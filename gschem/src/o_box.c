@@ -57,7 +57,6 @@ typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, COLOR *color,
 void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int wleft, wright, wtop, wbottom; /* world bounds */
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
   int line_width, length, space;
   int fill_width, angle1, pitch1, angle2, pitch2;
@@ -68,11 +67,6 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-	/* Get read to check for visibility of this line by using it's
-	 * bounding box */
-  world_get_single_object_bounds(toplevel, o_current,
-                                 &wleft, &wtop, &wright, &wbottom);
-	
   if (toplevel->DONT_REDRAW == 1)
     return;
 	

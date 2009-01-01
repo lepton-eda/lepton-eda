@@ -288,7 +288,6 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   PATH *path = o_current->path;
-  int wleft, wtop, wright, wbottom;
   int line_width, length, space;
   int fill_width, angle1, pitch1, angle2, pitch2;
   FILL_FUNC fill_func;
@@ -304,11 +303,6 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if (path == NULL) {
     return;
   }
-
-  /* Get read to check for visibility of this line by using it's
-   * bounding box */
-  world_get_single_object_bounds(toplevel, o_current,
-                                 &wleft, &wtop, &wright, &wbottom);
 
   if (toplevel->DONT_REDRAW == 1)
     return;

@@ -315,19 +315,12 @@ void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 void o_picture_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int wleft, wright, wtop, wbottom; /* world bounds */
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
 
   if (o_current->picture == NULL) {
     return;
   }
 
-  /* Get read to check for visibility of this line by using it's
-   * bounding picture
-   */
-  world_get_single_object_bounds(toplevel, o_current,
-                                 &wleft, &wtop, &wright, &wbottom);
-	
   WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->upper_y,
                  &s_upper_x, &s_upper_y );
   WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->lower_y,

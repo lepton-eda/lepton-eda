@@ -44,7 +44,6 @@
 void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int wleft, wright, wtop, wbottom;
   int x, y, radius;
   int line_width;
   COLOR *color;
@@ -53,9 +52,6 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if (o_current->arc == NULL) {
     return;
   }
-
-  world_get_single_object_bounds(toplevel, o_current,
-                                 &wleft, &wtop, &wright, &wbottom);
 
   if (toplevel->DONT_REDRAW == 1)
     return;

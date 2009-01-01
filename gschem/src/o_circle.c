@@ -49,7 +49,6 @@ typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, COLOR *color,
 void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int wleft, wright, wtop, wbottom; /* world bounds */
   int s_x, s_y;
   int radius;
   int line_width, length, space;
@@ -61,13 +60,6 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  /*
-   * Get read to check for visibility of this line by using it's
-   * bounding box
-   */
-  world_get_single_object_bounds(toplevel, o_current,
-                                 &wleft, &wtop, &wright, &wbottom);
-	
   if (toplevel->DONT_REDRAW == 1)
     return;
 	
