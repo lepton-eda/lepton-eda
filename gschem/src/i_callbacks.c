@@ -3353,6 +3353,9 @@ DEFINE_I_CALLBACK(options_afeedback)
     w_current->actionfeedback_mode = BOUNDINGBOX;
     s_log_message(_("Action feedback mode set to BOUNDINGBOX\n"));
   }
+  if (w_current->inside_action &&
+      w_current->toplevel->page_current->place_list != NULL)
+    o_place_invalidate_rubber (w_current, FALSE);
 }
 
 /*! \todo Finish function documentation!!!
