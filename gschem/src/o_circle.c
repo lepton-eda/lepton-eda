@@ -426,22 +426,15 @@ void o_circle_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_
 
   /* radius of the circle */
   radius = SCREENabs( toplevel, o_current->circle->radius );
-  /* upper left corner of the square the circle is inscribed in */
-  /* gdk coords system */
-  WORLDtoSCREEN( toplevel,
-                 o_current->circle->center_x - o_current->circle->radius + dx,
-                 o_current->circle->center_y + o_current->circle->radius + dy,
-                 &x, &y );
 
-  /* To draw be sure to setup width height */
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (color));
-  gdk_draw_arc (w_current->drawable, w_current->gc,
-                FALSE,
-                x, y,
-                2 * radius, 2 * radius,
-                0, FULL_CIRCLE);
+  WORLDtoSCREEN (toplevel, o_current->circle->center_x + dx,
+                           o_current->circle->center_y + dy, &x, &y);
 
-  /* backing store ?  not appropriate here */
+  cairo_new_sub_path (w_current->cr);
+  cairo_arc (w_current->cr, x + 0.5, y + 0.5, radius, 0., 2 * M_PI);
+
+  gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
 }
 
 /*! \brief Start process to input a new circle.

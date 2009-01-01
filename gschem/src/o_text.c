@@ -253,15 +253,10 @@ void o_text_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
       color = o_current->color;
     }
 
-    gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (color));
+    gschem_cairo_box (w_current->cr, 1, left, top, right, bottom);
 
-    gdk_draw_rectangle (w_current->drawable,
-                        w_current->gc,
-                        FALSE,
-                        left,
-                        top,
-                        right - left,
-                        bottom - top);
+    gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
+    gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
   }
 }
 

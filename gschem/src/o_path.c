@@ -132,16 +132,6 @@ static void path_to_points_modify (GSCHEM_TOPLEVEL *w_current, PATH *path,
 }
 
 
-static void path_to_points (GSCHEM_TOPLEVEL *w_current, PATH *path,
-                            int dx, int dy,
-                            GdkPoint **points, int *num_points)
-{
-  path_to_points_modify (w_current, path,
-                         dx, dy, 0, 0, -1,
-                         points, num_points);
-}
-
-
 /*! \brief Placeholder filling function.
  *  \par Function Description
  *  This function does nothing. It has the same prototype as all the
@@ -499,37 +489,69 @@ void o_path_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_path_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   PATH *path = o_current->path;
   int color;
-  int num_points;
-  GdkPoint *points;
+  int line_width = 1;
+  PATH_SECTION *section;
+  int i;
+  int x1, y1, x2, y2, x3, y3;
+  double fx1 = 0.0, fy1 = 0.0;
+  double fx2 = 0.0, fy2 = 0.0;
+  double fx3 = 0.0, fy3 = 0.0;
 
-  path_to_points (w_current, path, dx, dy, &points, &num_points);
-
-  if (num_points == 0) {
-    g_free (points);
+  if (path == NULL) {
     return;
   }
 
-  if (o_current->saved_color != -1) {
-    color = o_current->saved_color;
+  if (toplevel->override_color != -1 ) {
+    color = toplevel->override_color;
   } else {
     color = o_current->color;
   }
 
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor(color));
-  gdk_gc_set_line_attributes (w_current->gc, 0, GDK_LINE_SOLID,
-                              GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
+  for (i = 0; i <  path->num_sections; i++) {
+    section = &path->sections[i];
 
-  /* Stroke only, no fill for place drawing */
-  if (path->sections[path->num_sections - 1].code == PATH_END)
-    gdk_draw_polygon (w_current->drawable, w_current->gc,
-                      FALSE, points, num_points);
-  else
-    gdk_draw_lines (w_current->drawable, w_current->gc,
-                    points, num_points);
+    switch (section->code) {
+      case PATH_CURVETO:
+        /* Two control point grips */
+        WORLDtoSCREEN (toplevel, section->x1 + dx, section->y1 + dy, &x1, &y1);
+        WORLDtoSCREEN (toplevel, section->x2 + dx, section->y2 + dy, &x2, &y2);
+        hint_coordinates (x1, y1, &fx1, &fy1, line_width);
+        hint_coordinates (x2, y2, &fx2, &fy2, line_width);
+        /* Fall through */
+      case PATH_MOVETO:
+      case PATH_MOVETO_OPEN:
+      case PATH_LINETO:
+        /* Destination point grip */
+        WORLDtoSCREEN (toplevel, section->x3 + dx, section->y3 + dy, &x3, &y3);
+        hint_coordinates (x3, y3, &fx3, &fy3, line_width);
+      case PATH_END:
+        break;
+    }
 
-  g_free (points);
+    switch (section->code) {
+      case PATH_MOVETO:
+        cairo_close_path (w_current->cr);
+        /* fall-through */
+      case PATH_MOVETO_OPEN:
+        cairo_move_to (w_current->cr, fx3, fy3);
+        break;
+      case PATH_CURVETO:
+        cairo_curve_to (w_current->cr, fx1, fy1, fx2, fy2, fx3, fy3);
+        break;
+      case PATH_LINETO:
+        cairo_line_to (w_current->cr, fx3, fy3);
+        break;
+      case PATH_END:
+        cairo_close_path (w_current->cr);
+        break;
+    }
+  }
+
+  gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, line_width, -1, -1);
 }
 
 /*! \brief Start process to input a new path.

@@ -95,7 +95,7 @@ void o_bus_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 void o_bus_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int size;
+  int size = 1;
   int color;
   int sx[2], sy[2];
 
@@ -109,30 +109,19 @@ void o_bus_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
     color = o_current->color;
   }
 
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (color));
 
   if (toplevel->bus_style == THICK ) {
     size = SCREENabs(toplevel, BUS_WIDTH);
-    gdk_gc_set_line_attributes (w_current->gc, size+1,
-                                GDK_LINE_SOLID,
-                                GDK_CAP_NOT_LAST,
-                                GDK_JOIN_MITER);
+    size += 1;
   }
 
   WORLDtoSCREEN(toplevel, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0] );
   WORLDtoSCREEN(toplevel, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1] );
 
-  gdk_draw_line (w_current->drawable, w_current->gc,
-                 sx[0], sy[0], sx[1], sy[1]);
+  gschem_cairo_line (w_current->cr, END_NONE, 1, sx[0], sy[0], sx[1], sy[1]);
 
-  /* backing store ? not approriate here */
-
-  if (toplevel->bus_style == THICK ) {
-    gdk_gc_set_line_attributes (w_current->gc, 0,
-                                GDK_LINE_SOLID,
-                                GDK_CAP_NOT_LAST,
-                                GDK_JOIN_MITER);
-  }
+  gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
 }
 
 /*! \todo Finish function documentation!!!

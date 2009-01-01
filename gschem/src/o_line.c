@@ -159,13 +159,12 @@ void o_line_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
     color = o_current->color;
   }
 
-  /* changed for dark color stuff */
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (color));
-  
   WORLDtoSCREEN(toplevel, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0]);
   WORLDtoSCREEN(toplevel, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1]);
 
-  gdk_draw_line (w_current->drawable, w_current->gc, sx[0], sy[0], sx[1], sy[1]);
+  gschem_cairo_line (w_current->cr, END_NONE, 1, sx[0], sy[0], sx[1], sy[1]);
+  gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
 }
 
 /*! \brief Start process to input a new line.

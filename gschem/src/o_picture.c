@@ -450,20 +450,17 @@ void o_picture_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o
                  &screen_x1, &screen_y1 );
   WORLDtoSCREEN( toplevel, o_current->picture->lower_x + dx, o_current->picture->lower_y + dy,
                  &screen_x2, &screen_y2 );
-  
+
   if (o_current->saved_color != -1) {
     color = o_current->saved_color;
   } else {
     color = o_current->color;
   }
 
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor(color));
-  gdk_draw_rectangle (w_current->drawable,
-                      w_current->gc, FALSE,
-                      screen_x1,
-                      screen_y1,
-                      abs(screen_x2 - screen_x1),
-                      abs(screen_y2 - screen_y1));
+  gschem_cairo_box (w_current->cr, 1, screen_x1, screen_y1,
+                                      screen_x2, screen_y2);
+  gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
 }
 
 /*! \brief Replace all selected pictures with a new picture

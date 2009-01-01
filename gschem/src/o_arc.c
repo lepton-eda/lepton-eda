@@ -158,32 +158,12 @@ void o_arc_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 void o_arc_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int x, y, width, height, start_angle, end_angle;
+  int sx1, sy1, sx2, sy2;
+  int line_width = 1;
   int color;
 
   if (o_current->arc == NULL) {
     return;
-  }
-
-  /* diameter */
-  width       = SCREENabs( toplevel, o_current->arc->width );
-  /* height MUST be equal to width, just another name for diameter */
-  height      = SCREENabs( toplevel, o_current->arc->height );
-  /* center */
-  WORLDtoSCREEN(toplevel, o_current->arc->x + dx, o_current->arc->y + dy, &x, &y);
-  x -= (width  / 2);
-  y -= (height / 2);
-  /* start and end angles */
-  start_angle = o_current->arc->start_angle;
-  end_angle   = o_current->arc->end_angle;
-
-  /* check the size of the displayed arc */
-  /* do not allow null diameter = arc always displayed */
-  if (height < 1) {
-    height = 1;
-  }
-  if (width < 1) {
-    width = 1;
   }
 
   if (o_current->saved_color != -1) {
@@ -192,14 +172,27 @@ void o_arc_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
     color = o_current->color;
   }
 
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (color));
-  /* better to set the line attributes here ? */
-  gdk_draw_arc (w_current->drawable, w_current->gc, FALSE,
-                x, y, width, height,
-                start_angle * 64, end_angle * 64);
+  WORLDtoSCREEN (toplevel, o_current->arc->x + dx - o_current->arc->width / 2,
+                           o_current->arc->y + dy + o_current->arc->height / 2,
+                           &sx1, &sy1);
+  WORLDtoSCREEN (toplevel, o_current->arc->x + dx + o_current->arc->width / 2,
+                           o_current->arc->y + dy- o_current->arc->height / 2,
+                           &sx2, &sy2);
 
-  /* backing store? not appropriate here  */
+  cairo_translate (w_current->cr, (double)(sx1 + sx2) / 2.,
+                                  (double)(sy1 + sy2) / 2.);
 
+  /* Adjust for non-uniform X/Y scale factor. Note that the + 1
+     allows for the case where sx2 == sx1 or sy2 == sy1 */
+  cairo_scale (w_current->cr, (double)(sx2 - sx1 + 1) /
+                              (double)(sy2 - sy1 + 1), 1.);
+  gschem_cairo_arc (w_current->cr, line_width,
+                    0., 0., (double)(sy2 - sy1) / 2.,
+                    o_current->arc->start_angle, o_current->arc->end_angle);
+  cairo_identity_matrix (w_current->cr);
+
+  gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
 }
 
 /*! \brief Start process to input a new arc.
