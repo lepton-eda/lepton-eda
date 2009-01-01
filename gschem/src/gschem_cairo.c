@@ -52,6 +52,8 @@ void gschem_cairo_line (cairo_t *cr, int line_end, int width,
     yoffset = offset;
   else if (vertical)
     xoffset = offset;
+  else
+    xoffset = yoffset = offset;
 
   /* Now hint the ends of the lines */
 
@@ -60,16 +62,23 @@ void gschem_cairo_line (cairo_t *cr, int line_end, int width,
       /* Line terminates at the passed coordinate */
       /* Do nothing */
       break;
+
     case END_SQUARE:
+    case END_ROUND:
       /* Line terminates half a width away from the passed coordinate */
       if (horizontal) {
         xoffset = offset;
       } else if (vertical) {
         yoffset = offset;
       }
-    case END_ROUND:
-      /* Do nothing */
       break;
+  }
+
+  /* Add an extra pixel to give an inclusive span */
+  if (horizontal) {
+    if (x1 > x2) x1 += 1; else x2 += 1;
+  } else if (vertical) {
+    if (y1 > y2) y1 += 1; else y2 += 1;
   }
 
   cairo_move_to (cr, x1 + xoffset, y1 + yoffset);
