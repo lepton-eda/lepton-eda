@@ -312,89 +312,61 @@ void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current)
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] o_current  Picture OBJECT to draw.
  */
-void o_picture_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
+void o_picture_draw (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
+  GdkPixbuf *temp_pixbuf1, *temp_pixbuf2;
 
   if (o_current->picture == NULL) {
     return;
   }
 
-  WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->upper_y,
-                 &s_upper_x, &s_upper_y );
-  WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->lower_y,
-                 &s_lower_x, &s_lower_y );
-
-#if  DEBUG 
-  printf("drawing picture\n\n");
-  
-  printf("drawing picture: %d %d %d %d\n",
-         s_upper_x, s_upper_y,
-         s_upper_x + abs(s_lower_x - s_upper_x),
-         s_upper_y + abs(s_lower_y - s_upper_y));
-#endif
-
-  /*
-   * First, the picture is drawn.
-   * Finally the function takes care of the grips.
-   */
+  WORLDtoSCREEN (toplevel, o_current->picture->upper_x,
+                           o_current->picture->upper_y, &s_upper_x, &s_upper_y);
+  WORLDtoSCREEN (toplevel, o_current->picture->lower_x,
+                           o_current->picture->lower_y, &s_lower_x, &s_lower_y);
 
   if (o_current->picture->displayed_picture != NULL) {
-    g_object_unref(o_current->picture->displayed_picture);
+    g_object_unref (o_current->picture->displayed_picture);
     o_current->picture->displayed_picture = NULL;
   }
-  /* If it's not drawing using the background color then draw the image */
-  if (toplevel->override_color != toplevel->background_color) {
-    GdkPixbuf *temp_pixbuf1, *temp_pixbuf2;
 
-    /* Create a copy of the pixbuf rotated */
-    temp_pixbuf1 = gdk_pixbuf_rotate(o_current->picture->original_picture, 
-				    o_current->picture->angle);
+  /* Create a copy of the pixbuf rotated */
+  temp_pixbuf1 = gdk_pixbuf_rotate (o_current->picture->original_picture,
+                                    o_current->picture->angle);
 
-    if (temp_pixbuf1 == NULL) {
-      fprintf(stderr, "Couldn't get enough memory for rotating the picture\n");
-      return;
-    }
-
-    temp_pixbuf2 = gdk_pixbuf_mirror_flip(temp_pixbuf1,
-					  o_current->picture->mirrored, FALSE);
-    g_object_unref(temp_pixbuf1);
-
-    if (temp_pixbuf2 == NULL) {
-      fprintf(stderr, "Couldn't get enough memory for mirroring the picture\n");
-      return;
-    }
-
-    o_current->picture->displayed_picture = 
-    gdk_pixbuf_scale_simple(temp_pixbuf2, 
-                            abs(s_lower_x - s_upper_x), 
-                            abs(s_lower_y - s_upper_y), 
-                            GDK_INTERP_BILINEAR);
-    g_object_unref(temp_pixbuf2);
-
-    if (o_current->picture->displayed_picture == NULL) {
-      fprintf(stderr, "Couldn't get enough memory for scaling the picture\n");
-      return;
-    }
-
-    if (toplevel->DONT_REDRAW == 0) {
-      gdk_draw_pixbuf (w_current->drawable, w_current->gc,
-                      o_current->picture->displayed_picture,
-                      0, 0, s_upper_x, s_upper_y,
-                      -1, -1, GDK_RGB_DITHER_NONE, 0, 0);
-    }
+  if (temp_pixbuf1 == NULL) {
+    fprintf (stderr, "Couldn't get enough memory for rotating the picture\n");
+    return;
   }
-  else {
-    if (toplevel->DONT_REDRAW == 0) {
-      /* Erase the picture, drawing a rectangle with the background color */
-      gdk_gc_set_foreground(w_current->gc,
-                            x_get_color(toplevel->background_color));
-      gdk_draw_rectangle (w_current->drawable, w_current->gc, TRUE,
-                          s_upper_x, s_upper_y,
-                          abs(s_lower_x -s_upper_x),
-                          abs(s_lower_y - s_upper_y));
-    }
+
+  temp_pixbuf2 = gdk_pixbuf_mirror_flip (temp_pixbuf1,
+                                         o_current->picture->mirrored, FALSE);
+  g_object_unref (temp_pixbuf1);
+
+  if (temp_pixbuf2 == NULL) {
+    fprintf (stderr, "Couldn't get enough memory for mirroring the picture\n");
+    return;
+  }
+
+  o_current->picture->displayed_picture =
+    gdk_pixbuf_scale_simple (temp_pixbuf2,
+                             abs (s_lower_x - s_upper_x),
+                             abs (s_lower_y - s_upper_y),
+                             GDK_INTERP_BILINEAR);
+  g_object_unref (temp_pixbuf2);
+
+  if (o_current->picture->displayed_picture == NULL) {
+    fprintf (stderr, "Couldn't get enough memory for scaling the picture\n");
+    return;
+  }
+
+  if (toplevel->DONT_REDRAW == 0) {
+    gdk_draw_pixbuf (w_current->drawable, w_current->gc,
+                     o_current->picture->displayed_picture,
+                     0, 0, s_upper_x, s_upper_y,
+                     -1, -1, GDK_RGB_DITHER_NONE, 0, 0);
   }
 
   /* Grip specific stuff */
