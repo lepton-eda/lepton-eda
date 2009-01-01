@@ -233,9 +233,9 @@ static void o_path_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
     WORLDtoSCREEN (w_current->toplevel, line->x[0], line->y[0], &x1, &y1);
     WORLDtoSCREEN (w_current->toplevel, line->x[1], line->y[1], &x2, &y2);
     gschem_cairo_line (w_current->cr, END_NONE, fill_width, x1, y1, x2, y2);
-    gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE,
-                                        fill_width, -1, -1);
   }
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE,
+                                      fill_width, -1, -1);
 
   g_array_free (lines, TRUE);
 }
