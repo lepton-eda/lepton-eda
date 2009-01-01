@@ -89,16 +89,18 @@ void gschem_cairo_box (cairo_t *cr, int width,
 }
 
 
-void gschem_cairo_arc (cairo_t *cr, int width, int x, int y,
-                       int radius, int start_angle, int end_angle)
+void gschem_cairo_arc (cairo_t *cr, int width, double x, double y,
+                       double radius, int start_angle, int end_angle)
 {
+  double offset = ((width % 2) == 0) ? 0 : 0.5;
+
   cairo_new_sub_path (cr);
   if (start_angle > start_angle + end_angle) {
-    cairo_arc (cr, x + 0.5, y + 0.5, radius,
+    cairo_arc (cr, x + offset, y + offset, radius,
                -start_angle * (M_PI / 180.),
                (-start_angle - end_angle) * (M_PI / 180.));
   } else {
-    cairo_arc_negative (cr, x + 0.5, y + 0.5, radius,
+    cairo_arc_negative (cr, x + offset, y + offset, radius,
                         -start_angle * (M_PI / 180.),
                         (-start_angle - end_angle) * (M_PI / 180.));
   }

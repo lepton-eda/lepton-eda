@@ -44,7 +44,7 @@
 void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int x, y, radius;
+  int sx1, sy1, sx2, sy2;
   int line_width;
   COLOR *color;
   int length, space;
@@ -77,8 +77,6 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
    * encountered the arc is drawn as a solid arc independently of its
    * initial type.
    */
-  WORLDtoSCREEN( toplevel, o_current->arc->x, o_current->arc->y, &x, &y );
-  radius = SCREENabs( toplevel, o_current->arc->width / 2 );
 
   if (toplevel->override_color != -1 )
     color = x_color_lookup (toplevel->override_color);
@@ -93,8 +91,24 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   length = SCREENabs( toplevel, o_current->line_length );
   space = SCREENabs( toplevel, o_current->line_space );
 
-  gschem_cairo_arc (w_current->cr, line_width, x, y, radius,
+  WORLDtoSCREEN (toplevel, o_current->arc->x - o_current->arc->width / 2,
+                           o_current->arc->y + o_current->arc->height / 2,
+                           &sx1, &sy1);
+  WORLDtoSCREEN (toplevel, o_current->arc->x + o_current->arc->width / 2,
+                           o_current->arc->y - o_current->arc->height / 2,
+                           &sx2, &sy2);
+
+  cairo_translate (w_current->cr, (double)(sx1 + sx2) / 2.,
+                                  (double)(sy1 + sy2) / 2.);
+
+  /* Adjust for non-uniform X/Y scale factor. Note that the + 1
+     allows for the case where sx2 == sx1 or sy2 == sy1 */
+  cairo_scale (w_current->cr, (double)(sx2 - sx1 + 1) /
+                              (double)(sy2 - sy1 + 1), 1.);
+  gschem_cairo_arc (w_current->cr, line_width,
+                    0., 0., (double)(sy2 - sy1) / 2.,
                     o_current->arc->start_angle, o_current->arc->end_angle);
+  cairo_identity_matrix (w_current->cr);
 
   gschem_cairo_set_source_color (w_current->cr, color);
   gschem_cairo_stroke (w_current->cr, o_current->line_type,
