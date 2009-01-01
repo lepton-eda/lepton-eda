@@ -254,10 +254,6 @@ void o_box_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *
  *  All parameters are given in pixel.
  *
- *  The solid fill is done with the #gdk_draw_rectangle() function and
- *  its parameters <B>filled</B> set. The box is filled with the color
- *  <B>color</B> given as a parameter to the function.
- *
  *  \param [in] w           GdkDrawable to draw in.
  *  \param [in] gc          GdkGC graphics context to draw on.
  *  \param [in] color       Box fill color. 
