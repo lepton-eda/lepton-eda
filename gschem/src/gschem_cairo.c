@@ -60,7 +60,13 @@ void gschem_cairo_line (cairo_t *cr, int line_end, int width,
   switch (line_end) {
     case END_NONE:
       /* Line terminates at the passed coordinate */
-      /* Do nothing */
+
+      /* Add an extra pixel to give an inclusive span */
+      if (horizontal) {
+        if (x1 > x2) x1 += 1; else x2 += 1;
+      } else if (vertical) {
+        if (y1 > y2) y1 += 1; else y2 += 1;
+      }
       break;
 
     case END_SQUARE:
@@ -72,13 +78,6 @@ void gschem_cairo_line (cairo_t *cr, int line_end, int width,
         yoffset = offset;
       }
       break;
-  }
-
-  /* Add an extra pixel to give an inclusive span */
-  if (horizontal) {
-    if (x1 > x2) x1 += 1; else x2 += 1;
-  } else if (vertical) {
-    if (y1 > y2) y1 += 1; else y2 += 1;
   }
 
   cairo_move_to (cr, x1 + xoffset, y1 + yoffset);
