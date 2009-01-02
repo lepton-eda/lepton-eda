@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-21 13:41-0500\n"
-"PO-Revision-Date: 2008-12-20 14:05+0000\n"
+"POT-Creation-Date: 2009-01-02 13:53+0000\n"
+"PO-Revision-Date: 2009-01-02 08:04+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"
@@ -106,9 +106,9 @@ msgid "Failed to stat [%s]: %s"
 msgstr "Status niet gelukt [%s]: %s"
 
 #: ../src/f_basic.c:222
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot find file %s: %s"
-msgstr "Onbekend bestand: %s\n"
+msgstr "Kan bestand %s niet vinden: %s"
 
 #: ../src/f_basic.c:260
 #, c-format
@@ -175,47 +175,47 @@ msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "Kan reservekopie [%s] NIET op alleen-lezen instellen\n"
 
 #: ../src/f_basic.c:703
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s"
-msgstr "%s:%i:%i: %s\n"
+msgstr "%s: %s"
 
-#: ../src/f_print.c:111
+#: ../src/f_print.c:117
 msgid "Unable to get time of day in f_print_header()\n"
 msgstr "Kan geen tijd van de dag krijgen in f_print_header()\n"
 
-#: ../src/f_print.c:153
+#: ../src/f_print.c:159
 #, c-format
 msgid "Unable to open the prolog file `%s' for reading in f_print_header()\n"
 msgstr ""
 "Kan het prolog bestand `%s' niet openen tijdens lezen in f_print_header()\n"
 
-#: ../src/f_print.c:170
+#: ../src/f_print.c:176
 #, c-format
 msgid "Error during reading of the prolog file `%s' in f_print_header()\n"
 msgstr "Fout tijdens het lezen van prolog bestand `%s' in f_print_header()\n"
 
-#: ../src/f_print.c:176
+#: ../src/f_print.c:182
 msgid ""
 "Error during writing of the output postscript file in f_print_header()\n"
 msgstr ""
 "Fout tijdens het schrijven van het postscript uitvoerbestand in "
 "f_print_header()\n"
 
-#: ../src/f_print.c:189
+#: ../src/f_print.c:195
 msgid "Giving up on printing\n"
 msgstr "Geef het afdrukken op\n"
 
-#: ../src/f_print.c:381
+#: ../src/f_print.c:387
 #, c-format
 msgid "Could not open [%s] for printing\n"
 msgstr "Kan [%s] niet openen voor afdrukken\n"
 
-#: ../src/f_print.c:414
+#: ../src/f_print.c:420
 #, c-format
 msgid "Could not execute command [%s] for printing\n"
 msgstr "Kan opdracht [%s] niet uitvoeren voor afdrukken\n"
 
-#: ../src/f_print.c:687
+#: ../src/f_print.c:695
 msgid "Too many UTF-8 characters, cannot print\n"
 msgstr "Te veel UTF-8 karakters, kan niet afdrukken\n"
 
@@ -324,42 +324,43 @@ msgstr "Ongeldige kleur [ %s ] gevonden\n"
 #: ../src/o_circle_basic.c:294 ../src/o_line_basic.c:270
 #: ../src/o_net_basic.c:165 ../src/o_path_basic.c:200 ../src/o_pin_basic.c:176
 #: ../src/o_text_basic.c:1131
-msgid "Setting color to WHITE\n"
+#, fuzzy
+msgid "Setting color to default color\n"
 msgstr "Stel de kleur in op WIT \n"
 
-#: ../src/o_attrib.c:178
+#: ../src/o_attrib.c:167
 msgid "Attempt to attach non text item as an attribute!\n"
-msgstr ""
+msgstr "Probeerde een niet text item toe te voegen als een attribuut!\n"
 
-#: ../src/o_attrib.c:183
+#: ../src/o_attrib.c:172
 #, c-format
 msgid "Attempt to attach attribute [%s] to more than one object\n"
-msgstr ""
+msgstr "Probeerde attribuut [%s] aan meer dan een object toe te voegen\n"
 
 #. only an error if there's a slot string
-#: ../src/o_attrib.c:1410 ../src/o_attrib.c:1510
+#: ../src/o_attrib.c:1390 ../src/o_attrib.c:1490
 msgid "Did not find slotdef=#:#,#,#... attribute\n"
 msgstr "Kan slotdef=#:#,#,#... attribuut niet vinden\n"
 
 # Geen gebruikelijke slotdef=#:... gevonden, doe een waarschuwing in het log
 #. Didn't find proper slotdef=#:... put warning into log
-#: ../src/o_attrib.c:1416
+#: ../src/o_attrib.c:1396
 msgid "Improper slotdef syntax: missing \":\".\n"
 msgstr "Ongewenst slotdef syntax: \":\" ontbreekt.\n"
 
-#: ../src/o_attrib.c:1431 ../src/o_attrib.c:1529
+#: ../src/o_attrib.c:1411 ../src/o_attrib.c:1509
 msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
 msgstr "Kan het gewenste slotdef=#:#,#,#... attribuut niet vinden\n"
 
-#: ../src/o_attrib.c:1463 ../src/o_attrib.c:1558
+#: ../src/o_attrib.c:1443 ../src/o_attrib.c:1538
 msgid "component missing pinseq= attribute\n"
 msgstr "komponent mist het pinseq= attribuut\n"
 
-#: ../src/o_basic.c:195 ../src/o_basic.c:207
+#: ../src/o_basic.c:199 ../src/o_basic.c:211
 msgid "Invalid space specified, setting to 100\n"
 msgstr "Ongeldige ruimte gespecificeerd, ingesteld op 100\n"
 
-#: ../src/o_basic.c:203
+#: ../src/o_basic.c:207
 msgid "Invalid length specified, setting to 100\n"
 msgstr "Ongeldige lengte gespecificeerd, ingesteld op 100\n"
 
@@ -392,7 +393,7 @@ msgstr "Cirkels met een radius van nul zijn niet toegestaan\n"
 msgid "Found a zero radius circle [ %c %d %d %d %d ]\n"
 msgstr "Een cirkel met een radius van nul gevonden [ %c %d %d %d %d ]\n"
 
-#: ../src/o_complex_basic.c:476
+#: ../src/o_complex_basic.c:471
 #, c-format
 msgid ""
 "Component not found:\n"
@@ -401,13 +402,13 @@ msgstr ""
 "Komponent niet gevonden:\n"
 " %s"
 
-#: ../src/o_complex_basic.c:690
+#: ../src/o_complex_basic.c:685
 #, c-format
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
 "Een komponent met een ongeldige rotatie gevonden [ %c %d %d %d %d %d %s ]\n"
 
-#: ../src/o_complex_basic.c:702
+#: ../src/o_complex_basic.c:697
 #, c-format
 msgid ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
@@ -415,7 +416,7 @@ msgstr ""
 "Een komponent met een ongeldige spiegel vlag gevonden [ %c %d %d %d %d %d %"
 "s ]\n"
 
-#: ../src/o_complex_basic.c:1403
+#: ../src/o_complex_basic.c:1398
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -424,7 +425,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan symboolbestand niet doorzoeken symversion=%s\n"
 
-#: ../src/o_complex_basic.c:1407
+#: ../src/o_complex_basic.c:1402
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -433,7 +434,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan symboolbestand niet doorzoeken symversion=\n"
 
-#: ../src/o_complex_basic.c:1423
+#: ../src/o_complex_basic.c:1418
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -442,7 +443,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan bijgevoegd symboolbestand niet doorzoeken symversion=%s\n"
 
-#: ../src/o_complex_basic.c:1448
+#: ../src/o_complex_basic.c:1443
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -453,7 +454,7 @@ msgstr ""
 "\tsymversion=%s bijgevoegd aan bedoelde symbool, maar geen symversion= in "
 "het symbool bestand\n"
 
-#: ../src/o_complex_basic.c:1462
+#: ../src/o_complex_basic.c:1457
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -462,17 +463,17 @@ msgstr ""
 "WAARSCHUWING: Symbool versie fout bij refdes %s (%s):\n"
 "\tSymbool in bibliotheek is nieuwer dan bedoelde symbool\n"
 
-#: ../src/o_complex_basic.c:1490
+#: ../src/o_complex_basic.c:1485
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr "\tGROTE VERSIE VERANDERING (bestand %.3f, bedoeld %.3f, %s)!\n"
 
-#: ../src/o_complex_basic.c:1508
+#: ../src/o_complex_basic.c:1503
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\tKleine versie verandering (bestand %.3f, bedoeld %.3f)!\n"
 
-#: ../src/o_complex_basic.c:1519
+#: ../src/o_complex_basic.c:1514
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -735,6 +736,22 @@ msgstr "Komponent [%s] is niet in de komponenten bibliotheek gevonden\n"
 msgid "More than one component found with name [%s]\n"
 msgstr "Meer dan een komponent gevonden met de naam [%s]\n"
 
+#: ../src/s_color.c:202
+msgid "Color index out of range"
+msgstr ""
+
+#: ../src/s_color.c:257
+msgid "Color map entry must be a two-element list"
+msgstr ""
+
+#: ../src/s_color.c:265
+msgid "Index in color map entry must be an integer"
+msgstr ""
+
+#: ../src/s_color.c:291
+msgid "Value in color map entry must be #f or a string"
+msgstr ""
+
 #: ../src/s_hierarchy.c:90
 #, c-format
 msgid ""
@@ -783,43 +800,3 @@ msgstr "[%s] gevonden\n"
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr "Kan geen [%s] vinden in welke BronBibliotheek dan ook!\n"
-
-#~ msgid "Could not read symbolic link information for %s"
-#~ msgstr "Kan informatie van symbolische verbinding niet lezen voor %s"
-
-# Te veel symlinks
-#~ msgid "The file has too many symbolic links."
-#~ msgstr "Het bestand heeft te veel symbolische verbindingen."
-
-#~ msgid "Found an improper attribute: _%s_\n"
-#~ msgstr "Ongewenst attribuut gevonden: _%s_\n"
-
-#~ msgid "Cannot find any schematics above the current one!\n"
-#~ msgstr "Kan geen schema's vinden boven de huidige!\n"
-
-#~ msgid "Maybe toplevel schematic page was closed/discarded?\n"
-#~ msgstr "Misschien is de bovenste schema bladzijde gesloten/weggedaan?\n"
-
-#~ msgid "Can't get the real filename of %s.\n"
-#~ msgstr "Kan de werkelijke bestandsnaam van %s niet krijgen.\n"
-
-#~ msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f)!\n"
-#~ msgstr "\tGROTE VERSIE VERANDERING (bestand %.3f, bedoeld %.3f)!\n"
-
-#~ msgid "Component [%s] was not found in any component library\n"
-#~ msgstr "Komponent [%s] is in geen enkele komponenten bibliotheek gevonden\n"
-
-#~ msgid "s_page_delete: Can't get the real filename of %s.\n"
-#~ msgstr "s_page_delete: Kan de echte bestandsnaam van %s niet krijgen.\n"
-
-#~ msgid "Error decoding picture.\n"
-#~ msgstr "Fout bij het decoderen van een afbeelding.\n"
-
-#~ msgid "Error deserializing picture.\n"
-#~ msgstr "Fout bij het de-serialiseren van een afbeelding.\n"
-
-#~ msgid ""
-#~ "ERROR: o_picture_save: failed to create serialized data from picture\n"
-#~ msgstr ""
-#~ "FOUT: o_picture_save: het creeren van geserialiseerde data van een "
-#~ "afbeelding faalde\n"
