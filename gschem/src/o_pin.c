@@ -112,8 +112,12 @@ void o_pin_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
     color = o_current->color;
   }
 
-  if (toplevel->pin_style == THICK )
+  if (toplevel->pin_style == THICK) {
     size = SCREENabs(toplevel, PIN_WIDTH);
+    if (size < 1) {
+      size = 1;
+    }
+  }
 
   WORLDtoSCREEN(toplevel, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0]);
   WORLDtoSCREEN(toplevel, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1]);
