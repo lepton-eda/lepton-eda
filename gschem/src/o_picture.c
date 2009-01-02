@@ -282,21 +282,11 @@ void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current)
   width = SCREENabs(toplevel, GET_PICTURE_WIDTH (w_current));
   height = SCREENabs(toplevel, GET_PICTURE_HEIGHT(w_current));
 
-#if DEBUG
-  printf("o_picture_draw_rubber called:\n");
-  printf("pixbuf wh ratio: %i\n", w_current->pixbuf_wh_ratio);
-  printf("first: %i, %i\n", w_current->first_wx, w_current->first_wy);
-  printf("second: %i, %i\n", w_current->second_wx, w_current->second_wy);
-  printf("Left: %i\nTop: %i\nWidth: %i\nHeight: %i\n",
-	 picture_left, picture_top, picture_width, picture_height);
-#endif
-  /* draw the picture from the previous variables */
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (SELECT_COLOR));
-  gdk_gc_set_line_attributes (w_current->gc, 0,
-                              GDK_LINE_SOLID, GDK_CAP_NOT_LAST,
-                              GDK_JOIN_MITER);
-  gdk_draw_rectangle (w_current->drawable, w_current->gc,
-                      FALSE, left, top, width, height);
+  gschem_cairo_box (w_current->cr, 1, left, top, left + width, top + height);
+
+  gschem_cairo_set_source_color (w_current->cr,
+                                 x_color_lookup_dark (SELECT_COLOR));
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
 }
 
 /*! \brief Draw a picture on the screen.
@@ -390,17 +380,13 @@ void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   TOPLEVEL *toplevel = w_current->toplevel;
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
 
-#if DEBUG
-  printf("o_picture_draw_grips called\n");
-#endif
   if (w_current->draw_grips == FALSE)
-	  return;
+    return;
 
   WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->upper_y,
                  &s_upper_x, &s_upper_y );
   WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->lower_y,
                  &s_lower_x, &s_lower_y );
-  
 
   /* grip on upper left corner (whichone = PICTURE_UPPER_LEFT) */
   o_grips_draw(w_current, s_upper_x, s_upper_y);
@@ -415,10 +401,12 @@ void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   o_grips_draw(w_current, s_lower_x, s_lower_y);
   
   /* Box surrounding the picture */
-  gdk_draw_rectangle (w_current->drawable, w_current->gc, FALSE,
-                      s_upper_x, s_upper_y,
-                      abs(s_upper_x - s_lower_x),
-                      abs(s_upper_y - s_lower_y));
+  gschem_cairo_box (w_current->cr, 1, s_lower_x, s_lower_y,
+                                      s_upper_x, s_upper_y);
+
+  gschem_cairo_set_source_color (w_current->cr,
+                                 x_color_lookup_dark (SELECT_COLOR));
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
 }
 
 

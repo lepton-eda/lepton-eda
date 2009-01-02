@@ -302,20 +302,15 @@ void a_zoom_box_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
-  int box_width, box_height;
-  int box_left, box_top;
 
   WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
   WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
-  box_width  = abs(x1 - x2);
-  box_height = abs(y1 - y2);
-  box_left   = min(x1, x2);
-  box_top    = min(y1, y2);
+  gschem_cairo_box (w_current->cr, 1, x1, y1, x2, y2);
 
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (ZOOM_BOX_COLOR));
-  gdk_draw_rectangle (w_current->drawable, w_current->gc, FALSE,
-                      box_left, box_top, box_width, box_height);
+  gschem_cairo_set_source_color (w_current->cr,
+                                 x_color_lookup_dark (ZOOM_BOX_COLOR));
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
 }
 
 /*! \todo Finish function documentation!!!

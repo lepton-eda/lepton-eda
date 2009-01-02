@@ -259,30 +259,20 @@ void o_pin_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
-  int size = 0;
+  int size = 1;
 
   WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
   WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
-  if (toplevel->net_style == THICK ) {
+  if (toplevel->net_style == THICK )
     size = SCREENabs(toplevel, PIN_WIDTH);
 
-    if (size < 0)
-      size=0;
+  if (size < 1)
+    size = 1;
 
-    gdk_gc_set_line_attributes (w_current->gc, size,
-                                GDK_LINE_SOLID,
-                                GDK_CAP_NOT_LAST,
-                                GDK_JOIN_MITER);
-  }
+  gschem_cairo_line (w_current->cr, END_NONE, size, x1, y1, x2, y2);
 
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (SELECT_COLOR));
-  gdk_draw_line (w_current->drawable, w_current->gc, x1, y1, x2, y2);
-
-  if (toplevel->net_style == THICK ) {
-    gdk_gc_set_line_attributes (w_current->gc, 0,
-                                GDK_LINE_SOLID,
-                                GDK_CAP_NOT_LAST,
-                                GDK_JOIN_MITER);
-  }
+  gschem_cairo_set_source_color (w_current->cr,
+                                 x_color_lookup_dark (SELECT_COLOR));
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, size, -1, -1);
 }

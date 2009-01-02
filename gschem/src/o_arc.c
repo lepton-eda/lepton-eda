@@ -398,28 +398,41 @@ void o_arc_draw_rubber (GSCHEM_TOPLEVEL *w_current)
   TOPLEVEL *toplevel = w_current->toplevel;
 
   double rad_angle;
-  int cx, cy, x1, y1, radius;
+  double radius;
+  double cx, cy;
+  int sx1, sy1, sx2, sy2, rx, ry;
 
-  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &cx, &cy);
-  radius = SCREENabs(toplevel, w_current->distance);
-  
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (SELECT_COLOR));
-  gdk_gc_set_line_attributes (w_current->gc, 0,
-                              GDK_LINE_SOLID, GDK_CAP_NOT_LAST,
-                              GDK_JOIN_MITER);
+  WORLDtoSCREEN (toplevel, w_current->first_wx - w_current->distance,
+                           w_current->first_wy + w_current->distance,
+                           &sx1, &sy1);
+  WORLDtoSCREEN (toplevel, w_current->first_wx + w_current->distance,
+                           w_current->first_wy - w_current->distance,
+                           &sx2, &sy2);
 
-  /* draw the arc from the w_current variables */
-  gdk_draw_arc (w_current->drawable, w_current->gc, FALSE,
-                cx - radius, cy - radius,
-                radius * 2, radius * 2,
-                w_current->second_wx * 64,
-                w_current->second_wy * 64);
+  radius = (double)(sy2 - sy1) / 2.;
+  cx = (double)(sx1 + sx2) / 2.;
+  cy = (double)(sy1 + sy2) / 2.;
+
+  cairo_translate (w_current->cr, cx, cy);
+
+  /* Adjust for non-uniform X/Y scale factor. Note that the + 1
+     allows for the case where sx2 == sx1 or sy2 == sy1 */
+  cairo_scale (w_current->cr, (double)(sx2 - sx1 + 1) /
+                              (double)(sy2 - sy1 + 1), 1.);
+  gschem_cairo_arc (w_current->cr, 1, 0., 0., radius,
+                    w_current->second_wx, w_current->second_wy);
+  cairo_identity_matrix (w_current->cr);
+
+  gschem_cairo_set_source_color (w_current->cr,
+                                 x_color_lookup_dark (SELECT_COLOR));
 
   /* draw the radius segment from the w_current variables */
   rad_angle = ((double) w_current->second_wx) * M_PI / 180;
-  x1 = cx + radius*cos(rad_angle);
-  y1 = cy - radius*sin(rad_angle);
-  gdk_draw_line (w_current->drawable, w_current->gc, cx, cy, x1, y1);
+  rx = cx + radius * cos (rad_angle);
+  ry = cy - radius * sin (rad_angle);
+  gschem_cairo_line (w_current->cr, END_NONE, 1, cx, cy, rx, ry);
+
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
 }
 
 /*! \brief Draw grip marks on arc.

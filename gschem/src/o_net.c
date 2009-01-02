@@ -177,7 +177,7 @@ void o_net_draw_stretch (GSCHEM_TOPLEVEL *w_current,
   TOPLEVEL *toplevel = w_current->toplevel;
   int color;
   int dx1 = -1, dx2 = -1, dy1 = -1,dy2 = -1;
-  int sx[2], sy[2];
+  int x1, y1, x2, y2;
 
   if (o_current->line == NULL) {
     return;
@@ -189,27 +189,27 @@ void o_net_draw_stretch (GSCHEM_TOPLEVEL *w_current,
     color = o_current->color;
   }
 
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor(color));
-
   if (whichone == 0) {
     dx1 = dx;
     dy1 = dy;
-    dx2 = 0;
-    dy2 = 0;
+    dx2 = dy2 = 0;
   } else if (whichone == 1) {
+    dx1 = dy1 = 0;
     dx2 = dx;
     dy2 = dy;
-    dx1 = 0;
-    dy1 = 0;
   } else {
     fprintf(stderr, _("Got an invalid which one in o_net_draw_stretch\n"));
   }
 
-  WORLDtoSCREEN( toplevel, o_current->line->x[0] + dx1, o_current->line->y[0] + dy1, &sx[0], &sy[0] );
-  WORLDtoSCREEN( toplevel, o_current->line->x[1] + dx2, o_current->line->y[1] + dy2, &sx[1], &sy[1] );
+  WORLDtoSCREEN (toplevel, o_current->line->x[0] + dx1,
+                           o_current->line->y[0] + dy1, &x1, &y1);
+  WORLDtoSCREEN (toplevel, o_current->line->x[1] + dx2,
+                           o_current->line->y[1] + dy2, &x2, &y2);
 
-  gdk_draw_line (w_current->drawable, w_current->gc,
-                 sx[0], sy[0], sx[1], sy[1]);
+  gschem_cairo_line (w_current->cr, END_NONE, 1, x1, y1, x2, y2);
+
+  gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
 }
 
 
@@ -811,7 +811,7 @@ void o_net_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_net_draw_rubber(GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int size=0, magnetic_halfsize;
+  int size = 0, magnetic_halfsize;
   int magnetic_x, magnetic_y;
   int first_x, first_y, third_x, third_y, second_x, second_y;
 
@@ -824,40 +824,30 @@ void o_net_draw_rubber(GSCHEM_TOPLEVEL *w_current)
   WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy,
 		&second_x, &second_y);
 
-  if (toplevel->net_style == THICK) {
+  if (toplevel->net_style == THICK)
     size = SCREENabs(toplevel, NET_WIDTH);
-    gdk_gc_set_line_attributes (w_current->gc, size,
-                                GDK_LINE_SOLID,
-                                GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
-  }
-  size = max(size, 0);
 
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (SELECT_COLOR));
+  size = max (size, 1);
+
+  gschem_cairo_set_source_color (w_current->cr,
+                                 x_color_lookup_dark (SELECT_COLOR));
 
   if (w_current->magneticnet_mode) {
     if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
       magnetic_halfsize = max(4*size, MAGNETIC_HALFSIZE);
-      gdk_draw_arc (w_current->drawable, w_current->gc, FALSE,
-                    magnetic_x - magnetic_halfsize,
-                    magnetic_y - magnetic_halfsize,
-                    2 * magnetic_halfsize, 2 * magnetic_halfsize,
-                    0, FULL_CIRCLE);
+      gschem_cairo_arc (w_current->cr, size, magnetic_x, magnetic_y,
+                        magnetic_halfsize, 0, 360);
     }
   }
 
-  /* draw primary line */
-  gdk_draw_line (w_current->drawable, w_current->gc,
-                 first_x, first_y, second_x, second_y);
+  /* Primary line */
+  gschem_cairo_line (w_current->cr, END_NONE, size,
+                     first_x, first_y, second_x, second_y);
+  /* Secondary line */
+  gschem_cairo_line (w_current->cr, END_NONE, size,
+                     second_x, second_y, third_x, third_y);
 
-  /* Draw secondary line */
-  gdk_draw_line (w_current->drawable, w_current->gc,
-                 second_x, second_y, third_x, third_y);
-
-  if (toplevel->net_style == THICK) {
-    gdk_gc_set_line_attributes (w_current->gc, 0,
-                                GDK_LINE_SOLID,
-                                GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
-  }
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, size, -1, -1);
 }
 
 

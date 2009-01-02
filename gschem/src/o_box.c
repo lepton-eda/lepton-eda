@@ -585,26 +585,15 @@ void o_box_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
-  int box_width, box_height, box_left, box_top;
-  
-  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy,
-		&x1, &y1);
-  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, 
-		&x2, &y2);
 
-  /* get the width/height and the upper left corner of the box */
-  box_width  = abs(x2 - x1);
-  box_height = abs(y2 - y1);
-  box_left   = min(x1, x2);
-  box_top    = min(y1, y2);
-  
-  /* draw the box from the previous variables */
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (SELECT_COLOR));
-  gdk_gc_set_line_attributes (w_current->gc, 0,
-                              GDK_LINE_SOLID, GDK_CAP_NOT_LAST,
-                              GDK_JOIN_MITER);
-  gdk_draw_rectangle (w_current->drawable, w_current->gc,
-                      FALSE, box_left, box_top, box_width, box_height);
+  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+
+  gschem_cairo_box (w_current->cr, 1, x1, y1, x2, y2);
+
+  gschem_cairo_set_source_color (w_current->cr,
+                                 x_color_lookup_dark (SELECT_COLOR));
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
 }
 
 /*! \brief Draw grip marks on box.

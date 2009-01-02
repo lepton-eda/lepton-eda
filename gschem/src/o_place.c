@@ -294,11 +294,11 @@ void o_place_draw_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
     WORLDtoSCREEN(toplevel, left + diff_x, top + diff_y, &s_left, &s_top);
     WORLDtoSCREEN(toplevel, right + diff_x, bottom + diff_y, &s_right, &s_bottom);
 
-    gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (BOUNDINGBOX_COLOR));
-    gdk_draw_rectangle (w_current->drawable,
-                        w_current->gc, FALSE,
-                        s_left, s_bottom,
-                        s_right - s_left, s_top - s_bottom);
+    gschem_cairo_box (w_current->cr, 1, s_left, s_top, s_right, s_bottom);
+
+    gschem_cairo_set_source_color (w_current->cr,
+                                   x_color_lookup_dark (BOUNDINGBOX_COLOR));
+    gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
   } else {
     o_glist_draw_place (w_current, diff_x, diff_y,
                         toplevel->page_current->place_list);

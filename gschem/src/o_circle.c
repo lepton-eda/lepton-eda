@@ -594,18 +594,37 @@ void o_circle_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_circle_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int cx, cy, radius;
-
-  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &cx, &cy);
-  radius = SCREENabs(toplevel, w_current->distance);
+  int sx1, sy1, sx2, sy2;
+  double cx, cy;
+  double radius;
 
   /* draw the circle from the w_current variables */
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (SELECT_COLOR));
-  gdk_draw_line (w_current->drawable, w_current->gc,
-                 cx, cy, cx + radius, cy);
-  gdk_draw_arc (w_current->drawable, w_current->gc, FALSE,
-                cx - radius, cy - radius, 2 * radius, 2* radius,
-                0, FULL_CIRCLE);
+
+  WORLDtoSCREEN (toplevel, w_current->first_wx - w_current->distance,
+                           w_current->first_wy + w_current->distance,
+                           &sx1, &sy1);
+  WORLDtoSCREEN (toplevel, w_current->first_wx + w_current->distance,
+                           w_current->first_wy - w_current->distance,
+                           &sx2, &sy2);
+
+  cx = (double)(sx1 + sx2) / 2.;
+  cy = (double)(sy1 + sy2) / 2.;
+  radius = (double)(sy2 - sy1) / 2.;
+
+  cairo_translate (w_current->cr, cx, cy);
+
+  /* Adjust for non-uniform X/Y scale factor. Note that the + 1
+     allows for the case where sx2 == sx1 or sy2 == sy1 */
+  cairo_scale (w_current->cr, (double)(sx2 - sx1 + 1) /
+                              (double)(sy2 - sy1 + 1), 1.);
+
+  gschem_cairo_line (w_current->cr, END_NONE, 1, 0., 0., radius, 0.);
+  gschem_cairo_arc (w_current->cr, 1, 0., 0., radius, 0., 360);
+  cairo_identity_matrix (w_current->cr);
+
+  gschem_cairo_set_source_color (w_current->cr,
+                                 x_color_lookup_dark (SELECT_COLOR));
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
 }
 
 /*! \brief Draw grip marks on circle.

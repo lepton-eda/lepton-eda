@@ -135,7 +135,7 @@ void o_bus_draw_stretch (GSCHEM_TOPLEVEL *w_current,
   TOPLEVEL *toplevel = w_current->toplevel;
   int color;
   int dx1= - 1, dy1 = - 1, dx2 = -1, dy2 = -1;
-  int sx[2], sy[2];
+  int x1, y1, x2, y2;
 
   if (o_current->line == NULL) {
     return;
@@ -147,27 +147,27 @@ void o_bus_draw_stretch (GSCHEM_TOPLEVEL *w_current,
     color = o_current->color;
   }
 
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (color));
-
   if (whichone == 0) {
     dx1 = dx;
     dy1 = dy;
-    dx2 = 0;
-    dy2 = 0;
+    dx2 = dy2 = 0;
   } else if (whichone == 1) {
+    dx1 = dy1 = 0;
     dx2 = dx;
     dy2 = dy;
-    dx1 = 0;
-    dy1 = 0;
   } else {
     fprintf(stderr, _("Got an invalid which one in o_bus_draw_stretch\n"));
   }
 
-  WORLDtoSCREEN(toplevel, o_current->line->x[0] + dx1, o_current->line->y[0] + dy1, &sx[0], &sy[0]);
-  WORLDtoSCREEN(toplevel, o_current->line->x[1] + dx2, o_current->line->y[1] + dy2, &sx[1], &sy[1]);
+  WORLDtoSCREEN (toplevel, o_current->line->x[0] + dx1,
+                           o_current->line->y[0] + dy1, &x1, &y1);
+  WORLDtoSCREEN (toplevel, o_current->line->x[1] + dx2,
+                           o_current->line->y[1] + dy2, &x2, &y2);
 
-  gdk_draw_line (w_current->drawable, w_current->gc,
-                 sx[0], sy[0], sx[1], sy[1]);
+  gschem_cairo_line (w_current->cr, END_NONE, 1, x1, y1, x2, y2);
+
+  gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
 }
 
 /*! \brief set the start point of a new bus
@@ -331,30 +331,20 @@ void o_bus_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 void o_bus_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int x1, y1, x2, y2, size=0;
+  int x1, y1, x2, y2, size = 0;
 
   WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
   WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
-  if (toplevel->bus_style == THICK ) {
+  if (toplevel->bus_style == THICK)
     size = SCREENabs(toplevel, BUS_WIDTH);
-    
-    if (size < 0)
-      size=0;
 
-    gdk_gc_set_line_attributes(w_current->gc, size,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
+  if (size < 1)
+    size = 1;
 
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (SELECT_COLOR));
-  gdk_draw_line (w_current->drawable, w_current->gc, x1, y1, x2, y2);
+  gschem_cairo_line (w_current->cr, END_NONE, size, x1, y1, x2, y2);
 
-  if (toplevel->bus_style == THICK ) {
-    gdk_gc_set_line_attributes(w_current->gc, 0,
-                               GDK_LINE_SOLID,
-                               GDK_CAP_NOT_LAST,
-                               GDK_JOIN_MITER);
-  }
+  gschem_cairo_set_source_color (w_current->cr,
+                                 x_color_lookup_dark (SELECT_COLOR));
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, size, -1, -1);
 }

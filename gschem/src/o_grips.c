@@ -1556,18 +1556,15 @@ int o_grips_size(GSCHEM_TOPLEVEL *w_current)
 void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  GdkColor *color;
-  int size, x2size;
+  int color;
+  int size;
 
   /*
    * Depending on the current zoom level, the size of the grip is
-   * determined. <B>size</B> is half the width and height of the grip
-   * and <B>x2size</B> is the full width and height of the grip.
+   * determined. <B>size</B> is half the width and height of the grip.
    */
   /* size is half the width of grip */
   size = o_grips_size(w_current);
-  /* x2size is full width */
-  x2size = 2 * size;
 
   /*
    * The grip can be displayed or erased : if <B>toplevel->override_color</B>
@@ -1578,26 +1575,20 @@ void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int x, int y)
    */
   if (toplevel->override_color != -1 ) {
     /* override : use the override_color instead */
-    color = x_get_color(toplevel->override_color);
+    color = toplevel->override_color;
   } else {
     /* use the normal selection color */
-    color = x_get_color (SELECT_COLOR);
+    color = SELECT_COLOR;
   }
-  /* set the color for the grip */
-  gdk_gc_set_foreground(w_current->gc, color);
 
-  /* set the line options for grip : solid, 1 pix wide */
-  gdk_gc_set_line_attributes(w_current->gc, 0, GDK_LINE_SOLID,
-                             GDK_CAP_BUTT, GDK_JOIN_MITER);
-
-  /*
-   * A grip is a hollow square centered at (<B>x</B>,<B>y</B>) with a
-   * width/height of <B>x2size</B>.
+  /* A grip is a hollow square centered at (<B>x</B>,<B>y</B>)
+   * with a  width / height of 2 * <B>size</B>.
    */
   if (toplevel->DONT_REDRAW == 0) {
-    /* draw the grip in backingstore */
-    gdk_draw_rectangle (w_current->drawable, w_current->gc, FALSE,
-                        x - size, y - size, x2size, x2size);
+    gschem_cairo_box (w_current->cr, 1, x - size, y - size, x + size, y + size);
+
+    gschem_cairo_set_source_color (w_current->cr, x_color_lookup (color));
+    gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
   }
 }
 

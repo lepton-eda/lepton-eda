@@ -630,37 +630,79 @@ void o_path_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_path_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  PATH *path;
-  int num_points;
-  GdkPoint *points;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  int whichone = w_current->which_grip;
+  PATH *path = w_current->which_object->path;
+  PATH_SECTION *section;
+  int i;
+  int grip_no = 0;
+  int line_width = 1;
+  int x, y;
+  int x1, y1, x2, y2, x3, y3;
+  double fx1 = 0.0, fy1 = 0.0;
+  double fx2 = 0.0, fy2 = 0.0;
+  double fx3 = 0.0, fy3 = 0.0;
 
-  g_return_if_fail (w_current->which_object != NULL);
-  g_return_if_fail (w_current->which_object->path != NULL);
+  x = w_current->second_wx;
+  y = w_current->second_wy;
 
-  path = w_current->which_object->path;
+  for (i = 0; i <  path->num_sections; i++) {
+    section = &path->sections[i];
 
-  path_to_points_modify (w_current, path, 0, 0,
-                         w_current->second_wx, w_current->second_wy,
-                         w_current->which_grip, &points, &num_points);
+    x1 = section->x1;
+    y1 = section->y1;
+    x2 = section->x2;
+    y2 = section->y2;
+    x3 = section->x3;
+    y3 = section->y3;
 
-  if (num_points == 0) {
-    g_free (points);
-    return;
+    switch (section->code) {
+      case PATH_CURVETO:
+        /* Two control point grips */
+        if (whichone == grip_no++) {
+          x1 = x; y1 = y;
+        }
+        if (whichone == grip_no++) {
+          x2 = x; y2 = y;
+        }
+        WORLDtoSCREEN (toplevel, x1, y1, &x1, &y1);
+        WORLDtoSCREEN (toplevel, x2, y2, &x2, &y2);
+        hint_coordinates (x1, y1, &fx1, &fy1, line_width);
+        hint_coordinates (x2, y2, &fx2, &fy2, line_width);
+        /* Fall through */
+      case PATH_MOVETO:
+      case PATH_MOVETO_OPEN:
+      case PATH_LINETO:
+        /* Destination point grip */
+        if (whichone == grip_no++) {
+          x3 = x; y3 = y;
+        }
+        WORLDtoSCREEN (toplevel, x3, y3, &x3, &y3);
+        hint_coordinates (x3, y3, &fx3, &fy3, line_width);
+      case PATH_END:
+        break;
+    }
+
+    switch (section->code) {
+      case PATH_MOVETO:
+        cairo_close_path (w_current->cr);
+        /* fall-through */
+      case PATH_MOVETO_OPEN:
+        cairo_move_to (w_current->cr, fx3, fy3);
+        break;
+      case PATH_CURVETO:
+        cairo_curve_to (w_current->cr, fx1, fy1, fx2, fy2, fx3, fy3);
+        break;
+      case PATH_LINETO:
+        cairo_line_to (w_current->cr, fx3, fy3);
+        break;
+      case PATH_END:
+        break;
+    }
   }
 
-  gdk_gc_set_foreground (w_current->gc, x_get_darkcolor (SELECT_COLOR));
-  gdk_gc_set_line_attributes (w_current->gc, 0, GDK_LINE_SOLID,
-                              GDK_CAP_NOT_LAST, GDK_JOIN_MITER);
-
-  /* Stroke only, no fill for rubberbanding */
-  if (path->sections[path->num_sections - 1].code == PATH_END)
-    gdk_draw_polygon (w_current->drawable, w_current->gc,
-                      FALSE, points, num_points);
-  else
-    gdk_draw_lines (w_current->drawable, w_current->gc,
-                    points, num_points);
-
-  g_free (points);
+  gschem_cairo_set_source_color (w_current->cr, x_color_lookup (SELECT_COLOR));
+  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_SQUARE, line_width, -1, -1);
 }
 
 
@@ -682,18 +724,18 @@ static void draw_control_lines (GSCHEM_TOPLEVEL *w_current,
   int next_x, next_y;
   int last_x = 0, last_y = 0;
   PATH_SECTION *section;
-  GdkColor *color;
+  COLOR *color;
 
   if (toplevel->override_color != -1 ) {
     /* override : use the override_color instead */
-    color = x_get_color(toplevel->override_color);
+    color = x_color_lookup (toplevel->override_color);
   } else {
     /* use the normal selection color */
-    color = x_get_darkcolor (SELECT_COLOR);
+    color = x_color_lookup_dark (SELECT_COLOR);
   }
 
   /* set the color for the grip */
-  gdk_gc_set_foreground (w_current->gc, color);
+  gschem_cairo_set_source_color (w_current->cr, color);
 
   for (i = 0; i <  o_current->path->num_sections; i++) {
     section = &o_current->path->sections[i];
@@ -701,14 +743,17 @@ static void draw_control_lines (GSCHEM_TOPLEVEL *w_current,
     if (section->code != PATH_END)
       WORLDtoSCREEN (toplevel, section->x3, section->y3, &next_x, &next_y);
 
-
     switch (section->code) {
     case PATH_CURVETO:
       /* Two control point grips */
       WORLDtoSCREEN (toplevel, section->x1, section->y1, &x, &y);
-      gdk_draw_line (w_current->drawable, w_current->gc, last_x, last_y, x, y);
+      gschem_cairo_line (w_current->cr, END_NONE, 1, last_x, last_y, x, y);
+      gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+
       WORLDtoSCREEN (toplevel, section->x2, section->y2, &x, &y);
-      gdk_draw_line (w_current->drawable, w_current->gc, next_x, next_y, x, y);
+      gschem_cairo_line (w_current->cr, END_NONE, 1, next_x, next_y, x, y);
+      gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+
       /* Fall through */
     case PATH_MOVETO:
     case PATH_MOVETO_OPEN:
