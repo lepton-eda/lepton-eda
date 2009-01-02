@@ -245,10 +245,6 @@ void o_circle_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  The unit for <B>width</B>, <B>pitch1</B> and <B>pitch2</B> is pixel and unit
  *  for <B>angle1</B> and <B>angle2</B> is degree.
  *
- *  The solid fill is done with the #gdk_draw_arc() function and its
- *  parameters <B>filled</B> set. The circle is filled with the color
- *  <B>color</B> given as a parameter to the function.
- *
  *  \param [in] w           GdkDrawable to draw in.
  *  \param [in] gc          GdkGC graphics context to draw on.
  *  \param [in] color       Circle fill color. 
