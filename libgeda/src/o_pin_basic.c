@@ -100,7 +100,11 @@ OBJECT *o_pin_new(TOPLEVEL *toplevel,
   new_node->line->y[0] = y1;
   new_node->line->x[1] = x2;
   new_node->line->y[1] = y2;
-  new_node->line_width = PIN_WIDTH;
+
+  if (pin_type == PIN_TYPE_BUS)
+    new_node->line_width = PIN_WIDTH_BUS;
+  else
+    new_node->line_width = PIN_WIDTH_NET;
 
   o_pin_recalc (toplevel, new_node);
 
@@ -324,7 +328,7 @@ void o_pin_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   y2 = o_current->line->y[1] - origin_y;
   pin_width = 2;
   if(toplevel->pin_style == THICK) {
-    pin_width = PIN_WIDTH;
+    pin_width = o_current->line_width;
   }
 
   fprintf(fp, "%d %d %d %d %d line\n",x1,y1,x2,y2,pin_width);

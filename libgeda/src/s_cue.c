@@ -130,35 +130,32 @@ void s_cue_output_lowlevel(TOPLEVEL * toplevel, OBJECT * object, int whichone,
 
   type = CONN_ENDPOINT;
 
+  if (object->type == OBJ_BUS ||
+       (object->type == OBJ_PIN && object->pin_type == PIN_TYPE_BUS))
+    bus_involved = TRUE;
+
   cl_current = object->conn_list;
   while (cl_current != NULL && !done) {
     conn = (CONN *) cl_current->data;
 
     if (conn->x == x && conn->y == y) {
+
+      if (conn->other_object &&
+           (conn->other_object->type == OBJ_BUS ||
+             (conn->other_object->type == OBJ_PIN &&
+              conn->other_object->pin_type == PIN_TYPE_BUS)))
+        bus_involved=TRUE;
+
       switch (conn->type) {
 
         case (CONN_ENDPOINT):
           count++;
-          if (conn->other_object &&
-              ((object->type == OBJ_NET &&
-                conn->other_object->type == OBJ_BUS) ||
-               (object->type == OBJ_BUS &&
-                conn->other_object->type == OBJ_NET))) {
-            bus_involved=TRUE;
-          }
           break;
 
         case (CONN_MIDPOINT):
           type = CONN_MIDPOINT;
           done = TRUE;
           count = 0;
-          if (conn->other_object &&
-              ((object->type == OBJ_NET &&
-                conn->other_object->type == OBJ_BUS) ||
-               (object->type == OBJ_BUS &&
-                conn->other_object->type == OBJ_NET))) {
-            bus_involved=TRUE;
-          }
           break;
       }
     }
@@ -215,7 +212,10 @@ void s_cue_output_lowlevel_midpoints(TOPLEVEL * toplevel, OBJECT * object,
   int x, y;
   GList *cl_current;
   CONN *conn;
-  int size_flag;
+  int size_flag = FALSE;
+
+  if (object->type == OBJ_BUS)
+    size_flag = TRUE;
 
   cl_current = object->conn_list;
   while (cl_current != NULL) {
@@ -227,17 +227,9 @@ void s_cue_output_lowlevel_midpoints(TOPLEVEL * toplevel, OBJECT * object,
         x = conn->x;
         y = conn->y;
 
-        if (conn->other_object &&
-          ( (object->type == OBJ_BUS &&
-             conn->other_object->type == OBJ_NET) ||
-            (object->type == OBJ_NET &&
-             conn->other_object->type == OBJ_BUS))) {
-        size_flag = TRUE;
-      } else {
-        size_flag = FALSE;
-      }
+        if (conn->other_object && conn->other_object->type == OBJ_BUS)
+          size_flag = TRUE;
 
-        
         if (output_type == POSTSCRIPT) {
           s_cue_postscript_fillcircle(toplevel, fp, x, y, size_flag);
         }
