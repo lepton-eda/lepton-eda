@@ -1,0 +1,16 @@
+Warning: Found unknown name1= attribute: [name1=value1]
+Warning: Found unknown value_invisible= attribute: [value_invisible=value_invisible]
+Warning: Found unknown name_invisible= attribute: [name_invisible=name_invisible]
+Warning: Found a simple text object with only SHOW_NAME or SHOW_VALUE set [text with value_invisible]
+Warning: Found a simple text object with only SHOW_NAME or SHOW_VALUE set [text with name_invisible]
+Warning: Found text with unbalanced overbar markers '\_' in it' [pinlabel=\_Reset]
+Warning: Found text with a '\' in it: consider to escape it with '\\' [pinlabel=a\b]
+Warning: Found text with a '\' in it: consider to escape it with '\\' [pinlabel=ab\c\d\]
+Warning: Found text with a '\' in it: consider to escape it with '\\' [pinlabel=ab\c\d\]
+Warning: Found text with a trailing '': consider to escape it with '\\' [pinlabel=ab\c\d\]
+Warning: Missing footprint= attribute
+Warning: Missing refdes= attribute
+Warning: Did not find numslots= attribute, not checking slotting
+ERROR: Missing device= attribute
+13 warnings found 
+1 ERROR found 

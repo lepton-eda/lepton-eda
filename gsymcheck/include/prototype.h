@@ -17,6 +17,7 @@ int s_check_all(TOPLEVEL *pr_current);
 int s_check_symbol(TOPLEVEL *pr_current, PAGE *p_current, const GList *obj_list);
 gboolean s_check_list_has_item(char **list , char *item);
 void s_check_symbol_structure(const GList *obj_list, SYMCHECK *s_current);
+void s_check_text (const GList *obj_list, SYMCHECK *s_current);
 void s_check_graphical(const GList *obj_list, SYMCHECK *s_current);
 void s_check_device(const GList *obj_list, SYMCHECK *s_current);
 void s_check_pinseq(const GList *obj_list, SYMCHECK *s_current);
