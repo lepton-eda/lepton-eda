@@ -301,6 +301,57 @@ void o_move_cancel (GSCHEM_TOPLEVEL *w_current)
  */
 void o_move_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
+  GList *selection, *s_current;
+  OBJECT *object;
+  gint object_x, object_y;
+  gboolean resnap = FALSE;
+
+  selection = geda_list_get_glist( toplevel->page_current->selection_list );
+
+  /* realign the object if we are in resnap mode */
+  if (selection != NULL
+      && toplevel->snap == SNAP_RESNAP) {
+
+    if (g_list_length(selection) > 1) {
+      /* find an object that is not attached to any other object */
+      for (s_current = selection;
+           s_current != NULL;
+           s_current = g_list_next(s_current)) {
+        if (((OBJECT *) s_current->data)->attached_to == NULL) {
+          object = (OBJECT *) s_current->data;
+          resnap = TRUE;
+          break;
+        }
+      }
+
+      /* Only resnap single elements. This is also the case if
+         the selection contains one object and all other object
+         elements are attributes of the object element.*/
+      for (s_current = selection;
+           s_current != NULL && resnap == TRUE;
+           s_current = g_list_next(s_current)) {
+        if (!(object == (OBJECT *) s_current->data)
+            && !o_attrib_is_attached(toplevel,
+                                     (OBJECT *) s_current->data, object)) {
+          resnap = FALSE;
+        }
+      }
+    } else { /* single object */
+      resnap = TRUE;
+      object = (OBJECT *) selection->data;
+    }
+
+    /* manipulate w_x and w_y in a way that will lead to a position
+       of the object that is aligned with the grid */
+    if (resnap) {
+      if (o_get_position(toplevel, &object_x, &object_y, object)) {
+        w_x += snap_grid(toplevel, object_x) - object_x;
+        w_y += snap_grid(toplevel, object_y) - object_y;
+      }
+    }
+  }
+
   o_move_invalidate_rubber (w_current, FALSE);
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
