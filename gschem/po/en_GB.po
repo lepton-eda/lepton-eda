@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-schem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-02 13:53+0000\n"
+"POT-Creation-Date: 2009-01-02 21:29+0000\n"
 "PO-Revision-Date: 2009-01-02 14:32+0100\n"
 "Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -509,7 +509,7 @@ msgstr "Component Documentation"
 msgid "About gschem"
 msgstr "About gschem"
 
-#: ../src/rcstrings.c:132 ../src/x_dialog.c:2543
+#: ../src/rcstrings.c:132 ../src/x_dialog.c:2549
 msgid "Hotkeys"
 msgstr "Hotkeys"
 
@@ -1488,7 +1488,7 @@ msgid "Filter:"
 msgstr "Filter:"
 
 #. GtkTreeViewColumn
-#: ../src/x_compselect.c:1143 ../src/x_dialog.c:3595
+#: ../src/x_compselect.c:1143 ../src/x_dialog.c:3601
 #: ../src/x_multiattrib.c:1601
 msgid "Name"
 msgstr "Name"
@@ -1836,68 +1836,76 @@ msgid "Net junction"
 msgstr "Net junction"
 
 #: ../src/x_dialog.c:2245
+msgid "Mesh grid major"
+msgstr "Mesh grid major"
+
+#: ../src/x_dialog.c:2248
+msgid "Mesh grid minor"
+msgstr "Mesh grid minor"
+
+#: ../src/x_dialog.c:2251
 msgid "Unknown"
 msgstr "Unknown"
 
-#: ../src/x_dialog.c:2391
+#: ../src/x_dialog.c:2397
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr "ERROR: NULL object in color_edit_dialog_apply!\n"
 
-#: ../src/x_dialog.c:2454
+#: ../src/x_dialog.c:2460
 msgid "Color Edit"
 msgstr "Colour Edit"
 
-#: ../src/x_dialog.c:2485
+#: ../src/x_dialog.c:2491
 msgid "Object color:"
 msgstr "Object colour:"
 
-#: ../src/x_dialog.c:2607
+#: ../src/x_dialog.c:2613
 msgid "Function"
 msgstr "Function"
 
-#: ../src/x_dialog.c:2614
+#: ../src/x_dialog.c:2620
 msgid "Keystroke(s)"
 msgstr "Keystroke(s)"
 
-#: ../src/x_dialog.c:2923
+#: ../src/x_dialog.c:2929
 msgid "Find Text"
 msgstr "Find Text"
 
-#: ../src/x_dialog.c:2954
+#: ../src/x_dialog.c:2960
 msgid "Text to find:"
 msgstr "Text to find:"
 
-#: ../src/x_dialog.c:2964
+#: ../src/x_dialog.c:2970
 msgid "descend into hierarchy"
 msgstr "descend into hierarchy"
 
-#: ../src/x_dialog.c:3029
+#: ../src/x_dialog.c:3035
 msgid "Hide Text"
 msgstr "Hide Text"
 
-#: ../src/x_dialog.c:3060
+#: ../src/x_dialog.c:3066
 msgid "Hide text starting with:"
 msgstr "Hide text starting with:"
 
-#: ../src/x_dialog.c:3129
+#: ../src/x_dialog.c:3135
 msgid "Show Text"
 msgstr "Show Text"
 
-#: ../src/x_dialog.c:3160
+#: ../src/x_dialog.c:3166
 msgid "Show text starting with:"
 msgstr "Show text starting with:"
 
-#: ../src/x_dialog.c:3617
+#: ../src/x_dialog.c:3623
 msgid "S_elect the schematics you want to save:"
 msgstr "S_elect the schematics you want to save:"
 
-#: ../src/x_dialog.c:3711
+#: ../src/x_dialog.c:3717
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr "Save the changes to schematic \"%s\" before closing?"
 
-#: ../src/x_dialog.c:3717
+#: ../src/x_dialog.c:3723
 #, c-format
 msgid ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
@@ -1905,15 +1913,15 @@ msgstr ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
 
 #. secondary label
-#: ../src/x_dialog.c:3746
+#: ../src/x_dialog.c:3752
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr "If you don't save, all your changes will be permanently lost."
 
-#: ../src/x_dialog.c:3766
+#: ../src/x_dialog.c:3772
 msgid "_Close without saving"
 msgstr "_Close without saving"
 
-#: ../src/x_dialog.c:4100
+#: ../src/x_dialog.c:4106
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -1930,7 +1938,7 @@ msgstr ""
 "The name cannot end with a space.\n"
 "The value cannot start with a space."
 
-#: ../src/x_dialog.c:4102
+#: ../src/x_dialog.c:4108
 msgid "Invalid Attribute"
 msgstr "Invalid Attribute"
 

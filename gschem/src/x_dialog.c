@@ -2240,6 +2240,12 @@ char *index2functionstring(int index)
     case(JUNCTION_COLOR):
       string = g_strdup (_("Net junction"));
       break;
+    case(MESH_GRID_MAJOR_COLOR):
+      string = g_strdup (_("Mesh grid major"));
+      break;
+    case(MESH_GRID_MINOR_COLOR):
+      string = g_strdup (_("Mesh grid minor"));
+      break;
     default:
       string = g_strdup (_("Unknown"));
       break;
