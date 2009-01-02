@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-schem\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-21 13:41-0500\n"
-"PO-Revision-Date: 2008-12-20 14:25+0000\n"
+"POT-Creation-Date: 2009-01-02 13:53+0000\n"
+"PO-Revision-Date: 2009-01-02 14:32+0100\n"
 "Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"
@@ -61,7 +61,7 @@ msgstr "Print..."
 msgid "Write image..."
 msgstr "Write image..."
 
-#: ../src/rcstrings.c:13 ../src/x_menus.c:498
+#: ../src/rcstrings.c:13 ../src/x_menus.c:490
 msgid "Recent files"
 msgstr "Recent files"
 
@@ -81,15 +81,15 @@ msgstr "Quit"
 msgid "Edit"
 msgstr "Edit"
 
-#: ../src/rcstrings.c:19 ../src/x_window.c:390
+#: ../src/rcstrings.c:19 ../src/x_window.c:335
 msgid "Undo"
 msgstr "Undo"
 
-#: ../src/rcstrings.c:20 ../src/x_window.c:397
+#: ../src/rcstrings.c:20 ../src/x_window.c:342
 msgid "Redo"
 msgstr "Redo"
 
-#: ../src/rcstrings.c:21 ../src/i_basic.c:77 ../src/x_window.c:573
+#: ../src/rcstrings.c:21 ../src/i_basic.c:77 ../src/x_window.c:518
 msgid "Select Mode"
 msgstr "Select Mode"
 
@@ -145,7 +145,7 @@ msgstr "Slot..."
 msgid "Color..."
 msgstr "Colour..."
 
-#: ../src/rcstrings.c:35 ../src/i_callbacks.c:898 ../src/x_dialog.c:2233
+#: ../src/rcstrings.c:35 ../src/i_callbacks.c:898 ../src/x_dialog.c:2236
 msgid "Lock"
 msgstr "Lock"
 
@@ -258,7 +258,7 @@ msgid "Redraw"
 msgstr "Redraw"
 
 #. I don't know if this would get in the way
-#: ../src/rcstrings.c:65 ../src/i_callbacks.c:1504 ../src/i_callbacks.c:1576
+#: ../src/rcstrings.c:65 ../src/i_callbacks.c:1507 ../src/i_callbacks.c:1579
 msgid "Pan"
 msgstr "Pan"
 
@@ -282,226 +282,234 @@ msgstr "Zoom Out"
 msgid "Zoom Full"
 msgstr "Zoom Full"
 
+#: ../src/rcstrings.c:71
+msgid "Dark color scheme"
+msgstr "Dark colour scheme"
+
 #: ../src/rcstrings.c:72
+msgid "Light color scheme"
+msgstr "Light colour scheme"
+
+#: ../src/rcstrings.c:74
 msgid "Page"
 msgstr "Page"
 
-#: ../src/rcstrings.c:73
+#: ../src/rcstrings.c:75
 msgid "Manager..."
 msgstr "Manager..."
 
-#: ../src/rcstrings.c:74
+#: ../src/rcstrings.c:76
 msgid "Next"
 msgstr "Next"
 
-#: ../src/rcstrings.c:75
+#: ../src/rcstrings.c:77
 msgid "Previous"
 msgstr "Previous"
 
-#: ../src/rcstrings.c:76 ../src/x_window.c:368
+#: ../src/rcstrings.c:78 ../src/x_window.c:313
 msgid "New"
 msgstr "New"
 
-#: ../src/rcstrings.c:77
+#: ../src/rcstrings.c:79
 msgid "Revert"
 msgstr "Revert"
 
-#: ../src/rcstrings.c:78
+#: ../src/rcstrings.c:80
 msgid "Close"
 msgstr "Close"
 
-#: ../src/rcstrings.c:79
+#: ../src/rcstrings.c:81
 msgid "Discard"
 msgstr "Discard"
 
-#: ../src/rcstrings.c:81
+#: ../src/rcstrings.c:83
 msgid "Add"
 msgstr "Add"
 
-#: ../src/rcstrings.c:82
+#: ../src/rcstrings.c:84
 msgid "Component..."
 msgstr "Component..."
 
 #. need to click
-#: ../src/rcstrings.c:83 ../src/i_callbacks.c:2306 ../src/i_callbacks.c:2333
-#: ../src/x_dialog.c:2200
+#: ../src/rcstrings.c:85 ../src/i_callbacks.c:2343 ../src/i_callbacks.c:2370
+#: ../src/x_dialog.c:2203
 msgid "Net"
 msgstr "Net"
 
 #. need to click
-#: ../src/rcstrings.c:84 ../src/i_callbacks.c:2377 ../src/i_callbacks.c:2404
-#: ../src/x_dialog.c:2218 ../src/x_window.c:426
+#: ../src/rcstrings.c:86 ../src/i_callbacks.c:2414 ../src/i_callbacks.c:2441
+#: ../src/x_dialog.c:2221 ../src/x_window.c:371
 msgid "Bus"
 msgstr "Bus"
 
-#: ../src/rcstrings.c:85
+#: ../src/rcstrings.c:87
 msgid "Attribute..."
 msgstr "Attribute..."
 
-#: ../src/rcstrings.c:86
+#: ../src/rcstrings.c:88
 msgid "Text..."
 msgstr "Text..."
 
-#: ../src/rcstrings.c:87 ../src/i_callbacks.c:2485 ../src/i_callbacks.c:2508
+#: ../src/rcstrings.c:89 ../src/i_callbacks.c:2522 ../src/i_callbacks.c:2545
 msgid "Line"
 msgstr "Line"
 
-#: ../src/rcstrings.c:88 ../src/i_callbacks.c:2530 ../src/i_callbacks.c:2553
+#: ../src/rcstrings.c:90 ../src/i_callbacks.c:2567 ../src/i_callbacks.c:2590
 msgid "Box"
 msgstr "Box"
 
-#: ../src/rcstrings.c:89 ../src/i_callbacks.c:2609 ../src/i_callbacks.c:2633
+#: ../src/rcstrings.c:91 ../src/i_callbacks.c:2646 ../src/i_callbacks.c:2670
 msgid "Circle"
 msgstr "Circle"
 
-#: ../src/rcstrings.c:90 ../src/i_callbacks.c:2655 ../src/i_callbacks.c:2678
+#: ../src/rcstrings.c:92 ../src/i_callbacks.c:2692 ../src/i_callbacks.c:2715
 msgid "Arc"
 msgstr "Arc"
 
-#: ../src/rcstrings.c:91 ../src/i_callbacks.c:2700 ../src/i_callbacks.c:2723
-#: ../src/x_dialog.c:2191
+#: ../src/rcstrings.c:93 ../src/i_callbacks.c:2737 ../src/i_callbacks.c:2760
+#: ../src/x_dialog.c:2194
 msgid "Pin"
 msgstr "Pin"
 
-#: ../src/rcstrings.c:92
+#: ../src/rcstrings.c:94
 msgid "Picture..."
 msgstr "Picture..."
 
-#: ../src/rcstrings.c:94
+#: ../src/rcstrings.c:96
 msgid "Hierarchy"
 msgstr "Hierarchy"
 
-#: ../src/rcstrings.c:95
+#: ../src/rcstrings.c:97
 msgid "Down Schematic"
 msgstr "Down Schematic"
 
-#: ../src/rcstrings.c:96
+#: ../src/rcstrings.c:98
 msgid "Down Symbol"
 msgstr "Down Symbol"
 
-#: ../src/rcstrings.c:97
+#: ../src/rcstrings.c:99
 msgid "Up"
 msgstr "Up"
 
-#: ../src/rcstrings.c:98
+#: ../src/rcstrings.c:100
 msgid "Documentation"
 msgstr "Documentation"
 
 #. GtkFrame
-#: ../src/rcstrings.c:100 ../src/x_compselect.c:1418
+#: ../src/rcstrings.c:102 ../src/x_compselect.c:1418
 #: ../src/x_multiattrib.c:1543
 msgid "Attributes"
 msgstr "Attributes"
 
-#: ../src/rcstrings.c:101 ../src/i_callbacks.c:3000
+#: ../src/rcstrings.c:103 ../src/i_callbacks.c:3037
 msgid "Attach"
 msgstr "Attach"
 
-#: ../src/rcstrings.c:102 ../src/i_callbacks.c:3046
+#: ../src/rcstrings.c:104 ../src/i_callbacks.c:3084
 msgid "Detach"
 msgstr "Detach"
 
-#: ../src/rcstrings.c:103
+#: ../src/rcstrings.c:105
 msgid "Show Value"
 msgstr "Show Value"
 
-#: ../src/rcstrings.c:104
+#: ../src/rcstrings.c:106
 msgid "Show Name"
 msgstr "Show Name"
 
-#: ../src/rcstrings.c:105
+#: ../src/rcstrings.c:107
 msgid "Show Both"
 msgstr "Show Both"
 
-#: ../src/rcstrings.c:106
+#: ../src/rcstrings.c:108
 msgid "Toggle Visibility"
 msgstr "Toggle Visibility"
 
-#: ../src/rcstrings.c:107
+#: ../src/rcstrings.c:109
 msgid "Find Specific Text..."
 msgstr "Find Specific Text..."
 
-#: ../src/rcstrings.c:108
+#: ../src/rcstrings.c:110
 msgid "Hide Specific Text..."
 msgstr "Hide Specific Text..."
 
-#: ../src/rcstrings.c:109
+#: ../src/rcstrings.c:111
 msgid "Show Specific Text..."
 msgstr "Show Specific Text..."
 
-#: ../src/rcstrings.c:110
+#: ../src/rcstrings.c:112
 msgid "Autonumber Text..."
 msgstr "Autonumber Text..."
 
-#: ../src/rcstrings.c:112
+#: ../src/rcstrings.c:114
 msgid "Options"
 msgstr "Options"
 
-#: ../src/rcstrings.c:113
+#: ../src/rcstrings.c:115
 msgid "Text Size..."
 msgstr "Text Size..."
 
-#: ../src/rcstrings.c:114
-msgid "Toggle Grid On/Off"
-msgstr "Toggle Grid On/Off"
+#: ../src/rcstrings.c:116
+msgid "Cycle grid styles"
+msgstr "Cycle grid styles"
 
-#: ../src/rcstrings.c:115
+#: ../src/rcstrings.c:117
 msgid "Toggle Snap On/Off"
 msgstr "Toggle Snap On/Off"
 
-#: ../src/rcstrings.c:116
+#: ../src/rcstrings.c:118
 msgid "Snap Grid Spacing..."
 msgstr "Snap Grid Spacing..."
 
-#: ../src/rcstrings.c:117
+#: ../src/rcstrings.c:119
 msgid "Scale up Grid Spacing"
 msgstr "Scale up Grid Spacing"
 
-#: ../src/rcstrings.c:118
+#: ../src/rcstrings.c:120
 msgid "Scale down Grid Spacing"
 msgstr "Scale down Grid Spacing"
 
-#: ../src/rcstrings.c:119
+#: ../src/rcstrings.c:121
 msgid "Toggle Outline/Box"
 msgstr "Toggle Outline/Box"
 
-#: ../src/rcstrings.c:120
+#: ../src/rcstrings.c:122
 msgid "Toggle Net Rubberband"
 msgstr "Toggle Net Rubberband"
 
-#: ../src/rcstrings.c:121
+#: ../src/rcstrings.c:123
 msgid "Show Log Window..."
 msgstr "Show Log Window..."
 
-#: ../src/rcstrings.c:122
+#: ../src/rcstrings.c:124
 msgid "Show Coord Window..."
 msgstr "Show Coord Window..."
 
-#: ../src/rcstrings.c:124
+#: ../src/rcstrings.c:126
 msgid "Help"
 msgstr "Help"
 
-#: ../src/rcstrings.c:125
+#: ../src/rcstrings.c:127
 msgid "Manual"
 msgstr "Manual"
 
-#: ../src/rcstrings.c:126
+#: ../src/rcstrings.c:128
 msgid "gEDA Documentation"
 msgstr "gEDA Documentation"
 
-#: ../src/rcstrings.c:127
+#: ../src/rcstrings.c:129
 msgid "gschem FAQ"
 msgstr "gschem FAQ"
 
-#: ../src/rcstrings.c:128
+#: ../src/rcstrings.c:130
 msgid "Component Documentation"
 msgstr "Component Documentation"
 
-#: ../src/rcstrings.c:129
+#: ../src/rcstrings.c:131
 msgid "About gschem"
 msgstr "About gschem"
 
-#: ../src/rcstrings.c:130 ../src/x_dialog.c:2541
+#: ../src/rcstrings.c:132 ../src/x_dialog.c:2543
 msgid "Hotkeys"
 msgstr "Hotkeys"
 
@@ -526,92 +534,92 @@ msgstr "Could not invoke %s\n"
 msgid "Documentation commands not supported under MinGW.\n"
 msgstr "Documentation commands not supported under MinGW.\n"
 
-#: ../src/g_rc.c:140
-#, c-format
-msgid "Invalid color [%s] passed to %s\n"
-msgstr "Invalid colour [%s] passed to %s\n"
-
-#: ../src/g_rc.c:448
+#: ../src/g_rc.c:299
 #, c-format
 msgid "Invalid zoomfactor [%d] passed to %s\n"
 msgstr "Invalid zoomfactor [%d] passed to %s\n"
 
-#: ../src/g_rc.c:574
+#: ../src/g_rc.c:425
 #, c-format
 msgid "Invalid size [%d] passed to text-size\n"
 msgstr "Invalid size [%d] passed to text-size\n"
 
-#: ../src/g_rc.c:601
+#: ../src/g_rc.c:452
 #, c-format
 msgid "Invalid size [%f] passed to postscript-font-scale\n"
 msgstr "Invalid size [%f] passed to postscript-font-scale\n"
 
-#: ../src/g_rc.c:644
+#: ../src/g_rc.c:495
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "Invalid size [%d] passed to snap-size\n"
 
-#: ../src/g_rc.c:1116
+#: ../src/g_rc.c:967
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "Invalid num levels [%d] passed to undo-levels\n"
 
-#: ../src/g_rc.c:1374
+#: ../src/g_rc.c:1225
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Invalid size [%d] passed to bus-ripper-size\n"
 
-#: ../src/g_rc.c:1449
+#: ../src/g_rc.c:1300
 #, c-format
-msgid "Invalid dot size [%d] passed to grid-dot-size\n"
-msgstr "Invalid dot size [%d] passed to grid-dot-size\n"
+msgid "Invalid dot size [%d] passed to dots-grid-dot-size\n"
+msgstr "Invalid dot size [%d] passed to dots-grid-dot-size\n"
 
-#: ../src/g_rc.c:1490
+#: ../src/g_rc.c:1341
 #, c-format
-msgid "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
-msgstr "Invalid pixel spacing [%d] passed to grid-fixed-threshold\n"
+msgid "Invalid pixel spacing [%d] passed to dots-grid-fixed-threshold\n"
+msgstr "Invalid pixel spacing [%d] passed to dots-grid-fixed-threshold\n"
 
-#: ../src/g_rc.c:1534
+#: ../src/g_rc.c:1367
+#, c-format
+msgid "Invalid pixel spacing [%d] passed to mesh-grid-display-threshold\n"
+msgstr "Invalid pixel spacing [%d] passed to mesh-grid-display-threshold\n"
+
+#: ../src/g_rc.c:1411
 #, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr "Invalid offset [%d] passed to add-attribute-offset\n"
 
-#: ../src/g_rc.c:1558
+#: ../src/g_rc.c:1435
 #, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr "Invalid number of seconds [%d] passed to auto-save-interval\n"
 
-#: ../src/g_rc.c:1599
+#: ../src/g_rc.c:1476
 #, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr "Invalid gain [%d] passed to mousepan-gain\n"
 
-#: ../src/g_rc.c:1622
+#: ../src/g_rc.c:1499
 #, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr "Invalid gain [%d] passed to keyboardpan-gain\n"
 
-#: ../src/g_rc.c:1668
+#: ../src/g_rc.c:1545
 #, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 
-#: ../src/g_rc.c:1694
-#, fuzzy, c-format
+#: ../src/g_rc.c:1571
+#, c-format
 msgid "Invalid gain [%d] passed to zoom-gain\n"
-msgstr "Invalid gain [%d] passed to mousepan-gain\n"
+msgstr "Invalid gain [%d] passed to zoom-gain\n"
 
-#: ../src/g_rc.c:1719
-#, fuzzy, c-format
+#: ../src/g_rc.c:1596
+#, c-format
 msgid "Invalid number of steps [%d] scrollpan-steps\n"
-msgstr "Invalid number of seconds [%d] passed to auto-save-interval\n"
+msgstr "Invalid number of steps [%d] scrollpan-steps\n"
 
-#: ../src/gschem.c:189 ../src/gschem.c:200
+#: ../src/gschem.c:188 ../src/gschem.c:199
 #, c-format
 msgid "gEDA/gschem version %s%s.%s\n"
 msgstr "gEDA/gschem version %s%s.%s\n"
 
-#: ../src/gschem.c:192 ../src/gschem.c:203
+#: ../src/gschem.c:191 ../src/gschem.c:202
 #, c-format
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
@@ -620,14 +628,14 @@ msgstr ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
 
-#: ../src/gschem.c:194 ../src/gschem.c:205
+#: ../src/gschem.c:193 ../src/gschem.c:204
 #, c-format
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "This is free software, and you are welcome to redistribute it under certain\n"
 
-#: ../src/gschem.c:196 ../src/gschem.c:207
+#: ../src/gschem.c:195 ../src/gschem.c:206
 #, c-format
 msgid ""
 "conditions; please see the COPYING file for more details.\n"
@@ -636,47 +644,57 @@ msgstr ""
 "conditions; please see the COPYING file for more details.\n"
 "\n"
 
-#: ../src/gschem.c:211
+#: ../src/gschem.c:210
 #, c-format
 msgid "This is the MINGW32 port.\n"
 msgstr "This is the MINGW32 port.\n"
 
-#: ../src/gschem.c:215
+#: ../src/gschem.c:214
 #, c-format
 msgid "Current locale settings: %s\n"
 msgstr "Current locale settings: %s\n"
 
-#: ../src/gschem.c:228
+#: ../src/gschem.c:230
 #, c-format
 msgid "You must set the GEDADATA environment variable!\n"
 msgstr "You must set the GEDADATA environment variable!\n"
 
-#: ../src/gschem.c:245
-#, fuzzy, c-format
+#: ../src/gschem.c:247
+#, c-format
 msgid "Couldn't find init scm file [%s]\n"
-msgstr "Failed to read init scm file [%s]\n"
+msgstr "Couldn't find init scm file [%s]\n"
 
-#: ../src/gschem.c:249
+#: ../src/gschem.c:251
 #, c-format
 msgid "Read init scm file [%s]\n"
 msgstr "Read init scm file [%s]\n"
 
 #. ! \todo These two messages are the same. Should be
 #. * integrated.
-#: ../src/gschem.c:253
+#: ../src/gschem.c:255
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr "Failed to read init scm file [%s]\n"
 
-#: ../src/gschem.c:315
+#: ../src/gschem.c:316
 #, c-format
 msgid "Scheme directory NOT set!\n"
 msgstr "Scheme directory NOT set!\n"
 
-#: ../src/gschem.c:322 ../src/x_script.c:66
+#: ../src/gschem.c:323 ../src/x_script.c:66
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "Executing guile script [%s]\n"
+
+#: ../src/gschem_cairo.c:133
+#, c-format
+msgid "Unknown end for line (%d)\n"
+msgstr "Unknown end for line (%d)\n"
+
+#: ../src/gschem_cairo.c:141
+#, c-format
+msgid "Unknown type for stroke (%d) !\n"
+msgstr "Unknown type for stroke (%d) !\n"
 
 #: ../src/i_basic.c:79
 msgid "Component Mode"
@@ -700,9 +718,8 @@ msgid "Paste %d Mode"
 msgstr "Paste %d Mode"
 
 #: ../src/i_basic.c:109
-#, fuzzy
 msgid "Magnetic Net Mode"
-msgstr "Net Mode"
+msgstr "Magnetic Net Mode"
 
 #: ../src/i_basic.c:111
 msgid "Net Mode"
@@ -756,15 +773,15 @@ msgstr "Show Hidden"
 msgid "Snap Off"
 msgstr "Snap Off"
 
-#: ../src/i_basic.c:252 ../src/x_window.c:547
+#: ../src/i_basic.c:252 ../src/x_window.c:492
 msgid "Action"
 msgstr "Action"
 
-#: ../src/i_basic.c:258 ../src/x_dialog.c:2230 ../src/x_window.c:542
+#: ../src/i_basic.c:258 ../src/x_dialog.c:2233 ../src/x_window.c:487
 msgid "Stroke"
 msgstr "Stroke"
 
-#: ../src/i_basic.c:264 ../src/x_window.c:544
+#: ../src/i_basic.c:264 ../src/x_window.c:489
 msgid "none"
 msgstr "none"
 
@@ -777,6 +794,10 @@ msgid "OFF"
 msgstr "OFF"
 
 #: ../src/i_basic.c:540
+msgid "NONE"
+msgstr "NONE"
+
+#: ../src/i_basic.c:545
 #, c-format
 msgid "Grid(%s, %s)"
 msgstr "Grid(%s, %s)"
@@ -786,12 +807,12 @@ msgstr "Grid(%s, %s)"
 msgid "Documentation for [%s,%s,%s,%s]\n"
 msgstr "Documentation for [%s,%s,%s,%s]\n"
 
-#: ../src/i_callbacks.c:123 ../src/i_callbacks.c:1701
+#: ../src/i_callbacks.c:123 ../src/i_callbacks.c:1738
 #, c-format
 msgid "New page created [%s]\n"
 msgstr "New page created [%s]\n"
 
-#: ../src/i_callbacks.c:159 ../src/x_menus.c:467
+#: ../src/i_callbacks.c:159 ../src/x_menus.c:459
 #, c-format
 msgid "New Window created [%s]\n"
 msgstr "New Window created [%s]\n"
@@ -832,7 +853,7 @@ msgstr "Rotate"
 msgid "Mirror"
 msgstr "Mirror"
 
-#: ../src/i_callbacks.c:934 ../src/x_dialog.c:1623
+#: ../src/i_callbacks.c:934 ../src/x_dialog.c:1625
 msgid "Translate"
 msgstr "Translate"
 
@@ -872,124 +893,124 @@ msgstr "Update"
 msgid "ShowHidden"
 msgstr "ShowHidden"
 
-#: ../src/i_callbacks.c:1142
+#: ../src/i_callbacks.c:1143
 msgid "MakeVisible"
 msgstr "MakeVisible"
 
-#: ../src/i_callbacks.c:1259
+#: ../src/i_callbacks.c:1261
 msgid "Edit Line Type"
 msgstr "Edit Line Type"
 
-#: ../src/i_callbacks.c:1301 ../src/x_dialog.c:1243
+#: ../src/i_callbacks.c:1303 ../src/x_dialog.c:1245
 msgid "Edit Fill Type"
 msgstr "Edit Fill Type"
 
-#: ../src/i_callbacks.c:1595
+#: ../src/i_callbacks.c:1598
 msgid "Update Cues"
 msgstr "Update Cues"
 
-#: ../src/i_callbacks.c:1745
+#: ../src/i_callbacks.c:1782
 msgid "Really revert page?"
 msgstr "Really revert page?"
 
-#: ../src/i_callbacks.c:1817
+#: ../src/i_callbacks.c:1854
 msgid "Copy 1"
 msgstr "Copy 1"
 
-#: ../src/i_callbacks.c:1836
+#: ../src/i_callbacks.c:1873
 msgid "Copy 2"
 msgstr "Copy 2"
 
-#: ../src/i_callbacks.c:1855
+#: ../src/i_callbacks.c:1892
 msgid "Copy 3"
 msgstr "Copy 3"
 
-#: ../src/i_callbacks.c:1874
+#: ../src/i_callbacks.c:1911
 msgid "Copy 4"
 msgstr "Copy 4"
 
-#: ../src/i_callbacks.c:1893
+#: ../src/i_callbacks.c:1930
 msgid "Copy 5"
 msgstr "Copy 5"
 
-#: ../src/i_callbacks.c:1912
+#: ../src/i_callbacks.c:1949
 msgid "Cut 1"
 msgstr "Cut 1"
 
-#: ../src/i_callbacks.c:1931
+#: ../src/i_callbacks.c:1968
 msgid "Cut 2"
 msgstr "Cut 2"
 
-#: ../src/i_callbacks.c:1950
+#: ../src/i_callbacks.c:1987
 msgid "Cut 3"
 msgstr "Cut 3"
 
-#: ../src/i_callbacks.c:1969
+#: ../src/i_callbacks.c:2006
 msgid "Cut 4"
 msgstr "Cut 4"
 
-#: ../src/i_callbacks.c:1988
+#: ../src/i_callbacks.c:2025
 msgid "Cut 5"
 msgstr "Cut 5"
 
-#: ../src/i_callbacks.c:2004
+#: ../src/i_callbacks.c:2041
 msgid "Paste 1"
 msgstr "Paste 1"
 
-#: ../src/i_callbacks.c:2011 ../src/i_callbacks.c:2033
-#: ../src/i_callbacks.c:2055 ../src/i_callbacks.c:2077
-#: ../src/i_callbacks.c:2099
+#: ../src/i_callbacks.c:2048 ../src/i_callbacks.c:2070
+#: ../src/i_callbacks.c:2092 ../src/i_callbacks.c:2114
+#: ../src/i_callbacks.c:2136
 msgid "Empty buffer"
 msgstr "Empty buffer"
 
-#: ../src/i_callbacks.c:2026
+#: ../src/i_callbacks.c:2063
 msgid "Paste 2"
 msgstr "Paste 2"
 
-#: ../src/i_callbacks.c:2048
+#: ../src/i_callbacks.c:2085
 msgid "Paste 3"
 msgstr "Paste 3"
 
-#: ../src/i_callbacks.c:2070
+#: ../src/i_callbacks.c:2107
 msgid "Paste 4"
 msgstr "Paste 4"
 
-#: ../src/i_callbacks.c:2092
+#: ../src/i_callbacks.c:2129
 msgid "Paste 5"
 msgstr "Paste 5"
 
-#: ../src/i_callbacks.c:2229 ../src/x_window.c:406
+#: ../src/i_callbacks.c:2266 ../src/x_window.c:351
 msgid "Component"
 msgstr "Component"
 
-#: ../src/i_callbacks.c:2265 ../src/i_callbacks.c:2284 ../src/x_dialog.c:2203
+#: ../src/i_callbacks.c:2302 ../src/i_callbacks.c:2321 ../src/x_dialog.c:2206
 msgid "Attribute"
 msgstr "Attribute"
 
-#: ../src/i_callbacks.c:2781
+#: ../src/i_callbacks.c:2818
 #, c-format
 msgid "Searching for source [%s]\n"
 msgstr "Searching for source [%s]\n"
 
-#: ../src/i_callbacks.c:2805
+#: ../src/i_callbacks.c:2842
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "Cannot find source [%s]\n"
 
-#: ../src/i_callbacks.c:2872
+#: ../src/i_callbacks.c:2909
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "Searching for symbol [%s]\n"
 
-#: ../src/i_callbacks.c:2878
+#: ../src/i_callbacks.c:2915
 msgid "Symbol is not a real file. Symbol cannot be loaded.\n"
-msgstr ""
+msgstr "Symbol is not a real file. Symbol cannot be loaded.\n"
 
-#: ../src/i_callbacks.c:2909
+#: ../src/i_callbacks.c:2946
 msgid "Cannot find any schematics above the current one!\n"
-msgstr ""
+msgstr "Cannot find any schematics above the current one!\n"
 
-#: ../src/i_callbacks.c:2972
+#: ../src/i_callbacks.c:3009
 msgid ""
 "This command retrieves the component documentation from the web, but there "
 "is no component selected"
@@ -997,88 +1018,72 @@ msgstr ""
 "This command retrieves the component documentation from the web, but there "
 "is no component selected"
 
-#: ../src/i_callbacks.c:3084
+#: ../src/i_callbacks.c:3122
 msgid "ShowN"
 msgstr "ShowN"
 
-#: ../src/i_callbacks.c:3120
+#: ../src/i_callbacks.c:3158
 msgid "ShowV"
 msgstr "ShowV"
 
-#: ../src/i_callbacks.c:3156
+#: ../src/i_callbacks.c:3194
 msgid "ShowB"
 msgstr "ShowB"
 
-#: ../src/i_callbacks.c:3193
+#: ../src/i_callbacks.c:3231
 msgid "VisToggle"
 msgstr "VisToggle"
 
-#: ../src/i_callbacks.c:3223
+#: ../src/i_callbacks.c:3261
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "Sorry but this is a non-functioning menu option\n"
 
-#: ../src/i_callbacks.c:3311
+#: ../src/i_callbacks.c:3351
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr "Action feedback mode set to OUTLINE\n"
 
-#: ../src/i_callbacks.c:3314
+#: ../src/i_callbacks.c:3354
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr "Action feedback mode set to BOUNDINGBOX\n"
 
-#: ../src/i_callbacks.c:3331
+#: ../src/i_callbacks.c:3379
 msgid "Grid OFF\n"
 msgstr "Grid OFF\n"
 
-#: ../src/i_callbacks.c:3334
-msgid "Grid ON\n"
-msgstr "Grid ON\n"
+#: ../src/i_callbacks.c:3380
+msgid "Dot grid selected\n"
+msgstr "Dot grid selected\n"
 
-#: ../src/i_callbacks.c:3351
+#: ../src/i_callbacks.c:3381
+msgid "Mesh grid selected\n"
+msgstr "Mesh grid selected\n"
+
+#: ../src/i_callbacks.c:3399
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "Snap OFF (CAUTION!)\n"
 
-#: ../src/i_callbacks.c:3354
+#: ../src/i_callbacks.c:3402
 msgid "Snap ON\n"
 msgstr "Snap ON\n"
 
-#: ../src/i_callbacks.c:3374
+#: ../src/i_callbacks.c:3423
 msgid "Rubber band OFF \n"
 msgstr "Rubber band OFF \n"
 
-#: ../src/i_callbacks.c:3377
+#: ../src/i_callbacks.c:3426
 msgid "Rubber band ON\n"
 msgstr "Rubber band ON\n"
 
-#: ../src/i_callbacks.c:3392
+#: ../src/i_callbacks.c:3441
 msgid "magnetic net mode: ON\n"
-msgstr ""
+msgstr "magnetic net mode: ON\n"
 
-#: ../src/i_callbacks.c:3395
+#: ../src/i_callbacks.c:3444
 msgid "magnetic net mode: OFF\n"
-msgstr ""
+msgstr "magnetic net mode: OFF\n"
 
-#: ../src/o_arc.c:120
-#, c-format
-msgid "Unknown end for arc (%d)\n"
-msgstr "Unknown end for arc (%d)\n"
-
-#: ../src/o_arc.c:160
-#, c-format
-msgid "Unknown type for arc !\n"
-msgstr "Unknown type for arc !\n"
-
-#: ../src/o_box.c:136
-#, c-format
-msgid "Unknown end for box (%d)\n"
-msgstr "Unknown end for box (%d)\n"
-
-#: ../src/o_box.c:176
-#, c-format
-msgid "Unknown type for box !\n"
-msgstr "Unknown type for box !\n"
-
-#: ../src/o_box.c:260
+#: ../src/o_box.c:192
 #, c-format
 msgid "Unknown type for box (fill)!\n"
 msgstr "Unknown type for box (fill)!\n"
@@ -1098,42 +1103,20 @@ msgstr "Got an invalid buffer_number [o_buffer_cut]\n"
 msgid "Got an invalid buffer_number [o_buffer_paste_start]\n"
 msgstr "Got an invalid buffer_number [o_buffer_paste_start]\n"
 
-#: ../src/o_bus.c:183
+#: ../src/o_bus.c:159
 #, c-format
-msgid "Got an invalid which one in o_bus_draw_xor_single\n"
-msgstr "Got an invalid which one in o_bus_draw_xor_single\n"
+msgid "Got an invalid which one in o_bus_draw_stretch\n"
+msgstr "Got an invalid which one in o_bus_draw_stretch\n"
 
-#: ../src/o_circle.c:127
-#, c-format
-msgid "Unknown end for circle\n"
-msgstr "Unknown end for circle\n"
-
-#. just to be careful
-#: ../src/o_circle.c:163
-#, c-format
-msgid "Unknown type for circle!\n"
-msgstr "Unknown type for circle!\n"
-
-#: ../src/o_circle.c:245
+#: ../src/o_circle.c:171
 #, c-format
 msgid "Unknown type for circle (fill)!\n"
 msgstr "Unknown type for circle (fill)!\n"
 
-#: ../src/o_complex.c:251 ../src/o_complex.c:255
+#: ../src/o_complex.c:250 ../src/o_complex.c:254
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr "Translating schematic [%d %d]\n"
-
-#: ../src/o_line.c:111
-#, c-format
-msgid "Unknown end for line (%d)\n"
-msgstr "Unknown end for line (%d)\n"
-
-#. just to be careful
-#: ../src/o_line.c:151
-#, c-format
-msgid "Unknown type for line (%d) !\n"
-msgstr "Unknown type for line (%d) !\n"
 
 #: ../src/o_misc.c:61
 #, c-format
@@ -1148,35 +1131,35 @@ msgstr "Object already locked\n"
 msgid "Object already unlocked\n"
 msgstr "Object already unlocked\n"
 
-#: ../src/o_misc.c:444
+#: ../src/o_misc.c:445
 msgid "Hidden text is now visible\n"
 msgstr "Hidden text is now visible\n"
 
-#: ../src/o_misc.c:446
+#: ../src/o_misc.c:447
 msgid "Hidden text is now invisible\n"
 msgstr "Hidden text is now invisible\n"
 
-#: ../src/o_misc.c:694
+#: ../src/o_misc.c:697
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
 msgstr "Could not find symbol [%s] in library. Update failed.\n"
 
-#: ../src/o_misc.c:837
+#: ../src/o_misc.c:840
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr "o_autosave_backups: Can't get the real filename of %s."
 
-#: ../src/o_misc.c:881
+#: ../src/o_misc.c:884
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "Could NOT set previous backup file [%s] read-write\n"
 
-#: ../src/o_misc.c:899
+#: ../src/o_misc.c:902
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "Could NOT set backup file [%s] readonly\n"
 
-#: ../src/o_misc.c:904
+#: ../src/o_misc.c:907
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "Could NOT save backup file [%s]\n"
@@ -1186,57 +1169,47 @@ msgstr "Could NOT save backup file [%s]\n"
 msgid "ERROR: NULL object in o_move_end!\n"
 msgstr "ERROR: NULL object in o_move_end!\n"
 
-#: ../src/o_move.c:385
+#: ../src/o_move.c:410
 #, c-format
 msgid "DOH! tried to find the whichone, but didn't find it!\n"
 msgstr "DOH! tried to find the whichone, but didn't find it!\n"
 
-#: ../src/o_move.c:406
+#: ../src/o_move.c:431
 #, c-format
 msgid "Got a non line object in o_move_check_endpoint\n"
 msgstr "Got a non line object in o_move_check_endpoint\n"
 
-#: ../src/o_net.c:253
+#: ../src/o_net.c:201
 #, c-format
-msgid "Got an invalid which one in o_net_draw_xor_single\n"
-msgstr "Got an invalid which one in o_net_draw_xor_single\n"
+msgid "Got an invalid which one in o_net_draw_stretch\n"
+msgstr "Got an invalid which one in o_net_draw_stretch\n"
 
-#: ../src/o_net.c:630
+#: ../src/o_net.c:582
 msgid "Warning: Starting net at off grid coordinate\n"
-msgstr ""
+msgstr "Warning: Starting net at off grid coordinate\n"
 
-#: ../src/o_net.c:692
+#: ../src/o_net.c:644
 msgid "Warning: Ending net at off grid coordinate\n"
-msgstr ""
+msgstr "Warning: Ending net at off grid coordinate\n"
 
 #. try to exit gracefully
-#: ../src/o_net.c:1080 ../src/o_net.c:1117 ../src/o_net.c:1188
-#: ../src/o_net.c:1224
+#: ../src/o_net.c:1021 ../src/o_net.c:1058 ../src/o_net.c:1129
+#: ../src/o_net.c:1165
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr "Tried to add more than two bus rippers. Internal gschem error.\n"
 
-#: ../src/o_net.c:1294
+#: ../src/o_net.c:1235
 #, c-format
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
 msgstr "Bus ripper symbol [%s] was not found in any component library\n"
 
-#: ../src/o_path.c:483
-#, fuzzy, c-format
-msgid "Unknown end for path (%d)\n"
-msgstr "Unknown end for arc (%d)\n"
-
-#: ../src/o_path.c:524
-#, fuzzy, c-format
-msgid "Unknown type for path !\n"
-msgstr "Unknown type for arc !\n"
-
-#: ../src/o_path.c:594
-#, fuzzy, c-format
+#: ../src/o_path.c:373
+#, c-format
 msgid "Unknown type for path (fill)!\n"
-msgstr "Unknown type for box (fill)!\n"
+msgstr "Unknown type for path (fill)!\n"
 
-#: ../src/o_picture.c:166 ../src/o_picture.c:627
+#: ../src/o_picture.c:166 ../src/o_picture.c:568
 #, c-format
 msgid "Failed to load picture: %s"
 msgstr "Failed to load picture: %s"
@@ -1245,7 +1218,7 @@ msgstr "Failed to load picture: %s"
 msgid "Picture"
 msgstr "Picture"
 
-#: ../src/o_picture.c:535 ../src/x_attribedit.c:141
+#: ../src/o_picture.c:476 ../src/x_attribedit.c:141
 #, c-format
 msgid "ERROR: NULL object!\n"
 msgstr "ERROR: NULL object!\n"
@@ -1362,7 +1335,7 @@ msgstr "All"
 msgid "Components"
 msgstr "Components"
 
-#: ../src/x_attribedit.c:471 ../src/x_window.c:416
+#: ../src/x_attribedit.c:471 ../src/x_window.c:361
 msgid "Nets"
 msgstr "Nets"
 
@@ -1370,7 +1343,7 @@ msgstr "Nets"
 msgid "Replace existing attributes"
 msgstr "Replace existing attributes"
 
-#: ../src/x_autonumber.c:412
+#: ../src/x_autonumber.c:413
 msgid ""
 "slotted object without slot attribute may cause problems when autonumbering "
 "slots\n"
@@ -1379,136 +1352,135 @@ msgstr ""
 "slots\n"
 
 #. duplicate slot in used_slots
-#: ../src/x_autonumber.c:427
+#: ../src/x_autonumber.c:428
 #, c-format
 msgid ""
 "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
 msgstr ""
 "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
 
-#: ../src/x_autonumber.c:695
+#: ../src/x_autonumber.c:696
 msgid "No searchstring given in autonumber text.\n"
 msgstr "No searchstring given in autonumber text.\n"
 
-#: ../src/x_autonumber.c:746
+#: ../src/x_autonumber.c:748
 msgid "No '*' or '?' given at the end of the autonumber text.\n"
 msgstr "No '*' or '?' given at the end of the autonumber text.\n"
 
-#: ../src/x_autonumber.c:880
+#: ../src/x_autonumber.c:883
 msgid "Diagonal"
 msgstr "Diagonal"
 
-#: ../src/x_autonumber.c:881
+#: ../src/x_autonumber.c:884
 msgid "Top to bottom"
 msgstr "Top to bottom"
 
-#: ../src/x_autonumber.c:881
+#: ../src/x_autonumber.c:884
 msgid "Bottom to top"
 msgstr "Bottom to top"
 
-#: ../src/x_autonumber.c:882
+#: ../src/x_autonumber.c:885
 msgid "Left to right"
 msgstr "Left to right"
 
-#: ../src/x_autonumber.c:882
+#: ../src/x_autonumber.c:885
 msgid "Right to left"
 msgstr "Right to left"
 
-#: ../src/x_autonumber.c:883
+#: ../src/x_autonumber.c:886
 msgid "File order"
 msgstr "File order"
 
-#: ../src/x_autonumber.c:1219
+#: ../src/x_autonumber.c:1222
 msgid "Autonumber text"
 msgstr "Autonumber text"
 
 #. scope section
-#: ../src/x_autonumber.c:1243
+#: ../src/x_autonumber.c:1246
 msgid "<b>Scope</b>"
 msgstr "<b>Scope</b>"
 
-#: ../src/x_autonumber.c:1265
+#: ../src/x_autonumber.c:1268
 msgid "Search for:"
 msgstr "Search for:"
 
-#: ../src/x_autonumber.c:1279
+#: ../src/x_autonumber.c:1282
 msgid "Autonumber text in:"
 msgstr "Autonumber text in:"
 
-#: ../src/x_autonumber.c:1286
+#: ../src/x_autonumber.c:1289
 msgid "Skip numbers found in:"
 msgstr "Skip numbers found in:"
 
-#: ../src/x_autonumber.c:1298 ../src/x_autonumber.c:1307
+#: ../src/x_autonumber.c:1301 ../src/x_autonumber.c:1310
 msgid "Selected objects"
 msgstr "Selected objects"
 
-#: ../src/x_autonumber.c:1299 ../src/x_autonumber.c:1308
+#: ../src/x_autonumber.c:1302 ../src/x_autonumber.c:1311
 msgid "Current page"
 msgstr "Current page"
 
-#: ../src/x_autonumber.c:1300 ../src/x_autonumber.c:1309
+#: ../src/x_autonumber.c:1303 ../src/x_autonumber.c:1312
 msgid "Whole hierarchy"
 msgstr "Whole hierarchy"
 
-#: ../src/x_autonumber.c:1311
+#: ../src/x_autonumber.c:1314
 msgid "Overwrite existing numbers"
 msgstr "Overwrite existing numbers"
 
 #. Options section
-#: ../src/x_autonumber.c:1316
+#: ../src/x_autonumber.c:1319
 msgid "<b>Options</b>"
 msgstr "<b>Options</b>"
 
-#: ../src/x_autonumber.c:1338
+#: ../src/x_autonumber.c:1341
 msgid "Starting number:"
 msgstr "Starting number:"
 
-#: ../src/x_autonumber.c:1345
+#: ../src/x_autonumber.c:1348
 msgid "Sort order:"
 msgstr "Sort order:"
 
-#: ../src/x_autonumber.c:1366
+#: ../src/x_autonumber.c:1369
 msgid "Remove numbers"
 msgstr "Remove numbers"
 
-#: ../src/x_autonumber.c:1370
+#: ../src/x_autonumber.c:1373
 msgid "Automatic slotting"
 msgstr "Automatic slotting"
 
-#: ../src/x_color.c:52 ../src/x_color.c:61 ../src/x_color.c:124
-#: ../src/x_color.c:172
+#: ../src/x_color.c:94 ../src/x_color.c:103
 #, c-format
 msgid "Could not allocate the color %s!\n"
 msgstr "Could not allocate the colour %s!\n"
 
-#: ../src/x_color.c:52
+#: ../src/x_color.c:94
 msgid "black"
 msgstr "black"
 
-#: ../src/x_color.c:61
+#: ../src/x_color.c:103
 msgid "white"
 msgstr "white"
 
-#: ../src/x_color.c:103 ../src/x_color.c:140
+#: ../src/x_color.c:125
 #, c-format
-msgid "Could not find the color %s!\n"
-msgstr "Could not find the colour %s!\n"
+msgid "Could not allocate display color %i!\n"
+msgstr "Could not allocate display colour %i!\n"
 
-#: ../src/x_color.c:106 ../src/x_color.c:143
+#: ../src/x_color.c:147
 #, c-format
-msgid "Defaulting color to white\n"
-msgstr "Defaulting colour to white\n"
+msgid "Could not allocate outline color %i!\n"
+msgstr "Could not allocate outline colour %i!\n"
 
-#: ../src/x_color.c:113 ../src/x_color.c:150
-#, c-format
-msgid "Ack! Cannot allocate white!\n"
-msgstr "Ack! Cannot allocate white!\n"
-
-#: ../src/x_color.c:191 ../src/x_color.c:207
+#: ../src/x_color.c:164 ../src/x_color.c:181 ../src/x_color.c:197
 #, c-format
 msgid "Tried to get an invalid color: %d\n"
 msgstr "Tried to get an invalid colour: %d\n"
+
+#: ../src/x_color.c:214
+#, c-format
+msgid "Tried to get an invalid outline color: %d\n"
+msgstr "Tried to get an invalid outline colour: %d\n"
 
 #. GtkLabel
 #: ../src/x_compselect.c:1040
@@ -1516,7 +1488,7 @@ msgid "Filter:"
 msgstr "Filter:"
 
 #. GtkTreeViewColumn
-#: ../src/x_compselect.c:1143 ../src/x_dialog.c:3591
+#: ../src/x_compselect.c:1143 ../src/x_dialog.c:3595
 #: ../src/x_multiattrib.c:1601
 msgid "Name"
 msgstr "Name"
@@ -1661,92 +1633,92 @@ msgid "Phantom"
 msgstr "Phantom"
 
 #: ../src/x_dialog.c:779 ../src/x_dialog.c:781 ../src/x_dialog.c:783
-#: ../src/x_dialog.c:964 ../src/x_dialog.c:965 ../src/x_dialog.c:966
-#: ../src/x_dialog.c:974 ../src/x_dialog.c:1157 ../src/x_dialog.c:1159
-#: ../src/x_dialog.c:1161 ../src/x_dialog.c:1163 ../src/x_dialog.c:1165
-#: ../src/x_dialog.c:1368 ../src/x_dialog.c:1369 ../src/x_dialog.c:1370
-#: ../src/x_dialog.c:1371 ../src/x_dialog.c:1372 ../src/x_dialog.c:1380
+#: ../src/x_dialog.c:965 ../src/x_dialog.c:966 ../src/x_dialog.c:967
+#: ../src/x_dialog.c:975 ../src/x_dialog.c:1158 ../src/x_dialog.c:1160
+#: ../src/x_dialog.c:1162 ../src/x_dialog.c:1164 ../src/x_dialog.c:1166
+#: ../src/x_dialog.c:1370 ../src/x_dialog.c:1371 ../src/x_dialog.c:1372
+#: ../src/x_dialog.c:1373 ../src/x_dialog.c:1374 ../src/x_dialog.c:1382
 #, c-format
 msgid "*unchanged*"
 msgstr "*unchanged*"
 
-#: ../src/x_dialog.c:858
+#: ../src/x_dialog.c:859
 msgid "Edit Line Width & Type"
 msgstr "Edit Line Width & Type"
 
-#: ../src/x_dialog.c:897
+#: ../src/x_dialog.c:898
 msgid "Width:"
 msgstr "Width:"
 
-#: ../src/x_dialog.c:901 ../src/x_print.c:307
+#: ../src/x_dialog.c:902 ../src/x_print.c:307
 msgid "Type:"
 msgstr "Type:"
 
-#: ../src/x_dialog.c:905
+#: ../src/x_dialog.c:906
 msgid "Dash Length:"
 msgstr "Dash Length:"
 
-#: ../src/x_dialog.c:909
+#: ../src/x_dialog.c:910
 msgid "Dash Space:"
 msgstr "Dash Space:"
 
-#: ../src/x_dialog.c:1014
+#: ../src/x_dialog.c:1015
 msgid "Hollow"
 msgstr "Hollow"
 
-#: ../src/x_dialog.c:1015
+#: ../src/x_dialog.c:1016
 msgid "Filled"
 msgstr "Filled"
 
-#: ../src/x_dialog.c:1016
+#: ../src/x_dialog.c:1017
 msgid "Mesh"
 msgstr "Mesh"
 
-#: ../src/x_dialog.c:1017
+#: ../src/x_dialog.c:1018
 msgid "Hatch"
 msgstr "Hatch"
 
-#: ../src/x_dialog.c:1281
+#: ../src/x_dialog.c:1283
 msgid "Fill Type:"
 msgstr "Fill Type:"
 
-#: ../src/x_dialog.c:1285
+#: ../src/x_dialog.c:1287
 msgid "Line Width:"
 msgstr "Line Width:"
 
-#: ../src/x_dialog.c:1289
+#: ../src/x_dialog.c:1291
 msgid "Angle 1:"
 msgstr "Angle 1:"
 
-#: ../src/x_dialog.c:1293
+#: ../src/x_dialog.c:1295
 msgid "Pitch 1:"
 msgstr "Pitch 1:"
 
-#: ../src/x_dialog.c:1297
+#: ../src/x_dialog.c:1299
 msgid "Angle 2:"
 msgstr "Angle 2:"
 
-#: ../src/x_dialog.c:1301
+#: ../src/x_dialog.c:1303
 msgid "Pitch 2:"
 msgstr "Pitch 2:"
 
-#: ../src/x_dialog.c:1480
+#: ../src/x_dialog.c:1482
 msgid "Arc Params"
 msgstr "Arc Params"
 
-#: ../src/x_dialog.c:1520
+#: ../src/x_dialog.c:1522
 msgid "Arc Radius:"
-msgstr ""
+msgstr "Arc Radius:"
 
-#: ../src/x_dialog.c:1528
+#: ../src/x_dialog.c:1530
 msgid "Start Angle:"
 msgstr "Start Angle:"
 
-#: ../src/x_dialog.c:1536
+#: ../src/x_dialog.c:1538
 msgid "Degrees of Sweep:"
 msgstr "Degrees of Sweep:"
 
-#: ../src/x_dialog.c:1653
+#: ../src/x_dialog.c:1655
 msgid ""
 "Offset to translate?\n"
 "(0 for origin)"
@@ -1754,44 +1726,44 @@ msgstr ""
 "Offset to translate?\n"
 "(0 for origin)"
 
-#: ../src/x_dialog.c:1721
+#: ../src/x_dialog.c:1723
 msgid "Text Size"
 msgstr "Text Size"
 
-#: ../src/x_dialog.c:1751
+#: ../src/x_dialog.c:1753
 msgid "Enter new text size:"
 msgstr "Enter new text size:"
 
-#: ../src/x_dialog.c:1826
+#: ../src/x_dialog.c:1829
 msgid "Snap Size"
 msgstr "Snap Size"
 
-#: ../src/x_dialog.c:1856
+#: ../src/x_dialog.c:1859
 msgid "Enter new snap grid spacing:"
 msgstr "Enter new snap grid spacing:"
 
-#: ../src/x_dialog.c:1929
+#: ../src/x_dialog.c:1932
 msgid "Edit slot number"
 msgstr "Edit slot number"
 
-#: ../src/x_dialog.c:1960
+#: ../src/x_dialog.c:1963
 msgid "Edit slot number:"
 msgstr "Edit slot number:"
 
-#: ../src/x_dialog.c:2022
+#: ../src/x_dialog.c:2025
 msgid "About..."
 msgstr "About..."
 
-#: ../src/x_dialog.c:2042
+#: ../src/x_dialog.c:2045
 msgid "<b>gEDA: GPL Electronic Design Automation</b>"
 msgstr "<b>gEDA: GPL Electronic Design Automation</b>"
 
-#: ../src/x_dialog.c:2046
+#: ../src/x_dialog.c:2049
 #, c-format
 msgid "<b>gschem version %s%s.%s</b>"
 msgstr "<b>gschem version %s%s.%s</b>"
 
-#: ../src/x_dialog.c:2054
+#: ../src/x_dialog.c:2057
 msgid ""
 "Written by:\n"
 "Ales Hvezda\n"
@@ -1803,133 +1775,129 @@ msgstr ""
 "ahvezda@geda.seul.org\n"
 "And many others (See AUTHORS file)"
 
-#: ../src/x_dialog.c:2119
+#: ../src/x_dialog.c:2122
 msgid "Coords"
 msgstr "Coords"
 
-#: ../src/x_dialog.c:2140
+#: ../src/x_dialog.c:2143
 msgid "Screen"
 msgstr "Screen"
 
-#: ../src/x_dialog.c:2149
+#: ../src/x_dialog.c:2152
 msgid "World"
 msgstr "World"
 
-#: ../src/x_dialog.c:2188
+#: ../src/x_dialog.c:2191
 msgid "Background"
-msgstr ""
-
-#: ../src/x_dialog.c:2194
-msgid "Net endpoint"
-msgstr ""
+msgstr "Background"
 
 #: ../src/x_dialog.c:2197
-msgid "Graphic"
-msgstr ""
+msgid "Net endpoint"
+msgstr "Net endpoint"
 
-#: ../src/x_dialog.c:2206
-msgid "Logic bubble"
-msgstr ""
+#: ../src/x_dialog.c:2200
+msgid "Graphic"
+msgstr "Graphic"
 
 #: ../src/x_dialog.c:2209
-msgid "Grid point"
-msgstr ""
+msgid "Logic bubble"
+msgstr "Logic bubble"
 
 #: ../src/x_dialog.c:2212
-#, fuzzy
-msgid "Detached attribute"
-msgstr "Add Attribute"
+msgid "Grid point"
+msgstr "Grid point"
 
-#: ../src/x_dialog.c:2215 ../src/x_window.c:434
+#: ../src/x_dialog.c:2215
+msgid "Detached attribute"
+msgstr "Detached attribute"
+
+#: ../src/x_dialog.c:2218 ../src/x_window.c:379
 msgid "Text"
 msgstr "Text"
 
-#: ../src/x_dialog.c:2221
-#, fuzzy
-msgid "Selection"
-msgstr "Select"
-
 #: ../src/x_dialog.c:2224
-msgid "Bounding box"
-msgstr ""
+msgid "Selection"
+msgstr "Selection"
 
 #: ../src/x_dialog.c:2227
-#, fuzzy
-msgid "Zoom box"
-msgstr "Zoom Box"
+msgid "Bounding box"
+msgstr "Bounding box"
 
-#: ../src/x_dialog.c:2236
-msgid "Output background"
-msgstr ""
+#: ../src/x_dialog.c:2230
+msgid "Zoom box"
+msgstr "Zoom box"
 
 #: ../src/x_dialog.c:2239
-#, fuzzy
-msgid "Net junction"
-msgstr "Function"
+msgid "Output background"
+msgstr "Output background"
 
 #: ../src/x_dialog.c:2242
-msgid "Unknown"
-msgstr ""
+msgid "Net junction"
+msgstr "Net junction"
 
-#: ../src/x_dialog.c:2390
+#: ../src/x_dialog.c:2245
+msgid "Unknown"
+msgstr "Unknown"
+
+#: ../src/x_dialog.c:2391
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr "ERROR: NULL object in color_edit_dialog_apply!\n"
 
-#: ../src/x_dialog.c:2452
+#: ../src/x_dialog.c:2454
 msgid "Color Edit"
 msgstr "Colour Edit"
 
-#: ../src/x_dialog.c:2483
+#: ../src/x_dialog.c:2485
 msgid "Object color:"
 msgstr "Object colour:"
 
-#: ../src/x_dialog.c:2605
+#: ../src/x_dialog.c:2607
 msgid "Function"
 msgstr "Function"
 
-#: ../src/x_dialog.c:2612
+#: ../src/x_dialog.c:2614
 msgid "Keystroke(s)"
 msgstr "Keystroke(s)"
 
-#: ../src/x_dialog.c:2921
+#: ../src/x_dialog.c:2923
 msgid "Find Text"
 msgstr "Find Text"
 
-#: ../src/x_dialog.c:2952
+#: ../src/x_dialog.c:2954
 msgid "Text to find:"
 msgstr "Text to find:"
 
-#: ../src/x_dialog.c:2962
+#: ../src/x_dialog.c:2964
 msgid "descend into hierarchy"
 msgstr "descend into hierarchy"
 
-#: ../src/x_dialog.c:3026
+#: ../src/x_dialog.c:3029
 msgid "Hide Text"
 msgstr "Hide Text"
 
-#: ../src/x_dialog.c:3057
+#: ../src/x_dialog.c:3060
 msgid "Hide text starting with:"
 msgstr "Hide text starting with:"
 
-#: ../src/x_dialog.c:3125
+#: ../src/x_dialog.c:3129
 msgid "Show Text"
 msgstr "Show Text"
 
-#: ../src/x_dialog.c:3156
+#: ../src/x_dialog.c:3160
 msgid "Show text starting with:"
 msgstr "Show text starting with:"
 
-#: ../src/x_dialog.c:3613
+#: ../src/x_dialog.c:3617
 msgid "S_elect the schematics you want to save:"
 msgstr "S_elect the schematics you want to save:"
 
-#: ../src/x_dialog.c:3707
+#: ../src/x_dialog.c:3711
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr "Save the changes to schematic \"%s\" before closing?"
 
-#: ../src/x_dialog.c:3713
+#: ../src/x_dialog.c:3717
 #, c-format
 msgid ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
@@ -1937,15 +1905,15 @@ msgstr ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
 
 #. secondary label
-#: ../src/x_dialog.c:3742
+#: ../src/x_dialog.c:3746
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr "If you don't save, all your changes will be permanently lost."
 
-#: ../src/x_dialog.c:3762
+#: ../src/x_dialog.c:3766
 msgid "_Close without saving"
 msgstr "_Close without saving"
 
-#: ../src/x_dialog.c:4096
+#: ../src/x_dialog.c:4100
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -1962,7 +1930,7 @@ msgstr ""
 "The name cannot end with a space.\n"
 "The value cannot start with a space."
 
-#: ../src/x_dialog.c:4098
+#: ../src/x_dialog.c:4102
 msgid "Invalid Attribute"
 msgstr "Invalid Attribute"
 
@@ -2061,7 +2029,7 @@ msgstr "Image type"
 
 #: ../src/x_log.c:188
 msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
-msgstr ""
+msgstr "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
 
 #: ../src/x_log.c:256
 msgid "Status"
@@ -2135,26 +2103,26 @@ msgstr "/Down Symbol"
 msgid "/Up"
 msgstr "/Up"
 
-#: ../src/x_menus.c:323
+#: ../src/x_menus.c:315
 #, c-format
 msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
 msgstr "Tried to set the sensitivity on non-existent menu item '%s'\n"
 
-#: ../src/x_menus.c:347
+#: ../src/x_menus.c:339
 msgid "Popup_menu_item_factory doesn't exist!\n"
 msgstr "Popup_menu_item_factory doesn't exist!\n"
 
-#: ../src/x_menus.c:360
+#: ../src/x_menus.c:352
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
 msgstr "Tried to set the sensitivity on a non-existent popup menu_item\n"
 
 #. Remove this entry from all menus
-#: ../src/x_menus.c:455
+#: ../src/x_menus.c:447
 #, c-format
 msgid "Couldn't open file %s\n"
 msgstr "Couldn't open file %s\n"
 
-#: ../src/x_menus.c:516
+#: ../src/x_menus.c:508
 msgid "Clear"
 msgstr "Clear"
 
@@ -2219,6 +2187,10 @@ msgstr "Changed"
 #: ../src/x_pagesel.c:468
 msgid "Right click on the filename for more options..."
 msgstr "Right click on the filename for more options..."
+
+#: ../src/x_preview.c:223
+msgid "Preview Buffer"
+msgstr "Preview Buffer"
 
 #: ../src/x_print.c:84
 msgid "Select PostScript Filename..."
@@ -2293,60 +2265,40 @@ msgstr ""
 msgid "Printed current schematic to [%s]\n"
 msgstr "Printed current schematic to [%s]\n"
 
-#: ../src/x_window.c:81
+#: ../src/x_window.c:78
 #, c-format
 msgid "Couldn't allocate gc\n"
 msgstr "Couldn't allocate gc\n"
 
-#: ../src/x_window.c:94
-#, c-format
-msgid "Couldn't allocate xor_gc\n"
-msgstr "Couldn't allocate xor_gc\n"
-
-#: ../src/x_window.c:107
-#, c-format
-msgid "Couldn't allocate outline_xor_gc\n"
-msgstr "Couldn't allocate outline_xor_gc\n"
-
-#: ../src/x_window.c:123
-#, c-format
-msgid "Couldn't allocate bounding_xor_gc\n"
-msgstr "Couldn't allocate bounding_xor_gc\n"
-
-#: ../src/x_window.c:130
-#, c-format
-msgid "Couldn't allocate bus_gc\n"
-msgstr "Couldn't allocate bus_gc\n"
-
-#: ../src/x_window.c:369
+#: ../src/x_window.c:314
 msgid "New file"
 msgstr "New file"
 
-#: ../src/x_window.c:375
+#: ../src/x_window.c:320
 msgid "Open"
 msgstr "Open"
 
-#: ../src/x_window.c:376
+#: ../src/x_window.c:321
 msgid "Open file..."
 msgstr "Open file..."
 
-#: ../src/x_window.c:382
+#: ../src/x_window.c:327
 msgid "Save"
 msgstr "Save"
 
-#: ../src/x_window.c:383
+#: ../src/x_window.c:328
 msgid "Save file"
 msgstr "Save file"
 
-#: ../src/x_window.c:391
+#: ../src/x_window.c:336
 msgid "Undo last operation"
 msgstr "Undo last operation"
 
-#: ../src/x_window.c:398
+#: ../src/x_window.c:343
 msgid "Redo last undo"
 msgstr "Redo last undo"
 
-#: ../src/x_window.c:407
+#: ../src/x_window.c:352
 msgid ""
 "Add component...\n"
 "Select library and component from list, move the mouse into main window, "
@@ -2358,7 +2310,7 @@ msgstr ""
 "click to place\n"
 "Right mouse button to cancel"
 
-#: ../src/x_window.c:417
+#: ../src/x_window.c:362
 msgid ""
 "Add nets mode\n"
 "Right mouse button to cancel"
@@ -2366,7 +2318,7 @@ msgstr ""
 "Add nets mode\n"
 "Right mouse button to cancel"
 
-#: ../src/x_window.c:427
+#: ../src/x_window.c:372
 msgid ""
 "Add buses mode\n"
 "Right mouse button to cancel"
@@ -2374,78 +2326,78 @@ msgstr ""
 "Add buses mode\n"
 "Right mouse button to cancel"
 
-#: ../src/x_window.c:435
+#: ../src/x_window.c:380
 msgid "Add Text..."
 msgstr "Add Text..."
 
-#: ../src/x_window.c:445
+#: ../src/x_window.c:390
 msgid "Select"
 msgstr "Select"
 
-#: ../src/x_window.c:446
+#: ../src/x_window.c:391
 msgid "Select mode"
 msgstr "Select mode"
 
-#: ../src/x_window.c:533
+#: ../src/x_window.c:478
 msgid "Pick"
 msgstr "Pick"
 
-#: ../src/x_window.c:549
+#: ../src/x_window.c:494
 msgid "Repeat/none"
 msgstr "Repeat/none"
 
-#: ../src/x_window.c:559
+#: ../src/x_window.c:504
 msgid "Menu/Cancel"
 msgstr "Menu/Cancel"
 
-#: ../src/x_window.c:561
+#: ../src/x_window.c:506
 msgid "Pan/Cancel"
 msgstr "Pan/Cancel"
 
-#: ../src/x_window.c:783
+#: ../src/x_window.c:728
 #, c-format
 msgid "Loading schematic [%s]\n"
 msgstr "Loading schematic [%s]\n"
 
-#: ../src/x_window.c:795
+#: ../src/x_window.c:740
 msgid "Failed to load file"
 msgstr "Failed to load file"
 
-#: ../src/x_window.c:804
+#: ../src/x_window.c:749
 #, c-format
 msgid "New file [%s]\n"
 msgstr "New file [%s]\n"
 
 #. an error occured when saving page to file
-#: ../src/x_window.c:909
+#: ../src/x_window.c:854
 #, c-format
 msgid "Could NOT save page [%s]\n"
 msgstr "Could NOT save page [%s]\n"
 
-#: ../src/x_window.c:910
+#: ../src/x_window.c:855
 msgid "Error while trying to save"
 msgstr "Error while trying to save"
 
-#: ../src/x_window.c:919
+#: ../src/x_window.c:864
 #, c-format
 msgid "Saved as [%s]\n"
 msgstr "Saved as [%s]\n"
 
-#: ../src/x_window.c:921
+#: ../src/x_window.c:866
 #, c-format
 msgid "Saved [%s]\n"
 msgstr "Saved [%s]\n"
 
-#: ../src/x_window.c:923
+#: ../src/x_window.c:868
 msgid "Saved"
 msgstr "Saved"
 
-#: ../src/x_window.c:997
+#: ../src/x_window.c:942
 #, c-format
 msgid "Discarding page [%s]\n"
 msgstr "Discarding page [%s]\n"
 
-#: ../src/x_window.c:997
+#: ../src/x_window.c:942
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "Closing [%s]\n"
@@ -2457,21 +2409,3 @@ msgstr "Create and edit electrical schematics and symbols with gschem"
 #: ../data/geda-gschem.desktop.in.h:2
 msgid "gEDA Schematic Editor"
 msgstr "gEDA Schematic Editor"
-
-#~ msgid "Got NULL in o_attrib_toggle_visibility\n"
-#~ msgstr "Got NULL in o_attrib_toggle_visibility\n"
-
-#~ msgid "Got NULL in o_attrib_toggle_show_name_value\n"
-#~ msgstr "Got NULL in o_attrib_toggle_show_name_value\n"
-
-#~ msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
-#~ msgstr "Got an invalid buffer_number [o_buffer_paste_end]\n"
-
-#~ msgid "Could not find complex in new component placement!\n"
-#~ msgstr "Could not find complex in new component placement!\n"
-
-#~ msgid "ERROR: NULL object in o_copy_end!\n"
-#~ msgstr "ERROR: NULL object in o_copy_end!\n"
-
-#~ msgid "Attribute failed ot find.\n"
-#~ msgstr "Attribute failed ot find.\n"
