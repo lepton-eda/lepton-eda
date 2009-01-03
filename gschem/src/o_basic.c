@@ -62,7 +62,7 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
   g_return_if_fail (toplevel->page_current != NULL);
 
   grip_half_size = o_grips_size (w_current);
-  cue_half_size = SCREENabs (toplevel, CUE_BOX_SIZE);
+  cue_half_size = SCREENabs (w_current, CUE_BOX_SIZE);
   bloat = MAX (grip_half_size, cue_half_size);
 
   world_rects = g_new (BOX, n_rectangles);
@@ -75,9 +75,9 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
     width = rectangles[i].width;
     height = rectangles[i].height;
 
-    SCREENtoWORLD (toplevel, x - bloat, y + height + bloat,
+    SCREENtoWORLD (w_current, x - bloat, y + height + bloat,
                    &world_rects[i].lower_x, &world_rects[i].lower_y);
-    SCREENtoWORLD (toplevel, x + width + bloat, y - bloat,
+    SCREENtoWORLD (w_current, x + width + bloat, y - bloat,
                    &world_rects[i].upper_x, &world_rects[i].upper_y);
   }
 
@@ -500,7 +500,7 @@ void o_invalidate_rect (GSCHEM_TOPLEVEL *w_current,
     return;
 
   grip_half_size = o_grips_size (w_current);
-  cue_half_size = SCREENabs (w_current->toplevel, CUE_BOX_SIZE);
+  cue_half_size = SCREENabs (w_current, CUE_BOX_SIZE);
   bloat = MAX (grip_half_size, cue_half_size) + INVALIDATE_MARGIN;
 
   rect.x = MIN(x1, x2) - bloat;
@@ -542,8 +542,8 @@ void o_invalidate (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
   int s_left, s_top, s_bottom, s_right;
   if (world_get_single_object_bounds(toplevel, object, &left,  &top,
                                                        &right, &bottom)) {
-    WORLDtoSCREEN (toplevel, left, top, &s_left, &s_top);
-    WORLDtoSCREEN (toplevel, right, bottom, &s_right, &s_bottom);
+    WORLDtoSCREEN (w_current, left, top, &s_left, &s_top);
+    WORLDtoSCREEN (w_current, right, bottom, &s_right, &s_bottom);
     o_invalidate_rect (w_current, s_left, s_top, s_right, s_bottom);
   }
 }
@@ -565,8 +565,8 @@ void o_invalidate_glist (GSCHEM_TOPLEVEL *w_current, GList *list)
   int s_left, s_top, s_bottom, s_right;
   if (world_get_object_glist_bounds (toplevel, list, &left,  &top,
                                                      &right, &bottom)) {
-    WORLDtoSCREEN (toplevel, left, top, &s_left, &s_top);
-    WORLDtoSCREEN (toplevel, right, bottom, &s_right, &s_bottom);
+    WORLDtoSCREEN (w_current, left, top, &s_left, &s_top);
+    WORLDtoSCREEN (w_current, right, bottom, &s_right, &s_bottom);
     o_invalidate_rect (w_current, s_left, s_top, s_right, s_bottom);
   }
 }

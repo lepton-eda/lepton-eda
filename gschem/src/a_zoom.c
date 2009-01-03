@@ -123,7 +123,7 @@ void a_zoom(GSCHEM_TOPLEVEL *w_current, int dir, int selected_from, int pan_flag
 	
   /* warp the cursor to the right position */ 
   if (w_current->warp_cursor) {
-     WORLDtoSCREEN(toplevel, world_pan_center_x, world_pan_center_y,
+     WORLDtoSCREEN (w_current, world_pan_center_x, world_pan_center_y,
 		   &start_x, &start_y);
      x_basic_warp_cursor (w_current->drawing_area, start_x, start_y);
   }
@@ -281,11 +281,10 @@ void a_zoom_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void a_zoom_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
 
-  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
   o_invalidate_rect (w_current, x1, y1, x2, y1);
   o_invalidate_rect (w_current, x1, y1, x1, y2);
@@ -300,11 +299,10 @@ void a_zoom_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void a_zoom_box_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
 
-  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
   gschem_cairo_box (w_current->cr, 1, x1, y1, x2, y2);
 

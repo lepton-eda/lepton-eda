@@ -558,14 +558,14 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
         if (!skiplast) {
           a_zoom(w_current, ZOOM_FULL, DONTCARE, A_PAN_DONT_REDRAW);
           text_screen_height =
-            SCREENabs (toplevel, o_text_height (str, o_current->text->size));
+            SCREENabs (w_current, o_text_height (str, o_current->text->size));
           /* this code will zoom/pan till the text screen height is about */
           /* 50 pixels high, perhaps a future enhancement will be to make */
           /* this number configurable */
           while (text_screen_height < 50) {
             a_zoom(w_current, ZOOM_IN, DONTCARE, A_PAN_DONT_REDRAW);
             text_screen_height =
-              SCREENabs (toplevel, o_text_height (str, o_current->text->size));
+              SCREENabs (w_current, o_text_height (str, o_current->text->size));
           }
           a_pan_general(w_current,
                         o_current->text->x, o_current->text->y,

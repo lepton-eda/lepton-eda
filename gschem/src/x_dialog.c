@@ -2091,7 +2091,6 @@ void coord_dialog_response(GtkWidget *w, gint response, GSCHEM_TOPLEVEL *w_curre
  */
 void coord_display_update(GSCHEM_TOPLEVEL *w_current, int x, int y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   char *string;
   int world_x, world_y;
 
@@ -2099,9 +2098,9 @@ void coord_display_update(GSCHEM_TOPLEVEL *w_current, int x, int y)
   gtk_label_set_text(GTK_LABEL(w_current->coord_screen), string );
   g_free(string);
 
-  SCREENtoWORLD(toplevel, x, y, &world_x, &world_y);
-  world_x = snap_grid(toplevel, world_x);
-  world_y = snap_grid(toplevel, world_y);
+  SCREENtoWORLD (w_current, x, y, &world_x, &world_y);
+  world_x = snap_grid (w_current, world_x);
+  world_y = snap_grid (w_current, world_y);
 
   string = g_strdup_printf("(%d, %d)", world_x, world_y);
   gtk_label_set_text(GTK_LABEL(w_current->coord_world), string );

@@ -97,7 +97,7 @@ gboolean o_find_object (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
   int w_slack;
   const GList *iter = NULL;
 
-  w_slack = WORLDabs( toplevel, w_current->select_slack_pixels );
+  w_slack = WORLDabs (w_current, w_current->select_slack_pixels);
 
   /* Decide whether to iterate over all object or start at the last
      found object. If there is more than one object below the
@@ -160,7 +160,7 @@ gboolean o_find_selected_object(GSCHEM_TOPLEVEL *w_current,
   GList *s_current;
   int w_slack;
 
-  w_slack = WORLDabs( toplevel, w_current->select_slack_pixels );
+  w_slack = WORLDabs (w_current, w_current->select_slack_pixels);
 
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );
   /* do first search */

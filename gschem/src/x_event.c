@@ -101,10 +101,10 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   printf("\n");
 #endif
 
-  SCREENtoWORLD( toplevel, (int) event->x, (int) event->y,
-                 &unsnapped_wx, &unsnapped_wy );
-  w_x = snap_grid(toplevel, unsnapped_wx);
-  w_y = snap_grid(toplevel, unsnapped_wy);
+  SCREENtoWORLD (w_current, (int) event->x, (int) event->y,
+                 &unsnapped_wx, &unsnapped_wy);
+  w_x = snap_grid (w_current, unsnapped_wx);
+  w_y = snap_grid (w_current, unsnapped_wy);
 
   if (event->type == GDK_2BUTTON_PRESS &&
       (w_current->event_state == STARTSELECT ||
@@ -529,10 +529,10 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
   w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
   w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
 
-  SCREENtoWORLD( toplevel, (int) event->x, (int) event->y,
-                 &unsnapped_wx, &unsnapped_wy );
-  w_x = snap_grid(toplevel, unsnapped_wx);
-  w_y = snap_grid(toplevel, unsnapped_wy);
+  SCREENtoWORLD (w_current, (int) event->x, (int) event->y,
+                 &unsnapped_wx, &unsnapped_wy);
+  w_x = snap_grid (w_current, unsnapped_wx);
+  w_y = snap_grid (w_current, unsnapped_wy);
 
   if (event->button == 1) {
     switch(w_current->event_state) {
@@ -719,7 +719,6 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
                     GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int pdiff_x, pdiff_y;
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
@@ -759,10 +758,10 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
       return 0;
   }
 
-  SCREENtoWORLD( toplevel, (int) event->x, (int) event->y,
-                 &unsnapped_wx, &unsnapped_wy );
-  w_x = snap_grid(toplevel, unsnapped_wx);
-  w_y = snap_grid(toplevel, unsnapped_wy);
+  SCREENtoWORLD (w_current, (int) event->x, (int) event->y,
+                 &unsnapped_wx, &unsnapped_wy);
+  w_x = snap_grid (w_current, unsnapped_wx);
+  w_y = snap_grid (w_current, unsnapped_wy);
 
   if (w_current->cowindow) {
     coord_display_update(w_current, (int) event->x, (int) event->y);
@@ -1137,14 +1136,13 @@ gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
  */
 static void get_snapped_pointer (GSCHEM_TOPLEVEL *w_current, int *wx, int *wy)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int sx, sy;
   int unsnapped_wx, unsnapped_wy;
 
   gtk_widget_get_pointer (w_current->drawing_area, &sx, &sy);
-  SCREENtoWORLD (toplevel, sx, sy, &unsnapped_wx, &unsnapped_wy);
-  *wx = snap_grid (toplevel, unsnapped_wx);
-  *wy = snap_grid (toplevel, unsnapped_wy);
+  SCREENtoWORLD (w_current, sx, sy, &unsnapped_wx, &unsnapped_wy);
+  *wx = snap_grid (w_current, unsnapped_wx);
+  *wy = snap_grid (w_current, unsnapped_wy);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1357,7 +1355,6 @@ gboolean x_event_get_pointer_position (GSCHEM_TOPLEVEL *w_current,
 				       gboolean snapped,
 				       gint *wx, gint *wy)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int sx, sy, x, y;
 
   gtk_widget_get_pointer(w_current->drawing_area, &sx, &sy);
@@ -1367,10 +1364,10 @@ gboolean x_event_get_pointer_position (GSCHEM_TOPLEVEL *w_current,
       || sy <0 || sy >= w_current->win_height)
     return FALSE;
 
-  SCREENtoWORLD(toplevel, sx, sy, &x, &y);
+  SCREENtoWORLD (w_current, sx, sy, &x, &y);
   if (snapped) {
-    x = snap_grid(toplevel, x);
-    y = snap_grid(toplevel, y);
+    x = snap_grid (w_current, x);
+    y = snap_grid (w_current, y);
   }
   *wx = x;
   *wy = y;

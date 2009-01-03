@@ -83,18 +83,18 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   else
     color = x_color_lookup (o_current->color);
 
-  line_width = SCREENabs( toplevel, o_current->line_width );
+  line_width = SCREENabs (w_current, o_current->line_width);
   if(line_width <= 0) {
     line_width = 1;
   }
 
-  length = SCREENabs( toplevel, o_current->line_length );
-  space = SCREENabs( toplevel, o_current->line_space );
+  length = SCREENabs (w_current, o_current->line_length);
+  space = SCREENabs (w_current, o_current->line_space);
 
-  WORLDtoSCREEN (toplevel, o_current->arc->x - o_current->arc->width / 2,
+  WORLDtoSCREEN (w_current, o_current->arc->x - o_current->arc->width / 2,
                            o_current->arc->y + o_current->arc->height / 2,
                            &sx1, &sy1);
-  WORLDtoSCREEN (toplevel, o_current->arc->x + o_current->arc->width / 2,
+  WORLDtoSCREEN (w_current, o_current->arc->x + o_current->arc->width / 2,
                            o_current->arc->y - o_current->arc->height / 2,
                            &sx2, &sy2);
 
@@ -130,12 +130,10 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  */
 void o_arc_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-
   int cx, cy, radius;
 
-  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &cx, &cy);
-  radius = SCREENabs(toplevel, w_current->distance);
+  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &cx, &cy);
+  radius = SCREENabs (w_current, w_current->distance);
 
   /* FIXME: This isn't a tight bounding box */
   o_invalidate_rect (w_current, cx - radius, cy - radius,
@@ -157,7 +155,6 @@ void o_arc_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_arc_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int sx1, sy1, sx2, sy2;
   int line_width = 1;
   int color;
@@ -172,10 +169,10 @@ void o_arc_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
     color = o_current->color;
   }
 
-  WORLDtoSCREEN (toplevel, o_current->arc->x + dx - o_current->arc->width / 2,
+  WORLDtoSCREEN (w_current, o_current->arc->x + dx - o_current->arc->width / 2,
                            o_current->arc->y + dy + o_current->arc->height / 2,
                            &sx1, &sy1);
-  WORLDtoSCREEN (toplevel, o_current->arc->x + dx + o_current->arc->width / 2,
+  WORLDtoSCREEN (w_current, o_current->arc->x + dx + o_current->arc->width / 2,
                            o_current->arc->y + dy- o_current->arc->height / 2,
                            &sx2, &sy2);
 
@@ -351,8 +348,8 @@ void o_arc_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
      * The radius is taken as the biggest distance on the x and y
      * axis between the center of the arc and the mouse position.
      */		
-    diff_x = abs(w_current->first_wx - snap_grid(w_current->toplevel, w_x));
-    diff_y = abs(w_current->first_wy - snap_grid(w_current->toplevel, w_y));
+    diff_x = abs(w_current->first_wx - snap_grid (w_current, w_x));
+    diff_y = abs(w_current->first_wy - snap_grid (w_current, w_y));
     w_current->distance = max(diff_x, diff_y);
   }
   else if((whichone == ARC_START_ANGLE) || (whichone == ARC_END_ANGLE)) {
@@ -395,19 +392,17 @@ void o_arc_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
  */
 void o_arc_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-
   double rad_angle;
   double radius;
   double cx, cy;
   int sx1, sy1, sx2, sy2, rx, ry;
 
-  WORLDtoSCREEN (toplevel, w_current->first_wx - w_current->distance,
-                           w_current->first_wy + w_current->distance,
-                           &sx1, &sy1);
-  WORLDtoSCREEN (toplevel, w_current->first_wx + w_current->distance,
-                           w_current->first_wy - w_current->distance,
-                           &sx2, &sy2);
+  WORLDtoSCREEN (w_current, w_current->first_wx - w_current->distance,
+                            w_current->first_wy + w_current->distance,
+                            &sx1, &sy1);
+  WORLDtoSCREEN (w_current, w_current->first_wx + w_current->distance,
+                            w_current->first_wy - w_current->distance,
+                            &sx2, &sy2);
 
   radius = (double)(sy2 - sy1) / 2.;
   cx = (double)(sx1 + sx2) / 2.;
@@ -445,7 +440,6 @@ void o_arc_draw_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_arc_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int radius, x, y, start_angle, end_angle;
   int x1, y1, x2, y2;
 
@@ -461,8 +455,8 @@ void o_arc_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
    *   <DT>*</DT><DD>one at the end of the arc - at (<B>x2</B>,<B>y2</B>).
    */
 
-  WORLDtoSCREEN( toplevel, o_current->arc->x, o_current->arc->y, &x, &y );
-  radius      = SCREENabs( toplevel, o_current->arc->width / 2 );
+  WORLDtoSCREEN (w_current, o_current->arc->x, o_current->arc->y, &x, &y);
+  radius      = SCREENabs (w_current, o_current->arc->width / 2);
   start_angle = o_current->arc->start_angle;
   end_angle   = o_current->arc->end_angle;
 

@@ -79,7 +79,7 @@ OBJECT *o_grips_search_world(GSCHEM_TOPLEVEL *w_current, int x, int y, int *whic
 
   /* get the size of the grip according to zoom level */
   size = o_grips_size(w_current);
-  w_size = WORLDabs(toplevel, size );
+  w_size = WORLDabs (w_current, size );
 
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );
   while (s_current != NULL) {
@@ -1527,13 +1527,13 @@ int o_grips_size(GSCHEM_TOPLEVEL *w_current)
   factor = (int) toplevel->page_current->to_world_x_constant;
   if (factor > SMALL_ZOOMFACTOR1) {
     /* big zoom factor : small size converted to screen unit */
-    size = SCREENabs(toplevel, GRIP_SIZE1);
+    size = SCREENabs (w_current, GRIP_SIZE1);
   } else if (factor > SMALL_ZOOMFACTOR2) {
     /* medium zoom factor : medium size converted to screen unit */
-    size = SCREENabs(toplevel, GRIP_SIZE2);
+    size = SCREENabs (w_current, GRIP_SIZE2);
   } else {
     /* small zoom factor : big size converted to screen unit */
-    size = SCREENabs(toplevel, GRIP_SIZE3);
+    size = SCREENabs (w_current, GRIP_SIZE3);
   }
   
   return size;

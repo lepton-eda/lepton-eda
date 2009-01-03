@@ -346,8 +346,8 @@ void o_move_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
        of the object that is aligned with the grid */
     if (resnap) {
       if (o_get_position(toplevel, &object_x, &object_y, object)) {
-        w_x += snap_grid(toplevel, object_x) - object_x;
-        w_y += snap_grid(toplevel, object_y) - object_y;
+        w_x += snap_grid (w_current, object_x) - object_x;
+        w_y += snap_grid (w_current, object_y) - object_y;
       }
     }
   }
@@ -392,10 +392,10 @@ void o_move_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
             dy2 = w_current->second_wy - w_current->first_wy;
           }
 
-          WORLDtoSCREEN (toplevel, object->line->x[0] + dx1,
-                                   object->line->y[0] + dy1, &x1, &y1);
-          WORLDtoSCREEN (toplevel, object->line->x[1] + dx2,
-                                   object->line->y[1] + dy2, &x2, &y2);
+          WORLDtoSCREEN (w_current, object->line->x[0] + dx1,
+                                    object->line->y[0] + dy1, &x1, &y1);
+          WORLDtoSCREEN (w_current, object->line->x[1] + dx2,
+                                    object->line->y[1] + dy2, &x2, &y2);
 
           o_invalidate_rect (w_current, x1, y1, x2, y2);
       }

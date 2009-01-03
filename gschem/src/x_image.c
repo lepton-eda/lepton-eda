@@ -638,16 +638,10 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
 
   new_w_current.toplevel = &toplevel;
 
-  WORLDtoSCREEN(&toplevel, 
-      toplevel.page_current->right,
-      toplevel.page_current->left,
-      &s_right,
-      &s_left);
-  WORLDtoSCREEN(&toplevel, 
-      toplevel.page_current->bottom,
-      toplevel.page_current->top,
-      &s_bottom,
-      &s_top);
+  WORLDtoSCREEN (&new_w_current, toplevel.page_current->right,
+                                 toplevel.page_current->left, &s_right, &s_left);
+  WORLDtoSCREEN (&new_w_current, toplevel.page_current->bottom,
+                                 toplevel.page_current->top,  &s_bottom, &s_top);
 
   size_x = s_left - s_right;
   size_y = s_bottom - s_top;

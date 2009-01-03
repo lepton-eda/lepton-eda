@@ -102,7 +102,7 @@ void o_net_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   size = 1;
 
   if (toplevel->net_style == THICK ) {
-    size = SCREENabs(toplevel, NET_WIDTH);
+    size = SCREENabs (w_current, NET_WIDTH);
 
     if (size < 1)
       size=1;
@@ -153,12 +153,12 @@ void o_net_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
   }
 
   if (toplevel->net_style == THICK ) {
-    size = SCREENabs(toplevel, NET_WIDTH);
+    size = SCREENabs (w_current, NET_WIDTH);
     size += 1;
   }
 
-  WORLDtoSCREEN(toplevel, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0]);
-  WORLDtoSCREEN(toplevel, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1]);
+  WORLDtoSCREEN (w_current, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0]);
+  WORLDtoSCREEN (w_current, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1]);
 
   gschem_cairo_line (w_current->cr, END_NONE, size, sx[0], sy[0], sx[1], sy[1]);
 
@@ -174,7 +174,6 @@ void o_net_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
 void o_net_draw_stretch (GSCHEM_TOPLEVEL *w_current,
                          int dx, int dy, int whichone, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int color;
   int dx1 = -1, dx2 = -1, dy1 = -1,dy2 = -1;
   int x1, y1, x2, y2;
@@ -201,9 +200,9 @@ void o_net_draw_stretch (GSCHEM_TOPLEVEL *w_current,
     fprintf(stderr, _("Got an invalid which one in o_net_draw_stretch\n"));
   }
 
-  WORLDtoSCREEN (toplevel, o_current->line->x[0] + dx1,
+  WORLDtoSCREEN (w_current, o_current->line->x[0] + dx1,
                            o_current->line->y[0] + dy1, &x1, &y1);
-  WORLDtoSCREEN (toplevel, o_current->line->x[1] + dx2,
+  WORLDtoSCREEN (w_current, o_current->line->x[1] + dx2,
                            o_current->line->y[1] + dy2, &x2, &y2);
 
   gschem_cairo_line (w_current->cr, END_NONE, 1, x1, y1, x2, y2);
@@ -362,7 +361,7 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
   /* max distance of all the different reaches */
   magnetic_reach = max(MAGNETIC_PIN_REACH, MAGNETIC_NET_REACH);
   magnetic_reach = max(magnetic_reach, MAGNETIC_BUS_REACH);
-  w_magnetic_reach = WORLDabs(toplevel, magnetic_reach);
+  w_magnetic_reach = WORLDabs (w_current, magnetic_reach);
 
   /* get the objects of the tiles around the reach region */
   x1 = w_x - w_magnetic_reach;
@@ -375,7 +374,7 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
     for (iter2 = (GList*) iter1->data; iter2 != NULL; iter2 = g_list_next(iter2)) {
       o_current = (OBJECT*) iter2->data;
 
-      if (!visible(toplevel,  o_current->w_left, o_current->w_top, 
+      if (!visible (w_current,  o_current->w_left, o_current->w_top,
 		   o_current->w_right, o_current->w_bottom))
 	continue; /* skip invisible objects */
 
@@ -459,7 +458,7 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
     case (OBJ_NET): magnetic_reach = MAGNETIC_NET_REACH; break;
     case (OBJ_BUS): magnetic_reach = MAGNETIC_BUS_REACH; break;
     }
-    if (minbest > WORLDabs(toplevel, magnetic_reach)) {
+    if (minbest > WORLDabs (w_current, magnetic_reach)) {
       w_current->magnetic_wx = -1;
       w_current->magnetic_wy = -1;
     }
@@ -563,8 +562,6 @@ void o_net_start_magnetic(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_net_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-
   if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
     w_current->first_wx = w_current->magnetic_wx;
     w_current->first_wy = w_current->magnetic_wy;
@@ -577,8 +574,8 @@ void o_net_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->second_wx = w_current->third_wx = w_current->first_wx;
   w_current->second_wy = w_current->third_wy = w_current->first_wy;
 
-  if (w_current->first_wx != snap_grid(toplevel, w_current->first_wx)
-      || w_current->first_wy != snap_grid(toplevel, w_current->first_wy))
+  if (w_current->first_wx != snap_grid (w_current, w_current->first_wx)
+      || w_current->first_wy != snap_grid (w_current, w_current->first_wy))
       s_log_message(_("Warning: Starting net at off grid coordinate\n"));
 
   if (w_current->net_direction_mode)
@@ -639,8 +636,8 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
     color = toplevel->override_net_color;
   }
 
-  if (w_current->third_wx != snap_grid(toplevel, w_current->third_wx)
-      || w_current->third_wy != snap_grid(toplevel, w_current->third_wy))
+  if (w_current->third_wx != snap_grid (w_current, w_current->third_wx)
+      || w_current->third_wy != snap_grid (w_current, w_current->third_wy))
       s_log_message(_("Warning: Ending net at off grid coordinate\n"));
 
   if (!primary_zero_length ) {
@@ -815,17 +812,17 @@ void o_net_draw_rubber(GSCHEM_TOPLEVEL *w_current)
   int magnetic_x, magnetic_y;
   int first_x, first_y, third_x, third_y, second_x, second_y;
 
-  WORLDtoSCREEN(toplevel, w_current->magnetic_wx, w_current->magnetic_wy,
-		&magnetic_x, &magnetic_y);
-  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy,
-		&first_x, &first_y);
-  WORLDtoSCREEN(toplevel, w_current->third_wx, w_current->third_wy,
-		&third_x, &third_y);
-  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy,
-		&second_x, &second_y);
+  WORLDtoSCREEN (w_current, w_current->magnetic_wx, w_current->magnetic_wy,
+                 &magnetic_x, &magnetic_y);
+  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy,
+                 &first_x, &first_y);
+  WORLDtoSCREEN (w_current, w_current->third_wx, w_current->third_wy,
+                 &third_x, &third_y);
+  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy,
+                 &second_x, &second_y);
 
   if (toplevel->net_style == THICK)
-    size = SCREENabs(toplevel, NET_WIDTH);
+    size = SCREENabs (w_current, NET_WIDTH);
 
   size = max (size, 1);
 
@@ -865,17 +862,17 @@ void o_net_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
   int first_x, first_y, third_x, third_y, second_x, second_y;
   int x1, y1, x2, y2;
 
-  WORLDtoSCREEN (toplevel, w_current->magnetic_wx, w_current->magnetic_wy,
+  WORLDtoSCREEN (w_current, w_current->magnetic_wx, w_current->magnetic_wy,
                  &magnetic_x, &magnetic_y);
-  WORLDtoSCREEN (toplevel, w_current->first_wx, w_current->first_wy,
+  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy,
                  &first_x, &first_y);
-  WORLDtoSCREEN (toplevel, w_current->third_wx, w_current->third_wy,
+  WORLDtoSCREEN (w_current, w_current->third_wx, w_current->third_wy,
                  &third_x, &third_y);
-  WORLDtoSCREEN (toplevel, w_current->second_wx, w_current->second_wy,
+  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy,
                  &second_x, &second_y);
 
   if (toplevel->net_style == THICK) {
-    size = SCREENabs (toplevel, NET_WIDTH);
+    size = SCREENabs (w_current, NET_WIDTH);
   }
   size = max (size, 0);
   bloat = size / 2;

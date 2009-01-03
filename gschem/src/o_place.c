@@ -211,8 +211,8 @@ void o_place_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
   /* Find the bounds of the drawing to be done */
   world_get_object_glist_bounds (toplevel, toplevel->page_current->place_list,
                                  &left, &top, &right, &bottom);
-  WORLDtoSCREEN (toplevel, left + diff_x, top + diff_y, &s_left, &s_top);
-  WORLDtoSCREEN (toplevel, right + diff_x, bottom + diff_y, &s_right, &s_bottom);
+  WORLDtoSCREEN (w_current, left + diff_x, top + diff_y, &s_left, &s_top);
+  WORLDtoSCREEN (w_current, right + diff_x, bottom + diff_y, &s_right, &s_bottom);
 
   o_invalidate_rect (w_current, s_left, s_top, s_right, s_bottom);
 }
@@ -291,8 +291,8 @@ void o_place_draw_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
     world_get_object_glist_bounds (toplevel,
                                    toplevel->page_current->place_list,
                                    &left, &top, &right, &bottom);
-    WORLDtoSCREEN(toplevel, left + diff_x, top + diff_y, &s_left, &s_top);
-    WORLDtoSCREEN(toplevel, right + diff_x, bottom + diff_y, &s_right, &s_bottom);
+    WORLDtoSCREEN (w_current, left + diff_x, top + diff_y, &s_left, &s_top);
+    WORLDtoSCREEN (w_current, right + diff_x, bottom + diff_y, &s_right, &s_bottom);
 
     gschem_cairo_box (w_current->cr, 1, s_left, s_top, s_right, s_bottom);
 

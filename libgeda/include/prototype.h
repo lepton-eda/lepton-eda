@@ -69,24 +69,10 @@ GdkPixbuf *gdk_pixbuf_mirror_flip(GdkPixbuf *src, gint mirror, gint flip);
 void libgeda_init(void);
 
 /* m_basic.c */
-int mil_x(TOPLEVEL *toplevel, int val);
-int mil_y(TOPLEVEL *toplevel, int val);
-int pix_x(TOPLEVEL *toplevel, int val);
-int pix_y(TOPLEVEL *toplevel, int val);
-void WORLDtoSCREEN(TOPLEVEL *toplevel, int x, int y, int *mil_x, int *mil_y);
-void SCREENtoWORLD(TOPLEVEL *toplevel, int mx, int my, int *x, int *y);
-int snap_grid(TOPLEVEL *toplevel, int input);
-int SCREENabs(TOPLEVEL *toplevel, int val);
-int WORLDabs(TOPLEVEL *toplevel, int val);
 void set_window(TOPLEVEL *toplevel, PAGE *page, int xmin, int xmax, int ymin, int ymax);
-int on_snap(int val);
-int SCREENclip_change(TOPLEVEL *toplevel, int *x1, int *y1, int *x2, int *y2);
-int clip_nochange(TOPLEVEL *toplevel, int x1, int y1, int x2, int y2);
-int visible(TOPLEVEL *toplevel, int wleft, int wtop, int wright, int wbottom);
 void rotate_point(int x, int y, int angle, int *newx, int *newy);
 void rotate_point_90(int x, int y, int angle, int *newx, int *newy);
 void PAPERSIZEtoWORLD(int width, int height, int border, int *right, int *bottom);
-double round_5_2_1(double unrounded);
 
 /* m_hatch.c */
 void m_hatch_box(BOX *box, gint angle, gint pitch, GArray *lines);

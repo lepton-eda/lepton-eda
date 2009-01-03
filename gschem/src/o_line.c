@@ -92,13 +92,13 @@ void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   else
   color = x_color_lookup (o_current->color);
 	
-  line_width = SCREENabs( toplevel, o_current->line_width );
+  line_width = SCREENabs (w_current, o_current->line_width);
   if( line_width <= 0) {
     line_width = 1;
   }
 
-  length = SCREENabs( toplevel, o_current->line_length );
-  space = SCREENabs( toplevel, o_current->line_space );
+  length = SCREENabs (w_current, o_current->line_length);
+  space = SCREENabs (w_current, o_current->line_space);
 
   gschem_cairo_line (w_current->cr, o_current->line_end,
                      line_width, x1, y1, x2, y2);
@@ -123,11 +123,10 @@ void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  */
 void o_line_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
 
-  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
   o_invalidate_rect (w_current, x1, y1, x2, y2);
 }
@@ -145,7 +144,6 @@ void o_line_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_line_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int color;
   int sx[2], sy[2];
 
@@ -159,8 +157,8 @@ void o_line_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
     color = o_current->color;
   }
 
-  WORLDtoSCREEN(toplevel, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0]);
-  WORLDtoSCREEN(toplevel, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1]);
+  WORLDtoSCREEN (w_current, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0]);
+  WORLDtoSCREEN (w_current, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1]);
 
   gschem_cairo_line (w_current->cr, END_NONE, 1, sx[0], sy[0], sx[1], sy[1]);
   gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
@@ -294,11 +292,10 @@ void o_line_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_line_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
 
-  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
   gschem_cairo_line (w_current->cr, END_NONE, 1, x1, y1, x2, y2);
 
@@ -318,14 +315,13 @@ void o_line_draw_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_line_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int x[2], y[2];
 
   if (w_current->draw_grips == FALSE)
 	  return;
 
-  WORLDtoSCREEN( toplevel, o_current->line->x[0], o_current->line->y[0], &x[0], &y[0] );
-  WORLDtoSCREEN( toplevel, o_current->line->x[1], o_current->line->y[1], &x[1], &y[1] );
+  WORLDtoSCREEN (w_current, o_current->line->x[0], o_current->line->y[0], &x[0], &y[0]);
+  WORLDtoSCREEN (w_current, o_current->line->x[1], o_current->line->y[1], &x[1], &y[1]);
 
   /* draw the grip on line end 1 */
   o_grips_draw(w_current, x[LINE_END1], y[LINE_END1]);
@@ -354,8 +350,8 @@ int o_line_visible (GSCHEM_TOPLEVEL *w_current, LINE *line,
     return(TRUE);
   }
 
-  WORLDtoSCREEN (w_current->toplevel, line->x[0], line->y[0], x1, y1);
-  WORLDtoSCREEN (w_current->toplevel, line->x[1], line->y[1], x2, y2);
+  WORLDtoSCREEN (w_current, line->x[0], line->y[0], x1, y1);
+  WORLDtoSCREEN (w_current, line->x[1], line->y[1], x2, y2);
 
-  return SCREENclip_change (w_current->toplevel, x1, y1, x2, y2);
+  return SCREENclip_change (w_current, x1, y1, x2, y2);
 }

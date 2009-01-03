@@ -232,12 +232,12 @@ void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset)
                                  &w_rright, &w_rbottom);
 
   /*! \todo do we want snap grid here? */
-  x = snap_grid( toplevel, w_rleft );
+  x = snap_grid (w_current, w_rleft);
   /* WARNING: w_rtop isn't the top of the bounds, it is the smaller
    * y_coordinate, which represents in the bottom in world coords.
    * These variables are as named from when screen-coords (which had 
    * the correct sense) were in use . */
-  y = snap_grid( toplevel, w_rtop );
+  y = snap_grid (w_current, w_rtop);
 
   iter = s_page_objects (toplevel->page_current);
   while (iter != NULL) {

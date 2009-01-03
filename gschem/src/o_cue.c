@@ -153,14 +153,14 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
   printf("type: %d count: %d\n", type, count);
 #endif
   
-  WORLDtoSCREEN(toplevel, x, y, &screen_x, &screen_y);
+  WORLDtoSCREEN (w_current, x, y, &screen_x, &screen_y);
   
   switch(type) {
 
     case(CONN_ENDPOINT):
       if (object->type == OBJ_NET) { /* only nets have these cues */
         if (count < 1) { /* Didn't find anything connected there */
-          size = SCREENabs(toplevel, CUE_BOX_SIZE);
+          size = SCREENabs (w_current, CUE_BOX_SIZE);
           x2size = 2 * size;
           if (toplevel->DONT_REDRAW == 0) {
             o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
@@ -176,9 +176,9 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
           /* draw circle */
 
           if (bus_involved) {
-            size = SCREENabs(toplevel, CUE_CIRCLE_LARGE_SIZE) / 2;
+            size = SCREENabs (w_current, CUE_CIRCLE_LARGE_SIZE) / 2;
           } else {
-            size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE) / 2;
+            size = SCREENabs (w_current, CUE_CIRCLE_SMALL_SIZE) / 2;
           }
           x2size = 2 * size;
           if (toplevel->DONT_REDRAW == 0) {
@@ -192,9 +192,9 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
         /* Didn't find anything connected there */
         if (count < 1 && object->whichend == whichone) {
           if (bus_involved) {
-            size = SCREENabs(toplevel, PIN_CUE_SIZE_BUS);
+            size = SCREENabs (w_current, PIN_CUE_SIZE_BUS);
           } else {
-            size = SCREENabs(toplevel, PIN_CUE_SIZE_NET);
+            size = SCREENabs (w_current, PIN_CUE_SIZE_NET);
           }
           x2size = size * 2;
 
@@ -202,7 +202,7 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
 
           pinsize = 1;
           if (toplevel->pin_style == THICK )
-            pinsize = SCREENabs(toplevel, object->line_width);
+            pinsize = SCREENabs (w_current, object->line_width);
 
           if (toplevel->DONT_REDRAW == 0) {
             o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
@@ -246,9 +246,9 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
   
       /* draw circle */
       if (bus_involved) {
-        size = SCREENabs(toplevel, CUE_CIRCLE_LARGE_SIZE) / 2;
+        size = SCREENabs (w_current, CUE_CIRCLE_LARGE_SIZE) / 2;
       } else {
-        size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE) / 2;
+        size = SCREENabs (w_current, CUE_CIRCLE_SMALL_SIZE) / 2;
       }
       x2size = size * 2;
 
@@ -295,14 +295,14 @@ void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
         x = conn->x;
         y = conn->y;
 
-        WORLDtoSCREEN(toplevel, x, y, &screen_x, &screen_y);
+        WORLDtoSCREEN (w_current, x, y, &screen_x, &screen_y);
 
         /* draw circle */
         if (conn->other_object &&
             (object->type == OBJ_BUS || conn->other_object->type == OBJ_BUS)) {
-          size = SCREENabs(toplevel, CUE_CIRCLE_LARGE_SIZE) / 2;
+          size = SCREENabs (w_current, CUE_CIRCLE_LARGE_SIZE) / 2;
         } else {
-          size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE) / 2;
+          size = SCREENabs (w_current, CUE_CIRCLE_SMALL_SIZE) / 2;
         }
         x2size = size * 2;
 

@@ -21,6 +21,7 @@ gschem_SOURCES = \
 	i_basic.c \
 	i_callbacks.c \
 	i_vars.c \
+	m_basic.c \
 	o_arc.c \
 	o_attrib.c \
 	o_basic.c \

@@ -59,7 +59,7 @@ void o_bus_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   size = 1;
 
   if (toplevel->bus_style == THICK ) {
-    size = SCREENabs(toplevel, BUS_WIDTH);
+    size = SCREENabs (w_current, BUS_WIDTH);
 
     if (size < 1)
       size=1;
@@ -111,12 +111,12 @@ void o_bus_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
 
 
   if (toplevel->bus_style == THICK ) {
-    size = SCREENabs(toplevel, BUS_WIDTH);
+    size = SCREENabs (w_current, BUS_WIDTH);
     size += 1;
   }
 
-  WORLDtoSCREEN(toplevel, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0] );
-  WORLDtoSCREEN(toplevel, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1] );
+  WORLDtoSCREEN (w_current, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0]);
+  WORLDtoSCREEN (w_current, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1]);
 
   gschem_cairo_line (w_current->cr, END_NONE, 1, sx[0], sy[0], sx[1], sy[1]);
 
@@ -132,7 +132,6 @@ void o_bus_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
 void o_bus_draw_stretch (GSCHEM_TOPLEVEL *w_current,
                          int dx, int dy, int whichone, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int color;
   int dx1= - 1, dy1 = - 1, dx2 = -1, dy2 = -1;
   int x1, y1, x2, y2;
@@ -159,10 +158,10 @@ void o_bus_draw_stretch (GSCHEM_TOPLEVEL *w_current,
     fprintf(stderr, _("Got an invalid which one in o_bus_draw_stretch\n"));
   }
 
-  WORLDtoSCREEN (toplevel, o_current->line->x[0] + dx1,
-                           o_current->line->y[0] + dy1, &x1, &y1);
-  WORLDtoSCREEN (toplevel, o_current->line->x[1] + dx2,
-                           o_current->line->y[1] + dy2, &x2, &y2);
+  WORLDtoSCREEN (w_current, o_current->line->x[0] + dx1,
+                            o_current->line->y[0] + dy1, &x1, &y1);
+  WORLDtoSCREEN (w_current, o_current->line->x[1] + dx2,
+                            o_current->line->y[1] + dy2, &x2, &y2);
 
   gschem_cairo_line (w_current->cr, END_NONE, 1, x1, y1, x2, y2);
 
@@ -302,11 +301,11 @@ void o_bus_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
   int min_x, min_y, max_x, max_y;
   int bloat = 0;
 
-  WORLDtoSCREEN (toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN (toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
   if (toplevel->bus_style == THICK ) {
-    bloat = SCREENabs(toplevel, BUS_WIDTH) / 2;
+    bloat = SCREENabs (w_current, BUS_WIDTH) / 2;
   }
 
   min_x = min (x1, x2) - bloat;
@@ -333,11 +332,11 @@ void o_bus_draw_rubber (GSCHEM_TOPLEVEL *w_current)
   TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2, size = 0;
 
-  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
   if (toplevel->bus_style == THICK)
-    size = SCREENabs(toplevel, BUS_WIDTH);
+    size = SCREENabs (w_current, BUS_WIDTH);
 
   if (size < 1)
     size = 1;

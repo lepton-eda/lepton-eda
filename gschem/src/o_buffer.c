@@ -129,8 +129,8 @@ void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
   w_current->first_wy = w_y;
 
   /* snap x and y to the grid, pointed out by Martin Benes */
-  x = snap_grid(toplevel, rleft);
-  y = snap_grid(toplevel, rtop);
+  x = snap_grid (w_current, rleft);
+  y = snap_grid (w_current, rtop);
 
   o_glist_translate_world (toplevel, w_x - x, w_y - y,
                            toplevel->page_current->place_list);

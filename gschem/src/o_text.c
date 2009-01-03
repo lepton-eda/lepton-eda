@@ -87,8 +87,8 @@ void o_text_draw_rectangle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
      it's place */
 
   /* NOTE THAT THE TOP AND BOTTOM ARE REVERSED THROUGHT THE WHOLE OF GEDA FOR WORLD COORDS */
-  WORLDtoSCREEN( toplevel, o_current->w_left, o_current->w_bottom, &left, &top );
-  WORLDtoSCREEN( toplevel, o_current->w_right, o_current->w_top, &right, &bottom );
+  WORLDtoSCREEN (w_current, o_current->w_left, o_current->w_bottom, &left, &top);
+  WORLDtoSCREEN (w_current, o_current->w_right, o_current->w_top, &right, &bottom);
 
   if (toplevel->override_color != -1 ) {  /* Override */
     color = x_get_color (toplevel->override_color);
@@ -142,9 +142,9 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
         gdk_gc_set_foreground (w_current->gc, x_get_color (LOCK_COLOR));
       }
 
-      offset = SCREENabs(toplevel, 10);
-      small_dist = SCREENabs(toplevel, 20);
-      WORLDtoSCREEN( toplevel, o_current->text->x, o_current->text->y, &screen_x1, &screen_y1 );
+      offset = SCREENabs (w_current, 10);
+      small_dist = SCREENabs (w_current, 20);
+      WORLDtoSCREEN (w_current, o_current->text->x, o_current->text->y, &screen_x1, &screen_y1);
       screen_x1 += offset;
       screen_y1 += offset;
       if (toplevel->DONT_REDRAW == 0) {
@@ -181,13 +181,13 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  small_dist = SCREENabs(toplevel, 10);
+  small_dist = SCREENabs (w_current, 10);
 
   /* Switch of mark drawing for non-selected text, and at small sizes */
   if (!o_current->selected || small_dist < MINIMUM_MARK_SMALL_DIST)
     return;
 
-  WORLDtoSCREEN( toplevel, o_current->text->x, o_current->text->y, &screen_x1, &screen_y1 );
+  WORLDtoSCREEN (w_current, o_current->text->x, o_current->text->y, &screen_x1, &screen_y1);
 
   /* this is not really a fix, but a lame patch */
   /* not having this will cause a bad draw of things when coords */
@@ -244,8 +244,8 @@ void o_text_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
   } else {
     /* text is too small so go through and draw a line in
        it's place */
-    WORLDtoSCREEN(toplevel, o_current->w_left + dx, o_current->w_bottom + dy, &left, &top);
-    WORLDtoSCREEN(toplevel, o_current->w_right + dx, o_current->w_top + dy, &right, &bottom);
+    WORLDtoSCREEN (w_current, o_current->w_left + dx, o_current->w_bottom + dy, &left, &top);
+    WORLDtoSCREEN (w_current, o_current->w_right + dx, o_current->w_top + dy, &right, &bottom);
 
     if (o_current->saved_color != -1) {
       color = o_current->saved_color;

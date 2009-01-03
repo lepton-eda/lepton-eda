@@ -205,8 +205,8 @@ void a_pan_mouse(GSCHEM_TOPLEVEL *w_current, int diff_x, int diff_y)
   page_cx = (toplevel->page_current->left + toplevel->page_current->right) / 2.0;
   page_cy = (toplevel->page_current->top + toplevel->page_current->bottom) / 2.0;
 
-  world_cx = page_cx - WORLDabs(toplevel, diff_x);
-  world_cy = page_cy + WORLDabs(toplevel, diff_y);
+  world_cx = page_cx - WORLDabs (w_current, diff_x);
+  world_cy = page_cy + WORLDabs (w_current, diff_y);
 
 #if DEBUG
   printf("  world_cx=%f, world_cy=%f, world_dx=%d, world_dy=%d\n",

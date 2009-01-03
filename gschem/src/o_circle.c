@@ -96,13 +96,13 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
    * to an endless loop in function called after. If such a case is encountered
    * the circle is drawn as a solid circle independently of its initial type.
    */
-  line_width = SCREENabs( toplevel, o_current->line_width );
+  line_width = SCREENabs (w_current, o_current->line_width);
   if (line_width <= 0) {
     line_width = 1;
   }
 
-  length = SCREENabs( toplevel, o_current->line_length );
-  space = SCREENabs( toplevel, o_current->line_space );
+  length = SCREENabs (w_current, o_current->line_length);
+  space = SCREENabs (w_current, o_current->line_space);
 
   /*
    * The values needed for the fill operation are taken from the
@@ -125,7 +125,7 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
    * distinct. If such a case is encountered the circle is filled hollow
    * (e.q. not filled).
    */
-  fill_width = SCREENabs( toplevel, o_current->fill_width );
+  fill_width = SCREENabs (w_current, o_current->fill_width);
   if( fill_width <= 0) {
     fill_width = 1;
   }
@@ -179,12 +179,12 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                 color, w_current, o_current->circle,
                 fill_width, angle1, pitch1, angle2, pitch2);
 
-  WORLDtoSCREEN (toplevel, o_current->circle->center_x - o_current->circle->radius,
-                           o_current->circle->center_y + o_current->circle->radius,
-                           &sx1, &sy1);
-  WORLDtoSCREEN (toplevel, o_current->circle->center_x + o_current->circle->radius,
-                           o_current->circle->center_y - o_current->circle->radius,
-                           &sx2, &sy2);
+  WORLDtoSCREEN (w_current, o_current->circle->center_x - o_current->circle->radius,
+                            o_current->circle->center_y + o_current->circle->radius,
+                            &sx1, &sy1);
+  WORLDtoSCREEN (w_current, o_current->circle->center_x + o_current->circle->radius,
+                            o_current->circle->center_y - o_current->circle->radius,
+                            &sx2, &sy2);
 
   cx = (double)(sx1 + sx2) / 2.;
   cy = (double)(sy1 + sy2) / 2.;
@@ -326,8 +326,8 @@ void o_circle_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
     int x1, y1, x2, y2;
     LINE *line = &g_array_index (lines, LINE, i);
 
-    WORLDtoSCREEN (w_current->toplevel, line->x[0], line->y[0], &x1, &y1);
-    WORLDtoSCREEN (w_current->toplevel, line->x[1], line->y[1], &x2, &y2);
+    WORLDtoSCREEN (w_current, line->x[0], line->y[0], &x1, &y1);
+    WORLDtoSCREEN (w_current, line->x[1], line->y[1], &x2, &y2);
     gschem_cairo_line (w_current->cr, END_NONE, fill_width, x1, y1, x2, y2);
   }
   gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE,
@@ -387,11 +387,10 @@ void o_circle_fill_mesh (GdkDrawable *w, GdkGC *gc, COLOR *color,
  */
 void o_circle_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int cx, cy, radius;
 
-  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &cx, &cy);
-  radius = SCREENabs(toplevel, w_current->distance);
+  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &cx, &cy);
+  radius = SCREENabs (w_current, w_current->distance);
 
   o_invalidate_rect (w_current, cx - radius, cy - radius,
                                 cx + radius, cy + radius);
@@ -415,7 +414,6 @@ void o_circle_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_circle_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int sx1, sy1, sx2, sy2;
   double cx, cy;
   double radius;
@@ -431,12 +429,12 @@ void o_circle_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_
     color = o_current->color;
   }
 
-  WORLDtoSCREEN (toplevel, o_current->circle->center_x + dx - o_current->circle->radius,
-                           o_current->circle->center_y + dy + o_current->circle->radius,
-                           &sx1, &sy1);
-  WORLDtoSCREEN (toplevel, o_current->circle->center_x + dx + o_current->circle->radius,
-                           o_current->circle->center_y + dy - o_current->circle->radius,
-                           &sx2, &sy2);
+  WORLDtoSCREEN (w_current, o_current->circle->center_x + dx - o_current->circle->radius,
+                            o_current->circle->center_y + dy + o_current->circle->radius,
+                            &sx1, &sy1);
+  WORLDtoSCREEN (w_current, o_current->circle->center_x + dx + o_current->circle->radius,
+                            o_current->circle->center_y + dy - o_current->circle->radius,
+                            &sx2, &sy2);
 
   cx = (double)(sx1 + sx2) / 2.;
   cy = (double)(sy1 + sy2) / 2.;
@@ -593,19 +591,18 @@ void o_circle_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_circle_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int sx1, sy1, sx2, sy2;
   double cx, cy;
   double radius;
 
   /* draw the circle from the w_current variables */
 
-  WORLDtoSCREEN (toplevel, w_current->first_wx - w_current->distance,
-                           w_current->first_wy + w_current->distance,
-                           &sx1, &sy1);
-  WORLDtoSCREEN (toplevel, w_current->first_wx + w_current->distance,
-                           w_current->first_wy - w_current->distance,
-                           &sx2, &sy2);
+  WORLDtoSCREEN (w_current, w_current->first_wx - w_current->distance,
+                            w_current->first_wy + w_current->distance,
+                            &sx1, &sy1);
+  WORLDtoSCREEN (w_current, w_current->first_wx + w_current->distance,
+                            w_current->first_wy - w_current->distance,
+                            &sx2, &sy2);
 
   cx = (double)(sx1 + sx2) / 2.;
   cy = (double)(sy1 + sy2) / 2.;
@@ -636,17 +633,16 @@ void o_circle_draw_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_circle_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int x, y;
 
   if (w_current->draw_grips == FALSE)
 	  return;
 
   /* coords of the lower right corner of the square */
-  WORLDtoSCREEN( toplevel,
+  WORLDtoSCREEN (w_current,
                  o_current->circle->center_x + o_current->circle->radius,
                  o_current->circle->center_y - o_current->circle->radius,
-                 &x, &y );
+                 &x, &y);
   
   /* grip on lower right corner of the square */
   o_grips_draw(w_current, x, y);

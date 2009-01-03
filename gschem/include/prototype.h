@@ -452,6 +452,20 @@ gboolean i_callback_close_wm(GtkWidget *widget, GdkEvent *event, gpointer data);
 /* i_vars.c */
 void i_vars_set(GSCHEM_TOPLEVEL *w_current);
 void i_vars_freenames();
+ /* m_basic.c */
+int mil_x(GSCHEM_TOPLEVEL *w_current, int val);
+int mil_y(GSCHEM_TOPLEVEL *w_current, int val);
+int pix_x(GSCHEM_TOPLEVEL *w_current, int val);
+int pix_y(GSCHEM_TOPLEVEL *w_current, int val);
+void WORLDtoSCREEN(GSCHEM_TOPLEVEL *w_current, int x, int y, int *px, int *py);
+void SCREENtoWORLD(GSCHEM_TOPLEVEL *w_current, int mx, int my, int *x, int *y);
+int snap_grid(GSCHEM_TOPLEVEL *w_current, int input);
+int SCREENabs(GSCHEM_TOPLEVEL *w_current, int val);
+int WORLDabs(GSCHEM_TOPLEVEL *w_current, int val);
+int SCREENclip_change(GSCHEM_TOPLEVEL *w_current, int *x1, int *y1, int *x2, int *y2);
+int clip_nochange(GSCHEM_TOPLEVEL *w_current, int x1, int y1, int x2, int y2);
+int visible(GSCHEM_TOPLEVEL *w_current, int wleft, int wtop, int wright, int wbottom);
+double round_5_2_1(double unrounded);
 /* o_arc.c */
 void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_arc_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);

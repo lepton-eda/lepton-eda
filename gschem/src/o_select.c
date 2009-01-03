@@ -242,7 +242,6 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  */
 int o_select_box_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
 
   diff_x = abs(w_current->first_wx - w_x);
@@ -250,7 +249,7 @@ int o_select_box_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /* if we are still close to the button press location,
      then don't enter the selection box mode */
-  if (SCREENabs(toplevel, max(diff_x, diff_y)) < 10) {
+  if (SCREENabs (w_current, max(diff_x, diff_y)) < 10) {
     return FALSE;
   }
 
@@ -295,11 +294,10 @@ void o_select_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_select_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
 
-  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
   o_invalidate_rect (w_current, x1, y1, x2, y1);
   o_invalidate_rect (w_current, x1, y1, x1, y2);
@@ -314,11 +312,10 @@ void o_select_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_select_box_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
 
-  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
   gschem_cairo_box (w_current->cr, 1, x1, y1, x2, y2);
 

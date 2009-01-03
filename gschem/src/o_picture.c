@@ -204,14 +204,13 @@ void picture_selection_dialog (GSCHEM_TOPLEVEL *w_current)
  */
 void o_picture_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int left, top, width, height;
 
-  WORLDtoSCREEN (toplevel,
+  WORLDtoSCREEN (w_current,
                  GET_PICTURE_LEFT(w_current), GET_PICTURE_TOP(w_current),
                  &left, &top);
-  width = SCREENabs(toplevel, GET_PICTURE_WIDTH (w_current));
-  height = SCREENabs(toplevel, GET_PICTURE_HEIGHT(w_current));
+  width = SCREENabs (w_current, GET_PICTURE_WIDTH (w_current));
+  height = SCREENabs (w_current, GET_PICTURE_HEIGHT(w_current));
 
   o_invalidate_rect (w_current, left, top, left + width, top);
   o_invalidate_rect (w_current, left, top, left, top + height);
@@ -272,15 +271,14 @@ void o_picture_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int left, top, width, height;
 
   /* get the width/height and the upper left corner of the picture */
-  WORLDtoSCREEN(toplevel,
-		GET_PICTURE_LEFT(w_current), GET_PICTURE_TOP(w_current),
-		&left, &top);
-  width = SCREENabs(toplevel, GET_PICTURE_WIDTH (w_current));
-  height = SCREENabs(toplevel, GET_PICTURE_HEIGHT(w_current));
+  WORLDtoSCREEN (w_current,
+                 GET_PICTURE_LEFT(w_current), GET_PICTURE_TOP(w_current),
+                 &left, &top);
+  width = SCREENabs (w_current, GET_PICTURE_WIDTH (w_current));
+  height = SCREENabs (w_current, GET_PICTURE_HEIGHT(w_current));
 
   gschem_cairo_box (w_current->cr, 1, left, top, left + width, top + height);
 
@@ -312,10 +310,10 @@ void o_picture_draw (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  WORLDtoSCREEN (toplevel, o_current->picture->upper_x,
-                           o_current->picture->upper_y, &s_upper_x, &s_upper_y);
-  WORLDtoSCREEN (toplevel, o_current->picture->lower_x,
-                           o_current->picture->lower_y, &s_lower_x, &s_lower_y);
+  WORLDtoSCREEN (w_current, o_current->picture->upper_x,
+                            o_current->picture->upper_y, &s_upper_x, &s_upper_y);
+  WORLDtoSCREEN (w_current, o_current->picture->lower_x,
+                            o_current->picture->lower_y, &s_lower_x, &s_lower_y);
 
   if (o_current->picture->displayed_picture != NULL) {
     g_object_unref (o_current->picture->displayed_picture);
@@ -377,15 +375,14 @@ void o_picture_draw (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  */
 void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
 
   if (w_current->draw_grips == FALSE)
     return;
 
-  WORLDtoSCREEN( toplevel, o_current->picture->upper_x, o_current->picture->upper_y,
+  WORLDtoSCREEN (w_current, o_current->picture->upper_x, o_current->picture->upper_y,
                  &s_upper_x, &s_upper_y );
-  WORLDtoSCREEN( toplevel, o_current->picture->lower_x, o_current->picture->lower_y,
+  WORLDtoSCREEN (w_current, o_current->picture->lower_x, o_current->picture->lower_y,
                  &s_lower_x, &s_lower_y );
 
   /* grip on upper left corner (whichone = PICTURE_UPPER_LEFT) */
@@ -425,7 +422,6 @@ void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  */
 void o_picture_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int screen_x1, screen_y1;
   int screen_x2, screen_y2;
   int color;
@@ -434,10 +430,10 @@ void o_picture_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o
     return;
   }
 
-  WORLDtoSCREEN( toplevel, o_current->picture->upper_x + dx, o_current->picture->upper_y + dy,
-                 &screen_x1, &screen_y1 );
-  WORLDtoSCREEN( toplevel, o_current->picture->lower_x + dx, o_current->picture->lower_y + dy,
-                 &screen_x2, &screen_y2 );
+  WORLDtoSCREEN (w_current, o_current->picture->upper_x + dx, o_current->picture->upper_y + dy,
+                 &screen_x1, &screen_y1);
+  WORLDtoSCREEN (w_current, o_current->picture->lower_x + dx, o_current->picture->lower_y + dy,
+                 &screen_x2, &screen_y2);
 
   if (o_current->saved_color != -1) {
     color = o_current->saved_color;

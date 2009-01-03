@@ -66,7 +66,7 @@ static int query_dots_grid_spacing (GSCHEM_TOPLEVEL *w_current)
   } else {
     /* Fixed size grid in world coorinates */
     incr = toplevel->snap_size;
-    screen_incr = SCREENabs (toplevel, incr);
+    screen_incr = SCREENabs (w_current, incr);
     if (screen_incr < w_current->dots_grid_fixed_threshold) {
       /* No grid drawn if the on-screen spacing is less than the threshold */
       incr = -1;
@@ -104,8 +104,8 @@ static void draw_dots_grid_region (GSCHEM_TOPLEVEL *w_current,
 
   gdk_gc_set_foreground (w_current->gc, x_get_color (DOTS_GRID_COLOR));
 
-  SCREENtoWORLD (toplevel, x - 1, y + height + 1, &x_start, &y_start);
-  SCREENtoWORLD (toplevel, x + width + 1, y - 1, &x_end, &y_end);
+  SCREENtoWORLD (w_current, x - 1, y + height + 1, &x_start, &y_start);
+  SCREENtoWORLD (w_current, x + width + 1, y - 1, &x_end, &y_end);
 
   /* figure starting grid coordinates, work by taking the start
    * and end coordinates and rounding down to the nearest
@@ -115,7 +115,7 @@ static void draw_dots_grid_region (GSCHEM_TOPLEVEL *w_current,
 
   for (i = x_start; i <= x_end; i = i + incr) {
     for(j = y_start; j <= y_end; j = j + incr) {
-      WORLDtoSCREEN (toplevel, i,j, &dot_x, &dot_y);
+      WORLDtoSCREEN (w_current, i,j, &dot_x, &dot_y);
       if (inside_region (toplevel->page_current->left,
                          toplevel->page_current->top,
                          toplevel->page_current->right,
@@ -155,7 +155,6 @@ static void draw_mesh (GSCHEM_TOPLEVEL *w_current, int color,
                        int x_start, int y_start, int x_end, int y_end,
                        int incr, int coarse_mult)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int i, j;
   int x1, y1, x2, y2;
   int next_coarse_x, next_coarse_y;
@@ -189,8 +188,8 @@ static void draw_mesh (GSCHEM_TOPLEVEL *w_current, int color,
       next_coarse_y += coarse_incr;
       continue;
     }
-    WORLDtoSCREEN (toplevel, x_start, j, &x1, &y1);
-    WORLDtoSCREEN (toplevel, x_end,   j, &x2, &y2);
+    WORLDtoSCREEN (w_current, x_start, j, &x1, &y1);
+    WORLDtoSCREEN (w_current, x_end,   j, &x2, &y2);
     cairo_move_to (w_current->cr, x1, y1);
     cairo_line_to (w_current->cr, x2, y2);
   }
@@ -203,8 +202,8 @@ static void draw_mesh (GSCHEM_TOPLEVEL *w_current, int color,
       next_coarse_y += coarse_incr;
       continue;
     }
-    WORLDtoSCREEN (toplevel, i, y_start, &x1, &y1);
-    WORLDtoSCREEN (toplevel, i, y_end,   &x2, &y2);
+    WORLDtoSCREEN (w_current, i, y_start, &x1, &y1);
+    WORLDtoSCREEN (w_current, i, y_end,   &x2, &y2);
     cairo_move_to (w_current->cr, x1, y1);
     cairo_line_to (w_current->cr, x2, y2);
   }
@@ -231,7 +230,7 @@ static int query_mesh_grid_spacing (GSCHEM_TOPLEVEL *w_current)
   int incr, screen_incr;
 
   incr = toplevel->snap_size;
-  screen_incr = SCREENabs (toplevel, incr);
+  screen_incr = SCREENabs (w_current, incr);
 
   /* We draw a fine grid if its on-screen spacing is large enough */
   if (screen_incr >= w_current->mesh_grid_display_threshold) {
@@ -239,7 +238,7 @@ static int query_mesh_grid_spacing (GSCHEM_TOPLEVEL *w_current)
   }
 
   incr *= MESH_COARSE_GRID_MULTIPLIER;
-  screen_incr = SCREENabs (toplevel, incr);
+  screen_incr = SCREENabs (w_current, incr);
 
   /* We draw a coarse grid if its on-screen spacing is large enough */
   if (screen_incr >= w_current->mesh_grid_display_threshold)
@@ -268,10 +267,10 @@ static void draw_mesh_grid_region (GSCHEM_TOPLEVEL *w_current,
   int screen_incr;
 
   incr = toplevel->snap_size;
-  screen_incr = SCREENabs (toplevel, incr);
+  screen_incr = SCREENabs (w_current, incr);
 
-  SCREENtoWORLD (toplevel, x - 1, y + height + 1, &x_start, &y_start);
-  SCREENtoWORLD (toplevel, x + width + 1, y - 1, &x_end, &y_end);
+  SCREENtoWORLD (w_current, x - 1, y + height + 1, &x_start, &y_start);
+  SCREENtoWORLD (w_current, x + width + 1, y - 1, &x_end, &y_end);
 
   /* Draw the fine grid if its on-screen spacing is large enough */
   if (screen_incr >= w_current->mesh_grid_display_threshold) {
@@ -280,7 +279,7 @@ static void draw_mesh_grid_region (GSCHEM_TOPLEVEL *w_current,
   }
 
   incr *= MESH_COARSE_GRID_MULTIPLIER;
-  screen_incr = SCREENabs (toplevel, incr);
+  screen_incr = SCREENabs (w_current, incr);
 
   /* Draw the coarse grid if its on-screen spacing is large enough */
   if (screen_incr >= w_current->mesh_grid_display_threshold) {
@@ -368,10 +367,8 @@ void x_draw_tiles(GSCHEM_TOPLEVEL *w_current)
   for (j = 0; j < MAX_TILES_Y; j++) {
     for (i = 0; i < MAX_TILES_X; i++) {
       t_current = &toplevel->page_current->world_tiles[i][j];
-      WORLDtoSCREEN(toplevel, t_current->left,
-                    t_current->top, &x1, &y1);
-      WORLDtoSCREEN(toplevel, t_current->right,
-                    t_current->bottom, &x2, &y2);
+      WORLDtoSCREEN (w_current, t_current->left, t_current->top, &x1, &y1);
+      WORLDtoSCREEN (w_current, t_current->right, t_current->bottom, &x2, &y2);
 
       screen_x = min(x1, x2);
       screen_y = min(y1, y2);

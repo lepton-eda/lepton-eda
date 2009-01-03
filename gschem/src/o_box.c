@@ -111,18 +111,18 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
    * encountered the box is drawn as a solid box independently of its
    * initial type.
    */
-  line_width = SCREENabs( toplevel, o_current->line_width );
+  line_width = SCREENabs (w_current, o_current->line_width);
   if(line_width <= 0) {
     line_width = 1;
   }
 
-  length = SCREENabs( toplevel, o_current->line_length );
-  space = SCREENabs( toplevel, o_current->line_space );
+  length = SCREENabs (w_current, o_current->line_length);
+  space = SCREENabs (w_current, o_current->line_space);
 
-  WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->upper_y,
-                 &s_upper_x, &s_upper_y );
-  WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->lower_y,
-                 &s_lower_x, &s_lower_y );
+  WORLDtoSCREEN (w_current, o_current->box->upper_x, o_current->box->upper_y,
+                 &s_upper_x, &s_upper_y);
+  WORLDtoSCREEN (w_current, o_current->box->lower_x, o_current->box->lower_y,
+                 &s_lower_x, &s_lower_y);
 
   /*
    * The values needed for the fill operation are taken from the
@@ -146,7 +146,7 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
    * to be distinct. If such a case is encountered the circle is filled
    * hollow (e.q. not filled).
    */
-  fill_width = SCREENabs( toplevel, o_current->fill_width );
+  fill_width = SCREENabs (w_current, o_current->fill_width);
   if(fill_width <= 0) {
     fill_width = 1;
   }
@@ -324,8 +324,8 @@ void o_box_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
     int x1, y1, x2, y2;
     LINE *line = &g_array_index (lines, LINE, i);
 
-    WORLDtoSCREEN (w_current->toplevel, line->x[0], line->y[0], &x1, &y1);
-    WORLDtoSCREEN (w_current->toplevel, line->x[1], line->y[1], &x2, &y2);
+    WORLDtoSCREEN (w_current, line->x[0], line->y[0], &x1, &y1);
+    WORLDtoSCREEN (w_current, line->x[1], line->y[1], &x2, &y2);
     gschem_cairo_line (w_current->cr, END_NONE, fill_width, x1, y1, x2, y2);
   }
   gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE,
@@ -381,11 +381,10 @@ void o_box_fill_mesh (GdkDrawable *w, GdkGC *gc, COLOR *color,
  */
 void o_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
 
-  WORLDtoSCREEN (toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN (toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
   o_invalidate_rect (w_current, x1, y1, x2, y1);
   o_invalidate_rect (w_current, x1, y1, x1, y2);
@@ -408,7 +407,6 @@ void o_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_box_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int screen_x1, screen_y1;
   int screen_x2, screen_y2;
   int color;
@@ -417,10 +415,10 @@ void o_box_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
     return;
   }
 
-  WORLDtoSCREEN(toplevel, o_current->box->upper_x + dx, o_current->box->upper_y + dy,
-                &screen_x1, &screen_y1);
-  WORLDtoSCREEN(toplevel, o_current->box->lower_x + dx, o_current->box->lower_y + dy,
-                &screen_x2, &screen_y2);
+  WORLDtoSCREEN (w_current, o_current->box->upper_x + dx, o_current->box->upper_y + dy,
+                 &screen_x1, &screen_y1);
+  WORLDtoSCREEN (w_current, o_current->box->lower_x + dx, o_current->box->lower_y + dy,
+                 &screen_x2, &screen_y2);
 
   if (o_current->saved_color != -1) {
     color = o_current->saved_color;
@@ -583,11 +581,10 @@ void o_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_box_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
 
-  WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
+  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &x1, &y1);
+  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
   gschem_cairo_box (w_current->cr, 1, x1, y1, x2, y2);
 
@@ -609,16 +606,15 @@ void o_box_draw_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_box_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
 
   if (w_current->draw_grips == FALSE)
 	  return;
   
-  WORLDtoSCREEN( toplevel, o_current->box->upper_x, o_current->box->upper_y,
-                 &s_upper_x, &s_upper_y );
-  WORLDtoSCREEN( toplevel, o_current->box->lower_x, o_current->box->lower_y,
-                 &s_lower_x, &s_lower_y );
+  WORLDtoSCREEN (w_current, o_current->box->upper_x, o_current->box->upper_y,
+                 &s_upper_x, &s_upper_y);
+  WORLDtoSCREEN (w_current, o_current->box->lower_x, o_current->box->lower_y,
+                 &s_lower_x, &s_lower_y);
 
   /* grip on upper left corner (whichone = BOX_UPPER_LEFT) */
   o_grips_draw(w_current, s_upper_x, s_upper_y);
