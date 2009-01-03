@@ -561,6 +561,9 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->which_grip = whichone;
   w_current->which_object = object;
 
+  /* Switch off drawing for the object being modified */
+  object->dont_redraw = TRUE;
+
   /* there is one */
   /* depending on its type, start the modification process */
   switch(object->type) {
@@ -1026,6 +1029,9 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
     return;
   }
 
+  /* Switch drawing of the object back on */
+  object->dont_redraw = FALSE;
+
   switch(object->type) {
 
     case(OBJ_ARC):
@@ -1086,6 +1092,31 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
   toplevel->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);
 }
+
+
+/*! \brief Cancel process of modifying object with grip.
+ *
+ *  \par Function Description
+ *  This function cancels the process of modifying a parameter
+ *  of an object with a grip. It's main utility is to reset the
+ *  dont_redraw flag on the object which was being modified.
+ *
+ *  \param [in,out] w_current  The GSCHEM_TOPLEVEL object.
+ */
+void o_grips_cancel(GSCHEM_TOPLEVEL *w_current)
+{
+  OBJECT *object = w_current->which_object;
+
+  /* reset global variables */
+  w_current->which_grip = -1;
+  w_current->which_object = NULL;
+  w_current->rubber_visible = 0;
+
+  /* Switch drawing of the object back on */
+  g_return_if_fail (object != NULL);
+  object->dont_redraw = FALSE;
+}
+
 
 /*! \brief End process of modifying arc object with grip.
  *  \par Function Description

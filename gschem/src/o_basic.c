@@ -41,7 +41,7 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
                      GdkRectangle *rectangles, int n_rectangles)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  gboolean draw_selected = TRUE;
+  gboolean draw_selected;
   int redraw_state = toplevel->DONT_REDRAW;
   int grip_half_size;
   int cue_half_size;
@@ -87,8 +87,7 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
 
   draw_selected = !(w_current->inside_action &&
                     ((w_current->event_state == MOVE) ||
-                     (w_current->event_state == ENDMOVE) ||
-                     (w_current->event_state == GRIPS)));
+                     (w_current->event_state == ENDMOVE)));
 
   w_current->inside_redraw = 1;
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
@@ -358,6 +357,11 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
           (w_current->event_state == ENDMOVE)) {
         o_move_cancel (w_current);
       }
+
+      /* If we're cancelling from a grip action, call the specific cancel
+       * routine to reset the visibility of the object being modified */
+      if (w_current->event_state == GRIPS)
+        o_grips_cancel (w_current);
 
       /* Free the place list and its contents. If we were in a move
        * action, the list (refering to objects on the page) would

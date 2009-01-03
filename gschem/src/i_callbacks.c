@@ -3556,12 +3556,17 @@ DEFINE_I_CALLBACK(cancel)
     g_object_set_property (G_OBJECT(w_current->cswindow), "hidden", &value);
   }
 
-  /* If we're cancelling from a move action, re-wind the
-   * page contents back to their state before we started */
-  if (w_current->inside_action &&
-      (w_current->event_state == MOVE ||
-       w_current->event_state == ENDMOVE)) {
-    o_move_cancel (w_current);
+  if (w_current->inside_action) {
+    /* If we're cancelling from a move action, re-wind the
+     * page contents back to their state before we started */
+    if (w_current->event_state == MOVE ||
+        w_current->event_state == ENDMOVE)
+      o_move_cancel (w_current);
+
+    /* If we're cancelling from a grip action, call the specific cancel
+     * routine to reset the visibility of the object being modified */
+    if (w_current->event_state == GRIPS)
+      o_grips_cancel (w_current);
   }
 
   /* Free the place list and its contents. If we were in a move
