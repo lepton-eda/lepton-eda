@@ -67,15 +67,18 @@
 #define THICK           1
 
 /* various thicknesses (in mils) */
-#define NET_WIDTH	10
-#define PIN_WIDTH	10
 #define LINE_WIDTH	10
+#define NET_WIDTH	10
+#define PIN_WIDTH_NET	10
 #define BUS_WIDTH	30
+#define PIN_WIDTH_BUS	30
 
 /* various visual cue sizes (in mils) */
 #define CUE_BOX_SIZE 		30
 #define CUE_CIRCLE_SMALL_SIZE	30
 #define CUE_CIRCLE_LARGE_SIZE	60
+#define PIN_CUE_SIZE_NET	30
+#define PIN_CUE_SIZE_BUS	50
 
 /* For text location on component not found graphics */
 #define NOT_FOUND_TEXT_X	100

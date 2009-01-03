@@ -100,14 +100,14 @@ OBJECT *o_pin_new(TOPLEVEL *toplevel,
   new_node->line->y[0] = y1;
   new_node->line->x[1] = x2;
   new_node->line->y[1] = y2;
-  new_node->line_width = PIN_WIDTH;
+
+  o_pin_set_type (new_node, pin_type);
 
   o_pin_recalc (toplevel, new_node);
 
   new_node->draw_func = pin_draw_func;  
   new_node->sel_func = select_func;  
 
-  new_node->pin_type = pin_type;
   new_node->whichend = whichend;
   
   if (!toplevel->ADDING_SEL) {
@@ -324,7 +324,7 @@ void o_pin_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   y2 = o_current->line->y[1] - origin_y;
   pin_width = 2;
   if(toplevel->pin_style == THICK) {
-    pin_width = PIN_WIDTH;
+    pin_width = o_current->line_width;
   }
 
   fprintf(fp, "%d %d %d %d %d line\n",x1,y1,x2,y2,pin_width);
@@ -571,5 +571,31 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
       }
     }
     iter = g_list_next (iter);
+  }
+}
+
+
+/*! \brief Sets the type, and corresponding width of a pin
+ *
+ *  \par Function Description
+ *  Sets the pin's type and width to a particular style.
+ *
+ *  \param [in] o_current  The pin OBJECT being modified
+ *  \param [in] type       The new type of this pin
+ */
+void o_pin_set_type (OBJECT *o_current, int pin_type)
+{
+  switch (pin_type) {
+    default:
+      g_critical ("o_pin_set_type: Got invalid pin type %i\n", pin_type);
+      /* Fall through */
+    case PIN_TYPE_NET:
+      o_current->line_width = PIN_WIDTH_NET;
+      o_current->pin_type = PIN_TYPE_NET;
+      break;
+    case PIN_TYPE_BUS:
+      o_current->line_width = PIN_WIDTH_BUS;
+      o_current->pin_type = PIN_TYPE_BUS;
+      break;
   }
 }

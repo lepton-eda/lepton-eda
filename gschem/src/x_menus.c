@@ -46,6 +46,7 @@ static GtkItemFactoryEntry popup_items[] = {
   { "/sep1", NULL, NULL, 0, "<Separator>"},
   { N_("/Select"), 	  NULL, i_callback_edit_select,       0, NULL},
   { N_("/Edit..."), 	  NULL, i_callback_edit_edit,         0, NULL},
+  { N_("/Edit pin type..."), 	  NULL, i_callback_edit_pin_type,         0, NULL},
   { N_("/Copy"),          NULL, i_callback_edit_copy,         0, NULL},
   { N_("/Move"),          NULL, i_callback_edit_move,         0, NULL},
   { N_("/Delete"),        NULL, i_callback_edit_delete,       0, NULL},

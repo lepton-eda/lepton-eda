@@ -115,36 +115,33 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
   y = object->line->y[whichone];
 
   type = CONN_ENDPOINT;
-  
+
+  if (object->type == OBJ_BUS ||
+       (object->type == OBJ_PIN && object->pin_type == PIN_TYPE_BUS))
+    bus_involved = TRUE;
+
   cl_current = object->conn_list;
   while(cl_current != NULL && !done) {
     conn = (CONN *) cl_current->data;
    
     if (conn->x == x && conn->y == y) {
+
+      if (conn->other_object &&
+           (conn->other_object->type == OBJ_BUS ||
+             (conn->other_object->type == OBJ_PIN &&
+              conn->other_object->pin_type == PIN_TYPE_BUS)))
+        bus_involved=TRUE;
+
       switch(conn->type) {
         
         case(CONN_ENDPOINT):
           count++;
-          if (conn->other_object &&
-              ((object->type == OBJ_NET &&
-               conn->other_object->type == OBJ_BUS) ||
-              (object->type == OBJ_BUS &&
-               conn->other_object->type == OBJ_NET))) {
-            bus_involved=TRUE;
-          }
           break;
 
         case(CONN_MIDPOINT):
           type = CONN_MIDPOINT;
           done = TRUE;
           count = 0;
-          if (conn->other_object &&
-              ((object->type == OBJ_NET &&
-                conn->other_object->type == OBJ_BUS) ||
-               (object->type == OBJ_BUS &&
-               conn->other_object->type == OBJ_NET))) {
-            bus_involved=TRUE;
-          }
           break;
       }
     }
@@ -156,9 +153,6 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
   printf("type: %d count: %d\n", type, count);
 #endif
   
-  size = SCREENabs(toplevel, CUE_BOX_SIZE);
-  x2size = 2 * size;
-
   WORLDtoSCREEN(toplevel, x, y, &screen_x, &screen_y);
   
   switch(type) {
@@ -166,6 +160,8 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
     case(CONN_ENDPOINT):
       if (object->type == OBJ_NET) { /* only nets have these cues */
         if (count < 1) { /* Didn't find anything connected there */
+          size = SCREENabs(toplevel, CUE_BOX_SIZE);
+          x2size = 2 * size;
           if (toplevel->DONT_REDRAW == 0) {
             o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
             cairo_move_to (w_current->cr, screen_x - size, screen_y - size);
@@ -180,9 +176,9 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
           /* draw circle */
 
           if (bus_involved) {
-            size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE) / 2;
-          } else {
             size = SCREENabs(toplevel, CUE_CIRCLE_LARGE_SIZE) / 2;
+          } else {
+            size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE) / 2;
           }
           x2size = 2 * size;
           if (toplevel->DONT_REDRAW == 0) {
@@ -195,14 +191,18 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
       } else if (object->type == OBJ_PIN) {
         /* Didn't find anything connected there */
         if (count < 1 && object->whichend == whichone) {
+          if (bus_involved) {
+            size = SCREENabs(toplevel, PIN_CUE_SIZE_BUS);
+          } else {
+            size = SCREENabs(toplevel, PIN_CUE_SIZE_NET);
+          }
+          x2size = size * 2;
 
           otherone = !whichone;
 
-          pinsize = SCREENabs(toplevel, 10);
-          if (toplevel->pin_style == THICK ) {
-            cairo_set_line_width (w_current->cr, pinsize);
-            cairo_set_line_cap (w_current->cr, CAIRO_LINE_CAP_BUTT);
-          }
+          pinsize = 1;
+          if (toplevel->pin_style == THICK )
+            pinsize = SCREENabs(toplevel, object->line_width);
 
           if (toplevel->DONT_REDRAW == 0) {
             o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
@@ -217,7 +217,8 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
                                    screen_x,         screen_y,
                                    screen_x - size, screen_y);
               }
-              cairo_stroke (w_current->cr);
+              gschem_cairo_stroke (w_current->cr, TYPE_SOLID,
+                                   END_NONE, pinsize, -1, -1);
             } else if (object->line->x[0] == object->line->x[1]) {
               /* vertical line */
               if (object->line->y[whichone] <= object->line->y[otherone]) {
@@ -229,7 +230,8 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
                                    screen_x, screen_y,
                                    screen_x, screen_y + size);
               }
-              cairo_stroke (w_current->cr);
+              gschem_cairo_stroke (w_current->cr, TYPE_SOLID,
+                                   END_NONE, pinsize, -1, -1);
             } else {
               /* angled line */
               /* not supporting rendering of que for angled pin for now. hack */
@@ -244,9 +246,9 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
   
       /* draw circle */
       if (bus_involved) {
-        size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE) / 2;
-      } else {
         size = SCREENabs(toplevel, CUE_CIRCLE_LARGE_SIZE) / 2;
+      } else {
+        size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE) / 2;
       }
       x2size = size * 2;
 
@@ -297,13 +299,10 @@ void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 
         /* draw circle */
         if (conn->other_object &&
-            ( (object->type == OBJ_BUS &&
-               conn->other_object->type == OBJ_NET) ||
-              (object->type == OBJ_NET &&
-               conn->other_object->type == OBJ_BUS))) {
-          size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE) / 2;
-        } else {
+            (object->type == OBJ_BUS || conn->other_object->type == OBJ_BUS)) {
           size = SCREENabs(toplevel, CUE_CIRCLE_LARGE_SIZE) / 2;
+        } else {
+          size = SCREENabs(toplevel, CUE_CIRCLE_SMALL_SIZE) / 2;
         }
         x2size = size * 2;
 

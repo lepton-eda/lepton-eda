@@ -4113,3 +4113,79 @@ int x_dialog_validate_attribute(GtkWindow* parent, char *attribute)
 }
 /***************** End of misc helper dialog boxes **************/
 
+/*! \brief Edit the type of a pin (bus or net)
+ *  \par Function Description
+ *  This function presents an app modal dialog to edit the type of a pin
+ */
+
+void x_dialog_edit_pin_type (GSCHEM_TOPLEVEL *w_current, const GList *obj_list)
+{
+  GtkWidget *dialog;
+  GtkWidget *vbox;
+  GtkWidget *radio1;
+  GtkWidget *radio2;
+  const GList *iter;
+  int new_type;
+
+  if (obj_list == NULL)
+    return;
+
+  dialog = gschem_dialog_new_with_buttons(_("Pin type"),
+                                          GTK_WINDOW(w_current->main_window),
+                                          GTK_DIALOG_MODAL,
+                                          "pin-type-edit", w_current,
+                                          GTK_STOCK_CANCEL,
+                                          GTK_RESPONSE_CANCEL,
+                                          GTK_STOCK_OK,
+                                          GTK_RESPONSE_OK,
+                                          NULL);
+
+  /* Set the alternative button order (ok, cancel, help) for other systems */
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+
+  gtk_container_border_width (GTK_CONTAINER (dialog), DIALOG_BORDER_SPACING);
+  vbox = GTK_DIALOG (dialog)->vbox;
+  gtk_box_set_spacing (GTK_BOX(vbox), DIALOG_V_SPACING);
+
+  radio1 = gtk_radio_button_new_with_label (NULL, _("Net pin"));
+  radio2 = gtk_radio_button_new_with_label_from_widget (GTK_RADIO_BUTTON (radio1),
+                                                        _("Bus pin (graphical)"));
+  /* Pack them into a box, then show all the widgets */
+  gtk_box_pack_start (GTK_BOX (vbox), radio1, TRUE, TRUE, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), radio2, TRUE, TRUE, 2);
+  gtk_widget_show_all (vbox);
+
+  switch (gtk_dialog_run (GTK_DIALOG (dialog))) {
+    case GTK_RESPONSE_OK:
+      new_type = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (radio1)) ?
+                   PIN_TYPE_NET : PIN_TYPE_BUS;
+      for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+        OBJECT *object = iter->data;
+
+        if (object->type == OBJ_PIN) {
+          o_invalidate (w_current, object);
+          s_conn_remove_object (w_current->toplevel, object);
+          o_pin_set_type (object, new_type);
+          s_conn_update_object (w_current->toplevel, object);
+          o_invalidate (w_current, object);
+        }
+      }
+      break;
+
+    case GTK_RESPONSE_CANCEL:
+    default:
+      /* Do nothing */
+      break;
+  }
+
+  gtk_widget_destroy (dialog);
+}
+
+/***************** End of pin type edit dialog box *********************/

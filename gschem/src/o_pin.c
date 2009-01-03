@@ -63,7 +63,7 @@ void o_pin_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if (toplevel->DONT_REDRAW == 0) {
     size = 1;
     if (toplevel->pin_style == THICK) {
-      size = SCREENabs(toplevel, PIN_WIDTH);
+      size = SCREENabs (toplevel, o_current->line_width);
       if (size < 1)
         size=1;
     }
@@ -113,7 +113,7 @@ void o_pin_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
   }
 
   if (toplevel->pin_style == THICK) {
-    size = SCREENabs(toplevel, PIN_WIDTH);
+    size = SCREENabs (toplevel, o_current->line_width);
     if (size < 1) {
       size = 1;
     }
@@ -237,8 +237,9 @@ void o_pin_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
   WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
   WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
+  /* Pins are always first created as net pins, use net pin width */
   if (toplevel->net_style == THICK ) {
-    bloat = SCREENabs (toplevel, PIN_WIDTH) / 2;
+    bloat = SCREENabs (toplevel, PIN_WIDTH_NET) / 2;
   }
 
   min_x = min (x1, x2) - bloat;
@@ -264,8 +265,9 @@ void o_pin_draw_rubber (GSCHEM_TOPLEVEL *w_current)
   WORLDtoSCREEN(toplevel, w_current->first_wx, w_current->first_wy, &x1, &y1);
   WORLDtoSCREEN(toplevel, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
+  /* Pins are always first created as net pins, use net pin width */
   if (toplevel->net_style == THICK )
-    size = SCREENabs(toplevel, PIN_WIDTH);
+    size = SCREENabs(toplevel, PIN_WIDTH_NET);
 
   if (size < 1)
     size = 1;

@@ -292,6 +292,52 @@ void s_conn_update_glist (TOPLEVEL *toplevel, GList *obj_list)
   }
 }
 
+
+/*! \brief Checks if an object is bus, or a bus pin
+ *
+ *  \par Function Description
+ *  Checks if an object is a bus or a bus pin
+ *
+ *  \param object  The OBJECT to test
+ *  \return TRUE if the objects is a bis, or bus pin
+ */
+static int is_bus_related (OBJECT *object)
+{
+  return (object->type == OBJ_BUS ||
+           (object->type == OBJ_PIN && object->pin_type == PIN_TYPE_BUS));
+}
+
+
+/*! \brief Checks if two objects are of compatible types to be connected
+ *
+ *  \par Function Description
+ *  Checks if two objects are legal to be connected together
+ *
+ *  \param object1  First OBJECT
+ *  \param object2  Second OBJECT
+ *  \return TRUE if the objects are compatible, FALSE if not
+ */
+static int check_direct_compat (OBJECT *object1, OBJECT *object2)
+{
+  return (is_bus_related (object1) == is_bus_related (object2));
+}
+
+
+static void add_connection (OBJECT *object, OBJECT *other_object,
+                            int type, int x, int y,
+                            int whichone, int other_whichone)
+{
+  /* Describe the connection */
+  CONN *new_conn = s_conn_return_new (other_object, type, x, y,
+                                      whichone, other_whichone);
+  /* Do uniqness check */
+  if (s_conn_uniq (object->conn_list, new_conn)) {
+    object->conn_list = g_list_append (object->conn_list, new_conn);
+  } else {
+    g_free (new_conn);
+  }
+}
+
 /*! \brief add a line OBJECT to the connection system
  *  \par Function Description
  *  This function searches for all geometrical conections of the OBJECT
@@ -308,392 +354,112 @@ static void s_conn_update_line_object (TOPLEVEL *toplevel, OBJECT *object)
   GList *object_list;
   OBJECT *other_object;
   OBJECT *found;
-  CONN *new_conn;
-  int k;
-  int add_conn;
+  int j, k;
 
   /* loop over all tiles which object appears in */
   for (tl_current = object->tiles;
        tl_current != NULL;
        tl_current = g_list_next (tl_current)) {
-    t_current = (TILE*)tl_current->data;
+    t_current = tl_current->data;
 
-    add_conn = FALSE;
-    
-    object_list = t_current->objects;
-    while (object_list != NULL) {
-      other_object = (OBJECT *) object_list->data;
-      
-#if DEBUG
-      printf("Tile has object: %s\n", other_object->name);
-#endif
+    for (object_list = t_current->objects;
+         object_list != NULL;
+         object_list = g_list_next (object_list)) {
+      other_object = object_list->data;
 
-      /* here is where you check the end points */
+      if (object == other_object)
+        continue;
+
+      /* Here is where you check the end points */
+      /* Check both end points of the other object */
       for (k = 0; k < 2; k++) {
-        /* do first end point */
 
-        if (object->line->x[0] == other_object->line->x[k] &&
-            object->line->y[0] == other_object->line->y[k] &&
-            object != other_object) {
+        /* If the other object is a pin, only check the correct end */
+        if (other_object->type == OBJ_PIN && other_object->whichend != k)
+          continue;
 
-          if (object->type == OBJ_PIN) {
-            if (0 == object->whichend) {
-              if (other_object->type == OBJ_PIN && /* new addition */
-                  k != other_object->whichend ) { /* was 0 */
-                add_conn = FALSE; 
-              } else {
-                add_conn = TRUE;
-              }
-            } else {
-              add_conn = FALSE;
-            }
-          } else if (other_object->type == OBJ_PIN) {
-            if (k == other_object->whichend) {
-              if (object->type == OBJ_PIN && /* new addition */
-                  k != object->whichend ) {
-                add_conn = FALSE; 
-              } else {
-                add_conn = TRUE;
-              }
-            } else {
-              add_conn = FALSE;
-            }
-          } else {
-            add_conn = TRUE;
-          }
+        /* Check both end points of the object */
+        for (j = 0; j < 2; j++) {
 
-          /* check for pin / bus compatibility */
-          /* you cannot connect pins and buses at all */
-          if (add_conn) {
-            if ((object->type == OBJ_PIN && other_object->type == OBJ_BUS) ||
-                (object->type == OBJ_BUS && other_object->type == OBJ_PIN)) {
-              add_conn = FALSE;
-            } else {
-              add_conn = TRUE;
-            }
-          }
+          /* If the object is a pin, only check the correct end */
+          if (object->type == OBJ_PIN && object->whichend != j)
+            continue;
 
-          /* check for net / bus compatibility */
-          /* you cannot connect the endpoint of a bus to a net */
-          /* and the reverse is true as well */
-          if (add_conn) {
-            if ((object->type == OBJ_NET && other_object->type == OBJ_BUS) ||
-                (object->type == OBJ_BUS && other_object->type == OBJ_NET)) {
-              add_conn = FALSE;
-            } else {
-              add_conn = TRUE;
-            }
-          }
-          
-#if DEBUG
-          if (add_conn) {
-            printf("0\n");
-            printf("k: %d\n", k);
-            printf("object: %d\n", object->whichend);
-            printf("other: %d\n\n", other_object->whichend);
-          }
-#endif
+          /* Check for coincidence and compatability between
+             the objects being tested. */
+          if (object->line->x[j] == other_object->line->x[k] &&
+              object->line->y[j] == other_object->line->y[k] &&
+              check_direct_compat (object, other_object)) {
 
-          if (add_conn) {
-            new_conn =
-              s_conn_return_new(other_object, CONN_ENDPOINT,
-                                other_object->line->x[k],
-                                other_object->line->y[k], 0, k);
+            add_connection (object, other_object, CONN_ENDPOINT,
+                            other_object->line->x[k],
+                            other_object->line->y[k], j, k);
 
-            /* do uniqness check */
-            if (s_conn_uniq(object->conn_list, new_conn)) {
-              object->conn_list =
-                g_list_append(object->conn_list, new_conn);
-            } else {
-              g_free(new_conn);
-            }
-
-            new_conn = s_conn_return_new(object, CONN_ENDPOINT,
-                                         object->line->x[0],
-                                         object->line->y[0], k, 0);
-
-            /* do uniqness check */
-            if (s_conn_uniq(other_object->conn_list, new_conn)) {
-              other_object->conn_list =
-                g_list_append(other_object->conn_list,
-                              new_conn);
-            } else {
-              g_free(new_conn);
-            }
-
-#if DEBUG
-            printf("first end point -> %d\n", k);
-#endif
+            add_connection (other_object, object, CONN_ENDPOINT,
+                            object->line->x[j],
+                            object->line->y[j], k, j);
           }
         }
+      }
 
-        /* do second end point */
-        if (object->line->x[1] == other_object->line->x[k] &&
-            object->line->y[1] == other_object->line->y[k] &&
-            object != other_object) {
-          
-          if (object->type == OBJ_PIN) {
-            if (1 == object->whichend) {
-              if (other_object->type == OBJ_PIN && /* new addition */
-                  k != other_object->whichend ) { /* was 1 */
-                add_conn = FALSE; 
-              } else {
-                add_conn = TRUE;
-              }
-            } else {
-              add_conn = FALSE;
-            }
-          } else if (other_object->type == OBJ_PIN) {
-            if (k == other_object->whichend) {
-              if (object->type == OBJ_PIN && /* new addition */
-                  k != object->whichend ) {
-                add_conn = FALSE; 
-              } else {
-                add_conn = TRUE;
-              }       
-            } else {
-              add_conn = FALSE;
-            }
-          } else {
-            add_conn = TRUE;
-          }
+      /* Check both end points of the object against midpoints of the other */
+      for (k = 0; k < 2; k++) {
 
-          /* check for pin / bus compatibility */
-          /* you cannot connect pins and buses at all */
-          if (add_conn) {
-            if ((object->type == OBJ_PIN && other_object->type == OBJ_BUS) ||
-                (object->type == OBJ_BUS && other_object->type == OBJ_PIN)) {
-              add_conn = FALSE;
-            } else {
-              add_conn = TRUE;
-            }
-          }
-
-          /* check for net / bus compatibility */
-          /* you cannot connect the endpoint of a bus to a net */
-          /* and the reverse is true as well */
-          if (add_conn) {
-            if ((object->type == OBJ_NET && other_object->type == OBJ_BUS) ||
-                (object->type == OBJ_BUS && other_object->type == OBJ_NET)) {
-              add_conn = FALSE;
-            } else {
-              add_conn = TRUE;
-            }
-          }
-
-#if DEBUG
-          if (add_conn) {
-            printf("1\n");
-            printf("k: %d\n", k);
-            printf("object: %d\n", object->whichend);
-            printf("other: %d\n\n", other_object->whichend);
-          }
-#endif
-          
-          if (add_conn) {
-            new_conn =
-              s_conn_return_new(other_object, CONN_ENDPOINT,
-                                other_object->line->x[k],
-                                other_object->line->y[k], 1, k);
-
-            /* do uniqness check */
-            if (s_conn_uniq(object->conn_list, new_conn)) {
-              object->conn_list =
-                g_list_append(object->conn_list, new_conn);
-            } else {
-              g_free(new_conn);
-            }
-
-            new_conn = s_conn_return_new(object, CONN_ENDPOINT,
-                                         object->line->x[1],
-                                         object->line->y[1], k, 1);
-
-            /* do uniqness check */
-            if (s_conn_uniq(other_object->conn_list, new_conn)) {
-              other_object->conn_list =
-                g_list_append(other_object->conn_list,
-                              new_conn);
-            } else {
-              g_free(new_conn);
-            }
-
-#if DEBUG
-            printf("second end point -> %d\n", k);
-#endif
-          }
-        }
-        
+        /* If the object is a pin, only check the correct end */
+        if (object->type == OBJ_PIN && object->whichend != k)
+          continue;
 
         /* check for midpoint of other object, k endpoint of current obj*/
-        found = s_conn_check_midpoint(other_object,
-                                      object->line->x[k],
-                                      object->line->y[k]);
+        found = s_conn_check_midpoint (other_object, object->line->x[k],
+                                                     object->line->y[k]);
 
-        /* pins are not allowed midpoint connections (on them) */
-        /* pins can cause midpoint connections (via their endpoints) */
-        if (found && other_object->type != OBJ_PIN) { /* found midpoint */
-          /* have to add it to the current object and other object */
-#if DEBUG         
-          printf("%d endpoint to %s midpoint of: %s\n", k, object->name,
-                 found->name);
-#endif          
+        /* Pins are not allowed midpoint connections onto them. */
+        /* Allow nets to connect to the middle of buses. */
+        /* Allow compatible objects to connect. */
+        if (found && other_object->type != OBJ_PIN &&
+            ((object->type == OBJ_NET && other_object->type == OBJ_BUS) ||
+              check_direct_compat (object, other_object))) {
 
-          if (object->type == OBJ_PIN) {
-            if (k == object->whichend) {
-              add_conn = TRUE;
-            } else {
-              add_conn = FALSE;
-            }
-          } else {
-            add_conn = TRUE;
-          }
+          add_connection (object, other_object, CONN_MIDPOINT,
+                          object->line->x[k],
+                          object->line->y[k], k, -1);
 
-          /* check for pin / bus compatibility */
-          /* you cannot connect pins and buses at all */
-          if (add_conn) {
-            if ((object->type == OBJ_PIN && other_object->type == OBJ_BUS) ||
-                (object->type == OBJ_BUS && other_object->type == OBJ_PIN)) {
-              add_conn = FALSE;
-            } else {
-              add_conn = TRUE;
-            }
-          }
-
-          /* check for bus / net compatibility */
-          /* you cannot have the middle of bus connect to nets */
-          if (add_conn) {
-            if (object->type == OBJ_BUS && other_object->type == OBJ_NET) {
-              add_conn = FALSE;
-            } else {
-              add_conn = TRUE;
-            }
-          }
-
-          if (add_conn) {
-            /* First do the other object and put it in the current */
-            /* object list */
-            new_conn =
-              s_conn_return_new(other_object, CONN_MIDPOINT,
-                                object->line->x[k],
-                                object->line->y[k], k, -1);
-
-            /* do uniqness check */
-            if (s_conn_uniq(object->conn_list, new_conn)) {
-              object->conn_list =
-                g_list_append(object->conn_list, new_conn);
-            } else {
-              g_free(new_conn);
-            }
-
-            /* Next do the current object and put it into the other */
-            /* object list */
-            new_conn = s_conn_return_new(object, CONN_MIDPOINT,
-                                         object->line->x[k],
-                                         object->line->y[k], -1, k);
-
-            /* do uniqness check */
-            if (s_conn_uniq(other_object->conn_list, new_conn)) {
-              other_object->conn_list =
-                g_list_append(other_object->conn_list,
-                              new_conn);
-            } else {
-              g_free(new_conn);
-            }
-
-          }
+          add_connection (other_object, object, CONN_MIDPOINT,
+                          object->line->x[k],
+                          object->line->y[k], -1, k);
         }
-        
-        /****/
+      }
+
+      /* Check both end points of the other object against midpoints of the first */
+      for (k = 0; k < 2; k++) {
+
+        /* If the other object is a pin, only check the correct end */
+        if (other_object->type == OBJ_PIN && other_object->whichend != k)
+          continue;
 
         /* do object's endpoints cross the middle of other_object? */
         /* check for midpoint of other object, k endpoint of current obj*/
-        found = s_conn_check_midpoint(object,
-                                      other_object->line->x[k],
-                                      other_object->line->y[k]);
+        found = s_conn_check_midpoint (object, other_object->line->x[k],
+                                               other_object->line->y[k]);
 
-        /* pins are not allowed midpoint connections (on them) */
-        /* pins can cause midpoint connections (via their endpoints) */
-        if (found && object->type != OBJ_PIN) { /* found midpoint */
-          /* have to add it to the current object and other object */
-#if DEBUG          
-          printf("SECOND! %d endpoint to %s midpoint of: %s\n", k,
-                 other_object->name,
-                 found->name);
-#endif          
+        /* Pins are not allowed midpoint connections onto them. */
+        /* Allow nets to connect to the middle of buses. */
+        /* Allow compatible objects to connect. */
+        if (found && object->type != OBJ_PIN &&
+             ((object->type == OBJ_BUS && other_object->type == OBJ_NET) ||
+               check_direct_compat (object, other_object))) {
 
-          if (other_object->type == OBJ_PIN) {
-            if (k == other_object->whichend) {
-              add_conn = TRUE;
-            } else {
-              add_conn = FALSE;
-            }
-          } else {
-            add_conn = TRUE;
-          }
+          add_connection (object, other_object, CONN_MIDPOINT,
+                          other_object->line->x[k],
+                          other_object->line->y[k], -1, k);
 
-          
-          /* check for pin / bus compatibility */
-          /* you cannot connect pins and buses at all */
-          if (add_conn) {
-            if ((object->type == OBJ_PIN && other_object->type == OBJ_BUS) ||
-                (object->type == OBJ_BUS && other_object->type == OBJ_PIN)) {
-              add_conn = FALSE;
-            } else {
-              add_conn = TRUE;
-            }
-          }
+          add_connection (other_object, object, CONN_MIDPOINT,
+                          other_object->line->x[k],
+                          other_object->line->y[k], k, -1);
+        }
+      }
 
-          /* check for bus / net compatibility */
-          /* you cannot have the middle of bus connect to nets */
-          if (add_conn) {
-            if (object->type == OBJ_NET && other_object->type == OBJ_BUS) {
-              add_conn = FALSE;
-            } else {
-              add_conn = TRUE;
-            }
-          }
-
-          
-          if (add_conn) {
-            /* First do the other object and put it in the current */
-            /* object list */
-            new_conn =
-              s_conn_return_new(other_object, CONN_MIDPOINT,
-                                other_object->line->x[k],
-                                other_object->line->y[k], -1, k);
-
-            /* do uniqness check */
-            if (s_conn_uniq(object->conn_list, new_conn)) {
-              object->conn_list =
-                g_list_append(object->conn_list, new_conn);
-            } else {
-              g_free(new_conn);
-            }
-
-            /* Next do the current object and put it into the other */
-            /* object list */
-            new_conn = s_conn_return_new(object, CONN_MIDPOINT,
-                                         other_object->line->x[k],
-                                         other_object->line->y[k], k, -1);
-
-            /* do uniqness check */
-            if (s_conn_uniq(other_object->conn_list, new_conn)) {
-              other_object->conn_list =
-                g_list_append(other_object->conn_list,
-                              new_conn);
-            } else {
-              g_free(new_conn);
-            }
-
-          }
-          /* **** */
-          
-        } /* found midpoint */
-
-      } /* end of for over endpoints */
-
-      object_list = g_list_next(object_list);
-    } 
+    }
   }
 
 #if DEBUG
