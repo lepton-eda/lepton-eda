@@ -582,6 +582,7 @@ void o_line_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_line_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_line_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_line_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
+int o_line_visible(GSCHEM_TOPLEVEL *w_current, LINE *line, int *x1, int *y1, int *x2, int *y2);
 /* o_misc.c */
 void o_edit(GSCHEM_TOPLEVEL *w_current, GList *list);
 void o_lock(GSCHEM_TOPLEVEL *w_current);

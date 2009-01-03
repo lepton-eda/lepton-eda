@@ -53,7 +53,7 @@ void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   if ( (toplevel->DONT_REDRAW == 1) ||
-       (!o_line_visible(toplevel, o_current->line, &x1, &y1, &x2, &y2)) ) {
+       (!o_line_visible (w_current, o_current->line, &x1, &y1, &x2, &y2)) ) {
     return;
   }
 	
@@ -332,4 +332,30 @@ void o_line_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   
   /* draw the grip on line end 2 */
   o_grips_draw(w_current, x[LINE_END2], y[LINE_END2]);
+}
+
+
+/*! \brief
+ *  \par Function Description
+ *
+ *  \param [in] toplevel  The TOPLEVEL object.
+ *  \param [in] line
+ *  \param [in] x1
+ *  \param [in] y1
+ *  \param [in] x2
+ *  \param [in] y2
+ *  \return int
+ */
+int o_line_visible (GSCHEM_TOPLEVEL *w_current, LINE *line,
+                    int *x1, int *y1, int *x2, int *y2)
+{
+  /* don't do clipping if this is false */
+  if (!w_current->toplevel->object_clipping) {
+    return(TRUE);
+  }
+
+  WORLDtoSCREEN (w_current->toplevel, line->x[0], line->y[0], x1, y1);
+  WORLDtoSCREEN (w_current->toplevel, line->x[1], line->y[1], x2, y2);
+
+  return SCREENclip_change (w_current->toplevel, x1, y1, x2, y2);
 }

@@ -1158,35 +1158,6 @@ void o_line_scale_world(TOPLEVEL *toplevel, int x_scale, int y_scale,
   
 }
 
-/*! \brief
- *  \par Function Description
- *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] line
- *  \param [in] x1
- *  \param [in] y1
- *  \param [in] x2
- *  \param [in] y2
- *  \return int
- */
-int o_line_visible(TOPLEVEL *toplevel, LINE *line,
-                   int *x1, int *y1, int *x2, int *y2)
-{
-  int visible=0;
-
-
-  /* don't do clipping if this is false */
-  if (!toplevel->object_clipping) {
-    return(TRUE);
-  }
-
-  WORLDtoSCREEN( toplevel, line->x[0], line->y[0], x1, y1 );
-  WORLDtoSCREEN( toplevel, line->x[1], line->y[1], x2, y2 );
-
-  visible = SCREENclip_change(toplevel, x1, y1, x2, y2);
-
-  return(visible);
-}
 
 /*! \brief calculate the lenght of a line object
  *  \par Function Description
