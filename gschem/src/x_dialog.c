@@ -4126,8 +4126,18 @@ void x_dialog_edit_pin_type (GSCHEM_TOPLEVEL *w_current, const GList *obj_list)
   GtkWidget *radio2;
   const GList *iter;
   int new_type;
+  int found_pins = FALSE;
+  int changed_anything = FALSE;
 
-  if (obj_list == NULL)
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *object = iter->data;
+    if (object->type == OBJ_PIN) {
+      found_pins = TRUE;
+      break;
+    }
+  }
+
+  if (!found_pins)
     return;
 
   dialog = gschem_dialog_new_with_buttons(_("Pin type"),
@@ -4169,7 +4179,9 @@ void x_dialog_edit_pin_type (GSCHEM_TOPLEVEL *w_current, const GList *obj_list)
       for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
         OBJECT *object = iter->data;
 
-        if (object->type == OBJ_PIN) {
+        if (object->type == OBJ_PIN &&
+            object->pin_type != new_type) {
+          changed_anything = TRUE;
           o_invalidate (w_current, object);
           s_conn_remove_object (w_current->toplevel, object);
           o_pin_set_type (object, new_type);
@@ -4177,6 +4189,8 @@ void x_dialog_edit_pin_type (GSCHEM_TOPLEVEL *w_current, const GList *obj_list)
           o_invalidate (w_current, object);
         }
       }
+      if (changed_anything)
+        o_undo_savestate (w_current, UNDO_ALL);
       break;
 
     case GTK_RESPONSE_CANCEL:
