@@ -77,6 +77,7 @@ SCM g_keys_edit_mirror_hotkey(SCM rest);
 SCM g_keys_edit_slot(SCM rest);
 SCM g_keys_edit_color(SCM rest);
 SCM g_keys_edit_edit(SCM rest);
+SCM g_keys_edit_pin_type(SCM rest);
 SCM g_keys_edit_text(SCM rest);
 SCM g_keys_edit_lock(SCM rest);
 SCM g_keys_edit_unlock(SCM rest);
@@ -326,6 +327,7 @@ void i_callback_edit_move(gpointer data, guint callback_action, GtkWidget *widge
 void i_callback_edit_move_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_delete(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_edit(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_edit_pin_type(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_text(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_slot(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_color(gpointer data, guint callback_action, GtkWidget *widget);
@@ -760,6 +762,7 @@ void major_changed_dialog(GSCHEM_TOPLEVEL* w_current);
 void x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page);
 gboolean x_dialog_close_window (GSCHEM_TOPLEVEL *w_current);
 int x_dialog_validate_attribute(GtkWindow* parent, char *attribute);
+void x_dialog_edit_pin_type(GSCHEM_TOPLEVEL *w_current, const GList *obj_list);
 /* x_event.c */
 gint x_event_expose(GtkWidget *widget, GdkEventExpose *event, GSCHEM_TOPLEVEL *w_current);
 gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event, GSCHEM_TOPLEVEL *w_current);

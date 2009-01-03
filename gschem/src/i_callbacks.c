@@ -697,6 +697,24 @@ DEFINE_I_CALLBACK(edit_edit)
  *  \par Function Description
  *
  */
+DEFINE_I_CALLBACK(edit_pin_type)
+{
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+
+  exit_if_null(w_current);
+
+  i_update_middle_button (w_current, i_callback_edit_pin_type, _("Edit pin type"));
+
+  x_dialog_edit_pin_type (w_current,
+                          geda_list_get_glist (w_current->toplevel->
+                                                 page_current->selection_list));
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
 DEFINE_I_CALLBACK(edit_text)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
