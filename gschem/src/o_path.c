@@ -46,6 +46,63 @@ static void hint_coordinates (int x, int y, double *fx, double *fy, int width)
 }
 
 
+static void path_path (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
+{
+  PATH *path = object->path;
+  int line_width;
+  int i;
+  int x1, y1, x2, y2, x3, y3;
+  double fx1 = 0.0, fy1 = 0.0;
+  double fx2 = 0.0, fy2 = 0.0;
+  double fx3 = 0.0, fy3 = 0.0;
+
+  line_width = SCREENabs (w_current, object->line_width);
+  if (line_width <= 0) {
+    line_width = 1;
+  }
+
+  for (i = 0; i <  path->num_sections; i++) {
+    PATH_SECTION *section = &path->sections[i];
+
+    switch (section->code) {
+      case PATH_CURVETO:
+        /* Two control point grips */
+        WORLDtoSCREEN (w_current, section->x1, section->y1, &x1, &y1);
+        WORLDtoSCREEN (w_current, section->x2, section->y2, &x2, &y2);
+        hint_coordinates (x1, y1, &fx1, &fy1, line_width);
+        hint_coordinates (x2, y2, &fx2, &fy2, line_width);
+        /* Fall through */
+      case PATH_MOVETO:
+      case PATH_MOVETO_OPEN:
+      case PATH_LINETO:
+        /* Destination point grip */
+        WORLDtoSCREEN (w_current, section->x3, section->y3, &x3, &y3);
+        hint_coordinates (x3, y3, &fx3, &fy3, line_width);
+      case PATH_END:
+        break;
+    }
+
+    switch (section->code) {
+      case PATH_MOVETO:
+        cairo_close_path (w_current->cr);
+        /* fall-through */
+      case PATH_MOVETO_OPEN:
+        cairo_move_to (w_current->cr, fx3, fy3);
+        break;
+      case PATH_CURVETO:
+        cairo_curve_to (w_current->cr, fx1, fy1, fx2, fy2, fx3, fy3);
+        break;
+      case PATH_LINETO:
+        cairo_line_to (w_current->cr, fx3, fy3);
+        break;
+      case PATH_END:
+        cairo_close_path (w_current->cr);
+        break;
+    }
+  }
+}
+
+
 static void path_to_points_modify (GSCHEM_TOPLEVEL *w_current, PATH *path,
                                    int dx, int dy, int new_x, int new_y, int whichone,
                                    GdkPoint **points, int *num_points)
@@ -128,6 +185,57 @@ static void path_to_points_modify (GSCHEM_TOPLEVEL *w_current, PATH *path,
 
   *num_points = polygon_points->len;
   *points = (GdkPoint *)g_array_free (polygon_points, FALSE);
+}
+
+
+static PATH *path_copy_modify (PATH *path, int dx, int dy,
+                               int new_x, int new_y, int whichone)
+{
+  PATH *new_path;
+  int x1, y1, x2, y2, x3, y3;
+  int i;
+  int grip_no = 0;
+
+  new_path = g_malloc (sizeof (PATH));
+  new_path->sections = g_malloc (path->num_sections * sizeof (PATH_SECTION));
+  new_path->num_sections = path->num_sections;
+  new_path->num_sections_max = path->num_sections;
+
+  for (i = 0; i <  path->num_sections; i++) {
+    PATH_SECTION *section     = &path->sections[i];
+    PATH_SECTION *new_section = &new_path->sections[i];
+
+    x1 = section->x1 + dx; y1 = section->y1 + dy;
+    x2 = section->x2 + dx; y2 = section->y2 + dy;
+    x3 = section->x3 + dx; y3 = section->y3 + dy;
+
+    switch (section->code) {
+      case PATH_CURVETO:
+        /* Two control point grips */
+        if (whichone == grip_no++) {
+          x1 = new_x; y1 = new_y;
+        }
+        if (whichone == grip_no++) {
+          x2 = new_x; y2 = new_y;
+        }
+        /* Fall through */
+      case PATH_MOVETO:
+      case PATH_MOVETO_OPEN:
+      case PATH_LINETO:
+        /* Destination point grip */
+        if (whichone == grip_no++) {
+          x3 = new_x; y3 = new_y;
+        }
+      case PATH_END:
+        break;
+    }
+
+    new_section->code = section->code;
+    new_section->x1 = x1;  new_section->y1 = y1;
+    new_section->x2 = x2;  new_section->y2 = y2;
+    new_section->x3 = x3;  new_section->y3 = y3;
+  }
+  return new_path;
 }
 
 
@@ -280,12 +388,6 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   int line_width, length, space;
   int fill_width, angle1, pitch1, angle2, pitch2;
   FILL_FUNC fill_func;
-  PATH_SECTION *section;
-  int i;
-  int x1, y1, x2, y2, x3, y3;
-  double fx1 = 0.0, fy1 = 0.0;
-  double fx2 = 0.0, fy2 = 0.0;
-  double fx3 = 0.0, fy3 = 0.0;
 
   COLOR *color;
 
@@ -379,45 +481,7 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   (*fill_func) (w_current->drawable, w_current->gc, color,
                 w_current, path, fill_width, angle1, pitch1, angle2, pitch2);
 
-  for (i = 0; i <  path->num_sections; i++) {
-    section = &path->sections[i];
-
-    switch (section->code) {
-      case PATH_CURVETO:
-        /* Two control point grips */
-        WORLDtoSCREEN (w_current, section->x1, section->y1, &x1, &y1);
-        WORLDtoSCREEN (w_current, section->x2, section->y2, &x2, &y2);
-        hint_coordinates (x1, y1, &fx1, &fy1, line_width);
-        hint_coordinates (x2, y2, &fx2, &fy2, line_width);
-        /* Fall through */
-      case PATH_MOVETO:
-      case PATH_MOVETO_OPEN:
-      case PATH_LINETO:
-        /* Destination point grip */
-        WORLDtoSCREEN (w_current, section->x3, section->y3, &x3, &y3);
-        hint_coordinates (x3, y3, &fx3, &fy3, line_width);
-      case PATH_END:
-        break;
-    }
-
-    switch (section->code) {
-      case PATH_MOVETO:
-        cairo_close_path (w_current->cr);
-        /* fall-through */
-      case PATH_MOVETO_OPEN:
-        cairo_move_to (w_current->cr, fx3, fy3);
-        break;
-      case PATH_CURVETO:
-        cairo_curve_to (w_current->cr, fx1, fy1, fx2, fy2, fx3, fy3);
-        break;
-      case PATH_LINETO:
-        cairo_line_to (w_current->cr, fx3, fy3);
-        break;
-      case PATH_END:
-        cairo_close_path (w_current->cr);
-        break;
-    }
-  }
+  path_path (w_current, o_current);
 
   gschem_cairo_set_source_color (w_current->cr, color);
 
@@ -488,66 +552,25 @@ void o_path_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_path_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  PATH *path = o_current->path;
+  OBJECT object;
   int color;
   int line_width = 1;
-  PATH_SECTION *section;
-  int i;
-  int x1, y1, x2, y2, x3, y3;
-  double fx1 = 0.0, fy1 = 0.0;
-  double fx2 = 0.0, fy2 = 0.0;
-  double fx3 = 0.0, fy3 = 0.0;
 
-  if (path == NULL) {
-    return;
-  }
+  g_return_if_fail (o_current->path != NULL);
 
-  if (toplevel->override_color != -1 ) {
-    color = toplevel->override_color;
+  /* Setup a fake object to pass the drawing routine */
+  object.line_width = 0; /* clamped to 1 pixel in circle_path */
+  object.path = path_copy_modify (o_current->path, dx, dy, 0, 0, -1);
+
+  if (w_current->toplevel->override_color != -1 ) {
+    color = w_current->toplevel->override_color;
   } else {
     color = o_current->color;
   }
 
-  for (i = 0; i <  path->num_sections; i++) {
-    section = &path->sections[i];
-
-    switch (section->code) {
-      case PATH_CURVETO:
-        /* Two control point grips */
-        WORLDtoSCREEN (w_current, section->x1 + dx, section->y1 + dy, &x1, &y1);
-        WORLDtoSCREEN (w_current, section->x2 + dx, section->y2 + dy, &x2, &y2);
-        hint_coordinates (x1, y1, &fx1, &fy1, line_width);
-        hint_coordinates (x2, y2, &fx2, &fy2, line_width);
-        /* Fall through */
-      case PATH_MOVETO:
-      case PATH_MOVETO_OPEN:
-      case PATH_LINETO:
-        /* Destination point grip */
-        WORLDtoSCREEN (w_current, section->x3 + dx, section->y3 + dy, &x3, &y3);
-        hint_coordinates (x3, y3, &fx3, &fy3, line_width);
-      case PATH_END:
-        break;
-    }
-
-    switch (section->code) {
-      case PATH_MOVETO:
-        cairo_close_path (w_current->cr);
-        /* fall-through */
-      case PATH_MOVETO_OPEN:
-        cairo_move_to (w_current->cr, fx3, fy3);
-        break;
-      case PATH_CURVETO:
-        cairo_curve_to (w_current->cr, fx1, fy1, fx2, fy2, fx3, fy3);
-        break;
-      case PATH_LINETO:
-        cairo_line_to (w_current->cr, fx3, fy3);
-        break;
-      case PATH_END:
-        cairo_close_path (w_current->cr);
-        break;
-    }
-  }
+  path_path (w_current, &object);
+  g_free (object.path->sections);
+  g_free (object.path);
 
   gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
   gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, line_width, -1, -1);
@@ -629,75 +652,18 @@ void o_path_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_path_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  int whichone = w_current->which_grip;
-  PATH *path = w_current->which_object->path;
-  PATH_SECTION *section;
-  int i;
-  int grip_no = 0;
+  OBJECT object;
   int line_width = 1;
-  int x, y;
-  int x1, y1, x2, y2, x3, y3;
-  double fx1 = 0.0, fy1 = 0.0;
-  double fx2 = 0.0, fy2 = 0.0;
-  double fx3 = 0.0, fy3 = 0.0;
 
-  x = w_current->second_wx;
-  y = w_current->second_wy;
+  /* Setup a fake object to pass the drawing routine */
+  object.line_width = 0; /* clamped to 1 pixel in circle_path */
+  object.path = path_copy_modify (w_current->which_object->path, 0, 0,
+                                  w_current->second_wx,
+                                  w_current->second_wy, w_current->which_grip);
 
-  for (i = 0; i <  path->num_sections; i++) {
-    section = &path->sections[i];
-
-    x1 = section->x1;
-    y1 = section->y1;
-    x2 = section->x2;
-    y2 = section->y2;
-    x3 = section->x3;
-    y3 = section->y3;
-
-    switch (section->code) {
-      case PATH_CURVETO:
-        /* Two control point grips */
-        if (whichone == grip_no++) {
-          x1 = x; y1 = y;
-        }
-        if (whichone == grip_no++) {
-          x2 = x; y2 = y;
-        }
-        WORLDtoSCREEN (w_current, x1, y1, &x1, &y1);
-        WORLDtoSCREEN (w_current, x2, y2, &x2, &y2);
-        hint_coordinates (x1, y1, &fx1, &fy1, line_width);
-        hint_coordinates (x2, y2, &fx2, &fy2, line_width);
-        /* Fall through */
-      case PATH_MOVETO:
-      case PATH_MOVETO_OPEN:
-      case PATH_LINETO:
-        /* Destination point grip */
-        if (whichone == grip_no++) {
-          x3 = x; y3 = y;
-        }
-        WORLDtoSCREEN (w_current, x3, y3, &x3, &y3);
-        hint_coordinates (x3, y3, &fx3, &fy3, line_width);
-      case PATH_END:
-        break;
-    }
-
-    switch (section->code) {
-      case PATH_MOVETO:
-        cairo_close_path (w_current->cr);
-        /* fall-through */
-      case PATH_MOVETO_OPEN:
-        cairo_move_to (w_current->cr, fx3, fy3);
-        break;
-      case PATH_CURVETO:
-        cairo_curve_to (w_current->cr, fx1, fy1, fx2, fy2, fx3, fy3);
-        break;
-      case PATH_LINETO:
-        cairo_line_to (w_current->cr, fx3, fy3);
-        break;
-      case PATH_END:
-        break;
-    }
-  }
+  path_path (w_current, &object);
+  g_free (object.path->sections);
+  g_free (object.path);
 
   gschem_cairo_set_source_color (w_current->cr, x_color_lookup (SELECT_COLOR));
   gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_SQUARE, line_width, -1, -1);

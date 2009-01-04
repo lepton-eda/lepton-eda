@@ -33,6 +33,40 @@ typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, COLOR *color,
                            gint fill_width, gint angle1, gint pitch1,
                            gint angle2, gint pitch2 );
 
+
+static void circle_path (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
+{
+  CIRCLE *circle = object->circle;
+  int line_width;
+  int sx1, sy1, sx2, sy2;
+  double cx, cy;
+  double radius;
+
+  WORLDtoSCREEN (w_current, circle->center_x - circle->radius,
+                            circle->center_y + circle->radius, &sx1, &sy1);
+  WORLDtoSCREEN (w_current, circle->center_x + circle->radius,
+                            circle->center_y - circle->radius, &sx2, &sy2);
+  line_width = SCREENabs (w_current, object->line_width);
+  if (line_width <= 0) {
+    line_width = 1;
+  }
+
+  cx = (double)(sx1 + sx2) / 2.;
+  cy = (double)(sy1 + sy2) / 2.;
+  radius = (double)(sy2 - sy1) / 2.;
+
+  cairo_translate (w_current->cr, cx, cy);
+
+  /* Adjust for non-uniform X/Y scale factor. Note that the + 1
+     allows for the case where sx2 == sx1 or sy2 == sy1 */
+  cairo_scale (w_current->cr, (double)(sx2 - sx1 + 1) /
+                              (double)(sy2 - sy1 + 1), 1.);
+
+  gschem_cairo_arc (w_current->cr, line_width, 0., 0., radius, 0., 360);
+  cairo_identity_matrix (w_current->cr);
+}
+
+
 /*! \brief Draw a circle on the screen.
  *  \par Function Description
  *  This function is used to draw a circle on screen. The circle is described
@@ -49,9 +83,6 @@ typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, COLOR *color,
 void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int sx1, sy1, sx2, sy2;
-  double cx, cy;
-  double radius;
   int line_width, length, space;
   int fill_width, angle1, pitch1, angle2, pitch2;
   COLOR *color;
@@ -80,22 +111,6 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     color = x_color_lookup (o_current->color);
   }
 
-  /*
-   * The values describing the line type are extracted from the
-   * <B>o_current</B> pointed structure. These are the width of the line, the
-   * field called length and the field called space and the desired end type
-   * for the line.
-   *
-   * Depending on the type of the line that has to be used to draw the circle
-   * the appropriate function is called. Values of space and length are
-   * adapted to the type of line. The possible functions are the following :
-   * #o_arc_draw_solid(), #o_arc_draw_dotted(), #o_arc_draw_dashed() and
-   * #o_arc_draw_phantom(). Therefore it reuses the code from arc primitive.
-   *
-   * The combination <B>length</B> == 0 and <B>space</B> == 0 is avoided as it lead
-   * to an endless loop in function called after. If such a case is encountered
-   * the circle is drawn as a solid circle independently of its initial type.
-   */
   line_width = SCREENabs (w_current, o_current->line_width);
   if (line_width <= 0) {
     line_width = 1;
@@ -179,26 +194,7 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                 color, w_current, o_current->circle,
                 fill_width, angle1, pitch1, angle2, pitch2);
 
-  WORLDtoSCREEN (w_current, o_current->circle->center_x - o_current->circle->radius,
-                            o_current->circle->center_y + o_current->circle->radius,
-                            &sx1, &sy1);
-  WORLDtoSCREEN (w_current, o_current->circle->center_x + o_current->circle->radius,
-                            o_current->circle->center_y - o_current->circle->radius,
-                            &sx2, &sy2);
-
-  cx = (double)(sx1 + sx2) / 2.;
-  cy = (double)(sy1 + sy2) / 2.;
-  radius = (double)(sy2 - sy1) / 2.;
-
-  cairo_translate (w_current->cr, cx, cy);
-
-  /* Adjust for non-uniform X/Y scale factor. Note that the + 1
-     allows for the case where sx2 == sx1 or sy2 == sy1 */
-  cairo_scale (w_current->cr, (double)(sx2 - sx1 + 1) /
-                              (double)(sy2 - sy1 + 1), 1.);
-
-  gschem_cairo_arc (w_current->cr, line_width, 0., 0., radius, 0., 360);
-  cairo_identity_matrix (w_current->cr);
+  circle_path (w_current, o_current);
 
   gschem_cairo_set_source_color (w_current->cr, color);
   if (o_current->fill_type == FILLING_FILL)
@@ -414,14 +410,18 @@ void o_circle_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_circle_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
-  int sx1, sy1, sx2, sy2;
-  double cx, cy;
-  double radius;
+  OBJECT object;
+  CIRCLE circle;
   int color;
 
-  if (o_current->circle == NULL) {
-    return;
-  }
+  g_return_if_fail (o_current->circle != NULL);
+
+  /* Setup a fake object to pass the drawing routine */
+  object.circle = &circle;
+  object.line_width = 0; /* clamped to 1 pixel in circle_path */
+  circle.center_x = o_current->circle->center_x + dx;
+  circle.center_y = o_current->circle->center_y + dy;
+  circle.radius = o_current->circle->radius;
 
   if (o_current->saved_color != -1) {
     color = o_current->saved_color;
@@ -429,26 +429,7 @@ void o_circle_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_
     color = o_current->color;
   }
 
-  WORLDtoSCREEN (w_current, o_current->circle->center_x + dx - o_current->circle->radius,
-                            o_current->circle->center_y + dy + o_current->circle->radius,
-                            &sx1, &sy1);
-  WORLDtoSCREEN (w_current, o_current->circle->center_x + dx + o_current->circle->radius,
-                            o_current->circle->center_y + dy - o_current->circle->radius,
-                            &sx2, &sy2);
-
-  cx = (double)(sx1 + sx2) / 2.;
-  cy = (double)(sy1 + sy2) / 2.;
-  radius = (double)(sy2 - sy1) / 2.;
-
-  cairo_translate (w_current->cr, cx, cy);
-
-  /* Adjust for non-uniform X/Y scale factor. Note that the + 1
-     allows for the case where sx2 == sx1 or sy2 == sy1 */
-  cairo_scale (w_current->cr, (double)(sx2 - sx1 + 1) /
-                              (double)(sy2 - sy1 + 1), 1.);
-
-  gschem_cairo_arc (w_current->cr, 1, 0., 0., radius, 0., 360);
-  cairo_identity_matrix (w_current->cr);
+  circle_path (w_current, &object);
 
   gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
   gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
@@ -591,33 +572,24 @@ void o_circle_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_circle_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  int sx1, sy1, sx2, sy2;
-  double cx, cy;
-  double radius;
+  OBJECT object;
+  CIRCLE circle;
+  int x1, y1, x2, y2;
 
-  /* draw the circle from the w_current variables */
+  /* Setup a fake object to pass the drawing routine */
+  object.circle = &circle;
+  object.line_width = 0; /* clamped to 1 pixel in circle_path */
+  circle.center_x = w_current->first_wx;
+  circle.center_y = w_current->first_wy;
+  circle.radius   = w_current->distance;
 
-  WORLDtoSCREEN (w_current, w_current->first_wx - w_current->distance,
-                            w_current->first_wy + w_current->distance,
-                            &sx1, &sy1);
+  circle_path (w_current, &object);
+
+  WORLDtoSCREEN (w_current, w_current->first_wx,
+                            w_current->first_wy, &x1, &y1);
   WORLDtoSCREEN (w_current, w_current->first_wx + w_current->distance,
-                            w_current->first_wy - w_current->distance,
-                            &sx2, &sy2);
-
-  cx = (double)(sx1 + sx2) / 2.;
-  cy = (double)(sy1 + sy2) / 2.;
-  radius = (double)(sy2 - sy1) / 2.;
-
-  cairo_translate (w_current->cr, cx, cy);
-
-  /* Adjust for non-uniform X/Y scale factor. Note that the + 1
-     allows for the case where sx2 == sx1 or sy2 == sy1 */
-  cairo_scale (w_current->cr, (double)(sx2 - sx1 + 1) /
-                              (double)(sy2 - sy1 + 1), 1.);
-
-  gschem_cairo_arc (w_current->cr, 1, 0., 0., radius, 0., 360);
-  cairo_identity_matrix (w_current->cr);
-  gschem_cairo_line (w_current->cr, END_NONE, 1, cx, cy, cx + radius, cy);
+                            w_current->first_wy, &x2, &y2);
+  gschem_cairo_line (w_current->cr, END_NONE, 1, x1, y1, x2, y2);
 
   gschem_cairo_set_source_color (w_current->cr,
                                  x_color_lookup_dark (SELECT_COLOR));
