@@ -103,91 +103,6 @@ static void path_path (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 }
 
 
-static void path_to_points_modify (GSCHEM_TOPLEVEL *w_current, PATH *path,
-                                   int dx, int dy, int new_x, int new_y, int whichone,
-                                   GdkPoint **points, int *num_points)
-
-{
-  PATH_SECTION *section;
-  int x1, y1, x2, y2, x3, y3;
-  int i;
-  int grip_no = 0;
-
-  sPOINT point = { 0, 0 };
-  GArray *polygon_points;
-  BEZIER bezier;
-
-  polygon_points = g_array_new (FALSE, FALSE, sizeof (sPOINT));
-
-
-  for (i = 0; i <  path->num_sections; i++) {
-    section = &path->sections[i];
-
-    x1 = section->x1 + dx; y1 = section->y1 + dy;
-    x2 = section->x2 + dx; y2 = section->y2 + dy;
-    x3 = section->x3 + dx; y3 = section->y3 + dy;
-
-    switch (section->code) {
-      case PATH_CURVETO:
-        /* Two control point grips */
-        if (whichone == grip_no++) {
-          x1 = new_x; y1 = new_y;
-        }
-        if (whichone == grip_no++) {
-          x2 = new_x; y2 = new_y;
-        }
-        WORLDtoSCREEN (w_current, x1, y1, &x1, &y1);
-        WORLDtoSCREEN (w_current, x2, y2, &x2, &y2);
-        /* Fall through */
-      case PATH_MOVETO:
-      case PATH_MOVETO_OPEN:
-      case PATH_LINETO:
-        /* Destination point grip */
-        if (whichone == grip_no++) {
-          x3 = new_x; y3 = new_y;
-        }
-        WORLDtoSCREEN (w_current, x3, y3, &x3, &y3);
-      case PATH_END:
-        break;
-    }
-
-    switch (section->code) {
-      case PATH_CURVETO:
-        bezier.x[0] = point.x;
-        bezier.y[0] = point.y;
-        bezier.x[1] = x1;
-        bezier.y[1] = y1;
-        bezier.x[2] = x2;
-        bezier.y[2] = y2;
-        point.x = bezier.x[3] = x3;
-        point.y = bezier.y[3] = y3;
-        m_polygon_append_bezier (polygon_points, &bezier, NUM_BEZIER_SEGMENTS);
-        break;
-
-      case PATH_MOVETO_OPEN:
-        /* Unsupported, just fall through and draw a line */
-        /* Fall through */
-
-      case PATH_MOVETO:
-      case PATH_LINETO:
-        point.x = x3;
-        point.y = y3;
-        m_polygon_append_point (polygon_points, point.x, point.y);
-        break;
-
-      case PATH_END:
-        break;
-    }
-  }
-
-  /* WARNING:
-   * Relies on the fact that sPOINT and GdkPoint are compatible */
-
-  *num_points = polygon_points->len;
-  *points = (GdkPoint *)g_array_free (polygon_points, FALSE);
-}
-
-
 static PATH *path_copy_modify (PATH *path, int dx, int dy,
                                int new_x, int new_y, int whichone)
 {
@@ -497,22 +412,6 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 }
 
 
-static void find_points_bounds (GdkPoint *points, int num_points,
-                                int *min_x, int *min_y, int *max_x, int *max_y)
-{
-  int i;
-  int found_bound = FALSE;
-
-  for (i = 0; i < num_points; i++) {
-    *min_x = (found_bound) ? min (*min_x, points[i].x) : points[i].x;
-    *min_y = (found_bound) ? min (*min_y, points[i].y) : points[i].y;
-    *max_x = (found_bound) ? max (*max_x, points[i].x) : points[i].x;
-    *max_y = (found_bound) ? max (*max_y, points[i].y) : points[i].y;
-    found_bound = TRUE;
-  }
-}
-
-
 /*! \todo Finish function documentation
  *  \brief
  *  \par Function Description
@@ -520,22 +419,57 @@ static void find_points_bounds (GdkPoint *points, int num_points,
 void o_path_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   PATH *path = w_current->which_object->path;
-  int num_points;
-  GdkPoint *points;
-  int min_x = 0, min_y = 0, max_x = 0, max_y = 0;
+  int min_x, min_y, max_x, max_y;
+  int x1, y1, x2, y2, x3, y3;
+  int new_x, new_y, whichone;
+  int grip_no = 0;
+  int i;
 
-  path_to_points_modify (w_current, path, 0, 0,
-                         w_current->second_wx, w_current->second_wy,
-                         w_current->which_grip, &points, &num_points);
-  if (num_points == 0) {
-    g_free (points);
-    return;
+  min_x = G_MAXINT;  max_x = G_MININT;
+  min_y = G_MAXINT;  max_y = G_MININT;
+
+  new_x = w_current->second_wx;
+  new_y = w_current->second_wy;
+  whichone = w_current->which_grip;
+
+  for (i = 0; i <  path->num_sections; i++) {
+    PATH_SECTION *section = &path->sections[i];
+
+    x1 = section->x1; y1 = section->y1;
+    x2 = section->x2; y2 = section->y2;
+    x3 = section->x3; y3 = section->y3;
+
+    switch (section->code) {
+      case PATH_CURVETO:
+        /* Two control point grips */
+        if (whichone == grip_no++) {
+          x1 = new_x; y1 = new_y;
+        }
+        if (whichone == grip_no++) {
+          x2 = new_x; y2 = new_y;
+        }
+        min_x = MIN (min_x, x1);  min_y = MIN (min_y, y1);
+        max_x = MAX (max_x, x1);  max_y = MAX (max_y, y1);
+        min_x = MIN (min_x, x2);  min_y = MIN (min_y, y2);
+        max_x = MAX (max_x, x2);  max_y = MAX (max_y, y2);
+        /* Fall through */
+      case PATH_MOVETO:
+      case PATH_MOVETO_OPEN:
+      case PATH_LINETO:
+        /* Destination point grip */
+        if (whichone == grip_no++) {
+          x3 = new_x; y3 = new_y;
+        }
+        min_x = MIN (min_x, x3);  min_y = MIN (min_y, y3);
+        max_x = MAX (max_x, x3);  max_y = MAX (max_y, y3);
+      case PATH_END:
+        break;
+    }
   }
 
-  find_points_bounds (points, num_points, &min_x, &min_y, &max_x, &max_y);
-  g_free (points);
-
-  o_invalidate_rect (w_current, min_x, min_y, max_x, max_y);
+  WORLDtoSCREEN (w_current, min_x, max_y, &x1, &y1);
+  WORLDtoSCREEN (w_current, max_x, min_y, &x2, &y2);
+  o_invalidate_rect (w_current, x1, y1, x2, y2);
 }
 
 
