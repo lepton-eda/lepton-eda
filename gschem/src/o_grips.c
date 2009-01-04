@@ -221,21 +221,21 @@ OBJECT *o_grips_search_arc_world(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
     return(o_current);
   }
 
-  /* check the grip at the start angle of the arc */
-  tmp = ((double) start_angle) * M_PI / 180;
-  if (inside_grip(x, y,
-                  centerx + radius * cos(tmp),
-                  centery + radius * sin(tmp), size)) {
-    *whichone = ARC_START_ANGLE;
-    return(o_current);
-  }
-
   /* check the grip at the end angle of the arc */
   tmp = ((double) start_angle + end_angle) * M_PI / 180;
   if (inside_grip(x, y,
                   centerx + radius * cos(tmp),
                   centery + radius * sin(tmp), size)) {
     *whichone = ARC_END_ANGLE;
+    return(o_current);
+  }
+
+  /* check the grip at the start angle of the arc */
+  tmp = ((double) start_angle) * M_PI / 180;
+  if (inside_grip(x, y,
+                  centerx + radius * cos(tmp),
+                  centery + radius * sin(tmp), size)) {
+    *whichone = ARC_START_ANGLE;
     return(o_current);
   }
 
