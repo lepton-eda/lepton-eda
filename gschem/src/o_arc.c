@@ -354,18 +354,23 @@ void o_arc_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
   }
   else if((whichone == ARC_START_ANGLE) || (whichone == ARC_END_ANGLE)) {
     /* compute the angle */
-    diff_x = w_current->first_wx - w_x;
-    diff_y = w_current->first_wy - w_y;
-    angle_deg = atan2(diff_y, diff_x) * 180 / M_PI;
+    diff_x = w_x - w_current->first_wx;
+    diff_y = w_y - w_current->first_wy;
+    angle_deg = atan2 (diff_y, diff_x) * 180 / M_PI;
 
     /* set the start or end angle with this angle */
     switch(whichone) {
     case ARC_START_ANGLE:
-      w_current->second_wx = (angle_deg + 360 + 180) % 360;
+      w_current->second_wx = (angle_deg + 360) % 360;
       break;
 	
     case ARC_END_ANGLE:
-      w_current->second_wy = (angle_deg - w_current->second_wx + 720 + 180) % 360;
+      w_current->second_wy = (((angle_deg + 360) % 360) -
+                              w_current->second_wx + 360) % 360;
+      if (w_current->which_object->arc->end_angle < 0)
+        w_current->second_wy = w_current->second_wy - 360;
+      if (w_current->second_wy == 0)
+        w_current->second_wy = 360;
       break;
 	
     default:
