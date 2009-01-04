@@ -1315,8 +1315,13 @@ gboolean o_arc_within_sweep(ARC *arc, gint x, gint y)
 
   angle = 180 * atan2(dy, dx) / G_PI;
 
-  a0 = (gdouble) arc->start_angle;
-  a1 = ((gdouble) arc->end_angle) + a0;
+  if (arc->end_angle > 0) {
+    a0 = arc->start_angle;
+    a1 = arc->start_angle + arc->end_angle;
+  } else {
+    a0 = arc->start_angle + arc->end_angle + 360;
+    a1 = arc->start_angle + 360;
+  }
 
   while (angle < a0) {
     angle+=360;
