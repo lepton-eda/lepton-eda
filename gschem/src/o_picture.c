@@ -380,24 +380,28 @@ void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if (w_current->draw_grips == FALSE)
     return;
 
+  /* grip on upper left corner (whichone = PICTURE_UPPER_LEFT) */
+  o_grips_draw (w_current, o_current->picture->upper_x,
+                           o_current->picture->upper_y);
+
+  /* grip on upper right corner (whichone = PICTURE_UPPER_RIGHT) */
+  o_grips_draw (w_current, o_current->picture->lower_x,
+                           o_current->picture->upper_y);
+
+  /* grip on lower left corner (whichone = PICTURE_LOWER_LEFT) */
+  o_grips_draw (w_current, o_current->picture->upper_x,
+                           o_current->picture->lower_y);
+
+  /* grip on lower right corner (whichone = PICTURE_LOWER_RIGHT) */
+  o_grips_draw (w_current, o_current->picture->lower_x,
+                           o_current->picture->lower_y);
+
+  /* Box surrounding the picture */
   WORLDtoSCREEN (w_current, o_current->picture->upper_x, o_current->picture->upper_y,
                  &s_upper_x, &s_upper_y );
   WORLDtoSCREEN (w_current, o_current->picture->lower_x, o_current->picture->lower_y,
                  &s_lower_x, &s_lower_y );
 
-  /* grip on upper left corner (whichone = PICTURE_UPPER_LEFT) */
-  o_grips_draw(w_current, s_upper_x, s_upper_y);
-  
-  /* grip on upper right corner (whichone = PICTURE_UPPER_RIGHT) */
-  o_grips_draw(w_current, s_lower_x, s_upper_y);
-  
-  /* grip on lower left corner (whichone = PICTURE_LOWER_LEFT) */
-  o_grips_draw(w_current, s_upper_x, s_lower_y);
-  
-  /* grip on lower right corner (whichone = PICTURE_LOWER_RIGHT) */
-  o_grips_draw(w_current, s_lower_x, s_lower_y);
-  
-  /* Box surrounding the picture */
   gschem_cairo_box (w_current->cr, 1, s_lower_x, s_lower_y,
                                       s_upper_x, s_upper_y);
 

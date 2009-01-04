@@ -679,7 +679,6 @@ void o_path_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   PATH_SECTION *section;
   int i;
-  int x, y;
 
   if (w_current->draw_grips == FALSE)
     return;
@@ -692,17 +691,14 @@ void o_path_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     switch (section->code) {
     case PATH_CURVETO:
       /* Two control point grips */
-      WORLDtoSCREEN (w_current, section->x1, section->y1, &x, &y);
-      o_grips_draw (w_current, x, y);
-      WORLDtoSCREEN (w_current, section->x2, section->y2, &x, &y);
-      o_grips_draw (w_current, x, y);
+      o_grips_draw (w_current, section->x1, section->y1);
+      o_grips_draw (w_current, section->x2, section->y2);
       /* Fall through */
     case PATH_MOVETO:
     case PATH_MOVETO_OPEN:
     case PATH_LINETO:
       /* Destination point grip */
-      WORLDtoSCREEN (w_current, section->x3, section->y3, &x, &y);
-      o_grips_draw (w_current, x, y);
+      o_grips_draw (w_current, section->x3, section->y3);
       break;
     case PATH_END:
       break;

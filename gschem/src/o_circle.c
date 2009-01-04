@@ -605,18 +605,11 @@ void o_circle_draw_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_circle_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  int x, y;
-
   if (w_current->draw_grips == FALSE)
-	  return;
+    return;
 
-  /* coords of the lower right corner of the square */
-  WORLDtoSCREEN (w_current,
-                 o_current->circle->center_x + o_current->circle->radius,
-                 o_current->circle->center_y - o_current->circle->radius,
-                 &x, &y);
-  
   /* grip on lower right corner of the square */
-  o_grips_draw(w_current, x, y);
-
+  o_grips_draw (w_current,
+                o_current->circle->center_x + o_current->circle->radius,
+                o_current->circle->center_y - o_current->circle->radius);
 }

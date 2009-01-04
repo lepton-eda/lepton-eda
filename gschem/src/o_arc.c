@@ -424,8 +424,8 @@ void o_arc_draw_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_arc_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  int radius, x, y, start_angle, end_angle;
-  int x1, y1, x2, y2;
+  double radius, start_angle, end_angle;
+  int x1, y1, x2, y2, x3, y3;
 
   if (w_current->draw_grips == FALSE)
     return;
@@ -439,23 +439,25 @@ void o_arc_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
    *   <DT>*</DT><DD>one at the end of the arc - at (<B>x2</B>,<B>y2</B>).
    */
 
-  WORLDtoSCREEN (w_current, o_current->arc->x, o_current->arc->y, &x, &y);
-  radius      = SCREENabs (w_current, o_current->arc->width / 2);
+  x1 = o_current->arc->x;
+  y1 = o_current->arc->y;
+
+  radius      = o_current->arc->width / 2.;
   start_angle = o_current->arc->start_angle;
   end_angle   = o_current->arc->end_angle;
 
-  x1 = x + radius * cos(((double) start_angle) * M_PI / 180);
-  y1 = y - radius * sin(((double) start_angle) * M_PI / 180);
-  x2 = x + radius * cos(((double) (start_angle + end_angle)) * M_PI / 180);
-  y2 = y - radius * sin(((double) (start_angle + end_angle)) * M_PI / 180);
+  x2 = x1 + radius * cos ( start_angle              * M_PI / 180);
+  y2 = y1 + radius * sin ( start_angle              * M_PI / 180);
+  x3 = x1 + radius * cos ((start_angle + end_angle) * M_PI / 180);
+  y3 = y1 + radius * sin ((start_angle + end_angle) * M_PI / 180);
 
   /* draw the grip at the center */
-  o_grips_draw(w_current,  x,  y);
+  o_grips_draw (w_current, x1, y1);
 
   /* draw the grip at the start_angle end of the arc */
-  o_grips_draw(w_current, x1, y1);
+  o_grips_draw (w_current, x2, y2);
 
   /* draw the grip at the end_angle end of the arc */
-  o_grips_draw(w_current, x2, y2);
+  o_grips_draw (w_current, x3, y3);
 
 }

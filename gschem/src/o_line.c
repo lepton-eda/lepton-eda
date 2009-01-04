@@ -315,19 +315,14 @@ void o_line_draw_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_line_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  int x[2], y[2];
-
   if (w_current->draw_grips == FALSE)
-	  return;
-
-  WORLDtoSCREEN (w_current, o_current->line->x[0], o_current->line->y[0], &x[0], &y[0]);
-  WORLDtoSCREEN (w_current, o_current->line->x[1], o_current->line->y[1], &x[1], &y[1]);
+    return;
 
   /* draw the grip on line end 1 */
-  o_grips_draw(w_current, x[LINE_END1], y[LINE_END1]);
-  
+  o_grips_draw(w_current, o_current->line->x[0], o_current->line->y[0]);
+
   /* draw the grip on line end 2 */
-  o_grips_draw(w_current, x[LINE_END2], y[LINE_END2]);
+  o_grips_draw(w_current, o_current->line->x[1], o_current->line->y[1]);
 }
 
 

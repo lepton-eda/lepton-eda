@@ -1581,21 +1581,23 @@ int o_grips_size(GSCHEM_TOPLEVEL *w_current)
  *  <B>x</B> and <B>y</B> are in screen unit.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Center x screen coordinate for drawing grip.
- *  \param [in] y          Center y screen coordinate for drawing grip.
+ *  \param [in] x          Center x world coordinate for drawing grip.
+ *  \param [in] y          Center y world coordinate for drawing grip.
  */
-void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int wx, int wy)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int color;
-  int size;
+  int size, w_size;
+  int x1, y1, x2, y2;
 
   /*
    * Depending on the current zoom level, the size of the grip is
    * determined. <B>size</B> is half the width and height of the grip.
    */
   /* size is half the width of grip */
-  size = o_grips_size(w_current);
+  size = o_grips_size (w_current);
+  w_size = WORLDabs (w_current, size);
 
   /*
    * The grip can be displayed or erased : if <B>toplevel->override_color</B>
@@ -1616,7 +1618,9 @@ void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int x, int y)
    * with a  width / height of 2 * <B>size</B>.
    */
   if (toplevel->DONT_REDRAW == 0) {
-    gschem_cairo_box (w_current->cr, 1, x - size, y - size, x + size, y + size);
+    WORLDtoSCREEN (w_current, wx - w_size, wy - w_size, &x1, &y1);
+    WORLDtoSCREEN (w_current, wx + w_size, wy + w_size, &x2, &y2);
+    gschem_cairo_box (w_current->cr, 1, x1, y1, x2, y2);
 
     gschem_cairo_set_source_color (w_current->cr, x_color_lookup (color));
     gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
