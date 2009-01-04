@@ -92,6 +92,49 @@ static void o_cue_set_color(GSCHEM_TOPLEVEL *w_current, int color)
 }
 
 
+/*! \brief Draws a circular junction cue
+ *
+ *  \par Function Description
+ *  Draws a cue at the given world coordinate, picking the size based
+ *  on whether a bus forms a part of the connection.
+ *
+ *  The cue's drawn position is hinted to align with the widht a net or
+ *  bus would be drawn on screen. This helps to keep the cue looking
+ *  central when lines being hinted onto the pixel grid.
+ *
+ *  \param [in] w_current     The GSCHEM_TOPLEVEL object
+ *  \param [in] x             The X coordinate of the cue (world units)
+ *  \param [in] y             The Y coordinate of the cue (world units)
+ *  \param [in] bus_involved  If a bus forms part of the connection (TRUE/FALSE)
+ */
+static void draw_junction_cue (GSCHEM_TOPLEVEL *w_current,
+                               int x, int y, int bus_involved)
+{
+  int s_x, s_y;
+  int size, x2size;
+  int line_width;
+
+  if (w_current->toplevel->DONT_REDRAW)
+    return;
+
+  WORLDtoSCREEN (w_current, x, y, &s_x, &s_y);
+
+  if (bus_involved) {
+    size = SCREENabs (w_current, CUE_CIRCLE_LARGE_SIZE) / 2;
+    line_width = SCREENabs (w_current, BUS_WIDTH);
+  } else {
+    size = SCREENabs (w_current, CUE_CIRCLE_SMALL_SIZE) / 2;
+    line_width = SCREENabs (w_current, NET_WIDTH);
+  }
+  x2size = size * 2;
+  line_width = max (line_width, 1);
+
+  gschem_cairo_arc (w_current->cr, line_width, s_x, s_y, size, 0, 360);
+  o_cue_set_color (w_current, JUNCTION_COLOR);
+  cairo_fill (w_current->cr);
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -173,20 +216,7 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
           }
 
         } else if (count >= 2) {
-          /* draw circle */
-
-          if (bus_involved) {
-            size = SCREENabs (w_current, CUE_CIRCLE_LARGE_SIZE) / 2;
-          } else {
-            size = SCREENabs (w_current, CUE_CIRCLE_SMALL_SIZE) / 2;
-          }
-          x2size = 2 * size;
-          if (toplevel->DONT_REDRAW == 0) {
-            o_cue_set_color (w_current, JUNCTION_COLOR);
-            cairo_arc (w_current->cr, screen_x + 0.5, screen_y + 0.5, size, 0, 2. * M_PI);
-            cairo_fill (w_current->cr);
-
-          }
+          draw_junction_cue (w_current, x, y, bus_involved);
         }
       } else if (object->type == OBJ_PIN) {
         /* Didn't find anything connected there */
@@ -243,20 +273,7 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
       break;
 
     case(CONN_MIDPOINT):
-  
-      /* draw circle */
-      if (bus_involved) {
-        size = SCREENabs (w_current, CUE_CIRCLE_LARGE_SIZE) / 2;
-      } else {
-        size = SCREENabs (w_current, CUE_CIRCLE_SMALL_SIZE) / 2;
-      }
-      x2size = size * 2;
-
-      if (toplevel->DONT_REDRAW == 0) {
-        o_cue_set_color (w_current, JUNCTION_COLOR);
-        cairo_arc (w_current->cr, screen_x + 0.5, screen_y + 0.5, size, 0, 2. * M_PI);
-        cairo_fill (w_current->cr);
-      }
+      draw_junction_cue (w_current, x, y, bus_involved);
       break;
 
       /* here is where you draw bus rippers */
@@ -273,49 +290,21 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
  */
 void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int x, y, screen_x, screen_y;
-  GList *cl_current;
-  CONN *conn;
-  int size, x2size;
+  GList *iter;
+  int bus_involved;
 
-  if (toplevel->override_color != -1 ) {
-    gschem_cairo_set_source_color(w_current->cr, x_color_lookup (w_current->toplevel->override_color));
-  } else {
-    gschem_cairo_set_source_color(w_current->cr, x_color_lookup (JUNCTION_COLOR));
-  }
-  
-  cl_current = object->conn_list;
-  while(cl_current != NULL) {
-    conn = (CONN *) cl_current->data;
+  for (iter = object->conn_list; iter != NULL; iter = g_list_next (iter)) {
+    CONN *conn = iter->data;
 
-    switch(conn->type) {        
-      case(CONN_MIDPOINT):
-
-        x = conn->x;
-        y = conn->y;
-
-        WORLDtoSCREEN (w_current, x, y, &screen_x, &screen_y);
-
-        /* draw circle */
-        if (conn->other_object &&
-            (object->type == OBJ_BUS || conn->other_object->type == OBJ_BUS)) {
-          size = SCREENabs (w_current, CUE_CIRCLE_LARGE_SIZE) / 2;
-        } else {
-          size = SCREENabs (w_current, CUE_CIRCLE_SMALL_SIZE) / 2;
-        }
-        x2size = size * 2;
-
-        if (toplevel->DONT_REDRAW == 0) {
-          cairo_arc (w_current->cr, screen_x + 0.5, screen_y + 0.5, size, 0, 2. * M_PI);
-          cairo_fill (w_current->cr);
-        }
-        break;
+    if (conn->type == CONN_MIDPOINT) {
+      bus_involved = (object->type == OBJ_BUS ||
+                       (conn->other_object &&
+                        conn->other_object->type == OBJ_BUS));
+      draw_junction_cue (w_current, conn->x, conn->y, bus_involved);
     }
-
-    cl_current = g_list_next(cl_current);
   }
 }
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
