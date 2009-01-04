@@ -534,8 +534,8 @@ void world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left,
   halfwidth = object->line_width / 2;
 
   radius      = object->arc->width / 2;
-  start_angle = object->arc->start_angle % 360;
-  end_angle   = object->arc->end_angle   % 360;
+  start_angle = object->arc->start_angle;
+  end_angle   = object->arc->end_angle;
 
   x1 = object->arc->x;
   y1 = object->arc->y;
