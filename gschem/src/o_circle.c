@@ -615,9 +615,9 @@ void o_circle_draw_rubber (GSCHEM_TOPLEVEL *w_current)
   cairo_scale (w_current->cr, (double)(sx2 - sx1 + 1) /
                               (double)(sy2 - sy1 + 1), 1.);
 
-  gschem_cairo_line (w_current->cr, END_NONE, 1, 0., 0., radius, 0.);
   gschem_cairo_arc (w_current->cr, 1, 0., 0., radius, 0., 360);
   cairo_identity_matrix (w_current->cr);
+  gschem_cairo_line (w_current->cr, END_NONE, 1, cx, cy, cx + radius, cy);
 
   gschem_cairo_set_source_color (w_current->cr,
                                  x_color_lookup_dark (SELECT_COLOR));
