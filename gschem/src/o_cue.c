@@ -120,10 +120,10 @@ static void draw_junction_cue (GSCHEM_TOPLEVEL *w_current,
   WORLDtoSCREEN (w_current, x, y, &s_x, &s_y);
 
   if (bus_involved) {
-    size = SCREENabs (w_current, CUE_CIRCLE_LARGE_SIZE) / 2;
+    size = SCREENabs (w_current, JUNCTION_CUE_SIZE_BUS) / 2;
     line_width = SCREENabs (w_current, BUS_WIDTH);
   } else {
-    size = SCREENabs (w_current, CUE_CIRCLE_SMALL_SIZE) / 2;
+    size = SCREENabs (w_current, JUNCTION_CUE_SIZE_NET) / 2;
     line_width = SCREENabs (w_current, NET_WIDTH);
   }
   x2size = size * 2;

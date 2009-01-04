@@ -359,7 +359,7 @@ GList *s_conn_return_others(GList *input_list, OBJECT *object);
 
 /* s_cue.c */
 void s_cue_postscript_fillbox(TOPLEVEL *toplevel, FILE *fp, int x, int y);
-void s_cue_postscript_fillcircle(TOPLEVEL *toplevel, FILE *fp, int x, int y, int size_flag);
+void s_cue_postscript_junction (TOPLEVEL *toplevel, FILE *fp, int x, int y, int bus_involved);
 void s_cue_output_all(TOPLEVEL *toplevel, const GList *obj_list, FILE *fp, int type);
 void s_cue_output_lowlevel(TOPLEVEL *toplevel, OBJECT *object, int whichone, FILE *fp, int output_type);
 void s_cue_output_lowlevel_midpoints(TOPLEVEL *toplevel, OBJECT *object, FILE *fp, int output_type);

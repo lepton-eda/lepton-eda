@@ -57,15 +57,15 @@ void s_cue_postscript_fillbox(TOPLEVEL * toplevel, FILE * fp, int x,
  *  \par Function Description
  *
  */
-void s_cue_postscript_fillcircle(TOPLEVEL * toplevel, FILE * fp,
-                                 int x, int y, int size_flag)
+void s_cue_postscript_junction (TOPLEVEL * toplevel, FILE * fp,
+                                int x, int y, int bus_involved)
 {
   int offset2;
 
-  if (!size_flag) {
-    offset2 = CUE_CIRCLE_LARGE_SIZE;
+  if (bus_involved) {
+    offset2 = JUNCTION_CUE_SIZE_BUS;
   } else {
-    offset2 = CUE_CIRCLE_SMALL_SIZE;
+    offset2 = JUNCTION_CUE_SIZE_NET;
   }
 
   f_print_set_color(toplevel, fp, JUNCTION_COLOR);
@@ -178,25 +178,16 @@ void s_cue_output_lowlevel(TOPLEVEL * toplevel, OBJECT * object, int whichone,
 
 
         } else if (count >= 2) {
-          if (output_type == POSTSCRIPT) {
-            if (!bus_involved) {
-              s_cue_postscript_fillcircle(toplevel, fp, x, y, FALSE);
-            } else {
-              s_cue_postscript_fillcircle(toplevel, fp, x, y, TRUE);
-            }
-          }
+          if (output_type == POSTSCRIPT)
+            s_cue_postscript_junction (toplevel, fp, x, y, bus_involved);
         }
       }
       break;
 
     case (CONN_MIDPOINT):
-      if (output_type == POSTSCRIPT) {
-        if (!bus_involved) {
-          s_cue_postscript_fillcircle(toplevel, fp, x, y, FALSE);
-        } else {
-          s_cue_postscript_fillcircle(toplevel, fp, x, y, TRUE);
-        }
-      }
+      if (output_type == POSTSCRIPT)
+        s_cue_postscript_junction (toplevel, fp, x, y, bus_involved);
+      break;
   }
 
 }
@@ -212,10 +203,10 @@ void s_cue_output_lowlevel_midpoints(TOPLEVEL * toplevel, OBJECT * object,
   int x, y;
   GList *cl_current;
   CONN *conn;
-  int size_flag = FALSE;
+  int bus_involved = FALSE;
 
   if (object->type == OBJ_BUS)
-    size_flag = TRUE;
+    bus_involved = TRUE;
 
   cl_current = object->conn_list;
   while (cl_current != NULL) {
@@ -228,10 +219,10 @@ void s_cue_output_lowlevel_midpoints(TOPLEVEL * toplevel, OBJECT * object,
         y = conn->y;
 
         if (conn->other_object && conn->other_object->type == OBJ_BUS)
-          size_flag = TRUE;
+          bus_involved = TRUE;
 
         if (output_type == POSTSCRIPT) {
-          s_cue_postscript_fillcircle(toplevel, fp, x, y, size_flag);
+          s_cue_postscript_junction (toplevel, fp, x, y, bus_involved);
         }
         break;
     }
