@@ -204,14 +204,11 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
       if (object->type == OBJ_NET) { /* only nets have these cues */
         if (count < 1) { /* Didn't find anything connected there */
           size = SCREENabs (w_current, CUE_BOX_SIZE);
-          x2size = 2 * size;
           if (toplevel->DONT_REDRAW == 0) {
+            gschem_cairo_box (w_current->cr, -1,
+                              screen_x - size, screen_y - size,
+                              screen_x + size, screen_y + size);
             o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
-            cairo_move_to (w_current->cr, screen_x - size, screen_y - size);
-            cairo_rel_line_to (w_current->cr, x2size + 1, 0);
-            cairo_rel_line_to (w_current->cr, 0, x2size + 1);
-            cairo_rel_line_to (w_current->cr, -x2size - 1, 0);
-            cairo_close_path (w_current->cr);
             cairo_fill (w_current->cr);
           }
 
