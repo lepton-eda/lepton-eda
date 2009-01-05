@@ -55,7 +55,6 @@ struct line_type_data {
   GtkWidget *space_entry;
 
   GSCHEM_TOPLEVEL *w_current;
-  GList *objects;
 };
 
 struct fill_type_data {
@@ -649,7 +648,8 @@ static GtkWidget *create_menu_linetype (GSCHEM_TOPLEVEL *w_current)
                 { N_("Dotted"),  TYPE_DOTTED },
                 { N_("Dashed"),  TYPE_DASHED },
                 { N_("Center"),  TYPE_CENTER },
-                { N_("Phantom"), TYPE_PHANTOM } };
+                { N_("Phantom"), TYPE_PHANTOM },
+                { N_("*unchanged*"), TYPE_ERASE } };
   gint i;
 
   menu  = gtk_menu_new ();
@@ -668,6 +668,107 @@ static GtkWidget *create_menu_linetype (GSCHEM_TOPLEVEL *w_current)
 
   return(menu);
 }
+
+/*! \brief get the linetype data from selected objects
+ *  \par Function Description
+ *  Get linetype information over all selected objects.
+ *  If a object property is different to the other objects, then
+ *  return -2 in that variable.
+ *  \param [in]   selection the selection list
+ *  \param [out]  end       OBJECT_END type
+ *  \param [out]  type      OBJECT_FILLING type
+ *  \param [out]  width     line width
+ *  \param [out]  length    length of each line
+ *  \param [out]  space     space between points and lines
+ *  \returns TRUE if linetype found, FALSE otherwise
+ */
+static gboolean selection_get_line_type(GList *selection,
+                                        OBJECT_END *end, OBJECT_TYPE *type,
+                                        gint *width, gint *length, gint *space)
+{
+  GList *iter;
+  OBJECT *object;
+  gboolean found = FALSE;
+  OBJECT_END oend;
+  OBJECT_TYPE otype;
+  gint owidth, olength, ospace;
+
+  for (iter = selection; iter != NULL; iter = g_list_next(iter)) {
+    object = (OBJECT *) iter->data;
+    if (! o_get_line_options(object, &oend, &otype, 
+                             &owidth, &olength, &ospace))
+      continue;
+
+    if (found == FALSE) {  /* first object with filltype */
+      found = TRUE;
+      *end = oend;
+      *type = otype;
+      *width = owidth;
+      *length = olength;
+      *space = ospace;
+    } else {
+      /* indicate different values with the value -2 */
+      if (*end != oend) *end = -2;
+      if (*type != otype) *type = -2;
+      if (*width != owidth) *width = -2;
+      if (*length != olength) *length = -2;
+      if (*space != ospace) *space = -2;
+    }
+  }
+
+  return found;
+}
+ 
+
+/*! \brief set the linetype in the linetype dialog
+ *  \par Function Description
+ *  Set all widgets in the linetype dialog. Variables marked with the
+ *  invalid value -2 are set to *unchanged*.
+ *  \param [in]   line_type_data dialog structure
+ *  \param [in]   end       OBJECT_END type (currently not used)
+ *  \param [in]   type      OBJECT_FILLING type
+ *  \param [in]   width     fill width.
+ *  \param [in]   length    length of each line
+ *  \param [in]   space     space between points and lines
+ */
+static void line_type_dialog_set_values(struct line_type_data *line_type_data,
+                                        OBJECT_END end, OBJECT_TYPE type,
+                                        gint width, gint length, gint space)
+{
+  gchar *text;
+
+  if (type == -2)
+    type = TYPE_ERASE;
+  gtk_option_menu_set_history(GTK_OPTION_MENU(line_type_data->line_type), type);
+
+  if (width == -2)
+    text = g_strdup(_("*unchanged*"));
+  else
+    text = g_strdup_printf ("%d", width);
+  gtk_entry_set_text (GTK_ENTRY (line_type_data->width_entry), text);
+  gtk_entry_select_region (GTK_ENTRY (line_type_data->width_entry), 
+                           0, strlen (text));
+  g_free(text);
+
+  if (length == -2)
+    text = g_strdup(_("*unchanged*"));
+  else
+    text = g_strdup_printf ("%d", length);
+  gtk_entry_set_text (GTK_ENTRY (line_type_data->length_entry), text);
+  gtk_entry_select_region (GTK_ENTRY (line_type_data->length_entry), 
+                           0, strlen (text));
+  g_free(text);
+
+  if (space == -2)
+    text = g_strdup(_("*unchanged*"));
+  else
+    text = g_strdup_printf ("%d", space);
+  gtk_entry_set_text (GTK_ENTRY (line_type_data->space_entry), text);
+  gtk_entry_select_region (GTK_ENTRY (line_type_data->space_entry),
+                           0, strlen (text));
+  g_free(text);
+}
+                                         
 
 /*! \brief Callback function for the linetype menu item in the line type dialog
  *  \par Function Description
@@ -726,12 +827,20 @@ static void line_type_dialog_ok(GtkWidget *w, gpointer data)
   struct line_type_data *line_type_data = (struct line_type_data*)data;
   GSCHEM_TOPLEVEL *w_current = line_type_data->w_current;
   TOPLEVEL *toplevel = w_current->toplevel;
-  GList *objects;
+  GList *selection, *iter;
+  OBJECT *object;
   const gchar *width_str, *length_str, *space_str;
   OBJECT_TYPE type;
+  gint width, length, space;
+  OBJECT_TYPE otype;
+  OBJECT_END oend;
+  gint owidth, olength, ospace;
 
-  /* retrieve the list of objects */
-  objects  = line_type_data->objects;
+  /* get the selection */
+  if (! o_select_selected(w_current))
+    return;
+  selection = 
+    geda_list_get_glist(w_current->toplevel->page_current->selection_list);
 
   /* get the new values from the text entries of the dialog */
   width_str   = gtk_entry_get_text (GTK_ENTRY (
@@ -747,56 +856,53 @@ static void line_type_dialog_ok(GtkWidget *w, gpointer data)
           GTK_MENU (gtk_option_menu_get_menu (
                       GTK_OPTION_MENU (
                         line_type_data->line_type))))), "linetype"));
+  if (type == TYPE_ERASE)
+    type = -1;
+  
+  /* convert the options to integers (-1 means unchanged) */
+  width =  g_strcasecmp (width_str,
+                         _("*unchanged*")) ? atoi (width_str)  : -1;
+  length = g_strcasecmp (length_str,
+                         _("*unchanged*")) ? atoi (length_str) : -1;
+  space  = g_strcasecmp (space_str,
+                         _("*unchanged*")) ? atoi (space_str)  : -1;
 
-  /* are there several objects concerned? */
-  if (g_list_next (objects) == NULL) {
-    /* no, there is only one object */
-    OBJECT *o_current = (OBJECT*) objects->data;
-    gint width, length, space;
+  for (iter = selection; iter != NULL; iter = g_list_next(iter)) {
+    object = (OBJECT *) iter->data;
+    if (! o_get_line_options(object, &oend, &otype,
+                             &owidth, &olength, &ospace))
+      continue;
 
-    width  = atoi (width_str);
-    length = atoi (length_str);
-    space  = atoi (space_str);
+    /* oend is not in the dialog, yet */
+    otype = type == -1 ? otype : type;
+    owidth = width  == -1 ? owidth : width;
+    olength = length == -1 ? olength : length;
+    ospace = space  == -1 ? ospace : space;
 
-    /* apply the new line options to object */
-    o_invalidate (w_current, o_current);
-    o_set_line_options (toplevel, o_current,
-                        o_current->line_end,
-                        type,
-                        width,
-                        length,
-                        space);
-    o_invalidate (w_current, o_current);
-
-  } else {
-    /* more than one object in the list */
-    GList *object;
-    gint width, length, space;
-
-    /* get the new line options */
-    width  = g_strcasecmp (width_str,
-                           _("*unchanged*")) ? atoi (width_str)  : -1;
-    length = g_strcasecmp (length_str,
-                           _("*unchanged*")) ? atoi (length_str) : -1;
-    space  = g_strcasecmp (space_str,
-                           _("*unchanged*")) ? atoi (space_str)  : -1;
-
-    /* apply changes to each object */
-    object = objects;
-    while (object != NULL) {
-      OBJECT *o_current = (OBJECT*)object->data;
-
-      o_invalidate (w_current, o_current);
-      o_set_line_options (toplevel, o_current,
-                          o_current->line_end,
-                          type   == -1 ? o_current->line_type : type,
-                          width  == -1 ? o_current->line_width  : width,
-                          length == -1 ? o_current->line_length : length,
-                          space  == -1 ? o_current->line_space  : space);
-      o_invalidate (w_current, o_current);
-
-      object = g_list_next(object);
+    /* set all not required options to -1 and 
+       set nice parameters if not provided by the user */
+    switch (otype) {
+    case (TYPE_SOLID):
+      olength = ospace = -1;
+      break;
+    case (TYPE_DOTTED):
+      olength = -1;
+      if (ospace < 1) ospace = 100;
+      break;
+    case (TYPE_DASHED):
+    case (TYPE_CENTER):
+    case (TYPE_PHANTOM):
+      if (ospace < 1) ospace = 100;
+      if (olength < 1) olength = 100;
+      break;
+    default:
+      g_assert_not_reached();
     }
+
+    o_invalidate (w_current, object);
+    o_set_line_options (toplevel, object,
+                        oend, otype, owidth, olength, ospace);
+    o_invalidate (w_current, object);
   }
 
   toplevel->page_current->CHANGED = 1;
@@ -828,8 +934,6 @@ void line_type_dialog_response(GtkWidget *widget, gint response,
   i_update_toolbar (line_type_data->w_current);
   gtk_widget_destroy (line_type_data->dialog);
 
-  /* get ride of the list of objects but not the objects */
-  g_list_free (line_type_data->objects);
   g_free (line_type_data);
 }
 
@@ -838,7 +942,7 @@ void line_type_dialog_response(GtkWidget *widget, gint response,
  *  This function creates and sets up a dialog for manipulating the
  *  line width and the line type setting of objects.
  */
-void line_type_dialog (GSCHEM_TOPLEVEL *w_current, GList *objects)
+void line_type_dialog (GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
@@ -849,8 +953,20 @@ void line_type_dialog (GSCHEM_TOPLEVEL *w_current, GList *objects)
   GtkWidget *table;
   GtkWidget *label;
   struct line_type_data *line_type_data;
-  gchar *width_str, *space_str, *length_str;
-  gint type;
+  GList *selection;
+  OBJECT_END end;
+  OBJECT_TYPE type=TYPE_SOLID;
+  gint width=1, length=-1, space=-1;
+
+  if (! o_select_selected(w_current))
+    return;
+
+  selection = 
+    geda_list_get_glist(w_current->toplevel->page_current->selection_list);
+
+  if (! selection_get_line_type(selection, &end, &type,
+                                &width, &length, &space))
+    return;
 
   line_type_data = (struct line_type_data*) g_malloc (
     sizeof (struct line_type_data));
@@ -894,11 +1010,11 @@ void line_type_dialog (GSCHEM_TOPLEVEL *w_current, GList *objects)
   gtk_table_set_col_spacings(GTK_TABLE(table), DIALOG_H_SPACING);
   gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Width:"));
+  label = gtk_label_new (_("Type:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
   gtk_table_attach(GTK_TABLE(table), label, 0,1,0,1, GTK_FILL,0,0,0);
 
-  label = gtk_label_new (_("Type:"));
+  label = gtk_label_new (_("Width:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
   gtk_table_attach(GTK_TABLE(table), label, 0,1,1,2, GTK_FILL,0,0,0);
 
@@ -910,16 +1026,16 @@ void line_type_dialog (GSCHEM_TOPLEVEL *w_current, GList *objects)
   gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
   gtk_table_attach(GTK_TABLE(table), label, 0,1,3,4, GTK_FILL,0,0,0);
 
-  width_entry = gtk_entry_new();
-  gtk_entry_set_activates_default (GTK_ENTRY(width_entry), TRUE);
-  gtk_editable_select_region(GTK_EDITABLE(width_entry), 0, -1);
-  gtk_table_attach_defaults(GTK_TABLE(table), width_entry,
-                            1,2,0,1);
-
   optionmenu = gtk_option_menu_new ();
   gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
                            create_menu_linetype (w_current));
   gtk_table_attach_defaults(GTK_TABLE(table), optionmenu,
+                            1,2,0,1);
+
+  width_entry = gtk_entry_new();
+  gtk_entry_set_activates_default (GTK_ENTRY(width_entry), TRUE);
+  gtk_editable_select_region(GTK_EDITABLE(width_entry), 0, -1);
+  gtk_table_attach_defaults(GTK_TABLE(table), width_entry,
                             1,2,1,2);
 
   gtk_signal_connect(GTK_OBJECT (optionmenu), "changed",
@@ -946,54 +1062,16 @@ void line_type_dialog (GSCHEM_TOPLEVEL *w_current, GList *objects)
   line_type_data->space_entry  = space_entry;
 
   line_type_data->w_current = w_current;
-  line_type_data->objects  = objects;
 
   /* fill in the fields of the dialog */
-  if (g_list_next (objects) == NULL) {
-    /* only one object in object list */
-    OBJECT *o_current = (OBJECT*) objects->data;
-
-    width_str  = g_strdup_printf ("%d", o_current->line_width);
-    space_str  = g_strdup_printf ("%d", o_current->line_space);
-    length_str = g_strdup_printf ("%d", o_current->line_length);
-    type = o_current->line_type;
-  } else {
-    GtkWidget *menuitem;
-    GtkWidget *menu;
-
-    width_str   = g_strdup_printf (_("*unchanged*"));
-    space_str   = g_strdup_printf (_("*unchanged*"));
-    length_str  = g_strdup_printf (_("*unchanged*"));
-    type = TYPE_PHANTOM + 1;
-
-    /* add a new menuitem to option menu for line type */
-    menu = gtk_option_menu_get_menu (GTK_OPTION_MENU (optionmenu));
-    menuitem = gtk_radio_menu_item_new_with_label (
-      gtk_radio_menu_item_get_group (
-        GTK_RADIO_MENU_ITEM (gtk_menu_get_active (GTK_MENU (menu)))),
-      _("*unchanged*"));
-    gtk_menu_append (menu, menuitem);
-    gtk_object_set_data (GTK_OBJECT (menuitem),
-                         "linetype",
-                         GINT_TO_POINTER (-1));
-    gtk_widget_show (menuitem);
-  }
-
-  gtk_entry_set_text (GTK_ENTRY (width_entry), width_str);
-  gtk_entry_select_region (GTK_ENTRY (width_entry), 0, strlen (width_str));
-  gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), type);
-  gtk_entry_set_text (GTK_ENTRY (space_entry), space_str);
-  gtk_entry_set_text (GTK_ENTRY (length_entry), length_str);
+  line_type_dialog_set_values(line_type_data, end, type,
+                              width, length, space);
 
   /* calling it once will set the dash space/length activity */
   line_type_dialog_linetype_change(optionmenu, line_type_data);
 
   gtk_widget_grab_focus(width_entry);
   gtk_widget_show_all (dialog);
-
-  g_free (width_str);
-  g_free (space_str);
-  g_free (length_str);
 }
 
 /***************** End of Line Type / Width dialog box ****************/
@@ -1094,7 +1172,7 @@ static gboolean selection_get_fill_type(GList *selection,
  *  \par Function Description
  *  Set all widgets in the filltype dialog. Variables marked with the
  *  invalid value -2 are set to *unchanged*.
- *  \param [in]   selection the selection list
+ *  \param [in]   fill_type_data dialog structure
  *  \param [in]   type      OBJECT_FILLING type
  *  \param [in]   width     fill width.
  *  \param [in]   pitch1    cross hatch line distance
@@ -1258,7 +1336,9 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
           GTK_MENU (gtk_option_menu_get_menu (
                       GTK_OPTION_MENU (
                         fill_type_data->fill_type))))), "filltype"));
-  
+  if (type == FILLING_VOID)
+    type = -1;
+
   /* convert the options to integers (-1 means unchanged) */
   width  = g_strcasecmp (width_str,
                          _("*unchanged*")) ? atoi (width_str)  : -1;

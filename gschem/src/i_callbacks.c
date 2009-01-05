@@ -1251,37 +1251,7 @@ DEFINE_I_CALLBACK(edit_linetype)
 
   exit_if_null(w_current);
 
-  /* anything selected ? */
-  if (o_select_selected(w_current)) {
-    GList *s_current =
-      geda_list_get_glist( w_current->toplevel->page_current->selection_list );
-    GList *objects = NULL;
-
-    /* yes, build a list of relevant objects */
-    while (s_current != NULL) {
-      OBJECT *o_current = (OBJECT *) s_current->data;
-          
-      if (o_current->type == OBJ_LINE   ||
-          o_current->type == OBJ_BOX    ||
-          o_current->type == OBJ_CIRCLE ||
-          o_current->type == OBJ_ARC ||
-          o_current->type == OBJ_PATH) {
-        objects = g_list_prepend (objects, o_current);
-      }
-
-      s_current = g_list_next(s_current);
-    }
-
-    if (objects != NULL) {
-      /* at least one object in the list */
-      i_update_middle_button(w_current,
-                             i_callback_edit_color,
-                             _("Edit Line Type"));
-      /* enter edition of parameters of selected objects */
-      line_type_dialog(w_current, objects);
-    }
-  }
-  
+  line_type_dialog(w_current);
 }
 
 /*! \todo Finish function documentation!!!
