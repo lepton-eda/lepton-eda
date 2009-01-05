@@ -736,10 +736,14 @@ static void line_type_dialog_set_values(struct line_type_data *line_type_data,
                                         gint width, gint length, gint space)
 {
   gchar *text;
+  GtkWidget *menu, *menuitem;
 
   if (type == -2)
     type = TYPE_ERASE;
   gtk_option_menu_set_history(GTK_OPTION_MENU(line_type_data->line_type), type);
+  menu = gtk_option_menu_get_menu(GTK_OPTION_MENU(line_type_data->line_type));
+  menuitem = gtk_menu_get_active(GTK_MENU(menu));
+  gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), TRUE);
 
   if (width == -2)
     text = g_strdup(_("*unchanged*"));
@@ -1186,10 +1190,14 @@ static void fill_type_dialog_set_values(struct fill_type_data *fill_type_data,
                                         gint pitch2, gint angle2)
 {
   gchar *text;
+  GtkWidget *menu, *menuitem;
 
   if (type == -2)
     type = FILLING_VOID;
   gtk_option_menu_set_history(GTK_OPTION_MENU(fill_type_data->fill_type), type);
+  menu = gtk_option_menu_get_menu(GTK_OPTION_MENU(fill_type_data->fill_type));
+  menuitem = gtk_menu_get_active(GTK_MENU(menu));
+  gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), TRUE);
 
   if (width == -2)
     text = g_strdup(_("*unchanged*"));
