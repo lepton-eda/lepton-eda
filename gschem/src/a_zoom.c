@@ -58,39 +58,51 @@ void a_zoom(GSCHEM_TOPLEVEL *w_current, int dir, int selected_from, int pan_flag
   TOPLEVEL *toplevel = w_current->toplevel;
   double world_pan_center_x,world_pan_center_y,relativ_zoom_factor = - 1;
   int start_x, start_y;
+  double top, bottom, right, left;
 
-  /*calc center: either "mouse_to_world" or center=center */
+  /* NB: w_current->zoom_gain is a percentage increase */
+  switch(dir) {
+  case(ZOOM_IN):
+    relativ_zoom_factor = (100.0 + w_current->zoom_gain) / 100.0;
+    break;	
+	
+  case(ZOOM_OUT):
+    relativ_zoom_factor = 100.0 / (100.0 + w_current->zoom_gain);
+    break;
+
+  case(ZOOM_FULL):
+    /* indicate the zoom full with a negative zoomfactor */
+    relativ_zoom_factor = -1;
+    break;
+  }
+
+  /* calc center: either "mouse_to_world" or center=center or a 
+     virtual center if warp_cursor is disabled */
   if (w_current->zoom_with_pan == TRUE && selected_from == HOTKEY) {
     if (!x_event_get_pointer_position(w_current, FALSE, 
 				      &start_x, &start_y))
       return;
-    world_pan_center_x = start_x;
-    world_pan_center_y = start_y;
-  }
-  else {
+    if ( w_current->warp_cursor ) {
+      world_pan_center_x = start_x;
+      world_pan_center_y = start_y;
+    } else {
+      left = ((toplevel->page_current->left - start_x)
+              * (1/relativ_zoom_factor) + start_x);
+      right = ((toplevel->page_current->right - start_x)
+               * (1/relativ_zoom_factor) + start_x);
+      top = ((toplevel->page_current->top - start_y)
+             * (1/relativ_zoom_factor) + start_y);
+      bottom = ((toplevel->page_current->bottom - start_y)
+                * (1/relativ_zoom_factor) + start_y);
+      world_pan_center_x = (right + left) / 2;
+      world_pan_center_y = (top + bottom) / 2;
+    }
+  } else {
     world_pan_center_x = (double) (toplevel->page_current->left +
                                    toplevel->page_current->right ) / 2;
     world_pan_center_y = (double) (toplevel->page_current->top +
                                    toplevel->page_current->bottom ) / 2;
   }
-
-  /* NB: w_current->zoom_gain is a percentage increase */
-  switch(dir) {
-    case(ZOOM_IN):
-    relativ_zoom_factor = (100.0 + w_current->zoom_gain) / 100.0;
-    break;	
-	
-    case(ZOOM_OUT):
-    relativ_zoom_factor = 100.0 / (100.0 + w_current->zoom_gain);
-    break;
-
-    case(ZOOM_FULL):
-    /*hope someone have a better idea (hw)*/
-    relativ_zoom_factor = -1;
-    break;
-  }
-
-
 
 #if DEBUG
   printf("relative zoomfactor: %E\n", relativ_zoom_factor);
@@ -126,14 +138,6 @@ void a_zoom(GSCHEM_TOPLEVEL *w_current, int dir, int selected_from, int pan_flag
      WORLDtoSCREEN (w_current, world_pan_center_x, world_pan_center_y,
 		   &start_x, &start_y);
      x_basic_warp_cursor (w_current->drawing_area, start_x, start_y);
-  }
-  else {
-    /*! \bug FIXME? trigger a x_event_motion() call without moving the cursor 
-     *  this will redraw rubberband lines 
-     *  Find a way to trigger the x_event_motion() without moving
-     *  the mouse cursor (werner) 
-     */
-    /* x_basic_warp_cursor(w_current->drawing_area, mouse_x, mouse_y); */
   }
 }
 
