@@ -228,7 +228,6 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 void o_text_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int top, bottom, left, right;
   int color, factor;
 
   if (o_current->visibility == INVISIBLE && !toplevel->show_hidden_text) {
@@ -244,8 +243,6 @@ void o_text_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
   } else {
     /* text is too small so go through and draw a line in
        it's place */
-    WORLDtoSCREEN (w_current, o_current->w_left + dx, o_current->w_bottom + dy, &left, &top);
-    WORLDtoSCREEN (w_current, o_current->w_right + dx, o_current->w_top + dy, &right, &bottom);
 
     if (o_current->saved_color != -1) {
       color = o_current->saved_color;
@@ -253,10 +250,12 @@ void o_text_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
       color = o_current->color;
     }
 
-    gschem_cairo_box (w_current->cr, 1, left, top, right, bottom);
+    gschem_cairo_box (w_current, 0,
+                      o_current->w_left  + dx, o_current->w_bottom + dy,
+                      o_current->w_right + dx, o_current->w_top    + dy);
 
-    gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
-    gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+    gschem_cairo_set_source_color (w_current, x_color_lookup_dark (color));
+    gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
   }
 }
 

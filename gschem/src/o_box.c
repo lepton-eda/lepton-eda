@@ -57,9 +57,7 @@ typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, COLOR *color,
 void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
-  int line_width, length, space;
-  int fill_width, angle1, pitch1, angle2, pitch2;
+  int angle1, pitch1, angle2, pitch2;
   COLOR *color;
   FILL_FUNC fill_func;
 
@@ -69,20 +67,6 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
   if (toplevel->DONT_REDRAW == 1)
     return;
-	
-#if DEBUG
-  printf("drawing box\n\n");
-	
-  printf("drawing box: %d %d %d %d\n",
-         o_current->box->upper_x,
-         o_current->box->upper_y,
-         o_current->box->upper_x +
-         abs(o_current->box->lower_x -
-             o_current->box->upper_x),
-         o_current->box->upper_y +
-         abs(o_current->box->lower_y -
-             o_current->box->upper_y));
-#endif
 
   /*
    * The drawing of the box is divided in two steps : first step is to
@@ -111,18 +95,6 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
    * encountered the box is drawn as a solid box independently of its
    * initial type.
    */
-  line_width = SCREENabs (w_current, o_current->line_width);
-  if(line_width <= 0) {
-    line_width = 1;
-  }
-
-  length = SCREENabs (w_current, o_current->line_length);
-  space = SCREENabs (w_current, o_current->line_space);
-
-  WORLDtoSCREEN (w_current, o_current->box->upper_x, o_current->box->upper_y,
-                 &s_upper_x, &s_upper_y);
-  WORLDtoSCREEN (w_current, o_current->box->lower_x, o_current->box->lower_y,
-                 &s_lower_x, &s_lower_y);
 
   /*
    * The values needed for the fill operation are taken from the
@@ -146,11 +118,7 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
    * to be distinct. If such a case is encountered the circle is filled
    * hollow (e.q. not filled).
    */
-  fill_width = SCREENabs (w_current, o_current->fill_width);
-  if(fill_width <= 0) {
-    fill_width = 1;
-  }
-	
+
   angle1 = o_current->fill_angle1;
   pitch1 = o_current->fill_pitch1;
   angle2 = o_current->fill_angle2;
@@ -198,17 +166,21 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
   (*fill_func) (w_current->drawable, w_current->gc, color,
                 w_current, o_current->box,
-                fill_width, angle1, pitch1, angle2, pitch2);
+                o_current->fill_width, angle1, pitch1, angle2, pitch2);
 
-  gschem_cairo_set_source_color (w_current->cr, color);
-  gschem_cairo_box (w_current->cr, line_width,
-                    s_lower_x, s_lower_y, s_upper_x, s_upper_y);
+  gschem_cairo_set_source_color (w_current, color);
+  gschem_cairo_box (w_current, o_current->line_width,
+                    o_current->box->lower_x, o_current->box->lower_y,
+                    o_current->box->upper_x, o_current->box->upper_y);
 
   if (o_current->fill_type == FILLING_FILL)
     cairo_fill_preserve (w_current->cr);
 
-  gschem_cairo_stroke (w_current->cr, o_current->line_type,
-                       o_current->line_end, line_width, length, space);
+  gschem_cairo_stroke (w_current, o_current->line_type,
+                                  o_current->line_end,
+                                  o_current->line_width,
+                                  o_current->line_length,
+                                  o_current->line_space);
 
   if (o_current->selected && w_current->draw_grips) {
     o_box_draw_grips (w_current, o_current);
@@ -315,21 +287,18 @@ void o_box_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
   int i;
   GArray *lines;
 
-  gschem_cairo_set_source_color (w_current->cr, color);
+  gschem_cairo_set_source_color (w_current, color);
 
   lines = g_array_new (FALSE, FALSE, sizeof (LINE));
   m_hatch_box (box, angle1, pitch1, lines);
 
   for (i=0; i < lines->len; i++) {
-    int x1, y1, x2, y2;
     LINE *line = &g_array_index (lines, LINE, i);
 
-    WORLDtoSCREEN (w_current, line->x[0], line->y[0], &x1, &y1);
-    WORLDtoSCREEN (w_current, line->x[1], line->y[1], &x2, &y2);
-    gschem_cairo_line (w_current->cr, END_NONE, fill_width, x1, y1, x2, y2);
+    gschem_cairo_line (w_current, END_NONE, fill_width, line->x[0], line->y[0],
+                                                        line->x[1], line->y[1]);
   }
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE,
-                                      fill_width, -1, -1);
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, fill_width, -1, -1);
 
   g_array_free (lines, TRUE);
 }
@@ -407,18 +376,11 @@ void o_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_box_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
-  int screen_x1, screen_y1;
-  int screen_x2, screen_y2;
   int color;
 
   if (o_current->box == NULL) {
     return;
   }
-
-  WORLDtoSCREEN (w_current, o_current->box->upper_x + dx, o_current->box->upper_y + dy,
-                 &screen_x1, &screen_y1);
-  WORLDtoSCREEN (w_current, o_current->box->lower_x + dx, o_current->box->lower_y + dy,
-                 &screen_x2, &screen_y2);
 
   if (o_current->saved_color != -1) {
     color = o_current->saved_color;
@@ -426,10 +388,12 @@ void o_box_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
     color = o_current->color;
   }
 
-  gschem_cairo_box (w_current->cr, 1, screen_x1, screen_y1,
-                                      screen_x2, screen_y2);
-  gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+  gschem_cairo_box (w_current, 0, o_current->box->upper_x + dx,
+                                  o_current->box->upper_y + dy,
+                                  o_current->box->lower_x + dx,
+                                  o_current->box->lower_y + dy);
+  gschem_cairo_set_source_color (w_current, x_color_lookup_dark (color));
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 1, -1, -1);
 }
 
 /*! \brief Start process to input a new box.
@@ -581,16 +545,11 @@ void o_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_box_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  int x1, y1, x2, y2;
-
-  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
-
-  gschem_cairo_box (w_current->cr, 1, x1, y1, x2, y2);
-
-  gschem_cairo_set_source_color (w_current->cr,
+  gschem_cairo_box (w_current, 0, w_current->first_wx,  w_current->first_wy,
+                                  w_current->second_wx, w_current->second_wy);
+  gschem_cairo_set_source_color (w_current,
                                  x_color_lookup_dark (SELECT_COLOR));
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 
 /*! \brief Draw grip marks on box.

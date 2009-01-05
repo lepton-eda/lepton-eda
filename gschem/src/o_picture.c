@@ -274,17 +274,16 @@ void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current)
   int left, top, width, height;
 
   /* get the width/height and the upper left corner of the picture */
-  WORLDtoSCREEN (w_current,
-                 GET_PICTURE_LEFT(w_current), GET_PICTURE_TOP(w_current),
-                 &left, &top);
-  width = SCREENabs (w_current, GET_PICTURE_WIDTH (w_current));
-  height = SCREENabs (w_current, GET_PICTURE_HEIGHT(w_current));
+  left =   GET_PICTURE_LEFT (w_current);
+  top =    GET_PICTURE_TOP (w_current);
+  width =  GET_PICTURE_WIDTH (w_current);
+  height = GET_PICTURE_HEIGHT (w_current);
 
-  gschem_cairo_box (w_current->cr, 1, left, top, left + width, top + height);
+  gschem_cairo_box (w_current, 0, left, top, left + width, top + height);
 
-  gschem_cairo_set_source_color (w_current->cr,
+  gschem_cairo_set_source_color (w_current,
                                  x_color_lookup_dark (SELECT_COLOR));
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 
 /*! \brief Draw a picture on the screen.
@@ -375,8 +374,6 @@ void o_picture_draw (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  */
 void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
-
   if (w_current->draw_grips == FALSE)
     return;
 
@@ -397,17 +394,13 @@ void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                            o_current->picture->lower_y);
 
   /* Box surrounding the picture */
-  WORLDtoSCREEN (w_current, o_current->picture->upper_x, o_current->picture->upper_y,
-                 &s_upper_x, &s_upper_y );
-  WORLDtoSCREEN (w_current, o_current->picture->lower_x, o_current->picture->lower_y,
-                 &s_lower_x, &s_lower_y );
+  gschem_cairo_box (w_current, 0,
+                    o_current->picture->upper_x, o_current->picture->upper_y,
+                    o_current->picture->lower_x, o_current->picture->lower_y);
 
-  gschem_cairo_box (w_current->cr, 1, s_lower_x, s_lower_y,
-                                      s_upper_x, s_upper_y);
-
-  gschem_cairo_set_source_color (w_current->cr,
+  gschem_cairo_set_source_color (w_current,
                                  x_color_lookup_dark (SELECT_COLOR));
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 
 
@@ -426,18 +419,11 @@ void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  */
 void o_picture_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
-  int screen_x1, screen_y1;
-  int screen_x2, screen_y2;
   int color;
 
   if (o_current->picture == NULL) {
     return;
   }
-
-  WORLDtoSCREEN (w_current, o_current->picture->upper_x + dx, o_current->picture->upper_y + dy,
-                 &screen_x1, &screen_y1);
-  WORLDtoSCREEN (w_current, o_current->picture->lower_x + dx, o_current->picture->lower_y + dy,
-                 &screen_x2, &screen_y2);
 
   if (o_current->saved_color != -1) {
     color = o_current->saved_color;
@@ -445,10 +431,13 @@ void o_picture_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o
     color = o_current->color;
   }
 
-  gschem_cairo_box (w_current->cr, 1, screen_x1, screen_y1,
-                                      screen_x2, screen_y2);
-  gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+  gschem_cairo_box (w_current, 0, o_current->picture->upper_x + dx,
+                                  o_current->picture->upper_y + dy,
+                                  o_current->picture->lower_x + dx,
+                                  o_current->picture->lower_y + dy);
+
+  gschem_cairo_set_source_color (w_current, x_color_lookup_dark (color));
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 
 /*! \brief Replace all selected pictures with a new picture

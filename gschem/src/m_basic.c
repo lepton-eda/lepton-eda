@@ -309,27 +309,6 @@ struct st_halfspace {
  * encode_halfspace and clip are part of the cohen-sutherland clipping
  * algorithm.  They are used to determine if an object is visible or not
  */
-/*! \brief Encode SCREEN coordinates as halfspace matrix.
- *  \par Function Description
- *  This function takes a point and checks if it is in the bounds
- *  of the current TOPLEVEL object's page coordinates. It
- *  handles points with SCREEN coordinates.
- *
- *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in]  point      The point in SCREEN coordinates to be checked.
- *  \param [out] halfspace  The created HALFSPACE structure.
- *
- *  \warning halfspace must be allocated before this function is called
- */
-static void SCREENencode_halfspace (GSCHEM_TOPLEVEL *w_current,
-                                    sPOINT *point, HALFSPACE *halfspace)
-{
-  halfspace->left = point->x < 0;
-  halfspace->right = point->x > w_current->toplevel->width;
-  halfspace->bottom = point->y > w_current->toplevel->height;
-  halfspace->top = point->y < 0;
-}
-
 /*! \brief Encode WORLD coordinates as halfspace matrix.
  *  \par Function Description
  *  This function takes a point and checks if it is in the bounds
@@ -356,7 +335,7 @@ static void WORLDencode_halfspace (GSCHEM_TOPLEVEL *w_current,
  *  This function will check the provided set of coordinates to see if
  *  they fall within a clipping region.  If they do the coordinates will
  *  be changed to reflect only the region no covered by the clipping window.
- *  All coordinates should be in SCREEN units.
+ *  All coordinates should be in WORLD units.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in,out] x1     x coordinate of the first screen point.
@@ -365,8 +344,8 @@ static void WORLDencode_halfspace (GSCHEM_TOPLEVEL *w_current,
  *  \param [in,out] y2     y coordinate of the second screen point.
  *  \return TRUE if coordinates are now visible, FALSE otherwise.
  */
-int SCREENclip_change (GSCHEM_TOPLEVEL *w_current,
-                       int *x1, int *y1, int *x2, int *y2)
+int WORLDclip_change (GSCHEM_TOPLEVEL *w_current,
+                      int *x1, int *y1, int *x2, int *y2)
 {
   HALFSPACE half1, half2;
   HALFSPACE tmp_half;
@@ -382,19 +361,17 @@ int SCREENclip_change (GSCHEM_TOPLEVEL *w_current,
   point2.x = *x2;
   point2.y = *y2;
 
-
-  w_l = 0;
-  w_t = 0;
-  w_r = w_current->toplevel->width;
-  w_b = w_current->toplevel->height;
-
+  w_l = w_current->toplevel->page_current->left;
+  w_t = w_current->toplevel->page_current->top;
+  w_r = w_current->toplevel->page_current->right;
+  w_b = w_current->toplevel->page_current->bottom;
 
   done = FALSE;
   visible = FALSE;
 
   do {
-    SCREENencode_halfspace (w_current, &point1, &half1);
-    SCREENencode_halfspace (w_current, &point2, &half2);
+    WORLDencode_halfspace (w_current, &point1, &half1);
+    WORLDencode_halfspace (w_current, &point2, &half2);
 
 #if DEBUG
     printf("starting loop\n");

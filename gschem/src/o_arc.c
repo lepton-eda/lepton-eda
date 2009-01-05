@@ -28,40 +28,6 @@
 #endif
 
 
-static void arc_path (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
-{
-  ARC *arc = object->arc;
-  int line_width;
-  int sx1, sy1, sx2, sy2;
-  double cx, cy;
-  double radius;
-
-  WORLDtoSCREEN (w_current, arc->x - arc->width  / 2,
-                            arc->y + arc->height / 2, &sx1, &sy1);
-  WORLDtoSCREEN (w_current, arc->x + arc->width  / 2,
-                            arc->y - arc->height / 2, &sx2, &sy2);
-  line_width = SCREENabs (w_current, object->line_width);
-  if (line_width <= 0) {
-    line_width = 1;
-  }
-
-  cx = (double)(sx1 + sx2) / 2.;
-  cy = (double)(sy1 + sy2) / 2.;
-  radius = (double)(sy2 - sy1) / 2.;
-
-  cairo_translate (w_current->cr, cx, cy);
-
-  /* Adjust for non-uniform X/Y scale factor. Note that the + 1
-     allows for the case where sx2 == sx1 or sy2 == sy1 */
-  cairo_scale (w_current->cr, (double)(sx2 - sx1 + 1) /
-                              (double)(sy2 - sy1 + 1), 1.);
-
-  gschem_cairo_arc (w_current->cr, line_width, 0., 0., radius,
-                    arc->start_angle, arc->end_angle);
-  cairo_identity_matrix (w_current->cr);
-}
-
-
 /*! \brief Draw an arc on the screen.
  *  \par Function Description
  *  This function is used to draw an arc on screen. The arc is described
@@ -78,9 +44,7 @@ static void arc_path (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int line_width;
   COLOR *color;
-  int length, space;
 
   if (o_current->arc == NULL) {
     return;
@@ -94,19 +58,19 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   else
     color = x_color_lookup (o_current->color);
 
-  line_width = SCREENabs (w_current, o_current->line_width);
-  if(line_width <= 0) {
-    line_width = 1;
-  }
+  gschem_cairo_arc (w_current, o_current->line_width,
+                               o_current->arc->x,
+                               o_current->arc->y,
+                               o_current->arc->width / 2,
+                               o_current->arc->start_angle,
+                               o_current->arc->end_angle);
 
-  length = SCREENabs (w_current, o_current->line_length);
-  space = SCREENabs (w_current, o_current->line_space);
-
-  arc_path (w_current, o_current);
-
-  gschem_cairo_set_source_color (w_current->cr, color);
-  gschem_cairo_stroke (w_current->cr, o_current->line_type,
-                       o_current->line_end, line_width, length, space);
+  gschem_cairo_set_source_color (w_current, color);
+  gschem_cairo_stroke (w_current, o_current->line_type,
+                                  o_current->line_end,
+                                  o_current->line_width,
+                                  o_current->line_length,
+                                  o_current->line_space);
 
   if (o_current->selected && w_current->draw_grips == TRUE) {
     o_arc_draw_grips (w_current, o_current);
@@ -145,21 +109,9 @@ void o_arc_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_arc_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
-  OBJECT object;
-  ARC arc;
   int color;
 
   g_return_if_fail (o_current->arc != NULL);
-
-  /* Setup a fake object to pass the drawing routine */
-  object.arc = &arc;
-  object.line_width = 0; /* clamped to 1 pixel in arc_path */
-  arc.x = o_current->arc->x + dx;
-  arc.y = o_current->arc->y + dy;
-  arc.width  = o_current->arc->width;
-  arc.height = o_current->arc->height;
-  arc.start_angle = o_current->arc->start_angle;
-  arc.end_angle   = o_current->arc->end_angle;
 
   if (o_current->saved_color != -1) {
     color = o_current->saved_color;
@@ -167,10 +119,14 @@ void o_arc_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
     color = o_current->color;
   }
 
-  arc_path (w_current, &object);
+  gschem_cairo_arc (w_current, 0, o_current->arc->x + dx,
+                                  o_current->arc->y + dy,
+                                  o_current->arc->width / 2,
+                                  o_current->arc->start_angle,
+                                  o_current->arc->end_angle);
 
-  gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+  gschem_cairo_set_source_color (w_current, x_color_lookup_dark (color));
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 
 /*! \brief Start process to input a new arc.
@@ -378,25 +334,16 @@ void o_arc_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
  */
 void o_arc_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  OBJECT object;
-  ARC arc;
   double rad_angle;
   int rdx, rdy;
-  int x1, y1, x2, y2;
 
-  /* Setup a fake object to pass the drawing routine */
-  object.arc = &arc;
-  object.line_width = 0; /* clamped to 1 pixel in arc_path */
-  arc.x = w_current->first_wx;
-  arc.y = w_current->first_wy;
-  arc.width  = w_current->distance * 2;
-  arc.height = w_current->distance * 2;
-  arc.start_angle = w_current->second_wx;
-  arc.end_angle   = w_current->second_wy;
+  gschem_cairo_arc (w_current, 0, w_current->first_wx,
+                                  w_current->first_wy,
+                                  w_current->distance,
+                                  w_current->second_wx,
+                                  w_current->second_wy);
 
-  arc_path (w_current, &object);
-
-  gschem_cairo_set_source_color (w_current->cr,
+  gschem_cairo_set_source_color (w_current,
                                  x_color_lookup_dark (SELECT_COLOR));
 
   /* draw the radius line */
@@ -404,14 +351,12 @@ void o_arc_draw_rubber (GSCHEM_TOPLEVEL *w_current)
   rdx = (double) w_current->distance * cos (rad_angle);
   rdy = (double) w_current->distance * sin (rad_angle);
 
-  WORLDtoSCREEN (w_current, w_current->first_wx,
-                            w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN (w_current, w_current->first_wx + rdx,
-                            w_current->first_wy + rdy, &x2, &y2);
+  gschem_cairo_line (w_current, END_NONE, 0, w_current->first_wx,
+                                             w_current->first_wy,
+                                             w_current->first_wx + rdx,
+                                             w_current->first_wy + rdy);
 
-  gschem_cairo_line (w_current->cr, END_NONE, 1, x1, y1, x2, y2);
-
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 
 /*! \brief Draw grip marks on arc.

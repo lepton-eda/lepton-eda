@@ -233,21 +233,18 @@ static void o_path_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
   int i;
   GArray *lines;
 
-  gschem_cairo_set_source_color (w_current->cr, color);
+  gschem_cairo_set_source_color (w_current, color);
 
   lines = g_array_new (FALSE, FALSE, sizeof (LINE));
   m_hatch_path (path, angle1, pitch1, lines);
 
   for (i=0; i < lines->len; i++) {
-    int x1, y1, x2, y2;
     LINE *line = &g_array_index (lines, LINE, i);
 
-    WORLDtoSCREEN (w_current, line->x[0], line->y[0], &x1, &y1);
-    WORLDtoSCREEN (w_current, line->x[1], line->y[1], &x2, &y2);
-    gschem_cairo_line (w_current->cr, END_NONE, fill_width, x1, y1, x2, y2);
+    gschem_cairo_line (w_current, END_NONE, fill_width, line->x[0], line->y[0],
+                                                        line->x[1], line->y[1]);
   }
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE,
-                                      fill_width, -1, -1);
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, fill_width, -1, -1);
 
   g_array_free (lines, TRUE);
 }
@@ -300,8 +297,7 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   PATH *path = o_current->path;
-  int line_width, length, space;
-  int fill_width, angle1, pitch1, angle2, pitch2;
+  int angle1, pitch1, angle2, pitch2;
   FILL_FUNC fill_func;
 
   COLOR *color;
@@ -317,35 +313,6 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     color = x_color_lookup (toplevel->override_color);
   } else {
     color = x_color_lookup (o_current->color);
-  }
-
-  line_width = SCREENabs (w_current, o_current->line_width);
-  if( line_width <= 0) {
-    line_width = 1;
-  }
-
-  length = SCREENabs (w_current, o_current->line_length);
-  space = SCREENabs (w_current, o_current->line_space);
-
-  /*
-   * The values needed for the fill operation are taken from the
-   * <B>o_current</B> pointed OBJECT. It include the type of fill required,
-   * the width of the lines (if the fill use line) and angles and pitchs
-   * for hatch based filling.
-   *
-   * Once again the width of the line is important as if it is equal to
-   * 0 it may not be displayed. That is definetely not what we are looking for.
-   *
-   * Depending on the type of fill that has to be used inside the path the
-   * appropriate function is called. Values of <B>angle1</B>,
-   * <B>angle2</B>, <B>pitch1</B> and <B>pitch2</B> are adapted to the type of
-   * filling. The possible functions are the following :
-   * #o_path_fill_hollow(), #o_path_fill_fill(), #o_path_fill_mesh() and
-   * #o_path_fill_hatch().
-   */
-  fill_width = SCREENabs (w_current, o_current->fill_width);
-  if(fill_width <= 0) {
-    fill_width = 1;
   }
 
   angle1 = o_current->fill_angle1;
@@ -394,17 +361,20 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   (*fill_func) (w_current->drawable, w_current->gc, color,
-                w_current, path, fill_width, angle1, pitch1, angle2, pitch2);
+                w_current, path, o_current->fill_width, angle1, pitch1, angle2, pitch2);
 
   path_path (w_current, o_current);
 
-  gschem_cairo_set_source_color (w_current->cr, color);
+  gschem_cairo_set_source_color (w_current, color);
 
   if (o_current->fill_type == FILLING_FILL)
     cairo_fill_preserve (w_current->cr);
 
-  gschem_cairo_stroke (w_current->cr, o_current->line_type,
-                       o_current->line_end, line_width, length, space);
+  gschem_cairo_stroke (w_current, o_current->line_type,
+                                  o_current->line_end,
+                                  o_current->line_width,
+                                  o_current->line_length,
+                                  o_current->line_space);
 
   if (o_current->selected && w_current->draw_grips) {
     o_path_draw_grips (w_current, o_current);
@@ -488,7 +458,6 @@ void o_path_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
 {
   OBJECT object;
   int color;
-  int line_width = 1;
 
   g_return_if_fail (o_current->path != NULL);
 
@@ -506,8 +475,8 @@ void o_path_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
   g_free (object.path->sections);
   g_free (object.path);
 
-  gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, line_width, -1, -1);
+  gschem_cairo_set_source_color (w_current, x_color_lookup_dark (color));
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 
 /*! \brief Start process to input a new path.
@@ -587,7 +556,6 @@ void o_path_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_path_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   OBJECT object;
-  int line_width = 1;
 
   /* Setup a fake object to pass the drawing routine */
   object.line_width = 0; /* clamped to 1 pixel in circle_path */
@@ -599,8 +567,8 @@ void o_path_draw_rubber (GSCHEM_TOPLEVEL *w_current)
   g_free (object.path->sections);
   g_free (object.path);
 
-  gschem_cairo_set_source_color (w_current->cr, x_color_lookup (SELECT_COLOR));
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_SQUARE, line_width, -1, -1);
+  gschem_cairo_set_source_color (w_current, x_color_lookup (SELECT_COLOR));
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_SQUARE, 0, -1, -1);
 }
 
 
@@ -618,7 +586,6 @@ static void draw_control_lines (GSCHEM_TOPLEVEL *w_current,
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int i;
-  int x, y;
   int next_x, next_y;
   int last_x = 0, last_y = 0;
   PATH_SECTION *section;
@@ -633,24 +600,26 @@ static void draw_control_lines (GSCHEM_TOPLEVEL *w_current,
   }
 
   /* set the color for the grip */
-  gschem_cairo_set_source_color (w_current->cr, color);
+  gschem_cairo_set_source_color (w_current, color);
 
   for (i = 0; i <  o_current->path->num_sections; i++) {
     section = &o_current->path->sections[i];
 
-    if (section->code != PATH_END)
-      WORLDtoSCREEN (w_current, section->x3, section->y3, &next_x, &next_y);
+    if (section->code != PATH_END) {
+      next_x = section->x3;
+      next_y = section->y3;
+    }
 
     switch (section->code) {
     case PATH_CURVETO:
       /* Two control point grips */
-      WORLDtoSCREEN (w_current, section->x1, section->y1, &x, &y);
-      gschem_cairo_line (w_current->cr, END_NONE, 1, last_x, last_y, x, y);
-      gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+      gschem_cairo_line (w_current, END_NONE, 0,
+                         last_x, last_y, section->x1, section->y1);
+      gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 
-      WORLDtoSCREEN (w_current, section->x2, section->y2, &x, &y);
-      gschem_cairo_line (w_current->cr, END_NONE, 1, next_x, next_y, x, y);
-      gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+      gschem_cairo_line (w_current, END_NONE, 0,
+                         next_x, next_y, section->x2, section->y2);
+      gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 
       /* Fall through */
     case PATH_MOVETO:

@@ -1589,7 +1589,6 @@ void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int wx, int wy)
   TOPLEVEL *toplevel = w_current->toplevel;
   int color;
   int size, w_size;
-  int x, y;
 
   /*
    * Depending on the current zoom level, the size of the grip is
@@ -1618,16 +1617,14 @@ void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int wx, int wy)
    * with a  width / height of 2 * <B>size</B>.
    */
   if (toplevel->DONT_REDRAW == 0) {
-    WORLDtoSCREEN (w_current, wx, wy, &x, &y);
-
     /* You can only tell an offset of the grip when it is very small,
      * at which point, the object it's on is probably drawn 1px wide.
-     * Pass 1 as a hint that we're centering on a "hardware" line.
+     * Pass 0 as a hint that we're centering on a "hardware" line.
      */
-    gschem_cairo_center_box (w_current->cr, 1, 1, x, y, size, size);
+    gschem_cairo_center_box (w_current, 0, 0, wx, wy, w_size, w_size);
 
-    gschem_cairo_set_source_color (w_current->cr, x_color_lookup (color));
-    gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+    gschem_cairo_set_source_color (w_current, x_color_lookup (color));
+    gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
   }
 }
 

@@ -45,7 +45,6 @@ void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
-  int line_width, length, space;
   COLOR *color;
 
   if (o_current->line == NULL) {
@@ -56,64 +55,27 @@ void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
        (!o_line_visible (w_current, o_current->line, &x1, &y1, &x2, &y2)) ) {
     return;
   }
-	
-#if DEBUG
-  printf("drawing line\n\n");
-  printf("drawing line : %d,%d to %d,%d\n",
-         x1, y1,
-         x2, y2);
-#endif
 
-  /*
-   * As a line is definetely not a closed shape there is no need to define and
-   * call any filling function. Another way to say that is that a line can
-   * not be filled. It simply draws the line according to the type.
-   *
-   * The values describing the line type are extracted from the
-   * <B>o_current</B> pointed structure. These are the width of the line, the
-   * field called length and the field called space and the desired end type
-   * for the line.
-   *
-   * Depending on the type of the line that has to be used to draw the box
-   * the appropriate function is called. Values of space and length are
-   * adapted to the type of line. The possible functions are the following :
-   * #o_line_draw_solid(), #o_line_draw_dotted(), #o_line_draw_dashed() and
-   * #o_line_draw_phantom().
-   *
-   * The combination <B>length</B> == 0 and <B>space</B> == 0 is avoided as it
-   * leads to an endless loop in function called after. If such a case is
-   * encountered the line is drawn as a solid line independently of its
-   * initial type.
-   *
-   * Finally the function takes care of the grips.
-   */
-  if (toplevel->override_color != -1 )
-  color = x_color_lookup (toplevel->override_color);
+  if (toplevel->override_color != -1)
+    color = x_color_lookup (toplevel->override_color);
   else
-  color = x_color_lookup (o_current->color);
-	
-  line_width = SCREENabs (w_current, o_current->line_width);
-  if( line_width <= 0) {
-    line_width = 1;
-  }
+    color = x_color_lookup (o_current->color);
 
-  length = SCREENabs (w_current, o_current->line_length);
-  space = SCREENabs (w_current, o_current->line_space);
 
-  gschem_cairo_line (w_current->cr, o_current->line_end,
-                     line_width, x1, y1, x2, y2);
+  gschem_cairo_line (w_current, o_current->line_end,
+                                o_current->line_width,
+                                x1, y1, x2, y2);
 
-  gschem_cairo_set_source_color (w_current->cr, color);
-  gschem_cairo_stroke (w_current->cr, o_current->line_type,
-                       o_current->line_end, line_width, length, space);
+  gschem_cairo_set_source_color (w_current, color);
+  gschem_cairo_stroke (w_current, o_current->line_type,
+                                  o_current->line_end,
+                                  o_current->line_width,
+                                  o_current->line_length,
+                                  o_current->line_space);
 
   if (o_current->selected && w_current->draw_grips) {
     o_line_draw_grips (w_current, o_current);
   }
-
-#if DEBUG
-  printf("drawing line\n");
-#endif
 }
 
 
@@ -145,7 +107,6 @@ void o_line_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 void o_line_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
   int color;
-  int sx[2], sy[2];
 
   if (o_current->line == NULL) {
     return;
@@ -157,12 +118,11 @@ void o_line_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
     color = o_current->color;
   }
 
-  WORLDtoSCREEN (w_current, o_current->line->x[0] + dx, o_current->line->y[0] + dy, &sx[0], &sy[0]);
-  WORLDtoSCREEN (w_current, o_current->line->x[1] + dx, o_current->line->y[1] + dy, &sx[1], &sy[1]);
-
-  gschem_cairo_line (w_current->cr, END_NONE, 1, sx[0], sy[0], sx[1], sy[1]);
-  gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+  gschem_cairo_line (w_current, END_NONE, 0,
+                     o_current->line->x[0] + dx, o_current->line->y[0] + dy,
+                     o_current->line->x[1] + dx, o_current->line->y[1] + dy);
+  gschem_cairo_set_source_color (w_current, x_color_lookup_dark (color));
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 
 /*! \brief Start process to input a new line.
@@ -292,16 +252,13 @@ void o_line_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_line_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  int x1, y1, x2, y2;
+  gschem_cairo_line (w_current, END_NONE, 0,
+                     w_current->first_wx, w_current->first_wy,
+                     w_current->second_wx, w_current->second_wy);
 
-  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
-
-  gschem_cairo_line (w_current->cr, END_NONE, 1, x1, y1, x2, y2);
-
-  gschem_cairo_set_source_color (w_current->cr,
+  gschem_cairo_set_source_color (w_current,
                                  x_color_lookup_dark (SELECT_COLOR));
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 
 /*! \brief Draw grip marks on line.
@@ -345,8 +302,8 @@ int o_line_visible (GSCHEM_TOPLEVEL *w_current, LINE *line,
     return(TRUE);
   }
 
-  WORLDtoSCREEN (w_current, line->x[0], line->y[0], x1, y1);
-  WORLDtoSCREEN (w_current, line->x[1], line->y[1], x2, y2);
+  *x1 = line->x[0];  *y1 = line->y[0];
+  *x2 = line->x[1];  *y2 = line->y[1];
 
-  return SCREENclip_change (w_current, x1, y1, x2, y2);
+  return WORLDclip_change (w_current, x1, y1, x2, y2);
 }

@@ -34,39 +34,6 @@ typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, COLOR *color,
                            gint angle2, gint pitch2 );
 
 
-static void circle_path (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
-{
-  CIRCLE *circle = object->circle;
-  int line_width;
-  int sx1, sy1, sx2, sy2;
-  double cx, cy;
-  double radius;
-
-  WORLDtoSCREEN (w_current, circle->center_x - circle->radius,
-                            circle->center_y + circle->radius, &sx1, &sy1);
-  WORLDtoSCREEN (w_current, circle->center_x + circle->radius,
-                            circle->center_y - circle->radius, &sx2, &sy2);
-  line_width = SCREENabs (w_current, object->line_width);
-  if (line_width <= 0) {
-    line_width = 1;
-  }
-
-  cx = (double)(sx1 + sx2) / 2.;
-  cy = (double)(sy1 + sy2) / 2.;
-  radius = (double)(sy2 - sy1) / 2.;
-
-  cairo_translate (w_current->cr, cx, cy);
-
-  /* Adjust for non-uniform X/Y scale factor. Note that the + 1
-     allows for the case where sx2 == sx1 or sy2 == sy1 */
-  cairo_scale (w_current->cr, (double)(sx2 - sx1 + 1) /
-                              (double)(sy2 - sy1 + 1), 1.);
-
-  gschem_cairo_arc (w_current->cr, line_width, 0., 0., radius, 0., 360);
-  cairo_identity_matrix (w_current->cr);
-}
-
-
 /*! \brief Draw a circle on the screen.
  *  \par Function Description
  *  This function is used to draw a circle on screen. The circle is described
@@ -83,8 +50,7 @@ static void circle_path (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int line_width, length, space;
-  int fill_width, angle1, pitch1, angle2, pitch2;
+  int angle1, pitch1, angle2, pitch2;
   COLOR *color;
   FILL_FUNC fill_func;
 
@@ -111,13 +77,6 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     color = x_color_lookup (o_current->color);
   }
 
-  line_width = SCREENabs (w_current, o_current->line_width);
-  if (line_width <= 0) {
-    line_width = 1;
-  }
-
-  length = SCREENabs (w_current, o_current->line_length);
-  space = SCREENabs (w_current, o_current->line_space);
 
   /*
    * The values needed for the fill operation are taken from the
@@ -140,11 +99,7 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
    * distinct. If such a case is encountered the circle is filled hollow
    * (e.q. not filled).
    */
-  fill_width = SCREENabs (w_current, o_current->fill_width);
-  if( fill_width <= 0) {
-    fill_width = 1;
-  }
-	
+
   angle1 = o_current->fill_angle1;
   pitch1 = o_current->fill_pitch1;
   angle2 = o_current->fill_angle2;
@@ -192,15 +147,21 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
   (*fill_func) (w_current->drawable, w_current->gc,
                 color, w_current, o_current->circle,
-                fill_width, angle1, pitch1, angle2, pitch2);
+                o_current->fill_width, angle1, pitch1, angle2, pitch2);
 
-  circle_path (w_current, o_current);
+  gschem_cairo_arc (w_current, o_current->line_width,
+                               o_current->circle->center_x,
+                               o_current->circle->center_y,
+                               o_current->circle->radius, 0, 360);
 
-  gschem_cairo_set_source_color (w_current->cr, color);
+  gschem_cairo_set_source_color (w_current, color);
   if (o_current->fill_type == FILLING_FILL)
     cairo_fill_preserve (w_current->cr);
-  gschem_cairo_stroke (w_current->cr, o_current->line_type,
-                       o_current->line_end, line_width, length, space);
+  gschem_cairo_stroke (w_current, o_current->line_type,
+                                  o_current->line_end,
+                                  o_current->line_width,
+                                  o_current->line_length,
+                                  o_current->line_space);
 
   if (o_current->selected && w_current->draw_grips) {
     o_circle_draw_grips (w_current, o_current);
@@ -313,21 +274,18 @@ void o_circle_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
   int i;
   GArray *lines;
 
-  gschem_cairo_set_source_color (w_current->cr, color);
+  gschem_cairo_set_source_color (w_current, color);
 
   lines = g_array_new (FALSE, FALSE, sizeof (LINE));
   m_hatch_circle (circle, angle1, pitch1, lines);
 
   for (i=0; i < lines->len; i++) {
-    int x1, y1, x2, y2;
     LINE *line = &g_array_index (lines, LINE, i);
 
-    WORLDtoSCREEN (w_current, line->x[0], line->y[0], &x1, &y1);
-    WORLDtoSCREEN (w_current, line->x[1], line->y[1], &x2, &y2);
-    gschem_cairo_line (w_current->cr, END_NONE, fill_width, x1, y1, x2, y2);
+    gschem_cairo_line (w_current, END_NONE, fill_width, line->x[0], line->y[0],
+                                                        line->x[1], line->y[1]);
   }
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE,
-                                      fill_width, -1, -1);
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, fill_width, -1, -1);
 
   g_array_free (lines, TRUE);
 }
@@ -410,18 +368,9 @@ void o_circle_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_circle_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
-  OBJECT object;
-  CIRCLE circle;
   int color;
 
   g_return_if_fail (o_current->circle != NULL);
-
-  /* Setup a fake object to pass the drawing routine */
-  object.circle = &circle;
-  object.line_width = 0; /* clamped to 1 pixel in circle_path */
-  circle.center_x = o_current->circle->center_x + dx;
-  circle.center_y = o_current->circle->center_y + dy;
-  circle.radius = o_current->circle->radius;
 
   if (o_current->saved_color != -1) {
     color = o_current->saved_color;
@@ -429,10 +378,12 @@ void o_circle_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_
     color = o_current->color;
   }
 
-  circle_path (w_current, &object);
+  gschem_cairo_arc (w_current, 0, o_current->circle->center_x + dx,
+                                  o_current->circle->center_y + dy,
+                                  o_current->circle->radius, 0, 360);
 
-  gschem_cairo_set_source_color (w_current->cr, x_color_lookup_dark (color));
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+  gschem_cairo_set_source_color (w_current, x_color_lookup_dark (color));
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 
 /*! \brief Start process to input a new circle.
@@ -572,28 +523,19 @@ void o_circle_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_circle_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  OBJECT object;
-  CIRCLE circle;
-  int x1, y1, x2, y2;
+  gschem_cairo_arc (w_current, 0, w_current->first_wx,
+                                  w_current->first_wy,
+                                  w_current->distance, 0, 360);
 
-  /* Setup a fake object to pass the drawing routine */
-  object.circle = &circle;
-  object.line_width = 0; /* clamped to 1 pixel in circle_path */
-  circle.center_x = w_current->first_wx;
-  circle.center_y = w_current->first_wy;
-  circle.radius   = w_current->distance;
+  gschem_cairo_line (w_current, END_NONE, 0,
+                     w_current->first_wx,
+                     w_current->first_wy,
+                     w_current->first_wx + w_current->distance,
+                     w_current->first_wy);
 
-  circle_path (w_current, &object);
-
-  WORLDtoSCREEN (w_current, w_current->first_wx,
-                            w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN (w_current, w_current->first_wx + w_current->distance,
-                            w_current->first_wy, &x2, &y2);
-  gschem_cairo_line (w_current->cr, END_NONE, 1, x1, y1, x2, y2);
-
-  gschem_cairo_set_source_color (w_current->cr,
+  gschem_cairo_set_source_color (w_current,
                                  x_color_lookup_dark (SELECT_COLOR));
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 
 /*! \brief Draw grip marks on circle.

@@ -175,7 +175,7 @@ static void draw_mesh (GSCHEM_TOPLEVEL *w_current, int color,
     if (next_coarse_y < y_start) next_coarse_y += coarse_incr;
   }
 
-  gschem_cairo_set_source_color (w_current->cr, x_color_lookup (color));
+  gschem_cairo_set_source_color (w_current, x_color_lookup (color));
   cairo_set_line_width (w_current->cr, 1.);
   cairo_set_line_cap (w_current->cr, CAIRO_LINE_CAP_SQUARE);
 

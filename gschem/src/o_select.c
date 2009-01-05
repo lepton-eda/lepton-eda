@@ -312,16 +312,13 @@ void o_select_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_select_box_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  int x1, y1, x2, y2;
+  gschem_cairo_box (w_current, 0,
+                    w_current->first_wx, w_current->first_wy,
+                    w_current->second_wx, w_current->second_wy);
 
-  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
-
-  gschem_cairo_box (w_current->cr, 1, x1, y1, x2, y2);
-
-  gschem_cairo_set_source_color (w_current->cr,
+  gschem_cairo_set_source_color (w_current,
                                  x_color_lookup_dark (SELECT_COLOR));
-  gschem_cairo_stroke (w_current->cr, TYPE_SOLID, END_NONE, 1, -1, -1);
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 
 /*! \todo Finish function documentation!!!

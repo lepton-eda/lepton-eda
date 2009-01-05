@@ -85,9 +85,9 @@ void o_cue_redraw_all (GSCHEM_TOPLEVEL *w_current, GList *list, gboolean draw_se
 static void o_cue_set_color(GSCHEM_TOPLEVEL *w_current, int color)
 {
   if (w_current->toplevel->override_color != -1 ) {
-    gschem_cairo_set_source_color(w_current->cr, x_color_lookup (w_current->toplevel->override_color));
+    gschem_cairo_set_source_color (w_current, x_color_lookup (w_current->toplevel->override_color));
   } else {
-    gschem_cairo_set_source_color(w_current->cr, x_color_lookup (color));
+    gschem_cairo_set_source_color (w_current, x_color_lookup (color));
   }
 }
 
@@ -110,25 +110,21 @@ static void o_cue_set_color(GSCHEM_TOPLEVEL *w_current, int color)
 static void draw_junction_cue (GSCHEM_TOPLEVEL *w_current,
                                int x, int y, int bus_involved)
 {
-  int s_x, s_y;
   int size;
   int line_width;
 
   if (w_current->toplevel->DONT_REDRAW)
     return;
 
-  WORLDtoSCREEN (w_current, x, y, &s_x, &s_y);
-
   if (bus_involved) {
-    size = SCREENabs (w_current, JUNCTION_CUE_SIZE_BUS) / 2;
-    line_width = SCREENabs (w_current, BUS_WIDTH);
+    size = JUNCTION_CUE_SIZE_BUS / 2;
+    line_width = BUS_WIDTH;
   } else {
-    size = SCREENabs (w_current, JUNCTION_CUE_SIZE_NET) / 2;
-    line_width = SCREENabs (w_current, NET_WIDTH);
+    size = JUNCTION_CUE_SIZE_NET / 2;
+    line_width = NET_WIDTH;
   }
-  line_width = max (line_width, 1);
 
-  gschem_cairo_center_arc (w_current->cr, line_width, -1, s_x, s_y, size, 0, 360);
+  gschem_cairo_center_arc (w_current, line_width, -1, x, y, size, 0, 360);
   o_cue_set_color (w_current, JUNCTION_COLOR);
   cairo_fill (w_current->cr);
 }
@@ -142,7 +138,7 @@ static void draw_junction_cue (GSCHEM_TOPLEVEL *w_current,
 void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichone)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int x, y, screen_x, screen_y;
+  int x, y;
   GList *cl_current;
   CONN *conn;
   int type, count = 0;
@@ -194,17 +190,15 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
 #if DEBUG
   printf("type: %d count: %d\n", type, count);
 #endif
-  WORLDtoSCREEN (w_current, x, y, &screen_x, &screen_y);
 
   switch(type) {
 
     case(CONN_ENDPOINT):
       if (object->type == OBJ_NET) { /* only nets have these cues */
         if (count < 1) { /* Didn't find anything connected there */
-          size = SCREENabs (w_current, CUE_BOX_SIZE);
+          size = CUE_BOX_SIZE;
           if (toplevel->DONT_REDRAW == 0) {
-            gschem_cairo_center_box (w_current->cr, -1, -1,
-                                     screen_x, screen_y, size, size);
+            gschem_cairo_center_box (w_current, -1, -1, x, y, size, size);
             o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
             cairo_fill (w_current->cr);
           }
@@ -215,45 +209,37 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
       } else if (object->type == OBJ_PIN) {
         /* Didn't find anything connected there */
         if (count < 1 && object->whichend == whichone) {
-          if (bus_involved) {
-            size = SCREENabs (w_current, PIN_CUE_SIZE_BUS);
-          } else {
-            size = SCREENabs (w_current, PIN_CUE_SIZE_NET);
-          }
+          size = (bus_involved) ? PIN_CUE_SIZE_BUS : PIN_CUE_SIZE_NET;
 
           otherone = !whichone;
 
-          pinsize = 1;
+          pinsize = 0;
           if (toplevel->pin_style == THICK )
-            pinsize = SCREENabs (w_current, object->line_width);
+            pinsize = object->line_width;
 
           if (toplevel->DONT_REDRAW == 0) {
             o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
             if (object->line->y[whichone] == object->line->y[otherone]) {
               /* horizontal line */
               if (object->line->x[whichone] <= object->line->x[otherone]) {
-                gschem_cairo_line (w_current->cr, END_NONE, pinsize,
-                                   screen_x,        screen_y,
-                                   screen_x + size, screen_y);
+                gschem_cairo_line (w_current, END_NONE, pinsize, x,        y,
+                                                                 x + size, y);
               } else {
-                gschem_cairo_line (w_current->cr, END_NONE, pinsize,
-                                   screen_x,         screen_y,
-                                   screen_x - size, screen_y);
+                gschem_cairo_line (w_current, END_NONE, pinsize, x,        y,
+                                                                 x - size, y);
               }
-              gschem_cairo_stroke (w_current->cr, TYPE_SOLID,
+              gschem_cairo_stroke (w_current, TYPE_SOLID,
                                    END_NONE, pinsize, -1, -1);
             } else if (object->line->x[0] == object->line->x[1]) {
               /* vertical line */
               if (object->line->y[whichone] <= object->line->y[otherone]) {
-                gschem_cairo_line (w_current->cr, END_NONE, pinsize,
-                                   screen_x, screen_y,
-                                   screen_x, screen_y - size);
+                gschem_cairo_line (w_current, END_NONE, pinsize, x, y,
+                                                                 x, y - size);
               } else {
-                gschem_cairo_line (w_current->cr, END_NONE, pinsize,
-                                   screen_x, screen_y,
-                                   screen_x, screen_y + size);
+                gschem_cairo_line (w_current, END_NONE, pinsize, x, y,
+                                                                 x, y + size);
               }
-              gschem_cairo_stroke (w_current->cr, TYPE_SOLID,
+              gschem_cairo_stroke (w_current, TYPE_SOLID,
                                    END_NONE, pinsize, -1, -1);
             } else {
               /* angled line */
