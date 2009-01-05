@@ -753,7 +753,7 @@ gint change_alignment(GtkWidget *w, GSCHEM_TOPLEVEL *w_current);
 void text_edit_dialog_ok(GtkWidget *w, GSCHEM_TOPLEVEL *w_current);
 void text_edit_dialog(GSCHEM_TOPLEVEL *w_current, const char *string, int text_size, int text_alignment);
 void line_type_dialog(GSCHEM_TOPLEVEL *w_current, GList *objects);
-void fill_type_dialog(GSCHEM_TOPLEVEL *w_current, GList *objects);
+void fill_type_dialog(GSCHEM_TOPLEVEL *w_current);
 void arc_angle_dialog(GSCHEM_TOPLEVEL *w_current, OBJECT *arc_object);
 void translate_dialog(GSCHEM_TOPLEVEL *w_current);
 void text_size_dialog(GSCHEM_TOPLEVEL *w_current);

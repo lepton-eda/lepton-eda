@@ -68,7 +68,6 @@ struct fill_type_data {
   GtkWidget *pitch2_entry;
 
   GSCHEM_TOPLEVEL *w_current;
-  GList *objects;
 };
 
 /*! \todo Finish function documentation!!!
@@ -1015,7 +1014,8 @@ static GtkWidget *create_menu_filltype (GSCHEM_TOPLEVEL *w_current)
   } types[] = { { N_("Hollow"), FILLING_HOLLOW },
                 { N_("Filled"), FILLING_FILL },
                 { N_("Mesh"),   FILLING_MESH },
-                { N_("Hatch"),  FILLING_HATCH } };
+                { N_("Hatch"),  FILLING_HATCH },
+                { N_("*unchanged*"), FILLING_VOID } };
   gint i;
 
   menu  = gtk_menu_new ();
@@ -1034,6 +1034,131 @@ static GtkWidget *create_menu_filltype (GSCHEM_TOPLEVEL *w_current)
 
   return menu;
 }
+
+/*! \brief get the filltype data from selected objects
+ *  \par Function Description
+ *  Get filltype information over all selected objects.
+ *  If a object property is different to the other objects, then
+ *  return -2 in that variable.
+ *  \param [in]   selection the selection list
+ *  \param [out]  type      OBJECT_FILLING type
+ *  \param [out]  width     fill width.
+ *  \param [out]  pitch1    cross hatch line distance
+ *  \param [out]  angle1    cross hatch angle
+ *  \param [out]  pitch2    cross hatch line distance
+ *  \param [out]  angle2    cross hatch angle
+ *  \returns TRUE if filltype found, FALSE otherwise
+ */
+static gboolean selection_get_fill_type(GList *selection,
+                                        OBJECT_FILLING *type, gint *width,
+                                        gint *pitch1, gint *angle1,
+                                        gint *pitch2, gint *angle2)
+{
+  GList *iter;
+  OBJECT *object;
+  gboolean found = FALSE;
+  OBJECT_FILLING otype;
+  gint owidth, opitch1, oangle1, opitch2, oangle2;
+
+
+  for (iter = selection; iter != NULL; iter = g_list_next(iter)) {
+    object = (OBJECT *) iter->data;
+    if (! o_get_fill_options(object, &otype, &owidth, 
+                             &opitch1, &oangle1, &opitch2, &oangle2))
+      continue;
+
+    if (found == FALSE) {  /* first object with filltype */
+      found = TRUE;
+      *type = otype;
+      *width = owidth;
+      *pitch1 = opitch1;
+      *angle1 = oangle1;
+      *pitch2 = opitch2;
+      *angle2 = oangle2;
+    } else {
+      /* indicate different values with the value -2 */
+      if (*type != otype) *type = -2;
+      if (*width != owidth) *width = -2;
+      if (*pitch1 != opitch1) *pitch1 = -2;
+      if (*angle1 != oangle1) *angle1 = -2;
+      if (*pitch2 != opitch2) *pitch2 = -2;
+      if (*angle2 != oangle2) *angle2 = -2;
+    }
+  }
+
+  return found;
+}
+
+
+/*! \brief set the filltype in the filltype dialog
+ *  \par Function Description
+ *  Set all widgets in the filltype dialog. Variables marked with the
+ *  invalid value -2 are set to *unchanged*.
+ *  \param [in]   selection the selection list
+ *  \param [in]   type      OBJECT_FILLING type
+ *  \param [in]   width     fill width.
+ *  \param [in]   pitch1    cross hatch line distance
+ *  \param [in]   angle1    cross hatch angle
+ *  \param [in]   pitch2    cross hatch line distance
+ *  \param [in]   angle2    cross hatch angle
+ */
+static void fill_type_dialog_set_values(struct fill_type_data *fill_type_data,
+                                        OBJECT_FILLING type, gint width,
+                                        gint pitch1, gint angle1,
+                                        gint pitch2, gint angle2)
+{
+  gchar *text;
+
+  if (type == -2)
+    type = FILLING_VOID;
+  gtk_option_menu_set_history(GTK_OPTION_MENU(fill_type_data->fill_type), type);
+
+  if (width == -2)
+    text = g_strdup(_("*unchanged*"));
+  else
+    text = g_strdup_printf ("%d", width);
+  gtk_entry_set_text (GTK_ENTRY (fill_type_data->width_entry), text);
+  gtk_entry_select_region (GTK_ENTRY (fill_type_data->width_entry), 
+                           0, strlen (text));
+  g_free(text);
+
+  if (pitch1 == -2)
+    text = g_strdup(_("*unchanged*"));
+  else
+    text = g_strdup_printf ("%d", pitch1);
+  gtk_entry_set_text (GTK_ENTRY (fill_type_data->pitch1_entry), text);
+  gtk_entry_select_region (GTK_ENTRY (fill_type_data->pitch1_entry), 
+                           0, strlen (text));
+  g_free(text);
+
+  if (angle1 == -2)
+    text = g_strdup(_("*unchanged*"));
+  else
+    text = g_strdup_printf ("%d", angle1);
+  gtk_entry_set_text (GTK_ENTRY (fill_type_data->angle1_entry), text);
+  gtk_entry_select_region (GTK_ENTRY (fill_type_data->angle1_entry), 
+                           0, strlen (text));
+  g_free(text);
+
+  if (pitch2 == -2)
+    text = g_strdup(_("*unchanged*"));
+  else
+    text = g_strdup_printf ("%d", pitch2);
+  gtk_entry_set_text (GTK_ENTRY (fill_type_data->pitch2_entry), text);
+  gtk_entry_select_region (GTK_ENTRY (fill_type_data->pitch2_entry), 
+                           0, strlen (text));
+  g_free(text);
+
+  if (angle2 == -2)
+    text = g_strdup(_("*unchanged*"));
+  else
+    text = g_strdup_printf ("%d", angle2);
+  gtk_entry_set_text (GTK_ENTRY (fill_type_data->angle2_entry), text);
+  gtk_entry_select_region (GTK_ENTRY (fill_type_data->angle2_entry), 
+                           0, strlen (text));
+  g_free(text);
+}
+
 
 /*! \brief Callback function for the filltype menu in the filltype dialog
  *  \par Function Description
@@ -1056,26 +1181,25 @@ static gint fill_type_dialog_filltype_change(GtkWidget *w, gpointer data)
   type = GPOINTER_TO_INT(
     gtk_object_get_data (GTK_OBJECT (menuitem), "filltype"));
   switch(type) {
-      case(FILLING_HOLLOW):
-      case(FILLING_FILL):
-        activate_width_entry = FALSE;
-        activate_anglepitch1_entries = FALSE;
-        activate_anglepitch2_entries = FALSE;
-        break;
-      case(FILLING_HATCH):
-        activate_width_entry = TRUE;
-        activate_anglepitch1_entries = TRUE;
-        activate_anglepitch2_entries = FALSE;
-        break;
-      case(FILLING_MESH):
-        activate_width_entry = TRUE;
-        activate_anglepitch1_entries = TRUE;
-        activate_anglepitch2_entries = TRUE;
-        break;
-      default:
-        activate_width_entry = TRUE;
-        activate_anglepitch1_entries = TRUE;
-        activate_anglepitch2_entries = TRUE;
+  case(FILLING_HOLLOW):
+  case(FILLING_FILL):
+    activate_width_entry = FALSE;
+    activate_anglepitch1_entries = FALSE;
+    activate_anglepitch2_entries = FALSE;
+    break;
+  case(FILLING_HATCH):
+    activate_width_entry = TRUE;
+    activate_anglepitch1_entries = TRUE;
+    activate_anglepitch2_entries = FALSE;
+    break;
+  case(FILLING_MESH):
+  case(FILLING_VOID):
+    activate_width_entry = TRUE;
+    activate_anglepitch1_entries = TRUE;
+    activate_anglepitch2_entries = TRUE;
+    break;
+  default:
+    g_assert_not_reached ();
   }
 
   gtk_widget_set_sensitive (fill_type_data->width_entry,
@@ -1099,15 +1223,22 @@ static gint fill_type_dialog_filltype_change(GtkWidget *w, gpointer data)
  */
 static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
 {
-  struct fill_type_data *fill_type_data = (struct fill_type_data*)data;
+  struct fill_type_data *fill_type_data = (struct fill_type_data*) data;
   GSCHEM_TOPLEVEL *w_current = fill_type_data->w_current;
   TOPLEVEL *toplevel = w_current->toplevel;
-  GList *objects;
+  GList *selection, *iter;
+  OBJECT *object;
   const gchar *width_str, *angle1_str, *pitch1_str, *angle2_str, *pitch2_str;
   OBJECT_FILLING type;
+  gint width, angle1, pitch1, angle2, pitch2;
+  OBJECT_FILLING otype;
+  gint owidth, oangle1, opitch1, oangle2, opitch2;
 
-  /* retrieve the list of objects */
-  objects  = fill_type_data->objects;
+  /* get the selection */
+  if (! o_select_selected(w_current))
+    return;
+  selection = 
+    geda_list_get_glist(w_current->toplevel->page_current->selection_list);
 
   /* get the new values from the text entries of the dialog */
   width_str  = gtk_entry_get_text (GTK_ENTRY (
@@ -1127,62 +1258,36 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
           GTK_MENU (gtk_option_menu_get_menu (
                       GTK_OPTION_MENU (
                         fill_type_data->fill_type))))), "filltype"));
+  
+  /* convert the options to integers (-1 means unchanged) */
+  width  = g_strcasecmp (width_str,
+                         _("*unchanged*")) ? atoi (width_str)  : -1;
+  angle1 = g_strcasecmp (angle1_str,
+                         _("*unchanged*")) ? atoi (angle1_str) : -1;
+  pitch1 = g_strcasecmp (pitch1_str,
+                         _("*unchanged*")) ? atoi (pitch1_str) : -1;
+  angle2 = g_strcasecmp (angle2_str,
+                         _("*unchanged*")) ? atoi (angle2_str) : -1;
+  pitch2 = g_strcasecmp (pitch2_str,
+                         _("*unchanged*")) ? atoi (pitch2_str) : -1;
 
-  /* are there several objects concerned? */
-  if (g_list_next (objects) == NULL) {
-    /* no, there is only one object */
-    OBJECT *o_current = (OBJECT*) objects->data;
-    gint width, angle1, pitch1, angle2, pitch2;
+  for (iter = selection; iter != NULL; iter = g_list_next(iter)) {
+    object = (OBJECT *) iter->data;
+    if (! o_get_fill_options(object, &otype, &owidth,
+                             &opitch1, &oangle1, &opitch2, &oangle2))
+      continue;
 
-    width  = atoi (width_str);
-    angle1 = atoi (angle1_str);
-    pitch1 = atoi (pitch1_str);
-    angle2 = atoi (angle2_str);
-    pitch2 = atoi (pitch2_str);
-
-    /* apply the new line options to object */
-    o_invalidate (w_current, o_current);
-    o_set_fill_options(toplevel, o_current,
-                       type, width,
-                       pitch1, angle1,
-                       pitch2, angle2);
-    o_invalidate (w_current, o_current);
-
-  } else {
-    /* more than one object in the list */
-    GList *object;
-    gint width, angle1, pitch1, angle2, pitch2;
-
-    /* get the new line options */
-    width  = g_strcasecmp (width_str,
-                           _("*unchanged*")) ? atoi (width_str)  : -1;
-    angle1 = g_strcasecmp (angle1_str,
-                           _("*unchanged*")) ? atoi (angle1_str) : -1;
-    pitch1 = g_strcasecmp (pitch1_str,
-                           _("*unchanged*")) ? atoi (pitch1_str) : -1;
-    angle2 = g_strcasecmp (angle2_str,
-                           _("*unchanged*")) ? atoi (angle2_str) : -1;
-    pitch2 = g_strcasecmp (pitch2_str,
-                           _("*unchanged*")) ? atoi (pitch2_str) : -1;
-
-    /* apply changes to each object */
-    object = objects;
-    while (object != NULL) {
-      OBJECT *o_current = (OBJECT*)object->data;
-
-      o_invalidate (w_current, o_current);
-      o_set_fill_options (toplevel, o_current,
-                          type   == -1 ? o_current->fill_type   : type,
-                          width  == -1 ? o_current->fill_width  : width,
-                          pitch1 == -1 ? o_current->fill_pitch1 : pitch1,
-                          angle1 == -1 ? o_current->fill_angle1 : angle1,
-                          pitch2 == -1 ? o_current->fill_pitch2 : pitch2,
-                          angle2 == -1 ? o_current->fill_angle2 : angle2);
-      o_invalidate (w_current, o_current);
-
-      object = g_list_next(object);
-    }
+    o_invalidate (w_current, object);
+    o_set_fill_options (toplevel, object,
+                        type   == -1 ? otype : type,
+                        width  == -1 ? owidth  : width,
+                        pitch1 == -1 ? opitch1 : pitch1,
+                        angle1 == -1 ? oangle1 : angle1,
+                        pitch2 == -1 ? opitch2 : pitch2,
+                        angle2 == -1 ? oangle2 : angle2);
+    o_invalidate (w_current, object);
   }
+
   toplevel->page_current->CHANGED = 1;
   o_undo_savestate(w_current, UNDO_ALL);
 }
@@ -1213,17 +1318,15 @@ void fill_type_dialog_response(GtkWidget *widget, gint response,
   gtk_grab_remove (fill_type_data->dialog);
   gtk_widget_destroy (fill_type_data->dialog);
 
-  /* get ride of the list of objects but not the objects */
-  g_list_free (fill_type_data->objects);
   g_free (fill_type_data);
 }
 
 /*! \brief Creates the fill type dialog
  *  \par Function Description
- *  This function creates the fill type dialog. It operates on a list
- *  of objects.
+ *  This function creates the fill type dialog.
+ *  It uses the selection to set it's initial values.
  */
-void fill_type_dialog(GSCHEM_TOPLEVEL *w_current, GList *objects)
+void fill_type_dialog(GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
@@ -1236,8 +1339,19 @@ void fill_type_dialog(GSCHEM_TOPLEVEL *w_current, GList *objects)
   GtkWidget *label;
   GtkWidget *table;
   struct fill_type_data *fill_type_data;
-  gchar *width_str, *angle1_str, *pitch1_str, *angle2_str, *pitch2_str;
-  gint type;
+  GList *selection;
+  OBJECT_FILLING type=FILLING_VOID;
+  gint width=0, pitch1=0, angle1=0, pitch2=0, angle2=0;
+
+  if (! o_select_selected(w_current))
+    return;
+
+  selection = 
+    geda_list_get_glist(w_current->toplevel->page_current->selection_list);
+
+  if (! selection_get_fill_type(selection, &type, &width,
+                                &pitch1, &angle1, &pitch2, &angle2))
+    return;
 
   fill_type_data = (struct fill_type_data*) g_malloc (
     sizeof (struct fill_type_data));
@@ -1350,66 +1464,16 @@ void fill_type_dialog(GSCHEM_TOPLEVEL *w_current, GList *objects)
   fill_type_data->pitch2_entry = pitch2_entry;
 
   fill_type_data->w_current = w_current;
-  fill_type_data->objects  = objects;
 
   /* fill in the fields of the dialog */
-  if (g_list_next (objects) == NULL) {
-    /* only one object in object list */
-    OBJECT *o_current = (OBJECT*) objects->data;
-
-    type = o_current->fill_type;
-    width_str  = g_strdup_printf ("%d", o_current->fill_width);
-    angle1_str = g_strdup_printf ("%d", o_current->fill_angle1);
-    pitch1_str = g_strdup_printf ("%d", o_current->fill_pitch1);
-    angle2_str = g_strdup_printf ("%d", o_current->fill_angle2);
-    pitch2_str = g_strdup_printf ("%d", o_current->fill_pitch2);
-  } else {
-    GtkWidget *menuitem;
-    GtkWidget *menu;
-
-    width_str  = g_strdup_printf (_("*unchanged*"));
-    angle1_str = g_strdup_printf (_("*unchanged*"));
-    pitch1_str = g_strdup_printf (_("*unchanged*"));
-    angle2_str = g_strdup_printf (_("*unchanged*"));
-    pitch2_str = g_strdup_printf (_("*unchanged*"));
-    type = FILLING_HATCH + 1;
-
-    /* add a new menuitem to option menu for line type */
-    menu = gtk_option_menu_get_menu (GTK_OPTION_MENU (optionmenu));
-    menuitem = gtk_radio_menu_item_new_with_label (
-      gtk_radio_menu_item_get_group (
-        GTK_RADIO_MENU_ITEM (gtk_menu_get_active (GTK_MENU (menu)))),
-      _("*unchanged*"));
-    gtk_menu_append (menu, menuitem);
-    gtk_object_set_data (GTK_OBJECT (menuitem),
-                         "filltype",
-                         GINT_TO_POINTER (-1));
-    gtk_widget_show (menuitem);
-  }
-
-  gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), type);
-  gtk_entry_set_text (GTK_ENTRY (width_entry), width_str);
-  gtk_entry_select_region (GTK_ENTRY (width_entry), 0, strlen (width_str));
-  gtk_entry_set_text (GTK_ENTRY (angle1_entry), angle1_str);
-  gtk_entry_select_region (GTK_ENTRY (angle1_entry), 0, strlen (angle1_str));
-  gtk_entry_set_text (GTK_ENTRY (pitch1_entry), pitch1_str);
-  gtk_entry_select_region (GTK_ENTRY (pitch1_entry), 0, strlen (pitch1_str));
-  gtk_entry_set_text (GTK_ENTRY (angle2_entry), angle2_str);
-  gtk_entry_select_region (GTK_ENTRY (angle2_entry), 0, strlen (angle2_str));
-  gtk_entry_set_text (GTK_ENTRY (pitch2_entry), pitch2_str);
-  gtk_entry_select_region (GTK_ENTRY (pitch2_entry), 0, strlen (pitch2_str));
+  fill_type_dialog_set_values(fill_type_data, type, width,
+                              pitch1, angle1, pitch2, angle2);
 
   /* Set the widget activity according to the current filltype */
   fill_type_dialog_filltype_change(optionmenu, fill_type_data);
 
   gtk_widget_grab_focus(width_entry);
   gtk_widget_show_all (dialog);
-
-  g_free (width_str);
-  g_free (angle1_str);
-  g_free (pitch1_str);
-  g_free (angle2_str);
-  g_free (pitch2_str);
 }
 
 /***************** End of Fill Type dialog box ***********************/
