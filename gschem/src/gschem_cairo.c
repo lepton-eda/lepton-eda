@@ -255,6 +255,7 @@ void gschem_cairo_center_arc (GSCHEM_TOPLEVEL *w_current,
 void gschem_cairo_stroke (GSCHEM_TOPLEVEL *w_current, int line_type, int line_end,
                           int wwidth, int wlength, int wspace)
 {
+  double offset;
   double dashes[4];
   cairo_line_cap_t cap;
   cairo_line_cap_t round_cap_if_legible;
@@ -264,11 +265,12 @@ void gschem_cairo_stroke (GSCHEM_TOPLEVEL *w_current, int line_type, int line_en
   width  = screen_width (w_current, wwidth);
   length = SCREENabs (w_current, wlength);
   space  = SCREENabs (w_current, wspace);
+  offset = ((width % 2) == 0) ? 0 : 0.5;
 
   cairo_set_line_width (w_current->cr, width);
   cairo_set_line_join (w_current->cr, CAIRO_LINE_JOIN_MITER);
 
-  round_cap_if_legible = (width <= 0) ? CAIRO_LINE_CAP_SQUARE :
+  round_cap_if_legible = (width <= 1) ? CAIRO_LINE_CAP_SQUARE :
                                         CAIRO_LINE_CAP_ROUND;
 
   switch (line_end) {
@@ -300,7 +302,7 @@ void gschem_cairo_stroke (GSCHEM_TOPLEVEL *w_current, int line_type, int line_en
       dashes[1] = space;
       num_dashes = 2;
 
-      cairo_set_dash (w_current->cr, dashes, num_dashes, 0.);
+      cairo_set_dash (w_current->cr, dashes, num_dashes, offset);
       cairo_set_line_cap (w_current->cr, round_cap_if_legible);
       cairo_stroke (w_current->cr);
       break;
@@ -328,7 +330,7 @@ void gschem_cairo_stroke (GSCHEM_TOPLEVEL *w_current, int line_type, int line_en
       dashes[1] = 2 * space + length;
       num_dashes = 2;
 
-      cairo_set_dash (w_current->cr, dashes, num_dashes, -length - space);
+      cairo_set_dash (w_current->cr, dashes, num_dashes, -length - space + offset);
       cairo_set_line_cap (w_current->cr, round_cap_if_legible);
       cairo_stroke (w_current->cr);
       break;
@@ -348,7 +350,7 @@ void gschem_cairo_stroke (GSCHEM_TOPLEVEL *w_current, int line_type, int line_en
       dashes[3] = 2 * space + length;
       num_dashes = 4;
 
-      cairo_set_dash (w_current->cr, dashes, num_dashes, -length - space);
+      cairo_set_dash (w_current->cr, dashes, num_dashes, -length - space + offset);
       cairo_set_line_cap (w_current->cr, round_cap_if_legible);
       cairo_stroke (w_current->cr);
       break;
