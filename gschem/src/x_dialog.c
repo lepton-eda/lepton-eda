@@ -1277,14 +1277,37 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
                              &opitch1, &oangle1, &opitch2, &oangle2))
       continue;
 
+    otype = type == -1 ? otype : type;
+    owidth = width == -1 ? owidth : width;
+    opitch1 = pitch1 == -1 ? opitch1 : pitch1;
+    oangle1 = angle1 == -1 ? oangle1 : angle1;
+    opitch2 = pitch2 == -1 ? opitch2 : pitch2;
+    oangle2 = angle2 == -1 ? oangle2 : angle2;
+    
+    /* set all not required options to -1 and 
+       set nice parameters if not provided by the user */
+    switch (otype) {
+    case (FILLING_HOLLOW):
+    case (FILLING_FILL):
+      owidth = opitch1 = oangle1 = opitch2 = oangle2 = -1;
+      break;
+    case (FILLING_HATCH):
+      if (owidth < 1) owidth = 1;
+      if (opitch1 < 1) opitch1 = 100;
+      opitch2 = oangle2 = -1;
+      break;
+    case (FILLING_MESH):
+      if (owidth < 1) owidth = 1;
+      if (opitch1 < 1) opitch1 = 100;
+      if (opitch2 < 1) opitch2 = 100;
+      break;
+    default:
+      g_assert_not_reached();
+    }
+    
     o_invalidate (w_current, object);
-    o_set_fill_options (toplevel, object,
-                        type   == -1 ? otype : type,
-                        width  == -1 ? owidth  : width,
-                        pitch1 == -1 ? opitch1 : pitch1,
-                        angle1 == -1 ? oangle1 : angle1,
-                        pitch2 == -1 ? opitch2 : pitch2,
-                        angle2 == -1 ? oangle2 : angle2);
+    o_set_fill_options (toplevel, object, otype, owidth,
+                        opitch1, oangle1, opitch2, oangle2);
     o_invalidate (w_current, object);
   }
 
