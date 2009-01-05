@@ -283,9 +283,11 @@ void gschem_quit(void);
 void main_prog(void *closure, int argc, char *argv[]);
 int main(int argc, char *argv[]);
 /* gschem_cairo.c */
-void gschem_cairo_line(cairo_t *cr, int line_end, int width, int x1, int y1, int x2, int y2);
-void gschem_cairo_box(cairo_t *cr, int width, int x1, int y1, int x2, int y2);
-void gschem_cairo_arc(cairo_t *cr, int width, double x, double y, double radius, int start_angle, int end_angle);
+void gschem_cairo_line(cairo_t *cr, int line_end, int line_width, int x1, int y1, int x2, int y2);
+void gschem_cairo_box(cairo_t *cr, int line_width, int x1, int y1, int x2, int y2);
+void gschem_cairo_center_box(cairo_t *cr, int center_width, int line_width, int x1, int y1, int x2, int y2);
+void gschem_cairo_arc(cairo_t *cr, int line_width, double x, double y, double radius, int start_angle, int end_angle);
+void gschem_cairo_center_arc(cairo_t *cr, int center_width, int line_width, int x, int y, int radius, int start_angle, int end_angle);
 void gschem_cairo_stroke(cairo_t *cr, int line_type, int line_end, int width, int length, int space);
 void gschem_cairo_set_source_color(cairo_t *cr, COLOR *color);
 /* i_basic.c */

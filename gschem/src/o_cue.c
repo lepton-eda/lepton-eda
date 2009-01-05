@@ -111,7 +111,7 @@ static void draw_junction_cue (GSCHEM_TOPLEVEL *w_current,
                                int x, int y, int bus_involved)
 {
   int s_x, s_y;
-  int size, x2size;
+  int size;
   int line_width;
 
   if (w_current->toplevel->DONT_REDRAW)
@@ -126,10 +126,9 @@ static void draw_junction_cue (GSCHEM_TOPLEVEL *w_current,
     size = SCREENabs (w_current, JUNCTION_CUE_SIZE_NET) / 2;
     line_width = SCREENabs (w_current, NET_WIDTH);
   }
-  x2size = size * 2;
   line_width = max (line_width, 1);
 
-  gschem_cairo_arc (w_current->cr, line_width, s_x, s_y, size, 0, 360);
+  gschem_cairo_center_arc (w_current->cr, line_width, -1, s_x, s_y, size, 0, 360);
   o_cue_set_color (w_current, JUNCTION_COLOR);
   cairo_fill (w_current->cr);
 }
@@ -148,7 +147,7 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
   CONN *conn;
   int type, count = 0;
   int done = FALSE;
-  int size, x2size, pinsize;
+  int size, pinsize;
   int otherone;
   int bus_involved=FALSE;
 
@@ -195,9 +194,8 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
 #if DEBUG
   printf("type: %d count: %d\n", type, count);
 #endif
-  
   WORLDtoSCREEN (w_current, x, y, &screen_x, &screen_y);
-  
+
   switch(type) {
 
     case(CONN_ENDPOINT):
@@ -205,9 +203,8 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
         if (count < 1) { /* Didn't find anything connected there */
           size = SCREENabs (w_current, CUE_BOX_SIZE);
           if (toplevel->DONT_REDRAW == 0) {
-            gschem_cairo_box (w_current->cr, -1,
-                              screen_x - size, screen_y - size,
-                              screen_x + size, screen_y + size);
+            gschem_cairo_center_box (w_current->cr, -1, -1,
+                                     screen_x, screen_y, size, size);
             o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
             cairo_fill (w_current->cr);
           }
@@ -223,7 +220,6 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
           } else {
             size = SCREENabs (w_current, PIN_CUE_SIZE_NET);
           }
-          x2size = size * 2;
 
           otherone = !whichone;
 
