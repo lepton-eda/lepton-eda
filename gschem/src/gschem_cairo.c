@@ -88,7 +88,15 @@ void gschem_cairo_line (cairo_t *cr, int line_end, int width,
 void gschem_cairo_box (cairo_t *cr, int width,
                        int x1, int y1, int x2, int y2)
 {
-  double offset = ((width % 2) == 0) ? 0 : 0.5;
+  double offset = (width == -1 || (width % 2) == 0) ? 0 : 0.5;
+
+  /* Allow filled boxes (inferred from line_width == -1)
+   * to touch an extra pixel, so the filled span is inclusive */
+  if (width == -1) {
+    if (x1 > x2) x1 += 1; else x2 += 1;
+    if (y1 > y2) y1 += 1; else y2 += 1;
+  }
+
   cairo_move_to (cr, x2 + offset, y2 + offset);
   cairo_line_to (cr, x1 + offset, y2 + offset);
   cairo_line_to (cr, x1 + offset, y1 + offset);
