@@ -131,16 +131,31 @@ void gschem_cairo_center_box (GSCHEM_TOPLEVEL *w_current,
                               int half_width, int half_height)
 {
   int s_center_width, s_line_width;
-  int s_half_width, s_half_height;
+  int s_width, s_height;
+  double s_half_width, s_half_height;
   int s_x, s_y;
   int even_center_width;
   int even_line_width;
+  int even_width, even_height;
   double x1, y1, x2, y2;
-  double center_offset, radius_offset;
+  double center_offset;
+  int do_width_hint = TRUE;
+  int do_height_hint = TRUE;
 
   WORLDtoSCREEN (w_current, x, y, &s_x, &s_y);
-  s_half_width  = SCREENabs (w_current, half_width);
-  s_half_height = SCREENabs (w_current, half_height);
+  s_width  = SCREENabs (w_current, 2 * half_width);
+  s_height = SCREENabs (w_current, 2 * half_height);
+  even_width  = (s_width % 2 == 0);
+  even_height = (s_width % 2 == 0);
+  s_half_width  = (double) s_width  / 2.;
+  s_half_height = (double) s_height / 2.;
+
+#if 0 /* Not as nice an effect as with arcs */
+  /* Switch off radius hinting for small radii. If we don't, then we get
+   * a very abrupt transition once the box reaches a single pixel size. */
+  if (s_half_width  <= 1.)  do_width_hint  = FALSE;
+  if (s_half_height <= 1.)  do_height_hint = FALSE;
+#endif
 
   /* Hint the center of the box based on where a line
    * of thickness center_width (world) would drawn */
@@ -151,12 +166,17 @@ void gschem_cairo_center_box (GSCHEM_TOPLEVEL *w_current,
   /* Hint the half-widths to land the stroke on the pixel grid */
   s_line_width = screen_width (w_current, line_width);
   even_line_width = (line_width == -1 || (s_line_width % 2) == 0);
-  radius_offset = (even_center_width == even_line_width) ? 0. : 0.5;
+  if (do_width_hint)
+    s_half_width  += ((even_center_width ==
+                             even_line_width) == even_width ) ? 0. : 0.5;
+  if (do_height_hint)
+    s_half_height += ((even_center_width ==
+                             even_line_width) == even_height) ? 0. : 0.5;
 
-  x1 = (double) s_x + center_offset - s_half_width  - radius_offset;
-  y1 = (double) s_y + center_offset - s_half_height - radius_offset;
-  x2 = (double) s_x + center_offset + s_half_width  + radius_offset;
-  y2 = (double) s_y + center_offset + s_half_height + radius_offset;
+  x1 = (double) s_x + center_offset - s_half_width;
+  y1 = (double) s_y + center_offset - s_half_height;
+  x2 = (double) s_x + center_offset + s_half_width;
+  y2 = (double) s_y + center_offset + s_half_height;
 
   /* Allow filled boxes (inferred from line_width == -1)
    * to touch an extra pixel, so the filled span is inclusive */
@@ -224,13 +244,22 @@ void gschem_cairo_center_arc (GSCHEM_TOPLEVEL *w_current,
                               int radius, int start_angle, int end_angle)
 {
   int s_center_width, s_line_width;
-  int s_x, s_y, s_radius;
+  int s_x, s_y, s_diameter;
   int even_center_width;
   int even_line_width;
-  double center_offset, radius_offset;
+  int even_diameter;
+  double center_offset;
+  double s_radius;
+  int do_radius_hint = TRUE;
 
   WORLDtoSCREEN (w_current, x, y, &s_x, &s_y);
-  s_radius  = SCREENabs (w_current, radius);
+  s_diameter = SCREENabs (w_current, 2 * radius);
+  even_diameter = ((s_diameter % 2) == 0);
+  s_radius = (double) s_diameter / 2.;
+
+  /* Switch off radius hinting for small radii. If we don't, then we get
+   * a very abrupt transition once the arc reaches a single pixel size. */
+  if (s_radius <= 1.) do_radius_hint = FALSE;
 
   /* Hint the center of the arc based on where a line
    * of thickness center_width (world) would drawn */
@@ -241,13 +270,13 @@ void gschem_cairo_center_arc (GSCHEM_TOPLEVEL *w_current,
   /* Hint the radius to land its extermity on the pixel grid */
   s_line_width = screen_width (w_current, line_width);
   even_line_width = (line_width == -1 || (s_line_width % 2) == 0);
-  /* radius_offset = (even_center_width == even_line_width) ? 0. : 0.5; */
-  /* Don't hint the radius, it makes things look strange when drawing cues */
-  radius_offset = 0.;
+  if (do_radius_hint)
+    s_radius += ((even_center_width ==
+                        even_line_width) == even_diameter) ? 0. : 0.5;
 
   do_arc (w_current->cr, (double) s_x + center_offset,
                          (double) s_y + center_offset,
-                         (double) s_radius + radius_offset,
+                         (double) s_radius,
                          start_angle, end_angle);
 }
 
