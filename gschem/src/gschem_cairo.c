@@ -257,6 +257,7 @@ void gschem_cairo_stroke (GSCHEM_TOPLEVEL *w_current, int line_type, int line_en
 {
   double dashes[4];
   cairo_line_cap_t cap;
+  cairo_line_cap_t round_cap_if_legible;
   int num_dashes;
   int width, length, space;
 
@@ -267,10 +268,13 @@ void gschem_cairo_stroke (GSCHEM_TOPLEVEL *w_current, int line_type, int line_en
   cairo_set_line_width (w_current->cr, width);
   cairo_set_line_join (w_current->cr, CAIRO_LINE_JOIN_MITER);
 
+  round_cap_if_legible = (width <= 0) ? CAIRO_LINE_CAP_SQUARE :
+                                        CAIRO_LINE_CAP_ROUND;
+
   switch (line_end) {
     case END_NONE:   cap = CAIRO_LINE_CAP_BUTT;   break;
     case END_SQUARE: cap = CAIRO_LINE_CAP_SQUARE; break;
-    case END_ROUND:  cap = CAIRO_LINE_CAP_ROUND;  break;
+    case END_ROUND:  cap = round_cap_if_legible;  break;
     default:
       fprintf(stderr, _("Unknown end for line (%d)\n"), line_end);
       cap = CAIRO_LINE_CAP_BUTT;
@@ -297,7 +301,7 @@ void gschem_cairo_stroke (GSCHEM_TOPLEVEL *w_current, int line_type, int line_en
       num_dashes = 2;
 
       cairo_set_dash (w_current->cr, dashes, num_dashes, 0.);
-      cairo_set_line_cap (w_current->cr, CAIRO_LINE_CAP_ROUND);
+      cairo_set_line_cap (w_current->cr, round_cap_if_legible);
       cairo_stroke (w_current->cr);
       break;
 
@@ -325,7 +329,7 @@ void gschem_cairo_stroke (GSCHEM_TOPLEVEL *w_current, int line_type, int line_en
       num_dashes = 2;
 
       cairo_set_dash (w_current->cr, dashes, num_dashes, -length - space);
-      cairo_set_line_cap (w_current->cr, CAIRO_LINE_CAP_ROUND);
+      cairo_set_line_cap (w_current->cr, round_cap_if_legible);
       cairo_stroke (w_current->cr);
       break;
 
@@ -345,7 +349,7 @@ void gschem_cairo_stroke (GSCHEM_TOPLEVEL *w_current, int line_type, int line_en
       num_dashes = 4;
 
       cairo_set_dash (w_current->cr, dashes, num_dashes, -length - space);
-      cairo_set_line_cap (w_current->cr, CAIRO_LINE_CAP_ROUND);
+      cairo_set_line_cap (w_current->cr, round_cap_if_legible);
       cairo_stroke (w_current->cr);
       break;
   }
