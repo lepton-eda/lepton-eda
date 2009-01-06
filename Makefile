@@ -51,6 +51,8 @@ SHELL=/bin/sh
 # Basic targets
 ############################################################################
 
+all: notarget
+
 notarget:
 	@echo $(VERSION) $(CD_VERSION) $(DIR_PREFIX)
 	@echo "gEDA Toplevel Makefile"
@@ -75,7 +77,6 @@ notarget:
 	@echo "${MAKE} check        Run check in all sub directories"
 	@echo "${MAKE} dist         Create distribution (using make dist)"
 	@echo "${MAKE} src          Create all *.c files from *.nw files"
-	@echo "${MAKE} all          Just build. Do not use! Run make install"
 	@echo ""
 	@echo ""
 	@echo "---------------------------READ THIS---------------------------"
@@ -128,8 +129,6 @@ notarget:
 ##  shouldn't do this.  You're forewarned!
 ##----------------------------------------------------------------------
 
-# This installs libgeda and symbols and just builds gschem and gnetlist
-all: libgeda symbols gschem gnetlist gattrib gsymcheck utils docs examples
 
 # This builds and installs all of gEDA/gaf
 install: symbols_install libgeda_install gschem_install gnetlist_install \
