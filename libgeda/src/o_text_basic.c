@@ -169,8 +169,15 @@ static void update_disp_string(OBJECT *o)
 int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left,
                           int *top, int *right, int *bottom)
 {
-  return world_get_object_glist_bounds (toplevel, o_current->text->prim_objs,
-                                        left, top, right, bottom);
+  if (toplevel->rendered_text_bounds_func == NULL) {
+    return world_get_object_glist_bounds (toplevel, o_current->text->prim_objs,
+                                          left, top, right, bottom);
+  } else {
+    return
+      toplevel->rendered_text_bounds_func (toplevel->rendered_text_bounds_data,
+                                           o_current,
+                                           left, top, right, bottom);
+  }
 }
 
 /*! \brief get the position of a text object
@@ -1882,4 +1889,19 @@ const gchar *o_text_get_string (TOPLEVEL *toplevel, OBJECT *obj)
   g_return_val_if_fail (obj->text != NULL, NULL);
 
   return obj->text->string;
+}
+
+/*! \brief Set the font-renderer-specific bounds function.
+ *  \par Function Description
+ *  Set the function to be used to calculate text bounds for a given
+ *  #TOPLEVEL.
+ *
+ *  \param [in] func      Function to use.
+ *  \param [in] user_data User data to be passed to the function.
+ */
+void o_text_set_rendered_bounds_func (TOPLEVEL *toplevel,
+                                      RenderedBoundsFunc func,
+                                      void *user_data) {
+  toplevel->rendered_text_bounds_func = func;
+  toplevel->rendered_text_bounds_data = user_data;
 }

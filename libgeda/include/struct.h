@@ -439,6 +439,9 @@ struct st_page {
 /*! \brief different kind of snapping mechanisms used in TOPLEVEL */
 typedef enum {SNAP_OFF, SNAP_GRID, SNAP_RESNAP, SNAP_STATE_COUNT} SNAP_STATE;
 
+/*! \brief Type of callback function for calculating text bounds */
+typedef int(*RenderedBoundsFunc)(void *, OBJECT *, int *, int *, int *, int *);
+
 struct st_toplevel {
 
   /* have to decided on component list stuff */
@@ -572,6 +575,10 @@ struct st_toplevel {
   int hierarchy_netname_order;
   int hierarchy_uref_order;
   char *unnamed_netname;
+
+  /* Callback function for calculating text bounds */
+  RenderedBoundsFunc rendered_text_bounds_func;
+  void *rendered_text_bounds_data;
 };
 
 /* structures below are for gnetlist */
