@@ -142,7 +142,7 @@ s_color_rgba_decode (const gchar *rgba,
   *r = 0xff; *g = 0xff; *b = 0xff; *a = 0xff;
 
   /* Check that the string is a valid length and starts with a '#' */
-  len = strnlen (rgba, 10);
+  len = strlen (rgba);
   if ((len != 9 && len != 7) || rgba[0] != '#')
     return FALSE;
 
