@@ -59,13 +59,13 @@ LIBRARYFIELD8
 ]
 [
 DESIGNATOR
-A1
+R1
 FOOTPRINT
 unknown
 PARTTYPE
-abotol=1e-11
+20
 DESCRIPTION
-options
+RESISTOR
 Part Field 1
 *
 Part Field 2
@@ -117,13 +117,13 @@ LIBRARYFIELD8
 ]
 [
 DESIGNATOR
-R1
+A1
 FOOTPRINT
 unknown
 PARTTYPE
-20
+abotol=1e-11
 DESCRIPTION
-RESISTOR
+options
 Part Field 1
 *
 Part Field 2

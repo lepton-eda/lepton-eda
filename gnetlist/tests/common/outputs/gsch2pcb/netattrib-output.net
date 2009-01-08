@@ -11,9 +11,9 @@ Flags("nameonpcb,uniquename,clearnew,snappin")
 Groups("1,c:2,s:3:4:5:6:7:8")
 Styles["Signal,1000,3600,2000,1000:Power,2500,6000,3500,1000:Fat,4000,6000,3500,1000:Skinny,600,2402,1181,600"]
 PKG_unknown(unknown,F1,unknown)
-PKG_DIP14(DIP14,U100,unknown)
 PKG_DIP14(DIP14,U300,unknown)
 PKG_DIP14(DIP14,U200,unknown)
+PKG_DIP14(DIP14,U100,unknown)
 Layer(1 "component")
 (
 )

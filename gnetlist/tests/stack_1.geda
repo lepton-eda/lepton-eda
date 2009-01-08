@@ -7,10 +7,10 @@ END header
 
 START components
 
-U211 device=74191
 U210 device=74541
-U109 device=AM9128
+U211 device=74191
 U212 device=74191
+U109 device=AM9128
 
 END components
 

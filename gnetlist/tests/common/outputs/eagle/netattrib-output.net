@@ -1,12 +1,12 @@
    ;
 ADD 'F1' unknown@smd-ipc (1 1);
 VALUE 'F1' 'FUSE';
-ADD 'U100' DIP14@smd-ipc (1 1);
-VALUE 'U100' '7400';
 ADD 'U300' DIP14@smd-ipc (1 1);
 VALUE 'U300' '7404';
 ADD 'U200' DIP14@smd-ipc (1 1);
 VALUE 'U200' '7404';
+ADD 'U100' DIP14@smd-ipc (1 1);
+VALUE 'U100' '7400';
 SIGNAL 'UNNAMED_NET1'
    'U300' '2'
 ;

@@ -13,14 +13,14 @@ BEGIN
 	PORT MAP (	1 => unnamed_net1,
 			2 => GND);
  
-  A1 : ENTITY options
-	GENERIC MAP (
-			value => abotol=1e-11)
-;
- 
   R1 : ENTITY RESISTOR
 	GENERIC MAP (
 			value => 20)
 	PORT MAP (	2 => unnamed_net1,
 			1 => GND);
+ 
+  A1 : ENTITY options
+	GENERIC MAP (
+			value => abotol=1e-11)
+;
 END ARCHITECTURE default_architecture;

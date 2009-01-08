@@ -7,17 +7,17 @@ END header
 
 START components
 
-V1 device=vpulse
-Cm device=CAPACITOR
 A1 device=model
+Cm device=CAPACITOR
+Cp device=CAPACITOR
+Rlp device=RESISTOR
+Rlm device=RESISTOR
+Vdd device=VOLTAGE_SOURCE
+V1 device=vpulse
 Rt device=RESISTOR
+Rb device=RESISTOR
 M1 device=PMOS_TRANSISTOR
 X1 device=LVD
-Rlp device=RESISTOR
-Vdd device=VOLTAGE_SOURCE
-Rlm device=RESISTOR
-Cp device=CAPACITOR
-Rb device=RESISTOR
 
 END components
 

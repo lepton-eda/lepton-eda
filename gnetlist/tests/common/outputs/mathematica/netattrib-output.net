@@ -18,9 +18,9 @@ i["U300","14"]+i["U200","14"]+i["U100","14"]==0,
 i["F1","1"]+i["U300","1"]+i["U200","1"]+i["U100","3"]==0};
 modelEquations={
 fuse[value->f1]["F1"],
-7400[value->u100]["U100"],
 7404[value->u300]["U300"],
-7404[value->u200]["U200"]};
+7404[value->u200]["U200"],
+7400[value->u100]["U100"]};
 variables={
 v["unnamed_net1"],
 v["netattrib"],

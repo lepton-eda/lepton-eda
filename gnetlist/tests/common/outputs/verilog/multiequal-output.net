@@ -26,11 +26,11 @@ VOLTAGE_SOURCE V1 (
     .\2  ( GND )
     );
 
-options A1 (     );
-
 RESISTOR R1 ( 
     .\2  ( unnamed_net1 ),
     .\1  ( GND )
     );
+
+options A1 (     );
 
 endmodule

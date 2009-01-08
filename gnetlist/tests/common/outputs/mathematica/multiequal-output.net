@@ -6,8 +6,8 @@ nodeEquations={
 i["V1","1"]+i["R1","2"]==0};
 modelEquations={
 voltage_source[value->DC 1V]["V1"],
-options[value->abotol=1e-11]["A1"],
-resistor[value->20]["R1"]};
+resistor[value->20]["R1"],
+options[value->abotol=1e-11]["A1"]};
 variables={
 v["unnamed_net1"],
 i["V1","2"],

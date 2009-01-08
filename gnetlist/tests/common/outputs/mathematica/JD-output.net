@@ -32,17 +32,17 @@ i["V1","1"]+i["X1","1"]==0,
 i["Cp","1"]+i["Rt","1"]+i["Rlp","1"]+i["X1","5"]==0,
 i["Cm","1"]+i["Rlm","1"]+i["Rt","2"]+i["X1","4"]==0};
 modelEquations={
-vpulse[value->pulse 3.3 0 1u 10p 10p 1.25u 2.5u]["V1"],
-capacitor[value->20p]["Cm"],
 model[value->a1]["A1"],
-resistor[value->1k]["Rt"],
-pmos_transistor[value->m1]["M1"],
-lvd[value->x1]["X1"],
-resistor[value->1meg]["Rlp"],
-voltage_source[value->DC 3.3V]["Vdd"],
-resistor[value->500k]["Rlm"],
+capacitor[value->20p]["Cm"],
 capacitor[value->20p]["Cp"],
-resistor[value->5.6k]["Rb"]};
+resistor[value->1meg]["Rlp"],
+resistor[value->500k]["Rlm"],
+voltage_source[value->DC 3.3V]["Vdd"],
+vpulse[value->pulse 3.3 0 1u 10p 10p 1.25u 2.5u]["V1"],
+resistor[value->1k]["Rt"],
+resistor[value->5.6k]["Rb"],
+pmos_transistor[value->m1]["M1"],
+lvd[value->x1]["X1"]};
 variables={
 v["Vdd1"],
 v["LVH"],

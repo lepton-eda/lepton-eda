@@ -45,18 +45,6 @@ void g_set_project_current(TOPLEVEL * pr_current)
 }
 
 
-static void
-hash_table_2_list (gpointer key,
-                   gpointer value,
-                   gpointer user_data)
-{
-  SCM* plist = (SCM*)user_data;
-
-  *plist = scm_cons (scm_makfrom0str ((char*)value),
-                     *plist);
-}
-
-
 SCM g_scm_c_get_uref (TOPLEVEL *toplevel, OBJECT *object)
 {
   SCM func = scm_variable_ref (scm_c_lookup ("get-uref"));
@@ -84,13 +72,14 @@ SCM g_get_packages(SCM level)
       if (nl_current->component_uref != NULL) {
         /* add component_uref in the hash table */
         /* uniqueness of component_uref is guaranteed by the hashtable */
-        g_hash_table_insert (ht,
-                             nl_current->component_uref,
-                             nl_current->component_uref);
+
+        if (g_hash_table_lookup (ht, nl_current->component_uref) == NULL) {
+          g_hash_table_insert (ht, nl_current->component_uref,
+                                   nl_current->component_uref);
+          list = scm_cons (scm_makfrom0str (nl_current->component_uref), list);
+        }
       }
     }
-    /* now create a scheme list of the entries in the hash table */
-    g_hash_table_foreach (ht, hash_table_2_list, &list);
     g_hash_table_destroy (ht);
 
     return list;

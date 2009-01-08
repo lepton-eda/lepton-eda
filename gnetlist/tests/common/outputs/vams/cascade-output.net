@@ -22,6 +22,46 @@ BEGIN
 	PORT MAP (	1 => unnamed_net6,
 			2 => OPEN);
  
+  T1 : ENTITY cascade-transformer
+	GENERIC MAP (
+			ROUT => 50, 
+			RIN => 50, 
+			NF => 0, 
+			G => 0, 
+			footprint => none, 
+			device => cascade-transformer)
+	PORT MAP (	1 => unnamed_net5,
+			2 => unnamed_net6);
+ 
+  MX1 : ENTITY cascade-mixer
+	GENERIC MAP (
+			IIP3 => 5, 
+			NF => 15, 
+			G => 12, 
+			device => cascade-mixer, 
+			footprint => none)
+	PORT MAP (	1 => unnamed_net4,
+			2 => unnamed_net5);
+ 
+  FL1 : ENTITY cascade-filter
+	GENERIC MAP (
+			NF => 5.5, 
+			G => -5.5, 
+			device => cascade-filter, 
+			footprint => none)
+	PORT MAP (	1 => unnamed_net3,
+			2 => unnamed_net4);
+ 
+  DEF1 : ENTITY cascade-defaults
+	GENERIC MAP (
+			footprint => none, 
+			RHO => 0.2, 
+			ROUT => 50, 
+			RIN => 50, 
+			device => cascade-defaults)
+	PORT MAP (	1 => unnamed_net2,
+			2 => unnamed_net3);
+ 
   AMP1 : ENTITY cascade-amp
 	GENERIC MAP (
 			IIP3 => -2, 
@@ -48,44 +88,4 @@ BEGIN
 			RIN => 50, 
 			device => cascade-defaults-top)
 	PORT MAP (	1 => GND);
- 
-  MX1 : ENTITY cascade-mixer
-	GENERIC MAP (
-			IIP3 => 5, 
-			NF => 15, 
-			G => 12, 
-			device => cascade-mixer, 
-			footprint => none)
-	PORT MAP (	1 => unnamed_net4,
-			2 => unnamed_net5);
- 
-  DEF1 : ENTITY cascade-defaults
-	GENERIC MAP (
-			footprint => none, 
-			RHO => 0.2, 
-			ROUT => 50, 
-			RIN => 50, 
-			device => cascade-defaults)
-	PORT MAP (	1 => unnamed_net2,
-			2 => unnamed_net3);
- 
-  T1 : ENTITY cascade-transformer
-	GENERIC MAP (
-			ROUT => 50, 
-			RIN => 50, 
-			NF => 0, 
-			G => 0, 
-			footprint => none, 
-			device => cascade-transformer)
-	PORT MAP (	1 => unnamed_net5,
-			2 => unnamed_net6);
- 
-  FL1 : ENTITY cascade-filter
-	GENERIC MAP (
-			NF => 5.5, 
-			G => -5.5, 
-			device => cascade-filter, 
-			footprint => none)
-	PORT MAP (	1 => unnamed_net3,
-			2 => unnamed_net4);
 END ARCHITECTURE default_architecture;

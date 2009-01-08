@@ -1,17 +1,17 @@
 !PADS-POWERPCB-V3.0-MILS!
 
 *PART*
-V1	none
-CM	unknown
 A1	unknown
+CM	unknown
+CP	unknown
+RLP	unknown
+RLM	unknown
+VDD	none
+V1	none
 RT	unknown
+RB	unknown
 M1	unknown
 X1	unknown
-RLP	unknown
-VDD	none
-RLM	unknown
-CP	unknown
-RB	unknown
 
 *NET*
 *SIGNAL* VDD1

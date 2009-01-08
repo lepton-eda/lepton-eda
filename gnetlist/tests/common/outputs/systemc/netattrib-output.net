@@ -9,9 +9,9 @@
 
 #include "systemc.h"
 #include "FUSE.h"
+#include "7404.h"
+#include "7404.h"
 #include "7400.h"
-#include "7404.h"
-#include "7404.h"
 
 SC_MODULE (not found)
 {
@@ -28,22 +28,17 @@ sc_signal<0> one;
 
 /* Package instantiations */
 FUSE F1;
-7400 U100;
 7404 U300;
 7404 U200;
+7400 U100;
 
 SC_CTOR(not found):
     F1("F1"),
-    U100("U100"),
     U300("U300"),
-    U200("U200")
+    U200("U200"),
+    U100("U100")
   {
     F1.1(one);
-
-    U100.3(one);
-    U100.14(Vcc);
-    U100.7(GND);
-    U100.5(netattrib);
 
     U300.1(one);
     U300.2(unnamed_net1);
@@ -54,6 +49,11 @@ SC_CTOR(not found):
     U200.2(netattrib);
     U200.7(GND);
     U200.14(Vcc);
+
+    U100.3(one);
+    U100.14(Vcc);
+    U100.7(GND);
+    U100.5(netattrib);
   }
 };
 

@@ -1,8 +1,8 @@
 *OrCAD
 *START
 *COMP V1	"none"
-*COMP A1	"unknown"
 *COMP R1	"unknown"
+*COMP A1	"unknown"
 *NET "GND"
 *NET "GND" V1."2" R1."1"
 *NET "unnamed_net1"

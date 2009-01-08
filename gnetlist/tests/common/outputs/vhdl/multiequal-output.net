@@ -10,10 +10,10 @@ END not found;
 
 -- Secondary unit
 ARCHITECTURE netlist OF not found IS
-    COMPONENT RESISTOR
+    COMPONENT options
     END COMPONENT ;
 
-    COMPONENT options
+    COMPONENT RESISTOR
     END COMPONENT ;
 
     COMPONENT VOLTAGE_SOURCE
@@ -28,13 +28,13 @@ BEGIN
         1 => unnamed_net1,
         2 => GND);
 
-    A1 : options
-;
-
     R1 : RESISTOR
     PORT MAP (
         2 => unnamed_net1,
         1 => GND);
+
+    A1 : options
+;
 
 -- Signal assignment part
 END netlist;

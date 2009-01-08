@@ -8,9 +8,9 @@ END header
 START components
 
 Uunder/Umiddle/Urock/Qrock device=PNP_TRANSISTOR
-Utop/Umiddle/Urock/Qrock device=PNP_TRANSISTOR
 U2 device=7404
 U1 device=7404
+Utop/Umiddle/Urock/Qrock device=PNP_TRANSISTOR
 
 END components
 

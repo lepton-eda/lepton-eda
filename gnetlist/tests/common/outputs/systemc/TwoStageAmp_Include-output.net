@@ -12,25 +12,25 @@
 #include "RESISTOR.h"
 #include "RESISTOR.h"
 #include "RESISTOR.h"
+#include "CAPACITOR.h"
+#include "RESISTOR.h"
+#include "RESISTOR.h"
 #include "NPN_TRANSISTOR.h"
+#include "CAPACITOR.h"
 #include "directive.h"
-#include "RESISTOR.h"
 #include "include.h"
+#include "model.h"
+#include "VOLTAGE_SOURCE.h"
+#include "vsin.h"
+#include "CAPACITOR.h"
+#include "CAPACITOR.h"
+#include "RESISTOR.h"
+#include "RESISTOR.h"
+#include "RESISTOR.h"
+#include "RESISTOR.h"
+#include "RESISTOR.h"
 #include "RESISTOR.h"
 #include "NPN_TRANSISTOR.h"
-#include "model.h"
-#include "RESISTOR.h"
-#include "vsin.h"
-#include "RESISTOR.h"
-#include "CAPACITOR.h"
-#include "CAPACITOR.h"
-#include "CAPACITOR.h"
-#include "CAPACITOR.h"
-#include "RESISTOR.h"
-#include "VOLTAGE_SOURCE.h"
-#include "RESISTOR.h"
-#include "RESISTOR.h"
-#include "RESISTOR.h"
 
 SC_MODULE (not found)
 {
@@ -53,116 +53,116 @@ sc_signal<0> Vcoll1;
 
 
 /* Package instantiations */
-CAPACITOR Cout;
-RESISTOR R5;
-RESISTOR R4;
-RESISTOR RE2;
-NPN_TRANSISTOR Q2;
-directive A3;
-RESISTOR R3;
-include A2;
-RESISTOR RE1;
-NPN_TRANSISTOR Q1;
-model A1;
-RESISTOR R2;
-vsin Vinput;
-RESISTOR R1;
 CAPACITOR C2;
-CAPACITOR CE2;
-CAPACITOR C1;
-CAPACITOR CE1;
+RESISTOR R4;
+RESISTOR R3;
 RESISTOR R8;
-VOLTAGE_SOURCE VCC;
-RESISTOR RC2;
+CAPACITOR CE2;
+RESISTOR RE2;
 RESISTOR RC1;
+NPN_TRANSISTOR Q2;
+CAPACITOR C1;
+directive A3;
+include A2;
+model A1;
+VOLTAGE_SOURCE VCC;
+vsin Vinput;
+CAPACITOR CE1;
+CAPACITOR Cout;
 RESISTOR RL;
+RESISTOR RC2;
+RESISTOR RE1;
+RESISTOR R2;
+RESISTOR R1;
+RESISTOR R5;
+NPN_TRANSISTOR Q1;
 
 SC_CTOR(not found):
-    Cout("Cout"),
-    R5("R5"),
-    R4("R4"),
-    RE2("RE2"),
-    Q2("Q2"),
-    A3("A3"),
-    R3("R3"),
-    A2("A2"),
-    RE1("RE1"),
-    Q1("Q1"),
-    A1("A1"),
-    R2("R2"),
-    Vinput("Vinput"),
-    R1("R1"),
     C2("C2"),
-    CE2("CE2"),
-    C1("C1"),
-    CE1("CE1"),
+    R4("R4"),
+    R3("R3"),
     R8("R8"),
-    VCC("VCC"),
-    RC2("RC2"),
+    CE2("CE2"),
+    RE2("RE2"),
     RC1("RC1"),
-    RL("RL")
+    Q2("Q2"),
+    C1("C1"),
+    A3("A3"),
+    A2("A2"),
+    A1("A1"),
+    VCC("VCC"),
+    Vinput("Vinput"),
+    CE1("CE1"),
+    Cout("Cout"),
+    RL("RL"),
+    RC2("RC2"),
+    RE1("RE1"),
+    R2("R2"),
+    R1("R1"),
+    R5("R5"),
+    Q1("Q1")
   {
-    Cout.1(VColl2);
-    Cout.2(Vout);
-
-    R5.2(unnamed_net1);
-    R5.1(Vin);
+    C2.1(unnamed_net2);
+    C2.2(Vbase2);
 
     R4.2(Vbase2);
     R4.1(GND);
 
+    R3.2(Vcc);
+    R3.1(Vbase2);
+
+    R8.2(unnamed_net2);
+    R8.1(Vcoll1);
+
+    CE2.1(GND);
+    CE2.2(Vem2);
+
     RE2.2(Vem2);
     RE2.1(GND);
+
+    RC1.2(Vcc);
+    RC1.1(Vcoll1);
 
     Q2.3(VColl2);
     Q2.1(Vem2);
     Q2.2(Vbase2);
 
-    R3.2(Vcc);
-    R3.1(Vbase2);
-
-    RE1.2(Vem1);
-    RE1.1(GND);
-
-    Q1.3(Vcoll1);
-    Q1.1(Vem1);
-    Q1.2(Vbase1);
-
-    R2.2(Vbase1);
-    R2.1(GND);
-
-    Vinput.1(Vin);
-    Vinput.2(GND);
-
-    R1.2(Vcc);
-    R1.1(Vbase1);
-
-    C2.1(unnamed_net2);
-    C2.2(Vbase2);
-
-    CE2.1(GND);
-    CE2.2(Vem2);
-
     C1.1(unnamed_net1);
     C1.2(Vbase1);
-
-    CE1.1(GND);
-    CE1.2(Vem1);
-
-    R8.2(unnamed_net2);
-    R8.1(Vcoll1);
 
     VCC.1(Vcc);
     VCC.2(GND);
 
-    RC2.2(Vcc);
-    RC2.1(VColl2);
+    Vinput.1(Vin);
+    Vinput.2(GND);
 
-    RC1.2(Vcc);
-    RC1.1(Vcoll1);
+    CE1.1(GND);
+    CE1.2(Vem1);
+
+    Cout.1(VColl2);
+    Cout.2(Vout);
 
     RL.2(Vout);
     RL.1(GND);
+
+    RC2.2(Vcc);
+    RC2.1(VColl2);
+
+    RE1.2(Vem1);
+    RE1.1(GND);
+
+    R2.2(Vbase1);
+    R2.1(GND);
+
+    R1.2(Vcc);
+    R1.1(Vbase1);
+
+    R5.2(unnamed_net1);
+    R5.1(Vin);
+
+    Q1.3(Vcoll1);
+    Q1.1(Vem1);
+    Q1.2(Vbase1);
   }
 };
 

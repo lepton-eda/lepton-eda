@@ -1,10 +1,10 @@
    ;
 ADD 'V1' none@smd-ipc (1 1);
 VALUE 'V1' 'DC 1V';
-ADD 'A1' unknown@smd-ipc (1 1);
-VALUE 'A1' 'abotol=1e-11';
 ADD 'R1' unknown@smd-ipc (1 1);
 VALUE 'R1' '20';
+ADD 'A1' unknown@smd-ipc (1 1);
+VALUE 'A1' 'abotol=1e-11';
 SIGNAL 'GND'
    'V1' '2'
    'R1' '1'

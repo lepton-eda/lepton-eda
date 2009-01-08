@@ -30,24 +30,19 @@ wire eight ;
 /* continuous assignments */
 
 /* Package instantiations */
-FUSE F1 ( 
-    .\1  ( two ),
-    .\2  ( three )
-    );
-
-RESISTOR R2 ( 
+LM317 U2 ( 
     .\2  ( eleven ),
+    .\3  ( eight ),
     .\1  ( ten )
-    );
-
-MAINS_CONNECTOR CONN1 ( 
-    .\1  ( one ),
-    .\2  ( five ),
-    .\3  ( GND )
     );
 
 POLARIZED_CAPACITOR C4 ( 
     .\1  ( eleven ),
+    .\2  ( nine )
+    );
+
+POLARIZED_CAPACITOR C3 ( 
+    .\1  ( ten ),
     .\2  ( nine )
     );
 
@@ -57,12 +52,17 @@ VARIABLE_RESISTOR R1 (
     .\1  ( nine )
     );
 
-POLARIZED_CAPACITOR C3 ( 
-    .\1  ( ten ),
+POLARIZED_CAPACITOR C2 ( 
+    .\1  ( eight ),
     .\2  ( nine )
     );
 
-POLARIZED_CAPACITOR C2 ( 
+RESISTOR R2 ( 
+    .\2  ( eleven ),
+    .\1  ( ten )
+    );
+
+POLARIZED_CAPACITOR C1 ( 
     .\1  ( eight ),
     .\2  ( nine )
     );
@@ -72,9 +72,10 @@ SPST S1 (
     .\1  ( one )
     );
 
-POLARIZED_CAPACITOR C1 ( 
-    .\1  ( eight ),
-    .\2  ( nine )
+MAINS_CONNECTOR CONN1 ( 
+    .\1  ( one ),
+    .\2  ( five ),
+    .\3  ( GND )
     );
 
 transformer T1 ( 
@@ -84,10 +85,9 @@ transformer T1 (
     .\3  ( six )
     );
 
-LM317 U2 ( 
-    .\2  ( eleven ),
-    .\3  ( eight ),
-    .\1  ( ten )
+FUSE F1 ( 
+    .\1  ( two ),
+    .\2  ( three )
     );
 
 \DIODE-BRIDGE  U1 ( 

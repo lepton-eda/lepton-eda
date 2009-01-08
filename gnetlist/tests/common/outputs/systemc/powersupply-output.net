@@ -8,17 +8,17 @@
 /* Author.....Jaume Masip                   */
 
 #include "systemc.h"
-#include "FUSE.h"
-#include "RESISTOR.h"
-#include "MAINS_CONNECTOR.h"
+#include "LM317.h"
+#include "POLARIZED_CAPACITOR.h"
 #include "POLARIZED_CAPACITOR.h"
 #include "VARIABLE_RESISTOR.h"
 #include "POLARIZED_CAPACITOR.h"
+#include "RESISTOR.h"
 #include "POLARIZED_CAPACITOR.h"
 #include "SPST.h"
-#include "POLARIZED_CAPACITOR.h"
+#include "MAINS_CONNECTOR.h"
 #include "transformer.h"
-#include "LM317.h"
+#include "FUSE.h"
 #include "DIODE-BRIDGE.h"
 
 SC_MODULE (not found)
@@ -41,70 +41,70 @@ sc_signal<0> eight;
 
 
 /* Package instantiations */
-FUSE F1;
-RESISTOR R2;
-MAINS_CONNECTOR CONN1;
-POLARIZED_CAPACITOR C4;
-VARIABLE_RESISTOR R1;
-POLARIZED_CAPACITOR C3;
-POLARIZED_CAPACITOR C2;
-SPST S1;
-POLARIZED_CAPACITOR C1;
-transformer T1;
 LM317 U2;
+POLARIZED_CAPACITOR C4;
+POLARIZED_CAPACITOR C3;
+VARIABLE_RESISTOR R1;
+POLARIZED_CAPACITOR C2;
+RESISTOR R2;
+POLARIZED_CAPACITOR C1;
+SPST S1;
+MAINS_CONNECTOR CONN1;
+transformer T1;
+FUSE F1;
 DIODE-BRIDGE U1;
 
 SC_CTOR(not found):
-    F1("F1"),
-    R2("R2"),
-    CONN1("CONN1"),
-    C4("C4"),
-    R1("R1"),
-    C3("C3"),
-    C2("C2"),
-    S1("S1"),
-    C1("C1"),
-    T1("T1"),
     U2("U2"),
+    C4("C4"),
+    C3("C3"),
+    R1("R1"),
+    C2("C2"),
+    R2("R2"),
+    C1("C1"),
+    S1("S1"),
+    CONN1("CONN1"),
+    T1("T1"),
+    F1("F1"),
     U1("U1")
   {
-    F1.1(two);
-    F1.2(three);
-
-    R2.2(eleven);
-    R2.1(ten);
-
-    CONN1.1(one);
-    CONN1.2(five);
-    CONN1.3(GND);
+    U2.2(eleven);
+    U2.3(eight);
+    U2.1(ten);
 
     C4.1(eleven);
     C4.2(nine);
+
+    C3.1(ten);
+    C3.2(nine);
 
     R1.3(nine);
     R1.2(ten);
     R1.1(nine);
 
-    C3.1(ten);
-    C3.2(nine);
-
     C2.1(eight);
     C2.2(nine);
+
+    R2.2(eleven);
+    R2.1(ten);
+
+    C1.1(eight);
+    C1.2(nine);
 
     S1.2(two);
     S1.1(one);
 
-    C1.1(eight);
-    C1.2(nine);
+    CONN1.1(one);
+    CONN1.2(five);
+    CONN1.3(GND);
 
     T1.2(five);
     T1.1(three);
     T1.4(seven);
     T1.3(six);
 
-    U2.2(eleven);
-    U2.3(eight);
-    U2.1(ten);
+    F1.1(two);
+    F1.2(three);
 
     U1.1(eight);
     U1.2(nine);

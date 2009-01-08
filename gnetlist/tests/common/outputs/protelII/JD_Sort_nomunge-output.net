@@ -1,13 +1,13 @@
 PROTEL NETLIST 2.0
 [
 DESIGNATOR
-V1
+A1
 FOOTPRINT
-none
+unknown
 PARTTYPE
-pulse 3.3 0 1u 10p 10p 1.25u 2.5u
+model
 DESCRIPTION
-vpulse
+model
 Part Field 1
 *
 Part Field 2
@@ -117,13 +117,245 @@ LIBRARYFIELD8
 ]
 [
 DESIGNATOR
-A1
+Cp
 FOOTPRINT
 unknown
 PARTTYPE
-model
+20p
 DESCRIPTION
-model
+CAPACITOR
+Part Field 1
+*
+Part Field 2
+*
+Part Field 3
+*
+Part Field 4
+*
+Part Field 5
+*
+Part Field 6
+*
+Part Field 7
+*
+Part Field 8
+*
+Part Field 9
+*
+Part Field 10
+*
+Part Field 11
+*
+Part Field 12
+*
+Part Field 13
+*
+Part Field 14
+*
+Part Field 15
+*
+Part Field 16
+*
+LIBRARYFIELD1
+
+LIBRARYFIELD2
+
+LIBRARYFIELD3
+
+LIBRARYFIELD4
+
+LIBRARYFIELD5
+
+LIBRARYFIELD6
+
+LIBRARYFIELD7
+
+LIBRARYFIELD8
+
+]
+[
+DESIGNATOR
+Rlp
+FOOTPRINT
+unknown
+PARTTYPE
+1meg
+DESCRIPTION
+RESISTOR
+Part Field 1
+*
+Part Field 2
+*
+Part Field 3
+*
+Part Field 4
+*
+Part Field 5
+*
+Part Field 6
+*
+Part Field 7
+*
+Part Field 8
+*
+Part Field 9
+*
+Part Field 10
+*
+Part Field 11
+*
+Part Field 12
+*
+Part Field 13
+*
+Part Field 14
+*
+Part Field 15
+*
+Part Field 16
+*
+LIBRARYFIELD1
+
+LIBRARYFIELD2
+
+LIBRARYFIELD3
+
+LIBRARYFIELD4
+
+LIBRARYFIELD5
+
+LIBRARYFIELD6
+
+LIBRARYFIELD7
+
+LIBRARYFIELD8
+
+]
+[
+DESIGNATOR
+Rlm
+FOOTPRINT
+unknown
+PARTTYPE
+500k
+DESCRIPTION
+RESISTOR
+Part Field 1
+*
+Part Field 2
+*
+Part Field 3
+*
+Part Field 4
+*
+Part Field 5
+*
+Part Field 6
+*
+Part Field 7
+*
+Part Field 8
+*
+Part Field 9
+*
+Part Field 10
+*
+Part Field 11
+*
+Part Field 12
+*
+Part Field 13
+*
+Part Field 14
+*
+Part Field 15
+*
+Part Field 16
+*
+LIBRARYFIELD1
+
+LIBRARYFIELD2
+
+LIBRARYFIELD3
+
+LIBRARYFIELD4
+
+LIBRARYFIELD5
+
+LIBRARYFIELD6
+
+LIBRARYFIELD7
+
+LIBRARYFIELD8
+
+]
+[
+DESIGNATOR
+Vdd
+FOOTPRINT
+none
+PARTTYPE
+DC 3.3V
+DESCRIPTION
+VOLTAGE_SOURCE
+Part Field 1
+*
+Part Field 2
+*
+Part Field 3
+*
+Part Field 4
+*
+Part Field 5
+*
+Part Field 6
+*
+Part Field 7
+*
+Part Field 8
+*
+Part Field 9
+*
+Part Field 10
+*
+Part Field 11
+*
+Part Field 12
+*
+Part Field 13
+*
+Part Field 14
+*
+Part Field 15
+*
+Part Field 16
+*
+LIBRARYFIELD1
+
+LIBRARYFIELD2
+
+LIBRARYFIELD3
+
+LIBRARYFIELD4
+
+LIBRARYFIELD5
+
+LIBRARYFIELD6
+
+LIBRARYFIELD7
+
+LIBRARYFIELD8
+
+]
+[
+DESIGNATOR
+V1
+FOOTPRINT
+none
+PARTTYPE
+pulse 3.3 0 1u 10p 10p 1.25u 2.5u
+DESCRIPTION
+vpulse
 Part Field 1
 *
 Part Field 2
@@ -180,6 +412,64 @@ FOOTPRINT
 unknown
 PARTTYPE
 1k
+DESCRIPTION
+RESISTOR
+Part Field 1
+*
+Part Field 2
+*
+Part Field 3
+*
+Part Field 4
+*
+Part Field 5
+*
+Part Field 6
+*
+Part Field 7
+*
+Part Field 8
+*
+Part Field 9
+*
+Part Field 10
+*
+Part Field 11
+*
+Part Field 12
+*
+Part Field 13
+*
+Part Field 14
+*
+Part Field 15
+*
+Part Field 16
+*
+LIBRARYFIELD1
+
+LIBRARYFIELD2
+
+LIBRARYFIELD3
+
+LIBRARYFIELD4
+
+LIBRARYFIELD5
+
+LIBRARYFIELD6
+
+LIBRARYFIELD7
+
+LIBRARYFIELD8
+
+]
+[
+DESIGNATOR
+Rb
+FOOTPRINT
+unknown
+PARTTYPE
+5.6k
 DESCRIPTION
 RESISTOR
 Part Field 1
@@ -298,296 +588,6 @@ PARTTYPE
 LVD
 DESCRIPTION
 LVD
-Part Field 1
-*
-Part Field 2
-*
-Part Field 3
-*
-Part Field 4
-*
-Part Field 5
-*
-Part Field 6
-*
-Part Field 7
-*
-Part Field 8
-*
-Part Field 9
-*
-Part Field 10
-*
-Part Field 11
-*
-Part Field 12
-*
-Part Field 13
-*
-Part Field 14
-*
-Part Field 15
-*
-Part Field 16
-*
-LIBRARYFIELD1
-
-LIBRARYFIELD2
-
-LIBRARYFIELD3
-
-LIBRARYFIELD4
-
-LIBRARYFIELD5
-
-LIBRARYFIELD6
-
-LIBRARYFIELD7
-
-LIBRARYFIELD8
-
-]
-[
-DESIGNATOR
-Rlp
-FOOTPRINT
-unknown
-PARTTYPE
-1meg
-DESCRIPTION
-RESISTOR
-Part Field 1
-*
-Part Field 2
-*
-Part Field 3
-*
-Part Field 4
-*
-Part Field 5
-*
-Part Field 6
-*
-Part Field 7
-*
-Part Field 8
-*
-Part Field 9
-*
-Part Field 10
-*
-Part Field 11
-*
-Part Field 12
-*
-Part Field 13
-*
-Part Field 14
-*
-Part Field 15
-*
-Part Field 16
-*
-LIBRARYFIELD1
-
-LIBRARYFIELD2
-
-LIBRARYFIELD3
-
-LIBRARYFIELD4
-
-LIBRARYFIELD5
-
-LIBRARYFIELD6
-
-LIBRARYFIELD7
-
-LIBRARYFIELD8
-
-]
-[
-DESIGNATOR
-Vdd
-FOOTPRINT
-none
-PARTTYPE
-DC 3.3V
-DESCRIPTION
-VOLTAGE_SOURCE
-Part Field 1
-*
-Part Field 2
-*
-Part Field 3
-*
-Part Field 4
-*
-Part Field 5
-*
-Part Field 6
-*
-Part Field 7
-*
-Part Field 8
-*
-Part Field 9
-*
-Part Field 10
-*
-Part Field 11
-*
-Part Field 12
-*
-Part Field 13
-*
-Part Field 14
-*
-Part Field 15
-*
-Part Field 16
-*
-LIBRARYFIELD1
-
-LIBRARYFIELD2
-
-LIBRARYFIELD3
-
-LIBRARYFIELD4
-
-LIBRARYFIELD5
-
-LIBRARYFIELD6
-
-LIBRARYFIELD7
-
-LIBRARYFIELD8
-
-]
-[
-DESIGNATOR
-Rlm
-FOOTPRINT
-unknown
-PARTTYPE
-500k
-DESCRIPTION
-RESISTOR
-Part Field 1
-*
-Part Field 2
-*
-Part Field 3
-*
-Part Field 4
-*
-Part Field 5
-*
-Part Field 6
-*
-Part Field 7
-*
-Part Field 8
-*
-Part Field 9
-*
-Part Field 10
-*
-Part Field 11
-*
-Part Field 12
-*
-Part Field 13
-*
-Part Field 14
-*
-Part Field 15
-*
-Part Field 16
-*
-LIBRARYFIELD1
-
-LIBRARYFIELD2
-
-LIBRARYFIELD3
-
-LIBRARYFIELD4
-
-LIBRARYFIELD5
-
-LIBRARYFIELD6
-
-LIBRARYFIELD7
-
-LIBRARYFIELD8
-
-]
-[
-DESIGNATOR
-Cp
-FOOTPRINT
-unknown
-PARTTYPE
-20p
-DESCRIPTION
-CAPACITOR
-Part Field 1
-*
-Part Field 2
-*
-Part Field 3
-*
-Part Field 4
-*
-Part Field 5
-*
-Part Field 6
-*
-Part Field 7
-*
-Part Field 8
-*
-Part Field 9
-*
-Part Field 10
-*
-Part Field 11
-*
-Part Field 12
-*
-Part Field 13
-*
-Part Field 14
-*
-Part Field 15
-*
-Part Field 16
-*
-LIBRARYFIELD1
-
-LIBRARYFIELD2
-
-LIBRARYFIELD3
-
-LIBRARYFIELD4
-
-LIBRARYFIELD5
-
-LIBRARYFIELD6
-
-LIBRARYFIELD7
-
-LIBRARYFIELD8
-
-]
-[
-DESIGNATOR
-Rb
-FOOTPRINT
-unknown
-PARTTYPE
-5.6k
-DESCRIPTION
-RESISTOR
 Part Field 1
 *
 Part Field 2

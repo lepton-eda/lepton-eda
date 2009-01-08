@@ -1,9 +1,9 @@
 LAYOUT board;
 PARTS
     F1 : unknown;
-    U100 : DIP14;
     U300 : DIP14;
     U200 : DIP14;
+    U100 : DIP14;
 CONNECT
     /'unnamed_net1'/ U300.2;
     /'netattrib'/ U200.2=U100.5;

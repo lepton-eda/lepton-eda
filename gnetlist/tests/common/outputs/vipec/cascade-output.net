@@ -3,13 +3,13 @@
 % Based on code by Bas Gieltjes
 CKT
 	error	1 #<unspecified> 	% AMP2
+	error	2 1 	% T1
+	error	3 2 	% MX1
+	error	4 3 	% FL1
+	error	5 4 	% DEF1
 	error	6 5 	% AMP1
 	error	6 	% SOURCE
 	error	#<unspecified> 	% DEFAULTS
-	error	3 2 	% MX1
-	error	5 4 	% DEF1
-	error	2 1 	% T1
-	error	4 3 	% FL1
 	DEF2P	#<unspecified>  #<unspecified>
 	TERM	50 50
 

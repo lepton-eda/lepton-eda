@@ -1,16 +1,16 @@
 (Allegro netlister by M. Ettus)
 $PACKAGES
-none! vpulse! pulse 3.3 0 1u 10p 10p 1.25u 2.5u; V1
-! CAPACITOR! 20p; Cm
 ! model! model; A1
+! CAPACITOR! 20p; Cm
+! CAPACITOR! 20p; Cp
+! RESISTOR! 1meg; Rlp
+! RESISTOR! 500k; Rlm
+none! VOLTAGE_SOURCE! DC 3.3V; Vdd
+none! vpulse! pulse 3.3 0 1u 10p 10p 1.25u 2.5u; V1
 ! RESISTOR! 1k; Rt
+! RESISTOR! 5.6k; Rb
 ! PMOS_TRANSISTOR! PMOS_TRANSISTOR; M1
 ! LVD! LVD; X1
-! RESISTOR! 1meg; Rlp
-none! VOLTAGE_SOURCE! DC 3.3V; Vdd
-! RESISTOR! 500k; Rlm
-! CAPACITOR! 20p; Cp
-! RESISTOR! 5.6k; Rb
 $NETS
 Vdd1; Rlp.2,
  M1.B,

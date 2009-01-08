@@ -31,14 +31,9 @@ wire Vcoll1 ;
 /* continuous assignments */
 
 /* Package instantiations */
-CAPACITOR Cout ( 
-    .\1  ( VColl2 ),
-    .\2  ( Vout )
-    );
-
-RESISTOR R5 ( 
-    .\2  ( unnamed_net1 ),
-    .\1  ( Vin )
+CAPACITOR C2 ( 
+    .\1  ( unnamed_net2 ),
+    .\2  ( Vbase2 )
     );
 
 RESISTOR R4 ( 
@@ -46,9 +41,29 @@ RESISTOR R4 (
     .\1  ( GND )
     );
 
+RESISTOR R3 ( 
+    .\2  ( Vcc ),
+    .\1  ( Vbase2 )
+    );
+
+RESISTOR R8 ( 
+    .\2  ( unnamed_net2 ),
+    .\1  ( Vcoll1 )
+    );
+
+CAPACITOR CE2 ( 
+    .\1  ( GND ),
+    .\2  ( Vem2 )
+    );
+
 RESISTOR RE2 ( 
     .\2  ( Vem2 ),
     .\1  ( GND )
+    );
+
+RESISTOR RC1 ( 
+    .\2  ( Vcc ),
+    .\1  ( Vcoll1 )
     );
 
 NPN_TRANSISTOR Q2 ( 
@@ -57,31 +72,20 @@ NPN_TRANSISTOR Q2 (
     .\2  ( Vbase2 )
     );
 
-directive A3 (     );
-
-RESISTOR R3 ( 
-    .\2  ( Vcc ),
-    .\1  ( Vbase2 )
-    );
-
-include A2 (     );
-
-RESISTOR RE1 ( 
-    .\2  ( Vem1 ),
-    .\1  ( GND )
-    );
-
-NPN_TRANSISTOR Q1 ( 
-    .\3  ( Vcoll1 ),
-    .\1  ( Vem1 ),
+CAPACITOR C1 ( 
+    .\1  ( unnamed_net1 ),
     .\2  ( Vbase1 )
     );
 
+directive A3 (     );
+
+include A2 (     );
+
 model A1 (     );
 
-RESISTOR R2 ( 
-    .\2  ( Vbase1 ),
-    .\1  ( GND )
+VOLTAGE_SOURCE VCC ( 
+    .\1  ( Vcc ),
+    .\2  ( GND )
     );
 
 vsin Vinput ( 
@@ -89,39 +93,19 @@ vsin Vinput (
     .\2  ( GND )
     );
 
-RESISTOR R1 ( 
-    .\2  ( Vcc ),
-    .\1  ( Vbase1 )
-    );
-
-CAPACITOR C2 ( 
-    .\1  ( unnamed_net2 ),
-    .\2  ( Vbase2 )
-    );
-
-CAPACITOR CE2 ( 
-    .\1  ( GND ),
-    .\2  ( Vem2 )
-    );
-
-CAPACITOR C1 ( 
-    .\1  ( unnamed_net1 ),
-    .\2  ( Vbase1 )
-    );
-
 CAPACITOR CE1 ( 
     .\1  ( GND ),
     .\2  ( Vem1 )
     );
 
-RESISTOR R8 ( 
-    .\2  ( unnamed_net2 ),
-    .\1  ( Vcoll1 )
+CAPACITOR Cout ( 
+    .\1  ( VColl2 ),
+    .\2  ( Vout )
     );
 
-VOLTAGE_SOURCE VCC ( 
-    .\1  ( Vcc ),
-    .\2  ( GND )
+RESISTOR RL ( 
+    .\2  ( Vout ),
+    .\1  ( GND )
     );
 
 RESISTOR RC2 ( 
@@ -129,14 +113,30 @@ RESISTOR RC2 (
     .\1  ( VColl2 )
     );
 
-RESISTOR RC1 ( 
-    .\2  ( Vcc ),
-    .\1  ( Vcoll1 )
+RESISTOR RE1 ( 
+    .\2  ( Vem1 ),
+    .\1  ( GND )
     );
 
-RESISTOR RL ( 
-    .\2  ( Vout ),
+RESISTOR R2 ( 
+    .\2  ( Vbase1 ),
     .\1  ( GND )
+    );
+
+RESISTOR R1 ( 
+    .\2  ( Vcc ),
+    .\1  ( Vbase1 )
+    );
+
+RESISTOR R5 ( 
+    .\2  ( unnamed_net1 ),
+    .\1  ( Vin )
+    );
+
+NPN_TRANSISTOR Q1 ( 
+    .\3  ( Vcoll1 ),
+    .\1  ( Vem1 ),
+    .\2  ( Vbase1 )
     );
 
 endmodule

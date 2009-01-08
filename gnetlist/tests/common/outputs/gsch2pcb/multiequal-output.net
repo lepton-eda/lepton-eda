@@ -11,8 +11,8 @@ Flags("nameonpcb,uniquename,clearnew,snappin")
 Groups("1,c:2,s:3:4:5:6:7:8")
 Styles["Signal,1000,3600,2000,1000:Power,2500,6000,3500,1000:Fat,4000,6000,3500,1000:Skinny,600,2402,1181,600"]
 PKG_none(none,V1,DC 1V)
-PKG_unknown(unknown,A1,abotol=1e-11)
 PKG_unknown(unknown,R1,20)
+PKG_unknown(unknown,A1,abotol=1e-11)
 Layer(1 "component")
 (
 )

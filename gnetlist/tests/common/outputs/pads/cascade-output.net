@@ -2,13 +2,13 @@
 
 *PART*
 AMP2	none
+T1	none
+MX1	none
+FL1	none
+DEF1	none
 AMP1	none
 SOURCE	none
 DEFAULTS	unknown
-MX1	none
-DEF1	none
-T1	none
-FL1	none
 
 *NET*
 *SIGNAL* UNNAMED_NET6

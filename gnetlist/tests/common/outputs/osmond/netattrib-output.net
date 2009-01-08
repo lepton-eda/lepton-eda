@@ -1,7 +1,7 @@
 Part unknown { Name F1 }
-Part DIP14 { Name U100 }
 Part DIP14 { Name U300 }
 Part DIP14 { Name U200 }
+Part DIP14 { Name U100 }
 Signal "unnamed_net1"
   { U300-2 }
 Signal "netattrib"

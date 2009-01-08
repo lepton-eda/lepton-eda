@@ -2,17 +2,17 @@
 % Written by Matthew Ettus
 % Based on code by Bas Gieltjes
 CKT
-	error	6 5 	% F1
-	RES	1 2 R=220		% R2
-	error	3 4 0 	% CONN1
-	error	2 9 	% C4
-	error	9 1 9 	% R1
-	error	1 9 	% C3
-	error	10 9 	% C2
-	error	3 6 	% S1
-	error	10 9 	% C1
-	error	5 4 7 8 	% T1
 	error	1 2 10 	% U2
+	error	2 9 	% C4
+	error	1 9 	% C3
+	error	9 1 9 	% R1
+	error	10 9 	% C2
+	RES	1 2 R=220		% R2
+	error	10 9 	% C1
+	error	3 6 	% S1
+	error	3 4 0 	% CONN1
+	error	5 4 7 8 	% T1
+	error	6 5 	% F1
 	error	10 9 8 7 	% U1
 	DEF2P	#<unspecified>  #<unspecified>
 	TERM	50 50

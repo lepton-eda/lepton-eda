@@ -17,20 +17,13 @@ ARCHITECTURE default_architecture OF default_entity IS
 BEGIN
 -- Architecture statement part
  
-  Cout : ENTITY CAPACITOR
+  C2 : ENTITY CAPACITOR
 	GENERIC MAP (
 			symversion => 0.1, 
 			device => CAPACITOR, 
 			value => 2.2uF)
-	PORT MAP (	1 => VColl2,
-			2 => Vout);
- 
-  R5 : ENTITY RESISTOR
-	GENERIC MAP (
-			device => RESISTOR, 
-			value => 10)
-	PORT MAP (	2 => unnamed_net1,
-			1 => Vin);
+	PORT MAP (	1 => unnamed_net2,
+			2 => Vbase2);
  
   R4 : ENTITY RESISTOR
 	GENERIC MAP (
@@ -39,27 +32,6 @@ BEGIN
 	PORT MAP (	2 => Vbase2,
 			1 => GND);
  
-  RE2 : ENTITY RESISTOR
-	GENERIC MAP (
-			device => RESISTOR, 
-			value => 100)
-	PORT MAP (	2 => Vem2,
-			1 => GND);
- 
-  Q2 : ENTITY NPN_TRANSISTOR
-	GENERIC MAP (
-			device => NPN_TRANSISTOR, 
-			model-name => 2N3904)
-	PORT MAP (	3 => VColl2,
-			1 => Vem2,
-			2 => Vbase2);
- 
-  A3 : ENTITY directive
-	GENERIC MAP (
-			device => directive, 
-			value => .options TEMP=25)
-;
- 
   R3 : ENTITY RESISTOR
 	GENERIC MAP (
 			device => RESISTOR, 
@@ -67,63 +39,12 @@ BEGIN
 	PORT MAP (	2 => Vcc,
 			1 => Vbase2);
  
-  A2 : ENTITY include
-	GENERIC MAP (
-			device => include, 
-			file => Simulation.cmd)
-;
- 
-  RE1 : ENTITY RESISTOR
+  R8 : ENTITY RESISTOR
 	GENERIC MAP (
 			device => RESISTOR, 
-			value => 100)
-	PORT MAP (	2 => Vem1,
-			1 => GND);
- 
-  Q1 : ENTITY NPN_TRANSISTOR
-	GENERIC MAP (
-			device => NPN_TRANSISTOR, 
-			model-name => 2N3904)
-	PORT MAP (	3 => Vcoll1,
-			1 => Vem1,
-			2 => Vbase1);
- 
-  A1 : ENTITY model
-	GENERIC MAP (
-			device => model, 
-			file => ./models/2N3904.mod, 
-			model-name => 2N3904)
-;
- 
-  R2 : ENTITY RESISTOR
-	GENERIC MAP (
-			device => RESISTOR, 
-			value => 2K)
-	PORT MAP (	2 => Vbase1,
-			1 => GND);
- 
-  Vinput : ENTITY vsin
-	GENERIC MAP (
-			footprint => none, 
-			device => vsin, 
-			value => DC 1.6V AC 10MV SIN(0 1MV 1KHZ))
-	PORT MAP (	1 => Vin,
-			2 => GND);
- 
-  R1 : ENTITY RESISTOR
-	GENERIC MAP (
-			device => RESISTOR, 
-			value => 28K)
-	PORT MAP (	2 => Vcc,
-			1 => Vbase1);
- 
-  C2 : ENTITY CAPACITOR
-	GENERIC MAP (
-			symversion => 0.1, 
-			device => CAPACITOR, 
-			value => 2.2uF)
-	PORT MAP (	1 => unnamed_net2,
-			2 => Vbase2);
+			value => 1)
+	PORT MAP (	2 => unnamed_net2,
+			1 => Vcoll1);
  
   CE2 : ENTITY CAPACITOR
 	GENERIC MAP (
@@ -133,6 +54,28 @@ BEGIN
 	PORT MAP (	1 => GND,
 			2 => Vem2);
  
+  RE2 : ENTITY RESISTOR
+	GENERIC MAP (
+			device => RESISTOR, 
+			value => 100)
+	PORT MAP (	2 => Vem2,
+			1 => GND);
+ 
+  RC1 : ENTITY RESISTOR
+	GENERIC MAP (
+			device => RESISTOR, 
+			value => 3.3K)
+	PORT MAP (	2 => Vcc,
+			1 => Vcoll1);
+ 
+  Q2 : ENTITY NPN_TRANSISTOR
+	GENERIC MAP (
+			device => NPN_TRANSISTOR, 
+			model-name => 2N3904)
+	PORT MAP (	3 => VColl2,
+			1 => Vem2,
+			2 => Vbase2);
+ 
   C1 : ENTITY CAPACITOR
 	GENERIC MAP (
 			symversion => 0.1, 
@@ -141,20 +84,24 @@ BEGIN
 	PORT MAP (	1 => unnamed_net1,
 			2 => Vbase1);
  
-  CE1 : ENTITY CAPACITOR
+  A3 : ENTITY directive
 	GENERIC MAP (
-			symversion => 0.1, 
-			device => CAPACITOR, 
-			value => 1pF)
-	PORT MAP (	1 => GND,
-			2 => Vem1);
+			device => directive, 
+			value => .options TEMP=25)
+;
  
-  R8 : ENTITY RESISTOR
+  A2 : ENTITY include
 	GENERIC MAP (
-			device => RESISTOR, 
-			value => 1)
-	PORT MAP (	2 => unnamed_net2,
-			1 => Vcoll1);
+			device => include, 
+			file => Simulation.cmd)
+;
+ 
+  A1 : ENTITY model
+	GENERIC MAP (
+			device => model, 
+			file => ./models/2N3904.mod, 
+			model-name => 2N3904)
+;
  
   VCC : ENTITY VOLTAGE_SOURCE
 	GENERIC MAP (
@@ -164,19 +111,29 @@ BEGIN
 	PORT MAP (	1 => Vcc,
 			2 => GND);
  
-  RC2 : ENTITY RESISTOR
+  Vinput : ENTITY vsin
 	GENERIC MAP (
-			device => RESISTOR, 
-			value => 1K)
-	PORT MAP (	2 => Vcc,
-			1 => VColl2);
+			footprint => none, 
+			device => vsin, 
+			value => DC 1.6V AC 10MV SIN(0 1MV 1KHZ))
+	PORT MAP (	1 => Vin,
+			2 => GND);
  
-  RC1 : ENTITY RESISTOR
+  CE1 : ENTITY CAPACITOR
 	GENERIC MAP (
-			device => RESISTOR, 
-			value => 3.3K)
-	PORT MAP (	2 => Vcc,
-			1 => Vcoll1);
+			symversion => 0.1, 
+			device => CAPACITOR, 
+			value => 1pF)
+	PORT MAP (	1 => GND,
+			2 => Vem1);
+ 
+  Cout : ENTITY CAPACITOR
+	GENERIC MAP (
+			symversion => 0.1, 
+			device => CAPACITOR, 
+			value => 2.2uF)
+	PORT MAP (	1 => VColl2,
+			2 => Vout);
  
   RL : ENTITY RESISTOR
 	GENERIC MAP (
@@ -184,4 +141,47 @@ BEGIN
 			value => 100K)
 	PORT MAP (	2 => Vout,
 			1 => GND);
+ 
+  RC2 : ENTITY RESISTOR
+	GENERIC MAP (
+			device => RESISTOR, 
+			value => 1K)
+	PORT MAP (	2 => Vcc,
+			1 => VColl2);
+ 
+  RE1 : ENTITY RESISTOR
+	GENERIC MAP (
+			device => RESISTOR, 
+			value => 100)
+	PORT MAP (	2 => Vem1,
+			1 => GND);
+ 
+  R2 : ENTITY RESISTOR
+	GENERIC MAP (
+			device => RESISTOR, 
+			value => 2K)
+	PORT MAP (	2 => Vbase1,
+			1 => GND);
+ 
+  R1 : ENTITY RESISTOR
+	GENERIC MAP (
+			device => RESISTOR, 
+			value => 28K)
+	PORT MAP (	2 => Vcc,
+			1 => Vbase1);
+ 
+  R5 : ENTITY RESISTOR
+	GENERIC MAP (
+			device => RESISTOR, 
+			value => 10)
+	PORT MAP (	2 => unnamed_net1,
+			1 => Vin);
+ 
+  Q1 : ENTITY NPN_TRANSISTOR
+	GENERIC MAP (
+			device => NPN_TRANSISTOR, 
+			model-name => 2N3904)
+	PORT MAP (	3 => Vcoll1,
+			1 => Vem1,
+			2 => Vbase1);
 END ARCHITECTURE default_architecture;

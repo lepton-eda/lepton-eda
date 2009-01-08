@@ -7,14 +7,14 @@
 *********************************************************
 .INCLUDE ./models/openIP_5.cir
 *==============  Begin SPICE netlist of main design ============
-V1 i 0 pulse 3.3 0 1u 10p 10p 1.25u 2.5u
 Cm m 0 20p  
+Cp p 0 20p  
+Rlp p Vdd1 1meg  
+Rlm m 0 500k  
+Vdd Vdd1 0 DC 3.3V
+V1 i 0 pulse 3.3 0 1u 10p 10p 1.25u 2.5u
 Rt p m 1k  
+Rb 0 LVH 5.6k  
 M1 LVH LVH Vdd1 Vdd1 pch  l=3u w=3u m=36
 UX1 i 0 LVH m p Vdd1 0 unknown_LVD
-Rlp p Vdd1 1meg  
-Vdd Vdd1 0 DC 3.3V
-Rlm m 0 500k  
-Cp p 0 20p  
-Rb 0 LVH 5.6k  
 .end

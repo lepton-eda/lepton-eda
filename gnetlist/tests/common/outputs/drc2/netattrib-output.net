@@ -22,9 +22,6 @@ Checking slots...
 Checking duplicated slots...
 
 Checking unused slots...
-WARNING: Unused slot 2 of uref U100
-WARNING: Unused slot 3 of uref U100
-WARNING: Unused slot 4 of uref U100
 WARNING: Unused slot 2 of uref U300
 WARNING: Unused slot 3 of uref U300
 WARNING: Unused slot 4 of uref U300
@@ -35,6 +32,9 @@ WARNING: Unused slot 3 of uref U200
 WARNING: Unused slot 4 of uref U200
 WARNING: Unused slot 5 of uref U200
 WARNING: Unused slot 6 of uref U200
+WARNING: Unused slot 2 of uref U100
+WARNING: Unused slot 3 of uref U100
+WARNING: Unused slot 4 of uref U100
 
 Found 13 warnings.
 Found 5 errors.

@@ -10,10 +10,10 @@ END not found;
 
 -- Secondary unit
 ARCHITECTURE netlist OF not found IS
-    COMPONENT 7404
+    COMPONENT 7400
     END COMPONENT ;
 
-    COMPONENT 7400
+    COMPONENT 7404
     END COMPONENT ;
 
     COMPONENT FUSE
@@ -31,15 +31,6 @@ BEGIN
         1 => one,
         2 => OPEN);
 
-    U100 : 7400
-    PORT MAP (
-        3 => one,
-        2 => OPEN,
-        1 => OPEN,
-        14 => Vcc,
-        7 => GND,
-        5 => netattrib);
-
     U300 : 7404
     PORT MAP (
         1 => one,
@@ -53,6 +44,15 @@ BEGIN
         2 => netattrib,
         7 => GND,
         14 => Vcc);
+
+    U100 : 7400
+    PORT MAP (
+        3 => one,
+        2 => OPEN,
+        1 => OPEN,
+        14 => Vcc,
+        7 => GND,
+        5 => netattrib);
 
 -- Signal assignment part
 END netlist;

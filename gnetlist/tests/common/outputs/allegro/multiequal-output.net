@@ -1,8 +1,8 @@
 (Allegro netlister by M. Ettus)
 $PACKAGES
 none! VOLTAGE_SOURCE! DC 1V; V1
-! options! abotol=1e-11; A1
 ! RESISTOR! 20; R1
+! options! abotol=1e-11; A1
 $NETS
 GND; V1.2,
  R1.1

@@ -1,11 +1,11 @@
 Part none { Name AMP2 }
+Part none { Name T1 }
+Part none { Name MX1 }
+Part none { Name FL1 }
+Part none { Name DEF1 }
 Part none { Name AMP1 }
 Part none { Name SOURCE }
 Part unknown { Name DEFAULTS }
-Part none { Name MX1 }
-Part none { Name DEF1 }
-Part none { Name T1 }
-Part none { Name FL1 }
 Signal "unnamed_net6"
   { AMP2-1 T1-2 }
 Signal "unnamed_net5"

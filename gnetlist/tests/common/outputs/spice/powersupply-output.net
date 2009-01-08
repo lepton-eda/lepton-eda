@@ -1,14 +1,14 @@
 * Spice netlister for gnetlist
-F1 two three <No valid value attribute found>
-R2 ten eleven 220
-CONN1 one five 0 <No valid value attribute found>
-C4 eleven nine 1uf
-R1 nine ten nine 5k
-C3 ten nine 22uF
-C2 eight nine 0.1uF
-S1 one two <No valid value attribute found>
-C1 eight nine 2200uF
-T1 three five six seven <No valid value attribute found>
 U2 ten eleven eight <No valid value attribute found>
+C4 eleven nine 1uf
+C3 ten nine 22uF
+R1 nine ten nine 5k
+C2 eight nine 0.1uF
+R2 ten eleven 220
+C1 eight nine 2200uF
+S1 one two <No valid value attribute found>
+CONN1 one five 0 <No valid value attribute found>
+T1 three five six seven <No valid value attribute found>
+F1 two three <No valid value attribute found>
 U1 eight nine seven six <No valid value attribute found>
 .END

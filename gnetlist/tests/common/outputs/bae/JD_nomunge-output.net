@@ -1,16 +1,16 @@
 LAYOUT board;
 PARTS
-    V1 : none;
-    Cm : unknown;
     A1 : unknown;
+    Cm : unknown;
+    Cp : unknown;
+    Rlp : unknown;
+    Rlm : unknown;
+    Vdd : none;
+    V1 : none;
     Rt : unknown;
+    Rb : unknown;
     M1 : unknown;
     X1 : unknown;
-    Rlp : unknown;
-    Vdd : none;
-    Rlm : unknown;
-    Cp : unknown;
-    Rb : unknown;
 CONNECT
     /'Vdd1'/ Rlp.2=M1.B=M1.S=Vdd.1=X1.6;
     /'GND'/ Cm.2=Cp.2=Rlm.2=Vdd.2=V1.2=Rb.1=X1.7=X1.2;

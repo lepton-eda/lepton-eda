@@ -1,26 +1,26 @@
-Part unknown { Name Cout }
-Part unknown { Name R5 }
-Part unknown { Name R4 }
-Part unknown { Name RE2 }
-Part unknown { Name Q2 }
-Part unknown { Name A3 }
-Part unknown { Name R3 }
-Part unknown { Name A2 }
-Part unknown { Name RE1 }
-Part unknown { Name Q1 }
-Part unknown { Name A1 }
-Part unknown { Name R2 }
-Part none { Name Vinput }
-Part unknown { Name R1 }
 Part unknown { Name C2 }
-Part unknown { Name CE2 }
-Part unknown { Name C1 }
-Part unknown { Name CE1 }
+Part unknown { Name R4 }
+Part unknown { Name R3 }
 Part unknown { Name R8 }
-Part none { Name VCC }
-Part unknown { Name RC2 }
+Part unknown { Name CE2 }
+Part unknown { Name RE2 }
 Part unknown { Name RC1 }
+Part unknown { Name Q2 }
+Part unknown { Name C1 }
+Part unknown { Name A3 }
+Part unknown { Name A2 }
+Part unknown { Name A1 }
+Part none { Name VCC }
+Part none { Name Vinput }
+Part unknown { Name CE1 }
+Part unknown { Name Cout }
 Part unknown { Name RL }
+Part unknown { Name RC2 }
+Part unknown { Name RE1 }
+Part unknown { Name R2 }
+Part unknown { Name R1 }
+Part unknown { Name R5 }
+Part unknown { Name Q1 }
 Signal "unnamed_net2"
   { C2-1 R8-2 }
 Signal "Vbase2"

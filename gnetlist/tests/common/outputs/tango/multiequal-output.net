@@ -6,17 +6,17 @@ DC 1V
 
 ]
 [
-A1
-PATTERN
-options
-abotol=1e-11
-
-]
-[
 R1
 PATTERN
 RESISTOR
 20
+
+]
+[
+A1
+PATTERN
+options
+abotol=1e-11
 
 ]
 (

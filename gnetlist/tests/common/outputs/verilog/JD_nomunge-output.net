@@ -25,21 +25,46 @@ wire m ;
 /* continuous assignments */
 
 /* Package instantiations */
-vpulse V1 ( 
-    .\1  ( i ),
-    .\2  ( GND )
-    );
+model A1 (     );
 
 CAPACITOR Cm ( 
     .\1  ( m ),
     .\2  ( GND )
     );
 
-model A1 (     );
+CAPACITOR Cp ( 
+    .\1  ( p ),
+    .\2  ( GND )
+    );
+
+RESISTOR Rlp ( 
+    .\2  ( Vdd1 ),
+    .\1  ( p )
+    );
+
+RESISTOR Rlm ( 
+    .\2  ( GND ),
+    .\1  ( m )
+    );
+
+VOLTAGE_SOURCE Vdd ( 
+    .\1  ( Vdd1 ),
+    .\2  ( GND )
+    );
+
+vpulse V1 ( 
+    .\1  ( i ),
+    .\2  ( GND )
+    );
 
 RESISTOR Rt ( 
     .\2  ( m ),
     .\1  ( p )
+    );
+
+RESISTOR Rb ( 
+    .\2  ( LVH ),
+    .\1  ( GND )
     );
 
 PMOS_TRANSISTOR M1 ( 
@@ -57,31 +82,6 @@ LVD X1 (
     .\2  ( GND ),
     .\6  ( Vdd1 ),
     .\7  ( GND )
-    );
-
-RESISTOR Rlp ( 
-    .\2  ( Vdd1 ),
-    .\1  ( p )
-    );
-
-VOLTAGE_SOURCE Vdd ( 
-    .\1  ( Vdd1 ),
-    .\2  ( GND )
-    );
-
-RESISTOR Rlm ( 
-    .\2  ( GND ),
-    .\1  ( m )
-    );
-
-CAPACITOR Cp ( 
-    .\1  ( p ),
-    .\2  ( GND )
-    );
-
-RESISTOR Rb ( 
-    .\2  ( LVH ),
-    .\1  ( GND )
     );
 
 endmodule

@@ -8,9 +8,9 @@ END header
 START components
 
 F1 device=FUSE
-U100 device=7400
 U300 device=7404
 U200 device=7404
+U100 device=7400
 
 END components
 

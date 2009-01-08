@@ -28,13 +28,6 @@ FUSE F1 (
     .\1  ( one )
     );
 
-\7400  U100 ( 
-    .\3  ( one ),
-    .\14  ( Vcc ),
-    .\7  ( GND ),
-    .\5  ( netattrib )
-    );
-
 \7404  U300 ( 
     .\1  ( one ),
     .\2  ( unnamed_net1 ),
@@ -47,6 +40,13 @@ FUSE F1 (
     .\2  ( netattrib ),
     .\7  ( GND ),
     .\14  ( Vcc )
+    );
+
+\7400  U100 ( 
+    .\3  ( one ),
+    .\14  ( Vcc ),
+    .\7  ( GND ),
+    .\5  ( netattrib )
     );
 
 endmodule

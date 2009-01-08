@@ -1,13 +1,13 @@
 *OrCAD
 *START
 *COMP AMP2	"none"
+*COMP T1	"none"
+*COMP MX1	"none"
+*COMP FL1	"none"
+*COMP DEF1	"none"
 *COMP AMP1	"none"
 *COMP SOURCE	"none"
 *COMP DEFAULTS	"unknown"
-*COMP MX1	"none"
-*COMP DEF1	"none"
-*COMP T1	"none"
-*COMP FL1	"none"
 *NET "unnamed_net6"
 *NET "unnamed_net6" AMP2."1" T1."2"
 *NET "unnamed_net5"

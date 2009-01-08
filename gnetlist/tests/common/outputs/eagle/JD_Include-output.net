@@ -1,26 +1,26 @@
    ;
-ADD 'V1' none@smd-ipc (1 1);
-VALUE 'V1' 'pulse 3.3 0 1u 10p 10p 1.25u 2.5u';
-ADD 'Cm' unknown@smd-ipc (1 1);
-VALUE 'Cm' '20p';
 ADD 'A1' unknown@smd-ipc (1 1);
 VALUE 'A1' 'model';
+ADD 'Cm' unknown@smd-ipc (1 1);
+VALUE 'Cm' '20p';
+ADD 'Cp' unknown@smd-ipc (1 1);
+VALUE 'Cp' '20p';
+ADD 'Rlp' unknown@smd-ipc (1 1);
+VALUE 'Rlp' '1meg';
+ADD 'Rlm' unknown@smd-ipc (1 1);
+VALUE 'Rlm' '500k';
+ADD 'Vdd' none@smd-ipc (1 1);
+VALUE 'Vdd' 'DC 3.3V';
+ADD 'V1' none@smd-ipc (1 1);
+VALUE 'V1' 'pulse 3.3 0 1u 10p 10p 1.25u 2.5u';
 ADD 'Rt' unknown@smd-ipc (1 1);
 VALUE 'Rt' '1k';
+ADD 'Rb' unknown@smd-ipc (1 1);
+VALUE 'Rb' '5.6k';
 ADD 'M1' unknown@smd-ipc (1 1);
 VALUE 'M1' 'PMOS_TRANSISTOR';
 ADD 'X1' unknown@smd-ipc (1 1);
 VALUE 'X1' 'LVD';
-ADD 'Rlp' unknown@smd-ipc (1 1);
-VALUE 'Rlp' '1meg';
-ADD 'Vdd' none@smd-ipc (1 1);
-VALUE 'Vdd' 'DC 3.3V';
-ADD 'Rlm' unknown@smd-ipc (1 1);
-VALUE 'Rlm' '500k';
-ADD 'Cp' unknown@smd-ipc (1 1);
-VALUE 'Cp' '20p';
-ADD 'Rb' unknown@smd-ipc (1 1);
-VALUE 'Rb' '5.6k';
 SIGNAL 'VDD1'
    'Rlp' '2'
    'M1' 'B'

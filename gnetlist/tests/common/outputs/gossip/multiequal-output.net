@@ -7,5 +7,5 @@
 (define-block (not found (
 (signals (GND unnamed_net1))
    (V1)
-   (A1)
    (R1)
+   (A1)

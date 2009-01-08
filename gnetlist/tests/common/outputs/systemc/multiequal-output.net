@@ -9,8 +9,8 @@
 
 #include "systemc.h"
 #include "VOLTAGE_SOURCE.h"
-#include "options.h"
 #include "RESISTOR.h"
+#include "options.h"
 
 SC_MODULE (not found)
 {
@@ -24,13 +24,13 @@ sc_signal<0> unnamed_net1;
 
 /* Package instantiations */
 VOLTAGE_SOURCE V1;
-options A1;
 RESISTOR R1;
+options A1;
 
 SC_CTOR(not found):
     V1("V1"),
-    A1("A1"),
-    R1("R1")
+    R1("R1"),
+    A1("A1")
   {
     V1.1(unnamed_net1);
     V1.2(GND);

@@ -8,13 +8,13 @@ END header
 START components
 
 AMP2 device=cascade-amp
+T1 device=cascade-transformer
+MX1 device=cascade-mixer
+FL1 device=cascade-filter
+DEF1 device=cascade-defaults
 AMP1 device=cascade-amp
 SOURCE device=cascade-source
 DEFAULTS device=cascade-defaults-top
-MX1 device=cascade-mixer
-DEF1 device=cascade-defaults
-T1 device=cascade-transformer
-FL1 device=cascade-filter
 
 END components
 

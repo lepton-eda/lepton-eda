@@ -1,8 +1,8 @@
 LAYOUT board;
 PARTS
     V1 : none;
-    A1 : unknown;
     R1 : unknown;
+    A1 : unknown;
 CONNECT
     /'GND'/ V1.2=R1.1;
     /'unnamed_net1'/ V1.1=R1.2;

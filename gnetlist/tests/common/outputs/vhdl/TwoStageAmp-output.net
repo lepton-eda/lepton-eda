@@ -10,10 +10,10 @@ END not found;
 
 -- Secondary unit
 ARCHITECTURE netlist OF not found IS
-    COMPONENT RESISTOR
+    COMPONENT NPN_TRANSISTOR
     END COMPONENT ;
 
-    COMPONENT VOLTAGE_SOURCE
+    COMPONENT RESISTOR
     END COMPONENT ;
 
     COMPONENT CAPACITOR
@@ -22,10 +22,10 @@ ARCHITECTURE netlist OF not found IS
     COMPONENT vsin
     END COMPONENT ;
 
-    COMPONENT model
+    COMPONENT VOLTAGE_SOURCE
     END COMPONENT ;
 
-    COMPONENT NPN_TRANSISTOR
+    COMPONENT model
     END COMPONENT ;
 
     COMPONENT include
@@ -48,25 +48,40 @@ ARCHITECTURE netlist OF not found IS
     SIGNAL Vcoll1 : Std_Logic;
 BEGIN
 -- Architecture statement part
-    Cout : CAPACITOR
+    C2 : CAPACITOR
     PORT MAP (
-        1 => VColl2,
-        2 => Vout);
-
-    R5 : RESISTOR
-    PORT MAP (
-        2 => unnamed_net1,
-        1 => Vin);
+        1 => unnamed_net2,
+        2 => Vbase2);
 
     R4 : RESISTOR
     PORT MAP (
         2 => Vbase2,
         1 => GND);
 
+    R3 : RESISTOR
+    PORT MAP (
+        2 => Vcc,
+        1 => Vbase2);
+
+    R8 : RESISTOR
+    PORT MAP (
+        2 => unnamed_net2,
+        1 => Vcoll1);
+
+    CE2 : CAPACITOR
+    PORT MAP (
+        1 => GND,
+        2 => Vem2);
+
     RE2 : RESISTOR
     PORT MAP (
         2 => Vem2,
         1 => GND);
+
+    RC1 : RESISTOR
+    PORT MAP (
+        2 => Vcc,
+        1 => Vcoll1);
 
     Q2 : NPN_TRANSISTOR
     PORT MAP (
@@ -74,90 +89,75 @@ BEGIN
         1 => Vem2,
         2 => Vbase2);
 
-    A3 : directive
-;
-
-    R3 : RESISTOR
-    PORT MAP (
-        2 => Vcc,
-        1 => Vbase2);
-
-    A2 : include
-;
-
-    RE1 : RESISTOR
-    PORT MAP (
-        2 => Vem1,
-        1 => GND);
-
-    Q1 : NPN_TRANSISTOR
-    PORT MAP (
-        3 => Vcoll1,
-        1 => Vem1,
-        2 => Vbase1);
-
-    A1 : model
-;
-
-    R2 : RESISTOR
-    PORT MAP (
-        2 => Vbase1,
-        1 => GND);
-
-    Vinput : vsin
-    PORT MAP (
-        1 => Vin,
-        2 => GND);
-
-    R1 : RESISTOR
-    PORT MAP (
-        2 => Vcc,
-        1 => Vbase1);
-
-    C2 : CAPACITOR
-    PORT MAP (
-        1 => unnamed_net2,
-        2 => Vbase2);
-
-    CE2 : CAPACITOR
-    PORT MAP (
-        1 => GND,
-        2 => Vem2);
-
     C1 : CAPACITOR
     PORT MAP (
         1 => unnamed_net1,
         2 => Vbase1);
 
-    CE1 : CAPACITOR
-    PORT MAP (
-        1 => GND,
-        2 => Vem1);
+    A3 : directive
+;
 
-    R8 : RESISTOR
-    PORT MAP (
-        2 => unnamed_net2,
-        1 => Vcoll1);
+    A2 : include
+;
+
+    A1 : model
+;
 
     VCC : VOLTAGE_SOURCE
     PORT MAP (
         1 => Vcc,
         2 => GND);
 
-    RC2 : RESISTOR
+    Vinput : vsin
     PORT MAP (
-        2 => Vcc,
-        1 => VColl2);
+        1 => Vin,
+        2 => GND);
 
-    RC1 : RESISTOR
+    CE1 : CAPACITOR
     PORT MAP (
-        2 => Vcc,
-        1 => Vcoll1);
+        1 => GND,
+        2 => Vem1);
+
+    Cout : CAPACITOR
+    PORT MAP (
+        1 => VColl2,
+        2 => Vout);
 
     RL : RESISTOR
     PORT MAP (
         2 => Vout,
         1 => GND);
+
+    RC2 : RESISTOR
+    PORT MAP (
+        2 => Vcc,
+        1 => VColl2);
+
+    RE1 : RESISTOR
+    PORT MAP (
+        2 => Vem1,
+        1 => GND);
+
+    R2 : RESISTOR
+    PORT MAP (
+        2 => Vbase1,
+        1 => GND);
+
+    R1 : RESISTOR
+    PORT MAP (
+        2 => Vcc,
+        1 => Vbase1);
+
+    R5 : RESISTOR
+    PORT MAP (
+        2 => unnamed_net1,
+        1 => Vin);
+
+    Q1 : NPN_TRANSISTOR
+    PORT MAP (
+        3 => Vcoll1,
+        1 => Vem1,
+        2 => Vbase1);
 
 -- Signal assignment part
 END netlist;

@@ -7,6 +7,6 @@
 *********************************************************
 *==============  Begin SPICE netlist of main design ============
 V1 1 0 DC 1V
-.OPTIONS abotol=1e-11
 R1 0 1 20  
+.OPTIONS abotol=1e-11
 .end

@@ -1,8 +1,8 @@
 [
-V1
-none
-vpulse
-pulse 3.3 0 1u 10p 10p 1.25u 2.5u
+A1
+PATTERN
+model
+
 
 ]
 [
@@ -13,10 +13,38 @@ CAPACITOR
 
 ]
 [
-A1
+Cp
 PATTERN
-model
+CAPACITOR
+20p
 
+]
+[
+Rlp
+PATTERN
+RESISTOR
+1meg
+
+]
+[
+Rlm
+PATTERN
+RESISTOR
+500k
+
+]
+[
+Vdd
+none
+VOLTAGE_SOURCE
+DC 3.3V
+
+]
+[
+V1
+none
+vpulse
+pulse 3.3 0 1u 10p 10p 1.25u 2.5u
 
 ]
 [
@@ -24,6 +52,13 @@ Rt
 PATTERN
 RESISTOR
 1k
+
+]
+[
+Rb
+PATTERN
+RESISTOR
+5.6k
 
 ]
 [
@@ -38,41 +73,6 @@ X1
 PATTERN
 LVD
 
-
-]
-[
-Rlp
-PATTERN
-RESISTOR
-1meg
-
-]
-[
-Vdd
-none
-VOLTAGE_SOURCE
-DC 3.3V
-
-]
-[
-Rlm
-PATTERN
-RESISTOR
-500k
-
-]
-[
-Cp
-PATTERN
-CAPACITOR
-20p
-
-]
-[
-Rb
-PATTERN
-RESISTOR
-5.6k
 
 ]
 (

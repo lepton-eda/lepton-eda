@@ -1,14 +1,14 @@
-Part none { Name V1 }
-Part unknown { Name Cm }
 Part unknown { Name A1 }
+Part unknown { Name Cm }
+Part unknown { Name Cp }
+Part unknown { Name Rlp }
+Part unknown { Name Rlm }
+Part none { Name Vdd }
+Part none { Name V1 }
 Part unknown { Name Rt }
+Part unknown { Name Rb }
 Part unknown { Name M1 }
 Part unknown { Name X1 }
-Part unknown { Name Rlp }
-Part none { Name Vdd }
-Part unknown { Name Rlm }
-Part unknown { Name Cp }
-Part unknown { Name Rb }
 Signal "Vdd1"
   { Rlp-2 M1-B M1-S Vdd-1 X1-6 }
 Signal "GND"

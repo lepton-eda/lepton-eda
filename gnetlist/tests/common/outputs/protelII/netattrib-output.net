@@ -59,64 +59,6 @@ LIBRARYFIELD8
 ]
 [
 DESIGNATOR
-U100
-FOOTPRINT
-DIP14
-PARTTYPE
-7400
-DESCRIPTION
-7400
-Part Field 1
-*
-Part Field 2
-*
-Part Field 3
-*
-Part Field 4
-*
-Part Field 5
-*
-Part Field 6
-*
-Part Field 7
-*
-Part Field 8
-*
-Part Field 9
-*
-Part Field 10
-*
-Part Field 11
-*
-Part Field 12
-*
-Part Field 13
-*
-Part Field 14
-*
-Part Field 15
-*
-Part Field 16
-*
-LIBRARYFIELD1
-
-LIBRARYFIELD2
-
-LIBRARYFIELD3
-
-LIBRARYFIELD4
-
-LIBRARYFIELD5
-
-LIBRARYFIELD6
-
-LIBRARYFIELD7
-
-LIBRARYFIELD8
-
-]
-[
-DESIGNATOR
 U300
 FOOTPRINT
 DIP14
@@ -182,6 +124,64 @@ PARTTYPE
 7404
 DESCRIPTION
 7404
+Part Field 1
+*
+Part Field 2
+*
+Part Field 3
+*
+Part Field 4
+*
+Part Field 5
+*
+Part Field 6
+*
+Part Field 7
+*
+Part Field 8
+*
+Part Field 9
+*
+Part Field 10
+*
+Part Field 11
+*
+Part Field 12
+*
+Part Field 13
+*
+Part Field 14
+*
+Part Field 15
+*
+Part Field 16
+*
+LIBRARYFIELD1
+
+LIBRARYFIELD2
+
+LIBRARYFIELD3
+
+LIBRARYFIELD4
+
+LIBRARYFIELD5
+
+LIBRARYFIELD6
+
+LIBRARYFIELD7
+
+LIBRARYFIELD8
+
+]
+[
+DESIGNATOR
+U100
+FOOTPRINT
+DIP14
+PARTTYPE
+7400
+DESCRIPTION
+7400
 Part Field 1
 *
 Part Field 2

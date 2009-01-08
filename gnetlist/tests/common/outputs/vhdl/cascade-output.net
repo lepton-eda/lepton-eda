@@ -10,18 +10,6 @@ END not found;
 
 -- Secondary unit
 ARCHITECTURE netlist OF not found IS
-    COMPONENT cascade-filter
-    END COMPONENT ;
-
-    COMPONENT cascade-transformer
-    END COMPONENT ;
-
-    COMPONENT cascade-defaults
-    END COMPONENT ;
-
-    COMPONENT cascade-mixer
-    END COMPONENT ;
-
     COMPONENT cascade-defaults-top
     END COMPONENT ;
 
@@ -29,6 +17,18 @@ ARCHITECTURE netlist OF not found IS
     END COMPONENT ;
 
     COMPONENT cascade-amp
+    END COMPONENT ;
+
+    COMPONENT cascade-defaults
+    END COMPONENT ;
+
+    COMPONENT cascade-filter
+    END COMPONENT ;
+
+    COMPONENT cascade-mixer
+    END COMPONENT ;
+
+    COMPONENT cascade-transformer
     END COMPONENT ;
 
     SIGNAL unnamed_net6 : Std_Logic;
@@ -45,6 +45,26 @@ BEGIN
         1 => unnamed_net6,
         2 => OPEN);
 
+    T1 : cascade-transformer
+    PORT MAP (
+        1 => unnamed_net5,
+        2 => unnamed_net6);
+
+    MX1 : cascade-mixer
+    PORT MAP (
+        1 => unnamed_net4,
+        2 => unnamed_net5);
+
+    FL1 : cascade-filter
+    PORT MAP (
+        1 => unnamed_net3,
+        2 => unnamed_net4);
+
+    DEF1 : cascade-defaults
+    PORT MAP (
+        1 => unnamed_net2,
+        2 => unnamed_net3);
+
     AMP1 : cascade-amp
     PORT MAP (
         1 => unnamed_net1,
@@ -57,26 +77,6 @@ BEGIN
     DEFAULTS : cascade-defaults-top
     PORT MAP (
         1 => GND);
-
-    MX1 : cascade-mixer
-    PORT MAP (
-        1 => unnamed_net4,
-        2 => unnamed_net5);
-
-    DEF1 : cascade-defaults
-    PORT MAP (
-        1 => unnamed_net2,
-        2 => unnamed_net3);
-
-    T1 : cascade-transformer
-    PORT MAP (
-        1 => unnamed_net5,
-        2 => unnamed_net6);
-
-    FL1 : cascade-filter
-    PORT MAP (
-        1 => unnamed_net3,
-        2 => unnamed_net4);
 
 -- Signal assignment part
 END netlist;

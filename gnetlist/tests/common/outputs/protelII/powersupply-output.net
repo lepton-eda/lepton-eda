@@ -1,129 +1,13 @@
 PROTEL NETLIST 2.0
 [
 DESIGNATOR
-F1
+U2
 FOOTPRINT
 unknown
 PARTTYPE
-FUSE
+LM317
 DESCRIPTION
-FUSE
-Part Field 1
-*
-Part Field 2
-*
-Part Field 3
-*
-Part Field 4
-*
-Part Field 5
-*
-Part Field 6
-*
-Part Field 7
-*
-Part Field 8
-*
-Part Field 9
-*
-Part Field 10
-*
-Part Field 11
-*
-Part Field 12
-*
-Part Field 13
-*
-Part Field 14
-*
-Part Field 15
-*
-Part Field 16
-*
-LIBRARYFIELD1
-
-LIBRARYFIELD2
-
-LIBRARYFIELD3
-
-LIBRARYFIELD4
-
-LIBRARYFIELD5
-
-LIBRARYFIELD6
-
-LIBRARYFIELD7
-
-LIBRARYFIELD8
-
-]
-[
-DESIGNATOR
-R2
-FOOTPRINT
-unknown
-PARTTYPE
-220
-DESCRIPTION
-RESISTOR
-Part Field 1
-*
-Part Field 2
-*
-Part Field 3
-*
-Part Field 4
-*
-Part Field 5
-*
-Part Field 6
-*
-Part Field 7
-*
-Part Field 8
-*
-Part Field 9
-*
-Part Field 10
-*
-Part Field 11
-*
-Part Field 12
-*
-Part Field 13
-*
-Part Field 14
-*
-Part Field 15
-*
-Part Field 16
-*
-LIBRARYFIELD1
-
-LIBRARYFIELD2
-
-LIBRARYFIELD3
-
-LIBRARYFIELD4
-
-LIBRARYFIELD5
-
-LIBRARYFIELD6
-
-LIBRARYFIELD7
-
-LIBRARYFIELD8
-
-]
-[
-DESIGNATOR
-CONN1
-FOOTPRINT
-unknown
-PARTTYPE
-MAINS_CONNECTOR
-DESCRIPTION
-MAINS_CONNECTOR
+LM317
 Part Field 1
 *
 Part Field 2
@@ -180,6 +64,64 @@ FOOTPRINT
 unknown
 PARTTYPE
 1uf
+DESCRIPTION
+POLARIZED_CAPACITOR
+Part Field 1
+*
+Part Field 2
+*
+Part Field 3
+*
+Part Field 4
+*
+Part Field 5
+*
+Part Field 6
+*
+Part Field 7
+*
+Part Field 8
+*
+Part Field 9
+*
+Part Field 10
+*
+Part Field 11
+*
+Part Field 12
+*
+Part Field 13
+*
+Part Field 14
+*
+Part Field 15
+*
+Part Field 16
+*
+LIBRARYFIELD1
+
+LIBRARYFIELD2
+
+LIBRARYFIELD3
+
+LIBRARYFIELD4
+
+LIBRARYFIELD5
+
+LIBRARYFIELD6
+
+LIBRARYFIELD7
+
+LIBRARYFIELD8
+
+]
+[
+DESIGNATOR
+C3
+FOOTPRINT
+unknown
+PARTTYPE
+22uF
 DESCRIPTION
 POLARIZED_CAPACITOR
 Part Field 1
@@ -291,11 +233,11 @@ LIBRARYFIELD8
 ]
 [
 DESIGNATOR
-C3
+C2
 FOOTPRINT
 unknown
 PARTTYPE
-22uF
+0.1uF
 DESCRIPTION
 POLARIZED_CAPACITOR
 Part Field 1
@@ -349,11 +291,69 @@ LIBRARYFIELD8
 ]
 [
 DESIGNATOR
-C2
+R2
 FOOTPRINT
 unknown
 PARTTYPE
-0.1uF
+220
+DESCRIPTION
+RESISTOR
+Part Field 1
+*
+Part Field 2
+*
+Part Field 3
+*
+Part Field 4
+*
+Part Field 5
+*
+Part Field 6
+*
+Part Field 7
+*
+Part Field 8
+*
+Part Field 9
+*
+Part Field 10
+*
+Part Field 11
+*
+Part Field 12
+*
+Part Field 13
+*
+Part Field 14
+*
+Part Field 15
+*
+Part Field 16
+*
+LIBRARYFIELD1
+
+LIBRARYFIELD2
+
+LIBRARYFIELD3
+
+LIBRARYFIELD4
+
+LIBRARYFIELD5
+
+LIBRARYFIELD6
+
+LIBRARYFIELD7
+
+LIBRARYFIELD8
+
+]
+[
+DESIGNATOR
+C1
+FOOTPRINT
+unknown
+PARTTYPE
+2200uF
 DESCRIPTION
 POLARIZED_CAPACITOR
 Part Field 1
@@ -465,13 +465,13 @@ LIBRARYFIELD8
 ]
 [
 DESIGNATOR
-C1
+CONN1
 FOOTPRINT
 unknown
 PARTTYPE
-2200uF
+MAINS_CONNECTOR
 DESCRIPTION
-POLARIZED_CAPACITOR
+MAINS_CONNECTOR
 Part Field 1
 *
 Part Field 2
@@ -581,13 +581,13 @@ LIBRARYFIELD8
 ]
 [
 DESIGNATOR
-U2
+F1
 FOOTPRINT
 unknown
 PARTTYPE
-LM317
+FUSE
 DESCRIPTION
-LM317
+FUSE
 Part Field 1
 *
 Part Field 2

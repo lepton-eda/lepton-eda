@@ -9,13 +9,13 @@
 
 #include "systemc.h"
 #include "cascade-amp.h"
+#include "cascade-transformer.h"
+#include "cascade-mixer.h"
+#include "cascade-filter.h"
+#include "cascade-defaults.h"
 #include "cascade-amp.h"
 #include "cascade-source.h"
 #include "cascade-defaults-top.h"
-#include "cascade-mixer.h"
-#include "cascade-defaults.h"
-#include "cascade-transformer.h"
-#include "cascade-filter.h"
 
 SC_MODULE (not found)
 {
@@ -34,25 +34,37 @@ sc_signal<0> GND;
 
 /* Package instantiations */
 cascade-amp AMP2;
+cascade-transformer T1;
+cascade-mixer MX1;
+cascade-filter FL1;
+cascade-defaults DEF1;
 cascade-amp AMP1;
 cascade-source SOURCE;
 cascade-defaults-top DEFAULTS;
-cascade-mixer MX1;
-cascade-defaults DEF1;
-cascade-transformer T1;
-cascade-filter FL1;
 
 SC_CTOR(not found):
     AMP2("AMP2"),
+    T1("T1"),
+    MX1("MX1"),
+    FL1("FL1"),
+    DEF1("DEF1"),
     AMP1("AMP1"),
     SOURCE("SOURCE"),
-    DEFAULTS("DEFAULTS"),
-    MX1("MX1"),
-    DEF1("DEF1"),
-    T1("T1"),
-    FL1("FL1")
+    DEFAULTS("DEFAULTS")
   {
     AMP2.1(unnamed_net6);
+
+    T1.1(unnamed_net5);
+    T1.2(unnamed_net6);
+
+    MX1.1(unnamed_net4);
+    MX1.2(unnamed_net5);
+
+    FL1.1(unnamed_net3);
+    FL1.2(unnamed_net4);
+
+    DEF1.1(unnamed_net2);
+    DEF1.2(unnamed_net3);
 
     AMP1.1(unnamed_net1);
     AMP1.2(unnamed_net2);
@@ -60,18 +72,6 @@ SC_CTOR(not found):
     SOURCE.1(unnamed_net1);
 
     DEFAULTS.1(GND);
-
-    MX1.1(unnamed_net4);
-    MX1.2(unnamed_net5);
-
-    DEF1.1(unnamed_net2);
-    DEF1.2(unnamed_net3);
-
-    T1.1(unnamed_net5);
-    T1.2(unnamed_net6);
-
-    FL1.1(unnamed_net3);
-    FL1.2(unnamed_net4);
   }
 };
 

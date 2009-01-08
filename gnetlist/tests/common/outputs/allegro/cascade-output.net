@@ -1,13 +1,13 @@
 (Allegro netlister by M. Ettus)
 $PACKAGES
 none! cascade-amp! cascade-amp; AMP2
+none! cascade-transformer! cascade-transformer; T1
+none! cascade-mixer! cascade-mixer; MX1
+none! cascade-filter! cascade-filter; FL1
+none! cascade-defaults! cascade-defaults; DEF1
 none! cascade-amp! cascade-amp; AMP1
 none! cascade-source! cascade-source; SOURCE
 ! cascade-defaults-top! cascade-defaults-top; DEFAULTS
-none! cascade-mixer! cascade-mixer; MX1
-none! cascade-defaults! cascade-defaults; DEF1
-none! cascade-transformer! cascade-transformer; T1
-none! cascade-filter! cascade-filter; FL1
 $NETS
 unnamed_net6; AMP2.1,
  T1.2

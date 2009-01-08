@@ -7,11 +7,11 @@
 *********************************************************
 *==============  Begin SPICE netlist of main design ============
 AMP2 6 unconnected_pin-1 <No valid value attribute found>
+T1 5 6 <No valid value attribute found>
+MX1 4 5 unknown 
+FL1 3 4 <No valid value attribute found>
+DEF1 2 3 unknown 
 AMP1 1 2 <No valid value attribute found>
 SOURCE 1 <No valid value attribute found>
 DEFAULTS unknown 
-MX1 4 5 unknown 
-DEF1 2 3 unknown 
-T1 5 6 <No valid value attribute found>
-FL1 3 4 <No valid value attribute found>
 .end

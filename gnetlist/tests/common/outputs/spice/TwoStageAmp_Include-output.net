@@ -1,25 +1,25 @@
 * Spice netlister for gnetlist
-Cout VColl2 Vout 2.2uF
-R5 Vin 1 10
-R4 0 Vbase2 2.8K
-RE2 0 Vem2 100
-Q2 VColl2 Vbase2 Vem2 <No valid value attribute found>
-A3 .options TEMP=25
-R3 Vbase2 Vcc 28K
-A2 <No valid value attribute found>
-RE1 0 Vem1 100
-Q1 Vcoll1 Vbase1 Vem1 <No valid value attribute found>
-A1 <No valid value attribute found>
-R2 0 Vbase1 2K
-Vinput Vin 0 DC 1.6V AC 10MV SIN(0 1MV 1KHZ)
-R1 Vbase1 Vcc 28K
 C2 2 Vbase2 2.2uF
-CE2 0 Vem2 1pF
-C1 1 Vbase1 2.2uF
-CE1 0 Vem1 1pF
+R4 0 Vbase2 2.8K
+R3 Vbase2 Vcc 28K
 R8 Vcoll1 2 1
-VCC Vcc 0 DC 15V
-RC2 VColl2 Vcc 1K
+CE2 0 Vem2 1pF
+RE2 0 Vem2 100
 RC1 Vcoll1 Vcc 3.3K
+Q2 VColl2 Vbase2 Vem2 <No valid value attribute found>
+C1 1 Vbase1 2.2uF
+A3 .options TEMP=25
+A2 <No valid value attribute found>
+A1 <No valid value attribute found>
+VCC Vcc 0 DC 15V
+Vinput Vin 0 DC 1.6V AC 10MV SIN(0 1MV 1KHZ)
+CE1 0 Vem1 1pF
+Cout VColl2 Vout 2.2uF
 RL 0 Vout 100K
+RC2 VColl2 Vcc 1K
+RE1 0 Vem1 100
+R2 0 Vbase1 2K
+R1 Vbase1 Vcc 28K
+R5 Vin 1 10
+Q1 Vcoll1 Vbase1 Vem1 <No valid value attribute found>
 .END

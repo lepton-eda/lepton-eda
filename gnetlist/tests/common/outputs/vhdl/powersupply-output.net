@@ -13,28 +13,28 @@ ARCHITECTURE netlist OF not found IS
     COMPONENT DIODE-BRIDGE
     END COMPONENT ;
 
-    COMPONENT LM317
+    COMPONENT FUSE
     END COMPONENT ;
 
     COMPONENT transformer
     END COMPONENT ;
 
-    COMPONENT POLARIZED_CAPACITOR
+    COMPONENT MAINS_CONNECTOR
     END COMPONENT ;
 
     COMPONENT SPST
     END COMPONENT ;
 
-    COMPONENT VARIABLE_RESISTOR
-    END COMPONENT ;
-
-    COMPONENT MAINS_CONNECTOR
+    COMPONENT POLARIZED_CAPACITOR
     END COMPONENT ;
 
     COMPONENT RESISTOR
     END COMPONENT ;
 
-    COMPONENT FUSE
+    COMPONENT VARIABLE_RESISTOR
+    END COMPONENT ;
+
+    COMPONENT LM317
     END COMPONENT ;
 
     SIGNAL ten : Std_Logic;
@@ -50,25 +50,20 @@ ARCHITECTURE netlist OF not found IS
     SIGNAL eight : Std_Logic;
 BEGIN
 -- Architecture statement part
-    F1 : FUSE
-    PORT MAP (
-        1 => two,
-        2 => three);
-
-    R2 : RESISTOR
+    U2 : LM317
     PORT MAP (
         2 => eleven,
+        3 => eight,
         1 => ten);
-
-    CONN1 : MAINS_CONNECTOR
-    PORT MAP (
-        1 => one,
-        2 => five,
-        3 => GND);
 
     C4 : POLARIZED_CAPACITOR
     PORT MAP (
         1 => eleven,
+        2 => nine);
+
+    C3 : POLARIZED_CAPACITOR
+    PORT MAP (
+        1 => ten,
         2 => nine);
 
     R1 : VARIABLE_RESISTOR
@@ -77,12 +72,17 @@ BEGIN
         2 => ten,
         1 => nine);
 
-    C3 : POLARIZED_CAPACITOR
+    C2 : POLARIZED_CAPACITOR
     PORT MAP (
-        1 => ten,
+        1 => eight,
         2 => nine);
 
-    C2 : POLARIZED_CAPACITOR
+    R2 : RESISTOR
+    PORT MAP (
+        2 => eleven,
+        1 => ten);
+
+    C1 : POLARIZED_CAPACITOR
     PORT MAP (
         1 => eight,
         2 => nine);
@@ -92,10 +92,11 @@ BEGIN
         2 => two,
         1 => one);
 
-    C1 : POLARIZED_CAPACITOR
+    CONN1 : MAINS_CONNECTOR
     PORT MAP (
-        1 => eight,
-        2 => nine);
+        1 => one,
+        2 => five,
+        3 => GND);
 
     T1 : transformer
     PORT MAP (
@@ -104,11 +105,10 @@ BEGIN
         4 => seven,
         3 => six);
 
-    U2 : LM317
+    F1 : FUSE
     PORT MAP (
-        2 => eleven,
-        3 => eight,
-        1 => ten);
+        1 => two,
+        2 => three);
 
     U1 : DIODE-BRIDGE
     PORT MAP (

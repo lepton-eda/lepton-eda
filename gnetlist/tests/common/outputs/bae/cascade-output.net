@@ -1,13 +1,13 @@
 LAYOUT board;
 PARTS
     AMP2 : none;
+    T1 : none;
+    MX1 : none;
+    FL1 : none;
+    DEF1 : none;
     AMP1 : none;
     SOURCE : none;
     DEFAULTS : unknown;
-    MX1 : none;
-    DEF1 : none;
-    T1 : none;
-    FL1 : none;
 CONNECT
     /'unnamed_net6'/ AMP2.1=T1.2;
     /'unnamed_net5'/ T1.1=MX1.2;

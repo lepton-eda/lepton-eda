@@ -8,17 +8,17 @@
 /* Author.....Jaume Masip                   */
 
 #include "systemc.h"
-#include "vpulse.h"
-#include "CAPACITOR.h"
 #include "model.h"
+#include "CAPACITOR.h"
+#include "CAPACITOR.h"
+#include "RESISTOR.h"
+#include "RESISTOR.h"
+#include "VOLTAGE_SOURCE.h"
+#include "vpulse.h"
+#include "RESISTOR.h"
 #include "RESISTOR.h"
 #include "PMOS_TRANSISTOR.h"
 #include "LVD.h"
-#include "RESISTOR.h"
-#include "VOLTAGE_SOURCE.h"
-#include "RESISTOR.h"
-#include "CAPACITOR.h"
-#include "RESISTOR.h"
 
 SC_MODULE (not found)
 {
@@ -35,39 +35,54 @@ sc_signal<0> m;
 
 
 /* Package instantiations */
-vpulse V1;
-CAPACITOR Cm;
 model A1;
+CAPACITOR Cm;
+CAPACITOR Cp;
+RESISTOR Rlp;
+RESISTOR Rlm;
+VOLTAGE_SOURCE Vdd;
+vpulse V1;
 RESISTOR Rt;
+RESISTOR Rb;
 PMOS_TRANSISTOR M1;
 LVD X1;
-RESISTOR Rlp;
-VOLTAGE_SOURCE Vdd;
-RESISTOR Rlm;
-CAPACITOR Cp;
-RESISTOR Rb;
 
 SC_CTOR(not found):
-    V1("V1"),
-    Cm("Cm"),
     A1("A1"),
-    Rt("Rt"),
-    M1("M1"),
-    X1("X1"),
-    Rlp("Rlp"),
-    Vdd("Vdd"),
-    Rlm("Rlm"),
+    Cm("Cm"),
     Cp("Cp"),
-    Rb("Rb")
+    Rlp("Rlp"),
+    Rlm("Rlm"),
+    Vdd("Vdd"),
+    V1("V1"),
+    Rt("Rt"),
+    Rb("Rb"),
+    M1("M1"),
+    X1("X1")
   {
-    V1.1(i);
-    V1.2(GND);
-
     Cm.1(m);
     Cm.2(GND);
 
+    Cp.1(p);
+    Cp.2(GND);
+
+    Rlp.2(Vdd1);
+    Rlp.1(p);
+
+    Rlm.2(GND);
+    Rlm.1(m);
+
+    Vdd.1(Vdd1);
+    Vdd.2(GND);
+
+    V1.1(i);
+    V1.2(GND);
+
     Rt.2(m);
     Rt.1(p);
+
+    Rb.2(LVH);
+    Rb.1(GND);
 
     M1.S(Vdd1);
     M1.B(Vdd1);
@@ -81,21 +96,6 @@ SC_CTOR(not found):
     X1.2(GND);
     X1.6(Vdd1);
     X1.7(GND);
-
-    Rlp.2(Vdd1);
-    Rlp.1(p);
-
-    Vdd.1(Vdd1);
-    Vdd.2(GND);
-
-    Rlm.2(GND);
-    Rlm.1(m);
-
-    Cp.1(p);
-    Cp.2(GND);
-
-    Rb.2(LVH);
-    Rb.1(GND);
   }
 };
 

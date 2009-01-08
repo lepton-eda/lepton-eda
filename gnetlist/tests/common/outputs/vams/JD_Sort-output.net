@@ -11,11 +11,12 @@ ARCHITECTURE default_architecture OF default_entity IS
 BEGIN
 -- Architecture statement part
  
-  V1 : ENTITY vpulse
+  A1 : ENTITY model
 	GENERIC MAP (
-			value => pulse 3.3 0 1u 10p 10p 1.25u 2.5u)
-	PORT MAP (	1 => i,
-			2 => GND);
+			file => ./models/openIP_5.cir, 
+			model-name => unknown_LVD, 
+			device => model)
+;
  
   Cm : ENTITY CAPACITOR
 	GENERIC MAP (
@@ -25,18 +26,49 @@ BEGIN
 	PORT MAP (	1 => m,
 			2 => GND);
  
-  A1 : ENTITY model
+  Cp : ENTITY CAPACITOR
 	GENERIC MAP (
-			file => ./models/openIP_5.cir, 
-			model-name => unknown_LVD, 
-			device => model)
-;
+			value => 20p, 
+			symversion => 0.1)
+	PORT MAP (	1 => p,
+			2 => GND);
+ 
+  Rlp : ENTITY RESISTOR
+	GENERIC MAP (
+			value => 1meg)
+	PORT MAP (	2 => Vdd1,
+			1 => p);
+ 
+  Rlm : ENTITY RESISTOR
+	GENERIC MAP (
+			value => 500k)
+	PORT MAP (	2 => GND,
+			1 => m);
+ 
+  Vdd : ENTITY VOLTAGE_SOURCE
+	GENERIC MAP (
+			value => DC 3.3V)
+	PORT MAP (	1 => Vdd1,
+			2 => GND);
+ 
+  V1 : ENTITY vpulse
+	GENERIC MAP (
+			value => pulse 3.3 0 1u 10p 10p 1.25u 2.5u)
+	PORT MAP (	1 => i,
+			2 => GND);
  
   Rt : ENTITY RESISTOR
 	GENERIC MAP (
 			value => 1k)
 	PORT MAP (	2 => m,
 			1 => p);
+ 
+  Rb : ENTITY RESISTOR
+	GENERIC MAP (
+			device => RESISTOR, 
+			value => 5.6k)
+	PORT MAP (	2 => LVH,
+			1 => GND);
  
   M1 : ENTITY PMOS_TRANSISTOR
 	GENERIC MAP (
@@ -59,36 +91,4 @@ BEGIN
 			2 => GND,
 			6 => Vdd1,
 			7 => GND);
- 
-  Rlp : ENTITY RESISTOR
-	GENERIC MAP (
-			value => 1meg)
-	PORT MAP (	2 => Vdd1,
-			1 => p);
- 
-  Vdd : ENTITY VOLTAGE_SOURCE
-	GENERIC MAP (
-			value => DC 3.3V)
-	PORT MAP (	1 => Vdd1,
-			2 => GND);
- 
-  Rlm : ENTITY RESISTOR
-	GENERIC MAP (
-			value => 500k)
-	PORT MAP (	2 => GND,
-			1 => m);
- 
-  Cp : ENTITY CAPACITOR
-	GENERIC MAP (
-			value => 20p, 
-			symversion => 0.1)
-	PORT MAP (	1 => p,
-			2 => GND);
- 
-  Rb : ENTITY RESISTOR
-	GENERIC MAP (
-			device => RESISTOR, 
-			value => 5.6k)
-	PORT MAP (	2 => LVH,
-			1 => GND);
 END ARCHITECTURE default_architecture;
