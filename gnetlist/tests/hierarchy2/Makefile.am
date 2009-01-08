@@ -9,7 +9,9 @@ check_SCRIPTS = tests
 BUILDDIR=$(top_builddir)/tests/hierarchy2
 SRCDIR=$(srcdir)
 
-tests:
+tests: tests-job tests-clean
+
+tests-job:
 	rm -f $(BUILDDIR)/new_*
 	( export TESTDIR=$(SRCDIR); \
 	  echo $$TESTDIR; \
@@ -17,7 +19,9 @@ tests:
 	  gnetlist \
 	     -o $(BUILDDIR)/new_hierarchy2.geda -g geda \
 	     $(SRCDIR)/top.sch )
-	diff $(SRCDIR)/hierarchy2.geda $(BUILDDIR)/new_hierarchy2.geda; \
+	diff $(SRCDIR)/hierarchy2.geda $(BUILDDIR)/new_hierarchy2.geda;
+
+tests-clean:
 	rm -f $(BUILDDIR)/gafrc
 
 MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~

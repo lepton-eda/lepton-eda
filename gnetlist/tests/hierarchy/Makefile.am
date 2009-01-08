@@ -13,7 +13,9 @@ BUILDDIR=$(top_builddir)/tests/hierarchy
 SRCDIR=$(srcdir)
 GNETLIST=$(top_builddir)/src/gnetlist
 
-tests:
+tests: tests-job tests-clean
+
+tests-job:
 	rm -f $(BUILDDIR)/new_*
 	( export TESTDIR=$(SRCDIR); \
 	  echo $$TESTDIR; \
@@ -21,7 +23,9 @@ tests:
 	  $(GNETLIST) \
 	     -o $(BUILDDIR)/new_hierarchy.geda -g geda \
 	     $(SRCDIR)/top.sch )
-	diff $(SRCDIR)/hierarchy.geda $(BUILDDIR)/new_hierarchy.geda; \
+	diff $(SRCDIR)/hierarchy.geda $(BUILDDIR)/new_hierarchy.geda;
+
+tests-clean:
 	rm -f $(BUILDDIR)/gnetlistrc
 
 MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~
