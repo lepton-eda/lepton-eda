@@ -75,7 +75,7 @@
 
 /* various visual cue sizes (in mils) */
 #define CUE_BOX_SIZE 		30
-#define JUNCTION_CUE_SIZE_NET	60
+#define JUNCTION_CUE_SIZE_NET	50
 #define JUNCTION_CUE_SIZE_BUS	30
 #define PIN_CUE_SIZE_NET	30
 #define PIN_CUE_SIZE_BUS	50
