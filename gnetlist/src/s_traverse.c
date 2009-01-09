@@ -278,7 +278,9 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
        iter = g_list_next (iter)) {
     OBJECT *o_current = iter->data;
 
-    if (o_current->type != OBJ_PIN)
+    /* Ignore objects which aren't net pins */
+    if (o_current->type != OBJ_PIN ||
+        o_current->pin_type != PIN_TYPE_NET)
       continue;
 
     /* add cpin node */
