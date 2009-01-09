@@ -203,6 +203,18 @@ SCM g_rc_unnamed_netname(SCM name)
   return SCM_BOOL_T;
 }
 
+SCM g_rc_unnamed_busname(SCM name)
+{
+  SCM_ASSERT (scm_is_string (name), name,
+              SCM_ARG1, "unamed-busname");
+
+  g_free(default_unnamed_busname);
+
+  default_unnamed_busname = g_strdup (SCM_STRING_CHARS (name));
+
+  return SCM_BOOL_T;
+}
+
 
 /*************************** GUILE end done *********************************/
 

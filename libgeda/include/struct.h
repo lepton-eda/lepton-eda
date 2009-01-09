@@ -575,6 +575,7 @@ struct st_toplevel {
   int hierarchy_netname_order;
   int hierarchy_uref_order;
   char *unnamed_netname;
+  char *unnamed_busname;
 
   /* Callback function for calculating text bounds */
   RenderedBoundsFunc rendered_text_bounds_func;
@@ -605,6 +606,7 @@ struct st_netlist {
 /* for every pin on a component */
 struct st_cpinlist {
   int plid;
+  int type;                             /* PIN_TYPE_NET or PIN_TYPE_BUS */
 
   char *pin_number;
   char *net_name;			/* this is resolved at very end */

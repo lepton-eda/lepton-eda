@@ -30,3 +30,4 @@ extern char *default_hierarchy_netname_separator;
 extern char *default_hierarchy_netattrib_separator;
 extern char *default_hierarchy_uref_separator;
 extern char *default_unnamed_netname;
+extern char *default_unnamed_busname;

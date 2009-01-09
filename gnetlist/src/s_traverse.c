@@ -286,6 +286,7 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
     /* add cpin node */
     cpins = s_cpinlist_add(cpins);
     cpins->plid = o_current->sid;
+    cpins->type = o_current->pin_type;
 
     /* search the object only */
     cpins->pin_number =
@@ -302,7 +303,7 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
     /* This avoids us adding an unnamed net for an unconnected pin */
     if (o_current->conn_list != NULL) {
       nets = s_traverse_net (pr_current, nets, TRUE,
-                             o_current, hierarchy_tag);
+                             o_current, hierarchy_tag, cpins->type);
       s_traverse_clear_all_visited (s_page_objects (pr_current->page_current));
     }
 
@@ -315,29 +316,48 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
 }
 
 
+static int connection_type (OBJECT *object)
+{
+  switch (object->type) {
+    case OBJ_PIN:  return object->pin_type;
+    case OBJ_NET:  return PIN_TYPE_NET;
+    case OBJ_BUS:  return PIN_TYPE_BUS;
+    default:
+      g_critical ("Non-connectable object being queried for connection type\n");
+      return PIN_TYPE_NET;
+  }
+}
+
+
 NET *s_traverse_net (TOPLEVEL *pr_current, NET *nets, int starting,
-                     OBJECT *object, char *hierarchy_tag)
+                     OBJECT *object, char *hierarchy_tag, int type)
 {
   NET *new_net;
   CONN *c_current;
   GList *cl_current;
-  char *temp;
+  char *temp = NULL;
 
   visit (object);
+
+  if (connection_type (object) != type)
+    return nets;
+
   new_net = nets = s_net_add(nets);
   new_net->nid = object->sid;
 
   /* pins are not allowed to have the netname attribute attached to them */
   if (object->type != OBJ_PIN) {
-    temp = o_attrib_search_name_single (object, "netname", NULL);
+    /* Ignore netname attributes on buses */
+    if (object->type == OBJ_NET)
+      temp = o_attrib_search_name_single (object, "netname", NULL);
 
     if (temp) {
       new_net->net_name =
         s_hierarchy_create_netname(pr_current, temp,
                                    hierarchy_tag);
       g_free(temp);
-    } else {
-      /* search for the old label= attribute */
+    } else if (object->type == OBJ_NET) {
+      /* search for the old label= attribute on nets */
       temp = o_attrib_search_name_single (object, "label", NULL);
       if (temp) {
         printf("WARNING: Found label=%s. label= is deprecated, please use netname=\n", temp);
@@ -366,7 +386,8 @@ NET *s_traverse_net (TOPLEVEL *pr_current, NET *nets, int starting,
     }
 
     /* net= new */
-    if (strstr(nets->connected_to, "POWER")) {
+    if (strstr(nets->connected_to, "POWER") &&
+        type == PIN_TYPE_NET) {
 
 #if DEBUG
       printf("going to find netname %s \n", nets->connected_to);
@@ -411,10 +432,9 @@ NET *s_traverse_net (TOPLEVEL *pr_current, NET *nets, int starting,
 #endif
 
       if (!is_visited(c_current->other_object) &&
-          c_current->other_object != object &&
-          (starting || c_current->other_object->type != OBJ_BUS)) {
+          c_current->other_object != object) {
         nets = s_traverse_net (pr_current, nets, FALSE,
-                               c_current->other_object, hierarchy_tag);
+                               c_current->other_object, hierarchy_tag, type);
       }
 
     }

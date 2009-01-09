@@ -177,7 +177,8 @@ void s_netlist_post_process(TOPLEVEL * pr_current, NETLIST * head)
 			    s_net_name(pr_current,
 				       head,
 				       pl_current->nets,
-				       nl_current->hierarchy_tag);
+				       nl_current->hierarchy_tag,
+				       pl_current->type);
 
 			/* put this name also in the first 
 			   node of the nets linked list */

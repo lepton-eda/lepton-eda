@@ -42,6 +42,7 @@
 #endif
 
 static int unnamed_net_counter = 1;
+static int unnamed_bus_counter = 1;
 static int unnamed_pin_counter = 1;
 
 #define MAX_UNNAMED_NETS 99999999
@@ -344,10 +345,10 @@ char *s_net_name_search(TOPLEVEL * pr_current, NET * net_head)
     }
 }
 
-char *s_net_name(TOPLEVEL * pr_current, NETLIST * netlist_head,
-		 NET * net_head, char *hierarchy_tag)
+char *s_net_name (TOPLEVEL * pr_current, NETLIST * netlist_head,
+                  NET * net_head, char *hierarchy_tag, int type)
 {
-    char *string;
+    char *string = NULL;
     NET *n_start;
     NETLIST *nl_current;
     CPINLIST *pl_current;
@@ -355,7 +356,8 @@ char *s_net_name(TOPLEVEL * pr_current, NETLIST * netlist_head,
     int found = 0;
     int hierarchy_tag_len;
     char *temp;
-    char *misc;
+    int *unnamed_counter;
+    char *unnamed_string;
 
     net_name = s_net_name_search(pr_current, net_head);
 
@@ -424,37 +426,40 @@ char *s_net_name(TOPLEVEL * pr_current, NETLIST * netlist_head,
 	hierarchy_tag_len = 0;
     }
 
-    /* have we exceeded the number of unnamed nets? */
-    if (unnamed_net_counter < MAX_UNNAMED_NETS) {
-
-	if (netlist_mode == SPICE) {
-	    string =
-        g_strdup_printf("%d", unnamed_net_counter++);
-
-	    return (string);
-	} else {
-	    if (hierarchy_tag) {
-		temp = g_strdup_printf("%s%d", pr_current->unnamed_netname, 
-		        unnamed_net_counter++);
-
-		misc =
-		    s_hierarchy_create_netname(pr_current, temp,
-					       hierarchy_tag);
-		string = g_strdup(misc);
-		g_free(misc);
-	    } else {
-		string = g_strdup_printf("%s%d", pr_current->unnamed_netname, 
-			unnamed_net_counter++);
-	    }
-
-	    return (string);
-	}
-
-    } else {
-	fprintf(stderr, "Increase number of unnamed nets (s_net.c)\n");
-	exit(-1);
+    switch (type) {
+      case PIN_TYPE_NET:
+        unnamed_counter = &unnamed_net_counter;
+        unnamed_string = pr_current->unnamed_netname;
+        break;
+      case PIN_TYPE_BUS:
+        unnamed_counter = &unnamed_bus_counter;
+        unnamed_string = pr_current->unnamed_busname;
+        break;
+      default:
+        g_critical ("Incorrect connectivity type %i in s_name_nets()\n", type);
+        return NULL;
     }
 
-    return (NULL);
+    /* have we exceeded the number of unnamed nets? */
+    if (*unnamed_counter < MAX_UNNAMED_NETS) {
+
+        if (netlist_mode == SPICE) {
+          string = g_strdup_printf("%d", (*unnamed_counter)++);
+        } else {
+          temp = g_strdup_printf ("%s%d", unnamed_string, (*unnamed_counter)++);
+          if (hierarchy_tag) {
+            string = s_hierarchy_create_netname (pr_current, temp, hierarchy_tag);
+            g_free (temp);
+          } else {
+            string = temp;
+          }
+        }
+
+    } else {
+      fprintf(stderr, "Increase number of unnamed nets (s_net.c)\n");
+      exit(-1);
+    }
+
+    return string;
 
 }

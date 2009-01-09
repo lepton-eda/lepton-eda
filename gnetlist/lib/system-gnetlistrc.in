@@ -147,6 +147,14 @@
 ;
 (unnamed-netname "unnamed_net")
 
+; unnamed-busname string
+;
+; Specifies the default string which is placed in front of all buses that
+; have not been explicitly named by the user.
+; (This is not currently useful, since gnetlist does not netlist buses).
+;
+(unnamed-busname "unnamed_bus")
+
 ;
 ; End of mode related keywords
 ;

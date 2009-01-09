@@ -69,6 +69,7 @@ static struct gsubr_t gnetlist_funcs[] = {
   { "hierarchy-netname-order",      1, 0, 0, g_rc_hierarchy_netname_order },
   { "hierarchy-uref-order",         1, 0, 0, g_rc_hierarchy_uref_order },
   { "unnamed-netname",              1, 0, 0, g_rc_unnamed_netname },
+  { "unnamed-busname",              1, 0, 0, g_rc_unnamed_busname },
 
   /* netlist functions */
   { "gnetlist:get-packages",        1, 0, 0, g_get_packages },

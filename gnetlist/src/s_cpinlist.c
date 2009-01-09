@@ -83,6 +83,7 @@ CPINLIST *s_cpinlist_add(CPINLIST * ptr)
 
     /* setup node information */
     new_node->plid = 0;
+    new_node->type = PIN_TYPE_NET;
     new_node->pin_number = NULL;
     new_node->pin_label = NULL;
     new_node->net_name = NULL;
