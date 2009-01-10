@@ -222,32 +222,6 @@ GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
 ############################################################################
 
 ############################################################################
-# Check for gdk 2.4 or later
-# 
-
-PKG_CHECK_MODULES(GDK, gdk-2.0 >= 2.4.0, GDK="yes", no_GDK="yes")
-
-# This next bit of code figures out what gtk we need to use.
-if test "$GDK" = "yes" 
-then
-
-   AC_DEFINE(HAS_GDK, 1, [If gdk has been installed, define this])
-   GDK_CFLAGS=$GDK_CFLAGS
-   GDK_LIBS=$GDK_LIBS
-   GDK_VERSION=`$PKG_CONFIG gdk-2.0 --modversion`
-
-fi
-
-if test "$GDK_VERSION" = ""
-then
-   AC_MSG_ERROR([Cannot find gdk, please make sure it is installed.])
-fi
-
-# 
-# Check for gdk end
-############################################################################
-
-############################################################################
 # Check for gdk-pixbuf 
 # 
 
@@ -481,8 +455,8 @@ fi
 #########################################################################
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
-LIBGEDA_CFLAGS="$MINGW_CFLAGS $GUILE_CFLAGS $GLIB_CFLAGS $X_CFLAGS $GDK_PIXBUF_CFLAGS $GDK_CFLAGS"
-LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GLIB_LIBS $DMALLOC_LIBS $GDK_PIXBUF_LIBS $GDK_LIBS"
+LIBGEDA_CFLAGS="$MINGW_CFLAGS $GUILE_CFLAGS $GLIB_CFLAGS $X_CFLAGS $GDK_PIXBUF_CFLAGS"
+LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GLIB_LIBS $DMALLOC_LIBS $GDK_PIXBUF_LIBS"
 LIBTOOL_FLAGS="-version-info $SHARED_LIBRARY_VERSION"
 
 # Makefile.in variable substitution
@@ -523,7 +497,6 @@ AC_MSG_RESULT([
 ** Configuration summary for $PACKAGE $DOTTED_VERSION.$DATE_VERSION
 
    GLIB library version:             $GLIB_VERSION
-   GDK library version:              $GDK_VERSION
    GDK-PIXBUF (png output):          $GDK_PIXBUF_VERSION
    GUILE library version:            $GUILE_VERSION
    mingw build:                      $MINGW

@@ -20,11 +20,11 @@
 #ifndef LIBGEDA_H
 #define LIBGEDA_H
 
-#include <gdk/gdk.h>
 #include <glib.h>
 
 #include <stdio.h>
 #include <libguile.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include <libgeda/defines.h>
 #include <libgeda/struct.h>
@@ -35,7 +35,5 @@
 #include <libgeda/papersizes.h>
 #include <libgeda/prototype.h>
 #include <libgeda/geda_list.h>
-
-#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #endif

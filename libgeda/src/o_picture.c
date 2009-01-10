@@ -35,10 +35,7 @@
 #include <libgen.h>
 #endif
 
-#include <gdk/gdk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gdk-pixbuf/gdk-pixdata.h>
-
 
 #include "libgeda_priv.h"
 
@@ -75,13 +72,6 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
   gchar *file_content = NULL;
   guint file_length = 0;
   GError *err = NULL;
-  static char gdk_initialized=0;
-
-  /* Initialize GDK first in case this isn't a graphic app */
-  if (gdk_initialized == 0) {
-    gdk_init(NULL, NULL);
-    gdk_initialized = 1;
-  }
 
   num_conv = sscanf(first_line, "%c %d %d %d %d %d %c %c\n",
 	 &type, &x1, &y1, &width, &height, &angle, &mirrored, &embedded);

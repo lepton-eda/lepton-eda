@@ -1,8 +1,8 @@
 /* System headers which libgeda headers rely on */
 #include <glib.h>
 #include <glib-object.h>
-#include <gdk/gdk.h>
 #include <libguile.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include "guile_compat_1.6.h"
 
 /* Public libgeda headers */
