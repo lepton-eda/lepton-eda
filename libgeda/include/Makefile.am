@@ -2,16 +2,16 @@
 
 libgedaincludedir = $(includedir)/libgeda
 libgedainclude_HEADERS = \
-	colors.h \
-	defines.h \
-	funcs.h \
-	geda_list.h \
-	globals.h \
-	libgeda.h \
-	o_types.h \
-	papersizes.h \
-	prototype.h \
-	struct.h
+	libgeda/colors.h \
+	libgeda/defines.h \
+	libgeda/funcs.h \
+	libgeda/geda_list.h \
+	libgeda/globals.h \
+	libgeda/libgeda.h \
+	libgeda/o_types.h \
+	libgeda/papersizes.h \
+	libgeda/prototype.h \
+	libgeda/struct.h
 
 noinst_HEADERS = \
 	gettext_priv.h \
