@@ -141,45 +141,6 @@ AC_CHECK_LIB(dl, dlopen, DL_LIB="-ldl", DL_LIB="")
 # Check for mics things start
 ############################################################################
 
-
-############################################################################
-# Check for gtk+ 2.4 start
-# 
-
-PKG_CHECK_MODULES(GTK24, gtk+-2.0 >= 2.4.0, GTK24="yes", no_GTK24="yes")
-
-# This next bit of code figures out what gtk we need to use.
-if test "$GTK24" = "yes" 
-then
-
-   AC_DEFINE(HAS_GTK24, 1, [If gtk+ 2.4.x has been installed, define this])
-   GTK_CFLAGS=$GTK24_CFLAGS
-   GTK_LIBS=$GTK24_LIBS
-   GTK_VERSION=`$PKG_CONFIG gtk+-2.0 --modversion`
-
-   # Search for glib
-   PKG_CHECK_MODULES(GLIB24, glib-2.0 >= 2.4.0, GLIB24="yes", no_GLIB24="yes")
-   if test "$GLIB24" != "yes"
-   then
-       AC_MSG_ERROR([Cannot find glib 2.4.x, install it and rerun ./configure.])
-   fi
-   GLIB_CFLAGS=$GLIB24_CFLAGS
-   GLIB_LIBS=$GLIB24_LIBS
-   GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
-
-else
-   GTK_VERSION=""
-fi
-
-if test "$GTK_VERSION" = ""
-then
-   AC_MSG_ERROR([Cannot find gtk+ 2.4.x or later, please install gtk+.])
-fi
-
-# 
-# Check for gtk+ 2.4 end
-############################################################################
-
 ############################################################################
 # Check for libgeda start
 # 
@@ -322,7 +283,6 @@ expandedGEDADOCDIR=`eval "echo $GEDADOCDIR"`
 AC_MSG_RESULT([
 ** Configuration summary for $PACKAGE $DOTTED_VERSION.$DATE_VERSION:
 
-   GTK+ library version:             $GTK_VERSION
    libgeda library version:          $LIBGEDA_VERSION
    mingw build:                      $MINGW
    data directory:                   $expandedGEDADATADIR

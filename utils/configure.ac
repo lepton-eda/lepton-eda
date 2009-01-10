@@ -194,44 +194,6 @@ fi
 ############################################################################
 
 ############################################################################
-# Check for gtk+ 2.4 start
-# 
-
-PKG_CHECK_MODULES(GTK24, gtk+-2.0 >= 2.4.0, GTK24="yes", no_GTK24="yes")
-
-# This next bit of code figures out what gtk we need to use.
-if test "$GTK24" = "yes"
-then
-
-   AC_DEFINE(HAS_GTK24, 1, [If gtk+ 2.4.x has been installed, define this])
-   GTK_CFLAGS=$GTK24_CFLAGS
-   GTK_LIBS=$GTK24_LIBS
-   GTK_VERSION=`$PKG_CONFIG gtk+-2.0 --modversion`
-
-   # Search for glib
-   PKG_CHECK_MODULES(GLIB24, glib-2.0 >= 2.4.0, GLIB24="yes", no_GLIB24="yes")
-   if test "$GLIB24" != "yes"
-   then
-       AC_MSG_ERROR([Cannot find glib 2.4.x, install it and rerun ./configure.])
-   fi
-   GLIB_CFLAGS=$GLIB24_CFLAGS
-   GLIB_LIBS=$GLIB24_LIBS
-   GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
-
-else
-   GTK_VERSION=""
-fi
-
-if test "$GTK_VERSION" = ""
-then
-   AC_MSG_ERROR([Cannot find gtk+ 2.4.x or later, please install gtk+.])
-fi
-
-# 
-# Check for gtk+ 2.4 end
-############################################################################
-
-############################################################################
 # Check for glib 2.4 start
 # 
 
@@ -448,7 +410,7 @@ AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of this program's package])
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
 GSCHLAS_CFLAGS="$LIBGEDA_CFLAGS"
-GSCHLAS_LDFLAGS="$LIBGEDA_LIBS $GTK_LIBS"
+GSCHLAS_LDFLAGS="$LIBGEDA_LIBS"
 CONVERT_SYM_CFLAGS="$LIBGEDA_CFLAGS"
 SARLACC_SCHEM_CFLAGS="$LIBGEDA_CFLAGS"
 GMK_SYM_CFLASG=""
@@ -508,7 +470,6 @@ expandedPCBLIBPATH=`eval "echo $PCBLIBPATH"`
 AC_MSG_RESULT([
 ** Configuration summary for $PACKAGE $DOTTED_VERSION.$DATE_VERSION:
 
-   GTK+ library version:             $GTK_VERSION
    GLIB library version:             $GLIB_VERSION
    libgeda library version:          $LIBGEDA_VERSION
    mingw build:                      $MINGW
