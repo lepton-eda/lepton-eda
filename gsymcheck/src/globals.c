@@ -30,15 +30,6 @@
 
 char *rc_filename = NULL; 
 
-/* color stuff */
-GdkColormap *colormap; 
-GdkVisual *visual; 
-
-/* colors */
-GdkColor white;
-GdkColor black;
-
-
 int logfile_fd=-1;
 int logging_dest=STDOUT_TTY;
 

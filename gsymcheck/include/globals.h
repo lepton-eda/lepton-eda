@@ -17,28 +17,6 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-
-/* color stuff */
-extern GdkColormap *colormap; 
-extern GdkVisual *visual; 
-
-/* colors */
-extern GdkColor white;
-extern GdkColor black;
-extern GdkColor red;
-extern GdkColor green;
-extern GdkColor blue;
-extern GdkColor cyan;
-extern GdkColor yellow;
-extern GdkColor grey;
-extern GdkColor grey90;
-extern GdkColor darkgreen;
-extern GdkColor darkred;
-extern GdkColor darkyellow;
-extern GdkColor darkcyan;
-extern GdkColor darkblue;
-extern GdkColor darkgrey; 
-
 extern char *rc_filename; 
 
 extern int logfile_fd;

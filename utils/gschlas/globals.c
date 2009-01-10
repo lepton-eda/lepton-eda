@@ -33,16 +33,6 @@
 
 char *rc_filename = NULL; 
 
-#if 0
-/* color stuff */
-GdkColormap *colormap; 
-GdkVisual *visual; 
-
-/* colors */
-GdkColor white;
-GdkColor black;
-#endif
-
 int logfile_fd=-1;
 int logging_dest=LOG_WINDOW;
 
