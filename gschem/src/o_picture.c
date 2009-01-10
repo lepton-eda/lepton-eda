@@ -279,7 +279,7 @@ void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current)
   width =  GET_PICTURE_WIDTH (w_current);
   height = GET_PICTURE_HEIGHT (w_current);
 
-  gschem_cairo_box (w_current, 0, left, top, left + width, top + height);
+  gschem_cairo_box (w_current, 0, left, top - height, left + width, top);
 
   gschem_cairo_set_source_color (w_current,
                                  x_color_lookup_dark (SELECT_COLOR));
