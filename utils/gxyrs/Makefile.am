@@ -4,7 +4,7 @@
 
 bin_SCRIPTS = gxyrs
 	      
-rcdatadir = @GEDARCDIR@/gxyrs
+rcdatadir = @GEDADATADIR@/perl/lib
 rcdata_DATA = gxyrs.pm
 
 EXTRA_DIST = \

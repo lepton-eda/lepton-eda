@@ -24,7 +24,7 @@
 use strict;
 use warnings;
 
-use lib 'GEDARCDIR/gxyrs'; # Where gxyrs package is located
+use lib 'GEDADATADIR/perl/lib'; # Where gxyrs package is located
 
 use gxyrs;
 use gxyrs qw($CASE_INSENSITIVE);
