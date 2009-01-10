@@ -7,5 +7,5 @@ Name: libgeda
 Description: gEDA/gaf's core library 
 Requires: gdk-pixbuf-2.0
 Version: @DATE_VERSION@
-Libs: -L${libdir} -lgeda @LIBGEDA_LDFLAGS@ 
-Cflags: -I${includedir} @LIBGEDA_CFLAGS@
+Libs: -L${libdir} -lgeda
+Cflags: -I${includedir} @GUILE_CFLAGS@
