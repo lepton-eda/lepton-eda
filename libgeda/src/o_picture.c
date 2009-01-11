@@ -204,7 +204,7 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
   /* The picture is described by its upper left and lower right corner */
   new_obj = o_picture_new(toplevel, pixbuf,
                           file_content, file_length, filename,
-                          (double)height/ width,
+                          (double)width / (double)height,
                           type,
                           x1, y1+height, x1+width, y1,
                           angle, mirrored, embedded);
@@ -825,7 +825,6 @@ void o_picture_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   int height, width;
   GdkPixbuf* image = o_current->picture->original_picture;
   int img_width, img_height, img_rowstride;
-  double ratio;
   guint8 *rgb_data;
   guint8 *mask_data;
 
@@ -843,8 +842,6 @@ void o_picture_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 
   rgb_data = o_picture_rgb_data(image);
   mask_data = o_picture_mask_data(image);
-
-  ratio = height/width;
 
   fprintf(fp, "gsave\n");
 
