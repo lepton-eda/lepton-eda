@@ -16,6 +16,7 @@ gschem_SOURCES = \
 	g_register.c \
 	globals.c \
 	gschem.c \
+	gschem_cairo.c \
 	gschem_dialog.c \
 	gschem_toplevel.c \
 	i_basic.c \
@@ -67,16 +68,6 @@ gschem_SOURCES = \
 	x_script.c \
 	x_stroke.c \
 	x_window.c
-
-CAIRO_SRCS = \
-	gschem_cairo.c
-
-EXTRA_gschem_SOURCES = \
-	${CAIRO_SRCS}
-
-if ENABLE_CAIRO
-gschem_SOURCES += ${CAIRO_SRCS}
-endif
 
 if CCISGCC
 AM_CFLAGS = -Wall
