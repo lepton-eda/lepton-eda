@@ -184,24 +184,20 @@ AC_CHECK_LIB(dl, dlopen, DL_LIB="-ldl", DL_LIB="")
 ############################################################################
 
 ############################################################################
-# Check for glib 2.4 start
-# 
+# Check for glib start
+#
 
-# Search for glib
-PKG_CHECK_MODULES(GLIB24, glib-2.0 >= 2.4.0, GLIB24="yes", no_GLIB24="yes")
-if test "$GLIB24" != "yes"
+PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.8.0, GLIB="yes", no_GLIB="yes")
+
+# This next bit of code figures out what glib we need to use.
+if test "$GLIB" != "yes"
 then
-    AC_MSG_ERROR([Cannot find glib 2.4.x, install it and rerun ./configure.
-You may find the following error output (if any) useful:
-$GLIB24_PKG_ERRORS
-])
+   AC_MSG_ERROR([Cannot find glib 2.8.0 or later, please install it and rerun ./configure.])
 fi
-GLIB_CFLAGS=$GLIB24_CFLAGS
-GLIB_LIBS=$GLIB24_LIBS
 GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
 
-# 
-# Check for glib 2.4 end
+#
+# Check for glib end
 ############################################################################
 
 ############################################################################

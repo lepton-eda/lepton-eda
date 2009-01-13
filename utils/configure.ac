@@ -194,38 +194,20 @@ fi
 ############################################################################
 
 ############################################################################
-# Check for glib 2.4 start
+# Check for glib start
 # 
 
-# Check for pkg-config
-AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
-if test $PKG_CONFIG = no; then
-   AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
-fi
-
-# Search for glib 2.4.x first (only if we are not forcing the glib to 1.2)
-if test "$opt_gtkver" != "1.2"
-then
-   PKG_CHECK_MODULES(GLIB24, glib-2.0 >= 2.4.0, GLIB24="yes", no_GLIB24="yes")
-fi
+PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.8.0, GLIB="yes", no_GLIB="yes")
 
 # This next bit of code figures out what glib we need to use.
-if test "$GLIB24" = "yes" -a "$opt_gtkver" != "1.2"
+if test "$GLIB" != "yes"
 then
-   GLIB_CFLAGS=$GLIB24_CFLAGS
-   GLIB_LIBS=$GLIB24_LIBS
-   GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
-else
-   GLIB_VERSION=""
+   AC_MSG_ERROR([Cannot find glib 2.8.0 or later, please install it and rerun ./configure.])
 fi
+GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
 
-if test "$GLIB_VERSION" = ""
-then
-   AC_MSG_ERROR([Cannot find glib 2.4.x, install one of them.])
-fi
-
-# 
-# Check for glib 2.4 end
+#
+# Check for glib end
 ############################################################################
 
 #########################################################################
