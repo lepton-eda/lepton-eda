@@ -19,12 +19,10 @@ grenum_SOURCES = grenum.c grenum.h
 convert_sym_CFLAGS = @CONVERT_SYM_CFLAGS@ $(AM_CFLAGS)
 sarlacc_schem_CFLAGS = @SARLACC_SCHEM_CFLAGS@ $(AM_CFLAGS)
 gsch2pcb_CFLAGS = @GSCH2PCB_CFLAGS@ $(AM_CFLAGS)
-grenum_CFLAGS = @GRENUM_CFLAGS@ $(AM_CFLAGS)
 
 convert_sym_LDADD = -lm
 olib_LDADD = -lm
 gsch2pcb_LDADD = @GSCH2PCB_LDFLAGS@ 
-grenum_LDADD = @GRENUM_LDFLAGS@
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~ olib.c
 CLEANFILES = *.log *.ps core FILE *~  olib.c

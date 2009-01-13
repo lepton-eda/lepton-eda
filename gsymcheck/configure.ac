@@ -158,6 +158,23 @@ fi
 # Check for libgeda end
 ############################################################################
 
+############################################################################
+# Check for glib start
+#
+
+PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.8.0, GLIB="yes", no_GLIB="yes")
+
+# This next bit of code figures out what glib we need to use.
+if test "$GLIB" != "yes"
+then
+   AC_MSG_ERROR([Cannot find glib 2.8.0 or later, please install it and rerun ./configure.])
+fi
+GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
+
+#
+# Check for glib end
+############################################################################
+
 #########################################################################
 # Checks for header files start
 # 
@@ -252,8 +269,8 @@ AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of this program's package])
 #########################################################################
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
-GSYMCHECK_CFLAGS="$LIBGEDA_CFLAGS"
-GSYMCHECK_LDFLAGS="$LIBGEDA_LIBS"  
+GSYMCHECK_CFLAGS="$GLIB_CFLAGS $LIBGEDA_CFLAGS $GUILE_CFLAGS"
+GSYMCHECK_LDFLAGS="$GLIB_LIBS $LIBGEDA_LIBS $GUILE_LIBS"
 
 # Makefile.in variable substitution
 AC_SUBST(DATE_VERSION)
