@@ -18,7 +18,7 @@ AC_SUBST([CONFIG_DEPENDENCIES], ['$(top_srcdir)/configure.ac.in'])
 AC_GNU_SOURCE
 
 # Init libtool
-AM_PROG_LIBTOOL
+LT_INIT([win32-dll],[shared])
 
 #########################################################################
 # Command line flags start
@@ -48,10 +48,12 @@ case $host_os in
 esac
 
 if ! test "$MINGW" = "no" -o "$MINGW"x = x; then
+   MINGW_LIBTOOL_FLAGS="-no-undefined"
    MINGW_CFLAGS="-mms-bitfields"
    MINGW="yes"
 else
    # Unix host
+   MINGW_LIBTOOL_FLAGS=
    MINGW_CFLAGS=
    MINGW="no"
 fi
@@ -435,8 +437,8 @@ fi
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
 LIBGEDA_CFLAGS="$MINGW_CFLAGS $GUILE_CFLAGS $GLIB_CFLAGS $X_CFLAGS $GDK_PIXBUF_CFLAGS"
-LIBGEDA_LDFLAGS="$GUILE_LDFLAGS $GLIB_LIBS $DMALLOC_LIBS $GDK_PIXBUF_LIBS"
-LIBTOOL_FLAGS="-version-info $SHARED_LIBRARY_VERSION"
+LIBGEDA_LDFLAGS="$MINGW_LDFLAGS $GUILE_LDFLAGS $GLIB_LIBS $DMALLOC_LIBS $GDK_PIXBUF_LIBS"
+LIBTOOL_FLAGS="-version-info $SHARED_LIBRARY_VERSION $MINGW_LIBTOOL_FLAGS"
 
 # Makefile.in variable substitution
 AC_SUBST(DATE_VERSION)
