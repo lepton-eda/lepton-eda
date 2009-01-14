@@ -135,7 +135,7 @@ gboolean
 s_color_rgba_decode (const gchar *rgba,
                      guint8 *r, guint8 *g, guint8 *b, guint8 *a)
 {
-  gint len, i;
+  gint len, i, ri, gi, bi, ai;
   gchar c;
 
   /* Default to solid white */
@@ -156,14 +156,16 @@ s_color_rgba_decode (const gchar *rgba,
   }
 
   /* Use sscanf to extract values */
-  c = sscanf (rgba + 1, "%2hhx%2hhx%2hhx", r, g, b);
+  c = sscanf (rgba + 1, "%2x%2x%2x", &ri, &gi, &bi);
   if (c != 3)
     return FALSE;
+  *r = (guint8) ri; *g = (guint8) gi; *b = (guint8) bi;
 
   if (len == 9) {
-    c = sscanf (rgba + 7, "%2hhx", a);
+    c = sscanf (rgba + 7, "%2x", &ai);
     if (c != 1)
       return FALSE;
+    *a = (guint8) ai;
   }
 
   return TRUE;
@@ -184,9 +186,11 @@ gchar *
 s_color_rgba_encode (guint8 r, guint8 g, guint8 b, guint8 a)
 {
   if (a < 0xff)
-    return g_strdup_printf("#%02hhx%02hhx%02hhx%02hhx", r, g, b, a);
+    return g_strdup_printf("#%02x%02x%02x%02x",
+                           (gint) r, (gint) g, (gint) b, (gint) a);
   else
-    return g_strdup_printf("#%02hhx%02hhx%02hhx", r, g, b);
+    return g_strdup_printf("#%02x%02x%02x",
+                           (gint) r, (gint) g, (gint) b);
 }
 
 /*! \todo Finish function documentation!!!
