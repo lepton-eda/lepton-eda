@@ -18,7 +18,7 @@ AC_SUBST([CONFIG_DEPENDENCIES], ['$(top_srcdir)/configure.ac.in'])
 AC_GNU_SOURCE
 
 # Init libtool
-LT_INIT([win32-dll],[shared])
+AM_PROG_LIBTOOL
 
 #########################################################################
 # Command line flags start
