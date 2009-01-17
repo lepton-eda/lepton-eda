@@ -231,6 +231,7 @@ void f_print_objects (TOPLEVEL *toplevel, FILE *fp, const GList *obj_list,
 {
   OBJECT *o_current=NULL;
   int origin_x, origin_y;
+  int save_last_ps_color;
   const GList *iter;
 	
   origin_x = start_x;
@@ -284,6 +285,7 @@ void f_print_objects (TOPLEVEL *toplevel, FILE *fp, const GList *obj_list,
 
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER): /* new object -- 1.20.2005 SDB */
+        save_last_ps_color = toplevel->last_ps_color;
         fprintf(fp, "gsave\n");
 
         f_print_objects(toplevel, fp,
@@ -291,6 +293,7 @@ void f_print_objects (TOPLEVEL *toplevel, FILE *fp, const GList *obj_list,
                         origin_x, origin_y, scale,
                         unicode_count, unicode_table);
         fprintf(fp, "grestore\n");
+        toplevel->last_ps_color = save_last_ps_color;
         break;
 
       case(OBJ_TEXT):
@@ -308,6 +311,7 @@ void f_print_objects (TOPLEVEL *toplevel, FILE *fp, const GList *obj_list,
             vectors = 1;
           }
 
+          save_last_ps_color = toplevel->last_ps_color;
           fprintf(fp, "gsave\n");
 
           if (vectors)
@@ -327,6 +331,7 @@ void f_print_objects (TOPLEVEL *toplevel, FILE *fp, const GList *obj_list,
           }
 
           fprintf(fp, "grestore\n");
+          toplevel->last_ps_color = save_last_ps_color;
         }
         break;
 
