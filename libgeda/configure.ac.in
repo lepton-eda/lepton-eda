@@ -114,7 +114,7 @@ fi
 # Check for guile start
 #
 
-PKG_CHECK_MODULES(GUILE, guile-1.8, GUILE_PC="yes", no_GUILE_PC="yes")
+PKG_CHECK_MODULES(GUILE, [guile-1.8], GUILE_PC="yes", no_GUILE_PC="yes")
 
 if test "$GUILE_PC" = "yes" 
 then
@@ -190,7 +190,7 @@ AC_CHECK_LIB(dl, dlopen, DL_LIB="-ldl", DL_LIB="")
 # Check for glib start
 #
 
-PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.8.0, GLIB="yes", no_GLIB="yes")
+PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.8.0], GLIB="yes", no_GLIB="yes")
 
 # This next bit of code figures out what glib we need to use.
 if test "$GLIB" != "yes"
@@ -207,7 +207,7 @@ GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
 # Check for gdk-pixbuf 
 # 
 
-PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= 0.15.0, GDK_PIXBUF="yes", no_GDK_PIXBUF="yes")
+PKG_CHECK_MODULES(GDK_PIXBUF, [gdk-pixbuf-2.0 >= 0.15.0], GDK_PIXBUF="yes", no_GDK_PIXBUF="yes")
 
 # This next bit of code figures out what gtk we need to use.
 if test "$GDK_PIXBUF" = "yes" 

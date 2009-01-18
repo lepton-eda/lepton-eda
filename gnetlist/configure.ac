@@ -148,7 +148,7 @@ if test $PKG_CONFIG = no; then
    AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
 fi
 
-PKG_CHECK_MODULES(GUILE, guile-1.8, GUILE_PC="yes", no_GUILE_PC="yes")
+PKG_CHECK_MODULES(GUILE, [guile-1.8], GUILE_PC="yes", no_GUILE_PC="yes")
 
 if test "$GUILE_PC" = "yes" 
 then
@@ -234,7 +234,7 @@ AC_CHECK_LIB(dl, dlopen, DL_LIB="-ldl", DL_LIB="")
 ############################################################################
 # Check for libgeda start
 # 
-PKG_CHECK_MODULES(LIBGEDA, libgeda >= $DATE_VERSION, LIBGEDA="yes", 
+PKG_CHECK_MODULES(LIBGEDA, [libgeda >= $DATE_VERSION], LIBGEDA="yes", 
                   no_LIBGEDA="yes")
 
 if test "$LIBGEDA" = "yes" 
@@ -252,7 +252,7 @@ fi
 # Check for glib start
 #
 
-PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.8.0, GLIB="yes", no_GLIB="yes")
+PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.8.0], GLIB="yes", no_GLIB="yes")
 
 # This next bit of code figures out what glib we need to use.
 if test "$GLIB" != "yes"

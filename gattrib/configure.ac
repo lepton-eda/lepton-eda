@@ -106,7 +106,7 @@ if test $PKG_CONFIG = no; then
    AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
 fi
 
-PKG_CHECK_MODULES(GUILE, guile-1.8, GUILE_PC="yes", no_GUILE_PC="yes")
+PKG_CHECK_MODULES(GUILE, [guile-1.8], GUILE_PC="yes", no_GUILE_PC="yes")
 
 if test "$GUILE_PC" = "yes" 
 then
@@ -193,7 +193,7 @@ AC_CHECK_LIB(dl, dlopen, DL_LIB="-ldl", DL_LIB="")
 ##  This is looks for GTK
 #                                                                                      
 # Search for gtk+ 2.8.x
-PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.8.0, GTK="yes", no_GTK="yes")
+PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.8.0], GTK="yes", no_GTK="yes")
 
 # This next bit of code figures out what gtk we need to use.
 if test "$GTK" = "yes"
@@ -201,7 +201,7 @@ then
    GTK_VERSION=`$PKG_CONFIG gtk+-2.0 --modversion`
 
    # Search for glib
-   PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.8.0, GLIB="yes", no_GLIB="yes")
+   PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.8.0], GLIB="yes", no_GLIB="yes")
    if test "$GLIB" != "yes"
    then
        AC_MSG_ERROR([Cannot find glib 2.8.0 or later, please install it and rerun ./configure.])
@@ -211,7 +211,7 @@ then
 ##   GTKITEMENTRY_SOURCE=gtkitementry_2_2.c gtkitementry_2_2.h
 
    # Search for gthread
-   PKG_CHECK_MODULES(GTHREAD, gthread-2.0, GTHREAD="yes", no_GTHREAD="yes")
+   PKG_CHECK_MODULES(GTHREAD, [gthread-2.0], GTHREAD="yes", no_GTHREAD="yes")
    if test "$GTHREAD" = "yes"
    then
        AC_DEFINE(HAVE_GTHREAD, 1, [If gthread support is installed, define this])
@@ -234,7 +234,7 @@ fi
 ############################################################################
 # Check for libgeda start
 # 
-PKG_CHECK_MODULES(LIBGEDA, libgeda >= $DATE_VERSION, LIBGEDA="yes", 
+PKG_CHECK_MODULES(LIBGEDA, [libgeda >= $DATE_VERSION], LIBGEDA="yes", 
                   no_LIBGEDA="yes")
 
 if test "$LIBGEDA" = "yes" 
