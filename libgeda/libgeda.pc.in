@@ -5,8 +5,8 @@ includedir=@includedir@
 
 Name: libgeda
 Description: gEDA/gaf's core library 
-Requires:
-Requires.private: glib-2.0 gdk-pixbuf-2.0
+Requires: glib-2.0 gdk-pixbuf-2.0
+Requires.private:
 Version: @DATE_VERSION@
 Libs: -L${libdir} -lgeda
 Libs.private: @GUILE_LIBS@
