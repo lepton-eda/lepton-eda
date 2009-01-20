@@ -59,7 +59,7 @@ void g_rc_parse_gtkrc()
   if (home == NULL)
      home = g_get_home_dir ();
   if (home != NULL) {
-    filename = g_build_filename (home, ".gschem-gtkrc", NULL);
+    filename = g_build_filename (home, ".gEDA", "gschem-gtkrc", NULL);
     gtk_rc_parse (filename);
     g_free (filename);
   }
