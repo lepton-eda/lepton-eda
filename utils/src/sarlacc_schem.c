@@ -171,7 +171,7 @@ void parse_header(int fd1,int fd2)
     int length;
 
     read(fd1,localbuf,32);
-    if( strncmp(localbuf,"Schematic FILE",14) )
+    if( strncmp((char *) localbuf,"Schematic FILE",14) )
     {
 	fprintf(stderr,"\nFile is not an ORCAD 16 Bit Schematic\n");
 	exit(1);

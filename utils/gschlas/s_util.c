@@ -52,9 +52,12 @@ s_util_embed(TOPLEVEL *pr_current, int embed_mode)
        p_iter = g_list_next (p_iter)) {
     PAGE *p_current = p_iter->data;
 
-    for (o_iter = s_page_objects (p_current);
+    /* Cast removes const qualifier from return value of
+     * s_page_objects() */
+    for (o_iter = (GList *) s_page_objects (p_current);
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
+
       OBJECT *o_current = o_iter->data;
 
       if (o_current->type == OBJ_COMPLEX ||
