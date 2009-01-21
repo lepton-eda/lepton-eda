@@ -46,12 +46,6 @@
  */
 void libgeda_init(void)
 {
-  char *geda_data = getenv("GEDADATA");
-
-  if (geda_data == NULL) {
-    g_setenv ("GEDADATA", GEDADATADIR, FALSE);
-  }
-
   /* Initialise gettext */
   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
   bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");

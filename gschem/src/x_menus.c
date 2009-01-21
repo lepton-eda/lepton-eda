@@ -386,7 +386,7 @@ out:
 /* The list of recently loaded files. */
 static GList *recent_files = NULL;
 
-#define RECENT_FILES_STORE ".gEDA/gschem-recent-files"
+#define RECENT_FILES_STORE "gschem-recent-files"
 #define MAX_RECENT_FILES 10
 
 struct recent_file_menu_data {
@@ -593,7 +593,7 @@ static void recent_files_create_empty()
    gchar *c;
    const gchar * const tmp[] = { NULL };
    GKeyFile *kf = g_key_file_new();
-   gchar *file = g_build_filename(g_get_home_dir(), RECENT_FILES_STORE, NULL);
+   gchar *file = g_build_filename(s_path_user_config (), RECENT_FILES_STORE, NULL);
 
    g_key_file_set_string_list(kf, "Recent files", "Files", tmp, 0);
    c = g_key_file_to_data(kf, NULL, NULL);
@@ -613,7 +613,7 @@ void recent_files_save(gpointer user_data)
    gchar *files[MAX_RECENT_FILES];
    int num = 0;
    gchar *c;
-   gchar *file = g_build_filename(g_get_home_dir(), RECENT_FILES_STORE, NULL);
+   gchar *file = g_build_filename(s_path_user_config (), RECENT_FILES_STORE, NULL);
 
    GList *p = recent_files;
    if(p == NULL) {
@@ -647,12 +647,10 @@ void recent_files_save(gpointer user_data)
 void recent_files_load()
 {
    GKeyFile *kf = g_key_file_new();
-   gchar *file = g_build_filename(g_get_home_dir(), RECENT_FILES_STORE, NULL);
+   gchar *file = g_build_filename(s_path_user_config (), RECENT_FILES_STORE, NULL);
 
    if(!g_file_test(file, G_FILE_TEST_EXISTS)) {
-      gchar *dir = g_build_filename(g_get_home_dir(), ".gEDA", NULL);
-      g_mkdir(dir, S_IRWXU | S_IRWXG);
-      g_free(dir);
+     g_mkdir(s_path_user_config (), S_IRWXU | S_IRWXG);
 
       recent_files_create_empty();
    }

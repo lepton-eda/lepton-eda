@@ -49,21 +49,14 @@
 void g_rc_parse_gtkrc()
 {
   gchar *filename;
-  const gchar *home;
 
-  filename = g_build_filename (g_rc_parse_path (), "gschem-gtkrc", NULL);
+  filename = g_build_filename (s_path_sys_config (), "gschem-gtkrc", NULL);
   gtk_rc_parse (filename);
   g_free (filename);
-  
-  home = g_getenv ("HOME");
-  if (home == NULL)
-     home = g_get_home_dir ();
-  if (home != NULL) {
-    filename = g_build_filename (home, ".gEDA", "gschem-gtkrc", NULL);
-    gtk_rc_parse (filename);
-    g_free (filename);
-  }
-  
+
+  filename = g_build_filename (s_path_user_config (), "gschem-gtkrc", NULL);
+  gtk_rc_parse (filename);
+  g_free (filename);
 }
 
 /*! \todo Finish function documentation!!!

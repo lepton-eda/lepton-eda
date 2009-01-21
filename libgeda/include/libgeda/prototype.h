@@ -37,7 +37,6 @@ SCM g_rc_mode_general(SCM scmmode, const char *rc_name, int *mode_var,
 gint g_rc_parse_general(TOPLEVEL *toplevel,
                         const gchar *fname, 
                         const gchar *ok_msg, const gchar *err_msg);
-const char *g_rc_parse_path(void);
 gint g_rc_parse_system_rc(TOPLEVEL *toplevel, const gchar *rcname);
 gint g_rc_parse_home_rc(TOPLEVEL *toplevel, const gchar *rcname);
 gint g_rc_parse_local_rc(TOPLEVEL *toplevel, const gchar *rcname);
@@ -314,6 +313,9 @@ void s_delete_object_glist(TOPLEVEL *toplevel, GList *list);
 char *remove_nl(char *string);
 char *remove_last_nl(char *string);
 gchar *s_expand_env_variables (const gchar *string);
+const char *s_path_sys_data ();
+const char *s_path_sys_config ();
+const char *s_path_user_config ();
 
 /* s_clib.c */
 void s_clib_free (void);

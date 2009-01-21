@@ -486,3 +486,81 @@ s_expand_env_variables (const gchar *string)
   /* never reached */
   return NULL;
 }
+
+
+/* -------------------------------------------------- */
+
+/*! \brief Get the directory with the gEDA system data.
+ *  \par Function description
+ *  Returns the path to be searched for gEDA data shared between all
+ *  users. If the GEDADATA environment variable is set, returns its
+ *  value; otherwise, uses a compiled-in path.
+ *
+ *  \warning The returned string is owned by libgeda and should not be
+ *  modified or free'd.
+ *
+ *  \todo On Windows, we probably shouldn't use the compiled-in
+ *  default.
+ */
+const char *s_path_sys_data () {
+  static const char *p = NULL;
+  if (p == NULL) {
+    p = g_getenv ("GEDADATA");
+  }
+  if (p == NULL) {
+    p = GEDADATADIR;
+    g_setenv ("GEDADATA", p, FALSE);
+  }
+  return p;
+}
+
+/*! \brief Get the directory with the gEDA system configuration.
+ *  \par Function description
+ *  Returns the path to be searched for gEDA configuration shared
+ *  between all users. If the GEDADATARC environment variable is set,
+ *  returns its value; otherwise, uses a compiled-in path.
+ *
+ *  \warning The returned string is owned by libgeda and should not be
+ *  modified or free'd.
+ */
+const char *s_path_sys_config () {
+  static const char *p = NULL;
+
+  /* If GEDADATARC is set in the environment, use that path */
+  if (p == NULL) {
+    p = g_getenv ("GEDADATARC");
+  }
+  if (p == NULL) {
+    if (g_strcasecmp (GEDARCDIR, "none") != 0) {
+      /* If available, use the rc directory set during configure. */
+      p = GEDARCDIR;
+    } else {
+      /* Otherwise, just use the data directory */
+      p = s_path_sys_data ();
+    }
+    g_setenv("GEDADATARC", p, FALSE);
+  }
+  return p;
+}
+
+/*! \brief Get the directory with the gEDA user configuration.
+ *  \par Function description
+ *  Returns the path to be searched for the current user's gEDA
+ *  configuration. Currently defaults to a directory ".gEDA" in the
+ *  user's home directory.
+ *
+ *  \warning The returned string is owned by libgeda and should not be
+ *  modified or free'd.
+ *
+ *  \todo On Windows, we should use APPDATA.
+ */
+const char *s_path_user_config () {
+  static const char *p = NULL;
+
+  if (p == NULL) {
+    const char *home = g_getenv ("HOME");
+    if (home == NULL) home = g_get_home_dir ();
+    p = g_build_filename(home, ".gEDA", NULL);
+  }
+  return p;
+}

@@ -236,7 +236,6 @@ x_window_create_menu(GtkWindow *window, GtkWidget **menubar)
   GtkUIManager *ui;
   GtkActionGroup *action_group;
   GError *error = NULL;
-  const char *gedadata_path;
 
   /* Create and fill the action group object */
   action_group = gtk_action_group_new("");
@@ -247,12 +246,7 @@ x_window_create_menu(GtkWindow *window, GtkWidget **menubar)
 
   gtk_ui_manager_insert_action_group(ui, action_group, 0);
 
-  gedadata_path = g_getenv("GEDADATA"); /* do not free returned string */
-  if (gedadata_path != NULL) {
-     menu_file = g_build_filename(gedadata_path, "gattrib-menus.xml", NULL);
-  } else {
-     menu_file = g_build_filename(GEDADATADIR, "gattrib-menus.xml", NULL);
-  }
+  menu_file = g_build_filename(s_path_sys_data (), "gattrib-menus.xml", NULL);
 
   gtk_ui_manager_add_ui_from_file(ui, menu_file, &error);
   if(error != NULL) {

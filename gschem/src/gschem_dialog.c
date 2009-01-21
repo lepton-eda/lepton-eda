@@ -104,7 +104,7 @@ static void save_geometry_to_file(gpointer user_data)
   g_assert( dialog_geometry != NULL );
 
   data = g_key_file_to_data(dialog_geometry, NULL, NULL);
-  file = g_build_filename(g_get_home_dir (), ".gEDA", DIALOG_GEOMETRY_STORE,
+  file = g_build_filename(s_path_user_config (), DIALOG_GEOMETRY_STORE,
         NULL);
   g_file_set_contents(file, data, -1, NULL);
   g_free(data);
@@ -170,7 +170,7 @@ static void setup_keyfile ()
   if (dialog_geometry != NULL)
     return;
 
-  gchar *file = g_build_filename (g_get_home_dir (), ".gEDA",
+  gchar *file = g_build_filename (s_path_user_config (),
                                   DIALOG_GEOMETRY_STORE, NULL);
 
   dialog_geometry = g_key_file_new();
@@ -179,9 +179,7 @@ static void setup_keyfile ()
   gschem_atexit(save_geometry_to_file, NULL);
 
   if (!g_file_test (file, G_FILE_TEST_EXISTS)) {
-    gchar *dir = g_build_filename (g_get_home_dir (), ".gEDA", NULL);
-    g_mkdir (dir, S_IRWXU | S_IRWXG);
-    g_free (dir);
+    g_mkdir (s_path_user_config (), S_IRWXU | S_IRWXG);
 
     g_file_set_contents (file, "", -1, NULL);
   }

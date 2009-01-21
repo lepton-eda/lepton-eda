@@ -154,30 +154,6 @@ gint g_rc_parse_general(TOPLEVEL *toplevel,
 }
 
 
-/*! \brief Read gEDA root path from RC file.
- *  \par Function Description
- *  This function will read the RC file and parse the root path for gEDA.
- *
- *  \return String containing rc root path
- *
- *  \warning Do not free the returned character string.
- */
-const gchar* g_rc_parse_path(void)
-{
-  const gchar *rc_path;
-  
-  if (g_strcasecmp (GEDARCDIR, "none") == 0) {
-    /* rc dir not specified at configure time, so search for config in */
-    /* the normal GEDADATA directory */
-    rc_path = g_getenv ("GEDADATA");
-  } else {
-    /* rc path specified at configure time, always return specified path */
-    rc_path = GEDARCDIR;
-  }
-
-  return(rc_path);
-}
-
 /*! \brief Parses a system RC file.
  *  \par Function Description
  *  This function wil open and parse a system rc file.
@@ -188,18 +164,12 @@ const gchar* g_rc_parse_path(void)
  */
 gint g_rc_parse_system_rc(TOPLEVEL *toplevel, const gchar *rcname)
 {
-  const gchar *geda_data = g_getenv ("GEDADATA");
   gint found_rc;
   gchar *tmp;
   char *filename;
   gchar *ok_msg, *err_msg;
 
-  if (geda_data == NULL) {
-    fprintf(stderr, "You must set the GEDADATA environment variable!\n");
-    exit(-1);
-  }
-
-  tmp = g_strconcat (g_rc_parse_path (),
+  tmp = g_strconcat (s_path_sys_config (),
                      G_DIR_SEPARATOR_S,
                      "system-", rcname,
                      NULL);
@@ -208,10 +178,8 @@ gint g_rc_parse_system_rc(TOPLEVEL *toplevel, const gchar *rcname)
     return 0;
   }
 
-  ok_msg  = g_strdup_printf (_("Read system-%s file [%%s]\n"),
-                             rcname);
-  err_msg = g_strdup_printf (_("Did not find required system-%s file [%%s]\n"),
-                             rcname);  
+  ok_msg  = g_strdup_printf (_("Read system config file [%%s]\n"));
+  err_msg = g_strdup_printf (_("Did not find required system config file [%%s]\n"));
   found_rc = g_rc_parse_general(toplevel, filename, ok_msg, err_msg);
 
   g_free(ok_msg);
@@ -232,30 +200,21 @@ gint g_rc_parse_system_rc(TOPLEVEL *toplevel, const gchar *rcname)
  */
 gint g_rc_parse_home_rc(TOPLEVEL *toplevel, const gchar *rcname)
 {
-  const gchar *home;
   gint found_rc;
   gchar *tmp;
   char *filename;
   gchar *ok_msg, *err_msg;
 
-  home = g_getenv ("HOME");
-  if (home == NULL)
-     home = g_get_home_dir ();
+  if (s_path_user_config () == NULL) return 0;
 
-  if (home == NULL) {
-    return 0;
-  }
-
-  tmp = g_build_filename (home, ".gEDA", rcname, NULL);
+  tmp = g_build_filename (s_path_user_config (), rcname, NULL);
   filename = f_normalize_filename (tmp, NULL);
   if (filename == NULL) {
     return 0;
   }
 
-  ok_msg  = g_strdup_printf (_("Read ~/.gEDA/%s file [%%s]\n"),
-                             rcname);
-  err_msg = g_strdup_printf (_("Did not find optional ~/.gEDA/%s file [%%s]\n"),
-                             rcname);  
+  ok_msg  = g_strdup_printf (_("Read user config file [%%s]\n"));
+  err_msg = g_strdup_printf (_("Did not find optional user config file [%%s]\n"));
   found_rc = g_rc_parse_general(toplevel, filename, ok_msg, err_msg);
   
   g_free(ok_msg);
@@ -286,10 +245,8 @@ gint g_rc_parse_local_rc(TOPLEVEL *toplevel, const gchar *rcname)
     return 0;
   }
 
-  ok_msg  = g_strdup_printf (_("Read local %s file [%%s]\n"),
-                             rcname);
-  err_msg = g_strdup_printf (_("Did not find optional local %s file [%%s]\n"),
-                             rcname);  
+  ok_msg  = g_strdup_printf (_("Read local config file [%%s]\n"));
+  err_msg = g_strdup_printf (_("Did not find optional local config file [%%s]\n"));
   found_rc = g_rc_parse_general(toplevel, filename, ok_msg, err_msg);
 
   g_free(ok_msg);
@@ -357,15 +314,7 @@ void g_rc_parse(TOPLEVEL *toplevel,
 		const gchar *rcname, const gchar *specified_rc_filename)
 {
   gint found_rc = 0;
-  char *rc_path;
 
-  /* set the GEDADATARC environment variable so that the rc files */
-  /* know where to look for others */
-  rc_path = f_normalize_filename (g_rc_parse_path (), NULL);
-
-  g_setenv ("GEDADATARC", rc_path, TRUE);
-  g_free (rc_path);
-  
   /* visit rc files in order */
   /* Changed by SDB 1.2.2005 in response to Peter Kaiser's bug report.
    * Read gafrc files first */

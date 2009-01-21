@@ -99,9 +99,9 @@ void g_register_libgeda_funcs (void)
 void g_register_libgeda_vars (void)
 {
   scm_c_define("geda-rc-path", 
-	       scm_from_locale_string (g_rc_parse_path()));
+	       scm_from_locale_string (s_path_sys_config ()));
   scm_c_define("geda-data-path",
-	       scm_from_locale_string (g_getenv ("GEDADATA")));
+	       scm_from_locale_string (s_path_sys_data ()));
   scm_c_define("path-sep", 
 	       scm_from_locale_string(G_DIR_SEPARATOR_S));
 
