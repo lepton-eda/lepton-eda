@@ -128,7 +128,6 @@ void main_prog(void *closure, int argc, char *argv[])
   char *input_str = NULL;
   int argv_index;
   int first_page = 1;
-  char *geda_data = NULL;
   char *filename;
   SCM scm_tmp;
 
@@ -222,10 +221,16 @@ void main_prog(void *closure, int argc, char *argv[])
 
   o_undo_init(); 
 
-  geda_data = getenv("GEDADATA");
-  if (geda_data == NULL) {
-    fprintf(stderr, _("You must set the GEDADATA environment variable!\n"));
-    exit(-1);
+  if (s_path_sys_data () == NULL) {
+    gchar *message = _("You must set the GEDADATA environment variable!\n\n"
+                       "gschem cannot locate its data files. You must set the GEDADATA\n"
+                       "environment variable to point to the correct location.\n");
+    GtkWidget* error_diag =
+      gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_ERROR,
+                              GTK_BUTTONS_OK,
+                              message);
+    gtk_dialog_run (GTK_DIALOG (error_diag));
+    g_error (message);
   }
 
   /* Allocate w_current */
