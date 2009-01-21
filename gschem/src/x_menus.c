@@ -387,6 +387,7 @@ out:
 static GList *recent_files = NULL;
 
 #define RECENT_FILES_STORE ".gEDA/gschem-recent-files"
+#define MAX_RECENT_FILES 10
 
 /*! \brief Make all toplevels reflect changes to the
  *         recent files list.
@@ -521,10 +522,16 @@ void x_menu_attach_recent_files_submenu(GSCHEM_TOPLEVEL *w_current)
 }
 
 /*! \brief Add a filename to the list of recent files.
+ *
+ *  If filename is already in the list, moves it to the head of the
+ *  list.
  */
 void recent_files_add(const char *filename)
 {
    gchar *basename;
+   gchar *save_fn;
+   GError *err = NULL;
+   GList *p = recent_files;
 
    basename = g_path_get_basename(filename);
    if(strstr(basename, "untitled_") == basename) {
@@ -534,16 +541,34 @@ void recent_files_add(const char *filename)
 
    g_free(basename);
 
-   /* check if it is a duplicate */
-   GList *p = recent_files;
-   while(p) {
-      if(strcmp((char *)p->data, filename) == 0 )
-         return;
-      p = g_list_next(p);
+   /* Normalize the filename. */
+   save_fn = f_normalize_filename (filename, &err);
+   if (err != NULL) {
+     save_fn = g_strdup (filename);
+     g_error_free (err);
    }
 
-   filename = g_strdup(filename);
-   recent_files = g_list_prepend(recent_files, (gpointer)filename);
+   /* Check if the file is already in the list.  */
+   while (p != NULL) {
+     if (strcmp (save_fn, (gchar *) p->data) == 0) {
+       break;
+     }
+     p = g_list_next (p);
+   }
+
+   if (p != NULL) {
+     /* Since we found the filename already in the list, move it to
+      * the head of the list. */
+     g_free (save_fn);
+     save_fn = (gchar *) p->data;
+     recent_files = g_list_delete_link (recent_files, p);
+     recent_files = g_list_prepend (recent_files, save_fn);
+   } else {
+     /* Otherwise, just add the new filename to the front of the
+      * list. */
+     recent_files = g_list_prepend (recent_files, save_fn);
+   }
+
    update_recent_files_menus();
 }
 
@@ -571,7 +596,7 @@ static void recent_files_create_empty()
  */
 void recent_files_save(gpointer user_data)
 {
-   gchar **files = NULL;
+   gchar *files[MAX_RECENT_FILES];
    int num = 0;
    gchar *c;
    gchar *file = g_build_filename(g_get_home_dir(), RECENT_FILES_STORE, NULL);
@@ -582,10 +607,9 @@ void recent_files_save(gpointer user_data)
       return;
    }
 
-   while(p) {
-      files = g_realloc(files, (num + 1) * sizeof(gchar *));
-      files[num++] = (gchar *)p->data;
-      p = g_list_next(p);
+   while((p != NULL) && (num < MAX_RECENT_FILES)) {
+     files[num++] = (gchar *)p->data;
+     p = g_list_next(p);
    }
 
    GKeyFile *kf = g_key_file_new();
@@ -597,7 +621,6 @@ void recent_files_save(gpointer user_data)
 
    g_free(c);
    g_free(file);
-   g_free(files);
    g_key_file_free(kf);
 }
 
