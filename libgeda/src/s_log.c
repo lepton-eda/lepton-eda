@@ -42,6 +42,8 @@
 
 #include "libgeda_priv.h"
 
+#include <time.h>
+
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
@@ -56,6 +58,8 @@ int do_logging = TRUE;
                           (G_LOG_LEVEL_DEBUG | G_LOG_LEVEL_INFO))
 #define PRINT_LOG_LEVELS (CATCH_LOG_LEVELS ^ \
                           (G_LOG_LEVEL_WARNING | G_LOG_LEVEL_MESSAGE))
+
+#define LOG_OPEN_ATTEMPTS 5
 
 static void s_log_handler (const gchar *log_domain,
                            GLogLevelFlags log_level,
@@ -73,27 +77,102 @@ static guint log_handler_id;
  *
  *  \param [in] filename  Character string with file name to log to.
  */
-void s_log_init (const gchar *filename)
+void s_log_init (const gchar *prefix)
 {
+  /* FIXME we assume that the prefix is in the filesystem encoding. */
+
+  time_t nowt;
+  struct tm *nowtm;
+  gchar *full_prefix = NULL;
+  size_t full_prefix_len = 0;
+  gchar *dir_path = NULL;
+  gchar *filename = NULL;
+  int s, i;
+  int last_exist_logn = 0;
+  GDir *logdir = NULL;
+
+  if (logfile_fd != -1) {
+    g_critical ("s_log_init: Log already initialised.\n");
+    return;
+  }
   if (do_logging == FALSE) {
-    logfile_fd = -1;
     return;
   }
 
-  /* create log file */
-  logfile_fd = open (filename, O_RDWR|O_CREAT|O_TRUNC, 0600);
-  if (logfile_fd == -1) {
-    fprintf(stderr, "Could not open log file: %s\n", filename);
-    fprintf(stderr, "Errno was: %d\n", errno);
+  time (&nowt);
+  nowtm = gmtime (&nowt);
+
+  /* create "real" prefix -- this has the form "<prefix>-<date>-" */
+  full_prefix = g_strdup_printf ("%s-%04i%02i%02i-", prefix,
+                                 nowtm->tm_year + 1900, nowtm->tm_mon + 1,
+                                 nowtm->tm_mday);
+  full_prefix_len = strlen (full_prefix);
+
+  /* Find/create the directory where we're going to put the logs.
+   * FIXME should this be configured somehow?
+   *
+   * Then run through it finding the "biggest" existing filename with
+   * a matching prefix & date. */
+  dir_path = g_build_filename (s_path_user_config (), "logs", NULL);
+  /* Try to create the directory. */
+  s = g_mkdir_with_parents (dir_path, 0777/*octal*/);
+  if (s != 0) {
+    /* It's okay to use the logging functions from here, because
+     * there's already a default handler. */
+    g_warning ("Could not create log directory %s: %s\n",
+               dir_path, strerror (errno));
+    g_free (dir_path);
+    g_free (full_prefix);
     return;
   }
 
-  /* install the log handler */
-  log_handler_id = g_log_set_handler (NULL,
-                                      CATCH_LOG_LEVELS,
-                                      s_log_handler,
-                                      NULL);
+  logdir = g_dir_open (dir_path, 0, NULL);
+  while (TRUE) {
+    const gchar *file = g_dir_read_name (logdir);
+    int n;
+    if (file == NULL) break;
+    if (strncmp (full_prefix, file, full_prefix_len)) continue;
 
+    s = sscanf (file + full_prefix_len, "%i", &n);
+    if (s != 1) continue;
+
+    if (n > last_exist_logn) last_exist_logn = n;
+  }
+
+  /* Now try and create a new file. When we fail, increment the number. */
+  i = 0;
+  while (logfile_fd == -1 && (LOG_OPEN_ATTEMPTS > i++)) {
+    filename = g_strdup_printf ("%s%s%s%i.log", dir_path,
+                                G_DIR_SEPARATOR_S, full_prefix,
+                                ++last_exist_logn);
+    logfile_fd = open (filename, O_RDWR|O_CREAT|O_EXCL, 0600);
+
+    if (logfile_fd == -1 && (errno != EEXIST)) break;
+  }
+
+  if (logfile_fd != -1) {
+
+    /* install the log handler */
+    log_handler_id = g_log_set_handler (NULL,
+                                        CATCH_LOG_LEVELS,
+                                        s_log_handler,
+                                        NULL);
+
+  } else {
+    /* It's okay to use the logging functions from here, because
+     * there's already a default handler. */
+    if (errno == EEXIST) {
+      g_warning ("Could not create unique log filename in %s\n",
+                 dir_path);
+    } else {
+      g_warning ("Could not create log file in %s: %s\n",
+                 dir_path, strerror (errno));
+    }
+  }
+
+  g_free (filename);
+  g_free (dir_path);
+  g_free (full_prefix);
 }
 
 /*! \brief Terminates the logging of messages.

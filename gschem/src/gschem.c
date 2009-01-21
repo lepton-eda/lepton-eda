@@ -178,11 +178,8 @@ void main_prog(void *closure, int argc, char *argv[])
   load_newer_backup_func = x_fileselect_load_backup;
   select_func = o_select_object;
 
-  /*! \todo Probably the file name shuold be defined elsewhere */
   /* create log file right away even if logging is enabled */
-  filename = g_build_filename (cwd, "gschem.log", NULL);
-  s_log_init (filename);
-  g_free (filename);
+  s_log_init ("gschem");
 
   s_log_message(
                 _("gEDA/gschem version %s%s.%s\n"), PREPEND_VERSION_STRING,

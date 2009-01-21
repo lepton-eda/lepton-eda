@@ -118,8 +118,6 @@ void gattrib_main(void *closure, int argc, char *argv[])
   /* GtkWidget *main_window is a global */
 
   int argv_index;
-  gchar *cwd;
-  gchar *logfile;
 
 #ifdef HAVE_GTHREAD
   /* Gattrib isn't threaded, but some of GTK's file chooser
@@ -142,11 +140,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
   
   /* ----------  create log file right away ---------- */
   /* ----------  even if logging is enabled ---------- */
-  cwd = g_get_current_dir();
-  logfile = g_build_filename (cwd, "gattrib.log", NULL);
-  s_log_init (logfile);
-  g_free (logfile);
-  g_free (cwd);
+  s_log_init ("gattrib");
 
   s_log_message
     ("gEDA/gattrib version %s%s.%s\n", PREPEND_VERSION_STRING, 

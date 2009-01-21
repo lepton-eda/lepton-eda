@@ -52,8 +52,6 @@ main_prog(void *closure, int argc, char *argv[])
   int exit_status;
   char *cwd;
 
-  char *logfile;
-  
   TOPLEVEL *pr_current;
   
   argv_index = parse_commandline(argc, argv);
@@ -63,10 +61,8 @@ main_prog(void *closure, int argc, char *argv[])
 
   /* create log file right away */
   /* even if logging is enabled */
-  logfile = g_build_filename (cwd, "gsymcheck.log", NULL);
   x_log_update_func = s_log_update;
-  s_log_init (logfile);
-  g_free (logfile);
+  s_log_init ("gsymcheck");
 
   logging_dest=STDOUT_TTY;
   if (!quiet_mode)

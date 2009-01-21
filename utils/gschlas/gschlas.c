@@ -53,7 +53,6 @@ main_prog(void *closure, int argc, char *argv[])
   int i;
   int argv_index;
   char *cwd;
-  char *logfile;
   
   TOPLEVEL *pr_current;
 
@@ -68,9 +67,7 @@ main_prog(void *closure, int argc, char *argv[])
 
   /* create log file right away */
   /* even if logging is enabled */
-  logfile = g_build_filename (cwd, "gschlas.log", NULL);
-  s_log_init (logfile);
-  g_free (logfile);
+  s_log_init ("gschlas");
 	
   logging_dest=STDOUT_TTY;
   if (!quiet_mode)
