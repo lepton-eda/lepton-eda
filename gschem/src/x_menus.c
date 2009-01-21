@@ -389,6 +389,11 @@ static GList *recent_files = NULL;
 #define RECENT_FILES_STORE ".gEDA/gschem-recent-files"
 #define MAX_RECENT_FILES 10
 
+struct recent_file_menu_data {
+  GSCHEM_TOPLEVEL *w_current;
+  gchar *filename;
+};
+
 /*! \brief Make all toplevels reflect changes to the
  *         recent files list.
  */
@@ -436,11 +441,19 @@ static void clear_recent_file_list(gpointer data)
    update_recent_files_menus();
 }
 
-static void recent_file_clicked(gpointer filename)
+static void
+recent_file_free_menu_data (gpointer data, GClosure *closure) {
+  g_free (data);
+}
+
+static void recent_file_clicked(GtkMenuItem *menuitem, gpointer user_data)
 {
    FILE *fp;
    PAGE *page;
-   GSCHEM_TOPLEVEL *w_current;
+   struct recent_file_menu_data *data =
+     (struct recent_file_menu_data *) user_data;
+   GSCHEM_TOPLEVEL *w_current = data->w_current;
+   gchar *filename = data->filename;
 
    /* Check if the file exists */
    fp = fopen((char *) filename, "r");
@@ -453,12 +466,8 @@ static void recent_file_clicked(gpointer filename)
    }
    fclose(fp);
 
-   w_current = gschem_toplevel_new();
-   w_current->toplevel = s_toplevel_new();
-   x_window_setup(w_current);
    page = x_window_open_page(w_current, (char *)filename);
    x_window_set_current_page(w_current, page);
-   s_log_message (_("New Window created [%s]\n"), (char *)filename);
 }
 
 /*! \brief Attach a submenu with filenames to the 'Recent files'
@@ -494,12 +503,17 @@ void x_menu_attach_recent_files_submenu(GSCHEM_TOPLEVEL *w_current)
    recent_submenu = gtk_menu_new();
    GList *p = recent_files;
    while(p) {
-      tmp = gtk_menu_item_new_with_label((gchar *)p->data);
-      gtk_signal_connect_object(GTK_OBJECT(tmp), "activate",
-            GTK_SIGNAL_FUNC (recent_file_clicked),
-            p->data);
-      gtk_menu_append(GTK_MENU(recent_submenu), tmp);
-      p = g_list_next(p);
+     struct recent_file_menu_data *menu_data = g_new0 (struct recent_file_menu_data, 1);
+     menu_data->filename = p->data;
+     menu_data->w_current = w_current;
+     tmp = gtk_menu_item_new_with_label((gchar *)p->data);
+     g_signal_connect_data (GTK_OBJECT(tmp), "activate",
+                            (GCallback) recent_file_clicked,
+                            menu_data,
+                            (GClosureNotify) recent_file_free_menu_data,
+                            0);
+     gtk_menu_append(GTK_MENU(recent_submenu), tmp);
+     p = g_list_next(p);
    }
 
    if(recent_files != NULL) {
