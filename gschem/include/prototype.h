@@ -801,7 +801,7 @@ void x_compselect_deselect (GSCHEM_TOPLEVEL *w_current);
 /* x_fileselect.c */
 void x_fileselect_open(GSCHEM_TOPLEVEL *w_current);
 void x_fileselect_save(GSCHEM_TOPLEVEL *w_current);
-int x_fileselect_load_backup(TOPLEVEL *toplevel, GString *message);
+int x_fileselect_load_backup(void *user_data, GString *message);
 /* x_grid.c */
 void x_grid_draw_region(GSCHEM_TOPLEVEL *w_current, int x, int y, int width, int height);
 int x_grid_query_drawn_spacing(GSCHEM_TOPLEVEL *w_current);

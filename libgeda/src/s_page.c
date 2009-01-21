@@ -122,8 +122,6 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   page->saved_since_first_loaded = 0;
   page->do_autosave_backup = 0;
 
-  page->load_newer_backup_func = load_newer_backup_func;
-
   /* now append page to page list of toplevel */
   geda_list_add( toplevel->pages, page );
 

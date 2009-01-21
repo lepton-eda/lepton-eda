@@ -174,7 +174,6 @@ void main_prog(void *closure, int argc, char *argv[])
   path_draw_func = o_path_draw;
   pin_draw_func = o_pin_draw;
   text_draw_func = o_text_draw;
-  load_newer_backup_func = x_fileselect_load_backup;
   select_func = o_select_object;
 
   /* create log file right away even if logging is enabled */
@@ -237,6 +236,9 @@ void main_prog(void *closure, int argc, char *argv[])
   w_current = gschem_toplevel_new ();
   w_current->toplevel = s_toplevel_new ();
   global_window_current = w_current;
+
+  w_current->toplevel->load_newer_backup_func = x_fileselect_load_backup;
+  w_current->toplevel->load_newer_backup_data = w_current;
 
   /* Now read in RC files. */
   g_rc_parse_gtkrc();

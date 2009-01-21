@@ -317,23 +317,10 @@ x_fileselect_save (GSCHEM_TOPLEVEL *w_current)
  *  \param [in] message   Message to display to user.
  *  \return TRUE if the user wants to load the backup file, FALSE otherwise.
  */
-int x_fileselect_load_backup(TOPLEVEL *toplevel, GString *message)
+int x_fileselect_load_backup(void *user_data, GString *message)
 {
   GtkWidget *dialog;
-  GSCHEM_TOPLEVEL *window, *w_current = NULL;
-   GList *iter;
-
-  /* Find the matching GSCHEM_TOPLEVEL for the TOPLEVEL we were passed */
-  iter = global_window_list;
-  while (iter != NULL) {
-    window = (GSCHEM_TOPLEVEL *)iter->data;
-    if (window->toplevel == toplevel) {
-      w_current = window;
-      break;
-    }
-    iter = g_list_next (iter);
-  }
-  g_assert( w_current != NULL );
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) user_data;
 
   g_string_append(message, "\nIf you load the original file, the backup file will be overwritten in the next autosave timeout and it will be lost.\n\nDo you want to load the backup file?\n");
 

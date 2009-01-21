@@ -431,9 +431,6 @@ struct st_page {
   gint ops_since_last_backup;
   gchar do_autosave_backup;
 
-  /* Function which asks the user wether to load a newer backup file */
-  int (*load_newer_backup_func)();
-
 };
 
 /*! \brief different kind of snapping mechanisms used in TOPLEVEL */
@@ -441,6 +438,9 @@ typedef enum {SNAP_OFF, SNAP_GRID, SNAP_RESNAP, SNAP_STATE_COUNT} SNAP_STATE;
 
 /*! \brief Type of callback function for calculating text bounds */
 typedef int(*RenderedBoundsFunc)(void *, OBJECT *, int *, int *, int *, int *);
+
+/*! \brief Type of callback function for querying loading of backups */
+typedef gboolean(*LoadBackupQueryFunc)(void *, GString *);
 
 struct st_toplevel {
 
@@ -580,6 +580,10 @@ struct st_toplevel {
   /* Callback function for calculating text bounds */
   RenderedBoundsFunc rendered_text_bounds_func;
   void *rendered_text_bounds_data;
+
+  /* Callback function for deciding whether to load a backup file. */
+  LoadBackupQueryFunc load_newer_backup_func;
+  void *load_newer_backup_data;
 };
 
 /* structures below are for gnetlist */

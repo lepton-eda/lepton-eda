@@ -55,9 +55,6 @@
 #include <dmalloc.h>
 #endif
 
-/*! Default setting for arc draw function. */
-int (*load_newer_backup_func)() = NULL;
-
 /*! \brief Get the autosave filename for a file
  *  \par Function description
  *  Returns the expected autosave filename for the \a filename passed.
@@ -264,13 +261,13 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
         g_string_append(message, _("The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n"));
       }
       g_string_append (message, _("Gschem usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.\n"));
-      if (toplevel->page_current->load_newer_backup_func == NULL) {
+      if (toplevel->load_newer_backup_func == NULL) {
         g_warning ("%s", message->str);
         g_warning (_("\nRun gschem and correct the situation.\n\n"));
       } else {
         /* Ask the user if load the backup or the original file */
-        if (toplevel->page_current->load_newer_backup_func
-            (toplevel, message)) {
+        if (toplevel->load_newer_backup_func
+            (toplevel->load_newer_backup_data, message)) {
           /* Load the backup file */
           load_backup_file = 1;
         }
