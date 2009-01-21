@@ -496,21 +496,25 @@ s_expand_env_variables (const gchar *string)
  *  users. If the GEDADATA environment variable is set, returns its
  *  value; otherwise, uses a compiled-in path.
  *
+ *  On Windows, the compiled in path is *not* used, as it might not
+ *  match the path where the user has installed gEDA.
+ *
  *  \warning The returned string is owned by libgeda and should not be
  *  modified or free'd.
  *
- *  \todo On Windows, we probably shouldn't use the compiled-in
- *  default.
+ *  \return the gEDA shared data path, or NULL if none could be found.
  */
 const char *s_path_sys_data () {
   static const char *p = NULL;
   if (p == NULL) {
     p = g_getenv ("GEDADATA");
   }
+# if !defined (_WIN32)
   if (p == NULL) {
     p = GEDADATADIR;
     g_setenv ("GEDADATA", p, FALSE);
   }
+# endif
   return p;
 }
 
@@ -518,10 +522,14 @@ const char *s_path_sys_data () {
  *  \par Function description
  *  Returns the path to be searched for gEDA configuration shared
  *  between all users. If the GEDADATARC environment variable is set,
- *  returns its value; otherwise, uses a compiled-in path.
+ *  returns its value; otherwise, uses a compiled-in path. Finally
+ *  fallback to using the system data path.
  *
  *  \warning The returned string is owned by libgeda and should not be
  *  modified or free'd.
+ *
+ *  \return the gEDA shared config path, or NULL if none could be
+ *  found.
  */
 const char *s_path_sys_config () {
   static const char *p = NULL;
@@ -538,8 +546,8 @@ const char *s_path_sys_config () {
       /* Otherwise, just use the data directory */
       p = s_path_sys_data ();
     }
-    g_setenv("GEDADATARC", p, FALSE);
   }
+  if (p != NULL) g_setenv("GEDADATARC", p, FALSE);
   return p;
 }
 
