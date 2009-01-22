@@ -152,6 +152,10 @@ DEFINE_I_CALLBACK(file_new_window)
 
   w_current = gschem_toplevel_new ();
   w_current->toplevel = s_toplevel_new ();
+
+  w_current->toplevel->load_newer_backup_func = x_fileselect_load_backup;
+  w_current->toplevel->load_newer_backup_data = w_current;
+
   x_window_setup (w_current);
 
   page = x_window_open_page (w_current, NULL);
