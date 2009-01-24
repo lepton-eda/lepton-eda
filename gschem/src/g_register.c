@@ -200,6 +200,11 @@ static struct gsubr_t gschem_funcs[] = {
   { "edit-hide-text",            0, 0, 0, g_keys_edit_hide_text },
   { "edit-autonumber",           0, 0, 0, g_keys_edit_autonumber_text },
 
+  { "clipboard-copy",            0, 0, 0, g_keys_clipboard_copy },
+  { "clipboard-cut",             0, 0, 0, g_keys_clipboard_cut },
+  { "clipboard-paste",           0, 0, 0, g_keys_clipboard_paste },
+  { "clipboard-paste-hotkey",    0, 0, 0, g_keys_clipboard_paste_hotkey },
+
   { "buffer-copy1",              0, 0, 0, g_keys_buffer_copy1 },
   { "buffer-copy2",              0, 0, 0, g_keys_buffer_copy2 },
   { "buffer-copy3",              0, 0, 0, g_keys_buffer_copy3 },

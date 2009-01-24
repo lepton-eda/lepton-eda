@@ -120,6 +120,7 @@ struct st_gschem_toplevel {
   int doing_pan;                        /* mouse pan status flag */
   int buffer_number;                    /* current paste buffer in use */
   void (*last_callback)();              /* Last i_call* cmd executed */
+  GList *clipboard_buffer;              /* buffer for system clipboard integration */
 
   /* ------------------ */
   /* rc/user parameters */

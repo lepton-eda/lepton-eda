@@ -255,6 +255,11 @@ DEFINE_G_KEYS(edit_show_text)
 DEFINE_G_KEYS(edit_hide_text)
 DEFINE_G_KEYS(edit_autonumber_text)
 
+DEFINE_G_KEYS(clipboard_copy)
+DEFINE_G_KEYS(clipboard_cut)
+DEFINE_G_KEYS(clipboard_paste)
+DEFINE_G_KEYS(clipboard_paste_hotkey)
+
 DEFINE_G_KEYS(buffer_copy1)
 DEFINE_G_KEYS(buffer_copy2)
 DEFINE_G_KEYS(buffer_copy3)

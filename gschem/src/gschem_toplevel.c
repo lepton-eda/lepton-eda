@@ -137,6 +137,7 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->doing_pan = 0;
   w_current->buffer_number = 0;
   w_current->last_callback = NULL;
+  w_current->clipboard_buffer = NULL;
 
   /* ------------------ */
   /* rc/user parameters */

@@ -1800,6 +1800,97 @@ DEFINE_I_CALLBACK(page_print)
   s_page_print_all(w_current->toplevel);
 }
 
+/*! \section clipboard-menu Clipboard Menu Callback Functions */
+/*! \brief Copy selection to clipboard.
+ *  \par Function Description
+ * Copies the current selection to the clipboard, via buffer 0.
+ */
+DEFINE_I_CALLBACK(clipboard_copy)
+{
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+
+  exit_if_null (w_current);
+  if (!o_select_selected (w_current)) return;
+
+  i_update_middle_button (w_current, i_callback_clipboard_copy,
+                          _("Copy to clipboard"));
+
+  o_buffer_copy (w_current, 0);
+  x_clipboard_set (w_current, object_buffer[0]);
+}
+
+/*! \brief Cut selection to clipboard.
+ *  \par Function Description
+ * Cut the current selection to the clipboard, via buffer 0.
+ */
+DEFINE_I_CALLBACK(clipboard_cut)
+{
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+
+  exit_if_null (w_current);
+  if (!o_select_selected (w_current)) return;
+
+  i_update_middle_button (w_current, i_callback_clipboard_cut,
+                          _("Cut to clipboard"));
+
+  o_buffer_cut (w_current, 0);
+  x_clipboard_set (w_current, object_buffer[0]);
+}
+
+/*! \brief Start pasting clipboard contents.
+ *  \par Function Description
+ * Cut the current selection to the clipboard, via buffer 0.
+ */
+DEFINE_I_CALLBACK(clipboard_paste)
+{
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) data;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  GList *object_list = NULL;
+
+  exit_if_null(w_current);
+
+  i_update_middle_button (w_current, i_callback_buffer_paste1, _("Paste from clipboard"));
+
+  object_list = x_clipboard_get (w_current);
+
+  if (object_list != NULL) {
+    s_delete_object_glist (toplevel, object_buffer[0]);
+    object_buffer[0] = object_list;
+    o_redraw_cleanstates (w_current);
+    w_current->buffer_number = 0;
+    w_current->inside_action = 1;
+    i_set_state (w_current, STARTPASTE);
+  } else {
+    i_set_state_msg (w_current, SELECT, _("Empty buffer"));
+  }
+}
+
+/*! \brief Start pasting clipboard contents (hotkey version)
+ *  \par Function Description
+ *  It's not entirely clear what the difference is between this and
+ *  i_callback_clipboard_paste()...
+ */
+DEFINE_I_CALLBACK(clipboard_paste_hotkey)
+{
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) data;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  GList *object_list = NULL;
+  gint wx, wy;
+
+  exit_if_null (w_current);
+
+  if (!x_event_get_pointer_position (w_current, TRUE, &wx, &wy))
+    return;
+
+  object_list = x_clipboard_get (w_current);
+
+  if (object_list == NULL) return;
+  s_delete_object_glist (toplevel, object_buffer[0]);
+  object_buffer[0] = object_list;
+
+  o_buffer_paste_start (w_current, wx, wy, 0);
+}
+
 /*! \section buffer-menu Buffer Menu Callback Functions */
 /*! \todo Finish function documentation!!!
  *  \brief

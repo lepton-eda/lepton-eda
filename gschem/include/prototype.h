@@ -94,6 +94,10 @@ SCM g_keys_edit_find(SCM rest);
 SCM g_keys_edit_show_text(SCM rest);
 SCM g_keys_edit_hide_text(SCM rest);
 SCM g_keys_edit_autonumber_text(SCM rest);
+SCM g_keys_clipboard_copy(SCM rest);
+SCM g_keys_clipboard_cut(SCM rest);
+SCM g_keys_clipboard_paste(SCM rest);
+SCM g_keys_clipboard_paste_hotkey(SCM rest);
 SCM g_keys_buffer_copy1(SCM rest);
 SCM g_keys_buffer_copy2(SCM rest);
 SCM g_keys_buffer_copy3(SCM rest);
@@ -378,6 +382,10 @@ void i_callback_page_close(gpointer data, guint callback_action, GtkWidget *widg
 void i_callback_page_revert(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_discard(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_print(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_clipboard_copy(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_clipboard_cut(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_clipboard_paste(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_clipboard_paste_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_buffer_copy1(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_buffer_copy2(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_buffer_copy3(gpointer data, guint callback_action, GtkWidget *widget);
@@ -733,6 +741,9 @@ void x_vscrollbar_set_ranges(GSCHEM_TOPLEVEL *w_current);
 void x_vscrollbar_update(GSCHEM_TOPLEVEL *w_current);
 void x_scrollbars_update(GSCHEM_TOPLEVEL *w_current);
 void x_basic_warp_cursor(GtkWidget *widget, gint x, gint y);
+/* x_clipboard.c */
+gboolean x_clipboard_set (GSCHEM_TOPLEVEL *w_current, const GList *object_list);
+GList *x_clipboard_get (GSCHEM_TOPLEVEL *w_current);
 /* x_color.c */
 void x_color_init (void);
 void x_color_free (void);

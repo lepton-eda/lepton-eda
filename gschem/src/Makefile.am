@@ -52,6 +52,7 @@ gschem_SOURCES = \
 	x_attribedit.c \
 	x_autonumber.c \
 	x_basic.c \
+	x_clipboard.c \
 	x_color.c \
 	x_compselect.c \
 	x_dialog.c \

@@ -1368,9 +1368,9 @@
     ("Shift U" . edit-undo)
     ("Shift R" . edit-redo)
     ("Shift Z" . view-zoom-out-hotkey)
-    ("Control x" . buffer-cut1)
-    ("Control c" . buffer-copy1)
-    ("Control v" . buffer-paste1-hotkey)
+    ("Control x" . clipboard-cut)
+    ("Control c" . clipboard-copy)
+    ("Control v" . clipboard-paste-hotkey)
     ("Control z" . edit-undo)
     ("Control y" . edit-redo)))
 
