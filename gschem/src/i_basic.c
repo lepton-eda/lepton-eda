@@ -374,11 +374,17 @@ void i_update_menus(GSCHEM_TOPLEVEL *w_current)
   g_assert(w_current != NULL);
   g_assert(toplevel->page_current != NULL);
 
+  if (x_clipboard_usable (w_current)) {
+    x_menus_sensitivity(w_current, "Edit/Paste", TRUE);
+  } else {
+    x_menus_sensitivity(w_current, "Edit/Paste", FALSE);
+  }
+
   if (o_select_selected (w_current)) {
     /* since one or more things are selected, we set these TRUE */
     /* These strings should NOT be internationalized */
-    x_menus_sensitivity(w_current, "Edit/Cut Buffer", TRUE);
-    x_menus_sensitivity(w_current, "Edit/Copy Buffer", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Cut", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Copy", TRUE);
     x_menus_sensitivity(w_current, "Edit/Edit...", TRUE);
     x_menus_sensitivity(w_current, "Edit/Edit Text...", TRUE);
     x_menus_sensitivity(w_current, "Edit/Copy Mode", TRUE);
@@ -424,8 +430,8 @@ void i_update_menus(GSCHEM_TOPLEVEL *w_current)
   } else {
     /* Nothing is selected, grey these out */
     /* These strings should NOT be internationalized */
-    x_menus_sensitivity(w_current, "Edit/Cut Buffer", FALSE);
-    x_menus_sensitivity(w_current, "Edit/Copy Buffer", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Cut", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Copy", FALSE);
     x_menus_sensitivity(w_current, "Edit/Edit...", FALSE);
     x_menus_sensitivity(w_current, "Edit/Edit Text...", FALSE);
     x_menus_sensitivity(w_current, "Edit/Copy Mode", FALSE);

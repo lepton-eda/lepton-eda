@@ -44,6 +44,9 @@ void x_window_setup (GSCHEM_TOPLEVEL *w_current)
   /* Initialize the autosave callback */
   s_page_autosave_init(toplevel);
 
+  /* Initialize the clipboard callback */
+  x_clipboard_init (w_current);
+
   /* x_window_setup_world() - BEGIN */
   toplevel->init_left = -45;
   toplevel->init_top  = -45;

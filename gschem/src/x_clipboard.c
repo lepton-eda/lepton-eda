@@ -35,6 +35,19 @@
 #define MIME_TYPE_SCHEMATIC "application/x-geda-schematic"
 #define CLIP_TYPE_SCHEMATIC 1
 
+/* \brief Callback for handling system clipboard owner change.
+ * \par Function Description
+ *
+ */
+static void
+clip_handle_owner_change (GtkClipboard *cb, GdkEvent *event,
+                          gpointer user_data)
+{
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) user_data;
+
+  i_update_menus (w_current);
+}
+
 static void
 clip_get (GtkClipboard *cb, GtkSelectionData *selection_data,
           guint info, gpointer user_data_or_owner)
@@ -59,6 +72,46 @@ static void
 clip_clear (GtkClipboard *cb, gpointer user_data_or_owner)
 {
   /* Do nothing for now */
+}
+
+/* \brief Initialises system clipboard support
+ * \par Function Description
+ * Registers a signal handler to detect if the clipboard has changed
+ * and update the menu item sensitivity if necessary.
+ */
+void
+x_clipboard_init (GSCHEM_TOPLEVEL *w_current)
+{
+  GtkClipboard *cb = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
+  g_signal_connect (G_OBJECT (cb),
+                    "owner-change",
+                    G_CALLBACK (clip_handle_owner_change),
+                    w_current);
+}
+
+/* \brief Checks if the system clipboard contains schematic data.
+ * \par Function Description
+ * Checks whether the current owner of the system clipboard is
+ * advertising gEDA schematic data.
+ *
+ * \param [in,out] w_current   The current GSCHEM_TOPLEVEL.
+ *
+ * \return TRUE if the clipboard has schematic data.
+ */
+gboolean
+x_clipboard_usable (GSCHEM_TOPLEVEL *w_current)
+{
+  GtkClipboard *cb = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
+  GdkAtom *targets;
+  gint ntargets;
+  int i;
+
+  gtk_clipboard_wait_for_targets (cb, &targets, &ntargets);
+  for (i = 0; i < ntargets; i++) {
+    if (strcmp (gdk_atom_name (targets[i]), MIME_TYPE_SCHEMATIC) == 0)
+      return TRUE;
+  }
+  return FALSE;
 }
 
 /* \brief Set the contents of the system clipboard.
