@@ -26,20 +26,11 @@
 #include <dmalloc.h>
 #endif
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_buffer_copy(GSCHEM_TOPLEVEL *w_current, int buf_num)
+static void
+selection_to_buffer(GSCHEM_TOPLEVEL *w_current, int buf_num)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_current = NULL;
-
-  if (buf_num < 0 || buf_num > MAX_BUFFERS) {
-    fprintf(stderr, _("Got an invalid buffer_number [o_buffer_copy]\n"));
-    return;
-  }
 
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );
 
@@ -60,28 +51,29 @@ void o_buffer_copy(GSCHEM_TOPLEVEL *w_current, int buf_num)
  *  \par Function Description
  *
  */
-void o_buffer_cut(GSCHEM_TOPLEVEL *w_current, int buf_num)
+void o_buffer_copy(GSCHEM_TOPLEVEL *w_current, int buf_num)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  GList *s_current = NULL;
-
   if (buf_num < 0 || buf_num > MAX_BUFFERS) {
-    fprintf(stderr, _("Got an invalid buffer_number [o_buffer_cut]\n"));
+    g_warning (_("o_buffer_copy: Invalid buffer %i\n"), buf_num);
     return;
   }
 
-  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
+  selection_to_buffer (w_current, buf_num);
+}
 
-  if (object_buffer[buf_num] != NULL) {
-    s_delete_object_glist(toplevel, object_buffer[buf_num]);
-    object_buffer[buf_num] = NULL;
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+void o_buffer_cut(GSCHEM_TOPLEVEL *w_current, int buf_num)
+{
+  if (buf_num < 0 || buf_num > MAX_BUFFERS) {
+    g_warning (_("o_buffer_cut: Invalid buffer %i\n"), buf_num);
+    return;
   }
 
-  toplevel->ADDING_SEL = 1;
-  object_buffer[buf_num] = o_glist_copy_all (toplevel, s_current,
-                                             object_buffer[buf_num],
-                                             SELECTION_FLAG);
-  toplevel->ADDING_SEL = 0;
+  selection_to_buffer (w_current, buf_num);
   o_delete_selected(w_current);
 }
 
