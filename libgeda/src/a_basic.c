@@ -56,10 +56,11 @@ const gchar *o_file_format_header()
  *  This function saves a whole schematic into a buffer in libgeda
  *  format. The buffer should be freed when no longer needed.
  *
- *  \param [in] toplevel  The data to save.
+ *  \param [in] toplevel    The current TOPLEVEL.
+ *  \param [in] object_list The head of a GList of OBJECTs to save.
  *  \returns a buffer containing schematic data or NULL on failure.
  */
-gchar *o_save_buffer (TOPLEVEL *toplevel)
+gchar *o_save_buffer (TOPLEVEL *toplevel, const GList *object_list)
 {
   GString *acc;
   gchar *buffer;
@@ -74,7 +75,7 @@ gchar *o_save_buffer (TOPLEVEL *toplevel)
 
   acc = g_string_new (o_file_format_header());
 
-  buffer = o_save_objects (s_page_objects (toplevel->page_current), FALSE);
+  buffer = o_save_objects (object_list, FALSE);
   g_string_append (acc, buffer);
   g_free (buffer);
 
@@ -92,7 +93,7 @@ gchar *o_save_buffer (TOPLEVEL *toplevel)
  *  we recurse for saving out those attributes, the function must be called
  *  with save_attribs passed as TRUE.
  *
- *  \param [in] object_list   Head of list of objects to save.
+ *  \param [in] object_list   The head of a GList of objects to save.
  *  \param [in] save_attribs  Should attribute objects encounterd be saved?
  *  \returns a buffer containing schematic data or NULL on failure.
  */
@@ -217,11 +218,13 @@ gchar *o_save_objects (const GList *object_list, gboolean save_attribs)
 /*! \brief Save a file
  *  \par Function Description
  *  This function saves the data in a libgeda format to a file
- *  \param [in] toplevel  The data to save to file.
- *  \param [in] filename   The filename to save the data to.
+ *  \param [in] toplevel    The current TOPLEVEL.
+ *  \param [in] object_list The head of a GList of OBJECTs to save.
+ *  \param [in] filename    The filename to save the data to.
  *  \return 1 on success, 0 on failure.
  */
-int o_save(TOPLEVEL *toplevel, const char *filename)
+int o_save (TOPLEVEL *toplevel, const GList *object_list,
+            const char *filename)
 {
   FILE *fp;
   char *buffer;
@@ -233,7 +236,7 @@ int o_save(TOPLEVEL *toplevel, const char *filename)
     return 0;
   }
 
-  buffer = o_save_buffer (toplevel);
+  buffer = o_save_buffer (toplevel, object_list);
   if (fwrite (buffer, strlen(buffer), 1, fp) != 1) {
     /* An error occurred with fwrite */
 #warning FIXME: What do we do?
@@ -242,6 +245,19 @@ int o_save(TOPLEVEL *toplevel, const char *filename)
   fclose (fp);
 
   return 1;
+}
+
+/*! \brief Save a file
+ *  \par Function Description
+ *  This function saves the current page in a libgeda format to a file
+ *  \param [in] toplevel    The current TOPLEVEL.
+ *  \param [in] filename    The filename to save the data to.
+ *  \return 1 on success, 0 on failure.
+ */
+int o_save_curr_page (TOPLEVEL *toplevel, const char *filename)
+{
+  return o_save (toplevel, s_page_objects (toplevel->page_current),
+                 filename);
 }
 
 /*! \brief Read a memory buffer

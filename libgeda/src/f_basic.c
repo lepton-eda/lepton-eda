@@ -347,7 +347,7 @@ void f_close(TOPLEVEL *toplevel)
  */
 void f_save_close(TOPLEVEL *toplevel, char *filename)
 {
-  o_save(toplevel, filename);
+  o_save_curr_page (toplevel, filename);
   s_page_delete (toplevel, toplevel->page_current);
 }
 
@@ -444,7 +444,7 @@ int f_save(TOPLEVEL *toplevel, const char *filename)
   g_free (dirname);
   g_free (only_filename);
   
-  if (o_save(toplevel, real_filename)) {
+  if (o_save_curr_page (toplevel, real_filename)) {
 
     toplevel->page_current->saved_since_first_loaded = 1;
 

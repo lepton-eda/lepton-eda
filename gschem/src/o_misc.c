@@ -887,7 +887,7 @@ void o_autosave_backups(GSCHEM_TOPLEVEL *w_current)
           umask(saved_umask);
         }
 
-        if (o_save (toplevel, backup_filename)) {
+        if (o_save_curr_page (toplevel, backup_filename)) {
 
           p_current->ops_since_last_backup = 0;
                 p_current->do_autosave_backup = 0;
