@@ -475,7 +475,6 @@ void i_update_menus(GSCHEM_TOPLEVEL *w_current)
     /* x_menus_popup_sensitivity(w_current, "/Up", FALSE);	*/
   }
 
-  x_menus_sensitivity(w_current, "Edit/Paste Buffer",   (object_buffer[0] != NULL));
   x_menus_sensitivity(w_current, "Buffer/Paste from 1", (object_buffer[0] != NULL));
   x_menus_sensitivity(w_current, "Buffer/Paste from 2", (object_buffer[1] != NULL));
   x_menus_sensitivity(w_current, "Buffer/Paste from 3", (object_buffer[2] != NULL));
