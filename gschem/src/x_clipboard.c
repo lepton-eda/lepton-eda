@@ -178,8 +178,11 @@ x_clipboard_get (GSCHEM_TOPLEVEL *w_current)
 
   /* Convert the data buffer to OBJECTs */
   buf = gtk_selection_data_get_data (selection_data);
+
+  toplevel->ADDING_SEL = 1; /* HACK: Avoid adding objects to the tile system */
   object_list = o_read_buffer (toplevel, object_list,
                                (gchar *) buf, -1, "Clipboard");
+  toplevel->ADDING_SEL = 0;
 
   gtk_selection_data_free (selection_data);
   return object_list;
