@@ -297,7 +297,7 @@ def writesym(filename,options,attr,pins):
         plefty = prighty
 
     # Calculate the bottom left of the box
-    bottomleftx, bottomlefty = pinlength + 100, 100  ## bottom left of the box
+    bottomleftx, bottomlefty = pinlength + 100, 100
     if numpbottom > 0:
 	bottomlefty += pinlength
 
@@ -309,7 +309,7 @@ def writesym(filename,options,attr,pins):
                               calculated_top_symwidth)
 
     if (numptop + numpbottom > 0):
-	print "note: use sym_width to adjust symbol width if texts overlap."
+	print "Note: use sym_width to adjust symbol width if texts overlap."
 
     if o_symwidth == 0:
 	o_symwidth = calculated_symwidth
@@ -488,8 +488,8 @@ def writesym(filename,options,attr,pins):
 ### draw the attributes
     urefx, urefy = bottomleftx+o_symwidth, bottomlefty + high + 100
 
-    # Center name if we have top/bottom pins
-    if numptop + numpbottom > 0:
+    # Center name if we have top pins
+    if numptop > 0:
 	namex, namey = (bottomleftx + o_symwidth) / 2, (bottomlefty + high) / 2 + 100
     else:
 	namex, namey = bottomleftx, bottomlefty+high+100
