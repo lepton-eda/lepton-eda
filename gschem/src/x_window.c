@@ -556,6 +556,8 @@ void x_window_close(GSCHEM_TOPLEVEL *w_current)
     return;
   }
 
+  x_clipboard_finish (w_current);
+
 #if DEBUG
   o_conn_print_hash(w_current->page_current->conn_table);
 #endif

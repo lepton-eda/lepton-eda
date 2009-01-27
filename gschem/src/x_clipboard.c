@@ -71,7 +71,12 @@ clip_get (GtkClipboard *cb, GtkSelectionData *selection_data,
 static void
 clip_clear (GtkClipboard *cb, gpointer user_data_or_owner)
 {
-  /* Do nothing for now */
+  GSCHEM_TOPLEVEL *w_current = user_data_or_owner;
+  TOPLEVEL *toplevel = w_current->toplevel;
+
+  /* Free the objects in the clipboard buffer */
+  s_delete_object_glist (toplevel, w_current->clipboard_buffer);
+  w_current->clipboard_buffer = NULL;
 }
 
 /* \brief Initialises system clipboard support
@@ -87,6 +92,20 @@ x_clipboard_init (GSCHEM_TOPLEVEL *w_current)
                     "owner-change",
                     G_CALLBACK (clip_handle_owner_change),
                     w_current);
+}
+
+/* \brief Initialises system clipboard support
+ * \par Function Description
+ * Registers a signal handler to detect if the clipboard has changed
+ * and update the menu item sensitivity if necessary.
+ */
+void
+x_clipboard_finish (GSCHEM_TOPLEVEL *w_current)
+{
+  GtkClipboard *cb = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
+  g_signal_handlers_disconnect_by_func (cb, clip_handle_owner_change, w_current);
+  if (w_current->clipboard_buffer)
+    gtk_clipboard_store (cb);
 }
 
 /* \brief Checks if the system clipboard contains schematic data.
@@ -134,8 +153,8 @@ x_clipboard_set (GSCHEM_TOPLEVEL *w_current, const GList *object_list)
   gboolean result;
 
   /* Clear the clipboard buffer */
-  s_delete_object_glist(toplevel, w_current->clipboard_buffer);
-  w_current->clipboard_buffer = NULL;
+  if (w_current->clipboard_buffer)
+    gtk_clipboard_clear (cb);
 
   /* Copy the objects to the clipboard buffer */
   w_current->clipboard_buffer =
