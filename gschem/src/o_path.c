@@ -465,8 +465,8 @@ void o_path_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
   object.line_width = 0; /* clamped to 1 pixel in circle_path */
   object.path = path_copy_modify (o_current->path, dx, dy, 0, 0, -1);
 
-  if (w_current->toplevel->override_color != -1 ) {
-    color = w_current->toplevel->override_color;
+  if (o_current->saved_color != -1) {
+    color = o_current->saved_color;
   } else {
     color = o_current->color;
   }
