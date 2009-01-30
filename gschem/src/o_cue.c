@@ -234,10 +234,10 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
               /* vertical line */
               if (object->line->y[whichone] <= object->line->y[otherone]) {
                 gschem_cairo_line (w_current, END_NONE, pinsize, x, y,
-                                                                 x, y - size);
+                                                                 x, y + size);
               } else {
                 gschem_cairo_line (w_current, END_NONE, pinsize, x, y,
-                                                                 x, y + size);
+                                                                 x, y - size);
               }
               gschem_cairo_stroke (w_current, TYPE_SOLID,
                                    END_NONE, pinsize, -1, -1);
