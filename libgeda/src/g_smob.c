@@ -762,6 +762,7 @@ void g_init_page_smob(void)
   scm_set_smob_print(page_smob_tag, g_print_page_smob);
 
   scm_c_define_gsubr ("get-page-filename", 1, 0, 0, g_get_page_filename);
+  scm_c_define_gsubr ("set-page-filename", 2, 0, 0, g_set_page_filename);
 
   return;
 }
@@ -840,5 +841,39 @@ SCM g_get_page_filename(SCM page_smob)
     returned = scm_makfrom0str (page->page_filename);
 
   return (returned);
+}
+
+/*! \brief Set the page filename of the given page smob.
+ *  \par Function Description
+ *  Set the page filename of the given page smob.
+ *
+ *  \param [in]  page_smob    The page smob to set the filename from.
+ *  \param [in]  scm_filename The filename to set.
+ *  \return the page filename or SCM_EOL if there was some error.
+ */
+SCM g_set_page_filename(SCM page_smob, SCM scm_filename)
+{
+  SCM returned = SCM_EOL;
+  PAGE *page;
+  char *filename = NULL;
+
+  SCM_ASSERT ( SCM_NIMP(page_smob) &&
+	       ((long) SCM_CAR(page_smob) == page_smob_tag),
+               page_smob, SCM_ARG1, "set-page-filename");
+
+  SCM_ASSERT (scm_is_string(scm_filename), scm_filename,
+	      SCM_ARG2, "set-page-filename");
+
+  page = (PAGE *) 
+    (((struct st_page_smob *)SCM_CDR(page_smob))->page);
+
+  filename = SCM_STRING_CHARS (scm_filename);
+
+  if (page->page_filename) 
+    g_free(page->page_filename);
+
+  page->page_filename = g_strdup(filename);
+
+  return SCM_BOOL_T;
 }
 

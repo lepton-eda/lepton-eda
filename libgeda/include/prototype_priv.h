@@ -51,6 +51,7 @@ SCM g_get_object_type(SCM object_smob);
 SCM g_get_line_width(SCM object_smob);
 void g_init_page_smob(void);
 SCM g_get_page_filename(SCM page_smob);
+SCM g_set_page_filename(SCM page_smob, SCM scm_filename);
 
 /* m_bounds.c */
 void m_bounds_init(BOUNDS *bounds);
