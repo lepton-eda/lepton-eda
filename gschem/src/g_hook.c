@@ -707,6 +707,14 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
                       o_complex_promote_attribs (toplevel, new_obj));
   s_page_append (toplevel, page, new_obj);
   
+
+  /* Run the add component hook for the new component */
+  if (scm_hook_empty_p(add_component_object_hook) == SCM_BOOL_F) {
+    scm_run_hook(add_component_object_hook,
+		 scm_cons(g_make_object_smob(toplevel,
+					     new_obj), SCM_EOL));
+  }
+  
   /* 
    * For now, do not redraw the newly added complex, since this might cause
    * flicker if you are zoom/panning right after this function executes 
