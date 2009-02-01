@@ -686,7 +686,7 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
 
   /* Get the parameters */
   comp_name = SCM_STRING_CHARS(scm_comp_name);
-  x = scm_to_int(scm_y);
+  x = scm_to_int(scm_x);
   y = scm_to_int(scm_y);
   angle = scm_to_int(scm_angle);  
   selectable = SCM_NFALSEP(scm_selectable);
