@@ -196,7 +196,11 @@ x_clipboard_get (GSCHEM_TOPLEVEL *w_current)
   if (selection_data == NULL) return FALSE;
 
   /* Convert the data buffer to OBJECTs */
+#if GTK_CHECK_VERSION(2,14,0)
   buf = gtk_selection_data_get_data (selection_data);
+#else
+  buf = selection_data->data;
+#endif
 
   toplevel->ADDING_SEL = 1; /* HACK: Avoid adding objects to the tile system */
   object_list = o_read_buffer (toplevel, object_list,
