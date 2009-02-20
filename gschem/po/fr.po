@@ -2567,11 +2567,6 @@ msgstr "Descendre dans la hiérarchie"
 #~ msgid "Ack! something got fouled up with the keymappings!\n"
 #~ msgstr "Hum ! problème dans l'enregistrement des raccourcis clavier !\n"
 
-#~ msgid "libgd not installed or disabled, so this feature is disabled\n"
-#~ msgstr ""
-#~ "libgd n'est pas installée ou est désactivée, cette fonction est donc "
-#~ "désactivée\n"
-
 #~ msgid "Tried to render text with an invalid angle: %d\n"
 #~ msgstr "Angle du texte invalide : %d\n"
 

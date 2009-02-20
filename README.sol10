@@ -123,27 +123,24 @@ Source: http://forum.sun.com/thread.jspa?threadID=22817&tstart=0
    I did configure this with:  ./configure --disable-csharp 
    as I did not have mono or pnet installed.
 
-9) Install libstroke and libgdgeda from source. 
-   http://geda.seul.org/devel/support/
-
-10) Assuming you installed guile, transfig, gettext, libstroke and libgdgeda
-   into /usr/local, set the following environment variables to make aclocal
+9) Assuming you installed guile, transfig, gettext and libstroke into
+   /usr/local, set the following environment variables to make aclocal
    happy:
 
 	*TBD TBD TBD*
 
-11) Get the gEDA/gaf source tree from CVS.  See 
+10) Get the gEDA/gaf source tree from CVS.  See
     http://geda.seul.org/developer.html for more info on how to do this.
 
-12) cd into geda/devel and type make and set the appropriate environment
+11) cd into geda/devel and type make and set the appropriate environment
     variables (PATH, LD_LIBRARY_PATH, PKG_CONFIG_PATH) 
 
-13) Type: make install
+12) Type: make install
 
     Assuming all goes well, this should build all of the programs successfully.
 
     The documentation may not build if you do not have latex installed.  
 
-14) Done!  Run gschem/gnetlist etc... and gEDA/gaf should just work.
+13) Done!  Run gschem/gnetlist etc... and gEDA/gaf should just work.
 
 

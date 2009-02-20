@@ -122,7 +122,6 @@ occasional build bug.
 
   gEDA/gaf optional libraries (http://www.geda.seul.org/dist)
  	libstroke-0.5.1.tar.gz  
-	libgdgeda-1.8.tar.gz 
 
   Any VERSION >= 20020527 should build under MinGW.
 
@@ -448,36 +447,7 @@ find ghellow.c in $HOME/gtk.
 	Install libstroke into /mingw and not c:/geda since it will make 
 gEDA/gaf's build much easier.
 
-13) Build and install libgdgeda into c:/geda
-
-    Build and install libgdgeda if you want the ability to generate png images
-from schematics in gschem.
-
-	% tar xvfz libgdgeda-1.8.tar.gz
-
-	Edit the Makefile to change:
-	ln -sf include gdgeda
-	to:
-	cp -rp include gdgeda
-
-	Edit configure script changing the string png_read_init to 
-        png_get_copyright
-
-Example:
-int main() {
-png_get_copyright()
-; return 0; }
-
-	% ./configure --prefix=c:/geda
-	% make
-	% cd include
-	% make install
-	% cd ../src
-	% make install
-	% cd ..
-	% cp libgdgeda-config c:/geda/bin
-
-14) Build/install gEDA/gaf itself
+13) Build/install gEDA/gaf itself
 
     Untar all of the gEDA/gaf tarballs into a directory.
     Put that Makefile into this toplevel directory.

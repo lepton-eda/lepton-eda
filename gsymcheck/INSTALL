@@ -22,7 +22,6 @@ In order to build gschem you must install the following packages first:
 	libgeda
 	symbols
 	LibStroke 0.5.1  (optional)
-	libgdgeda 2.0.15 (optional; you also need zlib and png for this lib)
 
 -----------------------------------------------------------------------------
 More detailed info:

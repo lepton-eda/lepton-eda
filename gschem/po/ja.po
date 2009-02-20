@@ -2583,12 +2583,6 @@ msgstr "スケマチックへ"
 #~ msgstr "おっと!! キーマップの設定に間違いがあります!\n"
 
 #, fuzzy
-#~ msgid "libgd not installed or disabled, so this feature is disabled\n"
-#~ msgstr ""
-#~ "libgdgedaが無効またはインストールされていないため、この機能が使えませ"
-#~ "ん。\n"
-
-#, fuzzy
 #~ msgid "Tried to render text with an invalid angle: %d\n"
 #~ msgstr "無効な色の指定です。 : %d\n"
 

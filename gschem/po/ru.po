@@ -2609,10 +2609,6 @@ msgstr "Вглубь схемы"
 #~ msgid "Ack! something got fouled up with the keymappings!\n"
 #~ msgstr "Что-то получено испорченным вместе с назначением клавиш!\n"
 
-#, fuzzy
-#~ msgid "libgd not installed or disabled, so this feature is disabled\n"
-#~ msgstr "libgdgeda не установлена или выключена, поэтому опция выключена\n"
-
 #~ msgid "Tried to render text with an invalid angle: %d\n"
 #~ msgstr "Попытка получения текста с неверным углом: %d\n"
 

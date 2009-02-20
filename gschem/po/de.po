@@ -2600,11 +2600,6 @@ msgstr "gEDA Schaltplan Editor"
 #~ msgid "Ack! something got fouled up with the keymappings!\n"
 #~ msgstr "Ups! Irgend etwas ist faul mit der Tastenzuordnung!\n"
 
-#~ msgid "libgd not installed or disabled, so this feature is disabled\n"
-#~ msgstr ""
-#~ "libgd nicht installiert oder deaktiviert, folglich ist diese Funktion "
-#~ "deaktiviert\n"
-
 #~ msgid "Tried to render text with an invalid angle: %d\n"
 #~ msgstr ""
 #~ "Der Text kann nicht mit einem ungültigen Winkel gezeichnet werden: %d\n"
