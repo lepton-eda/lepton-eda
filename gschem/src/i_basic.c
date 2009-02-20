@@ -354,6 +354,20 @@ void i_update_toolbar(GSCHEM_TOPLEVEL *w_current)
   }
 }
 
+
+/*! \brief Update sensitivity of the Edit/Paste menu item
+ *
+ *  \par Function Description
+ *  Asynchronous callback to update sensitivity of the Edit/Paste
+ *  menu item.
+ */
+static void clipboard_usable_cb (int usable, void *userdata)
+{
+  GSCHEM_TOPLEVEL *w_current = userdata;
+  x_menus_sensitivity (w_current, "Edit/Paste", usable);
+}
+
+
 /*! \brief Update sensitivity of relevant menu items
  *
  *  \par Function Description
@@ -374,11 +388,7 @@ void i_update_menus(GSCHEM_TOPLEVEL *w_current)
   g_assert(w_current != NULL);
   g_assert(toplevel->page_current != NULL);
 
-  if (x_clipboard_usable (w_current)) {
-    x_menus_sensitivity(w_current, "Edit/Paste", TRUE);
-  } else {
-    x_menus_sensitivity(w_current, "Edit/Paste", FALSE);
-  }
+  x_clipboard_query_usable (w_current, clipboard_usable_cb, w_current);
 
   if (o_select_selected (w_current)) {
     /* since one or more things are selected, we set these TRUE */

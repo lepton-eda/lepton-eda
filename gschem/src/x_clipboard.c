@@ -108,29 +108,64 @@ x_clipboard_finish (GSCHEM_TOPLEVEL *w_current)
     gtk_clipboard_store (cb);
 }
 
+struct query_usable {
+  void (*callback) (int, void *);
+  void *userdata;
+};
+
+
+/* \brief Callback for determining if any clipboard targets are pastable
+ * \par Function Description
+ *
+ * Checks if the clipboard targets match any format we recognise, then
+ * calls back into a supplied callback function which is interested in
+ * the TRUE / FALSE answer to whether we can paste from the clipboard.
+ */
+static void
+query_usable_targets_cb (GtkClipboard *clip, GdkAtom *targets, gint ntargets,
+                         gpointer data)
+{
+  struct query_usable *cbinfo = data;
+  int i;
+  int is_usable = FALSE;
+
+  for (i = 0; i < ntargets; i++) {
+    if (strcmp (gdk_atom_name (targets[i]), MIME_TYPE_SCHEMATIC) == 0) {
+      is_usable = TRUE;
+      break;
+    }
+  }
+
+  cbinfo->callback (is_usable, cbinfo->userdata);
+  g_free (cbinfo);
+}
+
+
 /* \brief Checks if the system clipboard contains schematic data.
  * \par Function Description
  * Checks whether the current owner of the system clipboard is
  * advertising gEDA schematic data.
  *
- * \param [in,out] w_current   The current GSCHEM_TOPLEVEL.
+ * The check is performed asynchronously. When a response is
+ * recieved, the provided callback is called with a TRUE / FALSE
+ * result.
  *
- * \return TRUE if the clipboard has schematic data.
+ * \param [in] w_current   The current GSCHEM_TOPLEVEL.
+ * \param [in] callback    The callback to recieve the response.
+ * \param [in] userdata    Arbitrary data to pass the callback.
  */
-gboolean
-x_clipboard_usable (GSCHEM_TOPLEVEL *w_current)
+void
+x_clipboard_query_usable (GSCHEM_TOPLEVEL *w_current,
+                          void (*callback) (int, void *), void *userdata)
 {
-  GtkClipboard *cb = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
-  GdkAtom *targets;
-  gint ntargets;
-  int i;
+  GtkClipboard *clip = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
+  struct query_usable *cbinfo;
 
-  gtk_clipboard_wait_for_targets (cb, &targets, &ntargets);
-  for (i = 0; i < ntargets; i++) {
-    if (strcmp (gdk_atom_name (targets[i]), MIME_TYPE_SCHEMATIC) == 0)
-      return TRUE;
-  }
-  return FALSE;
+  cbinfo = g_new (struct query_usable, 1);
+  cbinfo->callback = callback;
+  cbinfo->userdata = userdata;
+
+  gtk_clipboard_request_targets (clip, query_usable_targets_cb, cbinfo);
 }
 
 /* \brief Set the contents of the system clipboard.
