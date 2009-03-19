@@ -1,7 +1,7 @@
 man_MANS = 		gschem.1
 
 EXTRA_DIST = 		gschem-main.txt what-is-geda.html what-is-gschem.html\
-			gschem.1 logo.png
+			gschem.1 logo.png gschem.dox
 
 all:
 	@echo 'Type: make doxygen to create doxygen documentation for gschem'
