@@ -9,8 +9,8 @@
 # can be accomplished by running ./update-versions.sh with the correct
 # arguments.
 #
-DOTTED_VERSION=1.5.1
-DATE_VERSION=20081221
+DOTTED_VERSION=1.5.2
+DATE_VERSION=20090328
 
 # 
 # Use this when you are building the repository version
