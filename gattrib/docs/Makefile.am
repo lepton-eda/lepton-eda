@@ -1,5 +1,7 @@
 SUFFIXES = 		.html
 
+EXTRA_DIST = gattrib.dox
+
 all: 
 	@echo 'Type: make doxygen  to create doxygen documentation for gattrib'
 
