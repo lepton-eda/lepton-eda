@@ -21,8 +21,9 @@ description=pin sorting test, pin sequence test
 documentation=http://url_to_the_datasheet.com/datasheet.pdf
 author=Werner Hoch <werner.ho(AT)gmx.de>
 numslots=4
-use-license=unlimited
-dist-license=GPL
+use-license
+dist-license=
+special-attribute=unknown
 slot=1
 slotdef=1:1,2,3
 slotdef=2:4,5,6

@@ -38,7 +38,7 @@ preset_options = {"wordswap":"yes",
                   "pinwidthvertikal":"400",
                   "pinwidthvertical":"400",
                   "pinwidthhorizontal":"400"}
-allowed_attr = ["version", "name", "device", "refdes", "footprint", "numslots",
+official_attr = ["version", "name", "device", "refdes", "footprint", "numslots",
                 "slot", "slotdef","description", "comment", "author",
                 "documentation","value","dist-license", "use-license"]
 single_attr_warning = ["device", "footprint", "author", "documentation",
@@ -203,10 +203,14 @@ def readsrc(filename):
                 options[string.strip(element[0])]=string.strip(element[1])
         elif section=="geda_attr":
             element=split_tab_equal(line,1)
-            nr=1
-            while geda_attr.has_key((element[0],nr)):
-                nr=nr+1
-            geda_attr[(string.strip(element[0]),nr)]=string.strip(element[1])
+            if len(element) < 2 or len(element[1].strip()) == 0:
+                print 'Warning: Empty attribute "%s" in the geda_attr section' % element[0]
+                print '         The incomplete attribute will be dropped'
+            else:
+                nr=1
+                while geda_attr.has_key((element[0],nr)):
+                    nr=nr+1
+                geda_attr[(string.strip(element[0]),nr)]=string.strip(element[1])
         elif section=="pins":
             element=string.split(line,"\t")
             if len(element) > 2:
@@ -219,9 +223,8 @@ def readsrc(filename):
 def checkattr(attr):
     for attr,value in attr.items():
         attr,nr=attr
-        if attr not in allowed_attr:
-            print "this attribute is not allowed: ", attr, value
-            sys.exit()
+        if attr not in official_attr:
+            print 'Warning: The attribute "%s=%s" is not official' %(attr, value)
 
 
 def splitspecial(str):
@@ -358,7 +361,7 @@ def writesym(filename,options,attr,pins):
             continue
         if pin.style=="spacer":
             if o_sort == "yes":
-                print "warning: spacers are not supported when sorting labels"
+                print "Warning: spacers are not supported when sorting labels"
                 continue
             elif pin.pos == "l": #left pin
                 plefty=plefty - o_vdist  #where to draw the _next_ pin
@@ -504,13 +507,13 @@ def writesym(filename,options,attr,pins):
         f.write("T %i"% urefx +" %i"% urefy +" 8 10 1 1 0 6 1\n")
         f.write("refdes=" + attr[("refdes",1)] + "\n")
     else:
-        print "warning: refdes attribut missing"
+        print "Warning: refdes attribut missing"
 
     if attr.has_key(("name",1)):
         f.write("T %i" %namex + " %i"% namey + " 9 10 1 0 0 0 1\n")
         f.write(attr[("name",1)] + "\n")
     else:
-        print "warning: name attribut missing"
+        print "Warning: name attribut missing"
 
     ## attributes with same format and warnings
     for a in single_attr_warning:
@@ -519,7 +522,7 @@ def writesym(filename,options,attr,pins):
             f.write(a + "=" + attr[(a,1)] + "\n")
             texty=texty+200
         else:
-            print "warning: " + a + " attribut missing"
+            print "Warning: " + a + " attribut missing"
 
     ## attributes without warning
     for a in single_attr:
