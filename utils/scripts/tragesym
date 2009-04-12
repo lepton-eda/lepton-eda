@@ -27,7 +27,7 @@
 import getopt, os.path, re, string, sys
 
 ##################### GLOBALS ############################################
-VERSION="0.0.14"
+VERSION="0.0.15"
 
 CHARHIGH=26
 preset_options = {"wordswap":"yes",
@@ -219,12 +219,6 @@ def readsrc(filename):
             print linenr, ": illegal section name: ", section
             sys.exit()
     return options, geda_attr, pins
-
-def checkattr(attr):
-    for attr,value in attr.items():
-        attr,nr=attr
-        if attr not in official_attr:
-            print 'Warning: The attribute "%s=%s" is not official' %(attr, value)
 
 
 def splitspecial(str):
@@ -540,6 +534,14 @@ def writesym(filename,options,attr,pins):
             texty=texty+200
             i = i + 1
 
+    ## unknown attributes
+    for (name, number),value in attr.items():
+        if name not in official_attr:
+            f.write("T %i" %textx + " %i"% texty + " 5 10 0 0 0 0 1\n")
+            f.write(name + "=" + value + "\n")
+            texty=texty+200
+            print 'Warning: The attribute "%s=%s" is not official' %(name, value)
+
     nets={}
     for pin in pins:
         if pin.style == "none":
@@ -608,8 +610,6 @@ if options["generate_pinseq"] == "yes":
 
 for pin in pins:
     pin.check()
-
-checkattr(attr)
 
 writesym(file_out,options,attr,pins)
 
