@@ -39,7 +39,7 @@ prefix?=$(HOME)/geda
 #             --disable-update-mime-database
 #             --disable-update-desktop-database
 #
-opts=--with-xdgdatadir=$(HOME)/.local/share --with-kdedatadir=$(HOME)/.kde/share
+opts=${GAF_CONFIGURE_OPTS} --with-xdgdatadir=$(HOME)/.local/share --with-kdedatadir=$(HOME)/.kde/share
 
 #
 # Set this to the shell that you want the various commands to run in.
