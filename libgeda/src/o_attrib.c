@@ -1138,17 +1138,8 @@ char *o_attrib_search_numslots(OBJECT *object)
  */
 char *o_attrib_search_default_slot(OBJECT *object)
 {
-  char *return_value;
-
   /* search for default value attribute buried inside the complex */
-  return_value = o_attrib_search_name(object->complex->prim_objs, 
-                                      "slot", 0);
-
-  if (return_value) {
-    return(return_value);
-  }
-
-  return(NULL);
+  return o_attrib_search_name (object->complex->prim_objs, "slot", 0);
 }
 
 /*! \brief Search pinseq attribute.
