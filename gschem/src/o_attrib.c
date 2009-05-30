@@ -57,25 +57,16 @@ void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection,
 
   g_assert( selection != NULL );
 
-  /* deal with attributes here? */
-  if (selected->attribs != NULL) {
-    /* first node is head */
-    a_iter = selected->attribs;
+  for (a_iter = selected->attribs; a_iter != NULL;
+       a_iter = g_list_next (a_iter)) {
+    a_current = a_iter->data;
 
-    while (a_iter != NULL) {
-      a_current = a_iter->data;
-
-      /* make sure object isn't selected already */
-      if (a_current->saved_color == -1) {
-        o_selection_add(selection, a_current);
-        o_invalidate (w_current, a_current);
-      }
-
-      a_iter = g_list_next (a_iter);
+    /* make sure object isn't selected already */
+    if (a_current->saved_color == -1) {
+      o_selection_add(selection, a_current);
+      o_invalidate (w_current, a_current);
     }
   }
-
-  return;
 }
 
 /*! \brief Change visibility status of attribute object.
