@@ -183,15 +183,20 @@ void o_attrib_attach_list (TOPLEVEL *toplevel,
 }
 
 
-/*! \brief Free all attribute items in a list.
+/*! \brief Detach all attribute items in a list.
  *  \par Function Description
- *  Free all attribute items in a list.
+ *  Detach all attribute items in a list.
+ *
+ *  \note The passed GList is freed by this function
+ *        The attributes being detached are _not_ removed
+ *        from any other GList, so it only makes sense to
+ *        call this function with some (OBJECT *)->attribs.
  *
  *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] list       The list to free.
  *
  */
-void o_attrib_free_all(TOPLEVEL *toplevel, GList *list)
+void o_attrib_detach_all(TOPLEVEL *toplevel, GList *list)
 {
   OBJECT *a_current;
   GList *a_iter;

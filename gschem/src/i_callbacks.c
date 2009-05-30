@@ -3143,8 +3143,7 @@ DEFINE_I_CALLBACK(attributes_detach)
     o_current = (OBJECT *) s_current->data;
     if (o_current) {
       if (o_current->attribs) {
-        o_attrib_free_all(w_current->toplevel,
-                          o_current->attribs);
+        o_attrib_detach_all (w_current->toplevel, o_current->attribs);
         o_current->attribs = NULL;
         w_current->toplevel->page_current->CHANGED=1;
       }
