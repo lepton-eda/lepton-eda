@@ -1117,24 +1117,13 @@ char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found)
  *  \note
  *  Caller must g_free returned character string.
  */
-char *o_attrib_search_numslots(OBJECT *object, OBJECT **return_found)
+char *o_attrib_search_numslots(OBJECT *object)
 {
-  char *return_value = NULL;
-
   /* search for numslots attribute buried inside the complex */
-  if (object->type == OBJ_COMPLEX) {
-    return_value = o_attrib_search_name(object->complex->prim_objs, 
-					"numslots", 0);
-  }
+  if (object->type != OBJ_COMPLEX)
+    return NULL;
 
-  if (return_value) {
-    return(return_value);
-  }
-
-  if (return_found) {
-    *return_found = NULL;
-  }
-  return(NULL);
+  return o_attrib_search_name (object->complex->prim_objs, "numslots", 0);
 }
 
 /*! \brief Search for default slot attribute.

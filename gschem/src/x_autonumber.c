@@ -388,7 +388,7 @@ gint autonumber_match(AUTONUMBER_TEXT *autotext, OBJECT *o_current, gint *number
 void autonumber_get_used(GSCHEM_TOPLEVEL *w_current, AUTONUMBER_TEXT *autotext)
 {
   gint number, numslots, slotnr, i;
-  OBJECT *o_current, *o_parent, *o_numslots;
+  OBJECT *o_current, *o_parent;
   AUTONUMBER_SLOT *slot;
   GList *slot_item;
   char *numslot_str, *slot_str;
@@ -403,7 +403,7 @@ void autonumber_get_used(GSCHEM_TOPLEVEL *w_current, AUTONUMBER_TEXT *autotext)
       o_parent = o_current->attached_to;
       if (autotext->slotting && o_parent != NULL) {
 	/* check for slotted symbol */
-	if ((numslot_str = o_attrib_search_numslots(o_parent, &o_numslots)) != NULL) {
+	if ((numslot_str = o_attrib_search_numslots (o_parent)) != NULL) {
 	  sscanf(numslot_str," %d",&numslots);
 	  g_free(numslot_str);
 
@@ -483,7 +483,7 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current,
   GList *item;
   gint new_number, numslots, i;
   AUTONUMBER_SLOT *freeslot;
-  OBJECT *o_parent = NULL, *o_numslots;
+  OBJECT *o_parent = NULL;
   GList *freeslot_item;
   gchar *numslot_str;
 
@@ -534,7 +534,7 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current,
 
   /* 3. is o_current a slotted object ? */
   if ((autotext->slotting) && o_parent != NULL) {
-    if ((numslot_str = o_attrib_search_numslots(o_parent, &o_numslots)) != NULL) {
+    if ((numslot_str = o_attrib_search_numslots (o_parent)) != NULL) {
       sscanf(numslot_str," %d",&numslots);
       g_free(numslot_str);
       if (numslots > 0) { 

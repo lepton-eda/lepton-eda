@@ -122,7 +122,7 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
 
   /* now find the slot attribute on the outside first */
   if (object != NULL) {
-    numslots_value = o_attrib_search_numslots(object, NULL);
+    numslots_value = o_attrib_search_numslots (object);
 
     if (!numslots_value) {
       s_log_message(_("numslots attribute missing\n"));

@@ -111,7 +111,7 @@ char *o_attrib_search_toplevel(const GList *list, char *name, int counter);
 char *o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found);
 char *o_attrib_search_name_single_count(OBJECT *object, char *name, int counter);
 char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found);
-char *o_attrib_search_numslots(OBJECT *object, OBJECT **return_found);
+char *o_attrib_search_numslots(OBJECT *object);
 char *o_attrib_search_default_slot(OBJECT *object);
 OBJECT *o_attrib_search_pinseq(GList *list, int pin_number);
 char *o_attrib_search_slotdef(OBJECT *object, int slotnumber);
