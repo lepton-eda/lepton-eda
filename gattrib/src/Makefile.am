@@ -36,9 +36,9 @@ gattrib_SOURCES = \
 		gattrib.c 
 
 
-INCLUDES = -I$(top_srcdir)/include @GATTRIB_CFLAGS@
-gattrib_LDFLAGS = @GATTRIB_LDFLAGS@
-gattrib_LDADD = @GATTRIB_LDFLAGS@
+INCLUDES = -I$(includedir) -I$(top_srcdir)/include @GATTRIB_CFLAGS@
+gattrib_LDFLAGS = -L$(libdir) @GATTRIB_LDFLAGS@
+gattrib_LDADD = -L$(libdir) @GATTRIB_LDFLAGS@
 
 ## Don't need these right now.
 ## man_MANS = gattrib.1
