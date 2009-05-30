@@ -58,6 +58,29 @@
 #define DELIMITERS ",; "
 
 
+/*! \brief Set attribute color
+ *  \par Function Description
+ *  This function sets an attribute object to the given color.
+ *
+ *  \param [in]     toplevel  The TOPLEVEL object.
+ *  \param [in,out] attrib    The attribute OBJECT to set the colors of.
+ *  \param [in]     color     The color to set.
+ *
+ */
+static void o_attrib_set_color(TOPLEVEL *toplevel, OBJECT *attrib, int color)
+{
+  g_return_if_fail (attrib->type == OBJ_TEXT);
+
+  if (attrib->saved_color == -1) {
+    o_complex_set_color (attrib->text->prim_objs, color);
+    attrib->color = color;
+  } else {
+    o_complex_set_saved_color_only (attrib->text->prim_objs, color);
+    attrib->saved_color = color;
+  }
+}
+
+
 /*! \brief Add an attribute to an existing attribute list.
  *  \par Function Description
  *  Add an attribute to an existing attribute list.
@@ -91,25 +114,7 @@ void o_attrib_free(TOPLEVEL *toplevel, OBJECT *current)
 
   /* \todo this makes me nervous... very nervous */
   current->attached_to=NULL;
-  current->color = DETACHED_ATTRIBUTE_COLOR;
-
-  if (current->type == OBJ_TEXT) {
-    o_complex_set_color(current->text->prim_objs,
-                        current->color);
-  } else {
-    printf("Tried to set the color on a complex!\nlibgeda/src/o_attrib_free 1\n");
-  }
-
-  /* \todo not sure on this */
-  if (current->saved_color != -1) {
-    if (current->type == OBJ_TEXT) {
-      o_complex_set_saved_color_only (current->text->prim_objs,
-                                      DETACHED_ATTRIBUTE_COLOR);
-    } else {
-      printf("Tried to set the color on a complex!\nlibgeda/src/o_attrib_free 2\n");
-    }
-    current->saved_color = DETACHED_ATTRIBUTE_COLOR;
-  }
+  o_attrib_set_color (toplevel, current, DETACHED_ATTRIBUTE_COLOR);
 }
 
 
@@ -170,15 +175,8 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object,
 
   o_attrib_add (toplevel, object, attrib);
 
-  if (set_color) {
-    if (attrib->saved_color == -1) {
-      attrib->color = ATTRIBUTE_COLOR;
-      o_complex_set_color (attrib->text->prim_objs, attrib->color);
-    } else {
-      attrib->saved_color = ATTRIBUTE_COLOR;
-      o_complex_set_saved_color_only (attrib->text->prim_objs, attrib->saved_color);
-    }
-  }
+  if (set_color)
+    o_attrib_set_color (toplevel, attrib, ATTRIBUTE_COLOR);
 
   /* can't do this here since just selecting something */
   /* will cause this to be set */
@@ -439,52 +437,6 @@ o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_pt
   return TRUE;
 }
 
-
-/*! \brief Set attribute color
- *  \par Function Description
- *  This function sets all attribute objects to the right
- *  color (attribute_color).
- *
- *  \param [in]     toplevel   The TOPLEVEL object.
- *  \param [in,out] attributes  OBJECT list to set colors on.
- *
- */
-void o_attrib_set_color(TOPLEVEL *toplevel, GList *attributes)
-{
-  OBJECT *a_current;
-  GList *a_iter;
-
-  a_iter = attributes;
-
-  while (a_iter != NULL) {
-    a_current = a_iter->data;
-
-    if (a_current->type == OBJ_TEXT &&
-        a_current->text->prim_objs) {
-
-      /* I'm not terribly happy with this */
-
-      if (a_current->saved_color != -1) {
-
-        /* if the object is selected, make */
-        /* sure it it say selected */
-        o_complex_set_color(a_current->text->prim_objs, SELECT_COLOR);
-        a_current->color = SELECT_COLOR;
-
-        o_complex_set_saved_color_only (a_current->text->prim_objs,
-                                        ATTRIBUTE_COLOR);
-        a_current->saved_color = ATTRIBUTE_COLOR;
-
-      } else {
-        o_complex_set_color (a_current->text->prim_objs,
-                             ATTRIBUTE_COLOR);
-        a_current->color = ATTRIBUTE_COLOR;
-      }
-    }
-
-    a_iter = g_list_next (a_iter);
-  }
-}
 
 /*! \brief Search for attibute by name.
  *  \par Function Description

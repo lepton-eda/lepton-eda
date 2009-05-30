@@ -102,7 +102,6 @@ void o_attrib_free_all(TOPLEVEL *toplevel, GList *list);
 void o_attrib_print(GList *attributes);
 void o_attrib_remove(GList **list, OBJECT *remove);
 gboolean o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_ptr);
-void o_attrib_set_color(TOPLEVEL *toplevel, GList *attributes);
 char *o_attrib_search_name(const GList *list, char *name, int counter);
 OBJECT *o_attrib_search_string_list(GList *list, char *string);
 char *o_attrib_search_string_partial(OBJECT *object, char *search_for, int counter);
