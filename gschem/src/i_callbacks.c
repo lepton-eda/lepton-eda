@@ -3138,7 +3138,6 @@ DEFINE_I_CALLBACK(attributes_detach)
   i_update_middle_button(w_current, i_callback_attributes_detach,
                          _("Detach"));
 
-  /* skip over head */
   s_current = geda_list_get_glist( w_current->toplevel->page_current->selection_list );
   while (s_current != NULL) {
     o_current = (OBJECT *) s_current->data;
