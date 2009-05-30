@@ -492,6 +492,8 @@ int skiplast;
  *  \brief
  *  \par Function Description
  *
+ *  \fixme Only descends into the first source schematic
+ *
  */
 int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
                       char *stext, int descend, int skip)
