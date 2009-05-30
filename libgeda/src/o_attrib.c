@@ -1152,7 +1152,7 @@ char *o_attrib_search_default_slot(OBJECT *object)
  *  \param [in] pin_number  pin number to search for.
  *  \return OBJECT containing pinseq data, NULL otherwise.
  */
-OBJECT *o_attrib_search_pinseq (GList *list, int pin_number)
+static OBJECT *o_attrib_search_pinseq (GList *list, int pin_number)
 {
   OBJECT *pinseq_text_object;
   char *search_for;
@@ -1179,7 +1179,7 @@ OBJECT *o_attrib_search_pinseq (GList *list, int pin_number)
  *  \warning
  *  Caller must g_free returned character string.
  */
-char *o_attrib_search_slotdef(OBJECT *object, int slotnumber)
+static char *o_attrib_search_slotdef(OBJECT *object, int slotnumber)
 {
   char *return_value=NULL;
   char *search_for=NULL;

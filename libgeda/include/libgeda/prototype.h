@@ -113,8 +113,6 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name, int counter)
 char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found);
 char *o_attrib_search_numslots(OBJECT *object);
 char *o_attrib_search_default_slot(OBJECT *object);
-OBJECT *o_attrib_search_pinseq(GList *list, int pin_number);
-char *o_attrib_search_slotdef(OBJECT *object, int slotnumber);
 char *o_attrib_search_component(OBJECT *object, char *name);
 void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object);
 void o_attrib_slot_copy(TOPLEVEL *toplevel, OBJECT *original, OBJECT *target);
