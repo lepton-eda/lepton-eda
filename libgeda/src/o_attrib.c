@@ -97,26 +97,6 @@ void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item)
   object->attribs = g_list_append (object->attribs, item);
 }
 
-/*! \brief Free single item in attribute list.
- *  \par Function Description
- *  Free single item in attribute list.
- *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] current   OBJECT pointer to remove attribute-ness from.
- *
- *  \note
- *  this routine is only called from free_all
- */
-void o_attrib_free(TOPLEVEL *toplevel, OBJECT *current)
-{
-  if (current == NULL)
-    return;
-
-  /* \todo this makes me nervous... very nervous */
-  current->attached_to=NULL;
-  o_attrib_set_color (toplevel, current, DETACHED_ATTRIBUTE_COLOR);
-}
-
 
 /*! \brief Check whether a attrib is attached to another object
  *  \par Function Description
@@ -216,12 +196,12 @@ void o_attrib_free_all(TOPLEVEL *toplevel, GList *list)
   OBJECT *a_current;
   GList *a_iter;
 
-  a_iter = list;
-
-  while (a_iter != NULL) {
+  for (a_iter = list; a_iter != NULL;
+       a_iter = g_list_next (a_iter)) {
     a_current = a_iter->data;
-    o_attrib_free(toplevel, a_current);
-    a_iter = g_list_next (a_iter);
+
+    a_current->attached_to = NULL;
+    o_attrib_set_color (toplevel, a_current, DETACHED_ATTRIBUTE_COLOR);
   }
   g_list_free (list);
 }
