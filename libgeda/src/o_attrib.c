@@ -57,36 +57,6 @@
 /*! Basic string splitting delimiters */
 #define DELIMITERS ",; "
 
-/*! \brief Search for an item in an attribute list.
- *  \par Function Description
- *  Search for an item in an attribute list.
- *
- *  \param [in] list  list to be searched.
- *  \param [in] item  item to be found.
- *  \return the object item if it is found, NULL otherwise
- */
-OBJECT *o_attrib_search(GList *list, OBJECT *item)
-{
-  GList *a_iter;
-  OBJECT *a_current;
-
-  if (item == NULL) {
-    return(NULL);
-  }
-
-  a_iter = list;
-
-  while(a_iter != NULL) {
-    a_current = a_iter->data;
-    if (item->sid == a_current->sid) {
-      return(a_current);
-    }
-
-    a_iter = g_list_next (a_iter);
-  }
-
-  return(NULL);
-}
 
 /*! \brief Add an attribute to an existing attribute list.
  *  \par Function Description
@@ -182,7 +152,7 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object,
   g_return_if_fail (object != NULL);
 
   /* is the object already part of the list ? */
-  if (o_attrib_search (object->attribs, attrib)) {
+  if (g_list_find (object->attribs, attrib)) {
     g_warning ("Attribute [%s] already attached\n", attrib->text->string);
     return;
   }

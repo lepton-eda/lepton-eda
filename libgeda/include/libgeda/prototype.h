@@ -93,7 +93,6 @@ void o_arc_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery
 void o_arc_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
 /* o_attrib.c */
-OBJECT *o_attrib_search(GList *list, OBJECT *item);
 void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item);
 void o_attrib_free(TOPLEVEL *toplevel, OBJECT *current);
 gboolean o_attrib_is_attached (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object);
