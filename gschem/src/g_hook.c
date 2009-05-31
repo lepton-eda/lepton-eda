@@ -50,34 +50,35 @@ static void custom_world_get_object_glist_bounds
  *  \par Function Description
  *
  */
-/* Makes a list of all attributes currently connected to object. *
- * Principle stolen from o_attrib_return_attribs */
-SCM g_make_attrib_smob_list(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
+/* Makes a list of all attributes currently connected to object.
+ * Uses the attribute list returned by o_attrib_return_attribs()
+ */
+SCM g_make_attrib_smob_list (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
-  OBJECT *a_current;
+  GList *attrib_list;
   GList *a_iter;
+  OBJECT *a_current;
   SCM smob_list = SCM_EOL;
 
-  if (!object) {
-    return(SCM_EOL);   
+  if (object == NULL) {
+    return SCM_EOL;
   }
 
-  if (!object->attribs) {
-    return(SCM_EOL);
-  }
+  attrib_list = o_attrib_return_attribs (object);
+
+  if (attrib_list == NULL)
+    return SCM_EOL;
 
   /* go through attribs */
-  a_iter = object->attribs;
-  while(a_iter != NULL) {
+  for (a_iter = attrib_list; a_iter != NULL;
+       a_iter = g_list_next (a_iter)) {
     a_current = a_iter->data;
-    if (a_current->type == OBJ_TEXT) {
-      if (o_text_get_string (w_current->toplevel, a_current)) {
-        smob_list = scm_cons (g_make_attrib_smob (w_current->toplevel, a_current),
-                              smob_list);
-      }
-    }
-    a_iter = g_list_next (a_iter);
+
+    smob_list = scm_cons (g_make_attrib_smob (w_current->toplevel, a_current),
+                          smob_list);
   }
+
+  g_list_free (attrib_list);
 
   return smob_list;
 }
