@@ -1891,8 +1891,9 @@ void multiattrib_update (Multiattrib *multiattrib)
   TOPLEVEL *toplevel;
   GtkListStore *liststore;
   GtkTreeIter iter;
-  OBJECT **object_attribs, *o_current;
-  gint i;
+  GList *object_attribs;
+  GList *a_iter;
+  OBJECT *a_current;
   gboolean sensitive;
   GtkStyle *style;
 
@@ -1923,22 +1924,16 @@ void multiattrib_update (Multiattrib *multiattrib)
   /* get list of attributes */
   object_attribs = o_attrib_return_attribs (multiattrib->object);
   /* populate the store with attributes */
-  if (object_attribs) {
-    for (i = 0, o_current = object_attribs[i];
-         o_current != NULL;
-         i++, o_current = object_attribs[i]) {
+  for (a_iter = object_attribs; a_iter != NULL;
+       a_iter = g_list_next (a_iter)) {
+    a_current = a_iter->data;
 
-      /* Don't add invalid attributes to the list */
-      if (!o_attrib_get_name_value (o_text_get_string (toplevel, o_current),
-                                    NULL, NULL))
-        continue;
-
-      gtk_list_store_append (liststore, &iter);
-      gtk_list_store_set (liststore, &iter,
-                          COLUMN_ATTRIBUTE, o_current,
-                          -1);
-    }
+    gtk_list_store_append (liststore, &iter);
+    gtk_list_store_set (liststore, &iter,
+                        COLUMN_ATTRIBUTE, a_current,
+                        -1);
   }
   /* delete the list of attribute objects */
-  o_attrib_free_returned (object_attribs);
+  g_list_free (object_attribs);
+
 }

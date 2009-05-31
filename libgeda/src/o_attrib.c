@@ -1491,82 +1491,44 @@ char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name)
   return(NULL);
 }
 
-/*! \brief Get all attached attributes to specified OBJECT.
+/*! \brief Get all attached attributes of the specified OBJECT.
  *  \par Function Description
- *  This function returns all attached attribute objects to the
- *  specified object.
- *  The returned list is an array of objects and should be freed using the
- *  #o_attrib_free_returned() function.
- *  This function will only look for attached attributes and not
- *  unattached free floating attribs.
+ *  This function returns all attached attributes of the specified object.
+ *
+ *  The returned GList should be freed using the #g_list_free().
+ *
+ *  This function does not look for inherited attributes. (Inherited
+ *  attributes are those which live as toplevel un-attached attributes
+ *  inside in a complex OBJECT's prim_objs).
  *
  *  \param [in] object       OBJECT whos attributes to return.
- *  \return An array of objects that attached to object, NULL otherwise.
+ *  \return A GList of attributes belinging to the passed object.
  */
-OBJECT ** o_attrib_return_attribs(OBJECT *object)
+GList * o_attrib_return_attribs (OBJECT *object)
 {
-  OBJECT **found_objects;
-  int num_attribs=0;
-  int i=0;
+  GList *attribs = NULL;
   OBJECT *a_current;
   GList *a_iter;
+  char *name;
 
-  if (!object || !object->attribs) {
-    return(NULL);
-  }
+  g_return_val_if_fail (object != NULL, NULL);
 
-  /* first count the number of attribs */
-  num_attribs = g_list_length (object->attribs);
-
-  found_objects = (OBJECT **) g_malloc(sizeof(OBJECT *)*(num_attribs+1));
-
-  /* now actually fill the array of objects */
-  a_iter = object->attribs;
-  while(a_iter != NULL) {
+  /* Directly attached attributes */
+  for (a_iter = object->attribs; a_iter != NULL;
+       a_iter = g_list_next (a_iter)) {
     a_current = a_iter->data;
-    if (a_current->type == OBJ_TEXT &&
-        a_current->text->string) {
-      found_objects[i] = a_current;
-      i++;
-    }
-    a_iter = g_list_next (a_iter);
+
+    if (a_current->type != OBJ_TEXT)
+      continue;
+
+    /* Don't add invalid attributes to the list */
+    if (!o_attrib_get_name_value (a_current->text->string, &name, NULL))
+      continue;
+
+    attribs = g_list_prepend (attribs, a_current);
+
   }
 
-  found_objects[i] = NULL;
-
-#if DEBUG 
-  i=0;
-  while(found_objects[i] != NULL) {
-    /*for (i = 0 ; i < num_attribs; i++) {*/
-    printf("%d : %s\n", i, found_objects[i]->text->string);
-    i++;
-  }
-#endif
-
-  return(found_objects);
-}
-
-/*! \brief Free attached attribute list.
- *  \par Function Description
- *  Free attached attribute list. Use only on a list created
- *  by #o_attrib_return_attribs().
- *
- *  \param [in] found_objects  List returned by #o_attrib_return_attribs().
- */
-void o_attrib_free_returned(OBJECT **found_objects)
-{
-  int i=0;
-
-  if (!found_objects) {
-    return;
-  }
-
-  /* don't free the insides of found_objects, since the contents are */
-  /* just pointers into the real object list */
-  while(found_objects[i] != NULL) {
-    found_objects[i] = NULL;
-    i++;	
-  }
-
-  g_free(found_objects);
+  attribs = g_list_reverse (attribs);
+  return attribs;
 }
