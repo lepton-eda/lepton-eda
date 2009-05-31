@@ -423,6 +423,40 @@ o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_pt
 }
 
 
+/*! \brief Find all floating attributes in the given object list.
+ *  \par Function Description
+ *  Find all floating attributes in the given object list.
+ *
+ *  \param [in] list     GList of OBJECTs to search.
+ *  \return GList of floating attributes from the input list
+ *
+ *  \warning
+ *  Caller must g_list_free returned list.
+ */
+GList *o_attrib_find_floating_attribs (const GList *list)
+{
+  GList *floating_attributes = NULL;
+  const GList *iter;
+  OBJECT *o_current;
+
+  for (iter = list; iter != NULL; iter = g_list_next (iter)) {
+    o_current = iter->data;
+
+    /* Skip non text objects, attached attributes and text which doesn't
+     * constitute a valid attributes (e.g. general text placed on the page)
+     */
+    if (o_current->type == OBJ_TEXT &&
+        o_current->attached_to == NULL &&
+        o_attrib_get_name_value (o_current->text->string, NULL, NULL)) {
+
+      floating_attributes = g_list_prepend (floating_attributes, o_current);
+    }
+  }
+
+  return g_list_reverse (floating_attributes);
+}
+
+
 /*! \brief Search for attibute by name.
  *  \par Function Description
  *  Search for attribute by name.
