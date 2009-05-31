@@ -208,6 +208,9 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
           src_object->attached_to->copied_to != NULL) {
         o_attrib_attach(toplevel, dst_object,
                         src_object->attached_to->copied_to, FALSE);
+        /* handle slot= attribute, it's a special case */
+        if (g_ascii_strncasecmp (dst_object->text->string, "slot=", 5) == 0)
+          o_attrib_slot_update (toplevel, src_object->attached_to->copied_to);
       }
     }
 
