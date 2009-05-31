@@ -48,6 +48,7 @@ struct _Multiattrib {
 
   GtkTreeView    *treeview;
 
+  GtkWidget      *show_inherited;
   GtkCombo       *combo_name;
   GtkTextView    *textview_value;
   GtkCheckButton *button_visible;
@@ -56,6 +57,7 @@ struct _Multiattrib {
   GtkWidget      *frame_add;
 
   GdkColor       value_normal_text_color;   /* Workaround for lameness in GtkTextView */
+  GdkColor       insensitive_text_color;
 };
 
 

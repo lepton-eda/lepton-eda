@@ -658,6 +658,39 @@ static void multiattrib_action_duplicate_attribute(GSCHEM_TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
+static void multiattrib_action_promote_attribute (GSCHEM_TOPLEVEL *w_current,
+                                                  OBJECT *object,
+                                                  OBJECT *o_attrib)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  OBJECT *o_new;
+
+  if (o_attrib->visibility) {
+    /* If the attribute we're promoting is visible, don't clone its location */
+    o_new = o_attrib_add_attrib (w_current,
+                                 o_text_get_string (w_current->toplevel, o_attrib),
+                                 o_attrib->visibility,
+                                 o_attrib->show_name_value,
+                                 object);
+  } else {
+      /* make a copy of the attribute object */
+      o_new = o_object_copy (toplevel, o_attrib, NORMAL_FLAG);
+      s_page_append (toplevel->page_current, o_new);
+      /* add the attribute its parent */
+      o_attrib_attach (toplevel, o_new, object, TRUE);
+      /* redraw the attribute object */
+      o_invalidate (w_current, o_new);
+      /* note: this object is unselected (not added to selection). */
+  }
+  w_current->toplevel->page_current->CHANGED = 1;
+  o_undo_savestate (w_current, UNDO_ALL);
+}
+
+/*! \todo Finish function documentation
+ *  \brief
+ *  \par Function Description
+ *
+ */
 static void multiattrib_action_delete_attribute(GSCHEM_TOPLEVEL *w_current,
 						OBJECT *o_attrib) 
 {
@@ -684,6 +717,7 @@ static void multiattrib_column_set_data_name(GtkTreeViewColumn *tree_column,
   gchar *name;
   Multiattrib *dialog = (Multiattrib *) data;
   const gchar *str = NULL;
+  int inherited;
 
   gtk_tree_model_get (tree_model, iter,
                       COLUMN_ATTRIBUTE, &o_attrib,
@@ -692,10 +726,13 @@ static void multiattrib_column_set_data_name(GtkTreeViewColumn *tree_column,
 
   str = o_text_get_string (GSCHEM_DIALOG(dialog)->w_current->toplevel,
                            o_attrib);
+  inherited = o_attrib_is_inherited (o_attrib);
 
   o_attrib_get_name_value (str, &name, NULL);
   g_object_set (cell,
                 "text", name,
+                "foreground-gdk", inherited ? &dialog->insensitive_text_color : NULL,
+                "editable", !inherited,
                 NULL);
   g_free (name);
   
@@ -716,6 +753,7 @@ static void multiattrib_column_set_data_value(GtkTreeViewColumn *tree_column,
   gchar *value;
   Multiattrib *dialog = (Multiattrib *) data;
   const gchar *str = NULL;
+  int inherited;
 
   gtk_tree_model_get (tree_model, iter,
                       COLUMN_ATTRIBUTE, &o_attrib,
@@ -724,10 +762,13 @@ static void multiattrib_column_set_data_value(GtkTreeViewColumn *tree_column,
 
   str = o_text_get_string (GSCHEM_DIALOG(dialog)->w_current->toplevel,
                            o_attrib);
+  inherited = o_attrib_is_inherited (o_attrib);
 
   o_attrib_get_name_value (str, NULL, &value);
   g_object_set (cell,
                 "text", value,
+                "foreground-gdk", inherited ? &dialog->insensitive_text_color : NULL,
+                "editable", !inherited,
                 NULL);
   g_free (value);
   
@@ -745,14 +786,19 @@ static void multiattrib_column_set_data_visible(GtkTreeViewColumn *tree_column,
 						gpointer data)
 {
   OBJECT *o_attrib;
+  int inherited;
 
   gtk_tree_model_get (tree_model, iter,
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
   
+  inherited = o_attrib_is_inherited (o_attrib);
+
   g_object_set (cell,
                 "active", (o_attrib->visibility == VISIBLE),
+                "sensitive",   !inherited,
+                "activatable", !inherited,
                 NULL);
   
 }
@@ -769,15 +815,20 @@ static void multiattrib_column_set_data_show_name(GtkTreeViewColumn *tree_column
 						  gpointer data)
 {
   OBJECT *o_attrib;
+  int inherited;
 
   gtk_tree_model_get (tree_model, iter,
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
   
+  inherited = o_attrib_is_inherited (o_attrib);
+
   g_object_set (cell,
                 "active", (o_attrib->show_name_value == SHOW_NAME_VALUE ||
                            o_attrib->show_name_value == SHOW_NAME),
+                "sensitive",   !inherited,
+                "activatable", !inherited,
                 NULL);
   
 }
@@ -794,15 +845,20 @@ static void multiattrib_column_set_data_show_value(GtkTreeViewColumn *tree_colum
 						   gpointer data)
 {
   OBJECT *o_attrib;
+  int inherited;
 
   gtk_tree_model_get (tree_model, iter,
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
   
+  inherited = o_attrib_is_inherited (o_attrib);
+
   g_object_set (cell,
                 "active", (o_attrib->show_name_value == SHOW_NAME_VALUE ||
                            o_attrib->show_name_value == SHOW_VALUE),
+                "sensitive",   !inherited,
+                "activatable", !inherited,
                 NULL);
   
 }
@@ -1099,6 +1155,7 @@ static gboolean multiattrib_callback_key_pressed(GtkWidget *widget,
     GtkTreeModel *model;
     GtkTreeIter iter;
     OBJECT *o_attrib;
+    int inherited;
     /* delete the currently selected attribute */
 
     if (!gtk_tree_selection_get_selected (
@@ -1113,6 +1170,11 @@ static gboolean multiattrib_callback_key_pressed(GtkWidget *widget,
                         -1);
     g_assert (o_attrib->type == OBJ_TEXT);
     
+    inherited = o_attrib_is_inherited (o_attrib);
+    /* We can't delete inherited attribtes */
+    if (inherited)
+      return FALSE;
+
     multiattrib_action_delete_attribute (GSCHEM_DIALOG (multiattrib)->w_current,
                                          o_attrib);
     
@@ -1192,6 +1254,42 @@ static void multiattrib_callback_popup_duplicate(GtkMenuItem *menuitem,
   /* update the treeview contents */
   multiattrib_update (multiattrib);
   
+}
+
+
+/*! \todo Finish function documentation
+ *  \brief
+ *  \par Function Description
+ *
+ */
+static void multiattrib_callback_popup_promote (GtkMenuItem *menuitem,
+                                                gpointer user_data)
+{
+  Multiattrib *multiattrib = user_data;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  GSCHEM_TOPLEVEL *w_current;
+  OBJECT *object, *o_attrib;
+
+  if (!gtk_tree_selection_get_selected (
+         gtk_tree_view_get_selection (multiattrib->treeview),
+         &model, &iter)) {
+    /* nothing selected, nothing to do */
+    return;
+  }
+
+  w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  object = multiattrib->object;
+
+  gtk_tree_model_get (model, &iter,
+                      COLUMN_ATTRIBUTE, &o_attrib,
+                      -1);
+  g_assert (o_attrib->type == OBJ_TEXT);
+
+  multiattrib_action_promote_attribute (w_current, object, o_attrib);
+
+  /* update the treeview contents */
+  multiattrib_update (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1396,27 +1494,51 @@ static void multiattrib_popup_menu(Multiattrib *multiattrib,
     gchar *label;
     GCallback callback;
   };
-  struct menuitem_t menuitems[] = {
+
+  struct menuitem_t menuitems_inherited[] = {
+    { N_("Promote"),   G_CALLBACK (multiattrib_callback_popup_promote)   },
+    { NULL,            NULL                                              } };
+
+  struct menuitem_t menuitems_noninherited[] = {
     { N_("Duplicate"), G_CALLBACK (multiattrib_callback_popup_duplicate) },
     { N_("Delete"),    G_CALLBACK (multiattrib_callback_popup_delete)    },
     { NULL,            NULL                                              } };
+
+  struct menuitem_t *item_list;
   struct menuitem_t *tmp;
-  
+  int inherited;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  GtkTreeSelection *selection;
+  OBJECT *o_attrib;
+
+  selection = gtk_tree_view_get_selection (multiattrib->treeview);
+
   if (event != NULL &&
       gtk_tree_view_get_path_at_pos (multiattrib->treeview,
                                      (gint)event->x, 
                                      (gint)event->y,
                                      &path, NULL, NULL, NULL)) {
-    GtkTreeSelection *selection;
-    selection = gtk_tree_view_get_selection (multiattrib->treeview);
     gtk_tree_selection_unselect_all (selection);
     gtk_tree_selection_select_path (selection, path);
     gtk_tree_path_free (path);
   }
 
+  /* if nothing is selected, nothing to do */
+  if (!gtk_tree_selection_get_selected (selection, &model, &iter))
+    return;
+
+  gtk_tree_model_get (model, &iter,
+                      COLUMN_ATTRIBUTE, &o_attrib,
+                      -1);
+  g_assert (o_attrib->type == OBJ_TEXT);
+
+  inherited = o_attrib_is_inherited (o_attrib);
+  item_list = inherited ? menuitems_inherited : menuitems_noninherited;
+
   /* create the context menu */
   menu = gtk_menu_new();
-  for (tmp = menuitems; tmp->label != NULL; tmp++) {
+  for (tmp = item_list; tmp->label != NULL; tmp++) {
     GtkWidget *menuitem;
     if (g_strcasecmp (tmp->label, "-") == 0) {
       menuitem = gtk_separator_menu_item_new ();
@@ -1435,6 +1557,60 @@ static void multiattrib_popup_menu(Multiattrib *multiattrib,
                   (event != NULL) ? event->button : 0,
                   gdk_event_get_time ((GdkEvent*)event));
   
+}
+
+
+/*! \brief GschemDialog "geometry_save" class method handler
+ *
+ *  \par Function Description
+ *  Chain up to our parent's method to save the dialog's size and
+ *  position, then save the dialog's current internal geometry.
+ *
+ *  \param [in] dialog     The GschemDialog to save the geometry of.
+ *  \param [in] key_file   The GKeyFile to save the geometry data to.
+ *  \param [in] group_name The group name in the key file to store the data under.
+ */
+static void
+multiattrib_geometry_save (GschemDialog *dialog, GKeyFile *key_file, gchar *group_name)
+{
+  gboolean show_inherited;
+
+  /* Call the parent's geometry_save method */
+  GSCHEM_DIALOG_CLASS (multiattrib_parent_class)->
+    geometry_save (dialog, key_file, group_name);
+
+  show_inherited =
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (MULTIATTRIB (dialog)->show_inherited));
+  g_key_file_set_boolean (key_file, group_name, "show_inherited", show_inherited);
+}
+
+
+/*! \brief GschemDialog "geometry_restore" class method handler
+ *
+ *  \par Function Description
+ *  Chain up to our parent's method to restore the dialog's size and
+ *  position, then restore the dialog's current internal geometry.
+ *
+ *  \param [in] dialog     The GschemDialog to restore the geometry of.
+ *  \param [in] key_file   The GKeyFile to save the geometry data to.
+ *  \param [in] group_name The group name in the key file to store the data under.
+ */
+static void
+multiattrib_geometry_restore (GschemDialog *dialog, GKeyFile *key_file, gchar *group_name)
+{
+  gboolean show_inherited;
+  GError *error = NULL;
+
+  /* Call the parent's geometry_restore method */
+  GSCHEM_DIALOG_CLASS (multiattrib_parent_class)->
+    geometry_restore (dialog, key_file, group_name);
+
+  show_inherited = g_key_file_get_boolean (key_file, group_name, "show_inherited", &error);
+  if (error != NULL) {
+    show_inherited = TRUE;
+    g_error_free (error);
+  }
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (MULTIATTRIB (dialog)->show_inherited), show_inherited);
 }
 
 
@@ -1485,11 +1661,15 @@ GType multiattrib_get_type()
 static void multiattrib_class_init(MultiattribClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+  GschemDialogClass *gschem_dialog_class = GSCHEM_DIALOG_CLASS (klass);
 
-  multiattrib_parent_class = g_type_class_peek_parent (klass);
+  gschem_dialog_class->geometry_save    = multiattrib_geometry_save;
+  gschem_dialog_class->geometry_restore = multiattrib_geometry_restore;
 
   gobject_class->set_property = multiattrib_set_property;
   gobject_class->get_property = multiattrib_get_property;
+
+  multiattrib_parent_class = g_type_class_peek_parent (klass);
 
   g_object_class_install_property (
     gobject_class, PROP_OBJECT,
@@ -1497,6 +1677,18 @@ static void multiattrib_class_init(MultiattribClass *klass)
                           "",
                           "",
                           G_PARAM_READWRITE));
+}
+
+/*! \brief Regenerate the attribute list when the visibility
+ *         setting for inherited attributes changes
+ */
+static void multiattrib_show_inherited_toggled (GtkToggleButton *button,
+                                                gpointer user_data)
+{
+  Multiattrib *multiattrib = user_data;
+
+  /* update the treeview contents */
+  multiattrib_update (multiattrib);
 }
 
 
@@ -1513,6 +1705,7 @@ static void multiattrib_init(Multiattrib *multiattrib)
 {
   GtkWidget *frame, *label, *scrolled_win, *treeview;
   GtkWidget *table, *textview, *combo, *optionm, *button;
+  GtkWidget *attrib_vbox, *show_inherited;
   GtkTreeModel *store;
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
@@ -1537,11 +1730,13 @@ static void multiattrib_init(Multiattrib *multiattrib)
 
   multiattrib->object   = NULL;
 
+  gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (multiattrib)->vbox), 5);
+
   /* create the attribute list frame */
   frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
-				    /* GtkFrame */
-				    "label", _("Attributes"),
-				    NULL));
+                                    /* GtkFrame */
+                                    "shadow", GTK_SHADOW_NONE,
+                                    NULL));
   multiattrib->frame_add = frame;
   /*   - create the model for the treeview */
   store = (GtkTreeModel*)gtk_list_store_new (NUM_COLUMNS,
@@ -1586,7 +1781,6 @@ static void multiattrib_init(Multiattrib *multiattrib)
   renderer = GTK_CELL_RENDERER (
 				g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
 					      /* GtkCellRendererText */
-					      "editable",  TRUE,
 					      /* unknown in GTK 2.4 */
 					      /* "ellipsize",
 					       * PANGO_ELLIPSIZE_END, */
@@ -1611,7 +1805,6 @@ static void multiattrib_init(Multiattrib *multiattrib)
   renderer = GTK_CELL_RENDERER (
 				g_object_new (TYPE_CELL_RENDERER_MULTI_LINE_TEXT,
 					      /* GtkCellRendererText */
-					      "editable",  TRUE,
 					      /* unknown in GTK 2.4 */
 					      /* "ellipsize",
 						 PANGO_ELLIPSIZE_END, */
@@ -1635,8 +1828,6 @@ static void multiattrib_init(Multiattrib *multiattrib)
   /*       - column 3: visibility */
   renderer = GTK_CELL_RENDERER (
 				g_object_new (GTK_TYPE_CELL_RENDERER_TOGGLE,
-					      /* GtkCellRendererToggle */
-					      "activatable", TRUE,
 					      NULL));
   g_signal_connect (renderer,
 		    "toggled",
@@ -1655,8 +1846,6 @@ static void multiattrib_init(Multiattrib *multiattrib)
   /*       - column 4: show name */
   renderer = GTK_CELL_RENDERER (
 				g_object_new (GTK_TYPE_CELL_RENDERER_TOGGLE,
-					      /* GtkCellRendererToggle */
-					      "activatable", TRUE,
 					      NULL));
   g_signal_connect (renderer,
 		    "toggled",
@@ -1675,8 +1864,6 @@ static void multiattrib_init(Multiattrib *multiattrib)
   /*       - column 5: show value */
   renderer = GTK_CELL_RENDERER (
 				g_object_new (GTK_TYPE_CELL_RENDERER_TOGGLE,
-					      /* GtkCellRendererToggle */
-					      "activatable", TRUE,
 					      NULL));
   g_signal_connect (renderer,
 		    "toggled",
@@ -1697,13 +1884,30 @@ static void multiattrib_init(Multiattrib *multiattrib)
   gtk_container_add (GTK_CONTAINER (scrolled_win), treeview);
   /* set treeview of multiattrib */
   multiattrib->treeview = GTK_TREE_VIEW (treeview);
-  /* add the scrolled window to frame */
-  gtk_container_add (GTK_CONTAINER (frame), scrolled_win);
+
+  attrib_vbox = gtk_vbox_new (FALSE, 0);
+
+  /* Pack the vbox into the frame */
+  gtk_container_add (GTK_CONTAINER (frame), attrib_vbox);
+
+  /* add the scrolled window to box */
+  gtk_box_pack_start (GTK_BOX (attrib_vbox), scrolled_win, TRUE, TRUE, 0);
+
+  /* create the show inherited button */
+  show_inherited = gtk_check_button_new_with_label (_("Show inherited attributes"));
+  multiattrib->show_inherited = show_inherited;
+  gtk_box_pack_start (GTK_BOX (attrib_vbox), show_inherited, FALSE, FALSE, 0);
+
+  g_signal_connect (show_inherited,
+                    "toggled",
+                    G_CALLBACK (multiattrib_show_inherited_toggled),
+                    multiattrib);
+
   /* pack the frame */
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (multiattrib)->vbox), frame,
 		      TRUE, TRUE, 1);
   gtk_widget_show_all (frame);
-  
+
   /* create the add/edit frame */
   frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
 				    "label", _("Add Attribute"),
@@ -1768,6 +1972,12 @@ static void multiattrib_init(Multiattrib *multiattrib)
   style = gtk_widget_get_style (textview);
   multiattrib->value_normal_text_color = style->text[ GTK_STATE_NORMAL ];
 
+  /* Save this one so we can pick it as a sensible colour to show the
+   * inherited attributes dimmed.
+   */
+  style = gtk_widget_get_style (treeview);
+  multiattrib->insensitive_text_color = style->text[ GTK_STATE_INSENSITIVE ];
+
   gtk_container_add (GTK_CONTAINER (scrolled_win), textview);
   multiattrib->textview_value = GTK_TEXT_VIEW (textview);
   gtk_table_attach (GTK_TABLE (table), label,
@@ -1807,7 +2017,7 @@ static void multiattrib_init(Multiattrib *multiattrib)
   gtk_container_add (GTK_CONTAINER (frame), table);
   /* pack the frame in the dialog */
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (multiattrib)->vbox), frame,
-		      FALSE, TRUE, 4);
+		      FALSE, TRUE, 1);
   gtk_widget_show_all (frame);
   
   
@@ -1896,6 +2106,7 @@ void multiattrib_update (Multiattrib *multiattrib)
   OBJECT *a_current;
   gboolean sensitive;
   GtkStyle *style;
+  gboolean show_inherited;
 
   g_assert (GSCHEM_DIALOG (multiattrib)->w_current != NULL);
   toplevel = GSCHEM_DIALOG (multiattrib)->w_current->toplevel;
@@ -1935,5 +2146,26 @@ void multiattrib_update (Multiattrib *multiattrib)
   }
   /* delete the list of attribute objects */
   g_list_free (object_attribs);
+
+  show_inherited =
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (multiattrib->show_inherited));
+
+  /* get list of inherited attributes from inside the symbol */
+  if (show_inherited && (multiattrib->object->type == OBJ_COMPLEX ||
+                         multiattrib->object->type == OBJ_PLACEHOLDER)) {
+    object_attribs =
+      o_attrib_find_floating_attribs (multiattrib->object->complex->prim_objs);
+
+    for (a_iter = object_attribs; a_iter != NULL;
+         a_iter = g_list_next (a_iter)) {
+      a_current = a_iter->data;
+
+      gtk_list_store_append (liststore, &iter);
+      gtk_list_store_set (liststore, &iter,
+                          COLUMN_ATTRIBUTE, a_current,
+                          -1);
+    }
+    g_list_free (object_attribs);
+  }
 
 }
