@@ -118,6 +118,7 @@ void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object);
 void o_attrib_slot_copy(TOPLEVEL *toplevel, OBJECT *original, OBJECT *target);
 char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name);
 GList *o_attrib_return_attribs(OBJECT *object);
+int o_attrib_is_inherited(OBJECT *attrib);
 
 /* o_basic.c */
 int inside_region(int xmin, int ymin, int xmax, int ymax, int x, int y);

@@ -1532,3 +1532,18 @@ GList * o_attrib_return_attribs (OBJECT *object)
   attribs = g_list_reverse (attribs);
   return attribs;
 }
+
+
+/*! \brief Query whether a given attribute OBJECT is "inherited"
+ *  \par Function Description
+ *  This function returns TRUE if the given attribute OBJECT is a
+ *  toplevel un-attached attribute inside a complex's prim_objs.
+ *
+ *  \param [in] object       OBJECT who's status to query.
+ *  \return TRUE if the given attribute is inside a symbol
+ */
+int o_attrib_is_inherited (OBJECT *attrib)
+{
+  return (attrib->attached_to == NULL &&
+          attrib->complex_parent != NULL);
+}
