@@ -1448,7 +1448,6 @@ GList * o_attrib_return_attribs (OBJECT *object)
   GList *attribs = NULL;
   OBJECT *a_current;
   GList *a_iter;
-  char *name;
 
   g_return_val_if_fail (object != NULL, NULL);
 
@@ -1461,7 +1460,7 @@ GList * o_attrib_return_attribs (OBJECT *object)
       continue;
 
     /* Don't add invalid attributes to the list */
-    if (!o_attrib_get_name_value (a_current->text->string, &name, NULL))
+    if (!o_attrib_get_name_value (a_current->text->string, NULL, NULL))
       continue;
 
     attribs = g_list_prepend (attribs, a_current);
