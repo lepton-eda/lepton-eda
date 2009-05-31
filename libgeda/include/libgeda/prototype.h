@@ -116,7 +116,6 @@ char *o_attrib_search_numslots(OBJECT *object);
 char *o_attrib_search_default_slot(OBJECT *object);
 char *o_attrib_search_component(OBJECT *object, char *name);
 void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object);
-void o_attrib_slot_copy(TOPLEVEL *toplevel, OBJECT *original, OBJECT *target);
 char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name);
 GList *o_attrib_return_attribs(OBJECT *object);
 int o_attrib_is_inherited(OBJECT *attrib);
