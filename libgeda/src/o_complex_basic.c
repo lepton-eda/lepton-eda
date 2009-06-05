@@ -381,7 +381,7 @@ GList *o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
  *  \param [in]  toplevel The toplevel environment.
  *  \param [in]  object   The complex object being altered.
  */
-void o_complex_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *object)
+static void o_complex_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *object)
 {
   GList *promotable, *iter;
 
