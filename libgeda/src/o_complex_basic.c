@@ -307,7 +307,7 @@ GList *o_complex_get_toplevel_attribs (TOPLEVEL *toplevel,
  *  \param [in]  detach   Should the attributes be detached?
  *  \returns              A linked list of OBJECTs to promote.
  */
-GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
+static GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
 {
   GList *promoted = NULL;
   GList *attribs;
