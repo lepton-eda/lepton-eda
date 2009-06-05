@@ -392,10 +392,12 @@ static void o_complex_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *obj
 
   for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
     OBJECT *a_object = iter->data;
-    if (toplevel->keep_invisible == TRUE) {
-      a_object->visibility = INVISIBLE;     /* Hide promotable attributes */
-    } else {
-      s_delete_object (toplevel, a_object); /* Delete promotable attributes */
+    if (toplevel->keep_invisible == TRUE) {   /* Hide promotable attributes */
+      a_object->visibility = INVISIBLE;
+    } else {                                /* Delete promotable attributes */
+      object->complex->prim_objs =
+        g_list_remove (object->complex->prim_objs, a_object);
+      s_delete_object (toplevel, a_object);
     }
   }
 
