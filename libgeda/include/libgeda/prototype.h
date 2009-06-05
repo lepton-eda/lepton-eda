@@ -191,7 +191,6 @@ OBJECT *o_complex_return_nth_pin(GList *list, int counter);
 void o_complex_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_complex_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin);
-int  o_complex_count_pins(OBJECT *object);
 void o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object);
 
 /* o_embed.c */
