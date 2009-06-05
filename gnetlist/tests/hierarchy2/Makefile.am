@@ -8,15 +8,16 @@ check_SCRIPTS = tests
 
 BUILDDIR=$(top_builddir)/tests/hierarchy2
 SRCDIR=$(srcdir)
+GNETLIST=$(top_builddir)/src/gnetlist
 
 tests: tests-job tests-clean
 
 tests-job:
 	rm -f $(BUILDDIR)/new_*
-	( export TESTDIR=$(SRCDIR); \
+	cp -f $(SRCDIR)/gafrc.hierarchy2 $(BUILDDIR)/gafrc
+	( TESTDIR=$(SRCDIR); export TESTDIR ; SCMDIR=${top_srcdir}/scheme ; export SCMDIR ; \
 	  echo $$TESTDIR; \
-	  cp -f $(SRCDIR)/gafrc.hierarchy2 $(BUILDDIR)/gafrc; \
-	  gnetlist \
+	  $(GNETLIST) \
 	     -o $(BUILDDIR)/new_hierarchy2.geda -g geda \
 	     $(SRCDIR)/top.sch )
 	diff $(SRCDIR)/hierarchy2.geda $(BUILDDIR)/new_hierarchy2.geda;

@@ -83,6 +83,8 @@ srcdir=${srcdir:-$here}
 srcdir=`cd $srcdir && pwd`
 
 GNETLIST=../../../src/gnetlist
+SCMDIR=../../../scheme
+export SCMDIR
 
 rundir=${here}/run
 
@@ -123,6 +125,7 @@ srcdir:     $srcdir
 INPUT_DIR:  ${INPUT_DIR}
 GOLDEN_DIR: ${GOLDEN_DIR}
 GNETLIST:   ${GNETLIST}
+SCMDIR:     ${SCMDIR}
 all_tests:
 
 ${all_tests}

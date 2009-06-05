@@ -20,6 +20,7 @@ check_SCRIPTS = tests
 
 BUILDDIR=$(top_builddir)/tests
 SRCDIR=$(srcdir)
+GNETLIST=$(top_builddir)/src/gnetlist
 
 tests:
 
@@ -135,7 +136,7 @@ tests_ales:
 		$(BUILDDIR) $(SRCDIR)
 
 # switcap (does not work with make distcheck due to local test.ana file)
-	gnetlist -o $(BUILDDIR)/new_skt.switcap -g switcap \
+	$(GNETLIST) -o $(BUILDDIR)/new_skt.switcap -g switcap \
 		$(SRCDIR)/../examples/switcap/ckt.sch \
 		$(SRCDIR)/../examples/switcap/clocks.sch \
 		$(SRCDIR)/../examples/switcap/analysis.sch

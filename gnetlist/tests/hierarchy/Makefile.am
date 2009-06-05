@@ -17,9 +17,9 @@ tests: tests-job tests-clean
 
 tests-job:
 	rm -f $(BUILDDIR)/new_*
-	( export TESTDIR=$(SRCDIR); \
+	cp -f $(SRCDIR)/gnetlistrc.hierarchy $(BUILDDIR)/gnetlistrc
+	( TESTDIR=$(SRCDIR); export TESTDIR ; SCMDIR=${top_srcdir}/scheme ; export SCMDIR ; \
 	  echo $$TESTDIR; \
-	  cp -f $(SRCDIR)/gnetlistrc.hierarchy $(BUILDDIR)/gnetlistrc; \
 	  $(GNETLIST) \
 	     -o $(BUILDDIR)/new_hierarchy.geda -g geda \
 	     $(SRCDIR)/top.sch )
@@ -32,6 +32,3 @@ MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~
 CLEANFILES = new_* core *.log FILE *.ps *~
 DISTCLEANFILES = *.log core FILE *~ prototype.bak
 MAINTAINERCLEANFILES = new_* core *.log FILE *.ps *~ Makefile.in configure
-
-
-
