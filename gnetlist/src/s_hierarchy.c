@@ -52,12 +52,12 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
     char *current_filename;
     int graphical=FALSE;
 
-    attrib = o_attrib_search_name_single_count(o_current, "source", 0);
+    attrib = o_attrib_search_attached_attribs_by_name (o_current, "source", 0);
 
     /* if above is null, then look inside symbol */
     if (attrib == NULL) {
-	attrib = o_attrib_search_name(o_current->complex->prim_objs,
-				      "source", count);
+	attrib = o_attrib_search_inherited_attribs_by_name (o_current,
+	                                                    "source", count);
 
 	looking_inside = TRUE;
 #if DEBUG
@@ -135,8 +135,8 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 	/* continue looking outside first */
 	if (!looking_inside) {
 	    attrib =
-		o_attrib_search_name_single_count(o_current, "source",
-						  count);
+		o_attrib_search_attached_attribs_by_name (o_current, "source",
+		                                          count);
 	}
 
 	/* okay we were looking outside and didn't */
@@ -153,8 +153,9 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 #if DEBUG
 	    printf("looking inside\n");
 #endif
-	    attrib = o_attrib_search_name(o_current->complex->prim_objs,
-					  "source", count);
+	    attrib =
+	        o_attrib_search_inherited_attribs_by_name (o_current,
+	                                                   "source", count);
 	}
 
         graphical = s_hierarchy_graphical_search(o_current, count);
@@ -625,23 +626,17 @@ char *s_hierarchy_return_baseuref(TOPLEVEL * pr_current, char *uref)
     return (return_value);
 }
 
-int 
-s_hierarchy_graphical_search(OBJECT* o_current, int count)
+int s_hierarchy_graphical_search (OBJECT* o_current, int count)
 {
-    char *graphical_attrib;
-    graphical_attrib = o_attrib_search_name_single_count(o_current, 
-                                                         "graphical", count);
+  char *graphical_attrib;
+  graphical_attrib =
+    o_attrib_search_object_attribs_by_name (o_current, "graphical", count);
 
-    if (graphical_attrib == NULL) {
-       graphical_attrib = o_attrib_search_name(o_current->complex->prim_objs,
-                                               "graphical", count);
-    }
- 
-    if (graphical_attrib) {
-      g_free(graphical_attrib);      
-      return TRUE;
-    }
-  
-    return FALSE;
+  if (graphical_attrib) {
+    g_free (graphical_attrib);
+    return TRUE;
+  }
+
+  return FALSE;
 }
 

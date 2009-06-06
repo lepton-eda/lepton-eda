@@ -256,39 +256,6 @@ int o_complex_is_embedded(OBJECT *o_current)
 }
 
 
-/*! \brief Get a list of all toplevel attributes of and object list
- *
- *  \par Function Description
- *  Returns a GList of all attribute OBJECTs
- *
- *  \param [in]  toplevel  The toplevel environment.
- *  \param [in]  obj_list  The object list to search for attributes
- *  \returns               A GList of attribute OBJECTs
- */
-GList *o_complex_get_toplevel_attribs (TOPLEVEL *toplevel,
-                                       const GList *obj_list)
-{
-  OBJECT *o_current;
-  GList *attr_list = NULL;
-  const GList *iter;
-
-  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    o_current = iter->data;
-
-    if (o_current->type == OBJ_TEXT &&
-        o_current->attached_to == NULL &&
-        o_attrib_get_name_value (o_current->text->string, NULL, NULL)) {
-
-      attr_list = g_list_prepend (attr_list, o_current);
-    }
-  }
-
-  attr_list = g_list_reverse (attr_list);
-
-  return attr_list;
-}
-
-
 /*! \brief Get attributes eligible for promotion from inside a complex
  *
  *  \par Function Description
@@ -317,8 +284,7 @@ static GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int 
   if (!toplevel->attribute_promotion) /* controlled through rc file */
     return NULL;
 
-  attribs = o_complex_get_toplevel_attribs (toplevel,
-                                            object->complex->prim_objs);
+  attribs = o_attrib_find_floating_attribs (object->complex->prim_objs);
 
   for (iter = attribs; iter != NULL; iter = g_list_next (iter)) {
     tmp = iter->data;
@@ -1167,38 +1133,6 @@ void o_complex_set_saved_color_only (GList *list, int color)
   }
 }
 
-/*! \brief get the nth pin of a object list
- *  \par Function Description
- *  Search the nth pin the object list \a list and return it.
- *  
- *  \param list     the object list to search through
- *  \param counter  specifies the nth pin
- *  \return the counter'th pin object, NULL if there is no more pin
- */
-OBJECT *o_complex_return_nth_pin (GList *list, int counter)
-{
-  OBJECT *o_current;
-  int internal_counter=0;
-  GList *iter;
-
-  iter = list;
-
-  while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
-    if (o_current->type == OBJ_PIN) {
-
-      if (counter == internal_counter) {
-        return(o_current);
-      } else {
-        internal_counter++;
-      }
-    }
-    iter = g_list_next (iter);
-  }
-
-  return(NULL);
-}
-
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -1280,48 +1214,43 @@ void o_complex_mirror_world(TOPLEVEL *toplevel,
 }
 
 
-/*! \brief search the pin with a given pin number
+/*! \brief Find a pin with a particular attribute.
  *  \par Function Description
- *  This function searches a pin object inside the complex \a object.
- *  The pin name is a character string \a pin.
-
- *  \param  object  The complex object
- *  \param  pin     The pin number (string) to find
- *  \return a pin object if found, NULL otherwise
+ *  Search for a pin inside the given complex which has an attribute
+ *  matching those passed.
+ *
+ *  \param [in] object        complex OBJECT whos pins to search.
+ *  \param [in] name          the attribute name to search for.
+ *  \param [in] wanted_value  the attribute value to search for.
+ *  \return The pin OBJECT with the given attribute, NULL otherwise.
  */
-OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin) 
+OBJECT *o_complex_find_pin_by_attribute (OBJECT *object, char *name, char *wanted_value)
 {
-  OBJECT *found;
   GList *iter;
+  OBJECT *o_current;
+  char *value;
+  int found;
 
-  g_return_val_if_fail(object != NULL, NULL);
-  g_return_val_if_fail(((object->type == OBJ_COMPLEX) ||
-			(object->type == OBJ_PLACEHOLDER)) , NULL);
-  g_return_val_if_fail(object->complex != NULL, NULL);
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_COMPLEX ||
+                        object->type == OBJ_PLACEHOLDER, NULL);
 
-  /* go inside complex objects */
-  for (iter = object->complex->prim_objs;
-       iter != NULL;
+  for (iter = object->complex->prim_objs; iter != NULL;
        iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    o_current = iter->data;
 
-    switch(o_current->type) {
-      case(OBJ_PIN):
-        /* Search for the pin making sure that */
-        /* any found attribute starts with "pinnumber" */
-        found = o_attrib_search_attrib_value(o_current->attribs, pin,
-                                             "pinnumber", 0);
-        if (found) {
-#if DEBUG
-          printf("%s: %s\n", found->name,
-                 found->text->string);
-#endif
-          return(o_current);
-        }
-        break;
-    }
+    if (o_current->type != OBJ_PIN)
+      continue;
+
+    value = o_attrib_search_object_attribs_by_name (o_current, name, 0);
+    found = (value != NULL && strcmp (value, wanted_value) == 0);
+    g_free (value);
+
+    if (found)
+      return o_current;
   }
-  return(NULL);
+
+  return NULL;
 }
 
 
@@ -1356,13 +1285,13 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
   g_return_if_fail (object->complex != NULL);
 
   /* first look on the inside for the symversion= attribute */
-  inside = o_attrib_search_name(object->complex->prim_objs, "symversion", 0);
+  inside = o_attrib_search_inherited_attribs_by_name (object, "symversion", 0);
 
   /* now look for the symversion= attached to object */
-  outside = o_attrib_search_attrib_name(object->attribs, "symversion", 0);
+  outside = o_attrib_search_attached_attribs_by_name (object, "symversion", 0);
 
   /* get the uref for future use */
-  refdes = o_attrib_search_attrib_name(object->attribs, "refdes", 0);
+  refdes = o_attrib_search_object_attribs_by_name(object, "refdes", 0);
   if (!refdes)
   {
     refdes = g_strdup ("unknown");

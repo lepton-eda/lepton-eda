@@ -142,7 +142,6 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
 				    char *hierarchy_tag)
 {
     OBJECT *o_current;
-    OBJECT *o_pinnum_object;
     char *pinnum = NULL;
     char *uref = NULL;
     SCM scm_uref;
@@ -154,9 +153,7 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
 
     o_current = object;
 
-    /* this function only searches the single o_current */
-    pinnum = o_attrib_search_name_single(o_current, "pinnumber",
-                                         &o_pinnum_object);
+    pinnum = o_attrib_search_object_attribs_by_name (o_current, "pinnumber", 0);
 
 #if DEBUG
     printf("found pinnum: %s\n", pinnum);

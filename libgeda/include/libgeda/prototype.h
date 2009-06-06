@@ -102,21 +102,13 @@ void o_attrib_print(GList *attributes);
 void o_attrib_remove(GList **list, OBJECT *remove);
 gboolean o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_ptr);
 GList *o_attrib_find_floating_attribs (const GList *list);
-char *o_attrib_search_name(const GList *list, char *name, int counter);
-OBJECT *o_attrib_search_string_list(GList *list, char *string);
-char *o_attrib_search_string_partial(OBJECT *object, char *search_for, int counter);
-OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for);
-OBJECT *o_attrib_search_attrib_value(GList *list, char *value, char *name, int counter);
-char *o_attrib_search_attrib_name(GList *list, char *name, int counter);
-char *o_attrib_search_toplevel(const GList *list, char *name, int counter);
-char *o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found);
-char *o_attrib_search_name_single_count(OBJECT *object, char *name, int counter);
+char *o_attrib_search_floating_attribs_by_name (const GList *list, char *name, int counter);
+char *o_attrib_search_attached_attribs_by_name (OBJECT *object, char *name, int counter);
+char *o_attrib_search_inherited_attribs_by_name (OBJECT *object, char *name, int counter);
+char *o_attrib_search_object_attribs_by_name (OBJECT *object, char *name, int counter);
 char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found);
 char *o_attrib_search_numslots(OBJECT *object);
-char *o_attrib_search_default_slot(OBJECT *object);
-char *o_attrib_search_component(OBJECT *object, char *name);
 void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object);
-char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name);
 GList *o_attrib_return_attribs(OBJECT *object);
 int o_attrib_is_inherited(OBJECT *attrib);
 
@@ -171,7 +163,6 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *o_list,
 			     int *left, int *top, 
 			     int *right, int *bottom);
 int o_complex_is_embedded(OBJECT *o_current);
-GList *o_complex_get_toplevel_attribs (TOPLEVEL *toplevel, const GList *obj_list);
 GList *o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object);
 OBJECT *o_complex_new(TOPLEVEL *toplevel, char type, int color, int x, int y, int angle, int mirror, const CLibSymbol *clib_sym, const gchar *basename, int selectable);
 OBJECT *o_complex_new_embedded(TOPLEVEL *toplevel, char type, int color, int x, int y, int angle, int mirror, const gchar *basename, int selectable);
@@ -185,10 +176,9 @@ void o_complex_set_color_save(GList *list, int color);
 void o_complex_unset_color(GList *list);
 void o_complex_unset_color_single(OBJECT *o_current);
 void o_complex_set_saved_color_only(GList *list, int color);
-OBJECT *o_complex_return_nth_pin(GList *list, int counter);
 void o_complex_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_complex_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin);
+OBJECT *o_complex_find_pin_by_attribute(OBJECT *object, char *name, char *wanted_value);
 void o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object);
 
 /* o_embed.c */

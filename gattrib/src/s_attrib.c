@@ -84,9 +84,9 @@ char *s_attrib_get_refdes(OBJECT *object)
   OBJECT *slot_text_object;
 
   /*------ Try to get the refdes -----*/
-  temp_uref = o_attrib_search_name_single(object, "refdes", NULL);
+  temp_uref = o_attrib_search_object_attribs_by_name (object, "refdes", 0);
   if (!temp_uref) {
-    temp_uref = o_attrib_search_name_single(object, "uref", NULL); // deprecated
+    temp_uref = o_attrib_search_object_attribs_by_name (object, "uref", 0); // deprecated
     if (temp_uref) {
       printf("WARNING: Found uref=%s, uref= is deprecated, please use refdes=\n", temp_uref);
     } else {        /* didn't find refdes.  Report error to log. */

@@ -39,51 +39,22 @@
  */
 void o_slot_start (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
-  OBJECT *slot_text_object;
-  char *default_slot_value;
   char *slot_value;
 
   /* single object for now */
-  if (object->type == OBJ_COMPLEX) {
-    /* first see if slot attribute already exists outside
-     * complex */
-    slot_value = o_attrib_search_slot(object, &slot_text_object);
+  if (object->type != OBJ_COMPLEX)
+    return;
 
-    if (slot_value) {
-#if DEBUG
-      printf("slot=%s\n", slot_value);
-      printf("text string : %s\n",
-             slot_text_object->text->string);
-#endif
-      slot_edit_dialog(w_current,
-                       o_text_get_string (w_current->toplevel,
-                                          slot_text_object));
-      g_free(slot_value);
-    } else {
-      /* we didn't find an attached slot=? attribute */
+  slot_value = o_attrib_search_object_attribs_by_name (object, "slot", 0);
 
-      /* See if there is a default value */
-      default_slot_value =
-        o_attrib_search_default_slot(object);
-
-      if (default_slot_value) {
-        slot_value = g_strdup_printf ("slot=%s", default_slot_value);
-      } else {
-				/* no default, make something up? */
-				/* for now.. this is an error
-                                   condition */
-        slot_value = g_strdup ("slot=1");
-      }
-
-#if DEBUG
-      printf("slot value: %s\n", slot_value);
-#endif
-
-      slot_edit_dialog(w_current, slot_value);
-      g_free(slot_value);
-      g_free(default_slot_value);
-    }
+  if (slot_value == NULL) {
+    /* we didn't find a slot=? attribute, make something up */
+    /* for now.. this is an error condition */
+    slot_value = g_strdup ("1");
   }
+
+  slot_edit_dialog (w_current, slot_value);
+  g_free (slot_value);
 }
 
 /*! \todo Finish function documentation!!!
@@ -120,14 +91,12 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
     }
   }
 
-  /* now find the slot attribute on the outside first */
   if (object != NULL) {
     numslots_value = o_attrib_search_numslots (object);
 
     if (!numslots_value) {
       s_log_message(_("numslots attribute missing\n"));
-      s_log_message(
-                    _("Slotting not allowed for this component\n"));
+      s_log_message(_("Slotting not allowed for this component\n"));
       g_free(value);
       return;
     }

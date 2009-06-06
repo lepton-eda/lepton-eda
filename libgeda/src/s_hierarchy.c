@@ -239,13 +239,13 @@ GList *s_hierarchy_traversepages(TOPLEVEL *toplevel,
 
     /* only complex things like symbols can contain attributes */
     if (o_current->type == OBJ_COMPLEX) {
-      filename = o_attrib_search_name_single_count(o_current,
-						   "source", 0);
+      filename =
+        o_attrib_search_attached_attribs_by_name (o_current, "source", 0);
       
       /* if above is NULL, then look inside symbol */
       if (filename == NULL) {
-	filename = o_attrib_search_name(o_current->
-				      complex->prim_objs, "source", 0);
+	filename =
+          o_attrib_search_inherited_attribs_by_name (o_current, "source", 0);
       }
 
       if (filename != NULL) {

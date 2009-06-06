@@ -2067,6 +2067,7 @@ void snap_size_dialog (GSCHEM_TOPLEVEL *w_current)
 void slot_edit_dialog_response(GtkWidget *widget, gint response, GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *textentry;
+  char *slot_string;
   int len;
   gchar *string = NULL;
 
@@ -2080,7 +2081,9 @@ void slot_edit_dialog_response(GtkWidget *widget, gint response, GSCHEM_TOPLEVEL
     string = (gchar*) gtk_entry_get_text(GTK_ENTRY(textentry));
     len = strlen(string);
     if (len != 0) {
-      o_slot_end(w_current, string, len);
+      slot_string = g_strdup_printf ("slot=%s", string);
+      o_slot_end(w_current, slot_string, len);
+      g_free (slot_string);
     }
     break;
   default:
@@ -2157,8 +2160,7 @@ void slot_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string)
   if (string != NULL) {
     textentry = g_object_get_data(G_OBJECT(w_current->sewindow),"textentry");
     gtk_entry_set_text(GTK_ENTRY(textentry), string);
-    gtk_entry_select_region(GTK_ENTRY(textentry),
-                            strlen("slot="), strlen(string));
+    gtk_editable_select_region (GTK_EDITABLE(textentry), 0, -1);
   }
 }
 

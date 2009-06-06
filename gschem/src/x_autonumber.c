@@ -408,7 +408,7 @@ void autonumber_get_used(GSCHEM_TOPLEVEL *w_current, AUTONUMBER_TEXT *autotext)
 	  g_free(numslot_str);
 
 	  if (numslots > 0) { 
-	    slot_str=o_attrib_search_attrib_name(o_parent->attribs,"slot",0);
+	    slot_str = o_attrib_search_object_attribs_by_name (o_parent, "slot", 0);
 	    if (slot_str == NULL) {
 	      s_log_message(_("slotted object without slot attribute may cause "
 			      "problems when autonumbering slots\n"));

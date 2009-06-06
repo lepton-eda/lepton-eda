@@ -481,7 +481,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
 
 	  if (o_lower_current->type == OBJ_PIN) {
 	    /* -----  Found a pin.  First get its pinnumber.  then get attrib head and loop on attribs.  ----- */
-	    pinnumber = o_attrib_search_name_single(o_lower_current, "pinnumber", NULL);
+	    pinnumber = o_attrib_search_object_attribs_by_name (o_lower_current, "pinnumber", 0);
 	    row_label = g_strconcat(temp_uref, ":", pinnumber, NULL);
 
 #if DEBUG

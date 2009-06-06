@@ -425,7 +425,7 @@ s_toplevel_sheetdata_to_toplevel (PAGE *page)
     if (o_current->type == OBJ_COMPLEX) {    /* Note that OBJ_COMPLEX = component + attribs */
 
 #if 0
-      if ( o_attrib_search_component(o_current, "graphical") ) {
+      if (o_attrib_search_object_attribs_by_name (o_current, "graphical", 0)) {
         break;  /* Ignore graphical components */
       }
 #endif
@@ -710,7 +710,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   /*  Now get the old attrib name & value from complete_comp_attrib_list 
    *  and value from o_current  */
   old_attrib_name = u_basic_breakup_string(local_list->data, '=', 0); 
-  old_attrib_value = o_attrib_search_name_single_count(o_current, old_attrib_name, 0);
+  old_attrib_value = o_attrib_search_attached_attribs_by_name (o_current, old_attrib_name, 0);
 
 #if DEBUG
   printf("        In s_toplevel_update_component_attribs_in_toplevel, old name = \"%s\" .\n", 
@@ -865,7 +865,7 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
   /* First find pos of this pin in the master pin list */
   /* first convert refdes, pin to refdes:pinno text string. Then call table_get_index.  */
 
-  pinnumber = o_attrib_search_name_single(pin, "pinnumber", NULL);
+  pinnumber = o_attrib_search_object_attribs_by_name (pin, "pinnumber", 0);
 
   if ( (refdes != NULL) && (pinnumber != NULL) ) {
     row_label = g_strconcat(refdes, ":", pinnumber, NULL);
@@ -964,7 +964,7 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
     g_free(new_attrib_value);   
     new_attrib_value = NULL;  /* s_misc_remaining_string doesn't return NULL for empty substring. */
   }
-  old_attrib_value = o_attrib_search_name_single_count(o_pin, new_attrib_name, 0);
+  old_attrib_value = o_attrib_search_attached_attribs_by_name (o_pin, new_attrib_name, 0);
                                                                                                        
     /* -------  Four cases to consider: Case 1: old and new attribs exist ----- */
     if ( (old_attrib_value != NULL) && (new_attrib_value != NULL) && (strlen(new_attrib_value) != 0) ) {

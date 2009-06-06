@@ -499,21 +499,9 @@ SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
 	if (nl_current->component_uref) {
 	    if (strcmp(nl_current->component_uref, uref) == 0) {
 
-		/* first search outside the symbol */
 		return_value =
-		    o_attrib_search_name_single(nl_current->object_ptr,
-						wanted_attrib, NULL);
-
-		if (return_value) {
-		    break;
-		}
-
-		/* now search inside the symbol */
-		return_value =
-		    o_attrib_search_name(nl_current->object_ptr->
-					 complex->prim_objs, wanted_attrib,
-					 0);
-
+		    o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
+		                                            wanted_attrib, 0);
 		break;
 	    }
 	}
@@ -539,9 +527,7 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
   char *uref;
   char *pinseq;
   char *wanted_attrib;
-  char *pinseq_attrib;
   char *return_value = NULL;
-  OBJECT *o_text_object;
   OBJECT *o_pin_object;
 
   SCM_ASSERT(scm_is_string (scm_uref),
@@ -557,8 +543,6 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
   uref          = SCM_STRING_CHARS (scm_uref);
   pinseq        = SCM_STRING_CHARS (scm_pinseq);
   wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
-  
-  pinseq_attrib = g_strconcat ("pinseq=", pinseq, NULL);
 
 #if DEBUG
   printf("gnetlist:g_netlist.c:g_get_attribute_by_pinseq -- \n");
@@ -577,48 +561,18 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
     if (nl_current->component_uref) {
       if (strcmp(nl_current->component_uref, uref) == 0) {
 
-        /* first search outside the symbol */
-	/* This checks for attributes attached to this component */
-        /* at schematic level */
-        o_text_object = o_attrib_search_string_single(nl_current->object_ptr,
-                                                      pinseq_attrib);
-        if (o_text_object && o_text_object->attached_to) {
-          o_pin_object = o_text_object->attached_to;
+        o_pin_object = o_complex_find_pin_by_attribute (nl_current->object_ptr,
+                                                        "pinseq", pinseq);
 
-          if (o_pin_object) {
-            return_value = o_attrib_search_name_single(o_pin_object,
-                                                       wanted_attrib,
-                                                       NULL);
-            if (return_value) {
-              break;
-            }
+        if (o_pin_object) {
+          return_value =
+            o_attrib_search_object_attribs_by_name (o_pin_object,
+                                                    wanted_attrib, 0);
+          if (return_value) {
+            break;
           }
+        }
 
-        } else {
-#if DEBUG
-	  printf("gnetlist:g_netlist.c:g_get_attribute_by_pinseq -- ");
-          printf("can't find pinseq at schematic level\n");
-#endif
-	}
-
-        
-        /* now search inside the symbol */
-	/* This checks for attributes attached at the symbol level */
-        o_text_object =
-          o_attrib_search_string_list(nl_current->object_ptr->
-                                      complex->prim_objs, pinseq_attrib);
-
-        if (o_text_object && o_text_object->attached_to) {
-          o_pin_object = o_text_object->attached_to;
-          if (o_pin_object) {
-            return_value = o_attrib_search_name_single(o_pin_object,
-                                                       wanted_attrib,
-                                                       NULL);
-            if (return_value) {
-              break;
-            }
-          }
-        }         
         /* Don't break until we search the whole netlist to handle slotted */
         /* parts.   4.28.2007 -- SDB. */
       }
@@ -636,8 +590,6 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
   printf("gnetlist:g_netlist.c:g_get_attribute_by_pinseq -- ");
   printf("return_value: %s\n", return_value);
 #endif
-
-  g_free(pinseq_attrib);
 
   return (scm_return_value);
 }
@@ -679,15 +631,15 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
 	    if (strcmp(nl_current->component_uref, uref) == 0) {
 
 		pin_object =
-		    o_complex_return_pin_object(nl_current->object_ptr,
-						pin);
+		    o_complex_find_pin_by_attribute (nl_current->object_ptr,
+		                                     "pinnumber", pin);
 
 		if (pin_object) {
 
 		    /* only look for the first occurance of wanted_attrib */
 		    return_value =
-			o_attrib_search_attrib_name(pin_object->attribs,
-						    wanted_attrib, 0);
+		      o_attrib_search_object_attribs_by_name (pin_object,
+		                                              wanted_attrib, 0);
 #if DEBUG
 		    if (return_value) {
 			printf("GOT IT: %s\n", return_value);
@@ -727,26 +679,39 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
 /* still highly temp and doesn't work right */
 SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
 {
-    char *wanted_attrib;
-    char *return_value;
-    SCM scm_return_value;
+  const GList *p_iter;
+  PAGE *p_current;
+  char *wanted_attrib;
+  char *attrib_value = NULL;
+  SCM scm_return_value;
 
-    SCM_ASSERT(scm_is_string (scm_wanted_attrib),
-	       scm_wanted_attrib, SCM_ARG1, "gnetlist:get-toplevel-attribute");
+  SCM_ASSERT(scm_is_string (scm_wanted_attrib),
+             scm_wanted_attrib, SCM_ARG1, "gnetlist:get-toplevel-attribute");
 
-    wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
+  wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
 
-    return_value = o_attrib_search_toplevel_all(project_current->pages,
-						wanted_attrib);
+  for (p_iter = geda_list_get_glist (project_current->pages); p_iter != NULL;
+       p_iter = g_list_next (p_iter)) {
+    p_current = p_iter->data;
 
-    if (return_value) {
-      scm_return_value = scm_makfrom0str (return_value);
-      g_free(return_value);
-    } else {
-      scm_return_value = scm_makfrom0str ("not found");
-    }
+    /* only look for first occurrance of the attribute on each page */
+    attrib_value =
+      o_attrib_search_floating_attribs_by_name (s_page_objects (p_current),
+                                                wanted_attrib, 0);
 
-    return (scm_return_value);
+    /* Stop when we find the first one */
+    if (attrib_value != NULL)
+      break;
+  }
+
+  if (attrib_value != NULL) {
+    scm_return_value = scm_makfrom0str (attrib_value);
+    g_free (attrib_value);
+  } else {
+    scm_return_value = scm_makfrom0str ("not found");
+  }
+
+  return (scm_return_value);
 }
 
 #if 0	      /* No longer needed, but the netlist_mode variable is still used */
@@ -800,16 +765,9 @@ SCM g_get_slots(SCM scm_uref)
 
 		/* first search outside the symbol */
 		slot_tmp =
-		    o_attrib_search_name_single(nl_current->object_ptr,
-						"slot", NULL);
+		  o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
+		                                          "slot", 0);
 
-		if (!slot_tmp) {
-		/* if not found, search inside the symbol */
-		slot_tmp =
-		    o_attrib_search_name(nl_current->object_ptr->
-					 complex->prim_objs, "slot",
-					 0);
-		}
 		/* When a package has no slot attribute, then assume it's slot number 1 */
 		if (!slot_tmp) {
 		  slot_tmp=g_strdup("1");
@@ -865,16 +823,9 @@ SCM g_get_unique_slots(SCM scm_uref)
 
 		/* first search outside the symbol */
 		slot_tmp =
-		    o_attrib_search_name_single(nl_current->object_ptr,
-						"slot", NULL);
+		  o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
+		                                          "slot", 0);
 
-		if (!slot_tmp) {
-		/* if not found, search inside the symbol */
-		slot_tmp =
-		    o_attrib_search_name(nl_current->object_ptr->
-					 complex->prim_objs, "slot",
-					 0);
-		}
 		/* When a package has no slot attribute, then assume it's slot number 1 */
 		if (!slot_tmp) {
 		  slot_tmp=g_strdup("1");
@@ -1007,15 +958,16 @@ SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has
 		  if (o_attrib_get_name_value (has_attrib, &has_attrib_name,
 					       &has_attrib_value) != 0) {
 		    attrib_value = 
-		      o_attrib_search_name_single(nl_current->object_ptr,
-						  has_attrib_name, NULL);
+		      o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
+		                                              has_attrib_name, 0);
 		    
 		    if ( ((has_attrib_value == NULL) && (attrib_value == NULL)) ||
 			 ((has_attrib_value != NULL) && (attrib_value != NULL) &&
 			  (strcmp(attrib_value, has_attrib_value) == 0)) ) {
 		      g_free (attrib_value);
-		      attrib_value = o_attrib_search_name_single(nl_current->object_ptr,
-								 wanted_attrib, NULL);
+		      attrib_value =
+		        o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
+		                                                wanted_attrib, 0);
 		      if (attrib_value) {
 			list = scm_cons (scm_makfrom0str (attrib_value), list);
 		      }

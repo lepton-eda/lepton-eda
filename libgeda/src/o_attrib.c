@@ -427,7 +427,7 @@ o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_pt
  *  \par Function Description
  *  Find all floating attributes in the given object list.
  *
- *  \param [in] list     GList of OBJECTs to search.
+ *  \param [in] list  GList of OBJECTs to search for floating attributes.
  *  \return GList of floating attributes from the input list
  *
  *  \warning
@@ -461,353 +461,78 @@ GList *o_attrib_find_floating_attribs (const GList *list)
  *  \par Function Description
  *  Search for attribute by name.
  *
- *  \warning
- *  The list is the top level list. Do not pass it an object_list list
- *  unless you know what you are doing.
- *  
  *  Counter is the n'th occurance of the attribute, and starts searching
  *  from zero.  Zero is the first occurance of an attribute.
  *
- *  \param [in] list     GList to search.
+ *  \param [in] list     GList of attributes to search.
  *  \param [in] name     Character string with attribute name to search for.
  *  \param [in] counter  Which occurance to return.
- *  \return Character string with attribute value, NULL otherwise.
- *
- *  \warning
- *  Caller must g_free returned character string.
+ *  \return The n'th attribute object in the given list with the given name.
  */
-char *o_attrib_search_name (const GList *list, char *name, int counter)
+static OBJECT *o_attrib_find_attrib_by_name (const GList *list, char *name, int count)
 {
-  OBJECT *o_current;
   OBJECT *a_current;
-  GList *a_iter;
-  int val;
-  int internal_counter=0;
-  char *found_name = NULL;
-  char *found_value = NULL;
-  char *return_string = NULL;
   const GList *iter;
+  char *found_name;
+  int internal_counter = 0;
 
-  iter = list;
+  for (iter = list; iter != NULL; iter = g_list_next (iter)) {
+    a_current = iter->data;
 
-  while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
-    if (o_current->attribs != NULL) {
-      a_iter = o_current->attribs;
-      while(a_iter != NULL) {
-        a_current = a_iter->data;
-        if (a_current->type == OBJ_TEXT) {
-          val = o_attrib_get_name_value(a_current->text->string,
-                                        &found_name, &found_value);
+    g_return_val_if_fail (a_current->type == OBJ_TEXT, NULL);
 
-          if (val) {
-            if (strcmp(name, found_name) == 0) {
-              if (counter != internal_counter) {
-                internal_counter++;
-              } else {
-                return_string = g_strdup (found_value);
-                g_free(found_name);
-                g_free(found_value);
-                return(return_string);
-              }
-            }
-            if (found_name) { g_free(found_name); found_name = NULL; }
-            if (found_value) { g_free(found_value); found_value = NULL; }
-          }
+    if (!o_attrib_get_name_value (a_current->text->string, &found_name, NULL))
+      continue;
 
-#if DEBUG
-          printf("0 _%s_\n", a_current->text->string);
-          printf("1 _%s_\n", found_name);
-          printf("2 _%s_\n", found_value);
-#endif
-        }
-        a_iter = g_list_next (a_iter);
-      }
-    }
-
-    /* search for attributes outside */
-
-    if (o_current->type == OBJ_TEXT) {
-      g_free(found_name);
-      g_free(found_value);
-      val = o_attrib_get_name_value(o_current->text->string, 
-                                    &found_name, &found_value);
-      if (val) {
-        if (strcmp(name, found_name) == 0) {
-          if (counter != internal_counter) {
-            internal_counter++;	
-          } else {
-            return_string = g_strdup (found_value);
-	    g_free(found_name);
-	    g_free(found_value);
-            return(return_string);
-          }
-        }
-	if (found_name) { g_free(found_name); found_name = NULL; }
-	if (found_value) { g_free(found_value); found_value = NULL; }
-      }	
-    }
-
-    iter = g_list_next (iter);
-  }
-	
-  g_free(found_name);
-  g_free(found_value);
-  return (NULL);
-} 
-
-/*! \brief Search OBJECT list for text string.
- *  \par Function Description
- *  Given an OBJECT list (i.e. OBJECTs on schematic page or
- *  inside symbol), search for the attribute called out in
- *  "string".  It iterates over all objects in the OBJECT list
- *  and dives into the attached attribute OBJECT list for
- *  each OBJECT if it finds one.
- *  Inside the attribute OBJECT list it looks for an attached text
- *  attribute matching "string".  It returns the
- *  pointer to the associated OBJECT if found.  If the attribute
- *  string is not found in the attribute OBJECT list, then the fcn
- *  looks on the OBJECT itself for the attribute.  Then it
- *  iterates to the next OBJECT.
- *
- *  \warning
- *  The list is the top level list. Do not pass it an object_list list
- *  unless you know what you are doing.
- *  
- *  \param [in] list    OBJECT list to search.
- *  \param [in] string  Character string to search for.
- *  \return A matching OBJECT if found, NULL otherwise.
- */
-OBJECT *o_attrib_search_string_list (GList *list, char *string)
-{
-  OBJECT *o_current;
-  OBJECT *a_current;
-  GList *a_iter;
-  GList *o_iter;
-
-  o_iter = list;
-
-  while (o_iter != NULL) {
-    o_current = o_iter->data;
-    /* first search attribute list */
-    if (o_current->attribs != NULL) {
-      a_iter = o_current->attribs;
-
-      while(a_iter != NULL) {
-        a_current = a_iter->data;
-        if (a_current->type == OBJ_TEXT) {
-#if DEBUG
-    printf("libgeda:o_attrib.c:o_attrib_search_string_list --");
-    printf("found OBJ_TEXT, string = %s\n", found->text->string);
-#endif
-          if (strcmp(string, a_current->text->string) == 0) {
-            return a_current;
-          }
-        }
-        a_iter = g_list_next (a_iter);
-      }
-    }
-
-    /* search for attributes outside (ie the actual object) */
-    if (o_current->type == OBJ_TEXT) {
-      if (strcmp(string, o_current->text->string) == 0) {
-        return(o_current);
-      }
-    }
-    
-    o_iter = g_list_next (o_iter);
-  }
-
-  return (NULL);
-} 
-
-/*! \brief Search list for partial string match.
- *  \par Function Description
- *  Search list for partial string match.
- *
- *  Counter is the n'th occurance of the attribute, and starts searching
- *  from zero.  Zero is the first occurance of an attribute.
- *
- *  \param [in] object      The OBJECT list to search.
- *  \param [in] search_for  Partial character string to search for.
- *  \param [in] counter     Which occurance to return.
- *  \return Matching object value if found, NULL otherwise.
- *
- *  \warning
- *  Caller must g_free returned character string.
- */
-char *o_attrib_search_string_partial(OBJECT *object, char *search_for,
-				     int counter) 
-{
-  OBJECT *o_current;
-  int val;
-  int internal_counter=0;
-  char *found_value = NULL;
-  char *return_string = NULL;
-
-  o_current = object;
-
-  if (o_current == NULL) {
-    return(NULL);
-  }
-
-  if (o_current->type == OBJ_TEXT) {
-    if (strstr(o_current->text->string, search_for)) {
-      if (counter != internal_counter) {
-        internal_counter++;	
-      } else {
-        val = o_attrib_get_name_value(o_current->text->string, 
-                                      NULL, &found_value);
-        if (val) {
-          return_string = g_strdup(found_value);
-	  g_free(found_value);
-	  return(return_string);
-        }
-      }
-    }
-  }	
-	
-  g_free(found_value);
-  return (NULL);
-} 
-
-/*! \brief Check if object matches string.
- *  \par Function Description
- *  This function will check if the text->string value of
- *  the passed OBJECT matches the <B>search_for</B> parameter.
- *  If not, it then searches the object's attribute list
- *  (if it has one.)
- *  Only this single OBJECT and its attribute list is
- *  checked, and other OBJECTs on the page are not checked.
- *  \param [in] object      The OBJECT to compare.
- *  \param [in] search_for  Character string to compare against.  
- *  Usually name=value
- *  \return The OBJECT passed in <B>object</B> parameter, NULL otherwise.
- */
-OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for)
-{
-  OBJECT *o_current;
-  OBJECT *a_current;
-  GList *a_iter;
-
-  o_current = object;
-
-#if DEBUG
-  printf("In libgeda:o_attrib.c:o_attrib_search_string_single\n");
-  printf("   Examining object->name = %s\n", object->name);
-#endif
-
-  if (o_current == NULL) {
-    return(NULL);
-  }
-
-  /* First check to see if this OBJECT itself is the attribute we want */
-  if (o_current->type == OBJ_TEXT) {
-    if (strcmp(o_current->text->string, search_for) == 0) {
-#if DEBUG
-      printf("   This object is searched-for attribute\n");
-#endif
-      return(o_current);
-    }
-  }
-
-  /* Next check to see if this OBJECT has an attribute list we */
-  /* can search.  If not return NULL.  If so, search it. */
-  if (o_current->attribs == NULL) 
-    return(NULL);
-
-  a_iter = o_current->attribs;
-  while(a_iter != NULL) {
-    a_current = a_iter->data;
-    if (a_current->type == OBJ_TEXT) {
-      if(strcmp(a_current->text->string, search_for) == 0) {
+    if (strcmp (name, found_name) == 0) {
+      if (internal_counter == count) {
+        g_free (found_name);
         return a_current;
       }
+      internal_counter++;
     }
-    a_iter = g_list_next (a_iter);
+
+    g_free (found_name);
   }
 
-  return (NULL);
-} 
+  return NULL;
+}
 
-/*! \brief Search for attribute by value and name.
+
+/*! \brief Search for attibute by name.
  *  \par Function Description
- *  Search for attribute by value and name.
- *  
+ *  Search for attribute by name.
+ *
  *  Counter is the n'th occurance of the attribute, and starts searching
  *  from zero.  Zero is the first occurance of an attribute.
  *
- *  The value is the primary search key, but name is checked before
- *  an OBJECT is returned to ensure the correct OBJECT has been found.
- *
- *  \param [in] list     The attribute OBJECT list to search.
- *  \param [in] value    Character string with value to search for.
- *  \param [in] name     Character string with name to compare.
+ *  \param [in] list     GList of attributes to search.
+ *  \param [in] name     Character string with attribute name to search for.
  *  \param [in] counter  Which occurance to return.
- *  \return The attribute OBJECT if found, NULL otherwise.
- *
+ *  \return The n'th attribute object in the given list with the given name.
  */
-OBJECT *o_attrib_search_attrib_value(GList *list, char *value, char *name,
-				     int counter) 
+static char *o_attrib_search_attrib_list_by_name (const GList *list, char *name, int counter)
 {
-  OBJECT *a_current;
-  GList *a_iter;
-  int val;
-  int internal_counter=0;
-  char *found_name = NULL;
-  char *found_value = NULL;
+  OBJECT *attrib;
+  char *value = NULL;
 
-  a_iter = list;
-	
-  if (!value) 
-  return(NULL);
+  attrib = o_attrib_find_attrib_by_name (list, name, counter);
 
-  if (!name) 
-  return(NULL);
+  if (attrib != NULL)
+    o_attrib_get_name_value (attrib->text->string, NULL, &value);
 
-  while(a_iter != NULL) {
-    a_current = a_iter->data;
-    if (a_current->type == OBJ_TEXT) {
-      val = o_attrib_get_name_value(a_current->text->string,
-                                    &found_name, &found_value);
+  return value;
+}
 
-      if (val) {
-#if DEBUG
-        printf("found value: %s\n", found_value);
-        printf("looking for: %s\n", value);
-#endif
-        if (strcmp(value, found_value) == 0) {
-          if (counter != internal_counter) {
-            internal_counter++;
-          } else {
-            if (strstr(found_name, name)) {
-              g_free(found_name);
-              g_free(found_value);
-              return a_current;
-            }
-          }
-        }
-        if (found_name) { g_free(found_name); found_name = NULL; }
-        if (found_value) { g_free(found_value); found_value = NULL; }
-      }
 
-    }
-    a_iter = g_list_next (a_iter);
-  }
-
-  g_free(found_name);
-  g_free(found_value);
-  return (NULL);
-} 
-
-/*! \brief Search for an attribute by name.
+/*! \brief Search for attibute by name.
  *  \par Function Description
- *  Search for an attribute by name.
+ *  Search for attribute by name.
  *
  *  Counter is the n'th occurance of the attribute, and starts searching
  *  from zero.  Zero is the first occurance of an attribute.
  *
- *  \param [in] list     attribute OBJECT list to search.
+ *  \param [in] list     GList of OBJECTs to search for floating attributes.
  *  \param [in] name     Character string with attribute name to search for.
  *  \param [in] counter  Which occurance to return.
  *  \return Character string with attribute value, NULL otherwise.
@@ -815,308 +540,100 @@ OBJECT *o_attrib_search_attrib_value(GList *list, char *value, char *name,
  *  \warning
  *  Caller must g_free returned character string.
  */
-char *
-o_attrib_search_attrib_name(GList *list, char *name, int counter)
+char *o_attrib_search_floating_attribs_by_name (const GList *list, char *name, int counter)
 {
-  OBJECT *a_current;
-  GList *a_iter;
-  int val;
-  int internal_counter=0;
-  char *found_name = NULL;
-  char *found_value = NULL;
-  char *return_string = NULL;
+  char *result;
+  GList *attributes;
 
-  a_iter = list;
+  attributes = o_attrib_find_floating_attribs (list);
+  result = o_attrib_search_attrib_list_by_name (attributes, name, counter);
+  g_list_free (attributes);
 
-  while(a_iter != NULL) {
-    a_current = a_iter->data;
-    if (a_current->type == OBJ_TEXT) {
-      val = o_attrib_get_name_value(a_current->text->string,
-                                    &found_name, &found_value);
+  return result;
+}
 
-      if (val) {
-#if DEBUG
-        printf("found name: %s\n", found_name);
-        printf("looking for: %s\n", name);
-#endif
-        if (strcmp(name, found_name) == 0) {
-          if (counter != internal_counter) {
-            internal_counter++;
-          } else {
-            return_string = g_strdup (found_value);
-            g_free(found_name);
-            g_free(found_value);
-            return(return_string);
-          }
-        }
-        if (found_name) { g_free(found_name); found_name = NULL; }
-        if (found_value) { g_free(found_value); found_value = NULL; }
-      }
-    }
-    a_iter = g_list_next (a_iter);
-  }
 
-  g_free(found_name);
-  g_free(found_value);
-  return (NULL);
-} 
-
-/*! \brief Search TOPLEVEL attributes.
+/*! \brief Search for attibute by name.
  *  \par Function Description
- *  This function should only be used to search for TOPLEVEL attributes.
- *  \warning
- *  The list is the top level list. Do not pass it an object_list list
- *  unless you know what you are doing.
- *  
+ *  Search for attribute by name.
+ *
  *  Counter is the n'th occurance of the attribute, and starts searching
  *  from zero.  Zero is the first occurance of an attribute.
- * 
- *  \param [in] list     The GList to search (TOPLEVEL only).
- *  \param [in] name     Character string of attribute name to search for.
+ *
+ *  \param [in] object   The OBJECT whos attached attributes to search.
+ *  \param [in] name     Character string with attribute name to search for.
  *  \param [in] counter  Which occurance to return.
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \warning
  *  Caller must g_free returned character string.
  */
-char *o_attrib_search_toplevel (const GList *list, char *name, int counter)
+char *o_attrib_search_attached_attribs_by_name (OBJECT *object, char *name, int counter)
 {
-  OBJECT *o_current;
-  int val;
-  int internal_counter=0;
-  char *found_name = NULL;
-  char *found_value = NULL;
-  char *return_string = NULL;
-  const GList *iter;
-
-  iter = list;
-
-  while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
-
-    /* search for attributes outside */
-
-    if (o_current->type == OBJ_TEXT) {
-      val = o_attrib_get_name_value(o_current->text->string, 
-                                    &found_name, &found_value);
-      if (val) {
-        if (strcmp(name, found_name) == 0) {
-          if (counter != internal_counter) {
-            internal_counter++;	
-          } else {
-            return_string = g_strdup (found_value);
-	    g_free(found_name);
-	    g_free(found_value);
-            return(return_string);
-          }
-        }
-	if (found_name) { g_free(found_name); found_name = NULL; }
-	if (found_value) { g_free(found_value); found_value = NULL; }
-      }	
-    }
-
-    iter = g_list_next (iter);
-  }
-	
-  g_free(found_name);
-  g_free(found_value);
-  return (NULL);
-} 
-
-
-/*! \brief Search for first occurance of a named attribute.
- *  \par Function Description
- *  Search for first occurance of a named attribute.
- *
- *  \param [in]  object        The OBJECT list to search.
- *  \param [in]  name          Character string of attribute name to search for.
- *  \param [out] return_found  Contains attribute OBJECT if found, NULL otherwise.
- *  \return Character string with attribute value, NULL otherwise.
- *
- *  \warning
- *  Caller must g_free returned character string.
- */
-char *o_attrib_search_name_single(OBJECT *object, char *name,
-				  OBJECT **return_found) 
-{
-  OBJECT *o_current;
-  OBJECT *a_current;
-  GList *a_iter;
-  int val;
-  char *found_name = NULL;
-  char *found_value = NULL;
-  char *return_string = NULL;
-
-  o_current = object;
-
-  if (o_current == NULL) {
-    return(NULL);
-  }
-
-  if (o_current->attribs != NULL) {
-    a_iter = o_current->attribs;
-
-    while(a_iter != NULL) {
-      a_current = a_iter->data;
-      if (a_current->type == OBJ_TEXT) {
-        val = o_attrib_get_name_value(a_current->text->string,
-                                      &found_name, &found_value);
-
-        if (val) {
-          if (strcmp(name, found_name) == 0) {
-            return_string = g_strdup (found_value);
-            if (return_found) {
-              *return_found = a_current;
-            }
-            g_free(found_name);
-            g_free(found_value);
-            return(return_string);
-          }
-          if (found_name) { g_free(found_name); found_name = NULL; }
-          if (found_value) { g_free(found_value); found_value = NULL; }
-        }
-
-#if DEBUG
-        printf("0 _%s_\n", found->text->string);
-        printf("1 _%s_\n", found_name);
-        printf("2 _%s_\n", found_value);
-#endif
-      }
-      a_iter = g_list_next (a_iter);
-    }
-  }
-  /* search for attributes outside */
-
-  if (o_current->type == OBJ_TEXT) {
-    g_free(found_name);
-    g_free(found_value);
-    val = o_attrib_get_name_value(o_current->text->string, 
-                                  &found_name, &found_value);
-
-    if (val) {
-      if (strcmp(name, found_name) == 0) {
-        return_string = g_strdup (found_value);
-        if (return_found) {
-          *return_found = o_current;
-        }
-	g_free(found_name);
-	g_free(found_value);
-        return(return_string);
-      }
-      if (found_name) { g_free(found_name); found_name = NULL; }
-      if (found_value) { g_free(found_value); found_value = NULL; }
-    }
-  }
-
-  if (return_found) {
-    *return_found = NULL;
-  }
-  
-  g_free(found_name);
-  g_free(found_value);
-  return (NULL);
+  return o_attrib_search_attrib_list_by_name (object->attribs, name, counter);
 }
 
-/*! \brief Search for N'th occurance of a named attribute.
+
+/*! \brief Search for attibute by name.
  *  \par Function Description
- *  Search for N'th occurance of a named attribute.
+ *  Search for attribute by name.
  *
- *  \param [in] object   The OBJECT list to search.
- *  \param [in] name     Character string of attribute name to search for.
+ *  Counter is the n'th occurance of the attribute, and starts searching
+ *  from zero.  Zero is the first occurance of an attribute.
+ *
+ *  \param [in] object   The OBJECT whos inherited attributes to search.
+ *  \param [in] name     Character string with attribute name to search for.
  *  \param [in] counter  Which occurance to return.
  *  \return Character string with attribute value, NULL otherwise.
- *  
+ *
  *  \warning
  *  Caller must g_free returned character string.
  */
-/* be sure caller free's return value */
-/* this function is like above, except that it returns the n'th occurance */
-/* of the attribute.  counter starts counting at zero */
-char *o_attrib_search_name_single_count(OBJECT *object, char *name, 
-					int counter) 
+char *o_attrib_search_inherited_attribs_by_name (OBJECT *object, char *name, int counter)
 {
-  OBJECT *o_current;
-  OBJECT *a_current;
-  GList *a_iter;
-  int val;
-  char *found_name = NULL;
-  char *found_value = NULL;
-  char *return_string = NULL;
-  int internal_counter=0;
+  g_return_val_if_fail (object->type == OBJ_COMPLEX ||
+                        object->type == OBJ_PLACEHOLDER, NULL);
 
-  o_current = object;
-
-  if (o_current == NULL) {
-    return(NULL);
-  }
-
-  a_iter = o_current->attribs;
-
-  while(a_iter != NULL) {
-    a_current = a_iter->data;
-    if (a_current->type == OBJ_TEXT) {
-      val = o_attrib_get_name_value(a_current->text->string,
-                                    &found_name, &found_value);
-
-      if (val) {
-        if (strcmp(name, found_name) == 0) {
-          if (counter != internal_counter) {
-            internal_counter++;
-          } else {
-            return_string = g_strdup (found_value);
-            g_free(found_name);
-            g_free(found_value);
-            return(return_string);
-          }
-        }
-        if (found_name) { g_free(found_name); found_name = NULL; }
-        if (found_value) { g_free(found_value); found_value = NULL; }
-      }
-
-#if DEBUG
-      printf("0 _%s_\n", a_current->text->string);
-      printf("1 _%s_\n", found_name);
-      printf("2 _%s_\n", found_value);
-#endif
-    }
-    a_iter = g_list_next (a_iter);
-  }
-
-  /* search for attributes outside */
-
-  if (o_current->type == OBJ_TEXT) {
-    g_free(found_name);
-    g_free(found_value);
-    val = o_attrib_get_name_value(o_current->text->string, 
-                                  &found_name, &found_value);
-
-    if (val) {
-      if (strcmp(name, found_name) == 0) {
-        if (counter != internal_counter) {
-          internal_counter++;
-        } else {
-          return_string = g_strdup (found_value);
-	  g_free(found_name);
-	  g_free(found_value);
-          return(return_string);
-        }
-      }
-      if (found_name) { g_free(found_name); found_name = NULL; }
-      if (found_value) { g_free(found_value); found_value = NULL; }
-    }
-  }	
-  
-  g_free(found_name);
-  g_free(found_value);
-  return (NULL);
+  return o_attrib_search_floating_attribs_by_name (object->complex->prim_objs, name, counter);
 }
+
+
+/*! \brief Search for attibute by name.
+ *  \par Function Description
+ *  Search for attribute by name.
+ *
+ *  Counter is the n'th occurance of the attribute, and starts searching
+ *  from zero.  Zero is the first occurance of an attribute.
+ *
+ *  \param [in] list     OBJECT whos attributes to search.
+ *  \param [in] name     Character string with attribute name to search for.
+ *  \param [in] counter  Which occurance to return.
+ *  \return Character string with attribute value, NULL otherwise.
+ *
+ *  \warning
+ *  Caller must g_free returned character string.
+ */
+char *o_attrib_search_object_attribs_by_name (OBJECT *object, char *name, int counter)
+{
+  char *result;
+  GList *attributes;
+
+  attributes = o_attrib_return_attribs (object);
+  result = o_attrib_search_attrib_list_by_name (attributes, name, counter);
+  g_list_free (attributes);
+
+  return result;
+}
+
 
 /*! \brief Search for slot attribute.
  *  \par Function Description
  *  Search for slot attribute.
  *
+ *  The returned value will only come from an attached attribute.
+ *
  *  \param [in] object        OBJECT list to search.
- *  \param [in] return_found  slot attribute if found, NULL otherwise.
+ *  \param [in] return_found  attached slot attribute if found, NULL otherwise.
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \warning
@@ -1124,20 +641,21 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name,
  */
 char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found)
 {
-  char *return_value;
+  GList *attributes;
+  OBJECT *attrib;
+  char *value = NULL;
 
-  /* search for default value attribute buried inside the complex */
-  return_value = o_attrib_search_name_single(object, "slot", return_found);
+  attributes = o_attrib_return_attribs (object);
+  attrib = o_attrib_find_attrib_by_name (attributes, "slot", 0);
+  g_list_free (attributes);
 
-  /* I'm confused here does the next if get ever called? */
-  if (return_value) {
-    return(return_value);
-  }
+  if (attrib != NULL)
+    o_attrib_get_name_value (attrib->text->string, NULL, &value);
 
-  if (return_found) {
-    *return_found = NULL;
-  }
-  return(NULL);
+  if (return_found)
+    *return_found = attrib;
+
+  return value;
 }
 
 /*! \brief Search for numslots attribute.
@@ -1157,50 +675,9 @@ char *o_attrib_search_numslots(OBJECT *object)
   if (object->type != OBJ_COMPLEX)
     return NULL;
 
-  return o_attrib_search_name (object->complex->prim_objs, "numslots", 0);
+  return o_attrib_search_object_attribs_by_name (object, "numslots", 0);
 }
 
-/*! \brief Search for default slot attribute.
- *  \par Function Description
- *  Search for default slot attribute.
- *
- *  \param [in] object  OBJECT list to search.
- *  \return Character string with attribute value, NULL otherwise.
- *
- *  \warning
- *  Caller must g_free returned character string.
- */
-char *o_attrib_search_default_slot(OBJECT *object)
-{
-  /* search for default value attribute buried inside the complex */
-  return o_attrib_search_name (object->complex->prim_objs, "slot", 0);
-}
-
-/*! \brief Search pinseq attribute.
- *  \par Function Description
- *  Given list of objects (generally a pin with attached attribs), 
- *  and a pinnumber, 
- *  search for and return pinseq= attrib (object).
- *
- *  \param [in] list        GList list to search.
- *  \param [in] pin_number  pin number to search for.
- *  \return OBJECT containing pinseq data, NULL otherwise.
- */
-static OBJECT *o_attrib_search_pinseq (GList *list, int pin_number)
-{
-  OBJECT *pinseq_text_object;
-  char *search_for;
-
-  search_for = g_strdup_printf ("pinseq=%d", pin_number);
-  pinseq_text_object = o_attrib_search_string_list(list, search_for);
-  g_free(search_for);
-  
-  if (pinseq_text_object && pinseq_text_object->attached_to) {
-    return pinseq_text_object->attached_to;
-  }
-  
-  return(NULL);
-}
 
 /*! \brief Search for slotdef attribute.
  *  \par Function Description
@@ -1213,133 +690,89 @@ static OBJECT *o_attrib_search_pinseq (GList *list, int pin_number)
  *  \warning
  *  Caller must g_free returned character string.
  */
-static char *o_attrib_search_slotdef(OBJECT *object, int slotnumber)
+static char *o_attrib_search_slotdef (OBJECT *object, int slotnumber)
 {
-  char *return_value=NULL;
-  char *search_for=NULL;
-  OBJECT *o_current;
-  GList *iter;
+  int counter;
+  char *slotdef;
+  char *search_for;
 
-  search_for = g_strdup_printf ("slotdef=%d:", slotnumber);
+  search_for = g_strdup_printf ("%d:", slotnumber);
 
-  iter = object->complex->prim_objs;
-  while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
-    return_value = o_attrib_search_string_partial(o_current, search_for, 0);
-    if (return_value) {
+  while (1) {
+    slotdef = o_attrib_search_object_attribs_by_name (object, "slotdef",
+                                                      counter++);
+    if (slotdef == NULL ||
+        strncmp (slotdef, search_for, strlen (search_for)) == 0)
       break;
-    }
-    iter = g_list_next (iter);
-  }
-  g_free(search_for);
 
-  if (return_value) {
-    return(return_value);
+    g_free (slotdef);
   }
 
-  return(NULL);
+  g_free (search_for);
+  return slotdef;
 }
 
-/*! \brief Search for component.
- *  \par Function Description
- *  Search for component.
- *
- *  \param [in] object  The OBJECT list to search.
- *  \param [in] name    Character string containing component name to match.
- *  \return Character string with the component value, NULL otherwise.
- */
-char *o_attrib_search_component(OBJECT *object, char *name)
-{
-  char *return_value = NULL;
-
-  if (!name) {
-    return(NULL);
-  }
-
-  if (object->type != OBJ_COMPLEX && object->type != OBJ_PLACEHOLDER) {
-    return(NULL);
-  }
-
-  /* first look inside the complex object */
-  return_value = o_attrib_search_name(object->complex->prim_objs, 
-                                      name, 0);
-
-  if (return_value) {
-    return(return_value);
-  }
-
-  /* now look outside to see if it was attached externally */
-  return_value = o_attrib_search_name_single(object, name, NULL);
-
-  if (return_value) {
-    return(return_value);
-  }
-
-  return(NULL);
-}
 
 /*! \brief Update all slot attributes in an object.
  *  \par Function Description
- *  Update pinnumber attributes in a graphic object.  
+ *  Update pinnumber attributes in a graphic object.
  *  The interesting case is where the object is an
- *  instantiation of a slotted part.  This means that 
+ *  instantiation of a slotted part.  This means that
  *  o_attrib_slot_update iterates through all pins
  *  found on object and sets the pinnumber= attrib
  *  on each.  This doesn't matter for non-slotted
- *  parts, but on slotted parts, this is what sets the 
+ *  parts, but on slotted parts, this is what sets the
  *  pinnumber= attribute on slots 2, 3, 4....
  *
  *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] object     The OBJECT to update.
  */
-void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
+void o_attrib_slot_update (TOPLEVEL *toplevel, OBJECT *object)
 {
-  OBJECT *o_current;  /* o_current points to the sch level complex object */
-  OBJECT *o_slot_attrib;
   OBJECT *o_pin_object;
-  OBJECT *o_pinnum_object;
+  OBJECT *o_pinnum_attrib;
+  GList *attributes;
   char *string;
   char *slotdef;
+  char *pinseq;
   int slot;
   int slot_string;
   int pin_counter;    /* Internal pin counter private to this fcn. */
   char* current_pin;  /* text from slotdef= to be made into pinnumber= */
   char* cptr;         /* char pointer pointing to pinnumbers in slotdef=#:#,#,# string */
 
-  o_current = object;
   /* For this particular graphic object (component instantiation) */
   /* get the slot number as a string */
-  string = o_attrib_search_slot(o_current, &o_slot_attrib);
+  string = o_attrib_search_object_attribs_by_name (object, "slot", 0);
 
-  if (!string) {
-    /* "Did not find slot= attribute", this is true if 
-     *  * there is no slot attribut
-     *  * or the slot attribute was deleted and we have to assume to use the 
-     *    first slot now
+  if (string == NULL) {
+    /* Did not find slot= attribute.
+     * This happens if there is no attached slot attribute, and
+     * there is no default slot= attribute inside the symbol.
+     * Assume slot=1.
      */
     slot = 1;
     slot_string = 0;
-  } 
-  else {
+  } else {
     slot_string = 1;
-    slot = atoi(string);
-    g_free(string);
+    slot = atoi (string);
+    g_free (string);
   }
-  
+
   /* OK, now that we have the slot number, use it to get the */
   /* corresponding slotdef=#:#,#,# string.  */
-  slotdef = o_attrib_search_slotdef(o_current, slot);
-  
-  if (!slotdef) { 
+  slotdef = o_attrib_search_slotdef (object, slot);
+
+  if (slotdef == NULL) {
     if (slot_string) /* only an error if there's a slot string */
-      s_log_message(_("Did not find slotdef=#:#,#,#... attribute\n"));
+      s_log_message (_("Did not find slotdef=#:#,#,#... attribute\n"));
     return;
   }
 
-  if (!strstr(slotdef, ":")) {
+  if (!strstr (slotdef, ":")) {
     /* Didn't find proper slotdef=#:... put warning into log */
-    s_log_message(_("Improper slotdef syntax: missing \":\".\n"));
-    g_free(slotdef);    
+    s_log_message (_("Improper slotdef syntax: missing \":\".\n"));
+    g_free (slotdef);
     return;
   }
 
@@ -1353,92 +786,56 @@ void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
   cptr++; /* skip colon */
 
   if (*cptr == '\0') {
-    s_log_message(_("Did not find proper slotdef=#:#,#,#... attribute\n"));
-    g_free(slotdef);    
+    s_log_message (_("Did not find proper slotdef=#:#,#,#... attribute\n"));
+    g_free (slotdef);
     return;
   }
 
   /* loop on all pins found in slotdef= attribute */
   pin_counter = 1;  /* internal pin_counter */
   /* get current pinnumber= from slotdef= attrib */
-  current_pin = strtok(cptr, DELIMITERS); 
-  while(current_pin != NULL) {
+  current_pin = strtok (cptr, DELIMITERS);
+  while (current_pin != NULL) {
     /* get pin on this component with pinseq == pin_counter */
-    o_pin_object = o_attrib_search_pinseq(o_current->complex->prim_objs, 
-                                          pin_counter);
+    pinseq = g_strdup_printf ("%d", pin_counter);
+    o_pin_object = o_complex_find_pin_by_attribute (object, "pinseq", pinseq);
+    g_free (pinseq);
 
-    if (o_pin_object) {
+    if (o_pin_object != NULL) {
       /* Now rename pinnumber= attrib on this part with value found */
       /* in slotdef attribute  */
-      string = o_attrib_search_name_single(o_pin_object, "pinnumber",
-                                           &o_pinnum_object);
-  
-      if (string && o_pinnum_object && o_pinnum_object->type == OBJ_TEXT &&
-          o_pinnum_object->text->string) {
-        g_free(o_pinnum_object->text->string);
+      attributes = o_attrib_return_attribs (o_pin_object);
+      o_pinnum_attrib = o_attrib_find_attrib_by_name (attributes, "pinnumber", 0);
+      g_list_free (attributes);
 
-        o_pinnum_object->text->string = g_strdup_printf ("pinnumber=%s", current_pin);
-        
-        o_text_recreate(toplevel, o_pinnum_object);
+      if (o_pinnum_attrib != NULL) {
+        g_free (o_pinnum_attrib->text->string);
+        o_pinnum_attrib->text->string = g_strdup_printf ("pinnumber=%s", current_pin);
+        o_text_recreate (toplevel, o_pinnum_attrib);
       }
-      g_free(string);
 
       pin_counter++;
     } else {
-      s_log_message(_("component missing pinseq= attribute\n"));
-    }
-    
-    current_pin = strtok(NULL, DELIMITERS);
-  } 
-  
-  g_free(slotdef);
-}
-
-
-/*! \brief Search for first TOPLEVEL attribute.
- *  \par Function Description
- *  This function searches all loaded pages for the first
- *  TOPLEVEL attribute found.
- *  The caller is responsible for freeing the returned value.
- *  See #o_attrib_search_toplevel() for other comments.
- *
- *  \param [in] page_list  Page list to search through.
- *  \param [in] name       Character string name to search for.
- *  \return Character string from the found attribute, NULL otherwise.
- */
-char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name)
-{
-  const GList *iter;
-  PAGE *p_current;
-  char *ret_value=NULL;
-
-  iter = geda_list_get_glist( page_list );
-
-  while( iter != NULL ) {
-    p_current = (PAGE *)iter->data;
-
-    /* only look for first occurrance of the attribute */
-    ret_value = o_attrib_search_toplevel (s_page_objects (p_current), name, 0);
-
-    if (ret_value != NULL) {
-      return(ret_value);
+      s_log_message (_("component missing pinseq= attribute\n"));
     }
 
-    iter = g_list_next( iter );
+    current_pin = strtok (NULL, DELIMITERS);
   }
 
-  return(NULL);
+  g_free (slotdef);
 }
+
 
 /*! \brief Get all attached attributes of the specified OBJECT.
  *  \par Function Description
- *  This function returns all attached attributes of the specified object.
+ *  This function returns all attributes of the specified object.
  *
  *  The returned GList should be freed using the #g_list_free().
  *
- *  This function does not look for inherited attributes. (Inherited
- *  attributes are those which live as toplevel un-attached attributes
- *  inside in a complex OBJECT's prim_objs).
+ *  This function aggregates the attached and inherited attributes
+ *  belonging to a given OBJECT. (inherited attributes are those
+ *  which live as toplevel un-attached attributes inside in a
+ *  complex OBJECT's prim_objs).
  *
  *  \param [in] object       OBJECT whos attributes to return.
  *  \return A GList of attributes belinging to the passed object.
@@ -1446,6 +843,7 @@ char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name)
 GList * o_attrib_return_attribs (OBJECT *object)
 {
   GList *attribs = NULL;
+  GList *inherited_attribs;
   OBJECT *a_current;
   GList *a_iter;
 
@@ -1464,10 +862,20 @@ GList * o_attrib_return_attribs (OBJECT *object)
       continue;
 
     attribs = g_list_prepend (attribs, a_current);
-
   }
 
   attribs = g_list_reverse (attribs);
+
+  /* Inherited attributes (inside complex objects) */
+  if (object->type == OBJ_COMPLEX ||
+      object->type == OBJ_PLACEHOLDER) {
+
+    inherited_attribs =
+      o_attrib_find_floating_attribs (object->complex->prim_objs);
+
+    attribs = g_list_concat (attribs, inherited_attribs);
+  }
+
   return attribs;
 }
 

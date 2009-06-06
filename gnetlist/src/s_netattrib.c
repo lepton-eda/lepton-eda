@@ -178,162 +178,119 @@ s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
 
 
 void
-s_netattrib_handle(TOPLEVEL * pr_current, OBJECT * o_current,
-		   NETLIST * netlist, char *hierarchy_tag)
+s_netattrib_handle (TOPLEVEL * pr_current, OBJECT * o_current,
+                    NETLIST * netlist, char *hierarchy_tag)
 {
-    char *value;
-    int counter = 0;
+  char *value;
+  int counter;
 
-    /* for now just look inside the component */
-    value = o_attrib_search_name(o_current->complex->prim_objs,
-				 "net", counter);
+  /* for now just look inside the component */
+  for (counter = 0; ;) {
+    value = o_attrib_search_inherited_attribs_by_name (o_current,
+                                                       "net", counter);
+    if (value == NULL)
+      break;
 
-#if DEBUG
-    printf("found net= %s\n", value);
-#endif
+    counter++;
 
-    while (value != NULL) {
-	if (value) {
-	    s_netattrib_create_pins(pr_current, o_current, netlist, value,
-				    hierarchy_tag);
-	    g_free(value);
-	}
-	counter++;
-	value = o_attrib_search_name(o_current->complex->prim_objs,
-				     "net", counter);
-#if DEBUG
-	printf("found net= %s\n", value);
-#endif
-    }
+    s_netattrib_create_pins (pr_current, o_current,
+                             netlist, value, hierarchy_tag);
+    g_free (value);
+  }
 
+  /* now look outside the component */
+  for (counter = 0; ;) {
+    value = o_attrib_search_attached_attribs_by_name (o_current,
+                                                      "net", counter);
+    if (value == NULL)
+      break;
 
-    g_free(value);
+    counter++;
 
-
-    /* for now just look inside the component */
-    counter = 0;
-    value = o_attrib_search_name_single_count(o_current, "net", counter);
-    while (value != NULL) {
-	if (value) {
-	    s_netattrib_create_pins(pr_current, o_current, netlist, value,
-				    hierarchy_tag);
-	    g_free(value);
-	}
-	counter++;
-	value =
-	    o_attrib_search_name_single_count(o_current, "net", counter);
-    }
-
-    g_free(value);
+    s_netattrib_create_pins (pr_current, o_current,
+                             netlist, value, hierarchy_tag);
+    g_free (value);
+  }
 }
 
-char *s_netattrib_net_search(OBJECT * o_current, char *wanted_pin)
+char *s_netattrib_net_search (OBJECT * o_current, char *wanted_pin)
 {
-    char *value = NULL;
-    char *char_ptr = NULL;
-    char *net_name = NULL;
-    char *current_pin = NULL;
-    char *start_of_pinlist = NULL;
-    char *return_value = NULL;
-    int counter = 0;
+  char *value = NULL;
+  char *char_ptr = NULL;
+  char *net_name = NULL;
+  char *current_pin = NULL;
+  char *start_of_pinlist = NULL;
+  char *return_value = NULL;
+  int counter;
 
-    if (o_current == NULL) {
-	return(NULL); 
+  if (o_current == NULL ||
+      o_current->complex == NULL)
+    return NULL;
+
+  /* for now just look inside the component */
+  for (counter = 0; ;) {
+    value = o_attrib_search_inherited_attribs_by_name (o_current,
+                                                       "net", counter);
+    if (value == NULL)
+      break;
+
+    counter++;
+
+    char_ptr = strchr (value, ':');
+    if (char_ptr == NULL) {
+      fprintf (stderr, "Got an invalid net= attrib [net=%s]\n"
+                       "Missing : in net= attrib\n", value);
+      g_free (value);
+      return NULL;
     }
 
-    if (o_current->complex == NULL) {
-	return(NULL); 
+    net_name = s_netattrib_extract_netname (value);
+
+    start_of_pinlist = char_ptr + 1;
+    current_pin = strtok (start_of_pinlist, DELIMITERS);
+    while (current_pin && !return_value) {
+      if (strcmp (current_pin, wanted_pin) == 0) {
+        return_value = net_name;
+      }
+      current_pin = strtok (NULL, DELIMITERS);
     }
 
-    /* for now just look inside the component */
-    value = o_attrib_search_name(o_current->complex->prim_objs,
-				 "net", counter);
-    while (value != NULL) {
-	if (value) {
-	    char_ptr = strchr(value, ':');
-	    if (char_ptr == NULL) {
-		fprintf(stderr, "Got an invalid net= attrib [net=%s]\nMissing : in net= attrib\n",
-			value);
-		return (NULL);
-	    }
+    g_free (value);
+  }
 
-	    net_name = s_netattrib_extract_netname(value);
+  /* now look outside the component */
+  for (counter = 0; ;) {
+    value = o_attrib_search_attached_attribs_by_name (o_current,
+                                                      "net", counter);
+    if (value == NULL)
+      break;
 
-	    start_of_pinlist = char_ptr + 1;
-	    current_pin = strtok(start_of_pinlist, DELIMITERS);
-	    while (current_pin && !return_value) {
-#if DEBUG
-		printf("looking at: %s\n", current_pin);
-#endif
-		if (strcmp(current_pin, wanted_pin) == 0) {
-#if DEBUG
-		    printf("found net_name: _%s_\n", net_name);
-#endif
-		    return_value = net_name;
-		}
-		current_pin = strtok(NULL, DELIMITERS);
-	    }
+    counter++;
 
-	    g_free(value);
-	}
-	counter++;
-	value = o_attrib_search_name(o_current->complex->prim_objs,
-				     "net", counter);
+    char_ptr = strchr (value, ':');
+    if (char_ptr == NULL) {
+      fprintf (stderr, "Got an invalid net= attrib [net=%s]\n"
+                       "Missing : in net= attrib\n", value);
+      g_free (value);
+      return NULL;
     }
 
+    net_name = s_netattrib_extract_netname (value);
 
-    g_free(value);
-
-
-    /* now look outside the component */
-    counter = 0;
-    value = o_attrib_search_name_single_count(o_current, "net", counter);
-    while (value != NULL) {
-	if (value) {
-	    char_ptr = strchr(value, ':');
-	    if (char_ptr == NULL) {
-		fprintf(stderr, "Got an invalid net= attrib [net=%s]\nMissing : in net= attrib\n",
-			value);
-		return (NULL);
-	    }
-
-	    net_name = s_netattrib_extract_netname(value);
-
-	    start_of_pinlist = char_ptr + 1;
-	    current_pin = strtok(start_of_pinlist, DELIMITERS);
-	    while (current_pin) {
-
-#if DEBUG
-		printf("looking at: %s\n", current_pin);
-#endif
-		if (strcmp(current_pin, wanted_pin) == 0) {
-#if DEBUG
-		    printf("found net_name: _%s_\n", net_name);
-#endif
-		    if (return_value) {
-			g_free(return_value);
-			return_value = NULL;
-		    }
-
-		    return (net_name);
-		}
-		current_pin = strtok(NULL, DELIMITERS);
-	    }
-
-	    g_free(value);
-	}
-	counter++;
-	value =
-	    o_attrib_search_name_single_count(o_current, "net", counter);
+    start_of_pinlist = char_ptr + 1;
+    current_pin = strtok (start_of_pinlist, DELIMITERS);
+    while (current_pin && !return_value) {
+      if (strcmp (current_pin, wanted_pin) == 0) {
+        g_free (return_value);
+        return net_name;
+      }
+      current_pin = strtok (NULL, DELIMITERS);
     }
 
-    g_free(value);
+    g_free (value);
+  }
 
-    if (return_value) {
-	return (return_value);
-    } else {
-	return (NULL);
-    }
+  return return_value;
 }
 
 char *s_netattrib_return_netname(TOPLEVEL * pr_current, OBJECT * o_current,

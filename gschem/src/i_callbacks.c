@@ -2850,11 +2850,12 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
     return;
 
   parent = w_current->toplevel->page_current;
-  attrib = o_attrib_search_name_single_count(object, "source", count);
+  attrib = o_attrib_search_attached_attribs_by_name (object, "source", count);
 
   /* if above is null, then look inside symbol */
   if (attrib == NULL) {
-    attrib = o_attrib_search_name(object->complex->prim_objs, "source", count);
+    attrib =
+      o_attrib_search_inherited_attribs_by_name (object, "source", count);
     looking_inside = TRUE;
 #if DEBUG
     printf("going to look inside now\n");
@@ -2915,7 +2916,8 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 
     /* continue looking outside first */
     if (!looking_inside) {
-      attrib = o_attrib_search_name_single_count(object, "source", count);
+      attrib =
+        o_attrib_search_attached_attribs_by_name (object, "source", count);
     }
 
     /* okay we were looking outside and didn't find anything,
@@ -2931,7 +2933,8 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 #if DEBUG
       printf("looking inside\n");
 #endif
-      attrib = o_attrib_search_name(object->complex->prim_objs, "source", count);
+      attrib =
+        o_attrib_search_inherited_attribs_by_name (object, "source", count);
     }
   }
 
@@ -3029,22 +3032,13 @@ DEFINE_I_CALLBACK(hierarchy_documentation)
     /* only allow going into symbols */
     if (object->type == OBJ_COMPLEX) {
 
-      /* look for "documentation" first outside, then inside symbol */
-      attrib_doc = o_attrib_search_name_single_count(object, "documentation", 0);
-      if (!attrib_doc) {
-        attrib_doc = o_attrib_search_name(object->complex->prim_objs, "documentation", 0);
-      }
+      /* look for "documentation" */
+      attrib_doc = o_attrib_search_object_attribs_by_name (object, "documentation", 0);
       /* look for "device" */
-      attrib_device = o_attrib_search_name_single_count(object, "device", 0);
-      if (!attrib_device) {
-        attrib_device = o_attrib_search_name(object->complex->prim_objs, "device", 0);
-      }
+      attrib_device = o_attrib_search_object_attribs_by_name (object, "device", 0);
       /* look for "value" */
-      attrib_value = o_attrib_search_name_single_count(object, "value", 0);
-      if (!attrib_value) {
-        attrib_value = o_attrib_search_name(object->complex->prim_objs, "value", 0);
-      }
-      
+      attrib_value = o_attrib_search_object_attribs_by_name (object, "value", 0);
+
       sym = s_clib_get_symbol_by_name (object->complex_basename);
       if (sym != NULL) {
         sourcename = s_clib_source_get_name (s_clib_symbol_get_source(sym));

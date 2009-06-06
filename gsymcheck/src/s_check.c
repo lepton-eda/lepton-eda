@@ -350,7 +350,7 @@ s_check_graphical (const GList *obj_list, SYMCHECK *s_current)
   char *temp;
   
   /* look for special graphical tag */
-  temp = o_attrib_search_name (obj_list, "graphical", 0);
+  temp = o_attrib_search_floating_attribs_by_name (obj_list, "graphical", 0);
 
   if (temp) {
     s_current->graphical_symbol=TRUE;
@@ -365,7 +365,7 @@ s_check_device (const GList *obj_list, SYMCHECK *s_current)
   char *message;
   
   /* search for device attribute */
-  temp = o_attrib_search_name (obj_list, "device", 0);
+  temp = o_attrib_search_floating_attribs_by_name (obj_list, "device", 0);
   if (!temp) {
     /* did not find device= attribute */
     message = g_strdup ("Missing device= attribute\n");
@@ -426,8 +426,8 @@ s_check_pinseq (const GList *obj_list, SYMCHECK *s_current)
       found_first = FALSE;
       counter = 0;
       
-      string = o_attrib_search_name_single_count(o_current, "pinseq",
-                                                 counter);
+      string = o_attrib_search_object_attribs_by_name (o_current, "pinseq",
+                                                       counter);
       if (!string)
       {
         message = g_strdup ("Missing pinseq= attribute\n");
@@ -474,8 +474,8 @@ s_check_pinseq (const GList *obj_list, SYMCHECK *s_current)
         }
         
         counter++;
-        string = o_attrib_search_name_single_count(o_current, "pinseq",
-                                                   counter);
+        string = o_attrib_search_object_attribs_by_name (o_current, "pinseq",
+                                                         counter);
       }
 
       s_current->missing_pinseq_attrib += missing_pinseq_attrib_sum;
@@ -548,7 +548,7 @@ s_check_pinnumber (const GList *obj_list, SYMCHECK *s_current)
     
   /* collect all net pins */
   for (counter = 0;
-       (net = o_attrib_search_toplevel (obj_list, "net", counter)) != NULL;
+       (net = o_attrib_search_floating_attribs_by_name (obj_list, "net", counter)) != NULL;
        counter++) {
     message = g_strdup_printf ("Found net=%s attribute\n", net);
     s_current->info_messages = g_list_append(s_current->info_messages,
@@ -619,8 +619,8 @@ s_check_pinnumber (const GList *obj_list, SYMCHECK *s_current)
       multiple_pinnumber_attrib_sum = 0;
       
       for (counter = 0; 
-	   (string = o_attrib_search_name_single_count(o_current, "pinnumber",
-						       counter)) != NULL;
+	   (string = o_attrib_search_object_attribs_by_name (o_current, "pinnumber",
+	                                                     counter)) != NULL;
 	   counter++) {
 	
         message = g_strdup_printf ("Found pinnumber=%s attribute\n", string);
@@ -790,7 +790,7 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
   int errors_found = 0;
 
   /* look for numslots to see if this symbol has slotting info */
-  value = o_attrib_search_name (obj_list, "numslots", 0);
+  value = o_attrib_search_floating_attribs_by_name (obj_list, "numslots", 0);
 
   if (!value) {
     message = g_strdup ("Did not find numslots= attribute, not checking slotting\n");
@@ -823,7 +823,7 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
 
   i = 0;
   /* get the slotdef attribute */
-  slotdef = o_attrib_search_name (obj_list, "slotdef", 0);
+  slotdef = o_attrib_search_floating_attribs_by_name (obj_list, "slotdef", 0);
   while ((slotdef != NULL) && (!error_parsing))
   {
 
@@ -985,7 +985,7 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
     slotdef = NULL;
    
     i++;
-    slotdef = o_attrib_search_name (obj_list, "slotdef", i);
+    slotdef = o_attrib_search_floating_attribs_by_name (obj_list, "slotdef", i);
   }
 
   if (!slotdef && i < s_current->numslots) {
@@ -1267,7 +1267,7 @@ s_check_missing_attribute(OBJECT *object, char *attribute, SYMCHECK *s_current)
     return;
   }
 
-  string = o_attrib_search_name_single_count (object, attribute, counter);
+  string = o_attrib_search_object_attribs_by_name (object, attribute, counter);
   if (!string)
   {
     message = g_strdup_printf (
@@ -1304,7 +1304,7 @@ s_check_missing_attribute(OBJECT *object, char *attribute, SYMCHECK *s_current)
     g_free(string);
 
     counter++;
-    string = o_attrib_search_name_single_count (object, attribute, counter);
+    string = o_attrib_search_object_attribs_by_name (object, attribute, counter);
   }
 
 }
@@ -1395,10 +1395,10 @@ void s_check_pintype (const GList *obj_list, SYMCHECK *s_current)
     if (o_current->type == OBJ_PIN) {
 
       for (counter = 0;
-	   (pintype = o_attrib_search_name_single_count(o_current, "pintype",
-							counter)) != NULL;
-	   counter++) {
-        
+           (pintype = o_attrib_search_object_attribs_by_name (o_current, "pintype",
+                                                              counter)) != NULL;
+           counter++) {
+
         message = g_strdup_printf("Found pintype=%s attribute\n", pintype);
         s_current->info_messages = g_list_append(s_current->info_messages,
 	 	    			         message);
