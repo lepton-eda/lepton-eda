@@ -56,8 +56,8 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 
     /* if above is null, then look inside symbol */
     if (attrib == NULL) {
-	attrib = o_attrib_search_name(o_current->complex->prim_objs,
-				      "source", count);
+	attrib = o_attrib_search_inherited_attribs_by_name (o_current,
+	                                                    "source", count);
 
 	looking_inside = TRUE;
 #if DEBUG
@@ -153,8 +153,9 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 #if DEBUG
 	    printf("looking inside\n");
 #endif
-	    attrib = o_attrib_search_name(o_current->complex->prim_objs,
-					  "source", count);
+	    attrib =
+	        o_attrib_search_inherited_attribs_by_name (o_current,
+	                                                   "source", count);
 	}
 
         graphical = s_hierarchy_graphical_search(o_current, count);

@@ -524,8 +524,8 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
 
         /* if above is null, then look inside symbol */
         if (attrib == NULL) {
-          attrib = o_attrib_search_name(o_current->complex->prim_objs,
-                                        "source", count);
+          attrib = o_attrib_search_inherited_attribs_by_name (o_current,
+                                                              "source", count);
           /*          looking_inside = TRUE; */
         }
 

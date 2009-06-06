@@ -1106,7 +1106,7 @@ char *o_attrib_search_numslots(OBJECT *object)
 char *o_attrib_search_default_slot(OBJECT *object)
 {
   /* search for default value attribute buried inside the complex */
-  return o_attrib_search_name (object->complex->prim_objs, "slot", 0);
+  return o_attrib_search_inherited_attribs_by_name (object, "slot", 0);
 }
 
 

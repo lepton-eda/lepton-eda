@@ -2854,7 +2854,8 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 
   /* if above is null, then look inside symbol */
   if (attrib == NULL) {
-    attrib = o_attrib_search_name(object->complex->prim_objs, "source", count);
+    attrib =
+      o_attrib_search_inherited_attribs_by_name (object, "source", count);
     looking_inside = TRUE;
 #if DEBUG
     printf("going to look inside now\n");
@@ -2931,7 +2932,8 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 #if DEBUG
       printf("looking inside\n");
 #endif
-      attrib = o_attrib_search_name(object->complex->prim_objs, "source", count);
+      attrib =
+        o_attrib_search_inherited_attribs_by_name (object, "source", count);
     }
   }
 

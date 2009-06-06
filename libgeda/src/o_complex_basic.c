@@ -1285,7 +1285,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
   g_return_if_fail (object->complex != NULL);
 
   /* first look on the inside for the symversion= attribute */
-  inside = o_attrib_search_name(object->complex->prim_objs, "symversion", 0);
+  inside = o_attrib_search_inherited_attribs_by_name (object, "symversion", 0);
 
   /* now look for the symversion= attached to object */
   outside = o_attrib_search_attrib_name(object->attribs, "symversion", 0);

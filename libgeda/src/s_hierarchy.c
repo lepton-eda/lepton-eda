@@ -244,8 +244,8 @@ GList *s_hierarchy_traversepages(TOPLEVEL *toplevel,
       
       /* if above is NULL, then look inside symbol */
       if (filename == NULL) {
-	filename = o_attrib_search_name(o_current->
-				      complex->prim_objs, "source", 0);
+	filename =
+          o_attrib_search_inherited_attribs_by_name (o_current, "source", 0);
       }
 
       if (filename != NULL) {
