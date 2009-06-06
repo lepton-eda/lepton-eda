@@ -118,7 +118,6 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name, int counter)
 char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found);
 char *o_attrib_search_numslots(OBJECT *object);
 char *o_attrib_search_default_slot(OBJECT *object);
-char *o_attrib_search_component(OBJECT *object, char *name);
 void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object);
 char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name);
 GList *o_attrib_return_attribs(OBJECT *object);

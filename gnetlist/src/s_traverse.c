@@ -179,7 +179,7 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
       verbose_print(" C");
 
       /* look for special tag */
-      temp = o_attrib_search_component(o_current, "graphical");
+      temp = o_attrib_search_object_attribs_by_name (o_current, "graphical", 0);
       if (temp) {
         /* traverse graphical elements, but adding them to the
 	   graphical netlist */

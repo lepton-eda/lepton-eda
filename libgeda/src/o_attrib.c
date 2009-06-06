@@ -1409,43 +1409,6 @@ static char *o_attrib_search_slotdef(OBJECT *object, int slotnumber)
   return(NULL);
 }
 
-/*! \brief Search for component.
- *  \par Function Description
- *  Search for component.
- *
- *  \param [in] object  The OBJECT list to search.
- *  \param [in] name    Character string containing component name to match.
- *  \return Character string with the component value, NULL otherwise.
- */
-char *o_attrib_search_component(OBJECT *object, char *name)
-{
-  char *return_value = NULL;
-
-  if (!name) {
-    return(NULL);
-  }
-
-  if (object->type != OBJ_COMPLEX && object->type != OBJ_PLACEHOLDER) {
-    return(NULL);
-  }
-
-  /* first look inside the complex object */
-  return_value = o_attrib_search_name(object->complex->prim_objs, 
-                                      name, 0);
-
-  if (return_value) {
-    return(return_value);
-  }
-
-  /* now look outside to see if it was attached externally */
-  return_value = o_attrib_search_name_single(object, name, NULL);
-
-  if (return_value) {
-    return(return_value);
-  }
-
-  return(NULL);
-}
 
 /*! \brief Update all slot attributes in an object.
  *  \par Function Description

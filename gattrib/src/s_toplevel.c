@@ -425,7 +425,7 @@ s_toplevel_sheetdata_to_toplevel (PAGE *page)
     if (o_current->type == OBJ_COMPLEX) {    /* Note that OBJ_COMPLEX = component + attribs */
 
 #if 0
-      if ( o_attrib_search_component(o_current, "graphical") ) {
+      if (o_attrib_search_object_attribs_by_name (o_current, "graphical", 0)) {
         break;  /* Ignore graphical components */
       }
 #endif
