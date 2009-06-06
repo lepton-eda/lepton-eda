@@ -291,7 +291,6 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
               && a_current->text != NULL) {  /* found an attribute */
             /* may need to check more thoroughly here. . . . */
             attrib_text = g_strdup(a_current->text->string);
-            o_attrib_get_name_value(attrib_text, &attrib_name, &attrib_value);
             attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
             attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
 	    old_visibility = a_current->visibility;
