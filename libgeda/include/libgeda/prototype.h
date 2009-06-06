@@ -108,7 +108,6 @@ char *o_attrib_search_inherited_attribs_by_name (OBJECT *object, char *name, int
 char *o_attrib_search_object_attribs_by_name (OBJECT *object, char *name, int counter);
 char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found);
 char *o_attrib_search_numslots(OBJECT *object);
-char *o_attrib_search_default_slot(OBJECT *object);
 void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object);
 GList *o_attrib_return_attribs(OBJECT *object);
 int o_attrib_is_inherited(OBJECT *attrib);

@@ -678,22 +678,6 @@ char *o_attrib_search_numslots(OBJECT *object)
   return o_attrib_search_object_attribs_by_name (object, "numslots", 0);
 }
 
-/*! \brief Search for default slot attribute.
- *  \par Function Description
- *  Search for default slot attribute.
- *
- *  \param [in] object  OBJECT list to search.
- *  \return Character string with attribute value, NULL otherwise.
- *
- *  \warning
- *  Caller must g_free returned character string.
- */
-char *o_attrib_search_default_slot(OBJECT *object)
-{
-  /* search for default value attribute buried inside the complex */
-  return o_attrib_search_inherited_attribs_by_name (object, "slot", 0);
-}
-
 
 /*! \brief Search for slotdef attribute.
  *  \par Function Description
