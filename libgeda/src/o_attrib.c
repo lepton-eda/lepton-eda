@@ -790,55 +790,6 @@ OBJECT *o_attrib_search_string_list (GList *list, char *string)
   return (NULL);
 } 
 
-/*! \brief Search list for partial string match.
- *  \par Function Description
- *  Search list for partial string match.
- *
- *  Counter is the n'th occurance of the attribute, and starts searching
- *  from zero.  Zero is the first occurance of an attribute.
- *
- *  \param [in] object      The OBJECT list to search.
- *  \param [in] search_for  Partial character string to search for.
- *  \param [in] counter     Which occurance to return.
- *  \return Matching object value if found, NULL otherwise.
- *
- *  \warning
- *  Caller must g_free returned character string.
- */
-char *o_attrib_search_string_partial(OBJECT *object, char *search_for,
-				     int counter) 
-{
-  OBJECT *o_current;
-  int val;
-  int internal_counter=0;
-  char *found_value = NULL;
-  char *return_string = NULL;
-
-  o_current = object;
-
-  if (o_current == NULL) {
-    return(NULL);
-  }
-
-  if (o_current->type == OBJ_TEXT) {
-    if (strstr(o_current->text->string, search_for)) {
-      if (counter != internal_counter) {
-        internal_counter++;	
-      } else {
-        val = o_attrib_get_name_value(o_current->text->string, 
-                                      NULL, &found_value);
-        if (val) {
-          return_string = g_strdup(found_value);
-	  g_free(found_value);
-	  return(return_string);
-        }
-      }
-    }
-  }	
-	
-  g_free(found_value);
-  return (NULL);
-} 
 
 /*! \brief Check if object matches string.
  *  \par Function Description
@@ -1319,31 +1270,26 @@ static OBJECT *o_attrib_search_pinseq (GList *list, int pin_number)
  *  \warning
  *  Caller must g_free returned character string.
  */
-static char *o_attrib_search_slotdef(OBJECT *object, int slotnumber)
+static char *o_attrib_search_slotdef (OBJECT *object, int slotnumber)
 {
-  char *return_value=NULL;
-  char *search_for=NULL;
-  OBJECT *o_current;
-  GList *iter;
+  int counter;
+  char *slotdef;
+  char *search_for;
 
-  search_for = g_strdup_printf ("slotdef=%d:", slotnumber);
+  search_for = g_strdup_printf ("%d:", slotnumber);
 
-  iter = object->complex->prim_objs;
-  while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
-    return_value = o_attrib_search_string_partial(o_current, search_for, 0);
-    if (return_value) {
+  while (1) {
+    slotdef = o_attrib_search_inherited_attribs_by_name (object, "slotdef",
+                                                         counter++);
+    if (slotdef == NULL ||
+        strncmp (slotdef, search_for, strlen (search_for)) == 0)
       break;
-    }
-    iter = g_list_next (iter);
-  }
-  g_free(search_for);
 
-  if (return_value) {
-    return(return_value);
+    g_free (slotdef);
   }
 
-  return(NULL);
+  g_free (search_for);
+  return slotdef;
 }
 
 

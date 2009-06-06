@@ -108,7 +108,6 @@ char *o_attrib_search_inherited_attribs_by_name (OBJECT *object, char *name, int
 char *o_attrib_search_object_attribs_by_name (OBJECT *object, char *name, int counter);
 char *o_attrib_search_name(const GList *list, char *name, int counter);
 OBJECT *o_attrib_search_string_list(GList *list, char *string);
-char *o_attrib_search_string_partial(OBJECT *object, char *search_for, int counter);
 OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for);
 OBJECT *o_attrib_search_attrib_value(GList *list, char *value, char *name, int counter);
 char *o_attrib_search_attrib_name(GList *list, char *name, int counter);
