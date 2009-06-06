@@ -106,9 +106,6 @@ char *o_attrib_search_floating_attribs_by_name (const GList *list, char *name, i
 char *o_attrib_search_attached_attribs_by_name (OBJECT *object, char *name, int counter);
 char *o_attrib_search_inherited_attribs_by_name (OBJECT *object, char *name, int counter);
 char *o_attrib_search_object_attribs_by_name (OBJECT *object, char *name, int counter);
-OBJECT *o_attrib_search_attrib_value(GList *list, char *value, char *name, int counter);
-char *o_attrib_search_attrib_name(GList *list, char *name, int counter);
-char *o_attrib_search_name_single_count(OBJECT *object, char *name, int counter);
 char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found);
 char *o_attrib_search_numslots(OBJECT *object);
 char *o_attrib_search_default_slot(OBJECT *object);
