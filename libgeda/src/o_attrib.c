@@ -427,7 +427,7 @@ o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_pt
  *  \par Function Description
  *  Find all floating attributes in the given object list.
  *
- *  \param [in] list     GList of OBJECTs to search.
+ *  \param [in] list  GList of OBJECTs to search for floating attributes.
  *  \return GList of floating attributes from the input list
  *
  *  \warning
