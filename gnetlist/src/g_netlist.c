@@ -539,9 +539,7 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
   char *uref;
   char *pinseq;
   char *wanted_attrib;
-  char *pinseq_attrib;
   char *return_value = NULL;
-  OBJECT *o_text_object;
   OBJECT *o_pin_object;
 
   SCM_ASSERT(scm_is_string (scm_uref),
@@ -557,8 +555,6 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
   uref          = SCM_STRING_CHARS (scm_uref);
   pinseq        = SCM_STRING_CHARS (scm_pinseq);
   wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
-  
-  pinseq_attrib = g_strconcat ("pinseq=", pinseq, NULL);
 
 #if DEBUG
   printf("gnetlist:g_netlist.c:g_get_attribute_by_pinseq -- \n");
@@ -577,48 +573,18 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
     if (nl_current->component_uref) {
       if (strcmp(nl_current->component_uref, uref) == 0) {
 
-        /* first search outside the symbol */
-	/* This checks for attributes attached to this component */
-        /* at schematic level */
-        o_text_object = o_attrib_search_string_single(nl_current->object_ptr,
-                                                      pinseq_attrib);
-        if (o_text_object && o_text_object->attached_to) {
-          o_pin_object = o_text_object->attached_to;
+        o_pin_object = o_complex_find_pin_by_attribute (nl_current->object_ptr,
+                                                        "pinseq", pinseq);
 
-          if (o_pin_object) {
-            return_value = o_attrib_search_name_single(o_pin_object,
-                                                       wanted_attrib,
-                                                       NULL);
-            if (return_value) {
-              break;
-            }
+        if (o_pin_object) {
+          return_value = o_attrib_search_name_single(o_pin_object,
+                                                     wanted_attrib,
+                                                     NULL);
+          if (return_value) {
+            break;
           }
+        }
 
-        } else {
-#if DEBUG
-	  printf("gnetlist:g_netlist.c:g_get_attribute_by_pinseq -- ");
-          printf("can't find pinseq at schematic level\n");
-#endif
-	}
-
-        
-        /* now search inside the symbol */
-	/* This checks for attributes attached at the symbol level */
-        o_text_object =
-          o_attrib_search_string_list(nl_current->object_ptr->
-                                      complex->prim_objs, pinseq_attrib);
-
-        if (o_text_object && o_text_object->attached_to) {
-          o_pin_object = o_text_object->attached_to;
-          if (o_pin_object) {
-            return_value = o_attrib_search_name_single(o_pin_object,
-                                                       wanted_attrib,
-                                                       NULL);
-            if (return_value) {
-              break;
-            }
-          }
-        }         
         /* Don't break until we search the whole netlist to handle slotted */
         /* parts.   4.28.2007 -- SDB. */
       }
@@ -636,8 +602,6 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
   printf("gnetlist:g_netlist.c:g_get_attribute_by_pinseq -- ");
   printf("return_value: %s\n", return_value);
 #endif
-
-  g_free(pinseq_attrib);
 
   return (scm_return_value);
 }
