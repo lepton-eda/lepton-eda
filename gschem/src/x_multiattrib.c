@@ -2132,12 +2132,19 @@ void multiattrib_update (Multiattrib *multiattrib)
   if (!sensitive)
     return;
 
+  show_inherited =
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (multiattrib->show_inherited));
+
   /* get list of attributes */
   object_attribs = o_attrib_return_attribs (multiattrib->object);
   /* populate the store with attributes */
   for (a_iter = object_attribs; a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
     a_current = a_iter->data;
+
+    /* Skip over inherited attributes if we don't want to show them */
+    if (!show_inherited && o_attrib_is_inherited (a_current))
+      continue;
 
     gtk_list_store_append (liststore, &iter);
     gtk_list_store_set (liststore, &iter,
@@ -2146,26 +2153,4 @@ void multiattrib_update (Multiattrib *multiattrib)
   }
   /* delete the list of attribute objects */
   g_list_free (object_attribs);
-
-  show_inherited =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (multiattrib->show_inherited));
-
-  /* get list of inherited attributes from inside the symbol */
-  if (show_inherited && (multiattrib->object->type == OBJ_COMPLEX ||
-                         multiattrib->object->type == OBJ_PLACEHOLDER)) {
-    object_attribs =
-      o_attrib_find_floating_attribs (multiattrib->object->complex->prim_objs);
-
-    for (a_iter = object_attribs; a_iter != NULL;
-         a_iter = g_list_next (a_iter)) {
-      a_current = a_iter->data;
-
-      gtk_list_store_append (liststore, &iter);
-      gtk_list_store_set (liststore, &iter,
-                          COLUMN_ATTRIBUTE, a_current,
-                          -1);
-    }
-    g_list_free (object_attribs);
-  }
-
 }

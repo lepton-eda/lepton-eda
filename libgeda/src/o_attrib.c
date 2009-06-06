@@ -1432,13 +1432,14 @@ char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name)
 
 /*! \brief Get all attached attributes of the specified OBJECT.
  *  \par Function Description
- *  This function returns all attached attributes of the specified object.
+ *  This function returns all attributes of the specified object.
  *
  *  The returned GList should be freed using the #g_list_free().
  *
- *  This function does not look for inherited attributes. (Inherited
- *  attributes are those which live as toplevel un-attached attributes
- *  inside in a complex OBJECT's prim_objs).
+ *  This function aggregates the attached and inherited attributes
+ *  belonging to a given OBJECT. (inherited attributes are those
+ *  which live as toplevel un-attached attributes inside in a
+ *  complex OBJECT's prim_objs).
  *
  *  \param [in] object       OBJECT whos attributes to return.
  *  \return A GList of attributes belinging to the passed object.
@@ -1446,6 +1447,7 @@ char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name)
 GList * o_attrib_return_attribs (OBJECT *object)
 {
   GList *attribs = NULL;
+  GList *inherited_attribs;
   OBJECT *a_current;
   GList *a_iter;
 
@@ -1464,10 +1466,20 @@ GList * o_attrib_return_attribs (OBJECT *object)
       continue;
 
     attribs = g_list_prepend (attribs, a_current);
-
   }
 
   attribs = g_list_reverse (attribs);
+
+  /* Inherited attributes (inside complex objects) */
+  if (object->type == OBJ_COMPLEX ||
+      object->type == OBJ_PLACEHOLDER) {
+
+    inherited_attribs =
+      o_attrib_find_floating_attribs (object->complex->prim_objs);
+
+    attribs = g_list_concat (attribs, inherited_attribs);
+  }
+
   return attribs;
 }
 
