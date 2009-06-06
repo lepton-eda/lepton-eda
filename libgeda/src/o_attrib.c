@@ -1464,40 +1464,6 @@ void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
 }
 
 
-/*! \brief Search for first TOPLEVEL attribute.
- *  \par Function Description
- *  This function searches all loaded pages for the first
- *  TOPLEVEL attribute found.
- *  The caller is responsible for freeing the returned value.
- *
- *  \param [in] page_list  Page list to search through.
- *  \param [in] name       Character string name to search for.
- *  \return Character string from the found attribute, NULL otherwise.
- */
-char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name)
-{
-  const GList *iter;
-  PAGE *p_current;
-  char *ret_value=NULL;
-
-  iter = geda_list_get_glist( page_list );
-
-  while( iter != NULL ) {
-    p_current = (PAGE *)iter->data;
-
-    /* only look for first occurrance of the attribute */
-    ret_value = o_attrib_search_floating_attribs_by_name (s_page_objects (p_current), name, 0);
-
-    if (ret_value != NULL) {
-      return(ret_value);
-    }
-
-    iter = g_list_next( iter );
-  }
-
-  return(NULL);
-}
-
 /*! \brief Get all attached attributes of the specified OBJECT.
  *  \par Function Description
  *  This function returns all attributes of the specified object.

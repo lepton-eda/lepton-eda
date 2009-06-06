@@ -727,26 +727,39 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
 /* still highly temp and doesn't work right */
 SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
 {
-    char *wanted_attrib;
-    char *return_value;
-    SCM scm_return_value;
+  const GList *p_iter;
+  PAGE *p_current;
+  char *wanted_attrib;
+  char *attrib_value = NULL;
+  SCM scm_return_value;
 
-    SCM_ASSERT(scm_is_string (scm_wanted_attrib),
-	       scm_wanted_attrib, SCM_ARG1, "gnetlist:get-toplevel-attribute");
+  SCM_ASSERT(scm_is_string (scm_wanted_attrib),
+             scm_wanted_attrib, SCM_ARG1, "gnetlist:get-toplevel-attribute");
 
-    wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
+  wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
 
-    return_value = o_attrib_search_toplevel_all(project_current->pages,
-						wanted_attrib);
+  for (p_iter = geda_list_get_glist (project_current->pages); p_iter != NULL;
+       p_iter = g_list_next (p_iter)) {
+    p_current = p_iter->data;
 
-    if (return_value) {
-      scm_return_value = scm_makfrom0str (return_value);
-      g_free(return_value);
-    } else {
-      scm_return_value = scm_makfrom0str ("not found");
-    }
+    /* only look for first occurrance of the attribute on each page */
+    attrib_value =
+      o_attrib_search_floating_attribs_by_name (s_page_objects (p_current),
+                                                wanted_attrib, 0);
 
-    return (scm_return_value);
+    /* Stop when we find the first one */
+    if (attrib_value != NULL)
+      break;
+  }
+
+  if (attrib_value != NULL) {
+    scm_return_value = scm_makfrom0str (attrib_value);
+    g_free (attrib_value);
+  } else {
+    scm_return_value = scm_makfrom0str ("not found");
+  }
+
+  return (scm_return_value);
 }
 
 #if 0	      /* No longer needed, but the netlist_mode variable is still used */
