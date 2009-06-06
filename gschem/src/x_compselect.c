@@ -522,7 +522,7 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
     o_attrlist = g_list_sort (o_attrlist, (GCompareFunc) sort_object_text);
     for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next (o_iter)) {
       o_current = o_iter->data;
-      o_attrib_get_name_value (o_current->text->string, &name, &value);
+      o_attrib_get_name_value (o_current, &name, &value);
       gtk_list_store_append (model, &iter);
       gtk_list_store_set (model, &iter, 0, name, 1, value, -1);
       g_free (name);
@@ -535,7 +535,7 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
          listiter = g_list_next (listiter)) {
       for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next (o_iter)) {
         o_current = o_iter->data;
-        if (o_attrib_get_name_value (o_current->text->string, &name, &value)) {
+        if (o_attrib_get_name_value (o_current, &name, &value)) {
           if (strcmp (name, listiter->data) == 0) {
             gtk_list_store_append (model, &iter);
             gtk_list_store_set (model, &iter, 0, name, 1, value, -1);

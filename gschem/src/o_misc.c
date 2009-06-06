@@ -82,7 +82,7 @@ void o_edit(GSCHEM_TOPLEVEL *w_current, GList *list)
     break;
     case(OBJ_TEXT):
       str = o_text_get_string (w_current->toplevel, o_current);
-      if (o_attrib_get_name_value (str, NULL, NULL) &&
+      if (o_attrib_get_name_value (o_current, NULL, NULL) &&
         /* attribute editor only accept 1-line values for attribute */
         o_text_num_lines (str) == 1) {
         attrib_edit_dialog(w_current,o_current, FROM_MENU);
@@ -749,8 +749,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     a_current = a_iter->data;
     g_assert (a_current->type == OBJ_TEXT);
 
-    o_attrib_get_name_value (o_text_get_string (toplevel, a_current),
-                             &name, NULL);
+    o_attrib_get_name_value (a_current, &name, NULL);
 
     /* We are only interested in the attributes which were promoted during
      * load of the new complex. Any which aren't already promoted in the

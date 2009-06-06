@@ -127,10 +127,9 @@ SCM g_get_attrib_name_value(SCM attrib_smob)
 
   attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
 
-  if (attribute &&
-      attribute->attribute &&
-      attribute->attribute->text->string ) {
-    o_attrib_get_name_value(attribute->attribute->text->string, &name, &value );
+  if (attribute != NULL &&
+      attribute->attribute != NULL) {
+    o_attrib_get_name_value (attribute->attribute, &name, &value );
     returned = scm_cons (scm_makfrom0str (name),
                          scm_makfrom0str (value));
     g_free(name);
@@ -171,13 +170,10 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
   attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
   value = SCM_STRING_CHARS (scm_value);
 
-  if (attribute &&
-      attribute->attribute &&
-      attribute->attribute->text &&
-      attribute->attribute->text->string ) {
+  if (attribute != NULL &&
+      attribute->attribute != NULL) {
 
-    o_attrib_get_name_value(attribute->attribute->text->string,
-                            &name, NULL);
+    o_attrib_get_name_value (attribute->attribute, &name, NULL);
 
     *new_string = g_strconcat (name, "=", value, NULL);
 		
@@ -575,8 +571,8 @@ SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
     a_iter = object->object->attribs;
     while (a_iter != NULL) {
       a_current = a_iter->data;
-      if (a_current && a_current->text) {
-        o_attrib_get_name_value(a_current->text->string, &name, &value );
+      if (a_current != NULL) {
+        o_attrib_get_name_value (a_current, &name, &value );
         if (strcmp(name, attrib_name) == 0)
           returned = scm_cons (scm_makfrom0str (value), returned);
         g_free (name);

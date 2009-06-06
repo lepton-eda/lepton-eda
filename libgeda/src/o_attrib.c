@@ -388,7 +388,7 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
  *  \return TRUE on success, FALSE otherwise.
  */
 gboolean
-o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_ptr)
+o_attrib_string_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_ptr)
 {
   gchar *ptr, *prev_char, *next_char;
 
@@ -423,6 +423,25 @@ o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_pt
 }
 
 
+/*! \brief Get name and value from an attribute OBJECT
+ *  \par Function Description
+ *  See o_attrib_string_get_name_value() for more details
+ *
+ *  \param [in]  attrib     The attribute OBJECT whos name/value to return.
+ *  \param [out] name_ptr   The return location for the name, or NULL.
+ *  \param [out] value_ptr  The return location for the value, or NULL.
+ *  \return TRUE on success, FALSE otherwise.
+ */
+gboolean
+o_attrib_get_name_value (OBJECT *attrib, gchar **name_ptr, gchar **value_ptr)
+{
+  g_return_val_if_fail (attrib->type == OBJ_TEXT, FALSE);
+
+  return o_attrib_string_get_name_value (attrib->text->string,
+                                         name_ptr, value_ptr);
+}
+
+
 /*! \brief Find all floating attributes in the given object list.
  *  \par Function Description
  *  Find all floating attributes in the given object list.
@@ -447,7 +466,7 @@ GList *o_attrib_find_floating_attribs (const GList *list)
      */
     if (o_current->type == OBJ_TEXT &&
         o_current->attached_to == NULL &&
-        o_attrib_get_name_value (o_current->text->string, NULL, NULL)) {
+        o_attrib_get_name_value (o_current, NULL, NULL)) {
 
       floating_attributes = g_list_prepend (floating_attributes, o_current);
     }
@@ -481,7 +500,7 @@ static OBJECT *o_attrib_find_attrib_by_name (const GList *list, char *name, int 
 
     g_return_val_if_fail (a_current->type == OBJ_TEXT, NULL);
 
-    if (!o_attrib_get_name_value (a_current->text->string, &found_name, NULL))
+    if (!o_attrib_get_name_value (a_current, &found_name, NULL))
       continue;
 
     if (strcmp (name, found_name) == 0) {
@@ -519,7 +538,7 @@ static char *o_attrib_search_attrib_list_by_name (const GList *list, char *name,
   attrib = o_attrib_find_attrib_by_name (list, name, counter);
 
   if (attrib != NULL)
-    o_attrib_get_name_value (attrib->text->string, NULL, &value);
+    o_attrib_get_name_value (attrib, NULL, &value);
 
   return value;
 }
@@ -650,7 +669,7 @@ char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found)
   g_list_free (attributes);
 
   if (attrib != NULL)
-    o_attrib_get_name_value (attrib->text->string, NULL, &value);
+    o_attrib_get_name_value (attrib, NULL, &value);
 
   if (return_found)
     *return_found = attrib;
@@ -858,7 +877,7 @@ GList * o_attrib_return_attribs (OBJECT *object)
       continue;
 
     /* Don't add invalid attributes to the list */
-    if (!o_attrib_get_name_value (a_current->text->string, NULL, NULL))
+    if (!o_attrib_get_name_value (a_current, NULL, NULL))
       continue;
 
     attribs = g_list_prepend (attribs, a_current);

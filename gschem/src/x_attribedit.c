@@ -487,8 +487,7 @@ void attrib_edit_dialog (GSCHEM_TOPLEVEL *w_current, OBJECT *attr_obj, int flag)
 
   /* gschem specific */
   if (attr_obj) {
-    o_attrib_get_name_value (o_text_get_string (toplevel, attr_obj),
-                            &name, &val);
+    o_attrib_get_name_value (attr_obj, &name, &val);
     attrib = attr_obj;
     if (attrib->visibility == VISIBLE) {
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton), TRUE);

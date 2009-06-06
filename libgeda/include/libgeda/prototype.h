@@ -100,7 +100,8 @@ void o_attrib_attach_list(TOPLEVEL *toplevel, GList *attr_list, OBJECT *object, 
 void o_attrib_detach_all(TOPLEVEL *toplevel, GList *list);
 void o_attrib_print(GList *attributes);
 void o_attrib_remove(GList **list, OBJECT *remove);
-gboolean o_attrib_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_ptr);
+gboolean o_attrib_string_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_ptr);
+gboolean o_attrib_get_name_value (OBJECT *attrib, gchar **name_ptr, gchar **value_ptr);
 GList *o_attrib_find_floating_attribs (const GList *list);
 char *o_attrib_search_floating_attribs_by_name (const GList *list, char *name, int counter);
 char *o_attrib_search_attached_attribs_by_name (OBJECT *object, char *name, int counter);

@@ -666,7 +666,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 #else
       /* might now compile now, but this #if'd out branch isn't being built */
       gint status;  
-      status = o_attrib_get_name_value(old_name_value_pair, &old_attrib_name, &old_attrib_value);
+      status = o_attrib_get_name_value (a_current, &old_attrib_name, &old_attrib_value);
       if (status == 0) {
         /* Don't put "refdes" or "slot" into list.  Don't put old name=value pair into list if a new
          * one is already in there. */

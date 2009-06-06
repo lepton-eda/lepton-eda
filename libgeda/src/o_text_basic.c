@@ -113,16 +113,16 @@ int tab_in_chars = 8;
  *  
  *  \param [in] o  The OBJECT to update
  */
-static void update_disp_string(OBJECT *o)
+static void update_disp_string (OBJECT *object)
 {
   char *name = NULL;
   char *value = NULL;
-  TEXT *text = o->text;
+  TEXT *text = object->text;
 
   g_free (text->disp_string);
 
-  if (o_attrib_get_name_value (text->string, &name, &value)) {
-    switch (o->show_name_value) {
+  if (o_attrib_get_name_value (object, &name, &value)) {
+    switch (object->show_name_value) {
       case (SHOW_NAME_VALUE):
         text->disp_string = g_strdup (text->string);
         break;
@@ -1563,7 +1563,7 @@ void o_text_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   f_print_set_color(toplevel, fp, o_current->color);
 
 
-  if (o_attrib_get_name_value(o_current->text->string, &name, &value)) {
+  if (o_attrib_get_name_value (o_current, &name, &value)) {
     switch(o_current->show_name_value) {
       case(SHOW_NAME_VALUE):
         output_string = g_strdup(o_current->text->string);

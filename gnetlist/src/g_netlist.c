@@ -955,7 +955,7 @@ SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has
 		net_name = pl_current->net_name;
 		if (strcmp(net_name, wanted_net_name) == 0) {
 
-		  if (o_attrib_get_name_value (has_attrib, &has_attrib_name,
+		  if (o_attrib_string_get_name_value (has_attrib, &has_attrib_name,
 					       &has_attrib_value) != 0) {
 		    attrib_value = 
 		      o_attrib_search_object_attribs_by_name (nl_current->object_ptr,

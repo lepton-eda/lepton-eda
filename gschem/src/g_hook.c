@@ -401,7 +401,6 @@ static void custom_world_get_single_object_bounds
     OBJECT *a_current;
     GList *a_iter;
     int rleft, rright, rbottom, rtop;
-    const gchar *text_value; 
     char *name_ptr, aux_ptr[2];
     gboolean include_text;
 
@@ -421,23 +420,20 @@ static void custom_world_get_single_object_bounds
 					    &rleft, &rtop, &rright, &rbottom);
 	    break;
           case (OBJ_TEXT):
-            text_value = o_text_get_string (toplevel, obj_ptr);
-	    if (text_value) {
-	      if (o_attrib_get_name_value(text_value, &name_ptr, NULL) &&
-		  g_list_find_custom(exclude_attrib_list, name_ptr, (GCompareFunc) &strcmp)) {
-		include_text = FALSE;
-	      }
-	      if (g_list_find_custom(exclude_attrib_list, "all", 
-				     (GCompareFunc) &strcmp)) {
-		include_text = FALSE;
-	      }
-	      if (include_text) {
-		world_get_single_object_bounds (toplevel, obj_ptr,
-						&rleft, &rtop, &rright, &rbottom);
-	      }
-	      g_free(name_ptr);
-	    }
-	    break;
+            if (o_attrib_get_name_value (obj_ptr, &name_ptr, NULL) &&
+                g_list_find_custom (exclude_attrib_list, name_ptr, (GCompareFunc) &strcmp)) {
+              include_text = FALSE;
+            }
+            if (g_list_find_custom (exclude_attrib_list, "all",
+                                    (GCompareFunc) &strcmp)) {
+              include_text = FALSE;
+            }
+            if (include_text) {
+              world_get_single_object_bounds (toplevel, obj_ptr,
+                                              &rleft, &rtop, &rright, &rbottom);
+            }
+            g_free(name_ptr);
+            break;
           case (OBJ_COMPLEX):
           case (OBJ_PLACEHOLDER):
 	    custom_world_get_object_glist_bounds (toplevel,

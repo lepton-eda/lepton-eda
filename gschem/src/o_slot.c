@@ -76,7 +76,7 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
   int new_slot_number;
   int status;
 
-  status = o_attrib_get_name_value(string, NULL, &value);
+  status = o_attrib_string_get_name_value (string, NULL, &value);
   if (!status) {
     s_log_message(_("Slot attribute malformed\n"));
     return;

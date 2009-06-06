@@ -52,8 +52,7 @@ vams_get_attribs_list (OBJECT *object)
   while(a_iter != NULL) {
     a_current = a_iter->data;
     if (a_current->text && a_current->text->string) {
-      val = o_attrib_get_name_value(a_current->text->string,
-                                    &found_name, NULL);
+      val = o_attrib_get_name_value (a_current, &found_name, NULL);
 
       if (val) {
         list = scm_cons (scm_makfrom0str (found_name), list);

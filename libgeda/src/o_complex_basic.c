@@ -213,7 +213,7 @@ static int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
   
   /* check list against attributes which can be promoted */
   if (toplevel->always_promote_attributes != NULL) {
-    if (o_attrib_get_name_value(object->text->string, &name, NULL)) {
+    if (o_attrib_get_name_value (object, &name, NULL)) {
       if (g_list_find_custom(toplevel->always_promote_attributes,
 			     name, (GCompareFunc) strcmp) != NULL) {
         /* Name of the attribute was in the always promote attributes list */
