@@ -3956,6 +3956,8 @@ close_confirmation_dialog_constructor (GType type,
                                           GTK_RESPONSE_CANCEL,
                                           -1);
 
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES);
+
   /* all done, let's show the contents of the dialog */
   gtk_widget_show_all (hbox);
 
