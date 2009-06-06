@@ -757,98 +757,6 @@ o_attrib_search_attrib_name(GList *list, char *name, int counter)
   return (NULL);
 } 
 
-/*! \brief Search for first occurance of a named attribute.
- *  \par Function Description
- *  Search for first occurance of a named attribute.
- *
- *  \param [in]  object        The OBJECT list to search.
- *  \param [in]  name          Character string of attribute name to search for.
- *  \param [out] return_found  Contains attribute OBJECT if found, NULL otherwise.
- *  \return Character string with attribute value, NULL otherwise.
- *
- *  \warning
- *  Caller must g_free returned character string.
- */
-char *o_attrib_search_name_single(OBJECT *object, char *name,
-				  OBJECT **return_found) 
-{
-  OBJECT *o_current;
-  OBJECT *a_current;
-  GList *a_iter;
-  int val;
-  char *found_name = NULL;
-  char *found_value = NULL;
-  char *return_string = NULL;
-
-  o_current = object;
-
-  if (o_current == NULL) {
-    return(NULL);
-  }
-
-  if (o_current->attribs != NULL) {
-    a_iter = o_current->attribs;
-
-    while(a_iter != NULL) {
-      a_current = a_iter->data;
-      if (a_current->type == OBJ_TEXT) {
-        val = o_attrib_get_name_value(a_current->text->string,
-                                      &found_name, &found_value);
-
-        if (val) {
-          if (strcmp(name, found_name) == 0) {
-            return_string = g_strdup (found_value);
-            if (return_found) {
-              *return_found = a_current;
-            }
-            g_free(found_name);
-            g_free(found_value);
-            return(return_string);
-          }
-          if (found_name) { g_free(found_name); found_name = NULL; }
-          if (found_value) { g_free(found_value); found_value = NULL; }
-        }
-
-#if DEBUG
-        printf("0 _%s_\n", found->text->string);
-        printf("1 _%s_\n", found_name);
-        printf("2 _%s_\n", found_value);
-#endif
-      }
-      a_iter = g_list_next (a_iter);
-    }
-  }
-  /* search for attributes outside */
-
-  if (o_current->type == OBJ_TEXT) {
-    g_free(found_name);
-    g_free(found_value);
-    val = o_attrib_get_name_value(o_current->text->string, 
-                                  &found_name, &found_value);
-
-    if (val) {
-      if (strcmp(name, found_name) == 0) {
-        return_string = g_strdup (found_value);
-        if (return_found) {
-          *return_found = o_current;
-        }
-	g_free(found_name);
-	g_free(found_value);
-        return(return_string);
-      }
-      if (found_name) { g_free(found_name); found_name = NULL; }
-      if (found_value) { g_free(found_value); found_value = NULL; }
-    }
-  }
-
-  if (return_found) {
-    *return_found = NULL;
-  }
-  
-  g_free(found_name);
-  g_free(found_value);
-  return (NULL);
-}
 
 /*! \brief Search for N'th occurance of a named attribute.
  *  \par Function Description
@@ -948,8 +856,10 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name,
  *  \par Function Description
  *  Search for slot attribute.
  *
+ *  The returned value will only come from an attached attribute.
+ *
  *  \param [in] object        OBJECT list to search.
- *  \param [in] return_found  slot attribute if found, NULL otherwise.
+ *  \param [in] return_found  attached slot attribute if found, NULL otherwise.
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \warning
@@ -957,20 +867,21 @@ char *o_attrib_search_name_single_count(OBJECT *object, char *name,
  */
 char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found)
 {
-  char *return_value;
+  GList *attributes;
+  OBJECT *attrib;
+  char *value = NULL;
 
-  /* search for default value attribute buried inside the complex */
-  return_value = o_attrib_search_name_single(object, "slot", return_found);
+  attributes = o_attrib_return_attribs (object);
+  attrib = o_attrib_find_attrib_by_name (attributes, "slot", 0);
+  g_list_free (attributes);
 
-  /* I'm confused here does the next if get ever called? */
-  if (return_value) {
-    return(return_value);
-  }
+  if (attrib != NULL)
+    o_attrib_get_name_value (attrib->text->string, NULL, &value);
 
-  if (return_found) {
-    *return_found = NULL;
-  }
-  return(NULL);
+  if (return_found)
+    *return_found = attrib;
+
+  return value;
 }
 
 /*! \brief Search for numslots attribute.
