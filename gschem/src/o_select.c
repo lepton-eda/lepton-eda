@@ -137,6 +137,7 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   TOPLEVEL *toplevel = w_current->toplevel;
   int SHIFTKEY;
   int CONTROLKEY;
+  int removing_obj = 0;
 
   SHIFTKEY = w_current->SHIFTKEY;
   CONTROLKEY = w_current->CONTROLKEY;
@@ -187,6 +188,7 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
           if (type != MULTIPLE) {
             o_select_run_hooks( w_current, o_current, 0 );
             o_selection_remove( toplevel->page_current->selection_list, o_current );
+            removing_obj = 1;
           }
 
           break;
@@ -221,6 +223,7 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
           if (CONTROLKEY) {
             o_select_run_hooks(w_current, o_current, 0);
             o_selection_remove( toplevel->page_current->selection_list, o_current);
+            removing_obj = 1;
           }
 
           break;
@@ -229,7 +232,17 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   }
 
   /* do the attributes */
-  o_attrib_add_selected(w_current, toplevel->page_current->selection_list, o_current);
+  if (removing_obj) {
+    /* Remove the invisible attributes from the object list as well,
+     * so they don't remain selected without the user knowing.
+     */
+    o_attrib_remove_selected_invisible (w_current,
+                                        toplevel->page_current->selection_list,
+                                        o_current);
+  } else {
+    o_attrib_add_selected (w_current, toplevel->page_current->selection_list,
+                           o_current);
+  }
 
   /* finally redraw object */
   o_invalidate (w_current, o_current);

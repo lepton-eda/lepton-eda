@@ -69,6 +69,35 @@ void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection,
   }
 }
 
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *  Remove all invisible attributes from the selection list.
+ *
+ *  \todo get a better name
+ */
+void o_attrib_remove_selected_invisible (GSCHEM_TOPLEVEL *w_current,
+                                         SELECTION *selection,
+                                         OBJECT *selected)
+{
+  OBJECT *a_current;
+  GList *a_iter;
+
+  g_assert( selection != NULL );
+
+  for (a_iter = selected->attribs; a_iter != NULL;
+       a_iter = g_list_next (a_iter)) {
+    a_current = a_iter->data;
+
+    if (!w_current->toplevel->show_hidden_text &&
+        a_current->visibility == INVISIBLE &&
+        a_current->selected) {
+      o_selection_remove (selection, a_current);
+      o_invalidate (w_current, a_current);
+    }
+  }
+}
+
 /*! \brief Change visibility status of attribute object.
  *  \par Function Description
  *  This function toggles the visibility status of the attribute \a
