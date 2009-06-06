@@ -350,7 +350,7 @@ s_check_graphical (const GList *obj_list, SYMCHECK *s_current)
   char *temp;
   
   /* look for special graphical tag */
-  temp = o_attrib_search_name (obj_list, "graphical", 0);
+  temp = o_attrib_search_floating_attribs_by_name (obj_list, "graphical", 0);
 
   if (temp) {
     s_current->graphical_symbol=TRUE;
@@ -365,7 +365,7 @@ s_check_device (const GList *obj_list, SYMCHECK *s_current)
   char *message;
   
   /* search for device attribute */
-  temp = o_attrib_search_name (obj_list, "device", 0);
+  temp = o_attrib_search_floating_attribs_by_name (obj_list, "device", 0);
   if (!temp) {
     /* did not find device= attribute */
     message = g_strdup ("Missing device= attribute\n");
@@ -790,7 +790,7 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
   int errors_found = 0;
 
   /* look for numslots to see if this symbol has slotting info */
-  value = o_attrib_search_name (obj_list, "numslots", 0);
+  value = o_attrib_search_floating_attribs_by_name (obj_list, "numslots", 0);
 
   if (!value) {
     message = g_strdup ("Did not find numslots= attribute, not checking slotting\n");
@@ -823,7 +823,7 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
 
   i = 0;
   /* get the slotdef attribute */
-  slotdef = o_attrib_search_name (obj_list, "slotdef", 0);
+  slotdef = o_attrib_search_floating_attribs_by_name (obj_list, "slotdef", 0);
   while ((slotdef != NULL) && (!error_parsing))
   {
 
@@ -985,7 +985,7 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
     slotdef = NULL;
    
     i++;
-    slotdef = o_attrib_search_name (obj_list, "slotdef", i);
+    slotdef = o_attrib_search_floating_attribs_by_name (obj_list, "slotdef", i);
   }
 
   if (!slotdef && i < s_current->numslots) {
