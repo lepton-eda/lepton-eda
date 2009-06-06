@@ -256,39 +256,6 @@ int o_complex_is_embedded(OBJECT *o_current)
 }
 
 
-/*! \brief Get a list of all toplevel attributes of and object list
- *
- *  \par Function Description
- *  Returns a GList of all attribute OBJECTs
- *
- *  \param [in]  toplevel  The toplevel environment.
- *  \param [in]  obj_list  The object list to search for attributes
- *  \returns               A GList of attribute OBJECTs
- */
-GList *o_complex_get_toplevel_attribs (TOPLEVEL *toplevel,
-                                       const GList *obj_list)
-{
-  OBJECT *o_current;
-  GList *attr_list = NULL;
-  const GList *iter;
-
-  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    o_current = iter->data;
-
-    if (o_current->type == OBJ_TEXT &&
-        o_current->attached_to == NULL &&
-        o_attrib_get_name_value (o_current->text->string, NULL, NULL)) {
-
-      attr_list = g_list_prepend (attr_list, o_current);
-    }
-  }
-
-  attr_list = g_list_reverse (attr_list);
-
-  return attr_list;
-}
-
-
 /*! \brief Get attributes eligible for promotion from inside a complex
  *
  *  \par Function Description
@@ -317,8 +284,7 @@ static GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int 
   if (!toplevel->attribute_promotion) /* controlled through rc file */
     return NULL;
 
-  attribs = o_complex_get_toplevel_attribs (toplevel,
-                                            object->complex->prim_objs);
+  attribs = o_attrib_find_floating_attribs (object->complex->prim_objs);
 
   for (iter = attribs; iter != NULL; iter = g_list_next (iter)) {
     tmp = iter->data;
