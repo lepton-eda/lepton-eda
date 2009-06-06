@@ -1090,7 +1090,7 @@ char *o_attrib_search_numslots(OBJECT *object)
   if (object->type != OBJ_COMPLEX)
     return NULL;
 
-  return o_attrib_search_name (object->complex->prim_objs, "numslots", 0);
+  return o_attrib_search_object_attribs_by_name (object, "numslots", 0);
 }
 
 /*! \brief Search for default slot attribute.

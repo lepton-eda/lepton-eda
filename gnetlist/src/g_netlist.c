@@ -499,21 +499,9 @@ SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
 	if (nl_current->component_uref) {
 	    if (strcmp(nl_current->component_uref, uref) == 0) {
 
-		/* first search outside the symbol */
 		return_value =
-		    o_attrib_search_name_single(nl_current->object_ptr,
-						wanted_attrib, NULL);
-
-		if (return_value) {
-		    break;
-		}
-
-		/* now search inside the symbol */
-		return_value =
-		    o_attrib_search_name(nl_current->object_ptr->
-					 complex->prim_objs, wanted_attrib,
-					 0);
-
+		    o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
+		                                            wanted_attrib, 0);
 		break;
 	    }
 	}
@@ -577,9 +565,9 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
                                                         "pinseq", pinseq);
 
         if (o_pin_object) {
-          return_value = o_attrib_search_name_single(o_pin_object,
-                                                     wanted_attrib,
-                                                     NULL);
+          return_value =
+            o_attrib_search_object_attribs_by_name (o_pin_object,
+                                                    wanted_attrib, 0);
           if (return_value) {
             break;
           }
@@ -650,8 +638,8 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
 
 		    /* only look for the first occurance of wanted_attrib */
 		    return_value =
-			o_attrib_search_attrib_name(pin_object->attribs,
-						    wanted_attrib, 0);
+		      o_attrib_search_object_attribs_by_name (pin_object,
+		                                              wanted_attrib, 0);
 #if DEBUG
 		    if (return_value) {
 			printf("GOT IT: %s\n", return_value);
@@ -777,16 +765,9 @@ SCM g_get_slots(SCM scm_uref)
 
 		/* first search outside the symbol */
 		slot_tmp =
-		    o_attrib_search_name_single(nl_current->object_ptr,
-						"slot", NULL);
+		  o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
+		                                          "slot", 0);
 
-		if (!slot_tmp) {
-		/* if not found, search inside the symbol */
-		slot_tmp =
-		    o_attrib_search_name(nl_current->object_ptr->
-					 complex->prim_objs, "slot",
-					 0);
-		}
 		/* When a package has no slot attribute, then assume it's slot number 1 */
 		if (!slot_tmp) {
 		  slot_tmp=g_strdup("1");
@@ -842,16 +823,9 @@ SCM g_get_unique_slots(SCM scm_uref)
 
 		/* first search outside the symbol */
 		slot_tmp =
-		    o_attrib_search_name_single(nl_current->object_ptr,
-						"slot", NULL);
+		  o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
+		                                          "slot", 0);
 
-		if (!slot_tmp) {
-		/* if not found, search inside the symbol */
-		slot_tmp =
-		    o_attrib_search_name(nl_current->object_ptr->
-					 complex->prim_objs, "slot",
-					 0);
-		}
 		/* When a package has no slot attribute, then assume it's slot number 1 */
 		if (!slot_tmp) {
 		  slot_tmp=g_strdup("1");
@@ -984,15 +958,16 @@ SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has
 		  if (o_attrib_get_name_value (has_attrib, &has_attrib_name,
 					       &has_attrib_value) != 0) {
 		    attrib_value = 
-		      o_attrib_search_name_single(nl_current->object_ptr,
-						  has_attrib_name, NULL);
+		      o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
+		                                              has_attrib_name, 0);
 		    
 		    if ( ((has_attrib_value == NULL) && (attrib_value == NULL)) ||
 			 ((has_attrib_value != NULL) && (attrib_value != NULL) &&
 			  (strcmp(attrib_value, has_attrib_value) == 0)) ) {
 		      g_free (attrib_value);
-		      attrib_value = o_attrib_search_name_single(nl_current->object_ptr,
-								 wanted_attrib, NULL);
+		      attrib_value =
+		        o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
+		                                                wanted_attrib, 0);
 		      if (attrib_value) {
 			list = scm_cons (scm_makfrom0str (attrib_value), list);
 		      }

@@ -263,7 +263,7 @@ void s_sheet_data_add_master_net_attrib_list_items (const GList *obj_start) {
  * 3.  Dive down to o_lower_current = o_current->complex->prim_objs
  * 4.  Loop on o_lower_current looking for OBJ_PIN
  * 5.  When we find a pin, find the pinnumber by calling
- *     o_attrib_search_name_single(o_lower_current, "pinnumber", NULL)
+ *     o_attrib_search_object_attribs_by_name (o_lower_current, "pinnumber", 0)
  * 6.  Create the pin list label as "refdes=XXX", and stick it into
  *     the master pin list.
  * Since this fcn operates on the global sheet_data->master_pin_list, 
@@ -308,7 +308,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
           printf ("In s_sheet_data_add_master_pin_list_items, examining object name %s\n", o_lower_current->name);
 #endif
           if (o_lower_current->type == OBJ_PIN) {
-            temp_pinnumber = o_attrib_search_name_single (o_lower_current, "pinnumber", NULL);
+            temp_pinnumber = o_attrib_search_object_attribs_by_name (o_lower_current, "pinnumber", 0);
 
             if (temp_pinnumber != NULL) {
               row_label = g_strconcat (temp_uref, ":", temp_pinnumber, NULL);

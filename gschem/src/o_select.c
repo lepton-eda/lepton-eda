@@ -414,7 +414,7 @@ void o_select_connected_nets(GSCHEM_TOPLEVEL *w_current, OBJECT* o_net)
 	}
 	if (w_current->net_selection_state > 2) {
 	  /* collect netnames */
-	  netname = o_attrib_search_attrib_name(o_current->attribs, "netname", 0);
+	  netname = o_attrib_search_object_attribs_by_name (o_current, "netname", 0);
 	  if (netname != NULL) {
 	    if (g_list_find_custom(netnamestack, netname, (GCompareFunc) strcmp) == NULL) {
 	      netnamestack = g_list_append(netnamestack, netname);
@@ -440,7 +440,7 @@ void o_select_connected_nets(GSCHEM_TOPLEVEL *w_current, OBJECT* o_net)
       if (o_current->type == OBJ_TEXT
 	  && o_current->attached_to != NULL) {
 	if (o_current->attached_to->type == OBJ_NET) {
-	  netname = o_attrib_search_attrib_name(o_current->attached_to->attribs, "netname", 0);
+	  netname = o_attrib_search_object_attribs_by_name (o_current->attached_to, "netname", 0);
 	  if (netname != NULL) {
 	    if (g_list_find_custom(netnamestack, netname, (GCompareFunc) strcmp) != NULL) {
 	      netstack = g_list_prepend(netstack, o_current->attached_to);

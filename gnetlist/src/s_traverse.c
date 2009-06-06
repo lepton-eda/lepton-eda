@@ -219,9 +219,7 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
 	/* search of net attribute */
 	/* maybe symbol is not a component */
 	/* but a power / gnd symbol */
-	temp =
-	  o_attrib_search_name(o_current->complex->prim_objs,
-			       "net", 0);
+	temp = o_attrib_search_object_attribs_by_name (o_current, "net", 0);
 	
 	/* nope net attribute not found */
 	if ( (!temp) && (!is_graphical) ) {
@@ -288,12 +286,11 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
     cpins->plid = o_current->sid;
     cpins->type = o_current->pin_type;
 
-    /* search the object only */
     cpins->pin_number =
-      o_attrib_search_name_single (o_current, "pinnumber", NULL);
+      o_attrib_search_object_attribs_by_name (o_current, "pinnumber", 0);
 
     cpins->pin_label =
-      o_attrib_search_name_single_count(o_current, "pinlabel", 0);
+      o_attrib_search_object_attribs_by_name (o_current, "pinlabel", 0);
 
     /* head nets node */
     /* is this really need */
@@ -349,7 +346,7 @@ NET *s_traverse_net (TOPLEVEL *pr_current, NET *nets, int starting,
   if (object->type != OBJ_PIN) {
     /* Ignore netname attributes on buses */
     if (object->type == OBJ_NET)
-      temp = o_attrib_search_name_single (object, "netname", NULL);
+      temp = o_attrib_search_object_attribs_by_name (object, "netname", 0);
 
     if (temp) {
       new_net->net_name =
@@ -358,7 +355,7 @@ NET *s_traverse_net (TOPLEVEL *pr_current, NET *nets, int starting,
       g_free(temp);
     } else if (object->type == OBJ_NET) {
       /* search for the old label= attribute on nets */
-      temp = o_attrib_search_name_single (object, "label", NULL);
+      temp = o_attrib_search_object_attribs_by_name (object, "label", 0);
       if (temp) {
         printf("WARNING: Found label=%s. label= is deprecated, please use netname=\n", temp);
         new_net->net_name =
@@ -379,7 +376,7 @@ NET *s_traverse_net (TOPLEVEL *pr_current, NET *nets, int starting,
     new_net->connected_to =
       s_net_return_connected_string (pr_current, object, hierarchy_tag);
 
-    temp = o_attrib_search_name_single_count (object, "pinlabel", 0);
+    temp = o_attrib_search_object_attribs_by_name (object, "pinlabel", 0);
 
     if (temp) {
       new_net->pin_label = temp;

@@ -1291,7 +1291,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
   outside = o_attrib_search_attrib_name(object->attribs, "symversion", 0);
 
   /* get the uref for future use */
-  refdes = o_attrib_search_attrib_name(object->attribs, "refdes", 0);
+  refdes = o_attrib_search_object_attribs_by_name(object, "refdes", 0);
   if (!refdes)
   {
     refdes = g_strdup ("unknown");

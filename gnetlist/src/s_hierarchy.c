@@ -625,23 +625,17 @@ char *s_hierarchy_return_baseuref(TOPLEVEL * pr_current, char *uref)
     return (return_value);
 }
 
-int 
-s_hierarchy_graphical_search(OBJECT* o_current, int count)
+int s_hierarchy_graphical_search (OBJECT* o_current, int count)
 {
-    char *graphical_attrib;
-    graphical_attrib = o_attrib_search_name_single_count(o_current, 
-                                                         "graphical", count);
+  char *graphical_attrib;
+  graphical_attrib =
+    o_attrib_search_object_attribs_by_name (o_current, "graphical", count);
 
-    if (graphical_attrib == NULL) {
-       graphical_attrib = o_attrib_search_name(o_current->complex->prim_objs,
-                                               "graphical", count);
-    }
- 
-    if (graphical_attrib) {
-      g_free(graphical_attrib);      
-      return TRUE;
-    }
-  
-    return FALSE;
+  if (graphical_attrib) {
+    g_free (graphical_attrib);
+    return TRUE;
+  }
+
+  return FALSE;
 }
 

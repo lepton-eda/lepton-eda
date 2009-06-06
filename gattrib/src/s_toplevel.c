@@ -865,7 +865,7 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
   /* First find pos of this pin in the master pin list */
   /* first convert refdes, pin to refdes:pinno text string. Then call table_get_index.  */
 
-  pinnumber = o_attrib_search_name_single(pin, "pinnumber", NULL);
+  pinnumber = o_attrib_search_object_attribs_by_name (pin, "pinnumber", 0);
 
   if ( (refdes != NULL) && (pinnumber != NULL) ) {
     row_label = g_strconcat(refdes, ":", pinnumber, NULL);
