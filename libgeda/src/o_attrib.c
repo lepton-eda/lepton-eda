@@ -1279,8 +1279,8 @@ static char *o_attrib_search_slotdef (OBJECT *object, int slotnumber)
   search_for = g_strdup_printf ("%d:", slotnumber);
 
   while (1) {
-    slotdef = o_attrib_search_inherited_attribs_by_name (object, "slotdef",
-                                                         counter++);
+    slotdef = o_attrib_search_object_attribs_by_name (object, "slotdef",
+                                                      counter++);
     if (slotdef == NULL ||
         strncmp (slotdef, search_for, strlen (search_for)) == 0)
       break;
