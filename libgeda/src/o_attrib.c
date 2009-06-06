@@ -1146,24 +1146,23 @@ static char *o_attrib_search_slotdef (OBJECT *object, int slotnumber)
 
 /*! \brief Update all slot attributes in an object.
  *  \par Function Description
- *  Update pinnumber attributes in a graphic object.  
+ *  Update pinnumber attributes in a graphic object.
  *  The interesting case is where the object is an
- *  instantiation of a slotted part.  This means that 
+ *  instantiation of a slotted part.  This means that
  *  o_attrib_slot_update iterates through all pins
  *  found on object and sets the pinnumber= attrib
  *  on each.  This doesn't matter for non-slotted
- *  parts, but on slotted parts, this is what sets the 
+ *  parts, but on slotted parts, this is what sets the
  *  pinnumber= attribute on slots 2, 3, 4....
  *
  *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] object     The OBJECT to update.
  */
-void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
+void o_attrib_slot_update (TOPLEVEL *toplevel, OBJECT *object)
 {
-  OBJECT *o_current;  /* o_current points to the sch level complex object */
-  OBJECT *o_slot_attrib;
   OBJECT *o_pin_object;
-  OBJECT *o_pinnum_object;
+  OBJECT *o_pinnum_attrib;
+  GList *attributes;
   char *string;
   char *slotdef;
   char *pinseq;
@@ -1173,40 +1172,38 @@ void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
   char* current_pin;  /* text from slotdef= to be made into pinnumber= */
   char* cptr;         /* char pointer pointing to pinnumbers in slotdef=#:#,#,# string */
 
-  o_current = object;
   /* For this particular graphic object (component instantiation) */
   /* get the slot number as a string */
-  string = o_attrib_search_slot(o_current, &o_slot_attrib);
+  string = o_attrib_search_object_attribs_by_name (object, "slot", 0);
 
-  if (!string) {
-    /* "Did not find slot= attribute", this is true if 
-     *  * there is no slot attribut
-     *  * or the slot attribute was deleted and we have to assume to use the 
-     *    first slot now
+  if (string == NULL) {
+    /* Did not find slot= attribute.
+     * This happens if there is no attached slot attribute, and
+     * there is no default slot= attribute inside the symbol.
+     * Assume slot=1.
      */
     slot = 1;
     slot_string = 0;
-  } 
-  else {
+  } else {
     slot_string = 1;
-    slot = atoi(string);
-    g_free(string);
+    slot = atoi (string);
+    g_free (string);
   }
-  
+
   /* OK, now that we have the slot number, use it to get the */
   /* corresponding slotdef=#:#,#,# string.  */
-  slotdef = o_attrib_search_slotdef(o_current, slot);
-  
-  if (!slotdef) { 
+  slotdef = o_attrib_search_slotdef (object, slot);
+
+  if (slotdef == NULL) {
     if (slot_string) /* only an error if there's a slot string */
-      s_log_message(_("Did not find slotdef=#:#,#,#... attribute\n"));
+      s_log_message (_("Did not find slotdef=#:#,#,#... attribute\n"));
     return;
   }
 
-  if (!strstr(slotdef, ":")) {
+  if (!strstr (slotdef, ":")) {
     /* Didn't find proper slotdef=#:... put warning into log */
-    s_log_message(_("Improper slotdef syntax: missing \":\".\n"));
-    g_free(slotdef);    
+    s_log_message (_("Improper slotdef syntax: missing \":\".\n"));
+    g_free (slotdef);
     return;
   }
 
@@ -1220,47 +1217,43 @@ void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
   cptr++; /* skip colon */
 
   if (*cptr == '\0') {
-    s_log_message(_("Did not find proper slotdef=#:#,#,#... attribute\n"));
-    g_free(slotdef);    
+    s_log_message (_("Did not find proper slotdef=#:#,#,#... attribute\n"));
+    g_free (slotdef);
     return;
   }
 
   /* loop on all pins found in slotdef= attribute */
   pin_counter = 1;  /* internal pin_counter */
   /* get current pinnumber= from slotdef= attrib */
-  current_pin = strtok(cptr, DELIMITERS); 
-  while(current_pin != NULL) {
+  current_pin = strtok (cptr, DELIMITERS);
+  while (current_pin != NULL) {
     /* get pin on this component with pinseq == pin_counter */
     pinseq = g_strdup_printf ("%d", pin_counter);
-    o_pin_object = o_complex_find_pin_by_attribute (o_current,
-                                                    "pinseq", pinseq);
+    o_pin_object = o_complex_find_pin_by_attribute (object, "pinseq", pinseq);
     g_free (pinseq);
 
-    if (o_pin_object) {
+    if (o_pin_object != NULL) {
       /* Now rename pinnumber= attrib on this part with value found */
       /* in slotdef attribute  */
-      string = o_attrib_search_name_single(o_pin_object, "pinnumber",
-                                           &o_pinnum_object);
-  
-      if (string && o_pinnum_object && o_pinnum_object->type == OBJ_TEXT &&
-          o_pinnum_object->text->string) {
-        g_free(o_pinnum_object->text->string);
+      attributes = o_attrib_return_attribs (o_pin_object);
+      o_pinnum_attrib = o_attrib_find_attrib_by_name (attributes, "pinnumber", 0);
+      g_list_free (attributes);
 
-        o_pinnum_object->text->string = g_strdup_printf ("pinnumber=%s", current_pin);
-        
-        o_text_recreate(toplevel, o_pinnum_object);
+      if (o_pinnum_attrib != NULL) {
+        g_free (o_pinnum_attrib->text->string);
+        o_pinnum_attrib->text->string = g_strdup_printf ("pinnumber=%s", current_pin);
+        o_text_recreate (toplevel, o_pinnum_attrib);
       }
-      g_free(string);
 
       pin_counter++;
     } else {
-      s_log_message(_("component missing pinseq= attribute\n"));
+      s_log_message (_("component missing pinseq= attribute\n"));
     }
-    
-    current_pin = strtok(NULL, DELIMITERS);
-  } 
-  
-  g_free(slotdef);
+
+    current_pin = strtok (NULL, DELIMITERS);
+  }
+
+  g_free (slotdef);
 }
 
 
