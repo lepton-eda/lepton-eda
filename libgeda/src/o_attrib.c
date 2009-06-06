@@ -461,6 +461,175 @@ GList *o_attrib_find_floating_attribs (const GList *list)
  *  \par Function Description
  *  Search for attribute by name.
  *
+ *  Counter is the n'th occurance of the attribute, and starts searching
+ *  from zero.  Zero is the first occurance of an attribute.
+ *
+ *  \param [in] list     GList of attributes to search.
+ *  \param [in] name     Character string with attribute name to search for.
+ *  \param [in] counter  Which occurance to return.
+ *  \return The n'th attribute object in the given list with the given name.
+ */
+static OBJECT *o_attrib_find_attrib_by_name (const GList *list, char *name, int count)
+{
+  OBJECT *a_current;
+  const GList *iter;
+  char *found_name;
+  int internal_counter = 0;
+
+  for (iter = list; iter != NULL; iter = g_list_next (iter)) {
+    a_current = iter->data;
+
+    g_return_val_if_fail (a_current->type == OBJ_TEXT, NULL);
+
+    if (!o_attrib_get_name_value (a_current->text->string, &found_name, NULL))
+      continue;
+
+    if (strcmp (name, found_name) == 0) {
+      if (internal_counter == count) {
+        g_free (found_name);
+        return a_current;
+      }
+      internal_counter++;
+    }
+
+    g_free (found_name);
+  }
+
+  return NULL;
+}
+
+
+/*! \brief Search for attibute by name.
+ *  \par Function Description
+ *  Search for attribute by name.
+ *
+ *  Counter is the n'th occurance of the attribute, and starts searching
+ *  from zero.  Zero is the first occurance of an attribute.
+ *
+ *  \param [in] list     GList of attributes to search.
+ *  \param [in] name     Character string with attribute name to search for.
+ *  \param [in] counter  Which occurance to return.
+ *  \return The n'th attribute object in the given list with the given name.
+ */
+static char *o_attrib_search_attrib_list_by_name (const GList *list, char *name, int counter)
+{
+  OBJECT *attrib;
+  char *value = NULL;
+
+  attrib = o_attrib_find_attrib_by_name (list, name, counter);
+
+  if (attrib != NULL)
+    o_attrib_get_name_value (attrib->text->string, NULL, &value);
+
+  return value;
+}
+
+
+/*! \brief Search for attibute by name.
+ *  \par Function Description
+ *  Search for attribute by name.
+ *
+ *  Counter is the n'th occurance of the attribute, and starts searching
+ *  from zero.  Zero is the first occurance of an attribute.
+ *
+ *  \param [in] list     GList of OBJECTs to search for floating attributes.
+ *  \param [in] name     Character string with attribute name to search for.
+ *  \param [in] counter  Which occurance to return.
+ *  \return Character string with attribute value, NULL otherwise.
+ *
+ *  \warning
+ *  Caller must g_free returned character string.
+ */
+char *o_attrib_search_floating_attribs_by_name (const GList *list, char *name, int counter)
+{
+  char *result;
+  GList *attributes;
+
+  attributes = o_attrib_find_floating_attribs (list);
+  result = o_attrib_search_attrib_list_by_name (attributes, name, counter);
+  g_list_free (attributes);
+
+  return result;
+}
+
+
+/*! \brief Search for attibute by name.
+ *  \par Function Description
+ *  Search for attribute by name.
+ *
+ *  Counter is the n'th occurance of the attribute, and starts searching
+ *  from zero.  Zero is the first occurance of an attribute.
+ *
+ *  \param [in] object   The OBJECT whos attached attributes to search.
+ *  \param [in] name     Character string with attribute name to search for.
+ *  \param [in] counter  Which occurance to return.
+ *  \return Character string with attribute value, NULL otherwise.
+ *
+ *  \warning
+ *  Caller must g_free returned character string.
+ */
+char *o_attrib_search_attached_attribs_by_name (OBJECT *object, char *name, int counter)
+{
+  return o_attrib_search_attrib_list_by_name (object->attribs, name, counter);
+}
+
+
+/*! \brief Search for attibute by name.
+ *  \par Function Description
+ *  Search for attribute by name.
+ *
+ *  Counter is the n'th occurance of the attribute, and starts searching
+ *  from zero.  Zero is the first occurance of an attribute.
+ *
+ *  \param [in] object   The OBJECT whos inherited attributes to search.
+ *  \param [in] name     Character string with attribute name to search for.
+ *  \param [in] counter  Which occurance to return.
+ *  \return Character string with attribute value, NULL otherwise.
+ *
+ *  \warning
+ *  Caller must g_free returned character string.
+ */
+char *o_attrib_search_inherited_attribs_by_name (OBJECT *object, char *name, int counter)
+{
+  g_return_val_if_fail (object->type == OBJ_COMPLEX ||
+                        object->type == OBJ_PLACEHOLDER, NULL);
+
+  return o_attrib_search_floating_attribs_by_name (object->complex->prim_objs, name, counter);
+}
+
+
+/*! \brief Search for attibute by name.
+ *  \par Function Description
+ *  Search for attribute by name.
+ *
+ *  Counter is the n'th occurance of the attribute, and starts searching
+ *  from zero.  Zero is the first occurance of an attribute.
+ *
+ *  \param [in] list     OBJECT whos attributes to search.
+ *  \param [in] name     Character string with attribute name to search for.
+ *  \param [in] counter  Which occurance to return.
+ *  \return Character string with attribute value, NULL otherwise.
+ *
+ *  \warning
+ *  Caller must g_free returned character string.
+ */
+char *o_attrib_search_object_attribs_by_name (OBJECT *object, char *name, int counter)
+{
+  char *result;
+  GList *attributes;
+
+  attributes = o_attrib_return_attribs (object);
+  result = o_attrib_search_attrib_list_by_name (attributes, name, counter);
+  g_list_free (attributes);
+
+  return result;
+}
+
+
+/*! \brief Search for attibute by name.
+ *  \par Function Description
+ *  Search for attribute by name.
+ *
  *  \warning
  *  The list is the top level list. Do not pass it an object_list list
  *  unless you know what you are doing.
