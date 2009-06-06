@@ -679,8 +679,8 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
 	    if (strcmp(nl_current->component_uref, uref) == 0) {
 
 		pin_object =
-		    o_complex_return_pin_object(nl_current->object_ptr,
-						pin);
+		    o_complex_find_pin_by_attribute (nl_current->object_ptr,
+		                                     "pinnumber", pin);
 
 		if (pin_object) {
 

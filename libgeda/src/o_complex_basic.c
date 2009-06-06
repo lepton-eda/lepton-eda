@@ -1214,48 +1214,43 @@ void o_complex_mirror_world(TOPLEVEL *toplevel,
 }
 
 
-/*! \brief search the pin with a given pin number
+/*! \brief Find a pin with a particular attribute.
  *  \par Function Description
- *  This function searches a pin object inside the complex \a object.
- *  The pin name is a character string \a pin.
-
- *  \param  object  The complex object
- *  \param  pin     The pin number (string) to find
- *  \return a pin object if found, NULL otherwise
+ *  Search for a pin inside the given complex which has an attribute
+ *  matching those passed.
+ *
+ *  \param [in] object        complex OBJECT whos pins to search.
+ *  \param [in] name          the attribute name to search for.
+ *  \param [in] wanted_value  the attribute value to search for.
+ *  \return The pin OBJECT with the given attribute, NULL otherwise.
  */
-OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin) 
+OBJECT *o_complex_find_pin_by_attribute (OBJECT *object, char *name, char *wanted_value)
 {
-  OBJECT *found;
   GList *iter;
+  OBJECT *o_current;
+  char *value;
+  int found;
 
-  g_return_val_if_fail(object != NULL, NULL);
-  g_return_val_if_fail(((object->type == OBJ_COMPLEX) ||
-			(object->type == OBJ_PLACEHOLDER)) , NULL);
-  g_return_val_if_fail(object->complex != NULL, NULL);
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_COMPLEX ||
+                        object->type == OBJ_PLACEHOLDER, NULL);
 
-  /* go inside complex objects */
-  for (iter = object->complex->prim_objs;
-       iter != NULL;
+  for (iter = object->complex->prim_objs; iter != NULL;
        iter = g_list_next (iter)) {
-    OBJECT *o_current = iter->data;
+    o_current = iter->data;
 
-    switch(o_current->type) {
-      case(OBJ_PIN):
-        /* Search for the pin making sure that */
-        /* any found attribute starts with "pinnumber" */
-        found = o_attrib_search_attrib_value(o_current->attribs, pin,
-                                             "pinnumber", 0);
-        if (found) {
-#if DEBUG
-          printf("%s: %s\n", found->name,
-                 found->text->string);
-#endif
-          return(o_current);
-        }
-        break;
-    }
+    if (o_current->type != OBJ_PIN)
+      continue;
+
+    value = o_attrib_search_object_attribs_by_name (o_current, name, 0);
+    found = (value != NULL && strcmp (value, wanted_value) == 0);
+    g_free (value);
+
+    if (found)
+      return o_current;
   }
-  return(NULL);
+
+  return NULL;
 }
 
 
