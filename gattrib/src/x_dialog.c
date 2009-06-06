@@ -234,6 +234,8 @@ void x_dialog_unsaved_data()
                                           GTK_RESPONSE_CANCEL,
                                           -1);
 
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES);
+
   switch (gtk_dialog_run (GTK_DIALOG (dialog)))
     {
       case GTK_RESPONSE_NO:
