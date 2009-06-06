@@ -520,7 +520,8 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
     if (descend) {
       if (o_current->type == OBJ_COMPLEX) {
         parent = toplevel->page_current;
-        attrib = o_attrib_search_name_single_count(o_current, "source", count);
+        attrib = o_attrib_search_attached_attribs_by_name (o_current,
+                                                           "source", count);
 
         /* if above is null, then look inside symbol */
         if (attrib == NULL) {
@@ -751,9 +752,13 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     o_attrib_get_name_value (o_text_get_string (toplevel, a_current),
                              &name, NULL);
 
-    attrfound = o_attrib_search_name_single(o_current, name, NULL);
+    /* We are only interested in the attributes which were promoted during
+     * load of the new complex. Any which aren't already promoted in the
+     * schematic are migrated.
+     */
+    attrfound = o_attrib_search_attached_attribs_by_name (o_current, name, 0);
 
-    /* free these now since they are no longer being used */
+    /* free this now since it is no longer being used */
     g_free(name);
 
     if (attrfound == NULL) {

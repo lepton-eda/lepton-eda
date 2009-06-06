@@ -2850,7 +2850,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
     return;
 
   parent = w_current->toplevel->page_current;
-  attrib = o_attrib_search_name_single_count(object, "source", count);
+  attrib = o_attrib_search_attached_attribs_by_name (object, "source", count);
 
   /* if above is null, then look inside symbol */
   if (attrib == NULL) {
@@ -2916,7 +2916,8 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 
     /* continue looking outside first */
     if (!looking_inside) {
-      attrib = o_attrib_search_name_single_count(object, "source", count);
+      attrib =
+        o_attrib_search_attached_attribs_by_name (object, "source", count);
     }
 
     /* okay we were looking outside and didn't find anything,

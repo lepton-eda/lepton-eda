@@ -1288,7 +1288,7 @@ o_complex_check_symversion(TOPLEVEL* toplevel, OBJECT* object)
   inside = o_attrib_search_inherited_attribs_by_name (object, "symversion", 0);
 
   /* now look for the symversion= attached to object */
-  outside = o_attrib_search_attrib_name(object->attribs, "symversion", 0);
+  outside = o_attrib_search_attached_attribs_by_name (object, "symversion", 0);
 
   /* get the uref for future use */
   refdes = o_attrib_search_object_attribs_by_name(object, "refdes", 0);

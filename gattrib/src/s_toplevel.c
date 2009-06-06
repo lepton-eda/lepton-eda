@@ -710,7 +710,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   /*  Now get the old attrib name & value from complete_comp_attrib_list 
    *  and value from o_current  */
   old_attrib_name = u_basic_breakup_string(local_list->data, '=', 0); 
-  old_attrib_value = o_attrib_search_name_single_count(o_current, old_attrib_name, 0);
+  old_attrib_value = o_attrib_search_attached_attribs_by_name (o_current, old_attrib_name, 0);
 
 #if DEBUG
   printf("        In s_toplevel_update_component_attribs_in_toplevel, old name = \"%s\" .\n", 
@@ -964,7 +964,7 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
     g_free(new_attrib_value);   
     new_attrib_value = NULL;  /* s_misc_remaining_string doesn't return NULL for empty substring. */
   }
-  old_attrib_value = o_attrib_search_name_single_count(o_pin, new_attrib_name, 0);
+  old_attrib_value = o_attrib_search_attached_attribs_by_name (o_pin, new_attrib_name, 0);
                                                                                                        
     /* -------  Four cases to consider: Case 1: old and new attribs exist ----- */
     if ( (old_attrib_value != NULL) && (new_attrib_value != NULL) && (strlen(new_attrib_value) != 0) ) {

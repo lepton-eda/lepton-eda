@@ -52,7 +52,7 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
     char *current_filename;
     int graphical=FALSE;
 
-    attrib = o_attrib_search_name_single_count(o_current, "source", 0);
+    attrib = o_attrib_search_attached_attribs_by_name (o_current, "source", 0);
 
     /* if above is null, then look inside symbol */
     if (attrib == NULL) {
@@ -135,8 +135,8 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 	/* continue looking outside first */
 	if (!looking_inside) {
 	    attrib =
-		o_attrib_search_name_single_count(o_current, "source",
-						  count);
+		o_attrib_search_attached_attribs_by_name (o_current, "source",
+		                                          count);
 	}
 
 	/* okay we were looking outside and didn't */
