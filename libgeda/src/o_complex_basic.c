@@ -1133,38 +1133,6 @@ void o_complex_set_saved_color_only (GList *list, int color)
   }
 }
 
-/*! \brief get the nth pin of a object list
- *  \par Function Description
- *  Search the nth pin the object list \a list and return it.
- *  
- *  \param list     the object list to search through
- *  \param counter  specifies the nth pin
- *  \return the counter'th pin object, NULL if there is no more pin
- */
-OBJECT *o_complex_return_nth_pin (GList *list, int counter)
-{
-  OBJECT *o_current;
-  int internal_counter=0;
-  GList *iter;
-
-  iter = list;
-
-  while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
-    if (o_current->type == OBJ_PIN) {
-
-      if (counter == internal_counter) {
-        return(o_current);
-      } else {
-        internal_counter++;
-      }
-    }
-    iter = g_list_next (iter);
-  }
-
-  return(NULL);
-}
-
 
 /*! \todo Finish function documentation!!!
  *  \brief

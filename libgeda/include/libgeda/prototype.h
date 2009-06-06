@@ -184,7 +184,6 @@ void o_complex_set_color_save(GList *list, int color);
 void o_complex_unset_color(GList *list);
 void o_complex_unset_color_single(OBJECT *o_current);
 void o_complex_set_saved_color_only(GList *list, int color);
-OBJECT *o_complex_return_nth_pin(GList *list, int counter);
 void o_complex_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_complex_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 OBJECT *o_complex_return_pin_object(OBJECT *object, char *pin);
