@@ -1233,31 +1233,6 @@ char *o_attrib_search_default_slot(OBJECT *object)
   return o_attrib_search_name (object->complex->prim_objs, "slot", 0);
 }
 
-/*! \brief Search pinseq attribute.
- *  \par Function Description
- *  Given list of objects (generally a pin with attached attribs), 
- *  and a pinnumber, 
- *  search for and return pinseq= attrib (object).
- *
- *  \param [in] list        GList list to search.
- *  \param [in] pin_number  pin number to search for.
- *  \return OBJECT containing pinseq data, NULL otherwise.
- */
-static OBJECT *o_attrib_search_pinseq (GList *list, int pin_number)
-{
-  OBJECT *pinseq_text_object;
-  char *search_for;
-
-  search_for = g_strdup_printf ("pinseq=%d", pin_number);
-  pinseq_text_object = o_attrib_search_string_list(list, search_for);
-  g_free(search_for);
-  
-  if (pinseq_text_object && pinseq_text_object->attached_to) {
-    return pinseq_text_object->attached_to;
-  }
-  
-  return(NULL);
-}
 
 /*! \brief Search for slotdef attribute.
  *  \par Function Description
@@ -1315,6 +1290,7 @@ void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
   OBJECT *o_pinnum_object;
   char *string;
   char *slotdef;
+  char *pinseq;
   int slot;
   int slot_string;
   int pin_counter;    /* Internal pin counter private to this fcn. */
@@ -1379,8 +1355,10 @@ void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
   current_pin = strtok(cptr, DELIMITERS); 
   while(current_pin != NULL) {
     /* get pin on this component with pinseq == pin_counter */
-    o_pin_object = o_attrib_search_pinseq(o_current->complex->prim_objs, 
-                                          pin_counter);
+    pinseq = g_strdup_printf ("%d", pin_counter);
+    o_pin_object = o_complex_find_pin_by_attribute (o_current,
+                                                    "pinseq", pinseq);
+    g_free (pinseq);
 
     if (o_pin_object) {
       /* Now rename pinnumber= attrib on this part with value found */
