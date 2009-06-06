@@ -112,7 +112,6 @@ char *o_attrib_search_string_partial(OBJECT *object, char *search_for, int count
 OBJECT *o_attrib_search_string_single(OBJECT *object, char *search_for);
 OBJECT *o_attrib_search_attrib_value(GList *list, char *value, char *name, int counter);
 char *o_attrib_search_attrib_name(GList *list, char *name, int counter);
-char *o_attrib_search_toplevel(const GList *list, char *name, int counter);
 char *o_attrib_search_name_single(OBJECT *object, char *name, OBJECT **return_found);
 char *o_attrib_search_name_single_count(OBJECT *object, char *name, int counter);
 char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found);

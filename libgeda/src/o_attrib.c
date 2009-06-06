@@ -1030,69 +1030,6 @@ o_attrib_search_attrib_name(GList *list, char *name, int counter)
   return (NULL);
 } 
 
-/*! \brief Search TOPLEVEL attributes.
- *  \par Function Description
- *  This function should only be used to search for TOPLEVEL attributes.
- *  \warning
- *  The list is the top level list. Do not pass it an object_list list
- *  unless you know what you are doing.
- *  
- *  Counter is the n'th occurance of the attribute, and starts searching
- *  from zero.  Zero is the first occurance of an attribute.
- * 
- *  \param [in] list     The GList to search (TOPLEVEL only).
- *  \param [in] name     Character string of attribute name to search for.
- *  \param [in] counter  Which occurance to return.
- *  \return Character string with attribute value, NULL otherwise.
- *
- *  \warning
- *  Caller must g_free returned character string.
- */
-char *o_attrib_search_toplevel (const GList *list, char *name, int counter)
-{
-  OBJECT *o_current;
-  int val;
-  int internal_counter=0;
-  char *found_name = NULL;
-  char *found_value = NULL;
-  char *return_string = NULL;
-  const GList *iter;
-
-  iter = list;
-
-  while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
-
-    /* search for attributes outside */
-
-    if (o_current->type == OBJ_TEXT) {
-      val = o_attrib_get_name_value(o_current->text->string, 
-                                    &found_name, &found_value);
-      if (val) {
-        if (strcmp(name, found_name) == 0) {
-          if (counter != internal_counter) {
-            internal_counter++;	
-          } else {
-            return_string = g_strdup (found_value);
-	    g_free(found_name);
-	    g_free(found_value);
-            return(return_string);
-          }
-        }
-	if (found_name) { g_free(found_name); found_name = NULL; }
-	if (found_value) { g_free(found_value); found_value = NULL; }
-      }	
-    }
-
-    iter = g_list_next (iter);
-  }
-	
-  g_free(found_name);
-  g_free(found_value);
-  return (NULL);
-} 
-
-
 /*! \brief Search for first occurance of a named attribute.
  *  \par Function Description
  *  Search for first occurance of a named attribute.
@@ -1532,7 +1469,6 @@ void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object)
  *  This function searches all loaded pages for the first
  *  TOPLEVEL attribute found.
  *  The caller is responsible for freeing the returned value.
- *  See #o_attrib_search_toplevel() for other comments.
  *
  *  \param [in] page_list  Page list to search through.
  *  \param [in] name       Character string name to search for.
@@ -1550,7 +1486,7 @@ char *o_attrib_search_toplevel_all(GedaPageList *page_list, char *name)
     p_current = (PAGE *)iter->data;
 
     /* only look for first occurrance of the attribute */
-    ret_value = o_attrib_search_toplevel (s_page_objects (p_current), name, 0);
+    ret_value = o_attrib_search_floating_attribs_by_name (s_page_objects (p_current), name, 0);
 
     if (ret_value != NULL) {
       return(ret_value);

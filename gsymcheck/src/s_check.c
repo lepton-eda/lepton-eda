@@ -548,7 +548,7 @@ s_check_pinnumber (const GList *obj_list, SYMCHECK *s_current)
     
   /* collect all net pins */
   for (counter = 0;
-       (net = o_attrib_search_toplevel (obj_list, "net", counter)) != NULL;
+       (net = o_attrib_search_floating_attribs_by_name (obj_list, "net", counter)) != NULL;
        counter++) {
     message = g_strdup_printf ("Found net=%s attribute\n", net);
     s_current->info_messages = g_list_append(s_current->info_messages,
