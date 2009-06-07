@@ -312,8 +312,7 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
       o_current->complex = NULL;
     }
 
-    o_attrib_detach_all (toplevel, o_current->attribs);
-    o_current->attribs = NULL;
+    o_attrib_detach_all (toplevel, o_current);
 
     g_free(o_current);	/* assuming it is not null */
 

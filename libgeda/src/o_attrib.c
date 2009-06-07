@@ -185,30 +185,26 @@ void o_attrib_attach_list (TOPLEVEL *toplevel,
 
 /*! \brief Detach all attribute items in a list.
  *  \par Function Description
- *  Detach all attribute items in a list.
- *
- *  \note The passed GList is freed by this function
- *        The attributes being detached are _not_ removed
- *        from any other GList, so it only makes sense to
- *        call this function with some (OBJECT *)->attribs.
+ *  Detach all attributes from an object.
  *
  *  \param [in]     toplevel  The TOPLEVEL object.
- *  \param [in,out] list       The list to free.
- *
+ *  \param [in,out] object    The object whos attributes to detach.
  */
-void o_attrib_detach_all(TOPLEVEL *toplevel, GList *list)
+void o_attrib_detach_all(TOPLEVEL *toplevel, OBJECT *object)
 {
   OBJECT *a_current;
   GList *a_iter;
 
-  for (a_iter = list; a_iter != NULL;
+  for (a_iter = object->attribs; a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
     a_current = a_iter->data;
 
     a_current->attached_to = NULL;
     o_attrib_set_color (toplevel, a_current, DETACHED_ATTRIBUTE_COLOR);
   }
-  g_list_free (list);
+
+  g_list_free (object->attribs);
+  object->attribs = NULL;
 }
 
 /*! \brief Print all attributes to a Postscript document.
