@@ -40,8 +40,7 @@
 #endif
 
 /* Pre-unwind handler called in the context in which the exception was
- * thrown.  Not used with Guile 1.6.x. */
-#if HAVE_DECL_SCM_C_CATCH
+ * thrown. */
 static SCM protected_pre_unwind_handler (void *data, SCM key, SCM args)
 {
   /* Capture the stack trace */
@@ -49,21 +48,14 @@ static SCM protected_pre_unwind_handler (void *data, SCM key, SCM args)
 
   return SCM_BOOL_T;
 }
-#endif
 
 /* Post-unwind handler called in the context of the catch expression.
  * This actually does the work of parsing the stack and generating log
  * messages. */
 static SCM protected_post_unwind_handler (void *data, SCM key, SCM args)
-{
-  SCM s_stack;
-#if HAVE_DECL_SCM_C_CATCH /* The stack was captured pre-unwind */
-  s_stack = *(SCM *) data;
-#else                        /* Get stack from magic variable */
-  s_stack = scm_fluid_ref (SCM_VARIABLE_REF (scm_the_last_stack_fluid_var));
-#endif /* HAVE_DECL_SCM_C_CATCH */
-
-
+{ 
+  /* The stack was captured pre-unwind */
+  SCM s_stack = *(SCM *) data;
   char *message = NULL;
   
   /* Capture the error message */
@@ -168,7 +160,6 @@ SCM g_scm_eval_protected (SCM exp, SCM module_or_state)
     body_data = scm_list_2 (exp, module_or_state);
   }
 
-#if HAVE_DECL_SCM_C_CATCH /* Guile 1.8.x approach */
   result = scm_c_catch (SCM_BOOL_T,
                         protected_body_eval,           /* catch body */
                         &body_data,                    /* body data */
@@ -177,14 +168,6 @@ SCM g_scm_eval_protected (SCM exp, SCM module_or_state)
                         protected_pre_unwind_handler,  /* pre handler */
                         &stack                         /* pre data */
                         );
-#else                     /* Guile 1.6.x approach using magic variables */
-  result =
-    scm_internal_stack_catch (SCM_BOOL_T,
-                              protected_body_eval,           /* catch body */
-                              &body_data,                    /* body data */
-                              protected_post_unwind_handler, /* post handler */
-                              NULL);
-#endif /* HAVE_DECL_SCM_C_CATCH */
 
   scm_remember_upto_here_2 (body_data, stack);
 
@@ -233,7 +216,6 @@ SCM g_scm_eval_string_protected (SCM str)
   SCM stack = SCM_BOOL_T;
   SCM result;
 
-#if HAVE_DECL_SCM_C_CATCH /* Guile 1.8.x approach */
   result = scm_c_catch (SCM_BOOL_T,
                         protected_body_eval_string,    /* catch body */
                         &str,                          /* body data */
@@ -242,14 +224,6 @@ SCM g_scm_eval_string_protected (SCM str)
                         protected_pre_unwind_handler,  /* pre handler */
                         &stack                         /* pre data */
                         );
-#else                     /* Guile 1.6.x approach using magic variables */
-  result =
-    scm_internal_stack_catch (SCM_BOOL_T,
-                              protected_body_eval_string,    /* catch body */
-                              &str,                          /* body data */
-                              protected_post_unwind_handler, /* post handler */
-                              NULL);
-#endif /* HAVE_DECL_SCM_C_CATCH */
 
   scm_remember_upto_here_1 (stack);
 

@@ -3,7 +3,6 @@
 #include <glib-object.h>
 #include <libguile.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include "guile_compat_1.6.h"
 
 /* Public libgeda headers */
 #include "defines.h"

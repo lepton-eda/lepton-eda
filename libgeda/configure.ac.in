@@ -148,28 +148,6 @@ if test "$guile_need_major" -gt "$guile_major" \
   AC_MSG_ERROR([Guile version >= $guile_need_version is required.])
 fi
 
-# Guile 1.6 compatability
-
-CFLAGS_temp_save="$CFLAGS"
-CFLAGS="$CFLAGS $GUILE_CFLAGS"
-AC_CHECK_DECLS([
-scm_c_catch,
-scm_caddr,
-scm_cadr,
-scm_car,
-scm_cdr,
-scm_from_int,
-scm_from_locale_string,
-scm_from_locale_symbol,
-scm_is_false,
-scm_is_integer,
-scm_is_string,
-scm_is_true,
-scm_to_int,
-scm_to_locale_string],,,
-[#include <libguile.h>])
-CFLAGS="$CFLAGS_temp_save"
-
 #
 # Check for guile end
 ############################################################################

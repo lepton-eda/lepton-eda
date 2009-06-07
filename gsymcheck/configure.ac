@@ -90,41 +90,6 @@ if test "$guile_need_major" -gt "$guile_major" \
   AC_MSG_ERROR([Guile version >= $guile_need_version is required.])
 fi
 
-# Guile 1.6 compatability
-
-CFLAGS_temp_save="$CFLAGS"
-CFLAGS="$CFLAGS $GUILE_CFLAGS"
-AC_CHECK_DECLS([scm_is_string, scm_is_integer, scm_to_int,
-scm_from_int,  scm_is_true,    scm_is_false,
-scm_from_locale_string, scm_to_locale_string],,,
-[#include <libguile.h>])
-CFLAGS="$CFLAGS_temp_save"
-
-AH_VERBATIM(SCM_IS_STRING, [#if !HAVE_DECL_SCM_IS_STRING
-#  define scm_is_string(x) SCM_STRINGP(x)
-#endif])
-AH_VERBATIM(SCM_IS_INTEGER, [#if !HAVE_DECL_SCM_IS_INTEGER
-#  define scm_is_integer(x) SCM_INUMP(x)
-#endif])
-AH_VERBATIM(SCM_TO_INT, [#if !HAVE_DECL_SCM_TO_INT
-#  define scm_to_int(x)     SCM_INUM(x)
-#endif])
-AH_VERBATIM(SCM_FROM_INT, [#if !HAVE_DECL_SCM_FROM_INT
-#  define scm_from_int(x)   SCM_MAKINUM(x)
-#endif])
-AH_VERBATIM(SCM_IS_TRUE, [#if !HAVE_DECL_SCM_IS_TRUE
-#  define scm_is_true(x)    SCM_NFALSEP(x)
-#endif])
-AH_VERBATIM(SCM_IS_FALSE, [#if !HAVE_DECL_SCM_IS_FALSE
-#  define scm_is_false(x)   SCM_FALSEP(x)
-#endif])
-AH_VERBATIM(SCM_FROM_LOCALE_STRING, [#if !HAVE_DECL_SCM_FROM_LOCALE_STRING
-#  define scm_from_locale_string(x) scm_makfrom0str(x)
-#endif])
-AH_VERBATIM(SCM_TO_LOCALE_STRING, [#if !HAVE_DECL_SCM_TO_LOCALE_STRING
-#  define scm_to_locale_string(x)   strdup(SCM_STRING_CHARS(x))
-#endif])
-
 #
 # Check for guile end
 ############################################################################

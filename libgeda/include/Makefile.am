@@ -15,7 +15,6 @@ libgedainclude_HEADERS = \
 
 noinst_HEADERS = \
 	gettext_priv.h \
-	guile_compat_1.6.h \
 	i_vars_priv.h \
 	libgeda_priv.h \
 	prototype_priv.h \
