@@ -313,7 +313,7 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
                         LOWER_LEFT, 0, /* zero is angle */
                         text_string, DEFAULT_TEXT_SIZE,
                         visibility, show_name_value);
-  s_page_append (pr_current->page_current, new_obj);
+  s_page_append (pr_current, pr_current->page_current, new_obj);
 
   /* now pr_current->page_current->object_tail contains new text item */
 
@@ -323,7 +323,8 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
     o_attrib_attach (pr_current, new_obj, o_current, FALSE);
   }
 
-  o_selection_add (pr_current->page_current->selection_list, new_obj);
+  o_selection_add (pr_current,
+                   pr_current->page_current->selection_list, new_obj);
 
 
   pr_current->page_current->CHANGED = 1;
@@ -341,7 +342,7 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
  *------------------------------------------------------------------*/
 void s_object_delete_text_object_in_object(TOPLEVEL * pr_current, OBJECT * text_object)
 {
-  s_page_remove (pr_current->page_current, text_object);
+  s_page_remove (pr_current, pr_current->page_current, text_object);
   s_delete_object (pr_current, text_object);
   pr_current->page_current->CHANGED = 1;
 }
