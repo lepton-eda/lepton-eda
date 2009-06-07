@@ -95,6 +95,7 @@ void get_main_menu(GtkWidget ** menubar)
   SCM scm_item_name;
   SCM scm_item_func;
   SCM scm_item_hotkey_func;
+  SCM scm_item_stock;
   SCM scm_index;
   SCM scm_keys;
   char *menu_name;
@@ -103,6 +104,7 @@ void get_main_menu(GtkWidget ** menubar)
   char *raw_menu_item_name;
   char *menu_item_func;
   char *menu_item_hotkey_func;
+  char *menu_item_stock;
   char *menu_item_keys;
   int i, j;
 
@@ -129,6 +131,8 @@ void get_main_menu(GtkWidget ** menubar)
       scm_item_name = SCM_CAR (scm_item);
       scm_item_func = SCM_CADR (scm_item);
       scm_item_hotkey_func = SCM_CADDR (scm_item);
+      scm_item_stock = scm_is_pair (SCM_CDDDR (scm_item)) ?
+                         SCM_CADDDR (scm_item) : SCM_BOOL_F;
       SCM_ASSERT(scm_is_string(scm_item_name), scm_item_name, SCM_ARGn, "get_main_menu item_name");
       SCM_ASSERT(SCM_SYMBOLP (scm_item_func) ||
                     scm_is_false (scm_item_func),
@@ -136,6 +140,9 @@ void get_main_menu(GtkWidget ** menubar)
       SCM_ASSERT (SCM_SYMBOLP (scm_item_hotkey_func) ||
                     scm_is_false (scm_item_hotkey_func),
                   scm_item_hotkey_func, SCM_ARGn, "get_main_menu hotkey_func");
+      SCM_ASSERT (SCM_STRINGP (scm_item_stock) ||
+                    scm_is_false (scm_item_stock),
+                  scm_item_stock, SCM_ARGn, "get_main_menu stock");
 
       raw_menu_item_name = SCM_STRING_CHARS (scm_item_name);
 
@@ -148,6 +155,11 @@ void get_main_menu(GtkWidget ** menubar)
         menu_item_hotkey_func = NULL;
       else
         menu_item_hotkey_func = SCM_SYMBOL_CHARS (scm_item_hotkey_func);
+
+      if (scm_is_false (scm_item_stock))
+        menu_item_stock = NULL;
+      else
+        menu_item_stock = SCM_SYMBOL_CHARS (scm_item_stock);
 
       menu_item_name = (char *) gettext(raw_menu_item_name);
 
@@ -175,7 +187,7 @@ void get_main_menu(GtkWidget ** menubar)
         action = gschem_action_new (menu_item_func,  /* Action name */
                                     menu_item_name,  /* Text */
                                     menu_item_name,  /* Tooltip */
-                                    NULL,            /* Icon stock ID */
+                                    menu_item_stock, /* Icon stock ID */
                                     menu_item_keys); /* Accelerator string */
         menu_item = gtk_action_create_menu_item (GTK_ACTION (action));
         gtk_menu_append (GTK_MENU (menu), menu_item);
