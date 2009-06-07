@@ -677,26 +677,6 @@ char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found)
   return value;
 }
 
-/*! \brief Search for numslots attribute.
- *  \par Function Description
- *  Search for numslots attribute.
- *
- *  \param [in] object        OBJECT to search.
- *  \param [in] return_found  numslots attribute if found, NULL otherwise.
- *  \return Character string with attribute value, NULL otherwise.
- *
- *  \note
- *  Caller must g_free returned character string.
- */
-char *o_attrib_search_numslots(OBJECT *object)
-{
-  /* search for numslots attribute buried inside the complex */
-  if (object->type != OBJ_COMPLEX)
-    return NULL;
-
-  return o_attrib_search_object_attribs_by_name (object, "numslots", 0);
-}
-
 
 /*! \brief Search for slotdef attribute.
  *  \par Function Description

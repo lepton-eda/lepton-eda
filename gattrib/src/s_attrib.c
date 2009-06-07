@@ -104,7 +104,8 @@ char *s_attrib_get_refdes(OBJECT *object)
   
   /*------- Now append .slot to refdes if part is slotted -------- */
   /* Find out if this is a multislotted component */
-  numslots_value = o_attrib_search_numslots (object);
+  numslots_value =
+    o_attrib_search_object_attribs_by_name (object, "numslots", 0);
   if (numslots_value != NULL) {  /* this is a slotted component; 
 				    append slot number to refdes. */
     slot_value = o_attrib_search_slot(object, &slot_text_object);

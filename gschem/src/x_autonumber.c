@@ -403,7 +403,9 @@ void autonumber_get_used(GSCHEM_TOPLEVEL *w_current, AUTONUMBER_TEXT *autotext)
       o_parent = o_current->attached_to;
       if (autotext->slotting && o_parent != NULL) {
 	/* check for slotted symbol */
-	if ((numslot_str = o_attrib_search_numslots (o_parent)) != NULL) {
+	numslot_str =
+	  o_attrib_search_object_attribs_by_name (o_parent, "numslots", 0);
+	if (numslot_str != NULL) {
 	  sscanf(numslot_str," %d",&numslots);
 	  g_free(numslot_str);
 
@@ -534,7 +536,9 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current,
 
   /* 3. is o_current a slotted object ? */
   if ((autotext->slotting) && o_parent != NULL) {
-    if ((numslot_str = o_attrib_search_numslots (o_parent)) != NULL) {
+    numslot_str =
+      o_attrib_search_object_attribs_by_name (o_parent, "numslots", 0);
+    if (numslot_str != NULL) {
       sscanf(numslot_str," %d",&numslots);
       g_free(numslot_str);
       if (numslots > 0) { 
