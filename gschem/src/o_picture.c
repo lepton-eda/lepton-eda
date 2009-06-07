@@ -110,7 +110,7 @@ void o_picture_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
                           picture_left + picture_width,
                           picture_top - picture_height,
                           0, FALSE, FALSE);
-  s_page_append (toplevel->page_current, new_obj);
+  s_page_append (toplevel, toplevel->page_current, new_obj);
 
   /* draw it */
   o_invalidate (w_current, new_obj);

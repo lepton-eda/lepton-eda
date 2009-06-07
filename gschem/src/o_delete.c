@@ -67,7 +67,7 @@ void o_delete (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
   }
   o_invalidate (w_current, object);
 
-  s_page_remove (toplevel->page_current, object);
+  s_page_remove (toplevel, toplevel->page_current, object);
   s_delete_object (toplevel, object);
 
   toplevel->page_current->CHANGED = 1;

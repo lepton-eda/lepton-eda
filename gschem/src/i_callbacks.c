@@ -1075,6 +1075,7 @@ DEFINE_I_CALLBACK(edit_unembed)
 DEFINE_I_CALLBACK(edit_update)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
   GList* selection_copy;
   GList* s_current;
@@ -1092,7 +1093,8 @@ DEFINE_I_CALLBACK(edit_update)
     /* left selected. */
 
     /* g_list_copy does a shallow copy which is exactly what we need here */
-    selection_copy = g_list_copy( geda_list_get_glist( w_current->toplevel->page_current->selection_list ));
+    selection_copy = g_list_copy (
+              geda_list_get_glist (toplevel->page_current->selection_list));
     s_current = selection_copy;
     while (s_current != NULL) {
       o_current = (OBJECT *) s_current->data;
@@ -1103,7 +1105,8 @@ DEFINE_I_CALLBACK(edit_update)
       else
       {
         /* object was not a OBJ_COMPLEX, so unselect it. */
-        o_selection_remove( w_current->toplevel->page_current->selection_list, o_current);
+        o_selection_remove (toplevel,
+                            toplevel->page_current->selection_list, o_current);
       }
       s_current = g_list_next(s_current);
     }

@@ -476,7 +476,7 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   new_obj = o_box_new (toplevel, OBJ_BOX, GRAPHIC_COLOR,
                        box_left, box_top,
                        box_left + box_width, box_top - box_height);
-  s_page_append (toplevel->page_current, new_obj);
+  s_page_append (toplevel, toplevel->page_current, new_obj);
 
   /* draw it */
   o_invalidate (w_current, new_obj);

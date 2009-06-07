@@ -46,9 +46,9 @@ SELECTION *o_selection_new( void )
  *  \param [in] selection Pointer to the selection list
  *  \param [in] o_selected Object to select.
  */
-void o_selection_add(SELECTION *selection, OBJECT *o_selected)
+void o_selection_add (TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected)
 {
-  o_selection_select( o_selected, SELECT_COLOR );
+  o_selection_select (toplevel, o_selected, SELECT_COLOR);
   geda_list_add( (GedaList *)selection, o_selected );
 }
 
@@ -60,7 +60,7 @@ void o_selection_add(SELECTION *selection, OBJECT *o_selected)
  *  \param [in] selection Pointer to the selection list
  *  \param [in] o_selected Object to unselect and remove from the list.
  */
-void o_selection_remove(SELECTION *selection, OBJECT *o_selected )
+void o_selection_remove (TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected)
 {
   if (o_selected == NULL) {
     fprintf(stderr, "Got NULL for o_selected in o_selection_remove\n");
@@ -68,7 +68,7 @@ void o_selection_remove(SELECTION *selection, OBJECT *o_selected )
   }
 
   if (g_list_find( geda_list_get_glist( selection ), o_selected ) != NULL) {
-    o_selection_unselect( o_selected );
+    o_selection_unselect (toplevel, o_selected);
     geda_list_remove( (GedaList *)selection, o_selected );
   }
 }
@@ -102,7 +102,7 @@ void o_selection_print_all(const SELECTION *selection)
  *  \param [in] object Object to select.
  *  \param [in] color color of the selected object.
  */
-void o_selection_select(OBJECT *object, int color)
+void o_selection_select(TOPLEVEL *toplevel, OBJECT *object, int color)
 {
   if (object->selected == TRUE) {
     printf("object already selected == TRUE\n");
@@ -130,7 +130,7 @@ void o_selection_select(OBJECT *object, int color)
  *  This function should not be called by anybody outside of this file.
  *  \param [in] object Object to unselect.
  */
-void o_selection_unselect(OBJECT *object)
+void o_selection_unselect (TOPLEVEL *toplevel, OBJECT *object)
 {
   object->selected = FALSE;
   object->color = object->saved_color;

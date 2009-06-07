@@ -373,7 +373,7 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
 
     s_page_delete_objects (toplevel, toplevel->page_current);
 
-    s_page_append_list (toplevel->page_current,
+    s_page_append_list (toplevel, toplevel->page_current,
                         o_glist_copy_all (toplevel, u_current->object_list,
                                           NULL, NORMAL_FLAG));
 

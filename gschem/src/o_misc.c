@@ -707,7 +707,8 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   /* delete its connections */
   s_conn_remove_object (toplevel, o_current);
   /* and unselect it */
-  o_selection_remove( toplevel->page_current->selection_list, o_current);
+  o_selection_remove (toplevel,
+                      toplevel->page_current->selection_list, o_current);
 
   new_complex = o_complex_new (toplevel, OBJ_COMPLEX, DEFAULT_COLOR,
                                o_current->complex->x,
@@ -766,7 +767,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
       /* make a copy of the attribute object */
       o_attrib = o_object_copy (toplevel, a_current, NORMAL_FLAG);
-      s_page_append (toplevel->page_current, o_attrib);
+      s_page_append (toplevel, toplevel->page_current, o_attrib);
       /* add the attribute to old */
       o_attrib_add (toplevel, o_current, o_attrib);
       /* redraw the attribute object */
@@ -791,7 +792,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
   /* reconnect, re-select and redraw */
   s_conn_update_object (toplevel, o_current);
-  o_selection_add( toplevel->page_current->selection_list, o_current );
+  o_selection_add (toplevel, toplevel->page_current->selection_list, o_current);
   o_invalidate (w_current, o_current);
 
   /* Re-flag as embedded if necessary */

@@ -186,7 +186,7 @@ void o_line_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   new_obj = o_line_new (toplevel, OBJ_LINE, GRAPHIC_COLOR,
                         w_current->first_wx, w_current->first_wy,
                         w_current->second_wx, w_current->second_wy);
-  s_page_append (toplevel->page_current, new_obj);
+  s_page_append (toplevel, toplevel->page_current, new_obj);
 
   /* draw it */
   o_invalidate (w_current, new_obj);

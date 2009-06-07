@@ -227,7 +227,7 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
 
     if (o_current->attached_to != NULL) {
       /* do the actual remove */
-      o_attrib_remove(&o_current->attached_to->attribs, o_current);
+      o_attrib_remove(toplevel, &o_current->attached_to->attribs, o_current);
     }
 
     if (toplevel->page_current->object_lastplace == o_current) {

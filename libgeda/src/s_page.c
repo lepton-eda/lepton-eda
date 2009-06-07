@@ -516,7 +516,7 @@ gint s_page_autosave (TOPLEVEL *toplevel)
  *  \param [in] page    The PAGE the object is being added to.
  *  \param [in] object  The OBJECT being added to the page.
  */
-void s_page_append (PAGE *page, OBJECT *object)
+void s_page_append (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 {
   page->_object_list = g_list_append (page->_object_list, object);
 }
@@ -530,7 +530,7 @@ void s_page_append (PAGE *page, OBJECT *object)
  *  \param [in] page      The PAGE the objects are being added to.
  *  \param [in] obj_list  The OBJECT list being added to the page.
  */
-void s_page_append_list (PAGE *page, GList *obj_list)
+void s_page_append_list (TOPLEVEL *toplevel, PAGE *page, GList *obj_list)
 {
   page->_object_list = g_list_concat (page->_object_list, obj_list);
 }
@@ -544,7 +544,7 @@ void s_page_append_list (PAGE *page, GList *obj_list)
  *  \param [in] page    The PAGE the object is being removed from.
  *  \param [in] object  The OBJECT being removed from the page.
  */
-void s_page_remove (PAGE *page, OBJECT *object)
+void s_page_remove (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 {
   page->_object_list = g_list_remove (page->_object_list, object);
 }

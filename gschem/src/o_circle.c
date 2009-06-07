@@ -455,7 +455,7 @@ void o_circle_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   new_obj = o_circle_new (toplevel, OBJ_CIRCLE, GRAPHIC_COLOR,
                           w_current->first_wx, w_current->first_wy,
                           w_current->distance);
-  s_page_append (toplevel->page_current, new_obj);
+  s_page_append (toplevel, toplevel->page_current, new_obj);
 
   /* draw it */
   o_invalidate (w_current, new_obj);

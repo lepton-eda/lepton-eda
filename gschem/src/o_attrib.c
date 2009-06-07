@@ -63,7 +63,7 @@ void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection,
 
     /* make sure object isn't selected already */
     if (a_current->saved_color == -1) {
-      o_selection_add(selection, a_current);
+      o_selection_add (w_current->toplevel, selection, a_current);
       o_invalidate (w_current, a_current);
     }
   }
@@ -92,7 +92,7 @@ void o_attrib_remove_selected_invisible (GSCHEM_TOPLEVEL *w_current,
     if (!w_current->toplevel->show_hidden_text &&
         a_current->visibility == INVISIBLE &&
         a_current->selected) {
-      o_selection_remove (selection, a_current);
+      o_selection_remove (w_current->toplevel, selection, a_current);
       o_invalidate (w_current, a_current);
     }
   }
@@ -261,7 +261,7 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
              LOWER_LEFT, 0, /* zero is angle */
              text_string,  w_current->text_size,  /* current text size */
              visibility, show_name_value);
-  s_page_append (toplevel->page_current, new_obj);
+  s_page_append (toplevel, toplevel->page_current, new_obj);
 
   /* now attach the attribute to the object (if o_current is not NULL) */
   /* remember that o_current contains the object to get the attribute */
@@ -269,7 +269,7 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
     o_attrib_attach (toplevel, new_obj, o_current, FALSE);
   }
 
-  o_selection_add (toplevel->page_current->selection_list, new_obj);
+  o_selection_add (toplevel, toplevel->page_current->selection_list, new_obj);
 
   o_invalidate (w_current, new_obj);
 

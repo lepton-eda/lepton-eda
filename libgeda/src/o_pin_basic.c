@@ -101,7 +101,7 @@ OBJECT *o_pin_new(TOPLEVEL *toplevel,
   new_node->line->x[1] = x2;
   new_node->line->y[1] = y2;
 
-  o_pin_set_type (new_node, pin_type);
+  o_pin_set_type (toplevel, new_node, pin_type);
 
   o_pin_recalc (toplevel, new_node);
 
@@ -583,7 +583,7 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
  *  \param [in] o_current  The pin OBJECT being modified
  *  \param [in] type       The new type of this pin
  */
-void o_pin_set_type (OBJECT *o_current, int pin_type)
+void o_pin_set_type (TOPLEVEL *toplevel, OBJECT *o_current, int pin_type)
 {
   switch (pin_type) {
     default:

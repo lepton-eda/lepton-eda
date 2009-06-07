@@ -172,7 +172,8 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 
       /* object not select, add it to the selection list */
       o_select_run_hooks( w_current, o_current, 1 );
-      o_selection_add( toplevel->page_current->selection_list, o_current);
+      o_selection_add (toplevel,
+                       toplevel->page_current->selection_list, o_current);
 
       break;
 
@@ -187,7 +188,8 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
           /* result: remove object from selection */
           if (type != MULTIPLE) {
             o_select_run_hooks( w_current, o_current, 0 );
-            o_selection_remove( toplevel->page_current->selection_list, o_current );
+            o_selection_remove (toplevel, toplevel->page_current->
+                                            selection_list, o_current);
             removing_obj = 1;
           }
 
@@ -205,7 +207,8 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
             o_select_unselect_list( w_current, toplevel->page_current->selection_list );
 
             o_select_run_hooks( w_current, o_current, 1 );
-            o_selection_add( toplevel->page_current->selection_list, o_current);
+            o_selection_add (toplevel,
+                             toplevel->page_current->selection_list, o_current);
           }	
 
           /* condition: doing single object add */
@@ -217,12 +220,14 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
             o_select_unselect_list( w_current, toplevel->page_current->selection_list );
 
             o_select_run_hooks (w_current, o_current, 1);
-            o_selection_add( toplevel->page_current->selection_list, o_current);
+            o_selection_add (toplevel, toplevel->page_current->
+                                         selection_list, o_current);
           }
 
           if (CONTROLKEY) {
             o_select_run_hooks(w_current, o_current, 0);
-            o_selection_remove( toplevel->page_current->selection_list, o_current);
+            o_selection_remove (toplevel, toplevel->page_current->
+                                            selection_list, o_current);
             removing_obj = 1;
           }
 
@@ -513,7 +518,7 @@ void o_select_unselect_list(GSCHEM_TOPLEVEL *w_current, SELECTION *selection)
   const GList *list = geda_list_get_glist( selection );
 
   while ( list != NULL ) {
-    o_selection_unselect( (OBJECT *)list->data );
+    o_selection_unselect (w_current->toplevel, (OBJECT *)list->data);
     o_invalidate (w_current, (OBJECT *)list->data);
    list = g_list_next( list );
   }

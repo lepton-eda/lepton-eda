@@ -99,7 +99,7 @@ void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object, int set
 void o_attrib_attach_list(TOPLEVEL *toplevel, GList *attr_list, OBJECT *object, int set_color);
 void o_attrib_detach_all(TOPLEVEL *toplevel, GList *list);
 void o_attrib_print(GList *attributes);
-void o_attrib_remove(GList **list, OBJECT *remove);
+void o_attrib_remove(TOPLEVEL *toplevel, GList **list, OBJECT *remove);
 gboolean o_attrib_string_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_ptr);
 gboolean o_attrib_get_name_value (OBJECT *attrib, gchar **name_ptr, gchar **value_ptr);
 GList *o_attrib_find_floating_attribs (const GList *list);
@@ -248,14 +248,14 @@ void o_pin_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery
 void o_pin_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 void o_pin_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 void o_pin_update_whichend(TOPLEVEL *toplevel, GList *object_list, int num_pins);
-void o_pin_set_type(OBJECT *o_current, int pin_type);
+void o_pin_set_type(TOPLEVEL *toplevel, OBJECT *o_current, int pin_type);
 /* o_selection.c */
 SELECTION *o_selection_new( void );
-void o_selection_add(SELECTION *selection, OBJECT *o_selected);
+void o_selection_add(TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected);
 void o_selection_print_all(const SELECTION *selection);
-void o_selection_remove(SELECTION *selection, OBJECT *o_selected);
-void o_selection_select(OBJECT *object, int color); /* DEPRECATED */
-void o_selection_unselect(OBJECT *object);          /* DEPRECATED */
+void o_selection_remove(TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected);
+void o_selection_select(TOPLEVEL *toplevel, OBJECT *object, int color); /* DEPRECATED */
+void o_selection_unselect(TOPLEVEL *toplevel, OBJECT *object);          /* DEPRECATED */
 
 /* o_text_basic.c */
 void o_text_init(void);
@@ -387,9 +387,9 @@ gboolean s_page_check_changed (GedaPageList *list);
 void s_page_clear_changed (GedaPageList *list);
 void s_page_autosave_init(TOPLEVEL *toplevel);
 gint s_page_autosave (TOPLEVEL *toplevel);
-void s_page_append (PAGE *page, OBJECT *object);
-void s_page_append_list (PAGE *page, GList *obj_list);
-void s_page_remove (PAGE *page, OBJECT *object);
+void s_page_append (TOPLEVEL *toplevel, PAGE *page, OBJECT *object);
+void s_page_append_list (TOPLEVEL *toplevel, PAGE *page, GList *obj_list);
+void s_page_remove (TOPLEVEL *toplevel, PAGE *page, OBJECT *object);
 void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page);
 const GList *s_page_objects (PAGE *page);
 GList *s_page_objects_in_region (TOPLEVEL *toplevel, PAGE *page, int min_x, int min_y, int max_x, int max_y);

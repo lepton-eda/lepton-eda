@@ -157,7 +157,7 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
                       w_current->first_wx, w_current->first_wy,
                       w_current->second_wx, w_current->second_wy,
                       PIN_TYPE_NET, 0);
-  s_page_append (toplevel->page_current, new_obj);
+  s_page_append (toplevel, toplevel->page_current, new_obj);
 
   o_current = o_current_pin = new_obj;
 

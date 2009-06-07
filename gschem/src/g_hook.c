@@ -703,8 +703,9 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
 
   new_obj = o_complex_new (toplevel, 'C', DEFAULT_COLOR, x, y, angle, mirror,
                            clib, comp_name, selectable);
-  s_page_append_list (page, o_complex_promote_attribs (toplevel, new_obj));
-  s_page_append (page, new_obj);
+  s_page_append_list (toplevel, page,
+                      o_complex_promote_attribs (toplevel, new_obj));
+  s_page_append (toplevel, page, new_obj);
   
   /* 
    * For now, do not redraw the newly added complex, since this might cause

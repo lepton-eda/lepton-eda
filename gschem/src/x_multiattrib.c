@@ -675,7 +675,7 @@ static void multiattrib_action_promote_attribute (GSCHEM_TOPLEVEL *w_current,
   } else {
       /* make a copy of the attribute object */
       o_new = o_object_copy (toplevel, o_attrib, NORMAL_FLAG);
-      s_page_append (toplevel->page_current, o_new);
+      s_page_append (toplevel, toplevel->page_current, o_new);
       /* add the attribute its parent */
       o_attrib_attach (toplevel, o_new, object, TRUE);
       /* redraw the attribute object */
@@ -695,7 +695,9 @@ static void multiattrib_action_delete_attribute(GSCHEM_TOPLEVEL *w_current,
 						OBJECT *o_attrib) 
 {
   /* actually deletes the attribute */
-  o_selection_remove ( w_current->toplevel->page_current->selection_list, o_attrib);
+  o_selection_remove (w_current->toplevel,
+                      w_current->toplevel->page_current->selection_list,
+                      o_attrib);
   o_delete (w_current, o_attrib);
   w_current->toplevel->page_current->CHANGED=1;
   o_undo_savestate (w_current, UNDO_ALL);

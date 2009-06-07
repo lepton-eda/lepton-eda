@@ -217,7 +217,7 @@ preview_update (Preview *preview)
     if (preview->buffer != NULL) {
 
       /* Load the data buffer */
-      s_page_append_list (preview_toplevel->page_current,
+      s_page_append_list (preview_toplevel, preview_toplevel->page_current,
                           o_read_buffer (preview_toplevel,
                                          NULL, preview->buffer, -1,
                                          _("Preview Buffer")));

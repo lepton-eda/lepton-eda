@@ -281,11 +281,11 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
    * the RC file, it's time to read in the file. */
   if (load_backup_file == 1) {
     /* Load the backup file */
-    s_page_append_list (toplevel->page_current,
+    s_page_append_list (toplevel, toplevel->page_current,
                         o_read (toplevel, NULL, backup_filename, &tmp_err));
   } else {
     /* Load the original file */
-    s_page_append_list (toplevel->page_current,
+    s_page_append_list (toplevel, toplevel->page_current,
                         o_read (toplevel, NULL, full_filename, &tmp_err));
   }
 

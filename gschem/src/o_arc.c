@@ -221,7 +221,7 @@ void o_arc_end4(GSCHEM_TOPLEVEL *w_current, int radius,
   new_obj = o_arc_new (toplevel, OBJ_ARC, GRAPHIC_COLOR,
                        w_current->first_wx, w_current->first_wy,
                        radius, start_angle, end_angle);
-  s_page_append (toplevel->page_current, new_obj);
+  s_page_append (toplevel, toplevel->page_current, new_obj);
 
   /* draw the new object */
   o_invalidate (w_current, new_obj);

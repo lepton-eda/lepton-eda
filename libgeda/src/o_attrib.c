@@ -245,7 +245,7 @@ void o_attrib_print(GList *attributes)
  *  \param [in] remove  The OBJECT to remove from list.
  *
  */
-void o_attrib_remove(GList **list, OBJECT *remove)
+void o_attrib_remove(TOPLEVEL *toplevel, GList **list, OBJECT *remove)
 {
   g_return_if_fail (remove != NULL);
 

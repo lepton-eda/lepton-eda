@@ -99,9 +99,10 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
   for (iter = temp_dest_list; iter != NULL; iter = g_list_next (iter)) {
     o_current = iter->data;
 
-    s_page_append (p_current, o_current);
+    s_page_append (toplevel, p_current, o_current);
 
-    o_selection_add (toplevel->page_current->selection_list, o_current);
+    o_selection_add (toplevel,
+                     toplevel->page_current->selection_list, o_current);
 
     /* Update object connectivity */
     s_conn_update_object (toplevel, o_current);

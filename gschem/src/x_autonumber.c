@@ -589,10 +589,12 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
     if (o_parent != NULL) {
       slot_str = o_attrib_search_slot(o_parent, &o_slot);
       if (slot_str != NULL && o_slot != NULL) {
-	g_free(slot_str);
-	/* delete the slot attribute */
-	o_selection_remove (autotext->w_current->toplevel->page_current->selection_list, o_slot);
-	o_delete (autotext->w_current, o_slot);
+        g_free(slot_str);
+        /* delete the slot attribute */
+        o_selection_remove (autotext->w_current->toplevel,
+                            autotext->w_current->toplevel->
+                              page_current->selection_list, o_slot);
+        o_delete (autotext->w_current, o_slot);
       }
     }
   }

@@ -173,7 +173,7 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
     /* unselect the object before the copy */
     selected_save = src_object->selected;
     if (selected_save)
-      o_selection_unselect(src_object);
+      o_selection_unselect (toplevel, src_object);
 
     if (src_object->type != OBJ_TEXT) {
       dst_object = o_object_copy (toplevel, src_object, flag);
@@ -183,7 +183,7 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
 
     /* reselect it */
     if (selected_save)
-      o_selection_select(src_object, SELECT_COLOR);
+      o_selection_select (toplevel, src_object, SELECT_COLOR);
 
     src = g_list_next(src);
   }
@@ -197,7 +197,7 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
     /* unselect the object before the copy */
     selected_save = src_object->selected;
     if (selected_save)
-      o_selection_unselect(src_object);
+      o_selection_unselect (toplevel, src_object);
 
     if (src_object->type == OBJ_TEXT) {
       dst_object = o_object_copy (toplevel, src_object, flag);
@@ -216,7 +216,7 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
 
     /* reselect it */
     if (selected_save)
-      o_selection_select(src_object, SELECT_COLOR);
+      o_selection_select (toplevel, src_object, SELECT_COLOR);
 
     src = g_list_next(src);
   }
