@@ -84,6 +84,7 @@ static void g_menu_execute(char *func)
 void get_main_menu(GtkWidget ** menubar)
 {
   char *buf;
+  GschemAction *action;
   GtkWidget *menu_item;
   GtkWidget *root_menu;
   GtkWidget *menu_bar;
@@ -103,12 +104,7 @@ void get_main_menu(GtkWidget ** menubar)
   char *menu_item_func;
   char *menu_item_hotkey_func;
   char *menu_item_keys;
-  char *spaces;
   int i, j;
-  int pad;
-  int sum, diff, max_size, space_size;
-  PangoLayout *layout;
-  int name_width, keys_width;
 
   menu_bar = gtk_menu_bar_new ();
   for (i = 0 ; i < s_menu_return_num(); i++) {
@@ -124,15 +120,6 @@ void get_main_menu(GtkWidget ** menubar)
     menu_item = gtk_tearoff_menu_item_new ();
     gtk_menu_append(GTK_MENU(menu), menu_item);
     gtk_widget_show(menu_item);
-
-    layout = gtk_widget_create_pango_layout(menu, " ");
-    pango_layout_get_pixel_size(layout, &space_size, NULL);
-    g_object_unref(layout);
-
-    layout = gtk_widget_create_pango_layout(menu, 
-	                                    "123456789012345678901234567890");
-    pango_layout_get_pixel_size(layout, &max_size, NULL);
-    g_object_unref(layout);
 
     scm_items_len = (int) scm_ilength (scm_items);
     for (j = 0 ; j < scm_items_len; j++) {
@@ -155,47 +142,31 @@ void get_main_menu(GtkWidget ** menubar)
       if (strcmp(menu_item_name, "SEPARATOR") == 0) {
         menu_item = gtk_menu_item_new();
         gtk_menu_append(GTK_MENU(menu), menu_item);
-      } else { 
+      } else {
         buf = g_strdup_printf("(find-key '%s)", menu_item_hotkey_func);
         scm_keys = g_scm_c_eval_string_protected (buf);
-	g_free(buf);
+        g_free(buf);
+
         if (scm_keys == SCM_BOOL_F) {
-          menu_item_keys = g_strdup (" ");
+          menu_item_keys = "";
         } else {
-          menu_item_keys = g_strdup (SCM_STRING_CHARS (scm_keys));
-        }      
+          menu_item_keys = SCM_STRING_CHARS (scm_keys);
+        }
 
-        layout = gtk_widget_create_pango_layout(menu, menu_item_name);
-        pango_layout_get_pixel_size(layout, &name_width, NULL);
-        g_object_unref(layout);
+        action = gschem_action_new (menu_item_func,  /* Action name */
+                                    menu_item_name,  /* Text */
+                                    menu_item_name,  /* Tooltip */
+                                    NULL,            /* Icon stock ID */
+                                    menu_item_keys); /* Accelerator string */
+        menu_item = gtk_action_create_menu_item (GTK_ACTION (action));
+        gtk_menu_append (GTK_MENU (menu), menu_item);
 
-        layout = gtk_widget_create_pango_layout(menu, menu_item_keys);
-        pango_layout_get_pixel_size(layout, &keys_width, NULL);
-        g_object_unref(layout);
-
-        sum = name_width + keys_width;
-
-	diff = max_size - sum;
-	pad = diff/space_size;
-	if (pad < 0) { 
-           pad = 1;
-	} 
-
-        spaces = g_strnfill (pad, ' ');
-        buf = g_strdup_printf("%s%s%s", menu_item_name, spaces, menu_item_keys);
-
-        menu_item = gtk_menu_item_new_with_label(buf);
-	g_free(buf);
-        gtk_menu_append(GTK_MENU(menu), menu_item);
-        gtk_signal_connect_object(GTK_OBJECT(menu_item), "activate",
-                                  GTK_SIGNAL_FUNC(g_menu_execute),
-                                  (gpointer) g_strdup (menu_item_func));
-        /* The g_strdup is a memory leak, but this is okay. I think. */
-        g_free(spaces);
-        g_free(menu_item_keys);
+        gtk_signal_connect_object (GTK_OBJECT(menu_item), "activate",
+                                   GTK_SIGNAL_FUNC(g_menu_execute),
+                                   (gpointer) g_strdup (menu_item_func));
       }
-      
-      gtk_widget_show(menu_item);
+
+      gtk_widget_show (menu_item);
 
       /* add a handle to the menu_bar object to get access to widget objects */
       /* This string should NOT be internationalized */
@@ -215,7 +186,7 @@ void get_main_menu(GtkWidget ** menubar)
     gtk_menu_item_set_submenu (GTK_MENU_ITEM (root_menu), menu);
     gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), root_menu);
   }
-  
+
   g_free(raw_menu_name);
   *menubar = menu_bar;
 }

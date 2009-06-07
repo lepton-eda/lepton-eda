@@ -16,6 +16,8 @@ gschem_SOURCES = \
 	g_register.c \
 	globals.c \
 	gschem.c \
+	gschem_accel_label.c \
+	gschem_action.c \
 	gschem_cairo.c \
 	gschem_dialog.c \
 	gschem_toplevel.c \
