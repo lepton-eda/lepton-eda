@@ -117,7 +117,7 @@ fi
 
 # Check Guile version
 guile_need_major=1
-guile_need_minor=6
+guile_need_minor=8
 guile_need_version="$guile_need_major[].$guile_need_minor.0"
 
 AC_MSG_CHECKING([Guile version >= $guile_need_version])
