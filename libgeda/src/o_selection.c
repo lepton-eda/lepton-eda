@@ -43,7 +43,9 @@ SELECTION *o_selection_new( void )
 /*! \brief Selects the given object and adds it to the selection list
  *  \par Selects the given object and does the needed work to make the
  *  object visually selected.
- *  \param [in] selection Pointer to the selection list
+ *
+ *  \param [in] toplevel   The TOPLEVEL object
+ *  \param [in] selection  Pointer to the selection list
  *  \param [in] o_selected Object to select.
  */
 void o_selection_add (TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected)
@@ -57,7 +59,9 @@ void o_selection_add (TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_select
  *  needed work to make the object visually unselected.
  *  It's ok to call this function with an object which is not necessarily
  *  selected.
- *  \param [in] selection Pointer to the selection list
+ *
+ *  \param [in] toplevel   The TOPLEVEL object
+ *  \param [in] selection  Pointer to the selection list
  *  \param [in] o_selected Object to unselect and remove from the list.
  */
 void o_selection_remove (TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected)
@@ -99,8 +103,10 @@ void o_selection_print_all(const SELECTION *selection)
 /*! \brief Selects the given object.
  *  \par Sets the select flag, saves the color, and then selects the 
  *  given object
- *  \param [in] object Object to select.
- *  \param [in] color color of the selected object.
+ *
+ *  \param [in] toplevel  The TOPLEVEL object
+ *  \param [in] object    Object to select.
+ *  \param [in] color     color of the selected object.
  */
 void o_selection_select(TOPLEVEL *toplevel, OBJECT *object, int color)
 {
@@ -128,7 +134,9 @@ void o_selection_select(TOPLEVEL *toplevel, OBJECT *object, int color)
  *  \par Unsets the select flag, restores the original color of the
  *  given object.
  *  This function should not be called by anybody outside of this file.
- *  \param [in] object Object to unselect.
+ *
+ *  \param [in] toplevel  The TOPLEVEL object
+ *  \param [in] object    Object to unselect.
  */
 void o_selection_unselect (TOPLEVEL *toplevel, OBJECT *object)
 {

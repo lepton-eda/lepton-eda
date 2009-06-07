@@ -580,6 +580,7 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
  *  \par Function Description
  *  Sets the pin's type and width to a particular style.
  *
+ *  \param [in] toplevel   The TOPLEVEL object
  *  \param [in] o_current  The pin OBJECT being modified
  *  \param [in] type       The new type of this pin
  */

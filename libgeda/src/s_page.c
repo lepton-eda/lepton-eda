@@ -513,8 +513,9 @@ gint s_page_autosave (TOPLEVEL *toplevel)
  *  Links the passed OBJECT to the end of the PAGE's
  *  linked list of objects.
  *
- *  \param [in] page    The PAGE the object is being added to.
- *  \param [in] object  The OBJECT being added to the page.
+ *  \param [in] toplevel  The TOPLEVEL object.
+ *  \param [in] page      The PAGE the object is being added to.
+ *  \param [in] object    The OBJECT being added to the page.
  */
 void s_page_append (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 {
@@ -527,6 +528,7 @@ void s_page_append (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
  *  Links the passed OBJECT GList to the end of the PAGE's
  *  object_list.
  *
+ *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] page      The PAGE the objects are being added to.
  *  \param [in] obj_list  The OBJECT list being added to the page.
  */
@@ -541,8 +543,9 @@ void s_page_append_list (TOPLEVEL *toplevel, PAGE *page, GList *obj_list)
  *  Removes the passed OBJECT from the PAGE's
  *  linked list of objects.
  *
- *  \param [in] page    The PAGE the object is being removed from.
- *  \param [in] object  The OBJECT being removed from the page.
+ *  \param [in] toplevel  The TOPLEVEL object.
+ *  \param [in] page      The PAGE the object is being removed from.
+ *  \param [in] object    The OBJECT being removed from the page.
  */
 void s_page_remove (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 {
