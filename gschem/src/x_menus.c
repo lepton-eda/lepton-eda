@@ -416,7 +416,7 @@ static void update_recent_files_menus()
 
       recent_menu_item =
         (GtkWidget *) gtk_object_get_data(GTK_OBJECT(w_current->menubar),
-                                          "File/Recent files");
+                                          "File/Open Recent");
       if(recent_menu_item == NULL)
          return;
 
@@ -473,7 +473,7 @@ static void recent_file_clicked(GtkMenuItem *menuitem, gpointer user_data)
    x_window_set_current_page(w_current, page);
 }
 
-/*! \brief Attach a submenu with filenames to the 'Recent files'
+/*! \brief Attach a submenu with filenames to the 'Open Recent'
  *         menu item.
  *
  *  Called from x_window_setup().
@@ -485,7 +485,7 @@ void x_menu_attach_recent_files_submenu(GSCHEM_TOPLEVEL *w_current)
    GtkWidget *recent_menu_item, *recent_submenu;
 
    recent_menu_item = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(
-            w_current->menubar), "File/Recent files");
+            w_current->menubar), "File/Open Recent");
    if(recent_menu_item == NULL)
       return;
 
@@ -501,7 +501,7 @@ void x_menu_attach_recent_files_submenu(GSCHEM_TOPLEVEL *w_current)
    /* remove 'q' from the menu item string; there has to be a better way to 
     * create a menu item without a hotkey being assigned to it automatically */
    GtkWidget *label = gtk_bin_get_child(GTK_BIN(recent_menu_item));
-   gtk_label_set_text(GTK_LABEL(label), _("Recent files"));
+   gtk_label_set_text(GTK_LABEL(label), _("Open Recent"));
 
    recent_submenu = gtk_menu_new();
    GList *p = recent_files;
