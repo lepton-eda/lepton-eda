@@ -158,7 +158,7 @@ AC_CHECK_LIB(dl, dlopen, DL_LIB="-ldl", DL_LIB="")
 ##  This is looks for GTK
 #                                                                                      
 # Search for gtk+ 2.8.x
-PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.8.0], GTK="yes", no_GTK="yes")
+PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.10.0], GTK="yes", no_GTK="yes")
 
 # This next bit of code figures out what gtk we need to use.
 if test "$GTK" = "yes"
@@ -166,10 +166,10 @@ then
    GTK_VERSION=`$PKG_CONFIG gtk+-2.0 --modversion`
 
    # Search for glib
-   PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.8.0], GLIB="yes", no_GLIB="yes")
+   PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.10.0], GLIB="yes", no_GLIB="yes")
    if test "$GLIB" != "yes"
    then
-       AC_MSG_ERROR([Cannot find glib 2.8.0 or later, please install it and rerun ./configure.])
+       AC_MSG_ERROR([Cannot find glib 2.10.0 or later, please install it and rerun ./configure.])
    fi
    GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
 
@@ -188,7 +188,7 @@ fi
 
 if test "$GTK_VERSION" = ""
 then
-   AC_MSG_ERROR([Cannot find gtk+ 2.8.0 or later, please install it and rerun ./configure.])
+   AC_MSG_ERROR([Cannot find gtk+ 2.10.0 or later, please install it and rerun ./configure.])
 fi
 
 #
