@@ -1409,10 +1409,10 @@
 	   ("Print..." 		file-print 		file-print)
 	   ("Write image..." 	file-image 		file-image)
 ;; The entry below will be removed from the menu if glib < 2.6 is detected
-	   ("Recent files"      no-action 		no-action)
-	   ("SEPARATOR"         no-action 		no-action)
+	   ("Recent files"      #f                      #f)
+	   ("SEPARATOR"         #f                      #f)
 	   ("Execute Script..." file-script 		file-script)
-	   ("SEPARATOR"         no-action 		no-action)
+	   ("SEPARATOR"         #f                      #f)
 	   ("Close Window"   	file-close-window 	file-close-window)
 	   ("Quit" 		file-quit 		file-quit)))
 
@@ -1422,12 +1422,12 @@
 ;;
 	'( ("Undo"		 edit-undo       	edit-undo)
            ("Redo"               edit-redo       	edit-redo)
-	   ("SEPARATOR"          no-action       	no-action)
+	   ("SEPARATOR"          #f                     #f)
            ("Select Mode"        edit-select     	edit-select)
 	   ("Cut"                clipboard-cut          clipboard-cut)
            ("Copy"               clipboard-copy         clipboard-copy)
            ("Paste"              clipboard-paste-hotkey clipboard-paste-hotkey)
-	   ("SEPARATOR"          no-action       	no-action)
+	   ("SEPARATOR"          #f                     #f)
            ("Edit..."		 edit-edit       	edit-edit)
            ("Edit Text..."	 edit-text       	edit-text)
            ("Copy Mode"		 edit-copy       	edit-copy-hotkey)
@@ -1436,7 +1436,7 @@
            ("Delete"		 edit-delete     	edit-delete)
            ("Rotate 90 Mode"	 edit-rotate-90  	edit-rotate-90-hotkey)
            ("Mirror Mode"	 edit-mirror     	edit-mirror-hotkey)
-	   ("SEPARATOR"		 no-action		no-action)
+	   ("SEPARATOR"		 #f                     #f)
 	   ("Slot..."            edit-slot              edit-slot)
  	   ("Color..."           edit-color             edit-color)
        	   ("Lock"               edit-lock              edit-lock)
@@ -1482,9 +1482,9 @@
 	   ("Zoom In"		view-zoom-in		view-zoom-in-hotkey)
 	   ("Zoom Out"		view-zoom-out		view-zoom-out-hotkey)
 	   ("Zoom Full"		view-zoom-full		view-zoom-full)
-	   ("SEPARATOR"         no-action               no-action)
-	   ("Dark color scheme"  view-dark-colors       no-action)
-	   ("Light color scheme" view-light-colors      no-action)
+	   ("SEPARATOR"         #f                      #f)
+	   ("Dark color scheme"  view-dark-colors       #f)
+	   ("Light color scheme" view-light-colors      #f)
 	 ))
 
 (define page-menu-items 
@@ -1497,7 +1497,7 @@
 	   ("New"		page-new       		page-new)
 	   ("Revert"		page-revert       	page-revert)
 	   ("Close"		page-close       	page-close)
-	   ("SEPARATOR"		no-action		no-action)
+	   ("SEPARATOR"		#f                      #f)
 	   ("Discard"		page-discard       	page-discard)))
 
 (define add-menu-items 
@@ -1509,7 +1509,7 @@
 	   ("Bus"		add-bus	  	     	add-bus-hotkey)
 	   ("Attribute..."	add-attribute  	     	add-attribute-hotkey)
 	   ("Text..."		add-text  	     	add-text)
-	   ("SEPARATOR"		no-action		no-action)
+	   ("SEPARATOR"		#f                      #f)
 	   ("Line"		add-line  	     	add-line-hotkey)
 	   ("Box"		add-box  	     	add-box-hotkey)
 	   ("Circle"		add-circle  	     	add-circle-hotkey)
@@ -1585,7 +1585,7 @@
 	   ("gEDA Wiki..."	     help-wiki		help-wiki)
 	   ("Component Documentation..."	hierarchy-documentation
 						hierarchy-documentation)
-	   ("SEPARATOR"		no-action		no-action)
+	   ("SEPARATOR"		#f                      #f)
 	   ("Hotkeys..."	help-hotkeys		help-hotkeys)
 	   ("About..."	        help-about		help-about)))
 	  

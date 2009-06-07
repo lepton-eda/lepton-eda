@@ -130,12 +130,24 @@ void get_main_menu(GtkWidget ** menubar)
       scm_item_func = SCM_CADR (scm_item);
       scm_item_hotkey_func = SCM_CADDR (scm_item);
       SCM_ASSERT(scm_is_string(scm_item_name), scm_item_name, SCM_ARGn, "get_main_menu item_name");
-      SCM_ASSERT(SCM_SYMBOLP(scm_item_func), scm_item_func, SCM_ARGn, "get_main_menu item_func");
-      SCM_ASSERT(SCM_SYMBOLP(scm_item_hotkey_func), scm_item_hotkey_func, SCM_ARGn, "get_main_menu hotkey_func");
+      SCM_ASSERT(SCM_SYMBOLP (scm_item_func) ||
+                    scm_is_false (scm_item_func),
+                 scm_item_func, SCM_ARGn, "get_main_menu item_func");
+      SCM_ASSERT (SCM_SYMBOLP (scm_item_hotkey_func) ||
+                    scm_is_false (scm_item_hotkey_func),
+                  scm_item_hotkey_func, SCM_ARGn, "get_main_menu hotkey_func");
 
       raw_menu_item_name = SCM_STRING_CHARS (scm_item_name);
-      menu_item_func = SCM_SYMBOL_CHARS (scm_item_func);
-      menu_item_hotkey_func = SCM_SYMBOL_CHARS (scm_item_hotkey_func);
+
+      if (scm_is_false (scm_item_func))
+        menu_item_func = "no-action";
+      else
+        menu_item_func = SCM_SYMBOL_CHARS (scm_item_func);
+
+      if (scm_is_false (scm_item_hotkey_func))
+        menu_item_hotkey_func = NULL;
+      else
+        menu_item_hotkey_func = SCM_SYMBOL_CHARS (scm_item_hotkey_func);
 
       menu_item_name = (char *) gettext(raw_menu_item_name);
 
@@ -143,14 +155,21 @@ void get_main_menu(GtkWidget ** menubar)
         menu_item = gtk_menu_item_new();
         gtk_menu_append(GTK_MENU(menu), menu_item);
       } else {
-        buf = g_strdup_printf("(find-key '%s)", menu_item_hotkey_func);
-        scm_keys = g_scm_c_eval_string_protected (buf);
-        g_free(buf);
 
-        if (scm_keys == SCM_BOOL_F) {
-          menu_item_keys = "";
+        if (menu_item_hotkey_func != NULL) {
+
+          buf = g_strdup_printf ("(find-key '%s)", menu_item_hotkey_func);
+          scm_keys = g_scm_c_eval_string_protected (buf);
+          g_free (buf);
+
+          if (scm_keys == SCM_BOOL_F) {
+            menu_item_keys = "";
+          } else {
+            menu_item_keys = SCM_STRING_CHARS (scm_keys);
+          }
+
         } else {
-          menu_item_keys = SCM_STRING_CHARS (scm_keys);
+          menu_item_keys = "";
         }
 
         action = gschem_action_new (menu_item_func,  /* Action name */
@@ -164,6 +183,7 @@ void get_main_menu(GtkWidget ** menubar)
         gtk_signal_connect_object (GTK_OBJECT(menu_item), "activate",
                                    GTK_SIGNAL_FUNC(g_menu_execute),
                                    (gpointer) g_strdup (menu_item_func));
+        /* The g_strdup is a memory leak, but this is okay. I think. */
       }
 
       gtk_widget_show (menu_item);

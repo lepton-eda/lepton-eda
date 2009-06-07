@@ -29,13 +29,6 @@
 (define last-command-sequence #f)
 (define current-command-sequence '())
 
-; no action hotkey
-(define no-action
-  (lambda ()
-      #f 
-  )
-)
-
 ; Doers
 (define (press-key key)
   (eval-pressed-key current-keymap key))
