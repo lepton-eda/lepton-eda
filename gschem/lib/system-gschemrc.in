@@ -1400,35 +1400,35 @@
 ;;          menu item name      menu action             menu hotkey function    menu stock icon
 ;;
         '( ("New Window"        file-new-window         file-new-window         #f)
-           ("New"               file-new                file-new                "gtk-new")
-           ("Open..."           file-open               file-open               "gtk-open")
+           ("_New"              file-new                file-new                "gtk-new")
+           ("_Open..."          file-open               file-open               "gtk-open")
 ;; The entry below will be removed from the menu if glib < 2.6 is detected
-           ("Open Recent"       #f                      #f                      #f)
+           ("Open Recen_t"      #f                      #f                      #f)
            ("SEPARATOR"         #f                      #f                      #f)
-           ("Save"              file-save               file-save               "gtk-save")
-           ("Save As..."        file-save-as            file-save-as            "gtk-save-as")
+           ("_Save"             file-save               file-save               "gtk-save")
+           ("Save _As..."       file-save-as            file-save-as            "gtk-save-as")
            ("Save All"          file-save-all           file-save-all           "gtk-save")
-           ("Revert"            page-revert             page-revert             "gtk-revert-to-saved")
+           ("_Revert"           page-revert             page-revert             "gtk-revert-to-saved")
            ("SEPARATOR"         #f                      #f                      #f)
-           ("Print..."          file-print              file-print              "gtk-print")
-           ("Write image..."    file-image              file-image              #f)
+           ("_Print..."         file-print              file-print              "gtk-print")
+           ("Write _image..."   file-image              file-image              #f)
            ("SEPARATOR"         #f                      #f                      #f)
            ("Execute Script..." file-script             file-script             "gtk-execute")
            ("SEPARATOR"         #f                      #f                      #f)
-           ("Close"             file-close-window       file-close-window       "gtk-close")
-           ("Quit"              file-quit               file-quit               "gtk-quit")))
+           ("_Close"            file-close-window       file-close-window       "gtk-close")
+           ("_Quit"             file-quit               file-quit               "gtk-quit")))
 
 (define edit-menu-items 
 ;;
 ;;          menu item name      menu action             menu hotkey action      menu stock icon
 ;;
-        '( ("Undo"               edit-undo              edit-undo               "gtk-undo")
-           ("Redo"               edit-redo              edit-redo               "gtk-redo")
+        '( ("_Undo"              edit-undo              edit-undo               "gtk-undo")
+           ("_Redo"              edit-redo              edit-redo               "gtk-redo")
            ("SEPARATOR"          #f                     #f                      #f)
-           ("Cut"                clipboard-cut          clipboard-cut           "gtk-cut")
-           ("Copy"               clipboard-copy         clipboard-copy          "gtk-copy")
-           ("Paste"              clipboard-paste-hotkey clipboard-paste-hotkey  "gtk-paste")
-           ("Delete"             edit-delete            edit-delete             "gtk-delete"  )
+           ("Cu_t"               clipboard-cut          clipboard-cut           "gtk-cut")
+           ("_Copy"              clipboard-copy         clipboard-copy          "gtk-copy")
+           ("_Paste"             clipboard-paste-hotkey clipboard-paste-hotkey  "gtk-paste")
+           ("_Delete"            edit-delete            edit-delete             "gtk-delete"  )
            ("SEPARATOR"          #f                     #f                      #f)
            ("Select Mode"        edit-select            edit-select             #f)
            ("Copy Mode"          edit-copy              edit-copy-hotkey        #f)
@@ -1476,94 +1476,94 @@
 
 (define view-menu-items 
 ;;
-;;          menu item name      menu action             menu hotkey action      menu stock icon
+;;          menu item name        menu action             menu hotkey action      menu stock icon
 ;;
-        '( ("Redraw"            view-redraw             view-redraw             "gtk-refresh")
-           ("Pan"               view-pan                view-pan-hotkey         #f)
-           ("Zoom Box"          view-zoom-box           view-zoom-box-hotkey    #f)
-           ("Zoom Extents"      view-zoom-extents       view-zoom-extents       "gtk-zoom-fit")
-           ("Zoom In"           view-zoom-in            view-zoom-in-hotkey     "gtk-zoom-in")
-           ("Zoom Out"          view-zoom-out           view-zoom-out-hotkey    "gtk-zoom-out")
-           ("Zoom Full"         view-zoom-full          view-zoom-full          #f)
-           ("SEPARATOR"         #f                      #f                      #f)
-           ("Dark color scheme"  view-dark-colors       view-dark-colors        #f)
-           ("Light color scheme" view-light-colors      view-light-colors       #f)
+        '( ("_Redraw"             view-redraw             view-redraw             "gtk-refresh")
+           ("_Pan"                view-pan                view-pan-hotkey         #f)
+           ("Zoom _Box"           view-zoom-box           view-zoom-box-hotkey    #f)
+           ("Zoom _Extents"       view-zoom-extents       view-zoom-extents       "gtk-zoom-fit")
+           ("Zoom _In"            view-zoom-in            view-zoom-in-hotkey     "gtk-zoom-in")
+           ("Zoom _Out"           view-zoom-out           view-zoom-out-hotkey    "gtk-zoom-out")
+           ("Zoom _Full"          view-zoom-full          view-zoom-full          #f)
+           ("SEPARATOR"           #f                      #f                      #f)
+           ("_Dark color scheme"  view-dark-colors        view-dark-colors        #f)
+           ("_Light color scheme" view-light-colors       view-light-colors       #f)
          ))
 
 (define page-menu-items 
 ;;
 ;;          menu item name      menu action             menu hotkey action      menu stock icon
 ;;
-        '( ("Manager..."        page-manager            page-manager            #f)
-           ("Previous"          page-prev               page-prev               "gtk-go-back")
-           ("Next"              page-next               page-next               "gtk-go-forward")
-           ("New"               page-new                page-new                "gtk-new")
-           ("Revert"            page-revert             page-revert             "gtk-revert-to-saved")
-           ("Close"             page-close              page-close              "gtk-close")
+        '( ("_Manager..."       page-manager            page-manager            #f)
+           ("_Previous"         page-prev               page-prev               "gtk-go-back")
+           ("_Next"             page-next               page-next               "gtk-go-forward")
+           ("Ne_w"              page-new                page-new                "gtk-new")
+           ("_Revert"           page-revert             page-revert             "gtk-revert-to-saved")
+           ("_Close"            page-close              page-close              "gtk-close")
            ("SEPARATOR"         #f                      #f                      #f)
-           ("Discard"           page-discard            page-discard            "gtk-discard")))
+           ("_Discard"          page-discard            page-discard            "gtk-discard")))
 
 (define add-menu-items 
 ;;
 ;;          menu item name      menu action             menu hotkey action      menu stock icon
 ;;
-	'( ("Component..."	add-component       	add-component)
-	   ("Net"		add-net	  	     	add-net-hotkey)
-	   ("Bus"		add-bus	  	     	add-bus-hotkey)
-	   ("Attribute..."	add-attribute  	     	add-attribute-hotkey)
-	   ("Text..."		add-text  	     	add-text)
-	   ("SEPARATOR"		#f                      #f)
-	   ("Line"		add-line  	     	add-line-hotkey)
-	   ("Box"		add-box  	     	add-box-hotkey)
-	   ("Circle"		add-circle  	     	add-circle-hotkey)
-	   ("Arc"		add-arc  	     	add-arc-hotkey)
-	   ("Pin"		add-pin  	     	add-pin-hotkey)
-	   ("Picture..."       	add-picture  	     	add-picture-hotkey)))
+	'( ("_Component..."     add-component       	add-component)
+	   ("_Net"              add-net	  	     	add-net-hotkey)
+	   ("B_us"              add-bus	  	     	add-bus-hotkey)
+	   ("_Attribute..."     add-attribute  	     	add-attribute-hotkey)
+	   ("_Text..."          add-text  	     	add-text)
+	   ("SEPARATOR"         #f                      #f)
+	   ("_Line"             add-line  	     	add-line-hotkey)
+	   ("_Box"              add-box  	     	add-box-hotkey)
+	   ("C_ircle"           add-circle  	     	add-circle-hotkey)
+	   ("A_rc"              add-arc  	     	add-arc-hotkey)
+	   ("_Pin"              add-pin  	     	add-pin-hotkey)
+	   ("Pictu_re..."       add-picture  	     	add-picture-hotkey)))
 
 (define hierarchy-menu-items 
 ;;
 ;;          menu item name      menu action               menu hotkey action        menu stock icon
 ;;
-        '( ("Down Schematic"    hierarchy-down-schematic  hierarchy-down-schematic  "gtk-go-down")
-           ("Down Symbol"       hierarchy-down-symbol     hierarchy-down-symbol     "gtk-goto-bottom")
-           ("Up"                hierarchy-up              hierarchy-up              "gtk-go-up")
-           ("Documentation..."  hierarchy-documentation   hierarchy-documentation   #f)))
+        '( ("_Down Schematic"   hierarchy-down-schematic  hierarchy-down-schematic  "gtk-go-down")
+           ("Down _Symbol"      hierarchy-down-symbol     hierarchy-down-symbol     "gtk-goto-bottom")
+           ("_Up"               hierarchy-up              hierarchy-up              "gtk-go-up")
+           ("D_ocumentation..." hierarchy-documentation   hierarchy-documentation   #f)))
 
 (define attributes-menu-items 
 ;;
 ;;          menu item name      menu action             menu hotkey action      menu stock icon
 ;;
-        '( ("Attach"            attributes-attach       attributes-attach       #f)
-           ("Detach"            attributes-detach       attributes-detach       #f)
-           ("Show Value"        attributes-show-value   attributes-show-value   #f)
-           ("Show Name"         attributes-show-name    attributes-show-name    #f)
-           ("Show Both"         attributes-show-both    attributes-show-both    #f)
-           ("Toggle Visibility" attributes-visibility-toggle
-                                attributes-visibility-toggle                    #f)
-           ("Find Specific Text..."  edit-find-text     edit-find-text          "gtk-find")
-           ("Hide Specific Text..."  edit-hide-text     edit-hide-text          #f)
-           ("Show Specific Text..."  edit-show-text     edit-show-text          #f)
-           ("Autonumber Text..."     edit-autonumber    edit-autonumber         #f)))
+        '( ("_Attach"           attributes-attach       attributes-attach       #f)
+           ("_Detach"           attributes-detach       attributes-detach       #f)
+           ("Show _Value"       attributes-show-value   attributes-show-value   #f)
+           ("Show _Name"        attributes-show-name    attributes-show-name    #f)
+           ("Show _Both"        attributes-show-both    attributes-show-both    #f)
+           ("_Toggle Visibility"  attributes-visibility-toggle
+                                  attributes-visibility-toggle                  #f)
+           ("_Find Specific Text..."  edit-find-text    edit-find-text          "gtk-find")
+           ("_Hide Specific Text..."  edit-hide-text    edit-hide-text          #f)
+           ("_Show Specific Text..."  edit-show-text    edit-show-text          #f)
+           ("A_utonumber Text..."     edit-autonumber   edit-autonumber         #f)))
 
 (define options-menu-items 
 ;;
 ;;          menu item name      menu action             menu hotkey action      menu stock icon
 ;;
-	'( ("Text Size..."	options-text-size       options-text-size)
-	   ("Cycle grid styles"  options-grid           options-grid)
-	   ("Toggle Snap On/Off" options-snap       	options-snap)
-	   ("Snap Grid Spacing..." options-snap-size   	options-snap-size)
-    	   ("Scale up Grid Spacing" options-scale-up-snap-size 
+	'( ("_Text Size..."	options-text-size       options-text-size)
+	   ("Cycle _grid styles"  options-grid           options-grid)
+	   ("Toggle _Snap On/Off" options-snap       	options-snap)
+	   ("Snap Grid S_pacing..." options-snap-size   	options-snap-size)
+    	   ("Scale _up Grid Spacing" options-scale-up-snap-size 
 						    options-scale-up-snap-size)
-    	   ("Scale down Grid Spacing" options-scale-down-snap-size
+    	   ("Scale _down Grid Spacing" options-scale-down-snap-size
 						  options-scale-down-snap-size)
-	   ("Toggle Outline/Box"   options-action-feedback   	
+	   ("Toggle _Outline/Box"   options-action-feedback   	
 				   options-action-feedback)
-	   ("Toggle Net Rubberband" options-rubberband   options-rubberband)
-	   ("Toggle Magnetic Net" options-magneticnet options-magneticnet)
-	   ("Show Log Window..."    options-show-log-window   
+	   ("Toggle Net _Rubberband" options-rubberband   options-rubberband)
+	   ("Toggle _Magnetic Net" options-magneticnet options-magneticnet)
+	   ("Show _Log Window..."    options-show-log-window   
 	 			    options-show-log-window)
-	   ("Show Coord Window..."   options-show-coord-window   
+	   ("Show _Coord Window..."   options-show-coord-window   
 				     options-show-coord-window)))
 
 ; Set up some functions used to open help files for the help menu
@@ -1579,13 +1579,13 @@
 ;;          menu item name                menu action               menu hotkey action        menu stock icon
 ;;
         '(
-           ("gEDA Documentation..."       help-manual               help-manual               "gtk-help")
-           ("gschem FAQ..."               help-faq                  help-faq                  #f)
-           ("gEDA Wiki..."                help-wiki                 help-wiki                 #f)
-           ("Component Documentation..."  hierarchy-documentation   hierarchy-documentation   #f)
+           ("gEDA Docu_mentation..."      help-manual               help-manual               "gtk-help")
+           ("gschem _FAQ..."              help-faq                  help-faq                  #f)
+           ("gEDA _Wiki..."               help-wiki                 help-wiki                 #f)
+           ("Component D_ocumentation..." hierarchy-documentation   hierarchy-documentation   #f)
            ("SEPARATOR"                   #f                        #f                        #f)
-           ("Hotkeys..."                  help-hotkeys              help-hotkeys              #f)
-           ("About..."                    help-about                help-about                "gtk-about")))
+           ("_Hotkeys..."                 help-hotkeys              help-hotkeys              #f)
+           ("_About..."                   help-about                help-about                "gtk-about")))
 
 ;
 ; Now actually add the menus.  The order here defines the order in which
