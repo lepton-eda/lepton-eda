@@ -1242,12 +1242,13 @@
   '(("r" . view-redraw)
     ("b" . view-zoom-box-hotkey)
     ("f" . view-zoom-full)
-    ("l" . view-zoom-extents)
     ("e" . view-zoom-extents)
     ("p" . view-pan-hotkey)
     ("u" . view-update-cues)
     ("o" . view-zoom-out-hotkey)
     ("i" . view-zoom-in-hotkey)
+    ("d" . view-dark-colors)
+    ("l" . view-light-colors)
    ))
 
 (define buffer-keymap
@@ -1485,8 +1486,8 @@
            ("Zoom Out"          view-zoom-out           view-zoom-out-hotkey    "gtk-zoom-out")
            ("Zoom Full"         view-zoom-full          view-zoom-full          #f)
            ("SEPARATOR"         #f                      #f                      #f)
-           ("Dark color scheme"  view-dark-colors       #f                      #f)
-           ("Light color scheme" view-light-colors      #f                      #f)
+           ("Dark color scheme"  view-dark-colors       view-dark-colors        #f)
+           ("Light color scheme" view-light-colors      view-light-colors       #f)
          ))
 
 (define page-menu-items 
