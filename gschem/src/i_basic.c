@@ -364,7 +364,7 @@ void i_update_toolbar(GSCHEM_TOPLEVEL *w_current)
 static void clipboard_usable_cb (int usable, void *userdata)
 {
   GSCHEM_TOPLEVEL *w_current = userdata;
-  x_menus_sensitivity (w_current, "Edit/Paste", usable);
+  x_menus_sensitivity (w_current, "Edit/_Paste", usable);
 }
 
 
@@ -393,16 +393,16 @@ void i_update_menus(GSCHEM_TOPLEVEL *w_current)
   if (o_select_selected (w_current)) {
     /* since one or more things are selected, we set these TRUE */
     /* These strings should NOT be internationalized */
-    x_menus_sensitivity(w_current, "Edit/Cut", TRUE);
-    x_menus_sensitivity(w_current, "Edit/Copy", TRUE);
-    x_menus_sensitivity(w_current, "Edit/Edit...", TRUE);
-    x_menus_sensitivity(w_current, "Edit/Edit Text...", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Cu_t", TRUE);
+    x_menus_sensitivity(w_current, "Edit/_Copy", TRUE);
+    x_menus_sensitivity(w_current, "Edit/_Delete", TRUE);
     x_menus_sensitivity(w_current, "Edit/Copy Mode", TRUE);
     x_menus_sensitivity(w_current, "Edit/Multiple Copy Mode", TRUE);
     x_menus_sensitivity(w_current, "Edit/Move Mode", TRUE);
-    x_menus_sensitivity(w_current, "Edit/Delete", TRUE);
     x_menus_sensitivity(w_current, "Edit/Rotate 90 Mode", TRUE);
     x_menus_sensitivity(w_current, "Edit/Mirror Mode", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Edit...", TRUE);
+    x_menus_sensitivity(w_current, "Edit/Edit Text...", TRUE);
     x_menus_sensitivity(w_current, "Edit/Slot...", TRUE);
     x_menus_sensitivity(w_current, "Edit/Color...", TRUE);
     x_menus_sensitivity(w_current, "Edit/Lock", TRUE);
@@ -422,15 +422,15 @@ void i_update_menus(GSCHEM_TOPLEVEL *w_current)
     x_menus_sensitivity(w_current, "Buffer/Cut into 3", TRUE);
     x_menus_sensitivity(w_current, "Buffer/Cut into 4", TRUE);
     x_menus_sensitivity(w_current, "Buffer/Cut into 5", TRUE);
-    x_menus_sensitivity(w_current, "Hierarchy/Down Schematic", TRUE);
-    x_menus_sensitivity(w_current, "Hierarchy/Down Symbol", TRUE);
-    x_menus_sensitivity(w_current, "Hierarchy/Documentation...", TRUE);
-    x_menus_sensitivity(w_current, "Attributes/Attach", TRUE);
-    x_menus_sensitivity(w_current, "Attributes/Detach", TRUE);
-    x_menus_sensitivity(w_current, "Attributes/Show Value", TRUE);
-    x_menus_sensitivity(w_current, "Attributes/Show Name", TRUE);
-    x_menus_sensitivity(w_current, "Attributes/Show Both", TRUE);
-    x_menus_sensitivity(w_current, "Attributes/Toggle Visibility", TRUE);
+    x_menus_sensitivity(w_current, "Hierarchy/_Down Schematic", TRUE);
+    x_menus_sensitivity(w_current, "Hierarchy/Down _Symbol", TRUE);
+    x_menus_sensitivity(w_current, "Hierarchy/D_ocumentation...", TRUE);
+    x_menus_sensitivity(w_current, "Attributes/_Attach", TRUE);
+    x_menus_sensitivity(w_current, "Attributes/_Detach", TRUE);
+    x_menus_sensitivity(w_current, "Attributes/Show _Value", TRUE);
+    x_menus_sensitivity(w_current, "Attributes/Show _Name", TRUE);
+    x_menus_sensitivity(w_current, "Attributes/Show _Both", TRUE);
+    x_menus_sensitivity(w_current, "Attributes/_Toggle Visibility", TRUE);
 
     /*  Menu items for hierarchy added by SDB 1.9.2005.  */
     x_menus_popup_sensitivity(w_current, "/Down Schematic", TRUE);
@@ -440,16 +440,16 @@ void i_update_menus(GSCHEM_TOPLEVEL *w_current)
   } else {
     /* Nothing is selected, grey these out */
     /* These strings should NOT be internationalized */
-    x_menus_sensitivity(w_current, "Edit/Cut", FALSE);
-    x_menus_sensitivity(w_current, "Edit/Copy", FALSE);
-    x_menus_sensitivity(w_current, "Edit/Edit...", FALSE);
-    x_menus_sensitivity(w_current, "Edit/Edit Text...", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Cu_t", FALSE);
+    x_menus_sensitivity(w_current, "Edit/_Copy", FALSE);
+    x_menus_sensitivity(w_current, "Edit/_Delete", FALSE);
     x_menus_sensitivity(w_current, "Edit/Copy Mode", FALSE);
     x_menus_sensitivity(w_current, "Edit/Multiple Copy Mode", FALSE);
     x_menus_sensitivity(w_current, "Edit/Move Mode", FALSE);
-    x_menus_sensitivity(w_current, "Edit/Delete", FALSE);
     x_menus_sensitivity(w_current, "Edit/Rotate 90 Mode", FALSE);
     x_menus_sensitivity(w_current, "Edit/Mirror Mode", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Edit...", FALSE);
+    x_menus_sensitivity(w_current, "Edit/Edit Text...", FALSE);
     x_menus_sensitivity(w_current, "Edit/Slot...", FALSE);
     x_menus_sensitivity(w_current, "Edit/Color...", FALSE);
     x_menus_sensitivity(w_current, "Edit/Lock", FALSE);
@@ -469,15 +469,15 @@ void i_update_menus(GSCHEM_TOPLEVEL *w_current)
     x_menus_sensitivity(w_current, "Buffer/Cut into 3", FALSE);
     x_menus_sensitivity(w_current, "Buffer/Cut into 4", FALSE);
     x_menus_sensitivity(w_current, "Buffer/Cut into 5", FALSE);
-    x_menus_sensitivity(w_current, "Hierarchy/Down Schematic", FALSE);
-    x_menus_sensitivity(w_current, "Hierarchy/Down Symbol", FALSE);
-    x_menus_sensitivity(w_current, "Hierarchy/Documentation...", FALSE);
-    x_menus_sensitivity(w_current, "Attributes/Attach", FALSE);
-    x_menus_sensitivity(w_current, "Attributes/Detach", FALSE);
-    x_menus_sensitivity(w_current, "Attributes/Show Value", FALSE);
-    x_menus_sensitivity(w_current, "Attributes/Show Name", FALSE);
-    x_menus_sensitivity(w_current, "Attributes/Show Both", FALSE);
-    x_menus_sensitivity(w_current, "Attributes/Toggle Visibility", FALSE);
+    x_menus_sensitivity(w_current, "Hierarchy/_Down Schematic", FALSE);
+    x_menus_sensitivity(w_current, "Hierarchy/Down _Symbol", FALSE);
+    x_menus_sensitivity(w_current, "Hierarchy/D_ocumentation...", FALSE);
+    x_menus_sensitivity(w_current, "Attributes/_Attach", FALSE);
+    x_menus_sensitivity(w_current, "Attributes/_Detach", FALSE);
+    x_menus_sensitivity(w_current, "Attributes/Show _Value", FALSE);
+    x_menus_sensitivity(w_current, "Attributes/Show _Name", FALSE);
+    x_menus_sensitivity(w_current, "Attributes/Show _Both", FALSE);
+    x_menus_sensitivity(w_current, "Attributes/_Toggle Visibility", FALSE);
 
     /*  Menu items for hierarchy added by SDB 1.9.2005.  */
     x_menus_popup_sensitivity(w_current, "/Down Schematic", FALSE);
