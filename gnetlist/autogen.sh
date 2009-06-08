@@ -107,7 +107,7 @@ do
       fi
       echo "autogen.sh running: aclocal $aclocalinclude ..."
       aclocal $aclocalinclude
-      if grep "^AM_CONFIG_HEADER" $configure_script >/dev/null; then
+      if grep "^AC_CONFIG_HEADER" $configure_script >/dev/null; then
 	echo "autogen.sh running: autoheader ..."
 	autoheader
       fi
