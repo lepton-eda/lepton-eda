@@ -687,7 +687,7 @@ char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found)
  */
 static char *o_attrib_search_slotdef (OBJECT *object, int slotnumber)
 {
-  int counter;
+  int counter = 0;
   char *slotdef;
   char *search_for;
 
