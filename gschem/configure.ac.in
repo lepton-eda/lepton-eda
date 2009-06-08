@@ -10,7 +10,7 @@ echo Configuring $PACKAGE version $DOTTED_VERSION.$DATE_VERSION
 
 # Initialize automake 
 AM_INIT_AUTOMAKE($PACKAGE, $DOTTED_VERSION, no-define)
-AM_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADER([config.h])
 AC_SUBST([CONFIG_DEPENDENCIES], ['$(top_srcdir)/configure.ac.in'])
 
 # Call this to make autoconf and friends happy
