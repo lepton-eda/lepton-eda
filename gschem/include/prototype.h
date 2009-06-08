@@ -842,10 +842,6 @@ void x_menu_attach_recent_files_submenu(GSCHEM_TOPLEVEL *w_current);
 void recent_files_load();
 void recent_files_save(gpointer user_data);
 void recent_files_add(const char *filename);
-#if !GLIB_CHECK_VERSION(2,8,0)
-gboolean g_file_set_contents(const gchar *filename, const gchar *contents,
-      gssize length, GError **error);
-#endif
 /* x_multiattrib.c */
 void x_multiattrib_open (GSCHEM_TOPLEVEL *w_current);
 void x_multiattrib_close (GSCHEM_TOPLEVEL *w_current);

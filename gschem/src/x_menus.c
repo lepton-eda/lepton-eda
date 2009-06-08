@@ -357,35 +357,6 @@ void x_menus_popup_sensitivity (GSCHEM_TOPLEVEL *w_current, const char *buf, int
   }
 }
 
-#if !GLIB_CHECK_VERSION(2,8,0)
-/* g_file_set_contents() exists only in glib >= 2.8 */
-gboolean g_file_set_contents(const gchar *filename, const gchar *contents,
-      gssize length, GError **error)
-{
-   FILE *fp;
-   gboolean ret = FALSE;
-
-   fp = fopen(filename, "wb");
-   if(fp == NULL)
-      return FALSE;
-
-   if(length == -1) {
-      /* It's a null-terminated string. */
-      if(fputs(contents, fp) == EOF)
-         goto out;
-   } else {
-      if(fwrite(contents, length, 1, fp) != 1)
-         goto out;
-   }
-
-   ret = TRUE;
-out:
-   fclose(fp);
-   return ret;
-}
-#endif  /* !GLIB_CHECK_VERSION(2,8,0) */
-
-
 /* The list of recently loaded files. */
 static GList *recent_files = NULL;
 
