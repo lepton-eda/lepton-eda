@@ -217,12 +217,12 @@ fi
 # Check for glib start
 #
 
-PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.10.0], GLIB="yes", no_GLIB="yes")
+PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.12.0], GLIB="yes", no_GLIB="yes")
 
 # This next bit of code figures out what glib we need to use.
 if test "$GLIB" != "yes"
 then
-   AC_MSG_ERROR([Cannot find glib 2.10.0 or later, please install it and rerun ./configure.])
+   AC_MSG_ERROR([Cannot find glib 2.12.0 or later, please install it and rerun ./configure.])
 fi
 GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
 
