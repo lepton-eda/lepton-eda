@@ -390,7 +390,7 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
   int save_adding_sel = 0;
   int loaded_normally = FALSE;
 
-  gchar *buffer;
+  gchar *buffer = NULL;
 
   new_node = s_basic_new_object(type, "complex");
 
