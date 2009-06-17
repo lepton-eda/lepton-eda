@@ -39,3 +39,5 @@ MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in configure config.h.in \
 		       mkinstalldirs configure.ac $(INTLTOOL_FILES)
 
 DISTCHECK_CONFIGURE_FLAGS = --disable-update-mime-database
+
+ACLOCAL_AMFLAGS = -I m4

@@ -147,7 +147,7 @@ do
     echo processing $dr
     ( cd $dr
 
-      aclocalinclude="$ACLOCAL_FLAGS"
+      aclocalinclude="$ACLOCAL_FLAGS -I m4"
 
       if test "$recreate_configure_only" = "0"; then
         # Only run these if we are NOT in the recreate_configure_only mode
