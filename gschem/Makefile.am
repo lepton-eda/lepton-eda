@@ -14,8 +14,7 @@ maintainer-clean-local:
 	-rm -rf autom4te.cache \
           intl/*.h intl/*.c intl/*.alias intl/*.y intl/*.sin intl/VERSION \
           intl/config.charset intl/Makefile.in intl/ChangeLog \
-          po/*.sed po/*.header po/*.sin po/*.template po/Rules-quot \
-          m4/*.m4 
+          po/*.sed po/*.header po/*.sin po/*.template po/Rules-quot
 
 
 # Special rule to make sure that configure.ac is recreated when configure.ac.in
