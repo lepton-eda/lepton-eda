@@ -89,9 +89,8 @@ AC_GEDA_MACRO_CHECK([AM_GNU_GETTEXT], [gettext.m4])
 AM_GNU_GETTEXT
 AM_GNU_GETTEXT_VERSION([%INSTALLED_GETTEXT_VERSION%])
 
-# Initialise intltool
-AC_GEDA_MACRO_CHECK([IT_PROG_INTLTOOL], [intltool.m4])
-IT_PROG_INTLTOOL(0.35.0)
+# Setup desktop-i18n
+AX_DESKTOP_I18N
 
 # 
 # Internationalisation end
@@ -440,8 +439,8 @@ AC_CONFIG_FILES([Makefile
                  docs/Makefile
                  data/Makefile
                  intl/Makefile
+                 po/domain.mak
                  po/Makefile.in
-                 po/Makefile
 	         libgeda.pc
 		 share/Makefile
 		 lib/Makefile

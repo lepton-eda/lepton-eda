@@ -61,6 +61,16 @@ DIE=0
   }
 }
 
+(grep "^AX_DESKTOP_I18N" $srcdir/$configure_script >/dev/null) && {
+  (test -x $srcdir/desktop-i18n) || {
+    echo
+    echo
+    echo "**Error**: The desktop-i18n program is missing."
+    echo "Ensure that your tarballs are intact or that your git"
+    echo "checkout is up-to-date."
+  }
+}
+
 (automake --version) < /dev/null > /dev/null 2>&1 || {
   echo
   echo "**Error**: You must have \`automake' installed."
@@ -155,10 +165,10 @@ do
 	  echo "autogen.sh running: autopoint ..." 
 	  echo "no" | autopoint --force 
 	fi
-	if grep "^IT_PROG_INTLTOOL" $configure_script >/dev/null; then
-	    echo "autogen.sh running: intltoolize ..."
-	    echo "no" | intltoolize --force --copy --automake
-	fi
+        if grep "^AX_DESKTOP_I18N" $configure_script >/dev/null; then
+          echo "autogen.sh running: desktop-i18n ..."
+          ./desktop-i18n --setup
+        fi
 	if grep "^AM_PROG_LIBTOOL" $configure_script >/dev/null; then
 	    echo "autogen.sh running: libtoolize ..."
 	    $LIBTOOLIZE --force --copy
