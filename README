@@ -13,8 +13,8 @@ README for gEDA/gaf
         - If you are building the repository version, then you will
     	  need the following packages installed as well: 
 
-          	autoconf, automake, libtool, gettext, intltool, 
-	        cvs, flex, groff, transfig
+          	autoconf, automake, libtool, gettext, cvs, flex,
+	        groff, transfig
 
 	- Download all source packages and the toplevel Makefile. 
 	- Untar all packages in a directory and place toplevel Makefile 
