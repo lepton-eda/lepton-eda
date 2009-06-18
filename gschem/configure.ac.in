@@ -67,7 +67,7 @@ AC_PROG_CC
 AM_CONDITIONAL(CCISGCC, test "$GCC" = "yes")    
 AC_PROG_CPP
 AC_PROG_MAKE_SET
-IT_PROG_INTLTOOL(0.35.0)
+
 
 ############################################################################
 # Update desktop database utility start
@@ -341,10 +341,6 @@ AC_CHECK_HEADER([locale.h],
                   fi
                 ])
 
-# Set package name for translations
-GETTEXT_PACKAGE=$PACKAGE
-AC_SUBST(GETTEXT_PACKAGE)
-
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 
@@ -478,11 +474,7 @@ AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of this program's package])
 AM_GNU_GETTEXT
 AM_GNU_GETTEXT_VERSION([%INSTALLED_GETTEXT_VERSION%])
 
-#GETTEXT_PACKAGE=$PACKAGE
-#AC_SUBST(GETTEXT_PACKAGE)
-#AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"],
-#                   [The domain to use with gettext])
-#AM_GLIB_GNU_GETTEXT
+AX_DESKTOP_I18N
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
 GSCHEM_CFLAGS="$MINGW_CFLAGS $LIBSTROKE_CFLAGS $LIBGEDA_CFLAGS $GLIB_CFLAGS $GTK_CFLAGS $GTHREAD_CFLAGS $GUILE_CFLAGS"

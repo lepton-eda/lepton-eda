@@ -17,12 +17,6 @@ install-sh
 missing
 mkinstalldirs
 ABOUT-NLS
-intltool-extract.in
-intltool-merge.in
-intltool-update.in
-intltool-extract
-intltool-merge
-intltool-update
 *~
 *#
 TAGS
@@ -32,4 +26,4 @@ GSYMS
 GTAGS
 HTML
 gschem.log
-m4
+.desktop-i18n
