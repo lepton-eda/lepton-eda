@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: de_DE\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-28 14:51-0400\n"
+"Report-Msgid-Bugs-To: geda-bug@seul.org\n"
+"POT-Creation-Date: 2009-06-18 11:24+0100\n"
 "PO-Revision-Date: 2008-12-20 14:37+0000\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -16,10 +16,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../data/geda-gattrib.desktop.in.h:1
-msgid "Manipulate component attributes with gattrib"
-msgstr "Editieren von Bauteilattributen mit gattrib"
-
-#: ../data/geda-gattrib.desktop.in.h:2
+#: data/geda-gattrib.desktop.in.h:3
 msgid "gEDA Attribute Editor"
 msgstr "gEDA Attributeditor"
+
+#: data/geda-gattrib.desktop.in.h:4
+msgid "Manipulate component attributes with gattrib"
+msgstr "Editieren von Bauteilattributen mit gattrib"

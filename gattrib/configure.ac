@@ -37,7 +37,6 @@ AC_PROG_CC
 AM_CONDITIONAL(CCISGCC, test "$GCC" = "yes")	
 AC_PROG_MAKE_SET
 AC_PATH_PROGS(AWK, nawk gawk mawk awk, )
-IT_PROG_INTLTOOL(0.35.0)
 
 ############################################################################
 # Update desktop database utility start
@@ -62,16 +61,10 @@ fi
 # Update desktop database utility end
 ############################################################################
 
-# Set USE_NLS
+# Set up internationalisation
 AM_NLS
-
-# Set package name for translations
-GETTEXT_PACKAGE=$PACKAGE
-AC_SUBST(GETTEXT_PACKAGE)
-
-# Check pre-requsites for the PO dir.
-# (Needed without explicitly initialising gettext)
-AM_PO_SUBDIRS
+AM_GNU_GETTEXT_VERSION([0.16])
+AX_DESKTOP_I18N
 
 #########################################################################
 # 

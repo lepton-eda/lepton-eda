@@ -16,10 +16,6 @@ install-sh
 missing
 mkinstalldirs
 ABOUT-NLS
-intltool-extract
-intltool-extract.in
-intltool-merge
-intltool-merge.in
-intltool-update
-intltool-update.in
+intl
+.desktop-i18n
 *~
