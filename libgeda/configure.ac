@@ -13,7 +13,6 @@ echo Configuring $PACKAGE version $DOTTED_VERSION.$DATE_VERSION
 # Init automake
 AM_INIT_AUTOMAKE($PACKAGE, $DOTTED_VERSION, no-define)
 AC_CONFIG_HEADER([config.h])
-AC_SUBST([CONFIG_DEPENDENCIES], ['$(top_srcdir)/configure.ac.in'])
 
 # Call this to make autoconf and friends happy
 AC_GNU_SOURCE
@@ -87,7 +86,7 @@ AC_SUBST(GETTEXT_PACKAGE)
 # Initialise gettext
 AC_GEDA_MACRO_CHECK([AM_GNU_GETTEXT], [gettext.m4])
 AM_GNU_GETTEXT
-AM_GNU_GETTEXT_VERSION([%INSTALLED_GETTEXT_VERSION%])
+AM_GNU_GETTEXT_VERSION([0.16])
 
 # Setup desktop-i18n
 AX_DESKTOP_I18N
