@@ -26,8 +26,6 @@
 
 #include <stdio.h>
 
-#include <libgen.h>
-
 #include "libgeda_priv.h"
 
 #ifdef HAVE_LIBDMALLOC

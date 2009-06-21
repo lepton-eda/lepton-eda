@@ -30,11 +30,6 @@
 #endif
 #include <math.h>
 
-/* for basename(3) */
-#ifdef HAVE_LIBGEN_H
-#include <libgen.h>
-#endif
-
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgeda_priv.h"
