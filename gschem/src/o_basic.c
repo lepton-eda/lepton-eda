@@ -583,8 +583,8 @@ void o_invalidate_glist (GSCHEM_TOPLEVEL *w_current, GList *list)
  *  OBJECT's natural colour, as appropriate. If toplevel->override_color
  *  is set, that takes precedence.
  *
- *  The complex_parent field of the OBEJCT structure is used to recurse
- *  down and check whether the OBEJCT being drawn is a prim_obj belonging
+ *  The parent field of the OBJECT structure is used to recurse down
+ *  and check whether the OBJECT being drawn is a prim_obj belonging
  *  to some selected OBJECT. If so, SELECT_COLOR is used.
  *
  *  As a convenience, the appropriate color index is looked up using
@@ -605,7 +605,7 @@ COLOR *o_drawing_color (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
     color_idx = SELECT_COLOR;
 
   /* Check if the object, or its parent(s) are selected */
-  for (temp = object; temp != NULL; temp = temp->complex_parent) {
+  for (temp = object; temp != NULL; temp = temp->parent) {
     if (temp->selected) {
       color_idx = SELECT_COLOR;
       break;
