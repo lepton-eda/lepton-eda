@@ -798,7 +798,7 @@ GList *o_text_create_string (TOPLEVEL *toplevel, char *string, int size,
                                           o_font_set->font_prim_objs,
                                           NULL, NORMAL_FLAG);
 
-        o_complex_set_color(start_of_char, color);
+        o_glist_set_color (toplevel, start_of_char, color);
         o_scale(toplevel, start_of_char, size/2, size/2);
 
         /* Rotate and translate the character to its world position */

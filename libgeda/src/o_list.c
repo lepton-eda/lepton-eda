@@ -287,3 +287,21 @@ void o_glist_mirror_world (TOPLEVEL *toplevel, int x, int y, const GList *list)
     iter = g_list_next (iter);
   }
 }
+
+
+/*! \brief Change the color of a list of objects
+ *
+ *  \par Function Description
+ *  This function changes the the new color of a list of objects
+ *
+ *  \param [in] toplevel  The TOPLEVEL structure.
+ *  \param [in] list      The list of OBJECTs to change color.
+ *  \param [in] color     The new color.
+ */
+void o_glist_set_color (TOPLEVEL *toplevel, const GList *list, int color)
+{
+  const GList *iter;
+
+  for (iter = list; iter != NULL; iter = g_list_next (iter))
+    o_set_color (toplevel, iter->data, color);
+}

@@ -58,24 +58,6 @@
 #define DELIMITERS ",; "
 
 
-/*! \brief Set attribute color
- *  \par Function Description
- *  This function sets an attribute object to the given color.
- *
- *  \param [in]     toplevel  The TOPLEVEL object.
- *  \param [in,out] attrib    The attribute OBJECT to set the colors of.
- *  \param [in]     color     The color to set.
- *
- */
-static void o_attrib_set_color(TOPLEVEL *toplevel, OBJECT *attrib, int color)
-{
-  g_return_if_fail (attrib->type == OBJ_TEXT);
-
-  o_complex_set_color (attrib->text->prim_objs, color);
-  attrib->color = color;
-}
-
-
 /*! \brief Add an attribute to an existing attribute list.
  *  \par Function Description
  *  Add an attribute to an existing attribute list.
@@ -151,7 +133,7 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object,
   o_attrib_add (toplevel, object, attrib);
 
   if (set_color)
-    o_attrib_set_color (toplevel, attrib, ATTRIBUTE_COLOR);
+    o_set_color (toplevel, attrib, ATTRIBUTE_COLOR);
 
   /* can't do this here since just selecting something */
   /* will cause this to be set */
@@ -195,7 +177,7 @@ void o_attrib_detach_all(TOPLEVEL *toplevel, OBJECT *object)
     a_current = a_iter->data;
 
     a_current->attached_to = NULL;
-    o_attrib_set_color (toplevel, a_current, DETACHED_ATTRIBUTE_COLOR);
+    o_set_color (toplevel, a_current, DETACHED_ATTRIBUTE_COLOR);
   }
 
   g_list_free (object->attribs);
