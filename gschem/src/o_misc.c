@@ -733,7 +733,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
        po_iter != NULL;
        po_iter = g_list_next (po_iter)) {
     OBJECT *tmp = po_iter->data;
-    tmp->complex_parent = o_current;
+    tmp->parent = o_current;
   }
 
   /*   - reset the new complex prim_objs */

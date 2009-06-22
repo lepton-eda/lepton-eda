@@ -259,8 +259,7 @@ struct st_object {
 
   gboolean complex_embedded;                    /* is embedded component? */
   gchar *complex_basename;              /* Component Library Symbol name */
-  OBJECT *complex_parent;		/* Complex parent object pointer */
-  /* used only in complex head nodes */
+  OBJECT *parent;                       /* Parent object pointer */
 
   /* unused for now */
   void (*action_func)();			/* Execute function */

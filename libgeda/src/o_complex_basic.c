@@ -294,7 +294,7 @@ static GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int 
       continue;
 
     if (detach) {
-      tmp->complex_parent = NULL;
+      tmp->parent = NULL;
       object->complex->prim_objs =
         g_list_remove (object->complex->prim_objs, tmp);
     }
@@ -536,7 +536,7 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
   /* set the parent field now */
   for (iter = prim_objs; iter != NULL; iter = g_list_next (iter)) {
     OBJECT *tmp = iter->data;
-    tmp->complex_parent = new_node;
+    tmp->parent = new_node;
   }
 
   o_complex_recalc(toplevel, new_node);
@@ -855,7 +855,7 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *o_current)
   /* set the parent field now */
   for (iter = new_obj->complex->prim_objs; iter != NULL; iter = g_list_next (iter)) {
     OBJECT *tmp = iter->data;
-    tmp->complex_parent = new_obj;
+    tmp->parent = new_obj;
   }
 
   o_complex_recalc(toplevel, new_obj);

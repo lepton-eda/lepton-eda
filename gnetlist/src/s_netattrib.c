@@ -316,7 +316,7 @@ char *s_netattrib_return_netname(TOPLEVEL * pr_current, OBJECT * o_current,
 #endif
 
     /* use hierarchy tag here to make this net uniq */
-    temp_netname = s_netattrib_net_search(o_current->complex_parent,
+    temp_netname = s_netattrib_net_search(o_current->parent,
                                           current_pin);
 
     netname =
