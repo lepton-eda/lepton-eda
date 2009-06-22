@@ -973,6 +973,7 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
   TEXT *text;
   char *name = NULL;
   char *value = NULL;
+  GList *iter;
 
   if (string == NULL) {
     return(NULL);
@@ -1009,7 +1010,12 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
     new_node->text->prim_objs =
       o_text_create_string (toplevel,
                            text->disp_string, size, color,
-                           x, y, alignment, angle); 
+                           x, y, alignment, angle);
+    /* set the parent field */
+    for (iter = new_node->text->prim_objs;
+         iter != NULL; iter = g_list_next (iter))
+      ((OBJECT *)iter->data)->parent = new_node;
+
     new_node->text->displayed_width = o_text_width(toplevel,
                                                    text->disp_string, size/2);
     new_node->text->displayed_height = o_text_height(text->disp_string, size);
@@ -1330,6 +1336,7 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
   char *name = NULL;
   char *value = NULL;
   TEXT *text = o_current->text;
+  GList *iter;
 
   update_disp_string (o_current);
 
@@ -1347,6 +1354,10 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
                                             text->y,
                                             text->alignment,
                                             text->angle);
+    /* set the parent field */
+    for (iter = text->prim_objs;
+         iter != NULL; iter = g_list_next (iter))
+      ((OBJECT *)iter->data)->parent = o_current;
 
     o_complex_set_saved_color_only(text->prim_objs,
                                    o_current->saved_color);
