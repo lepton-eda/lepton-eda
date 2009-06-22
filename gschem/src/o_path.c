@@ -300,20 +300,12 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   int angle1, pitch1, angle2, pitch2;
   FILL_FUNC fill_func;
 
-  COLOR *color;
-
   if (path == NULL) {
     return;
   }
 
   if (toplevel->DONT_REDRAW == 1)
     return;
-
-  if (toplevel->override_color != -1 ) {
-    color = x_color_lookup (toplevel->override_color);
-  } else {
-    color = x_color_lookup (o_current->color);
-  }
 
   angle1 = o_current->fill_angle1;
   pitch1 = o_current->fill_pitch1;
@@ -360,12 +352,15 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     fill_func = o_path_fill_fill;
   }
 
-  (*fill_func) (w_current->drawable, w_current->gc, color,
-                w_current, path, o_current->fill_width, angle1, pitch1, angle2, pitch2);
+  (*fill_func) (w_current->drawable, w_current->gc,
+                o_drawing_color (w_current, o_current),
+                w_current, path, o_current->fill_width,
+                angle1, pitch1, angle2, pitch2);
 
   path_path (w_current, o_current);
 
-  gschem_cairo_set_source_color (w_current, color);
+  gschem_cairo_set_source_color (w_current,
+                                 o_drawing_color (w_current, o_current));
 
   if (o_current->fill_type == FILLING_FILL)
     cairo_fill_preserve (w_current->cr);
@@ -457,7 +452,6 @@ void o_path_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 void o_path_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
   OBJECT object;
-  int color;
 
   g_return_if_fail (o_current->path != NULL);
 
@@ -465,17 +459,12 @@ void o_path_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
   object.line_width = 0; /* clamped to 1 pixel in circle_path */
   object.path = path_copy_modify (o_current->path, dx, dy, 0, 0, -1);
 
-  if (o_current->saved_color != -1) {
-    color = o_current->saved_color;
-  } else {
-    color = o_current->color;
-  }
-
   path_path (w_current, &object);
   g_free (object.path->sections);
   g_free (object.path);
 
-  gschem_cairo_set_source_color (w_current, x_color_lookup_dark (color));
+  gschem_cairo_set_source_color (w_current,
+                                 x_color_lookup_dark (o_current->color));
   gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 

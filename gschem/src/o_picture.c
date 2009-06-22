@@ -419,16 +419,8 @@ void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  */
 void o_picture_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
-  int color;
-
   if (o_current->picture == NULL) {
     return;
-  }
-
-  if (o_current->saved_color != -1) {
-    color = o_current->saved_color;
-  } else {
-    color = o_current->color;
   }
 
   gschem_cairo_box (w_current, 0, o_current->picture->upper_x + dx,
@@ -436,7 +428,8 @@ void o_picture_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o
                                   o_current->picture->lower_x + dx,
                                   o_current->picture->lower_y + dy);
 
-  gschem_cairo_set_source_color (w_current, x_color_lookup_dark (color));
+  gschem_cairo_set_source_color (w_current,
+                                 x_color_lookup_dark (o_current->color));
   gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 

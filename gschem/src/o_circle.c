@@ -51,7 +51,6 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int angle1, pitch1, angle2, pitch2;
-  COLOR *color;
   FILL_FUNC fill_func;
 
   if (o_current->circle == NULL) {
@@ -71,12 +70,6 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
    *
    * Finally the function takes care of the grips.
    */
-  if (toplevel->override_color != -1 ) {
-    color = x_color_lookup (toplevel->override_color);
-  } else {
-    color = x_color_lookup (o_current->color);
-  }
-
 
   /*
    * The values needed for the fill operation are taken from the
@@ -146,7 +139,8 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   (*fill_func) (w_current->drawable, w_current->gc,
-                color, w_current, o_current->circle,
+                o_drawing_color (w_current, o_current),
+                w_current, o_current->circle,
                 o_current->fill_width, angle1, pitch1, angle2, pitch2);
 
   gschem_cairo_arc (w_current, o_current->line_width,
@@ -154,7 +148,8 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                                o_current->circle->center_y,
                                o_current->circle->radius, 0, 360);
 
-  gschem_cairo_set_source_color (w_current, color);
+  gschem_cairo_set_source_color (w_current,
+                                 o_drawing_color (w_current, o_current));
   if (o_current->fill_type == FILLING_FILL)
     cairo_fill_preserve (w_current->cr);
   gschem_cairo_stroke (w_current, o_current->line_type,
@@ -368,21 +363,14 @@ void o_circle_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_circle_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
-  int color;
-
   g_return_if_fail (o_current->circle != NULL);
-
-  if (o_current->saved_color != -1) {
-    color = o_current->saved_color;
-  } else {
-    color = o_current->color;
-  }
 
   gschem_cairo_arc (w_current, 0, o_current->circle->center_x + dx,
                                   o_current->circle->center_y + dy,
                                   o_current->circle->radius, 0, 360);
 
-  gschem_cairo_set_source_color (w_current, x_color_lookup_dark (color));
+  gschem_cairo_set_source_color (w_current,
+                                 x_color_lookup_dark (o_current->color));
   gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 

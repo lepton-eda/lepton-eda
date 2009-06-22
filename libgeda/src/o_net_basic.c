@@ -198,7 +198,6 @@ OBJECT *o_net_read (TOPLEVEL *toplevel, char buf[],
 char *o_net_save(OBJECT *object)
 {
   int x1, x2, y1, y2;
-  int color;
   char *buf;
 
   x1 = object->line->x[0];
@@ -206,14 +205,7 @@ char *o_net_save(OBJECT *object)
   x2 = object->line->x[1];
   y2 = object->line->y[1];
 
-  /* Use the right color */
-  if (object->saved_color == -1) {
-    color = object->color;
-  } else {
-    color = object->saved_color;
-  }
-
-  buf = g_strdup_printf("%c %d %d %d %d %d", object->type, x1, y1, x2, y2, color);
+  buf = g_strdup_printf("%c %d %d %d %d %d", object->type, x1, y1, x2, y2, object->color);
   return (buf);
 }
 
@@ -256,19 +248,12 @@ void o_net_translate_world(TOPLEVEL *toplevel, int dx, int dy,
 OBJECT *o_net_copy(TOPLEVEL *toplevel,  OBJECT *o_current)
 {
   OBJECT *new_obj;
-  int color;
-
-  if (o_current->saved_color == -1) {
-    color = o_current->color;
-  } else {
-    color = o_current->saved_color;
-  }
 
   /* make sure you fix this in pin and bus as well */
   /* still doesn't work... you need to pass in the new values */
   /* or don't update and update later */
   /* I think for now I'll disable the update and manually update */
-  new_obj = o_net_new (toplevel, OBJ_NET, color,
+  new_obj = o_net_new (toplevel, OBJ_NET, o_current->color,
                        o_current->line->x[0], o_current->line->y[0],
                        o_current->line->x[1], o_current->line->y[1]);
 

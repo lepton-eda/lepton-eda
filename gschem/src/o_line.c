@@ -45,7 +45,6 @@ void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
-  COLOR *color;
 
   if (o_current->line == NULL) {
     return;
@@ -56,17 +55,12 @@ void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  if (toplevel->override_color != -1)
-    color = x_color_lookup (toplevel->override_color);
-  else
-    color = x_color_lookup (o_current->color);
-
-
   gschem_cairo_line (w_current, o_current->line_end,
                                 o_current->line_width,
                                 x1, y1, x2, y2);
 
-  gschem_cairo_set_source_color (w_current, color);
+  gschem_cairo_set_source_color (w_current,
+                                 o_drawing_color (w_current, o_current));
   gschem_cairo_stroke (w_current, o_current->line_type,
                                   o_current->line_end,
                                   o_current->line_width,
@@ -106,22 +100,15 @@ void o_line_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_line_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
 {
-  int color;
-
   if (o_current->line == NULL) {
     return;
-  }
-
-  if (o_current->saved_color != -1) {
-    color = o_current->saved_color;
-  } else {
-    color = o_current->color;
   }
 
   gschem_cairo_line (w_current, END_NONE, 0,
                      o_current->line->x[0] + dx, o_current->line->y[0] + dy,
                      o_current->line->x[1] + dx, o_current->line->y[1] + dy);
-  gschem_cairo_set_source_color (w_current, x_color_lookup_dark (color));
+  gschem_cairo_set_source_color (w_current,
+                                 x_color_lookup_dark (o_current->color));
   gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 

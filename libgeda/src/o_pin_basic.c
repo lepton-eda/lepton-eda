@@ -216,7 +216,6 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, char buf[],
 char *o_pin_save(OBJECT *object)
 {
   int x1, x2, y1, y2;
-  int color;
   int pin_type, whichend;
   char *buf;
   
@@ -224,19 +223,12 @@ char *o_pin_save(OBJECT *object)
   y1 = object->line->y[0];
   x2 = object->line->x[1];
   y2 = object->line->y[1];
-  
-  /* Use the right color */
-  if (object->saved_color == -1) {
-    color = object->color;
-  } else {
-    color = object->saved_color;
-  }
 
   pin_type = object->pin_type;
   whichend = object->whichend;
   
   buf = g_strdup_printf("%c %d %d %d %d %d %d %d", object->type,
-		   x1, y1, x2, y2, color, pin_type, whichend);
+		   x1, y1, x2, y2, object->color, pin_type, whichend);
   return(buf);
 }
 
@@ -277,15 +269,8 @@ void o_pin_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
 OBJECT *o_pin_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
-  int color;
 
-  if (o_current->saved_color == -1) {
-    color = o_current->color;
-  } else {
-    color = o_current->saved_color;
-  }
-
-  new_obj = o_pin_new (toplevel, OBJ_PIN, color,
+  new_obj = o_pin_new (toplevel, OBJ_PIN, o_current->color,
                        o_current->line->x[0], o_current->line->y[0],
                        o_current->line->x[1], o_current->line->y[1],
                        o_current->pin_type, o_current->whichend);

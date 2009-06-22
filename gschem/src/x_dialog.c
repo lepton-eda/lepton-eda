@@ -2511,7 +2511,7 @@ create_color_menu (GSCHEM_TOPLEVEL *w_current)
 
   obj = o_select_return_first_object (w_current);
   if (obj != NULL)
-    w_current->edit_color = obj->saved_color;
+    w_current->edit_color = obj->color;
 
   /* The columns are: name of color, index of color. */
   store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
@@ -2573,27 +2573,8 @@ void color_edit_dialog_apply(GtkWidget *w, GSCHEM_TOPLEVEL *w_current)
       exit(-1);
     }
 
-    switch(object->type) {
-      case(OBJ_LINE):
-      case(OBJ_BOX):
-      case(OBJ_CIRCLE):
-      case(OBJ_NET):
-      case(OBJ_BUS):
-      case(OBJ_PIN):
-      case(OBJ_PATH):
-      case(OBJ_ARC):
-        object->saved_color = w_current->edit_color;
-        w_current->toplevel->page_current->CHANGED = 1;
-        break;
-
-      case(OBJ_TEXT):
-        object->saved_color = w_current->edit_color;
-        o_complex_set_saved_color_only(
-                                       object->text->prim_objs,
-                                       w_current->edit_color);
-        w_current->toplevel->page_current->CHANGED = 1;
-        break;
-    }
+    o_complex_set_color_single (object, w_current->edit_color);
+    w_current->toplevel->page_current->CHANGED = 1;
 
     s_current = g_list_next(s_current);
   }

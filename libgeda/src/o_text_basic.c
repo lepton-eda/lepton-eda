@@ -1293,7 +1293,6 @@ void o_text_set_info_font(char buf[])
 char *o_text_save(OBJECT *object)
 {
   int x, y;
-  int color;
   int size;
   char *string;
   char *buf;
@@ -1305,20 +1304,13 @@ char *o_text_save(OBJECT *object)
   string = object->text->string;
   size = object->text->size;
 
-  /* Use the right color */
-  if (object->saved_color == -1) {
-    color = object->color;
-  } else {
-    color = object->saved_color;
-  }
-
   /* string can have multiple lines (seperated by \n's) */
   num_lines = o_text_num_lines(string);
 
-  buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d\n%s", object->type,
-                        x, y, color, size, object->visibility, 
-			object->show_name_value, object->text->angle, 
-			object->text->alignment, num_lines, string);
+  buf = g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d\n%s", object->type,
+                         x, y, object->color, size, object->visibility,
+                         object->show_name_value, object->text->angle,
+                         object->text->alignment, num_lines, string);
 
   return(buf);
 }
@@ -1359,8 +1351,6 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
          iter != NULL; iter = g_list_next (iter))
       ((OBJECT *)iter->data)->parent = o_current;
 
-    o_complex_set_saved_color_only(text->prim_objs,
-                                   o_current->saved_color);
     text->displayed_width = o_text_width (toplevel,
                                           text->disp_string,
                                           text->size/2);
@@ -1412,15 +1402,8 @@ void o_text_translate_world(TOPLEVEL *toplevel,
 OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
-  int color;
 
-  if (o_current->saved_color == -1) {
-    color = o_current->color;
-  } else {
-    color = o_current->saved_color;
-  }
-
-  new_obj = o_text_new (toplevel, OBJ_TEXT, color,
+  new_obj = o_text_new (toplevel, OBJ_TEXT, o_current->color,
                         o_current->text->x, o_current->text->y,
                         o_current->text->alignment,
                         o_current->text->angle,

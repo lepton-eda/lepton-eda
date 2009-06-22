@@ -71,13 +71,8 @@ static void o_attrib_set_color(TOPLEVEL *toplevel, OBJECT *attrib, int color)
 {
   g_return_if_fail (attrib->type == OBJ_TEXT);
 
-  if (attrib->saved_color == -1) {
-    o_complex_set_color (attrib->text->prim_objs, color);
-    attrib->color = color;
-  } else {
-    o_complex_set_saved_color_only (attrib->text->prim_objs, color);
-    attrib->saved_color = color;
-  }
+  o_complex_set_color (attrib->text->prim_objs, color);
+  attrib->color = color;
 }
 
 

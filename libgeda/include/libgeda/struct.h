@@ -268,7 +268,6 @@ struct st_object {
   void (*draw_func)();			/* Draw function */
 
   int color; 				/* Which color */
-  int saved_color; 			/* Saved color */
   int dont_redraw;			/* Flag to skip redrawing */
   int selected;				/* object selected flag */
   int locked_color; 			/* Locked color (used to save */

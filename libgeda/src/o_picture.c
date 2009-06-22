@@ -682,11 +682,7 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
   picture = g_malloc(sizeof(PICTURE));
   new_node->picture = picture;
 
-  if (object->saved_color == -1) {
-    new_node->color = object->color;
-  } else {
-    new_node->color = object->saved_color;
-  }
+  new_node->color = object->color;
 
   /* describe the picture with its upper left and lower right corner */
   picture->upper_x = object->picture->upper_x;

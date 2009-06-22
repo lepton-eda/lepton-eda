@@ -172,10 +172,6 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current);
 OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *o_current);
 void o_complex_set_color(GList *prim_objs, int color);
 void o_complex_set_color_single(OBJECT *o_current, int color);
-void o_complex_set_color_save(GList *list, int color);
-void o_complex_unset_color(GList *list);
-void o_complex_unset_color_single(OBJECT *o_current);
-void o_complex_set_saved_color_only(GList *list, int color);
 void o_complex_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_complex_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 OBJECT *o_complex_find_pin_by_attribute(OBJECT *object, char *name, char *wanted_value);
@@ -254,8 +250,8 @@ SELECTION *o_selection_new( void );
 void o_selection_add(TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected);
 void o_selection_print_all(const SELECTION *selection);
 void o_selection_remove(TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected);
-void o_selection_select(TOPLEVEL *toplevel, OBJECT *object, int color); /* DEPRECATED */
-void o_selection_unselect(TOPLEVEL *toplevel, OBJECT *object);          /* DEPRECATED */
+void o_selection_select(TOPLEVEL *toplevel, OBJECT *object);   /* DEPRECATED */
+void o_selection_unselect(TOPLEVEL *toplevel, OBJECT *object); /* DEPRECATED */
 
 /* o_text_basic.c */
 void o_text_init(void);

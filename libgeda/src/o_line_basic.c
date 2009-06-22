@@ -109,17 +109,10 @@ OBJECT *o_line_new(TOPLEVEL *toplevel,
 OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
-  int color;
-
-  if (o_current->saved_color == -1) {
-    color = o_current->color;
-  } else {
-    color = o_current->saved_color;
-  }
 
   /* A new line object is created with #o_line_new().
    * Values for its fields are default and need to be modified. */
-  new_obj = o_line_new (toplevel, OBJ_LINE, color,
+  new_obj = o_line_new (toplevel, OBJ_LINE, o_current->color,
                         o_current->line->x[0], o_current->line->y[0],
                         o_current->line->x[1], o_current->line->y[1]);
 
@@ -306,7 +299,6 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, char buf[],
 char *o_line_save(OBJECT *object)
 {
   int x1, x2, y1, y2;
-  int color;
   int line_width, line_space, line_length;
   char *buf;
   OBJECT_END line_end;
@@ -325,15 +317,8 @@ char *o_line_save(OBJECT *object)
   line_length= object->line_length;
   line_space = object->line_space;
   
-  /* Use the right color */
-  if (object->saved_color == -1) {
-    color = object->color;
-  } else {
-    color = object->saved_color;
-  }
-  
   buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d", object->type,
-			x1, y1, x2, y2, color,
+			x1, y1, x2, y2, object->color,
 			line_width, line_end, line_type,
 			line_length, line_space);
 

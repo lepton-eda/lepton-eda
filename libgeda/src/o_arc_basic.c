@@ -133,15 +133,8 @@ OBJECT *o_arc_new(TOPLEVEL *toplevel,
 OBJECT *o_arc_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
-  int color;
 
-  if (o_current->saved_color == -1) {
-    color = o_current->color;
-  } else {
-    color = o_current->saved_color;
-  }
-
-  new_obj = o_arc_new (toplevel, OBJ_ARC, color,
+  new_obj = o_arc_new (toplevel, OBJ_ARC, o_current->color,
                        o_current->arc->x, o_current->arc->y,
                        o_current->arc->width / 2,
                        o_current->arc->start_angle,
@@ -314,7 +307,6 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, char buf[],
  */
 char *o_arc_save(OBJECT *object)
 {
-  int color;
   int x, y, radius, start_angle, end_angle;
   int arc_width, arc_length, arc_space;
   char *buf;
@@ -335,16 +327,9 @@ char *o_arc_save(OBJECT *object)
   arc_length = object->line_length;
   arc_space  = object->line_space;
 
-  /* Save the right color */
-  if (object->saved_color == -1) {
-    color = object->color;
-  } else {
-    color = object->saved_color;
-  }
-
   /* Describe a circle with post-20000704 file format */
   buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d", object->type,
-			x, y, radius, start_angle, end_angle, color,
+			x, y, radius, start_angle, end_angle, object->color,
 			arc_width, arc_end, arc_type, arc_length, arc_space);
 
   return(buf);

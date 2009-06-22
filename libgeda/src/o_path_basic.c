@@ -116,16 +116,9 @@ OBJECT *o_path_copy (TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
   char *path_string;
-  int color;
-
-  if (o_current->saved_color == -1) {
-    color = o_current->color;
-  } else {
-    color = o_current->saved_color;
-  }
 
   path_string = s_path_string_from_path (o_current->path);
-  new_obj = o_path_new (toplevel, OBJ_PATH, color, path_string);
+  new_obj = o_path_new (toplevel, OBJ_PATH, o_current->color, path_string);
   g_free (path_string);
 
   /* copy the path type and filling options */
@@ -251,7 +244,6 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
  */
 char *o_path_save (OBJECT *object)
 {
-  int color;
   int line_width, line_space, line_length;
   char *buf;
   int num_lines;
@@ -276,17 +268,10 @@ char *o_path_save (OBJECT *object)
   angle2       = object->fill_angle2;
   pitch2       = object->fill_pitch2;
 
-  /* Use the right color */
-  if (object->saved_color == -1) {
-    color = object->color;
-  } else {
-    color = object->saved_color;
-  }
-
   path_string = s_path_string_from_path (object->path);
   num_lines = o_text_num_lines (path_string);
   buf = g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d %d %d %d %d\n%s",
-                         object->type, color, line_width, line_end,
+                         object->type, object->color, line_width, line_end,
                          line_type, line_length, line_space, fill_type,
                          fill_width, angle1, pitch1, angle2, pitch2,
                          num_lines, path_string);
