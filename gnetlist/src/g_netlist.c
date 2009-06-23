@@ -486,8 +486,8 @@ SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
     SCM_ASSERT(scm_is_string (scm_wanted_attrib),
 	       scm_wanted_attrib, SCM_ARG2, "gnetlist:get-package-attribute");
 
-    uref          = SCM_STRING_CHARS (scm_uref);
-    wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
+    uref          = scm_to_locale_string (scm_uref);
+    wanted_attrib = scm_to_locale_string (scm_wanted_attrib);
 
     /* here is where you make it multi page aware */
     nl_current = netlist_head;
@@ -513,6 +513,9 @@ SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
     } else {
       scm_return_value = scm_makfrom0str ("unknown");
     }
+
+    free (uref);
+    free (wanted_attrib);
 
     return (scm_return_value);
 }
