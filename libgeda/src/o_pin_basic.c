@@ -421,8 +421,8 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
 {
   OBJECT *o_current;
   GList *iter;
-  int top, left;
-  int right, bottom;
+  int top = 0, left = 0;
+  int right = 0, bottom = 0;
   int d1, d2, d3, d4;
   int min0, min1;
   int min0_whichend, min1_whichend;
