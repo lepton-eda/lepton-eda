@@ -562,3 +562,27 @@ void o_bounds_invalidate(TOPLEVEL *toplevel, OBJECT *obj)
 {
   obj->w_bounds_valid = FALSE;
 }
+
+
+/*! \brief Change the color of an object
+ *
+ *  \par Function Description
+ *  This function changes the color of an object.
+ *
+ *  \param [in] toplevel  The TOPLEVEL structure.
+ *  \param [in] object    The OBJECT to change color.
+ *  \param [in] color     The new color.
+ */
+void o_set_color (TOPLEVEL *toplevel, OBJECT *object, int color)
+{
+  g_return_if_fail (object != NULL);
+
+  object->color = color;
+
+  if (object->type == OBJ_TEXT)
+    o_glist_set_color (toplevel, object->text->prim_objs, color);
+
+  if (object->type == OBJ_COMPLEX ||
+      object->type == OBJ_PLACEHOLDER)
+    o_glist_set_color (toplevel, object->complex->prim_objs, color);
+}

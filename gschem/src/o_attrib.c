@@ -62,7 +62,7 @@ void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection,
     a_current = a_iter->data;
 
     /* make sure object isn't selected already */
-    if (a_current->saved_color == -1) {
+    if (!a_current->selected) {
       o_selection_add (w_current->toplevel, selection, a_current);
       o_invalidate (w_current, a_current);
     }

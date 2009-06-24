@@ -259,8 +259,7 @@ struct st_object {
 
   gboolean complex_embedded;                    /* is embedded component? */
   gchar *complex_basename;              /* Component Library Symbol name */
-  OBJECT *complex_parent;		/* Complex parent object pointer */
-  /* used only in complex head nodes */
+  OBJECT *parent;                       /* Parent object pointer */
 
   /* unused for now */
   void (*action_func)();			/* Execute function */
@@ -269,7 +268,6 @@ struct st_object {
   void (*draw_func)();			/* Draw function */
 
   int color; 				/* Which color */
-  int saved_color; 			/* Saved color */
   int dont_redraw;			/* Flag to skip redrawing */
   int selected;				/* object selected flag */
   int locked_color; 			/* Locked color (used to save */

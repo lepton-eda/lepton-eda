@@ -103,11 +103,10 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
   new_node->conn_list = NULL;
 
   new_node->complex_basename = NULL;
-  new_node->complex_parent = NULL;
+  new_node->parent = NULL;
 		
   /* Setup the color */
   new_node->color = DEFAULT_COLOR;
-  new_node->saved_color = -1;
   new_node->selected = FALSE;
   new_node->dont_redraw = FALSE;
   new_node->locked_color = -1;

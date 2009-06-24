@@ -30,8 +30,6 @@ xmldir = $(mimedir)/packages
 xml_in_files = libgeda.xml.in
 xml_DATA = $(xml_in_files:.xml.in=.xml)
 
-@INTLTOOL_XML_RULE@
-
 kdedatadir=@KDEDATADIR@
 mimelnkdir = $(kdedatadir)/mimelnk
 applicationdir = $(mimelnkdir)/application
@@ -42,8 +40,6 @@ application_in_files = \
 	x-geda-symbol.desktop.in
 application_DATA = $(application_in_files:.desktop.in=.desktop)
 
-@INTLTOOL_DESKTOP_RULE@
-
 install_icon_exec = \
 	$(SHELL) $(top_srcdir)/icon-theme-installer \
 	-t $(theme) \
@@ -52,6 +48,12 @@ install_icon_exec = \
 	-b $(themedir) \
 	-m "$(mkinstalldirs)" \
 	-x "$(INSTALL_DATA)"
+
+DOMAIN=$(GETTEXT_PACKAGE)
+
+@DESKTOP_I18N_LANGS_RULE@
+@DESKTOP_I18N_DESKTOP_RULE@
+@DESKTOP_I18N_XML_RULE@
 
 install-data-local:
 	$(install_icon_exec) -i $(theme_icons)

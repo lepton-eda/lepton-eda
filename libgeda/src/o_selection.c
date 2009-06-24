@@ -50,7 +50,7 @@ SELECTION *o_selection_new( void )
  */
 void o_selection_add (TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected)
 {
-  o_selection_select (toplevel, o_selected, SELECT_COLOR);
+  o_selection_select (toplevel, o_selected);
   geda_list_add( (GedaList *)selection, o_selected );
 }
 
@@ -106,28 +106,15 @@ void o_selection_print_all(const SELECTION *selection)
  *
  *  \param [in] toplevel  The TOPLEVEL object
  *  \param [in] object    Object to select.
- *  \param [in] color     color of the selected object.
  */
-void o_selection_select(TOPLEVEL *toplevel, OBJECT *object, int color)
+void o_selection_select(TOPLEVEL *toplevel, OBJECT *object)
 {
   if (object->selected == TRUE) {
     printf("object already selected == TRUE\n");
     return;
   }
 
-  if (object->saved_color != -1) {
-    printf("object already saved_color != -1\n");
-    return;
-  }
-
   object->selected = TRUE;
-  object->saved_color = object->color;
-  object->color = color;
-  if (object->type == OBJ_COMPLEX || object->type == OBJ_PLACEHOLDER) { 
-    o_complex_set_color_save(object->complex->prim_objs, color);
-  } else if (object->type == OBJ_TEXT) {
-    o_complex_set_color_save(object->text->prim_objs, color);
-  }
 }
 
 /*! \brief Unselects the given object.
@@ -141,21 +128,5 @@ void o_selection_select(TOPLEVEL *toplevel, OBJECT *object, int color)
 void o_selection_unselect (TOPLEVEL *toplevel, OBJECT *object)
 {
   object->selected = FALSE;
-  object->color = object->saved_color;
-  if (object->type == OBJ_COMPLEX || object->type == OBJ_PLACEHOLDER) { 
-    if (!object->complex) {
-      fprintf(stderr, "o_selection_unselect: Called with NULL object.\n");
-      return;
-    }
-    o_complex_unset_color(object->complex->prim_objs);
-  } else if (object->type == OBJ_TEXT) {
-    if (!object->text) {
-      fprintf(stderr, "o_selection_unselect: Called with NULL object.\n");
-      return;
-    }
-    o_complex_unset_color(object->text->prim_objs);
-  }
-
-  object->saved_color = -1;
 }
 

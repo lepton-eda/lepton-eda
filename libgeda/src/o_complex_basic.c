@@ -294,7 +294,7 @@ static GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int 
       continue;
 
     if (detach) {
-      tmp->complex_parent = NULL;
+      tmp->parent = NULL;
       object->complex->prim_objs =
         g_list_remove (object->complex->prim_objs, tmp);
     }
@@ -390,7 +390,7 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
   int save_adding_sel = 0;
   int loaded_normally = FALSE;
 
-  gchar *buffer;
+  gchar *buffer = NULL;
 
   new_node = s_basic_new_object(type, "complex");
 
@@ -536,7 +536,7 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
   /* set the parent field now */
   for (iter = prim_objs; iter != NULL; iter = g_list_next (iter)) {
     OBJECT *tmp = iter->data;
-    tmp->complex_parent = new_node;
+    tmp->parent = new_node;
   }
 
   o_complex_recalc(toplevel, new_node);
@@ -777,23 +777,16 @@ void o_complex_translate_world(TOPLEVEL *toplevel, int dx, int dy,
 OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj=NULL;
-  int color;
   int selectable;
   const CLibSymbol *clib = NULL;
 
   g_return_val_if_fail(o_current != NULL, NULL);
 
-  if (o_current->saved_color == -1) {
-    color = o_current->color;
-  } else {
-    color = o_current->saved_color;
-  }
-
   selectable = (o_current->sel_func != NULL);
 
   clib = s_clib_get_symbol_by_name (o_current->complex_basename);
 
-  new_obj = o_complex_new (toplevel, o_current->type, color,
+  new_obj = o_complex_new (toplevel, o_current->type, o_current->color,
                            o_current->complex->x, o_current->complex->y,
                            o_current->complex->angle,
                            o_current->complex->mirror,
@@ -826,20 +819,13 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj=NULL;
   GList *iter;
-  int color;
   int selectable;
 
   g_return_val_if_fail(o_current != NULL, NULL);
 
-  if (o_current->saved_color == -1) {
-    color = o_current->color;
-  } else {
-    color = o_current->saved_color;
-  }
-
   selectable = (o_current->sel_func != NULL);
 
-  new_obj = o_complex_new_embedded (toplevel, o_current->type, color,
+  new_obj = o_complex_new_embedded (toplevel, o_current->type, o_current->color,
                                     o_current->complex->x, o_current->complex->y,
                                     o_current->complex->angle,
                                     o_current->complex->mirror,
@@ -855,7 +841,7 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *o_current)
   /* set the parent field now */
   for (iter = new_obj->complex->prim_objs; iter != NULL; iter = g_list_next (iter)) {
     OBJECT *tmp = iter->data;
-    tmp->complex_parent = new_obj;
+    tmp->parent = new_obj;
   }
 
   o_complex_recalc(toplevel, new_obj);
@@ -865,272 +851,6 @@ OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *o_current)
    * fill it with sid's of the attributes */
 
   return new_obj;
-}
-
-/*! \brief Change the color of a object list
- *  \par Function Description
- *  This function changes the the color of a object list
- *
- *  \param [in] prim_objs  The head object
- *  \param [in] color      The new color
- *
- *  \note This function is mainly used to change the color of text objects
- */
-void o_complex_set_color (GList *prim_objs, int color)
-{
-  OBJECT *o_current=NULL;
-  GList *iter;
-
-  iter = prim_objs;
-
-  while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
-    switch(o_current->type) {
-      case(OBJ_LINE):
-      case(OBJ_NET):
-      case(OBJ_BUS):
-      case(OBJ_BOX):
-      case(OBJ_PICTURE):
-      case(OBJ_CIRCLE):
-      case(OBJ_PATH):
-      case(OBJ_PIN):
-      case(OBJ_ARC):
-        o_current->color = color;
-        break;
-
-      case(OBJ_TEXT):
-        o_current->color = color;
-        o_complex_set_color(o_current->text->prim_objs, color);
-        break;
-
-      case(OBJ_COMPLEX):
-      case(OBJ_PLACEHOLDER):
-        o_current->color = color;
-        o_complex_set_color(o_current->complex->prim_objs, color);
-        break;
-
-    }
-    iter = g_list_next (iter);
-  }
-}
-
-/*! \brief Change the color of a complex object
- *  \par Function Description
- *  This function changes the color of a complex object \a o_current.
- *
- *  \param [in] o_current  The OBJECT to change
- *  \param [in] color      The new color
- */
-void o_complex_set_color_single(OBJECT *o_current, int color)
-{
-  g_return_if_fail(o_current != NULL);
-
-  switch(o_current->type) {
-    case(OBJ_LINE):
-    case(OBJ_NET):
-    case(OBJ_BUS):
-    case(OBJ_BOX):
-    case(OBJ_PICTURE):
-    case(OBJ_CIRCLE):
-    case(OBJ_PATH):
-    case(OBJ_PIN):
-    case(OBJ_ARC):
-    o_current->color = color;
-    break;
-
-    case(OBJ_TEXT):
-    o_current->color = color;
-    o_complex_set_color(o_current->text->prim_objs, color);
-    break;
-
-    case(OBJ_COMPLEX):
-    case(OBJ_PLACEHOLDER):
-    o_current->color = color;
-    o_complex_set_color(o_current->complex->prim_objs, 
-                        color);
-    break;
-
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_complex_set_color_save (GList *list, int color)
-{
-  OBJECT *o_current=NULL;
-  GList *iter;
-
-  iter = list;
-
-  while ( iter != NULL ) {
-    o_current = (OBJECT *)iter->data;
-    switch(o_current->type) {
-      case(OBJ_LINE):
-      case(OBJ_NET):
-      case(OBJ_BUS):
-      case(OBJ_BOX):
-      case(OBJ_PICTURE):
-      case(OBJ_CIRCLE):
-      case(OBJ_PATH):
-      case(OBJ_PIN):
-      case(OBJ_ARC):
-        o_current->saved_color = o_current->color;
-        o_current->color = color;
-        break;
-
-      case(OBJ_TEXT):
-        o_current->saved_color = o_current->color;
-        o_current->color = color;
-        o_complex_set_color_save(
-                                 o_current->text->prim_objs, 
-                                 color);
-        break;
-
-      case(OBJ_COMPLEX):
-      case(OBJ_PLACEHOLDER):
-        o_current->saved_color = o_current->color;
-        o_current->color = color;
-        o_complex_set_color_save(o_current->complex->
-                                 prim_objs,
-                                 color);
-        break;
-
-    }
-    iter = g_list_next (iter);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_complex_unset_color (GList *list)
-{
-  OBJECT *o_current=NULL;
-  GList *iter;
-
-  iter = list;
-
-  while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
-    switch(o_current->type) {
-      case(OBJ_LINE):
-      case(OBJ_NET):
-      case(OBJ_BUS):
-      case(OBJ_BOX):
-      case(OBJ_PICTURE):
-      case(OBJ_CIRCLE):
-      case(OBJ_PATH):
-      case(OBJ_PIN):
-      case(OBJ_ARC):
-        o_current->color = o_current->saved_color;
-        o_current->saved_color = -1;
-        break;
-
-      case(OBJ_TEXT):
-        o_current->color = o_current->saved_color;
-        o_current->saved_color = -1;
-        o_complex_unset_color(o_current->text->prim_objs);
-        break;
-
-      case(OBJ_COMPLEX):
-      case(OBJ_PLACEHOLDER):
-        o_current->color = o_current->saved_color;
-        o_current->saved_color = -1;
-        o_complex_unset_color(o_current->complex->
-                              prim_objs);
-
-        break;
-
-    }
-    iter = g_list_next (iter);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_complex_unset_color_single(OBJECT *o_current)
-{
-  g_return_if_fail(o_current != NULL);
-
-  switch(o_current->type) {
-    case(OBJ_LINE):
-    case(OBJ_NET):
-    case(OBJ_BUS):
-    case(OBJ_BOX):
-    case(OBJ_PICTURE):
-    case(OBJ_CIRCLE):
-    case(OBJ_PATH):
-    case(OBJ_PIN):
-    case(OBJ_ARC):
-    o_current->color = o_current->saved_color;
-    o_current->saved_color = -1;
-    break;
-
-    case(OBJ_TEXT):
-    o_current->color = o_current->saved_color;
-    o_current->saved_color = -1;
-    o_complex_unset_color(o_current->text->prim_objs);
-    break;
-
-    case(OBJ_COMPLEX):
-    case(OBJ_PLACEHOLDER):
-    o_current->color = o_current->saved_color;
-    o_current->saved_color = -1;
-    o_complex_unset_color(o_current->complex->prim_objs);
-
-    break;
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_complex_set_saved_color_only (GList *list, int color)
-{
-  OBJECT *o_current=NULL;
-  GList *iter;
-
-  iter = list;
-
-  while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
-    switch(o_current->type) {
-      case(OBJ_LINE):
-      case(OBJ_NET):
-      case(OBJ_BUS):
-      case(OBJ_BOX):
-      case(OBJ_PICTURE):
-      case(OBJ_CIRCLE):
-      case(OBJ_PATH):
-      case(OBJ_PIN):
-      case(OBJ_ARC):
-        o_current->saved_color = color;
-        break;
-
-      case(OBJ_TEXT):
-        o_current->saved_color = color;
-        o_complex_set_saved_color_only(o_current->text->prim_objs, color);
-        break;
-
-      case(OBJ_COMPLEX):
-      case(OBJ_PLACEHOLDER):
-        o_current->saved_color = color;
-        o_complex_set_saved_color_only(o_current->complex->prim_objs, color);
-        break;
-
-    }
-    iter = g_list_next (iter);
-  }
 }
 
 

@@ -20,7 +20,10 @@ desktopdir=$(xdgdatadir)/applications
 desktop_in_files = geda-gattrib.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
-@INTLTOOL_DESKTOP_RULE@
+DOMAIN=geda-gattrib
+
+@DESKTOP_I18N_LANGS_RULE@
+@DESKTOP_I18N_DESKTOP_RULE@
 
 install_icon_exec = \
 	$(SHELL) $(top_srcdir)/icon-theme-installer \

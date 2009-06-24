@@ -12,5 +12,6 @@ Rules-quot
 Makevars.template
 stamp-po
 stamp-it
-.intltool-merge-cache
+stamp-i18n
+domain.mak
 *~

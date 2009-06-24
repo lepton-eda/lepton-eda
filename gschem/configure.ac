@@ -1,47 +1,47 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT
-AC_CONFIG_SRCDIR([src/libgeda.c])
+AC_CONFIG_SRCDIR([src/gschem.c])
+AC_CONFIG_MACRO_DIR([m4])
 AC_PREREQ(2.54)
 
-PACKAGE=libgeda
+PACKAGE=geda-gschem
 DOTTED_VERSION=1.5.2
 DATE_VERSION=20090328
-SHARED_LIBRARY_VERSION=36:0:0
 echo Configuring $PACKAGE version $DOTTED_VERSION.$DATE_VERSION
 
-# Init automake
+# Initialize automake 
 AM_INIT_AUTOMAKE($PACKAGE, $DOTTED_VERSION, no-define)
 AC_CONFIG_HEADER([config.h])
-AC_SUBST([CONFIG_DEPENDENCIES], ['$(top_srcdir)/configure.ac.in'])
 
 # Call this to make autoconf and friends happy
 AC_GNU_SOURCE
 
-# Init libtool
-AC_LIBTOOL_WIN32_DLL
-AM_PROG_LIBTOOL
-
 #########################################################################
 # Command line flags start
 # 
+# --disable-stroke : turn off stroke support
+AC_ARG_ENABLE(stroke,
+    [  --disable-stroke       Disable stroke support (don't use LibStroke at all)], [ if test $enableval = "no"; then
+	 no_stroke=yes
+        fi ])
 
 # Change default location for rc files
 AC_ARG_WITH(rcdir, [  --with-rcdir=path       Change where the system-*rc files are installed], [opt_rcdir=$withval])
 
-# Change default location for XDG files (MIME and Icons)
-AC_ARG_WITH(xdgdatadir, [  --with-xdgdatadir=path  Change where the theme icons and mime registrations are installed [[DATADIR]]], [opt_xdgdatadir=$withval])
+# Change default location for XDG files (.desktop and icons)
+AC_ARG_WITH(xdgdatadir, [  --with-xdgdatadir=path  Change where the .desktop file and theme icons are installed [[DATADIR]]], [opt_xdgdatadir=$withval])
 
-# Change default location for KDE data files (KDE MIME registrations)
-AC_ARG_WITH(kdedatadir, [  --with-kdedatadir=path  Change where the KDE mime registrations are installed [[DATADIR]]], [opt_kdedatadir=$withval])
+# Allow the user to specify where there libstroke library lives
+AC_ARG_WITH(stroke, [  --with-stroke=DIR       Tell configure where to find libstroke], [opt_stroke=$withval])
 
 # 
 # Command line flags end
 #########################################################################
 
-# Checks for libraries.
 #########################################################################
 # 
 # Misc win32 / mingw checks and variables start
+AC_CANONICAL_HOST
 
 # Figure out if we are building on win32 and what environment.
 case $host_os in
@@ -49,14 +49,12 @@ case $host_os in
 esac
 
 if ! test "$MINGW" = "no" -o "$MINGW"x = x; then
-   MINGW_LIBTOOL_FLAGS="-no-undefined"
-   MINGW_CFLAGS="-mms-bitfields"
    MINGW="yes"
+   MINGW_CFLAGS="-mms-bitfields -mwindows"
 else
    # Unix host
-   MINGW_LIBTOOL_FLAGS=
-   MINGW_CFLAGS=
    MINGW="no"
+   MINGW_CFLAGS=
 fi
 
 # 
@@ -65,67 +63,53 @@ fi
 
 # Checks for programs.
 AC_PROG_CC
-AM_CONDITIONAL(CCISGCC, test "$GCC" = "yes")
+AM_CONDITIONAL(CCISGCC, test "$GCC" = "yes")    
 AC_PROG_CPP
 AC_PROG_MAKE_SET
 
-############################################################################
-# Internationalisation start
-#
-# Set USE_NLS
-AC_GEDA_MACRO_CHECK([AM_NLS], [nls.m4])
-AM_NLS
-
-# Set package name for translations
-so_major=`echo "$SHARED_LIBRARY_VERSION" | sed 's/:.*//'`
-GETTEXT_PACKAGE=$PACKAGE$so_major
-AH_TEMPLATE([GETTEXT_PACKAGE], [Name of this program's gettext domain])
-AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"])
-AC_SUBST(GETTEXT_PACKAGE)
-
-# Initialise gettext
-AC_GEDA_MACRO_CHECK([AM_GNU_GETTEXT], [gettext.m4])
-AM_GNU_GETTEXT
-AM_GNU_GETTEXT_VERSION([%INSTALLED_GETTEXT_VERSION%])
-
-# Initialise intltool
-AC_GEDA_MACRO_CHECK([IT_PROG_INTLTOOL], [intltool.m4])
-IT_PROG_INTLTOOL(0.35.0)
-
-# 
-# Internationalisation end
-#########################################################################
 
 ############################################################################
-# Check for pkg-config start
+# Update desktop database utility start
 #
 
-# Check for pkg-config
-AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
-if test $PKG_CONFIG = no; then
-    AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
+AC_ARG_ENABLE(update-desktop-database,
+   AC_HELP_STRING([--disable-update-desktop-database],
+                   [do not update desktop file database after installation]),,
+                   enable_update_desktop_database=yes)
+
+AM_CONDITIONAL(ENABLE_UPDATE_DESKTOP_DATABASE,
+               test x$enable_update_desktop_database = xyes)
+
+if test x$enable_update_desktop_database = xyes ; then
+  AC_PATH_PROG(UPDATE_DESKTOP_DATABASE, [update-desktop-database], no)
+  if test $UPDATE_DESKTOP_DATABASE = no; then
+     AC_MSG_ERROR([Cannot find update-desktop-database, make sure it is installed and in your PATH, or configure with --disable-update-desktop-database])
+  fi
 fi
 
 #
-# Check for pkg-config end
+# Update desktop database utility end
 ############################################################################
 
 ############################################################################
 # Check for guile start
-#
+
+# Check for pkg-config
+AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
+if test $PKG_CONFIG = no; then
+   AC_MSG_ERROR([Cannot find pkg-config, make sure it is installed and in your PATH])
+fi
 
 PKG_CHECK_MODULES(GUILE, [guile-1.8], GUILE_PC="yes", no_GUILE_PC="yes")
 
 if test "$GUILE_PC" = "yes" 
 then
 
-   GUILE_LDFLAGS=$GUILE_LIBS
    GUILE_VERSION=`$PKG_CONFIG guile-1.8 --modversion`
 
 else
 
    # Find about the installed guile
-   AC_GEDA_MACRO_CHECK([GUILE_FLAGS], [guile.m4])
    GUILE_FLAGS
    GUILE_VERSION=`$GUILE_CONFIG info guileversion`
 
@@ -165,58 +149,130 @@ AC_CHECK_LIB(dl, dlopen, DL_LIB="-ldl", DL_LIB="")
 ############################################################################
 
 ############################################################################
-# Check for glib start
-#
-
-PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.12.0], GLIB="yes", no_GLIB="yes")
-
-# This next bit of code figures out what glib we need to use.
-if test "$GLIB" != "yes"
-then
-   AC_MSG_ERROR([Cannot find glib 2.12.0 or later, please install it and rerun ./configure.])
-fi
-GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
-
-#
-# Check for glib end
-############################################################################
-
-############################################################################
-# Check for gdk-pixbuf 
+# Check for gtk+ start
 # 
 
-PKG_CHECK_MODULES(GDK_PIXBUF, [gdk-pixbuf-2.0 >= 0.15.0], GDK_PIXBUF="yes", no_GDK_PIXBUF="yes")
+PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.10.0], GTK="yes", no_GTK="yes")
 
 # This next bit of code figures out what gtk we need to use.
-if test "$GDK_PIXBUF" = "yes" 
+if test "$GTK" = "yes"
 then
+   GTK_VERSION=`$PKG_CONFIG gtk+-2.0 --modversion`
 
-   AC_DEFINE(HAS_GDK_PIXBUF, 1, [If gdk-pixbuf has been installed, define this])
-   GDK_PIXBUF_CFLAGS=$GDK_PIXBUF_CFLAGS
-   GDK_PIXBUF_LIBS=$GDK_PIXBUF_LIBS
-   GDK_PIXBUF_VERSION=`$PKG_CONFIG gdk-pixbuf-2.0 --modversion`
+   # Search for glib
+   PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.12.0], GLIB="yes", no_GLIB="yes")
+   if test "$GLIB" != "yes"
+   then
+       AC_MSG_ERROR([Cannot find glib 2.12.0 or later, please install it and rerun ./configure.])
+   fi
+   GLIB_VERSION=`$PKG_CONFIG glib-2.0 --modversion`
 
+   # Search for gthread
+   PKG_CHECK_MODULES(GTHREAD, [gthread-2.0], GTHREAD="yes", no_GTHREAD="yes")
+   if test "$GTHREAD" = "yes"
+   then
+       AC_DEFINE(HAVE_GTHREAD, 1, [If gthread support is installed, define this])
+   fi
+
+else
+   GTK_VERSION=""
 fi
 
-if test "$GDK_PIXBUF_VERSION" = ""
+if test "$GTK_VERSION" = ""
 then
-   AC_MSG_ERROR([Cannot find gdk-pixbuf, please make sure it is installed.])
+   AC_MSG_ERROR([Cannot find gtk+ 2.10.0 or later, please install it and rerun ./configure.])
 fi
 
 # 
-# Check for gdk-pixbuf end
+# Check for gtk+ end
 ############################################################################
 
+############################################################################
+# Check for cairo start
+#
 
+PKG_CHECK_MODULES(CAIRO, [cairo >= 1.2.0], CAIRO="yes", no_CAIRO="yes")
+
+if test "$CAIRO" = "yes"
+then
+   CAIRO_VERSION=`$PKG_CONFIG cairo --modversion`
+else
+   AC_MSG_ERROR([Cannot find cairo 1.2.0 or later, please install or configure with --disable-cairo])
+fi
+
+#
+# Check for cairo end
+############################################################################
+
+############################################################################
+# Check for libgeda start
+# 
+PKG_CHECK_MODULES(LIBGEDA, [libgeda >= $DATE_VERSION], LIBGEDA="yes", 
+                  no_LIBGEDA="yes")
+
+if test "$LIBGEDA" = "yes" 
+then
+   LIBGEDA_VERSION=`$PKG_CONFIG libgeda --modversion`
+else
+   AC_MSG_ERROR([libgeda detection error: $LIBGEDA_PKG_ERRORS])
+fi
+
+# 
+# Check for libgeda end
+############################################################################
+
+############################################################################
+# Check for libstroke start
+#
+
+# user specified --with-stroke
+if eval "test x$opt_stroke != x"; then
+   LIBSTROKE_LIBS="-L$opt_stroke/lib"
+   LIBSTROKE_CFLAGS="-I$opt_stroke/include"
+fi
+
+# only check if the user has not disable strokes
+if test "$no_stroke" != "yes"; then
+   save_cppflags="$CPPFLAGS"
+   save_ldflags="$LDFLAGS"
+   CPPFLAGS="$CPPFLAGS $LIBSTROKE_CFLAGS"
+   LDFLAGS="$LDFLAGS $LIBSTROKE_LIBS"
+   AC_CHECK_LIB(stroke, stroke_init, LIBSTROKE="yes", LIBSTROKE="no")
+   CPPFLAGS="$save_cppflags"
+   LDFLAGS="$save_ldflags"
+fi
+
+if test "$LIBSTROKE" = "yes"; then
+   AC_DEFINE(HAS_LIBSTROKE, 1, [Define if you have libstroke installed])
+   if eval "test x$opt_stroke = x"; then
+       LIBSTROKE_LIBS="-lstroke"
+       LIBSTROKE_CFLAGS=""
+   else
+       LIBSTROKE_LIBS="$LIBSTROKE_LIBS -lstroke"
+       # LIBSTROKE_CFLAGS set above
+   fi
+fi
+
+if test "$no_stroke" = "yes"; then
+   echo "**                                **"
+   echo "** Disabling libstroke by request **"
+   echo "**                                **"
+   LIBSTROKE_LIB=""
+   LIBSTROKE_CFLAGS=""
+   LIBSTROKE="no"
+fi
+
+#
+# Check for libstroke end
+############################################################################
 
 ############################################################################
 # Check for doxygen start
 # 
-
 # Doxygen is a utility for generating html and latex documentation
 # from c source code files.
 
-# search for Doxygen 
+# search for Doxygen
 AC_PATH_PROG(DOXYGEN, doxygen, no, ${PATH})
 
 if test "$DOXYGEN" = "no"; then 
@@ -225,7 +281,7 @@ if test "$DOXYGEN" = "no"; then
    echo "**   Documentation creation disabled    **"
    DOXYGEN=echo
 
-   # prevent from creating html and latex documents.
+   # prevent from weaving the nw files
    # but does not prevent from processing gschemdoc
    builddoc=false
 else 
@@ -250,14 +306,46 @@ AM_CONDITIONAL(BUILDDOC, test x$builddoc = xtrue)
 #########################################################################
 
 #########################################################################
-# Checks for header files start
+# Check for groff start
 # 
 
+# search for groff
+AC_PATH_PROG(GROFF, groff, no, ${PATH})
+if test $GROFF = "no"; then
+        echo "Cannot find groff, some documentation will not be created."
+fi
+
+# 
+# Check for groff end
+#########################################################################
+
+#########################################################################
+# Checks for header files start
+# 
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_HEADER_DIRENT
-AC_CHECK_HEADERS(unistd.h string.h stdlib.h stdarg.h assert.h fcntl.h \
-                 errno.h libgen.h)
+AC_CHECK_HEADERS(unistd.h string.h stdlib.h \
+                 stdarg.h assert.h fcntl.h errno.h sys/param.h)
+
+# Check for locale.h
+
+# Set USE_NLS
+AM_NLS
+AC_CHECK_HEADER([locale.h],
+                [AC_DEFINE([HAVE_LOCALE_H], 1, [Define if you have locale.h])],
+                [
+                  if test "$USE_NLS" = "yes"; then
+                    AC_MSG_ERROR([Cannot find useful locale.h, and nls support is enabled. Try compiling with --disable-nls])
+                  fi
+                ])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+
+# Checks for library functions.
+AC_TYPE_SIGNAL
+AC_CHECK_FUNCS(strstr getuid getgid)
 
 AC_MSG_CHECKING([for optarg in unistd.h])
 AC_TRY_COMPILE(
@@ -266,16 +354,10 @@ AC_TRY_COMPILE(
 optarg_found=yes,
 optarg_found=no)
 AC_MSG_RESULT($optarg_found)
+
 if test $optarg_found = yes; then
-   AC_DEFINE(OPTARG_IN_UNISTD, 1, [Define if you have optarg in unistd.h])
+    AC_DEFINE(OPTARG_IN_UNISTD, 1, [Define if you have optarg in unistd.h])
 fi
-
-# Checks for typedefs, structures, and compiler characteristics.
-AC_C_CONST
-
-# Checks for library functions.
-AC_TYPE_SIGNAL
-AC_CHECK_FUNCS(strstr chown getlogin)
 
 # 
 # Checks for header files end
@@ -331,7 +413,6 @@ AC_MSG_RESULT([no])
 
 #
 #########################################################################
-
 #########################################################################
 # gEDA/gaf specific setup start
 #
@@ -358,18 +439,8 @@ else
 fi
 AC_SUBST(XDGDATADIR)
 
-if test x$opt_kdedatadir = x; then
-        # path was not specified with --with-kdedatadir
-        KDEDATADIR='${datadir}'
-else
-        # path WAS specified with --with-kdedatadir
-        KDEDATADIR="$opt_kdedatadir"
-fi
-AC_SUBST(KDEDATADIR)
-
-# Defs for libary symbol files
-#
 # Expand the prefix variable
+# I don't like the way this is done, but it works (I hope).
 if eval "test x$prefix = xNONE"; then
  dprefix=$ac_default_prefix
 else
@@ -378,6 +449,15 @@ fi
 
 gedatopdir=$dprefix/share/$DATADIR
 expandgedadatadir=`echo $gedatopdir`
+
+gedadocdir=$dprefix/share/doc/geda-doc
+# --with-docdir : tells where to store documentation if not default
+AC_ARG_WITH(docdir,
+    [  --with-docdir      Where to store documentation if not default.],
+        gedadocdir=$withval)
+expandgedadocdir=`echo $gedadocdir`
+GEDADOCDIR=$expandgedadocdir
+AC_SUBST(GEDADOCDIR)
 
 # this has to be expanded ( no ${prefix} ) --
 AC_DEFINE_UNQUOTED(GEDADATADIR, "$gedatopdir", [gEDA/gaf's data directory])
@@ -389,83 +469,64 @@ AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of this program's package])
 # gEDA/gaf specify things which need to setup
 #########################################################################
 
-#########################################################################
-# Update mime database utility start
-#
-# Adapted from gnome-control-center.
-#
+# Initialized gettext 
+AM_GNU_GETTEXT
+AM_GNU_GETTEXT_VERSION([0.16])
 
-AC_ARG_ENABLE(update-mime-database,
-   AC_HELP_STRING([--disable-update-mime-database],
-                   [do not update mime database after installation]),,
-                   enable_update_mime_database=yes)
-
-AM_CONDITIONAL(ENABLE_UPDATE_MIME_DATABASE,
-               test x$enable_update_mime_database = xyes)
-
-if test x$enable_update_mime_database = xyes ; then
-  AC_PATH_PROG(UPDATE_MIME_DATABASE, [update-mime-database], no)
-  if test $UPDATE_MIME_DATABASE = no; then
-     AC_MSG_ERROR([Cannot find update-mime-database, make sure it is installed and in your PATH, or configure with --disable-update-mime-database])
-  fi
-fi
-
-#
-# Update mime database utility end
-#########################################################################
+AX_DESKTOP_I18N
 
 # Finally create the final CFLAGS and LDFLAGS for use in the makefiles
-LIBGEDA_CFLAGS="$MINGW_CFLAGS $GUILE_CFLAGS $GLIB_CFLAGS $X_CFLAGS $GDK_PIXBUF_CFLAGS"
-LIBGEDA_LDFLAGS="$MINGW_LDFLAGS $GUILE_LDFLAGS $GLIB_LIBS $DMALLOC_LIBS $GDK_PIXBUF_LIBS"
-LIBTOOL_FLAGS="-version-info $SHARED_LIBRARY_VERSION $MINGW_LIBTOOL_FLAGS"
+GSCHEM_CFLAGS="$MINGW_CFLAGS $LIBSTROKE_CFLAGS $LIBGEDA_CFLAGS $GLIB_CFLAGS $GTK_CFLAGS $GTHREAD_CFLAGS $GUILE_CFLAGS"
+GSCHEM_LDFLAGS="$LIBSTROKE_LIBS $LIBGEDA_LIBS $GLIB_LIBS $GTK_LIBS $DMALLOC_LIBS $GTHREAD_LIBS $GUILE_LIBS"
 
 # Makefile.in variable substitution
 AC_SUBST(DATE_VERSION)
 AC_SUBST(DOTTED_VERSION)
-AC_SUBST(LIBGEDA_CFLAGS)
-AC_SUBST(LIBGEDA_LDFLAGS)
-AC_SUBST(LIBTOOL_FLAGS)
+AC_SUBST(GSCHEM_CFLAGS)
+AC_SUBST(GSCHEM_LDFLAGS)
 AC_SUBST(GEDADATADIR)
 AC_SUBST(GEDARCDIR)
-AC_SUBST(PATHSEP)
-AC_SUBST(OTHERPATHSEP)
 AC_SUBST(GUILEINTERP)
 AC_SUBST(INDENT)
 
 # Create all the necessary derived files
-AC_CONFIG_FILES([Makefile
-                 src/Makefile
-                 include/Makefile
-                 docs/Makefile
-                 data/Makefile
-                 intl/Makefile
-                 po/Makefile.in
-                 po/Makefile
-	         libgeda.pc
-		 share/Makefile
-		 lib/Makefile
-		 scheme/Makefile ])
+AC_CONFIG_FILES([Makefile 
+                po/Makefile.in 
+                intl/Makefile 
+		src/Makefile
+		include/Makefile
+		scheme/Makefile
+		bitmap/Makefile
+		scripts/Makefile
+		scripts/config.sh
+		examples/Makefile
+		docs/Makefile
+		lib/Makefile
+		tests/Makefile
+		data/Makefile
+		lib/system-gschemrc ])
+
 
 AC_OUTPUT
 
 expandedGEDADATADIR=`eval "echo $GEDADATADIR"`
 expandedGEDARCDIR=`eval "echo $GEDARCDIR"`
 expandedXDGDATADIR=`eval "echo $XDGDATADIR"`
-expandedKDEDATADIR=`eval "echo $KDEDATADIR"`
+expandedGEDADOCDIR=`eval "echo $GEDADOCDIR"`
 
 AC_MSG_RESULT([
-** Configuration summary for $PACKAGE $DOTTED_VERSION.$DATE_VERSION
+** Configuration summary for $PACKAGE $DOTTED_VERSION.$DATE_VERSION:
 
-   GLIB library version:             $GLIB_VERSION
-   GDK-PIXBUF (png output):          $GDK_PIXBUF_VERSION
+   GTK+ library version:             $GTK_VERSION
+   CAIRO library version:            $CAIRO_VERSION
    GUILE library version:            $GUILE_VERSION
+   libgeda library version:          $LIBGEDA_VERSION
+   libstroke library:                $LIBSTROKE
    mingw build:                      $MINGW
    data directory:                   $expandedGEDADATADIR
    rc directory:                     $expandedGEDARCDIR
-   xdg data directory:               $expandedXDGDATADIR
-   KDE data directory:               $expandedKDEDATADIR
-   LIBGEDA .so version:              $SHARED_LIBRARY_VERSION
+   xdg directory:                    $expandedXDGDATADIR
+   documentation directory:          $expandedGEDADOCDIR
    dmalloc debugging:                $with_dmalloc
    ElectricFence debugging:          $with_efence
 ])
-

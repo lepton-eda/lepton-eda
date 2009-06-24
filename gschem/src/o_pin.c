@@ -38,7 +38,6 @@ void o_pin_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
   int size = 0;
-  COLOR *color;
 
   if (o_current->line == NULL) {
     return;
@@ -50,19 +49,14 @@ void o_pin_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  if (toplevel->override_color != -1 ) {
-    color = x_color_lookup (toplevel->override_color);
-  } else {
-    color = x_color_lookup (o_current->color);
-  }
-
   if (toplevel->DONT_REDRAW == 0) {
     if (toplevel->pin_style == THICK)
       size = o_current->line_width;
 
     gschem_cairo_line (w_current, END_NONE, size, x1, y1, x2, y2);
 
-    gschem_cairo_set_source_color (w_current, color);
+    gschem_cairo_set_source_color (w_current,
+                                   o_drawing_color (w_current, o_current));
     gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, size, -1, -1);
   }
 
@@ -88,16 +82,9 @@ void o_pin_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int size = 0;
-  int color;
 
   if (o_current->line == NULL) {
     return;
-  }
-
-  if (o_current->saved_color != -1) {
-    color = o_current->saved_color;
-  } else {
-    color = o_current->color;
   }
 
   if (toplevel->pin_style == THICK)
@@ -107,7 +94,8 @@ void o_pin_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
                      o_current->line->x[0] + dx, o_current->line->y[0] + dy,
                      o_current->line->x[1] + dx, o_current->line->y[1] + dy);
 
-  gschem_cairo_set_source_color (w_current, x_color_lookup_dark (color));
+  gschem_cairo_set_source_color (w_current,
+                                 x_color_lookup_dark (o_current->color));
   gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, size, -1, -1);
 }
 

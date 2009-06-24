@@ -574,3 +574,46 @@ void o_invalidate_glist (GSCHEM_TOPLEVEL *w_current, GList *list)
     o_invalidate_rect (w_current, s_left, s_top, s_right, s_bottom);
   }
 }
+
+
+/*! \brief Returns the color an object should be drawn in
+ *
+ *  \par Function Description
+ *  This function looks up and returns either the SELECT_COLOR, or the
+ *  OBJECT's natural colour, as appropriate. If toplevel->override_color
+ *  is set, that takes precedence.
+ *
+ *  The parent field of the OBJECT structure is used to recurse down
+ *  and check whether the OBJECT being drawn is a prim_obj belonging
+ *  to some selected OBJECT. If so, SELECT_COLOR is used.
+ *
+ *  As a convenience, the appropriate color index is looked up using
+ *  x_color_lookup(), so that code is not duplicated in each drawing
+ *  function.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] object     The OBJECT whos color to return.
+ */
+COLOR *o_drawing_color (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
+{
+  int color_idx;
+  OBJECT *temp;
+
+  color_idx = object->color;
+
+  if (object->selected)
+    color_idx = SELECT_COLOR;
+
+  /* Check if the object, or its parent(s) are selected */
+  for (temp = object; temp != NULL; temp = temp->parent) {
+    if (temp->selected) {
+      color_idx = SELECT_COLOR;
+      break;
+    }
+  }
+
+  if (w_current->toplevel->override_color != -1)
+    color_idx = w_current->toplevel->override_color;
+
+  return x_color_lookup (color_idx);
+}

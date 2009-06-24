@@ -493,8 +493,7 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
       continue;
 
     /* really make sure that the object is not selected */
-    if (c_current->other_object->saved_color != -1 ||
-        c_current->other_object->selected == TRUE)
+    if (c_current->other_object->selected)
       continue;
 
     if (c_current->type != CONN_ENDPOINT &&

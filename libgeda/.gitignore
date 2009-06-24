@@ -20,12 +20,6 @@ install-sh
 missing
 mkinstalldirs
 ABOUT-NLS
-intltool-extract
-intltool-extract.in
-intltool-merge
-intltool-merge.in
-intltool-update
-intltool-update.in
 *~
 *#
 TAGS
@@ -37,3 +31,4 @@ HTML
 gschem.log
 docs/images/*png
 docs/images/*pdf
+.desktop-i18n

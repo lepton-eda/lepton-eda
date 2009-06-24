@@ -58,7 +58,7 @@ void o_delete (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
       for (iter = prev_conn_objects; iter != NULL; iter = iter_next) {
         OBJECT *conn_obj = iter->data;
         iter_next = g_list_next (iter);
-        if (conn_obj->complex_parent == object)
+        if (conn_obj->parent == object)
           prev_conn_objects = g_list_delete_link (prev_conn_objects, iter);
       }
     }

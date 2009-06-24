@@ -121,17 +121,10 @@ OBJECT *o_circle_new(TOPLEVEL *toplevel,
 OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
-  int color;
-
-  if (o_current->saved_color == -1) {
-    color = o_current->color;
-  } else {
-    color = o_current->saved_color;
-  }
 
   /* A new circle object is created with #o_circle_new().
    * Values for its fields are default and need to be modified. */
-  new_obj = o_circle_new (toplevel, OBJ_CIRCLE, color, 0, 0, 0);
+  new_obj = o_circle_new (toplevel, OBJ_CIRCLE, o_current->color, 0, 0, 0);
 
   /*
    * The parameters of the new circle are set with the ones of the original
@@ -330,7 +323,6 @@ char *o_circle_save(OBJECT *object)
 {
   int x,y;
   int radius;
-  int color;
   int circle_width, circle_space, circle_length;
   int fill_width, angle1, pitch1, angle2, pitch2;
   char *buf;
@@ -358,15 +350,8 @@ char *o_circle_save(OBJECT *object)
   angle2       = object->fill_angle2;
   pitch2       = object->fill_pitch2;
   
-  /* Use the right color */
-  if (object->saved_color == -1) {
-    color = object->color;
-  } else {
-    color = object->saved_color;
-  }
-  
   buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d", 
-			object->type, x, y, radius, color,
+			object->type, x, y, radius, object->color,
 			circle_width, circle_end, circle_type, circle_length, 
 			circle_space, circle_fill,
 			fill_width, angle1, pitch1, angle2, pitch2);

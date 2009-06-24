@@ -459,7 +459,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
           for (iter = new_obj->complex->prim_objs;
                iter != NULL; iter = g_list_next (iter)) {
             OBJECT *tmp = iter->data;
-            tmp->complex_parent = new_obj;
+            tmp->parent = new_obj;
           }
 
           o_recalc_single_object (toplevel, new_obj);

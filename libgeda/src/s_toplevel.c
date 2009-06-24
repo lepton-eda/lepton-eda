@@ -24,9 +24,6 @@
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
-#ifdef HAVE_STRARG_H
-#include <stdarg.h>
-#endif
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
