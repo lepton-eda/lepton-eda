@@ -50,3 +50,19 @@ DISTCLEANFILES = *.log core FILE *~ prototype.bak \
 	         gnet-PCBboard.scm gnet-gsch2pcb.scm
 MAINTAINERCLEANFILES = *.log *~ Makefile.in configure \
 	         gnet-PCBboard.scm gnet-gsch2pcb.scm
+
+all-local:
+	if test "$(srcdir)" != "$(builddir)" ; then \
+		echo "copying scheme files" ; \
+		cp -f $(srcdir)/*.scm $(builddir) ; \
+	else \
+		echo "source directory = build directory" ; \
+	fi
+
+clean-local:
+	if test "$(srcdir)" != "$(builddir)" ; then \
+		echo "cleaning scheme files" ; \
+		rm -f $(builddir)/*.scm ; \
+	else \
+		echo "source directory = build directory" ; \
+	fi

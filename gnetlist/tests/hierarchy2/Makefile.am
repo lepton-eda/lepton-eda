@@ -15,7 +15,7 @@ tests: tests-job tests-clean
 tests-job:
 	rm -f $(BUILDDIR)/new_*
 	cp -f $(SRCDIR)/gafrc.hierarchy2 $(BUILDDIR)/gafrc
-	( TESTDIR=$(SRCDIR); export TESTDIR ; SCMDIR=${top_srcdir}/scheme ; export SCMDIR ; \
+	( TESTDIR=$(SRCDIR); export TESTDIR ; SCMDIR=${top_builddir}/scheme ; export SCMDIR ; \
 	  echo $$TESTDIR; \
 	  $(GNETLIST) \
 	     -o $(BUILDDIR)/new_hierarchy2.geda -g geda \

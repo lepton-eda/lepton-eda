@@ -18,7 +18,7 @@ tests: tests-job tests-clean
 tests-job:
 	rm -f $(BUILDDIR)/new_*
 	cp -f $(SRCDIR)/gnetlistrc.hierarchy $(BUILDDIR)/gnetlistrc
-	( TESTDIR=$(SRCDIR); export TESTDIR ; SCMDIR=${top_srcdir}/scheme ; export SCMDIR ; \
+	( TESTDIR=$(SRCDIR); export TESTDIR ; SCMDIR=${top_builddir}/scheme ; export SCMDIR ; \
 	  echo $$TESTDIR; \
 	  $(GNETLIST) \
 	     -o $(BUILDDIR)/new_hierarchy.geda -g geda \

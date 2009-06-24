@@ -1,4 +1,4 @@
 ;; We want to point at the scheme code that hasn't been installed yet so that
 ;; 'make check' during development can work correctly.
-(scheme-directory "@scheme_srcdir@")
+(scheme-directory "@scheme_builddir@")
 
