@@ -3,3 +3,7 @@
 (scheme-directory "${SCMDIR}")
 
 (component-library "./sym")
+
+;; Rather than checking what m4 and pcb's m4 files do with
+;; the output we produce, just see what output gnetlist produces.
+(define gsch2pcb:pcb-m4-command-line "cat - >>")

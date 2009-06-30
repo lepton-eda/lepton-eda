@@ -69,7 +69,7 @@
 ;; Split string at current split-char and returns
 ;; a pair with substrings. If string is not splitable
 ;; it returns #f.
-(define (string-split the-string split-char)
+(define (gsch2pcb:string-split the-string split-char)
 ;;string-index is Guile specific
   (let ((split-index (string-index the-string split-char))
         (last-index (- (string-length the-string) 1)))
@@ -77,7 +77,7 @@
     (cond ((not split-index)
            #f)
           ((= split-index 0)
-           (string-split 
+           (gsch2pcb:string-split
             (substring the-string 1 (string-length the-string)) 
             split-char))
           ((= split-index last-index)
@@ -91,19 +91,19 @@
 
 ;; Splits a string with space separated words and returns a list
 ;; of the words (still as strings).
-(define (split-to-list the-string)
-  (let ((the-list (string-split the-string #\space)))
+(define (gsch2pcb:split-to-list the-string)
+  (let ((the-list (gsch2pcb:string-split the-string #\space)))
     (if the-list
-        (cons (car the-list) (split-to-list (cdr the-list)))
+        (cons (car the-list) (gsch2pcb:split-to-list (cdr the-list)))
         (list the-string))))
 
 ;; Joins the elements of a list of strings into a single string,
 ;; with each element prefixed by a given prefix string.
-(define (list-join-with-prefixes the-list prefix)
+(define (gsch2pcb:list-join-with-prefixes the-list prefix)
   (if (null? the-list)
       ""
       (string-append prefix (car the-list)
-                     (list-join-with-prefixes (cdr the-list) prefix))))
+                     (gsch2pcb:list-join-with-prefixes (cdr the-list) prefix))))
 
 
 (define gsch2pcb:write-value-footprint
@@ -112,7 +112,7 @@
 ;;       refdes contains the first element of ls        
         (let* ((refdes (car ls))
                (value (gnetlist:get-package-attribute refdes "value"))
-               (footprint (split-to-list 
+               (footprint (gsch2pcb:split-to-list
                           (gnetlist:get-package-attribute refdes  "footprint") ) ) 
 	       (lquote (if gsch2pcb:use-m4 "`" ""))
 	       (rquote (if gsch2pcb:use-m4 "'" ""))
@@ -121,11 +121,11 @@
 
                (display (string-append "PKG_" (car footprint)) pipe)
                (display (string-append "(" lquote (car footprint)) pipe)
-               (display (list-join-with-prefixes (cdr footprint) "-") pipe)
+               (display (gsch2pcb:list-join-with-prefixes (cdr footprint) "-") pipe)
                (display (string-append rquote "," lquote refdes rquote "," lquote ) pipe)
 
                (display value pipe)
-               (display (list-join-with-prefixes (cdr footprint) (string-append rquote "," lquote)) pipe)
+               (display (gsch2pcb:list-join-with-prefixes (cdr footprint) (string-append rquote "," lquote)) pipe)
                (display (string-append rquote ")") pipe)
                (newline pipe)
                (gsch2pcb:write-value-footprint pipe (cdr ls))) )))
@@ -133,15 +133,52 @@
 ;;
 ;;
 
-(define m4-command "@m4@")
-(define m4-pcbdir "@pcbm4dir@")
-(define m4-pcbconfdir "@pcbconfdir@")
-(define m4-files "")
 (define gsch2pcb:use-m4 #f)
 
-;; To emulate popen. Guileish again.
-; Needed after guile ver. 1.3.2. To save 1.3a users, wrap it in.
-; Doesn't work in guile 1.6 (false-if-exception (use-modules (ice-9 popen)))
+
+;; Let the user override the m4 command, the directory
+;; where pcb stores its m4 files and the pcb config directory.
+(if (not (defined? 'gsch2pcb:pcb-m4-command)) (define gsch2pcb:pcb-m4-command "@m4@"))
+(if (not (defined? 'gsch2pcb:pcb-m4-dir)) (define gsch2pcb:pcb-m4-dir "@pcbm4dir@"))
+(if (not (defined? 'gsch2pcb:pcb-m4-confdir)) (define gsch2pcb:pcb-m4-confdir "@pcbconfdir@"))
+
+;; Let the user override the m4 search path
+(if (not (defined? 'gsch2pcb:pcb-m4-path))
+    (define gsch2pcb:pcb-m4-path (list gsch2pcb:pcb-m4-dir gsch2pcb:pcb-m4-confdir "$HOME/.pcb" "."))
+)
+
+;; Build up the m4 command line
+
+(define gsch2pcb:m4-command-line-tmp (string-append
+				  gsch2pcb:pcb-m4-command " -d ") )
+(define gsch2pcb:pcb-m4-path-str #f)
+(for-each (lambda (d)
+	    (set! gsch2pcb:m4-command-line-tmp (string-append
+						gsch2pcb:m4-command-line-tmp
+						" -I" d))
+	    (if gsch2pcb:pcb-m4-path-str
+		(set! gsch2pcb:pcb-m4-path-str (string-append
+						gsch2pcb:pcb-m4-path-str
+						"  " d) )
+		(set! gsch2pcb:pcb-m4-path-str d)
+		)
+	    )
+	  gsch2pcb:pcb-m4-path
+	  )
+
+
+
+(set! gsch2pcb:m4-command-line-tmp
+      ( string-append gsch2pcb:m4-command-line-tmp
+		      " " gsch2pcb:pcb-m4-dir "/common.m4 - >> "
+		      )
+      )
+
+(if (not (defined? 'gsch2pcb:pcb-m4-command-line))
+    (define gsch2pcb:pcb-m4-command-line
+      gsch2pcb:m4-command-line-tmp)
+    )
+
 (use-modules (ice-9 popen))
 
 (define (gsch2pcb output-filename)
@@ -150,15 +187,36 @@
     (close-port port)
     )
 
+  (set! gsch2pcb:pcb-m4-command-line (string-append
+				  gsch2pcb:pcb-m4-command-line
+				  output-filename))
+  (display (string-append
+	    "=====================================================\n"
+	    "gsch2pcb backend configuration:\n"
+	    "\n"
+	    "   ----------------------------------------\n"
+	    "   Variables which may be changed in gafrc:\n"
+	    "   ----------------------------------------\n"
+	    "   gsch2pcb:pcb-m4-command:    " gsch2pcb:pcb-m4-command "\n"
+	    "   gsch2pcb:pcb-m4-dir:        " gsch2pcb:pcb-m4-dir "\n"
+	    "   gsch2pcb:pcb-m4-confdir:    " gsch2pcb:pcb-m4-confdir "\n"
+	    "   gsch2pcb:pcb-m4-path:       " gsch2pcb:pcb-m4-path-str "\n"
+	    "   gsch2pcb:m4-command-line:   " gsch2pcb:pcb-m4-command-line  "\n"
+	    "\n"
+	    "   ---------------------------------------------------\n"
+	    "   Variables which may be changed in the project file:\n"
+	    "   ---------------------------------------------------\n"
+	    "   gsch2pcb:use-m4:            " (if gsch2pcb:use-m4 "yes" "no") "\n"
+	    "\n"
+	    "=====================================================\n"
+	    )
+	   )
+
   ;; If we have defined gsch2pcb:use-m4 then run the footprints
   ;; through the pcb m4 setup.  Otherwise skip m4 entirely
- (if gsch2pcb:use-m4
+  (if gsch2pcb:use-m4
       ;; pipe with the macro define in pcb program
-      (let ((pipe (open-output-pipe (string-append
-				     m4-command " -d -I. -I" m4-pcbdir " "
-				     " -I " m4-pcbconfdir " -I$HOME/.pcb -I. "
-				     m4-pcbdir "/common.m4 " m4-files " - >> "
-				     output-filename)))
+      (let ((pipe (open-output-pipe gsch2pcb:pcb-m4-command-line))
 	    )
 	
 	(display "Using the m4 processor for pcb footprints\n")
