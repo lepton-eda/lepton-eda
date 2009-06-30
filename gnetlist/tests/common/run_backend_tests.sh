@@ -13,7 +13,7 @@ $0 -- Testsuite program for various backends
 Usage
 
   $0 [-h | --help]
-  $0 [-r | --regen] <backend> [test1 [test2 [....]]]
+  $0 [-d | --debug] [-r | --regen] <backend> [test1 [test2 [....]]]
 
 Options
 
@@ -36,10 +36,16 @@ $0 --regen new_test spice-sdb
 
 EOF
 }
+debug=no
 while test -n "$1"
 do
     case "$1"
     in
+
+    -d|--debug)
+	debug=yes
+	shift
+	;;
 
     -h|--help)
 	usage
@@ -260,7 +266,7 @@ for t in $all_tests ; do
     cd $here
     
     # Delete the run directory in prep for the next test
-    rm -fr ${rundir}
+    test "$debug" = "no" && rm -fr ${rundir}
 
 done
 
