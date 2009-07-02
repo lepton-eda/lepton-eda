@@ -1,6 +1,6 @@
 
 EXTRA_DIST = bompp.sh.in annotate.sh.in  unannotate.sh bom_xref.sh.in sw2asc.in \
-	     gschem2pcb sch2eaglepos.sh
+	     sch2eaglepos.sh
 
 bin_SCRIPTS =  sw2asc sch2eaglepos.sh
 

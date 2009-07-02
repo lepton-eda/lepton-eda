@@ -20,7 +20,6 @@ SUBDIRS= \
        partslist1 \
        partslist2 \
        partslist3 \
-       PCBboard \
        pcbpins \
        PCB \
        protelII \

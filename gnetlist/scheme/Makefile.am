@@ -25,17 +25,10 @@ DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-geda.scm \
 
 EXTRA_DIST = $(DIST_SCM) $(SCM_SRCS)
 
-SCM_SRCS=	gnet-PCBboard.scm.in \
+SCM_SRCS=	\
 		gnet-gsch2pcb.scm.in
 
-BUILT_SCM=	gnet-PCBboard.scm gnet-gsch2pcb.scm
-
-gnet-PCBboard.scm: $(srcdir)/gnet-PCBboard.scm.in
-	sed \
-		-e 's;@m4@;${M4};g' \
-		-e 's;@pcbm4dir@;${PCBM4DIR};g' \
-		-e 's;@pcbconfdir@;${PCBCONFDIR};g' \
-		$(srcdir)/gnet-PCBboard.scm.in > $@
+BUILT_SCM=	gnet-gsch2pcb.scm
 
 gnet-gsch2pcb.scm: $(srcdir)/gnet-gsch2pcb.scm.in
 	sed \
@@ -45,11 +38,11 @@ gnet-gsch2pcb.scm: $(srcdir)/gnet-gsch2pcb.scm.in
 		$(srcdir)/gnet-gsch2pcb.scm.in > $@
 
 MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ gnet-PCBboard.scm gnet-gsch2pcb.scm
+CLEANFILES = *.log *~ gnet-gsch2pcb.scm
 DISTCLEANFILES = *.log core FILE *~ prototype.bak \
-	         gnet-PCBboard.scm gnet-gsch2pcb.scm
+	         gnet-gsch2pcb.scm
 MAINTAINERCLEANFILES = *.log *~ Makefile.in configure \
-	         gnet-PCBboard.scm gnet-gsch2pcb.scm
+	         gnet-gsch2pcb.scm
 
 all-local:
 	if test "$(srcdir)" != "$(builddir)" ; then \

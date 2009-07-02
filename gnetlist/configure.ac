@@ -418,7 +418,6 @@ AC_CONFIG_FILES([Makefile
 		 tests/common/outputs/partslist1/Makefile
 		 tests/common/outputs/partslist2/Makefile
 		 tests/common/outputs/partslist3/Makefile
-		 tests/common/outputs/PCBboard/Makefile
 		 tests/common/outputs/PCB/Makefile
 		 tests/common/outputs/pcbpins/Makefile
 		 tests/common/outputs/protelII/Makefile
