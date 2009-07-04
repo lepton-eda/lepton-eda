@@ -45,15 +45,22 @@ tests:
 # Cleanup
 	rm -f $(BUILDDIR)/new_*
 
+	fail=0 ; \
+	pass=0 ; \
 	for file in $(SRCDIR)/*.sym; do \
-	  $(SRCDIR)/runtest.sh $$file $(BUILDDIR) $(SRCDIR); \
+	  $(SHELL) $(SRCDIR)/runtest.sh $$file $(BUILDDIR) $(SRCDIR); \
           if [ $$? -ne 0 ]; then \
 	     echo "$$file FAILED!"; \
-             exit 1; \
+             fail=`expr $$fail + 1`; \
 	   else \
 	     echo "$$file passed."; \
+             pass=`expr $$pass + 1`; \
 	   fi; \
-	done
+	done ; \
+	echo "passed: $$pass" ; \
+	echo "failed: $$fail" ; \
+	exit $$fail
+
 
 # Cleanup
 #	rm -f $(BUILDDIR)/new_*
