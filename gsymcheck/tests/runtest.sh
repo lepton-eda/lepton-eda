@@ -3,9 +3,7 @@
 INPUT=$1
 BUILDDIR=$2
 SRCDIR=$3
-
-here=`pwd`
-rundir=${here}/run
+rundir=${BUILDDIR}/run
 
 # create temporary run directory and required subdirs
 mkdir -m 0700 -p ${rundir}
@@ -21,7 +19,7 @@ export TESTDIR
 
 symbasename=`basename $INPUT .sym`
 
-in="${SRCDIR}/${INPUT}"
+in="${INPUT}"
 ref="${SRCDIR}/${symbasename}.output"
 new="${rundir}/new_${symbasename}.output"
 tmpfile=${rundir}/tmp$$

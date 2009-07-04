@@ -37,7 +37,7 @@ EXTRA_DIST = buses.sym connections1.sym connections2.sym connections3.sym \
 
 check_SCRIPTS = tests
 
-BUILDDIR=$(top_builddir)/tests
+BUILDDIR=$(builddir)
 SRCDIR=$(srcdir)
 
 tests:
@@ -48,12 +48,13 @@ tests:
 	fail=0 ; \
 	pass=0 ; \
 	for file in $(SRCDIR)/*.sym; do \
+	  base=`basename $$file`; \
 	  $(SHELL) $(SRCDIR)/runtest.sh $$file $(BUILDDIR) $(SRCDIR); \
           if [ $$? -ne 0 ]; then \
-	     echo "$$file FAILED!"; \
-             fail=`expr $$fail + 1`; \
+	     echo "$$base FAILED!"; \
+             fail=`expr $$pass + 1`; \
 	   else \
-	     echo "$$file passed."; \
+	     echo "$$base passed."; \
              pass=`expr $$pass + 1`; \
 	   fi; \
 	done ; \
