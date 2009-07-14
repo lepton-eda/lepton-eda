@@ -168,7 +168,7 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
 	      "set-attribute-value!");
 
   attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
-  value = SCM_STRING_CHARS (scm_value);
+  value = scm_to_locale_string (scm_value);
 
   if (attribute != NULL &&
       attribute->attribute != NULL) {
@@ -182,6 +182,8 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
 
     g_free(name);
   }
+
+  free (value);
 
   return SCM_UNDEFINED;
 }
@@ -244,7 +246,7 @@ SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
   x = scm_to_int(scm_x);
   y = scm_to_int(scm_y);
   
-  alignment_string = SCM_STRING_CHARS(scm_alignment);
+  alignment_string = scm_to_locale_string (scm_alignment);
 
   if (strlen(alignment_string) == 0) {
     alignment = -1;
@@ -276,6 +278,9 @@ SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
   if (strcmp(alignment_string, "Upper Right") == 0) {
     alignment = 8;
   }
+
+  free (alignment_string);
+
   if (alignment == -2) {
     /* Bad specified */
     SCM_ASSERT (scm_is_string(scm_alignment), scm_alignment,
@@ -563,7 +568,7 @@ SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
 
   /* Get parameters */
   object = (struct st_object_smob *)SCM_CDR(object_smob);
-  attrib_name = SCM_STRING_CHARS(scm_attrib_name);
+  attrib_name = scm_to_locale_string (scm_attrib_name);
 
   if (object && object->object) {
 
@@ -581,6 +586,8 @@ SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
       a_iter = g_list_next (a_iter);
     }
   }
+
+  free (attrib_name);
 
   return returned;
 }

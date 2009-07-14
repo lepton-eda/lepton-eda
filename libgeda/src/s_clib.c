@@ -717,6 +717,7 @@ static void refresh_scm (CLibSource *source)
   SCM symlist;
   SCM symname;
   CLibSymbol *symbol;
+  char *tmp;
 
   g_return_if_fail (source != NULL);
   g_return_if_fail (source->type == CLIB_SCM);
@@ -742,8 +743,12 @@ static void refresh_scm (CLibSource *source)
     } else {
       symbol = g_new0 (CLibSymbol, 1);
       symbol->source = source;
-      symbol->name = g_strdup(SCM_STRING_CHARS (symname));
-      
+
+      /* Need to make sure that the correct free() function is called
+       * on strings allocated by Guile. */
+      tmp = scm_to_locale_string (symname);
+      symbol->name = g_strdup(tmp);
+      free (tmp);
 
       /* Prepend because it's faster and it doesn't matter what order we
        * add them. */
@@ -1124,6 +1129,8 @@ static gchar *get_data_command (const CLibSymbol *symbol)
 static gchar *get_data_scm (const CLibSymbol *symbol)
 {
   SCM symdata;
+  char *tmp;
+  gchar *result;
 
   g_return_val_if_fail ((symbol != NULL), NULL);
   g_return_val_if_fail ((symbol->source->type == CLIB_SCM), NULL);
@@ -1137,7 +1144,13 @@ static gchar *get_data_scm (const CLibSymbol *symbol)
     return NULL;
   }
 
-  return g_strdup (SCM_STRING_CHARS (symdata));
+  /* Need to make sure that the correct free() function is called
+   * on strings allocated by Guile. */
+  tmp = scm_to_locale_string (symdata);
+  result = g_strdup(tmp);
+  free (tmp);
+
+  return result;
 }
 
 /*! \brief Get symbol data.
