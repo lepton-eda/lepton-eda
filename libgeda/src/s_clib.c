@@ -72,7 +72,7 @@
  *  s_clib_symbol_get_data_by_name().
  *
  *
- *  \page libcmds Library Commands
+ *  \section libcmds Library Commands
  *
  *  A program or set of programs can be used as a component source.  The procedure used to add such a source from a gEDA rc file is:
  *
@@ -92,7 +92,7 @@
  *  non-zero exit status.  Anything it has output on stdout will be
  *  ignored, and any stderr output displayed to the user.
  *
- *  \page libscms Library Scheme Procedures
+ *  \section libscms Library Scheme Procedures
  *
  *  A set of Scheme procedures can be used as a component source.  The
  *  procedure used to add such a source from a gEDA rc file is:
