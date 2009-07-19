@@ -422,12 +422,6 @@ NET *s_traverse_net (TOPLEVEL *pr_current, NET *nets, int starting,
 
     if (c_current->other_object != NULL) {
 
-#if DEBUG
-      printf("c_current %s visited: %d\n",
-             c_current->other_object->name,
-             c_current->other_object->visited);
-#endif
-
       if (!is_visited(c_current->other_object) &&
           c_current->other_object != object) {
         nets = s_traverse_net (pr_current, nets, FALSE,
