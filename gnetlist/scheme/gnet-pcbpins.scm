@@ -18,6 +18,24 @@
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
+(use-modules (ice-9 regex))
+
+;; A comma or close parenthesis will cause problems with the pcb
+;; action script, so if one of the arguments to ChangePinName contains
+;; one it should be quoted.  Any quote characters within the argument
+;; are escaped.
+;;
+;; At present, this function only quotes if there is a comma or close
+;; parenthesis present in the string.
+(define pcbpins:quote_string
+  (lambda (s)
+    (if (string-match "[,)]" s)
+        (string-join (list "\""
+                           (regexp-substitute/global #f "\"" s 'pre "\\\"" 'post)
+                           "\"")
+                     "")
+        s)))
+
 ;; write out the pins for a particular component
 (define pcbpins:component_pins
   (lambda (port package pins)
@@ -29,19 +47,19 @@
 		(pinnum #f)
 		)
 	    (display "ChangePinName(" port)
-	    (display package port)
+	    (display (pcbpins:quote_string package) port)
 	    (display ", " port)
 
 	    (set! pinnum (gnetlist:get-attribute-by-pinnumber package pin "pinnumber"))
 
-	    (display pinnum port)
+	    (display (pcbpins:quote_string pinnum) port)
 	    (display ", " port)
 
 	    (set! label (gnetlist:get-attribute-by-pinnumber package pin "pinlabel"))
 	    (if (string=? label "unknown") 
 		(set! label pinnum)
 		)
-	    (display label port)
+	    (display (pcbpins:quote_string label) port)
 	    (display ")\n" port)
 	    )
 	  (pcbpins:component_pins port package (cdr pins))
