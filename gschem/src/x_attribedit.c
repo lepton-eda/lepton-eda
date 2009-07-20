@@ -294,7 +294,7 @@ void attrib_edit_dialog (GSCHEM_TOPLEVEL *w_current, OBJECT *attr_obj, int flag)
   GtkWidget *show_options;
   GtkWidget *show_options_menu;
   GtkWidget *glade_menuitem;
-  GtkWidget *attrib_combo;
+  GtkWidget *attrib_combo_box_entry;
   GtkWidget *attrib_combo_entry;
   GtkWidget *value_entry;
   GtkWidget *visbutton;
@@ -303,10 +303,10 @@ void attrib_edit_dialog (GSCHEM_TOPLEVEL *w_current, OBJECT *attr_obj, int flag)
   GtkWidget *addtocompsbutton;
   GtkWidget *addtonetsbutton;
   GtkWidget *overwritebutton;
+  GtkEntryCompletion *attrib_combo_entry_completion;
 
   /* gschem specific */
   GList *s_current = NULL;
-  GList *combo_items = NULL;
   char* string = NULL;
   int nsel=0, i, len;
   char *name = NULL;
@@ -380,13 +380,14 @@ void attrib_edit_dialog (GSCHEM_TOPLEVEL *w_current, OBJECT *attr_obj, int flag)
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
 
-  attrib_combo = gtk_combo_new ();
-  gtk_table_attach (GTK_TABLE (table), attrib_combo, 1, 2, 0, 1,
+  attrib_combo_box_entry = gtk_combo_box_entry_new_text ();
+  attrib_combo_entry = gtk_bin_get_child(GTK_BIN(attrib_combo_box_entry));
+  gtk_table_attach (GTK_TABLE (table), attrib_combo_box_entry, 1, 2, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  attrib_combo_entry = GTK_COMBO (attrib_combo)->entry;
-  gtk_widget_ref (attrib_combo_entry);
-  gtk_object_set_data_full (GTK_OBJECT (aewindow), "attrib_combo_entry", attrib_combo_entry,
+  g_object_ref (attrib_combo_entry);
+  g_object_set_data_full (G_OBJECT (aewindow),
+                         "attrib_combo_entry", attrib_combo_entry,
                             (GtkDestroyNotify) gtk_widget_unref);
 
   /* Value entry */
@@ -540,13 +541,19 @@ void attrib_edit_dialog (GSCHEM_TOPLEVEL *w_current, OBJECT *attr_obj, int flag)
   i = 0;
   string = (char *) s_attrib_get(i);
   while (string != NULL) {
-    combo_items = g_list_append(combo_items, string);
+    gtk_combo_box_append_text(GTK_COMBO_BOX(attrib_combo_box_entry), string);
     i++;
     string = (char *) s_attrib_get(i);
   }
-  combo_items = g_list_prepend(combo_items, name);
-  gtk_combo_set_popdown_strings(GTK_COMBO(attrib_combo), combo_items);
-  g_list_free(combo_items);
+
+  /* Add completion to attribute combo box entry */
+  attrib_combo_entry_completion = gtk_entry_completion_new();
+  gtk_entry_completion_set_model(attrib_combo_entry_completion,
+          gtk_combo_box_get_model(GTK_COMBO_BOX(attrib_combo_box_entry)));
+  gtk_entry_completion_set_text_column(attrib_combo_entry_completion, 0);
+  gtk_entry_completion_set_inline_completion(attrib_combo_entry_completion, TRUE);
+  gtk_entry_completion_set_popup_single_match(attrib_combo_entry_completion, FALSE);
+  gtk_entry_set_completion(GTK_ENTRY(attrib_combo_entry), attrib_combo_entry_completion);
   
   /* gschem specific */
   gtk_widget_show_all(aewindow);
