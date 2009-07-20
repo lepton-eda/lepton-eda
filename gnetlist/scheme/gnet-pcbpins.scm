@@ -93,13 +93,6 @@
 ;; The top level netlister for pcbpins
 (define pcbpins
   (lambda (filename)
-    (newline)
-    (display "---------------------------------\n")
-    (display "gEDA/gnetlist pcbpins Backend\n")
-    (display "This backend is EXPERIMENTAL\n")
-    (display "Use at your own risk!\n")
-    (display "---------------------------------\n\n")
-    
     (let ((port (open-output-file filename)))
       
       ;; write the header
