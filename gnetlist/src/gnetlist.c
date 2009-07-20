@@ -153,18 +153,7 @@ void main_prog(void *closure, int argc, char *argv[])
     s_log_message
         ("conditions; please see the COPYING file for more details.\n\n");
 
-    if (!quiet_mode) {
-        fprintf(stderr, "gEDA/gnetlist version %s%s.%s\n",
-                PREPEND_VERSION_STRING, DOTTED_VERSION, DATE_VERSION);
-        fprintf(stderr,
-                "gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
-        fprintf(stderr,
-                "This is free software, and you are welcome to redistribute it under certain\n");
-        fprintf(stderr,
-                "conditions; please see the COPYING file for more details.\n\n");
-    }
-
-#ifdef __MINGW32__
+#if defined(__MINGW32__) && defined(DEBUG)
     fprintf(stderr, "This is the MINGW32 port.\n\n");
 #endif
 

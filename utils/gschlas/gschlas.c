@@ -70,20 +70,8 @@ main_prog(void *closure, int argc, char *argv[])
   s_log_init ("gschlas");
 	
   logging_dest=STDOUT_TTY;
-  if (!quiet_mode)
-  {
-    s_log_message(
-                  "gEDA/gschlas version %s%s.%s\n", PREPEND_VERSION_STRING, 
-                  DOTTED_VERSION, DATE_VERSION);
-    s_log_message(
-                  "gEDA/gschlas comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
-    s_log_message(
-                  "This is free software, and you are welcome to redistribute it under certain\n");
-    s_log_message(
-                  "conditions; please see the COPYING file for more details.\n\n"); 
-  }
 
-#ifdef __MINGW32__
+#if defined(__MINGW32__) && defined(DEBUG)
   fprintf(stderr, "This is the MINGW32 port.\n");
 #endif  
 

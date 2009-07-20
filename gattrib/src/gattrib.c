@@ -151,20 +151,6 @@ void gattrib_main(void *closure, int argc, char *argv[])
     ("This is free software, and you are welcome to redistribute it under certain\n");
   s_log_message
     ("conditions; please see the COPYING file for more details.\n\n");
-  
-  if (!quiet_mode) {
-    fflush(stderr);
-    fflush(stdout);
-    fprintf(stderr, 
-	    "gEDA/gattrib version %s%s.%s\n", PREPEND_VERSION_STRING, 
-            DOTTED_VERSION, DATE_VERSION);
-    fprintf(stderr,
-	    "gEDA/gattrib comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
-    fprintf(stderr,
-	    "This is free software, and you are welcome to redistribute it under certain\n");
-    fprintf(stderr,
-	    "conditions; please see the COPYING file for more details.\n\n");
-  }
 
   /* ------  register guile (scheme) functions.  Necessary to parse RC file.  ------ */
   g_register_funcs();

@@ -189,19 +189,7 @@ void main_prog(void *closure, int argc, char *argv[])
   s_log_message(
                 _("conditions; please see the COPYING file for more details.\n\n")); 
 
-  if (!quiet_mode) {
-    fprintf(stderr, 
-            _("gEDA/gschem version %s%s.%s\n"), PREPEND_VERSION_STRING, 
-            DOTTED_VERSION, DATE_VERSION);
-    fprintf(stderr, 
-            _("gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n"));
-    fprintf(stderr, 
-            _("This is free software, and you are welcome to redistribute it under certain\n"));
-    fprintf(stderr, 
-            _("conditions; please see the COPYING file for more details.\n\n")); 
-  }
-
-#ifdef __MINGW32__
+#if defined(__MINGW32__) && defined(DEBUG)
   fprintf(stderr, _("This is the MINGW32 port.\n"));
 #endif  
 
