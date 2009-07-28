@@ -65,7 +65,7 @@
  *  \param [in]  toplevel   The TOPLEVEL object.
  *  \param [in]  object     The OBJECT we're adding the attribute to.
  *  \param [in]  item       The item you want to add as an attribute.
- *  \return The new head of the attributes list.
+ *  \return nothing.
  */
 void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item)
 {
@@ -449,7 +449,7 @@ GList *o_attrib_find_floating_attribs (const GList *list)
 }
 
 
-/*! \brief Search for attibute by name.
+/*! \brief Find an attribute in a list.
  *  \par Function Description
  *  Search for attribute by name.
  *
@@ -491,7 +491,7 @@ static OBJECT *o_attrib_find_attrib_by_name (const GList *list, char *name, int 
 }
 
 
-/*! \brief Search for attibute by name.
+/*! \brief Search attribute list by name.
  *  \par Function Description
  *  Search for attribute by name.
  *
@@ -501,7 +501,7 @@ static OBJECT *o_attrib_find_attrib_by_name (const GList *list, char *name, int 
  *  \param [in] list     GList of attributes to search.
  *  \param [in] name     Character string with attribute name to search for.
  *  \param [in] counter  Which occurance to return.
- *  \return The n'th attribute object in the given list with the given name.
+ *  \return Character string with attribute value, NULL otherwise.
  */
 static char *o_attrib_search_attrib_list_by_name (const GList *list, char *name, int counter)
 {
@@ -517,7 +517,7 @@ static char *o_attrib_search_attrib_list_by_name (const GList *list, char *name,
 }
 
 
-/*! \brief Search for attibute by name.
+/*! \brief Search floating attribute by name.
  *  \par Function Description
  *  Search for attribute by name.
  *
@@ -545,7 +545,7 @@ char *o_attrib_search_floating_attribs_by_name (const GList *list, char *name, i
 }
 
 
-/*! \brief Search for attibute by name.
+/*! \brief Search attached attributes by name.
  *  \par Function Description
  *  Search for attribute by name.
  *
@@ -566,7 +566,7 @@ char *o_attrib_search_attached_attribs_by_name (OBJECT *object, char *name, int 
 }
 
 
-/*! \brief Search for attibute by name.
+/*! \brief Search inherited attribute by name.
  *  \par Function Description
  *  Search for attribute by name.
  *
@@ -590,14 +590,14 @@ char *o_attrib_search_inherited_attribs_by_name (OBJECT *object, char *name, int
 }
 
 
-/*! \brief Search for attibute by name.
+/*! \brief Search attributes of object by name.
  *  \par Function Description
  *  Search for attribute by name.
  *
  *  Counter is the n'th occurance of the attribute, and starts searching
  *  from zero.  Zero is the first occurance of an attribute.
  *
- *  \param [in] list     OBJECT whos attributes to search.
+ *  \param [in] object   OBJECT who's attributes to search.
  *  \param [in] name     Character string with attribute name to search for.
  *  \param [in] counter  Which occurance to return.
  *  \return Character string with attribute value, NULL otherwise.
