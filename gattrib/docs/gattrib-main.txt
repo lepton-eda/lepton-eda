@@ -1,0 +1,7 @@
+/*! \mainpage gattrib - The GPL Electronic Design Automation attributes editor for the schematic capture tool.
+\image html logo.png
+\section geda-intro gEDA Introduction
+    \htmlinclude what-is-geda.html
+\section gattrib-intro gAttrib Introduction
+    \htmlinclude what-is-gattrib.html
+*/
