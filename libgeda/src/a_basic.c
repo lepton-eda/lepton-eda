@@ -67,12 +67,6 @@ gchar *o_save_buffer (TOPLEVEL *toplevel, const GList *object_list)
 
   if (toplevel == NULL) return NULL;
 
-  /* make sure you init net_consolide to false (default) in all */
-  /* programs */
-  if (toplevel->net_consolidate == TRUE) {
-    o_net_consolidate(toplevel);
-  }
-
   acc = g_string_new (o_file_format_header());
 
   buffer = o_save_objects (object_list, FALSE);
