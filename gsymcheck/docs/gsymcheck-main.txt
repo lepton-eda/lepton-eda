@@ -1,0 +1,7 @@
+/*! \mainpage gsymcheck - The GPL Electronic Design Automation symbol checker for the schematic capture tool.
+\image html logo.png
+\section geda-intro gEDA Introduction
+    \htmlinclude what-is-geda.html
+\section gsymcheck-intro gsymcheck Introduction
+    \htmlinclude what-is-gsymcheck.html
+*/
