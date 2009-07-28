@@ -1,0 +1,7 @@
+/*! \mainpage utils - The GPL Electronic Design Automation utilities.
+\image html logo.png
+\section geda-intro gEDA Introduction
+    \htmlinclude what-is-geda.html
+\section utils-intro Utilities Introduction
+    \htmlinclude what-is-utils.html
+*/
