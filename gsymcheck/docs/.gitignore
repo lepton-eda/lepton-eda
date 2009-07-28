@@ -1,4 +1,6 @@
 Makefile
 Makefile.in
+html
+latex
 gsymcheck.html
 *~
