@@ -18,7 +18,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
-
+/*! \file
+ *
+ * \todo Unused function in here, i_update_status(). File is a candidate
+ *       for removal?
+ */
 
 #include <config.h>
 

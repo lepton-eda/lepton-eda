@@ -17,6 +17,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
+/*!
+ * \file
+ * \brief Functions to rename STRING_LIST contents
+ *
+ * Functions to rename STRING_LIST contents
+ */
 #include <config.h>
 
 #include <stdio.h>
@@ -53,12 +59,19 @@ typedef struct {
 #define MAX_RENAME 64
 #define MAX_SETS 10
 
-/* size is fixed... TODO: maybe make this dynamic */
+/*! size is fixed...
+ * \todo maybe make this dynamic */
 static RENAME rename_pairs[MAX_SETS][MAX_RENAME];
 
 static int rename_counter = 0;
 static int cur_set = 0;
 
+
+/*! \brief Initialize the renaming data space
+ *
+ * Initialise the renaming data space by setting all the pair pointers
+ * to NULL.
+ */
 void s_rename_init(void)
 {
     int i, j;
@@ -73,6 +86,11 @@ void s_rename_init(void)
     cur_set = 0;
 }
 
+/*! \brief Free all data referred to by the rename pairs
+ *
+ * Runs through the rename pairs and calls g_free() on the non-NULL
+ * entries, then sets the entry to NULL.
+ */
 void s_rename_destroy_all(void)
 {
     int i, j;
@@ -106,6 +124,10 @@ void s_rename_next_set(void)
     rename_counter = 0;
 }
 
+/*! \brief Print all rename sets
+ *
+ * Iterate through the array and print all the rename sets to stdout.
+ */
 void s_rename_print(void)
 {
     int i,j;
@@ -123,9 +145,17 @@ void s_rename_print(void)
     }
 }
 
-/* if the src is found, return true */
-/* if the dest is found, also return true, but warn user */
-/* If quiet_flag is true than don't print anything */
+/*! \brief Search the rename sets
+ *
+ * Search through the rename sets looking for src and dest.  If
+ * quiet_flag is true than don't print anything.
+ * \param src Source to search for
+ * \param dest Destination to search for
+ * \param quiet_flag Suppress printing if set to TRUE
+ * \returns TRUE if the
+ * src is found. If the dest is found, also return true, but warn
+ * user
+ */
 int s_rename_search(char *src, char *dest, int quiet_flag)
 {
     int i;
@@ -153,6 +183,13 @@ int s_rename_search(char *src, char *dest, int quiet_flag)
 
     return (FALSE);
 }
+
+/*! \brief Add to the rename pairs
+ *
+ * Add a source and destination to the rename pairs.
+ * \param src Source to add
+ * \param dest Destination to add
+ */
 
 void s_rename_add(char *src, char *dest)
 {
@@ -205,6 +242,8 @@ void s_rename_add(char *src, char *dest)
     }
 
 }
+
+
 
 void s_rename_all_lowlevel(NETLIST * netlist_head, char *src, char *dest)
 {

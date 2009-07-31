@@ -17,9 +17,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
-/*------------------------------------------------------------------
- * This file holds fcns used to display dialog boxes.  
- *------------------------------------------------------------------*/
+/*------------------------------------------------------------------*/
+/*! \file
+ * \brief Functions used to display dialog boxes.
+ *
+ * Functions used to display dialog boxes.
+ */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -60,7 +63,9 @@
 #endif
 
 
-/*! \brief This asks for the name of the attrib column to insert
+/*! \brief Add new attribute dialog.
+ *
+ * This asks for the name of the attrib column to insert
  *         and then inserts the column.
  */
 void x_dialog_newattrib()
@@ -112,7 +117,9 @@ void x_dialog_newattrib()
 }
 
 
-/*! \brief This function throws up the "Delete foo, are you sure?" dialog
+/*! \brief Delete Attribute dialog
+ *
+ * This function throws up the "Delete foo, are you sure?" dialog
  *         box.  It offers two buttons: "yes" and "cancel".
  */
 void x_dialog_delattrib()
@@ -158,7 +165,9 @@ void x_dialog_delattrib()
   gtk_widget_destroy(dialog);
 }
 
-/*! \brief This is the "missing symbol file found on object" dialog.
+/*! \brief Missing Symbol dialog
+ *
+ * This is the "missing symbol file found on object" dialog.
  *
  *  It offers the user the chance to close the project without
  *  saving because he read a schematic with a missing symbol file.
@@ -200,7 +209,9 @@ void x_dialog_missing_sym()
   gtk_widget_destroy(dialog);
 }
 
-/*! \brief This is the "Unsaved data -- are you sure you want to quit?" dialog
+/*! \brief Unsaved data dialog
+ *
+ * This is the "Unsaved data -- are you sure you want to quit?" dialog
  *         box which is thrown up before the user quits.
  */
 void x_dialog_unsaved_data()
@@ -261,7 +272,9 @@ void x_dialog_unsaved_data()
   return;
 }
 
-/*! \brief This function informs the user that he has chosen an unimplemented
+/*! \brief Unimplemented feature dialog
+ *
+ * This function informs the user that he has chosen an unimplemented
  *         feature.  It presents only an "OK" button to leave.
  */
 void x_dialog_unimplemented_feature()
@@ -287,12 +300,14 @@ void x_dialog_unimplemented_feature()
   gtk_widget_destroy(dialog);
 }
 
-/*! \brief This function displays a dialog with the error string and
- *         terminates the program.
+/*! \brief Fatal error dialog
+ *
+ * This function displays a dialog with the error string and
+ * terminates the program.
  *
  *  \param [in] string the error string
  *  \param [in] return_code the exit code
- *  \return this function never returns
+ *  \todo Is the GPOINTER_TO_INT() call needed in exit()?
  */
 void x_dialog_fatal_error(gchar *string, gint return_code)
 {
@@ -314,7 +329,9 @@ void x_dialog_fatal_error(gchar *string, gint return_code)
   exit(GPOINTER_TO_INT(return_code));
 }
 
-/*! \brief This dosplays the about dialog.
+/*! \brief About gattrib dialog
+ *
+ * This dosplays the about dialog.
  */
 void x_dialog_about_dialog()
 {
@@ -340,7 +357,9 @@ void x_dialog_about_dialog()
   gtk_widget_destroy(dialog);
 }
 
-/*! \brief This asks for the filename for the CSV export file and then
+/*! \brief Export file dialog
+ *
+ * This asks for the filename for the CSV export file and then
  *         does the exporting.
  */
 void x_dialog_export_file()

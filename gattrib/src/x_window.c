@@ -17,11 +17,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
-/*------------------------------------------------------------------
- * This file holds fcns used to handle the toplevel window and
+/*------------------------------------------------------------------*/
+/*! \file
+ * \brief Functions for the toplevel window
+ *
+ * This file holds functions used to handle the toplevel window and
  * various widgets held by that window.  Widges used to handle
  * (GtkSheet *sheet) itself are held in a different file.
- *------------------------------------------------------------------*/
+ */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -65,7 +68,9 @@ x_window_create_menu(GtkWindow *window, GtkWidget **menubar);
 static void
 x_window_set_default_icon( void );
 
-/*! \brief This function initializes the toplevel gtksheet stuff. 
+/*! \brief Initialises the toplevel gtksheet
+ *
+ * This function initializes the toplevel gtksheet stuff.
  *
  *  It basically just initializes the following widgets:
  *  GTK_WINDOW *window 
@@ -121,10 +126,13 @@ x_window_init()
 
 
 /*------------------------------------------------------------------
- * TODO: this should really be done in two stages:
- * 1. close the current project and reinitialize structures
- * 2. load the new projec:t
- *------------------------------------------------------------------*/
+ * \brief File Open menu
+ *
+ * File open menu. Currently unimplemented.
+ * \todo this should really be done in two stages:
+ * -# close the current project and reinitialize structures
+ * -# load the new project
+ */
 static void
 menu_file_open()
 {
@@ -142,6 +150,11 @@ menu_file_open()
 #endif
 }
 
+/*!
+ * \brief File->Save menu item
+ *
+ * Implement the File->Save menu
+ */
 static void
 menu_file_save()
 {
@@ -151,6 +164,11 @@ menu_file_save()
   sheet_head->CHANGED = FALSE;
 }
 
+/*!
+ * \brief File->Export CSV menu item
+ *
+ * Implement the File->Export CSV menu item
+ */
 static void 
 menu_file_export_csv()
 {
@@ -168,6 +186,11 @@ menu_file_export_csv()
   }
 }
 
+/*!
+ * \brief Edit->New attrib menu item
+ *
+ * Implement the New attrib menu item
+ */
 static void 
 menu_edit_newattrib()
 {
@@ -182,12 +205,20 @@ menu_edit_newattrib()
   }
 }
 
+/*!
+ * \brief Edit->Delete Attribute menu item
+ *
+ * Implements the Delete Attribute menu item
+ */
 static void
 menu_edit_delattrib()
 {
   x_dialog_delattrib();
 }
 
+/*!
+ * The Gtk action table
+ */
 static const GtkActionEntry actions[] = {
   /* name, stock-id, label, accelerator, tooltip, callback function */
   /* File menu */
@@ -219,7 +250,9 @@ static const GtkActionEntry actions[] = {
 };
 
 
-/*! \brief Create the menu bar and attach it to the main window.
+/*! \brief Create and attach the menu bar
+ *
+ * Create the menu bar and attach it to the main window.
  *
  *  First, the GtkActionGroup object is created and filled with
  *  entries of type GtkActionEntry (each entry specifies a single
@@ -228,6 +261,8 @@ static const GtkActionEntry actions[] = {
  *  description. Finally, the GtkAccelGroup is added to the
  *  main window to enable keyboard accelerators and a pointer
  *  to the menu bar is retrieved from the GtkUIManager object.
+ * \param window Window to add the menubar to
+ * \param [out] menubar Created menubar
  */
 static void
 x_window_create_menu(GtkWindow *window, GtkWidget **menubar)
@@ -263,20 +298,21 @@ x_window_create_menu(GtkWindow *window, GtkWidget **menubar)
 }
 
 
-/*! \brief This function updates the top level window
+/*! \brief Add all items to the top level window
+ *
+ * This function updates the top level window
  *         after a new page is read in.  
  *
- *  \par Function Description
  *  It does the following:
  * 
- *  2.  Create a new gtksheet having the current dimensions.
- *  3.  Call x_gktsheet_add_row_labels(comp_count, master_*_list_head)
- *  4.  Call x_gktsheet_add_col_labels(comp_attrib_count, master_*_attrib_list_head)
- *  5.  Call x_gktsheet_add_row_labels(net_count, master_*_list_head)
- *  6.  Call x_gktsheet_add_col_labels(net_attrib_count, master_*_attrib_list_head)
- *  7.  loop on i, j -- call x_gtksheet_add_entry(i, j, attrib_value)
- *  8.  Call gtk_widget_show(window) to show new window.
- *------------------------------------------------------------------*/
+ *  -# Create a new gtksheet having the current dimensions.
+ *  -# Call x_gktsheet_add_row_labels(comp_count, master_*_list_head)
+ *  -# Call x_gktsheet_add_col_labels(comp_attrib_count, master_*_attrib_list_head)
+ *  -# Call x_gktsheet_add_row_labels(net_count, master_*_list_head)
+ *  -# Call x_gktsheet_add_col_labels(net_attrib_count, master_*_attrib_list_head)
+ *  -# loop on i, j -- call x_gtksheet_add_entry(i, j, attrib_value)
+ *  -# Call gtk_widget_show(window) to show new window.
+ */
 void
 x_window_add_items()
 {
@@ -393,9 +429,10 @@ x_window_add_items()
 }
 
 
-/*! \brief Setup default icon for GTK windows
+/*! \brief Set application icon
  *
- *  \par Function Description
+ * Setup default icon for GTK windows
+ *
  *  Sets the default window icon by name, to be found in the current icon
  *  theme. The name used is #defined above as GATTRIB_THEME_ICON_NAME.
  */

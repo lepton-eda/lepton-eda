@@ -16,6 +16,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+/*! \file
+ * \brief Functions to register Scheme functions
+ *
+ * Functions to register Scheme functions
+ */
 
 #include <config.h>
 
@@ -48,11 +53,12 @@
 
 
 /* ---------------------------------------------------------------------- */
-/*! \brief This function registers the Scheme functions required to use
+/*! \brief Register Scheme functions
+ *
+ * This function registers the Scheme functions required to use
  * gattrib.  They are mostly unnecessary, except for reading in the gattribrc
  * file at the beginning of the prog which gives the library search paths.
- *
- * ---------------------------------------------------------------------- */
+ */
 void g_register_funcs(void)
 {
   /* general functions */
@@ -64,6 +70,10 @@ void g_register_funcs(void)
 
 }
 
+/*! \brief Scheme function to quit the application
+ *
+ * Quit the application from within Scheme.
+ */
 SCM g_quit(void)
 {
 #ifdef DEBUG

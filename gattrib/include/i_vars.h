@@ -17,6 +17,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
+/*!
+ * \file
+ * \brief Default variable value declarations.
+ * Default variable value declarations.
+ */
+
 extern int   default_text_size;
 extern int   default_text_caps;
 

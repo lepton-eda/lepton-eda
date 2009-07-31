@@ -17,12 +17,17 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
-/*------------------------------------------------------------------
- * This file holds fcns involved in manipulating the TABLE structure, 
+/*------------------------------------------------------------------*/
+/*! \file
+ *  \brief Functions to manipulate the TABLE structure
+ *
+ * This file holds functions involved in manipulating the TABLE structure,
  * which is subsidiary to SHEET_DATA.  TABLE is a 2 dimensional array 
  * of structs; each struct corresponds to the data about an element
  * in a single cell of the spreadsheet.
- *------------------------------------------------------------------*/
+ * \todo TABLE should also store its dimensions in its own data
+ *       structure to save carrying the dimensions around separately.
+ */
 
 #include <config.h>
 
@@ -35,7 +40,7 @@
 /*------------------------------------------------------------------
  * Gattrib specific includes
  *------------------------------------------------------------------*/
-#include <libgeda/libgeda.h>       /* geda library fcns  */
+#include <libgeda/libgeda.h>       /* geda library functions  */
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
@@ -47,15 +52,19 @@
 /* ===================  Public Functions  ====================== */
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn is the table creator.  It returns a pointer to 
+/*! \brief Create a new table
+ *
+ * This is the table creator.  It returns a pointer to
  * an initialized TABLE struct.  As calling args, it needs
  * the number of rows and cols to allocate.  The table is a
  * dynamically allocated 2D array of structs.  To access data in
  * a cell in the table, you reference (for example):
  * ((sheet_data->comp_table)[i][j]).attrib_value
  * (Parens used only for clarity.  It works without parens.)
- *
- *------------------------------------------------------------------*/
+ * \param rows Number of rows required in the new table
+ * \param cols Number of columns required in the new table
+ * \returns a pointer to an initialized TABLE struct.
+ */
 TABLE **s_table_new(int rows, int cols)
 {
   TABLE **new_table;
@@ -88,13 +97,21 @@ TABLE **s_table_new(int rows, int cols)
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn recreates the table with 
+/*! \brief Resize a TABLE
+ *
+ * This function recreates the table with
  * a new size.  It can only increase
  * the number of cols.  You can't increase the number of rows since
  * gattrib doesn't allow you to input new components.  Decreasing the 
  * number of cols is also TBD.
- * 
- *------------------------------------------------------------------*/
+ * \param table Table to resize
+ * \param rows Number of rows in the table
+ * \param old_cols Number of columns previously in the table
+ * \param new_cols Number of columns required in the table
+ * \returns a pointer to the resized table
+ * \todo The row and column information could be stored in the
+ *       TABLE struct.
+ */
 TABLE **s_table_resize(TABLE **table, 
 		       int rows, int old_cols, int new_cols)
 {
@@ -124,11 +141,15 @@ TABLE **s_table_resize(TABLE **table,
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn destroys the old table.  
+/*! \brief Destroy a table
+ *
+ * This function destroys the old table.
  * Use it after reading in a new
  * page to get rid of the old table before building a new one.
- *
- *------------------------------------------------------------------*/
+ * \param table Table to destroy
+ * \param row_count Number of rows in table
+ * \param col_count Number of columns in table
+ */
 void s_table_destroy(TABLE **table, int row_count, int col_count)
 {
   int i, j;
@@ -157,12 +178,16 @@ void s_table_destroy(TABLE **table, int row_count, int col_count)
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn returns the index number 
+/*! \brief Get a string index number
+ *
+ * This function returns the index number
  * when given a STRING_LIST and a 
  * string to match.  It finds the index
  * number by iterating through the master  list.
- *
- *------------------------------------------------------------------*/
+ * \param local_list
+ * \param local_string
+ * \returns the index of the string
+ */
 int s_table_get_index(STRING_LIST *local_list, char *local_string) {
   int count = 0;
   STRING_LIST *list_element;
@@ -186,13 +211,20 @@ int s_table_get_index(STRING_LIST *local_list, char *local_string) {
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn takes a table, a row list, and a row name, 
+/*! \brief Create attribute pair
+ *
+ * This function takes a table, a row list, and a row name,
  * and returns a list holding
  * name=value pairs for all attribs pertainent to that particular
  * row.
  * If the row holds no attribs, it just returns NULL.
  *
- *------------------------------------------------------------------*/
+ * \param row_name Name of the row to search for
+ * \param table Table to be searched
+ * \param row_list list of rows
+ * \param num_attribs
+ * \returns STRING_LIST of name=value pairs
+ */
 STRING_LIST *s_table_create_attrib_pair(gchar *row_name, 
 					TABLE **table, 
 					STRING_LIST *row_list,
@@ -232,12 +264,14 @@ STRING_LIST *s_table_create_attrib_pair(gchar *row_name,
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn iterates over adds all 
+/*! \brief Add components to the component table
+ *
+ * This fcn iterates over adds all
  * objects found on this page looking
  * for components.  When it finds a component, it finds all component
  * attribs and sticks them in the TABLE.
- *
- *------------------------------------------------------------------*/
+ * \param obj_list pointer to GList containing objects on this page
+ */
 void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
   gchar *temp_uref;
   int row, col;
@@ -345,12 +379,19 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
  
 #if 0
 /*------------------------------------------------------------------*/
-/*! \brief This fcn iterates over adds all 
+/*! \brief Add nets to net table
+ *
+ * This function iterates over adds all
  * items found on this page looking
  * for nets and adds them individually to the net table.  Looping over
  * objects occurs here.
  *
- *------------------------------------------------------------------*/
+ * \param start_obj Pointer to first object
+ *
+ * \todo Why do the calling semantics of this function disagree with
+ *       s_table_add_toplevel_pin_items_to_pin_table()?  That function
+ *       takes a GList, this one takes a pointer to OBJECT.
+ */
 void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
   OBJECT *o_current;
   char *temp_netname;
@@ -430,11 +471,13 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn iterates over adds all items found on this page
+/*! \brief Add pins to pin table.
+ *
+ * This function iterates over adds all items found on this page
  * looking for pins.  WHen it finds a pin, it gathers all
  * pin attribs and sticks them into the pin table. 
- *
- *------------------------------------------------------------------*/
+ * \param obj_list List of objects on page
+ */
 void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
   gchar *temp_uref;
   gchar *pinnumber;
@@ -549,12 +592,13 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn through the spreadsheet, 
+/*! \brief Push spreadsheet data to TABLEs.
+ *
+ * This function traverses the spreadsheet,
  * extracts the attribs from
  * the cells, and places them back into TABLE.  This is the
  * first step in saving out a project.
- *
- *------------------------------------------------------------------*/
+ */
 void s_table_gtksheet_to_all_tables() {
 
   int num_rows;
@@ -616,12 +660,20 @@ void s_table_gtksheet_to_all_tables() {
 
 /* ===================  Private Functions  ====================== */
 /*------------------------------------------------------------------*/
-/*! \brief This fcn does the actual heaving lifting of looping 
+/*! \brief Extract attributes from gtksheet into TABLE
+ *
+ * This function does the actual heavy lifting of looping
  * through the spreadsheet, extracting the attribs from
  * the cells, and placing them back into TABLE.  This is the
  * first step in saving out a project.
  *
- *------------------------------------------------------------------*/
+ * \param local_gtk_sheet GtkSheet to save
+ * \param master_row_list STRING_LIST of rows
+ * \param master_col_list STRING_LIST of columns
+ * \param local_table TABLE structure to fill
+ * \param num_rows Number of rows in table
+ * \param num_cols Number of columns in table
+ */
 void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_row_list, 
 			 STRING_LIST *master_col_list, TABLE **local_table,
 			 int num_rows, int num_cols) 

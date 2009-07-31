@@ -17,6 +17,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
+/*! \file
+ * \brief Functions for variable setting.
+ *
+ * Functions for variable setting.
+ */
+
 #include <config.h>
 
 #include <stdio.h>
@@ -43,16 +49,23 @@
 
 
 
-/*------------------------------------------------------------------
+/*------------------------------------------------------------------*/
+/*
  * Define the vars we'll use later
  *------------------------------------------------------------------*/
-int   default_paper_width = 11000; /* letter size */
-int   default_paper_height = 85000;
+int   default_paper_width = 11000; /*!< width for letter paper (landscape)
+				    * \todo Can this be const? */
+int   default_paper_height = 85000;/*!< height for letter paper (landscape)
+				    * \todo Can this be const? */
 
 
-/*------------------------------------------------------------------
- * This initializes the vars in pr_current.
- *------------------------------------------------------------------*/
+/*------------------------------------------------------------------*/
+/*! \brief Initialise variables in pr_current
+ *
+ * Initialize the variables in pr_current. In practice, this is only
+ * the paper size for the sheet.
+ * \param pr_current pointer to the TOPLEVEL to set paper size in.
+ */
 void i_vars_set(TOPLEVEL * pr_current)
 {
   i_vars_libgeda_set(pr_current);

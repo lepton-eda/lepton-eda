@@ -17,6 +17,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
+/*! \file
+ *  \brief Miscellaneous STRING_LIST functions
+ */
+
 #include <config.h>
 
 #include <stdio.h>
@@ -42,8 +46,18 @@
  * The below fcns identical to those defined in
  * geda-gnetlist/src/s_misc.c
  *------------------------------------------------------------------*/
+/*!
+ * Running count of number of characters printed on current line.
+ */
 static int char_index = 0;
 
+/*! \brief Print message in verbose mode
+ *
+ * Print the supplied message in verbose mode. Line wrap if necessary.
+ *
+ * Identical to that defined in gnetlist/src/s_misc.c
+ * \param string String to be printed
+ */
 void verbose_print(char *string)
 {
     if (verbose_mode) {
@@ -56,6 +70,13 @@ void verbose_print(char *string)
     }
 }
 
+/*! \brief Print "DONE" message in verbose mode
+ *
+ * Prints the "DONE" message in verbose mode, wrapping before printing
+ * if near the end of line.
+ *
+ * Identical to function defined in gnetlist/src/s_misc.c
+ */
 void verbose_done(void)
 {
     if (verbose_mode) {
@@ -69,6 +90,13 @@ void verbose_done(void)
     }
 }
 
+/*! \brief Reset the running character count
+ *
+ * Reset the current characted count.
+ *
+ * Identical to function defined in gnetlist/src/s_misc.c
+ */
+
 void verbose_reset_index(void)
 {
     char_index = 0;
@@ -78,7 +106,6 @@ void verbose_reset_index(void)
 /*------------------------------------------------------------------
  * Gattrib specific utilities
  *------------------------------------------------------------------*/
-
 char *s_misc_remaining_string(gchar *string, gchar delimiter, gint count)
 {
   gint i;

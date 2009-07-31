@@ -17,15 +17,18 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
-/*------------------------------------------------------------------
- * This file holds fcns involved in manipulating the OBJECT data
+/*------------------------------------------------------------------*/
+/*! \file
+ * \brief Functions for manipulating OBJECTs.
+ *
+ * This file holds functions involved in manipulating the OBJECT data
  * structure.  OBJECT is defined in libgeda.  An OBJECT is a graphical
  * primitive normally used in gschem.  Example OBJECTs: some text, 
  * a component (complex), a pin, a line, etc. 
  *
- * The fcns herein are fcns which I wrote as wrappers to the 
+ * The functions herein are functions which I wrote as wrappers to the
  * fcns in libgeda.  
- *------------------------------------------------------------------ */
+ */
 
 #include <config.h>
  
@@ -57,16 +60,22 @@
 /* ===================  Public Functions  ====================== */
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn adds a new attrib to o_current, when o_current is a
+/*! \brief Add an attribute to an OBJECT
+ *
+ * This fcn adds a new attrib to o_current, when o_current is a
  * component.  It does it in the following 
  * way:
- * 1. It creates an object -- "attrib_graphic" -- and fills it in.
- * 2. It gets the position info from o_current's refdes attrib and
- *    calls o_text_new to add pos info and name=value string
+ * -# It creates an object -- "attrib_graphic" -- and fills it in.
+ * -# It gets the position info from o_current's refdes attrib and
+ *    calls o_text_new() to add position info and name=value string
  *    to attrib_graphic.
- * 3. It calls o_attrib_add to wrap attrib_graphic with (attribute OBJECT )
- *
- *------------------------------------------------------------------ */
+ * -# It calls o_attrib_add() to wrap attrib_graphic with (attribute OBJECT )
+ * \param o_current pointer to object to add attribute to
+ * \param new_attrib_name name of the attribute to add
+ * \param new_attrib_value value of the attribute to add
+ * \param visibility Is the attribute visible?
+ * \param show_name_value Control visibility of name and value.
+ */
 void s_object_add_comp_attrib_to_object(OBJECT *o_current, 
 					char *new_attrib_name, 
 					char *new_attrib_value,
@@ -90,9 +99,9 @@ void s_object_add_comp_attrib_to_object(OBJECT *o_current,
 
 
 /*------------------------------------------------------------------*/
-/*! /brief This needs to be filled in.
- *
- *------------------------------------------------------------------*/
+/*!
+ * \todo This needs to be filled in.
+ */
 void s_object_add_net_attrib_to_object(OBJECT *o_current, char *new_attrib_name, 
 				char *new_attrib_value)
 {
@@ -101,18 +110,22 @@ void s_object_add_net_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn adds a new attrib to o_current, when o_current is a
+/*! \brief Add a new attribute to an pin OBJECT
+ *
+ * Add a new attribute to o_current, when o_current is a
  * pin.  It does it in the following 
  * way:
- * 1. It creates an object -- "attrib_graphic" -- and fills it in.
- * 2. It gets the position info from o_current's refdes attrib and
- *    calls o_text_new to add pos info and name=value string
+ * -# It creates an object -- "attrib_graphic" -- and fills it in.
+ * -# It gets the position info from o_current's refdes attrib and
+ *    calls o_text_new() to add position info and name=value string
  *    to attrib_graphic.
- * 3. It calls o_attrib_add to wrap attrib_graphic with (attribute OBJECT )
- * Question:  Do I really need separate fcns for comps, nets, and 
+ * -# It calls o_attrib_add() to wrap attrib_graphic with (attribute OBJECT )
+ * \param o_current Pointer to pin object
+ * \param new_attrib_name Name of attribute to add
+ * \parma new_attrib_value Value of attribute to add
+ * \todo Do I really need separate fcns for comps, nets, and
  * pins???
- *
- *------------------------------------------------------------------ */
+ */
 void s_object_add_pin_attrib_to_object(OBJECT *o_current, char *new_attrib_name, 
 				char *new_attrib_value)
 {
@@ -133,13 +146,17 @@ void s_object_add_pin_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
 }
 
 
-
-
 /*------------------------------------------------------------------*/
-/*! \brief This fcn finds the instance of attrib_name on o_current, and
- * replaces it's value wiht new_attrib_value.
+/*! \brief Replace attribute value in object
  *
- *------------------------------------------------------------------*/
+ * Find the instance of attrib_name on o_current, and
+ * replace its value with the new_attrib_value.
+ * \param o_current object to operate on
+ * \param new_attrib_name name of attribute to replace
+ * \param new_attrib_value value to set attribute to
+ * \param visibility set visibility of attribute
+ * \param show_name_value set visibility of attribute name and value
+ */
 void s_object_replace_attrib_in_object(OBJECT *o_current, 
 				       char *new_attrib_name, 
 				       char *new_attrib_value,
@@ -195,9 +212,13 @@ void s_object_replace_attrib_in_object(OBJECT *o_current,
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn removes attrib from o_current.
+/*!
+ * \brief Remove attribute from object
  *
- *------------------------------------------------------------------*/
+ * Remove an attribute from an object.
+ * \param o_current Object to remove attribute from
+ * \param new_attrib_name Name of attribute to remove
+ */
 void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name) 
 {
   GList *a_iter;
@@ -247,11 +268,19 @@ void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name)
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn attaches the name=value pair to the OBJECT "object"  It 
- * was stolen from gschem/src/o_attrib.c:o_attrib_add_attrib and
- * hacked for gattrib.  Does it need to return OBJECT?
+/*! \brief Attach attribute to object.
  *
- *------------------------------------------------------------------*/
+ * Attach the name=value pair to the OBJECT "object". This function
+ * was stolen from gschem/src/o_attrib.c:o_attrib_add_attrib and
+ * hacked for gattrib.
+ * \param pr_current TOPLEVEL to operate on
+ * \param text_string
+ * \param visibility
+ * \param show_name_value
+ * \param object
+ * \returns pointer to the object
+ * \todo Does it need to return OBJECT?
+ */
 OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_string,
 			    int visibility, int show_name_value,
 			    OBJECT * object)
@@ -336,10 +365,14 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
 
  
 /*------------------------------------------------------------------*/
-/*! \brief This fcn deletes the text object pointed to by text_object.  It
+/*! \brief Delete text object
+ *
+ * Delete the text object pointed to by text_object.  This function
  * was shamelessly stolen from gschem/src/o_delete.c and hacked
  * for gattrib by SDB.
- *------------------------------------------------------------------*/
+ * \param pr_current TOPLEVEL to be operated on
+ * \param test_object text object to be deleted
+ */
 void s_object_delete_text_object_in_object(TOPLEVEL * pr_current, OBJECT * text_object)
 {
   s_page_remove (pr_current, pr_current->page_current, text_object);
@@ -349,11 +382,12 @@ void s_object_delete_text_object_in_object(TOPLEVEL * pr_current, OBJECT * text_
                                                                                                     
 
 /*------------------------------------------------------------------*/
-/*! \brief This verifies that the object has a non-null symbol file.
+/*! \brief Ensure object has a symbol file
  *
- * \returns It returns 0 = valid symbol file, 1 = no symbol file found.
+ * This verifies that the object has a non-null symbol file.
  *
- *------------------------------------------------------------------*/
+ * \returns 0 = valid symbol file, 1 = no symbol file found.
+ */
 int s_object_has_sym_file(OBJECT *object)
 {
   char *filename;

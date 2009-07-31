@@ -17,11 +17,21 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
-/*------------------------------------------------------------------
- * This file holds fcns involved in manipulating the STRING_LIST
+/*------------------------------------------------------------------*/
+/*! \file
+ *  \brief Functions involved in manipulating the STRING_LIST
+ *         structure.
+ *
+ * This file holds functions involved in manipulating the STRING_LIST
  * structure.  STRING_LIST is basically a linked list of strings
  * (text).
- *------------------------------------------------------------------*/
+ *
+ * \todo This could be implemented using an underlying GList
+ *       structure.  The count parameter could also be eliminated -
+ *       either store it in the struct or preferably, calculate it
+ *       when needed - I don't think the speed penalty of traversing
+ *       the list is significant at all. GDE
+ */
 
 #include <config.h>
 
@@ -46,9 +56,11 @@
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This returns a pointer to a new STRING_LIST object.
+/*! \brief Return a pointer to a new STRING_LIST
  *
- *------------------------------------------------------------------*/
+ * Returns a pointer to a new STRING_LIST struct. This list is empty.
+ * \returns pointer to the new STRING_LIST struct.
+ */
 STRING_LIST *s_string_list_new() {
   STRING_LIST *local_string_list;
   
@@ -63,10 +75,13 @@ STRING_LIST *s_string_list_new() {
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This takes an old string list, duplicates it and returns a pointer
- * to the new, duplicate list.
+/*! \brief Duplicate a STRING_LIST
  *
- *------------------------------------------------------------------*/
+ * Given a STRING_LIST, duplicate it and returns a pointer
+ * to the new, duplicate list.
+ * \param old_string_list pointer to the STRING_LIST to be duplicated
+ * \returns a pointer to the duplicate STRING_LIST
+ */
 STRING_LIST *s_string_list_duplicate_string_list(STRING_LIST *old_string_list) {
   STRING_LIST *new_string_list;
   STRING_LIST *local_string_list;
@@ -92,19 +107,15 @@ STRING_LIST *s_string_list_duplicate_string_list(STRING_LIST *old_string_list) {
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn inserts the item into a char* list.  
- * It first cycles through the
- * list to make sure that there are no duplications. The list is assumed
- * to be a STRING_LIST:
- * struct STRING_LIST
- * {
- *   char *data;
- *   int pos;
- *   STRING_LIST *next;
- *   STRING_LIST *prev;
- * };
+/*! \brief Add an item to a STRING_LIST
  *
- *------------------------------------------------------------------*/
+ * Inserts the item into a STRING_LIST.
+ * It first passes through the
+ * list to make sure that there are no duplications.
+ * \param list pointer to STRING_LIST to be added to.
+ * \param count FIXME Don't know what this does - input or output? both?
+ * \param item pointer to string to be added
+ */
 void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
 
   gchar *trial_item = NULL;
@@ -161,11 +172,13 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn deletes an item in a STRING_LIST.
- * It takes args: list to to delete item, pointer to no of items in
- * list at end, and the item itself to remove.
+/*! \brief Delete an item from a STRING_LIST
  *
- *------------------------------------------------------------------*/
+ * Deletes an item in a STRING_LIST.
+ * \param list pointer to STRING_LIST
+ * \param count pointer to count of items in list
+ * \param item item to remove from list
+ */
 void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
 
   gchar *trial_item = NULL;
@@ -244,12 +257,15 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
 
 }
 
-
 /*------------------------------------------------------------------*/
-/*! \brief This fcn looks for item in the list.  It returns 1 if item is
- * present, 0 if absent.
+/*! \brief Detect item in list
  *
- *------------------------------------------------------------------*/
+ * Look for item in the list.
+ *
+ * \param list pointer to the STRING_LIST struct
+ * \param item string to search for
+ * \returns 0 if absent, 1 if present
+ */
 int s_string_list_in_list(STRING_LIST *list, char *item) {
 
   gchar *trial_item = NULL;
@@ -281,10 +297,14 @@ int s_string_list_in_list(STRING_LIST *list, char *item) {
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn returns the index'th item in the string list.
- * It returns NULL if there is a problem
+/*! \brief Get an item from a STRING_LIST by index
  *
- *------------------------------------------------------------------*/
+ * Returns the index'th item in the string list.
+ * \param list pointer to STRING_LIST to get from
+ * \param index index of item to return
+ * \returns NULL if there is a problem otherwise a pointer to
+ *          the string.
+ */
 gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index) 
 {
   gint i;
@@ -309,14 +329,15 @@ gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn takes the master comp list 
+/*! \brief Sort the master component list
+ *
+ * Takes the master comp list
  * sheet_head->master_comp_list_head
  * and sorts it in this order:
  * <all refdeses in alphabetical order>
  * Right now it does nothing other than fill in the "position"
  * and "length" variables.
- *
- *------------------------------------------------------------------*/
+ */
 void s_string_list_sort_master_comp_list() {
   int i = 0;
   STRING_LIST *local_list, *p;
@@ -349,15 +370,6 @@ void s_string_list_sort_master_comp_list() {
   return;
 }
 
-/*------------------------------------------------------------------*/
-/*! \brief This fcn takes the master comp attrib list 
- * sheet_head->master_comp_attrib_list_head
- * and sorts it in this order:
- * <all refdeses in alphabetical order>
- * Right now it does nothing other than fill in the "position"
- * and "length" variables.
- *
- *------------------------------------------------------------------*/
 
 /* This list overrides the alphanumeric sort.  Attribs not found in
    this list are sorted as if they had a value of DEFAULT_ATTRIB_POS
@@ -374,6 +386,16 @@ static struct {
 #define NUM_CERTAINS (sizeof(certain_attribs)/sizeof(certain_attribs[0]))
 #define DEFAULT_ATTRIB_POS 100
 
+/*------------------------------------------------------------------*/
+/*! \brief Sort the master component attribute list
+ *
+ * Take the master comp attrib list
+ * sheet_head->master_comp_attrib_list_head
+ * and sort it in this order:
+ * <all refdeses in alphabetical order>
+ * Right now it does nothing other than fill in the "position"
+ * and "length" variables.
+ */
 void s_string_list_sort_master_comp_attrib_list() {
   int i = 0;
   STRING_LIST *local_list, *p;
@@ -413,12 +435,13 @@ void s_string_list_sort_master_comp_attrib_list() {
 }
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn takes the master net list 
+/*! \brief Sort the master netlist
+ *
+ * This fcn takes the master net list
  * sheet_head->master_net_list_head
  * and sorts it in this order:
  * <all nets in alphabetical order>
- *
- *------------------------------------------------------------------*/
+ */
 void s_string_list_sort_master_net_list() {
   int i = 0;
   STRING_LIST *local_list;
@@ -437,13 +460,15 @@ void s_string_list_sort_master_net_list() {
 }
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn takes the master net attrib list 
- * sheet_head->master_net_attrib_list_head
- * and sorts it in this order:
- * value, footprint, model-name, file, 
- * <all other attribs in alphabetical order>
+/*! \brief Sort the master net attribute list
  *
- *------------------------------------------------------------------*/
+ * Take the master net attribute list
+ * sheet_head->master_net_attrib_list_head
+ * and sort it in this order:
+ * value, footprint, model-name, file, 
+ * <all other attributes in alphabetical order>
+ */
+/*------------------------------------------------------------------*/
 void s_string_list_sort_master_net_attrib_list() {
   int i = 0;
   STRING_LIST *local_list;
@@ -463,14 +488,16 @@ void s_string_list_sort_master_net_attrib_list() {
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn takes the master pin list 
+/*! \brief Sort the master pin list
+ *
+ * Take the master pin list
  * sheet_head->master_pin_list_head
  * and sorts it in this order:
  * <all refdeses in alphabetical order>
  * Right now it does nothing other than fill in the "position"
  * and "length" variables.
- *
- *------------------------------------------------------------------*/
+ */
+/*------------------------------------------------------------------*/
 void s_string_list_sort_master_pin_list() {
   int i = 0;
   STRING_LIST *local_list, *p;
@@ -504,14 +531,16 @@ void s_string_list_sort_master_pin_list() {
 }
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn takes the master pin attrib list 
+/*! \brief Sort the master pin attribute list
+ *
+ * Takes the master pin attrib list
  * sheet_head->master_pin_attrib_list_head
  * and sorts it in this order:
  * <all pin attribs in alphabetical order>
  * Right now it does nothing other than fill in the "position"
  * and "length" variables.
- *
- *------------------------------------------------------------------*/
+ */
+/*------------------------------------------------------------------*/
 void s_string_list_sort_master_pin_attrib_list() {
   int i = 0;
   STRING_LIST *local_list;

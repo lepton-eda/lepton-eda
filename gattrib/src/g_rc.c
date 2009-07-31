@@ -16,6 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+/*! \file
+ *
+ * \brief RC-file specific functions
+ *
+ * RC-file specific functions for Scheme. At the moment it only
+ * contains a function to test the version number of the program.
+ */
 
 #include <config.h>
 
@@ -49,9 +56,12 @@
 #include <dmalloc.h>
 #endif
 
-/*------------------------------------------------------------------
+/*------------------------------------------------------------------*/
+/*! \brief Test the version of gattrib and gEDA/gaf
  * 
- *------------------------------------------------------------------*/
+ * \param version Version being tested
+ * \returns false if incorrect version, true if OK
+ */
 SCM g_rc_gattrib_version(SCM version)
 {
   SCM_ASSERT (scm_is_string (version), version,

@@ -17,12 +17,16 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
-/*------------------------------------------------------------------
- * This file holds fcns involved in manipulating the TOPLEVEL data
+/*------------------------------------------------------------------*/
+/*! \file
+ *  \brief Functions to manipulate the TOPLEVEL struct.
+ *
+ * This file holds functions involved in manipulating the TOPLEVEL data
  * structure.  TOPLEVEL is the data structure inherited from gEDA's
  * other programs, and holds all info about a project in a form
  * native to gEDA.
- *------------------------------------------------------------------*/
+ */
+
 
 #include <config.h>
 
@@ -35,7 +39,7 @@
 /*------------------------------------------------------------------
  * Gattrib specific includes
  *------------------------------------------------------------------*/
-#include <libgeda/libgeda.h>       /* geda library fcns  */
+#include <libgeda/libgeda.h>       /* geda library functions  */
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
@@ -48,10 +52,12 @@
 /* ===================  Public Functions  ====================== */
 
 
-/*! \brief Reads in a page & calls f_open, which fills out the
- *         pr_current structure.
+/*! \brief Read a schematic page
  *
- *  \param [in] filename file to be opened
+ * Reads in a schematic page & calls f_open, which fills out the
+ * pr_current structure.
+ *
+ *  \param filename file to be opened
  *  \returns 1 on success, 0 on failure
  */
 int s_toplevel_read_page(char *filename)
@@ -75,14 +81,16 @@ int s_toplevel_read_page(char *filename)
 }
 
 
-/*! \brief This function loops through all components in the
- *         design looking for components which are placeholders.
+/*! \brief Verify the entire design
+ *
+ * This function loops through all components in the
+ * design looking for components which are placeholders.
  *
  *  Placeholders are inserted into the object list when
  *  no symbol file is found.  If this function finds a
  *  placeholder, it warns the user.
  *
- *  \param [in] pr_current a toplevel object
+ *  \param pr_current pointer to the toplevel object to be verified
  */
 void s_toplevel_verify_design(TOPLEVEL *pr_current)
 {
@@ -115,11 +123,15 @@ void s_toplevel_verify_design(TOPLEVEL *pr_current)
 
 
 
-/*------------------------------------------------------------------
- * This fcn returns 1 if the project is empty (i.e. pr_current is 
+/*------------------------------------------------------------------*/
+/*! \brief Detect empty project
+ *
+ * Test if there is data in the current project.
+ * \returns 1 if the project is empty (i.e. pr_current is
  * not filled out yet), and 0 if the project is non-empty (i.e. there
  * is some data in pr_current).
- *------------------------------------------------------------------*/
+ * \todo Doesn't do anything. Candidate for removal?
+ */
 void s_toplevel_empty_project()
 {
   /* Nothing here yet.  Is this necessary in current program
@@ -128,12 +140,15 @@ void s_toplevel_empty_project()
 
 
 
-/*------------------------------------------------------------------
- * This fcn is called when the user invokes "save".  It first
+/*------------------------------------------------------------------*/
+/*! \brief Copy data from gtksheet into TOPLEVEL struct
+ *
+ * Called when the user invokes "save".  It first
  * places all data from gtksheet into SHEET_DATA.  Then it
- * loops through all pages & calls s_toplevel_sheetdata_to_toplevel to place all
+ * loops through all pages & calls s_toplevel_sheetdata_to_toplevel()
+ * to place all
  * stuff in SHEET_DATA into the libgeda TOPLEVEL structure.
- *------------------------------------------------------------------*/
+ */
 void
 s_toplevel_gtksheet_to_toplevel()
 {
@@ -171,15 +186,18 @@ s_toplevel_gtksheet_to_toplevel()
 }
 
 
-/*------------------------------------------------------------------
- *  This fcn gets called when the user has entered a new attrib name,
+/*------------------------------------------------------------------*/
+/*! \brief Add a new attribute to the top level
+ *
+ *  This function gets called when the user has entered a new attrib name,
  *  and clicked the OK button.  It does this:
- *  1. It figures out which attrib/sheet is being added to
- *  2. It destroys the old table in preparation for the new attrib.
- *  3. It adds the new attrib to the master lists.
- *  4. It creates a new table with the new attrib.
- *  5. It then adds the appropriate col to the gtksheet.
- *------------------------------------------------------------------*/
+ *  -# It figures out which attrib/sheet is being added to
+ *  -# It destroys the old table in preparation for the new attrib.
+ *  -# It adds the new attrib to the master lists.
+ *  -# It creates a new table with the new attrib.
+ *  -# It then adds the appropriate col to the gtksheet.
+ * \param new_attrib_name attribute to be added
+ */
 void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
   gint cur_page;  /* current page in notbook  */
   gint old_comp_attrib_count;
@@ -262,11 +280,13 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
 }
 
 
-/*------------------------------------------------------------------
- *  This fcn gets called when the user has selected a single attrib
+/*------------------------------------------------------------------*/
+/*! \brief Delete an attribute column
+ *
+ *  This function gets called when the user has selected a single attrib
  *  column, selected the edit->delete attrib item from the pull-down
  *  menu, and then said "yes" to the confirm dialog.
- *------------------------------------------------------------------*/
+ */
 void s_toplevel_delete_attrib_col() {
   gint cur_page;  /* current page in notbook  */
   gint mincol, maxcol;
@@ -363,14 +383,17 @@ void s_toplevel_delete_attrib_col() {
 }
 
 
-/*------------------------------------------------------------------
- * This fcn is a hack.  It gives a non-NULL value to the select_func
- * defined in globals.c for libgeda.  A non-NULL value for this fcn
+/*------------------------------------------------------------------*/
+/*! \brief Select object in the top level.
+ *
+ * This function is a hack.  It gives a non-NULL value to the select_func
+ * defined in globals.c for libgeda.  A non-NULL value for this function
  * makes sure that object->sel_func = 1 when the project is saved out,
  * which keeps the objects selectable in gschem.
  * Perhaps I should just set the variable myself when saving the 
  * project out . . . . .
- *------------------------------------------------------------------*/
+ * \todo Function is a NOP - candidate for removal?
+ */
 void s_toplevel_select_object()
 {
   /* I don't know if I should do anything in here to prevent
@@ -378,20 +401,23 @@ void s_toplevel_select_object()
 }
 
 
-/* =======================  Private fcns  ====================== */
+/* =======================  Private functions  ====================== */
 
-/*------------------------------------------------------------------
- * This fcn 
+/*------------------------------------------------------------------*/
+/*! \brief Copy SHEET_DATA content to TOP_LEVEL
+ *
+ * This function
  * loops through all objects on (PAGE page)->(OBJECT *start_obj).
  * It takes the updated SHEET_DATA->TABLE data and then updates the 
  * objects with the new attribs & attrib values.
  * For each component, it updates the attached 
  * attrib values using the updated values held in the SHEET_DATA->TABLE 
  * structure.  It does so in three steps:
- * 1.  First find and update component attribs.
- * 2.  Then find and update net attribs.
- * 3.  Finally find and update pin attribs.
- *------------------------------------------------------------------*/
+ * -# First find and update component attribs.
+ * -# Then find and update net attribs.
+ * -# Finally find and update pin attribs.
+ * \param page schematic page to copy
+ */
 void
 s_toplevel_sheetdata_to_toplevel (PAGE *page)
 {
@@ -433,7 +459,8 @@ s_toplevel_sheetdata_to_toplevel (PAGE *page)
       temp_uref = s_attrib_get_refdes(o_current);
       if (temp_uref != NULL) {
 	/* Must create a name=value pair list for each particular component
-	 * which we can pass to fcn updating o_current.  This fcn places all attribs
+	 * which we can pass to function updating o_current.  This function
+         * places all attribs
 	 * found in the row into new_comp_attrib_pair_list.  */
 	new_comp_attrib_pair_list = s_table_create_attrib_pair(temp_uref,
 							       sheet_head->component_table, 
@@ -519,11 +546,14 @@ s_toplevel_sheetdata_to_toplevel (PAGE *page)
 }
 
 
-/*------------------------------------------------------------------
- * This fcn returns a list of attributes attached to obj_name = comp
- * refdes or netlist.  The returned list is a STRING_LIST where the
- * ->data holds a name=value string.
- *------------------------------------------------------------------*/
+/*------------------------------------------------------------------*/
+/*! \brief Get the component attributes from the top level
+ *
+ * This function returns a list of attributes attached to obj_name = comp
+ * refdes or netlist.
+ * \param refdes component refdes to return values from
+ * \returns a STRING_LIST where the data field holds a name=value string.
+ */
 STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes)
 {
   STRING_LIST *new_attrib_list;
@@ -589,29 +619,28 @@ STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes)
 
 
 
-/*------------------------------------------------------------------
+/*------------------------------------------------------------------*/
+/*! \brief Update component attributes in TOP_LEVEL
+ *
  * For each attrib string attached to the component, update it using the value
  * held in new_comp_attrib_list.  Algorithm:
- * 1.  Form list of all component attribs held on both the component
- *     (o_current), as well as in the attrib list (SHEET_DATA).
- * 2.  Loop over name=value pairs held in complete_comp_attrib_list.
- * 3.  For each name=value pair, look for corresponding attrib on o_current.
- * 4.  For each name=value pair, look for the corresponding attrib in 
- *     new_comp_attrib_list.
- * 5.  If the attrib exists on o_current and in new_comp_attrib_list, write the 
- *     new value (from new_comp_attrib_list) into o_current.
- * 6.  If the attrib exists on o_current, but is null in name=value pair,
- *     delete the attrib from o_current.
- * 7.  If the attribs doesn't exist on o_current, but is non-null in
- *     the name=value pair, create an attrib object and add it to the part
- *     on o_current.
- *
- * Calling args:  OBJECT *o_current -- component (complex) to be updated.
- *                STRING_LIST *new_comp... -- list of name=value attribute pairs
- *                                            from SHEET_DATA.
- * Returns: Returns nothing because the changes are made in o_current, which
- *          is part of the global TOPLEVEL pr_current.
- *------------------------------------------------------------------*/
+ * -# Form list of all component attribs held on both the component
+ *    (o_current), as well as in the attrib list (SHEET_DATA).
+ * -# Loop over name=value pairs held in complete_comp_attrib_list.
+ * -# For each name=value pair, look for corresponding attrib on o_current.
+ * -# For each name=value pair, look for the corresponding attrib in
+ *    new_comp_attrib_list.
+ * -# If the attrib exists on o_current and in new_comp_attrib_list, write the
+ *    new value (from new_comp_attrib_list) into o_current.
+ * -# If the attrib exists on o_current, but is null in name=value pair,
+ *    delete the attrib from o_current.
+ * -# If the attribs doesn't exist on o_current, but is non-null in
+ *    the name=value pair, create an attrib object and add it to the part
+ *    on o_current.
+ * \param o_current Component (complex) to be updated.
+ * \param new_comp_attrib_list list of name=value attribute pairs
+ *                             from SHEET_DATA.
+ */
 void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current, 
 						     STRING_LIST *new_comp_attrib_list) 
 {
@@ -625,7 +654,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
   gchar *refdes;
   GList *a_iter;
   OBJECT *a_current;
-  int count = 0;  /* This is to fake out a fcn called later */
+  int count = 0;  /* This is to fake out a function called later */
   gint row, col;
   gint visibility = 0;
   gint show_name_value = 0;
@@ -688,7 +717,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 
 
   /* 
-   *Now the main business of this fcn:  updating the attribs attached to this o_current.
+   *Now the main business of this function:  updating the attribs attached to this o_current.
    * Loop on name=value pairs held in complete_comp_attrib_list , and then use this to get the
    * name=value pairs out of new_comp_attrib_list and from o_current.
    */
@@ -813,9 +842,10 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 }
 
 
-/*------------------------------------------------------------------
- * 
- *------------------------------------------------------------------*/
+/*------------------------------------------------------------------*/
+/*!
+ * \todo Function doesn't do anything - candidate for removal?
+ */
 STRING_LIST *s_toplevel_get_net_attribs_in_sheet(char *netname)
 {
   /* must be filled in */
@@ -823,9 +853,10 @@ STRING_LIST *s_toplevel_get_net_attribs_in_sheet(char *netname)
 }
 
 
-/*------------------------------------------------------------------
- * 
- *------------------------------------------------------------------*/
+/*------------------------------------------------------------------*/
+/*!
+ * \todo Function doesn't do anything - candidate for removal?
+ */
 void s_toplevel_update_net_attribs_in_toplevel(OBJECT *o_current, 
 				   STRING_LIST *new_net_attrib_list)
 {
@@ -834,17 +865,23 @@ void s_toplevel_update_net_attribs_in_toplevel(OBJECT *o_current,
 }
 
 
-/*------------------------------------------------------------------
- * This fcn takes a pointer to the OBJECT pin, and returns a list
+/*------------------------------------------------------------------*/
+/*! \brief Get pin attributes
+ *
+ * This function takes a pointer to the OBJECT pin, and returns a list
  * of attribs found attached to the pin.  The returned list is a 
  * STRING_LIST where the ->data holds a name=value string.
  * The algorithm is as follows:
- * 1.  Form refdes:pinnumber label for this pin.
- * 2.  Get row number of this refdes:pinnumber
- * 3.  Create a list of name=value pairs from entries in the pin_table
- *     on this row.
- * 4.  Return list of name=value pairs found.
- *------------------------------------------------------------------*/
+ * -# Form refdes:pinnumber label for this pin.
+ * -# Get row number of this refdes:pinnumber
+ * -# Create a list of name=value pairs from entries in the pin_table
+ *    on this row.
+ * -# Return list of name=value pairs found.
+ *
+ * \param refdes Ref des string
+ * \param pin Pin object
+ * \returns name=value pair as a STRING_LIST
+ */
 STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
 {
   STRING_LIST *new_attrib_list;
@@ -922,20 +959,23 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
 
 
 
-/*------------------------------------------------------------------
+/*------------------------------------------------------------------*/
+/*! \brief Update pin attributes in toplevel
+ *
  * For each attrib string attached to the pin, update it using the value
  * held in new_pin_attrib_list.  Algorithm:
- * 1.  Loop over name=value pairs held in new_pin_attrib_list.
- * 2.  For each name=value pair, look for corresponding attrib on pin.
- * 3.  If the attrib exists on pin and in name=value pair, write the 
- *     new value in.
- * 4.  If the attrib exists on pin, but is null in name=value pair,
- *     delete the attrib.
- * 5.  If the attribs doesn't exist on pin, but is non-null in
- *     the name=value pair, create an attrib object and add it to the pin.
- * Returns: Returns nothing because the changes are made in o_pin, which
- *          is part of the global TOPLEVEL pr_current.
- *------------------------------------------------------------------*/
+ * -# Loop over name=value pairs held in new_pin_attrib_list.
+ * -# For each name=value pair, look for corresponding attrib on pin.
+ * -# If the attrib exists on pin and in name=value pair, write the
+ *    new value in.
+ * -# If the attrib exists on pin, but is null in name=value pair,
+ *    delete the attrib.
+ * -# If the attribs doesn't exist on pin, but is non-null in
+ *    the name=value pair, create an attrib object and add it to the pin.
+ * \param refdes Unused - needs refactored out
+ * \param [in,out] o_pin pin to update
+ * \param [in] new_pin_attrib_list New pin attribute list to apply
+ */
 void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin, 
 				   STRING_LIST *new_pin_attrib_list)
 {

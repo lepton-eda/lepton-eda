@@ -17,11 +17,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
-/*------------------------------------------------------------------
- * This file holds fcns used to handle the spreadsheet widget.
+/*------------------------------------------------------------------*/
+/*! \file
+ * \brief Functions to interface to the spreadsheet widget.
+ *
+ * This file holds functions used to handle the spreadsheet widget.
  * Much of this was hacked from testgtksheet.c starting in Jan 2004 
  * by SDB.
- *------------------------------------------------------------------*/
+ */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -62,7 +65,9 @@
 
 static void show_entry(GtkWidget *widget, gpointer data);
 
-/*! \brief Creates and initializes the GtkSheet widget, which is the
+/*! \brief Create the GtkSheet
+ *
+ * Creates and initializes the GtkSheet widget, which is the
  *         spreadsheet widget used for displaying the data.
  */
 void
@@ -152,9 +157,14 @@ x_gtksheet_init()
 
 
 
-/*------------------------------------------------------------------
- * x_gtksheet_add_row_labels
- *------------------------------------------------------------------*/
+/*------------------------------------------------------------------*/
+/*! \brief Add row labels to GtkSheet
+ *
+ * Add row labels to GtkSheet
+ * \param sheet Pointer to the GtkSheet object
+ * \param count Number of row labels to add
+ * \param list_head Top of the string list
+ */
 void
 x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
 {
@@ -193,9 +203,14 @@ x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
 }
 
 
-/*------------------------------------------------------------------
- * x_gtksheet_add_col_labels
- *------------------------------------------------------------------*/
+/*------------------------------------------------------------------*/
+/*! \brief Add column labels to GtkSheet
+ *
+ * Add column labels to GtkSheet.
+ * \param sheet GtkSheet to add columns to
+ * \param count
+ * \param list_head pointer to top of STRING_LIST
+ */
 void
 x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
 {
@@ -218,9 +233,17 @@ x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
 }
   
 
-/*------------------------------------------------------------------
- * x_gtksheet_add_cell_item:  
- *------------------------------------------------------------------*/
+/*------------------------------------------------------------------*/
+/*! \brief Add a cell item to the GtkSheet
+ *
+ * Add a cell item to the GtkSheet
+ * \param sheet GtkSheet to add the cell item to
+ * \param i
+ * \param j
+ * \param text
+ * \param visibility
+ * \param show_name_value
+ */
 void
 x_gtksheet_add_cell_item(GtkSheet *sheet,gint i, gint j, 
 			 gchar *text, 
@@ -257,8 +280,14 @@ x_gtksheet_add_cell_item(GtkSheet *sheet,gint i, gint j,
 }
 
 
-/*! \brief Returns the index of the first column selected, or -1 if
+/*! \brief Get the first column selected in the GtkSheet
+ *
+ * Get the first column selected in the GtkSheet
+ * Returns the index of the first column selected, or -1 if
  *         no column is selected.
+ * \param sheet GtkSheet to query
+ * \returns index of the first column selected, or -1 if
+ *          no column is selected.
  */
 int x_gtksheet_get_min_col(GtkSheet *sheet) {
   if (sheet->state == GTK_SHEET_COLUMN_SELECTED) {
@@ -269,7 +298,11 @@ int x_gtksheet_get_min_col(GtkSheet *sheet) {
 }
 
 
-/*! \brief Returns the index of the last column selected, or -1 if
+/*! \brief Get the last column selected in the GtkSheet
+ *
+ * Get the last column selected in the GtkSheet
+ * \param GtkSheet to query
+ * \returns the index of the last column selected, or -1 if
  *         no column is selected.
  */
 int x_gtksheet_get_max_col(GtkSheet *sheet) {
@@ -281,7 +314,13 @@ int x_gtksheet_get_max_col(GtkSheet *sheet) {
 }
 
 
-/*! \brief Sets the color of a cell identified by row, col.
+/*! \brief Set the text color of a cell
+ *
+ * Sets the color of a cell identified by row, col.
+ * \param sheet GtkSheet to operate on
+ * \param row Row of cell to set
+ * \param col Column of cell to set
+ * \param color_name Color to set text to
  */
 void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col, 
 			       gint color_name)
@@ -339,9 +378,13 @@ void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col,
 }
 
 
-/*! \brief Displays a text entry box at the top of the working area.
+/*! \brief Show text entry box
+ *
+ * Displays a text entry box at the top of the working area.
  *         It is removed since it is not needed now, but may come in
  *         handy later. Therefore I keep the code around.
+ * \param widget
+ * \param data
  */
 static void
 show_entry(GtkWidget *widget, gpointer data)

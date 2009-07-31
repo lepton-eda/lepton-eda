@@ -16,10 +16,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
-/*------------------------------------------------------------------
- * This file holds widgets and fcns used in conjunction 
+/*------------------------------------------------------------------*/
+/*! \file
+ * \brief Functions to manipulate attribute visibility
+ *
+ * This file holds widgets and functions used in conjunction
  * with setting attribute visibility.
- *------------------------------------------------------------------*/
+ * \todo There seems to be a lot of duplicated code in this file -
+ *       a good candidate for refactoring.
+ */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -79,13 +84,15 @@
 
 
 
-/* ---------------------------------------------------------------------- *
- * s_visibility_set_invisible -- This sets the selected cells to 
- * INVISIBLE.  
- * This fcn is called from the menu, it assumes you have
+/* ---------------------------------------------------------------------- */
+/* \brief Set the selected cells to INVISIBLE
+ *
+ *
+ * This sets the selected cells to INVISIBLE.
+ * This function is called from the menu, it assumes you have
  * selected a range of cells which are carried in the global 
  * variable "sheet".
- * ---------------------------------------------------------------------- */
+ */
 void s_visibility_set_invisible() {
   gint i, j;
   gint row_start, row_end, col_start, col_end;
@@ -151,12 +158,14 @@ void s_visibility_set_invisible() {
 
 }
 
-/* ---------------------------------------------------------------------- *
- * s_visibility_set_name_only -- This sets the selected cells to NAME_ONLY.
- * This fcn is invoked from the menu, it assumes you have
+/* ---------------------------------------------------------------------- */
+/*! \brief Set the visibility of the selected cells to NAME_ONLY.
+ *
+ * This sets the selected cells to NAME_ONLY.
+ * This function is invoked from the menu, it assumes you have
  * selected a range of cells which are carried in the global 
  * variable "sheet".
- * ---------------------------------------------------------------------- */
+ */
 void s_visibility_set_name_only() {
   gint i, j;
   gint row_start, row_end, col_start, col_end;
@@ -210,12 +219,14 @@ void s_visibility_set_name_only() {
   }
 }
 
-/* ---------------------------------------------------------------------- *
+/* ---------------------------------------------------------------------- */
+/* \brief Set the selected cells' visibility to VALUE_ONLY
+ *
  * s_visibility_set_value_only -- This sets the selected cells to VALUE_ONLY.
  * This fcn is invoked from the menu, it assumes you have
  * selected a range of cells which are carried in the global 
  * variable "sheet".
- * ---------------------------------------------------------------------- */
+ */
 void s_visibility_set_value_only() {
   gint i, j;
   gint row_start, row_end, col_start, col_end;
@@ -271,13 +282,16 @@ void s_visibility_set_value_only() {
   }
 }
 
-/* ---------------------------------------------------------------------- *
- * s_visibility_set_name_and_value -- This sets the selected cells 
+/* ---------------------------------------------------------------------- */
+/* \brief Set the visibility of the selected cells to NAME_AND_VALUE
+ *
+ * This sets the selected cells
  * to NAME_AND_VALUE
  * This fcn is invoked from the menu, it assumes you have
  * selected a range of cells which are carried in the global 
  * variable "sheet".
- * ---------------------------------------------------------------------- */
+ *
+ */
 void s_visibility_set_name_and_value() {
   gint i, j;
   gint row_start, row_end, col_start, col_end;
@@ -332,10 +346,17 @@ void s_visibility_set_name_and_value() {
 
 /* ==================  Private functions  =================== */
 
-/* ---------------------------------------------------------------------- *
- * s_visibility_set_cell -- this sets the visibility of an individual cell
+/* ---------------------------------------------------------------------- */
+/* \brief set the visibility of an individual cell
+ *
+ * Set the visibility of an individual cell
  * to "state".  The cell is identified by (row, col)
- * ---------------------------------------------------------------------- */
+ * \param cur_page index of spreadsheet tab
+ * \param row Row index of target cell
+ * \param col Column index of target cell
+ * \param visibility Visibility value to set cell to
+ * \param show_name_value Name, Value visibility flag
+ */
 void s_visibility_set_cell(gint cur_page, gint row, gint col, 
 			   gint visibility, 
 			   gint show_name_value) {

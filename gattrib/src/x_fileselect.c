@@ -16,11 +16,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
-/*------------------------------------------------------------------
+/*------------------------------------------------------------------*/
+/*! \file
+ * \brief Functions to display file open/save dialog box.
+ *
  * This file holds fcns used to display the file open/save dialog box.
  * It was cloned from x_fileselect.c in gschem/src, and then hacked
  * by SDB for use in gattrib.
- *------------------------------------------------------------------*/
+ */
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -79,9 +82,12 @@
 
 /* ----- x_fileselect stuff begins here ----- */
 
-/*------------------------------------------------------------------
+/*------------------------------------------------------------------*/
+/*! \brief Set up file filter for the file chooser
+ *
  * This fcn creates and sets the file filter for the filechooser.
- *------------------------------------------------------------------*/
+ * \param filechooser GtkFileChooser to set up
+ */
 static void
 x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
 {
@@ -111,11 +117,11 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
 
 }
 
-/*! \brief Open all files specified in the list. The caller
- *         is responsible for freeing the strings and the list
- *         itself.
+/*! \brief Open all files specified in the list.
  *
- *  \par Function Description
+ * Open all files specified in the list. The caller is responsible for
+ * freeing the strings and the list itself.
+ *
  *  The function updates the user interface. At the end of the function, 
  *  the toplevel's current page is set to the page of the last loaded page.
  *
@@ -218,7 +224,9 @@ x_fileselect_load_files (GSList *filenames)
   return TRUE;
 }
 
-/*! \brief This function opens a file chooser dialog and waits for the user
+/*! \brief Open file dialog
+ *
+ * This function opens a file chooser dialog and waits for the user
  *         to select at least one file to load as toplevel's new pages.
  *
  *  \returns list of files to be opened, or NULL if the user cancelled
@@ -258,7 +266,9 @@ x_fileselect_open (void)
   return filenames;
 }
 
-/*------------------------------------------------------------------
+/*------------------------------------------------------------------*/
+/*! \brief File save dialog
+ *
  *  This function opens a file chooser dialog and wait for the user to
  *  select a file where the toplevel's current page will be
  *  saved.
@@ -267,7 +277,7 @@ x_fileselect_open (void)
  *  page is not saved.
  *
  *  The function updates the user interface.
- *------------------------------------------------------------------*/
+ */
 void
 x_fileselect_save (void)
 {

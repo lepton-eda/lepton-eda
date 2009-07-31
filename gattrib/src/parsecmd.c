@@ -16,6 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+/*!
+ * \file
+ * \brief Functions to parse the command line.
+ *
+ * Functions to parse the command line and to provide usage
+ * information.
+ */
 
 #include <config.h>
 
@@ -33,6 +40,11 @@
 #endif  /* Checking for getopt  */
 
 #if !defined(HAVE_GETOPT_LONG) || !defined(HAVE_GETOPT_H)
+/*! \brief Command line option string for getopt.
+ *
+ *  Command line option string for getopt. Defines "q" for quiet,
+ *  "v" for verbose and "h" for help.
+ */
 #define OPTIONS "qvh"
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -54,6 +66,13 @@ extern int optind;
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
 
+/*!
+ * \brief Print usage message
+ *
+ * Prints gattrib usage information to stdout.
+ * \param cmd Unused parameter.
+ *
+ */
 
 void usage(char *cmd)
 {
@@ -84,7 +103,19 @@ void usage(char *cmd)
     exit(0);
 }
 
-
+/*!
+ * \brief Parse command line switches.
+ *
+ * Parse command line switches at startup. There are only 3 command
+ * line switches:
+ * - verbose
+ * - quiet
+ * - help
+ * \param argc Number of command line arguments
+ * \param argv Command line arguments (array of strings)
+ * \returns I don't know what - looks uninitialised in some circumstances.
+ *
+ */
 int parse_commandline(int argc, char *argv[])
 {
     int ch;

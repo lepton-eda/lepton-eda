@@ -1,9 +1,11 @@
 
 /*----------------------------------------------------------------*
+/*! \file
  * Linked list sorting code taken from 
  * http://www.chiark.greenend.org.uk/~sgtatham/algorithms/listsort.html
  * and hacked to serve in gattrib by SDB.
- *----------------------------------------------------------------*/
+ *
+ */
 
 /*
  * Demonstration code for sorting a linked list.
@@ -73,9 +75,15 @@
 #endif
 
 
-/*----------------------------------------------------------------*
+/*----------------------------------------------------------------*/
+/*! \brief Compare values of string data
+ *
  * Comparison function -- compare values of string data.
- *----------------------------------------------------------------*/
+ * \param al pointer to first STRING_LIST item to be compared
+ * \param bl pointer to second STRING_LIST item to be compared
+ * \returns +ve if al > bl, -ve if al < bl, 0 if al = bl
+ */
+/*----------------------------------------------------------------*/
 int cmp(STRING_LIST *al, STRING_LIST *bl) {
   char *a = al->data;
   char *b = bl->data;
@@ -108,18 +116,26 @@ int cmp(STRING_LIST *al, STRING_LIST *bl) {
   return 0;
 }
 
-/*----------------------------------------------------------------*
+/*----------------------------------------------------------------*/
+/*! \brief Sort the linked list
+ *
  * This is the actual sort function. Notice that it returns the new
  * head of the list. (It has to, because the head will not
  * generally be the same element after the sort.) So unlike sorting
  * an array, where you can do
  * 
- *     sort(myarray);
+ * - sort(myarray);
  * 
  * you now have to do
  * 
- *     list = listsort(mylist);
- *----------------------------------------------------------------*/
+ * - list = listsort(mylist);
+ *
+ * \param list The linked STRING_LIST to be sorted
+ * \param is_circular TRUE if this is a circularly linked list
+ * \param is_double TRUE if this is a doubly-linked list
+ * \returns a pointer to the new head of the list
+ */
+/*----------------------------------------------------------------*/
 STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double) {
     STRING_LIST *p, *q, *e, *tail, *oldhead;
     int insize, nmerges, psize, qsize, i;

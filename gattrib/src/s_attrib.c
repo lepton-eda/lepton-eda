@@ -17,6 +17,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
+/*!
+ * \file
+ * \brief Functions to operate on attributes in  STRING_LISTs
+ *
+ * Various functions to operate on attribute name=value pairs in supplied
+ * STRING_LIST structs.
+ */
+
 #include <config.h>
 
 #include <stdio.h>
@@ -39,12 +47,15 @@
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn is passed a STRING_LIST of name=value pairs, and a 
- * name.  
+/*! \brief Detect "name" in STRING_LIST
  *
- * \return It returns 1 (TRUE) if the name is in the STRING_LIST, otherwise
- * it returns 0 (FALSE).
- *------------------------------------------------------------------*/
+ * This function is passed a STRING_LIST of name=value pairs, and a
+ * name.
+ * \param name_value_list pointer to STRING_LIST to search
+ * \param name name string to search for
+ * \returns 1 (TRUE) if the name is in the STRING_LIST, otherwise
+ *          it returns 0 (FALSE).
+ */
 int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name)
 {
   STRING_LIST *local_list_item;
@@ -69,13 +80,15 @@ int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name)
 
 
 /*------------------------------------------------------------------*/
-/*! \brief This fcn takes an object, finds its refdes and returns it.
+/*! \brief Locate the refdes associated with an object.
  * 
- * \return For normal components, it returns a (pointer to a) 
- * string containing the
- * refdes If the component is slotted, it returns a refdes of the form 
- * refdes.slot.  If no refdes is found, it returns NULL.
- *------------------------------------------------------------------*/
+ * This fcn takes an object, finds its refdes and returns it.
+ * \param object Pointer to the object to search for.
+ * \return For normal components, it returns a pointer to a
+ *         string containing the refdes. If the component is slotted,
+ *         it returns a refdes of the form
+ *         refdes.slot. If no refdes is found, it returns NULL.
+ */
 char *s_attrib_get_refdes(OBJECT *object)
 {
   char *temp_uref;

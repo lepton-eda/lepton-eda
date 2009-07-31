@@ -17,9 +17,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
-/*------------------------------------------------------------------
- * This file holds fcns used for import/export of attrib sheets.
- *------------------------------------------------------------------*/
+/*! \file
+ *  \brief Import/export functions
+ *
+ * This file holds fcns used for import/export of attribute sheets.
+ * At the moment, this is only component sheets.
+ */
 
 #include <config.h>
 
@@ -44,11 +47,14 @@
 
 /* ===================  Public Functions  ====================== */
 /* ------------------------------------------------------------- */
-/* \brief This function is invoked when the user selects file ->
+/* \brief Export components to CSV
+ *
+ * This function is invoked when the user selects file ->
  * export from the pull-down menu.  It writes out a CSV file 
  * of the design for external processing.
  *
- * ------------------------------------------------------------- */
+ * \param filename The name of the file to export to
+ */
 void f_export_components(gchar *filename)
 {
   gint cur_page;
