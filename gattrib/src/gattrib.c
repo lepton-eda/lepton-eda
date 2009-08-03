@@ -308,14 +308,6 @@ void gattrib_main(void *closure, int argc, char *argv[])
  */
 int main(int argc, char *argv[])
 {
-  /* This is i18n stuff */
-#if ENABLE_NLS
-  setlocale(LC_ALL, "");
-  bindtextdomain(PACKAGE, LOCALEDIR);
-  textdomain(PACKAGE);
-  bind_textdomain_codeset(PACKAGE, "UTF-8");
-#endif
-
   /* disable the deprecated warnings in guile 1.6.3 */
   /* Eventually the warnings will need to be fixed */
   if(getenv("GUILE_WARN_DEPRECATED")==NULL)
