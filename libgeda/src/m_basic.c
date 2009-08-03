@@ -176,10 +176,9 @@ void PAPERSIZEtoWORLD(int width, int height, int border, int *right, int *bottom
 #endif
 
   if (aspect < 1.333333333) {
-    /* is this rint really needed? */
-#ifdef HAS_RINT
-    *right = (int) rint(width+border + 
-			((height+border)*1.33333333 - (width+border)));
+    /* is this lrint really needed? */
+#ifdef HAVE_LRINT
+    *right = lrint (width+border + ((height+border)*1.33333333 - (width+border)));
 #else 
     *right = (int) width+border + 
       ((height+border)*1.33333333 - (width+border));

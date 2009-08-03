@@ -154,8 +154,10 @@ fi
 ############################################################################
 # Check for mics things start
 # 
-# Checking for rint in math library
-AC_CHECK_LIB(m, rint, AC_DEFINE(HAS_RINT, 1, [If your math library has rint in it, define this]), no_RINT="yes")
+# Checking for lrint in math library
+AC_CHECK_LIB([m], [lrint],
+             AC_DEFINE([HAVE_LRINT], 1,
+                       [If your math library has lrint in it, define this]))
 
 # Checking for dynamic lib
 AC_CHECK_LIB(dl, dlopen, DL_LIB="-ldl", DL_LIB="")
