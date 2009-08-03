@@ -39,8 +39,7 @@ AC_ARG_WITH(pcbm4dir,
 )
 AC_MSG_RESULT([${PCBM4DIR}])
 AC_SUBST(PCBM4DIR)
-
-# Change default location for pcb's newlib library directory
+ default location for pcb's newlib library directory
 AC_ARG_WITH(pcb-newlib-path,
 	[  --with-pcb-newlib-path=path   Change the default search path for PCB newlib libraries [[default=${datadir}/pcb/pcblib-newlib:${datadir}/pcb/newlib:]]],
         [PCBLIBPATH=$withval],
@@ -396,49 +395,9 @@ AC_CONFIG_FILES([Makefile
 		 tests/hierarchy2/Makefile 
 		 tests/drc2/Makefile
 		 tests/common/Makefile
-		 tests/common/outputs/Makefile
-		 tests/common/outputs/allegro/Makefile
-		 tests/common/outputs/bae/Makefile
-		 tests/common/outputs/bom2/Makefile
-		 tests/common/outputs/bom/Makefile
-		 tests/common/outputs/calay/Makefile
-		 tests/common/outputs/cascade/Makefile
-		 tests/common/outputs/drc2/Makefile
-		 tests/common/outputs/drc/Makefile
-		 tests/common/outputs/eagle/Makefile
-		 tests/common/outputs/futurenet2/Makefile
-		 tests/common/outputs/geda/Makefile
-		 tests/common/outputs/gossip/Makefile
-		 tests/common/outputs/gsch2pcb/Makefile
-		 tests/common/outputs/liquidpcb/Makefile
-		 tests/common/outputs/mathematica/Makefile
-		 tests/common/outputs/maxascii/Makefile
-		 tests/common/outputs/osmond/Makefile
-		 tests/common/outputs/pads/Makefile
-		 tests/common/outputs/partslist1/Makefile
-		 tests/common/outputs/partslist2/Makefile
-		 tests/common/outputs/partslist3/Makefile
-		 tests/common/outputs/PCB/Makefile
-		 tests/common/outputs/pcbpins/Makefile
-		 tests/common/outputs/protelII/Makefile
-		 tests/common/outputs/redac/Makefile
-		 tests/common/outputs/spice/Makefile
-		 tests/common/outputs/spice-sdb/Makefile
-		 tests/common/outputs/switcap/Makefile
-		 tests/common/outputs/systemc/Makefile
-		 tests/common/outputs/tango/Makefile
-		 tests/common/outputs/vams/Makefile
-		 tests/common/outputs/verilog/Makefile
-		 tests/common/outputs/vhdl/Makefile
-		 tests/common/outputs/vipec/Makefile
-		 tests/common/inputs/models/Makefile
-		 tests/common/inputs/Makefile
-		 tests/common/inputs/sym/Makefile
 		 docs/Makefile 
 		 docs/vams/Makefile 
 		 examples/vams/Makefile 
-		 examples/vams/sch/Makefile 
-		 examples/vams/sym/Makefile 
 		 examples/vams/vhdl/Makefile 
 		 examples/vams/vhdl/basic-vhdl/Makefile 
 		 examples/vams/vhdl/new-vhdl/Makefile 
