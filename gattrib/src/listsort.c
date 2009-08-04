@@ -1,5 +1,5 @@
 
-/*----------------------------------------------------------------*
+/*----------------------------------------------------------------*/
 /*! \file
  * Linked list sorting code taken from 
  * http://www.chiark.greenend.org.uk/~sgtatham/algorithms/listsort.html
