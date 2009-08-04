@@ -1,21 +1,20 @@
-
 Bugs (no particular order): 
-----------------------
+--------------------------
 
 	- If a component cannot be read, then this situation is not dealt 
 	  with.  Technically at this point, gnetlist can't do anything so 
 	  it really should exit.  Add code to do this later...
 
-	- memory leaks (lots right now) A LOT MORE now!
+	- Memory leaks (lots right now) A LOT MORE now!
 
-	- Ordering of pin outputs in spice netlist ouput for components like 
+	- Ordering of pin outputs in spice netlist output for components like 
 	  BJT transistors B C E.  This is wrong for now. (might be fixed now)
 
 	- (SPICE backend) It is possible to have named a net something (say 1)
 	  and then have an unnamed net called 1 as well.  Obviously my
 	  unnamed net naming is lame.
 
-	- gnetlist:get-toplevel-attribute only looks for the first occurrance
+	- gnetlist:get-toplevel-attribute only looks for the first occurrence
 	  of the toplevel attribute.  Make this somehow better?
 
 	- Figure out why the post process screwed up net names when it was
@@ -25,11 +24,12 @@ Bugs (no particular order):
 	  non-linux only? 
 
 Finished stuff:
+---------------
 
-FIXED	embedded schematics don't netlist at all.
+FIXED	Embedded schematics don't netlist at all.
 
-OKAY	infinite net connection loops
+OKAY	Infinite net connection loops.
 
-FIXED  	attach an label to a net which is going to no pin and it won't
+FIXED  	Attach a label to a net which is going to no pin and it won't
         show up. (this is because mid point connections are not being
 	dealt with properly...)

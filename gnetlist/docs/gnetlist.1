@@ -64,13 +64,13 @@ MAXASCII netlist format (-g maxascii)
 .IP \[bu]
 VHDL-AMS netlist format (-g vams)
 .IP \[bu]
-Futurenet2 netlist format (-g futurenet2 )
+Futurenet2 netlist format (-g futurenet2)
 .IP \[bu]
-SWITCAP switched capacitor simulator netlist format (-g switcap )
+SWITCAP switched capacitor simulator netlist format (-g switcap)
 .IP \[bu]
-RF Cascade netlist format (-g cascade )
+RF Cascade netlist format (-g cascade)
 .IP \[bu]
-RACAL-REDAC netlist format (-g redac )
+RACAL-REDAC netlist format (-g redac)
 .IP \[bu]
 SystemC netlist backend (-g systemc)
 .IP \[bu]
@@ -82,7 +82,7 @@ Eagle netlist format (-g eagle)
 .IP \[bu]
 Netlister for symbolic circuit analysis using Mathematica (-g mathematica)
 .IP \[bu]
-LiquidPCB format netlist backend (-g liquidpcb )
+LiquidPCB format netlist backend (-g liquidpcb)
 
 For more info on these formats please look at the README.*
 
@@ -116,7 +116,7 @@ pass information to backends.
 Force embedding contents of .include file when using the spice-sdb backend.
 .TP 8
 .B -O string
-Pass the given option to the specified backend
+Pass the given option to the specified backend.
 .TP 8
 .B -m scheme_file
 Specify a filename which contains scheme code to be loaded and
@@ -125,7 +125,7 @@ execute after the backend is loaded but still before any guile procedure
 and can be used to pass information to backends.  This flag, for example, 
 allows the user to override variables inside of the backends (such as paths).
 .TP 8
-.B -n --nomunge
+.B -n, --nomunge
 Do not autocorrect the refdes attributes.  Only applies to the spice-sdb backend.
 .TP 8
 .B -c string
@@ -135,10 +135,10 @@ the string with either single or double quotes to satisfy your shell.  The
 string is execute before any init or netlist backend scheme code is
 loaded or executed.
 .TP 8
-.B -I --include 
+.B -I, --include 
 Put .INCLUDE <filename> in output file instead of model file's contents.
 .TP 8
-.B -h --help
+.B -h, --help
 Print out short command line help.
 .TP 8
 .B -i 
@@ -205,7 +205,7 @@ with the -v flag:
 .PP
 .TP 8
 .B GEDADATA 
-specifies where the various required scheme and rc files are located
+Specifies where the various required scheme and rc files are located
 (the default is ${prefix}/share/gEDA).  This environment variables does
 not need to be set by the end user unless they are moving the executables
 to a new install ${prefix}.
@@ -220,5 +220,5 @@ Ales Hvezda and many others
 Copyright \(co  1999-2008 Ales Hvezda
 
 This document can be freely redistributed according to the terms of the 
-GNU General Public License version 2.0
+GNU General Public License version 2.0.
 

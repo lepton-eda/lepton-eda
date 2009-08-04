@@ -56,7 +56,7 @@ specifying the `--disable-shared' option to `configure'.
 
 The configure script should figure out most system dependant things, but at
 this point I'm either not taking into account what configure figures out or 
-I have missed some system dependance.  So please e-mail me at: 
+I have missed some system dependence.  So please e-mail me at: 
 ahvezda@geda.seul.org
 
 - Uninstall

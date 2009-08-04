@@ -15,7 +15,7 @@ Add more regression tests
 
 Hierarchy support
 --------------------------------------------------------
-OKAY seperator configurable (char or string, or nothing)
+OKAY separator configurable (char or string, or nothing)
 
 OKAY append / prepend of tag
 
