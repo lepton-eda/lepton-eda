@@ -7,7 +7,7 @@ all:
 
 doxygen: gattrib.dox
 	@echo 'Creating doxygen documentation for gattrib...'
-if BUILDDOC
+if ENABLE_DOXYGEN
 	$(DOXYGEN) gattrib.dox
 else
 	@echo 'Doxygen is not installed on your system.' >> $@
@@ -17,7 +17,7 @@ endif
 MOSTLYCLEANFILES = 	*.log *~
 CLEANFILES = 		*.log *~
 DISTCLEANFILES =        *.log
-MAINTAINERCLEANFILES = 	*.log *~ Makefile.in configure
+MAINTAINERCLEANFILES = 	*.log *~ Makefile.in
 
 distclean-local:
 	-rm -rf html latex

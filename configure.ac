@@ -184,5 +184,15 @@ AC_CONFIG_FILES([Makefile
                  gschem/tests/Makefile
                  gschem/scheme/Makefile
 
+                 gattrib/Makefile
+                 gattrib/po/Makefile.in
+                 gattrib/design/Makefile
+                 gattrib/docs/Makefile
+                 gattrib/include/Makefile
+                 gattrib/lib/Makefile
+                 gattrib/lib/system-gattribrc
+                 gattrib/src/Makefile
+                 gattrib/data/Makefile
+
 ])
 AC_OUTPUT

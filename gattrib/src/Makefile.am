@@ -1,10 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 ## This Makefile.am created for gattrib by SDB 12.13.2003
 
-if CCISGCC
-AM_CFLAGS = -Wall
-endif
-
 bin_PROGRAMS = gattrib
 
 ## don't forget all *.h files */
@@ -36,21 +32,15 @@ gattrib_SOURCES = \
 		gattrib.c 
 
 
-INCLUDES = -I$(includedir) -I$(top_srcdir)/include @GATTRIB_CFLAGS@
-gattrib_LDFLAGS = -L$(libdir) @GATTRIB_LDFLAGS@
-gattrib_LDADD = -L$(libdir) @GATTRIB_LDFLAGS@
-
-## Don't need these right now.
-## man_MANS = gattrib.1
-## EXTRA_DIST = gattrib.1 
+gattrib_CPPFLAGS = -I$(top_srcdir)/libgeda/include \
+	-I$(srcdir)/../include -I$(top_srcdir) -I$(includedir)
+gattrib_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLAGS) $(GLIB_CFLAGS) \
+	$(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(GUILE_CFLAGS)
+gattrib_LDFLAGS = $(GLIB_LIBS) $(GTK_LIBS) $(GTHREAD_LIBS) \
+	$(GUILE_LIBS)
+gattrib_LDADD = $(top_builddir)/libgeda/src/libgeda.la
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~ #*# 
 CLEANFILES = *.log *.ps core FILE *~ #*#
 DISTCLEANFILES = *.log core FILE *~ #*#
 MAINTAINERCLEANFILES = *.log *.ps core FILE *~ #*#
-
-
-
-
-
-

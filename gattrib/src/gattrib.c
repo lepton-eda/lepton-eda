@@ -100,6 +100,7 @@
 
 
 #include <config.h>
+#include <version.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -235,7 +236,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
 
   s_log_message
     ("gEDA/gattrib version %s%s.%s\n", PREPEND_VERSION_STRING, 
-     DOTTED_VERSION, DATE_VERSION);
+     PACKAGE_DOTTED_VERSION, PACKAGE_DATE_VERSION);
   s_log_message
     ("gEDA/gattrib comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
   s_log_message

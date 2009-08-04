@@ -1,6 +1,6 @@
 
-rcdatadir = @GEDARCDIR@
-datadir = @GEDADATADIR@
+rcdatadir = $(GEDARCDIR)
+datadir = $(GEDADATADIR)
 rcdata_DATA = system-gattribrc
 data_DATA = gattrib-menus.xml
 

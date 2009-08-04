@@ -28,6 +28,8 @@
 #include "config.h"
 #endif
 
+#include <version.h>
+
 /*------------------------------------------------------------------
  * Includes required to run graphical widgets.
  *------------------------------------------------------------------*/
@@ -349,7 +351,8 @@ void x_dialog_about_dialog()
                                    GTK_MESSAGE_INFO,
                                    GTK_BUTTONS_OK,
                                    string, PREPEND_VERSION_STRING, 
-                                   DOTTED_VERSION, DATE_VERSION);
+                                   PACKAGE_DOTTED_VERSION,
+                                   PACKAGE_DATE_VERSION);
   
   gtk_window_set_title(GTK_WINDOW(dialog), "About...");
 
