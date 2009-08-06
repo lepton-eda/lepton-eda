@@ -2,16 +2,11 @@
 
 bin_PROGRAMS = mk_verilog_syms
 
-if CCISGCC
-AM_CFLAGS = -Wall
-endif
-
 mk_verilog_syms_SOURCES = \
 		mk_verilog_syms.c
 
-INCLUDES = 
-
-mk_verilog_syms_LDADD = -lm 
+mk_verilog_syms_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLIGS)
+mk_verilog_syms_LDFLAGS = -lm
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~ prototype.bak
 CLEANFILES = *.log *.ps core FILE *~ prototype.bak

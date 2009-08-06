@@ -6,14 +6,14 @@ EXTRA_DIST = gafrc.hierarchy2 hierarchy2.geda top.sch under.sch under.sym
 # make distcheck
 check_SCRIPTS = tests
 
-BUILDDIR=$(top_builddir)/tests/hierarchy2
+BUILDDIR=$(top_builddir)/gnetlist/tests/hierarchy2
 SRCDIR=$(srcdir)
-GNETLIST=$(top_builddir)/src/gnetlist
+GNETLIST=$(top_builddir)/gnetlist/src/gnetlist
 
 tests:
 	rm -f $(BUILDDIR)/new_*
 	cp -f $(SRCDIR)/gafrc.hierarchy2 $(BUILDDIR)/gafrc
-	( TESTDIR=$(SRCDIR); export TESTDIR ; SCMDIR=${top_builddir}/scheme ; export SCMDIR ; \
+	( TESTDIR=$(SRCDIR); export TESTDIR ; SCMDIR=${top_builddir}/gnetlist/scheme ; export SCMDIR ; \
 	  echo $$TESTDIR; \
 	  $(GNETLIST) \
 	     -o $(BUILDDIR)/new_hierarchy2.geda -g geda \

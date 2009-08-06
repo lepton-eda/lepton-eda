@@ -201,5 +201,31 @@ AC_CONFIG_FILES([Makefile
                  gsymcheck/src/Makefile
                  gsymcheck/tests/Makefile
                  gsymcheck/Makefile
+
+                 gnetlist/Makefile
+                 gnetlist/src/Makefile
+                 gnetlist/include/Makefile
+                 gnetlist/scheme/Makefile
+                 gnetlist/examples/Makefile
+                 gnetlist/tests/Makefile
+                 gnetlist/tests/hierarchy/Makefile
+                 gnetlist/tests/hierarchy2/Makefile
+                 gnetlist/tests/drc2/Makefile
+                 gnetlist/tests/common/Makefile
+                 gnetlist/docs/Makefile
+                 gnetlist/docs/vams/Makefile
+                 gnetlist/examples/vams/Makefile
+                 gnetlist/examples/vams/vhdl/Makefile
+                 gnetlist/examples/vams/vhdl/basic-vhdl/Makefile
+                 gnetlist/examples/vams/vhdl/new-vhdl/Makefile
+                 gnetlist/examples/switcap/Makefile
+                 gnetlist/lib/Makefile
+                 gnetlist/utils/Makefile
+                 gnetlist/scripts/Makefile
+                 gnetlist/scripts/annotate.sh
+                 gnetlist/scripts/bom_xref.sh
+                 gnetlist/scripts/bompp.sh
+                 gnetlist/scripts/sw2asc
+                 gnetlist/lib/system-gnetlistrc
 ])
 AC_OUTPUT

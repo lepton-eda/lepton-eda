@@ -40,8 +40,11 @@ EXTRA_DIST = duplicated-refdes.sch duplicated-refdes.drc2 \
 # make distcheck
 check_SCRIPTS = tests
 
-BUILDDIR=$(top_builddir)/tests/drc2
+BUILDDIR=$(builddir)
 SRCDIR=$(srcdir)
+
+gnet_srcdir=$(top_srcdir)/gnetlist
+gnet_builddir=$(top_builddir)/gnetlist
 
 .PHONY : tests
 tests:
@@ -51,8 +54,8 @@ tests:
 
 # copy required file(s)
 	sed \
-		-e 's;@scheme_srcdir@;${top_srcdir}/scheme;g' \
-		-e 's;@scheme_builddir@;${top_builddir}/scheme;g' \
+		-e 's;@scheme_srcdir@;${gnet_srcdir}/scheme;g' \
+		-e 's;@scheme_builddir@;${gnet_builddir}/scheme;g' \
 		$(SRCDIR)/gnetlistrc.drc2 > $(BUILDDIR)/gnetlistrc
 
 # make the tests
@@ -61,8 +64,8 @@ tests:
 	  file_basename=`basename $$file .sch`; \
 	  echo Checking test in $(SRCDIR)/$$file_basename.sch; \
 	  ( export TESTDIR=$(SRCDIR) ; \
-	    $(top_builddir)/src/gnetlist -g drc2 -o $(BUILDDIR)/new_$$file_basename.drc2 \
-            $$file ); \
+	    $(gnet_builddir)/src/gnetlist -g drc2 -o $(BUILDDIR)/new_$$file_basename.drc2 \
+            $$file > /dev/null 2>&1); \
           diff $(SRCDIR)/$$file_basename.drc2 \
                  $(BUILDDIR)/new_$$file_basename.drc2; \
           if [ $$? -ne 0 ]; then \

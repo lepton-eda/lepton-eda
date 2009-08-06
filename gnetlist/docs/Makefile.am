@@ -8,15 +8,16 @@ BUILT_SOURCES = gnetlist.html
 
 man_MANS = gnetlist.1
 
-docsreadmedir = @GEDADOCDIR@/readmes
+docsreadmedir = $(docdir)/readmes
 docsreadme_DATA = README.bom README.pcb README.switcap README.verilog \
 		  README.vhdl README.sysc README.eagle
 
-docsmandir = @GEDADOCDIR@/man
+docsmandir = $(docdir)/man
 docsman_DATA = gnetlist.html
 
+SUFFIXES = .1 .html
 
-%.html: %.1
+.1.html:
 	@echo "Creating html manpage (using groff)"
 	@rm -rf $*.tmp
 	@if test "x$(GROFF)" != xno; then                        \
