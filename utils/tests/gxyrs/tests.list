@@ -17,88 +17,88 @@ do_nothing | pcb_example1.xy | do_nothing.pl | | 1
 # -----------------------------------------
 # Tests for match subroutine in gxyrs package.
 # -----------------------------------------
-match_column_is_not_number| pcb_example1.xy | | --eval "return check_columns 'd1', 'R[0-9]+'" | 255
-match_column_is_not_number2| pcb_example1.xy | | --eval "return check_columns '1d', 'R[0-9]+'" | 255
-match_column_is_real| pcb_example1.xy | | --eval "return check_columns '1.1', 'R[0-9]+'" | 255
-match_column_is_negative| pcb_example1.xy | | --eval "return check_columns '-1', 'R[0-9]+'" | 255
-match_column_is_too_high| pcb_example1.xy | | --eval "return check_columns '100', 'R[0-9]+'" | 255
-match_column_insensitive1| pcb_example2.xy | | --caseinsensitive --eval "return check_columns 1, 'R[0-9]+'" | 1
-match_column_insensitive2| pcb_example2.xy | | --caseinsensitive --eval "return check_columns 1, 'r[0-9]+'" | 1
-match_column_insensitive3| pcb_example1.xy | | --caseinsensitive --eval "return check_columns 1, 'R[0-9]+'" | 1
-match_column_insensitive4| pcb_example1.xy | | --caseinsensitive --eval "return check_columns 1, 'r[0-9]+'" | 1
-match_column_sensitive1| pcb_example1.xy | | --eval "return check_columns 1, 'r[0-9]+'" | 0
-match_column_sensitive2| pcb_example1.xy | | --eval "return check_columns 1, 'R[0-9]+'" | 1
-match_column_sensitive3| pcb_example2.xy | | --eval "return check_columns 1, 'R[0-9]+'" | 0
-match_column_sensitive4| pcb_example2.xy | | --eval "return check_columns 1, 'r[0-9]+'" | 1
+match_col_is_not_num| pcb_example1.xy | | --eval "return check_columns 'd1', 'R[0-9]+'" | 255
+match_col_is_not_num2| pcb_example1.xy | | --eval "return check_columns '1d', 'R[0-9]+'" | 255
+match_col_is_real| pcb_example1.xy | | --eval "return check_columns '1.1', 'R[0-9]+'" | 255
+match_col_is_negative| pcb_example1.xy | | --eval "return check_columns '-1', 'R[0-9]+'" | 255
+match_col_is_too_high| pcb_example1.xy | | --eval "return check_columns '100', 'R[0-9]+'" | 255
+match_col_insens1| pcb_example2.xy | | --caseinsensitive --eval "return check_columns 1, 'R[0-9]+'" | 1
+match_col_insens2| pcb_example2.xy | | --caseinsensitive --eval "return check_columns 1, 'r[0-9]+'" | 1
+match_col_insens3| pcb_example1.xy | | --caseinsensitive --eval "return check_columns 1, 'R[0-9]+'" | 1
+match_col_insens4| pcb_example1.xy | | --caseinsensitive --eval "return check_columns 1, 'r[0-9]+'" | 1
+match_col_sens1| pcb_example1.xy | | --eval "return check_columns 1, 'r[0-9]+'" | 0
+match_col_sens2| pcb_example1.xy | | --eval "return check_columns 1, 'R[0-9]+'" | 1
+match_col_sens3| pcb_example2.xy | | --eval "return check_columns 1, 'R[0-9]+'" | 0
+match_col_sens4| pcb_example2.xy | | --eval "return check_columns 1, 'r[0-9]+'" | 1
 match_no_args| pcb_example1.xy | | --caseinsensitive --eval "return check_columns " | 1
 
 # -----------------------------------------
 # Tests for del_line subroutine in gxyrs package.
 # -----------------------------------------
-del_case_sensitive1 | pcb_example1.xy | | --eval "return del_line 1, 'R[0-9]+'"| 1
-del_case_sensitive2 | pcb_example2.xy | | --eval "return del_line 1, 'R[0-9]+'"| 0
-del_case_sensitive3 | pcb_example1.xy | | --eval "return del_line 1, 'r[0-9]+'"| 0
-del_case_sensitive4 | pcb_example2.xy | | --eval "return del_line 1, 'r[0-9]+'"| 1
-del_case_insensitive1 | pcb_example1.xy | | --caseinsensitive --eval "return del_line 1, 'r[0-9]+'"| 1
-del_case_insensitive2 | pcb_example2.xy | | --caseinsensitive --eval "return del_line 1, 'R[0-9]+'"| 1
-del_check_columns_return_minus1 | pcb_example1.xy | | --eval "return del_line -1, 'r[0-9]+'" | 255
-del_check_columns_no_match | pcb_example1.xy | | --eval "return del_line 1, 'component[0-9]+'" | 0
+del_case_sens1 | pcb_example1.xy | | --eval "return del_line 1, 'R[0-9]+'"| 1
+del_case_sens2 | pcb_example2.xy | | --eval "return del_line 1, 'R[0-9]+'"| 0
+del_case_sens3 | pcb_example1.xy | | --eval "return del_line 1, 'r[0-9]+'"| 0
+del_case_sens4 | pcb_example2.xy | | --eval "return del_line 1, 'r[0-9]+'"| 1
+del_case_insens1 | pcb_example1.xy | | --caseinsensitive --eval "return del_line 1, 'r[0-9]+'"| 1
+del_case_insens2 | pcb_example2.xy | | --caseinsensitive --eval "return del_line 1, 'R[0-9]+'"| 1
+del_check_cols_return_minus1 | pcb_example1.xy | | --eval "return del_line -1, 'r[0-9]+'" | 255
+del_check_cols_no_match | pcb_example1.xy | | --eval "return del_line 1, 'component[0-9]+'" | 0
 
 # -----------------------------------------
 # Tests for rotate subroutine in gxyrs package.
 # -----------------------------------------
-rotate_case_sensitive | pcb_example1.xy | | --eval "return rotate_comp 6, 90, 1, 'R[0-9]+'"| 1
-rotate_case_insensitive | pcb_example1.xy | | --caseinsensitive --eval "return rotate_comp 6, 90, 1, 'r[0-9]+'"| 1
-rotate_check_columns_return_minus1 | pcb_example1.xy | | --eval "return rotate_comp 6, 90, -1, 'r[0-9]+'" | 255
-rotate_check_columns_no_match | pcb_example1.xy | | --eval "return rotate_comp 6, 90, 1, 'component[0-9]+'" | 0
+rotate_case_sens | pcb_example1.xy | | --eval "return rotate_comp 6, 90, 1, 'R[0-9]+'"| 1
+rotate_case_insens | pcb_example1.xy | | --caseinsensitive --eval "return rotate_comp 6, 90, 1, 'r[0-9]+'"| 1
+rotate_check_cols_return_minus1 | pcb_example1.xy | | --eval "return rotate_comp 6, 90, -1, 'r[0-9]+'" | 255
+rotate_check_cols_no_match | pcb_example1.xy | | --eval "return rotate_comp 6, 90, 1, 'component[0-9]+'" | 0
 rotate_real_angle | pcb_example1.xy | | --eval "return rotate_comp 6, 90.0, 1, 'R[0-9]+'"| 1
 rotate_negative_real_angle | pcb_example1.xy | | --eval "return rotate_comp 6, -90.0, 1, 'R[0-9]+'"| 1
 rotate_negative_angle | pcb_example1.xy | | --eval "return rotate_comp 6, -90, 1, 'R[0-9]+'"| 1
-rotate_bad_column_number1 | pcb_example1.xy | | --eval "return rotate_comp '6d', -90, 1, 'R[0-9]+'"| 255
-rotate_bad_column_number2 | pcb_example1.xy | | --eval "return rotate_comp 'd6', -90, 1, 'R[0-9]+'"| 255
-rotate_negative_column_number | pcb_example1.xy | | --eval "return rotate_comp -6, -90, 1, 'R[0-9]+'"| 255
-rotate_column_number_too_high | pcb_example1.xy | | --eval "return rotate_comp 100, -90, 1, 'R[0-9]+'"| 255
+rotate_bad_col_num1 | pcb_example1.xy | | --eval "return rotate_comp '6d', -90, 1, 'R[0-9]+'"| 255
+rotate_bad_col_num2 | pcb_example1.xy | | --eval "return rotate_comp 'd6', -90, 1, 'R[0-9]+'"| 255
+rotate_negative_col_num | pcb_example1.xy | | --eval "return rotate_comp -6, -90, 1, 'R[0-9]+'"| 255
+rotate_col_num_too_high | pcb_example1.xy | | --eval "return rotate_comp 100, -90, 1, 'R[0-9]+'"| 255
 
 # -----------------------------------------
 # Tests for subst_col_val subroutine in gxyrs package.
 # -----------------------------------------
-subst_bad_column_number1 | pcb_example1.xy | | --eval "return subst_col_val '6d', -90, 1, 'R[0-9]+'"| 255
-subst_bad_column_number2 | pcb_example1.xy | | --eval "return subst_col_val 'd6', -90, 1, 'R[0-9]+'"| 255
-subst_negative_column_number | pcb_example1.xy | | --eval "return subst_col_val -6, -90, 1, 'R[0-9]+'"| 255
-subst_column_number_too_high | pcb_example1.xy | | --eval "return subst_col_val 100, -90, 1, 'R[0-9]+'"| 255
-subst_check_columns_return_minus1 | pcb_example1.xy | | --eval "return subst_col_val 3, '\"100K\"', '-1', 'r[0-9]+'" | 255
-subst_check_columns_no_match | pcb_example1.xy | | --eval "return subst_col_val 3, '\"100K\"', 1, 'component[0-9]+'" | 0
-subst_check_columns_match | pcb_example1.xy | | --eval "return subst_col_val 3, '\"100K\"', 1, 'R[0-9]+'" | 1
+subst_bad_col_num1 | pcb_example1.xy | | --eval "return subst_col_val '6d', -90, 1, 'R[0-9]+'"| 255
+subst_bad_col_num2 | pcb_example1.xy | | --eval "return subst_col_val 'd6', -90, 1, 'R[0-9]+'"| 255
+subst_negative_col_num | pcb_example1.xy | | --eval "return subst_col_val -6, -90, 1, 'R[0-9]+'"| 255
+subst_col_num_too_high | pcb_example1.xy | | --eval "return subst_col_val 100, -90, 1, 'R[0-9]+'"| 255
+subst_check_cols_return_minus1 | pcb_example1.xy | | --eval "return subst_col_val 3, '\"100K\"', '-1', 'r[0-9]+'" | 255
+subst_check_cols_no_match | pcb_example1.xy | | --eval "return subst_col_val 3, '\"100K\"', 1, 'component[0-9]+'" | 0
+subst_check_cols_match | pcb_example1.xy | | --eval "return subst_col_val 3, '\"100K\"', 1, 'R[0-9]+'" | 1
 
 # -----------------------------------------
 # Tests for change_col_units subroutine in gxyrs package.
 # -----------------------------------------
-change_units_bad_column_number1 | pcb_example1.xy | | --eval "return change_col_units 'mm', '4d'"| 255
-change_units_bad_column_number2 | pcb_example1.xy | | --eval "return change_col_units 'mm', 'd4'"| 255
-change_units_negative_column_number | pcb_example1.xy | | --eval "return change_col_units 'mm', -4"| 255
-change_units_column_number_too_high | pcb_example1.xy | | --eval "return change_col_units 'mm', 100"| 255
-change_units_no_units | pcb_example1.xy | | --eval "return change_col_units 'mm', 4"| 254
-change_units_to_mm_6col_tab | protel_example1_mil.txt | | --tabulate --eval "return change_col_units 'mm', 3, 4, 5, 6, 7, 8"| 254
-change_units_2mm_6col_tab_notit | protel_example1_mil.txt | | --tabulate --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mm', 3, 4, 5, 6, 7, 8}"| 1
-change_units_already_done | protel_example1_mil.txt | | --eval "return change_col_units 'mil', 3"| 254
-change_units_done_notitle | protel_example1_mil.txt | | --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mil', 3}"| 0
-change_units_units_not_supported | protel_example1_mil.txt | | --eval "return change_col_units 'gallons', 3"| 255
-change_units_to_mm | protel_example1_mil.txt | | --eval "return change_col_units 'mm', 3"| 254
-change_units_to_mm_no_title | protel_example1_mil.txt | | --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mm', 3}"| 1
-change_units_to_mil | protel_example1_mm.txt| | --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mil', 3}"| 1
-change_units_to_mm_2cols | protel_example1_mil.txt | | --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mm', 3, 4}"| 1
-change_units_to_mil_2cols | protel_example1_mm.txt | | --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mil', 3, 4}"| 1
+chunits_bad_col_num1 | pcb_example1.xy | | --eval "return change_col_units 'mm', '4d'"| 255
+chunits_bad_col_num2 | pcb_example1.xy | | --eval "return change_col_units 'mm', 'd4'"| 255
+chunits_negative_col_num | pcb_example1.xy | | --eval "return change_col_units 'mm', -4"| 255
+chunits_col_num_too_high | pcb_example1.xy | | --eval "return change_col_units 'mm', 100"| 255
+chunits_no_units | pcb_example1.xy | | --eval "return change_col_units 'mm', 4"| 254
+chunits_to_mm_6col_tab | protel_example1_mil.txt | | --tabulate --eval "return change_col_units 'mm', 3, 4, 5, 6, 7, 8"| 254
+chunits_2mm_6col_tab_notit | protel_example1_mil.txt | | --tabulate --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mm', 3, 4, 5, 6, 7, 8}"| 1
+chunits_already_done | protel_example1_mil.txt | | --eval "return change_col_units 'mil', 3"| 254
+chunits_done_notitle | protel_example1_mil.txt | | --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mil', 3}"| 0
+chunits_units_not_supported | protel_example1_mil.txt | | --eval "return change_col_units 'gallons', 3"| 255
+chunits_to_mm | protel_example1_mil.txt | | --eval "return change_col_units 'mm', 3"| 254
+chunits_to_mm_no_title | protel_example1_mil.txt | | --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mm', 3}"| 1
+chunits_to_mil | protel_example1_mm.txt| | --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mil', 3}"| 1
+chunits_to_mm_2cols | protel_example1_mil.txt | | --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mm', 3, 4}"| 1
+chunits_to_mil_2cols | protel_example1_mm.txt | | --eval "if (\$LINE_NUMBER != \$TITLE_LINE) {return change_col_units 'mil', 3, 4}"| 1
 
 # -----------------------------------------
 # Tests for add_number_to_col subroutine in gxyrs package.
 # -----------------------------------------
-offset_bad_column_number1 | pcb_example1.xy | | --eval "return add_number_to_col '4d', -90, 1, 'R[0-9]+'"| 255
-offset_bad_column_number2 | pcb_example1.xy | | --eval "return add_number_to_col 'd4', -90, 1, 'R[0-9]+'"| 255
-offset_negative_column_number | pcb_example1.xy | | --eval "return add_number_to_col -4, -90, 1, 'R[0-9]+'"| 255
-offset_column_number_too_high | pcb_example1.xy | | --eval "return add_number_to_col 100, -90, 1, 'R[0-9]+'"| 255
-offset_check_columns_return_minus1 | pcb_example1.xy | | --eval "return add_number_to_col 4, 100, -1, 'r[0-9]+'" | 255
-offset_check_columns_no_match | pcb_example1.xy | | --eval "return add_number_to_col 4, 100, 1, 'component[0-9]+'" | 0
-offset_check_columns_match | pcb_example1.xy | | --eval "return add_number_to_col 4, 100, 1, 'R[0-9]+'" | 1
+offset_bad_col_num1 | pcb_example1.xy | | --eval "return add_number_to_col '4d', -90, 1, 'R[0-9]+'"| 255
+offset_bad_col_num2 | pcb_example1.xy | | --eval "return add_number_to_col 'd4', -90, 1, 'R[0-9]+'"| 255
+offset_negative_col_num | pcb_example1.xy | | --eval "return add_number_to_col -4, -90, 1, 'R[0-9]+'"| 255
+offset_col_num_too_high | pcb_example1.xy | | --eval "return add_number_to_col 100, -90, 1, 'R[0-9]+'"| 255
+offset_check_cols_return_minus1 | pcb_example1.xy | | --eval "return add_number_to_col 4, 100, -1, 'r[0-9]+'" | 255
+offset_check_cols_no_match | pcb_example1.xy | | --eval "return add_number_to_col 4, 100, 1, 'component[0-9]+'" | 0
+offset_check_cols_match | pcb_example1.xy | | --eval "return add_number_to_col 4, 100, 1, 'R[0-9]+'" | 1
 offset_match_negative_offset | pcb_example1.xy | | --eval "return add_number_to_col 4, -100, 1, 'R[0-9]+'" | 1
 offset_match_real_offset | pcb_example1.xy | | --eval "return add_number_to_col 4, 10.3, 1, 'R[0-9]+'" | 1
 offset_match_negative_real_offset | pcb_example1.xy | | --eval "return add_number_to_col 4, -10.3, 1, 'R[0-9]+'" | 1
@@ -107,15 +107,15 @@ offset_match_no_units_in_file | pcb_example1.xy | | --eval "return add_number_to
 # -----------------------------------------
 # Tests for translate_col_val subroutine in gxyrs package.
 # -----------------------------------------
-translate_bad_column_number1 | pcb_example1.xy | | --eval "return translate_col_val '4d', '^.([0-9]+)k.$','sprintf(\"%dK\",$1)', 1, 'R[0-9]+'"| 255
-translate_bad_column_number2 | pcb_example1.xy | | --eval "return translate_col_val 'd4', '^.([0-9]+)k.$','sprintf(\"%dK\",$1)', 1, 'R[0-9]+'"| 255
-translate_negative_column_number | pcb_example1.xy | | --eval "return translate_col_val -4, '^.([0-9]+)k.$','sprintf(\"%dK\",$1)', 1, 'R[0-9]+'"| 255
-translate_column_number_too_high | pcb_example1.xy | | --eval "return translate_col_val 100, '^.([0-9]+)k.$','sprintf(\"%dK\",$1)', 1, 'R[0-9]+'"| 255
-translate_column_change_all_value_plus_k | pcb_example1.xy | | --eval "return translate_col_val 3, '^.([0-9]+)k.$','sprintf(\"%dK\",\$1)'"| 1
-translate_column_change_R10_value | pcb_example1.xy | | --eval "return translate_col_val 3, '^.([0-9]+)k.$','sprintf(\"%dK\",\$1)', 1, 'R10'"| 1
-translate_col_R10_value_case_insensitive | pcb_example1.xy | | --caseinsensitive --eval "return translate_col_val 3, '^.([0-9]+)K.$','sprintf(\"%dkilohms\",\$1)', 1, 'R10'"| 1
-translate_column_no_match1 | pcb_example1.xy | | --eval "return translate_col_val 3, '^.([0-9]+)k.$','sprintf(\"%dK\",\$1)', 1, 'R90'"| 0
-translate_column_no_match2 | pcb_example1.xy | | --eval "return translate_col_val 3, '^.([0-9]+)n.$','sprintf(\"%dnF\",\$1)', 1, 'R10'"| 0
+translate_bad_col_num1 | pcb_example1.xy | | --eval "return translate_col_val '4d', '^.([0-9]+)k.$','sprintf(\"%dK\",$1)', 1, 'R[0-9]+'"| 255
+translate_bad_col_num2 | pcb_example1.xy | | --eval "return translate_col_val 'd4', '^.([0-9]+)k.$','sprintf(\"%dK\",$1)', 1, 'R[0-9]+'"| 255
+translate_negative_col_num | pcb_example1.xy | | --eval "return translate_col_val -4, '^.([0-9]+)k.$','sprintf(\"%dK\",$1)', 1, 'R[0-9]+'"| 255
+translate_col_num_too_high | pcb_example1.xy | | --eval "return translate_col_val 100, '^.([0-9]+)k.$','sprintf(\"%dK\",$1)', 1, 'R[0-9]+'"| 255
+translate_col_change_all_value_plus_k | pcb_example1.xy | | --eval "return translate_col_val 3, '^.([0-9]+)k.$','sprintf(\"%dK\",\$1)'"| 1
+translate_col_change_R10_value | pcb_example1.xy | | --eval "return translate_col_val 3, '^.([0-9]+)k.$','sprintf(\"%dK\",\$1)', 1, 'R10'"| 1
+translate_col_R10_value_case_insens | pcb_example1.xy | | --caseinsensitive --eval "return translate_col_val 3, '^.([0-9]+)K.$','sprintf(\"%dkilohms\",\$1)', 1, 'R10'"| 1
+translate_col_no_match1 | pcb_example1.xy | | --eval "return translate_col_val 3, '^.([0-9]+)k.$','sprintf(\"%dK\",\$1)', 1, 'R90'"| 0
+translate_col_no_match2 | pcb_example1.xy | | --eval "return translate_col_val 3, '^.([0-9]+)n.$','sprintf(\"%dnF\",\$1)', 1, 'R10'"| 0
 
 # -----------------------------------------
 # Tests for output delimiter option in gxyrs.
@@ -125,27 +125,27 @@ output_delimiter | pcb_example1.xy | | --tabulate --output-delimiter " " --eval 
 # -----------------------------------------
 # Tests for panelize_xyrs subroutine in gxyrs package.
 # -----------------------------------------
-panelize_bad_x_column_number1 | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,'d2',\$Y_COL, \$REF_COL, ''"| 255
-panelize_bad_y_column_number1 | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,\$X_COL, 'd2', \$REF_COL, ''"| 255
-panelize_bad_ref_column_number1 | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500, \$X_COL,\$Y_COL, 'd2', ''"| 255
-panelize_bad_x_column_number2 | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,'2d',\$Y_COL, \$REF_COL, ''"| 255
-panelize_bad_y_column_number2 | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,\$X_COL,'2d', \$REF_COL, ''"| 255
-panelize_bad_ref_column_number2 | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,\$REF_COL,\$Y_COL, '2d', ''"| 255
-panelize_negative_x_column_number | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,-1,\$Y_COL, \$REF_COL, ''"| 255
-panelize_negative_y_column_number | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,\$X_COL,-1, \$REF_COL, ''"| 255
-panelize_negative_ref_column_number | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,\$X_COL,\$Y_COL, -1, ''"| 255
-panelize_x_column_number_too_high | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,100,\$Y_COL, \$REF_COL, ''"| 255
-panelize_y_column_number_too_high | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,\$X_COL,100, \$REF_COL, ''"| 255
-panelize_ref_column_number_too_high | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,\$X_COL,\$Y_COL, 100, ''"| 255
+panelize_bad_x_col_num1 | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,'d2',\$Y_COL, \$REF_COL, ''"| 255
+panelize_bad_y_col_num1 | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,\$X_COL, 'd2', \$REF_COL, ''"| 255
+panelize_bad_ref_col_num1 | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500, \$X_COL,\$Y_COL, 'd2', ''"| 255
+panelize_bad_x_col_num2 | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,'2d',\$Y_COL, \$REF_COL, ''"| 255
+panelize_bad_y_col_num2 | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,\$X_COL,'2d', \$REF_COL, ''"| 255
+panelize_bad_ref_col_num2 | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,\$REF_COL,\$Y_COL, '2d', ''"| 255
+panelize_negative_x_col_num | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,-1,\$Y_COL, \$REF_COL, ''"| 255
+panelize_negative_y_col_num | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,\$X_COL,-1, \$REF_COL, ''"| 255
+panelize_negative_ref_col_num | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,\$X_COL,\$Y_COL, -1, ''"| 255
+panelize_x_col_num_too_high | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,100,\$Y_COL, \$REF_COL, ''"| 255
+panelize_y_col_num_too_high | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,\$X_COL,100, \$REF_COL, ''"| 255
+panelize_ref_col_num_too_high | pcb_example1.xy | | --eval "return panelize_xyrs 15,15,500,1500,\$X_COL,\$Y_COL, 100, ''"| 255
 panelize_tabulate | pcb_example1.xy | | --tabulate --output-delimiter " " --eval "return panelize_xyrs 15,15,500,1500,\$X_COL,\$Y_COL, \$REF_COL, ''"| 1
 
 # -----------------------------------------
 # Tests for multiply subroutine in gxyrs package.
 # -----------------------------------------
-multiply_bad_column_number1 | pcb_example1.xy | | --eval "return mul_col_val 'd2', 2"| 255
-multiply_bad_column_number2 | pcb_example1.xy | | --eval "return mul_col_val '2d', 2"| 255
-multiply_negative_column_number | pcb_example1.xy | | --eval "return mul_col_val -1, 2"| 255
-multiply_column_number_too_high | pcb_example1.xy | | --eval "return mul_col_val 100, 100"| 255
+multiply_bad_col_num1 | pcb_example1.xy | | --eval "return mul_col_val 'd2', 2"| 255
+multiply_bad_col_num2 | pcb_example1.xy | | --eval "return mul_col_val '2d', 2"| 255
+multiply_negative_col_num | pcb_example1.xy | | --eval "return mul_col_val -1, 2"| 255
+multiply_col_num_too_high | pcb_example1.xy | | --eval "return mul_col_val 100, 100"| 255
 multiply_real_factor | pcb_example1.xy | | --eval "return mul_col_val \$Y_COL, 2.5"| 1
 multiply_negative_real_factor | pcb_example1.xy | | --eval "return mul_col_val \$Y_COL, -2.5"| 1
 multiply_integer_factor | pcb_example1.xy | | --eval "return mul_col_val \$Y_COL, 2"| 1
@@ -155,27 +155,27 @@ multiply_with_checklist | pcb_example1.xy | | --eval "return mul_col_val \$Y_COL
 # -----------------------------------------
 # Tests for swap_columns subroutine in gxyrs package.
 # -----------------------------------------
-swap_columns_bad_column1_number1 | pcb_example1.xy | | --eval "return swap_columns 'd2', 2"| 255
-swap_columns_bad_column1_number2 | pcb_example1.xy | | --eval "return swap_columns '2d', 2"| 255
-swap_columns_negative_column1_number | pcb_example1.xy | | --eval "return swap_columns -1, 2"| 255
-swap_columns_column1_number_too_high | pcb_example1.xy | | --eval "return swap_columns 100, 1"| 255
-swap_columns_bad_column2_number1 | pcb_example1.xy | | --eval "return swap_columns 2, 'd2'"| 255
-swap_columns_bad_column2_number2 | pcb_example1.xy | | --eval "return swap_columns 2, '2d'"| 255
-swap_columns_negative_column2_number | pcb_example1.xy | | --eval "return swap_columns 2, -1"| 255
-swap_columns_column2_number_too_high | pcb_example1.xy | | --eval "return swap_columns 1, 100"| 255
-swap_columns_with_match | pcb_example1.xy | | --eval "return swap_columns 1, 2, \$REF_COL, 'R[0-9]+'"| 1
-swap_columns_no_match | pcb_example1.xy | | --eval "return swap_columns 1, 2, \$REF_COL, 'Rb[0-9]+'"| 0
-swap_columns_no_matchlist | pcb_example1.xy | | --eval "return swap_columns 1, 2"| 1
+swap_cols_bad_col1_num1 | pcb_example1.xy | | --eval "return swap_columns 'd2', 2"| 255
+swap_cols_bad_col1_num2 | pcb_example1.xy | | --eval "return swap_columns '2d', 2"| 255
+swap_cols_negative_col1_num | pcb_example1.xy | | --eval "return swap_columns -1, 2"| 255
+swap_cols_col1_num_too_high | pcb_example1.xy | | --eval "return swap_columns 100, 1"| 255
+swap_cols_bad_col2_num1 | pcb_example1.xy | | --eval "return swap_columns 2, 'd2'"| 255
+swap_cols_bad_col2_num2 | pcb_example1.xy | | --eval "return swap_columns 2, '2d'"| 255
+swap_cols_negative_col2_num | pcb_example1.xy | | --eval "return swap_columns 2, -1"| 255
+swap_cols_col2_num_too_high | pcb_example1.xy | | --eval "return swap_columns 1, 100"| 255
+swap_cols_with_match | pcb_example1.xy | | --eval "return swap_columns 1, 2, \$REF_COL, 'R[0-9]+'"| 1
+swap_cols_no_match | pcb_example1.xy | | --eval "return swap_columns 1, 2, \$REF_COL, 'Rb[0-9]+'"| 0
+swap_cols_no_matchlist | pcb_example1.xy | | --eval "return swap_columns 1, 2"| 1
 
 # -----------------------------------------
 # Tests for insert_column subroutine in gxyrs package.
 # -----------------------------------------
-insert_column_bad_column_number1 | pcb_example1.xy | | --eval "return insert_column 'd2', 2"| 255
-insert_column_bad_column_number2 | pcb_example1.xy | | --eval "return insert_column '2d', 2"| 255
-insert_column_negative_column_number | pcb_example1.xy | | --eval "return insert_column -1, 2"| 255
-insert_column_column_number_too_high | pcb_example1.xy | | --eval "return insert_column 100, 100"| 255
-insert_column_first_pos | pcb_example1.xy | | --eval "return insert_column 0, 'new_value'"| 1
-insert_column_second_pos | pcb_example1.xy | | --eval "return insert_column 1, 'new_value'"| 1
+insert_col_bad_col_num1 | pcb_example1.xy | | --eval "return insert_column 'd2', 2"| 255
+insert_col_bad_col_num2 | pcb_example1.xy | | --eval "return insert_column '2d', 2"| 255
+insert_col_negative_col_num | pcb_example1.xy | | --eval "return insert_column -1, 2"| 255
+insert_col_col_num_too_high | pcb_example1.xy | | --eval "return insert_column 100, 100"| 255
+insert_col_first_pos | pcb_example1.xy | | --eval "return insert_column 0, 'new_value'"| 1
+insert_col_second_pos | pcb_example1.xy | | --eval "return insert_column 1, 'new_value'"| 1
 
 # -----------------------------------------
 # Tests if footprint field is guessed in several file formats.
