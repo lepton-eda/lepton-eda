@@ -1,7 +1,7 @@
 
 
 docname=wiki
-docsdir = @GEDADOCDIR@/$(docname)/
+docsdir = $(docdir)/$(docname)/
 
 SUBDIRS = _media _detail lib 
 

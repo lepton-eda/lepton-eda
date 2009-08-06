@@ -1,7 +1,7 @@
 
 
 docname=wiki
-docsdir = @GEDADOCDIR@/$(docname)/lib
+docsdir = $(docdir)/$(docname)/lib
 
 SUBDIRS = exe tpl images plugins 
 

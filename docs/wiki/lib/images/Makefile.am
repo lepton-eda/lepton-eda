@@ -1,7 +1,7 @@
 
 
 docname=wiki
-docsdir = @GEDADOCDIR@/$(docname)/lib/images
+docsdir = $(docdir)/$(docname)/lib/images
 
 SUBDIRS = smileys interwiki fileicons 
 

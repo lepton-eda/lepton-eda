@@ -1,7 +1,7 @@
 
 
 docname=wiki
-docsdir = @GEDADOCDIR@/$(docname)/lib/plugins/definitionlist/images
+docsdir = $(docdir)/$(docname)/lib/plugins/definitionlist/images
 
 docs_DATA = bullet.gif 
 
