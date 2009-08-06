@@ -45,23 +45,6 @@ AC_SUBST(GEDADOCDIR)
 AC_SUBST(DATE_VERSION)
 AC_SUBST(DOTTED_VERSION)
 
-AC_DEFUN([GEDA_DECLARE_DOCS],
- [
-        data$1=`find $srcdir/$1 -name \* -print \
-				 | sed "s%\.\./wiki/%%" \
-				 | sed "s%\.\./wiki%%" \
-				 | sed "s%\./wiki/%%" \
-				 | sed "s%\./wiki%%" \
-				 | grep -v Makefile | grep -v ChangeLog \
-                                 | grep -v CVS | grep -v "\\.cvsignore" \
-                                 | grep -v README \
-                                 | grep -v "\\~" | grep -v "\\.orig"`
-        data$1=`echo $data$1`
-        AC_SUBST(data$1)
- ])
-
-GEDA_DECLARE_DOCS(wiki)
-
 AC_CONFIG_FILES([Makefile 
 		 toplevel/Makefile 
 		 toplevel/gedadocs.html 
