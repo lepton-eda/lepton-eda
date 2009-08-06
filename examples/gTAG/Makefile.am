@@ -1,4 +1,4 @@
-exampledir = @GEDADOCDIR@/examples/gTAG/
+exampledir = $(docdir)/examples/gTAG/
 
 example_DATA = 7414-1.sym attribs gafrc copyleft.sym crdist.sh \
 	     cy7c64603-52nc.sym gTAG-consio.ps gTAG-consio.sch \
@@ -12,6 +12,5 @@ EXTRA_DIST = ChangeLog-1.0 $(example_DATA)
 
 MOSTLYCLEANFILES = gschem.log *~
 CLEANFILES = gschem.log *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = gschem.log *~ Makefile.in configure
-
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = gschem.log *~ Makefile.in

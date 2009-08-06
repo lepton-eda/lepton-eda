@@ -274,5 +274,13 @@ AC_CONFIG_FILES([Makefile
                  docs/wiki/lib/tpl/Makefile
                  docs/wiki/lib/tpl/geda/Makefile
                  docs/wiki/lib/tpl/geda/images/Makefile
+
+                 examples/Makefile
+                 examples/RF_Amp/Makefile
+                 examples/RF_Amp/model/Makefile
+                 examples/RF_Amp/sym/Makefile
+                 examples/TwoStageAmp/Makefile
+                 examples/gTAG/Makefile
+                 examples/lightning_detector/Makefile
 ])
 AC_OUTPUT

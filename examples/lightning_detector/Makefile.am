@@ -1,11 +1,11 @@
-SUBDIRS = sym
+exampledir = $(docdir)/examples/lightning_detector/
 
-exampledir = @GEDADOCDIR@/examples/lightning_detector/
+nobase_example_DATA = \
+	bom bom.readme lightning.net lightning.pcb lightning.sch \
+	lightning.sch.bom gafrc \
+	sym/2N4401.sym sym/2N4403.sym
 
-example_DATA = bom bom.readme lightning.net lightning.pcb lightning.sch \
-             lightning.sch.bom gafrc
-
-EXTRA_DIST = $(example_DATA) 
+EXTRA_DIST = $(nobase_example_DATA) 
 
 MOSTLYCLEANFILES = gschem.log *~
 CLEANFILES = gschem.log *~

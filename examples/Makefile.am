@@ -1,22 +1,13 @@
 
 SUBDIRS = gTAG lightning_detector RF_Amp TwoStageAmp
 
-exampledir = @GEDADOCDIR@/examples/
+exampledir = $(docdir)/examples/
 
 example_DATA = README 
 
-EXTRA_DIST = ChangeLog-1.0 autogen.sh $(example_DATA)
-
-distclean-local:
-	-rm -rf autom4te.cache
-
-maintainer-clean-local:
-	-rm -rf autom4te.cache
+EXTRA_DIST = ChangeLog-1.0 $(example_DATA)
 
 MOSTLYCLEANFILES = *.log core FILE *~ 
 CLEANFILES = *.log core FILE *~ 
-DISTCLEANFILES = *.log core FILE *~ prototype.bak 
-MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in configure config.h.in \
-                       config.status aclocal.m4 install-sh missing \
-		       mkinstalldirs
-
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log core FILE *~
