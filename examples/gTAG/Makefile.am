@@ -8,7 +8,12 @@ example_DATA = 7414-1.sym attribs gafrc copyleft.sym crdist.sh \
              gTAG.bom gTAG.ps gTAG.sch gnetlistrc max882.sym sn75240pw.sym \
 	     README
 
-EXTRA_DIST = ChangeLog-1.0 $(example_DATA)
+EXTRA_DIST = ChangeLog ChangeLog-1.0 $(example_DATA)
+
+if HAVE_GIT_REPO
+ChangeLog: $(top_builddir)/stamp-git
+	(cd $(srcdir) && $(GIT) log --pretty=medium $(CHANGELOG_BASE).. -- .) > $@
+endif HAVE_GIT_REPO
 
 MOSTLYCLEANFILES = gschem.log *~
 CLEANFILES = gschem.log *~
