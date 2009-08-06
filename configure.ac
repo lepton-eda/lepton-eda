@@ -227,5 +227,27 @@ AC_CONFIG_FILES([Makefile
                  gnetlist/scripts/bompp.sh
                  gnetlist/scripts/sw2asc
                  gnetlist/lib/system-gnetlistrc
+
+                 utils/Makefile
+                 utils/docs/Makefile
+                 utils/examples/Makefile
+                 utils/examples/gmk_sym/Makefile
+                 utils/examples/gsch2pcb/Makefile
+                 utils/examples/tragesym/Makefile
+                 utils/gschlas/Makefile
+                 utils/gxyrs/Makefile
+                 utils/include/Makefile
+                 utils/lib/Makefile
+                 utils/lib/system-gschlasrc
+                 utils/man/Makefile
+                 utils/scripts/Makefile
+                 utils/src/Makefile
+                 utils/tests/Makefile
+                 utils/tests/gxyrs/Makefile
+                 utils/tests/gxyrs/inputs/Makefile
+                 utils/tests/gxyrs/outputs/Makefile
+                 utils/tests/refdes_renum/Makefile
+                 utils/tests/refdes_renum/inputs/Makefile
+                 utils/tests/refdes_renum/outputs/Makefile
 ])
 AC_OUTPUT

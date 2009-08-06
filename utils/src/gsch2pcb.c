@@ -79,7 +79,7 @@ static GList	*pcb_element_list,
 				*extra_gnetlist_arg_list;
 
 static gchar	*schematics,
-				*basename;
+				*sch_basename;
 
 static gchar	*m4_command,
 				*m4_pcbdir,
@@ -1165,8 +1165,8 @@ add_schematic(gchar *sch)
 	else
 		schematics = g_strdup(sch);
 	g_free(s);
-	if (!basename && (s = strstr(sch, ".sch")) != NULL)
-		basename = g_strndup(sch, s - sch);
+	if (!sch_basename && (s = strstr(sch, ".sch")) != NULL)
+		sch_basename = g_strndup(sch, s - sch);
 	}
 
 static gint
@@ -1226,7 +1226,7 @@ parse_config(gchar *config, gchar *arg)
 				g_list_prepend(element_directory_list, expand_dir(arg));
 		}
 	else if (!strcmp(config, "output-name") || !strcmp(config, "o"))
-		basename = g_strdup(arg);
+		sch_basename = g_strdup(arg);
 	else if (!strcmp(config, "schematics"))
 		add_schematic(arg);
 	else if (!strcmp(config, "m4-command"))
@@ -1508,10 +1508,10 @@ main(gint argc, gchar **argv)
 	  }
 	g_free (path);
 
-	pins_file_name = g_strconcat(basename, ".cmd", NULL);
-	net_file_name = g_strconcat(basename, ".net", NULL);
-	pcb_file_name = g_strconcat(basename, ".pcb", NULL);
-	bak_file_name = g_strconcat(basename, ".pcb.bak", NULL);
+	pins_file_name = g_strconcat(sch_basename, ".cmd", NULL);
+	net_file_name = g_strconcat(sch_basename, ".net", NULL);
+	pcb_file_name = g_strconcat(sch_basename, ".pcb", NULL);
+	bak_file_name = g_strconcat(sch_basename, ".pcb.bak", NULL);
 	tmp = g_strdup(bak_file_name);
 
 	for (i = 0; g_file_test(bak_file_name, G_FILE_TEST_EXISTS); ++i)
@@ -1524,13 +1524,14 @@ main(gint argc, gchar **argv)
 	if (g_file_test(pcb_file_name, G_FILE_TEST_EXISTS))
 		{
 		initial_pcb = FALSE;
-		pcb_new_file_name = g_strconcat(basename, ".new.pcb", NULL);
+		pcb_new_file_name = g_strconcat(sch_basename, ".new.pcb", NULL);
 		get_pcb_element_list(pcb_file_name);
 		}
 	else
 		pcb_new_file_name = g_strdup(pcb_file_name);
 
-	run_gnetlist(pins_file_name, net_file_name, pcb_new_file_name, basename, schematics);
+	run_gnetlist(pins_file_name, net_file_name, pcb_new_file_name,
+                     sch_basename, schematics);
 
 	if (add_elements(pcb_new_file_name) == 0)
 		{

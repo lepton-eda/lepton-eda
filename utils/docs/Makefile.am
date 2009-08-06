@@ -1,7 +1,7 @@
 
 EXTRA_DIST = README.gsch2pcb README.olib README.tragesym README.grenum TODO.grenum why.grenum
 
-docsreadmedir = @GEDADOCDIR@/readmes
+docsreadmedir = $(docdir)/readmes
 docsreadme_DATA = README.gsch2pcb README.olib README.tragesym README.grenum
 
 MOSTLYCLEANFILES = *.log *~
