@@ -70,75 +70,6 @@ fi
 #########################################################################
 
 #########################################################################
-# Do individual library files start
-# 
-
-# Some of our own macros for setting up library files
-AC_DEFUN([GEDA_DECLARE_SYMLIB],
- [
-	data$1=`ls -1 $srcdir/$1 | grep -v Makefile | grep -v ChangeLog \
-				 | grep -v CVS | grep -v "\\.cvsignore" \
-				 | grep -v README \
-				 | grep -v "\\~" | grep -v "\\.orig"`
-	data$1=`echo $data$1`
-        AC_SUBST(data$1)
- ])
-
-GEDA_DECLARE_SYMLIB(4000)
-GEDA_DECLARE_SYMLIB(national)
-GEDA_DECLARE_SYMLIB(local)
-GEDA_DECLARE_SYMLIB(io)
-GEDA_DECLARE_SYMLIB(amphenol)
-GEDA_DECLARE_SYMLIB(analog)
-GEDA_DECLARE_SYMLIB(maxim)
-GEDA_DECLARE_SYMLIB(verilog)
-GEDA_DECLARE_SYMLIB(vhdl)
-GEDA_DECLARE_SYMLIB(spice)
-GEDA_DECLARE_SYMLIB(connector)
-GEDA_DECLARE_SYMLIB(altera)
-GEDA_DECLARE_SYMLIB(linear)
-GEDA_DECLARE_SYMLIB(switch)
-GEDA_DECLARE_SYMLIB(switcap)
-GEDA_DECLARE_SYMLIB(titleblock)
-GEDA_DECLARE_SYMLIB(tube)
-GEDA_DECLARE_SYMLIB(radio)
-GEDA_DECLARE_SYMLIB(micro)
-GEDA_DECLARE_SYMLIB(memory)
-GEDA_DECLARE_SYMLIB(74)
-GEDA_DECLARE_SYMLIB(relay)
-GEDA_DECLARE_SYMLIB(diode)
-GEDA_DECLARE_SYMLIB(opto)
-GEDA_DECLARE_SYMLIB(bus)
-GEDA_DECLARE_SYMLIB(supervisor)
-GEDA_DECLARE_SYMLIB(lattice)
-GEDA_DECLARE_SYMLIB(misc)
-GEDA_DECLARE_SYMLIB(transistor)
-GEDA_DECLARE_SYMLIB(power)
-GEDA_DECLARE_SYMLIB(philips)
-GEDA_DECLARE_SYMLIB(xilinx)
-GEDA_DECLARE_SYMLIB(dec)
-GEDA_DECLARE_SYMLIB(rf)
-GEDA_DECLARE_SYMLIB(pla)
-GEDA_DECLARE_SYMLIB(ecl)
-GEDA_DECLARE_SYMLIB(IEC417)
-GEDA_DECLARE_SYMLIB(font)
-GEDA_DECLARE_SYMLIB(idt)
-GEDA_DECLARE_SYMLIB(diode)
-GEDA_DECLARE_SYMLIB(opto)
-GEDA_DECLARE_SYMLIB(cascade)
-GEDA_DECLARE_SYMLIB(asic)
-GEDA_DECLARE_SYMLIB(asicpads)
-GEDA_DECLARE_SYMLIB(gnetman)
-GEDA_DECLARE_SYMLIB(minicircuits)
-GEDA_DECLARE_SYMLIB(st)
-GEDA_DECLARE_SYMLIB(apex)
-GEDA_DECLARE_SYMLIB(allegro)
-GEDA_DECLARE_SYMLIB(irf)
-# 
-# Do individual library files start
-#########################################################################
-
-#########################################################################
 # gEDA/gaf specify setup start
 #
 DATADIR=gEDA
@@ -174,57 +105,8 @@ AC_SUBST(GEDADATADIR)
 AC_SUBST(GEDADOCDIR)
 AC_SUBST(GEDARCDIR)
 
-AC_CONFIG_FILES([ 
-        Makefile 
-	4000/Makefile
-	74/Makefile 
-	relay/Makefile 
-	bus/Makefile 
-	supervisor/Makefile 
-	lattice/Makefile 
-	xilinx/Makefile 
-	dec/Makefile 
-	pla/Makefile 
-	ecl/Makefile 
-	rf/Makefile 
-	IEC417/Makefile 
-	altera/Makefile 
-	amphenol/Makefile 
-	analog/Makefile 
-	connector/Makefile 
-	font/Makefile 
-	idt/Makefile 
-	io/Makefile 
-	linear/Makefile 
-	local/Makefile
-        maxim/Makefile 
-	memory/Makefile 
-	micro/Makefile 
-	misc/Makefile 
-	transistor/Makefile 
-	power/Makefile 
-	philips/Makefile 
-	radio/Makefile 
-	switch/Makefile 
-	switcap/Makefile 
-	titleblock/Makefile 
-	tube/Makefile 
-	verilog/Makefile
-	vhdl/Makefile 
-	spice/Makefile
-	diode/Makefile 
-	opto/Makefile 
-	national/Makefile
-	cascade/Makefile 
-	asic/Makefile 
-	asicpads/Makefile 
-	gnetman/Makefile 
-	minicircuits/Makefile
-	st/Makefile 
-	apex/Makefile 
-	allegro/Makefile 
-	irf/Makefile 
-	documentation/Makefile ])
+AC_CONFIG_FILES([Makefile
+                 documentation/Makefile])
 
 AC_OUTPUT 
 
