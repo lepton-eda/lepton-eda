@@ -50,25 +50,19 @@ symbol_dirs = \
 
 SUBDIRS = documentation
 
-scmdatadir = @GEDADATADIR@/scheme
+scmdatadir = $(GEDADATADIR)/scheme
 dist_scmdata_DATA = geda-font.scm
 
-gafrcddir = @GEDADATADIR@/gafrc.d
+gafrcddir = $(GEDADATADIR)/gafrc.d
 dist_gafrcd_DATA = geda-clib.scm
 
 datasymdir = $(GEDADATADIR)/sym
 nobase_dist_datasym_DATA = \
 	vhdl/verilog2vhdl.sh vhdl/script.sed
 
-EXTRA_DIST = autogen.sh ChangeLog-1.0 \
+EXTRA_DIST = ChangeLog-1.0 \
 	font/README font/ChangeLog font/ChangeLog-1.0 \
 	radio/README
-
-distclean-local:
-	-rm -rf autom4te.cache
-
-maintainer-clean-local:
-	-rm -rf autom4te.cache
 
 # Copies symbols into distribution
 dist-hook:
@@ -107,7 +101,5 @@ uninstall-local:
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak 
-MAINTAINERCLEANFILES = *.log *~ Makefile.in configure config.status \
-		       aclocal.m4 config.guess config.sub install-sh \
-		       missing mkinstalldirs config.h.in
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log *~ Makefile.in

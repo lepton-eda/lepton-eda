@@ -1,15 +1,15 @@
-datadocdir = @GEDADOCDIR@
-
-datadoc_DATA = nc.pdf
+doc_DATA = nc.pdf
 
 EXTRA_DIST = nc.doc geda.fig geda.pic nc.ps nc.pdf
 
 BUILT_SOURCES = geda.pic nc.pdf nc.ps
 
+SUFFIXES = .fig .pic .ps .doc .pdf
+
 #
 #  some standard rules for groff based documentation
 #
-%.pic: %.fig
+.fig.pic:
 	@echo "Creating pic (using fig2dev)"
 	@if which fig2dev >/dev/null 2>/dev/null; then           \
 		fig2dev -L pic $*.fig >$*.pic		       ;\
@@ -19,7 +19,7 @@ BUILT_SOURCES = geda.pic nc.pdf nc.ps
 		touch $*.pic				       ;\
 	fi
 
-%.ps: %.doc
+.doc.ps:
 	@echo "Creating ps (using groff)"
 	@rm -rf $*.tmp
 	@if test "x$(GROFF)" != xno; then                        \
@@ -31,7 +31,7 @@ BUILT_SOURCES = geda.pic nc.pdf nc.ps
 		touch $*.ps                                     ;\
 	fi
 
-%.pdf: %.ps
+.ps.pdf:
 	@echo "Creating pdf (using ps2pdf)"
 	@rm -rf $*.pdf
 	@if which ps2pdf >/dev/null 2>/dev/null; then             \
@@ -50,5 +50,5 @@ nc.pdf: nc.ps
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~ *.ps *.pdf 
-DISTCLEANFILES = *.log core FILE *~ prototype.bak 
-MAINTAINERCLEANFILES = *.log *~ Makefile.in configure geda.pic *.pdf *.ps
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log *~ Makefile.in geda.pic *.pdf *.ps
