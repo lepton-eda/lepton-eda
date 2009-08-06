@@ -1,6 +1,6 @@
 SUBDIRS = po src include lib design docs data
 
-EXTRA_DIST = BUGS NOTES README ChangeLog ChangeLog-1.0 AUTHORS \
+EXTRA_DIST = BUGS NOTES README ChangeLog ChangeLog-1.0 \
 	INSTALL ToDos
 
 MOSTLYCLEANFILES = *.log core FILE *~ #*#

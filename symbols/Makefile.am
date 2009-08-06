@@ -62,7 +62,7 @@ nobase_dist_datasym_DATA = \
 
 EXTRA_DIST = ChangeLog-1.0 \
 	font/README font/ChangeLog font/ChangeLog-1.0 \
-	radio/README
+	radio/README AUTHORS
 
 # Copies symbols into distribution
 dist-hook:
