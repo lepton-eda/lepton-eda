@@ -19,6 +19,7 @@
  */
 /*! \todo STILL NEED to clean up line lengths in aa and tr */
 #include <config.h>
+#include <version.h>
 
 #include <stdio.h>
 #ifdef HAVE_STDLIB_H
@@ -2224,8 +2225,8 @@ void about_dialog (GSCHEM_TOPLEVEL *w_current)
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 
     string = g_strdup_printf(_("<b>gschem version %s%s.%s</b>"),
-                             PREPEND_VERSION_STRING, DOTTED_VERSION,
-                             DATE_VERSION);
+                             PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
+                             PACKAGE_DATE_VERSION);
     label = gtk_label_new (string);
     gtk_label_set_use_markup (GTK_LABEL(label), TRUE);
     g_free(string);

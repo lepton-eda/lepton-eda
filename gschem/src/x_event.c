@@ -38,9 +38,9 @@ int start_pan_x, start_pan_y;
 int throttle = 0;
 
 /* used for the stroke stuff */
-#ifdef HAS_LIBSTROKE
+#ifdef HAVE_LIBSTROKE
 static int DOING_STROKE = FALSE;
-#endif /* HAS_LIBSTROKE */
+#endif /* HAVE_LIBSTROKE */
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -405,11 +405,11 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         (*w_current->last_callback)(w_current, 0, NULL);
       }
       break;
-#ifdef HAS_LIBSTROKE
+#ifdef HAVE_LIBSTROKE
       case(STROKE):
       DOING_STROKE=TRUE;
       break;
-#endif /* HAS_LIBSTROKE */
+#endif /* HAVE_LIBSTROKE */
 
       case(MID_MOUSEPAN_ENABLED):
       w_current->event_state = MOUSEPAN; /* start */
@@ -670,12 +670,12 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
       }
       break;
 
-#ifdef HAS_LIBSTROKE
+#ifdef HAVE_LIBSTROKE
       case(STROKE):
       DOING_STROKE = FALSE;
       x_stroke_translate_and_execute (w_current);
       break;
-#endif /* HAS_LIBSTROKE */
+#endif /* HAVE_LIBSTROKE */
 
       case(MID_MOUSEPAN_ENABLED):
       w_current->doing_pan=FALSE;
@@ -736,12 +736,12 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
   /*  printf("MOTION!\n");*/
 #endif
 
-#ifdef HAS_LIBSTROKE
+#ifdef HAVE_LIBSTROKE
   if (DOING_STROKE == TRUE) {
     x_stroke_record (w_current, event->x, event->y);
     return(0);
   }
-#endif /* HAS_LIBSTROKE */
+#endif /* HAVE_LIBSTROKE */
 
   /* skip the moving event if there are other moving events in the
      gdk event queue (Werner)

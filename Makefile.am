@@ -1,4 +1,4 @@
-SUBDIRS = libgeda intl
+SUBDIRS = intl libgeda gschem
 
 ACLOCAL_AMFLAGS = -I m4
 

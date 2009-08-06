@@ -21,7 +21,7 @@
 
 #include "gschem.h"
 
-#ifdef HAS_LIBSTROKE
+#ifdef HAVE_LIBSTROKE
 #include <stroke.h>
 
 #ifdef HAVE_LIBDMALLOC
@@ -169,4 +169,4 @@ x_stroke_translate_and_execute (GSCHEM_TOPLEVEL *w_current)
   return 0;
 }
 
-#endif /* HAS_LIBSTROKE */
+#endif /* HAVE_LIBSTROKE */

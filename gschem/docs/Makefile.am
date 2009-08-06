@@ -8,7 +8,7 @@ all:
 
 doxygen: gschem.dox
 	@echo 'Creating doxygen documentation for gschem...'
-if BUILDDOC
+if ENABLE_DOXYGEN
 	$(DOXYGEN) gschem.dox
 	-cd latex && $(MAKE)
 	-cd ..
@@ -19,10 +19,10 @@ endif
 
 MOSTLYCLEANFILES = 	*.log *~
 CLEANFILES = 		*.log *~
-DISTCLEANFILES = 	*.log core FILE *~ prototype.bak \
+DISTCLEANFILES = 	*.log core FILE *~ \
 			*.dvi *.info *.info-* *.aux *.fn \
 			*.fns *.cp *.ky *.pg *.toc *.tp *.vrs *.vr 
-MAINTAINERCLEANFILES = 	*.log *~ Makefile.in configure
+MAINTAINERCLEANFILES = 	*.log *~ Makefile.in
 
 distclean-local:
 	-rm -rf html latex

@@ -1,9 +1,3 @@
-#
-# NOTE: Don't forget that in the libtool distribution, files in this
-# directory are distributed by the demo_distfiles variable in the top
-# level Makefile.
-#
-
 bin_PROGRAMS = gschem
 
 gschem_SOURCES = \
@@ -72,42 +66,20 @@ gschem_SOURCES = \
 	x_stroke.c \
 	x_window.c
 
-if CCISGCC
-AM_CFLAGS = -Wall
-endif
-
-INCLUDES = -I$(includedir) -I$(top_srcdir)/intl -I$(top_srcdir)/include @GSCHEM_CFLAGS@
-gschem_LDADD = -L$(libdir) @GSCHEM_LDFLAGS@ @LIBINTL@
+gschem_CPPFLAGS = -I$(top_srcdir)/libgeda/include  -I$(srcdir)/../include \
+	-I$(top_srcdir) -I$(includedir) -I$(top_srcdir)/intl
+gschem_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLAGS) $(LIBSTROKE_CFLAGS) \
+	$(GLIB_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(GUILE_CFLAGS)
+gschem_LDFLAGS = $(LIBSTROKE_LDFLAGS) $(GLIB_LIBS) $(GTK_LIBS) \
+	$(GTHREAD_LIBS) $(GUILE_LIBS)
+gschem_LDADD = $(top_builddir)/libgeda/src/libgeda.la @LIBINTL@
 
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
-#man_MANS = gschem.1
-EXTRA_DIST = create_proto rcstrings.c
-#gschem.1
+EXTRA_DIST = rcstrings.c
 
-src: $(gschem_SOURCES)
-	@echo Finished building the C source
-
-CPROTO =	cproto
-CPROTOCFLAGS = 	$(INCLUDES) -I. -I.. -I../include
-ALES_HACK =	-D__GNUC__
-
-proto: prototype.h
-
-prototype.h: $(gschem_SOURCES)
-	$(CPROTO) $(ALES_HACK) $(CPROTOCFLAGS) *.c > new_proto
-	mv new_proto ../include/prototype.h
-
-potfiles:
-	rm -f po/$(PACKAGE).pot
-	@mv -f po/POTFILES.in po/POTFILES.in~ ; true
-	grep '\([^A-Za-z0-9_]_(\)\|\(^_(\)\|\(gettext[[:blank:]]*(\)' \
-	*.c | cut -d: -f1 | sort -u >po/POTFILES.in
-	$(MAKE)
-
-MOSTLYCLEANFILES = *.log core FILE *~ prototype.bak
-CLEANFILES = *.log core FILE *~ prototype.bak
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = *.log core FILE *~ prototype.bak prototype.h \
-			Makefile.in configure 
+MOSTLYCLEANFILES = *.log core FILE *~
+CLEANFILES = *.log core FILE *~
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in

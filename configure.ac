@@ -169,5 +169,20 @@ AC_CONFIG_FILES([Makefile
                  libgeda/scheme/Makefile
                  libgeda/share/Makefile
                  libgeda/src/Makefile
+
+                 gschem/Makefile
+                 gschem/po/Makefile.in
+                 gschem/docs/Makefile
+                 gschem/include/Makefile
+                 gschem/scripts/Makefile
+                 gschem/src/Makefile
+                 gschem/examples/Makefile
+                 gschem/lib/Makefile
+                 gschem/lib/system-gschemrc
+                 gschem/data/Makefile
+                 gschem/bitmap/Makefile
+                 gschem/tests/Makefile
+                 gschem/scheme/Makefile
+
 ])
 AC_OUTPUT

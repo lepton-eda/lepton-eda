@@ -1,5 +1,5 @@
 
-bitmapdatadir = @GEDADATADIR@/bitmap
+bitmapdatadir = $(GEDADATADIR)/bitmap
 bitmapdata_DATA = gschem-bus.xpm gschem-comp.xpm gschem-net.xpm		 \
 		  gschem-new.xpm gschem-open.xpm gschem-redo.xpm	 \
 		  gschem-save.xpm gschem-select.xpm gschem-undo.xpm	 \
@@ -28,5 +28,5 @@ EXTRA_DIST = $(bitmapdata_DATA) README
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = *.log *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log *~ Makefile.in

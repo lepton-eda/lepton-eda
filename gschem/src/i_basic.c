@@ -254,7 +254,7 @@ void i_update_middle_button(GSCHEM_TOPLEVEL *w_current,
                   _("Action"));
     break;
 
-#ifdef HAS_LIBSTROKE
+#ifdef HAVE_LIBSTROKE
     case(STROKE):
     gtk_label_set(GTK_LABEL(w_current->middle_label),
                   _("Stroke"));

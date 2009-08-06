@@ -80,7 +80,7 @@ int   default_print_output_capstyle = SQUARE_CAP;
 int   default_log_window = MAP_ON_STARTUP;
 int   default_log_window_type = DECORATED;
 int   default_third_button = POPUP_ENABLED;
-#ifdef HAS_LIBSTROKE
+#ifdef HAVE_LIBSTROKE
 int   default_middle_button = STROKE;
 #else
 int   default_middle_button = REPEAT;

@@ -30,6 +30,11 @@ CANDIDATE_BROWSER="xdg-open galeon mozilla phoenix netscape netscape-navigator o
 CANDIDATE_PDFREADER="xdg-open xpdf acroread ggv gv"
 CANDIDATE_LOCATE="slocate locate"
 
+#
+# Information about the gEDA installation
+#
+DOCDIR="@DOCDIR@"
+
 # For OS X, since Linux has 'open' with different semantics
 if [ "`uname -s`" = "Darwin" ]; then
 	CANDIDATE_BROWSER="open $CANDIDATE_BROWSER"
