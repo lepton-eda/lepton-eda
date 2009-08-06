@@ -13,9 +13,7 @@ BUILDDIR=$(top_builddir)/tests/hierarchy
 SRCDIR=$(srcdir)
 GNETLIST=$(top_builddir)/src/gnetlist
 
-tests: tests-job tests-clean
-
-tests-job:
+tests:
 	rm -f $(BUILDDIR)/new_*
 	cp -f $(SRCDIR)/gnetlistrc.hierarchy $(BUILDDIR)/gnetlistrc
 	( TESTDIR=$(SRCDIR); export TESTDIR ; SCMDIR=${top_builddir}/scheme ; export SCMDIR ; \
@@ -25,10 +23,7 @@ tests-job:
 	     $(SRCDIR)/top.sch )
 	diff $(SRCDIR)/hierarchy.geda $(BUILDDIR)/new_hierarchy.geda;
 
-tests-clean:
-	rm -f $(BUILDDIR)/gnetlistrc
-
 MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~
 CLEANFILES = new_* core *.log FILE *.ps *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
+DISTCLEANFILES = *.log core FILE *~ prototype.bak gnetlistrc gafrc
 MAINTAINERCLEANFILES = new_* core *.log FILE *.ps *~ Makefile.in configure
