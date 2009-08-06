@@ -70,5 +70,5 @@ tests:
 
 MOSTLYCLEANFILES = *.log *~ new_*
 CLEANFILES = *.log *~ new_*
-DISTCLEANFILES = *.log core FILE *~ prototype.bak new_*
-MAINTAINERCLEANFILES = system-gsymcheckrc *.log *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~ new_*
+MAINTAINERCLEANFILES = *.log *~ Makefile.in

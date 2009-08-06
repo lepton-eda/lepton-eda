@@ -1,4 +1,4 @@
-SUBDIRS = intl libgeda gschem gattrib
+SUBDIRS = intl libgeda gschem gattrib gsymcheck
 
 ACLOCAL_AMFLAGS = -I m4
 
