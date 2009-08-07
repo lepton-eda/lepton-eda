@@ -124,6 +124,8 @@ autopoint_fix() {
         cp -a $top_po/* $d || break
       done
     } && rm -rf $top_po
+  else
+    exit $?
   fi
 }
 
