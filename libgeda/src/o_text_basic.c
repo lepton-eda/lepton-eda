@@ -366,8 +366,20 @@ GList *o_text_load_font (TOPLEVEL *toplevel, gunichar needed_char)
     found = FALSE;
   }
 
+  /* We need to make sure to create and add a font OBJECT to the
+   * font_loaded hashtable *before* attempting to call o_read().  This
+   * is because o_text_set_info_font() expects to find it. */
+  o_font_set = (OBJECT*)g_new (OBJECT, 1);
+  o_font_set->font_prim_objs = NULL;
+  o_font_set->font_text_size = 100;
+
+  /* Add it to the list and hash table. Some functions will need it */
+  g_hash_table_insert (font_loaded,
+                       GUINT_TO_POINTER (needed_char), o_font_set);
+
   if (found) {
-    prim_objs = o_read(toplevel, prim_objs, temp_string, &err);
+    o_font_set->font_prim_objs = o_read(toplevel, o_font_set->font_prim_objs,
+                                        temp_string, &err);
     if (err != NULL) {
       g_warning ("o_text_basic.c: Failed to read font file: %s\n",
                  err->message);
@@ -377,20 +389,17 @@ GList *o_text_load_font (TOPLEVEL *toplevel, gunichar needed_char)
   }
 
   if (!found) {
-    /* Get a question mark. */
-    o_font_set = builtin_question_mark (toplevel);
-  } else {
-    /* Make new object for the font set list */
-    o_font_set = (OBJECT*)g_new (OBJECT, 1);
-    o_font_set->font_prim_objs = prim_objs;
-    o_font_set->font_text_size = 100;
+    /* Get a question mark instead. */
+    OBJECT *q = builtin_question_mark (toplevel);
+    /* Replace the current o_font_set object in the hashtable.
+     * Because its font_prim_objs GList will be empty (== NULL), we
+     * can just rely on the hashtables free func to clean it up for
+     * us.  This is horrible, but effective. */
+    g_hash_table_insert (font_loaded, GUINT_TO_POINTER (needed_char), q);
+    o_font_set = q;
   }
 
   o_font_set->name = g_strdup_printf ("%c", needed_char);
-
-  /* Add it to the list and hash table. Some functions will need it */
-  g_hash_table_insert (font_loaded,
-                       GUINT_TO_POINTER (needed_char), o_font_set);
 
   g_free(temp_string);
 
