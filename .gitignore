@@ -1,0 +1,17 @@
+*~
+.desktop-i18n
+ABOUT-NLS
+Makefile
+Makefile.in
+aclocal.m4
+autom4te.cache
+config.h
+config.h.in
+config.status
+configure
+intl
+libtool
+stamp-git
+stamp-h1
+version.h
+INSTALL

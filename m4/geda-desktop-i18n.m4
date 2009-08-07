@@ -37,11 +37,7 @@ gettext is correctly installed, and rerun configure.])
 
   # How should desktop-i18n be run?
   DESKTOP_I18N_SCRIPT="$am_aux_dir/desktop-i18n"
-  if test "X$GETTEXT" != "Xgettext"; then
-    DESKTOP_I18N="\${SHELL} $DESKTOP_I18N_SCRIPT"
-  else
-    DESKTOP_I18N="GETTEXT=\${GETTEXT} \${SHELL} $DESKTOP_I18N_SCRIPT"
-  fi
+  DESKTOP_I18N="\${SHELL} $DESKTOP_I18N_SCRIPT"
   AC_SUBST([DESKTOP_I18N_SCRIPT])
   AC_SUBST([DESKTOP_I18N])
 

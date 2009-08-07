@@ -289,7 +289,14 @@ create_desktop() {
 create_xml() {
   # Loop over each line of standard input
   n=0
-  while read REPLY; do
+  while : ; do
+
+    # We have to do an ugly hack to avoid stripping whitespace.
+    saveIFS="$IFS"
+    IFS=
+    read REPLY || { IFS="$saveIFS" ; break; }
+    IFS="$saveIFS"
+
     n=`expr $n + 1`
     regexp='<_\([a-zA-Z][a-zA-Z]*\)>\(.*\)</_\1>'
     if ! (echo $REPLY | grep $regexp > /dev/null); then

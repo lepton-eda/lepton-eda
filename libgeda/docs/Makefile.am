@@ -8,7 +8,7 @@ all:
 
 doxygen: libgeda.dox
 	@echo 'Creating doxygen documentation for libgeda...'
-if BUILDDOC
+if ENABLE_DOXYGEN
 	-cd images && $(MAKE)
 	-cd ..
 	$(DOXYGEN) libgeda.dox
@@ -22,7 +22,7 @@ endif
 MOSTLYCLEANFILES = 	*.log *~
 CLEANFILES = 		*.log *~
 DISTCLEANFILES =        *.log
-MAINTAINERCLEANFILES = 	*.log *~ Makefile.in configure
+MAINTAINERCLEANFILES = 	*.log *~ Makefile.in
 
 distclean-local:
 	-rm -rf html latex

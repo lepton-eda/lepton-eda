@@ -535,13 +535,13 @@ const char *s_path_sys_config () {
     p = g_getenv ("GEDADATARC");
   }
   if (p == NULL) {
-    if (g_strcasecmp (GEDARCDIR, "none") != 0) {
-      /* If available, use the rc directory set during configure. */
-      p = GEDARCDIR;
-    } else {
-      /* Otherwise, just use the data directory */
-      p = s_path_sys_data ();
-    }
+#ifdef GEDARCDIR
+    /* If available, use the rc directory set during configure. */
+    p = GEDARCDIR;
+#else
+    /* Otherwise, just use the data directory */
+    p = s_path_sys_data ();
+#endif
   }
   if (p != NULL) g_setenv("GEDADATARC", p, FALSE);
   return p;

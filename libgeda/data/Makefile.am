@@ -30,18 +30,20 @@ xmldir = $(mimedir)/packages
 xml_in_files = libgeda.xml.in
 xml_DATA = $(xml_in_files:.xml.in=.xml)
 
-kdedatadir=@KDEDATADIR@
-mimelnkdir = $(kdedatadir)/mimelnk
-applicationdir = $(mimelnkdir)/application
-
 application_in_files = \
 	x-geda-gsch2pcb-project.desktop.in \
 	x-geda-schematic.desktop.in \
 	x-geda-symbol.desktop.in
+
+if ENABLE_KDE_DESKTOP_DATA
+kdedatadir=@KDEDATADIR@
+mimelnkdir = $(kdedatadir)/mimelnk
+applicationdir = $(mimelnkdir)/application
 application_DATA = $(application_in_files:.desktop.in=.desktop)
+endif ENABLE_KDE_DESKTOP_DATA
 
 install_icon_exec = \
-	$(SHELL) $(top_srcdir)/icon-theme-installer \
+	$(ICON_THEME_INSTALLER) \
 	-t $(theme) \
 	-s $(srcdir) \
 	-d "x$(DESTDIR)" \
@@ -49,7 +51,7 @@ install_icon_exec = \
 	-m "$(mkinstalldirs)" \
 	-x "$(INSTALL_DATA)"
 
-DOMAIN=$(GETTEXT_PACKAGE)
+DOMAIN=$(LIBGEDA_GETTEXT_DOMAIN)
 
 @DESKTOP_I18N_LANGS_RULE@
 @DESKTOP_I18N_DESKTOP_RULE@
@@ -59,12 +61,12 @@ install-data-local:
 	$(install_icon_exec) -i $(theme_icons)
 
 install-data-hook:
-if ENABLE_UPDATE_MIME_DATABASE
+if ENABLE_UPDATE_XDG_DATABASE
 	$(UPDATE_MIME_DATABASE) "$(DESTDIR)$(mimedir)"
 endif
 
 uninstall-hook:
-if ENABLE_UPDATE_MIME_DATABASE
+if ENABLE_UPDATE_XDG_DATABASE
 	$(UPDATE_MIME_DATABASE) "$(DESTDIR)$(mimedir)"
 endif
 	$(install_icon_exec) -u $(theme_icons)
@@ -72,6 +74,5 @@ endif
 MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in
 DISTCLEANFILES = $(xml_DATA) $(application_DATA)
 EXTRA_DIST = $(mime_icon_files) $(mime_icon_sources) \
-             $(xml_in_files) $(xml_DATA) \
-             $(application_in_files)
+             $(xml_in_files) $(application_in_files)
 

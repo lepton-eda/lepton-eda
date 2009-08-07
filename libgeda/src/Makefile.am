@@ -1,15 +1,5 @@
-# $Id$
-#
-# NOTE: Don't forget that in the libtool distribution, files in this
-# directory are distributed by the demo_distfiles variable in the top
-# level Makefile.
-AUTOMAKE_OPTIONS = foreign
 
-if CCISGCC
-AM_CFLAGS = -Wall
-endif
-
-# Build a libtool library, libhello.la for installation in libdir.
+# Build a libtool library for installation in libdir.
 lib_LTLIBRARIES = libgeda.la
 
 libgeda_la_SOURCES = \
@@ -69,32 +59,20 @@ libgeda_la_SOURCES = \
 	s_undo.c \
 	u_basic.c
 
-INCLUDES = -I$(top_srcdir)/include -I$(top_srcdir)/include/libgeda @LIBGEDA_CFLAGS@
-DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
-libgeda_la_LDFLAGS = @LIBTOOL_FLAGS@ @LIBGEDA_LDFLAGS@
+libgeda_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"  $(DATADIR_DEFS) \
+	-I$(srcdir)/../include -I$(srcdir)/../include/libgeda -I$(top_srcdir)
+libgeda_la_CFLAGS = \
+	$(GCC_CFLAGS) $(MINGW_CFLAGS) $(GUILE_CFLAGS) $(GLIB_CFLAGS) \
+	$(GDK_PIXBUF_CFLAGS)
+libgeda_la_LDFLAGS = --version-info $(LIBGEDA_SHLIB_VERSION) \
+	$(MINGW_LIBTOOL_FLAGS) $(MINGW_LDFLAGS) $(GUILE_LDFLAGS) \
+	$(GLIB_LIBS) $(GDK_PIXBUF_LIBS)
 LIBTOOL=@LIBTOOL@ --silent
 
-EXTRA_DIST = create_proto 
-
-src: $(libgeda_la_SOURCES)
-	@echo Finished building the C source
-
-CPROTO =	cproto
-CPROTOCFLAGS = 	$(INCLUDES) -I. -I.. -I../include
-ALES_HACK =	-D__GNUC__
-
-proto: prototype.h
-
-prototype.h: $(libgeda_la_SOURCES)
-	$(CPROTO) $(ALES_HACK) $(CPROTOCFLAGS) *.c > new_proto
-	mv new_proto ../include/prototype.h
-
-
-MOSTLYCLEANFILES = *.log core FILE *~ prototype.bak
-CLEANFILES = *.log core FILE *~ prototype.bak
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = *.log core FILE *~ prototype.bak prototype.h \
-			Makefile.in configure
+MOSTLYCLEANFILES = *.log core FILE *~
+CLEANFILES = *.log core FILE *~
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in
 
 # Unfortunately, in order to test libtool thoroughly, we need access
 # to its private directory.

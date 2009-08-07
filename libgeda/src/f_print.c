@@ -23,6 +23,7 @@
  */
 
 #include <config.h>
+#include <version.h>
 
 #include <stdio.h>
 #include <unistd.h>
@@ -134,7 +135,7 @@ int f_print_header(TOPLEVEL *toplevel, FILE *fp,
 	  "%%%%Pages: 1\n"
 	  "%%%%Endcomments\n"
 	  "%%%%BeginProlog\n",
-	  DATE_VERSION,
+	  PACKAGE_GIT_VERSION,
 	  ctime(&current_time),
 	  toplevel->page_current->page_filename,
 #ifdef HAVE_GETLOGIN
