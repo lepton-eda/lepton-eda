@@ -14,13 +14,13 @@ EXTRA_DIST = runtest.sh \
              singlenet.protelII singlenet.sch stack_1.geda amp.spice-sdb \
 	     singlenet.liquidpcb \
 	     darlington.spice-sdb skt.switcap test.ana multiequal.sch \
-	     multiequal.spice-sdb gnetlistrc.vhdl
+	     multiequal.spice-sdb gnetlistrc.vhdl gnetlistrc
 
 check_SCRIPTS = tests
 
-BUILDDIR=$(top_builddir)/tests
+BUILDDIR=$(builddir)
 SRCDIR=$(srcdir)
-GNETLIST=$(top_builddir)/src/gnetlist
+GNETLIST=$(builddir)/../src/gnetlist
 
 tests:
 
@@ -28,6 +28,7 @@ tests:
 	rm -f $(BUILDDIR)/new_*
 	rm -rf $(BUILDDIR)/devfiles
 	mkdir $(BUILDDIR)/devfiles
+	cp $(srcdir)/gnetlistrc $(builddir)
 
 # netattrib gEDA 
 	$(SRCDIR)/runtest.sh $(SRCDIR)/netattrib.sch geda \
@@ -108,6 +109,7 @@ tests:
 # Cleanup
 	rm -f $(BUILDDIR)/new_*
 	rm -rf $(BUILDDIR)/devfiles
+	rm -f $(builddir)/gnetlistrc
 
 
 # These tests are internal to Ales and will not work without the schematics
@@ -155,7 +157,7 @@ tests_ales:
 
 MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~
 CLEANFILES = new_* core *.log FILE *.ps *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
+DISTCLEANFILES = *.log core FILE *~ prototype.bak gnetlistrc
 MAINTAINERCLEANFILES = new_* core *.log FILE *.ps *~ Makefile.in configure
 
 

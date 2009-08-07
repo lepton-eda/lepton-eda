@@ -1,5 +1,5 @@
 theme=hicolor
-xdgdatadir=@XDGDATADIR@
+xdgdatadir=$(XDGDATADIR)
 themedir=$(xdgdatadir)/icons/$(theme)
 
 app_icon = geda-gattrib
@@ -26,7 +26,7 @@ DOMAIN=geda-gattrib
 @DESKTOP_I18N_DESKTOP_RULE@
 
 install_icon_exec = \
-	$(SHELL) $(top_srcdir)/icon-theme-installer \
+	$(ICON_THEME_INSTALLER) \
 	-t $(theme) \
 	-s $(srcdir) \
 	-d "x$(DESTDIR)" \
@@ -39,12 +39,12 @@ install-data-local:
 
 
 install-data-hook:
-if ENABLE_UPDATE_DESKTOP_DATABASE
+if ENABLE_UPDATE_XDG_DATABASE
 	$(UPDATE_DESKTOP_DATABASE) "$(DESTDIR)$(desktopdir)"
 endif
 
 uninstall-hook:
-if ENABLE_UPDATE_DESKTOP_DATABASE
+if ENABLE_UPDATE_XDG_DATABASE
 	$(UPDATE_DESKTOP_DATABASE) "$(DESTDIR)$(desktopdir)"
 endif
 	$(install_icon_exec) -u $(theme_icons)

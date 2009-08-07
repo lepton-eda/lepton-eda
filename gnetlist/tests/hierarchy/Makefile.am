@@ -9,18 +9,18 @@ EXTRA_DIST = 1217.geda bottom.sch bottom.sym gnetlistrc.hierarchy gschemrc \
 # make distcheck
 check_SCRIPTS = tests
 
-BUILDDIR=$(top_builddir)/tests/hierarchy
+BUILDDIR=$(top_builddir)/gnetlist/tests/hierarchy
 SRCDIR=$(srcdir)
-GNETLIST=$(top_builddir)/src/gnetlist
+GNETLIST=$(top_builddir)/gnetlist/src/gnetlist
 
 tests:
 	rm -f $(BUILDDIR)/new_*
 	cp -f $(SRCDIR)/gnetlistrc.hierarchy $(BUILDDIR)/gnetlistrc
-	( TESTDIR=$(SRCDIR); export TESTDIR ; SCMDIR=${top_builddir}/scheme ; export SCMDIR ; \
-	  echo $$TESTDIR; \
-	  $(GNETLIST) \
-	     -o $(BUILDDIR)/new_hierarchy.geda -g geda \
-	     $(SRCDIR)/top.sch )
+	( TESTDIR=$(SRCDIR) \
+	  GEDADATARC=$(top_builddir)/gnetlist/lib \
+	  SCMDIR=${top_builddir}/gnetlist/scheme \
+	  SYMDIR=$(top_srcdir)/symbols \
+	    $(GNETLIST) -o $(BUILDDIR)/new_hierarchy.geda -g geda $(SRCDIR)/top.sch )
 	diff $(SRCDIR)/hierarchy.geda $(BUILDDIR)/new_hierarchy.geda;
 
 MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~

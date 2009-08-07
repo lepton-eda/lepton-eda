@@ -11,6 +11,9 @@ export TESTDIR
 
 schbasename=`basename $INPUT .sch`
 
+SCMDIR=$SRCDIR/../scheme \
+SYMDIR=$SRCDIR/../../symbols \
+GEDADATARC=$BUILDDIR/../lib \
 ../src/gnetlist -o ${BUILDDIR}/new_${schbasename}.$BACKEND -g $BACKEND $INPUT 
 status=$?
 

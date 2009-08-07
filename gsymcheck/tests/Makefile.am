@@ -49,6 +49,7 @@ tests:
 	pass=0 ; \
 	for file in $(SRCDIR)/*.sym; do \
 	  base=`basename $$file`; \
+	  GEDADATARC=$(builddir)/../lib \
 	  $(SHELL) $(SRCDIR)/runtest.sh $$file $(BUILDDIR) $(SRCDIR); \
           if [ $$? -ne 0 ]; then \
 	     echo "$$base FAILED!"; \
@@ -70,5 +71,5 @@ tests:
 
 MOSTLYCLEANFILES = *.log *~ new_*
 CLEANFILES = *.log *~ new_*
-DISTCLEANFILES = *.log core FILE *~ prototype.bak new_*
-MAINTAINERCLEANFILES = system-gsymcheckrc *.log *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~ new_*
+MAINTAINERCLEANFILES = *.log *~ Makefile.in

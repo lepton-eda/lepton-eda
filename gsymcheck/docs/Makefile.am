@@ -5,26 +5,19 @@ BUILT_SOURCES = gsymcheck.html
 
 man_MANS = gsymcheck.1
 
-docsmandir = @GEDADOCDIR@/man
+docsmandir = $(docdir)/man
 docsman_DATA = gsymcheck.html
 
-
-%.html: %.1
-	@echo "Creating html manpage (using groff)"
-	@rm -rf $*.tmp
-	@if test "x$(GROFF)" != xno; then                        \
-		LC_NUMERIC=C $(GROFF) -man -T html  $*.1 >$*.tmp;\
-		mv -f $*.tmp $*.html                            ;\
-	else                                                     \
-		echo "** Did not find groff **"                 ;\
-		echo "Some Documentation might not be correct!" ;\
-                touch $*.html                                   ;\
-	fi
-
-gsymcheck.html: gsymcheck.1
+.1.html:
+if ENABLE_GROFF
+	LC_NUMERIC=C $(GROFF) -man -T html $< > $@.tmp \
+	  && mv -f $@.tmp $@
+else
+	echo "Cannot build $@ from $<: groff is missing."
+endif
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~ gsymcheck.html
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = *.log *~ Makefile.in configure gsymcheck.html
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log *~ Makefile.in gsymcheck.html
 

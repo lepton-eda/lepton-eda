@@ -1,0 +1,545 @@
+#!/bin/sh
+#                                                   -*-Shell-script-*-
+# Helper script for translating desktop integration data
+# Copyright (C) 2009  Peter Brett <peter@peter-b.co.uk>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+# usage [EXITSTATUS]
+# ------------------
+# Print a simple help message, then exit with EXITSTATUS
+usage() {
+cat <<EOF
+Carry out translation tasks on desktop integration data.
+
+Usage:
+  desktop-i18n --extract <options> -- <xgettext_options>
+  desktop-i18n --create  <options> INFILE OUTFILE
+  desktop-i18n --setup
+
+  Operating modes:
+      --extract  Extract strings by calling xgettext
+      --create   Substitute translated strings
+      --setup    Setup a source tree to use desktop-i18n
+      --help     Print this message
+
+  Options for --extract mode:
+      --xgettext=XGETTEXT
+                 Specify xgettext executable to use
+
+  Options for --create mode:
+      --gettext=GETTEXT
+                 Specify gettext executable to use
+      --domain=TEXTDOMAIN
+                 Retrieve translated bmessages from TEXTDOMAIN
+      --localedir=TEXTDOMAINDIR
+                 Retrieve message catalog from TEXTDOMAINDIR
+      --lang=LANG  Add a language to translate messages into
+
+In order for this to work, all strings to be matched must be on a
+single line. In a .desktop file, a translatable name-value pair must
+have the desired name prefixed by an underscore. For example:
+
+   _Comment=gEDA Schematic Editor
+
+In a MIME info file, XML tag pairs where the tagname begins with an
+underscore are recognized. Both tags must be on the same line, and
+the tag must be the only XML content on the line. Whitespace at the
+start of the line before the opening tag is preserved. For example:
+
+    <_comment>gEDA circuit schematic</_comment>
+
+Do not include double-quotes (") or slashes (\) in translatable
+strings.
+EOF
+exit $1
+}
+
+# extract_desktop INFILE
+# ----------------------
+# Parse desktop file data from standard input and generate C on
+# standard output. If an error occurs, a message is printed blaming
+# INFILE.
+extract_desktop() {
+  # First argument is name of file being processed
+  echo "/* Generated from $1 by desktop-i18n */"
+  echo
+  # Loop over each line of standard input
+  n=0
+  while read REPLY; do
+    n=`expr $n + 1`
+    regexp='^_\([^=]*\)=\(.*\)$'
+    if ! (echo $REPLY | grep $regexp > /dev/null); then
+      continue
+    fi
+    name=`echo $REPLY | sed -e "s:$regexp:\1:"`
+    msgid=`echo $REPLY | sed -e "s:$regexp:\2:"`
+
+    # Test for bad characters
+    if (echo $msgid | grep '["\\]' > /dev/null); then
+      echo "$1:$n: msgid contains invalid character" >&2
+      exit 2
+    fi
+
+    # Generate output line
+    if test "x$name" != x -a "x$msgid" != x; then
+      echo "_(\"$msgid\");"
+    else
+      echo "$1:$n: name or msgid is empty" >&2
+      exit 2
+    fi
+  done
+}
+
+
+# extract_xml INFILE
+# ------------------
+# Parse XML mimeinfo data from standard input and generate C on
+# standard output. If an error occurs, a message is printed blaming
+# INFILE.
+extract_xml() {
+  echo "/* Generated from $1 by desktop-i18n */"
+  echo
+  # Loop over each line of standard input
+  n=0
+  while read REPLY; do
+    n=`expr $n + 1`
+    regexp='<_\([a-zA-Z][a-zA-Z]*\)>\(.*\)</_\1>'
+    if ! (echo $REPLY | grep $regexp > /dev/null); then
+      continue
+    fi
+    name=`echo $REPLY | sed -e "s:$regexp:\1:"`
+    msgid=`echo $REPLY | sed -e "s:$regexp:\2:"`
+
+    # Test for bad characters
+    if (echo $msgid | grep '["\\]' > /dev/null); then
+      echo "$1:$n: msgid contains invalid character" >&2
+      exit 2
+    fi
+
+    # Generate output line
+    if test "x$name" != x -a "x$msgid" != x; then
+      echo "_(\"$msgid\");"
+    else
+      echo "$1:$n: name or msgid is empty" >&2
+      exit 2
+    fi
+  done
+}
+
+# do_extract [OPTION]... -- [XGETTEXT_OPTION]...
+# ----------------------------------------------
+# A wrapper around xgettext. It identifies the file lists and search
+# directories being used by xgettext, and from them any desktop or
+# mimeinfo files to be processed.
+#
+# It then creates a new private directory, and adds it to the xgettext
+# search path. It creates a new file list and set of preprocessed
+# files in that directory, and then calls xgettext (preserving all
+# other original arguments).
+do_extract() {
+  XGETTEXT=xgettext
+
+  # First we have to process the command-line arguments
+  for arg; do
+    # Split into name=value
+    name=`echo $arg | sed -e's:=.*::'`
+    value=`echo $arg | sed -e's:^[^=]*=*::'`
+
+    if test "X$in_xg_args" = X; then
+      # This is an argument only for this script
+      case $name in
+        --xgettext) XGETTEXT="$value";;
+        --help)     usage;;
+        --)         in_xg_args=1;;
+        *)          usage 1;;
+      esac
+
+    else
+      # This is an argument to xgettext.  Luckily the Makefile only
+      # uses full-length arguments, and we only really care about the
+      # ones from there!
+      case $name in
+        --directory)  search_dirs="$search_dirs $value";;
+        --files-from) file_lists="$file_lists $value";;
+        *)
+          # We just want to pass this arg straight to xgettext, so
+          # stick it back on the end of the positional parameters
+          set x "$@" "$arg"; shift;;
+      esac
+    fi
+
+    # Discard processed arg from positional parameters
+    shift
+  done
+
+  # If our private data directory exists, die. Otherwise, create it.
+  priv_dir=.po-input
+  if test -d $priv_dir; then
+    echo "desktop-i18n: $PWD/$priv_dir already exists"
+    exit 3
+  fi
+  mkdir $priv_dir
+
+  # Process file lists if necessary
+  if test "X$file_lists" != X; then
+    # Extract names of files we need to preprocess
+    desktop_in=`cat $file_lists | grep ".desktop.in$"`
+    xml_in=`cat $file_lists | grep ".xml.in$"`
+
+    # Create a new POTFILES file which uses the postprocessed
+    # filenames instead of the original ones.
+    cat $file_lists | \
+      sed -e "s:.desktop.in$:.desktop.in.h:" -e "s:.xml.in$:.xml.in.h:" \
+        > $priv_dir/POTFILES
+  fi
+
+  # Preprocess .desktop files
+  for f in $desktop_in; do
+    src=`_search_file $f $search_dirs` || { rm -rf $priv_dir; exit 3; }
+    mkdir -p $priv_dir/`dirname $f`
+    extract_desktop $f < $src > $priv_dir/$f.h
+  done
+
+  # Preprocess .xml files
+  for f in $xml_in; do
+    src=`_search_file $f $search_dirs` || { rm -rf $priv_dir; exit 3; }
+    mkdir -p $priv_dir/`dirname $f`
+    extract_xml $f < $src > $priv_dir/$f.h
+  done
+
+  # Call xgettext (recall we saved some args in $@)
+  gen_args="--files-from=$priv_dir/POTFILES --directory=$priv_dir"
+  for d in $search_dirs; do
+    gen_args="$gen_args --directory=$d"
+  done
+  $XGETTEXT $gen_args "$@"
+
+  # Clean up private directory
+  rm -rf $priv_dir
+}
+
+_search_file() {
+  f=$1
+  shift
+  for d in $@; do
+    if test -f "$d/$f"; then echo "$d/$f"; exit; fi
+  done
+  echo "desktop-i18n: Cannot find $f in xgettext search directories"
+}
+
+# create_desktop INFILE
+# ---------------------
+# Parse desktop file data from standard input and generate a
+# translated desktop file on standard output. If an error occurs, a
+# message is printed blaming INFILE.
+create_desktop() {
+  # Loop over each line of standard input
+  n=0
+  while read REPLY; do
+    n=`expr $n + 1`
+    regexp='^_\([^=]*\)=\(.*\)$'
+    if ! (echo $REPLY | grep $regexp > /dev/null); then
+      echo $REPLY
+      continue
+    fi
+    name=`echo $REPLY | sed -e "s:$regexp:\1:"`
+    msgid=`echo $REPLY | sed -e "s:$regexp:\2:"`
+
+    # Test for bad characters
+    if (echo $msgid | grep '["\\]' > /dev/null); then
+      echo "$1:$n: msgid contains invalid character" >&2
+      exit 2
+    fi
+
+    # Generate first output line
+    echo "$name=$msgid"
+
+    # Generate language-specific output lines
+    for lang in $LINGUAS; do
+      msg=`LANGUAGE=$lang $GETTEXT "$msgid"`
+      # If translated message is unmodified, don't write an output
+      # line
+      if test "x$msg" = x -o "$msg" = "$msgid"; then
+        continue;
+      fi
+
+      echo "$name[$lang]=$msg"
+    done
+  done
+}
+
+# create_xml INFILE
+# -----------------
+# Parse XML mimeinfo data from standard input and generate a
+# translated mimeinfo file on standard output. If an error occurs, a
+# message is printed blaming INFILE.
+create_xml() {
+  # Loop over each line of standard input
+  n=0
+  while : ; do
+
+    # We have to do an ugly hack to avoid stripping whitespace.
+    saveIFS="$IFS"
+    IFS=
+    read REPLY || { IFS="$saveIFS" ; break; }
+    IFS="$saveIFS"
+
+    n=`expr $n + 1`
+    regexp='<_\([a-zA-Z][a-zA-Z]*\)>\(.*\)</_\1>'
+    if ! (echo $REPLY | grep $regexp > /dev/null); then
+      echo "$REPLY"
+      continue
+    fi
+    name=`echo $REPLY | sed -e "s:$regexp:\1:"`
+    msgid=`echo $REPLY | sed -e "s:$regexp:\2:"`
+    prefix=`echo $REPLY | sed -e "s:^\(.*\)<_$name>.*:\1:"`
+    suffix=`echo $REPLY | sed -e "s:.*</_$name>\(.*\):\1:"`
+
+    # Test for bad characters
+    if (echo $msgid | grep '["\\]' > /dev/null); then
+      echo "$1:$n: msgid contains invalid character" >&2
+      exit 2
+    fi
+
+    # Test for non-empty prefix/suffix
+    if test "x$prefix" != x -o "x$suffix" != x; then
+      echo "$1:$n: translatable tag must be alone on line" >&2
+      exit 2
+    fi
+
+    # Generate first output line
+    echo "$REPLY" | sed -e "s:<_\($name\)>\(.*\)</_\1>:<\1>\2</\1>:"
+
+    # Generate language-specific output lines
+    for lang in $LINGUAS; do
+      msg=`LANGUAGE=$lang $GETTEXT "$msgid"`
+      # If translated message is unmodified, don't write an output
+      # line
+      if test "x$msg" = x -o "$msg" = "$msgid"; then
+        continue;
+      fi
+      echo "$REPLY" | sed -e "s,<_\($name\)>\(.*\)</_\1>,<\1 xml:lang=\"$lang\">$msg</\1>,"
+    done
+  done
+}
+
+# do_create [OPTION]... INFILE OUTFILE
+# ------------------------------------
+# Substitutes translations into .desktop or mimeinfo files.
+do_create() {
+  GETTEXT=gettext
+
+  # First process command-line arguments
+  for arg; do
+    # Split into name=value
+    name=`echo $arg | sed -e's:=.*::'`
+    value=`echo $arg | sed -e's:^[^=]*=*::'`
+
+    case $name in
+      --gettext)   GETTEXT=$value;;
+      --domain)    TEXTDOMAIN=$value;;
+      --localedir) TEXTDOMAINDIR=$value;;
+      --lang)      LINGUAS="$LINGUAS $value";;
+      *)
+        # Arg might be a filename, so save it at the end of the
+        # positional parameters
+        set x "$@" "$arg"; shift
+    esac
+
+    # Discard processed arg from positional parameters
+    shift
+  done
+
+  if test $# != 2; then usage 1; fi # Should only have 2 args left
+  INFILE=$1; OUTFILE=$2
+  if ! test -r $INFILE; then
+    echo "desktop-i18n: Cannot open $INFILE for reading."
+    exit 3
+  fi
+
+  export TEXTDOMAIN
+  export GETTEXT
+  export TEXTDOMAINDIR
+  export LINGUAS
+
+  if (echo "$INFILE" | grep ".desktop.in$" > /dev/null); then
+    create_desktop $INFILE < $INFILE > $OUTFILE
+    exit 0
+  fi
+
+  if (echo "$INFILE" | grep ".xml.in$" > /dev/null); then
+    create_xml $INFILE < $INFILE > $OUTFILE
+    exit 0
+  fi
+
+  echo "desktop-i18n: $INFILE: Unrecognized extension"
+  exit 1
+}
+
+# do_setup [DIR]
+# --------------
+# Try to set up a source tree to use desktop-i18n.
+#
+# This is a nasty bit of hackery. We need to insert some rules into
+# the Makefile.in.in installed by gettextize/autopoint so that make
+# knows how to generate input for xgettext.
+#
+# Unfortunately, there's no nice way to do this, so we do it by
+# appending some rules onto each Makefile.in.in, using the following
+# procedure:
+#
+# 1. Look for configure.ac in DIR, or in cwd if DIR wasn't
+#    specified. If we can't find it, whinge.
+# 2. If configure.ac doesn't have AX_DESKTOP_I18N, quit successfully.
+# 3. Find anywhere where AC_CONFIG_FILES is called. For each
+#    Makefile.in found in the list of files to create:
+#    (a) Check for Makefile.in.in. If it doesn't exist, skip with a warning.
+#    (b) If Makefile.in.in contains the string DESKTOP_I18N_RULES,
+#        skip silently.
+#    (c) Append a chunk of rules onto Makefile.in.in
+#
+# Note that we can't use a po/Rules-* file because substitution is not
+# carried out on these files.
+do_setup() {
+  # Was DIR specified?
+  if test "x$1" = x; then srcdir=.; else srcdir=$1; fi
+
+  # Can we find configure.ac or configure.in?
+  for f in configure.ac configure.in; do
+    if test -r $srcdir/$f; then
+      ac_file=$srcdir/$f
+      break
+    fi
+  done
+  if test "x$ac_file" = x; then
+    echo "Cannot find configure.ac or configure.in!"
+    exit 4
+  fi
+
+  # Check that configure.ac is readable
+  if ! test -r $ac_file; then
+    echo "Cannot open $ac_file for reading."
+    exit 3
+  fi
+
+  # Is the AX_DESKTOP_I18N macro present?
+  if ! grep AX_DESKTOP_I18N $ac_file > /dev/null; then
+    exit
+  fi
+
+  # Now we use a piece of m4 code to try and discover all of the
+  # configuration files. This is UGLY AND BAD, because it only detects
+  # when AC_CONFIG_FILES is called in the main configure script (if
+  # AC_CONFIG_FILES is called by another macro somewhere, it won't be
+  # detected).
+  cat - $ac_file > conftest <<EOF
+changequote([,])dnl
+divert([-1])
+define([AC_CONFIG_FILES], [divert([0])[\$1]divert([-1])])
+EOF
+  conf_files=`m4 conftest`
+  rm conftest
+
+  # Look for any files called Makefile.in.
+  for f in $conf_files; do
+    # Discard any composition rules and prepend srcdir.
+    f=`echo "$f" | sed -e 's,:.*,,'`
+    f="$srcdir/$f"
+
+    # Skip files not called Makefile.in
+    if test `echo "$f" | sed -e 's:.*/::'` != Makefile.in; then
+      continue
+    fi
+
+    # Check that a corresponding Makefile.in.in exists and we can
+    # read/write it
+    if ! test -r $f.in -a -w $f.in; then
+      echo "desktop-i18n: Cannot process $f.in"
+      continue
+    fi
+
+    # Check that we haven't already hacked it
+    if grep DESKTOP_I18N_RULES $f.in > /dev/null; then
+      continue
+    fi
+
+    # Append our rules
+    echo "desktop-i18n: modifying $f.in"
+    cat >> $f.in <<EOF
+
+# DESKTOP_I18N_RULES  (Do not edit or remove this line)
+#####################################################################
+# Makefile rules needed by the desktop-i18n tool.
+# Copyright (C) 2009  Peter Brett <peter@peter-b.co.uk>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+top_builddir = @top_builddir@
+MKDIR_P = @MKDIR_P@
+
+DESKTOP_I18N_LOCALE_DIR = @DESKTOP_I18N_LOCALE_DIR@
+
+# We need to temporarily install the localisation files somewhere so
+# that desktop-i18n --create can look up messages in them. We recreate
+# the timestamp before *and* after running 'make install' so that the
+# make doesn't go into an infinite loop!
+all: stamp-i18n
+stamp-i18n: \$(DESKTOP_I18N_LOCALE_DIR) stamp-po Makefile
+	@echo timestamp > stamp-i18nT && mv stamp-i18nT stamp-i18n
+	\$(MAKE) prefix=\$(DESKTOP_I18N_LOCALE_DIR) install && \
+	cp \$(srcdir)/LINGUAS \$(DESKTOP_I18N_LOCALE_DIR)/\$(DOMAIN).LINGUAS \
+	|| rm stamp-i18n
+	@echo timestamp > stamp-i18nT && mv stamp-i18nT stamp-i18n
+\$(DESKTOP_I18N_LOCALE_DIR):
+	\$(MKDIR_P) \$(DESKTOP_I18N_LOCALE_DIR)
+
+clean: clean-i18n
+clean-i18n:
+	-rm -rf \$(DESKTOP_I18N_LOCALE_DIR) stamp-i18n
+
+# End of desktop-i18n rules
+#####################################################################
+
+EOF
+  done
+}
+
+
+
+# First argument has to be the mode of operation. Then call the
+# appropriate function to process the rest of the arguments and do the
+# work.
+if test -z $1; then usage 1; fi
+MODE=$1; shift
+case $MODE in
+  --extract) do_extract "$@";;
+  --create) do_create "$@";;
+  --setup) do_setup "$@";;
+  --help) usage;;
+  *) usage 1;;
+esac

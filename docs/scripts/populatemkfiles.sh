@@ -27,7 +27,7 @@ do_work()
 
 	echo "" >> Makefile.am
 	echo "docname=wiki" >> Makefile.am
-	echo 'docsdir = @GEDADOCDIR@/$(docname)'$thisdir >> Makefile.am
+	echo 'docsdir = $(docdir)/$(docname)'$thisdir >> Makefile.am
 	echo "" >> Makefile.am
 
 	dirs=`find . -maxdepth 1 -type d -print | grep -v CVS | sed "s%^./%%" | sed "s%^\.%%"`

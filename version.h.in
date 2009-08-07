@@ -1,0 +1,11 @@
+/* Date part of package version string. */
+/* #undef PACKAGE_DATE_VERSION */
+
+/* Dotted part of package version string. */
+/* #undef PACKAGE_DOTTED_VERSION */
+
+/* Current git commit. */
+/* #undef PACKAGE_GIT_COMMIT */
+
+/* Current 'git describe' version string. */
+/* #undef PACKAGE_GIT_VERSION */

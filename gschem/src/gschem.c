@@ -18,6 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 #include <config.h>
+#include <version.h>
 
 #include <stdio.h>
 #ifdef HAVE_STRING_H
@@ -93,9 +94,9 @@ void gschem_quit(void)
   /* o_text_freeallfonts();*/
   s_attrib_free();
   s_papersizes_free();
-#ifdef HAS_LIBSTROKE
+#ifdef HAVE_LIBSTROKE
   x_stroke_free ();
-#endif /* HAS_LIBSTROKE */
+#endif /* HAVE_LIBSTROKE */
   o_undo_cleanup();
   /* s_stroke_free(); no longer needed */
 
@@ -181,7 +182,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
   s_log_message(
                 _("gEDA/gschem version %s%s.%s\n"), PREPEND_VERSION_STRING,
-                DOTTED_VERSION, DATE_VERSION);
+                PACKAGE_DOTTED_VERSION, PACKAGE_DATE_VERSION);
   s_log_message(
                 _("gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n"));
   s_log_message(
@@ -262,9 +263,9 @@ void main_prog(void *closure, int argc, char *argv[])
   x_color_allocate();
   x_window_setup (w_current);
 
-#ifdef HAS_LIBSTROKE
+#ifdef HAVE_LIBSTROKE
   x_stroke_init ();
-#endif /* HAS_LIBSTROKE */
+#endif /* HAVE_LIBSTROKE */
 
   for (i = argv_index; i < argc; i++) {
 

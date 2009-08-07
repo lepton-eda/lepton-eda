@@ -1,8 +1,7 @@
 
-SUBDIRS = po data docs include intl lib scheme share src
+SUBDIRS = po data docs include lib scheme share src
 
-EXTRA_DIST = HACKING BUGS ChangeLog-1.0 autogen.sh \
-             icon-theme-installer desktop-i18n po/domain.mak.in
+EXTRA_DIST = HACKING BUGS ChangeLog ChangeLog-1.0 po/domain.mak.in
 
 pkgconfigdir            = $(libdir)/pkgconfig
 pkgconfig_DATA          = libgeda.pc
@@ -11,20 +10,12 @@ libgeda-pc-install: libgeda.pc
 	$(mkinstalldirs) $(DESTDIR)$(pkgconfigdir)
 	$(INSTALL_DATA) libgeda.pc $(DESTDIR)$(pkgconfigdir)
 
-distclean-local:
-	-rm -rf autom4te.cache
-
-maintainer-clean-local:
-	-rm -rf autom4te.cache
+if HAVE_GIT_REPO
+ChangeLog: $(top_builddir)/stamp-git
+	(cd $(srcdir) && $(GIT) log --pretty=medium $(CHANGELOG_BASE).. -- .) > $@
+endif HAVE_GIT_REPO
 
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak libgeda.pc po/domain.mak
-MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in configure config.h.in \
-	               config.status aclocal.m4 libgeda.pc config.guess \
-		       config.sub depcomp install-sh ltmain.sh missing \
-		       mkinstalldirs
-
-DISTCHECK_CONFIGURE_FLAGS = --disable-update-mime-database
-
-ACLOCAL_AMFLAGS = -I m4
+DISTCLEANFILES = *.log core FILE *~ libgeda.pc po/domain.mak
+MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in libgeda.pc

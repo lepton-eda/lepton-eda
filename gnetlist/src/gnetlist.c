@@ -19,6 +19,7 @@
  */
 
 #include <config.h>
+#include <version.h>
 
 #include <stdio.h>
 #include <sys/param.h>
@@ -145,7 +146,7 @@ void main_prog(void *closure, int argc, char *argv[])
     s_log_init ("gnetlist");
 
     s_log_message("gEDA/gnetlist version %s%s.%s\n", PREPEND_VERSION_STRING,
-                  DOTTED_VERSION, DATE_VERSION);
+                  PACKAGE_DOTTED_VERSION, PACKAGE_DATE_VERSION);
     s_log_message
         ("gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
     s_log_message

@@ -1,20 +1,22 @@
 ## Process this file with automake to produce Makefile.in
 
-EXTRA_DIST = gafrc.hierarchy2 hierarchy2.geda top.sch under.sch under.sym
+EXTRA_DIST = gnetlistrc.hierarchy2 hierarchy2.geda top.sch under.sch under.sym
 
 # Temporarily disabled make check, since this is interfering with 
 # make distcheck
 check_SCRIPTS = tests
 
-BUILDDIR=$(top_builddir)/tests/hierarchy2
+BUILDDIR=$(top_builddir)/gnetlist/tests/hierarchy2
 SRCDIR=$(srcdir)
-GNETLIST=$(top_builddir)/src/gnetlist
+GNETLIST=$(top_builddir)/gnetlist/src/gnetlist
 
 tests:
 	rm -f $(BUILDDIR)/new_*
-	cp -f $(SRCDIR)/gafrc.hierarchy2 $(BUILDDIR)/gafrc
-	( TESTDIR=$(SRCDIR); export TESTDIR ; SCMDIR=${top_builddir}/scheme ; export SCMDIR ; \
-	  echo $$TESTDIR; \
+	cp -f $(SRCDIR)/gnetlistrc.hierarchy2 $(BUILDDIR)/gnetlistrc
+	( TESTDIR=$(SRCDIR) \
+	  GEDADATARC=$(top_builddir)/gnetlist/lib \
+	  SCMDIR=${top_builddir}/gnetlist/scheme \
+	  SYMDIR=${top_srcdir}/symbols \
 	  $(GNETLIST) \
 	     -o $(BUILDDIR)/new_hierarchy2.geda -g geda \
 	     $(SRCDIR)/top.sch )
@@ -22,7 +24,7 @@ tests:
 
 MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~
 CLEANFILES = new_* core *.log FILE *.ps *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak gafrc
+DISTCLEANFILES = *.log core FILE *~ prototype.bak gnetlistrc
 MAINTAINERCLEANFILES = new_* core *.log FILE *.ps *~ Makefile.in configure
 
 

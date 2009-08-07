@@ -13,3 +13,4 @@ mkinstalldirs
 config.guess
 config.sub
 *~
+ChangeLog

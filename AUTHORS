@@ -1,0 +1,96 @@
+gEDA
+
+GPL Electronic Design Automation
+------------------------------------------------------------------------------
+
+gEDA/gaf AUTHORS and contributors
+
+Many thanks to the following individuals for their contributions:
+
+Andrew Bardsley
+Nick Bastin
+Martin Benes
+Patrick Bernaud
+Antonio A Todo Bom
+Peter Brett
+Stuart Brorson
+Eric Busta
+Jared Casper
+Peter Clifton
+Ron Van Dam
+Magnus Danielson
+Thomas Dean
+DJ Delorie
+Bryce Denney
+Andrew Dyer
+Gareth Edwards
+Chris Ellec
+Matt Ettus
+Rolf Fiedler
+Robert Fitzsimons
+Geoff Harland
+Thomas Heidel
+Edward Hennessy
+Uwe Herman
+Kazu Hirata
+Werner Hoch
+Ales Hvezda
+Braddock Gaskill
+Bas Gieltjes
+Mike Jarabek
+Bernd Jendrissek
+Wojciech Kazubski
+Kai-Martin Knaak
+Krzysztof Kościuszkiewicz
+Reinhard Kotucha
+Egil Kvaleberg
+Dan McMahill
+Dave Lawrence
+Martin Lehmann
+Michael Linnemann
+Arnim Littek
+Ye Ma
+Dan McMahill
+Jeff McNeal
+Piotr Miarecki
+Hamish Moffatt
+Kipton Moravec
+Eduard Moser
+Thien-Thi Nguyen
+Alexandre P. Nunes
+Jerry O'Keefe
+Carlos Nieves Onega
+Erick Britis Ortiz
+Gabriel Paubert
+Simon Peacock
+Stefan Petersen
+Michele Petrecca
+Maciej Pijanka
+Alex Precosky
+Christian Riggenbach
+Manu Rouat
+JM Routoure
+Bruno Schwander
+Andy Shevchenko
+Anatole Sokolov
+Tomaž Šolc
+Nuno Sucena
+Ivan Stankovic
+Borge Strand
+Cesar Strauss
+James Swonger
+Miyamoto Takanori
+Stephen Tell
+Bert Timmerman
+Marius Vollmer
+Rich Walker
+John White
+Roger Williams
+Bill Wilson
+
+For specific contributions, please check out the appropriate ChangeLog
+for more details.
+
+Also thanks go to all the people on the geda-* mailing list.  Many of
+the subscribers provided good suggestions (as well as patches) that are
+greatly appreciated

@@ -40,8 +40,12 @@ EXTRA_DIST = duplicated-refdes.sch duplicated-refdes.drc2 \
 # make distcheck
 check_SCRIPTS = tests
 
-BUILDDIR=$(top_builddir)/tests/drc2
+BUILDDIR=$(builddir)
 SRCDIR=$(srcdir)
+GNETLIST=$(builddir)/../../src/gnetlist
+
+gnet_srcdir=$(top_srcdir)/gnetlist
+gnet_builddir=$(top_builddir)/gnetlist
 
 .PHONY : tests
 tests:
@@ -49,19 +53,17 @@ tests:
 	rm -f $(BUILDDIR)/new_*
 	rm -f $(BUILDDIR)/failed.log
 
-# copy required file(s)
-	sed \
-		-e 's;@scheme_srcdir@;${top_srcdir}/scheme;g' \
-		-e 's;@scheme_builddir@;${top_builddir}/scheme;g' \
-		$(SRCDIR)/gnetlistrc.drc2 > $(BUILDDIR)/gnetlistrc
-
 # make the tests
+	cp $(srcdir)/gnetlistrc.drc2 $(builddir)/gnetlistrc
 	failed=0; \
 	for file in $(SRCDIR)/*.sch; do \
 	  file_basename=`basename $$file .sch`; \
 	  echo Checking test in $(SRCDIR)/$$file_basename.sch; \
-	  ( export TESTDIR=$(SRCDIR) ; \
-	    $(top_builddir)/src/gnetlist -g drc2 -o $(BUILDDIR)/new_$$file_basename.drc2 \
+	  ( TESTDIR=$(SRCDIR) \
+	    GEDADATARC=$(top_builddir)/gnetlist/lib \
+	    SCMDIR=${top_builddir}/gnetlist/scheme \
+	    SYMDIR=${top_srcdir}/symbols \
+	    $(GNETLIST) -g drc2 -o $(BUILDDIR)/new_$$file_basename.drc2 \
             $$file ); \
           diff $(SRCDIR)/$$file_basename.drc2 \
                  $(BUILDDIR)/new_$$file_basename.drc2; \

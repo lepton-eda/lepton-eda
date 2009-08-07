@@ -25,6 +25,7 @@
  */
 
 #include <config.h>
+#include <version.h>
 
 #include <stdio.h>
 #include <sys/stat.h>
@@ -67,10 +68,12 @@ SCM g_rc_gattrib_version(SCM version)
   SCM_ASSERT (scm_is_string (version), version,
 	      SCM_ARG1, "gattrib-version");
   
-  if (g_strcasecmp (SCM_STRING_CHARS (version), DATE_VERSION) != 0) {
+  if (g_strcasecmp (SCM_STRING_CHARS (version),
+                    PACKAGE_DATE_VERSION) != 0) {
     fprintf(stderr,
             "You are running gEDA/gaf version [%s%s.%s],\n",
-            PREPEND_VERSION_STRING, DOTTED_VERSION, DATE_VERSION);
+            PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
+            PACKAGE_DATE_VERSION);
     fprintf(stderr,
             "but you have a version [%s] gattribrc file.\n",
             SCM_STRING_CHARS (version));

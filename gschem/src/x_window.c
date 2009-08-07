@@ -486,7 +486,7 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
   gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 5);
 
   if (w_current->middle_button == STROKE) {
-#ifdef HAS_LIBSTROKE
+#ifdef HAVE_LIBSTROKE
     w_current->middle_label = gtk_label_new (_("Stroke"));
 #else
     w_current->middle_label = gtk_label_new (_("none"));

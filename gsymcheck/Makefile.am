@@ -1,20 +1,14 @@
 
-SUBDIRS = src include lib scheme examples docs tests
+SUBDIRS = src include lib docs tests
 
-EXTRA_DIST = BUGS ChangeLog-1.0 autogen.sh
+EXTRA_DIST = BUGS ChangeLog ChangeLog-1.0
 
-proto:
-	(cd src ; ./create_proto)
-
-distclean-local:
-	-rm -rf autom4te.cache
-
-maintainer-clean-local:
-	-rm -rf autom4te.cache
+if HAVE_GIT_REPO
+ChangeLog: $(top_builddir)/stamp-git
+	(cd $(srcdir) && $(GIT) log --pretty=medium $(CHANGELOG_BASE).. -- .) > $@
+endif HAVE_GIT_REPO
 
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak 
-MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in configure config.h.in \
-		       config.status aclocal.m4 config.guess config.sub \
-		       depcomp install-sh missing mkinstalldirs
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in

@@ -22,6 +22,7 @@
  *  \brief basic libgeda read and write functions
  */
 #include <config.h>
+#include <version.h>
 
 #include <stdio.h>
 #ifdef HAVE_STRING_H
@@ -46,7 +47,8 @@ const gchar *o_file_format_header()
   static gchar *header = NULL;
 
   if (header == NULL)
-    header = g_strdup_printf("v %s %u\n", DATE_VERSION, FILEFORMAT_VERSION);
+    header = g_strdup_printf("v %s %u\n", PACKAGE_DATE_VERSION,
+                             FILEFORMAT_VERSION);
 
   return header;
 }

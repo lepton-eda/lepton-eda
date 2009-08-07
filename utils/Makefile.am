@@ -1,18 +1,15 @@
 
 SUBDIRS = src gschlas scripts lib include examples docs man tests gxyrs
 
-EXTRA_DIST = ChangeLog.tragesym-1.0 ChangeLog.gsch2pcb-1.0 ChangeLog-1.0 \
-	autogen.sh
+EXTRA_DIST = ChangeLog ChangeLog.tragesym-1.0 ChangeLog.gsch2pcb-1.0 \
+	ChangeLog-1.0 AUTHORS
 
-distclean-local:
-	-rm -rf autom4te.cache
-
-maintainer-clean-local:
-	-rm -rf autom4te.cache
+if HAVE_GIT_REPO
+ChangeLog: $(top_builddir)/stamp-git
+	(cd $(srcdir) && $(GIT) log --pretty=medium $(CHANGELOG_BASE).. -- .) > $@
+endif HAVE_GIT_REPO
 
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak 
-MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in configure config.h.in \
-		       config.status aclocal.m4 config.guess config.sub \
-		       depcomp install-sh  missing mkinstalldirs compile
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in

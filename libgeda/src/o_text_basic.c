@@ -103,6 +103,64 @@ GHashTable *font_char_to_file = NULL;
 /*! Size of a tab in characters */
 int tab_in_chars = 8;
 
+/*! Data for built-in question mark character.
+ *
+ * See builtin_question_mark().
+ */
+static int question_mark_data[][4] = {
+  {0, 22, 4, 26},
+  {4, 26, 10, 26},
+  {10, 26, 14, 22},
+  {14, 22, 14, 18},
+  {14, 18, 12, 14},
+  {12, 14, 6, 8},
+  {6, 8, 6, 6},
+  {6, -1, 7, -1},
+  {7, -1, 8, 0},
+  {8, 0, 8, 1},
+  {8, 1, 7, 2},
+  {7, 2, 6, 2},
+  {6, 2, 5, 1},
+  {5, 1, 5, 0},
+  {5, 0, 6, -1},
+  {-128, -128, -128, -128} /* Daft choice of sentinel */
+  };
+
+/*! \brief Get the built-in question mark font character.
+ * \par Function Description
+ * If the font can't be found (e.g. because it isn't installed
+ * correctly), this function generates a question mark character. This
+ * is based on the "quest.sym" font character.
+ */
+static OBJECT *
+builtin_question_mark (TOPLEVEL *toplevel) {
+  OBJECT *q;
+  int i;
+
+  q = g_new0 (OBJECT, 1);
+  q->font_prim_objs = NULL;
+  q->font_text_size = 20;
+  q->name = g_strdup_printf ("?");
+  q->font_prim_objs = NULL;
+
+  for (i = 0; ; i++) {
+    if (question_mark_data[i][0] == -128) break;
+
+    OBJECT *l = o_line_new (toplevel, OBJ_LINE,
+                            DEFAULT_COLOR,
+                            question_mark_data[i][0],
+                            question_mark_data[i][1],
+                            question_mark_data[i][2],
+                            question_mark_data[i][3]);
+    o_set_line_options (toplevel, l, 0, 0, 0, -1, -1);
+    o_set_fill_options (toplevel, l,
+                        FILLING_HOLLOW,
+                        -1, -1, -1, -1, -1);
+    q->font_prim_objs = g_list_prepend (q->font_prim_objs, l);
+  }
+
+  return q;
+}
 
 /*! \brief update the visible part of a string
  *  \par Function Description
@@ -266,9 +324,10 @@ GList *o_text_load_font (TOPLEVEL *toplevel, gunichar needed_char)
 {
   gchar *temp_string = NULL;
   OBJECT *o_font_set;
-  int not_found = FALSE;
+  int found = TRUE;
   gchar *aux_str2;
   GError *err = NULL;
+  GList *prim_objs = NULL;
 
   /* retrieve the name of the file where the char is defined */
   aux_str2 = g_hash_table_lookup (font_char_to_file,
@@ -303,52 +362,35 @@ GList *o_text_load_font (TOPLEVEL *toplevel, gunichar needed_char)
     s_log_message(_("Could not find character '%s' definition.\n"), outbuf);
     
     g_free (temp_string);
-    temp_string = g_build_filename (toplevel->font_directory, "quest.sym", NULL);
-    if ( access(temp_string, R_OK) != 0 ) {
-      fprintf(stderr, _("Could not load question font char -- check font-directory keyword\n"));
-      exit(-1);
-    }
-    not_found = TRUE; 
+    temp_string = NULL;
+    found = FALSE;
   }
 
-  /* Make new object for the font set list */
-  o_font_set = (OBJECT*)g_new (OBJECT, 1);	
-  
-  o_font_set->font_prim_objs = NULL;
-  o_font_set->font_text_size = 100;
+  if (found) {
+    prim_objs = o_read(toplevel, prim_objs, temp_string, &err);
+    if (err != NULL) {
+      g_warning ("o_text_basic.c: Failed to read font file: %s\n",
+                 err->message);
+      g_error_free (err);
+      found = FALSE;
+    }
+  }
+
+  if (!found) {
+    /* Get a question mark. */
+    o_font_set = builtin_question_mark (toplevel);
+  } else {
+    /* Make new object for the font set list */
+    o_font_set = (OBJECT*)g_new (OBJECT, 1);
+    o_font_set->font_prim_objs = prim_objs;
+    o_font_set->font_text_size = 100;
+  }
 
   o_font_set->name = g_strdup_printf ("%c", needed_char);
-  o_font_set->font_prim_objs = NULL;
-  
+
   /* Add it to the list and hash table. Some functions will need it */
   g_hash_table_insert (font_loaded,
                        GUINT_TO_POINTER (needed_char), o_font_set);
-
-  if (not_found == TRUE) {
-    /* set the font text size (width) to the question mark's size */
-    /* yes, the question mark character was loaded instead of the real char */
-    /* 63 == question mark character */
-
-    OBJECT *aux_obj;
-    
-    aux_obj = g_hash_table_lookup (font_loaded,
-                                   GUINT_TO_POINTER ((gunichar)'?'));
-    if (aux_obj == NULL) {
-      o_text_load_font(toplevel, (gunichar) '?');
-      aux_obj = g_hash_table_lookup (font_loaded,
-                                     GUINT_TO_POINTER ((gunichar)'?'));
-    }
-
-    o_font_set->font_text_size = aux_obj->font_text_size;
-  }
-
-  o_font_set->font_prim_objs = o_read(toplevel, o_font_set->font_prim_objs,
-				      temp_string, &err);
-  if (err != NULL) {
-    g_warning ("o_text_basic.c: Failed to read font file: %s\n",
-               err->message);
-    g_error_free (err);
-  }
 
   g_free(temp_string);
 

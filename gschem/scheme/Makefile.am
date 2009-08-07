@@ -1,9 +1,6 @@
 ## -*- Makefile -*-
-##
-## $Id$
-##
 
-scmdatadir = @GEDADATADIR@/scheme
+scmdatadir = $(GEDADATADIR)/scheme
 scmdata_DATA = auto-uref.scm generate_netlist.scm gschem.scm list-keys.scm \
 	       print-NB-attribs.scm auto-place-attribs.scm pcb.scm \
                default-attrib-positions.scm
@@ -12,5 +9,5 @@ EXTRA_DIST = $(scmdata_DATA)
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = *.log *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log *~ Makefile.in

@@ -1,7 +1,7 @@
 
 
 docname=wiki
-docsdir = @GEDADOCDIR@/$(docname)/lib/plugins
+docsdir = $(docdir)/$(docname)/lib/plugins
 
 SUBDIRS = note definitionlist 
 

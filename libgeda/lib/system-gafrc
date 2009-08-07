@@ -34,7 +34,7 @@
 (let ((font-def-file (%search-load-path "geda-font")))
   (if font-def-file 
       (load font-def-file)
-      (display "Failed to load default font.\n")))
+      (display "Failed to load default font.\n" (current-error-port))))
 
 ; Set the name of the postscript prolog file that will be 
 ; pasted into the postscript output after the DSC comments, but

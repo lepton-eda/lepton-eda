@@ -31,8 +31,8 @@ EXTRA_DIST= run_backend_tests.sh ${RUN_TESTS} tests.list backends.list \
 CLEANFILES= *.log
 
 dist-hook: tests.list backends.list
-	tests=`cat tests.list | sed -e "s:#.*$$::" | sed -e "s:|.*$$::"`; \
-	backends=`cat backends.list`; \
+	@tests=`cat $(srcdir)/tests.list | sed -e "s:#.*$$::" | sed -e "s:|.*$$::"`; \
+	backends=`cat $(srcdir)/backends.list`; \
 	$(MKDIR_P) $(distdir)/outputs || exit $$?; \
 	for backend in $$backends; do \
 	  dir=outputs/$$backend; \

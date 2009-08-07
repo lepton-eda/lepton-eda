@@ -1,5 +1,5 @@
 
-rcdatadir = @GEDARCDIR@
+rcdatadir = $(GEDARCDIR)
 dist_rcdata_DATA = system-gafrc print-colormap-lightbg print-colormap-darkbg
 
 MOSTLYCLEANFILES = *.log *~

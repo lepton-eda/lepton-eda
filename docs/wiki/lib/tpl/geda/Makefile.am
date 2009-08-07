@@ -1,7 +1,7 @@
 
 
 docname=wiki
-docsdir = @GEDADOCDIR@/$(docname)/lib/tpl/geda
+docsdir = $(docdir)/$(docname)/lib/tpl/geda
 
 SUBDIRS = images 
 

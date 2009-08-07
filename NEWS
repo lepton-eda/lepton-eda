@@ -1,0 +1,198 @@
+==============================================
+ 'gschem and Friends' Electronic Design Suite
+==============================================
+
+Copyright (C) 1998-2009 gEDA Developers
+
+This file documents important user-visible changes in gEDA/gaf.  For
+more information, please consult the `ChangeLog' file.
+
+Notable changes in gEDA/gaf 1.6.0
+=================================
+
+* Numerous build system changes.
+
+  - gEDA/gaf is now distributed as a single source archive, called
+    gEDA-<version>.tar.gz.
+
+  - GTK+ 2.10 or newer and Guile 1.8 or newer are now required.
+
+  - `intltool' is no longer required.
+
+  - Documentation is now installed to ${docdir} (usually
+    ${prefix}/share/doc/gEDA).
+
+* The attribute edit dialog in `gschem' now has completion of most
+  common attribute names.
+
+* The multi-attribute edit dialog in `gschem' now shows unpromoted
+  symbol attributes.
+
+* Menu items in `gschem' now have icons and properly aligned key
+  bindings. They also support accelerator keys.
+
+* The `gschem2pcb' and `PCBboard' netlist backends have been removed.
+  It is recommended to use `gsch2pcb' instead.
+
+Notable changes in gEDA/gaf 1.5.2
+=================================
+
+* `gschem' now uses Cairo for all rendering.  This allows for
+  everything to be rendered anti-aliased.
+
+* `gschem' now uses a mesh grid instead of dots by default.
+
+* Net junction cues in `gschem' are drawn smaller now.
+
+* Copy and paste now works between different `gschem' instances (using
+  the X selection).
+
+* Recent files are no longer opened in a new `gschem' window.
+
+* Major, *backwards-incompatible* changes to color handling in
+  `libgeda' and `gschem'.
+
+  - All colors are specified using hexadecimal `#RRGGBB' or
+    `#RRGGBBAA' syntax.
+
+  - The print and display color maps are now separate.
+
+  - A new Scheme syntax is used to inspect and modify color maps.
+
+  - If you wish to use a light background in `gschem', add the line:
+
+      (load (build-path geda-rc-path "gschem-colormap-lightbg"))
+
+    to your personal or project gschemrc file.
+
+* Attributes of embedded objects are now shown in the right color.
+
+* Bus pins are now supported by `gschem' and `libgeda', but are *not*
+  properly supported by the netlister.  The pin type can be modified
+  by selecting a pin, then right-clicking it and selecting `Edit pin
+  type...'.
+
+* All of the symbols were modified to use overbar markup tags ("like
+  \_this\_") instead of separate lines.
+
+* Log files are now saved to $HOME/.gEDA/logs rather than being
+  dropped in the current directory.
+
+Notable changes in gEDA/gaf 1.5.1
+=================================
+
+* GTK+ version 2.8.x or later is now required.
+
+* The selection behaviour in `gschem' was changed. 
+
+  - Lines, unfilled boxes, unfilled circles, arcs, pins, nets, and
+    buses must be selected by clicking on the drawn path itself.
+
+  - Filled boxes, circles, text, and components, may be selected by
+    clicking anywhere in the bounding box.
+
+  - The default mouse click distance required to select an element was
+    increased to 10 pixels.
+
+  - Double-clicking on a net segment selects all connected net
+    segments.
+
+* The percentage step in or out while zooming the display in `gschem'
+  is now configurable with the `zoom-gain' gschemrc parameter.  The
+  default value is 20%.
+
+* The size of steps when panning with the mouse wheel or with a
+  trackpad in `gschem' is now adjustable with the `scrollpan-steps'
+  gschemrc parameter.  The default setting scrolls in steps of 1/8 of
+  a screen.
+
+* A number of improvements were made to the `gschem' component
+  selection dialog.
+
+  - The dialog now shows a table of top-level attributes in the
+    selected symbol.
+
+  - It is now possible to expand/collapse a library by clicking
+    anywhere on its row.
+
+* Changes to fill- and line-styles in `gschem' can now be undone.
+
+* Arcs can now be adjusted in `gschem' using an arc angle dialog.  It
+  can be accessed by selecting an arc and selecting Edit->Edit.
+
+* It is now possible to rotate objects while placing them in `gschem'.
+
+* Support for arbitrary filled and unfilled paths, using a subset of
+  the SVG path syntax.  For more information, please see the file
+  format specification.
+  <http://geda.seul.org/wiki/geda:file_format_spec>
+
+  - `gschem' does not yet provide a GUI for creating or editing path
+    elements.  However, it does support rendering them.  They can also
+    be printed.
+
+  - Some of the symbols in the component library were updated to use
+    paths.
+
+* A Scheme evaluation prompt was added to `gschem'.  It can be
+  accessed by typing `:'.
+
+* Improved algorithm for drawing hatched fills both on screen and in
+  PostScript output.
+
+* Color selection dialogs and menus in `gschem' now show the actual
+  color as well as the description.  Color names are now translatable.
+
+* `gattrib' now prompts to save changes.
+
+* All of the unimplemented menu items and pages in `gattrib' were
+  removed.
+
+* The `always-promote-attributes' gafrc parameter now takes a list of
+  strings as an argument.  The space-delimited string syntax is
+  deprecated.
+
+* Some optimisations were made to the `gnetlist' connection traversal
+  algorithm to speed up netlisting large designs.
+
+* A new netlist backend was added to support Liquid PCB.
+  <http://www.liquidpcb.org/>
+
+* The `bom2' netlist backend now generates a `qty' column.
+
+* Several improvements and fixes were made to the `systemc' backend.
+
+* The `--gnetlist-arg' option to gsch2pcb can now be used to pass
+  extra `gnetlist' arguments.
+
+* `gsch2pcb' now emits files with the latest `pcb' file format.
+
+* The `gxyrs' pick-and-place tool was added.
+
+Notable changes in gEDA/gaf 1.5.0
+=================================
+
+* Magnetic net mode in `gschem'. Magnetic mode lets you draw nets and
+  automatically connect to valid end points (such as pins and other
+  nets).  The `magnetic-net-mode' gschemrc parameter can be used to
+  enable/disable this feature.
+
+* Rotating a component while moving it in `gschem' now rotates around
+  the current mouse location.
+
+* The `verilog' and `vhdl' backends now work again.
+
+* Embedded components can now be mirrored.
+
+* The `pads' netlist backend now uses CRLF line endings.
+
+Older versions
+==============
+
+Release notes for older versions of gEDA/gaf are available on the gEDA
+website.  <http://www.gpleda.org/news/index.html>
+
+..
+   Local Variables:
+   mode: text
+   End:
