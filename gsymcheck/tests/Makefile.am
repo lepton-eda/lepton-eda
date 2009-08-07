@@ -49,6 +49,7 @@ tests:
 	pass=0 ; \
 	for file in $(SRCDIR)/*.sym; do \
 	  base=`basename $$file`; \
+	  GEDADATARC=$(builddir)/../lib \
 	  $(SHELL) $(SRCDIR)/runtest.sh $$file $(BUILDDIR) $(SRCDIR); \
           if [ $$? -ne 0 ]; then \
 	     echo "$$base FAILED!"; \
