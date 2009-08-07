@@ -42,6 +42,7 @@ check_SCRIPTS = tests
 
 BUILDDIR=$(builddir)
 SRCDIR=$(srcdir)
+GNETLIST=$(builddir)/../../src/gnetlist
 
 gnet_srcdir=$(top_srcdir)/gnetlist
 gnet_builddir=$(top_builddir)/gnetlist
@@ -52,20 +53,18 @@ tests:
 	rm -f $(BUILDDIR)/new_*
 	rm -f $(BUILDDIR)/failed.log
 
-# copy required file(s)
-	sed \
-		-e 's;@scheme_srcdir@;${gnet_srcdir}/scheme;g' \
-		-e 's;@scheme_builddir@;${gnet_builddir}/scheme;g' \
-		$(SRCDIR)/gnetlistrc.drc2 > $(BUILDDIR)/gnetlistrc
-
 # make the tests
+	cp $(srcdir)/gnetlistrc.drc2 $(builddir)/gnetlistrc
 	failed=0; \
 	for file in $(SRCDIR)/*.sch; do \
 	  file_basename=`basename $$file .sch`; \
 	  echo Checking test in $(SRCDIR)/$$file_basename.sch; \
-	  ( export TESTDIR=$(SRCDIR) ; \
-	    $(gnet_builddir)/src/gnetlist -g drc2 -o $(BUILDDIR)/new_$$file_basename.drc2 \
-            $$file > /dev/null 2>&1); \
+	  ( TESTDIR=$(SRCDIR) \
+	    GEDADATARC=$(top_builddir)/gnetlist/lib \
+	    SCMDIR=${top_builddir}/gnetlist/scheme \
+	    SYMDIR=${top_srcdir}/symbols \
+	    $(GNETLIST) -g drc2 -o $(BUILDDIR)/new_$$file_basename.drc2 \
+            $$file ); \
           diff $(SRCDIR)/$$file_basename.drc2 \
                  $(BUILDDIR)/new_$$file_basename.drc2; \
           if [ $$? -ne 0 ]; then \

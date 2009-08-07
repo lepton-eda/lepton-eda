@@ -2,6 +2,11 @@
 ;; 'make check' during development can work correctly.
 (scheme-directory "${SCMDIR}")
 
+;; We want to use the symbols that haven't been installed yet
+(map (lambda (x) (component-library (string-join (list "${SYMDIR}/" x) "")))
+     '("io" "74" "analog" "power" "misc" "diode" "linear" "connector" "switch"
+       "asic" "spice" "cascade" "titleblock"))
+
 (component-library "./sym")
 
 ;; Rather than checking what m4 and pcb's m4 files do with

@@ -2,6 +2,10 @@
 ;; 'make check' during development can work correctly.
 (scheme-directory "${SCMDIR}")
 
+;; We want to use the symbols that haven't been installed yet
+(map (lambda (x) (component-library (string-join (list "${SYMDIR}/" x) "")))
+     '("io" "74" "titleblock"))
+
 (source-library "${TESTDIR}")
 (component-library "${TESTDIR}")
 ;(net-naming-priority "label")

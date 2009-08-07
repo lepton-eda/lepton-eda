@@ -87,10 +87,17 @@ echo "********USING BACKEND ${backend}*********"
 here=`pwd`
 srcdir=${srcdir:-$here}
 srcdir=`cd $srcdir && pwd`
+builddir="${here}"
 
-GNETLIST=../../../src/gnetlist
-SCMDIR=../../../scheme
+GNETLIST="${builddir}/../../src/gnetlist"
+GEDADATA="${srcdir}/../.." # HACKHACKHACK
+GEDADATARC="${builddir}/../../lib"
+SCMDIR="${builddir}/../../scheme"
+SYMDIR="${srcdir}/../../../symbols"
+export GEDADATA
+export GEDADATARC
 export SCMDIR
+export SYMDIR
 
 rundir=${here}/run
 
@@ -131,7 +138,10 @@ srcdir:     $srcdir
 INPUT_DIR:  ${INPUT_DIR}
 GOLDEN_DIR: ${GOLDEN_DIR}
 GNETLIST:   ${GNETLIST}
+GEDADATA:   ${GEDATADA}
+GEDADATARC: ${GEDATADARC}
 SCMDIR:     ${SCMDIR}
+SYMDIR:     ${SYMDIR}
 all_tests:
 
 ${all_tests}

@@ -4,4 +4,5 @@
 
 ;; We want to use the symbols that haven't been installed yet
 (map (lambda (x) (component-library (string-join (list "${SYMDIR}/" x) "")))
-     '("io" "74" "analog" "power" "misc" "titleblock"))
+     '("74" "analog" "misc" "memory" "power" "connector" "switch" "linear"
+       "diode" "spice" "cascade" "titleblock"))
