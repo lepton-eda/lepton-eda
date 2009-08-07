@@ -39,6 +39,11 @@
 #define DEFAULT_SCHEME_DIRECTORY "./"
 #define DEFAULT_FONT_DIRECTORY   "../lib/sym/font"
 #define DEFAULT_BITMAP_DIRECTORY   "non-existant"
+#define DEFAULT_HIERARCHY_NETNAME_SEPARATOR "/"
+#define DEFAULT_HIERARCHY_NETATTRIB_SEPARATOR "/"
+#define DEFAULT_HIERARCHY_UREF_SEPARATOR "/"
+#define DEFAULT_UNNAMED_NETNAME "unnamed_net"
+#define DEFAULT_UNNAMED_BUSNAME "unnamed_bus"
 
 #define INIT_STR(w, name, str) {                            \
     g_free((w)->name);                                      \
@@ -83,17 +88,28 @@ void i_vars_set(TOPLEVEL * pr_current)
 	    pr_current->hierarchy_uref_separator = g_strdup("/");
 	}
     }
-    
-    if (!default_hierarchy_netname_separator ||
-        !default_hierarchy_netattrib_separator ||
-        !default_hierarchy_uref_separator ||
-        !default_unnamed_netname ||
-        !default_unnamed_busname) {
-      fprintf(stderr, "Some rc variables are not set!\n");
-      fprintf(stderr, "Check log and make sure the system-gnetlistrc file was found! (exiting)\n");
-      exit(-1);
+
+    if (!default_hierarchy_netname_separator) {
+      default_hierarchy_netname_separator =
+        g_strdup (DEFAULT_HIERARCHY_NETNAME_SEPARATOR);
     }
-    
+    if (!default_hierarchy_netattrib_separator) {
+      default_hierarchy_netattrib_separator =
+        g_strdup (DEFAULT_HIERARCHY_NETATTRIB_SEPARATOR);
+    }
+    if (!default_hierarchy_uref_separator) {
+      default_hierarchy_uref_separator =
+        g_strdup (DEFAULT_HIERARCHY_UREF_SEPARATOR);
+    }
+    if (!default_unnamed_netname) {
+      default_unnamed_netname =
+        g_strdup (DEFAULT_UNNAMED_NETNAME);
+    }
+    if (!default_unnamed_busname) {
+      default_unnamed_busname =
+        g_strdup (DEFAULT_UNNAMED_BUSNAME);
+    }
+
     INIT_STR(pr_current, hierarchy_netname_separator,
              default_hierarchy_netname_separator);
     INIT_STR(pr_current, hierarchy_netattrib_separator,
