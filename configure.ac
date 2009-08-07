@@ -16,7 +16,7 @@ AC_CONFIG_AUX_DIR([build-tools])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADER([config.h])
 
-AM_INIT_AUTOMAKE([foreign]) # FIXME we should not need 'foreign'
+AM_INIT_AUTOMAKE
 
 AC_GNU_SOURCE # FIXME for some reason this is needed?
 
