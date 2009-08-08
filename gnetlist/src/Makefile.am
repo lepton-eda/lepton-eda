@@ -28,8 +28,8 @@ gnetlist_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLIGS) $(GLIB_CFLAGS) \
 gnetlist_LDFLAGS = $(GLIB_LIBS) $(GUILE_LIBS) $(GDK_PIXBUF_LIBS)
 gnetlist_LDADD = $(top_builddir)/libgeda/src/libgeda.la
 
-MOSTLYCLEANFILES = *.log *.ps core FILE *~ prototype.bak
-CLEANFILES = *.log *.ps core FILE *~ prototype.bak
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = *.log *.ps core FILE *~ prototype.bak prototype.h Makefile.in configure
+MOSTLYCLEANFILES = *.log *.ps core FILE *~
+CLEANFILES = *.log *.ps core FILE *~
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in configure
 

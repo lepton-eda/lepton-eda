@@ -21,20 +21,8 @@ gsymcheck_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLIGS) $(GLIB_CFLAGS) \
 gsymcheck_LDFLAGS = $(GLIB_LIBS) $(GUILE_LIBS) $(GDK_PIXBUF_LIBS)
 gsymcheck_LDADD = $(top_builddir)/libgeda/src/libgeda.la
 
-EXTRA_DIST = create_proto 
-
-CPROTO =        cproto
-CPROTOCFLAGS =  $(INCLUDES) -I. -I.. -I../include
-ALES_HACK =     -D__GNUC__
-
-proto: prototype.h
-
-prototype.h: $(gschem_SOURCES)
-	$(CPROTO) $(ALES_HACK) $(CPROTOCFLAGS) *.c > new_proto
-	mv new_proto ../include/prototype.h
-
-MOSTLYCLEANFILES = *.log *.ps core FILE *~ prototype.bak
-CLEANFILES = *.log *.ps core FILE *~ prototype.bak
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = *.log *.ps core FILE *~ prototype.bak prototype.h Makefile.in configure
+MOSTLYCLEANFILES = *.log *.ps core FILE *~
+CLEANFILES = *.log *.ps core FILE *~
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in configure
 
