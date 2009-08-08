@@ -25,7 +25,7 @@ DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-geda.scm \
 
 EXTRA_DIST = $(DIST_SCM) $(SCM_SRCS)
 
-SCM_SRCS=	\
+SCM_SRCS=	gnetlist-PCBboard.scm.in \
 		gnet-gsch2pcb.scm.in
 
 BUILT_SCM=	gnet-gsch2pcb.scm

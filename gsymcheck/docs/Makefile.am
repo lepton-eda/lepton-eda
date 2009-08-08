@@ -1,5 +1,5 @@
 
-EXTRA_DIST = gsymcheck.1 gsymcheck.html
+EXTRA_DIST = gsymcheck.1 gsymcheck.html logo.png
 
 BUILT_SOURCES = gsymcheck.html
 
