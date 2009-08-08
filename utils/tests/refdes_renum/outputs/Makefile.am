@@ -1,5 +1,3 @@
-## $Id$
-##
 
 # ls *.sch | sort | awk '{printf("\t%s \\\n", $0)}' >> Makefile.am
 
@@ -39,4 +37,9 @@ EXTRA_DIST= \
 	some_old_refdeses-someold1.sch \
 	some_old_refdeses1-someold1.sch \
 	some_old_refdeses2-someold1.sch 
+
+MOSTLYCLEANFILES = *.log core FILE *~
+CLEANFILES = *.log core FILE *~
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in
 

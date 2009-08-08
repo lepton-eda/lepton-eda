@@ -61,15 +61,12 @@ nobase_dist_datasym_DATA = \
 	vhdl/verilog2vhdl.sh vhdl/script.sed
 
 EXTRA_DIST = ChangeLog ChangeLog-1.0 \
-	font/README font/ChangeLog font/ChangeLog-1.0 \
+	font/README font/ChangeLog-1.0 \
 	radio/README AUTHORS
 
 if HAVE_GIT_REPO
 ChangeLog: $(top_builddir)/stamp-git
 	(cd $(srcdir) && $(GIT) log --pretty=medium $(CHANGELOG_BASE).. -- .) > $@
-font/ChangeLog:
-	$(MKDIR_P) font && \
-	(cd $(srcdir) && $(GIT) log --pretty=medium $(CHANGELOG_BASE).. -- ./font) > $@
 endif HAVE_GIT_REPO
 
 # Copies symbols into distribution
@@ -110,4 +107,4 @@ uninstall-local:
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
 DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *~ Makefile.in
+MAINTAINERCLEANFILES = *.log *~ Makefile.in ChangeLog

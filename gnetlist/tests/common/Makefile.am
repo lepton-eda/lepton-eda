@@ -28,7 +28,6 @@ TESTS= ${RUN_TESTS}
 
 EXTRA_DIST= run_backend_tests.sh ${RUN_TESTS} tests.list backends.list \
 	always-copy.list $(input_files)
-CLEANFILES= *.log
 
 dist-hook: tests.list backends.list
 	@tests=`cat $(srcdir)/tests.list | sed -e "s:#.*$$::" | sed -e "s:|.*$$::"`; \
@@ -43,3 +42,9 @@ dist-hook: tests.list backends.list
 	          $(distdir)/$$dir || exit $$?; \
 	  done; \
 	done;
+
+MOSTLYCLEANFILES = core *.log FILE *.ps *~
+CLEANFILES = core *.log FILE *.ps *~
+DISTCLEANFILES = core *.log FILE *.ps *~
+MAINTAINERCLEANFILES = core *.log FILE *.ps *~ Makefile.in
+

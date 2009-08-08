@@ -18,4 +18,4 @@ endif HAVE_GIT_REPO
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
 DISTCLEANFILES = *.log core FILE *~ libgeda.pc po/domain.mak
-MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in libgeda.pc
+MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in libgeda.pc ChangeLog
