@@ -14,7 +14,7 @@ EXTRA_DIST = runtest.sh \
              singlenet.protelII singlenet.sch stack_1.geda amp.spice-sdb \
 	     singlenet.liquidpcb \
 	     darlington.spice-sdb skt.switcap test.ana multiequal.sch \
-	     multiequal.spice-sdb gnetlistrc.vhdl gnetlistrc
+	     multiequal.spice-sdb gnetlistrc.vhdl gnetlistrc.orig
 
 check_SCRIPTS = tests
 
@@ -28,7 +28,7 @@ tests:
 	rm -f $(BUILDDIR)/new_*
 	rm -rf $(BUILDDIR)/devfiles
 	mkdir $(BUILDDIR)/devfiles
-	cp $(srcdir)/gnetlistrc $(builddir)
+	cp -f $(srcdir)/gnetlistrc.orig $(builddir)/gnetlistrc
 
 # netattrib gEDA 
 	$(SRCDIR)/runtest.sh $(SRCDIR)/netattrib.sch geda \
