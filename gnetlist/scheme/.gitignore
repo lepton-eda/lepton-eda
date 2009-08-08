@@ -1,5 +1,4 @@
 Makefile
 Makefile.in
-gnet-PCBboard.scm
 gnet-gsch2pcb.scm
 *~
