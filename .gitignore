@@ -8,6 +8,7 @@ autom4te.cache
 config.h
 config.h.in
 config.status
+config.log
 configure
 intl
 libtool
