@@ -230,8 +230,8 @@ EXTRA_DIST= \
 	translate_bad_col_num1-pcb_example1.xy-error \
 	translate_bad_col_num2-pcb_example1.xy \
 	translate_bad_col_num2-pcb_example1.xy-error \
-	translate_col_change_all_value_plus_k-pcb_example1.xy \
-	translate_col_change_all_value_plus_k-pcb_example1.xy-error \
+	translate_col_chg_all_val_plus_k-pcb_example1.xy \
+	translate_col_chg_all_val_plus_k-pcb_example1.xy-error \
 	translate_col_change_R10_value-pcb_example1.xy \
 	translate_col_change_R10_value-pcb_example1.xy-error \
 	translate_col_no_match1-pcb_example1.xy \
