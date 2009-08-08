@@ -7,5 +7,5 @@ docsreadme_DATA = vams_mode.txt syntax_architecture.txt syntax_entity.txt
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = *.log *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log *~ Makefile.in

@@ -32,5 +32,5 @@ AM_CPPFLAGS = -I$(top_srcdir)/libgeda/include -I$(srcdir)/../include \
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~ olib.c
 CLEANFILES = *.log *.ps core FILE *~  olib.c
-DISTCLEANFILES = *.log core FILE *~ prototype.bak olib.c
-MAINTAINERCLEANFILES = *.log *.ps core FILE *~  Makefile.in configure olib.c
+DISTCLEANFILES = *.log core FILE *~ olib.c
+MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in olib.c

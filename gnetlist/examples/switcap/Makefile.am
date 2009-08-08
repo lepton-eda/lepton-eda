@@ -5,8 +5,8 @@ EXTRA_DIST = README analysis.sch ckt.sch clocks.sch example.out example.scn \
 
 MOSTLYCLEANFILES =  core *.log FILE *.ps *~
 CLEANFILES = core *.log FILE *.ps *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = core *.log FILE *.ps *~ Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = core *.log FILE *.ps *~ Makefile.in
 
 
 

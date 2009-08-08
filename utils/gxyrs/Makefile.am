@@ -29,5 +29,4 @@ gxyrs: $(srcdir)/gxyrs.pl
 MOSTLYCLEANFILES = *.log *.ps core FILE tmp *~
 CLEANFILES = *.log *.ps core FILE tmp  *~
 DISTCLEANFILES = *.log core FILE tmp *~ gxyrs
-MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in \
-	               configure gxyrs
+MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in gxyrs

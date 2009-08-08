@@ -36,13 +36,6 @@ gnet-gsch2pcb.scm: $(srcdir)/gnet-gsch2pcb.scm.in
 		-e 's;@pcbconfdir@;${PCBCONFDIR};g' \
 		$(srcdir)/gnet-gsch2pcb.scm.in > $@
 
-MOSTLYCLEANFILES = *.log *~
-CLEANFILES = *.log *~ gnet-gsch2pcb.scm
-DISTCLEANFILES = *.log core FILE *~ prototype.bak \
-	         gnet-gsch2pcb.scm
-MAINTAINERCLEANFILES = *.log *~ Makefile.in configure \
-	         gnet-gsch2pcb.scm
-
 all-local:
 	if test "$(srcdir)" != "$(builddir)" ; then \
 		echo "copying scheme files" ; \
@@ -58,3 +51,8 @@ clean-local:
 	else \
 		echo "source directory = build directory" ; \
 	fi
+
+MOSTLYCLEANFILES = *.log *~
+CLEANFILES = *.log *~ gnet-gsch2pcb.scm
+DISTCLEANFILES = *.log core FILE *~ gnet-gsch2pcb.scm
+MAINTAINERCLEANFILES = *.log *~ Makefile.in gnet-gsch2pcb.scm

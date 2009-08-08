@@ -20,6 +20,5 @@ garchive: $(srcdir)/garchive.py
 
 MOSTLYCLEANFILES = *.log *.ps core FILE tmp *~
 CLEANFILES = *.log *.ps core FILE tmp  *~
-DISTCLEANFILES = *.log core FILE tmp *~ prototype.bak garchive
-MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in \
-	               configure garchive
+DISTCLEANFILES = *.log core FILE tmp *~ garchive
+MAINTAINERCLEANFILES = *.log *.ps core FILE tmp *~ Makefile.in garchive

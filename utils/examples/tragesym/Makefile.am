@@ -5,6 +5,6 @@ EXTRA_DIST = 4099.src AT90S8535_TQFP.src alltest template.src template.ods \
 
 MOSTLYCLEANFILES = *.log *.ps core FILE *~
 CLEANFILES = *.log *.ps core FILE *~ 
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = *.log *.ps core FILE *~  Makefile.in configure
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in
 

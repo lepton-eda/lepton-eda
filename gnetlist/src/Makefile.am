@@ -31,5 +31,5 @@ gnetlist_LDADD = $(top_builddir)/libgeda/src/libgeda.la
 MOSTLYCLEANFILES = *.log *.ps core FILE *~
 CLEANFILES = *.log *.ps core FILE *~
 DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in configure
+MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in
 

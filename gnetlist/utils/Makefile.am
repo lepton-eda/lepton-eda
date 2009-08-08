@@ -8,8 +8,8 @@ mk_verilog_syms_SOURCES = \
 mk_verilog_syms_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLIGS)
 mk_verilog_syms_LDFLAGS = -lm
 
-MOSTLYCLEANFILES = *.log *.ps core FILE *~ prototype.bak
-CLEANFILES = *.log *.ps core FILE *~ prototype.bak
-DISTCLEANFILES = *.log core FILE *~ prototype.bak
-MAINTAINERCLEANFILES = *.log *.ps core FILE *~ prototype.bak prototype.h Makefile.in configure
+MOSTLYCLEANFILES = *.log *.ps core FILE *~
+CLEANFILES = *.log *.ps core FILE *~
+DISTCLEANFILES = *.log core FILE *~
+MAINTAINERCLEANFILES = *.log *.ps core FILE *~ Makefile.in
 

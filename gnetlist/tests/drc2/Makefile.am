@@ -84,7 +84,6 @@ tests:
 
 MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~ gnetlistrc
 CLEANFILES = new_* core *.log FILE *.ps *~ gnetlistrc
-DISTCLEANFILES = *.log core FILE *~ prototype.bak gnetlistrc
-MAINTAINERCLEANFILES = new_* core *.log FILE *.ps *~ Makefile.in configure \
-		       gnetlistrc
+DISTCLEANFILES = *.log core FILE *~ gnetlistrc
+MAINTAINERCLEANFILES = new_* core *.log FILE *.ps *~ Makefile.in gnetlistrc
 
