@@ -50,3 +50,4 @@ stamp-git:
 endif HAVE_GIT_REPO
 
 DISTCLEANFILES = stamp-git
+MAINTAINERCLEANFILES=Makefile.in aclocal.m4 config.h.in configure
