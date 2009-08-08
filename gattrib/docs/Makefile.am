@@ -1,6 +1,6 @@
 SUFFIXES = 		.html
 
-EXTRA_DIST = gattrib.dox
+EXTRA_DIST = gattrib.dox logo.png
 
 all: 
 	@echo 'Type: make doxygen  to create doxygen documentation for gattrib'
