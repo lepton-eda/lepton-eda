@@ -121,7 +121,7 @@ autopoint_fix() {
     {
       for d in $podirs; do
         echo "$script_name: copying gettext files to $d ..."
-        cp -a $top_po/* $d || break
+        cp -p $top_po/* $d || break
       done
     } && rm -rf $top_po
   else
