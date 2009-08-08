@@ -22,8 +22,10 @@ tests:
 	  SYMDIR=$(top_srcdir)/symbols \
 	    $(GNETLIST) -o $(BUILDDIR)/new_hierarchy.geda -g geda $(SRCDIR)/top.sch )
 	diff $(SRCDIR)/hierarchy.geda $(BUILDDIR)/new_hierarchy.geda;
+	rm -f $(BUILDDIR)/gnetlistrc
 
-MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~
-CLEANFILES = new_* core *.log FILE *.ps *~
-DISTCLEANFILES = *.log core FILE *~ prototype.bak gnetlistrc gafrc
-MAINTAINERCLEANFILES = new_* core *.log FILE *.ps *~ Makefile.in configure
+MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~ gnetlistrc
+CLEANFILES = new_* core *.log FILE *.ps *~ gnetlistrc
+DISTCLEANFILES = *.log core FILE *~ prototype.bak gnetlistrc
+MAINTAINERCLEANFILES = new_* core *.log FILE *.ps *~ Makefile.in configure \
+		       gnetlistrc

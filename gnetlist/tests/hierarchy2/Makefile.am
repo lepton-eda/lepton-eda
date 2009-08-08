@@ -21,9 +21,10 @@ tests:
 	     -o $(BUILDDIR)/new_hierarchy2.geda -g geda \
 	     $(SRCDIR)/top.sch )
 	diff $(SRCDIR)/hierarchy2.geda $(BUILDDIR)/new_hierarchy2.geda;
+	rm -f $(BUILDDIR)/gnetlistrc
 
-MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~
-CLEANFILES = new_* core *.log FILE *.ps *~
+MOSTLYCLEANFILES = new_* core *.log FILE *.ps *~ gnetlistrc
+CLEANFILES = new_* core *.log FILE *.ps *~ gnetlistrc
 DISTCLEANFILES = *.log core FILE *~ prototype.bak gnetlistrc
 MAINTAINERCLEANFILES = new_* core *.log FILE *.ps *~ Makefile.in configure
 
