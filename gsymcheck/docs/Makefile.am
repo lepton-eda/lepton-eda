@@ -1,5 +1,6 @@
 
-EXTRA_DIST = gsymcheck.1 gsymcheck.html logo.png
+EXTRA_DIST = gsymcheck.1 gsymcheck.html gsymcheck.dox logo.png \
+	     gsymcheck-main.txt what-is-geda.html what-is-gsymcheck.html
 
 BUILT_SOURCES = gsymcheck.html
 

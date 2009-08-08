@@ -2,7 +2,9 @@
 SUBDIRS = vams
 
 EXTRA_DIST = README.bom README.pcb README.verilog README.vhdl README.switcap \
-	     README.sysc README.eagle gnetlist.1 gnetlist.html logo.png
+	     README.sysc README.eagle gnetlist.1 gnetlist.html logo.png \
+	     gnetlist-main.txt what-is-geda.html what-is-gnetlist.html \
+	     gnetlist.dox
 
 BUILT_SOURCES = gnetlist.html
 

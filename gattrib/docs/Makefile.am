@@ -1,6 +1,7 @@
 SUFFIXES = 		.html
 
-EXTRA_DIST = gattrib.dox logo.png
+EXTRA_DIST = gattrib.dox what-is-gattrib.html what-is-geda.html \
+	     gattrib-main.txt logo.png
 
 all: 
 	@echo 'Type: make doxygen  to create doxygen documentation for gattrib'
