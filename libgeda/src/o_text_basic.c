@@ -327,7 +327,6 @@ GList *o_text_load_font (TOPLEVEL *toplevel, gunichar needed_char)
   int found = TRUE;
   gchar *aux_str2;
   GError *err = NULL;
-  GList *prim_objs = NULL;
 
   /* retrieve the name of the file where the char is defined */
   aux_str2 = g_hash_table_lookup (font_char_to_file,
