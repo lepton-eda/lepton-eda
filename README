@@ -101,7 +101,7 @@ Installation from a source archive
 
 First extract the archive to a sensible place:
 
-  tar -xzvf gEDA-<version>.tar.gz && cd gEDA-<version>
+  tar -xzvf gEDA-gaf-<version>.tar.gz && cd gEDA-gaf-<version>
 
 Run the configuration script.  You'll probably want to specify a
 custom directory to install gEDA to, for example:
