@@ -306,7 +306,25 @@ static struct gsubr_t gschem_funcs[] = {
   { "get-selected-component-attributes", 0, 0, 0, g_get_selected_component_attributes },
   
   { NULL,                        0, 0, 0, NULL } };
-  
+
+/*! \brief Define a hook.
+ * \par Function Description
+ * Creates a Guile new hook with \a n_args arguments, and binds it to
+ * the variable \a name, returning the newly created hook.
+ *
+ * \param n_args Number of arguments the hook should take.
+ * \param name   Name of variable to bind the hook to.
+ *
+ * \return the newly-created hook.
+ */
+static SCM
+create_hook (const char *name, int n_args)
+{
+  SCM hook = scm_make_hook (scm_from_int (n_args));
+  scm_c_define (name, hook);
+  return scm_permanent_object (hook);
+}
+
 /*! \brief Register function with Scheme.
  *  \par Function Description
  *  Creates <B>subr</B> objects to make <B>g_rc_*</B> functions that are defined *  #g_rc.c, #g_keys.c and #g_funcs.c visible to Scheme.
@@ -332,26 +350,22 @@ void g_register_funcs (void)
   scm_c_define_gsubr ("get-objects-in-page", 1, 0, 0, g_get_objects_in_page);
   scm_c_define_gsubr ("get-current-page", 0, 0, 0, g_get_current_page);
 
-  add_component_hook  = scm_create_hook ("add-component-hook", 1);
-  add_component_object_hook  = scm_create_hook ("add-component-object-hook", 
-						1);
-  rotate_component_object_hook  = scm_create_hook ("rotate-component-object-hook",
-						   1);
-  mirror_component_object_hook  = scm_create_hook ("mirror-component-object-hook", 
-						1);
-  copy_component_hook = scm_create_hook ("copy-component-hook", 1);
-  move_component_hook = scm_create_hook ("move-component-hook", 1);
-  deselect_component_hook = scm_create_hook ("deselect-component-hook", 1);
-  deselect_net_hook = scm_create_hook ("deselect-net-hook", 1);
-  deselect_all_hook = scm_create_hook ("deselect-all-hook", 1);
-  select_component_hook = scm_create_hook ("select-component-hook", 1);
-  select_net_hook = scm_create_hook ("select-net-hook", 1);
+  add_component_hook  = create_hook ("add-component-hook", 1);
+  add_component_object_hook  = create_hook ("add-component-object-hook", 1);
+  rotate_component_object_hook  = create_hook ("rotate-component-object-hook", 1);
+  mirror_component_object_hook  = create_hook ("mirror-component-object-hook", 1);
+  copy_component_hook = create_hook ("copy-component-hook", 1);
+  move_component_hook = create_hook ("move-component-hook", 1);
+  deselect_component_hook = create_hook ("deselect-component-hook", 1);
+  deselect_net_hook = create_hook ("deselect-net-hook", 1);
+  deselect_all_hook = create_hook ("deselect-all-hook", 1);
+  select_component_hook = create_hook ("select-component-hook", 1);
+  select_net_hook = create_hook ("select-net-hook", 1);
 
-  add_pin_hook = scm_create_hook ("add-pin-hook", 1);
-  mirror_pin_hook = scm_create_hook ("mirror-pin-hook", 1);
-  rotate_pin_hook = scm_create_hook ("rotate-pin-hook", 1);
-  add_attribute_hook = scm_create_hook ("add-attribute-hook", 1);
-  new_page_hook = scm_create_hook ("new-page-hook", 1);
-  complex_place_list_changed_hook = 
-    scm_create_hook ("complex-place-list-changed-hook", 1);
+  add_pin_hook = create_hook ("add-pin-hook", 1);
+  mirror_pin_hook = create_hook ("mirror-pin-hook", 1);
+  rotate_pin_hook = create_hook ("rotate-pin-hook", 1);
+  add_attribute_hook = create_hook ("add-attribute-hook", 1);
+  new_page_hook = create_hook ("new-page-hook", 1);
+  complex_place_list_changed_hook = create_hook ("complex-place-list-changed-hook", 1);
 }
