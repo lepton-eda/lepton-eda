@@ -550,6 +550,21 @@ insert_element(FILE *f_out, gchar *element_file,
 		g_free(s);
 		return FALSE;
 		}
+	/* Scan the file to detect whether it's actually a PCB
+	 * layout. Assumes that a PCB layout will have a "PCB" line. */
+	while ((fgets(buf, sizeof(buf), f_in)) != NULL) {
+		for (s = buf; *s == ' ' || *s == '\t'; ++s)
+		;
+		s[3] = 0; /* Truncate line */
+		if (strncmp ("PCB", s, sizeof(buf)) == 0) {
+			printf ("Warning: %s appears to be a PCB layout file. Skipping.\n",
+				element_file);
+			fclose (f_in);
+			return FALSE;
+		}
+	}
+	rewind (f_in);
+
 	/* Copy the file element lines.  Substitute new parameters into the
 	|  Element() or Element[] line and strip comments.
 	*/
