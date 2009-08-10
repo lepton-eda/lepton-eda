@@ -69,8 +69,7 @@ AX_DESKTOP_I18N
 
 PKG_PROG_PKG_CONFIG
 
-PKG_CHECK_MODULES(GUILE, [guile-1.8], ,
-  AC_MSG_ERROR([Guile 1.8 or later is required.]))
+AX_CHECK_GUILE([1.8.0])
 
 PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.12.0], ,
   AC_MSG_ERROR([GLib 2.12.0 or later is required.]))
