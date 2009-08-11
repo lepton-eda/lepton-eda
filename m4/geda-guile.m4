@@ -96,7 +96,7 @@ AC_DEFUN([AX_CHECK_GUILE],
         GUILE_LIBS=`${GUILE_CONFIG} link`
         AC_MSG_RESULT([$GUILE_LIBS])
     else
-        AC_MSG_ERROR([you need at least version 1.8 of guile])
+        AC_MSG_ERROR([you need at least version ${GUILE_MIN_VER} of guile])
     fi
     AC_SUBST(GUILE_VER)
     AC_SUBST(GUILE_CFLAGS)
