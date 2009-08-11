@@ -44,7 +44,7 @@ changequote([,])
 
   # If there's an annotated tag available, test that the git version
   # and AC_INIT versions agree.
-  if git describe > /dev/null; then
+  if (cd $srcdir && git describe > /dev/null); then
 changequote(,)
     git_sed_pattern="^\([^-]*\)-\([^-]*\).*"
 changequote([,])
