@@ -53,6 +53,7 @@ AX_GCC_FLAGS([-Wall])
 AM_PROG_LEX
 AX_PROG_AWK
 AX_PROG_GROFF
+AC_PATH_PROGS([M4], [gm4 m4], [m4])
 
 #####################################################################
 # Internationalisation
