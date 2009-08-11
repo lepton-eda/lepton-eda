@@ -66,13 +66,13 @@ void o_complex_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o
  *  \par Function Description
  *
  */
-void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
+void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const CLibSymbol *sym)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *temp_list;
   OBJECT *o_current;
   char *buffer;
-  const CLibSymbol *sym;
+  const gchar *sym_name = s_clib_symbol_get_name (sym);
   int redraw_state;
 
   /* remove the old place list if it exists */
@@ -90,7 +90,7 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
     temp_list = NULL;
 
     toplevel->ADDING_SEL=1;
-    buffer = s_clib_symbol_get_data_by_name (sym_name);
+    buffer = s_clib_symbol_get_data (sym);
     temp_list = o_read_buffer (toplevel,
                                temp_list,
                                buffer, -1,
@@ -106,7 +106,6 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name)
     OBJECT *new_object;
 
     toplevel->ADDING_SEL = 1; /* reuse this flag, rename later hack */
-    sym = s_clib_get_symbol_by_name (sym_name);
     new_object = o_complex_new (toplevel, OBJ_COMPLEX, DEFAULT_COLOR,
                                 0, 0, 0, 0, sym, sym_name, 1);
 

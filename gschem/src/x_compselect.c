@@ -155,7 +155,7 @@ x_compselect_callback_response (GtkDialog *dialog,
           w_current->event_state = SELECT;
         } else {
           /* Otherwise set the new symbol to place */
-          o_complex_prepare_place (w_current, s_clib_symbol_get_name (symbol));
+          o_complex_prepare_place (w_current, symbol);
         }
         break;
       }

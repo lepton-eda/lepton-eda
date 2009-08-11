@@ -549,7 +549,7 @@ void o_circle_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 /* o_complex.c */
 void o_complex_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_complex_draw_place(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *complex);
-void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const char *sym_name);
+void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const CLibSymbol *sym);
 void o_complex_place_changed_run_hook(GSCHEM_TOPLEVEL *w_current);
 void o_complex_end(GSCHEM_TOPLEVEL *w_current, int x, int y, int continue_placing);
 void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset);
