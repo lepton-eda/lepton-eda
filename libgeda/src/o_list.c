@@ -83,11 +83,7 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
 
     case(OBJ_COMPLEX):
     case(OBJ_PLACEHOLDER):
-      if (o_complex_is_embedded (selected)) {
-        new_obj = o_complex_copy_embedded (toplevel, selected);
-      } else {
-        new_obj = o_complex_copy (toplevel, selected);
-      }
+      new_obj = o_complex_copy (toplevel, selected);
       break;
 
     case(OBJ_TEXT):

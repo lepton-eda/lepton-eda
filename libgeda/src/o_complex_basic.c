@@ -766,91 +766,60 @@ void o_complex_translate_world(TOPLEVEL *toplevel, int dx, int dy,
   o_complex_recalc (toplevel, object);
 }
 
-/*! \brief create a copy of a complex object
+/*! \brief Create a copy of a COMPLEX object
  *  \par Function Description
  *  This function creates a copy of the complex object \a o_current.
  *
  *  \param [in] toplevel     The TOPLEVEL object
  *  \param [in] o_current    The object that is copied
- *  \return a new complex object
+ *  \return a new COMPLEX object
  */
 OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 {
-  OBJECT *new_obj=NULL;
-  int selectable;
-  const CLibSymbol *clib = NULL;
-
-  g_return_val_if_fail(o_current != NULL, NULL);
-
-  selectable = (o_current->sel_func != NULL);
-
-  clib = s_clib_get_symbol_by_name (o_current->complex_basename);
-
-  new_obj = o_complex_new (toplevel, o_current->type, o_current->color,
-                           o_current->complex->x, o_current->complex->y,
-                           o_current->complex->angle,
-                           o_current->complex->mirror,
-                           clib, o_current->complex_basename,
-                           selectable);
-
-  /* Delete or hide attributes eligible for promotion inside the complex */
-   o_complex_remove_promotable_attribs (toplevel, new_obj);
-
-  o_attrib_slot_update (toplevel, new_obj);
-
-  /* deal with stuff that has changed */
-
-  /* here you need to create a list of attributes which need to be 
-   * connected to the new list, probably make an attribute list and
-   * fill it with sid's of the attributes */
-
-  return new_obj;
-}
-
-/*! \brief create a copy of a embedded complex object
- *  \par Function Description
- *  This function creates a copy of an embedded complex object \a o_current.
- *
- *  \param [in] toplevel     The TOPLEVEL object
- *  \param [in] o_current    The object that is copied
- *  \return a new complex object
- */
-OBJECT *o_complex_copy_embedded(TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  OBJECT *new_obj=NULL;
+  OBJECT *o_new;
   GList *iter;
-  int selectable;
 
   g_return_val_if_fail(o_current != NULL, NULL);
 
-  selectable = (o_current->sel_func != NULL);
+  o_new = s_basic_new_object(o_current->type, "complex");
+  o_new->color = o_current->color;
+  o_new->complex_basename = g_strdup(o_current->complex_basename);
+  o_new->complex_embedded = o_current->complex_embedded;
+  o_new->sel_func = o_current->sel_func;
+  o_new->draw_func = o_current->draw_func;
 
-  new_obj = o_complex_new_embedded (toplevel, o_current->type, o_current->color,
-                                    o_current->complex->x, o_current->complex->y,
-                                    o_current->complex->angle,
-                                    o_current->complex->mirror,
-                                    o_current->complex_basename,
-                                    selectable);
+  o_new->complex = g_malloc0(sizeof(COMPLEX));
+  o_new->complex->x = o_current->complex->x;
+  o_new->complex->y = o_current->complex->y;
+  o_new->complex->angle = o_current->complex->angle;
+  o_new->complex->mirror = o_current->complex->mirror;
 
-  /* deal with stuff that has changed */
-
-  new_obj->complex->prim_objs =
+  /* Copy contents and set the parent pointers on the copied objects. */
+  o_new->complex->prim_objs =
     o_glist_copy_all (toplevel, o_current->complex->prim_objs,
-                      new_obj->complex->prim_objs, toplevel->ADDING_SEL);
+                      NULL, toplevel->ADDING_SEL);
 
-  /* set the parent field now */
-  for (iter = new_obj->complex->prim_objs; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *tmp = iter->data;
-    tmp->parent = new_obj;
+  for (iter = o_new->complex->prim_objs;
+       iter != NULL;
+       iter = g_list_next (iter)) {
+    ((OBJECT*) iter->data)->parent = o_new;
   }
 
-  o_complex_recalc(toplevel, new_obj);
+  /* Recalculate bounds */
+  o_complex_recalc(toplevel, o_new);
 
-  /* here you need to create a list of attributes which need to be 
+  /* Delete or hide attributes eligible for promotion inside the complex */
+  o_complex_remove_promotable_attribs (toplevel, o_new);
+
+  o_attrib_slot_update (toplevel, o_new);
+
+  /* deal with stuff that has changed */
+
+  /* here you need to create a list of attributes which need to be
    * connected to the new list, probably make an attribute list and
    * fill it with sid's of the attributes */
 
-  return new_obj;
+  return o_new;
 }
 
 
