@@ -309,21 +309,45 @@ static GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int 
 }
 
 
-/*! \brief Promote attributes from the passed complex OBJECT
- *
+/*! \brief Promote attributes from a complex OBJECT
  *  \par Function Description
- *  Promotes attributes from the passed complex OBJECT, detaching
- *  them from inside the object and returning them in a list.
+ *  Selects promotable attributes from \a object, and returns a new
+ *  #GList containing them (suitable for appending to a #PAGE).
  *
- *  \param [in]  toplevel The toplevel environment.
- *  \param [in]  object   The complex who's attributes are being promoted.
- *  \return A GList list of promoted attributes.
+ *  \param [in]  toplevel The #TOPLEVEL environment.
+ *  \param [in]  object   The complex #OBJECT to promote from.
+ *  \return A #GList of promoted attributes.
  */
 GList *o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
 {
-  GList *promoted;
+  GList *promoted = NULL;
+  GList *promotable = NULL;
+  GList *iter = NULL;
 
-  promoted = o_complex_get_promotable (toplevel, object, TRUE);
+  promotable = o_complex_get_promotable (toplevel, object, FALSE);
+
+  /* Run through the attributes deciding if we want to keep them (in
+   * which case we copy them and make them invisible) or if we want to
+   * remove them. */
+  if (toplevel->keep_invisible) {
+    for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
+      OBJECT *o_kept = (OBJECT *) iter->data;
+      OBJECT *o_copy = o_object_copy (toplevel, o_kept,
+                                      toplevel->ADDING_SEL);
+      o_kept->visibility = INVISIBLE;
+      o_copy->parent = NULL;
+      promoted = g_list_prepend (promoted, o_copy);
+    }
+    promoted = g_list_reverse (promoted);
+  } else {
+    for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
+      OBJECT *o_removed = (OBJECT *) iter->data;
+      o_removed->parent = NULL;
+      object->complex->prim_objs =
+        g_list_remove (object->complex->prim_objs, o_removed);
+    }
+    promoted = promotable;
+  }
 
   /* Attach promoted attributes to the original complex object */
   o_attrib_attach_list (toplevel, promoted, object, TRUE);
