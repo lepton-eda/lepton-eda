@@ -10,7 +10,7 @@ docsmandir = $(docdir)/man
 docsman_DATA = gsymcheck.html
 
 .1.html:
-if ENABLE_GROFF
+if ENABLE_GROFF_HTML
 	LC_NUMERIC=C $(GROFF) -man -T html $< > $@.tmp \
 	  && mv -f $@.tmp $@
 else
