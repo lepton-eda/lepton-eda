@@ -27,9 +27,6 @@
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
-#if defined(HAVE_DIRENT_H) 
-#include <dirent.h>
-#endif
 
 #include "libgeda_priv.h"
 

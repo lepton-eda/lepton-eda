@@ -93,7 +93,6 @@ AC_HEADER_SYS_WAIT
 # FIXME these checks are obsolete, because every plausible platform
 # provides what they check for.
 AC_HEADER_STDC
-AC_HEADER_DIRENT
 
 # FIXME these checks may be pointless for one of three reasons: every
 # even vaguely sane libc implementation provides them; we don't use

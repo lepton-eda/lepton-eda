@@ -30,9 +30,7 @@
 #ifdef HAVE_STRING_H
 #include <string.h>
 #endif
-#ifdef HAVE_DIRENT_H
 #include <dirent.h>
-#endif
 
 #include "libgeda_priv.h"
 
