@@ -1,24 +1,30 @@
 
-EXTRA_DIST = gsymcheck.1 gsymcheck.html gsymcheck.dox logo.png \
+EXTRA_DIST = $(html_man_files) gsymcheck.dox logo.png \
 	     gsymcheck-main.txt what-is-geda.html what-is-gsymcheck.html
 
-BUILT_SOURCES = gsymcheck.html
+dist_man_MANS = gsymcheck.1
 
-man_MANS = gsymcheck.1
 
-docsmandir = $(docdir)/man
-docsman_DATA = gsymcheck.html
+# Rules for converting man->html
+html_man_files = gsymcheck.html
+SUFFIXES = .1 .html
 
-.1.html:
 if ENABLE_GROFF_HTML
-	LC_NUMERIC=C $(GROFF) -man -T html $< > $@.tmp \
-	  && mv -f $@.tmp $@
+docsmandir=$(docdir)/man
+docsman_DATA=$(html_man_files)
+.1.html:
+	rm -rf $@.tmp && \
+	LC_NUMERIC=C $(GROFF) -man -T html  $< >$@.tmp && \
+	mv -f $@.tmp $@
 else
-	echo "Cannot build $@ from $<: groff is missing."
+.1.html:
+	@echo "No working groff available: cannot create $@"
+	@! :
 endif
+
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~ gsymcheck.html
 DISTCLEANFILES = *.log core FILE *~
-MAINTAINERCLEANFILES = *.log *~ Makefile.in gsymcheck.html
+MAINTAINERCLEANFILES = *.log *~ Makefile.in $(html_man_files)
 

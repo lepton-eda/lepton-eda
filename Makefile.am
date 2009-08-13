@@ -5,7 +5,14 @@ ACLOCAL_AMFLAGS = -I m4
 
 # We need to ensure that `make distcheck' *doesn't* find a git
 # repository!
-DISTCHECK_CONFIGURE_FLAGS = GIT="/bin/sh -c '! :'" --disable-update-xdg-database
+#
+# We also should be able to successfully build & install without
+# groff.
+false=/bin/sh -c '! :'
+DISTCHECK_CONFIGURE_FLAGS = \
+	GIT="$(false)" \
+	GROFF="$(false)" \
+	--disable-update-xdg-database
 
 BUILT_SOURCES = version.h
 EXTRA_DIST = autogen.sh version.h version.h.in README.Cygwin
