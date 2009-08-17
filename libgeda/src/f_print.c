@@ -299,37 +299,12 @@ void f_print_objects (TOPLEVEL *toplevel, FILE *fp, const GList *obj_list,
 
       case(OBJ_TEXT):
         if (o_current->visibility == VISIBLE) {
-          int vectors = 0;
-
-          /* Look at flags and determine if vector text should
-           * be used for output.
-           */
-          if(toplevel->text_output == VECTOR_FONTS) {
-            vectors = 1;
-          } else if (toplevel->print_vector_threshold > 0 &&
-                     o_text_num_lines (o_current->text->string) >
-                       toplevel->print_vector_threshold) {
-            vectors = 1;
-          }
-
+          /* Output text */
           save_last_ps_color = toplevel->last_ps_color;
           fprintf(fp, "gsave\n");
-
-          if (vectors)
-          {
-      /* Output vectors */
-            f_print_objects(toplevel,
-                            fp,
-                            o_current->text->
-                            prim_objs,
-                            origin_x, origin_y,
-                            scale, unicode_count, unicode_table);
-          } else {
-      /* Output text */
-            o_text_print(toplevel, fp,
-                         o_current,
-                         origin_x, origin_y, unicode_count, unicode_table);
-          }
+          o_text_print(toplevel, fp,
+                       o_current,
+                       origin_x, origin_y, unicode_count, unicode_table);
 
           fprintf(fp, "grestore\n");
           toplevel->last_ps_color = save_last_ps_color;

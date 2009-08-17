@@ -83,9 +83,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "paper-sizes",               3, 0, 0, g_rc_paper_sizes },
   { "postscript-font-scale",     1, 0, 0, g_rc_postscript_font_scale },
 
-  /* text-output is old... will eventually be removed! */
-  { "text-output",               1, 0, 0, g_rc_output_text }, 
-  { "output-text",               1, 0, 0, g_rc_output_text },
   { "output-type",               1, 0, 0, g_rc_output_type },
   { "output-orientation",        1, 0, 0, g_rc_output_orientation },
   { "output-color",              1, 0, 0, g_rc_output_color },
@@ -130,7 +127,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "dots-grid-mode",            1, 0, 0, g_rc_dots_grid_mode },
   { "dots-grid-fixed-threshold", 1, 0, 0, g_rc_dots_grid_fixed_threshold },
   { "mesh-grid-display-threshold", 1, 0, 0, g_rc_mesh_grid_display_threshold },
-  { "output-vector-threshold",   1, 0, 0, g_rc_output_vector_threshold },
   { "add-attribute-offset",      1, 0, 0, g_rc_add_attribute_offset },
   { "mousepan-gain",             1, 0, 0, g_rc_mousepan_gain },
   { "keyboardpan-gain",          1, 0, 0, g_rc_keyboardpan_gain },

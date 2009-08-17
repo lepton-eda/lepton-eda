@@ -62,7 +62,6 @@ int   default_do_logging = TRUE;
 int   default_logging_dest = LOG_WINDOW;
 int   default_embed_complex = FALSE;
 int   default_include_complex = FALSE;
-int   default_text_output = VECTOR_FONTS;
 int   default_snap_size = 100;
 
 int   default_paper_width = 11000; /* letter size */
@@ -115,7 +114,6 @@ int   default_dots_grid_dot_size = 1;
 int   default_dots_grid_mode = DOTS_GRID_VARIABLE_MODE;
 int   default_dots_grid_fixed_threshold = 10;
 int   default_mesh_grid_display_threshold = 3;
-int   default_print_vector_threshold = 3;
 int   default_add_attribute_offset = 50;
 
 int   default_auto_save_interval = 120;
@@ -183,7 +181,6 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
   toplevel->object_clipping = default_object_clipping;
   w_current->embed_complex   = default_embed_complex;
   w_current->include_complex = default_include_complex;
-  toplevel->text_output     = default_text_output;
   toplevel->snap_size       = default_snap_size;
   w_current->log_window      = default_log_window;
   w_current->log_window_type = default_log_window_type;
@@ -239,7 +236,6 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
   w_current->dots_grid_fixed_threshold   = default_dots_grid_fixed_threshold;
   w_current->mesh_grid_display_threshold = default_mesh_grid_display_threshold;
 
-  toplevel->print_vector_threshold  = default_print_vector_threshold;
   w_current->add_attribute_offset  = default_add_attribute_offset;
 
   w_current->drag_can_move = default_drag_can_move;

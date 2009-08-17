@@ -602,18 +602,6 @@
 ;
 (print-command "lpr")
 
-; output-text string
-;
-; Controls how text is rendered to postscript
-; 	vector - the displayed vector font is rendered to the postscript file
-; 	ps     - an equivalent postscript font is rendered to the ps file
-; vector rendering is *exactly* as the display is shown 
-; PostScript text is close, but looks nicer.
-; Also vector rendered text files are much much larger then ps files.
-; 
-;(output-text "vector")
-(output-text "ps")
-
 ; postscript-font-scale real
 ;
 ; Sets a scaling factor for the text in the PostScript output.  This
@@ -622,18 +610,6 @@
 ; on the screen.
 ;  The default value is 1.0.
 (postscript-font-scale 1.0)
-
-; output-vector-threshold
-;
-; Controls the threshold (in text lines) where multi-line text objects
-; are outputted using the postscript font or the vector font.  If the 
-; number of lines exceeds the specified threshold, then the whole multi-line 
-; text item is outputted using the vector font instead of the postscript 
-; font.  If you want to enable this feature, then set the value to a positive
-; integer greater than 0.  This feature is disabled by default.
-;
-(output-vector-threshold -1)
-;(output-vector-threshold 3)
 
 
 ; output-type string

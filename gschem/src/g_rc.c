@@ -615,23 +615,6 @@ SCM g_rc_paper_sizes(SCM scm_papername, SCM scm_width, SCM scm_height)
  *  \brief
  *  \par Function Description
  *
- */
-SCM g_rc_output_text(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {VECTOR_FONTS , "vector" },
-    {PS_FONTS     , "ps"     },
-  };
-
-  RETURN_G_RC_MODE("output-text",
-		   default_text_output,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
  *  \todo this keyword needs a better name ...
  */
 SCM g_rc_output_type(SCM mode)
@@ -1362,25 +1345,6 @@ SCM g_rc_mesh_grid_display_threshold (SCM spacing)
   }
 
   default_mesh_grid_display_threshold = val;
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_output_vector_threshold(SCM numlines)
-{
-  int val;
-
-  SCM_ASSERT (scm_is_integer (numlines), numlines,
-              SCM_ARG1, "output-vector-threshold");
-  
-  val = scm_to_int (numlines);
-
-  default_print_vector_threshold = val;
 
   return SCM_BOOL_T;
 }

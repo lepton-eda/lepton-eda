@@ -498,9 +498,6 @@ struct st_toplevel {
   /* controls whether objects are clipped */
   int object_clipping; 
 
-  /* controls how text is printed (vector / PS font) */ 
-  int text_output; 
-
   /* either landscape or portrait */
   int print_orientation; 
 
@@ -551,10 +548,6 @@ struct st_toplevel {
 
   /* controls if the whole bounding box is used in the auto whichend code */
   int force_boundingbox;
-
-  /* controls the threshold (in lines of text) when the multi-line text */
-  /* output font is forced to vector */
-  int print_vector_threshold;
 
   /* List of attributes to always promote */
   GList *always_promote_attributes;

@@ -87,8 +87,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->object_clipping = 0;
 
-  toplevel->text_output = 0;
-
   toplevel->print_orientation = 0;
 
   toplevel->image_color = FALSE;
@@ -122,8 +120,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->bus_ripper_symname = NULL;
 
   toplevel->force_boundingbox = FALSE;
-
-  toplevel->print_vector_threshold = 3;
 
   toplevel->always_promote_attributes = NULL;
 
