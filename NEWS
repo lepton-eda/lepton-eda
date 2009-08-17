@@ -10,6 +10,13 @@ more information, please consult the `ChangeLog' file.
 Notable changes in gEDA/gaf 1.6.0
 =================================
 
+* Text rendering using native system fonts
+
+  - gEDA/gaf no longer uses its own built-in line font.
+
+  - Native system fonts are used for rendering, giving support for a
+    wider range of symbols, and better looking schematics.
+
 * Numerous build system changes.
 
   - gEDA/gaf is now distributed as a single source archive, called
