@@ -81,6 +81,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "attribute-name",            1, 0, 0, g_rc_attribute_name },
   { "paper-size",                2, 0, 0, g_rc_paper_size },
   { "paper-sizes",               3, 0, 0, g_rc_paper_sizes },
+  { "postscript-font-scale",     1, 0, 0, g_rc_postscript_font_scale },
 
   { "output-type",               1, 0, 0, g_rc_output_type },
   { "output-orientation",        1, 0, 0, g_rc_output_orientation },

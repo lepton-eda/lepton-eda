@@ -424,6 +424,26 @@ SCM g_rc_text_size(SCM size)
   return SCM_BOOL_T;
 }
 
+/*! \brief Catch deprecated option to set the output font scaling factor
+ *
+ *  \par This setting used to change the scale of the output PS font
+ *  characters. Since gEDA 1.6.0, this is fixed to match the on-screen
+ *  font size.
+ *
+ *  \return SCM_BOOL_T always.
+ */
+
+SCM g_rc_postscript_font_scale(SCM scale)
+{
+  g_warning (_("\n"
+               "The config option postscript-font-scale is "
+               "deprecated and will be removed in gEDA 1.8.0.\n"
+               "Printed text is fixed to match on-screen sizes. "
+               "Please remove this option from your config files.\n"
+               "\n"));
+
+  return SCM_BOOL_T;
+}
 
 /*! \todo Finish function documentation!!!
  *  \brief
