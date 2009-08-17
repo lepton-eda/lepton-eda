@@ -1,4 +1,7 @@
-SUBDIRS = intl libgeda gschem gattrib gsymcheck gnetlist utils symbols docs \
+if ENABLE_GATTRIB
+GATTRIB_DIR=gattrib
+endif
+SUBDIRS = intl libgeda gschem ${GATTRIB_DIR} gsymcheck gnetlist utils symbols docs \
 	examples
 
 ACLOCAL_AMFLAGS = -I m4
