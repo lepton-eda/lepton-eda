@@ -193,6 +193,105 @@ static PangoFontMetrics *setup_pango_return_metrics (GSCHEM_TOPLEVEL *w_current,
 }
 
 
+static void rotate_vector (double x, double y, double angle,
+                           double *rx, double *ry)
+{
+  double costheta = cos (angle * M_PI / 180.);
+  double sintheta = sin (angle * M_PI / 180.);
+
+  *rx = costheta * x - sintheta * y;
+  *ry = sintheta * x + costheta * y;
+}
+
+
+static void expand_bounds (int *left, int *top, int *right, int *bottom,
+                           int new_x, int new_y)
+{
+  *left =   MIN (*left,   new_x);
+  *right =  MAX (*right,  new_x);
+  *top =    MIN (*top,    new_y);
+  *bottom = MAX (*bottom, new_y);
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+int o_text_get_rendered_bounds (void *user_data, OBJECT *o_current,
+                                int *min_x, int *min_y,
+                                int *max_x, int *max_y)
+{
+  GSCHEM_TOPLEVEL *w_current = user_data;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  PangoLayout *layout;
+  cairo_t *cr;
+  double x, y;
+  PangoFontMetrics *font_metrics;
+  PangoRectangle logical_rect;
+  PangoRectangle inked_rect;
+  int angle;
+  double rx, ry;
+  double tleft, ttop, tright, tbottom;
+  int left, right, top, bottom;
+
+  g_return_val_if_fail (o_current != NULL, FALSE);
+  g_return_val_if_fail (o_current->text != NULL, FALSE);
+
+  if (o_current->visibility == INVISIBLE &&
+      !toplevel->show_hidden_text)
+    return FALSE;
+
+  if (o_current->text->disp_string == NULL)
+    return FALSE;
+
+  cr = gdk_cairo_create (w_current->drawable);
+  layout = pango_cairo_create_layout (cr);
+
+  font_metrics = setup_pango_return_metrics (w_current, layout, 1., o_current);
+
+  pango_layout_get_pixel_extents (layout, &inked_rect, &logical_rect);
+  calculate_position (o_current, font_metrics, logical_rect, inked_rect, &x, &y);
+  pango_font_metrics_unref (font_metrics);
+
+  tleft = x + inked_rect.x;
+  tright = x + inked_rect.x + inked_rect.width;
+  /* Deliberately include bounds up to the height of the logical rect,
+   * since we draw overbars in that space. In the unlikely event that
+   * the inked rect extends above the logical (inked_rect.y is -ve),
+   * do take that into account.
+   */
+  ttop = -y - (inked_rect.y < 0 ? inked_rect.y : 0.);
+  tbottom = -y - inked_rect.y - inked_rect.height;
+
+  angle = o_current->text->angle;
+  /* Special case turns upside down text back upright */
+  if (angle == 180)
+    angle = 0;
+
+  rotate_vector (tleft, ttop, angle, &rx, &ry);
+  left = right = rx;
+  top = bottom = ry;
+  rotate_vector (tright, ttop, angle, &rx, &ry);
+  expand_bounds (&left, &top, &right, &bottom, rx, ry);
+  rotate_vector (tleft, tbottom, angle, &rx, &ry);
+  expand_bounds (&left, &top, &right, &bottom, rx, ry);
+  rotate_vector (tright, tbottom, angle, &rx, &ry);
+  expand_bounds (&left, &top, &right, &bottom, rx, ry);
+
+  *min_x = o_current->text->x + left;
+  *max_x = o_current->text->x + right;
+  *min_y = o_current->text->y + top;
+  *max_y = o_current->text->y + bottom;
+
+  g_object_unref (layout);
+  cairo_destroy (cr);
+
+  return TRUE;
+}
+
+
 #ifdef DEBUG_TEXT
 static void draw_construction_lines (GSCHEM_TOPLEVEL *w_current,
                                      double x, double y,
