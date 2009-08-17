@@ -1,7 +1,7 @@
 <ui>
   <menubar>
     <menu action="file">
-      <menuitem action="file-open" />
+      <!-- <menuitem action="file-open" / > -->
       <menuitem action="file-save" />
       <menuitem action="file-export-csv" />
       <separator/>

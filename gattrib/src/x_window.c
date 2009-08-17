@@ -133,6 +133,7 @@ x_window_init()
  * -# close the current project and reinitialize structures
  * -# load the new project
  */
+#ifdef UNIMPLEMENTED_FEATURES
 static void
 menu_file_open()
 {
@@ -149,6 +150,7 @@ menu_file_open()
   g_slist_free(file_list);
 #endif
 }
+#endif
 
 /*!
  * \brief File->Save menu item
@@ -223,7 +225,7 @@ static const GtkActionEntry actions[] = {
   /* name, stock-id, label, accelerator, tooltip, callback function */
   /* File menu */
   { "file", NULL, "_File"},
-  { "file-open", GTK_STOCK_OPEN, "Open", "<Control>O", "", menu_file_open},
+  /* { "file-open", GTK_STOCK_OPEN, "Open", "<Control>O", "", menu_file_open}, */
   { "file-save", GTK_STOCK_SAVE, "Save", "<Control>S", "", menu_file_save},
   { "file-export-csv", NULL, "Export CSV", "", "", menu_file_export_csv},
   /* { "file-print", GTK_STOCK_PRINT, "Print", "<Control>P", "", x_dialog_unimplemented_feature}, */
