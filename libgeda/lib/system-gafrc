@@ -30,12 +30,6 @@
 ;; The directory containing various bitmaps (e.g. icons)
 (bitmap-directory (build-path geda-data-path "bitmap"))
 
-; Load the default font
-(let ((font-def-file (%search-load-path "geda-font")))
-  (if font-def-file 
-      (load font-def-file)
-      (display "Failed to load default font.\n" (current-error-port))))
-
 ; Set the name of the postscript prolog file that will be 
 ; pasted into the postscript output after the DSC comments, but
 ; before the main script.

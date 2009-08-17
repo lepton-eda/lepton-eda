@@ -276,13 +276,6 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
       g_free(o_current->text->string); 
       o_current->text->string = NULL;
       g_free(o_current->text->disp_string);
-
-      if (o_current->text->prim_objs) {
-				/*printf("sdeleting text complex\n");*/
-        s_delete_object_glist (toplevel, o_current->text->prim_objs);
-        o_current->text->prim_objs = NULL;
-      }
-
       /*	printf("sdeleting text\n");*/
       g_free(o_current->text);
     }

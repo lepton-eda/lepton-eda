@@ -102,7 +102,6 @@ SCM g_rc_mode_general(SCM scmmode,
   return ret;
 }
 
-extern GHashTable *font_char_to_file;
 
 /*! \brief Reads the gafrc file.
  *  \par Function Description
@@ -705,37 +704,6 @@ SCM g_rc_untitled_name(SCM name)
   return SCM_BOOL_T;
 }
 
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- *
- *  \param [in] path  
- *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
- */
-SCM g_rc_font_directory(SCM path)
-{
-  gchar *string;
-
-  SCM_ASSERT (scm_is_string (path), path,
-              SCM_ARG1, "font-directory");
-
-  /* take care of any shell variables */
-  string = s_expand_env_variables (SCM_STRING_CHARS (path));
-
-  /* invalid path? */
-  if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
-    fprintf (stderr,
-             "Invalid path [%s] passed to font-directory\n",
-             string);
-    g_free(string);
-    return SCM_BOOL_F;
-  }
-
-  g_free(default_font_directory);
-  default_font_directory = string;
-
-  return SCM_BOOL_T;
-}
 
 /*! \todo Finish function description!!!
  *  \brief
@@ -867,47 +835,6 @@ SCM g_rc_reset_source_library(void)
   return SCM_BOOL_T;
 }
 
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- *
- *  \param [in] scmcharstr   
- *  \param [in] scmfilename  
- *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
- */
-SCM g_rc_map_font_character_to_file(SCM scmcharstr, SCM scmfilename)
-{
-  gchar *charstr, *filename;
-  gunichar character;
-
-  SCM_ASSERT (scm_is_string (scmcharstr), scmcharstr,
-              SCM_ARG1, "map-font-character-to-file");
-  SCM_ASSERT (scm_is_string (scmfilename), scmfilename,
-              SCM_ARG2, "map-font-character-to-file");
-
-  charstr  = SCM_STRING_CHARS (scmcharstr);
-  filename = SCM_STRING_CHARS (scmfilename);
-  
-  if (charstr == NULL || filename == NULL) {
-    fprintf(stderr,
-            "%s requires two strings as parameters\n",
-            "map-font-character-to-file"
-            );
-    return SCM_BOOL_F;
-  }
-
-  /* take care of expansion of any shell variables in filename */
-  filename = s_expand_env_variables (filename);
-
-  character = g_utf8_get_char_validated (charstr, -1);
-  
-  /* insert the new character declaration in the hash table */
-  g_hash_table_insert (font_char_to_file,
-                       GUINT_TO_POINTER ((guint)character),
-                       filename);
-
-  return SCM_BOOL_T;
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

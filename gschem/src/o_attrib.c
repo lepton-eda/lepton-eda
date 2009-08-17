@@ -134,12 +134,7 @@ void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
     }
 
     object->visibility = VISIBLE;
-
-    /* you must do this since real->text->complex */
-    /* might be null when text is invisible */
-    if (object->text->prim_objs == NULL) {
-      o_text_recreate(toplevel, object);
-    }
+    o_text_recreate(toplevel, object);
 
     o_invalidate (w_current, object);
   }

@@ -39,12 +39,6 @@
  *  is used by diacritic marks like accents, breve, circumflex mostly in
  *  european characters.
  *
- *  When loading a font definition the basic line objects are stored in
- *  <b>OBJECT->font_prim_objs</b> as a list of OBJECTs.
- *  
- *  All font objects are stored in the hash table #font_loaded when they 
- *  are loaded.
- *
  *  \par The text definitions
  *
  *  The text is stored and printed in several different representations.
@@ -63,8 +57,6 @@
  *  To draw the text in gschem, the string is interpreted and converted
  *  to a list of basic graphical objects. The basic line objects are
  *  collected from the font character objects.
- *  All basic graphical objects are stored in
- *  <b>OBJECT->text->prim_objs</b>.
  */
 
 #include <config.h>
@@ -100,79 +92,8 @@
 /*! Default setting for text draw function. */
 void (*text_draw_func)() = NULL;
 
-/*! Hashtable storing font_character (string) as a key, and pointer to data 
- *  \note
- *  This table stays global, thus all functions can access it.
- */
-GHashTable *font_loaded = NULL;
-
-/*! Hashtable storing mapping between character and font definition file
- *  \note
- *  This table stays global, thus all functions can access it.
- */
-GHashTable *font_char_to_file = NULL;
-
 /*! Size of a tab in characters */
 int tab_in_chars = 8;
-
-/*! Data for built-in question mark character.
- *
- * See builtin_question_mark().
- */
-static int question_mark_data[][4] = {
-  {0, 22, 4, 26},
-  {4, 26, 10, 26},
-  {10, 26, 14, 22},
-  {14, 22, 14, 18},
-  {14, 18, 12, 14},
-  {12, 14, 6, 8},
-  {6, 8, 6, 6},
-  {6, -1, 7, -1},
-  {7, -1, 8, 0},
-  {8, 0, 8, 1},
-  {8, 1, 7, 2},
-  {7, 2, 6, 2},
-  {6, 2, 5, 1},
-  {5, 1, 5, 0},
-  {5, 0, 6, -1},
-  {-128, -128, -128, -128} /* Daft choice of sentinel */
-  };
-
-/*! \brief Get the built-in question mark font character.
- * \par Function Description
- * If the font can't be found (e.g. because it isn't installed
- * correctly), this function generates a question mark character. This
- * is based on the "quest.sym" font character.
- */
-static OBJECT *
-builtin_question_mark (TOPLEVEL *toplevel) {
-  OBJECT *q;
-  int i;
-
-  q = g_new0 (OBJECT, 1);
-  q->font_prim_objs = NULL;
-  q->font_text_size = 20;
-  q->name = g_strdup_printf ("?");
-  q->font_prim_objs = NULL;
-
-  for (i = 0; ; i++) {
-    if (question_mark_data[i][0] == -128) break;
-
-    OBJECT *l = o_line_new (toplevel, OBJ_LINE,
-                            DEFAULT_COLOR,
-                            question_mark_data[i][0],
-                            question_mark_data[i][1],
-                            question_mark_data[i][2],
-                            question_mark_data[i][3]);
-    o_set_line_options (toplevel, l, 0, 0, 0, -1, -1);
-    o_set_fill_options (toplevel, l,
-                        FILLING_HOLLOW,
-                        -1, -1, -1, -1, -1);
-    q->font_prim_objs = g_list_prepend (q->font_prim_objs, l);
-  }
-
-  return q;
-}
 
 /*! \brief update the visible part of a string
  *  \par Function Description
@@ -239,15 +160,14 @@ static void update_disp_string (OBJECT *object)
 int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left,
                           int *top, int *right, int *bottom)
 {
-  if (toplevel->rendered_text_bounds_func == NULL) {
-    return world_get_object_glist_bounds (toplevel, o_current->text->prim_objs,
-                                          left, top, right, bottom);
-  } else {
+  if (toplevel->rendered_text_bounds_func != NULL) {
     return
       toplevel->rendered_text_bounds_func (toplevel->rendered_text_bounds_data,
                                            o_current,
                                            left, top, right, bottom);
   }
+
+  return FALSE;
 }
 
 /*! \brief get the position of a text object
@@ -268,154 +188,6 @@ gboolean o_text_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
   return TRUE;
 }
 
-/*! \brief initialize the hash tables for the fonts
- *  \par Function Description
- *  This function initializes the two global hash tables <b>font_loaded</b> 
- *  and <b>font_char_to_file</b> that are used to store the fonts characters.
- */
-void o_text_init(void)
-{
-  if (font_loaded == NULL) {
-    font_loaded = g_hash_table_new_full (g_direct_hash,
-                                         g_direct_equal,
-                                         NULL,
-                                         g_free);
-  } else {
-    fprintf (stderr, "o_text_init: Tried to initialize an already initialized font_loaded hash table!!\n");
-  }
-  if (font_char_to_file == NULL) {
-    font_char_to_file = g_hash_table_new_full (g_direct_hash,
-                                               g_direct_equal,
-                                               NULL,
-                                               g_free);
-  }
-  else {
-    fprintf (stderr, "o_text_init: Tried to initialize an already initialized font_char_to_file hash table!!\n");
-  }
-  
-  return;
-
-}
-
-/*! \brief print informations about some characters
- *  \note
- *  This is a debugging function. Do not use it in regular code.
- */
-void o_text_print_set(void)
-{
-  OBJECT *o_current, *o_font_set;
-  GList *iter;
-  char i;
-	
-  for (i = 'A' ; i < 'Z'+1; i++) {
-    o_font_set = g_hash_table_lookup (font_loaded,
-                                      GUINT_TO_POINTER ((gunichar)i));
-    if (o_font_set != NULL) {
-      printf("%c: LOADED\n", i);	
-      for (iter=o_font_set->font_prim_objs; iter != NULL;
-           iter = g_list_next (iter))
-      {
-        o_current = (OBJECT *)iter->data;
-        printf("  %s\n", o_current->name);	
-      }
-    } else {
-      printf("%c: unloaded\n", i);	
-    }
-  }
-}
-
-/*! \brief load a font character into an object
- *  \par Function Description
- *  This function loads a character form a font symbol file.
- *
- *  \param [in] toplevel    The TOPLEVEL object
- *  \param [in] needed_char unicode character to load
- *  return a character OBJECT
- */
-GList *o_text_load_font (TOPLEVEL *toplevel, gunichar needed_char)
-{
-  gchar *temp_string = NULL;
-  OBJECT *o_font_set;
-  int found = TRUE;
-  gchar *aux_str2;
-  GError *err = NULL;
-
-  /* retrieve the name of the file where the char is defined */
-  aux_str2 = g_hash_table_lookup (font_char_to_file,
-                                  GUINT_TO_POINTER (needed_char));
-  if (aux_str2 == NULL) {
-      /* this is needed since WinNT file systems are 
-       * case insensitive, and cannot tell the difference 
-       * between A.sym and a.sym.  So we create a_.sym -  
-       * z_.sym, this loads up the chars 
-       */
-      if (needed_char >= 'a' && needed_char <= 'z') {
-        temp_string = g_strdup_printf("%s%c%c_.sym", 
-                toplevel->font_directory, G_DIR_SEPARATOR,
-                needed_char);
-      } else {
-        temp_string = g_strdup_printf("%s%c%c.sym", 
-                toplevel->font_directory, G_DIR_SEPARATOR,
-                needed_char);
-      }
-  } else {
-    temp_string = g_strdup_printf("%s", aux_str2);
-  }
-  aux_str2 = NULL;
-
-  if ( access(temp_string, R_OK) != 0 ) {
-    gchar outbuf[7];
-    gint l;
-
-    /* convert needed_char to a utf-8 string */
-    l = g_unichar_to_utf8 (needed_char, outbuf);
-    outbuf[l] = '\0';
-    s_log_message(_("Could not find character '%s' definition.\n"), outbuf);
-    
-    g_free (temp_string);
-    temp_string = NULL;
-    found = FALSE;
-  }
-
-  /* We need to make sure to create and add a font OBJECT to the
-   * font_loaded hashtable *before* attempting to call o_read().  This
-   * is because o_text_set_info_font() expects to find it. */
-  o_font_set = (OBJECT*)g_new (OBJECT, 1);
-  o_font_set->font_prim_objs = NULL;
-  o_font_set->font_text_size = 100;
-
-  /* Add it to the list and hash table. Some functions will need it */
-  g_hash_table_insert (font_loaded,
-                       GUINT_TO_POINTER (needed_char), o_font_set);
-
-  if (found) {
-    o_font_set->font_prim_objs = o_read(toplevel, o_font_set->font_prim_objs,
-                                        temp_string, &err);
-    if (err != NULL) {
-      g_warning ("o_text_basic.c: Failed to read font file: %s\n",
-                 err->message);
-      g_error_free (err);
-      found = FALSE;
-    }
-  }
-
-  if (!found) {
-    /* Get a question mark instead. */
-    OBJECT *q = builtin_question_mark (toplevel);
-    /* Replace the current o_font_set object in the hashtable.
-     * Because its font_prim_objs GList will be empty (== NULL), we
-     * can just rely on the hashtables free func to clean it up for
-     * us.  This is horrible, but effective. */
-    g_hash_table_insert (font_loaded, GUINT_TO_POINTER (needed_char), q);
-    o_font_set = q;
-  }
-
-  o_font_set->name = g_strdup_printf ("%c", needed_char);
-
-  g_free(temp_string);
-
-  return(o_font_set->font_prim_objs);
-}
 
 /*! \brief count the lines of a text string
  *  \par Function Description
@@ -449,566 +221,10 @@ int o_text_num_lines(const char *string)
   return (line_count);
 }
 
-/*! \brief calculates the height of a text string
- *  \par Function Description
- *  This function calculates the height of a \a string depending
- *  on it's text \a size. The number of lines and the spacing
- *  between the lines are taken into account.
- * 
- *  \param [in] string  the text string
- *  \param [in] size    the text size of the character
- *  \return the total height of the text string
- */
-int o_text_height(const char *string, int size) 
-{
-  int line_count = 0;
-
-  if (string == NULL) {
-    return 0;
-  }
-
-  /* Get the number of lines in the string */
-  line_count = o_text_num_lines(string);
-  
-  /* 26 is the height of a single char (in mils) */
-  /* which represents a character which is 2 pts high */
-  /* So size has to be divided in half */
-  /* and it's added the LINE_SPACING*character_height of each line */
-  return(26*size/2*(1+LINE_SPACING*(line_count-1)));
-}
-
-/*! \brief calculate the width of a text
- *  \par Function Description
- *  This function caluculates the width of a text \a string
- *  depending on the text \a size and the width of the individual
- *  characters that are in the text string.
- *  
- *  \param [in] toplevel  The TOPLEVEL object
- *  \param [in] string    The text string
- *  \param [in] size      The text size
- *  \return  the total width of the text.
- */
-int o_text_width(TOPLEVEL *toplevel, char *string, int size)
-{
-  int width=0, max_width=0;
-  int size_of_tab_in_coord;
-  OBJECT *o_font_set;
-  gchar *ptr;
-  gunichar previous_char;
-  gunichar c = 0;
-  if (string == NULL) {
-    return 0;
-  }
-  
-  /* Make sure TAB_CHAR_MODEL is loaded before trying to use its text */
-  /* size */
-  o_font_set = g_hash_table_lookup (
-    font_loaded, GUINT_TO_POINTER ((gunichar)TAB_CHAR_MODEL[0]));
-  if (o_font_set == NULL) {
-    o_text_load_font(toplevel, (gunichar) TAB_CHAR_MODEL[0]);
-    o_font_set = (OBJECT *) g_hash_table_lookup (
-      font_loaded, GUINT_TO_POINTER ((gunichar)TAB_CHAR_MODEL[0]));
-  }
- 
-  /* Get the maximum tab width's in coordinates */
-  size_of_tab_in_coord = tab_in_chars * size * o_font_set->font_text_size;
-
-  for (ptr = string;
-       ptr != NULL && *ptr != 0;
-       ptr = g_utf8_find_next_char (ptr, NULL))
-  {
-    previous_char = c;
-    c = g_utf8_get_char_validated (ptr, -1);
-
-    if ( (c == (gunichar) '\\') &&
-	 (previous_char != (gunichar) '\\') ) {
-      continue;
-    }
-    if ( (c == (gunichar) '_') &&
-	 (previous_char == (gunichar) '\\') ) {
-      continue;
-    }
-    switch (c) {
-        case ((gunichar)'\n'):
-          width = 0;
-          break;
-        case ((gunichar)'\t'):
-          width += (size_of_tab_in_coord - (width % size_of_tab_in_coord));
-          break;
-        default:
-          /* find current_char */
-          o_font_set = g_hash_table_lookup (font_loaded,
-                                            GUINT_TO_POINTER (c));
-          if (o_font_set == NULL) {
-            o_text_load_font (toplevel, (gunichar)c);
-            /* let do a new search for character c */
-            o_font_set = g_hash_table_lookup (font_loaded,
-                                              GUINT_TO_POINTER (c));
-          }
-
-          if (o_font_set != NULL) {
-            width = width + size*o_font_set->font_text_size;
-          }
-
-          if (width > max_width) {
-            max_width = width;
-          }
-    }
-  }
-
-  /* the size is a fudge factor */
-  /* Changed the return value according to a suggestion of Ales. */
-  /* Yes, the -size*10 fudge factor should be removed. */
-  /* return(max_width - size*10); */
-  return max_width;
-}
-
-/*! \brief create a complex text object from a string
- *  \par Function Description
- *  This function converts the \a string into a list of basic objects.
- *  All basic objects are appendend to the \a object_list.
- *  The basic objects are collected from the basic font definition 
- *  of each character of they are created as lines for the overbar feature.
- *
- *  \param [in] toplevel    The TOPLEVEL object
- *  \param [in] object_list The list to append the basic objects
- *  \param [in] string      The string to create the object list from
- *  \param [in] size        The size of the text object
- *  \param [in] color       The color of the text object
- *  \param [in] x           The x coord of the text object
- *  \param [in] y           The y coord of the text object
- *  \param [in] alignment   The alignment of the text object
- *  \param [in] angle       The angle of the text object (in 90 degree steps)
- *  
- *  \return the object list of the primary text objects
- */
-GList *o_text_create_string (TOPLEVEL *toplevel, char *string, int size,
-                             int color, int x, int y, int alignment, int angle)
-{
-  GList *new_obj_list = NULL;
-  GList *start_of_char;
-  OBJECT *new_obj;
-  int x_offset;
-  int y_offset;
-  int text_width;
-  int text_height;
-  int char_height;
-  int line_start_x, line_start_y;
-  int sign=1;
-  int overbar_startx=0, overbar_starty=0;
-  int overbar_endx=0, overbar_endy=0;
-  int overbar_height_offset = 0;
-  gchar *ptr;
-  OBJECT *o_font_set;
-  gunichar current_char;
-  gboolean escape = FALSE, overbar_started = FALSE;
-  gboolean finish_overbar, start_overbar, leave_parser = FALSE;
-  gboolean draw_character, draw_tabulator, draw_newline;
-
-  /* error condition hack */
-  if (string == NULL) {
-    return(NULL);
-  }
-
-  /* now read in the chars */
-  text_height = o_text_height(string, size); 
-  char_height = o_text_height("a", size);
-  text_width = o_text_width(toplevel, string, size/2);
-
-  switch(angle) {
-    case(0):
-      sign = -1;
-      break;
-    case(90):
-      sign = 1;
-      break;
-    case(180):
-      sign = 1;
-      break;
-    case(270):
-      sign = -1;
-      break;
-  }
-
-  if (angle == 0 || angle == 180) {
-    y = y - o_text_height("a", size) + text_height;
-    
-    switch(alignment) {
-
-      case(LOWER_LEFT):
-      x_offset = x;
-      y_offset = y;
-      break;
-
-      case(MIDDLE_LEFT):
-      x_offset = x;
-      y_offset = y + sign*0.5*text_height;
-      break;
-	
-      case(UPPER_LEFT):
-      x_offset = x;
-      y_offset = y + sign*text_height;
-      break;
-	
-      case(LOWER_MIDDLE):
-      x_offset = x + sign*0.5*text_width;
-      y_offset = y;
-      break;
-	
-      case(MIDDLE_MIDDLE):
-      x_offset = x + sign*0.5*text_width;
-      y_offset = y + sign*0.5*text_height;
-      break;
-	
-      case(UPPER_MIDDLE):
-      x_offset = x + sign*0.5*text_width;
-      y_offset = y + sign*text_height;
-	
-      break;
-	
-      case(LOWER_RIGHT):
-      x_offset = x + sign*text_width;
-      y_offset = y;
-      break;
-	
-      case(MIDDLE_RIGHT):
-      x_offset = x + sign*text_width;
-      y_offset = y + sign*0.5*text_height;
-      break;
-	
-      case(UPPER_RIGHT):
-      x_offset = x + sign*text_width;
-      y_offset = y + sign*text_height;
-      break;
-
-      default: 
-      fprintf(stderr, "Got an invalid text alignment [%d]\n",
-              alignment); 
-      fprintf(stderr, "Defaulting to Lower Left");
-      alignment = LOWER_LEFT;
-      x_offset = x;
-      y_offset = y;
-      break;
-    }
-  } else { /* angle is 90 or 270 */
-    x = x + sign*(o_text_height("a", size) - text_height);
-
-    switch(alignment) {
-
-      case(LOWER_LEFT):
-      x_offset = x;
-      y_offset = y;
-      break;
-
-      case(MIDDLE_LEFT):
-      x_offset = x + sign*0.5*text_height;
-      y_offset = y;
-      break;
-
-      case(UPPER_LEFT):
-      x_offset = x + sign*text_height;
-      y_offset = y;
-      break;
-
-      case(LOWER_MIDDLE):
-      x_offset = x;
-      y_offset = y - sign*0.5*text_width;
-      break;
-
-      case(MIDDLE_MIDDLE):
-      x_offset = x + sign*0.5*text_height;
-      y_offset = y - sign*0.5*text_width;
-      break;
-
-      case(UPPER_MIDDLE):
-      x_offset = x + sign*text_height;
-      y_offset = y - sign*0.5*text_width;
-
-      break;
-
-      case(LOWER_RIGHT):
-      x_offset = x;
-      y_offset = y - sign*text_width;
-      break;
-
-      case(MIDDLE_RIGHT):
-      x_offset = x + sign*0.5*text_height;
-      y_offset = y - sign*text_width;
-      break;
-
-      case(UPPER_RIGHT):
-      x_offset = x + sign*text_height;
-      y_offset = y - sign*text_width;
-      break;
-
-      default: 
-      fprintf(stderr, "Got an invalid text alignment [%d]\n",
-              alignment); 
-      fprintf(stderr, "Defaulting to Lower Left");
-      alignment = LOWER_LEFT;
-      x_offset = x;
-      y_offset = y;
-      break;
-    }
-
-  }
-
-  switch(angle) {
-    case(180):
-    x_offset = x_offset - text_width;
-    y_offset = y_offset - text_height;
-    angle = 0;
-    break;
-  }
-
-#if DEBUG
-  printf("width: %d\n", o_text_width(toplevel, string, size/2));
-  printf("1 %d %d\n", x_offset, y_offset);
-#endif
-
-  line_start_x = x_offset;
-  line_start_y = y_offset;
-
-  /* the overbar is 1/4 above the char height. */
-  overbar_height_offset = char_height + char_height/4;
-
-  for (ptr = string;
-       ptr != NULL && !leave_parser;
-       ptr = g_utf8_find_next_char (ptr, NULL)) {
-
-    current_char = g_utf8_get_char_validated (ptr, -1);
-
-    /* reset all actions */
-    finish_overbar = FALSE;
-    start_overbar = FALSE;
-    leave_parser = FALSE;
-    draw_character = FALSE;
-    draw_tabulator = FALSE;
-    draw_newline = FALSE;
-
-    /* state machine to interpret the string:
-     * there are two independant state variables overbar_started and escape.
-     * The actions are set according to the current character and
-     * the two state variables.
-     */
-    switch (current_char) {
-    case '\0':
-      /* end of the string */
-      if (overbar_started)
-        finish_overbar = TRUE;
-      leave_parser = TRUE;
-      break;
-    case '\\':
-      if (escape == TRUE) {
-        draw_character = TRUE;
-        escape = FALSE;
-      } else {
-        escape = TRUE;
-      }
-      break;
-    case '_':
-      if (escape == TRUE) {
-        escape = FALSE;
-        if (overbar_started == TRUE) {
-          finish_overbar = TRUE;
-          overbar_started = FALSE;
-        } else {
-          start_overbar = TRUE;
-          overbar_started = TRUE;
-        }
-      } else {
-        draw_character = TRUE;
-      }
-      break;
-    case '\n':
-      draw_newline = TRUE;
-      if (overbar_started == TRUE) {
-        finish_overbar = TRUE;
-        start_overbar = TRUE;
-      }
-      escape = FALSE;
-      break;
-    case '\t':
-      draw_tabulator = TRUE;
-      escape = FALSE;
-      break;
-    default:
-      draw_character = TRUE;
-      escape = FALSE;
-    }
-
-    /* execute all actions set by the state machine
-     * Note: It's important that the three actions
-     * finish_overbar, draw_newline, start_overbar are executed
-     * in exacly that order. It's required to continue overbars
-     * over newlines.
-     */
-    if (draw_character) {
-      /* get the character from the hash table */
-      o_font_set = g_hash_table_lookup (font_loaded,
-                                        GUINT_TO_POINTER (current_char));
-      if (o_font_set == NULL) {
-        o_text_load_font(toplevel, (gunichar) current_char);
-        o_font_set = g_hash_table_lookup (font_loaded,
-                                          GUINT_TO_POINTER (current_char));
-      }
-
-      /* Only add the character if there are primary object.
-         e.g. the space character doesn't have those */
-      if (o_font_set->font_prim_objs != NULL) {
-        start_of_char = o_glist_copy_all (toplevel,
-                                          o_font_set->font_prim_objs,
-                                          NULL, NORMAL_FLAG);
-
-        o_glist_set_color (toplevel, start_of_char, color);
-        o_scale(toplevel, start_of_char, size/2, size/2);
-
-        /* Rotate and translate the character to its world position */
-        o_glist_rotate_world (toplevel, 0, 0, angle, start_of_char);
-        o_glist_translate_world (toplevel, x_offset, y_offset, start_of_char);
-
-        /* Add the character to the list of prim_objs*/
-        new_obj_list = g_list_concat (new_obj_list, start_of_char);
-      }
-
-      /* Calcule the position of the next character */
-      switch(angle) {
-      case(0):
-        x_offset = (x_offset) + size/2*o_font_set->font_text_size;
-        break;
-      case(90):
-        y_offset = (y_offset) + size/2*o_font_set->font_text_size;
-        break;
-      case(180):
-        x_offset = (x_offset) - size/2*o_font_set->font_text_size;
-        break;
-      case(270):
-        y_offset = (y_offset) - size/2*o_font_set->font_text_size;
-        break;
-      }
-    }
-
-    if (draw_tabulator) {
-      gint size_of_tab_in_coord;
-      gint rel_char_coord;
-      /* Get the maximum tab width's in coordinates */
-      size_of_tab_in_coord = (tab_in_chars *
-                              o_text_width(toplevel, TAB_CHAR_MODEL, size/2));
-
-      switch (angle) {
-      case 0:
-      case 180:
-        rel_char_coord = x_offset - line_start_x;
-        x_offset += (size_of_tab_in_coord -
-                     (rel_char_coord % size_of_tab_in_coord));
-        break;
-      case 90:
-        rel_char_coord = y_offset - line_start_y;
-        y_offset += (size_of_tab_in_coord -
-                     (rel_char_coord % size_of_tab_in_coord));
-        break;
-      case 270:
-        rel_char_coord = line_start_y - y_offset;
-        y_offset -= (size_of_tab_in_coord -
-                     (rel_char_coord % size_of_tab_in_coord));
-        break;
-      default:
-        fprintf(stderr, "o_text_create_string: Angle not supported\n");
-        break;
-      }
-    }
-
-    if (finish_overbar) {
-      switch (angle) {
-      case 0:
-        overbar_endx = x_offset;
-        overbar_endy = y_offset + overbar_height_offset;
-        break;
-      case 90:
-        overbar_endx = x_offset - overbar_height_offset;
-        overbar_endy = y_offset;
-        break;
-      case 180:
-        overbar_endx = x_offset;
-        overbar_endy = y_offset - overbar_height_offset;
-        break;
-      case 270:
-        overbar_endx = x_offset + overbar_height_offset;
-        overbar_endy = y_offset;
-        break;
-      default:
-        fprintf(stderr, "o_text_create_string: Angle not supported\n");
-        break;
-      }
-      /* Now add the overbar (if it is not a zero length overbar) */
-      if ((overbar_startx != overbar_endx)
-          || (overbar_starty != overbar_endy)) {
-        new_obj = o_line_new (toplevel, OBJ_LINE, color,
-                              overbar_startx, overbar_starty,
-                              overbar_endx, overbar_endy);
-        new_obj_list = g_list_append (new_obj_list, new_obj);
-      }
-    }
-
-    if (draw_newline) {
-      switch (angle) {
-      case 0:
-        x_offset = line_start_x;
-        y_offset = line_start_y - char_height * LINE_SPACING;
-        break;
-      case 90:
-        x_offset = line_start_x + char_height * LINE_SPACING;
-        y_offset = line_start_y;
-        break;
-      case 180:
-        x_offset = line_start_x;
-        y_offset = line_start_y + char_height * LINE_SPACING;
-        break;
-      case 270:
-        x_offset = line_start_x - char_height * LINE_SPACING;
-        y_offset = line_start_y;
-        break;
-      default:
-        fprintf(stderr, "o_text_create_string: Angle not supported\n");
-        break;
-      }
-      line_start_x = x_offset;
-      line_start_y = y_offset;
-    }
-
-    if (start_overbar) {
-      switch (angle) {
-      case 0:
-        overbar_startx = x_offset;
-        overbar_starty = y_offset + overbar_height_offset;
-        break;
-      case 90:
-        overbar_startx = x_offset - overbar_height_offset;
-        overbar_starty = y_offset;
-        break;
-      case 180:
-        overbar_startx = x_offset;
-        overbar_starty = y_offset - overbar_height_offset;
-        break;
-      case 270:
-        overbar_startx = x_offset + overbar_height_offset;
-        overbar_starty = y_offset;
-        break;
-      default:
-        fprintf(stderr, "o_text_create_string: Angle not supported\n");
-        break;
-      }
-    }
-  }
-
-  return new_obj_list;
-}
 
 /*! \brief Creates a text OBJECT and the graphical objects representing it
  *  \par Function Description
  *  Create an OBJECT of type OBJ_TEXT.
- *  Also add the OBJECTs forming the graphical representation of the visible
- *  string, to the text OBJECT's prim_objs list.
  *
  *  \param [in]  toplevel              The TOPLEVEL object.
  *  \param [in]  type                   OBJ_TEXT (TODO: why bother)
@@ -1035,7 +251,6 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
   TEXT *text;
   char *name = NULL;
   char *value = NULL;
-  GList *iter;
 
   if (string == NULL) {
     return(NULL);
@@ -1064,28 +279,6 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
   new_node->show_name_value = show_name_value;
 
   update_disp_string (new_node);
-
-  /* now start working on the complex */
-
-  if (visibility == VISIBLE ||
-      (visibility == INVISIBLE && toplevel->show_hidden_text)) {
-    new_node->text->prim_objs =
-      o_text_create_string (toplevel,
-                           text->disp_string, size, color,
-                           x, y, alignment, angle);
-    /* set the parent field */
-    for (iter = new_node->text->prim_objs;
-         iter != NULL; iter = g_list_next (iter))
-      ((OBJECT *)iter->data)->parent = new_node;
-
-    new_node->text->displayed_width = o_text_width(toplevel,
-                                                   text->disp_string, size/2);
-    new_node->text->displayed_height = o_text_height(text->disp_string, size);
-  } else {
-    new_node->text->prim_objs = NULL;
-    new_node->text->displayed_width = 0;
-    new_node->text->displayed_height = 0;
-  }
 
   /* Update bounding box */
   new_node->w_bounds_valid = FALSE;
@@ -1267,82 +460,6 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
   return new_obj;
 }
 
-/*! \brief read and set infos of a font object
- *  \par Function Description
- *  This function reads the font definition buffer \a buf and sets 
- *  the width of a character. This function also deals with the special,
- *  invisible character space and newline.
- *  
- *  \param [in] buf  the font definition according to the geda file format
- *  \todo  Investigate why the TAB character is not defined here.
- */
-void o_text_set_info_font(char buf[])
-{
-  char type; 
-  int width;
-  gunichar character=0;
-  gchar *buf_ptr;
-  int special=0;
-  char *string; 
-  OBJECT *o_font_set;
-
-  string = remove_nl (buf);	
-
-  /* parse the font info: */
-  buf_ptr = (gchar*)string;
-  /*   - type */
-  type = *buf_ptr++;
-  if (type != INFO_FONT) {
-    g_critical ("o_text_set_info_font: Bad font type '%c', expected '%c'\n",
-                type, INFO_FONT);
-    return;
-  }
-
-  while (buf_ptr != NULL && *buf_ptr == ' ') buf_ptr++;
-  /*   - character */
-  if (buf_ptr != NULL && *buf_ptr != '\0') {
-    character = g_utf8_get_char_validated (buf_ptr, -1);
-    if (character == (gunichar)-1) {
-      s_log_message (_("Failed to validate utf-8 character in font definition: \"%s\".\n"),
-                     string);
-      return;
-    }
-    /* move buf_ptr just after character */
-    buf_ptr = g_utf8_find_next_char (buf_ptr, NULL);
-  }
-  while (buf_ptr != NULL && *buf_ptr == ' ') buf_ptr++;
-  /*   - width and special */
-  if (buf_ptr != NULL) {
-    sscanf (buf_ptr, "%d %d\n", &width, &special);
-  }
-
-  /* deal with special characters */
-  if (special == 1) {
-    switch (character) {
-      case ((gunichar)'_'):
-      /* space */
-      character = (gunichar)' ';
-      break;
-      case ((gunichar)'n'):
-      /* newline */
-      character = (gunichar)'\n';
-      break;
-    }
-  }
-
-  o_font_set = g_hash_table_lookup (font_loaded,
-                                    GUINT_TO_POINTER ((gunichar)character));
-  if (o_font_set != NULL) {
-    o_font_set->font_text_size = width;
-  } else {
-    gchar outbuf[7];
-    gint l = g_unichar_to_utf8 (character, outbuf);
-    outbuf[l] = '\0';
-    fprintf(stderr,
-            "o_text_set_info_font: character %s not found!!!\n", outbuf);
-  }
-  
-}
 
 /*! \brief Create a string representation of the text object
  *  \par Function Description
@@ -1389,42 +506,8 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   char *name = NULL;
   char *value = NULL;
-  TEXT *text = o_current->text;
-  GList *iter;
 
   update_disp_string (o_current);
-
-  s_delete_object_glist (toplevel, text->prim_objs);
-  text->prim_objs = NULL;
-
-  if (o_current->visibility == VISIBLE ||
-      (o_current->visibility == INVISIBLE && toplevel->show_hidden_text)) {
-
-    text->prim_objs = o_text_create_string (toplevel,
-                                            text->disp_string,
-                                            text->size,
-                                            o_current->color,
-                                            text->x,
-                                            text->y,
-                                            text->alignment,
-                                            text->angle);
-    /* set the parent field */
-    for (iter = text->prim_objs;
-         iter != NULL; iter = g_list_next (iter))
-      ((OBJECT *)iter->data)->parent = o_current;
-
-    text->displayed_width = o_text_width (toplevel,
-                                          text->disp_string,
-                                          text->size/2);
-    text->displayed_height = o_text_height (text->disp_string,
-                                            text->size);
-  } else {
-    /* make sure list is truely free */
-    s_delete_object_glist (toplevel, text->prim_objs);
-    text->prim_objs = NULL;
-    text->displayed_width = 0;
-    text->displayed_height = 0;
-  }
 
   o_current->w_bounds_valid = FALSE;
 
@@ -1446,8 +529,6 @@ void o_text_translate_world(TOPLEVEL *toplevel,
 {
   o_current->text->x = o_current->text->x + dx;
   o_current->text->y = o_current->text->y + dy;
-
-  o_glist_translate_world (toplevel, dx, dy, o_current->text->prim_objs);
 
   /* Update bounding box */
   o_current->w_bounds_valid = FALSE;
@@ -1477,54 +558,6 @@ OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   return new_obj;
 }
 
-/*! \brief delete a font set
- *  \par Function Description
- *  This is a GHRFunc function that deletes a single font set.
- *
- *  \param [in] key        The hash key (the font charater)
- *  \param [in] value      The value of the hash table (the font object)
- *  \param [in] user_data  Data supplied by the user (the TOPLEVEL object)
- */
-static gboolean delete_font_set (gpointer key, gpointer value,
-				 gpointer user_data)
-{
-  OBJECT *tmp = (OBJECT*)value;
-  TOPLEVEL *toplevel = (TOPLEVEL*)user_data;
-
-  if (tmp != NULL) {
-    if (tmp->font_prim_objs != NULL) {
-      s_delete_object_glist (toplevel, tmp->font_prim_objs);
-      tmp->font_prim_objs = NULL;
-    }
-    /* do not use s_delete_object () as tmp is not fully initialized */
-    g_free (tmp->name);
-
-    /* Do not free tmp here since it will be freed with the function */
-    /* that was specified when the hash table was created. */
-  }
-
-  return TRUE;
-}
-
-/*! \brief free the font hash tables
- *  \par Function Description
- *  This function destroys the two global font hash tables
- *  <b>font_loaded</b> and <b>font_char_to_file</b>
- */
-void o_text_freeallfonts(TOPLEVEL *toplevel)
-{
-  /* destroy the char-to-objects hastable */
-  g_hash_table_foreach_remove (font_loaded,
-                               delete_font_set,
-                               toplevel);
-  g_hash_table_destroy (font_loaded);
-  font_loaded = NULL;
-
-  /* destroy the font-to-filename hashtable */
-  g_hash_table_destroy (font_char_to_file);
-  font_char_to_file = NULL;
- 
-}
 
 /*! \brief write a text string to a postscript file
  *  \par Function Description
@@ -1585,6 +618,36 @@ void o_text_print_text_string(FILE *fp, char *string, int unicode_count,
 
   fprintf(fp,") ");
 }
+
+
+/*! \brief calculates the height of a text string
+ *  \par Function Description
+ *  This function calculates the height of a \a string depending
+ *  on it's text \a size. The number of lines and the spacing
+ *  between the lines are taken into account.
+ * 
+ *  \param [in] string  the text string
+ *  \param [in] size    the text size of the character
+ *  \return the total height of the text string
+ */
+static int o_text_height(const char *string, int size) 
+{
+  int line_count = 0;
+
+  if (string == NULL) {
+    return 0;
+  }
+
+  /* Get the number of lines in the string */
+  line_count = o_text_num_lines(string);
+  
+  /* 26 is the height of a single char (in mils) */
+  /* which represents a character which is 2 pts high */
+  /* So size has to be divided in half */
+  /* and it's added the LINE_SPACING*character_height of each line */
+  return(26*size/2*(1+LINE_SPACING*(line_count-1)));
+}
+
 
 /*! \brief print a text object into a postscript file
  *  \par Function Description

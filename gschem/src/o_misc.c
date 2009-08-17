@@ -398,9 +398,7 @@ void o_edit_show_hidden_lowlevel (GSCHEM_TOPLEVEL *w_current,
 
       if (toplevel->show_hidden_text) {
         /* draw the text object if it hidden  */
-        if (o_current->text->prim_objs == NULL) {
-          o_text_recreate(toplevel, o_current);
-        }
+        o_text_recreate(toplevel, o_current);
         o_recalc_single_object(toplevel, o_current);
         o_invalidate (w_current, o_current);
       } else {
@@ -467,10 +465,7 @@ void o_edit_make_visible (GSCHEM_TOPLEVEL *w_current, const GList *o_list)
     if (o_current->type == OBJ_TEXT) {
       if (o_current->visibility == INVISIBLE) {
         o_current->visibility = VISIBLE;
-
-        if (o_current->text->prim_objs == NULL) {
-          o_text_recreate(toplevel, o_current);
-        }
+        o_text_recreate(toplevel, o_current);
 
         o_invalidate (w_current, o_current);
 
@@ -506,6 +501,7 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
   int page_control = 0;
   int pcount = 0;
   int rv;
+  int x1, y1, x2, y2;
   int text_screen_height;
   const GList *iter;
 
@@ -560,15 +556,14 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
       if (strstr (str,stext)) {
         if (!skiplast) {
           a_zoom(w_current, ZOOM_FULL, DONTCARE, A_PAN_DONT_REDRAW);
-          text_screen_height =
-            SCREENabs (w_current, o_text_height (str, o_current->text->size));
+          world_get_single_object_bounds (toplevel, o_current, &x1, &y1, &x2, &y2);
+          text_screen_height = SCREENabs (w_current, y2 - y1);
           /* this code will zoom/pan till the text screen height is about */
           /* 50 pixels high, perhaps a future enhancement will be to make */
           /* this number configurable */
           while (text_screen_height < 50) {
             a_zoom(w_current, ZOOM_IN, DONTCARE, A_PAN_DONT_REDRAW);
-            text_screen_height =
-              SCREENabs (w_current, o_text_height (str, o_current->text->size));
+            text_screen_height = SCREENabs (w_current, y2 - y1);
           }
           a_pan_general(w_current,
                         o_current->text->x, o_current->text->y,
@@ -619,10 +614,8 @@ void o_edit_hide_specific_text (GSCHEM_TOPLEVEL *w_current,
       if (!strncmp (stext, str, strlen (stext))) {
         if (o_current->visibility == VISIBLE) {
           o_current->visibility = INVISIBLE;
+          o_text_recreate(toplevel, o_current);
 
-          if (o_current->text->prim_objs == NULL) {
-            o_text_recreate(toplevel, o_current);
-          }
           toplevel->page_current->CHANGED = 1;
         }
       }
@@ -655,10 +648,8 @@ void o_edit_show_specific_text (GSCHEM_TOPLEVEL *w_current,
       if (!strncmp (stext, str, strlen (stext))) {
         if (o_current->visibility == INVISIBLE) {
           o_current->visibility = VISIBLE;
+          o_text_recreate(toplevel, o_current);
 
-          if (o_current->text->prim_objs == NULL) {
-            o_text_recreate(toplevel, o_current);
-          }
           o_invalidate (w_current, o_current);
           toplevel->page_current->CHANGED = 1;
         }

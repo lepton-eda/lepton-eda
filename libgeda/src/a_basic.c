@@ -473,7 +473,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         break;
 
       case(INFO_FONT):
-        o_text_set_info_font(line);
+        /* NOP */
         break;
 
       case(COMMENT):

@@ -579,9 +579,6 @@ void o_set_color (TOPLEVEL *toplevel, OBJECT *object, int color)
 
   object->color = color;
 
-  if (object->type == OBJ_TEXT)
-    o_glist_set_color (toplevel, object->text->prim_objs, color);
-
   if (object->type == OBJ_COMPLEX ||
       object->type == OBJ_PLACEHOLDER)
     o_glist_set_color (toplevel, object->complex->prim_objs, color);

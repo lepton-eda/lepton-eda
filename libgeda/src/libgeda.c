@@ -59,8 +59,6 @@ void libgeda_init(void)
   s_attrib_init();
   s_color_init();
 
-  o_text_init(); 
-
   g_register_libgeda_funcs();
   g_register_libgeda_vars();
 

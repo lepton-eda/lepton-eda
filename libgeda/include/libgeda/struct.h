@@ -189,11 +189,7 @@ struct st_text {
   int length;
   int size;
   int alignment;	
-  int displayed_width;
-  int displayed_height;
   int angle;
-
-  GList *prim_objs;
 };
 
 struct st_complex {

@@ -45,13 +45,9 @@ symbol_dirs = \
 	tube \
 	verilog \
 	vhdl \
-	xilinx \
-	font
+	xilinx
 
 SUBDIRS = documentation
-
-scmdatadir = $(GEDADATADIR)/scheme
-dist_scmdata_DATA = geda-font.scm
 
 gafrcddir = $(GEDADATADIR)/gafrc.d
 dist_gafrcd_DATA = geda-clib.scm
@@ -61,7 +57,6 @@ nobase_dist_datasym_DATA = \
 	vhdl/verilog2vhdl.sh vhdl/script.sed
 
 EXTRA_DIST = ChangeLog ChangeLog-1.0 \
-	font/README font/ChangeLog-1.0 \
 	radio/README AUTHORS
 
 if HAVE_GIT_REPO

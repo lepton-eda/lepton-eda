@@ -627,8 +627,6 @@ void x_window_close(GSCHEM_TOPLEVEL *w_current)
 
   /* stuff that has to be done before we free w_current */
   if (last_window) {
-    /* free all fonts */
-    o_text_freeallfonts (toplevel);
     /* close the log file */
     s_log_close ();
     /* free the buffers */
