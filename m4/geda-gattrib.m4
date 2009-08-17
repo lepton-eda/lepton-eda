@@ -1,7 +1,7 @@
 # geda-gattrib.m4                                        -*-Autoconf-*-
 # serial 1.0
 
-dnl Optionally disable assertions
+dnl Check for dependencies for gattrib and optionally disable it.
 dnl Copyright (C) 2009  Dan McMahill <dan@mcmahill.net>
 dnl
 dnl This program is free software; you can redistribute it and/or modify

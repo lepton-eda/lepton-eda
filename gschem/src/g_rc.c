@@ -424,29 +424,23 @@ SCM g_rc_text_size(SCM size)
   return SCM_BOOL_T;
 }
 
-/*! \brief Sets the output font scaling factor 
+/*! \brief Catch deprecated option to set the output font scaling factor
  *
- *  \par Use this setting to change the scale of the output PS font
- *  characters. This allows to fine tune the font size so that it
- *  matches more closely with the screen.
+ *  \par This setting used to change the scale of the output PS font
+ *  characters. Since gEDA 1.6.0, this is fixed to match the on-screen
+ *  font size.
  *
  *  \return SCM_BOOL_T always.
  */
 
 SCM g_rc_postscript_font_scale(SCM scale)
 {
-  float val;
-
-  SCM_ASSERT (SCM_REALP (scale), scale, SCM_ARG1, "postscript-font-scale");
-
-  val =(float)(SCM_REAL_VALUE (scale));
-  if (val == 0) {
-    fprintf(stderr, _("Invalid size [%f] passed to postscript-font-scale\n"),
-            val);
-    val = 1.0; /* absolute default */
-  }
-
-  default_postscript_font_scale = val;
+  g_warning (_("\n"
+               "The config option postscript-font-scale is "
+               "deprecated and will be removed in gEDA 1.8.0.\n"
+               "Printed text is fixed to match on-screen sizes. "
+               "Please remove this option from your config files.\n"
+               "\n"));
 
   return SCM_BOOL_T;
 }
@@ -610,23 +604,6 @@ SCM g_rc_paper_sizes(SCM scm_papername, SCM scm_width, SCM scm_height)
   return ret;
 }
 #undef FUNC_NAME
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_output_text(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {VECTOR_FONTS , "vector" },
-    {PS_FONTS     , "ps"     },
-  };
-
-  RETURN_G_RC_MODE("output-text",
-		   default_text_output,
-		   2);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -1362,25 +1339,6 @@ SCM g_rc_mesh_grid_display_threshold (SCM spacing)
   }
 
   default_mesh_grid_display_threshold = val;
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_output_vector_threshold(SCM numlines)
-{
-  int val;
-
-  SCM_ASSERT (scm_is_integer (numlines), numlines,
-              SCM_ARG1, "output-vector-threshold");
-  
-  val = scm_to_int (numlines);
-
-  default_print_vector_threshold = val;
 
   return SCM_BOOL_T;
 }

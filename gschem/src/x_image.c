@@ -652,6 +652,7 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
   new_w_current.window = gdk_pixmap_new (w_current->window, size_x, size_y, -1);
   new_w_current.drawable = new_w_current.window;
   new_w_current.cr = gdk_cairo_create (new_w_current.window);
+  new_w_current.pl = pango_cairo_create_layout (new_w_current.cr);
 
   new_w_current.grid = 0;
   new_w_current.text_origin_marker = FALSE;
@@ -732,6 +733,7 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
   }
 
   if (new_w_current.cr != NULL) cairo_destroy (new_w_current.cr);
+  if (new_w_current.pl != NULL) g_object_unref (new_w_current.pl);
   if (new_w_current.window != NULL) {
     g_object_unref(new_w_current.window);
   }

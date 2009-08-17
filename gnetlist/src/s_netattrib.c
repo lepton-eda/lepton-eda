@@ -279,7 +279,7 @@ char *s_netattrib_net_search (OBJECT * o_current, char *wanted_pin)
 
     start_of_pinlist = char_ptr + 1;
     current_pin = strtok (start_of_pinlist, DELIMITERS);
-    while (current_pin && !return_value) {
+    while (current_pin) {
       if (strcmp (current_pin, wanted_pin) == 0) {
         g_free (return_value);
         return net_name;

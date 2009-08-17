@@ -271,6 +271,8 @@ void o_text_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_center
 void o_text_set_string(TOPLEVEL *toplevel, OBJECT *obj, const gchar *new_string);
 const gchar *o_text_get_string(TOPLEVEL *toplevel, OBJECT *obj);
 void o_text_set_rendered_bounds_func (TOPLEVEL *toplevel, RenderedBoundsFunc func, void *user_data);
+double o_text_get_font_size_in_points(TOPLEVEL *toplevel, OBJECT *object);
+
 /* s_attrib.c */
 int s_attrib_add_entry(char *new_attrib);
 void s_attrib_print(void);

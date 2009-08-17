@@ -159,8 +159,7 @@ struct st_box {
 #define BOX_LOWER_LEFT 3
 
 struct st_picture {
-  GdkPixbuf *original_picture;
-  GdkPixbuf *displayed_picture;
+  GdkPixbuf *pixbuf;
   gchar *file_content;
   gsize file_length;
 
@@ -499,9 +498,6 @@ struct st_toplevel {
   /* controls whether objects are clipped */
   int object_clipping; 
 
-  /* controls how text is printed (vector / PS font) */ 
-  int text_output; 
-
   /* either landscape or portrait */
   int print_orientation; 
 
@@ -522,9 +518,6 @@ struct st_toplevel {
 
   /* The name of the prolog file to paste into the Postscript output */
   char *postscript_prolog;
-
-  /* Use this as a scaling factor for the output font */
-  float postscript_font_scale;
 
   /* controls if the net consolidation code is used */ 
   int net_consolidate; 
@@ -552,10 +545,6 @@ struct st_toplevel {
 
   /* controls if the whole bounding box is used in the auto whichend code */
   int force_boundingbox;
-
-  /* controls the threshold (in lines of text) when the multi-line text */
-  /* output font is forced to vector */
-  int print_vector_threshold;
 
   /* List of attributes to always promote */
   GList *always_promote_attributes;

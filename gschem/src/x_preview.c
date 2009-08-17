@@ -123,13 +123,24 @@ preview_callback_expose (GtkWidget *widget,
   GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
   GdkRectangle *rectangles;
   int n_rectangles;
+  cairo_t *save_cr;
+  PangoLayout *save_pl;
 
-  if (preview_w_current->cr != NULL) cairo_destroy (preview_w_current->cr);
+  save_cr = preview_w_current->cr;
+  save_pl = preview_w_current->pl;
+
   preview_w_current->cr = gdk_cairo_create (widget->window);
+  preview_w_current->pl = pango_cairo_create_layout (preview_w_current->cr);
 
   gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
   o_redraw_rects (preview_w_current, rectangles, n_rectangles);
   g_free (rectangles);
+
+  g_object_unref (preview_w_current->pl);
+  cairo_destroy (preview_w_current->cr);
+
+  preview_w_current->cr = save_cr;
+  preview_w_current->pl = save_pl;
 
   return FALSE;
 }
@@ -366,6 +377,9 @@ preview_init (Preview *preview)
     x_fileselect_load_backup;
   preview_w_current->toplevel->load_newer_backup_data =
     preview_w_current;
+  o_text_set_rendered_bounds_func (preview_w_current->toplevel,
+                                   o_text_get_rendered_bounds,
+                                   preview_w_current);
 
   i_vars_set (preview_w_current);
 

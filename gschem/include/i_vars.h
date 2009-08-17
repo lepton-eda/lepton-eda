@@ -24,7 +24,6 @@ extern int default_do_logging;
 extern int default_logging_dest;
 extern int default_embed_complex;
 extern int default_include_complex;
-extern int default_text_output;
 extern int default_snap_size;
 
 extern int default_paper_width;
@@ -76,7 +75,6 @@ extern int default_dots_grid_dot_size;
 extern int default_dots_grid_mode;
 extern int default_dots_grid_fixed_threshold;
 extern int default_mesh_grid_display_threshold;
-extern int default_print_vector_threshold;
 extern int default_add_attribute_offset;
 extern int default_auto_save_interval;
 extern int default_drag_can_move;

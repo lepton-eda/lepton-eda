@@ -12,6 +12,7 @@ noinst_HEADERS = \
 	gschem_action.h \
 	gschem_defines.h \
 	gschem_dialog.h \
+	gschem_pango.h \
 	gschem_struct.h
 
 MOSTLYCLEANFILES = *.log core FILE *~
