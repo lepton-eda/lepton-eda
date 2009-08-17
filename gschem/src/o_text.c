@@ -46,6 +46,58 @@
 #undef DEBUG_TEXT
 
 
+char *unescape_text_and_overbars (char *text, PangoAttrList *attrs)
+{
+  char *p, *sp, *strip_text;
+  char *overbar_start = NULL;
+  int escape = FALSE;
+
+  /* The unescaped text is alwasys shorter than the original
+     string, so just allocate the same ammount of memory. */
+  sp = strip_text = g_malloc (strlen (text) + 1);
+
+  for (p = text; p != NULL; p++) {
+    int finish_overbar = FALSE;
+
+    /* If we find an escape character "\", we note it and continue looping */
+    if (!escape && *p == '\\') {
+      escape = TRUE;
+      continue;
+    }
+
+    if (escape && *p == '_') {
+      /* Overbar start or end sequence */
+      if (overbar_start != NULL) {
+        finish_overbar = TRUE;
+      } else {
+        overbar_start = sp;
+      }
+    } else {
+      /* just append the character, which may have been escaped */
+      *sp++ = *p;
+    }
+    escape = FALSE;
+
+    if (overbar_start != NULL &&
+        (finish_overbar || *p == '\0')) {
+      PangoAttribute *attr;
+
+      attr = gschem_pango_attr_overbar_new (TRUE);
+      attr->start_index = overbar_start - strip_text;
+      attr->end_index = sp - strip_text;
+      pango_attr_list_insert (attrs, attr);
+      overbar_start = NULL;
+    }
+
+    /* end of the string, stop iterating */
+    if (*p == '\0')
+      break;
+  }
+
+  return strip_text;
+}
+
+
 static void calculate_position (OBJECT *object,
                                 PangoFontMetrics *font_metrics,
                                 PangoRectangle logical_rect,
@@ -104,9 +156,11 @@ static PangoFontMetrics *setup_pango_return_metrics (GSCHEM_TOPLEVEL *w_current,
   PangoContext *context;
   PangoFontDescription *desc;
   PangoFontMetrics *font_metrics;
+  PangoAttrList *attrs;
   cairo_font_options_t *options;
   double font_size_pt;
   char *font_string;
+  char *unescaped;
 
   context = pango_layout_get_context (layout);
 
@@ -128,7 +182,12 @@ static PangoFontMetrics *setup_pango_return_metrics (GSCHEM_TOPLEVEL *w_current,
   font_metrics = pango_context_get_metrics (context, desc, NULL);
   pango_font_description_free (desc);
 
-  pango_layout_set_text (layout, o_current->text->disp_string, -1);
+  attrs = pango_attr_list_new ();
+  unescaped = unescape_text_and_overbars (o_current->text->disp_string, attrs);
+  pango_layout_set_text (layout, unescaped, -1);
+  g_free (unescaped);
+  pango_layout_set_attributes (layout, attrs);
+  pango_attr_list_unref (attrs);
 
   return font_metrics;
 }
@@ -259,7 +318,7 @@ static void o_text_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
    *     the grid lines, and ensures consistency with other lines when the
    *     page view is zoomed out. */
   cairo_move_to (cr, x + 0.5, y + 0.5);
-  pango_cairo_show_layout (cr, w_current->pl);
+  gschem_pango_show_layout (cr, w_current->pl);
 
 #ifdef DEBUG_TEXT
   draw_construction_lines (w_current, x, y, font_metrics, logical_rect);
