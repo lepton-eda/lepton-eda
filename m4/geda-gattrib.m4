@@ -22,6 +22,7 @@ dnl Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 AC_DEFUN([AX_OPTION_GATTRIB],
 [
   AC_PREREQ([2.60])dnl
+  AC_REQUIRE([PKG_PROG_PKG_CONFIG])
 
   AC_MSG_CHECKING([whether to enable gattrib])
   AC_ARG_ENABLE([gattrib],
