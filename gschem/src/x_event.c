@@ -61,8 +61,10 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
   /* nasty global variable */
   global_window_current = w_current;
 
+  if (w_current->pl != NULL) g_object_unref( w_current->pl );
   if (w_current->cr != NULL) cairo_destroy( w_current->cr );
   w_current->cr = gdk_cairo_create( widget->window );
+  w_current->pl = pango_cairo_create_layout (w_current->cr);
 
   gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
   o_redraw_rects (w_current, rectangles, n_rectangles);
