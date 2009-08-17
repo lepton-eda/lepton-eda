@@ -340,8 +340,7 @@ OBJECT *o_picture_new(TOPLEVEL *toplevel, GdkPixbuf *pixbuf,
   picture->file_length  = file_length;
   picture->filename = g_strdup (filename);
   picture->ratio = ratio;
-  picture->original_picture = gdk_pixbuf_copy(pixbuf);
-  picture->displayed_picture = NULL;
+  picture->pixbuf = gdk_pixbuf_copy (pixbuf);
   picture->angle = angle;
   picture->mirrored = mirrored;
   picture->embedded = embedded;
@@ -701,11 +700,7 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
   picture->embedded    = object->picture->embedded;
 
   /* Copy the picture data */
-  picture->original_picture =
-    gdk_pixbuf_copy(object->picture->original_picture);
-
-  picture->displayed_picture =
-    gdk_pixbuf_copy(object->picture->displayed_picture);
+  picture->pixbuf = gdk_pixbuf_copy (object->picture->pixbuf);
 
   new_node->draw_func = object->draw_func;
   new_node->sel_func  = object->sel_func;
@@ -814,7 +809,7 @@ void o_picture_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 {
   int x1, y1, x, y;
   int height, width;
-  GdkPixbuf* image = o_current->picture->original_picture;
+  GdkPixbuf* image = o_current->picture->pixbuf;
   int img_width, img_height, img_rowstride;
   guint8 *rgb_data;
   guint8 *mask_data;
@@ -921,10 +916,10 @@ void o_picture_embed (TOPLEVEL *toplevel, OBJECT *object)
   }
 
   /* Change to the new pixbuf loaded before we embedded. */
-  if (object->picture->original_picture != NULL)
-    g_object_unref(object->picture->original_picture);
+  if (object->picture->pixbuf != NULL)
+    g_object_unref (object->picture->pixbuf);
 
-  object->picture->original_picture = pixbuf;
+  object->picture->pixbuf = pixbuf;
 
   filename = g_path_get_basename(object->picture->filename);
   s_log_message (_("Picture [%s] has been embedded\n"), filename);
@@ -956,10 +951,10 @@ void o_picture_unembed (TOPLEVEL *toplevel, OBJECT *object)
   }
 
   /* Change to the new pixbuf loaded from the file. */
-  if (object->picture->original_picture != NULL)
-    g_object_unref(object->picture->original_picture);
+  if (object->picture->pixbuf != NULL)
+    g_object_unref(object->picture->pixbuf);
 
-  object->picture->original_picture = pixbuf;
+  object->picture->pixbuf = pixbuf;
 
   g_free (object->picture->file_content);
   object->picture->file_content = NULL;

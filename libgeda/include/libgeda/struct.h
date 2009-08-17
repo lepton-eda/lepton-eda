@@ -159,8 +159,7 @@ struct st_box {
 #define BOX_LOWER_LEFT 3
 
 struct st_picture {
-  GdkPixbuf *original_picture;
-  GdkPixbuf *displayed_picture;
+  GdkPixbuf *pixbuf;
   gchar *file_content;
   gsize file_length;
 

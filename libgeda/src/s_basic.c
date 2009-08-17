@@ -263,10 +263,8 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
       /*	printf("sdeleting picture\n");*/
 
       g_free(o_current->picture->file_content);
-      if (o_current->picture->original_picture)
-	g_object_unref(o_current->picture->original_picture);
-      if (o_current->picture->displayed_picture)
-	g_object_unref(o_current->picture->displayed_picture);
+      if (o_current->picture->pixbuf)
+        g_object_unref (o_current->picture->pixbuf);
 
       g_free(o_current->picture->filename);
       g_free(o_current->picture);

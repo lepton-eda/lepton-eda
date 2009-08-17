@@ -303,9 +303,9 @@ void o_picture_draw (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
-  GdkPixbuf *temp_pixbuf1, *temp_pixbuf2;
 
-  if (o_current->picture == NULL) {
+  if (o_current->picture == NULL ||
+      toplevel->DONT_REDRAW) {
     return;
   }
 
@@ -314,53 +314,45 @@ void o_picture_draw (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   WORLDtoSCREEN (w_current, o_current->picture->lower_x,
                             o_current->picture->lower_y, &s_lower_x, &s_lower_y);
 
-  if (o_current->picture->displayed_picture != NULL) {
-    g_object_unref (o_current->picture->displayed_picture);
-    o_current->picture->displayed_picture = NULL;
+  cairo_save (w_current->cr);
+
+  int swap_wh = (o_current->picture->angle == 90 || o_current->picture->angle == 270);
+  float orig_width  = swap_wh ? gdk_pixbuf_get_height (o_current->picture->pixbuf) :
+                                gdk_pixbuf_get_width  (o_current->picture->pixbuf);
+  float orig_height = swap_wh ? gdk_pixbuf_get_width  (o_current->picture->pixbuf) :
+                                gdk_pixbuf_get_height (o_current->picture->pixbuf);
+
+  cairo_translate (w_current->cr, s_upper_x, s_upper_y);
+  cairo_scale (w_current->cr,
+    (float)SCREENabs (w_current, abs (o_current->picture->upper_x -
+                                      o_current->picture->lower_x)) / orig_width,
+    (float)SCREENabs (w_current, abs (o_current->picture->upper_y -
+                                      o_current->picture->lower_y)) / orig_height);
+
+  /* Evil magic translates picture origin to the right position for a given rotation */
+  switch (o_current->picture->angle) {
+    case 0:                                                               break;
+    case 90:   cairo_translate (w_current->cr, 0,          orig_height);  break;
+    case 180:  cairo_translate (w_current->cr, orig_width, orig_height);  break;
+    case 270:  cairo_translate (w_current->cr, orig_width, 0          );  break;
   }
+  cairo_rotate (w_current->cr, -o_current->picture->angle * M_PI / 180.);
+  if (o_current->picture->mirrored)
+    cairo_scale (w_current->cr, -1, 1);
 
-  /* Create a copy of the pixbuf rotated */
-  temp_pixbuf1 = gdk_pixbuf_rotate (o_current->picture->original_picture,
-                                    o_current->picture->angle);
+  gdk_cairo_set_source_pixbuf (w_current->cr,
+                               o_current->picture->pixbuf, 0,0);
+  cairo_rectangle (w_current->cr, 0, 0,
+                   gdk_pixbuf_get_width (o_current->picture->pixbuf),
+                   gdk_pixbuf_get_height (o_current->picture->pixbuf));
 
-  if (temp_pixbuf1 == NULL) {
-    fprintf (stderr, "Couldn't get enough memory for rotating the picture\n");
-    return;
-  }
-
-  temp_pixbuf2 = gdk_pixbuf_mirror_flip (temp_pixbuf1,
-                                         o_current->picture->mirrored, FALSE);
-  g_object_unref (temp_pixbuf1);
-
-  if (temp_pixbuf2 == NULL) {
-    fprintf (stderr, "Couldn't get enough memory for mirroring the picture\n");
-    return;
-  }
-
-  o_current->picture->displayed_picture =
-    gdk_pixbuf_scale_simple (temp_pixbuf2,
-                             abs (s_lower_x - s_upper_x),
-                             abs (s_lower_y - s_upper_y),
-                             GDK_INTERP_BILINEAR);
-  g_object_unref (temp_pixbuf2);
-
-  if (o_current->picture->displayed_picture == NULL) {
-    fprintf (stderr, "Couldn't get enough memory for scaling the picture\n");
-    return;
-  }
-
-  if (toplevel->DONT_REDRAW == 0) {
-    gdk_draw_pixbuf (w_current->drawable, w_current->gc,
-                     o_current->picture->displayed_picture,
-                     0, 0, s_upper_x, s_upper_y,
-                     -1, -1, GDK_RGB_DITHER_NONE, 0, 0);
-  }
+  cairo_clip (w_current->cr);
+  cairo_paint (w_current->cr);
+  cairo_restore (w_current->cr);
 
   /* Grip specific stuff */
   if (o_current->selected && w_current->draw_grips) {
-    if (toplevel->DONT_REDRAW == 0) {
-      o_picture_draw_grips (w_current, o_current);
-    }
+    o_picture_draw_grips (w_current, o_current);
   }
 }
 
@@ -470,9 +462,9 @@ void o_picture_exchange (GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf,
         object->picture->filename = (char *) g_strdup(filename);
 
         /* Unref the old pixmap */
-        if (object->picture->original_picture != NULL) {
-          g_object_unref(object->picture->original_picture);
-          object->picture->original_picture=NULL;
+        if (object->picture->pixbuf != NULL) {
+          g_object_unref (object->picture->pixbuf);
+          object->picture->pixbuf = NULL;
         }
 
         if (object->picture->embedded) {
@@ -482,8 +474,8 @@ void o_picture_exchange (GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf,
         } else {
           /* For non-embedded pictures, create a copy of the passed pixbuf
            * and insert it manually */
-          object->picture->original_picture = gdk_pixbuf_copy(pixbuf);
-          if (object->picture->original_picture == NULL) {
+          object->picture->pixbuf = gdk_pixbuf_copy (pixbuf);
+          if (object->picture->pixbuf == NULL) {
             fprintf(stderr, "change picture: Couldn't get enough memory for the new picture\n");
             return;
           }

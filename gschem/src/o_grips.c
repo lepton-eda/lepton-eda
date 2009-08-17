@@ -823,7 +823,7 @@ void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 
   /* erase the picture before */
   o_invalidate (w_current, o_current);
-  w_current->current_pixbuf = o_current->picture->original_picture;
+  w_current->current_pixbuf = o_current->picture->pixbuf;
   w_current->pixbuf_filename = o_current->picture->filename;
   w_current->pixbuf_wh_ratio = o_current->picture->ratio;
 
