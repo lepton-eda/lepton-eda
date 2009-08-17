@@ -424,32 +424,6 @@ SCM g_rc_text_size(SCM size)
   return SCM_BOOL_T;
 }
 
-/*! \brief Sets the output font scaling factor 
- *
- *  \par Use this setting to change the scale of the output PS font
- *  characters. This allows to fine tune the font size so that it
- *  matches more closely with the screen.
- *
- *  \return SCM_BOOL_T always.
- */
-
-SCM g_rc_postscript_font_scale(SCM scale)
-{
-  float val;
-
-  SCM_ASSERT (SCM_REALP (scale), scale, SCM_ARG1, "postscript-font-scale");
-
-  val =(float)(SCM_REAL_VALUE (scale));
-  if (val == 0) {
-    fprintf(stderr, _("Invalid size [%f] passed to postscript-font-scale\n"),
-            val);
-    val = 1.0; /* absolute default */
-  }
-
-  default_postscript_font_scale = val;
-
-  return SCM_BOOL_T;
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

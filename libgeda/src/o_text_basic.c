@@ -85,6 +85,18 @@
 #include <dmalloc.h>
 #endif
 
+/*! \brief Scale factor between legacy gschem font units and postscript points.
+ *
+ *  \par Description
+ *  gschem fonts are nominally specified in points, however there is a
+ *  difference in how the specified font size corresponds to the metrics of
+ *  the font when compared to typical typographic usage.
+ *
+ *  The following factor was impirically determined to approximately match the
+ *  cap-height between the legacy gschem font, and fonts rendered using pango.
+ */
+#define GEDA_FONT_FACTOR 1.3
+
 /*! Default setting for text draw function. */
 void (*text_draw_func)() = NULL;
 
@@ -1725,8 +1737,8 @@ void o_text_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   /* Collect pertinent info about the text location */
   x = o_current->text->x;
   y = o_current->text->y;
-  font_size = (((float)(o_current->text->size))
-	       * toplevel->postscript_font_scale / 72.0 * 1000.0);
+  font_size = o_text_get_font_size_in_points (toplevel, o_current)
+                / 72.0 * 1000.0;
   fprintf(fp,"] %d %d %d %f text\n",angle,x,y,font_size);
 
   
@@ -1948,4 +1960,23 @@ void o_text_set_rendered_bounds_func (TOPLEVEL *toplevel,
                                       void *user_data) {
   toplevel->rendered_text_bounds_func = func;
   toplevel->rendered_text_bounds_data = user_data;
+}
+
+
+/*! \brief Return font size of a text object in postscript points.
+ *
+ *  \par Description
+ *  gEDA fonts are specified in a non-standard unit. This
+ *  function applies an appopriate scaling to return the
+ *  font size in postscript points.
+ *
+ *  \param [in] toplevel  The TOPLEVEL object
+ *  \param [in] object    The text OBJECT whos font size to return
+ *  \return The font size converted to postscript points.
+ */
+double o_text_get_font_size_in_points (TOPLEVEL *toplevel, OBJECT *object)
+{
+  g_return_val_if_fail (object->type == OBJ_TEXT, 0.);
+
+  return object->text->size * GEDA_FONT_FACTOR;
 }
