@@ -708,8 +708,7 @@ void o_select_move_to_place_list(GSCHEM_TOPLEVEL *w_current);
 void o_slot_start(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len);
 /* o_text.c */
-void o_text_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_text_draw_rectangle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
+int o_text_get_rendered_bounds(void *user_data, OBJECT *object, int *min_x, int *min_y, int *max_x, int *max_y);
 void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_draw_place(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
 void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text);

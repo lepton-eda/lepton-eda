@@ -156,6 +156,8 @@ DEFINE_I_CALLBACK(file_new_window)
   w_current->toplevel->load_newer_backup_func = x_fileselect_load_backup;
   w_current->toplevel->load_newer_backup_data = w_current;
 
+  o_text_set_rendered_bounds_func (w_current->toplevel,
+                                   o_text_get_rendered_bounds, w_current);
   x_window_setup (w_current);
 
   page = x_window_open_page (w_current, NULL);

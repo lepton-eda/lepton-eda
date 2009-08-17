@@ -125,7 +125,9 @@ preview_callback_expose (GtkWidget *widget,
   int n_rectangles;
 
   if (preview_w_current->cr != NULL) cairo_destroy (preview_w_current->cr);
+  if (preview_w_current->pl != NULL) g_object_unref (preview_w_current->pl);
   preview_w_current->cr = gdk_cairo_create (widget->window);
+  preview_w_current->pl = pango_cairo_create_layout (preview_w_current->cr);
 
   gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
   o_redraw_rects (preview_w_current, rectangles, n_rectangles);
@@ -366,6 +368,9 @@ preview_init (Preview *preview)
     x_fileselect_load_backup;
   preview_w_current->toplevel->load_newer_backup_data =
     preview_w_current;
+  o_text_set_rendered_bounds_func (preview_w_current->toplevel,
+                                   o_text_get_rendered_bounds,
+                                   preview_w_current);
 
   i_vars_set (preview_w_current);
 

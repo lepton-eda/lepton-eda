@@ -14,6 +14,7 @@ gschem_SOURCES = \
 	gschem_action.c \
 	gschem_cairo.c \
 	gschem_dialog.c \
+	gschem_pango.c \
 	gschem_toplevel.c \
 	i_basic.c \
 	i_callbacks.c \
