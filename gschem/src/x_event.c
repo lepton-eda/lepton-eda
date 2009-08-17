@@ -52,6 +52,8 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
 {
   GdkRectangle *rectangles;
   int n_rectangles;
+  cairo_t *save_cr;
+  PangoLayout *save_pl;
 
 #if DEBUG
   printf("EXPOSE\n");
@@ -61,8 +63,9 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
   /* nasty global variable */
   global_window_current = w_current;
 
-  if (w_current->pl != NULL) g_object_unref( w_current->pl );
-  if (w_current->cr != NULL) cairo_destroy( w_current->cr );
+  save_cr = w_current->cr;
+  save_pl = w_current->pl;
+
   w_current->cr = gdk_cairo_create( widget->window );
   w_current->pl = pango_cairo_create_layout (w_current->cr);
 
@@ -74,6 +77,12 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
   if (w_current->raise_dialog_boxes) {
     x_dialog_raise_all(w_current);
   }
+
+  g_object_unref (w_current->pl);
+  cairo_destroy (w_current->cr);
+
+  w_current->cr = save_cr;
+  w_current->pl = save_pl;
 
   return(0);
 }
