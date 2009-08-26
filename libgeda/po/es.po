@@ -1,15 +1,15 @@
 # Spanish/Spain translation of libgeda.
 # Copyright (C) 2007-2008 Carlos Nieves Ónega
 # This file is distributed under the same license as the libgeda package.
-# Carlos Nieves Ónega <cnieves@iespana.es>, 2007, 2008.
 #
 #
+# Carlos Nieves Ónega <cnieves@iespana.es>, 2007-2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2009-08-18 22:55-0400\n"
-"PO-Revision-Date: 2008-12-21 21:07+0100\n"
+"PO-Revision-Date: 2009-08-25 21:30+0200\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"
@@ -247,34 +247,38 @@ msgid "RC file [%s] already read in.\n"
 msgstr "El archivo RC [%s] ya ha sido leído.\n"
 
 #: libgeda/src/g_rc.c:177
-#, fuzzy, c-format
+#, c-format
 msgid "Read system config file [%%s]\n"
-msgstr "Leído archivo system-%s [%%s]\n"
+msgstr "Leído archivo de configuración de sistema [%%s]\n"
 
 #: libgeda/src/g_rc.c:178
-#, fuzzy, c-format
+#, c-format
 msgid "Did not find required system config file [%%s]\n"
-msgstr "No se ha encontrado el archivo imprescindible system-%s [%%s]\n"
+msgstr ""
+"No se ha encontrado el archivo imprescindible de configuración de sistema [%%"
+"s]\n"
 
 #: libgeda/src/g_rc.c:212
-#, fuzzy, c-format
+#, c-format
 msgid "Read user config file [%%s]\n"
-msgstr "Leído el archivo especificado %s [%%s]\n"
+msgstr "Leído el archivo de configuración de usuario [%%s]\n"
 
 #: libgeda/src/g_rc.c:213
-#, fuzzy, c-format
+#, c-format
 msgid "Did not find optional user config file [%%s]\n"
-msgstr "No se ha podido encontrar el archivo local %s [%%s]\n"
+msgstr ""
+"No se ha podido encontrar el archivo opcional de configuración de usuario [%%"
+"s]\n"
 
 #: libgeda/src/g_rc.c:244
-#, fuzzy, c-format
+#, c-format
 msgid "Read local config file [%%s]\n"
-msgstr "Leído el archivo local %s [%%s]\n"
+msgstr "Leído el archivo local  de configuración [%%s]\n"
 
 #: libgeda/src/g_rc.c:245
-#, fuzzy, c-format
+#, c-format
 msgid "Did not find optional local config file [%%s]\n"
-msgstr "No se ha podido encontrar el archivo local %s [%%s]\n"
+msgstr "No se ha podido encontrar el archivo local de configuración [%%s]\n"
 
 #: libgeda/src/g_rc.c:282
 #, c-format
@@ -319,9 +323,8 @@ msgstr "Se ha encontrado un color no válido [%s]\n"
 #: libgeda/src/o_line_basic.c:263 libgeda/src/o_net_basic.c:181
 #: libgeda/src/o_path_basic.c:193 libgeda/src/o_pin_basic.c:194
 #: libgeda/src/o_text_basic.c:417
-#, fuzzy
 msgid "Setting color to default color\n"
-msgstr "Seleccionando color BLANCO\n"
+msgstr "Asignando el color por defecto al color\n"
 
 #: libgeda/src/o_attrib.c:123
 msgid "Attempt to attach non text item as an attribute!\n"
@@ -731,19 +734,19 @@ msgstr "Se ha encontrado más de un componente con el nombre [%s]\n"
 
 #: libgeda/src/s_color.c:206
 msgid "Color index out of range"
-msgstr ""
+msgstr "Índice de color fuera de rango"
 
 #: libgeda/src/s_color.c:261
 msgid "Color map entry must be a two-element list"
-msgstr ""
+msgstr "La entrada del mapa de colores debe ser una lista de dos elementos"
 
 #: libgeda/src/s_color.c:269
 msgid "Index in color map entry must be an integer"
-msgstr ""
+msgstr "El índice en la entrada del mapa de colores debe ser un número entero"
 
 #: libgeda/src/s_color.c:295
 msgid "Value in color map entry must be #f or a string"
-msgstr ""
+msgstr "El valor en la entrada del mapa de colores debe ser #f o una cadena"
 
 #: libgeda/src/s_hierarchy.c:90
 #, c-format

@@ -1,17 +1,18 @@
 # Spanish/Spain translation of gschem.
 # Copyright (C) 2005-2008 Carlos Nieves Onega
 # This file is distributed under the same license as the gschem package.
-# Carlos Nieves Ónega <cnieves@iespana.es>, 2005-2008.
 #
 #
+# Carlos Nieves Ónega <cnieves@iespana.es>, 2005-2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2009-08-18 22:55-0400\n"
-"PO-Revision-Date: 2008-12-21 21:20+0100\n"
+"PO-Revision-Date: 2009-08-25 22:11+0200\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
-"Language-Team: Spanish/SpainMIME-Version: 1.0\n"
+"Language-Team: Spanish/Spain <geda-dev@seul.org>\n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);X-Generator: KBabel 1.0.2\n"
@@ -93,9 +94,8 @@ msgid "Select Mode"
 msgstr "Seleccionar"
 
 #: gschem/src/rcstrings.c:22
-#, fuzzy
 msgid "Cut"
-msgstr "Cortar 1"
+msgstr "Cortar"
 
 #: gschem/src/rcstrings.c:23 gschem/src/i_basic.c:135
 #: gschem/src/i_callbacks.c:538 gschem/src/i_callbacks.c:562
@@ -103,9 +103,8 @@ msgid "Copy"
 msgstr "Copiar"
 
 #: gschem/src/rcstrings.c:24
-#, fuzzy
 msgid "Paste"
-msgstr "Pegar 1"
+msgstr "Pegar"
 
 #: gschem/src/rcstrings.c:25
 msgid "Edit..."
@@ -288,11 +287,11 @@ msgstr "Vista completa"
 
 #: gschem/src/rcstrings.c:71
 msgid "Dark color scheme"
-msgstr ""
+msgstr "Configuración de colores oscuros"
 
 #: gschem/src/rcstrings.c:72
 msgid "Light color scheme"
-msgstr ""
+msgstr "Configuración de colores claros"
 
 #: gschem/src/rcstrings.c:74
 msgid "Page"
@@ -456,7 +455,7 @@ msgstr "Tamaño de texto..."
 
 #: gschem/src/rcstrings.c:116
 msgid "Cycle grid styles"
-msgstr ""
+msgstr "Cambiar estilos de rejilla"
 
 #: gschem/src/rcstrings.c:117
 msgid "Toggle Snap On/Off"
@@ -556,6 +555,12 @@ msgid ""
 "from your config files.\n"
 "\n"
 msgstr ""
+"\n"
+"La opción de configuración postscript-font-scale está obsoleta y se "
+"eliminará en gEDA 1.8.0\n"
+"El texto impreso está fijado para ajustarse al tamaño mostrado en pantalla. "
+"Por favor, elimine esta opción de sus archivos de configuración.\n"
+"\n"
 
 #: gschem/src/g_rc.c:481
 #, c-format
@@ -574,24 +579,24 @@ msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Tamaño no válido [%d] especificado a la función bus-ripper-size\n"
 
 #: gschem/src/g_rc.c:1269
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid dot size [%d] passed to dots-grid-dot-size\n"
 msgstr ""
-"Tamaño de punto no válido [%d] especificado a la función grid-dot-size\n"
+"Tamaño de punto no válido [%d] especificado a la función dots-grid-dot-size\n"
 
 #: gschem/src/g_rc.c:1310
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid pixel spacing [%d] passed to dots-grid-fixed-threshold\n"
 msgstr ""
-"Espaciado de punto no válido [%d] especificado a la función grid-fixed-"
+"Espaciado de punto no válido [%d] especificado a la función dots-grid-fixed-"
 "threshold\n"
 
 #: gschem/src/g_rc.c:1336
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid pixel spacing [%d] passed to mesh-grid-display-threshold\n"
 msgstr ""
-"Espaciado de punto no válido [%d] especificado a la función grid-fixed-"
-"threshold\n"
+"Espaciado de punto no válido [%d] especificado a la función mesh-grid-"
+"display-threshold\n"
 
 #: gschem/src/g_rc.c:1361
 #, c-format
@@ -682,6 +687,10 @@ msgid ""
 "gschem cannot locate its data files. You must set the GEDADATA\n"
 "environment variable to point to the correct location.\n"
 msgstr ""
+"¡Debe configurar la variable de entorno GEDADATA!\n"
+"\n"
+"gschem no puede encontrar sus archivos de datos. Debe configurar la variable "
+"de entorno GEDADATA con el camino adecuado.\n"
 
 #: gschem/src/gschem.c:243
 #, c-format
@@ -710,27 +719,27 @@ msgstr "Ejecutando programa de guile [%s]\n"
 
 #: gschem/src/gschem_accel_label.c:319
 msgid "Accelerator Closure"
-msgstr ""
+msgstr "Cierre de la tecla rápida"
 
 #: gschem/src/gschem_accel_label.c:320
 msgid "The closure to be monitored for accelerator changes"
-msgstr ""
+msgstr "El cierre a monitorizar para cambios en las teclas rápidas"
 
 #: gschem/src/gschem_accel_label.c:326
 msgid "Accelerator Widget"
-msgstr ""
+msgstr "Artilugio de teclas rápidas"
 
 #: gschem/src/gschem_accel_label.c:327
 msgid "The widget to be monitored for accelerator changes"
-msgstr ""
+msgstr "El artilugio a monitorizar para los cambios de teclas rápidas"
 
 #: gschem/src/gschem_accel_label.c:333
 msgid "Accelerator String"
-msgstr ""
+msgstr "Cadena de tecla rápida"
 
 #: gschem/src/gschem_accel_label.c:334
 msgid "The accelerator string to be displayed"
-msgstr ""
+msgstr "La cadena de tecla rápida a visualizar"
 
 #: gschem/src/gschem_cairo.c:310
 #, c-format
@@ -738,9 +747,9 @@ msgid "Unknown end for line (%d)\n"
 msgstr "Final de línea desconocido (%d)\n"
 
 #: gschem/src/gschem_cairo.c:318
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown type for stroke (%d) !\n"
-msgstr "Tipo de línea desconocido (%d)\n"
+msgstr "¡ Tipo desconocido para gesto (%d) !\n"
 
 #: gschem/src/i_basic.c:79
 msgid "Component Mode"
@@ -819,7 +828,7 @@ msgstr "Desactivado el ajuste a la rejilla"
 
 #: gschem/src/i_basic.c:173
 msgid "Resnap Active"
-msgstr ""
+msgstr "Reajuste a la rejilla activado"
 
 #: gschem/src/i_basic.c:254 gschem/src/x_window.c:495
 msgid "Action"
@@ -844,7 +853,7 @@ msgstr "NO"
 
 #: gschem/src/i_basic.c:567
 msgid "NONE"
-msgstr ""
+msgstr "NINGUNO"
 
 #: gschem/src/i_basic.c:572
 #, c-format
@@ -884,9 +893,8 @@ msgid "Select objs first"
 msgstr "Antes seleccione objetos"
 
 #: gschem/src/i_callbacks.c:712
-#, fuzzy
 msgid "Edit pin type"
-msgstr "Editar tipo de línea"
+msgstr "Editar tipo de pin"
 
 #: gschem/src/i_callbacks.c:731
 msgid "Edit Text"
@@ -965,16 +973,15 @@ msgstr "¿Seguro que quiere recargar la página?"
 
 #: gschem/src/i_callbacks.c:1821
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "Copiar al portapapeles"
 
 #: gschem/src/i_callbacks.c:1839
 msgid "Cut to clipboard"
-msgstr ""
+msgstr "Cortar al portapapeles"
 
 #: gschem/src/i_callbacks.c:1857
-#, fuzzy
 msgid "Paste from clipboard"
-msgstr "Pegar memoria intermedia 1"
+msgstr "Pegar desde el portapapeles"
 
 #: gschem/src/i_callbacks.c:1869 gschem/src/i_callbacks.c:2108
 #: gschem/src/i_callbacks.c:2130 gschem/src/i_callbacks.c:2152
@@ -1117,11 +1124,11 @@ msgstr "Rejilla DESACTIVADA\n"
 
 #: gschem/src/i_callbacks.c:3431
 msgid "Dot grid selected\n"
-msgstr ""
+msgstr "Seleccionada rejilla de puntos\n"
 
 #: gschem/src/i_callbacks.c:3432
 msgid "Mesh grid selected\n"
-msgstr ""
+msgstr "Seleccionada rejilla de malla\n"
 
 #: gschem/src/i_callbacks.c:3453
 msgid "Snap OFF (CAUTION!)\n"
@@ -1132,9 +1139,8 @@ msgid "Snap ON\n"
 msgstr "Ajuste a la rejilla ACTIVADO\n"
 
 #: gschem/src/i_callbacks.c:3459
-#, fuzzy
 msgid "Snap back to the grid (CAUTION!)\n"
-msgstr "¡PRECAUCIÓN!: Ajuste a la rejilla DESACTIVADO \n"
+msgstr "Reajuste a la rejilla (¡PRECAUCIÓN!)\n"
 
 #: gschem/src/i_callbacks.c:3485
 msgid "Rubber band OFF \n"
@@ -1160,12 +1166,12 @@ msgstr "¡Tipo de relleno de rectángulo desconocido!\n"
 #: gschem/src/o_buffer.c:57
 #, c-format
 msgid "o_buffer_copy: Invalid buffer %i\n"
-msgstr ""
+msgstr "o_buffer_copy: memoria intermedia no válida %i\n"
 
 #: gschem/src/o_buffer.c:72
 #, c-format
 msgid "o_buffer_cut: Invalid buffer %i\n"
-msgstr ""
+msgstr "o_buffer_cut: memoria intermedia no válida %i\n"
 
 #: gschem/src/o_buffer.c:93
 #, c-format
@@ -1175,11 +1181,11 @@ msgstr ""
 "o_buffer_paste_start\n"
 
 #: gschem/src/o_bus.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "Got an invalid which one in o_bus_draw_stretch\n"
 msgstr ""
 "Se ha recibido un parámetro no válido (\"whichone\") en la función "
-"o_bus_draw_xor_single\n"
+"o_bus_draw_stretch\n"
 
 #: gschem/src/o_circle.c:134
 #, c-format
@@ -1263,11 +1269,11 @@ msgstr ""
 "o_move_check_endpoint\n"
 
 #: gschem/src/o_net.c:159
-#, fuzzy, c-format
+#, c-format
 msgid "Got an invalid which one in o_net_draw_stretch\n"
 msgstr ""
 "Se ha recibido un parámetro no válido (\"whichone\") en la función "
-"o_net_draw_xor_single\n"
+"o_net_draw_stretch\n"
 
 #: gschem/src/o_net.c:536
 msgid "Warning: Starting net at off grid coordinate\n"
@@ -1543,14 +1549,14 @@ msgid "white"
 msgstr "blanco"
 
 #: gschem/src/x_color.c:125
-#, fuzzy, c-format
+#, c-format
 msgid "Could not allocate display color %i!\n"
-msgstr "¡No se puede reservar memoria para el color %s!\n"
+msgstr "¡No se puede reservar memoria para el color %i!\n"
 
 #: gschem/src/x_color.c:147
-#, fuzzy, c-format
+#, c-format
 msgid "Could not allocate outline color %i!\n"
-msgstr "¡No se puede reservar memoria para el color %s!\n"
+msgstr "¡No se puede reservar memoria para el color del contorno %i!\n"
 
 #: gschem/src/x_color.c:164 gschem/src/x_color.c:181 gschem/src/x_color.c:197
 #, c-format
@@ -1558,9 +1564,9 @@ msgid "Tried to get an invalid color: %d\n"
 msgstr "Se ha intentado obtener un color no válido: %d\n"
 
 #: gschem/src/x_color.c:214
-#, fuzzy, c-format
+#, c-format
 msgid "Tried to get an invalid outline color: %d\n"
-msgstr "Se ha intentado obtener un color no válido: %d\n"
+msgstr "Se ha intentado obtener un color para el contorno no válido: %d\n"
 
 #: gschem/src/x_compselect.c:1036
 msgid "Filter:"
@@ -1909,11 +1915,11 @@ msgstr "Unión de conexiones"
 
 #: gschem/src/x_dialog.c:2421
 msgid "Mesh grid major"
-msgstr ""
+msgstr "Rejilla de malla mayor"
 
 #: gschem/src/x_dialog.c:2424
 msgid "Mesh grid minor"
-msgstr ""
+msgstr "Rejilla de malla menor"
 
 #: gschem/src/x_dialog.c:2427
 msgid "Unknown"
@@ -2015,18 +2021,16 @@ msgid "Invalid Attribute"
 msgstr "Propiedad incorrecta"
 
 #: gschem/src/x_dialog.c:4303
-#, fuzzy
 msgid "Pin type"
-msgstr "Modo Pin"
+msgstr "Tipo de Pin"
 
 #: gschem/src/x_dialog.c:4327
-#, fuzzy
 msgid "Net pin"
-msgstr "Punto final de conexión"
+msgstr "Pin para conexión simple"
 
 #: gschem/src/x_dialog.c:4329
 msgid "Bus pin (graphical)"
-msgstr ""
+msgstr "Pin para conexión a bus (gráfico)"
 
 #: gschem/src/x_fileselect.c:42
 msgid "Schematics"
@@ -2175,9 +2179,8 @@ msgid "/Edit..."
 msgstr "/Editar..."
 
 #: gschem/src/x_menus.c:49
-#, fuzzy
 msgid "/Edit pin type..."
-msgstr "Editar tipo de línea"
+msgstr "/Editar tipo de pin"
 
 #: gschem/src/x_menus.c:50
 msgid "/Copy"
@@ -2244,7 +2247,7 @@ msgstr "Mostrar sólo nombre"
 
 #: gschem/src/x_multiattrib.c:1491
 msgid "Promote"
-msgstr ""
+msgstr "Promocionar"
 
 #: gschem/src/x_multiattrib.c:1495
 msgid "Duplicate"
@@ -2267,9 +2270,8 @@ msgid "V"
 msgstr "V"
 
 #: gschem/src/x_multiattrib.c:1889
-#, fuzzy
 msgid "Show inherited attributes"
-msgstr "Desvincular propiedad"
+msgstr "Mostrar propiedades heredadas"
 
 #: gschem/src/x_multiattrib.c:1905
 msgid "Add Attribute"
@@ -2296,9 +2298,8 @@ msgid "Right click on the filename for more options..."
 msgstr "Pulse con el botón derecho para ver más opciones..."
 
 #: gschem/src/x_preview.c:234
-#, fuzzy
 msgid "Preview Buffer"
-msgstr "Pegar"
+msgstr "Previsualizar memoria intermedia"
 
 #: gschem/src/x_print.c:84
 msgid "Select PostScript Filename..."
