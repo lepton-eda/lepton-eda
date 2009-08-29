@@ -8,10 +8,10 @@ svg_images = \
 	s_page_overview.svg \
 	s_tile_overview.svg
 
+EXTRA_DIST = $(svg_images)
 
-png_images = $(patsubst %.svg, %.png, $(svg_images))
-pdf_images = $(patsubst %.svg, %.pdf, $(svg_images))
-
+png_images = $(EXTRA_DIST:.svg=.png)
+pdf_images = $(EXTRA_DIST:.svg=.pdf) 
 
 all: $(png_images) $(pdf_images)
 

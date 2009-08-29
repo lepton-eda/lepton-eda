@@ -168,6 +168,7 @@ AC_CONFIG_FILES([Makefile
                  libgeda/po/Makefile.in
                  libgeda/data/Makefile
                  libgeda/docs/Makefile
+                 libgeda/docs/images/Makefile
                  libgeda/include/Makefile
                  libgeda/lib/Makefile
                  libgeda/scheme/Makefile
