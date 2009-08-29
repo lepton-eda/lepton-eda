@@ -10,7 +10,7 @@ more information, please consult the `ChangeLog' file.
 Notable changes in gEDA/gaf 1.5.3
 =================================
 
-* Text rendering using native system fonts
+* Text rendering using native system fonts:
 
   - The various programs in gEDA/gaf no longer uses its own built-in
     line font.
@@ -22,9 +22,9 @@ Notable changes in gEDA/gaf 1.5.3
   "output-text", "text-output" and "output-vector-threshold" config
   functions have been removed.
 
-* Render images in gschem using cairo instead of GDK.
+* Image rendering in 'gschem' uses cairo instead of GDK.
 
-* Numerous build system changes.
+* Numerous build system changes:
 
   - gEDA/gaf is now distributed as a single source archive, called
     gEDA-<version>.tar.gz.
@@ -48,32 +48,32 @@ Notable changes in gEDA/gaf 1.5.3
 * The `gschem2pcb' and `PCBboard' netlist backends have been removed.
   It is recommended to use `gsch2pcb' instead.
 
-* Check for and reject non-footprint PCB files in gsch2pcb.
+* Check for and reject non-footprint PCB files in 'gsch2pcb'.
 
-* Removed unimplemented "File->Open" feature in gattrib
+* Removed unimplemented "File->Open" feature in 'gattrib'.
 
 * Added --disable-gattrib command line flag to ./configure to disable the
-  building of gattrib.  This is useful if you are building against
-  gtk+ 2.17.x which breaks gattrib.
+  building of 'gattrib'.  This is useful if you are building against
+  gtk+ 2.17.x which breaks 'gattrib'.
 
-* gnetlist does not recommend drc2 every time gnetlist runs.  The drc2
-  backend is only used in certain circumstances.
+* 'gnetlist' does not recommend drc2 every time it runs.  The drc2
+  backend is only useful in certain circumstances.
 
 * Assign shortcuts "vd" and "vl" for changing between color schemes
-  in gschem.
+  in 'gschem'.
 
-* Fix problem with attached net attribute not being honored in gnetlist.
+* Fix problem with attached net attribute not being honored in 'gnetlist'.
 
-* Focus the "save" button in the close confirmation dialog in gattrib and
-  gschem.
+* Focus the "save" button in the close confirmation dialog in 'gattrib' and
+  'gschem'.
 
-* Accept empty attributes in the src file in tragesym.
+* Accept empty attributes in the src file in 'tragesym'.
 
-* Cleaned up the slot dialog box in gschem.
+* Cleaned up the slot dialog box in 'gschem'.
 
-* Introduction of a new attribute searching API in libgeda and gschem.
+* Introduction of a new attribute searching API in 'libgeda' and 'gschem'.
 
-* Improvements and cleanup to the gnetlist and gsymcheck test suites.
+* Improvements and cleanup to the 'gnetlist' and 'gsymcheck' test suites.
 
 * Fixed the following bugs:
   - 2460301: libgeda: Make o_complex_promote_attribs() respect keep_invisible
@@ -85,7 +85,7 @@ Notable changes in gEDA/gaf 1.5.3
   - 2823755: gnetlist: Fix DEBUG builds.
   - 2836109: build-sys: Add check for groff html driver.
 
-* Spanish translation updates
+* Spanish translation were updated.
 
 * Lots of code, infrastructure, and doxygen documentation cleanup and
   refactoring.
