@@ -13,7 +13,10 @@ EXTRA_DIST = $(svg_images)
 png_images = $(EXTRA_DIST:.svg=.png)
 pdf_images = $(EXTRA_DIST:.svg=.pdf) 
 
-all: $(png_images) $(pdf_images)
+all:
+	@echo 'Type: make images  to create all the png/pdf images'
+
+images: $(png_images) $(pdf_images)
 
 clean:
 	rm -rf $(png_images) $(pdf_images)
@@ -24,3 +27,7 @@ clean:
 %.pdf: %.svg
 	inkscape -A $@ $<  ||  convert $< $@
 
+MOSTLYCLEANFILES = *~ $(png_images) $(pdf_images)
+CLEANFILES = *~ $(png_images) $(pdf_images)
+DISTCLEANFILES = *~ $(png_images) $(pdf_images)
+MAINTAINERCLEANFILES = *~ Makefile.in $(png_images) $(pdf_images)
