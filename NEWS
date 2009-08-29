@@ -71,6 +71,9 @@ Notable changes in gEDA/gaf 1.5.3
 
 * Cleaned up the slot dialog box in 'gschem'.
 
+* Changed the grip size rendering in 'gschem' to be reasonably sized when
+  zoomed in a lot.
+
 * Introduction of a new attribute searching API in 'libgeda' and 'gschem'.
 
 * Improvements and cleanup to the 'gnetlist' and 'gsymcheck' test suites.
