@@ -1544,7 +1544,7 @@ void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
  *  and height of a grip in screen units.
  *
  *  <B>GRIP_SIZE1</B> and <B>GRIP_SIZE2</B> and <B>GRIP_SIZE3</B> are macros defined
- *  in libgeda #defines.h. They are the half width/height of a grip in
+ *  in gschem_defines.h. They are the half width/height of a grip in
  *  world unit for a determined range of zoom factors.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
@@ -1567,7 +1567,7 @@ int o_grips_size(GSCHEM_TOPLEVEL *w_current)
     size = SCREENabs (w_current, GRIP_SIZE3);
   }
   
-  return size;
+  return min(size, MAXIMUM_GRIP_PIXELS/2);
 }
 
 /*! \brief Draw grip centered at <B>x</B>, <B>y</B>

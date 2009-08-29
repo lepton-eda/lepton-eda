@@ -31,6 +31,7 @@
 #define GRIP_SIZE3		80
 #define SMALL_ZOOMFACTOR1	150
 #define SMALL_ZOOMFACTOR2	30
+#define MAXIMUM_GRIP_PIXELS     30
 
 /* for bus_ripper_type */
 #define COMP_BUS_RIPPER         0

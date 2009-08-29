@@ -56,6 +56,10 @@ void o_cue_redraw_all (GSCHEM_TOPLEVEL *w_current, GList *list, gboolean draw_se
 	  w_current->toplevel->DONT_REDRAW = 0 || redraw_state;
 	}
         o_cue_draw_single(w_current, o_current);
+
+	if (o_current->selected && w_current->draw_grips) {
+	  o_line_draw_grips (w_current, o_current);
+	}
         break;
 
       case(OBJ_COMPLEX):
