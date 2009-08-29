@@ -1,5 +1,5 @@
 
-SUBDIRS = src gschlas scripts lib include examples docs man tests gxyrs
+SUBDIRS = src gschlas scripts gxyrs lib include examples docs man tests
 
 EXTRA_DIST = ChangeLog ChangeLog.tragesym-1.0 ChangeLog.gsch2pcb-1.0 \
 	ChangeLog-1.0 AUTHORS
