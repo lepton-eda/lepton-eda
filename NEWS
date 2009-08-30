@@ -7,8 +7,11 @@ Copyright (C) 1998-2009 gEDA Developers
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
 
-Notable changes in gEDA/gaf 1.5.3
+Notable changes in gEDA/gaf 1.5.3/1.5.4
 =================================
+
+* NOTE: gEDA/gaf 1.5.3 was released with some critical bugs, so
+        it was withdrawn before it was widely distributed.
 
 * Text rendering using native system fonts:
 
