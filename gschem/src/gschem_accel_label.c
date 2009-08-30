@@ -274,6 +274,19 @@ gschem_accel_label_expose_event (GtkWidget      *widget,
   return FALSE;
 }
 
+/* Underscores in key names are better displayed as spaces
+ * E.g., Page_Up should be "Page Up"
+ */
+static void
+substitute_underscores (char *str)
+{
+  char *p;
+
+  for (p = str; *p; p++)
+    if (*p == '_')
+      *p = ' ';
+}
+
 
 /**
  * gschem_accel_label_set_accel_string:
@@ -293,6 +306,7 @@ gschem_accel_label_set_accel_string (GschemAccelLabel *accel_label,
 
   if (accel_string) {
     accel_label->accel_string = g_strdup (accel_string);
+    substitute_underscores (accel_label->accel_string);
   } else {
     accel_label->accel_string = NULL;
   }
