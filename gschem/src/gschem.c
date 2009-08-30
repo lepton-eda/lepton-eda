@@ -346,9 +346,9 @@ int main (int argc, char *argv[])
 #if ENABLE_NLS
   setlocale(LC_ALL, "");
   setlocale(LC_NUMERIC, "POSIX");
-  bindtextdomain(PACKAGE, LOCALEDIR);
-  textdomain(PACKAGE);
-  bind_textdomain_codeset(PACKAGE, "UTF-8");
+  bindtextdomain("geda-gschem", LOCALEDIR);
+  textdomain("geda-gschem");
+  bind_textdomain_codeset("geda-gschem", "UTF-8");
 #endif
 
   /* disable the deprecated warnings in guile 1.6.3 */
