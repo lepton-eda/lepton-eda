@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2009-08-29 11:29-0400\n"
+"POT-Creation-Date: 2009-08-30 19:22-0400\n"
 "PO-Revision-Date: 2008-12-20 14:22+0000\n"
 "Last-Translator: MIYAMOTO Takanori <pnms@jcom.home.ne.jp>\n"
 "Language-Team: japanese <ja@li.org>\n"
@@ -703,27 +703,27 @@ msgstr "schemeディレクトリが設定されていません!\n"
 msgid "Executing guile script [%s]\n"
 msgstr "guileスクリプトを実行しています。[%s]\n"
 
-#: gschem/src/gschem_accel_label.c:319
+#: gschem/src/gschem_accel_label.c:333
 msgid "Accelerator Closure"
 msgstr ""
 
-#: gschem/src/gschem_accel_label.c:320
+#: gschem/src/gschem_accel_label.c:334
 msgid "The closure to be monitored for accelerator changes"
 msgstr ""
 
-#: gschem/src/gschem_accel_label.c:326
+#: gschem/src/gschem_accel_label.c:340
 msgid "Accelerator Widget"
 msgstr ""
 
-#: gschem/src/gschem_accel_label.c:327
+#: gschem/src/gschem_accel_label.c:341
 msgid "The widget to be monitored for accelerator changes"
 msgstr ""
 
-#: gschem/src/gschem_accel_label.c:333
+#: gschem/src/gschem_accel_label.c:347
 msgid "Accelerator String"
 msgstr ""
 
-#: gschem/src/gschem_accel_label.c:334
+#: gschem/src/gschem_accel_label.c:348
 msgid "The accelerator string to be displayed"
 msgstr ""
 
