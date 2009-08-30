@@ -79,9 +79,15 @@ Notable changes in gEDA/gaf 1.5.3
 * Improvements and cleanup to the 'gnetlist' and 'gsymcheck' test suites.
 
 * Fixed the following bugs:
+
+  - 1758673: Combine source tarballs
+  - 2058707: gschem, gattrib: Dangerous button focus in "Save changes"
+             dialog at quit
+  - 2430369: gschem: Deselect invisible attribs with their parent object.
+  - 2449060: Graphic state left inconsistent cancelling from net mode
   - 2460301: libgeda: Make o_complex_promote_attribs() respect keep_invisible
              and libgeda: Make o_complex_copy() actually copy.
-  - 2430369: gschem: Deselect invisible attribs with their parent object.
+  - 2455061: Gnetlist output changed, and tests fail with recent GLib
   - 2655088: autogen.sh: Make sure to exit if autopoint fails.
   - 2823703: gnet-pcbpins.scm: Quote pins names if they contain comma
              or close parenthesis.
