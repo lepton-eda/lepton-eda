@@ -232,11 +232,6 @@ preview_update (Preview *preview)
                           o_read_buffer (preview_toplevel,
                                          NULL, preview->buffer, -1,
                                          _("Preview Buffer")));
-
-      /* Is this needed? */
-      if (preview_toplevel->net_consolidate == TRUE) {	
-              o_net_consolidate(preview_toplevel);
-      }
     }
   }
 

@@ -294,12 +294,6 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
   else
     g_propagate_error (err, tmp_err);
 
-  /* make sure you init net_consolide to false (default) in all */
-  /* programs */
-  if (toplevel->net_consolidate == TRUE) {
-    o_net_consolidate(toplevel);
-  }
-
   if (load_backup_file == 0) {
     /* If it's not the backup file */
     toplevel->page_current->CHANGED=0; /* added 4/7/98 */
