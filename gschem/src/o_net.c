@@ -635,13 +635,6 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 	save_wx = w_current->second_wx;
 	save_wy = w_current->second_wy;
       }
-
-      /* you don't want to consolidate nets which are drawn non-ortho */
-      if (toplevel->net_consolidate == TRUE && !w_current->CONTROLKEY) {
-        /* CAUTION: Object list will change when nets are consolidated, don't
-         *          keep pointers to other objects than new_net after this. */
-        o_net_consolidate_segments(toplevel, new_net);
-      }
   }
 
 
@@ -674,13 +667,6 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
       g_list_free (prev_conn_objects);
       prev_conn_objects = NULL;
-
-      /* you don't want to consolidate nets which are drawn non-ortho */
-      if (toplevel->net_consolidate == TRUE && !w_current->CONTROLKEY) {
-        /* CAUTION: Object list will change when nets are consolidated, don't
-         *          keep pointers to other objects than new_net after this. */
-        o_net_consolidate_segments(toplevel, new_net);
-      }
   }
 
   toplevel->page_current->CHANGED = 1;
