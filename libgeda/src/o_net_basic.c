@@ -531,7 +531,6 @@ int o_net_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object)
   CONN *conn;
   OBJECT *other_object;
   int changed = 0;
-  int reselect_new=FALSE;
 
   if (object == NULL) {
     return(0);
@@ -571,12 +570,13 @@ int o_net_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object)
           changed++;
           if (other_object->selected == TRUE ) {
             o_selection_remove (toplevel, toplevel->page_current->selection_list, other_object);
-            reselect_new=TRUE;
-          }
 
-          if (reselect_new == TRUE) {
-            o_selection_remove (toplevel, toplevel->page_current->selection_list, object);
-            o_selection_add (toplevel, toplevel->page_current->selection_list, object);
+            /* If we're consolidating with a selected object,
+             * ensure we select the resulting object.
+             */
+            if (object->selected == FALSE) {
+              o_selection_add (toplevel, toplevel->page_current->selection_list, object);
+            }
           }
 
           s_conn_remove_object (toplevel, other_object);
