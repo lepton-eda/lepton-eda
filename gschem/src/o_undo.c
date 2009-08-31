@@ -89,13 +89,25 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
     return;
   }
 
-  if (w_current->undo_type == UNDO_DISK && flag == UNDO_ALL) {
+  if (flag == UNDO_ALL) {
 
     /* Increment the number of operations since last backup if 
        auto-save is enabled */
     if (toplevel->auto_save_interval != 0) {
       toplevel->page_current->ops_since_last_backup++;
     }
+
+    /* HACK */
+    /* Before we save the undo state, consolidate nets as necessary */
+
+    /* This is where the net consolidation call would have been
+     * triggered before it was removed from o_save_buffer().
+     */
+    if (toplevel->net_consolidate == TRUE)
+      o_net_consolidate (w_current->toplevel);
+  }
+
+  if (w_current->undo_type == UNDO_DISK && flag == UNDO_ALL) {
 
     filename = g_strdup_printf("%s%cgschem.save%d_%d.sch",
                                tmp_path, G_DIR_SEPARATOR,
@@ -107,15 +119,7 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
        saving an undo backup copy */
     o_save_curr_page (toplevel, filename);
 
-
   } else if (w_current->undo_type == UNDO_MEMORY && flag == UNDO_ALL) {
-
-    /* Increment the number of operations since last backup if 
-       auto-save is enabled */
-    if (toplevel->auto_save_interval != 0) {
-      toplevel->page_current->ops_since_last_backup++;
-    }
-
     object_list = o_glist_copy_all (toplevel,
                                     s_page_objects (toplevel->page_current),
                                     object_list, SELECTION_FLAG);
