@@ -142,8 +142,6 @@ OBJECT *o_bus_copy(TOPLEVEL *toplevel, OBJECT *o_current);
 void o_bus_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_bus_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 int o_bus_orientation(OBJECT *object);
-void o_bus_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient);
-int o_bus_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object);
 void o_bus_consolidate(TOPLEVEL *toplevel);
 void o_bus_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
@@ -204,9 +202,6 @@ OBJECT *o_net_copy(TOPLEVEL *toplevel, OBJECT *o_current);
 void o_net_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_net_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 int o_net_orientation(OBJECT *object);
-void o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object, int orient);
-int o_net_consolidate_nomidpoint(OBJECT *object, int x, int y);
-int o_net_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object);
 void o_net_consolidate(TOPLEVEL *toplevel);
 void o_net_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 

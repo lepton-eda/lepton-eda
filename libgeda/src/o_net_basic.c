@@ -404,8 +404,8 @@ int o_net_orientation(OBJECT *object)
  *  \note The first net \a object gets the attributes of the second net 
  *  \a del_object if the two nets are merged together.
  */
-void o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
-				int orient)
+static void o_net_consolidate_lowlevel (OBJECT *object,
+                                        OBJECT *del_object, int orient)
 {
   int temp1, temp2;
   int final1, final2;
@@ -488,7 +488,7 @@ void o_net_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
  *  \param y       y-coord of the connection location
  *  \return TRUE if there's no midpoint connection, else return FALSE
  */
-int o_net_consolidate_nomidpoint(OBJECT *object, int x, int y)
+static int o_net_consolidate_nomidpoint (OBJECT *object, int x, int y)
 {
   GList *c_current;
   CONN *conn;
@@ -523,7 +523,7 @@ int o_net_consolidate_nomidpoint(OBJECT *object, int x, int y)
  *  \return 0 if no consolidation was possible, -1 otherwise
  *
  */
-int o_net_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object)
+static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
 {
   int object_orient;
   int other_orient;

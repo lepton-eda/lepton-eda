@@ -412,8 +412,8 @@ int o_bus_orientation(OBJECT *object)
  *
  * \todo This function is currently not used. Check it before using it
  */
-void o_bus_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
-				int orient) 
+static void o_bus_consolidate_lowlevel (OBJECT *object,
+                                        OBJECT *del_object, int orient)
 {
   int temp1, temp2;
   int final1, final2;
@@ -495,7 +495,7 @@ void o_bus_consolidate_lowlevel(OBJECT *object, OBJECT *del_object,
  *
  * \todo Not Implemented Yet
  */
-int o_bus_consolidate_segments(TOPLEVEL *toplevel, OBJECT *object)
+static int o_bus_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
 {
 
   return(0);
