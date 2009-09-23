@@ -30,11 +30,10 @@ AX_GIT_VERSION([20090830])
 AC_SUBST([CHANGELOG_BASE], [1.0-20070526])
 
 #####################################################################
-# Win32/MinGW support
+# Windows/MinGW/Cygwin support
 #####################################################################
 
-# FIXME complete this
-AC_CANONICAL_HOST
+AX_WINDOWS_FLAGS
 
 #####################################################################
 # Check for compiling & linking tools

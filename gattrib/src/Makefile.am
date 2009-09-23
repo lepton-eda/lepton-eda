@@ -34,7 +34,8 @@ gattrib_SOURCES = \
 
 gattrib_CPPFLAGS = -I$(top_srcdir)/libgeda/include \
 	-I$(srcdir)/../include -I$(top_srcdir) -I$(includedir)
-gattrib_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLAGS) $(GLIB_CFLAGS) \
+gattrib_CFLAGS = $(GCC_CFLAGS) $(GLIB_CFLAGS) \
+	$(MINGW_CFLAGS) $(MINGW_GUI_CFLAGS) \
 	$(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(GUILE_CFLAGS)
 gattrib_LDFLAGS = $(GLIB_LIBS) $(GTK_LIBS) $(GTHREAD_LIBS) \
 	$(GUILE_LIBS)
