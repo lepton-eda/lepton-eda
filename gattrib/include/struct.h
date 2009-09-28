@@ -39,7 +39,6 @@
 /* -------  Includes needed to make the GTK stuff work  ------ */
 
 #include "gtksheet_2_2.h"
-#include "gtkitementry_2_2.h"
 
 
 /* ========  Data structures used in processing below here  ========== */

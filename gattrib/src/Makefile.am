@@ -7,7 +7,6 @@ bin_PROGRAMS = gattrib
 gattrib_SOURCES = \
 		gtksheet_2_2.c \
 		gtkextra-marshal.c \
-                gtkitementry_2_2.c \
 		globals.c \
 		listsort.c \
 		parsecmd.c \

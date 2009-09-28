@@ -5,7 +5,6 @@ noinst_HEADERS = \
 	prototype.h \
 	x_states.h \
 	gtksheet_2_2.h \
-	gtkitementry_2_2.h \
 	i_vars.h \
 	struct.h \
 	gtkextra-marshal.h

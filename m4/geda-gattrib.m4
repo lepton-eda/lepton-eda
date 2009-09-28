@@ -31,26 +31,6 @@ AC_DEFUN([AX_OPTION_GATTRIB],
 
   if test "X$enable_gattrib" = "Xyes"; then
     AC_MSG_RESULT([yes])
-    # currently (2009-08-16) gattrib will not build with gtk version 2.17.4 and
-    # newer.  This is because gattrib accesses some internal private gtk variables
-    # that changed.  It will probably take a fair amount of rewriting of
-    # gattrib to fix this.
-    AC_MSG_CHECKING([if the installed version of gtk is compatible with gattrib])
-
-    _max_gtk_version=2.17.3
-    $PKG_CONFIG --max-version=${_max_gtk_version} gtk+-2.0
-    _gtk_ok=$?
-
-    if test ${_gtk_ok} -eq 0 ; then
-      AC_MSG_RESULT([yes])
-    else
-      AC_MSG_RESULT([no])
-      _GTK_VER="`${PKG_CONFIG} --modversion gtk+-2.0`"
-      AC_MSG_ERROR([Currently gattrib is not compatible with gtk versions newer than
-${_max_gtk_version}.  It appears that you have ${_GTK_VER} installed.  Either
-downgrade your gtk installation or configure with --disable-gattrib])
-    fi
-
   else
     AC_MSG_RESULT([no])
   fi

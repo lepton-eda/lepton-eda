@@ -42,9 +42,6 @@
 #include <string.h>
 #endif
 
-#include "gtksheet_2_2.h"
-#include "gtkitementry_2_2.h"
-
 /*------------------------------------------------------------------
  * Gattrib specific includes
  *------------------------------------------------------------------*/

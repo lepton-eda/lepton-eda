@@ -44,7 +44,6 @@
 #include <gtk/gtkcontainer.h>
 #include <gtk/gtkpixmap.h>
 #include <pango/pango.h>
-#include "gtkitementry_2_2.h"
 #include "gtksheet_2_2.h"
 #include "gtkextra-marshal.h"
 
@@ -528,7 +527,6 @@ static void global_button_clicked		(GtkWidget *widget,
 
 static void create_sheet_entry			(GtkSheet *sheet);
 static void gtk_sheet_size_allocate_entry	(GtkSheet *sheet);
-static void gtk_sheet_entry_set_max_size	(GtkSheet *sheet);
 
 /* Sheet button gadgets */
 
@@ -4184,13 +4182,9 @@ gtk_sheet_show_active_cell(GtkSheet *sheet)
  }
 
 
- if(!GTK_IS_ITEM_ENTRY(sheet_entry))
-    gtk_entry_set_text(GTK_ENTRY(sheet_entry), text);
- else
-    gtk_item_entry_set_text(GTK_ITEM_ENTRY(sheet_entry), text, justification);
+ gtk_entry_set_text(GTK_ENTRY(sheet_entry), text);
 
 
- gtk_sheet_entry_set_max_size(sheet);
  gtk_sheet_size_allocate_entry(sheet);
 
  gtk_widget_map(sheet->sheet_entry);
@@ -6210,20 +6204,15 @@ gtk_sheet_size_allocate_entry(GtkSheet *sheet)
   GTK_WIDGET(sheet_entry)->style = previous_style;
 
   if(style != previous_style){
-    if(!GTK_IS_ITEM_ENTRY(sheet->sheet_entry)){
-      style->bg[GTK_STATE_NORMAL] = previous_style->bg[GTK_STATE_NORMAL];
-      style->fg[GTK_STATE_NORMAL] = previous_style->fg[GTK_STATE_NORMAL];
-      style->bg[GTK_STATE_ACTIVE] = previous_style->bg[GTK_STATE_ACTIVE];
-      style->fg[GTK_STATE_ACTIVE] = previous_style->fg[GTK_STATE_ACTIVE];
-    }
+    style->bg[GTK_STATE_NORMAL] = previous_style->bg[GTK_STATE_NORMAL];
+    style->fg[GTK_STATE_NORMAL] = previous_style->fg[GTK_STATE_NORMAL];
+    style->bg[GTK_STATE_ACTIVE] = previous_style->bg[GTK_STATE_ACTIVE];
+    style->fg[GTK_STATE_ACTIVE] = previous_style->fg[GTK_STATE_ACTIVE];
     gtk_widget_set_style(GTK_WIDGET(sheet_entry), style);
   }
  }
 
- if(GTK_IS_ITEM_ENTRY(sheet_entry))
-    max_size = GTK_ITEM_ENTRY(sheet_entry)->text_max_size;
- else
-    max_size = 0;
+ max_size = 0;
 
  text_size = 0;
  text = gtk_entry_get_text(GTK_ENTRY(sheet_entry));
@@ -6244,92 +6233,16 @@ gtk_sheet_size_allocate_entry(GtkSheet *sheet)
  shentry_allocation.width = column_width;
  shentry_allocation.height = sheet->row[sheet->active_cell.row].height;
 
- if(GTK_IS_ITEM_ENTRY(sheet->sheet_entry)){
-
-   shentry_allocation.height -= 2*CELLOFFSET;
-   shentry_allocation.y += CELLOFFSET;
-   if(gtk_sheet_clip_text(sheet))
-     shentry_allocation.width = column_width - 2*CELLOFFSET;
-   else
-     shentry_allocation.width = size;
-
-   switch(GTK_ITEM_ENTRY(sheet_entry)->justification){
-     case GTK_JUSTIFY_CENTER:
-       shentry_allocation.x += (column_width)/2 - size/2;
-       break;
-     case GTK_JUSTIFY_RIGHT:
-       shentry_allocation.x += column_width - size - CELLOFFSET;
-       break;
-     case GTK_JUSTIFY_LEFT:
-     case GTK_JUSTIFY_FILL:
-       shentry_allocation.x += CELLOFFSET;
-       break;
-    }
-
- }
-
- if(!GTK_IS_ITEM_ENTRY(sheet->sheet_entry)){
-   shentry_allocation.x += 2;
-   shentry_allocation.y += 2;
-   shentry_allocation.width -= MIN(shentry_allocation.width, 3);
-   shentry_allocation.height -= MIN(shentry_allocation.height, 3);
- }
+ shentry_allocation.x += 2;
+ shentry_allocation.y += 2;
+ shentry_allocation.width -= MIN(shentry_allocation.width, 3);
+ shentry_allocation.height -= MIN(shentry_allocation.height, 3);
 
  gtk_widget_size_allocate(sheet->sheet_entry, &shentry_allocation);
 
  if(previous_style == style) gtk_style_unref(previous_style);
 }
 
-static void
-gtk_sheet_entry_set_max_size(GtkSheet *sheet)
-{
- gint i;
- gint size=0;
- gint sizel=0, sizer=0;
- gint row,col;
- GtkJustification justification;
-
- row=sheet->active_cell.row;
- col=sheet->active_cell.col;
-
- if(!GTK_IS_ITEM_ENTRY(sheet->sheet_entry) || gtk_sheet_clip_text(sheet)) return;
-
-
- justification = GTK_ITEM_ENTRY(sheet->sheet_entry)->justification;
-
- switch(justification){
-  case GTK_JUSTIFY_FILL:
-  case GTK_JUSTIFY_LEFT:
-    for(i=col+1; i<=MAX_VISIBLE_COLUMN(sheet); i++){
-     if(gtk_sheet_cell_get_text(sheet, row, i)) break;
-     size+=sheet->column[i].width;
-    }
-    size = MIN(size, sheet->sheet_window_width - COLUMN_LEFT_XPIXEL(sheet, col));
-    break;
-  case GTK_JUSTIFY_RIGHT:
-    for(i=col-1; i>=MIN_VISIBLE_COLUMN(sheet); i--){
-     if(gtk_sheet_cell_get_text(sheet, row, i)) break;
-     size+=sheet->column[i].width;
-    }
-    break;
-  case GTK_JUSTIFY_CENTER:
-    for(i=col+1; i<=MAX_VISIBLE_COLUMN(sheet); i++){
-/*     if(gtk_sheet_cell_get_text(sheet, row, i)) break;
-*/
-     sizer+=sheet->column[i].width;
-    }
-    for(i=col-1; i>=MIN_VISIBLE_COLUMN(sheet); i--){
-     if(gtk_sheet_cell_get_text(sheet, row, i)) break;
-     sizel+=sheet->column[i].width;
-    }
-    size=2*MIN(sizel, sizer);
-    break;
- }
-
- if(size!=0) size+=sheet->column[col].width;
- GTK_ITEM_ENTRY(sheet->sheet_entry)->text_max_size=size;
-
-}
 
 static void
 create_sheet_entry(GtkSheet *sheet)
@@ -6373,7 +6286,7 @@ create_sheet_entry(GtkSheet *sheet)
    if(!found_entry){
 
      g_warning ("Entry type must be GtkEntry subclass, using default");
-     entry = gtk_item_entry_new();
+     entry = gtk_entry_new ();
      sheet->sheet_entry = entry;
 
    } else {
@@ -6385,7 +6298,7 @@ create_sheet_entry(GtkSheet *sheet)
 
  } else {
 
-     entry = gtk_item_entry_new();
+     entry = gtk_entry_new ();
      sheet->sheet_entry = entry;
 
  }
