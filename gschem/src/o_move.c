@@ -472,6 +472,7 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *cl_current;
   CONN *c_current;
+  OBJECT *other;
   int whichone;
 
   if (!object)
@@ -488,12 +489,17 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
        cl_current = g_list_next(cl_current)) {
 
     c_current = (CONN *) cl_current->data;
+    other = c_current->other_object;
 
-    if (c_current->other_object == NULL)
+    if (other == NULL)
       continue;
 
     /* really make sure that the object is not selected */
-    if (c_current->other_object->selected)
+    if (other->selected)
+      continue;
+
+    /* Catch pins, whos parent object is selected. */
+    if (other->parent != NULL && other->parent->selected)
       continue;
 
     if (c_current->type != CONN_ENDPOINT &&
@@ -501,18 +507,37 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
          c_current->other_whichone == -1))
       continue;
 
+    if (/* (net)pin to (net)pin contact */
+        (object->type == OBJ_PIN && object->pin_type == PIN_TYPE_NET &&
+          other->type == OBJ_PIN &&  other->pin_type == PIN_TYPE_NET)) {
+
+     /* net to (net)pin contact */
+     /* (object->type == OBJ_NET &&
+          other->type == OBJ_PIN && other->pin_type == PIN_TYPE_NET) */
+
+      OBJECT *new_net;
+      /* other object is a pin, insert a net */
+      new_net = o_net_new (toplevel, OBJ_NET, NET_COLOR,
+                           c_current->x, c_current->y,
+                           c_current->x, c_current->y);
+      s_page_append (toplevel, toplevel->page_current, new_net);
+      s_tile_add_object (toplevel, new_net);
+      s_conn_update_object (toplevel, new_net);
+      /* This new net object is only picked up for stretching later,
+       * somewhat of a kludge. If the move operation is cancelled, these
+       * new 0 length nets are removed by the "undo" operation invoked.
+       */
+    }
+
     /* Only attempt to stretch nets and buses */
-    if (c_current->other_object->type != OBJ_NET &&
-        c_current->other_object->type != OBJ_BUS)
+    if (other->type != OBJ_NET && other->type != OBJ_BUS)
       continue;
 
-    whichone = o_move_return_whichone(c_current->other_object,
-                                      c_current->x,
-                                      c_current->y);
+    whichone = o_move_return_whichone (other, c_current->x, c_current->y);
 
 #if DEBUG
     printf ("FOUND: %s type: %d, whichone: %d, x,y: %d %d\n",
-            c_current->other_object->name, c_current->type,
+            other->name, c_current->type,
             whichone, c_current->x, c_current->y);
 
     printf("other x,y: %d %d\n", c_current->x, c_current->y);
@@ -524,8 +549,7 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
     if (whichone >= 0 && whichone <= 1) {
       toplevel->page_current->stretch_list =
         s_stretch_add (toplevel->page_current->stretch_list,
-                       c_current->other_object,
-                       c_current, whichone);
+                       other, c_current, whichone);
     }
   }
 
