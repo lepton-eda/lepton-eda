@@ -12,34 +12,34 @@ SUFFIXES = .fig .pic .ps .doc .pdf
 .fig.pic:
 	@echo "Creating pic (using fig2dev)"
 	@if which fig2dev >/dev/null 2>/dev/null; then           \
-		fig2dev -L pic $*.fig >$*.pic		       ;\
+		fig2dev -L pic $< > $@		               ;\
 	else                                                    \
 		echo "** Did not find fig2dev **"              ;\
 		echo "Some documentation might not be correct!";\
-		touch $*.pic				       ;\
+		touch $@				       ;\
 	fi
 
 .doc.ps:
 	@echo "Creating ps (using groff)"
-	@rm -rf $*.tmp
+	@rm -rf $@.tmp
 	@if test "x$(GROFF)" != xno; then                        \
-		LC_NUMERIC=C $(GROFF) -t -sp -ms $*.doc >$*.tmp ;\
-		mv -f $*.tmp $*.ps                              ;\
+		LC_NUMERIC=C $(GROFF) -t -sp -ms $< > $@.tmp    ;\
+		mv -f $@.tmp $@                                 ;\
 	else						         \
 		echo "** Did not find groff **"                 ;\
 		echo "Some Documentation might not be correct!" ;\
-		touch $*.ps                                     ;\
+		touch $@                                     ;\
 	fi
 
 .ps.pdf:
 	@echo "Creating pdf (using ps2pdf)"
-	@rm -rf $*.pdf
+	@rm -rf $@
 	@if which ps2pdf >/dev/null 2>/dev/null; then             \
-		ps2pdf $*.ps					;\
+		ps2pdf $<					;\
 	else                                                     \
 		echo "** Did not find ps2pdf **"                ;\
 		echo "Some Documentation might not be correct!" ;\
-		touch $*.pdf                                    ;\
+		touch $@                                        ;\
 	fi
 
 #
