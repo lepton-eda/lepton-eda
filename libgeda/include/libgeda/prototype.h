@@ -107,8 +107,6 @@ char *o_attrib_search_floating_attribs_by_name (const GList *list, char *name, i
 char *o_attrib_search_attached_attribs_by_name (OBJECT *object, char *name, int counter);
 char *o_attrib_search_inherited_attribs_by_name (OBJECT *object, char *name, int counter);
 char *o_attrib_search_object_attribs_by_name (OBJECT *object, char *name, int counter);
-char *o_attrib_search_slot(OBJECT *object, OBJECT **return_found);
-void o_attrib_slot_update(TOPLEVEL *toplevel, OBJECT *object);
 GList *o_attrib_return_attribs(OBJECT *object);
 int o_attrib_is_inherited(OBJECT *attrib);
 
@@ -411,6 +409,10 @@ char *s_slib_getfiles(char *directory, int flag);
 void s_slib_print(void);
 int s_slib_uniq(char *path);
 void s_slib_print_dirs(void);
+
+/* s_slot.c */
+char *s_slot_search_slot(OBJECT *object, OBJECT **return_found);
+void s_slot_update_object(TOPLEVEL *toplevel, OBJECT *object);
 
 /* s_stretch.c */
 GList *s_stretch_add(GList *list, OBJECT *object, CONN *connection, int whichone);

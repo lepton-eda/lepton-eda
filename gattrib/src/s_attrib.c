@@ -121,7 +121,7 @@ char *s_attrib_get_refdes(OBJECT *object)
     o_attrib_search_object_attribs_by_name (object, "numslots", 0);
   if (numslots_value != NULL) {  /* this is a slotted component; 
 				    append slot number to refdes. */
-    slot_value = o_attrib_search_slot(object, &slot_text_object);
+    slot_value = s_slot_search_slot (object, &slot_text_object);
 #if DEBUG
     printf(". . .  , found slotted component with slot = %s\n", slot_value);
 #endif

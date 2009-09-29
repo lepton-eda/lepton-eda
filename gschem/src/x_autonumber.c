@@ -587,7 +587,7 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
     /* get the slot attribute */
     o_parent = o_current->attached_to;
     if (o_parent != NULL) {
-      slot_str = o_attrib_search_slot(o_parent, &o_slot);
+      slot_str = s_slot_search_slot (o_parent, &o_slot);
       if (slot_str != NULL && o_slot != NULL) {
         g_free(slot_str);
         /* delete the slot attribute */
@@ -617,7 +617,7 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
   /* add the slot as attribute to the object */
   o_parent = o_current->attached_to;
   if (slot != 0 && o_parent != NULL) {
-    slot_str = o_attrib_search_slot(o_parent, &o_slot);
+    slot_str = s_slot_search_slot (o_parent, &o_slot);
     if (slot_str != NULL) {
       /* update the slot attribute */
       g_free(slot_str);
@@ -635,7 +635,6 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
 			  INVISIBLE, SHOW_NAME_VALUE,
 			  o_parent);
     }
-    o_attrib_slot_update(autotext->w_current->toplevel, o_parent);
   }
 
   /* replace old text */

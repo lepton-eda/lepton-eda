@@ -119,7 +119,7 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
 
     /* first see if slot attribute already exists outside
      * complex */
-    slot_value = o_attrib_search_slot(object, &slot_text_object);
+    slot_value = s_slot_search_slot (object, &slot_text_object);
 
     if (slot_value) {
       o_text_set_string (toplevel, slot_text_object, string);
@@ -158,7 +158,7 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
     }
 
     o_invalidate (w_current, object);
-    o_attrib_slot_update(toplevel, object);
+    s_slot_update_object (toplevel, object);
 
     o_invalidate (w_current,object);
 

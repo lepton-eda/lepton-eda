@@ -835,7 +835,7 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   /* Delete or hide attributes eligible for promotion inside the complex */
   o_complex_remove_promotable_attribs (toplevel, o_new);
 
-  o_attrib_slot_update (toplevel, o_new);
+  s_slot_update_object (toplevel, o_new);
 
   /* deal with stuff that has changed */
 

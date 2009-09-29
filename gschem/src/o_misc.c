@@ -776,7 +776,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   s_delete_object_glist (toplevel, temp_list);
 
   /* update the pinnumbers to the current slot */
-  o_attrib_slot_update(toplevel, o_current);
+  s_slot_update_object (toplevel, o_current);
 
   /* Recalculate the bounds of the object */
   o_recalc_single_object(toplevel, o_current);

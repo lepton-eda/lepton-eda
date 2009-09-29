@@ -107,6 +107,7 @@ GList *o_read_attribs(TOPLEVEL *toplevel,
                       TextBuffer *tb,
                       unsigned int release_ver,
                       unsigned int fileformat_ver);
+OBJECT *o_attrib_find_attrib_by_name(const GList *list, char *name, int count);
 
 /* o_basic.c */
 void o_bounds_invalidate(TOPLEVEL *toplevel, OBJECT *object);
