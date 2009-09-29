@@ -781,8 +781,9 @@ void o_attrib_slot_update (TOPLEVEL *toplevel, OBJECT *object)
       g_list_free (attributes);
 
       if (o_pinnum_attrib != NULL) {
-        g_free (o_pinnum_attrib->text->string);
-        o_pinnum_attrib->text->string = g_strdup_printf ("pinnumber=%s", current_pin);
+        o_text_set_string (toplevel,
+                           o_pinnum_attrib,
+                           g_strdup_printf ("pinnumber=%s", current_pin));
         o_text_recreate (toplevel, o_pinnum_attrib);
       }
 
