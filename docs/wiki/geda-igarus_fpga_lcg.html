@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="fpga_loadable_code_generator_for_icarus_verilog" id="fpga_loadable_code_generator_for_icarus_verilog">FPGA Loadable Code Generator for Icarus Verilog</a></h1>
+<div class="level1">
+<pre class="code">FPGA LOADABLE CODE GENERATOR FOR Icarus Verilog
+
+  Copyright 2001 Stephen Williams
+  $Id: fpga.txt,v 1.12 2005/09/19 21:45:36 steve Exp $
+
+The FPGA code generator supports a variety of FPGA devices, writing
+XNF or EDIF depending on the target. You can select the architecture
+of the device, and the detailed part name. The architecture is used to
+select library primitives, and the detailed part name is written into
+the generated file for the use of downstream tools.
+
+INVOKING THE FPGA TARGET
+
+The code generator is invoked with the -tfpga flag to iverilog. It
+understands the part= and the arch= parameters, which can be set with
+the -p flag of iverilog:
+
+	iverilog -parch=virtex -ppart=v50-pq240-6 -tfpga foo.vl
+
+This example selects the Virtex architecture, and give the detailed
+part number as v50-pq240-6. The output is written into a.out unless a
+different output file is specified with the -o flag.
+
+The following is a list of architecture types that this code generator
+supports.
+
+* arch=lpm
+
+This is a device independent format, where the gates are device types
+as defined by the LPM 2 1 0 specification. Some backend tools may take
+this format, or users may write interface libraries to connect these
+netlists to the device in question.
+
+* arch=generic-edif (obsolete)
+
+This is generic EDIF code. It doesn&#039;t necessarily work because the
+external library is not available to the code generator. But, what it
+does is generate generic style gates that a portability library can
+map to target gates if desired.
+
+* arch=generic-xnf (obsolete)
+
+If this is selected, then the output is formatted as an XNF file,
+suitable for most any type of device. The devices that it emits
+are generic devices from the unified library. Some devices are macros,
+you may need to further resolve the generated XNF to get working
+code for your part.
+
+* arch=virtex
+
+If this is selected, then the output is formatted as an EDIF 200 file,
+suitable for Virtex class devices. This is supposed to know that you
+are targeting a Virtex part, so can generate primitives instead of
+using external macros. It includes the VIRTEX internal library, and
+should work properly for any Virtex part.
+
+* arch=virtex2
+
+If this is selected, then the output is EDIF 2 0 0 suitable for
+Virtex-II and Virtex-II Pro devices. It uses the VIRTEX2 library, but
+is very similar to the Virtex target.
+
+XNF ROOT PORTS
+
+  NOTE: As parts are moved over to EDIF format, XNF support will be
+  phased out. Current Xilinx implementation tools will accept EDIF
+  format files even for the older parts, and non-Xilinx implementation
+  tools accept nothing else.
+
+When the output format is XNF, the code generator will generate &quot;SIG&quot;
+records for the signals that are ports of the root module. The name is
+declared as an external pin that this macro makes available.
+
+The name given to the macro pin is generated from the base name of the
+signal. If the signal is one bit wide, then the pin name is exactly
+the module port name. If the port is a vector, then the pin number is
+given as a vector. For example, the module:
+
+	module main(out, in);
+	    output out;
+	    input [2:0] in;
+	    [...]
+	endmodule
+
+leads to these SIG, records:
+
+	SIG, main/out, PIN=out
+	SIG, main/in&lt;2&gt;, PIN=in2
+	SIG, main/in&lt;1&gt;, PIN=in1
+	SIG, main/in&lt;0&gt;, PIN=in0
+
+
+EDIF ROOT PORTS
+
+The EDIF format is more explicit about the interface into an EDIF
+file. The code generator uses that control to generate an explicit
+interface definition into the design. (This is *not* the same as the
+PADS of a part.) The generated EDIF interface section contains port
+definitions, including the proper direction marks.
+
+With the (rename ...) s-exp in EDIF, it is possible to assign
+arbitrary text to port names. The EDIF code generator therefore does
+not resort to the mangling that is needed for the XNF target. The base
+name of the signal that is an input or output is used as the name of
+the port, complete with the proper case.
+
+However, since the ports are single bit ports, the name of vectors
+includes the string &quot;[0]&quot; where the number is the bit number. For
+example, the module:
+
+
+	module main(out, in);
+	    output out;
+	    input [2:0] in;
+	    [...]
+	endmodule
+
+creates these ports:
+
+	out   OUTPUT
+	in[0] INPUT
+	in[1] INPUT
+	in[2] INPUT
+
+Target tools, including Xilinx Foundation tools, understand the []
+characters in the name and recollect the signals into a proper bus
+when presenting the vector to the user.
+
+
+PADS AND PIN ASSIGNMENT
+
+The ports of a root module may be assigned to specific pins, or to a
+generic pad. If a signal (that is a port) has a PAD attribute, then
+the value of that attribute is a list of locations, one for each bit
+of the signal, that specifies the pin for each bit of the signal. For
+example:
+
+	module main( (* PAD = &quot;P10&quot; *)         output out,
+		     (* PAD = &quot;P20,P21,P22&quot; *) input [2:0] in);
+
+	    [...]
+
+	endmodule
+
+In this example, port ``out&#039;&#039; is assigned to pin 10, and port ``in&#039;&#039;
+is assigned to pins 20-22. If the architecture supports it, a pin
+number of 0 means let the back end tools choose a pin. The format of
+the pin number depends on the architecture family being targeted, so
+for example Xilinx family devices take the name that is associated
+with the &quot;LOC&quot; attribute.
+
+NOTE: If a module port is assigned to a pin (and therefore attached to
+a PAD) then it is *not* connected to a port of the EDIF file. This is
+because the PAD (and possibly IBUF or OBUF) would become an extra
+driver to the port. An error.
+
+
+SPECIAL DEVICES
+
+The code generator supports the &quot;cellref&quot; attribute attached to logic
+devices to cause specific device types be generated, instead of the
+usual device that the code generator might generate. For example, to
+get a clock buffer out of a Verilog buf:
+
+	buf my_gbuf(out, in);
+	$attribute(my_buf, &quot;cellref&quot;, &quot;GBUF:O,I&quot;);
+
+The &quot;cellref&quot; attribute tells the code generator to use the given
+cell. The syntax of the value is:
+
+	&lt;cell type&gt;:&lt;pin name&gt;,...
+
+The cell type is the name of the library part to use. The pin names
+are the names of the type in the library, in the order that the logic
+device pins are connected.
+
+
+COMPILING WITH XILINX FOUNDATION
+
+Compile a single-file design with command line tools like so:
+
+	% iverilog -parch=virtex -o foo.edf foo.vl
+	% edif2ngd foo.edf foo.ngo
+	% ngdbuild -p v50-pq240 foo.ngo foo.ngd
+	% map -o map.ncd foo.ngd
+	% par -w map.ncd foo.ncd
+
+---
+$Log: fpga.txt,v $
+Revision 1.12  2005/09/19 21:45:36  steve
+ Spelling patches from Larry.
+
+Revision 1.11  2003/08/07 05:17:34  steve
+ Add arch=lpm to the documentation.
+
+Revision 1.10  2003/07/04 03:57:19  steve
+ Allow attributes on Verilog 2001 port declarations.
+
+Revision 1.9  2003/07/04 01:08:03  steve
+ PAD attribute can be used to assign pins.
+
+Revision 1.8  2003/07/02 00:26:49  steve
+ Fix spelling of part= flag.
+
+Revision 1.7  2003/03/24 02:28:38  steve
+ Document the virtex2 architecture.
+
+Revision 1.6  2003/03/24 00:47:54  steve
+ Add new virtex2 architecture family, and
+ also the new edif.h EDIF management functions.
+
+Revision 1.5  2002/04/30 04:26:42  steve
+ Spelling errors.
+
+Revision 1.4  2001/09/16 22:26:47  steve
+ Support the cellref attribute.
+
+Revision 1.3  2001/09/16 01:48:16  steve
+ Suppor the PAD attribute on signals.
+
+Revision 1.2  2001/09/06 04:28:40  steve
+ Separate the virtex and generic-edif code generators.
+
+Revision 1.1  2001/09/02 23:58:49  steve
+ Add documentation for the code generator.
+
+</pre>
+
+</div>
+</body>
+</html>

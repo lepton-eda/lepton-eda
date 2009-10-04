@@ -257,27 +257,20 @@ AC_CONFIG_FILES([Makefile
                  symbols/Makefile
                  symbols/documentation/Makefile
 
-                 docs/Makefile
+		 docs/Makefile
                  docs/scripts/Makefile
                  docs/toplevel/Makefile
                  docs/toplevel/gedadocs.html
                  docs/wiki/Makefile
-                 docs/wiki/_detail/Makefile
-                 docs/wiki/_media/Makefile
-                 docs/wiki/lib/Makefile
-                 docs/wiki/lib/exe/Makefile
-                 docs/wiki/lib/images/Makefile
-                 docs/wiki/lib/images/fileicons/Makefile
-                 docs/wiki/lib/images/interwiki/Makefile
-                 docs/wiki/lib/images/smileys/Makefile
-                 docs/wiki/lib/plugins/Makefile
-                 docs/wiki/lib/plugins/definitionlist/Makefile
-                 docs/wiki/lib/plugins/definitionlist/images/Makefile
-                 docs/wiki/lib/plugins/note/Makefile
-                 docs/wiki/lib/plugins/note/images/Makefile
-                 docs/wiki/lib/tpl/Makefile
-                 docs/wiki/lib/tpl/geda/Makefile
-                 docs/wiki/lib/tpl/geda/images/Makefile
+                 docs/wiki/images/smileys/Makefile
+                 docs/wiki/images/Makefile
+                 docs/wiki/images/interwiki/Makefile
+                 docs/wiki/media/geda/Makefile
+                 docs/wiki/media/wiki/Makefile
+                 docs/wiki/media/tragesym/tragesym/Makefile
+                 docs/wiki/media/tragesym/Makefile
+                 docs/wiki/media/Makefile
+                 docs/wiki/media/devel_tips/Makefile
 
                  examples/Makefile
                  examples/RF_Amp/Makefile

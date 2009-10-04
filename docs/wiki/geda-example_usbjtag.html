@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="example_usb-based_jtag_interface" id="example_usb-based_jtag_interface">Example USB-based JTAG interface</a></h1>
+<div class="level1">
+
+<p>
+If you installed the gEDA Tool Suite from the distribution CD-ROM, then you should have this example of a USB-based JTAG interface in the:<br/>
+ <strong><code>{source-code_installation_path}geda-sources/gedagaf/geda-examples-20060123/gTAG</code></strong> <br/>
+ directory.
+</p>
+<pre class="code">		gTAG - 	USB to JTAG interface
+		============================
+
+This is the README file for the schematic of gTAG.
+
+Short description
+-----------------
+gTAG is an interface to connect your USB port of computer to talk
+to your circuits which talks JTAG.
+
+Copyright
+---------
+These schematics is (C) by Stefan Petersen (spe@stacken.kth.se) and 
+released under GPL (see the attached file COPYING). GPL is mainly 
+written for software, ie intellectual property in electronic form. 
+By making this schematic an intellectual property in electronic
+form gTAG schematics can be covered by GPL.
+
+How?
+----
+These schematics are made with gschem and netlists are then generated
+with gnetlist. Both gschem and gnetlist are part of gEDA 
+(http://www.geda.seul.org/).
+
+Files
+-----
+The distribution of the schematics of gTAG should consist of:
+* README - this file.
+* COPYING - GPL copyright notice.
+* crdist.sh - shell script used to generate the tar.gz.
+* ChangeLog - tries to scribble down what has changed between versions.
+* Four component symbols:
+  - 7414-1.sym - Original 7414 from gschem without power attributes.
+  - max882.sym - 5-to-3.3 V converter.
+  - cy7c64603-52nc.sym - USB microcontroller from Cypress.
+  - sn75240pw.sym - Surge supressor for USB
+  - copyleft.sym - Symbol with GPL text for all schematics.
+* Five schematics with four symbols:
+  - gTAG.sch.sch - Toplevel schematic for gTAG
+  - gTAG-jtagio.[sym/sch]
+  - gTAG-ucont.[sym/sch]
+  - gTAG-consio.[sym/sch]
+  - gTAG-psu.[sym/sch]
+* gEDA rc-files for this project:
+  - commonrc - contains common declarations for both gschem and gnetlist
+  - gnetlistrc - gnetlist specific and and calls commonrc
+  - gschemrc   - gschem specific and and calls commonrc
+</pre>
+
+</div>
+</body>
+</html>

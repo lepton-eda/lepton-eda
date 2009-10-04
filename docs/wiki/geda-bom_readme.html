@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="bill_of_material_netlister_readme" id="bill_of_material_netlister_readme">Bill of Material netlister README</a></h1>
+<div class="level1">
+<pre class="code">README for
+BOM - Bill Of Materials generater for gnetlist.
+
+--------------------------------------------------------------------------
+
+I (Matt) put together a quick bill of materials generator for gnetlist.
+It takes a configuration file which tells it what attributes you want
+netlisted (i.e. vendor, part number).
+
+This is a sample config file:
+
+device
+label
+name  
+
+Just call it with 
+        gnetlist  -g bom -o test.bom test.sch 
+
+The config file must be called &quot;attribs&quot; and be in the pwd, because
+there is no way to pass arguments to the netlister (at least that I
+could find).
+
+Eventually I&#039;d like to integrate this with some sort of a database for
+production purposes.  Let me know if you are interested in helping or
+have any ideas.
+
+Matt
+matt@ettus.com
+
+</pre>
+
+</div>
+</body>
+</html>

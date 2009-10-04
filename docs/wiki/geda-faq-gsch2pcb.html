@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#gsch2pcb" class="toc">gsch2pcb</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#where_is_the_gsch2pcb_tutorial" class="toc">Where is the gsch2pcb tutorial?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#where_can_i_download_gsch2pcb" class="toc">Where can I download gsch2pcb?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#gsch2pcb_can_t_find_some_of_my_footprints_or_errors_out._what_can_i_do_to_diagnose_my_problem" class="toc">gsch2pcb can&#039;t find some of my footprints, or errors out. What can I do to diagnose my problem?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#i_don_t_like_the_default_layer_stack_of_gschem2pcb._how_can_i_change_this" class="toc">I don&#039;t like the default layer stack of gschem2pcb. How can I change this?</a></span></div></li></ul>
+</li></ul>
+</div>
+</div>
+
+
+
+<h1><a name="gsch2pcb" id="gsch2pcb">gsch2pcb</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "gsch2pcb" [1-24] -->
+<h2><a name="where_is_the_gsch2pcb_tutorial" id="where_is_the_gsch2pcb_tutorial">Where is the gsch2pcb tutorial?</a></h2>
+<div class="level2">
+
+<p>
+Currently, the best information about how to get started with gsch2pcb is contained in Bill Wilson’s outstanding <a href="geda-gsch2pcb_tutorial.html" class="wikilink1" title="geda-gsch2pcb_tutorial.html">tutorial</a>. 
+</p>
+
+<p>
+There is a wrapper script for gsch2pcb called sch2pcb.  Read about it in the <a href="geda-pcb_tips.html" class="wikilink1" title="geda-pcb_tips.html">pcb_tips</a> section of this wiki.
+</p>
+
+</div>
+<!-- SECTION "Where is the gsch2pcb tutorial?" [25-336] -->
+<h2><a name="where_can_i_download_gsch2pcb" id="where_can_i_download_gsch2pcb">Where can I download gsch2pcb?</a></h2>
+<div class="level2">
+
+<p>
+gsch2pcb is part of gEDA/gaf, in the utils. It is normally installed by default (along with everything else) if you install the entirety of gEDA/gaf. If you don’t have it installed on your machine for some reason you can either download the utils tarball from:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://geda.seul.org/download.html" class="urlextern" title="http://geda.seul.org/download.html"  rel="nofollow">http://geda.seul.org/download.html</a></div>
+</li>
+</ul>
+
+<p>
+ or grab it directly from git at:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://git.gpleda.org/?p=gaf.git;a=tree;f=utils/src;h=abf7590274f82f17c67bb1eecdc0d1da5029718a;hb=HEAD" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=tree;f=utils/src;h=abf7590274f82f17c67bb1eecdc0d1da5029718a;hb=HEAD"  rel="nofollow">http://git.gpleda.org/?p=gaf.git;a=tree;f=utils/src;h=abf7590274f82f17c67bb1eecdc0d1da5029718a;hb=HEAD</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Where can I download gsch2pcb?" [337-831] -->
+<h2><a name="gsch2pcb_can_t_find_some_of_my_footprints_or_errors_out._what_can_i_do_to_diagnose_my_problem" id="gsch2pcb_can_t_find_some_of_my_footprints_or_errors_out._what_can_i_do_to_diagnose_my_problem">gsch2pcb can&#039;t find some of my footprints, or errors out. What can I do to diagnose my problem?</a></h2>
+<div class="level2">
+
+<p>
+Try running gsch2pcb in double verbose mode: “gsch2pcb -v -v”. This will produce lots of spew telling you where gsch2pcb is looking while it tries to find footprints. It will also tell you where it does find the footprints it uses.
+</p>
+
+</div>
+<!-- SECTION "gsch2pcb can't find some of my footprints, or errors out. What can I do to diagnose my problem?" [832-1177] -->
+<h2><a name="i_don_t_like_the_default_layer_stack_of_gschem2pcb._how_can_i_change_this" id="i_don_t_like_the_default_layer_stack_of_gschem2pcb._how_can_i_change_this">I don&#039;t like the default layer stack of gschem2pcb. How can I change this?</a></h2>
+<div class="level2">
+
+<p>
+Edit $INSTALLDIR/share/gEDA/scheme/gnet-gsch2pcb.scm to reflect your preferred layer stack. In particular you may have to modify the line that defines the layer groups: 
+</p>
+<pre class="code">    (display &quot;Groups(\&quot;1,2,3,s:4,5,6,c:7:8\&quot;)\n&quot; port) </pre>
+
+<p>
+ and the layer stack itself: 
+</p>
+<pre class="code">(lambda (port)
+    (display &quot;Layer(1 \&quot;bottom\&quot;)\n(\n)\n&quot; port)
+    (display &quot;Layer(2 \&quot;bott.-poly.\&quot;)\n(\n)\n&quot; port)
+ ...
+    (display &quot;Layer(8 \&quot;lineout\&quot;)\n(\n)&quot; port)
+    (display &quot;Layer(9 \&quot;ignored\&quot;)\n(\n)\n&quot; port)
+    (display &quot;Layer(10 \&quot;ignored\&quot;)\n(\n)&quot; port)
+    (newline port)))</pre>
+
+<p>
+ Note, the last two layers will map to silk on both sides of the board. So you will have to define two more layers than you want for your copper layout. 
+</p>
+
+</div>
+<!-- SECTION "I don't like the default layer stack of gschem2pcb. How can I change this?" [1178-] --></body>
+</html>

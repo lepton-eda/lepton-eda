@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="icarus_verilog_vvp_runtime_engine_man-page" id="icarus_verilog_vvp_runtime_engine_man-page">Icarus Verilog vvp runtime engine man-page</a></h1>
+<div class="level1">
+<pre class="code">vvp(1)			 $Date: 2005/01/29 06:28:19 $			vvp(1)
+
+
+
+NAME
+       vvp - Icarus Verilog vvp runtime engine
+
+
+SYNOPSIS
+       vvp  [-sv] [-Mpath] [-mmodule] [-llogfile] inputfile [extended-args...]
+
+
+DESCRIPTION
+       vvp is the run time engine that executes the default compiled form gen-
+       erated  by  Icarus Verilog. The output from the iverilog command is not
+       by itself executable on any  platform.  Instead,	 the  vvp  program  is
+       invoked to execute the generated output file.
+
+
+OPTIONS
+       vvp accepts the following options:
+
+       -llogfile
+	       This  flag  specifies  a	 logfile where all MCI &lt;stdlog&gt; output
+	       goes.  Specify logfile as â€™-â€™ to send log output	 to  &lt;stderr&gt;.
+	       $display	 and  friends  send  their output both to &lt;stdout&gt; and
+	       &lt;stdlog&gt;.
+
+       -Mpath  This flag adds a directory to the path list used to locate  VPI
+	       modules.	 The  default path includes only the install directory
+	       for the system.vpi module, but this flag can add other directo-
+	       ries.  Multiple paths are allowed, and modules will be searched
+	       in order.
+
+       -mmodule
+	       Tell the vvp run time to load the named module before executing
+	       the simulation. The system.vpi module is loaded by default, but
+	       additional  modules,  including	modules	 that	you   compiled
+	       locally, can be specified with this flag. Any number of modules
+	       can be loaded, and they will be linked in the  order  they  are
+	       listed on the command line.
+
+	       Normally,  you  only  need  to  specify the name of the module,
+	       without any directory path or .vpi suffix and the  search  path
+	       is scanned to find the module. However, if the name includes at
+	       least one directory character, then  the	 search	 path  is  not
+	       scanned and the name is assumed to be a complete file name.
+
+       -s      Stop.  This will cause the simulation to stop in the beginning,
+	       before any events are scheduled. This  allows  the  interactive
+	       user to get hold of the simulation just before it starts.
+
+       -v      Turn on verbose messages. This will cause information about run
+	       time progress to be printed to standard out.
+
+
+EXTENDED ARGUMENTS
+       The vvp options described above must come before the design file	 name.
+       After the design file name, however, there may be any number of unspec-
+       ified arguments. These arguments are not interpreted  by	 vvp  but  are
+       instead	passed	on  to	the executed design, and are available via the
+       $test$plusargs and $value$plusargs system functions.
+
+       Arguments that do not start with the plus(+) character are  not	avail-
+       able  to	 the $plusargs system tasks, but can still be accessed via PLI
+       code via the vpi_get_vlog_info function. This means  that  vpi  modules
+       may  use arguments that do not start with + and be assured that they do
+       not interfere with user defined plus-args.
+
+       There are a few extended arguments that are interpreted by the standard
+       system.vpi module, which implements the standard system tasks and so is
+       always included. These arguments are described here.
+
+       -vcd|-vcd-none
+	       This extended argument sets the wave dump format to  VCD.  This
+	       is  the	default in the absence of any IVERILOG_DUMPER environ-
+	       ment variable. The VCD dump files are large and ponderous,  but
+	       are  also maximally compatible with third party tools that read
+	       waveform dumps.
+
+       The -vcd-none variant actually suppresses all waveform output. This can
+       make long simulations run faster.
+
+
+       -lxt|-lxt-speed|-lxt-space|-lxt-none
+	       These  extended arguments set the wave dump format to lxt, pos-
+	       sibly with format optimizations. The -lxt-space flag  sets  the
+	       output format to lxt with full compression enabled. The result-
+	       ing files are quite small. The -lxt-speed chooses the lxt  com-
+	       pression	 mode  that  leads  to the best execution time and the
+	       fastest read time, at the expense of some file size.
+
+       The -lxt-none variant actually suppresses all waveform output. This can
+       make long simulations run faster.
+
+
+       -lxt2   The  LXT2 format is slower then LXT (faster then VCD) but takes
+	       less space, and is written out  incrementally.  Thus,  you  can
+	       view lxt2 files while a simulation is still running (or paused)
+	       or if your simulation crashes or is killed, you	still  have  a
+	       useful dump.
+
+
+ENVIRONMENT
+       The  vvp	 command  also accepts some environment variables that control
+       its behavior. These can be used to make semi-permanent changes.
+
+
+       IVERILOG_DUMPER=lxt|lxt2|vcd|none
+	       This selects the output format for the  waveform	 output.  Nor-
+	       mally,  waveforms  are  dumped in vcd format, but this variable
+	       can be used to select lxt format, which is  far	more  compact,
+	       though limited to gtkwave or compatible viewers. It can also be
+	       used to suppress VCD output, a time-saver for regression tests.
+
+
+INTERACTIVE MODE
+       The simulation engine supports an interactive mode. The user may inter-
+       rupt the simulation (typically by typing Ctrl-C) to get to the interac-
+       tive  prompt. From that prompt, the help command prints a brief summary
+       of the available commands.
+
+       The interactive mode may also be entered by a call to the $stop	system
+       task  from  within  the simulation, or by a call to the vpi_control VPI
+       function with the vpiStop control argument.  These  means  of  entering
+       interactive mode are equivalent.
+
+
+AUTHOR
+       Steve Williams (steve@icarus.com)
+
+
+SEE ALSO
+       iverilog(1), iverilog-vpi(1), &lt;http://www.icarus.com/eda/verilog/&gt;
+
+
+COPYRIGHT
+       Copyright Â©  2001-2003 Stephen Williams
+
+       This document can be freely redistributed according to the terms of the
+       GNU General Public License version 2.0
+
+
+
+Version			 $Date: 2005/01/29 06:28:19 $			vvp(1)</pre>
+
+</div>
+</body>
+</html>

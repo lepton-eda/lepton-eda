@@ -1,84 +1,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
- lang="en" dir="ltr">
+<html>
 <head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>pcb-projects</title>
-<meta name="generator" content="DokuWiki Release rc2007-05-24" />
-<meta name="robots" content="index,follow" />
-<meta name="date" content="2008-03-21T07:21:01-0400" />
-<meta name="keywords" content="pcb-projects" />
-<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
-<link rel="start" href="http://geda.seul.org/wiki/" />
-<link rel="contents" href="http://geda.seul.org/wiki/pcb-projects?do=index" title="Index" />
-<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=" />
-<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/pcb-projects" />
-<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/pcb-projects" />
-<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
-<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
-<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
-<div class="dokuwiki export">
+
 
 
 
 <h3><a name="pcb_layout_editor" id="pcb_layout_editor">PCB Layout Editor</a></h3>
 <div class="level3">
-
-</div>
-
-<h5><a name="improve_handling_of_non-copper_layers_in_pcb" id="improve_handling_of_non-copper_layers_in_pcb">Improve handling of non-copper layers in pcb</a></h5>
-<div class="level5">
-
-<p>
- PCB’s support for non-copper layers needs improvement. In this project, you would add support for more easily-editable non-copper layers. These non-copper layers would be used for things like keepout regions, assembly drawing, and an actual board outline layer that is not just a copper layer. For more thoughts on the issue of layers in PCB, please see database.txt and keepouts.txt
-</p>
-
-<p>
-Difficulty = 2
-</p>
-
-</div>
-
-<h5><a name="pcb_drc_interface_improvements" id="pcb_drc_interface_improvements">PCB DRC interface improvements</a></h5>
-<div class="level5">
-
-<p>
- Improve the DRC interface for PCB. Perhaps have a DRC layer that gets generated when you run DRC. Then you could have an interface that lets you step through them and see on that layer, exactly what failed. Maybe this could be combined with making the DRC checks more unit testable.
-</p>
-
-<p>
-Difficulty = 2
-</p>
-
-</div>
-
-<h5><a name="pcb_autorouter" id="pcb_autorouter">PCB Autorouter</a></h5>
-<div class="level5">
-
-<p>
- PCB currently incorporates a simple autorouter. However, a topological autorouter would represent a significant improvement over the existing autorouter. In this ambitious project, the student would create a topological autorouter for PCB.
-</p>
-
-<p>
-Difficulty = 5
-</p>
-
-</div>
-
-<h5><a name="improved_and_formalized_mechanism_for_forward_backward_annotation" id="improved_and_formalized_mechanism_for_forward_backward_annotation">Improved and formalized mechanism for forward/backward annotation</a></h5>
-<div class="level5">
-
-<p>
- Add hooks into gschem needed to fully support things like backannotation of simulation results and click-to-plot results. Specifically, this would enable you to draw a schematic in gschem, then simulate it in ngspice without leaving gschem. The simulation plots would then appear in a graphical pop-up window.
-</p>
-
-<p>
-Difficulty = 3
-</p>
 
 </div>
 
@@ -132,7 +69,6 @@ Difficulty = 1
 Difficulty = 1
 </p>
 
-</div>
 </div>
 </body>
 </html>

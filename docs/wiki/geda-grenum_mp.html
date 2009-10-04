@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="grenum_man-page" id="grenum_man-page">grenum man-page</a></h1>
+<div class="level1">
+<pre class="code">grenum(1)							     grenum(1)
+
+
+
+NAME
+       grenum - An advanced refdes renumber utility
+
+
+SYNOPSIS
+       grenum  [-v|--version  -h|--help -p|--pagejump] infile1.sch infile2.sch
+       ...
+
+
+
+DESCRIPTION
+       The grenum program will	renumber  the  refdes  definitions  read  from
+       infile.
+
+
+OPTIONS
+       -p, --pagejump
+	      This  will  switch on the page jump mode. It means that refdesâ€™s
+	      from each inputfile gets renumbered from 100,200... etc.
+
+       -v, --version
+	      prints version information
+
+       -h, --help
+	      prints help message
+
+
+RETURN VALUE
+       grenum will return 0 if all files processed successfully, -1  if	 there
+       was  no	input file specified, -2 if I/O files canâ€™t be opened/written,
+       -3 if there is parse error in input file, -4 if	there  is  not	enough
+       memory to store refdes prefixes.
+
+BUGS
+       If you find one, please report it to:
+
+
+AUTHOR
+       Levente Kovacs
+
+       Levente.Kovacs@interware.hu
+
+
+SEE ALSO
+       gschem(1)
+
+
+
+								     grenum(1)
+</pre>
+
+</div>
+</body>
+</html>

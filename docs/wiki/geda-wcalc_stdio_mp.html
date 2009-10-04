@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="stdio_wcalc_man-page" id="stdio_wcalc_man-page">stdio Wcalc man-page</a></h1>
+<div class="level1">
+<pre class="code">STDIO-WCALC(1)							STDIO-WCALC(1)
+
+
+
+NAME
+       stdio-wcalc - Transmission line analysis/synthesis calculator.
+
+
+SYNOPSIS
+       stdio-wcalc [ -v|--verbose ] [ file ...	]
+       stdio-wcalc [ -h|--help ]
+       stdio-wcalc [ -V|--version ]
+
+
+DESCRIPTION
+       The  stdio-wcalc program is a simple standard input/output interface to
+       libwcalc which is the numerical engine  for  the	 wcalc	program.   The
+       input  is read from the standard input on a line at a time basis.  Each
+       line consists of a command followed by the numerical arguments.
+
+       The analysis and synthesis functions supported by stdio-wcalc  are  the
+       same  as	 those	in  the scilab, octave, and matlab frontends to wcalc.
+       Please refer to the man pages listed at the end of this	man  page  for
+       details	on  each  of  the  supported  functions.   The	syntax used by
+       stdio-wcalc is slightly different than  scilab/octave/matlab.   Instead
+       of  [a,b,c] = somefn(x,y,z) as you would use in scilab, octave, or mat-
+       lab, you simply enter somefn x y z as the input line to stdio-wcalc and
+       the standard output will be a b c
+
+       In  addition  to the analysis and synthesis functions, stdio-wcalc sup-
+       ports the &quot;version&quot; command which returns the current  version  of  the
+       program.
+
+
+SEE ALSO
+       wcalc(1), air_coil_calc(n), air_coil_syn(n), coax_calc(n), coax_syn(n),
+       coupled_microstrip_calc(n),		    coupled_microstrip_syn(n),
+       ic_microstrip_calc(n),	  ic_microstrip_syn(n),	   microstrip_calc(n),
+       microstrip_syn(n), stripline_calc(n), stripline_syn(n)
+
+
+AUTHORS
+       Wcalc was written by Dan McMahill &lt;mcmahill@alum.mit.edu&gt;
+
+
+BUGS
+       Please  report  any  on	the  Wcalc  Sourceforge	 project  website   at
+       http://wcalc.sf.net
+
+
+
+
+
+
+								STDIO-WCALC(1)</pre>
+
+</div>
+</body>
+</html>

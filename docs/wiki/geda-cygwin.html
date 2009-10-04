@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="installing_geda_gaf_on_windows_-_the_cygwin_way" id="installing_geda_gaf_on_windows_-_the_cygwin_way">Installing gEDA/gaf on Windows - the Cygwin way</a></h1>
+<div class="level1">
+
+<p>
+ This guide describes one way to build gEDA/gaf (gschem and friends) on the Windows operating system. It uses Cygwin as the layer between Windows and the *nix world (ie gcc, make, bash etc&hellip;).
+</p>
+
+</div>
+<!-- SECTION "Installing gEDA/gaf on Windows - the Cygwin way" [1-258] -->
+<h2><a name="instructions" id="instructions">Instructions</a></h2>
+<div class="level2">
+
+<p>
+ <strong>1. Download and run setup.exe from cygwin website:</strong> <a href="http://www.cygwin.com" class="urlextern" title="http://www.cygwin.com"  rel="nofollow">http://www.cygwin.com</a>.
+</p>
+
+<p>
+In the package selection dialog, select the following packages:
+</p>
+
+<p>
+(Hint: press the “view” button once to arrange the list in alphabetical order) 
+</p>
+<pre class="code">atk-devel
+crypt
+file
+gcc
+gtk2-x11-devel
+guile-devel
+libgmp-devel
+libtool1.5
+make
+pango-devel
+patchutils
+pcre-devel
+pcre-doc
+pkg-config
+xorg-x11-devel
+xorg-x11-fscl
+xterm</pre>
+
+<p>
+ <strong>2. Append these lines to your .bash_profile:</strong> 
+</p>
+<pre class="code">export LD_LIBRARY_PATH=$HOME/geda/lib:$LD_LIBRARY_PATH
+export PATH=$HOME/geda/bin:$PATH
+export PKG_CONFIG_PATH=$HOME/geda/lib/pkgconfig:$PKG_CONFIG_PATH</pre>
+
+<p>
+ Update your environment:
+</p>
+<pre class="code">$ source .bash_profile</pre>
+
+<p>
+ <strong>3. Go to the <a href="http://www.geda.seul.org/sources.html" class="urlextern" title="http://www.geda.seul.org/sources.html"  rel="nofollow">gEDA sources download page</a>.</strong>
+</p>
+
+<p>
+From the gEDA/gaf group, download <strong>only</strong> the packages which have a date as its version. The necessary dependencies were already installed in step 1. However, if you haven’t installed or built the libstroke package, be sure to add 
+</p>
+<pre class="code">
+--disable-stroke
+</pre>
+
+<p>
+ to the opts= line. Add the following options to the opts= line in the Makefile 
+</p>
+<pre class="code">
+--disable-update-mime-database --disable-update-desktop-database --disable-nls
+</pre>
+
+<p>
+<strong>4. Go to the download directory and type:</strong>
+</p>
+<pre class="code">$ make open
+$ make install
+( ...patience... )</pre>
+
+<p>
+ <strong>5. Now, to properly view the documentation from the help menu of gschem:</strong>
+</p>
+
+<p>
+Locate the executables of your browser and <acronym title="Portable Document Format">PDF</acronym> reader and create links from /usr/bin. Examples:
+</p>
+<pre class="code">$ ln -s &quot;c:\Program Files\Internet Explorer\iexplore.exe&quot; /usr/bin/iexplore
+$ ln -s &quot;c:\Program Files\Firefox\firefox.exe&quot; /usr/bin/firefox
+$ ln -s &quot;c:\Program Files\Adobe\Acrobat 7.0\Reader\AcroRd32.exe&quot; /usr/bin/acroread</pre>
+
+<p>
+ Try:
+</p>
+<pre class="code">$ iexplore
+( Microsoft Internet Explorer appears )
+$ firefox
+( Firefox appears - if installed )
+$ acroread
+( Adobe Acrobat Reader appears )
+$ gschemdoc -m
+( gEDA documentation appears )</pre>
+
+<p>
+ <strong>6. Finally, start the X server:</strong>
+</p>
+<pre class="code">$ startx</pre>
+
+<p>
+ Have fun!
+</p>
+
+</div>
+<!-- SECTION "Instructions" [259-] --></body>
+</html>

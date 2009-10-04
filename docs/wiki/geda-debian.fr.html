@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="notes_d_installation_debian_de_la_version_20060825" id="notes_d_installation_debian_de_la_version_20060825">Notes d&#039;installation Debian de la version 20060825</a></h1>
+<div class="level1">
+
+<p>
+ Voici un rapport d’utilisateur qui fournit quelques éléments aux personnes installant avec le CDROM 20060825 sur une Debian. Notez que l’utilisateur avec pré-ajouté les paquets -dev sur son système au lieu de laisser l’installateur les trouver. C’est une manière parfaitement acceptable &ndash; et souvent préférable &ndash; de traiter les dépendances de gEDA.
+</p>
+<pre class="code">
+Just completed an install on my main desktop box which is Debian
+etch/testing with patches of sid/unstable.
+
+Lib packages I had to add to my system:
+        * libreadline5-dev
+        * libgd1-xpm-dev
+        * libwxgtk2.6-dev
+        * libgtk1.2-dev (compile failed because of missing gtk-config.
+          Configure did not seem to check for it.)
+        * I needed to install guile-1.6-dev rather than libguile-dev.
+          Else the installer fails to find scm_make_smob_type.
+
+On my system /usr/lib/libqthreads.so pointed to a non existing 
+/usr/lib/libqthreads.so.12.3.1 This may be a bug in Debians packaging
+rules. Thus the installer failed with:
+        gcc: /usr/lib/libqthreads.so: No such file or directory make[2]:*** [libgeda.la] Error 1
+I resolved the issue by faking a link:
+        sudo ln -s libqthreads.so.12.3.0 libqthreads.so.12.3.1
+</pre>
+
+</div>
+</body>
+</html>

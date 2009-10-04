@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#clipboard_support" class="toc">Clipboard Support</a></span></div>
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#introduction" class="toc">Introduction</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#the_x_clipboard" class="toc">The X clipboard</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#the_windows_clipboard" class="toc">The Windows clipboard</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#gtk_clipboard_api" class="toc">GTK clipboard API</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#buffers_in_gschem" class="toc">Buffers in gschem</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#clipboard_data_types" class="toc">Clipboard data types</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+
+
+
+<h1><a name="clipboard_support" id="clipboard_support">Clipboard Support</a></h1>
+<div class="level1">
+
+<p>
+ Targetted for release in gEDA 1.8.0.
+</p>
+
+</div>
+<!-- SECTION "Clipboard Support" [1-71] -->
+<h3><a name="introduction" id="introduction">Introduction</a></h3>
+<div class="level3">
+
+<p>
+ Currently, if you ‘copy’ in gschem and ‘paste’ in another program (or a different instance of gschem), nothing useful happens. We should ideally try and use the system clipboard to enable transparent copying and pasting of schematic data between multiple gschem windows as well as other programs.
+</p>
+
+<p>
+It would be nice to be able to: 
+</p>
+<ol>
+<li class="level1"><div class="li"> Copy in gschem, paste in text editor. Should it paste schematic file source code equivalent to copied elements?</div>
+</li>
+<li class="level1"><div class="li"> Copy in gschem, paste in another instance of gschem. How should it handle differences in component library settings between programs?</div>
+</li>
+<li class="level1"><div class="li"> Copy in gschem, paste in &lt;program that understands images&gt;. Should paste an image representation of the copied elements.</div>
+</li>
+</ol>
+
+<p>
+ Consider the use case of “I want this circuit in my OpenOffice presentation, let’s try the obvious thing to get it there.&quot;
+</p>
+
+</div>
+<!-- SECTION "Introduction" [72-930] -->
+<h3><a name="the_x_clipboard" id="the_x_clipboard">The X clipboard</a></h3>
+<div class="level3">
+
+<p>
+ The X window system uses the arcane “selection” protocol for copy/paste between X client applications. By taking charge of a “selection”, an application is able to advertise a number of different datatypes, from which another application can request the most appropriate. Two selections are usually available: 
+</p>
+<ol>
+<li class="level1"><div class="li"> The PRIMARY selection is customarily used to hold the last piece of text the user selected, and many programs paste its contents on middle-click.</div>
+</li>
+<li class="level1"><div class="li"> The CLIPBOARD selection is customarily used with an application’s “Copy”, “Cut” and “Paste” actions.</div>
+</li>
+</ol>
+
+<p>
+ Many desktop environments (including GNOME and KDE) run a “clipboard daemon”, which copies the CLIPBOARD contents and makes it available even if the original application quits.
+</p>
+
+<p>
+Due to the primarily non-textual nature of schematic or symbol data, gschem should use the CLIPBOARD on copy/paste, and ignore the SELECTION.
+</p>
+
+</div>
+<!-- SECTION "The X clipboard" [931-1845] -->
+<h3><a name="the_windows_clipboard" id="the_windows_clipboard">The Windows clipboard</a></h3>
+<div class="level3">
+
+<p>
+ Research needed.
+</p>
+
+</div>
+<!-- SECTION "The Windows clipboard" [1846-1896] -->
+<h3><a name="gtk_clipboard_api" id="gtk_clipboard_api">GTK clipboard API</a></h3>
+<div class="level3">
+
+<p>
+ The Gimp Toolkit used by gschem’s <acronym title="Graphical User Interface">GUI</acronym> provides APIs for manipulating the X selection (see <a href="http://library.gnome.org/devel/gtk/stable/gtk-Clipboards.html" class="urlextern" title="http://library.gnome.org/devel/gtk/stable/gtk-Clipboards.html"  rel="nofollow">the GTK manual</a>). Since gschem already links against GTK, and the GTK clipboard <acronym title="Application Programming Interface">API</acronym> is considerably simpler than using low-level X library calls (as well as being more portable), gschem should make use of it.
+</p>
+
+</div>
+<!-- SECTION "GTK clipboard API" [1897-2290] -->
+<h3><a name="buffers_in_gschem" id="buffers_in_gschem">Buffers in gschem</a></h3>
+<div class="level3">
+
+<p>
+ gschem currently uses “buffers” to store cut or copied objects for pasting. A buffer is simply a GList of OBJECTs.
+</p>
+
+<p>
+When a set of selected items is “copied”: 
+</p>
+<ol>
+<li class="level1"><div class="li"> Any existing items in the buffer are freed (the GList and OBJECTS destroyed).</div>
+</li>
+<li class="level1"><div class="li"> The selection is recursively copied to the buffer.</div>
+</li>
+</ol>
+
+<p>
+ When a set of selected items is “cut”: 
+</p>
+<ol>
+<li class="level1"><div class="li"> The copying procedure is followed.</div>
+</li>
+<li class="level1"><div class="li"> All of the selected objects are deleted.</div>
+</li>
+</ol>
+
+<p>
+ When a set of selected items is “pasted”: 
+</p>
+<ol>
+<li class="level1"><div class="li"> All the items in the buffer are copied into the schematic or symbol’s GList, with an appropriate translation applied.</div>
+</li>
+</ol>
+
+</div>
+<!-- SECTION "Buffers in gschem" [2291-2910] -->
+<h3><a name="clipboard_data_types" id="clipboard_data_types">Clipboard data types</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="schematic_symbol_data" id="schematic_symbol_data">Schematic/symbol data</a></h4>
+<div class="level4">
+
+<p>
+ <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=6a07d737a32a816f43e1f061409a10e616d7aa2a" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=6a07d737a32a816f43e1f061409a10e616d7aa2a"  rel="nofollow"> Implemented in 1.5.2+</a>.
+</p>
+
+<p>
+On “copy to clipboard”, gschem copies the selected objects to <code>GSCHEM_TOPLEVEL&rarr;clipboard_buffer</code>, gets control of the CLIPBOARD selection, and advertises <code>application/x-geda-schematic</code> data. On receiving a request, gschem uses <code>o_save_buffer()</code> to convert the selected objects to gEDA’s on-disk schematic format for transmission.
+</p>
+
+<p>
+On “paste from clipboard”, gschem looks to see if the current owner of the CLIPBOARD selection is advertising <code>application/x-geda-schematic</code> data. If so, gschem requests the data, and uses <code>o_read_buffer()</code> to convert it to an object list, which it then enters the paste mode for.
+</p>
+
+<p>
+To simplify the implementation, the first schematic data buffer is currently used as an intermediate store for clipboard data.
+</p>
+
+<p>
+For the time being, it is assumed destination gschem instance has its library set up correctly &ndash; i.e. no changes made to the embedding status of the data being sent before serialisation. 
+</p>
+
+</div>
+<!-- SECTION "Clipboard data types" [2911-] --></body>
+</html>

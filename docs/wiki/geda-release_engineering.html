@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="geda_s_release_engineering" id="geda_s_release_engineering">gEDA&#039;s Release Engineering</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "gEDA's Release Engineering" [1-44] -->
+<h2><a name="geda_gaf_release_creation_checklist" id="geda_gaf_release_creation_checklist">gEDA/gaf Release Creation Checklist</a></h2>
+<div class="level2">
+
+<p>
+ Here is a list of steps that are taken every time when creating a new gEDA/gaf release: 
+</p>
+<ul>
+<li class="level1"><div class="li"> Update the toplevel NEWS file with a summary of all the changes in the new release.  The NEWS file forms the basis for the release notes.</div>
+</li>
+<li class="level1"><div class="li"> Manually run all tests.  gnetlist has a nice set of regression tests in gnetlist/tests.  gsymcheck also has a nice set of regression tests in gsymcheck/tests.  Open up all schematics in gschem/examples and gschem/tests.  You can do this by running the following in the toplevel directory:</div>
+</li>
+</ul>
+<pre class="code">
+        make check
+</pre>
+<ul>
+<li class="level1"><div class="li"> Run make update-po in all po directories.  Commit these changes before continuing.</div>
+</li>
+<li class="level1"><div class="li"> In the toplevel configure.ac file update the package version in the AC_INIT macro, the date in the AX_GIT_VERSION macro, and update libgeda’s shared library version (libgeda’s so version should follow what is described in <a href="http://sourceware.org/autobook/autobook/autobook_91.html" class="urlextern" title="http://sourceware.org/autobook/autobook/autobook_91.html"  rel="nofollow"> Autobook&#039;s library versioning</a> chapter).</div>
+</li>
+<li class="level1"><div class="li"> Update all the versions and dates in the man pages (gschem.1, gnetlist.1, gsymcheck.1)</div>
+</li>
+<li class="level1"><div class="li"> Update the wiki documentation (this is far far far too manual)</div>
+</li>
+</ul>
+<pre class="code">
+        cd docs
+        mkdir wip
+        cd wip
+        ../scripts/wikifetch.sh
+        rm -f *.txt
+        mv geda.seul.org/wiki/* .
+        rmdir geda.seul.org/wiki
+        rmdir geda.seul.org
+        ../scripts/postproc.sh
+        find . -name *.orig -exec rm -f {} \; -print
+        cd ..
+        scripts/copygitignores.sh
+        cd wip
+        ../scripts/populatemkfiles.sh
+        vi `find . -name Makefile.am`   (Make sure all files have correct install path)
+        cd ..
+        diff -r -q wiki wip  | grep -v Only | sed &quot;s/Files /tkdiff /&quot; | sed &quot;s/ and//&quot; | sed &quot;s/differ//&quot; &gt; diffs
+        sh diffs  (and examine all changes; you need to have tkdiff installer or use just plain diff above)
+        mv wiki wiki.original
+        mv wip wiki
+        git status  
+        git add &lt;any new files&gt;
+        git commit -a
+</pre>
+<ul>
+<li class="level1"><div class="li"> Commit all of the above changes (preferably in between each step)</div>
+</li>
+<li class="level1"><div class="li"> To build the distribution tarball (and verify all tests on the contained files) run:  </div>
+</li>
+</ul>
+<pre class="code">
+        make distcheck   
+</pre>
+
+<p>
+and make sure it completes without any errors.  After this is complete you will find the distribution tarball in the toplevel directory (named gEDA-gaf-VERSION.tar.gz).
+</p>
+<ul>
+<li class="level1"><div class="li"> Copy the distribution tarball some place else along with the toplevel README (which should be renamed to gEDA-gaf-VERSION-README.txt).</div>
+</li>
+<li class="level1"><div class="li"> Create a file the md5sum for the toplevel tarball. </div>
+</li>
+</ul>
+<pre class="code">
+        md5sum -b gEDA-gaf-1.5.3.tar.gz &gt; gEDA-gaf-1.5.3.md5sum
+</pre>
+<ul>
+<li class="level1"><div class="li"> Untar the tarballs and compare what is inside to what is in the repository.  You should only find additional dist files inside the tarballs and no missing required files.</div>
+</li>
+<li class="level1"><div class="li"> Build and test the distribution tarball one last time.</div>
+</li>
+<li class="level1"><div class="li"> Make sure everything is committed and pushed and then put down the correctly formatted tag:</div>
+</li>
+</ul>
+<pre class="code">
+        git tag -a 1.5.3-20090829
+</pre>
+<ul>
+<li class="level1"><div class="li"> Push all the commits to the main repository.  If you are on a branch the command should be: </div>
+</li>
+</ul>
+<pre class="code">
+        git push origin remote_branch_name
+</pre>
+<ul>
+<li class="level1"><div class="li"> Push the tag to the main repository:</div>
+</li>
+</ul>
+<pre class="code">
+        git push --tags
+</pre>
+<ul>
+<li class="level1"><div class="li"> Upload distribution tarball, README, and md5sum file to the correct place</div>
+</li>
+<li class="level1"><div class="li"> Write release announcement and send to mailing lists</div>
+</li>
+<li class="level1"><div class="li"> Write up release notes and send pointer to mailing lists (named: gEDA-gaf-VERSION-releasenotes.html)</div>
+</li>
+<li class="level1"><div class="li"> Update news update the sources download pages on the website with links to the new version</div>
+</li>
+<li class="level1"><div class="li"> Update the geda:todos page moving the release into the historical todos page.</div>
+</li>
+<li class="level1"><div class="li"> Done!</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "gEDA/gaf Release Creation Checklist" [45-] --></body>
+</html>

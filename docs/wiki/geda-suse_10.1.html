@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="suse_10.1_install_notes" id="suse_10.1_install_notes">Suse 10.1 install notes</a></h1>
+<div class="level1">
+
+<p>
+These notes pertain to the latest gEDA CD install (20060825).
+</p>
+
+</div>
+<!-- SECTION "Suse 10.1 install notes" [1-101] -->
+<h2><a name="prerequisites" id="prerequisites">Prerequisites:</a></h2>
+<div class="level2">
+
+<p>
+If you are installing gEDA onto a pre-existing SuSE system, make sure your system runs the Gnome desktop, or at least has the Gnome libraries installed.  If you have a KDE desktop system, unpredictable things may happen with the installer.
+</p>
+
+<p>
+When installing SuSE-10.1, click on the “change” button when YaST shows you your configuration. Select “software” → “details”. Then add the following packages to your installation list:
+</p>
+<ul>
+<li class="level1"><div class="li"> C/C++ tools</div>
+</li>
+<li class="level1"><div class="li"> Gnome development</div>
+</li>
+</ul>
+
+<p>
+ Once these packages are installed, the installer should run to completion.  You <strong>will</strong> need to let the installer become root to install gd-devel as well as WxGTK.  If you don’t want to do this, then install gd-devel and WxGTK manually before running the installer.
+</p>
+
+</div>
+<!-- SECTION "Prerequisites:" [102-] --></body>
+</html>

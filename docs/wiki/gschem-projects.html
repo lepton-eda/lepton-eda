@@ -1,27 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
- lang="en" dir="ltr">
+<html>
 <head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>gschem-projects</title>
-<meta name="generator" content="DokuWiki Release rc2007-05-24" />
-<meta name="robots" content="index,follow" />
-<meta name="date" content="2008-04-04T13:35:50-0400" />
-<meta name="keywords" content="gschem-projects" />
-<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
-<link rel="start" href="http://geda.seul.org/wiki/" />
-<link rel="contents" href="http://geda.seul.org/wiki/gschem-projects?do=index" title="Index" />
-<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=" />
-<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/gschem-projects" />
-<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/gschem-projects" />
-<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
-<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
-<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
-<div class="dokuwiki export">
+
 
 
 
@@ -104,6 +93,19 @@ Difficulty = 1
 
 <p>
 Difficulty = 1 to 2
+</p>
+
+</div>
+
+<h5><a name="improved_and_formalized_mechanism_for_forward_backward_annotation" id="improved_and_formalized_mechanism_for_forward_backward_annotation">Improved and formalized mechanism for forward/backward annotation</a></h5>
+<div class="level5">
+
+<p>
+ Add hooks into gschem needed to fully support things like backannotation of simulation results and click-to-plot results. Specifically, this would enable you to draw a schematic in gschem, then simulate it in ngspice without leaving gschem. The simulation plots would then appear in a graphical pop-up window.
+</p>
+
+<p>
+Difficulty = 3
 </p>
 
 </div>
@@ -206,19 +208,6 @@ Difficulty = 2 to 3
 
 </div>
 
-<h5><a name="filled_polygon_object" id="filled_polygon_object">Filled polygon object</a></h5>
-<div class="level5">
-
-<p>
- Adding a filled polygon graphical object type to the gschem symbol file format and, of course, gschem would be a nice project. This would be useful for filled arrows (transistors) and a filled triangle for diodes.
-</p>
-
-<p>
-Difficulty = 2 to 3
-</p>
-
-</div>
-
 <h5><a name="an_interactive_sub_sheet_generator" id="an_interactive_sub_sheet_generator">An Interactive Sub Sheet Generator</a></h5>
 <div class="level5">
 
@@ -227,14 +216,13 @@ Difficulty = 2 to 3
 </p>
 
 <p>
-Some work has already been done to deal with the bottom-up case. See <a href="http://sourceforge.net/tracker/index.php?func=detail&aid=1800913&group_id=161080&atid=818428" class="urlextern" title="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1800913&amp;group_id=161080&amp;atid=818428"  rel="nofollow">the bash script geda_sch2sym</a> available at sourceforge. This may be used as a starting point. However, a restart from scratch would be welcome too.
+Some work has already been done to deal with the bottom-up case. See <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1800913&amp;group_id=161080&amp;atid=818428" class="urlextern" title="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1800913&amp;group_id=161080&amp;atid=818428"  rel="nofollow">the bash script geda_sch2sym</a> available at sourceforge. This may be used as a starting point. However, a restart from scratch would be welcome too.
 </p>
 
 <p>
 Difficulty = 2   
 </p>
 
-</div>
 </div>
 </body>
 </html>

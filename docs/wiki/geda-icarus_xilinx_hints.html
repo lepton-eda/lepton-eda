@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="xilinx_hints" id="xilinx_hints">Xilinx Hints</a></h1>
+<div class="level1">
+<pre class="code">For those of you who wish to use Icarus Verilog, in combination with
+the Xilinx back end (Foundation or Alliance), it can be done.  I have
+run some admittedly simple (2300 equivalent gates) designs through this
+setup, targeting a Spartan XCS10.
+
+Verilog:
+
+   Older versions of Icarus Verilog (like 19990814) couldn&#039;t synthesize
+   logic buried in procedural (flip-flop) assignment.  Newer versions
+   (like 20000120) don&#039;t have this limitation.
+
+   Procedural assignments have to be given one at a time, to be
+   &quot;found&quot; by xnfsyn.  Say
+       always @ (posedge Clk) Y = newY;
+       always @ (posedge Clk) Z = newZ;
+   rather than
+       always @ (posedge Clk) begin
+           Y = newY;
+           Z = newZ;
+       end
+
+   Steve&#039;s xnf.txt covers most buffer and pin constructs, but I had reason
+   to use a global clock net not connected to an input pin.  The standard
+   Verilog for a buffer, combined with a declaration to turn that into a
+   BUFG, is:
+       buf BUFG( your_output_here, your_input_here );
+       $attribute(BUFG,&quot;XNF-LCA&quot;,&quot;BUFG:O,I&quot;)
+
+   I use post-processing on my .xnf files to add &quot;FAST&quot; attributes to
+   output pins.
+
+Running ivl:
+
+   The -F switches are important.  The following order seems to robustly
+   generate valid XNF files, and is used by &quot;verilog -X&quot;:
+      -Fsynth -Fnodangle -Fxnfio
+
+Generating .pcf files:
+
+   The ngdbuild step seems to lose pin placement information that ivl
+   puts in the XNF file.  Use xnf2pcf to extract this information to
+   a .pcf file, which the Xilinx place-and-route software _will_ pay
+   attention to.  Steve says he now makes that information available
+   in an NCF file, with -fncf=&lt;path&gt;, but I haven&#039;t tested that.
+
+Running the Xilinx back end:
+
+   You can presumably use the GUI, but that doesn&#039;t fit in Makefiles :-).
+   Here is the command sequence in pseudo-shell-script:
+      ngdbuild -p $part $1.xnf $1.ngd
+      map -p $part -o map.ncd $1.ngd
+      xnf2pcf &lt;$1.xnf &gt;$1.pcf    # see above
+      par -w -ol 2 -d 0 map.ncd $1.ncd $1.pcf
+      bitgen_flags = -g ConfigRate:SLOW -g TdoPin:PULLNONE -g DonePin:PULLUP \
+                     -g CRC:enable -g StartUpClk:CCLK -g SyncToDone:no \
+                     -g DoneActive:C1 -g OutputsActive:C3 -g GSRInactive:C4 \
+                     -g ReadClk:CCLK -g ReadCapture:enable -g ReadAbort:disable
+      bitgen $1.ncd -l -w $bitgen_flags
+
+   The Xilinx software has diarrhea of the temp files (14, not including
+   .xnf, .pcf, .ngd, .ncd, and .bit), so this sequence is best done in a
+   dedicated directory.  Note in particular that map.ncd is a generic name.
+
+   I had reason to run this remotely (and transparently within a Makefile)
+   via ssh.  I use the gmake rule
+%.bit : %.xnf
+        ssh -x -a -o &#039;BatchMode yes&#039; ${ALLIANCE_HOST} \
+               remote_alliance ${REMOTE_DIR} $(basename $@) 2&gt;&amp;1 &lt; $&lt;
+	scp ${ALLIANCE_HOST}:${REMOTE_DIR}/$@ .
+    and the remote_alliance script (on ${ALLIANCE_HOST})
+/bin/csh
+cd $1
+cat &gt;! $2.xnf
+xnf2pcf &lt;$2.xnf &gt;! $2.pcf
+./backend $2
+
+   There is now a &quot;Xilinx on Linux HOWTO&quot; at
+         http://www.polybus.com/xilinx_on_linux.html
+   I haven&#039;t tried this yet, it looks interesting.
+
+Downloading:
+
+   I use the XESS (http://www.xess.com/) XSP-10 development board, which
+   uses the PC parallel (printer) port for downloading and interaction
+   with the host.  They made an old version of their download program
+   public domain, posted it at
+      http://www.xess.com/FPGA/xstools.zip ,
+   and now there is a Linux port at
+      ftp://ftp.microux.com/pub/pilotscope/xstools.tar.gz .
+
+The above hints are based on my experience with Foundation 1.5 on NT
+(gack) and Alliance 2.1i on Solaris.  Your mileage may vary.  Good luck!
+
+     - Larry Doolittle   &lt;LRDoolittle@lbl.gov&gt;   August 19, 1999
+                                        updated February 1, 2000
+</pre>
+
+</div>
+</body>
+</html>

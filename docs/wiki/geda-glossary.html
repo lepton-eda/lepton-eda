@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="glossary_of_geda_and_eda_terms" id="glossary_of_geda_and_eda_terms">Glossary of gEDA (and EDA) terms</a></h1>
+<div class="level1">
+
+<p>
+ The design of electronics involves a host of specific terms. Some words have a meaning that only vaguely resembles the use in everyday life. This glossary aims to be a dictionary of terms specific to the gEDA suite, as well as to the larger world of CAD for electronics. Unfortunately, there is no universal naming scheme for concepts in the area of electronic design. The glossary will give hints on how things are called in other design suites.
+</p>
+
+<p>
+<span class="hilited">(Wiki-authors: Please insert new terms according to the alphabet)</span>
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>annular ring</strong>: The annular ring, sometimes also called <strong>annulus</strong>, is a diameter of copper that needs to be placed arround metalized holes like pads and vias. The minimum size of the annular ring is specified by the pcb-fab. A common requirements is 16 mil larger than the hole.</div>
+</li>
+<li class="level1"><div class="li"> <strong>dead copper</strong>: A part of the copper layer which is not connected to any net defined in the netlist. By definition, this may be any object pcb defines. However, the term commonly refers to unconnected snippets of a polygon which is divided by a track. </div>
+</li>
+<li class="level1"><div class="li"> <strong>design flow</strong>: The order or stages through which you take your design as you progress from initial concept, through schematic capture, attribute attachment, netlisting, and layout. The gEDA Suite uses entirely separate programs for different stages of the flow; each tool in the suite reads the output file produced by the previous tool, and writes a file to be read by the next tool in the flow. The gEDA design flow for designing a PCB is illustrated <a href="http://geda.seul.org/wiki/geda:usage#what_does_the_design_flow_in_geda_look_like" class="urlextern" title="http://geda.seul.org/wiki/geda:usage#what_does_the_design_flow_in_geda_look_like"  rel="nofollow">here</a>. Note that the design flow for different tasks might look different. For example, if your goal is to simulate your circuit, you will use a different flow than that shown in the link above.</div>
+</li>
+<li class="level1"><div class="li"> <strong>footprint</strong>: The pattern of metal and silkscreen which defines where you place a component on a PCB. Footprints are the placed by the user onto the PC board during the “placement” phase of PCB layout (using e.g. the open-source tool PCB). A footprint is also sometimes called called a “decal” (PADS), or a “land-pattern”.</div>
+</li>
+<li class="level1"><div class="li"> <strong>GTK-HID</strong>: The GTK version of the pcb user interface. “HID” is an acronym for “human interface device”. As the name sugests, GTK-HID uses the GTK+ widgetset and tries to comply with GTK usability standards.This is the default <acronym title="Graphical User Interface">GUI</acronym> of pcb. Menu and keyboard configuration is read from gpcb-menu.res. (See Lesstif-HID for an alternative)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Lesstif-HID</strong>: The Lesstif version of the pcb user interface.  It uses the Lesstif widgetset, which is the open source version of Motif. Menu and keyboard configuration read from <code>pcb-menu.res</code> try to comply with Lesstif usability standards. If you want to give this interface a try, you have to give the option <code>&ndash;with-gui=lesstif</code> at compile time.</div>
+</li>
+<li class="level1"><div class="li"> <strong>net</strong>: A net is the representation of a wire, or electrical connection in your schematic diagram. It is basically a line connecting two symbol pins. The term “net” is also sometimes used loosely to talk about an electrical connection (via a wire or PCB trace) in a real circuit. Some schematic capture tools call a net a “wire”.</div>
+</li>
+<li class="level1"><div class="li"> <strong>netlist</strong>: A netlist is an text file representation of your circuit which emphasizes the connections between the different circuit elements, perhaps independently of the physical packages constituting the actual components in the circuit.</div>
+</li>
+<li class="level1"><div class="li"> <strong>pad</strong>: A pad is the patch of copper to which a SMD-component is to be soldered. Although pads are usually square, they can also be rounded.</div>
+</li>
+<li class="level1"><div class="li"> <strong>pin</strong>: A pin is a hole in the printed circuit that allows to connect a wired component. In many cases the hole is clad with copper by the pcb-fab. Also called a “thru-hole”.</div>
+</li>
+<li class="level1"><div class="li"> <strong>pcb</strong>: In the context of gEDA this acronym has two distict meanings:</div>
+<ol>
+<li class="level2"><div class="li"> An abbreviation of “printed circuit board”. This is the actual hardware that is used to connect electronic components. It is also sometimes called a “printed wiring board” (PWB), although this usage may be dying out.</div>
+</li>
+<li class="level2"><div class="li"> A powerful, open-source tool used to design the layout of a printed circuit board. The output of the gaf tools can be used as an input to pcb.(<a href="http://pcb.sourceforge.net/index.html" class="urlextern" title="http://pcb.sourceforge.net/index.html"  rel="nofollow">homepage of pcb</a>)</div>
+</li>
+</ol>
+</li>
+<li class="level1"><div class="li"> <strong>rats nest</strong>: The lines drawn on the pcb working area that hint which pads still need to be connected with tracks. Unlike the actual tracks the rats nest are straight lines. If multiple pads are involved in a net, pcb tries to draw rats nests with the shortest possible length.</div>
+</li>
+<li class="level1"><div class="li"> <strong>refdes</strong>: Short for “reference designator”. The unique designator (or name) of a component. The gEDA tools rely on the refdefs to organize the components internally. Therefore, for successful creation of a printed circuit board every component has to be linked with a refdes. Usually, the refdes consists of a few upper case letters and a digit. Examples: R1, R2, U115, CONN3. (Protel: “Designator”)(<a href="http://en.wikipedia.org/wiki/reference_designator" class="urlextern" title="http://en.wikipedia.org/wiki/reference_designator"  rel="nofollow"> Wikipedia: reference designator</a>)</div>
+</li>
+<li class="level1"><div class="li"> <strong>silkscreen</strong>: This is the layer that defines the text and graphics printed on the pcb board. It usually contains the name of the board, outlines of the components and possibly their values or refdes. The origin of the name is the silk traditionally used during the print process. </div>
+</li>
+<li class="level1"><div class="li"> <strong>slot</strong>: Some components contain multiple, identical devices inside a single package. The IOs for each component are mapped to different pin sets on the package. A classic example is the TTL 7400 quad nand gate. Gschem (like other schematic capture packages) handles this type of component by allowing you to draw four separate nand gate symbols, and then selecting which <strong>slot</strong> each symbol should have by attaching a slot attribute to the symbol. In the example of the 7400 quad nand, you would select <strong><code>slot=1</code></strong> for the first appearance of the symbol, slot=2 for the second appearance, and so on. Note that in gschem you need to attach power nets to a slotted component only <strong>once</strong>. (Other schematic capture programs like Orcad require you to attach common nets – like power nets – on each instantiation of the slotted symbol.)</div>
+</li>
+<li class="level1"><div class="li"> <strong>solder layer</strong>: This is the side of the board where traditional, thru hole components are soldered. (Protel: “Bottom Layer”)</div>
+</li>
+<li class="level1"><div class="li"> <strong>symbol</strong>: A symbol is the representation of a particular component in your schematic diagram. The classic examples are squiggley lines for resistors (in US usage anyway), or a triangle for an op-amp. Using a schematic capture program (e.g. gschem) you place symbols on your board, and then wire them up to create a representation of your circuit.</div>
+</li>
+<li class="level1"><div class="li"> <strong>component layer</strong>: This is the side of the board where traditional, thru hole components sit, Usually the top side of the board. (Protel: “Top Layer”)</div>
+</li>
+<li class="level1"><div class="li"> <strong>thermal</strong>, short for <a href="http://en.wikipedia.org/wiki/Thermal_relief_pad" class="urlextern" title="http://en.wikipedia.org/wiki/Thermal_relief_pad"  rel="nofollow"> thermal relief pad</a>: A thermal is a way to connect a via with a copper plane through narrow bridges. The aim is to connect electrically, but provide enough thermal resistance to allow for convenient soldering. There is a special mode in pcb to convert the annular ring of vias into thermals. (However, vias never need thermals, since they are never soldered &ndash; only thru-holes need vias).</div>
+</li>
+<li class="level1"><div class="li"> <strong>via</strong>: A via is a metalized hole that is meant to electrically connect different layers of the pcb. Usually, vias are as small as possible to save valuable real estate on the pcb. A via is made the same way as a thru-hole, but since no pin will be pushed through, it’s OK for the metal to completely fill the hole (“filled”) and for the solder mask to completely cover the hole (“tented”).</div>
+</li>
+</ul>
+
+</div>
+</body>
+</html>

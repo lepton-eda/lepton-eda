@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+<p>
+ <strong>Ubuntu Install Notes</strong>
+</p>
+
+<p>
+Basic Stable Installation:  Use apt-get or synaptic to install a stable version from Debian repositories. (easy).  Alternately download a binary .deb from Debian (thanks to Hamish) and you can just sudo dpkg -i &lt;pcb-version.deb&gt;.
+</p>
+
+<p>
+Build Installation: Ubuntu doesn’t include everything you need to compile software yourself.  You’ll want to install the ‘build-essential’ package using apt-get or synaptic to get the basic toolchain working on your machine.  (Things like GCC are not inc. in Ubuntu).  For a testing maturity level for PCB or geda, build-essential should be all you need.
+</p>
+
+<p>
+Be careful as synaptic can do extreme damage to your system.  Do be fooled into replacing libc6 because synaptic will want to remove all applications that depend on it &ndash; meaning your entire system.
+</p>
+
+<p>
+<acronym title="Concurrent Versions System">CVS</acronym> Installation: For the <acronym title="Concurrent Versions System">CVS</acronym> version of PCB under Edgy, your ./configure step will require running with switch &ndash;enable-maintainer-mode.  (more notes needed) 
+</p>
+</body>
+</html>

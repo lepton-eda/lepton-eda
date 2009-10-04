@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="tragesym_symbol_generator_readme" id="tragesym_symbol_generator_readme">tragesym (symbol generator) README</a></h1>
+<div class="level1">
+<pre class="code">tragesym is a small python script that creates geda symbols out of 
+structured textfiles.
+
+For creating a symbol you have to edit the sourcefile first.  You can
+use the template.src file, which is in /examples/tragesym/ directory.
+Some examples are in the examples/tragesym directory too.
+
+For possible footprint names take a look into the ~geda directory 
+of the PCB program.
+
+usage is:
+  tragesym &lt;sourcefile&gt; &lt;symbolfile&gt;
+
+After you have translated the sourcefile to the symbolfile you have to
+rearrange some pins with gschem, translate the symbol to the origin
+and save it in an appropriate symbol directory.  Make the attributes
+visible while doing that (edit-&gt;show hidden text) and hide the text
+again before saving.
+
+tragesym requires python (versions greater 1.5 should work).
+
+Comment an questions are welcome. 
+Send it to Werner Hoch (werner.ho@gmx.de)
+</pre>
+
+</div>
+</body>
+</html>

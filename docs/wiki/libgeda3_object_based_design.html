@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#overview" class="toc">Overview</a></span></div></li>
+<li class="level1"><div class="li"><span class="li"><a href="#description_of_the_needs_in_an_electrical_cad_system" class="toc">Description of the needs in an Electrical CAD system</a></span></div></li>
+<li class="level1"><div class="li"><span class="li"><a href="#object_based_design" class="toc">Object based design</a></span></div></li>
+<li class="level1"><div class="li"><span class="li"><a href="#geda_objects" class="toc">geda objects</a></span></div></li>
+<li class="level1"><div class="li"><span class="li"><a href="#integration_with_current_code" class="toc">Integration with current code</a></span></div></li>
+<li class="level1"><div class="li"><span class="li"><a href="#comments" class="toc">Comments?</a></span></div></li></ul>
+</div>
+</div>
+
+
+
+<h1><a name="overview" id="overview">Overview</a></h1>
+<div class="level1">
+
+<p>
+As stated in <a href="libgeda3.html" class="wikilink1" title="libgeda3.html">libgeda3</a>, libgeda has some design problems that needs to be addressed. The structure described in this page is very different from the current libgeda structure and design, while hopefully can be flexible enough to be the basement of future developments.
+</p>
+
+</div>
+<!-- SECTION "Overview" [1-296] -->
+<h1><a name="description_of_the_needs_in_an_electrical_cad_system" id="description_of_the_needs_in_an_electrical_cad_system">Description of the needs in an Electrical CAD system</a></h1>
+<div class="level1">
+
+<p>
+ Schematics and PCB (or IC) designs are, by nature, a graphical representation of objects, with interconnections between them. 
+</p>
+
+<p>
+The basic primitives used in the graphical artwork are:
+</p>
+<ul>
+<li class="level1"><div class="li"> Lines</div>
+</li>
+<li class="level1"><div class="li"> Arcs</div>
+</li>
+<li class="level1"><div class="li"> Rectangles</div>
+</li>
+<li class="level1"><div class="li"> Circles</div>
+</li>
+<li class="level1"><div class="li"> Text</div>
+</li>
+<li class="level1"><div class="li"> Images (not very often)</div>
+</li>
+</ul>
+
+<p>
+ These basic shapes can have attributes modifying how they are drawn in the screen: dashed or dotted lines, filled or unfilled shapes,&hellip; , and can be grouped into a composed object (this object is drawn as a combination of one or more basic primitives). The graphical representation of a composed object is a symbol.
+</p>
+
+<p>
+An electrical or electronic CAD must be able to draw components (composed objects) and interconnections between them.  The interconnections is the key difference from other CAD packages, and are the basis of further engineering work, such as simulations or layouts. They are drawn as lines, but they are not only lines and therefore should be handled differently. The interconnection primitives are:
+</p>
+<ul>
+<li class="level1"><div class="li"> Pin or ports: points of a composed object which can be used for interconnection, or connection points between pages.</div>
+</li>
+<li class="level1"><div class="li"> Nets: define the interconnections between pin or ports. It is usually drawn as a line.</div>
+</li>
+<li class="level1"><div class="li"> Junction: define the connection between crossing nets. It is usually drawn as a dot at the intersection of two crossing nets.</div>
+</li>
+<li class="level1"><div class="li"> Buses: group of nets. Trying to make things simple, they are drawn as a line, usually thicker than nets.</div>
+</li>
+<li class="level1"><div class="li"> Bus ripper: connects a net to a bus. It is needed because there should be a way to specify which net of the bus should be connected.</div>
+</li>
+</ul>
+
+<p>
+ An electric circuit can be drawn in a page, but, as designs grow in complexity, it is usually divided into several interconnected pages, or is drawn as a hierarchy.  One common way is to draw a circuit defining some ports (where it is going to connect to other circuits), make a symbol for it, and include the symbol in other pages as it was a common composed object. So a design is composed of one or several pages, which can also include other page’s symbols, and so on. Therefore, a design can be drawn as a hiearchy tree.
+</p>
+
+<p>
+Finally, but not less important, every object described can have properties attached, describing the nature of the component, its attributes, or other representations (simulation models, graphical representation for PCB design,&hellip;).
+</p>
+
+</div>
+<!-- SECTION "Description of the needs in an Electrical CAD system" [297-2701] -->
+<h1><a name="object_based_design" id="object_based_design">Object based design</a></h1>
+<div class="level1">
+
+<p>
+Despite its title, this is not a section talking about Object Oriented Programming. <img src="images/smileys/icon_smile.gif" align="middle" alt=":-)" />
+</p>
+
+<p>
+It is a known fact that all schematics are graphical representations of components, interconnections and properties, organized as a plain or hierarchical tree.
+</p>
+
+<p>
+One of the current issues with libgeda is that the schematic program itself, and hence the developers, should take care of all the drawing stuff associated with schematics. Plus, there are drawing transforms, like moving, rotating, mirroring, etc&hellip; This is very time consuming for the developer, and the results are not always the best.
+</p>
+
+<p>
+This was fine at the moment when it was born, but technology is continuously evolving.  Today there are more advanced widgets that take care of all the object drawing, and lets the applications concentrate on what they should do. This kind of widgets are called “canvas”.
+</p>
+
+<p>
+Let’s take a look at one of them: <a href="http://sourceforge.net/projects/goocanvas" class="urlextern" title="http://sourceforge.net/projects/goocanvas"  rel="nofollow">goocanvas</a>. There are no screenshots, no official webpage, but don’t be scared and look further. Download it and take a look at the documentation into the “doc” directory. You can also compile a demo, but you will need GTK 2.10 (for goocanvas version greater than 0.4), or GTK2.8 (goocanvas 0.4). I can tell you that the demo of the last version (0.8 at this moment) is quite impressive. If you have time, try it!. It is worth!.
+</p>
+
+<p>
+Basically what it provides is:
+</p>
+<ul>
+<li class="level1"><div class="li"> Already defined primitives: ellipse, image, path, polyline, rectangle, text, and even support for other GTK widges.</div>
+</li>
+<li class="level1"><div class="li"> Takes care of all the drawing stuff.</div>
+</li>
+<li class="level1"><div class="li"> Model/view implementation:  several views of the same page is easily supported.</div>
+</li>
+<li class="level1"><div class="li"> Full hierarchy/nesting capability: there are no nesting limits.</div>
+</li>
+<li class="level1"><div class="li"> Uses cairo, already in GTK. This can be a drawback for some people, but if you have problems with cairo, it’s likely you are going to have problems with the current gschem when GTK complete the transition into cairo.</div>
+</li>
+<li class="level1"><div class="li"> Built-in drawing transforms (rotating, scaling, moving,&hellip;).</div>
+</li>
+<li class="level1"><div class="li"> Full international text support without creating a new font. This is something true with some programs using a custom font: if you want it to support your language, you have to create the font for your special characters. (This is the case of the current gschem).</div>
+</li>
+<li class="level1"><div class="li"> Built-in object visibility and clipping handling.</div>
+</li>
+<li class="level1"><div class="li"> Built-in object events: it can detect clicks on objects, for example.</div>
+</li>
+<li class="level1"><div class="li"> Written in C using GObject.</div>
+</li>
+</ul>
+
+<p>
+ The advantage is clear: all the basic drawing primitives and operations are already done.
+</p>
+
+<p>
+ So the proposal is to base all the geda objects on the objects supplied by the canvas (note that every canvas you find is going to provide its own object classes, so this is a canvas based generic design.
+</p>
+
+</div>
+<!-- SECTION "Object based design" [2702-5463] -->
+<h1><a name="geda_objects" id="geda_objects">geda objects</a></h1>
+<div class="level1">
+
+<p>
+ The geda object definition could be something as simple as: 
+</p>
+<pre class="code C"><span class="kw4">struct</span> GedaObject <span class="br0">&#123;</span>
+  <span class="kw4">int</span> GedaType;
+  GList *views; <span class="coMULTI">/* List of pointers to GooCanvasItems 
+                   This could solve the problem about heterogeneus parts: 
+                   We can store as many graphical representations of they object as we want */</span>
+                <span class="coMULTI">/* Still not sure about this, though */</span>
+  GooCanvasItem *current_view;
+<span class="br0">&#125;</span>;
+&nbsp;
+<span class="kw4">struct</span> GedaObjectGroup <span class="br0">&#123;</span>
+  <span class="kw4">int</span> GedaType;
+  GooCanvasItem group; <span class="coMULTI">/* There is also an item for groups of objects */</span>
+<span class="br0">&#125;</span>;</pre>
+<p>
+There is no need to store graphic attributes in GedaObject. If the position is needed, since the canvas item can be queried. Some special definition for properties is needed (they shouldn’t be handled as just text): 
+</p>
+<pre class="code C"><span class="kw4">struct</span> GedaObjectProperty <span class="br0">&#123;</span>
+  GedaType;
+  GooCanvasItem *name;
+  GooCanvasItem *value;
+<span class="br0">&#125;</span>;</pre>
+<p>
+and another one for connectivity items: 
+</p>
+<pre class="code C"><span class="kw4">struct</span> GedaObjectPort <span class="br0">&#123;</span>
+  <span class="kw4">int</span> GedaType;
+  GooCanvasItem *graphic;
+  GedaObject *connected_object;
+<span class="br0">&#125;</span>;
+&nbsp;
+<span class="kw4">struct</span> GedaObjectDotConnection <span class="br0">&#123;</span>
+  <span class="kw4">int</span> GedaType;
+  GooCanvasItem *graphic;
+  GList *connected_objects;
+<span class="br0">&#125;</span>;
+&nbsp;
+<span class="kw4">struct</span> GedaObjectNet <span class="br0">&#123;</span> <span class="coMULTI">/* or bus, or bus ripper */</span>
+  <span class="kw4">int</span> GedaType;
+  GooCanvasItem *graphic;
+  GList *connected_objects;
+<span class="br0">&#125;</span>;</pre>
+<p>
+Everything else can be done attaching properties to the defined objects. For example, a page is just as any other GedaObject, where the view item points to a GedaObjectGroup. Notice that having multiple views for a page could be just like a page having multiple pages (at the same hierarchy level).
+</p>
+
+<p>
+No object naming is required, although it is already supported by default: you can add a GedaProperty to any other object (it will become part of the object).
+</p>
+
+<p>
+Example: a 7400 symbol, with a footprint attribute “DIP-16”, and reference designator “U1” would look as: 
+</p>
+<pre class="code">
+GedaObject
+ |- views
+ |    |- GedaObjectGroup 
+ |    |     |- GedaObjectGroup    /* the graphic representation */
+ |    |     |- GedaObjectProperty /* name = &quot;refdes&quot;,    value=&quot;U1&quot; */
+ |    |     |- GedaObjectProperty /* name = &quot;footprint&quot;, value=&quot;DIP-16&quot; */
+ v    v     
+</pre>
+
+</div>
+<!-- SECTION "geda objects" [5464-7610] -->
+<h1><a name="integration_with_current_code" id="integration_with_current_code">Integration with current code</a></h1>
+<div class="level1">
+
+<p>
+ There is no easy and direct way to get this structure into the current codebase. However, the current codebase can be adapted progressively to use this structure.
+</p>
+
+<p>
+All canvas specific code can be hidden by a common interface or a runtime plugin, so a possible change of the used canvas could be easy.
+</p>
+
+</div>
+<!-- SECTION "Integration with current code" [7611-7959] -->
+<h1><a name="comments" id="comments">Comments?</a></h1>
+<div class="level1">
+
+<p>
+ Leave your comment here!
+</p>
+
+<p>
+[Peter C] {
+</p>
+
+<p>
+Hi. I think a canvas could be the right way to go with gschem, however we should design libgeda structures to represent the underlying circuit, design, and CAD / graphics concepts involved. I’d hope we can avoid linking any canvas or UI specific structures into libgeda. In a sense, part of what libgeda’s does is define canvas independent data-structures and manipulation functions for for the graphic objects on a schematic page.
+</p>
+
+<p>
+We can write a wrapper between libgeda and the canvas for actual rendering. It looks (superficially) that this is possible with goocanvas. The two basic cases are “compound” gEDA objects which map to groups of other objects (like complex objects, the current font implementation etc.), and gEDA objects which map to primitives like lines and arcs.
+</p>
+
+<p>
+I think some of the important design decisions to make now involve defining the <acronym title="Application Programming Interface">API</acronym> for object / design database manipulation, and what signals and hooks we might expose to other code. I’d start by considering starting with basic “translate, rotate, mirror, &hellip;.&quot; operations like libgeda has now, and then explore signals notifying that an object has changed.
+</p>
+
+<p>
+}
+</p>
+
+</div>
+<!-- SECTION "Comments?" [7960-] --></body>
+</html>

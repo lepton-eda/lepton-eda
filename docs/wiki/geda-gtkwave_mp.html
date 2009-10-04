@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="visualization_tool_for_vcd_lxt_and_vzt_files_gtkwave" id="visualization_tool_for_vcd_lxt_and_vzt_files_gtkwave">Visualization tool for VCD, LXT, and VZT files (gtkwave)</a></h1>
+<div class="level1">
+<pre class="code">GTKWAVE(1)		    Simulation Wave Viewer		    GTKWAVE(1)
+
+
+
+NAME
+       gtkwave - Visualization tool for VCD, LXT, and VZT files
+
+SYNTAX
+       gtkwave [option]... [DUMPFILE] [SAVEFILE] [RCFILE]
+
+
+DESCRIPTION
+       Visualization  tool  for	 VCD,  LXT, LXT2, and VZT.  VCD is an industry
+       standard simulation dump format. LXT, LXT2, and VZT have been  designed
+       specifically for use with gtkwave.  Native dumpers exist in Icarus Ver-
+       ilog for the LXT formats so conversion with vcd2lxt(1)  or  vcd2lxt2(1)
+       is  not	necessary to take direct advantage of LXT with that simulator.
+       AET2 files can also be processed provided that  libae2rw	 is  available
+       but this is only of interest to people who use IBM EDA toolsets.
+
+OPTIONS
+       -n,--nocli &lt;directory name&gt;
+	      Use file requester for dumpfile name
+
+       -f,--dump &lt;filename&gt;
+	      Specify dumpfile name.
+
+       -r,--rcfile &lt;filename&gt;
+	      Specify override .gtkwaverc filename.
+
+       -i,--indirect &lt;filename&gt;
+	      Specify  indirect facs file name.	 The file contains a series of
+	      regular expressions used to limit what signals can  be  browsed.
+	      Signal  names which match any of the regular expressions will be
+	      viewable.	 Typically, indirect files are used to	reduce	memory
+	      requirements  for	 extremely large models containing millions of
+	      facilities or to strip  out  top-level  hierarchy	 clutter  from
+	      BugSpray	models.	  This feature is only available with the AET2
+	      loader.
+
+       -l,--logfile &lt;filename&gt;
+	      Specify simulation logfile name.	Multiple logfiles may be spec-
+	      ified  by	 preceeding  each with the command flag.  By selecting
+	      the numbers in the text widget, the marker will immediately zoom
+	      to the specific time value.
+
+       -d,--defaultskip
+	      If  there is not a .gtkwaverc file in the home directory or cur-
+	      rent directory and it is not explicitly specified on the command
+	      line,  when  this option is enabled, do not use an implicit con-
+	      figuration file and instead default  to  the  old	 &quot;whitescreen&quot;
+	      behavior.
+
+       -s,--start &lt;time&gt;
+	      Specify start time for LXT2/VZT block skip.
+
+       -e,--end &lt;time&gt;
+	      Specify end time for LXT2/VZT block skip.
+
+       -c,--cpu &lt;numcpus&gt;
+	      Specify  number  of CPUs available for parallelizable ops (e.g.,
+	      block prefetching on VZT reads).
+
+       -v,--vcd
+	      Use stdin as a VCD dumpfile.
+
+       -V,--version
+	      Display version banner then exit.
+
+       -h,--help
+	      Display help then exit.
+
+       -x,--exit
+	      Exit after loading trace (for loader benchmarking).
+
+FILES
+       ~/.gtkwaverc
+
+
+EXAMPLES
+       To run this program the standard way type:
+	      gtkwave dumpfile.vcd
+
+       Alternatively you can run it with a save file as:
+	      gtkwave dumpfile.vcd dumpfile.sav
+
+       Command line options are not necessary for representing	the  dumpfile,
+       savefile, and rcfile names.  They are merely provided to allow specify-
+       ing them out of order.  Note that on non-glibc systems, the  long  com-
+       mand  line  options  will not be available and that the short ones will
+       have to be used instead.
+
+AUTHORS
+       Anthony Bybell &lt;bybell@nc.rr.com&gt;
+
+SEE ALSO
+       lxt2vcd(1) vcd2lxt(1) vcd2lxt2(1) vzt2vcd(1) vcd2vzt(1)
+
+
+
+Anthony Bybell			    1.3.70			    GTKWAVE(1)</pre>
+
+</div>
+</body>
+</html>

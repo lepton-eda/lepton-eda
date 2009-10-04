@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#past_releases" class="toc">Past Releases</a></span></div>
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#stable" class="toc">1.4.2 (stable)</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#stable1" class="toc">1.4.3 (stable)</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#unstable" class="toc">1.5.1 (unstable)</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#unstable1" class="toc">1.5.2 (unstable)</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+
+
+
+<h1><a name="past_releases" id="past_releases">Past Releases</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "Past Releases" [1-29] -->
+<h3><a name="stable" id="stable">1.4.2 (stable)</a></h3>
+<div class="level3">
+
+<p>
+ Target release date: <strong>November 2008</strong> <br/>
+  Actual release date: <strong>December 20th 2008</strong>
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Description                         </th><th class="leftalign"> SF bug  </th><th class="leftalign"> GIT Commit (to cherrypick)            </th><th class="leftalign"> Developer(s)         </th><th class="leftalign"> Status       </th>
+	</tr>
+	<tr>
+		<td> Bump libgeda.so micro / minor version </td><td class="centeralign">   n/a                                 </td><td class="centeralign">  n/a  </td><td> Ales </td><td class="leftalign"> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=59f9593cf903345f96f78fbd365c008061cf600e" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=59f9593cf903345f96f78fbd365c008061cf600e"  rel="nofollow"> Done </a>             </td>
+	</tr>
+	<tr>
+		<td> Backport fix for gattrib crash with graphical attribute </td><td> <a href="https://sourceforge.net/tracker/?func=detail&amp;atid=818426&amp;aid=2214739&amp;group_id=161080" class="urlextern" title="https://sourceforge.net/tracker/?func=detail&amp;atid=818426&amp;aid=2214739&amp;group_id=161080"  rel="nofollow"> 2214739 </a> </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commitdiff;h=9bb639685d3d413d245ebf8f58cd55b6734bec2e" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commitdiff;h=9bb639685d3d413d245ebf8f58cd55b6734bec2e"  rel="nofollow"> 9bb639685d3d413d245ebf8f58cd55b6734bec2e </a> <a href="http://git.gpleda.org/?p=gaf.git;a=commitdiff;h=0b194eee257f5818cc0ad9b035f9b81134a87745" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commitdiff;h=0b194eee257f5818cc0ad9b035f9b81134a87745"  rel="nofollow"> 0b194eee257f5818cc0ad9b035f9b81134a87745 </a> </td><td> Peter B </td><td> Done </td>
+	</tr>
+	<tr>
+		<td> Backport fix for crash / ghost connections copying embedded symbols </td><td> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=2321269&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=2321269&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2321269 </a> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=1692626&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=1692626&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 1692626 </a> </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commitdiff;h=0a823197e4d511cc5fdfb38013808847781dd2f5" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commitdiff;h=0a823197e4d511cc5fdfb38013808847781dd2f5"  rel="nofollow"> 0a823197e4d511cc5fdfb38013808847781dd2f5 </a> </td><td> Peter B </td><td> Done </td>
+	</tr>
+	<tr>
+		<td> Backport fix for recomputing bounds of copied embedded symbol </td><td> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=1977704&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=1977704&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 1977704 </a> </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commitdiff;h=3db78903fb7bd41a0f2d8b4022c2afa18055a54a" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commitdiff;h=3db78903fb7bd41a0f2d8b4022c2afa18055a54a"  rel="nofollow"> 3db78903fb7bd41a0f2d8b4022c2afa18055a54a </a> </td><td> Peter B </td><td> Done </td>
+	</tr>
+	<tr>
+		<td> Backport security fix insecure /tmp usage in sch2eaglepos.sh </td><td class="centeralign">   n/a  </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commitdiff;h=5bf126369c5f5a60f5ae039170c33ff4c767a4ee" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commitdiff;h=5bf126369c5f5a60f5ae039170c33ff4c767a4ee"  rel="nofollow"> 5bf126369c5f5a60f5ae039170c33ff4c767a4ee </a> </td><td> Peter B </td><td> Done </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "1.4.2 (stable)" [30-1936] -->
+<h3><a name="stable1" id="stable1">1.4.3 (stable)</a></h3>
+<div class="level3">
+
+<p>
+ Target release date: <strong>January 2009</strong> <br/>
+  Actual release date: <strong>December 31st 2008</strong> 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Description                         </th><th class="leftalign"> SF bug  </th><th class="leftalign"> GIT Commit (to cherrypick)            </th><th class="leftalign"> Developer(s)         </th><th class="leftalign"> Status       </th>
+	</tr>
+	<tr>
+		<td> Backport “Enable promotion of attributes when adding a component from guile.&quot; </td><td> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=1932474&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=1932474&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 1932474 </a> </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=f154fcb921e75e7940e0b4dbd9ad5bab6a61e704" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=f154fcb921e75e7940e0b4dbd9ad5bab6a61e704"  rel="nofollow"> f154fcb921e75e7940e0b4dbd9ad5bab6a61e704 </a> </td><td> Peter C </td><td> <a href="http://repo.or.cz/w/geda-gaf/pcjc2.git?a=commit;h=416c2900bcc126171a28e33341b90d9d49848ab8" class="urlextern" title="http://repo.or.cz/w/geda-gaf/pcjc2.git?a=commit;h=416c2900bcc126171a28e33341b90d9d49848ab8"  rel="nofollow"> Done </a> </td>
+	</tr>
+	<tr>
+		<td> Backport crash fix for rubberbanded nets </td><td> <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2017356&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2017356&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2017356 </a> </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=fe8640898cb843b72e1c3cc01ee52c33db736ccf" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=fe8640898cb843b72e1c3cc01ee52c33db736ccf"  rel="nofollow"> fe8640898cb843b72e1c3cc01ee52c33db736ccf </a> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=c69785fe267e2cdc70e2748dfab7268fbdcc3e7e" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=c69785fe267e2cdc70e2748dfab7268fbdcc3e7e"  rel="nofollow"> c69785fe267e2cdc70e2748dfab7268fbdcc3e7e </a> </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=469f81a602ea8c5228f1553f6ee785499f24905e" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=469f81a602ea8c5228f1553f6ee785499f24905e"  rel="nofollow"> Done </a> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=794d0f1c804d366a0840a9ffc63e6bdf5da27b6b" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=794d0f1c804d366a0840a9ffc63e6bdf5da27b6b"  rel="nofollow"> Done </a> </td>
+	</tr>
+	<tr>
+		<td> Backport crash fix for coincident pins </td><td> <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=1912859&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=1912859&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 1912859 </a> </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=3d8b3efb5a4ce8672133658ccdbe5c57d341f0fc" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=3d8b3efb5a4ce8672133658ccdbe5c57d341f0fc"  rel="nofollow"> 3d8b3efb5a4ce8672133658ccdbe5c57d341f0fc </a> CAUTION: In 1.4.x, complex_parent is only set on HEAD of prim_objs list </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=66140fd3956e8d4523c8a7ecc63e519144b9c4c6" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=66140fd3956e8d4523c8a7ecc63e519144b9c4c6"  rel="nofollow"> Done </a> </td>
+	</tr>
+	<tr>
+		<td> Backport crash fix invalid attributes </td><td> <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2061325&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2061325&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2061325 </a> </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=b14f3bf215963529b89f650ff3bd6f0b0c90450f" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=b14f3bf215963529b89f650ff3bd6f0b0c90450f"  rel="nofollow"> b14f3bf215963529b89f650ff3bd6f0b0c90450f </a> CAUTION: MOFIDY FOR OLD o_attrib_get_name_value() </td><td class="leftalign"> Peter C  </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=51926b0107a70e944c494f9a5a76d379b217f9fb" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=51926b0107a70e944c494f9a5a76d379b217f9fb"  rel="nofollow"> Done </a> </td>
+	</tr>
+	<tr>
+		<td> Backport “Validate calls to scm_c_eval_string(). [2105219]&quot; </td><td> <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2105219&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2105219&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2105219 </a> </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=2a4fdb13021d0153e788fe3b2fc005f273dcdf4b" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=2a4fdb13021d0153e788fe3b2fc005f273dcdf4b"  rel="nofollow"> 2a4fdb13021d0153e788fe3b2fc005f273dcdf4b </a> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=16102ef095c959b5c1febb9b9259dda23c739258" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=16102ef095c959b5c1febb9b9259dda23c739258"  rel="nofollow"> 16102ef095c959b5c1febb9b9259dda23c739258 </a> </td><td class="leftalign"> Peter B  </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=22d9457c68d756675facc5acfebebca96299a766" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=22d9457c68d756675facc5acfebebca96299a766"  rel="nofollow"> Done </a> </td>
+	</tr>
+	<tr>
+		<td> Backport “Fix the “systemc” gnetlist backend” </td><td class="centeralign">  n/a  </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=bfd49ad477a49235c3e5ee1eda54e5009f6e347a" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=bfd49ad477a49235c3e5ee1eda54e5009f6e347a"  rel="nofollow"> bfd49ad477a49235c3e5ee1eda54e5009f6e347a </a> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=d13aadcbac4af912e0555b3696b59fc904c6cd9f" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=d13aadcbac4af912e0555b3696b59fc904c6cd9f"  rel="nofollow"> d13aadcbac4af912e0555b3696b59fc904c6cd9f </a> </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=7b17b576aac3f59d880d5d28234833b3a9d82e26" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=7b17b576aac3f59d880d5d28234833b3a9d82e26"  rel="nofollow"> Done </a> </td>
+	</tr>
+	<tr>
+		<td> Fix invalidation of text origin and “I” markers </td><td class="centeralign">  n/a  </td><td class="centeralign">  n/a  </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=f8749da75c18866778067b6ad04adfebce80559c" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=f8749da75c18866778067b6ad04adfebce80559c"  rel="nofollow"> Done </a> </td>
+	</tr>
+	<tr>
+		<td> Backport redraw empty preview on configure events </td><td> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=2159047&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=2159047&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2159047 </a> </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=87a19a19e52a37f8ad14ae0c4c68f3292b0c3285" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=87a19a19e52a37f8ad14ae0c4c68f3292b0c3285"  rel="nofollow"> 87a19a19e52a37f8ad14ae0c4c68f3292b0c3285 </a> </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=89bb8cf750c586b5b291f2fd90d204791650dae5" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=89bb8cf750c586b5b291f2fd90d204791650dae5"  rel="nofollow"> Done </a> </td>
+	</tr>
+	<tr>
+		<td> Backport “gschlas: Fix segfault opening file” </td><td class="centeralign">  n/a  </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=46fdb00b19d300dfcc5f9009f9c7dbbf0940834f" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=46fdb00b19d300dfcc5f9009f9c7dbbf0940834f"  rel="nofollow"> 46fdb00b19d300dfcc5f9009f9c7dbbf0940834f </a> </td><td class="leftalign"> Peter C  </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=6f001abc5c1fc69bb5bfbece189efbd231a8ed4c" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=6f001abc5c1fc69bb5bfbece189efbd231a8ed4c"  rel="nofollow"> Done </a> </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "1.4.3 (stable)" [1937-6063] -->
+<h3><a name="unstable" id="unstable">1.5.1 (unstable)</a></h3>
+<div class="level3">
+
+<p>
+ Target release date: <strong>November 2008</strong> <br/>
+   Actual release date: <strong>December 21st 2008</strong> 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Description                         </th><th class="leftalign"> SF bug                           </th><th class="leftalign"> Developer(s)         </th><th class="leftalign"> Status       </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> Selection of filled objects         </td><td> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=2094571&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=2094571&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2094571 </a> </td><td> Ed Hennessy, Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=94602fdc724dd31527c3ceed2092ddeee1d954e0" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=94602fdc724dd31527c3ceed2092ddeee1d954e0"  rel="nofollow"> Mostly fixed </a> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=67daa4d705d62d16133feb2d9a3a77cacb9b34de" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=67daa4d705d62d16133feb2d9a3a77cacb9b34de"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> Selection mechanism tweaks          </td><td class="centeralign">   n/a        </td><td class="leftalign"> Ed Hennessy          </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=1d7d0b9f7f0cc38a79b7e392756dcb359b61bdbb" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=1d7d0b9f7f0cc38a79b7e392756dcb359b61bdbb"  rel="nofollow"> Fixed</a> </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> Finalize polygon file format        </td><td class="centeralign">   n/a                            </td><td class="leftalign"> Peter C              </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=beae647a1e0217dc5802084a6e00522a59ad5a28" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=beae647a1e0217dc5802084a6e00522a59ad5a28"  rel="nofollow"> Fixed</a> </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> Update file format docs             </td><td class="centeralign">   n/a                            </td><td class="leftalign"> Peter C              </td><td> <a href="http://geda.seul.org/wiki/geda:file_format_spec" class="urlextern" title="http://geda.seul.org/wiki/geda:file_format_spec"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> Bump file format version            </td><td class="centeralign">   n/a                            </td><td class="leftalign"> Peter C              </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=c2c94821ec6c9a83d0144adad7f6fa190f403af3" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=c2c94821ec6c9a83d0144adad7f6fa190f403af3"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> Check on BOM2 performance           </td><td class="centeralign">   n/a                            </td><td class="leftalign"> Peter B              </td><td class="leftalign"> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=51c2a5c9f7f9ad1c99b9da2774a051ae97f3e62e" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=51c2a5c9f7f9ad1c99b9da2774a051ae97f3e62e"  rel="nofollow"> Fixed </a>  </td>
+	</tr>
+	<tr>
+		<td> gschem: Segmentation fault (another one) </td><td> <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2105219&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2105219&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2105219</a> </td><td> Peter B </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=2a4fdb13021d0153e788fe3b2fc005f273dcdf4b" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=2a4fdb13021d0153e788fe3b2fc005f273dcdf4b"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td> CRASH: Crash in multiattrib editor with unusal attribute </td><td> <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2061325&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2061325&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2061325</a> </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=b14f3bf215963529b89f650ff3bd6f0b0c90450f" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=b14f3bf215963529b89f650ff3bd6f0b0c90450f"  rel="nofollow"> Fixed crash </a> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=70590a2312e2650f61a220980f9cf58bdad88987" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=70590a2312e2650f61a220980f9cf58bdad88987"  rel="nofollow"> Fixed trigger </a> </td>
+	</tr>
+	<tr>
+		<td> gschem segfaults when stretching net segments </td><td> <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2017356&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2017356&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2017356</a> </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=fe8640898cb843b72e1c3cc01ee52c33db736ccf" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=fe8640898cb843b72e1c3cc01ee52c33db736ccf"  rel="nofollow"> Partly fixed </a> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=c69785fe267e2cdc70e2748dfab7268fbdcc3e7e" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=c69785fe267e2cdc70e2748dfab7268fbdcc3e7e"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td> Crash removing symbol with coincident pins </td><td> <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=1912859&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=1912859&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 1912859</a> </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=3d8b3efb5a4ce8672133658ccdbe5c57d341f0fc" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=3d8b3efb5a4ce8672133658ccdbe5c57d341f0fc"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td> Fix breakage with Patrick’s re-written f_normalize_filename on mingw32 </td><td class="centeralign">   n/a    </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=b6f3379b8144b72492e3a9922939ba99ab4d4480" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=b6f3379b8144b72492e3a9922939ba99ab4d4480"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td> Fix the “systemc” gnetlist backend </td><td class="centeralign">  n/a  </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=bfd49ad477a49235c3e5ee1eda54e5009f6e347a" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=bfd49ad477a49235c3e5ee1eda54e5009f6e347a"  rel="nofollow"> Mostly fixed </a> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=d13aadcbac4af912e0555b3696b59fc904c6cd9f" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=d13aadcbac4af912e0555b3696b59fc904c6cd9f"  rel="nofollow"> Fixed </a> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=4ff7f410e4e601b85e5b6d0b8d4b6b930e49072b" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=4ff7f410e4e601b85e5b6d0b8d4b6b930e49072b"  rel="nofollow"> Fixed test-suite </a> </td>
+	</tr>
+	<tr>
+		<td> Re-add “spice” backend to common tests in gnetlist </td><td class="centeralign">  n/a  </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=227e5102e722675c93ecf897b1b1c422dd7f032c" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=227e5102e722675c93ecf897b1b1c422dd7f032c"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td> Add LiquidPCB backend to common tests in gnetlist </td><td class="centeralign">  n/a  </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=55850bb331afc0596a18dac1807a487cb475b30d" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=55850bb331afc0596a18dac1807a487cb475b30d"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td> Verify gnetlist test-suite passes </td><td class="centeralign">  n/a  </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=ba936e6bb6c321b7c9d433a8276d7cccd17c9889" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=ba936e6bb6c321b7c9d433a8276d7cccd17c9889"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> Renderer improvements (invalidate / expose model)    </td><td class="centeralign">  n/a  </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=9f65e2f99a8c4658fab1b048d76089fc6897384d" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=9f65e2f99a8c4658fab1b048d76089fc6897384d"  rel="nofollow"> Merged </a> </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "1.5.1 (unstable)" [6064-10170] -->
+<h3><a name="unstable1" id="unstable1">1.5.2 (unstable)</a></h3>
+<div class="level3">
+
+<p>
+ Target release date: <strong>December 2008 / January 2009</strong> <br/>
+ Actual release date: <strong>March 28th, 2009</strong> 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Description                         </th><th class="leftalign"> SF bug                           </th><th class="leftalign"> Developer(s)         </th><th class="leftalign"> Status       </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> Simplified color maps               </td><td class="centeralign">   n/a                              </td><td class="leftalign"> Peter B              </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=06449db86b91db91bf5d4551acc2794cf34c97f1" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=06449db86b91db91bf5d4551acc2794cf34c97f1"  rel="nofollow"> Done </a> </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> Renderer improvements (cairo for static drawing)     </td><td class="centeralign">  n/a            </td><td class="leftalign"> Peter C              </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=6e8513e78fb37bfdeba7254a7670cb86e3608924" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=6e8513e78fb37bfdeba7254a7670cb86e3608924"  rel="nofollow"> Done </a> </td>
+	</tr>
+	<tr>
+		<td> Renderer improvements (cairo for rubberband drawing) </td><td class="centeralign">  n/a            </td><td class="leftalign"> Peter C              </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=212b0cf870e05a105fc5a6c134b7803cf6c63c28" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=212b0cf870e05a105fc5a6c134b7803cf6c63c28"  rel="nofollow"> Done place </a> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=fef99d7912ebc1feb4890e5babff1772f6b20703" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=fef99d7912ebc1feb4890e5babff1772f6b20703"  rel="nofollow"> Done rubber and stretch </a> </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> Renderer improvements (pango text on screen)  </td><td class="rightalign">                        </td><td class="leftalign"> Peter C              </td><td> 80-90% finished; moved to 1.5.3 </td>
+	</tr>
+	<tr>
+		<td> Renderer improvements (get text bounds from gschem, not libgeda) </td><td class="rightalign">     </td><td class="leftalign"> Peter B, Peter C     </td><td class="leftalign"> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=330e6bc49a83a176c549644011d186dbc5e1d8b9" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=330e6bc49a83a176c549644011d186dbc5e1d8b9"  rel="nofollow"> Support </a> But not used yet!  </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> Embedding pin label colors          </td><td> <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2157598&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2157598&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2157598</a> </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=0029ee5696a4f8c0fd2a0edb64c0096792e24912" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=0029ee5696a4f8c0fd2a0edb64c0096792e24912"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> Selection from inside closed paths  </td><td class="centeralign">  n/a  </td><td> Ed Hennessy, Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=7ad1508b5dfa3a38f30176a72b288d5eb68f5050" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=7ad1508b5dfa3a38f30176a72b288d5eb68f5050"  rel="nofollow"> Fixed</a> </td>
+	</tr>
+	<tr>
+		<td> Refactored object hatching (leading to hatched polygons) </td><td class="centeralign">  n/a  </td><td> Ed Hennessy, Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=c01757cd814e7c92cb4c64a6e134aa670b9750d1" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=c01757cd814e7c92cb4c64a6e134aa670b9750d1"  rel="nofollow"> Fixed paths </a> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=3b8bbb1f0e4f549ad2e366e36365e59f7657622e" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=3b8bbb1f0e4f549ad2e366e36365e59f7657622e"  rel="nofollow"> Fixed circles </a> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=54d2fd7dc6bf09dad1d9657c5cd3635bb31e14b7" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=54d2fd7dc6bf09dad1d9657c5cd3635bb31e14b7"  rel="nofollow"> Fixed boxes </a> </td>
+	</tr>
+	<tr>
+		<td> gschem: redraw overlapping objects </td><td> <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=1444319&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=1444319&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 1444319 </a> </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=9f65e2f99a8c4658fab1b048d76089fc6897384d" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=9f65e2f99a8c4658fab1b048d76089fc6897384d"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td> gschem: Add undo point when editing fill and line styles </td><td> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=2344933&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=2344933&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2344933 </a> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=2344920&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=2344920&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2344920 </a> </td><td class="leftalign"> Peter B  </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=51a19f38bdff7c3fa3f5656a0e9347b303a2c215" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=51a19f38bdff7c3fa3f5656a0e9347b303a2c215"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td> Fix redraw of incidentally selected objects when rubberbanding </td><td> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=2482746&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=2482746&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2482746 </a> </td><td class="leftalign"> Peter C    </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=30b150c00aa04b05dd6e85cd5f336f379b4def1b" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=30b150c00aa04b05dd6e85cd5f336f379b4def1b"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td> Fix hit-detection of mirrored arcs (negative sweep) </td><td class="centeralign">  n/a  </td><td class="leftalign"> Peter C  </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=ba15c06da1ec82e3ff063e211def6d8a983f1bde" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=ba15c06da1ec82e3ff063e211def6d8a983f1bde"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td> Fix rubberbanding of mirrored arcs (negative sweep) </td><td class="centeralign">  n/a  </td><td class="leftalign"> Peter C  </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=7a6b1a22fec9785f503c46d24406046feb04d87f" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=7a6b1a22fec9785f503c46d24406046feb04d87f"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td> Fix mistakenly changed sizes of circular joint cues </td><td class="centeralign">  n/a  </td><td class="leftalign"> Peter C  </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=95432ccffdbb39434981f87050433c00f40125da" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=95432ccffdbb39434981f87050433c00f40125da"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> Ensure gnetlist doesn’t netlist buses / bus pins    </td><td class="centeralign">  n/a  </td><td class="leftalign"> Peter C  </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=a838dece88323eb782b0ac301c5825ed693fbf0f" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=a838dece88323eb782b0ac301c5825ed693fbf0f"  rel="nofollow"> Fixed </a> </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> <a href="geda-wip-clipboard.html" class="wikilink1" title="geda-wip-clipboard.html">Clipboard support</a> for copy / paste of schematic data between gEDA applications  </td><td class="rightalign">       </td><td class="leftalign"> Peter B     </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=6a07d737a32a816f43e1f061409a10e616d7aa2a" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=6a07d737a32a816f43e1f061409a10e616d7aa2a"  rel="nofollow"> Done</a> </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "1.5.2 (unstable)" [10171-] --></body>
+</html>

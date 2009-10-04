@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="xml_file_formats" id="xml_file_formats">XML File Formats</a></h1>
+<div class="level1">
+
+<p>
+This page is a starting point for discussions on using <acronym title="Extensible Markup Language">XML</acronym> for commonality between gEDA applications.
+</p>
+
+<p>
+One major goal of this effort is to provide advanced file format features while still maintaining backward compatibility with the existing file formats (and be able to bring an old design forward with ease if you wish).
+</p>
+
+<p>
+Another main goal is to start addressing the Symbol Library Hacker task discussed at <a href="geda-tasks.html" class="wikilink1" title="geda-tasks.html">tasks</a>.
+</p>
+
+<p>
+Yes, this effort is self concious because of <a href="geda-usage.html#can_we_change_geda_to_use_an_xml_file_format" class="wikilink1" title="geda-usage.html">can_we_change_geda_to_use_an_xml_file_format</a> The concerns expressed there will hopefully be addressed as part of this effort to minimize the impact to existing file formats, and not tie up core developer time on this work.  Specifically issues 2,3,4 and 5 are valid concerns, but they can be overcome with good design and a little bit of coding, especially if this is treated as a wrapper or evolution rather than a totally new file format.
+</p>
+
+<p>
+While the initial version of the schema has both a large and small format for gschem files, it is assumed that the smaller will progress further to reduce the amount of “file bloat” associated with putting the files in this format.
+</p>
+
+<p>
+While there are plenty of arguments for and against <acronym title="Extensible Markup Language">XML</acronym>, it does provide one key feature that can be difficult to implement in a custom file format, and that is unification of the different data types each gEDA program expects with minimal impact to the existing programs.  What this schema currently does is separately define gschem file formats and PCB file formats.  The part schema then allows for both of these to be combined into a “part” file without change thus allowing for “heavy” parts containing both symbols and PCB elements.  It will also allow for a project to be stored in a single archive file if the user so chooses.  It thus provides a kind of wrapper functionality that maintains internal structure formats.
+</p>
+
+<p>
+It also introduces file format validation making sure that the file is well-formed and also, using Schematron, makes sure that constraints on data in the file are checked.  This can be a real plus for managing parts like on gedasymbols.org when files can be “easily” validated for format and content on upload with some perl code.
+</p>
+
+<p>
+An initial git repository is at <a href="http://github.com/oblivian/geda-xml/tree/master" class="urlextern" title="http://github.com/oblivian/geda-xml/tree/master"  rel="nofollow">http://github.com/oblivian/geda-xml/tree/master</a>
+</p>
+
+<p>
+Right now it provides schema for gschem symbol and schematic files, and a PCB file format (adapted from parse.y). The part/part.xsd schema is for combining the individual schemas into a part format capable of both regular and heavy parts.
+</p>
+
+<p>
+convert-symbol.pl (when it is done) will write a gschem symbol to the <acronym title="Extensible Markup Language">XML</acronym> format. It also performs validation against the <acronym title="Extensible Markup Language">XML</acronym> Schema itself and Schematron rules also stored in the schema files.
+</p>
+
+<p>
+The <acronym title="Extensible Markup Language">XML</acronym> Schema for gschem files provides for a “lightweight” file format that should allow for an overlay on the normal file reading routines in libgeda without modification.
+</p>
+
+<p>
+So a line in gschem is represented as
+</p>
+
+<p>
+&lt;gs:l p=“200 800 200 200 3 0 0 0 -1 -1” /&gt;
+</p>
+
+<p>
+instead of
+</p>
+
+<p>
+L 200 800 200 200 3 0 0 0 -1 -1
+</p>
+
+<p>
+But the validation is handled by the <acronym title="Extensible Markup Language">XML</acronym> parser rather than writing extra validation code.
+</p>
+
+<p>
+The <acronym title="Extensible Markup Language">XML</acronym> Schema makes sure the symbols are well-formed, and the Schematron makes sure the data is valid in the “p” attributes.
+</p>
+
+<p>
+Work completed:
+</p>
+<ul>
+<li class="level1"><div class="li"> <acronym title="Extensible Markup Language">XML</acronym> Schema for gschem, PCB and .xpart file format.</div>
+</li>
+</ul>
+
+<p>
+Work that needs to be done to get this effort really started:
+</p>
+<ul>
+<li class="level1"><div class="li"> Finish convert-symbol.pl.</div>
+</li>
+<li class="level1"><div class="li"> Write <acronym title="Extensible Stylesheet Language Transformations">XSLT</acronym> to convert “xpart” file back to .sym/.fp format.</div>
+</li>
+</ul>
+
+</div>
+</body>
+</html>

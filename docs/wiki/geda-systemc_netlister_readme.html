@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="systemc_netlister_readme" id="systemc_netlister_readme">SystemC netlister README</a></h1>
+<div class="level1">
+<pre class="code">TITLE:
+
+     Gnetlist SystemC Backend
+
+OBJECTIVE:
+
+     Transform a geda schematic into a transaction based structural systemc module.
+
+LIMITATIONS:
+
+     1.- Only transaction based wires are considered (wire_name&lt;user_type&gt;).
+     2.- Unnamed wires are eliminated.
+     3.- In/out ports have to be inserted manually in the sysc code.
+     4.- Duplicated include headers are not eliminated by the backend.
+     5.- The maximum number of object constructor parameters is 31 (attr1-&gt;attr31).
+
+LINKS:
+
+     GPL Electronic Design Automation (geda-gnetlist): http://www.gpleda.org
+     SystemC: http://www.systemc.org
+
+ACK:
+
+     Based on gnet-verilog.scm by Mike Jarabek.
+
+EXAMPLE:
+
+     Schematic:
+
+     src1                         alg1                      snk1
+     ______________               _______________           _______________
+     | source     |  a&lt;user_type&gt; |  algorithm  |  b&lt;float&gt; |        sink |
+     |         OUT|__ _________ __|IN        OUT|__ _____ __|IN           |
+     |            |               |             |           |             |
+     | infile.data|               |             |           | outfile.data|
+     |____________|               |_____________|           |_____________|
+
+
+     Attributes:
+
+            Schematic:
+                     module_name=test_sch2sysc
+     
+            Wires:
+                     netname=a&lt;user_type&gt;
+                     netname=b&lt;float&gt;
+            Symbols:
+                     refdes=src1 attr1=infile.data
+                     refdes=alg1
+                     refdes=snk1 attr1=outfile.data
+                     refdes=pina
+                     refdes=pinb
+
+     SystemC:
+
+		#include &quot;systemc.h&quot;
+		#include &quot;sink.h&quot;
+		#include &quot;source.h&quot;
+		#include &quot;algorithm.h&quot;
+
+		SC_MODULE (test_sch2sysc)
+		{
+			/* Port directions begin here */
+
+		 	/* Wires from the design */
+			sc_signal&lt;float&gt; b;
+			sc_signal&lt;packet_type&gt; a;
+	
+			/* Package instantiations */
+			sink snk1;
+			source src1;
+			algorithm alg1;
+
+			SC_CTOR(test_sch2sysc):
+				snk1(&quot;snk1&quot;,&quot;outfile.data&quot;),
+				src1(&quot;src1&quot;,&quot;infile.data&quot;),
+				alg1(&quot;alg1&quot;)
+			{
+				snk1.IN(b);
+			  	src1.OUT(a);
+			  	alg1.IN(a);
+			  	alg1.OUT(b);
+			}
+		};
+
+</pre>
+
+</div>
+</body>
+</html>

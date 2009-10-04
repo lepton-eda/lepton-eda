@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#overview" class="toc">Overview</a></span></div></li>
+<li class="level1"><div class="li"><span class="li"><a href="#setup" class="toc">Setup</a></span></div></li>
+<li class="level1"><div class="li"><span class="li"><a href="#adding_some_spice_stuff" class="toc">Adding some SPICE stuff</a></span></div></li>
+<li class="level1"><div class="li"><span class="li"><a href="#simulation" class="toc">Simulation</a></span></div></li></ul>
+</div>
+</div>
+
+
+
+<h1><a name="overview" id="overview">Overview</a></h1>
+<div class="level1">
+
+<p>
+ It is possible to use gschem to make circuit diagrams which can then be simulated with ngspice. The advantage is that you can iteratively design and simulate before you commit to fabrication. The purpose of this tutorial is not to teach the details of SPICE but rather to work a very simple example so that the required steps are made clear. More detailed documents on both Spice and gEDA can be found at: 
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://ngspice.sourceforge.net/index.html" class="urlextern" title="http://ngspice.sourceforge.net/index.html"  rel="nofollow">ngspice</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-csygas.html" class="wikilink1" title="geda-csygas.html">geda and Spice</a></div>
+</li>
+</ul>
+
+<p>
+ There is a <acronym title="Frequently Asked Questions">FAQ</acronym> in the wiki that may be of help: <a href="geda-faq-simulation.html" class="wikilink1" title="geda-faq-simulation.html">faq-simulation</a>
+</p>
+
+<p>
+ This tutorial is based on the example ‘TwoStageAmp.sch’ in the examples which ship in gEDA’s documentation and constructs the first half of that example step by step.
+</p>
+
+</div>
+<!-- SECTION "Overview" [1-772] -->
+<h1><a name="setup" id="setup">Setup</a></h1>
+<div class="level1">
+
+<p>
+ It is assumed that you are able to construct schematics with gschem. If you are unsure how to do this please visit <a href="geda-gsch2pcb_tutorial.html" class="wikilink1" title="geda-gsch2pcb_tutorial.html">gsch2pcb_tutorial</a>. So let’s start by making a project directory ‘simpleSPICE’ and creating a schematic file named  ‘simplespice.sch’ in that directory.
+</p>
+
+<p>
+Use gschem to build up a schematic that looks like:
+</p>
+
+<p>
+<a href="media/geda/simple1.png" class="media" target="_blank" title="geda:simple1.png"><img src="media/geda/simple1.png" class="media" alt="" /></a>
+</p>
+
+<p>
+Note that three named nets have been created, “Vin”, “Vout”, and “Vbase”. Although this is not necessary, it is an easy way to keep track of important points in the circuit. Naming nets is done by editing either by right-clicking or by hitting ‘ee’ while a net is selected; then just add the attribute ‘netname’ and give it an appropriate name. Although we now have a circuit to simulate, we need to add some SPICE specific information before we can get any results.
+</p>
+
+</div>
+<!-- SECTION "Setup" [773-1612] -->
+<h1><a name="adding_some_spice_stuff" id="adding_some_spice_stuff">Adding some SPICE stuff</a></h1>
+<div class="level1">
+
+<p>
+ There are four things that we will need to add to the schematic to make it suitable for simulation. We must include an input signal, describe the properties of the transistor, explicitly define Vcc, and add some lines to the SPICE file. When all these things are done the schematic will look like:
+</p>
+
+<p>
+<a href="media/geda/schematicfinished2.png" class="media" target="_blank" title="geda:schematicfinished2.png"><img src="media/geda/schematicfinished2.png" class="media" title="" alt="" /></a>
+</p>
+
+<p>
+The input signal is added by choosing ‘SPICE simulation elements&rarr;vac-1.sym’ from the components menu and, after placing the device, editing its properties to read:
+</p>
+
+<p>
+<a href="media/geda/dialogvac.png" class="media" target="_blank" title="geda:dialogvac.png"><img src="media/geda/dialogvac.png" class="media" title="" alt="" /></a>
+</p>
+
+<p>
+Notice that the ‘value’ is a string that will be read by SPICE. You learn about SPICE syntax in the links given above.
+</p>
+
+<p>
+Vcc is set in basically the same way except we choose ‘SPICE simulation elements&rarr;vdc-1.sym’ from the components menu. Its properties should be edited to read:
+</p>
+
+<p>
+<a href="media/geda/dialogvdc1.png" class="media" target="_blank" title="geda:dialogvdc1.png"><img src="media/geda/dialogvdc1.png" class="media" title="" alt="" /></a>
+</p>
+
+<p>
+The transistor setup is a bit more complicated. We must first have access to a SPICE model for the transistor of interest. This can usually be found from the transistor datasheet or downloaded from a manufacturer website. For this example we will consider the ubiquitous 2N3904. Which has the following model:
+</p>
+<pre class="code">.model 2N3904   NPN(Is=6.734f Xti=3 Eg=1.11 Vaf=74.03 Bf=416.4 Ne=1.259
++               Ise=6.734f Ikf=66.78m Xtb=1.5 Br=.7371 Nc=2 Isc=0 Ikr=0 Rc=1
++               Cjc=3.638p Mjc=.3085 Vjc=.75 Fc=.5 Cje=4.493p Mje=.2593 Vje=.75
++               Tr=239.5n Tf=301.2p Itf=.4 Vtf=4 Xtf=2 Rb=10)
+*               Fairchild        pid=23          case=TO92
+*               88-09-08 bam    creation </pre>
+
+<p>
+Make a sub-folder named ‘models’ in our project folder ‘simpleSPICE’ and make a file named ‘2N3904.mod’ in that folder and fill it with the model text given above. Make sure that there is a newline at the end of the file, this is important so that when the final SPICE file is created everything will be on its own line. Okay, now that we have a model for the transistor we have to apply it. Edit the transistor properties to read:
+</p>
+
+<p>
+<a href="media/geda/dialogtrans.png" class="media" target="_blank" title="geda:dialogtrans.png"><img src="media/geda/dialogtrans.png" class="media" title="" alt="" /></a>
+</p>
+
+<p>
+Now we also need to inform gschem of the model file we created. This is done by adding a ‘spice-model-1.sym’ symbol to the schematic. Edit its properties to read:
+</p>
+
+<p>
+<a href="media/geda/dialogmodel.png" class="media" target="_blank" title="geda:dialogmodel.png"><img src="media/geda/dialogmodel.png" class="media" title="" alt="" /></a>
+</p>
+
+<p>
+Okay, there are two more symbols to add. The first is ‘spice-include-1.sym’ which will include a text file which describes the SPICE simulation you may want to run and the other is ‘spice-directive-1.sym’ which allows additional lines to be added to the SPICE file. The properties of these symbols can be set as:
+</p>
+
+<p>
+<a href="media/geda/dialoginclude.png" class="media" target="_blank" title="geda:dialoginclude.png"><img src="media/geda/dialoginclude.png" class="media" alt="" /></a>
+</p>
+
+<p>
+<a href="media/geda/dialogdirective.png" class="media" target="_blank" title="geda:dialogdirective.png"><img src="media/geda/dialogdirective.png" class="media" alt="" /></a>
+</p>
+
+<p>
+Congratulations! We now have a schematic that is ready for simulation.
+</p>
+
+</div>
+<!-- SECTION "Adding some SPICE stuff" [1613-4297] -->
+<h1><a name="simulation" id="simulation">Simulation</a></h1>
+<div class="level1">
+
+<p>
+ Although the schematic is in place, we still need to write out what the simulation will do. This information will be written in the &#039;./Simulation.cmd’ that was referenced in the include symbol added in the last section. For now, create a file &#039;./Simulation.cmd’ and make it read:
+</p>
+<pre class="code">.OP
+.AC DEC 20 1Hz 100MegHz
+* .DC VINPUT 0 5 .01
+* .DC VINPUT 1 2 .01
+.plot ac v(Vout) v(Vin)
+.print ac v(Vout) v(Vin)</pre>
+
+<p>
+Which does one AC analysis while two lines for DC analysis are commented out. Then both Vout and Vin are plotted as well as having their numerical values printed. As mentioned previously, SPICE can be learned from the links given above.
+</p>
+
+<p>
+Now that we have described the simulation we want done, open a terminal, move to the ‘simpleSPICE’ directory and type the command: 
+</p>
+<pre class="code">gnetlist -g spice-sdb -o spice.net simplespice.sch</pre>
+
+<p>
+ to produce the SPICE file ‘spice.net’. Now the simulation can be run in batch mode by typing: 
+</p>
+<pre class="code">ngspice -b spice.net &gt; result.txt</pre>
+
+<p>
+ which will spew a great deal of text to ‘result.txt’. The file should include the numerical output we requested as well as a crude ascii plot of the results. Note that the 10mV input signal has been amplified to about -280mV over a wide frequency range. If you want to veiw graphical plots ngspice can be operated in interactive mode by removing the -b option. The ngspice website describes this in more detail. In any event, we now have the simulation results in a nice text format suitable for reading with a script, perhaps something written in python or octave, for further graphing or analysis.
+</p>
+
+</div>
+<!-- SECTION "Simulation" [4298-] --></body>
+</html>

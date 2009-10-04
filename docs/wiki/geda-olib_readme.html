@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="olib_orcad_tm_converter_readme" id="olib_orcad_tm_converter_readme">olib (OrCAD (TM) converter) README</a></h1>
+<div class="level1">
+<pre class="code">###############################################################
+README and release notes for olib2geda - 1 settembre 2002
+OrCAD (TM) lib ASCII dump to gEDA .sym converter
+###############################################################
+
+
+What it olib2geda?
+It&#039;s a simple automated converter from OrCAD v4 (in SDT version 1.10) parts
+library (in ASCII dump format, through &quot;decomp&quot; utility) to gEDA component 
+definition in .sym format file.
+It allow an initial dumb conversion file to file, with one lib converted in 
+multiple .sym file, one per component in library.
+The converted component file needs little editing to become usable, but in some
+case needs no editing at all.
+
+
+What olib do.
+* Convert box shaped component in OrCAD (TM) lib in .sym file in gEDA format
+* Place pin, pin name, pin type, pin number
+* Place logic bubble when needed (DOT attribute in OrCAD (TM), for logic nega-
+    tion)
+* Place clock arrow when needed (CLK attribute)
+* Place reference, from REFERENCE statement in OrCAD (TM)
+* Place Part name as label and device name as attribute
+* Parse and draw non-box component, with LINE, ARC, CIRCLE and TEXT
+* Add power pin as invisible net=name:pin attribute when detected (in OrCAD (TM)
+    invisible pin has tipically T0 and B0 coords)
+* Through command line switch, hides pin name in VECTOR drawed symbols, allowing
+    better appearance
+* Write both new (20020825) and old (20020209) file format for .sym files 
+    through a switch on the command line
+
+
+What olib do not.
+* Do not parse and store alternate component drawing (statement CONVERT in 
+    OrCAD (TM))
+* Do not handle drawing part using VECTOR list from another part (statement
+    VECTOR &#039;partname&#039; in OrCAD (TM))
+* Do not handle FILL statement in VECTOR statement (incompatible with gEDA, but
+    for what i know is used only for &quot;better&quot; part drawing)
+* Do not handle multiple part in one package (slots in gEDA)
+
+
+Bugs.
+More and more. But for the use that I do bugs aren&#039;t so critical.
+If you find a bug or want improvements to the program, feel free to contact me
+at the e-mail address at the end of this text.
+
+
+How to obtain last version.
+Open the URL:
+http://digilander.libero.it/tailchaser
+in section &quot;Linux&quot; you can see the main page of olib.
+
+
+Compile and install. 
+[[ Ales here, I have incorperated olib into the ./configure build mechanism,
+   so these instructions only apply if you build from Mario&#039;s distribution ]]
+
+To compile program go in directory &#039;src&#039; of the unpacked tarball, and type
+&#039;make&#039;. This produces the binary executable, named &#039;olib&#039;.
+Compilation process uses the flex scanner generator to generate the file
+&#039;olib.c&#039; from the &#039;olib.lex&#039;, and link the library math to the code. The binary
+included in the distribution is compiled on a P266-MMX with RedHat 7.2, with gcc
+version 2.96 and flex 2.5.4, but the program don&#039;t require any special feature
+or critical function, as far as I know. At the end of compilation phase, you can
+see two warnings:
+* warning, -s option given but default rule can be matched
+* warning: `yyunput&#039; defined but not used
+this is normal, don&#039;t affect program functionality, and you can safely ignore
+it.
+Installation is not needed for normal operations, but if you want you can copy
+only the executable (olib) on a directory in the PATH.
+
+
+Use of olib.
+To convert library, first convert it to ASCII dump with &#039;decomp&#039; utility
+included in the OrCAD (TM) distribution. After that invoke the lib converter:
+olib path/to/file/file_ascii prefix where &#039;prefix&#039; is used to generate file name
+of every symbol, like: 
+prefix-partname-1.sym 
+During the process, you can see a lot of ugly text scrolling in the terminal,
+that show the progress of the conversion. If you want to read this text, you can
+redirect the stderr output to a file: 
+olib path/to/file/file_ascii prefix 2&gt; logfile.txt
+where &#039;2&gt;&#039; instruct the shell to redirect stderr output to logfile.txt. 
+The converter write one file per part, in the current directory. At the end of
+the execution you can see a lot of file in the directory, extracted from OrCAD
+library.
+In the (not so improbable) case of incomplete conversion of a part (i.e. because
+of unsupported VECTOR &#039;partname&#039; statement), the file of the incomplete part
+will be named &#039;prefix-partname-1.sym.part&#039;, stand for partial conversion.
+If the conversion process stops with the message: &quot;flex scanner jammed&quot;, the
+converter has encountered an unknown statement, an incompatible version of
+library, or a bug. If you can, please report the complete log and the library
+dump, to allow corrections or improvements.
+
+
+Mario Pascucci
+&lt;m.pas@libero.it&gt;
+</pre>
+
+</div>
+</body>
+</html>

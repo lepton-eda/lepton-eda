@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="eagle_pcb_netlister_readme" id="eagle_pcb_netlister_readme">Eagle PCB netlister README</a></h1>
+<div class="level1">
+<pre class="code">Basic information about the Eagle PCB backend and sch2eaglepos.sh
+
+gnet-eagle.scm  
+
+The script uses the component&#039;s package, footprint, value, and (if no
+value) device attributes, as well as the netlist, to generate an Eagle
+script that will add and connect all components.  It also introduces a
+&quot;lib&quot; attribute, which specifies the Eagle library where the footprint
+can be found...if a &quot;lib&quot; attribute is not set for a component, then
+the library defaults to &quot;smd-ipc&quot; (the default Eagle surface mount library).
+
+sch2eaglepos.sh
+
+I am also including a simple shell script that I wrote which has saved
+me hours by extracting the relative locations of the parts from a
+gschem schematic, and generating an Eagle script to place the
+components in the same relative locations on the layout.  By default
+all packages are piled on top of each other, and with a large design
+it takes a long time to sort out which cap bypasses which IC, etc.
+
+</pre>
+
+</div>
+</body>
+</html>

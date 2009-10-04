@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="gattrib_readme" id="gattrib_readme">gattrib README</a></h1>
+<div class="level1">
+<pre class="code">******************************************************************
+*************  DANGER!!  Read the entirety of this  **************
+************  README before you try runing gattrib!  *************
+******************************************************************
+
+
+INTRODUCTION
+
+Gattrib is gEDA&#039;s attribute editor.  It reads a set of gschem .sch
+files (schematic files), and creates a spreadsheet showing all
+components in rows, with the associated component attributes listed in
+the columns.  It allows the user to add, modify, or delete component
+attributes outside of gschem, and then save the .sch files back
+out.  When it is completed, it will allow the user to edit attributes
+attached to components, nets, and pins.  (Currently, only component
+attribute editing is implemented; pin attributes are displayed only,
+and net attributes are TBD.) 
+
+Gattrib is useful in situations where you need to view, add, modify,
+or delete a number of attributes all at once.  It saves you the pain
+of clicking on each component and repeatedly using gschem&#039;s attribute 
+editor to modify component attributes.  For example, if you create a
+large design with generic components, and then later want to attach
+&quot;footprint&quot; attributes to your components, it is a real hassle to do
+so using gschem.  In this situation, you can run gattrib on your
+design files to attach the &quot;footprint&quot; attributes all at once using an
+easy-to-use spreadsheet. 
+
+WARNING NOTE:  Gattrib is currently PRE-ALPHA SOFTWARE!
+It has been tested on several designs, but is not garuanteed to work.
+It may even trash your design!  Therefore, if you wish to try gattrib
+out, please create a backup copy of your design before you run it!
+
+------------------------------------------------------------------
+USAGE
+
+You can invoke gattrib on your design from the command line in the
+following way:
+
+gattrib my_design_*.sch
+
+(This assumes you have a multi-page design with file names
+&quot;my_design_1.sch&quot;, &quot;my_design_2.sch&quot;, etc.)  Gattrib will then read in
+your design, and present you with a spreadsheet showing all components
+and associated attributes. 
+
+You can also just run gattrib, and specify the input files using the
+file-&gt;open dialog box.
+
+To edit your attributes, just edit the cells in the spreadsheet.  
+
+To save your design, just select &quot;save&quot; from the command menu.  Note
+that no checks are currently done when you select save.  Be careful!
+
+To quit, just select &quot;quit&quot; from the command menu.  Note that
+currently no checks thet you have saved your design are done when you
+quit.  
+
+If you want to add an entirely new attribute to your design (i.e. one
+which doesn&#039;t exist on any component), you must first attach at least
+one instance of that attribute to a component using gschem.  Then you
+can use gattrib to attach the attribute to the remaining components.
+(The reason for this is that gattrib creates its spreadsheet columns
+based upon all attributes it finds when reading in the design.
+Therefore, to create a column for a new attribute, you need to make
+sure that that new attribute pre-exists in the design.)  In the future,
+you will be able to add new attribute columns directly from gattrib,
+but this feature is currently unimplemented.
+
+------------------------------------------------------------------
+FEATURES
+
+The following features are currently implemented:
+
+*  .sch file read in from command line.
+*  .sch file read in from menu.
+*  .sch file save out from menu.
+*  Component attribute editing (of course).
+*  Pin attribute viewing.
+*  Quit from menu.
+
+The following features are currently unimplemented, but will be
+incorporated at some future date:
+
+*  Throw up &quot;Are you sure&quot; dialog boxes upon selecting &quot;save&quot; and
+   &quot;quit&quot; from menu.
+*  Alphabetic sort of rows.  (Should happen automatically upon read-in
+   of design.)
+*  Editing of net attributes (important for setting routing
+   attributes). 
+*  Adding/deleting attribute columns (to add/delete entire sets of
+   attributes from a design.)
+*  Search/replace of individual attributes.
+*  Search for component refdeses &amp; netnames.
+*  Set/view component &amp; net visibility (through options pull-down
+   menu).  Currently, visibility is &quot;invisible&quot;, and both name &amp; value
+   are displayed (if you turn on the visibility).
+
+Note that if you select unimplemented features from the menu, nothing
+will happen.
+
+------------------------------------------------------------------
+INSTALLATION
+
+To install gattrib, place the tarball in the directory where your gEDA
+sources live.  Then do:
+
+tar -zxvf geda-gattrib-20040806.tar.gz
+cd geda-gattrib-20040806
+./configure --prefix=/path/to/your/geda/stuff
+make
+make install
+
+Note that you may need to set some environment variables first.  If
+your compilation barfs, try setting these (for csh):
+
+setenv LD_LIBRARY_PATH /usr/local/geda/lib:$LD_LIBRARY_PATH
+setenv PATH /usr/local/geda/bin:$PATH
+setenv PKG_CONFIG_PATH /usr/local/geda/lib/pkgconfig:$PKG_CONFIG_PATH
+
+------------------------------------------------------------------
+CREDITS/CONTACT:
+
+Gattrib was cobbled together by Stuart Brorson starting in December
+2003 from parts culled from GtkSheet (GTK+Extra) and gEDA.  Please
+mail bug reports to: sdb@cloud9.net
+
+
+
+</pre>
+
+</div>
+</body>
+</html>

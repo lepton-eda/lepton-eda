@@ -1,27 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
- lang="en" dir="ltr">
+<html>
 <head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>glue-projects</title>
-<meta name="generator" content="DokuWiki Release rc2007-05-24" />
-<meta name="robots" content="index,follow" />
-<meta name="date" content="2008-03-23T01:12:11-0400" />
-<meta name="keywords" content="glue-projects" />
-<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
-<link rel="start" href="http://geda.seul.org/wiki/" />
-<link rel="contents" href="http://geda.seul.org/wiki/glue-projects?do=index" title="Index" />
-<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=" />
-<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/glue-projects" />
-<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/glue-projects" />
-<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
-<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
-<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
-<div class="dokuwiki export">
+
 
 
 
@@ -34,29 +23,15 @@
 
 </div>
 
-<h5><a name="xgsch2pcb_project_manager" id="xgsch2pcb_project_manager">Xgsch2pcb project manager</a></h5>
+<h5><a name="autogeneration_of_fab_drawing_with_embedded_fab_notes" id="autogeneration_of_fab_drawing_with_embedded_fab_notes">Autogeneration of fab drawing with embedded fab notes</a></h5>
 <div class="level5">
 
 <p>
- gEDA has recently acquired a project manager called xgsch2pcb.  It is written in Python.  It provides the user a “dashboard” interface to the various programs comprising the gEDA Suite, such as gschem, gattrib, and PCB.  It also handles forward annotation of a design captured in gschem into a board file which may be laid out in PCB.
+ This project involves creating a system which can create an annotated fab drawing from the drill file output by PCB, along with other inputs.  In one possible implementation, you could use LaTeX/metapost driven from an external script.  The script would read in some type of template holding boilerplate fab notes, insert a .eps version of the drill file, also read in some type of file holding stack-up information and other info for the PCB fab house, run LaTeX on it all, and then output an annotated .ps or .pdf fab drawing.  
 </p>
 
 <p>
-The project manager is currently in working prototype stage.  This project involves adopting the existing project manager and incorporating new features like: 
-</p>
-<ul>
-<li class="level1"><div class="li"> Creation of SPICE netlists</div>
-</li>
-<li class="level1"><div class="li"> Invocation of simulators like gnucap or ngspice.</div>
-</li>
-<li class="level1"><div class="li"> Clean up of existing netlist to PCB.  </div>
-</li>
-<li class="level1"><div class="li"> Maybe work with the PCB developers to implement a command-oriented list of instructions to PCB (instead of just a board file).  This would solve some footprint search path issues.</div>
-</li>
-</ul>
-
-<p>
- Difficulty = 3 or 4, depending upon what is done.
+Difficulty: 2
 </p>
 
 </div>
@@ -98,7 +73,7 @@ A new user would like to do the following things inside gschem:
 </ul>
 
 <p>
- The simulation runs and the postprocessing may be in an extra program that is triggered by IPC. More thoughts about the project have been entered by Werner Hoch on the gEDA Wiki (<a href="http://geda.seul.org/wiki/geda:circuit_simulation_improvements" class="wikilink1" title="geda:circuit_simulation_improvements">Circuit simulation improvements</a>, <a href="http://geda.seul.org/wiki/geda:data_plotting_improvements" class="wikilink1" title="geda:data_plotting_improvements"> Plotting improvements</a>).
+ The simulation runs and the postprocessing may be in an extra program that is triggered by IPC. More thoughts about the project have been entered by Werner Hoch on the gEDA Wiki (<a href="geda-circuit_simulation_improvements.html" class="wikilink1" title="geda-circuit_simulation_improvements.html">Circuit simulation improvements</a>, <a href="geda-data_plotting_improvements.html" class="wikilink1" title="geda-data_plotting_improvements.html"> Plotting improvements</a>).
 </p>
 
 <p>
@@ -197,7 +172,6 @@ You can use the existing plugins for Verilog, Spectre, and Spice as examples.  T
 Difficulty = 1 to 5 depending on the format(s).
 </p>
 
-</div>
 </div>
 </body>
 </html>

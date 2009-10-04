@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#guile_scripting_reference" class="toc">Guile scripting reference</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#libgeda_c_library" class="toc">libgeda C library</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#libgeda_geda.scm" class="toc">libgeda geda.scm</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+
+
+
+<h2><a name="guile_scripting_reference" id="guile_scripting_reference">Guile scripting reference</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Guile scripting reference" [1-40] -->
+<h3><a name="libgeda_c_library" id="libgeda_c_library">libgeda C library</a></h3>
+<div class="level3">
+
+<p>
+ libgeda defines a number of low-level functions in C for configuring its behaviour and manipulating features such as the component and subcircuit libraries.
+</p>
+
+</div>
+
+<h4><a name="types" id="types">Types</a></h4>
+<div class="level4">
+<ul>
+<li class="level1"><div class="li"> attribute</div>
+</li>
+<li class="level1"><div class="li"> object</div>
+</li>
+<li class="level1"><div class="li"> page</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="variables" id="variables">Variables</a></h4>
+<div class="level4">
+
+<p>
+ Basic configuration (defined by libgeda, read-only) 
+</p>
+<ul>
+<li class="level1"><div class="li"> path-sep</div>
+</li>
+<li class="level1"><div class="li"> geda-rc-path</div>
+</li>
+<li class="level1"><div class="li"> geda-data-path</div>
+</li>
+</ul>
+
+<p>
+ Object type identifiers (defined by libgeda, read-only) 
+</p>
+<ul>
+<li class="level1"><div class="li"> OBJ_LINE</div>
+</li>
+<li class="level1"><div class="li"> OBJ_BOX</div>
+</li>
+<li class="level1"><div class="li"> OBJ_PICTURE</div>
+</li>
+<li class="level1"><div class="li"> OBJ_CIRCLE</div>
+</li>
+<li class="level1"><div class="li"> OBJ_NET</div>
+</li>
+<li class="level1"><div class="li"> OBJ_BUS</div>
+</li>
+<li class="level1"><div class="li"> OBJ_COMPLEX</div>
+</li>
+<li class="level1"><div class="li"> OBJ_TEXT</div>
+</li>
+<li class="level1"><div class="li"> OBJ_<acronym title="Personal Identification Number">PIN</acronym></div>
+</li>
+<li class="level1"><div class="li"> OBJ_ARC</div>
+</li>
+<li class="level1"><div class="li"> OBJ_ROUTE</div>
+</li>
+<li class="level1"><div class="li"> OBJ_THRU_HOLE</div>
+</li>
+<li class="level1"><div class="li"> OBJ_PLACEHOLDER</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="functions" id="functions">Functions</a></h4>
+<div class="level4">
+
+<p>
+ Component library: 
+</p>
+<ul>
+<li class="level1"><div class="li"> component-library</div>
+</li>
+<li class="level1"><div class="li"> component-library-command</div>
+</li>
+<li class="level1"><div class="li"> component-library-funcs</div>
+</li>
+<li class="level1"><div class="li"> component-library-search</div>
+</li>
+<li class="level1"><div class="li"> reset-component-library</div>
+</li>
+</ul>
+
+<p>
+ Subcircuit library: 
+</p>
+<ul>
+<li class="level1"><div class="li"> source-library</div>
+</li>
+<li class="level1"><div class="li"> source-library-search</div>
+</li>
+<li class="level1"><div class="li"> reset-source-library</div>
+</li>
+</ul>
+
+<p>
+ Libgeda behaviour configuration (write-only): 
+</p>
+<ul>
+<li class="level1"><div class="li"> always-promote-attributes</div>
+</li>
+<li class="level1"><div class="li"> attribute-promotion</div>
+</li>
+<li class="level1"><div class="li"> bitmap-directory</div>
+</li>
+<li class="level1"><div class="li"> bus-ripper-symname</div>
+</li>
+<li class="level1"><div class="li"> font-directory</div>
+</li>
+<li class="level1"><div class="li"> keep-invisible</div>
+</li>
+<li class="level1"><div class="li"> map-font-character-to-file</div>
+</li>
+<li class="level1"><div class="li"> postscript-prolog</div>
+</li>
+<li class="level1"><div class="li"> promote-invisible</div>
+</li>
+<li class="level1"><div class="li"> scheme-directory</div>
+</li>
+<li class="level1"><div class="li"> untitled-name</div>
+</li>
+<li class="level1"><div class="li"> world-size</div>
+</li>
+</ul>
+
+<p>
+ Smob type manipulators: 
+</p>
+<ul>
+<li class="level1"><div class="li"> get-attribute-name-value</div>
+</li>
+<li class="level1"><div class="li"> get-attribute-bounds</div>
+</li>
+<li class="level1"><div class="li"> get-attribute-angle</div>
+</li>
+<li class="level1"><div class="li"> calcule-new-attrib-bounds</div>
+</li>
+<li class="level1"><div class="li"> get-object-attributes</div>
+</li>
+<li class="level1"><div class="li"> get-attrib-value-by-attrib-name</div>
+</li>
+<li class="level1"><div class="li"> get-object-type</div>
+</li>
+<li class="level1"><div class="li"> get-line-width</div>
+</li>
+<li class="level1"><div class="li"> get-page-filename</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "libgeda C library" [41-1481] -->
+<h3><a name="libgeda_geda.scm" id="libgeda_geda.scm">libgeda geda.scm</a></h3>
+<div class="level3">
+
+<p>
+ geda.scm, installed with libgeda, provides several useful functions for doing simple manipulation of paths and files, as well as loading rc files from gafrc.d directories.
+</p>
+
+</div>
+
+<h4><a name="functions1" id="functions1">Functions</a></h4>
+<div class="level4">
+<ul>
+<li class="level1"><div class="li"> build-path</div>
+</li>
+<li class="level1"><div class="li"> regular-file?</div>
+</li>
+<li class="level1"><div class="li"> directory?</div>
+</li>
+<li class="level1"><div class="li"> has-suffix?</div>
+</li>
+<li class="level1"><div class="li"> load-scheme-dir</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "libgeda geda.scm" [1482-] --></body>
+</html>

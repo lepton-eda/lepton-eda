@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="ngsconvert_man-page" id="ngsconvert_man-page">ngsconvert man-page</a></h1>
+<div class="level1">
+<pre class="code">SCONVERT(1)							   SCONVERT(1)
+
+
+
+NAME
+       sconvert - convert spice formats
+
+SYNOPSIS
+       sconvert fromtype fromfile totype tofile
+       sconvert fromtype totype
+       sconvert
+
+DESCRIPTION
+       Sconvert	 translates  spice  output  files among three formats: the old
+       binary format, a new binary format, and a new ascii format.   The  for-
+       mats  are  specified  by the fromtype and totype arguments: â€˜oâ€™ for the
+       old format, â€˜bâ€™ for the new binary format, and â€˜aâ€™ for  the  new	 ascii
+       format.	Fromtype specifies the format to be read, and totype specifies
+       the format to be written.  If fromfile and tofile are given, then  they
+       are  used  as the input and output, otherwise standard input and output
+       are used.  (Note that this second option is only available on UNIX sys-
+       tems  - on VMS and other systems you must supply the filenames.)	 If no
+       arguments are given, the parameters are prompted for.
+
+       Binary format is the preferred format for general use,  as  it  is  the
+       most  economical	 in  terms  of space and speed of access, and ascii is
+       provided to make it easy to modify data files and transfer them between
+       machines with different floating-point formats.	The old format is pro-
+       vided only for backward compatibility. The three formats	 are  as  fol-
+       lows:
+
+       Old:
+
+		What	      Size in Bytes
+
+	    title		     80
+	    date		8
+	    time		8
+	    numoutputs		     2
+	    the integer 4	     2
+	    variable names --
+		 char[numoutputs][8] numoutputs * 8
+	    types of output		  numoutputs * 2
+	    node index		     numoutputs * 2
+	    plot title		     numoutputs * 24
+	    the actual data		  numpoints * numoutputs * 8
+
+       Ascii:
+
+	    Title: Title Card String
+	    Date: Date
+	    [ Plotname: Plot Name
+	      Flags: complex or real
+	      No. Variables: numoutputs
+	      No. Points: numpoints
+	      Command: nutmeg command
+	      Variables:   0 varname1 typename1
+		      1 varname2 typename2
+		      etc...
+	      Values:
+		0     n	   n	n    n	  ...
+		1     n	   n	n    n	  ...
+		And so forth...
+	    ] repeated one or more times
+
+
+       If one of the flags is complex, the points look like r,i where r and i
+       are floating point (in %e format). Otherwise they are in %e format.
+       Only one of real and complex should appear.
+
+       The lines are guaranteed to be less than 80 columns wide (unless the
+       plot title or variable names are very long), so this format is safe
+       to mail between systems like CMS.
+
+       Any number of Command: lines may appear between the No. Points:
+       and the Variables: lines, and whenever the plot is loaded into
+       nutmeg they will be executed.
+
+       Binary:
+
+	    Title Card		  (a NULL terminated string)
+	    Date, Time		  (a NULL terminated string)
+	    [
+	      Plot title	  (a NULL terminated string)
+	      Number of variables   (an int)
+	      Number of data points (an int)
+	      flags	     (a short)
+	      variable header struct (repeated numoutputs times)
+		 variable name	  (a NULL terminated string)
+		 variable type	  (an int)
+	      set of outputs	  (repeated numpoints times)
+	    ] repeated one or more times.
+
+
+       A set of outputs is a vector of doubles of length numoutputs, or
+       a vector of real-imaginary pairs of doubles if the data is complex.
+
+SEE ALSO
+       nutmeg(1), spice(1), writedata(3)
+
+AUTHOR
+       Wayne Christopher (faustus@cad.berkeley.edu)
+
+BUGS
+       If  variable  names  and	 the  title and plotname strings have trailing
+       blanks in them they will be stripped off when the file is read,	if  it
+       is in ascii format.
+
+       If  a plot title begins with &quot;Title:&quot; nutmeg will be fooled into think-
+       ing that this is an ascii format file.  Sconvert	 always	 requires  the
+       type to be specified, however.
+
+
+
+
+4th Berkeley Distribution	 20 March 1986			   SCONVERT(1)
+</pre>
+
+</div>
+</body>
+</html>

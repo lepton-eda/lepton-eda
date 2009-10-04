@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="gsymcheck_man-page" id="gsymcheck_man-page">gsymcheck man-page</a></h1>
+<div class="level1">
+<pre class="code">gsymcheck(1)			   20031231			  gsymcheck(1)
+
+
+
+NAME
+       gsymcheck - gEDA/gaf Symbol Checker
+
+SYNOPSIS
+       gnetlist [-h] [-v] [-q] symbol1 [... symbolN]
+
+DESCRIPTION
+       gsymcheck  is  a	 symbol	 checker for gEDA.  Eventually there will be a
+       list of checks performed on the symbols listed here.
+
+
+OPTIONS
+       gsymcheck accepts the following options:
+
+       -q      Quiet mode on.  This mode  turns	 off  all  warnings/notes/mes-
+	       sages. (optional)
+
+       -v      Verbose	mode  1.   This	 mode  will  show  all	error messages
+	       (optional)
+
+       -vv     Verbose mode 2.	This mode will show all error and warning mes-
+	       sages (optional)
+
+       -vvv    Verbose	mode  2.   This mode will show all error, warning, and
+	       info messages (optional)
+
+       -h      Usage summary / gsymcheck help
+
+       symbol1 [... symbolN]
+	       At least one symbol file must be specified.  If	multiple  sym-
+	       bols  are  specified  then  they	 are  sequentially read in and
+	       checked.	 It is important that the schematic(s) follow all  the
+	       options (ie last).
+
+
+EXAMPLES
+       Examples to be listed here eventually
+
+
+ENVIRONMENT
+       No environment variables are used.
+
+
+AUTHOR
+       Ales Hvezda and many others
+
+
+SEE ALSO
+       gschem(1), gnetlist(1)
+
+COPYRIGHT
+       Copyright ©  1999-2004 Ales Hvezda
+
+       This document can be freely redistributed according to the terms of the
+       GNU General Public License version 2.0
+
+
+
+
+Version			      December 31st, 2003		  gsymcheck(1)
+</pre>
+
+</div>
+</body>
+</html>

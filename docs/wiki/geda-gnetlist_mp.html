@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="gnetlist_man-page" id="gnetlist_man-page">gnetlist man-page</a></h1>
+<div class="level1">
+<pre class="code">gnetlist(1)			   20031231			   gnetlist(1)
+
+
+
+NAME
+       gnetlist - gEDA/gaf Netlist extraction/generation
+
+SYNOPSIS
+       gnetlist	 [-i] [-I] [-q] [-s] [-v] [-l schem_file] [-m schem_file ] [-g
+       guile_procedure] [-c scheme_string ]  [-o  output_filename]  schematic1
+       [... schematicN]
+
+DESCRIPTION
+       gnetlist	 is  the  netlist  extraction/generation program which is part
+       gEDA (GPL Electronic Design Automation) toolset.	 This program takes  a
+       schematic for its input and outputs a netlist.
+
+       gnetlist	 depends heavily on guile (a scheme based scripting language).
+       It uses guile to define the output format.  Basically gnetlist reads  a
+       schematic,  creates  an	internal representation of the various connec-
+       tions, and then a guile	script	extracts  the  connections  into  some
+       netlist format.
+
+       gnetlist is very much so a work in progress.  Currently it supports the
+       following backends:
+
+	       1) Allegro netlist format (-g allegro)
+
+	       2) BAE netlist format (-g bae)
+
+	       3) BOM / BOM2 - Bill of Materials (-g bom and -g bom2)
+
+	       4) Partslist 1,2,3 - More Bill of Materials (-g partslist[1-3])
+
+	       5) DRC - Start of a design rule checker (-g drc)
+
+	       6) DRC2 - A second design rule checker (-g drc2)
+
+	       7) gEDA - native format, mainly used for testing (-g geda)
+
+	       8) Gossip netlist format (-g gossip)
+
+	       9) PADS netlist format (-g pads)
+
+	       10) PCB / PCBboard (-g PCB and -g PCBboard)
+
+	       11) gsch2pcb backend (-g gsch2pcb)
+
+	       12) ProtelII netlist format (-g protelII)
+
+	       13) Spice compatible netlist format (-g spice)
+
+	       14) Enhanced spice compatible netlist format (-g spice-sdb)
+
+	       15) Switcap netlist format (-g switcap)
+
+	       16) Tango netlist format (-g tango)
+
+	       17) Verilog code (-g verilog)
+
+	       18) VHDL code (-g vhdl)
+
+	       19) VIPEC netlist format (-g vipec)
+
+	       20) Bartels Autoengineer netlist format (-g bae)
+
+	       21) GOSSIP system simulation system netlist format (-g gossip)
+
+	       22) MAXASCII netlist format (-g maxascii)
+
+	       23) VHDL-AMS netlist format (-g vams)
+
+	       24) Futurenet2 netlist format (-g futurenet2 )
+
+	       25)  SWITCAP  switched  capacitor  simulator netlist format (-g
+       switcap )
+
+	       26) RF Cascade netlist format (-g cascade )
+
+	       27) RACAL-REDAC netlist format (-g redac )
+
+	       28) PCB actions file for forward annotating pin/pad names  from
+		schematic to layout (-g pcbpins)
+
+
+       For more info on these formats please look at the README.*
+
+       Please  read  the  official  (non-existant) documentation on how to use
+       gnetlist, since this man page just describes the command line arguments
+       and a few examples on how to run gnetlist.
+
+
+OPTIONS
+       gnelist accepts the following options:
+
+       -q      Quiet  mode  on.	  This	mode turns off all warnings/notes/mes-
+	       sages. (optional)
+
+       -v      Verbose mode on.	 This mode gives as much feedback to the  user
+	       as possible. (optional)
+
+       -g guile_procedure
+	       Specify	the  guile  procedure  which is executed to create the
+	       netlist.
+
+       -o output_filename
+	       Specify the filename which will contain the  netlist  generated
+	       by gnetlist.  If this option is not specified the default file-
+	       name is &quot;output.net&quot;.
+
+       -l scheme_file
+	       Specify a filename which contains scheme code to be loaded  and
+	       execute	before	any  backend  is loaded or any guile procedure
+	       (using -g flag) is executed.  This flag can be specified multi-
+	       ple times and can be used to pass information to backends.
+
+       -m scheme_file
+	       Specify	a filename which contains scheme code to be loaded and
+	       execute after the backend is loaded but still before any	 guile
+	       procedure (using -g flag) is executed.  This flag can be speci-
+	       fied multiple times and can be  used  to	 pass  information  to
+	       backends.   This flag, for example, allows the user to override
+	       variables inside of the backends (such as paths).
+
+       -c string
+	       Pass the specified  string  to  the  guile  interpreter.	  This
+	       allows  you to execute arbitrary guile scripts from the command
+	       line.  Be sure to surround the string  with  either  single  or
+	       double  quotes  to  satisfy  your shell.	 The string is execute
+	       before any init or netlist backend scheme  code	is  loaded  or
+	       executed.
+
+       -I      Put  .INCLUDE &lt;filename&gt; in output file instead of model file’s
+	       contents.
+
+       -i      Interactive mode.  After the schematic is read  in  and	parsed
+	       then  go	 into  interactive  mode.  Interactive mode allows the
+	       user to execute guile procedures directly.
+
+       -s      Sort output netlist (for Gnucap)
+
+       schematic1 [... schematicN]
+	       At least one schematic file must	 be  specified.	  If  multiple
+	       schematics are specified then they are sequentially read in and
+	       parsed with the assumption that they are all part of  the  same
+	       design.	 It  is important that the schematic(s) follow all the
+	       options (ie last).
+
+
+EXAMPLES
+       These examples assume that you have a stack_1.sch in the current direc-
+       tory.
+
+       gnetlist	 requires  that	 at least one schematic to be specified on the
+       command line:
+
+	    ./gnetlist stack_1.sch
+
+       This is not very useful since it does not direct gnetlist to do
+       anything.
+
+       Specify a guile procedure name to get gnetlist to output a netlist:
+
+	    ./gnetlist -g geda stack_1.sch
+
+       The netlist output will be written to a file called &quot;output.net&quot;
+       in the current working directory.
+
+       You can specify the output filename by using the -o flag:
+
+	    ./gnetlist -g geda stack_1.sch -o stack.netlist
+
+       The spice backend is run against the schematic(s) if you specify
+       -g spice and the tango backend is run if you specify -g tango.
+
+       To interact with the guile interpreter:
+
+	    ./gnetlist -i stack_1.sch
+
+       You will get a prompt where you can execute guile procedures.
+
+       To get a more verbose feedback as to what gnetlist is doing run
+       with the -v flag:
+
+	    ./gnetlist -v -g geda stack_1.sch
+
+
+ENVIRONMENT
+       No environment variables are used.
+
+
+AUTHOR
+       Ales Hvezda and many others
+
+
+SEE ALSO
+       gschem(1), gsymcheck(1)
+
+COPYRIGHT
+       Copyright ©  1999-2004 Ales Hvezda
+
+       This document can be freely redistributed according to the terms of the
+       GNU General Public License version 2.0
+
+
+
+
+Version			      December 31st, 2003		   gnetlist(1)</pre>
+
+</div>
+</body>
+</html>

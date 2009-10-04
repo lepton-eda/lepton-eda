@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="vhdl_netlister_readme" id="vhdl_netlister_readme">VHDL netlister README</a></h1>
+<div class="level1">
+<pre class="code">The VHDL backend
+
+Written by Magnus Danielson and improved by Thomas Heidel 
+
+
+A few things you have to care about:
+
+1. In order to generate valid component declarations, you
+   have to add an additional attribute to each pin.
+   &quot;type=IN&quot; or &quot;type=OUT&quot; or &quot;type=INOUT&quot;
+
+2. The &quot;device&quot; attribute must be unique to a symbol!
+   The verilog symbols of the same type for example, have all
+   the same device attribute and will therefore not work.
+
+3. Make sure your component-library picks up the vhdl symbols instead
+   of the verilog symbols  Library paths that show up last are searched
+   first!
+</pre>
+
+</div>
+</body>
+</html>

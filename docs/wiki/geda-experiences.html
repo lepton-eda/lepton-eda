@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="this_page_should_include_user_experiences_with_the_geda_suite" id="this_page_should_include_user_experiences_with_the_geda_suite">This page should include user experiences with the gEDA suite.</a></h1>
+<div class="level1">
+
+<p>
+Hello!
+</p>
+
+<p>
+My name is Paul Csanyi. I am a technics teacher in an elementary school.
+</p>
+
+<p>
+I use mainly Debian GNU/Linux operating system. I have installed the gEDA suite on my system. 
+</p>
+
+<p>
+I am a newbe to the electronics and to the gEDA tools, but the electronics is so interesting theme to me so I decide to study gEDA tools and use it for making some simple projects. With these simple projects I intend to teach my pupils to fundamentals of electronics.
+</p>
+
+<p>
+I tried first the gEDA <acronym title="Graphical User Interface">GUI</acronym>, but then I red that it is better to use gEDA from the command line, so I did so.
+</p>
+
+<p>
+I have tried several times gEDA tools to make some simple projects. Up to the present I learn how to use gschem tool very easily.  I made schematics easily. 
+</p>
+
+<p>
+But then I need a symbol that I can’t find in gschem library, so I decide to make it. I follow the tutorial <a href="http://geda.seul.org/wiki/geda:tragesym_tutorial" class="urlextern" title="http://geda.seul.org/wiki/geda:tragesym_tutorial"  rel="nofollow">http://geda.seul.org/wiki/geda:tragesym_tutorial</a> and ask some questions on the mailing list geda-user <a href="http://www.seul.org/cgi-bin/mailman/listinfo/geda-user" class="urlextern" title="http://www.seul.org/cgi-bin/mailman/listinfo/geda-user"  rel="nofollow">http://www.seul.org/cgi-bin/mailman/listinfo/geda-user</a>.
+</p>
+
+<p>
+Here in this Wiki I want to share some of mine experiences with the gEDA suite. I want to share some addons to the tragesym tutorial.
+</p>
+
+<p>
+If these thoughts are specific for the Debian system, like the place of the tragesym_template.gz file, then I shall write a note of this.
+</p>
+
+<p>
+I made a symbol for the 36-pin Centronics connector.
+</p>
+
+<p>
+From the “Tragesym tutorial”:
+</p>
+
+<p>
+<strong>Step1: Open a tragesym template file</strong>
+</p>
+<ul>
+<li class="level1"><div class="li"> open xterm window: eg.: urxvt</div>
+</li>
+<li class="level1"><div class="li"> cp /usr/share/doc/geda-doc/wiki/_media/tragesym_template.gz ~/gEDA/gaf/ <br/>
+</div>
+</li>
+</ul>
+
+<p>
+<em class="u">Note: This is Debian specific.</em>
+</p>
+<ul>
+<li class="level1"><div class="li"> cd gEDA/gaf/</div>
+</li>
+<li class="level1"><div class="li"> gzip -d tragesym_template.gz</div>
+</li>
+<li class="level1"><div class="li"> Open in OpenOffice the tragesym_template file. I get OpenOffice Calc with opened file. “Set the type, style and position column to the most common value.&quot; I have saved this <strong>tragesym_template</strong> file for the future use.</div>
+</li>
+</ul>
+
+<p>
+ <strong>Step2: Download the part data sheet and find the pin list</strong>
+</p>
+
+<p>
+<strong>Step3: Copy the pin list into an editor and prepare it</strong>
+</p>
+<ul>
+<li class="level1"><div class="li">I have tried Midnight Commander as editor, but XEmacs is much better for this. I make Tabs between columns. From XEmacs I copy the lines into OpenOffice Calc.</div>
+</li>
+</ul>
+
+<p>
+ <strong>Step4: Insert all missing data into the spreadsheet</strong>
+</p>
+<ul>
+<li class="level1"><div class="li">In OpenOffice Calc I inserted all missing data. The label of the Pin 36 is ‘IN SEL’ and have a negation overbar, so I write in the approppriate column: \_IN\ SEL\_ Note that here is a space between ‘IN’ and ‘SEL’. Maybe it is trivial, but if one have a space in the label this works.</div>
+</li>
+</ul>
+
+<p>
+ <strong>Step5: Export the spreadsheet into a tab seperated text file</strong>
+</p>
+<ul>
+<li class="level1"><div class="li">In OpenOffice I did File / Save As / Filename: tragesym_template-for_36-pin_centronics_connector / Filetype: Structural text (CSV) (.csv) / Filter setup: on / Save / Text boundary: empty</div>
+</li>
+</ul>
+
+<p>
+ <strong>Step6: execute tragesym and create the symbol</strong>
+</p>
+<ul>
+<li class="level1"><div class="li">tragesym tragesym_template-for_36-pin_centronics_connector 36-pin-centronics.sch</div>
+</li>
+</ul>
+
+<p>
+ <strong>Step7: check the result with gschem and do some artwork</strong>
+</p>
+<ul>
+<li class="level1"><div class="li">“Now we have a complete symbol.&quot;</div>
+</li>
+<li class="level1"><div class="li">“You can copy the symbol to your local symbol library e.g. /usr/local/share/gEDA/sym/local/ and use it.&quot; <br/>
+</div>
+</li>
+</ul>
+
+<p>
+cp 36-pin_centronics.sch /home/username/gEDA/gaf/gschem-sym/connectors/36-pin_centronics.sym
+</p>
+
+<p>
+This symbol can be viewed here: <br/>
+ <a href="http://www.mediamax.com/paul_csanyi/Hosted/gschem_schems/36-pin-centronics.sym" class="urlextern" title="http://www.mediamax.com/paul_csanyi/Hosted/gschem_schems/36-pin-centronics.sym"  rel="nofollow">http://www.mediamax.com/paul_csanyi/Hosted/gschem_schems/36-pin-centronics.sym</a>
+</p>
+
+<p>
+In this symbol I put the footprint: “SUBD_FEMALE_LAY 25” but this is not the approppriate footprint for the 36-pin Centronics connector. I tried to find footprint for the 36-pin Centronics connector here: <a href="http://www.gedasymbols.org/" class="urlextern" title="http://www.gedasymbols.org/"  rel="nofollow">http://www.gedasymbols.org/</a>, but with no success.
+</p>
+
+<p>
+I think I gone to make one 36-pin Centronics footprint soon, using “PCB Footprint Guide” here:<br/>
+ <a href="http://geda.seul.org/wiki/geda:pcb_footprints" class="urlextern" title="http://geda.seul.org/wiki/geda:pcb_footprints"  rel="nofollow">http://geda.seul.org/wiki/geda:pcb_footprints</a>. <img src="images/smileys/icon_smile.gif" align="middle" alt=":-)" /> 
+</p>
+
+</div>
+<!-- SECTION "This page should include user experiences with the gEDA suite." [24-] --></body>
+</html>

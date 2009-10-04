@@ -1,27 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
- lang="en" dir="ltr">
+<html>
 <head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>gwave-projects</title>
-<meta name="generator" content="DokuWiki Release rc2007-05-24" />
-<meta name="robots" content="index,follow" />
-<meta name="date" content="2008-03-21T00:50:23-0400" />
-<meta name="keywords" content="gwave-projects" />
-<link rel="search" type="application/opensearchdescription+xml" href="http://geda.seul.org/wiki/lib/exe/opensearch.php" title="geda Wiki" />
-<link rel="start" href="http://geda.seul.org/wiki/" />
-<link rel="contents" href="http://geda.seul.org/wiki/gwave-projects?do=index" title="Index" />
-<link rel="alternate" type="application/rss+xml" title="Recent Changes" href="http://geda.seul.org/wiki/feed.php" />
-<link rel="alternate" type="application/rss+xml" title="Current Namespace" href="http://geda.seul.org/wiki/feed.php?mode=list&ns=" />
-<link rel="alternate" type="text/html" title="Plain HTML" href="http://geda.seul.org/wiki/_export/xhtml/gwave-projects" />
-<link rel="alternate" type="text/plain" title="Wiki Markup" href="http://geda.seul.org/wiki/_export/raw/gwave-projects" />
-<link rel="stylesheet" media="all" type="text/css" href="lib/exe/css" />
-<link rel="stylesheet" media="screen" type="text/css" href="lib/exe/001css" />
-<link rel="stylesheet" media="print" type="text/css" href="lib/exe/002css" />
 </head>
 <body>
-<div class="dokuwiki export">
+
 
 
 
@@ -30,6 +19,24 @@
 
 <p>
  Gwave is an analog waveform viewer which is used to view the output files produced by ngspice or gnucap.  Here are some feature suggestions.  You might choose a large handful of features to implement as your GSoC project.
+</p>
+
+</div>
+
+<h5><a name="geda_integration" id="geda_integration">gEDA integration</a></h5>
+<div class="level5">
+
+<p>
+ This project involves improving the integration of gwave into the  interprocess-communication to and from the other tools, especialy gschem and gnucap.  While gwave has an X11-based remote mechanism, Dbus is now the standard, and should probably be used instead.
+</p>
+
+</div>
+
+<h5><a name="developing_unit_tests_for_gtk_-2.0" id="developing_unit_tests_for_gtk_-2.0">Developing unit tests for GTK+-2.0</a></h5>
+<div class="level5">
+
+<p>
+ Gwave has been ported to Gtk2.  As part of this effort, developing a battery of unit tests for gwave would be useful.  The idea is to create a variety of different input files which exercise gwave’s ability to import and display waveforms.  An important feature for testing will be to compare the displayed waveform against a “golden” waveform to verify rendering correctness.
 </p>
 
 </div>
@@ -134,20 +141,6 @@
 </li>
 </ul>
 
-</div>
-
-<h5><a name="geda_integration" id="geda_integration">gEDA integration</a></h5>
-<div class="level5">
-<ul>
-<li class="level1"><div class="li"> communication with gschem: choose variable to plot from the schematic, etc.</div>
-</li>
-</ul>
-<ul>
-<li class="level1"><div class="li"> comunication with gnucap and other simulators</div>
-</li>
-</ul>
-
-</div>
 </div>
 </body>
 </html>

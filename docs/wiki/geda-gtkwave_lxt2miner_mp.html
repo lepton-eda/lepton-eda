@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+
+
+<h1><a name="data_mining_of_lxt2_files_lxt2miner" id="data_mining_of_lxt2_files_lxt2miner">Data mining of LXT2 files (lxt2miner)</a></h1>
+<div class="level1">
+<pre class="code">LXT2MINER(1)		     Dumpfile Data Mining		  LXT2MINER(1)
+
+
+
+NAME
+       lxt2miner - Data mining of LXT2 files
+
+SYNTAX
+       lxt2miner [option]... [LXT2FILE]
+
+DESCRIPTION
+       Mines  LXT2  files  for specific data values and generates gtkwave save
+       files to stdout for future reload.
+
+OPTIONS
+       -d,--dumpfile &lt;filename&gt;
+	      Specify LXT2 input dumpfile.
+
+       -m,--match &lt;filename&gt;
+	      Specifies &quot;bitwise&quot; match data (binary, real, string)
+
+       -x,--hex &lt;value&gt;
+	      Specifies hexadecimal match data that will automatically be con-
+	      verted to binary for searches
+
+       -n,--namesonly
+	      Indicates	 that  only  facnames  should  be printed in a gtkwave
+	      savefile compatible format.  By doing this, the file can be used
+	      to specify which traces are to be imported into gtkwave.
+
+       -h,--help
+	      Show help screen.
+
+EXAMPLES
+       lxt2miner dumpfile.lxt2 --match 20470000 -n
+
+       This attempts to match the hex value 20470000 across all facilities and
+       when the value is encountered, the facname only is printed to stdout in
+       order to generate a gtkwave compatible save file.
+
+LIMITATIONS
+       lxt2miner  only prints the first time a value is encountered for a spe-
+       cific net.  This is done in order to cut down on	 the  size  of	output
+       files  and to aid in following data such as addresses through a simula-
+       tion model.
+
+
+AUTHORS
+       Anthony Bybell &lt;bybell@nc.rr.com&gt;
+
+SEE ALSO
+       vztminer(1) vzt2vcd(1) lxt2vcd(1) vcd2lxt2(1) gtkwave(1)
+
+
+
+Anthony Bybell			    1.3.64			  LXT2MINER(1)
+</pre>
+
+</div>
+</body>
+</html>

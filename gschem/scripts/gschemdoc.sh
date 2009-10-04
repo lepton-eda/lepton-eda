@@ -144,7 +144,7 @@ lookup_wiki()
     LIVEWIKIROOT="http://geda.seul.org/wiki/"
 
     # Munge wiki path to remove bad chars
-    LOCALNAME=$(echo "$1" | tr "?\!*:" "____")
+    LOCALNAME=$(echo "$1" | tr "?\!*:" "___-")
     if test -z "$LOCALNAME"; then
 	LOCALNAME="index"
     fi

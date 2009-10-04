@@ -1,0 +1,583 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#geda_gaf_master_attribute_document" class="toc">gEDA/gaf Master Attribute Document</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#overview" class="toc">Overview</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#what_are_attributes" class="toc">What are Attributes?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#symbol_only_attributes" class="toc">Symbol only Attributes</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#device" class="toc">device</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#graphical" class="toc">graphical</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#description" class="toc">description</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#author" class="toc">author</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#comment" class="toc">comment</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#pinseq" class="toc">pinseq</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#pinnumber" class="toc">pinnumber</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#pintype" class="toc">pintype</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#pinlabel" class="toc">pinlabel</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#numslots" class="toc">numslots</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#slotdef" class="toc">slotdef</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#footprint" class="toc">footprint</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#documentation" class="toc">documentation</a></span></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><span class="li"><a href="#schematic_only_attributes" class="toc">Schematic only Attributes</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#netname" class="toc">netname</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#source" class="toc">source</a></span></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><span class="li"><a href="#symbol_and_schematic_attributes" class="toc">Symbol and Schematic Attributes</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#refdes" class="toc">refdes</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#slot" class="toc">slot</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#net" class="toc">net</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#value" class="toc">value</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#symversion" class="toc">symversion</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#dist-license" class="toc">dist-license</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#use-license" class="toc">use-license</a></span></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><span class="li"><a href="#obsolete_attributes" class="toc">Obsolete Attributes</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#uref" class="toc">uref</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#name" class="toc">name</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#label" class="toc">label</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#pin" class="toc">pin#</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#slot1" class="toc">slot#</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#type" class="toc">type</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#email" class="toc">email</a></span></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><span class="li"><a href="#document_revision_history" class="toc">Document Revision History</a></span></div></li></ul>
+</li></ul>
+</div>
+</div>
+
+
+
+<h1><a name="geda_gaf_master_attribute_document" id="geda_gaf_master_attribute_document">gEDA/gaf Master Attribute Document</a></h1>
+<div class="level1">
+
+<p>
+by: Ales Hvezda, ahvezda@geda.seul.org
+</p>
+
+<p>
+This document is released under <a href="http://www.gnu.org/copyleft/fdl.html" class="urlextern" title="http://www.gnu.org/copyleft/fdl.html"  rel="nofollow">GFDL</a>
+</p>
+
+<p>
+July 10th, 2007
+</p>
+
+</div>
+<!-- SECTION "gEDA/gaf Master Attribute Document" [1-185] -->
+<h2><a name="overview" id="overview">Overview</a></h2>
+<div class="level2">
+
+<p>
+This document describes all the attributes used in in gEDA/gaf (<acronym title="GNU General Public License">GPL</acronym>‘d Electronic Design Automation / Gschem And Friends). This document is broken down into several section: this overview, symbol only attributes, schematic only attributes, attributes which can appear in both symbols and schematics, and attributes which are obsolete or deprecated.<br/>
+ In this document, attribute names are in <strong>bold</strong> and examples are in the <code>typewriter</code> font.
+</p>
+
+</div>
+<!-- SECTION "Overview" [186-652] -->
+<h2><a name="what_are_attributes" id="what_are_attributes">What are Attributes?</a></h2>
+<div class="level2">
+
+<p>
+Attributes in the gEDA/gaf system are nothing more than text items which take on the form: <strong>name</strong>=value. Name can be anything just as long as it doesn’t contain a equals sign. Value can also be anything just as long as it is something (vs nothing). <strong>name</strong>= (without a value part) is not a valid attribute. Also, there cannot be any spaces immediately before or after the equals sign.<br/>
+ Attributes can be attached to some part of the symbol. If the attribute conveys information specific to an object, then the attribute should be attached directly to the object, otherwise the attribute should be free standing or  floating. Free standing attributes just exist in the symbol file as text items which take on the form <strong>name</strong>=value.
+</p>
+
+</div>
+<!-- SECTION "What are Attributes?" [653-1423] -->
+<h2><a name="symbol_only_attributes" id="symbol_only_attributes">Symbol only Attributes</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Symbol only Attributes" [1424-1459] -->
+<h3><a name="device" id="device">device</a></h3>
+<div class="level3">
+
+<p>
+<strong>device</strong>= is the device name of the symbol and is required by gnetlist.<br/>
+ <strong>device</strong>= should be placed somewhere in the symbol and made invisible. This is a free standing or  floating attribute. If the object is a graphic then <strong>device</strong>= should be set to none (<strong>device</strong>=none) and attach a <a href="#graphical" title=":geda:master_attributes_list.txt &crarr;" class="wikilink1">graphical</a>= attribute. Do not confuse this attribute with just having a text label which the device name. Do not put spaces into the device name; there are some programs which dislike spaces in the device specifier. Generally the device name is in all caps.<br/>
+ Examples: <code>device=7400 device=CONNECTOR 10 device=NPN TRANSISTOR</code>
+</p>
+
+</div>
+<!-- SECTION "device" [1460-2103] -->
+<h3><a name="graphical" id="graphical">graphical</a></h3>
+<div class="level3">
+
+<p>
+Symbols which have no electrical or circuit significance need a <strong>graphical</strong>=1 attribute. Symbols like titleboxes are purely graphical symbols. Any symbol which has <strong>graphical</strong>=1 is ignored by gnetlist.<br/>
+ <strong>graphical</strong>=1 should exist somewhere in the symbol and made invisible. This is a free standing or  floating attribute. Don’t forget to set <a href="#device" title=":geda:master_attributes_list.txt &crarr;" class="wikilink1">device</a>=none.<br/>
+ Example: <code>graphical=1</code>
+</p>
+
+</div>
+<!-- SECTION "graphical" [2104-2518] -->
+<h3><a name="description" id="description">description</a></h3>
+<div class="level3">
+
+<p>
+The <strong>description</strong> attribute provides a simple one line description of what the symbol is supposed to represent.<br/>
+ Example: <code>description=4 NAND gates with 2 inputs</code>
+</p>
+
+</div>
+<!-- SECTION "description" [2519-2709] -->
+<h3><a name="author" id="author">author</a></h3>
+<div class="level3">
+
+<p>
+The <strong>author</strong> attribute identifies the name of the author of this symbol and their e-mail address. This attribute is optional, but it is nice to know who created which symbols. It also serves the purpose of known who to contact if there are questions about the intent(s) of the symbol. This attribute is free form and it can also include people’s names who modified the symbol as well as multiple e-mail addresses. It is probably also a good idea to obfuscate the e-mail address so it is not harvested for spam purposes.<br/>
+ Example: <code>author=Ales Hvezda ahvezdaATgeda.seul.org</code>
+</p>
+
+</div>
+<!-- SECTION "author" [2710-3306] -->
+<h3><a name="comment" id="comment">comment</a></h3>
+<div class="level3">
+
+<p>
+The <code>comment</code> attribute can contain anything. This attribute can convey any additional information which might not fit into any other attribute. There can be multiple instances of this attribute.<br/>
+ Example: <code>comment=This is a comment inside a symbol</code>
+</p>
+
+</div>
+<!-- SECTION "comment" [3307-3580] -->
+<h3><a name="pinseq" id="pinseq">pinseq</a></h3>
+<div class="level3">
+
+<p>
+This attribute is used to give each pin an unique number or sequence. All pins must have a <strong>pinseq</strong>=# attribute attached to the pin object. This attribute should be hidden. This attribute is used extensively by gschem and gnetlist.<br/>
+ In some backends (especially the SPICE backend), gnetlist will output pins in the order of increasing pin sequence. The sequence numbers start at 1 and should increase without skipping any numbers. This attribute is not the pin number (i.e. device pin numbers, like GND is 7 on TTL). For pin numbers see the <a href="#pinnumber" title=":geda:master_attributes_list.txt &crarr;" class="wikilink1">pinnumber</a> attribute.<br/>
+ Examples: <code>pinseq=1 pinseq=2 pinseq=3</code><br/>
+
+</p>
+
+<p>
+This attribute replaces the obsolete <strong>pin#</strong>=# attribute.
+</p>
+
+</div>
+<!-- SECTION "pinseq" [3581-4273] -->
+<h3><a name="pinnumber" id="pinnumber">pinnumber</a></h3>
+<div class="level3">
+
+<p>
+This attribute is the pin number (i.e. like GND is 7 on 74 TTL). All pins must have a <strong>pinnumber</strong>=# attribute attached to the pin object.<br/>
+ You can have numbers or letters for the value. This attribute should be visible with the value only visible. You also need a <a href="#pinseq" title=":geda:master_attributes_list.txt &crarr;" class="wikilink1">pinseq</a> attribute.<br/>
+ Examples: <code>pinnumber=1 pinnumber=13 pinnumber=A0</code><br/>
+
+</p>
+
+<p>
+This attribute replaces the obsolete pin#=# attribute.
+</p>
+
+</div>
+<!-- SECTION "pinnumber" [4274-4696] -->
+<h3><a name="pintype" id="pintype">pintype</a></h3>
+<div class="level3">
+
+<p>
+Each pin must have a <strong>pintype</strong>=value attribute attached to it and should be make hidden. Table 1 shows valid values for this attribute.<br/>
+ This attribute is not used extensively in the symbol library, but it will be used for DRC and netlisting.<br/>
+ Examples: <code>pintype=clk pintype=in pintype=pas</code><br/>
+ 
+</p>
+<table class="inline">
+	<tr>
+		<td>in</td><td>Input</td>
+	</tr>
+	<tr>
+		<td>out</td><td>Output</td>
+	</tr>
+	<tr>
+		<td>io</td><td>Input/Output</td>
+	</tr>
+	<tr>
+		<td>oc</td><td>Open collector</td>
+	</tr>
+	<tr>
+		<td>oe</td><td>Open emitter</td>
+	</tr>
+	<tr>
+		<td>pas</td><td>Passive</td>
+	</tr>
+	<tr>
+		<td>tp</td><td>Totem pole</td>
+	</tr>
+	<tr>
+		<td>tri</td><td>Tristate (high impedance)</td>
+	</tr>
+	<tr>
+		<td>clk</td><td>Clock</td>
+	</tr>
+	<tr>
+		<td>pwr</td><td>Power/Ground</td>
+	</tr>
+	<tr>
+		<td colspan="2">Table 1: pintype values</td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "pintype" [4697-5215] -->
+<h3><a name="pinlabel" id="pinlabel">pinlabel</a></h3>
+<div class="level3">
+
+<p>
+This attribute labels a pin object. This attribute is primarily used by gnetlist to support hierarchical designs.<br/>
+ This attribute must be attached to the pin and be left visible. Please make this attribute green (instead of the default attribute yellow).<br/>
+ Examples: <code>pinlabel=A0 pinlabel=DATA1 pinlabel=CLK</code><br/>
+
+</p>
+
+</div>
+<!-- SECTION "pinlabel" [5216-5549] -->
+<h3><a name="numslots" id="numslots">numslots</a></h3>
+<div class="level3">
+
+<p>
+If a component has multiple slots in a physical package (such as a 7400 (NAND) which has 4 NANDs per package) then you need a <strong>numslots</strong>=# attribute. The # is the number of slots that are in a physical device. <strong>numslots</strong>=# should exist somewhere in the symbol and be made invisible. This is a free standing or floating attribute. If the symbol does not need slotting, then put <strong>numslots</strong>=0 into the symbol file.<br/>
+ Example: <code>numslots=4</code>
+</p>
+
+</div>
+<!-- SECTION "numslots" [5550-6013] -->
+<h3><a name="slotdef" id="slotdef">slotdef</a></h3>
+<div class="level3">
+
+<p>
+If a component has multiple slots in a physical package then you must attach a <strong>slotdef</strong>=slotnumber:#,#,#&hellip; for every device inside the physical package.<br/>
+ The slotnumber corresponds to the slot number. The colon after the slot number is required. For example, if a device has 4 slots then there would be <strong>slotdef</strong>=1:&hellip;, <strong>slotdef</strong>=2:&hellip;, <strong>slotdef</strong>=3:&hellip;, and slotdef=4:&hellip; attributes somewhere in the symbol and be made invisible. This is a free standing or  floating attribute.<br/>
+ The #‘s have a one-to-one correspondence to the <strong>pinseq</strong> attributes and specify which <strong>pinnumber</strong>=# is used during display (gschem) or netlisting (gnetlist).<br/>
+ It is recommended that all symbols which have slots have a <a href="#slot" title=":geda:master_attributes_list.txt &crarr;" class="wikilink1">slot</a>=1 attribute attached in the same fashion as the <a href="#device" title=":geda:master_attributes_list.txt &crarr;" class="wikilink1">device</a>= attribute.<br/>
+ See 7400-1.sym as a concrete example.<br/>
+ Examples: <code>slotdef=1:1,2,3 slotdef=2:4,5,6 slotdef=3:7,8,9</code><br/>
+ This attribute replaces the obsolete <strong>slot</strong>#=# attribute.
+</p>
+
+</div>
+<!-- SECTION "slotdef" [6014-6994] -->
+<h3><a name="footprint" id="footprint">footprint</a></h3>
+<div class="level3">
+
+<p>
+<strong>footprint</strong>=package name should exist somewhere in the symbol and be made invisible. This attribute is used by gnetlist and primarily for the PCB package.<br/>
+ Attach this attribute just like the <a href="#device" title=":geda:master_attributes_list.txt &crarr;" class="wikilink1">device</a>= attribute. This is a free standing or floating attribute.<br/>
+ package name is the pcb footprint or package type like DIP14 or DIP40. Although this attribute in principle is pcb package dependent, gEDA/gaf conventions exist to make this attribute as portable as possible, allowing for easy collaboration and sharing between users. See the <a href="geda-scg.html#footprint_naming_conventions" class="wikilink1" title="geda-scg.html">Footprint naming conventions in the Symbol Creation Guide</a>.<br/>
+ If the symbol does not have a footprint, then the value of <strong>footprint</strong>= should be set to none. If the footprint must be overridden in a schematic, then the value of <strong>footprint</strong>= should be set to none. If the footprint is not known, then the value of footprint= should be set to unknown.
+</p>
+
+</div>
+<!-- SECTION "footprint" [6995-7953] -->
+<h3><a name="documentation" id="documentation">documentation</a></h3>
+<div class="level3">
+
+<p>
+<strong>documentation</strong>=documentation_locator may exist somewhere in the symbol and be made invisible. This attribute is used by gschemdoc to find relevant documentation for the symbol, or rather, the device or component associated with the symbol.<br/>
+ Attach this attribute just like the <a href="#device" title=":geda:master_attributes_list.txt &crarr;" class="wikilink1">device</a>= attribute. This is a freestanding or floating attribute.<br/>
+ documentation_locator is either the base filename of the documentation, or it is the complete Internet <acronym title="Uniform Resource Locator">URL</acronym> (Uniform Resource Locator). If it is the filename, an attempt will be made to search for it in the local gEDA share directory named <strong>documentation</strong>.<br/>
+ Filename example: <code>documentation=sn74ls00.pdf</code><br/>
+ <acronym title="Uniform Resource Locator">URL</acronym> example: <code>documentation=<a href="http://www-s.ti.com/sc/ds/sn74ls00.pdf" class="urlextern" title="http://www-s.ti.com/sc/ds/sn74ls00.pdf"  rel="nofollow">http://www-s.ti.com/sc/ds/sn74ls00.pdf</a></code>
+</p>
+
+</div>
+<!-- SECTION "documentation" [7954-8712] -->
+<h2><a name="schematic_only_attributes" id="schematic_only_attributes">Schematic only Attributes</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Schematic only Attributes" [8713-8750] -->
+<h3><a name="netname" id="netname">netname</a></h3>
+<div class="level3">
+
+<p>
+This attribute should be attached to a net object to give it a name. Multiple net names for connected net segments is discouraged. All nets which have the same value are considered electrically connected. This attribute is not valid inside symbols (as you cannot have nets inside of symbols).<br/>
+ Examples: <code>netname=DATA0 H netname=CLK L</code><br/>
+
+</p>
+
+</div>
+<!-- SECTION "netname" [8751-9110] -->
+<h3><a name="source" id="source">source</a></h3>
+<div class="level3">
+
+<p>
+The source= attribute is used to specify that a symbol has underlying schematics. This attribute is attached directly to a component.<br/>
+ This attribute should only be attached to instantiated components in schematics. Attach the attribute to a component and specify the filename (not the path) of the underlying schematic (like block.sch) for the value. The specified schematic must be in a source-library path. This attribute can be attached multiple times with difierent values which basically means that there are multiple underlying schematics.<br/>
+ Examples: <code>source=underlying.sch source=memory.sch</code>
+</p>
+
+</div>
+<!-- SECTION "source" [9111-9732] -->
+<h2><a name="symbol_and_schematic_attributes" id="symbol_and_schematic_attributes">Symbol and Schematic Attributes</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Symbol and Schematic Attributes" [9733-9777] -->
+<h3><a name="refdes" id="refdes">refdes</a></h3>
+<div class="level3">
+
+<p>
+This attribute is used to specify the reference designator to a particular instantiated component. It must be on ALL components which have some sort of electrical significance. This attribute can also be on the inside of a symbol (it will be promoted, i.e. attached to the outside of the symbol, if it is visible) to provide a default refdes value (such as U?). Usually this attribute is composed by a prefix (‘U’ for example) and a number (different for each component).<br/>
+ Examples: <code>refdes=U1 refdes=R10 refdes=CONN1</code><br/>
+ There is a convention of the reference designator used for each kind of component. Here are some of them (substitute a cardinal value for &lt;n&gt;):
+</p>
+<table class="inline">
+	<tr>
+		<th> Prefix </th><th> Component type</th>
+	</tr>
+	<tr>
+		<td class="leftalign"> R&lt;n&gt;   </td><td>Resistor</td>
+	</tr>
+	<tr>
+		<td class="leftalign"> RN&lt;n&gt;  </td><td>Resistor Network</td>
+	</tr>
+	<tr>
+		<td class="leftalign"> FB&lt;n&gt;  </td><td>Ferrite Bead</td>
+	</tr>
+	<tr>
+		<td class="leftalign"> L&lt;n&gt;   </td><td>Inductor</td>
+	</tr>
+	<tr>
+		<td class="leftalign"> C&lt;n&gt;   </td><td>Capacitor</td>
+	</tr>
+	<tr>
+		<td class="leftalign"> B&lt;n&gt;   </td><td>Battery </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> F&lt;n&gt;   </td><td class="leftalign">Fuse    </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> J&lt;n&gt;   </td><td>Connector</td>
+	</tr>
+	<tr>
+		<td class="leftalign"> P&lt;n&gt;   </td><td>Connector (usually plugs that mate with J&lt;n&gt;)</td>
+	</tr>
+	<tr>
+		<td class="leftalign"> K&lt;n&gt;   </td><td>Relay</td>
+	</tr>
+	<tr>
+		<td class="leftalign"> S&lt;n&gt;   </td><td>Switch</td>
+	</tr>
+	<tr>
+		<td class="leftalign"> T&lt;n&gt;   </td><td>Transformer</td>
+	</tr>
+	<tr>
+		<td class="leftalign"> TP&lt;n&gt;  </td><td>Testpoint</td>
+	</tr>
+	<tr>
+		<td class="leftalign"> M&lt;n&gt;   </td><td>Motor</td>
+	</tr>
+	<tr>
+		<td class="leftalign"> D&lt;n&gt;   </td><td>Diode</td>
+	</tr>
+	<tr>
+		<td class="leftalign"> Q&lt;n&gt;   </td><td>Transistor</td>
+	</tr>
+	<tr>
+		<td class="leftalign"> U&lt;n&gt;   </td><td>IC</td>
+	</tr>
+	<tr>
+		<td class="leftalign"> X&lt;n&gt;   </td><td>Crystal</td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "refdes" [9778-10889] -->
+<h3><a name="slot" id="slot">slot</a></h3>
+<div class="level3">
+
+<p>
+This attribute is used to specify a slot for a slotted component. It should be attached to an instantiated component. This attribute can also be on the inside of a symbol (it will be promoted, i.e. attached to the outside of the symbol, if it is visible) to provide a default slot.
+</p>
+
+</div>
+<!-- SECTION "slot" [10890-11187] -->
+<h3><a name="net" id="net">net</a></h3>
+<div class="level3">
+
+<p>
+The <strong>net</strong>= attribute is used to create power/ground and arbitrary nets. Please see the  <a href="geda-na_howto.html" class="wikilink1" title="geda-na_howto.html">net= attribute mini-HOWTO</a> for more info. When this attribute is inside a symbol, it is used to create nets. When this attribute is attached to an instantiated component (in a schematic), then the <strong>net</strong>= can also be used to create new nets and can used to override existing nets.
+</p>
+
+</div>
+<!-- SECTION "net" [11188-11591] -->
+<h3><a name="value" id="value">value</a></h3>
+<div class="level3">
+
+<p>
+Used mainly in the spice backend netlister to specify the value of the various elements. No translation is done on this, and it is placed as is into the netlist.<br/>
+ Examples: <code>value=1K value=10V</code><br/>
+
+</p>
+
+</div>
+<!-- SECTION "value" [11592-11807] -->
+<h3><a name="symversion" id="symversion">symversion</a></h3>
+<div class="level3">
+
+<p>
+The <strong>symversion</strong>= attribute is used to version the contents of symbols. Normally this attribute is not present, but once a symbol has been accepted into the main gEDA symbol library and there are changes to it, this attribute must be placed into the symbol file and properly incremented. The value of this attribute takes the following form:<br/>
+ <strong>major.minor</strong>
+</p>
+
+<p>
+where major and minor are just plain integers (separated by a period). The major number is incremented when a symbol has some sort of a change which will break or might break an existing schematic. The minor number is only incremented when a cosmetic or very minor change is made to the symbol. The major and minor numbers are not coupled in any way, however, when making major version changes, the minor version number can be reset to zero.<br/>
+ If this attribute is inside of a symbol and that symbol is placed onto a schematic, then the <strong>symversion</strong>= attribute will be automatically promoted and attached to the outside of the symbol. During the load of the symbol from disk, the value of the <strong>symversion</strong>= inside the symbol file (if any) and the <strong>symversion</strong>= attached to the symbol (if any) are compared. If the values are the same then the placed symbol matches the disk symbol file, however if the values do not match, then libgeda will output a warning/error message (based on whether it is a major or minor version change).<br/>
+ New symbols should not receive this attribute at all. Only when the symbol is change should this attribute be placed into the symbol file and maintained. Users should not attach this attribute manually to instantiated symbols. This attribute should normally be made invisible when placed inside of a symbol file. This attribute is always promoted when it is found inside of a symbol (during component placement).<br/>
+ Examples: <code>symversion=1.1</code><br/>
+
+</p>
+
+</div>
+<!-- SECTION "symversion" [11808-13676] -->
+<h3><a name="dist-license" id="dist-license">dist-license</a></h3>
+<div class="level3">
+
+<p>
+ The <strong>dist-license</strong> attribute is used to specify the redistribution license for the symbol or schematic.  It should be the name of a known license.  Some examples values are:  <acronym title="GNU General Public License">GPL</acronym>, <acronym title="GNU General Public License">GPL</acronym> version 2 only, <acronym title="GNU General Public License">GPL</acronym> version 3 only, public domain, Apache version 2, Modified BSD, X11, etc.  <br/>
+ <br/>
+ For a list of licenses see: <a href="http://www.gnu.org/philosophy/license-list.html" class="urlextern" title="http://www.gnu.org/philosophy/license-list.html"  rel="nofollow">FSF License List</a> and  <a href="http://www.opensource.org/licenses/category" class="urlextern" title="http://www.opensource.org/licenses/category"  rel="nofollow">OSI License List</a>
+</p>
+
+</div>
+<!-- SECTION "dist-license" [13677-14157] -->
+<h3><a name="use-license" id="use-license">use-license</a></h3>
+<div class="level3">
+
+<p>
+ The <strong>use-license</strong> attribute is used to specify the license for how the symbol or schematic can be used by other people in their own circuits or boards.  Some example values are: unlimited, personal use only, not for sale, etc.<br/>
+ <br/>
+ <img src="images/smileys/fixme.gif" align="middle" alt="FIXME" /> put a better list of examples here.
+</p>
+
+</div>
+<!-- SECTION "use-license" [14158-14457] -->
+<h2><a name="obsolete_attributes" id="obsolete_attributes">Obsolete Attributes</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Obsolete Attributes" [14458-14489] -->
+<h3><a name="uref" id="uref">uref</a></h3>
+<div class="level3">
+
+<p>
+The uref= attribute is obsolete and cannot not be used. It was used to provide the same information as <a href="#refdes" title=":geda:master_attributes_list.txt &crarr;" class="wikilink1">refdes</a>.
+</p>
+
+</div>
+<!-- SECTION "uref" [14490-14621] -->
+<h3><a name="name" id="name">name</a></h3>
+<div class="level3">
+
+<p>
+The <strong>name</strong>= attribute should not be attached or appear in any symbol. It is considered ambiguous. <strong>name</strong>= was never used by gEDA/gaf.
+</p>
+
+</div>
+<!-- SECTION "name" [14622-14775] -->
+<h3><a name="label" id="label">label</a></h3>
+<div class="level3">
+
+<p>
+The <strong>label</strong>= attribute is obsolete and cannot be used. It was used to give nets names/labels and to label pins. The replacement attributes for this are <a href="#netname" title=":geda:master_attributes_list.txt &crarr;" class="wikilink1">netname</a> and <a href="#pinlabel" title=":geda:master_attributes_list.txt &crarr;" class="wikilink1">pinlabel</a> respectively.
+</p>
+
+</div>
+<!-- SECTION "label" [14776-14991] -->
+<h3><a name="pin" id="pin">pin#</a></h3>
+<div class="level3">
+
+<p>
+The <strong>pin#</strong>=# attribute is obsolete and cannot be used. It was used to provide sequence and number information to pins. The replacement attributes for this are <a href="#pinseq" title=":geda:master_attributes_list.txt &crarr;" class="wikilink1">pinseq</a> and <a href="#pinnumber" title=":geda:master_attributes_list.txt &crarr;" class="wikilink1">pinnumber</a>.
+</p>
+
+</div>
+<!-- SECTION "pin#" [14992-15200] -->
+<h3><a name="slot1" id="slot1">slot#</a></h3>
+<div class="level3">
+
+<p>
+The <strong>slot#</strong>=# attribute is obsolete and cannot be used. It was used to provide slotting information to components. The replacement attribute for this is <a href="#slotdef" title=":geda:master_attributes_list.txt &crarr;" class="wikilink1">slotdef</a>.
+</p>
+
+</div>
+<!-- SECTION "slot#" [15201-15386] -->
+<h3><a name="type" id="type">type</a></h3>
+<div class="level3">
+
+<p>
+The <strong>type</strong>= attribute is obsolete and cannot be used. It was used to provide type information on pins. The replacement attribute for this is <a href="#pintype" title=":geda:master_attributes_list.txt &crarr;" class="wikilink1">pintype</a>.
+</p>
+
+</div>
+<!-- SECTION "type" [15387-15559] -->
+<h3><a name="email" id="email">email</a></h3>
+<div class="level3">
+
+<p>
+The information in this attribute has been merged with <a href="#author" title=":geda:master_attributes_list.txt &crarr;" class="wikilink1">author</a>.
+</p>
+
+</div>
+<!-- SECTION "email" [15560-15644] -->
+<h2><a name="document_revision_history" id="document_revision_history">Document Revision History</a></h2>
+<div class="level2">
+<table class="inline">
+	<tr>
+		<td>July 14th, 2002</td><td>Created attributes.tex from attributes.txt.</td>
+	</tr>
+	<tr>
+		<td>July 14th, 2002</td><td>Updated doc to be in sync with post-20020527.</td>
+	</tr>
+	<tr>
+		<td>August 25th, 2002</td><td>Added obsolete type= attribute.</td>
+	</tr>
+	<tr>
+		<td>September 14, 2002</td><td>Added description= attribute. Minor xes</td>
+	</tr>
+	<tr>
+		<td>October 7, 2002</td><td>Added doc= attribute; Egil Kvaleberg.</td>
+	</tr>
+	<tr>
+		<td>February 11, 2003</td><td>Added reference to footprint conventions.</td>
+	</tr>
+	<tr>
+		<td>February 23, 2003</td><td>Added author=, email=, and comment= attributes.</td>
+	</tr>
+	<tr>
+		<td>July 6th, 2004</td><td>Added symversion= attributes.</td>
+	</tr>
+	<tr>
+		<td>July 10th, 2007</td><td>Added dist-license= and use-license= attributes.</td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Document Revision History" [15645-] --></body>
+</html>

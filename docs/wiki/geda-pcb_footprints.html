@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#pcb_footprint_guide" class="toc">PCB Footprint Guide</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#using_pcb_footprints" class="toc">Using PCB Footprints</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#creating_pcb_footprints" class="toc">Creating PCB Footprints</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#footprint_basics" class="toc">Footprint basics</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#pcb_footprint_faq" class="toc">PCB Footprint FAQ</a></span></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><span class="li"><a href="#sharing_pcb_footprints" class="toc">Sharing PCB Footprints</a></span></div></li></ul>
+</li></ul>
+</div>
+</div>
+
+
+
+<h1><a name="pcb_footprint_guide" id="pcb_footprint_guide">PCB Footprint Guide</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "PCB Footprint Guide" [3-37] -->
+<h2><a name="using_pcb_footprints" id="using_pcb_footprints">Using PCB Footprints</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Using PCB Footprints" [38-71] -->
+<h2><a name="creating_pcb_footprints" id="creating_pcb_footprints">Creating PCB Footprints</a></h2>
+<div class="level2">
+
+<p>
+<strong>This page is redundant!!! see <a href="geda-pcb_tips.html" class="wikilink1" title="geda-pcb_tips.html">pcb_tips</a>.  Furthermore, there is no better way to understand the inner workings of footprints than the pdf <em>Footprint Creation for the Open-Source Layout Program “PCB”</em></strong><a href="http://brorson.com/gEDA/land_patterns_20070818.pdf" class="urlextern" title="http://brorson.com/gEDA/land_patterns_20070818.pdf"  rel="nofollow">http://brorson.com/gEDA/land_patterns_20070818.pdf</a> 
+</p>
+
+</div>
+<!-- SECTION "Creating PCB Footprints" [72-375] -->
+<h3><a name="footprint_basics" id="footprint_basics">Footprint basics</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> There are two types of footprints: M4 and NEWLIB.</div>
+</li>
+<li class="level1"><div class="li"> The best tools for creating footprints are PCB (wysiwyg), TEXT EDITOR (fast, accurate), SCRIPTING (powerful).</div>
+</li>
+<li class="level1"><div class="li"> For drawing footprints in PCB, refer to:</div>
+</li>
+<li class="level1"><div class="li"> For writing footprints in text, refer to: &quot; <em>Footprint Creation for the Open-Source Layout Program “PCB”</em> written and maintained by Stuart Brorson</div>
+</li>
+<li class="level1"><div class="li"> For Scripting footprints:</div>
+</li>
+<li class="level1"><div class="li"> Other things you may find helpful: calculator, paper+pencil, datasheets, calipers, spreadsheet.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Footprint basics" [376-906] -->
+<h3><a name="pcb_footprint_faq" id="pcb_footprint_faq">PCB Footprint FAQ</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="what_is_the_footprint_naming_convention" id="what_is_the_footprint_naming_convention">What is the Footprint naming Convention ?</a></h4>
+<div class="level4">
+
+</div>
+
+<h4><a name="can_i_have_two_pads_pins_with_the_same_pin-number" id="can_i_have_two_pads_pins_with_the_same_pin-number">Can I have two pads/pins with the same pin-number?</a></h4>
+<div class="level4">
+
+<p>
+“Yes, totally.  This is how you create oval shaped copper around pins, or funny shaped pads (e.g. square at one end and round at the other) by overlapping two or more pads.&quot;
+</p>
+
+</div>
+
+<h4><a name="how_do_i_make_an_oval_shaped_pad_around_a_footprint_pin" id="how_do_i_make_an_oval_shaped_pad_around_a_footprint_pin">How do I make an oval shaped pad around a footprint pin?</a></h4>
+<div class="level4">
+
+<p>
+Simply add a pad on top of your pin and give them the same pin-number.  If the soldermask is kept off both pins, and they overlap, they should appear as one pin on your board.
+</p>
+
+</div>
+
+<h4><a name="how_do_i_make_a_2-sided_pad" id="how_do_i_make_a_2-sided_pad">How do I make a 2-sided pad?</a></h4>
+<div class="level4">
+
+<p>
+“Odd as it sounds, this can be necessary for some edge connectors. &hellip; but how do you do it???&quot;
+</p>
+
+</div>
+
+<h4><a name="edge_connectors" id="edge_connectors">Edge Connectors</a></h4>
+<div class="level4">
+
+</div>
+
+<h4><a name="what_are_some_references_for_making_surface_mount_pads_and_footprints" id="what_are_some_references_for_making_surface_mount_pads_and_footprints">What are some references for making surface mount pads and footprints?</a></h4>
+<div class="level4">
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.nxp.com/package" class="urlextern" title="http://www.nxp.com/package"  rel="nofollow">http://www.nxp.com/package</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://focus.ti.com/general/docs/packaging.jsp" class="urlextern" title="http://focus.ti.com/general/docs/packaging.jsp"  rel="nofollow">http://focus.ti.com/general/docs/packaging.jsp</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.maxim-ic.com/design/packaging/" class="urlextern" title="http://www.maxim-ic.com/design/packaging/"  rel="nofollow">http://www.maxim-ic.com/design/packaging/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.national.com/packaging/folders/pkg_index.html" class="urlextern" title="http://www.national.com/packaging/folders/pkg_index.html"  rel="nofollow">http://www.national.com/packaging/folders/pkg_index.html</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.irf.com/package/" class="urlextern" title="http://www.irf.com/package/"  rel="nofollow">http://www.irf.com/package/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.onsemi.com/PowerSolutions/supportTechDoc.do?id=1165" class="urlextern" title="http://www.onsemi.com/PowerSolutions/supportTechDoc.do?id=1165"  rel="nofollow">http://www.onsemi.com/PowerSolutions/supportTechDoc.do?id=1165</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.analog.com/Analog_Root/Packages/Packages_Home/" class="urlextern" title="http://www.analog.com/Analog_Root/Packages/Packages_Home/"  rel="nofollow">http://www.analog.com/Analog_Root/Packages/Packages_Home/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.linear.com/designtools/PkgInfo.jsp" class="urlextern" title="http://www.linear.com/designtools/PkgInfo.jsp"  rel="nofollow">http://www.linear.com/designtools/PkgInfo.jsp</a></div>
+</li>
+</ul>
+
+<p>
+ <a href="geda-pcb_tips.html" class="wikilink1" title="geda-pcb_tips.html">pcb_tips</a> covers a lot of Footprint material.  This page and that page need to be reconciled!
+</p>
+
+</div>
+<!-- SECTION "PCB Footprint FAQ" [907-2204] -->
+<h2><a name="sharing_pcb_footprints" id="sharing_pcb_footprints">Sharing PCB Footprints</a></h2>
+<div class="level2">
+
+</div>
+
+<h5><a name="popular_sources_of_footprints" id="popular_sources_of_footprints">Popular Sources of Footprints</a></h5>
+<div class="level5">
+
+<p>
+ * The place to share symbols and footprints is <a href="http://www.gedasymbols.org" class="urlextern" title="http://www.gedasymbols.org"  rel="nofollow"> gedasymbols.org</a>
+</p>
+
+<p>
+* You can find many PCB footprints at <a href="http://www.luciani.org/geda/pcb/pcb-footprint-list.html" class="urlextern" title="http://www.luciani.org/geda/pcb/pcb-footprint-list.html"  rel="nofollow">John Luciani&#039;s footprint page</a> 
+</p>
+
+<p>
+* You can share <a href="http://opencircuits.com/PCB_Footprints" class="urlextern" title="http://opencircuits.com/PCB_Footprints"  rel="nofollow"> gEDA footprints at Open Circuits</a>.
+</p>
+
+</div>
+<!-- SECTION "Sharing PCB Footprints" [2205-] --></body>
+</html>

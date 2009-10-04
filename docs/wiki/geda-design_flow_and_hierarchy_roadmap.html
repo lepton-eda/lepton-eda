@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#required_for_production_circuits" class="toc">Required for production circuits</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#intermediate_translation_file_format_vhdl_edif" class="toc">intermediate translation file format VHDL? EDIF?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#hierarchical_buses" class="toc">Hierarchical Buses</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#ipc_improvements" class="toc">IPC Improvements</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#robust_function" class="toc">Robust Function</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#other_improvements" class="toc">Other Improvements</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#too_detailed" class="toc">Too Detailed</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#implementation" class="toc">Implementation</a></span></div></li></ul>
+</li></ul>
+</div>
+</div>
+
+
+
+<h1><a name="required_for_production_circuits" id="required_for_production_circuits">Required for production circuits</a></h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> hierarchy in schematic and netlist and pcb &ndash; modules that can be reused, arrayed.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Required for production circuits" [1-135] -->
+<h2><a name="intermediate_translation_file_format_vhdl_edif" id="intermediate_translation_file_format_vhdl_edif">intermediate translation file format VHDL? EDIF?</a></h2>
+<div class="level2">
+
+</div>
+
+<h4><a name="schematic_layout_logic_sim_analog_sim_etc" id="schematic_layout_logic_sim_analog_sim_etc">Schematic, Layout, logic sim, analog sim, etc</a></h4>
+<div class="level4">
+
+<p>
+ In an *AMS language, nets have types.  It’s not just “wire”. The schematic needs to be extended so that pins on symbols can have types.  It is not prohibited to mix types.  Verilog has something called a “connectmodule” to define how to resolve mixed types.  <strong>gschem attributes need to have types.</strong> [Al Davis]
+</p>
+
+<p>
+ I certainly agree that the (gnetlist-ed.) Verilog output is not ‘lossless’ &ndash; it’s only an interchange format for the interconnect&hellip;[Mike Jarabek]
+</p>
+
+<p>
+ He’s not actually proposing to use VHDL (as modeling language-ed.) but to steal some <strong>syntax from VHDL</strong> and interpret it as he sees fit for the task. In particular, he’s only interested in the <strong>entity-architecture separation</strong>[Steve Williams]
+</p>
+
+<p>
+More useful, (than creating intermediate file formats-ed.) is to <strong>refactor libgeda and define an <acronym title="Application Programming Interface">API</acronym></strong> which can be exposed via C, scheme, DBus, and other scripting languages directly modifying the underlying design. [Peter Clifton]
+</p>
+
+<p>
+ Any extraction should preserve hierarchy, in hopes that the target tool also benefits from it.  Translation must be 100%, lossless, from  netlist to PCB refdes, and from PCB refdes used to create a module or back annotate a schematic. [Al Davis]  [paraphrased heavily by JGriessen &ndash; correct?]
+</p>
+
+<p>
+ The <strong>file format should be designed as a language</strong> meaningful and expressive of IC, programmable logic, and printed circuits.  File formats that are data structure dumps cause big problems.  We need an interchange file format..[Al Davis] 
+</p>
+
+<p>
+ If EDIF has layout objects or schematic objects  built-in, that is actually a weakness.  Just like SPICE having  resistors and transistors built-in has become a weakness.[Al Davis]
+</p>
+
+<p>
+ <strong>EDIF’s not mainstream.</strong>  VHDL and Verilog are mainstream.  That is  one reason for my preference.  It’s not all technical[Al Davis]
+</p>
+
+<p>
+ <strong>PCB behavior with a hierarchic netlist</strong>   Right click on a symbol, select “go inside”, and another drawing opens up showing what’s inside.  gschem also should act this way. [Al Davis]  Display in place what’s inside, <strong>turn on/off the visibility</strong> or “editability” of any subcells. [Igor] <strong>Ability to visually toggle</strong> [Dan McMahill]  <strong>“blocks” should be translucent.</strong>  (To show in place)ed. even when you’re not editing it. [DJ Delorie]  Yep. [John Griessen]  Dive into a block so you can edit it.  When done, <strong>close and updated in place</strong>. [DJ Delorie]
+</p>
+
+<p>
+<strong>how to handle re-use blocks?</strong>  [Stuart Brorson] That is, if I have a sub-schematic which I instantiate four times, how should it be refdesed in the netlist?     
+</p>
+
+</div>
+<!-- SECTION "intermediate translation file format VHDL? EDIF?" [136-2788] -->
+<h2><a name="hierarchical_buses" id="hierarchical_buses">Hierarchical Buses</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Hierarchical Buses" [2789-2821] -->
+<h2><a name="ipc_improvements" id="ipc_improvements">IPC Improvements</a></h2>
+<div class="level2">
+
+<p>
+ (InterProcess Communication -ed.) between gschem and PCB using DBus will benefit from netlisting changes (certainly cross probing and back annotation).[Peter Clifton]
+</p>
+
+<p>
+ Peter Brett and I put together a graphical frontend to gsch2pcb which uses gsch2pcb’s output to feed changes into a live PCB layout. [Peter Clifton]
+</p>
+
+<p>
+ For <strong>cross-probing</strong> / interactive simulation / back annotation, we require libgeda to <strong>give gschem, gattrib etc.. the circuit representation</strong> underlying your schematic drawing.[Peter Clifton]
+</p>
+
+</div>
+<!-- SECTION "IPC Improvements" [2822-3368] -->
+<h2><a name="robust_function" id="robust_function">Robust Function</a></h2>
+<div class="level2">
+
+<p>
+ libgeda could/should evolve - as a backend to different tools.   Since the PCB file-format is PCB’s, and may change, it is wiser to use a defined <acronym title="Application Programming Interface">API</acronym> to PCB to make PCB write the file. This entails adding to PCB’s action interface as necessary, and making gsch2pcb output a script of actions rather than a “PCB” file.  [Peter Clifton]
+</p>
+
+<p>
+ I’m hoping to separate much of the <acronym title="Graphical User Interface">GUI</acronym> structure and cram that back in the applications it belongs in, re-structuring libgeda to be design data-oriented.[Peter Clifton]
+</p>
+
+<p>
+<strong>function library with bindings to users language of choice</strong>  a proper, “official” <acronym title="Practical Extraction and Report Language">Perl</acronym>-callable library to parse a layout file, a footprint file, or a schematic file, and load the data into an in-memory data structure. Such a library to read and write these file formats would dramatically reduce the activation energy hump to write a rich set of tools for all of us. [CP Tarun]
+</p>
+
+<p>
+ It would not fall out of sync with the changing file-formats, because you wouldn’t write yet another implementation of the parser, data-structures etc, nor would you copy-paste code.  You would have one library which is used by all tools (probably in C as this is what the suite mostly uses), then you would provide language bindings so people can write the useful utilities they want.  If this means having to split code out of existing tools and into a library, that is the way forward in terms of code reuse. [Peter Clifton]
+</p>
+
+<p>
+ I completely agree.  [Dan McMahill]
+</p>
+
+<p>
+ Also consider libgpmi which currently supports 8 languages, will support guile  [Igor]
+</p>
+
+</div>
+<!-- SECTION "Robust Function" [3369-4944] -->
+<h2><a name="other_improvements" id="other_improvements">Other Improvements</a></h2>
+<div class="level2">
+
+<p>
+It is very useful I think to let DRC run to completion and <strong>have a DRC layer</strong> (or perhaps 1 DRC layer per copper layer as you suggest) that identifies exactly the <strong>offending feature</strong>.[Dan McMahill]
+</p>
+
+<p>
+<strong>layout and save a hierarchy module</strong>  [Steve Meier]    
+</p>
+
+<p>
+ have a block (in PCB)ed. that is a modular entity.  Normally, you can’t do anything but move it around as a whole.  A special action “opens” this block (and hides everything else) so you can edit it.  When you’re done, it’s closed again - and any copies of the block are automatically updated in place. [DJ Delorie]
+</p>
+
+<p>
+<strong>be able in the netlist to tell pcb which slots are swapable</strong>, which i/o pins are swapable and which pin pairs can function as differential pairs (these last two have to be able to be limited to specific banks) such that pcb could correctly change the net list itself. Then I would like PCB to be able to tell me what pins and in what order the pins were swapped so that this could be imported back into the original design.[Steve Meier]
+</p>
+
+<p>
+ <strong>gschem attribute editable  as symbols placed</strong>, (such as description of the layout footprint attribute) [CP Tarun]
+</p>
+
+<p>
+<strong> recesses in boards, (holes in PCB layers)</strong>[Steve Meier]  Required for straight leads out side of packages and flex circuits.
+</p>
+
+<p>
+ Yeah, you’d need the “layer types” patch to really manage that, as you’d be able to tag multiple pcb layers as “outline” layers[DJ Delorie]
+</p>
+
+<p>
+<strong> PCB should be able to do hidden vias</strong>, buried vias and micro vias. [Steve Meier]
+</p>
+
+<p>
+ Answered by non-copper layers, multi-pin projects in SoC list [DJ Delorie]
+</p>
+
+<p>
+ Use padstack to build elements with copper and non-copper layers independent.[Levente]
+</p>
+
+<p>
+ <strong>a PCB interface for presenting dynamic dialog boxes</strong> for importers [Igor]  I think this is part of having easy scripting of user’s choice, so an important design flow consideration[John Griessen]
+</p>
+
+</div>
+<!-- SECTION "Other Improvements" [4945-6847] -->
+<h2><a name="too_detailed" id="too_detailed">Too Detailed</a></h2>
+<div class="level2">
+
+<p>
+<strong>change only the top of hierarchy string</strong> of a layout module to netlist correctly.[Steve Meier]
+</p>
+
+<p>
+<strong>Separate the hierarchy</strong>  from the rest of the refdes. [Steve Meier]  
+</p>
+
+<p>
+ PCB doesn’t care     what the refdes is, a heirarchical one is just as valid [DJ Delorie]
+</p>
+
+<p>
+<strong>In gschem, visually browse the symbol library</strong>.[CP Tarun]  
+</p>
+
+<p>
+ Can be putoff and done as a <acronym title="Graphical User Interface">GUI</acronym> plugin script &ndash; a detail of easy scripting wants [JGriessen]
+</p>
+
+<p>
+<strong>In gschem, more control over printed or exporting</strong>, as in CAM files a la Eagle.[CP Tarun]
+</p>
+
+<p>
+ Can be putoff and done as a <acronym title="Graphical User Interface">GUI</acronym> plugin script &ndash; a detail of easy scripting wants [JGriessen]
+</p>
+
+</div>
+<!-- SECTION "Too Detailed" [6848-7493] -->
+<h2><a name="implementation" id="implementation">Implementation</a></h2>
+<div class="level2">
+
+<p>
+ <strong>What kind of data structures are desirable?</strong>  How would they look?  [Stuart Brorson] <strong>Once a datastructure is decided upon, then what does the file format look like?</strong>    Preserving the current close mapping of files to data structures is a desirable goal.  The data structures defining hierarchy dictate what the file format should look like.  [Stuart Brorson]
+</p>
+
+<p>
+ Right now, the main data structure for a schematic is a linear linked list of graphical objects (for each schematic page).  Some list items point to others (i.e. to support component attributes). How would that change to support hierarchy?  [Stuart Brorson]
+</p>
+
+<p>
+ PCB has a second format it uses called a “resource file”.  It’s a semi-lisp-ish format that allows for arbitrarily nested data.  It could be used to hold pretty much anything, but it isn’t “designed for the data”.[DJ Delorie]
+</p>
+
+<p>
+<strong>How should gschem behave once hierarchy is architected in?</strong> Right now you attach a source= attribute to a symbol.  Then you do “schematic down” on that symbol to dive into the sub-schematic.  Is that OK?  Or what’s a better scheme?
+</p>
+
+<p>
+<strong>Some work has already been done using gnetman by Bill Cox,</strong> but it has never been part of the distribution gnetlist.  Dan McMahill wrote:  “a reason to use the gnetman database as opposed to one designed by one of us” is that without availing Bill Cox’s substantial tested work,  we may “find that the underlying database structure and methods for accessing it still aren’t complete enough, fast enough, or scalable enough.&quot;
+</p>
+
+<p>
+<strong>Some work has already been done by Steve Meier</strong> to enable practical work on FPGAs.
+</p>
+
+<p>
+<strong>Some design work has been done by Peter Brett and Peter Clifton,</strong> producing a concept diagram of a sub-circuit oriented data-structure based on gnetman’s structure diagram for netlisting. See <a href="geda-data_structure_design_discussion.html" class="wikilink1" title="geda-data_structure_design_discussion.html">data structure design discussion</a> 
+</p>
+
+</div>
+<!-- SECTION "Implementation" [7494-] --></body>
+</html>
