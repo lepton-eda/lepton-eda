@@ -8,7 +8,7 @@ dnl directory.
 # Set up configuration system
 #####################################################################
 
-AC_INIT([gEDA/gaf], [1.5.4], [geda-bug@seul.org], [geda-gaf])
+AC_INIT([gEDA/gaf], [1.6.0], [geda-bug@seul.org], [geda-gaf])
 AC_PREREQ([2.60])
 
 AC_CONFIG_SRCDIR([libgeda/src/libgeda.c])
@@ -24,7 +24,7 @@ AC_GNU_SOURCE # FIXME for some reason this is needed?
 # Do version number magic
 #####################################################################
 
-AX_GIT_VERSION([20090830])
+AX_GIT_VERSION([20091004])
 
 # This is used for keeping the ChangeLog files up-to-date
 AC_SUBST([CHANGELOG_BASE], [1.0-20070526])
@@ -152,7 +152,7 @@ AX_DATA_DIRS
 # Where should PCB footprints be searched for?
 AX_PCB_DIRS
 # Set up libgeda with the correct ld version number
-AX_LIBGEDA([37:0:0])
+AX_LIBGEDA([38:0:0])
 
 #####################################################################
 # Generate output
