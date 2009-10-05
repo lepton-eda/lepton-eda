@@ -257,7 +257,7 @@ AC_CONFIG_FILES([Makefile
                  symbols/Makefile
                  symbols/documentation/Makefile
 
-		 docs/Makefile
+                 docs/Makefile
                  docs/scripts/Makefile
                  docs/toplevel/Makefile
                  docs/toplevel/gedadocs.html
