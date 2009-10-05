@@ -7,8 +7,22 @@ Copyright (C) 1998-2009 gEDA Developers
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
 
-Notable changes in gEDA/gaf 1.5.3/1.5.4
+Notable changes in gEDA/gaf 1.6.0
 =================================
+
+* Fixed the GtkItemEntry code inside of gattrib code so that it builds
+  using gtk+ > 2.16.x.
+
+* In gschem, rubberband pin to pin connections by adding nets.
+
+* Cleanup of the slot handling code in libgeda.
+
+* Fixes/updates to the MinGW port.
+
+* Updated the shipped documentation from the online wiki.
+
+Notable changes in gEDA/gaf 1.5.3/1.5.4
+=======================================
 
 * NOTE: gEDA/gaf 1.5.3 was released with some critical bugs, so
         it was withdrawn before it was widely distributed.
