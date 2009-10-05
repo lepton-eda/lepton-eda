@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2009-08-29 15:17-0400\n"
+"POT-Creation-Date: 2009-10-04 18:50-0400\n"
 "PO-Revision-Date: 2009-01-02 08:04+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -150,27 +150,27 @@ msgstr ""
 "Voer gschem uit en corrigeer de situatie.\n"
 "\n"
 
-#: libgeda/src/f_basic.c:375
+#: libgeda/src/f_basic.c:369
 #, c-format
 msgid "Can't get the real filename of %s."
 msgstr "Kan de werkelijke bestandsnaam van %s niet krijgen."
 
-#: libgeda/src/f_basic.c:395
+#: libgeda/src/f_basic.c:389
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "Kan vorige reservekopie [%s] NIET op lezen-schrijven instellen\n"
 
-#: libgeda/src/f_basic.c:401
+#: libgeda/src/f_basic.c:395
 #, c-format
 msgid "Can't save backup file: %s."
 msgstr "Kan reservekopie niet opslaan: %s."
 
-#: libgeda/src/f_basic.c:411
+#: libgeda/src/f_basic.c:405
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "Kan reservekopie [%s] NIET op alleen-lezen instellen\n"
 
-#: libgeda/src/f_basic.c:700
+#: libgeda/src/f_basic.c:694
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -321,31 +321,14 @@ msgstr "Ongeldige kleur [ %s ] gevonden\n"
 msgid "Setting color to default color\n"
 msgstr "Stel de kleur in op WIT \n"
 
-#: libgeda/src/o_attrib.c:123
+#: libgeda/src/o_attrib.c:120
 msgid "Attempt to attach non text item as an attribute!\n"
 msgstr "Probeerde een niet text item toe te voegen als een attribuut!\n"
 
-#: libgeda/src/o_attrib.c:128
+#: libgeda/src/o_attrib.c:125
 #, c-format
 msgid "Attempt to attach attribute [%s] to more than one object\n"
 msgstr "Probeerde attribuut [%s] aan meer dan een object toe te voegen\n"
-
-#: libgeda/src/o_attrib.c:740
-msgid "Did not find slotdef=#:#,#,#... attribute\n"
-msgstr "Kan slotdef=#:#,#,#... attribuut niet vinden\n"
-
-# Geen gebruikelijke slotdef=#:... gevonden, doe een waarschuwing in het log
-#: libgeda/src/o_attrib.c:746
-msgid "Improper slotdef syntax: missing \":\".\n"
-msgstr "Ongewenst slotdef syntax: \":\" ontbreekt.\n"
-
-#: libgeda/src/o_attrib.c:761
-msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
-msgstr "Kan het gewenste slotdef=#:#,#,#... attribuut niet vinden\n"
-
-#: libgeda/src/o_attrib.c:791
-msgid "component missing pinseq= attribute\n"
-msgstr "komponent mist het pinseq= attribuut\n"
 
 #: libgeda/src/o_basic.c:199 libgeda/src/o_basic.c:211
 msgid "Invalid space specified, setting to 100\n"
@@ -775,6 +758,19 @@ msgstr "[%s] gevonden\n"
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr "Kan geen [%s] vinden in welke BronBibliotheek dan ook!\n"
+
+#~ msgid "Did not find slotdef=#:#,#,#... attribute\n"
+#~ msgstr "Kan slotdef=#:#,#,#... attribuut niet vinden\n"
+
+# Geen gebruikelijke slotdef=#:... gevonden, doe een waarschuwing in het log
+#~ msgid "Improper slotdef syntax: missing \":\".\n"
+#~ msgstr "Ongewenst slotdef syntax: \":\" ontbreekt.\n"
+
+#~ msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
+#~ msgstr "Kan het gewenste slotdef=#:#,#,#... attribuut niet vinden\n"
+
+#~ msgid "component missing pinseq= attribute\n"
+#~ msgstr "komponent mist het pinseq= attribuut\n"
 
 #~ msgid "Could not find character '%s' definition.\n"
 #~ msgstr "Kan karakter '%s' definitie niet vinden.\n"

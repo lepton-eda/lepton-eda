@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2009-08-29 15:17-0400\n"
+"POT-Creation-Date: 2009-10-04 18:50-0400\n"
 "PO-Revision-Date: 2009-08-25 21:30+0200\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -149,31 +149,31 @@ msgstr ""
 "Ejecute gschem y corrija la situación.\n"
 "\n"
 
-#: libgeda/src/f_basic.c:375
+#: libgeda/src/f_basic.c:369
 #, c-format
 msgid "Can't get the real filename of %s."
 msgstr "No se puede averiguar el nombre real del archivo %s."
 
-#: libgeda/src/f_basic.c:395
+#: libgeda/src/f_basic.c:389
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 "No se ha podido poner el archivo de copia de seguridad anterior [%s] en modo "
 "de lectura-escritura\n"
 
-#: libgeda/src/f_basic.c:401
+#: libgeda/src/f_basic.c:395
 #, c-format
 msgid "Can't save backup file: %s."
 msgstr "No se puede guardar la copia de seguridad: %s"
 
-#: libgeda/src/f_basic.c:411
+#: libgeda/src/f_basic.c:405
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr ""
 "No se ha podido poner el archivo de copia de seguridad [%s] en modo de sólo "
 "lectura\n"
 
-#: libgeda/src/f_basic.c:700
+#: libgeda/src/f_basic.c:694
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -326,30 +326,14 @@ msgstr "Se ha encontrado un color no válido [%s]\n"
 msgid "Setting color to default color\n"
 msgstr "Asignando el color por defecto al color\n"
 
-#: libgeda/src/o_attrib.c:123
+#: libgeda/src/o_attrib.c:120
 msgid "Attempt to attach non text item as an attribute!\n"
 msgstr "¡Se ha intentado añadir un objeto que no es texto como un attributo!\n"
 
-#: libgeda/src/o_attrib.c:128
+#: libgeda/src/o_attrib.c:125
 #, c-format
 msgid "Attempt to attach attribute [%s] to more than one object\n"
 msgstr "Se ha intentado añadir el attributo [%s] a más de un objeto\n"
-
-#: libgeda/src/o_attrib.c:740
-msgid "Did not find slotdef=#:#,#,#... attribute\n"
-msgstr "No se ha encontrado un atributo slotdef=#:#,#,#...\n"
-
-#: libgeda/src/o_attrib.c:746
-msgid "Improper slotdef syntax: missing \":\".\n"
-msgstr "Sintaxis de slotdef incorrecta: falta el carácter \":\".\n"
-
-#: libgeda/src/o_attrib.c:761
-msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
-msgstr "No se ha encontrado un atributo válido slotdef=#:#,#,#...\n"
-
-#: libgeda/src/o_attrib.c:791
-msgid "component missing pinseq= attribute\n"
-msgstr "El componente no tiene el atributo pinseq\n"
 
 #: libgeda/src/o_basic.c:199 libgeda/src/o_basic.c:211
 msgid "Invalid space specified, setting to 100\n"
@@ -796,6 +780,18 @@ msgstr "Encontrado [%s]\n"
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr "No se ha podido encontrar [%s] en ninguna librería fuente\n"
+
+#~ msgid "Did not find slotdef=#:#,#,#... attribute\n"
+#~ msgstr "No se ha encontrado un atributo slotdef=#:#,#,#...\n"
+
+#~ msgid "Improper slotdef syntax: missing \":\".\n"
+#~ msgstr "Sintaxis de slotdef incorrecta: falta el carácter \":\".\n"
+
+#~ msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
+#~ msgstr "No se ha encontrado un atributo válido slotdef=#:#,#,#...\n"
+
+#~ msgid "component missing pinseq= attribute\n"
+#~ msgstr "El componente no tiene el atributo pinseq\n"
 
 #~ msgid "Could not find character '%s' definition.\n"
 #~ msgstr "No se puede encontrar la definición del carácter '%s'.\n"

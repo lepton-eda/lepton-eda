@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2009-08-29 15:17-0400\n"
+"POT-Creation-Date: 2009-10-04 18:50-0400\n"
 "PO-Revision-Date: 2009-01-02 14:31+0100\n"
 "Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -146,27 +146,27 @@ msgstr ""
 "Run gschem and correct the situation.\n"
 "\n"
 
-#: libgeda/src/f_basic.c:375
+#: libgeda/src/f_basic.c:369
 #, c-format
 msgid "Can't get the real filename of %s."
 msgstr "Can't get the real filename of %s."
 
-#: libgeda/src/f_basic.c:395
+#: libgeda/src/f_basic.c:389
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "Could NOT set previous backup file [%s] read-write\n"
 
-#: libgeda/src/f_basic.c:401
+#: libgeda/src/f_basic.c:395
 #, c-format
 msgid "Can't save backup file: %s."
 msgstr "Can't save backup file: %s."
 
-#: libgeda/src/f_basic.c:411
+#: libgeda/src/f_basic.c:405
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "Could NOT set backup file [%s] readonly\n"
 
-#: libgeda/src/f_basic.c:700
+#: libgeda/src/f_basic.c:694
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -313,30 +313,14 @@ msgstr "Found an invalid colour [ %s ]\n"
 msgid "Setting color to default color\n"
 msgstr "Setting colour to default colour\n"
 
-#: libgeda/src/o_attrib.c:123
+#: libgeda/src/o_attrib.c:120
 msgid "Attempt to attach non text item as an attribute!\n"
 msgstr "Attempt to attach non text item as an attribute!\n"
 
-#: libgeda/src/o_attrib.c:128
+#: libgeda/src/o_attrib.c:125
 #, c-format
 msgid "Attempt to attach attribute [%s] to more than one object\n"
 msgstr "Attempt to attach attribute [%s] to more than one object\n"
-
-#: libgeda/src/o_attrib.c:740
-msgid "Did not find slotdef=#:#,#,#... attribute\n"
-msgstr "Did not find slotdef=#:#,#,#... attribute\n"
-
-#: libgeda/src/o_attrib.c:746
-msgid "Improper slotdef syntax: missing \":\".\n"
-msgstr "Improper slotdef syntax: missing \":\".\n"
-
-#: libgeda/src/o_attrib.c:761
-msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
-msgstr "Did not find proper slotdef=#:#,#,#... attribute\n"
-
-#: libgeda/src/o_attrib.c:791
-msgid "component missing pinseq= attribute\n"
-msgstr "component missing pinseq= attribute\n"
 
 #: libgeda/src/o_basic.c:199 libgeda/src/o_basic.c:211
 msgid "Invalid space specified, setting to 100\n"
@@ -751,6 +735,18 @@ msgstr "Found [%s]\n"
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr "Could not find [%s] in any SourceLibrary\n"
+
+#~ msgid "Did not find slotdef=#:#,#,#... attribute\n"
+#~ msgstr "Did not find slotdef=#:#,#,#... attribute\n"
+
+#~ msgid "Improper slotdef syntax: missing \":\".\n"
+#~ msgstr "Improper slotdef syntax: missing \":\".\n"
+
+#~ msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
+#~ msgstr "Did not find proper slotdef=#:#,#,#... attribute\n"
+
+#~ msgid "component missing pinseq= attribute\n"
+#~ msgstr "component missing pinseq= attribute\n"
 
 #~ msgid "Could not find character '%s' definition.\n"
 #~ msgstr "Could not find character '%s' definition.\n"

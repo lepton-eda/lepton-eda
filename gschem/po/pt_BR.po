@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2009-08-30 19:22-0400\n"
+"POT-Creation-Date: 2009-10-04 18:51-0400\n"
 "PO-Revision-Date: 2008-12-20 14:24+0000\n"
 "Last-Translator: \n"
 "Language-Team:  <pt@li.org>\n"
@@ -1235,7 +1235,7 @@ msgstr ""
 msgid "DOH! tried to find the whichone, but didn't find it!\n"
 msgstr ""
 
-#: gschem/src/o_move.c:482
+#: gschem/src/o_move.c:483
 #, c-format
 msgid "Got a non line object in o_move_check_endpoint\n"
 msgstr ""
@@ -1253,13 +1253,13 @@ msgstr ""
 msgid "Warning: Ending net at off grid coordinate\n"
 msgstr ""
 
-#: gschem/src/o_net.c:966 gschem/src/o_net.c:1003 gschem/src/o_net.c:1074
-#: gschem/src/o_net.c:1110
+#: gschem/src/o_net.c:952 gschem/src/o_net.c:989 gschem/src/o_net.c:1060
+#: gschem/src/o_net.c:1096
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 
-#: gschem/src/o_net.c:1180
+#: gschem/src/o_net.c:1166
 #, fuzzy, c-format
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
 msgstr "Não consigo encontrar %s em nenhuma biblioteca\n"
@@ -1304,7 +1304,7 @@ msgstr "Número de slot fora dos limites\n"
 msgid "uggg! you tried to slot edit something that doesn't exist!\n"
 msgstr "Você tentou editar o slot de algo que não existe!\n"
 
-#: gschem/src/o_undo.c:300
+#: gschem/src/o_undo.c:304
 msgid "Undo/Redo disabled in rc file\n"
 msgstr "Desfaz e Refaz desabilitado no arquivo rc\n"
 
@@ -1410,102 +1410,102 @@ msgid ""
 "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
 msgstr ""
 
-#: gschem/src/x_autonumber.c:702
+#: gschem/src/x_autonumber.c:701
 msgid "No searchstring given in autonumber text.\n"
 msgstr ""
 
-#: gschem/src/x_autonumber.c:754
+#: gschem/src/x_autonumber.c:753
 msgid "No '*' or '?' given at the end of the autonumber text.\n"
 msgstr ""
 
-#: gschem/src/x_autonumber.c:889
+#: gschem/src/x_autonumber.c:888
 #, fuzzy
 msgid "Diagonal"
 msgstr "diagonal"
 
-#: gschem/src/x_autonumber.c:890
+#: gschem/src/x_autonumber.c:889
 msgid "Top to bottom"
 msgstr ""
 
-#: gschem/src/x_autonumber.c:890
+#: gschem/src/x_autonumber.c:889
 msgid "Bottom to top"
 msgstr ""
 
-#: gschem/src/x_autonumber.c:891
+#: gschem/src/x_autonumber.c:890
 #, fuzzy
 msgid "Left to right"
 msgstr "Esq Dir"
 
-#: gschem/src/x_autonumber.c:891
+#: gschem/src/x_autonumber.c:890
 msgid "Right to left"
 msgstr ""
 
-#: gschem/src/x_autonumber.c:892
+#: gschem/src/x_autonumber.c:891
 #, fuzzy
 msgid "File order"
 msgstr "Ordena em arquivos"
 
-#: gschem/src/x_autonumber.c:1228
+#: gschem/src/x_autonumber.c:1227
 msgid "Autonumber text"
 msgstr "Autonumerar texto"
 
-#: gschem/src/x_autonumber.c:1252
+#: gschem/src/x_autonumber.c:1251
 msgid "<b>Scope</b>"
 msgstr ""
 
-#: gschem/src/x_autonumber.c:1274
+#: gschem/src/x_autonumber.c:1273
 #, fuzzy
 msgid "Search for:"
 msgstr "foco de procura"
 
-#: gschem/src/x_autonumber.c:1288
+#: gschem/src/x_autonumber.c:1287
 #, fuzzy
 msgid "Autonumber text in:"
 msgstr "Autonumerar texto"
 
-#: gschem/src/x_autonumber.c:1295
+#: gschem/src/x_autonumber.c:1294
 msgid "Skip numbers found in:"
 msgstr ""
 
-#: gschem/src/x_autonumber.c:1307 gschem/src/x_autonumber.c:1316
+#: gschem/src/x_autonumber.c:1306 gschem/src/x_autonumber.c:1315
 #, fuzzy
 msgid "Selected objects"
 msgstr "Objetos selecionados"
 
-#: gschem/src/x_autonumber.c:1308 gschem/src/x_autonumber.c:1317
+#: gschem/src/x_autonumber.c:1307 gschem/src/x_autonumber.c:1316
 #, fuzzy
 msgid "Current page"
 msgstr "Folha corrente"
 
-#: gschem/src/x_autonumber.c:1309 gschem/src/x_autonumber.c:1318
+#: gschem/src/x_autonumber.c:1308 gschem/src/x_autonumber.c:1317
 #, fuzzy
 msgid "Whole hierarchy"
 msgstr "Hierarquia"
 
-#: gschem/src/x_autonumber.c:1320
+#: gschem/src/x_autonumber.c:1319
 msgid "Overwrite existing numbers"
 msgstr ""
 
-#: gschem/src/x_autonumber.c:1325
+#: gschem/src/x_autonumber.c:1324
 #, fuzzy
 msgid "<b>Options</b>"
 msgstr "Opções"
 
-#: gschem/src/x_autonumber.c:1347
+#: gschem/src/x_autonumber.c:1346
 #, fuzzy
 msgid "Starting number:"
 msgstr "Número inicial"
 
-#: gschem/src/x_autonumber.c:1354
+#: gschem/src/x_autonumber.c:1353
 #, fuzzy
 msgid "Sort order:"
 msgstr "Ordenação"
 
-#: gschem/src/x_autonumber.c:1375
+#: gschem/src/x_autonumber.c:1374
 msgid "Remove numbers"
 msgstr ""
 
-#: gschem/src/x_autonumber.c:1379
+#: gschem/src/x_autonumber.c:1378
 msgid "Automatic slotting"
 msgstr ""
 

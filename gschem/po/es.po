@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2009-08-30 19:22-0400\n"
+"POT-Creation-Date: 2009-10-04 18:51-0400\n"
 "PO-Revision-Date: 2009-08-25 22:11+0200\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain <geda-dev@seul.org>\n"
@@ -1261,7 +1261,7 @@ msgstr ""
 "¡Eh! Se ha intentado encontrar el parámetro \"whichone\", pero ¡no se ha "
 "encontrado!\n"
 
-#: gschem/src/o_move.c:482
+#: gschem/src/o_move.c:483
 #, c-format
 msgid "Got a non line object in o_move_check_endpoint\n"
 msgstr ""
@@ -1287,15 +1287,15 @@ msgstr ""
 "Advertencia: se ha finalizado la conexión en una coordenada fuera de la "
 "rejilla\n"
 
-#: gschem/src/o_net.c:966 gschem/src/o_net.c:1003 gschem/src/o_net.c:1074
-#: gschem/src/o_net.c:1110
+#: gschem/src/o_net.c:952 gschem/src/o_net.c:989 gschem/src/o_net.c:1060
+#: gschem/src/o_net.c:1096
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 "Se ha intentado añadir más de dos conexiones a bus. Error interno de "
 "gschem.\n"
 
-#: gschem/src/o_net.c:1180
+#: gschem/src/o_net.c:1166
 #, c-format
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
 msgstr "No se ha encontrado el símbolo %s en ninguna librería de componentes\n"
@@ -1340,7 +1340,7 @@ msgstr "El nuevo número de elemento está fuera de rango\n"
 msgid "uggg! you tried to slot edit something that doesn't exist!\n"
 msgstr "¡¡Ufff!! ¡se ha intentado editar el elemento de algo que no existe!\n"
 
-#: gschem/src/o_undo.c:300
+#: gschem/src/o_undo.c:304
 msgid "Undo/Redo disabled in rc file\n"
 msgstr "¡Deshacer/Rehacer deshabilitado en el fichero rc!\n"
 
@@ -1447,91 +1447,91 @@ msgstr ""
 "La duplicidad de la propiedad 'slot' puede causar problemas: [nombre del "
 "símbolo=%s, número=%d, slot=%d]\n"
 
-#: gschem/src/x_autonumber.c:702
+#: gschem/src/x_autonumber.c:701
 msgid "No searchstring given in autonumber text.\n"
 msgstr "No se ha especificado una cadena de búsqueda para autonumerar texto.\n"
 
-#: gschem/src/x_autonumber.c:754
+#: gschem/src/x_autonumber.c:753
 msgid "No '*' or '?' given at the end of the autonumber text.\n"
 msgstr "No se ha especificado '*' o '?' al final del texto a autonumerar.\n"
 
-#: gschem/src/x_autonumber.c:889
+#: gschem/src/x_autonumber.c:888
 msgid "Diagonal"
 msgstr "Diagonal"
 
-#: gschem/src/x_autonumber.c:890
+#: gschem/src/x_autonumber.c:889
 msgid "Top to bottom"
 msgstr "De arriba hacia abajo"
 
-#: gschem/src/x_autonumber.c:890
+#: gschem/src/x_autonumber.c:889
 msgid "Bottom to top"
 msgstr "De abajo hacia arriba"
 
-#: gschem/src/x_autonumber.c:891
+#: gschem/src/x_autonumber.c:890
 msgid "Left to right"
 msgstr "De izquierda hacia derecha"
 
-#: gschem/src/x_autonumber.c:891
+#: gschem/src/x_autonumber.c:890
 msgid "Right to left"
 msgstr "De derecha hacia izquierda"
 
-#: gschem/src/x_autonumber.c:892
+#: gschem/src/x_autonumber.c:891
 msgid "File order"
 msgstr "Orden de archivos:"
 
-#: gschem/src/x_autonumber.c:1228
+#: gschem/src/x_autonumber.c:1227
 msgid "Autonumber text"
 msgstr "Autoenumerar texto"
 
-#: gschem/src/x_autonumber.c:1252
+#: gschem/src/x_autonumber.c:1251
 msgid "<b>Scope</b>"
 msgstr "<b>Ámbito</b>"
 
-#: gschem/src/x_autonumber.c:1274
+#: gschem/src/x_autonumber.c:1273
 msgid "Search for:"
 msgstr "Buscar:"
 
-#: gschem/src/x_autonumber.c:1288
+#: gschem/src/x_autonumber.c:1287
 msgid "Autonumber text in:"
 msgstr "Autoenumerar texto en:"
 
-#: gschem/src/x_autonumber.c:1295
+#: gschem/src/x_autonumber.c:1294
 msgid "Skip numbers found in:"
 msgstr "Ignorar números encontrados en:"
 
-#: gschem/src/x_autonumber.c:1307 gschem/src/x_autonumber.c:1316
+#: gschem/src/x_autonumber.c:1306 gschem/src/x_autonumber.c:1315
 msgid "Selected objects"
 msgstr "Objetos seleccionados"
 
-#: gschem/src/x_autonumber.c:1308 gschem/src/x_autonumber.c:1317
+#: gschem/src/x_autonumber.c:1307 gschem/src/x_autonumber.c:1316
 msgid "Current page"
 msgstr "Hoja actual"
 
-#: gschem/src/x_autonumber.c:1309 gschem/src/x_autonumber.c:1318
+#: gschem/src/x_autonumber.c:1308 gschem/src/x_autonumber.c:1317
 msgid "Whole hierarchy"
 msgstr "Jerarquía completa"
 
-#: gschem/src/x_autonumber.c:1320
+#: gschem/src/x_autonumber.c:1319
 msgid "Overwrite existing numbers"
 msgstr "Sobreescribir los números existentes"
 
-#: gschem/src/x_autonumber.c:1325
+#: gschem/src/x_autonumber.c:1324
 msgid "<b>Options</b>"
 msgstr "<b>Opciones</b>"
 
-#: gschem/src/x_autonumber.c:1347
+#: gschem/src/x_autonumber.c:1346
 msgid "Starting number:"
 msgstr "Número inicial:"
 
-#: gschem/src/x_autonumber.c:1354
+#: gschem/src/x_autonumber.c:1353
 msgid "Sort order:"
 msgstr "Método de ordenación:"
 
-#: gschem/src/x_autonumber.c:1375
+#: gschem/src/x_autonumber.c:1374
 msgid "Remove numbers"
 msgstr "Borrar los números"
 
-#: gschem/src/x_autonumber.c:1379
+#: gschem/src/x_autonumber.c:1378
 msgid "Automatic slotting"
 msgstr "Asignar números de elemento automáticamente"
 
