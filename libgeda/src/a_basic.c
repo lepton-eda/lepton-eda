@@ -222,23 +222,16 @@ gchar *o_save_objects (const GList *object_list, gboolean save_attribs)
 int o_save (TOPLEVEL *toplevel, const GList *object_list,
             const char *filename)
 {
-  FILE *fp;
   char *buffer;
-
-  fp = fopen(filename, "wb");
-
-  if (fp == NULL) {
-    s_log_message(_("o_save: Could not open [%s]\n"), filename);
-    return 0;
-  }
+  GError *err = NULL;
 
   buffer = o_save_buffer (toplevel, object_list);
-  if (fwrite (buffer, strlen(buffer), 1, fp) != 1) {
-    /* An error occurred with fwrite */
-#warning FIXME: What do we do?
+  if (!g_file_set_contents (filename, buffer, strlen(buffer), &err)) {
+    g_free (buffer);
+    g_error_free (err);
+    return 0;
   }
   g_free (buffer);
-  fclose (fp);
 
   return 1;
 }
