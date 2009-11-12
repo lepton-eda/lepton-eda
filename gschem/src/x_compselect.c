@@ -443,12 +443,16 @@ tree_row_activated (GtkTreeView       *tree_view,
 {
   GtkTreeModel *model;
   GtkTreeIter iter;
+  Compselect *compselect = (Compselect*)user_data;
 
   model = gtk_tree_view_get_model (tree_view);
   gtk_tree_model_get_iter (model, &iter, path);
 
-  if (!gtk_tree_model_iter_has_child (model, &iter))
+  if (!gtk_tree_model_iter_has_child (model, &iter)) {
+    gtk_dialog_response (GTK_DIALOG (compselect),
+                         COMPSELECT_RESPONSE_HIDE);
     return;
+  }
 
   if (gtk_tree_view_row_expanded (tree_view, path))
     gtk_tree_view_collapse_row (tree_view, path);
