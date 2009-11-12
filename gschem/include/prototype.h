@@ -815,7 +815,7 @@ void x_log_message (const gchar *log_domain,
                     GLogLevelFlags log_level,
                     const gchar *message);
 /* x_menus.c */
-void get_main_menu(GtkWidget **menubar);
+GtkWidget *get_main_menu(GSCHEM_TOPLEVEL *w_current);
 GtkWidget *get_main_popup(GSCHEM_TOPLEVEL *w_current);
 gint do_popup(GSCHEM_TOPLEVEL *w_current, GdkEventButton *event);
 void x_menus_sensitivity(GSCHEM_TOPLEVEL *w_current, const char *buf, int flag);

@@ -64,10 +64,12 @@ int npopup_items = sizeof(popup_items) / sizeof(popup_items[0]);
  *  \par Function Description
  *
  */
-static void g_menu_execute(char *func)
+static void g_menu_execute(GtkAction *action, gpointer user_data)
 {
   gchar *guile_string;
-  
+  const gchar *func = gtk_action_get_name (action);
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) user_data;
+
   guile_string = g_strdup_printf("(%s)", func);
 #if DEBUG
   printf("%s\n", guile_string);
@@ -81,7 +83,8 @@ static void g_menu_execute(char *func)
  *  \par Function Description
  *
  */
-void get_main_menu(GtkWidget ** menubar)
+GtkWidget *
+get_main_menu(GSCHEM_TOPLEVEL *w_current)
 {
   char *buf;
   GschemAction *action;
@@ -192,10 +195,9 @@ void get_main_menu(GtkWidget ** menubar)
         menu_item = gtk_action_create_menu_item (GTK_ACTION (action));
         gtk_menu_append (GTK_MENU (menu), menu_item);
 
-        gtk_signal_connect_object (GTK_OBJECT(menu_item), "activate",
-                                   GTK_SIGNAL_FUNC(g_menu_execute),
-                                   (gpointer) g_strdup (menu_item_func));
-        /* The g_strdup is a memory leak, but this is okay. I think. */
+        g_signal_connect (GTK_OBJECT(action), "activate",
+                          GTK_SIGNAL_FUNC(g_menu_execute),
+                          (gpointer) w_current);
       }
 
       gtk_widget_show (menu_item);
@@ -220,7 +222,7 @@ void get_main_menu(GtkWidget ** menubar)
   }
 
   g_free(raw_menu_name);
-  *menubar = menu_bar;
+  return menu_bar;
 }
 
 /*! \todo Finish function documentation!!!

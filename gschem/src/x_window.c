@@ -284,7 +284,7 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
   gtk_container_border_width(GTK_CONTAINER(main_box), 0);
   gtk_container_add(GTK_CONTAINER(w_current->main_window), main_box);
 
-  get_main_menu(&menubar);
+  menubar = get_main_menu (w_current);
   if (w_current->handleboxes) {
   	handlebox = gtk_handle_box_new ();
   	gtk_box_pack_start(GTK_BOX(main_box), handlebox, FALSE, FALSE, 0);
