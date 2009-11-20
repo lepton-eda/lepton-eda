@@ -3,13 +3,13 @@
 # Copyright (C) 2002-2008 Werner Hoch
 # This file is distributed under the same license as the gEDA/gaf package.
 #
-# Werner Hoch <werner.ho@gmx.de>, 2002, 2005, 2006, 2007, 2008.
+# Werner Hoch <werner.ho@gmx.de>, 2002, 2005, 2006, 2007, 2008, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2009-10-04 18:51-0400\n"
-"PO-Revision-Date: 2008-12-21 12:10+0100\n"
+"PO-Revision-Date: 2009-10-17 11:04+0200\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -94,9 +94,8 @@ msgid "Select Mode"
 msgstr "Auswahl Modus"
 
 #: gschem/src/rcstrings.c:22
-#, fuzzy
 msgid "Cut"
-msgstr "Ausschneiden 1"
+msgstr "Ausschneiden"
 
 #: gschem/src/rcstrings.c:23 gschem/src/i_basic.c:135
 #: gschem/src/i_callbacks.c:538 gschem/src/i_callbacks.c:562
@@ -104,9 +103,8 @@ msgid "Copy"
 msgstr "Kopieren"
 
 #: gschem/src/rcstrings.c:24
-#, fuzzy
 msgid "Paste"
-msgstr "Einfügen 1"
+msgstr "Einfügen"
 
 #: gschem/src/rcstrings.c:25
 msgid "Edit..."
@@ -289,11 +287,11 @@ msgstr "Ganze Seite"
 
 #: gschem/src/rcstrings.c:71
 msgid "Dark color scheme"
-msgstr ""
+msgstr "Dunkles Farbschema"
 
 #: gschem/src/rcstrings.c:72
 msgid "Light color scheme"
-msgstr ""
+msgstr "Helle Farbschema"
 
 #: gschem/src/rcstrings.c:74
 msgid "Page"
@@ -457,7 +455,7 @@ msgstr "Text Größe..."
 
 #: gschem/src/rcstrings.c:116
 msgid "Cycle grid styles"
-msgstr ""
+msgstr "Rasterart wechseln"
 
 #: gschem/src/rcstrings.c:117
 msgid "Toggle Snap On/Off"
@@ -556,6 +554,12 @@ msgid ""
 "from your config files.\n"
 "\n"
 msgstr ""
+"\n"
+"Die Konfigurationseinstellung 'postscript-font-scale' ist veraltet und wird in "
+"gEDA 1.8.0 entfernt.\n"
+"Die Größe des Textes ist fest eingestellt, damit sie mit der Bildschirmdarstellung übereinstimmt.\n"
+"Bitte entferne diese Option aus den Konfiturationsdateien.\n"
+"\n"
 
 #: gschem/src/g_rc.c:481
 #, c-format
@@ -573,21 +577,19 @@ msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Eine ungültige Größe [%d] wurde an bus-ripper-size übergeben.\n"
 
 #: gschem/src/g_rc.c:1269
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid dot size [%d] passed to dots-grid-dot-size\n"
-msgstr "An \"grid-dot-size\" wurde eine falsche Punktgröße [%d] übergeben.\n"
+msgstr "An \"grid-dot-size\" wurde eine falsche Punktgröße [%d] übergeben\n"
 
 #: gschem/src/g_rc.c:1310
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid pixel spacing [%d] passed to dots-grid-fixed-threshold\n"
-msgstr ""
-"An \"grid-fixed-threshold\" wurde ein falscher Punktabstand [%d] übergeben.\n"
+msgstr "An \"grid-fixed-threshold\" wurde ein falscher Punktabstand [%d] übergeben\n"
 
 #: gschem/src/g_rc.c:1336
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid pixel spacing [%d] passed to mesh-grid-display-threshold\n"
-msgstr ""
-"An \"grid-fixed-threshold\" wurde ein falscher Punktabstand [%d] übergeben.\n"
+msgstr "An \"mesh-grid-display-treshold\" wurde ein falscher Punktabstand [%d] übergeben.\n"
 
 #: gschem/src/g_rc.c:1361
 #, c-format
@@ -614,8 +616,7 @@ msgstr "Ein ungültiger Wert [%d] wurde an keyboardpan-gain übergeben.\n"
 #: gschem/src/g_rc.c:1495
 #, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
-msgstr ""
-"An \"select-slack-pixels\" wurde eine ungültige Pixelzahl [%d] übergeben\n"
+msgstr "An \"select-slack-pixels\" wurde eine ungültige Pixelzahl [%d] übergeben\n"
 
 #: gschem/src/g_rc.c:1521
 #, c-format
@@ -643,8 +644,7 @@ msgstr ""
 "fürnähere Informationen.\n"
 
 #: gschem/src/gschem.c:189
-msgid ""
-"This is free software, and you are welcome to redistribute it under certain\n"
+msgid "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Dies ist Freie Software. Sie darf gerne weitergegeben werden. Bitte lies "
 "die\n"
@@ -674,6 +674,10 @@ msgid ""
 "gschem cannot locate its data files. You must set the GEDADATA\n"
 "environment variable to point to the correct location.\n"
 msgstr ""
+"Die Umgebungsvariable GEDADATA muss gesetzt werden!\n"
+"\n"
+"gschem kann seine Datendateien nicht finden.\n"
+"GEDADATA muss auf das richtige Verzeichnis zeigen.\n"
 
 #: gschem/src/gschem.c:243
 #, c-format
@@ -717,9 +721,8 @@ msgid "The widget to be monitored for accelerator changes"
 msgstr ""
 
 #: gschem/src/gschem_accel_label.c:347
-#, fuzzy
 msgid "Accelerator String"
-msgstr "Allgemeiner Text"
+msgstr ""
 
 #: gschem/src/gschem_accel_label.c:348
 msgid "The accelerator string to be displayed"
@@ -731,9 +734,9 @@ msgid "Unknown end for line (%d)\n"
 msgstr "Undefiniertes Ende einer Linie (%d)\n"
 
 #: gschem/src/gschem_cairo.c:318
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown type for stroke (%d) !\n"
-msgstr "Undefinierter Type der Linie (%d).\n"
+msgstr "Unbekannter Linienstil Typ (%d)!\n"
 
 #: gschem/src/i_basic.c:79
 msgid "Component Mode"
@@ -812,7 +815,7 @@ msgstr "Am Raster ausrichten aus"
 
 #: gschem/src/i_basic.c:173
 msgid "Resnap Active"
-msgstr ""
+msgstr "Neu Ausrichen"
 
 #: gschem/src/i_basic.c:254 gschem/src/x_window.c:495
 msgid "Action"
@@ -837,7 +840,7 @@ msgstr "AUS"
 
 #: gschem/src/i_basic.c:567
 msgid "NONE"
-msgstr ""
+msgstr "NICHTS"
 
 #: gschem/src/i_basic.c:572
 #, c-format
@@ -877,9 +880,8 @@ msgid "Select objs first"
 msgstr "Wähle erst Objekte aus"
 
 #: gschem/src/i_callbacks.c:712
-#, fuzzy
 msgid "Edit pin type"
-msgstr "Editiere Linienart"
+msgstr "Editiere Pinart"
 
 #: gschem/src/i_callbacks.c:731
 msgid "Edit Text"
@@ -907,8 +909,7 @@ msgstr "Verschieben nach"
 
 #: gschem/src/i_callbacks.c:961
 msgid "WARNING: Do not translate with snap off!\n"
-msgstr ""
-"ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
+msgstr "ACHTUNG: Keine Transformation mit ausgeschalteter Ausrichtung am Raster!\n"
 
 #: gschem/src/i_callbacks.c:962
 msgid "WARNING: Turning snap on and continuing with translate.\n"
@@ -958,16 +959,15 @@ msgstr "Seite wirklich wiederherstellen?"
 
 #: gschem/src/i_callbacks.c:1821
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "Kopieren"
 
 #: gschem/src/i_callbacks.c:1839
 msgid "Cut to clipboard"
-msgstr ""
+msgstr "Einfügen"
 
 #: gschem/src/i_callbacks.c:1857
-#, fuzzy
 msgid "Paste from clipboard"
-msgstr "Einfügen aus 1"
+msgstr "Einfügen"
 
 #: gschem/src/i_callbacks.c:1869 gschem/src/i_callbacks.c:2108
 #: gschem/src/i_callbacks.c:2130 gschem/src/i_callbacks.c:2152
@@ -1110,11 +1110,11 @@ msgstr "Raster AUS\n"
 
 #: gschem/src/i_callbacks.c:3431
 msgid "Dot grid selected\n"
-msgstr ""
+msgstr "Punktraster ausgewählt\n"
 
 #: gschem/src/i_callbacks.c:3432
 msgid "Mesh grid selected\n"
-msgstr ""
+msgstr "Linienraster ausgewählt\n"
 
 #: gschem/src/i_callbacks.c:3453
 msgid "Snap OFF (CAUTION!)\n"
@@ -1125,9 +1125,8 @@ msgid "Snap ON\n"
 msgstr "Am Raster ausrichten\n"
 
 #: gschem/src/i_callbacks.c:3459
-#, fuzzy
 msgid "Snap back to the grid (CAUTION!)\n"
-msgstr "Freihandmodus (ACHTUNG! Ausrichten am Raster abgeschaltet)\n"
+msgstr "Objekte neu am Raster ausrichten (Achtung!)\n"
 
 #: gschem/src/i_callbacks.c:3485
 msgid "Rubber band OFF \n"
@@ -1153,12 +1152,12 @@ msgstr "Undefinierter Typ für das Rechteck (Füllung)!\n"
 #: gschem/src/o_buffer.c:57
 #, c-format
 msgid "o_buffer_copy: Invalid buffer %i\n"
-msgstr ""
+msgstr "o_buffer_copy: fehlerhafter Puffer %i\n"
 
 #: gschem/src/o_buffer.c:72
 #, c-format
 msgid "o_buffer_cut: Invalid buffer %i\n"
-msgstr ""
+msgstr "o_buffer_cut: fehlerhafter Puffer %i\n"
 
 #: gschem/src/o_buffer.c:93
 #, c-format
@@ -1168,10 +1167,9 @@ msgstr ""
 "[o_buffer_paste_start]\n"
 
 #: gschem/src/o_bus.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "Got an invalid which one in o_bus_draw_stretch\n"
-msgstr ""
-"Ungültiger Wert in Variable whichone in der Funktion o_bus_draw_xor_single\n"
+msgstr "Ungültiger Wert für das Pinende in der Funktion o_bus_draw_stretch\n"
 
 #: gschem/src/o_circle.c:134
 #, c-format
@@ -1221,8 +1219,7 @@ msgstr ""
 #: gschem/src/o_misc.c:882
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr ""
-"Die vorherige Backup-Datei [%s] konnte nicht auf read-write gesetzt werden.\n"
+msgstr "Die vorherige Backup-Datei [%s] konnte nicht auf read-write gesetzt werden.\n"
 
 #: gschem/src/o_misc.c:900
 #, c-format
@@ -1252,15 +1249,13 @@ msgid "Got a non line object in o_move_check_endpoint\n"
 msgstr "Da ist ein Objekt in o_move_check_endpoint, welches keine Linie ist.\n"
 
 #: gschem/src/o_net.c:159
-#, fuzzy, c-format
+#, c-format
 msgid "Got an invalid which one in o_net_draw_stretch\n"
-msgstr ""
-"Ungültiger Wert der Variablen whichone innerhalb von o_net_draw_xor_single\n"
+msgstr "Ungültiger Wert für das Pinende in der Funktion o_net_draw_stretch\n"
 
 #: gschem/src/o_net.c:536
 msgid "Warning: Starting net at off grid coordinate\n"
-msgstr ""
-"Achtung: Der Startpunkt des Netzes befindet sich nicht auf dem Raster\n"
+msgstr "Achtung: Der Startpunkt des Netzes befindet sich nicht auf dem Raster\n"
 
 #: gschem/src/o_net.c:598
 msgid "Warning: Ending net at off grid coordinate\n"
@@ -1420,8 +1415,7 @@ msgstr ""
 
 #: gschem/src/x_autonumber.c:430
 #, c-format
-msgid ""
-"duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
+msgid "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
 msgstr ""
 "Doppelt vergebener slot kann Probleme verursachen: [Symbolname=%s, Number=%"
 "d, slot=%d]\n"
@@ -1528,14 +1522,14 @@ msgid "white"
 msgstr "weiss"
 
 #: gschem/src/x_color.c:125
-#, fuzzy, c-format
+#, c-format
 msgid "Could not allocate display color %i!\n"
-msgstr "Konnte die Farbe %s nicht zuteilen!\n"
+msgstr "Konnte die Bildschirmfarbe %i nicht allokieren!\n"
 
 #: gschem/src/x_color.c:147
-#, fuzzy, c-format
+#, c-format
 msgid "Could not allocate outline color %i!\n"
-msgstr "Konnte die Farbe %s nicht zuteilen!\n"
+msgstr "Konnte die Umrissfarbe %i nicht allokieren!\n"
 
 #: gschem/src/x_color.c:164 gschem/src/x_color.c:181 gschem/src/x_color.c:197
 #, c-format
@@ -1543,9 +1537,9 @@ msgid "Tried to get an invalid color: %d\n"
 msgstr "Versuchte eine ungültige Farbe zuzuteilen: %d\n"
 
 #: gschem/src/x_color.c:214
-#, fuzzy, c-format
+#, c-format
 msgid "Tried to get an invalid outline color: %d\n"
-msgstr "Versuchte eine ungültige Farbe zuzuteilen: %d\n"
+msgstr "Versuchte eine ungültige Farbe zu holen: %d\n"
 
 #: gschem/src/x_compselect.c:1036
 msgid "Filter:"
@@ -1893,11 +1887,11 @@ msgstr "Netzverbindung"
 
 #: gschem/src/x_dialog.c:2421
 msgid "Mesh grid major"
-msgstr ""
+msgstr "Grobes Gitternetz"
 
 #: gschem/src/x_dialog.c:2424
 msgid "Mesh grid minor"
-msgstr ""
+msgstr "Feines Gitternetz"
 
 #: gschem/src/x_dialog.c:2427
 msgid "Unknown"
@@ -1965,8 +1959,7 @@ msgstr ""
 
 #: gschem/src/x_dialog.c:3880
 #, c-format
-msgid ""
-"There are %d schematics with unsaved changes. Save changes before closing?"
+msgid "There are %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 "Es gibt %d ungesicherte Schaltpläne. Sollen die Änderungen vor dem Schließen "
 "gespeichert werden?"
@@ -2002,18 +1995,16 @@ msgid "Invalid Attribute"
 msgstr "Fehlerhaftes Attribut"
 
 #: gschem/src/x_dialog.c:4303
-#, fuzzy
 msgid "Pin type"
-msgstr "Linien Typ"
+msgstr "Pin Typ"
 
 #: gschem/src/x_dialog.c:4327
-#, fuzzy
 msgid "Net pin"
-msgstr "Netz-Endemarkierung"
+msgstr "Netz Pin"
 
 #: gschem/src/x_dialog.c:4329
 msgid "Bus pin (graphical)"
-msgstr ""
+msgstr "Bus Pin (graphisch)"
 
 #: gschem/src/x_fileselect.c:42
 msgid "Schematics"
@@ -2162,9 +2153,8 @@ msgid "/Edit..."
 msgstr "/Bearbeiten..."
 
 #: gschem/src/x_menus.c:49
-#, fuzzy
 msgid "/Edit pin type..."
-msgstr "Editiere Linienart"
+msgstr "/Editiere Pin Typ..."
 
 #: gschem/src/x_menus.c:50
 msgid "/Copy"
@@ -2218,8 +2208,7 @@ msgstr "Entfernen"
 
 #: gschem/src/x_multiattrib.c:913
 msgid "Attributes with empty name are not allowed. Please set a name."
-msgstr ""
-"Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
+msgstr "Attribute mit leerem Namen sind nicht erlaubt. Gib bitte einen Namen ein."
 
 #: gschem/src/x_multiattrib.c:1461
 msgid "Show Value only"
@@ -2231,7 +2220,7 @@ msgstr "Nur Name anzeigen"
 
 #: gschem/src/x_multiattrib.c:1491
 msgid "Promote"
-msgstr ""
+msgstr "Einsetzen"
 
 #: gschem/src/x_multiattrib.c:1495
 msgid "Duplicate"
@@ -2254,9 +2243,8 @@ msgid "V"
 msgstr "Wert"
 
 #: gschem/src/x_multiattrib.c:1889
-#, fuzzy
 msgid "Show inherited attributes"
-msgstr "Attribut ablösen"
+msgstr "geerbte Attribute anzeigen"
 
 #: gschem/src/x_multiattrib.c:1905
 msgid "Add Attribute"
@@ -2283,9 +2271,8 @@ msgid "Right click on the filename for more options..."
 msgstr "Rechtsklick auf den Dateinamen für mehr Optionen..."
 
 #: gschem/src/x_preview.c:234
-#, fuzzy
 msgid "Preview Buffer"
-msgstr "Auswahl einfügen"
+msgstr "Vorschau"
 
 #: gschem/src/x_print.c:84
 msgid "Select PostScript Filename..."
@@ -3015,3 +3002,4 @@ msgstr ""
 #~ msgid "Invalid path [%s] passed to font-directory\n"
 #~ msgstr ""
 #~ "Ein ungültiges Verzeichnis [%s] wurde an font-directory übergeben.\n"
+
