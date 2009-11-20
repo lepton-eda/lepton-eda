@@ -3,7 +3,7 @@
 gsymcheck - gEDA/gaf Symbol Checker
 .SH SYNOPSIS
 .B gsymcheck
-[-h] [-v] [-q] symbol1 [... symbolN]
+[\-h] [\-v] [\-q] symbol1 [... symbolN]
 .SH DESCRIPTION
 .PP
 \fIgsymcheck\fP is a symbol checker for gEDA/gaf.  Here is a list of checks that 
@@ -32,7 +32,6 @@ Checks for any other connections within a symbol
 Checks to make sure the number of pins is the correct number
 
 .SH OPTIONS
-.l
 \fIgsymcheck\fP accepts the following options:
 .TP 8
 .B -q
@@ -68,15 +67,15 @@ To actually check a symbol with just error counts, run:
 
 To get the actuall error messages, run:
 
-	gsymcheck -v symbolfilename.sym
+	gsymcheck \-v symbolfilename.sym
 
 To see all the error messages and warnings, run:
 
-	gsymcheck -vv symbolfilename.sym
+	gsymcheck \-vv symbolfilename.sym
 
 To see all the error messages, warnings, and parse info, run:
 
-	gsymcheck -vvv symbolfilename.sym
+	gsymcheck \-vvv symbolfilename.sym
 
 .SH "ENVIRONMENT"
 \fIgsymcheck\fP respects the following environment variable:
