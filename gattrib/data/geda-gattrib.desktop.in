@@ -8,4 +8,4 @@ Type=Application
 Exec=gattrib %F
 Icon=geda-gattrib
 #MimeType=application/x-geda-schematic;application/x-geda-symbol;
-Categories=Engineering;Electronics
+Categories=Engineering;Electronics;

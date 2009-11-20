@@ -8,4 +8,4 @@ Type=Application
 Exec=gschem %F
 Icon=geda-gschem
 MimeType=application/x-geda-schematic;application/x-geda-symbol;
-Categories=Engineering;Electronics
+Categories=Engineering;Electronics;
