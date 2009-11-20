@@ -17,8 +17,8 @@ if ENABLE_DOXYGEN
 	-cd latex && $(MAKE)
 	-cd ..
 else
-	@echo 'Doxygen is not installed on your system.' >> $@
-	@echo 'The documentation can not be built from the sources.'     >> $@
+	@echo 'Doxygen is not installed on your system.'
+	@echo 'The documentation can not be built from the sources.'
 endif
 
 MOSTLYCLEANFILES = 	*.log *~
