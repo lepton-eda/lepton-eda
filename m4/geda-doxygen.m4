@@ -25,9 +25,9 @@ AC_DEFUN([AX_OPTION_DOXYGEN],
   AC_ARG_VAR([DOXYGEN], [Path to doxygen executable])
 
   # Check if the user enabled Doxygen
-  AC_MSG_CHECKING([whether to generate API documentation])
+  AC_MSG_CHECKING([whether to enable generation of Doxygen API documentation])
   AC_ARG_ENABLE([doxygen],
-    [AS_HELP_STRING([--enable-doxygen], [generate Doxygen API documentation])])
+    [AS_HELP_STRING([--enable-doxygen], [enable generation of Doxygen API documentation])])
 
   # If user enabled doxygen, find the path to the doxygen
   # executable. Also check for other required tools.
