@@ -59,5 +59,16 @@ stamp-git:
 .PHONY: stamp-git
 endif HAVE_GIT_REPO
 
+doxygen:
+if ENABLE_DOXYGEN
+	@for subdir in gattrib/docs gschem/docs gnetlist/docs \
+	  libgeda/docs gsymcheck/docs utils/docs ; do \
+	  (cd $$subdir; $(MAKE) doxygen) || exit 1; \
+        done
+else
+	@echo 'configure was not run with the --enable-doxygen switch.'
+	@echo 'The documentation cannot be built from the sources.'
+endif
+
 DISTCLEANFILES = stamp-git
 MAINTAINERCLEANFILES=Makefile.in aclocal.m4 config.h.in configure
