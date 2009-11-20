@@ -102,7 +102,7 @@ int tab_in_chars = 8;
  *  This functions updates the text->disp_string according
  *  to the object->show_name_value settings
  *  
- *  \param [in] o  The OBJECT to update
+ *  \param [in] object  The OBJECT to update
  */
 static void update_disp_string (OBJECT *object)
 {
@@ -321,7 +321,6 @@ void o_text_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *  create and appended to the \a object_list.
  *  
  *  \param [in] toplevel     The TOPLEVEL object
- *  \param [in] object_list  list of OBJECTS to append a new text
  *  \param [in] first_line   the first line of the text
  *  \param [in] tb           a text buffer (usually a line of a schematic file)
  *  \param [in] release_ver  The release number gEDA
@@ -1015,6 +1014,7 @@ const gchar *o_text_get_string (TOPLEVEL *toplevel, OBJECT *obj)
  *  Set the function to be used to calculate text bounds for a given
  *  #TOPLEVEL.
  *
+ *  \param [in] toplevel     The TOPLEVEL object
  *  \param [in] func      Function to use.
  *  \param [in] user_data User data to be passed to the function.
  */

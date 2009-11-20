@@ -44,7 +44,6 @@ extern int global_sid;
  *  \param [in]  toplevel   The TOPLEVEL object.
  *  \param [in]  selected
  *  \param [in]  flag
- *  \param [out] return_end  
  *  \return OBJECT pointer.
  */
 OBJECT *o_object_copy (TOPLEVEL *toplevel,

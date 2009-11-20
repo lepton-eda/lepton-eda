@@ -455,7 +455,7 @@ GList *o_attrib_find_floating_attribs (const GList *list)
  *
  *  \param [in] list     GList of attributes to search.
  *  \param [in] name     Character string with attribute name to search for.
- *  \param [in] counter  Which occurance to return.
+ *  \param [in] count    Which occurance to return.
  *  \return The n'th attribute object in the given list with the given name.
  */
 OBJECT *o_attrib_find_attrib_by_name (const GList *list, char *name, int count)
@@ -674,7 +674,7 @@ GList * o_attrib_return_attribs (OBJECT *object)
  *  This function returns TRUE if the given attribute OBJECT is a
  *  toplevel un-attached attribute inside a complex's prim_objs.
  *
- *  \param [in] object       OBJECT who's status to query.
+ *  \param [in] attrib       OBJECT who's status to query.
  *  \return TRUE if the given attribute is inside a symbol
  */
 int o_attrib_is_inherited (OBJECT *attrib)

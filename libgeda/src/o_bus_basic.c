@@ -151,7 +151,6 @@ void o_bus_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *  allocated and appended to the \a object_list.
  *  
  *  \param [in] toplevel     The TOPLEVEL object
- *  \param [in] object_list  list of OBJECTS to append a new bus
  *  \param [in] buf          a text buffer (usually a line of a schematic file)
  *  \param [in] release_ver  The release number gEDA
  *  \param [in] fileformat_ver a integer value of the file format

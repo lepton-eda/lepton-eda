@@ -150,7 +150,6 @@ void o_pin_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *  allocated and appended to the \a object_list.
  *
  *  \param [in] toplevel     The TOPLEVEL object
- *  \param [in] object_list  list of OBJECTS to append a new pin
  *  \param [in] buf          a text buffer (usually a line of a schematic file)
  *  \param [in] release_ver  The release number gEDA
  *  \param [in] fileformat_ver a integer value of the file format
@@ -567,7 +566,7 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
  *
  *  \param [in] toplevel   The TOPLEVEL object
  *  \param [in] o_current  The pin OBJECT being modified
- *  \param [in] type       The new type of this pin
+ *  \param [in] pin_type   The new type of this pin
  */
 void o_pin_set_type (TOPLEVEL *toplevel, OBJECT *o_current, int pin_type)
 {
