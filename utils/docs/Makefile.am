@@ -11,8 +11,8 @@ doxygen: utils.dox
 if ENABLE_DOXYGEN
 	$(DOXYGEN) utils.dox
 else
-	@echo 'Doxygen is not installed on your system.'
-	@echo 'The documentation can not be built from the sources.'
+	@echo 'configure was not run with the --enable-doxygen switch.'
+	@echo 'The documentation cannot be built from the sources.'
 endif
 
 
