@@ -292,8 +292,8 @@ void gschem_cairo_stroke (GSCHEM_TOPLEVEL *w_current, int line_type, int line_en
   int width, length, space;
 
   width  = screen_width (w_current, wwidth);
-  length = SCREENabs (w_current, wlength);
-  space  = SCREENabs (w_current, wspace);
+  length = screen_width (w_current, wlength);
+  space  = screen_width (w_current, wspace);
   offset = ((width % 2) == 0) ? 0 : 0.5;
 
   cairo_set_line_width (w_current->cr, width);
