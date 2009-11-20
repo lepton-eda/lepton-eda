@@ -520,9 +520,9 @@ static void custom_world_get_object_glist_bounds
  *  scm_exclude_attribs, neither the object types included in 
  *  scm_exclude_object_type
  *  \param [in] object_smob The object we want to know the bounds of.
- *  \param [in] exclude_attrib_list A list with the attribute names we don't
+ *  \param [in] scm_exclude_attribs A list with the attribute names we don't
  *  want to include when calculing the bounds.
- *  \param [in] exclude_obj_type_list A list with the object types we don't
+ *  \param [in] scm_exclude_object_type A list with the object types we don't
  *  want to include when calculing the bounds. 
  *  The object types are those used in (OBJECT *)->type converted into strings.
  *  \return a list of the bounds of the <B>object smob</B>. 
@@ -639,11 +639,13 @@ SCM g_get_object_pins (SCM object_smob)
  *  Adds a component <B>scm_comp_name</B> to the schematic, at 
  *  position (<B>scm_x</B>, <B>scm_y</B>), with some properties set by 
  *  the parameters:
+ *  \param [in,out] page_smob Schematic page
+ *  \param [in] scm_comp_name Component to be added
  *  \param [in] scm_x Coordinate X of the symbol.
  *  \param [in] scm_y Coordinate Y of the symbol.
- *  \param [in] angle Angle of rotation of the symbol. 
- *  \param [in] selectable True if the symbol is selectable, false otherwise.
- *  \param [in] mirror True if the symbol is mirrored, false otherwise.
+ *  \param [in] scm_angle Angle of rotation of the symbol.
+ *  \param [in] scm_selectable True if the symbol is selectable, false otherwise.
+ *  \param [in] scm_mirror True if the symbol is mirrored, false otherwise.
  *  If scm_comp_name is a scheme empty list, SCM_BOOL_F, or an empty 
  *  string (""), then g_add_component returns SCM_BOOL_F without writing 
  *  to the log.

@@ -689,7 +689,7 @@ compselect_callback_filter_entry_changed (GtkEditable *editable,
  *  It resets the filter entry, indirectly causing re-evaluation
  *  of the filter on the list of symbols to update the display.
  *
- *  \param [in] editable  The filter text entry.
+ *  \param [in] button    The clear button
  *  \param [in] user_data The component selection dialog.
  */
 static void

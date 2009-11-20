@@ -511,7 +511,7 @@ int o_select_selected(GSCHEM_TOPLEVEL *w_current)
  *  \par Unselects all objects in the given list, does the
  *  needed work to make the objects visually unselected, and redraw them.
  *  \param [in] w_current  GSCHEM_TOPLEVEL struct.
- *  \param [in] head       Pointer to the selection list
+ *  \param [in] selection  Pointer to the selection list
  */
 void o_select_unselect_list(GSCHEM_TOPLEVEL *w_current, SELECTION *selection)
 {

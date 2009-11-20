@@ -179,6 +179,7 @@ void x_window_setup_draw_events(GSCHEM_TOPLEVEL *w_current)
  * falls back to the bitmap icons provided in the distribution.
  *
  * \param stock Name of the stock icon ("new", "open", etc.)
+ * \param w_current Schematic top level
  * \return Pointer to the new GtkImage object.
  */
 static GtkWidget *x_window_stock_pixmap(const char *stock, GSCHEM_TOPLEVEL *w_current)
@@ -683,7 +684,7 @@ void x_window_close_all(GSCHEM_TOPLEVEL *w_current)
  *
  *  The opened page becomes the current page of <B>toplevel</B>.
  *
- *  \param [in] toplevel The toplevel environment.
+ *  \param [in] w_current The toplevel environment.
  *  \param [in] filename The name of the file to open or NULL for a blank page.
  *  \returns A pointer on the new page.
  *
@@ -788,8 +789,8 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
  *
  *  <B>page</B> has to be in the list of PAGEs attached to <B>toplevel</B>.
  *
- *  \param [in] toplevel The toplevel environment.
- *  \param [in] page     The page to become current page.
+ *  \param [in] w_current The toplevel environment.
+ *  \param [in] page      The page to become current page.
  */
 void
 x_window_set_current_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
@@ -828,9 +829,9 @@ x_window_set_current_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
  *  <B>page</B> may not be the current page of <B>toplevel</B>. The
  *  current page of <B>toplevel</B> is not affected by this function.
  *
- *  \param [in] toplevel The toplevel environment.
- *  \param [in] page     The page to save.
- *  \param [in] filename The name of the file in which to save page.
+ *  \param [in] w_current The toplevel environment.
+ *  \param [in] page      The page to save.
+ *  \param [in] filename  The name of the file in which to save page.
  *  \returns 1 on success, 0 otherwise.
  */
 gint
@@ -897,8 +898,8 @@ x_window_save_page (GSCHEM_TOPLEVEL *w_current, PAGE *page, const gchar *filenam
  *  If necessary, the current page of <B>toplevel</B> is changed to
  *  the next valid page or to a new untitled page.
  *
- *  \param [in] toplevel The toplevel environment.
- *  \param [in] page     The page to close.
+ *  \param [in] w_current The toplevel environment.
+ *  \param [in] page      The page to close.
  */
 void
 x_window_close_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
@@ -965,7 +966,7 @@ x_window_close_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
  *
  *  \par Function Description
  *  Sets the default window icon by name, to be found in the current icon
- *  theme. The name used is #defined above as GSCHEM_THEME_ICON_NAME.
+ *  theme. The name used is \#defined above as GSCHEM_THEME_ICON_NAME.
  */
 void x_window_set_default_icon( void )
 {

@@ -522,7 +522,6 @@ void o_invalidate_rect (GSCHEM_TOPLEVEL *w_current,
  *  of NULL, causing the entire drawing area to be invalidated.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] object     The OBJECT invalidated on screen.
  */
 void o_invalidate_all (GSCHEM_TOPLEVEL *w_current)
 {

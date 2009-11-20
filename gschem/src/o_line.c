@@ -273,7 +273,7 @@ void o_line_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 /*! \brief
  *  \par Function Description
  *
- *  \param [in] toplevel  The TOPLEVEL object.
+ *  \param [in] w_current  The TOPLEVEL object.
  *  \param [in] line
  *  \param [in] x1
  *  \param [in] y1

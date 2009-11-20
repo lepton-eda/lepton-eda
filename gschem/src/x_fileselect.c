@@ -313,7 +313,7 @@ x_fileselect_save (GSCHEM_TOPLEVEL *w_current)
  *  \todo Make this a registered callback function with user data,
  *        as we'd rather be passed a GSCHEM_TOPLEVEL than a TOPLEVEL.
  *
- *  \param [in] toplevel  The TOPLEVEL object.
+ *  \param [in] user_data The TOPLEVEL object.
  *  \param [in] message   Message to display to user.
  *  \return TRUE if the user wants to load the backup file, FALSE otherwise.
  */

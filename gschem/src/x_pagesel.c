@@ -301,8 +301,8 @@ static void pagesel_popup_menu (Pagesel *pagesel,
  *  When the gschem-toplevel property is set on the parent GschemDialog,
  *  we should update the pagesel dialog.
  *
- *  \param [in] pspec      the GParamSpec of the property which changed
  *  \param [in] gobject    the object which received the signal.
+ *  \param [in] arg1      the GParamSpec of the property which changed
  *  \param [in] user_data  user data set when the signal handler was connected.
  */
 static void notify_gschem_toplevel_cb (GObject    *gobject,

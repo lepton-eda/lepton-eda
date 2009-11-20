@@ -163,6 +163,7 @@ static PATH *path_copy_modify (PATH *path, int dx, int dy,
  *  \param [in] w           GdkDrawable to draw in.
  *  \param [in] gc          GdkGC graphics context to draw on.
  *  \param [in] color       Box fill color.
+ *  \param [in] w_current   Schematic top level
  *  \param [in] path        The PATH object to draw
  *  \param [in] fill_width  PATH pattern fill width.
  *  \param [in] angle1      1st angle for pattern.
@@ -189,6 +190,7 @@ static void o_path_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] w           GdkDrawable to draw in.
  *  \param [in] gc          GdkGC graphics context to draw on.
  *  \param [in] color       Box fill color.
+ *  \param [in] w_current   Schematic top level
  *  \param [in] path        The PATH object to draw
  *  \param [in] fill_width  PATH pattern fill width.
  *  \param [in] angle1      (unused)
@@ -217,6 +219,7 @@ static void o_path_fill_fill (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] w           GdkDrawable to draw in.
  *  \param [in] gc          GdkGC graphics context to draw on.
  *  \param [in] color       Box fill color.
+ *  \param [in] w_current   Schematic top level
  *  \param [in] path        The PATH object to draw
  *  \param [in] fill_width  PATH pattern fill width.
  *  \param [in] angle1      1st angle for pattern.
@@ -263,6 +266,7 @@ static void o_path_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] w           GdkDrawable to draw in.
  *  \param [in] gc          GdkGC graphics context to draw on.
  *  \param [in] color       Box fill color.
+ *  \param [in] w_current   Schematic top level
  *  \param [in] path        The PATH object to draw
  *  \param [in] fill_width  PATH pattern fill width.
  *  \param [in] angle1      1st angle for pattern.

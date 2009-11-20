@@ -83,7 +83,6 @@ static gboolean find_single_object (GSCHEM_TOPLEVEL *w_current, OBJECT *object,
  *  through any objects on top of each other at this location.
  *
  *  \param [in] w_current         The GSCHEM_TOPLEVEL object.
- *  \param [in] object            The OBJECT being hit-tested.
  *  \param [in] w_x               The X coordinate to test (in world coords).
  *  \param [in] w_y               The Y coordinate to test (in world coords).
  *  \param [in] change_selection  Whether to select the found object or not.

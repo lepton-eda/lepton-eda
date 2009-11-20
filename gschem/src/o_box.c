@@ -191,10 +191,8 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *  \param [in] w           GdkDrawable to draw in.
  *  \param [in] gc          GdkGC graphics context to draw on.
  *  \param [in] color       Box fill color. 
- *  \param [in] x           Upper x coordinate of BOX.
- *  \param [in] y           Upper y coordinate of BOX.
- *  \param [in] width       Width of BOX.
- *  \param [in] height      Height of BOX.
+ *  \param [in] w_current   Schematic top level
+ *  \param [in] box         Box definition
  *  \param [in] fill_width  BOX pattern fill width.
  *  \param [in] angle1      1st angle for pattern.
  *  \param [in] pitch1      1st pitch for pattern.
@@ -223,11 +221,9 @@ void o_box_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *
  *  \param [in] w           GdkDrawable to draw in.
  *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box fill color. 
- *  \param [in] x           Upper x coordinate of BOX.
- *  \param [in] y           Upper y coordinate of BOX.
- *  \param [in] width       Width of BOX.
- *  \param [in] height      Height of BOX.
+ *  \param [in] color       Box fill color.
+ *  \param [in] w_current   Schematic top level
+ *  \param [in] box         Box definition
  *  \param [in] fill_width  BOX pattern fill width.
  *  \param [in] angle1      (unused)
  *  \param [in] pitch1      (unused)
@@ -263,10 +259,8 @@ void o_box_fill_fill (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] w           GdkDrawable to draw in.
  *  \param [in] gc          GdkGC graphics context to draw on.
  *  \param [in] color       Box fill color. 
- *  \param [in] x           Upper x coordinate of BOX.
- *  \param [in] y           Upper y coordinate of BOX.
- *  \param [in] width       Width of BOX.
- *  \param [in] height      Height of BOX.
+ *  \param [in] w_current   Schematic top level
+ *  \param [in] box         Box definition
  *  \param [in] fill_width  BOX pattern fill width.
  *  \param [in] angle1      1st angle for pattern.
  *  \param [in] pitch1      1st pitch for pattern.
@@ -315,10 +309,8 @@ void o_box_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] w           GdkDrawable to draw in.
  *  \param [in] gc          GdkGC graphics context to draw on.
  *  \param [in] color       Box fill color. 
- *  \param [in] x           Upper x coordinate of BOX.
- *  \param [in] y           Upper y coordinate of BOX.
- *  \param [in] width       Width of BOX.
- *  \param [in] height      Height of BOX.
+ *  \param [in] w_current   Schematic top level
+ *  \param [in] box         Box definition
  *  \param [in] fill_width  BOX pattern fill width.
  *  \param [in] angle1      1st angle for pattern.
  *  \param [in] pitch1      1st pitch for pattern.

@@ -296,13 +296,13 @@ gschem_pango_renderer_class_init (GschemPangoRendererClass *klass)
 }
 
 /*!
- * gschem_pango_renderer_new:
- * @cr: a #cairo renderer
+ * \brief Create a new PangoRenderer
  *
- * Creates a new #PangoRenderer for @cr. Normally you can use the results
+ * Create a new #PangoRenderer. Normally you can use the results
  * of gschem_pango_renderer_get_default() rather than creating a new renderer.
  *
- * Return value: a newly created #PangoRenderer. Free with g_object_unref().
+ * \param [in] cr a cairo renderer
+ * \return a newly created #PangoRenderer. Free with g_object_unref().
  */
 PangoRenderer *
 gschem_pango_renderer_new (cairo_t *cr)
@@ -361,12 +361,10 @@ gschem_pango_attr_overbar_compare (const PangoAttribute *attr1,
 }
 
 /*!
- * gschem_pango_attr_overbar_new:
- * @overbar: if the region should be drawn with an overbar
- *
  * Creates a new attribute flagging a region as being drawn with overbar or not
  *
- * Return value: new #PangoAttribute
+ * \param [in] overbar if the region should be drawn with an overbar
+ * \return a new #PangoAttribute
  */
 PangoAttribute *
 gschem_pango_attr_overbar_new (gboolean overbar)

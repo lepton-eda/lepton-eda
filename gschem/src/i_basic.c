@@ -532,7 +532,6 @@ void i_set_filename(GSCHEM_TOPLEVEL *w_current, const gchar *string)
  *  The format is "Grid([SnapGridSize],[CurrentGridSize])"
  *
  *  \param [in] w_current GSCHEM_TOPLEVEL structure
- *  \param [in] visible_grid Visible grid size
  */
 void i_update_grid_info (GSCHEM_TOPLEVEL *w_current)
 {

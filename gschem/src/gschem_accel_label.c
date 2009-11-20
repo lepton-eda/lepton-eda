@@ -290,8 +290,8 @@ substitute_underscores (char *str)
 
 /**
  * gschem_accel_label_set_accel_string:
- * @accel_label: a #GschemAccelLabel
- * @accel_string: the accelerator string.
+ * \param accel_label a #GschemAccelLabel
+ * \param accel_string the accelerator string.
  *
  * Sets the accelerator string for this accelerator label.
  **/

@@ -2435,6 +2435,10 @@ char *index2functionstring(int index)
  *  Cell layout data function to support color swatches in the color
  *  combobox.
  *
+ *  \param layout
+ *  \param cell
+ *  \param model
+ *  \param iter
  *  \param data the current #GSCHEM_TOPLEVEL pointer.
  */
 static void
@@ -2461,6 +2465,7 @@ color_menu_swatch_layout_data (GtkCellLayout *layout,
  *  Update application state to reflect color combobox selection
  *  changes.
  *
+ *  \param widget
  *  \param data the current #GSCHEM_TOPLEVEL pointer.
  */
 static void
@@ -3585,7 +3590,7 @@ close_confirmation_dialog_init (CloseConfirmationDialog *self)
  *  This function determines the number of pages with unsaved changes
  *  from the model.
  *
- *  \param in model The tree model.
+ *  \param [in] model The tree model.
  *  \returns The number of pages with unsaved changes.
  */
 static gint
@@ -3613,8 +3618,8 @@ count_pages (GtkTreeModel *model)
  *
  *  The returned value must be freed by caller.
  *
- *  \param in model The tree model.
- *  \param in piter A pointer on a GtkTreeIter of model or NULL.
+ *  \param [in] model The tree model.
+ *  \param [in] piter A pointer on a GtkTreeIter of model or NULL.
  *  \returns The name for the page.
  */
 static gchar*
@@ -3643,12 +3648,12 @@ get_page_name (GtkTreeModel *model, GtkTreeIter *piter)
  *  This functions sets the cell of the treeview with the short name
  *  of the page obtained with <B>get_page_name()</B>.
  *
- *  \param in tree_column A GtkTreeColumn.
- *  \param in cell        The GtkCellRenderer that is being rendered by
+ *  \param [in] tree_column A GtkTreeColumn.
+ *  \param [in] cell        The GtkCellRenderer that is being rendered by
  *                        tree_column.
- *  \param in tree_model  The GtkTreeModel being rendered.
- *  \param in iter        A GtkTreeIter of the current row rendered.
- *  \param in data        .
+ *  \param [in] tree_model  The GtkTreeModel being rendered.
+ *  \param [in] iter        A GtkTreeIter of the current row rendered.
+ *  \param [in] data        .
  */
 static void
 close_confirmation_dialog_set_page_name (GtkTreeViewColumn *tree_column,
@@ -3673,9 +3678,9 @@ close_confirmation_dialog_set_page_name (GtkTreeViewColumn *tree_column,
  *  for the affected row when user toggles the check box in the
  *  treeview.
  *
- *  \param in cell_renderer The GtkCellRendererToggle.
- *  \param in path          The GtkTreePath to the concerned row in model.
- *  \param in user          The dialog as user data.
+ *  \param [in] cell_renderer The GtkCellRendererToggle.
+ *  \param [in] path          The GtkTreePath to the concerned row in model.
+ *  \param [in] user_data     The dialog as user data.
  */
 static void
 close_confirmation_dialog_callback_renderer_toggled (GtkCellRendererToggle *cell_renderer,
@@ -3706,7 +3711,7 @@ close_confirmation_dialog_callback_renderer_toggled (GtkCellRendererToggle *cell
  *
  *  The treeview displays the page names with check boxes.
  *
- *  \param in dialog The dialog.
+ *  \param [in] dialog The dialog.
  *  \returns A pointer on the GtkVBox to add to dialog.
  */
 static GtkWidget*
@@ -4027,10 +4032,10 @@ close_confirmation_dialog_get_property (GObject    *object,
  *  action has been requested. Each selected page is appended to the
  *  GList pointed by <B>data</B>
  *
- *  \param in model The tree model.
- *  \param in path  .
- *  \param in iter  .
- *  \param in data  A pointer on a GList* to fill.
+ *  \param [in] model The tree model.
+ *  \param [in] path  .
+ *  \param [in] iter  .
+ *  \param [in] data  A pointer on a GList* to fill.
  *  \returns FALSE to continue walking the tree.
  */
 static gboolean
@@ -4061,7 +4066,7 @@ get_selected_pages (GtkTreeModel *model,
  *
  *  The returned list must be freed.
  *
- *  \param in dialog The dialog.
+ *  \param [in] dialog The dialog.
  *  \returns A GList of selected PAGE* in dialog.
  */
 GList*
@@ -4086,8 +4091,8 @@ close_confirmation_dialog_get_selected_pages (CloseConfirmationDialog *dialog)
  *  closing, or to discard the changes or to save the changes to a
  *  file.
  *
- *  \param in toplevel The toplevel environment.
- *  \param in page     The page to close.
+ *  \param [in] w_current The toplevel environment.
+ *  \param [in] page      The page to close.
  */
 void
 x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
@@ -4156,7 +4161,7 @@ x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
  *  window. Otherwise the user has somehow cancelled and the window
  *  must not be closed.
  *
- *  \param in toplevel The toplevel environment.
+ *  \param [in] w_current The toplevel environment.
  *  \returns TRUE if the window can be closed, FALSE otherwise.
  */
 gboolean

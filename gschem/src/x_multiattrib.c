@@ -1691,7 +1691,7 @@ static void multiattrib_show_inherited_toggled (GtkToggleButton *button,
  *  GType instance initialiser for Multiattrib. Create
  *  and setup the widgets which make up the dialog.
  *
- *  \param [in]  dialog       The Multiattrib we are initialising
+ *  \param [in] multiattrib The Multiattrib we are initialising
  */
 static void multiattrib_init(Multiattrib *multiattrib)
 {

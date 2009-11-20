@@ -259,7 +259,7 @@ static void unmap_handler (GtkWidget *widget)
  *  Just before the GschemDialog GObject is finalized, free our
  *  allocated data, and then chain up to the parent's finalize handler.
  *
- *  \param [in] widget  The GObject being finalized.
+ *  \param [in] object The GObject being finalized.
  */
 static void gschem_dialog_finalize (GObject *object)
 {

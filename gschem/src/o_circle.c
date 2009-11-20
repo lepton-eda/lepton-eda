@@ -175,10 +175,9 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *  \param [in] w           GdkDrawable to draw in.
  *  \param [in] gc          GdkGC graphics context to draw on.
  *  \param [in] color       Circle fill color. 
- *  \param [in] x           Center x coordinate of Circle.
- *  \param [in] y           Center y coordinate of Circle.
- *  \param [in] radius      Radius of Circle.
- *  \param [in] width       Circle pattern fill width.
+ *  \param [in] w_current   Schematic top level
+ *  \param [in] circle      Circle to be drawn
+ *  \param [in] fill_width
  *  \param [in] angle1      1st angle for pattern.
  *  \param [in] pitch1      1st pitch for pattern.
  *  \param [in] angle2      2nd angle for pattern.
@@ -209,10 +208,9 @@ void o_circle_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] w           GdkDrawable to draw in.
  *  \param [in] gc          GdkGC graphics context to draw on.
  *  \param [in] color       Circle fill color. 
- *  \param [in] x           Center x coordinate of Circle.
- *  \param [in] y           Center y coordinate of Circle.
- *  \param [in] radius      Radius of Circle.
- *  \param [in] width       (unused)
+ *  \param [in] w_current   Schematic top level
+ *  \param [in] circle      Circle to be drawn
+ *  \param [in] fill_width
  *  \param [in] angle1      (unused)
  *  \param [in] pitch1      (unused)
  *  \param [in] angle2      (unused)
@@ -251,10 +249,9 @@ void o_circle_fill_fill (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] w           GdkDrawable to draw in.
  *  \param [in] gc          GdkGC graphics context to draw on.
  *  \param [in] color       Circle fill color. 
- *  \param [in] x           Center x coordinate of Circle.
- *  \param [in] y           Center y coordinate of Circle.
- *  \param [in] radius      Radius of Circle.
- *  \param [in] width       Circle pattern fill width.
+ *  \param [in] w_current   Schematic top level
+ *  \param [in] circle      Circle to be drawn
+ *  \param [in] fill_width
  *  \param [in] angle1      1st angle for pattern.
  *  \param [in] pitch1      1st pitch for pattern.
  *  \param [in] angle2      (unused)
@@ -306,10 +303,9 @@ void o_circle_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] w           GdkDrawable to draw in.
  *  \param [in] gc          GdkGC graphics context to draw on.
  *  \param [in] color       Circle fill color. 
- *  \param [in] x           Center x coordinate of Circle.
- *  \param [in] y           Center y coordinate of Circle.
- *  \param [in] radius      Radius of Circle.
- *  \param [in] width       Circle pattern fill width.
+ *  \param [in] w_current   Schematic top level
+ *  \param [in] circle      Circle to be drawn
+ *  \param [in] fill_width
  *  \param [in] angle1      1st angle for pattern.
  *  \param [in] pitch1      1st pitch for pattern.
  *  \param [in] angle2      2nd angle for pattern.

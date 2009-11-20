@@ -876,7 +876,7 @@ void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  *  (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>). They are not suppose
  *  to change during the action.
  *
- *  The radius of the circle is stored in <B>w_current->distance<B>.
+ *  The radius of the circle is stored in <B>w_current->distance</B>.
  *
  *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in]  o_current  Circle OBJECT to check.
@@ -1581,8 +1581,8 @@ int o_grips_size(GSCHEM_TOPLEVEL *w_current)
  *  <B>x</B> and <B>y</B> are in screen unit.
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] x          Center x world coordinate for drawing grip.
- *  \param [in] y          Center y world coordinate for drawing grip.
+ *  \param [in] wx         Center x world coordinate for drawing grip.
+ *  \param [in] wy         Center y world coordinate for drawing grip.
  */
 void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int wx, int wy)
 {

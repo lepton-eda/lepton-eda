@@ -136,7 +136,7 @@ void o_bus_draw_stretch (GSCHEM_TOPLEVEL *w_current,
  *  
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] w_x        the x position in world coords
- *  \param [in] w_x        the y position in world coords
+ *  \param [in] w_y        the y position in world coords
  */
 void o_bus_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
@@ -156,7 +156,7 @@ void o_bus_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  *  \param [in] w_x        (unused)
- *  \param [in] w_x        (unused)
+ *  \param [in] w_y        (unused)
  */
 int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
