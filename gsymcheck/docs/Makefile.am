@@ -22,9 +22,24 @@ else
 	@! :
 endif
 
+doxygen: gsymcheck.dox
+	@echo 'Creating doxygen documentation for gsymcheck...'
+if ENABLE_DOXYGEN
+	$(DOXYGEN) gsymcheck.dox
+else
+	@echo 'Doxygen is not installed on your system.'
+	@echo 'The documentation can not be built from the sources.'
+endif
+
+
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~ gsymcheck.html
 DISTCLEANFILES = *.log core FILE *~
 MAINTAINERCLEANFILES = *.log *~ Makefile.in $(html_man_files)
 
+distclean-local:
+	-rm -rf html latex
+
+maintainer-clean-local:
+	-rm -rf html latex

@@ -30,8 +30,22 @@ else
 	@! :
 endif
 
+doxygen: gnetlist.dox
+	@echo 'Creating doxygen documentation for gnetlist...'
+if ENABLE_DOXYGEN
+	$(DOXYGEN) gnetlist.dox
+else
+	@echo 'Doxygen is not installed on your system.'
+	@echo 'The documentation can not be built from the sources.'
+endif
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
 DISTCLEANFILES = *.log core FILE *~
 MAINTAINERCLEANFILES = *.log *~ Makefile.in $(html_man_files)
+
+distclean-local:
+	-rm -rf html latex
+
+maintainer-clean-local:
+	-rm -rf html latex
