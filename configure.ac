@@ -106,6 +106,12 @@ AC_CHECK_HEADERS([stdlib.h string.h unistd.h])
 # fail anyway.
 AC_CHECK_HEADERS([errno.h fcntl.h])
 
+# FIXME On a system without locale.h, the user may have just disabled NLS
+# to be able to build.  But are there known systems with working NLS but
+# without a locale.h?  We do need to include locale.h on some systems
+# to be able to build gschem/src/gschem.c
+AC_CHECK_HEADERS([locale.h])
+
 # Check for rint in math library. FIXME do we actually need to test
 # this? Should we use lrint instead?
 AC_CHECK_LIB([m], [lrint],
