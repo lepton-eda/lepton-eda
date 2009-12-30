@@ -52,7 +52,6 @@ struct st_gschem_toplevel {
   GtkWidget *tshowwindow;               /* text show window */
   GtkWidget *thidewindow;               /* text hide window */
   GtkWidget *tfindwindow;               /* text find window */
-  GtkWidget *abwindow;                  /* Help/About... dialog*/
   GtkWidget *hkwindow;                  /* Help/Hotkeys... dialog*/
   GtkWidget *clwindow;                  /* Color edit dialog */
   int edit_color;                         /* Used by the color edit dialog */

@@ -71,7 +71,6 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->tshowwindow  = NULL;
   w_current->thidewindow  = NULL;
   w_current->tfindwindow  = NULL;
-  w_current->abwindow     = NULL;
   w_current->hkwindow     = NULL;
   w_current->clwindow     = NULL;
   w_current->edit_color   = 0;

@@ -592,9 +592,6 @@ void x_window_close(GSCHEM_TOPLEVEL *w_current)
   if (w_current->tswindow)
   gtk_widget_destroy(w_current->tswindow);
 
-  if (w_current->abwindow)
-  gtk_widget_destroy(w_current->abwindow);
-
   if (w_current->iwindow)
   gtk_widget_destroy(w_current->iwindow);
 

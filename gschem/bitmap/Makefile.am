@@ -1,6 +1,10 @@
 
 bitmapdatadir = $(GEDADATADIR)/bitmap
-bitmapdata_DATA = gschem-bus.xpm gschem-comp.xpm gschem-net.xpm		 \
+bitmapdata_DATA = \
+                  gschem-about-logo.png                                  \
+                  gschem-bus.xpm                                         \
+                  gschem-comp.xpm                                        \
+                  gschem-net.xpm                                         \
 		  gschem-new.xpm gschem-open.xpm gschem-redo.xpm	 \
 		  gschem-save.xpm gschem-select.xpm gschem-undo.xpm	 \
 		  gschem-edit.xpm gschem-text.xpm			 \
@@ -22,9 +26,9 @@ bitmapdata_DATA = gschem-bus.xpm gschem-comp.xpm gschem-net.xpm		 \
                   gschem-alignment_middlecenter.png			 \
                   gschem-alignment_topleft.png
 
-
-
-EXTRA_DIST = $(bitmapdata_DATA) README
+EXTRA_DIST = $(bitmapdata_DATA)                                          \
+             README                                                      \
+             gschem-about-logo.xcf
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

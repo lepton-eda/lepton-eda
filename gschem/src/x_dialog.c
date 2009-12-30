@@ -2169,82 +2169,51 @@ void slot_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string)
 
 /***************** Start of help/about dialog box ********************/
 
-/*! \brief Response function for the about dialog
- *  \par Function Description
- *  This function destoys the about dialg.
- */
-void about_dialog_response(GtkWidget *w, gint response,
-                           GSCHEM_TOPLEVEL *w_current)
-{
-  switch (response) {
-  case GTK_RESPONSE_REJECT:
-  case GTK_RESPONSE_DELETE_EVENT:
-    /* void */
-    break;
-  default:
-    printf("about_dialog_response(): strange signal %d\n",response);
-  }
-
-  gtk_widget_destroy(w_current->abwindow);
-  w_current->abwindow = NULL;
-}
-
 /*! \brief Create the about dialog and show it
  *  \par Function Description
  *  This function creates the about dialog.
  */
 void about_dialog (GSCHEM_TOPLEVEL *w_current)
 {
-  GtkWidget *label = NULL;
-  GtkWidget *vbox;
-  char *string;
+  char *version_string;
+  char *logo_file;
+  GdkPixbuf *logo;
+  GError *error = NULL;
 
-  if (!w_current->abwindow) {
-    w_current->abwindow = gschem_dialog_new_with_buttons(_("About..."),
-                                                         GTK_WINDOW(w_current->main_window),
-                                                         GTK_DIALOG_MODAL,
-                                                         "about", w_current,
-                                                         GTK_STOCK_CLOSE,
-                                                         GTK_RESPONSE_REJECT,
-                                                         NULL);
+  version_string = g_strdup_printf(_("%s%s (%s)"),
+                                   PREPEND_VERSION_STRING,
+                                   PACKAGE_DOTTED_VERSION,
+                                   PACKAGE_DATE_VERSION);
 
-    gtk_window_position (GTK_WINDOW (w_current->abwindow),
-                         GTK_WIN_POS_MOUSE);
 
-    gtk_signal_connect (GTK_OBJECT (w_current->abwindow), "response",
-                        GTK_SIGNAL_FUNC(about_dialog_response),
-                        w_current);
+  logo_file = g_strconcat (w_current->toplevel->bitmap_directory,
+                           G_DIR_SEPARATOR_S, "gschem-about-logo.png", NULL);
 
-    gtk_container_border_width (GTK_CONTAINER(w_current->abwindow),
-                                DIALOG_BORDER_SPACING);
-    vbox = GTK_DIALOG(w_current->abwindow)->vbox;
-    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
+  logo = gdk_pixbuf_new_from_file (logo_file, &error);
+  g_free (logo_file);
 
-    label = gtk_label_new ( _("<b>gEDA: GPL Electronic Design Automation</b>"));
-    gtk_label_set_use_markup (GTK_LABEL(label), TRUE);
-    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
-
-    string = g_strdup_printf(_("<b>gschem version %s%s.%s</b>"),
-                             PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
-                             PACKAGE_DATE_VERSION);
-    label = gtk_label_new (string);
-    gtk_label_set_use_markup (GTK_LABEL(label), TRUE);
-    g_free(string);
-    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
-
-    label = gtk_label_new ( _("Written by:\n"
-                              "Ales Hvezda\n"
-                              "ahvezda@geda.seul.org\n"
-                              "And many others (See AUTHORS file)"));
-    gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
-    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
-
-    gtk_widget_show_all(w_current->abwindow);
+  if (error != NULL) {
+    g_assert (logo == NULL);
+    s_log_message ("Could not load image at file: %s\n%s\n",
+                   logo_file, error->message);
+    g_error_free (error);
   }
 
-  else { /* dialog already created */
-    gtk_window_present(GTK_WINDOW(w_current->abwindow));
-  }
+  gtk_show_about_dialog (
+      GTK_WINDOW (w_current->main_window),
+      "version",        version_string,
+      "logo",           logo,
+      "title",          _("About gschem"),
+      "comments",       _("gEDA: GPL Electronic Design Automation"),
+      "copyright",      _("Copyright © 1998-2009 Ales Hvezda"
+                            " <ahvezda@geda.seul.org>\n"
+                          "Copyright © 1998-2009 gEDA Contributors"
+                            " (see ChangeLog for details)"),
+      "website",        "http://www.gpleda.org/",
+      NULL);
+
+  g_free (version_string);
+  g_object_unref (logo);
 }
 
 /***************** End of help/about dialog box *********************/
@@ -2839,9 +2808,6 @@ void x_dialog_raise_all(GSCHEM_TOPLEVEL *w_current)
   }
   if(w_current->tswindow) {
     gdk_window_raise(w_current->tswindow->window);
-  }
-  if(w_current->abwindow) {
-    gdk_window_raise(w_current->abwindow->window);
   }
   if(w_current->hkwindow) {
     gdk_window_raise(w_current->hkwindow->window);
