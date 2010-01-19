@@ -159,7 +159,6 @@ static PangoFontMetrics *setup_pango_return_metrics (GSCHEM_TOPLEVEL *w_current,
   PangoAttrList *attrs;
   cairo_font_options_t *options;
   double font_size_pt;
-  char *font_string;
   char *unescaped;
 
   context = pango_layout_get_context (layout);
@@ -174,9 +173,9 @@ static PangoFontMetrics *setup_pango_return_metrics (GSCHEM_TOPLEVEL *w_current,
   pango_cairo_context_set_resolution (context, 1000. * scale_factor);
   font_size_pt = o_text_get_font_size_in_points (w_current->toplevel,
                                                  o_current);
-  font_string = g_strdup_printf ("%s %f\n", FONT_NAME, font_size_pt);
-  desc = pango_font_description_from_string (font_string);
-  g_free (font_string);
+
+  desc = pango_font_description_from_string (FONT_NAME);
+  pango_font_description_set_size (desc, (double)PANGO_SCALE * font_size_pt);
 
   pango_layout_set_font_description (layout, desc);
   font_metrics = pango_context_get_metrics (context, desc, NULL);
