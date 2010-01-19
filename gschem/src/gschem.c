@@ -145,7 +145,7 @@ void main_prog(void *closure, int argc, char *argv[])
   gtk_set_locale();
 
   /* This must be the same for all locales */
-  setlocale(LC_NUMERIC, "POSIX");
+  setlocale(LC_NUMERIC, "C");
 
   /* Disable gtk's ability to set the locale. */ 
   /* If gtk is allowed to set the locale, then it will override the     */
@@ -345,7 +345,7 @@ int main (int argc, char *argv[])
 
 #if ENABLE_NLS
   setlocale(LC_ALL, "");
-  setlocale(LC_NUMERIC, "POSIX");
+  setlocale(LC_NUMERIC, "C");
   bindtextdomain("geda-gschem", LOCALEDIR);
   textdomain("geda-gschem");
   bind_textdomain_codeset("geda-gschem", "UTF-8");
