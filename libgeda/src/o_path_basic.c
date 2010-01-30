@@ -773,7 +773,7 @@ static void o_path_print_filled (TOPLEVEL *toplevel, FILE *fp, PATH *path,
 
     switch (section->code) {
       case PATH_MOVETO:
-        fprintf (fp, "closepath ");
+        fprintf (fp, "closepath");
         /* Fall through */
       case PATH_MOVETO_OPEN:
         fprintf (fp, "%i %i moveto",
@@ -790,12 +790,12 @@ static void o_path_print_filled (TOPLEVEL *toplevel, FILE *fp, PATH *path,
                      section->x3 - origin_x, section->y3 - origin_y);
         break;
       case PATH_END:
-        fprintf (fp, "closepath ");
+        fprintf (fp, "closepath");
         break;
     }
   }
 
-  fprintf (fp, "fill\n");
+  fprintf (fp, " fill\n");
 }
 
 
