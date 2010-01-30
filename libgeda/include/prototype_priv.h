@@ -22,7 +22,6 @@ SCM g_rc_world_size(SCM width, SCM height, SCM border);
 SCM g_rc_reset_component_library(void);
 SCM g_rc_reset_source_library(void);
 SCM g_rc_untitled_name(SCM name);
-SCM g_rc_font_directory(SCM path);
 SCM g_rc_bitmap_directory(SCM path);
 SCM g_rc_scheme_directory(SCM path);
 SCM g_rc_bus_ripper_symname(SCM scmsymname);
