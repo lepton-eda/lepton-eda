@@ -319,12 +319,10 @@ void o_place_draw_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
 void o_place_rotate (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int savestate;
 
-  savestate = toplevel->DONT_REDRAW;
-  toplevel->DONT_REDRAW = 1;
-  o_rotate_world_update (w_current,
-                         w_current->first_wx, w_current->first_wy,
-                         90, toplevel->page_current->place_list);
-  toplevel->DONT_REDRAW = savestate;
+  o_glist_rotate_world (toplevel,
+                        w_current->first_wx, w_current->first_wy, 90,
+                        toplevel->page_current->place_list);
+  /* All objects were rotated. Run the rotate hooks */
+  o_rotate_call_hooks (w_current, toplevel->page_current->place_list);
 }
