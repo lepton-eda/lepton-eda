@@ -521,8 +521,6 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
                            c_current->x, c_current->y,
                            c_current->x, c_current->y);
       s_page_append (toplevel, toplevel->page_current, new_net);
-      s_tile_add_object (toplevel, new_net);
-      s_conn_update_object (toplevel, new_net);
       /* This new net object is only picked up for stretching later,
        * somewhat of a kludge. If the move operation is cancelled, these
        * new 0 length nets are removed by the "undo" operation invoked.
