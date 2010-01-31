@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2009-10-04 18:51-0400\n"
+"POT-Creation-Date: 2010-01-31 11:00+0000\n"
 "PO-Revision-Date: 2008-12-20 14:24+0000\n"
 "Last-Translator: \n"
 "Language-Team:  <pt@li.org>\n"
@@ -702,31 +702,6 @@ msgstr "Diretório Scheme NÃO ajustado!\n"
 msgid "Executing guile script [%s]\n"
 msgstr "Executando script guile [%s]\n"
 
-#: gschem/src/gschem_accel_label.c:333
-msgid "Accelerator Closure"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:334
-msgid "The closure to be monitored for accelerator changes"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:340
-msgid "Accelerator Widget"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:341
-msgid "The widget to be monitored for accelerator changes"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:347
-#, fuzzy
-msgid "Accelerator String"
-msgstr "String geral"
-
-#: gschem/src/gschem_accel_label.c:348
-msgid "The accelerator string to be displayed"
-msgstr ""
-
 #: gschem/src/gschem_cairo.c:310
 #, c-format
 msgid "Unknown end for line (%d)\n"
@@ -1192,35 +1167,35 @@ msgstr "Objeto já bloqueado\n"
 msgid "Object already unlocked\n"
 msgstr "Objeto já desbloqueado\n"
 
-#: gschem/src/o_misc.c:443
+#: gschem/src/o_misc.c:448
 msgid "Hidden text is now visible\n"
 msgstr "Texto oculto agora está visível\n"
 
-#: gschem/src/o_misc.c:445
+#: gschem/src/o_misc.c:450
 msgid "Hidden text is now invisible\n"
 msgstr "Texto oculto agora está invisível\n"
 
-#: gschem/src/o_misc.c:691
+#: gschem/src/o_misc.c:696
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
 msgstr ""
 
-#: gschem/src/o_misc.c:838
+#: gschem/src/o_misc.c:843
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr ""
 
-#: gschem/src/o_misc.c:882
+#: gschem/src/o_misc.c:887
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "NÃO foi possível deixar arquivo backup [%s] como leitura e gravação\n"
 
-#: gschem/src/o_misc.c:900
+#: gschem/src/o_misc.c:905
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "NÃO foi possível deixar arquivo backup [%s] apenas leitura!\n"
 
-#: gschem/src/o_misc.c:905
+#: gschem/src/o_misc.c:910
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "NÃO foi possível salvar  arquivo backup [%s] !\n"
@@ -2515,6 +2490,10 @@ msgstr "Descer ao Esquemático"
 #: gschem/data/geda-gschem.desktop.in.h:4
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Accelerator String"
+#~ msgstr "String geral"
 
 #, fuzzy
 #~ msgid "Invalid size [%f] passed to postscript-font-scale\n"

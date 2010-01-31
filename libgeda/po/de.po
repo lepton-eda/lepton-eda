@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2009-10-04 21:39-0400\n"
+"POT-Creation-Date: 2010-01-31 11:00+0000\n"
 "PO-Revision-Date: 2009-10-17 11:28+0200\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -192,7 +192,8 @@ msgid "Error during reading of the prolog file `%s' in f_print_header()\n"
 msgstr "f_print_header(): Fehler beim Lesen der Prologdatei '%s'\n"
 
 #: libgeda/src/f_print.c:183
-msgid "Error during writing of the output postscript file in f_print_header()\n"
+msgid ""
+"Error during writing of the output postscript file in f_print_header()\n"
 msgstr "f_print_header(): Fehler beim Schreiben der Postscript-Datei.\n"
 
 #: libgeda/src/f_print.c:196
@@ -250,7 +251,8 @@ msgstr "Lese die Systemkonfigurationsdatei [%%s]\n"
 #: libgeda/src/g_rc.c:178
 #, c-format
 msgid "Did not find required system config file [%%s]\n"
-msgstr "Konnte die erforderliche Systemkonfigurationsdatei nicht finden [%%s]\n"
+msgstr ""
+"Konnte die erforderliche Systemkonfigurationsdatei nicht finden [%%s]\n"
 
 #: libgeda/src/g_rc.c:212
 #, c-format
@@ -325,7 +327,8 @@ msgstr "Es wurde versucht eine Attribut anzubringen, welches kein Text ist!\n"
 #: libgeda/src/o_attrib.c:125
 #, c-format
 msgid "Attempt to attach attribute [%s] to more than one object\n"
-msgstr "Es wurde versucht ein Attribute [%s] an mehr als ein Objekt anzubringen\n"
+msgstr ""
+"Es wurde versucht ein Attribute [%s] an mehr als ein Objekt anzubringen\n"
 
 #: libgeda/src/o_basic.c:199 libgeda/src/o_basic.c:211
 msgid "Invalid space specified, setting to 100\n"
@@ -375,11 +378,13 @@ msgstr ""
 #: libgeda/src/o_complex_basic.c:695
 #, c-format
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
-msgstr "Bauteil mit fehlerhafter Rotationsangabe entdeckt [ %c %d %d %d %d %d %s ]\n"
+msgstr ""
+"Bauteil mit fehlerhafter Rotationsangabe entdeckt [ %c %d %d %d %d %d %s ]\n"
 
 #: libgeda/src/o_complex_basic.c:707
 #, c-format
-msgid "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
+msgid ""
+"Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
 "Bauteil mit fehlerhafter Spiegelungsangabe entdeckt [ %c %d %d %d %d %d %"
 "s ]\n"
@@ -446,7 +451,8 @@ msgstr ""
 #: libgeda/src/o_complex_basic.c:1125
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
-msgstr "\tKleine Versionsänderung (Symboldatei %.3f, Symbol im Schaltplan %.3f)!\n"
+msgstr ""
+"\tKleine Versionsänderung (Symboldatei %.3f, Symbol im Schaltplan %.3f)!\n"
 
 #: libgeda/src/o_complex_basic.c:1136
 #, c-format
@@ -590,7 +596,8 @@ msgstr "Pin mit der Länge 0 entdeckt: [ %s ]\n"
 #: libgeda/src/o_text_basic.c:374
 #, c-format
 msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
-msgstr "Textstring mit der Zeichengröße 0 entdeckt [ %c %d %d %d %d %d %d %d %d ]\n"
+msgstr ""
+"Textstring mit der Zeichengröße 0 entdeckt [ %c %d %d %d %d %d %d %d %d ]\n"
 
 #: libgeda/src/o_text_basic.c:386
 #, c-format
@@ -664,7 +671,8 @@ msgstr "Kann die Bibliothek nicht hinzufügen. Der Name fehlt\n"
 
 #: libgeda/src/s_clib.c:907
 #, c-format
-msgid "Cannot add library [%s]: both 'list' and 'get' commands must be specified.\n"
+msgid ""
+"Cannot add library [%s]: both 'list' and 'get' commands must be specified.\n"
 msgstr ""
 "Kann die Bibliothek [%s] nicht hinzufügen: Beide Befehle ('list' und 'get') "
 "müssen angegeben werden.\n"
@@ -689,7 +697,8 @@ msgstr "Fehler beim Laden der Symboldaten [%s] aus der Quelle [%s]\n"
 #: libgeda/src/s_clib.c:1373
 #, c-format
 msgid "Component [%s] was not found in the component library\n"
-msgstr "Das Bauteil [%s] konnte nicht in der Bauteilbibliothek gefunden werden\n"
+msgstr ""
+"Das Bauteil [%s] konnte nicht in der Bauteilbibliothek gefunden werden\n"
 
 #: libgeda/src/s_clib.c:1379
 #, c-format
@@ -733,7 +742,8 @@ msgstr "ERROR: s_hierarchy_traverse: Schaltplan [%s] wurde nicht gefunden.\n"
 #: libgeda/src/s_page.c:167
 #, c-format
 msgid "s_page_delete: Can't get the real filename of %s."
-msgstr "s_page_delete: Kann den tatsächlichen Dateinamen von [%s] nicht ermitteln."
+msgstr ""
+"s_page_delete: Kann den tatsächlichen Dateinamen von [%s] nicht ermitteln."
 
 #: libgeda/src/s_page.c:178
 #, c-format
@@ -821,4 +831,3 @@ msgstr "Konnte [%s] in keiner Bibliothekenquelle finden\n"
 #~ msgstr ""
 #~ "s_page_delete: Kann den tatsächlichen Dateinamen von [%s] nicht "
 #~ "ermitteln.\n"
-

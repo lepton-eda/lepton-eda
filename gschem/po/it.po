@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it_IT\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2009-10-04 18:51-0400\n"
+"POT-Creation-Date: 2010-01-31 11:00+0000\n"
 "PO-Revision-Date: 2008-12-20 14:38+0000\n"
 "Last-Translator: Michele <michelinux@alice.it>\n"
 "Language-Team: Italiano <michelinux@alice.it>\n"
@@ -699,30 +699,6 @@ msgstr "Cartelle degli schemi non impostata!\n"
 msgid "Executing guile script [%s]\n"
 msgstr "Esecuzione dello script guile [%s]\n"
 
-#: gschem/src/gschem_accel_label.c:333
-msgid "Accelerator Closure"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:334
-msgid "The closure to be monitored for accelerator changes"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:340
-msgid "Accelerator Widget"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:341
-msgid "The widget to be monitored for accelerator changes"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:347
-msgid "Accelerator String"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:348
-msgid "The accelerator string to be displayed"
-msgstr ""
-
 #: gschem/src/gschem_cairo.c:310
 #, c-format
 msgid "Unknown end for line (%d)\n"
@@ -1191,41 +1167,41 @@ msgstr "Oggetto già bloccato\n"
 msgid "Object already unlocked\n"
 msgstr "Oggetto già sbloccato\n"
 
-#: gschem/src/o_misc.c:443
+#: gschem/src/o_misc.c:448
 msgid "Hidden text is now visible\n"
 msgstr "Il testo nascosto è ora visibile\n"
 
-#: gschem/src/o_misc.c:445
+#: gschem/src/o_misc.c:450
 msgid "Hidden text is now invisible\n"
 msgstr "Il testo ora è non visibile\n"
 
-#: gschem/src/o_misc.c:691
+#: gschem/src/o_misc.c:696
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
 msgstr ""
 "Non è possibile trovare il simbolo [%s] nella libreria. Aggiornamento "
 "fallito.\n"
 
-#: gschem/src/o_misc.c:838
+#: gschem/src/o_misc.c:843
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr "o_autosave_backups: Non è possibile ottenere il vero nome del file %s."
 
-#: gschem/src/o_misc.c:882
+#: gschem/src/o_misc.c:887
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 "NOn è possibile impostare il precedente file di ripristino [%s] in lettura-"
 "scrittura\n"
 
-#: gschem/src/o_misc.c:900
+#: gschem/src/o_misc.c:905
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr ""
 "Non è possibile impostare il precedente file di ripristino [%s] in sola "
 "lettura\n"
 
-#: gschem/src/o_misc.c:905
+#: gschem/src/o_misc.c:910
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "Non è possibile salvare il file di ripristino [%s]\n"

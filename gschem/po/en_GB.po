@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-schem\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2009-10-04 18:51-0400\n"
+"POT-Creation-Date: 2010-01-31 11:00+0000\n"
 "PO-Revision-Date: 2009-01-02 14:32+0100\n"
 "Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -690,30 +690,6 @@ msgstr "Scheme directory NOT set!\n"
 msgid "Executing guile script [%s]\n"
 msgstr "Executing guile script [%s]\n"
 
-#: gschem/src/gschem_accel_label.c:333
-msgid "Accelerator Closure"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:334
-msgid "The closure to be monitored for accelerator changes"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:340
-msgid "Accelerator Widget"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:341
-msgid "The widget to be monitored for accelerator changes"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:347
-msgid "Accelerator String"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:348
-msgid "The accelerator string to be displayed"
-msgstr ""
-
 #: gschem/src/gschem_cairo.c:310
 #, c-format
 msgid "Unknown end for line (%d)\n"
@@ -1179,35 +1155,35 @@ msgstr "Object already locked\n"
 msgid "Object already unlocked\n"
 msgstr "Object already unlocked\n"
 
-#: gschem/src/o_misc.c:443
+#: gschem/src/o_misc.c:448
 msgid "Hidden text is now visible\n"
 msgstr "Hidden text is now visible\n"
 
-#: gschem/src/o_misc.c:445
+#: gschem/src/o_misc.c:450
 msgid "Hidden text is now invisible\n"
 msgstr "Hidden text is now invisible\n"
 
-#: gschem/src/o_misc.c:691
+#: gschem/src/o_misc.c:696
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
 msgstr "Could not find symbol [%s] in library. Update failed.\n"
 
-#: gschem/src/o_misc.c:838
+#: gschem/src/o_misc.c:843
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr "o_autosave_backups: Can't get the real filename of %s."
 
-#: gschem/src/o_misc.c:882
+#: gschem/src/o_misc.c:887
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr "Could NOT set previous backup file [%s] read-write\n"
 
-#: gschem/src/o_misc.c:900
+#: gschem/src/o_misc.c:905
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "Could NOT set backup file [%s] readonly\n"
 
-#: gschem/src/o_misc.c:905
+#: gschem/src/o_misc.c:910
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "Could NOT save backup file [%s]\n"

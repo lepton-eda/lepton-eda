@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2009-11-12 18:58+0000\n"
+"POT-Creation-Date: 2010-01-31 11:00+0000\n"
 "PO-Revision-Date: 2009-02-22 21:51+0300\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -403,7 +403,7 @@ msgstr "Наверх"
 msgid "Documentation"
 msgstr "Документация"
 
-#: gschem/src/rcstrings.c:102 gschem/src/x_compselect.c:1418
+#: gschem/src/rcstrings.c:102 gschem/src/x_compselect.c:1414
 msgid "Attributes"
 msgstr "Атрибуты"
 
@@ -696,31 +696,6 @@ msgstr "Каталог схем НЕ установлен!\n"
 #, c-format
 msgid "Executing guile script [%s]\n"
 msgstr "Запускается guile-скрипт [%s]\n"
-
-#: gschem/src/gschem_accel_label.c:333
-msgid "Accelerator Closure"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:334
-msgid "The closure to be monitored for accelerator changes"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:340
-msgid "Accelerator Widget"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:341
-msgid "The widget to be monitored for accelerator changes"
-msgstr ""
-
-#: gschem/src/gschem_accel_label.c:347
-#, fuzzy
-msgid "Accelerator String"
-msgstr "Общая строка"
-
-#: gschem/src/gschem_accel_label.c:348
-msgid "The accelerator string to be displayed"
-msgstr ""
 
 #: gschem/src/gschem_cairo.c:310
 #, c-format
@@ -1184,37 +1159,37 @@ msgstr "Объект уже заблокирован\n"
 msgid "Object already unlocked\n"
 msgstr "Объект уже разблокирован\n"
 
-#: gschem/src/o_misc.c:443
+#: gschem/src/o_misc.c:448
 msgid "Hidden text is now visible\n"
 msgstr "Скрытый текст сейчас видим\n"
 
-#: gschem/src/o_misc.c:445
+#: gschem/src/o_misc.c:450
 msgid "Hidden text is now invisible\n"
 msgstr "Скрытый текст сейчас невидим\n"
 
-#: gschem/src/o_misc.c:691
+#: gschem/src/o_misc.c:696
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
 msgstr "Не найден символ [%s] в библиотеке. Обновление не выполнено.\n"
 
-#: gschem/src/o_misc.c:838
+#: gschem/src/o_misc.c:843
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr "o_autosave_backups: невозможно получить реально имя файла для %s."
 
-#: gschem/src/o_misc.c:882
+#: gschem/src/o_misc.c:887
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 "Невозможно установить режим чтения-записи для предыдущей резервной копии "
 "файла [%s]\n"
 
-#: gschem/src/o_misc.c:900
+#: gschem/src/o_misc.c:905
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "Невозможно установить режим только для чтения резервного файла [%s]\n"
 
-#: gschem/src/o_misc.c:905
+#: gschem/src/o_misc.c:910
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "Невозможно сохранить резервный файл [%s]\n"
@@ -1378,8 +1353,8 @@ msgstr "<b>Присоединённые параметры</b>"
 msgid "All"
 msgstr "Все"
 
-#: gschem/src/x_attribedit.c:464 gschem/src/x_compselect.c:896
-#: gschem/src/x_compselect.c:1010
+#: gschem/src/x_attribedit.c:464 gschem/src/x_compselect.c:892
+#: gschem/src/x_compselect.c:1006
 msgid "Components"
 msgstr "Компоненты"
 
@@ -1528,44 +1503,44 @@ msgstr "Попытка получения неверного цвета: %d\n"
 msgid "Tried to get an invalid outline color: %d\n"
 msgstr "Попытка получения неверного цвета контура: %d\n"
 
-#: gschem/src/x_compselect.c:1040
+#: gschem/src/x_compselect.c:1036
 msgid "Filter:"
 msgstr "Фильтр:"
 
-#: gschem/src/x_compselect.c:1143 gschem/src/x_dialog.c:3758
+#: gschem/src/x_compselect.c:1139 gschem/src/x_dialog.c:3758
 #: gschem/src/x_multiattrib.c:1787
 msgid "Name"
 msgstr "Имя"
 
-#: gschem/src/x_compselect.c:1152 gschem/src/x_multiattrib.c:1811
+#: gschem/src/x_compselect.c:1148 gschem/src/x_multiattrib.c:1811
 msgid "Value"
 msgstr "Значение"
 
-#: gschem/src/x_compselect.c:1191
+#: gschem/src/x_compselect.c:1187
 msgid "Default behavior - reference component"
 msgstr "Нормальное поведение — ссылка на компонент"
 
-#: gschem/src/x_compselect.c:1194
+#: gschem/src/x_compselect.c:1190
 msgid "Embed component in schematic"
 msgstr "Внедрить компонент в схему"
 
-#: gschem/src/x_compselect.c:1197
+#: gschem/src/x_compselect.c:1193
 msgid "Include component as individual objects"
 msgstr "Включить компонент как индивидуальный объект"
 
-#: gschem/src/x_compselect.c:1354
+#: gschem/src/x_compselect.c:1350
 msgid "Select Component..."
 msgstr "Выбор компонента"
 
-#: gschem/src/x_compselect.c:1377
+#: gschem/src/x_compselect.c:1373
 msgid "In Use"
 msgstr "Используемые"
 
-#: gschem/src/x_compselect.c:1381
+#: gschem/src/x_compselect.c:1377
 msgid "Libraries"
 msgstr "Библиотеки"
 
-#: gschem/src/x_compselect.c:1390 gschem/src/x_fileselect.c:122
+#: gschem/src/x_compselect.c:1386 gschem/src/x_fileselect.c:122
 msgid "Preview"
 msgstr "Предварительный просмотр"
 
@@ -2474,6 +2449,10 @@ msgstr "gEDA схемотехнический редактор"
 #: gschem/data/geda-gschem.desktop.in.h:4
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr "Создание и редактирование электрических схем и символов в gschem"
+
+#, fuzzy
+#~ msgid "Accelerator String"
+#~ msgstr "Общая строка"
 
 #~ msgid "Invalid size [%f] passed to postscript-font-scale\n"
 #~ msgstr "Задан неверный размер [%f] для postscript-font-scale\n"
