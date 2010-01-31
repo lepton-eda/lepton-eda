@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-schem\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-01-31 10:54+0000\n"
-"PO-Revision-Date: 2009-01-02 14:32+0100\n"
+"POT-Creation-Date: 2010-01-31 11:13+0000\n"
+"PO-Revision-Date: 2010-01-31 11:04+0100\n"
 "Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"
@@ -92,9 +92,8 @@ msgid "Select Mode"
 msgstr "Select Mode"
 
 #: gschem/src/rcstrings.c:22
-#, fuzzy
 msgid "Cut"
-msgstr "Cut 1"
+msgstr "Cut"
 
 #: gschem/src/rcstrings.c:23 gschem/src/i_basic.c:135
 #: gschem/src/i_callbacks.c:538 gschem/src/i_callbacks.c:562
@@ -102,9 +101,8 @@ msgid "Copy"
 msgstr "Copy"
 
 #: gschem/src/rcstrings.c:24
-#, fuzzy
 msgid "Paste"
-msgstr "Paste 1"
+msgstr "Paste"
 
 #: gschem/src/rcstrings.c:25
 msgid "Edit..."
@@ -554,6 +552,12 @@ msgid ""
 "from your config files.\n"
 "\n"
 msgstr ""
+"\n"
+"The config option postscript-font-scale is deprecated and will be removed in "
+"gEDA 1.8.0.\n"
+"Printed text is fixed to match on-screen sizes. Please remove this option "
+"from your config files.\n"
+"\n"
 
 #: gschem/src/g_rc.c:481
 #, c-format
@@ -664,6 +668,10 @@ msgid ""
 "gschem cannot locate its data files. You must set the GEDADATA\n"
 "environment variable to point to the correct location.\n"
 msgstr ""
+"You must set the GEDADATA environment variable!\n"
+"\n"
+"gschem cannot locate its data files. You must set the GEDADATA\n"
+"environment variable to point to the correct location.\n"
 
 #: gschem/src/gschem.c:243
 #, c-format
@@ -777,7 +785,7 @@ msgstr "Snap Off"
 
 #: gschem/src/i_basic.c:173
 msgid "Resnap Active"
-msgstr ""
+msgstr "Resnap Active"
 
 #: gschem/src/i_basic.c:254 gschem/src/x_window.c:496
 msgid "Action"
@@ -842,9 +850,8 @@ msgid "Select objs first"
 msgstr "Select objs first"
 
 #: gschem/src/i_callbacks.c:712
-#, fuzzy
 msgid "Edit pin type"
-msgstr "Edit Line Type"
+msgstr "Edit pin type"
 
 #: gschem/src/i_callbacks.c:731
 msgid "Edit Text"
@@ -920,16 +927,15 @@ msgstr "Really revert page?"
 
 #: gschem/src/i_callbacks.c:1821
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "Copy to clipboard"
 
 #: gschem/src/i_callbacks.c:1839
 msgid "Cut to clipboard"
-msgstr ""
+msgstr "Cut to clipboard"
 
 #: gschem/src/i_callbacks.c:1857
-#, fuzzy
 msgid "Paste from clipboard"
-msgstr "Paste from 1"
+msgstr "Paste from clipboard"
 
 #: gschem/src/i_callbacks.c:1869 gschem/src/i_callbacks.c:2108
 #: gschem/src/i_callbacks.c:2130 gschem/src/i_callbacks.c:2152
@@ -1087,9 +1093,8 @@ msgid "Snap ON\n"
 msgstr "Snap ON\n"
 
 #: gschem/src/i_callbacks.c:3459
-#, fuzzy
 msgid "Snap back to the grid (CAUTION!)\n"
-msgstr "Snap OFF (CAUTION!)\n"
+msgstr "Snap back to the grid (CAUTION!)\n"
 
 #: gschem/src/i_callbacks.c:3485
 msgid "Rubber band OFF \n"
@@ -1115,12 +1120,12 @@ msgstr "Unknown type for box (fill)!\n"
 #: gschem/src/o_buffer.c:57
 #, c-format
 msgid "o_buffer_copy: Invalid buffer %i\n"
-msgstr ""
+msgstr "o_buffer_copy: Invalid buffer %i\n"
 
 #: gschem/src/o_buffer.c:72
 #, c-format
 msgid "o_buffer_cut: Invalid buffer %i\n"
-msgstr ""
+msgstr "o_buffer_cut: Invalid buffer %i\n"
 
 #: gschem/src/o_buffer.c:93
 #, c-format
@@ -1936,18 +1941,16 @@ msgid "Invalid Attribute"
 msgstr "Invalid Attribute"
 
 #: gschem/src/x_dialog.c:4274
-#, fuzzy
 msgid "Pin type"
-msgstr "Pin Mode"
+msgstr "Pin type"
 
 #: gschem/src/x_dialog.c:4298
-#, fuzzy
 msgid "Net pin"
-msgstr "Net endpoint"
+msgstr "Net pin"
 
 #: gschem/src/x_dialog.c:4300
 msgid "Bus pin (graphical)"
-msgstr ""
+msgstr "Bus pin (graphical)"
 
 #: gschem/src/x_fileselect.c:42
 msgid "Schematics"
@@ -2094,9 +2097,8 @@ msgid "/Edit..."
 msgstr "/Edit..."
 
 #: gschem/src/x_menus.c:49
-#, fuzzy
 msgid "/Edit pin type..."
-msgstr "Edit Line Type"
+msgstr "/Edit pin type..."
 
 #: gschem/src/x_menus.c:50
 msgid "/Copy"
@@ -2158,7 +2160,7 @@ msgstr "Show Name only"
 
 #: gschem/src/x_multiattrib.c:1491
 msgid "Promote"
-msgstr ""
+msgstr "Promote"
 
 #: gschem/src/x_multiattrib.c:1495
 msgid "Duplicate"
@@ -2181,9 +2183,8 @@ msgid "V"
 msgstr "V"
 
 #: gschem/src/x_multiattrib.c:1889
-#, fuzzy
 msgid "Show inherited attributes"
-msgstr "Detached attribute"
+msgstr "Show inherited attributes"
 
 #: gschem/src/x_multiattrib.c:1905
 msgid "Add Attribute"
@@ -2427,41 +2428,3 @@ msgstr "gEDA Schematic Editor"
 #: gschem/data/geda-gschem.desktop.in.h:4
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr "Create and edit electrical schematics and symbols with gschem"
-
-#~ msgid "About..."
-#~ msgstr "About..."
-
-#~ msgid "<b>gschem version %s%s.%s</b>"
-#~ msgstr "<b>gschem version %s%s.%s</b>"
-
-#~ msgid ""
-#~ "Written by:\n"
-#~ "Ales Hvezda\n"
-#~ "ahvezda@geda.seul.org\n"
-#~ "And many others (See AUTHORS file)"
-#~ msgstr ""
-#~ "Written by:\n"
-#~ "Ales Hvezda\n"
-#~ "ahvezda@geda.seul.org\n"
-#~ "And many others (See AUTHORS file)"
-
-#~ msgid "Invalid size [%f] passed to postscript-font-scale\n"
-#~ msgstr "Invalid size [%f] passed to postscript-font-scale\n"
-
-#~ msgid "Cut Buffer"
-#~ msgstr "Cut Buffer"
-
-#~ msgid "Copy Buffer"
-#~ msgstr "Copy Buffer"
-
-#~ msgid "Paste Buffer"
-#~ msgstr "Paste Buffer"
-
-#~ msgid "You must set the GEDADATA environment variable!\n"
-#~ msgstr "You must set the GEDADATA environment variable!\n"
-
-#~ msgid "Got an invalid buffer_number [o_buffer_copy]\n"
-#~ msgstr "Got an invalid buffer_number [o_buffer_copy]\n"
-
-#~ msgid "Got an invalid buffer_number [o_buffer_cut]\n"
-#~ msgstr "Got an invalid buffer_number [o_buffer_cut]\n"

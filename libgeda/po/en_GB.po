@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-01-31 10:45+0000\n"
-"PO-Revision-Date: 2009-01-02 14:31+0100\n"
+"POT-Creation-Date: 2010-01-31 11:13+0000\n"
+"PO-Revision-Date: 2010-01-31 11:05+0100\n"
 "Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"
@@ -234,34 +234,34 @@ msgid "RC file [%s] already read in.\n"
 msgstr "RC file [%s] already read in.\n"
 
 #: libgeda/src/g_rc.c:177
-#, fuzzy, c-format
+#, c-format
 msgid "Read system config file [%%s]\n"
-msgstr "Read system-%s file [%%s]\n"
+msgstr "Read system config file [%%s]\n"
 
 #: libgeda/src/g_rc.c:178
-#, fuzzy, c-format
+#, c-format
 msgid "Did not find required system config file [%%s]\n"
-msgstr "Did not find required system-%s file [%%s]\n"
+msgstr "Did not find required system config file [%%s]\n"
 
 #: libgeda/src/g_rc.c:212
-#, fuzzy, c-format
+#, c-format
 msgid "Read user config file [%%s]\n"
-msgstr "Read specified %s file [%%s]\n"
+msgstr "Read user config file [%%s]\n"
 
 #: libgeda/src/g_rc.c:213
-#, fuzzy, c-format
+#, c-format
 msgid "Did not find optional user config file [%%s]\n"
-msgstr "Did not find optional local %s file [%%s]\n"
+msgstr "Did not find optional user config file [%%s]\n"
 
 #: libgeda/src/g_rc.c:244
-#, fuzzy, c-format
+#, c-format
 msgid "Read local config file [%%s]\n"
-msgstr "Read local %s file [%%s]\n"
+msgstr "Read local config file [%%s]\n"
 
 #: libgeda/src/g_rc.c:245
-#, fuzzy, c-format
+#, c-format
 msgid "Did not find optional local config file [%%s]\n"
-msgstr "Did not find optional local %s file [%%s]\n"
+msgstr "Did not find optional local config file [%%s]\n"
 
 #: libgeda/src/g_rc.c:282
 #, c-format
@@ -730,33 +730,3 @@ msgstr "Found [%s]\n"
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr "Could not find [%s] in any SourceLibrary\n"
-
-#~ msgid "o_save: Could not open [%s]\n"
-#~ msgstr "o_save: Could not open [%s]\n"
-
-#~ msgid "Did not find slotdef=#:#,#,#... attribute\n"
-#~ msgstr "Did not find slotdef=#:#,#,#... attribute\n"
-
-#~ msgid "Improper slotdef syntax: missing \":\".\n"
-#~ msgstr "Improper slotdef syntax: missing \":\".\n"
-
-#~ msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
-#~ msgstr "Did not find proper slotdef=#:#,#,#... attribute\n"
-
-#~ msgid "component missing pinseq= attribute\n"
-#~ msgstr "component missing pinseq= attribute\n"
-
-#~ msgid "Could not find character '%s' definition.\n"
-#~ msgstr "Could not find character '%s' definition.\n"
-
-#~ msgid "Failed to validate utf-8 character in font definition: \"%s\".\n"
-#~ msgstr "Failed to validate utf-8 character in font definition: \"%s\".\n"
-
-#~ msgid "Could not load question font char -- check font-directory keyword\n"
-#~ msgstr "Could not load question font char -- check font-directory keyword\n"
-
-#~ msgid "Read ~/.gEDA/%s file [%%s]\n"
-#~ msgstr "Read ~/.gEDA/%s file [%%s]\n"
-
-#~ msgid "Did not find optional ~/.gEDA/%s file [%%s]\n"
-#~ msgstr "Did not find optional ~/.gEDA/%s file [%%s]\n"
