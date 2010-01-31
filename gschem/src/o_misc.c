@@ -240,40 +240,8 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
   g_list_free (connected_objects);
   connected_objects = NULL;
 
-  /* All objects were rotated. Do a 2nd pass to run the rotate hooks */
-  /* Do not run any hooks for simple objects here, like text, since they
-     were rotated in the previous pass, and the selection list can contain
-     an object and all its attributes (text) */
-  o_iter = list;
-  while (o_iter != NULL) {
-    o_current = o_iter->data;
-
-    switch(o_current->type) {
-      case(OBJ_PIN):
-        /* Run the rotate pin hook */
-        if (scm_hook_empty_p(rotate_pin_hook) == SCM_BOOL_F &&
-            o_current != NULL) {
-          scm_run_hook(rotate_pin_hook,
-                       scm_cons(g_make_object_smob(toplevel, o_current),
-                                SCM_EOL));
-        }
-        break;
-
-      case (OBJ_COMPLEX):
-        /* Run the rotate hook */
-        if (scm_hook_empty_p(rotate_component_object_hook) == SCM_BOOL_F &&
-            o_current != NULL) {
-          scm_run_hook(rotate_component_object_hook,
-                       scm_cons(g_make_object_smob(toplevel, o_current),
-                                SCM_EOL));
-        }
-        break;
-    default:
-        break;
-    }
-
-    o_iter = g_list_next(o_iter);
-  }
+  /* All objects were rotated. Run the rotate hooks */
+  o_rotate_call_hooks (w_current, list);
 
   /* Don't save the undo state if we are inside an action */
   /* This is useful when rotating the selection while moving, for example */
@@ -283,6 +251,43 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
   }
 }
 
+
+void o_rotate_call_hooks (GSCHEM_TOPLEVEL *w_current, GList *list)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  OBJECT *o_current;
+  GList *iter;
+
+  /* Do not run any hooks for simple objects here, like text, since they
+     were rotated in the previous pass, and the selection list can contain
+     an object and all its attributes (text) */
+  for (iter = list; iter != NULL; iter = g_list_next (iter)) {
+    o_current = iter->data;
+
+    switch (o_current->type) {
+      case OBJ_PIN:
+        /* Run the rotate pin hook */
+        if (scm_hook_empty_p (rotate_pin_hook) == SCM_BOOL_F) {
+          scm_run_hook (rotate_pin_hook,
+                        scm_cons (g_make_object_smob (toplevel, o_current),
+                                  SCM_EOL));
+        }
+        break;
+
+      case OBJ_COMPLEX:
+        /* Run the rotate hook */
+        if (scm_hook_empty_p (rotate_component_object_hook) == SCM_BOOL_F) {
+          scm_run_hook (rotate_component_object_hook,
+                        scm_cons (g_make_object_smob (toplevel, o_current),
+                                  SCM_EOL));
+        }
+        break;
+
+      default:
+        break;
+    }
+  }
+}
 
 /*! \todo Finish function documentation!!!
  *  \brief
