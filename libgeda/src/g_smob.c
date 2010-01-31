@@ -853,7 +853,6 @@ SCM g_get_page_filename(SCM page_smob)
  */
 SCM g_set_page_filename(SCM page_smob, SCM scm_filename)
 {
-  SCM returned = SCM_EOL;
   PAGE *page;
   char *filename = NULL;
 
