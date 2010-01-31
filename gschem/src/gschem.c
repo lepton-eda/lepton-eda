@@ -216,9 +216,9 @@ void main_prog(void *closure, int argc, char *argv[])
     GtkWidget* error_diag =
       gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_ERROR,
                               GTK_BUTTONS_OK,
-                              message);
+                              "%s", message);
     gtk_dialog_run (GTK_DIALOG (error_diag));
-    g_error (message);
+    g_error ("%s", message);
   }
 
   /* Allocate w_current */
