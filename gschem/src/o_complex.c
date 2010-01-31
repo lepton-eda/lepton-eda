@@ -238,13 +238,12 @@ void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset)
    * the correct sense) were in use . */
   y = snap_grid (w_current, w_rtop);
 
-  iter = s_page_objects (toplevel->page_current);
-  while (iter != NULL) {
+  for (iter = s_page_objects (toplevel->page_current);
+       iter != NULL; iter = g_list_next (iter)) {
     o_current = iter->data;
     s_conn_remove_object (toplevel, o_current);
-    iter = g_list_next (iter);
   }
-        
+
   if (offset == 0) {
     s_log_message(_("Translating schematic [%d %d]\n"), -x, -y);
     o_glist_translate_world (toplevel, -x, -y,
@@ -256,15 +255,10 @@ void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset)
                              s_page_objects (toplevel->page_current));
   }
 
-  iter = s_page_objects (toplevel->page_current);
-  while (iter != NULL) {
+  for (iter = s_page_objects (toplevel->page_current);
+       iter != NULL;  iter = g_list_next (iter)) {
     o_current = iter->data;
-    if (o_current->type != OBJ_COMPLEX && o_current->type != OBJ_PLACEHOLDER) {
-      s_conn_update_object (toplevel, o_current);
-    } else {
-      s_conn_update_object (toplevel, o_current);
-    }
-    iter = g_list_next (iter);
+    s_conn_update_object (toplevel, o_current);
   }
 
   /* this is an experimental mod, to be able to translate to all
