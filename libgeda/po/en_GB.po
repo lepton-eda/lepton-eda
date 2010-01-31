@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2009-10-04 21:39-0400\n"
+"POT-Creation-Date: 2010-01-31 10:45+0000\n"
 "PO-Revision-Date: 2009-01-02 14:31+0100\n"
 "Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -44,12 +44,7 @@ msgstr "gEDA Schematic Symbol"
 msgid "o_save_objects: object %p has unknown type '%c'\n"
 msgstr "o_save_objects: object %p has unknown type '%c'\n"
 
-#: libgeda/src/a_basic.c:231
-#, c-format
-msgid "o_save: Could not open [%s]\n"
-msgstr "o_save: Could not open [%s]\n"
-
-#: libgeda/src/a_basic.c:436
+#: libgeda/src/a_basic.c:429
 #, c-format
 msgid ""
 "Read unexpected embedded symbol start marker in [%s] :\n"
@@ -60,7 +55,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: libgeda/src/a_basic.c:465
+#: libgeda/src/a_basic.c:458
 #, c-format
 msgid ""
 "Read unexpected embedded symbol end marker in [%s] :\n"
@@ -71,7 +66,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: libgeda/src/a_basic.c:494
+#: libgeda/src/a_basic.c:487
 #, c-format
 msgid ""
 "Read an old format sym/sch file!\n"
@@ -82,7 +77,7 @@ msgstr ""
 "Please run g[sym|sch]update on:\n"
 "[%s]\n"
 
-#: libgeda/src/a_basic.c:500
+#: libgeda/src/a_basic.c:493
 #, c-format
 msgid ""
 "Read garbage in [%s] :\n"
@@ -297,19 +292,19 @@ msgid "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"
 msgstr "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"
 
 #: libgeda/src/o_arc_basic.c:280 libgeda/src/o_box_basic.c:294
-#: libgeda/src/o_bus_basic.c:188 libgeda/src/o_circle_basic.c:286
-#: libgeda/src/o_line_basic.c:262 libgeda/src/o_net_basic.c:180
-#: libgeda/src/o_path_basic.c:192 libgeda/src/o_pin_basic.c:193
-#: libgeda/src/o_text_basic.c:416
+#: libgeda/src/o_bus_basic.c:187 libgeda/src/o_circle_basic.c:286
+#: libgeda/src/o_line_basic.c:262 libgeda/src/o_net_basic.c:179
+#: libgeda/src/o_path_basic.c:192 libgeda/src/o_pin_basic.c:192
+#: libgeda/src/o_text_basic.c:415
 #, c-format
 msgid "Found an invalid color [ %s ]\n"
 msgstr "Found an invalid colour [ %s ]\n"
 
 #: libgeda/src/o_arc_basic.c:281 libgeda/src/o_box_basic.c:295
-#: libgeda/src/o_bus_basic.c:189 libgeda/src/o_circle_basic.c:287
-#: libgeda/src/o_line_basic.c:263 libgeda/src/o_net_basic.c:181
-#: libgeda/src/o_path_basic.c:193 libgeda/src/o_pin_basic.c:194
-#: libgeda/src/o_text_basic.c:417
+#: libgeda/src/o_bus_basic.c:188 libgeda/src/o_circle_basic.c:287
+#: libgeda/src/o_line_basic.c:263 libgeda/src/o_net_basic.c:180
+#: libgeda/src/o_path_basic.c:193 libgeda/src/o_pin_basic.c:193
+#: libgeda/src/o_text_basic.c:416
 msgid "Setting color to default color\n"
 msgstr "Setting colour to default colour\n"
 
@@ -335,17 +330,17 @@ msgstr "Invalid length specified, setting to 100\n"
 msgid "Found a zero width/height box [ %c %d %d %d %d %d ]\n"
 msgstr "Found a zero width/height box [ %c %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_bus_basic.c:179
+#: libgeda/src/o_bus_basic.c:178
 #, c-format
 msgid "Found a zero length bus [ %c %d %d %d %d %d ]\n"
 msgstr "Found a zero length bus [ %c %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_bus_basic.c:194
+#: libgeda/src/o_bus_basic.c:193
 #, c-format
 msgid "Found an invalid bus ripper direction [ %s ]\n"
 msgstr "Found an invalid bus ripper direction [ %s ]\n"
 
-#: libgeda/src/o_bus_basic.c:195
+#: libgeda/src/o_bus_basic.c:194
 msgid "Resetting direction to neutral (no direction)\n"
 msgstr "Resetting direction to neutral (no direction)\n"
 
@@ -367,19 +362,19 @@ msgstr ""
 "Component not found:\n"
 " %s"
 
-#: libgeda/src/o_complex_basic.c:695
+#: libgeda/src/o_complex_basic.c:694
 #, c-format
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 msgstr "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 
-#: libgeda/src/o_complex_basic.c:707
+#: libgeda/src/o_complex_basic.c:706
 #, c-format
 msgid ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
 
-#: libgeda/src/o_complex_basic.c:1020
+#: libgeda/src/o_complex_basic.c:1019
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -388,7 +383,7 @@ msgstr ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse symbol file symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:1024
+#: libgeda/src/o_complex_basic.c:1023
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -397,7 +392,7 @@ msgstr ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse symbol file symversion=\n"
 
-#: libgeda/src/o_complex_basic.c:1040
+#: libgeda/src/o_complex_basic.c:1039
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -406,7 +401,7 @@ msgstr ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse attached symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:1065
+#: libgeda/src/o_complex_basic.c:1064
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -417,7 +412,7 @@ msgstr ""
 "\tsymversion=%s attached to instantiated symbol, but no symversion= inside "
 "symbol file\n"
 
-#: libgeda/src/o_complex_basic.c:1079
+#: libgeda/src/o_complex_basic.c:1078
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -426,17 +421,17 @@ msgstr ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
 "\tSymbol in library is newer than instantiated symbol\n"
 
-#: libgeda/src/o_complex_basic.c:1107
+#: libgeda/src/o_complex_basic.c:1106
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 
-#: libgeda/src/o_complex_basic.c:1125
+#: libgeda/src/o_complex_basic.c:1124
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\tMinor version change (file %.3f, instantiated %.3f)\n"
 
-#: libgeda/src/o_complex_basic.c:1136
+#: libgeda/src/o_complex_basic.c:1135
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -469,7 +464,7 @@ msgstr "Component [%s] has been successfully unembedded\n"
 msgid "Found a zero length line [ %c %d %d %d %d %d ]\n"
 msgstr "Found a zero length line [ %c %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_net_basic.c:170
+#: libgeda/src/o_net_basic.c:169
 #, c-format
 msgid "Found a zero length net [ %c %d %d %d %d %d ]\n"
 msgstr "Found a zero length net [ %c %d %d %d %d %d ]\n"
@@ -507,7 +502,7 @@ msgstr "Setting embedded to 0\n"
 msgid "Found an unsupported picture angle [ %d ]\n"
 msgstr "Found an unsupported picture angle [ %d ]\n"
 
-#: libgeda/src/o_picture.c:116 libgeda/src/o_text_basic.c:388
+#: libgeda/src/o_picture.c:116 libgeda/src/o_text_basic.c:387
 msgid "Setting angle to 0\n"
 msgstr "Setting angle to 0\n"
 
@@ -555,7 +550,7 @@ msgstr "Picture [%s] has been embedded\n"
 msgid "Picture [%s] has been unembedded\n"
 msgstr "Picture [%s] has been unembedded\n"
 
-#: libgeda/src/o_pin_basic.c:180
+#: libgeda/src/o_pin_basic.c:179
 msgid ""
 "Found a pin which did not have the whichone field set.\n"
 "Verify and correct manually.\n"
@@ -563,32 +558,32 @@ msgstr ""
 "Found a pin which did not have the whichone field set.\n"
 "Verify and correct manually.\n"
 
-#: libgeda/src/o_pin_basic.c:183
+#: libgeda/src/o_pin_basic.c:182
 #, c-format
 msgid "Found an invalid whichend on a pin (reseting to zero): %d\n"
 msgstr "Found an invalid whichend on a pin (reseting to zero): %d\n"
 
-#: libgeda/src/o_pin_basic.c:189
+#: libgeda/src/o_pin_basic.c:188
 #, c-format
 msgid "Found a zero length pin: [ %s ]\n"
 msgstr "Found a zero length pin: [ %s ]\n"
 
-#: libgeda/src/o_text_basic.c:374
+#: libgeda/src/o_text_basic.c:373
 #, c-format
 msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_text_basic.c:386
+#: libgeda/src/o_text_basic.c:385
 #, c-format
 msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_text_basic.c:408
+#: libgeda/src/o_text_basic.c:407
 #, c-format
 msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_text_basic.c:410
+#: libgeda/src/o_text_basic.c:409
 msgid "Setting alignment to LOWER_LEFT\n"
 msgstr "Setting alignment to LOWER_LEFT\n"
 
@@ -735,6 +730,9 @@ msgstr "Found [%s]\n"
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr "Could not find [%s] in any SourceLibrary\n"
+
+#~ msgid "o_save: Could not open [%s]\n"
+#~ msgstr "o_save: Could not open [%s]\n"
 
 #~ msgid "Did not find slotdef=#:#,#,#... attribute\n"
 #~ msgstr "Did not find slotdef=#:#,#,#... attribute\n"
