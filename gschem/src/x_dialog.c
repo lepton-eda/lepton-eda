@@ -1970,7 +1970,7 @@ void snap_size_dialog_response(GtkWidget *w, gint response,
     spin_size = g_object_get_data(G_OBJECT(w_current->tswindow),"spin_size");
     size = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spin_size));
 
-    w_current->toplevel->snap_size = size;
+    w_current->snap_size = size;
     i_update_grid_info (w_current);
     o_invalidate_all (w_current);
     w_current->toplevel->page_current->CHANGED=1;  /* maybe remove those two lines */
@@ -2052,7 +2052,7 @@ void snap_size_dialog (GSCHEM_TOPLEVEL *w_current)
 
   /* always set the current gschem value to the dialog entry */
   spin_size = g_object_get_data(G_OBJECT(w_current->tswindow),"spin_size");
-  gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_size), w_current->toplevel->snap_size);
+  gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_size), w_current->snap_size);
   gtk_editable_select_region(GTK_EDITABLE(spin_size), 0, -1);
 }
 

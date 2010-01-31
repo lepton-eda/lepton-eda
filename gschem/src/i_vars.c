@@ -179,7 +179,7 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
   toplevel->object_clipping = default_object_clipping;
   w_current->embed_complex   = default_embed_complex;
   w_current->include_complex = default_include_complex;
-  toplevel->snap_size       = default_snap_size;
+  w_current->snap_size       = default_snap_size;
   w_current->log_window      = default_log_window;
   w_current->log_window_type = default_log_window_type;
 

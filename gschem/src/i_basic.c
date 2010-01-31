@@ -167,9 +167,9 @@ void i_show_state(GSCHEM_TOPLEVEL *w_current, const char *message)
   if(toplevel->show_hidden_text)
     array[i--] = _("Show Hidden");
   
-  if(toplevel->snap == SNAP_OFF)
+  if(w_current->snap == SNAP_OFF)
     array[i--] = _("Snap Off");
-  else if (toplevel->snap == SNAP_RESNAP)
+  else if (w_current->snap == SNAP_RESNAP)
     array[i--] = _("Resnap Active");
   
   if(message && message[0])
@@ -535,7 +535,6 @@ void i_set_filename(GSCHEM_TOPLEVEL *w_current, const gchar *string)
  */
 void i_update_grid_info (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   gchar *print_string=NULL;
   gchar *snap=NULL;
   gchar *grid=NULL;
@@ -543,19 +542,19 @@ void i_update_grid_info (GSCHEM_TOPLEVEL *w_current)
   if (!w_current->grid_label)
     return;
 
-  switch (toplevel->snap) {
+  switch (w_current->snap) {
   case SNAP_OFF:
     snap = g_strdup(_("OFF"));
     break;
   case SNAP_GRID:
-    snap = g_strdup_printf("%d", toplevel->snap_size);
+    snap = g_strdup_printf("%d", w_current->snap_size);
     break;
   case SNAP_RESNAP:
-    snap = g_strdup_printf("%dR", toplevel->snap_size);
+    snap = g_strdup_printf("%dR", w_current->snap_size);
     break;
   default:
-    g_critical("i_set_grid: toplevel->snap out of range: %d\n", 
-               toplevel->snap);
+    g_critical("i_set_grid: w_current->snap out of range: %d\n",
+               w_current->snap);
   }
 
   if (w_current->grid == GRID_NONE) {

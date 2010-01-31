@@ -311,7 +311,7 @@ void o_move_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /* realign the object if we are in resnap mode */
   if (selection != NULL
-      && toplevel->snap == SNAP_RESNAP) {
+      && w_current->snap == SNAP_RESNAP) {
 
     if (g_list_length(selection) > 1) {
       /* find an object that is not attached to any other object */

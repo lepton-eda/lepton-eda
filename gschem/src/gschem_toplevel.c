@@ -193,6 +193,8 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->select_slack_pixels = 4;
   w_current->zoom_gain = 20;
   w_current->scrollpan_steps = 8;
+  w_current->snap = SNAP_GRID;
+  w_current->snap_size = 100;
 
   w_current->print_command = NULL;
 

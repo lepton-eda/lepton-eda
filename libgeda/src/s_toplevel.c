@@ -57,7 +57,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->width  = 1;
   toplevel->height = 1;
-  toplevel->snap = SNAP_GRID;
 
   toplevel->override_color = -1;
 
@@ -70,8 +69,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->show_hidden_text = 0;
 
   toplevel->major_changed_refdes = NULL;
-
-  toplevel->snap_size = 100;
 
   /* BLOCK SET IN GSCHEM, BUT USED IN LIBGEDA - NEEDS A RETHINK */
   toplevel->background_color   = 0;

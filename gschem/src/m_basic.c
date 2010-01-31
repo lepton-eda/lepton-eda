@@ -204,12 +204,12 @@ int snap_grid(GSCHEM_TOPLEVEL *w_current, int input)
   int p, m, n;
   int sign, value, snap_grid;
 
-  if (w_current->toplevel->snap == SNAP_OFF ||
-      w_current->toplevel->snap_size <= 0) {
+  if (w_current->snap == SNAP_OFF ||
+      w_current->snap_size <= 0) {
     return(input);
   }
 
-  snap_grid = w_current->toplevel->snap_size;
+  snap_grid = w_current->snap_size;
 
   /* this code was inspired from killustrator, it's much simpler than mine */
   sign = ( input < 0 ? -1 : 1 );

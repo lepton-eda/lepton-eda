@@ -60,12 +60,12 @@ static int query_dots_grid_spacing (GSCHEM_TOPLEVEL *w_current)
                         DOTS_VARIABLE_MODE_SPACING) + 0.1;
 
     /* limit minimum grid spacing to grid to snap_size */
-    if (incr < toplevel->snap_size) {
-      incr = toplevel->snap_size;
+    if (incr < w_current->snap_size) {
+      incr = w_current->snap_size;
     }
   } else {
     /* Fixed size grid in world coorinates */
-    incr = toplevel->snap_size;
+    incr = w_current->snap_size;
     screen_incr = SCREENabs (w_current, incr);
     if (screen_incr < w_current->dots_grid_fixed_threshold) {
       /* No grid drawn if the on-screen spacing is less than the threshold */
@@ -226,10 +226,9 @@ static void draw_mesh (GSCHEM_TOPLEVEL *w_current, int color,
  */
 static int query_mesh_grid_spacing (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int incr, screen_incr;
 
-  incr = toplevel->snap_size;
+  incr = w_current->snap_size;
   screen_incr = SCREENabs (w_current, incr);
 
   /* We draw a fine grid if its on-screen spacing is large enough */
@@ -261,12 +260,11 @@ static int query_mesh_grid_spacing (GSCHEM_TOPLEVEL *w_current)
 static void draw_mesh_grid_region (GSCHEM_TOPLEVEL *w_current,
                                    int x, int y, int width, int height)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int x_start, y_start, x_end, y_end;
   int incr;
   int screen_incr;
 
-  incr = toplevel->snap_size;
+  incr = w_current->snap_size;
   screen_incr = SCREENabs (w_current, incr);
 
   SCREENtoWORLD (w_current, x - 1, y + height + 1, &x_start, &y_start);

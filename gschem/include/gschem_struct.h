@@ -1,3 +1,6 @@
+/*! \brief different kind of snapping mechanisms used in TOPLEVEL */
+typedef enum {SNAP_OFF, SNAP_GRID, SNAP_RESNAP, SNAP_STATE_COUNT} SNAP_STATE;
+
 typedef struct st_gschem_toplevel GSCHEM_TOPLEVEL;
 
 struct st_gschem_toplevel {
@@ -175,6 +178,9 @@ struct st_gschem_toplevel {
   int bus_ripper_type;    /* sets type of the bus ripper (component or net) */
   int bus_ripper_rotation;  /* sets if the the bus ripper is symmetric or not */
   int magneticnet_mode; /* enables/disables the magnetic net mode ON/OFF */
+
+  SNAP_STATE snap;                      /* Whether/how to snap to grid */
+  int snap_size;                        /* Snap grid parameter */
 
   /* sets the mininum number of pixels necessary for the grid to be */
   /* displayed */

@@ -426,9 +426,6 @@ struct st_page {
 
 };
 
-/*! \brief different kind of snapping mechanisms used in TOPLEVEL */
-typedef enum {SNAP_OFF, SNAP_GRID, SNAP_RESNAP, SNAP_STATE_COUNT} SNAP_STATE;
-
 /*! \brief Type of callback function for calculating text bounds */
 typedef int(*RenderedBoundsFunc)(void *, OBJECT *, int *, int *, int *, int *);
 
@@ -452,9 +449,6 @@ struct st_toplevel {
 
   int width, height;			/* height, width of window */
 
-  /*! \brief whether and how to snap to the current grid */
-  SNAP_STATE snap;
-
   int override_color;			/* used in doing selections */
 
   int last_ps_color;                    /* used in print code */
@@ -475,9 +469,6 @@ struct st_toplevel {
   /* backup variables */
   int auto_save_interval;
   gint auto_save_timeout;
-
-  /* used by math funcs for the snapping */
-  int snap_size;		
 
   /* BLOCK SET IN GSCHEM, BUT USED IN LIBGEDA - NEEDS A RETHINK */
   int background_color;
