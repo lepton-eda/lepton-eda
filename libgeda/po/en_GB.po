@@ -3,11 +3,12 @@
 # This file is distributed under the same license as the libgeda package.
 # Peter Clifton <pcjc2@cam.ac.uk> 2007, 2008
 #
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-01-31 11:00+0000\n"
+"POT-Creation-Date: 2010-02-06 18:21+0000\n"
 "PO-Revision-Date: 2010-01-31 11:05+0100\n"
 "Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
@@ -735,30 +736,3 @@ msgstr "Found [%s]\n"
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr "Could not find [%s] in any SourceLibrary\n"
-
-#~ msgid "Did not find slotdef=#:#,#,#... attribute\n"
-#~ msgstr "Did not find slotdef=#:#,#,#... attribute\n"
-
-#~ msgid "Improper slotdef syntax: missing \":\".\n"
-#~ msgstr "Improper slotdef syntax: missing \":\".\n"
-
-#~ msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
-#~ msgstr "Did not find proper slotdef=#:#,#,#... attribute\n"
-
-#~ msgid "component missing pinseq= attribute\n"
-#~ msgstr "component missing pinseq= attribute\n"
-
-#~ msgid "Could not find character '%s' definition.\n"
-#~ msgstr "Could not find character '%s' definition.\n"
-
-#~ msgid "Failed to validate utf-8 character in font definition: \"%s\".\n"
-#~ msgstr "Failed to validate utf-8 character in font definition: \"%s\".\n"
-
-#~ msgid "Could not load question font char -- check font-directory keyword\n"
-#~ msgstr "Could not load question font char -- check font-directory keyword\n"
-
-#~ msgid "Read ~/.gEDA/%s file [%%s]\n"
-#~ msgstr "Read ~/.gEDA/%s file [%%s]\n"
-
-#~ msgid "Did not find optional ~/.gEDA/%s file [%%s]\n"
-#~ msgstr "Did not find optional ~/.gEDA/%s file [%%s]\n"
