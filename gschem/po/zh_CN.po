@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-01-31 13:12+0000\n"
+"POT-Creation-Date: 2010-02-06 23:11+0000\n"
 "PO-Revision-Date: 2010-01-29 15:51+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -25,86 +25,100 @@ msgstr "文件"
 msgid "New Window"
 msgstr "新建窗口"
 
-#: gschem/src/rcstrings.c:4 gschem/src/x_pagesel.c:252
-msgid "New Page"
-msgstr "新建页面"
+#: gschem/src/rcstrings.c:4
+#, fuzzy
+msgid "_New"
+msgstr "新建"
 
-#: gschem/src/rcstrings.c:5 gschem/src/x_pagesel.c:253
-msgid "Open Page..."
+#: gschem/src/rcstrings.c:5
+#, fuzzy
+msgid "_Open..."
 msgstr "打开页面..."
 
-#: gschem/src/rcstrings.c:6 gschem/src/x_pagesel.c:256
-msgid "Close Page"
-msgstr "关闭页面"
+#: gschem/src/rcstrings.c:6
+msgid "Open Recen_t"
+msgstr ""
 
 #: gschem/src/rcstrings.c:7
-msgid "Revert Page"
-msgstr "翻转页面"
+#, fuzzy
+msgid "_Save"
+msgstr "全部保存"
 
-#: gschem/src/rcstrings.c:8 gschem/src/x_pagesel.c:255
-msgid "Save Page"
-msgstr "保存页面"
-
-#: gschem/src/rcstrings.c:9
-msgid "Save Page As..."
+#: gschem/src/rcstrings.c:8
+#, fuzzy
+msgid "Save _As..."
 msgstr "页面保存为..."
 
-#: gschem/src/rcstrings.c:10
+#: gschem/src/rcstrings.c:9
 msgid "Save All"
 msgstr "全部保存"
 
-#: gschem/src/rcstrings.c:11 gschem/src/x_print.c:276
-msgid "Print..."
+#: gschem/src/rcstrings.c:10 gschem/src/rcstrings.c:79
+#, fuzzy
+msgid "_Revert"
+msgstr "翻转页面"
+
+#: gschem/src/rcstrings.c:11
+#, fuzzy
+msgid "_Print..."
 msgstr "打印..."
 
-#: gschem/src/rcstrings.c:12 gschem/src/x_image.c:495
-msgid "Write image..."
+#: gschem/src/rcstrings.c:12
+#, fuzzy
+msgid "Write _image..."
 msgstr "写入图片..."
 
-#: gschem/src/rcstrings.c:13
-msgid "Recent files"
-msgstr "最近打开的文件"
-
-#: gschem/src/rcstrings.c:14 gschem/src/x_script.c:47
+#: gschem/src/rcstrings.c:13 gschem/src/x_script.c:47
 msgid "Execute Script..."
 msgstr "执行脚本..."
 
-#: gschem/src/rcstrings.c:15
-msgid "Close Window"
-msgstr "关闭窗口"
+#: gschem/src/rcstrings.c:14 gschem/src/rcstrings.c:80
+#, fuzzy
+msgid "_Close"
+msgstr "关闭"
 
-#: gschem/src/rcstrings.c:16
-msgid "Quit"
+#: gschem/src/rcstrings.c:15
+#, fuzzy
+msgid "_Quit"
 msgstr "退出"
 
-#: gschem/src/rcstrings.c:18 gschem/src/i_callbacks.c:697
+#: gschem/src/rcstrings.c:17 gschem/src/i_callbacks.c:697
 msgid "Edit"
 msgstr "编辑"
 
-#: gschem/src/rcstrings.c:19 gschem/src/x_window.c:338
-msgid "Undo"
+#: gschem/src/rcstrings.c:18
+#, fuzzy
+msgid "_Undo"
 msgstr "撤销"
 
-#: gschem/src/rcstrings.c:20 gschem/src/x_window.c:345
-msgid "Redo"
+#: gschem/src/rcstrings.c:19
+#, fuzzy
+msgid "_Redo"
 msgstr "重做"
 
-#: gschem/src/rcstrings.c:21 gschem/src/i_basic.c:77 gschem/src/x_window.c:521
-msgid "Select Mode"
-msgstr "选择模式"
-
-#: gschem/src/rcstrings.c:22
-msgid "Cut"
+#: gschem/src/rcstrings.c:20
+#, fuzzy
+msgid "Cu_t"
 msgstr "剪切"
 
-#: gschem/src/rcstrings.c:23 gschem/src/i_basic.c:135
-#: gschem/src/i_callbacks.c:538 gschem/src/i_callbacks.c:562
-msgid "Copy"
+#: gschem/src/rcstrings.c:21
+#, fuzzy
+msgid "_Copy"
 msgstr "复制"
 
-#: gschem/src/rcstrings.c:24
-msgid "Paste"
+#: gschem/src/rcstrings.c:22
+#, fuzzy
+msgid "_Paste"
 msgstr "粘贴"
+
+#: gschem/src/rcstrings.c:23
+#, fuzzy
+msgid "_Delete"
+msgstr "删除"
+
+#: gschem/src/rcstrings.c:24 gschem/src/i_basic.c:77 gschem/src/x_window.c:521
+msgid "Select Mode"
+msgstr "选择模式"
 
 #: gschem/src/rcstrings.c:25
 msgid "Edit..."
@@ -126,35 +140,34 @@ msgstr "多重复制模式"
 msgid "Move Mode"
 msgstr "移动模式"
 
-#: gschem/src/rcstrings.c:30 gschem/src/i_callbacks.c:672
-#: gschem/src/x_multiattrib.c:1496
-msgid "Delete"
-msgstr "删除"
-
-#: gschem/src/rcstrings.c:31
+#: gschem/src/rcstrings.c:30
 msgid "Rotate 90 Mode"
 msgstr "旋转 90 度"
 
-#: gschem/src/rcstrings.c:32 gschem/src/i_basic.c:91
+#: gschem/src/rcstrings.c:31 gschem/src/i_basic.c:91
 msgid "Mirror Mode"
 msgstr "镜像模式"
 
-#: gschem/src/rcstrings.c:33
+#: gschem/src/rcstrings.c:32
 msgid "Slot..."
 msgstr ""
 
-#: gschem/src/rcstrings.c:34
+#: gschem/src/rcstrings.c:33
 msgid "Color..."
 msgstr "颜色..."
 
-#: gschem/src/rcstrings.c:35 gschem/src/i_callbacks.c:922
+#: gschem/src/rcstrings.c:34 gschem/src/i_callbacks.c:922
 #: gschem/src/x_dialog.c:2412
 msgid "Lock"
 msgstr "锁定"
 
-#: gschem/src/rcstrings.c:36 gschem/src/i_callbacks.c:940
+#: gschem/src/rcstrings.c:35 gschem/src/i_callbacks.c:940
 msgid "Unlock"
 msgstr "解锁"
+
+#: gschem/src/rcstrings.c:36
+msgid "Invoke Macro"
+msgstr ""
 
 #: gschem/src/rcstrings.c:37
 msgid "Line Width & Type..."
@@ -257,40 +270,45 @@ msgid "View"
 msgstr "查看"
 
 #: gschem/src/rcstrings.c:64
-msgid "Redraw"
+#, fuzzy
+msgid "_Redraw"
 msgstr "重画"
 
-#: gschem/src/rcstrings.c:65 gschem/src/i_callbacks.c:1476
-#: gschem/src/i_callbacks.c:1548
-msgid "Pan"
+#: gschem/src/rcstrings.c:65
+msgid "_Pan"
 msgstr ""
 
-#: gschem/src/rcstrings.c:66 gschem/src/i_basic.c:95
-msgid "Zoom Box"
-msgstr ""
+#: gschem/src/rcstrings.c:66
+#, fuzzy
+msgid "Zoom _Box"
+msgstr "放大"
 
 #: gschem/src/rcstrings.c:67
-msgid "Zoom Extents"
-msgstr ""
+#, fuzzy
+msgid "Zoom _Extents"
+msgstr "放大"
 
 #: gschem/src/rcstrings.c:68
-msgid "Zoom In"
+#, fuzzy
+msgid "Zoom _In"
 msgstr "放大"
 
 #: gschem/src/rcstrings.c:69
-msgid "Zoom Out"
+#, fuzzy
+msgid "Zoom _Out"
 msgstr "缩小"
 
 #: gschem/src/rcstrings.c:70
-msgid "Zoom Full"
-msgstr ""
+#, fuzzy
+msgid "Zoom _Full"
+msgstr "缩小"
 
 #: gschem/src/rcstrings.c:71
-msgid "Dark color scheme"
+msgid "_Dark color scheme"
 msgstr ""
 
 #: gschem/src/rcstrings.c:72
-msgid "Light color scheme"
+msgid "_Light color scheme"
 msgstr ""
 
 #: gschem/src/rcstrings.c:74
@@ -298,31 +316,28 @@ msgid "Page"
 msgstr "页面"
 
 #: gschem/src/rcstrings.c:75
-msgid "Manager..."
-msgstr ""
+#, fuzzy
+msgid "_Manager..."
+msgstr "打开页面..."
 
 #: gschem/src/rcstrings.c:76
-msgid "Next"
-msgstr "下一个"
-
-#: gschem/src/rcstrings.c:77
-msgid "Previous"
+#, fuzzy
+msgid "_Previous"
 msgstr "上一个"
 
-#: gschem/src/rcstrings.c:78 gschem/src/x_window.c:316
-msgid "New"
+#: gschem/src/rcstrings.c:77
+#, fuzzy
+msgid "_Next"
+msgstr "下一个"
+
+#: gschem/src/rcstrings.c:78
+#, fuzzy
+msgid "Ne_w"
 msgstr "新建"
 
-#: gschem/src/rcstrings.c:79
-msgid "Revert"
-msgstr ""
-
-#: gschem/src/rcstrings.c:80
-msgid "Close"
-msgstr "关闭"
-
 #: gschem/src/rcstrings.c:81
-msgid "Discard"
+#, fuzzy
+msgid "_Discard"
 msgstr "丢弃"
 
 #: gschem/src/rcstrings.c:83
@@ -330,55 +345,55 @@ msgid "Add"
 msgstr "添加"
 
 #: gschem/src/rcstrings.c:84
-msgid "Component..."
+#, fuzzy
+msgid "_Component..."
 msgstr "组件..."
 
-#: gschem/src/rcstrings.c:85 gschem/src/i_callbacks.c:2403
-#: gschem/src/i_callbacks.c:2430 gschem/src/x_dialog.c:2379
-msgid "Net"
-msgstr ""
+#: gschem/src/rcstrings.c:85
+#, fuzzy
+msgid "_Net"
+msgstr "下一个"
 
-#: gschem/src/rcstrings.c:86 gschem/src/i_callbacks.c:2474
-#: gschem/src/i_callbacks.c:2501 gschem/src/x_dialog.c:2397
-#: gschem/src/x_window.c:374
-msgid "Bus"
+#: gschem/src/rcstrings.c:86
+#, fuzzy
+msgid "B_us"
 msgstr "总线"
 
 #: gschem/src/rcstrings.c:87
-msgid "Attribute..."
+#, fuzzy
+msgid "_Attribute..."
 msgstr "属性..."
 
 #: gschem/src/rcstrings.c:88
-msgid "Text..."
+#, fuzzy
+msgid "_Text..."
 msgstr "文本..."
 
-#: gschem/src/rcstrings.c:89 gschem/src/i_callbacks.c:2582
-#: gschem/src/i_callbacks.c:2605
-msgid "Line"
+#: gschem/src/rcstrings.c:89
+msgid "_Line"
 msgstr ""
 
-#: gschem/src/rcstrings.c:90 gschem/src/i_callbacks.c:2627
-#: gschem/src/i_callbacks.c:2650
-msgid "Box"
+#: gschem/src/rcstrings.c:90
+msgid "_Box"
 msgstr ""
 
-#: gschem/src/rcstrings.c:91 gschem/src/i_callbacks.c:2706
-#: gschem/src/i_callbacks.c:2730
-msgid "Circle"
+#: gschem/src/rcstrings.c:91
+#, fuzzy
+msgid "C_ircle"
 msgstr "圆"
 
-#: gschem/src/rcstrings.c:92 gschem/src/i_callbacks.c:2752
-#: gschem/src/i_callbacks.c:2775
-msgid "Arc"
+#: gschem/src/rcstrings.c:92
+#, fuzzy
+msgid "A_rc"
 msgstr "弧线"
 
-#: gschem/src/rcstrings.c:93 gschem/src/i_callbacks.c:2797
-#: gschem/src/i_callbacks.c:2820 gschem/src/x_dialog.c:2370
-msgid "Pin"
+#: gschem/src/rcstrings.c:93
+msgid "_Pin"
 msgstr ""
 
 #: gschem/src/rcstrings.c:94
-msgid "Picture..."
+#, fuzzy
+msgid "Pictu_re..."
 msgstr "图片..."
 
 #: gschem/src/rcstrings.c:96
@@ -386,63 +401,70 @@ msgid "Hierarchy"
 msgstr "层次"
 
 #: gschem/src/rcstrings.c:97
-msgid "Down Schematic"
+msgid "_Down Schematic"
 msgstr ""
 
 #: gschem/src/rcstrings.c:98
-msgid "Down Symbol"
+msgid "Down _Symbol"
 msgstr ""
 
 #: gschem/src/rcstrings.c:99
-msgid "Up"
+msgid "_Up"
 msgstr ""
 
 #: gschem/src/rcstrings.c:100
-msgid "Documentation"
+#, fuzzy
+msgid "D_ocumentation..."
 msgstr "文档"
 
 #: gschem/src/rcstrings.c:102 gschem/src/x_compselect.c:1414
 msgid "Attributes"
 msgstr "属性"
 
-#: gschem/src/rcstrings.c:103 gschem/src/i_callbacks.c:3091
-msgid "Attach"
+#: gschem/src/rcstrings.c:103
+#, fuzzy
+msgid "_Attach"
 msgstr "连接"
 
-#: gschem/src/rcstrings.c:104 gschem/src/i_callbacks.c:3138
-msgid "Detach"
+#: gschem/src/rcstrings.c:104
+#, fuzzy
+msgid "_Detach"
 msgstr "脱离"
 
 #: gschem/src/rcstrings.c:105
-msgid "Show Value"
+#, fuzzy
+msgid "Show _Value"
 msgstr "显示数值"
 
 #: gschem/src/rcstrings.c:106
-msgid "Show Name"
+#, fuzzy
+msgid "Show _Name"
 msgstr "显示名称"
 
 #: gschem/src/rcstrings.c:107
-msgid "Show Both"
+#, fuzzy
+msgid "Show _Both"
 msgstr "都显示"
 
 #: gschem/src/rcstrings.c:108
-msgid "Toggle Visibility"
+#, fuzzy
+msgid "_Toggle Visibility"
 msgstr "变换可见性"
 
 #: gschem/src/rcstrings.c:109
-msgid "Find Specific Text..."
+msgid "_Find Specific Text..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:110
-msgid "Hide Specific Text..."
+msgid "_Hide Specific Text..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:111
-msgid "Show Specific Text..."
+msgid "_Show Specific Text..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:112
-msgid "Autonumber Text..."
+msgid "A_utonumber Text..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:114
@@ -450,72 +472,80 @@ msgid "Options"
 msgstr ""
 
 #: gschem/src/rcstrings.c:115
-msgid "Text Size..."
-msgstr ""
+#, fuzzy
+msgid "_Text Size..."
+msgstr "文本..."
 
 #: gschem/src/rcstrings.c:116
-msgid "Cycle grid styles"
+msgid "Cycle _grid styles"
 msgstr ""
 
 #: gschem/src/rcstrings.c:117
-msgid "Toggle Snap On/Off"
+msgid "Toggle _Snap On/Off"
 msgstr ""
 
 #: gschem/src/rcstrings.c:118
-msgid "Snap Grid Spacing..."
+msgid "Snap Grid S_pacing..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:119
-msgid "Scale up Grid Spacing"
+msgid "Scale _up Grid Spacing"
 msgstr ""
 
 #: gschem/src/rcstrings.c:120
-msgid "Scale down Grid Spacing"
+msgid "Scale _down Grid Spacing"
 msgstr ""
 
 #: gschem/src/rcstrings.c:121
-msgid "Toggle Outline/Box"
+msgid "Toggle _Outline/Box"
 msgstr ""
 
 #: gschem/src/rcstrings.c:122
-msgid "Toggle Net Rubberband"
+msgid "Toggle Net _Rubberband"
 msgstr ""
 
 #: gschem/src/rcstrings.c:123
-msgid "Show Log Window..."
+msgid "Toggle _Magnetic Net"
 msgstr ""
 
 #: gschem/src/rcstrings.c:124
-msgid "Show Coord Window..."
+msgid "Show _Log Window..."
 msgstr ""
 
-#: gschem/src/rcstrings.c:126
-msgid "Help"
+#: gschem/src/rcstrings.c:125
+msgid "Show _Coord Window..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:127
-msgid "Manual"
+msgid "Help"
 msgstr ""
 
 #: gschem/src/rcstrings.c:128
-msgid "gEDA Documentation"
-msgstr ""
+#, fuzzy
+msgid "gEDA Docu_mentation..."
+msgstr "文档"
 
 #: gschem/src/rcstrings.c:129
-msgid "gschem FAQ"
+msgid "gschem _FAQ..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:130
-msgid "Component Documentation"
+msgid "gEDA _Wiki..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:131
-msgid "About gschem"
+#, fuzzy
+msgid "Component D_ocumentation..."
+msgstr "文档"
+
+#: gschem/src/rcstrings.c:132
+msgid "_Hotkeys..."
 msgstr ""
 
-#: gschem/src/rcstrings.c:132 gschem/src/x_dialog.c:2706
-msgid "Hotkeys"
-msgstr ""
+#: gschem/src/rcstrings.c:133
+#, fuzzy
+msgid "_About..."
+msgstr "属性..."
 
 #: gschem/src/a_zoom.c:212
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -707,6 +737,10 @@ msgstr ""
 msgid "Rotate Mode"
 msgstr ""
 
+#: gschem/src/i_basic.c:95
+msgid "Zoom Box"
+msgstr ""
+
 #: gschem/src/i_basic.c:99
 msgid "Pan Mode"
 msgstr ""
@@ -751,6 +785,11 @@ msgstr ""
 #: gschem/src/i_basic.c:133
 msgid "Pin Mode"
 msgstr ""
+
+#: gschem/src/i_basic.c:135 gschem/src/i_callbacks.c:538
+#: gschem/src/i_callbacks.c:562
+msgid "Copy"
+msgstr "复制"
 
 #: gschem/src/i_basic.c:137 gschem/src/i_callbacks.c:628
 #: gschem/src/i_callbacks.c:652
@@ -836,6 +875,10 @@ msgstr ""
 msgid "Select objs first"
 msgstr ""
 
+#: gschem/src/i_callbacks.c:672 gschem/src/x_multiattrib.c:1496
+msgid "Delete"
+msgstr "删除"
+
 #: gschem/src/i_callbacks.c:712
 msgid "Edit pin type"
 msgstr ""
@@ -900,6 +943,10 @@ msgstr ""
 
 #: gschem/src/i_callbacks.c:1170
 msgid "MakeVisible"
+msgstr ""
+
+#: gschem/src/i_callbacks.c:1476 gschem/src/i_callbacks.c:1548
+msgid "Pan"
 msgstr ""
 
 #: gschem/src/i_callbacks.c:1567
@@ -997,6 +1044,37 @@ msgstr ""
 msgid "Attribute"
 msgstr ""
 
+#: gschem/src/i_callbacks.c:2403 gschem/src/i_callbacks.c:2430
+#: gschem/src/x_dialog.c:2379
+msgid "Net"
+msgstr ""
+
+#: gschem/src/i_callbacks.c:2474 gschem/src/i_callbacks.c:2501
+#: gschem/src/x_dialog.c:2397 gschem/src/x_window.c:374
+msgid "Bus"
+msgstr "总线"
+
+#: gschem/src/i_callbacks.c:2582 gschem/src/i_callbacks.c:2605
+msgid "Line"
+msgstr ""
+
+#: gschem/src/i_callbacks.c:2627 gschem/src/i_callbacks.c:2650
+msgid "Box"
+msgstr ""
+
+#: gschem/src/i_callbacks.c:2706 gschem/src/i_callbacks.c:2730
+msgid "Circle"
+msgstr "圆"
+
+#: gschem/src/i_callbacks.c:2752 gschem/src/i_callbacks.c:2775
+msgid "Arc"
+msgstr "弧线"
+
+#: gschem/src/i_callbacks.c:2797 gschem/src/i_callbacks.c:2820
+#: gschem/src/x_dialog.c:2370
+msgid "Pin"
+msgstr ""
+
 #: gschem/src/i_callbacks.c:2879
 #, c-format
 msgid "Searching for source [%s]\n"
@@ -1025,6 +1103,14 @@ msgid ""
 "This command retrieves the component documentation from the web, but there "
 "is no component selected"
 msgstr ""
+
+#: gschem/src/i_callbacks.c:3091
+msgid "Attach"
+msgstr "连接"
+
+#: gschem/src/i_callbacks.c:3138
+msgid "Detach"
+msgstr "脱离"
 
 #: gschem/src/i_callbacks.c:3173
 msgid "ShowN"
@@ -1830,6 +1916,10 @@ msgstr ""
 msgid "Object color:"
 msgstr ""
 
+#: gschem/src/x_dialog.c:2706
+msgid "Hotkeys"
+msgstr ""
+
 #: gschem/src/x_dialog.c:2770
 msgid "Function"
 msgstr ""
@@ -2001,6 +2091,10 @@ msgstr ""
 msgid "Image type"
 msgstr ""
 
+#: gschem/src/x_image.c:495
+msgid "Write image..."
+msgstr "写入图片..."
+
 #: gschem/src/x_log.c:188
 msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
 msgstr ""
@@ -2147,6 +2241,22 @@ msgstr ""
 msgid "Add Attribute"
 msgstr ""
 
+#: gschem/src/x_pagesel.c:252
+msgid "New Page"
+msgstr "新建页面"
+
+#: gschem/src/x_pagesel.c:253
+msgid "Open Page..."
+msgstr "打开页面..."
+
+#: gschem/src/x_pagesel.c:255
+msgid "Save Page"
+msgstr "保存页面"
+
+#: gschem/src/x_pagesel.c:256
+msgid "Close Page"
+msgstr "关闭页面"
+
 #: gschem/src/x_pagesel.c:257
 msgid "Discard Page"
 msgstr ""
@@ -2194,6 +2304,10 @@ msgstr ""
 #: gschem/src/x_print.c:216
 msgid "Portrait"
 msgstr ""
+
+#: gschem/src/x_print.c:276
+msgid "Print..."
+msgstr "打印..."
 
 #: gschem/src/x_print.c:284
 msgid "Settings"
@@ -2245,6 +2359,10 @@ msgstr ""
 msgid "Couldn't allocate gc\n"
 msgstr ""
 
+#: gschem/src/x_window.c:316
+msgid "New"
+msgstr "新建"
+
 #: gschem/src/x_window.c:317
 msgid "New file"
 msgstr ""
@@ -2265,9 +2383,17 @@ msgstr ""
 msgid "Save file"
 msgstr ""
 
+#: gschem/src/x_window.c:338
+msgid "Undo"
+msgstr "撤销"
+
 #: gschem/src/x_window.c:339
 msgid "Undo last operation"
 msgstr ""
+
+#: gschem/src/x_window.c:345
+msgid "Redo"
+msgstr "重做"
 
 #: gschem/src/x_window.c:346
 msgid "Redo last undo"
@@ -2375,3 +2501,9 @@ msgstr ""
 #: gschem/data/geda-gschem.desktop.in.h:4
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr ""
+
+#~ msgid "Recent files"
+#~ msgstr "最近打开的文件"
+
+#~ msgid "Close Window"
+#~ msgstr "关闭窗口"

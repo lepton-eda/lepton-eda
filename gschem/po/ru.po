@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-01-31 11:00+0000\n"
+"POT-Creation-Date: 2010-02-06 23:11+0000\n"
 "PO-Revision-Date: 2009-02-22 21:51+0300\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -28,86 +28,100 @@ msgstr "Файл"
 msgid "New Window"
 msgstr "Новое окно"
 
-#: gschem/src/rcstrings.c:4 gschem/src/x_pagesel.c:252
-msgid "New Page"
-msgstr "Новая страница"
+#: gschem/src/rcstrings.c:4
+#, fuzzy
+msgid "_New"
+msgstr "Новая"
 
-#: gschem/src/rcstrings.c:5 gschem/src/x_pagesel.c:253
-msgid "Open Page..."
-msgstr "Открыть страницу..."
+#: gschem/src/rcstrings.c:5
+#, fuzzy
+msgid "_Open..."
+msgstr "Открыть..."
 
-#: gschem/src/rcstrings.c:6 gschem/src/x_pagesel.c:256
-msgid "Close Page"
-msgstr "Закрыть страницу"
+#: gschem/src/rcstrings.c:6
+msgid "Open Recen_t"
+msgstr ""
 
 #: gschem/src/rcstrings.c:7
-msgid "Revert Page"
-msgstr "Возвратить страницу"
+#, fuzzy
+msgid "_Save"
+msgstr "Сохранить"
 
-#: gschem/src/rcstrings.c:8 gschem/src/x_pagesel.c:255
-msgid "Save Page"
-msgstr "Сохранить страницу"
+#: gschem/src/rcstrings.c:8
+#, fuzzy
+msgid "Save _As..."
+msgstr "Сохранить как..."
 
 #: gschem/src/rcstrings.c:9
-msgid "Save Page As..."
-msgstr "Сохранить страницу как..."
-
-#: gschem/src/rcstrings.c:10
 msgid "Save All"
 msgstr "Сохранить все"
 
-#: gschem/src/rcstrings.c:11 gschem/src/x_print.c:276
-msgid "Print..."
+#: gschem/src/rcstrings.c:10 gschem/src/rcstrings.c:79
+#, fuzzy
+msgid "_Revert"
+msgstr "Вернуть сохранённую"
+
+#: gschem/src/rcstrings.c:11
+#, fuzzy
+msgid "_Print..."
 msgstr "Печать..."
 
-#: gschem/src/rcstrings.c:12 gschem/src/x_image.c:495
-msgid "Write image..."
+#: gschem/src/rcstrings.c:12
+#, fuzzy
+msgid "Write _image..."
 msgstr "Сохранить изображение..."
 
-#: gschem/src/rcstrings.c:13
-msgid "Recent files"
-msgstr "Недавние файлы"
-
-#: gschem/src/rcstrings.c:14 gschem/src/x_script.c:47
+#: gschem/src/rcstrings.c:13 gschem/src/x_script.c:47
 msgid "Execute Script..."
 msgstr "Выполнить скрипт..."
 
-#: gschem/src/rcstrings.c:15
-msgid "Close Window"
-msgstr "Закрыть окно"
+#: gschem/src/rcstrings.c:14 gschem/src/rcstrings.c:80
+#, fuzzy
+msgid "_Close"
+msgstr "Закрыть"
 
-#: gschem/src/rcstrings.c:16
-msgid "Quit"
+#: gschem/src/rcstrings.c:15
+#, fuzzy
+msgid "_Quit"
 msgstr "Выйти"
 
-#: gschem/src/rcstrings.c:18 gschem/src/i_callbacks.c:697
+#: gschem/src/rcstrings.c:17 gschem/src/i_callbacks.c:697
 msgid "Edit"
 msgstr "Правка"
 
-#: gschem/src/rcstrings.c:19 gschem/src/x_window.c:338
-msgid "Undo"
+#: gschem/src/rcstrings.c:18
+#, fuzzy
+msgid "_Undo"
 msgstr "Отменить действие"
 
-#: gschem/src/rcstrings.c:20 gschem/src/x_window.c:345
-msgid "Redo"
+#: gschem/src/rcstrings.c:19
+#, fuzzy
+msgid "_Redo"
 msgstr "Повторить действие"
 
-#: gschem/src/rcstrings.c:21 gschem/src/i_basic.c:77 gschem/src/x_window.c:521
-msgid "Select Mode"
-msgstr "Режим выборки"
-
-#: gschem/src/rcstrings.c:22
-msgid "Cut"
+#: gschem/src/rcstrings.c:20
+#, fuzzy
+msgid "Cu_t"
 msgstr "Вырезать"
 
-#: gschem/src/rcstrings.c:23 gschem/src/i_basic.c:135
-#: gschem/src/i_callbacks.c:538 gschem/src/i_callbacks.c:562
-msgid "Copy"
+#: gschem/src/rcstrings.c:21
+#, fuzzy
+msgid "_Copy"
 msgstr "Копировать"
 
-#: gschem/src/rcstrings.c:24
-msgid "Paste"
+#: gschem/src/rcstrings.c:22
+#, fuzzy
+msgid "_Paste"
 msgstr "Вставить"
+
+#: gschem/src/rcstrings.c:23
+#, fuzzy
+msgid "_Delete"
+msgstr "Удалить"
+
+#: gschem/src/rcstrings.c:24 gschem/src/i_basic.c:77 gschem/src/x_window.c:521
+msgid "Select Mode"
+msgstr "Режим выборки"
 
 #: gschem/src/rcstrings.c:25
 msgid "Edit..."
@@ -129,35 +143,34 @@ msgstr "Режим множественного копирования"
 msgid "Move Mode"
 msgstr "Режим перемещения"
 
-#: gschem/src/rcstrings.c:30 gschem/src/i_callbacks.c:672
-#: gschem/src/x_multiattrib.c:1496
-msgid "Delete"
-msgstr "Удалить"
-
-#: gschem/src/rcstrings.c:31
+#: gschem/src/rcstrings.c:30
 msgid "Rotate 90 Mode"
 msgstr "Режим вращения на 90°"
 
-#: gschem/src/rcstrings.c:32 gschem/src/i_basic.c:91
+#: gschem/src/rcstrings.c:31 gschem/src/i_basic.c:91
 msgid "Mirror Mode"
 msgstr "Режим зеркалирования"
 
-#: gschem/src/rcstrings.c:33
+#: gschem/src/rcstrings.c:32
 msgid "Slot..."
 msgstr "Слот..."
 
-#: gschem/src/rcstrings.c:34
+#: gschem/src/rcstrings.c:33
 msgid "Color..."
 msgstr "Цвет..."
 
-#: gschem/src/rcstrings.c:35 gschem/src/i_callbacks.c:922
+#: gschem/src/rcstrings.c:34 gschem/src/i_callbacks.c:922
 #: gschem/src/x_dialog.c:2412
 msgid "Lock"
 msgstr "Блокировать"
 
-#: gschem/src/rcstrings.c:36 gschem/src/i_callbacks.c:940
+#: gschem/src/rcstrings.c:35 gschem/src/i_callbacks.c:940
 msgid "Unlock"
 msgstr "Разблокировать"
+
+#: gschem/src/rcstrings.c:36
+msgid "Invoke Macro"
+msgstr ""
 
 #: gschem/src/rcstrings.c:37
 msgid "Line Width & Type..."
@@ -260,40 +273,48 @@ msgid "View"
 msgstr "Вид"
 
 #: gschem/src/rcstrings.c:64
-msgid "Redraw"
+#, fuzzy
+msgid "_Redraw"
 msgstr "Перерисовать"
 
-#: gschem/src/rcstrings.c:65 gschem/src/i_callbacks.c:1476
-#: gschem/src/i_callbacks.c:1548
-msgid "Pan"
+#: gschem/src/rcstrings.c:65
+#, fuzzy
+msgid "_Pan"
 msgstr "Центрировать"
 
-#: gschem/src/rcstrings.c:66 gschem/src/i_basic.c:95
-msgid "Zoom Box"
+#: gschem/src/rcstrings.c:66
+#, fuzzy
+msgid "Zoom _Box"
 msgstr "Область масштабирования"
 
 #: gschem/src/rcstrings.c:67
-msgid "Zoom Extents"
+#, fuzzy
+msgid "Zoom _Extents"
 msgstr "Вместить содержимое"
 
 #: gschem/src/rcstrings.c:68
-msgid "Zoom In"
+#, fuzzy
+msgid "Zoom _In"
 msgstr "Увеличить"
 
 #: gschem/src/rcstrings.c:69
-msgid "Zoom Out"
+#, fuzzy
+msgid "Zoom _Out"
 msgstr "Уменьшить"
 
 #: gschem/src/rcstrings.c:70
-msgid "Zoom Full"
+#, fuzzy
+msgid "Zoom _Full"
 msgstr "Вместить всё поле"
 
 #: gschem/src/rcstrings.c:71
-msgid "Dark color scheme"
+#, fuzzy
+msgid "_Dark color scheme"
 msgstr "Тёмная цветовая схема"
 
 #: gschem/src/rcstrings.c:72
-msgid "Light color scheme"
+#, fuzzy
+msgid "_Light color scheme"
 msgstr "Светлая цветовая схема"
 
 #: gschem/src/rcstrings.c:74
@@ -301,31 +322,28 @@ msgid "Page"
 msgstr "Страница"
 
 #: gschem/src/rcstrings.c:75
-msgid "Manager..."
+#, fuzzy
+msgid "_Manager..."
 msgstr "Управление..."
 
 #: gschem/src/rcstrings.c:76
-msgid "Next"
-msgstr "Следующая"
-
-#: gschem/src/rcstrings.c:77
-msgid "Previous"
+#, fuzzy
+msgid "_Previous"
 msgstr "Предыдущая"
 
-#: gschem/src/rcstrings.c:78 gschem/src/x_window.c:316
-msgid "New"
+#: gschem/src/rcstrings.c:77
+#, fuzzy
+msgid "_Next"
+msgstr "Следующая"
+
+#: gschem/src/rcstrings.c:78
+#, fuzzy
+msgid "Ne_w"
 msgstr "Новая"
 
-#: gschem/src/rcstrings.c:79
-msgid "Revert"
-msgstr "Вернуть сохранённую"
-
-#: gschem/src/rcstrings.c:80
-msgid "Close"
-msgstr "Закрыть"
-
 #: gschem/src/rcstrings.c:81
-msgid "Discard"
+#, fuzzy
+msgid "_Discard"
 msgstr "Отвергнуть"
 
 #: gschem/src/rcstrings.c:83
@@ -333,55 +351,58 @@ msgid "Add"
 msgstr "Добавить"
 
 #: gschem/src/rcstrings.c:84
-msgid "Component..."
+#, fuzzy
+msgid "_Component..."
 msgstr "Элемент..."
 
-#: gschem/src/rcstrings.c:85 gschem/src/i_callbacks.c:2403
-#: gschem/src/i_callbacks.c:2430 gschem/src/x_dialog.c:2379
-msgid "Net"
+#: gschem/src/rcstrings.c:85
+#, fuzzy
+msgid "_Net"
 msgstr "Соединение"
 
-#: gschem/src/rcstrings.c:86 gschem/src/i_callbacks.c:2474
-#: gschem/src/i_callbacks.c:2501 gschem/src/x_dialog.c:2397
-#: gschem/src/x_window.c:374
-msgid "Bus"
+#: gschem/src/rcstrings.c:86
+#, fuzzy
+msgid "B_us"
 msgstr "Шину"
 
 #: gschem/src/rcstrings.c:87
-msgid "Attribute..."
+#, fuzzy
+msgid "_Attribute..."
 msgstr "Атрибут..."
 
 #: gschem/src/rcstrings.c:88
-msgid "Text..."
+#, fuzzy
+msgid "_Text..."
 msgstr "Текст..."
 
-#: gschem/src/rcstrings.c:89 gschem/src/i_callbacks.c:2582
-#: gschem/src/i_callbacks.c:2605
-msgid "Line"
+#: gschem/src/rcstrings.c:89
+#, fuzzy
+msgid "_Line"
 msgstr "Отрезок"
 
-#: gschem/src/rcstrings.c:90 gschem/src/i_callbacks.c:2627
-#: gschem/src/i_callbacks.c:2650
-msgid "Box"
+#: gschem/src/rcstrings.c:90
+#, fuzzy
+msgid "_Box"
 msgstr "Прямоугольник"
 
-#: gschem/src/rcstrings.c:91 gschem/src/i_callbacks.c:2706
-#: gschem/src/i_callbacks.c:2730
-msgid "Circle"
+#: gschem/src/rcstrings.c:91
+#, fuzzy
+msgid "C_ircle"
 msgstr "Окружность"
 
-#: gschem/src/rcstrings.c:92 gschem/src/i_callbacks.c:2752
-#: gschem/src/i_callbacks.c:2775
-msgid "Arc"
+#: gschem/src/rcstrings.c:92
+#, fuzzy
+msgid "A_rc"
 msgstr "Дугу"
 
-#: gschem/src/rcstrings.c:93 gschem/src/i_callbacks.c:2797
-#: gschem/src/i_callbacks.c:2820 gschem/src/x_dialog.c:2370
-msgid "Pin"
+#: gschem/src/rcstrings.c:93
+#, fuzzy
+msgid "_Pin"
 msgstr "Вывод"
 
 #: gschem/src/rcstrings.c:94
-msgid "Picture..."
+#, fuzzy
+msgid "Pictu_re..."
 msgstr "Изображение..."
 
 #: gschem/src/rcstrings.c:96
@@ -389,63 +410,77 @@ msgid "Hierarchy"
 msgstr "Иерархия"
 
 #: gschem/src/rcstrings.c:97
-msgid "Down Schematic"
+#, fuzzy
+msgid "_Down Schematic"
 msgstr "Вглубь схемы"
 
 #: gschem/src/rcstrings.c:98
-msgid "Down Symbol"
+#, fuzzy
+msgid "Down _Symbol"
 msgstr "Внутрь символа"
 
 #: gschem/src/rcstrings.c:99
-msgid "Up"
+#, fuzzy
+msgid "_Up"
 msgstr "Наверх"
 
 #: gschem/src/rcstrings.c:100
-msgid "Documentation"
+#, fuzzy
+msgid "D_ocumentation..."
 msgstr "Документация"
 
 #: gschem/src/rcstrings.c:102 gschem/src/x_compselect.c:1414
 msgid "Attributes"
 msgstr "Атрибуты"
 
-#: gschem/src/rcstrings.c:103 gschem/src/i_callbacks.c:3091
-msgid "Attach"
+#: gschem/src/rcstrings.c:103
+#, fuzzy
+msgid "_Attach"
 msgstr "Присоединить"
 
-#: gschem/src/rcstrings.c:104 gschem/src/i_callbacks.c:3138
-msgid "Detach"
+#: gschem/src/rcstrings.c:104
+#, fuzzy
+msgid "_Detach"
 msgstr "Отсоединить"
 
 #: gschem/src/rcstrings.c:105
-msgid "Show Value"
+#, fuzzy
+msgid "Show _Value"
 msgstr "Показать значение"
 
 #: gschem/src/rcstrings.c:106
-msgid "Show Name"
+#, fuzzy
+msgid "Show _Name"
 msgstr "Показать имя"
 
 #: gschem/src/rcstrings.c:107
-msgid "Show Both"
+#, fuzzy
+msgid "Show _Both"
 msgstr "Показать имя и значение"
 
 #: gschem/src/rcstrings.c:108
-msgid "Toggle Visibility"
+#, fuzzy
+msgid "_Toggle Visibility"
 msgstr "Переключить отображение"
 
 #: gschem/src/rcstrings.c:109
-msgid "Find Specific Text..."
+#, fuzzy
+msgid "_Find Specific Text..."
 msgstr "Найти текст..."
 
 #: gschem/src/rcstrings.c:110
-msgid "Hide Specific Text..."
+#, fuzzy
+msgid "_Hide Specific Text..."
 msgstr "Скрыть текст..."
 
 #: gschem/src/rcstrings.c:111
-msgid "Show Specific Text..."
+#, fuzzy
+msgid "_Show Specific Text..."
 msgstr "Показать текст..."
 
 #: gschem/src/rcstrings.c:112
-msgid "Autonumber Text..."
+#, fuzzy
+msgid "A_utonumber Text..."
 msgstr "Автонумеровать текст..."
 
 #: gschem/src/rcstrings.c:114
@@ -453,72 +488,92 @@ msgid "Options"
 msgstr "Настройки"
 
 #: gschem/src/rcstrings.c:115
-msgid "Text Size..."
+#, fuzzy
+msgid "_Text Size..."
 msgstr "Размер текста..."
 
 #: gschem/src/rcstrings.c:116
-msgid "Cycle grid styles"
+#, fuzzy
+msgid "Cycle _grid styles"
 msgstr "Переключить стиль сетки"
 
 #: gschem/src/rcstrings.c:117
-msgid "Toggle Snap On/Off"
+#, fuzzy
+msgid "Toggle _Snap On/Off"
 msgstr "Включить / выключить привязку"
 
 #: gschem/src/rcstrings.c:118
-msgid "Snap Grid Spacing..."
+#, fuzzy
+msgid "Snap Grid S_pacing..."
 msgstr "Шаг привязки к сетке..."
 
 #: gschem/src/rcstrings.c:119
-msgid "Scale up Grid Spacing"
+#, fuzzy
+msgid "Scale _up Grid Spacing"
 msgstr "Увеличить шаг привязки"
 
 #: gschem/src/rcstrings.c:120
-msgid "Scale down Grid Spacing"
+#, fuzzy
+msgid "Scale _down Grid Spacing"
 msgstr "Уменьшить шаг привязки"
 
 #: gschem/src/rcstrings.c:121
-msgid "Toggle Outline/Box"
+#, fuzzy
+msgid "Toggle _Outline/Box"
 msgstr "Изменить вид перетаскиваемого"
 
 #: gschem/src/rcstrings.c:122
-msgid "Toggle Net Rubberband"
+#, fuzzy
+msgid "Toggle Net _Rubberband"
 msgstr "Переключить резиновое соединение"
 
 #: gschem/src/rcstrings.c:123
-msgid "Show Log Window..."
-msgstr "Показать окно статуса..."
+#, fuzzy
+msgid "Toggle _Magnetic Net"
+msgstr "Режим магнитного соединения"
 
 #: gschem/src/rcstrings.c:124
-msgid "Show Coord Window..."
+#, fuzzy
+msgid "Show _Log Window..."
+msgstr "Показать окно статуса..."
+
+#: gschem/src/rcstrings.c:125
+#, fuzzy
+msgid "Show _Coord Window..."
 msgstr "Показать окно координат..."
 
-#: gschem/src/rcstrings.c:126
+#: gschem/src/rcstrings.c:127
 msgid "Help"
 msgstr "Помощь"
 
-#: gschem/src/rcstrings.c:127
-msgid "Manual"
-msgstr "Руководство"
-
 #: gschem/src/rcstrings.c:128
-msgid "gEDA Documentation"
+#, fuzzy
+msgid "gEDA Docu_mentation..."
 msgstr "Документация gEDA"
 
 #: gschem/src/rcstrings.c:129
-msgid "gschem FAQ"
+#, fuzzy
+msgid "gschem _FAQ..."
 msgstr "gschem FAQ"
 
 #: gschem/src/rcstrings.c:130
-msgid "Component Documentation"
-msgstr "Документация на компонент"
+msgid "gEDA _Wiki..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:131
-msgid "About gschem"
-msgstr "О gschem"
+#, fuzzy
+msgid "Component D_ocumentation..."
+msgstr "Документация на компонент"
 
-#: gschem/src/rcstrings.c:132 gschem/src/x_dialog.c:2706
-msgid "Hotkeys"
-msgstr "Горячие клавиши"
+#: gschem/src/rcstrings.c:132
+#, fuzzy
+msgid "_Hotkeys..."
+msgstr "Горячие клавиши..."
+
+#: gschem/src/rcstrings.c:133
+#, fuzzy
+msgid "_About..."
+msgstr "О программе..."
 
 #: gschem/src/a_zoom.c:212
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -720,6 +775,10 @@ msgstr "Режим текста"
 msgid "Rotate Mode"
 msgstr "Режим вращения"
 
+#: gschem/src/i_basic.c:95
+msgid "Zoom Box"
+msgstr "Область масштабирования"
+
 #: gschem/src/i_basic.c:99
 msgid "Pan Mode"
 msgstr "Режим панорамирования"
@@ -764,6 +823,11 @@ msgstr "Черчение дуг"
 #: gschem/src/i_basic.c:133
 msgid "Pin Mode"
 msgstr "Добавление выводов"
+
+#: gschem/src/i_basic.c:135 gschem/src/i_callbacks.c:538
+#: gschem/src/i_callbacks.c:562
+msgid "Copy"
+msgstr "Копировать"
 
 #: gschem/src/i_basic.c:137 gschem/src/i_callbacks.c:628
 #: gschem/src/i_callbacks.c:652
@@ -849,6 +913,10 @@ msgstr "Закрытие окна\n"
 msgid "Select objs first"
 msgstr "Сначала нужно выделить что-либо"
 
+#: gschem/src/i_callbacks.c:672 gschem/src/x_multiattrib.c:1496
+msgid "Delete"
+msgstr "Удалить"
+
 #: gschem/src/i_callbacks.c:712
 msgid "Edit pin type"
 msgstr "Правка типа вывода"
@@ -916,6 +984,10 @@ msgstr "Показать скрытые"
 #: gschem/src/i_callbacks.c:1170
 msgid "MakeVisible"
 msgstr "Сделать видимым"
+
+#: gschem/src/i_callbacks.c:1476 gschem/src/i_callbacks.c:1548
+msgid "Pan"
+msgstr "Центрировать"
 
 #: gschem/src/i_callbacks.c:1567
 msgid "Update Cues"
@@ -1012,6 +1084,37 @@ msgstr "Элемент"
 msgid "Attribute"
 msgstr "Атрибут"
 
+#: gschem/src/i_callbacks.c:2403 gschem/src/i_callbacks.c:2430
+#: gschem/src/x_dialog.c:2379
+msgid "Net"
+msgstr "Соединение"
+
+#: gschem/src/i_callbacks.c:2474 gschem/src/i_callbacks.c:2501
+#: gschem/src/x_dialog.c:2397 gschem/src/x_window.c:374
+msgid "Bus"
+msgstr "Шину"
+
+#: gschem/src/i_callbacks.c:2582 gschem/src/i_callbacks.c:2605
+msgid "Line"
+msgstr "Отрезок"
+
+#: gschem/src/i_callbacks.c:2627 gschem/src/i_callbacks.c:2650
+msgid "Box"
+msgstr "Прямоугольник"
+
+#: gschem/src/i_callbacks.c:2706 gschem/src/i_callbacks.c:2730
+msgid "Circle"
+msgstr "Окружность"
+
+#: gschem/src/i_callbacks.c:2752 gschem/src/i_callbacks.c:2775
+msgid "Arc"
+msgstr "Дугу"
+
+#: gschem/src/i_callbacks.c:2797 gschem/src/i_callbacks.c:2820
+#: gschem/src/x_dialog.c:2370
+msgid "Pin"
+msgstr "Вывод"
+
 #: gschem/src/i_callbacks.c:2879
 #, c-format
 msgid "Searching for source [%s]\n"
@@ -1042,6 +1145,14 @@ msgid ""
 msgstr ""
 "Эта команда используется для поиска документации по компоненту в Интернет, "
 "но ни один компонент не выбран"
+
+#: gschem/src/i_callbacks.c:3091
+msgid "Attach"
+msgstr "Присоединить"
+
+#: gschem/src/i_callbacks.c:3138
+msgid "Detach"
+msgstr "Отсоединить"
 
 #: gschem/src/i_callbacks.c:3173
 msgid "ShowN"
@@ -1875,6 +1986,10 @@ msgstr "Правка цвета"
 msgid "Object color:"
 msgstr "Цвет объекта:"
 
+#: gschem/src/x_dialog.c:2706
+msgid "Hotkeys"
+msgstr "Горячие клавиши"
+
 #: gschem/src/x_dialog.c:2770
 msgid "Function"
 msgstr "Функции"
@@ -2060,6 +2175,10 @@ msgstr "Ширина × высота"
 msgid "Image type"
 msgstr "Тип изображения"
 
+#: gschem/src/x_image.c:495
+msgid "Write image..."
+msgstr "Сохранить изображение..."
+
 #: gschem/src/x_log.c:188
 msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
 msgstr "** Неверный символ UTF-8 в окне статуса. См. stderr или gschem.log.\n"
@@ -2209,6 +2328,22 @@ msgstr "Показать унаследованные атрибуты"
 msgid "Add Attribute"
 msgstr "Добавить атрибут"
 
+#: gschem/src/x_pagesel.c:252
+msgid "New Page"
+msgstr "Новая страница"
+
+#: gschem/src/x_pagesel.c:253
+msgid "Open Page..."
+msgstr "Открыть страницу..."
+
+#: gschem/src/x_pagesel.c:255
+msgid "Save Page"
+msgstr "Сохранить страницу"
+
+#: gschem/src/x_pagesel.c:256
+msgid "Close Page"
+msgstr "Закрыть страницу"
+
 #: gschem/src/x_pagesel.c:257
 msgid "Discard Page"
 msgstr "Отвергнуть страницу"
@@ -2257,6 +2392,10 @@ msgstr "Альбомная"
 #: gschem/src/x_print.c:216
 msgid "Portrait"
 msgstr "Портретная"
+
+#: gschem/src/x_print.c:276
+msgid "Print..."
+msgstr "Печать..."
 
 #: gschem/src/x_print.c:284
 msgid "Settings"
@@ -2310,6 +2449,10 @@ msgstr "Текущая схема распечатана на [%s]\n"
 msgid "Couldn't allocate gc\n"
 msgstr "Невозможно назначить gc\n"
 
+#: gschem/src/x_window.c:316
+msgid "New"
+msgstr "Новая"
+
 #: gschem/src/x_window.c:317
 msgid "New file"
 msgstr "Новый файл"
@@ -2330,9 +2473,17 @@ msgstr "Сохранить"
 msgid "Save file"
 msgstr "Сохранить файл"
 
+#: gschem/src/x_window.c:338
+msgid "Undo"
+msgstr "Отменить действие"
+
 #: gschem/src/x_window.c:339
 msgid "Undo last operation"
 msgstr "Отменить последнее действие"
+
+#: gschem/src/x_window.c:345
+msgid "Redo"
+msgstr "Повторить действие"
 
 #: gschem/src/x_window.c:346
 msgid "Redo last undo"
@@ -2448,6 +2599,24 @@ msgstr "gEDA редактор схем"
 #: gschem/data/geda-gschem.desktop.in.h:4
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr "Создание и редактирование электрических схем и символов в gschem"
+
+#~ msgid "Revert Page"
+#~ msgstr "Возвратить страницу"
+
+#~ msgid "Save Page As..."
+#~ msgstr "Сохранить страницу как..."
+
+#~ msgid "Recent files"
+#~ msgstr "Недавние файлы"
+
+#~ msgid "Close Window"
+#~ msgstr "Закрыть окно"
+
+#~ msgid "Manual"
+#~ msgstr "Руководство"
+
+#~ msgid "About gschem"
+#~ msgstr "О gschem"
 
 #, fuzzy
 #~ msgid "Accelerator String"
@@ -2605,9 +2774,6 @@ msgstr "Создание и редактирование электрическ�
 
 #~ msgid "Write PNG..."
 #~ msgstr "Записать PNG..."
-
-#~ msgid "Hotkeys..."
-#~ msgstr "Горячие клавиши..."
 
 #~ msgid "Ack! something got fouled up with the keymappings!\n"
 #~ msgstr "Что-то получено испорченным вместе с назначением клавиш!\n"
