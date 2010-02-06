@@ -1,50 +1,50 @@
-# translation of de.po to deutsch
-# German translation for libgeda
-# Copyright (C) 2008 Werner Hoch
-# This file is distributed under the same license as the libgeda package.
+# Polish translation for geda
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the geda package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
-# Werner Hoch <werner.ho@gmx.de>, 2008, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: de\n"
+"Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2010-02-06 21:29+0000\n"
-"PO-Revision-Date: 2009-10-17 11:28+0200\n"
-"Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
-"Language-Team: deutsch <de@li.org>\n"
+"PO-Revision-Date: 2010-01-20 23:29+0000\n"
+"Last-Translator: Jarosław Ogrodnik <nobodythere@gmail.com>\n"
+"Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Launchpad-Export-Date: 2010-02-06 18:20+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: libgeda/data/libgeda.xml.in.h:3
 msgid "gEDA circuit schematic"
-msgstr "gEDA Schaltplan"
+msgstr "schemat obwodu gEDA"
 
 #: libgeda/data/libgeda.xml.in.h:4
 msgid "gEDA schematic symbol"
-msgstr "gEDA Schaltplansymbol"
+msgstr "element schematu gEDA"
 
 #: libgeda/data/libgeda.xml.in.h:5
 msgid "gEDA gsch2pcb project"
-msgstr "gEDA gsch2pcb Projekt"
+msgstr "projekt gsch2pcb gEDA"
 
 #: libgeda/data/x-geda-gsch2pcb-project.desktop.in.h:3
 msgid "gEDA Gsch2pcb Project"
-msgstr "gEDA Gsch2pcb Projekt"
+msgstr "Projekt Gsch2pcb gEDA"
 
 #: libgeda/data/x-geda-schematic.desktop.in.h:3
 msgid "gEDA Circuit Schematic"
-msgstr "gEDA Schaltplan"
+msgstr "Schemat Obwodu gEDA"
 
 #: libgeda/data/x-geda-symbol.desktop.in.h:3
 msgid "gEDA Schematic Symbol"
-msgstr "gEDA Schaltplansymbol"
+msgstr "Element Schematu gEDA"
 
 #: libgeda/src/a_basic.c:181
 #, c-format
 msgid "o_save_objects: object %p has unknown type '%c'\n"
-msgstr "o_save_objects: Das Objekt %p hat eine unbekannte Typangabe '%c'\n"
+msgstr "o_save_objects: objekt %p jest nieznanego typu '%c'\n"
 
 #: libgeda/src/a_basic.c:429
 #, c-format
@@ -53,7 +53,7 @@ msgid ""
 ">>\n"
 "%s<<\n"
 msgstr ""
-"Fehlerhafte Startmarkierung bei eingebetteten Symbol gefunden [%s]:\n"
+"Napotkano nieoczekiwany znacznik początku osadzonego symbolu w [%s] :\n"
 ">>\n"
 "%s<<\n"
 
@@ -64,7 +64,7 @@ msgid ""
 ">>\n"
 "%s<<\n"
 msgstr ""
-"Fehlerhafte Endmarkierung bei eingebetteten Symbol gefunden [%s]:\n"
+"Napotkano nieoczekiwany znacznik końca osadzonego symbolu w [%s] :\n"
 ">>\n"
 "%s<<\n"
 
@@ -75,8 +75,8 @@ msgid ""
 "Please run g[sym|sch]update on:\n"
 "[%s]\n"
 msgstr ""
-"Die eingelesene sch/sym Datei hat ein altes Dateiformat!\n"
-"Bitte aktualisiere die Datei mit g[sym|sch]update:\n"
+"Przestarzały format pliku!\n"
+"Uruchom program gsymupdate/gschemupdate na pliku:\n"
 "[%s]\n"
 
 #: libgeda/src/a_basic.c:493
@@ -86,19 +86,19 @@ msgid ""
 ">>\n"
 "%s<<\n"
 msgstr ""
-"Fehlerhafte Daten in [%s]:\n"
+"Napotkano śmieci w [%s] :\n"
 ">>\n"
 "%s<<\n"
 
 #: libgeda/src/f_basic.c:123 libgeda/src/f_basic.c:136
 #, c-format
 msgid "Failed to stat [%s]: %s"
-msgstr "Konnte Dateiinformation nicht ermitteln [%s]: %s"
+msgstr "Błąd odczytu atrybutów [%s]: %s"
 
 #: libgeda/src/f_basic.c:219
 #, c-format
 msgid "Cannot find file %s: %s"
-msgstr "Konnte Datei nicht finden %s: %s"
+msgstr "Nie odnaleziono pliku %s: %s"
 
 #: libgeda/src/f_basic.c:257
 #, c-format
@@ -109,31 +109,30 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"ACHTUNG: Es wurde eine automatisch gesicherte Backupdatei gefunden:\n"
+"UWAGA: Odnaleziono plik kopii zapasowej:\n"
 "  %s.\n"
 "\n"
 
 #: libgeda/src/f_basic.c:259
 msgid "I could not guess if it is newer, so you have to do it manually.\n"
 msgstr ""
-"Konnte nicht feststellen ob die Backupdatei neuer ist oder nicht. Dies muss "
-"nun manuell durchgeführt werden.\n"
+"Nie można stwierdzić, czy kopia jest nowsza - musisz sprawdzić to ręcznie.\n"
 
 #: libgeda/src/f_basic.c:261
 msgid ""
 "The backup copy is newer than the schematic, so it seems you should load it "
 "instead of the original file.\n"
 msgstr ""
-"Die Backupdatei ist neuer als die des Schaltplanes. Es sollte eventuell das "
-"Backup anstatt der originalen Datei geladen werden.\n"
+"Kopia zapasowa jest nowsza niż plik schematu, a więc powinieneś otworzyć "
+"kopię zamiast oryginalnego pliku.\n"
 
 #: libgeda/src/f_basic.c:263
 msgid ""
 "Gschem usually makes backup copies automatically, and this situation happens "
 "when it crashed or it was forced to exit abruptly.\n"
 msgstr ""
-"Gschem erstellt automatisch Backupdateien. Stürzt gschem ab oder wird es "
-"absichtlich getötet, so ergibt sich diese Situation.\n"
+"Gschem tworzy kopie zapasowe automatycznie, a ta sytuacja może być wynikiem "
+"niepoprawnego zamknięcia programu, np. z powodu błędu.\n"
 
 #: libgeda/src/f_basic.c:266
 msgid ""
@@ -142,30 +141,29 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Starte gschem und korrigiere diesen Zustand.\n"
+"Uruchom gschem i napraw plik ręcznie.\n"
 "\n"
 
 #: libgeda/src/f_basic.c:369
 #, c-format
 msgid "Can't get the real filename of %s."
-msgstr "Konnte den wahren Dateinamen von %s nicht ermitteln."
+msgstr "Nie można odczytać rzeczywistej nazwy %s."
 
 #: libgeda/src/f_basic.c:389
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr ""
-"Konnte die Rechte der alten Backupdatei [%s] nicht auf lesen+schreiben "
-"setzen\n"
+msgstr "Nie można ustawić pliku kopii zapasowej w tryb zapisu i odczytu [%s]\n"
 
 #: libgeda/src/f_basic.c:395
 #, c-format
 msgid "Can't save backup file: %s."
-msgstr "Konnte Backupdatei nicht speichern: %s."
+msgstr "Nie można zapisać kopii zapasowej: %s."
 
 #: libgeda/src/f_basic.c:405
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
-msgstr "Konnte die Rechte der Backupdatei [%s] nicht auf nurlesend setzen\n"
+msgstr ""
+"Nie można ustawić pliku kopii zapasowej w tryb tylko do odczytu [%s].\n"
 
 #: libgeda/src/f_basic.c:694
 #, c-format
@@ -174,40 +172,41 @@ msgstr "%s: %s"
 
 #: libgeda/src/f_print.c:118
 msgid "Unable to get time of day in f_print_header()\n"
-msgstr "f_print_header(): Konnte die aktuelle Zeit nicht ermitteln\n"
+msgstr "Błąd odczytu pory dnia w f_print_header()\n"
 
 #: libgeda/src/f_print.c:160
 #, c-format
 msgid "Unable to open the prolog file `%s' for reading in f_print_header()\n"
-msgstr "f_print_header(): Konnte die Prologdatei '%s' nicht öffnen.\n"
+msgstr "Nie można otworzyć pliku nagłówka `%s' do odczytu w f_print_header()\n"
 
 #: libgeda/src/f_print.c:177
 #, c-format
 msgid "Error during reading of the prolog file `%s' in f_print_header()\n"
-msgstr "f_print_header(): Fehler beim Lesen der Prologdatei '%s'\n"
+msgstr "Błąd odczytu pliku nagłówka `%s' w f_print_header()\n"
 
 #: libgeda/src/f_print.c:183
 msgid ""
 "Error during writing of the output postscript file in f_print_header()\n"
-msgstr "f_print_header(): Fehler beim Schreiben der Postscript-Datei.\n"
+msgstr ""
+"Błąd w trakcie zapisu pliku wyjściowego postscript w f_print_header()\n"
 
 #: libgeda/src/f_print.c:196
 msgid "Giving up on printing\n"
-msgstr "Gebe das Ausdrucken auf\n"
+msgstr "Drukowanie nie powiodło się\n"
 
 #: libgeda/src/f_print.c:366
 #, c-format
 msgid "Could not open [%s] for printing\n"
-msgstr "Konnte die Datei [%s] nicht zum Drucken öffnen\n"
+msgstr "Nie można otworzyć [%s] do wydruku\n"
 
 #: libgeda/src/f_print.c:399
 #, c-format
 msgid "Could not execute command [%s] for printing\n"
-msgstr "Konnte den Befehl [%s] zum Drucken nicht ausführen\n"
+msgstr "Nie można wykonać komendy [%s] do wydruku\n"
 
 #: libgeda/src/f_print.c:674
 msgid "Too many UTF-8 characters, cannot print\n"
-msgstr "Zu viele UTF-8 Zeichen. Es kann nicht gedruckt werden\n"
+msgstr "Błąd drukowania: zbyt wiele znaków w kodowaniu UTF-8\n"
 
 #: libgeda/src/g_basic.c:101
 #, c-format
@@ -217,86 +216,84 @@ msgstr "%s:%i:%i: %s\n"
 #: libgeda/src/g_basic.c:108
 #, c-format
 msgid "Unknown file: %s\n"
-msgstr "Unbekannte Datei: %s\n"
+msgstr "Nieznany plik: %s\n"
 
 #: libgeda/src/g_basic.c:114
 #, c-format
 msgid "Evaluation failed: %s\n"
-msgstr "Ausführung gescheitert: %s\n"
+msgstr "Interpretacja nie powiodła się: %s\n"
 
 #: libgeda/src/g_basic.c:115
 msgid "Enable debugging for more detailed information\n"
-msgstr "Aktiviere die Debugausgabe für genaure Informationen\n"
+msgstr "Włącz tryb debugowania aby uzyskać więcej informacji\n"
 
 #: libgeda/src/g_basic.c:258
 #, c-format
 msgid "Could not find [%s] for interpretation\n"
-msgstr "Konnte [%s] für die Auswertung nicht finden\n"
+msgstr "Nie odnaleziono [%s] do interpretacji\n"
 
 #: libgeda/src/g_rc.c:132
 #, c-format
 msgid "RC file [%s] already read in.\n"
-msgstr "Konfigurationsdatei [%s] wurde bereits gelesen.\n"
+msgstr "plik RC [%s] został już wczytany.\n"
 
 #: libgeda/src/g_rc.c:177
 #, c-format
 msgid "Read system config file [%%s]\n"
-msgstr "Lese die Systemkonfigurationsdatei [%%s]\n"
+msgstr "Wczytano globalny plik konfiguracji [%%s]\n"
 
 #: libgeda/src/g_rc.c:178
 #, c-format
 msgid "Did not find required system config file [%%s]\n"
-msgstr ""
-"Konnte die erforderliche Systemkonfigurationsdatei nicht finden [%%s]\n"
+msgstr "Nie odnaleziono wymaganego globalnego pliku konfiguracji [%%s]\n"
 
 #: libgeda/src/g_rc.c:212
 #, c-format
 msgid "Read user config file [%%s]\n"
-msgstr "Lese User-Konfigurationsdatei [%%s]\n"
+msgstr "Wczytano plik konfiguracji użytkownika [%%s]\n"
 
 #: libgeda/src/g_rc.c:213
 #, c-format
 msgid "Did not find optional user config file [%%s]\n"
-msgstr "Die optionale User-Konfigurationsdatei [%%s] wurde nicht gefunden\n"
+msgstr "Nie znaleziono opcjonalnego pliku konfiguracji użytkownika [%%s]\n"
 
 #: libgeda/src/g_rc.c:244
 #, c-format
 msgid "Read local config file [%%s]\n"
-msgstr "Lese die lokale Konfigurationsdatei [%%s]\n"
+msgstr "Wczytano lokalny plik konfiguracji [%%s]\n"
 
 #: libgeda/src/g_rc.c:245
 #, c-format
 msgid "Did not find optional local config file [%%s]\n"
-msgstr "Die optionale lokale Konfigurationsdatei [%%s] wurde nicht gefunden\n"
+msgstr "Nie znaleziono opcjonalnego pliku lokalnej konfiguracji [%%s]\n"
 
 #: libgeda/src/g_rc.c:282
 #, c-format
 msgid "Read specified %s file [%%s]\n"
-msgstr "Lese vorgegebene %s Datei [%%s]\n"
+msgstr "Wczytano podany plik %s [%%s]\n"
 
 #: libgeda/src/g_rc.c:284
 #, c-format
 msgid "Did not find specified %s file [%%s]\n"
-msgstr "Konnte die angegebene %s-Datei [%%s] nicht finden\n"
+msgstr "Nie odnaleziono podanego pliku %s [%%s]\n"
 
 #: libgeda/src/g_rc.c:334
 #, c-format
 msgid "Could not find any %s file!\n"
-msgstr "Konnte keine %s-Dateien finden!\n"
+msgstr "Nie odnaleziono żadnego pliku %s!\n"
 
 #: libgeda/src/g_rc.c:908
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
 "list of strings instead\n"
 msgstr ""
-"ACHTUNG: Die Verwendung eines Strings als Variablenwert von 'always-promote-"
-"attributes' ist veraltet. Es sollte statdessen eine Liste von Strings "
-"verwendet werden.\n"
+"UWAGA: użycie napisu jako wartości 'always-promote-attributes' jest "
+"niezalecane. Użyj listy napisów\n"
 
 #: libgeda/src/o_arc_basic.c:275
 #, c-format
 msgid "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"
-msgstr "Kreisbogen mit Radius 0 entdeckt [%c %d, %d, %d, %d, %d, %d ]\n"
+msgstr "Napotkano łuk o zerowym promieniu [ %c %d, %d, %d, %d, %d, %d ]\n"
 
 #: libgeda/src/o_arc_basic.c:280 libgeda/src/o_box_basic.c:294
 #: libgeda/src/o_bus_basic.c:187 libgeda/src/o_circle_basic.c:286
@@ -305,7 +302,7 @@ msgstr "Kreisbogen mit Radius 0 entdeckt [%c %d, %d, %d, %d, %d, %d ]\n"
 #: libgeda/src/o_text_basic.c:415
 #, c-format
 msgid "Found an invalid color [ %s ]\n"
-msgstr "Fehlerhafte Farbangabe entdeckt [%s]\n"
+msgstr "Napotkano niepoprawny kolor [ %s ]\n"
 
 #: libgeda/src/o_arc_basic.c:281 libgeda/src/o_box_basic.c:295
 #: libgeda/src/o_bus_basic.c:188 libgeda/src/o_circle_basic.c:287
@@ -313,53 +310,53 @@ msgstr "Fehlerhafte Farbangabe entdeckt [%s]\n"
 #: libgeda/src/o_path_basic.c:193 libgeda/src/o_pin_basic.c:193
 #: libgeda/src/o_text_basic.c:416
 msgid "Setting color to default color\n"
-msgstr "Verwende die Default Farbe\n"
+msgstr "Użyję domyślnego koloru\n"
 
 #: libgeda/src/o_attrib.c:120
 msgid "Attempt to attach non text item as an attribute!\n"
-msgstr "Es wurde versucht eine Attribut anzubringen, welches kein Text ist!\n"
+msgstr "Próba użycia innego obiektu niż tekst jako atrybut!\n"
 
 #: libgeda/src/o_attrib.c:125
 #, c-format
 msgid "Attempt to attach attribute [%s] to more than one object\n"
-msgstr ""
-"Es wurde versucht ein Attribute [%s] an mehr als ein Objekt anzubringen\n"
+msgstr "Próba powiązania atrybutu [%s] z więcej niż jednym obiektem\n"
 
 #: libgeda/src/o_basic.c:199 libgeda/src/o_basic.c:211
 msgid "Invalid space specified, setting to 100\n"
-msgstr "Fehlerhafte Abstandsangabe, verwende 100\n"
+msgstr "Błędna specyfikacja odstępu, użyję wartości 100\n"
 
 #: libgeda/src/o_basic.c:207
 msgid "Invalid length specified, setting to 100\n"
-msgstr "Fehlerhafte Längenangabe, verwende 100\n"
+msgstr "Błędna specyfikacja długości, użyję wartości 100\n"
 
 #: libgeda/src/o_box_basic.c:289
 #, c-format
 msgid "Found a zero width/height box [ %c %d %d %d %d %d ]\n"
-msgstr "Rechteck mit der Kantenlänge 0 entdeckt [ %c %d %d %d %d %d ]\n"
+msgstr ""
+"Napotkano prostokąt o zerowej wysokości/szerokości [ %c %d %d %d %d %d ]\n"
 
 #: libgeda/src/o_bus_basic.c:178
 #, c-format
 msgid "Found a zero length bus [ %c %d %d %d %d %d ]\n"
-msgstr "Bus mit der Länge 0 entdeckt [ %c %d %d %d %d %d ]\n"
+msgstr "Napotkano magistralę o zerowej długości [ %c %d %d %d %d %d ]\n"
 
 #: libgeda/src/o_bus_basic.c:193
 #, c-format
 msgid "Found an invalid bus ripper direction [ %s ]\n"
-msgstr "Fehlerhafte Richtungsangabe [%s] bei einem Busanschluss entdeckt\n"
+msgstr "Napotkano odczep magistrali z błędnym ustawieniem kierunku [ %s ]\n"
 
 #: libgeda/src/o_bus_basic.c:194
 msgid "Resetting direction to neutral (no direction)\n"
-msgstr "Setze die Richtung auf neutral (keine Richtung)\n"
+msgstr "Ustawię kierunek na neutralny (brak kierunku)\n"
 
 #: libgeda/src/o_circle_basic.c:197
 msgid "Null radius circles are not allowed\n"
-msgstr "Kreise mit dem Radius 0 sind nicht erlaubt\n"
+msgstr "Koła o zerowym promieniu są niedozwolone\n"
 
 #: libgeda/src/o_circle_basic.c:280
 #, c-format
 msgid "Found a zero radius circle [ %c %d %d %d %d ]\n"
-msgstr "Kreis mit dem Radius 0 entdeckt [ %c %d %d %d %d ]\n"
+msgstr "Napotkano koło o zerowym promieniu [ %c %d %d %d %d ]\n"
 
 #: libgeda/src/o_complex_basic.c:481
 #, c-format
@@ -367,22 +364,22 @@ msgid ""
 "Component not found:\n"
 " %s"
 msgstr ""
-"Bauteil wurde nicht gefunden:\n"
+"Nie odnaleziono komponentu:\n"
 " %s"
 
 #: libgeda/src/o_complex_basic.c:694
 #, c-format
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
-"Bauteil mit fehlerhafter Rotationsangabe entdeckt [ %c %d %d %d %d %d %s ]\n"
+"Napotkano komponent o błędnej specyfikacji rotacji [ %c %d %d %d %d %d %s ]\n"
 
 #: libgeda/src/o_complex_basic.c:706
 #, c-format
 msgid ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
-"Bauteil mit fehlerhafter Spiegelungsangabe entdeckt [ %c %d %d %d %d %d %"
-"s ]\n"
+"Napotkano komponent z nieprawidłową wartością flagi odbicia lustrzanego [ %c "
+"%d %d %d %d %d %s ]\n"
 
 #: libgeda/src/o_complex_basic.c:1019
 #, c-format
@@ -390,9 +387,8 @@ msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse symbol file symversion=%s\n"
 msgstr ""
-"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz '%"
-"s':\n"
-"\tKonnte das Attribut symversion=%s nicht zerlegen\n"
+"UWAGA: Błąd parsowania wersji symbolu o identyfikatorze %s:\n"
+"\tNiepowodzenie podczas parsowania pliku symbolu symversion=%s\n"
 
 #: libgeda/src/o_complex_basic.c:1023
 #, c-format
@@ -400,9 +396,8 @@ msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse symbol file symversion=\n"
 msgstr ""
-"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz '%"
-"s':\n"
-"\tKonnte das Attribut symversion= nicht zerlegen\n"
+"UWAGA: Błąd parsowania wersji symbolu o identyfikatorze %s:\n"
+"\tNiepowodzenie podczas parsowania pliku symbolu symversion=\n"
 
 #: libgeda/src/o_complex_basic.c:1039
 #, c-format
@@ -410,9 +405,8 @@ msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse attached symversion=%s\n"
 msgstr ""
-"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz '%"
-"s':\n"
-"\tKonnte das angehängte Attribut symversion=%s nicht zerlegen\n"
+"UWAGA: Błąd parsowania wersji symbolu o identyfikatorze %s:\n"
+"\tNiepowodzenie podczas parsowania dołączonego atrybutu symversion=%s\n"
 
 #: libgeda/src/o_complex_basic.c:1064
 #, c-format
@@ -421,10 +415,9 @@ msgid ""
 "\tsymversion=%s attached to instantiated symbol, but no symversion= inside "
 "symbol file\n"
 msgstr ""
-"ACHTUNG: Seltsame Konstellation der Version des Symbols mit der Referenz '%"
-"s':\n"
-"\tsymversion=%s existiert bei dem Symbol im Schaltplan, fehlt aber innerhalb "
-"der Schaltsymbol-Datei\n"
+"UWAGA: Dziwna wersja symbolu o identyfikatorze %s:\n"
+"\tAtrybut symversion=%s dołączony do symbolu, ale brak atrybutu symversion= "
+"w pliku symbolu\n"
 
 #: libgeda/src/o_complex_basic.c:1078
 #, c-format
@@ -432,22 +425,18 @@ msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
 "\tSymbol in library is newer than instantiated symbol\n"
 msgstr ""
-"Achtung: Die Version des Symbols mit der Referenz %s stimmt nicht überein (%"
-"s):\n"
-"\tDas Symbol in der Bibliothek ist neuer als das Symbol im Schaltplan\n"
+"UWAGA: Niezgodność wersji symbolu o identyfikatorze %s (%s):\n"
+"\tWersja symbolu w bibliotece jest nowsza niż wersja tej instancji symbolu\n"
 
 #: libgeda/src/o_complex_basic.c:1106
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
-msgstr ""
-"\tGROSSE VERSIONSÄNDERUNG (Symboldatei %.3f, Symbol im Schaltplan %.3f, %"
-"s)!\n"
+msgstr "\tZNACZĄCA ZMIANA WERSJI (plik %.3f, użyto %.3f, %s)!\n"
 
 #: libgeda/src/o_complex_basic.c:1124
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
-msgstr ""
-"\tKleine Versionsänderung (Symboldatei %.3f, Symbol im Schaltplan %.3f)!\n"
+msgstr "\tPomniejsza zmiana wersji (plik %.3f, użyto %.3f)\n"
 
 #: libgeda/src/o_complex_basic.c:1135
 #, c-format
@@ -455,13 +444,13 @@ msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
 "\tInstantiated symbol is newer than symbol in library\n"
 msgstr ""
-"ACHTUNG: Seltsame Versionskonstellation bei dem Symbol mit der Referenz %s:\n"
-"\tDie Symbolversion im Schaltplan ist aktueller als in der Symbolbibliothek\n"
+"UWAGA: Dziwna wersja symbolu o identyfikatorze %s:\n"
+"\tWersja symbolu w bibliotece jest nowsza niż wersja tej instancji symbolu\n"
 
 #: libgeda/src/o_embed.c:56
 #, c-format
 msgid "Component [%s] has been embedded\n"
-msgstr "Bauteil [%s] wurde eingebettet\n"
+msgstr "Osadzono komponent [%s]\n"
 
 #: libgeda/src/o_embed.c:96
 #, c-format
@@ -469,163 +458,161 @@ msgid ""
 "Could not find component [%s], while trying to unembed. Component is still "
 "embedded\n"
 msgstr ""
-"Konnte Symbol [%s] nicht finden um es auszubetten. Das Bauteil bleibt "
-"eingebettet\n"
+"Nie odnaleziono komponentu [%s] podczas próby usunięcia osadzenia. Komponent "
+"pozostanie osadzony\n"
 
 #: libgeda/src/o_embed.c:104
 #, c-format
 msgid "Component [%s] has been successfully unembedded\n"
-msgstr "Das Bauteil [%s] wurde erfolgreich ausgebettet\n"
+msgstr "Komponent [%s] nie jest już osadzony\n"
 
 #: libgeda/src/o_line_basic.c:257
 #, c-format
 msgid "Found a zero length line [ %c %d %d %d %d %d ]\n"
-msgstr "Linie mit der Länge 0 entdeckt [ %c %d %d %d %d %d ]\n"
+msgstr "Napotkano linię o zerowej długości [ %c %d %d %d %d %d ]\n"
 
 #: libgeda/src/o_net_basic.c:169
 #, c-format
 msgid "Found a zero length net [ %c %d %d %d %d %d ]\n"
-msgstr "Netz mit der Länge 0 entdeckt [ %c %d %d %d %d %d ]\n"
+msgstr "Napotkano połączenie o zerowej długości [ %c %d %d %d %d %d ]\n"
 
 #: libgeda/src/o_picture.c:75
 #, c-format
 msgid "Error reading picture definition line: %s.\n"
-msgstr "Fehler beim Lesen der Bildinformation. Zeile: %s.\n"
+msgstr "Błąd podczas odczytu linii definiującej obrazek: %s.\n"
 
 #: libgeda/src/o_picture.c:89
 #, c-format
 msgid "Found a zero width/height picture [ %c %d %d %d %d ]\n"
-msgstr "Bild mit der Seitenlänge 0 entdeckt [ %c %d %d %d %d ]\n"
+msgstr "Napotkano obrazek o zerowej wysokości/szerokości [ %c %d %d %d %d ]\n"
 
 #: libgeda/src/o_picture.c:94
 #, c-format
 msgid "Found a picture with a wrong 'mirrored' parameter: %c.\n"
-msgstr "Bild mit fehlerhaften Spiegelungsparametern entdeckt: %c.\n"
+msgstr "Napotkano obrazek o niepoprawnej wartości 'odbity': %c.\n"
 
 #: libgeda/src/o_picture.c:96
 msgid "Setting mirrored to 0\n"
-msgstr "Setze die Spiegelung auf 0\n"
+msgstr "Przyjmuję 'odbity' równe 0\n"
 
 #: libgeda/src/o_picture.c:101
 #, c-format
 msgid "Found a picture with a wrong 'embedded' parameter: %c.\n"
-msgstr "Bild mit fehlerhaften Einbettungsparametern entdeckt. %c.\n"
+msgstr "Napotkano obrazek o niepoprawnej wartości 'osadzony': %c.\n"
 
 #: libgeda/src/o_picture.c:103
 msgid "Setting embedded to 0\n"
-msgstr "Setze die Einbettung auf 0\n"
+msgstr "Przyjmuję 'osadzony' równe 0\n"
 
 #: libgeda/src/o_picture.c:115
 #, c-format
 msgid "Found an unsupported picture angle [ %d ]\n"
-msgstr "Bild mit fehlerhafter Winkelangabe entdeckt [%d]\n"
+msgstr "Napotkano obrazek z nieprawidłową wartością nachylenia [ %d ]\n"
 
 #: libgeda/src/o_picture.c:116 libgeda/src/o_text_basic.c:387
 msgid "Setting angle to 0\n"
-msgstr "Setze die Winkelangabe auf 0\n"
+msgstr "Użyję nachylenia równego 0\n"
 
 #: libgeda/src/o_picture.c:151 libgeda/src/o_picture.c:162
 #: libgeda/src/o_picture.c:910
 #, c-format
 msgid "Failed to load image from embedded data [%s]: %s\n"
-msgstr "Fehler beim Laden der Daten eines eingebetteten Bildes [%s]: %s\n"
+msgstr "Błąd odczytu obrazka z osadzonych danych [%s]: %s\n"
 
 #: libgeda/src/o_picture.c:152
 msgid "Base64 decoding failed."
-msgstr "Base64 Dekodierung fehlgeschlagen."
+msgstr "Błąd dekodowania Base64."
 
 #: libgeda/src/o_picture.c:153 libgeda/src/o_picture.c:164
 #: libgeda/src/o_picture.c:912
 msgid "Falling back to file loading. Picture unembedded.\n"
-msgstr "Lade das Bild aus der Datei. Das Bild ist ausgebettet.\n"
+msgstr "Spróbuję odczytać obrazek z pliku. Obrazek nie będzie osadzony.\n"
 
 #: libgeda/src/o_picture.c:175 libgeda/src/o_picture.c:898
 #: libgeda/src/o_picture.c:947
 #, c-format
 msgid "Failed to load image from file [%s]: %s\n"
-msgstr "Das Bild konnte nicht aus der Datei [%s] geladen werden: %s\n"
+msgstr "Błąd odczytu obrazka z pliku [%s]: %s\n"
 
 #: libgeda/src/o_picture.c:186
 msgid "Loading warning picture.\n"
-msgstr "Lade das Warnbild.\n"
+msgstr "Ładuję ostrzegawcze zdjęcie.\n"
 
 #: libgeda/src/o_picture.c:192
 #, c-format
 msgid "Error loading picture from file: %s.\n"
-msgstr "Fehler beim Laden des Bildes aus der Datei %s.\n"
+msgstr "Błąd odczytu obrazka z pliku: %s.\n"
 
 #: libgeda/src/o_picture.c:252
 msgid "ERROR: o_picture_save: unable to encode the picture.\n"
-msgstr "FEHLER: o_picture_save: Kann das Bild nicht kodieren.\n"
+msgstr "BŁĄD: o_picture_save: nie można zapisać obrazka.\n"
 
 #: libgeda/src/o_picture.c:925
 #, c-format
 msgid "Picture [%s] has been embedded\n"
-msgstr "Das Bild [%s] wurde eingebettet\n"
+msgstr "Obrazek [%s] został osadzony\n"
 
 #: libgeda/src/o_picture.c:965
 #, c-format
 msgid "Picture [%s] has been unembedded\n"
-msgstr "Das Bild [%s] wurde ausgebettet\n"
+msgstr "Obrazek [%s] nie jest już osadzony\n"
 
 #: libgeda/src/o_pin_basic.c:179
 msgid ""
 "Found a pin which did not have the whichone field set.\n"
 "Verify and correct manually.\n"
 msgstr ""
-"Pin ohne Markierung (whichend) der aktiven Seite entdeckt.\n"
-"Kontrolliere die Markierung und korrigiere ggf. manuell.\n"
+"Napotkano pin bez ustawionego pola 'whichone'.\n"
+"Popraw plik manualnie.\n"
 
 #: libgeda/src/o_pin_basic.c:182
 #, c-format
 msgid "Found an invalid whichend on a pin (reseting to zero): %d\n"
 msgstr ""
-"Pin mit fehlerafter Markierung (whichend) der aktiven Seite entdeckt. "
-"Verwende 0: %d\n"
+"Napotkano nieprawidłową wartość 'whichend' przypisaną do pinu (użyję "
+"wartości 0): %d\n"
 
 #: libgeda/src/o_pin_basic.c:188
 #, c-format
 msgid "Found a zero length pin: [ %s ]\n"
-msgstr "Pin mit der Länge 0 entdeckt: [ %s ]\n"
+msgstr "Napotkano pin o zerowej długości: [ %s ]\n"
 
 #: libgeda/src/o_text_basic.c:373
 #, c-format
 msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
-msgstr ""
-"Textstring mit der Zeichengröße 0 entdeckt [ %c %d %d %d %d %d %d %d %d ]\n"
+msgstr "Napotkano napis o zerowych wymiarach [ %c %d %d %d %d %d %d %d %d ]\n"
 
 #: libgeda/src/o_text_basic.c:385
 #, c-format
 msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
-"Text mit nicht unterstützer Winkelangabe entdeckt [ %c %d %d %d %d %d %d %d %"
-"d ]\n"
+"Napotkano napis z nieprawidłowym nachyleniem [ %c %d %d %d %d %d %d %d %d ]\n"
 
 #: libgeda/src/o_text_basic.c:407
 #, c-format
 msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
-"Text mit nicht unterstützer Ausrichtung entdeckt [ %c %d %d %d %d %d %d %d %"
-"d ]\n"
+"Napotkano napis z nieprawidłowym wyrównaniem tekstu [ %c %d %d %d %d %d %d %"
+"d %d ]\n"
 
 #: libgeda/src/o_text_basic.c:409
 msgid "Setting alignment to LOWER_LEFT\n"
-msgstr "Verwende die Ausrichtung 'Links Unten'\n"
+msgstr "Użyję wyrównania do dolnego lewego rogu\n"
 
 #: libgeda/src/s_clib.c:464
 #, c-format
 msgid "Library command failed [%s]: %s\n"
-msgstr "Bibliotheksbefehl fehlgeschlagen [%s]: %s\n"
+msgstr "Błąd operacji w bibliotece [%s]: %s\n"
 
 #: libgeda/src/s_clib.c:469
 #, c-format
 msgid "Library command failed [%s]: Uncaught signal %i.\n"
-msgstr "Bibliotheksbefehl fehlgeschlagen [%s]: Nicht abgefangenes Signal %i.\n"
+msgstr "Błąd operacji w bibliotece [%s]: Nieobsługiwany sygnał %i.\n"
 
 #: libgeda/src/s_clib.c:473
 #, c-format
 msgid "Library command failed [%s]\n"
-msgstr "Bibliotheksbefehl fehlgeschlagen [%s]\n"
+msgstr "Błąd operacji w bibliotece [%s]\n"
 
 #: libgeda/src/s_clib.c:474
 #, c-format
@@ -633,88 +620,82 @@ msgid ""
 "Error output was:\n"
 "%s\n"
 msgstr ""
-"Die Fehlermeldung lautete:\n"
+"Komunikat o błędzie:\n"
 "%s\n"
 
 #: libgeda/src/s_clib.c:560
 #, c-format
 msgid "Library name [%s] already in use.  Using [%s].\n"
-msgstr "Bibliotheksname [%s] wird bereits verwendet. Verwende [%s].\n"
+msgstr "Nazwa biblioteki [%s] jest już zajęta.  Użyję [%s].\n"
 
 #: libgeda/src/s_clib.c:597
 #, c-format
 msgid "Failed to open directory [%s]: %s\n"
-msgstr "Fehler beim Öffnen eines Verzeichnisses [%s]: %s\n"
+msgstr "Błąd otwarcia katalogu [%s]: %s\n"
 
 #: libgeda/src/s_clib.c:733
 #, c-format
 msgid "Failed to scan library [%s]: Scheme function returned non-list\n"
 msgstr ""
-"Fehler beim Einlesen der Bibliothek [%s]: Die Scheme-Funktion hat 'non-list' "
-"zurückgegeben\n"
+"Błąd przeszukiwania biblioteki [%s]: funkcja Scheme zwróciła nie-listę\n"
 
 #: libgeda/src/s_clib.c:741
 #, c-format
 msgid "Non-string symbol name while scanning library [%s]\n"
 msgstr ""
-"Beim Einlesen der Bibliothek [%s] wurde der Symbolname 'non-string' "
-"zurückgegeben\n"
+"Napotkano niepoprawną nazwę symbolu podczas przeszukiwania biblioteki [%s]\n"
 
 #: libgeda/src/s_clib.c:900 libgeda/src/s_clib.c:947
 msgid "Cannot add library: name not specified\n"
-msgstr "Kann die Bibliothek nicht hinzufügen. Der Name fehlt\n"
+msgstr "Nie można dodać biblioteki: nie podano nazwy\n"
 
 #: libgeda/src/s_clib.c:907
 #, c-format
 msgid ""
 "Cannot add library [%s]: both 'list' and 'get' commands must be specified.\n"
 msgstr ""
-"Kann die Bibliothek [%s] nicht hinzufügen: Beide Befehle ('list' und 'get') "
-"müssen angegeben werden.\n"
+"Nie można dodać biblioteki [%s]: komendy 'list' i 'get' muszą być podane\n"
 
 #: libgeda/src/s_clib.c:955
 #, c-format
 msgid "Cannot add Scheme-library [%s]: callbacks must be closures\n"
-msgstr ""
-"Die Scheme-Bibliothek kann nicht hinzugefügt werden [%s]: Die aufgerufenen "
-"Prozeduren müssen abgeschlossen sein (closures)\n"
+msgstr "Nie można dodać biblioteki Scheme [%s]: callbacks must be closures\n"
 
 #: libgeda/src/s_clib.c:1082
 #, c-format
 msgid "Failed to load symbol from file [%s]: %s\n"
-msgstr "Fehler beim Laden eines Symbols aus der Datei [%s]: %s\n"
+msgstr "Błąd podczas ładowania symbolu z pliku [%s]: %s\n"
 
 #: libgeda/src/s_clib.c:1142
 #, c-format
 msgid "Failed to load symbol data [%s] from source [%s]\n"
-msgstr "Fehler beim Laden der Symboldaten [%s] aus der Quelle [%s]\n"
+msgstr "Odczyt danych symbolu [%s] z pliku [%s] nie powiódł się\n"
 
 #: libgeda/src/s_clib.c:1373
 #, c-format
 msgid "Component [%s] was not found in the component library\n"
-msgstr ""
-"Das Bauteil [%s] konnte nicht in der Bauteilbibliothek gefunden werden\n"
+msgstr "Nie odnaleziono komponentu [%s] w bibliotece komponentów\n"
 
 #: libgeda/src/s_clib.c:1379
 #, c-format
 msgid "More than one component found with name [%s]\n"
-msgstr "Mehr als ein Bauteil mit dem Namen [%s] gefunden\n"
+msgstr "Odnaleziono więcej niż jeden komponent o nazwie [%s]\n"
 
 #: libgeda/src/s_color.c:206
 msgid "Color index out of range"
-msgstr "Farbindex außerhalb des gültigen Wertebereichs"
+msgstr "Indeks koloru poza zakresem"
 
 #: libgeda/src/s_color.c:261
 msgid "Color map entry must be a two-element list"
-msgstr "Der Eintrag in der Farbtabelle muss eine zweielementige Liste sein"
+msgstr "Wpis w mapie kolorów musi być dwuelementową listą"
 
 #: libgeda/src/s_color.c:269
 msgid "Index in color map entry must be an integer"
-msgstr "Der Indexeintrag in der Farbtabelle muss ein Integerwert sein"
+msgstr "Indeks koloru musi być liczbą całkowitą"
 
 #: libgeda/src/s_color.c:295
 msgid "Value in color map entry must be #f or a string"
-msgstr "Der Wert in der Farbtabelle muss '#f' oder ein String sein."
+msgstr "Wpis w mapie kolorów musi być wartością #f lub napisem"
 
 #: libgeda/src/s_hierarchy.c:90
 #, c-format
@@ -722,110 +703,105 @@ msgid ""
 "hierarchy loop detected while visiting page:\n"
 "  \"%s\"\n"
 msgstr ""
-"Zirkuläre Abhängigkeiten in der Hierarchie entdeckt. Schaltplan:\n"
+"wykryto cykl w hierarchii podczas odczytu strony:\n"
 "  \"%s\"\n"
 
 #: libgeda/src/s_hierarchy.c:185
 msgid "There are no schematics above the current one!\n"
-msgstr "Über diesem Schaltplan gibt es keinen weiteren!\n"
+msgstr "Jesteś już na szczycie hierarchii schematów!\n"
 
 #: libgeda/src/s_hierarchy.c:266
 #, c-format
 msgid "ERROR in s_hierarchy_traverse: schematic not found: %s\n"
-msgstr "ERROR: s_hierarchy_traverse: Schaltplan [%s] wurde nicht gefunden.\n"
+msgstr "BŁĄD w s_hierarchy_traverse: nie odnaleziono schematu: %s\n"
 
 #: libgeda/src/s_page.c:167
 #, c-format
 msgid "s_page_delete: Can't get the real filename of %s."
-msgstr ""
-"s_page_delete: Kann den tatsächlichen Dateinamen von [%s] nicht ermitteln."
+msgstr "s_page_delete: nie można uzyskać rzeczywistej nazwy pliku %s."
 
 #: libgeda/src/s_page.c:178
 #, c-format
 msgid "s_page_delete: Unable to delete backup file %s."
-msgstr "s_page_delete: Kann die Backupdatei [%s] nicht löschen."
+msgstr "s_page_delete: Nie można skasować kopii zapasowej %s."
 
 #: libgeda/src/s_page.c:380
 #, c-format
 msgid "Saved [%s]\n"
-msgstr "Gespeichert [%s]\n"
+msgstr "Zapisano [%s]\n"
 
 #: libgeda/src/s_page.c:386
 #, c-format
 msgid "Could NOT save [%s]\n"
-msgstr "ACHTUNG: Konnte Datei nicht speichern [%s]\n"
+msgstr "Nie można zapisać [%s]\n"
 
 #: libgeda/src/s_slib.c:179
 #, c-format
 msgid "Found [%s]\n"
-msgstr "[%s] gefunden\n"
+msgstr "Odnaleziono [%s]\n"
 
 #: libgeda/src/s_slib.c:189
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
-msgstr "Konnte [%s] in keiner Bibliothekenquelle finden\n"
+msgstr "Nie odnaleziono [%s] in w żadnej bibliotece\n"
 
 #~ msgid "o_save: Could not open [%s]\n"
-#~ msgstr "o_save: Konnte Datei [%s] nicht öffnen\n"
+#~ msgstr "o_save: nie można otworzyć [%s]\n"
+
+#~ msgid "Could not read symbolic link information for %s"
+#~ msgstr "Nie można odczytać informacji o dowiązaniu symbolicznym %s"
+
+#~ msgid "The file has too many symbolic links."
+#~ msgstr "Plik używa zbyt wielu dowiązań symbolicznych."
+
+#~ msgid "Read system-%s file [%%s]\n"
+#~ msgstr "Wczytano plik system-%s [%%s]\n"
+
+#~ msgid "Did not find required system-%s file [%%s]\n"
+#~ msgstr "Nie odnaleziono wymaganego pliku system-%s [%%s]\n"
+
+#~ msgid "Read ~/.gEDA/%s file [%%s]\n"
+#~ msgstr "Wczytano plik ~/.gEDA/%s [%%s]\n"
+
+#~ msgid "Did not find optional ~/.gEDA/%s file [%%s]\n"
+#~ msgstr "Nie odnaleziono opcjonalnego pliku ~/.gEDA/%s [%%s]\n"
+
+#~ msgid "Read local %s file [%%s]\n"
+#~ msgstr "Wczytano lokalny plik %s [%%s]\n"
+
+#~ msgid "Did not find optional local %s file [%%s]\n"
+#~ msgstr "Nie odnaleziono opcjonalnego lokalnego pliku %s [%%s]\n"
+
+#~ msgid "Setting color to WHITE\n"
+#~ msgstr "Użyję koloru białego\n"
+
+#~ msgid "Found an improper attribute: _%s_\n"
+#~ msgstr "Napotkano niepoprawny atrybut: _%s_\n"
 
 #~ msgid "Did not find slotdef=#:#,#,#... attribute\n"
-#~ msgstr "Es wurde kein slotdef=#:#,#,#... Attribut gefunden\n"
+#~ msgstr "Nie odnaleziono atrybutu slotdef=#:#,#,#...\n"
 
 #~ msgid "Improper slotdef syntax: missing \":\".\n"
-#~ msgstr "Fehlerhafte slotdef syntax: \":\" fehlt.\n"
+#~ msgstr "Błąd składni atrybutu slotdef: brak \":\".\n"
 
 #~ msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
-#~ msgstr "Kein korrektes Attribut slotdef=#:#,#,#... gefunden\n"
+#~ msgstr "Nie odnaleziono atrybutu slotdef=#:#,#,#...\n"
 
 #~ msgid "component missing pinseq= attribute\n"
-#~ msgstr "pinseq= Attribut fehlt.\n"
+#~ msgstr "komponent nie ma atrybutu pinseq=\n"
 
 #~ msgid "Could not find character '%s' definition.\n"
-#~ msgstr "Konnte die Definition des Zeichens '%s' nicht finden.\n"
-
-#~ msgid "Failed to validate utf-8 character in font definition: \"%s\".\n"
-#~ msgstr ""
-#~ "UTF-8 Zeichen konnte in der Zeichensatzdefinition nicht ermittelt werden: "
-#~ "\"%s\".\n"
+#~ msgstr "Nie odnaleziono definicji znaku '%s'.\n"
 
 #~ msgid "Could not load question font char -- check font-directory keyword\n"
 #~ msgstr ""
-#~ "Konnte das angefragte Zeichen nicht laden -- kontrolliere die Einstellung "
-#~ "'font-directory'\n"
+#~ "Nie można odczytać znaku zapytania -- sprawdź ustawienie font-directory\n"
 
-#~ msgid "Read ~/.gEDA/%s file [%%s]\n"
-#~ msgstr "Lese die ~/.gEDA/%s Datei [%%s]\n"
-
-#~ msgid "Did not find optional ~/.gEDA/%s file [%%s]\n"
-#~ msgstr "Konnte die optionale ~/.gEDA/%s-Datei [%%s] nicht finden\n"
-
-#~ msgid "Could not read symbolic link information for %s"
-#~ msgstr "Konnte die Information des symbolischen Links [%s] nicht lesen"
-
-#~ msgid "The file has too many symbolic links."
-#~ msgstr "Die Datei hat zu viele symbolische Links."
-
-#~ msgid "Found an improper attribute: _%s_\n"
-#~ msgstr "Fehlerhaftes Attribut entdeckt: [%s]\n"
+#~ msgid "Failed to validate utf-8 character in font definition: \"%s\".\n"
+#~ msgstr "Błąd walidacji znaku utf-8 w definicji czcionki: \"%s\".\n"
 
 #~ msgid "Cannot find any schematics above the current one!\n"
-#~ msgstr "Es wurde kein Schaltplan über dem aktuellen gefunden!\n"
+#~ msgstr "Jesteś już na szczycie hierarchii schematów!\n"
 
 #~ msgid "Maybe toplevel schematic page was closed/discarded?\n"
-#~ msgstr "Eventuell wurde der übergeordnete Schaltplan geschlossen?\n"
-
-#~ msgid "Can't get the real filename of %s.\n"
-#~ msgstr "Konnte den wahren Dateinamen von %s nicht ermitteln.\n"
-
-#~ msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f)!\n"
-#~ msgstr ""
-#~ "\tGROSSE VERSIONSÄNDERUNG (Symboldatei %.3f, Symbol im Schaltplan %.3f)!\n"
-
-#~ msgid "Component [%s] was not found in any component library\n"
-#~ msgstr ""
-#~ "Das Bauteil [%s] konnte in keiner Bauteilbibliothek gefunden werden\n"
-
-#~ msgid "s_page_delete: Can't get the real filename of %s.\n"
-#~ msgstr ""
-#~ "s_page_delete: Kann den tatsächlichen Dateinamen von [%s] nicht "
-#~ "ermitteln.\n"
+#~ msgstr "Być może schemat został zamknięty/porzucony?\n"

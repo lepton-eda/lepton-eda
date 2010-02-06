@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-01-31 10:54+0000\n"
+"POT-Creation-Date: 2010-02-06 21:16+0000\n"
 "PO-Revision-Date: 2009-10-17 11:04+0200\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
@@ -1792,9 +1792,8 @@ msgid "%s%s (%s)"
 msgstr ""
 
 #: gschem/src/x_dialog.c:2207
-#, fuzzy
 msgid "gEDA: GPL Electronic Design Automation"
-msgstr "<b>gEDA : GPL Electronic Design Automation</b>"
+msgstr ""
 
 #: gschem/src/x_dialog.c:2208
 msgid ""
@@ -2472,6 +2471,9 @@ msgstr ""
 
 #~ msgid "About..."
 #~ msgstr "Über..."
+
+#~ msgid "<b>gEDA: GPL Electronic Design Automation</b>"
+#~ msgstr "<b>gEDA : GPL Electronic Design Automation</b>"
 
 #~ msgid "<b>gschem version %s%s.%s</b>"
 #~ msgstr "<b>gschem Version %s%s.%s</b>"

@@ -10,13 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-01-31 10:54+0000\n"
+"POT-Creation-Date: 2010-02-06 21:16+0000\n"
 "PO-Revision-Date: 2008-12-20 14:26+0000\n"
 "Last-Translator: Patrick Bernaud <b-patrick@wanadoo.fr>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2010-01-31 13:08+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
 msgid "File"
@@ -59,14 +61,12 @@ msgid "Print..."
 msgstr "Imprimer..."
 
 #: gschem/src/rcstrings.c:12 gschem/src/x_image.c:495
-#, fuzzy
 msgid "Write image..."
-msgstr "Exporter l'image..."
+msgstr "Écrire l'image..."
 
 #: gschem/src/rcstrings.c:13
-#, fuzzy
 msgid "Recent files"
-msgstr "Nouveau fichier"
+msgstr "Fichiers récents"
 
 #: gschem/src/rcstrings.c:14 gschem/src/x_script.c:47
 msgid "Execute Script..."
@@ -97,9 +97,8 @@ msgid "Select Mode"
 msgstr "Mode Sélection"
 
 #: gschem/src/rcstrings.c:22
-#, fuzzy
 msgid "Cut"
-msgstr "Couper 1"
+msgstr "Couper"
 
 #: gschem/src/rcstrings.c:23 gschem/src/i_basic.c:135
 #: gschem/src/i_callbacks.c:538 gschem/src/i_callbacks.c:562
@@ -107,9 +106,8 @@ msgid "Copy"
 msgstr "Copier"
 
 #: gschem/src/rcstrings.c:24
-#, fuzzy
 msgid "Paste"
-msgstr "Coller 1"
+msgstr "Coller"
 
 #: gschem/src/rcstrings.c:25
 msgid "Edit..."
@@ -471,18 +469,16 @@ msgid "Snap Grid Spacing..."
 msgstr "Espacement de la grille de snap..."
 
 #: gschem/src/rcstrings.c:119
-#, fuzzy
 msgid "Scale up Grid Spacing"
-msgstr "Espacement de la grille de snap..."
+msgstr "Agrandir la taille de la grille"
 
 #: gschem/src/rcstrings.c:120
-#, fuzzy
 msgid "Scale down Grid Spacing"
-msgstr "Espacement de la grille de snap..."
+msgstr "Réduire la taille de la grille"
 
 #: gschem/src/rcstrings.c:121
 msgid "Toggle Outline/Box"
-msgstr ""
+msgstr "Commuter Contour/Boîte"
 
 #: gschem/src/rcstrings.c:122
 msgid "Toggle Net Rubberband"
@@ -501,27 +497,24 @@ msgid "Help"
 msgstr "Aide"
 
 #: gschem/src/rcstrings.c:127
-#, fuzzy
 msgid "Manual"
-msgstr "Manuel..."
+msgstr "Manuel"
 
 #: gschem/src/rcstrings.c:128
-#, fuzzy
 msgid "gEDA Documentation"
-msgstr "Documentation"
+msgstr "Documentation gEDA"
 
 #: gschem/src/rcstrings.c:129
 msgid "gschem FAQ"
-msgstr ""
+msgstr "FAQ gschem"
 
 #: gschem/src/rcstrings.c:130
-#, fuzzy
 msgid "Component Documentation"
-msgstr "Documentation"
+msgstr "Documentation des composants"
 
 #: gschem/src/rcstrings.c:131 gschem/src/x_dialog.c:2206
 msgid "About gschem"
-msgstr ""
+msgstr "À propos de gschem"
 
 #: gschem/src/rcstrings.c:132 gschem/src/x_dialog.c:2680
 msgid "Hotkeys"
@@ -581,21 +574,20 @@ msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Taille [%d] passée à bus-ripper-size invalide\n"
 
 #: gschem/src/g_rc.c:1269
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid dot size [%d] passed to dots-grid-dot-size\n"
-msgstr "Taille de point [%d] passée à grid-dot-size invalide\n"
+msgstr "Taille de point [%d] invalide passé à dots-grid-dot-size\n"
 
 #: gschem/src/g_rc.c:1310
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid pixel spacing [%d] passed to dots-grid-fixed-threshold\n"
-msgstr ""
-"Seuil d'affichage de grille [%d] passé à grid-fixed-threshold invalide\n"
+msgstr "Espace de pixel [%d] invalide passé à dots-grid-fixed-threshold\n"
 
 #: gschem/src/g_rc.c:1336
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid pixel spacing [%d] passed to mesh-grid-display-threshold\n"
 msgstr ""
-"Seuil d'affichage de grille [%d] passé à grid-fixed-threshold invalide\n"
+"Espacement [%d] de pixel invalide passé à mesh-grid-display-threshold\n"
 
 #: gschem/src/g_rc.c:1361
 #, c-format
@@ -618,19 +610,19 @@ msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr "Gain [%d] passé à keyboardpan-gain invalide\n"
 
 #: gschem/src/g_rc.c:1495
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
-msgstr "Nombre de secondes [%d] passé  auto-save-interval invalide\n"
+msgstr "Nombre [%d] de pixels invalides passés à select-slack-pixels\n"
 
 #: gschem/src/g_rc.c:1521
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid gain [%d] passed to zoom-gain\n"
-msgstr "Gain [%d] passé à mousepan-gain invalide\n"
+msgstr "Gain [%d] invalide passé à zoom-gain\n"
 
 #: gschem/src/g_rc.c:1546
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid number of steps [%d] scrollpan-steps\n"
-msgstr "Nombre de secondes [%d] passé  auto-save-interval invalide\n"
+msgstr "Nombre d'étapes [%d] scrollpan-steps invalide\n"
 
 #: gschem/src/gschem.c:184
 #, c-format
@@ -675,12 +667,12 @@ msgid ""
 "\n"
 "gschem cannot locate its data files. You must set the GEDADATA\n"
 "environment variable to point to the correct location.\n"
-msgstr ""
+msgstr "Vous devez positionner la variable d'environnement GEDADATA!\n"
 
 #: gschem/src/gschem.c:243
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't find init scm file [%s]\n"
-msgstr "Échec de la lecture du fichier scm de démarrage [%s]\n"
+msgstr "Impossible de trouver le fichier scm d'init [%s]\n"
 
 #: gschem/src/gschem.c:247
 #, c-format
@@ -708,9 +700,9 @@ msgid "Unknown end for line (%d)\n"
 msgstr "Extrémité de ligne inconnue (%d)\n"
 
 #: gschem/src/gschem_cairo.c:318
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown type for stroke (%d) !\n"
-msgstr "Type de ligne pour ligne inconnu (%d) !\n"
+msgstr ""
 
 #: gschem/src/i_basic.c:79
 msgid "Component Mode"
@@ -734,9 +726,8 @@ msgid "Paste %d Mode"
 msgstr "Mode Coller %d"
 
 #: gschem/src/i_basic.c:109
-#, fuzzy
 msgid "Magnetic Net Mode"
-msgstr "Mode Lien"
+msgstr "Mode Filet Magnétique"
 
 #: gschem/src/i_basic.c:111
 msgid "Net Mode"
@@ -811,11 +802,11 @@ msgstr "Répéter"
 
 #: gschem/src/i_basic.c:547 gschem/src/i_basic.c:561
 msgid "OFF"
-msgstr ""
+msgstr "OFF"
 
 #: gschem/src/i_basic.c:565
 msgid "NONE"
-msgstr ""
+msgstr "AUCUN"
 
 #: gschem/src/i_basic.c:570
 #, c-format
@@ -833,9 +824,9 @@ msgid "New page created [%s]\n"
 msgstr "Nouvelle page [%s] créée\n"
 
 #: gschem/src/i_callbacks.c:165
-#, fuzzy, c-format
+#, c-format
 msgid "New Window created [%s]\n"
-msgstr "Nouvelle fenêtre créée\n"
+msgstr "Nouvelle création de fenêtre [%s]\n"
 
 #: gschem/src/i_callbacks.c:283
 msgid "Failed to Save All"
@@ -855,9 +846,8 @@ msgid "Select objs first"
 msgstr "Sélectionnez d'abord des objets"
 
 #: gschem/src/i_callbacks.c:712
-#, fuzzy
 msgid "Edit pin type"
-msgstr "Éditer le type de ligne"
+msgstr "Édition du type de broche"
 
 #: gschem/src/i_callbacks.c:731
 msgid "Edit Text"
@@ -933,16 +923,15 @@ msgstr "Abandonner les modifications ?"
 
 #: gschem/src/i_callbacks.c:1821
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "Copier vers le presse-papier"
 
 #: gschem/src/i_callbacks.c:1839
 msgid "Cut to clipboard"
-msgstr ""
+msgstr "Coupe la sélection dans le presse-papier"
 
 #: gschem/src/i_callbacks.c:1857
-#, fuzzy
 msgid "Paste from clipboard"
-msgstr "Coller depuis 1"
+msgstr "Coller depuis le presse-papiers"
 
 #: gschem/src/i_callbacks.c:1869 gschem/src/i_callbacks.c:2108
 #: gschem/src/i_callbacks.c:2130 gschem/src/i_callbacks.c:2152
@@ -1036,17 +1025,19 @@ msgstr "Recherche du symbole [%s]\n"
 
 #: gschem/src/i_callbacks.c:2978
 msgid "Symbol is not a real file. Symbol cannot be loaded.\n"
-msgstr ""
+msgstr "Le symbole n'est pas un fichier réel. Il ne peut pas être chargé.\n"
 
 #: gschem/src/i_callbacks.c:3009
 msgid "Cannot find any schematics above the current one!\n"
-msgstr ""
+msgstr "Impossible de trouver des schémas au-dessus de celui-ci!\n"
 
 #: gschem/src/i_callbacks.c:3063
 msgid ""
 "This command retrieves the component documentation from the web, but there "
 "is no component selected"
 msgstr ""
+"Cette commande retrouve la documentation du composant depuis le web mais "
+"aucun composant n'est sélectionné"
 
 #: gschem/src/i_callbacks.c:3173
 msgid "ShowN"
@@ -1083,7 +1074,7 @@ msgstr "Grille OFF\n"
 
 #: gschem/src/i_callbacks.c:3431
 msgid "Dot grid selected\n"
-msgstr ""
+msgstr "Grille à points sélectionnée\n"
 
 #: gschem/src/i_callbacks.c:3432
 msgid "Mesh grid selected\n"
@@ -1098,9 +1089,8 @@ msgid "Snap ON\n"
 msgstr "Snap ON\n"
 
 #: gschem/src/i_callbacks.c:3459
-#, fuzzy
 msgid "Snap back to the grid (CAUTION!)\n"
-msgstr "Snap OFF (ATTENTION)\n"
+msgstr ""
 
 #: gschem/src/i_callbacks.c:3485
 msgid "Rubber band OFF \n"
@@ -1112,7 +1102,7 @@ msgstr ""
 
 #: gschem/src/i_callbacks.c:3503
 msgid "magnetic net mode: ON\n"
-msgstr ""
+msgstr "Mode Filet Magnétique :  Allumé\n"
 
 #: gschem/src/i_callbacks.c:3506
 msgid "magnetic net mode: OFF\n"
@@ -1126,12 +1116,12 @@ msgstr "Type de remplissage de boîte inconnu !\n"
 #: gschem/src/o_buffer.c:57
 #, c-format
 msgid "o_buffer_copy: Invalid buffer %i\n"
-msgstr ""
+msgstr "o_buffer_copy: Tampon buffer %i invalide\n"
 
 #: gschem/src/o_buffer.c:72
 #, c-format
 msgid "o_buffer_cut: Invalid buffer %i\n"
-msgstr ""
+msgstr "o_buffer_cut: Tampon buffer %i invalide\n"
 
 #: gschem/src/o_buffer.c:93
 #, c-format
@@ -1139,9 +1129,9 @@ msgid "Got an invalid buffer_number [o_buffer_paste_start]\n"
 msgstr "Valeur de buffer_number incorrecte [o_buffer_paste_start]\n"
 
 #: gschem/src/o_bus.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "Got an invalid which one in o_bus_draw_stretch\n"
-msgstr "Valeur de whichone incorrecte dans o_bus_draw_xor_single\n"
+msgstr ""
 
 #: gschem/src/o_circle.c:134
 #, c-format
@@ -1159,12 +1149,10 @@ msgid "Got an unexpected NULL in o_edit\n"
 msgstr "o_current==NULL dans o_edit()\n"
 
 #: gschem/src/o_misc.c:125
-#, fuzzy
 msgid "Object already locked\n"
 msgstr "Objet déjà verrouillé\n"
 
 #: gschem/src/o_misc.c:163
-#, fuzzy
 msgid "Object already unlocked\n"
 msgstr "Objet déjà déverrouillé\n"
 
@@ -1180,6 +1168,8 @@ msgstr "Le texte normalement caché est maintenant invisible\n"
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
 msgstr ""
+"Impossible de trouver le symbole [%s] dans la bibliothèque. Échec de la mise "
+"à jour.\n"
 
 #: gschem/src/o_misc.c:843
 #, c-format
@@ -1221,17 +1211,19 @@ msgid "Got a non line object in o_move_check_endpoint\n"
 msgstr "L'objet passé n'est pas une ligne dans o_move_check_endpoint\n"
 
 #: gschem/src/o_net.c:159
-#, fuzzy, c-format
+#, c-format
 msgid "Got an invalid which one in o_net_draw_stretch\n"
-msgstr "Valeur de whichone incorrecte dans o_net_draw_xor_single\n"
+msgstr ""
 
 #: gschem/src/o_net.c:536
 msgid "Warning: Starting net at off grid coordinate\n"
 msgstr ""
+"Attention; Démarrage d'une liaison en-dehors des coordonnées de la grille\n"
 
 #: gschem/src/o_net.c:598
 msgid "Warning: Ending net at off grid coordinate\n"
 msgstr ""
+"Attention; Arrêt d'une liaison en-dehors des coordonnées de la grille\n"
 
 #: gschem/src/o_net.c:952 gschem/src/o_net.c:989 gschem/src/o_net.c:1060
 #: gschem/src/o_net.c:1096
@@ -1241,14 +1233,14 @@ msgstr ""
 "Tentative d'ajout de plus de deux jonctions de bus. Erreur interne gschem.\n"
 
 #: gschem/src/o_net.c:1166
-#, fuzzy, c-format
+#, c-format
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
-msgstr "Impossible de trouver %s dans toutes les bibliothèques de composants\n"
+msgstr ""
 
 #: gschem/src/o_path.c:352
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown type for path (fill)!\n"
-msgstr "Type de remplissage de boîte inconnu !\n"
+msgstr "Type de chemin inconnu (à remplir)!\n"
 
 #: gschem/src/o_picture.c:166 gschem/src/o_picture.c:542
 #, c-format
@@ -1498,14 +1490,14 @@ msgid "white"
 msgstr "blanc"
 
 #: gschem/src/x_color.c:125
-#, fuzzy, c-format
+#, c-format
 msgid "Could not allocate display color %i!\n"
-msgstr "Impossible d'allouer la couleur %s !\n"
+msgstr "Impossible d'allouer la couleur affichée %i!\n"
 
 #: gschem/src/x_color.c:147
-#, fuzzy, c-format
+#, c-format
 msgid "Could not allocate outline color %i!\n"
-msgstr "Impossible d'allouer la couleur %s !\n"
+msgstr "Impossible d'allouer la couleur de contour %i!\n"
 
 #: gschem/src/x_color.c:164 gschem/src/x_color.c:181 gschem/src/x_color.c:197
 #, c-format
@@ -1513,9 +1505,9 @@ msgid "Tried to get an invalid color: %d\n"
 msgstr "Tentative d'obtention d'une couleur invalide : %d\n"
 
 #: gschem/src/x_color.c:214
-#, fuzzy, c-format
+#, c-format
 msgid "Tried to get an invalid outline color: %d\n"
-msgstr "Tentative d'obtention d'une couleur invalide : %d\n"
+msgstr "Essai d'un couleur de bordure invalide: %d\n"
 
 #: gschem/src/x_compselect.c:1040
 msgid "Filter:"
@@ -1548,7 +1540,7 @@ msgstr "Sélecteur de composant..."
 
 #: gschem/src/x_compselect.c:1377
 msgid "In Use"
-msgstr ""
+msgstr "En cours d'utilisation"
 
 #: gschem/src/x_compselect.c:1381
 msgid "Libraries"
@@ -1734,7 +1726,7 @@ msgstr "Paramètres d'arc"
 
 #: gschem/src/x_dialog.c:1698
 msgid "Arc Radius:"
-msgstr ""
+msgstr "Rayon de l'Arc:"
 
 #: gschem/src/x_dialog.c:1706
 msgid "Start Angle:"
@@ -1806,55 +1798,51 @@ msgstr "Monde"
 
 #: gschem/src/x_dialog.c:2336
 msgid "Background"
-msgstr ""
+msgstr "Arrière-plan"
 
 #: gschem/src/x_dialog.c:2342
 msgid "Net endpoint"
-msgstr ""
+msgstr "Point d'arrêt de la liaison"
 
 #: gschem/src/x_dialog.c:2345
 msgid "Graphic"
-msgstr ""
+msgstr "Graphique"
 
 #: gschem/src/x_dialog.c:2354
 msgid "Logic bubble"
-msgstr ""
+msgstr "Bulle logique"
 
 #: gschem/src/x_dialog.c:2357
 msgid "Grid point"
-msgstr ""
+msgstr "Point de grille"
 
 #: gschem/src/x_dialog.c:2360
-#, fuzzy
 msgid "Detached attribute"
-msgstr "Ajouter un attribut"
+msgstr "Attribut détaché"
 
 #: gschem/src/x_dialog.c:2363 gschem/src/x_window.c:383
 msgid "Text"
 msgstr "Texte"
 
 #: gschem/src/x_dialog.c:2369
-#, fuzzy
 msgid "Selection"
 msgstr "Sélection"
 
 #: gschem/src/x_dialog.c:2372
 msgid "Bounding box"
-msgstr ""
+msgstr "Boîte englobante"
 
 #: gschem/src/x_dialog.c:2375
-#, fuzzy
 msgid "Zoom box"
-msgstr "Zoom boîte"
+msgstr "Boîte d'agrandissement"
 
 #: gschem/src/x_dialog.c:2384
 msgid "Output background"
-msgstr ""
+msgstr "Arrière-plan de sortie"
 
 #: gschem/src/x_dialog.c:2387
-#, fuzzy
 msgid "Net junction"
-msgstr "Action"
+msgstr "Jonction de liaison"
 
 #: gschem/src/x_dialog.c:2390
 msgid "Mesh grid major"
@@ -1866,7 +1854,7 @@ msgstr ""
 
 #: gschem/src/x_dialog.c:2396
 msgid "Unknown"
-msgstr ""
+msgstr "Inconnu"
 
 #: gschem/src/x_dialog.c:2547
 #, c-format
@@ -1882,14 +1870,12 @@ msgid "Object color:"
 msgstr "Couleur de l'objet :"
 
 #: gschem/src/x_dialog.c:2744
-#, fuzzy
 msgid "Function"
-msgstr "Action"
+msgstr "Fonction"
 
 #: gschem/src/x_dialog.c:2751
-#, fuzzy
 msgid "Keystroke(s)"
-msgstr "Action : raccourci(s)"
+msgstr ""
 
 #: gschem/src/x_dialog.c:3057
 msgid "Find Text"
@@ -1931,12 +1917,12 @@ msgstr ""
 "fermer ?"
 
 #: gschem/src/x_dialog.c:3851
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
-"Il y a %d schémas avec des modifications non enregistrées. Voulez-vous "
-"enregistrer les modifications avant de fermer ?"
+"Il y a %d schémas avec des modifications non sauvegardées. Les sauvegarder "
+"avant de fermer?"
 
 #: gschem/src/x_dialog.c:3880
 msgid "If you don't save, all your changes will be permanently lost."
@@ -1958,25 +1944,29 @@ msgid ""
 "The name cannot end with a space.\n"
 "The value cannot start with a space."
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">L'entrée d'attribut \"%s\" est "
+"invalide\n"
+"Veuillez corriger pour continuer</span>\n"
+"\n"
+"Le nom et la valeur ne peuvent être vides.\n"
+"Le nom ne peut se terminer par un espace.\n"
+"La valeur ne peut débuter avec un espace."
 
 #: gschem/src/x_dialog.c:4238
-#, fuzzy
 msgid "Invalid Attribute"
-msgstr "Ajouter un attribut"
+msgstr "Attribut invalide"
 
 #: gschem/src/x_dialog.c:4274
-#, fuzzy
 msgid "Pin type"
-msgstr "Type :"
+msgstr "Type de broche"
 
 #: gschem/src/x_dialog.c:4298
-#, fuzzy
 msgid "Net pin"
-msgstr "Action"
+msgstr "Broche de liaison"
 
 #: gschem/src/x_dialog.c:4300
 msgid "Bus pin (graphical)"
-msgstr ""
+msgstr "Broche de bus (graphique)"
 
 #: gschem/src/x_fileselect.c:42
 msgid "Schematics"
@@ -2009,29 +1999,33 @@ msgid ""
 "\n"
 "Would you like to overwrite it?"
 msgstr ""
+"Le fichier sélectionné `%s' existe déjà.\n"
+"\n"
+"Voulez-vous l'écraser?"
 
 #: gschem/src/x_fileselect.c:287
-#, fuzzy
 msgid "Overwrite file?"
-msgstr "Nouveau fichier"
+msgstr "Écraser le fichier ?"
 
 #: gschem/src/x_fileselect.c:289
 msgid "Save cancelled on user request\n"
-msgstr ""
+msgstr "Sauvegarde annulée sur demande de l'utilisateur\n"
 
 #: gschem/src/x_image.c:176
 msgid "Encapsulated Postscript"
-msgstr ""
+msgstr "PostScript encapsulé"
 
 #: gschem/src/x_image.c:296
-#, fuzzy, c-format
+#, c-format
 msgid "x_image_lowlevel: Unable to write eps file %s.\n"
-msgstr "x_image_lowlevel(): Impossible d'écrire le fichier PNG.\n"
+msgstr ""
+"Copy text   \t\n"
+"x_image_lowlevel: Impossible d'écrire le fichier eps %s.\n"
 
 #: gschem/src/x_image.c:374
-#, fuzzy, c-format
+#, c-format
 msgid "x_image_lowlevel: Unable to write %s file %s.\n"
-msgstr "x_image_lowlevel(): Impossible d'écrire le fichier PNG.\n"
+msgstr "x_image_lowlevel: Impossible d'écrire le %s fichier %s.\n"
 
 #: gschem/src/x_image.c:384
 #, c-format
@@ -2041,6 +2035,11 @@ msgid ""
 "\n"
 "%s.\n"
 msgstr ""
+"L'erreur suivante a été rencontrée lors de la sauvegarde de l'image avec le "
+"type %s vers le nom de fichier:\n"
+"%s\n"
+"\n"
+"%s.\n"
 
 #: gschem/src/x_image.c:403
 #, c-format
@@ -2059,18 +2058,17 @@ msgstr ""
 "gschem.\n"
 
 #: gschem/src/x_image.c:458
-#, fuzzy
 msgid "Width x Height"
-msgstr "Largeur x Hauteur :"
+msgstr "Largeur x Hauteur"
 
 #: gschem/src/x_image.c:474
-#, fuzzy
 msgid "Image type"
-msgstr "Image"
+msgstr "Type d'image"
 
 #: gschem/src/x_log.c:188
 msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
 msgstr ""
+"** UTF-8 invalide dans le message de log. Regardez stderr ou gschem.log.\n"
 
 #: gschem/src/x_log.c:256
 msgid "Status"
@@ -2121,9 +2119,8 @@ msgid "/Edit..."
 msgstr "/Éditer..."
 
 #: gschem/src/x_menus.c:49
-#, fuzzy
 msgid "/Edit pin type..."
-msgstr "Éditer le type de ligne"
+msgstr "/Édition de type de broche..."
 
 #: gschem/src/x_menus.c:50
 msgid "/Copy"
@@ -2150,9 +2147,10 @@ msgid "/Up"
 msgstr "/Remonter"
 
 #: gschem/src/x_menus.c:319
-#, fuzzy, c-format
+#, c-format
 msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
-msgstr "Tentative de rendre sensible un élément de menu inexistant\n"
+msgstr ""
+"Tentative de valider la sensibilité ou un menu inexistant d'un objet '%s'\n"
 
 #: gschem/src/x_menus.c:343
 msgid "Popup_menu_item_factory doesn't exist!\n"
@@ -2164,9 +2162,9 @@ msgstr ""
 "Tentative de rendre sensible un élément de menu contextuel inexistant\n"
 
 #: gschem/src/x_menus.c:436
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't open file %s\n"
-msgstr "Impossible de lancer %s\n"
+msgstr "Impossible d'ouvrir le fichier %s\n"
 
 #: gschem/src/x_menus.c:493
 msgid "Clear"
@@ -2209,9 +2207,8 @@ msgid "V"
 msgstr "V"
 
 #: gschem/src/x_multiattrib.c:1889
-#, fuzzy
 msgid "Show inherited attributes"
-msgstr "Ajouter un attribut"
+msgstr "Montrer les attributs hérités"
 
 #: gschem/src/x_multiattrib.c:1905
 msgid "Add Attribute"
@@ -2238,9 +2235,8 @@ msgid "Right click on the filename for more options..."
 msgstr "Utilisez le clic droit sur le nom de fichier pour plus d'options..."
 
 #: gschem/src/x_preview.c:234
-#, fuzzy
 msgid "Preview Buffer"
-msgstr "Tampon"
+msgstr "Prévisualisation du tampon"
 
 #: gschem/src/x_print.c:84
 msgid "Select PostScript Filename..."
@@ -2408,14 +2404,13 @@ msgid "Loading schematic [%s]\n"
 msgstr "Chargement du schéma [%s]\n"
 
 #: gschem/src/x_window.c:741
-#, fuzzy
 msgid "Failed to load file"
-msgstr "Échec lors du chargement de l'image : %s"
+msgstr "Échec lors du chargement du fichier"
 
 #: gschem/src/x_window.c:750
-#, fuzzy, c-format
+#, c-format
 msgid "New file [%s]\n"
-msgstr "Nouveau fichier"
+msgstr "Nouveau fichier [%s]\n"
 
 #: gschem/src/x_window.c:855
 #, c-format
@@ -2451,36 +2446,26 @@ msgid "Closing [%s]\n"
 msgstr "Ferme [%s]\n"
 
 #: gschem/data/geda-gschem.desktop.in.h:3
-#, fuzzy
 msgid "gEDA Schematic Editor"
-msgstr "Descendre dans la hiérarchie"
+msgstr "Éditeur de schémas gEDA"
 
 #: gschem/data/geda-gschem.desktop.in.h:4
 msgid "Create and edit electrical schematics and symbols with gschem"
-msgstr ""
-
-#, fuzzy
-#~ msgid "Accelerator String"
-#~ msgstr "Saisie de texte"
+msgstr "Créer et éditer des schémas électriques et des symboles avec gschem"
 
 #~ msgid "About..."
 #~ msgstr "À propos..."
 
-#, fuzzy
-#~ msgid "<b>gschem version %s%s.%s</b>"
-#~ msgstr "<b>gschem version %s%s.$s</b>"
+#~ msgid "<b>gEDA: GPL Electronic Design Automation</b>"
+#~ msgstr "<b>gEDA : GPL Electronic Design Automation</b>"
 
 #, fuzzy
-#~ msgid ""
-#~ "Written by:\n"
-#~ "Ales Hvezda\n"
-#~ "ahvezda@geda.seul.org\n"
-#~ "And many others (See AUTHORS file)"
-#~ msgstr ""
-#~ "Écrit par:\n"
-#~ "Ales V. Hvezda\n"
-#~ "ahvezda@geda.seul.org\n"
-#~ "Et bien d'autres (consultez le fichier AUTHORS)"
+#~ msgid "<b>gschem version %s%s.%s</b>"
+#~ msgstr "gEDA/gschem version %s%s.%s\n"
+
+#, fuzzy
+#~ msgid "Accelerator String"
+#~ msgstr "Saisie de texte"
 
 #~ msgid "Invalid size [%f] passed to postscript-font-scale\n"
 #~ msgstr "Taille [%f] passée à postscript-font-scale invalide\n"
@@ -2752,9 +2737,6 @@ msgstr ""
 #~ msgid "sch - Schematics"
 #~ msgstr "sch - Schémas"
 
-#~ msgid "sym - Symbols "
-#~ msgstr "sym - Symboles"
-
 #~ msgid "sym/sch - Schematics and Symbols"
 #~ msgstr "sym/sch - Schémas et symboles"
 
@@ -2896,3 +2878,6 @@ msgstr ""
 
 #~ msgid "Close Manager"
 #~ msgstr "Fermer le Gestionnaire"
+
+#~ msgid "sym - Symbols "
+#~ msgstr "sym - Symboles"

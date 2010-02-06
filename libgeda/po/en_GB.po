@@ -3,11 +3,12 @@
 # This file is distributed under the same license as the libgeda package.
 # Peter Clifton <pcjc2@cam.ac.uk> 2007, 2008
 #
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: libgeda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-01-31 11:13+0000\n"
+"POT-Creation-Date: 2010-02-06 21:29+0000\n"
 "PO-Revision-Date: 2010-01-31 11:05+0100\n"
 "Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"

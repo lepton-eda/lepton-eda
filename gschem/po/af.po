@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-01-31 10:54+0000\n"
+"POT-Creation-Date: 2010-02-06 21:16+0000\n"
 "PO-Revision-Date: 2008-12-20 14:27+0000\n"
 "Last-Translator: Bernd Jendrissek <bernd.jendrissek@gmail.com>\n"
 "Language-Team: <geda-dev@moira.seul.org>\n"
@@ -91,9 +91,8 @@ msgid "Select Mode"
 msgstr "Uitsoekmodus"
 
 #: gschem/src/rcstrings.c:22
-#, fuzzy
 msgid "Cut"
-msgstr "Sny 1"
+msgstr "Sny"
 
 #: gschem/src/rcstrings.c:23 gschem/src/i_basic.c:135
 #: gschem/src/i_callbacks.c:538 gschem/src/i_callbacks.c:562
@@ -101,9 +100,8 @@ msgid "Copy"
 msgstr "Kopieer"
 
 #: gschem/src/rcstrings.c:24
-#, fuzzy
 msgid "Paste"
-msgstr "Plak 1"
+msgstr "Plak"
 
 #: gschem/src/rcstrings.c:25
 msgid "Edit..."
@@ -572,19 +570,19 @@ msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Ongeldige grootte [%d] gegee aan bus-ripper-size\n"
 
 #: gschem/src/g_rc.c:1269
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid dot size [%d] passed to dots-grid-dot-size\n"
-msgstr "Ongeldige puntgrootte [%d] gegee aan grid-dot-size\n"
+msgstr "Ongeldige puntgrootte [%d] gegee aan dots-grid-dot-size\n"
 
 #: gschem/src/g_rc.c:1310
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid pixel spacing [%d] passed to dots-grid-fixed-threshold\n"
-msgstr "Ongeldige puntgrootte [%d] gegee aan grid-dot-size\n"
+msgstr ""
 
 #: gschem/src/g_rc.c:1336
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid pixel spacing [%d] passed to mesh-grid-display-threshold\n"
-msgstr "Ongeldige puntgrootte [%d] gegee aan grid-dot-size\n"
+msgstr ""
 
 #: gschem/src/g_rc.c:1361
 #, c-format
@@ -612,14 +610,14 @@ msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr ""
 
 #: gschem/src/g_rc.c:1521
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid gain [%d] passed to zoom-gain\n"
-msgstr "Ongeldige versterking [%d] gegee aan mousepan-gain\n"
+msgstr "Ongeldige versterking [%d] gegee aan zoom-gain\n"
 
 #: gschem/src/g_rc.c:1546
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid number of steps [%d] scrollpan-steps\n"
-msgstr "Ongeldige hoeveelheid sekondes [%d] gegee aan auto-save-interval\n"
+msgstr ""
 
 #: gschem/src/gschem.c:184
 #, c-format
@@ -666,9 +664,9 @@ msgid ""
 msgstr ""
 
 #: gschem/src/gschem.c:243
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't find init scm file [%s]\n"
-msgstr "Het misluk of scm-aanvangslêer [%s] te lees\n"
+msgstr ""
 
 #: gschem/src/gschem.c:247
 #, c-format
@@ -696,9 +694,9 @@ msgid "Unknown end for line (%d)\n"
 msgstr "Onbekende einde vir lyn (%d)\n"
 
 #: gschem/src/gschem_cairo.c:318
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown type for stroke (%d) !\n"
-msgstr "Onbekende tipe vir lyn (%d)!\n"
+msgstr ""
 
 #: gschem/src/i_basic.c:79
 msgid "Component Mode"
@@ -722,9 +720,8 @@ msgid "Paste %d Mode"
 msgstr "Plak %d Modus"
 
 #: gschem/src/i_basic.c:109
-#, fuzzy
 msgid "Magnetic Net Mode"
-msgstr "Netmodus"
+msgstr ""
 
 #: gschem/src/i_basic.c:111
 msgid "Net Mode"
@@ -843,9 +840,8 @@ msgid "Select objs first"
 msgstr "Kies eers voorwerpe"
 
 #: gschem/src/i_callbacks.c:712
-#, fuzzy
 msgid "Edit pin type"
-msgstr "Bewerk Lyntipe"
+msgstr ""
 
 #: gschem/src/i_callbacks.c:731
 msgid "Edit Text"
@@ -927,9 +923,8 @@ msgid "Cut to clipboard"
 msgstr ""
 
 #: gschem/src/i_callbacks.c:1857
-#, fuzzy
 msgid "Paste from clipboard"
-msgstr "Plak vanuit 1"
+msgstr ""
 
 #: gschem/src/i_callbacks.c:1869 gschem/src/i_callbacks.c:2108
 #: gschem/src/i_callbacks.c:2130 gschem/src/i_callbacks.c:2152
@@ -1128,9 +1123,9 @@ msgid "Got an invalid buffer_number [o_buffer_paste_start]\n"
 msgstr "Het 'n ongeldige buffer_number gekry [o_buffer_paste_start]\n"
 
 #: gschem/src/o_bus.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "Got an invalid which one in o_bus_draw_stretch\n"
-msgstr "Het 'n ongeldige whichone in o_bus_draw_xor_single gekry\n"
+msgstr "Het 'n ongeldige whichone in o_bus_draw_stretch gekry\n"
 
 #: gschem/src/o_circle.c:134
 #, c-format
@@ -1206,9 +1201,9 @@ msgid "Got a non line object in o_move_check_endpoint\n"
 msgstr "Het 'n voorwerp wat nie 'n lyn is nie in o_move_check_endpoint gekry\n"
 
 #: gschem/src/o_net.c:159
-#, fuzzy, c-format
+#, c-format
 msgid "Got an invalid which one in o_net_draw_stretch\n"
-msgstr "Het 'n ongeldige whichone in o_net_draw_xor_single gekry\n"
+msgstr "Het 'n ongeldige whichone in o_net_draw_stretch gekry\n"
 
 #: gschem/src/o_net.c:536
 msgid "Warning: Starting net at off grid coordinate\n"
@@ -1231,9 +1226,9 @@ msgid "Bus ripper symbol [%s] was not found in any component library\n"
 msgstr "Busrippersimbool [%s] is nie in enige komponentbiblioteek gevind nie\n"
 
 #: gschem/src/o_path.c:352
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown type for path (fill)!\n"
-msgstr "Onbekende tipe vir reghoek (vul)!\n"
+msgstr ""
 
 #: gschem/src/o_picture.c:166 gschem/src/o_picture.c:542
 #, c-format
@@ -1468,14 +1463,14 @@ msgid "white"
 msgstr "wit"
 
 #: gschem/src/x_color.c:125
-#, fuzzy, c-format
+#, c-format
 msgid "Could not allocate display color %i!\n"
-msgstr "Kon nie aanspraak maak op die kleur %s nie!\n"
+msgstr ""
 
 #: gschem/src/x_color.c:147
-#, fuzzy, c-format
+#, c-format
 msgid "Could not allocate outline color %i!\n"
-msgstr "Kon nie aanspraak maak op die kleur %s nie!\n"
+msgstr ""
 
 #: gschem/src/x_color.c:164 gschem/src/x_color.c:181 gschem/src/x_color.c:197
 #, c-format
@@ -1483,9 +1478,9 @@ msgid "Tried to get an invalid color: %d\n"
 msgstr "Het probeer om 'n ongeldige kleur te kry: %d\n"
 
 #: gschem/src/x_color.c:214
-#, fuzzy, c-format
+#, c-format
 msgid "Tried to get an invalid outline color: %d\n"
-msgstr "Het probeer om 'n ongeldige kleur te kry: %d\n"
+msgstr ""
 
 #: gschem/src/x_compselect.c:1040
 msgid "Filter:"
@@ -1793,25 +1788,22 @@ msgid "Grid point"
 msgstr ""
 
 #: gschem/src/x_dialog.c:2360
-#, fuzzy
 msgid "Detached attribute"
-msgstr "Voeg Eienskap By"
+msgstr ""
 
 #: gschem/src/x_dialog.c:2363 gschem/src/x_window.c:383
 msgid "Text"
 msgstr "Teks"
 
 #: gschem/src/x_dialog.c:2369
-#, fuzzy
 msgid "Selection"
-msgstr "Kies"
+msgstr ""
 
 #: gschem/src/x_dialog.c:2372
 msgid "Bounding box"
 msgstr ""
 
 #: gschem/src/x_dialog.c:2375
-#, fuzzy
 msgid "Zoom box"
 msgstr "Zoem Reghoek"
 
@@ -1820,9 +1812,8 @@ msgid "Output background"
 msgstr ""
 
 #: gschem/src/x_dialog.c:2387
-#, fuzzy
 msgid "Net junction"
-msgstr "Funksie"
+msgstr ""
 
 #: gschem/src/x_dialog.c:2390
 msgid "Mesh grid major"
@@ -1934,14 +1925,12 @@ msgid "Invalid Attribute"
 msgstr "Ongeldige Eienskap"
 
 #: gschem/src/x_dialog.c:4274
-#, fuzzy
 msgid "Pin type"
-msgstr "Penmodus"
+msgstr ""
 
 #: gschem/src/x_dialog.c:4298
-#, fuzzy
 msgid "Net pin"
-msgstr "Funksie"
+msgstr ""
 
 #: gschem/src/x_dialog.c:4300
 msgid "Bus pin (graphical)"
@@ -2089,9 +2078,8 @@ msgid "/Edit..."
 msgstr "/Bewerk"
 
 #: gschem/src/x_menus.c:49
-#, fuzzy
 msgid "/Edit pin type..."
-msgstr "Bewerk Lyntipe"
+msgstr ""
 
 #: gschem/src/x_menus.c:50
 msgid "/Copy"
@@ -2176,9 +2164,8 @@ msgid "V"
 msgstr "W"
 
 #: gschem/src/x_multiattrib.c:1889
-#, fuzzy
 msgid "Show inherited attributes"
-msgstr "Voeg Eienskap By"
+msgstr ""
 
 #: gschem/src/x_multiattrib.c:1905
 msgid "Add Attribute"
@@ -2205,9 +2192,8 @@ msgid "Right click on the filename for more options..."
 msgstr "Regs-klik op die lêernaam vir meer opsies..."
 
 #: gschem/src/x_preview.c:234
-#, fuzzy
 msgid "Preview Buffer"
-msgstr "Plak Buffer"
+msgstr ""
 
 #: gschem/src/x_print.c:84
 msgid "Select PostScript Filename..."
@@ -2419,6 +2405,9 @@ msgstr "Skep en bewerk stroombaandiagramme en simbole met gschem"
 #~ msgid "About..."
 #~ msgstr "Omtrent..."
 
+#~ msgid "<b>gEDA: GPL Electronic Design Automation</b>"
+#~ msgstr "<b>gEDA: GPL Elektroniese Ontwerp Outomatisering</b>"
+
 #~ msgid "<b>gschem version %s%s.%s</b>"
 #~ msgstr "<b>gschem uitgawe %s%s.%s</b>"
 
@@ -2478,14 +2467,6 @@ msgstr "Skep en bewerk stroombaandiagramme en simbole met gschem"
 #~ msgid "Unknown type for circle!\n"
 #~ msgstr "Onbekende tipe vir sirkel!\n"
 
-#, fuzzy
-#~ msgid "Unknown end for path (%d)\n"
-#~ msgstr "Onbekende einde vir boog (%d)\n"
-
-#, fuzzy
-#~ msgid "Unknown type for path !\n"
-#~ msgstr "Onbekende tipe vir boog!\n"
-
 #~ msgid "Could not find the color %s!\n"
 #~ msgstr "Kon nie die kleur %s vind nie!\n"
 
@@ -2513,10 +2494,6 @@ msgstr "Skep en bewerk stroombaandiagramme en simbole met gschem"
 #~ msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
 #~ msgstr "Het 'n ongeldige buffer_number gekry [o_buffer_paste_end]\n"
 
-#, fuzzy
-#~ msgid "Could not find complex in new component placement!\n"
-#~ msgstr "Kon nie kompleks in nuwe komponentplasing vind nie!\n"
-
 #~ msgid "ERROR: NULL object in o_copy_end!\n"
 #~ msgstr "FOUT: NULL voorwerp in o_copy_end!\n"
 
@@ -2525,3 +2502,15 @@ msgstr "Skep en bewerk stroombaandiagramme en simbole met gschem"
 
 #~ msgid "Draw slot %s which is in %s\n"
 #~ msgstr "Teken gleuf %s wat in %s is\n"
+
+#, fuzzy
+#~ msgid "Unknown end for path (%d)\n"
+#~ msgstr "Onbekende einde vir boog (%d)\n"
+
+#, fuzzy
+#~ msgid "Unknown type for path !\n"
+#~ msgstr "Onbekende tipe vir boog!\n"
+
+#, fuzzy
+#~ msgid "Could not find complex in new component placement!\n"
+#~ msgstr "Kon nie kompleks in nuwe komponentplasing vind nie!\n"
