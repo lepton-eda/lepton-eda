@@ -33,7 +33,7 @@ msgstr "_Open..."
 
 #: gschem/src/rcstrings.c:6
 msgid "Open Recen_t"
-msgstr ""
+msgstr "Open Recen_t"
 
 #: gschem/src/rcstrings.c:7
 msgid "_Save"
@@ -150,7 +150,7 @@ msgstr "Unlock"
 
 #: gschem/src/rcstrings.c:36
 msgid "Invoke Macro"
-msgstr ""
+msgstr "Invoke Macro"
 
 #: gschem/src/rcstrings.c:37
 msgid "Line Width & Type..."
