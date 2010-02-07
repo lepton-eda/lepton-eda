@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-02-07 01:27+0000\n"
-"PO-Revision-Date: 2009-10-09 04:18+0100\n"
+"POT-Creation-Date: 2010-02-07 12:10+0000\n"
+"PO-Revision-Date: 2010-02-02 07:17+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev@moira.seul.org\n"
 "MIME-Version: 1.0\n"
@@ -1877,22 +1877,24 @@ msgstr "Bewerk slot nummer:"
 #: gschem/src/x_dialog.c:2183
 #, c-format
 msgid "%s%s (%s)"
-msgstr ""
+msgstr "%s%s (%s)"
 
 #: gschem/src/x_dialog.c:2206
 msgid "About gschem"
 msgstr "Over gschem"
 
 #: gschem/src/x_dialog.c:2207
-#, fuzzy
 msgid "gEDA: GPL Electronic Design Automation"
-msgstr "<b>gEDA: GPL Elektronische Ontwerp Automatisering</b>"
+msgstr "gEDA: GPL Elektronische Ontwerp Automatisering"
 
 #: gschem/src/x_dialog.c:2208
 msgid ""
 "Copyright © 1998-2009 Ales Hvezda <ahvezda@geda.seul.org>\n"
 "Copyright © 1998-2009 gEDA Contributors (see ChangeLog for details)"
 msgstr ""
+"Copyright © 1998-2009 Ales Hvezda <ahvezda@geda.seul.org>\n"
+"Copyright © 1998-2009 gEDA Contributors (zie het WijzigingsLogboek voor "
+"details)"
 
 #: gschem/src/x_dialog.c:2267
 msgid "Coords"
@@ -2595,26 +2597,6 @@ msgstr "gEDA schema bewerking"
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr "Creer en bewerk elektrische schema's en symbolen met gschem"
 
-#~ msgid "About..."
-#~ msgstr "Omtrent..."
-
-#~ msgid "<b>gEDA: GPL Electronic Design Automation</b>"
-#~ msgstr "<b>gEDA: GPL Elektronische Ontwerp Automatisering</b>"
-
-#~ msgid "<b>gschem version %s%s.%s</b>"
-#~ msgstr "<b>gschem versie %s%s.%s</b>"
-
-#~ msgid ""
-#~ "Written by:\n"
-#~ "Ales Hvezda\n"
-#~ "ahvezda@geda.seul.org\n"
-#~ "And many others (See AUTHORS file)"
-#~ msgstr ""
-#~ "Geschreven door:\n"
-#~ "Ales Hvezda\n"
-#~ "ahvezda@geda.seul.org\n"
-#~ "En vele anderen (zie het AUTHORS bestand)"
-
 #~ msgid "Revert Page"
 #~ msgstr "Terughalen Pagina"
 
@@ -2647,6 +2629,20 @@ msgstr "Creer en bewerk elektrische schema's en symbolen met gschem"
 
 #~ msgid "The accelerator string to be displayed"
 #~ msgstr "De versnellings string die getoond moet worden"
+
+#~ msgid "<b>gschem version %s%s.%s</b>"
+#~ msgstr "<b>gschem versie %s%s.%s</b>"
+
+#~ msgid ""
+#~ "Written by:\n"
+#~ "Ales Hvezda\n"
+#~ "ahvezda@geda.seul.org\n"
+#~ "And many others (See AUTHORS file)"
+#~ msgstr ""
+#~ "Geschreven door:\n"
+#~ "Ales Hvezda\n"
+#~ "ahvezda@geda.seul.org\n"
+#~ "En vele anderen (zie het AUTHORS bestand)"
 
 #~ msgid "Invalid size [%f] passed to postscript-font-scale\n"
 #~ msgstr "Ongeldige waarde [%f] overgedragen aan postscript-font-scale\n"
