@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it_IT\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-02-06 21:16+0000\n"
+"POT-Creation-Date: 2010-02-07 01:27+0000\n"
 "PO-Revision-Date: 2010-01-31 12:18+0000\n"
 "Last-Translator: Michele <Unknown>\n"
 "Language-Team: Italiano <michelinux@alice.it>\n"
@@ -26,86 +26,100 @@ msgstr "File"
 msgid "New Window"
 msgstr "Nuova finestra"
 
-#: gschem/src/rcstrings.c:4 gschem/src/x_pagesel.c:252
-msgid "New Page"
-msgstr "Nuova pagina"
+#: gschem/src/rcstrings.c:4
+#, fuzzy
+msgid "_New"
+msgstr "Nuovo"
 
-#: gschem/src/rcstrings.c:5 gschem/src/x_pagesel.c:253
-msgid "Open Page..."
-msgstr "Apri pagina..."
+#: gschem/src/rcstrings.c:5
+#, fuzzy
+msgid "_Open..."
+msgstr "Apri..."
 
-#: gschem/src/rcstrings.c:6 gschem/src/x_pagesel.c:256
-msgid "Close Page"
-msgstr "Chiudi pagina"
+#: gschem/src/rcstrings.c:6
+msgid "Open Recen_t"
+msgstr ""
 
 #: gschem/src/rcstrings.c:7
-msgid "Revert Page"
-msgstr "Annulla Pagina"
+#, fuzzy
+msgid "_Save"
+msgstr "Salva"
 
-#: gschem/src/rcstrings.c:8 gschem/src/x_pagesel.c:255
-msgid "Save Page"
-msgstr "Salva la pagina"
+#: gschem/src/rcstrings.c:8
+#, fuzzy
+msgid "Save _As..."
+msgstr "Salva con nome..."
 
 #: gschem/src/rcstrings.c:9
-msgid "Save Page As..."
-msgstr "Salva pagina con nome..."
-
-#: gschem/src/rcstrings.c:10
 msgid "Save All"
 msgstr "Salva tutto"
 
-#: gschem/src/rcstrings.c:11 gschem/src/x_print.c:276
-msgid "Print..."
+#: gschem/src/rcstrings.c:10 gschem/src/rcstrings.c:79
+#, fuzzy
+msgid "_Revert"
+msgstr "Riduce e Centra lo Schema"
+
+#: gschem/src/rcstrings.c:11
+#, fuzzy
+msgid "_Print..."
 msgstr "Stampa..."
 
-#: gschem/src/rcstrings.c:12 gschem/src/x_image.c:495
-msgid "Write image..."
+#: gschem/src/rcstrings.c:12
+#, fuzzy
+msgid "Write _image..."
 msgstr "Scrivi immagine..."
 
-#: gschem/src/rcstrings.c:13
-msgid "Recent files"
-msgstr "File recenti"
-
-#: gschem/src/rcstrings.c:14 gschem/src/x_script.c:47
+#: gschem/src/rcstrings.c:13 gschem/src/x_script.c:47
 msgid "Execute Script..."
 msgstr "Esegui Script..."
 
-#: gschem/src/rcstrings.c:15
-msgid "Close Window"
-msgstr "Chiudi finestra"
+#: gschem/src/rcstrings.c:14 gschem/src/rcstrings.c:80
+#, fuzzy
+msgid "_Close"
+msgstr "Chiudi"
 
-#: gschem/src/rcstrings.c:16
-msgid "Quit"
+#: gschem/src/rcstrings.c:15
+#, fuzzy
+msgid "_Quit"
 msgstr "Esci"
 
-#: gschem/src/rcstrings.c:18 gschem/src/i_callbacks.c:697
+#: gschem/src/rcstrings.c:17 gschem/src/i_callbacks.c:697
 msgid "Edit"
 msgstr "Modifica"
 
-#: gschem/src/rcstrings.c:19 gschem/src/x_window.c:339
-msgid "Undo"
+#: gschem/src/rcstrings.c:18
+#, fuzzy
+msgid "_Undo"
 msgstr "Annulla"
 
-#: gschem/src/rcstrings.c:20 gschem/src/x_window.c:346
-msgid "Redo"
+#: gschem/src/rcstrings.c:19
+#, fuzzy
+msgid "_Redo"
 msgstr "Ripristina"
 
-#: gschem/src/rcstrings.c:21 gschem/src/i_basic.c:77 gschem/src/x_window.c:522
-msgid "Select Mode"
-msgstr "Modalità selezione"
-
-#: gschem/src/rcstrings.c:22
-msgid "Cut"
+#: gschem/src/rcstrings.c:20
+#, fuzzy
+msgid "Cu_t"
 msgstr "Taglia"
 
-#: gschem/src/rcstrings.c:23 gschem/src/i_basic.c:135
-#: gschem/src/i_callbacks.c:538 gschem/src/i_callbacks.c:562
-msgid "Copy"
+#: gschem/src/rcstrings.c:21
+#, fuzzy
+msgid "_Copy"
 msgstr "Copia"
 
-#: gschem/src/rcstrings.c:24
-msgid "Paste"
+#: gschem/src/rcstrings.c:22
+#, fuzzy
+msgid "_Paste"
 msgstr "Incolla"
+
+#: gschem/src/rcstrings.c:23
+#, fuzzy
+msgid "_Delete"
+msgstr "Cancella"
+
+#: gschem/src/rcstrings.c:24 gschem/src/i_basic.c:77 gschem/src/x_window.c:522
+msgid "Select Mode"
+msgstr "Modalità selezione"
 
 #: gschem/src/rcstrings.c:25
 msgid "Edit..."
@@ -127,35 +141,34 @@ msgstr "Modalità di copiatura multipla"
 msgid "Move Mode"
 msgstr "Modalità spostamento"
 
-#: gschem/src/rcstrings.c:30 gschem/src/i_callbacks.c:672
-#: gschem/src/x_multiattrib.c:1496
-msgid "Delete"
-msgstr "Cancella"
-
-#: gschem/src/rcstrings.c:31
+#: gschem/src/rcstrings.c:30
 msgid "Rotate 90 Mode"
 msgstr "Ruota di 90 gradi"
 
-#: gschem/src/rcstrings.c:32 gschem/src/i_basic.c:91
+#: gschem/src/rcstrings.c:31 gschem/src/i_basic.c:91
 msgid "Mirror Mode"
 msgstr "Modalità specchio"
 
-#: gschem/src/rcstrings.c:33
+#: gschem/src/rcstrings.c:32
 msgid "Slot..."
 msgstr "Slot..."
 
-#: gschem/src/rcstrings.c:34
+#: gschem/src/rcstrings.c:33
 msgid "Color..."
 msgstr "Colore..."
 
-#: gschem/src/rcstrings.c:35 gschem/src/i_callbacks.c:922
+#: gschem/src/rcstrings.c:34 gschem/src/i_callbacks.c:922
 #: gschem/src/x_dialog.c:2381
 msgid "Lock"
 msgstr "Blocca"
 
-#: gschem/src/rcstrings.c:36 gschem/src/i_callbacks.c:940
+#: gschem/src/rcstrings.c:35 gschem/src/i_callbacks.c:940
 msgid "Unlock"
 msgstr "Sblocca"
+
+#: gschem/src/rcstrings.c:36
+msgid "Invoke Macro"
+msgstr ""
 
 #: gschem/src/rcstrings.c:37
 msgid "Line Width & Type..."
@@ -258,40 +271,48 @@ msgid "View"
 msgstr "Vista"
 
 #: gschem/src/rcstrings.c:64
-msgid "Redraw"
+#, fuzzy
+msgid "_Redraw"
 msgstr "Aggiorna"
 
-#: gschem/src/rcstrings.c:65 gschem/src/i_callbacks.c:1476
-#: gschem/src/i_callbacks.c:1548
-msgid "Pan"
+#: gschem/src/rcstrings.c:65
+#, fuzzy
+msgid "_Pan"
 msgstr "Pan"
 
-#: gschem/src/rcstrings.c:66 gschem/src/i_basic.c:95
-msgid "Zoom Box"
+#: gschem/src/rcstrings.c:66
+#, fuzzy
+msgid "Zoom _Box"
 msgstr "Ingrandisci Riquadro"
 
 #: gschem/src/rcstrings.c:67
-msgid "Zoom Extents"
+#, fuzzy
+msgid "Zoom _Extents"
 msgstr "Adatta alla pagina"
 
 #: gschem/src/rcstrings.c:68
-msgid "Zoom In"
+#, fuzzy
+msgid "Zoom _In"
 msgstr "Ingrandisci"
 
 #: gschem/src/rcstrings.c:69
-msgid "Zoom Out"
+#, fuzzy
+msgid "Zoom _Out"
 msgstr "Riduci"
 
 #: gschem/src/rcstrings.c:70
-msgid "Zoom Full"
+#, fuzzy
+msgid "Zoom _Full"
 msgstr "Riduci al Massimo"
 
 #: gschem/src/rcstrings.c:71
-msgid "Dark color scheme"
+#, fuzzy
+msgid "_Dark color scheme"
 msgstr "Schema colore scuro"
 
 #: gschem/src/rcstrings.c:72
-msgid "Light color scheme"
+#, fuzzy
+msgid "_Light color scheme"
 msgstr "Schema colore chiaro"
 
 #: gschem/src/rcstrings.c:74
@@ -299,31 +320,28 @@ msgid "Page"
 msgstr "Pagina"
 
 #: gschem/src/rcstrings.c:75
-msgid "Manager..."
+#, fuzzy
+msgid "_Manager..."
 msgstr "Gestore..."
 
 #: gschem/src/rcstrings.c:76
-msgid "Next"
-msgstr "Successiva"
-
-#: gschem/src/rcstrings.c:77
-msgid "Previous"
+#, fuzzy
+msgid "_Previous"
 msgstr "Precedente"
 
-#: gschem/src/rcstrings.c:78 gschem/src/x_window.c:317
-msgid "New"
+#: gschem/src/rcstrings.c:77
+#, fuzzy
+msgid "_Next"
+msgstr "Successiva"
+
+#: gschem/src/rcstrings.c:78
+#, fuzzy
+msgid "Ne_w"
 msgstr "Nuovo"
 
-#: gschem/src/rcstrings.c:79
-msgid "Revert"
-msgstr "Riduce e Centra lo Schema"
-
-#: gschem/src/rcstrings.c:80
-msgid "Close"
-msgstr "Chiudi"
-
 #: gschem/src/rcstrings.c:81
-msgid "Discard"
+#, fuzzy
+msgid "_Discard"
 msgstr "Annulla"
 
 #: gschem/src/rcstrings.c:83
@@ -331,55 +349,58 @@ msgid "Add"
 msgstr "Aggiungi"
 
 #: gschem/src/rcstrings.c:84
-msgid "Component..."
+#, fuzzy
+msgid "_Component..."
 msgstr "Componente..."
 
-#: gschem/src/rcstrings.c:85 gschem/src/i_callbacks.c:2403
-#: gschem/src/i_callbacks.c:2430 gschem/src/x_dialog.c:2348
-msgid "Net"
+#: gschem/src/rcstrings.c:85
+#, fuzzy
+msgid "_Net"
 msgstr "Collegamento"
 
-#: gschem/src/rcstrings.c:86 gschem/src/i_callbacks.c:2474
-#: gschem/src/i_callbacks.c:2501 gschem/src/x_dialog.c:2366
-#: gschem/src/x_window.c:375
-msgid "Bus"
+#: gschem/src/rcstrings.c:86
+#, fuzzy
+msgid "B_us"
 msgstr "Bus"
 
 #: gschem/src/rcstrings.c:87
-msgid "Attribute..."
+#, fuzzy
+msgid "_Attribute..."
 msgstr "Caratteristica..."
 
 #: gschem/src/rcstrings.c:88
-msgid "Text..."
+#, fuzzy
+msgid "_Text..."
 msgstr "Testo..."
 
-#: gschem/src/rcstrings.c:89 gschem/src/i_callbacks.c:2582
-#: gschem/src/i_callbacks.c:2605
-msgid "Line"
+#: gschem/src/rcstrings.c:89
+#, fuzzy
+msgid "_Line"
 msgstr "Linea"
 
-#: gschem/src/rcstrings.c:90 gschem/src/i_callbacks.c:2627
-#: gschem/src/i_callbacks.c:2650
-msgid "Box"
+#: gschem/src/rcstrings.c:90
+#, fuzzy
+msgid "_Box"
 msgstr "Box"
 
-#: gschem/src/rcstrings.c:91 gschem/src/i_callbacks.c:2706
-#: gschem/src/i_callbacks.c:2730
-msgid "Circle"
+#: gschem/src/rcstrings.c:91
+#, fuzzy
+msgid "C_ircle"
 msgstr "Cerchio"
 
-#: gschem/src/rcstrings.c:92 gschem/src/i_callbacks.c:2752
-#: gschem/src/i_callbacks.c:2775
-msgid "Arc"
+#: gschem/src/rcstrings.c:92
+#, fuzzy
+msgid "A_rc"
 msgstr "Arco"
 
-#: gschem/src/rcstrings.c:93 gschem/src/i_callbacks.c:2797
-#: gschem/src/i_callbacks.c:2820 gschem/src/x_dialog.c:2339
-msgid "Pin"
+#: gschem/src/rcstrings.c:93
+#, fuzzy
+msgid "_Pin"
 msgstr "Pin"
 
 #: gschem/src/rcstrings.c:94
-msgid "Picture..."
+#, fuzzy
+msgid "Pictu_re..."
 msgstr "Immagine..."
 
 #: gschem/src/rcstrings.c:96
@@ -387,63 +408,77 @@ msgid "Hierarchy"
 msgstr "Gerarchia"
 
 #: gschem/src/rcstrings.c:97
-msgid "Down Schematic"
+#, fuzzy
+msgid "_Down Schematic"
 msgstr "Scarica Schematico"
 
 #: gschem/src/rcstrings.c:98
-msgid "Down Symbol"
+#, fuzzy
+msgid "Down _Symbol"
 msgstr "Scarica Simbolo"
 
 #: gschem/src/rcstrings.c:99
-msgid "Up"
+#, fuzzy
+msgid "_Up"
 msgstr "Sopra"
 
 #: gschem/src/rcstrings.c:100
-msgid "Documentation"
+#, fuzzy
+msgid "D_ocumentation..."
 msgstr "Documentazione"
 
 #: gschem/src/rcstrings.c:102 gschem/src/x_compselect.c:1418
 msgid "Attributes"
 msgstr "Caratteristiche"
 
-#: gschem/src/rcstrings.c:103 gschem/src/i_callbacks.c:3091
-msgid "Attach"
+#: gschem/src/rcstrings.c:103
+#, fuzzy
+msgid "_Attach"
 msgstr "Collega"
 
-#: gschem/src/rcstrings.c:104 gschem/src/i_callbacks.c:3138
-msgid "Detach"
+#: gschem/src/rcstrings.c:104
+#, fuzzy
+msgid "_Detach"
 msgstr "Scollega"
 
 #: gschem/src/rcstrings.c:105
-msgid "Show Value"
+#, fuzzy
+msgid "Show _Value"
 msgstr "Mostra Valore"
 
 #: gschem/src/rcstrings.c:106
-msgid "Show Name"
+#, fuzzy
+msgid "Show _Name"
 msgstr "Mostra Nome"
 
 #: gschem/src/rcstrings.c:107
-msgid "Show Both"
+#, fuzzy
+msgid "Show _Both"
 msgstr "Mostra Entrambi"
 
 #: gschem/src/rcstrings.c:108
-msgid "Toggle Visibility"
+#, fuzzy
+msgid "_Toggle Visibility"
 msgstr "Pulsante Visibilità"
 
 #: gschem/src/rcstrings.c:109
-msgid "Find Specific Text..."
+#, fuzzy
+msgid "_Find Specific Text..."
 msgstr "Trova Testo Specifico..."
 
 #: gschem/src/rcstrings.c:110
-msgid "Hide Specific Text..."
+#, fuzzy
+msgid "_Hide Specific Text..."
 msgstr "Nascondi Testo Specifico..."
 
 #: gschem/src/rcstrings.c:111
-msgid "Show Specific Text..."
+#, fuzzy
+msgid "_Show Specific Text..."
 msgstr "Mostra Testo Specifico..."
 
 #: gschem/src/rcstrings.c:112
-msgid "Autonumber Text..."
+#, fuzzy
+msgid "A_utonumber Text..."
 msgstr "Autonumera Testo..."
 
 #: gschem/src/rcstrings.c:114
@@ -451,72 +486,88 @@ msgid "Options"
 msgstr "Opzioni"
 
 #: gschem/src/rcstrings.c:115
-msgid "Text Size..."
+#, fuzzy
+msgid "_Text Size..."
 msgstr "Ampiezza Testo..."
 
 #: gschem/src/rcstrings.c:116
-msgid "Cycle grid styles"
+msgid "Cycle _grid styles"
 msgstr ""
 
 #: gschem/src/rcstrings.c:117
-msgid "Toggle Snap On/Off"
+#, fuzzy
+msgid "Toggle _Snap On/Off"
 msgstr "Alterna Snap On/Off"
 
 #: gschem/src/rcstrings.c:118
-msgid "Snap Grid Spacing..."
+#, fuzzy
+msgid "Snap Grid S_pacing..."
 msgstr "Ampiezza Griglia"
 
 #: gschem/src/rcstrings.c:119
-msgid "Scale up Grid Spacing"
-msgstr ""
+#, fuzzy
+msgid "Scale _up Grid Spacing"
+msgstr "Ampiezza Griglia"
 
 #: gschem/src/rcstrings.c:120
-msgid "Scale down Grid Spacing"
-msgstr ""
+#, fuzzy
+msgid "Scale _down Grid Spacing"
+msgstr "Ampiezza Griglia"
 
 #: gschem/src/rcstrings.c:121
-msgid "Toggle Outline/Box"
+msgid "Toggle _Outline/Box"
 msgstr ""
 
 #: gschem/src/rcstrings.c:122
-msgid "Toggle Net Rubberband"
+msgid "Toggle Net _Rubberband"
 msgstr ""
 
 #: gschem/src/rcstrings.c:123
-msgid "Show Log Window..."
-msgstr "Mostra Finestra File di Log..."
+msgid "Toggle _Magnetic Net"
+msgstr ""
 
 #: gschem/src/rcstrings.c:124
-msgid "Show Coord Window..."
+#, fuzzy
+msgid "Show _Log Window..."
+msgstr "Mostra Finestra File di Log..."
+
+#: gschem/src/rcstrings.c:125
+#, fuzzy
+msgid "Show _Coord Window..."
 msgstr "Mostra Coordinate Finestra..."
 
-#: gschem/src/rcstrings.c:126
+#: gschem/src/rcstrings.c:127
 msgid "Help"
 msgstr "Aiuto"
 
-#: gschem/src/rcstrings.c:127
-msgid "Manual"
-msgstr "Manuale"
-
 #: gschem/src/rcstrings.c:128
-msgid "gEDA Documentation"
+#, fuzzy
+msgid "gEDA Docu_mentation..."
 msgstr "Documentazione gEDA"
 
 #: gschem/src/rcstrings.c:129
-msgid "gschem FAQ"
+#, fuzzy
+msgid "gschem _FAQ..."
 msgstr "FAQ gschem"
 
 #: gschem/src/rcstrings.c:130
-msgid "Component Documentation"
+msgid "gEDA _Wiki..."
+msgstr ""
+
+#: gschem/src/rcstrings.c:131
+#, fuzzy
+msgid "Component D_ocumentation..."
 msgstr "Documentazione componente"
 
-#: gschem/src/rcstrings.c:131 gschem/src/x_dialog.c:2206
-msgid "About gschem"
-msgstr "Informazioni su gschem"
-
-#: gschem/src/rcstrings.c:132 gschem/src/x_dialog.c:2680
-msgid "Hotkeys"
+#: gschem/src/rcstrings.c:132
+#, fuzzy
+msgid "_Hotkeys..."
 msgstr "Hotkeys"
+
+#: gschem/src/rcstrings.c:133
+#, fuzzy
+msgid "_About..."
+msgstr "Altro..."
 
 #: gschem/src/a_zoom.c:212
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -717,6 +768,10 @@ msgstr "Modalità Testo"
 msgid "Rotate Mode"
 msgstr "Modalità Rotazione"
 
+#: gschem/src/i_basic.c:95
+msgid "Zoom Box"
+msgstr "Ingrandisci Riquadro"
+
 #: gschem/src/i_basic.c:99
 msgid "Pan Mode"
 msgstr ""
@@ -761,6 +816,11 @@ msgstr "Modalità Arco"
 #: gschem/src/i_basic.c:133
 msgid "Pin Mode"
 msgstr "Modalità Pin"
+
+#: gschem/src/i_basic.c:135 gschem/src/i_callbacks.c:538
+#: gschem/src/i_callbacks.c:562
+msgid "Copy"
+msgstr "Copia"
 
 #: gschem/src/i_basic.c:137 gschem/src/i_callbacks.c:628
 #: gschem/src/i_callbacks.c:652
@@ -846,6 +906,10 @@ msgstr "Chiusura Finestra\n"
 msgid "Select objs first"
 msgstr "Seleziona prima un oggetto"
 
+#: gschem/src/i_callbacks.c:672 gschem/src/x_multiattrib.c:1496
+msgid "Delete"
+msgstr "Cancella"
+
 #: gschem/src/i_callbacks.c:712
 msgid "Edit pin type"
 msgstr ""
@@ -915,6 +979,10 @@ msgstr "Mostra Nascosto"
 #: gschem/src/i_callbacks.c:1170
 msgid "MakeVisible"
 msgstr "Rendi Visibile"
+
+#: gschem/src/i_callbacks.c:1476 gschem/src/i_callbacks.c:1548
+msgid "Pan"
+msgstr "Pan"
 
 #: gschem/src/i_callbacks.c:1567
 msgid "Update Cues"
@@ -1011,6 +1079,37 @@ msgstr "Componente"
 msgid "Attribute"
 msgstr "Caratteristica"
 
+#: gschem/src/i_callbacks.c:2403 gschem/src/i_callbacks.c:2430
+#: gschem/src/x_dialog.c:2348
+msgid "Net"
+msgstr "Collegamento"
+
+#: gschem/src/i_callbacks.c:2474 gschem/src/i_callbacks.c:2501
+#: gschem/src/x_dialog.c:2366 gschem/src/x_window.c:375
+msgid "Bus"
+msgstr "Bus"
+
+#: gschem/src/i_callbacks.c:2582 gschem/src/i_callbacks.c:2605
+msgid "Line"
+msgstr "Linea"
+
+#: gschem/src/i_callbacks.c:2627 gschem/src/i_callbacks.c:2650
+msgid "Box"
+msgstr "Box"
+
+#: gschem/src/i_callbacks.c:2706 gschem/src/i_callbacks.c:2730
+msgid "Circle"
+msgstr "Cerchio"
+
+#: gschem/src/i_callbacks.c:2752 gschem/src/i_callbacks.c:2775
+msgid "Arc"
+msgstr "Arco"
+
+#: gschem/src/i_callbacks.c:2797 gschem/src/i_callbacks.c:2820
+#: gschem/src/x_dialog.c:2339
+msgid "Pin"
+msgstr "Pin"
+
 #: gschem/src/i_callbacks.c:2879
 #, c-format
 msgid "Searching for source [%s]\n"
@@ -1041,6 +1140,14 @@ msgid ""
 msgstr ""
 "Questo comando reperisce la documentazione del componente da Internet, ma "
 "non hai selezionato nessun componente da cercare."
+
+#: gschem/src/i_callbacks.c:3091
+msgid "Attach"
+msgstr "Collega"
+
+#: gschem/src/i_callbacks.c:3138
+msgid "Detach"
+msgstr "Scollega"
 
 #: gschem/src/i_callbacks.c:3173
 msgid "ShowN"
@@ -1764,6 +1871,10 @@ msgstr "Modifica numero slot:"
 msgid "%s%s (%s)"
 msgstr ""
 
+#: gschem/src/x_dialog.c:2206
+msgid "About gschem"
+msgstr "Informazioni su gschem"
+
 #: gschem/src/x_dialog.c:2207
 #, fuzzy
 msgid "gEDA: GPL Electronic Design Automation"
@@ -1859,6 +1970,10 @@ msgstr "Modifica Colore"
 #: gschem/src/x_dialog.c:2622
 msgid "Object color:"
 msgstr "Colore dell'oggetto:"
+
+#: gschem/src/x_dialog.c:2680
+msgid "Hotkeys"
+msgstr "Hotkeys"
 
 #: gschem/src/x_dialog.c:2744
 msgid "Function"
@@ -2046,6 +2161,10 @@ msgstr "Larghezza x Altezza"
 msgid "Image type"
 msgstr "Tipo di immagine"
 
+#: gschem/src/x_image.c:495
+msgid "Write image..."
+msgstr "Scrivi immagine..."
+
 #: gschem/src/x_log.c:188
 msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
 msgstr ""
@@ -2194,6 +2313,22 @@ msgstr ""
 msgid "Add Attribute"
 msgstr "Aggiungi Attributo"
 
+#: gschem/src/x_pagesel.c:252
+msgid "New Page"
+msgstr "Nuova pagina"
+
+#: gschem/src/x_pagesel.c:253
+msgid "Open Page..."
+msgstr "Apri pagina..."
+
+#: gschem/src/x_pagesel.c:255
+msgid "Save Page"
+msgstr "Salva la pagina"
+
+#: gschem/src/x_pagesel.c:256
+msgid "Close Page"
+msgstr "Chiudi pagina"
+
 #: gschem/src/x_pagesel.c:257
 msgid "Discard Page"
 msgstr "Abbandona la pagina"
@@ -2243,6 +2378,10 @@ msgstr "Landscape"
 #: gschem/src/x_print.c:216
 msgid "Portrait"
 msgstr "Portrait"
+
+#: gschem/src/x_print.c:276
+msgid "Print..."
+msgstr "Stampa..."
 
 #: gschem/src/x_print.c:284
 msgid "Settings"
@@ -2296,6 +2435,10 @@ msgstr "Lo schema corrente è stato stampato in [%s]\n"
 msgid "Couldn't allocate gc\n"
 msgstr "Impossibile l'allocazione di gc\n"
 
+#: gschem/src/x_window.c:317
+msgid "New"
+msgstr "Nuovo"
+
 #: gschem/src/x_window.c:318
 msgid "New file"
 msgstr "Nuovo file"
@@ -2316,9 +2459,17 @@ msgstr "Salva"
 msgid "Save file"
 msgstr "Salva file"
 
+#: gschem/src/x_window.c:339
+msgid "Undo"
+msgstr "Annulla"
+
 #: gschem/src/x_window.c:340
 msgid "Undo last operation"
 msgstr "Annulla l'ultima operazione"
+
+#: gschem/src/x_window.c:346
+msgid "Redo"
+msgstr "Ripristina"
 
 #: gschem/src/x_window.c:347
 msgid "Redo last undo"
@@ -2458,6 +2609,21 @@ msgstr "Crea e modifica schemi elettrici e simboli con gschem"
 #~ "Ales  Hvezda\n"
 #~ "ahvezda@geda.seul.org\n"
 #~ "...e molti altri (leggere il file AUTHORS)"
+
+#~ msgid "Revert Page"
+#~ msgstr "Annulla Pagina"
+
+#~ msgid "Save Page As..."
+#~ msgstr "Salva pagina con nome..."
+
+#~ msgid "Recent files"
+#~ msgstr "File recenti"
+
+#~ msgid "Close Window"
+#~ msgstr "Chiudi finestra"
+
+#~ msgid "Manual"
+#~ msgstr "Manuale"
 
 #~ msgid "Invalid size [%f] passed to postscript-font-scale\n"
 #~ msgstr "L'ampiezza [%f] passata al postscript-font-scale non è valida\n"
