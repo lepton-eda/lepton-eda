@@ -8,14 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-02-06 23:11+0000\n"
-"PO-Revision-Date: 2009-10-17 11:04+0200\n"
-"Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
+"POT-Creation-Date: 2010-02-08 17:35+0000\n"
+"PO-Revision-Date: 2010-02-07 14:25+0000\n"
+"Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Launchpad-Export-Date: 2010-02-08 16:28+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
 msgid "File"
@@ -26,95 +27,80 @@ msgid "New Window"
 msgstr "Neues Fenster"
 
 #: gschem/src/rcstrings.c:4
-#, fuzzy
 msgid "_New"
-msgstr "Neu"
+msgstr "_Neu"
 
 #: gschem/src/rcstrings.c:5
-#, fuzzy
 msgid "_Open..."
-msgstr "Öffnen..."
+msgstr "_Öffnen..."
 
 #: gschem/src/rcstrings.c:6
 msgid "Open Recen_t"
-msgstr ""
+msgstr "Öffne _Letzte"
 
 #: gschem/src/rcstrings.c:7
-#, fuzzy
 msgid "_Save"
-msgstr "Speichern"
+msgstr "_Speichern"
 
 #: gschem/src/rcstrings.c:8
-#, fuzzy
 msgid "Save _As..."
-msgstr "Speichern unter..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:9
 msgid "Save All"
 msgstr "Alles speichern"
 
 #: gschem/src/rcstrings.c:10 gschem/src/rcstrings.c:79
-#, fuzzy
 msgid "_Revert"
-msgstr "Wiederherstellen"
+msgstr ""
 
 #: gschem/src/rcstrings.c:11
-#, fuzzy
 msgid "_Print..."
-msgstr "Drucken..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:12
-#, fuzzy
 msgid "Write _image..."
-msgstr "Speichere Bild..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:13 gschem/src/x_script.c:47
 msgid "Execute Script..."
 msgstr "Skript ausführen..."
 
 #: gschem/src/rcstrings.c:14 gschem/src/rcstrings.c:80
-#, fuzzy
 msgid "_Close"
-msgstr "Schließen"
+msgstr ""
 
 #: gschem/src/rcstrings.c:15
-#, fuzzy
 msgid "_Quit"
-msgstr "Beenden"
+msgstr ""
 
 #: gschem/src/rcstrings.c:17 gschem/src/i_callbacks.c:697
 msgid "Edit"
 msgstr "Bearbeiten"
 
 #: gschem/src/rcstrings.c:18
-#, fuzzy
 msgid "_Undo"
-msgstr "Rückgängig"
+msgstr ""
 
 #: gschem/src/rcstrings.c:19
-#, fuzzy
 msgid "_Redo"
-msgstr "Wiederherstellen"
+msgstr ""
 
 #: gschem/src/rcstrings.c:20
-#, fuzzy
 msgid "Cu_t"
-msgstr "Ausschneiden"
+msgstr ""
 
 #: gschem/src/rcstrings.c:21
-#, fuzzy
 msgid "_Copy"
-msgstr "Kopieren"
+msgstr ""
 
 #: gschem/src/rcstrings.c:22
-#, fuzzy
 msgid "_Paste"
-msgstr "Einfügen"
+msgstr ""
 
 #: gschem/src/rcstrings.c:23
-#, fuzzy
 msgid "_Delete"
-msgstr "Löschen"
+msgstr ""
 
 #: gschem/src/rcstrings.c:24 gschem/src/i_basic.c:77 gschem/src/x_window.c:521
 msgid "Select Mode"
@@ -270,308 +256,252 @@ msgid "View"
 msgstr "Ansicht"
 
 #: gschem/src/rcstrings.c:64
-#, fuzzy
 msgid "_Redraw"
-msgstr "Neu zeichnen"
+msgstr ""
 
 #: gschem/src/rcstrings.c:65
-#, fuzzy
 msgid "_Pan"
-msgstr "Ausschnitt verschieben"
+msgstr ""
 
 #: gschem/src/rcstrings.c:66
-#, fuzzy
 msgid "Zoom _Box"
-msgstr "Ausschnitt wählen"
+msgstr ""
 
 #: gschem/src/rcstrings.c:67
-#, fuzzy
 msgid "Zoom _Extents"
-msgstr "Automatisch"
+msgstr ""
 
 #: gschem/src/rcstrings.c:68
-#, fuzzy
 msgid "Zoom _In"
-msgstr "Vergrößern"
+msgstr ""
 
 #: gschem/src/rcstrings.c:69
-#, fuzzy
 msgid "Zoom _Out"
-msgstr "Verkleinern"
+msgstr ""
 
 #: gschem/src/rcstrings.c:70
-#, fuzzy
 msgid "Zoom _Full"
-msgstr "Ganze Seite"
+msgstr ""
 
 #: gschem/src/rcstrings.c:71
-#, fuzzy
 msgid "_Dark color scheme"
-msgstr "Dunkles Farbschema"
+msgstr ""
 
 #: gschem/src/rcstrings.c:72
-#, fuzzy
 msgid "_Light color scheme"
-msgstr "Helle Farbschema"
+msgstr ""
 
 #: gschem/src/rcstrings.c:74
 msgid "Page"
 msgstr "Seite"
 
 #: gschem/src/rcstrings.c:75
-#, fuzzy
 msgid "_Manager..."
-msgstr "Manager..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:76
-#, fuzzy
 msgid "_Previous"
-msgstr "Vorherige"
+msgstr ""
 
 #: gschem/src/rcstrings.c:77
-#, fuzzy
 msgid "_Next"
-msgstr "Nächste"
+msgstr ""
 
 #: gschem/src/rcstrings.c:78
-#, fuzzy
 msgid "Ne_w"
-msgstr "Neu"
+msgstr ""
 
 #: gschem/src/rcstrings.c:81
-#, fuzzy
 msgid "_Discard"
-msgstr "Ablegen"
+msgstr ""
 
 #: gschem/src/rcstrings.c:83
 msgid "Add"
 msgstr "Einfügen"
 
 #: gschem/src/rcstrings.c:84
-#, fuzzy
 msgid "_Component..."
-msgstr "Bauteil..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:85
-#, fuzzy
 msgid "_Net"
-msgstr "Netz"
+msgstr "_Netz"
 
 #: gschem/src/rcstrings.c:86
-#, fuzzy
 msgid "B_us"
-msgstr "Bus"
+msgstr "B_us"
 
 #: gschem/src/rcstrings.c:87
-#, fuzzy
 msgid "_Attribute..."
-msgstr "Attribut..."
+msgstr "_Attribut"
 
 #: gschem/src/rcstrings.c:88
-#, fuzzy
 msgid "_Text..."
-msgstr "Text..."
+msgstr "_Text"
 
 #: gschem/src/rcstrings.c:89
-#, fuzzy
 msgid "_Line"
-msgstr "Linie"
+msgstr ""
 
 #: gschem/src/rcstrings.c:90
-#, fuzzy
 msgid "_Box"
-msgstr "Rechteck"
+msgstr ""
 
 #: gschem/src/rcstrings.c:91
-#, fuzzy
 msgid "C_ircle"
-msgstr "Kreis"
+msgstr ""
 
 #: gschem/src/rcstrings.c:92
-#, fuzzy
 msgid "A_rc"
-msgstr "Bogen"
+msgstr ""
 
 #: gschem/src/rcstrings.c:93
-#, fuzzy
 msgid "_Pin"
-msgstr "Anschluß"
+msgstr "_Pin"
 
 #: gschem/src/rcstrings.c:94
-#, fuzzy
 msgid "Pictu_re..."
-msgstr "Bild..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:96
 msgid "Hierarchy"
 msgstr "Hierarchie"
 
 #: gschem/src/rcstrings.c:97
-#, fuzzy
 msgid "_Down Schematic"
-msgstr "zum Schaltplan hinab"
+msgstr ""
 
 #: gschem/src/rcstrings.c:98
-#, fuzzy
 msgid "Down _Symbol"
-msgstr "zum Symbol hinab"
+msgstr ""
 
 #: gschem/src/rcstrings.c:99
-#, fuzzy
 msgid "_Up"
-msgstr "Hinauf"
+msgstr ""
 
 #: gschem/src/rcstrings.c:100
-#, fuzzy
 msgid "D_ocumentation..."
-msgstr "Dokumentation"
+msgstr ""
 
 #: gschem/src/rcstrings.c:102 gschem/src/x_compselect.c:1414
 msgid "Attributes"
 msgstr "Attribut"
 
 #: gschem/src/rcstrings.c:103
-#, fuzzy
 msgid "_Attach"
-msgstr "Anbringen"
+msgstr ""
 
 #: gschem/src/rcstrings.c:104
-#, fuzzy
 msgid "_Detach"
-msgstr "Ablösen"
+msgstr ""
 
 #: gschem/src/rcstrings.c:105
-#, fuzzy
 msgid "Show _Value"
-msgstr "Wert zeigen"
+msgstr ""
 
 #: gschem/src/rcstrings.c:106
-#, fuzzy
 msgid "Show _Name"
-msgstr "Name zeigen"
+msgstr ""
 
 #: gschem/src/rcstrings.c:107
-#, fuzzy
 msgid "Show _Both"
-msgstr "Name & Wert zeigen"
+msgstr ""
 
 #: gschem/src/rcstrings.c:108
-#, fuzzy
 msgid "_Toggle Visibility"
-msgstr "Sichbarkeit EIN/AUS"
+msgstr ""
 
 #: gschem/src/rcstrings.c:109
-#, fuzzy
 msgid "_Find Specific Text..."
-msgstr "Suche Text..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:110
-#, fuzzy
 msgid "_Hide Specific Text..."
-msgstr "Verberge Text..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:111
-#, fuzzy
 msgid "_Show Specific Text..."
-msgstr "Zeige Text..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:112
-#, fuzzy
 msgid "A_utonumber Text..."
-msgstr "Text durchnummerieren..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:114
 msgid "Options"
 msgstr "Optionen"
 
 #: gschem/src/rcstrings.c:115
-#, fuzzy
 msgid "_Text Size..."
-msgstr "Text Größe..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:116
-#, fuzzy
 msgid "Cycle _grid styles"
-msgstr "Rasterart wechseln"
+msgstr ""
 
 #: gschem/src/rcstrings.c:117
-#, fuzzy
 msgid "Toggle _Snap On/Off"
-msgstr "am Raster ausrichten EIN/AUS"
+msgstr ""
 
 #: gschem/src/rcstrings.c:118
-#, fuzzy
 msgid "Snap Grid S_pacing..."
-msgstr "Rastermaß eingeben..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:119
-#, fuzzy
 msgid "Scale _up Grid Spacing"
-msgstr "Rastermaß vergrößern"
+msgstr ""
 
 #: gschem/src/rcstrings.c:120
-#, fuzzy
 msgid "Scale _down Grid Spacing"
-msgstr "Rastermaß verkleinern"
+msgstr ""
 
 #: gschem/src/rcstrings.c:121
-#, fuzzy
 msgid "Toggle _Outline/Box"
-msgstr "Auswahl Umgebung/Lokal"
+msgstr ""
 
 #: gschem/src/rcstrings.c:122
-#, fuzzy
 msgid "Toggle Net _Rubberband"
-msgstr "Gummifäden EIN/AUS"
+msgstr ""
 
 #: gschem/src/rcstrings.c:123
-#, fuzzy
 msgid "Toggle _Magnetic Net"
-msgstr "Magnetischer Netz Modus"
+msgstr ""
 
 #: gschem/src/rcstrings.c:124
-#, fuzzy
 msgid "Show _Log Window..."
-msgstr "Statusmeldungen anzeigen..."
+msgstr "Zeige _Log Fenster"
 
 #: gschem/src/rcstrings.c:125
-#, fuzzy
 msgid "Show _Coord Window..."
-msgstr "Koordinaten anzeigen..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:127
 msgid "Help"
 msgstr "Hilfe"
 
 #: gschem/src/rcstrings.c:128
-#, fuzzy
 msgid "gEDA Docu_mentation..."
-msgstr "gEDA Dokumentation"
+msgstr ""
 
 #: gschem/src/rcstrings.c:129
-#, fuzzy
 msgid "gschem _FAQ..."
-msgstr "gschem FAQ"
+msgstr "gschem _FAQ..."
 
 #: gschem/src/rcstrings.c:130
-#, fuzzy
 msgid "gEDA _Wiki..."
-msgstr "gEDA Wiki"
+msgstr "gEDA _Wiki..."
 
 #: gschem/src/rcstrings.c:131
-#, fuzzy
 msgid "Component D_ocumentation..."
-msgstr "Bauteil Dokumentation"
+msgstr ""
 
 #: gschem/src/rcstrings.c:132
-#, fuzzy
 msgid "_Hotkeys..."
-msgstr "Tastenkürzel..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:133
-#, fuzzy
 msgid "_About..."
-msgstr "Über..."
+msgstr ""
 
 #: gschem/src/a_zoom.c:212
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -1225,7 +1155,7 @@ msgstr "Objekte neu am Raster ausrichten (Achtung!)\n"
 
 #: gschem/src/i_callbacks.c:3485
 msgid "Rubber band OFF \n"
-msgstr "Gummifäden AUS\n"
+msgstr "Gummifäden AUS \n"
 
 #: gschem/src/i_callbacks.c:3488
 msgid "Rubber band ON\n"
@@ -2649,99 +2579,11 @@ msgstr ""
 #~ msgid "About gschem"
 #~ msgstr "Über gschem"
 
-#~ msgid "Invalid size [%f] passed to postscript-font-scale\n"
-#~ msgstr ""
-#~ "Ein ungültiger Wert [%f] wurde an postscript-font-scale übergeben.\n"
-
-#~ msgid "Cut Buffer"
-#~ msgstr "Auswahl ausschneiden"
-
-#~ msgid "Copy Buffer"
-#~ msgstr "Auswahl kopieren"
-
-#~ msgid "Toggle Grid On/Off"
-#~ msgstr "Raster EIN/AUS"
-
-#~ msgid "Invalid color [%s] passed to %s\n"
-#~ msgstr "Eine ungültige Farbe [%s] wurde an %s übergeben.\n"
-
-#~ msgid "You must set the GEDADATA environment variable!\n"
-#~ msgstr "Die Umgebungsvariable GEDADATA muß gesetzt werden!\n"
-
-#~ msgid "Grid ON\n"
-#~ msgstr "Raster EIN\n"
-
-#~ msgid "Unknown end for arc (%d)\n"
-#~ msgstr "Undefiniertes Ende des Kreisbogens (%d)\n"
-
-#~ msgid "Unknown type for arc !\n"
-#~ msgstr "Undefinierter Typ für einen Kreisbogen\n"
-
-#~ msgid "Unknown end for box (%d)\n"
-#~ msgstr "Undefiniertes Ende für ein Rechteck (%d)\n"
-
-#~ msgid "Unknown type for box !\n"
-#~ msgstr "Undefinierter Typ für das Rechteck!\n"
-
-#~ msgid "Got an invalid buffer_number [o_buffer_copy]\n"
-#~ msgstr ""
-#~ "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_copy]\n"
-
-#~ msgid "Got an invalid buffer_number [o_buffer_cut]\n"
-#~ msgstr ""
-#~ "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_cut]\n"
-
-#~ msgid "Unknown end for circle\n"
-#~ msgstr "Undefiniertes Ende eines Kreises\n"
-
-#~ msgid "Unknown type for circle!\n"
-#~ msgstr "Undefinierter Typ für einen Kreis\n"
-
 #~ msgid "Unknown end for path (%d)\n"
 #~ msgstr "Unbekanntes Linienende einer Pfad-Definition (%d)\n"
 
 #~ msgid "Unknown type for path !\n"
 #~ msgstr "Unbekannter Linientyp einer Pfad-Definition!\n"
-
-#~ msgid "Could not find the color %s!\n"
-#~ msgstr "Die Farbe %s wurde nicht gefunden.\n"
-
-#~ msgid "Defaulting color to white\n"
-#~ msgstr "Nehme als Voreinstellung die Farbe weiß\n"
-
-#~ msgid "Ack! Cannot allocate white!\n"
-#~ msgstr "Ups! Kann die Farbe weiß nicht zuteilen.\n"
-
-#~ msgid "Couldn't allocate xor_gc\n"
-#~ msgstr "Konnte xor_gc in x_window_setup_gc nicht zuweisen\n"
-
-#~ msgid "Couldn't allocate outline_xor_gc\n"
-#~ msgstr "Konnte outline_xor_gc in x_window_setup_gc nicht zuweisen\n"
-
-#~ msgid "Couldn't allocate bounding_xor_gc\n"
-#~ msgstr "Konnte bounding_xor_gc in x_window_setup_gc nicht zuweisen\n"
-
-#~ msgid "Couldn't allocate bus_gc\n"
-#~ msgstr "Konnte bus_gc in x_window_setup_gc nicht zuweisen\n"
-
-#~ msgid "Got NULL in o_attrib_toggle_visibility\n"
-#~ msgstr "Erhielt NULL von o_attrib_toggle_visibility\n"
-
-#~ msgid "Got NULL in o_attrib_toggle_show_name_value\n"
-#~ msgstr "Erhielt NULL von o_attrib_toggle_show_name_value\n"
-
-#~ msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
-#~ msgstr ""
-#~ "Eine ungültige Zwischenspeichernummer wurde übergeben "
-#~ "[o_buffer_paste_end]\n"
-
-#~ msgid "Could not find complex in new component placement!\n"
-#~ msgstr ""
-#~ "Konnte complex während des Hinzufügens eines neuen Bauteils nicht "
-#~ "finden.\n"
-
-#~ msgid "ERROR: NULL object in o_copy_end!\n"
-#~ msgstr "FEHLER: NULL Objekt innerhalb von o_copy_end!\n"
 
 #~ msgid "Attribute failed ot find.\n"
 #~ msgstr "Attribut wurde nicht gefunden.\n"
@@ -2937,7 +2779,7 @@ msgstr ""
 #~ msgstr "sch - Schaltpläne"
 
 #~ msgid "sym - Symbols "
-#~ msgstr "sym - Symbole"
+#~ msgstr "sym - Symbole "
 
 #~ msgid "sym/sch - Schematics and Symbols"
 #~ msgstr "sym/sch - Symbole und Schaltpläne"
@@ -2969,10 +2811,6 @@ msgstr ""
 
 #~ msgid "Files"
 #~ msgstr "Dateien"
-
-#, fuzzy
-#~ msgid "Discard changes"
-#~ msgstr "Verwerfe Änderungen?"
 
 #~ msgid "x_preview_update_gtk24: Can't get pixbuf from preview struct.\n"
 #~ msgstr ""
@@ -3096,23 +2934,11 @@ msgstr ""
 #~ msgid "Read system-gschemrc file [%s]\n"
 #~ msgstr "Lese system-gschemrc Datei [%s]\n"
 
-#, fuzzy
-#~ msgid "Did not find required system-gschemrc file [%s]\n"
-#~ msgstr "Datei system-gschemrc [%s] nicht gefunden.\n"
-
 #~ msgid "Read ~/.gEDA/gschemrc file [%s]\n"
 #~ msgstr "Lese ~/.gEDA/gschemrc Datei [%s]\n"
 
-#, fuzzy
-#~ msgid "Did not find optional ~/.gEDA/gschemrc file [%s]\n"
-#~ msgstr "Datei ~/.gEDA/gschemrc [%s] nicht gefunden.\n"
-
 #~ msgid "Read local gschemrc file [%s]\n"
 #~ msgstr "Lese lokale gschemrc Datei [%s]\n"
-
-#, fuzzy
-#~ msgid "Did not find optional local gschemrc file [%s]\n"
-#~ msgstr "Lokale gschemrc Datei [%s] nicht gefunden\n"
 
 #~ msgid "Read specified rc file [%s]\n"
 #~ msgstr "Lese die angegebene rc Datei [%s]\n"
@@ -3154,3 +2980,111 @@ msgstr ""
 #~ msgid "Invalid path [%s] passed to font-directory\n"
 #~ msgstr ""
 #~ "Ein ungültiges Verzeichnis [%s] wurde an font-directory übergeben.\n"
+
+#, fuzzy
+#~ msgid "gEDA: GPL Electronic Design Automation"
+#~ msgstr "<b>gEDA : GPL Electronic Design Automation</b>"
+
+#~ msgid "Invalid size [%f] passed to postscript-font-scale\n"
+#~ msgstr ""
+#~ "Ein ungültiger Wert [%f] wurde an postscript-font-scale übergeben.\n"
+
+#~ msgid "Cut Buffer"
+#~ msgstr "Auswahl ausschneiden"
+
+#~ msgid "Copy Buffer"
+#~ msgstr "Auswahl kopieren"
+
+#~ msgid "Toggle Grid On/Off"
+#~ msgstr "Raster EIN/AUS"
+
+#~ msgid "Invalid color [%s] passed to %s\n"
+#~ msgstr "Eine ungültige Farbe [%s] wurde an %s übergeben.\n"
+
+#~ msgid "You must set the GEDADATA environment variable!\n"
+#~ msgstr "Die Umgebungsvariable GEDADATA muß gesetzt werden!\n"
+
+#~ msgid "Grid ON\n"
+#~ msgstr "Raster EIN\n"
+
+#~ msgid "Unknown end for arc (%d)\n"
+#~ msgstr "Undefiniertes Ende des Kreisbogens (%d)\n"
+
+#~ msgid "Unknown type for arc !\n"
+#~ msgstr "Undefinierter Typ für einen Kreisbogen\n"
+
+#~ msgid "Unknown end for box (%d)\n"
+#~ msgstr "Undefiniertes Ende für ein Rechteck (%d)\n"
+
+#~ msgid "Unknown type for box !\n"
+#~ msgstr "Undefinierter Typ für das Rechteck!\n"
+
+#~ msgid "Got an invalid buffer_number [o_buffer_copy]\n"
+#~ msgstr ""
+#~ "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_copy]\n"
+
+#~ msgid "Got an invalid buffer_number [o_buffer_cut]\n"
+#~ msgstr ""
+#~ "Eine ungültige Zwischenspeichernummer wurde übergeben [o_buffer_cut]\n"
+
+#~ msgid "Unknown end for circle\n"
+#~ msgstr "Undefiniertes Ende eines Kreises\n"
+
+#~ msgid "Unknown type for circle!\n"
+#~ msgstr "Undefinierter Typ für einen Kreis\n"
+
+#~ msgid "Could not find the color %s!\n"
+#~ msgstr "Die Farbe %s wurde nicht gefunden.\n"
+
+#~ msgid "Defaulting color to white\n"
+#~ msgstr "Nehme als Voreinstellung die Farbe weiß\n"
+
+#~ msgid "Ack! Cannot allocate white!\n"
+#~ msgstr "Ups! Kann die Farbe weiß nicht zuteilen.\n"
+
+#~ msgid "Couldn't allocate xor_gc\n"
+#~ msgstr "Konnte xor_gc in x_window_setup_gc nicht zuweisen\n"
+
+#~ msgid "Couldn't allocate outline_xor_gc\n"
+#~ msgstr "Konnte outline_xor_gc in x_window_setup_gc nicht zuweisen\n"
+
+#~ msgid "Couldn't allocate bounding_xor_gc\n"
+#~ msgstr "Konnte bounding_xor_gc in x_window_setup_gc nicht zuweisen\n"
+
+#~ msgid "Couldn't allocate bus_gc\n"
+#~ msgstr "Konnte bus_gc in x_window_setup_gc nicht zuweisen\n"
+
+#~ msgid "Got NULL in o_attrib_toggle_visibility\n"
+#~ msgstr "Erhielt NULL von o_attrib_toggle_visibility\n"
+
+#~ msgid "Got NULL in o_attrib_toggle_show_name_value\n"
+#~ msgstr "Erhielt NULL von o_attrib_toggle_show_name_value\n"
+
+#~ msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
+#~ msgstr ""
+#~ "Eine ungültige Zwischenspeichernummer wurde übergeben "
+#~ "[o_buffer_paste_end]\n"
+
+#~ msgid "Could not find complex in new component placement!\n"
+#~ msgstr ""
+#~ "Konnte complex während des Hinzufügens eines neuen Bauteils nicht "
+#~ "finden.\n"
+
+#~ msgid "ERROR: NULL object in o_copy_end!\n"
+#~ msgstr "FEHLER: NULL Objekt innerhalb von o_copy_end!\n"
+
+#, fuzzy
+#~ msgid "Discard changes"
+#~ msgstr "Verwerfe Änderungen?"
+
+#, fuzzy
+#~ msgid "Did not find required system-gschemrc file [%s]\n"
+#~ msgstr "Datei system-gschemrc [%s] nicht gefunden.\n"
+
+#, fuzzy
+#~ msgid "Did not find optional ~/.gEDA/gschemrc file [%s]\n"
+#~ msgstr "Datei ~/.gEDA/gschemrc [%s] nicht gefunden.\n"
+
+#, fuzzy
+#~ msgid "Did not find optional local gschemrc file [%s]\n"
+#~ msgstr "Lokale gschemrc Datei [%s] nicht gefunden\n"

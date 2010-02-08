@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-02-06 23:11+0000\n"
-"PO-Revision-Date: 2010-01-29 15:51+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2010-02-08 17:35+0000\n"
+"PO-Revision-Date: 2010-02-07 00:21+0000\n"
+"Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: Arabic <ar@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-01-31 13:08+0000\n"
+"X-Launchpad-Export-Date: 2010-02-08 16:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
@@ -26,95 +26,80 @@ msgid "New Window"
 msgstr "نافذة جديدة"
 
 #: gschem/src/rcstrings.c:4
-#, fuzzy
 msgid "_New"
-msgstr "جديد"
+msgstr ""
 
 #: gschem/src/rcstrings.c:5
-#, fuzzy
 msgid "_Open..."
-msgstr "إفتح..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:6
 msgid "Open Recen_t"
 msgstr ""
 
 #: gschem/src/rcstrings.c:7
-#, fuzzy
 msgid "_Save"
-msgstr "إحفظ"
+msgstr ""
 
 #: gschem/src/rcstrings.c:8
-#, fuzzy
 msgid "Save _As..."
-msgstr "إحفظ كـ..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:9
 msgid "Save All"
 msgstr "إحفظ الكل"
 
 #: gschem/src/rcstrings.c:10 gschem/src/rcstrings.c:79
-#, fuzzy
 msgid "_Revert"
-msgstr "أعد"
+msgstr ""
 
 #: gschem/src/rcstrings.c:11
-#, fuzzy
 msgid "_Print..."
-msgstr "إطبع..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:12
-#, fuzzy
 msgid "Write _image..."
-msgstr "أكتب صورة..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:13 gschem/src/x_script.c:47
 msgid "Execute Script..."
 msgstr "نفذ المخطوط..."
 
 #: gschem/src/rcstrings.c:14 gschem/src/rcstrings.c:80
-#, fuzzy
 msgid "_Close"
-msgstr "أغلق"
+msgstr ""
 
 #: gschem/src/rcstrings.c:15
-#, fuzzy
 msgid "_Quit"
-msgstr "أخرج"
+msgstr ""
 
 #: gschem/src/rcstrings.c:17 gschem/src/i_callbacks.c:697
 msgid "Edit"
 msgstr "تحرير"
 
 #: gschem/src/rcstrings.c:18
-#, fuzzy
 msgid "_Undo"
-msgstr "تراجع"
+msgstr ""
 
 #: gschem/src/rcstrings.c:19
-#, fuzzy
 msgid "_Redo"
-msgstr "كرّر"
+msgstr ""
 
 #: gschem/src/rcstrings.c:20
-#, fuzzy
 msgid "Cu_t"
-msgstr "قصّ"
+msgstr ""
 
 #: gschem/src/rcstrings.c:21
-#, fuzzy
 msgid "_Copy"
-msgstr "إنسخ"
+msgstr ""
 
 #: gschem/src/rcstrings.c:22
-#, fuzzy
 msgid "_Paste"
-msgstr "ألصق"
+msgstr ""
 
 #: gschem/src/rcstrings.c:23
-#, fuzzy
 msgid "_Delete"
-msgstr "إحذف"
+msgstr ""
 
 #: gschem/src/rcstrings.c:24 gschem/src/i_basic.c:77 gschem/src/x_window.c:521
 msgid "Select Mode"
@@ -270,306 +255,252 @@ msgid "View"
 msgstr "عرض"
 
 #: gschem/src/rcstrings.c:64
-#, fuzzy
 msgid "_Redraw"
-msgstr "أعد الرسم"
+msgstr ""
 
 #: gschem/src/rcstrings.c:65
-#, fuzzy
 msgid "_Pan"
-msgstr "إنتقل"
+msgstr ""
 
 #: gschem/src/rcstrings.c:66
-#, fuzzy
 msgid "Zoom _Box"
-msgstr "قرب المربع"
+msgstr ""
 
 #: gschem/src/rcstrings.c:67
-#, fuzzy
 msgid "Zoom _Extents"
-msgstr "قرّب مع شمل  الإمتدادات"
+msgstr ""
 
 #: gschem/src/rcstrings.c:68
-#, fuzzy
 msgid "Zoom _In"
-msgstr "قرّب"
+msgstr ""
 
 #: gschem/src/rcstrings.c:69
-#, fuzzy
 msgid "Zoom _Out"
-msgstr "بعّد"
+msgstr ""
 
 #: gschem/src/rcstrings.c:70
-#, fuzzy
 msgid "Zoom _Full"
-msgstr "بعّد للحد الأقصى"
+msgstr ""
 
 #: gschem/src/rcstrings.c:71
-#, fuzzy
 msgid "_Dark color scheme"
-msgstr "مخطط ألوان داكنة"
+msgstr ""
 
 #: gschem/src/rcstrings.c:72
-#, fuzzy
 msgid "_Light color scheme"
-msgstr "مخطط ألوان فاتحة"
+msgstr ""
 
 #: gschem/src/rcstrings.c:74
 msgid "Page"
 msgstr "الصفحة"
 
 #: gschem/src/rcstrings.c:75
-#, fuzzy
 msgid "_Manager..."
-msgstr "المدير..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:76
-#, fuzzy
 msgid "_Previous"
-msgstr "السّابقة"
+msgstr ""
 
 #: gschem/src/rcstrings.c:77
-#, fuzzy
 msgid "_Next"
-msgstr "التّالية"
+msgstr ""
 
 #: gschem/src/rcstrings.c:78
-#, fuzzy
 msgid "Ne_w"
-msgstr "جديد"
+msgstr ""
 
 #: gschem/src/rcstrings.c:81
-#, fuzzy
 msgid "_Discard"
-msgstr "أهمل"
+msgstr ""
 
 #: gschem/src/rcstrings.c:83
 msgid "Add"
 msgstr "أضف"
 
 #: gschem/src/rcstrings.c:84
-#, fuzzy
 msgid "_Component..."
-msgstr "مكون..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:85
-#, fuzzy
 msgid "_Net"
-msgstr "شبكة"
+msgstr ""
 
 #: gschem/src/rcstrings.c:86
-#, fuzzy
 msgid "B_us"
-msgstr "ناقل"
+msgstr ""
 
 #: gschem/src/rcstrings.c:87
-#, fuzzy
 msgid "_Attribute..."
-msgstr "قيمة وصفية..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:88
-#, fuzzy
 msgid "_Text..."
-msgstr "نص..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:89
-#, fuzzy
 msgid "_Line"
-msgstr "خط"
+msgstr ""
 
 #: gschem/src/rcstrings.c:90
-#, fuzzy
 msgid "_Box"
-msgstr "إطار"
+msgstr ""
 
 #: gschem/src/rcstrings.c:91
-#, fuzzy
 msgid "C_ircle"
-msgstr "دائرة"
+msgstr ""
 
 #: gschem/src/rcstrings.c:92
-#, fuzzy
 msgid "A_rc"
-msgstr "قوس"
+msgstr ""
 
 #: gschem/src/rcstrings.c:93
-#, fuzzy
 msgid "_Pin"
-msgstr "دبوس"
+msgstr ""
 
 #: gschem/src/rcstrings.c:94
-#, fuzzy
 msgid "Pictu_re..."
-msgstr "صورة..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:96
 msgid "Hierarchy"
 msgstr "تسلسل هرمي"
 
 #: gschem/src/rcstrings.c:97
-#, fuzzy
 msgid "_Down Schematic"
-msgstr "إنزل إلى المخطط"
+msgstr ""
 
 #: gschem/src/rcstrings.c:98
-#, fuzzy
 msgid "Down _Symbol"
-msgstr "إنزل إلى الرمز"
+msgstr ""
 
 #: gschem/src/rcstrings.c:99
-#, fuzzy
 msgid "_Up"
-msgstr "إرتفع"
+msgstr ""
 
 #: gschem/src/rcstrings.c:100
-#, fuzzy
 msgid "D_ocumentation..."
-msgstr "توثيق"
+msgstr ""
 
 #: gschem/src/rcstrings.c:102 gschem/src/x_compselect.c:1414
 msgid "Attributes"
 msgstr "مواصفات"
 
 #: gschem/src/rcstrings.c:103
-#, fuzzy
 msgid "_Attach"
-msgstr "أرفق"
+msgstr ""
 
 #: gschem/src/rcstrings.c:104
-#, fuzzy
 msgid "_Detach"
-msgstr "إفصل"
+msgstr ""
 
 #: gschem/src/rcstrings.c:105
-#, fuzzy
 msgid "Show _Value"
-msgstr "أظهر القيمة"
+msgstr ""
 
 #: gschem/src/rcstrings.c:106
-#, fuzzy
 msgid "Show _Name"
-msgstr "أظهر الاسم"
+msgstr ""
 
 #: gschem/src/rcstrings.c:107
-#, fuzzy
 msgid "Show _Both"
-msgstr "أظهر الإثنين"
+msgstr ""
 
 #: gschem/src/rcstrings.c:108
-#, fuzzy
 msgid "_Toggle Visibility"
-msgstr "بدل الرؤية"
+msgstr ""
 
 #: gschem/src/rcstrings.c:109
-#, fuzzy
 msgid "_Find Specific Text..."
-msgstr "إبحث عن نص معين..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:110
-#, fuzzy
 msgid "_Hide Specific Text..."
-msgstr "أخف نصا معينا..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:111
-#, fuzzy
 msgid "_Show Specific Text..."
-msgstr "أظهر نصا معينا..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:112
-#, fuzzy
 msgid "A_utonumber Text..."
-msgstr "نص الترقيم الآلى..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:114
 msgid "Options"
 msgstr "خيارات"
 
 #: gschem/src/rcstrings.c:115
-#, fuzzy
 msgid "_Text Size..."
-msgstr "حجم النص..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:116
-#, fuzzy
 msgid "Cycle _grid styles"
-msgstr "دوّر أنماط الشبيكة"
+msgstr ""
 
 #: gschem/src/rcstrings.c:117
-#, fuzzy
 msgid "Toggle _Snap On/Off"
-msgstr "شغل/أوقف الإلتصاق"
+msgstr ""
 
 #: gschem/src/rcstrings.c:118
-#, fuzzy
 msgid "Snap Grid S_pacing..."
-msgstr "تباعد شبيكة الإلتصاق..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:119
-#, fuzzy
 msgid "Scale _up Grid Spacing"
-msgstr "كبّر تباعد الشبيكة"
+msgstr ""
 
 #: gschem/src/rcstrings.c:120
-#, fuzzy
 msgid "Scale _down Grid Spacing"
-msgstr "صغّر تباعد الشبيكة"
+msgstr ""
 
 #: gschem/src/rcstrings.c:121
-#, fuzzy
 msgid "Toggle _Outline/Box"
-msgstr "بدل الإطار\\الحد الخارجي"
+msgstr ""
 
 #: gschem/src/rcstrings.c:122
-#, fuzzy
 msgid "Toggle Net _Rubberband"
-msgstr "بدل الشريط المطاطي للشبكة"
+msgstr ""
 
 #: gschem/src/rcstrings.c:123
 msgid "Toggle _Magnetic Net"
 msgstr ""
 
 #: gschem/src/rcstrings.c:124
-#, fuzzy
 msgid "Show _Log Window..."
-msgstr "أظهر نافذة السجل..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:125
-#, fuzzy
 msgid "Show _Coord Window..."
-msgstr "أظهر نافذة المعلم..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:127
 msgid "Help"
 msgstr "مساعدة"
 
 #: gschem/src/rcstrings.c:128
-#, fuzzy
 msgid "gEDA Docu_mentation..."
-msgstr "توثيق gEDA"
+msgstr ""
 
 #: gschem/src/rcstrings.c:129
-#, fuzzy
 msgid "gschem _FAQ..."
-msgstr "أسئلة أكثر شيوعا لـ gschem"
+msgstr ""
 
 #: gschem/src/rcstrings.c:130
 msgid "gEDA _Wiki..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:131
-#, fuzzy
 msgid "Component D_ocumentation..."
-msgstr "توثيق المكونات"
+msgstr ""
 
 #: gschem/src/rcstrings.c:132
-#, fuzzy
 msgid "_Hotkeys..."
-msgstr "مفاتيح ساخنة"
+msgstr ""
 
 #: gschem/src/rcstrings.c:133
-#, fuzzy
 msgid "_About..."
-msgstr "قيمة وصفية..."
+msgstr ""
 
 #: gschem/src/a_zoom.c:212
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -608,6 +539,11 @@ msgid ""
 "from your config files.\n"
 "\n"
 msgstr ""
+"\n"
+"تمّ احتضار خيار الإعداد postscript-font-scale و سيزال في gEDA 1.8.0.\n"
+"ثبّت النص المطبوع ليطابق الحجم على الشاشة. الرجاء إزالة هذا الخيار من ملفات "
+"الإعداد لديك.\n"
+"\n"
 
 #: gschem/src/g_rc.c:481
 #, c-format
@@ -753,7 +689,7 @@ msgstr "نهاية السطر (%d) مجهولة\n"
 #: gschem/src/gschem_cairo.c:318
 #, c-format
 msgid "Unknown type for stroke (%d) !\n"
-msgstr ""
+msgstr "نوع مجهول للجرة (%d) !\n"
 
 #: gschem/src/i_basic.c:79
 msgid "Component Mode"
@@ -773,7 +709,7 @@ msgstr "قرب المربع"
 
 #: gschem/src/i_basic.c:99
 msgid "Pan Mode"
-msgstr ""
+msgstr "وضع الإنتقال الإختياري"
 
 #: gschem/src/i_basic.c:103
 #, c-format
@@ -782,7 +718,7 @@ msgstr "وضع اللصق %d"
 
 #: gschem/src/i_basic.c:109
 msgid "Magnetic Net Mode"
-msgstr ""
+msgstr "وضع الشبكة المغناطيسية"
 
 #: gschem/src/i_basic.c:111
 msgid "Net Mode"
@@ -837,11 +773,11 @@ msgstr "أظهر المخفي"
 
 #: gschem/src/i_basic.c:171
 msgid "Snap Off"
-msgstr ""
+msgstr "تعطيل الإلتصاق"
 
 #: gschem/src/i_basic.c:173
 msgid "Resnap Active"
-msgstr ""
+msgstr "تفعيل الإلتصاق"
 
 #: gschem/src/i_basic.c:254 gschem/src/x_window.c:495
 msgid "Action"
@@ -850,7 +786,7 @@ msgstr "إجراء"
 #: gschem/src/i_basic.c:260 gschem/src/x_dialog.c:2409
 #: gschem/src/x_window.c:490
 msgid "Stroke"
-msgstr ""
+msgstr "جرة"
 
 #: gschem/src/i_basic.c:266 gschem/src/x_window.c:492
 msgid "none"
@@ -862,21 +798,21 @@ msgstr "كرر\\"
 
 #: gschem/src/i_basic.c:549 gschem/src/i_basic.c:563
 msgid "OFF"
-msgstr ""
+msgstr "تعطيل"
 
 #: gschem/src/i_basic.c:567
 msgid "NONE"
-msgstr ""
+msgstr "لا شيئ"
 
 #: gschem/src/i_basic.c:572
 #, c-format
 msgid "Grid(%s, %s)"
-msgstr ""
+msgstr "شبيكة(%s, %s)"
 
 #: gschem/src/i_callbacks.c:63
 #, c-format
 msgid "Documentation for [%s,%s,%s,%s]\n"
-msgstr ""
+msgstr "التوثيق لأجل [%s,%s,%s,%s]\n"
 
 #: gschem/src/i_callbacks.c:123 gschem/src/i_callbacks.c:1707
 #, c-format
@@ -911,7 +847,7 @@ msgstr "إحذف"
 
 #: gschem/src/i_callbacks.c:712
 msgid "Edit pin type"
-msgstr ""
+msgstr "تحرير نوع الدبوس"
 
 #: gschem/src/i_callbacks.c:731
 msgid "Edit Text"
@@ -939,21 +875,22 @@ msgstr "أنقل"
 
 #: gschem/src/i_callbacks.c:961
 msgid "WARNING: Do not translate with snap off!\n"
-msgstr ""
+msgstr "تحذير: لا تسحب مع إلتصاق معطل!\n"
 
 #: gschem/src/i_callbacks.c:962
 msgid "WARNING: Turning snap on and continuing with translate.\n"
-msgstr ""
+msgstr "تحذير: تشغيل الإلتصاق و المتابعة مع السحب.\n"
 
 #: gschem/src/i_callbacks.c:969
 msgid "WARNING: Snap grid size is not equal to 100!\n"
-msgstr ""
+msgstr "تحذير: حجم شبيكة الإلتصاق لا يساوي 100!\n"
 
 #: gschem/src/i_callbacks.c:971
 msgid ""
 "WARNING: If you are translating a symbol to the origin, the snap grid size "
 "should be set to 100\n"
 msgstr ""
+"تحذير: إذا كنت تسحب رمزا إلى المبدأ، يجب أن يعيّن حجم شبيكة الإلتصاق إلى 100\n"
 
 #: gschem/src/i_callbacks.c:1002
 msgid "Embed"
@@ -961,7 +898,7 @@ msgstr "ضمّن"
 
 #: gschem/src/i_callbacks.c:1043
 msgid "Unembed"
-msgstr ""
+msgstr "لا تضمّن"
 
 #: gschem/src/i_callbacks.c:1087
 msgid "Update"
@@ -981,7 +918,7 @@ msgstr "إنتقل"
 
 #: gschem/src/i_callbacks.c:1567
 msgid "Update Cues"
-msgstr ""
+msgstr "حدّث الإشارات"
 
 #: gschem/src/i_callbacks.c:1751
 msgid "Really revert page?"
@@ -989,15 +926,15 @@ msgstr "تريد استعادة الصفحة حقا؟"
 
 #: gschem/src/i_callbacks.c:1821
 msgid "Copy to clipboard"
-msgstr ""
+msgstr "انسخ إلى الحافظة"
 
 #: gschem/src/i_callbacks.c:1839
 msgid "Cut to clipboard"
-msgstr ""
+msgstr "قصّ إلى الحافظة"
 
 #: gschem/src/i_callbacks.c:1857
 msgid "Paste from clipboard"
-msgstr ""
+msgstr "ألصق من الحافظة"
 
 #: gschem/src/i_callbacks.c:1869 gschem/src/i_callbacks.c:2108
 #: gschem/src/i_callbacks.c:2130 gschem/src/i_callbacks.c:2152
@@ -1108,31 +1045,31 @@ msgstr "دبوس"
 #: gschem/src/i_callbacks.c:2879
 #, c-format
 msgid "Searching for source [%s]\n"
-msgstr ""
+msgstr "البحث عن المنبع [%s]\n"
 
 #: gschem/src/i_callbacks.c:2903
 #, c-format
 msgid "Cannot find source [%s]\n"
-msgstr ""
+msgstr "يتعذر العثور على المنبع [%s]\n"
 
 #: gschem/src/i_callbacks.c:2972
 #, c-format
 msgid "Searching for symbol [%s]\n"
-msgstr ""
+msgstr "البحث عن الرمز [%s]\n"
 
 #: gschem/src/i_callbacks.c:2978
 msgid "Symbol is not a real file. Symbol cannot be loaded.\n"
-msgstr ""
+msgstr "الرمز ليس ملفا حقيقيا. يتعذر تحميل الرمز.\n"
 
 #: gschem/src/i_callbacks.c:3009
 msgid "Cannot find any schematics above the current one!\n"
-msgstr ""
+msgstr "يتعذرإيجاد أي مخطط فوق الحالي!\n"
 
 #: gschem/src/i_callbacks.c:3063
 msgid ""
 "This command retrieves the component documentation from the web, but there "
 "is no component selected"
-msgstr ""
+msgstr "هذا الأمر يسترد توثيق المكوّن من الموقع، لكن لا يوجد أي مكوّن منتقى"
 
 #: gschem/src/i_callbacks.c:3091
 msgid "Attach"
@@ -1144,19 +1081,19 @@ msgstr "إفصل"
 
 #: gschem/src/i_callbacks.c:3173
 msgid "ShowN"
-msgstr ""
+msgstr "أظهرN"
 
 #: gschem/src/i_callbacks.c:3209
 msgid "ShowV"
-msgstr ""
+msgstr "أظهرV"
 
 #: gschem/src/i_callbacks.c:3245
 msgid "ShowB"
-msgstr ""
+msgstr "أظهرB"
 
 #: gschem/src/i_callbacks.c:3282
 msgid "VisToggle"
-msgstr ""
+msgstr "تبديل الرؤية"
 
 #: gschem/src/i_callbacks.c:3312
 #, c-format
@@ -1502,7 +1439,7 @@ msgstr "نص تعداد آلي"
 
 #: gschem/src/x_autonumber.c:1251
 msgid "<b>Scope</b>"
-msgstr ""
+msgstr "<b>المجال</b>"
 
 #: gschem/src/x_autonumber.c:1273
 msgid "Search for:"
@@ -1542,7 +1479,7 @@ msgstr "رقم البدأ:"
 
 #: gschem/src/x_autonumber.c:1353
 msgid "Sort order:"
-msgstr ""
+msgstr "الترتيب:"
 
 #: gschem/src/x_autonumber.c:1374
 msgid "Remove numbers"
@@ -1840,18 +1777,17 @@ msgid "Edit slot number:"
 msgstr ""
 
 #: gschem/src/x_dialog.c:2203
-#, fuzzy
 msgid "About..."
-msgstr "قيمة وصفية..."
+msgstr "عن..."
 
 #: gschem/src/x_dialog.c:2223
 msgid "<b>gEDA: GPL Electronic Design Automation</b>"
 msgstr ""
 
 #: gschem/src/x_dialog.c:2227
-#, fuzzy, c-format
+#, c-format
 msgid "<b>gschem version %s%s.%s</b>"
-msgstr "إصدار gEDA/gschem %s%s.%s\n"
+msgstr "‏<b>إصدار gschem %s%s.%s</b>"
 
 #: gschem/src/x_dialog.c:2235
 msgid ""
@@ -1875,7 +1811,7 @@ msgstr "عالم"
 
 #: gschem/src/x_dialog.c:2367
 msgid "Background"
-msgstr ""
+msgstr "خلفيّة"
 
 #: gschem/src/x_dialog.c:2373
 msgid "Net endpoint"
@@ -1883,7 +1819,7 @@ msgstr ""
 
 #: gschem/src/x_dialog.c:2376
 msgid "Graphic"
-msgstr ""
+msgstr "رسم"
 
 #: gschem/src/x_dialog.c:2385
 msgid "Logic bubble"
@@ -1903,7 +1839,7 @@ msgstr "نص"
 
 #: gschem/src/x_dialog.c:2400
 msgid "Selection"
-msgstr ""
+msgstr "المنتقى"
 
 #: gschem/src/x_dialog.c:2403
 msgid "Bounding box"
@@ -1931,7 +1867,7 @@ msgstr ""
 
 #: gschem/src/x_dialog.c:2427
 msgid "Unknown"
-msgstr ""
+msgstr "مجهول"
 
 #: gschem/src/x_dialog.c:2573
 #, c-format
@@ -2003,11 +1939,11 @@ msgstr ""
 
 #: gschem/src/x_dialog.c:3909
 msgid "If you don't save, all your changes will be permanently lost."
-msgstr ""
+msgstr "ستضيع جميع التّغييرات للأبد إذا لم تحفظ."
 
 #: gschem/src/x_dialog.c:3929
 msgid "_Close without saving"
-msgstr ""
+msgstr "أغلق _دون حفظ"
 
 #: gschem/src/x_dialog.c:4265
 #, c-format
@@ -2241,7 +2177,7 @@ msgstr "أظهر الاسم فقط"
 
 #: gschem/src/x_multiattrib.c:1491
 msgid "Promote"
-msgstr ""
+msgstr "رَقِّ"
 
 #: gschem/src/x_multiattrib.c:1495
 msgid "Duplicate"
@@ -2269,7 +2205,7 @@ msgstr ""
 
 #: gschem/src/x_multiattrib.c:1905
 msgid "Add Attribute"
-msgstr ""
+msgstr "إضافة خاصية"
 
 #: gschem/src/x_pagesel.c:252
 msgid "New Page"
@@ -2532,20 +2468,20 @@ msgstr "محرّر المخططات gEDA"
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr ""
 
-#~ msgid "Revert Page"
-#~ msgstr "أعد الصفحة"
-
-#~ msgid "Save Page As..."
-#~ msgstr "إحفظ الصفحة كـ..."
-
-#~ msgid "Recent files"
-#~ msgstr "آخر الملفات"
-
 #~ msgid "Close Window"
 #~ msgstr "أغلق النافذة"
+
+#~ msgid "About gschem"
+#~ msgstr "عن gschem"
 
 #~ msgid "Manual"
 #~ msgstr "يدوي"
 
-#~ msgid "About gschem"
-#~ msgstr "عن gschem"
+#~ msgid "Save Page As..."
+#~ msgstr "إحفظ الصفحة كـ..."
+
+#~ msgid "Revert Page"
+#~ msgstr "أعد الصفحة"
+
+#~ msgid "Recent files"
+#~ msgstr "آخر الملفات"

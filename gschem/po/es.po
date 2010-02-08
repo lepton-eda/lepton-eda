@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-02-06 23:11+0000\n"
-"PO-Revision-Date: 2009-08-25 22:11+0200\n"
-"Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
+"POT-Creation-Date: 2010-02-08 17:35+0000\n"
+"PO-Revision-Date: 2010-02-07 00:30+0000\n"
+"Last-Translator: Carlos Nieves Ónega <Unknown>\n"
 "Language-Team: Spanish/Spain <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0.2\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Launchpad-Export-Date: 2010-02-08 16:28+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
 msgid "File"
@@ -27,95 +27,80 @@ msgid "New Window"
 msgstr "Nueva ventana"
 
 #: gschem/src/rcstrings.c:4
-#, fuzzy
 msgid "_New"
-msgstr "Nuevo"
+msgstr ""
 
 #: gschem/src/rcstrings.c:5
-#, fuzzy
 msgid "_Open..."
-msgstr "Abrir..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:6
 msgid "Open Recen_t"
 msgstr ""
 
 #: gschem/src/rcstrings.c:7
-#, fuzzy
 msgid "_Save"
-msgstr "Guardar"
+msgstr ""
 
 #: gschem/src/rcstrings.c:8
-#, fuzzy
 msgid "Save _As..."
-msgstr "Guardar como..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:9
 msgid "Save All"
 msgstr "Guardar todo"
 
 #: gschem/src/rcstrings.c:10 gschem/src/rcstrings.c:79
-#, fuzzy
 msgid "_Revert"
-msgstr "Recargar"
+msgstr ""
 
 #: gschem/src/rcstrings.c:11
-#, fuzzy
 msgid "_Print..."
-msgstr "Imprimir..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:12
-#, fuzzy
 msgid "Write _image..."
-msgstr "Guardar imagen..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:13 gschem/src/x_script.c:47
 msgid "Execute Script..."
 msgstr "Ejecutar subprograma..."
 
 #: gschem/src/rcstrings.c:14 gschem/src/rcstrings.c:80
-#, fuzzy
 msgid "_Close"
-msgstr "Cerrar"
+msgstr ""
 
 #: gschem/src/rcstrings.c:15
-#, fuzzy
 msgid "_Quit"
-msgstr "Salir"
+msgstr ""
 
 #: gschem/src/rcstrings.c:17 gschem/src/i_callbacks.c:697
 msgid "Edit"
 msgstr "Editar"
 
 #: gschem/src/rcstrings.c:18
-#, fuzzy
 msgid "_Undo"
-msgstr "Deshacer"
+msgstr ""
 
 #: gschem/src/rcstrings.c:19
-#, fuzzy
 msgid "_Redo"
-msgstr "Rehacer"
+msgstr ""
 
 #: gschem/src/rcstrings.c:20
-#, fuzzy
 msgid "Cu_t"
-msgstr "Cortar"
+msgstr ""
 
 #: gschem/src/rcstrings.c:21
-#, fuzzy
 msgid "_Copy"
-msgstr "Copiar"
+msgstr ""
 
 #: gschem/src/rcstrings.c:22
-#, fuzzy
 msgid "_Paste"
-msgstr "Pegar"
+msgstr ""
 
 #: gschem/src/rcstrings.c:23
-#, fuzzy
 msgid "_Delete"
-msgstr "Borrar"
+msgstr ""
 
 #: gschem/src/rcstrings.c:24 gschem/src/i_basic.c:77 gschem/src/x_window.c:521
 msgid "Select Mode"
@@ -271,307 +256,252 @@ msgid "View"
 msgstr "Ver"
 
 #: gschem/src/rcstrings.c:64
-#, fuzzy
 msgid "_Redraw"
-msgstr "Redibujar"
+msgstr ""
 
 #: gschem/src/rcstrings.c:65
-#, fuzzy
 msgid "_Pan"
-msgstr "Centrar respecto al cursor"
+msgstr ""
 
 #: gschem/src/rcstrings.c:66
-#, fuzzy
 msgid "Zoom _Box"
-msgstr "Ampliar"
+msgstr ""
 
 #: gschem/src/rcstrings.c:67
-#, fuzzy
 msgid "Zoom _Extents"
-msgstr "Mostrar todo"
+msgstr ""
 
 #: gschem/src/rcstrings.c:68
-#, fuzzy
 msgid "Zoom _In"
-msgstr "Aumentar ampliación"
+msgstr ""
 
 #: gschem/src/rcstrings.c:69
-#, fuzzy
 msgid "Zoom _Out"
-msgstr "Disminuir ampliación"
+msgstr ""
 
 #: gschem/src/rcstrings.c:70
-#, fuzzy
 msgid "Zoom _Full"
-msgstr "Vista completa"
+msgstr ""
 
 #: gschem/src/rcstrings.c:71
-#, fuzzy
 msgid "_Dark color scheme"
-msgstr "Configuración de colores oscuros"
+msgstr ""
 
 #: gschem/src/rcstrings.c:72
-#, fuzzy
 msgid "_Light color scheme"
-msgstr "Configuración de colores claros"
+msgstr ""
 
 #: gschem/src/rcstrings.c:74
 msgid "Page"
 msgstr "Página"
 
 #: gschem/src/rcstrings.c:75
-#, fuzzy
 msgid "_Manager..."
-msgstr "Administrador..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:76
-#, fuzzy
 msgid "_Previous"
-msgstr "Anterior"
+msgstr ""
 
 #: gschem/src/rcstrings.c:77
-#, fuzzy
 msgid "_Next"
-msgstr "Siguiente"
+msgstr ""
 
 #: gschem/src/rcstrings.c:78
-#, fuzzy
 msgid "Ne_w"
-msgstr "Nuevo"
+msgstr ""
 
 #: gschem/src/rcstrings.c:81
-#, fuzzy
 msgid "_Discard"
-msgstr "Descartar"
+msgstr ""
 
 #: gschem/src/rcstrings.c:83
 msgid "Add"
 msgstr "Añadir"
 
 #: gschem/src/rcstrings.c:84
-#, fuzzy
 msgid "_Component..."
-msgstr "Componente..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:85
-#, fuzzy
 msgid "_Net"
-msgstr "Conexión"
+msgstr ""
 
 #: gschem/src/rcstrings.c:86
-#, fuzzy
 msgid "B_us"
-msgstr "Bus"
+msgstr ""
 
 #: gschem/src/rcstrings.c:87
-#, fuzzy
 msgid "_Attribute..."
-msgstr "Propiedad..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:88
-#, fuzzy
 msgid "_Text..."
-msgstr "Texto..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:89
-#, fuzzy
 msgid "_Line"
-msgstr "Línea"
+msgstr ""
 
 #: gschem/src/rcstrings.c:90
-#, fuzzy
 msgid "_Box"
-msgstr "Rectángulo"
+msgstr ""
 
 #: gschem/src/rcstrings.c:91
-#, fuzzy
 msgid "C_ircle"
-msgstr "Círculo"
+msgstr ""
 
 #: gschem/src/rcstrings.c:92
-#, fuzzy
 msgid "A_rc"
-msgstr "Arco"
+msgstr ""
 
 #: gschem/src/rcstrings.c:93
-#, fuzzy
 msgid "_Pin"
-msgstr "Pin"
+msgstr ""
 
 #: gschem/src/rcstrings.c:94
-#, fuzzy
 msgid "Pictu_re..."
-msgstr "Imagen..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:96
 msgid "Hierarchy"
 msgstr "Jerarquía"
 
 #: gschem/src/rcstrings.c:97
-#, fuzzy
 msgid "_Down Schematic"
-msgstr "Descender en esquema"
+msgstr ""
 
 #: gschem/src/rcstrings.c:98
-#, fuzzy
 msgid "Down _Symbol"
-msgstr "Descender en símbolo"
+msgstr ""
 
 #: gschem/src/rcstrings.c:99
-#, fuzzy
 msgid "_Up"
-msgstr "Arriba"
+msgstr ""
 
 #: gschem/src/rcstrings.c:100
-#, fuzzy
 msgid "D_ocumentation..."
-msgstr "Documentación"
+msgstr ""
 
 #: gschem/src/rcstrings.c:102 gschem/src/x_compselect.c:1414
 msgid "Attributes"
 msgstr "Propiedades"
 
 #: gschem/src/rcstrings.c:103
-#, fuzzy
 msgid "_Attach"
-msgstr "Adjuntar"
+msgstr ""
 
 #: gschem/src/rcstrings.c:104
-#, fuzzy
 msgid "_Detach"
-msgstr "No adjuntar"
+msgstr ""
 
 #: gschem/src/rcstrings.c:105
-#, fuzzy
 msgid "Show _Value"
-msgstr "Mostrar valor"
+msgstr ""
 
 #: gschem/src/rcstrings.c:106
-#, fuzzy
 msgid "Show _Name"
-msgstr "Mostrar nombre"
+msgstr ""
 
 #: gschem/src/rcstrings.c:107
-#, fuzzy
 msgid "Show _Both"
-msgstr "Mostrar ambos"
+msgstr ""
 
 #: gschem/src/rcstrings.c:108
-#, fuzzy
 msgid "_Toggle Visibility"
-msgstr "Cambiar visibilidad"
+msgstr ""
 
 #: gschem/src/rcstrings.c:109
-#, fuzzy
 msgid "_Find Specific Text..."
-msgstr "Encontrar texto específico..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:110
-#, fuzzy
 msgid "_Hide Specific Text..."
-msgstr "Ocultar texto específico..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:111
-#, fuzzy
 msgid "_Show Specific Text..."
-msgstr "Mostrar texto específico..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:112
-#, fuzzy
 msgid "A_utonumber Text..."
-msgstr "Autonumerar texto..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:114
 msgid "Options"
 msgstr "Opciones"
 
 #: gschem/src/rcstrings.c:115
-#, fuzzy
 msgid "_Text Size..."
-msgstr "Tamaño de texto..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:116
-#, fuzzy
 msgid "Cycle _grid styles"
-msgstr "Cambiar estilos de rejilla"
+msgstr ""
 
 #: gschem/src/rcstrings.c:117
-#, fuzzy
 msgid "Toggle _Snap On/Off"
-msgstr "Act/Desact ajuste a la rejilla"
+msgstr ""
 
 #: gschem/src/rcstrings.c:118
-#, fuzzy
 msgid "Snap Grid S_pacing..."
-msgstr "Espaciado de la rejilla..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:119
-#, fuzzy
 msgid "Scale _up Grid Spacing"
-msgstr "Aumentar espaciado de la rejilla..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:120
-#, fuzzy
 msgid "Scale _down Grid Spacing"
-msgstr "Disminuir espaciado de la rejilla..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:121
-#, fuzzy
 msgid "Toggle _Outline/Box"
-msgstr "Cambiar Silueta/Rectángulo"
+msgstr ""
 
 #: gschem/src/rcstrings.c:122
-#, fuzzy
 msgid "Toggle Net _Rubberband"
-msgstr "Act/Desact conservar conexiones"
+msgstr ""
 
 #: gschem/src/rcstrings.c:123
-#, fuzzy
 msgid "Toggle _Magnetic Net"
-msgstr "Modo Ayuda a la conexión"
+msgstr ""
 
 #: gschem/src/rcstrings.c:124
-#, fuzzy
 msgid "Show _Log Window..."
-msgstr "Mostrar ventana de registro..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:125
-#, fuzzy
 msgid "Show _Coord Window..."
-msgstr "Mostrar ventana de coordenadas..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:127
 msgid "Help"
 msgstr "Ayuda"
 
 #: gschem/src/rcstrings.c:128
-#, fuzzy
 msgid "gEDA Docu_mentation..."
-msgstr "Documentación de gEDA"
+msgstr ""
 
 #: gschem/src/rcstrings.c:129
-#, fuzzy
 msgid "gschem _FAQ..."
-msgstr "PUF de gschem"
+msgstr ""
 
 #: gschem/src/rcstrings.c:130
 msgid "gEDA _Wiki..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:131
-#, fuzzy
 msgid "Component D_ocumentation..."
-msgstr "Documentación del componente"
+msgstr ""
 
 #: gschem/src/rcstrings.c:132
-#, fuzzy
 msgid "_Hotkeys..."
-msgstr "Teclas rápidas"
+msgstr ""
 
 #: gschem/src/rcstrings.c:133
-#, fuzzy
 msgid "_About..."
-msgstr "Acerca de..."
+msgstr ""
 
 #: gschem/src/a_zoom.c:212
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -1220,7 +1150,7 @@ msgstr "Seleccionada rejilla de malla\n"
 
 #: gschem/src/i_callbacks.c:3453
 msgid "Snap OFF (CAUTION!)\n"
-msgstr "¡PRECAUCIÓN!: Ajuste a la rejilla DESACTIVADO \n"
+msgstr "¡PRECAUCIÓN!: Ajuste a la rejilla DESACTIVADO\n"
 
 #: gschem/src/i_callbacks.c:3456
 msgid "Snap ON\n"
@@ -1232,7 +1162,7 @@ msgstr "Reajuste a la rejilla (¡PRECAUCIÓN!)\n"
 
 #: gschem/src/i_callbacks.c:3485
 msgid "Rubber band OFF \n"
-msgstr "Goma de borrar DESACT\n"
+msgstr "Goma de borrar DESACT \n"
 
 #: gschem/src/i_callbacks.c:3488
 msgid "Rubber band ON\n"
@@ -2680,6 +2610,16 @@ msgstr "Crear y modificar esquemas y símbolos con gschem"
 #~ msgid "The accelerator string to be displayed"
 #~ msgstr "La cadena de tecla rápida a visualizar"
 
+#~ msgid "Unknown end for path (%d)\n"
+#~ msgstr "Final de camino desconocido (%d)\n"
+
+#~ msgid "Unknown type for path !\n"
+#~ msgstr "¡Tipo de camino desconocido!\n"
+
+#, fuzzy
+#~ msgid "gEDA: GPL Electronic Design Automation"
+#~ msgstr "<b>gEDA: Automatización de Diseño Electrónico GPL</b>"
+
 #~ msgid "Invalid size [%f] passed to postscript-font-scale\n"
 #~ msgstr ""
 #~ "Se ha especificado un tamaño no válido [%f] a la función postscript-font-"
@@ -2730,12 +2670,6 @@ msgstr "Crear y modificar esquemas y símbolos con gschem"
 
 #~ msgid "Unknown type for circle!\n"
 #~ msgstr "¡Tipo de círculo desconocido!\n"
-
-#~ msgid "Unknown end for path (%d)\n"
-#~ msgstr "Final de camino desconocido (%d)\n"
-
-#~ msgid "Unknown type for path !\n"
-#~ msgstr "¡Tipo de camino desconocido!\n"
 
 #~ msgid "Could not find the color %s!\n"
 #~ msgstr "¡No se ha podido encontrar el color %s!\n"

@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-02-06 23:11+0000\n"
-"PO-Revision-Date: 2010-01-29 15:51+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2010-02-08 17:35+0000\n"
+"PO-Revision-Date: 2010-01-31 15:49+0000\n"
+"Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: Chinese (Traditional) <zh_TW@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-01-31 13:08+0000\n"
+"X-Launchpad-Export-Date: 2010-02-08 16:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
@@ -26,94 +26,80 @@ msgid "New Window"
 msgstr "開新視窗"
 
 #: gschem/src/rcstrings.c:4
-#, fuzzy
 msgid "_New"
-msgstr "新增分頁"
+msgstr ""
 
 #: gschem/src/rcstrings.c:5
-#, fuzzy
 msgid "_Open..."
-msgstr "開啟舊檔"
+msgstr ""
 
 #: gschem/src/rcstrings.c:6
 msgid "Open Recen_t"
 msgstr ""
 
 #: gschem/src/rcstrings.c:7
-#, fuzzy
 msgid "_Save"
-msgstr "儲存"
+msgstr ""
 
 #: gschem/src/rcstrings.c:8
-#, fuzzy
 msgid "Save _As..."
-msgstr "另存為..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:9
 msgid "Save All"
 msgstr "全部儲存"
 
 #: gschem/src/rcstrings.c:10 gschem/src/rcstrings.c:79
-#, fuzzy
 msgid "_Revert"
-msgstr "重新整理"
+msgstr ""
 
 #: gschem/src/rcstrings.c:11
-#, fuzzy
 msgid "_Print..."
-msgstr "列印"
+msgstr ""
 
 #: gschem/src/rcstrings.c:12
-#, fuzzy
 msgid "Write _image..."
-msgstr "匯出成圖片"
+msgstr ""
 
 #: gschem/src/rcstrings.c:13 gschem/src/x_script.c:47
 msgid "Execute Script..."
 msgstr "執行腳本"
 
 #: gschem/src/rcstrings.c:14 gschem/src/rcstrings.c:80
-#, fuzzy
 msgid "_Close"
-msgstr "關閉此分頁"
+msgstr ""
 
 #: gschem/src/rcstrings.c:15
-#, fuzzy
 msgid "_Quit"
-msgstr "離開"
+msgstr ""
 
 #: gschem/src/rcstrings.c:17 gschem/src/i_callbacks.c:697
 msgid "Edit"
 msgstr "編輯"
 
 #: gschem/src/rcstrings.c:18
-#, fuzzy
 msgid "_Undo"
-msgstr "復原"
+msgstr ""
 
 #: gschem/src/rcstrings.c:19
-#, fuzzy
 msgid "_Redo"
-msgstr "取消上次復原"
+msgstr ""
 
 #: gschem/src/rcstrings.c:20
 msgid "Cu_t"
 msgstr ""
 
 #: gschem/src/rcstrings.c:21
-#, fuzzy
 msgid "_Copy"
-msgstr "複製"
+msgstr ""
 
 #: gschem/src/rcstrings.c:22
-#, fuzzy
 msgid "_Paste"
-msgstr "分頁"
+msgstr ""
 
 #: gschem/src/rcstrings.c:23
-#, fuzzy
 msgid "_Delete"
-msgstr "刪除"
+msgstr ""
 
 #: gschem/src/rcstrings.c:24 gschem/src/i_basic.c:77 gschem/src/x_window.c:521
 msgid "Select Mode"
@@ -269,38 +255,32 @@ msgid "View"
 msgstr "顯示"
 
 #: gschem/src/rcstrings.c:64
-#, fuzzy
 msgid "_Redraw"
-msgstr "重繪"
+msgstr ""
 
 #: gschem/src/rcstrings.c:65
 msgid "_Pan"
 msgstr ""
 
 #: gschem/src/rcstrings.c:66
-#, fuzzy
 msgid "Zoom _Box"
-msgstr "放大"
+msgstr ""
 
 #: gschem/src/rcstrings.c:67
-#, fuzzy
 msgid "Zoom _Extents"
-msgstr "放大"
+msgstr ""
 
 #: gschem/src/rcstrings.c:68
-#, fuzzy
 msgid "Zoom _In"
-msgstr "放大"
+msgstr ""
 
 #: gschem/src/rcstrings.c:69
-#, fuzzy
 msgid "Zoom _Out"
-msgstr "縮小"
+msgstr ""
 
 #: gschem/src/rcstrings.c:70
-#, fuzzy
 msgid "Zoom _Full"
-msgstr "縮至最小"
+msgstr ""
 
 #: gschem/src/rcstrings.c:71
 msgid "_Dark color scheme"
@@ -315,86 +295,72 @@ msgid "Page"
 msgstr "分頁"
 
 #: gschem/src/rcstrings.c:75
-#, fuzzy
 msgid "_Manager..."
-msgstr "管理分頁"
+msgstr ""
 
 #: gschem/src/rcstrings.c:76
-#, fuzzy
 msgid "_Previous"
-msgstr "上一頁"
+msgstr ""
 
 #: gschem/src/rcstrings.c:77
-#, fuzzy
 msgid "_Next"
-msgstr "下一頁"
+msgstr ""
 
 #: gschem/src/rcstrings.c:78
-#, fuzzy
 msgid "Ne_w"
-msgstr "新增分頁"
+msgstr ""
 
 #: gschem/src/rcstrings.c:81
-#, fuzzy
 msgid "_Discard"
-msgstr "捨棄此分頁"
+msgstr ""
 
 #: gschem/src/rcstrings.c:83
 msgid "Add"
 msgstr "新增"
 
 #: gschem/src/rcstrings.c:84
-#, fuzzy
 msgid "_Component..."
-msgstr "元件"
+msgstr ""
 
 #: gschem/src/rcstrings.c:85
-#, fuzzy
 msgid "_Net"
-msgstr "下一頁"
+msgstr ""
 
 #: gschem/src/rcstrings.c:86
 msgid "B_us"
 msgstr ""
 
 #: gschem/src/rcstrings.c:87
-#, fuzzy
 msgid "_Attribute..."
-msgstr "屬性"
+msgstr ""
 
 #: gschem/src/rcstrings.c:88
-#, fuzzy
 msgid "_Text..."
-msgstr "新增文字"
+msgstr ""
 
 #: gschem/src/rcstrings.c:89
-#, fuzzy
 msgid "_Line"
-msgstr "直線"
+msgstr ""
 
 #: gschem/src/rcstrings.c:90
-#, fuzzy
 msgid "_Box"
-msgstr "矩形"
+msgstr ""
 
 #: gschem/src/rcstrings.c:91
-#, fuzzy
 msgid "C_ircle"
-msgstr "圓形"
+msgstr ""
 
 #: gschem/src/rcstrings.c:92
-#, fuzzy
 msgid "A_rc"
-msgstr "弧線"
+msgstr ""
 
 #: gschem/src/rcstrings.c:93
 msgid "_Pin"
 msgstr ""
 
 #: gschem/src/rcstrings.c:94
-#, fuzzy
 msgid "Pictu_re..."
-msgstr "圖片"
+msgstr ""
 
 #: gschem/src/rcstrings.c:96
 msgid "Hierarchy"
@@ -429,52 +395,44 @@ msgid "_Detach"
 msgstr ""
 
 #: gschem/src/rcstrings.c:105
-#, fuzzy
 msgid "Show _Value"
-msgstr "顯示數值"
+msgstr ""
 
 #: gschem/src/rcstrings.c:106
-#, fuzzy
 msgid "Show _Name"
-msgstr "顯示名稱"
+msgstr ""
 
 #: gschem/src/rcstrings.c:107
-#, fuzzy
 msgid "Show _Both"
-msgstr "顯示數值與名稱"
+msgstr ""
 
 #: gschem/src/rcstrings.c:108
 msgid "_Toggle Visibility"
 msgstr ""
 
 #: gschem/src/rcstrings.c:109
-#, fuzzy
 msgid "_Find Specific Text..."
-msgstr "找尋特定的文字"
+msgstr ""
 
 #: gschem/src/rcstrings.c:110
-#, fuzzy
 msgid "_Hide Specific Text..."
-msgstr "隱藏特定的文字"
+msgstr ""
 
 #: gschem/src/rcstrings.c:111
-#, fuzzy
 msgid "_Show Specific Text..."
-msgstr "顯示特定的文字"
+msgstr ""
 
 #: gschem/src/rcstrings.c:112
-#, fuzzy
 msgid "A_utonumber Text..."
-msgstr "新增文字"
+msgstr ""
 
 #: gschem/src/rcstrings.c:114
 msgid "Options"
 msgstr "選項"
 
 #: gschem/src/rcstrings.c:115
-#, fuzzy
 msgid "_Text Size..."
-msgstr "字體大小"
+msgstr ""
 
 #: gschem/src/rcstrings.c:116
 msgid "Cycle _grid styles"
@@ -509,14 +467,12 @@ msgid "Toggle _Magnetic Net"
 msgstr ""
 
 #: gschem/src/rcstrings.c:124
-#, fuzzy
 msgid "Show _Log Window..."
-msgstr "顯示log視窗"
+msgstr ""
 
 #: gschem/src/rcstrings.c:125
-#, fuzzy
 msgid "Show _Coord Window..."
-msgstr "顯示log視窗"
+msgstr ""
 
 #: gschem/src/rcstrings.c:127
 msgid "Help"
@@ -527,28 +483,24 @@ msgid "gEDA Docu_mentation..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:129
-#, fuzzy
 msgid "gschem _FAQ..."
-msgstr "gschem 問與答"
+msgstr ""
 
 #: gschem/src/rcstrings.c:130
 msgid "gEDA _Wiki..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:131
-#, fuzzy
 msgid "Component D_ocumentation..."
-msgstr "元件"
+msgstr ""
 
 #: gschem/src/rcstrings.c:132
-#, fuzzy
 msgid "_Hotkeys..."
-msgstr "熱鍵"
+msgstr ""
 
 #: gschem/src/rcstrings.c:133
-#, fuzzy
 msgid "_About..."
-msgstr "屬性"
+msgstr ""
 
 #: gschem/src/a_zoom.c:212
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -1813,9 +1765,8 @@ msgid "Edit slot number:"
 msgstr ""
 
 #: gschem/src/x_dialog.c:2203
-#, fuzzy
 msgid "About..."
-msgstr "屬性"
+msgstr ""
 
 #: gschem/src/x_dialog.c:2223
 msgid "<b>gEDA: GPL Electronic Design Automation</b>"
@@ -2505,11 +2456,11 @@ msgstr ""
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr ""
 
-#~ msgid "Revert Page"
-#~ msgstr "重新整理"
-
 #~ msgid "Save Page As..."
 #~ msgstr "另存新檔"
+
+#~ msgid "Revert Page"
+#~ msgstr "重新整理"
 
 #~ msgid "Recent files"
 #~ msgstr "最近開啟的檔案"

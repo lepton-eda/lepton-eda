@@ -8,17 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-02-06 23:11+0000\n"
-"PO-Revision-Date: 2009-02-22 21:51+0300\n"
+"POT-Creation-Date: 2010-02-08 17:35+0000\n"
+"PO-Revision-Date: 2010-02-07 19:45+0000\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-01-31 13:08+0000\n"
+"X-Launchpad-Export-Date: 2010-02-08 16:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: gschem/src/rcstrings.c:2
 msgid "File"
@@ -29,95 +27,80 @@ msgid "New Window"
 msgstr "Новое окно"
 
 #: gschem/src/rcstrings.c:4
-#, fuzzy
 msgid "_New"
-msgstr "Новая"
+msgstr "_Новый"
 
 #: gschem/src/rcstrings.c:5
-#, fuzzy
 msgid "_Open..."
-msgstr "Открыть..."
+msgstr "_Открыть..."
 
 #: gschem/src/rcstrings.c:6
 msgid "Open Recen_t"
-msgstr ""
+msgstr "Открыть не_давние"
 
 #: gschem/src/rcstrings.c:7
-#, fuzzy
 msgid "_Save"
-msgstr "Сохранить"
+msgstr "_Сохранить"
 
 #: gschem/src/rcstrings.c:8
-#, fuzzy
 msgid "Save _As..."
-msgstr "Сохранить как..."
+msgstr "Сохранить _как..."
 
 #: gschem/src/rcstrings.c:9
 msgid "Save All"
 msgstr "Сохранить все"
 
 #: gschem/src/rcstrings.c:10 gschem/src/rcstrings.c:79
-#, fuzzy
 msgid "_Revert"
-msgstr "Вернуть сохранённую"
+msgstr "_Возвратить"
 
 #: gschem/src/rcstrings.c:11
-#, fuzzy
 msgid "_Print..."
-msgstr "Печать..."
+msgstr "_Печать..."
 
 #: gschem/src/rcstrings.c:12
-#, fuzzy
 msgid "Write _image..."
-msgstr "Сохранить изображение..."
+msgstr "Сохранить _изображение..."
 
 #: gschem/src/rcstrings.c:13 gschem/src/x_script.c:47
 msgid "Execute Script..."
 msgstr "Выполнить скрипт..."
 
 #: gschem/src/rcstrings.c:14 gschem/src/rcstrings.c:80
-#, fuzzy
 msgid "_Close"
-msgstr "Закрыть"
+msgstr "_Закрыть"
 
 #: gschem/src/rcstrings.c:15
-#, fuzzy
 msgid "_Quit"
-msgstr "Выйти"
+msgstr "В_ыход"
 
 #: gschem/src/rcstrings.c:17 gschem/src/i_callbacks.c:697
 msgid "Edit"
 msgstr "Правка"
 
 #: gschem/src/rcstrings.c:18
-#, fuzzy
 msgid "_Undo"
-msgstr "Отменить действие"
+msgstr "_Отменить"
 
 #: gschem/src/rcstrings.c:19
-#, fuzzy
 msgid "_Redo"
-msgstr "Повторить действие"
+msgstr "_Повторить"
 
 #: gschem/src/rcstrings.c:20
-#, fuzzy
 msgid "Cu_t"
-msgstr "Вырезать"
+msgstr "_Вырезать"
 
 #: gschem/src/rcstrings.c:21
-#, fuzzy
 msgid "_Copy"
-msgstr "Копировать"
+msgstr "_Копировать"
 
 #: gschem/src/rcstrings.c:22
-#, fuzzy
 msgid "_Paste"
-msgstr "Вставить"
+msgstr "В_ставить"
 
 #: gschem/src/rcstrings.c:23
-#, fuzzy
 msgid "_Delete"
-msgstr "Удалить"
+msgstr "_Удалить"
 
 #: gschem/src/rcstrings.c:24 gschem/src/i_basic.c:77 gschem/src/x_window.c:521
 msgid "Select Mode"
@@ -170,7 +153,7 @@ msgstr "Разблокировать"
 
 #: gschem/src/rcstrings.c:36
 msgid "Invoke Macro"
-msgstr ""
+msgstr "Выполнить макрос"
 
 #: gschem/src/rcstrings.c:37
 msgid "Line Width & Type..."
@@ -273,307 +256,252 @@ msgid "View"
 msgstr "Вид"
 
 #: gschem/src/rcstrings.c:64
-#, fuzzy
 msgid "_Redraw"
-msgstr "Перерисовать"
+msgstr "Пе_рерисовать"
 
 #: gschem/src/rcstrings.c:65
-#, fuzzy
 msgid "_Pan"
-msgstr "Центрировать"
+msgstr "_Центрировать"
 
 #: gschem/src/rcstrings.c:66
-#, fuzzy
 msgid "Zoom _Box"
-msgstr "Область масштабирования"
+msgstr "Обла_сть масштабирования"
 
 #: gschem/src/rcstrings.c:67
-#, fuzzy
 msgid "Zoom _Extents"
-msgstr "Вместить содержимое"
+msgstr "М_асштаб на экран"
 
 #: gschem/src/rcstrings.c:68
-#, fuzzy
 msgid "Zoom _In"
-msgstr "Увеличить"
+msgstr "У_величить"
 
 #: gschem/src/rcstrings.c:69
-#, fuzzy
 msgid "Zoom _Out"
-msgstr "Уменьшить"
+msgstr "У_меньшить"
 
 #: gschem/src/rcstrings.c:70
-#, fuzzy
 msgid "Zoom _Full"
-msgstr "Вместить всё поле"
+msgstr "Це_ликом"
 
 #: gschem/src/rcstrings.c:71
-#, fuzzy
 msgid "_Dark color scheme"
-msgstr "Тёмная цветовая схема"
+msgstr "_Тёмная цветовая схема"
 
 #: gschem/src/rcstrings.c:72
-#, fuzzy
 msgid "_Light color scheme"
-msgstr "Светлая цветовая схема"
+msgstr "_Светлая цветовая схема"
 
 #: gschem/src/rcstrings.c:74
 msgid "Page"
 msgstr "Страница"
 
 #: gschem/src/rcstrings.c:75
-#, fuzzy
 msgid "_Manager..."
-msgstr "Управление..."
+msgstr "_Менеджер..."
 
 #: gschem/src/rcstrings.c:76
-#, fuzzy
 msgid "_Previous"
-msgstr "Предыдущая"
+msgstr "_Предыдущая"
 
 #: gschem/src/rcstrings.c:77
-#, fuzzy
 msgid "_Next"
-msgstr "Следующая"
+msgstr "_Следующая"
 
 #: gschem/src/rcstrings.c:78
-#, fuzzy
 msgid "Ne_w"
-msgstr "Новая"
+msgstr "_Новая"
 
 #: gschem/src/rcstrings.c:81
-#, fuzzy
 msgid "_Discard"
-msgstr "Отвергнуть"
+msgstr "_Отвергнуть"
 
 #: gschem/src/rcstrings.c:83
 msgid "Add"
 msgstr "Добавить"
 
 #: gschem/src/rcstrings.c:84
-#, fuzzy
 msgid "_Component..."
-msgstr "Элемент..."
+msgstr "_Компонент..."
 
 #: gschem/src/rcstrings.c:85
-#, fuzzy
 msgid "_Net"
-msgstr "Соединение"
+msgstr "_Соединение"
 
 #: gschem/src/rcstrings.c:86
-#, fuzzy
 msgid "B_us"
-msgstr "Шину"
+msgstr "_Шина"
 
 #: gschem/src/rcstrings.c:87
-#, fuzzy
 msgid "_Attribute..."
-msgstr "Атрибут..."
+msgstr "_Атрибут..."
 
 #: gschem/src/rcstrings.c:88
-#, fuzzy
 msgid "_Text..."
-msgstr "Текст..."
+msgstr "_Текст..."
 
 #: gschem/src/rcstrings.c:89
-#, fuzzy
 msgid "_Line"
-msgstr "Отрезок"
+msgstr "_Линия"
 
 #: gschem/src/rcstrings.c:90
-#, fuzzy
 msgid "_Box"
-msgstr "Прямоугольник"
+msgstr "_Прямоугольник"
 
 #: gschem/src/rcstrings.c:91
-#, fuzzy
 msgid "C_ircle"
-msgstr "Окружность"
+msgstr "_Окружность"
 
 #: gschem/src/rcstrings.c:92
-#, fuzzy
 msgid "A_rc"
-msgstr "Дугу"
+msgstr "_Дуга"
 
 #: gschem/src/rcstrings.c:93
-#, fuzzy
 msgid "_Pin"
-msgstr "Вывод"
+msgstr "_Вывод"
 
 #: gschem/src/rcstrings.c:94
-#, fuzzy
 msgid "Pictu_re..."
-msgstr "Изображение..."
+msgstr "_Изображение..."
 
 #: gschem/src/rcstrings.c:96
 msgid "Hierarchy"
 msgstr "Иерархия"
 
 #: gschem/src/rcstrings.c:97
-#, fuzzy
 msgid "_Down Schematic"
-msgstr "Вглубь схемы"
+msgstr "В_глубь схемы"
 
 #: gschem/src/rcstrings.c:98
-#, fuzzy
 msgid "Down _Symbol"
-msgstr "Внутрь символа"
+msgstr "Вг_лубь символа"
 
 #: gschem/src/rcstrings.c:99
-#, fuzzy
 msgid "_Up"
-msgstr "Наверх"
+msgstr "На_верх"
 
 #: gschem/src/rcstrings.c:100
-#, fuzzy
 msgid "D_ocumentation..."
-msgstr "Документация"
+msgstr "_Документация"
 
 #: gschem/src/rcstrings.c:102 gschem/src/x_compselect.c:1414
 msgid "Attributes"
 msgstr "Атрибуты"
 
 #: gschem/src/rcstrings.c:103
-#, fuzzy
 msgid "_Attach"
-msgstr "Присоединить"
+msgstr "При_соединить"
 
 #: gschem/src/rcstrings.c:104
-#, fuzzy
 msgid "_Detach"
-msgstr "Отсоединить"
+msgstr "Отсое_динить"
 
 #: gschem/src/rcstrings.c:105
-#, fuzzy
 msgid "Show _Value"
-msgstr "Показать значение"
+msgstr "Показать _значение"
 
 #: gschem/src/rcstrings.c:106
-#, fuzzy
 msgid "Show _Name"
-msgstr "Показать имя"
+msgstr "Показать _имя"
 
 #: gschem/src/rcstrings.c:107
-#, fuzzy
 msgid "Show _Both"
-msgstr "Показать имя и значение"
+msgstr "П_оказать имя и значение"
 
 #: gschem/src/rcstrings.c:108
-#, fuzzy
 msgid "_Toggle Visibility"
-msgstr "Переключить отображение"
+msgstr "Пе_реключить показанные"
 
 #: gschem/src/rcstrings.c:109
-#, fuzzy
 msgid "_Find Specific Text..."
-msgstr "Найти текст..."
+msgstr "Найти _текст..."
 
 #: gschem/src/rcstrings.c:110
-#, fuzzy
 msgid "_Hide Specific Text..."
-msgstr "Скрыть текст..."
+msgstr "С_крыть текст..."
 
 #: gschem/src/rcstrings.c:111
-#, fuzzy
 msgid "_Show Specific Text..."
-msgstr "Показать текст..."
+msgstr "_Показать текст..."
 
 #: gschem/src/rcstrings.c:112
-#, fuzzy
 msgid "A_utonumber Text..."
-msgstr "Автонумеровать текст..."
+msgstr "Авто_нумеровать текст..."
 
 #: gschem/src/rcstrings.c:114
 msgid "Options"
 msgstr "Настройки"
 
 #: gschem/src/rcstrings.c:115
-#, fuzzy
 msgid "_Text Size..."
-msgstr "Размер текста..."
+msgstr "_Размер текста..."
 
 #: gschem/src/rcstrings.c:116
-#, fuzzy
 msgid "Cycle _grid styles"
-msgstr "Переключить стиль сетки"
+msgstr "Переключить стиль с_етки"
 
 #: gschem/src/rcstrings.c:117
-#, fuzzy
 msgid "Toggle _Snap On/Off"
-msgstr "Включить / выключить привязку"
+msgstr "Включить/выключить при_вязку"
 
 #: gschem/src/rcstrings.c:118
-#, fuzzy
 msgid "Snap Grid S_pacing..."
-msgstr "Шаг привязки к сетке..."
+msgstr "Ша_г привязки к сетке..."
 
 #: gschem/src/rcstrings.c:119
-#, fuzzy
 msgid "Scale _up Grid Spacing"
-msgstr "Увеличить шаг привязки"
+msgstr "Уве_личить сетку"
 
 #: gschem/src/rcstrings.c:120
-#, fuzzy
 msgid "Scale _down Grid Spacing"
-msgstr "Уменьшить шаг привязки"
+msgstr "Уме_ньшить сетку"
 
 #: gschem/src/rcstrings.c:121
-#, fuzzy
 msgid "Toggle _Outline/Box"
-msgstr "Изменить вид перетаскиваемого"
+msgstr "Переключить внешний _контур/бокс"
 
 #: gschem/src/rcstrings.c:122
-#, fuzzy
 msgid "Toggle Net _Rubberband"
-msgstr "Переключить резиновое соединение"
+msgstr "Переключить ре_зиновое соединение"
 
 #: gschem/src/rcstrings.c:123
-#, fuzzy
 msgid "Toggle _Magnetic Net"
-msgstr "Режим магнитного соединения"
+msgstr "Переключить _магнитное соединение"
 
 #: gschem/src/rcstrings.c:124
-#, fuzzy
 msgid "Show _Log Window..."
-msgstr "Показать окно статуса..."
+msgstr "Показать окно с_татуса..."
 
 #: gschem/src/rcstrings.c:125
-#, fuzzy
 msgid "Show _Coord Window..."
-msgstr "Показать окно координат..."
+msgstr "Показать окно коор_динат..."
 
 #: gschem/src/rcstrings.c:127
 msgid "Help"
 msgstr "Помощь"
 
 #: gschem/src/rcstrings.c:128
-#, fuzzy
 msgid "gEDA Docu_mentation..."
-msgstr "Документация gEDA"
+msgstr "Доку_ментация gEDA"
 
 #: gschem/src/rcstrings.c:129
-#, fuzzy
 msgid "gschem _FAQ..."
-msgstr "gschem FAQ"
+msgstr "gschem _FAQ"
 
 #: gschem/src/rcstrings.c:130
 msgid "gEDA _Wiki..."
-msgstr ""
+msgstr "gEDA _Wiki..."
 
 #: gschem/src/rcstrings.c:131
-#, fuzzy
 msgid "Component D_ocumentation..."
-msgstr "Документация на компонент"
+msgstr "Документация на _компонент"
 
 #: gschem/src/rcstrings.c:132
-#, fuzzy
 msgid "_Hotkeys..."
-msgstr "Горячие клавиши..."
+msgstr "_Горячие клавиши"
 
 #: gschem/src/rcstrings.c:133
-#, fuzzy
 msgid "_About..."
-msgstr "О программе..."
+msgstr "О _программе..."
 
 #: gschem/src/a_zoom.c:212
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -612,6 +540,12 @@ msgid ""
 "from your config files.\n"
 "\n"
 msgstr ""
+"\n"
+"Параметр настройки postscript-font-scale устарел и будет удалён в gEDA "
+"1.8.0.\n"
+"Размер печатаемого текста соответствует размеру текста отображаемому на "
+"экране. Удалите этот параметр из вашего файла настроек.\n"
+"\n"
 
 #: gschem/src/g_rc.c:481
 #, c-format
@@ -879,7 +813,7 @@ msgstr "НЕТ"
 #: gschem/src/i_basic.c:572
 #, c-format
 msgid "Grid(%s, %s)"
-msgstr "Сетка(%s, %s)"
+msgstr "Сетка (%s, %s)"
 
 #: gschem/src/i_callbacks.c:63
 #, c-format
@@ -1881,6 +1815,7 @@ msgstr "О программе..."
 #: gschem/src/x_dialog.c:2223
 msgid "<b>gEDA: GPL Electronic Design Automation</b>"
 msgstr ""
+"gEDA: Система автоматизированного проектирования электронных схем (GPL)"
 
 #: gschem/src/x_dialog.c:2227
 #, c-format
@@ -2606,102 +2541,17 @@ msgstr "Создание и редактирование электрическ�
 #~ msgid "Save Page As..."
 #~ msgstr "Сохранить страницу как..."
 
-#~ msgid "Recent files"
-#~ msgstr "Недавние файлы"
-
 #~ msgid "Close Window"
 #~ msgstr "Закрыть окно"
+
+#~ msgid "Recent files"
+#~ msgstr "Недавние файлы"
 
 #~ msgid "Manual"
 #~ msgstr "Руководство"
 
 #~ msgid "About gschem"
 #~ msgstr "О gschem"
-
-#, fuzzy
-#~ msgid "Accelerator String"
-#~ msgstr "Общая строка"
-
-#~ msgid "Invalid size [%f] passed to postscript-font-scale\n"
-#~ msgstr "Задан неверный размер [%f] для postscript-font-scale\n"
-
-#~ msgid "Cut Buffer"
-#~ msgstr "Вырезать в буфер"
-
-#~ msgid "Copy Buffer"
-#~ msgstr "Копировать в буфер"
-
-#~ msgid "Toggle Grid On/Off"
-#~ msgstr "Переключить отображение сетки"
-
-#~ msgid "Invalid color [%s] passed to %s\n"
-#~ msgstr "Неверный цвет [%s] при обработке %s\n"
-
-#~ msgid "You must set the GEDADATA environment variable!\n"
-#~ msgstr "Вы должны установить переменную окружения GEDADATA!\n"
-
-#~ msgid "Grid ON\n"
-#~ msgstr "Сетка ВКЛ\n"
-
-#~ msgid "Unknown end for arc (%d)\n"
-#~ msgstr "Неизвестный конец для дуги (%d)\n"
-
-#~ msgid "Unknown type for arc !\n"
-#~ msgstr "Неизвестный тип для дуги !\n"
-
-#~ msgid "Unknown end for box (%d)\n"
-#~ msgstr "Неизвестный конец для прямоугольника (%d)\n"
-
-#~ msgid "Unknown type for box !\n"
-#~ msgstr "Неизвестный тип для прямоугольника !\n"
-
-#~ msgid "Got an invalid buffer_number [o_buffer_copy]\n"
-#~ msgstr "Получен неверный buffer_number [o_buffer_copy]\n"
-
-#~ msgid "Got an invalid buffer_number [o_buffer_cut]\n"
-#~ msgstr "Получен неверный buffer_number [o_buffer_cut]\n"
-
-#~ msgid "Unknown end for circle\n"
-#~ msgstr "Неизвестный конец для окружности\n"
-
-#~ msgid "Unknown type for circle!\n"
-#~ msgstr "Неизвестный тип для окружности!\n"
-
-#~ msgid "Could not find the color %s!\n"
-#~ msgstr "Невозможно найти цвет %s!\n"
-
-#~ msgid "Defaulting color to white\n"
-#~ msgstr "Установка белого цвета по умолчанию\n"
-
-#~ msgid "Ack! Cannot allocate white!\n"
-#~ msgstr "Невозможно назначить белый!\n"
-
-#~ msgid "Couldn't allocate xor_gc\n"
-#~ msgstr "Невозможно назначить xor_gc\n"
-
-#~ msgid "Couldn't allocate outline_xor_gc\n"
-#~ msgstr "Невозможно назначить outline_xor_gc\n"
-
-#~ msgid "Couldn't allocate bounding_xor_gc\n"
-#~ msgstr "Невозможно назначить bounding_xor_gc\n"
-
-#~ msgid "Couldn't allocate bus_gc\n"
-#~ msgstr "Невозможно назначить bus_gc\n"
-
-#~ msgid "Got NULL in o_attrib_toggle_visibility\n"
-#~ msgstr "Получен NULL в o_attrib_toggle_visibility\n"
-
-#~ msgid "Got NULL in o_attrib_toggle_show_name_value\n"
-#~ msgstr "Получен NULL в o_attrib_toggle_show_name_value\n"
-
-#~ msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
-#~ msgstr "Получен неверный buffer_number [o_buffer_paste_end]\n"
-
-#~ msgid "Could not find complex in new component placement!\n"
-#~ msgstr "Невозможно найти комплекс в новом расположении компонента!\n"
-
-#~ msgid "ERROR: NULL object in o_copy_end!\n"
-#~ msgstr "Ошибка: объект NULL в o_copy_end!\n"
 
 #~ msgid "Attribute failed ot find.\n"
 #~ msgstr "Ошибка поиска атрибута.\n"
@@ -2884,7 +2734,7 @@ msgstr "Создание и редактирование электрическ�
 #~ msgstr "sch - схемы"
 
 #~ msgid "sym - Symbols "
-#~ msgstr "sym - символы"
+#~ msgstr "sym - символы "
 
 #~ msgid "sym/sch - Schematics and Symbols"
 #~ msgstr "sym/sch - схемы и символы"
@@ -2971,3 +2821,93 @@ msgstr "Создание и редактирование электрическ�
 
 #~ msgid "Mirror mode"
 #~ msgstr "Режим зеркалирования"
+
+#, fuzzy
+#~ msgid "gEDA: GPL Electronic Design Automation"
+#~ msgstr ""
+#~ "gEDA: Система автоматизированного проектирования электронных схем (GPL)"
+
+#, fuzzy
+#~ msgid "Accelerator String"
+#~ msgstr "Общая строка"
+
+#~ msgid "Invalid size [%f] passed to postscript-font-scale\n"
+#~ msgstr "Задан неверный размер [%f] для postscript-font-scale\n"
+
+#~ msgid "Cut Buffer"
+#~ msgstr "Вырезать в буфер"
+
+#~ msgid "Copy Buffer"
+#~ msgstr "Копировать в буфер"
+
+#~ msgid "Toggle Grid On/Off"
+#~ msgstr "Переключить отображение сетки"
+
+#~ msgid "Invalid color [%s] passed to %s\n"
+#~ msgstr "Неверный цвет [%s] при обработке %s\n"
+
+#~ msgid "You must set the GEDADATA environment variable!\n"
+#~ msgstr "Вы должны установить переменную окружения GEDADATA!\n"
+
+#~ msgid "Grid ON\n"
+#~ msgstr "Сетка ВКЛ\n"
+
+#~ msgid "Unknown end for arc (%d)\n"
+#~ msgstr "Неизвестный конец для дуги (%d)\n"
+
+#~ msgid "Unknown type for arc !\n"
+#~ msgstr "Неизвестный тип для дуги !\n"
+
+#~ msgid "Unknown end for box (%d)\n"
+#~ msgstr "Неизвестный конец для прямоугольника (%d)\n"
+
+#~ msgid "Unknown type for box !\n"
+#~ msgstr "Неизвестный тип для прямоугольника !\n"
+
+#~ msgid "Got an invalid buffer_number [o_buffer_copy]\n"
+#~ msgstr "Получен неверный buffer_number [o_buffer_copy]\n"
+
+#~ msgid "Got an invalid buffer_number [o_buffer_cut]\n"
+#~ msgstr "Получен неверный buffer_number [o_buffer_cut]\n"
+
+#~ msgid "Unknown end for circle\n"
+#~ msgstr "Неизвестный конец для окружности\n"
+
+#~ msgid "Unknown type for circle!\n"
+#~ msgstr "Неизвестный тип для окружности!\n"
+
+#~ msgid "Could not find the color %s!\n"
+#~ msgstr "Невозможно найти цвет %s!\n"
+
+#~ msgid "Defaulting color to white\n"
+#~ msgstr "Установка белого цвета по умолчанию\n"
+
+#~ msgid "Ack! Cannot allocate white!\n"
+#~ msgstr "Невозможно назначить белый!\n"
+
+#~ msgid "Couldn't allocate xor_gc\n"
+#~ msgstr "Невозможно назначить xor_gc\n"
+
+#~ msgid "Couldn't allocate outline_xor_gc\n"
+#~ msgstr "Невозможно назначить outline_xor_gc\n"
+
+#~ msgid "Couldn't allocate bounding_xor_gc\n"
+#~ msgstr "Невозможно назначить bounding_xor_gc\n"
+
+#~ msgid "Couldn't allocate bus_gc\n"
+#~ msgstr "Невозможно назначить bus_gc\n"
+
+#~ msgid "Got NULL in o_attrib_toggle_visibility\n"
+#~ msgstr "Получен NULL в o_attrib_toggle_visibility\n"
+
+#~ msgid "Got NULL in o_attrib_toggle_show_name_value\n"
+#~ msgstr "Получен NULL в o_attrib_toggle_show_name_value\n"
+
+#~ msgid "Got an invalid buffer_number [o_buffer_paste_end]\n"
+#~ msgstr "Получен неверный buffer_number [o_buffer_paste_end]\n"
+
+#~ msgid "Could not find complex in new component placement!\n"
+#~ msgstr "Невозможно найти комплекс в новом расположении компонента!\n"
+
+#~ msgid "ERROR: NULL object in o_copy_end!\n"
+#~ msgstr "Ошибка: объект NULL в o_copy_end!\n"
