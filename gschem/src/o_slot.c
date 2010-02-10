@@ -67,10 +67,9 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *new_obj;
   OBJECT *object;
-  OBJECT *temp;
   char *slot_value;
   char *numslots_value;
-  OBJECT *slot_text_object;
+  OBJECT *o_slot;
   char *value = NULL;
   int numslots;
   int new_slot_number;
@@ -119,28 +118,25 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
 
     /* first see if slot attribute already exists outside
      * complex */
-    slot_value = s_slot_search_slot (object, &slot_text_object);
+    slot_value = s_slot_search_slot (object, &o_slot);
+    g_free (slot_value);
 
-    if (slot_value) {
-      o_text_set_string (toplevel, slot_text_object, string);
+    if (o_slot != NULL && !o_attrib_is_inherited (o_slot)) {
+      o_text_set_string (toplevel, o_slot, string);
 
-      temp = slot_text_object;
-
-      if (temp->visibility == VISIBLE ||
-          (temp->visibility == INVISIBLE && toplevel->show_hidden_text)) {
-        o_invalidate (w_current,temp);
+      if (o_slot->visibility == VISIBLE ||
+          (o_slot->visibility == INVISIBLE && toplevel->show_hidden_text)) {
+        o_invalidate (w_current, o_slot);
       }
 
-      o_text_recreate(toplevel, temp);
+      o_text_recreate(toplevel, o_slot);
 
       /* this doesn't deal with the selection list
        * item */
-      if (temp->visibility == VISIBLE ||
-          (temp->visibility == INVISIBLE && toplevel->show_hidden_text)) {
-        o_invalidate (w_current,temp);
+      if (o_slot->visibility == VISIBLE ||
+          (o_slot->visibility == INVISIBLE && toplevel->show_hidden_text)) {
+        o_invalidate (w_current, o_slot);
       }
-
-      g_free(slot_value);
 
     } else {
       /* here you need to do the add the slot
@@ -153,8 +149,6 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string, int len)
 
       /* manually attach attribute */
       o_attrib_attach (toplevel, new_obj, object, FALSE);
-
-      slot_text_object = new_obj;
     }
 
     o_invalidate (w_current, object);
