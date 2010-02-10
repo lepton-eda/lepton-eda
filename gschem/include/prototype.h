@@ -707,7 +707,7 @@ void o_select_unselect_all(GSCHEM_TOPLEVEL *w_current);
 void o_select_move_to_place_list(GSCHEM_TOPLEVEL *w_current);
 /* o_slot.c */
 void o_slot_start(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
-void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string);
+void o_slot_end(GSCHEM_TOPLEVEL *w_current, OBJECT *object, const char *string);
 /* o_text.c */
 int o_text_get_rendered_bounds(void *user_data, OBJECT *object, int *min_x, int *min_y, int *max_x, int *max_y);
 void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
