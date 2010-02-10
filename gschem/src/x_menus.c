@@ -209,7 +209,7 @@ void get_main_menu(GtkWidget ** menubar)
     }
     
     menu_name = (char *) gettext(*raw_menu_name);
-    root_menu = gtk_menu_item_new_with_label (menu_name);
+    root_menu = gtk_menu_item_new_with_mnemonic (menu_name);
     /* do not free *raw_menu_name */
 
     /* no longer right justify the help menu since that has gone out of style */
