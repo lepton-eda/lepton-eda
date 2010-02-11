@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the gschem package.
 #
 #
-# Carlos Nieves Ónega <cnieves@iespana.es>, 2005-2009.
+# Carlos Nieves Ónega <cnieves@iespana.es>, 2005-2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2010-02-11 01:45+0000\n"
-"PO-Revision-Date: 2010-02-07 00:30+0000\n"
+"PO-Revision-Date: 2010-02-11 18:53+0100\n"
 "Last-Translator: Carlos Nieves Ónega <Unknown>\n"
 "Language-Team: Spanish/Spain <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: gschem/src/rcstrings.c:2
 msgid "_File"
-msgstr "Archivo"
+msgstr "_Archivo"
 
 #: gschem/src/rcstrings.c:3
 msgid "New Window"
@@ -28,23 +28,23 @@ msgstr "Nueva ventana"
 
 #: gschem/src/rcstrings.c:4
 msgid "_New"
-msgstr ""
+msgstr "_Nuevo"
 
 #: gschem/src/rcstrings.c:5
 msgid "_Open..."
-msgstr ""
+msgstr "_Abrir..."
 
 #: gschem/src/rcstrings.c:6
 msgid "Open Recen_t"
-msgstr ""
+msgstr "Abrir recien_te"
 
 #: gschem/src/rcstrings.c:7
 msgid "_Save"
-msgstr ""
+msgstr "_Guardar"
 
 #: gschem/src/rcstrings.c:8
 msgid "Save _As..."
-msgstr ""
+msgstr "Guardar _como..."
 
 #: gschem/src/rcstrings.c:9
 msgid "Save All"
@@ -52,15 +52,15 @@ msgstr "Guardar todo"
 
 #: gschem/src/rcstrings.c:10 gschem/src/rcstrings.c:79
 msgid "_Revert"
-msgstr ""
+msgstr "_Recargar"
 
 #: gschem/src/rcstrings.c:11
 msgid "_Print..."
-msgstr ""
+msgstr "Im_primir..."
 
 #: gschem/src/rcstrings.c:12
 msgid "Write _image..."
-msgstr ""
+msgstr "Guardar _imagen..."
 
 #: gschem/src/rcstrings.c:13 gschem/src/x_script.c:47
 msgid "Execute Script..."
@@ -68,39 +68,39 @@ msgstr "Ejecutar subprograma..."
 
 #: gschem/src/rcstrings.c:14 gschem/src/rcstrings.c:80
 msgid "_Close"
-msgstr ""
+msgstr "C_errar"
 
 #: gschem/src/rcstrings.c:15
 msgid "_Quit"
-msgstr ""
+msgstr "_Salir"
 
 #: gschem/src/rcstrings.c:17
 msgid "_Edit"
-msgstr "Editar"
+msgstr "_Editar"
 
 #: gschem/src/rcstrings.c:18
 msgid "_Undo"
-msgstr ""
+msgstr "_Deshacer"
 
 #: gschem/src/rcstrings.c:19
 msgid "_Redo"
-msgstr ""
+msgstr "_Rehacer"
 
 #: gschem/src/rcstrings.c:20
 msgid "Cu_t"
-msgstr ""
+msgstr "Cor_tar"
 
 #: gschem/src/rcstrings.c:21
 msgid "_Copy"
-msgstr ""
+msgstr "_Copiar"
 
 #: gschem/src/rcstrings.c:22
 msgid "_Paste"
-msgstr ""
+msgstr "_Pegar"
 
 #: gschem/src/rcstrings.c:23
 msgid "_Delete"
-msgstr ""
+msgstr "_Borrar"
 
 #: gschem/src/rcstrings.c:24 gschem/src/i_basic.c:77 gschem/src/x_window.c:521
 msgid "Select Mode"
@@ -153,7 +153,7 @@ msgstr "Desfijar"
 
 #: gschem/src/rcstrings.c:36
 msgid "Invoke Macro"
-msgstr ""
+msgstr "Ejecutar macro"
 
 #: gschem/src/rcstrings.c:37
 msgid "Line Width & Type..."
@@ -189,7 +189,7 @@ msgstr "Hacer visible el texto oculto"
 
 #: gschem/src/rcstrings.c:46
 msgid "_Buffer"
-msgstr "Memoria intermedia"
+msgstr "Me_moria intermedia"
 
 #: gschem/src/rcstrings.c:47
 msgid "Copy into 1"
@@ -253,255 +253,255 @@ msgstr "Pegar memoria intermedia 5"
 
 #: gschem/src/rcstrings.c:63
 msgid "_View"
-msgstr "Ver"
+msgstr "_Ver"
 
 #: gschem/src/rcstrings.c:64
 msgid "_Redraw"
-msgstr ""
+msgstr "_Redibujar"
 
 #: gschem/src/rcstrings.c:65
 msgid "_Pan"
-msgstr ""
+msgstr "Centrar res_pecto al cursor"
 
 #: gschem/src/rcstrings.c:66
 msgid "Zoom _Box"
-msgstr ""
+msgstr "Ampliar z_ona"
 
 #: gschem/src/rcstrings.c:67
 msgid "Zoom _Extents"
-msgstr ""
+msgstr "Mostrar _todo"
 
 #: gschem/src/rcstrings.c:68
 msgid "Zoom _In"
-msgstr ""
+msgstr "_Aumentar ampliación"
 
 #: gschem/src/rcstrings.c:69
 msgid "Zoom _Out"
-msgstr ""
+msgstr "_Disminuir ampliación"
 
 #: gschem/src/rcstrings.c:70
 msgid "Zoom _Full"
-msgstr ""
+msgstr "Vista co_mpleta"
 
 #: gschem/src/rcstrings.c:71
 msgid "_Dark color scheme"
-msgstr ""
+msgstr "Configuración de colores os_curos"
 
 #: gschem/src/rcstrings.c:72
 msgid "_Light color scheme"
-msgstr ""
+msgstr "Configuración de co_lores claros"
 
 #: gschem/src/rcstrings.c:74
 msgid "_Page"
-msgstr "Página"
+msgstr "_Página"
 
 #: gschem/src/rcstrings.c:75
 msgid "_Manager..."
-msgstr ""
+msgstr "Ad_ministrador..."
 
 #: gschem/src/rcstrings.c:76
 msgid "_Previous"
-msgstr ""
+msgstr "_Anterior"
 
 #: gschem/src/rcstrings.c:77
 msgid "_Next"
-msgstr ""
+msgstr "_Siguiente"
 
 #: gschem/src/rcstrings.c:78
 msgid "Ne_w"
-msgstr ""
+msgstr "_Nuevo"
 
 #: gschem/src/rcstrings.c:81
 msgid "_Discard"
-msgstr ""
+msgstr "_Descartar"
 
 #: gschem/src/rcstrings.c:83
 msgid "_Add"
-msgstr "Añadir"
+msgstr "Aña_dir"
 
 #: gschem/src/rcstrings.c:84
 msgid "_Component..."
-msgstr ""
+msgstr "_Componente..."
 
 #: gschem/src/rcstrings.c:85
 msgid "_Net"
-msgstr ""
+msgstr "Co_nexión"
 
 #: gschem/src/rcstrings.c:86
 msgid "B_us"
-msgstr ""
+msgstr "B_us"
 
 #: gschem/src/rcstrings.c:87
 msgid "_Attribute..."
-msgstr ""
+msgstr "Propied_ad..."
 
 #: gschem/src/rcstrings.c:88
 msgid "_Text..."
-msgstr ""
+msgstr "_Texto..."
 
 #: gschem/src/rcstrings.c:89
 msgid "_Line"
-msgstr ""
+msgstr "_Línea"
 
 #: gschem/src/rcstrings.c:90
 msgid "_Box"
-msgstr ""
+msgstr "Rectán_gulo"
 
 #: gschem/src/rcstrings.c:91
 msgid "C_ircle"
-msgstr ""
+msgstr "Círcul_o"
 
 #: gschem/src/rcstrings.c:92
 msgid "A_rc"
-msgstr ""
+msgstr "A_rco"
 
 #: gschem/src/rcstrings.c:93
 msgid "_Pin"
-msgstr ""
+msgstr "_Pin"
 
 #: gschem/src/rcstrings.c:94
 msgid "Pictu_re..."
-msgstr ""
+msgstr "I_magen..."
 
 #: gschem/src/rcstrings.c:96
 msgid "Hie_rarchy"
-msgstr "Jerarquía"
+msgstr "Je_rarquía"
 
 #: gschem/src/rcstrings.c:97
 msgid "_Down Schematic"
-msgstr ""
+msgstr "_Descender en esquema"
 
 #: gschem/src/rcstrings.c:98
 msgid "Down _Symbol"
-msgstr ""
+msgstr "Descender en _símbolo"
 
 #: gschem/src/rcstrings.c:99
 msgid "_Up"
-msgstr ""
+msgstr "A_rriba"
 
 #: gschem/src/rcstrings.c:100
 msgid "D_ocumentation..."
-msgstr ""
+msgstr "D_ocumentación"
 
 #: gschem/src/rcstrings.c:102
 msgid "A_ttributes"
-msgstr "Propiedades"
+msgstr "Prop_iedades"
 
 #: gschem/src/rcstrings.c:103
 msgid "_Attach"
-msgstr ""
+msgstr "_Adjuntar"
 
 #: gschem/src/rcstrings.c:104
 msgid "_Detach"
-msgstr ""
+msgstr "No a_djuntar"
 
 #: gschem/src/rcstrings.c:105
 msgid "Show _Value"
-msgstr ""
+msgstr "Mostrar _valor"
 
 #: gschem/src/rcstrings.c:106
 msgid "Show _Name"
-msgstr ""
+msgstr "Mostrar _nombre"
 
 #: gschem/src/rcstrings.c:107
 msgid "Show _Both"
-msgstr ""
+msgstr "Mostrar am_bos"
 
 #: gschem/src/rcstrings.c:108
 msgid "_Toggle Visibility"
-msgstr ""
+msgstr "Cambiar v_isibilidad"
 
 #: gschem/src/rcstrings.c:109
 msgid "_Find Specific Text..."
-msgstr ""
+msgstr "_Encontrar texto específico..."
 
 #: gschem/src/rcstrings.c:110
 msgid "_Hide Specific Text..."
-msgstr ""
+msgstr "_Ocultar texto específico..."
 
 #: gschem/src/rcstrings.c:111
 msgid "_Show Specific Text..."
-msgstr ""
+msgstr "Mo_strar texto específico..."
 
 #: gschem/src/rcstrings.c:112
 msgid "A_utonumber Text..."
-msgstr ""
+msgstr "A_utonumerar texto..."
 
 #: gschem/src/rcstrings.c:114
 msgid "_Options"
-msgstr "Opciones"
+msgstr "_Opciones"
 
 #: gschem/src/rcstrings.c:115
 msgid "_Text Size..."
-msgstr ""
+msgstr "_Tamaño de texto..."
 
 #: gschem/src/rcstrings.c:116
 msgid "Cycle _grid styles"
-msgstr ""
+msgstr "Cambiar estilos de re_jilla"
 
 #: gschem/src/rcstrings.c:117
 msgid "Toggle _Snap On/Off"
-msgstr ""
+msgstr "Act/Desact aju_ste a la rejilla"
 
 #: gschem/src/rcstrings.c:118
 msgid "Snap Grid S_pacing..."
-msgstr ""
+msgstr "Es_paciado de la rejilla..."
 
 #: gschem/src/rcstrings.c:119
 msgid "Scale _up Grid Spacing"
-msgstr ""
+msgstr "A_umentar espaciado de la rejilla..."
 
 #: gschem/src/rcstrings.c:120
 msgid "Scale _down Grid Spacing"
-msgstr ""
+msgstr "_Disminuir espaciado de la rejilla..."
 
 #: gschem/src/rcstrings.c:121
 msgid "Toggle _Outline/Box"
-msgstr ""
+msgstr "Cambiar Silueta/Rectángul_o"
 
 #: gschem/src/rcstrings.c:122
 msgid "Toggle Net _Rubberband"
-msgstr ""
+msgstr "Act/Desact conserva_r conexiones"
 
 #: gschem/src/rcstrings.c:123
 msgid "Toggle _Magnetic Net"
-msgstr ""
+msgstr "Modo ayuda _magnética a la conexión"
 
 #: gschem/src/rcstrings.c:124
 msgid "Show _Log Window..."
-msgstr ""
+msgstr "Mostrar ventana de re_gistro..."
 
 #: gschem/src/rcstrings.c:125
 msgid "Show _Coord Window..."
-msgstr ""
+msgstr "Mostrar ventana de _coordenadas..."
 
 #: gschem/src/rcstrings.c:127
 msgid "_Help"
-msgstr "Ayuda"
+msgstr "Ay_uda"
 
 #: gschem/src/rcstrings.c:128
 msgid "gEDA Docu_mentation..."
-msgstr ""
+msgstr "Docu_mentación de gEDA"
 
 #: gschem/src/rcstrings.c:129
 msgid "gschem _FAQ..."
-msgstr ""
+msgstr "PU_F de gschem"
 
 #: gschem/src/rcstrings.c:130
 msgid "gEDA _Wiki..."
-msgstr ""
+msgstr "_Wiki de gEDA..."
 
 #: gschem/src/rcstrings.c:131
 msgid "Component D_ocumentation..."
-msgstr ""
+msgstr "D_ocumentación del componente..."
 
 #: gschem/src/rcstrings.c:132
 msgid "_Hotkeys..."
-msgstr ""
+msgstr "_Teclas rápidas"
 
 #: gschem/src/rcstrings.c:133
 msgid "_About..."
-msgstr ""
+msgstr "_Acerca de..."
 
 #: gschem/src/a_zoom.c:212
 msgid "Zoom too small!  Cannot zoom further.\n"
