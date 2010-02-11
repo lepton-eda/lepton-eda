@@ -2083,7 +2083,8 @@ void slot_edit_dialog_response(GtkWidget *widget, gint response, GSCHEM_TOPLEVEL
     len = strlen(string);
     if (len != 0) {
       slot_string = g_strdup_printf ("slot=%s", string);
-      o_slot_end(w_current, slot_string);
+      o_slot_end (w_current, o_select_return_first_object (w_current),
+                  slot_string);
       g_free (slot_string);
     }
     break;

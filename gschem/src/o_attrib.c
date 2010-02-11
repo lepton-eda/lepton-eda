@@ -269,8 +269,9 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
   o_invalidate (w_current, new_obj);
 
   /* handle slot= attribute, it's a special case */
-  if (g_ascii_strncasecmp (text_string, "slot=", 5) == 0) {
-    o_slot_end (w_current, text_string);
+  if (o_current != NULL &&
+      g_ascii_strncasecmp (text_string, "slot=", 5) == 0) {
+    o_slot_end (w_current, o_current, text_string);
   }
 
   /* Run the add attribute hook */

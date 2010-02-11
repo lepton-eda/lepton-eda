@@ -669,8 +669,9 @@ void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int len, int text
         if (numselect == 1 && string) {
           o_text_set_string (w_current->toplevel, object, string);
 	  /* handle slot= attribute, it's a special case */
-	  if (g_ascii_strncasecmp (string, "slot=", 5) == 0) {
-	    o_slot_end (w_current, string);
+	  if (object->attached_to != NULL &&
+	      g_ascii_strncasecmp (string, "slot=", 5) == 0) {
+	    o_slot_end (w_current, object->attached_to, string);
 	  }
         }
         o_text_recreate(toplevel, object);
@@ -717,8 +718,9 @@ void o_text_change(GSCHEM_TOPLEVEL *w_current, OBJECT *object, char *string,
   o_invalidate (w_current, object);
 
   /* handle slot= attribute, it's a special case */
-  if (g_ascii_strncasecmp (string, "slot=", 5) == 0) {
-    o_slot_end (w_current, string);
+  if (object->attached_to != NULL &&
+      g_ascii_strncasecmp (string, "slot=", 5) == 0) {
+    o_slot_end (w_current, object->attached_to, string);
   }
 
   toplevel->page_current->CHANGED = 1;

@@ -62,11 +62,10 @@ void o_slot_start (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
  *  \par Function Description
  *
  */
-void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string)
+void o_slot_end(GSCHEM_TOPLEVEL *w_current, OBJECT *object, const char *string)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *new_obj;
-  OBJECT *object;
   char *slot_value;
   char *numslots_value;
   OBJECT *o_slot;
@@ -74,15 +73,6 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, const char *string)
   int numslots;
   int new_slot_number;
   int status;
-
-  object = o_select_return_first_object (w_current);
-
-  /* get the parent object if the selection is only a text object */
-  if (object != NULL && object->type == OBJ_TEXT) {
-    if (object->attached_to != NULL) {
-      object = object->attached_to;
-    }
-  }
 
   g_return_if_fail (object != NULL);
 
