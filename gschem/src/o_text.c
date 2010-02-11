@@ -670,7 +670,7 @@ void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int len, int text
           o_text_set_string (w_current->toplevel, object, string);
 	  /* handle slot= attribute, it's a special case */
 	  if (g_ascii_strncasecmp (string, "slot=", 5) == 0) {
-	    o_slot_end (w_current, string, strlen (string));
+	    o_slot_end (w_current, string);
 	  }
         }
         o_text_recreate(toplevel, object);
@@ -718,7 +718,7 @@ void o_text_change(GSCHEM_TOPLEVEL *w_current, OBJECT *object, char *string,
 
   /* handle slot= attribute, it's a special case */
   if (g_ascii_strncasecmp (string, "slot=", 5) == 0) {
-    o_slot_end (w_current, string, strlen (string));
+    o_slot_end (w_current, string);
   }
 
   toplevel->page_current->CHANGED = 1;
