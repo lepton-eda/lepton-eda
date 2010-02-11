@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the gschem package.
 #
 #
-# Carlos Nieves Ónega <cnieves@iespana.es>, 2005-2010.
+# Carlos Nieves Ónega <cnieves@iespana.es>, 2005-201, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2010-02-07 01:27+0000\n"
-"PO-Revision-Date: 2010-02-11 17:48+0100\n"
+"PO-Revision-Date: 2010-02-11 18:59+0100\n"
 "Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
 "Language-Team: Spanish/Spain <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"
@@ -68,7 +68,7 @@ msgstr "Ejecutar subprograma..."
 
 #: gschem/src/rcstrings.c:14 gschem/src/rcstrings.c:80
 msgid "_Close"
-msgstr "_Cerrar"
+msgstr "C_errar"
 
 #: gschem/src/rcstrings.c:15
 msgid "_Quit"
@@ -281,7 +281,7 @@ msgstr "_Disminuir ampliación"
 
 #: gschem/src/rcstrings.c:70
 msgid "Zoom _Full"
-msgstr "Vista com_pleta"
+msgstr "Vista co_mpleta"
 
 #: gschem/src/rcstrings.c:71
 msgid "_Dark color scheme"
@@ -345,11 +345,11 @@ msgstr "_Línea"
 
 #: gschem/src/rcstrings.c:90
 msgid "_Box"
-msgstr "_Rectángulo"
+msgstr "Rectán_gulo"
 
 #: gschem/src/rcstrings.c:91
 msgid "C_ircle"
-msgstr "C_írculo"
+msgstr "Círcul_o"
 
 #: gschem/src/rcstrings.c:92
 msgid "A_rc"
@@ -409,7 +409,7 @@ msgstr "Mostrar am_bos"
 
 #: gschem/src/rcstrings.c:108
 msgid "_Toggle Visibility"
-msgstr "Cambiar visibili_dad"
+msgstr "Cambiar v_isibilidad"
 
 #: gschem/src/rcstrings.c:109
 msgid "_Find Specific Text..."
