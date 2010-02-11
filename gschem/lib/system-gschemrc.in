@@ -1558,16 +1558,16 @@
 ; Now actually add the menus.  The order here defines the order in which
 ; the menus appear in the top menu bar.
 ;
-(add-menu "File" file-menu-items)
-(add-menu "Edit" edit-menu-items)
-(add-menu "Buffer" buffer-menu-items)
-(add-menu "View" view-menu-items)
-(add-menu "Page" page-menu-items)
-(add-menu "Add" add-menu-items)
-(add-menu "Hierarchy" hierarchy-menu-items)
-(add-menu "Attributes" attributes-menu-items)
-(add-menu "Options" options-menu-items)
-(add-menu "Help" help-menu-items)   
+(add-menu "_File" file-menu-items)
+(add-menu "_Edit" edit-menu-items)
+(add-menu "_Buffer" buffer-menu-items)
+(add-menu "_View" view-menu-items)
+(add-menu "_Page" page-menu-items)
+(add-menu "_Add" add-menu-items)
+(add-menu "Hie_rarchy" hierarchy-menu-items)
+(add-menu "A_ttributes" attributes-menu-items)
+(add-menu "_Options" options-menu-items)
+(add-menu "_Help" help-menu-items)
 
 ;
 ; End of keymapping related keywords
