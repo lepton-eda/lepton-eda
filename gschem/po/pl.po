@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-02-08 17:35+0000\n"
+"POT-Creation-Date: 2010-02-11 01:45+0000\n"
 "PO-Revision-Date: 2010-01-31 15:46+0000\n"
 "Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
-msgid "File"
+msgid "_File"
 msgstr "Plik"
 
 #: gschem/src/rcstrings.c:3
@@ -73,9 +73,9 @@ msgstr ""
 msgid "_Quit"
 msgstr ""
 
-#: gschem/src/rcstrings.c:17 gschem/src/i_callbacks.c:697
-msgid "Edit"
-msgstr "Edycja"
+#: gschem/src/rcstrings.c:17
+msgid "_Edit"
+msgstr "_Edycja"
 
 #: gschem/src/rcstrings.c:18
 msgid "_Undo"
@@ -142,7 +142,7 @@ msgid "Color..."
 msgstr "Kolor..."
 
 #: gschem/src/rcstrings.c:34 gschem/src/i_callbacks.c:922
-#: gschem/src/x_dialog.c:2412
+#: gschem/src/x_dialog.c:2413
 msgid "Lock"
 msgstr "Zablokuj"
 
@@ -187,7 +187,7 @@ msgid "Make Inv Text Vis"
 msgstr "Pokaż niewidoczne atrybuty"
 
 #: gschem/src/rcstrings.c:46
-msgid "Buffer"
+msgid "_Buffer"
 msgstr "Schowek"
 
 #: gschem/src/rcstrings.c:47
@@ -251,7 +251,7 @@ msgid "Paste from 5"
 msgstr "Wklej z 5"
 
 #: gschem/src/rcstrings.c:63
-msgid "View"
+msgid "_View"
 msgstr "Widok"
 
 #: gschem/src/rcstrings.c:64
@@ -291,7 +291,7 @@ msgid "_Light color scheme"
 msgstr ""
 
 #: gschem/src/rcstrings.c:74
-msgid "Page"
+msgid "_Page"
 msgstr "Arkusz"
 
 #: gschem/src/rcstrings.c:75
@@ -315,7 +315,7 @@ msgid "_Discard"
 msgstr ""
 
 #: gschem/src/rcstrings.c:83
-msgid "Add"
+msgid "_Add"
 msgstr "Dodaj"
 
 #: gschem/src/rcstrings.c:84
@@ -363,8 +363,8 @@ msgid "Pictu_re..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:96
-msgid "Hierarchy"
-msgstr "Hierarchia"
+msgid "Hie_rarchy"
+msgstr "Hie_rarchia"
 
 #: gschem/src/rcstrings.c:97
 msgid "_Down Schematic"
@@ -382,9 +382,9 @@ msgstr ""
 msgid "D_ocumentation..."
 msgstr ""
 
-#: gschem/src/rcstrings.c:102 gschem/src/x_compselect.c:1414
-msgid "Attributes"
-msgstr "Atrybuty"
+#: gschem/src/rcstrings.c:102
+msgid "A_ttributes"
+msgstr "A_trybuty"
 
 #: gschem/src/rcstrings.c:103
 msgid "_Attach"
@@ -427,7 +427,7 @@ msgid "A_utonumber Text..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:114
-msgid "Options"
+msgid "_Options"
 msgstr "Ustawienia"
 
 #: gschem/src/rcstrings.c:115
@@ -475,7 +475,7 @@ msgid "Show _Coord Window..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:127
-msgid "Help"
+msgid "_Help"
 msgstr "Pomoc"
 
 #: gschem/src/rcstrings.c:128
@@ -779,7 +779,7 @@ msgstr ""
 msgid "Action"
 msgstr "Czynność"
 
-#: gschem/src/i_basic.c:260 gschem/src/x_dialog.c:2409
+#: gschem/src/i_basic.c:260 gschem/src/x_dialog.c:2410
 #: gschem/src/x_window.c:490
 msgid "Stroke"
 msgstr "Gest"
@@ -840,6 +840,10 @@ msgstr "Wpierw wybierz obiekty"
 #: gschem/src/i_callbacks.c:672 gschem/src/x_multiattrib.c:1496
 msgid "Delete"
 msgstr "Usuń"
+
+#: gschem/src/i_callbacks.c:697
+msgid "Edit"
+msgstr "Edycja"
 
 #: gschem/src/i_callbacks.c:712
 msgid "Edit pin type"
@@ -1002,17 +1006,17 @@ msgid "Component"
 msgstr "Element"
 
 #: gschem/src/i_callbacks.c:2362 gschem/src/i_callbacks.c:2381
-#: gschem/src/x_dialog.c:2382
+#: gschem/src/x_dialog.c:2383
 msgid "Attribute"
 msgstr "Atrybut"
 
 #: gschem/src/i_callbacks.c:2403 gschem/src/i_callbacks.c:2430
-#: gschem/src/x_dialog.c:2379
+#: gschem/src/x_dialog.c:2380
 msgid "Net"
 msgstr "Połączenie"
 
 #: gschem/src/i_callbacks.c:2474 gschem/src/i_callbacks.c:2501
-#: gschem/src/x_dialog.c:2397 gschem/src/x_window.c:374
+#: gschem/src/x_dialog.c:2398 gschem/src/x_window.c:374
 msgid "Bus"
 msgstr "Magistralę"
 
@@ -1033,7 +1037,7 @@ msgid "Arc"
 msgstr "Łuk"
 
 #: gschem/src/i_callbacks.c:2797 gschem/src/i_callbacks.c:2820
-#: gschem/src/x_dialog.c:2370
+#: gschem/src/x_dialog.c:2371
 msgid "Pin"
 msgstr ""
 
@@ -1293,21 +1297,16 @@ msgstr "BŁĄD: obiekt NULL!\n"
 msgid "Slot attribute malformed\n"
 msgstr "Nieprawidłowa wartość atrybutu \"slot\"\n"
 
-#: gschem/src/o_slot.c:99
+#: gschem/src/o_slot.c:89
 msgid "numslots attribute missing\n"
 msgstr "Brak atrybutu \"numslots\"\n"
 
-#: gschem/src/o_slot.c:100
+#: gschem/src/o_slot.c:90
 msgid "Slotting not allowed for this component\n"
 msgstr ""
 
-#: gschem/src/o_slot.c:115
+#: gschem/src/o_slot.c:105
 msgid "New slot number out of range\n"
-msgstr ""
-
-#: gschem/src/o_slot.c:170
-#, c-format
-msgid "uggg! you tried to slot edit something that doesn't exist!\n"
 msgstr ""
 
 #: gschem/src/o_undo.c:304
@@ -1416,91 +1415,91 @@ msgid ""
 "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
 msgstr ""
 
-#: gschem/src/x_autonumber.c:701
+#: gschem/src/x_autonumber.c:682
 msgid "No searchstring given in autonumber text.\n"
 msgstr "Nie podano tekstu wyszukiwania.\n"
 
-#: gschem/src/x_autonumber.c:753
+#: gschem/src/x_autonumber.c:734
 msgid "No '*' or '?' given at the end of the autonumber text.\n"
 msgstr "Brak '*' lub '?' na końcu tekstu do automatycznej numeracji.\n"
 
-#: gschem/src/x_autonumber.c:888
+#: gschem/src/x_autonumber.c:869
 msgid "Diagonal"
 msgstr "Po przekątnej"
 
-#: gschem/src/x_autonumber.c:889
+#: gschem/src/x_autonumber.c:870
 msgid "Top to bottom"
 msgstr "Od góry do dołu"
 
-#: gschem/src/x_autonumber.c:889
+#: gschem/src/x_autonumber.c:870
 msgid "Bottom to top"
 msgstr "Od dołu do góry"
 
-#: gschem/src/x_autonumber.c:890
+#: gschem/src/x_autonumber.c:871
 msgid "Left to right"
 msgstr "Od lewej do prawej"
 
-#: gschem/src/x_autonumber.c:890
+#: gschem/src/x_autonumber.c:871
 msgid "Right to left"
 msgstr "Od prawej do lewej"
 
-#: gschem/src/x_autonumber.c:891
+#: gschem/src/x_autonumber.c:872
 msgid "File order"
 msgstr "Kolejność plików"
 
-#: gschem/src/x_autonumber.c:1227
+#: gschem/src/x_autonumber.c:1208
 msgid "Autonumber text"
 msgstr "Automatyczna numeracja"
 
-#: gschem/src/x_autonumber.c:1251
+#: gschem/src/x_autonumber.c:1232
 msgid "<b>Scope</b>"
 msgstr "<b>Zakres</b>"
 
-#: gschem/src/x_autonumber.c:1273
+#: gschem/src/x_autonumber.c:1254
 msgid "Search for:"
 msgstr "Wyszukiwany tekst:"
 
-#: gschem/src/x_autonumber.c:1287
+#: gschem/src/x_autonumber.c:1268
 msgid "Autonumber text in:"
 msgstr "Automatycznie numeruj w:"
 
-#: gschem/src/x_autonumber.c:1294
+#: gschem/src/x_autonumber.c:1275
 msgid "Skip numbers found in:"
 msgstr "Pomiń numery znalezione w:"
 
-#: gschem/src/x_autonumber.c:1306 gschem/src/x_autonumber.c:1315
+#: gschem/src/x_autonumber.c:1287 gschem/src/x_autonumber.c:1296
 msgid "Selected objects"
 msgstr "Zaznaczonych elementach"
 
-#: gschem/src/x_autonumber.c:1307 gschem/src/x_autonumber.c:1316
+#: gschem/src/x_autonumber.c:1288 gschem/src/x_autonumber.c:1297
 msgid "Current page"
 msgstr "Bieżącej stronie"
 
-#: gschem/src/x_autonumber.c:1308 gschem/src/x_autonumber.c:1317
+#: gschem/src/x_autonumber.c:1289 gschem/src/x_autonumber.c:1298
 msgid "Whole hierarchy"
 msgstr "Całej hierarchii"
 
-#: gschem/src/x_autonumber.c:1319
+#: gschem/src/x_autonumber.c:1300
 msgid "Overwrite existing numbers"
 msgstr "Zastępuj istniejącą numerację"
 
-#: gschem/src/x_autonumber.c:1324
+#: gschem/src/x_autonumber.c:1305
 msgid "<b>Options</b>"
 msgstr "<b>Opcje</b>"
 
-#: gschem/src/x_autonumber.c:1346
+#: gschem/src/x_autonumber.c:1327
 msgid "Starting number:"
 msgstr "Numer początkowy"
 
-#: gschem/src/x_autonumber.c:1353
+#: gschem/src/x_autonumber.c:1334
 msgid "Sort order:"
 msgstr "Kolejność:"
 
-#: gschem/src/x_autonumber.c:1374
+#: gschem/src/x_autonumber.c:1355
 msgid "Remove numbers"
 msgstr "Usuń numery"
 
-#: gschem/src/x_autonumber.c:1378
+#: gschem/src/x_autonumber.c:1359
 msgid "Automatic slotting"
 msgstr ""
 
@@ -1541,7 +1540,7 @@ msgstr ""
 msgid "Filter:"
 msgstr "Filtr:"
 
-#: gschem/src/x_compselect.c:1139 gschem/src/x_dialog.c:3758
+#: gschem/src/x_compselect.c:1139 gschem/src/x_dialog.c:3759
 #: gschem/src/x_multiattrib.c:1787
 msgid "Name"
 msgstr "Nazwa"
@@ -1577,6 +1576,10 @@ msgstr "Biblioteki"
 #: gschem/src/x_compselect.c:1386 gschem/src/x_fileselect.c:122
 msgid "Preview"
 msgstr "Podgląd"
+
+#: gschem/src/x_compselect.c:1414
+msgid "Attributes"
+msgstr "Atrybuty"
 
 #: gschem/src/x_dialog.c:175
 msgid "Text Entry..."
@@ -1786,28 +1789,28 @@ msgstr "Odległość przyciągania"
 msgid "Enter new snap grid spacing:"
 msgstr "Wprowadź nową odległość przyciągania"
 
-#: gschem/src/x_dialog.c:2111
+#: gschem/src/x_dialog.c:2112
 msgid "Edit slot number"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2142
+#: gschem/src/x_dialog.c:2143
 msgid "Edit slot number:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2203
+#: gschem/src/x_dialog.c:2204
 msgid "About..."
 msgstr "O programie..."
 
-#: gschem/src/x_dialog.c:2223
+#: gschem/src/x_dialog.c:2224
 msgid "<b>gEDA: GPL Electronic Design Automation</b>"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2227
+#: gschem/src/x_dialog.c:2228
 #, c-format
 msgid "<b>gschem version %s%s.%s</b>"
 msgstr "<b>gschem, wersja %s%s.%s</b>"
 
-#: gschem/src/x_dialog.c:2235
+#: gschem/src/x_dialog.c:2236
 msgid ""
 "Written by:\n"
 "Ales Hvezda\n"
@@ -1819,155 +1822,155 @@ msgstr ""
 "ahvezda@geda.seul.org\n"
 "Oraz wielu innych (zobacz plik AUTHORS)"
 
-#: gschem/src/x_dialog.c:2298
+#: gschem/src/x_dialog.c:2299
 msgid "Coords"
 msgstr "Współrzędne"
 
-#: gschem/src/x_dialog.c:2319
+#: gschem/src/x_dialog.c:2320
 msgid "Screen"
 msgstr "Ekran"
 
-#: gschem/src/x_dialog.c:2328
+#: gschem/src/x_dialog.c:2329
 msgid "World"
 msgstr "Świat"
 
-#: gschem/src/x_dialog.c:2367
+#: gschem/src/x_dialog.c:2368
 msgid "Background"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2373
+#: gschem/src/x_dialog.c:2374
 msgid "Net endpoint"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2376
+#: gschem/src/x_dialog.c:2377
 msgid "Graphic"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2385
+#: gschem/src/x_dialog.c:2386
 msgid "Logic bubble"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2388
+#: gschem/src/x_dialog.c:2389
 msgid "Grid point"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2391
+#: gschem/src/x_dialog.c:2392
 msgid "Detached attribute"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2394 gschem/src/x_window.c:382
+#: gschem/src/x_dialog.c:2395 gschem/src/x_window.c:382
 msgid "Text"
 msgstr "Tekst"
 
-#: gschem/src/x_dialog.c:2400
+#: gschem/src/x_dialog.c:2401
 msgid "Selection"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2403
+#: gschem/src/x_dialog.c:2404
 msgid "Bounding box"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2406
+#: gschem/src/x_dialog.c:2407
 msgid "Zoom box"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2415
+#: gschem/src/x_dialog.c:2416
 msgid "Output background"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2418
+#: gschem/src/x_dialog.c:2419
 msgid "Net junction"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2421
+#: gschem/src/x_dialog.c:2422
 msgid "Mesh grid major"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2424
+#: gschem/src/x_dialog.c:2425
 msgid "Mesh grid minor"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2427
+#: gschem/src/x_dialog.c:2428
 msgid "Unknown"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2573
+#: gschem/src/x_dialog.c:2574
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr "BŁĄD: obiekt NULL w funkcji color_edit_dialog_apply!\n"
 
-#: gschem/src/x_dialog.c:2617
+#: gschem/src/x_dialog.c:2618
 msgid "Color Edit"
 msgstr "Edycja koloru"
 
-#: gschem/src/x_dialog.c:2648
+#: gschem/src/x_dialog.c:2649
 msgid "Object color:"
 msgstr "Kolor obiektu:"
 
-#: gschem/src/x_dialog.c:2706
+#: gschem/src/x_dialog.c:2707
 msgid "Hotkeys"
 msgstr "Klawisze skrótów"
 
-#: gschem/src/x_dialog.c:2770
+#: gschem/src/x_dialog.c:2771
 msgid "Function"
 msgstr "Funkcja"
 
-#: gschem/src/x_dialog.c:2777
+#: gschem/src/x_dialog.c:2778
 msgid "Keystroke(s)"
 msgstr "Klawisz(e)"
 
-#: gschem/src/x_dialog.c:3086
+#: gschem/src/x_dialog.c:3087
 msgid "Find Text"
 msgstr "Znajdź tekst"
 
-#: gschem/src/x_dialog.c:3117
+#: gschem/src/x_dialog.c:3118
 msgid "Text to find:"
 msgstr "Szukany tekst:"
 
-#: gschem/src/x_dialog.c:3127
+#: gschem/src/x_dialog.c:3128
 msgid "descend into hierarchy"
 msgstr "Szukaj również wewnątrz elementów"
 
-#: gschem/src/x_dialog.c:3192
+#: gschem/src/x_dialog.c:3193
 msgid "Hide Text"
 msgstr "Ukryj tekst"
 
-#: gschem/src/x_dialog.c:3223
+#: gschem/src/x_dialog.c:3224
 msgid "Hide text starting with:"
 msgstr "Ukryj tekst zaczynający się od:"
 
-#: gschem/src/x_dialog.c:3292
+#: gschem/src/x_dialog.c:3293
 msgid "Show Text"
 msgstr "Wyświetl tekst"
 
-#: gschem/src/x_dialog.c:3323
+#: gschem/src/x_dialog.c:3324
 msgid "Show text starting with:"
 msgstr "Wyświetl tekst zaczynający się od:"
 
-#: gschem/src/x_dialog.c:3780
+#: gschem/src/x_dialog.c:3781
 msgid "S_elect the schematics you want to save:"
 msgstr "Wybi_erz schematy, które chcesz zapisać:"
 
-#: gschem/src/x_dialog.c:3874
+#: gschem/src/x_dialog.c:3875
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr "Zapisać zmiany w schemacie \"%s\" przed wyjściem?"
 
-#: gschem/src/x_dialog.c:3880
+#: gschem/src/x_dialog.c:3881
 #, c-format
 msgid ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
 msgstr "Niezapisane zmiany w %d schematach. Zapisać zmiany przed wyjściem?"
 
-#: gschem/src/x_dialog.c:3909
+#: gschem/src/x_dialog.c:3910
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr "Jeżeli nie zapiszesz, wszystkie zmiany zostaną bezpowrotnie utracone."
 
-#: gschem/src/x_dialog.c:3929
+#: gschem/src/x_dialog.c:3930
 msgid "_Close without saving"
 msgstr "_Zamknij bez zapisywania"
 
-#: gschem/src/x_dialog.c:4265
+#: gschem/src/x_dialog.c:4266
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -1984,19 +1987,19 @@ msgstr ""
 "Nazwa nie może zaczynać się od spacji.\n"
 "Wartość nie może zaczynać się od spacji."
 
-#: gschem/src/x_dialog.c:4267
+#: gschem/src/x_dialog.c:4268
 msgid "Invalid Attribute"
 msgstr "Nieprawidłowy atrybut"
 
-#: gschem/src/x_dialog.c:4303
+#: gschem/src/x_dialog.c:4304
 msgid "Pin type"
 msgstr ""
 
-#: gschem/src/x_dialog.c:4327
+#: gschem/src/x_dialog.c:4328
 msgid "Net pin"
 msgstr ""
 
-#: gschem/src/x_dialog.c:4329
+#: gschem/src/x_dialog.c:4330
 msgid "Bus pin (graphical)"
 msgstr ""
 
