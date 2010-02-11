@@ -588,8 +588,9 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
     o_parent = o_current->attached_to;
     if (o_parent != NULL) {
       slot_str = s_slot_search_slot (o_parent, &o_slot);
-      if (slot_str != NULL && o_slot != NULL) {
-        g_free(slot_str);
+      g_free (slot_str);
+      /* Only attempt to remove non-inherited slot attributes */
+      if (o_slot != NULL && !o_attrib_is_inherited (o_slot)) {
         /* delete the slot attribute */
         o_selection_remove (autotext->w_current->toplevel,
                             autotext->w_current->toplevel->
@@ -618,9 +619,9 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
   o_parent = o_current->attached_to;
   if (slot != 0 && o_parent != NULL) {
     slot_str = s_slot_search_slot (o_parent, &o_slot);
-    if (slot_str != NULL) {
-      /* update the slot attribute */
-      g_free(slot_str);
+    g_free (slot_str);
+    if (o_slot != NULL && !o_attrib_is_inherited (o_slot)) {
+      /* update the attached slot attribute */
       slot_str = g_strdup_printf("slot=%d",slot);
       o_text_set_string (autotext->w_current->toplevel, o_slot, slot_str);
       g_free (slot_str);
