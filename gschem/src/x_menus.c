@@ -387,7 +387,7 @@ static void update_recent_files_menus()
 
       recent_menu_item =
         (GtkWidget *) gtk_object_get_data(GTK_OBJECT(w_current->menubar),
-                                          "File/Open Recen_t");
+                                          "_File/Open Recen_t");
       if(recent_menu_item == NULL)
          return;
 
@@ -456,7 +456,7 @@ void x_menu_attach_recent_files_submenu(GSCHEM_TOPLEVEL *w_current)
    GtkWidget *recent_menu_item, *recent_submenu;
 
    recent_menu_item = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(
-            w_current->menubar), "File/Open Recen_t");
+            w_current->menubar), "_File/Open Recen_t");
    if(recent_menu_item == NULL)
       return;
 
