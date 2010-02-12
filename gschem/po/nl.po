@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2010-02-11 01:45+0000\n"
-"PO-Revision-Date: 2010-02-07 00:32+0000\n"
+"PO-Revision-Date: 2010-02-12 12:54+0000\n"
 "Last-Translator: lambert63 <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev@moira.seul.org\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-08 16:28+0000\n"
+"X-Launchpad-Export-Date: 2010-02-12 17:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
@@ -2535,9 +2535,6 @@ msgstr "gEDA schema bewerking"
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr "Creer en bewerk elektrische schema's en symbolen met gschem"
 
-#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
-#~ msgstr "Hmmm, je probeerde een slot te bewerken op iets dat niet bestaat!\n"
-
 #~ msgid "Save Page As..."
 #~ msgstr "Opslaan Pagina Als..."
 
@@ -2549,6 +2546,9 @@ msgstr "Creer en bewerk elektrische schema's en symbolen met gschem"
 
 #~ msgid "About gschem"
 #~ msgstr "Over gschem"
+
+#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
+#~ msgstr "Hmmm, je probeerde een slot te bewerken op iets dat niet bestaat!\n"
 
 #~ msgid "Unknown end for path (%d)\n"
 #~ msgstr "Onbekend einde van pad (%d)\n"

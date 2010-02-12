@@ -11,13 +11,13 @@ msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2010-02-11 01:45+0000\n"
-"PO-Revision-Date: 2010-02-07 00:19+0000\n"
-"Last-Translator: Patrick Bernaud <Unknown>\n"
+"PO-Revision-Date: 2010-02-12 13:16+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-08 16:28+0000\n"
+"X-Launchpad-Export-Date: 2010-02-12 17:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
@@ -2546,9 +2546,6 @@ msgstr "Éditeur de schémas gEDA"
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr "Créer et éditer des schémas électriques et des symboles avec gschem"
 
-#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
-#~ msgstr "Tentative d'édition de slot sur un objet inexistant !\n"
-
 #~ msgid "Revert Page"
 #~ msgstr "Annuler les modifications"
 
@@ -2557,6 +2554,9 @@ msgstr "Créer et éditer des schémas électriques et des symboles avec gschem"
 
 #~ msgid "Close Window"
 #~ msgstr "Fermer la fenêtre"
+
+#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
+#~ msgstr "Tentative d'édition de slot sur un objet inexistant !\n"
 
 #~ msgid "Recent files"
 #~ msgstr "Fichiers récents"

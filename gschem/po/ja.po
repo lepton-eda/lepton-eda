@@ -5,16 +5,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
+"Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2010-02-11 01:45+0000\n"
-"PO-Revision-Date: 2010-02-07 00:29+0000\n"
-"Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
+"PO-Revision-Date: 2010-02-12 12:57+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-08 16:28+0000\n"
+"X-Launchpad-Export-Date: 2010-02-12 17:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
@@ -2480,14 +2480,14 @@ msgstr ""
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr ""
 
-#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
-#~ msgstr "おっと! 存在しないスロットを編集しようとしました!\n"
-
 #~ msgid "Revert Page"
 #~ msgstr "戻す"
 
 #~ msgid "Close Window"
 #~ msgstr "ウィンドウを閉じる"
+
+#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
+#~ msgstr "おっと! 存在しないスロットを編集しようとしました!\n"
 
 #~ msgid "Attribute failed ot find.\n"
 #~ msgstr "アトリビュートが見付かりません。\n"

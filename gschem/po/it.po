@@ -6,16 +6,16 @@
 # Michele Petrecca <michelinux@alice.it>, 2005, 2006, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: it_IT\n"
+"Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2010-02-11 01:45+0000\n"
-"PO-Revision-Date: 2010-02-07 18:33+0000\n"
-"Last-Translator: Giuseppe Dia <Unknown>\n"
+"PO-Revision-Date: 2010-02-12 13:12+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Italiano <michelinux@alice.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-08 16:28+0000\n"
+"X-Launchpad-Export-Date: 2010-02-12 17:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
@@ -700,7 +700,7 @@ msgstr "Non corretta terminazione per la linea (%d)\n"
 #: gschem/src/gschem_cairo.c:318
 #, c-format
 msgid "Unknown type for stroke (%d) !\n"
-msgstr ""
+msgstr "Tipo di tratto sconosciuto (%d) !\n"
 
 #: gschem/src/i_basic.c:79
 msgid "Component Mode"
@@ -936,7 +936,7 @@ msgstr "Pan"
 
 #: gschem/src/i_callbacks.c:1567
 msgid "Update Cues"
-msgstr ""
+msgstr "Aggiorna intersezioni"
 
 #: gschem/src/i_callbacks.c:1751
 msgid "Really revert page?"
@@ -1865,15 +1865,15 @@ msgstr "Sfondo"
 
 #: gschem/src/x_dialog.c:2374
 msgid "Net endpoint"
-msgstr ""
+msgstr "Fine net"
 
 #: gschem/src/x_dialog.c:2377
 msgid "Graphic"
-msgstr ""
+msgstr "Grafico"
 
 #: gschem/src/x_dialog.c:2386
 msgid "Logic bubble"
-msgstr ""
+msgstr "Bolla logica"
 
 #: gschem/src/x_dialog.c:2389
 msgid "Grid point"
@@ -1881,7 +1881,7 @@ msgstr "Punto della griglia"
 
 #: gschem/src/x_dialog.c:2392
 msgid "Detached attribute"
-msgstr ""
+msgstr "Attributo staccato"
 
 #: gschem/src/x_dialog.c:2395 gschem/src/x_window.c:382
 msgid "Text"
@@ -1901,23 +1901,23 @@ msgstr "Riquadro di Zoom"
 
 #: gschem/src/x_dialog.c:2416
 msgid "Output background"
-msgstr ""
+msgstr "Sfondo uscita"
 
 #: gschem/src/x_dialog.c:2419
 msgid "Net junction"
-msgstr ""
+msgstr "Giunzione di traccia"
 
 #: gschem/src/x_dialog.c:2422
 msgid "Mesh grid major"
-msgstr ""
+msgstr "Griglia a maglie grandi"
 
 #: gschem/src/x_dialog.c:2425
 msgid "Mesh grid minor"
-msgstr ""
+msgstr "Griglia a maglie piccole"
 
 #: gschem/src/x_dialog.c:2428
 msgid "Unknown"
-msgstr ""
+msgstr "Sconosciuto"
 
 #: gschem/src/x_dialog.c:2574
 #, c-format
@@ -1934,7 +1934,7 @@ msgstr "Colore dell'oggetto:"
 
 #: gschem/src/x_dialog.c:2707
 msgid "Hotkeys"
-msgstr "Hotkeys"
+msgstr "Tasti scelta rapida"
 
 #: gschem/src/x_dialog.c:2771
 msgid "Function"
@@ -1942,7 +1942,7 @@ msgstr "Funzione"
 
 #: gschem/src/x_dialog.c:2778
 msgid "Keystroke(s)"
-msgstr ""
+msgstr "Tasto(i)"
 
 #: gschem/src/x_dialog.c:3087
 msgid "Find Text"
@@ -1950,7 +1950,7 @@ msgstr "Trova testo"
 
 #: gschem/src/x_dialog.c:3118
 msgid "Text to find:"
-msgstr "Testo da cercare:"
+msgstr "Testo da trovare:"
 
 #: gschem/src/x_dialog.c:3128
 msgid "descend into hierarchy"
@@ -1974,12 +1974,12 @@ msgstr "Mostra il testo iniziando con:"
 
 #: gschem/src/x_dialog.c:3781
 msgid "S_elect the schematics you want to save:"
-msgstr "S_eleziona lo schematico che vuoi salvare:"
+msgstr "S_eleziona lo schema che vuoi salvare:"
 
 #: gschem/src/x_dialog.c:3875
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
-msgstr "Salvare i cambi allo schematico \"%s\" prima di chiudere?"
+msgstr "Salvare i cambi allo schema \"%s\" prima di chiudere?"
 
 #: gschem/src/x_dialog.c:3881
 #, c-format
@@ -1991,9 +1991,7 @@ msgstr ""
 
 #: gschem/src/x_dialog.c:3910
 msgid "If you don't save, all your changes will be permanently lost."
-msgstr ""
-"Se non effettui un salvataggio dei cambi, essi verranno definitivamente "
-"persi."
+msgstr "Se non salvi, tutte le modifiche saranno perse definitivamente."
 
 #: gschem/src/x_dialog.c:3930
 msgid "_Close without saving"
@@ -2019,23 +2017,23 @@ msgstr ""
 
 #: gschem/src/x_dialog.c:4268
 msgid "Invalid Attribute"
-msgstr "Caratteristica non valida"
+msgstr "Attributo non valido"
 
 #: gschem/src/x_dialog.c:4304
 msgid "Pin type"
-msgstr ""
+msgstr "Tipo di pin"
 
 #: gschem/src/x_dialog.c:4328
 msgid "Net pin"
-msgstr ""
+msgstr "Net pin"
 
 #: gschem/src/x_dialog.c:4330
 msgid "Bus pin (graphical)"
-msgstr ""
+msgstr "Bus pin (grafico)"
 
 #: gschem/src/x_fileselect.c:42
 msgid "Schematics"
-msgstr "Schematici"
+msgstr "Schemi"
 
 #: gschem/src/x_fileselect.c:47
 msgid "Symbols"
@@ -2043,7 +2041,7 @@ msgstr "Simboli"
 
 #: gschem/src/x_fileselect.c:52
 msgid "Schematics and symbols"
-msgstr "Schematici e Simboli"
+msgstr "Schemi e simboli"
 
 #: gschem/src/x_fileselect.c:58
 msgid "All files"
@@ -2087,7 +2085,7 @@ msgstr "x_image_lowlevel: non è possibile scrivere il file eps %s.\n"
 #: gschem/src/x_image.c:374
 #, c-format
 msgid "x_image_lowlevel: Unable to write %s file %s.\n"
-msgstr ""
+msgstr "x_image_lowlevel: impossibile scrivere %s file %s.\n"
 
 #: gschem/src/x_image.c:384
 #, c-format
@@ -2097,6 +2095,11 @@ msgid ""
 "\n"
 "%s.\n"
 msgstr ""
+"Si è verificato il seguente errore salvando l'immagine con formato %s nel "
+"file:\n"
+"%s\n"
+"\n"
+"%s.\n"
 
 #: gschem/src/x_image.c:403
 #, c-format
@@ -2129,6 +2132,8 @@ msgstr "Scrivi immagine..."
 #: gschem/src/x_log.c:188
 msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
 msgstr ""
+"**  UTF-8 non valido in messaggio del log. Verificare in stderr o gschem."
+"log.\n"
 
 #: gschem/src/x_log.c:256
 msgid "Status"
@@ -2180,7 +2185,7 @@ msgstr "/Modifica..."
 
 #: gschem/src/x_menus.c:49
 msgid "/Edit pin type..."
-msgstr ""
+msgstr "/Modifica tipo pin..."
 
 #: gschem/src/x_menus.c:50
 msgid "/Copy"
@@ -2196,20 +2201,22 @@ msgstr "/Cancella"
 
 #: gschem/src/x_menus.c:55
 msgid "/Down Schematic"
-msgstr "/Rilascia schematico"
+msgstr "/Modifica schema"
 
 #: gschem/src/x_menus.c:56
 msgid "/Down Symbol"
-msgstr "/Rilascia simbolo"
+msgstr "/Modifica simbolo"
 
 #: gschem/src/x_menus.c:57
 msgid "/Up"
-msgstr "/Sopra"
+msgstr "/Torna su"
 
 #: gschem/src/x_menus.c:319
 #, c-format
 msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
 msgstr ""
+"Si è tentato di regolare la sensitività su un oggetto di menu inesistente %"
+"s\n"
 
 #: gschem/src/x_menus.c:343
 msgid "Popup_menu_item_factory doesn't exist!\n"
@@ -2244,7 +2251,7 @@ msgstr "Mostra solo il Nome"
 
 #: gschem/src/x_multiattrib.c:1491
 msgid "Promote"
-msgstr ""
+msgstr "Promuovi"
 
 #: gschem/src/x_multiattrib.c:1495
 msgid "Duplicate"
@@ -2252,7 +2259,7 @@ msgstr "Duplicare"
 
 #: gschem/src/x_multiattrib.c:1713
 msgid "Edit Attributes"
-msgstr "Modifica Caratteristiche"
+msgstr "Modifica attributi"
 
 #: gschem/src/x_multiattrib.c:1831
 msgid "Vis?"
@@ -2322,11 +2329,11 @@ msgstr "Seleziona il nome del file Psotscript..."
 
 #: gschem/src/x_print.c:164
 msgid "Extents with margins"
-msgstr "Estensioni con margini"
+msgstr "Completo con margini"
 
 #: gschem/src/x_print.c:170
 msgid "Extents no margins"
-msgstr "Estensioni senza margini"
+msgstr "Completo senza margini"
 
 #: gschem/src/x_print.c:176
 msgid "Current Window"
@@ -2334,11 +2341,11 @@ msgstr "Finestra Corrente"
 
 #: gschem/src/x_print.c:210
 msgid "Landscape"
-msgstr "Landscape"
+msgstr "Orizzontale"
 
 #: gschem/src/x_print.c:216
 msgid "Portrait"
-msgstr "Portrait"
+msgstr "Verticale"
 
 #: gschem/src/x_print.c:276
 msgid "Print..."
@@ -2354,7 +2361,7 @@ msgstr "Ampiezza del foglio:"
 
 #: gschem/src/x_print.c:318
 msgid "Orientation:"
-msgstr "Orientazione:"
+msgstr "Orientamento:"
 
 #: gschem/src/x_print.c:330
 msgid "Destination"
@@ -2490,7 +2497,7 @@ msgstr "Ripeti/Niente"
 
 #: gschem/src/x_window.c:507
 msgid "Menu/Cancel"
-msgstr "Menù/Cancella"
+msgstr "Menu/Cancella"
 
 #: gschem/src/x_window.c:509
 msgid "Pan/Cancel"
@@ -2545,14 +2552,11 @@ msgstr "Chiusura [%s]\n"
 
 #: gschem/data/geda-gschem.desktop.in.h:3
 msgid "gEDA Schematic Editor"
-msgstr ""
+msgstr "Editor di schemi gEDA"
 
 #: gschem/data/geda-gschem.desktop.in.h:4
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr "Crea e modifica schemi elettrici e simboli con gschem"
-
-#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
-#~ msgstr "Hai provato a modificare qualcosa che non esiste!\n"
 
 #~ msgid "Save Page As..."
 #~ msgstr "Salva pagina con nome..."
@@ -2586,6 +2590,9 @@ msgstr "Crea e modifica schemi elettrici e simboli con gschem"
 
 #~ msgid "ERROR: NULL object in o_mirror!\n"
 #~ msgstr "ERRORE: oggetto NULLO in o_mirror!\n"
+
+#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
+#~ msgstr "Hai provato a modificare qualcosa che non esiste!\n"
 
 #, fuzzy
 #~ msgid "gEDA: GPL Electronic Design Automation"

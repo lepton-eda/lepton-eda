@@ -6,16 +6,16 @@
 # Sergey Alyoshin <alyoshin.s@gmail.com>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: ru\n"
+"Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2010-02-11 01:45+0000\n"
-"PO-Revision-Date: 2010-02-07 19:45+0000\n"
+"PO-Revision-Date: 2010-02-12 13:01+0000\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-08 16:28+0000\n"
+"X-Launchpad-Export-Date: 2010-02-12 17:20+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
@@ -2538,9 +2538,6 @@ msgstr "gEDA редактор схем"
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr "Создание и редактирование электрических схем и символов в gschem"
 
-#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
-#~ msgstr "Вы пытаетесь править слот чего-то несуществующего!\n"
-
 #~ msgid "Revert Page"
 #~ msgstr "Возвратить страницу"
 
@@ -2549,6 +2546,9 @@ msgstr "Создание и редактирование электрическ�
 
 #~ msgid "Close Window"
 #~ msgstr "Закрыть окно"
+
+#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
+#~ msgstr "Вы пытаетесь править слот чего-то несуществующего!\n"
 
 #~ msgid "Recent files"
 #~ msgstr "Недавние файлы"
