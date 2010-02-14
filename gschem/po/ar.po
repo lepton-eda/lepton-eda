@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-02-11 01:45+0000\n"
-"PO-Revision-Date: 2010-02-12 13:15+0000\n"
+"POT-Creation-Date: 2010-02-13 13:36+0000\n"
+"PO-Revision-Date: 2010-02-14 06:08+0000\n"
 "Last-Translator: عبدالله شلي (Abdellah Chelli) <Unknown>\n"
 "Language-Team: https://launchpad.net/~algeriatul\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-12 17:20+0000\n"
+"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "Language: ar\n"
 "X-Poedit-Language: Arabic\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: gschem/src/rcstrings.c:2
 msgid "_File"
-msgstr "ملف"
+msgstr "_ملف"
 
 #: gschem/src/rcstrings.c:3
 msgid "New Window"
@@ -38,7 +38,7 @@ msgstr "ا_فتح..."
 
 #: gschem/src/rcstrings.c:6
 msgid "Open Recen_t"
-msgstr "افتح أح_دث الملفات"
+msgstr "افتح الأح_دث"
 
 #: gschem/src/rcstrings.c:7
 msgid "_Save"
@@ -66,7 +66,7 @@ msgstr "أكتب _صورة..."
 
 #: gschem/src/rcstrings.c:13 gschem/src/x_script.c:47
 msgid "Execute Script..."
-msgstr "نفذ مخطوطا (Script)..."
+msgstr "نفذ مخطوطا (سكربت)..."
 
 #: gschem/src/rcstrings.c:14 gschem/src/rcstrings.c:80
 msgid "_Close"
@@ -78,7 +78,7 @@ msgstr "أ_خرج"
 
 #: gschem/src/rcstrings.c:17
 msgid "_Edit"
-msgstr "تحرير"
+msgstr "_تحرير"
 
 #: gschem/src/rcstrings.c:18
 msgid "_Undo"
@@ -138,7 +138,7 @@ msgstr "وضع المرآة"
 
 #: gschem/src/rcstrings.c:32
 msgid "Slot..."
-msgstr "فتحة..."
+msgstr "شقّ..."
 
 #: gschem/src/rcstrings.c:33
 msgid "Color..."
@@ -191,7 +191,7 @@ msgstr "إجعل النص الخفي ظاهرا"
 
 #: gschem/src/rcstrings.c:46
 msgid "_Buffer"
-msgstr "ذاكرة وسيطة"
+msgstr "م_خزن"
 
 #: gschem/src/rcstrings.c:47
 msgid "Copy into 1"
@@ -255,7 +255,7 @@ msgstr "ألصق من 5"
 
 #: gschem/src/rcstrings.c:63
 msgid "_View"
-msgstr "عرض"
+msgstr "_عرض"
 
 #: gschem/src/rcstrings.c:64
 msgid "_Redraw"
@@ -295,7 +295,7 @@ msgstr "مخطط ألوان _فاتحة"
 
 #: gschem/src/rcstrings.c:74
 msgid "_Page"
-msgstr "الصفحة"
+msgstr "_صفحة"
 
 #: gschem/src/rcstrings.c:75
 msgid "_Manager..."
@@ -319,7 +319,7 @@ msgstr "أ_همل"
 
 #: gschem/src/rcstrings.c:83
 msgid "_Add"
-msgstr "أضف"
+msgstr "_أضف"
 
 #: gschem/src/rcstrings.c:84
 msgid "_Component..."
@@ -367,7 +367,7 @@ msgstr "_صورة..."
 
 #: gschem/src/rcstrings.c:96
 msgid "Hie_rarchy"
-msgstr "تسلسل هرمي"
+msgstr "تسلسل​_هرمي"
 
 #: gschem/src/rcstrings.c:97
 msgid "_Down Schematic"
@@ -387,7 +387,7 @@ msgstr "ت_وثيق"
 
 #: gschem/src/rcstrings.c:102
 msgid "A_ttributes"
-msgstr "مواصفات"
+msgstr "_سمات"
 
 #: gschem/src/rcstrings.c:103
 msgid "_Attach"
@@ -431,7 +431,7 @@ msgstr "_نص الترقيم الآلي..."
 
 #: gschem/src/rcstrings.c:114
 msgid "_Options"
-msgstr "خيارات"
+msgstr "_خيارات"
 
 #: gschem/src/rcstrings.c:115
 msgid "_Text Size..."
@@ -459,11 +459,11 @@ msgstr "_صغّر تباعد الشبيكة"
 
 #: gschem/src/rcstrings.c:121
 msgid "Toggle _Outline/Box"
-msgstr "بدل ال_حد الخارجي/الإطار"
+msgstr "بدّل ال_حد الخارجي/الإطار"
 
 #: gschem/src/rcstrings.c:122
 msgid "Toggle Net _Rubberband"
-msgstr "بدل الشريط الم_طاطي للشبكة"
+msgstr "بدّل الشريط الم_طاطي للشبكة"
 
 #: gschem/src/rcstrings.c:123
 msgid "Toggle _Magnetic Net"
@@ -479,7 +479,7 @@ msgstr "أظهر نافذة الم_علم..."
 
 #: gschem/src/rcstrings.c:127
 msgid "_Help"
-msgstr "مساعدة"
+msgstr "مساع_دة"
 
 #: gschem/src/rcstrings.c:128
 msgid "gEDA Docu_mentation..."
@@ -561,7 +561,7 @@ msgstr "مرّر عدد مستويات غير صالح [%d] إلى 'مستويا
 #: gschem/src/g_rc.c:1194
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
-msgstr "مرّر حجم غير صالح [%d] إلى 'حجم مموّج الناقل'\n"
+msgstr "مرّر حجم غير صالح [%d] إلى 'حجم كسار الناقل'\n"
 
 #: gschem/src/g_rc.c:1269
 #, c-format
@@ -662,17 +662,17 @@ msgstr ""
 #: gschem/src/gschem.c:243
 #, c-format
 msgid "Couldn't find init scm file [%s]\n"
-msgstr "تعذّر العثور على ملف الاستهلال [%s]\n"
+msgstr "تعذّر العثور على ملف الاستهلال [‎%s‬]\n"
 
 #: gschem/src/gschem.c:247
 #, c-format
 msgid "Read init scm file [%s]\n"
-msgstr "قراءة ملف الاستهلال [%s]\n"
+msgstr "قراءة ملف الاستهلال [‎%s‬]\n"
 
 #: gschem/src/gschem.c:251
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
-msgstr "فشل قراءة ملف الاستهلال [%s]\n"
+msgstr "فشل قراءة ملف الاستهلال [‎%s‬]\n"
 
 #: gschem/src/gschem.c:312
 #, c-format
@@ -682,7 +682,7 @@ msgstr "دليل المخطط غير معين!\n"
 #: gschem/src/gschem.c:319 gschem/src/x_script.c:66
 #, c-format
 msgid "Executing guile script [%s]\n"
-msgstr "تنفيذ مخطوط guile [%s]\n"
+msgstr "تنفيذ مخطوط guile [‎%s‬]\n"
 
 #: gschem/src/gschem_cairo.c:310
 #, c-format
@@ -692,7 +692,7 @@ msgstr "نهاية السطر (%d) مجهولة\n"
 #: gschem/src/gschem_cairo.c:318
 #, c-format
 msgid "Unknown type for stroke (%d) !\n"
-msgstr "نوع مجهول لـ (stroke' (%d' !\n"
+msgstr "نوع مجهول للجرّة-‪stroke‬ (%d) !\n"
 
 #: gschem/src/i_basic.c:79
 msgid "Component Mode"
@@ -820,12 +820,12 @@ msgstr "التوثيق لأجل [%s,%s,%s,%s]\n"
 #: gschem/src/i_callbacks.c:123 gschem/src/i_callbacks.c:1707
 #, c-format
 msgid "New page created [%s]\n"
-msgstr "أنشئت صفحة جديدة [%s]\n"
+msgstr "أنشئت صفحة جديدة [‎%s‬]\n"
 
 #: gschem/src/i_callbacks.c:165
 #, c-format
 msgid "New Window created [%s]\n"
-msgstr "أنشئت نافذة جديدة [%s]\n"
+msgstr "أنشئت نافذة جديدة [‎%s‬]\n"
 
 #: gschem/src/i_callbacks.c:283
 msgid "Failed to Save All"
@@ -862,7 +862,7 @@ msgstr "حرّر النص"
 
 #: gschem/src/i_callbacks.c:754
 msgid "Slot"
-msgstr "فتحة"
+msgstr "شقّ"
 
 #: gschem/src/i_callbacks.c:771
 msgid "Color"
@@ -1178,7 +1178,7 @@ msgstr "حصلت على buffer_number غير صالح [o_buffer_paste_start]\n"
 #: gschem/src/o_bus.c:118
 #, c-format
 msgid "Got an invalid which one in o_bus_draw_stretch\n"
-msgstr ""
+msgstr "﻿حصلت على أيّ-واحد غير صالح في o_bus_draw_stretch\n"
 
 #: gschem/src/o_circle.c:134
 #, c-format
@@ -1197,11 +1197,11 @@ msgstr "حصلت على NULL غير متوقع في o_edit\n"
 
 #: gschem/src/o_misc.c:125
 msgid "Object already locked\n"
-msgstr ""
+msgstr "تم إقفال الكائن مسبقا\n"
 
 #: gschem/src/o_misc.c:163
 msgid "Object already unlocked\n"
-msgstr ""
+msgstr "تم فك قفل الكائن مسبقا\n"
 
 #: gschem/src/o_misc.c:448
 msgid "Hidden text is now visible\n"
@@ -1224,17 +1224,17 @@ msgstr "﻿‏o_autosave_backups: تعذر الحصول على اسم الحقي
 #: gschem/src/o_misc.c:887
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr "تعذر تعيين الملف الاحتياطي السابق [%s] للقراءة والكتابة\n"
+msgstr "تعذر تعيين الملف الاحتياطي السابق [‎%s‬] للقراءة والكتابة\n"
 
 #: gschem/src/o_misc.c:905
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
-msgstr "تعذر تعيين الملف الاحتياطي [%s] للقراءة فقط\n"
+msgstr "تعذر تعيين الملف الاحتياطي [‎%s‬] للقراءة فقط\n"
 
 #: gschem/src/o_misc.c:910
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
-msgstr "تعذر حفظ الملف الاحتياطي [%s]\n"
+msgstr "تعذر حفظ الملف الاحتياطي [‎%s‬]\n"
 
 #: gschem/src/o_move.c:188
 #, c-format
@@ -1244,36 +1244,36 @@ msgstr "﻿خطأ: كائن فارغ (NULL) في o_move_end!\n"
 #: gschem/src/o_move.c:461
 #, c-format
 msgid "DOH! tried to find the whichone, but didn't find it!\n"
-msgstr ""
+msgstr "عجبا! حاولت العثور على أيّ-واحد ولكن لم أعثر عليه!\n"
 
 #: gschem/src/o_move.c:483
 #, c-format
 msgid "Got a non line object in o_move_check_endpoint\n"
-msgstr ""
+msgstr "﻿حصلت على كائن غير مشكّل من خط في o_move_check_endpoint\n"
 
 #: gschem/src/o_net.c:159
 #, c-format
 msgid "Got an invalid which one in o_net_draw_stretch\n"
-msgstr ""
+msgstr "﻿حصلت على أيّ-واحد غير صالح في o_net_draw_stretch\n"
 
 #: gschem/src/o_net.c:536
 msgid "Warning: Starting net at off grid coordinate\n"
-msgstr "﻿تحذير: بدء الشبيكة خارج إحداثيات الشبيكة\n"
+msgstr "﻿تحذير: بدء الشبكة خارج إحداثيات الشبيكة\n"
 
 #: gschem/src/o_net.c:598
 msgid "Warning: Ending net at off grid coordinate\n"
-msgstr ""
+msgstr "﻿تحذير: إنهاء الشبكة خارج إحداثيات الشبيكة\n"
 
 #: gschem/src/o_net.c:952 gschem/src/o_net.c:989 gschem/src/o_net.c:1060
 #: gschem/src/o_net.c:1096
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
-msgstr ""
+msgstr "﻿حاولت إضافة أكثر من اثنين من كسارات الناقل. خطأ داخلي ل‍ gschem.\n"
 
 #: gschem/src/o_net.c:1166
 #, c-format
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
-msgstr ""
+msgstr "﻿لم يتم العثور على رمز كسار الناقل [%s] في أي مكتبة مكون\n"
 
 #: gschem/src/o_path.c:348
 #, c-format
@@ -1296,19 +1296,19 @@ msgstr "﻿خطأ: كائن فارغ (NULL)!\n"
 
 #: gschem/src/o_slot.c:81
 msgid "Slot attribute malformed\n"
-msgstr "سمة ﻿الفتحة تالفة\n"
+msgstr "سمة ﻿الشقّ تالفة\n"
 
 #: gschem/src/o_slot.c:89
 msgid "numslots attribute missing\n"
-msgstr "السمة numslots (رقم الفتحة) مفقودة\n"
+msgstr "السمة numslots (عدد الشقوق) مفقودة\n"
 
 #: gschem/src/o_slot.c:90
 msgid "Slotting not allowed for this component\n"
-msgstr ""
+msgstr "التقسيم (الشقّ) غير مسموح لهذا المكون\n"
 
 #: gschem/src/o_slot.c:105
 msgid "New slot number out of range\n"
-msgstr ""
+msgstr "عدد شق جديد خارج النطاق\n"
 
 #: gschem/src/o_undo.c:304
 msgid "Undo/Redo disabled in rc file\n"
@@ -1342,7 +1342,7 @@ msgstr ""
 #: gschem/src/x_attribedit.c:127
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
-msgstr ""
+msgstr "﻿حصلت على خيار عرض غير صحيح ؛تعيين الافتراضي لإظهار كليهما\n"
 
 #: gschem/src/x_attribedit.c:330
 msgid "Single Attribute Editor"
@@ -1406,20 +1406,21 @@ msgid ""
 "slotted object without slot attribute may cause problems when autonumbering "
 "slots\n"
 msgstr ""
+"﻿كائن مقسم (مشقوق) بدون سمة الشقّ قد يسبب مشاكل عند الترقيم الآلي للشقوق\n"
 
 #: gschem/src/x_autonumber.c:430
 #, c-format
 msgid ""
 "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
-msgstr ""
+msgstr "﻿شقّ مكرر قد يسبب مشاكل: [اسم​الرمز=%s، العدد=%d، الشقّ=%d]\n"
 
 #: gschem/src/x_autonumber.c:682
 msgid "No searchstring given in autonumber text.\n"
-msgstr ""
+msgstr "لا يوجد نص بحث في نص الترقيم الآلي.\n"
 
 #: gschem/src/x_autonumber.c:734
 msgid "No '*' or '?' given at the end of the autonumber text.\n"
-msgstr ""
+msgstr "لا توجد '*' و لا '؟' في نهاية نص الترقيم الآلي.\n"
 
 #: gschem/src/x_autonumber.c:869
 msgid "Diagonal"
@@ -1463,7 +1464,7 @@ msgstr "نص تعداد آلي في:"
 
 #: gschem/src/x_autonumber.c:1275
 msgid "Skip numbers found in:"
-msgstr ""
+msgstr "﻿تخطي الأرقام الموجودة في:"
 
 #: gschem/src/x_autonumber.c:1287 gschem/src/x_autonumber.c:1296
 msgid "Selected objects"
@@ -1483,7 +1484,7 @@ msgstr "أكتب فوق الأرقام الموجودة"
 
 #: gschem/src/x_autonumber.c:1305
 msgid "<b>Options</b>"
-msgstr "<b>خيارات</b>"
+msgstr "<b>الخيارات</b>"
 
 #: gschem/src/x_autonumber.c:1327
 msgid "Starting number:"
@@ -1499,7 +1500,7 @@ msgstr "أزل الأعداد"
 
 #: gschem/src/x_autonumber.c:1359
 msgid "Automatic slotting"
-msgstr ""
+msgstr "شقّ آلي"
 
 #: gschem/src/x_color.c:94 gschem/src/x_color.c:103
 #, c-format
@@ -1517,22 +1518,22 @@ msgstr "أبيض"
 #: gschem/src/x_color.c:125
 #, c-format
 msgid "Could not allocate display color %i!\n"
-msgstr ""
+msgstr "﻿تعذر تعيين لون العرض %i!\n"
 
 #: gschem/src/x_color.c:147
 #, c-format
 msgid "Could not allocate outline color %i!\n"
-msgstr ""
+msgstr "﻿تعذر تعيين لون الخط الخارجي %i!\n"
 
 #: gschem/src/x_color.c:164 gschem/src/x_color.c:181 gschem/src/x_color.c:197
 #, c-format
 msgid "Tried to get an invalid color: %d\n"
-msgstr ""
+msgstr "حاول الحصول على لون غير صالح: %d\n"
 
 #: gschem/src/x_color.c:214
 #, c-format
 msgid "Tried to get an invalid outline color: %d\n"
-msgstr ""
+msgstr "حاول الحصول على لون خط خارجي غير صالح: %d\n"
 
 #: gschem/src/x_compselect.c:1036
 msgid "Filter:"
@@ -1671,7 +1672,7 @@ msgstr "وسط"
 
 #: gschem/src/x_dialog.c:652
 msgid "Phantom"
-msgstr ""
+msgstr "وهم"
 
 #: gschem/src/x_dialog.c:653 gschem/src/x_dialog.c:750
 #: gschem/src/x_dialog.c:759 gschem/src/x_dialog.c:768
@@ -1791,11 +1792,11 @@ msgstr "﻿أدخل تباعد جديد لشبيكة الجذب:"
 
 #: gschem/src/x_dialog.c:2112
 msgid "Edit slot number"
-msgstr "﻿حرّر رقم الفتحة"
+msgstr "﻿حرّر عدد الشقّ"
 
 #: gschem/src/x_dialog.c:2143
 msgid "Edit slot number:"
-msgstr "﻿تحرير رقم الفتحة:"
+msgstr "﻿تحرير عدد الشقّ:"
 
 #: gschem/src/x_dialog.c:2204
 msgid "About..."
@@ -1803,7 +1804,8 @@ msgstr "عن..."
 
 #: gschem/src/x_dialog.c:2224
 msgid "<b>gEDA: GPL Electronic Design Automation</b>"
-msgstr "<b>gEDA: GPL Electronic Design Automation</b>"
+msgstr ""
+"<b>gEDA: GPL Electronic Design Automation (أتمتة التصميم الإلكتروني)</b>"
 
 #: gschem/src/x_dialog.c:2228
 #, c-format
@@ -1884,11 +1886,11 @@ msgstr "وصلة شبكة"
 
 #: gschem/src/x_dialog.c:2422
 msgid "Mesh grid major"
-msgstr ""
+msgstr "أساسي - خيط الشبيكة"
 
 #: gschem/src/x_dialog.c:2425
 msgid "Mesh grid minor"
-msgstr ""
+msgstr "ثانوي - خيط الشبيكة"
 
 #: gschem/src/x_dialog.c:2428
 msgid "Unknown"
@@ -1921,7 +1923,7 @@ msgstr "ضغطة مفاتيح"
 
 #: gschem/src/x_dialog.c:3087
 msgid "Find Text"
-msgstr "إبحث عن نص"
+msgstr "ابحث عن نص"
 
 #: gschem/src/x_dialog.c:3118
 msgid "Text to find:"
@@ -2186,7 +2188,7 @@ msgstr "محاولة تعيين الحساسية على عنصر قائمة غي
 
 #: gschem/src/x_menus.c:343
 msgid "Popup_menu_item_factory doesn't exist!\n"
-msgstr "‏popup_menu_item_factory غير موجود!\n"
+msgstr "مصنع-عنصر-القائمة-المنبثقة غير موجود!\n"
 
 #: gschem/src/x_menus.c:356
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
@@ -2344,7 +2346,7 @@ msgstr "لم تعيّن وجهة للطباعة\n"
 #: gschem/src/x_print.c:748
 #, c-format
 msgid "Cannot print current schematic to [%s]\n"
-msgstr "لا يمكن طباعة المخطط الحالي إلى [%s]\n"
+msgstr "لا يمكن طباعة المخطط الحالي إلى [‎%s‬]\n"
 
 #: gschem/src/x_print.c:757
 #, c-format
@@ -2358,7 +2360,7 @@ msgstr ""
 #: gschem/src/x_print.c:764
 #, c-format
 msgid "Printed current schematic to [%s]\n"
-msgstr "طُبع المخطط الحالي إلى [%s]\n"
+msgstr "طُبع المخطط الحالي إلى [‎%s‬]\n"
 
 #: gschem/src/x_window.c:81
 #, c-format
@@ -2464,7 +2466,7 @@ msgstr "انتقل/ألغِ"
 #: gschem/src/x_window.c:731
 #, c-format
 msgid "Loading schematic [%s]\n"
-msgstr "تحميل المخطط [%s]\n"
+msgstr "تحميل المخطط [‎%s‬]\n"
 
 #: gschem/src/x_window.c:743
 msgid "Failed to load file"
@@ -2478,7 +2480,7 @@ msgstr "ملف جديد [‎%s‬]\n"
 #: gschem/src/x_window.c:857
 #, c-format
 msgid "Could NOT save page [%s]\n"
-msgstr "تعذّر حفظ الصفحة [%s]\n"
+msgstr "تعذّر حفظ الصفحة [‎%s‬]\n"
 
 #: gschem/src/x_window.c:858
 msgid "Error while trying to save"
@@ -2487,12 +2489,12 @@ msgstr "خطا عند محاولة الحفظ"
 #: gschem/src/x_window.c:867
 #, c-format
 msgid "Saved as [%s]\n"
-msgstr "حُفظ كـ [%s]\n"
+msgstr "حُفظ كـ [‎%s‬]\n"
 
 #: gschem/src/x_window.c:869
 #, c-format
 msgid "Saved [%s]\n"
-msgstr "‏حُفظ [%s]\n"
+msgstr "‏حُفظ [‎%s‬]\n"
 
 #: gschem/src/x_window.c:871
 msgid "Saved"
@@ -2501,12 +2503,12 @@ msgstr "محفوظ"
 #: gschem/src/x_window.c:945
 #, c-format
 msgid "Discarding page [%s]\n"
-msgstr "إهمال الصفحة [%s]\n"
+msgstr "إهمال الصفحة [‎%s‬]\n"
 
 #: gschem/src/x_window.c:945
 #, c-format
 msgid "Closing [%s]\n"
-msgstr "غلق [%s]\n"
+msgstr "غلق [‎%s‬]\n"
 
 #: gschem/data/geda-gschem.desktop.in.h:3
 msgid "gEDA Schematic Editor"

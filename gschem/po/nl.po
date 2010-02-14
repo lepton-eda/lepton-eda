@@ -7,12 +7,14 @@ msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2010-02-13 13:36+0000\n"
-"PO-Revision-Date: 2009-10-09 04:18+0100\n"
+"PO-Revision-Date: 2010-02-14 01:04+0000\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev@moira.seul.org\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
 msgid "_File"
@@ -1147,7 +1149,7 @@ msgstr "Snap terug op raster (PAS OP!)\n"
 
 #: gschem/src/i_callbacks.c:3485
 msgid "Rubber band OFF \n"
-msgstr "Elastiek band UIT\n"
+msgstr "Elastiek band UIT \n"
 
 #: gschem/src/i_callbacks.c:3488
 msgid "Rubber band ON\n"
@@ -2536,26 +2538,29 @@ msgstr "gEDA schema bewerking"
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr "Creer en bewerk elektrische schema's en symbolen met gschem"
 
-#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
-#~ msgstr "Hmmm, je probeerde een slot te bewerken op iets dat niet bestaat!\n"
-
-#~ msgid "Revert Page"
-#~ msgstr "Terughalen Pagina"
-
 #~ msgid "Save Page As..."
 #~ msgstr "Opslaan Pagina Als..."
 
 #~ msgid "Recent files"
 #~ msgstr "Recente bestanden"
 
-#~ msgid "Close Window"
-#~ msgstr "Sluit Venster"
-
 #~ msgid "Manual"
 #~ msgstr "Handleiding"
 
 #~ msgid "About gschem"
 #~ msgstr "Over gschem"
+
+#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
+#~ msgstr "Hmmm, je probeerde een slot te bewerken op iets dat niet bestaat!\n"
+
+#~ msgid "Unknown end for path (%d)\n"
+#~ msgstr "Onbekend einde van pad (%d)\n"
+
+#~ msgid "Revert Page"
+#~ msgstr "Terughalen Pagina"
+
+#~ msgid "Close Window"
+#~ msgstr "Sluit Venster"
 
 #~ msgid "Accelerator Closure"
 #~ msgstr "Versnellings Afsluiting"
@@ -2622,9 +2627,6 @@ msgstr "Creer en bewerk elektrische schema's en symbolen met gschem"
 
 #~ msgid "Unknown type for circle!\n"
 #~ msgstr "Onbekend type voor cirkel!\n"
-
-#~ msgid "Unknown end for path (%d)\n"
-#~ msgstr "Onbekend einde van pad (%d)\n"
 
 #~ msgid "Could not find the color %s!\n"
 #~ msgstr "Kan kleur %s niet vinden!\n"

@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-02-11 01:45+0000\n"
-"PO-Revision-Date: 2010-02-11 03:10+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2010-02-13 13:36+0000\n"
+"PO-Revision-Date: 2010-02-13 10:43+0000\n"
+"Last-Translator: kop <Unknown>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-12 17:20+0000\n"
+"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
@@ -27,23 +27,23 @@ msgstr "Új ablak"
 
 #: gschem/src/rcstrings.c:4
 msgid "_New"
-msgstr ""
+msgstr "_Új"
 
 #: gschem/src/rcstrings.c:5
 msgid "_Open..."
-msgstr ""
+msgstr "_Megnyitás..."
 
 #: gschem/src/rcstrings.c:6
 msgid "Open Recen_t"
-msgstr ""
+msgstr "Legutóbbi megnyitása"
 
 #: gschem/src/rcstrings.c:7
 msgid "_Save"
-msgstr ""
+msgstr "Menté_s"
 
 #: gschem/src/rcstrings.c:8
 msgid "Save _As..."
-msgstr ""
+msgstr "Mentés másként"
 
 #: gschem/src/rcstrings.c:9
 msgid "Save All"
@@ -51,11 +51,11 @@ msgstr "Mind mentése"
 
 #: gschem/src/rcstrings.c:10 gschem/src/rcstrings.c:79
 msgid "_Revert"
-msgstr ""
+msgstr "_Visszaállítás"
 
 #: gschem/src/rcstrings.c:11
 msgid "_Print..."
-msgstr ""
+msgstr "_Nyomtatás…"
 
 #: gschem/src/rcstrings.c:12
 msgid "Write _image..."
@@ -67,11 +67,11 @@ msgstr "Szkript végrehajtása"
 
 #: gschem/src/rcstrings.c:14 gschem/src/rcstrings.c:80
 msgid "_Close"
-msgstr ""
+msgstr "_Bezárás"
 
 #: gschem/src/rcstrings.c:15
 msgid "_Quit"
-msgstr ""
+msgstr "Kilépés"
 
 #: gschem/src/rcstrings.c:17
 msgid "_Edit"
@@ -79,31 +79,31 @@ msgstr "Szerkesztés"
 
 #: gschem/src/rcstrings.c:18
 msgid "_Undo"
-msgstr ""
+msgstr "_Visszavonás"
 
 #: gschem/src/rcstrings.c:19
 msgid "_Redo"
-msgstr ""
+msgstr "Új_ra"
 
 #: gschem/src/rcstrings.c:20
 msgid "Cu_t"
-msgstr ""
+msgstr "Kivágás"
 
 #: gschem/src/rcstrings.c:21
 msgid "_Copy"
-msgstr ""
+msgstr "Másolás (_C)"
 
 #: gschem/src/rcstrings.c:22
 msgid "_Paste"
-msgstr ""
+msgstr "Beillesztés (_P)"
 
 #: gschem/src/rcstrings.c:23
 msgid "_Delete"
-msgstr ""
+msgstr "Törlés (_D)"
 
 #: gschem/src/rcstrings.c:24 gschem/src/i_basic.c:77 gschem/src/x_window.c:521
 msgid "Select Mode"
-msgstr "Kiválasztás"
+msgstr "Kiválasztás mód"
 
 #: gschem/src/rcstrings.c:25
 msgid "Edit..."
@@ -152,7 +152,7 @@ msgstr "Zárolás feloldása"
 
 #: gschem/src/rcstrings.c:36
 msgid "Invoke Macro"
-msgstr ""
+msgstr "Makró végrehajtása"
 
 #: gschem/src/rcstrings.c:37
 msgid "Line Width & Type..."
@@ -256,7 +256,7 @@ msgstr "Nézet"
 
 #: gschem/src/rcstrings.c:64
 msgid "_Redraw"
-msgstr ""
+msgstr "Újrarajzolás"
 
 #: gschem/src/rcstrings.c:65
 msgid "_Pan"
@@ -272,11 +272,11 @@ msgstr ""
 
 #: gschem/src/rcstrings.c:68
 msgid "Zoom _In"
-msgstr ""
+msgstr "Nagyítás"
 
 #: gschem/src/rcstrings.c:69
 msgid "Zoom _Out"
-msgstr ""
+msgstr "Kicsinyítés"
 
 #: gschem/src/rcstrings.c:70
 msgid "Zoom _Full"
@@ -284,11 +284,11 @@ msgstr ""
 
 #: gschem/src/rcstrings.c:71
 msgid "_Dark color scheme"
-msgstr ""
+msgstr "Sötét színséma"
 
 #: gschem/src/rcstrings.c:72
 msgid "_Light color scheme"
-msgstr ""
+msgstr "Világos színséma"
 
 #: gschem/src/rcstrings.c:74
 msgid "_Page"
@@ -300,59 +300,59 @@ msgstr ""
 
 #: gschem/src/rcstrings.c:76
 msgid "_Previous"
-msgstr ""
+msgstr "Előző"
 
 #: gschem/src/rcstrings.c:77
 msgid "_Next"
-msgstr ""
+msgstr "Következő"
 
 #: gschem/src/rcstrings.c:78
 msgid "Ne_w"
-msgstr ""
+msgstr "Új"
 
 #: gschem/src/rcstrings.c:81
 msgid "_Discard"
-msgstr ""
+msgstr "El_dobás"
 
 #: gschem/src/rcstrings.c:83
 msgid "_Add"
-msgstr "Hozzáadás"
+msgstr "Hozzá_adás"
 
 #: gschem/src/rcstrings.c:84
 msgid "_Component..."
-msgstr ""
+msgstr "Alkatrész"
 
 #: gschem/src/rcstrings.c:85
 msgid "_Net"
-msgstr ""
+msgstr "_Net"
 
 #: gschem/src/rcstrings.c:86
 msgid "B_us"
-msgstr ""
+msgstr "B_usz"
 
 #: gschem/src/rcstrings.c:87
 msgid "_Attribute..."
-msgstr ""
+msgstr "_Attribútum"
 
 #: gschem/src/rcstrings.c:88
 msgid "_Text..."
-msgstr ""
+msgstr "Szöveg"
 
 #: gschem/src/rcstrings.c:89
 msgid "_Line"
-msgstr ""
+msgstr "Vona_l"
 
 #: gschem/src/rcstrings.c:90
 msgid "_Box"
-msgstr ""
+msgstr "Do_boz"
 
 #: gschem/src/rcstrings.c:91
 msgid "C_ircle"
-msgstr ""
+msgstr "Kör"
 
 #: gschem/src/rcstrings.c:92
 msgid "A_rc"
-msgstr ""
+msgstr "Kö_rív"
 
 #: gschem/src/rcstrings.c:93
 msgid "_Pin"
@@ -360,7 +360,7 @@ msgstr ""
 
 #: gschem/src/rcstrings.c:94
 msgid "Pictu_re..."
-msgstr ""
+msgstr "Kép"
 
 #: gschem/src/rcstrings.c:96
 msgid "Hie_rarchy"
@@ -368,19 +368,19 @@ msgstr "Hie_rarchia"
 
 #: gschem/src/rcstrings.c:97
 msgid "_Down Schematic"
-msgstr ""
+msgstr "Kapcsolási rajz szerkesztése"
 
 #: gschem/src/rcstrings.c:98
 msgid "Down _Symbol"
-msgstr ""
+msgstr "Szimbólum szerkesztése"
 
 #: gschem/src/rcstrings.c:99
 msgid "_Up"
-msgstr ""
+msgstr "Vissza a rajzhoz"
 
 #: gschem/src/rcstrings.c:100
 msgid "D_ocumentation..."
-msgstr ""
+msgstr "D_okumentáció"
 
 #: gschem/src/rcstrings.c:102
 msgid "A_ttributes"
@@ -396,43 +396,43 @@ msgstr ""
 
 #: gschem/src/rcstrings.c:105
 msgid "Show _Value"
-msgstr ""
+msgstr "Érték mutatása"
 
 #: gschem/src/rcstrings.c:106
 msgid "Show _Name"
-msgstr ""
+msgstr "Név mutatása"
 
 #: gschem/src/rcstrings.c:107
 msgid "Show _Both"
-msgstr ""
+msgstr "Mindkettő mutatása"
 
 #: gschem/src/rcstrings.c:108
 msgid "_Toggle Visibility"
-msgstr ""
+msgstr "Lá_thatóság váltása"
 
 #: gschem/src/rcstrings.c:109
 msgid "_Find Specific Text..."
-msgstr ""
+msgstr "Szöveg keresése"
 
 #: gschem/src/rcstrings.c:110
 msgid "_Hide Specific Text..."
-msgstr ""
+msgstr "Szöveg elrejtése"
 
 #: gschem/src/rcstrings.c:111
 msgid "_Show Specific Text..."
-msgstr ""
+msgstr "Szöveg mutatása"
 
 #: gschem/src/rcstrings.c:112
 msgid "A_utonumber Text..."
-msgstr ""
+msgstr "Szöveg automatikus számozása"
 
 #: gschem/src/rcstrings.c:114
 msgid "_Options"
-msgstr "Beállítások"
+msgstr "Beállítás_ok"
 
 #: gschem/src/rcstrings.c:115
 msgid "_Text Size..."
-msgstr ""
+msgstr "Szöveg mére_te"
 
 #: gschem/src/rcstrings.c:116
 msgid "Cycle _grid styles"
