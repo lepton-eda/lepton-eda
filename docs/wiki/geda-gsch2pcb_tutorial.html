@@ -78,7 +78,7 @@ The gschem <strong>value</strong> attribute value is the particular component va
 </p>
 
 </div>
-<!-- SECTION "Terminology" [948-3251] -->
+<!-- SECTION "Terminology" [948-3252] -->
 <h2><a name="setup" id="setup">Setup</a></h2>
 <div class="level2">
 
@@ -138,7 +138,7 @@ or, in each project directory there could be a <strong>gafrc</strong> file with 
 </ul>
 <pre class="code">ln -s ../pcb-elements packages</pre>
 <ul>
-<li class="level1"><div class="li">  <strong> gsch2pcb setup: </strong> In each of your project directories, create a gsch2pcb project file which can be named anything that does not end in <em>.sch</em>. A poject file will be created in the example below.</div>
+<li class="level1"><div class="li">  <strong> gsch2pcb setup: </strong> In each of your project directories, create a gsch2pcb project file which can be named anything that does not end in <em>.sch</em>. A project file will be created in the example below.</div>
 </li>
 </ul>
 
@@ -147,7 +147,7 @@ or, in each project directory there could be a <strong>gafrc</strong> file with 
 </p>
 
 </div>
-<!-- SECTION "Setup" [3252-7825] -->
+<!-- SECTION "Setup" [3253-7827] -->
 <h2><a name="simple_example" id="simple_example">Simple Example</a></h2>
 <div class="level2">
 
@@ -163,7 +163,7 @@ output-name board
 </pre>
 
 </div>
-<!-- SECTION "Simple Example" [7826-8301] -->
+<!-- SECTION "Simple Example" [7828-8303] -->
 <h3><a name="create_schematicone.sch" id="create_schematicone.sch">Create schematic: one.sch</a></h3>
 <div class="level3">
 
@@ -200,7 +200,7 @@ output-name board
 </p>
 
 </div>
-<!-- SECTION "Create schematic: one.sch" [8302-9703] -->
+<!-- SECTION "Create schematic: one.sch" [8304-9705] -->
 <h3><a name="edit_the_attributes_of_the_components_on_the_schematic" id="edit_the_attributes_of_the_components_on_the_schematic">Edit the attributes of the components on the schematic.</a></h3>
 <div class="level3">
 
@@ -228,7 +228,7 @@ Anyway, we’re done for now with <strong>one.sch</strong>, so save it with the 
 </p>
 
 </div>
-<!-- SECTION "Edit the attributes of the components on the schematic." [9704-11653] -->
+<!-- SECTION "Edit the attributes of the components on the schematic." [9706-11656] -->
 <h3><a name="create_schematictwo.sch" id="create_schematictwo.sch">Create schematic: two.sch</a></h3>
 <div class="level3">
 
@@ -240,7 +240,7 @@ This will be really trivial and stupid since we’re doing it only to demonstrat
 </li>
 <li class="level1"><div class="li"> Add components:</div>
 <ul>
-<li class="level2"><div class="li"> From the <strong>Iput/Output</strong> library one <strong>input-2.sym</strong>.</div>
+<li class="level2"><div class="li"> From the <strong>Input/Output</strong> library one <strong>input-2.sym</strong>.</div>
 </li>
 <li class="level2"><div class="li"> From the <strong>Basic Devices</strong> library one <strong>resistor-1.sym</strong>.</div>
 </li>
@@ -283,7 +283,7 @@ Now we are done with the schematics except for assigning <strong>refdes</strong>
 </p>
 
 </div>
-<!-- SECTION "Create schematic: two.sch" [11654-15281] -->
+<!-- SECTION "Create schematic: two.sch" [11657-15285] -->
 <h3><a name="generate_pcb_files_from_schematics" id="generate_pcb_files_from_schematics">Generate PCB Files from Schematics</a></h3>
 <div class="level3">
 
@@ -311,7 +311,7 @@ If you get output from gsch2pcb like: <em>2 unknown elements added to board.pcb.
 </p>
 
 </div>
-<!-- SECTION "Generate PCB Files from Schematics" [15282-17519] -->
+<!-- SECTION "Generate PCB Files from Schematics" [15286-17524] -->
 <h3><a name="layout_pcb_files" id="layout_pcb_files">Layout PCB Files</a></h3>
 <div class="level3">
 
@@ -378,7 +378,8 @@ Or, you can let PCB spread out the elements with <strong>Select&rarr;Disperse al
 </p>
 
 <p>
-Note: you can use the PCB auto placement feature instead of manually placing (or dispersing with the <strong>Select&rarr;Disperse &hellip;</strong> commands) the components as described above.  To do this, you would load the netlist, select the components you want to be autoplaced (if this is the first PCB run, just &lt;b&gt;Select&rarr;Select all objects&lt;/b&gt;) then do <strong>Select&rarr;Auto place selected elements</strong>. Then you can again manually tune the PCB generated placements. The auto place function should place elements more intelligently than the disperse function, but it is also much slower as layouts get larger.
+Note: you can use the PCB auto placement feature instead of manually placing (or dispersing with the <strong>Select&rarr;Disperse &hellip;</strong> commands) the components as described above.  To do this, you would load the netlist, select the components you want to be autoplaced (if this is the first PCB run, just <strong>Select&rarr;Select all
+objects</strong>) then do <strong>Select&rarr;Auto place selected elements</strong>. Then you can again manually tune the PCB generated placements. The auto place function should place elements more intelligently than the disperse function, but it is also much slower as layouts get larger.
 </p>
 
 </div>
@@ -422,7 +423,7 @@ In some layouts it is important to put components on either side of  the board, 
 </p>
 
 </div>
-<!-- SECTION "Layout PCB Files" [17520-25954] -->
+<!-- SECTION "Layout PCB Files" [17525-25956] -->
 <h2><a name="modifying_schematics" id="modifying_schematics">Modifying Schematics</a></h2>
 <div class="level2">
 
@@ -479,7 +480,7 @@ board.pcb is backed up as board.pcb.bak1.
 </p>
 
 </div>
-<!-- SECTION "Modifying Schematics" [25955-29760] -->
+<!-- SECTION "Modifying Schematics" [25957-29762] -->
 <h2><a name="custom_gschem_symbols" id="custom_gschem_symbols">Custom gschem Symbols</a></h2>
 <div class="level2">
 
@@ -578,7 +579,7 @@ For complete details on making symbols, read through the <a href="geda-scg.html"
 </p>
 
 </div>
-<!-- SECTION "Custom gschem Symbols" [29761-34014] -->
+<!-- SECTION "Custom gschem Symbols" [29763-34016] -->
 <h2><a name="custom_file_elements" id="custom_file_elements">Custom file elements</a></h2>
 <div class="level2">
 
@@ -659,7 +660,7 @@ Pin(0 0 70 20 70 42 &quot;&quot; &quot;1&quot; 0x00000101)
 </p>
 
 </div>
-<!-- SECTION "Custom file elements" [34015-40476] -->
+<!-- SECTION "Custom file elements" [34017-40478] -->
 <h2><a name="custom_m4_elements_requires_gsch2pcb_1.0" id="custom_m4_elements_requires_gsch2pcb_1.0">Custom m4 elements (Requires gsch2pcb &gt;= 1.0)</a></h2>
 <div class="level2">
 
@@ -798,7 +799,7 @@ Mark(50 50)
 </p>
 
 </div>
-<!-- SECTION "Custom m4 elements (Requires gsch2pcb >= 1.0)" [40477-48164] -->
+<!-- SECTION "Custom m4 elements (Requires gsch2pcb >= 1.0)" [40479-48166] -->
 <h2><a name="multi-user_setup_requires_gsch2pcb_1.0" id="multi-user_setup_requires_gsch2pcb_1.0">Multi-user Setup (requires gsch2pcb &gt;= 1.0)</a></h2>
 <div class="level2">
 
@@ -839,7 +840,7 @@ With the above, users will have access to site wide libraries and only need to p
 </p>
 
 </div>
-<!-- SECTION "Multi-user Setup (requires gsch2pcb >= 1.0)" [48165-49802] -->
+<!-- SECTION "Multi-user Setup (requires gsch2pcb >= 1.0)" [48167-49804] -->
 <h2><a name="pc_board_fabrication" id="pc_board_fabrication">PC Board Fabrication</a></h2>
 <div class="level2">
 
@@ -874,5 +875,5 @@ If you find that your pads and traces don’t print on the same page, or are pla
 </p>
 
 </div>
-<!-- SECTION "PC Board Fabrication" [49803-] --></body>
+<!-- SECTION "PC Board Fabrication" [49805-] --></body>
 </html>

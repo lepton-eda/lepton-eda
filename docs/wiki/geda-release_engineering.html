@@ -18,7 +18,7 @@
 <div class="level1">
 
 </div>
-<!-- SECTION "gEDA's Release Engineering" [1-44] -->
+<!-- SECTION "gEDA's Release Engineering" [1-47] -->
 <h2><a name="geda_gaf_release_creation_checklist" id="geda_gaf_release_creation_checklist">gEDA/gaf Release Creation Checklist</a></h2>
 <div class="level2">
 
@@ -39,7 +39,9 @@
 </li>
 <li class="level1"><div class="li"> In the toplevel configure.ac file update the package version in the AC_INIT macro, the date in the AX_GIT_VERSION macro, and update libgeda’s shared library version (libgeda’s so version should follow what is described in <a href="http://sourceware.org/autobook/autobook/autobook_91.html" class="urlextern" title="http://sourceware.org/autobook/autobook/autobook_91.html"  rel="nofollow"> Autobook&#039;s library versioning</a> chapter).</div>
 </li>
-<li class="level1"><div class="li"> Update all the versions and dates in the man pages (gschem.1, gnetlist.1, gsymcheck.1)</div>
+<li class="level1"><div class="li"> Update all the versions and dates in the man pages (gschem.1, gnetlist.1, gsymcheck.1, grenum.1)</div>
+</li>
+<li class="level1"><div class="li"> Go into the wiki pages and update the “gEDA/gaf File Format Document” and add the release date to the version field.</div>
 </li>
 <li class="level1"><div class="li"> Update the wiki documentation (this is far far far too manual)</div>
 </li>
@@ -80,7 +82,7 @@
 </pre>
 
 <p>
-and make sure it completes without any errors.  After this is complete you will find the distribution tarball in the toplevel directory (named gEDA-gaf-VERSION.tar.gz).
+and make sure it completes without any errors.  After this is complete you will find the distribution tarball in the toplevel directory (named geda-gaf-VERSION.tar.gz).
 </p>
 <ul>
 <li class="level1"><div class="li"> Copy the distribution tarball some place else along with the toplevel README (which should be renamed to gEDA-gaf-VERSION-README.txt).</div>
@@ -89,7 +91,7 @@ and make sure it completes without any errors.  After this is complete you will 
 </li>
 </ul>
 <pre class="code">
-        md5sum -b gEDA-gaf-1.5.3.tar.gz &gt; gEDA-gaf-1.5.3.md5sum
+        md5sum -b geda-gaf-1.5.3.tar.gz &gt; geda-gaf-1.5.3.md5sum
 </pre>
 <ul>
 <li class="level1"><div class="li"> Untar the tarballs and compare what is inside to what is in the repository.  You should only find additional dist files inside the tarballs and no missing required files.</div>
@@ -121,7 +123,7 @@ and make sure it completes without any errors.  After this is complete you will 
 </li>
 <li class="level1"><div class="li"> Write release announcement and send to mailing lists</div>
 </li>
-<li class="level1"><div class="li"> Write up release notes and send pointer to mailing lists (named: gEDA-gaf-VERSION-releasenotes.html)</div>
+<li class="level1"><div class="li"> Write up release notes and send pointer to mailing lists (named: geda-gaf-VERSION-releasenotes.html)</div>
 </li>
 <li class="level1"><div class="li"> Update news update the sources download pages on the website with links to the new version</div>
 </li>
@@ -132,5 +134,5 @@ and make sure it completes without any errors.  After this is complete you will 
 </ul>
 
 </div>
-<!-- SECTION "gEDA/gaf Release Creation Checklist" [45-] --></body>
+<!-- SECTION "gEDA/gaf Release Creation Checklist" [48-] --></body>
 </html>

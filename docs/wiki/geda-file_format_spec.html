@@ -145,7 +145,7 @@ A schematic/symbol file for gEDA/gaf consists of:
 </p>
 
 </div>
-<!-- SECTION "Object types" [2247-3517] -->
+<!-- SECTION "Object types" [2247-3519] -->
 <h3><a name="version" id="version">version</a></h3>
 <div class="level3">
 
@@ -186,9 +186,9 @@ Valid in: Schematic and Symbol files<br/>
 </li>
 <li class="level1"><div class="li"> fileformat version is just an integer with no minor number.</div>
 </li>
-<li class="level1"><div class="li"> Development versions include: 19990601, 19990610, 19990705, 19990829, 19990919, 19991011, 20000220, 20000704, 20001006, 20001217, 20010304, 20010708, 20010722, 20020209, 20020414, 20020527, 20020825, 20021103, 20030223, 20030525, 20030901, 20040111, 20040710, 20041228, 20050313, 20050820, 20060123, 20060824, 20060906, 20061020, 20070216, 20070705, 20070708, 20070818, 20071229, 20080110</div>
+<li class="level1"><div class="li"> Development versions include: 19990601, 19990610, 19990705, 19990829, 19990919, 19991011, 20000220, 20000704, 20001006, 20001217, 20010304, 20010708, 20010722, 20020209, 20020414, 20020527, 20020825, 20021103, 20030223, 20030525, 20030901, 20040111, 20040710, 20041228, 20050313, 20050820, 20060123, 20060824, 20060906, 20061020, 20070216, 20070705, 20070708, 20070818, 20071229, 20080110, 20080127, 20080706, 20081220, 20081221, 20090328, 20090829, 20090830</div>
 </li>
-<li class="level1"><div class="li"> Stable versions include: 20070526, 20070626, 20070902, 20071231, 20080127</div>
+<li class="level1"><div class="li"> Stable versions include: 20070526, 20070626, 20070902, 20071231, 20080127, 20080929, 20081220, 20081231, 20091004, 20100214</div>
 </li>
 <li class="level1"><div class="li"> <acronym title="Concurrent Versions System">CVS</acronym> or test versions (should not be used): 20030921, 20031004, 20031019, 20031231, 20050814</div>
 </li>
@@ -203,7 +203,7 @@ Valid in: Schematic and Symbol files<br/>
 <pre class="code">v 20040111 1</pre>
 
 </div>
-<!-- SECTION "version" [3518-5475] -->
+<!-- SECTION "version" [3520-5597] -->
 <h3><a name="line" id="line">line</a></h3>
 <div class="level3">
 
@@ -291,7 +291,7 @@ A line segment from (23000, 69000) to (28000, 69000) with color index 3, 40 mils
 </p>
 
 </div>
-<!-- SECTION "line" [5476-6710] -->
+<!-- SECTION "line" [5598-6832] -->
 <h3><a name="picture" id="picture">picture</a></h3>
 <div class="level3">
 
@@ -401,7 +401,7 @@ A picture object with the lower left corner at (16900, 35800). The width of the 
 </p>
 
 </div>
-<!-- SECTION "picture" [6711-9504] -->
+<!-- SECTION "picture" [6833-9626] -->
 <h3><a name="box" id="box">box</a></h3>
 <div class="level3">
 
@@ -530,7 +530,7 @@ A box with the lower left hand corner at (33000, 67300) and a width and height o
 </p>
 
 </div>
-<!-- SECTION "box" [9505-11711] -->
+<!-- SECTION "box" [9627-11833] -->
 <h3><a name="circle" id="circle">circle</a></h3>
 <div class="level3">
 
@@ -646,7 +646,7 @@ A circle with the center at (38000, 67000) and a radius of 900 mils, color index
 </p>
 
 </div>
-<!-- SECTION "circle" [11712-13837] -->
+<!-- SECTION "circle" [11834-13959] -->
 <h3><a name="arc" id="arc">arc</a></h3>
 <div class="level3">
 
@@ -742,7 +742,7 @@ dashlength dashspace</code></strong>
 </p>
 
 </div>
-<!-- SECTION "arc" [13838-15354] -->
+<!-- SECTION "arc" [13960-15476] -->
 <h3><a name="text" id="text">text</a></h3>
 <div class="level3">
 
@@ -889,7 +889,7 @@ A text object with the origin at (10000, 20000), color index 3, 10 points in siz
 </p>
 
 </div>
-<!-- SECTION "text" [15355-18509] -->
+<!-- SECTION "text" [15477-18631] -->
 <h3><a name="net" id="net">net</a></h3>
 <div class="level3">
 
@@ -938,7 +938,7 @@ A net segment from (12700, 29400) to (32900, 29400) with color index 4.
 </p>
 
 </div>
-<!-- SECTION "net" [18510-19035] -->
+<!-- SECTION "net" [18632-19157] -->
 <h3><a name="bus" id="bus">bus</a></h3>
 <div class="level3">
 
@@ -994,7 +994,7 @@ A bus segment from (27300, 37400) to (27300, 35300) with color index 3 and no ne
 </p>
 
 </div>
-<!-- SECTION "bus" [19036-19967] -->
+<!-- SECTION "bus" [19158-20089] -->
 <h3><a name="pin" id="pin">pin</a></h3>
 <div class="level3">
 
@@ -1061,7 +1061,7 @@ A pin from (0, 200) to (200, 200) with color index 1, a regular pin, and the fir
 </p>
 
 </div>
-<!-- SECTION "pin" [19968-20964] -->
+<!-- SECTION "pin" [20090-21086] -->
 <h3><a name="component" id="component">component</a></h3>
 <div class="level3">
 
@@ -1123,7 +1123,7 @@ A component who’s origin is at (18600,19900), is selectable, not rotated, not 
 </p>
 
 </div>
-<!-- SECTION "component" [20965-21969] -->
+<!-- SECTION "component" [21087-22091] -->
 <h3><a name="path" id="path">path</a></h3>
 <div class="level3">
 
@@ -1274,7 +1274,7 @@ A path starting at (410,240) with lines drawn from there, and joining points (50
 </p>
 
 </div>
-<!-- SECTION "path" [21970-24820] -->
+<!-- SECTION "path" [22092-24942] -->
 <h3><a name="font" id="font">font</a></h3>
 <div class="level3">
 
@@ -1317,7 +1317,7 @@ The above font definition is for the space character.
 </p>
 
 </div>
-<!-- SECTION "font" [24821-25342] -->
+<!-- SECTION "font" [24943-25464] -->
 <h2><a name="colors" id="colors">Colors</a></h2>
 <div class="level2">
 
@@ -1407,7 +1407,7 @@ In the gEDA/gaf schematic and symbol file format colors are specified via an int
 </p>
 
 </div>
-<!-- SECTION "Colors" [25343-26381] -->
+<!-- SECTION "Colors" [25465-26503] -->
 <h2><a name="attributes" id="attributes">Attributes</a></h2>
 <div class="level2">
 
@@ -1429,7 +1429,7 @@ The object is a pin which has an attribute pinnumber=3 and pinseq=3 (name=value)
 </p>
 
 </div>
-<!-- SECTION "Attributes" [26382-27369] -->
+<!-- SECTION "Attributes" [26504-27491] -->
 <h2><a name="embedded_components" id="embedded_components">Embedded Components</a></h2>
 <div class="level2">
 
@@ -1448,7 +1448,7 @@ In the example above, <strong>555-1.sym</strong> is the component. The EMBEDDED 
 </p>
 
 </div>
-<!-- SECTION "Embedded Components" [27370-28134] -->
+<!-- SECTION "Embedded Components" [27492-28256] -->
 <h2><a name="path_data" id="path_data">Path data</a></h2>
 <div class="level2">
 
@@ -1537,7 +1537,7 @@ The resulting path (with control points drawn on to illustrate their positions) 
 </p>
 
 </div>
-<!-- SECTION "Path data" [28135-31563] -->
+<!-- SECTION "Path data" [28257-31685] -->
 <h2><a name="document_revision_history" id="document_revision_history">Document Revision History</a></h2>
 <div class="level2">
 <table class="inline">
@@ -1559,5 +1559,5 @@ The resulting path (with control points drawn on to illustrate their positions) 
 </table>
 
 </div>
-<!-- SECTION "Document Revision History" [31564-] --></body>
+<!-- SECTION "Document Revision History" [31686-] --></body>
 </html>

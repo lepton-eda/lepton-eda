@@ -798,7 +798,7 @@ The default printing size is used when printing from the command line. To set th
 </p>
 
 </div>
-<!-- SECTION "How do I print schematics from the command line?" [25153-26443] -->
+<!-- SECTION "How do I print schematics from the command line?" [25153-26444] -->
 <h2><a name="how_can_i_get_color_postscript_png_output" id="how_can_i_get_color_postscript_png_output">How can I get color postscript/PNG output?</a></h2>
 <div class="level2">
 
@@ -826,8 +826,13 @@ To control the background of the <acronym title="Portable Network Graphics">PNG<
 The 255 255 255 are the RGB components for the background color of the <acronym title="Portable Network Graphics">PNG</acronym> image.
 </p>
 
+<p>
+From version 1.5.2 onwards, print and display color maps are separate. In order to get postscript output with a light background, add the following to your gschemrc:
+</p>
+<pre class="code">(load (build-path geda-rc-path &quot;print-colormap-lightbg&quot;))</pre>
+
 </div>
-<!-- SECTION "How can I get color postscript/PNG output?" [26444-27576] -->
+<!-- SECTION "How can I get color postscript/PNG output?" [26445-27815] -->
 <h2><a name="how_can_i_get_black_and_white_postscript_png_output" id="how_can_i_get_black_and_white_postscript_png_output">How can I get black and white postscript/PNG output?</a></h2>
 <div class="level2">
 
@@ -842,7 +847,7 @@ For black and white <acronym title="Portable Network Graphics">PNG</acronym> ima
 <pre class="code">(image-color &quot;disabled&quot;)       ; for monochromoe PNG output</pre>
 
 </div>
-<!-- SECTION "How can I get black and white postscript/PNG output?" [27577-27942] -->
+<!-- SECTION "How can I get black and white postscript/PNG output?" [27816-28181] -->
 <h2><a name="how_can_i_produce_pdf_output" id="how_can_i_produce_pdf_output">How can I produce PDF output?</a></h2>
 <div class="level2">
 
@@ -875,7 +880,7 @@ In a KDE environment the print command is “kprinter” with the output option 
 <pre class="code">(print-command &quot;kprinter&quot;)</pre>
 
 </div>
-<!-- SECTION "How can I produce PDF output?" [27943-28915] -->
+<!-- SECTION "How can I produce PDF output?" [28182-29154] -->
 <h2><a name="how_can_i_insert_schematics_into_my_latex_document" id="how_can_i_insert_schematics_into_my_latex_document">How can I insert schematics into my LaTex document?</a></h2>
 <div class="level2">
 <ol>
@@ -899,7 +904,7 @@ In a KDE environment the print command is “kprinter” with the output option 
 \end{document}</pre>
 
 </div>
-<!-- SECTION "How can I insert schematics into my LaTex document?" [28916-29484] -->
+<!-- SECTION "How can I insert schematics into my LaTex document?" [29155-29723] -->
 <h2><a name="how_can_i_split_postscript_output_over_multiple_pages" id="how_can_i_split_postscript_output_over_multiple_pages">How can I split Postscript output over multiple pages?</a></h2>
 <div class="level2">
 
@@ -908,12 +913,12 @@ gschem does not provide this functionality internally, however there is a progra
 </p>
 
 </div>
-<!-- SECTION "How can I split Postscript output over multiple pages?" [29485-29828] -->
+<!-- SECTION "How can I split Postscript output over multiple pages?" [29724-30067] -->
 <h1><a name="gschem_installation_run-time_problems" id="gschem_installation_run-time_problems">Gschem installation/run-time problems</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Gschem installation/run-time problems" [29829-29881] -->
+<!-- SECTION "Gschem installation/run-time problems" [30068-30120] -->
 <h2><a name="gschem_segfaults_when_i_delete_components_on_fc5_and_other_linux_distributions_is_there_a_work-around" id="gschem_segfaults_when_i_delete_components_on_fc5_and_other_linux_distributions_is_there_a_work-around">Gschem segfaults when I delete components on FC5 (and other Linux distributions)! Is there a work-around?</a></h2>
 <div class="level2">
 
@@ -936,7 +941,7 @@ csh:
 <pre class="code">setenv G_SLICE always-malloc</pre>
 
 </div>
-<!-- SECTION "Gschem segfaults when I delete components on FC5 (and other Linux distributions)! Is there a work-around?" [29882-30536] -->
+<!-- SECTION "Gschem segfaults when I delete components on FC5 (and other Linux distributions)! Is there a work-around?" [30121-30775] -->
 <h2><a name="after_installation_gschem_does_not_work_what_could_be_wrong" id="after_installation_gschem_does_not_work_what_could_be_wrong">After installation gschem does not work!? What could be wrong?</a></h2>
 <div class="level2">
 
@@ -974,7 +979,7 @@ Also, some older releases of gEDA/gaf had some bugs when the rc files were insta
 </p>
 
 </div>
-<!-- SECTION "After installation gschem does not work!? What could be wrong?" [30537-32461] -->
+<!-- SECTION "After installation gschem does not work!? What could be wrong?" [30776-32700] -->
 <h2><a name="add_components_offers_no_symbols_what_can_i_do_about_it" id="add_components_offers_no_symbols_what_can_i_do_about_it">&quot;Add Components&quot; offers no symbols! What can I do about it?</a></h2>
 <div class="level2">
 
@@ -1008,7 +1013,7 @@ All of these config files may or may not append paths to the library search list
 </p>
 
 </div>
-<!-- SECTION "Add Components offers no symbols! What can I do about it?" [32462-33420] -->
+<!-- SECTION "Add Components offers no symbols! What can I do about it?" [32701-33659] -->
 <h2><a name="i_m_using_gschem_gaf_through_a_ssh_connection_and_i_get_an_error_likexlibextension_render_missing_on_display_localhost10.0" id="i_m_using_gschem_gaf_through_a_ssh_connection_and_i_get_an_error_likexlibextension_render_missing_on_display_localhost10.0">I&#039;m using gschem/gaf through a SSH connection and I get an error like: &#039;Xlib: extension &quot;RENDER&quot; missing on display &quot;localhost:10.0&quot;.&#039;</a></h2>
 <div class="level2">
 
@@ -1027,5 +1032,5 @@ The latter enables trusted X11 forwarding.
 </p>
 
 </div>
-<!-- SECTION "I'm using gschem/gaf through a SSH connection and I get an error like: 'Xlib: extension RENDER missing on display localhost:10.0.'" [33421-] --></body>
+<!-- SECTION "I'm using gschem/gaf through a SSH connection and I get an error like: 'Xlib: extension RENDER missing on display localhost:10.0.'" [33660-] --></body>
 </html>
