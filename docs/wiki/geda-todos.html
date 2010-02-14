@@ -20,9 +20,9 @@
 <ul class="toc">
 <li class="level2"><div class="li"><span class="li"><a href="#release_roadmap" class="toc">Release roadmap</a></span></div>
 <ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#unstable" class="toc">1.5.3/1.5.4 (unstable)</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#stable" class="toc">1.6 (stable)</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#stable1" class="toc">1.8 (stable)</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#stable" class="toc">1.6.1 (stable)</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#stable1" class="toc">1.6.2 (stable)</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#stable2" class="toc">1.8 (stable)</a></span></div></li>
 </ul>
 </li>
 <li class="level2"><div class="li"><span class="li"><a href="#longer_term_upgrades_desired_for_specific_tools" class="toc">Longer term upgrades desired for specific tools</a></span></div></li>
@@ -59,86 +59,12 @@ Todos for past releases can be seen on the <a href="geda-todos_historical.html" 
 </p>
 
 </div>
-<!-- SECTION "Release roadmap" [305-717] -->
-<h3><a name="unstable" id="unstable">1.5.3/1.5.4 (unstable)</a></h3>
+<!-- SECTION "Release roadmap" [305-709] -->
+<h3><a name="stable" id="stable">1.6.1 (stable)</a></h3>
 <div class="level3">
 
 <p>
- Target release date: <strong>August 2009</strong> <br/>
- Actual release date: <strong>August 29th 2009 and August 30th 2009</strong> <br/>
- 1.5.3 was withdrawn from distribution after some release critical bugs were discovered. <br/>
- 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Description                         </th><th class="leftalign"> SF bug                           </th><th class="leftalign"> Developer(s)         </th><th class="leftalign"> Status       </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> Renderer improvements (pango text on screen)  </td><td class="rightalign">                        </td><td class="leftalign"> Peter C              </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=f8a0f1c1b5fd42c78a7165dcfa4b5135790a24a5" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=f8a0f1c1b5fd42c78a7165dcfa4b5135790a24a5"  rel="nofollow"> Done </a> </td>
-	</tr>
-	<tr>
-		<td> Embeded symbol contents different depending on how embedded </td><td> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=2460301&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=2460301&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2460301 </a> </td><td class="leftalign"> Peter B  </td><td> Fixed (<a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=ea46d8defce4390b9650e8d2a5035de4794673df" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=ea46d8defce4390b9650e8d2a5035de4794673df"  rel="nofollow"> 1</a> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=a419f4f196ef6574940d082d88f46b95bbeb0ea9" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=a419f4f196ef6574940d082d88f46b95bbeb0ea9"  rel="nofollow"> 2</a>) </td>
-	</tr>
-	<tr>
-		<td> <del>gattrib: Fix file&rarr;load to do something useful</del> </td><td class="centeralign">  <del>n/a</del>  </td><td> </td><td> Cancelled </td>
-	</tr>
-	<tr>
-		<td> gschem: Preselect current setting when editing fill and line styles </td><td> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=2344964&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=2344964&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2344964 </a> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=2344956&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=2344956&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2344956 </a> </td><td class="leftalign"> Werner  </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=e84330457016f1bfb3db1cd6c8a6980a72a6e90c" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=e84330457016f1bfb3db1cd6c8a6980a72a6e90c"  rel="nofollow">Fixed</a> </td>
-	</tr>
-	<tr>
-		<td> Dangerous button focus in “Save changes” dialog at quit </td><td> <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2058707&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2058707&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2058707</a> </td><td class="leftalign"> Peter C  </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=c006ec0603fd570ec6c10386f3a3d19f9cbd525d" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=c006ec0603fd570ec6c10386f3a3d19f9cbd525d"  rel="nofollow"> Fixed gschem </a> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=7253fb551e683b3c7c15c0f8595178f88129e7c5" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=7253fb551e683b3c7c15c0f8595178f88129e7c5"  rel="nofollow"> Fixed gattrib </a> </td>
-	</tr>
-	<tr>
-		<td> Fix zooming with (warp-cursor “disabled”) </td><td> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=2001299&amp;group_id=161080&amp;atid=818429" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=2001299&amp;group_id=161080&amp;atid=818429"  rel="nofollow"> 2001299 </a> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=2212748&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=2212748&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2212748 </a> </td><td> Werner </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=d48b0b36c5348abd52413de14afb6ab0958b260d" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=d48b0b36c5348abd52413de14afb6ab0958b260d"  rel="nofollow"> Fixed </a></td>
-	</tr>
-	<tr>
-		<td> Fix drawing artifact sometimes left after cancelling net mode </td><td> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=2449060&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=2449060&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2449060 </a> </td><td class="leftalign"> Peter C  </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commitdiff;h=0fe820aa442bba02d164832ce771932f2189d231#patch14" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commitdiff;h=0fe820aa442bba02d164832ce771932f2189d231#patch14"  rel="nofollow"> Fixed </a> (in invalidate/expose code) </td>
-	</tr>
-	<tr>
-		<td> Deselecting component doesn’t deselect hidden attrib </td><td> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=2430369&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=2430369&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2430369 </a> </td><td class="leftalign"> Peter C  </td><td class="leftalign"> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=d3bd67e8ccb5ed47f17603392f480f220380daa5" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=d3bd67e8ccb5ed47f17603392f480f220380daa5"  rel="nofollow"> Fixed </a>  </td>
-	</tr>
-	<tr>
-		<td> Fix gnetlist ordering / test-suite against recent GLib </td><td> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=2455061&amp;group_id=161080&amp;atid=818426" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=2455061&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2455061 </a> </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=2d888258d954c993aa03e4a1beb7b03e62df4d95" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=2d888258d954c993aa03e4a1beb7b03e62df4d95"  rel="nofollow"> Fixed </a> </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> Unified build system                 </td><td> <a href="https://sourceforge.net/tracker2/?func=detail&amp;aid=1758673&amp;group_id=161080&amp;atid=818429" class="urlextern" title="https://sourceforge.net/tracker2/?func=detail&amp;aid=1758673&amp;group_id=161080&amp;atid=818429"  rel="nofollow"> 1758673 </a> </td><td class="leftalign"> Peter B            </td><td class="leftalign"> Done             </td>
-	</tr>
-	<tr>
-		<td> Get rid of all obsolete auto* macros </td><td class="centeralign">   n/a                              </td><td class="leftalign"> Peter B             </td><td class="leftalign"> Done             </td>
-	</tr>
-</table>
-
-<p>
- Wishlist 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Description                         </th><th class="leftalign"> SF bug                           </th><th class="leftalign"> Developer(s)         </th><th class="leftalign"> Status       </th>
-	</tr>
-	<tr>
-		<td> Printing improvements (Arbitrary UTF8 postscript) - print with cairo </td><td class="centeralign">  n/a                 </td><td class="leftalign"> Peter B, Peter C     </td><td> 50% </td>
-	</tr>
-	<tr>
-		<td> gschem: interface for creating paths and inserting / deleting nodes </td><td class="centeralign">  n/a  </td><td class="rightalign">  </td><td> </td>
-	</tr>
-	<tr>
-		<td> Bitmap export options: allow specifying DPI rather than / as well as absolute page size </td><td> <a href="https://sourceforge.net/tracker/?func=detail&amp;atid=818429&amp;aid=2226522&amp;group_id=161080" class="urlextern" title="https://sourceforge.net/tracker/?func=detail&amp;atid=818429&amp;aid=2226522&amp;group_id=161080"  rel="nofollow"> 2226522 </a> </td><td> </td><td> </td>
-	</tr>
-	<tr>
-		<td> Set print border size </td><td> <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2243238&amp;group_id=161080&amp;atid=818429" class="urlextern" title="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2243238&amp;group_id=161080&amp;atid=818429"  rel="nofollow"> 2243238 </a> </td><td> Werner </td><td> </td>
-	</tr>
-	<tr>
-		<td> Allow setting gschem on-screen border </td><td> <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2243238&amp;group_id=161080&amp;atid=818429" class="urlextern" title="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2243238&amp;group_id=161080&amp;atid=818429"  rel="nofollow"> 2243238 </a> </td><td> </td><td> </td>
-	</tr>
-</table>
-
-</div>
-<!-- SECTION "1.5.3/1.5.4 (unstable)" [718-4896] -->
-<h3><a name="stable" id="stable">1.6 (stable)</a></h3>
-<div class="level3">
-
-<p>
- Target release date: <strong>September 2009 (soon after 1.5.4 is complete) </strong> <br/>
+ Target release date: <strong>February 2010</strong> <br/>
   Actual release date: <strong>TBD</strong> 
 </p>
 <table class="inline">
@@ -146,52 +72,52 @@ Todos for past releases can be seen on the <a href="geda-todos_historical.html" 
 		<th class="leftalign"> Description                         </th><th class="leftalign"> SF bug                           </th><th class="leftalign"> Developer(s)         </th><th class="leftalign"> Status       </th>
 	</tr>
 	<tr>
-		<td class="leftalign"> Fix gattrib build with recent GTK+  </td><td class="leftalign"> <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=2832985&amp;group_id=161080&amp;atid=818426" class="urlextern" title="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=2832985&amp;group_id=161080&amp;atid=818426"  rel="nofollow"> 2832985 </a>  </td><td class="leftalign"> Peter C   </td><td class="leftalign"> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=78da20ca286eb2f6e518c64dca94b888fc8c19af" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=78da20ca286eb2f6e518c64dca94b888fc8c19af"  rel="nofollow"> Fixed </a>  </td>
+		<td> Screenshots of release version for a publicity revamp of gEDA website. </td><td class="centeralign">   n/a   </td><td> Peter C </td><td> </td>
 	</tr>
 	<tr>
-		<td class="leftalign"> Update documentation from wiki      </td><td class="rightalign">                                  </td><td class="leftalign"> Ales                 </td><td class="rightalign">              </td>
+		<td> Merge translations from Launchpad upstream. </td><td class="centeralign">  n/a  </td><td class="leftalign"> Peter C  </td><td> Ongoing sync </td>
 	</tr>
 	<tr>
-		<td class="leftalign"> Check copyright headers are up-to-date  </td><td class="centeralign">  n/a    </td><td class="rightalign">   </td><td class="rightalign">            </td>
+		<td class="leftalign"> Check copyright headers are up-to-date  </td><td class="centeralign">  n/a    </td><td> Ales H </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=bd34cfde2450790b357e574281f9562adce64303" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=bd34cfde2450790b357e574281f9562adce64303"  rel="nofollow"> Done </a> </td>
 	</tr>
+</table>
+
+</div>
+<!-- SECTION "1.6.1 (stable)" [710-1264] -->
+<h3><a name="stable1" id="stable1">1.6.2 (stable)</a></h3>
+<div class="level3">
+
+<p>
+ Target release date: <strong>Unknown</strong> <br/>
+  Actual release date: <strong>TBD</strong> 
+</p>
+<table class="inline">
 	<tr>
-		<td> <del>UTF-8 / system / filesystem encoding bugs</del> </td><td> <del><a href="https://sourceforge.net/tracker/?func=detail&amp;group_id=161080&amp;atid=818426&amp;aid=1868072" class="urlextern" title="https://sourceforge.net/tracker/?func=detail&amp;group_id=161080&amp;atid=818426&amp;aid=1868072"  rel="nofollow"> 1868072</a></del> </td><td> </td><td> Cancelled (minor impact) </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> Portability patches for mingw32 landed in some form or other.  </td><td> </td><td> Cesar S, Peter C </td><td> Awaiting testing and feedback </td>
+		<th class="leftalign"> Description                         </th><th class="leftalign"> SF bug                           </th><th class="leftalign"> Developer(s)         </th><th class="leftalign"> Status       </th>
 	</tr>
 	<tr>
 		<td> Screenshots of release version for a publicity revamp of gEDA website. </td><td class="centeralign">   n/a   </td><td> Peter C </td><td> </td>
 	</tr>
 	<tr>
-		<td> Merge translations from Launchpad upstream. </td><td> </td><td> Peter C (?) </td><td> </td>
+		<td> Merge translations from Launchpad upstream. </td><td class="centeralign">  n/a  </td><td class="leftalign"> Peter C  </td><td> </td>
 	</tr>
 	<tr>
-		<td> Cure all: “warning: format not a string literal and no format arguments” compiling with recent GCC versions </td><td> </td><td> </td><td> Fixed </td>
+		<td class="leftalign"> Check copyright headers are up-to-date  </td><td class="centeralign">  n/a    </td><td class="rightalign">   </td><td class="rightalign">            </td>
+	</tr>
+	<tr>
+		<td> UTF-8 / system / filesystem encoding bugs </td><td> <a href="https://sourceforge.net/tracker/?func=detail&amp;group_id=161080&amp;atid=818426&amp;aid=1868072" class="urlextern" title="https://sourceforge.net/tracker/?func=detail&amp;group_id=161080&amp;atid=818426&amp;aid=1868072"  rel="nofollow"> 1868072</a> </td><td> </td><td> </td>
+	</tr>
+	<tr>
+		<td> Prettify symbols (e.g. gates) using paths </td><td class="centeralign">  n/a  </td><td class="rightalign">  </td><td class="rightalign">  </td>
 	</tr>
 	<tr>
 		<td> Cure all: “warning : ignoring return value of ‘&hellip;’, declared with attribute warn_unused_result” compiling with recent GCC versions </td><td> </td><td> </td><td> </td>
 	</tr>
-	<tr>
-		<td> gattrib: Remove all deliberately-non-functioning menu options / buttons </td><td class="centeralign">   n/a  </td><td> Peter C </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=0deb0abc3d82a8127c9566d886858811c1dcc717" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=0deb0abc3d82a8127c9566d886858811c1dcc717"  rel="nofollow"> Fixed menu items </a> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=22d5b2abcd1aa5c098566ee5b292c6d7215b9b8e" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=22d5b2abcd1aa5c098566ee5b292c6d7215b9b8e"  rel="nofollow"> Fixed Nets sheet </a> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=721114eccc913dbbbd5e1d0700b87662aac316fc" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=721114eccc913dbbbd5e1d0700b87662aac316fc"  rel="nofollow"> Fixed Pins sheet </a> </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> <del>Prettify symbols (e.g. gates) using paths</del>  </td><td class="centeralign">  <del>n/a</del>  </td><td class="rightalign">  </td><td> Cancelled (cosmetic) </td>
-	</tr>
-	<tr>
-		<td> Fix symbols using explicit lines for overbars </td><td class="centeralign">  n/a  </td><td> Bert T,  Werner </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=9e3e45193643d5bca628df5074fd1aedd7ff619c" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=9e3e45193643d5bca628df5074fd1aedd7ff619c"  rel="nofollow">Done</a></td>
-	</tr>
-	<tr>
-		<td> utils: Teach gsch2pcb to detect and avoid the common “footprint saved as PCB file” mistake </td><td class="centeralign">  n/a  </td><td> Peter B </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=821845073b187409488bbf78ed947fd084439546" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=821845073b187409488bbf78ed947fd084439546"  rel="nofollow"> Done </a> </td>
-	</tr>
-	<tr>
-		<td> gschem: Fix broken net consolidation for certain scenarios </td><td class="centeralign">  n/a  </td><td class="leftalign"> Peter C  </td><td> <a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=399560caafde7046fe0e361712389e559969a424" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=399560caafde7046fe0e361712389e559969a424"  rel="nofollow"> Fixed </a> (hack) </td>
-	</tr>
 </table>
 
 </div>
-<!-- SECTION "1.6 (stable)" [4897-7452] -->
-<h3><a name="stable1" id="stable1">1.8 (stable)</a></h3>
+<!-- SECTION "1.6.2 (stable)" [1265-2066] -->
+<h3><a name="stable2" id="stable2">1.8 (stable)</a></h3>
 <div class="level3">
 
 <p>
@@ -252,8 +178,32 @@ Todos for past releases can be seen on the <a href="geda-todos_historical.html" 
 	</tr>
 </table>
 
+<p>
+ Wishlist 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Description                         </th><th class="leftalign"> SF bug                           </th><th class="leftalign"> Developer(s)         </th><th class="leftalign"> Status       </th>
+	</tr>
+	<tr>
+		<td> Printing improvements (Arbitrary UTF8 postscript) - print with cairo </td><td class="centeralign">  n/a                 </td><td class="leftalign"> Peter B, Peter C     </td><td> 50% </td>
+	</tr>
+	<tr>
+		<td> gschem: interface for creating paths and inserting / deleting nodes </td><td class="centeralign">  n/a  </td><td class="rightalign">  </td><td> </td>
+	</tr>
+	<tr>
+		<td> Bitmap export options: allow specifying DPI rather than / as well as absolute page size </td><td> <a href="https://sourceforge.net/tracker/?func=detail&amp;atid=818429&amp;aid=2226522&amp;group_id=161080" class="urlextern" title="https://sourceforge.net/tracker/?func=detail&amp;atid=818429&amp;aid=2226522&amp;group_id=161080"  rel="nofollow"> 2226522 </a> </td><td> </td><td> </td>
+	</tr>
+	<tr>
+		<td> Set print border size </td><td> <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2243238&amp;group_id=161080&amp;atid=818429" class="urlextern" title="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2243238&amp;group_id=161080&amp;atid=818429"  rel="nofollow"> 2243238 </a> </td><td> Werner </td><td> </td>
+	</tr>
+	<tr>
+		<td> Allow setting gschem on-screen border </td><td> <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2243238&amp;group_id=161080&amp;atid=818429" class="urlextern" title="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2243238&amp;group_id=161080&amp;atid=818429"  rel="nofollow"> 2243238 </a> </td><td> </td><td> </td>
+	</tr>
+</table>
+
 </div>
-<!-- SECTION "1.8 (stable)" [7453-9505] -->
+<!-- SECTION "1.8 (stable)" [2067-4963] -->
 <h2><a name="longer_term_upgrades_desired_for_specific_tools" id="longer_term_upgrades_desired_for_specific_tools">Longer term upgrades desired for specific tools</a></h2>
 <div class="level2">
 <ul>
@@ -364,7 +314,7 @@ Todos for past releases can be seen on the <a href="geda-todos_historical.html" 
 </ul>
 
 </div>
-<!-- SECTION "Longer term upgrades desired for specific tools" [9506-13235] -->
+<!-- SECTION "Longer term upgrades desired for specific tools" [4964-8693] -->
 <h2><a name="ideas_for_new_tools_or_geda_suite-wide_enhancements" id="ideas_for_new_tools_or_geda_suite-wide_enhancements">Ideas for new tools or gEDA Suite-wide enhancements</a></h2>
 <div class="level2">
 <ul>
@@ -379,7 +329,7 @@ Todos for past releases can be seen on the <a href="geda-todos_historical.html" 
 </ul>
 
 </div>
-<!-- SECTION "Ideas for new tools or gEDA Suite-wide enhancements" [13236-13802] -->
+<!-- SECTION "Ideas for new tools or gEDA Suite-wide enhancements" [8694-9260] -->
 <h2><a name="code_cleanup_and_refactoring" id="code_cleanup_and_refactoring">Code cleanup and refactoring</a></h2>
 <div class="level2">
 <ul>
@@ -398,5 +348,5 @@ Todos for past releases can be seen on the <a href="geda-todos_historical.html" 
 </ul>
 
 </div>
-<!-- SECTION "Code cleanup and refactoring" [13803-] --></body>
+<!-- SECTION "Code cleanup and refactoring" [9261-] --></body>
 </html>

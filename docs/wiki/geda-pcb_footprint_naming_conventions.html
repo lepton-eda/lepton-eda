@@ -1,0 +1,231 @@
+
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="clear">
+
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#footprint_naming_conventions" class="toc">Footprint naming conventions</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#notes" class="toc">Notes</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#integrated_circuit_packages" class="toc">Integrated circuit packages</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#integrated_circuit_smt_packages" class="toc">Integrated circuit SMT packages</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#basic_semiconductors" class="toc">Basic semiconductors</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#basic_smt_semiconductors" class="toc">Basic SMT semiconductors</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#passive_components" class="toc">Passive components</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#passive_smt_components" class="toc">Passive SMT components</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+
+
+
+<h2><a name="footprint_naming_conventions" id="footprint_naming_conventions">Footprint naming conventions</a></h2>
+<div class="level2">
+
+<p>
+This section describes the conventions for naming of footprints used in PCB (and gEDA/gaf).<br/>
+ The purpose of the naming convention is to establish a standard to maintain the same naming convention through the different phases of the CAD chain. This helps in ensuring that the collaborative effort of gEDA/gaf is not lost.
+</p>
+
+</div>
+<!-- SECTION "Footprint naming conventions" [1-364] -->
+<h3><a name="notes" id="notes">Notes</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Unless otherwise noted, numerical pin names will be used, starting from 1.</div>
+</li>
+<li class="level1"><div class="li"> n is for the pin count.</div>
+</li>
+<li class="level1"><div class="li"> m is for the pin spacing in mils.</div>
+</li>
+<li class="level1"><div class="li"> x is for the x dimension of the package (excluding pins). In particular this is used for the QFP package family.</div>
+</li>
+<li class="level1"><div class="li"> SMT means surface mount, other components are through-hole.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Notes" [365-707] -->
+<h3><a name="integrated_circuit_packages" id="integrated_circuit_packages">Integrated circuit packages</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Dual in line packages with up to 22 100 mil spaced pins and 300 mil row spacing are called DIPn.</div>
+</li>
+<li class="level1"><div class="li"> Dual in line packages with 24 or more 100 mil spaced pins and 300 mil row spacing are called DIPnN.</div>
+</li>
+<li class="level1"><div class="li"> Dual in line packages with 100 mil spaced pins and 400 mil row spacing are called DIPnH.</div>
+</li>
+<li class="level1"><div class="li"> Dual in line packages with 24 or more 100 mil spaced pins and 600 mil row spacing are called DIPn.</div>
+</li>
+<li class="level1"><div class="li"> Shrink dual in line packages with up to 24 70 mil spaced pins and 300 mil row spacing are called SDIPn.</div>
+</li>
+<li class="level1"><div class="li"> Shrink dual in line packages with more than 24 70 mil spaced pins and 400 mil row spacing are called SDIPn.</div>
+</li>
+<li class="level1"><div class="li"> Single in line packages with 100 mil spaced pins are called SIPnN. See also JUMPER, below.</div>
+</li>
+<li class="level1"><div class="li"> Zig-zag in-line package are called ZIPn.</div>
+</li>
+<li class="level1"><div class="li"> Plastic leadless chip carrier with pin socket are called PLCCnX.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Integrated circuit packages" [708-1576] -->
+<h3><a name="integrated_circuit_smt_packages" id="integrated_circuit_smt_packages">Integrated circuit SMT packages</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Small outline SMT packages with up to 16 50 mil spaced pins and 150 mil total width are called SOn.</div>
+</li>
+<li class="level1"><div class="li"> Small outline SMT packages with more than 16 50 mil spaced pins and 150 mil total width are called SOnN.</div>
+</li>
+<li class="level1"><div class="li"> Small outline SMT packages with 50 mil spaced pins and 200 mil total width are called SOnM.</div>
+</li>
+<li class="level1"><div class="li"> Small outline SMT packages with up to 20 50 mil spaced pins and 300 mil total width are called SOnW.</div>
+</li>
+<li class="level1"><div class="li"> Small outline SMT packages with more than 20 50 mil spaced pins and 300 mil total width are called SOn.</div>
+</li>
+<li class="level1"><div class="li"> Small outline SMT packages with 44 or more 50 mil spaced pins and 525 mil total width are called SOn.</div>
+</li>
+<li class="level1"><div class="li"> Metric shrink small outline SMT packages with 0.65 mm spaced pins and 323 mil total width are called MSSOPn. NOTE: To be confirmed.</div>
+</li>
+<li class="level1"><div class="li"> Metric shrink small outline SMT packages with up to 44 0.65 mm spaced pins and 420 mil total width are called MSSOPnW.</div>
+</li>
+<li class="level1"><div class="li"> Metric shrink small outline SMT packages with over 44 0.65 mm spaced pins and 545 mil total width are called MSSOPnW.</div>
+</li>
+<li class="level1"><div class="li"> Shrink small outline SMT packages with 25 mil spaced pins and 420 mil total width are called SSOPnW.</div>
+</li>
+<li class="level1"><div class="li"> Quarter size small outline SMT packages with 25 mil spaced pins and 244 mil total width are called SSOPn.</div>
+</li>
+<li class="level1"><div class="li"> Thin small outline SMT packages with 21.65 mil spaced pins and 535 mil total width are called TSOPn.</div>
+</li>
+<li class="level1"><div class="li"> Thin small outline SMT packages with 20 mil spaced pins and 795 mil total width are called TSOPnA.</div>
+</li>
+<li class="level1"><div class="li"> Thin small outline SMT packages with 20 mil spaced pins and 559 mil total width are called TSOPnB.</div>
+</li>
+<li class="level1"><div class="li"> Thin shrink small outline SMT packages with up to 28 26 mil spaced pins and 260 mil total width are called TSSOPn.</div>
+</li>
+<li class="level1"><div class="li"> Thin shrink small outline SMT packages with over 28 20 mil spaced pins and 319 mil total width are called TSSOPn.</div>
+</li>
+<li class="level1"><div class="li"> Ultra Super Mini SMT packages with up to 16 0.5 mm spaced pins are called USn.</div>
+</li>
+<li class="level1"><div class="li"> Plastic leadless chip carrier SMT are called PLCCn.</div>
+</li>
+<li class="level1"><div class="li"> Square quad-side at pack SMT are called QFPn x.</div>
+</li>
+<li class="level1"><div class="li"> Rectangular quad-side at pack SMT are called QFPn R.</div>
+</li>
+<li class="level1"><div class="li"> Square low profile quad-side at pack SMT are called LQFPn x.</div>
+</li>
+<li class="level1"><div class="li"> Square thin quad-side at pack SMT are called TQFPn x.</div>
+</li>
+<li class="level1"><div class="li"> Square Quad-side at no-lead SMT without exposed paddle (back side contact) are called QFNn x. Pin count is n and package size is x mm.</div>
+</li>
+<li class="level1"><div class="li"> Square Quad-side at no-lead SMT with exposed paddle (back side contact) are called QFNn x EP. Pin count is n and package size is x mm.</div>
+</li>
+<li class="level1"><div class="li"> Thin profile square Quad-side at no-lead SMT without exposed paddle (back side contact) are called TQFNn x. Pin count is n and package size is x mm.</div>
+</li>
+<li class="level1"><div class="li"> Thin profile square Quad-side at no-lead SMT with exposed paddle (back side contact) are called TQFNn x EP. Pin count is n and package size is x mm.</div>
+</li>
+<li class="level1"><div class="li"> Dual in line style crystal oscillators are OSC8 and OSC14.</div>
+</li>
+<li class="level1"><div class="li"> 5 pin SOT SMT packages are SOT25 and SOT325.</div>
+</li>
+<li class="level1"><div class="li"> 6 pin SOT SMT packages are SOT26 and SOT326.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Integrated circuit SMT packages" [1577-4507] -->
+<h3><a name="basic_semiconductors" id="basic_semiconductors">Basic semiconductors</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Axial diodes are called ALFm. Pin 1 is the cathode.</div>
+</li>
+<li class="level1"><div class="li"> Conventional through hole LED is LED3 and LED5 for 3 and 5 mm respectively. Pin 1 is plus. NOTE: Should probably be changed to be in line with diode convention.</div>
+</li>
+<li class="level1"><div class="li"> TO transistors are TO5, TO92, TO126, TO220 etc. Suxes may apply, e.g. TO126W is for wide, TO126S is for standing, TO126SW is for standing, wide.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Basic semiconductors" [4508-4910] -->
+<h3><a name="basic_smt_semiconductors" id="basic_smt_semiconductors">Basic SMT semiconductors</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> SOD diode SMT packages use their standard package name, e.g. SOD80, SOD87, SOD106A, SOD110. There are also SOD123, SOD323 with narrow pads.</div>
+</li>
+<li class="level1"><div class="li"> SOT transistor SMT packages use their standard package name, e.g. SOT23, SOT323. There is also an SC90.</div>
+</li>
+<li class="level1"><div class="li"> SOT transistor SMT packages with numbering as for diodes (pin 1 is cathode, pin 2 anode) are SOT23D, SOT323D.</div>
+</li>
+<li class="level1"><div class="li"> 4 pin SOT SMT packages are SOT89, SOT143, SOT223.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Basic SMT semiconductors" [4911-5366] -->
+<h3><a name="passive_components" id="passive_components">Passive components</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Axial non-polar components (typically resistor, capacitor) are called ACYm.</div>
+</li>
+<li class="level1"><div class="li"> Bottom lead (radial) non-polar circular component (typically capacitor) is RCYm.</div>
+</li>
+<li class="level1"><div class="li"> Bottom lead non-polar rectangular component (typically capacitor) is BREm.</div>
+</li>
+<li class="level1"><div class="li"> A standard crystal is HC49, or other HC designations as required.</div>
+</li>
+<li class="level1"><div class="li"> Single row 100 mil pin spacing jumpers are JUMPERn. The main difference compared to single in line package is the hole size.</div>
+</li>
+<li class="level1"><div class="li"> Dual row 100 mil spacing headers with DIP pin numbering are HEADERn 1. Note that n is an even number.</div>
+</li>
+<li class="level1"><div class="li"> Dual row 100 mil spacing headers with ribbon cable numbering are HEADERn 2. Note that n is an even number.</div>
+</li>
+<li class="level1"><div class="li"> Angled full header connectors with latches are DIN41651 n.</div>
+</li>
+<li class="level1"><div class="li"> Standing full header connectors with latches are DIN41651 nS.</div>
+</li>
+<li class="level1"><div class="li"> DSUB connectors female are DBnF.</div>
+</li>
+<li class="level1"><div class="li"> DSUB connectors male are DBnM.</div>
+</li>
+<li class="level1"><div class="li"> Female DIN card-to-card connectors are DIN41612CnF. Add S suffix for standing.</div>
+</li>
+<li class="level1"><div class="li"> Male DIN card-to-card connectors are DIN41612CnM. Add S suffix for standing.</div>
+</li>
+<li class="level1"><div class="li"> AMP modular RJ connectors with screen are RJ11, RJ12 and RJ45.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Passive components" [5367-6488] -->
+<h3><a name="passive_smt_components" id="passive_smt_components">Passive SMT components</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Standard SMT resistors, inductors, capacitors etc are 0201, 0402, 0603, 0805, 1206, 1210, 1806, 1812, 1825, 2020, 2706.</div>
+</li>
+<li class="level1"><div class="li"> Tantalum SMT capacitors are EIA3216, EIA3528, EIA6032, and EIA7343. Pin 1 is plus.</div>
+</li>
+<li class="level1"><div class="li"> SMT electrolytics are designated by can diameter in 1/10 mm: SME33, SME43, SME53, SME66, SME84, SME104.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Passive SMT components" [6489-] --></body>
+</html>

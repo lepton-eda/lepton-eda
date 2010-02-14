@@ -48,6 +48,7 @@
 <li class="level2"><div class="li"><span class="li"><a href="#what_is_the_recommended_way_to_deal_with_different_footprints_for_the_same_sort_of_device" class="toc">What is the recommended way to deal with different footprints for the same sort of device?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#how_do_i_draw_a_new_footprint" class="toc">How do I draw a new footprint?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#how_do_i_edit_change_an_existing_footprint" class="toc">How do I edit/change an existing footprint?</a></span></div></li>
+<li class="level2"><div class="li"><span class="li"><a href="#pcb_does_not_save_silk_when_i_try_to_make_a_footprint" class="toc">pcb does not save silk when I try to make a footprint</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#what_is_the_proper_way_to_make_a_double-sided_footprint" class="toc">What is the proper way to make a double-sided footprint?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#how_do_i_add_a_footprint_library_to_pcb" class="toc">How do I add a footprint library to PCB?</a></span></div></li>
 <li class="level2"><div class="li"><span class="li"><a href="#how_do_i_update_a_footprint_in_my_layout" class="toc">How do I update a footprint in my layout?</a></span></div></li>
@@ -396,7 +397,7 @@ Everybody does this a little differently. Some people draw the footprint entirel
 </ul>
 
 </div>
-<!-- SECTION "How do I draw a new footprint?" [11969-13166] -->
+<!-- SECTION "How do I draw a new footprint?" [11969-13167] -->
 <h2><a name="how_do_i_edit_change_an_existing_footprint" id="how_do_i_edit_change_an_existing_footprint">How do I edit/change an existing footprint?</a></h2>
 <div class="level2">
 
@@ -437,7 +438,16 @@ Alternatively, you can use your favorite text editor and edit the source code of
 </p>
 
 </div>
-<!-- SECTION "How do I edit/change an existing footprint?" [13167-14134] -->
+<!-- SECTION "How do I edit/change an existing footprint?" [13168-14135] -->
+<h2><a name="pcb_does_not_save_silk_when_i_try_to_make_a_footprint" id="pcb_does_not_save_silk_when_i_try_to_make_a_footprint">pcb does not save silk when I try to make a footprint</a></h2>
+<div class="level2">
+
+<p>
+The silk of footprints can only deal with lines and arcs. All the other objects like polygons, rectangles and text are silently omitted during <code>Convert buffer to element</code>. If you need text in footprints you have to literary draw the letters with the line tool.
+</p>
+
+</div>
+<!-- SECTION "pcb does not save silk when I try to make a footprint" [14136-14465] -->
 <h2><a name="what_is_the_proper_way_to_make_a_double-sided_footprint" id="what_is_the_proper_way_to_make_a_double-sided_footprint">What is the proper way to make a double-sided footprint?</a></h2>
 <div class="level2">
 
@@ -455,7 +465,7 @@ If you draw the footprint with pcb-<acronym title="Graphical User Interface">GUI
 </p>
 
 </div>
-<!-- SECTION "What is the proper way to make a double-sided footprint?" [14135-14704] -->
+<!-- SECTION "What is the proper way to make a double-sided footprint?" [14466-15035] -->
 <h2><a name="how_do_i_add_a_footprint_library_to_pcb" id="how_do_i_add_a_footprint_library_to_pcb">How do I add a footprint library to PCB?</a></h2>
 <div class="level2">
 
@@ -466,7 +476,7 @@ Adding footprint libraries can be done from the <acronym title="Graphical User I
 </p>
 
 </div>
-<!-- SECTION "How do I add a footprint library to PCB?" [14705-15210] -->
+<!-- SECTION "How do I add a footprint library to PCB?" [15036-15541] -->
 <h2><a name="how_do_i_update_a_footprint_in_my_layout" id="how_do_i_update_a_footprint_in_my_layout">How do I update a footprint in my layout?</a></h2>
 <div class="level2">
 
@@ -476,7 +486,7 @@ There is no way to automatically replace all instances of a footprint with the n
 </p>
 
 </div>
-<!-- SECTION "How do I update a footprint in my layout?" [15211-15933] -->
+<!-- SECTION "How do I update a footprint in my layout?" [15542-16264] -->
 <h2><a name="pcb_is_not_finding_my_footprints._why" id="pcb_is_not_finding_my_footprints._why">PCB is not finding my footprints. Why?</a></h2>
 <div class="level2">
 
@@ -485,7 +495,7 @@ The footprint path that PCB uses is defined using the <strong><code>Pcb.elementP
 </p>
 
 </div>
-<!-- SECTION "PCB is not finding my footprints. Why?" [15934-16282] -->
+<!-- SECTION "PCB is not finding my footprints. Why?" [16265-16613] -->
 <h2><a name="now_that_i_have_all_of_these_footprints_where_do_i_put_them" id="now_that_i_have_all_of_these_footprints_where_do_i_put_them">Now that I have all of these footprints where do I put them?</a></h2>
 <div class="level2">
 
@@ -532,7 +542,7 @@ gsch2pcb myproject
 </pre>
 
 </div>
-<!-- SECTION "Now that I have all of these footprints where do I put them?" [16283-17830] -->
+<!-- SECTION "Now that I have all of these footprints where do I put them?" [16614-18161] -->
 <h2><a name="what_s_this_business_about_flashed_pads" id="what_s_this_business_about_flashed_pads">What&#039;s this business about flashed pads?</a></h2>
 <div class="level2">
 
@@ -549,12 +559,12 @@ Now the plotters I believe are all laser plotters and the concept of flashed vs 
 </p>
 
 </div>
-<!-- SECTION "What's this business about flashed pads?" [17831-19490] -->
+<!-- SECTION "What's this business about flashed pads?" [18162-19821] -->
 <h1><a name="component_placement" id="component_placement">Component placement</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Component placement" [19491-19525] -->
+<!-- SECTION "Component placement" [19822-19856] -->
 <h2><a name="how_do_i_rotate_a_selection_i.e._of_more_than_one_item" id="how_do_i_rotate_a_selection_i.e._of_more_than_one_item">How do I rotate a selection (i.e. of more than one item)?</a></h2>
 <div class="level2">
 <ol>
@@ -573,7 +583,7 @@ Now the plotters I believe are all laser plotters and the concept of flashed vs 
 </p>
 
 </div>
-<!-- SECTION "How do I rotate a selection (i.e. of more than one item)?" [19526-19969] -->
+<!-- SECTION "How do I rotate a selection (i.e. of more than one item)?" [19857-20300] -->
 <h2><a name="how_do_i_rotate_objects_by_an_arbitrary_angle" id="how_do_i_rotate_objects_by_an_arbitrary_angle">How do I rotate objects by an arbitrary angle?</a></h2>
 <div class="level2">
 <ol>
@@ -590,7 +600,7 @@ Now the plotters I believe are all laser plotters and the concept of flashed vs 
 </p>
 
 </div>
-<!-- SECTION "How do I rotate objects by an arbitrary angle?" [19970-20382] -->
+<!-- SECTION "How do I rotate objects by an arbitrary angle?" [20301-20713] -->
 <h2><a name="how_do_i_move_objects_by_an_arbitrary_distance" id="how_do_i_move_objects_by_an_arbitrary_distance">How do I move objects by an arbitrary distance?</a></h2>
 <div class="level2">
 <ol>
@@ -607,7 +617,7 @@ If both coordinates are prefixed with a &quot;+&quot;, or &quot;-&quot; the move
 </p>
 
 </div>
-<!-- SECTION "How do I move objects by an arbitrary distance?" [20383-20824] -->
+<!-- SECTION "How do I move objects by an arbitrary distance?" [20714-21155] -->
 <h2><a name="how_do_i_move_objects_to_an_absolute_location" id="how_do_i_move_objects_to_an_absolute_location">How do I move objects to an absolute location?</a></h2>
 <div class="level2">
 
@@ -616,7 +626,7 @@ Use the command “MoveObject()&quot; as described above.
 </p>
 
 </div>
-<!-- SECTION "How do I move objects to an absolute location?" [20825-20935] -->
+<!-- SECTION "How do I move objects to an absolute location?" [21156-21266] -->
 <h2><a name="how_do_i_change_the_size_of_a_graphical_object_such_as_text_silkscreen_lines_etc" id="how_do_i_change_the_size_of_a_graphical_object_such_as_text_silkscreen_lines_etc">How do I change the size of a graphical object (such as text, silkscreen lines, etc)?</a></h2>
 <div class="level2">
 <ul>
@@ -631,7 +641,7 @@ Use the command “MoveObject()&quot; as described above.
 </p>
 
 </div>
-<!-- SECTION "How do I change the size of a graphical object (such as text, silkscreen lines, etc)?" [20936-21387] -->
+<!-- SECTION "How do I change the size of a graphical object (such as text, silkscreen lines, etc)?" [21267-21718] -->
 <h2><a name="how_do_i_put_components_on_both_faces_in_pcb" id="how_do_i_put_components_on_both_faces_in_pcb">How do I put components on both faces in PCB?</a></h2>
 <div class="level2">
 
@@ -646,7 +656,7 @@ There are two ways to do it:
 </ul>
 
 </div>
-<!-- SECTION "How do I put components on both faces in PCB?" [21388-21856] -->
+<!-- SECTION "How do I put components on both faces in PCB?" [21719-22187] -->
 <h2><a name="i_cant_t_move_the_components_on_the_other_side_of_the_board" id="i_cant_t_move_the_components_on_the_other_side_of_the_board">I cant&#039;t move the components on the other side of the board!</a></h2>
 <div class="level2">
 
@@ -680,7 +690,7 @@ The way to access these modes differs among the <acronym title="Graphical User I
 </p>
 
 </div>
-<!-- SECTION "I cant't move the components on the other side of the board!" [21857-27529] -->
+<!-- SECTION "I cant't move the components on the other side of the board!" [22188-27860] -->
 <h2><a name="i_got_stuck_how_do_i_go_back" id="i_got_stuck_how_do_i_go_back">I got stuck! How do I go back?</a></h2>
 <div class="level2">
 
@@ -689,7 +699,7 @@ The universal undo key [<strong><code>U</code></strong>] works even while in the
 </p>
 
 </div>
-<!-- SECTION "I got stuck! How do I go back?" [27530-27802] -->
+<!-- SECTION "I got stuck! How do I go back?" [27861-28133] -->
 <h2><a name="how_do_i_move_one_set_of_layer_tracks_to_a_different_layer" id="how_do_i_move_one_set_of_layer_tracks_to_a_different_layer">How do I move one set of layer tracks to a different layer?</a></h2>
 <div class="level2">
 <ol>
@@ -702,7 +712,7 @@ The universal undo key [<strong><code>U</code></strong>] works even while in the
 </ol>
 
 </div>
-<!-- SECTION "How do I move one set of layer tracks to a different layer?" [27803-28243] -->
+<!-- SECTION "How do I move one set of layer tracks to a different layer?" [28134-28574] -->
 <h2><a name="how_do_i_achieve_open_vias_clear_of_soldermask" id="how_do_i_achieve_open_vias_clear_of_soldermask">How do I achieve open vias clear of soldermask</a></h2>
 <div class="level2">
 
@@ -744,7 +754,7 @@ where <code>&lt;delta&gt;</code> is a size given in 1/100 of a mil. Thus the num
 </p>
 
 </div>
-<!-- SECTION "How do I achieve open vias clear of soldermask" [28244-30019] -->
+<!-- SECTION "How do I achieve open vias clear of soldermask" [28575-30350] -->
 <h2><a name="how_do_i_change_the_soldermask_clearance_around_a_hole_pad" id="how_do_i_change_the_soldermask_clearance_around_a_hole_pad">How do I change the soldermask clearance around a hole/pad?</a></h2>
 <div class="level2">
 
@@ -753,7 +763,7 @@ By default holes and pads will be cleared by an amount given in the correspondin
 </p>
 
 </div>
-<!-- SECTION "How do I change the soldermask clearance around a hole/pad?" [30020-30546] -->
+<!-- SECTION "How do I change the soldermask clearance around a hole/pad?" [30351-30877] -->
 <h2><a name="how_do_i_change_the_size_of_my_tracks" id="how_do_i_change_the_size_of_my_tracks">How do I change the size of my tracks?</a></h2>
 <div class="level2">
 
@@ -770,7 +780,7 @@ There are a number of ways to change the size of already laid down tracks:
 </ol>
 
 </div>
-<!-- SECTION "How do I change the size of my tracks?" [30547-31484] -->
+<!-- SECTION "How do I change the size of my tracks?" [30878-31815] -->
 <h2><a name="how_do_i_drive_a_via_to_connect_a_track_to_a_ground_plane_on_a_different_layer" id="how_do_i_drive_a_via_to_connect_a_track_to_a_ground_plane_on_a_different_layer">How do I drive a via to connect a track to a ground plane on a different layer?</a></h2>
 <div class="level2">
 <ol>
@@ -793,7 +803,7 @@ There are a number of ways to change the size of already laid down tracks:
 </ol>
 
 </div>
-<!-- SECTION "How do I drive a via to connect a track to a ground plane on a different layer?" [31485-31970] -->
+<!-- SECTION "How do I drive a via to connect a track to a ground plane on a different layer?" [31816-32301] -->
 <h2><a name="what_is_the_easiest_way_to_create_a_thermal_via" id="what_is_the_easiest_way_to_create_a_thermal_via">What is the easiest way to create a &quot;thermal via&quot;?</a></h2>
 <div class="level2">
 
@@ -812,7 +822,7 @@ Here are some suggestions:
 </ul>
 
 </div>
-<!-- SECTION "What is the easiest way to create a thermal via?" [31971-32748] -->
+<!-- SECTION "What is the easiest way to create a thermal via?" [32302-33079] -->
 <h2><a name="i_want_to_draw_a_track_between_two_segments_on_the_same_net_but_pcb_won_t_let_me_why" id="i_want_to_draw_a_track_between_two_segments_on_the_same_net_but_pcb_won_t_let_me_why">I want to draw a track between two segments on the same net, but PCB won&#039;t let me! Why?</a></h2>
 <div class="level2">
 
@@ -831,7 +841,7 @@ You are likely drawing tracks with auto-DRC on. To connect the two segments, her
 </ul>
 
 </div>
-<!-- SECTION "I want to draw a track between two segments on the same net, but PCB won't let me! Why?" [32749-34067] -->
+<!-- SECTION "I want to draw a track between two segments on the same net, but PCB won't let me! Why?" [33080-34398] -->
 <h2><a name="pcb_seems_to_munge_my_components_names_and_complains_that_it_can_t_find_proper_nets_for_the_pins_how_come" id="pcb_seems_to_munge_my_components_names_and_complains_that_it_can_t_find_proper_nets_for_the_pins_how_come">PCB seems to munge my components names and complains that it can&#039;t find proper nets for the pins! How come?</a></h2>
 <div class="level2">
 
@@ -841,7 +851,7 @@ Most likely you named them such that pcb believes they are one part. Lower case 
 </p>
 
 </div>
-<!-- SECTION "PCB seems to munge my components names and complains that it can't find proper nets for the pins! How come?" [34068-34706] -->
+<!-- SECTION "PCB seems to munge my components names and complains that it can't find proper nets for the pins! How come?" [34399-35037] -->
 <h2><a name="how_can_i_set_color_and_thickness_of_the_rats_nests" id="how_can_i_set_color_and_thickness_of_the_rats_nests">How can I set color and thickness of the rats nests?</a></h2>
 <div class="level2">
 
@@ -858,7 +868,7 @@ Values 0..19 are fixed width in screen pixels. Anything larger means PCB units (
 </p>
 
 </div>
-<!-- SECTION "How can I set color and thickness of the rats nests?" [34707-35211] -->
+<!-- SECTION "How can I set color and thickness of the rats nests?" [35038-35542] -->
 <h2><a name="where_is_that_last_remaining_rat" id="where_is_that_last_remaining_rat">Where is that last remaining rat?</a></h2>
 <div class="level2">
 
@@ -867,12 +877,12 @@ Sometimes remaining rats are hard to see, because they have zero length. This wi
 </p>
 
 </div>
-<!-- SECTION "Where is that last remaining rat?" [35212-35539] -->
+<!-- SECTION "Where is that last remaining rat?" [35543-35870] -->
 <h1><a name="beyond_tracks_and_footprints" id="beyond_tracks_and_footprints">Beyond tracks and footprints</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Beyond tracks and footprints" [35540-35582] -->
+<!-- SECTION "Beyond tracks and footprints" [35871-35913] -->
 <h2><a name="how_do_i_trace_a_drawing_a_print_or_another_pcb" id="how_do_i_trace_a_drawing_a_print_or_another_pcb">How do I trace a drawing, a print, or another PCB?</a></h2>
 <div class="level2">
 
@@ -889,7 +899,7 @@ If you don’t like to use PCB confined to the area of the board, i.e. if you wa
 </p>
 
 </div>
-<!-- SECTION "How do I trace a drawing, a print, or another PCB?" [35583-36423] -->
+<!-- SECTION "How do I trace a drawing, a print, or another PCB?" [35914-36754] -->
 <h2><a name="i_can_t_copy_component_pads_in_a_layout._what_gives" id="i_can_t_copy_component_pads_in_a_layout._what_gives">I can&#039;t copy component pads in a layout.  What gives?</a></h2>
 <div class="level2">
 
@@ -914,7 +924,7 @@ Then I go to paste the copied area&hellip; and all that moves are a couple of tr
 </p>
 
 </div>
-<!-- SECTION "I can't copy component pads in a layout.  What gives?" [36424-37078] -->
+<!-- SECTION "I can't copy component pads in a layout.  What gives?" [36755-37409] -->
 <h2><a name="how_do_i_fill_areas_with_copper" id="how_do_i_fill_areas_with_copper">How do I fill areas with copper?</a></h2>
 <div class="level2">
 
@@ -923,7 +933,7 @@ Use rectangles and polygon planes. These items will always avoid vias, pads and 
 </p>
 
 </div>
-<!-- SECTION "How do I fill areas with copper?" [37079-37442] -->
+<!-- SECTION "How do I fill areas with copper?" [37410-37773] -->
 <h2><a name="how_can_i_assign_my_polygon_to_a_net" id="how_can_i_assign_my_polygon_to_a_net">How can I assign my polygon to a net?</a></h2>
 <div class="level2">
 
@@ -932,7 +942,7 @@ Polygons are not “assigned” to nets, they’re connected to them. Pads are t
 </p>
 
 </div>
-<!-- SECTION "How can I assign my polygon to a net?" [37443-37745] -->
+<!-- SECTION "How can I assign my polygon to a net?" [37774-38076] -->
 <h2><a name="how_can_i_connect_tracks_pads_or_vias_to_my_polygon" id="how_can_i_connect_tracks_pads_or_vias_to_my_polygon">How can I connect tracks, pads, or vias to my polygon?</a></h2>
 <div class="level2">
 
@@ -951,7 +961,7 @@ There are different ways to adequately connect different types of objects to a p
 </ul>
 
 </div>
-<!-- SECTION "How can I connect tracks, pads, or vias to my polygon?" [37746-38632] -->
+<!-- SECTION "How can I connect tracks, pads, or vias to my polygon?" [38077-38963] -->
 <h2><a name="the_polygons_are_shorting_my_tracks_what_can_i_do_about_it" id="the_polygons_are_shorting_my_tracks_what_can_i_do_about_it">The polygons are shorting my tracks! What can I do about it?</a></h2>
 <div class="level2">
 
@@ -960,7 +970,7 @@ You didn’t have “Enable_new_lines_clear_polygons” checked in the settings 
 </p>
 
 </div>
-<!-- SECTION "The polygons are shorting my tracks! What can I do about it?" [38633-39282] -->
+<!-- SECTION "The polygons are shorting my tracks! What can I do about it?" [38964-39613] -->
 <h2><a name="how_do_i_change_polygon_clearance" id="how_do_i_change_polygon_clearance">How do I change polygon clearance?</a></h2>
 <div class="level2">
 
@@ -973,16 +983,16 @@ The amount of the increment can be configured in the dialog File/Preference/Incr
 </p>
 
 </div>
-<!-- SECTION "How do I change polygon clearance?" [39283-39783] -->
+<!-- SECTION "How do I change polygon clearance?" [39614-40115] -->
 <h2><a name="how_do_i_hide_the_polygons_while_i_edit_the_layout" id="how_do_i_hide_the_polygons_while_i_edit_the_layout">How do I hide the polygons while I edit the layout?</a></h2>
 <div class="level2">
 
 <p>
-Put the polygons (and rectangles) on a separate layer. Use the preference to make sure, this layer is not in the same group as the tracks. Disable the layer by a click on the corresponding layer button in the main window. After you are finished with the changes, use the preference dialog to let the polygon layer join the layer of the tracks. You will have to save and reload the layout to trigger recalculation of polygons so they are adapted to your edits. Alternatively a restart will recaalculate the polygons too. 
+Put the polygons (and rectangles) on a separate layer. Use the preference to make sure, this layer is not in the same group as the tracks. Disable the layer by a click on the corresponding layer button in the main window. After you are finished with the changes, use the preference dialog to let the polygon layer join the layer of the tracks. You will have to save and reload the layout to trigger recalculation of polygons so they are adapted to your edits. Alternatively a restart will recalculate the polygons too. 
 </p>
 
 </div>
-<!-- SECTION "How do I hide the polygons while I edit the layout?" [39784-40369] -->
+<!-- SECTION "How do I hide the polygons while I edit the layout?" [40116-40700] -->
 <h2><a name="polygons_are_making_the_gui_sluggish._what_i_can_do_about_it" id="polygons_are_making_the_gui_sluggish._what_i_can_do_about_it">Polygons are making the GUI sluggish. What I can do about it?</a></h2>
 <div class="level2">
 
@@ -999,7 +1009,7 @@ Parts of the polygon that are not connected to some net are automatically elimin
 </ul>
 
 </div>
-<!-- SECTION "Polygons are making the GUI sluggish. What I can do about it?" [40370-41413] -->
+<!-- SECTION "Polygons are making the GUI sluggish. What I can do about it?" [40701-41744] -->
 <h2><a name="after_i_defined_those_ground_planes_pcb_takes_ages_to_load._how_come" id="after_i_defined_those_ground_planes_pcb_takes_ages_to_load._how_come">After I defined those ground planes, pcb takes ages to load. How come?</a></h2>
 <div class="level2">
 
@@ -1008,7 +1018,7 @@ Polygon calculation is potentially an expensive operation in terms of processor 
 </p>
 
 </div>
-<!-- SECTION "After I defined those ground planes, pcb takes ages to load. How come?" [41414-41834] -->
+<!-- SECTION "After I defined those ground planes, pcb takes ages to load. How come?" [41745-42165] -->
 <h2><a name="how_do_i_edit_polygons" id="how_do_i_edit_polygons">How do I edit polygons?</a></h2>
 <div class="level2">
 
@@ -1021,7 +1031,7 @@ There are four basic ways to edit polygon outlines. You can move and delete vert
 </p>
 
 </div>
-<!-- SECTION "How do I edit polygons?" [41835-43020] -->
+<!-- SECTION "How do I edit polygons?" [42166-43351] -->
 <h2><a name="how_do_i_place_vias_that_connect_to_a_polygon_for_full_thermal_dissipation_or_full_shielding_integrity" id="how_do_i_place_vias_that_connect_to_a_polygon_for_full_thermal_dissipation_or_full_shielding_integrity">How do I place vias that connect to a polygon for full thermal dissipation or full shielding integrity?</a></h2>
 <div class="level2">
 
@@ -1050,7 +1060,7 @@ You can also add another polygon on-top of the polygon to which you want to conn
 </p>
 
 </div>
-<!-- SECTION "How do I place vias that connect to a polygon for full thermal dissipation or full shielding integrity?" [43021-44942] -->
+<!-- SECTION "How do I place vias that connect to a polygon for full thermal dissipation or full shielding integrity?" [43352-45273] -->
 <h2><a name="can_polygons_be_un-masked_can_a_polygon_be_made_bare-copper_with_no_solder_mask" id="can_polygons_be_un-masked_can_a_polygon_be_made_bare-copper_with_no_solder_mask">Can polygons be un-masked? (Can a polygon be made bare-copper with no solder mask?)</a></h2>
 <div class="level2">
 
@@ -1077,7 +1087,7 @@ While the pad witdth is limited to 250 mil, clearance can be arbitrary.
 </p>
 
 </div>
-<!-- SECTION "Can polygons be un-masked? (Can a polygon be made bare-copper with no solder mask?)" [44943-45692] -->
+<!-- SECTION "Can polygons be un-masked? (Can a polygon be made bare-copper with no solder mask?)" [45274-46023] -->
 <h2><a name="how_do_i_place_mounting_holes" id="how_do_i_place_mounting_holes">How do I place mounting holes?</a></h2>
 <div class="level2">
 
@@ -1098,7 +1108,7 @@ For footprint examples see <a href="http://www.luciani.org/geda/pcb/pcb-footprin
 </p>
 
 </div>
-<!-- SECTION "How do I place mounting holes?" [45693-46357] -->
+<!-- SECTION "How do I place mounting holes?" [46024-46688] -->
 <h2><a name="why_is_it_possible_to_make_a_thermal_for_pin_but_not_for_a_pad" id="why_is_it_possible_to_make_a_thermal_for_pin_but_not_for_a_pad">Why is it possible to make a thermal for pin, but not for a pad?</a></h2>
 <div class="level2">
 
@@ -1107,7 +1117,7 @@ The reason is that pins usually have sufficient spacing that the plane surroundi
 </p>
 
 </div>
-<!-- SECTION "Why is it possible to make a thermal for pin, but not for a pad?" [46358-46989] -->
+<!-- SECTION "Why is it possible to make a thermal for pin, but not for a pad?" [46689-47320] -->
 <h2><a name="can_pcb_be_used_to_make_single_layer_boards" id="can_pcb_be_used_to_make_single_layer_boards">Can PCB be used to make single layer boards?</a></h2>
 <div class="level2">
 
@@ -1128,7 +1138,7 @@ When you dump your gerbers, delete the component side one and rename the plated-
 </p>
 
 </div>
-<!-- SECTION "Can PCB be used to make single layer boards?" [46990-48215] -->
+<!-- SECTION "Can PCB be used to make single layer boards?" [47321-48546] -->
 <h2><a name="what_resources_exist_to_process_pcb_files_using_scripts" id="what_resources_exist_to_process_pcb_files_using_scripts">What resources exist to process PCB files using scripts?</a></h2>
 <div class="level2">
 
@@ -1147,7 +1157,7 @@ One of PCB’s great features is that it uses an easily understood <acronym titl
 </ol>
 
 </div>
-<!-- SECTION "What resources exist to process PCB files using scripts?" [48216-49501] -->
+<!-- SECTION "What resources exist to process PCB files using scripts?" [48547-49832] -->
 <h2><a name="how_do_i_import_external_vector_graphics" id="how_do_i_import_external_vector_graphics">How do I import external vector graphics?</a></h2>
 <div class="level2">
 
@@ -1160,7 +1170,7 @@ Import of external vector graphics is usefull if an irregular shape of the pcb i
 </p>
 
 </div>
-<!-- SECTION "How do I import external vector graphics?" [49502-50581] -->
+<!-- SECTION "How do I import external vector graphics?" [49833-50912] -->
 <h2><a name="is_there_a_way_to_import_a_dxf_drawing_from_mechanical_cad_applications" id="is_there_a_way_to_import_a_dxf_drawing_from_mechanical_cad_applications">Is there a way to import a DXF drawing from mechanical CAD applications?</a></h2>
 <div class="level2">
 
@@ -1169,7 +1179,7 @@ There is no import filter to directly load a DXF file to pcb. However, the open 
 </p>
 
 </div>
-<!-- SECTION "Is there a way to import a DXF drawing from mechanical CAD applications?" [50582-50936] -->
+<!-- SECTION "Is there a way to import a DXF drawing from mechanical CAD applications?" [50913-51267] -->
 <h2><a name="what_is_the_best_way_to_do_weird_footprints" id="what_is_the_best_way_to_do_weird_footprints">What is the best way to do weird footprints?</a></h2>
 <div class="level2">
 
@@ -1220,7 +1230,7 @@ Sometimes footprints call for shapes that are difficult to achieve with the rest
 </ul>
 
 </div>
-<!-- SECTION "What is the best way to do weird footprints?" [50937-51798] -->
+<!-- SECTION "What is the best way to do weird footprints?" [51268-52129] -->
 <h2><a name="how_do_i_attach_a_name_to_my_layout" id="how_do_i_attach_a_name_to_my_layout">How Do I attach a name to my layout?</a></h2>
 <div class="level2">
 
@@ -1229,7 +1239,7 @@ You can set the name of the current pcb with <code>Menu Edit - Edit name of - la
 </p>
 
 </div>
-<!-- SECTION "How Do I attach a name to my layout?" [51799-52071] -->
+<!-- SECTION "How Do I attach a name to my layout?" [52130-52402] -->
 <h2><a name="is_there_a_way_to_do_multiple_instances_of_a_subcircuits" id="is_there_a_way_to_do_multiple_instances_of_a_subcircuits">Is there a way to do multiple instances of a subcircuits?</a></h2>
 <div class="level2">
 
@@ -1246,12 +1256,12 @@ The pair of scripts was written a few years ago and is not used regularily. They
 </p>
 
 </div>
-<!-- SECTION "Is there a way to do multiple instances of a subcircuits?" [52072-53179] -->
+<!-- SECTION "Is there a way to do multiple instances of a subcircuits?" [52403-53510] -->
 <h1><a name="auto_router" id="auto_router">Auto Router</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Auto Router" [53180-53209] -->
+<!-- SECTION "Auto Router" [53511-53540] -->
 <h2><a name="how_do_i_make_the_most_of_the_auto_router" id="how_do_i_make_the_most_of_the_auto_router">How do I make the most of the auto router?</a></h2>
 <div class="level2">
 <ol>
@@ -1288,7 +1298,7 @@ If you really want to muck with the router because you have a special design, e.
 </p>
 
 </div>
-<!-- SECTION "How do I make the most of the auto router?" [53210-54977] -->
+<!-- SECTION "How do I make the most of the auto router?" [53541-55308] -->
 <h2><a name="how_do_i_force_the_autorouter_to_only_put_traces_on_a_particular_layer" id="how_do_i_force_the_autorouter_to_only_put_traces_on_a_particular_layer">How do I force the autorouter to only put traces on a particular layer?</a></h2>
 <div class="level2">
 
@@ -1297,7 +1307,7 @@ Just unselect the layers you don’t want (usually green and blue) by clicking o
 </p>
 
 </div>
-<!-- SECTION "How do I force the autorouter to only put traces on a particular layer?" [54978-55189] -->
+<!-- SECTION "How do I force the autorouter to only put traces on a particular layer?" [55309-55520] -->
 <h2><a name="how_do_i_make_autorouter_leave_particular_nets_alone" id="how_do_i_make_autorouter_leave_particular_nets_alone">How do I make autorouter leave particular nets alone?</a></h2>
 <div class="level2">
 
@@ -1306,7 +1316,7 @@ Open up the netlist window.  It has options for including or excluding nets from
 </p>
 
 </div>
-<!-- SECTION "How do I make autorouter leave particular nets alone?" [55190-55514] -->
+<!-- SECTION "How do I make autorouter leave particular nets alone?" [55521-55845] -->
 <h2><a name="how_do_i_force_the_autorouter_to_route_only_within_my_pcb_outline" id="how_do_i_force_the_autorouter_to_route_only_within_my_pcb_outline">How do I force the autorouter to route only within my pcb outline?</a></h2>
 <div class="level2">
 
@@ -1315,7 +1325,7 @@ You can have the autorouter work only within a given area by drawing a copper po
 </p>
 
 </div>
-<!-- SECTION "How do I force the autorouter to route only within my pcb outline?" [55515-55946] -->
+<!-- SECTION "How do I force the autorouter to route only within my pcb outline?" [55846-56277] -->
 <h2><a name="how_do_i_route_power_and_ground_planes_with_the_autorouter" id="how_do_i_route_power_and_ground_planes_with_the_autorouter">How do I route power and ground planes with the autorouter?</a></h2>
 <div class="level2">
 
@@ -1324,7 +1334,7 @@ Connect the polygon that will become your power planes to a net and the autorout
 </p>
 
 </div>
-<!-- SECTION "How do I route power and ground planes with the autorouter?" [55947-56228] -->
+<!-- SECTION "How do I route power and ground planes with the autorouter?" [56278-56559] -->
 <h2><a name="the_layout_produced_by_the_autorouter_is_inefficient" id="the_layout_produced_by_the_autorouter_is_inefficient">The layout produced by the autorouter is inefficient!</a></h2>
 <div class="level2">
 
@@ -1333,7 +1343,7 @@ This is a technological limitation of the current auto router. It is gridless an
 </p>
 
 </div>
-<!-- SECTION "The layout produced by the autorouter is inefficient!" [56229-56409] -->
+<!-- SECTION "The layout produced by the autorouter is inefficient!" [56560-56740] -->
 <h2><a name="the_layout_produced_by_the_autorouter_is_ugly" id="the_layout_produced_by_the_autorouter_is_ugly">The layout produced by the autorouter is ugly!</a></h2>
 <div class="level2">
 
@@ -1342,12 +1352,12 @@ Have you tried the various clean-up tools under connects&ndash;&gt;optimize rout
 </p>
 
 </div>
-<!-- SECTION "The layout produced by the autorouter is ugly!" [56410-56553] -->
+<!-- SECTION "The layout produced by the autorouter is ugly!" [56741-56884] -->
 <h1><a name="gerber_files_prints_and_other_i_o_issues" id="gerber_files_prints_and_other_i_o_issues">Gerber files, prints and other I/O issues</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Gerber files, prints and other I/O issues" [56554-56610] -->
+<!-- SECTION "Gerber files, prints and other I/O issues" [56885-56941] -->
 <h2><a name="is_is_possible_to_produce_output_without_gui_intervention" id="is_is_possible_to_produce_output_without_gui_intervention">Is is possible to produce output without GUI intervention?</a></h2>
 <div class="level2">
 
@@ -1381,7 +1391,7 @@ Different output procedures allow for different options. See the output of <code
 </p>
 
 </div>
-<!-- SECTION "Is is possible to produce output without GUI intervention?" [56611-57212] -->
+<!-- SECTION "Is is possible to produce output without GUI intervention?" [56942-57543] -->
 <h2><a name="how_do_i_make_a_board_outline_to_go_with_my_gerbers_to_the_board_maker" id="how_do_i_make_a_board_outline_to_go_with_my_gerbers_to_the_board_maker">How do I make a board outline to go with my gerbers to the board maker?</a></h2>
 <div class="level2">
 
@@ -1406,7 +1416,7 @@ It’s also possible to edit the native .pcb file format of your layout. I usual
 )</pre>
 
 </div>
-<!-- SECTION "How do I make a board outline to go with my gerbers to the board maker?" [57213-58061] -->
+<!-- SECTION "How do I make a board outline to go with my gerbers to the board maker?" [57544-58392] -->
 <h2><a name="yes_i_tried_that_but_the_gerber_exporter_didn_t_give_me_an_outline_file._why" id="yes_i_tried_that_but_the_gerber_exporter_didn_t_give_me_an_outline_file._why">Yes, I tried that, but the gerber exporter didn&#039;t give me an outline file. Why?</a></h2>
 <div class="level2">
 
@@ -1415,7 +1425,7 @@ By default, gsch2pcb creates layer groups in a way which prevents your outline l
 </p>
 
 </div>
-<!-- SECTION "Yes, I tried that, but the gerber exporter didn't give me an outline file. Why?" [58062-58514] -->
+<!-- SECTION "Yes, I tried that, but the gerber exporter didn't give me an outline file. Why?" [58393-58845] -->
 <h2><a name="how_do_i_make_sure_that_the_design_contains_only_certain_hole_sizes" id="how_do_i_make_sure_that_the_design_contains_only_certain_hole_sizes">How do I make sure, that the design contains only certain hole sizes?</a></h2>
 <div class="level2">
 
@@ -1432,7 +1442,7 @@ On load, pcb will substitute drill sizes so that the layout conforms to the list
 </p>
 
 </div>
-<!-- SECTION "How do I make sure, that the design contains only certain hole sizes?" [58515-59486] -->
+<!-- SECTION "How do I make sure, that the design contains only certain hole sizes?" [58846-59817] -->
 <h2><a name="i_m_done_with_my_layout._how_should_i_check_my_design" id="i_m_done_with_my_layout._how_should_i_check_my_design">I&#039;m done with my layout. How should I check my design?</a></h2>
 <div class="level2">
 <ul>
@@ -1465,12 +1475,12 @@ Besides running the DRC checker, it is essential to check your Gerber files. The
 </ul>
 
 </div>
-<!-- SECTION "I'm done with my layout. How should I check my design?" [59487-61706] -->
+<!-- SECTION "I'm done with my layout. How should I check my design?" [59818-62037] -->
 <h1><a name="exporting_other_formatsraster_and_ps_files" id="exporting_other_formatsraster_and_ps_files">Exporting Other Formats: Raster and PS Files</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Exporting Other Formats: Raster and PS Files" [61707-61766] -->
+<!-- SECTION "Exporting Other Formats: Raster and PS Files" [62038-62097] -->
 <h2><a name="what_is_xy-max_in_the_png_export_dialog_box" id="what_is_xy-max_in_the_png_export_dialog_box">What is xy-max in the PNG export dialog box?</a></h2>
 <div class="level2">
 
@@ -1479,12 +1489,12 @@ It limits the size of the image to NxN pixels, but maintains the aspect ratio.  
 </p>
 
 </div>
-<!-- SECTION "What is xy-max in the PNG export dialog box?" [61767-62037] -->
+<!-- SECTION "What is xy-max in the PNG export dialog box?" [62098-62368] -->
 <h1><a name="customization" id="customization">Customization</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Customization" [62038-62066] -->
+<!-- SECTION "Customization" [62369-62397] -->
 <h2><a name="i_don_t_like_that_old-style_black_background._how_can_i_get_a_light_canvas" id="i_don_t_like_that_old-style_black_background._how_can_i_get_a_light_canvas">I don&#039;t like that old-style black background. How can I get a light canvas?</a></h2>
 <div class="level2">
 
@@ -1493,7 +1503,7 @@ In <a href="geda-glossary.html" class="wikilink1" title="geda-glossary.html">GTK
 </p>
 
 </div>
-<!-- SECTION "I don't like that old-style black background. How can I get a light canvas?" [62067-62521] -->
+<!-- SECTION "I don't like that old-style black background. How can I get a light canvas?" [62398-62852] -->
 <h2><a name="how_do_i_set_the_default_values_of_the_postscript_dialog" id="how_do_i_set_the_default_values_of_the_postscript_dialog">How do I set the default values of the postscript dialog?</a></h2>
 <div class="level2">
 
@@ -1505,7 +1515,7 @@ align-marks = 0
 multi-file = 1</pre>
 
 </div>
-<!-- SECTION "How do I set the default values of the postscript dialog?" [62522-62960] -->
+<!-- SECTION "How do I set the default values of the postscript dialog?" [62853-63291] -->
 <h1><a name="you_didn_t_answer_my_question._what_other_resources_exist_for_pcb_information" id="you_didn_t_answer_my_question._what_other_resources_exist_for_pcb_information">You didn&#039;t answer my question. What other resources exist for PCB information?</a></h1>
 <div class="level1">
 
@@ -1520,5 +1530,5 @@ You can get fast responses from the geda-user email list. If you haven’t found
 </p>
 
 </div>
-<!-- SECTION "You didn't answer my question. What other resources exist for PCB information?" [62961-] --></body>
+<!-- SECTION "You didn't answer my question. What other resources exist for PCB information?" [63292-] --></body>
 </html>

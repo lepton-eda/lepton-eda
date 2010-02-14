@@ -1,0 +1,1457 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="toc">
+<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
+<div id="toc__inside">
+
+<ul class="toc">
+<li class="level1"><div class="li"><span class="li"><a href="#part_manager" class="toc">Part Manager</a></span></div>
+<ul class="toc">
+<li class="level2"><div class="li"><span class="li"><a href="#part_database" class="toc">Part Database</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#entities" class="toc">Entities</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#part_categories" class="toc">Part Categories</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#part_hierarchy" class="toc">Part Hierarchy</a></span></div></li>
+</ul>
+</li>
+<li class="level2"><div class="li"><span class="li"><a href="#part_manager_gui" class="toc">Part Manager GUI</a></span></div>
+<ul class="toc">
+<li class="level3"><div class="li"><span class="li"><a href="#use_cases" class="toc">Use Cases</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#ui_design" class="toc">UI Design</a></span></div></li>
+<li class="level3"><div class="li"><span class="li"><a href="#configuration" class="toc">Configuration</a></span></div></li></ul>
+</li></ul>
+</li></ul>
+</div>
+</div>
+
+<p>
+This page serves as a working document for the design of a parts manager for gEDA. Please submit feedback to the geda-dev or geda-user mailing lists.
+</p>
+
+
+
+<h1><a name="part_manager" id="part_manager">Part Manager</a></h1>
+<div class="level1">
+
+<p>
+ The part manager uses a relational database to store parts used in the development of electronic assemblies.  The part manager also stores attributes for these parts and can place these attributes into a component or symbol for placement into schematics.
+</p>
+
+<p>
+The part manager provides a <acronym title="Graphical User Interface">GUI</acronym> that allows the user to browse and edit the data in the part database.  The user can select parts in the <acronym title="Graphical User Interface">GUI</acronym>, then cut and paste them into their schematic.
+</p>
+
+<p>
+The following figure shows the relationship between the parts manager and other applications in the gEDA suite.
+</p>
+
+<p>
+<a href="media/geda/gparts-flow-2.png" class="media" target="_blank" title="geda:gparts-flow-2.png"><img src="media/geda/gparts-flow-2.png" class="media" title="" alt="" /></a>
+</p>
+
+<p>
+The part database can be configured as either local or remote.  In the remote configuration, many users can access the part database concurrently.
+</p>
+
+</div>
+<!-- SECTION "Part Manager" [152-914] -->
+<h2><a name="part_database" id="part_database">Part Database</a></h2>
+<div class="level2">
+
+<p>
+ The following figure shows the entity relationships for a part in the resistor category. The category does not reference any tables in the resistor category, but only contains the view name and stored procedures to manipulate a part within the resistor category. This mechanism allows the tables and relationships to vary by category.
+</p>
+
+<p>
+<a href="media/geda/gparts_erd_main.png" class="media" target="_blank" title="geda:gparts_erd_main.png"><img src="media/geda/gparts_erd_main.png" class="media" title="" alt="" /></a>
+</p>
+
+</div>
+<!-- SECTION "Part Database" [915-1308] -->
+<h3><a name="entities" id="entities">Entities</a></h3>
+<div class="level3">
+
+<p>
+ The database always contains tables to store the following entities.  The database contains additional tables to store specific categories of parts (e.g. a capacitor table, a diode table, a resistor table, etc&hellip;).  This list excludes junction tables and metadata tables.
+</p>
+
+</div>
+
+<h4><a name="category" id="category">Category</a></h4>
+<div class="level4">
+
+<p>
+ A class of parts (e.g. capacitors, diodes, resistors, transistors, etc&hellip;).  A category can contain sub-categories (e.g. small-signal diodes, TVS diodes, zener diodes, etc&hellip;)  Sub-categories can include additional sub-categories. All parts within a category or sub-category share the same set of attributes (e.g. forward voltage, maximum current, power dissipation, etc&hellip;).  Sub-categories do not need to inherit the attributes of their parent.
+</p>
+
+<p>
+The category stores metadata for mapping the part’s database columns to the component attributes.  For numeric attributes, the category stores the column’s unit of measure (e.g. amps, farads, ohms, volts, etc&hellip;).
+</p>
+
+<p>
+The category also stores the names of database views and stored procedures to access and manipulate the tables of parts within the category. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Field        </th><th class="leftalign"> Type   </th><th class="leftalign"> Description                     </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> CategoryID   </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                   </td>
+	</tr>
+	<tr>
+		<td> CategoryName </td><td> String </td><td> The unique name of the category </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> ParentID     </td><td class="rightalign">        </td><td class="leftalign"> Foreign key to Category         </td>
+	</tr>
+</table>
+
+</div>
+
+<h4><a name="company" id="company">Company</a></h4>
+<div class="level4">
+
+<p>
+ Currently, a company represents a part’s manufacturer.   
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Field       </th><th class="leftalign"> Type   </th><th class="leftalign"> Description                    </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> CompanyID   </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                  </td>
+	</tr>
+	<tr>
+		<td> CompanyName </td><td> String </td><td> The unique name of the company </td>
+	</tr>
+</table>
+
+</div>
+
+<h4><a name="device" id="device">Device</a></h4>
+<div class="level4">
+
+<p>
+ A type of part.  The device name only provides a mechanism to map parts to symbols.  A part in the library of device resistor can use all the symbols in the library where device is resistor.  Similarly, a symbol where device is resistor can represent any part of device resistor.  When importing a symbol, the database uses the value of the symbol attribute DEVICE as the initial value for the device field.  The user can change the device field after import using the part manager <acronym title="Graphical User Interface">GUI</acronym>. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Field      </th><th class="leftalign"> Type   </th><th class="leftalign"> Description                   </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> DeviceID   </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                 </td>
+	</tr>
+	<tr>
+		<td> DeviceName </td><td> String </td><td> The unique name of the device </td>
+	</tr>
+</table>
+
+</div>
+
+<h4><a name="document" id="document">Document</a></h4>
+<div class="level4">
+
+<p>
+ Any file associated with a part.  Documents can include datasheets, erata, user manuals, etc&hellip; This entity stores a path to the actual document file.  The path could either be local or network.  The path stored in the database is relative to the base path stored in the configuration file. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Field        </th><th class="leftalign"> Type   </th><th class="leftalign"> Description                                                        </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> DocumentID   </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                                                      </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> Category     </td><td> String </td><td> The document’s category (e.g. “Datasheet”, “Erata”, “User Manual”) </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> Title        </td><td> String </td><td class="leftalign"> The document’s title                                               </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> SourceURL    </td><td> String </td><td class="leftalign"> The <acronym title="Uniform Resource Locator">URL</acronym> where the document can be obtained on the Internet         </td>
+	</tr>
+	<tr>
+		<td> FileLocation </td><td> String </td><td class="leftalign"> The location of the locally stored document                        </td>
+	</tr>
+</table>
+
+</div>
+
+<h4><a name="footprint" id="footprint">Footprint</a></h4>
+<div class="level4">
+
+<p>
+ The PCB artwork associated with a package.  This entity stores a path to the actual PCB footprint file.  The path could either be local or network.  The path stored in the database is relative to the base path stored in the configuration file. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Field         </th><th class="leftalign"> Type   </th><th class="leftalign"> Description                      </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> FootprintID   </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                    </td>
+	</tr>
+	<tr>
+		<td> FootprintName </td><td> String </td><td> The unique name of the footprint </td>
+	</tr>
+</table>
+
+</div>
+
+<h4><a name="model" id="model">Model</a></h4>
+<div class="level4">
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Field     </th><th class="leftalign"> Type   </th><th class="leftalign"> Description                                        </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> ModelID   </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                                      </td>
+	</tr>
+	<tr>
+		<td> ModelName </td><td> String </td><td class="leftalign"> The name of the MODEL within the model file.       </td>
+	</tr>
+	<tr>
+		<td> ModelPath </td><td> String </td><td class="leftalign"> Absolute path to the model file.                   </td>
+	</tr>
+	<tr>
+		<td> ModelType </td><td> String </td><td class="leftalign"> The model type: IBIS, PSPICE, etc&hellip;               </td>
+	</tr>
+</table>
+
+</div>
+
+<h5><a name="spice" id="spice">Spice</a></h5>
+<div class="level5">
+
+<p>
+ When instantiating a component or creating a heavy symbol that uses a Spice model, the following database columns map to the following attributes. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Column          </th><th class="leftalign"> Attribute  </th><th class="leftalign"> Notes                     </th>
+	</tr>
+	<tr>
+		<td> Model.ModelName </td><td> MODEL-NAME </td><td class="rightalign">                           </td>
+	</tr>
+	<tr>
+		<td> Model.ModelPath </td><td class="leftalign"> FILE       </td><td> Should use absolute path. </td>
+	</tr>
+</table>
+
+</div>
+
+<h4><a name="part_flat" id="part_flat">Part (Flat)</a></h4>
+<div class="level4">
+
+<p>
+ A part represents a class of components. The database uses this version of the part table when configured to use a flat part table. The flat and hierarchical parts tables are mutually exclusive. The database uses one or the other. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Field      </th><th> Type </th><th class="leftalign"> Description                                   </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> PartID     </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                                 </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> CompanyID  </td><td class="rightalign">        </td><td> Foreign key to company specifies manufacturer </td>
+	</tr>
+	<tr>
+		<td> PartNumber </td><td> String </td><td class="leftalign"> The manufacturers’s part number               </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> DeviceID   </td><td class="rightalign">        </td><td class="leftalign"> Foreign key to Device                         </td>
+	</tr>
+</table>
+
+<p>
+ Other columns TBD.
+</p>
+
+</div>
+
+<h4><a name="part_hierarchical" id="part_hierarchical">Part (Hierarchical)</a></h4>
+<div class="level4">
+
+<p>
+ A part represents a class of components. The database uses this version of the part table when configured to use hierarchical part tables. The flat and hierarchical parts tables are mutually exclusive. The database uses one or the other.  
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Field      </th><th> Type </th><th class="leftalign"> Description                                   </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> PartID     </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                                 </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> CompanyID  </td><td class="rightalign">        </td><td> Foreign key to company specifies manufacturer </td>
+	</tr>
+	<tr>
+		<td> PartNumber </td><td> String </td><td class="leftalign"> The manufacturers’s part number               </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> DeviceID   </td><td class="rightalign">        </td><td class="leftalign"> Foreign key to Device                         </td>
+	</tr>
+</table>
+
+</div>
+
+<h4><a name="package" id="package">Package</a></h4>
+<div class="level4">
+
+<p>
+ The physical structure, or form-factor, of a part (i.e. 0603, SOT-23, PDIP16).  Each package can associate with zero or more footprints.  Also, each footprint could represent zero or more packages. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Field       </th><th class="leftalign"> Type   </th><th class="leftalign"> Description                                </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> PackageID   </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                              </td>
+	</tr>
+	<tr>
+		<td> PackageName </td><td> String </td><td class="leftalign"> The unique name of the package             </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> Technology  </td><td> String </td><td> The type of package.  Either “SMT” or “TH” </td>
+	</tr>
+</table>
+
+</div>
+
+<h4><a name="symbol" id="symbol">Symbol</a></h4>
+<div class="level4">
+
+<p>
+ The graphical representation of a part. This entity uses the symbol base filename as the unique name of the symbol. This base filename is relative to one of the component libraries found in the configuration files. The component library paths can either be local or network. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Field      </th><th class="leftalign"> Type   </th><th class="leftalign"> Description                   </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> SymbolID   </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                                                                       </td>
+	</tr>
+	<tr>
+		<td> SymbolName </td><td> String </td><td> The unique name of the symbol. This field contains the base filename of the symbol. </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> DeviceID   </td><td class="rightalign">        </td><td class="leftalign"> Foreign key to Device                                                               </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Entities" [1309-8103] -->
+<h3><a name="part_categories" id="part_categories">Part Categories</a></h3>
+<div class="level3">
+
+<p>
+ Part categories break down classes of parts hierarchically. The category hierarchy exists separately than the part hierarchy. The category hierarchy only provides the user with a system to locate parts quickly. A child in the category hierarchy does not need to inherit the attributes of a parent.
+</p>
+
+<p>
+The parts manager uses categories to keep the lists of parts manageable. If the list of parts in a particular category grows large, the category can be subdivided into sub-categories.
+</p>
+
+<p>
+It may be difficult to change the categories, using a <acronym title="Graphical User Interface">GUI</acronym>, because of the part table abstraction through database views and stored procedures.  It may be better to distribute the parts manager with a default configuration that works for most.
+</p>
+
+<div class="noteclassic">Help is needed with the taxonomy of parts.  Please send feedback to the geda-dev or geda-user mailing lists.
+</div>
+
+<p>
+The default hierarchy of parts follow: 
+</p>
+<ul>
+<li class="level1"><div class="li"> Discretes</div>
+<ul>
+<li class="level2"><div class="li"> Diodes</div>
+<ul>
+<li class="level3"><div class="li"> Small-signal</div>
+</li>
+<li class="level3"><div class="li"> TVS</div>
+</li>
+<li class="level3"><div class="li"> Zeners</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Passives</div>
+<ul>
+<li class="level2"><div class="li"> Capacitors</div>
+</li>
+<li class="level2"><div class="li"> Inductors</div>
+</li>
+<li class="level2"><div class="li"> Resistors</div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Part Categories" [8104-9162] -->
+<h3><a name="part_hierarchy" id="part_hierarchy">Part Hierarchy</a></h3>
+<div class="level3">
+
+<p>
+ The part hierarchy allows the database to attach additional attributes to a class of parts.  These attributes provide a faster means to locate and select parts, especially commodity parts. The database only provides these additional attributes when configured to use hierarchical part tables.
+</p>
+
+<p>
+These additional attributes, stored in numeric format, allow <acronym title="Structured Query Language">SQL</acronym> to select parts. For example, to locate diodes with reverse voltage greater than 60 volts, use the following <acronym title="Structured Query Language">SQL</acronym> statement.
+</p>
+<pre class="code sql"><span class="kw1">SELECT</span> * <span class="kw1">FROM</span> DiodeV
+    <span class="kw1">WHERE</span> VR &gt; <span class="nu0">60</span>;</pre>
+<p>
+The intent of the part hierarchy does not include exhaustively classifying all electronic parts or fully parameterizing any class of electronic part.  The part hierarchy simply intends to allow the user to quickly locate a part, such as a 4.75 kΩ 1% 0603.
+</p>
+
+<p>
+<em class="u">TODO: Develop guidelines for subclassing part.</em>
+</p>
+
+<p>
+Proposed guidelines for including attributes: 
+</p>
+<ul>
+<li class="level1"><div class="li"> Include attributes that are encoded in the manufacturer part number.</div>
+</li>
+<li class="level1"><div class="li"> Exclude attributes that are inconsistently characterized between manufacturers.</div>
+</li>
+<li class="level1"><div class="li"> Exclude attributes that must be either read from graphs, or calculated.  </div>
+</li>
+</ul>
+
+<p>
+ These attributes may not work for everyone, so the database allows the user to customize these part tables.
+</p>
+
+</div>
+
+<h4><a name="capacitors" id="capacitors">Capacitors</a></h4>
+<div class="level4">
+
+<p>
+ Capacitors extend part with one additional table of attributes. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Field       </th><th class="leftalign"> Type     </th><th class="leftalign"> Units   </th><th class="leftalign"> Description            </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> PartID      </td><td class="rightalign">          </td><td class="rightalign">         </td><td class="leftalign"> Foreign key to Part    </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> PackageID   </td><td class="rightalign">          </td><td class="rightalign">         </td><td> Foreign key to Package </td>
+	</tr>
+	<tr>
+		<td> Capacitance </td><td> Physical </td><td class="leftalign"> FARADS  </td><td class="leftalign"> Capacitance            </td>
+	</tr>
+</table>
+
+<p>
+ When instantiating a component or creating a heavy symbol, the following database columns map to the following attributes. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Column                </th><th> Attribute </th><th class="leftalign"> Notes                  </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> Device.DeviceName     </td><td class="leftalign"> DEVICE    </td><td class="rightalign">                        </td>
+	</tr>
+	<tr>
+		<td> Capacitor.Capacitance </td><td class="leftalign"> VALUE     </td><td class="rightalign">                        </td>
+	</tr>
+</table>
+
+</div>
+
+<h4><a name="inductors" id="inductors">Inductors</a></h4>
+<div class="level4">
+
+<p>
+ Inductors extend part with one additional table of attributes. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Field      </th><th class="leftalign"> Type     </th><th class="leftalign"> Units   </th><th class="leftalign"> Description            </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> PartID     </td><td class="rightalign">          </td><td class="rightalign">         </td><td class="leftalign"> Foreign key to Part    </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> PackageID  </td><td class="rightalign">          </td><td class="rightalign">         </td><td> Foreign key to Package </td>
+	</tr>
+	<tr>
+		<td> Inductance </td><td> Physical </td><td class="leftalign"> HENRYS  </td><td class="leftalign"> Inductance             </td>
+	</tr>
+</table>
+
+<p>
+ When instantiating a component or creating a heavy symbol, the following database columns map to the following attributes. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Column              </th><th> Attribute </th><th class="leftalign"> Notes                  </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> Device.DeviceName   </td><td class="leftalign"> DEVICE    </td><td class="rightalign">                        </td>
+	</tr>
+	<tr>
+		<td> Inductor.Inductance </td><td class="leftalign"> VALUE     </td><td class="rightalign">                        </td>
+	</tr>
+</table>
+
+</div>
+
+<h4><a name="rectifier_and_switching_diodes" id="rectifier_and_switching_diodes">Rectifier and Switching Diodes</a></h4>
+<div class="level4">
+
+<p>
+ Rectifier and switching diodes extend part with one additional table of attributes. Most diodes can be placed into this table. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Field             </th><th class="leftalign"> Type     </th><th> Units </th><th class="leftalign"> Description            </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> PartID            </td><td class="rightalign">          </td><td class="rightalign">       </td><td class="leftalign"> Foreign key to Part                               </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> PackageID         </td><td class="rightalign">          </td><td class="rightalign">       </td><td class="leftalign"> Foreign key to Package                            </td>
+	</tr>
+	<tr>
+		<td> MaxReverseVoltage </td><td> Physical </td><td> VOLTS </td><td> Maximum reverse voltage (Absolute maximum rating) </td>
+	</tr>
+	<tr>
+		<td> MaxForwardCurrent </td><td> Physical </td><td class="leftalign"> AMPS  </td><td> Maximum forward current (Absolute maximum rating) </td>
+	</tr>
+	<tr>
+		<td> TypForwardVoltage </td><td> Physical </td><td> VOLTS </td><td class="leftalign"> Typical forward voltage                           </td>
+	</tr>
+	<tr>
+		<td> AveForwardCurrent </td><td> Physical </td><td class="leftalign"> AMPS  </td><td class="leftalign"> Average forward current                           </td>
+	</tr>
+</table>
+
+</div>
+
+<h4><a name="resistors" id="resistors">Resistors</a></h4>
+<div class="level4">
+
+<p>
+ Resistors extend part with one additional table of attributes. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Field      </th><th class="leftalign"> Type     </th><th class="leftalign"> Units   </th><th class="leftalign"> Description            </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> PartID     </td><td class="rightalign">          </td><td class="rightalign">         </td><td class="leftalign"> Foreign key to Part    </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> PackageID  </td><td class="rightalign">          </td><td class="rightalign">         </td><td> Foreign key to Package </td>
+	</tr>
+	<tr>
+		<td> Resistance </td><td> Physical </td><td class="leftalign"> OHMS    </td><td class="leftalign"> Resistance             </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> Tolerance  </td><td> Physical </td><td> PERCENT </td><td class="leftalign"> Tolerance              </td>
+	</tr>
+</table>
+
+<p>
+ When instantiating a component or creating a heavy symbol, the following database columns map to the following attributes. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Column              </th><th> Attribute </th><th class="leftalign"> Notes                  </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> Device.DeviceName   </td><td class="leftalign"> DEVICE    </td><td class="rightalign">                        </td>
+	</tr>
+	<tr>
+		<td> Resistor.Resistance </td><td class="leftalign"> VALUE     </td><td class="rightalign">                        </td>
+	</tr>
+</table>
+
+</div>
+
+<h4><a name="tvs_diodes" id="tvs_diodes">TVS Diodes</a></h4>
+<div class="level4">
+
+<p>
+ TVS diodes extend part with one additional table of attributes. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Field            </th><th class="leftalign"> Type     </th><th> Units </th><th class="leftalign"> Description            </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> PartID           </td><td class="rightalign">          </td><td class="rightalign">       </td><td class="leftalign"> Foreign key to Part    </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> PackageID        </td><td class="rightalign">          </td><td class="rightalign">       </td><td> Foreign key to Package </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> WorkingVoltage   </td><td> Physical </td><td> VOLTS </td><td class="leftalign"> Working voltage        </td>
+	</tr>
+	<tr>
+		<td> BreakdownVoltage </td><td> Physical </td><td> VOLTS </td><td class="leftalign"> Breakdown voltage      </td>
+	</tr>
+</table>
+
+</div>
+
+<h4><a name="zener_diodes" id="zener_diodes">Zener Diodes</a></h4>
+<div class="level4">
+
+<p>
+ Zener diodes extend part with one additional table of attributes. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Field        </th><th class="leftalign"> Type     </th><th> Units </th><th class="leftalign"> Description            </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> PartID       </td><td class="rightalign">          </td><td class="rightalign">       </td><td class="leftalign"> Foreign key to Part    </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> PackageID    </td><td class="rightalign">          </td><td class="rightalign">       </td><td> Foreign key to Package </td>
+	</tr>
+	<tr>
+		<td> ZenerVoltage </td><td> Physical </td><td> VOLTS </td><td class="leftalign"> Zener voltage          </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Part Hierarchy" [9163-13953] -->
+<h2><a name="part_manager_gui" id="part_manager_gui">Part Manager GUI</a></h2>
+<div class="level2">
+
+<p>
+ The part manager <acronym title="Graphical User Interface">GUI</acronym> is the main component of the part management system.  The part manager <acronym title="Graphical User Interface">GUI</acronym> allows the user to browse and manipulate the part database and to cut and paste symbols into the schematic editor.
+</p>
+
+</div>
+<!-- SECTION "Part Manager GUI" [13954-14195] -->
+<h3><a name="use_cases" id="use_cases">Use Cases</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="uc.component.copy.clipboard" id="uc.component.copy.clipboard">uc.component.copy.clipboard</a></h4>
+<div class="level4">
+
+<p>
+ Copy a part to the clipboard as a component (light symbol). 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects a part in the database.</div>
+</li>
+<li class="level1"><div class="li"> The user selects a symbol to represent the part.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> instantiates a component and overrides attributes.</div>
+</li>
+<li class="level1"><div class="li"> The user previews the component to ensure the graphic looks correct.</div>
+</li>
+<li class="level1"><div class="li"> The user selects the copy action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> copies the component to the clipboard.</div>
+</li>
+<li class="level1"><div class="li"> The user pastes the component in gschem.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.component.export.file" id="uc.component.export.file">uc.component.export.file</a></h4>
+<div class="level4">
+
+<p>
+ Export a part to a file as a heavy symbol. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects a part in the database.</div>
+</li>
+<li class="level1"><div class="li"> The user selects a symbol to represent the part.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> clones the symbol and substitutes attributes.</div>
+</li>
+<li class="level1"><div class="li"> The user previews the symbol to ensure the graphic looks correct.</div>
+</li>
+<li class="level1"><div class="li"> The user selects the export action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user for a filename and location.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> writes the symbol to the given file.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.database.create" id="uc.database.create">uc.database.create</a></h4>
+<div class="level4">
+
+<p>
+ Create a new part database. 
+</p>
+<ol>
+<li class="level1"><div class="li"> TBD</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.database.destroy" id="uc.database.destroy">uc.database.destroy</a></h4>
+<div class="level4">
+
+<p>
+ Destroy an existing database. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects the destroy database action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user for confirmation.</div>
+</li>
+<li class="level1"><div class="li"> The application drops the database.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.document.add" id="uc.document.add">uc.document.add</a></h4>
+<div class="level4">
+
+<p>
+ Add a new document to the database. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects the add document action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user for a filename and location.</div>
+</li>
+<li class="level1"><div class="li"> The application adds the document to the database.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.document.attach" id="uc.document.attach">uc.document.attach</a></h4>
+<div class="level4">
+
+<p>
+ Associate a document(s) with a part(s). 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects one or more parts from the database.</div>
+</li>
+<li class="level1"><div class="li"> The user selects the attach document action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user with a list of all the documents in the database.</div>
+</li>
+<li class="level1"><div class="li"> The user selects one or more documents from the list.</div>
+</li>
+<li class="level1"><div class="li"> The application attaches the given documents to the given parts.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.document.delete" id="uc.document.delete">uc.document.delete</a></h4>
+<div class="level4">
+
+<p>
+ Delete a document(s) from the database.  Remove all references. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects one or more documents in the database.</div>
+</li>
+<li class="level1"><div class="li"> The user selects the delete action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user for confirmation.</div>
+</li>
+<li class="level1"><div class="li"> The application deletes the selected documents from the database.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.document.detach" id="uc.document.detach">uc.document.detach</a></h4>
+<div class="level4">
+
+<p>
+ Disassociate a document(s) from a part(s).  All parts and documents remain in the database.  Only the relationship is removed. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects one or more parts from the database.</div>
+</li>
+<li class="level1"><div class="li"> The user selects the detach document action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user with a list of all the documents attached to the given parts.</div>
+</li>
+<li class="level1"><div class="li"> The user selects one or more documents from the list.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user for confirmation.</div>
+</li>
+<li class="level1"><div class="li"> The application detaches the given documents from the given parts, if attached.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.document.edit" id="uc.document.edit">uc.document.edit</a></h4>
+<div class="level4">
+
+<p>
+ Edit the metadata associated with a document. 
+</p>
+<ol>
+<li class="level1"><div class="li"> TBD</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.document.view" id="uc.document.view">uc.document.view</a></h4>
+<div class="level4">
+
+<p>
+ View a document. 
+</p>
+<ol>
+<li class="level1"><div class="li"> TBD</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.footprint.delete" id="uc.footprint.delete">uc.footprint.delete</a></h4>
+<div class="level4">
+
+<p>
+ Delete a footprint(s) from the database.  Remove all references. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects one or more footprints in the database.</div>
+</li>
+<li class="level1"><div class="li"> The user selects the delete action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user for confirmation.</div>
+</li>
+<li class="level1"><div class="li"> The application deletes the selected footprints from the database.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.footprint.edit" id="uc.footprint.edit">uc.footprint.edit</a></h4>
+<div class="level4">
+
+<p>
+ Edit the metadata associated with a footprint.
+</p>
+
+</div>
+
+<h4><a name="uc.footprint.import.file" id="uc.footprint.import.file">uc.footprint.import.file</a></h4>
+<div class="level4">
+
+<p>
+ Import a single footprint file into the database. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects the import footprint file action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user for a footprint file.</div>
+</li>
+<li class="level1"><div class="li"> The application creates a footprint in the database for a new footprint file.</div>
+</li>
+<li class="level1"><div class="li"> The application updates a footprint in the database for an old footprint file.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.footprint.import.library" id="uc.footprint.import.library">uc.footprint.import.library</a></h4>
+<div class="level4">
+
+<p>
+ Import all footprint files from the library into the database. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects the import footprint library action.</div>
+</li>
+<li class="level1"><div class="li"> The application searches all footprint libraries.</div>
+</li>
+<li class="level1"><div class="li"> The application creates footprints in the database for new footprint files in the library.</div>
+</li>
+<li class="level1"><div class="li"> The application updates footprints in the database for old footprint files in the library. </div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.model.add" id="uc.model.add">uc.model.add</a></h4>
+<div class="level4">
+
+<p>
+ Add a new model to the database. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects the add model action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user for a model type, name, and filename.</div>
+</li>
+<li class="level1"><div class="li"> The application adds the model to the database.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.model.attach" id="uc.model.attach">uc.model.attach</a></h4>
+<div class="level4">
+
+<p>
+ Associate a model(s) with a part(s). 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects one or more parts from the database.</div>
+</li>
+<li class="level1"><div class="li"> The user selects the attach model action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user with a list of all the models in the database.</div>
+</li>
+<li class="level1"><div class="li"> The user selects one or more models from the list.</div>
+</li>
+<li class="level1"><div class="li"> The application attaches the given models to the given parts.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.model.delete" id="uc.model.delete">uc.model.delete</a></h4>
+<div class="level4">
+
+<p>
+ Delete a model(s) from the database.  Remove all references. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects one or more models in the database.</div>
+</li>
+<li class="level1"><div class="li"> The user selects the delete action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user for confirmation.</div>
+</li>
+<li class="level1"><div class="li"> The application deletes the selected models from the database.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.model.detach" id="uc.model.detach">uc.model.detach</a></h4>
+<div class="level4">
+
+<p>
+ Disassociate a model(s) from a part(s).  All parts and models remain in the database.  Only the relationship is removed. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects one or more parts from the database.</div>
+</li>
+<li class="level1"><div class="li"> The user selects the detach model action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user with a list of all the models attached to the given parts.</div>
+</li>
+<li class="level1"><div class="li"> The user selects one or more models from the list.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user for confirmation.</div>
+</li>
+<li class="level1"><div class="li"> The application detaches the given models from the given parts, if attached.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.model.import.library.spice" id="uc.model.import.library.spice">uc.model.import.library.spice</a></h4>
+<div class="level4">
+
+<p>
+ Import all Spice files from the library into the database. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects the import Spice library action.</div>
+</li>
+<li class="level1"><div class="li"> The application searches all Spice library directories for files.</div>
+</li>
+<li class="level1"><div class="li"> The application parses files to extract model names.</div>
+</li>
+<li class="level1"><div class="li"> The application creates Spice models in the database for new models in the library.</div>
+</li>
+<li class="level1"><div class="li"> The application updates Spice models in the database for old models in the library.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.model.view" id="uc.model.view">uc.model.view</a></h4>
+<div class="level4">
+
+<p>
+ TBD
+</p>
+
+</div>
+
+<h4><a name="uc.package.add" id="uc.package.add">uc.package.add</a></h4>
+<div class="level4">
+
+<p>
+ Add a new package to the database. 
+</p>
+<ol>
+<li class="level1"><div class="li"> TBD</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.package.delete" id="uc.package.delete">uc.package.delete</a></h4>
+<div class="level4">
+
+<p>
+ Delete a package(s) from the database.  Remove all references. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects one or more packages in the database.</div>
+</li>
+<li class="level1"><div class="li"> The user selects the delete action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user for confirmation.</div>
+</li>
+<li class="level1"><div class="li"> The application deletes the selected packages from the database.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.package.edit" id="uc.package.edit">uc.package.edit</a></h4>
+<div class="level4">
+
+<p>
+ Edit the package data. 
+</p>
+<ol>
+<li class="level1"><div class="li"> TBD</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.part.add" id="uc.part.add">uc.part.add</a></h4>
+<div class="level4">
+
+<p>
+ Add a new part to the database. 
+</p>
+<ol>
+<li class="level1"><div class="li"> TBD</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.part.delete" id="uc.part.delete">uc.part.delete</a></h4>
+<div class="level4">
+
+<p>
+ Delete a part(s) from the database.  Remove all references. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects one or more parts in the database.</div>
+</li>
+<li class="level1"><div class="li"> The user selects the delete action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user for confirmation.</div>
+</li>
+<li class="level1"><div class="li"> The application deletes the selected parts from the database.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.part.edit" id="uc.part.edit">uc.part.edit</a></h4>
+<div class="level4">
+
+<p>
+ Edit the part data. 
+</p>
+<ol>
+<li class="level1"><div class="li"> TBD</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.part.search" id="uc.part.search">uc.part.search</a></h4>
+<div class="level4">
+
+<p>
+ Search for a part in the database using the manufacturer part number.
+</p>
+
+</div>
+
+<h4><a name="uc.symbol.delete" id="uc.symbol.delete">uc.symbol.delete</a></h4>
+<div class="level4">
+
+<p>
+ Delete a symbol(s) from the database.  Remove all references. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects one or more symbols in the database.</div>
+</li>
+<li class="level1"><div class="li"> The user selects the delete action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user for confirmation.</div>
+</li>
+<li class="level1"><div class="li"> The application deletes the selected symbols from the database.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.symbol.edit" id="uc.symbol.edit">uc.symbol.edit</a></h4>
+<div class="level4">
+
+<p>
+ Edit the metadata associated with a symbol. 
+</p>
+<ol>
+<li class="level1"><div class="li"> TBD</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.symbol.import.file" id="uc.symbol.import.file">uc.symbol.import.file</a></h4>
+<div class="level4">
+
+<p>
+ Import a single symbol file into the database. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects the import symbol file action.</div>
+</li>
+<li class="level1"><div class="li"> The <acronym title="Graphical User Interface">GUI</acronym> prompts the user for a symbol file.</div>
+</li>
+<li class="level1"><div class="li"> The application creates a symbol in the database for a new symbol file.</div>
+</li>
+<li class="level1"><div class="li"> The application updates a symbol in the database for an old symbol file.</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="uc.symbol.import.library" id="uc.symbol.import.library">uc.symbol.import.library</a></h4>
+<div class="level4">
+
+<p>
+ Import the contents of the component library into the database. 
+</p>
+<ol>
+<li class="level1"><div class="li"> The user selects the import symbol library action.</div>
+</li>
+<li class="level1"><div class="li"> The application searches all component libraries specified in the configuration file for symbol files.</div>
+</li>
+<li class="level1"><div class="li"> The application creates symbols in the database for new symbol files in the library.</div>
+</li>
+<li class="level1"><div class="li"> The application updates symbols in the database for old symbol files in the library.</div>
+</li>
+</ol>
+
+</div>
+<!-- SECTION "Use Cases" [14196-22131] -->
+<h3><a name="ui_design" id="ui_design">UI Design</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="company_view" id="company_view">Company View</a></h4>
+<div class="level4">
+
+<p>
+ The company view lists all the companies in the database.
+</p>
+
+<p>
+<a href="media/geda/gparts-ss-companies.png" class="media" target="_blank" title="geda:gparts-ss-companies.png"><img src="media/geda/gparts-ss-companies.png" class="media" title="" alt="" /></a>
+</p>
+
+</div>
+
+<h4><a name="device_view" id="device_view">Device View</a></h4>
+<div class="level4">
+
+<p>
+ The device view lists all the devices stored in the database.
+</p>
+
+<p>
+<a href="media/geda/gparts-ss-devices.png" class="media" target="_blank" title="geda:gparts-ss-devices.png"><img src="media/geda/gparts-ss-devices.png" class="media" title="" alt="" /></a>
+</p>
+
+</div>
+
+<h4><a name="documentation_view" id="documentation_view">Documentation View</a></h4>
+<div class="level4">
+
+<p>
+ The documentation view shows all the documents stored in the database.
+</p>
+
+<p>
+<a href="media/geda/gparts-ss-documentation.png" class="media" target="_blank" title="geda:gparts-ss-documentation.png"><img src="media/geda/gparts-ss-documentation.png" class="media" title="" alt="" /></a>
+</p>
+
+</div>
+
+<h4><a name="footprint_view" id="footprint_view">Footprint View</a></h4>
+<div class="level4">
+
+<p>
+ The footprint view shows all the footprints stored in the database.
+</p>
+
+<p>
+<a href="media/geda/gparts-ss-footprints.png" class="media" target="_blank" title="geda:gparts-ss-footprints.png"><img src="media/geda/gparts-ss-footprints.png" class="media" title="" alt="" /></a>
+</p>
+
+</div>
+
+<h4><a name="package_view" id="package_view">Package View</a></h4>
+<div class="level4">
+
+<p>
+ The package view shows all the packages stored in the database.
+</p>
+
+<p>
+<a href="media/geda/gparts-ss-packages.png" class="media" target="_blank" title="geda:gparts-ss-packages.png"><img src="media/geda/gparts-ss-packages.png" class="media" title="" alt="" /></a>
+</p>
+
+</div>
+
+<h4><a name="part_view" id="part_view">Part View</a></h4>
+<div class="level4">
+
+<p>
+ The part view shows parts stored in the database. The user selects the category from the left pane.  The parts within the given category show in the middle pane. After selecting a part from the middle pane, the symbols available for that part show in the lower right pane.  The upper right pane shows the symbol preview. 
+</p>
+
+<p>
+<a href="media/geda/gparts-ss-parts-2.png" class="media" target="_blank" title="geda:gparts-ss-parts-2.png"><img src="media/geda/gparts-ss-parts-2.png" class="media" title="" alt="" /></a>
+</p>
+
+</div>
+
+<h4><a name="symbol_view" id="symbol_view">Symbol View</a></h4>
+<div class="level4">
+
+<p>
+ The symbol view shows all the symbols stored in the database.  The upper right pane shows the symbol preview.
+</p>
+
+<p>
+<a href="media/geda/gparts-ss-symbols-2.png" class="media" target="_blank" title="geda:gparts-ss-symbols-2.png"><img src="media/geda/gparts-ss-symbols-2.png" class="media" title="" alt="" /></a>
+</p>
+
+</div>
+<!-- SECTION "UI Design" [22132-23316] -->
+<h3><a name="configuration" id="configuration">Configuration</a></h3>
+<div class="level3">
+
+<p>
+ The parts manager reads gaf’s Scheme configuration files using Guile-1.8. The parts manager reads the following configuration files in order.  The parts manager attempts reading the file in each of the given paths in order.   
+</p>
+<ol>
+<li class="level1"><div class="li"> system-gafrc</div>
+<ol>
+<li class="level2"><div class="li"> the path specified in the environment variable GEDADATARC</div>
+</li>
+<li class="level2"><div class="li"> the paths retrieved from g_get_system_config_dirs() + “gEDA”</div>
+</li>
+<li class="level2"><div class="li"> the paths retrieved from g_get_system_data_dirs() + “gEDA”</div>
+</li>
+</ol>
+</li>
+<li class="level1"><div class="li"> gafrc</div>
+<ol>
+<li class="level2"><div class="li"> the path specified in the environment variable HOME</div>
+</li>
+<li class="level2"><div class="li"> ~/.gEDA</div>
+</li>
+</ol>
+</li>
+<li class="level1"><div class="li"> gafrc</div>
+<ol>
+<li class="level2"><div class="li"> .</div>
+</li>
+</ol>
+</li>
+<li class="level1"><div class="li"> system-gpartsrc</div>
+<ol>
+<li class="level2"><div class="li"> the path specified in the environment variable GPARTSDATARC</div>
+</li>
+<li class="level2"><div class="li"> the paths retrieved from g_get_system_config_dirs() + “gparts”</div>
+</li>
+<li class="level2"><div class="li"> the paths retrieved from g_get_system_data_dirs() + “gparts”</div>
+</li>
+</ol>
+</li>
+<li class="level1"><div class="li"> gpartsrc</div>
+<ol>
+<li class="level2"><div class="li"> the path specified in the environment variable HOME</div>
+</li>
+<li class="level2"><div class="li"> ~/.gEDA</div>
+</li>
+</ol>
+</li>
+<li class="level1"><div class="li"> gpartsrc</div>
+<ol>
+<li class="level2"><div class="li"> .</div>
+</li>
+</ol>
+</li>
+</ol>
+
+<p>
+ The parts manager supports the following configuration items from gaf. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Item                      </th><th class="leftalign"> Parser  </th><th> Description </th>
+	</tr>
+	<tr>
+		<td> always-promote-attributes </td><td> libgeda </td><td class="rightalign">                                                     </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> attribute-promotion       </td><td> libgeda </td><td class="rightalign">                                                     </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> bitmap-directory          </td><td> libgeda </td><td class="leftalign"> Specifies the directory for bitmap images           </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> bus-style                 </td><td class="leftalign"> gschem  </td><td class="leftalign"> Specifies the line thickness for busses             </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> component-library         </td><td> libgeda </td><td class="leftalign"> Adds a directory to the component library           </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> display-color-map         </td><td class="leftalign"> gschem  </td><td class="leftalign"> Specifies schematic colors for display              </td>
+	</tr>
+	<tr>
+		<td> display-outline-color-map </td><td class="leftalign"> gschem  </td><td class="rightalign">                                                     </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> eval-protected            </td><td> libgeda </td><td class="leftalign"> For the parts manager, simply ‘eval’                </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> keep-invisible            </td><td> libgeda </td><td class="rightalign">                                                     </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> net-style                 </td><td class="leftalign"> gschem  </td><td class="leftalign"> Specifies the line thickness for nets               </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> postscript-prolog         </td><td> libgeda </td><td class="leftalign"> Ignored by the parts manager                        </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> print-color-map           </td><td> libgeda </td><td class="leftalign"> Specifies schematic colors for printing             </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> promote-invisible         </td><td> libgeda </td><td class="rightalign">                                                     </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> scheme-directory          </td><td> libgeda </td><td> Specifies the directory for additional scheme files </td>
+	</tr>
+</table>
+
+<p>
+ The parts manager supports the following private configuration items. 
+</p>
+<table class="inline">
+	<tr>
+		<th class="leftalign"> Item                      </th><th> Parser </th><th> Description </th>
+	</tr>
+	<tr>
+		<td class="leftalign"> database-interface        </td><td> gparts </td><td class="leftalign"> Adds a database interface module          </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> document-library          </td><td> gparts </td><td class="leftalign"> Adds a directory to the document library  </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> footprint-library         </td><td> gparts </td><td> Adds a directory to the footprint library </td>
+	</tr>
+	<tr>
+		<td class="leftalign"> spice-library             </td><td> gparts </td><td class="leftalign"> Adds a directory to the spice library     </td>
+	</tr>
+</table>
+
+</div>
+
+<h4><a name="database-interface" id="database-interface">database-interface</a></h4>
+<div class="level4">
+
+<p>
+ The parts manager uses dynamically loadable modules to support the various database engines.  The parts manager uses a separate module to support each database engine. 
+</p>
+<ul>
+<li class="level1"><div class="li"> MySQL</div>
+</li>
+<li class="level1"><div class="li"> PostgreSQL</div>
+</li>
+<li class="level1"><div class="li"> SQLite</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="document-library" id="document-library">document-library</a></h4>
+<div class="level4">
+
+<p>
+ Adds a directory to the list of directories where documentation is stored.
+</p>
+
+</div>
+
+<h4><a name="footprint-library" id="footprint-library">footprint-library</a></h4>
+<div class="level4">
+
+<p>
+ Adds a directory to the list of directories where footprints are stored. The parts manager can import newlib footprints from these directories.
+</p>
+
+</div>
+
+<h4><a name="spice-library" id="spice-library">spice-library</a></h4>
+<div class="level4">
+
+<p>
+ Adds a directory to the list of directories where SPICE models are stored. The parts manager can import these models from these directories.
+</p>
+
+</div>
+<!-- SECTION "Configuration" [23317-] --></body>
+</html>
