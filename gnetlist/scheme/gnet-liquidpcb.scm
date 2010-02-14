@@ -1,6 +1,6 @@
 ;;; gEDA - GPL Electronic Design Automation
 ;;; gnetlist - gEDA Netlist
-;;; Copyright (C) 2008 Ales Hvezda
+;;; Copyright (C) 2008-2010 Ales Hvezda
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by

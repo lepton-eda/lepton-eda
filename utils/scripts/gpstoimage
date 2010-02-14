@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# gEDA: GNU Electronic Design Automation
+# gEDA: GPL Electronic Design Automation
 # pstoimage (converts a postscript file to a gif)
 # This script is placed under the GNU Public License (GPL) version 2.0 
 
