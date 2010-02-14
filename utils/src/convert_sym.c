@@ -5,7 +5,7 @@
  *  accept one argument, the name of the file to 
  *  convert, converted output is displayed on stdout.
  *
- *     Copyright (C) 1999-2002  Mike Jarabek
+ *     Copyright (C) 1999-2010  Mike Jarabek
  *
  *     CHANGE HISTORY:
  *

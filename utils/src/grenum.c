@@ -1,7 +1,7 @@
 /* $Id$ */
 /*	This is grenum, an advanced refdes renumber utility for gEDA's gschem.
  *
- *	Copyright (C) 2005-2006  Levente Kovacs
+ *	Copyright (C) 2005-2010  Levente Kovacs
  *
  *	This program is free software; you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by

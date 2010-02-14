@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gattrib - gEDA gEDA component and net attribute manipulation using spreadsheet.
- * Copyright (C) 1998-2008 Ales V. Hvezda
- * Copyright (C) 2003-2008 Stuart D. Brorson.
+ * Copyright (C) 1998-2010 Ales V. Hvezda
+ * Copyright (C) 2003-2010 Stuart D. Brorson.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

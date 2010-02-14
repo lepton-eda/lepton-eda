@@ -2,7 +2,7 @@
 /*
 
     geda_sym_format.h - gEDA symbol write function
-    Copyright (C) 2002 Mario Pascucci <m.pas@libero.it>
+    Copyright (C) 2002-2010 Mario Pascucci <m.pas@libero.it>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

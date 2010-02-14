@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
- * gnetlist - gEDA Schematic Capture
- * Copyright (C) 1998-2000 Ales V. Hvezda
+ * gattrib -- gEDA component and net attribute manipulation using spreadsheet.
+ * Copyright (C) 1998-2010 Ales Hvezda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

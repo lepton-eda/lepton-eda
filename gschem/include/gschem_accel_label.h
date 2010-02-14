@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
- * Copyright (C) 1998-2009 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
  *
  * Code based on GTK 2.14.5 gtk/gtkaccellabel.h (LGPL)
  *
