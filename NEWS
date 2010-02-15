@@ -2,10 +2,29 @@
  'gschem and Friends' Electronic Design Suite
 ==============================================
 
-Copyright (C) 1998-2009 gEDA Developers
+Copyright (C) 1998-2010 gEDA Developers
 
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
+
+Notable changes in gEDA/gaf 1.6.1
+=================================
+
+* Added accelerator mnemonics for root menus in gschem
+
+* Lots of updated and new language translations in libgeda, gschem, and
+  gattrib.  (Courtesy of language translators and Launchpad) 
+
+* Updated the shipped documentation from the official gEDA wiki
+
+* Fixed the following bugs:
+
+  - 2876373: Fix rendering with zoomed out dashed lines
+  - 2901183: Fix for some manpage issues
+  - 2904715: Don't update page connectivity from o_place_rotate()
+  - 2949232: Fix slot editing routines to not edit inherited attributes 
+  - Cherry picked some other bug fixes from master that should be in
+    this release
 
 Notable changes in gEDA/gaf 1.6.0
 =================================
