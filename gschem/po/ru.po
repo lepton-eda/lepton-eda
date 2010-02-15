@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-02-07 01:27+0000\n"
+"POT-Creation-Date: 2010-02-15 18:00+0000\n"
 "PO-Revision-Date: 2009-02-22 21:51+0300\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -21,7 +21,8 @@ msgstr ""
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: gschem/src/rcstrings.c:2
-msgid "File"
+#, fuzzy
+msgid "_File"
 msgstr "Файл"
 
 #: gschem/src/rcstrings.c:3
@@ -85,8 +86,9 @@ msgstr "Закрыть"
 msgid "_Quit"
 msgstr "Выйти"
 
-#: gschem/src/rcstrings.c:17 gschem/src/i_callbacks.c:697
-msgid "Edit"
+#: gschem/src/rcstrings.c:17
+#, fuzzy
+msgid "_Edit"
 msgstr "Правка"
 
 #: gschem/src/rcstrings.c:18
@@ -160,7 +162,7 @@ msgid "Color..."
 msgstr "Цвет..."
 
 #: gschem/src/rcstrings.c:34 gschem/src/i_callbacks.c:922
-#: gschem/src/x_dialog.c:2381
+#: gschem/src/x_dialog.c:2382
 msgid "Lock"
 msgstr "Блокировать"
 
@@ -205,7 +207,8 @@ msgid "Make Inv Text Vis"
 msgstr "Сделать невидимый текст видимым"
 
 #: gschem/src/rcstrings.c:46
-msgid "Buffer"
+#, fuzzy
+msgid "_Buffer"
 msgstr "Буфер"
 
 #: gschem/src/rcstrings.c:47
@@ -269,7 +272,8 @@ msgid "Paste from 5"
 msgstr "Вставить из 5"
 
 #: gschem/src/rcstrings.c:63
-msgid "View"
+#, fuzzy
+msgid "_View"
 msgstr "Вид"
 
 #: gschem/src/rcstrings.c:64
@@ -318,7 +322,8 @@ msgid "_Light color scheme"
 msgstr "Светлая цветовая схема"
 
 #: gschem/src/rcstrings.c:74
-msgid "Page"
+#, fuzzy
+msgid "_Page"
 msgstr "Страница"
 
 #: gschem/src/rcstrings.c:75
@@ -347,7 +352,8 @@ msgid "_Discard"
 msgstr "Отвергнуть"
 
 #: gschem/src/rcstrings.c:83
-msgid "Add"
+#, fuzzy
+msgid "_Add"
 msgstr "Добавить"
 
 #: gschem/src/rcstrings.c:84
@@ -406,7 +412,8 @@ msgid "Pictu_re..."
 msgstr "Изображение..."
 
 #: gschem/src/rcstrings.c:96
-msgid "Hierarchy"
+#, fuzzy
+msgid "Hie_rarchy"
 msgstr "Иерархия"
 
 #: gschem/src/rcstrings.c:97
@@ -429,8 +436,9 @@ msgstr "Наверх"
 msgid "D_ocumentation..."
 msgstr "Документация"
 
-#: gschem/src/rcstrings.c:102 gschem/src/x_compselect.c:1418
-msgid "Attributes"
+#: gschem/src/rcstrings.c:102
+#, fuzzy
+msgid "A_ttributes"
 msgstr "Атрибуты"
 
 #: gschem/src/rcstrings.c:103
@@ -484,7 +492,8 @@ msgid "A_utonumber Text..."
 msgstr "Автонумеровать текст..."
 
 #: gschem/src/rcstrings.c:114
-msgid "Options"
+#, fuzzy
+msgid "_Options"
 msgstr "Настройки"
 
 #: gschem/src/rcstrings.c:115
@@ -543,7 +552,8 @@ msgid "Show _Coord Window..."
 msgstr "Показать окно координат..."
 
 #: gschem/src/rcstrings.c:127
-msgid "Help"
+#, fuzzy
+msgid "_Help"
 msgstr "Помощь"
 
 #: gschem/src/rcstrings.c:128
@@ -855,7 +865,7 @@ msgstr "Перепривязка активна"
 msgid "Action"
 msgstr "Действие"
 
-#: gschem/src/i_basic.c:260 gschem/src/x_dialog.c:2378
+#: gschem/src/i_basic.c:260 gschem/src/x_dialog.c:2379
 #: gschem/src/x_window.c:491
 msgid "Stroke"
 msgstr "Жест"
@@ -916,6 +926,10 @@ msgstr "Сначала нужно выделить что-либо"
 #: gschem/src/i_callbacks.c:672 gschem/src/x_multiattrib.c:1496
 msgid "Delete"
 msgstr "Удалить"
+
+#: gschem/src/i_callbacks.c:697
+msgid "Edit"
+msgstr "Правка"
 
 #: gschem/src/i_callbacks.c:712
 msgid "Edit pin type"
@@ -1080,17 +1094,17 @@ msgid "Component"
 msgstr "Элемент"
 
 #: gschem/src/i_callbacks.c:2362 gschem/src/i_callbacks.c:2381
-#: gschem/src/x_dialog.c:2351
+#: gschem/src/x_dialog.c:2352
 msgid "Attribute"
 msgstr "Атрибут"
 
 #: gschem/src/i_callbacks.c:2403 gschem/src/i_callbacks.c:2430
-#: gschem/src/x_dialog.c:2348
+#: gschem/src/x_dialog.c:2349
 msgid "Net"
 msgstr "Соединение"
 
 #: gschem/src/i_callbacks.c:2474 gschem/src/i_callbacks.c:2501
-#: gschem/src/x_dialog.c:2366 gschem/src/x_window.c:375
+#: gschem/src/x_dialog.c:2367 gschem/src/x_window.c:375
 msgid "Bus"
 msgstr "Шину"
 
@@ -1111,7 +1125,7 @@ msgid "Arc"
 msgstr "Дугу"
 
 #: gschem/src/i_callbacks.c:2797 gschem/src/i_callbacks.c:2820
-#: gschem/src/x_dialog.c:2339
+#: gschem/src/x_dialog.c:2340
 msgid "Pin"
 msgstr "Вывод"
 
@@ -1370,22 +1384,17 @@ msgstr "ОШИБКА: объект NULL!\n"
 msgid "Slot attribute malformed\n"
 msgstr "Атрибут слота испорчен\n"
 
-#: gschem/src/o_slot.c:99
+#: gschem/src/o_slot.c:89
 msgid "numslots attribute missing\n"
 msgstr "отсутствует атрибут numslots\n"
 
-#: gschem/src/o_slot.c:100
+#: gschem/src/o_slot.c:90
 msgid "Slotting not allowed for this component\n"
 msgstr "Слотирование не допустимо для этого компонента\n"
 
-#: gschem/src/o_slot.c:115
+#: gschem/src/o_slot.c:105
 msgid "New slot number out of range\n"
 msgstr "Номер нового слота выходит за пределы\n"
-
-#: gschem/src/o_slot.c:170
-#, c-format
-msgid "uggg! you tried to slot edit something that doesn't exist!\n"
-msgstr "Вы пытаетесь править слот чего-то несуществующего!\n"
 
 #: gschem/src/o_undo.c:304
 msgid "Undo/Redo disabled in rc file\n"
@@ -1494,91 +1503,91 @@ msgstr ""
 "повторяющийся слот может быть причиной проблемы: [symbolname=%s, number=%d, "
 "slot=%d]\n"
 
-#: gschem/src/x_autonumber.c:701
+#: gschem/src/x_autonumber.c:682
 msgid "No searchstring given in autonumber text.\n"
 msgstr "Не задана строка для поиска в тексте автонумерации.\n"
 
-#: gschem/src/x_autonumber.c:753
+#: gschem/src/x_autonumber.c:734
 msgid "No '*' or '?' given at the end of the autonumber text.\n"
 msgstr "Не задан символ '*' или '?' в конце текста автонумерации.\n"
 
-#: gschem/src/x_autonumber.c:888
+#: gschem/src/x_autonumber.c:869
 msgid "Diagonal"
 msgstr "По диагонали"
 
-#: gschem/src/x_autonumber.c:889
+#: gschem/src/x_autonumber.c:870
 msgid "Top to bottom"
 msgstr "Сверху вниз"
 
-#: gschem/src/x_autonumber.c:889
+#: gschem/src/x_autonumber.c:870
 msgid "Bottom to top"
 msgstr "Снизу вверх"
 
-#: gschem/src/x_autonumber.c:890
+#: gschem/src/x_autonumber.c:871
 msgid "Left to right"
 msgstr "Слева на право"
 
-#: gschem/src/x_autonumber.c:890
+#: gschem/src/x_autonumber.c:871
 msgid "Right to left"
 msgstr "Справа налево"
 
-#: gschem/src/x_autonumber.c:891
+#: gschem/src/x_autonumber.c:872
 msgid "File order"
 msgstr "Порядок файлов"
 
-#: gschem/src/x_autonumber.c:1227
+#: gschem/src/x_autonumber.c:1208
 msgid "Autonumber text"
 msgstr "Автонумеровать текст"
 
-#: gschem/src/x_autonumber.c:1251
+#: gschem/src/x_autonumber.c:1232
 msgid "<b>Scope</b>"
 msgstr "<b>Область</b>"
 
-#: gschem/src/x_autonumber.c:1273
+#: gschem/src/x_autonumber.c:1254
 msgid "Search for:"
 msgstr "Искать:"
 
-#: gschem/src/x_autonumber.c:1287
+#: gschem/src/x_autonumber.c:1268
 msgid "Autonumber text in:"
 msgstr "Автонумерация текста в:"
 
-#: gschem/src/x_autonumber.c:1294
+#: gschem/src/x_autonumber.c:1275
 msgid "Skip numbers found in:"
 msgstr "Пропустить номера найденные в:"
 
-#: gschem/src/x_autonumber.c:1306 gschem/src/x_autonumber.c:1315
+#: gschem/src/x_autonumber.c:1287 gschem/src/x_autonumber.c:1296
 msgid "Selected objects"
 msgstr "Выбранные объекты"
 
-#: gschem/src/x_autonumber.c:1307 gschem/src/x_autonumber.c:1316
+#: gschem/src/x_autonumber.c:1288 gschem/src/x_autonumber.c:1297
 msgid "Current page"
 msgstr "Текущая страница"
 
-#: gschem/src/x_autonumber.c:1308 gschem/src/x_autonumber.c:1317
+#: gschem/src/x_autonumber.c:1289 gschem/src/x_autonumber.c:1298
 msgid "Whole hierarchy"
 msgstr "Вся иерархия"
 
-#: gschem/src/x_autonumber.c:1319
+#: gschem/src/x_autonumber.c:1300
 msgid "Overwrite existing numbers"
 msgstr "Заменить существующие номера"
 
-#: gschem/src/x_autonumber.c:1324
+#: gschem/src/x_autonumber.c:1305
 msgid "<b>Options</b>"
 msgstr "<b>Настройки</b>"
 
-#: gschem/src/x_autonumber.c:1346
+#: gschem/src/x_autonumber.c:1327
 msgid "Starting number:"
 msgstr "Начальный номер:"
 
-#: gschem/src/x_autonumber.c:1353
+#: gschem/src/x_autonumber.c:1334
 msgid "Sort order:"
 msgstr "Порядок сортировки:"
 
-#: gschem/src/x_autonumber.c:1374
+#: gschem/src/x_autonumber.c:1355
 msgid "Remove numbers"
 msgstr "Удалить номера"
 
-#: gschem/src/x_autonumber.c:1378
+#: gschem/src/x_autonumber.c:1359
 msgid "Automatic slotting"
 msgstr "Автоматическое слотирование"
 
@@ -1619,7 +1628,7 @@ msgstr "Попытка получения неверного цвета конт
 msgid "Filter:"
 msgstr "Фильтр:"
 
-#: gschem/src/x_compselect.c:1143 gschem/src/x_dialog.c:3729
+#: gschem/src/x_compselect.c:1143 gschem/src/x_dialog.c:3730
 #: gschem/src/x_multiattrib.c:1787
 msgid "Name"
 msgstr "Имя"
@@ -1655,6 +1664,10 @@ msgstr "Библиотеки"
 #: gschem/src/x_compselect.c:1390 gschem/src/x_fileselect.c:122
 msgid "Preview"
 msgstr "Предварительный просмотр"
+
+#: gschem/src/x_compselect.c:1418
+msgid "Attributes"
+msgstr "Атрибуты"
 
 #: gschem/src/x_dialog.c:175
 msgid "Text Entry..."
@@ -1866,185 +1879,185 @@ msgstr "Шаг привязки"
 msgid "Enter new snap grid spacing:"
 msgstr "Введите новый шаг привязки к сетке:"
 
-#: gschem/src/x_dialog.c:2111
+#: gschem/src/x_dialog.c:2112
 msgid "Edit slot number"
 msgstr "Правка номера слота"
 
-#: gschem/src/x_dialog.c:2142
+#: gschem/src/x_dialog.c:2143
 msgid "Edit slot number:"
 msgstr "Правка номера слота:"
 
-#: gschem/src/x_dialog.c:2183
+#: gschem/src/x_dialog.c:2184
 #, c-format
 msgid "%s%s (%s)"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2206
+#: gschem/src/x_dialog.c:2207
 msgid "About gschem"
 msgstr "О gschem"
 
-#: gschem/src/x_dialog.c:2207
+#: gschem/src/x_dialog.c:2208
 #, fuzzy
 msgid "gEDA: GPL Electronic Design Automation"
 msgstr ""
 "gEDA: Система Автоматизированного ПРоектирования электронных схем (GPL)"
 
-#: gschem/src/x_dialog.c:2208
+#: gschem/src/x_dialog.c:2209
 msgid ""
 "Copyright © 1998-2009 Ales Hvezda <ahvezda@geda.seul.org>\n"
 "Copyright © 1998-2009 gEDA Contributors (see ChangeLog for details)"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2267
+#: gschem/src/x_dialog.c:2268
 msgid "Coords"
 msgstr "Координаты"
 
-#: gschem/src/x_dialog.c:2288
+#: gschem/src/x_dialog.c:2289
 msgid "Screen"
 msgstr "Экран"
 
-#: gschem/src/x_dialog.c:2297
+#: gschem/src/x_dialog.c:2298
 msgid "World"
 msgstr "Поле"
 
-#: gschem/src/x_dialog.c:2336
+#: gschem/src/x_dialog.c:2337
 msgid "Background"
 msgstr "Фон"
 
-#: gschem/src/x_dialog.c:2342
+#: gschem/src/x_dialog.c:2343
 msgid "Net endpoint"
 msgstr "Окончание соединения"
 
-#: gschem/src/x_dialog.c:2345
+#: gschem/src/x_dialog.c:2346
 msgid "Graphic"
 msgstr "Изображение"
 
-#: gschem/src/x_dialog.c:2354
+#: gschem/src/x_dialog.c:2355
 msgid "Logic bubble"
 msgstr "Логическая инверсия"
 
-#: gschem/src/x_dialog.c:2357
+#: gschem/src/x_dialog.c:2358
 msgid "Grid point"
 msgstr "Точка сетки"
 
-#: gschem/src/x_dialog.c:2360
+#: gschem/src/x_dialog.c:2361
 msgid "Detached attribute"
 msgstr "Отсоединённый атрибут"
 
-#: gschem/src/x_dialog.c:2363 gschem/src/x_window.c:383
+#: gschem/src/x_dialog.c:2364 gschem/src/x_window.c:383
 msgid "Text"
 msgstr "Текст"
 
-#: gschem/src/x_dialog.c:2369
+#: gschem/src/x_dialog.c:2370
 msgid "Selection"
 msgstr "Выбор"
 
-#: gschem/src/x_dialog.c:2372
+#: gschem/src/x_dialog.c:2373
 msgid "Bounding box"
 msgstr "Ограничивающий прямоугольник"
 
-#: gschem/src/x_dialog.c:2375
+#: gschem/src/x_dialog.c:2376
 msgid "Zoom box"
 msgstr "Масштаб области"
 
-#: gschem/src/x_dialog.c:2384
+#: gschem/src/x_dialog.c:2385
 msgid "Output background"
 msgstr "Фон при выводе"
 
-#: gschem/src/x_dialog.c:2387
+#: gschem/src/x_dialog.c:2388
 msgid "Net junction"
 msgstr "Соединительный узел"
 
-#: gschem/src/x_dialog.c:2390
+#: gschem/src/x_dialog.c:2391
 msgid "Mesh grid major"
 msgstr "Основная сетка из линий"
 
-#: gschem/src/x_dialog.c:2393
+#: gschem/src/x_dialog.c:2394
 msgid "Mesh grid minor"
 msgstr "Детальная сетка из линий"
 
-#: gschem/src/x_dialog.c:2396
+#: gschem/src/x_dialog.c:2397
 msgid "Unknown"
 msgstr "Неизвестно"
 
-#: gschem/src/x_dialog.c:2547
+#: gschem/src/x_dialog.c:2548
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr "ОШИБКА: объект NULL в color_edit_dialog_apply!\n"
 
-#: gschem/src/x_dialog.c:2591
+#: gschem/src/x_dialog.c:2592
 msgid "Color Edit"
 msgstr "Правка цвета"
 
-#: gschem/src/x_dialog.c:2622
+#: gschem/src/x_dialog.c:2623
 msgid "Object color:"
 msgstr "Цвет объекта:"
 
-#: gschem/src/x_dialog.c:2680
+#: gschem/src/x_dialog.c:2681
 msgid "Hotkeys"
 msgstr "Горячие клавиши"
 
-#: gschem/src/x_dialog.c:2744
+#: gschem/src/x_dialog.c:2745
 msgid "Function"
 msgstr "Функции"
 
-#: gschem/src/x_dialog.c:2751
+#: gschem/src/x_dialog.c:2752
 msgid "Keystroke(s)"
 msgstr "Комбинации клавиш"
 
-#: gschem/src/x_dialog.c:3057
+#: gschem/src/x_dialog.c:3058
 msgid "Find Text"
 msgstr "Найти текст"
 
-#: gschem/src/x_dialog.c:3088
+#: gschem/src/x_dialog.c:3089
 msgid "Text to find:"
 msgstr "Текст для поиска:"
 
-#: gschem/src/x_dialog.c:3098
+#: gschem/src/x_dialog.c:3099
 msgid "descend into hierarchy"
 msgstr "Вниз по иерархии"
 
-#: gschem/src/x_dialog.c:3163
+#: gschem/src/x_dialog.c:3164
 msgid "Hide Text"
 msgstr "Скрыть текст"
 
-#: gschem/src/x_dialog.c:3194
+#: gschem/src/x_dialog.c:3195
 msgid "Hide text starting with:"
 msgstr "Скрыть текст, начинающийся с:"
 
-#: gschem/src/x_dialog.c:3263
+#: gschem/src/x_dialog.c:3264
 msgid "Show Text"
 msgstr "Показать текст"
 
-#: gschem/src/x_dialog.c:3294
+#: gschem/src/x_dialog.c:3295
 msgid "Show text starting with:"
 msgstr "Показать текст, начинающийся с:"
 
-#: gschem/src/x_dialog.c:3751
+#: gschem/src/x_dialog.c:3752
 msgid "S_elect the schematics you want to save:"
 msgstr "_Выберите схему для сохранения:"
 
-#: gschem/src/x_dialog.c:3845
+#: gschem/src/x_dialog.c:3846
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr "Сохранить изменения в схеме \"%s\" перед закрытием?"
 
-#: gschem/src/x_dialog.c:3851
+#: gschem/src/x_dialog.c:3852
 #, c-format
 msgid ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 "В схемах есть несохранённые изменения (%d). Сохранить их перед закрытием?"
 
-#: gschem/src/x_dialog.c:3880
+#: gschem/src/x_dialog.c:3881
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr "Если вы не сохраните, все изменения будут безвозвратно утеряны."
 
-#: gschem/src/x_dialog.c:3900
+#: gschem/src/x_dialog.c:3901
 msgid "_Close without saving"
 msgstr "_Закрыть без сохранения"
 
-#: gschem/src/x_dialog.c:4236
+#: gschem/src/x_dialog.c:4237
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -2061,19 +2074,19 @@ msgstr ""
 "Имя не может заканчиваться пробелом.\n"
 "Значение не может начинаться с пробела."
 
-#: gschem/src/x_dialog.c:4238
+#: gschem/src/x_dialog.c:4239
 msgid "Invalid Attribute"
 msgstr "Неверный атрибут"
 
-#: gschem/src/x_dialog.c:4274
+#: gschem/src/x_dialog.c:4275
 msgid "Pin type"
 msgstr "Тип вывода"
 
-#: gschem/src/x_dialog.c:4298
+#: gschem/src/x_dialog.c:4299
 msgid "Net pin"
 msgstr "Вывод соединения"
 
-#: gschem/src/x_dialog.c:4300
+#: gschem/src/x_dialog.c:4301
 msgid "Bus pin (graphical)"
 msgstr "Вывод шины (графический)"
 
@@ -2593,6 +2606,9 @@ msgstr "gEDA редактор схем"
 #: gschem/data/geda-gschem.desktop.in.h:4
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr "Создание и редактирование электрических схем и символов в gschem"
+
+#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
+#~ msgstr "Вы пытаетесь править слот чего-то несуществующего!\n"
 
 #~ msgid "About..."
 #~ msgstr "О программе..."
