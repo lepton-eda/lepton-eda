@@ -265,11 +265,17 @@ void text_input_dialog (GSCHEM_TOPLEVEL *w_current)
  *  \todo Remove that function. Only the OK-Button should set any
  *  properties in the GSCHEM_TOPLEVEL struct.
  */
-gint change_alignment(GtkWidget *w, GSCHEM_TOPLEVEL *w_current)
+gint change_alignment(GtkComboBox *w, GSCHEM_TOPLEVEL *w_current)
 {
-  char *alignment;
-  alignment = gtk_object_get_data(GTK_OBJECT(w),"alignment");
-  w_current->text_alignment = atoi(alignment);
+  GtkTreeIter iter;
+  GtkTreeModel *model;
+  gint value;
+  if( gtk_combo_box_get_active_iter(w, &iter))
+  {
+    model = gtk_combo_box_get_model(w);
+    gtk_tree_model_get(model, &iter, 1, &value, -1);
+    w_current->text_alignment = value;
+  }
 
   /*w_current->page_current->CHANGED=1; I don't think this belongs */
   /* o_undo_savestate(w_current, UNDO_ALL); I don't think this belongs */
@@ -277,121 +283,50 @@ gint change_alignment(GtkWidget *w, GSCHEM_TOPLEVEL *w_current)
   return 0;
 }
 
-/*! \brief Create the alignment menu for the text property dialog
+/*! \brief Create the alignment combo box list store for the text
+*   property dialog
  *  \par Function Description
- *  This function creates a GtkMenu with nine different alignment
+ *  This function creates a GtkListStore with nine different alignment
  *  entries.
  */
-static GtkWidget *create_menu_alignment (GSCHEM_TOPLEVEL *w_current)
+static GtkListStore *create_menu_alignment (GSCHEM_TOPLEVEL *w_current)
 {
-  GtkWidget *menu;
-  GtkWidget *menuitem;
-  GSList *group;
-  char *buf;
+  GtkListStore *store;
+  GtkTreeIter   iter;
 
-  menu = gtk_menu_new ();
-  group = NULL;
+  store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_INT);
 
-  buf = g_strdup_printf( _("Lower Left"));
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "0");
-  gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
-                     (GtkSignalFunc) change_alignment,
-                     w_current);
-  gtk_widget_show (menuitem);
+  gtk_list_store_append(store, &iter);
+  gtk_list_store_set(store, &iter, 0, _("Upper Left"), -1);
+  gtk_list_store_set(store, &iter, 1, 2, -1);
+  gtk_list_store_append(store, &iter);
+  gtk_list_store_set(store, &iter, 0, _("Upper Middle"), -1);
+  gtk_list_store_set(store, &iter, 1, 5, -1);
+  gtk_list_store_append( store, &iter);
+  gtk_list_store_set(store, &iter, 0, _("Upper Right"), -1);
+  gtk_list_store_set(store, &iter, 1, 8, -1);
 
-  buf = g_strdup_printf( _("Middle Left"));
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "1");
-  gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
-                     (GtkSignalFunc) change_alignment,
-                     w_current);
-  gtk_widget_show (menuitem);
+  gtk_list_store_append(store, &iter);
+  gtk_list_store_set(store, &iter, 0, _("Middle Left"), -1);
+  gtk_list_store_set(store, &iter, 1, 1, -1);
+  gtk_list_store_append(store, &iter);
+  gtk_list_store_set(store, &iter, 0, _("Middle Middle"), -1);
+  gtk_list_store_set(store, &iter, 1, 4, -1);
+  gtk_list_store_append(store, &iter);
+  gtk_list_store_set(store, &iter, 0, _("Middle Right"), -1);
+  gtk_list_store_set(store, &iter, 1, 7, -1);
 
-  buf = g_strdup_printf( _("Upper Left"));
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "2");
-  gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
-                     (GtkSignalFunc) change_alignment,
-                     w_current);
-  gtk_widget_show (menuitem);
+  gtk_list_store_append(store, &iter);
+  gtk_list_store_set(store, &iter, 0, _("Lower Left"), -1);
+  gtk_list_store_set(store, &iter, 1, 0, -1);
+  gtk_list_store_append(store, &iter);
+  gtk_list_store_set(store, &iter, 0, _("Lower Middle"), -1);
+  gtk_list_store_set(store, &iter, 1, 3, -1);
+  gtk_list_store_append(store, &iter);
+  gtk_list_store_set(store, &iter, 0, _("Lower Right"), -1);
+  gtk_list_store_set(store, &iter, 1, 6, -1);
 
-  buf = g_strdup_printf( _("Lower Middle"));
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "3");
-  gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
-                     (GtkSignalFunc) change_alignment,
-                     w_current);
-  gtk_widget_show (menuitem);
-
-  buf = g_strdup_printf( _("Middle Middle"));
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "4");
-  gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
-                     (GtkSignalFunc) change_alignment,
-                     w_current);
-  gtk_widget_show (menuitem);
-
-  buf = g_strdup_printf( _("Upper Middle"));
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "5");
-  gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
-                     (GtkSignalFunc) change_alignment,
-                     w_current);
-  gtk_widget_show (menuitem);
-
-  buf = g_strdup_printf( _("Lower Right"));
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "6");
-  gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
-                     (GtkSignalFunc) change_alignment,
-                     w_current);
-  gtk_widget_show (menuitem);
-
-  buf = g_strdup_printf( _("Middle Right"));
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "7");
-  gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
-                     (GtkSignalFunc) change_alignment,
-                     w_current);
-  gtk_widget_show (menuitem);
-
-  buf = g_strdup_printf( _("Upper Right"));
-  menuitem = gtk_radio_menu_item_new_with_label (group, buf);
-  g_free(buf);
-  group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
-  gtk_object_set_data (GTK_OBJECT(menuitem), "alignment", "8");
-  gtk_signal_connect(GTK_OBJECT (menuitem), "activate",
-                     (GtkSignalFunc) change_alignment,
-                     w_current);
-  gtk_widget_show (menuitem);
-
-  return menu;
+  return store;
 }
 
 /* we reuse the color menu so we need to declare it */
@@ -483,7 +418,9 @@ void text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_
   GtkWidget *table;
   GtkWidget *vbox;
   GtkWidget *optionmenu = NULL;
+  GtkWidget *combobox = NULL;
   GtkWidget *align_menu = NULL;
+  GtkCellRenderer *cell = NULL;
   GtkWidget *viewport1 = NULL;
   GtkWidget *textentry = NULL;
   GtkWidget *sizeentry = NULL;
@@ -492,6 +429,9 @@ void text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_
   GtkTextBuffer *textbuffer;
   char *text_size_string;
   int num_selected=0;
+  /* Lookup table for quickly translating between alignment values and the
+     combo box list indices, index is alignment value, value is list index */
+  static int alignment_lookup[] = {6, 3, 0, 7, 4, 1, 8, 5, 2};
 
   if (!w_current->tewindow) {
     w_current->tewindow = gschem_dialog_new_with_buttons(_("Edit Text Properties"),
@@ -595,16 +535,20 @@ void text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_
     gtk_misc_set_alignment(GTK_MISC(label),0,0);
     gtk_table_attach(GTK_TABLE(table), label, 0,1,2,3, GTK_FILL,0,0,0);
 
-    optionmenu = gtk_option_menu_new ();
-    align_menu = create_menu_alignment (w_current);
-    gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
-                             align_menu);
-    gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu),
-                                text_alignment);
+    align_menu = create_menu_alignment(w_current);
+    combobox = gtk_combo_box_new_with_model(GTK_TREE_MODEL(align_menu));
+    gtk_combo_box_set_wrap_width(GTK_COMBO_BOX(combobox), 3);
+    cell = gtk_cell_renderer_text_new();
+    gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(combobox), cell, TRUE);
+    gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(combobox), cell,
+                                   "text", 0, NULL);
+    gtk_combo_box_set_active(GTK_COMBO_BOX(combobox),
+                             alignment_lookup[text_alignment]);
     w_current->text_alignment = text_alignment;
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(gtk_menu_get_active(GTK_MENU(align_menu))),
-                                   TRUE);
-    gtk_table_attach_defaults(GTK_TABLE(table), optionmenu, 1,2,2,3);
+    g_object_unref(G_OBJECT(align_menu));
+    gtk_table_attach_defaults(GTK_TABLE(table), combobox, 1,2,2,3);
+    g_signal_connect(G_OBJECT(combobox), "changed",
+                      G_CALLBACK(change_alignment), w_current);
 
     GLADE_HOOKUP_OBJECT(w_current->tewindow, sizeentry,"sizeentry");
     gtk_widget_show_all(w_current->tewindow);

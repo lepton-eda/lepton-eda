@@ -763,7 +763,7 @@ void select_all_text_in_textview(GtkTextView *textview);
 void destroy_window(GtkWidget *widget, GtkWidget **window);
 void text_input_dialog_apply(GtkWidget *w, GSCHEM_TOPLEVEL *w_current);
 void text_input_dialog(GSCHEM_TOPLEVEL *w_current);
-gint change_alignment(GtkWidget *w, GSCHEM_TOPLEVEL *w_current);
+gint change_alignment(GtkComboBox *w, GSCHEM_TOPLEVEL *w_current);
 void text_edit_dialog_ok(GtkWidget *w, GSCHEM_TOPLEVEL *w_current);
 void text_edit_dialog(GSCHEM_TOPLEVEL *w_current, const char *string, int text_size, int text_alignment);
 void line_type_dialog(GSCHEM_TOPLEVEL *w_current);
