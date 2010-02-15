@@ -5,20 +5,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: geda-gschem-CVS-2002-09-26\n"
+"Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2010-02-15 18:00+0000\n"
-"PO-Revision-Date: 2010-01-31 12:19+0000\n"
-"Last-Translator: MIYAMOTO Takanori <Unknown>\n"
+"PO-Revision-Date: 2010-02-14 01:03+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-01-31 13:08+0000\n"
+"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
-#, fuzzy
 msgid "_File"
 msgstr "ファイル"
 
@@ -27,96 +26,80 @@ msgid "New Window"
 msgstr "新規ウィンドウ"
 
 #: gschem/src/rcstrings.c:4
-#, fuzzy
 msgid "_New"
-msgstr "新規"
+msgstr ""
 
 #: gschem/src/rcstrings.c:5
-#, fuzzy
 msgid "_Open..."
-msgstr "開く..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:6
 msgid "Open Recen_t"
 msgstr ""
 
 #: gschem/src/rcstrings.c:7
-#, fuzzy
 msgid "_Save"
-msgstr "保存"
+msgstr ""
 
 #: gschem/src/rcstrings.c:8
-#, fuzzy
 msgid "Save _As..."
-msgstr "名前を付けて保存..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:9
 msgid "Save All"
 msgstr "すべて保存"
 
 #: gschem/src/rcstrings.c:10 gschem/src/rcstrings.c:79
-#, fuzzy
 msgid "_Revert"
-msgstr "戻る"
+msgstr ""
 
 #: gschem/src/rcstrings.c:11
-#, fuzzy
 msgid "_Print..."
-msgstr "印刷..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:12
-#, fuzzy
 msgid "Write _image..."
-msgstr "イメージ出力..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:13 gschem/src/x_script.c:47
 msgid "Execute Script..."
 msgstr "スクリプト実行..."
 
 #: gschem/src/rcstrings.c:14 gschem/src/rcstrings.c:80
-#, fuzzy
 msgid "_Close"
-msgstr "閉じる"
+msgstr ""
 
 #: gschem/src/rcstrings.c:15
-#, fuzzy
 msgid "_Quit"
-msgstr "終了"
+msgstr ""
 
 #: gschem/src/rcstrings.c:17
-#, fuzzy
 msgid "_Edit"
 msgstr "編集"
 
 #: gschem/src/rcstrings.c:18
-#, fuzzy
 msgid "_Undo"
-msgstr "アンドゥ"
+msgstr ""
 
 #: gschem/src/rcstrings.c:19
-#, fuzzy
 msgid "_Redo"
-msgstr "リドゥ"
+msgstr ""
 
 #: gschem/src/rcstrings.c:20
-#, fuzzy
 msgid "Cu_t"
-msgstr "カット"
+msgstr ""
 
 #: gschem/src/rcstrings.c:21
-#, fuzzy
 msgid "_Copy"
-msgstr "コピー"
+msgstr ""
 
 #: gschem/src/rcstrings.c:22
-#, fuzzy
 msgid "_Paste"
-msgstr "ペースト"
+msgstr ""
 
 #: gschem/src/rcstrings.c:23
-#, fuzzy
 msgid "_Delete"
-msgstr "削除"
+msgstr ""
 
 #: gschem/src/rcstrings.c:24 gschem/src/i_basic.c:77 gschem/src/x_window.c:522
 msgid "Select Mode"
@@ -135,9 +118,8 @@ msgid "Copy Mode"
 msgstr "コピーモード"
 
 #: gschem/src/rcstrings.c:28 gschem/src/i_basic.c:142
-#, fuzzy
 msgid "Multiple Copy Mode"
-msgstr "コピーモード"
+msgstr ""
 
 #: gschem/src/rcstrings.c:29 gschem/src/i_basic.c:87
 msgid "Move Mode"
@@ -185,14 +167,12 @@ msgid "Symbol Translate..."
 msgstr "シンボル転送..."
 
 #: gschem/src/rcstrings.c:40
-#, fuzzy
 msgid "Embed Component/Picture"
-msgstr "組み込む"
+msgstr ""
 
 #: gschem/src/rcstrings.c:41
-#, fuzzy
 msgid "Unembed Component/Picture"
-msgstr "組み込み解除"
+msgstr ""
 
 #: gschem/src/rcstrings.c:42
 msgid "Update Component"
@@ -207,7 +187,6 @@ msgid "Make Inv Text Vis"
 msgstr "隠しテキスト表示"
 
 #: gschem/src/rcstrings.c:46
-#, fuzzy
 msgid "_Buffer"
 msgstr "バッファ"
 
@@ -272,44 +251,36 @@ msgid "Paste from 5"
 msgstr "ペースト5"
 
 #: gschem/src/rcstrings.c:63
-#, fuzzy
 msgid "_View"
 msgstr "表示"
 
 #: gschem/src/rcstrings.c:64
-#, fuzzy
 msgid "_Redraw"
-msgstr "画面更新"
+msgstr ""
 
 #: gschem/src/rcstrings.c:65
-#, fuzzy
 msgid "_Pan"
-msgstr "パン"
+msgstr ""
 
 #: gschem/src/rcstrings.c:66
-#, fuzzy
 msgid "Zoom _Box"
-msgstr "拡大"
+msgstr ""
 
 #: gschem/src/rcstrings.c:67
-#, fuzzy
 msgid "Zoom _Extents"
-msgstr "拡大範囲"
+msgstr ""
 
 #: gschem/src/rcstrings.c:68
-#, fuzzy
 msgid "Zoom _In"
-msgstr "拡大"
+msgstr ""
 
 #: gschem/src/rcstrings.c:69
-#, fuzzy
 msgid "Zoom _Out"
-msgstr "縮小"
+msgstr ""
 
 #: gschem/src/rcstrings.c:70
-#, fuzzy
 msgid "Zoom _Full"
-msgstr "最大拡大"
+msgstr ""
 
 #: gschem/src/rcstrings.c:71
 msgid "_Dark color scheme"
@@ -320,242 +291,196 @@ msgid "_Light color scheme"
 msgstr ""
 
 #: gschem/src/rcstrings.c:74
-#, fuzzy
 msgid "_Page"
 msgstr "ページ"
 
 #: gschem/src/rcstrings.c:75
-#, fuzzy
 msgid "_Manager..."
-msgstr "マネージャ..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:76
-#, fuzzy
 msgid "_Previous"
-msgstr "前"
+msgstr ""
 
 #: gschem/src/rcstrings.c:77
-#, fuzzy
 msgid "_Next"
-msgstr "次"
+msgstr ""
 
 #: gschem/src/rcstrings.c:78
-#, fuzzy
 msgid "Ne_w"
-msgstr "新規"
+msgstr ""
 
 #: gschem/src/rcstrings.c:81
-#, fuzzy
 msgid "_Discard"
-msgstr "破棄"
+msgstr ""
 
 #: gschem/src/rcstrings.c:83
-#, fuzzy
 msgid "_Add"
 msgstr "追加"
 
 #: gschem/src/rcstrings.c:84
-#, fuzzy
 msgid "_Component..."
-msgstr "部品..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:85
-#, fuzzy
 msgid "_Net"
-msgstr "ネット"
+msgstr ""
 
 #: gschem/src/rcstrings.c:86
-#, fuzzy
 msgid "B_us"
-msgstr "バス"
+msgstr ""
 
 #: gschem/src/rcstrings.c:87
-#, fuzzy
 msgid "_Attribute..."
-msgstr "アトリビュート..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:88
-#, fuzzy
 msgid "_Text..."
-msgstr "テキスト..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:89
-#, fuzzy
 msgid "_Line"
-msgstr "線"
+msgstr ""
 
 #: gschem/src/rcstrings.c:90
-#, fuzzy
 msgid "_Box"
-msgstr "ボックス"
+msgstr ""
 
 #: gschem/src/rcstrings.c:91
-#, fuzzy
 msgid "C_ircle"
-msgstr "円"
+msgstr ""
 
 #: gschem/src/rcstrings.c:92
-#, fuzzy
 msgid "A_rc"
-msgstr "円弧"
+msgstr ""
 
 #: gschem/src/rcstrings.c:93
-#, fuzzy
 msgid "_Pin"
-msgstr "ピン"
+msgstr ""
 
 #: gschem/src/rcstrings.c:94
-#, fuzzy
 msgid "Pictu_re..."
-msgstr "印刷..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:96
-#, fuzzy
 msgid "Hie_rarchy"
 msgstr "階層"
 
 #: gschem/src/rcstrings.c:97
-#, fuzzy
 msgid "_Down Schematic"
-msgstr "スケマチックへ"
+msgstr ""
 
 #: gschem/src/rcstrings.c:98
-#, fuzzy
 msgid "Down _Symbol"
-msgstr "シンボルへ"
+msgstr ""
 
 #: gschem/src/rcstrings.c:99
-#, fuzzy
 msgid "_Up"
-msgstr "上へ"
+msgstr ""
 
 #: gschem/src/rcstrings.c:100
-#, fuzzy
 msgid "D_ocumentation..."
-msgstr "ドキュメント表示/検索"
+msgstr ""
 
 #: gschem/src/rcstrings.c:102
-#, fuzzy
 msgid "A_ttributes"
 msgstr "アトリビュート"
 
 #: gschem/src/rcstrings.c:103
-#, fuzzy
 msgid "_Attach"
-msgstr "アタッチ"
+msgstr ""
 
 #: gschem/src/rcstrings.c:104
-#, fuzzy
 msgid "_Detach"
-msgstr "アタッチ解除"
+msgstr ""
 
 #: gschem/src/rcstrings.c:105
-#, fuzzy
 msgid "Show _Value"
-msgstr "値表示"
+msgstr ""
 
 #: gschem/src/rcstrings.c:106
-#, fuzzy
 msgid "Show _Name"
-msgstr "名前表示"
+msgstr ""
 
 #: gschem/src/rcstrings.c:107
-#, fuzzy
 msgid "Show _Both"
-msgstr "名前と値を表示"
+msgstr ""
 
 #: gschem/src/rcstrings.c:108
-#, fuzzy
 msgid "_Toggle Visibility"
-msgstr "表示/非表示"
+msgstr ""
 
 #: gschem/src/rcstrings.c:109
-#, fuzzy
 msgid "_Find Specific Text..."
-msgstr "テキスト検索..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:110
-#, fuzzy
 msgid "_Hide Specific Text..."
-msgstr "テキストを隠す..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:111
-#, fuzzy
 msgid "_Show Specific Text..."
-msgstr "テキストを表示..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:112
-#, fuzzy
 msgid "A_utonumber Text..."
-msgstr "オートナンバーテキスト"
+msgstr ""
 
 #: gschem/src/rcstrings.c:114
-#, fuzzy
 msgid "_Options"
 msgstr "オプション"
 
 #: gschem/src/rcstrings.c:115
-#, fuzzy
 msgid "_Text Size..."
-msgstr "テキストサイズ..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:116
 msgid "Cycle _grid styles"
 msgstr ""
 
 #: gschem/src/rcstrings.c:117
-#, fuzzy
 msgid "Toggle _Snap On/Off"
-msgstr "スナップ オン/オフ"
+msgstr ""
 
 #: gschem/src/rcstrings.c:118
-#, fuzzy
 msgid "Snap Grid S_pacing..."
-msgstr "グリッドの間隔..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:119
-#, fuzzy
 msgid "Scale _up Grid Spacing"
-msgstr "グリッドの間隔..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:120
-#, fuzzy
 msgid "Scale _down Grid Spacing"
-msgstr "グリッドの間隔..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:121
-#, fuzzy
 msgid "Toggle _Outline/Box"
-msgstr "アウトライン/ボックス"
+msgstr ""
 
 #: gschem/src/rcstrings.c:122
-#, fuzzy
 msgid "Toggle Net _Rubberband"
-msgstr "ラバーバンド切替え"
+msgstr ""
 
 #: gschem/src/rcstrings.c:123
 msgid "Toggle _Magnetic Net"
 msgstr ""
 
 #: gschem/src/rcstrings.c:124
-#, fuzzy
 msgid "Show _Log Window..."
-msgstr "ログウィンドウ表示..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:125
-#, fuzzy
 msgid "Show _Coord Window..."
-msgstr "座標ウィンドウ表示..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:127
-#, fuzzy
 msgid "_Help"
 msgstr "ヘルプ"
 
 #: gschem/src/rcstrings.c:128
-#, fuzzy
 msgid "gEDA Docu_mentation..."
-msgstr "ドキュメント表示/検索"
+msgstr ""
 
 #: gschem/src/rcstrings.c:129
 msgid "gschem _FAQ..."
@@ -566,19 +491,16 @@ msgid "gEDA _Wiki..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:131
-#, fuzzy
 msgid "Component D_ocumentation..."
-msgstr "ドキュメント表示/検索"
+msgstr ""
 
 #: gschem/src/rcstrings.c:132
-#, fuzzy
 msgid "_Hotkeys..."
-msgstr "ホットキー..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:133
-#, fuzzy
 msgid "_About..."
-msgstr "gschemについて..."
+msgstr ""
 
 #: gschem/src/a_zoom.c:212
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -1868,9 +1790,8 @@ msgid "About gschem"
 msgstr ""
 
 #: gschem/src/x_dialog.c:2208
-#, fuzzy
 msgid "gEDA: GPL Electronic Design Automation"
-msgstr "gEDA : GPL Electronic Design Automation"
+msgstr ""
 
 #: gschem/src/x_dialog.c:2209
 msgid ""
@@ -1964,9 +1885,8 @@ msgid "Object color:"
 msgstr ""
 
 #: gschem/src/x_dialog.c:2681
-#, fuzzy
 msgid "Hotkeys"
-msgstr "ホットキー..."
+msgstr ""
 
 #: gschem/src/x_dialog.c:2745
 msgid "Function"
@@ -2140,9 +2060,8 @@ msgid "Image type"
 msgstr ""
 
 #: gschem/src/x_image.c:495
-#, fuzzy
 msgid "Write image..."
-msgstr "イメージ出力..."
+msgstr ""
 
 #: gschem/src/x_log.c:188
 msgid "** Invalid UTF-8 in log message. See stderr or gschem.log.\n"
@@ -2559,64 +2478,17 @@ msgstr ""
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr ""
 
-#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
-#~ msgstr "おっと! 存在しないスロットを編集しようとしました!\n"
-
 #~ msgid "About..."
 #~ msgstr "gschemについて..."
 
 #~ msgid "Revert Page"
 #~ msgstr "戻す"
 
-#, fuzzy
-#~ msgid "Recent files"
-#~ msgstr "新規ファイル"
-
 #~ msgid "Close Window"
 #~ msgstr "ウィンドウを閉じる"
 
-#, fuzzy
-#~ msgid "Manual"
-#~ msgstr "マニュアル..."
-
-#~ msgid "Toggle Grid On/Off"
-#~ msgstr "グリッド オン/オフ"
-
-#~ msgid "Invalid color [%s] passed to %s\n"
-#~ msgstr "無効な色[%s]が%sに指定されました。\n"
-
-#~ msgid "You must set the GEDADATA environment variable!\n"
-#~ msgstr "環境変数GEDADATAを設定してください!\n"
-
-#~ msgid "Grid ON\n"
-#~ msgstr "グリッド・オン\n"
-
-#~ msgid "Unknown end for arc (%d)\n"
-#~ msgstr "不明な円弧の先端(%d)\n"
-
-#~ msgid "Unknown type for arc !\n"
-#~ msgstr "不明な円弧の種類!\n"
-
-#~ msgid "Unknown end for box (%d)\n"
-#~ msgstr "不明なボックスの先端(%d)\n"
-
-#~ msgid "Unknown type for box !\n"
-#~ msgstr "不明なボックスの種類!\n"
-
-#~ msgid "Unknown end for circle\n"
-#~ msgstr "不明な円の先端\n"
-
-#~ msgid "Unknown type for circle!\n"
-#~ msgstr "不明な円の種類!\n"
-
-#~ msgid "Could not find the color %s!\n"
-#~ msgstr "色%sが見付かりません!\n"
-
-#~ msgid "Defaulting color to white\n"
-#~ msgstr "デフォルトの色を白にします。\n"
-
-#~ msgid "Ack! Cannot allocate white!\n"
-#~ msgstr "あっ! 白を指定できません!\n"
+#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
+#~ msgstr "おっと! 存在しないスロットを編集しようとしました!\n"
 
 #~ msgid "Attribute failed ot find.\n"
 #~ msgstr "アトリビュートが見付かりません。\n"
@@ -2694,7 +2566,7 @@ msgstr ""
 #~ msgstr "sch - スケマチック"
 
 #~ msgid "sym - Symbols "
-#~ msgstr "sym - シンボル"
+#~ msgstr "sym - シンボル "
 
 #~ msgid "sym/sch - Schematics and Symbols"
 #~ msgstr "sym/sch - スケマチックとシンボル"
@@ -2874,16 +2746,87 @@ msgstr ""
 #~ msgstr "すべて保存 - 選択"
 
 #~ msgid "Paste 1 Mode "
-#~ msgstr "ペースト1モード"
+#~ msgstr "ペースト1モード "
 
 #~ msgid "Paste 2 Mode "
-#~ msgstr "ペースト2モード"
+#~ msgstr "ペースト2モード "
 
 #~ msgid "Paste 3 Mode "
-#~ msgstr "ペースト3モード"
+#~ msgstr "ペースト3モード "
 
 #~ msgid "Paste 4 Mode "
-#~ msgstr "ペースト4モード"
+#~ msgstr "ペースト4モード "
+
+#, fuzzy
+#~ msgid "Recent files"
+#~ msgstr "新規ファイル"
+
+#, fuzzy
+#~ msgid "Manual"
+#~ msgstr "マニュアル..."
+
+#~ msgid "Toggle Grid On/Off"
+#~ msgstr "グリッド オン/オフ"
+
+#~ msgid "Invalid color [%s] passed to %s\n"
+#~ msgstr "無効な色[%s]が%sに指定されました。\n"
+
+#~ msgid "You must set the GEDADATA environment variable!\n"
+#~ msgstr "環境変数GEDADATAを設定してください!\n"
+
+#~ msgid "Grid ON\n"
+#~ msgstr "グリッド・オン\n"
+
+#~ msgid "Unknown end for arc (%d)\n"
+#~ msgstr "不明な円弧の先端(%d)\n"
+
+#~ msgid "Unknown type for arc !\n"
+#~ msgstr "不明な円弧の種類!\n"
+
+#~ msgid "Unknown end for box (%d)\n"
+#~ msgstr "不明なボックスの先端(%d)\n"
+
+#~ msgid "Unknown type for box !\n"
+#~ msgstr "不明なボックスの種類!\n"
+
+#~ msgid "Unknown end for circle\n"
+#~ msgstr "不明な円の先端\n"
+
+#~ msgid "Unknown type for circle!\n"
+#~ msgstr "不明な円の種類!\n"
+
+#~ msgid "Could not find the color %s!\n"
+#~ msgstr "色%sが見付かりません!\n"
+
+#~ msgid "Defaulting color to white\n"
+#~ msgstr "デフォルトの色を白にします。\n"
+
+#~ msgid "Ack! Cannot allocate white!\n"
+#~ msgstr "あっ! 白を指定できません!\n"
+
+#~ msgid "File"
+#~ msgstr "ファイル"
+
+#~ msgid "Buffer"
+#~ msgstr "バッファ"
+
+#~ msgid "View"
+#~ msgstr "表示"
+
+#~ msgid "Page"
+#~ msgstr "ページ"
+
+#~ msgid "Add"
+#~ msgstr "追加"
+
+#~ msgid "Hierarchy"
+#~ msgstr "階層"
+
+#~ msgid "Options"
+#~ msgstr "オプション"
+
+#~ msgid "Help"
+#~ msgstr "ヘルプ"
 
 #, fuzzy
 #~ msgid "Invalid size [%f] passed to postscript-font-scale\n"

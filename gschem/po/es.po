@@ -3,25 +3,24 @@
 # This file is distributed under the same license as the gschem package.
 #
 #
-# Carlos Nieves Ónega <cnieves@iespana.es>, 2005-201, 2010.
+# Carlos Nieves Ónega <cnieves@iespana.es>, 2005-2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2010-02-15 18:00+0000\n"
-"PO-Revision-Date: 2010-02-11 18:59+0100\n"
-"Last-Translator: Carlos Nieves Ónega <cnieves@iespana.es>\n"
+"PO-Revision-Date: 2010-02-14 01:04+0000\n"
+"Last-Translator: Carlos Nieves Ónega <Unknown>\n"
 "Language-Team: Spanish/Spain <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0.2\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
-#, fuzzy
 msgid "_File"
-msgstr "Archivo"
+msgstr "_Archivo"
 
 #: gschem/src/rcstrings.c:3
 msgid "New Window"
@@ -76,9 +75,8 @@ msgid "_Quit"
 msgstr "_Salir"
 
 #: gschem/src/rcstrings.c:17
-#, fuzzy
 msgid "_Edit"
-msgstr "Editar"
+msgstr "_Editar"
 
 #: gschem/src/rcstrings.c:18
 msgid "_Undo"
@@ -190,9 +188,8 @@ msgid "Make Inv Text Vis"
 msgstr "Hacer visible el texto oculto"
 
 #: gschem/src/rcstrings.c:46
-#, fuzzy
 msgid "_Buffer"
-msgstr "Memoria intermedia"
+msgstr "Me_moria intermedia"
 
 #: gschem/src/rcstrings.c:47
 msgid "Copy into 1"
@@ -255,9 +252,8 @@ msgid "Paste from 5"
 msgstr "Pegar memoria intermedia 5"
 
 #: gschem/src/rcstrings.c:63
-#, fuzzy
 msgid "_View"
-msgstr "Ver"
+msgstr "_Ver"
 
 #: gschem/src/rcstrings.c:64
 msgid "_Redraw"
@@ -296,9 +292,8 @@ msgid "_Light color scheme"
 msgstr "Configuración de co_lores claros"
 
 #: gschem/src/rcstrings.c:74
-#, fuzzy
 msgid "_Page"
-msgstr "Página"
+msgstr "_Página"
 
 #: gschem/src/rcstrings.c:75
 msgid "_Manager..."
@@ -321,9 +316,8 @@ msgid "_Discard"
 msgstr "_Descartar"
 
 #: gschem/src/rcstrings.c:83
-#, fuzzy
 msgid "_Add"
-msgstr "Añadir"
+msgstr "Aña_dir"
 
 #: gschem/src/rcstrings.c:84
 msgid "_Component..."
@@ -370,9 +364,8 @@ msgid "Pictu_re..."
 msgstr "I_magen..."
 
 #: gschem/src/rcstrings.c:96
-#, fuzzy
 msgid "Hie_rarchy"
-msgstr "Jerarquía"
+msgstr "Je_rarquía"
 
 #: gschem/src/rcstrings.c:97
 msgid "_Down Schematic"
@@ -391,9 +384,8 @@ msgid "D_ocumentation..."
 msgstr "D_ocumentación"
 
 #: gschem/src/rcstrings.c:102
-#, fuzzy
 msgid "A_ttributes"
-msgstr "Propiedades"
+msgstr "Prop_iedades"
 
 #: gschem/src/rcstrings.c:103
 msgid "_Attach"
@@ -436,9 +428,8 @@ msgid "A_utonumber Text..."
 msgstr "A_utonumerar texto..."
 
 #: gschem/src/rcstrings.c:114
-#, fuzzy
 msgid "_Options"
-msgstr "Opciones"
+msgstr "_Opciones"
 
 #: gschem/src/rcstrings.c:115
 msgid "_Text Size..."
@@ -485,9 +476,8 @@ msgid "Show _Coord Window..."
 msgstr "Mostrar ventana de _coordenadas..."
 
 #: gschem/src/rcstrings.c:127
-#, fuzzy
 msgid "_Help"
-msgstr "Ayuda"
+msgstr "Ay_uda"
 
 #: gschem/src/rcstrings.c:128
 msgid "gEDA Docu_mentation..."
@@ -1164,7 +1154,7 @@ msgstr "Seleccionada rejilla de malla\n"
 
 #: gschem/src/i_callbacks.c:3453
 msgid "Snap OFF (CAUTION!)\n"
-msgstr "¡PRECAUCIÓN!: Ajuste a la rejilla DESACTIVADO \n"
+msgstr "¡PRECAUCIÓN!: Ajuste a la rejilla DESACTIVADO\n"
 
 #: gschem/src/i_callbacks.c:3456
 msgid "Snap ON\n"
@@ -1176,7 +1166,7 @@ msgstr "Reajuste a la rejilla (¡PRECAUCIÓN!)\n"
 
 #: gschem/src/i_callbacks.c:3485
 msgid "Rubber band OFF \n"
-msgstr "Goma de borrar DESACT\n"
+msgstr "Goma de borrar DESACT \n"
 
 #: gschem/src/i_callbacks.c:3488
 msgid "Rubber band ON\n"
@@ -2584,10 +2574,6 @@ msgstr "Editor de esquemas gEDA"
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr "Crear y modificar esquemas y símbolos con gschem"
 
-#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
-#~ msgstr ""
-#~ "¡¡Ufff!! ¡se ha intentado editar el elemento de algo que no existe!\n"
-
 #~ msgid "About..."
 #~ msgstr "Acerca de..."
 
@@ -2623,6 +2609,10 @@ msgstr "Crear y modificar esquemas y símbolos con gschem"
 #~ msgid "Manual"
 #~ msgstr "Manual"
 
+#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
+#~ msgstr ""
+#~ "¡¡Ufff!! ¡se ha intentado editar el elemento de algo que no existe!\n"
+
 #~ msgid "Accelerator Closure"
 #~ msgstr "Cierre de la tecla rápida"
 
@@ -2640,6 +2630,12 @@ msgstr "Crear y modificar esquemas y símbolos con gschem"
 
 #~ msgid "The accelerator string to be displayed"
 #~ msgstr "La cadena de tecla rápida a visualizar"
+
+#~ msgid "Unknown end for path (%d)\n"
+#~ msgstr "Final de camino desconocido (%d)\n"
+
+#~ msgid "Unknown type for path !\n"
+#~ msgstr "¡Tipo de camino desconocido!\n"
 
 #~ msgid "Invalid size [%f] passed to postscript-font-scale\n"
 #~ msgstr ""
@@ -2692,12 +2688,6 @@ msgstr "Crear y modificar esquemas y símbolos con gschem"
 #~ msgid "Unknown type for circle!\n"
 #~ msgstr "¡Tipo de círculo desconocido!\n"
 
-#~ msgid "Unknown end for path (%d)\n"
-#~ msgstr "Final de camino desconocido (%d)\n"
-
-#~ msgid "Unknown type for path !\n"
-#~ msgstr "¡Tipo de camino desconocido!\n"
-
 #~ msgid "Could not find the color %s!\n"
 #~ msgstr "¡No se ha podido encontrar el color %s!\n"
 
@@ -2736,3 +2726,27 @@ msgstr "Crear y modificar esquemas y símbolos con gschem"
 
 #~ msgid "ERROR: NULL object in o_copy_end!\n"
 #~ msgstr "ERROR: en la función o_copy_end, ¡el objeto es NULL!\n"
+
+#~ msgid "File"
+#~ msgstr "Archivo"
+
+#~ msgid "Buffer"
+#~ msgstr "Memoria intermedia"
+
+#~ msgid "View"
+#~ msgstr "Ver"
+
+#~ msgid "Page"
+#~ msgstr "Página"
+
+#~ msgid "Add"
+#~ msgstr "Añadir"
+
+#~ msgid "Hierarchy"
+#~ msgstr "Jerarquía"
+
+#~ msgid "Options"
+#~ msgstr "Opciones"
+
+#~ msgid "Help"
+#~ msgstr "Ayuda"

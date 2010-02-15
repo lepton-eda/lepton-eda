@@ -5,17 +5,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libgeda\n"
+"Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2010-02-15 17:59+0000\n"
-"PO-Revision-Date: 2009-10-06 07:37+0100\n"
-"Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
+"PO-Revision-Date: 2010-01-31 13:00+0000\n"
+"Last-Translator: lambert63 <bert.timmerman@xs4all.nl>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Dutch\n"
+"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: NETHERLANDS\n"
+"X-Poedit-Language: Dutch\n"
 
 #: libgeda/data/libgeda.xml.in.h:3
 msgid "gEDA circuit schematic"

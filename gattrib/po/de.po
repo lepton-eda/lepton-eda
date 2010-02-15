@@ -5,16 +5,17 @@
 # Werner Hoch <werner.ho@gmx.de>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: de_DE\n"
+"Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2009-08-17 13:12+0100\n"
-"PO-Revision-Date: 2008-12-20 14:37+0000\n"
+"PO-Revision-Date: 2010-01-29 16:46+0000\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: gattrib/data/geda-gattrib.desktop.in.h:3
 msgid "gEDA Attribute Editor"

@@ -8,17 +8,16 @@ msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2010-02-15 18:00+0000\n"
-"PO-Revision-Date: 2010-01-29 15:51+0000\n"
+"PO-Revision-Date: 2010-02-11 03:33+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Malayalam <ml@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-01-31 13:08+0000\n"
+"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
-#, fuzzy
 msgid "_File"
 msgstr "ഫയല്‍"
 
@@ -27,42 +26,36 @@ msgid "New Window"
 msgstr "പുതിയ ജാലകം"
 
 #: gschem/src/rcstrings.c:4
-#, fuzzy
 msgid "_New"
-msgstr "പുതിയ"
+msgstr ""
 
 #: gschem/src/rcstrings.c:5
-#, fuzzy
 msgid "_Open..."
-msgstr "പേജ് തുറക്കുക"
+msgstr ""
 
 #: gschem/src/rcstrings.c:6
 msgid "Open Recen_t"
 msgstr ""
 
 #: gschem/src/rcstrings.c:7
-#, fuzzy
 msgid "_Save"
-msgstr "എല്ലാം സേവ് ചെയുക"
+msgstr ""
 
 #: gschem/src/rcstrings.c:8
-#, fuzzy
 msgid "Save _As..."
-msgstr "പേജ് ഇന്ന രീതിയില്‍ സേവ് ചെയുക"
+msgstr ""
 
 #: gschem/src/rcstrings.c:9
 msgid "Save All"
 msgstr "എല്ലാം സേവ് ചെയുക"
 
 #: gschem/src/rcstrings.c:10 gschem/src/rcstrings.c:79
-#, fuzzy
 msgid "_Revert"
-msgstr "പൂര്‍വ്വസ്ഥിതിയില്‍ ആക്കുക"
+msgstr ""
 
 #: gschem/src/rcstrings.c:11
-#, fuzzy
 msgid "_Print..."
-msgstr "പ്രിന്‍റ് ചെയ്യുക..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:12
 msgid "Write _image..."
@@ -73,29 +66,24 @@ msgid "Execute Script..."
 msgstr "സ്ക്രിപ്റ്റ് പ്രവര്‍ത്തിപ്പിക്കുക"
 
 #: gschem/src/rcstrings.c:14 gschem/src/rcstrings.c:80
-#, fuzzy
 msgid "_Close"
-msgstr "അടയ്ക്കുക"
+msgstr ""
 
 #: gschem/src/rcstrings.c:15
-#, fuzzy
 msgid "_Quit"
-msgstr "പുറത്തു് കടക്കുക"
+msgstr ""
 
 #: gschem/src/rcstrings.c:17
-#, fuzzy
 msgid "_Edit"
-msgstr "തിരുത്തിയെഴുതുക (Edit)"
+msgstr "തിരുത്തിയെഴുതുക (_Edit)"
 
 #: gschem/src/rcstrings.c:18
-#, fuzzy
 msgid "_Undo"
-msgstr "തിരിച്ച് ചെയ്യുക"
+msgstr ""
 
 #: gschem/src/rcstrings.c:19
-#, fuzzy
 msgid "_Redo"
-msgstr "ആവര്‍ത്തിക്കുക"
+msgstr ""
 
 #: gschem/src/rcstrings.c:20
 msgid "Cu_t"
@@ -106,14 +94,12 @@ msgid "_Copy"
 msgstr ""
 
 #: gschem/src/rcstrings.c:22
-#, fuzzy
 msgid "_Paste"
-msgstr "താള്"
+msgstr ""
 
 #: gschem/src/rcstrings.c:23
-#, fuzzy
 msgid "_Delete"
-msgstr "മായ്ക്കുക"
+msgstr ""
 
 #: gschem/src/rcstrings.c:24 gschem/src/i_basic.c:77 gschem/src/x_window.c:522
 msgid "Select Mode"
@@ -201,7 +187,6 @@ msgid "Make Inv Text Vis"
 msgstr ""
 
 #: gschem/src/rcstrings.c:46
-#, fuzzy
 msgid "_Buffer"
 msgstr "ബഫര്‍"
 
@@ -266,103 +251,84 @@ msgid "Paste from 5"
 msgstr "പകര്‍ത്തി എടുക്കുക 5 ല്‍ നിന്നും"
 
 #: gschem/src/rcstrings.c:63
-#, fuzzy
 msgid "_View"
 msgstr "വീക്ഷണം"
 
 #: gschem/src/rcstrings.c:64
-#, fuzzy
 msgid "_Redraw"
-msgstr "വീണ്ടും വരയ്ക്കുക"
+msgstr ""
 
 #: gschem/src/rcstrings.c:65
 msgid "_Pan"
 msgstr ""
 
 #: gschem/src/rcstrings.c:66
-#, fuzzy
 msgid "Zoom _Box"
-msgstr "വലുതാക്കി കാണിക്കുന്ന പെട്ടി"
+msgstr ""
 
 #: gschem/src/rcstrings.c:67
-#, fuzzy
 msgid "Zoom _Extents"
-msgstr "വലുതാക്കി കാണികുന്നതിന്റെ വിസ്താരം"
+msgstr ""
 
 #: gschem/src/rcstrings.c:68
-#, fuzzy
 msgid "Zoom _In"
-msgstr "വലുതാക്കി കാണിക്കുക"
+msgstr ""
 
 #: gschem/src/rcstrings.c:69
-#, fuzzy
 msgid "Zoom _Out"
-msgstr "ചെറുതാക്കി കാണിക്കുക"
+msgstr ""
 
 #: gschem/src/rcstrings.c:70
-#, fuzzy
 msgid "Zoom _Full"
-msgstr "മുഴുവനായി വലുതക്കുക"
+msgstr ""
 
 #: gschem/src/rcstrings.c:71
-#, fuzzy
 msgid "_Dark color scheme"
-msgstr "ഇരുണ്ട നിറ വ്യവസ്ഥ"
+msgstr ""
 
 #: gschem/src/rcstrings.c:72
-#, fuzzy
 msgid "_Light color scheme"
-msgstr "തെളിമയാര്‍ന്ന നിറ വ്യവസ്ഥ"
+msgstr ""
 
 #: gschem/src/rcstrings.c:74
-#, fuzzy
 msgid "_Page"
 msgstr "താള്"
 
 #: gschem/src/rcstrings.c:75
-#, fuzzy
 msgid "_Manager..."
-msgstr "മേല്‍നോട്ടക്കാരന്‍"
+msgstr ""
 
 #: gschem/src/rcstrings.c:76
-#, fuzzy
 msgid "_Previous"
-msgstr "മുന്‍പത്തേത്"
+msgstr ""
 
 #: gschem/src/rcstrings.c:77
-#, fuzzy
 msgid "_Next"
-msgstr "അടുത്തതു്"
+msgstr ""
 
 #: gschem/src/rcstrings.c:78
-#, fuzzy
 msgid "Ne_w"
-msgstr "പുതിയ"
+msgstr ""
 
 #: gschem/src/rcstrings.c:81
-#, fuzzy
 msgid "_Discard"
-msgstr "ഉപേക്ഷിക്കുക"
+msgstr ""
 
 #: gschem/src/rcstrings.c:83
-#, fuzzy
 msgid "_Add"
 msgstr "കൂട്ടിച്ചേര്‍ക്കുക"
 
 #: gschem/src/rcstrings.c:84
-#, fuzzy
 msgid "_Component..."
-msgstr "സാധനത്തിലെ മാറ്റങ്ങള്‍ നടപ്പില്‍ വരുത്തുക"
+msgstr ""
 
 #: gschem/src/rcstrings.c:85
-#, fuzzy
 msgid "_Net"
-msgstr "നെറ്റ്"
+msgstr ""
 
 #: gschem/src/rcstrings.c:86
-#, fuzzy
 msgid "B_us"
-msgstr "ബസ്"
+msgstr ""
 
 #: gschem/src/rcstrings.c:87
 msgid "_Attribute..."
@@ -373,34 +339,28 @@ msgid "_Text..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:89
-#, fuzzy
 msgid "_Line"
-msgstr "രേഖ"
+msgstr ""
 
 #: gschem/src/rcstrings.c:90
-#, fuzzy
 msgid "_Box"
-msgstr "ബോക്സ്"
+msgstr ""
 
 #: gschem/src/rcstrings.c:91
-#, fuzzy
 msgid "C_ircle"
-msgstr "വൃത്തം"
+msgstr ""
 
 #: gschem/src/rcstrings.c:92
-#, fuzzy
 msgid "A_rc"
-msgstr "അര്ദ്ധവൃത്തം"
+msgstr ""
 
 #: gschem/src/rcstrings.c:93
-#, fuzzy
 msgid "_Pin"
-msgstr "പിന്‍"
+msgstr ""
 
 #: gschem/src/rcstrings.c:94
-#, fuzzy
 msgid "Pictu_re..."
-msgstr "ചിത്രം"
+msgstr ""
 
 #: gschem/src/rcstrings.c:96
 msgid "Hie_rarchy"
@@ -415,9 +375,8 @@ msgid "Down _Symbol"
 msgstr ""
 
 #: gschem/src/rcstrings.c:99
-#, fuzzy
 msgid "_Up"
-msgstr "മുകളിേലക്ക്"
+msgstr ""
 
 #: gschem/src/rcstrings.c:100
 msgid "D_ocumentation..."
@@ -2503,3 +2462,18 @@ msgstr ""
 
 #~ msgid "Close Window"
 #~ msgstr "വിന്ഡോ അടയ്ക്കുക"
+
+#~ msgid "File"
+#~ msgstr "ഫയല്‍"
+
+#~ msgid "Buffer"
+#~ msgstr "ബഫര്‍"
+
+#~ msgid "View"
+#~ msgstr "വീക്ഷണം"
+
+#~ msgid "Page"
+#~ msgstr "താള്"
+
+#~ msgid "Add"
+#~ msgstr "കൂട്ടിച്ചേര്‍ക്കുക"

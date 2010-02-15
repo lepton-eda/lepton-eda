@@ -7,15 +7,16 @@ msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2010-02-15 18:00+0000\n"
-"PO-Revision-Date: 2008-12-20 14:27+0000\n"
-"Last-Translator: Bernd Jendrissek <bernd.jendrissek@gmail.com>\n"
+"PO-Revision-Date: 2010-02-14 01:03+0000\n"
+"Last-Translator: Bernd Jendrissek <Unknown>\n"
 "Language-Team: <geda-dev@moira.seul.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: gschem/src/rcstrings.c:2
-#, fuzzy
 msgid "_File"
 msgstr "Lêer"
 
@@ -24,96 +25,80 @@ msgid "New Window"
 msgstr "Nuwe Venster"
 
 #: gschem/src/rcstrings.c:4
-#, fuzzy
 msgid "_New"
-msgstr "Nuwe"
+msgstr ""
 
 #: gschem/src/rcstrings.c:5
-#, fuzzy
 msgid "_Open..."
-msgstr "Open..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:6
 msgid "Open Recen_t"
 msgstr ""
 
 #: gschem/src/rcstrings.c:7
-#, fuzzy
 msgid "_Save"
-msgstr "Bewaar"
+msgstr ""
 
 #: gschem/src/rcstrings.c:8
-#, fuzzy
 msgid "Save _As..."
-msgstr "Bewaar as..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:9
 msgid "Save All"
 msgstr "Bewaar Alles"
 
 #: gschem/src/rcstrings.c:10 gschem/src/rcstrings.c:79
-#, fuzzy
 msgid "_Revert"
-msgstr "Gaan Terug"
+msgstr ""
 
 #: gschem/src/rcstrings.c:11
-#, fuzzy
 msgid "_Print..."
-msgstr "Druk..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:12
-#, fuzzy
 msgid "Write _image..."
-msgstr "Skryf afbeelding..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:13 gschem/src/x_script.c:47
 msgid "Execute Script..."
 msgstr "Voer Script Uit..."
 
 #: gschem/src/rcstrings.c:14 gschem/src/rcstrings.c:80
-#, fuzzy
 msgid "_Close"
-msgstr "Sluit Af"
+msgstr ""
 
 #: gschem/src/rcstrings.c:15
-#, fuzzy
 msgid "_Quit"
-msgstr "Sluit"
+msgstr ""
 
 #: gschem/src/rcstrings.c:17
-#, fuzzy
 msgid "_Edit"
 msgstr "Bewerk"
 
 #: gschem/src/rcstrings.c:18
-#, fuzzy
 msgid "_Undo"
-msgstr "Maak Ongedaan"
+msgstr ""
 
 #: gschem/src/rcstrings.c:19
-#, fuzzy
 msgid "_Redo"
-msgstr "Herstel"
+msgstr ""
 
 #: gschem/src/rcstrings.c:20
-#, fuzzy
 msgid "Cu_t"
-msgstr "Sny"
+msgstr ""
 
 #: gschem/src/rcstrings.c:21
-#, fuzzy
 msgid "_Copy"
-msgstr "Kopieer"
+msgstr ""
 
 #: gschem/src/rcstrings.c:22
-#, fuzzy
 msgid "_Paste"
-msgstr "Plak"
+msgstr ""
 
 #: gschem/src/rcstrings.c:23
-#, fuzzy
 msgid "_Delete"
-msgstr "Verwyder"
+msgstr ""
 
 #: gschem/src/rcstrings.c:24 gschem/src/i_basic.c:77 gschem/src/x_window.c:522
 msgid "Select Mode"
@@ -202,7 +187,6 @@ msgid "Make Inv Text Vis"
 msgstr "Maak Onsigbare Teks Sigbaar"
 
 #: gschem/src/rcstrings.c:46
-#, fuzzy
 msgid "_Buffer"
 msgstr "Buffer"
 
@@ -267,44 +251,36 @@ msgid "Paste from 5"
 msgstr "Plak vanuit 5"
 
 #: gschem/src/rcstrings.c:63
-#, fuzzy
 msgid "_View"
 msgstr "Aansig"
 
 #: gschem/src/rcstrings.c:64
-#, fuzzy
 msgid "_Redraw"
-msgstr "Herteken"
+msgstr ""
 
 #: gschem/src/rcstrings.c:65
-#, fuzzy
 msgid "_Pan"
-msgstr "Skuif Aansig"
+msgstr ""
 
 #: gschem/src/rcstrings.c:66
-#, fuzzy
 msgid "Zoom _Box"
-msgstr "Zoem Reghoek"
+msgstr ""
 
 #: gschem/src/rcstrings.c:67
-#, fuzzy
 msgid "Zoom _Extents"
-msgstr "Zoem Omvang"
+msgstr ""
 
 #: gschem/src/rcstrings.c:68
-#, fuzzy
 msgid "Zoom _In"
-msgstr "Zoem In"
+msgstr ""
 
 #: gschem/src/rcstrings.c:69
-#, fuzzy
 msgid "Zoom _Out"
-msgstr "Zoem Uit"
+msgstr ""
 
 #: gschem/src/rcstrings.c:70
-#, fuzzy
 msgid "Zoom _Full"
-msgstr "Zoem Ten Volle"
+msgstr ""
 
 #: gschem/src/rcstrings.c:71
 msgid "_Dark color scheme"
@@ -315,266 +291,216 @@ msgid "_Light color scheme"
 msgstr ""
 
 #: gschem/src/rcstrings.c:74
-#, fuzzy
 msgid "_Page"
 msgstr "Bladsy"
 
 #: gschem/src/rcstrings.c:75
-#, fuzzy
 msgid "_Manager..."
-msgstr "Bestuurder..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:76
-#, fuzzy
 msgid "_Previous"
-msgstr "Vorige"
+msgstr ""
 
 #: gschem/src/rcstrings.c:77
-#, fuzzy
 msgid "_Next"
-msgstr "Volgende"
+msgstr ""
 
 #: gschem/src/rcstrings.c:78
-#, fuzzy
 msgid "Ne_w"
-msgstr "Nuwe"
+msgstr ""
 
 #: gschem/src/rcstrings.c:81
-#, fuzzy
 msgid "_Discard"
-msgstr "Werp Weg"
+msgstr ""
 
 #: gschem/src/rcstrings.c:83
-#, fuzzy
 msgid "_Add"
 msgstr "Voeg By"
 
 #: gschem/src/rcstrings.c:84
-#, fuzzy
 msgid "_Component..."
-msgstr "Komponent..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:85
-#, fuzzy
 msgid "_Net"
-msgstr "Skakeling"
+msgstr ""
 
 #: gschem/src/rcstrings.c:86
-#, fuzzy
 msgid "B_us"
-msgstr "Bus"
+msgstr ""
 
 #: gschem/src/rcstrings.c:87
-#, fuzzy
 msgid "_Attribute..."
-msgstr "Eienskap..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:88
-#, fuzzy
 msgid "_Text..."
-msgstr "Teks..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:89
-#, fuzzy
 msgid "_Line"
-msgstr "Lyn"
+msgstr ""
 
 #: gschem/src/rcstrings.c:90
-#, fuzzy
 msgid "_Box"
-msgstr "Reghoek"
+msgstr ""
 
 #: gschem/src/rcstrings.c:91
-#, fuzzy
 msgid "C_ircle"
-msgstr "Sirkel"
+msgstr ""
 
 #: gschem/src/rcstrings.c:92
-#, fuzzy
 msgid "A_rc"
-msgstr "Boog"
+msgstr ""
 
 #: gschem/src/rcstrings.c:93
-#, fuzzy
 msgid "_Pin"
-msgstr "Pen"
+msgstr ""
 
 #: gschem/src/rcstrings.c:94
-#, fuzzy
 msgid "Pictu_re..."
-msgstr "Afbeelding"
+msgstr ""
 
 #: gschem/src/rcstrings.c:96
-#, fuzzy
 msgid "Hie_rarchy"
 msgstr "Hierargie"
 
 #: gschem/src/rcstrings.c:97
-#, fuzzy
 msgid "_Down Schematic"
-msgstr "Stroombaandiagram Af"
+msgstr ""
 
 #: gschem/src/rcstrings.c:98
-#, fuzzy
 msgid "Down _Symbol"
-msgstr "Simbool Af"
+msgstr ""
 
 #: gschem/src/rcstrings.c:99
-#, fuzzy
 msgid "_Up"
-msgstr "Op"
+msgstr ""
 
 #: gschem/src/rcstrings.c:100
-#, fuzzy
 msgid "D_ocumentation..."
-msgstr "Dokumentasie"
+msgstr ""
 
 #: gschem/src/rcstrings.c:102
-#, fuzzy
 msgid "A_ttributes"
 msgstr "Eienskappe"
 
 #: gschem/src/rcstrings.c:103
-#, fuzzy
 msgid "_Attach"
-msgstr "Heg aan"
+msgstr ""
 
 #: gschem/src/rcstrings.c:104
-#, fuzzy
 msgid "_Detach"
-msgstr "Heg af"
+msgstr ""
 
 #: gschem/src/rcstrings.c:105
-#, fuzzy
 msgid "Show _Value"
-msgstr "Toon Waarde"
+msgstr ""
 
 #: gschem/src/rcstrings.c:106
-#, fuzzy
 msgid "Show _Name"
-msgstr "Toon Naam"
+msgstr ""
 
 #: gschem/src/rcstrings.c:107
-#, fuzzy
 msgid "Show _Both"
-msgstr "Toon Beide"
+msgstr ""
 
 #: gschem/src/rcstrings.c:108
-#, fuzzy
 msgid "_Toggle Visibility"
-msgstr "Skakel Sigbaarheid"
+msgstr ""
 
 #: gschem/src/rcstrings.c:109
-#, fuzzy
 msgid "_Find Specific Text..."
-msgstr "Vind Spesifieke Teks..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:110
-#, fuzzy
 msgid "_Hide Specific Text..."
-msgstr "Verskuil Spesifieke Teks..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:111
-#, fuzzy
 msgid "_Show Specific Text..."
-msgstr "Toon Spesifieke Teks..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:112
-#, fuzzy
 msgid "A_utonumber Text..."
-msgstr "Nommereer Teks Outomaties..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:114
-#, fuzzy
 msgid "_Options"
 msgstr "Opsies"
 
 #: gschem/src/rcstrings.c:115
-#, fuzzy
 msgid "_Text Size..."
-msgstr "Teksgrootte..."
+msgstr ""
 
 #: gschem/src/rcstrings.c:116
 msgid "Cycle _grid styles"
 msgstr ""
 
 #: gschem/src/rcstrings.c:117
-#, fuzzy
 msgid "Toggle _Snap On/Off"
-msgstr "Skakel Rooster Aan/Af"
+msgstr ""
 
-# FIXME: Find a better expression for "Snap Grid".
 #: gschem/src/rcstrings.c:118
-#, fuzzy
 msgid "Snap Grid S_pacing..."
-msgstr "Snaproosterspasiëring"
+msgstr ""
 
 #: gschem/src/rcstrings.c:119
-#, fuzzy
 msgid "Scale _up Grid Spacing"
-msgstr "Vergroot Roosterspasiëring"
+msgstr ""
 
 #: gschem/src/rcstrings.c:120
-#, fuzzy
 msgid "Scale _down Grid Spacing"
-msgstr "Verklein Roosterspasiëring"
+msgstr ""
 
 #: gschem/src/rcstrings.c:121
-#, fuzzy
 msgid "Toggle _Outline/Box"
-msgstr "Skakel Skets/Omtrekreghoek"
+msgstr ""
 
 #: gschem/src/rcstrings.c:122
-#, fuzzy
 msgid "Toggle Net _Rubberband"
-msgstr "Skakel Net Rubberband"
+msgstr ""
 
 #: gschem/src/rcstrings.c:123
 msgid "Toggle _Magnetic Net"
 msgstr ""
 
 #: gschem/src/rcstrings.c:124
-#, fuzzy
 msgid "Show _Log Window..."
-msgstr "Wys Aantekeningevenster"
+msgstr ""
 
 #: gschem/src/rcstrings.c:125
-#, fuzzy
 msgid "Show _Coord Window..."
-msgstr "Wys Koordinatevenster"
+msgstr ""
 
 #: gschem/src/rcstrings.c:127
-#, fuzzy
 msgid "_Help"
 msgstr "Help"
 
 #: gschem/src/rcstrings.c:128
-#, fuzzy
 msgid "gEDA Docu_mentation..."
-msgstr "gEDA Dokumentasie"
+msgstr ""
 
 #: gschem/src/rcstrings.c:129
-#, fuzzy
 msgid "gschem _FAQ..."
-msgstr "gschem FAQ"
+msgstr ""
 
 #: gschem/src/rcstrings.c:130
 msgid "gEDA _Wiki..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:131
-#, fuzzy
 msgid "Component D_ocumentation..."
-msgstr "Komponent Dokumentasie"
+msgstr ""
 
 #: gschem/src/rcstrings.c:132
 msgid "_Hotkeys..."
 msgstr ""
 
 #: gschem/src/rcstrings.c:133
-#, fuzzy
 msgid "_About..."
-msgstr "Omtrent..."
+msgstr ""
 
 #: gschem/src/a_zoom.c:212
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -693,7 +619,6 @@ msgstr ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
 
-# FIXME: Track down other projects' translations of the GPL boilerplate.
 #: gschem/src/gschem.c:189
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
@@ -1208,7 +1133,7 @@ msgstr ""
 
 #: gschem/src/i_callbacks.c:3485
 msgid "Rubber band OFF \n"
-msgstr "Rubberband AF\n"
+msgstr "Rubberband AF \n"
 
 #: gschem/src/i_callbacks.c:3488
 msgid "Rubber band ON\n"
@@ -1866,9 +1791,8 @@ msgid "About gschem"
 msgstr "Oor gschem"
 
 #: gschem/src/x_dialog.c:2208
-#, fuzzy
 msgid "gEDA: GPL Electronic Design Automation"
-msgstr "<b>gEDA: GPL Elektroniese Ontwerp Outomatisering</b>"
+msgstr "gEDA: GPL Elektroniese Ontwerp Outomatisering"
 
 #: gschem/src/x_dialog.c:2209
 msgid ""
@@ -2564,11 +2488,6 @@ msgstr "gEDA Stroombaandiagram Bewerker"
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr "Skep en bewerk stroombaandiagramme en simbole met gschem"
 
-#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
-#~ msgstr ""
-#~ "uggg!  Jy het probeer om iets as 'n gleuf te bewerk, maar dit bestaan "
-#~ "nie!\n"
-
 #~ msgid "About..."
 #~ msgstr "Omtrent..."
 
@@ -2595,14 +2514,25 @@ msgstr "Skep en bewerk stroombaandiagramme en simbole met gschem"
 #~ msgid "Save Page As..."
 #~ msgstr "Bewaar Bladsy As..."
 
-#~ msgid "Recent files"
-#~ msgstr "Onlangse lêers"
-
 #~ msgid "Close Window"
 #~ msgstr "Sluit Venster"
 
 #~ msgid "Manual"
 #~ msgstr "Handleiding"
+
+#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
+#~ msgstr ""
+#~ "uggg!  Jy het probeer om iets as 'n gleuf te bewerk, maar dit bestaan "
+#~ "nie!\n"
+
+#~ msgid "Recent files"
+#~ msgstr "Onlangse lêers"
+
+#~ msgid "Slot Chooser"
+#~ msgstr "Gleufkieser"
+
+#~ msgid "Draw slot %s which is in %s\n"
+#~ msgstr "Teken gleuf %s wat in %s is\n"
 
 #~ msgid "Invalid size [%f] passed to postscript-font-scale\n"
 #~ msgstr "Ongeldige grootte [%f] aan postscript-font-scale gegee\n"
@@ -2676,11 +2606,29 @@ msgstr "Skep en bewerk stroombaandiagramme en simbole met gschem"
 #~ msgid "ERROR: NULL object in o_copy_end!\n"
 #~ msgstr "FOUT: NULL voorwerp in o_copy_end!\n"
 
-#~ msgid "Slot Chooser"
-#~ msgstr "Gleufkieser"
+#~ msgid "File"
+#~ msgstr "Lêer"
 
-#~ msgid "Draw slot %s which is in %s\n"
-#~ msgstr "Teken gleuf %s wat in %s is\n"
+#~ msgid "Buffer"
+#~ msgstr "Buffer"
+
+#~ msgid "View"
+#~ msgstr "Aansig"
+
+#~ msgid "Page"
+#~ msgstr "Bladsy"
+
+#~ msgid "Add"
+#~ msgstr "Voeg By"
+
+#~ msgid "Hierarchy"
+#~ msgstr "Hierargie"
+
+#~ msgid "Options"
+#~ msgstr "Opsies"
+
+#~ msgid "Help"
+#~ msgstr "Help"
 
 #, fuzzy
 #~ msgid "Unknown end for path (%d)\n"
