@@ -58,6 +58,32 @@
 
 static gint global_pid = 0;
 
+/* Called just before removing an OBJECT from a PAGE. */
+static void
+object_added (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
+{
+  /* Set up object parent pointer */
+#ifndef NDEBUG
+  if (object->page != NULL) {
+    g_critical ("Object %p already has parent page %p!", object, object->page);
+  }
+#endif
+  object->page = page;
+}
+
+/* Called just after removing an OBJECT from a PAGE. */
+static void
+object_removed (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
+{
+  /* Clear object parent pointer */
+#ifndef NDEBUG
+  if (object->page == NULL) {
+    g_critical ("Object %p has NULL parent page!", object);
+  }
+#endif
+  object->page = NULL;
+}
+
 /*! \brief create a new page object
  *  \par Function Description
  *  Creates a new page and add it to <B>toplevel</B>'s list of pages.
@@ -520,6 +546,7 @@ gint s_page_autosave (TOPLEVEL *toplevel)
 void s_page_append (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 {
   page->_object_list = g_list_append (page->_object_list, object);
+  object_added (toplevel, page, object);
 }
 
 /*! \brief Append a GList of OBJECTs to the PAGE
@@ -534,7 +561,11 @@ void s_page_append (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
  */
 void s_page_append_list (TOPLEVEL *toplevel, PAGE *page, GList *obj_list)
 {
+  GList *iter;
   page->_object_list = g_list_concat (page->_object_list, obj_list);
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    object_added (toplevel, page, iter->data);
+  }
 }
 
 /*! \brief Remove an OBJECT from the PAGE
@@ -550,6 +581,7 @@ void s_page_append_list (TOPLEVEL *toplevel, PAGE *page, GList *obj_list)
 void s_page_remove (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 {
   page->_object_list = g_list_remove (page->_object_list, object);
+  object_removed (toplevel, page, object);
 }
 
 /*! \brief Remove and free all OBJECTs from the PAGE
@@ -562,8 +594,13 @@ void s_page_remove (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
  */
 void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page)
 {
-  s_delete_object_glist (toplevel, page->_object_list);
+  GList *objects = page->_object_list;
+  GList *iter;
   page->_object_list = NULL;
+  for (iter = objects; iter != NULL; iter = g_list_next (iter)) {
+    object_removed (toplevel, page, iter->data);
+  }
+  s_delete_object_glist (toplevel, objects);
 }
 
 

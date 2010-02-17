@@ -218,6 +218,8 @@ struct st_object {
   int sid;
   char *name;
 
+  PAGE *page; /* Parent page */
+
   int w_top;				/* Bounding box information */
   int w_left;				/* in world coords */
   int w_right;

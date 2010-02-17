@@ -111,6 +111,7 @@ OBJECT *o_attrib_find_attrib_by_name(const GList *list, char *name, int count);
 /* o_basic.c */
 void o_bounds_invalidate(TOPLEVEL *toplevel, OBJECT *object);
 double o_shortest_distance_full(OBJECT *object, int x, int y, int force_solid);
+PAGE *o_get_page_compat (TOPLEVEL *toplevel, OBJECT *object);
 
 /* o_box_basic.c */
 OBJECT *o_box_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver);

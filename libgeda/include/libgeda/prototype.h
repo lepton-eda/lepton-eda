@@ -124,6 +124,7 @@ void o_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, in
 void o_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 double o_shortest_distance(OBJECT *object, int x, int y);
 void o_set_color(TOPLEVEL *toplevel, OBJECT *object, int color);
+PAGE *o_get_page (TOPLEVEL *toplevel, OBJECT *object);
 
 /* o_box_basic.c */
 OBJECT *o_box_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);

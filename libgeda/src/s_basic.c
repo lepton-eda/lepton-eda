@@ -81,6 +81,9 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
   /* Setup the name */
   new_node->name = g_strdup_printf("%s.%d", name, new_node->sid);
 
+  /* Don't associate with a page, initially */
+  new_node->page = NULL;
+
   /* Setup the bounding box */
   new_node->w_top = 0;
   new_node->w_left = 0;
@@ -222,6 +225,11 @@ void
 s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   if (o_current != NULL) {
+    /* If currently attached to a page, remove it from the page */
+    if (o_current->page != NULL) {
+      s_page_remove (toplevel, o_current->page, o_current);
+    }
+
     s_conn_remove_object (toplevel, o_current);
 
     if (o_current->attached_to != NULL) {

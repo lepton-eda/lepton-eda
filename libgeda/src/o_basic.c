@@ -583,3 +583,57 @@ void o_set_color (TOPLEVEL *toplevel, OBJECT *object, int color)
       object->type == OBJ_PLACEHOLDER)
     o_glist_set_color (toplevel, object->complex->prim_objs, color);
 }
+
+
+/*! \brief Get an object's parent PAGE.
+ *
+ * \par Function Description
+ * Returns the PAGE structure which owns \a object. If \a object is
+ * not currently associated with a PAGE, returns NULL. If \a object is
+ * part of a compound object, recurses upward.
+ *
+ * \param [in] toplevel  The TOPLEVEL structure.
+ * \param [in] object    The OBJECT for which to retrieve the parent PAGE.
+ * \return The PAGE which owns \a object or NULL.
+ *
+ * \sa s_page_append_object() s_page_append() s_page_remove()
+ */
+PAGE *
+o_get_page (TOPLEVEL *toplevel, OBJECT *object)
+{
+  if (object->parent != NULL) {
+    return o_get_page (toplevel, object->parent);
+  }
+  return object->page;
+}
+
+/*! \brief Get an object's parent PAGE, or fall back to global current page.
+ *
+ * \par Function Description
+ * If set, returns the PAGE structure which owns \a object.  If \a
+ * object does not have a parent page set, returns the global current
+ * page from \a toplevel.  If the object parent page is inconsistent
+ * with the global current page, a critical-level error message is
+ * emitted.
+ *
+ * \warning This function is primarily intended to assist in the
+ * migration of code from using the TOPLEVEL current page to using the
+ * o_get_page().  It should not be used in new code.
+ *
+ * \deprecated Use o_get_page() in new code.
+ *
+ * \param [in] toplevel  The TOPLEVEL structure.
+ * \param [in] object    The OBJECT for which to retrieve the parent PAGE.
+ * \return The PAGE which owns \a object, the global current PAGE, or NULL.
+ */
+PAGE *
+o_get_page_compat (TOPLEVEL *toplevel, OBJECT *object) {
+  PAGE *page = o_get_page (*toplevel, *object);
+  if (page != toplevel->page_current) {
+    g_critical ("o_get_page_compat: OBJECT.page = %p, TOPLEVEL.page_current = %p",
+                page, toplevel->page_current);
+    return toplevel->page_current;
+  } else {
+    return page;
+  }
+}
