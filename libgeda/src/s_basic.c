@@ -237,10 +237,6 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
       o_attrib_remove(toplevel, &o_current->attached_to->attribs, o_current);
     }
 
-    if (toplevel->page_current->object_lastplace == o_current) {
-      toplevel->page_current->object_lastplace = NULL;
-    }
-
     if (o_current->line) {
       /*	printf("sdeleting line\n");*/
       g_free(o_current->line);

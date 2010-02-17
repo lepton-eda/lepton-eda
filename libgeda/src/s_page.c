@@ -82,6 +82,11 @@ object_removed (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
   }
 #endif
   object->page = NULL;
+
+  /* Clear page's object_lastplace pointer if set */
+  if (page->object_lastplace == object) {
+    page->object_lastplace = NULL;
+  }
 }
 
 /*! \brief create a new page object
