@@ -230,6 +230,13 @@ void s_clib_init (void);
 void s_color_init(void);
 gchar *s_color_ps_string(gint color);
 
+/* s_conn.c */
+CONN *s_conn_return_new(OBJECT *other_object, int type, int x, int y, int whichone, int other_whichone);
+int s_conn_uniq(GList *conn_list, CONN *input_conn);
+int s_conn_remove_other(TOPLEVEL *toplevel, OBJECT *other_object, OBJECT *to_remove);
+OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y);
+void s_conn_print(GList *conn_list);
+
 /* s_encoding.c */
 gchar* s_encoding_base64_encode (gchar* src, guint srclen, guint* dstlenp, gboolean strict);
 gchar* s_encoding_base64_decode (gchar* src, guint srclen, guint* dstlenp);
