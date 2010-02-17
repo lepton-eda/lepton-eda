@@ -103,11 +103,6 @@ OBJECT *o_net_new(TOPLEVEL *toplevel, char type,
   new_node->draw_func = net_draw_func;
   new_node->sel_func = select_func;
 
-  if (!toplevel->ADDING_SEL) {
-    s_tile_add_object (toplevel, new_node);
-    s_conn_update_object (toplevel, new_node);
-  }
-
   return new_node;
 }
 
@@ -578,7 +573,6 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
             }
           }
 
-          s_conn_remove_object (toplevel, other_object);
           s_page_remove (toplevel, toplevel->page_current, other_object);
           s_delete_object (toplevel, other_object);
           o_net_recalc(toplevel, object);

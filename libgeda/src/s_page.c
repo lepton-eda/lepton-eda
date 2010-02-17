@@ -69,6 +69,12 @@ object_added (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
   }
 #endif
   object->page = page;
+
+  /* Add object to tile system. */
+  s_tile_add_object (toplevel, object);
+
+  /* Update object connection tracking */
+  s_conn_update_object (toplevel, object);
 }
 
 /* Called just after removing an OBJECT from a PAGE. */
@@ -87,6 +93,12 @@ object_removed (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
   if (page->object_lastplace == object) {
     page->object_lastplace = NULL;
   }
+
+  /* Remove object from connection system */
+  s_conn_remove_object (toplevel, object);
+
+  /* Remove object from tile system */
+  s_tile_remove_object (object);
 }
 
 /*! \brief create a new page object

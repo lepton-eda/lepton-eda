@@ -108,11 +108,6 @@ OBJECT *o_bus_new(TOPLEVEL *toplevel,
   new_node->draw_func = bus_draw_func;  
   new_node->sel_func = select_func;  
 
-  if (!toplevel->ADDING_SEL) {
-    s_tile_add_object (toplevel, new_node);
-    s_conn_update_object (toplevel, new_node);
-  }
-
   return new_node;
 }
 

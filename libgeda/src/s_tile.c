@@ -309,12 +309,22 @@ static void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
  */
 void s_tile_add_object (TOPLEVEL *toplevel, OBJECT *object)
 {
+  GList *iter;
+
   switch (object->type) {
     case OBJ_NET:
     case OBJ_PIN:
     case OBJ_BUS:
       s_tile_add_line_object (toplevel, object);
       break;
+
+  case OBJ_COMPLEX:
+  case OBJ_PLACEHOLDER:
+    for (iter = object->complex->prim_objs;
+         iter != NULL;
+         iter = g_list_next (iter)) {
+      s_tile_add_object (toplevel, iter->data);
+    }
   }
 }
 
@@ -326,7 +336,17 @@ void s_tile_add_object (TOPLEVEL *toplevel, OBJECT *object)
  */
 void s_tile_remove_object(OBJECT *object)
 {
+  GList *iter;
   GList *tl_current;
+
+  /* Correctly deal with compound objects */
+  if (object->type == OBJ_COMPLEX || object->type == OBJ_PLACEHOLDER) {
+    for (iter = object->complex->prim_objs;
+         iter != NULL;
+         iter = g_list_next (iter)) {
+      s_tile_remove_object (iter->data);
+    }
+  }
 
   for (tl_current = object->tiles;
        tl_current != NULL;

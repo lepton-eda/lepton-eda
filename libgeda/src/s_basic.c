@@ -240,9 +240,6 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
     if (o_current->line) {
       /*	printf("sdeleting line\n");*/
       g_free(o_current->line);
-
-      /* yes this object might be in the tile system */
-      s_tile_remove_object(o_current);
     }
     o_current->line = NULL;
 
