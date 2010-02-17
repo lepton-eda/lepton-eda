@@ -39,20 +39,15 @@ extern int global_sid;
  *  returns head !!!!!!!!!!!!!!!!!!!
  *  look at above.. this returns what was passed in!!!!
  *  copies selected to list_head (!! returns new list)
- *  flag is either NORMAL_FLAG or SELECTION_FLAG
  *
  *  \param [in]  toplevel   The TOPLEVEL object.
  *  \param [in]  selected
- *  \param [in]  flag
  *  \return OBJECT pointer.
  */
 OBJECT *o_object_copy (TOPLEVEL *toplevel,
-                       OBJECT *selected, int flag)
+                       OBJECT *selected)
 {
   OBJECT *new_obj;
-
-  /* are we adding a selection or the real object list */
-  toplevel->ADDING_SEL = flag;
 
   switch(selected->type) {
 
@@ -116,9 +111,6 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
     new_obj->sid = selected->sid;
   }
 
-  /* I don't think this is a good idea at all */
-  /* toplevel->ADDING_SEL = 0; */
-
   return new_obj;
 }
 
@@ -142,12 +134,11 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
  */
 GList *o_glist_copy_all (TOPLEVEL *toplevel,
                          const GList *src_list,
-                         GList *dest_list, int flag)
+                         GList *dest_list)
 {
   const GList *src;
   GList *dest;
   OBJECT *src_object, *dst_object;
-  int adding_sel_save;
   int selected_save;
 
   src = src_list;
@@ -157,9 +148,6 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
   if (src == NULL) {
     return(NULL);
   }
-
-  /* Save ADDING_SEL as o_list_copy_to() sets it */
-  adding_sel_save = toplevel->ADDING_SEL;
 
   /* first do all NON text items */
   while(src != NULL) {
@@ -171,7 +159,7 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
       o_selection_unselect (toplevel, src_object);
 
     if (src_object->type != OBJ_TEXT) {
-      dst_object = o_object_copy (toplevel, src_object, flag);
+      dst_object = o_object_copy (toplevel, src_object);
       dst_object->sid = global_sid++;
       dest = g_list_prepend (dest, dst_object);
     }
@@ -195,7 +183,7 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
       o_selection_unselect (toplevel, src_object);
 
     if (src_object->type == OBJ_TEXT) {
-      dst_object = o_object_copy (toplevel, src_object, flag);
+      dst_object = o_object_copy (toplevel, src_object);
       dst_object->sid = global_sid++;
       dest = g_list_prepend (dest, dst_object);
 
@@ -226,8 +214,6 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
 
   /* Reverse the list to be in the correct order */
   dest = g_list_reverse (dest);
-
-  toplevel->ADDING_SEL = adding_sel_save;
 
   return(dest);
 }

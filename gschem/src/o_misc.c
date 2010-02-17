@@ -762,7 +762,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
       /* add new attribute to old component */
 
       /* make a copy of the attribute object */
-      o_attrib = o_object_copy (toplevel, a_current, NORMAL_FLAG);
+      o_attrib = o_object_copy (toplevel, a_current);
       s_page_append (toplevel, toplevel->page_current, o_attrib);
       /* add the attribute to old */
       o_attrib_add (toplevel, o_current, o_attrib);

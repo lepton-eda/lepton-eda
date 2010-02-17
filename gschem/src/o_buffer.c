@@ -39,11 +39,8 @@ selection_to_buffer(GSCHEM_TOPLEVEL *w_current, int buf_num)
     object_buffer[buf_num] = NULL;
   }
 
-  toplevel->ADDING_SEL = 1;
   object_buffer[buf_num] = o_glist_copy_all (toplevel, s_current,
-                                             object_buffer[buf_num],
-                                             SELECTION_FLAG);
-  toplevel->ADDING_SEL = 0;
+                                             object_buffer[buf_num]);
 }
 
 /*! \todo Finish function documentation!!!
@@ -100,11 +97,9 @@ void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
   s_delete_object_glist(toplevel, toplevel->page_current->place_list);
   toplevel->page_current->place_list = NULL;
 
-  toplevel->ADDING_SEL = 1;
   toplevel->page_current->place_list =
     o_glist_copy_all (toplevel, object_buffer[buf_num],
-                      toplevel->page_current->place_list,
-                      SELECTION_FLAG);
+                      toplevel->page_current->place_list);
 
   if (!world_get_object_glist_bounds (toplevel,
                                       toplevel->page_current->place_list,
@@ -126,7 +121,6 @@ void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
 
   o_glist_translate_world (toplevel, w_x - x, w_y - y,
                            toplevel->page_current->place_list);
-  toplevel->ADDING_SEL = 0;
 
   w_current->inside_action = 1;
   i_set_state(w_current, ENDPASTE);

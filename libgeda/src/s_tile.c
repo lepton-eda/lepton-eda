@@ -132,7 +132,7 @@ static void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
 
   p_current = o_get_page (toplevel, object);
 
-  if (toplevel->ADDING_SEL || p_current == NULL) {
+  if (p_current == NULL) {
     return;
   }
   

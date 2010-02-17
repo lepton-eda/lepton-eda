@@ -73,7 +73,7 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
     /* Make a copy of the place list if we want to keep it afterwards */
     temp_dest_list = o_glist_copy_all (toplevel,
                                        toplevel->page_current->place_list,
-                                       temp_dest_list, SELECTION_FLAG);
+                                       temp_dest_list);
   } else {
     /* Otherwise just take it */
     temp_dest_list = toplevel->page_current->place_list;
@@ -84,9 +84,6 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
     *ret_new_objects = g_list_copy (temp_dest_list);
   }
 
-  /* Translate with ADDING_SEL=0, so connectable objects (nets, pins, buses)
-   * get referenced and updated in the page's tile system. */
-  toplevel->ADDING_SEL = 0;
   o_glist_translate_world(toplevel, w_diff_x, w_diff_y, temp_dest_list);
 
   /* Clear the old selection list */

@@ -57,8 +57,7 @@ void o_copy_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   toplevel->page_current->place_list =
     o_glist_copy_all (toplevel, s_current,
-                      toplevel->page_current->place_list,
-                      SELECTION_FLAG);
+                      toplevel->page_current->place_list);
 
   w_current->inside_action = 1;
   i_set_state(w_current, COPY);

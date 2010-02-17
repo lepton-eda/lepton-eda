@@ -61,7 +61,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->override_color = -1;
 
   toplevel->DONT_REDRAW       = 0;
-  toplevel->ADDING_SEL        = 0;
 
   toplevel->pages = geda_list_new();
   toplevel->page_current = NULL;

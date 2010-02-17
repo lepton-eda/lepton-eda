@@ -332,8 +332,7 @@ GList *o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
   if (toplevel->keep_invisible) {
     for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
       OBJECT *o_kept = (OBJECT *) iter->data;
-      OBJECT *o_copy = o_object_copy (toplevel, o_kept,
-                                      toplevel->ADDING_SEL);
+      OBJECT *o_copy = o_object_copy (toplevel, o_kept);
       o_kept->visibility = INVISIBLE;
       o_copy->parent = NULL;
       promoted = g_list_prepend (promoted, o_copy);
@@ -411,7 +410,6 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
   OBJECT *new_prim_obj;
   GList *prim_objs;
   GList *iter;
-  int save_adding_sel = 0;
   int loaded_normally = FALSE;
 
   gchar *buffer = NULL;
@@ -448,9 +446,6 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
   if (clib != NULL) {
     buffer = s_clib_symbol_get_data (clib);
   }
-
-  save_adding_sel = toplevel->ADDING_SEL;
-  toplevel->ADDING_SEL = 1;	/* name is hack, don't want to */
 
   if (clib == NULL || buffer == NULL) {
 
@@ -541,7 +536,6 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
     g_free (buffer);
 
   }
-  toplevel->ADDING_SEL = save_adding_sel;
 
   /* do not mirror/rotate/translate/connect the primitive objects if the
    * component was not loaded via o_read 
@@ -815,7 +809,7 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   /* Copy contents and set the parent pointers on the copied objects. */
   o_new->complex->prim_objs =
     o_glist_copy_all (toplevel, o_current->complex->prim_objs,
-                      NULL, toplevel->ADDING_SEL);
+                      NULL);
 
   for (iter = o_new->complex->prim_objs;
        iter != NULL;

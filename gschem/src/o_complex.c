@@ -89,14 +89,12 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const CLibSymbol *sym)
 
     temp_list = NULL;
 
-    toplevel->ADDING_SEL=1;
     buffer = s_clib_symbol_get_data (sym);
     temp_list = o_read_buffer (toplevel,
                                temp_list,
                                buffer, -1,
                                sym_name);
     g_free (buffer);
-    toplevel->ADDING_SEL=0;
 
     /* Take the added objects */
     toplevel->page_current->place_list =
@@ -105,7 +103,6 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const CLibSymbol *sym)
   } else { /* if (w_current->include_complex) {..} else { */
     OBJECT *new_object;
 
-    toplevel->ADDING_SEL = 1; /* reuse this flag, rename later hack */
     new_object = o_complex_new (toplevel, OBJ_COMPLEX, DEFAULT_COLOR,
                                 0, 0, 0, 0, sym, sym_name, 1);
 
@@ -114,8 +111,6 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const CLibSymbol *sym)
         o_complex_promote_attribs (toplevel, new_object));
     toplevel->page_current->place_list =
       g_list_append (toplevel->page_current->place_list, new_object);
-
-    toplevel->ADDING_SEL = 0;
 
     /* Flag the symbol as embedded if necessary */
     o_current = (g_list_last (toplevel->page_current->place_list))->data;

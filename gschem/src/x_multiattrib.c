@@ -674,7 +674,7 @@ static void multiattrib_action_promote_attribute (GSCHEM_TOPLEVEL *w_current,
                                  object);
   } else {
       /* make a copy of the attribute object */
-      o_new = o_object_copy (toplevel, o_attrib, NORMAL_FLAG);
+      o_new = o_object_copy (toplevel, o_attrib);
       s_page_append (toplevel, toplevel->page_current, o_new);
       /* add the attribute its parent */
       o_attrib_attach (toplevel, o_new, object, TRUE);

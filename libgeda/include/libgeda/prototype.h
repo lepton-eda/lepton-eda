@@ -187,8 +187,8 @@ void o_line_scale_world(TOPLEVEL *toplevel, int x_scale, int y_scale, OBJECT *ob
 double o_line_length(OBJECT *object);
 
 /* o_list.c */
-OBJECT *o_object_copy(TOPLEVEL *toplevel, OBJECT *selected, int flag);
-GList *o_glist_copy_all(TOPLEVEL *toplevel, const GList *src_list, GList *dest_list, int flag);
+OBJECT *o_object_copy(TOPLEVEL *toplevel, OBJECT *selected);
+GList *o_glist_copy_all(TOPLEVEL *toplevel, const GList *src_list, GList *dest_list);
 void o_glist_translate_world(TOPLEVEL *toplevel, int dx, int dy, const GList *list);
 void o_glist_rotate_world(TOPLEVEL *toplevel, int x, int y, int angle, const GList *list);
 void o_glist_mirror_world(TOPLEVEL *toplevel, int x, int y, const GList *list);

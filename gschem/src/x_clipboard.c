@@ -193,8 +193,7 @@ x_clipboard_set (GSCHEM_TOPLEVEL *w_current, const GList *object_list)
 
   /* Copy the objects to the clipboard buffer */
   w_current->clipboard_buffer =
-    o_glist_copy_all (toplevel, object_list, w_current->clipboard_buffer,
-                      SELECTION_FLAG);
+    o_glist_copy_all (toplevel, object_list, w_current->clipboard_buffer);
 
   /* Advertise that the data is available */
   result = gtk_clipboard_set_with_data (cb, &target, 1,
@@ -237,10 +236,8 @@ x_clipboard_get (GSCHEM_TOPLEVEL *w_current)
   buf = selection_data->data;
 #endif
 
-  toplevel->ADDING_SEL = 1; /* HACK: Avoid adding objects to the tile system */
   object_list = o_read_buffer (toplevel, object_list,
                                (gchar *) buf, -1, "Clipboard");
-  toplevel->ADDING_SEL = 0;
 
   gtk_selection_data_free (selection_data);
   return object_list;
