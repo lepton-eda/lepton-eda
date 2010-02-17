@@ -244,3 +244,10 @@ TextBuffer *s_textbuffer_free (TextBuffer *tb);
 void s_textbuffer_seek (TextBuffer *tb, const gint offset);
 gchar *s_textbuffer_next (TextBuffer *tb, const gsize count);
 gchar *s_textbuffer_next_line (TextBuffer *tb);
+
+/* s_tile.c */
+void s_tile_init(TOPLEVEL *toplevel, PAGE *p_current);
+void s_tile_add_object(TOPLEVEL *toplevel, OBJECT *object);
+void s_tile_remove_object(OBJECT *object);
+void s_tile_print(TOPLEVEL *toplevel);
+void s_tile_free_all(PAGE *p_current);
