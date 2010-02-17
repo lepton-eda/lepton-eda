@@ -525,6 +525,7 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
   CONN *conn;
   OBJECT *other_object;
   int changed = 0;
+  PAGE *page;
 
   if (object == NULL) {
     return(0);
@@ -532,6 +533,12 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
 
   if (object->type != OBJ_NET) {
     return(0);
+  }
+
+  /* It's meaningless to do anything here without a valid current page. */
+  page = o_get_page_compat (toplevel, object);
+  if (page == NULL) {
+    return (0);
   }
 
   object_orient = o_net_orientation(object);
@@ -563,17 +570,16 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
 
           changed++;
           if (other_object->selected == TRUE ) {
-            o_selection_remove (toplevel, toplevel->page_current->selection_list, other_object);
+            o_selection_remove (toplevel, page->selection_list, other_object);
 
             /* If we're consolidating with a selected object,
              * ensure we select the resulting object.
              */
             if (object->selected == FALSE) {
-              o_selection_add (toplevel, toplevel->page_current->selection_list, object);
+              o_selection_add (toplevel, page->selection_list, object);
             }
           }
 
-          s_page_remove (toplevel, toplevel->page_current, other_object);
           s_delete_object (toplevel, other_object);
           o_net_recalc(toplevel, object);
           s_tile_update_object(toplevel, object);

@@ -130,10 +130,9 @@ static void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
 
-  if (toplevel->ADDING_SEL) {
-#if DEBUG    
-    printf("s_tile_add_object, adding sel TRUE\n");
-#endif
+  p_current = o_get_page (toplevel, object);
+
+  if (toplevel->ADDING_SEL || p_current == NULL) {
     return;
   }
   
@@ -146,7 +145,6 @@ static void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
   y2 = (int) (object->line->y[1] / y_size);
 
   bottom = x2 - x1;
-  p_current = toplevel->page_current;
 
   if (bottom != 0.0) {
     m = (double) (y2 - y1) / bottom;

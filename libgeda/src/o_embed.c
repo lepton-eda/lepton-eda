@@ -44,6 +44,8 @@
  */
 void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
 {
+  PAGE *page = o_get_page_compat (toplevel, o_current);
+  int page_modified = 0;
 
   /* check o_current is a complex and is not already embedded */
   if (o_current->type == OBJ_COMPLEX &&
@@ -55,9 +57,7 @@ void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
 
     s_log_message (_("Component [%s] has been embedded\n"),
                    o_current->complex_basename);
-    
-    /* page content has been modified */
-    toplevel->page_current->CHANGED = 1;
+    page_modified = 1;
   }
 
   /* If it's a picture and it's not embedded */
@@ -65,8 +65,12 @@ void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
        (o_current->picture->embedded == 0) ) {
     o_picture_embed (toplevel, o_current);
 
+    page_modified = 1;
+  }
+
+  if (page_modified && page != NULL) {
     /* page content has been modified */
-    toplevel->page_current->CHANGED = 1;
+    page->CHANGED = 1;
   }
 }
 
@@ -82,6 +86,8 @@ void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
 void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   const CLibSymbol *sym;
+  PAGE *page = o_get_page_compat (toplevel, o_current);
+  int page_modified = 0;
   
   /* check o_current is an embedded complex */
   if (o_current->type == OBJ_COMPLEX &&
@@ -104,9 +110,7 @@ void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current)
       s_log_message (_("Component [%s] has been successfully unembedded\n"),
                      o_current->complex_basename);
       
-      /* page content has been modified */
-      toplevel->page_current->CHANGED = 1;
-      
+      page_modified = 1;
     }
   }
 
@@ -115,7 +119,10 @@ void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current)
        (o_current->picture->embedded == 1) ) {
     o_picture_unembed (toplevel, o_current);
 
-    /* page content has been modified */
-    toplevel->page_current->CHANGED = 1;
+    page_modified = 1;
+  }
+
+  if (page_modified && page != NULL) {
+    page->CHANGED = 1;
   }
 }
