@@ -628,7 +628,7 @@ o_get_page (TOPLEVEL *toplevel, OBJECT *object)
  */
 PAGE *
 o_get_page_compat (TOPLEVEL *toplevel, OBJECT *object) {
-  PAGE *page = o_get_page (*toplevel, *object);
+  PAGE *page = o_get_page (toplevel, object);
   if (page != toplevel->page_current) {
     g_critical ("o_get_page_compat: OBJECT.page = %p, TOPLEVEL.page_current = %p",
                 page, toplevel->page_current);
