@@ -241,9 +241,9 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
     /* Remove the invisible attributes from the object list as well,
      * so they don't remain selected without the user knowing.
      */
-    o_attrib_remove_selected_invisible (w_current,
-                                        toplevel->page_current->selection_list,
-                                        o_current);
+    o_attrib_deselect_invisible (w_current,
+                                 toplevel->page_current->selection_list,
+                                 o_current);
   } else {
     o_attrib_add_selected (w_current, toplevel->page_current->selection_list,
                            o_current);

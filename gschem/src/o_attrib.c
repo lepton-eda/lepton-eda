@@ -69,16 +69,20 @@ void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection,
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Remove invisible attributes of an object from the selection list.
  *  \par Function Description
- *  Remove all invisible attributes from the selection list.
  *
- *  \todo get a better name
+ *  Remove all invisible attributes attached to the given object
+ *  from the selection list. If hidden text is being shown, this
+ *  function returns immediately.
+ *
+ *  \param [in]     w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in,out] selection  The SELECTION list to remove from.
+ *  \param [in]     object     The OBJECT whos invisible attributes to remove.
  */
-void o_attrib_remove_selected_invisible (GSCHEM_TOPLEVEL *w_current,
-                                         SELECTION *selection,
-                                         OBJECT *selected)
+void o_attrib_deselect_invisible (GSCHEM_TOPLEVEL *w_current,
+                                  SELECTION *selection,
+                                  OBJECT *selected)
 {
   OBJECT *a_current;
   GList *a_iter;
