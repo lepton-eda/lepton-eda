@@ -206,7 +206,6 @@ void s_slot_update_object (TOPLEVEL *toplevel, OBJECT *object)
         o_text_set_string (toplevel,
                            o_pinnum_attrib,
                            g_strdup_printf ("pinnumber=%s", current_pin));
-        o_text_recreate (toplevel, o_pinnum_attrib);
       }
 
       pin_counter++;

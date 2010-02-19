@@ -986,6 +986,8 @@ void o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj,
 
   g_free (obj->text->string);
   obj->text->string = g_strdup (new_string);
+
+  o_text_recreate (toplevel, obj);
 }
 
 

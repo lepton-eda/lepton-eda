@@ -113,11 +113,10 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, OBJECT *object, const char *string)
   g_free (slot_value);
 
   if (o_slot != NULL && !o_attrib_is_inherited (o_slot)) {
-    o_text_set_string (toplevel, o_slot, string);
 
     o_invalidate (w_current, o_slot);
 
-    o_text_recreate (toplevel, o_slot);
+    o_text_set_string (toplevel, o_slot, string);
 
     /* this doesn't deal with the selection list
      * item */

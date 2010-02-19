@@ -572,14 +572,15 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
   gchar *slot_str;
   gchar *str = NULL;
 
+  /* invalidate the old text */
+  o_invalidate (autotext->w_current, o_current);
+
   /* replace old text */
   str = g_strdup_printf("%s?", autotext->current_searchtext);
   o_text_set_string (autotext->w_current->toplevel, o_current, str);
   g_free (str);
 
   /* redraw the text */
-  o_invalidate (autotext->w_current, o_current);
-  o_text_recreate(autotext->w_current->toplevel, o_current);
   o_invalidate (autotext->w_current, o_current);
 
   /* remove the slot attribute if slotting is active */
@@ -618,14 +619,15 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
   o_slot_end (autotext->w_current, o_current->attached_to, str);
   g_free (str);
 
+  /* invalidate the old text */
+  o_invalidate (autotext->w_current, o_current);
+
   /* replace old text */
   str = g_strdup_printf("%s%d", autotext->current_searchtext, number);
   o_text_set_string (autotext->w_current->toplevel, o_current, str);
   g_free (str);
 
   /* redraw the text */
-  o_invalidate (autotext->w_current, o_current);
-  o_text_recreate(autotext->w_current->toplevel, o_current);
   o_invalidate (autotext->w_current, o_current);
   autotext->w_current->toplevel->page_current->CHANGED = 1;
 }
