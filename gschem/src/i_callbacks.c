@@ -1559,21 +1559,6 @@ DEFINE_I_CALLBACK(view_pan_hotkey)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(view_update_cues)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  i_update_middle_button(w_current,
-                         i_callback_view_update_cues, _("Update Cues"));
-
-  o_invalidate_all (w_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 DEFINE_I_CALLBACK (view_dark_colors)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;

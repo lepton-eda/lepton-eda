@@ -133,7 +133,6 @@ SCM g_keys_view_pan_right(SCM rest);
 SCM g_keys_view_pan_up(SCM rest);
 SCM g_keys_view_pan_down(SCM rest);
 SCM g_keys_view_pan_hotkey(SCM rest);
-SCM g_keys_view_update_cues(SCM rest);
 SCM g_keys_view_dark_colors(SCM rest);
 SCM g_keys_view_light_colors(SCM rest);
 SCM g_keys_page_manager(SCM rest);
@@ -369,7 +368,6 @@ void i_callback_view_pan_right(gpointer data, guint callback_action, GtkWidget *
 void i_callback_view_pan_up(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_pan_down(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_pan_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_view_update_cues(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_dark_colors(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_view_light_colors(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_manager(gpointer data, guint callback_action, GtkWidget *widget);

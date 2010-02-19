@@ -1211,7 +1211,6 @@
     ("f" . view-zoom-full)
     ("e" . view-zoom-extents)
     ("p" . view-pan-hotkey)
-    ("u" . view-update-cues)
     ("o" . view-zoom-out-hotkey)
     ("i" . view-zoom-in-hotkey)
     ("d" . view-dark-colors)
