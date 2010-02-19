@@ -115,19 +115,13 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, OBJECT *object, const char *string)
   if (o_slot != NULL && !o_attrib_is_inherited (o_slot)) {
     o_text_set_string (toplevel, o_slot, string);
 
-    if (o_slot->visibility == VISIBLE ||
-        (o_slot->visibility == INVISIBLE && toplevel->show_hidden_text)) {
-      o_invalidate (w_current, o_slot);
-    }
+    o_invalidate (w_current, o_slot);
 
     o_text_recreate (toplevel, o_slot);
 
     /* this doesn't deal with the selection list
      * item */
-    if (o_slot->visibility == VISIBLE ||
-        (o_slot->visibility == INVISIBLE && toplevel->show_hidden_text)) {
-      o_invalidate (w_current, o_slot);
-    }
+    o_invalidate (w_current, o_slot);
 
   } else {
     /* here you need to do the add the slot
