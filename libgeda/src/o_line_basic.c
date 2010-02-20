@@ -166,27 +166,26 @@ OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *o_current)
  *  </DL>
  */
 void o_line_modify(TOPLEVEL *toplevel, OBJECT *object,
-		   int x, int y, int whichone)
+                   int x, int y, int whichone)
 {
-	/* change one of the end of the line */
-	switch(whichone) {
-		case LINE_END1:
-		object->line->x[0] = x;
-		object->line->y[0] = y;
-		break;
-		
-		case LINE_END2:
-		object->line->x[1] = x;
-		object->line->y[1] = y;
-		break;
-		
-		default:
-		return;
-	}
-	
-	/* recalculate the bounding box */
-	o_line_recalc(toplevel, object);
-	
+  /* change one of the end of the line */
+  switch (whichone) {
+    case LINE_END1:
+      object->line->x[0] = x;
+      object->line->y[0] = y;
+      break;
+
+    case LINE_END2:
+      object->line->x[1] = x;
+      object->line->y[1] = y;
+      break;
+
+    default:
+      return;
+  }
+
+  /* recalculate the bounding box */
+  o_line_recalc(toplevel, object);
 }
 
 /*! \brief Create line OBJECT from character string.
