@@ -563,6 +563,7 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /* Switch off drawing for the object being modified */
   object->dont_redraw = TRUE;
+  o_invalidate (w_current, object);
 
   /* there is one */
   /* depending on its type, start the modification process */
@@ -638,9 +639,6 @@ void o_grips_start_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 {
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
-  /* erase the arc before */
-  o_invalidate (w_current, o_current);
-
   /* describe the arc with GSCHEM_TOPLEVEL variables */
   /* center */
   w_current->first_wx = o_current->arc->x;
@@ -681,9 +679,6 @@ void o_grips_start_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                        int x, int y, int whichone)
 {
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
-
-  /* erase the box before */
-  o_invalidate (w_current, o_current);
 
   /* (second_wx, second_wy) is the selected corner */
   /* (first_wx, first_wy) is the opposite corner */
@@ -754,9 +749,6 @@ void o_grips_start_path(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 
   w_current->last_drawb_mode = -1;
 
-  /* erase the path before */
-  o_invalidate (w_current, o_current);
-
   for (i = 0; i <  o_current->path->num_sections; i++) {
     section = &o_current->path->sections[i];
 
@@ -821,8 +813,6 @@ void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 {
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
-  /* erase the picture before */
-  o_invalidate (w_current, o_current);
   w_current->current_pixbuf = o_current->picture->pixbuf;
   w_current->pixbuf_filename = o_current->picture->filename;
   w_current->pixbuf_wh_ratio = o_current->picture->ratio;
@@ -890,9 +880,6 @@ void o_grips_start_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
-  /* erase the circle before */
-  o_invalidate (w_current, o_current);
-
   /* store circle center and radius in GSCHEM_TOPLEVEL structure */
   w_current->first_wx = o_current->circle->center_x;
   w_current->first_wy = o_current->circle->center_y;
@@ -924,9 +911,6 @@ void o_grips_start_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                         int x, int y, int whichone)
 {
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
-
-  /* erase the line before */
-  o_invalidate (w_current, o_current);
 
   /* describe the line with GSCHEM_TOPLEVEL variables */
   w_current->second_wx = o_current->line->x[whichone];
@@ -1029,9 +1013,6 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
     return;
   }
 
-  /* Switch drawing of the object back on */
-  object->dont_redraw = FALSE;
-
   switch(object->type) {
 
     case(OBJ_ARC):
@@ -1082,6 +1063,10 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
     default:
     return;
   }
+
+  /* Switch drawing of the object back on */
+  object->dont_redraw = FALSE;
+  o_invalidate (w_current, object);
 
   /* reset global variables */
   w_current->which_grip = -1;
@@ -1175,10 +1160,6 @@ void o_grips_end_arc(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
 
   /* modify the arc with the parameters determined above */
   o_arc_modify(toplevel, o_current, arg1, arg2, whichone);
-
-  /* display the new arc */
-  o_invalidate (w_current, o_current);
-
 }
 
 /*! \todo Finish function documentation!!!
@@ -1206,12 +1187,6 @@ void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   }
 
   o_box_modify(toplevel, o_current, w_current->second_wx, w_current->second_wy, whichone);
-
-  /* erase the temporary box */
-  /* o_box_invalidate_rubber (w_current); */
-
-  /* draw the modified box */
-  o_invalidate (w_current, o_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1230,9 +1205,6 @@ void o_grips_end_path(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichon
 
   o_path_modify (w_current->toplevel, o_current,
                  w_current->second_wx, w_current->second_wy, whichone);
-
-  /* draw the modified path */
-  o_invalidate (w_current, o_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1260,9 +1232,6 @@ void o_grips_end_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whic
 
   o_picture_modify(toplevel, o_current, 
 		   w_current->second_wx, w_current->second_wy, whichone);
-
-  /* draw the modified picture */
-  o_invalidate (w_current, o_current);
 
   w_current->current_pixbuf = NULL;
   w_current->pixbuf_filename = NULL;
@@ -1301,9 +1270,6 @@ void o_grips_end_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int which
 
   /* modify the radius of the circle */
   o_circle_modify(toplevel, o_current, w_current->distance, -1, CIRCLE_RADIUS);
-
-  /* display the new circle */
-  o_invalidate (w_current, o_current);
 }
 
 /*! \brief End process of modifying line object with grip.
@@ -1341,9 +1307,6 @@ void o_grips_end_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichon
   /* modify the right line end according to whichone */
   o_line_modify(toplevel, o_current, 
 		w_current->second_wx, w_current->second_wy, whichone);
-
-  /* display the new line */
-  o_invalidate (w_current, o_current);
 }
 
 
@@ -1381,9 +1344,6 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
     return;
   }
 
-  /* remove the old net */
-  o_invalidate (w_current, o_current);
-
   prev_conn_objects = s_conn_return_others (NULL, o_current);
 
   s_conn_remove_object (toplevel, o_current);
@@ -1400,8 +1360,6 @@ void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   /* draw the object objects */
   o_invalidate_glist (w_current, prev_conn_objects);
   g_list_free (prev_conn_objects);
-
-  o_invalidate (w_current, o_current);
 
   /* get the other connected objects and redraw them */
   connected_objects = s_conn_return_others (NULL, o_current);
@@ -1443,16 +1401,12 @@ void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
     return;
   }
 
-  /* erase old pin object */
-  o_invalidate (w_current, o_current);
-
   prev_conn_objects = s_conn_return_others (NULL, o_current);
 
   s_conn_remove_object (toplevel, o_current);
   o_pin_modify (toplevel, o_current, w_current->second_wx,
                 w_current->second_wy, w_current->which_grip);
   s_conn_update_object (toplevel, o_current);
-  o_invalidate (w_current, o_current);
 
   /* redraw the object connections */
   o_invalidate_glist (w_current, prev_conn_objects);
@@ -1499,16 +1453,12 @@ void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
     return;
   }
 
-  /* erase the old bus and it's cues */
-  o_invalidate (w_current, o_current);
-
   prev_conn_objects = s_conn_return_others (NULL, o_current);
 
   s_conn_remove_object (toplevel, o_current);
   o_bus_modify (toplevel, o_current, w_current->second_wx,
                 w_current->second_wy, w_current->which_grip);
   s_conn_update_object (toplevel, o_current);
-  o_invalidate (w_current, o_current);
 
   /* redraw the connected objects */
   o_invalidate_glist (w_current, prev_conn_objects);
