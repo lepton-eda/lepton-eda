@@ -29,7 +29,7 @@
 #endif
 
 #define GET_BOX_WIDTH(w)  abs((w)->second_wx - (w)->first_wx)
-#define GET_BOX_HEIGHT(w) abs((w)->second_wy - (w)->second_wy)
+#define GET_BOX_HEIGHT(w) abs((w)->second_wy - (w)->first_wy)
 
 #define GET_PICTURE_WIDTH(w)			\
   abs((w)->second_wx - (w)->first_wx) 
@@ -1200,7 +1200,7 @@ void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int whichone
   /* don't allow zero width/height boxes
    * this ends the box drawing behavior
    * we want this? hack */
-  if ((box_width == 0) && (box_height == 0)) {
+  if ((box_width == 0) || (box_height == 0)) {
     o_invalidate (w_current, o_current);
     return;
   }
