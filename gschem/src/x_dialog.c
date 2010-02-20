@@ -414,21 +414,21 @@ void text_edit_dialog_response(GtkWidget * widget, gint response, GSCHEM_TOPLEVE
 void text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_size,
                        int text_alignment)
 {
-  GtkWidget *label = NULL;
+  GtkWidget *label;
   GtkWidget *table;
   GtkWidget *vbox;
-  GtkWidget *optionmenu = NULL;
-  GtkWidget *combobox = NULL;
+  GtkWidget *optionmenu;
+  GtkWidget *combobox;
   GtkListStore *align_menu_model;
-  GtkCellRenderer *cell = NULL;
-  GtkWidget *viewport1 = NULL;
-  GtkWidget *textentry = NULL;
-  GtkWidget *sizeentry = NULL;
+  GtkCellRenderer *cell;
+  GtkWidget *viewport1;
+  GtkWidget *textentry;
+  GtkWidget *sizeentry;
   GtkWidget *alignment;
-  GtkWidget *scrolled_window = NULL;
+  GtkWidget *scrolled_window;
   GtkTextBuffer *textbuffer;
   char *text_size_string;
-  int num_selected=0;
+  int num_selected;
   /* Lookup table for quickly translating between alignment values and the
      combo box list indices, index is alignment value, value is list index */
   static int alignment_lookup[] = {6, 3, 0, 7, 4, 1, 8, 5, 2};
@@ -489,8 +489,12 @@ void text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_
       gtk_container_add( GTK_CONTAINER(alignment), viewport1);
 
       textentry = gtk_text_view_new();
-      gtk_text_view_set_editable(GTK_TEXT_VIEW(textentry), TRUE);
-      select_all_text_in_textview(GTK_TEXT_VIEW(textentry));
+      gtk_text_view_set_editable (GTK_TEXT_VIEW (textentry), TRUE);
+      if (string != NULL) {
+        textbuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (textentry));
+        gtk_text_buffer_set_text (GTK_TEXT_BUFFER (textbuffer), string, -1);
+        select_all_text_in_textview (GTK_TEXT_VIEW (textentry));
+      }
 
       /*! \bug FIXME: Set tab's width in the textview widget. */
       /* See first the code in text_input_dialog and get it working before adding it here. */
@@ -556,15 +560,6 @@ void text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_
 
   else { /* dialog already there */
     gtk_window_present(GTK_WINDOW(w_current->tewindow));
-  }
-
-  if (string != NULL) {
-    if (num_selected == 1) { /* only if one thing is selected */
-      textentry = g_object_get_data (G_OBJECT (w_current->tewindow), "textentry");
-      textbuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textentry));
-      gtk_text_buffer_set_text(GTK_TEXT_BUFFER(textbuffer), string, -1);
-      select_all_text_in_textview(GTK_TEXT_VIEW(textentry));
-    }
   }
 
   text_size_string = g_strdup_printf("%d", text_size);
