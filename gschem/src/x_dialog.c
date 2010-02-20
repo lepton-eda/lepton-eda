@@ -419,7 +419,7 @@ void text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_
   GtkWidget *vbox;
   GtkWidget *optionmenu = NULL;
   GtkWidget *combobox = NULL;
-  GtkWidget *align_menu = NULL;
+  GtkListStore *align_menu_model;
   GtkCellRenderer *cell = NULL;
   GtkWidget *viewport1 = NULL;
   GtkWidget *textentry = NULL;
@@ -535,8 +535,8 @@ void text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_
     gtk_misc_set_alignment(GTK_MISC(label),0,0);
     gtk_table_attach(GTK_TABLE(table), label, 0,1,2,3, GTK_FILL,0,0,0);
 
-    align_menu = create_menu_alignment(w_current);
-    combobox = gtk_combo_box_new_with_model(GTK_TREE_MODEL(align_menu));
+    align_menu_model = create_menu_alignment(w_current);
+    combobox = gtk_combo_box_new_with_model(GTK_TREE_MODEL(align_menu_model));
     gtk_combo_box_set_wrap_width(GTK_COMBO_BOX(combobox), 3);
     cell = gtk_cell_renderer_text_new();
     gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(combobox), cell, TRUE);
@@ -545,7 +545,7 @@ void text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_
     gtk_combo_box_set_active(GTK_COMBO_BOX(combobox),
                              alignment_lookup[text_alignment]);
     w_current->text_alignment = text_alignment;
-    g_object_unref(G_OBJECT(align_menu));
+    g_object_unref (align_menu_model);
     gtk_table_attach_defaults(GTK_TABLE(table), combobox, 1,2,2,3);
     g_signal_connect(G_OBJECT(combobox), "changed",
                       G_CALLBACK(change_alignment), w_current);
