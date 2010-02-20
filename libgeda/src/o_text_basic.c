@@ -249,8 +249,6 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
 {
   OBJECT *new_node=NULL;
   TEXT *text;
-  char *name = NULL;
-  char *value = NULL;
 
   if (string == NULL) {
     return(NULL);
@@ -283,8 +281,6 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
   /* Update bounding box */
   new_node->w_bounds_valid = FALSE;
 
-  g_free(name);
-  g_free(value);
   return new_node;
 }
 
@@ -503,15 +499,8 @@ char *o_text_save(OBJECT *object)
  */
 void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
 {
-  char *name = NULL;
-  char *value = NULL;
-
   update_disp_string (o_current);
-
   o_current->w_bounds_valid = FALSE;
-
-  g_free(name);
-  g_free(value);
 }
 
 /*! \brief move a text object
