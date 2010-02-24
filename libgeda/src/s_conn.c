@@ -121,6 +121,8 @@ int s_conn_remove_other (TOPLEVEL *toplevel, OBJECT *other_object,
     GList *c_current = NULL;
     CONN *conn = NULL;
 
+    o_emit_pre_change_notify (toplevel, other_object);
+
     c_current = other_object->conn_list;
     while (c_current != NULL) {
 	conn = (CONN *) c_current->data;
@@ -154,6 +156,8 @@ int s_conn_remove_other (TOPLEVEL *toplevel, OBJECT *other_object,
 
 	c_current = g_list_next(c_current);
     }
+
+    o_emit_change_notify (toplevel, other_object);
 
     return (FALSE);
 }
@@ -391,6 +395,8 @@ static void s_conn_update_line_object (TOPLEVEL *toplevel, OBJECT *object)
               object->line->y[j] == other_object->line->y[k] &&
               check_direct_compat (object, other_object)) {
 
+            o_emit_pre_change_notify (toplevel, other_object);
+
             add_connection (object, other_object, CONN_ENDPOINT,
                             other_object->line->x[k],
                             other_object->line->y[k], j, k);
@@ -398,6 +404,8 @@ static void s_conn_update_line_object (TOPLEVEL *toplevel, OBJECT *object)
             add_connection (other_object, object, CONN_ENDPOINT,
                             object->line->x[j],
                             object->line->y[j], k, j);
+
+            o_emit_change_notify (toplevel, other_object);
           }
         }
       }

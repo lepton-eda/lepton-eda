@@ -191,8 +191,6 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
   GList *o_iter;
-  GList *prev_conn_objects=NULL;
-  GList *connected_objects=NULL;
 
   /* this is okay if you just hit rotate and have nothing selected */
   if (list == NULL) {
@@ -207,12 +205,11 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
 
   /* Find connected objects, removing each object in turn from the
    * connection list. We only _really_ want those objects connected
-   * to the selection, not those within in it. The extra redraws
-   * don't _really_ hurt though. */
+   * to the selection, not those within in it.
+   */
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
 
-    prev_conn_objects = s_conn_return_others (prev_conn_objects, o_current);
     s_conn_remove_object (toplevel, o_current);
   }
 
@@ -220,25 +217,17 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
 
   /* Find connected objects, adding each object in turn back to the
    * connection list. We only _really_ want those objects connected
-   * to the selection, not those within in it. The extra redraws dont
-   * _really_ hurt though. */
+   * to the selection, not those within in it.
+   */
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
 
     s_conn_update_object (toplevel, o_current);
-    connected_objects = s_conn_return_others (connected_objects, o_current);
   }
 
   if (!toplevel->DONT_REDRAW) {
     o_invalidate_glist (w_current, list);
-    o_invalidate_glist (w_current, prev_conn_objects);
-    o_invalidate_glist (w_current, connected_objects);
   }
-
-  g_list_free (prev_conn_objects);
-  prev_conn_objects = NULL;
-  g_list_free (connected_objects);
-  connected_objects = NULL;
 
   /* All objects were rotated. Run the rotate hooks */
   o_rotate_call_hooks (w_current, list);
@@ -299,8 +288,6 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
   GList *o_iter;
-  GList *prev_conn_objects=NULL;
-  GList *connected_objects=NULL;
 
   if (list == NULL) {
     w_current->inside_action = 0;
@@ -312,12 +299,11 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
 
   /* Find connected objects, removing each object in turn from the
    * connection list. We only _really_ want those objects connected
-   * to the selection, not those within in it. The extra redraws
-   * don't _really_ hurt though. */
+   * to the selection, not those within in it.
+   */
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
 
-    prev_conn_objects = s_conn_return_others (prev_conn_objects, o_current);
     s_conn_remove_object (toplevel, o_current);
   }
 
@@ -325,23 +311,15 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
 
   /* Find connected objects, adding each object in turn back to the
    * connection list. We only _really_ want those objects connected
-   * to the selection, not those within in it. The extra redraws dont
-   * _really_ hurt though. */
+   * to the selection, not those within in it.
+   */
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
 
     s_conn_update_object (toplevel, o_current);
-    connected_objects = s_conn_return_others (connected_objects, o_current);
   }
 
   o_invalidate_glist (w_current, list);
-  o_invalidate_glist (w_current, prev_conn_objects);
-  o_invalidate_glist (w_current, connected_objects);
-
-  g_list_free (prev_conn_objects);
-  prev_conn_objects = NULL;
-  g_list_free (connected_objects);
-  connected_objects = NULL;
 
   /* All objects were mirrored. Do a 2nd pass to run the mirror hooks */
   /* Do not run any hooks for simple objects here, like text, since they
