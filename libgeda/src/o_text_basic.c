@@ -89,6 +89,14 @@
  */
 #define GEDA_FONT_FACTOR 1.3
 
+/*! \brief Scale factor font height and line-spacing (for print only)
+ *
+ *  \par Description
+ *  Specifies the scale factor between the nominal font size and the inter-
+ *  line spacing used to render it when printing.
+ */
+#define PRINT_LINE_SPACING 1.12
+
 /*! Default setting for text draw function. */
 void (*text_draw_func)() = NULL;
 
@@ -608,35 +616,6 @@ void o_text_print_text_string(FILE *fp, char *string, int unicode_count,
 }
 
 
-/*! \brief calculates the height of a text string
- *  \par Function Description
- *  This function calculates the height of a \a string depending
- *  on it's text \a size. The number of lines and the spacing
- *  between the lines are taken into account.
- * 
- *  \param [in] string  the text string
- *  \param [in] size    the text size of the character
- *  \return the total height of the text string
- */
-static int o_text_height(const char *string, int size) 
-{
-  int line_count = 0;
-
-  if (string == NULL) {
-    return 0;
-  }
-
-  /* Get the number of lines in the string */
-  line_count = o_text_num_lines(string);
-  
-  /* 26 is the height of a single char (in mils) */
-  /* which represents a character which is 2 pts high */
-  /* So size has to be divided in half */
-  /* and it's added the LINE_SPACING*character_height of each line */
-  return(26*size/2*(1+LINE_SPACING*(line_count-1)));
-}
-
-
 /*! \brief print a text object into a postscript file
  *  \par Function Description
  *  This function writes the postscript representation of the text object
@@ -659,7 +638,7 @@ void o_text_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   char *output_string = NULL;
   char *name = NULL;
   char *value = NULL;
-  int x, y, angle, len, char_height;
+  int x, y, angle, len;
   float font_size;
 
 
@@ -764,8 +743,9 @@ void o_text_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
     break;
   }
 
-  char_height = o_text_height("a", o_current->text->size);
-  fprintf(fp,"%s %f [",centering_control,(float)(char_height*LINE_SPACING));
+  font_size = o_text_get_font_size_in_points (toplevel, o_current)
+                / 72.0 * 1000.0;
+  fprintf(fp,"%s %f [",centering_control, font_size * PRINT_LINE_SPACING);
 
   /* split the line at each newline and print them */
   p = output_string;   /* Current point */
@@ -788,8 +768,6 @@ void o_text_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   /* Collect pertinent info about the text location */
   x = o_current->text->x;
   y = o_current->text->y;
-  font_size = o_text_get_font_size_in_points (toplevel, o_current)
-                / 72.0 * 1000.0;
   fprintf(fp,"] %d %d %d %f text\n",angle,x,y,font_size);
 
   

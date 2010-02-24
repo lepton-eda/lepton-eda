@@ -121,9 +121,6 @@
 /* Warning: it MUST be a string. */
 #define TAB_CHAR_MODEL "b"
 
-/* multi text line spacing (multipled times character height) */
-#define LINE_SPACING    2.0
-
 /* The conn modes for type */
 #define CONN_NULL               0
 #define CONN_ENDPOINT		1
