@@ -1086,6 +1086,7 @@ static void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
    * this ends the box drawing behavior
    * we want this? hack */
   if ((box_width == 0) || (box_height == 0)) {
+    o_box_invalidate_rubber (w_current);
     o_invalidate (w_current, o_current);
     return;
   }
@@ -1132,6 +1133,7 @@ static void o_grips_end_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
    * this ends the picture drawing behavior
    * we want this? hack */
   if ((GET_PICTURE_WIDTH(w_current) == 0) || (GET_PICTURE_HEIGHT(w_current) == 0)) {
+    o_picture_invalidate_rubber (w_current);
     o_invalidate (w_current, o_current);
     return;
   }
@@ -1171,6 +1173,7 @@ static void o_grips_end_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
    * this ends the circle drawing behavior
    * we want this? hack */
   if (w_current->distance == 0) {
+    o_circle_invalidate_rubber (w_current);
     o_invalidate (w_current, o_current);
     return;
   }
@@ -1208,6 +1211,7 @@ static void o_grips_end_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
    * we want this? hack */
   if ((w_current->first_wx == w_current->second_wx) &&
       (w_current->first_wy == w_current->second_wy)) {
+    o_box_invalidate_rubber (w_current);
     o_invalidate (w_current, o_current);
     return;
   }
