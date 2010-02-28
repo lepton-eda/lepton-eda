@@ -60,11 +60,6 @@ gboolean g_get_data_from_page_smob(SCM object_smob, TOPLEVEL **toplevel,
 void i_vars_libgeda_set(TOPLEVEL *toplevel);
 void i_vars_libgeda_freenames();
 
-/* gdk-pixbuf-hacks.c */
-GdkPixbuf *gdk_pixbuf_rotate (GdkPixbuf *pixbuf, guint angle);
-void gdk_pixbuf_add (GdkPixbuf *pixbuf, int offset_x, int offset_y, GdkPixbuf *pixbuf_to_add);
-GdkPixbuf *gdk_pixbuf_mirror_flip(GdkPixbuf *src, gint mirror, gint flip);
-
 /* libgeda.c */
 void libgeda_init(void);
 

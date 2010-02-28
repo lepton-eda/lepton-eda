@@ -7,7 +7,6 @@ libgeda_la_SOURCES = \
 	f_basic.c \
 	f_print.c \
 	g_basic.c \
-	gdk-pixbuf-hacks.c \
 	geda_list.c \
 	g_rc.c \
 	g_register.c \
