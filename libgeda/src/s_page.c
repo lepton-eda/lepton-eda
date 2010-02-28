@@ -77,9 +77,9 @@ object_added (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
   s_conn_update_object (toplevel, object);
 }
 
-/* Called just after removing an OBJECT from a PAGE. */
+/* Called just before removing an OBJECT from a PAGE. */
 static void
-object_removed (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
+pre_object_removed (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 {
   /* Clear object parent pointer */
 #ifndef NDEBUG
@@ -597,8 +597,8 @@ void s_page_append_list (TOPLEVEL *toplevel, PAGE *page, GList *obj_list)
  */
 void s_page_remove (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 {
+  pre_object_removed (toplevel, page, object);
   page->_object_list = g_list_remove (page->_object_list, object);
-  object_removed (toplevel, page, object);
 }
 
 /*! \brief Remove and free all OBJECTs from the PAGE
@@ -613,10 +613,10 @@ void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page)
 {
   GList *objects = page->_object_list;
   GList *iter;
-  page->_object_list = NULL;
   for (iter = objects; iter != NULL; iter = g_list_next (iter)) {
-    object_removed (toplevel, page, iter->data);
+    pre_object_removed (toplevel, page, iter->data);
   }
+  page->_object_list = NULL;
   s_delete_object_glist (toplevel, objects);
 }
 
