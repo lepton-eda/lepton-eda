@@ -216,6 +216,8 @@ void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current,
     break;
   }
   
+  o_emit_pre_change_notify (toplevel, o_current);
+
   o_current->line_width = width;
   o_current->line_end   = end;
   o_current->line_type  = type;
@@ -225,6 +227,8 @@ void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current,
 
   /* Recalculate the object's bounding box */
   o_recalc_single_object( toplevel, o_current );
+  o_emit_change_notify (toplevel, o_current);
+
 }
 
 /*! \brief get #OBJECT's line properties.

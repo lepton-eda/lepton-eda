@@ -843,10 +843,8 @@ static void line_type_dialog_ok(GtkWidget *w, gpointer data)
       g_assert_not_reached();
     }
 
-    o_invalidate (w_current, object);
     o_set_line_options (toplevel, object,
                         oend, otype, owidth, olength, ospace);
-    o_invalidate (w_current, object);
   }
 
   toplevel->page_current->CHANGED = 1;
