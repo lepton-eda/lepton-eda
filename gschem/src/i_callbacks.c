@@ -158,6 +158,12 @@ DEFINE_I_CALLBACK(file_new_window)
 
   o_text_set_rendered_bounds_func (w_current->toplevel,
                                    o_text_get_rendered_bounds, w_current);
+
+  /* Damage notifications should invalidate the object on screen */
+  o_set_change_notify_funcs (w_current->toplevel,
+                             (ChangeNotifyFunc) o_invalidate,
+                             (ChangeNotifyFunc) o_invalidate, w_current);
+
   x_window_setup (w_current);
 
   page = x_window_open_page (w_current, NULL);

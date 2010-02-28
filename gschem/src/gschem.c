@@ -232,6 +232,11 @@ void main_prog(void *closure, int argc, char *argv[])
   o_text_set_rendered_bounds_func (w_current->toplevel,
                                    o_text_get_rendered_bounds, w_current);
 
+  /* Damage notifications should invalidate the object on screen */
+  o_set_change_notify_funcs (w_current->toplevel,
+                             (ChangeNotifyFunc) o_invalidate,
+                             (ChangeNotifyFunc) o_invalidate, w_current);
+
   /* Now read in RC files. */
   g_rc_parse_gtkrc();
   g_rc_parse(w_current->toplevel, "gschemrc", rc_filename);
