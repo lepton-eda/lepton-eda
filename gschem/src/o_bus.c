@@ -189,8 +189,6 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
                       w_current->second_wx, w_current->second_wy, 0);
   s_page_append (toplevel, toplevel->page_current, new_obj);
 
-  o_invalidate (w_current, new_obj);
-
   /* connect the new bus to the other busses */
   prev_conn_objects = s_conn_return_others (prev_conn_objects, new_obj);
   o_invalidate_glist (w_current, prev_conn_objects);

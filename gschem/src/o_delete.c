@@ -65,7 +65,6 @@ void o_delete (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
     o_invalidate_glist (w_current, prev_conn_objects);
     g_list_free (prev_conn_objects);
   }
-  o_invalidate (w_current, object);
 
   s_page_remove (toplevel, toplevel->page_current, object);
   s_delete_object (toplevel, object);

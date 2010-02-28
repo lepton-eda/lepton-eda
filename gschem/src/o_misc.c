@@ -766,8 +766,6 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
       s_page_append (toplevel, toplevel->page_current, o_attrib);
       /* add the attribute to old */
       o_attrib_add (toplevel, o_current, o_attrib);
-      /* redraw the attribute object */
-      o_invalidate (w_current, o_attrib);
       /* note: this object is unselected (not added to selection). */
     }
     else

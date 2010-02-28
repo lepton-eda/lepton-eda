@@ -155,7 +155,6 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
   prev_conn_objects = s_conn_return_others (prev_conn_objects, new_obj);
   o_invalidate_glist (w_current, prev_conn_objects);
   g_list_free (prev_conn_objects);
-  o_invalidate (w_current, new_obj);
 
   toplevel->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);

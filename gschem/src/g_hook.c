@@ -716,17 +716,7 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
 		 scm_cons(g_make_object_smob(toplevel,
 					     new_obj), SCM_EOL));
   }
-  
-  /* 
-   * For now, do not redraw the newly added complex, since this might cause
-   * flicker if you are zoom/panning right after this function executes 
-   */
-#if 0 
-  /* Now the new component should be added to the object's list and 
-     drawn in the screen */
-  o_invalidate (toplevel, new_object);
-#endif
-  
+
   return SCM_BOOL_T;        
 }
 

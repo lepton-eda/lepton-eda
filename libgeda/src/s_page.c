@@ -75,12 +75,16 @@ object_added (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 
   /* Update object connection tracking */
   s_conn_update_object (toplevel, object);
+
+  o_emit_change_notify (toplevel, object);
 }
 
 /* Called just before removing an OBJECT from a PAGE. */
 static void
 pre_object_removed (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 {
+  o_emit_pre_change_notify (toplevel, object);
+
   /* Clear object parent pointer */
 #ifndef NDEBUG
   if (object->page == NULL) {

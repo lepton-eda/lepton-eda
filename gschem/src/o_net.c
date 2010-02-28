@@ -619,8 +619,6 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
       s_conn_print(new_net->conn_list);
 #endif
 
-      o_invalidate (w_current, new_net);
-
       o_invalidate_glist (w_current, prev_conn_objects);
 
       g_list_free (prev_conn_objects);
@@ -660,8 +658,6 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 #if DEBUG
       s_conn_print(new_net->conn_list);
 #endif
-
-      o_invalidate (w_current, new_net);
 
       o_invalidate_glist (w_current, prev_conn_objects);
 
@@ -1160,8 +1156,6 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
           s_page_append_list (toplevel, toplevel->page_current,
                               o_complex_promote_attribs (toplevel, new_obj));
           s_page_append (toplevel, toplevel->page_current, new_obj);
-
-          o_invalidate (w_current, new_obj);
         } else {
           s_log_message(_("Bus ripper symbol [%s] was not found in any component library\n"),
                         toplevel->bus_ripper_symname);

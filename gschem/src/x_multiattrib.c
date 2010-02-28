@@ -678,8 +678,6 @@ static void multiattrib_action_promote_attribute (GSCHEM_TOPLEVEL *w_current,
       s_page_append (toplevel, toplevel->page_current, o_new);
       /* add the attribute its parent */
       o_attrib_attach (toplevel, o_new, object, TRUE);
-      /* redraw the attribute object */
-      o_invalidate (w_current, o_new);
       /* note: this object is unselected (not added to selection). */
   }
   w_current->toplevel->page_current->CHANGED = 1;
