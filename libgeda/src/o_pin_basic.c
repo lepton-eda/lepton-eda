@@ -565,6 +565,7 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
  */
 void o_pin_set_type (TOPLEVEL *toplevel, OBJECT *o_current, int pin_type)
 {
+  o_emit_pre_change_notify (toplevel, o_current);
   switch (pin_type) {
     default:
       g_critical ("o_pin_set_type: Got invalid pin type %i\n", pin_type);
@@ -578,4 +579,5 @@ void o_pin_set_type (TOPLEVEL *toplevel, OBJECT *o_current, int pin_type)
       o_current->pin_type = PIN_TYPE_BUS;
       break;
   }
+  o_emit_change_notify (toplevel, o_current);
 }

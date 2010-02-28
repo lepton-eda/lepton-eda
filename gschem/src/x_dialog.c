@@ -4247,11 +4247,9 @@ void x_dialog_edit_pin_type (GSCHEM_TOPLEVEL *w_current, const GList *obj_list)
         if (object->type == OBJ_PIN &&
             object->pin_type != new_type) {
           changed_anything = TRUE;
-          o_invalidate (w_current, object);
           s_conn_remove_object (w_current->toplevel, object);
           o_pin_set_type (w_current->toplevel, object, new_type);
           s_conn_update_object (w_current->toplevel, object);
-          o_invalidate (w_current, object);
         }
       }
       if (changed_anything)
