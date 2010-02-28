@@ -1021,8 +1021,6 @@ DEFINE_I_CALLBACK(edit_embed)
       }
       s_current = g_list_next(s_current);
     }
-    o_invalidate_glist (w_current, geda_list_get_glist (
-                          w_current->toplevel->page_current->selection_list));
     o_undo_savestate(w_current, UNDO_ALL);
   } else {
     /* nothing selected, go back to select state */
@@ -1062,8 +1060,6 @@ DEFINE_I_CALLBACK(edit_unembed)
       }
       s_current = g_list_next(s_current);
     }
-    o_invalidate_glist (w_current, geda_list_get_glist (
-                          w_current->toplevel->page_current->selection_list));
     o_undo_savestate(w_current, UNDO_ALL);
   } else {
     /* nothing selected, go back to select state */
