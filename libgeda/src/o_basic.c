@@ -290,6 +290,8 @@ void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current,
     return;
   }
 
+  o_emit_pre_change_notify (toplevel, o_current);
+
   o_current->fill_type = type;
   o_current->fill_width = width;
 
@@ -298,7 +300,8 @@ void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current,
 
   o_current->fill_pitch2 = pitch2;
   o_current->fill_angle2 = angle2;
-	
+
+  o_emit_change_notify (toplevel, o_current);
 }
 
 /*! \brief get #OBJECT's fill properties.

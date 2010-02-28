@@ -1331,10 +1331,8 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
       g_assert_not_reached();
     }
     
-    o_invalidate (w_current, object);
     o_set_fill_options (toplevel, object, otype, owidth,
                         opitch1, oangle1, opitch2, oangle2);
-    o_invalidate (w_current, object);
   }
 
   toplevel->page_current->CHANGED = 1;
