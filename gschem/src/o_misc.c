@@ -400,20 +400,7 @@ void o_edit_show_hidden_lowlevel (GSCHEM_TOPLEVEL *w_current,
     if (o_current->type == OBJ_TEXT && o_current->visibility == INVISIBLE) {
 
       /* don't toggle the visibility flag */
-
-      if (toplevel->show_hidden_text) {
-        /* draw the text object if it hidden  */
-        o_text_recreate(toplevel, o_current);
-        o_recalc_single_object(toplevel, o_current);
-        o_invalidate (w_current, o_current);
-      } else {
-        /* object is hidden and we are now NOT drawing it, so */
-        /* get rid of the extra primitive data */
-        o_text_recreate(toplevel, o_current);
-        o_recalc_single_object(toplevel, o_current);
-        /* unfortunately, you cannot erase the old visible text here */
-        /* because o_text_draw will just return */
-      }
+      o_text_recreate (toplevel, o_current);
     }
 
     if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
@@ -471,8 +458,6 @@ void o_edit_make_visible (GSCHEM_TOPLEVEL *w_current, const GList *o_list)
       if (o_current->visibility == INVISIBLE) {
         o_current->visibility = VISIBLE;
         o_text_recreate(toplevel, o_current);
-
-        o_invalidate (w_current, o_current);
 
         toplevel->page_current->CHANGED = 1;
       }
@@ -655,7 +640,6 @@ void o_edit_show_specific_text (GSCHEM_TOPLEVEL *w_current,
           o_current->visibility = VISIBLE;
           o_text_recreate(toplevel, o_current);
 
-          o_invalidate (w_current, o_current);
           toplevel->page_current->CHANGED = 1;
         }
       }

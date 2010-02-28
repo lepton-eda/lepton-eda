@@ -1023,7 +1023,6 @@ static void multiattrib_callback_toggled_visible(GtkCellRendererToggle *cell_ren
   /* actually modifies the attribute */
   o_attrib->visibility = visibility;
   o_text_recreate (w_current->toplevel, o_attrib);
-  o_invalidate (w_current, o_attrib);
   o_undo_savestate (w_current, UNDO_ALL);
 
   /* request an update of display for this row */
@@ -1072,7 +1071,6 @@ static void multiattrib_callback_toggled_show_name(GtkCellRendererToggle *cell_r
   /* actually modifies the attribute */
   o_attrib->show_name_value = new_snv;
   o_text_recreate (w_current->toplevel, o_attrib);
-  o_invalidate (w_current, o_attrib);
   o_undo_savestate (w_current, UNDO_ALL);
 
   /* request an update of display for this row */
@@ -1121,7 +1119,6 @@ static void multiattrib_callback_toggled_show_value(GtkCellRendererToggle *cell_
   /* actually modifies the attribute */
   o_attrib->show_name_value = new_snv;
   o_text_recreate (w_current->toplevel, o_attrib);
-  o_invalidate (w_current, o_attrib);
   o_undo_savestate (w_current, UNDO_ALL);
   
   /* request an update of display for this row */

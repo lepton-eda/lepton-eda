@@ -140,8 +140,6 @@ void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 
     object->visibility = VISIBLE;
     o_text_recreate(toplevel, object);
-
-    o_invalidate (w_current, object);
   }
 
   toplevel->page_current->CHANGED = 1;
@@ -167,7 +165,6 @@ void o_attrib_toggle_show_name_value(GSCHEM_TOPLEVEL *w_current,
   o_invalidate (w_current, object);
   object->show_name_value = show_name_value;
   o_text_recreate(toplevel, object);
-  o_invalidate (w_current, object);
 
   toplevel->page_current->CHANGED = 1;
 }

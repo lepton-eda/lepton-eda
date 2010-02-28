@@ -347,7 +347,6 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_coloridx,
     object = attribute->attribute;
     if (object &&
 	object->text) {
-      o_invalidate (w_current, object);
       if (x != -1) {
 	object->text->x = x;
       }
@@ -364,9 +363,6 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_coloridx,
 	object->text->angle = rotation;
       }
       o_text_recreate(toplevel, object);
-      if (!toplevel->DONT_REDRAW) {
-        o_invalidate (w_current, object);
-      }
     }
   }
   return SCM_BOOL_T;

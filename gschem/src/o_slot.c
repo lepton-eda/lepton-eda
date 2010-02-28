@@ -113,15 +113,7 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, OBJECT *object, const char *string)
   g_free (slot_value);
 
   if (o_slot != NULL && !o_attrib_is_inherited (o_slot)) {
-
-    o_invalidate (w_current, o_slot);
-
     o_text_set_string (toplevel, o_slot, string);
-
-    /* this doesn't deal with the selection list
-     * item */
-    o_invalidate (w_current, o_slot);
-
   } else {
     /* here you need to do the add the slot
        attribute since it doesn't exist */
@@ -135,10 +127,7 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, OBJECT *object, const char *string)
     o_attrib_attach (toplevel, new_obj, object, FALSE);
   }
 
-  o_invalidate (w_current, object);
   s_slot_update_object (toplevel, object);
-
-  o_invalidate (w_current,object);
 
   toplevel->page_current->CHANGED = 1;
   g_free (value);
