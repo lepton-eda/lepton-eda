@@ -637,3 +637,31 @@ o_get_page_compat (TOPLEVEL *toplevel, OBJECT *object) {
     return page;
   }
 }
+
+void o_set_change_notify_funcs (TOPLEVEL *toplevel,
+                                ChangeNotifyFunc pre_change_func,
+                                ChangeNotifyFunc change_func,
+                                void *user_data)
+{
+  toplevel->pre_change_notify_func = pre_change_func;
+  toplevel->change_notify_func = change_func;
+  toplevel->change_notify_data = user_data;
+}
+
+
+void o_emit_pre_change_notify (TOPLEVEL *toplevel, OBJECT *object)
+{
+  if (toplevel->pre_change_notify_func == NULL)
+    return;
+
+  toplevel->pre_change_notify_func (toplevel->change_notify_data, object);
+}
+
+
+void o_emit_change_notify (TOPLEVEL *toplevel, OBJECT *object)
+{
+  if (toplevel->change_notify_func == NULL)
+    return;
+
+  toplevel->change_notify_func (toplevel->change_notify_data, object);
+}
