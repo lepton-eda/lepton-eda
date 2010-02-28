@@ -768,10 +768,9 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   /* Recalculate the bounds of the object */
   o_recalc_single_object(toplevel, o_current);
 
-  /* reconnect, re-select and redraw */
+  /* reconnect and re-select */
   s_conn_update_object (toplevel, o_current);
   o_selection_add (toplevel, toplevel->page_current->selection_list, o_current);
-  o_invalidate (w_current, o_current);
 
   /* Re-flag as embedded if necessary */
   o_current->complex_embedded = is_embedded;

@@ -62,10 +62,8 @@ void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection,
     a_current = a_iter->data;
 
     /* make sure object isn't selected already */
-    if (!a_current->selected) {
+    if (!a_current->selected)
       o_selection_add (w_current->toplevel, selection, a_current);
-      o_invalidate (w_current, a_current);
-    }
   }
 }
 
@@ -96,10 +94,8 @@ void o_attrib_deselect_invisible (GSCHEM_TOPLEVEL *w_current,
        a_iter = g_list_next (a_iter)) {
     a_current = a_iter->data;
 
-    if (a_current->selected && a_current->visibility == INVISIBLE) {
+    if (a_current->selected && a_current->visibility == INVISIBLE)
       o_selection_remove (w_current->toplevel, selection, a_current);
-      o_invalidate (w_current, a_current);
-    }
   }
 }
 
@@ -267,8 +263,6 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
   }
 
   o_selection_add (toplevel, toplevel->page_current->selection_list, new_obj);
-
-  o_invalidate (w_current, new_obj);
 
   /* handle slot= attribute, it's a special case */
   if (o_current != NULL &&
