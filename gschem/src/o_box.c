@@ -458,9 +458,6 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
                        box_left + box_width, box_top - box_height);
   s_page_append (toplevel, toplevel->page_current, new_obj);
 
-  /* draw it */
-  o_invalidate (w_current, new_obj);
-
 #if DEBUG
   printf("coords: %d %d %d %d\n", box_left, box_top, box_width, box_height);
 #endif

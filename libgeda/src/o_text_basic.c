@@ -507,8 +507,10 @@ char *o_text_save(OBJECT *object)
  */
 void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
 {
+  o_emit_pre_change_notify (toplevel, o_current);
   update_disp_string (o_current);
   o_current->w_bounds_valid = FALSE;
+  o_emit_change_notify (toplevel, o_current);
 }
 
 /*! \brief move a text object

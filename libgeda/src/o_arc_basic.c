@@ -178,6 +178,8 @@ void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object,
 		  int x, int y, int whichone)
 {
 
+	o_emit_pre_change_notify (toplevel, object);
+
 	switch(whichone) {
 		case ARC_CENTER:
 		/* modify the center of arc object */
@@ -207,7 +209,7 @@ void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object,
 
 	/* update the screen coords and the bounding box */
 	o_arc_recalc(toplevel, object);
-	
+	o_emit_change_notify (toplevel, object);
 }
 
 /*! \brief

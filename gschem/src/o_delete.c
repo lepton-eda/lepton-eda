@@ -38,34 +38,8 @@
 void o_delete (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  GList *prev_conn_objects = NULL;
-  GList *iter, *iter_next;
-  gboolean do_conn;
 
   g_return_if_fail (object != NULL);
-
-  do_conn =
-    object->type == OBJ_NET || object->type == OBJ_BUS ||
-    object->type == OBJ_PIN || object->type == OBJ_COMPLEX;
-  
-  if (do_conn) {
-    prev_conn_objects = s_conn_return_others (prev_conn_objects, object);
-
-    /* Check for complex which self-connects, e.g. coincident pins.
-     * Remove any prev_conn_objects which are inside the complex.
-     */
-    if (object->type == OBJ_COMPLEX) {
-      for (iter = prev_conn_objects; iter != NULL; iter = iter_next) {
-        OBJECT *conn_obj = iter->data;
-        iter_next = g_list_next (iter);
-        if (conn_obj->parent == object)
-          prev_conn_objects = g_list_delete_link (prev_conn_objects, iter);
-      }
-    }
-    o_invalidate_glist (w_current, prev_conn_objects);
-    g_list_free (prev_conn_objects);
-  }
-  o_invalidate (w_current, object);
 
   s_page_remove (toplevel, toplevel->page_current, object);
   s_delete_object (toplevel, object);

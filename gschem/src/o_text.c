@@ -656,7 +656,6 @@ void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int len, int text
 
     if (object) {
       if (object->type == OBJ_TEXT) {
-        o_invalidate (w_current, object);
 
         object->text->size = text_size;
         object->text->alignment = text_alignment;
@@ -675,7 +674,6 @@ void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int len, int text
 	  }
         }
         o_text_recreate(toplevel, object);
-        o_invalidate (w_current, object);
       } 
     }
     
@@ -706,16 +704,11 @@ void o_text_change(GSCHEM_TOPLEVEL *w_current, OBJECT *object, char *string,
     return;
   }
 
-  /* erase old object */
-  o_invalidate (w_current, object);
-
-  /* second change the real object */
   o_text_set_string (toplevel, object, string);
 
   object->visibility = visibility;
   object->show_name_value = show;
   o_text_recreate(toplevel, object);
-  o_invalidate (w_current, object);
 
   /* handle slot= attribute, it's a special case */
   if (object->attached_to != NULL &&

@@ -303,6 +303,8 @@ void o_path_modify (TOPLEVEL *toplevel, OBJECT *object,
   int grip_no = 0;
   PATH_SECTION *section;
 
+  o_emit_pre_change_notify (toplevel, object);
+
   for (i = 0; i <  object->path->num_sections; i++) {
     section = &object->path->sections[i];
 
@@ -334,6 +336,7 @@ void o_path_modify (TOPLEVEL *toplevel, OBJECT *object,
 
   /* Update bounding box */
   o_path_recalc (toplevel, object);
+  o_emit_change_notify (toplevel, object);
 }
 
 

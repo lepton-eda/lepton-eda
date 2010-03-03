@@ -248,9 +248,6 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
     o_attrib_add_selected (w_current, toplevel->page_current->selection_list,
                            o_current);
   }
-
-  /* finally redraw object */
-  o_invalidate (w_current, o_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -519,8 +516,7 @@ void o_select_unselect_list(GSCHEM_TOPLEVEL *w_current, SELECTION *selection)
 
   while ( list != NULL ) {
     o_selection_unselect (w_current->toplevel, (OBJECT *)list->data);
-    o_invalidate (w_current, (OBJECT *)list->data);
-   list = g_list_next( list );
+    list = g_list_next (list);
   }
 
   geda_list_remove_all( (GedaList *)selection );

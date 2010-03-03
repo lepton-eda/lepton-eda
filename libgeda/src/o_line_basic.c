@@ -168,6 +168,8 @@ OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 void o_line_modify(TOPLEVEL *toplevel, OBJECT *object,
                    int x, int y, int whichone)
 {
+  o_emit_pre_change_notify (toplevel, object);
+
   /* change one of the end of the line */
   switch (whichone) {
     case LINE_END1:
@@ -186,6 +188,7 @@ void o_line_modify(TOPLEVEL *toplevel, OBJECT *object,
 
   /* recalculate the bounding box */
   o_line_recalc(toplevel, object);
+  o_emit_change_notify (toplevel, object);
 }
 
 /*! \brief Create line OBJECT from character string.

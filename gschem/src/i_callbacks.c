@@ -158,6 +158,12 @@ DEFINE_I_CALLBACK(file_new_window)
 
   o_text_set_rendered_bounds_func (w_current->toplevel,
                                    o_text_get_rendered_bounds, w_current);
+
+  /* Damage notifications should invalidate the object on screen */
+  o_set_change_notify_funcs (w_current->toplevel,
+                             (ChangeNotifyFunc) o_invalidate,
+                             (ChangeNotifyFunc) o_invalidate, w_current);
+
   x_window_setup (w_current);
 
   page = x_window_open_page (w_current, NULL);
@@ -1015,8 +1021,6 @@ DEFINE_I_CALLBACK(edit_embed)
       }
       s_current = g_list_next(s_current);
     }
-    o_invalidate_glist (w_current, geda_list_get_glist (
-                          w_current->toplevel->page_current->selection_list));
     o_undo_savestate(w_current, UNDO_ALL);
   } else {
     /* nothing selected, go back to select state */
@@ -1056,8 +1060,6 @@ DEFINE_I_CALLBACK(edit_unembed)
       }
       s_current = g_list_next(s_current);
     }
-    o_invalidate_glist (w_current, geda_list_get_glist (
-                          w_current->toplevel->page_current->selection_list));
     o_undo_savestate(w_current, UNDO_ALL);
   } else {
     /* nothing selected, go back to select state */
@@ -1113,9 +1115,6 @@ DEFINE_I_CALLBACK(edit_update)
       s_current = g_list_next(s_current);
     }
     g_list_free(selection_copy);
-
-    /* Make sure the display is up to date */
-    o_invalidate_all (w_current);
   } else {
     /* nothing selected, go back to select state */
     o_redraw_cleanstates(w_current);	

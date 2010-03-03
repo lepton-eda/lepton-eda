@@ -191,8 +191,6 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
   GList *o_iter;
-  GList *prev_conn_objects=NULL;
-  GList *connected_objects=NULL;
 
   /* this is okay if you just hit rotate and have nothing selected */
   if (list == NULL) {
@@ -207,12 +205,11 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
 
   /* Find connected objects, removing each object in turn from the
    * connection list. We only _really_ want those objects connected
-   * to the selection, not those within in it. The extra redraws
-   * don't _really_ hurt though. */
+   * to the selection, not those within in it.
+   */
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
 
-    prev_conn_objects = s_conn_return_others (prev_conn_objects, o_current);
     s_conn_remove_object (toplevel, o_current);
   }
 
@@ -220,25 +217,17 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
 
   /* Find connected objects, adding each object in turn back to the
    * connection list. We only _really_ want those objects connected
-   * to the selection, not those within in it. The extra redraws dont
-   * _really_ hurt though. */
+   * to the selection, not those within in it.
+   */
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
 
     s_conn_update_object (toplevel, o_current);
-    connected_objects = s_conn_return_others (connected_objects, o_current);
   }
 
   if (!toplevel->DONT_REDRAW) {
     o_invalidate_glist (w_current, list);
-    o_invalidate_glist (w_current, prev_conn_objects);
-    o_invalidate_glist (w_current, connected_objects);
   }
-
-  g_list_free (prev_conn_objects);
-  prev_conn_objects = NULL;
-  g_list_free (connected_objects);
-  connected_objects = NULL;
 
   /* All objects were rotated. Run the rotate hooks */
   o_rotate_call_hooks (w_current, list);
@@ -299,8 +288,6 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
   GList *o_iter;
-  GList *prev_conn_objects=NULL;
-  GList *connected_objects=NULL;
 
   if (list == NULL) {
     w_current->inside_action = 0;
@@ -312,12 +299,11 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
 
   /* Find connected objects, removing each object in turn from the
    * connection list. We only _really_ want those objects connected
-   * to the selection, not those within in it. The extra redraws
-   * don't _really_ hurt though. */
+   * to the selection, not those within in it.
+   */
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
 
-    prev_conn_objects = s_conn_return_others (prev_conn_objects, o_current);
     s_conn_remove_object (toplevel, o_current);
   }
 
@@ -325,23 +311,15 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
 
   /* Find connected objects, adding each object in turn back to the
    * connection list. We only _really_ want those objects connected
-   * to the selection, not those within in it. The extra redraws dont
-   * _really_ hurt though. */
+   * to the selection, not those within in it.
+   */
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
     o_current = o_iter->data;
 
     s_conn_update_object (toplevel, o_current);
-    connected_objects = s_conn_return_others (connected_objects, o_current);
   }
 
   o_invalidate_glist (w_current, list);
-  o_invalidate_glist (w_current, prev_conn_objects);
-  o_invalidate_glist (w_current, connected_objects);
-
-  g_list_free (prev_conn_objects);
-  prev_conn_objects = NULL;
-  g_list_free (connected_objects);
-  connected_objects = NULL;
 
   /* All objects were mirrored. Do a 2nd pass to run the mirror hooks */
   /* Do not run any hooks for simple objects here, like text, since they
@@ -400,20 +378,7 @@ void o_edit_show_hidden_lowlevel (GSCHEM_TOPLEVEL *w_current,
     if (o_current->type == OBJ_TEXT && o_current->visibility == INVISIBLE) {
 
       /* don't toggle the visibility flag */
-
-      if (toplevel->show_hidden_text) {
-        /* draw the text object if it hidden  */
-        o_text_recreate(toplevel, o_current);
-        o_recalc_single_object(toplevel, o_current);
-        o_invalidate (w_current, o_current);
-      } else {
-        /* object is hidden and we are now NOT drawing it, so */
-        /* get rid of the extra primitive data */
-        o_text_recreate(toplevel, o_current);
-        o_recalc_single_object(toplevel, o_current);
-        /* unfortunately, you cannot erase the old visible text here */
-        /* because o_text_draw will just return */
-      }
+      o_text_recreate (toplevel, o_current);
     }
 
     if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
@@ -471,8 +436,6 @@ void o_edit_make_visible (GSCHEM_TOPLEVEL *w_current, const GList *o_list)
       if (o_current->visibility == INVISIBLE) {
         o_current->visibility = VISIBLE;
         o_text_recreate(toplevel, o_current);
-
-        o_invalidate (w_current, o_current);
 
         toplevel->page_current->CHANGED = 1;
       }
@@ -655,7 +618,6 @@ void o_edit_show_specific_text (GSCHEM_TOPLEVEL *w_current,
           o_current->visibility = VISIBLE;
           o_text_recreate(toplevel, o_current);
 
-          o_invalidate (w_current, o_current);
           toplevel->page_current->CHANGED = 1;
         }
       }
@@ -766,8 +728,6 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
       s_page_append (toplevel, toplevel->page_current, o_attrib);
       /* add the attribute to old */
       o_attrib_add (toplevel, o_current, o_attrib);
-      /* redraw the attribute object */
-      o_invalidate (w_current, o_attrib);
       /* note: this object is unselected (not added to selection). */
     }
     else
@@ -786,10 +746,9 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   /* Recalculate the bounds of the object */
   o_recalc_single_object(toplevel, o_current);
 
-  /* reconnect, re-select and redraw */
+  /* reconnect and re-select */
   s_conn_update_object (toplevel, o_current);
   o_selection_add (toplevel, toplevel->page_current->selection_list, o_current);
-  o_invalidate (w_current, o_current);
 
   /* Re-flag as embedded if necessary */
   o_current->complex_embedded = is_embedded;

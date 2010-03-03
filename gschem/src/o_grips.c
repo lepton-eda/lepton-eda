@@ -1242,7 +1242,6 @@ static void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                             int whichone)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  GList *prev_conn_objects;
   GList *connected_objects;
 
   /* erase the temporary line */
@@ -1257,26 +1256,14 @@ static void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
     return;
   }
 
-  prev_conn_objects = s_conn_return_others (NULL, o_current);
-
   s_conn_remove_object (toplevel, o_current);
   o_net_modify (toplevel, o_current, w_current->second_wx,
                 w_current->second_wy, w_current->which_grip);
   s_conn_update_object (toplevel, o_current);
 
-  /* get the other connected objects and redraw them */
-  connected_objects = s_conn_return_others (NULL, o_current);
   /* add bus rippers if necessary */
-  o_net_add_busrippers (w_current, o_current, connected_objects);
-  g_list_free (connected_objects);
-
-  /* draw the object objects */
-  o_invalidate_glist (w_current, prev_conn_objects);
-  g_list_free (prev_conn_objects);
-
-  /* get the other connected objects and redraw them */
   connected_objects = s_conn_return_others (NULL, o_current);
-  o_invalidate_glist (w_current, connected_objects);
+  o_net_add_busrippers (w_current, o_current, connected_objects);
   g_list_free (connected_objects);
 }
 
@@ -1300,8 +1287,6 @@ static void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                             int whichone)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  GList *prev_conn_objects;
-  GList *connected_objects;
 
   /* erase the temporary line */
   /* o_line_invalidate_rubber (w_current); */
@@ -1315,22 +1300,10 @@ static void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
     return;
   }
 
-  prev_conn_objects = s_conn_return_others (NULL, o_current);
-
   s_conn_remove_object (toplevel, o_current);
   o_pin_modify (toplevel, o_current, w_current->second_wx,
                 w_current->second_wy, w_current->which_grip);
   s_conn_update_object (toplevel, o_current);
-
-  /* redraw the object connections */
-  o_invalidate_glist (w_current, prev_conn_objects);
-  g_list_free (prev_conn_objects);
-
-  /* get the other connected objects and redraw them */
-  connected_objects = s_conn_return_others (NULL, o_current);
-  o_invalidate_glist (w_current, connected_objects);
-  g_list_free (connected_objects);
-
 }
 
 /*! \brief End process of modifying bus object with grip.
@@ -1353,8 +1326,6 @@ static void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                             int whichone)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  GList *prev_conn_objects;
-  GList *connected_objects;
 
   /* erase the temporary line */
   /* o_line_invalidate_rubber (w_current); */
@@ -1368,21 +1339,10 @@ static void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
     return;
   }
 
-  prev_conn_objects = s_conn_return_others (NULL, o_current);
-
   s_conn_remove_object (toplevel, o_current);
   o_bus_modify (toplevel, o_current, w_current->second_wx,
                 w_current->second_wy, w_current->which_grip);
   s_conn_update_object (toplevel, o_current);
-
-  /* redraw the connected objects */
-  o_invalidate_glist (w_current, prev_conn_objects);
-  g_list_free (prev_conn_objects);
-
-  /* get the other connected objects and redraw them */
-  connected_objects = s_conn_return_others (NULL, o_current);
-  o_invalidate_glist (w_current, connected_objects);
-  g_list_free (connected_objects);
 }
 
 

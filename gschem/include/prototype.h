@@ -608,7 +608,7 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_autosave_backups(GSCHEM_TOPLEVEL *w_current);
 /* o_move.c */
 void o_move_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_move_end_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int diff_x, int diff_y, GList **other_objects, GList **connected_objects);
+void o_move_end_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int diff_x, int diff_y);
 void o_move_end(GSCHEM_TOPLEVEL *w_current);
 void o_move_cancel(GSCHEM_TOPLEVEL *w_current);
 void o_move_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -618,7 +618,7 @@ int o_move_return_whichone(OBJECT *object, int x, int y);
 void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_move_prep_rubberband(GSCHEM_TOPLEVEL *w_current);
 int o_move_zero_length(OBJECT *object);
-void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x, int world_diff_y, GList **objects, GList **other_objects, GList **connected_objects);
+void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x, int world_diff_y, GList **objects);
 /* o_net.c */
 void o_net_reset(GSCHEM_TOPLEVEL *w_current); 
 void o_net_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);

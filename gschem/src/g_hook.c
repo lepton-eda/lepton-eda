@@ -347,7 +347,6 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_coloridx,
     object = attribute->attribute;
     if (object &&
 	object->text) {
-      o_invalidate (w_current, object);
       if (x != -1) {
 	object->text->x = x;
       }
@@ -364,9 +363,6 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_coloridx,
 	object->text->angle = rotation;
       }
       o_text_recreate(toplevel, object);
-      if (!toplevel->DONT_REDRAW) {
-        o_invalidate (w_current, object);
-      }
     }
   }
   return SCM_BOOL_T;
@@ -716,17 +712,7 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
 		 scm_cons(g_make_object_smob(toplevel,
 					     new_obj), SCM_EOL));
   }
-  
-  /* 
-   * For now, do not redraw the newly added complex, since this might cause
-   * flicker if you are zoom/panning right after this function executes 
-   */
-#if 0 
-  /* Now the new component should be added to the object's list and 
-     drawn in the screen */
-  o_invalidate (toplevel, new_object);
-#endif
-  
+
   return SCM_BOOL_T;        
 }
 

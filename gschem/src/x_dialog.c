@@ -843,10 +843,8 @@ static void line_type_dialog_ok(GtkWidget *w, gpointer data)
       g_assert_not_reached();
     }
 
-    o_invalidate (w_current, object);
     o_set_line_options (toplevel, object,
                         oend, otype, owidth, olength, ospace);
-    o_invalidate (w_current, object);
   }
 
   toplevel->page_current->CHANGED = 1;
@@ -1333,10 +1331,8 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
       g_assert_not_reached();
     }
     
-    o_invalidate (w_current, object);
     o_set_fill_options (toplevel, object, otype, owidth,
                         opitch1, oangle1, opitch2, oangle2);
-    o_invalidate (w_current, object);
   }
 
   toplevel->page_current->CHANGED = 1;
@@ -1559,11 +1555,9 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
     arc_object = (OBJECT*) g_object_get_data(G_OBJECT(w_current->aawindow),"arc_object");
 
     if (arc_object != NULL) {
-      o_invalidate (w_current, arc_object);
       o_arc_modify(w_current->toplevel, arc_object, radius, 0, ARC_RADIUS);
       o_arc_modify(w_current->toplevel, arc_object, start_angle, 0, ARC_START_ANGLE);
       o_arc_modify(w_current->toplevel, arc_object, sweep_angle, 0, ARC_END_ANGLE);
-      o_invalidate (w_current, arc_object);
     } else {
       o_arc_end4(w_current, radius, start_angle, sweep_angle);
     }
@@ -4253,11 +4247,9 @@ void x_dialog_edit_pin_type (GSCHEM_TOPLEVEL *w_current, const GList *obj_list)
         if (object->type == OBJ_PIN &&
             object->pin_type != new_type) {
           changed_anything = TRUE;
-          o_invalidate (w_current, object);
           s_conn_remove_object (w_current->toplevel, object);
           o_pin_set_type (w_current->toplevel, object, new_type);
           s_conn_update_object (w_current->toplevel, object);
-          o_invalidate (w_current, object);
         }
       }
       if (changed_anything)

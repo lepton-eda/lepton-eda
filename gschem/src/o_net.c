@@ -558,7 +558,7 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   int found_primary_connection = FALSE;
   int save_wx, save_wy;
 
-  GList *prev_conn_objects = NULL;
+  GList *prev_conn_objects;
   OBJECT *new_net = NULL;
 
   g_assert( w_current->inside_action != 0 );
@@ -606,25 +606,14 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
       /* conn stuff */
       /* LEAK CHECK 1 */
-      prev_conn_objects = s_conn_return_others (prev_conn_objects, new_net);
-
-      if (o_net_add_busrippers (w_current, new_net, prev_conn_objects)) {
-        g_list_free (prev_conn_objects);
-        prev_conn_objects = NULL;
-        prev_conn_objects = s_conn_return_others (prev_conn_objects, new_net);
-      }
+      prev_conn_objects = s_conn_return_others (NULL, new_net);
+      o_net_add_busrippers (w_current, new_net, prev_conn_objects);
+      g_list_free (prev_conn_objects);
 
 #if DEBUG 
       printf("primary:\n"); 
       s_conn_print(new_net->conn_list);
 #endif
-
-      o_invalidate (w_current, new_net);
-
-      o_invalidate_glist (w_current, prev_conn_objects);
-
-      g_list_free (prev_conn_objects);
-      prev_conn_objects = NULL;
 
       /* Go off and search for valid connection on this newly created net */
       found_primary_connection = s_conn_net_search(new_net, 1, 
@@ -650,23 +639,12 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
       /* conn stuff */
       /* LEAK CHECK 2 */
-      prev_conn_objects = s_conn_return_others (prev_conn_objects, new_net);
-
-      if (o_net_add_busrippers (w_current, new_net, prev_conn_objects)) {
-        g_list_free (prev_conn_objects);
-        prev_conn_objects = NULL;
-        prev_conn_objects = s_conn_return_others (prev_conn_objects, new_net);
-      }
+      prev_conn_objects = s_conn_return_others (NULL, new_net);
+      o_net_add_busrippers (w_current, new_net, prev_conn_objects);
+      g_list_free (prev_conn_objects);
 #if DEBUG
       s_conn_print(new_net->conn_list);
 #endif
-
-      o_invalidate (w_current, new_net);
-
-      o_invalidate_glist (w_current, prev_conn_objects);
-
-      g_list_free (prev_conn_objects);
-      prev_conn_objects = NULL;
   }
 
   toplevel->page_current->CHANGED = 1;
@@ -1160,8 +1138,6 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
           s_page_append_list (toplevel, toplevel->page_current,
                               o_complex_promote_attribs (toplevel, new_obj));
           s_page_append (toplevel, toplevel->page_current, new_obj);
-
-          o_invalidate (w_current, new_obj);
         } else {
           s_log_message(_("Bus ripper symbol [%s] was not found in any component library\n"),
                         toplevel->bus_ripper_symname);

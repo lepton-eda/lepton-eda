@@ -216,6 +216,8 @@ void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current,
     break;
   }
   
+  o_emit_pre_change_notify (toplevel, o_current);
+
   o_current->line_width = width;
   o_current->line_end   = end;
   o_current->line_type  = type;
@@ -225,6 +227,8 @@ void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current,
 
   /* Recalculate the object's bounding box */
   o_recalc_single_object( toplevel, o_current );
+  o_emit_change_notify (toplevel, o_current);
+
 }
 
 /*! \brief get #OBJECT's line properties.
@@ -286,6 +290,8 @@ void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current,
     return;
   }
 
+  o_emit_pre_change_notify (toplevel, o_current);
+
   o_current->fill_type = type;
   o_current->fill_width = width;
 
@@ -294,7 +300,8 @@ void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current,
 
   o_current->fill_pitch2 = pitch2;
   o_current->fill_angle2 = angle2;
-	
+
+  o_emit_change_notify (toplevel, o_current);
 }
 
 /*! \brief get #OBJECT's fill properties.
@@ -636,4 +643,32 @@ o_get_page_compat (TOPLEVEL *toplevel, OBJECT *object) {
   } else {
     return page;
   }
+}
+
+void o_set_change_notify_funcs (TOPLEVEL *toplevel,
+                                ChangeNotifyFunc pre_change_func,
+                                ChangeNotifyFunc change_func,
+                                void *user_data)
+{
+  toplevel->pre_change_notify_func = pre_change_func;
+  toplevel->change_notify_func = change_func;
+  toplevel->change_notify_data = user_data;
+}
+
+
+void o_emit_pre_change_notify (TOPLEVEL *toplevel, OBJECT *object)
+{
+  if (toplevel->pre_change_notify_func == NULL)
+    return;
+
+  toplevel->pre_change_notify_func (toplevel->change_notify_data, object);
+}
+
+
+void o_emit_change_notify (TOPLEVEL *toplevel, OBJECT *object)
+{
+  if (toplevel->change_notify_func == NULL)
+    return;
+
+  toplevel->change_notify_func (toplevel->change_notify_data, object);
 }

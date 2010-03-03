@@ -376,6 +376,11 @@ preview_init (Preview *preview)
                                    o_text_get_rendered_bounds,
                                    preview_w_current);
 
+  o_set_change_notify_funcs (preview_w_current->toplevel,
+                             (ChangeNotifyFunc) o_invalidate,
+                             (ChangeNotifyFunc) o_invalidate,
+                             preview_w_current);
+
   i_vars_set (preview_w_current);
 
   /* be sure to turn off scrollbars */

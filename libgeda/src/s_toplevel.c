@@ -134,6 +134,10 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->rendered_text_bounds_func = NULL;
   toplevel->rendered_text_bounds_data = NULL;
 
+  toplevel->pre_change_notify_func = NULL;
+  toplevel->change_notify_func = NULL;
+  toplevel->change_notify_data = NULL;
+
   toplevel->load_newer_backup_func = NULL;
   toplevel->load_newer_backup_data = NULL;
 

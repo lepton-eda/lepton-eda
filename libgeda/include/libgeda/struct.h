@@ -431,6 +431,9 @@ struct st_page {
 /*! \brief Type of callback function for calculating text bounds */
 typedef int(*RenderedBoundsFunc)(void *, OBJECT *, int *, int *, int *, int *);
 
+/*! \brief Type of callback function for object damage notification */
+typedef int(*ChangeNotifyFunc)(void *, OBJECT *);
+
 /*! \brief Type of callback function for querying loading of backups */
 typedef gboolean(*LoadBackupQueryFunc)(void *, GString *);
 
@@ -554,6 +557,11 @@ struct st_toplevel {
   /* Callback function for calculating text bounds */
   RenderedBoundsFunc rendered_text_bounds_func;
   void *rendered_text_bounds_data;
+
+  /* Callback functions for object change notification */
+  ChangeNotifyFunc pre_change_notify_func;
+  ChangeNotifyFunc change_notify_func;
+  void *change_notify_data;
 
   /* Callback function for deciding whether to load a backup file. */
   LoadBackupQueryFunc load_newer_backup_func;
