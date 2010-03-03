@@ -627,29 +627,39 @@ void o_edit_show_specific_text (GSCHEM_TOPLEVEL *w_current,
   o_undo_savestate(w_current, UNDO_ALL);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+
+/*! \brief Update a component.
  *
+ * \par Function Description
+ * Updates \a o_current to the latest version of the symbol available
+ * in the symbol library, while preserving any attributes set in the
+ * current schematic. On success, returns the new OBJECT which
+ * replaces \a o_current on the page; \a o_current is deleted. On
+ * failure, returns NULL, and \a o_current is left unchanged.
+ *
+ * \param [in]     w_current The GSCHEM_TOPLEVEL object.
+ * \param [in,out] o_current The OBJECT to be updated.
+ *
+ * \return the new OBJECT that replaces \a o_current.
  */
-void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
+OBJECT *
+o_update_component (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *new_complex;
-  OBJECT *a_current;
-  GList *temp_list;
-  GList *a_iter;
-  GList *po_iter;
-  gboolean is_embedded;
+  OBJECT *o_new;
+  PAGE *page;
+  GList *new_attribs;
+  GList *old_attribs;
+  GList *iter;
   const CLibSymbol *clib;
 
-  g_return_if_fail (o_current != NULL);
+  g_return_val_if_fail (o_current != NULL, NULL);
+  g_return_val_if_fail (o_current->type == OBJ_COMPLEX, NULL);
+  g_return_val_if_fail (o_current->complex_basename != NULL, NULL);
 
-  is_embedded = o_complex_is_embedded (o_current);
+  page = o_get_page (toplevel, o_current);
 
-  g_assert (o_current->complex_basename != NULL);
-
-  /* This shuold be replaced with API to invalidate only the specific
+  /* This should be replaced with API to invalidate only the specific
    * symbol name we want to update */
   s_clib_flush_symbol_cache ();
   clib = s_clib_get_symbol_by_name (o_current->complex_basename);
@@ -657,106 +667,78 @@ void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if (clib == NULL) {
     s_log_message (_("Could not find symbol [%s] in library. Update failed.\n"),
                    o_current->complex_basename);
-    return;
+    return NULL;
   }
 
-  /* ensure we repaint where the complex object was */
-  o_invalidate (w_current, o_current);
-  /* delete its connections */
-  s_conn_remove_object (toplevel, o_current);
-  /* and unselect it */
-  o_selection_remove (toplevel,
-                      toplevel->page_current->selection_list, o_current);
+  /* Unselect the old object. */
+  o_selection_remove (toplevel, page->selection_list, o_current);
 
-  new_complex = o_complex_new (toplevel, OBJ_COMPLEX, DEFAULT_COLOR,
-                               o_current->complex->x,
-                               o_current->complex->y,
-                               o_current->complex->angle,
-                               o_current->complex->mirror,
-                               clib, o_current->complex_basename,
-                               1);
-
-  temp_list = o_complex_promote_attribs (toplevel, new_complex);
-  temp_list = g_list_append (temp_list, new_complex);
-
-  /* updating the old complex with data from the new one */
-  /* first process the prim_objs: */
-  /*   - delete the prim_objs of the old component */
-  s_delete_object_glist (toplevel, o_current->complex->prim_objs);
-  /*   - put the prim_objs of the new component in the old one */
-  o_current->complex->prim_objs = new_complex->complex->prim_objs;
-
-  /* set the parent field now */
-  for (po_iter = o_current->complex->prim_objs;
-       po_iter != NULL;
-       po_iter = g_list_next (po_iter)) {
-    OBJECT *tmp = po_iter->data;
-    tmp->parent = o_current;
+  /* Create new object and set embedded */
+  o_new = o_complex_new (toplevel, OBJ_COMPLEX, DEFAULT_COLOR,
+                         o_current->complex->x,
+                         o_current->complex->y,
+                         o_current->complex->angle,
+                         o_current->complex->mirror,
+                         clib, o_current->complex_basename,
+                         1);
+  if (o_complex_is_embedded (o_current)) {
+    o_embed (toplevel, o_new);
   }
 
-  /*   - reset the new complex prim_objs */
-  new_complex->complex->prim_objs = NULL;
+  new_attribs = o_complex_promote_attribs (toplevel, o_new);
 
-  /* then process the attributes: */
-  /*   - check each attrib of the new complex */
-  a_iter = new_complex->attribs;
-  while (a_iter != NULL) {
-    OBJECT *o_attrib;
+  /* Cull any attributes from new COMPLEX that are already attached to
+   * old COMPLEX. Note that the new_attribs list is kept consistent by
+   * setting GList data pointers to NULL if their OBJECTs are
+   * culled. At the end, the new_attribs list is updated by removing
+   * all list items with NULL data. This is slightly magic, but
+   * works. */
+  for (iter = new_attribs; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *attr_new = iter->data;
     gchar *name;
-    char *attrfound;
+    gchar *value;
 
-    a_current = a_iter->data;
-    g_assert (a_current->type == OBJ_TEXT);
+    g_assert (attr_new->type == OBJ_TEXT);
 
-    o_attrib_get_name_value (a_current, &name, NULL);
+    o_attrib_get_name_value (attr_new, &name, NULL);
 
-    /* We are only interested in the attributes which were promoted during
-     * load of the new complex. Any which aren't already promoted in the
-     * schematic are migrated.
-     */
-    attrfound = o_attrib_search_attached_attribs_by_name (o_current, name, 0);
-
-    /* free this now since it is no longer being used */
-    g_free(name);
-
-    if (attrfound == NULL) {
-      /* attribute with same name not found in old component: */
-      /* add new attribute to old component */
-
-      /* make a copy of the attribute object */
-      o_attrib = o_object_copy (toplevel, a_current);
-      s_page_append (toplevel, toplevel->page_current, o_attrib);
-      /* add the attribute to old */
-      o_attrib_add (toplevel, o_current, o_attrib);
-      /* note: this object is unselected (not added to selection). */
-    }
-    else
-    {
-      g_free(attrfound);
+    value = o_attrib_search_attached_attribs_by_name (o_current, name, 0);
+    if (value != NULL) {
+      o_attrib_remove (toplevel, &o_new->attribs, attr_new);
+      s_delete_object (toplevel, attr_new);
+      iter->data = NULL;
     }
 
-    a_iter = g_list_next (a_iter);
+    g_free (name);
+    g_free (value);
   }
+  new_attribs = g_list_remove_all (new_attribs, NULL);
 
-  s_delete_object_glist (toplevel, temp_list);
+  /* Detach attributes from old OBJECT and attach to new OBJECT */
+  old_attribs = g_list_copy (o_current->attribs);
+  o_attrib_detach_all (toplevel, o_current);
+  o_attrib_attach_list (toplevel, old_attribs, o_new, 1);
+  g_list_free (old_attribs);
 
-  /* update the pinnumbers to the current slot */
-  s_slot_update_object (toplevel, o_current);
+  /* Add new attributes to page */
+  s_page_append_list (toplevel, page, new_attribs);
+  g_list_free (new_attribs);
 
-  /* Recalculate the bounds of the object */
-  o_recalc_single_object(toplevel, o_current);
+  /* Update pinnumbers for current slot */
+  s_slot_update_object (toplevel, o_new);
 
-  /* reconnect and re-select */
-  s_conn_update_object (toplevel, o_current);
-  o_selection_add (toplevel, toplevel->page_current->selection_list, o_current);
+  /* Replace old OBJECT with new OBJECT */
+  s_page_replace (toplevel, page, o_current, o_new);
+  s_delete_object (toplevel, o_current);
 
-  /* Re-flag as embedded if necessary */
-  o_current->complex_embedded = is_embedded;
+  /* Select new OBJECT */
+  o_selection_add (toplevel, page->selection_list, o_new);
 
   /* mark the page as modified */
   toplevel->page_current->CHANGED = 1;
   o_undo_savestate (w_current, UNDO_ALL);
 
+  return o_new;
 }
 
 /*! \brief Do autosave on all pages that are marked.

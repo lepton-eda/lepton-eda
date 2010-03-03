@@ -604,7 +604,7 @@ void o_edit_make_visible(GSCHEM_TOPLEVEL *w_current, const GList *o_list);
 int o_edit_find_text(GSCHEM_TOPLEVEL *w_current, const GList *o_list, char *stext, int descend, int skip);
 void o_edit_hide_specific_text(GSCHEM_TOPLEVEL *w_current, const GList *o_list, char *stext);
 void o_edit_show_specific_text(GSCHEM_TOPLEVEL *w_current, const GList *o_list, char *stext);
-void o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
+OBJECT *o_update_component(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_autosave_backups(GSCHEM_TOPLEVEL *w_current);
 /* o_move.c */
 void o_move_start(GSCHEM_TOPLEVEL *w_current, int x, int y);

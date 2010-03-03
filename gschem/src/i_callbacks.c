@@ -1080,41 +1080,32 @@ DEFINE_I_CALLBACK(edit_update)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_current;
-  GList* selection_copy;
-  GList* s_current;
+  GList *selection;
+  GList *selected_components = NULL;
+  GList *iter;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_edit_update, _("Update"));
-  /* anything selected ? */
   if (o_select_selected(w_current)) {
 
-    /* yes, update each selected component, but operate from a copy of the */
-    /* selection list, since o_update_component will modify the selection */
-
-    /* After the following code executes, only OBJ_COMPLEX object will be */
-    /* left selected. */
-
-    /* g_list_copy does a shallow copy which is exactly what we need here */
-    selection_copy = g_list_copy (
-              geda_list_get_glist (toplevel->page_current->selection_list));
-    s_current = selection_copy;
-    while (s_current != NULL) {
-      o_current = (OBJECT *) s_current->data;
-      g_assert (o_current != NULL);
-      if (o_current->type == OBJ_COMPLEX) {
-        o_update_component (w_current, o_current);
+    /* Updating components modifies the selection. Therefore, create a
+     * new list of only the OBJECTs we want to update from the current
+     * selection, then iterate over that new list to perform the
+     * update. */
+    selection = geda_list_get_glist (toplevel->page_current->selection_list);
+    for (iter = selection; iter != NULL; iter = g_list_next (iter)) {
+      OBJECT *o_current = (OBJECT *) iter->data;
+      if (o_current != NULL && o_current->type == OBJ_COMPLEX) {
+        selected_components = g_list_prepend (selected_components, o_current);
       }
-      else
-      {
-        /* object was not a OBJ_COMPLEX, so unselect it. */
-        o_selection_remove (toplevel,
-                            toplevel->page_current->selection_list, o_current);
-      }
-      s_current = g_list_next(s_current);
     }
-    g_list_free(selection_copy);
+    for (iter = selected_components; iter != NULL; iter = g_list_next (iter)) {
+      OBJECT *o_current = (OBJECT *) iter->data;
+      iter->data = o_update_component (w_current, o_current);
+    }
+    g_list_free (selected_components);
+
   } else {
     /* nothing selected, go back to select state */
     o_redraw_cleanstates(w_current);	
