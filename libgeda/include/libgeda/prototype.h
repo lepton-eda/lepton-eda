@@ -364,6 +364,7 @@ gint s_page_autosave (TOPLEVEL *toplevel);
 void s_page_append (TOPLEVEL *toplevel, PAGE *page, OBJECT *object);
 void s_page_append_list (TOPLEVEL *toplevel, PAGE *page, GList *obj_list);
 void s_page_remove (TOPLEVEL *toplevel, PAGE *page, OBJECT *object);
+void s_page_replace (TOPLEVEL *toplevel, PAGE *page, OBJECT *object1, OBJECT *object2);
 void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page);
 const GList *s_page_objects (PAGE *page);
 GList *s_page_objects_in_region (TOPLEVEL *toplevel, PAGE *page, int min_x, int min_y, int max_x, int max_y);

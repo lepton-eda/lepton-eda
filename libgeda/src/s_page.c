@@ -605,6 +605,35 @@ void s_page_remove (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
   page->_object_list = g_list_remove (page->_object_list, object);
 }
 
+/*! \brief Replace an OBJECT in a PAGE, in the same list position.
+ *
+ * \par Function Description
+ * Removes \a object1 from \a page's linked list of objects, and puts
+ * \a object2 in the position thus vacated. If \a object1 is not in \a
+ * page, object2 is appended to \a page.
+ *
+ * \param [in] toplevel  The TOPLEVEL object.
+ * \param [in] page      The PAGE to be modified.
+ * \param [in] object1   The OBJECT being removed from the page.
+ * \param [in] object2   The OBJECT being added to the page.
+ */
+void
+s_page_replace (TOPLEVEL *toplevel, PAGE *page,
+                OBJECT *object1, OBJECT *object2)
+{
+  GList *iter = g_list_find (page->_object_list, object1);
+
+  /* If object1 not found, append object2 */
+  if (iter == NULL) {
+    s_page_append (toplevel, page, object2);
+    return;
+  }
+
+  pre_object_removed (toplevel, page, object1);
+  iter->data = object2;
+  object_added (toplevel, page, object2);
+}
+
 /*! \brief Remove and free all OBJECTs from the PAGE
  *
  *  \par Function Description
