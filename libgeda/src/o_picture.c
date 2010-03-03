@@ -448,7 +448,9 @@ void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object,
 		      int x, int y, int whichone)
 {
   int tmp;
-  
+
+  o_emit_pre_change_notify (toplevel, object);
+
   /* change the position of the selected corner */
   switch(whichone) {
     case PICTURE_UPPER_LEFT:
@@ -510,6 +512,7 @@ void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object,
 	
   /* recalculate the screen coords and the boundings */
   o_picture_recalc(toplevel, object);
+  o_emit_change_notify (toplevel, object);
 }
 
 /*! \brief Rotate picture OBJECT using WORLD coordinates.

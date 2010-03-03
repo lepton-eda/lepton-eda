@@ -185,6 +185,8 @@ OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 void o_circle_modify(TOPLEVEL *toplevel, OBJECT *object,
 		     int x, int y, int whichone)
 {
+  o_emit_pre_change_notify (toplevel, object);
+
   switch(whichone) {
     case CIRCLE_CENTER:
       /* modify the center of the circle */
@@ -205,7 +207,7 @@ void o_circle_modify(TOPLEVEL *toplevel, OBJECT *object,
 
   /* recalculate the boundings */
   o_circle_recalc(toplevel, object);
-  
+  o_emit_change_notify (toplevel, object);
 }
 
 /*! \brief Create circle OBJECT from character string.

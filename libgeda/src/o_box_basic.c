@@ -168,7 +168,9 @@ void o_box_modify(TOPLEVEL *toplevel, OBJECT *object,
 		  int x, int y, int whichone)
 {
 	int tmp;
-	
+
+	o_emit_pre_change_notify (toplevel, object);
+
 	/* change the position of the selected corner */
 	switch(whichone) {
 		case BOX_UPPER_LEFT:
@@ -210,6 +212,7 @@ void o_box_modify(TOPLEVEL *toplevel, OBJECT *object,
 	
 	/* recalculate the world coords and the boundings */
 	o_box_recalc(toplevel, object);
+	o_emit_change_notify (toplevel, object);
   
 }
 
