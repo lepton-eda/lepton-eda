@@ -1119,9 +1119,6 @@ DEFINE_I_CALLBACK(edit_update)
       s_current = g_list_next(s_current);
     }
     g_list_free(selection_copy);
-
-    /* Make sure the display is up to date */
-    o_invalidate_all (w_current);
   } else {
     /* nothing selected, go back to select state */
     o_redraw_cleanstates(w_current);	
