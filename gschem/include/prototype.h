@@ -710,6 +710,11 @@ void o_undo_remove_last_undo(GSCHEM_TOPLEVEL *w_current);
 /* parsecmd.c */
 void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);
+/* s_stretch.c */
+GList *s_stretch_add(GList *list, OBJECT *object, CONN *connection, int whichone);
+GList *s_stretch_remove(GList *list, OBJECT *object);
+void s_stretch_print_all(GList *list);
+void s_stretch_destroy_all(GList *list);
 /* x_attribedit.c */
 gint option_menu_get_history(GtkOptionMenu *option_menu);
 void attrib_edit_dialog_ok(GtkWidget *w, GSCHEM_TOPLEVEL *w_current);

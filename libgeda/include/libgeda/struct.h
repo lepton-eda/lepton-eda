@@ -51,9 +51,6 @@ typedef struct st_bounds BOUNDS;
 typedef struct st_conn CONN;
 typedef struct st_bus_ripper BUS_RIPPER;
 
-/* Used when you move objects and you want the nets/pins to stretch */
-typedef struct st_stretch STRETCH;
-
 /* netlist structures (gnetlist) */
 typedef struct st_netlist NETLIST;
 typedef struct st_cpinlist CPINLIST;
@@ -324,14 +321,6 @@ struct st_bus_ripper
   int y[2];
 };
 
-struct st_stretch
-{
-  OBJECT *object;
-  CONN *connection;
-
-  int whichone;
-};
-
 struct st_bounds {
   gint min_x;
   gint min_y;
@@ -391,7 +380,6 @@ struct st_page {
   SELECTION *selection_list; /* new selection mechanism */
   GList *place_list;
   OBJECT *object_lastplace; /* the last found item */
-  GList *stretch_list;
 
   char *page_filename; 
   int CHANGED;			/* changed flag */

@@ -149,9 +149,6 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   /* new selection mechanism */
   page->selection_list = o_selection_new();
 
-  /* net/pin/bus stretch when doing moves */
-  page->stretch_list = NULL;
-
   page->place_list = NULL;
 
   /* init undo struct pointers */
@@ -247,8 +244,6 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   s_tile_print(toplevel);
 #endif
   s_tile_free_all (page);
-
-  s_stretch_destroy_all (page->stretch_list);
 
   /* free current page undo structs */
   s_undo_free_all (toplevel, page); 

@@ -20,12 +20,8 @@
 #include <config.h>
 
 #include <stdio.h>
-#include <ctype.h>
-#if HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
 
-#include "libgeda_priv.h"
+#include "gschem.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>

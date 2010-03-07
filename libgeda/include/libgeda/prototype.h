@@ -419,12 +419,6 @@ void s_slib_print_dirs(void);
 char *s_slot_search_slot(OBJECT *object, OBJECT **return_found);
 void s_slot_update_object(TOPLEVEL *toplevel, OBJECT *object);
 
-/* s_stretch.c */
-GList *s_stretch_add(GList *list, OBJECT *object, CONN *connection, int whichone);
-GList *s_stretch_remove(GList *list, OBJECT *object);
-void s_stretch_print_all(GList *list);
-void s_stretch_destroy_all(GList *list);
-
 /* s_tile.c */
 void s_tile_update_object(TOPLEVEL *toplevel, OBJECT *object);
 GList *s_tile_get_objectlists(TOPLEVEL *toplevel, int world_x1, int world_y1, int world_x2, int world_y2);

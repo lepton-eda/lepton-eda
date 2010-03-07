@@ -2,6 +2,7 @@
 typedef enum {SNAP_OFF, SNAP_GRID, SNAP_RESNAP, SNAP_STATE_COUNT} SNAP_STATE;
 
 typedef struct st_gschem_toplevel GSCHEM_TOPLEVEL;
+typedef struct st_stretch STRETCH;
 
 struct st_gschem_toplevel {
 
@@ -105,6 +106,11 @@ struct st_gschem_toplevel {
                                            type of object being manipulated. */
   OBJECT *which_object;                 /* Object being manipulated */
 
+  /* ------------------ */
+  /* Rubberbanding nets */
+  /* ------------------ */
+  GList *stretch_list;
+
   /* --------------------- */
   /* Gschem internal state */
   /* --------------------- */
@@ -205,3 +211,11 @@ struct st_gschem_toplevel {
   char *print_command;    /* The command to send postscript to when printing */
 };
 
+
+struct st_stretch
+{
+  OBJECT *object;
+  CONN *connection;
+
+  int whichone;
+};

@@ -46,6 +46,7 @@ gschem_SOURCES = \
 	o_text.c \
 	o_undo.c \
 	parsecmd.c \
+	s_stretch.c \
 	x_attribedit.c \
 	x_autonumber.c \
 	x_basic.c \

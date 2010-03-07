@@ -118,6 +118,11 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->which_grip = -1;
   w_current->which_object = NULL;
 
+  /* ------------------ */
+  /* Rubberbanding nets */
+  /* ------------------ */
+  w_current->stretch_list = NULL;
+
   /* --------------------- */
   /* Gschem internal state */
   /* --------------------- */
