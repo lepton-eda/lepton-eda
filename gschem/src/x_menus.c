@@ -68,7 +68,7 @@ static void g_menu_execute(GtkAction *action, gpointer user_data)
 {
   gchar *guile_string;
   const gchar *func = gtk_action_get_name (action);
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) user_data;
+  /* GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) user_data; */
 
   guile_string = g_strdup_printf("(%s)", func);
 #if DEBUG
@@ -195,9 +195,9 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
         menu_item = gtk_action_create_menu_item (GTK_ACTION (action));
         gtk_menu_append (GTK_MENU (menu), menu_item);
 
-        g_signal_connect (GTK_OBJECT(action), "activate",
-                          GTK_SIGNAL_FUNC(g_menu_execute),
-                          (gpointer) w_current);
+        g_signal_connect (G_OBJECT(action), "activate",
+                          G_CALLBACK(g_menu_execute),
+                          w_current);
       }
 
       gtk_widget_show (menu_item);
