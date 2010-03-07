@@ -540,47 +540,33 @@ void o_move_prep_rubberband(GSCHEM_TOPLEVEL *w_current)
   OBJECT *o_current;
   GList *iter;
 
-#if DEBUG
-  printf("\n\n\n");
-  s_stretch_print_all (toplevel->page_current->stretch_list);
-  printf("\n\n\n");
-#endif
+  for (s_current = geda_list_get_glist (toplevel->page_current->selection_list);
+       s_current != NULL; s_current = g_list_next (s_current)) {
+    object = s_current->data;
 
-  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
-  while (s_current != NULL) {
-    object = (OBJECT *) s_current->data;
-    if (object) {
-      switch (object->type) {
-        case (OBJ_NET):
-        case (OBJ_PIN):
-        case (OBJ_BUS):
-          o_move_check_endpoint(w_current, object);
-          break;
+    if (object == NULL)
+      continue;
 
-        case (OBJ_COMPLEX):
-        case (OBJ_PLACEHOLDER):
-          iter = object->complex->prim_objs;
-          while (iter != NULL) {
-            o_current = (OBJECT *)iter->data;
+    switch (object->type) {
+      case (OBJ_NET):
+      case (OBJ_PIN):
+      case (OBJ_BUS):
+        o_move_check_endpoint (w_current, object);
+        break;
 
-            if (o_current->type == OBJ_PIN) {
-              o_move_check_endpoint(w_current, o_current);
-            }
+      case (OBJ_COMPLEX):
+      case (OBJ_PLACEHOLDER):
+        for (iter = object->complex->prim_objs;
+             iter != NULL; iter = g_list_next (iter)) {
+          o_current = iter->data;
 
-            iter = g_list_next (iter);
+          if (o_current->type == OBJ_PIN) {
+            o_move_check_endpoint (w_current, o_current);
           }
-
-          break;
-
-      }
+        }
+        break;
     }
-    s_current = g_list_next(s_current);
   }
-
-#if DEBUG
-  printf("\n\n\n\nfinished building scretch list:\n");
-  s_stretch_print_all (toplevel->page_current->stretch_list);
-#endif
 }
 
 /*! \todo Finish function documentation!!!
