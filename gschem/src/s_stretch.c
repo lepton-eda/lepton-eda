@@ -33,8 +33,7 @@
  *  \par Function Description
  *
  */
-GList *s_stretch_add (GList *list, OBJECT *object,
-                      CONN *connection, int whichone)
+GList *s_stretch_add (GList *list, OBJECT *object, int whichone)
 {
   GList *s_iter;
   STRETCH *s_new;
@@ -49,7 +48,6 @@ GList *s_stretch_add (GList *list, OBJECT *object,
 
   s_new = g_malloc (sizeof (STRETCH));
   s_new->object = object;
-  s_new->connection = connection;
   s_new->whichone = whichone;
 
   return g_list_append (list, s_new);
@@ -107,12 +105,6 @@ void s_stretch_print_all (GList *list)
       printf("Object: %s\n", s_current->object->name);
     } else {
       printf("Object is NULL\n");
-    }
-
-    if (s_current->connection) {
-      printf("Connection type: %d\n", s_current->connection->type);
-    } else {
-      printf("Connection is NULL\n");
     }
 
     printf("which one: %d\n", s_current->whichone);

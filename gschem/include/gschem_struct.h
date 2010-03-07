@@ -215,7 +215,5 @@ struct st_gschem_toplevel {
 struct st_stretch
 {
   OBJECT *object;
-  CONN *connection;
-
   int whichone;
 };

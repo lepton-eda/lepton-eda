@@ -519,7 +519,7 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
 
     if (whichone >= 0 && whichone <= 1) {
       w_current->stretch_list = s_stretch_add (w_current->stretch_list,
-                                               other, c_current, whichone);
+                                               other, whichone);
     }
   }
 
