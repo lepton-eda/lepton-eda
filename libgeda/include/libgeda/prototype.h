@@ -125,6 +125,7 @@ void o_set_change_notify_funcs(TOPLEVEL *toplevel, ChangeNotifyFunc pre_change_f
 /* o_box_basic.c */
 OBJECT *o_box_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
 OBJECT *o_box_copy(TOPLEVEL *toplevel, OBJECT *o_current);
+void o_box_modify_all (TOPLEVEL *toplevel, OBJECT *object, int x1, int y1, int x2, int y2);
 void o_box_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 void o_box_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
 void o_box_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);

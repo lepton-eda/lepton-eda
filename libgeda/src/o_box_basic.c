@@ -141,6 +141,34 @@ OBJECT *o_box_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 } 
 
 /*! \brief Modify a BOX OBJECT's coordinates.
+ * \par Function Description
+ * Modifies the coordinates of all four corners of \a box, by setting
+ * the box to the rectangle enclosed by the points (\a x1, \a y1) and
+ * (\a x2, \a y2).
+ *
+ * \param [in]     toplevel current #TOPLEVEL.
+ * \param [in,out] object   box #OBJECT to be modified.
+ * \param [in]     x1       x coordinate of first corner of box.
+ * \param [in]     y1       y coordinate of first corner of box.
+ * \param [in]     x2       x coordinate of second corner of box.
+ * \param [in]     y2       y coordinate of second corner of box,
+ */
+void
+o_box_modify_all (TOPLEVEL *toplevel, OBJECT *object,
+                  int x1, int y1, int x2, int y2)
+{
+  object->box->lower_x = (x1 > x2) ? x1 : x2;
+  object->box->lower_y = (y1 > y2) ? y2 : y1;
+
+  object->box->upper_x = (x1 > x2) ? x2 : x1;
+  object->box->upper_y = (y1 > y2) ? y1 : y2;
+
+  /* recalculate the world coords and bounds */
+  o_box_recalc(toplevel, object);
+  o_emit_change_notify (toplevel, object);
+}
+
+/*! \brief Modify a BOX OBJECT's coordinates.
  *  \par Function Description
  *  This function modifies the coordinates of one of the four corner of
  *  the box. The new coordinates of the corner identified by <B>whichone</B>
