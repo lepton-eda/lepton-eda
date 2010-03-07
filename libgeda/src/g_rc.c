@@ -84,7 +84,7 @@ SCM g_rc_mode_general(SCM scmmode,
   SCM_ASSERT (scm_is_string (scmmode), scmmode,
               SCM_ARG1, rc_name);
   
-  mode = SCM_STRING_CHARS (scmmode);
+  mode = scm_to_locale_string (scmmode);
   
   index = vstbl_lookup_str(table, table_size, mode);
   /* no match? */
@@ -98,7 +98,9 @@ SCM g_rc_mode_general(SCM scmmode,
     *mode_var = vstbl_get_val(table, index);
     ret = SCM_BOOL_T;
   }
-  
+
+  free (mode);
+
   return ret;
 }
 
@@ -346,6 +348,7 @@ void g_rc_parse(TOPLEVEL *toplevel,
 SCM g_rc_component_library(SCM path, SCM name)
 {
   gchar *string;
+  char *temp;
   char *namestr = NULL;
 
   SCM_ASSERT (scm_is_string (path), path,
@@ -354,17 +357,22 @@ SCM g_rc_component_library(SCM path, SCM name)
   if (name != SCM_UNDEFINED) {
     SCM_ASSERT (scm_is_string (name), name,
 		SCM_ARG2, "component-library");
-    namestr = SCM_STRING_CHARS (name);
+    namestr = scm_to_locale_string (name);
   }
   
   /* take care of any shell variables */
-  string = s_expand_env_variables (SCM_STRING_CHARS (path));
+  temp = scm_to_locale_string (path);
+  string = s_expand_env_variables (temp);
+  free (temp);
 
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
     fprintf(stderr,
             "Invalid path [%s] passed to component-library\n",
             string);
+    if (namestr != NULL) {
+      free (namestr);
+    }
     g_free(string);
     return SCM_BOOL_F;
   }
@@ -380,6 +388,9 @@ SCM g_rc_component_library(SCM path, SCM name)
     g_free(cwd);
   }
 
+  if (namestr != NULL) {
+    free (namestr);
+  }
   g_free(string);
 
   return SCM_BOOL_T;
@@ -453,6 +464,9 @@ SCM g_rc_component_library_command (SCM listcmd, SCM getcmd,
  */
 SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name)
 {
+  char *namestr;
+  SCM result = SCM_BOOL_F;
+
   SCM_ASSERT (scm_is_true (scm_procedure_p (listfunc)), listfunc, SCM_ARG1,
 	      "component-library-funcs");
   SCM_ASSERT (scm_is_true (scm_procedure_p (getfunc)), getfunc, SCM_ARG2,
@@ -460,11 +474,14 @@ SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name)
   SCM_ASSERT (scm_is_string (name), name, SCM_ARG1, 
 	      "component-library-funcs");
 
-  if (s_clib_add_scm (listfunc, getfunc, SCM_STRING_CHARS (name)) != NULL) {
-    return SCM_BOOL_T;
-  } else {
-    return SCM_BOOL_F;
+  namestr = scm_to_locale_string (name);
+
+  if (s_clib_add_scm (listfunc, getfunc, namestr) != NULL) {
+    result = SCM_BOOL_T;
   }
+
+  free (namestr);
+  return result;
 }
 
 /*! \todo Finish function description!!!
@@ -477,6 +494,7 @@ SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name)
 SCM g_rc_component_library_search(SCM path)
 {
   gchar *string;
+  char *temp;
   GDir *dir;
   const gchar *entry;
   
@@ -484,7 +502,9 @@ SCM g_rc_component_library_search(SCM path)
               SCM_ARG1, "component-library-search");
 
   /* take care of any shell variables */
-  string = s_expand_env_variables (SCM_STRING_CHARS (path));
+  temp = scm_to_locale_string (path);
+  string = s_expand_env_variables (temp);
+  free (temp);
 
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
@@ -543,12 +563,15 @@ SCM g_rc_component_library_search(SCM path)
 SCM g_rc_source_library(SCM path)
 {
   gchar *string;
+  char *temp;
   
   SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "source-library");
 
   /* take care of any shell variables */
-  string = s_expand_env_variables (SCM_STRING_CHARS (path));
+  temp = scm_to_locale_string (path);
+  string = s_expand_env_variables (temp);
+  free (temp);
   
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
@@ -585,6 +608,7 @@ SCM g_rc_source_library(SCM path)
 SCM g_rc_source_library_search(SCM path)
 {
   gchar *string;
+  char *temp;
   GDir *dir;
   const gchar *entry;
   
@@ -592,7 +616,9 @@ SCM g_rc_source_library_search(SCM path)
               SCM_ARG1, "source-library-search");
 
   /* take care of any shell variables */
-  string = s_expand_env_variables (SCM_STRING_CHARS (path));
+  temp = scm_to_locale_string (path);
+  string = s_expand_env_variables (temp);
+  free (temp);
 
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
@@ -694,12 +720,15 @@ SCM g_rc_world_size(SCM width, SCM height, SCM border)
  */
 SCM g_rc_untitled_name(SCM name)
 {
+  char *temp;
   SCM_ASSERT (scm_is_string (name), name,
               SCM_ARG1, "untitled-name");
 
   g_free(default_untitled_name);
 
-  default_untitled_name = g_strdup (SCM_STRING_CHARS (name));
+  temp = scm_to_locale_string (name);
+  default_untitled_name = g_strdup (temp);
+  free (temp);
 
   return SCM_BOOL_T;
 }
@@ -715,12 +744,15 @@ SCM g_rc_untitled_name(SCM name)
 SCM g_rc_scheme_directory(SCM path)
 {
   gchar *string;
+  char *temp;
 
   SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "scheme-directory");
 
   /* take care of any shell variables */
-  string = s_expand_env_variables (SCM_STRING_CHARS (path));
+  temp = scm_to_locale_string (path);
+  string = s_expand_env_variables (temp);
+  free (temp);
 
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
@@ -747,12 +779,15 @@ SCM g_rc_scheme_directory(SCM path)
 SCM g_rc_bitmap_directory(SCM path)
 {
   gchar *string;
+  char *temp;
 
   SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "bitmap-directory");
   
   /* take care of any shell variables */
-  string = s_expand_env_variables (SCM_STRING_CHARS (path));
+  temp = scm_to_locale_string (path);
+  string = s_expand_env_variables (temp);
+  free (temp);
 
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
@@ -778,11 +813,16 @@ SCM g_rc_bitmap_directory(SCM path)
  */
 SCM g_rc_bus_ripper_symname(SCM scmsymname)
 {
+  char *temp;
+
   SCM_ASSERT (scm_is_string (scmsymname), scmsymname,
               SCM_ARG1, "bus-ripper-symname");
 
   g_free(default_bus_ripper_symname);
-  default_bus_ripper_symname = g_strdup (SCM_STRING_CHARS (scmsymname));
+
+  temp = scm_to_locale_string (scmsymname);
+  default_bus_ripper_symname = g_strdup (temp);
+  free (temp);
 
   return SCM_BOOL_T;
 }
@@ -796,14 +836,18 @@ SCM g_rc_bus_ripper_symname(SCM scmsymname)
  */
 SCM g_rc_postscript_prolog(SCM scmsymname)
 {
+  char *temp;
+
   SCM_ASSERT (scm_is_string (scmsymname), scmsymname,
               SCM_ARG1, "postsript-prolog");
 
   g_free(default_postscript_prolog);
 
   /* take care of any shell variables */
+  temp = scm_to_locale_string (scmsymname);
   default_postscript_prolog =
-    s_expand_env_variables (SCM_STRING_CHARS (scmsymname));
+    s_expand_env_variables (temp);
+  free (temp);
 
   return SCM_BOOL_T;
 }
@@ -905,11 +949,15 @@ SCM g_rc_always_promote_attributes(SCM attrlist)
   g_list_free(default_always_promote_attributes);
 
   if (scm_is_string (attrlist)) {
+    char *temp;
     s_log_message(_("WARNING: using a string for 'always-promote-attributes'"
 		    " is deprecated. Use a list of strings instead\n"));
 
     /* convert the space separated strings into a GList */
-    attr2 = g_strsplit(SCM_STRING_CHARS (attrlist)," ", 0);
+    temp = scm_to_locale_string (attrlist);
+    attr2 = g_strsplit(temp," ", 0);
+    free (temp);
+
     for (i=0; attr2[i] != NULL; i++) {
       if (strlen(attr2[i]) > 0) {
 	list = g_list_prepend(list, g_strdup(attr2[i]));
@@ -921,10 +969,13 @@ SCM g_rc_always_promote_attributes(SCM attrlist)
     length = scm_ilength(attrlist);
     /* convert the scm list into a GList */
     for (i=0; i < length; i++) {
+      char *temp;
       SCM_ASSERT(scm_is_string(scm_list_ref(attrlist, scm_from_int(i))), 
 		 scm_list_ref(attrlist, scm_from_int(i)), SCM_ARG1, 
 		 "always-promote-attribute: list element is not a string");
-      attr = g_strdup(SCM_STRING_CHARS(scm_list_ref(attrlist, scm_from_int(i))));
+      temp = scm_to_locale_string (scm_list_ref (attrlist, scm_from_int (i)));
+      attr = g_strdup(temp);
+      free (temp);
       list = g_list_prepend(list, attr);
     }
   }
