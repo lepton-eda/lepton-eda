@@ -158,6 +158,8 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   s_undo_init(page);
   
   page->object_lastplace = NULL;
+
+  page->weak_refs = NULL;
   
   set_window (toplevel, page,
               toplevel->init_left, toplevel->init_right,
@@ -261,6 +263,8 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   s_tile_print (toplevel);
 #endif
 
+  s_weakref_notify (page, page->weak_refs);
+
   g_free (page);
 
   /* restore page_current */
@@ -300,6 +304,88 @@ void s_page_delete_list(TOPLEVEL *toplevel)
 
   /* reset toplevel fields */
   toplevel->page_current = NULL;
+}
+
+/*! \brief Add a weak reference watcher to an PAGE.
+ * \par Function Description
+ * Adds the weak reference callback \a notify_func to \a page.  When
+ * \a page is destroyed, \a notify_func will be called with two
+ * arguments: the \a page, and the \a user_data.
+ *
+ * \sa s_page_weak_unref
+ *
+ * \param [in] toplevel       The #TOPLEVEL structure.
+ * \param [in,out] page       Page to weak-reference.
+ * \param [in] notify_func    Weak reference notify function.
+ * \param [in] user_data      Data to be passed to \a notify_func.
+ */
+void
+s_page_weak_ref (PAGE *page,
+                 void (*notify_func)(void *, void *),
+                 void *user_data)
+{
+  g_return_if_fail (page != NULL);
+  page->weak_refs = s_weakref_add (page->weak_refs, notify_func, user_data);
+}
+
+/*! \brief Remove a weak reference watcher from an PAGE.
+ * \par Function Description
+ * Removes the weak reference callback \a notify_func from \a page.
+ *
+ * \sa s_page_weak_ref()
+ *
+ * \param [in] toplevel       The #TOPLEVEL structure.
+ * \param [in,out] page       Page to weak-reference.
+ * \param [in] notify_func    Notify function to search for.
+ * \param [in] user_data      Data to to search for.
+ */
+void
+s_page_weak_unref (PAGE *page,
+                   void (*notify_func)(void *, void *),
+                   void *user_data)
+{
+  g_return_if_fail (page != NULL);
+  page->weak_refs = s_weakref_remove (page->weak_refs,
+                                      notify_func, user_data);
+}
+
+/*! \brief Add a weak pointer to an PAGE.
+ * \par Function Description
+ * Adds the weak pointer at \a weak_pointer_loc to \a page. The
+ * value of \a weak_pointer_loc will be set to NULL when \a page is
+ * destroyed.
+ *
+ * \sa s_page_remove_weak_ptr
+ *
+ * \param [in] toplevel          The #TOPLEVEL structure.
+ * \param [in,out] page          Page to weak-reference.
+ * \param [in] weak_pointer_loc  Memory address of a pointer.
+ */
+void
+s_page_add_weak_ptr (PAGE *page,
+                     void *weak_pointer_loc)
+{
+  g_return_if_fail (page != NULL);
+  page->weak_refs = s_weakref_add_ptr (page->weak_refs, weak_pointer_loc);
+}
+
+/*! \brief Remove a weak pointer from an PAGE.
+ * \par Function Description
+ * Removes the weak pointer at \a weak_pointer_loc from \a page.
+ *
+ * \sa s_page_add_weak_ptr()
+ *
+ * \param [in] toplevel          The #TOPLEVEL structure.
+ * \param [in,out] page          Page to weak-reference.
+ * \param [in] weak_pointer_loc  Memory address of a pointer.
+ */
+void
+s_page_remove_weak_ptr (PAGE *page,
+                        void *weak_pointer_loc)
+{
+  g_return_if_fail (page != NULL);
+  page->weak_refs = s_weakref_remove_ptr (page->weak_refs,
+                                          weak_pointer_loc);
 }
 
 /*! \brief changes the current page in toplevel

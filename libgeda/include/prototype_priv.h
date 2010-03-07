@@ -260,3 +260,10 @@ void s_tile_add_object(TOPLEVEL *toplevel, OBJECT *object);
 void s_tile_remove_object(OBJECT *object);
 void s_tile_print(TOPLEVEL *toplevel);
 void s_tile_free_all(PAGE *p_current);
+
+/* s_weakref.c */
+void s_weakref_notify (void *dead_ptr, GList *weak_refs);
+GList *s_weakref_add (GList *weak_refs, void (*notify_func)(void *, void *), void *user_data);
+GList *s_weakref_remove (GList *weak_refs, void (*notify_func)(void *, void *), void *user_data);
+GList *s_weakref_add_ptr (GList *weak_refs, void **weak_pointer_loc);
+GList *s_weakref_remove_ptr (GList *weak_refs, void **weak_pointer_loc);

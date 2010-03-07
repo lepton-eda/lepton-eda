@@ -148,6 +148,7 @@ TOPLEVEL *s_toplevel_new (void)
   /* disable the events */
   toplevel->DONT_REDRAW = 1;
 
+  toplevel->weak_refs = NULL;
   return toplevel;
 }
 
@@ -180,6 +181,92 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
   /* Delete the page list */
   g_object_unref(toplevel->pages);
 
+  s_weakref_notify (toplevel, toplevel->weak_refs);
+
   g_free (toplevel);
 
+}
+
+/*! \brief Add a weak reference watcher to an TOPLEVEL.
+ * \par Function Description
+ * Adds the weak reference callback \a notify_func to \a toplevel.  When
+ * \a toplevel is destroyed, \a notify_func will be called with two
+ * arguments: the \a toplevel, and the \a user_data.
+ *
+ * \sa s_toplevel_weak_unref
+ *
+ * \param [in] toplevel       The #TOPLEVEL structure.
+ * \param [in,out] toplevel   Toplevel to weak-reference.
+ * \param [in] notify_func    Weak reference notify function.
+ * \param [in] user_data      Data to be passed to \a notify_func.
+ */
+void
+s_toplevel_weak_ref (TOPLEVEL *toplevel,
+                     void (*notify_func)(void *, void *),
+                     void *user_data)
+{
+  g_return_if_fail (toplevel != NULL);
+  toplevel->weak_refs = s_weakref_add (toplevel->weak_refs,
+                                       notify_func, user_data);
+}
+
+/*! \brief Remove a weak reference watcher from an TOPLEVEL.
+ * \par Function Description
+ * Removes the weak reference callback \a notify_func from \a toplevel.
+ *
+ * \sa s_toplevel_weak_ref()
+ *
+ * \param [in] toplevel       The #TOPLEVEL structure.
+ * \param [in,out] toplevel       Toplevel to weak-reference.
+ * \param [in] notify_func    Notify function to search for.
+ * \param [in] user_data      Data to to search for.
+ */
+void
+s_toplevel_weak_unref (TOPLEVEL *toplevel,
+                       void (*notify_func)(void *, void *),
+                       void *user_data)
+{
+  g_return_if_fail (toplevel != NULL);
+  toplevel->weak_refs = s_weakref_remove (toplevel->weak_refs,
+                                          notify_func, user_data);
+}
+
+/*! \brief Add a weak pointer to an TOPLEVEL.
+ * \par Function Description
+ * Adds the weak pointer at \a weak_pointer_loc to \a toplevel. The
+ * value of \a weak_pointer_loc will be set to NULL when \a toplevel is
+ * destroyed.
+ *
+ * \sa s_toplevel_remove_weak_ptr
+ *
+ * \param [in] toplevel          The #TOPLEVEL structure.
+ * \param [in,out] toplevel      Toplevel to weak-reference.
+ * \param [in] weak_pointer_loc  Memory address of a pointer.
+ */
+void
+s_toplevel_add_weak_ptr (TOPLEVEL *toplevel,
+                         void *weak_pointer_loc)
+{
+  g_return_if_fail (toplevel != NULL);
+  toplevel->weak_refs = s_weakref_add_ptr (toplevel->weak_refs,
+                                           weak_pointer_loc);
+}
+
+/*! \brief Remove a weak pointer from an TOPLEVEL.
+ * \par Function Description
+ * Removes the weak pointer at \a weak_pointer_loc from \a toplevel.
+ *
+ * \sa s_toplevel_add_weak_ptr()
+ *
+ * \param [in] toplevel          The #TOPLEVEL structure.
+ * \param [in,out] toplevel      Toplevel to weak-reference.
+ * \param [in] weak_pointer_loc  Memory address of a pointer.
+ */
+void
+s_toplevel_remove_weak_ptr (TOPLEVEL *toplevel,
+                            void *weak_pointer_loc)
+{
+  g_return_if_fail (toplevel != NULL);
+  toplevel->weak_refs = s_weakref_remove_ptr (toplevel->weak_refs,
+                                              weak_pointer_loc);
 }

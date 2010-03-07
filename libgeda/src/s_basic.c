@@ -140,6 +140,8 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
   new_node->pin_type = PIN_TYPE_NET;
   new_node->whichend = -1;
 
+  new_node->weak_refs = NULL;
+
   return(new_node);
 }
 
@@ -305,6 +307,8 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
 
     o_attrib_detach_all (toplevel, o_current);
 
+    s_weakref_notify (o_current, o_current->weak_refs);
+
     g_free(o_current);	/* assuming it is not null */
 
     o_current=NULL;		/* misc clean up */
@@ -334,6 +338,87 @@ s_delete_object_glist(TOPLEVEL *toplevel, GList *list)
   g_list_free(list);
 }
 
+/*! \brief Add a weak reference watcher to an OBJECT.
+ * \par Function Description
+ * Adds the weak reference callback \a notify_func to \a object.  When
+ * \a object is destroyed, \a notify_func will be called with two
+ * arguments: the \a object, and the \a user_data.
+ *
+ * \sa s_object_weak_unref
+ *
+ * \param [in] toplevel       The #TOPLEVEL structure.
+ * \param [in,out] object     Object to weak-reference.
+ * \param [in] notify_func    Weak reference notify function.
+ * \param [in] user_data      Data to be passed to \a notify_func.
+ */
+void
+s_object_weak_ref (OBJECT *object,
+                   void (*notify_func)(void *, void *),
+                   void *user_data)
+{
+  g_return_if_fail (object != NULL);
+  object->weak_refs = s_weakref_add (object->weak_refs, notify_func, user_data);
+}
+
+/*! \brief Remove a weak reference watcher from an OBJECT.
+ * \par Function Description
+ * Removes the weak reference callback \a notify_func from \a object.
+ *
+ * \sa s_object_weak_ref()
+ *
+ * \param [in] toplevel       The #TOPLEVEL structure.
+ * \param [in,out] object     Object to weak-reference.
+ * \param [in] notify_func    Notify function to search for.
+ * \param [in] user_data      Data to to search for.
+ */
+void
+s_object_weak_unref (OBJECT *object,
+                     void (*notify_func)(void *, void *),
+                     void *user_data)
+{
+  g_return_if_fail (object != NULL);
+  object->weak_refs = s_weakref_remove (object->weak_refs,
+                                        notify_func, user_data);
+}
+
+/*! \brief Add a weak pointer to an OBJECT.
+ * \par Function Description
+ * Adds the weak pointer at \a weak_pointer_loc to \a object. The
+ * value of \a weak_pointer_loc will be set to NULL when \a object is
+ * destroyed.
+ *
+ * \sa s_object_remove_weak_ptr
+ *
+ * \param [in] toplevel          The #TOPLEVEL structure.
+ * \param [in,out] object        Object to weak-reference.
+ * \param [in] weak_pointer_loc  Memory address of a pointer.
+ */
+void
+s_object_add_weak_ptr (OBJECT *object,
+                       void *weak_pointer_loc)
+{
+  g_return_if_fail (object != NULL);
+  object->weak_refs = s_weakref_add_ptr (object->weak_refs, weak_pointer_loc);
+}
+
+/*! \brief Remove a weak pointer from an OBJECT.
+ * \par Function Description
+ * Removes the weak pointer at \a weak_pointer_loc from \a object.
+ *
+ * \sa s_object_add_weak_ptr()
+ *
+ * \param [in] toplevel          The #TOPLEVEL structure.
+ * \param [in,out] object        Object to weak-reference.
+ * \param [in] weak_pointer_loc  Memory address of a pointer.
+ */
+void
+s_object_remove_weak_ptr (OBJECT *object,
+                          void *weak_pointer_loc)
+{
+  g_return_if_fail (object != NULL);
+  object->weak_refs = s_weakref_remove_ptr (object->weak_refs,
+                                            weak_pointer_loc);
+}
 
 /*! \todo Finish function documentation!!!
  *  \brief

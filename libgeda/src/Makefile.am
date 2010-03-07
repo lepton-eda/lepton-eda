@@ -57,6 +57,7 @@ libgeda_la_SOURCES = \
 	s_tile.c \
 	s_toplevel.c \
 	s_undo.c \
+	s_weakref.c \
 	u_basic.c
 
 libgeda_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"  $(DATADIR_DEFS) \

@@ -290,6 +290,7 @@ struct st_object {
   OBJECT *attached_to;  /* when object is an attribute */
   OBJECT *copied_to;    /* used when copying attributes */
 
+  GList *weak_refs; /* Weak references */
 }; 
 
 
@@ -426,6 +427,7 @@ struct st_page {
   gint ops_since_last_backup;
   gchar do_autosave_backup;
 
+  GList *weak_refs; /* Weak references */
 };
 
 /*! \brief Type of callback function for calculating text bounds */
@@ -566,6 +568,8 @@ struct st_toplevel {
   /* Callback function for deciding whether to load a backup file. */
   LoadBackupQueryFunc load_newer_backup_func;
   void *load_newer_backup_data;
+
+  GList *weak_refs; /* Weak references */
 };
 
 /* structures below are for gnetlist */

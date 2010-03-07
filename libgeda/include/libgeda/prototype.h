@@ -272,6 +272,10 @@ void print_struct_forw(GList *list);
 void print_struct(OBJECT *ptr);
 void s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current);
 void s_delete_object_glist(TOPLEVEL *toplevel, GList *list);
+void s_object_weak_ref (OBJECT *object, void (*notify_func)(void *, void *), void *user_data);
+void s_object_weak_unref (OBJECT *object, void (*notify_func)(void *, void *), void *user_data);
+void s_object_add_weak_ptr (OBJECT *object, void *weak_pointer_loc);
+void s_object_remove_weak_ptr (OBJECT *object, void *weak_pointer_loc);
 char *remove_nl(char *string);
 char *remove_last_nl(char *string);
 gchar *s_expand_env_variables (const gchar *string);
@@ -352,6 +356,10 @@ void s_menu_init(void);
 PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename);
 void s_page_delete (TOPLEVEL *toplevel, PAGE *page);
 void s_page_delete_list(TOPLEVEL *toplevel);
+void s_page_weak_ref (PAGE *page, void (*notify_func)(void *, void *), void *user_data);
+void s_page_weak_unref (PAGE *page, void (*notify_func)(void *, void *), void *user_data);
+void s_page_add_weak_ptr (PAGE *page, void *weak_pointer_loc);
+void s_page_remove_weak_ptr (PAGE *page, void *weak_pointer_loc);
 void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new);
 PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename);
 PAGE *s_page_search_by_page_id (GedaPageList *list, int pid);
@@ -386,6 +394,10 @@ char *s_path_string_from_path (const PATH *path);
 /* s_project.c */
 TOPLEVEL *s_toplevel_new (void);
 void s_toplevel_delete (TOPLEVEL *toplevel);
+void s_toplevel_weak_ref (TOPLEVEL *toplevel, void (*notify_func)(void *, void *), void *user_data);
+void s_toplevel_weak_unref (TOPLEVEL *toplevel, void (*notify_func)(void *, void *), void *user_data);
+void s_toplevel_add_weak_ptr (TOPLEVEL *toplevel, void *weak_pointer_loc);
+void s_toplevel_remove_weak_ptr (TOPLEVEL *toplevel, void *weak_pointer_loc);
 
 /* s_slib.c */
 int s_slib_add_entry(char *new_path);
