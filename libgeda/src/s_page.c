@@ -241,7 +241,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
 
 #if DEBUG
   printf("Freeing page: %s\n", page->page_filename);
-  s_tile_print(toplevel);
+  s_tile_print(toplevel, page);
 #endif
   s_tile_free_all (page);
 
@@ -255,7 +255,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   geda_list_remove( toplevel->pages, page );
 
 #if DEBUG
-  s_tile_print (toplevel);
+  s_tile_print (toplevel, page);
 #endif
 
   s_weakref_notify (page, page->weak_refs);

@@ -380,16 +380,14 @@ void s_tile_update_object(TOPLEVEL * toplevel, OBJECT * object)
  *  by the given rectangle (x1,y1), (x2,y2).
  *  \note The caller has to g_list_free() the returned list.
  */
-GList* s_tile_get_objectlists(TOPLEVEL *toplevel, int world_x1, int world_y1,
-			      int world_x2, int world_y2)
+GList* s_tile_get_objectlists(TOPLEVEL *toplevel, PAGE *p_current,
+                              int world_x1, int world_y1,
+                              int world_x2, int world_y2)
 {
   TILE *t_current;
-  PAGE *p_current;
   int x1, x2, y1, y2, x, y;
   double x_size, y_size;
   GList *objectlists = NULL;
-
-  p_current = toplevel->page_current;
 
   x_size = (double) toplevel->init_right / (double) MAX_TILES_X;
   y_size = (double) toplevel->init_bottom / (double) MAX_TILES_Y;
@@ -431,7 +429,7 @@ GList* s_tile_get_objectlists(TOPLEVEL *toplevel, int world_x1, int world_y1,
  *  Debugging function to print all object names that are inside
  *  the tiles.
  */
-void s_tile_print(TOPLEVEL * toplevel)
+void s_tile_print(TOPLEVEL * toplevel, PAGE *page)
 {
   TILE *t_current;
   GList *temp;
@@ -442,7 +440,7 @@ void s_tile_print(TOPLEVEL * toplevel)
     for (i = 0; i < MAX_TILES_X; i++) {
       printf("\nTile %d %d\n", i, j);
 
-      t_current = &toplevel->page_current->world_tiles[i][j];
+      t_current = &page->world_tiles[i][j];
 
       temp = t_current->objects;
       while (temp) {

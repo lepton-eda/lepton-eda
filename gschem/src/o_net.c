@@ -195,7 +195,8 @@ void o_net_guess_direction(GSCHEM_TOPLEVEL *w_current,
   const int bus_rules[] = {90, 0, 40};
   const int net_rules[] = {80, 30, 0};
   
-  objectlists = s_tile_get_objectlists(toplevel, wx, wy, wx, wy);
+  objectlists = s_tile_get_objectlists(toplevel, toplevel->page_current,
+                                       wx, wy, wx, wy);
 
   for (iter1 = objectlists; iter1 != NULL; iter1 = g_list_next(iter1)) {
     for (iter2 = (GList*) iter1->data; iter2 != NULL; iter2 = g_list_next(iter2)) {
@@ -325,7 +326,8 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
   y1 = w_y - w_magnetic_reach;
   x2 = w_x + w_magnetic_reach;
   y2 = w_y + w_magnetic_reach;
-  objectlists = s_tile_get_objectlists(toplevel, x1, y1, x2, y2);
+  objectlists = s_tile_get_objectlists(toplevel, toplevel->page_current,
+                                       x1, y1, x2, y2);
 
   for (iter1 = objectlists; iter1 != NULL; iter1 = g_list_next(iter1)) {
     for (iter2 = (GList*) iter1->data; iter2 != NULL; iter2 = g_list_next(iter2)) {

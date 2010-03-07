@@ -258,7 +258,7 @@ gchar *s_textbuffer_next_line (TextBuffer *tb);
 void s_tile_init(TOPLEVEL *toplevel, PAGE *p_current);
 void s_tile_add_object(TOPLEVEL *toplevel, OBJECT *object);
 void s_tile_remove_object(OBJECT *object);
-void s_tile_print(TOPLEVEL *toplevel);
+void s_tile_print(TOPLEVEL *toplevel, PAGE *page);
 void s_tile_free_all(PAGE *p_current);
 
 /* s_weakref.c */

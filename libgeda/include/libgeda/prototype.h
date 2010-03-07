@@ -422,7 +422,7 @@ void s_slot_update_object(TOPLEVEL *toplevel, OBJECT *object);
 
 /* s_tile.c */
 void s_tile_update_object(TOPLEVEL *toplevel, OBJECT *object);
-GList *s_tile_get_objectlists(TOPLEVEL *toplevel, int world_x1, int world_y1, int world_x2, int world_y2);
+GList *s_tile_get_objectlists(TOPLEVEL *toplevel, PAGE *p_current, int world_x1, int world_y1, int world_x2, int world_y2);
 
 /* s_undo.c */
 UNDO *s_undo_return_tail(UNDO *head);
