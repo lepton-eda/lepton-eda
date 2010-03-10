@@ -1,0 +1,67 @@
+==============================================
+ 'gschem and Friends' Electronic Design Suite
+==============================================
+
+Copyright (C) 1998-2010 gEDA Developers
+
+This file contains information which you may find useful if you wish
+to contribute to gEDA.
+
+How to submit patches
+=====================
+
+Please submit patches to the patch tracker on SourceForge.net:
+
+  <https://sourceforge.net/tracker/?group_id=161080&atid=818428>
+
+Once you've submitted your patches, you may wish to also e-mail the
+`gEDA-user' mailing list to announce that you've done so and to ask
+for feedback.
+
+To make it easier for developers to promptly verify your patches and
+integrate them, please try to follow the following guidelines:
+
+  - If your patch is big, try to split it up into a series of small,
+    logical steps, and use a separate patch for each.
+
+  - Avoid unnecessary whitespace changes. Please do not add trailing
+    whitespace.
+
+  - Ensure that each of your patches applies cleanly against the
+    `master' branch of the gaf main git repository.
+
+  - Please format your patches with `git format-patch', and ensure
+    that they contain good commit messages.  The commit messages
+    should include:
+
+      * A one-line summary of what the patch changes.
+
+      * A detailed explanation of what the patch changes, the problem
+        it solves, and why you chose that approach to solving the
+        problem.  Sometimes, the change will be very self-explanatory.
+        Sometimes, the commit message will be considerably longer than
+        the patch itself.
+
+      * If the patch is related to another ticket in the
+        SourceForge.net tracker (i.e. a bug or feature request),
+        include its tracker item number.
+
+      * If your patch fixes a regression, and you know which commit
+        introduced the regression, include the broken commit's ID.
+
+  - Make sure it's clear whether, and in what ways, you've tested your
+    patch.
+
+  - If you add functions, or change function definitions, make sure
+    that the doxygen comments are up-to-date.
+
+Sometimes, you may submit a patch and not hear anything back for a
+while.  This can be for a number of reasons, and it's only very rarely
+that there's a great conspiracy of gEDA developers to obstruct your
+changes from getting included.  It might even be that your patch has
+been committed, but the developer who did so forgot to let you know!
+If it's been more than a couple of weeks since you submitted a patch,
+you should e-mail the `gEDA-user' mailing list with a reminder.
+
+A final thought: to get your patches included, make it easy to accept
+them!
