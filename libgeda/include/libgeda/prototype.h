@@ -15,7 +15,6 @@ int f_open(TOPLEVEL *toplevel, const gchar *filename, GError **err);
 int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
                  const gint flags, GError **err);
 void f_close(TOPLEVEL *toplevel);
-void f_save_close(TOPLEVEL *toplevel, char *filename);
 int f_save(TOPLEVEL *toplevel, const char *filename);
 gchar *f_normalize_filename (const gchar *filename, GError **error);
 char *follow_symlinks (const gchar *filename, GError **error);

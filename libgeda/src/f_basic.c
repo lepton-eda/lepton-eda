@@ -331,20 +331,6 @@ void f_close(TOPLEVEL *toplevel)
 
 }
 
-/*! \brief Save schematic file and close
- *  \par Function Description
- *  This function will save the current schematic file before closing it.
- *  It also deletes the page_current item in the TOPLEVEL structure.
- *
- *  \param [in,out] toplevel  The TOPLEVEL object containing the schematic.
- *  \param [in]      filename  The file name to save the schematic to.
- */
-void f_save_close(TOPLEVEL *toplevel, char *filename)
-{
-  o_save_curr_page (toplevel, filename);
-  s_page_delete (toplevel, toplevel->page_current);
-}
-
 /*! \brief Save the schematic file
  *  \par Function Description
  *  This function saves the current schematic file in the toplevel object.
