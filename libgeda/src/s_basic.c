@@ -346,7 +346,6 @@ s_delete_object_glist(TOPLEVEL *toplevel, GList *list)
  *
  * \sa s_object_weak_unref
  *
- * \param [in] toplevel       The #TOPLEVEL structure.
  * \param [in,out] object     Object to weak-reference.
  * \param [in] notify_func    Weak reference notify function.
  * \param [in] user_data      Data to be passed to \a notify_func.
@@ -366,7 +365,6 @@ s_object_weak_ref (OBJECT *object,
  *
  * \sa s_object_weak_ref()
  *
- * \param [in] toplevel       The #TOPLEVEL structure.
  * \param [in,out] object     Object to weak-reference.
  * \param [in] notify_func    Notify function to search for.
  * \param [in] user_data      Data to to search for.
@@ -389,7 +387,6 @@ s_object_weak_unref (OBJECT *object,
  *
  * \sa s_object_remove_weak_ptr
  *
- * \param [in] toplevel          The #TOPLEVEL structure.
  * \param [in,out] object        Object to weak-reference.
  * \param [in] weak_pointer_loc  Memory address of a pointer.
  */
@@ -407,7 +404,6 @@ s_object_add_weak_ptr (OBJECT *object,
  *
  * \sa s_object_add_weak_ptr()
  *
- * \param [in] toplevel          The #TOPLEVEL structure.
  * \param [in,out] object        Object to weak-reference.
  * \param [in] weak_pointer_loc  Memory address of a pointer.
  */

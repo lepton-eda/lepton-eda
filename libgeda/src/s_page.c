@@ -309,7 +309,6 @@ void s_page_delete_list(TOPLEVEL *toplevel)
  *
  * \sa s_page_weak_unref
  *
- * \param [in] toplevel       The #TOPLEVEL structure.
  * \param [in,out] page       Page to weak-reference.
  * \param [in] notify_func    Weak reference notify function.
  * \param [in] user_data      Data to be passed to \a notify_func.
@@ -329,7 +328,6 @@ s_page_weak_ref (PAGE *page,
  *
  * \sa s_page_weak_ref()
  *
- * \param [in] toplevel       The #TOPLEVEL structure.
  * \param [in,out] page       Page to weak-reference.
  * \param [in] notify_func    Notify function to search for.
  * \param [in] user_data      Data to to search for.
@@ -352,7 +350,6 @@ s_page_weak_unref (PAGE *page,
  *
  * \sa s_page_remove_weak_ptr
  *
- * \param [in] toplevel          The #TOPLEVEL structure.
  * \param [in,out] page          Page to weak-reference.
  * \param [in] weak_pointer_loc  Memory address of a pointer.
  */
@@ -370,7 +367,6 @@ s_page_add_weak_ptr (PAGE *page,
  *
  * \sa s_page_add_weak_ptr()
  *
- * \param [in] toplevel          The #TOPLEVEL structure.
  * \param [in,out] page          Page to weak-reference.
  * \param [in] weak_pointer_loc  Memory address of a pointer.
  */

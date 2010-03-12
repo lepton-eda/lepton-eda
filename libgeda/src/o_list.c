@@ -129,7 +129,6 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
  *  \param [in] toplevel       The TOPLEVEL object.
  *  \param [in] src_list       The GList to copy from.
  *  \param [in] dest_list      The GList to copy to.
- *  \param [in] flag
  *  \return the dest_list GList with objects appended to it.
  */
 GList *o_glist_copy_all (TOPLEVEL *toplevel,

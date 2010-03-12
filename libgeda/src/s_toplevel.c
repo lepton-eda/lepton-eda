@@ -195,7 +195,6 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
  *
  * \sa s_toplevel_weak_unref
  *
- * \param [in] toplevel       The #TOPLEVEL structure.
  * \param [in,out] toplevel   Toplevel to weak-reference.
  * \param [in] notify_func    Weak reference notify function.
  * \param [in] user_data      Data to be passed to \a notify_func.
@@ -216,7 +215,6 @@ s_toplevel_weak_ref (TOPLEVEL *toplevel,
  *
  * \sa s_toplevel_weak_ref()
  *
- * \param [in] toplevel       The #TOPLEVEL structure.
  * \param [in,out] toplevel       Toplevel to weak-reference.
  * \param [in] notify_func    Notify function to search for.
  * \param [in] user_data      Data to to search for.
@@ -239,7 +237,6 @@ s_toplevel_weak_unref (TOPLEVEL *toplevel,
  *
  * \sa s_toplevel_remove_weak_ptr
  *
- * \param [in] toplevel          The #TOPLEVEL structure.
  * \param [in,out] toplevel      Toplevel to weak-reference.
  * \param [in] weak_pointer_loc  Memory address of a pointer.
  */
@@ -258,7 +255,6 @@ s_toplevel_add_weak_ptr (TOPLEVEL *toplevel,
  *
  * \sa s_toplevel_add_weak_ptr()
  *
- * \param [in] toplevel          The #TOPLEVEL structure.
  * \param [in,out] toplevel      Toplevel to weak-reference.
  * \param [in] weak_pointer_loc  Memory address of a pointer.
  */
