@@ -239,6 +239,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "view-pan-down",		 0, 0, 0, g_keys_view_pan_down },
   { "view-dark-colors",          0, 0, 0, g_keys_view_dark_colors },
   { "view-light-colors",         0, 0, 0, g_keys_view_light_colors },
+  { "view-bw-colors",            0, 0, 0, g_keys_view_bw_colors },
   { "page-manager",              0, 0, 0, g_keys_page_manager },
   { "page-next",                 0, 0, 0, g_keys_page_next },
   { "page-prev",                 0, 0, 0, g_keys_page_prev },

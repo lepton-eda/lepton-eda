@@ -70,6 +70,7 @@ _("Zoom _Out")
 _("Zoom _Full")
 _("_Dark color scheme")
 _("_Light color scheme")
+_("B_W color scheme")
 
 _("_Page")
 _("_Manager...")

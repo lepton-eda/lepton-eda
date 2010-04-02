@@ -32,6 +32,7 @@
 ;
 (load (build-path geda-rc-path "gschem-colormap-darkbg")) ; dark background
 ;(load (build-path geda-rc-path "gschem-colormap-lightbg")) ; light background
+;(load (build-path geda-rc-path "gschem-colormap-bw")) ; light background, bw
 
 ;
 ; End of color section
@@ -1215,6 +1216,7 @@
     ("i" . view-zoom-in-hotkey)
     ("d" . view-dark-colors)
     ("l" . view-light-colors)
+    ("w" . view-bw-colors)
    ))
 
 (define buffer-keymap
@@ -1454,6 +1456,7 @@
            ("SEPARATOR"           #f                      #f                      #f)
            ("_Dark color scheme"  view-dark-colors        view-dark-colors        #f)
            ("_Light color scheme" view-light-colors       view-light-colors       #f)
+           ("B_W color scheme"    view-bw-colors          view-bw-colors          #f)
          ))
 
 (define page-menu-items 
