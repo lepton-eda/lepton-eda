@@ -1256,6 +1256,60 @@
   )
 )
 
+; most of this code is shamelessly copied from write-net-names-on-component
+; probably net-on-component could take one more argument that will be formater
+; which receives pin data those generated in let, etc
+; then this cruft might just provide own formater and reuse code
+(define spice-sdb:write-probe-item
+  (lambda (refdes number-of-pins port)
+    (if (> number-of-pins 0)
+      (begin
+        (spice-sdb:write-probe-item refdes (- number-of-pins 1) port)
+        (let* ((pin-name (number->string number-of-pins))
+	       (pinnumber (gnetlist:get-attribute-by-pinseq refdes pin-name "pinnumber"))
+	       (pinseq (gnetlist:get-attribute-by-pinseq refdes pin-name "pinseq"))
+	       (netname (car (spice-sdb:get-net refdes pinnumber)) )
+	       )
+
+;; -------  Super debug stuff  --------
+	  (debug-spew "  In write-probe-item. . . . \n")
+	  (debug-spew (string-append "     pin-name = " pin-name "\n"))
+	  (debug-spew (string-append "     pinnumber = " pinnumber "\n"))
+	  (debug-spew (string-append "     pinseq = " pinseq "\n"))
+	  (debug-spew (string-append "     netname = " netname "\n"))
+;; ------------------------------ 
+
+	  (if (not (string=? netname "ERROR_INVALID_PIN"))
+             (display (string-append "V(" netname ") ") port)     ;; write out attached net if OK.
+             (debug-spew (string-append "For " refdes ", found pin with no pinseq attribute.  Ignoring. . . .\n"))
+          )
+        )  ;; let*
+      ) ;; begin
+    ) ;; if
+  ) ;; lambda
+)
+
+(define spice-sdb:write-probe
+  (lambda (package port)
+    ;; fetch only one attr we care about, so far
+    (let ((value (gnetlist:get-package-attribute package "value"))
+	 ) ;; end of local assignments
+
+    (debug-spew (string-append "Found Probe item, refdes = " package "\n"))
+
+    (if (string=? value "unknown")
+      (set! value "TRAN"))
+
+    (display (string-append "* Probe device " package " on nets ") port)
+    (spice-sdb:write-probe-item package (length (gnetlist:get-pins package)) port)
+    (newline port)
+    (display (string-append ".print " value " +") port)
+    (spice-sdb:write-probe-item package (length (gnetlist:get-pins package)) port)
+    (newline port)
+  ) ;; end of let
+ ) ;; close of lambda
+) ;; close of define
+
 ;;--------------------------------------------------------------------
 ;; Given a refdes and number of pins, this writes out the nets
 ;; attached to the component's pins.  This is used to write out
@@ -1617,6 +1671,8 @@
               (spice-sdb:write-directive package port))
           ( (string=? device "include")
               (spice-sdb:write-include package port))
+          ( (string=? device "TESTPOINT")
+              (spice-sdb:write-probe package port))
           ( else 
 	      (spice-sdb:write-default-component package file-info-list port))
         ) ;; end of cond
