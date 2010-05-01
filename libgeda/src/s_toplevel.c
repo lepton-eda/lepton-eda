@@ -135,6 +135,8 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->change_notify_funcs = NULL;
 
+  toplevel->attribs_changed_hooks = NULL;
+
   toplevel->load_newer_backup_func = NULL;
   toplevel->load_newer_backup_data = NULL;
 

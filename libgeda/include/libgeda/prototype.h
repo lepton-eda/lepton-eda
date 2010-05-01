@@ -89,6 +89,10 @@ char *o_attrib_search_inherited_attribs_by_name (OBJECT *object, char *name, int
 char *o_attrib_search_object_attribs_by_name (OBJECT *object, char *name, int counter);
 GList *o_attrib_return_attribs(OBJECT *object);
 int o_attrib_is_inherited(OBJECT *attrib);
+void o_attrib_append_attribs_changed_hook(TOPLEVEL *toplevel, AttribsChangedFunc func, void *data);
+void o_attrib_emit_attribs_changed(TOPLEVEL *toplevel, OBJECT *object);
+void o_attrib_freeze_hooks(TOPLEVEL *toplevel, OBJECT *object);
+void o_attrib_thaw_hooks(TOPLEVEL *toplevel, OBJECT *object);
 
 /* o_basic.c */
 int inside_region(int xmin, int ymin, int xmax, int ymax, int x, int y);

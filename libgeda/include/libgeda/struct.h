@@ -287,6 +287,10 @@ struct st_object {
   OBJECT *copied_to;    /* used when copying attributes */
 
   GList *weak_refs; /* Weak references */
+
+  /* Attribute notification handling */
+  int attrib_notify_freeze_count;
+  int attrib_notify_pending;
 }; 
 
 
@@ -423,6 +427,9 @@ typedef int(*RenderedBoundsFunc)(void *, OBJECT *, int *, int *, int *, int *);
 /*! \brief Type of callback function for object damage notification */
 typedef int(*ChangeNotifyFunc)(void *, OBJECT *);
 
+/*! \brief Type of callback function for notification when an object's attributes change */
+typedef void(*AttribsChangedFunc)(void *, OBJECT *);
+
 /*! \brief Type of callback function for querying loading of backups */
 typedef gboolean(*LoadBackupQueryFunc)(void *, GString *);
 
@@ -549,6 +556,9 @@ struct st_toplevel {
 
   /* Callback functions for object change notification */
   GList *change_notify_funcs;
+
+  /* Callback functions for object attribute change notification */
+  GList *attribs_changed_hooks;
 
   /* Callback function for deciding whether to load a backup file. */
   LoadBackupQueryFunc load_newer_backup_func;

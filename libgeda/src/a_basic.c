@@ -388,11 +388,13 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         break;
 
       case(STARTATTACH_ATTR): 
+        o_attrib_freeze_hooks (toplevel, new_obj);
         /* first is the fp */
         /* 2nd is the object to get the attributes */
         new_obj_list = o_read_attribs (toplevel, NULL, new_obj, tb, release_ver, fileformat_ver);
         new_obj_list = g_list_reverse (new_obj_list);
         object_list = g_list_concat (new_obj_list, object_list);
+        o_attrib_thaw_hooks (toplevel, new_obj);
 
         /* by now we have finished reading all the attributes */
         /* did we just finish attaching to a complex object? */

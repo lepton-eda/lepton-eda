@@ -954,6 +954,9 @@ void o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj,
   obj->text->string = g_strdup (new_string);
 
   o_text_recreate (toplevel, obj);
+
+  if (obj->attached_to != NULL)
+    o_attrib_emit_attribs_changed (toplevel, obj->attached_to);
 }
 
 
