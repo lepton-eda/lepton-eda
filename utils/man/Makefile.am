@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-dist_man_MANS = grenum.1
+dist_man_MANS = grenum.1 gxyrs.1
 
 
 # Rules for converting man->html
