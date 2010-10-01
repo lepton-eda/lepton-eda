@@ -21,6 +21,8 @@
 ;;
 ;; DRC backend written by Carlos Nieves Onega starts here.
 ;;
+;;  2010-10-02: Applied patch from Karl Hammar. Do drc-matrix lower triangular
+;;                    and let get-drc-matrixelement swap row/column if row < column.
 ;;  2006-04-22: Display the pins when reporting a net with only one connection.
 ;;  2006-04-08: Added support for DRC directives (DontCheckPintypes and 
 ;;              NoConnection), so the DRC doesn't depend on the net name
@@ -134,27 +136,27 @@
 ;;;  Order is important !
 ;;;             unknown in    out   io    oc    oe    pas   tp    tri   clk   pwr unconnected
 ;;;unknown
-;;  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e )
+;;  '(            #\c )
 ;;;in
-;;  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e )
+;;  '(            #\c   #\c)
 ;;;out
-;;  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\c   #\e   #\e )
+;;  '(            #\c   #\c   #\e )
 ;;;io
-;;  '(            #\c   #\c   #\w   #\c   #\w   #\w   #\c   #\w   #\c   #\c   #\w   #\e )
+;;  '(            #\c   #\c   #\w   #\c)
 ;;;oc
-;;  '(            #\c   #\c   #\e   #\w   #\e   #\c   #\c   #\e   #\c   #\c   #\e   #\e )
+;;  '(            #\c   #\c   #\e   #\w   #\e)
 ;;;oe
-;;  '(            #\c   #\c   #\e   #\w   #\c   #\e   #\c   #\e   #\c   #\c   #\e   #\e )
+;;  '(            #\c   #\c   #\e   #\w   #\c   #\e)
 ;;;pas
-;;  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e )
+;;  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c)
 ;;;tp
-;;  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\c   #\e   #\e )
+;;  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e)
 ;;;tri
-;;  '(            #\c   #\c   #\e   #\c   #\c   #\c   #\c   #\e   #\c   #\c   #\e   #\e )
+;;  '(            #\c   #\c   #\e   #\c   #\c   #\c   #\c   #\e   #\c)
 ;;;clk
-;;  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e   #\e )
+;;  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c)
 ;;;pwr
-;;  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\e   #\c   #\e )
+;;  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\e   #\c)
 ;;;unconnected
 ;;  '(            #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e )))
 
@@ -219,27 +221,27 @@
 ;  Order is important !
 ;             unknown in    out   io    oc    oe    pas   tp    tri   clk   pwr unconnected
 ;unknown
-  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e )
+  '(            #\c )
 ;in
-  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e )
+  '(            #\c   #\c   )
 ;out
-  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\c   #\e   #\e )
+  '(            #\c   #\c   #\e   )
 ;io
-  '(            #\c   #\c   #\w   #\c   #\w   #\w   #\c   #\w   #\c   #\c   #\w   #\e )
+  '(            #\c   #\c   #\w   #\c   )
 ;oc
-  '(            #\c   #\c   #\e   #\w   #\e   #\c   #\c   #\e   #\c   #\c   #\e   #\e )
+  '(            #\c   #\c   #\e   #\w   #\e   )
 ;oe
-  '(            #\c   #\c   #\e   #\w   #\c   #\e   #\c   #\e   #\c   #\c   #\e   #\e )
+  '(            #\c   #\c   #\e   #\w   #\c   #\e   )
 ;pas
-  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e )
+  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   )
 ;tp
-  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\c   #\e   #\e )
+  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   )
 ;tri
-  '(            #\c   #\c   #\e   #\c   #\c   #\c   #\c   #\e   #\c   #\c   #\e   #\e )
+  '(            #\c   #\c   #\e   #\c   #\c   #\c   #\c   #\e   #\c   )
 ;clk
-  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\e   #\e )
+  '(            #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   #\c   )
 ;pwr
-  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\e   #\c   #\e )
+  '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\e   #\c  )
 ;unconnected
   '(            #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e )
 )))
@@ -284,7 +286,9 @@
 ; Get value x y from matrix
 (define drc2:get-drc-matrix-element
   (lambda (row column)
-	  (list-ref (list-ref drc-matrix row) column)))
+    (if (< row column)
+	(list-ref (list-ref drc-matrix column) row)
+	(list-ref (list-ref drc-matrix row) column))))
   
 ; Check if all elements of the DRC matrix are characters
 (define drc2:drc-matrix-elements-are-correct?
@@ -306,27 +310,6 @@
       
 ))
 
-; Check if the DRC matrix is simetric.
-(define drc2:is-simetric-drc-matrix
-  (lambda ()
-    (let check-row ((row 1))
-      (if (let check-column ((column 0))    
-	    (if (not (eqv? (drc2:get-drc-matrix-element row column)
-			   (drc2:get-drc-matrix-element column row)))
-		#f
-		(if (< column (- row 1))
-		    (check-column (+ column 1)) 		    
-		    #t)
-		)
-	    )
-	  (if (< row (- (length pintype-names) 1))
-	      (check-row (+ row 1)) 
-	      #t)	  
-	 #f)
-      )
-      
-))
-	  
 ;
 ; End of DRC matrix functions
 ;-----------------------------------------------------------------------
@@ -924,12 +907,6 @@
          (begin
 		    
 	    ;; Perform DRC-matrix sanity checks.
-	    ; See if the matrix is simetric.
-	    (if (not (drc2:is-simetric-drc-matrix))
-		(begin (display "INTERNAL ERROR: DRC matrix is NOT simetric." port)
-		       (newline port)
-		       (newline port)
-		       (error "INTERNAL ERROR. DRC matrix is NOT simetric")))
 	    ; See if all elements of the matrix are chars
 	    (if (not (drc2:drc-matrix-elements-are-correct?))
 		(begin (display "INTERNAL ERROR: DRC matrix elements are NOT all chars." port)
