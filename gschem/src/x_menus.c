@@ -105,7 +105,6 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
   char **raw_menu_name = g_malloc (sizeof(char *));
   char *menu_item_name;
   char *raw_menu_item_name;
-  char *menu_item_func;
   char *menu_item_hotkey_func;
   char *menu_item_stock;
   char *menu_item_keys;
@@ -149,11 +148,6 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
 
       raw_menu_item_name = SCM_STRING_CHARS (scm_item_name);
 
-      if (scm_is_false (scm_item_func))
-        menu_item_func = "no-action";
-      else
-        menu_item_func = SCM_SYMBOL_CHARS (scm_item_func);
-
       if (scm_is_false (scm_item_hotkey_func))
         menu_item_hotkey_func = NULL;
       else
@@ -187,17 +181,21 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
           menu_item_keys = "";
         }
 
-        action = gschem_action_new (menu_item_func,  /* Action name */
-                                    menu_item_name,  /* Text */
-                                    menu_item_name,  /* Tooltip */
-                                    menu_item_stock, /* Icon stock ID */
-                                    menu_item_keys); /* Accelerator string */
-        menu_item = gtk_action_create_menu_item (GTK_ACTION (action));
-        gtk_menu_append (GTK_MENU (menu), menu_item);
+        if(scm_is_false (scm_item_func)) {
+          menu_item = gtk_menu_item_new_with_mnemonic(menu_item_name);
+        } else {
+          action = gschem_action_new (SCM_SYMBOL_CHARS (scm_item_func),  /* Action name */
+                                      menu_item_name,  /* Text */
+                                      menu_item_name,  /* Tooltip */
+                                      menu_item_stock, /* Icon stock ID */
+                                      menu_item_keys); /* Accelerator string */
+          menu_item = gtk_action_create_menu_item (GTK_ACTION (action));
+          g_signal_connect (G_OBJECT(action), "activate",
+                            G_CALLBACK(g_menu_execute),
+                            w_current);
+        }
 
-        g_signal_connect (G_OBJECT(action), "activate",
-                          G_CALLBACK(g_menu_execute),
-                          w_current);
+        gtk_menu_append (GTK_MENU (menu), menu_item);
       }
 
       gtk_widget_show (menu_item);
