@@ -2,6 +2,8 @@ prefix=@prefix@
 exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
+gedarcdir=@GEDARCDIR@
+gedadatadir=@GEDADATADIR@
 
 Name: libgeda
 Description: gEDA/gaf's core library 
