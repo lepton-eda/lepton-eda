@@ -21,7 +21,7 @@
       (let ((package (car packages)))
 	(if (string=? (get-device package) "include")
 	    (get-parts-table (cdr packages))
-	    (cons (list (gnetlist:get-package-attribute package "refdes")
+	    (cons (list package
 			(get-device package)
 			(get-value package)  
 			(gnetlist:get-package-attribute package "footprint")) ;; sdb change
