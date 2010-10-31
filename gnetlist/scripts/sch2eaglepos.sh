@@ -43,16 +43,16 @@ fi
 tmpf=${tmpdir}/tmpf
 grep -B1 refdes= "$FNAME" |sed 's/=/ /' | cut -d" " -f2,3 |grep -v '^--' >${tmpf}
 
-3<$tmpf
-while read -u 3; do
+
+while read; do
     # the directory on the client to backup
     X=`echo $REPLY | cut -d' ' -f1`
     Y=`echo $REPLY | cut -d' ' -f2`
-    read -u 3;
+    read;
     PART="$REPLY"
     X=`echo "scale=5; ($X - $XOFFSET) / $XSCALE" |bc`
     Y=`echo "scale=5; ($Y - $YOFFSET) / $YSCALE" |bc`
     echo "MOVE '$PART' ($X $Y);"
-done
+done < $tmpf
 rm -fr "${tmpdir}"
 
