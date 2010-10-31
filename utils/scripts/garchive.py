@@ -275,15 +275,15 @@ class CmdLineArgs:
 
             if Option == '-a':
                 if self.ProgramMode == "extract":          # sanity check
-                    raise "Incompatible command line args"
+                    raise SyntaxError("Incompatible command line args")
 
             if Option == '-e':
                 if self.ProgramMode == "archive":          # sanity check
-                    raise "Incompatible command line args"
+                    raise SyntaxError("Incompatible command line args")
 
             if Option == '-f':
                 if self.ProgramMode == "extract":          # sanity check
-                    raise "Incompatible command line args"
+                    raise SyntaxError("Incompatible command line args")
                 try:
                     os.stat(Value)
                 except OSError:
@@ -294,7 +294,7 @@ class CmdLineArgs:
 
             if Option == '-o':
                 if self.ProgramMode == "extract":          # sanity check
-                    raise "incompatible command line args"
+                    raise SyntaxError("Incompatible command line args")
                 if CheckFilename(Value):
                     self.OutputFileName = Value            #strcopy?
                 else:
@@ -904,7 +904,7 @@ elif Args.ProgramMode == "extract":
     Extract(Args)
     sys.exit(0)
 else:
-    raise "Unknown program mode found."
+    raise RuntimeError("Unknown program mode found.")
 
 #  That's it -- very simple!!
 
