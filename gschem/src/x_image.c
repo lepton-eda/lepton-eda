@@ -349,7 +349,7 @@ void x_image_lowlevel(GSCHEM_TOPLEVEL *w_current, const char* filename,
 
   /* Preserve proportions */
   prop = (float)width / height;
-  if(page_width > page_height) {
+  if (((float)page_width / page_height) > prop) {
     page_height = (page_width / prop);
   }else{
     page_width = (page_height * prop);
