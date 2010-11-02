@@ -27,6 +27,7 @@
 #include <math.h>
 
 #include <libgeda/libgeda.h>
+#include <libgeda/libgedaguile.h>
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
@@ -34,15 +35,6 @@
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
-
-
-/* current project */
-static TOPLEVEL *project_current;
-
-void g_set_project_current(TOPLEVEL * pr_current)
-{
-    project_current = pr_current;
-}
 
 
 SCM g_scm_c_get_uref (TOPLEVEL *toplevel, OBJECT *object)
@@ -687,13 +679,14 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
   char *wanted_attrib;
   char *attrib_value = NULL;
   SCM scm_return_value;
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
   SCM_ASSERT(scm_is_string (scm_wanted_attrib),
              scm_wanted_attrib, SCM_ARG1, "gnetlist:get-toplevel-attribute");
 
   wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
 
-  for (p_iter = geda_list_get_glist (project_current->pages); p_iter != NULL;
+  for (p_iter = geda_list_get_glist (toplevel->pages); p_iter != NULL;
        p_iter = g_list_next (p_iter)) {
     p_current = p_iter->data;
 
