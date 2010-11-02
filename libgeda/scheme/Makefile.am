@@ -10,7 +10,8 @@ TESTS_ENVIRONMENT = $(builddir)/../shell/geda-shell -q -L $(srcdir) \
 	-c '(use-modules (unit-test)) (load (list-ref (command-line) 1)) (exit (if (tests-passed?) 0 1))'
 
 TESTS = unit-tests/t0001-geda-conf-lib.scm \
-	unit-tests/t0010-object-line.scm
+	unit-tests/t0010-object-line.scm \
+	unit-tests/t0011-object-box.scm
 
 dist_noinst_DATA = unit-test.scm $(TESTS)
 

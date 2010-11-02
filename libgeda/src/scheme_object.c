@@ -434,6 +434,101 @@ SCM_DEFINE (make_bus, "%make-bus", 0, 0, 0,
   return result;
 }
 
+/*! \brief Create a new box.
+ * \par Function Description
+ * Creates a new box object, with all its parameters set to default
+ * values.
+ *
+ * \note Scheme API: Implements the %make-box procedure in the (geda
+ * core object) module.
+ *
+ * \return a newly-created box object.
+ */
+SCM_DEFINE (make_box, "%make-box", 0, 0, 0,
+            (), "Create a new box object.")
+{
+  OBJECT *obj = o_box_new (edascm_c_current_toplevel (),
+                           OBJ_BOX, DEFAULT_COLOR,
+                           0, 0, 0, 0);
+
+  SCM result = edascm_from_object (obj);
+
+  /* At the moment, the only pointer to the object is owned by the
+   * smob. */
+  edascm_c_set_gc (result, 1);
+
+  return result;
+}
+
+/*! \brief Set box parameters.
+ * \par Function Description
+ * Modifies a box object by setting its parameters to new values.
+ *
+ * \note Scheme API: Implements the %set-box! procedure in the (geda
+ * core object) module.
+ *
+ * \param box_s  the box object to modify.
+ * \param x1_s   the new x-coordinate of the top left of the box.
+ * \param y1_s   the new y-coordinate of the top left of the box.
+ * \param x2_s   the new x-coordinate of the bottom right of the box.
+ * \param y2_s   the new y-coordinate of the bottom right of the box.
+ * \param color  the colormap index of the color to be used for
+ *               drawing the box.
+ *
+ * \return the modified box object.
+ */
+SCM_DEFINE (set_box, "%set-box!", 6, 0, 0,
+            (SCM box_s, SCM x1_s, SCM y1_s, SCM x2_s, SCM y2_s, SCM color_s),
+            "Set box parameters.")
+{
+  SCM_ASSERT (edascm_is_object_type (box_s, OBJ_BOX), box_s,
+              SCM_ARG1, s_set_box);
+  SCM_ASSERT (scm_is_integer (x1_s),    x1_s,    SCM_ARG2, s_set_box);
+  SCM_ASSERT (scm_is_integer (y1_s),    y1_s,    SCM_ARG3, s_set_box);
+  SCM_ASSERT (scm_is_integer (x2_s),    x2_s,    SCM_ARG4, s_set_box);
+  SCM_ASSERT (scm_is_integer (y2_s),    y2_s,    SCM_ARG5, s_set_box);
+  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG6, s_set_box);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (box_s);
+  o_box_modify_all (toplevel, obj,
+                    scm_to_int (x1_s), scm_to_int (y1_s),
+                    scm_to_int (x2_s), scm_to_int (y2_s));
+  o_set_color (toplevel, obj, scm_to_int (color_s));
+
+  return box_s;
+}
+
+/*! \brief Get box parameters.
+ * \par Function Description
+ * Retrieves the parameters of a box object. The return value is a
+ * list of parameters:
+ *
+ * -# X-coordinate of top left of box
+ * -# Y-coordinate of top left of box
+ * -# X-coordinate of bottom right of box
+ * -# Y-coordinate of bottom right of box
+ * -# Colormap index of color to be used for drawing the box
+ *
+ * \param box_s the box object to inspect.
+ * \return a list of box parameters.
+ */
+SCM_DEFINE (box_info, "%box-info", 1, 0, 0,
+            (SCM box_s), "Get box parameters.")
+{
+  SCM_ASSERT (edascm_is_object_type (box_s, OBJ_BOX), box_s,
+              SCM_ARG1, s_box_info);
+
+  OBJECT *obj = edascm_to_object (box_s);
+
+  return scm_list_n (scm_from_int (obj->box->upper_x),
+                     scm_from_int (obj->box->upper_y),
+                     scm_from_int (obj->box->lower_x),
+                     scm_from_int (obj->box->lower_y),
+                     scm_from_int (obj->color),
+                     SCM_UNDEFINED);
+}
+
 /*!
  * \brief Create the (geda core object) Scheme module.
  * \par Function Description
@@ -451,6 +546,7 @@ init_module_geda_core_object ()
                 s_object_color, s_set_object_color,
                 s_make_line, s_make_net, s_make_bus,
                 s_set_line, s_line_info,
+                s_make_box, s_set_box, s_box_info,
                 NULL);
 }
 

@@ -138,3 +138,64 @@
 (define*-public (make-bus start end #:optional color)
   (let ((l (%make-bus)))
     (set-line! l start end color)))
+
+;;;; Boxes
+
+;; box? x
+;;
+;; Returns #t if x is a gEDA box object.
+(define-public (box? l)
+  (object-type? l 'box))
+
+;; set-box! b top-left bottom-right [color]
+;;
+;; Sets the parameters of a box b. top-left is the new coordinates (x
+;; . y) of the top left corner of the box, and bottom-right is the new
+;; coordinates of the bottom right corner. The optional color argument
+;; is the new colormap index of the box's color. Returns b after
+;; modifications.
+(define*-public (set-box! b top-left bottom-right #:optional color)
+  (%set-box! b
+             (car top-left) (cdr top-left)
+             (car bottom-right) (cdr bottom-right)
+             (if (not color)
+                 (object-color b)
+                 color)))
+
+;; make-box top-left bottom-right [color]
+;;
+;; Creates a new box. top-left is the coordinates (x . y) of the top
+;; left corner of the box, and bottom-right is the coordinates (x . y)
+;; of the bottom right corner.  The optional color argument is the
+;; color index of the color with which to draw the box.  If color is
+;; not specified, the default color is used.
+(define*-public (make-box top-left bottom-right #:optional color)
+  (let ((l (%make-box)))
+    (set-box! l top-left bottom-right color)))
+
+;; box-info b
+;;
+;; Returns the parameters of the box b as a list of the form:
+;;
+;;  ((top-left-x . top-left-y) (bottom-right-x . bottom-right-y) color)
+(define-public (box-info b)
+  (let ((params (%box-info b)))
+    (list (cons (list-ref params 0)
+                (list-ref params 1))
+          (cons (list-ref params 2)
+                (list-ref params 3))
+          (list-ref params 4))))
+
+;; box-top-left b
+;;
+;; Returns the coordinates (x . y) of the top left of the gEDA box
+;; object b.
+(define-public (box-top-left l)
+  (list-ref (box-info l) 0))
+
+;; box-bottom-right b
+;;
+;; Returns the coordinates (x . y) of the bottom right of the gEDA box
+;; object b.
+(define-public (box-bottom-right l)
+  (list-ref (box-info l) 1))
