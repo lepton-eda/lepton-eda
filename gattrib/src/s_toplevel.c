@@ -69,7 +69,8 @@ int s_toplevel_read_page(char *filename)
   pr_current->page_current->page_filename = g_strdup(filename);
   
   /* read in and fill out pr_current using f_open and its callees */
-  file_return_code = f_open(pr_current, filename, &err);
+  file_return_code = f_open(pr_current, pr_current->page_current,
+                            filename, &err);
 
   /* If an error occurred, print message */
   if (err != NULL) {

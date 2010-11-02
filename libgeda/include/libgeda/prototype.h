@@ -11,11 +11,11 @@ void o_scale(TOPLEVEL *toplevel, GList *list, int x_scale, int y_scale);
 /* f_basic.c */
 gchar *f_get_autosave_filename (const gchar *filename);
 gboolean f_has_active_autosave (const gchar *filename, GError **err);
-int f_open(TOPLEVEL *toplevel, const gchar *filename, GError **err);
-int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
+int f_open(TOPLEVEL *toplevel, PAGE *page, const gchar *filename, GError **err);
+int f_open_flags(TOPLEVEL *toplevel, PAGE *page, const gchar *filename,
                  const gint flags, GError **err);
 void f_close(TOPLEVEL *toplevel);
-int f_save(TOPLEVEL *toplevel, const char *filename);
+int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename);
 gchar *f_normalize_filename (const gchar *filename, GError **error);
 char *follow_symlinks (const gchar *filename, GError **error);
 

@@ -366,7 +366,7 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
 
   if (w_current->undo_type == UNDO_DISK && u_current->filename) {
 
-    f_open(toplevel, u_current->filename, NULL);
+    f_open(toplevel, toplevel->page_current, u_current->filename, NULL);
 
     x_manual_resize(w_current);
     toplevel->page_current->page_control = u_current->page_control;

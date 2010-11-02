@@ -162,9 +162,10 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err)
  *
  *  \return 0 on failure, 1 on success.
  */
-int f_open(TOPLEVEL *toplevel, const gchar *filename, GError **err)
+int f_open(TOPLEVEL *toplevel, PAGE *page,
+           const gchar *filename, GError **err)
 {
-  return f_open_flags (toplevel, filename,
+  return f_open_flags (toplevel, page, filename,
                        F_OPEN_RC | F_OPEN_CHECK_BACKUP, err);
 }
 
@@ -187,7 +188,8 @@ int f_open(TOPLEVEL *toplevel, const gchar *filename, GError **err)
  *
  *  \return 0 on failure, 1 on success.
  */
-int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
+int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
+                 const gchar *filename,
                  const gint flags, GError **err)
 {
   int opened=FALSE;
@@ -339,7 +341,7 @@ void f_close(TOPLEVEL *toplevel)
  *  \param [in]      filename  The file name to save the schematic to.
  *  \return 1 on success, 0 on failure.
  */
-int f_save(TOPLEVEL *toplevel, const char *filename)
+int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename)
 {
   gchar *backup_filename;
   gchar *real_filename;

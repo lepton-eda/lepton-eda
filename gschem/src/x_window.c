@@ -728,7 +728,7 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
     if (!quiet_mode)
       s_log_message (_("Loading schematic [%s]\n"), fn);
 
-    if (!f_open (toplevel, (gchar *) fn, &err)) {
+    if (!f_open (toplevel, page, (gchar *) fn, &err)) {
       GtkWidget *dialog;
 
       g_warning ("%s\n", err->message);
@@ -851,7 +851,7 @@ x_window_save_page (GSCHEM_TOPLEVEL *w_current, PAGE *page, const gchar *filenam
   /* change to page */
   s_page_goto (toplevel, page);
   /* and try saving current page to filename */
-  ret = (gint)f_save (toplevel, filename);
+  ret = (gint)f_save (toplevel, toplevel->page_current, filename);
   if (ret != 1) {
     /* an error occured when saving page to file */
     log_msg   = _("Could NOT save page [%s]\n");

@@ -485,11 +485,8 @@ void s_page_print_all (TOPLEVEL *toplevel)
 gint s_page_save_all (TOPLEVEL *toplevel)
 {
   const GList *iter;
-  PAGE *p_save, *p_current;
+  PAGE *p_current;
   gint status = 0;
-
-  /* save current page */
-  p_save = toplevel->page_current;
 
   for ( iter = geda_list_get_glist( toplevel->pages );
         iter != NULL;
@@ -497,28 +494,20 @@ gint s_page_save_all (TOPLEVEL *toplevel)
 
     p_current = (PAGE *)iter->data;
 
-    /* make p_current the current page of toplevel */
-    s_page_goto (toplevel, p_current);
-
-    if (f_save (toplevel, p_current->page_filename)) {
+    if (f_save (toplevel, p_current,
+                p_current->page_filename)) {
       s_log_message (_("Saved [%s]\n"),
-                     toplevel->page_current->page_filename);
+                     p_current->page_filename);
       /* reset the CHANGED flag of p_current */
       p_current->CHANGED = 0;
 
     } else {
       s_log_message (_("Could NOT save [%s]\n"),
-                     toplevel->page_current->page_filename);
+                     p_current->page_filename);
       /* increase the error counter */
       status++;
     }
 
-  }
-
-  /* restore current page */
-  if (p_save != NULL) 
-  {
-     s_page_goto (toplevel, p_save);
   }
 
   return status;
