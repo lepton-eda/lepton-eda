@@ -204,7 +204,7 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
   /* has the head been freed yet? */
   /* probably not hack PAGE */
 
-  set_window(toplevel, toplevel->page_current,
+  set_window(toplevel, page,
              toplevel->init_left, toplevel->init_right,
              toplevel->init_top,  toplevel->init_bottom);
 
@@ -224,9 +224,9 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
     return 0;
   }
 
-  /* write full, absolute filename into page_current->page_filename */
-  g_free(toplevel->page_current->page_filename);
-  toplevel->page_current->page_filename = g_strdup(full_filename);
+  /* write full, absolute filename into page->page_filename */
+  g_free(page->page_filename);
+  page->page_filename = g_strdup(full_filename);
 
   /* Before we open the page, let's load the corresponding gafrc. */
   /* First cd into file's directory. */
@@ -298,11 +298,11 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
 
   if (load_backup_file == 0) {
     /* If it's not the backup file */
-    toplevel->page_current->CHANGED=0; /* added 4/7/98 */
+    page->CHANGED=0; /* added 4/7/98 */
   } else {
     /* We are loading the backup file, so gschem should ask
        the user if save it or not when closing the page. */
-    toplevel->page_current->CHANGED=1;
+    page->CHANGED=1;
   }
 
   g_free(full_filename);
@@ -363,7 +363,7 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename)
   only_filename = g_path_get_basename(real_filename);  
 
   /* Do a backup if it's not an undo file backup and it was never saved. */
-  if (toplevel->page_current->saved_since_first_loaded == 0) {
+  if (page->saved_since_first_loaded == 0) {
     if ( (g_file_test (real_filename, G_FILE_TEST_EXISTS)) && 
 	 (!g_file_test(real_filename, G_FILE_TEST_IS_DIR)) )
     {
@@ -428,12 +428,12 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename)
   
   if (o_save (toplevel, s_page_objects (page), real_filename)) {
 
-    toplevel->page_current->saved_since_first_loaded = 1;
+    page->saved_since_first_loaded = 1;
 
     /* Reset the last saved timer */
-    g_get_current_time (&toplevel->page_current->last_load_or_save_time);
-    toplevel->page_current->ops_since_last_backup = 0;
-    toplevel->page_current->do_autosave_backup = 0;
+    g_get_current_time (&page->last_load_or_save_time);
+    page->ops_since_last_backup = 0;
+    page->do_autosave_backup = 0;
 
     /* Restore permissions. */
     chmod (real_filename, st.st_mode);
