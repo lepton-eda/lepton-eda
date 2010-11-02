@@ -33,6 +33,7 @@
 #endif
 
 #include "gschem.h"
+#include <libgeda/libgedaguile.h>
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -45,7 +46,7 @@
  */
 SCM g_funcs_print(SCM filename)
 {
-  TOPLEVEL *toplevel = global_window_current->toplevel;
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   
   SCM_ASSERT (scm_is_string (filename), filename,
               SCM_ARG1, "gschem-print");
@@ -70,7 +71,7 @@ SCM g_funcs_print(SCM filename)
  */
 SCM g_funcs_postscript(SCM filename)
 {
-  TOPLEVEL *toplevel = global_window_current->toplevel;
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
   SCM_ASSERT (scm_is_string (filename), filename,
               SCM_ARG1, "gschem-postscript");
@@ -98,15 +99,17 @@ SCM g_funcs_image(SCM filename)
   SCM_ASSERT (scm_is_string (filename), filename,
               SCM_ARG1, "gschem-image");
 
+  GSCHEM_TOPLEVEL *w_current = g_current_window ();
+
   if (output_filename) {
-    x_image_lowlevel (global_window_current, output_filename,
-                      global_window_current->image_width,
-                      global_window_current->image_height,
+    x_image_lowlevel (w_current, output_filename,
+                      w_current->image_width,
+                      w_current->image_height,
 		      g_strdup("png"));
   } else  {
-    x_image_lowlevel (global_window_current, SCM_STRING_CHARS (filename),
-                      global_window_current->image_width,
-                      global_window_current->image_height,
+    x_image_lowlevel (w_current, SCM_STRING_CHARS (filename),
+                      w_current->image_width,
+                      w_current->image_height,
 		      g_strdup("png"));
   }
   
@@ -237,7 +240,7 @@ SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags)
  */
 SCM g_funcs_use_rc_values(void)
 {
-  i_vars_set(global_window_current);
+  i_vars_set(g_current_window ());
   return SCM_BOOL_T;
 }
 

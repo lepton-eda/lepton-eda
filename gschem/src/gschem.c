@@ -225,7 +225,6 @@ void main_prog(void *closure, int argc, char *argv[])
   /* Allocate w_current */
   w_current = gschem_toplevel_new ();
   w_current->toplevel = s_toplevel_new ();
-  global_window_current = w_current;
 
   w_current->toplevel->load_newer_backup_func = x_fileselect_load_backup;
   w_current->toplevel->load_newer_backup_data = w_current;
@@ -237,6 +236,9 @@ void main_prog(void *closure, int argc, char *argv[])
   o_set_change_notify_funcs (w_current->toplevel,
                              (ChangeNotifyFunc) o_invalidate,
                              (ChangeNotifyFunc) o_invalidate, w_current);
+
+  scm_dynwind_begin (0);
+  g_dynwind_window (w_current);
 
   /* Now read in RC files. */
   g_rc_parse_gtkrc();
@@ -335,7 +337,9 @@ void main_prog(void *closure, int argc, char *argv[])
   /* if there were any symbols which had major changes, put up an error */
   /* dialog box */
   major_changed_dialog(w_current);
-    
+
+  scm_dynwind_end ();
+
   /* enter main loop */
   gtk_main();
 }

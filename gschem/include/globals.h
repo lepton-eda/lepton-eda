@@ -21,8 +21,6 @@
 #ifndef H_GSCHEM_GLOBALS_H
 #define H_GSCHEM_GLOBALS_H
 
-/* used by various guile functions, set in x_event* functions */
-extern GSCHEM_TOPLEVEL *global_window_current;
 
 /* window list */
 extern GList *global_window_list;

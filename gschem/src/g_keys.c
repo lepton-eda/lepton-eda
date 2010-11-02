@@ -188,8 +188,9 @@ static gboolean clear_keyaccel_string(gpointer data)
 #define DEFINE_G_KEYS(name)				\
 SCM g_keys_ ## name(SCM rest)				\
 {							\
-   g_timeout_add(400, clear_keyaccel_string, global_window_current); \
-   i_callback_ ## name(global_window_current, 0, NULL); \
+   GSCHEM_TOPLEVEL *w_current = g_current_window ();	\
+   g_timeout_add(400, clear_keyaccel_string, w_current);       \
+   i_callback_ ## name(w_current, 0, NULL);                   \
    return SCM_BOOL_T;				\
 }
 
@@ -388,7 +389,7 @@ DEFINE_G_KEYS(cancel)
 /*help for generate-netlist hot key*/
 SCM g_get_selected_filename(void)                     
 {                                                     
-	return (get_selected_filename(global_window_current));
+  return (get_selected_filename(g_current_window ()));
 }
 
 /*! \todo Finish function documentation!!!
@@ -398,5 +399,5 @@ SCM g_get_selected_filename(void)
  */
 SCM g_get_selected_component_attributes(void)                 
 {
-  return (get_selected_component_attributes(global_window_current));
+  return (get_selected_component_attributes(g_current_window ()));
 }

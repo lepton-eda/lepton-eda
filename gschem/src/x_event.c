@@ -60,8 +60,6 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
 #endif
 
   exit_if_null(w_current);
-  /* nasty global variable */
-  global_window_current = w_current;
 
   save_cr = w_current->cr;
   save_pl = w_current->pl;
@@ -101,7 +99,6 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   int unsnapped_wx, unsnapped_wy;
 
   exit_if_null(w_current);
-  global_window_current = w_current;
 
 #if DEBUG
   printf("pressed button %d! \n", event->button);
@@ -131,6 +128,12 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
   w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
   w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
+
+  /* Huge switch statement to evaluate state transitions. Jump to
+   * end_button_pressed label to escape the state evaluation rather than
+   * returning from the function directly. */
+  scm_dynwind_begin (0);
+  g_dynwind_window (w_current);
 
   if (event->button == 1) {
     switch(w_current->event_state) {
@@ -353,17 +356,15 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
     /* try this out and see how it behaves */
     if (w_current->inside_action) {
-      if (w_current->event_state == ENDCOMP ||
-          w_current->event_state == ENDTEXT ||
-          w_current->event_state == ENDMOVE ||
-          w_current->event_state == ENDCOPY ||
-          w_current->event_state == ENDMCOPY ||
-          w_current->event_state == ENDPASTE ) {
-            return(0);
-          } else {
-            i_callback_cancel(w_current, 0, NULL);
-            return(0);
-          }
+      if (!(w_current->event_state == ENDCOMP ||
+            w_current->event_state == ENDTEXT ||
+            w_current->event_state == ENDMOVE ||
+            w_current->event_state == ENDCOPY ||
+            w_current->event_state == ENDMCOPY ||
+            w_current->event_state == ENDPASTE )) {
+        i_callback_cancel(w_current, 0, NULL);
+      }
+      goto end_button_pressed;
     }
 
     switch(w_current->middle_button) {
@@ -394,7 +395,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
-        return(0);
+        goto end_button_pressed;
       }
 
       if (w_current->ALTKEY) {
@@ -510,6 +511,10 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       i_update_toolbar(w_current);
     }
   }
+
+ end_button_pressed:
+  scm_dynwind_end ();
+
   return(0);
 }
 
@@ -527,7 +532,6 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
   int unsnapped_wx, unsnapped_wy;
 
   exit_if_null(w_current);
-  global_window_current = w_current;
 
 #if DEBUG
   printf("released! %d \n", w_current->event_state);
@@ -541,6 +545,12 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
                  &unsnapped_wx, &unsnapped_wy);
   w_x = snap_grid (w_current, unsnapped_wx);
   w_y = snap_grid (w_current, unsnapped_wy);
+
+  /* Huge switch statement to evaluate state transitions. Jump to
+   * end_button_released label to escape the state evaluation rather
+   * than returning from the function directly. */
+  scm_dynwind_begin (0);
+  g_dynwind_window (w_current);
 
   if (event->button == 1) {
     switch(w_current->event_state) {
@@ -653,7 +663,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
           o_place_invalidate_rubber (w_current, TRUE);
         }
         w_current->rubber_visible = 1;
-        return(0);
+        goto end_button_released;
       }
     }
 
@@ -714,6 +724,9 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
       i_update_toolbar(w_current);
     }
   }
+ end_button_released:
+  scm_dynwind_end ();
+
   return(0);
 }
 
@@ -732,7 +745,6 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
   GdkEvent *test_event;
 
   exit_if_null(w_current);
-  global_window_current = w_current;
 
   w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
   w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
@@ -772,7 +784,6 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
   if (w_current->cowindow) {
     coord_display_update(w_current, (int) event->x, (int) event->y);
   }
-
   if (w_current->third_button == MOUSEPAN_ENABLED || w_current->middle_button == MID_MOUSEPAN_ENABLED) {
     if((w_current->event_state == MOUSEPAN) &&
        w_current->inside_action) {
@@ -790,6 +801,12 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
          return(0);
        }
   }
+
+  /* Huge switch statement to evaluate state transitions. Jump to
+   * end_motion label to escape the state evaluation rather
+   * than returning from the function directly. */
+  scm_dynwind_begin (0);
+  g_dynwind_window (w_current);
 
   switch(w_current->event_state) {
 
@@ -894,6 +911,10 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     break;
 
   }
+
+ end_motion:
+  scm_dynwind_end ();
+
   return(0);
 }
 
@@ -928,7 +949,6 @@ x_event_configure (GtkWidget         *widget,
   gdouble relativ_zoom_factor = 1.0;
 
   g_assert (toplevel != NULL);
-  global_window_current = w_current;
 
   if (toplevel->page_current == NULL) {
     /* don't want to call this if the current page isn't setup yet */
@@ -1052,7 +1072,6 @@ void x_event_hschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
   GtkAdjustment        *hadjustment;
 
   exit_if_null(w_current);
-  global_window_current = w_current;
 
   if (w_current->scrollbars_flag == FALSE) {
     return;
@@ -1087,7 +1106,6 @@ void x_event_vschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
   GtkAdjustment        *vadjustment;
 
   exit_if_null(w_current);
-  global_window_current = w_current;
 
   if (w_current->scrollbars_flag == FALSE) {
     return;
@@ -1125,7 +1143,6 @@ gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
                    GSCHEM_TOPLEVEL *w_current)
 {
   exit_if_null(w_current);
-  global_window_current = w_current;
   /* do nothing or now */
   return(0);
 }
@@ -1166,8 +1183,6 @@ gboolean x_event_key (GtkWidget *widget, GdkEventKey *event,
   int control_key = 0;
   int pressed;
 
-  global_window_current = w_current;
-
 #if DEBUG
   printf("x_event_key_pressed: Pressed key %i.\n", event->keyval);
 #endif
@@ -1198,6 +1213,13 @@ gboolean x_event_key (GtkWidget *widget, GdkEventKey *event,
       w_current->CONTROLKEY = pressed;
       break;
   }
+
+
+  /* Huge switch statement to evaluate state transitions. Jump to
+   * end_key label to escape the state evaluation rather
+   * than returning from the function directly. */
+  scm_dynwind_begin (0);
+  g_dynwind_window (w_current);
 
   switch (w_current->event_state) {
     case ENDLINE:
@@ -1248,6 +1270,8 @@ gboolean x_event_key (GtkWidget *widget, GdkEventKey *event,
     retval = g_keys_execute (w_current, event->state, event->keyval)
                ? TRUE : FALSE;
 
+  scm_dynwind_end ();
+
   return retval;
 }
 
@@ -1268,7 +1292,6 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
   int zoom_direction = ZOOM_IN;
 
   exit_if_null(w_current);
-  global_window_current = w_current;
 
   /* update the state of the modifiers */
   w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;

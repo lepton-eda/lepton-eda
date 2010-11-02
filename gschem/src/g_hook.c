@@ -25,6 +25,7 @@
 #include <math.h>
 
 #include "gschem.h"
+#include <libgeda/libgedaguile.h>
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -103,7 +104,7 @@ SCM g_set_attrib_value_x(SCM attrib_smob, SCM scm_value)
   returned = g_set_attrib_value_internal(attrib_smob, scm_value, 
                                          &toplevel, &o_attrib, &new_string);
 
-  o_text_change(global_window_current, o_attrib, new_string,
+  o_text_change(g_current_window (), o_attrib, new_string,
                 o_attrib->visibility, o_attrib->show_name_value);
 
   g_free(new_string);
@@ -127,7 +128,7 @@ The return value is always TRUE.
 SCM g_add_attrib(SCM object, SCM scm_attrib_name, 
 		 SCM scm_attrib_value, SCM scm_vis, SCM scm_show)
 {
-  GSCHEM_TOPLEVEL *w_current=global_window_current;
+  GSCHEM_TOPLEVEL *w_current = g_current_window ();
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current=NULL;
   gboolean vis;
@@ -271,7 +272,7 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_coloridx,
   struct st_attrib_smob *attribute = 
   (struct st_attrib_smob *)SCM_CDR(attrib_smob);
   OBJECT *object;
-  GSCHEM_TOPLEVEL *w_current = global_window_current;
+  GSCHEM_TOPLEVEL *w_current = g_current_window ();
   TOPLEVEL *toplevel = w_current->toplevel;
 
   int color = -1;
@@ -750,6 +751,6 @@ SCM g_get_objects_in_page(SCM page_smob) {
 
 SCM g_get_current_page(void)
 {
-  return (g_make_page_smob(global_window_current->toplevel,
-			   global_window_current->toplevel->page_current));
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  return (g_make_page_smob(toplevel, toplevel->page_current));
 }

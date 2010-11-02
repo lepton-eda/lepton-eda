@@ -29,10 +29,6 @@
 #include <dmalloc.h>
 #endif
 
-/* this is needed since guile scripts only deal with the current
- * window set in x_event* functions */
-GSCHEM_TOPLEVEL *global_window_current = NULL;
-
 /* window list */
 GList *global_window_list = NULL;
 
