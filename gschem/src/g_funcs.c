@@ -45,14 +45,18 @@
  */
 SCM g_funcs_print(SCM filename)
 {
+  TOPLEVEL *toplevel = global_window_current->toplevel;
+  
   SCM_ASSERT (scm_is_string (filename), filename,
               SCM_ARG1, "gschem-print");
 
   if (output_filename) {
-    if (f_print_file (global_window_current->toplevel, output_filename))
+    if (f_print_file (toplevel, toplevel->page_current,
+                      output_filename))
       return SCM_BOOL_F;
   } else  {
-    if (f_print_file (global_window_current->toplevel, SCM_STRING_CHARS (filename)))
+    if (f_print_file (toplevel, toplevel->page_current,
+                      SCM_STRING_CHARS (filename)))
       return SCM_BOOL_F;
   }
   
@@ -66,14 +70,18 @@ SCM g_funcs_print(SCM filename)
  */
 SCM g_funcs_postscript(SCM filename)
 {
+  TOPLEVEL *toplevel = global_window_current->toplevel;
+
   SCM_ASSERT (scm_is_string (filename), filename,
               SCM_ARG1, "gschem-postscript");
 
   if (output_filename) {
-    if (f_print_file (global_window_current->toplevel, output_filename))
+    if (f_print_file (toplevel, toplevel->page_current,
+                      output_filename))
       return SCM_BOOL_F;
   } else  {
-    if (f_print_file (global_window_current->toplevel, SCM_STRING_CHARS (filename)))
+    if (f_print_file (toplevel, toplevel->page_current,
+                      SCM_STRING_CHARS (filename)))
       return SCM_BOOL_F;
   }
   

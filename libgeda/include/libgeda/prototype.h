@@ -20,9 +20,9 @@ gchar *f_normalize_filename (const gchar *filename, GError **error);
 char *follow_symlinks (const gchar *filename, GError **error);
 
 /* f_print.c */
-int f_print_file (TOPLEVEL *toplevel, const char *filename);
-int f_print_command (TOPLEVEL *toplevel, const char *command);
-int f_print_stream(TOPLEVEL *toplevel, FILE *fp);
+int f_print_file (TOPLEVEL *toplevel, PAGE *page, const char *filename);
+int f_print_command (TOPLEVEL *toplevel, PAGE *page, const char *command);
+int f_print_stream(TOPLEVEL *toplevel, PAGE *page, FILE *fp);
 void f_print_set_type(TOPLEVEL *toplevel, int type);
 
 /* g_basic.c */
