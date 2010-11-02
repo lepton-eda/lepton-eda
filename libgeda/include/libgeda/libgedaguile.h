@@ -48,3 +48,9 @@ PAGE *edascm_to_page (SCM smob);
 
 /* Retrieve an object structure from a Guile value. */
 OBJECT *edascm_to_object (SCM smob);
+
+/* Test if smob is a gEDA page. */
+int edascm_is_page (SCM smob);
+
+/* Test if smob is a gEDA object. */
+int edascm_is_object (SCM smob);

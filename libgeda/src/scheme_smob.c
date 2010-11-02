@@ -319,16 +319,110 @@ edascm_c_set_gc (SCM smob, int gc)
   EDASCM_SMOB_SET_GC (smob, gc);
 }
 
-/*! \brief Initialise gEDA smob types etc
+/*! \brief Test whether a smob is a #OBJECT instance
  * \par Function Description
- * Carry out initial setup of gEDA smob types, modules, procedures etc.
- * Should only be called by edascm_init().
+ * If \a smob is a #OBJECT instance, returns non-zero. Otherwise,
+ * returns zero.
+ *
+ * \param [in] smob Guile value to test.
+ *
+ * \return non-zero iff \a smob is a #OBJECT instance.
+ */
+int
+edascm_is_object (SCM smob)
+{
+  return EDASCM_OBJECTP (smob);
+}
+
+/*! \brief Test whether a smob is a #PAGE instance
+ * \par Function Description
+ * If \a smob is a #PAGE instance, returns non-zero. Otherwise,
+ * returns zero.
+ *
+ * \param [in] smob Guile value to test.
+ *
+ * \return non-zero iff \a smob is a #PAGE instance.
+ */
+int
+edascm_is_page (SCM smob)
+{
+  return EDASCM_PAGEP (smob);
+}
+
+/*! \brief Test whether a smob is a #PAGE instance.
+ * \par Function Description
+ * If \a page_smob is a #PAGE instance, returns \b SCM_BOOL_T;
+ * otherwise returns \b SCM_BOOL_F.
+ *
+ * \note Scheme API: Implements the %page? procedure in the (geda
+ * core smob) module.
+ *
+ * \param [in] page_smob Guile value to test.
+ *
+ * \return SCM_BOOL_T iff \a page_smob is a #PAGE instance.
+ */
+SCM_DEFINE (page_p, "%page?", 1, 0, 0,
+            (SCM page_smob),
+            "Test whether the value is a gEDA PAGE instance.")
+{
+  return (EDASCM_PAGEP (page_smob) ? SCM_BOOL_T : SCM_BOOL_F);
+}
+
+/*! \brief Test whether a smob is an #OBJECT instance.
+ * \par Function Description
+ * If \a object_smob is an #OBJECT instance, returns \b SCM_BOOL_T;
+ * otherwise returns \b SCM_BOOL_F.
+ *
+ * \note Scheme API: Implements the %object? procedure in the (geda
+ * core smob) module.
+ *
+ * \param [in] object_smob Guile value to test.
+ *
+ * \return SCM_BOOL_T iff \a object_smob is an #OBJECT instance.
+ */
+SCM_DEFINE (object_p, "%object?", 1, 0, 0,
+            (SCM object_smob),
+            "Test whether the value is a gEDA OBJECT instance.")
+{
+  return (EDASCM_OBJECTP (object_smob) ? SCM_BOOL_T : SCM_BOOL_F);
+}
+
+/*!
+ * \brief Create the (geda core smob) Scheme module.
+ * \par Function Description
+ * Defines procedures in the (geda core smob) module. The module can
+ * be accessed using (use-modules (geda core smob)).
+ */
+static void
+init_module_geda_core_smob ()
+{
+  /* Register the functions. */
+  #include "scheme_smob.x"
+
+  /* Add them to the module's public definitions. */ 
+  scm_c_export (s_page_p, s_object_p, NULL);
+}
+
+/*!
+ * \brief Initialise the basic gEDA smob types.
+ * \par Function Description
+ * Registers the gEDA core smob types and some procedures acting on
+ * them.  gEDA only uses a single Guile smob, and uses the flags field
+ * to multiplex the several different underlying C structures that may
+ * be represented by that smob. Should only be called by
+ * edascm_init().
  */
 void
 edascm_init_smob ()
 {
+  /* Register gEDA smob type */
   geda_smob_tag = scm_make_smob_type ("geda", 0);
   scm_set_smob_free (geda_smob_tag, smob_free);
   scm_set_smob_print (geda_smob_tag, smob_print);
   scm_set_smob_equalp (geda_smob_tag, smob_equalp);
+
+  /* Define the (geda core smob) module */
+  scm_c_define_module ("geda core smob",
+                       init_module_geda_core_smob,
+                       NULL);
 }
