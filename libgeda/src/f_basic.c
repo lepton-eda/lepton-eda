@@ -426,7 +426,7 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename)
   g_free (dirname);
   g_free (only_filename);
   
-  if (o_save_curr_page (toplevel, real_filename)) {
+  if (o_save (toplevel, s_page_objects (page), real_filename)) {
 
     toplevel->page_current->saved_since_first_loaded = 1;
 

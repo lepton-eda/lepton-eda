@@ -236,19 +236,6 @@ int o_save (TOPLEVEL *toplevel, const GList *object_list,
   return 1;
 }
 
-/*! \brief Save a file
- *  \par Function Description
- *  This function saves the current page in a libgeda format to a file
- *  \param [in] toplevel    The current TOPLEVEL.
- *  \param [in] filename    The filename to save the data to.
- *  \return 1 on success, 0 on failure.
- */
-int o_save_curr_page (TOPLEVEL *toplevel, const char *filename)
-{
-  return o_save (toplevel, s_page_objects (toplevel->page_current),
-                 filename);
-}
-
 /*! \brief Read a memory buffer
  *  \par Function Description
  *  This function reads data in libgeda format from a memory buffer.

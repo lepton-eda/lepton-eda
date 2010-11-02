@@ -117,7 +117,7 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
     /* f_save manages the creaton of backup copies. 
        This way, f_save is called only when saving a file, and not when
        saving an undo backup copy */
-    o_save_curr_page (toplevel, filename);
+    o_save (toplevel, s_page_objects (toplevel->page_current), filename);
 
   } else if (w_current->undo_type == UNDO_MEMORY && flag == UNDO_ALL) {
     object_list = o_glist_copy_all (toplevel,
