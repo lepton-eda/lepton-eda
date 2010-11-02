@@ -2,6 +2,7 @@
 
 /* gschem_toplevel.c */
 GSCHEM_TOPLEVEL *gschem_toplevel_new();
+
 /* a_pan.c */
 void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
 		   double relativ_zoom_factor, int flags);
@@ -277,6 +278,10 @@ SCM g_rc_display_color_map (SCM scm_map);
 SCM g_rc_display_outline_color_map (SCM scm_map);
 /* g_register.c */
 void g_register_funcs(void);
+/* g_window.c */
+GSCHEM_TOPLEVEL *g_current_window ();
+void g_dynwind_window (GSCHEM_TOPLEVEL *w_current);
+void g_init_window ();
 /* globals.c */
 /* gschem.c */
 typedef void (*gschem_atexit_func)(gpointer data);

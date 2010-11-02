@@ -1,5 +1,8 @@
 bin_PROGRAMS = gschem
 
+BUILT_SOURCES = \
+	g_window.x
+
 gschem_SOURCES = \
 	a_pan.c \
 	a_zoom.c \
@@ -8,6 +11,7 @@ gschem_SOURCES = \
 	g_keys.c \
 	g_rc.c \
 	g_register.c \
+	g_window.c \
 	globals.c \
 	gschem.c \
 	gschem_accel_label.c \
@@ -76,6 +80,15 @@ gschem_CFLAGS = $(GCC_CFLAGS) $(LIBSTROKE_CFLAGS) \
 gschem_LDFLAGS = $(LIBSTROKE_LDFLAGS) $(GLIB_LIBS) $(GTK_LIBS) \
 	$(GTHREAD_LIBS) $(GUILE_LIBS) $(MINGW_GUI_LDFLAGS)
 gschem_LDADD = $(top_builddir)/libgeda/src/libgeda.la @LIBINTL@
+
+
+# This is used to generate boilerplate for defining Scheme functions
+# in C.
+SUFFIXES = .x
+snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(gschem_CPPFLAGS) $(AM_CFLAGS) $(gschem_CFLAGS)
+.c.x:
+	$(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
 
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@

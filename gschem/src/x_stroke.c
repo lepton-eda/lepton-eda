@@ -159,7 +159,9 @@ x_stroke_translate_and_execute (GSCHEM_TOPLEVEL *w_current)
       g_strdup_printf("(eval-stroke \"%s\")", sequence);
     SCM ret;
 
+    SCHEME_WINDOW_PUSH(w_current);
     ret = g_scm_c_eval_string_protected (guile_string);
+    SCHEME_WINDOW_POP(w_current);
 
     g_free (guile_string);
 

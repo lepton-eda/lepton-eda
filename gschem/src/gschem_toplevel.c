@@ -203,5 +203,8 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
 
   w_current->print_command = NULL;
 
+  w_current->smob = SCM_UNDEFINED;
+
   return w_current;
 }
+

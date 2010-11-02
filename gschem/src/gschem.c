@@ -203,6 +203,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
   /* register guile (scheme) functions */
   g_register_funcs();
+  g_init_window ();
 
   /* initialise color map (need to do this before reading rc files */
   x_color_init ();

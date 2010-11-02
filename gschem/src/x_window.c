@@ -229,7 +229,10 @@ static void x_window_invoke_macro(GtkEntry *entry, void *userdata)
   interpreter = scm_list_2(scm_from_locale_symbol("invoke-macro"),
 			   scm_from_locale_string(gtk_entry_get_text(entry)));
 
+  scm_dynwind_begin (0);
+  g_dynwind_window (w_current);
   g_scm_eval_protected(interpreter, SCM_UNDEFINED);
+  scm_dynwind_end ();
 
   gtk_widget_hide(w_current->macro_box);
   gtk_widget_grab_focus(w_current->drawing_area);
@@ -632,6 +635,12 @@ void x_window_close(GSCHEM_TOPLEVEL *w_current)
   }
 
   x_window_free_gc(w_current);
+
+  /* Clear Guile smob weak ref */
+  if (w_current->smob != SCM_UNDEFINED) {
+    SCM_SET_SMOB_DATA (w_current->smob, NULL);
+    w_current->smob = SCM_UNDEFINED;
+  }
 
   /* finally close the main window */
   gtk_widget_destroy(w_current->main_window);

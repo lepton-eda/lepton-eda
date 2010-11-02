@@ -104,9 +104,13 @@ int g_keys_execute(GSCHEM_TOPLEVEL *w_current, int state, int keyval)
 #if DEBUG 
   printf("_%s_\n", guile_string);
 #endif
+
+  scm_dynwind_begin (0);
+  scm_dynwind_unwind_handler (g_free, guile_string, SCM_F_WIND_EXPLICITLY);
+  scm_dynwind_unwind_handler (g_free, modifier, SCM_F_WIND_EXPLICITLY);
+  g_dynwind_window (w_current);
   scm_retval = g_scm_c_eval_string_protected (guile_string);
-  g_free(guile_string);
-  g_free(modifier);
+  scm_dynwind_end ();
 
   return (SCM_FALSEP (scm_retval)) ? 0 : 1;
 }
