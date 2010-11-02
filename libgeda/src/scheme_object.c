@@ -134,6 +134,36 @@ edascm_is_object_type (SCM smob, int type)
   return (obj->type == type);
 }
 
+/*! \brief Copy an object.
+ * \par Function Description
+ * Returns a copy of the #OBJECT contained in smob \a obj_s as a new
+ * smob.
+ *
+ * \note Scheme API: Implements the %copy-object procedure in the
+ * (geda core object) module.
+ *
+ * \param [in] obj_s an #OBJECT smob.
+ * \return a new #OBJECT smob containing a copy of the #OBJECT in \a obj_s.
+ */
+SCM_DEFINE (copy_object, "%copy-object", 1, 0, 0,
+            (SCM obj_s), "Copy an object.")
+{
+  SCM result;
+  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
+              SCM_ARG1, s_copy_object);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (obj_s);
+
+  result = edascm_from_object (o_object_copy (toplevel, obj));
+
+  /* At the moment, the only pointer to the object is owned by the
+   * smob. */
+  edascm_c_set_gc (result, TRUE);
+
+  return result;
+}
+
 /*! \brief Get the type of an object.
  * \par Function Description
  * Returns a symbol describing the type of the #OBJECT smob \a obj_s.
@@ -175,6 +205,55 @@ SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
   return result;
 }
 
+/*! \brief Get the color of an object.
+ * \par Function Description
+ * Returns the colormap index of the color used to draw the #OBJECT
+ * smob \a obj_s. Note that the color may not be meaningful for some
+ * object types.
+ *
+ * \note Scheme API: Implements the %object-color procedure in the
+ * (geda core object) module.
+ *
+ * \param [in] obj_s #OBJECT smob to inspect.
+ * \return The colormap index used by \a obj_s.
+ */
+SCM_DEFINE (object_color, "%object-color", 1, 0, 0,
+            (SCM obj_s), "Get the color of an object.")
+{
+  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
+              SCM_ARG1, s_object_color);
+
+  OBJECT *obj = edascm_to_object (obj_s);
+  return scm_from_int (obj->color);
+}
+
+/*! \brief Set the color of an object.
+ * \par Function Description
+ * Set the colormap index of the color used to draw the #OBJECT smob
+ * \a obj_s to \a color_s. Note that the color may not be meaningful
+ * for some object types.
+ *
+ * \note Scheme API: Implements the %set-object-color! procedure in
+ * the (geda core object) module.
+ *
+ * \param obj_s   #OBJECT smob to modify.
+ * \param color_s new colormap index to use for \a obj_s.
+ * \return the modified \a obj_s.
+ */
+SCM_DEFINE (set_object_color, "%set-object-color!", 2, 0, 0,
+            (SCM obj_s, SCM color_s), "Set the color of an object.")
+{
+  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
+              SCM_ARG1, s_set_object_color);
+  SCM_ASSERT (scm_is_integer (color_s), color_s,
+              SCM_ARG2, s_set_object_color);
+
+  o_set_color (edascm_c_current_toplevel (),
+               edascm_to_object (obj_s), scm_to_int (color_s));
+
+  return obj_s;
+}
+
 /*!
  * \brief Create the (geda core object) Scheme module.
  * \par Function Description
@@ -188,7 +267,9 @@ init_module_geda_core_object ()
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_object_type, NULL);
+  scm_c_export (s_object_type, s_copy_object,
+                s_object_color, s_set_object_color,
+                NULL);
 }
 
 /*!

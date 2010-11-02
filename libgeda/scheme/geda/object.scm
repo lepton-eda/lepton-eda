@@ -30,3 +30,8 @@
   (if (object? x)
       (eq? (object-type x) type)
       #f))
+
+(define-public copy-object %copy-object)
+
+(define-public object-color %object-color)
+(define-public set-object-color! %set-object-color!)
