@@ -11,6 +11,7 @@ libgedainclude_HEADERS = \
 	libgeda/o_types.h \
 	libgeda/papersizes.h \
 	libgeda/prototype.h \
+	libgeda/libgedaguile.h \
 	libgeda/struct.h
 
 noinst_HEADERS = \
@@ -18,7 +19,8 @@ noinst_HEADERS = \
 	i_vars_priv.h \
 	libgeda_priv.h \
 	prototype_priv.h \
-	struct_priv.h
+	struct_priv.h \
+	libgedaguile_priv.h
 
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~

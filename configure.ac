@@ -72,6 +72,8 @@ PKG_PROG_PKG_CONFIG
 
 AX_CHECK_GUILE([1.8.0])
 
+AX_PROG_GUILE_SNARF
+
 PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.12.0], ,
   AC_MSG_ERROR([GLib 2.12.0 or later is required.]))
 

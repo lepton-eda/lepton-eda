@@ -32,6 +32,7 @@
 #endif
 
 #include "libgeda_priv.h"
+#include "libgeda/libgedaguile.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -65,6 +66,8 @@ void libgeda_init(void)
   g_init_object_smob();
   g_init_attrib_smob();
   g_init_page_smob();
+
+  edascm_init ();
 }
 
 

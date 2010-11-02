@@ -2,7 +2,13 @@
 # Build a libtool library for installation in libdir.
 lib_LTLIBRARIES = libgeda.la
 
+BUILT_SOURCES = 
+
+scheme_api_sources = \
+	scheme_init.c
+
 libgeda_la_SOURCES = \
+	$(scheme_api_sources) \
 	a_basic.c \
 	f_basic.c \
 	f_print.c \
@@ -68,6 +74,14 @@ libgeda_la_LDFLAGS = -version-info $(LIBGEDA_SHLIB_VERSION) \
 	$(WINDOWS_LIBTOOL_FLAGS) $(MINGW_LDFLAGS) $(GUILE_LIBS) \
 	$(GLIB_LIBS) $(GDK_PIXBUF_LIBS)
 LIBTOOL=@LIBTOOL@ --silent
+
+# This is used to generate boilerplate for defining Scheme functions
+# in C.
+SUFFIXES = .x
+snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(libgeda_la_CPPFLAGS) $(AM_CFLAGS) $(libgeda_la_CFLAGS)
+.c.x:
+	$(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
 
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
