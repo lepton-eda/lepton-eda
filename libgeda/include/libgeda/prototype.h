@@ -29,7 +29,7 @@ void f_print_set_type(TOPLEVEL *toplevel, int type);
 SCM g_scm_eval_protected (SCM exp, SCM module_or_state);
 SCM g_scm_eval_string_protected (SCM str);
 SCM g_scm_c_eval_string_protected (const gchar *str);
-int g_read_file(const gchar *filename);
+int g_read_file(TOPLEVEL *toplevel, const gchar *filename);
 
 /* g_rc.c */
 SCM g_rc_mode_general(SCM scmmode, const char *rc_name, int *mode_var, 

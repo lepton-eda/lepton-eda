@@ -64,7 +64,7 @@ void setup_script_selector (GSCHEM_TOPLEVEL *w_current)
 
     if (!(g_file_test(filename, G_FILE_TEST_IS_DIR))) {
       s_log_message(_("Executing guile script [%s]\n"), filename);
-      g_read_file(filename);
+      g_read_file(w_current->toplevel, filename);
     }
     g_free (filename);
   }

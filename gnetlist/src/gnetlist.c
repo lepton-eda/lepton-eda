@@ -174,7 +174,7 @@ void main_prog(void *closure, int argc, char *argv[])
     /* Load the first set of scm files before we load any schematic files */
     list_pnt = pre_backend_list;
     while (list_pnt) {
-      if (g_read_file(list_pnt->data) != -1) {
+      if (g_read_file(pr_current, list_pnt->data) != -1) {
         s_log_message("Read scm file [%s]\n",
                       (char *) list_pnt->data);
       } else {
@@ -238,7 +238,7 @@ void main_prog(void *closure, int argc, char *argv[])
 #endif
 
     filename = g_build_filename (pr_current->scheme_directory, "gnetlist.scm", NULL);
-    if (g_read_file (filename) != -1) {
+    if (g_read_file (pr_current, filename) != -1) {
       s_log_message ("Read init scm file [%s]\n", filename);
     } else {
       s_log_message ("Failed to read init scm file [%s]\n", filename);
@@ -251,7 +251,7 @@ void main_prog(void *closure, int argc, char *argv[])
         str = g_strdup_printf("gnet-%s.scm", guile_proc);
         filename = g_build_filename (pr_current->scheme_directory, str, NULL);
         g_free (str);
-        if (g_read_file (filename) != -1) {
+        if (g_read_file (pr_current, filename) != -1) {
           s_log_message ("Read %s scm file [%s]\n", guile_proc, filename);
         } else {
           s_log_message ("Failed to read %s scm file [%s]\n", guile_proc, filename);
@@ -262,7 +262,7 @@ void main_prog(void *closure, int argc, char *argv[])
         /* Load second set of scm files */
         list_pnt = post_backend_list;
         while (list_pnt) {
-          if (g_read_file(list_pnt->data) != -1) {
+          if (g_read_file(pr_current, list_pnt->data) != -1) {
             s_log_message("Read scm file [%s]\n",
                           (char *) list_pnt->data);
           } else {
@@ -289,7 +289,7 @@ void main_prog(void *closure, int argc, char *argv[])
     g_free(cwd);
 
     filename = g_build_filename (pr_current->scheme_directory, "gnetlist-post.scm", NULL);
-    if (g_read_file (filename) != -1) {
+    if (g_read_file (pr_current, filename) != -1) {
       s_log_message ("Read post traversal scm file [%s]\n", filename);
     } else {
       s_log_message ("Failed to read post traversal scm file [%s]\n", filename);
