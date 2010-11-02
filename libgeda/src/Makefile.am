@@ -4,7 +4,8 @@ lib_LTLIBRARIES = libgeda.la
 
 BUILT_SOURCES = \
 	scheme_smob.x \
-	scheme_toplevel.x
+	scheme_toplevel.x \
+	scheme_object.x
 
 scheme_api_sources = \
 	scheme_init.c \

@@ -42,4 +42,5 @@ edascm_init ()
 
   edascm_init_smob ();
   edascm_init_toplevel ();
+  edascm_init_object ();
 }

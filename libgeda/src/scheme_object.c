@@ -28,6 +28,17 @@
 #include "libgedaguile_priv.h"
 
 SCM_SYMBOL (wrong_type_arg_sym , "wrong-type-arg");
+SCM_SYMBOL (line_sym , "line");
+SCM_SYMBOL (net_sym , "net");
+SCM_SYMBOL (bus_sym , "bus");
+SCM_SYMBOL (box_sym , "box");
+SCM_SYMBOL (picture_sym , "picture");
+SCM_SYMBOL (circle_sym , "circle");
+SCM_SYMBOL (complex_sym , "complex");
+SCM_SYMBOL (text_sym , "text");
+SCM_SYMBOL (path_sym , "path");
+SCM_SYMBOL (pin_sym , "pin");
+SCM_SYMBOL (arc_sym , "arc");
 
 /*! \brief Convert a Scheme object list to a GList.
  * \par Function Description
@@ -102,4 +113,95 @@ edascm_from_object_glist (const GList *objs)
 
   scm_remember_upto_here_1 (lst);
   return rlst;
+}
+
+/*! \brief Test if an object smob is of a particular type.
+ * \par Function Description
+ * Checks if \a smob contains an #OBJECT of the given \a type. This is
+ * intended to be used by C-based Scheme procedures for working with
+ * particular object types.
+ *
+ * \param [in] smob Scheme value to check type for.
+ * \param [in] type Type to check against (e.g. OBJ_LINE).
+ * \return non-zero if \a smob is an #OBJECT smob of \a type.
+ */
+int
+edascm_is_object_type (SCM smob, int type)
+{
+  if (!EDASCM_OBJECTP(smob)) return 0;
+
+  OBJECT *obj = edascm_to_object (smob);
+  return (obj->type == type);
+}
+
+/*! \brief Get the type of an object.
+ * \par Function Description
+ * Returns a symbol describing the type of the #OBJECT smob \a obj_s.
+ *
+ * \note Scheme API: Implements the %object-type procedure in the
+ * (geda core object) module.
+ *
+ * \param [in] obj_s an #OBJECT smob.
+ * \return a Scheme symbol representing the object type.
+ */
+SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
+            (SCM obj_s), "Get an object smob's type")
+{
+  SCM result;
+
+  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
+              SCM_ARG1, s_object_type);
+
+  OBJECT *obj = edascm_to_object (obj_s);
+  switch (obj->type) {
+  case OBJ_LINE:    result = line_sym;       break;
+  case OBJ_NET:     result = net_sym;        break;
+  case OBJ_BUS:     result = bus_sym;        break;
+  case OBJ_BOX:     result = box_sym;        break;
+  case OBJ_PICTURE: result = picture_sym;    break;
+  case OBJ_CIRCLE:  result = circle_sym;     break;
+  case OBJ_PLACEHOLDER:
+  case OBJ_COMPLEX: result = complex_sym;    break;
+  case OBJ_TEXT:    result = text_sym;       break;
+  case OBJ_PATH:    result = path_sym;       break;
+  case OBJ_PIN:     result = pin_sym;        break;
+  case OBJ_ARC:     result = arc_sym;        break;
+  default:
+    g_critical ("o_mirror_world: object %p has bad type '%c'\n",
+                obj, obj->type);
+    result = SCM_BOOL_F;
+  }
+
+  return result;
+}
+
+/*!
+ * \brief Create the (geda core object) Scheme module.
+ * \par Function Description
+ * Defines procedures in the (geda core object) module. The module can
+ * be accessed using (use-modules (geda core object)).
+ */
+static void
+init_module_geda_core_object ()
+{
+  /* Register the functions and symbols */
+  #include "scheme_object.x"
+
+  /* Add them to the module's public definitions. */
+  scm_c_export (s_object_type, NULL);
+}
+
+/*!
+ * \brief Initialise the basic gEDA object manipulation procedures.
+ * \par Function Description
+ * Registers some Scheme procedures for working with #OBJECT
+ * smobs. Should only be called by scheme_api_init().
+ */
+void
+edascm_init_object ()
+{
+  /* Define the (geda core object) module */
+  scm_c_define_module ("geda core object",
+                       init_module_geda_core_object,
+                       NULL);
 }
