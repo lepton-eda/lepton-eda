@@ -375,3 +375,19 @@
 ;; Returns the end angle of the gEDA arc object a.
 (define-public (arc-end-angle a)
   (list-ref (arc-info a) 3))
+
+;;;; Paths
+
+;; path? x
+;;
+;; Returns #t if x is a gEDA path object.
+(define-public (path? x)
+  (object-type? x 'path))
+
+;;;; Pictures
+
+;; picture? x
+;;
+;; Returns #t if x is a gEDA picture object.
+(define-public (picture? x)
+  (object-type? x 'picture))
