@@ -49,11 +49,11 @@
 
 ;; set-line! l start end [color]
 ;;
-;; Sets the parameters of a line, net or bus object l. start is the
-;; new coordinates (x . y) of the start of the line, and end is the
-;; new coordinates of the end of the line. The optional color argument
-;; is the new colormap index of the line's color. Returns l after
-;; modifications.
+;; Sets the parameters of a line, net, bus or pin object l. start is
+;; the new coordinates (x . y) of the start of the line (for pins,
+;; this is the connectable point), and end is the new coordinates of the
+;; end of the line. The optional color argument is the new colormap
+;; index of the line's color. Returns l after modifications.
 (define*-public (set-line! l start end #:optional color)
   (%set-line! l
               (car start) (cdr start)
@@ -75,10 +75,12 @@
 
 ;; line-info l
 ;;
-;; Returns the parameters of the line, net or bus l as a list of the
-;; form:
+;; Returns the parameters of the line, net, bus or pin l as a list of
+;; the form:
 ;;
 ;;  ((start-x . start-y) (end-x . end-y) color)
+;;
+;; For pins, start is the connectable point on the pin.
 (define-public (line-info l)
   (let ((params (%line-info l)))
     (list (cons (list-ref params 0)
@@ -89,8 +91,9 @@
 
 ;; line-start l
 ;;
-;; Returns the coordinates (x . y) of the start of the gEDA line, net
-;; or bus object l.
+;; Returns the coordinates (x . y) of the start of the gEDA line, net,
+;; bus or pin object l.  For pins, this is is the connectable point on
+;; the pin.
 (define-public (line-start l)
   (list-ref (line-info l) 0))
 
@@ -137,6 +140,48 @@
 ;; default color is used.
 (define*-public (make-bus start end #:optional color)
   (let ((l (%make-bus)))
+    (set-line! l start end color)))
+
+;;;; Pins
+
+;; pin? x
+;;
+;; Returns #t if x is a gEDA pin object
+(define-public (pin? l)
+  (object-type? l 'pin))
+
+;; net-pin? x
+;;
+;; Returns #t if x is a gEDA net pin object
+(define-public (net-pin? l)
+  (and (pin? l) (equal? (%pin-type l) 'net)))
+
+;; bus-pin? x
+;;
+;; Returns #t if x is a gEDA bus pin object
+(define-public (bus-pin? l)
+  (and (pin? l) (equal? (%pin-type l) 'bus)))
+
+;; make-net-pin start end [color]
+;;
+;; Creates a new net pin.  start is the coordinates (x . y) of the
+;; start (the connectable end) of the pin, and end is the coordinates
+;; (x . y) of the end of the pin.  The optional color argument is the
+;; color index of the color with which to draw the bus.  If color is
+;; not specified, the default color is used.
+(define*-public (make-net-pin start end #:optional color)
+  (let ((l (%make-pin 'net)))
+    (set-line! l start end color)))
+
+;; make-bus-pin start end [color]
+;;
+;; Creates a new bus pin.  start is the coordinates (x . y) of the
+;; start (the connectable end) of the pin, and end is the coordinates
+;; (x . y) of the end of the pin.  The optional color argument is the
+;; color index of the color with which to draw the bus.  If color is
+;; not specified, the default color is used.
+(define*-public (make-bus-pin start end #:optional color)
+  (let ((l (%make-pin 'bus)))
     (set-line! l start end color)))
 
 ;;;; Boxes

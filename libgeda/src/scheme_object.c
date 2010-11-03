@@ -287,7 +287,8 @@ SCM_DEFINE (make_line, "%make-line", 0, 0, 0,
  * \note Scheme API: Implements the %set-line! procedure in the (geda
  * core object) module.
  *
- * This function also works on net and bus objects.
+ * This function also works on net, bus and pin objects.  For pins,
+ * the start is the connectable point on the pin.
  *
  * \param line_s the line object to modify.
  * \param x1_s   the new x-coordinate of the start of the line.
@@ -305,7 +306,8 @@ SCM_DEFINE (set_line, "%set-line!", 6, 0, 0,
 {
   SCM_ASSERT ((edascm_is_object_type (line_s, OBJ_LINE)
                || edascm_is_object_type (line_s, OBJ_NET)
-               || edascm_is_object_type (line_s, OBJ_BUS)),
+               || edascm_is_object_type (line_s, OBJ_BUS)
+               || edascm_is_object_type (line_s, OBJ_PIN)),
               line_s, SCM_ARG1, s_set_line);
 
   SCM_ASSERT (scm_is_integer (x1_s),    x1_s,    SCM_ARG2, s_set_line);
@@ -333,6 +335,11 @@ SCM_DEFINE (set_line, "%set-line!", 6, 0, 0,
     o_bus_modify (toplevel, obj, x1, y1, 0);
     o_bus_modify (toplevel, obj, x2, y2, 1);
     break;
+  case OBJ_PIN:
+    /* Swap ends according to pin's whichend flag. */
+    o_pin_modify (toplevel, obj, x1, y1, obj->whichend ? 1 : 0);
+    o_pin_modify (toplevel, obj, x2, y2, obj->whichend ? 0 : 1);
+    break;
   default:
     return line_s;
   }
@@ -343,7 +350,8 @@ SCM_DEFINE (set_line, "%set-line!", 6, 0, 0,
 
 /*! \brief Get line parameters.
  * \par Function Description
- * Retrieves the parameters of a line object. The return value is a list of parameters:
+ * Retrieves the parameters of a line object. The return value is a
+ * list of parameters:
  *
  * -# X-coordinate of start of line
  * -# Y-coordinate of start of line
@@ -351,7 +359,8 @@ SCM_DEFINE (set_line, "%set-line!", 6, 0, 0,
  * -# Y-coordinate of end of line
  * -# Colormap index of color to be used for drawing the line
  *
- * This function also works on net and bus objects.
+ * This function also works on net, bus and pin objects.  For pins,
+ * the start is the connectable point on the pin.
  *
  * \param line_s the line object to inspect.
  * \return a list of line parameters.
@@ -361,17 +370,25 @@ SCM_DEFINE (line_info, "%line-info", 1, 0, 0,
 {
   SCM_ASSERT ((edascm_is_object_type (line_s, OBJ_LINE)
                || edascm_is_object_type (line_s, OBJ_NET)
-               || edascm_is_object_type (line_s, OBJ_BUS)),
+               || edascm_is_object_type (line_s, OBJ_BUS)
+               || edascm_is_object_type (line_s, OBJ_PIN)),
               line_s, SCM_ARG1, s_line_info);
 
   OBJECT *obj = edascm_to_object (line_s);
+  SCM x1 = scm_from_int (obj->line->x[0]);
+  SCM y1 = scm_from_int (obj->line->y[0]);
+  SCM x2 = scm_from_int (obj->line->x[1]);
+  SCM y2 = scm_from_int (obj->line->y[1]);
+  SCM color = scm_from_int (obj->color);
 
-  return scm_list_n (scm_from_int (obj->line->x[0]),
-                     scm_from_int (obj->line->y[0]),
-                     scm_from_int (obj->line->x[1]),
-                     scm_from_int (obj->line->y[1]),
-                     scm_from_int (obj->color),
-                     SCM_UNDEFINED);
+  /* Swap ends according to pin's whichend flag. */
+  if ((obj->type == OBJ_PIN) && obj->whichend) {
+    SCM s;
+    s = x1; x1 = x2; x2 = s;
+    s = y1; y1 = y2; y2 = s;
+  }
+
+  return scm_list_n (x1, y1, x2, y2, color, SCM_UNDEFINED);
 }
 
 /*! \brief Create a new net.
@@ -430,6 +447,80 @@ SCM_DEFINE (make_bus, "%make-bus", 0, 0, 0,
   /* At the moment, the only pointer to the object is owned by the
    * smob. */
   edascm_c_set_gc (result, 1);
+
+  return result;
+}
+
+/*! \brief Create a new pin.
+ * \par Function description
+ * Creates a new pin object, with all parameters set to default
+ * values.  type_s is a Scheme symbol indicating whether the pin
+ * should be a "net" pin or a "bus" pin.
+ *
+ * \note Scheme API: Implements the %make-pin procedure in the (geda
+ * core object) module.
+ *
+ * \return a newly-created pin object.
+ */
+SCM_DEFINE (make_pin, "%make-pin", 1, 0, 0,
+            (SCM type_s), "Create a new pin object.")
+{
+  SCM_ASSERT (scm_is_symbol (type_s),
+              type_s, SCM_ARG1, s_make_pin);
+
+  int type;
+  if (type_s == net_sym) {
+    type = PIN_TYPE_NET;
+  } else if (type_s == bus_sym) {
+    type = PIN_TYPE_BUS;
+  } else {
+    scm_misc_error (s_make_pin,
+                    _("Invalid pin type ~A, must be 'net or 'bus"),
+                    scm_list_1 (type_s));
+  }
+
+  OBJECT *obj = o_pin_new (edascm_c_current_toplevel (),
+                           OBJ_PIN, PIN_COLOR, 0, 0, 0, 0, type, 0);
+  SCM result = edascm_from_object (obj);
+
+  /* At the moment, the only pointer to the object is owned by the
+   * smob. */
+  edascm_c_set_gc (result, 1);
+
+  return result;
+}
+
+/*! \brief Get the type of a pin object.
+ * \par Function Description
+ * Returns a symbol describing the pin type of the pin object \a
+ * pin_s.
+ *
+ * \note Scheme API: Implements the %make-pin procedure in the (geda
+ * core object) module.
+ *
+ * \return the symbol 'pin or 'bus.
+ */
+SCM_DEFINE (pin_type, "%pin-type", 1, 0, 0,
+            (SCM pin_s), "Get the type of a pin object.")
+{
+  SCM_ASSERT (edascm_is_object_type (pin_s, OBJ_PIN), pin_s,
+              SCM_ARG1, s_pin_type);
+
+  OBJECT *obj = edascm_to_object (pin_s);
+  SCM result;
+
+  switch (obj->pin_type) {
+  case PIN_TYPE_NET:
+    result = net_sym;
+    break;
+  case PIN_TYPE_BUS:
+    result = bus_sym;
+    break;
+  default:
+    scm_misc_error (s_make_pin,
+                    _("Object ~A has invalid pin type."),
+                    scm_list_1 (pin_s));
+  }
 
   return result;
 }
@@ -638,6 +729,7 @@ init_module_geda_core_object ()
   scm_c_export (s_object_type, s_copy_object,
                 s_object_color, s_set_object_color,
                 s_make_line, s_make_net, s_make_bus,
+                s_make_pin, s_pin_type,
                 s_set_line, s_line_info,
                 s_make_box, s_set_box, s_box_info,
                 s_make_circle, s_set_circle, s_circle_info,
