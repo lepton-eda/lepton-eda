@@ -713,6 +713,113 @@ SCM_DEFINE (circle_info, "%circle-info", 1, 0, 0,
                      SCM_UNDEFINED);
 }
 
+/*! \brief Create a new arc.
+ * \par Function Description
+ * Creates a new arc object, with all its parameters set to default
+ * values.
+ *
+ * \note Scheme API: Implements the %make-arc procedure in the
+ * (geda core object) module.
+ *
+ * \return a newly-created arc object.
+ */
+SCM_DEFINE (make_arc, "%make-arc", 0, 0, 0,
+            (), "Create a new arc object.")
+{
+  OBJECT *obj = o_arc_new (edascm_c_current_toplevel (),
+                              OBJ_ARC, DEFAULT_COLOR,
+                           0, 0, 1, 0, 0);
+
+  SCM result = edascm_from_object (obj);
+
+  /* At the moment, the only pointer to the object is owned by the
+   * smob. */
+  edascm_c_set_gc (result, 1);
+
+  return result;
+}
+
+/*! \brief Set arc parameters.
+ * \par Function Description
+ * Modifies a arc object by setting its parameters to new values.
+ *
+ * \note Scheme API: Implements the %set-arc! procedure in the
+ * (geda core object) module.
+ *
+ * \param arc_s         the arc object to modify.
+ * \param x_s           the new x-coordinate of the center of the arc.
+ * \param y_s           the new y-coordinate of the center of the arc.
+ * \param r_s           the new radius of the arc.
+ * \param start_angle_s the start angle of the arc.
+ * \param end_angle_s   the start angle of the arc.
+ * \param color_s       the colormap index of the color to be used for
+ *                      drawing the arc.
+ *
+ * \return the modified arc object.
+ */
+SCM_DEFINE (set_arc, "%set-arc!", 7, 0, 0,
+            (SCM arc_s, SCM x_s, SCM y_s, SCM r_s, SCM start_angle_s,
+             SCM end_angle_s, SCM color_s),
+            "Set arc parameters")
+{
+  SCM_ASSERT (edascm_is_object_type (arc_s, OBJ_ARC), arc_s,
+              SCM_ARG1, s_set_arc);
+  SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_arc);
+  SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_arc);
+  SCM_ASSERT (scm_is_integer (r_s),     r_s,     SCM_ARG4, s_set_arc);
+  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG5, s_set_arc);
+  SCM_ASSERT (scm_is_integer (start_angle_s),
+                                  start_angle_s, SCM_ARG3, s_set_arc);
+  SCM_ASSERT (scm_is_integer (end_angle_s),
+                                  end_angle_s, SCM_ARG4, s_set_arc);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (arc_s);
+  o_arc_modify (toplevel, obj, scm_to_int(x_s), scm_to_int(y_s),
+                   ARC_CENTER);
+  o_arc_modify (toplevel, obj, scm_to_int(r_s), 0, ARC_RADIUS);
+  o_arc_modify (toplevel, obj, scm_to_int(start_angle_s), 0, ARC_START_ANGLE);
+  o_arc_modify (toplevel, obj, scm_to_int(end_angle_s), 0, ARC_END_ANGLE);
+  o_set_color (toplevel, obj, scm_to_int (color_s));
+
+  return arc_s;
+}
+
+/*! \brief Get arc parameters.
+ * \par Function Description
+ * Retrieves the parameters of a arc object. The return value is a
+ * list of parameters:
+ *
+ * -# X-coordinate of center of arc
+ * -# Y-coordinate of center of arc
+ * -# Radius of arc
+ * -# Start angle of arc
+ * -# End angle of arc
+ * -# Colormap index of color to be used for drawing the arc
+ *
+ * \note Scheme API: Implements the %arc-info procedure in the
+ * (geda core object) module.
+ *
+ * \param arc_s the arc object to inspect.
+ * \return a list of arc parameters.
+ */
+SCM_DEFINE (arc_info, "%arc-info", 1, 0, 0,
+            (SCM arc_s), "Get arc parameters.")
+{
+  SCM_ASSERT (edascm_is_object_type (arc_s, OBJ_ARC),
+              arc_s, SCM_ARG1, s_arc_info);
+
+  OBJECT *obj = edascm_to_object (arc_s);
+
+  return scm_list_n (scm_from_int (obj->arc->x),
+                     scm_from_int (obj->arc->y),
+                     scm_from_int (obj->arc->width / 2),
+                     scm_from_int (obj->arc->start_angle),
+                     scm_from_int (obj->arc->end_angle),
+                     scm_from_int (obj->color),
+                     SCM_UNDEFINED);
+}
+
 /*!
  * \brief Create the (geda core object) Scheme module.
  * \par Function Description
@@ -733,6 +840,7 @@ init_module_geda_core_object ()
                 s_set_line, s_line_info,
                 s_make_box, s_set_box, s_box_info,
                 s_make_circle, s_set_circle, s_circle_info,
+                s_make_arc, s_set_arc, s_arc_info,
                 NULL);
 }
 
