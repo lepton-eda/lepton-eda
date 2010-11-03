@@ -391,3 +391,125 @@
 ;; Returns #t if x is a gEDA picture object.
 (define-public (picture? x)
   (object-type? x 'picture))
+
+;;;; Text
+
+;; text? t
+;;
+;; Returns #t if t is a gEDA text object.
+(define-public (text? t)
+  (object-type? t 'text))
+
+;; set-text! t anchor align angle string size visible show [color]
+;;
+;; Sets the parameters of a text object.  anchor is the point (x . y)
+;; at which the text is anchored.  align is the position of the anchor
+;; relative to the text, and must be one of the following symbols:
+;;
+;;   lower-left
+;;   middle-left
+;;   upper-left
+;;   lower-center
+;;   middle-center
+;;   upper-center
+;;   lower-right
+;;   middle-right
+;;   upper-right
+;;
+;; string is the new value of the text object.  size is the font size.
+;; If visible is #f, the text object will be flagged as invisible;
+;; otherwise, it will be visible.  When the text is an attribute, show
+;; determines which parts of the string will be displayed, and must be
+;; one of the following symbols:
+;;
+;;   name
+;;   value
+;;   both
+;;
+;;  The optional color argument is the colormap index of the color
+;;  with which to draw the text.  If color is not specified, the
+;;  default color is used.
+(define*-public (set-text! t anchor align angle string size visible show
+                           #:optional color)
+  (%set-text! t (car anchor) (cdr anchor) align angle string size visible show
+              (if (not color) (object-color t) color)))
+
+;; make-text! anchor align angle string size visible show [color]
+;;
+;; Create a new text object.  See set-text! for description of arguments.
+(define*-public (make-text . args)
+  (let ((t (%make-text)))
+    (apply set-text! t args)))
+
+;; text-info t
+;;
+;; Returns the parameters of the text object t as a list of the form:
+;;
+;;   ((anchor-x . anchor-y) align angle string size visible show color)
+;;
+;; See set-text! for description of these parameters.
+(define-public (text-info t)
+  (let* ((params (%text-info t))
+         (tail (cddr params)))
+    (cons (cons (list-ref params 0)
+                (list-ref params 1))
+          tail)))
+
+;; text-anchor t
+;;
+;; Returns the anchor point of the text object t.
+(define-public (text-anchor t)
+  (list-ref (text-info t) 0))
+
+;; text-align t
+;;
+;; Returns the text alignment of the text object t.  The returned
+;; value will be one of the following symbols:
+;;
+;;   lower-left
+;;   middle-left
+;;   upper-left
+;;   lower-center
+;;   middle-center
+;;   upper-center
+;;   lower-right
+;;   middle-right
+;;   upper-right
+(define-public (text-align t)
+  (list-ref (text-info t) 1))
+
+;; text-angle t
+;;
+;; Returns the angle of the text object t.
+(define-public (text-angle t)
+  (list-ref (text-info t) 2))
+
+;; text-string t
+;;
+;; Returns the string contained in the text object t.
+(define-public (text-string t)
+  (list-ref (text-info t) 3))
+
+;; text-size t
+;;
+;; Returns the font size of the text object t.
+(define-public (text-size t)
+  (list-ref (text-info t) 4))
+
+;; text-visible? t
+;;
+;; Returns #t if the text object t is set to be visible.
+(define-public (text-visible? t)
+  (list-ref (text-info t) 5))
+
+;; text-attribute-mode t
+;;
+;; Returns the visibility mode of the text object t when the string
+;; contained in t is a valid attribute.  The returned value will be
+;; one of the following symbols:
+;;
+;;   name
+;;   value
+;;   both
+(define-public (text-attribute-mode t)
+  (list-ref (text-info t) 6))

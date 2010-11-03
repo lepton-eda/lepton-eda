@@ -40,6 +40,20 @@ SCM_SYMBOL (path_sym , "path");
 SCM_SYMBOL (pin_sym , "pin");
 SCM_SYMBOL (arc_sym , "arc");
 
+SCM_SYMBOL (lower_left_sym , "lower-left");
+SCM_SYMBOL (middle_left_sym , "middle-left");
+SCM_SYMBOL (upper_left_sym , "upper-left");
+SCM_SYMBOL (lower_center_sym , "lower-center");
+SCM_SYMBOL (middle_center_sym , "middle-center");
+SCM_SYMBOL (upper_center_sym , "upper-center");
+SCM_SYMBOL (lower_right_sym , "lower-right");
+SCM_SYMBOL (middle_right_sym , "middle-right");
+SCM_SYMBOL (upper_right_sym , "upper-right");
+
+SCM_SYMBOL (name_sym , "name");
+SCM_SYMBOL (value_sym , "value");
+SCM_SYMBOL (both_sym , "both");
+
 /*! \brief Convert a Scheme object list to a GList.
  * \par Function Description
  * Takes a Scheme list of #OBJECT smobs, and returns a GList
@@ -820,6 +834,238 @@ SCM_DEFINE (arc_info, "%arc-info", 1, 0, 0,
                      SCM_UNDEFINED);
 }
 
+/*! \brief Create a new text item.
+ * \par Function Description
+ * Creates a new text object, with all its parameters set to default
+ * values.
+ *
+ * \note Scheme API: Implements the %make-text procedure in the
+ * (geda core object) module.
+ *
+ * \return a newly-created text object.
+ */
+SCM_DEFINE (make_text, "%make-text", 0, 0, 0,
+            (), "Create a new text object.")
+{
+  OBJECT *obj = o_text_new (edascm_c_current_toplevel (),
+                            OBJ_TEXT, DEFAULT_COLOR,
+                            0, 0, LOWER_LEFT, 0, "", 10,
+                            VISIBLE, SHOW_NAME_VALUE);
+
+  SCM result = edascm_from_object (obj);
+
+  /* At the moment, the only pointer to the object is owned by the
+   * smob. */
+  edascm_c_set_gc (result, 1);
+
+  return result;
+}
+
+/*! \brief Set text parameters.
+ * \par Function Description
+ * Modifies a text object by setting its parameters to new values.
+ *
+ * The alignment \a align_s should be a symbol of the form "x-y" where
+ * x can be one of "lower", "middle", or "upper", and y can be one of
+ * "left", "center" or "right". \a show_s determines which parts of an
+ * attribute-formatted string should be shown, and should be one of
+ * the symbols "name", "value" or "both".
+ *
+ * \note Scheme API: Implements the %set-text! procedure in the
+ * (geda core object) module.
+ *
+ * \param text_s    the text object to modify.
+ * \param x_s       the new x-coordinate of the anchor of the text.
+ * \param y_s       the new y-coordinate of the anchor of the text.
+ * \param align_s   the new alignment of the text on the anchor.
+ * \param angle_s   the angle the text in degrees (0, 90, 180 or 270).
+ * \param string_s  the new string to display.
+ * \param size_s    the new text size.
+ * \param visible_s the new text visibility (SCM_BOOL_T or SCM_BOOL_F).
+ * \param show_s    the new attribute part visibility setting.
+ * \param color_s   the colormap index of the color to be used for
+ *                  drawing the text.
+ *
+ * \return the modified text object.
+ */
+SCM_DEFINE (set_text, "%set-text!", 10, 0, 0,
+            (SCM text_s, SCM x_s, SCM y_s, SCM align_s, SCM angle_s,
+             SCM string_s, SCM size_s, SCM visible_s, SCM show_s, SCM color_s),
+            "Set text parameters")
+{
+  SCM_ASSERT (edascm_is_object_type (text_s, OBJ_TEXT), text_s,
+              SCM_ARG1, s_set_text);
+  SCM_ASSERT (scm_is_integer (x_s),     x_s,      SCM_ARG2, s_set_text);
+  SCM_ASSERT (scm_is_integer (y_s),     y_s,      SCM_ARG3, s_set_text);
+  SCM_ASSERT (scm_is_symbol (align_s),  align_s,  SCM_ARG4, s_set_text);
+  SCM_ASSERT (scm_is_integer (angle_s), angle_s,  SCM_ARG5, s_set_text);
+  SCM_ASSERT (scm_is_string (string_s), string_s, SCM_ARG6, s_set_text);
+  SCM_ASSERT (scm_is_integer (size_s),  size_s,   SCM_ARG7, s_set_text);
+
+  SCM_ASSERT (scm_is_symbol (show_s),    show_s,     9, s_set_text);
+  SCM_ASSERT (scm_is_integer (color_s),  color_s,   10, s_set_text);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (text_s);
+
+  /* Alignment. Sadly we can't switch on pointers. :-( */
+  int align;
+  if      (align_s == lower_left_sym)    { align = LOWER_LEFT;    }
+  else if (align_s == middle_left_sym)   { align = MIDDLE_LEFT;   }
+  else if (align_s == upper_left_sym)    { align = UPPER_LEFT;    }
+  else if (align_s == lower_center_sym)  { align = LOWER_MIDDLE;  }
+  else if (align_s == middle_center_sym) { align = MIDDLE_MIDDLE; }
+  else if (align_s == upper_center_sym)  { align = UPPER_MIDDLE;  }
+  else if (align_s == lower_right_sym)   { align = LOWER_RIGHT;   }
+  else if (align_s == middle_right_sym)  { align = MIDDLE_RIGHT;  }
+  else if (align_s == upper_right_sym)   { align = UPPER_RIGHT;   }
+  else {
+    scm_misc_error (s_set_text,
+                    _("Invalid text alignment ~A."),
+                    scm_list_1 (angle_s));
+  }
+
+  /* Angle */
+  int angle = scm_to_int (angle_s);
+  switch (angle) {
+  case 0:
+  case 90:
+  case 180:
+  case 270:
+    /* These are all fine. */
+    break;
+  default:
+    /* Otherwise, not fine. */
+    scm_misc_error (s_set_text,
+                    _("Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"),
+                    scm_list_1 (angle_s));
+  }
+
+  /* Visibility */
+  int visibility;
+  if (scm_is_false (visible_s)) {
+    visibility = INVISIBLE;
+  } else {
+    visibility = VISIBLE;
+  }
+
+  /* Name/value visibility */
+  int show;
+  if      (show_s == name_sym)  { show = SHOW_NAME;       }
+  else if (show_s == value_sym) { show = SHOW_VALUE;      }
+  else if (show_s == both_sym)  { show = SHOW_NAME_VALUE; }
+  else {
+    scm_misc_error (s_set_text,
+                    _("Invalid text name/value visibility ~A."),
+                    scm_list_1 (angle_s));
+  }
+
+  /* Actually make changes */
+  o_emit_pre_change_notify (toplevel, obj);
+
+  obj->text->x = scm_to_int (x_s);
+  obj->text->y = scm_to_int (y_s);
+  obj->text->alignment = align;
+  obj->text->angle = angle;
+
+  obj->text->size = scm_to_int (size_s);
+  obj->visibility = visibility;
+  obj->show_name_value = show;
+
+  o_emit_change_notify (toplevel, obj);
+
+  char *tmp = scm_to_locale_string (string_s);
+  o_text_set_string (toplevel, obj, tmp);
+  free (tmp);
+
+  o_text_recreate (toplevel, obj);
+
+  /* Color */
+  o_set_color (toplevel, obj, scm_to_int (color_s));
+
+  return text_s;
+}
+
+/*! \brief Get text parameters.
+ * \par Function Description
+ * Retrieves the parameters of a text object. The return value is a
+ * list of parameters:
+ *
+ * -# X-coordinate of anchor of text
+ * -# Y-coordinate of anchor of text
+ * -# Alignment of text
+ * -# Angle of text
+ * -# The string contained in the text object
+ * -# Size of text
+ * -# Text visibility
+ * -# Which part(s) of an text attribute are shown
+ * -# Colormap index of color to be used for drawing the text
+ *
+ * \note Scheme API: Implements the %text-info procedure in the
+ * (geda core object) module.
+ *
+ * \param text_s the text object to inspect.
+ * \return a list of text parameters.
+ */
+SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
+            (SCM text_s), "Get text parameters.")
+{
+  SCM_ASSERT (edascm_is_object_type (text_s, OBJ_TEXT),
+              text_s, SCM_ARG1, s_text_info);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (text_s);
+  SCM align_s, visible_s, show_s;
+
+  switch (obj->text->alignment) {
+  case LOWER_LEFT:    align_s = lower_left_sym;    break;
+  case MIDDLE_LEFT:   align_s = middle_left_sym;   break;
+  case UPPER_LEFT:    align_s = upper_left_sym;    break;
+  case LOWER_MIDDLE:  align_s = lower_center_sym;  break;
+  case MIDDLE_MIDDLE: align_s = middle_center_sym; break;
+  case UPPER_MIDDLE:  align_s = upper_center_sym;  break;
+  case LOWER_RIGHT:   align_s = lower_right_sym;   break;
+  case MIDDLE_RIGHT:  align_s = middle_right_sym;  break;
+  case UPPER_RIGHT:   align_s = upper_right_sym;   break;
+  default:
+    scm_misc_error (s_text_info,
+                    _("Text object ~A has invalid text alignment ~A"),
+                    scm_list_2 (text_s, scm_from_int (obj->text->alignment)));
+  }
+
+  switch (obj->visibility) {
+  case VISIBLE:   visible_s = SCM_BOOL_T; break;
+  case INVISIBLE: visible_s = SCM_BOOL_F; break;
+  default:
+    scm_misc_error (s_text_info,
+                    _("Text object ~A has invalid visibility ~A"),
+                    scm_list_2 (text_s, scm_from_int (obj->visibility)));
+  }
+
+  switch (obj->show_name_value) {
+  case SHOW_NAME:       show_s = name_sym;  break;
+  case SHOW_VALUE:      show_s = value_sym; break;
+  case SHOW_NAME_VALUE: show_s = both_sym;  break;
+  default:
+    scm_misc_error (s_text_info,
+                    _("Text object ~A has invalid text attribute visibility ~A"),
+                    scm_list_2 (text_s, scm_from_int (obj->show_name_value)));
+  }
+
+  return scm_list_n (scm_from_int (obj->text->x),
+                     scm_from_int (obj->text->y),
+                     align_s,
+                     scm_from_int (obj->text->angle),
+                     scm_from_locale_string (o_text_get_string (toplevel, obj)),
+                     scm_from_int (obj->text->size),
+                     visible_s,
+                     show_s,
+                     scm_from_int (obj->color),
+                     SCM_UNDEFINED);
+}
+
+
+
 /*!
  * \brief Create the (geda core object) Scheme module.
  * \par Function Description
@@ -841,6 +1087,7 @@ init_module_geda_core_object ()
                 s_make_box, s_set_box, s_box_info,
                 s_make_circle, s_set_circle, s_circle_info,
                 s_make_arc, s_set_arc, s_arc_info,
+                s_make_text, s_set_text, s_text_info,
                 NULL);
 }
 
