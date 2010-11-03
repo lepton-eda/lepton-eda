@@ -254,6 +254,186 @@ SCM_DEFINE (set_object_color, "%set-object-color!", 2, 0, 0,
   return obj_s;
 }
 
+/*! \brief Create a new line.
+ * \par Function Description
+ * Creates a new line object, with all its parameters set to default
+ * values.
+ *
+ * \note Scheme API: Implements the %make-line procedure in the (geda
+ * core object) module.
+ *
+ * \return a newly-created line object.
+ */
+SCM_DEFINE (make_line, "%make-line", 0, 0, 0,
+            (), "Create a new line object.")
+{
+  OBJECT *obj = o_line_new (edascm_c_current_toplevel (),
+                            OBJ_LINE, DEFAULT_COLOR,
+                            0, 0, 0, 0);
+
+  SCM result = edascm_from_object (obj);
+
+  /* At the moment, the only pointer to the object is owned by the
+   * smob. */
+  edascm_c_set_gc (result, TRUE);
+
+  return result;
+}
+
+/*! \brief Set line parameters.
+ * \par Function Description
+ * Modifies a line object by setting its parameters to new values.
+ *
+ * \note Scheme API: Implements the %set-line! procedure in the (geda
+ * core object) module.
+ *
+ * This function also works on net and bus objects.
+ *
+ * \param line_s the line object to modify.
+ * \param x1_s   the new x-coordinate of the start of the line.
+ * \param y1_s   the new y-coordinate of the start of the line.
+ * \param x2_s   the new x-coordinate of the end of the line.
+ * \param y2_s   the new y-coordinate of the end of the line.
+ * \param color  the colormap index of the color to be used for
+ *               drawing the line.
+ *
+ * \return the modified line object.
+ */
+SCM_DEFINE (set_line, "%set-line!", 6, 0, 0,
+            (SCM line_s, SCM x1_s, SCM y1_s, SCM x2_s, SCM y2_s, SCM color_s),
+            "Set line parameters.")
+{
+  SCM_ASSERT ((edascm_is_object_type (line_s, OBJ_LINE)
+               || edascm_is_object_type (line_s, OBJ_NET)
+               || edascm_is_object_type (line_s, OBJ_BUS)),
+              line_s, SCM_ARG1, s_set_line);
+
+  SCM_ASSERT (scm_is_integer (x1_s),    x1_s,    SCM_ARG2, s_set_line);
+  SCM_ASSERT (scm_is_integer (y1_s),    y1_s,    SCM_ARG3, s_set_line);
+  SCM_ASSERT (scm_is_integer (x2_s),    x2_s,    SCM_ARG4, s_set_line);
+  SCM_ASSERT (scm_is_integer (y2_s),    y2_s,    SCM_ARG5, s_set_line);
+  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG6, s_set_line);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (line_s);
+  int x1 = scm_to_int (x1_s);
+  int y1 = scm_to_int (y1_s);
+  int x2 = scm_to_int (x2_s);
+  int y2 = scm_to_int (y2_s);
+  switch (obj->type) {
+  case OBJ_LINE:
+    o_line_modify (toplevel, obj, x1, y1, LINE_END1);
+    o_line_modify (toplevel, obj, x2, y2, LINE_END2);
+    break;
+  case OBJ_NET:
+    o_net_modify (toplevel, obj, x1, y1, 0);
+    o_net_modify (toplevel, obj, x2, y2, 1);
+    break;
+  case OBJ_BUS:
+    o_bus_modify (toplevel, obj, x1, y1, 0);
+    o_bus_modify (toplevel, obj, x2, y2, 1);
+    break;
+  default:
+    return line_s;
+  }
+  o_set_color (toplevel, obj, scm_to_int (color_s));
+
+  return line_s;
+}
+
+/*! \brief Get line parameters.
+ * \par Function Description
+ * Retrieves the parameters of a line object. The return value is a list of parameters:
+ *
+ * -# X-coordinate of start of line
+ * -# Y-coordinate of start of line
+ * -# X-coordinate of end of line
+ * -# Y-coordinate of end of line
+ * -# Colormap index of color to be used for drawing the line
+ *
+ * This function also works on net and bus objects.
+ *
+ * \param line_s the line object to inspect.
+ * \return a list of line parameters.
+ */
+SCM_DEFINE (line_info, "%line-info", 1, 0, 0,
+            (SCM line_s), "Get line parameters.")
+{
+  SCM_ASSERT ((edascm_is_object_type (line_s, OBJ_LINE)
+               || edascm_is_object_type (line_s, OBJ_NET)
+               || edascm_is_object_type (line_s, OBJ_BUS)),
+              line_s, SCM_ARG1, s_line_info);
+
+  OBJECT *obj = edascm_to_object (line_s);
+
+  return scm_list_n (scm_from_int (obj->line->x[0]),
+                     scm_from_int (obj->line->y[0]),
+                     scm_from_int (obj->line->x[1]),
+                     scm_from_int (obj->line->y[1]),
+                     scm_from_int (obj->color),
+                     SCM_UNDEFINED);
+}
+
+/*! \brief Create a new net.
+ * \par Function Description
+ * Creates a new net object, with all its parameters set to default
+ * values.
+ *
+ * \note Scheme API: Implements the %make-net procedure in the (geda
+ * core object) module.
+ *
+ * \return a newly-created net object.
+ */
+SCM_DEFINE (make_net, "%make-net", 0, 0, 0,
+            (), "Create a new net object.")
+{
+  OBJECT *obj;
+  SCM result;
+
+  obj = o_net_new (edascm_c_current_toplevel (),
+                   OBJ_NET, NET_COLOR, 0, 0, 0, 0);
+
+
+  result = edascm_from_object (obj);
+
+  /* At the moment, the only pointer to the object is owned by the
+   * smob. */
+  edascm_c_set_gc (result, 1);
+
+  return result;
+}
+
+/*! \brief Create a new bus.
+ * \par Function Description
+ * Creates a new bus object, with all its parameters set to default
+ * values.
+ *
+ * \note Scheme API: Implements the %make-bus procedure in the (geda
+ * core object) module.
+ *
+ * \todo Do we need a way to get/set bus ripper direction?
+ *
+ * \return a newly-created bus object.
+ */
+SCM_DEFINE (make_bus, "%make-bus", 0, 0, 0,
+            (), "Create a new bus object.")
+{
+  OBJECT *obj;
+  SCM result;
+
+  obj = o_bus_new (edascm_c_current_toplevel (),
+                   OBJ_BUS, BUS_COLOR, 0, 0, 0, 0,
+                   0); /* Bus ripper direction */
+
+  result = edascm_from_object (obj);
+
+  /* At the moment, the only pointer to the object is owned by the
+   * smob. */
+  edascm_c_set_gc (result, 1);
+
+  return result;
+}
+
 /*!
  * \brief Create the (geda core object) Scheme module.
  * \par Function Description
@@ -269,6 +449,8 @@ init_module_geda_core_object ()
   /* Add them to the module's public definitions. */
   scm_c_export (s_object_type, s_copy_object,
                 s_object_color, s_set_object_color,
+                s_make_line, s_make_net, s_make_bus,
+                s_set_line, s_line_info,
                 NULL);
 }
 
