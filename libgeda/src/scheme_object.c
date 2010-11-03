@@ -529,6 +529,99 @@ SCM_DEFINE (box_info, "%box-info", 1, 0, 0,
                      SCM_UNDEFINED);
 }
 
+/*! \brief Create a new circle.
+ * \par Function Description
+
+ * Creates a new circle object, with all its parameters set to default
+ * values.
+ *
+ * \note Scheme API: Implements the %make-circle procedure in the
+ * (geda core object) module.
+ *
+ * \return a newly-created circle object.
+ */
+SCM_DEFINE (make_circle, "%make-circle", 0, 0, 0,
+            (), "Create a new circle object.")
+{
+  OBJECT *obj = o_circle_new (edascm_c_current_toplevel (),
+                              OBJ_CIRCLE, DEFAULT_COLOR,
+                              0, 0, 1);
+
+  SCM result = edascm_from_object (obj);
+
+  /* At the moment, the only pointer to the object is owned by the
+   * smob. */
+  edascm_c_set_gc (result, 1);
+
+  return result;
+}
+
+/*! \brief Set circle parameters.
+ * \par Function Description
+ * Modifies a circle object by setting its parameters to new values.
+ *
+ * \note Scheme API: Implements the %set-circle! procedure in the
+ * (geda core object) module.
+ *
+ * \param circle_s the circle object to modify.
+ * \param x_s    the new x-coordinate of the center of the circle.
+ * \param y_s    the new y-coordinate of the center of the circle.
+ * \param r_s    the new radius of the circle.
+ * \param color  the colormap index of the color to be used for
+ *               drawing the circle.
+ *
+ * \return the modified circle object.
+ */
+SCM_DEFINE (set_circle, "%set-circle!", 5, 0, 0,
+            (SCM circle_s, SCM x_s, SCM y_s, SCM r_s, SCM color_s),
+            "Set circle parameters")
+{
+  SCM_ASSERT (edascm_is_object_type (circle_s, OBJ_CIRCLE), circle_s,
+              SCM_ARG1, s_set_circle);
+  SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_circle);
+  SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_circle);
+  SCM_ASSERT (scm_is_integer (r_s),     r_s,     SCM_ARG4, s_set_circle);
+  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG5, s_set_circle);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (circle_s);
+  o_circle_modify (toplevel, obj, scm_to_int(x_s), scm_to_int(y_s),
+                   CIRCLE_CENTER);
+  o_circle_modify (toplevel, obj, scm_to_int(r_s), 0, CIRCLE_RADIUS);
+  o_set_color (toplevel, obj, scm_to_int (color_s));
+
+  return circle_s;
+}
+
+/*! \brief Get circle parameters.
+ * \par Function Description
+
+ * Retrieves the parameters of a circle object. The return value is a
+ * list of parameters:
+ *
+ * -# X-coordinate of center of circle
+ * -# Y-coordinate of center of circle
+ * -# Radius of circle
+ * -# Colormap index of color to be used for drawing the circle
+ *
+ * \param circle_s the circle object to inspect.
+ * \return a list of circle parameters.
+ */
+SCM_DEFINE (circle_info, "%circle-info", 1, 0, 0,
+            (SCM circle_s), "Get circle parameters.")
+{
+  SCM_ASSERT (edascm_is_object_type (circle_s, OBJ_CIRCLE),
+              circle_s, SCM_ARG1, s_circle_info);
+
+  OBJECT *obj = edascm_to_object (circle_s);
+
+  return scm_list_n (scm_from_int (obj->circle->center_x),
+                     scm_from_int (obj->circle->center_y),
+                     scm_from_int (obj->circle->radius),
+                     scm_from_int (obj->color),
+                     SCM_UNDEFINED);
+}
+
 /*!
  * \brief Create the (geda core object) Scheme module.
  * \par Function Description
@@ -547,6 +640,7 @@ init_module_geda_core_object ()
                 s_make_line, s_make_net, s_make_bus,
                 s_set_line, s_line_info,
                 s_make_box, s_set_box, s_box_info,
+                s_make_circle, s_set_circle, s_circle_info,
                 NULL);
 }
 

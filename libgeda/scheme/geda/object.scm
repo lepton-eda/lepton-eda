@@ -199,3 +199,61 @@
 ;; object b.
 (define-public (box-bottom-right l)
   (list-ref (box-info l) 1))
+
+;;;; Circles
+
+;; circle? x
+;;
+;; Returns #t if x is a gEDA circle object.
+(define-public (circle? c)
+  (object-type? c 'circle))
+
+;; set-circle! c center radius [color]
+;;
+;; Sets the parameters of a circle c. center is the new coordinates (x
+;; . y) of the center of the circle, and radius is the new radius of
+;; the circle.  The optional color argument is the new colormap index
+;; of the circle's color. Returns c after modifications.
+(define*-public (set-circle! c center radius #:optional color)
+  (%set-circle! c
+                (car center) (cdr center)
+                radius
+                (if (not color)
+                    (object-color c)
+                    color)))
+
+;; make-circle center radius [color]
+;;
+;; Creates a new circle.  center is the coordinates (x . y) of the
+;; center of the circle, and radius is the radius of the circle.  The
+;; optional color argument is the colormap index of the color with
+;; which to draw the circle.  If color is not specified, the default
+;; color is used.
+(define*-public (make-circle center radius #:optional color)
+  (let ((c (%make-circle)))
+    (set-circle! c center radius color)))
+
+;; circle-info c
+;;
+;; Returns the parameters of the circle c as a list of the form:
+;;
+;;   ((center-x . center-y) radius color)
+(define-public (circle-info c)
+  (let* ((params (%circle-info c))
+         (tail (cddr params)))
+    (cons (cons (list-ref params 0)
+                (list-ref params 1))
+          tail)))
+
+;; circle-center c
+;;
+;; Returns the coordinates (x . y) of the center of the gEDA circle
+;; object c.
+(define-public (circle-center c)
+  (list-ref (circle-info c) 0))
+
+;; circle-radius c
+;;
+;; Returns the radius of the gEDA circle object c.
+(define-public (circle-radius c)
+  (list-ref (circle-info c) 1))

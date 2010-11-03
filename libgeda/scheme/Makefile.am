@@ -11,7 +11,8 @@ TESTS_ENVIRONMENT = $(builddir)/../shell/geda-shell -q -L $(srcdir) \
 
 TESTS = unit-tests/t0001-geda-conf-lib.scm \
 	unit-tests/t0010-object-line.scm \
-	unit-tests/t0011-object-box.scm
+	unit-tests/t0011-object-box.scm \
+	unit-tests/t0012-object-circle.scm
 
 dist_noinst_DATA = unit-test.scm $(TESTS)
 
