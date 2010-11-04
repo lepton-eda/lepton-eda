@@ -34,6 +34,7 @@
 #endif
 
 #include "libgeda_priv.h"
+#include "libgedaguile.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -244,6 +245,7 @@ g_read_file(TOPLEVEL *toplevel, const gchar *filename)
 {
 	SCM eval_result = SCM_BOOL_F;
         SCM expr;
+        SCM s_filename;
 	char * full_filename;
 
 	if (filename == NULL) {
@@ -262,12 +264,19 @@ g_read_file(TOPLEVEL *toplevel, const gchar *filename)
 		return(-1);
   	}
 
-        expr = scm_list_2 (scm_from_locale_symbol ("load"),
-                           scm_from_locale_string (full_filename));
+        s_filename = scm_from_locale_string (full_filename);
+        g_free (full_filename);
+
+        scm_dynwind_begin (SCM_F_DYNWIND_REWINDABLE);
+        edascm_dynwind_toplevel (toplevel);
+
+        expr = scm_list_2 (scm_from_locale_symbol ("load"), s_filename);
         eval_result = g_scm_eval_protected (expr,
                                             scm_interaction_environment ());
 
-	g_free(full_filename);
+        scm_dynwind_end ();
+
+        scm_remember_upto_here_1 (s_filename);
 
 	return (eval_result != SCM_BOOL_F);
 }

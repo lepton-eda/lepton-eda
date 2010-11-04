@@ -2,10 +2,14 @@
 # Build a libtool library for installation in libdir.
 lib_LTLIBRARIES = libgeda.la
 
-BUILT_SOURCES = 
+BUILT_SOURCES = \
+	scheme_smob.x \
+	scheme_toplevel.x
 
 scheme_api_sources = \
-	scheme_init.c
+	scheme_init.c \
+	scheme_smob.c \
+	scheme_toplevel.c
 
 libgeda_la_SOURCES = \
 	$(scheme_api_sources) \

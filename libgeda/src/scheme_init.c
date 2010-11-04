@@ -40,5 +40,6 @@ edascm_init ()
   if (init_called) return;
   init_called = 1;
 
-  /* Do nothing yet! */
+  edascm_init_smob ();
+  edascm_init_toplevel ();
 }

@@ -26,3 +26,25 @@
 
 /* Initialise the Scheme API. */
 void edascm_init ();
+
+/* Get the value of the #TOPLEVEL fluid. */
+TOPLEVEL *edascm_c_current_toplevel ();
+
+/* Set the #TOPLEVEL fluid in the current dynamic context. */
+void edascm_dynwind_toplevel (TOPLEVEL *toplevel);
+
+/* Set the current #TOPLEVEL temporarily. */
+SCM edascm_c_with_toplevel (TOPLEVEL *toplevel, SCM (*func)(void *),
+                            void *user_data);
+
+/* Create a Guile value from a page structure. */
+SCM edascm_from_page (PAGE *page);
+
+/* Create a Guile value from an object structure. */
+SCM edascm_from_object (OBJECT *object);
+
+/* Retrieve a page structure from a Guile value. */
+PAGE *edascm_to_page (SCM smob);
+
+/* Retrieve an object structure from a Guile value. */
+OBJECT *edascm_to_object (SCM smob);
