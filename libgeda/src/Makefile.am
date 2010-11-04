@@ -9,7 +9,8 @@ BUILT_SOURCES = \
 scheme_api_sources = \
 	scheme_init.c \
 	scheme_smob.c \
-	scheme_toplevel.c
+	scheme_toplevel.c \
+	scheme_object.c
 
 libgeda_la_SOURCES = \
 	$(scheme_api_sources) \
