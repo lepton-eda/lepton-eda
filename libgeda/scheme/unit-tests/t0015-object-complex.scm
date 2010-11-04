@@ -2,6 +2,7 @@
 
 (use-modules (unit-test))
 (use-modules (geda object))
+(use-modules (geda page))
 
 (begin-test 'component
   (let ((a (make-component "test component" '(1 . 2) 0 #t #f)))
@@ -49,7 +50,12 @@
     (assert-equal (list x y) (component-contents A))
 
     (assert-thrown 'object-state
-                   (component-append! B x))))
+                   (component-append! B x))
+
+    (assert-thrown 'object-state
+      (let* ((P (make-page "/test/page/A"))
+             (z (page-append! P (make-line '(1 . 0) '(2 . 2)))))
+        (component-append! A z)))))
 
 (begin-test 'component-remove
   (let ((A (make-component "test component" '(1 . 2) 0 #t #f))
@@ -69,4 +75,9 @@
     (assert-equal (list y) (component-contents A))
 
     (assert-thrown 'object-state
-                   (component-remove! B y))))
+                   (component-remove! B y))
+
+    (assert-thrown 'object-state
+      (let* ((P (make-page "/test/page/A"))
+             (z (page-append! P (make-line '(1 . 0) '(2 . 2)))))
+        (component-remove! A z)))))

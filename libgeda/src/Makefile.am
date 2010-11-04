@@ -7,14 +7,16 @@ BUILT_SOURCES = \
 	scheme_smob.x \
 	scheme_toplevel.x \
 	scheme_object.x \
-	scheme_complex.x
+	scheme_complex.x \
+	scheme_page.x
 
 scheme_api_sources = \
 	scheme_init.c \
 	scheme_smob.c \
 	scheme_toplevel.c \
-	scheme_object.c\
-	scheme_complex.c
+	scheme_object.c \
+	scheme_complex.c \
+	scheme_page.c
 
 libgeda_la_SOURCES = \
 	$(scheme_api_sources) \

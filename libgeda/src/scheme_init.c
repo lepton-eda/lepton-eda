@@ -48,4 +48,5 @@ edascm_init ()
   edascm_init_toplevel ();
   edascm_init_object ();
   edascm_init_complex ();
+  edascm_init_page ();
 }
