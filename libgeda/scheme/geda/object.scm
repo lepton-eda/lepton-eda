@@ -22,6 +22,7 @@
   ; Import C procedures
   #:use-module (geda core smob)
   #:use-module (geda core object)
+  #:use-module (geda core complex)
 
   ; Optional arguments
   #:use-module (ice-9 optargs))
@@ -513,3 +514,99 @@
 ;;   both
 (define-public (text-attribute-mode t)
   (list-ref (text-info t) 6))
+
+;;;; Component objects
+;;
+;; In the gEDA source code, these are normally called "complex"
+;; objects.  However, as Guile supports complex numbers, and the
+;; procedures related to working with complex numbers use the word
+;; "complex" to describe them, this API uses "component" in order to
+;; remove the ambiguity.
+
+;; component? c
+;;
+;; Returns #t if c is a gEDA component object.
+(define-public (component? c)
+  (object-type? c 'complex))
+
+;; set-component! c position angle mirror locked
+;;
+;; Sets the parameters of a component object c.  position is the point
+;; (x . y) at which the component object is located.  angle is the
+;; rotation angle of the component object in degrees, and must be 0, 90,
+;; 180, or 270.  If mirror is true, the component object will be
+;; flipped, and if locked is true, it will be non-selectable in an
+;; editor.
+(define-public (set-component! c position angle mirror locked)
+  (%set-complex! c (car position) (cdr position) angle mirror locked))
+
+;; make-component basename position angle mirror locked
+;;
+;; Make a new, empty embedded component object with the given basename
+;; and parameters.  See set-component! for full description of
+;; arguments.
+(define-public (make-component basename . args)
+  (let ((c (%make-complex basename)))
+    (apply set-component! c args)))
+
+;; component-info c
+;;
+;; Returns the parameters of the component object c as a list of the
+;; form:
+;;
+;; (basename (x . y) angle mirror locked)
+(define-public (component-info c)
+  (let* ((params (%complex-info c))
+         (tail (list-tail params 3))
+         (position (list-tail params 1)))
+    (set-car! position (cons (list-ref position 0)
+                             (list-ref position 1)))
+    (set-cdr! position tail)
+    params))
+
+;; component-basename c
+;;
+;; Returns the basename of the component object c.
+(define-public (component-basename c)
+  (list-ref (component-info c) 0))
+
+;; component-position c
+;;
+;; Returns the position of the component object c.
+(define-public (component-position c)
+  (list-ref (component-info c) 1))
+
+;; component-angle c
+;;
+;; Returns the rotation angle of the component object c.
+(define-public (component-angle c)
+  (list-ref (component-info c) 2))
+
+;; component-mirror? c
+;;
+;; Returns #t if the component object c is mirrored.
+(define-public (component-mirror? c)
+  (list-ref (component-info c) 3))
+
+;; component-locked? c
+;;
+;; Returns #t if the component object c is non-selectable.
+(define-public (component-locked? c)
+  (list-ref (component-info c) 4))
+
+;; component-contents c
+;;
+;; Returns a list of the primitive objects which make up the component
+;; object c.
+(define-public component-contents %complex-contents)
+
+;; component-append! c obj
+;;
+;; Adds obj to the primitive objects of the component c.  Returns obj.
+(define-public component-append! %complex-append!)
+
+;; component-remove! c obj
+;;
+;; Removes obj from the primitive objects of the component c.  Returns
+;; obj.
+(define-public component-remove! %complex-remove!)

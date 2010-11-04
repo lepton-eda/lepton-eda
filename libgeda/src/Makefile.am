@@ -3,15 +3,18 @@
 lib_LTLIBRARIES = libgeda.la
 
 BUILT_SOURCES = \
+	scheme_init.x \
 	scheme_smob.x \
 	scheme_toplevel.x \
-	scheme_object.x
+	scheme_object.x \
+	scheme_complex.x
 
 scheme_api_sources = \
 	scheme_init.c \
 	scheme_smob.c \
 	scheme_toplevel.c \
-	scheme_object.c
+	scheme_object.c\
+	scheme_complex.c
 
 libgeda_la_SOURCES = \
 	$(scheme_api_sources) \

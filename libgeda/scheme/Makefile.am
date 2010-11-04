@@ -14,7 +14,8 @@ TESTS = unit-tests/t0001-geda-conf-lib.scm \
 	unit-tests/t0011-object-box.scm \
 	unit-tests/t0012-object-circle.scm \
 	unit-tests/t0013-object-arc.scm\
-	unit-tests/t0014-object-text.scm
+	unit-tests/t0014-object-text.scm \
+	unit-tests/t0015-object-complex.scm
 
 dist_noinst_DATA = unit-test.scm $(TESTS)
 

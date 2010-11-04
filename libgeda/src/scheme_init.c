@@ -29,6 +29,8 @@
 /*! Non-zero if the Scheme API has been initialised. */
 static int init_called = 0;
 
+SCM_GLOBAL_SYMBOL (edascm_object_state_sym, "object-state");
+
 /*! \brief Initialise the Scheme API.
  * \par Function Description
  * Registers all modules, procedures and variables exported by the
@@ -40,7 +42,10 @@ edascm_init ()
   if (init_called) return;
   init_called = 1;
 
+  #include "scheme_init.x"
+
   edascm_init_smob ();
   edascm_init_toplevel ();
   edascm_init_object ();
+  edascm_init_complex ();
 }

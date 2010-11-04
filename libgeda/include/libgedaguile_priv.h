@@ -29,6 +29,7 @@
 void edascm_init_smob ();
 void edascm_init_toplevel ();
 void edascm_init_object ();
+void edascm_init_complex ();
 
 /* ---------------------------------------- */
 
@@ -124,3 +125,7 @@ void edascm_c_set_gc (SCM smob, int gc);
 GList *edascm_to_object_glist (SCM objs, const char *subr);
 SCM edascm_from_object_glist (const GList *objs);
 int edascm_is_object_type (SCM smob, int type);
+
+/* ---------------------------------------- */
+
+extern SCM edascm_object_state_sym;
