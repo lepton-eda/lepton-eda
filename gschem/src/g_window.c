@@ -114,7 +114,7 @@ g_dynwind_window (GSCHEM_TOPLEVEL *w_current)
  * Return the value of the #GSCHEM_TOPLEVEL fluid in the current
  * dynamic context.
  */
-SCM_DEFINE (g_scm_current_window, "%current-window", 0, 0, 0,
+SCM_DEFINE (current_window, "%current-window", 0, 0, 0,
             (),
             "Get the GSCHEM_TOPLEVEL for the current dynamic context.")
 {
@@ -130,7 +130,7 @@ SCM_DEFINE (g_scm_current_window, "%current-window", 0, 0, 0,
 GSCHEM_TOPLEVEL *
 g_current_window ()
 {
-  SCM window_s = g_scm_current_window ();
+  SCM window_s = current_window ();
 
   if (!(SCM_SMOB_PREDICATE (window_smob_tag, window_s)
         &&  ((void *)SCM_SMOB_DATA (window_s) != NULL))) {
@@ -139,6 +139,51 @@ g_current_window ()
   }
 
   return (GSCHEM_TOPLEVEL *) SCM_SMOB_DATA (window_s);
+}
+
+/*!
+ * \brief Get the active page.
+ * \par Function Description
+ * Returns the page which is active in the current gschem window.  If
+ * there is no active page, returns SCM_BOOL_F.
+ *
+ * \note Scheme API: Implements the %active-page procedure in the
+ * (gschem core window) module.
+ *
+ * \return the active page.
+ */
+SCM_DEFINE (active_page, "%active-page", 0, 0, 0,
+            (), "Get the active page.")
+{
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  if (toplevel->page_current != NULL) {
+    return edascm_from_page (toplevel->page_current);
+  } else {
+    return SCM_BOOL_F;
+  }
+}
+
+/*!
+ * \brief Set the active page.
+ * \par Function Description
+ * Sets the page which is active in the current gschem window to \a
+ * page_s.
+ *
+ * \note Scheme API: Implements the %set-active-page! procedure in the
+ * (gschem core window) module.
+ *
+ * \param page_s
+ * \return \a page_s.
+ */
+SCM_DEFINE (set_active_page, "%set-active-page!", 1, 0, 0,
+            (SCM page_s), "Set the active page.")
+{
+  SCM_ASSERT (edascm_is_page (page_s), page_s, SCM_ARG1, s_set_active_page);
+
+  PAGE *page = edascm_to_page (page_s);
+  x_window_set_current_page (g_current_window (), page);
+
+  return page_s;
 }
 
 /*!
@@ -154,7 +199,7 @@ init_module_gschem_core_window ()
   #include "g_window.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_g_scm_current_window, NULL);
+  scm_c_export (s_current_window, s_active_page, s_set_active_page, NULL);
 }
 
 /*!
