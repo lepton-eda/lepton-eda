@@ -3,6 +3,7 @@
 (use-modules (unit-test))
 (use-modules (geda object))
 (use-modules (geda page))
+(use-modules (geda attrib))
 
 (begin-test 'component
   (let ((a (make-component "test component" '(1 . 2) 0 #t #f)))
@@ -60,8 +61,10 @@
 (begin-test 'component-remove
   (let ((A (make-component "test component" '(1 . 2) 0 #t #f))
         (B (make-component "test component" '(1 . 2) 0 #t #f))
+        (P (make-page "/test/page/A"))
         (x (make-line '(0 . 0) '(2 . 0)))
-        (y (make-line '(0 . 0) '(0 . 2))))
+        (y (make-line '(0 . 0) '(0 . 2)))
+        (z (make-line '(1 . 0) '(2 . 2))))
 
     (component-append! A x)
     (assert-equal x (component-remove! A x))
@@ -77,7 +80,16 @@
     (assert-thrown 'object-state
                    (component-remove! B y))
 
+    (page-append! P z)
     (assert-thrown 'object-state
-      (let* ((P (make-page "/test/page/A"))
-             (z (page-append! P (make-line '(1 . 0) '(2 . 2)))))
-        (component-remove! A z)))))
+        (component-remove! A z))
+    ))
+
+(begin-test 'component-remove-attrib
+  (let ((comp (make-component "test component" '(1 . 2) 0 #t #f))
+        (pin (make-net-pin '(0 . 0) '(100 . 0)))
+        (attrib (make-text '(0 . 0) 'lower-left 0 "name=x" 10 #t 'both)))
+    (for-each (lambda (x) (component-append! comp x)) (list pin attrib))
+    (attach-attrib! pin attrib)
+    (assert-thrown 'object-state (component-remove! comp pin))
+    (assert-thrown 'object-state (component-remove! comp attrib))))

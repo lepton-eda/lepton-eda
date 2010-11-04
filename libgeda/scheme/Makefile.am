@@ -1,7 +1,7 @@
 
 scmdatadir = $(GEDADATADIR)/scheme
 nobase_dist_scmdata_DATA = geda.scm color-map.scm \
-	geda/object.scm geda/page.scm
+	geda/object.scm geda/page.scm geda/attrib.scm
 
 # Unit test support.  The unit tests are run using the geda-batch
 # program, with config loading disabled (-q) so that user config
@@ -16,7 +16,8 @@ TESTS = unit-tests/t0001-geda-conf-lib.scm \
 	unit-tests/t0013-object-arc.scm\
 	unit-tests/t0014-object-text.scm \
 	unit-tests/t0015-object-complex.scm \
-	unit-tests/t0020-page.scm
+	unit-tests/t0020-page.scm \
+	unit-tests/t0030-attribute.scm
 
 dist_noinst_DATA = unit-test.scm $(TESTS)
 

@@ -8,7 +8,8 @@ BUILT_SOURCES = \
 	scheme_toplevel.x \
 	scheme_object.x \
 	scheme_complex.x \
-	scheme_page.x
+	scheme_page.x \
+	scheme_attrib.x
 
 scheme_api_sources = \
 	scheme_init.c \
@@ -16,7 +17,8 @@ scheme_api_sources = \
 	scheme_toplevel.c \
 	scheme_object.c \
 	scheme_complex.c \
-	scheme_page.c
+	scheme_page.c \
+	scheme_attrib.c
 
 libgeda_la_SOURCES = \
 	$(scheme_api_sources) \

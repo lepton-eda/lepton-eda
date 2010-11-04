@@ -269,6 +269,20 @@ SCM_DEFINE (complex_remove, "%complex-remove!", 2, 0, 0,
                scm_list_1 (obj_s), SCM_EOL);
   }
 
+  /* Check that object is not attached as an attribute. */
+  if (child->attached_to != NULL) {
+    scm_error (edascm_object_state_sym, s_complex_remove,
+               _("Object ~A is attached as an attribute"),
+               scm_list_1 (obj_s), SCM_EOL);
+  }
+
+  /* Check that object doesn't have attributes. */
+  if (child->attribs != NULL) {
+    scm_error (edascm_object_state_sym, s_complex_remove,
+               _("Object ~A has attributes"),
+               scm_list_1 (obj_s), SCM_EOL);
+  }
+
   if (child->parent == NULL) return obj_s;
 
   /* Don't need to emit change notifications for the child because

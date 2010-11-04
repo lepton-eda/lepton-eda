@@ -235,6 +235,20 @@ SCM_DEFINE (page_remove_, "%page-remove!", 2, 0, 0,
                scm_list_1 (obj_s), SCM_EOL);
   }
 
+  /* Check that object is not attached as an attribute. */
+  if (obj->attached_to != NULL) {
+    scm_error (edascm_object_state_sym, s_page_remove_,
+               _("Object ~A is attached as an attribute"),
+               scm_list_1 (obj_s), SCM_EOL);
+  }
+
+  /* Check that object doesn't have attributes. */
+  if (obj->attribs != NULL) {
+    scm_error (edascm_object_state_sym, s_page_remove_,
+               _("Object ~A has attributes"),
+               scm_list_1 (obj_s), SCM_EOL);
+  }
+
   if (curr_page == NULL) return obj_s;
 
   o_emit_pre_change_notify (toplevel, obj);
