@@ -17,6 +17,7 @@ TESTS = unit-tests/t0001-geda-conf-lib.scm \
 	unit-tests/t0014-object-text.scm \
 	unit-tests/t0015-object-complex.scm \
 	unit-tests/t0020-page.scm \
+	unit-tests/t0021-page-dirty.scm \
 	unit-tests/t0030-attribute.scm
 
 dist_noinst_DATA = unit-test.scm $(TESTS)

@@ -21,7 +21,9 @@
 
   ; Import C procedures
   #:use-module (geda core smob)
-  #:use-module (geda core page))
+  #:use-module (geda core page)
+
+  #:use-module (ice-9 optargs))
 
 (define-public object-page %object-page)
 
@@ -33,3 +35,11 @@
 (define-public page-contents %page-contents)
 (define-public page-append! %page-append!)
 (define-public page-remove! %page-remove!)
+(define-public page-dirty? %page-dirty?)
+
+;; set-page-dirty! [state]
+;;
+;; Set whether page is flagged as changed according to the optional
+;; flag state.  If state is omitted, the page is marked as changed.
+(define*-public (set-page-dirty! page #:optional (state #t))
+  (%set-page-dirty! page state))

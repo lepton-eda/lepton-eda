@@ -291,6 +291,53 @@ SCM_DEFINE (page_remove_, "%page-remove!", 2, 0, 0,
   return obj_s;
 }
 
+/*! \brief Check whether a page has been flagged as changed.
+ * \par Function Description
+ * Returns SCM_BOOL_T if \a page_s has been flagged as having been
+ * modified.
+ *
+ * \note Scheme API: Implements the %page-dirty? procedure of the
+ * (geda core page) module.
+ *
+ * \param page_s page to inspect.
+ * \return SCM_BOOL_T if page is dirtied, otherwise SCM_BOOL_F.
+ */
+SCM_DEFINE (page_dirty, "%page-dirty?", 1, 0, 0,
+            (SCM page_s), "Check whether a page has been flagged as changed.")
+{
+  /* Ensure that the argument is a page smob */
+  SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
+              SCM_ARG1, s_page_dirty);
+
+  PAGE *page = edascm_to_page (page_s);
+  return page->CHANGED ? SCM_BOOL_T : SCM_BOOL_F;
+}
+
+/*! \brief Set a page's changed flag.
+ * \par Function Description
+ * If \a flag_s is true, flag \a page_s as having been modified.
+ * Otherwise, clears the change flag.
+ *
+ * \note Scheme API: Implements the %set-page-dirty! procedure of the
+ * (geda core page) module.
+ *
+ * \param page_s page to modify.
+ * \param flag_s new flag setting.
+ * \return \a page_s
+ */
+SCM_DEFINE (set_page_dirty, "%set-page-dirty!", 2, 0, 0,
+            (SCM page_s, SCM flag_s),
+            "Set whether a page is flagged as changed.")
+{
+  /* Ensure that the argument is a page smob */
+  SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
+              SCM_ARG1, s_set_page_dirty);
+
+  PAGE *page = edascm_to_page (page_s);
+  page->CHANGED = scm_is_true (flag_s);
+  return page_s;
+}
+
 /*!
  * \brief Create the (geda core page) Scheme module.
  * \par Function Description
@@ -307,7 +354,7 @@ init_module_geda_core_page ()
 
   scm_c_export (s_active_pages, s_new_page, s_close_page,
                 s_page_filename, s_page_contents, s_object_page, s_page_append_,
-                s_page_remove_, NULL);
+                s_page_remove_, s_page_dirty, s_set_page_dirty, NULL);
 }
 
 /*!
