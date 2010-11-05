@@ -17,14 +17,7 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-
-; guile 1.4/1.6 compatibility:  Define an eval-in-currentmodule procedure
-; If this version of guile has an R5RS-compatible eval (that requires a
-; second argument specfying the environment), and a current-module function
-; (like 1.6) use them to define eval-cm. else define eval-cm to eval (for 1.4)
-(if (false-if-exception (eval 'display (current-module)))
-    (define (eval-cm exp) (eval exp (current-module)))
-    (define eval-cm eval))
+(define (eval-cm exp) (eval exp (current-module)))
 
 (define last-command-sequence #f)
 (define current-command-sequence '())
