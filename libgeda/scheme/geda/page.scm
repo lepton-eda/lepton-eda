@@ -28,6 +28,7 @@
 (define-public page? %page?)
 (define-public active-pages %active-pages)
 (define-public make-page %new-page)
+(define-public close-page! %close-page!)
 (define-public page-filename %page-filename)
 (define-public page-contents %page-contents)
 (define-public page-append! %page-append!)

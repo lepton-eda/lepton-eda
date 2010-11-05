@@ -83,6 +83,34 @@ SCM_DEFINE (new_page, "%new-page", 1, 0, 0,
   return edascm_from_page (page);
 }
 
+/*! \brief Close a page
+ * \par Function Description
+
+ * Destroys the #PAGE structure \a page_s, freeing all of its
+ * resources.  Attempting to use \a page_s after calling this function
+ * will cause an error.
+ *
+ * \note Scheme API: Implements the %close-page procedure of the (geda
+ * core page) module.
+ *
+ * \param page_s The page to close.
+ * \return SCM_UNDEFINED.
+ */
+SCM_DEFINE (close_page, "%close-page!", 1, 0, 0,
+            (SCM page_s), "Close a page.")
+{
+  /* Ensure that the argument is a page smob */
+  SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
+              SCM_ARG1, s_close_page);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  PAGE *page = edascm_to_page (page_s);
+
+  s_page_delete (toplevel, page);
+
+  return SCM_UNDEFINED;
+}
+
 /*! \brief Get the filename associated with a page.
  * \par Function Description
  * Retrieves the filename associated with the #PAGE smob \a page_s.
@@ -277,8 +305,9 @@ init_module_geda_core_page ()
 
   /* Add them to the module's public definitions. */
 
-  scm_c_export (s_active_pages, s_new_page, s_page_filename, s_page_contents,
-                s_object_page, s_page_append_, s_page_remove_, NULL);
+  scm_c_export (s_active_pages, s_new_page, s_close_page,
+                s_page_filename, s_page_contents, s_object_page, s_page_append_,
+                s_page_remove_, NULL);
 }
 
 /*!

@@ -172,7 +172,7 @@ SCM_DEFINE (active_page, "%active-page", 0, 0, 0,
  * \note Scheme API: Implements the %set-active-page! procedure in the
  * (gschem core window) module.
  *
- * \param page_s
+ * \param page_s Page to switch to.
  * \return \a page_s.
  */
 SCM_DEFINE (set_active_page, "%set-active-page!", 1, 0, 0,
@@ -184,6 +184,48 @@ SCM_DEFINE (set_active_page, "%set-active-page!", 1, 0, 0,
   x_window_set_current_page (g_current_window (), page);
 
   return page_s;
+}
+
+/*!
+ * \brief Close a page
+ * \par Function Description
+ * Closes the page \a page_s.
+ *
+ * \note Scheme API: Implements the %close-page! procedure in the
+ * (gschem core window) module.  Overrides the %close-page! procedure
+ * in the (geda core page) module.
+ *
+ * \param page_s Page to close.
+ * \return SCM_UNDEFINED
+ */
+SCM_DEFINE (close_page, "%close-page!", 1, 0, 0,
+            (SCM page_s), "Close a page.")
+{
+  /* Ensure that the argument is a page smob */
+  SCM_ASSERT (edascm_is_page (page_s), page_s,
+              SCM_ARG1, s_close_page);
+
+  GSCHEM_TOPLEVEL *w_current = g_current_window ();
+  TOPLEVEL *toplevel = w_current->toplevel;
+  PAGE *page = edascm_to_page (page_s);
+
+  /* If page is not the current page, switch pages, then switch back
+   * after closing page. */
+  PAGE *curr_page = toplevel->page_current;
+  int reset_page = (page != curr_page);
+  if (reset_page)
+    x_window_set_current_page (w_current, page);
+
+  if (w_current->toplevel->page_current->CHANGED) {
+    x_dialog_close_changed_page (w_current, w_current->toplevel->page_current);
+  } else {
+    x_window_close_page (w_current, w_current->toplevel->page_current);
+  }
+
+  if (reset_page)
+    x_window_set_current_page (w_current, curr_page);
+
+  return SCM_UNDEFINED;
 }
 
 /*!
@@ -199,7 +241,15 @@ init_module_gschem_core_window ()
   #include "g_window.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_current_window, s_active_page, s_set_active_page, NULL);
+  scm_c_export (s_current_window, s_active_page, s_set_active_page, s_close_page,
+                NULL);
+
+  /* Override procedures in the (geda core page) module */
+  {
+    SCM geda_page_module = scm_c_resolve_module ("geda core page");
+    SCM close_page_proc = scm_variable_ref (scm_c_lookup (s_close_page));
+    scm_c_module_define (geda_page_module, s_close_page, close_page_proc);
+  }
 }
 
 /*!

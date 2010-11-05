@@ -20,7 +20,10 @@
 (define-module (gschem window)
 
   ; Import C procedures
-  #:use-module (gschem core window))
+  #:use-module (gschem core window)
+
+  #:use-module (geda page)
+  #:re-export (close-page!))
 
 (define-public active-page %active-page)
 (define-public set-active-page! %set-active-page!)
