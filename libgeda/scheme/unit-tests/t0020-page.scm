@@ -10,6 +10,10 @@
          (page-b (make-page "/test/page/B")))
      (assert-equal "/test/page/A" (page-filename page-a))
      (assert-equal (list page-a page-b) (active-pages))
+
+     (assert-equal page-a (set-page-filename! page-a "/test/page/C"))
+     (assert-equal "/test/page/C" (page-filename page-a))
+
      (close-page! page-a)
      (assert-equal (list page-b) (active-pages))
      (close-page! page-b)))

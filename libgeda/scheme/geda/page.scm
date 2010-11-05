@@ -32,6 +32,7 @@
 (define-public make-page %new-page)
 (define-public close-page! %close-page!)
 (define-public page-filename %page-filename)
+(define-public set-page-filename! %set-page-filename!)
 (define-public page-contents %page-contents)
 (define-public page-append! %page-append!)
 (define-public page-remove! %page-remove!)

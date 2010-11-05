@@ -134,6 +134,36 @@ SCM_DEFINE (page_filename, "%page-filename", 1, 0, 0,
   return scm_from_locale_string (page->page_filename);
 }
 
+/*! \brief Change the filename associated with a page.
+ * \par Function Description
+ * Sets the filename associated with the #PAGE smob \a page_s.
+ *
+ * \note Scheme API: Implements the %set-page-filename! procedure of
+ * the (geda core page) module.
+ *
+ * \param page_s page to set filename for.
+ * \param filename_s new filename for \a page.
+ * \return \a page.
+ */
+SCM_DEFINE (set_page_filename, "%set-page-filename!", 2, 0, 0,
+            (SCM page_s, SCM filename_s), "Set a page's associated filename")
+{
+  SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
+              SCM_ARG1, s_set_page_filename);
+  SCM_ASSERT (scm_is_string (filename_s), filename_s,
+              SCM_ARG2, s_set_page_filename);
+
+  PAGE *page = edascm_to_page (page_s);
+  char *new_fn = scm_to_locale_string (filename_s);
+  if (page->page_filename != NULL) {
+    g_free (page->page_filename);
+  }
+  page->page_filename = g_strdup (new_fn);
+  free (new_fn);
+
+  return page_s;
+}
+
 /*! \brief Get a list of objects in a page.
  * \par Function Description
  * Retrieves the contents of a the #PAGE smob \a page_s as a Scheme
@@ -353,8 +383,9 @@ init_module_geda_core_page ()
   /* Add them to the module's public definitions. */
 
   scm_c_export (s_active_pages, s_new_page, s_close_page,
-                s_page_filename, s_page_contents, s_object_page, s_page_append_,
-                s_page_remove_, s_page_dirty, s_set_page_dirty, NULL);
+                s_page_filename, s_set_page_filename, s_page_contents,
+                s_object_page, s_page_append_, s_page_remove_, s_page_dirty,
+                s_set_page_dirty, NULL);
 }
 
 /*!
