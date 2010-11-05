@@ -37,6 +37,8 @@
 
 (define-public copy-object %copy-object)
 
+(define-public object-bounds %object-bounds)
+
 (define-public object-color %object-color)
 (define-public set-object-color! %set-object-color!)
 

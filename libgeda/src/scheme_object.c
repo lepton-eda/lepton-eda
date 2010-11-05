@@ -225,6 +225,67 @@ SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
   return result;
 }
 
+/*! \brief Get the bounds of a list of objects
+ * \par Function Description
+ * Returns the bounds of the objects in the list formed by prepending
+ * \a obj_s to \a rst_s. The bounds are returned as a pair structure
+ * of the form:
+ *
+ * <code>((left . top) . (right . bottom))</code>
+ *
+ * If none of the objects has any bounds (e.g. because they are all
+ * empty components and/or text strings), returns SCM_BOOL_F.
+ *
+ * \warning This function always returns the actual bounds of the
+ * objects, not the visible bounds.
+ *
+ * \note Scheme API: Implements the %object-bounds procedure in
+ * the (geda core object) module.  The procedure takes one or more
+ * #OBJECT smobs as arguments.
+ *
+ * \param [in] obj_s #OBJECT to get bounds for.
+ * \param [in] rst_s Variable-length list of additional #OBJECT arguments.
+ * \return bounds of objects or SCM_BOOL_F.
+ */
+SCM_DEFINE (object_bounds, "%object-bounds", 1, 0, 1,
+            (SCM obj_s, SCM rst_s), "Get the bounds of one or more objects")
+{
+  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
+              SCM_ARG1, s_object_bounds);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (obj_s);
+
+  GList *obj_list = edascm_to_object_glist (rst_s, s_object_bounds);
+  obj_list = g_list_prepend (obj_list, obj);
+
+  int success, left, top, right, bottom;
+  if (toplevel->show_hidden_text) {
+    success = world_get_object_glist_bounds (toplevel, obj_list,
+                                             &left, &top, &right, &bottom);
+  } else {
+    toplevel->show_hidden_text = TRUE;
+    o_recalc_object_glist (toplevel, obj_list);
+
+    success = world_get_object_glist_bounds (toplevel, obj_list,
+                                             &left, &top, &right, &bottom);
+
+    toplevel->show_hidden_text = FALSE;
+    o_recalc_object_glist (toplevel, obj_list);
+  }
+
+  SCM result = SCM_BOOL_F;
+  if (success) {
+    result = scm_cons (scm_cons (scm_from_int (min(left, right)),
+                                 scm_from_int (max(top, bottom))),
+                       scm_cons (scm_from_int (max(left, right)),
+                                 scm_from_int (min(top, bottom))));
+  }
+
+  scm_remember_upto_here_2 (obj_s, rst_s);
+  return result;
+}
+
 /*! \brief Get the color of an object.
  * \par Function Description
  * Returns the colormap index of the color used to draw the #OBJECT
@@ -1098,7 +1159,7 @@ init_module_geda_core_object ()
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_object_type, s_copy_object,
+  scm_c_export (s_object_type, s_copy_object, s_object_bounds,
                 s_object_color, s_set_object_color,
                 s_make_line, s_make_net, s_make_bus,
                 s_make_pin, s_pin_type,
