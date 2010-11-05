@@ -309,12 +309,19 @@ SCM_DEFINE (complex_remove, "%complex-remove!", 2, 0, 0,
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *parent = edascm_to_object (complex_s);
   OBJECT *child = edascm_to_object (obj_s);
+  PAGE *child_page = o_get_page (toplevel, child);
 
-  /* Check that object is not attached to a page or a different complex. */
-  if ((o_get_page (toplevel, child) != NULL)
-      || ((child->parent != NULL) && (child->parent != parent))) {
+  /* Check that object is not attached to a different complex. */
+  if ((child->parent != NULL) && (child->parent != parent)) {
     scm_error (edascm_object_state_sym, s_complex_remove,
-               _("Object ~A is attached to a page or a different complex"),
+               _("Object ~A is attached to a different complex"),
+               scm_list_1 (obj_s), SCM_EOL);
+  }
+
+  /* Check that object is not attached to a page. */
+  if ((child->parent == NULL) && (child_page != NULL)) {
+    scm_error (edascm_object_state_sym, s_complex_remove,
+               _("Object ~A is attached to a page"),
                scm_list_1 (obj_s), SCM_EOL);
   }
 

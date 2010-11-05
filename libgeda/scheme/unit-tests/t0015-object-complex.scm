@@ -51,17 +51,11 @@
     (assert-equal (list x y) (component-contents A))
 
     (assert-thrown 'object-state
-                   (component-append! B x))
-
-    (assert-thrown 'object-state
-      (let* ((P (make-page "/test/page/A"))
-             (z (page-append! P (make-line '(1 . 0) '(2 . 2)))))
-        (component-append! A z)))))
+                   (component-append! B x))))
 
 (begin-test 'component-remove
   (let ((A (make-component "test component" '(1 . 2) 0 #t #f))
         (B (make-component "test component" '(1 . 2) 0 #t #f))
-        (P (make-page "/test/page/A"))
         (x (make-line '(0 . 0) '(2 . 0)))
         (y (make-line '(0 . 0) '(0 . 2)))
         (z (make-line '(1 . 0) '(2 . 2))))
@@ -78,11 +72,58 @@
     (assert-equal (list y) (component-contents A))
 
     (assert-thrown 'object-state
-                   (component-remove! B y))
+                   (component-remove! B y))))
 
-    (page-append! P z)
-    (assert-thrown 'object-state
-        (component-remove! A z))
+(begin-test 'component-append/page
+  (let ((P (make-page "/test/page/A"))
+        (A (make-component "test component" '(1 . 2) 0 #t #f))
+        (x (make-line '(0 . 0) '(2 . 0)))
+        (y (make-line '(0 . 0) '(0 . 2))))
+    (dynamic-wind
+     (lambda () #t)
+     (lambda ()
+       (page-append! P x)
+       (assert-thrown 'object-state
+                      (component-append! A x))
+
+       (page-append! P A)
+       (assert-thrown 'object-state
+                      (component-append! A x))
+
+       (component-append! A y)
+       (assert-equal (list y) (component-contents A)))
+
+     (lambda ()
+       (close-page! P)))
+    ))
+
+(begin-test 'component-remove/page
+  (let ((P (make-page "/test/page/A"))
+        (A (make-component "test component" '(1 . 2) 0 #t #f))
+        (x (make-line '(0 . 0) '(2 . 0)))
+        (y (make-line '(0 . 0) '(0 . 2))))
+    (dynamic-wind
+     (lambda () #t)
+     (lambda ()
+       ;; Test that if a primitive object is attached directly to
+       ;; a page, attempting to remove it from a component
+       ;; doesn't work.
+       (page-append! P x)
+       (assert-thrown 'object-state
+                      (component-remove! A x))
+
+       (page-append! P A)
+       (assert-thrown 'object-state
+                      (component-remove! A x))
+
+       ;; Test that you can remove primitive objects from a
+       ;; component that is attached to a page.
+       (component-append! A y)
+       (component-remove! A y)
+       (assert-equal '() (component-contents A)))
+
+     (lambda ()
+       (close-page! P)))
     ))
 
 (begin-test 'component-translate
