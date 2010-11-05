@@ -54,6 +54,12 @@ SCM_SYMBOL (name_sym , "name");
 SCM_SYMBOL (value_sym , "value");
 SCM_SYMBOL (both_sym , "both");
 
+void o_page_changed (TOPLEVEL *t, OBJECT *o)
+{
+  PAGE *p = o_get_page (t, o);
+  if (p != NULL) p->CHANGED = TRUE;
+}
+
 /*! \brief Convert a Scheme object list to a GList.
  * \par Function Description
  * Takes a Scheme list of #OBJECT smobs, and returns a GList
@@ -262,8 +268,11 @@ SCM_DEFINE (set_object_color, "%set-object-color!", 2, 0, 0,
   SCM_ASSERT (scm_is_integer (color_s), color_s,
               SCM_ARG2, s_set_object_color);
 
-  o_set_color (edascm_c_current_toplevel (),
-               edascm_to_object (obj_s), scm_to_int (color_s));
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (obj_s);
+  o_set_color (toplevel, obj, scm_to_int (color_s));
+
+  o_page_changed (toplevel, obj);
 
   return obj_s;
 }
@@ -358,6 +367,8 @@ SCM_DEFINE (set_line, "%set-line!", 6, 0, 0,
     return line_s;
   }
   o_set_color (toplevel, obj, scm_to_int (color_s));
+
+  o_page_changed (toplevel, obj);
 
   return line_s;
 }
@@ -601,6 +612,8 @@ SCM_DEFINE (set_box, "%set-box!", 6, 0, 0,
                     scm_to_int (x2_s), scm_to_int (y2_s));
   o_set_color (toplevel, obj, scm_to_int (color_s));
 
+  o_page_changed (toplevel, obj);
+
   return box_s;
 }
 
@@ -694,6 +707,8 @@ SCM_DEFINE (set_circle, "%set-circle!", 5, 0, 0,
                    CIRCLE_CENTER);
   o_circle_modify (toplevel, obj, scm_to_int(r_s), 0, CIRCLE_RADIUS);
   o_set_color (toplevel, obj, scm_to_int (color_s));
+
+  o_page_changed (toplevel, obj);
 
   return circle_s;
 }
@@ -795,6 +810,8 @@ SCM_DEFINE (set_arc, "%set-arc!", 7, 0, 0,
   o_arc_modify (toplevel, obj, scm_to_int(start_angle_s), 0, ARC_START_ANGLE);
   o_arc_modify (toplevel, obj, scm_to_int(end_angle_s), 0, ARC_END_ANGLE);
   o_set_color (toplevel, obj, scm_to_int (color_s));
+
+  o_page_changed (toplevel, obj);
 
   return arc_s;
 }
@@ -982,6 +999,8 @@ SCM_DEFINE (set_text, "%set-text!", 10, 0, 0,
 
   /* Color */
   o_set_color (toplevel, obj, scm_to_int (color_s));
+
+  o_page_changed (toplevel, obj);
 
   return text_s;
 }

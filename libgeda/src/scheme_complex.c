@@ -165,6 +165,8 @@ SCM_DEFINE (set_complex, "%set-complex!", 6, 0, 0,
 
   o_emit_change_notify (toplevel, obj);
 
+  o_page_changed (toplevel, obj);
+
   return complex_s;
 }
 
@@ -281,6 +283,8 @@ SCM_DEFINE (complex_append, "%complex-append!", 2, 0, 0,
 
   o_emit_change_notify (toplevel, parent);
 
+  o_page_changed (toplevel, parent);
+
   return obj_s;
 }
 
@@ -350,6 +354,8 @@ SCM_DEFINE (complex_remove, "%complex-remove!", 2, 0, 0,
   child->parent = NULL;
 
   o_emit_change_notify (toplevel, parent);
+
+  o_page_changed (toplevel, parent);
 
   /* Object cleanup now managed by Guile. */
   edascm_c_set_gc (obj_s, 1);
