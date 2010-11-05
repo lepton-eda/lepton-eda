@@ -93,3 +93,27 @@
     (attach-attrib! pin attrib)
     (assert-thrown 'object-state (component-remove! comp pin))
     (assert-thrown 'object-state (component-remove! comp attrib))))
+
+
+;; Set up component library, making blatant assumptions about the
+;; directory layout.
+(component-library "../../symbols/analog" "Basic devices")
+
+(begin-test 'component/library
+  (let ((A (make-component/library "resistor-1.sym" '(1 . 2) 0 #t #f))
+        (B (make-component/library "invalid-component-name" '(1 . 2) 0 #t #f)))
+
+    (assert-true A)
+    (assert-equal '(1 . 2) (component-position A))
+    (assert-equal 0 (component-angle A))
+    (assert-true (component-mirror? A))
+    (assert-true (not (component-locked? A)))
+
+    (assert-equal "resistor-1.sym" (component-basename A))
+
+    (assert-true (not (null? (component-contents A))))
+
+    (assert-true (not B))))
+
+;; Clear component library again
+(reset-component-library)

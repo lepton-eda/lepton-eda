@@ -549,6 +549,17 @@
   (let ((c (%make-complex basename)))
     (apply set-component! c args)))
 
+;; make-component/library basename position angle mirror locked
+;;
+;; Make a new component object by searching the component library for
+;; the given basename, and instatiate it with the given parameters.
+;; See set-component! for full description of arguments.  Returns #f
+;; if basename was not found in the component library.  The component
+;; is not initially embedded.
+(define-public (make-component/library basename . args)
+  (let ((c (%make-complex/library basename)))
+    (if c (apply set-component! c args) #f)))
+
 ;; component-info c
 ;;
 ;; Returns the parameters of the component object c as a list of the

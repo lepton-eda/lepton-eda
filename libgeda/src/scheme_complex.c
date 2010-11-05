@@ -58,6 +58,51 @@ SCM_DEFINE (make_complex, "%make-complex", 1, 0, 0,
   return result;
 }
 
+/*! \brief Instantiate a complex object from the component library.
+ * \par Function Description
+
+ * Searches the component library for a component with the given \a
+ * basename.  If found, creates a new complex object by instantiating
+ * that library component.  It is initially set to be unembedded.  If
+ * no match is found for \a basename in the library, returns
+ * SCM_BOOL_F.
+ *
+ * \note Scheme API: Implements the %make-complex/library procedure in
+ * the (geda core complex) module.
+ *
+ * \param basename component name to search for in the component
+ *                 library.
+ * \return a newly-created complex object.
+ */
+SCM_DEFINE (make_complex_library, "%make-complex/library", 1, 0, 0,
+            (SCM basename_s),
+            "Instantiate a complex object from the component library.")
+{
+  SCM_ASSERT (scm_is_string (basename_s), basename_s, SCM_ARG1,
+              s_make_complex_library);
+
+  char *basename = scm_to_locale_string (basename_s);
+  scm_dynwind_begin (0);
+  scm_dynwind_unwind_handler (free, basename, SCM_F_WIND_EXPLICITLY);
+
+  SCM result = SCM_BOOL_F;
+  const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
+  if (clib != NULL) {
+    OBJECT *obj = o_complex_new (edascm_c_current_toplevel (),
+                                 OBJ_COMPLEX, DEFAULT_COLOR, 0, 0, 0,
+                                 FALSE, clib, basename, TRUE);
+
+    result = edascm_from_object (obj);
+
+    /* At the moment, the only pointer to the object is owned by the
+     * smob. */
+    edascm_c_set_gc (result, TRUE);
+  }
+
+  scm_dynwind_end ();
+  return result;
+}
+
 /*! \brief Set complex object parameters.
  * \par Function Description
  * Modifies the complex object \a complex_s by setting its parameters
@@ -313,9 +358,9 @@ init_module_geda_core_complex ()
   #include "scheme_complex.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_make_complex, s_set_complex, s_complex_info,
-                s_complex_contents, s_complex_append, s_complex_remove,
-                NULL);
+  scm_c_export (s_make_complex, s_make_complex_library, s_set_complex,
+                s_complex_info, s_complex_contents, s_complex_append,
+                s_complex_remove, NULL);
 }
 
 /*!
