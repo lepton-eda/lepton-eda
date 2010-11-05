@@ -25,7 +25,6 @@
 #include <math.h>
 
 #include "gschem.h"
-#include <libgeda/libgedaguile.h>
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>

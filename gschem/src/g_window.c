@@ -19,7 +19,6 @@
 #include <config.h>
 
 #include "gschem.h"
-#include <libgeda/libgedaguile.h>
 
 SCM scheme_window_fluid = SCM_UNDEFINED;
 
