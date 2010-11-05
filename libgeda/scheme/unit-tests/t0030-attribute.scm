@@ -19,58 +19,102 @@
     (assert-true (not (attrib-value bad))) ))
 
 (begin-test 'attach-attrib
-  (let ((page1 (make-page "/test/page/1"))
-        (page2 (make-page "/test/page/2"))
-        (comp1 (make-component "testcomponent1" '(0 . 0) 0 #f #f))
-        (comp2 (make-component "testcomponent2" '(0 . 0) 0 #f #f))
-        (pin (make-net-pin '(0 . 0) '(100 . 0)))
+  (let ((C (make-component "testcomponent1" '(0 . 0) 0 #f #f))
+        (D (make-component "testcomponent2" '(0 . 0) 0 #f #f))
+        (p (make-net-pin '(0 . 0) '(100 . 0)))
+        (q (make-net-pin '(0 . 0) '(100 . 0)))
         (x (make-text '(0 . 0) 'lower-left 0 "name=x" 10 #t 'both))
-        (y (make-text '(0 . 0) 'lower-left 0 "name=y" 10 #t 'both)))
+        (y (make-text '(0 . 0) 'lower-left 0 "name=y" 10 #t 'both))
+        (z (make-text '(0 . 0) 'lower-left 0 "name=z" 10 #t 'both)))
 
-    ;; This test is particularly long-winded because it tries to
-    ;; exhaustively test every possible reason for attach-attrib! to
-    ;; fail.
+    ;; Attach attribute outside component or page
+    (assert-thrown 'object-state (attach-attrib! C x))
+    (assert-equal '() (object-attribs C))
+    (assert-true (not (attrib-attachment x)))
 
-    (assert-thrown 'object-state
-      (attach-attrib! pin x))
+    ;; Populate components
+    (for-each (lambda (o) (component-append! C o)) (list p q x y))
+    (component-append! D z)
 
-    (component-append! comp1 pin)
-    (assert-thrown 'object-state
-      (attach-attrib! pin x))
+    ;; Attach attribute to object in same component
+    (assert-equal x (attach-attrib! p x))
+    (assert-equal (list x) (object-attribs p))
+    (assert-equal p (attrib-attachment x))
 
-    (component-append! comp1 x)
-    (assert-equal x (attach-attrib! pin x))
-    (assert-equal (list x) (object-attribs pin))
+    ;; Attach attribute which is already attached, within same
+    ;; component
+    (assert-thrown 'object-state (attach-attrib! q x))
 
-    (assert-thrown 'object-state
-      (attach-attrib! x y))
+    ;; Attach attribute to object in different component
+    (assert-thrown 'object-state (attach-attrib! p z))
+    (assert-equal (list x) (object-attribs p))
+    (assert-true (not (attrib-attachment z)))
 
-    (assert-thrown 'object-state
-      (attach-attrib! y x))
+    ;; Attach internal attribute to containing component
+    (assert-thrown 'object-state (attach-attrib! D z))
+    (assert-equal '() (object-attribs D))
+    (assert-true (not (attrib-attachment z)))
 
-    (component-append! comp2 y)
-    (assert-thrown 'object-state
-      (attach-attrib! pin y))
+    ;; Attach attribute in component to floating object
+    (assert-thrown 'object-state (attach-attrib! C z))
+    (assert-equal '() (object-attribs C))
+    (assert-true (not (attrib-attachment z)))
 
-    (component-remove! comp2 y)
+    ;; Attach floating attribute to object in component
+    (component-remove! D z)
+    (assert-thrown 'object-state (attach-attrib! p z))
+    (assert-equal (list x) (object-attribs p))
+    (assert-true (not (attrib-attachment z)))
 
-    (page-append! page1 comp1)
-    (assert-thrown 'object-state
-      (attach-attrib! comp1 y))
+    ;; Attach multiple attributes
+    (assert-equal y (attach-attrib! p y))
+    (assert-equal (list x y) (object-attribs p))
+    (assert-equal p (attrib-attachment y))
+    ))
 
-    (page-append! page1 y)
-    (assert-thrown 'object-state
-      (attach-attrib! pin y))
+(begin-test 'attach-attrib/page
+  (let ((P (make-page "/test/page/A"))
+        (Q (make-page "/test/page/A"))
+        (p (make-net-pin '(0 . 0) '(100 . 0)))
+        (x (make-text '(1 . 2) 'lower-left 0 "name=value" 10 #t 'both))
+        (y (make-text '(1 . 2) 'lower-left 0 "name=value" 10 #t 'both))
+        (z (make-text '(1 . 2) 'lower-left 0 "name=value" 10 #t 'both))
+        (C (make-component "test component" '(1 . 2) 0 #t #f)))
 
-    (page-remove! page1 y)
-    (page-append! page2 y)
-    (assert-thrown 'object-state
-      (attach-attrib! comp1 y))
+    (dynamic-wind ; Make sure pages are cleaned up
+        (lambda () #f)
+        (lambda ()
+          ; Populate pages
+          (page-append! P x) (page-append! P C)
+          (component-append! C p) (component-append! C y)
 
-    (page-remove! page2 y)
-    (page-append! page1 y)
-    (assert-equal y (attach-attrib! comp1 y))
-    (assert-equal (list y) (object-attribs comp1)) ))
+          (page-append! Q z)
+
+          ; Attach attribute to component in same page
+          (attach-attrib! C x)
+          (assert-equal (list x) (object-attribs C))
+          (assert-equal C (attrib-attachment x))
+
+          ; Remove stuff from page
+          (assert-thrown 'object-state (page-remove! P x))
+          (assert-thrown 'object-state (page-remove! P C))
+
+          ; Attach attribute to component in different page
+          (assert-thrown 'object-state (attach-attrib! C z))
+
+          ; Attach attribute to pin in component in page
+          (attach-attrib! p y)
+          (assert-equal (list y) (object-attribs p))
+          (assert-equal p (attrib-attachment y))
+
+          ; Remove stuff from component in page
+          (assert-thrown 'object-state (component-remove! C p))
+          (assert-thrown 'object-state (component-remove! C y)) )
+        (lambda ()
+          (close-page! P)
+          (close-page! Q) ))
+
+    ))
 
 (begin-test 'detach-attrib
   (let ((page (make-page "/test/page/1"))
