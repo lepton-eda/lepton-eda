@@ -85,6 +85,14 @@
         (component-remove! A z))
     ))
 
+(begin-test 'component-translate
+  (let* ((A (make-component "test component" '(0 . 0) 0 #t #f))
+         (x (component-append! A (make-box '(0 . 2) '(2 . 0)))))
+
+    (set-component! A '(1 . 1) 0 #t #f)
+    (assert-equal '(1 . 3) (box-top-left x))
+    (assert-equal '(3 . 1) (box-bottom-right x))))
+
 (begin-test 'component-remove-attrib
   (let ((comp (make-component "test component" '(1 . 2) 0 #t #f))
         (pin (make-net-pin '(0 . 0) '(100 . 0)))

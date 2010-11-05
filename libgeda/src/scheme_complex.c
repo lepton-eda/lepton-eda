@@ -151,8 +151,12 @@ SCM_DEFINE (set_complex, "%set-complex!", 6, 0, 0,
 
   o_emit_pre_change_notify (toplevel, obj);
 
-  obj->complex->x = scm_to_int (x_s);
-  obj->complex->y = scm_to_int (y_s);
+  int x = scm_to_int (x_s);
+  int y = scm_to_int (y_s);
+  o_translate_world (toplevel,
+                     x - obj->complex->x,
+                     y - obj->complex->y,
+                     obj);
   obj->complex->angle = angle;
   obj->complex->mirror = scm_is_true (mirror_s);
   obj->sel_func = scm_is_true (locked_s) ? NULL : select_func;
