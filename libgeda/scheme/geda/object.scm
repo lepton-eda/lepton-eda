@@ -623,3 +623,31 @@
 ;; Removes obj from the primitive objects of the component c.  Returns
 ;; obj.
 (define-public component-remove! %complex-remove!)
+
+;;;; Fill and stroke
+
+(define-public object-stroke %object-stroke)
+(define-public set-object-stroke! %set-object-stroke!)
+
+;; object-stroke-width obj
+;;
+;; Returns the stroke width used to draw obj
+(define-public (object-stroke-width obj)
+  (list-ref (object-stroke obj) 0))
+
+;; object-stroke-cap obj
+;;
+;; Returns the cap style used to draw obj. One of the symbols none,
+;; square or round.
+(define-public (object-stroke-cap obj)
+  (list-ref (object-stroke obj) 1))
+
+;; object-stroke-dash obj
+;;
+;; Returns the dash style used to draw obj.  The style is returned as
+;; a list, where the first element is the style itself (one of the
+;; symbols solid, dotted, dashed, center or phantom), and the
+;; remaining elements (if present) are the dot/dash spacing and dash
+;; length used in the dash style.
+(define-public (object-stroke-dash obj)
+  (list-tail (object-stroke obj) 2))

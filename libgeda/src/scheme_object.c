@@ -54,6 +54,16 @@ SCM_SYMBOL (name_sym , "name");
 SCM_SYMBOL (value_sym , "value");
 SCM_SYMBOL (both_sym , "both");
 
+SCM_SYMBOL (none_sym, "none");
+SCM_SYMBOL (square_sym , "square");
+SCM_SYMBOL (round_sym , "round");
+
+SCM_SYMBOL (solid_sym , "solid");
+SCM_SYMBOL (dotted_sym , "dotted");
+SCM_SYMBOL (dashed_sym , "dashed");
+SCM_SYMBOL (center_sym , "center");
+SCM_SYMBOL (phantom_sym , "phantom");
+
 void o_page_changed (TOPLEVEL *t, OBJECT *o)
 {
   PAGE *p = o_get_page (t, o);
@@ -284,6 +294,175 @@ SCM_DEFINE (object_bounds, "%object-bounds", 1, 0, 1,
 
   scm_remember_upto_here_2 (obj_s, rst_s);
   return result;
+}
+
+/*! \brief Get the stroke properties of an object.
+ * \par Function Description
+ * Returns the stroke settings of the object \a obj_s.  If \a obj_s is
+ * not a line, box, circle, arc, or path, throws a Scheme error.  The
+ * return value is a list of parameters:
+ *
+ * -# stroke width
+ * -# cap style (a symbol: none, square or round)
+ * -# dash style (a symbol: solid, dotted, dashed, center or phantom)
+ * -# up to two dash parameters, depending on dash style:
+ *    -# For solid lines, no parameters.
+ *    -# For dotted lines, dot spacing.
+ *    -# For other styles, dot/dash spacing and dash length.
+ *
+ * \note Scheme API: Implements the %object-stroke procedure in the
+ * (geda core object) module.
+ *
+ * \param obj_s object to get stroke settings for.
+ * \return a list of stroke parameters.
+ */
+SCM_DEFINE (object_stroke, "%object-stroke", 1, 0, 0,
+            (SCM obj_s), "Get the stroke properties of an object.")
+{
+  SCM_ASSERT ((edascm_is_object_type (obj_s, OBJ_LINE)
+               || edascm_is_object_type (obj_s, OBJ_BOX)
+               || edascm_is_object_type (obj_s, OBJ_CIRCLE)
+               || edascm_is_object_type (obj_s, OBJ_ARC)
+               || edascm_is_object_type (obj_s, OBJ_PATH)),
+              obj_s, SCM_ARG1, s_object_stroke);
+
+  OBJECT *obj = edascm_to_object (obj_s);
+
+  int end, type, width, length, space;
+  o_get_line_options (obj, (OBJECT_END *) &end, (OBJECT_TYPE *) &type, &width,
+                      &length, &space);
+
+  SCM width_s = scm_from_int (width);
+  SCM length_s = scm_from_int (length);
+  SCM space_s = scm_from_int (space);
+
+  SCM cap_s;
+  switch (end) {
+  case END_NONE: cap_s = none_sym; break;
+  case END_SQUARE: cap_s = square_sym; break;
+  case END_ROUND: cap_s = round_sym; break;
+  default:
+    scm_misc_error (s_object_stroke,
+                    _("Object ~A has invalid stroke cap style ~A"),
+                    scm_list_2 (obj_s, scm_from_int (end)));
+  }
+
+  SCM dash_s;
+  switch (type) {
+  case TYPE_SOLID: dash_s = solid_sym; break;
+  case TYPE_DOTTED: dash_s = dotted_sym; break;
+  case TYPE_DASHED: dash_s = dashed_sym; break;
+  case TYPE_CENTER: dash_s = center_sym; break;
+  case TYPE_PHANTOM: dash_s = phantom_sym; break;
+  default:
+    scm_misc_error (s_object_stroke,
+                    _("Object ~A has invalid stroke dash style ~A"),
+                    scm_list_2 (obj_s, scm_from_int (type)));
+  }
+
+  switch (type) {
+  case TYPE_DASHED:
+  case TYPE_CENTER:
+  case TYPE_PHANTOM:
+    return scm_list_5 (width_s, cap_s, dash_s, space_s, length_s);
+  case TYPE_DOTTED:
+    return scm_list_4 (width_s, cap_s, dash_s, space_s);
+  default:
+    return scm_list_3 (width_s, cap_s, dash_s);
+  }
+}
+
+/*! \brief Set the stroke properties of an object.
+ * \par Function Description
+ * Updates the stroke settings of the object \a obj_s.  If \a obj_s is
+ * not a line, box, circle, arc, or path, throws a Scheme error.  The
+ * optional parameters \a space_s and \a length_s can be set to
+ * SCM_UNDEFINED if not required by the dash style \a dash_s.
+ *
+ * \note Scheme API: Implements the %object-stroke procedure in the
+ * (geda core object) module.
+ *
+ * \param obj_s object to set stroke settings for.
+ * \param width_s new stroke width for \a obj_s.
+ * \param cap_s new stroke cap style for \a obj_s.
+ * \param dash_s new dash style for \a obj_s.
+ * \param space_s dot/dash spacing for dash styles other than solid.
+ * \param length_s dash length for dash styles other than solid or
+ *                 dotted.
+ * \return \a obj_s.
+ */
+SCM_DEFINE (set_object_stroke, "%set-object-stroke!", 4, 2, 0,
+            (SCM obj_s, SCM width_s, SCM cap_s, SCM dash_s, SCM space_s,
+             SCM length_s), "Set the stroke properties of an object.")
+{
+  SCM_ASSERT ((edascm_is_object_type (obj_s, OBJ_LINE)
+               || edascm_is_object_type (obj_s, OBJ_BOX)
+               || edascm_is_object_type (obj_s, OBJ_CIRCLE)
+               || edascm_is_object_type (obj_s, OBJ_ARC)
+               || edascm_is_object_type (obj_s, OBJ_PATH)),
+              obj_s, SCM_ARG1, s_set_object_stroke);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (obj_s);
+  int cap, type, width, length = -1, space = -1;
+
+  SCM_ASSERT (scm_is_integer (width_s), width_s,
+              SCM_ARG2, s_set_object_stroke);
+  SCM_ASSERT (scm_is_symbol (cap_s), cap_s,
+              SCM_ARG3, s_set_object_stroke);
+  SCM_ASSERT (scm_is_symbol (dash_s), dash_s,
+              SCM_ARG4, s_set_object_stroke);
+
+  width = scm_to_int (width_s);
+
+  if      (cap_s == none_sym)   { cap = END_NONE;   }
+  else if (cap_s == square_sym) { cap = END_SQUARE; }
+  else if (cap_s == round_sym)  { cap = END_ROUND;  }
+  else {
+    scm_misc_error (s_set_object_stroke,
+                    _("Invalid stroke cap style ~A."),
+                    scm_list_1 (cap_s));
+  }
+
+  if      (dash_s == solid_sym)   { type = TYPE_SOLID;   }
+  else if (dash_s == dotted_sym)  { type = TYPE_DOTTED;  }
+  else if (dash_s == dashed_sym)  { type = TYPE_DASHED;  }
+  else if (dash_s == center_sym)  { type = TYPE_CENTER;  }
+  else if (dash_s == phantom_sym) { type = TYPE_PHANTOM; }
+  else {
+    scm_misc_error (s_set_object_stroke,
+                    _("Invalid stroke dash style ~A."),
+                    scm_list_1 (dash_s));
+  }
+
+  switch (type) {
+  case TYPE_DASHED:
+  case TYPE_CENTER:
+  case TYPE_PHANTOM:
+    if (length_s == SCM_UNDEFINED) {
+      scm_misc_error (s_set_object_stroke,
+                      _("Missing dash length parameter for dash style ~A."),
+                      scm_list_1 (length_s));
+    }
+    SCM_ASSERT (scm_is_integer (length_s), length_s,
+                SCM_ARG6, s_set_object_stroke);
+    length = scm_to_int (length_s);
+    /* This case intentionally falls through */
+  case TYPE_DOTTED:
+    if (space_s == SCM_UNDEFINED) {
+      scm_misc_error (s_set_object_stroke,
+                      _("Missing dot/dash space parameter for dash style ~A."),
+                      scm_list_1 (space_s));
+    }
+    SCM_ASSERT (scm_is_integer (space_s), space_s,
+                SCM_ARG5, s_set_object_stroke);
+    space = scm_to_int (space_s);
+    /* This case intentionally falls through */
+  }
+
+  o_set_line_options (toplevel, obj, cap, type, width, length, space);
+
+  return obj_s;
 }
 
 /*! \brief Get the color of an object.
@@ -1160,6 +1339,7 @@ init_module_geda_core_object ()
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_object_type, s_copy_object, s_object_bounds,
+                s_object_stroke, s_set_object_stroke,
                 s_object_color, s_set_object_color,
                 s_make_line, s_make_net, s_make_bus,
                 s_make_pin, s_pin_type,
