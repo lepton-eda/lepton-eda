@@ -97,7 +97,7 @@ snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
 
 MOSTLYCLEANFILES = *.log core FILE *~
-CLEANFILES = *.log core FILE *~
+CLEANFILES = *.log core FILE *~ $(BUILT_SOURCES)
 DISTCLEANFILES = *.log core FILE *~
 MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in
 

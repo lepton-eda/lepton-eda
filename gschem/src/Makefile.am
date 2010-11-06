@@ -96,6 +96,6 @@ DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 EXTRA_DIST = rcstrings.c
 
 MOSTLYCLEANFILES = *.log core FILE *~
-CLEANFILES = *.log core FILE *~
+CLEANFILES = *.log core FILE *~ $(BUILT_SOURCES)
 DISTCLEANFILES = *.log core FILE *~
 MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in
