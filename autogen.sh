@@ -103,27 +103,31 @@ run_tool() {
 # autopoint_fix [PO_DIR]...
 # ------------------------
 # GNU gettext has a tool called autopoint which is used for copying
-# the gettext build infrastructure into the package. Unfortunately, it
-# only recognizes the top level po directory -- which gEDA doesn't use
-# at all. We therefore run autopoint to populate the top-level po
-# directory, and then copy the files to the po directories that we
-# actually use.
+# the gettext build infrastructure into the package. Unfortunately,
+# some versions of autopoint only recognize the top level po directory
+# -- which gEDA doesn't use at all.
+#
+# To get around this, when we run autopoint we check if it's created
+# the top-level po directory.  If it has, we copy the files to po
+# directories that we actually use.
 #
 # N.b. when this function is called we've cd'd into $srcdir.
 autopoint_fix() {
   top_po="po"
 
   # For safety, refuse to continue if the top level po dir exists.
-  if test -d top_po; then
+  if test -d $top_po; then
     echo "***Error*** $script_name: $top_po exists. Remove it and re-run $script_name"
     ! : #false
   elif run_tool $AUTOPOINT --force; then
-    {
-      for d in $podirs; do
-        echo "$script_name: copying gettext files to $d ..."
-        cp -p $top_po/* $d || break
-      done
-    } && rm -rf $top_po
+    if test -d $top_po; then
+      {
+        for d in $podirs; do
+          echo "$script_name: copying gettext files to $d ..."
+          cp -p $top_po/* $d || break
+        done
+      } && rm -rf $top_po
+    fi
   else
     exit $?
   fi

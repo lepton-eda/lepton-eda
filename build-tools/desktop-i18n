@@ -175,6 +175,7 @@ do_extract() {
       case $name in
         --directory)  search_dirs="$search_dirs $value";;
         --files-from) file_lists="$file_lists $value";;
+        --default-domain) domain="$value"; set x "$@" "$arg"; shift;;
         *)
           # We just want to pass this arg straight to xgettext, so
           # stick it back on the end of the positional parameters
@@ -227,6 +228,13 @@ do_extract() {
     gen_args="$gen_args --directory=$d"
   done
   $XGETTEXT $gen_args "$@"
+
+  # Fix up file suffixes.  Recall that we added .h to the ends of some
+  # filenames -- now we need to remove them from the generated .pot
+  # files.
+  echo "Fixing up $domain.po"
+  sed -i -e "s/.desktop.in.h/.desktop.in/" -e "s/.xml.in.h/.xml.in/" \
+      $domain.po
 
   # Clean up private directory
   rm -rf $priv_dir

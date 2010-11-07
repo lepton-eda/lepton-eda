@@ -9,20 +9,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2009-08-17 13:12+0100\n"
+"POT-Creation-Date: 2010-11-07 10:52+0000\n"
 "PO-Revision-Date: 2010-01-29 16:49+0000\n"
 "Last-Translator: Carlos Nieves Ónega <Unknown>\n"
-"Language-Team: geda-dev <geda-dev@geda.seul.org>\n"
+"Language-Team: gEDA developers <geda-dev@seul.org>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: gattrib/data/geda-gattrib.desktop.in.h:3
+#: gattrib/data/geda-gattrib.desktop.in:3
 msgid "gEDA Attribute Editor"
 msgstr "Editor de Propiedades de gEDA"
 
-#: gattrib/data/geda-gattrib.desktop.in.h:4
+#: gattrib/data/geda-gattrib.desktop.in:4
 msgid "Manipulate component attributes with gattrib"
 msgstr "Manejar propiedades de componentes con gattrib"

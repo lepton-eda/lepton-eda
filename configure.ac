@@ -192,7 +192,6 @@ AC_CONFIG_FILES([Makefile
                  gschem/src/Makefile
                  gschem/examples/Makefile
                  gschem/lib/Makefile
-                 gschem/lib/system-gschemrc
                  gschem/data/Makefile
                  gschem/bitmap/Makefile
                  gschem/tests/Makefile

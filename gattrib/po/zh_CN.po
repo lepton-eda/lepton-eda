@@ -7,20 +7,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2009-08-17 13:12+0100\n"
+"POT-Creation-Date: 2010-11-07 10:52+0000\n"
 "PO-Revision-Date: 2010-02-06 22:10+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
+"Language-Team: gEDA developers <geda-dev@seul.org>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: gattrib/data/geda-gattrib.desktop.in.h:3
+#: gattrib/data/geda-gattrib.desktop.in:3
 msgid "gEDA Attribute Editor"
 msgstr "gEDA 属性编辑器"
 
-#: gattrib/data/geda-gattrib.desktop.in.h:4
+#: gattrib/data/geda-gattrib.desktop.in:4
 msgid "Manipulate component attributes with gattrib"
 msgstr "使用 gattrib 操作组件的属性"
