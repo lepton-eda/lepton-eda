@@ -133,7 +133,7 @@ g_current_window ()
 
   if (!(SCM_SMOB_PREDICATE (window_smob_tag, window_s)
         &&  ((void *)SCM_SMOB_DATA (window_s) != NULL))) {
-    scm_misc_error (NULL, "Found invalid gschem window smob ~S",
+    scm_misc_error (NULL, _("Found invalid gschem window smob ~S"),
                     scm_list_1 (window_s));
   }
 
