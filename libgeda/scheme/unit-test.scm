@@ -58,32 +58,22 @@
   (if result
       #t
       (throw 'test-failed-exception
-             (with-output-to-string
-              (lambda ()
-                (display "  assert-true: ")
-                (display "got: ")
-                (write result))))))
+             (simple-format #f "  assert-true: got: ~S" result))))
 
 (define (assert-equal expected result)
   (if (equal? expected result)
       #t
       (throw 'test-failed-exception
-             (with-output-to-string
-              (lambda ()
-                (display "  assert-equal: expected: ")
-                (write expected)
-                (display " got: ")
-                (write result))))))
+             (simple-format #f "  assert-equal: expected: ~S got: ~S"
+                            expected result))))
 
 (define (%assert-thrown key thunk)
   (catch key
          (lambda ()
            (thunk)
            (throw 'test-failed-exception
-                  (with-output-to-string
-                    (lambda ()
-                      (display "  assert-thrown: expected exception: ")
-                      (write key)))))
+                  (simple-format #f "  assert-thrown: expected exception: ~S"
+                                 key)))
          (lambda (key . args) #t)))
 
 (define (%begin-test name test-thunk)
@@ -95,12 +85,9 @@
            (lambda (key . args)
              (set! test-success #f)
              (set! test-fail-msg
-             (if (eqv? key 'test-failed-exception)
-                 (car args)
-                 (with-output-to-string
-                  (lambda ()
-                    (display "  unexpected exception: ")
-                    (write (cons key args))))))))
+                   (if (eqv? key 'test-failed-exception)
+                       (car args)
+                       (format #f "  unexpected exception: ~S" (cons key args))))))
 
     (if test-success
         (begin
