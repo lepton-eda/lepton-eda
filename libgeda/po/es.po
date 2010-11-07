@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-02-15 17:59+0000\n"
+"POT-Creation-Date: 2010-11-07 09:52+0000\n"
 "PO-Revision-Date: 2010-02-06 22:11+0000\n"
 "Last-Translator: Carlos Nieves Ónega <Unknown>\n"
-"Language-Team: geda-dev <geda-dev@seul.org>\n"
+"Language-Team: gEDA developers <geda-dev@seul.org>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -146,31 +147,31 @@ msgstr ""
 "Ejecute gschem y corrija la situación.\n"
 "\n"
 
-#: libgeda/src/f_basic.c:369
+#: libgeda/src/f_basic.c:355
 #, c-format
 msgid "Can't get the real filename of %s."
 msgstr "No se puede averiguar el nombre real del archivo %s."
 
-#: libgeda/src/f_basic.c:389
+#: libgeda/src/f_basic.c:375
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 "No se ha podido poner el archivo de copia de seguridad anterior [%s] en modo "
 "de lectura-escritura\n"
 
-#: libgeda/src/f_basic.c:395
+#: libgeda/src/f_basic.c:381
 #, c-format
 msgid "Can't save backup file: %s."
 msgstr "No se puede guardar la copia de seguridad: %s"
 
-#: libgeda/src/f_basic.c:405
+#: libgeda/src/f_basic.c:391
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr ""
 "No se ha podido poner el archivo de copia de seguridad [%s] en modo de sólo "
 "lectura\n"
 
-#: libgeda/src/f_basic.c:694
+#: libgeda/src/f_basic.c:680
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
@@ -238,61 +239,61 @@ msgstr "Habilitar la depuración para ver información más detallada\n"
 msgid "Could not find [%s] for interpretation\n"
 msgstr "No se puede encontrar [%s] para interpretar\n"
 
-#: libgeda/src/g_rc.c:132
+#: libgeda/src/g_rc.c:134
 #, c-format
 msgid "RC file [%s] already read in.\n"
 msgstr "El archivo RC [%s] ya ha sido leído.\n"
 
-#: libgeda/src/g_rc.c:177
+#: libgeda/src/g_rc.c:179
 #, c-format
 msgid "Read system config file [%%s]\n"
 msgstr "Leído archivo de configuración de sistema [%%s]\n"
 
-#: libgeda/src/g_rc.c:178
+#: libgeda/src/g_rc.c:180
 #, c-format
 msgid "Did not find required system config file [%%s]\n"
 msgstr ""
-"No se ha encontrado el archivo imprescindible de configuración de sistema [%%"
-"s]\n"
+"No se ha encontrado el archivo imprescindible de configuración de sistema "
+"[%%s]\n"
 
-#: libgeda/src/g_rc.c:212
+#: libgeda/src/g_rc.c:214
 #, c-format
 msgid "Read user config file [%%s]\n"
 msgstr "Leído el archivo de configuración de usuario [%%s]\n"
 
-#: libgeda/src/g_rc.c:213
+#: libgeda/src/g_rc.c:215
 #, c-format
 msgid "Did not find optional user config file [%%s]\n"
 msgstr ""
-"No se ha podido encontrar el archivo opcional de configuración de usuario [%%"
-"s]\n"
+"No se ha podido encontrar el archivo opcional de configuración de usuario "
+"[%%s]\n"
 
-#: libgeda/src/g_rc.c:244
+#: libgeda/src/g_rc.c:246
 #, c-format
 msgid "Read local config file [%%s]\n"
 msgstr "Leído el archivo local  de configuración [%%s]\n"
 
-#: libgeda/src/g_rc.c:245
+#: libgeda/src/g_rc.c:247
 #, c-format
 msgid "Did not find optional local config file [%%s]\n"
 msgstr "No se ha podido encontrar el archivo local de configuración [%%s]\n"
 
-#: libgeda/src/g_rc.c:282
+#: libgeda/src/g_rc.c:284
 #, c-format
 msgid "Read specified %s file [%%s]\n"
 msgstr "Leído el archivo especificado %s [%%s]\n"
 
-#: libgeda/src/g_rc.c:284
+#: libgeda/src/g_rc.c:286
 #, c-format
 msgid "Did not find specified %s file [%%s]\n"
 msgstr "No se ha podido encontrar el archivo especificado %s [%%s]\n"
 
-#: libgeda/src/g_rc.c:334
+#: libgeda/src/g_rc.c:336
 #, c-format
 msgid "Could not find any %s file!\n"
 msgstr "¡No se puede encontrar ningún archivo %s!\n"
 
-#: libgeda/src/g_rc.c:908
+#: libgeda/src/g_rc.c:953
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
 "list of strings instead\n"
@@ -300,26 +301,26 @@ msgstr ""
 "ADVERTENCIA: el uso de la cadena 'always-promote-attributes' está obsoleto. "
 "Se recomienda utilizar una lista de cadenas en su lugar\n"
 
-#: libgeda/src/o_arc_basic.c:275
+#: libgeda/src/o_arc_basic.c:277
 #, c-format
 msgid "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"
 msgstr ""
 "Se ha encontrado un arco con radio cero [ %c %d, %d, %d, %d, %d, %d ]\n"
 
-#: libgeda/src/o_arc_basic.c:280 libgeda/src/o_box_basic.c:294
-#: libgeda/src/o_bus_basic.c:187 libgeda/src/o_circle_basic.c:286
-#: libgeda/src/o_line_basic.c:262 libgeda/src/o_net_basic.c:179
-#: libgeda/src/o_path_basic.c:192 libgeda/src/o_pin_basic.c:192
-#: libgeda/src/o_text_basic.c:415
+#: libgeda/src/o_arc_basic.c:282 libgeda/src/o_box_basic.c:325
+#: libgeda/src/o_bus_basic.c:182 libgeda/src/o_circle_basic.c:288
+#: libgeda/src/o_line_basic.c:264 libgeda/src/o_net_basic.c:174
+#: libgeda/src/o_path_basic.c:192 libgeda/src/o_pin_basic.c:187
+#: libgeda/src/o_text_basic.c:419
 #, c-format
 msgid "Found an invalid color [ %s ]\n"
 msgstr "Se ha encontrado un color no válido [%s]\n"
 
-#: libgeda/src/o_arc_basic.c:281 libgeda/src/o_box_basic.c:295
-#: libgeda/src/o_bus_basic.c:188 libgeda/src/o_circle_basic.c:287
-#: libgeda/src/o_line_basic.c:263 libgeda/src/o_net_basic.c:180
-#: libgeda/src/o_path_basic.c:193 libgeda/src/o_pin_basic.c:193
-#: libgeda/src/o_text_basic.c:416
+#: libgeda/src/o_arc_basic.c:283 libgeda/src/o_box_basic.c:326
+#: libgeda/src/o_bus_basic.c:183 libgeda/src/o_circle_basic.c:289
+#: libgeda/src/o_line_basic.c:265 libgeda/src/o_net_basic.c:175
+#: libgeda/src/o_path_basic.c:193 libgeda/src/o_pin_basic.c:188
+#: libgeda/src/o_text_basic.c:420
 msgid "Setting color to default color\n"
 msgstr "Asignando el color por defecto al color\n"
 
@@ -340,39 +341,39 @@ msgstr "Se ha especificado un espaciado no válido, se corrige a 100\n"
 msgid "Invalid length specified, setting to 100\n"
 msgstr "Se ha especificado una longitud no válida, se corrige a 100\n"
 
-#: libgeda/src/o_box_basic.c:289
+#: libgeda/src/o_box_basic.c:320
 #, c-format
 msgid "Found a zero width/height box [ %c %d %d %d %d %d ]\n"
 msgstr ""
-"Se ha encontrado un rectángulo con altura o anchura cero [ %c %d %d %d %d %"
-"d ]\n"
+"Se ha encontrado un rectángulo con altura o anchura cero [ %c %d %d %d %d "
+"%d ]\n"
 
-#: libgeda/src/o_bus_basic.c:178
+#: libgeda/src/o_bus_basic.c:173
 #, c-format
 msgid "Found a zero length bus [ %c %d %d %d %d %d ]\n"
 msgstr "Se ha encontrado un bus de longitud cero [ %c %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_bus_basic.c:193
+#: libgeda/src/o_bus_basic.c:188
 #, c-format
 msgid "Found an invalid bus ripper direction [ %s ]\n"
 msgstr ""
-"Se ha encontrado una dirección del símbolo de extracción de bus no válida [ %"
-"s ]\n"
+"Se ha encontrado una dirección del símbolo de extracción de bus no válida "
+"[ %s ]\n"
 
-#: libgeda/src/o_bus_basic.c:194
+#: libgeda/src/o_bus_basic.c:189
 msgid "Resetting direction to neutral (no direction)\n"
 msgstr "Cambiando la dirección al valor por defecto neutro (sin dirección)\n"
 
-#: libgeda/src/o_circle_basic.c:197
+#: libgeda/src/o_circle_basic.c:199
 msgid "Null radius circles are not allowed\n"
 msgstr "No se permiten círculos con radio cero\n"
 
-#: libgeda/src/o_circle_basic.c:280
+#: libgeda/src/o_circle_basic.c:282
 #, c-format
 msgid "Found a zero radius circle [ %c %d %d %d %d ]\n"
 msgstr "Se ha encontrado un círculo con radio cero [ %c %d %d %d %d ]\n"
 
-#: libgeda/src/o_complex_basic.c:481
+#: libgeda/src/o_complex_basic.c:476
 #, c-format
 msgid ""
 "Component not found:\n"
@@ -381,14 +382,14 @@ msgstr ""
 "No se ha encontrado el componente:\n"
 " %s"
 
-#: libgeda/src/o_complex_basic.c:694
+#: libgeda/src/o_complex_basic.c:683
 #, c-format
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
-"Se ha encontrado un componente con un ángulo de rotación no válido [ %c %d %"
-"d %d %d %d %s ]\n"
+"Se ha encontrado un componente con un ángulo de rotación no válido [ %c %d "
+"%d %d %d %d %s ]\n"
 
-#: libgeda/src/o_complex_basic.c:706
+#: libgeda/src/o_complex_basic.c:695
 #, c-format
 msgid ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
@@ -396,7 +397,7 @@ msgstr ""
 "Se ha encontrado un componente con un atributo de simetría no válido [ %c %d "
 "%d %d %d %d %s ]\n"
 
-#: libgeda/src/o_complex_basic.c:1019
+#: libgeda/src/o_complex_basic.c:1008
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -405,7 +406,7 @@ msgstr ""
 "ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
 "\tNo se ha podido procesar el atributo de versión de archivo symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:1023
+#: libgeda/src/o_complex_basic.c:1012
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -414,7 +415,7 @@ msgstr ""
 "ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
 "\tNo se ha podido procesar el atributo de versión de archivo symversion=\n"
 
-#: libgeda/src/o_complex_basic.c:1039
+#: libgeda/src/o_complex_basic.c:1028
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -423,7 +424,7 @@ msgstr ""
 "ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
 "\tNo se ha podido procesar el atributo añadido symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:1064
+#: libgeda/src/o_complex_basic.c:1053
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -435,29 +436,29 @@ msgstr ""
 "\tse ha añadido el atributo symversion=%s a la instancia del símbolo, pero "
 "no hay ningún atributo symversion= dentro del archivo del símbolo\n"
 
-#: libgeda/src/o_complex_basic.c:1078
+#: libgeda/src/o_complex_basic.c:1067
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
 "\tSymbol in library is newer than instantiated symbol\n"
 msgstr ""
-"ADVERTENCIA: Las versiones de los símbolos no coinciden para la referencia %"
-"s (%s):\n"
+"ADVERTENCIA: Las versiones de los símbolos no coinciden para la referencia "
+"%s (%s):\n"
 "\t El símbolo en la librería es más reciente que el instanciado en el "
 "esquema\n"
 
-#: libgeda/src/o_complex_basic.c:1106
+#: libgeda/src/o_complex_basic.c:1095
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr ""
 "\t¡CAMBIO DE VERSIÓN IMPORTANTE (archivo %.3f, instanciado %.3f, %s)!\n"
 
-#: libgeda/src/o_complex_basic.c:1124
+#: libgeda/src/o_complex_basic.c:1113
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\tCambio menor en la versión (archivo %.3f, instanciado %.3f)\n"
 
-#: libgeda/src/o_complex_basic.c:1135
+#: libgeda/src/o_complex_basic.c:1124
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -467,12 +468,12 @@ msgstr ""
 "referencia %s:\n"
 "\tEl símbolo instanciado es más reciente que el símbolo en la librería\n"
 
-#: libgeda/src/o_embed.c:56
+#: libgeda/src/o_embed.c:58
 #, c-format
 msgid "Component [%s] has been embedded\n"
 msgstr "Se ha incrustado el componente [%s]\n"
 
-#: libgeda/src/o_embed.c:96
+#: libgeda/src/o_embed.c:102
 #, c-format
 msgid ""
 "Could not find component [%s], while trying to unembed. Component is still "
@@ -481,17 +482,17 @@ msgstr ""
 "No se puede encontrar el componente [%s], al intentar desincrustarlo.El "
 "componente permanece todavía incrustado\n"
 
-#: libgeda/src/o_embed.c:104
+#: libgeda/src/o_embed.c:110
 #, c-format
 msgid "Component [%s] has been successfully unembedded\n"
 msgstr "Se ha desincrustado satisfactoriamente el componente [%s]\n"
 
-#: libgeda/src/o_line_basic.c:257
+#: libgeda/src/o_line_basic.c:259
 #, c-format
 msgid "Found a zero length line [ %c %d %d %d %d %d ]\n"
 msgstr "Se ha encontrado una línea con longitud cero [ %c %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_net_basic.c:169
+#: libgeda/src/o_net_basic.c:164
 #, c-format
 msgid "Found a zero length net [ %c %d %d %d %d %d ]\n"
 msgstr ""
@@ -534,12 +535,12 @@ msgid "Found an unsupported picture angle [ %d ]\n"
 msgstr ""
 "Se ha encontrado una imagen con un ángulo de rotación no válido [ %d ]\n"
 
-#: libgeda/src/o_picture.c:116 libgeda/src/o_text_basic.c:387
+#: libgeda/src/o_picture.c:116 libgeda/src/o_text_basic.c:391
 msgid "Setting angle to 0\n"
 msgstr "Cambiando el parámetro 'ángulo' a 0\n"
 
 #: libgeda/src/o_picture.c:151 libgeda/src/o_picture.c:162
-#: libgeda/src/o_picture.c:910
+#: libgeda/src/o_picture.c:913
 #, c-format
 msgid "Failed to load image from embedded data [%s]: %s\n"
 msgstr "Error al cargar imagen desde los datos embebidos [%s]: %s\n"
@@ -549,12 +550,12 @@ msgid "Base64 decoding failed."
 msgstr "Ha fallado la decodificación Base64"
 
 #: libgeda/src/o_picture.c:153 libgeda/src/o_picture.c:164
-#: libgeda/src/o_picture.c:912
+#: libgeda/src/o_picture.c:915
 msgid "Falling back to file loading. Picture unembedded.\n"
 msgstr "Volviendo al modo de carga de archivo. Imagen desincrustada.\n"
 
-#: libgeda/src/o_picture.c:175 libgeda/src/o_picture.c:898
-#: libgeda/src/o_picture.c:947
+#: libgeda/src/o_picture.c:175 libgeda/src/o_picture.c:901
+#: libgeda/src/o_picture.c:950
 #, c-format
 msgid "Failed to load image from file [%s]: %s\n"
 msgstr "Error al cargar imagen desde el archivo [%s]: %s\n"
@@ -572,17 +573,17 @@ msgstr "Error al cargar la imagen desde el fichero: %s\n"
 msgid "ERROR: o_picture_save: unable to encode the picture.\n"
 msgstr "ERROR: o_picture_save: imposible codificar la imagen.\n"
 
-#: libgeda/src/o_picture.c:925
+#: libgeda/src/o_picture.c:928
 #, c-format
 msgid "Picture [%s] has been embedded\n"
 msgstr "Se ha incrustado la imagen [%s]\n"
 
-#: libgeda/src/o_picture.c:965
+#: libgeda/src/o_picture.c:968
 #, c-format
 msgid "Picture [%s] has been unembedded\n"
 msgstr "Se ha desincrustado la imagen [%s]\n"
 
-#: libgeda/src/o_pin_basic.c:179
+#: libgeda/src/o_pin_basic.c:174
 msgid ""
 "Found a pin which did not have the whichone field set.\n"
 "Verify and correct manually.\n"
@@ -590,38 +591,38 @@ msgstr ""
 "Se ha encontrado una pata que no tiene el campo 'whichone'.\n"
 "Por favor, compruébelo y corríjalo manualmente.\n"
 
-#: libgeda/src/o_pin_basic.c:182
+#: libgeda/src/o_pin_basic.c:177
 #, c-format
 msgid "Found an invalid whichend on a pin (reseting to zero): %d\n"
 msgstr ""
 "Se ha encontrado un parámetro 'whichone' en una pata (y se cambia a 0): %d\n"
 
-#: libgeda/src/o_pin_basic.c:188
+#: libgeda/src/o_pin_basic.c:183
 #, c-format
 msgid "Found a zero length pin: [ %s ]\n"
 msgstr "Se ha encontrado una pata con longitud cero [ %s ]\n"
 
-#: libgeda/src/o_text_basic.c:373
+#: libgeda/src/o_text_basic.c:377
 #, c-format
 msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
 "Se ha encontrado un texto con tamaño cero [ %c %d %d %d %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_text_basic.c:385
+#: libgeda/src/o_text_basic.c:389
 #, c-format
 msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
-"Se ha encontrado un texto con ángulo no válido [ %c %d %d %d %d %d %d %d %"
-"d ]\n"
+"Se ha encontrado un texto con ángulo no válido [ %c %d %d %d %d %d %d %d "
+"%d ]\n"
 
-#: libgeda/src/o_text_basic.c:407
+#: libgeda/src/o_text_basic.c:411
 #, c-format
 msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
-"Se ha encontrado un texto con alineamiento no válido [ %c %d %d %d %d %d %d %"
-"d %d ]\n"
+"Se ha encontrado un texto con alineamiento no válido [ %c %d %d %d %d %d %d "
+"%d %d ]\n"
 
-#: libgeda/src/o_text_basic.c:409
+#: libgeda/src/o_text_basic.c:413
 msgid "Setting alignment to LOWER_LEFT\n"
 msgstr "Cambiando el alineamiento a 'Abajo a la izquierda'\n"
 
@@ -747,23 +748,23 @@ msgstr "¡No hay más esquemas en un nivel de jerarquía superior al actual!\n"
 msgid "ERROR in s_hierarchy_traverse: schematic not found: %s\n"
 msgstr "ERROR: en s_hierarchy_traverse: no se encuentra el esquema %s\n"
 
-#: libgeda/src/s_page.c:167
+#: libgeda/src/s_page.c:213
 #, c-format
 msgid "s_page_delete: Can't get the real filename of %s."
 msgstr "s_page_delete: No se puede encontrar el nombre real del archivo %s."
 
-#: libgeda/src/s_page.c:178
+#: libgeda/src/s_page.c:224
 #, c-format
 msgid "s_page_delete: Unable to delete backup file %s."
 msgstr ""
 "s_page_delete: No se ha podido borrar el archivo de copia de seguridad %s."
 
-#: libgeda/src/s_page.c:380
+#: libgeda/src/s_page.c:504
 #, c-format
 msgid "Saved [%s]\n"
 msgstr "Guardado [%s]\n"
 
-#: libgeda/src/s_page.c:386
+#: libgeda/src/s_page.c:510
 #, c-format
 msgid "Could NOT save [%s]\n"
 msgstr "No se ha podido guardar [%s]\n"
