@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-11-07 09:52+0000\n"
+"POT-Creation-Date: 2010-11-07 10:51+0000\n"
 "PO-Revision-Date: 2010-02-06 22:11+0000\n"
 "Last-Translator: Carlos Nieves Ónega <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -19,27 +19,27 @@ msgstr ""
 "X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
-#: libgeda/data/libgeda.xml.in.h:3
+#: libgeda/data/libgeda.xml.in:3
 msgid "gEDA circuit schematic"
 msgstr "Esquema de circuito gEDA"
 
-#: libgeda/data/libgeda.xml.in.h:4
+#: libgeda/data/libgeda.xml.in:4
 msgid "gEDA schematic symbol"
 msgstr "Símbolo de esquema gEDA"
 
-#: libgeda/data/libgeda.xml.in.h:5
+#: libgeda/data/libgeda.xml.in:5
 msgid "gEDA gsch2pcb project"
 msgstr "Proyecto de gEDA gsch2pcb"
 
-#: libgeda/data/x-geda-gsch2pcb-project.desktop.in.h:3
+#: libgeda/data/x-geda-gsch2pcb-project.desktop.in:3
 msgid "gEDA Gsch2pcb Project"
 msgstr "Proyecto gEDA Gsch2pcb"
 
-#: libgeda/data/x-geda-schematic.desktop.in.h:3
+#: libgeda/data/x-geda-schematic.desktop.in:3
 msgid "gEDA Circuit Schematic"
 msgstr "Esquema de circuito gEDA"
 
-#: libgeda/data/x-geda-symbol.desktop.in.h:3
+#: libgeda/data/x-geda-symbol.desktop.in:3
 msgid "gEDA Schematic Symbol"
 msgstr "Símbolo de esquema gEDA"
 

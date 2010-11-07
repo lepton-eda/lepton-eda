@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-11-07 09:53+0000\n"
+"POT-Creation-Date: 2010-11-07 10:52+0000\n"
 "PO-Revision-Date: 2010-02-14 01:03+0000\n"
 "Last-Translator: Bernd Jendrissek <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -2481,11 +2481,11 @@ msgstr "Werp bladsy [%s] weg\n"
 msgid "Closing [%s]\n"
 msgstr "Sluit [%s]\n"
 
-#: gschem/data/geda-gschem.desktop.in.h:3
+#: gschem/data/geda-gschem.desktop.in:3
 msgid "gEDA Schematic Editor"
 msgstr "gEDA Stroombaandiagram Bewerker"
 
-#: gschem/data/geda-gschem.desktop.in.h:4
+#: gschem/data/geda-gschem.desktop.in:4
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr "Skep en bewerk stroombaandiagramme en simbole met gschem"
 
