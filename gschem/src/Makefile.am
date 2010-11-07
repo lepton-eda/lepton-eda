@@ -80,8 +80,6 @@ gschem_LDADD = $(top_builddir)/libgeda/src/libgeda.la @LIBINTL@
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
-EXTRA_DIST = rcstrings.c
-
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~
 DISTCLEANFILES = *.log core FILE *~

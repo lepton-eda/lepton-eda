@@ -1,4 +1,3 @@
-gschem/src/rcstrings.c
 gschem/src/a_pan.c
 gschem/src/a_zoom.c
 gschem/src/g_funcs.c
@@ -57,4 +56,7 @@ gschem/src/x_print.c
 gschem/src/x_script.c
 gschem/src/x_stroke.c
 gschem/src/x_window.c
+
 gschem/data/geda-gschem.desktop.in
+
+gschem/lib/system-gschemrc.scm
