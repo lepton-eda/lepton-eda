@@ -25,3 +25,19 @@
     (set-object-stroke! a 1 'round 'phantom 7 8)
     (assert-equal '(phantom 7 8) (object-stroke-dash a))
     ))
+
+(begin-test 'fill
+  (let ((a (make-box '(1 . 2) '(3 . 4))))
+
+    (assert-equal a (set-object-fill! a 'hollow))
+    (assert-equal '(hollow) (object-fill a))
+
+    (assert-equal a (set-object-fill! a 'solid))
+    (assert-equal '(solid) (object-fill a))
+
+    (assert-equal a (set-object-fill! a 'hatch 1 2 3))
+    (assert-equal '(hatch 1 2 3) (object-fill a))
+
+    (assert-equal a (set-object-fill! a 'mesh 4 5 6 7 8))
+    (assert-equal '(mesh 4 5 6 7 8) (object-fill a))
+    ))

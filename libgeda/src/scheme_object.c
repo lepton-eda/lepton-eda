@@ -64,6 +64,10 @@ SCM_SYMBOL (dashed_sym , "dashed");
 SCM_SYMBOL (center_sym , "center");
 SCM_SYMBOL (phantom_sym , "phantom");
 
+SCM_SYMBOL (hollow_sym , "hollow");
+SCM_SYMBOL (mesh_sym , "mesh");
+SCM_SYMBOL (hatch_sym , "hatch");
+
 void o_page_changed (TOPLEVEL *t, OBJECT *o)
 {
   PAGE *p = o_get_page (t, o);
@@ -296,6 +300,7 @@ SCM_DEFINE (object_bounds, "%object-bounds", 1, 0, 1,
   return result;
 }
 
+
 /*! \brief Get the stroke properties of an object.
  * \par Function Description
  * Returns the stroke settings of the object \a obj_s.  If \a obj_s is
@@ -461,6 +466,162 @@ SCM_DEFINE (set_object_stroke, "%set-object-stroke!", 4, 2, 0,
   }
 
   o_set_line_options (toplevel, obj, cap, type, width, length, space);
+
+  return obj_s;
+}
+
+/*! \brief Get the fill properties of an object.
+ * \par Function Description
+ * Returns the fill settings of the object \a obj_s.  If \a obj_s is
+ * not a box, circle, or path, throws a Scheme error.  The return
+ * value is a list of parameters:
+ *
+ * -# fill style (a symbol: hollow, solid, mesh or hatch)
+ * -# up to five fill parameters, depending on fill style:
+ *   -# none for hollow or solid fills
+ *   -# line width, line angle, and line spacing for hatch fills.
+ *   -# line width, first angle and spacing, and second angle and
+ *      spacing for mesh fills.
+ *
+ * \note Scheme API: Implements the %object-fill procedure in the
+ * (geda core object) module.
+ *
+ * \param obj_s object to get fill settings for.
+ * \return a list of fill parameters.
+ */
+SCM_DEFINE (object_fill, "%object-fill", 1, 0, 0,
+            (SCM obj_s), "Get the fill properties of an object.")
+{
+  SCM_ASSERT ((edascm_is_object_type (obj_s, OBJ_BOX)
+               || edascm_is_object_type (obj_s, OBJ_CIRCLE)
+               || edascm_is_object_type (obj_s, OBJ_PATH)),
+              obj_s, SCM_ARG1, s_object_fill);
+
+  OBJECT *obj = edascm_to_object (obj_s);
+
+  int type, width, pitch1, angle1, pitch2, angle2;
+  o_get_fill_options (obj, (OBJECT_FILLING *) &type, &width, &pitch1, &angle1,
+                      &pitch2, &angle2);
+
+  SCM width_s = scm_from_int (width);
+  SCM pitch1_s = scm_from_int (pitch1);
+  SCM angle1_s = scm_from_int (angle1);
+  SCM pitch2_s = scm_from_int (pitch2);
+  SCM angle2_s = scm_from_int (angle2);
+
+  SCM type_s;
+  switch (type) {
+  case FILLING_HOLLOW: type_s = hollow_sym; break;
+  case FILLING_FILL: type_s = solid_sym; break;
+  case FILLING_MESH: type_s = mesh_sym; break;
+  case FILLING_HATCH: type_s = hatch_sym; break;
+  default:
+    scm_misc_error (s_object_fill,
+                    _("Object ~A has invalid fill style ~A"),
+                    scm_list_2 (obj_s, scm_from_int (type)));
+  }
+
+  switch (type) {
+  case FILLING_MESH:
+    return scm_list_n (type_s, width_s, pitch1_s, angle1_s, pitch2_s, angle2_s,
+                       SCM_UNDEFINED);
+  case FILLING_HATCH:
+    return scm_list_4 (type_s, width_s, pitch1_s, angle1_s);
+  default:
+    return scm_list_1 (type_s);
+  }
+}
+
+/*! \brief Set the fill properties of an object.
+ * \par Function Description
+
+ * Updates the fill settings of the object \a obj_s.  If \a obj_s is
+ * not a box, circle, or path, throws a Scheme error.  The optional
+ * parameters \a width_s, \a angle1_s, \a space1_s, \a angle2_s and
+ * space2_s
+ *
+ * \note Scheme API: Implements the %object-fill procedure in the
+ * (geda core object) module.
+ *
+ * \param obj_s object to set fill settings for.
+ * \return \a obj_s.
+ */
+SCM_DEFINE (set_object_fill, "%set-object-fill!", 2, 5, 0,
+            (SCM obj_s, SCM type_s, SCM width_s, SCM space1_s, SCM angle1_s,
+             SCM space2_s, SCM angle2_s),
+            "Set the fill properties of an object.")
+{
+  SCM_ASSERT ((edascm_is_object_type (obj_s, OBJ_BOX)
+               || edascm_is_object_type (obj_s, OBJ_CIRCLE)
+               || edascm_is_object_type (obj_s, OBJ_PATH)),
+              obj_s, SCM_ARG1, s_set_object_fill);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (obj_s);
+  int type, width = -1, angle1 = -1, space1 = -1, angle2 = -1, space2 = -1;
+
+  if      (type_s == hollow_sym)   { type = FILLING_HOLLOW;   }
+  else if (type_s == solid_sym) { type = FILLING_FILL; }
+  else if (type_s == hatch_sym)  { type = FILLING_HATCH;  }
+  else if (type_s == mesh_sym)  { type = FILLING_MESH;  }
+  else {
+    scm_misc_error (s_set_object_fill,
+                    _("Invalid fill style ~A."),
+                    scm_list_1 (type_s));
+  }
+
+  switch (type) {
+  case FILLING_MESH:
+    if (space2_s == SCM_UNDEFINED) {
+      scm_misc_error (s_set_object_fill,
+                      _("Missing second space parameter for fill style ~A."),
+                      scm_list_1 (space2_s));
+    }
+    SCM_ASSERT (scm_is_integer (space2_s), space2_s,
+                SCM_ARG6, s_set_object_fill);
+    space2 = scm_to_int (space2_s);
+
+    if (angle2_s == SCM_UNDEFINED) {
+      scm_misc_error (s_set_object_fill,
+                      _("Missing second angle parameter for fill style ~A."),
+                      scm_list_1 (angle2_s));
+    }
+    SCM_ASSERT (scm_is_integer (angle2_s), angle2_s,
+                SCM_ARG7, s_set_object_fill);
+    angle2 = scm_to_int (angle2_s);
+    /* This case intentionally falls through */
+  case FILLING_HATCH:
+    if (width_s == SCM_UNDEFINED) {
+      scm_misc_error (s_set_object_fill,
+                      _("Missing stroke width parameter for fill style ~A."),
+                      scm_list_1 (width_s));
+    }
+    SCM_ASSERT (scm_is_integer (width_s), width_s,
+                SCM_ARG3, s_set_object_fill);
+    width = scm_to_int (width_s);
+
+    if (space1_s == SCM_UNDEFINED) {
+      scm_misc_error (s_set_object_fill,
+                      _("Missing space parameter for fill style ~A."),
+                      scm_list_1 (space1_s));
+    }
+    SCM_ASSERT (scm_is_integer (space1_s), space1_s,
+                SCM_ARG4, s_set_object_fill);
+    space1 = scm_to_int (space1_s);
+
+    if (angle1_s == SCM_UNDEFINED) {
+      scm_misc_error (s_set_object_fill,
+                      _("Missing angle parameter for fill style ~A."),
+                      scm_list_1 (angle1_s));
+    }
+    SCM_ASSERT (scm_is_integer (angle1_s), angle1_s,
+                SCM_ARG5, s_set_object_fill);
+    angle1 = scm_to_int (angle1_s);
+    /* This case intentionally falls through */
+  }
+
+  o_set_fill_options (toplevel, obj, type, width,
+                      space1, angle1, space2, angle2);
 
   return obj_s;
 }
@@ -1340,6 +1501,7 @@ init_module_geda_core_object ()
   /* Add them to the module's public definitions. */
   scm_c_export (s_object_type, s_copy_object, s_object_bounds,
                 s_object_stroke, s_set_object_stroke,
+                s_object_fill, s_set_object_fill,
                 s_object_color, s_set_object_color,
                 s_make_line, s_make_net, s_make_bus,
                 s_make_pin, s_pin_type,

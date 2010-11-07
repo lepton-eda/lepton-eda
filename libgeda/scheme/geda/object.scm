@@ -651,3 +651,6 @@
 ;; length used in the dash style.
 (define-public (object-stroke-dash obj)
   (list-tail (object-stroke obj) 2))
+
+(define-public object-fill %object-fill)
+(define-public set-object-fill! %set-object-fill!)
