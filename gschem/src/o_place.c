@@ -86,9 +86,6 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
 
   o_glist_translate_world(toplevel, w_diff_x, w_diff_y, temp_dest_list);
 
-  /* Clear the old selection list */
-  o_select_unselect_all (w_current);
-
   /* Attach each item back onto the page's object list. Update object
    * connectivity and add the new objects to the selection list.*/
   p_current = toplevel->page_current;
@@ -97,9 +94,6 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
     o_current = iter->data;
 
     s_page_append (toplevel, p_current, o_current);
-
-    o_selection_add (toplevel,
-                     toplevel->page_current->selection_list, o_current);
 
     /* Update object connectivity */
     s_conn_update_object (toplevel, o_current);
