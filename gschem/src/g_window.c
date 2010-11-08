@@ -231,7 +231,7 @@ SCM_DEFINE (close_page, "%close-page!", 1, 0, 0,
  * \brief Create the (gschem core window) Scheme module
  * \par Function Description
  * Defines procedures in the (gschem core window) module. The module
- * can be accessed using (use-modules (geda core toplevel)).
+ * can be accessed using (use-modules (gschem core window)).
  */
 static void
 init_module_gschem_core_window ()
@@ -270,7 +270,7 @@ g_init_window ()
   /* Create fluid */
   scheme_window_fluid = scm_permanent_object (scm_make_fluid ());
 
-  /* Define the (geda core toplevel) module */
+  /* Define the (gschem core window) module */
   scm_c_define_module ("gschem core window",
                        init_module_gschem_core_window,
                        NULL);
