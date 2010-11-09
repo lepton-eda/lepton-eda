@@ -10,7 +10,8 @@ nobase_dist_scmdata_DATA = \
 	auto-place-attribs.scm \
 	pcb.scm \
 	default-attrib-positions.scm \
-	gschem/window.scm
+	gschem/window.scm \
+	gschem/selection.scm
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

@@ -1,7 +1,8 @@
 bin_PROGRAMS = gschem
 
 BUILT_SOURCES = \
-	g_window.x
+	g_window.x \
+	g_select.x
 
 gschem_SOURCES = \
 	a_pan.c \
@@ -11,6 +12,7 @@ gschem_SOURCES = \
 	g_keys.c \
 	g_rc.c \
 	g_register.c \
+	g_select.c \
 	g_window.c \
 	globals.c \
 	gschem.c \
