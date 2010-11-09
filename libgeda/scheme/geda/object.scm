@@ -42,6 +42,8 @@
 (define-public object-color %object-color)
 (define-public set-object-color! %set-object-color!)
 
+(define-public object-connections %object-connections)
+
 ;;;; Lines
 
 ;; line? x

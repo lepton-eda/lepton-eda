@@ -281,6 +281,10 @@ SCM_DEFINE (complex_append, "%complex-append!", 2, 0, 0,
 
   o_complex_recalc (toplevel, parent);
 
+  /* We may need to update connections */
+  s_tile_update_object (toplevel, child);
+  s_conn_update_object (toplevel, child);
+
   o_emit_change_notify (toplevel, parent);
 
   o_page_changed (toplevel, parent);
@@ -352,6 +356,10 @@ SCM_DEFINE (complex_remove, "%complex-remove!", 2, 0, 0,
   parent->complex->prim_objs =
     g_list_remove_all (parent->complex->prim_objs, child);
   child->parent = NULL;
+
+  /* We may need to update connections */
+  s_tile_remove_object (child);
+  s_conn_remove_object (toplevel, child);
 
   o_emit_change_notify (toplevel, parent);
 

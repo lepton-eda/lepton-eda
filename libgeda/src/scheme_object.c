@@ -746,6 +746,10 @@ SCM_DEFINE (set_line, "%set-line!", 6, 0, 0,
   int y1 = scm_to_int (y1_s);
   int x2 = scm_to_int (x2_s);
   int y2 = scm_to_int (y2_s);
+
+  /* We may need to update connectivity. */
+  s_conn_remove_object (toplevel, obj);
+
   switch (obj->type) {
   case OBJ_LINE:
     o_line_modify (toplevel, obj, x1, y1, LINE_END1);
@@ -768,6 +772,10 @@ SCM_DEFINE (set_line, "%set-line!", 6, 0, 0,
     return line_s;
   }
   o_set_color (toplevel, obj, scm_to_int (color_s));
+
+  /* We may need to update connectivity. */
+  s_tile_update_object (toplevel, obj);
+  s_conn_update_object (toplevel, obj);
 
   o_page_changed (toplevel, obj);
 
@@ -1484,7 +1492,40 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
                      SCM_UNDEFINED);
 }
 
+/*! \brief Get objects that are connected to an object.
+ * \par Function Description
+ * Returns a list of all objects directly connected to \a obj_s.  If
+ * \a obj_s is not included in a page, throws a Scheme error.  If \a
+ * obj_s is not a pin, net, bus, or complex object, returns the empty
+ * list.
+ *
+ * \note Scheme API: Implements the %object-connections procedure of
+ * the (geda core object) module.
+ *
+ * \param obj_s #OBJECT smob for object to get connections for.
+ * \return a list of #OBJECT smobs.
+ */
+SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
+            (SCM obj_s), "Get objects that are connected to an object.")
+{
+  /* Ensure that the argument is an object smob */
+  SCM_ASSERT (edascm_is_object (obj_s), obj_s,
+              SCM_ARG1, s_object_connections);
 
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (obj_s);
+  if (o_get_page (toplevel, obj) == NULL) {
+    scm_error (edascm_object_state_sym,
+               s_object_connections,
+               _("Object ~A is not included in a page."),
+               scm_list_1 (obj_s), SCM_EOL);
+  }
+
+  GList *lst = s_conn_return_others (NULL, obj);
+  SCM result = edascm_from_object_glist (lst);
+  g_list_free (lst);
+  return result;
+}
 
 /*!
  * \brief Create the (geda core object) Scheme module.
@@ -1510,6 +1551,7 @@ init_module_geda_core_object ()
                 s_make_circle, s_set_circle, s_circle_info,
                 s_make_arc, s_set_arc, s_arc_info,
                 s_make_text, s_set_text, s_text_info,
+                s_object_connections,
                 NULL);
 }
 
