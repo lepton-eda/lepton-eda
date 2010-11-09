@@ -26,3 +26,4 @@
 
 (define-public select-object! %select-object!)
 (define-public deselect-object! %deselect-object!)
+(define-public object-selected? %object-selected?)
