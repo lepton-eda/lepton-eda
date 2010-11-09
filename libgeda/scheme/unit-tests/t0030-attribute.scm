@@ -9,6 +9,9 @@
   (let ((good (make-text '(1 . 2) 'lower-left 0 "name=value" 10 #t 'both))
         (bad (make-text '(1 . 2) 'lower-left 0 "name value" 10 #t 'both)))
 
+    (assert-true (attribute? good))
+    (assert-true (not (attribute? bad)))
+
     (assert-equal "name" (attrib-name good))
     (assert-equal "value" (attrib-value good))
     (assert-equal (cons (attrib-name good) (attrib-value good))
@@ -131,3 +134,21 @@
 
     (assert-equal x (detach-attrib! pin1 x))
     (assert-equal '() (object-attribs pin1)) ))
+
+(begin-test 'inherited-attribs
+  (let ((C (make-component "test component" '(1 . 2) 0 #t #f))
+        (p (make-net-pin '(0 . 0) '(100 . 0)))
+        (x (make-text '(1 . 2) 'lower-left 0 "name=x" 10 #t 'both))
+        (y (make-text '(1 . 2) 'lower-left 0 "name=y" 10 #t 'both)))
+
+    (assert-equal '() (inherited-attribs p))
+    (assert-equal '() (inherited-attribs C))
+
+    ;; Set up component
+    (for-each (lambda (o) (component-append! C o)) (list p x y))
+
+    (assert-equal (list x y) (inherited-attribs C))
+
+    (attach-attrib! p x)
+
+    (assert-equal (list y) (inherited-attribs C))))

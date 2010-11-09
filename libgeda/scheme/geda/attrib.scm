@@ -51,3 +51,15 @@
 (define-public (attrib-value a)
   (let ((v (parse-attrib a)))
     (if v (cdr v) v)))
+
+;; inherited-attribs object
+;;
+;; Returns the inherited attributes of object, if object is a
+;; component.  The inherited attributes are the unattached top-level
+;; attributes in the component.  If object is not a component, returns
+;; the empty list.
+(define-public (inherited-attribs object)
+  (if (component? object)
+      (filter! (lambda (x) (and (attribute? x) (not (attrib-attachment x))))
+               (component-contents object))
+      '()))
