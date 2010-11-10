@@ -225,6 +225,29 @@ SCM_DEFINE (detach_attrib, "%detach-attrib!", 2, 0, 0,
   return attrib_s;
 }
 
+/*! \brief Get a complex object's promotable attribs.
+ * \par Function Description
+ * Returns the promotable attributes of \a complex_s, according to the
+ * current gEDA configuration.
+ *
+ * \param complex_s the complex object for which to get promotable
+ *                  attributes.
+ * \return a list of promotable attributes.
+ */
+SCM_DEFINE (promotable_attribs, "%promotable-attribs", 1, 0, 0,
+            (SCM complex_s), "Get a component's promotable attributes")
+{
+  SCM_ASSERT (edascm_is_object_type (complex_s, OBJ_COMPLEX), complex_s,
+              SCM_ARG2, s_promotable_attribs);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (complex_s);
+
+  GList *lst = o_complex_get_promotable (toplevel, obj, FALSE);
+
+  return edascm_from_object_glist (lst);
+}
+
 
 /*!
  * \brief Create the (geda core attrib) Scheme module.
@@ -241,6 +264,7 @@ init_module_geda_core_attrib ()
   /* Add them to the module's public definitions. */
   scm_c_export (s_parse_attrib, s_object_attribs, s_attrib_attachment,
                 s_attach_attrib, s_detach_attrib,
+                s_promotable_attribs,
                 NULL);
 }
 

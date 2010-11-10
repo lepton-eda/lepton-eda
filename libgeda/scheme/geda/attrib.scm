@@ -29,6 +29,7 @@
 (define-public attrib-attachment %attrib-attachment)
 (define-public attach-attrib! %attach-attrib!)
 (define-public detach-attrib! %detach-attrib!)
+(define-public promotable-attribs %promotable-attribs)
 
 ;; attribute? a
 ;;

@@ -164,6 +164,7 @@ double o_complex_shortest_distance(OBJECT *object, int x, int y, int force_soild
 void world_get_complex_bounds(TOPLEVEL *toplevel, OBJECT *complex, int *left, int *top, int *right, int *bottom);
 gboolean o_complex_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
 void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
+GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach);
 
 /* o_line_basic.c */
 OBJECT *o_line_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
