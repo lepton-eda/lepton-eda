@@ -146,7 +146,8 @@
 
 ;; Set up component library, making blatant assumptions about the
 ;; directory layout.
-(component-library "../../symbols/analog" "Basic devices")
+(component-library (string-join (list (getenv "srcdir") "../../symbols/analog") "/")
+                   "Basic devices")
 
 (begin-test 'component/library
   (let ((A (make-component/library "resistor-1.sym" '(1 . 2) 0 #t #f))
