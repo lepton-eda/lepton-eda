@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,9 @@ void o_delete (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 
   g_return_if_fail (object != NULL);
 
+  o_selection_remove (toplevel, toplevel->page_current->selection_list, object);
   s_page_remove (toplevel, toplevel->page_current, object);
+  g_run_hook_object ("%remove-objects-hook", object);
   s_delete_object (toplevel, object);
 
   toplevel->page_current->CHANGED = 1;
@@ -56,20 +58,28 @@ void o_delete (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
  */
 void o_delete_selected (GSCHEM_TOPLEVEL *w_current)
 {
-  SELECTION *selection = w_current->toplevel->page_current->selection_list;
-  GList *s_current;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  SELECTION *selection = toplevel->page_current->selection_list;
+  GList *to_remove;
+  GList *iter;
 
   g_return_if_fail (o_select_selected (w_current));
 
+  to_remove = g_list_copy (geda_list_get_glist (selection));
 
-  for (s_current = geda_list_get_glist (selection);
-       s_current != NULL;
-       s_current = g_list_next (s_current)) {
-    o_delete (w_current, (OBJECT*)s_current->data);
+  for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *obj = (OBJECT *) iter->data;
+    o_selection_remove (toplevel, selection, obj);
+    s_page_remove (toplevel, toplevel->page_current, obj);
   }
-  /* Objects in the selection list have been deleted. */
-  /* Empty the list without touching the objects */
-  geda_list_remove_all (selection);
+
+  g_run_hook_object_list ("%remove-objects-hook", to_remove);
+
+  for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
+    s_delete_object (toplevel, (OBJECT *) iter->data);
+  }
+
+  g_list_free (to_remove);
 
   w_current->inside_action = 0;
   o_undo_savestate (w_current, UNDO_ALL);

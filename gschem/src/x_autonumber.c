@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -587,9 +587,6 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
       /* Only attempt to remove non-inherited slot attributes */
       if (o_slot != NULL && !o_attrib_is_inherited (o_slot)) {
         /* delete the slot attribute */
-        o_selection_remove (autotext->w_current->toplevel,
-                            autotext->w_current->toplevel->
-                              page_current->selection_list, o_slot);
         o_delete (autotext->w_current, o_slot);
       }
     }
