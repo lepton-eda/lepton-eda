@@ -95,7 +95,7 @@
         (lambda () #f)
         (lambda ()
           ; Populate page
-          (page-append! P t) (page-append! P C) (component-append! C p)
+          (page-append! P t C) (component-append! C p)
 
           ; Attach attribute to component
           (assert-dirties P (attach-attrib! C t))
@@ -103,7 +103,8 @@
           (assert-dirties P (detach-attrib! C t))
 
           ; Move attribute into component
-          (component-append! C (page-remove! P t))
+          (page-remove! P t)
+          (component-append! C t)
 
           ; Attach attribute to pin
           (assert-dirties P (attach-attrib! p t))

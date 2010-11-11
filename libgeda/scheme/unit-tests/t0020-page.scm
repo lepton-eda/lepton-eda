@@ -29,13 +29,10 @@
         (lambda ()
           (assert-equal '() (page-contents A))
 
-          (assert-equal x (page-append! A x))
+          (assert-equal A (page-append! A x))
           (assert-equal (list x) (page-contents A))
 
-          (assert-equal x (page-append! A x))
-          (assert-equal (list x) (page-contents A))
-
-          (assert-equal y (page-append! A y))
+          (assert-equal A (page-append! A x y))
           (assert-equal (list x y) (page-contents A))
 
           (assert-thrown 'object-state
@@ -43,7 +40,8 @@
 
           (assert-thrown 'object-state
             (let* ((C (make-component "test component" '(1 . 2) 0 #t #f))
-                   (z (component-append! C (make-line '(1 . 0) '(2 . 2)))))
+                   (z (make-line '(1 . 0) '(2 . 2))))
+              (component-append! C z)
               (page-append! A z))))
 
         (lambda ()
@@ -62,14 +60,13 @@
         (lambda () #f)
         (lambda ()
           (page-append! A x)
-          (assert-equal x (page-remove! A x))
+          (assert-equal A (page-remove! A x))
           (assert-equal '() (page-contents A))
-          (assert-equal x (page-remove! A x))
-          (assert-equal x (page-remove! B x))
+          (assert-equal A (page-remove! A x))
+          (assert-equal B (page-remove! B x))
 
-          (page-append! A x)
-          (page-append! A y)
-          (assert-equal x (page-remove! A x))
+          (page-append! A x y)
+          (assert-equal A (page-remove! A x))
           (assert-equal (list y) (page-contents A))
 
           (assert-thrown 'object-state

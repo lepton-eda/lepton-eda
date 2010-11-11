@@ -224,7 +224,7 @@ SCM_DEFINE (object_page, "%object-page", 1, 0, 0,
  * \note Scheme API: Implements the %page-append! procedure of the
  * (geda core page) module.
  *
- * \return \a obj_s.
+ * \return \a page_s.
  */
 SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
             (SCM page_s, SCM obj_s), "Add an object to a page.")
@@ -257,7 +257,7 @@ SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
   o_emit_change_notify (toplevel, obj);
   page->CHANGED = 1; /* Ugh. */
 
-  return obj_s;
+  return page_s;
 }
 
 /*! \brief Remove an object from a page.
@@ -269,7 +269,7 @@ SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
  * \note Scheme API: Implements the %page-remove! procedure of the
  * (geda core page) module.
  *
- * \return \a obj_s.
+ * \return \a page_s.
  */
 SCM_DEFINE (page_remove_x, "%page-remove!", 2, 0, 0,
             (SCM page_s, SCM obj_s), "Remove an object from a page.")
@@ -318,7 +318,7 @@ SCM_DEFINE (page_remove_x, "%page-remove!", 2, 0, 0,
 
   /* Object cleanup now managed by Guile. */
   edascm_c_set_gc (obj_s, 1);
-  return obj_s;
+  return page_s;
 }
 
 /*! \brief Check whether a page has been flagged as changed.

@@ -289,7 +289,7 @@ SCM_DEFINE (complex_append_x, "%complex-append!", 2, 0, 0,
 
   o_page_changed (toplevel, parent);
 
-  return obj_s;
+  return complex_s;
 }
 
 /*! \brief Remove a primitive object from a complex object.
@@ -367,7 +367,7 @@ SCM_DEFINE (complex_remove_x, "%complex-remove!", 2, 0, 0,
 
   /* Object cleanup now managed by Guile. */
   edascm_c_set_gc (obj_s, 1);
-  return obj_s;
+  return complex_s;
 }
 
 /*!

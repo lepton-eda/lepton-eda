@@ -615,16 +615,21 @@
 ;; object c.
 (define-public component-contents %complex-contents)
 
-;; component-append! c obj
+;; component-append! c obj ...
 ;;
-;; Adds obj to the primitive objects of the component c.  Returns obj.
-(define-public component-append! %complex-append!)
+;; Adds obj (and any additional objects) to the primitive objects of
+;; the component c. Returns c.
+(define-public (component-append! component . objects)
+  (for-each (lambda (x) (%complex-append! component x)) objects)
+  component)
 
-;; component-remove! c obj
+;; component-remove! c obj ...
 ;;
-;; Removes obj from the primitive objects of the component c.  Returns
-;; obj.
-(define-public component-remove! %complex-remove!)
+;; Adds obj (and any additional objects) from the primitive objects of
+;; the component c. Returns c.
+(define-public (component-remove! component . objects)
+  (for-each (lambda (x) (%complex-remove! component x)) objects)
+  component)
 
 ;;;; Fill and stroke
 

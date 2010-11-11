@@ -34,9 +34,23 @@
 (define-public page-filename %page-filename)
 (define-public set-page-filename! %set-page-filename!)
 (define-public page-contents %page-contents)
-(define-public page-append! %page-append!)
-(define-public page-remove! %page-remove!)
 (define-public page-dirty? %page-dirty?)
+
+;; page-append! P obj ...
+;;
+;; Adds obj (and any additional objects) to the contents of the page
+;; P. Returns P.
+(define-public (page-append! P . objects)
+  (for-each (lambda (x) (%page-append! P x)) objects)
+  P)
+
+;; page-remove! P obj ...
+;;
+;; Removes obj (and any additional objects) from the contents of the
+;; page P. Returns P.
+(define-public (page-remove! P . objects)
+  (for-each (lambda (x) (%page-remove! P x)) objects)
+  P)
 
 ;; set-page-dirty! [state]
 ;;

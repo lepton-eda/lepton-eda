@@ -36,7 +36,7 @@
     (assert-true (not (attrib-attachment x)))
 
     ;; Populate components
-    (for-each (lambda (o) (component-append! C o)) (list p q x y))
+    (component-append! C p q x y)
     (component-append! D z)
 
     ;; Attach attribute to object in same component
@@ -88,8 +88,8 @@
         (lambda () #f)
         (lambda ()
           ; Populate pages
-          (page-append! P x) (page-append! P C)
-          (component-append! C p) (component-append! C y)
+          (page-append! P x C)
+          (component-append! C p y)
 
           (page-append! Q z)
 
@@ -125,7 +125,7 @@
         (pin2 (make-net-pin '(0 . 100) '(100 . 100)))
         (x (make-text '(0 . 0) 'lower-left 0 "name=x" 10 #t 'both)))
 
-    (for-each (lambda (x) (page-append! page x)) (list pin1 pin2 x))
+    (page-append! page pin1 pin2 x)
 
     (attach-attrib! pin1 x)
 
@@ -145,7 +145,7 @@
     (assert-equal '() (inherited-attribs C))
 
     ;; Set up component
-    (for-each (lambda (o) (component-append! C o)) (list p x y))
+    (component-append! C p x y)
 
     (assert-equal (list x y) (inherited-attribs C))
 

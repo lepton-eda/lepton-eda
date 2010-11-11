@@ -18,11 +18,11 @@
     (assert-thrown 'object-state (object-connections np))
 
     ;; Build component
-    (for-each (lambda (x) (component-append! C x)) (list np bp))
+    (component-append! C np bp)
     (assert-thrown 'object-state (object-connections np))
 
     ;; Build page
-    (for-each (lambda (x) (page-append! P x)) (list C n1 n2 b1 b2))
+    (page-append! P C n1 n2 b1 b2)
 
     ;; Test initial connections
     (assert-equal (list n1 b1) (object-connections C))
