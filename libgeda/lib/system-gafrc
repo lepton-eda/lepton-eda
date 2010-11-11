@@ -26,6 +26,9 @@
 ; writing Scheme code for embedding in gaf.
 (load-from-path "geda.scm")
 
+;; Import deprecated Scheme functions
+(use-modules (geda deprecated))
+
 
 ;; The directory containing various bitmaps (e.g. icons)
 (bitmap-directory (build-path geda-data-path "bitmap"))

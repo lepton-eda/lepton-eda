@@ -37,21 +37,6 @@ SCM g_rc_print_color_map (SCM scm_map);
 void g_register_libgeda_funcs(void);
 void g_register_libgeda_vars (void);
 
-/* g_smob.c */
-void g_init_attrib_smob(void);
-SCM g_get_attrib_name_value(SCM attrib_smob);
-SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
-				 SCM scm_angle, SCM scm_x, SCM scm_y);
-SCM g_get_attrib_bounds(SCM attrib_smob);
-SCM g_get_attrib_angle(SCM attrib_smob);
-SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name);
-void g_init_object_smob(void);
-SCM g_get_object_type(SCM object_smob);
-SCM g_get_line_width(SCM object_smob);
-void g_init_page_smob(void);
-SCM g_get_page_filename(SCM page_smob);
-SCM g_set_page_filename(SCM page_smob, SCM scm_filename);
-
 /* m_bounds.c */
 void m_bounds_init(BOUNDS *bounds);
 void m_bounds_of_points(BOUNDS *bounds, sPOINT points[], gint count);

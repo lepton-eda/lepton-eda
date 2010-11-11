@@ -1,7 +1,7 @@
 
 scmdatadir = $(GEDADATADIR)/scheme
 nobase_dist_scmdata_DATA = geda.scm color-map.scm \
-	geda/object.scm geda/page.scm geda/attrib.scm
+	geda/object.scm geda/page.scm geda/attrib.scm geda/deprecated.scm
 
 # Unit test support.  The unit tests are run using the geda-batch
 # program, with config loading disabled (-q) so that user config

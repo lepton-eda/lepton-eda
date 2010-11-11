@@ -43,23 +43,6 @@ void g_rc_parse(TOPLEVEL *toplevel, const gchar* rcname,
                 const gchar* specified_rc_filename);
 gint g_rc_parse_specified_rc(TOPLEVEL *toplevel, const gchar *rcfilename);
 
-/* g_smob.c */
-#if 0
-SCM g_make_attrib_smob(TOPLEVEL *curr_w, OBJECT *curr_attr);
-#endif
-SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value, TOPLEVEL **world, OBJECT **o_attrib, char *new_string[]);
-#if 0
-gboolean g_get_data_from_object_smob(SCM object_smob, TOPLEVEL **toplevel, 
-				     OBJECT **object);
-SCM g_make_object_smob(TOPLEVEL *curr_w, OBJECT *object);
-#endif
-SCM g_get_object_attributes(SCM object_smob);
-#if 0
-SCM g_make_page_smob(TOPLEVEL *curr_w, PAGE *page);
-gboolean g_get_data_from_page_smob(SCM object_smob, TOPLEVEL **toplevel, 
-				   PAGE **object);
-#endif
-
 /* i_vars.c */
 void i_vars_libgeda_set(TOPLEVEL *toplevel);
 void i_vars_libgeda_freenames();

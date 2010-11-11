@@ -50,4 +50,5 @@ edascm_init ()
   edascm_init_complex ();
   edascm_init_page ();
   edascm_init_attrib ();
+  edascm_init_deprecated ();
 }

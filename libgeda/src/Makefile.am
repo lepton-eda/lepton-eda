@@ -9,7 +9,8 @@ BUILT_SOURCES = \
 	scheme_object.x \
 	scheme_complex.x \
 	scheme_page.x \
-	scheme_attrib.x
+	scheme_attrib.x \
+	scheme_deprecated.x
 
 scheme_api_sources = \
 	scheme_init.c \
@@ -18,7 +19,8 @@ scheme_api_sources = \
 	scheme_object.c \
 	scheme_complex.c \
 	scheme_page.c \
-	scheme_attrib.c
+	scheme_attrib.c \
+	scheme_deprecated.c
 
 libgeda_la_SOURCES = \
 	$(scheme_api_sources) \
@@ -29,7 +31,6 @@ libgeda_la_SOURCES = \
 	geda_list.c \
 	g_rc.c \
 	g_register.c \
-	g_smob.c \
 	i_vars.c \
 	libgeda.c \
 	m_basic.c \

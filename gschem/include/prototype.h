@@ -33,7 +33,6 @@ SCM get_selected_component_attributes(GSCHEM_TOPLEVEL *w_current);
 SCM get_selected_filename(GSCHEM_TOPLEVEL *w_current);
 /* g_hook.c */
 SCM g_make_attrib_smob_list(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
-SCM g_set_attrib_value_x(SCM attrib_smob, SCM scm_value);
 SCM g_add_attrib(SCM object, SCM attrib_name, 
 		 SCM attrib_value, SCM scm_vis, SCM scm_show);
 SCM g_get_pin_ends(SCM object);

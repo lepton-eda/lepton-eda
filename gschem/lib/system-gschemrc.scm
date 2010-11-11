@@ -3,6 +3,8 @@
 ; Init file for gschem
 ;
 
+(use-modules (gschem deprecated))
+
 ;  ;'s are comments
 ;  keywords are case sensitive (guile feature)
 ;  mode strings are case sensitive

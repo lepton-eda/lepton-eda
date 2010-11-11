@@ -63,10 +63,6 @@ void libgeda_init(void)
   g_register_libgeda_funcs();
   g_register_libgeda_vars();
 
-  g_init_object_smob();
-  g_init_attrib_smob();
-  g_init_page_smob();
-
   edascm_init ();
 }
 

@@ -11,7 +11,8 @@ nobase_dist_scmdata_DATA = \
 	pcb.scm \
 	default-attrib-positions.scm \
 	gschem/window.scm \
-	gschem/selection.scm
+	gschem/selection.scm \
+	gschem/deprecated.scm
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

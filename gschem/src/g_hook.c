@@ -88,34 +88,6 @@ SCM g_make_attrib_smob_list (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
  *  \par Function Description
  *
  */
-/**************************************************************************
- * This function partly part of libgeda, since it belongs to the smob     *
- * definition. But since I use o_text_change, which is defined in gschem, *
- * we have to do it like this.                                            *
- **************************************************************************/
-SCM g_set_attrib_value_x(SCM attrib_smob, SCM scm_value)
-{
-  SCM returned;
-  TOPLEVEL *toplevel;
-  OBJECT *o_attrib;
-  char *new_string;
-
-  returned = g_set_attrib_value_internal(attrib_smob, scm_value, 
-                                         &toplevel, &o_attrib, &new_string);
-
-  o_text_change(g_current_window (), o_attrib, new_string,
-                o_attrib->visibility, o_attrib->show_name_value);
-
-  g_free(new_string);
-
-  return returned;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 /*
  * Adds an attribute <B>scm_attrib_name</B> with value <B>scm_attrib_value</B> to the given <B>object</B>.
 The attribute has the visibility <B>scm_vis</B> and show <B>scm_show</B> flags.
