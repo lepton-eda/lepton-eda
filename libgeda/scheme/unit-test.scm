@@ -48,11 +48,13 @@
             tests-passed?
             report-tests
             %begin-test)
-  #:export-syntax (begin-test
+  #:export-syntax (skip-test
+                   begin-test
                    assert-thrown))
 
 (define *failed-tests* '())
 (define *passed-tests* '())
+(define *skipped-tests* '())
 
 (define (assert-true result)
   (if result
@@ -77,6 +79,7 @@
          (lambda (key . args) #t)))
 
 (define (%begin-test name test-thunk)
+  (gc)
   (let ((test-success #t)
         (test-fail-msg #f))
     (display name) (display "... ")
@@ -107,6 +110,13 @@
       ((_ name . test-forms)
        (%begin-test name (lambda () . test-forms)))))
 
+(define-syntax skip-test
+  (syntax-rules ()
+    ((_ name . test-forms)
+     (begin
+       (format #t "~A... skipped\n" name)
+       (set! *skipped-tests* (cons name *skipped-tests*))))))
+
 (define-syntax assert-thrown
     (syntax-rules ()
       ((_ key . test-forms)
@@ -116,5 +126,6 @@
 
 (define (report-tests)
   (display "Test summary")(newline)
-  (display "Passed: ") (display (length *passed-tests*)) (newline)
-  (display "Failed: ") (display (length *failed-tests*)) (newline))
+  (display "Passed:  ") (display (length *passed-tests*)) (newline)
+  (display "Failed:  ") (display (length *failed-tests*)) (newline)
+  (display "Skipped: ") (display (length *skipped-tests*)) (newline))
