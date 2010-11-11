@@ -52,8 +52,6 @@ extern GList *object_buffer[MAX_BUFFERS];
 
 /* Hooks */
 extern SCM complex_place_list_changed_hook;
-extern SCM copy_component_hook;
-extern SCM move_component_hook;
 extern SCM deselect_component_hook;
 extern SCM deselect_net_hook;
 extern SCM deselect_all_hook;

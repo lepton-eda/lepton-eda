@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -180,13 +180,6 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
       case (OBJ_COMPLEX):
       case (OBJ_PLACEHOLDER):
 
-        if (scm_is_false (scm_hook_empty_p (move_component_hook)) &&
-            object != NULL) {
-          scm_run_hook(move_component_hook,
-                       scm_cons (g_make_attrib_smob_list
-                                 (w_current, object), SCM_EOL));
-        }
-
         /* TODO: Fix so we can just pass the complex to o_move_end_lowlevel,
          * IE.. by falling through the bottom of this case statement. */
 
@@ -227,13 +220,17 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
   /* Draw the connected nets/buses that were also changed */
   o_invalidate_glist (w_current, rubbernet_objects);
 
+  /* Call move-objects-hook for moved objects and changed connected
+   * nets/buses */
+  GList *moved_list = g_list_concat (toplevel->page_current->place_list,
+                                     rubbernet_objects);
+  toplevel->page_current->place_list = NULL;
+  rubbernet_objects = NULL;
+  g_run_hook_object_list ("%move-objects-hook", moved_list);
+  g_list_free (moved_list);
+
   toplevel->page_current->CHANGED = 1;
   o_undo_savestate(w_current, UNDO_ALL);
-
-  g_list_free(rubbernet_objects);
-
-  g_list_free(toplevel->page_current->place_list);
-  toplevel->page_current->place_list = NULL;
 
   s_stretch_destroy_all (w_current->stretch_list);
   w_current->stretch_list = NULL;

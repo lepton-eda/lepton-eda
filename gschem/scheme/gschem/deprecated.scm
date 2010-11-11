@@ -157,3 +157,21 @@
 ;; Same as rotate-component-object-hook, but for pins.
 (define-public rotate-pin-hook (make-hook 1))
 (add-hook!/filter rotate-objects-hook rotate-pin-hook pin?)
+
+;; copy-component-hook:
+;;
+;; Called each time a component is copied into the schematic.
+;; Argument is a list off all attributes (inherited & promoted) of the
+;; component.  Differs from classic behaviour in that it is called on
+;; pasting from buffers and the clipboard, in addition to "Edit->Copy
+;; Mode" and "Edit->Multiple Copy Mode".
+(define-public copy-component-hook (make-hook 1))
+(add-hook!/full-attribs paste-objects-hook copy-component-hook component?)
+
+;; move-component-hook:
+;;
+;; Called each time a component is moved in the schematic.
+;; Argument is as copy-component-hook.
+(define-public move-component-hook (make-hook 1))
+(add-hook!/full-attribs move-objects-hook move-component-hook component?)
+

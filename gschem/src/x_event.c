@@ -303,7 +303,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ENDPASTE):
-        o_place_end(w_current, w_x, w_y, FALSE, NULL, NULL);
+        o_place_end(w_current, w_x, w_y, FALSE, NULL, "%paste-objects-hook");
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
