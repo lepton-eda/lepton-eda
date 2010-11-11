@@ -22,7 +22,8 @@ TESTS = unit-tests/t0001-geda-conf-lib.scm \
 	unit-tests/t0020-page.scm \
 	unit-tests/t0021-page-dirty.scm \
 	unit-tests/t0030-attribute.scm \
-	unit-tests/t0031-promotable-attributes.scm
+	unit-tests/t0031-promotable-attributes.scm \
+	unit-tests/t1000-deprecated.scm
 
 XFAIL_TESTS = unit-tests/t0031-promotable-attributes.scm
 
