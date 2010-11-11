@@ -339,12 +339,6 @@ void g_register_funcs (void)
   scm_c_define_gsubr ("set-attribute-text-properties!", 7, 0, 0, g_set_attrib_text_properties);
   scm_c_define_gsubr ("add-component-at-xy", 7, 0, 0, g_add_component);
 
-  deselect_component_hook = create_hook ("deselect-component-hook", 1);
-  deselect_net_hook = create_hook ("deselect-net-hook", 1);
-  deselect_all_hook = create_hook ("deselect-all-hook", 1);
-  select_component_hook = create_hook ("select-component-hook", 1);
-  select_net_hook = create_hook ("select-net-hook", 1);
-
   new_page_hook = create_hook ("new-page-hook", 1);
   complex_place_list_changed_hook = create_hook ("complex-place-list-changed-hook", 1);
 }

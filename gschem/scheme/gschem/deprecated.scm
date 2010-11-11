@@ -26,7 +26,8 @@
   #:use-module (geda object)
   #:use-module (geda attrib)
   #:use-module (gschem window)
-  #:use-module (gschem hook))
+  #:use-module (gschem hook)
+  #:use-module (gschem selection))
 
 (define-public (set-attribute-value! attrib value)
   (let ((params (text-info attrib))
@@ -175,3 +176,47 @@
 (define-public move-component-hook (make-hook 1))
 (add-hook!/full-attribs move-objects-hook move-component-hook component?)
 
+;; deselect-component-hook:
+;;
+;; Called each time a component is removed from the selection,
+;; except if the selection is cleared entirely.  Argument is
+;; as select-component-hook.
+(define-public deselect-component-hook (make-hook 1))
+(add-hook!/full-attribs deselect-objects-hook deselect-component-hook
+                        component?)
+
+;; deselect-net-hook:
+;;
+;; Called each time a net segment (n.b. *not* bus segment) is added to
+;; the selection. Argument is a list of all attributes of the
+;; net.
+(define-public deselect-net-hook (make-hook 1))
+(add-hook!/full-attribs deselect-objects-hook deselect-net-hook net?)
+
+;; deselect-all-hook:
+;;
+;; Called with the empty list as the argument each time the
+;; selection is emptied, even if the selection is already
+;; empty.
+(define-public deselect-all-hook (make-hook 1))
+(add-hook! deselect-objects-hook
+  (lambda (arg)
+    (if (and (not (null? deselect-all-hook))
+             (null? (page-selection (active-page))))
+        (run-hook deselect-all-hook '()))))
+
+;; select-component-hook:
+;;
+;; Called each time a component is added to the selection.
+;; Argument is a list of all attributes (inherited & promoted)
+;; of the component.
+(define-public select-component-hook (make-hook 1))
+(add-hook!/full-attribs select-objects-hook select-component-hook
+                        component?)
+
+;; select-net-hook:
+;;
+;; Called each time a net segment (n.b. *not* bus segment) is
+;; added to the selection.  Argument is the empty list.
+(define-public select-net-hook (make-hook 1))
+(add-hook!/full-attribs select-objects-hook select-net-hook net?)

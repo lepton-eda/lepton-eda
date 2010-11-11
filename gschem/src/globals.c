@@ -51,9 +51,4 @@ GList *object_buffer[MAX_BUFFERS];
 
 /* Hooks */
 SCM complex_place_list_changed_hook;
-SCM deselect_component_hook;
-SCM deselect_net_hook;
-SCM deselect_all_hook;
-SCM select_component_hook;
-SCM select_net_hook;
 SCM new_page_hook;

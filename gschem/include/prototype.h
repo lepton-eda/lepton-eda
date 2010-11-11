@@ -682,7 +682,6 @@ void o_select_box_search(GSCHEM_TOPLEVEL *w_current);
 void o_select_connected_nets(GSCHEM_TOPLEVEL *w_current, OBJECT* o_current);
 OBJECT *o_select_return_first_object(GSCHEM_TOPLEVEL *w_current);
 int o_select_selected(GSCHEM_TOPLEVEL *w_current);
-void o_select_unselect_list(GSCHEM_TOPLEVEL *w_current, SELECTION *selection);
 void o_select_unselect_all(GSCHEM_TOPLEVEL *w_current);
 void o_select_visible_unlocked(GSCHEM_TOPLEVEL *w_current);
 void o_select_move_to_place_list(GSCHEM_TOPLEVEL *w_current);
