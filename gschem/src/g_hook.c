@@ -177,50 +177,6 @@ SCM g_add_attrib(SCM object, SCM scm_attrib_name,
  *
  */
 /*
- * Returns a list with coords of the ends of  the given pin <B>object</B>.
-The list is ( (x0 y0) (x1 y1) ), where the beginning is at (x0,y0) and the end at (x1,y1). 
-The active connection end of the pin is the beginning, so this function cares about the whichend property of the pin object. If whichend is 1, then it has to reverse the ends.
- */
-SCM g_get_pin_ends(SCM object)
-{
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
-  OBJECT *o_current;
-  SCM coord1 = SCM_EOL;
-  SCM coord2 = SCM_EOL;
-  SCM coords = SCM_EOL;
-
-  /* Get toplevel and o_current */
-  SCM_ASSERT (edascm_is_object (object),
-	      object, SCM_ARG1, "get-pin-ends");
-  o_current = edascm_to_object (object);
-
-  /* Check that it is a pin object */
-  SCM_ASSERT (o_current != NULL,
-	      object, SCM_ARG1, "get-pin-ends");
-  SCM_ASSERT (o_current->type == OBJ_PIN,
-	      object, SCM_ARG1, "get-pin-ends");
-  SCM_ASSERT (o_current->line != NULL,
-	      object, SCM_ARG1, "get-pin-ends");
-
-  coord1 = scm_cons(scm_from_int(o_current->line->x[0]), 
-		    scm_from_int(o_current->line->y[0]));
-  coord2 = scm_cons(scm_from_int(o_current->line->x[1]),
-		    scm_from_int(o_current->line->y[1]));
-  if (o_current->whichend == 0) {
-    coords = scm_cons(coord1, scm_list(coord2));
-  } else {
-    coords = scm_cons(coord2, scm_list(coord1));
-  }    
-		     
-  return coords;  
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/*
  * Sets several text properties of the given <B>attribute smob</B>:
   - <B>coloridx</B>: The index of the text color, or -1 to keep previous color.
   - <B>size</B>: Size (numeric) of the text, or -1 to keep the previous size.
@@ -561,44 +517,6 @@ SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclu
   return (returned);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/*
- *Returns a list of the pins of the <B>object smob</B>.
- */
-SCM g_get_object_pins (SCM object_smob)
-{
-  TOPLEVEL *toplevel=edascm_c_current_toplevel ();
-  OBJECT *object=NULL;
-  OBJECT *prim_obj;
-  GList *iter;
-  SCM returned=SCM_EOL;
-
-  /* Get toplevel and o_current */
-  SCM_ASSERT (edascm_is_object (object_smob),
-	      object_smob, SCM_ARG1, "get-object-pins");
-  object = edascm_to_object (object_smob);
-
-  if (!object) {
-    return (returned);
-  }
-  if (object->complex && object->complex->prim_objs) {
-    iter = object->complex->prim_objs;
-    while (iter != NULL) {
-      prim_obj = (OBJECT *)iter->data;
-      if (prim_obj->type == OBJ_PIN) {
-	returned = scm_cons (edascm_from_object (prim_obj), returned);
-      }
-      iter = g_list_next (iter);
-    }
-  }
-  
-  return (returned);
-}
-
 /*! \brief Add a component to the page.
  *  \par Function Description
  *  Adds a component <B>scm_comp_name</B> to the schematic, at 
@@ -684,43 +602,4 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
   }
 
   return SCM_BOOL_T;        
-}
-
-/*! \brief Return the objects in a page.
- *  \par Function Description
- *  Returns an object smob list with all the objects in the given page.
- *  \param [in] page_smob Page to look at.
- *  \return the object smob list with the objects in the page.
- *
- */
-SCM g_get_objects_in_page(SCM page_smob) {
-
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
-  PAGE *page;
-  OBJECT *object;
-  const GList *iter;
-  SCM return_list=SCM_EOL;
-
-  /* Get toplevel and the page */
-  SCM_ASSERT (edascm_is_page (page_smob),
-	      page_smob, SCM_ARG1, "add-component");
-  page = edascm_to_page (page_smob);
-
-  if (page && s_page_objects (page)) {
-    iter = s_page_objects (page);
-    while (iter != NULL) {
-      object = (OBJECT *)iter->data;
-      return_list = scm_cons (edascm_from_object (object),
-			      return_list);
-      iter = g_list_next (iter);
-    }
-  }
-
-  return return_list;
-} 
-
-SCM g_get_current_page(void)
-{
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
-  return (edascm_from_page (toplevel->page_current));
 }

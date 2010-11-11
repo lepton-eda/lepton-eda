@@ -24,10 +24,25 @@
 
   #:use-module (geda page)
   #:use-module (geda object)
-  #:use-module (geda attrib))
+  #:use-module (geda attrib)
+  #:use-module (gschem window))
 
 (define-public (set-attribute-value! attrib value)
   (let ((params (text-info attrib))
         (name-value (attrib-parse attrib))
        (list-set! params 3 (simple-format "~A=~A" (car name-value) value))
        (apply set-text! attrib params))))
+
+(define-public (get-objects-in-page page)
+  (reverse! (page-contents page)))
+
+(define-public get-current-page active-page)
+
+(define-public (get-object-pins object)
+  (if (component? object)
+      (reverse! (filter! pin? (component-contents object)))
+      '()))
+
+(define-public (get-pin-ends pin)
+  (let ((params (line-info pin)))
+    (cons (list-ref params 0) (list-ref params 1))))

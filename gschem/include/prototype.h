@@ -35,17 +35,13 @@ SCM get_selected_filename(GSCHEM_TOPLEVEL *w_current);
 SCM g_make_attrib_smob_list(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 SCM g_add_attrib(SCM object, SCM attrib_name, 
 		 SCM attrib_value, SCM scm_vis, SCM scm_show);
-SCM g_get_pin_ends(SCM object);
 SCM
 g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname, SCM scm_size, 
 			     SCM scm_alignment, SCM scm_rotation, SCM scm_x,
 			     SCM scm_y);
 SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclude_object_type);
-SCM g_get_object_pins (SCM object_smob);
 SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y, 
 		    SCM scm_angle, SCM scm_selectable, SCM scm_mirror);
-SCM g_get_objects_in_page(SCM page_smob);
-SCM g_get_current_page(void);
 /* g_keys.c */
 int g_keys_execute(GSCHEM_TOPLEVEL *w_current, int state, int keyval);
 GArray *g_keys_dump_keymap (void);
