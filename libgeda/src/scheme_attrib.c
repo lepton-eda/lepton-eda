@@ -138,13 +138,13 @@ SCM_DEFINE (attrib_attachment, "%attrib-attachment", 1, 0, 0,
  * \param attrib_s the attribute to attach.
  * \return \a attrib_s.
  */
-SCM_DEFINE (attach_attrib, "%attach-attrib!", 2, 0, 0,
+SCM_DEFINE (attach_attrib_x, "%attach-attrib!", 2, 0, 0,
             (SCM obj_s, SCM attrib_s), "Attach an attribute to an object.")
 {
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_attach_attrib);
+              SCM_ARG1, s_attach_attrib_x);
   SCM_ASSERT (edascm_is_object_type (attrib_s, OBJ_TEXT), attrib_s,
-              SCM_ARG2, s_attach_attrib);
+              SCM_ARG2, s_attach_attrib_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
@@ -154,19 +154,19 @@ SCM_DEFINE (attach_attrib, "%attach-attrib!", 2, 0, 0,
   if ((obj->parent != attrib->parent)
       || (o_get_page (toplevel, obj) != o_get_page (toplevel, attrib))
       || ((obj->parent == NULL) && (o_get_page (toplevel, obj) == NULL))) {
-    scm_error (edascm_object_state_sym, s_attach_attrib,
+    scm_error (edascm_object_state_sym, s_attach_attrib_x,
                _("Objects ~A and ~A are not part of the same page and/or complex object"),
                scm_list_2 (obj_s, attrib_s), SCM_EOL);
   }
 
   /* Check that neither is already an attached attribute */
   if (obj->attached_to != NULL) {
-    scm_error (edascm_object_state_sym, s_attach_attrib,
+    scm_error (edascm_object_state_sym, s_attach_attrib_x,
                _("Object ~A is already attached as an attribute"),
                scm_list_1 (obj_s), SCM_EOL);
   }
   if (attrib->attached_to != NULL) {
-    scm_error (edascm_object_state_sym, s_attach_attrib,
+    scm_error (edascm_object_state_sym, s_attach_attrib_x,
                _("Object ~A is already attached as an attribute"),
                scm_list_1 (attrib_s), SCM_EOL);
   }
@@ -195,13 +195,13 @@ SCM_DEFINE (attach_attrib, "%attach-attrib!", 2, 0, 0,
  * \param attrib_s the attribute to detach.
  * \return \a attrib_s.
  */
-SCM_DEFINE (detach_attrib, "%detach-attrib!", 2, 0, 0,
+SCM_DEFINE (detach_attrib_x, "%detach-attrib!", 2, 0, 0,
             (SCM obj_s, SCM attrib_s), "Detach an attribute to an object.")
 {
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_detach_attrib);
+              SCM_ARG1, s_detach_attrib_x);
   SCM_ASSERT (edascm_is_object_type (attrib_s, OBJ_TEXT), attrib_s,
-              SCM_ARG2, s_detach_attrib);
+              SCM_ARG2, s_detach_attrib_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
@@ -209,7 +209,7 @@ SCM_DEFINE (detach_attrib, "%detach-attrib!", 2, 0, 0,
 
   /* Check that attrib isn't attached elsewhere */
   if (attrib->attached_to != obj) {
-    scm_error (edascm_object_state_sym, s_detach_attrib,
+    scm_error (edascm_object_state_sym, s_detach_attrib_x,
                _("Object ~A is attribute of wrong object"),
                scm_list_1 (attrib_s), SCM_EOL);
   }
@@ -263,7 +263,7 @@ init_module_geda_core_attrib ()
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_parse_attrib, s_object_attribs, s_attrib_attachment,
-                s_attach_attrib, s_detach_attrib,
+                s_attach_attrib_x, s_detach_attrib_x,
                 s_promotable_attribs,
                 NULL);
 }

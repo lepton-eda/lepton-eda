@@ -120,15 +120,15 @@ SCM_DEFINE (make_complex_library, "%make-complex/library", 1, 0, 0,
  *
  * \return the modified \a complex_s.
  */
-SCM_DEFINE (set_complex, "%set-complex!", 6, 0, 0,
+SCM_DEFINE (set_complex_x, "%set-complex!", 6, 0, 0,
             (SCM complex_s, SCM x_s, SCM y_s, SCM angle_s, SCM mirror_s,
              SCM locked_s), "Set complex object parameters")
 {
   SCM_ASSERT (edascm_is_object_type (complex_s, OBJ_COMPLEX), complex_s,
-              SCM_ARG1, s_set_complex);
-  SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_complex);
-  SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_complex);
-  SCM_ASSERT (scm_is_integer (angle_s), angle_s, SCM_ARG4, s_set_complex);
+              SCM_ARG1, s_set_complex_x);
+  SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_complex_x);
+  SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_complex_x);
+  SCM_ASSERT (scm_is_integer (angle_s), angle_s, SCM_ARG4, s_set_complex_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (complex_s);
@@ -144,7 +144,7 @@ SCM_DEFINE (set_complex, "%set-complex!", 6, 0, 0,
     break;
   default:
     /* Otherwise, not fine. */
-    scm_misc_error (s_set_complex,
+    scm_misc_error (s_set_complex_x,
                     _("Invalid complex angle ~A. Must be 0, 90, 180, or 270 degrees"),
                     scm_list_1 (angle_s));
   }
@@ -240,17 +240,17 @@ SCM_DEFINE (complex_contents, "%complex-contents", 1, 0, 0,
  * \param obj_s     primitive object to add.
  * \return \a obj_s.
  */
-SCM_DEFINE (complex_append, "%complex-append!", 2, 0, 0,
+SCM_DEFINE (complex_append_x, "%complex-append!", 2, 0, 0,
             (SCM complex_s, SCM obj_s),
             "Add a primitive object to a complex object")
 {
   /* Ensure that the arguments have the correct types. */
   SCM_ASSERT (edascm_is_object_type (complex_s, OBJ_COMPLEX), complex_s,
-              SCM_ARG1, s_complex_append);
+              SCM_ARG1, s_complex_append_x);
   SCM_ASSERT ((EDASCM_OBJECTP (obj_s)
                && !edascm_is_object_type (obj_s, OBJ_COMPLEX)
                && !edascm_is_object_type (obj_s, OBJ_PLACEHOLDER)),
-              obj_s, SCM_ARG2, s_complex_append);
+              obj_s, SCM_ARG2, s_complex_append_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *parent = edascm_to_object (complex_s);
@@ -261,7 +261,7 @@ SCM_DEFINE (complex_append, "%complex-append!", 2, 0, 0,
   if ((o_get_page (toplevel, child) != NULL)
       || ((child->parent != NULL) && (child->parent != parent))) {
     scm_error (edascm_object_state_sym,
-               s_complex_append,
+               s_complex_append_x,
                _("Object ~A is already attached to something"),
                scm_list_1 (obj_s), SCM_EOL);
   }
@@ -305,14 +305,14 @@ SCM_DEFINE (complex_append, "%complex-append!", 2, 0, 0,
  * \param obj_s     primitive object to remove.
  * \return \a obj_s.
  */
-SCM_DEFINE (complex_remove, "%complex-remove!", 2, 0, 0,
+SCM_DEFINE (complex_remove_x, "%complex-remove!", 2, 0, 0,
             (SCM complex_s, SCM obj_s),
             "Remove a primitive object from a complex object")
 {
   /* Ensure that the arguments have the correct types. */
   SCM_ASSERT (edascm_is_object_type (complex_s, OBJ_COMPLEX), complex_s,
-              SCM_ARG1, s_complex_remove);
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s, SCM_ARG2, s_complex_remove);
+              SCM_ARG1, s_complex_remove_x);
+  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s, SCM_ARG2, s_complex_remove_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *parent = edascm_to_object (complex_s);
@@ -321,28 +321,28 @@ SCM_DEFINE (complex_remove, "%complex-remove!", 2, 0, 0,
 
   /* Check that object is not attached to a different complex. */
   if ((child->parent != NULL) && (child->parent != parent)) {
-    scm_error (edascm_object_state_sym, s_complex_remove,
+    scm_error (edascm_object_state_sym, s_complex_remove_x,
                _("Object ~A is attached to a different complex"),
                scm_list_1 (obj_s), SCM_EOL);
   }
 
   /* Check that object is not attached to a page. */
   if ((child->parent == NULL) && (child_page != NULL)) {
-    scm_error (edascm_object_state_sym, s_complex_remove,
+    scm_error (edascm_object_state_sym, s_complex_remove_x,
                _("Object ~A is attached to a page"),
                scm_list_1 (obj_s), SCM_EOL);
   }
 
   /* Check that object is not attached as an attribute. */
   if (child->attached_to != NULL) {
-    scm_error (edascm_object_state_sym, s_complex_remove,
+    scm_error (edascm_object_state_sym, s_complex_remove_x,
                _("Object ~A is attached as an attribute"),
                scm_list_1 (obj_s), SCM_EOL);
   }
 
   /* Check that object doesn't have attributes. */
   if (child->attribs != NULL) {
-    scm_error (edascm_object_state_sym, s_complex_remove,
+    scm_error (edascm_object_state_sym, s_complex_remove_x,
                _("Object ~A has attributes"),
                scm_list_1 (obj_s), SCM_EOL);
   }
@@ -383,9 +383,9 @@ init_module_geda_core_complex ()
   #include "scheme_complex.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_make_complex, s_make_complex_library, s_set_complex,
-                s_complex_info, s_complex_contents, s_complex_append,
-                s_complex_remove, NULL);
+  scm_c_export (s_make_complex, s_make_complex_library, s_set_complex_x,
+                s_complex_info, s_complex_contents, s_complex_append_x,
+                s_complex_remove_x, NULL);
 }
 
 /*!

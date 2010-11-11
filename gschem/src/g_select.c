@@ -63,19 +63,19 @@ SCM_DEFINE (page_selection, "%page-selection", 1, 0, 0,
  * \param obj_s #OBJECT smob for object to be selected.
  * \return obj_s.
  */
-SCM_DEFINE (select_object_, "%select-object!", 1, 0, 0,
+SCM_DEFINE (select_object_x, "%select-object!", 1, 0, 0,
             (SCM obj_s), "Select an object.")
 {
   /* Ensure that the argument is an object smob */
   SCM_ASSERT (edascm_is_object (obj_s), obj_s,
-              SCM_ARG1, s_select_object_);
+              SCM_ARG1, s_select_object_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   PAGE *page = o_get_page (toplevel, obj);
   if ((page == NULL) || (obj->parent != NULL)) {
     scm_error (object_state_sym,
-               s_select_object_,
+               s_select_object_x,
                _("Object ~A is not directly included in a page."),
                scm_list_1 (obj_s), SCM_EOL);
   }
@@ -100,19 +100,19 @@ SCM_DEFINE (select_object_, "%select-object!", 1, 0, 0,
  * \param obj_s #OBJECT smob for object to be deselected.
  * \return obj_s.
  */
-SCM_DEFINE (deselect_object, "%deselect-object!", 1, 0, 0,
+SCM_DEFINE (deselect_object_x, "%deselect-object!", 1, 0, 0,
             (SCM obj_s), "Deselect an object.")
 {
   /* Ensure that the argument is an object smob */
   SCM_ASSERT (edascm_is_object (obj_s), obj_s,
-              SCM_ARG1, s_deselect_object);
+              SCM_ARG1, s_deselect_object_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   PAGE *page = o_get_page (toplevel, obj);
   if ((page == NULL) || (obj->parent != NULL)) {
     scm_error (object_state_sym,
-               s_deselect_object,
+               s_deselect_object_x,
                _("Object ~A is not directly included in a page."),
                scm_list_1 (obj_s), SCM_EOL);
   }
@@ -167,7 +167,7 @@ init_module_gschem_core_select ()
   #include "g_select.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_page_selection, s_select_object_, s_deselect_object,
+  scm_c_export (s_page_selection, s_select_object_x, s_deselect_object_x,
                 s_object_selected_p, NULL);
 }
 

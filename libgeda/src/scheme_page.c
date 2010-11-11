@@ -96,12 +96,12 @@ SCM_DEFINE (new_page, "%new-page", 1, 0, 0,
  * \param page_s The page to close.
  * \return SCM_UNDEFINED.
  */
-SCM_DEFINE (close_page, "%close-page!", 1, 0, 0,
+SCM_DEFINE (close_page_x, "%close-page!", 1, 0, 0,
             (SCM page_s), "Close a page.")
 {
   /* Ensure that the argument is a page smob */
   SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
-              SCM_ARG1, s_close_page);
+              SCM_ARG1, s_close_page_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   PAGE *page = edascm_to_page (page_s);
@@ -145,13 +145,13 @@ SCM_DEFINE (page_filename, "%page-filename", 1, 0, 0,
  * \param filename_s new filename for \a page.
  * \return \a page.
  */
-SCM_DEFINE (set_page_filename, "%set-page-filename!", 2, 0, 0,
+SCM_DEFINE (set_page_filename_x, "%set-page-filename!", 2, 0, 0,
             (SCM page_s, SCM filename_s), "Set a page's associated filename")
 {
   SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
-              SCM_ARG1, s_set_page_filename);
+              SCM_ARG1, s_set_page_filename_x);
   SCM_ASSERT (scm_is_string (filename_s), filename_s,
-              SCM_ARG2, s_set_page_filename);
+              SCM_ARG2, s_set_page_filename_x);
 
   PAGE *page = edascm_to_page (page_s);
   char *new_fn = scm_to_locale_string (filename_s);
@@ -226,14 +226,14 @@ SCM_DEFINE (object_page, "%object-page", 1, 0, 0,
  *
  * \return \a obj_s.
  */
-SCM_DEFINE (page_append_, "%page-append!", 2, 0, 0,
+SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
             (SCM page_s, SCM obj_s), "Add an object to a page.")
 {
   /* Ensure that the arguments have the correct types. */
   SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
-              SCM_ARG1, s_page_append_);
+              SCM_ARG1, s_page_append_x);
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG2, s_page_append_);
+              SCM_ARG2, s_page_append_x);
 
   PAGE *page = edascm_to_page (page_s);
   OBJECT *obj = edascm_to_object (obj_s);
@@ -243,7 +243,7 @@ SCM_DEFINE (page_append_, "%page-append!", 2, 0, 0,
   PAGE *curr_page = o_get_page (toplevel, obj);
   if (((curr_page != NULL) && (curr_page != page))
       || (obj->parent != NULL)) {
-    scm_error (edascm_object_state_sym, s_page_append_,
+    scm_error (edascm_object_state_sym, s_page_append_x,
                _("Object ~A is already attached to something"),
                scm_list_1 (obj_s), SCM_EOL);
   }
@@ -271,14 +271,14 @@ SCM_DEFINE (page_append_, "%page-append!", 2, 0, 0,
  *
  * \return \a obj_s.
  */
-SCM_DEFINE (page_remove_, "%page-remove!", 2, 0, 0,
+SCM_DEFINE (page_remove_x, "%page-remove!", 2, 0, 0,
             (SCM page_s, SCM obj_s), "Remove an object from a page.")
 {
   /* Ensure that the arguments have the correct types. */
   SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
-              SCM_ARG1, s_page_remove_);
+              SCM_ARG1, s_page_remove_x);
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG2, s_page_remove_);
+              SCM_ARG2, s_page_remove_x);
 
   PAGE *page = edascm_to_page (page_s);
   OBJECT *obj = edascm_to_object (obj_s);
@@ -288,21 +288,21 @@ SCM_DEFINE (page_remove_, "%page-remove!", 2, 0, 0,
   PAGE *curr_page = o_get_page (toplevel, obj);
   if ((curr_page != NULL && curr_page != page)
       || (obj->parent != NULL)) {
-    scm_error (edascm_object_state_sym, s_page_remove_,
+    scm_error (edascm_object_state_sym, s_page_remove_x,
                _("Object ~A is attached to a complex or different page"),
                scm_list_1 (obj_s), SCM_EOL);
   }
 
   /* Check that object is not attached as an attribute. */
   if (obj->attached_to != NULL) {
-    scm_error (edascm_object_state_sym, s_page_remove_,
+    scm_error (edascm_object_state_sym, s_page_remove_x,
                _("Object ~A is attached as an attribute"),
                scm_list_1 (obj_s), SCM_EOL);
   }
 
   /* Check that object doesn't have attributes. */
   if (obj->attribs != NULL) {
-    scm_error (edascm_object_state_sym, s_page_remove_,
+    scm_error (edascm_object_state_sym, s_page_remove_x,
                _("Object ~A has attributes"),
                scm_list_1 (obj_s), SCM_EOL);
   }
@@ -355,13 +355,13 @@ SCM_DEFINE (page_dirty, "%page-dirty?", 1, 0, 0,
  * \param flag_s new flag setting.
  * \return \a page_s
  */
-SCM_DEFINE (set_page_dirty, "%set-page-dirty!", 2, 0, 0,
+SCM_DEFINE (set_page_dirty_x, "%set-page-dirty!", 2, 0, 0,
             (SCM page_s, SCM flag_s),
             "Set whether a page is flagged as changed.")
 {
   /* Ensure that the argument is a page smob */
   SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
-              SCM_ARG1, s_set_page_dirty);
+              SCM_ARG1, s_set_page_dirty_x);
 
   PAGE *page = edascm_to_page (page_s);
   page->CHANGED = scm_is_true (flag_s);
@@ -382,10 +382,10 @@ init_module_geda_core_page ()
 
   /* Add them to the module's public definitions. */
 
-  scm_c_export (s_active_pages, s_new_page, s_close_page,
-                s_page_filename, s_set_page_filename, s_page_contents,
-                s_object_page, s_page_append_, s_page_remove_, s_page_dirty,
-                s_set_page_dirty, NULL);
+  scm_c_export (s_active_pages, s_new_page, s_close_page_x,
+                s_page_filename, s_set_page_filename_x, s_page_contents,
+                s_object_page, s_page_append_x, s_page_remove_x, s_page_dirty,
+                s_set_page_dirty_x, NULL);
 }
 
 /*!

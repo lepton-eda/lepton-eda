@@ -396,7 +396,7 @@ SCM_DEFINE (object_stroke, "%object-stroke", 1, 0, 0,
  *                 dotted.
  * \return \a obj_s.
  */
-SCM_DEFINE (set_object_stroke, "%set-object-stroke!", 4, 2, 0,
+SCM_DEFINE (set_object_stroke_x, "%set-object-stroke!", 4, 2, 0,
             (SCM obj_s, SCM width_s, SCM cap_s, SCM dash_s, SCM space_s,
              SCM length_s), "Set the stroke properties of an object.")
 {
@@ -405,18 +405,18 @@ SCM_DEFINE (set_object_stroke, "%set-object-stroke!", 4, 2, 0,
                || edascm_is_object_type (obj_s, OBJ_CIRCLE)
                || edascm_is_object_type (obj_s, OBJ_ARC)
                || edascm_is_object_type (obj_s, OBJ_PATH)),
-              obj_s, SCM_ARG1, s_set_object_stroke);
+              obj_s, SCM_ARG1, s_set_object_stroke_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   int cap, type, width, length = -1, space = -1;
 
   SCM_ASSERT (scm_is_integer (width_s), width_s,
-              SCM_ARG2, s_set_object_stroke);
+              SCM_ARG2, s_set_object_stroke_x);
   SCM_ASSERT (scm_is_symbol (cap_s), cap_s,
-              SCM_ARG3, s_set_object_stroke);
+              SCM_ARG3, s_set_object_stroke_x);
   SCM_ASSERT (scm_is_symbol (dash_s), dash_s,
-              SCM_ARG4, s_set_object_stroke);
+              SCM_ARG4, s_set_object_stroke_x);
 
   width = scm_to_int (width_s);
 
@@ -424,7 +424,7 @@ SCM_DEFINE (set_object_stroke, "%set-object-stroke!", 4, 2, 0,
   else if (cap_s == square_sym) { cap = END_SQUARE; }
   else if (cap_s == round_sym)  { cap = END_ROUND;  }
   else {
-    scm_misc_error (s_set_object_stroke,
+    scm_misc_error (s_set_object_stroke_x,
                     _("Invalid stroke cap style ~A."),
                     scm_list_1 (cap_s));
   }
@@ -435,7 +435,7 @@ SCM_DEFINE (set_object_stroke, "%set-object-stroke!", 4, 2, 0,
   else if (dash_s == center_sym)  { type = TYPE_CENTER;  }
   else if (dash_s == phantom_sym) { type = TYPE_PHANTOM; }
   else {
-    scm_misc_error (s_set_object_stroke,
+    scm_misc_error (s_set_object_stroke_x,
                     _("Invalid stroke dash style ~A."),
                     scm_list_1 (dash_s));
   }
@@ -445,22 +445,22 @@ SCM_DEFINE (set_object_stroke, "%set-object-stroke!", 4, 2, 0,
   case TYPE_CENTER:
   case TYPE_PHANTOM:
     if (length_s == SCM_UNDEFINED) {
-      scm_misc_error (s_set_object_stroke,
+      scm_misc_error (s_set_object_stroke_x,
                       _("Missing dash length parameter for dash style ~A."),
                       scm_list_1 (length_s));
     }
     SCM_ASSERT (scm_is_integer (length_s), length_s,
-                SCM_ARG6, s_set_object_stroke);
+                SCM_ARG6, s_set_object_stroke_x);
     length = scm_to_int (length_s);
     /* This case intentionally falls through */
   case TYPE_DOTTED:
     if (space_s == SCM_UNDEFINED) {
-      scm_misc_error (s_set_object_stroke,
+      scm_misc_error (s_set_object_stroke_x,
                       _("Missing dot/dash space parameter for dash style ~A."),
                       scm_list_1 (space_s));
     }
     SCM_ASSERT (scm_is_integer (space_s), space_s,
-                SCM_ARG5, s_set_object_stroke);
+                SCM_ARG5, s_set_object_stroke_x);
     space = scm_to_int (space_s);
     /* This case intentionally falls through */
   }
@@ -546,7 +546,7 @@ SCM_DEFINE (object_fill, "%object-fill", 1, 0, 0,
  * \param obj_s object to set fill settings for.
  * \return \a obj_s.
  */
-SCM_DEFINE (set_object_fill, "%set-object-fill!", 2, 5, 0,
+SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
             (SCM obj_s, SCM type_s, SCM width_s, SCM space1_s, SCM angle1_s,
              SCM space2_s, SCM angle2_s),
             "Set the fill properties of an object.")
@@ -554,7 +554,7 @@ SCM_DEFINE (set_object_fill, "%set-object-fill!", 2, 5, 0,
   SCM_ASSERT ((edascm_is_object_type (obj_s, OBJ_BOX)
                || edascm_is_object_type (obj_s, OBJ_CIRCLE)
                || edascm_is_object_type (obj_s, OBJ_PATH)),
-              obj_s, SCM_ARG1, s_set_object_fill);
+              obj_s, SCM_ARG1, s_set_object_fill_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
@@ -565,7 +565,7 @@ SCM_DEFINE (set_object_fill, "%set-object-fill!", 2, 5, 0,
   else if (type_s == hatch_sym)  { type = FILLING_HATCH;  }
   else if (type_s == mesh_sym)  { type = FILLING_MESH;  }
   else {
-    scm_misc_error (s_set_object_fill,
+    scm_misc_error (s_set_object_fill_x,
                     _("Invalid fill style ~A."),
                     scm_list_1 (type_s));
   }
@@ -573,49 +573,49 @@ SCM_DEFINE (set_object_fill, "%set-object-fill!", 2, 5, 0,
   switch (type) {
   case FILLING_MESH:
     if (space2_s == SCM_UNDEFINED) {
-      scm_misc_error (s_set_object_fill,
+      scm_misc_error (s_set_object_fill_x,
                       _("Missing second space parameter for fill style ~A."),
                       scm_list_1 (space2_s));
     }
     SCM_ASSERT (scm_is_integer (space2_s), space2_s,
-                SCM_ARG6, s_set_object_fill);
+                SCM_ARG6, s_set_object_fill_x);
     space2 = scm_to_int (space2_s);
 
     if (angle2_s == SCM_UNDEFINED) {
-      scm_misc_error (s_set_object_fill,
+      scm_misc_error (s_set_object_fill_x,
                       _("Missing second angle parameter for fill style ~A."),
                       scm_list_1 (angle2_s));
     }
     SCM_ASSERT (scm_is_integer (angle2_s), angle2_s,
-                SCM_ARG7, s_set_object_fill);
+                SCM_ARG7, s_set_object_fill_x);
     angle2 = scm_to_int (angle2_s);
     /* This case intentionally falls through */
   case FILLING_HATCH:
     if (width_s == SCM_UNDEFINED) {
-      scm_misc_error (s_set_object_fill,
+      scm_misc_error (s_set_object_fill_x,
                       _("Missing stroke width parameter for fill style ~A."),
                       scm_list_1 (width_s));
     }
     SCM_ASSERT (scm_is_integer (width_s), width_s,
-                SCM_ARG3, s_set_object_fill);
+                SCM_ARG3, s_set_object_fill_x);
     width = scm_to_int (width_s);
 
     if (space1_s == SCM_UNDEFINED) {
-      scm_misc_error (s_set_object_fill,
+      scm_misc_error (s_set_object_fill_x,
                       _("Missing space parameter for fill style ~A."),
                       scm_list_1 (space1_s));
     }
     SCM_ASSERT (scm_is_integer (space1_s), space1_s,
-                SCM_ARG4, s_set_object_fill);
+                SCM_ARG4, s_set_object_fill_x);
     space1 = scm_to_int (space1_s);
 
     if (angle1_s == SCM_UNDEFINED) {
-      scm_misc_error (s_set_object_fill,
+      scm_misc_error (s_set_object_fill_x,
                       _("Missing angle parameter for fill style ~A."),
                       scm_list_1 (angle1_s));
     }
     SCM_ASSERT (scm_is_integer (angle1_s), angle1_s,
-                SCM_ARG5, s_set_object_fill);
+                SCM_ARG5, s_set_object_fill_x);
     angle1 = scm_to_int (angle1_s);
     /* This case intentionally falls through */
   }
@@ -661,13 +661,13 @@ SCM_DEFINE (object_color, "%object-color", 1, 0, 0,
  * \param color_s new colormap index to use for \a obj_s.
  * \return the modified \a obj_s.
  */
-SCM_DEFINE (set_object_color, "%set-object-color!", 2, 0, 0,
+SCM_DEFINE (set_object_color_x, "%set-object-color!", 2, 0, 0,
             (SCM obj_s, SCM color_s), "Set the color of an object.")
 {
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_set_object_color);
+              SCM_ARG1, s_set_object_color_x);
   SCM_ASSERT (scm_is_integer (color_s), color_s,
-              SCM_ARG2, s_set_object_color);
+              SCM_ARG2, s_set_object_color_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
@@ -724,7 +724,7 @@ SCM_DEFINE (make_line, "%make-line", 0, 0, 0,
  *
  * \return the modified line object.
  */
-SCM_DEFINE (set_line, "%set-line!", 6, 0, 0,
+SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
             (SCM line_s, SCM x1_s, SCM y1_s, SCM x2_s, SCM y2_s, SCM color_s),
             "Set line parameters.")
 {
@@ -732,13 +732,13 @@ SCM_DEFINE (set_line, "%set-line!", 6, 0, 0,
                || edascm_is_object_type (line_s, OBJ_NET)
                || edascm_is_object_type (line_s, OBJ_BUS)
                || edascm_is_object_type (line_s, OBJ_PIN)),
-              line_s, SCM_ARG1, s_set_line);
+              line_s, SCM_ARG1, s_set_line_x);
 
-  SCM_ASSERT (scm_is_integer (x1_s),    x1_s,    SCM_ARG2, s_set_line);
-  SCM_ASSERT (scm_is_integer (y1_s),    y1_s,    SCM_ARG3, s_set_line);
-  SCM_ASSERT (scm_is_integer (x2_s),    x2_s,    SCM_ARG4, s_set_line);
-  SCM_ASSERT (scm_is_integer (y2_s),    y2_s,    SCM_ARG5, s_set_line);
-  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG6, s_set_line);
+  SCM_ASSERT (scm_is_integer (x1_s),    x1_s,    SCM_ARG2, s_set_line_x);
+  SCM_ASSERT (scm_is_integer (y1_s),    y1_s,    SCM_ARG3, s_set_line_x);
+  SCM_ASSERT (scm_is_integer (x2_s),    x2_s,    SCM_ARG4, s_set_line_x);
+  SCM_ASSERT (scm_is_integer (y2_s),    y2_s,    SCM_ARG5, s_set_line_x);
+  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG6, s_set_line_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (line_s);
@@ -1002,17 +1002,17 @@ SCM_DEFINE (make_box, "%make-box", 0, 0, 0,
  *
  * \return the modified box object.
  */
-SCM_DEFINE (set_box, "%set-box!", 6, 0, 0,
+SCM_DEFINE (set_box_x, "%set-box!", 6, 0, 0,
             (SCM box_s, SCM x1_s, SCM y1_s, SCM x2_s, SCM y2_s, SCM color_s),
             "Set box parameters.")
 {
   SCM_ASSERT (edascm_is_object_type (box_s, OBJ_BOX), box_s,
-              SCM_ARG1, s_set_box);
-  SCM_ASSERT (scm_is_integer (x1_s),    x1_s,    SCM_ARG2, s_set_box);
-  SCM_ASSERT (scm_is_integer (y1_s),    y1_s,    SCM_ARG3, s_set_box);
-  SCM_ASSERT (scm_is_integer (x2_s),    x2_s,    SCM_ARG4, s_set_box);
-  SCM_ASSERT (scm_is_integer (y2_s),    y2_s,    SCM_ARG5, s_set_box);
-  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG6, s_set_box);
+              SCM_ARG1, s_set_box_x);
+  SCM_ASSERT (scm_is_integer (x1_s),    x1_s,    SCM_ARG2, s_set_box_x);
+  SCM_ASSERT (scm_is_integer (y1_s),    y1_s,    SCM_ARG3, s_set_box_x);
+  SCM_ASSERT (scm_is_integer (x2_s),    x2_s,    SCM_ARG4, s_set_box_x);
+  SCM_ASSERT (scm_is_integer (y2_s),    y2_s,    SCM_ARG5, s_set_box_x);
+  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG6, s_set_box_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (box_s);
@@ -1099,16 +1099,16 @@ SCM_DEFINE (make_circle, "%make-circle", 0, 0, 0,
  *
  * \return the modified circle object.
  */
-SCM_DEFINE (set_circle, "%set-circle!", 5, 0, 0,
+SCM_DEFINE (set_circle_x, "%set-circle!", 5, 0, 0,
             (SCM circle_s, SCM x_s, SCM y_s, SCM r_s, SCM color_s),
             "Set circle parameters")
 {
   SCM_ASSERT (edascm_is_object_type (circle_s, OBJ_CIRCLE), circle_s,
-              SCM_ARG1, s_set_circle);
-  SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_circle);
-  SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_circle);
-  SCM_ASSERT (scm_is_integer (r_s),     r_s,     SCM_ARG4, s_set_circle);
-  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG5, s_set_circle);
+              SCM_ARG1, s_set_circle_x);
+  SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_circle_x);
+  SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_circle_x);
+  SCM_ASSERT (scm_is_integer (r_s),     r_s,     SCM_ARG4, s_set_circle_x);
+  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG5, s_set_circle_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (circle_s);
@@ -1195,21 +1195,21 @@ SCM_DEFINE (make_arc, "%make-arc", 0, 0, 0,
  *
  * \return the modified arc object.
  */
-SCM_DEFINE (set_arc, "%set-arc!", 7, 0, 0,
+SCM_DEFINE (set_arc_x, "%set-arc!", 7, 0, 0,
             (SCM arc_s, SCM x_s, SCM y_s, SCM r_s, SCM start_angle_s,
              SCM end_angle_s, SCM color_s),
             "Set arc parameters")
 {
   SCM_ASSERT (edascm_is_object_type (arc_s, OBJ_ARC), arc_s,
-              SCM_ARG1, s_set_arc);
-  SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_arc);
-  SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_arc);
-  SCM_ASSERT (scm_is_integer (r_s),     r_s,     SCM_ARG4, s_set_arc);
-  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG5, s_set_arc);
+              SCM_ARG1, s_set_arc_x);
+  SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_arc_x);
+  SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_arc_x);
+  SCM_ASSERT (scm_is_integer (r_s),     r_s,     SCM_ARG4, s_set_arc_x);
+  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG5, s_set_arc_x);
   SCM_ASSERT (scm_is_integer (start_angle_s),
-                                  start_angle_s, SCM_ARG3, s_set_arc);
+                                  start_angle_s, SCM_ARG3, s_set_arc_x);
   SCM_ASSERT (scm_is_integer (end_angle_s),
-                                  end_angle_s, SCM_ARG4, s_set_arc);
+                                  end_angle_s, SCM_ARG4, s_set_arc_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (arc_s);
@@ -1314,22 +1314,22 @@ SCM_DEFINE (make_text, "%make-text", 0, 0, 0,
  *
  * \return the modified text object.
  */
-SCM_DEFINE (set_text, "%set-text!", 10, 0, 0,
+SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
             (SCM text_s, SCM x_s, SCM y_s, SCM align_s, SCM angle_s,
              SCM string_s, SCM size_s, SCM visible_s, SCM show_s, SCM color_s),
             "Set text parameters")
 {
   SCM_ASSERT (edascm_is_object_type (text_s, OBJ_TEXT), text_s,
-              SCM_ARG1, s_set_text);
-  SCM_ASSERT (scm_is_integer (x_s),     x_s,      SCM_ARG2, s_set_text);
-  SCM_ASSERT (scm_is_integer (y_s),     y_s,      SCM_ARG3, s_set_text);
-  SCM_ASSERT (scm_is_symbol (align_s),  align_s,  SCM_ARG4, s_set_text);
-  SCM_ASSERT (scm_is_integer (angle_s), angle_s,  SCM_ARG5, s_set_text);
-  SCM_ASSERT (scm_is_string (string_s), string_s, SCM_ARG6, s_set_text);
-  SCM_ASSERT (scm_is_integer (size_s),  size_s,   SCM_ARG7, s_set_text);
+              SCM_ARG1, s_set_text_x);
+  SCM_ASSERT (scm_is_integer (x_s),     x_s,      SCM_ARG2, s_set_text_x);
+  SCM_ASSERT (scm_is_integer (y_s),     y_s,      SCM_ARG3, s_set_text_x);
+  SCM_ASSERT (scm_is_symbol (align_s),  align_s,  SCM_ARG4, s_set_text_x);
+  SCM_ASSERT (scm_is_integer (angle_s), angle_s,  SCM_ARG5, s_set_text_x);
+  SCM_ASSERT (scm_is_string (string_s), string_s, SCM_ARG6, s_set_text_x);
+  SCM_ASSERT (scm_is_integer (size_s),  size_s,   SCM_ARG7, s_set_text_x);
 
-  SCM_ASSERT (scm_is_symbol (show_s),    show_s,     9, s_set_text);
-  SCM_ASSERT (scm_is_integer (color_s),  color_s,   10, s_set_text);
+  SCM_ASSERT (scm_is_symbol (show_s),    show_s,     9, s_set_text_x);
+  SCM_ASSERT (scm_is_integer (color_s),  color_s,   10, s_set_text_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (text_s);
@@ -1346,7 +1346,7 @@ SCM_DEFINE (set_text, "%set-text!", 10, 0, 0,
   else if (align_s == middle_right_sym)  { align = MIDDLE_RIGHT;  }
   else if (align_s == upper_right_sym)   { align = UPPER_RIGHT;   }
   else {
-    scm_misc_error (s_set_text,
+    scm_misc_error (s_set_text_x,
                     _("Invalid text alignment ~A."),
                     scm_list_1 (angle_s));
   }
@@ -1362,7 +1362,7 @@ SCM_DEFINE (set_text, "%set-text!", 10, 0, 0,
     break;
   default:
     /* Otherwise, not fine. */
-    scm_misc_error (s_set_text,
+    scm_misc_error (s_set_text_x,
                     _("Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"),
                     scm_list_1 (angle_s));
   }
@@ -1381,7 +1381,7 @@ SCM_DEFINE (set_text, "%set-text!", 10, 0, 0,
   else if (show_s == value_sym) { show = SHOW_VALUE;      }
   else if (show_s == both_sym)  { show = SHOW_NAME_VALUE; }
   else {
-    scm_misc_error (s_set_text,
+    scm_misc_error (s_set_text_x,
                     _("Invalid text name/value visibility ~A."),
                     scm_list_1 (angle_s));
   }
@@ -1541,16 +1541,16 @@ init_module_geda_core_object ()
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_object_type, s_copy_object, s_object_bounds,
-                s_object_stroke, s_set_object_stroke,
-                s_object_fill, s_set_object_fill,
-                s_object_color, s_set_object_color,
+                s_object_stroke, s_set_object_stroke_x,
+                s_object_fill, s_set_object_fill_x,
+                s_object_color, s_set_object_color_x,
                 s_make_line, s_make_net, s_make_bus,
                 s_make_pin, s_pin_type,
-                s_set_line, s_line_info,
-                s_make_box, s_set_box, s_box_info,
-                s_make_circle, s_set_circle, s_circle_info,
-                s_make_arc, s_set_arc, s_arc_info,
-                s_make_text, s_set_text, s_text_info,
+                s_set_line_x, s_line_info,
+                s_make_box, s_set_box_x, s_box_info,
+                s_make_circle, s_set_circle_x, s_circle_info,
+                s_make_arc, s_set_arc_x, s_arc_info,
+                s_make_text, s_set_text_x, s_text_info,
                 s_object_connections,
                 NULL);
 }

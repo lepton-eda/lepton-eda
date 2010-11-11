@@ -174,10 +174,10 @@ SCM_DEFINE (active_page, "%active-page", 0, 0, 0,
  * \param page_s Page to switch to.
  * \return \a page_s.
  */
-SCM_DEFINE (set_active_page, "%set-active-page!", 1, 0, 0,
+SCM_DEFINE (set_active_page_x, "%set-active-page!", 1, 0, 0,
             (SCM page_s), "Set the active page.")
 {
-  SCM_ASSERT (edascm_is_page (page_s), page_s, SCM_ARG1, s_set_active_page);
+  SCM_ASSERT (edascm_is_page (page_s), page_s, SCM_ARG1, s_set_active_page_x);
 
   PAGE *page = edascm_to_page (page_s);
   x_window_set_current_page (g_current_window (), page);
@@ -197,12 +197,12 @@ SCM_DEFINE (set_active_page, "%set-active-page!", 1, 0, 0,
  * \param page_s Page to close.
  * \return SCM_UNDEFINED
  */
-SCM_DEFINE (close_page, "%close-page!", 1, 0, 0,
+SCM_DEFINE (close_page_x, "%close-page!", 1, 0, 0,
             (SCM page_s), "Close a page.")
 {
   /* Ensure that the argument is a page smob */
   SCM_ASSERT (edascm_is_page (page_s), page_s,
-              SCM_ARG1, s_close_page);
+              SCM_ARG1, s_close_page_x);
 
   GSCHEM_TOPLEVEL *w_current = g_current_window ();
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -240,14 +240,14 @@ init_module_gschem_core_window ()
   #include "g_window.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_current_window, s_active_page, s_set_active_page, s_close_page,
-                NULL);
+  scm_c_export (s_current_window, s_active_page, s_set_active_page_x,
+                s_close_page_x, NULL);
 
   /* Override procedures in the (geda core page) module */
   {
     SCM geda_page_module = scm_c_resolve_module ("geda core page");
-    SCM close_page_proc = scm_variable_ref (scm_c_lookup (s_close_page));
-    scm_c_module_define (geda_page_module, s_close_page, close_page_proc);
+    SCM close_page_proc = scm_variable_ref (scm_c_lookup (s_close_page_x));
+    scm_c_module_define (geda_page_module, s_close_page_x, close_page_proc);
   }
 }
 
