@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,15 +50,11 @@ int auto_place_mode = FALSE;
 GList *object_buffer[MAX_BUFFERS];
 
 /* Hooks */
-SCM add_attribute_hook;
-SCM add_component_hook;
-SCM add_component_object_hook;
 SCM mirror_component_object_hook;
 SCM rotate_component_object_hook;
 SCM complex_place_list_changed_hook;
 SCM copy_component_hook;
 SCM move_component_hook;
-SCM add_pin_hook;
 SCM rotate_pin_hook;
 SCM mirror_pin_hook;
 SCM deselect_component_hook;

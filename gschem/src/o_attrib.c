@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -270,12 +270,8 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
     o_slot_end (w_current, o_current, text_string);
   }
 
-  /* Run the add attribute hook */
-  if (scm_is_false (scm_hook_empty_p (add_attribute_hook)) &&
-      o_current != NULL) {
-    scm_run_hook (add_attribute_hook,
-                  scm_list_1 (edascm_from_object (o_current)));
-  }
+  /* Call add-objects-hook. */
+  g_run_hook_object ("%add-objects-hook", new_obj);
 
   toplevel->page_current->CHANGED = 1;
 

@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -148,46 +148,6 @@ void o_complex_place_changed_run_hook(GSCHEM_TOPLEVEL *w_current) {
     }
 
   }
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_complex_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int continue_placing)
-{
-  GList *new_objects;
-  GList *iter;
-  OBJECT *o_current;
-
-  o_place_end (w_current, w_x, w_y, continue_placing, &new_objects);
-
-  if (w_current->include_complex) {
-    g_list_free (new_objects);
-    return;
-  }
-
-  /* Run the add component hook for the new component */
-  for (iter = new_objects;
-       iter != NULL;
-       iter = g_list_next (iter)) {
-    o_current = iter->data;
-
-    if (scm_is_false (scm_hook_empty_p (add_component_hook))) {
-      scm_run_hook(add_component_hook,
-                   scm_cons(g_make_attrib_smob_list(w_current, o_current),
-                            SCM_EOL));
-    }
-
-    if (scm_is_false (scm_hook_empty_p (add_component_object_hook))) {
-      scm_run_hook(add_component_object_hook,
-                   scm_list_1 (edascm_from_object(o_current)));
-    }
-  }
-
-  g_list_free (new_objects);
 }
 
 

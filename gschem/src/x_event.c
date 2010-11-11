@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -293,7 +293,8 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         }
         break;
       case(ENDCOMP):
-        o_complex_end(w_current, w_x, w_y, w_current->continue_component_place);
+        o_place_end(w_current, w_x, w_y, w_current->continue_component_place,
+                    NULL, "%add-objects-hook");
         if (!w_current->continue_component_place) {
           w_current->inside_action = 0;
           i_set_state(w_current, SELECT);
@@ -302,7 +303,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ENDPASTE):
-        o_place_end(w_current, w_x, w_y, FALSE, NULL);
+        o_place_end(w_current, w_x, w_y, FALSE, NULL, NULL);
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
@@ -328,7 +329,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ENDTEXT):
-        o_place_end(w_current, w_x, w_y, FALSE, NULL);
+        o_place_end(w_current, w_x, w_y, FALSE, NULL, "%add-objects-hook");
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);

@@ -547,7 +547,6 @@ void o_complex_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_complex_draw_place(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *complex);
 void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const CLibSymbol *sym);
 void o_complex_place_changed_run_hook(GSCHEM_TOPLEVEL *w_current);
-void o_complex_end(GSCHEM_TOPLEVEL *w_current, int x, int y, int continue_placing);
 void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset);
 /* o_copy.c */
 void o_copy_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -667,7 +666,7 @@ void o_pin_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_pin_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 /* o_place.c */
 void o_place_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_place_end(GSCHEM_TOPLEVEL *w_current, int x, int y, int continue_placing, GList **ret_new_objects);
+void o_place_end(GSCHEM_TOPLEVEL *w_current, int x, int y, int continue_placing, GList **ret_new_objects, const char *hook_name);
 void o_place_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_place_invalidate_rubber(GSCHEM_TOPLEVEL *w_current, int drawing);
 void o_place_draw_rubber(GSCHEM_TOPLEVEL *w_current, int drawing);

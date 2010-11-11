@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -456,6 +456,9 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->second_wx  = (-1);
   w_current->second_wy  = (-1);
 	
+  /* Call add-objects-hook */
+  g_run_hook_object ("%add-objects-hook", new_obj);
+
   toplevel->page_current->CHANGED = 1;
 
   o_undo_savestate(w_current, UNDO_ALL);

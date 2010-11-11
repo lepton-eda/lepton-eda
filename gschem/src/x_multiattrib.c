@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -730,6 +730,9 @@ static void multiattrib_action_promote_attribute (GSCHEM_TOPLEVEL *w_current,
       /* add the attribute its parent */
       o_attrib_attach (toplevel, o_new, object, TRUE);
       /* note: this object is unselected (not added to selection). */
+
+      /* Call add-objects-hook */
+      g_run_hook_object ("%add-objects-hook", o_new);
   }
   w_current->toplevel->page_current->CHANGED = 1;
   o_undo_savestate (w_current, UNDO_ALL);

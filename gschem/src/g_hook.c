@@ -106,7 +106,6 @@ SCM g_add_attrib(SCM object, SCM scm_attrib_name,
 		 SCM scm_attrib_value, SCM scm_vis, SCM scm_show)
 {
   GSCHEM_TOPLEVEL *w_current = g_current_window ();
-  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current=NULL;
   gboolean vis;
   int show=0;
@@ -550,6 +549,7 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
   gchar *comp_name;
   int x, y, angle;
   OBJECT *new_obj;
+  GList *added_objects = NULL;
   const CLibSymbol *clib;
 
   /* Return if scm_comp_name is NULL (an empty list) or scheme's FALSE */
@@ -596,16 +596,17 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
 
   new_obj = o_complex_new (toplevel, 'C', DEFAULT_COLOR, x, y, angle, mirror,
                            clib, comp_name, selectable);
+
+  added_objects = o_complex_promote_attribs (toplevel, new_obj);
   s_page_append_list (toplevel, page,
-                      o_complex_promote_attribs (toplevel, new_obj));
+                      g_list_copy (added_objects));
   s_page_append (toplevel, page, new_obj);
   
 
-  /* Run the add component hook for the new component */
-  if (scm_is_false (scm_hook_empty_p (add_component_object_hook))) {
-    scm_run_hook(add_component_object_hook,
-		 scm_list_1 (edascm_from_object(new_obj)));
-  }
+  /* Run the add-objects-hook for the new component & attributes */
+  added_objects = g_list_prepend (added_objects, new_obj);
+  g_run_hook_object_list ("%add-objects-hook", added_objects);
+  g_list_free (added_objects);
 
   return SCM_BOOL_T;        
 }

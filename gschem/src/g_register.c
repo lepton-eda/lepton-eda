@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -339,8 +339,6 @@ void g_register_funcs (void)
   scm_c_define_gsubr ("set-attribute-text-properties!", 7, 0, 0, g_set_attrib_text_properties);
   scm_c_define_gsubr ("add-component-at-xy", 7, 0, 0, g_add_component);
 
-  add_component_hook  = create_hook ("add-component-hook", 1);
-  add_component_object_hook  = create_hook ("add-component-object-hook", 1);
   rotate_component_object_hook  = create_hook ("rotate-component-object-hook", 1);
   mirror_component_object_hook  = create_hook ("mirror-component-object-hook", 1);
   copy_component_hook = create_hook ("copy-component-hook", 1);
@@ -351,10 +349,8 @@ void g_register_funcs (void)
   select_component_hook = create_hook ("select-component-hook", 1);
   select_net_hook = create_hook ("select-net-hook", 1);
 
-  add_pin_hook = create_hook ("add-pin-hook", 1);
   mirror_pin_hook = create_hook ("mirror-pin-hook", 1);
   rotate_pin_hook = create_hook ("rotate-pin-hook", 1);
-  add_attribute_hook = create_hook ("add-attribute-hook", 1);
   new_page_hook = create_hook ("new-page-hook", 1);
   complex_place_list_changed_hook = create_hook ("complex-place-list-changed-hook", 1);
 }

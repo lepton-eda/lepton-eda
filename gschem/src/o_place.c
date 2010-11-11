@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,8 @@ void o_place_start (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_place_end (GSCHEM_TOPLEVEL *w_current,
                   int w_x, int w_y,
                   int continue_placing,
-                  GList **ret_new_objects)
+                  GList **ret_new_objects,
+                  const char* hook_name)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int w_diff_x, w_diff_y;
@@ -98,6 +99,10 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
     /* Update object connectivity */
     s_conn_update_object (toplevel, o_current);
     connected_objects = s_conn_return_others (connected_objects, o_current);
+  }
+
+  if (hook_name != NULL) {
+    g_run_hook_object_list (hook_name, temp_dest_list);
   }
 
   o_invalidate_glist (w_current, connected_objects);

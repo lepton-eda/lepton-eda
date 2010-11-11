@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,7 +76,8 @@ static void o_copy_end_generic(GSCHEM_TOPLEVEL *w_current, int multiple)
   GList *iter;
   OBJECT *object;
 
-  o_place_end (w_current, w_current->second_wx, w_current->second_wy, multiple, &new_objects);
+  o_place_end (w_current, w_current->second_wx, w_current->second_wy, multiple,
+               &new_objects, NULL);
 
   /* Run the copy component hook for all new components */
   for (iter = new_objects;
