@@ -74,7 +74,7 @@ SCM g_make_attrib_smob_list (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
        a_iter = g_list_next (a_iter)) {
     a_current = a_iter->data;
 
-    smob_list = scm_cons (g_make_attrib_smob (w_current->toplevel, a_current),
+    smob_list = scm_cons (edascm_from_object (a_current),
                           smob_list);
   }
 
@@ -148,8 +148,9 @@ SCM g_add_attrib(SCM object, SCM scm_attrib_name,
 	      SCM_ARG5, "add-attribute-to-object");
   
   /* Get toplevel and o_current */
-  SCM_ASSERT (g_get_data_from_object_smob (object, &toplevel, &o_current),
+  SCM_ASSERT (edascm_is_object (object),
 	      object, SCM_ARG1, "add-attribute-to-object");
+  o_current = edascm_to_object (object);
 
   /* Get parameters */
   attrib_name = SCM_STRING_CHARS(scm_attrib_name);
@@ -210,16 +211,17 @@ The active connection end of the pin is the beginning, so this function cares ab
  */
 SCM g_get_pin_ends(SCM object)
 {
-  TOPLEVEL *toplevel;
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *o_current;
   SCM coord1 = SCM_EOL;
   SCM coord2 = SCM_EOL;
   SCM coords = SCM_EOL;
 
   /* Get toplevel and o_current */
-  SCM_ASSERT (g_get_data_from_object_smob (object, &toplevel, &o_current),
+  SCM_ASSERT (edascm_is_object (object),
 	      object, SCM_ARG1, "get-pin-ends");
-  
+  o_current = edascm_to_object (object);
+
   /* Check that it is a pin object */
   SCM_ASSERT (o_current != NULL,
 	      object, SCM_ARG1, "get-pin-ends");
@@ -268,9 +270,7 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_coloridx,
 				 SCM scm_size, SCM scm_alignment,
 				 SCM scm_rotation, SCM scm_x, SCM scm_y)
 {
-  struct st_attrib_smob *attribute = 
-  (struct st_attrib_smob *)SCM_CDR(attrib_smob);
-  OBJECT *object;
+  OBJECT *object = edascm_to_object (attrib_smob);
   GSCHEM_TOPLEVEL *w_current = g_current_window ();
   TOPLEVEL *toplevel = w_current->toplevel;
 
@@ -342,9 +342,6 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_coloridx,
 		SCM_ARG4, "set-attribute-text-properties!");
   }
 
-  if (attribute &&
-      attribute->attribute) {
-    object = attribute->attribute;
     if (object &&
 	object->text) {
       if (x != -1) {
@@ -364,7 +361,6 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_coloridx,
       }
       o_text_recreate(toplevel, object);
     }
-  }
   return SCM_BOOL_T;
 }
 
@@ -531,7 +527,7 @@ static void custom_world_get_object_glist_bounds
 SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclude_object_type)
 {
 
-  TOPLEVEL *toplevel=NULL;
+  TOPLEVEL *toplevel=edascm_c_current_toplevel ();
   OBJECT *object=NULL;
   int left=0, right=0, bottom=0, top=0; 
   SCM returned = SCM_EOL;
@@ -567,7 +563,7 @@ SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclu
   }
 
   /* Get toplevel and o_current. */
-  g_get_data_from_object_smob (object_smob, &toplevel, &object);
+  object = edascm_to_object (object_smob);
   
   SCM_ASSERT (toplevel && object,
 	      object_smob, SCM_ARG1, "get-object-bounds");
@@ -603,15 +599,16 @@ SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclu
  */
 SCM g_get_object_pins (SCM object_smob)
 {
-  TOPLEVEL *toplevel=NULL;
+  TOPLEVEL *toplevel=edascm_c_current_toplevel ();
   OBJECT *object=NULL;
   OBJECT *prim_obj;
   GList *iter;
   SCM returned=SCM_EOL;
 
   /* Get toplevel and o_current */
-  SCM_ASSERT (g_get_data_from_object_smob (object_smob, &toplevel, &object),
+  SCM_ASSERT (edascm_is_object (object_smob),
 	      object_smob, SCM_ARG1, "get-object-pins");
+  object = edascm_to_object (object_smob);
 
   if (!object) {
     return (returned);
@@ -621,7 +618,7 @@ SCM g_get_object_pins (SCM object_smob)
     while (iter != NULL) {
       prim_obj = (OBJECT *)iter->data;
       if (prim_obj->type == OBJ_PIN) {
-	returned = scm_cons (g_make_object_smob(toplevel, prim_obj),returned);
+	returned = scm_cons (edascm_from_object (prim_obj), returned);
       }
       iter = g_list_next (iter);
     }
@@ -651,7 +648,7 @@ SCM g_get_object_pins (SCM object_smob)
 SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y, 
 		    SCM scm_angle, SCM scm_selectable, SCM scm_mirror)
 {
-  TOPLEVEL *toplevel;
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   PAGE *page;
   gboolean selectable, mirror;
   gchar *comp_name;
@@ -666,8 +663,10 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
   }
 
   /* Get toplevel and the page */
-  SCM_ASSERT (g_get_data_from_page_smob (page_smob, &toplevel, &page),
+  SCM_ASSERT (edascm_is_page (page_smob),
 	      page_smob, SCM_ARG1, "add-component-at-xy");
+  page = edascm_to_page (page_smob);
+
   /* Check the arguments */
   SCM_ASSERT (scm_is_string(scm_comp_name), scm_comp_name,
 	      SCM_ARG2, "add-component-at-xy");
@@ -709,8 +708,7 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
   /* Run the add component hook for the new component */
   if (scm_hook_empty_p(add_component_object_hook) == SCM_BOOL_F) {
     scm_run_hook(add_component_object_hook,
-		 scm_cons(g_make_object_smob(toplevel,
-					     new_obj), SCM_EOL));
+		 scm_list_1 (edascm_from_object(new_obj)));
   }
 
   return SCM_BOOL_T;        
@@ -725,21 +723,22 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
  */
 SCM g_get_objects_in_page(SCM page_smob) {
 
-  TOPLEVEL *toplevel;
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   PAGE *page;
   OBJECT *object;
   const GList *iter;
   SCM return_list=SCM_EOL;
 
   /* Get toplevel and the page */
-  SCM_ASSERT (g_get_data_from_page_smob (page_smob, &toplevel, &page),
+  SCM_ASSERT (edascm_is_page (page_smob),
 	      page_smob, SCM_ARG1, "add-component");
+  page = edascm_to_page (page_smob);
 
   if (page && s_page_objects (page)) {
     iter = s_page_objects (page);
     while (iter != NULL) {
       object = (OBJECT *)iter->data;
-      return_list = scm_cons (g_make_object_smob(toplevel, object),
+      return_list = scm_cons (edascm_from_object (object),
 			      return_list);
       iter = g_list_next (iter);
     }
@@ -751,5 +750,5 @@ SCM g_get_objects_in_page(SCM page_smob) {
 SCM g_get_current_page(void)
 {
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
-  return (g_make_page_smob(toplevel, toplevel->page_current));
+  return (edascm_from_page (toplevel->page_current));
 }

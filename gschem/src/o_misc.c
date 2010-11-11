@@ -258,8 +258,7 @@ void o_rotate_call_hooks (GSCHEM_TOPLEVEL *w_current, GList *list)
         /* Run the rotate pin hook */
         if (scm_hook_empty_p (rotate_pin_hook) == SCM_BOOL_F) {
           scm_run_hook (rotate_pin_hook,
-                        scm_cons (g_make_object_smob (toplevel, o_current),
-                                  SCM_EOL));
+                        scm_list_1 (edascm_from_object (o_current)));
         }
         break;
 
@@ -267,8 +266,7 @@ void o_rotate_call_hooks (GSCHEM_TOPLEVEL *w_current, GList *list)
         /* Run the rotate hook */
         if (scm_hook_empty_p (rotate_component_object_hook) == SCM_BOOL_F) {
           scm_run_hook (rotate_component_object_hook,
-                        scm_cons (g_make_object_smob (toplevel, o_current),
-                                  SCM_EOL));
+                        scm_list_1 (edascm_from_object (o_current)));
         }
         break;
 
@@ -335,8 +333,7 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
         if (scm_hook_empty_p(mirror_pin_hook) == SCM_BOOL_F &&
             o_current != NULL) {
           scm_run_hook(mirror_pin_hook,
-                       scm_cons(g_make_object_smob(toplevel, o_current),
-                                SCM_EOL));
+                       scm_list_1 (edascm_from_object (o_current)));
         }
         break;
 
@@ -345,8 +342,7 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
         if (scm_hook_empty_p(mirror_component_object_hook) == SCM_BOOL_F &&
             o_current != NULL) {
           scm_run_hook(mirror_component_object_hook,
-                       scm_cons(g_make_object_smob(toplevel, o_current),
-                                SCM_EOL));
+                       scm_list_1 (edascm_from_object (o_current)));
         }
         break;
     default:

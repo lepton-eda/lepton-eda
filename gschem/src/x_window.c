@@ -764,7 +764,7 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
 
   if (scm_hook_empty_p (new_page_hook) == SCM_BOOL_F)
     scm_run_hook (new_page_hook,
-                  scm_cons (g_make_page_smob (toplevel, page), SCM_EOL));
+                  scm_list_1 (edascm_from_page (page)));
 
   a_zoom_extents (w_current,
                   s_page_objects (toplevel->page_current),

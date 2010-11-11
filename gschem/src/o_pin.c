@@ -147,7 +147,7 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
 
   if (scm_hook_empty_p (add_pin_hook) == SCM_BOOL_F) {
     scm_run_hook (add_pin_hook,
-                  scm_cons (g_make_object_smob (toplevel, new_obj), SCM_EOL));
+                  scm_list_1 (edascm_from_object (new_obj)));
   }
 
   toplevel->page_current->CHANGED=1;

@@ -274,8 +274,7 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
   if (scm_hook_empty_p(add_attribute_hook) == SCM_BOOL_F &&
       o_current != NULL) {
     scm_run_hook (add_attribute_hook,
-                  scm_cons (g_make_object_smob (toplevel, o_current),
-                            SCM_EOL));
+                  scm_list_1 (edascm_from_object (o_current)));
   }
 
   toplevel->page_current->CHANGED = 1;

@@ -26,11 +26,13 @@
 #endif
 
 #include "libgeda_priv.h"
+#include "libgedaguile.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
 
+#if 0
 static long attrib_smob_tag; /*! Attribute SMOB tag */
 static long object_smob_tag; /*! Object SMOB tag */
 static long page_smob_tag;   /*! Page SMOB tag */
@@ -106,6 +108,7 @@ SCM g_make_attrib_smob(TOPLEVEL *curr_w, OBJECT *curr_attr)
   /* Assumes Guile version >= 1.3.2 */
   SCM_RETURN_NEWSMOB(attrib_smob_tag, smob_attribute);
 }
+#endif
 
 /*! \brief Get name and value of attribute.
  *  \par Function Description
@@ -116,20 +119,17 @@ SCM g_make_attrib_smob(TOPLEVEL *curr_w, OBJECT *curr_attr)
  */
 SCM g_get_attrib_name_value(SCM attrib_smob)
 {
-  struct st_attrib_smob *attribute;
+  OBJECT *attribute;
   char *name = NULL;
   char *value = NULL;
   SCM returned = SCM_EOL;
 
-  SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
-               ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
+  SCM_ASSERT ( edascm_is_object (attrib_smob),
                attrib_smob, SCM_ARG1, "get-attribute-name-value");
 
-  attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+  attribute = edascm_to_object (attrib_smob);
 
-  if (attribute != NULL &&
-      attribute->attribute != NULL &&
-      o_attrib_get_name_value (attribute->attribute, &name, &value)) {
+  if (o_attrib_get_name_value (attribute, &name, &value)) {
     returned = scm_cons (scm_makfrom0str (name),
                          scm_makfrom0str (value));
     g_free(name);
@@ -157,28 +157,26 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
 				TOPLEVEL **world, OBJECT **o_attrib,
 				char *new_string[])
 {
-  struct st_attrib_smob *attribute;
+  OBJECT *attribute;
   char *name = NULL;
   char *value = NULL;
 
-  SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
-               ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
+  SCM_ASSERT ( edascm_is_object (attrib_smob),
                attrib_smob, SCM_ARG1, "set-attribute-value!");
   SCM_ASSERT (scm_is_string(scm_value), scm_value, SCM_ARG2, 
 	      "set-attribute-value!");
 
-  attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+  attribute = edascm_to_object (attrib_smob);
   value = scm_to_locale_string (scm_value);
 
-  if (attribute != NULL &&
-      attribute->attribute != NULL) {
+  if (attribute != NULL) {
 
-    o_attrib_get_name_value (attribute->attribute, &name, NULL);
+    o_attrib_get_name_value (attribute, &name, NULL);
 
     *new_string = g_strconcat (name, "=", value, NULL);
 		
-    *world = attribute->world;
-    *o_attrib = attribute->attribute;
+    *world = edascm_c_current_toplevel ();
+    *o_attrib = attribute;
 
     g_free(name);
   }
@@ -287,16 +285,13 @@ SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
 		SCM_ARG2, "calcule-new-attrib-bounds");
   }
 
-  attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
-  toplevel = attribute->world;
+  toplevel = edascm_c_current_toplevel ();
+  object = edascm_to_object (attrib_smob);
   
-  SCM_ASSERT ( attribute &&
-               attribute->attribute &&
-               attribute->attribute->text &&
-               attribute->attribute->text->string,
+  SCM_ASSERT ( object &&
+               object->text &&
+               object->text->string,
                attrib_smob, SCM_ARG1, "calcule-new-attrib-bounds");
-
-  object = (OBJECT *) attribute->attribute;
   
   /* Store the previous values */
   old_alignment = object->text->alignment;
@@ -344,11 +339,13 @@ SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
 void g_init_attrib_smob(void)
 {
 
+#if 0
   attrib_smob_tag = scm_make_smob_type("attribute",
 				       sizeof (struct st_attrib_smob));
   scm_set_smob_mark(attrib_smob_tag, 0);
   scm_set_smob_free(attrib_smob_tag, g_free_attrib_smob);
   scm_set_smob_print(attrib_smob_tag, g_print_attrib_smob);
+#endif
 
   scm_c_define_gsubr("get-attribute-name-value", 1, 0, 0,
 		     g_get_attrib_name_value);
@@ -375,26 +372,23 @@ void g_init_attrib_smob(void)
  */
 SCM g_get_attrib_bounds(SCM attrib_smob)
 {
-  TOPLEVEL *toplevel;
-  struct st_attrib_smob *attribute;
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *attribute;
   SCM vertical = SCM_EOL;
   SCM horizontal = SCM_EOL;
   int left=0, right=0, bottom=0, top=0; 
   SCM returned = SCM_EOL;
 
-  SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
-               ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
+  SCM_ASSERT ( edascm_is_object (attrib_smob),
                attrib_smob, SCM_ARG1, "get-attribute-bounds");
   
-  attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
-  toplevel = attribute->world;
+  attribute = edascm_to_object (attrib_smob);
 
   if (attribute &&
-      attribute->attribute &&
-      attribute->attribute->text &&
-      attribute->attribute->text->string ) {
+      attribute->text &&
+      attribute->text->string ) {
 
-    world_get_text_bounds (toplevel, attribute->attribute, &left,
+    world_get_text_bounds (toplevel, attribute, &left,
                            &top, &right, &bottom);
 
     horizontal = scm_cons (scm_from_int(left), scm_from_int(right));
@@ -414,23 +408,22 @@ SCM g_get_attrib_bounds(SCM attrib_smob)
 SCM g_get_attrib_angle(SCM attrib_smob)
 {
   TOPLEVEL *toplevel;
-  struct st_attrib_smob *attribute;
+  OBJECT *attribute;
 
-  SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
-               ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
+  SCM_ASSERT ( edascm_is_object (attrib_smob),
                attrib_smob, SCM_ARG1, "get-attribute-angle");
   
-  attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
-  toplevel = attribute->world;
+  attribute = edascm_to_object (attrib_smob);
+  toplevel = edascm_c_current_toplevel ();
 
-  SCM_ASSERT ( attribute && 
-               attribute->attribute &&
-               attribute->attribute->text,
+  SCM_ASSERT ( attribute &&
+               attribute->text,
                attrib_smob, SCM_ARG1, "get-attribute-angle");
 
-  return scm_from_int(attribute->attribute->text->angle);
+  return scm_from_int(attribute->text->angle);
 }
 
+#if 0
 /*! \brief Free object smob memory.
  *  \par Function Description
  *  Free the memory allocated by the object smob and return its size.
@@ -499,6 +492,7 @@ SCM g_make_object_smob(TOPLEVEL *curr_w, OBJECT *object)
   /* Assumes Guile version >= 1.3.2 */
   SCM_RETURN_NEWSMOB(object_smob_tag, smob_object);
 }
+#endif
 
 /*! \brief Get all object attributes in a list.
  *  \par Function Description
@@ -510,26 +504,24 @@ SCM g_make_object_smob(TOPLEVEL *curr_w, OBJECT *object)
 SCM g_get_object_attributes(SCM object_smob)
 {
   TOPLEVEL *toplevel;
-  struct st_object_smob *object;
+  OBJECT  *object;
   SCM returned = SCM_EOL;
   GList *a_iter;
   OBJECT *a_current;
 
-  SCM_ASSERT ( SCM_NIMP(object_smob) && 
-               ((long) SCM_CAR(object_smob) == object_smob_tag),
+  SCM_ASSERT ( edascm_is_object (object_smob),
                object_smob, SCM_ARG1, "get-object-attributes");
 
-  object = (struct st_object_smob *)SCM_CDR(object_smob);
+  object = edascm_to_object (object_smob);
 
-  if (object &&
-      object->object) {
+  if (object) {
 
-    toplevel = object->world;
-    a_iter = object->object->attribs;
+    toplevel = edascm_c_current_toplevel ();
+    a_iter = object->attribs;
     while (a_iter != NULL) {
       a_current = a_iter->data;
       if (a_current && a_current->text) {
-        returned = scm_cons (g_make_attrib_smob (toplevel, a_current),
+        returned = scm_cons (edascm_from_object (a_current),
                              returned);
       }
       a_iter = g_list_next (a_iter);
@@ -552,28 +544,27 @@ SCM g_get_object_attributes(SCM object_smob)
 SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
 {
   TOPLEVEL *toplevel;
-  struct st_object_smob *object;
+  OBJECT *object;
   gchar *attrib_name=NULL;
   SCM returned = SCM_EOL;
   gchar *name=NULL, *value=NULL;
   GList *a_iter;
   OBJECT *a_current;
 
-  SCM_ASSERT ( SCM_NIMP(object_smob) && 
-               ((long) SCM_CAR(object_smob) == object_smob_tag),
+  SCM_ASSERT ( edascm_is_object (object_smob),
                object_smob, SCM_ARG1, "get-attrib-value-by-attrib-name");
 
   SCM_ASSERT (scm_is_string(scm_attrib_name), scm_attrib_name,
 	      SCM_ARG2, "get-attrib-value-by-attrib-name");
 
   /* Get parameters */
-  object = (struct st_object_smob *)SCM_CDR(object_smob);
+  object = edascm_to_object (object_smob);
   attrib_name = scm_to_locale_string (scm_attrib_name);
 
-  if (object && object->object) {
+  if (object) {
 
-    toplevel = object->world;
-    a_iter = object->object->attribs;
+    toplevel = edascm_c_current_toplevel ();
+    a_iter = object->attribs;
     while (a_iter != NULL) {
       a_current = a_iter->data;
       if (a_current != NULL &&
@@ -602,19 +593,13 @@ SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
  */
 SCM g_get_object_type(SCM object_smob)
 {
-  struct st_object_smob *object_struct;
   OBJECT *object;
   SCM returned = SCM_EOL;
 
-  SCM_ASSERT ( SCM_NIMP(object_smob) && 
-               ((long) SCM_CAR(object_smob) == object_smob_tag),
+  SCM_ASSERT ( edascm_is_object (object_smob),
                object_smob, SCM_ARG1, "get-object-type");
-
-  object_struct = (struct st_object_smob *)SCM_CDR(object_smob);
-
-  g_assert (object_struct && object_struct->object);
   
-  object = (OBJECT *) object_struct->object;
+  object = edascm_to_object (object_smob);
   
   returned = SCM_MAKE_CHAR((unsigned char) object->type);
 
@@ -631,23 +616,12 @@ SCM g_get_object_type(SCM object_smob)
  */
 SCM g_get_line_width(SCM object_smob)
 {
-  struct st_object_smob *object_struct;
-  OBJECT *object;
-  SCM returned = SCM_EOL;
+  SCM_ASSERT (edascm_is_object (object_smob),
+              object_smob, SCM_ARG1, "get-line-width");
 
-  SCM_ASSERT ( SCM_NIMP(object_smob) && 
-               ((long) SCM_CAR(object_smob) == object_smob_tag),
-               object_smob, SCM_ARG1, "get-line-width");
+  OBJECT *object = edascm_to_object (object_smob);
 
-  object_struct = (struct st_object_smob *)SCM_CDR(object_smob);
-
-  g_assert (object_struct && object_struct->object);
-  
-  object = (OBJECT *) object_struct->object;
-  
-  returned = scm_from_int(object->line_width);
-
-  return returned;
+  return scm_from_int(object->line_width);
 }
 
 /*! \brief Initialize the framework to support an object smob.
@@ -657,11 +631,12 @@ SCM g_get_line_width(SCM object_smob)
  */
 void g_init_object_smob(void)
 {
-
+#if 0
   object_smob_tag = scm_make_smob_type("object", sizeof (struct st_object_smob));
   scm_set_smob_mark(object_smob_tag, 0);
   scm_set_smob_free(object_smob_tag, g_free_object_smob);
   scm_set_smob_print(object_smob_tag, g_print_object_smob);
+#endif
 
   scm_c_define_gsubr("get-object-attributes", 1, 0, 0, g_get_object_attributes);
   scm_c_define_gsubr("get-attrib-value-by-attrib-name", 2, 0, 0, 
@@ -672,7 +647,7 @@ void g_init_object_smob(void)
   return;
 }
 
-
+#if 0
 /*! \brief Get the TOPLEVEL and OBJECT data from an object smob.
  *  \par Function Description
  *  Get the TOPLEVEL and OBJECT data from an object smob.
@@ -746,6 +721,7 @@ static int g_print_page_smob(SCM page_smob, SCM port,
   /* non-zero means success */
   return 1;
 }
+#endif
 
 /*! \brief Initialize the framework to support a page smob.
  *  \par Function Description
@@ -754,12 +730,13 @@ static int g_print_page_smob(SCM page_smob, SCM port,
  */
 void g_init_page_smob(void)
 {
-
+#if 0
   page_smob_tag = scm_make_smob_type("page",
 				       sizeof (struct st_page_smob));
   scm_set_smob_mark(page_smob_tag, 0);
   scm_set_smob_free(page_smob_tag, g_free_page_smob);
   scm_set_smob_print(page_smob_tag, g_print_page_smob);
+#endif
 
   scm_c_define_gsubr ("get-page-filename", 1, 0, 0, g_get_page_filename);
   scm_c_define_gsubr ("set-page-filename", 2, 0, 0, g_set_page_filename);
@@ -767,6 +744,7 @@ void g_init_page_smob(void)
   return;
 }
 
+#if 0
 /*! \brief Creates a page smob
  *  \par Function Description
  *  This function creates and returns a new page smob,
@@ -817,6 +795,7 @@ gboolean g_get_data_from_page_smob(SCM page_smob, TOPLEVEL **toplevel,
   }
   return (TRUE);
 }
+#endif
 
 /*! \brief Get the page filename from a page smob.
  *  \par Function Description
@@ -830,12 +809,10 @@ SCM g_get_page_filename(SCM page_smob)
   SCM returned = SCM_EOL;
   PAGE *page;
 
-  SCM_ASSERT ( SCM_NIMP(page_smob) &&
-	       ((long) SCM_CAR(page_smob) == page_smob_tag),
+  SCM_ASSERT ( edascm_is_page (page_smob),
                page_smob, SCM_ARG1, "get-page-filename");
 
-  page = (PAGE *) 
-    (((struct st_page_smob *)SCM_CDR(page_smob))->page);
+  page = edascm_to_page (page_smob);
 
   if (page->page_filename) 
     returned = scm_makfrom0str (page->page_filename);
@@ -856,15 +833,13 @@ SCM g_set_page_filename(SCM page_smob, SCM scm_filename)
   PAGE *page;
   char *filename = NULL;
 
-  SCM_ASSERT ( SCM_NIMP(page_smob) &&
-	       ((long) SCM_CAR(page_smob) == page_smob_tag),
+  SCM_ASSERT ( edascm_is_page (page_smob),
                page_smob, SCM_ARG1, "set-page-filename");
 
   SCM_ASSERT (scm_is_string(scm_filename), scm_filename,
 	      SCM_ARG2, "set-page-filename");
 
-  page = (PAGE *) 
-    (((struct st_page_smob *)SCM_CDR(page_smob))->page);
+  page = edascm_to_page (page_smob);
 
   filename = SCM_STRING_CHARS (scm_filename);
 

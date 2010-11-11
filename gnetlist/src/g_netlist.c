@@ -40,7 +40,7 @@
 SCM g_scm_c_get_uref (TOPLEVEL *toplevel, OBJECT *object)
 {
   SCM func = scm_variable_ref (scm_c_lookup ("get-uref"));
-  SCM object_smob = g_make_object_smob (toplevel, object);
+  SCM object_smob = edascm_from_object (object);
   SCM exp = scm_list_2 (func, object_smob);
 
   return g_scm_eval_protected (exp, SCM_UNDEFINED);

@@ -149,9 +149,7 @@ void o_complex_place_changed_run_hook(GSCHEM_TOPLEVEL *w_current) {
     ptr = toplevel->page_current->place_list;
     while (ptr) {
       scm_run_hook(complex_place_list_changed_hook, 
-		   scm_cons (g_make_object_smob
-			     (toplevel,
-			      (OBJECT *) ptr->data), SCM_EOL));
+		   scm_list_1 (edascm_from_object ((OBJECT *) ptr->data)));
       ptr = g_list_next(ptr);
     }
 
@@ -191,8 +189,7 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int continue_pl
 
     if (scm_hook_empty_p(add_component_object_hook) == SCM_BOOL_F) {
       scm_run_hook(add_component_object_hook,
-                   scm_cons(g_make_object_smob(w_current->toplevel,
-                                               o_current), SCM_EOL));
+                   scm_list_1 (edascm_from_object(o_current)));
     }
   }
 
