@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -225,50 +225,14 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
 
   o_invalidate_glist (w_current, list);
 
-  /* All objects were rotated. Run the rotate hooks */
-  o_rotate_call_hooks (w_current, list);
+  /* Run rotate-objects-hook */
+  g_run_hook_object_list ("%rotate-objects-hook", list);
 
   /* Don't save the undo state if we are inside an action */
   /* This is useful when rotating the selection while moving, for example */
   toplevel->page_current->CHANGED = 1;
   if (!w_current->inside_action) {
     o_undo_savestate(w_current, UNDO_ALL);
-  }
-}
-
-
-void o_rotate_call_hooks (GSCHEM_TOPLEVEL *w_current, GList *list)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_current;
-  GList *iter;
-
-  /* Do not run any hooks for simple objects here, like text, since they
-     were rotated in the previous pass, and the selection list can contain
-     an object and all its attributes (text) */
-  for (iter = list; iter != NULL; iter = g_list_next (iter)) {
-    o_current = iter->data;
-
-    switch (o_current->type) {
-      case OBJ_PIN:
-        /* Run the rotate pin hook */
-        if (scm_is_false (scm_hook_empty_p (rotate_pin_hook))) {
-          scm_run_hook (rotate_pin_hook,
-                        scm_list_1 (edascm_from_object (o_current)));
-        }
-        break;
-
-      case OBJ_COMPLEX:
-        /* Run the rotate hook */
-        if (scm_is_false (scm_hook_empty_p (rotate_component_object_hook))) {
-          scm_run_hook (rotate_component_object_hook,
-                        scm_list_1 (edascm_from_object (o_current)));
-        }
-        break;
-
-      default:
-        break;
-    }
   }
 }
 
@@ -315,38 +279,8 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
 
   o_invalidate_glist (w_current, list);
 
-  /* All objects were mirrored. Do a 2nd pass to run the mirror hooks */
-  /* Do not run any hooks for simple objects here, like text, since they
-     were mirrored in the previous pass, and the selection list can contain
-     an object and all its attributes (text) */
-  o_iter = list;
-  while (o_iter != NULL) {
-    o_current = (OBJECT *) o_iter->data;
-
-    switch(o_current->type) {
-      case(OBJ_PIN):
-        /* Run the mirror pin hook */
-        if (scm_is_false (scm_hook_empty_p (mirror_pin_hook)) &&
-            o_current != NULL) {
-          scm_run_hook(mirror_pin_hook,
-                       scm_list_1 (edascm_from_object (o_current)));
-        }
-        break;
-
-      case (OBJ_COMPLEX):
-        /* Run the mirror pin hook */
-        if (scm_is_false (scm_hook_empty_p(mirror_component_object_hook)) &&
-            o_current != NULL) {
-          scm_run_hook(mirror_component_object_hook,
-                       scm_list_1 (edascm_from_object (o_current)));
-        }
-        break;
-    default:
-        break;
-    }
-
-    o_iter = g_list_next(o_iter);
-  }
+  /* Run mirror-objects-hook */
+  g_run_hook_object_list ("%mirror-objects-hook", list);
 
   toplevel->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);

@@ -595,7 +595,6 @@ void o_edit(GSCHEM_TOPLEVEL *w_current, GList *list);
 void o_lock(GSCHEM_TOPLEVEL *w_current);
 void o_unlock(GSCHEM_TOPLEVEL *w_current);
 void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery, int angle, GList *list);
-void o_rotate_call_hooks(GSCHEM_TOPLEVEL *w_current, GList *list);
 void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery, GList *list);
 void o_edit_show_hidden_lowlevel(GSCHEM_TOPLEVEL *w_current, const GList *o_list);
 void o_edit_show_hidden(GSCHEM_TOPLEVEL *w_current, const GList *o_list);

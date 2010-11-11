@@ -50,13 +50,9 @@ int auto_place_mode = FALSE;
 GList *object_buffer[MAX_BUFFERS];
 
 /* Hooks */
-SCM mirror_component_object_hook;
-SCM rotate_component_object_hook;
 SCM complex_place_list_changed_hook;
 SCM copy_component_hook;
 SCM move_component_hook;
-SCM rotate_pin_hook;
-SCM mirror_pin_hook;
 SCM deselect_component_hook;
 SCM deselect_net_hook;
 SCM deselect_all_hook;

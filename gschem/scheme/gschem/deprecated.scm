@@ -129,3 +129,31 @@
 ;; pin itself.
 (define-public add-pin-hook (make-hook 1))
 (add-hook!/filter add-objects-hook add-pin-hook pin?)
+
+;; mirror-component-object-hook
+;;
+;; Called for each component in the selection when a mirror operation
+;; is carried out.  The argument is the component itself.
+(define-public mirror-component-object-hook (make-hook 1))
+(add-hook!/filter mirror-objects-hook mirror-component-object-hook component?)
+
+;; mirror-pin-hook
+;;
+;; Same as mirror-component-object-hook, but for pins.
+(define-public mirror-pin-hook (make-hook 1))
+(add-hook!/filter mirror-objects-hook mirror-pin-hook pin?)
+
+;; rotate-component-object-hook
+;;
+;; Called for each component in the selection when a rotate operation
+;; is carried out (including using the middle mouse button during a
+;; move operation, but excluding rotations during component
+;; placement).  The argument is the component itself.
+(define-public rotate-component-object-hook (make-hook 1))
+(add-hook!/filter rotate-objects-hook rotate-component-object-hook component?)
+
+;; rotate-pin-hook
+;;
+;; Same as rotate-component-object-hook, but for pins.
+(define-public rotate-pin-hook (make-hook 1))
+(add-hook!/filter rotate-objects-hook rotate-pin-hook pin?)

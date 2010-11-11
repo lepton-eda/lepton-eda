@@ -319,6 +319,9 @@ void o_place_rotate (GSCHEM_TOPLEVEL *w_current)
   o_glist_rotate_world (toplevel,
                         w_current->first_wx, w_current->first_wy, 90,
                         toplevel->page_current->place_list);
-  /* All objects were rotated. Run the rotate hooks */
-  o_rotate_call_hooks (w_current, toplevel->page_current->place_list);
+
+
+  /* Run rotate-objects-hook */
+  g_run_hook_object_list ("%rotate-objects-hook",
+                          toplevel->page_current->place_list);
 }

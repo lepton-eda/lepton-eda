@@ -51,13 +51,9 @@ extern int auto_place_mode;
 extern GList *object_buffer[MAX_BUFFERS];
 
 /* Hooks */
-extern SCM mirror_component_object_hook;
-extern SCM rotate_component_object_hook;
 extern SCM complex_place_list_changed_hook;
 extern SCM copy_component_hook;
 extern SCM move_component_hook;
-extern SCM mirror_pin_hook;
-extern SCM rotate_pin_hook;
 extern SCM deselect_component_hook;
 extern SCM deselect_net_hook;
 extern SCM deselect_all_hook;
