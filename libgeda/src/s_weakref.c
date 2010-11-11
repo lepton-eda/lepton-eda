@@ -103,7 +103,7 @@ s_weakref_remove (GList *weak_refs, void (*notify_func)(void *, void *),
     entry = iter->data;
     if ((entry != NULL) &&
         (entry->notify_func == notify_func) &&
-        (entry->user_data != user_data)) {
+        (entry->user_data == user_data)) {
       g_free (entry);
       iter->data = NULL;
     }
