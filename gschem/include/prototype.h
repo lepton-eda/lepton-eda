@@ -42,6 +42,9 @@ g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname, SCM scm_size,
 SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclude_object_type);
 SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y, 
 		    SCM scm_angle, SCM scm_selectable, SCM scm_mirror);
+void g_init_hook ();
+void g_run_hook_object (const char *name, OBJECT *obj);
+void g_run_hook_object_list (const char *name, GList *obj_lst);
 /* g_keys.c */
 int g_keys_execute(GSCHEM_TOPLEVEL *w_current, int state, int keyval);
 GArray *g_keys_dump_keymap (void);
