@@ -670,6 +670,22 @@ g_run_hook_object (const char *name, OBJECT *obj)
   scm_remember_upto_here_1 (args);
 }
 
+/*! \brief Runs a page hook.
+ * \par Function Description
+ * Runs a hook called \a name, which should expect the single #PAGE \a
+ * page as its argument.
+ *
+ * \param name name of hook to run
+ * \param page #PAGE argument for hook.
+ */
+void
+g_run_hook_page (const char *name, PAGE *page)
+{
+  SCM args = scm_list_1 (edascm_from_page (page));
+  scm_run_hook (g_get_hook_by_name (name), args);
+  scm_remember_upto_here_1 (args);
+}
+
 /*! \brief Create the (gschem core hook) Scheme module.
  * \par Function Description
  * Defines some hooks in the (gschem core hook) module.  These hooks

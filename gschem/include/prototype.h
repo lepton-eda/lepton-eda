@@ -45,6 +45,7 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
 void g_init_hook ();
 void g_run_hook_object (const char *name, OBJECT *obj);
 void g_run_hook_object_list (const char *name, GList *obj_lst);
+void g_run_hook_page (const char *name, PAGE *page);
 /* g_keys.c */
 int g_keys_execute(GSCHEM_TOPLEVEL *w_current, int state, int keyval);
 GArray *g_keys_dump_keymap (void);

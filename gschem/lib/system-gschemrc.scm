@@ -939,7 +939,7 @@
     (use-modules (ice-9 regex))
     (display "Your Guile installation doesn't provide the regex module.\n"))
 
-(add-hook! new-page-hook (lambda (page)
+(add-hook! (@ (gschem hook) new-page-hook) (lambda (page)
    ; Only place the titleblock if there are no objects in the page
    ; and the page filename ends in ".sym".
    (if (and (null? (get-objects-in-page page))

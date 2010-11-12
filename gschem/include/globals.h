@@ -52,7 +52,6 @@ extern GList *object_buffer[MAX_BUFFERS];
 
 /* Hooks */
 extern SCM complex_place_list_changed_hook;
-extern SCM new_page_hook;
 
 #include "gettext.h"
 #ifdef ENABLE_NLS

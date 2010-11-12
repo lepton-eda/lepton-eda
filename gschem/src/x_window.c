@@ -756,11 +756,12 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
     if (!quiet_mode)
       s_log_message (_("New file [%s]\n"),
                      toplevel->page_current->page_filename);
-  }
 
-  if (scm_is_false (scm_hook_empty_p (new_page_hook)))
-    scm_run_hook (new_page_hook,
-                  scm_list_1 (edascm_from_page (page)));
+    scm_dynwind_begin (0);
+    g_dynwind_window (w_current);
+    g_run_hook_page ("%new-page-hook", toplevel->page_current);
+    scm_dynwind_end ();
+  }
 
   a_zoom_extents (w_current,
                   s_page_objects (toplevel->page_current),
