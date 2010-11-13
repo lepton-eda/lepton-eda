@@ -549,9 +549,7 @@ struct st_toplevel {
   void *rendered_text_bounds_data;
 
   /* Callback functions for object change notification */
-  ChangeNotifyFunc pre_change_notify_func;
-  ChangeNotifyFunc change_notify_func;
-  void *change_notify_data;
+  GList *change_notify_funcs;
 
   /* Callback function for deciding whether to load a backup file. */
   LoadBackupQueryFunc load_newer_backup_func;
