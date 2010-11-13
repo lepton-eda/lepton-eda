@@ -448,8 +448,6 @@ struct st_toplevel {
 
   int last_ps_color;                    /* used in print code */
 
-  int DONT_REDRAW;			/* misc flags */
-
   /* page system */
   PAGE *page_current;
   GedaPageList *pages;

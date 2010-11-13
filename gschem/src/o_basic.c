@@ -42,7 +42,6 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   gboolean draw_selected;
-  int redraw_state = toplevel->DONT_REDRAW;
   int grip_half_size;
   int cue_half_size;
   int bloat;
@@ -51,11 +50,9 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
   GList *iter;
   BOX *world_rects;
 
-  if (!toplevel->DONT_REDRAW) {
-    for (i = 0; i < n_rectangles; i++) {
-      x_repaint_background_region (w_current, rectangles[i].x, rectangles[i].y,
-                                   rectangles[i].width, rectangles[i].height);
-    }
+  for (i = 0; i < n_rectangles; i++) {
+    x_repaint_background_region (w_current, rectangles[i].x, rectangles[i].y,
+                                 rectangles[i].width, rectangles[i].height);
   }
 
   g_return_if_fail (toplevel != NULL);
@@ -89,19 +86,15 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
                     ((w_current->event_state == MOVE) ||
                      (w_current->event_state == ENDMOVE)));
 
-  w_current->inside_redraw = 1;
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
     OBJECT *o_current = iter->data;
 
-    if (o_current->draw_func != NULL) {
-      toplevel->DONT_REDRAW = redraw_state ||
-                              o_current->dont_redraw ||
-                              (!draw_selected && o_current->selected);
+    if ((o_current->draw_func != NULL)
+        && !(o_current->dont_redraw
+             || (!draw_selected && o_current->selected))) {
       (*o_current->draw_func)(w_current, o_current);
     }
   }
-  w_current->inside_redraw = 0;
-  toplevel->DONT_REDRAW = redraw_state;
 
   o_cue_redraw_all (w_current, obj_list, draw_selected);
 
@@ -199,21 +192,19 @@ void o_redraw (GSCHEM_TOPLEVEL *w_current, GList *object_list, gboolean draw_sel
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
   GList *iter;
-  int redraw_state = toplevel->DONT_REDRAW;
 
   iter = object_list;
   while (iter != NULL) {
     o_current = (OBJECT *)iter->data;
-    if (o_current->draw_func != NULL) {
-      toplevel->DONT_REDRAW = redraw_state ||
-                              o_current->dont_redraw ||
-                              (!draw_selected && o_current->selected);
+
+    if ((o_current->draw_func != NULL)
+        && !(o_current->dont_redraw
+             || (!draw_selected && o_current->selected))) {
       (*o_current->draw_func)(w_current, o_current);
     }
 
     iter = g_list_next (iter);
   }
-  toplevel->DONT_REDRAW = redraw_state;
 }
 
 /*! \brief Redraw an object on the screen.
@@ -229,9 +220,6 @@ void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   TOPLEVEL *toplevel = w_current->toplevel;
 
   if (o_current == NULL)
-  return;
-
-  if (toplevel->DONT_REDRAW) /* highly experimental */
   return;
 
   if (o_current->draw_func != NULL) {

@@ -308,9 +308,6 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  if (toplevel->DONT_REDRAW == 1)
-    return;
-
   angle1 = o_current->fill_angle1;
   pitch1 = o_current->fill_pitch1;
   angle2 = o_current->fill_angle2;

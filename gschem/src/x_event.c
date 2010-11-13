@@ -307,11 +307,8 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         break;
 
       case(ENDROTATEP):
-        prev_state = toplevel->DONT_REDRAW;
-        toplevel->DONT_REDRAW = 0;
         o_rotate_world_update(w_current, w_x, w_y, 90,
           geda_list_get_glist(toplevel->page_current->selection_list ));
-        toplevel->DONT_REDRAW = prev_state;
 
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
@@ -639,12 +636,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         o_place_rotate(w_current);
 
         if (w_current->event_state == ENDCOMP) {
-          /* Run the complex place list changed hook without redrawing */
-          /* since all objects are being redrawn afterwards */
-          prev_state = toplevel->DONT_REDRAW;
-          toplevel->DONT_REDRAW = 1;
           o_complex_place_changed_run_hook (w_current);
-          toplevel->DONT_REDRAW = prev_state;
         }
 
         if (w_current->event_state == ENDMOVE) {
@@ -991,11 +983,9 @@ x_event_configure (GtkWidget         *widget,
   /* restore current page to saved value */
   s_page_goto (toplevel, old_page_current);
 
-  if (!toplevel->DONT_REDRAW) {
-    /* redraw the current page and update UI */
-    o_invalidate_all (w_current);
-    x_scrollbars_update (w_current);
-  }
+  /* redraw the current page and update UI */
+  o_invalidate_all (w_current);
+  x_scrollbars_update (w_current);
 
   return FALSE;
 }
@@ -1069,9 +1059,7 @@ void x_event_hschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
     toplevel->page_current->right -
     (current_left - new_left);
 
-  if (!toplevel->DONT_REDRAW) {
-    o_invalidate_all (w_current);
-  }
+  o_invalidate_all (w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1111,9 +1099,7 @@ void x_event_vschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
          toplevel->page_current->bottom);
 #endif
 
-  if (!toplevel->DONT_REDRAW) {
-    o_invalidate_all (w_current);
-  }
+  o_invalidate_all (w_current);
 }
 
 /*! \todo Finish function documentation!!!

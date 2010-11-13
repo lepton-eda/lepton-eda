@@ -95,8 +95,6 @@ preview_callback_realize (GtkWidget *widget,
   preview_page = s_page_new (preview_toplevel, "unknown");
   s_page_goto (preview_toplevel, preview_page);
 
-  preview_toplevel->DONT_REDRAW = 0;
-
   a_zoom_extents(preview_w_current,
                  s_page_objects (preview_page),
                  A_PAN_DONT_REDRAW);
@@ -328,10 +326,7 @@ preview_event_configure (GtkWidget         *widget,
   GSCHEM_TOPLEVEL *preview_w_current = PREVIEW (widget)->preview_w_current;
   PAGE     *preview_page = preview_w_current->toplevel->page_current;
 
-  save_redraw = preview_w_current->toplevel->DONT_REDRAW;
-  preview_w_current->toplevel->DONT_REDRAW = 1;
   retval = x_event_configure (widget, event, preview_w_current);
-  preview_w_current->toplevel->DONT_REDRAW = save_redraw;
   if (preview_page != NULL) {
     a_zoom_extents(preview_w_current, s_page_objects (preview_page), 0);
   }

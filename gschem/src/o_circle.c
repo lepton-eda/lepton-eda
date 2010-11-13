@@ -57,9 +57,6 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  if (toplevel->DONT_REDRAW == 1)
-    return;
-	
 #if DEBUG
   printf("drawing circle\n\n");
 #endif

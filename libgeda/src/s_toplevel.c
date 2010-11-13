@@ -60,8 +60,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->override_color = -1;
 
-  toplevel->DONT_REDRAW       = 0;
-
   toplevel->pages = geda_list_new();
   toplevel->page_current = NULL;
 
@@ -142,9 +140,6 @@ TOPLEVEL *s_toplevel_new (void)
   /* Auto-save interval */
   toplevel->auto_save_interval = 0;
   toplevel->auto_save_timeout = 0;
-
-  /* disable the events */
-  toplevel->DONT_REDRAW = 1;
 
   toplevel->weak_refs = NULL;
   return toplevel;

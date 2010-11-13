@@ -64,9 +64,6 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  if (toplevel->DONT_REDRAW == 1)
-    return;
-
   /*
    * The drawing of the box is divided in two steps : first step is to
    * draw the outline, the second is to draw the filling pattern inside

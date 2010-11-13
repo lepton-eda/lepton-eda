@@ -438,7 +438,6 @@ DEFINE_I_CALLBACK(edit_undo)
        w_current->event_state == ENDMOVE)) {
     i_callback_cancel (w_current, 0, NULL);
   } else {
-    w_current->toplevel->DONT_REDRAW = 0;
     o_undo_callback(w_current, UNDO_ACTION);
   }
 }
@@ -469,7 +468,6 @@ DEFINE_I_CALLBACK(edit_redo)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  w_current->toplevel->DONT_REDRAW = 0;
   o_undo_callback(w_current, REDO_ACTION);
 }
 
@@ -858,7 +856,6 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
     i_update_middle_button(w_current,
                            i_callback_edit_rotate_90_hotkey, _("Rotate"));
     /* Allow o_rotate_world_update to redraw the objects */
-    w_current->toplevel->DONT_REDRAW = 0;
     o_rotate_world_update(w_current, wx, wy, 90, object_list);
   }
 

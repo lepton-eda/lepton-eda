@@ -442,8 +442,7 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   g_return_if_fail (o_current->type == OBJ_TEXT);
   g_return_if_fail (o_current->text != NULL);
 
-  if (toplevel->DONT_REDRAW == 1 ||
-      (o_current->visibility == INVISIBLE && !toplevel->show_hidden_text)) {
+  if (o_current->visibility == INVISIBLE && !toplevel->show_hidden_text) {
     return;
   }
 
@@ -468,26 +467,24 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
       WORLDtoSCREEN (w_current, o_current->text->x, o_current->text->y, &screen_x1, &screen_y1);
       screen_x1 += offset;
       screen_y1 += offset;
-      if (toplevel->DONT_REDRAW == 0) {
-        /* Top part of the I */
-        gdk_draw_line (w_current->drawable, w_current->gc,
-                       screen_x1,
-                       screen_y1,
-                       screen_x1+small_dist,
-                       screen_y1);
-        /* Middle part of the I */
-        gdk_draw_line (w_current->drawable, w_current->gc,
-                       screen_x1+small_dist/2,
-                       screen_y1,
-                       screen_x1+small_dist/2,
-                       screen_y1+small_dist);
-        /* Bottom part of the I */
-        gdk_draw_line (w_current->drawable, w_current->gc,
-                       screen_x1,
-                       screen_y1+small_dist,
-                       screen_x1+small_dist,
-                       screen_y1+small_dist);
-      }
+      /* Top part of the I */
+      gdk_draw_line (w_current->drawable, w_current->gc,
+                     screen_x1,
+                     screen_y1,
+                     screen_x1+small_dist,
+                     screen_y1);
+      /* Middle part of the I */
+      gdk_draw_line (w_current->drawable, w_current->gc,
+                     screen_x1+small_dist/2,
+                     screen_y1,
+                     screen_x1+small_dist/2,
+                     screen_y1+small_dist);
+      /* Bottom part of the I */
+      gdk_draw_line (w_current->drawable, w_current->gc,
+                     screen_x1,
+                     screen_y1+small_dist,
+                     screen_x1+small_dist,
+                     screen_y1+small_dist);
     }
   } else {
     /* draw a box in it's place */
@@ -530,19 +527,17 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     gdk_gc_set_foreground (w_current->gc, x_get_color (LOCK_COLOR));
   }
 
-  if (toplevel->DONT_REDRAW == 0) {
-    gdk_draw_line (w_current->drawable, w_current->gc,
-                   screen_x1-small_dist,
-                   screen_y1+small_dist,
-                   screen_x1+small_dist,
-                   screen_y1-small_dist);
+  gdk_draw_line (w_current->drawable, w_current->gc,
+                 screen_x1-small_dist,
+                 screen_y1+small_dist,
+                 screen_x1+small_dist,
+                 screen_y1-small_dist);
 
-    gdk_draw_line (w_current->drawable, w_current->gc,
-                   screen_x1+small_dist,
-                   screen_y1+small_dist,
-                   screen_x1-small_dist,
-                   screen_y1-small_dist);
-  }
+  gdk_draw_line (w_current->drawable, w_current->gc,
+                 screen_x1+small_dist,
+                 screen_y1+small_dist,
+                 screen_x1-small_dist,
+                 screen_y1-small_dist);
 }
 
 

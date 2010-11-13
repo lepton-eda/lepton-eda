@@ -50,8 +50,7 @@ void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  if ( (toplevel->DONT_REDRAW == 1) ||
-       (!o_line_visible (w_current, o_current->line, &x1, &y1, &x2, &y2)) ) {
+  if (!o_line_visible (w_current, o_current->line, &x1, &y1, &x2, &y2)) {
     return;
   }
 

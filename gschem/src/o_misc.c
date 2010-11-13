@@ -199,9 +199,7 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
     return;
   }
 
-  if (!toplevel->DONT_REDRAW) {
-    o_invalidate_glist (w_current, list);
-  }
+  o_invalidate_glist (w_current, list);
 
   /* Find connected objects, removing each object in turn from the
    * connection list. We only _really_ want those objects connected
@@ -225,9 +223,7 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
     s_conn_update_object (toplevel, o_current);
   }
 
-  if (!toplevel->DONT_REDRAW) {
-    o_invalidate_glist (w_current, list);
-  }
+  o_invalidate_glist (w_current, list);
 
   /* All objects were rotated. Run the rotate hooks */
   o_rotate_call_hooks (w_current, list);
