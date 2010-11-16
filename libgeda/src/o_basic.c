@@ -647,30 +647,127 @@ o_get_page_compat (TOPLEVEL *toplevel, OBJECT *object) {
   }
 }
 
-void o_set_change_notify_funcs (TOPLEVEL *toplevel,
-                                ChangeNotifyFunc pre_change_func,
-                                ChangeNotifyFunc change_func,
-                                void *user_data)
+/* Structure for each entry in a TOPLEVEL's list of registered change
+ * notification handlers */
+struct change_notify_entry {
+  ChangeNotifyFunc pre_change_func;
+  ChangeNotifyFunc change_func;
+  void *user_data;
+};
+
+/*! \brief Add change notification handlers to a TOPLEVEL.
+ * \par Function Description
+ * Adds a set of change notification handlers to a #TOPLEVEL instance.
+ * \a pre_change_func will be called just before an object is
+ * modified, and \a change_func will be called just after an object is
+ * modified, with the affected object and the given \a user_data.
+ *
+ * \param toplevel #TOPLEVEL structure to add handlers to.
+ * \param pre_change_func Function to be called just before changes.
+ * \param change_func Function to be called just after changes.
+ * \param user_data User data to be passed to callback functions.
+ */
+void
+o_add_change_notify (TOPLEVEL *toplevel,
+                     ChangeNotifyFunc pre_change_func,
+                     ChangeNotifyFunc change_func,
+                     void *user_data)
 {
-  toplevel->pre_change_notify_func = pre_change_func;
-  toplevel->change_notify_func = change_func;
-  toplevel->change_notify_data = user_data;
+  struct change_notify_entry *entry = g_new0 (struct change_notify_entry, 1);
+  entry->pre_change_func = pre_change_func;
+  entry->change_func = change_func;
+  entry->user_data = user_data;
+  toplevel->change_notify_funcs =
+    g_list_prepend (toplevel->change_notify_funcs, entry);
 }
 
-
-void o_emit_pre_change_notify (TOPLEVEL *toplevel, OBJECT *object)
+/*! \brief Remove change notification handlers from a TOPLEVEL.
+ * \par Function Description
+ * Removes a set of change notification handlers and their associated
+ * \a user_data from \a toplevel.  If no registered set of handlers
+ * matches the given \a pre_change_func, \a change_func and \a
+ * user_data, does nothing.
+ *
+ * \see o_add_change_notify()
+ *
+ * \param toplevel #TOPLEVEL structure to remove handlers from.
+ * \param pre_change_func Function called just before changes.
+ * \param change_func Function called just after changes.
+ * \param user_data User data passed to callback functions.
+ */
+void
+o_remove_change_notify (TOPLEVEL *toplevel,
+                        ChangeNotifyFunc pre_change_func,
+                        ChangeNotifyFunc change_func,
+                        void *user_data)
 {
-  if (toplevel->pre_change_notify_func == NULL)
-    return;
+  GList *iter;
+  for (iter = toplevel->change_notify_funcs;
+       iter != NULL; iter = g_list_next (iter)) {
 
-  toplevel->pre_change_notify_func (toplevel->change_notify_data, object);
+    struct change_notify_entry *entry =
+      (struct change_notify_entry *) iter->data;
+
+    if ((entry != NULL)
+        && (entry->pre_change_func == pre_change_func)
+        && (entry->change_func == change_func)
+        && (entry->user_data == user_data)) {
+      g_free (entry);
+      iter->data = NULL;
+    }
+  }
+  toplevel->change_notify_funcs =
+    g_list_remove_all (toplevel->change_notify_funcs, NULL);
 }
 
-
-void o_emit_change_notify (TOPLEVEL *toplevel, OBJECT *object)
+/*! \brief Emit an object pre-change notification.
+ * \par Function Description
+ * Calls each pre-change callback function registered with #TOPLEVEL
+ * to notify listeners that \a object is about to be modified.  All
+ * libgeda functions that modify #OBJECT structures should call this
+ * just before making a change to an #OBJECT.
+ *
+ * \param toplevel #TOPLEVEL structure to emit notifications from.
+ * \param object   #OBJECT structure to emit notifications for.
+ */
+void
+o_emit_pre_change_notify (TOPLEVEL *toplevel, OBJECT *object)
 {
-  if (toplevel->change_notify_func == NULL)
-    return;
+  GList *iter;
+  for (iter = toplevel->change_notify_funcs;
+       iter != NULL; iter = g_list_next (iter)) {
 
-  toplevel->change_notify_func (toplevel->change_notify_data, object);
+    struct change_notify_entry *entry =
+      (struct change_notify_entry *) iter->data;
+
+    if ((entry != NULL) && (entry->pre_change_func != NULL)) {
+      entry->pre_change_func (entry->user_data, object);
+    }
+  }
+}
+
+/*! \brief Emit an object change notification.
+ * \par Function Description
+ * Calls each change callback function registered with #TOPLEVEL to
+ * notify listeners that \a object has just been modified.  All
+ * libgeda functions that modify #OBJECT structures should call this
+ * just after making a change to an #OBJECT.
+ *
+ * \param toplevel #TOPLEVEL structure to emit notifications from.
+ * \param object   #OBJECT structure to emit notifications for.
+ */
+void
+o_emit_change_notify (TOPLEVEL *toplevel, OBJECT *object)
+{
+  GList *iter;
+  for (iter = toplevel->change_notify_funcs;
+       iter != NULL; iter = g_list_next (iter)) {
+
+    struct change_notify_entry *entry =
+      (struct change_notify_entry *) iter->data;
+
+    if ((entry != NULL) && (entry->change_func != NULL)) {
+      entry->change_func (entry->user_data, object);
+    }
+  }
 }

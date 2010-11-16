@@ -448,8 +448,6 @@ struct st_toplevel {
 
   int last_ps_color;                    /* used in print code */
 
-  int DONT_REDRAW;			/* misc flags */
-
   /* page system */
   PAGE *page_current;
   GedaPageList *pages;
@@ -549,9 +547,7 @@ struct st_toplevel {
   void *rendered_text_bounds_data;
 
   /* Callback functions for object change notification */
-  ChangeNotifyFunc pre_change_notify_func;
-  ChangeNotifyFunc change_notify_func;
-  void *change_notify_data;
+  GList *change_notify_funcs;
 
   /* Callback function for deciding whether to load a backup file. */
   LoadBackupQueryFunc load_newer_backup_func;

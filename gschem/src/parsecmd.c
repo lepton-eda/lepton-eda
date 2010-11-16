@@ -18,6 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 #include <config.h>
+#include <version.h>
 
 #include <stdio.h>
 #ifdef HAVE_UNISTD_H
@@ -30,7 +31,7 @@
 #include <dmalloc.h>
 #endif
 
-#define OPTIONS "hqvr:s:o:pt"
+#define OPTIONS "hqvr:s:o:ptV"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -52,9 +53,26 @@ void usage(char *cmd)
          "  -o filename   Output filename (for printing)\n"
          "  -p            Automatically place the window\n"
          "  -t            Print stroke information\n"
+         "  -V            Show version information\n"
          "  -h            Help; this message\n"
          "\n"), cmd);
   exit(0);
+}
+
+static void
+version ()
+{
+  char *git7 = strndup (PACKAGE_GIT_COMMIT, 7);
+  printf(_(
+"gEDA %s (g%s)\n"
+"Copyright (C) 1998-2010 gEDA developers\n"
+"This is free software, and you are welcome to redistribute it under\n"
+"certain conditions. For details, see the file `COPYING', which is\n"
+"included in the gEDA distribution.\n"
+"There is NO WARRANTY, to the extent permitted by law.\n"),
+         PACKAGE_DOTTED_VERSION, git7);
+  free (git7);
+  exit (0);
 }
 
 /*! \todo Finish function documentation!!!
@@ -98,6 +116,10 @@ int parse_commandline(int argc, char *argv[])
 
       case 'h':
         usage(argv[0]);
+        break;
+
+      case 'V':
+        version ();
         break;
 
       case '?':

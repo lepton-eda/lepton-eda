@@ -60,8 +60,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->override_color = -1;
 
-  toplevel->DONT_REDRAW       = 0;
-
   toplevel->pages = geda_list_new();
   toplevel->page_current = NULL;
 
@@ -134,9 +132,7 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->rendered_text_bounds_func = NULL;
   toplevel->rendered_text_bounds_data = NULL;
 
-  toplevel->pre_change_notify_func = NULL;
-  toplevel->change_notify_func = NULL;
-  toplevel->change_notify_data = NULL;
+  toplevel->change_notify_funcs = NULL;
 
   toplevel->load_newer_backup_func = NULL;
   toplevel->load_newer_backup_data = NULL;
@@ -144,9 +140,6 @@ TOPLEVEL *s_toplevel_new (void)
   /* Auto-save interval */
   toplevel->auto_save_interval = 0;
   toplevel->auto_save_timeout = 0;
-
-  /* disable the events */
-  toplevel->DONT_REDRAW = 1;
 
   toplevel->weak_refs = NULL;
   return toplevel;
@@ -159,6 +152,8 @@ TOPLEVEL *s_toplevel_new (void)
  */
 void s_toplevel_delete (TOPLEVEL *toplevel)
 {
+  GList *iter;
+
   if (toplevel->auto_save_timeout != 0) {
     /* Assume this works */
     g_source_remove (toplevel->auto_save_timeout);
@@ -180,6 +175,13 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
 
   /* Delete the page list */
   g_object_unref(toplevel->pages);
+
+  /* Remove all change notification handlers */
+  for (iter = toplevel->change_notify_funcs;
+       iter != NULL; iter = g_list_next (iter)) {
+    g_free (iter->data);
+  }
+  g_list_free (toplevel->change_notify_funcs);
 
   s_weakref_notify (toplevel, toplevel->weak_refs);
 

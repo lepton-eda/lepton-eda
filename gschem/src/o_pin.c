@@ -44,21 +44,18 @@ void o_pin_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   }
 
   /* reuse line's routine */
-  if ( (toplevel->DONT_REDRAW == 1) ||
-       (!o_line_visible (w_current, o_current->line, &x1, &y1, &x2, &y2)) ) {
+  if (!o_line_visible (w_current, o_current->line, &x1, &y1, &x2, &y2)) {
     return;
   }
 
-  if (toplevel->DONT_REDRAW == 0) {
-    if (toplevel->pin_style == THICK)
-      size = o_current->line_width;
+  if (toplevel->pin_style == THICK)
+    size = o_current->line_width;
 
-    gschem_cairo_line (w_current, END_NONE, size, x1, y1, x2, y2);
+  gschem_cairo_line (w_current, END_NONE, size, x1, y1, x2, y2);
 
-    gschem_cairo_set_source_color (w_current,
-                                   o_drawing_color (w_current, o_current));
-    gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, size, -1, -1);
-  }
+  gschem_cairo_set_source_color (w_current,
+                                 o_drawing_color (w_current, o_current));
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, size, -1, -1);
 
   /* draw the cue directly */
   o_cue_draw_lowlevel(w_current, o_current, o_current->whichend);

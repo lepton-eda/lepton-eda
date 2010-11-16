@@ -49,9 +49,6 @@ void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  if (toplevel->DONT_REDRAW == 1)
-    return;
-
   gschem_cairo_arc (w_current, o_current->line_width,
                                o_current->arc->x,
                                o_current->arc->y,

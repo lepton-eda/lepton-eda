@@ -41,9 +41,7 @@ void o_complex_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   g_return_if_fail (o_current != NULL); 
   g_return_if_fail (o_current->complex != NULL);
 
-  if (!w_current->toplevel->DONT_REDRAW) {
-    o_redraw(w_current, o_current->complex->prim_objs, TRUE);
-  }
+  o_redraw(w_current, o_current->complex->prim_objs, TRUE);
 }
 
 
@@ -73,7 +71,6 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const CLibSymbol *sym)
   OBJECT *o_current;
   char *buffer;
   const gchar *sym_name = s_clib_symbol_get_name (sym);
-  int redraw_state;
 
   /* remove the old place list if it exists */
   s_delete_object_glist(toplevel, toplevel->page_current->place_list);
@@ -121,11 +118,8 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const CLibSymbol *sym)
 
   /* Run the complex place list changed hook without redrawing */
   /* since the place list is going to be redrawn afterwards */
-  redraw_state = toplevel->DONT_REDRAW;
-  toplevel->DONT_REDRAW = 1;
   o_complex_place_changed_run_hook (w_current);
-  toplevel->DONT_REDRAW = redraw_state;
-
+ 
   w_current->inside_action = 1;
   i_set_state (w_current, ENDCOMP);
 }

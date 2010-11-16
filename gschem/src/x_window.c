@@ -818,11 +818,9 @@ x_window_set_current_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
   x_pagesel_update (w_current);
   x_multiattrib_update (w_current);
 
-  toplevel->DONT_REDRAW = 1;
   x_manual_resize (w_current);
   x_hscrollbar_update (w_current);
   x_vscrollbar_update (w_current);
-  toplevel->DONT_REDRAW = 0;
 
   o_invalidate_all (w_current);
 }

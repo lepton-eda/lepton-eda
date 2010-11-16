@@ -360,8 +360,6 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
 
   /* temporarily disable logging */
   save_logging = do_logging;
-  prev_status = toplevel->DONT_REDRAW;
-  toplevel->DONT_REDRAW = 1;
   do_logging = FALSE;
 
   if (w_current->undo_type == UNDO_DISK && u_current->filename) {
@@ -406,12 +404,7 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
   x_multiattrib_update (w_current);
 
   /* Let the caller to decide if redraw or not */
-  /* toplevel->DONT_REDRAW = 0; */
-  toplevel->DONT_REDRAW = prev_status;
-
-  if (!toplevel->DONT_REDRAW) {
-    o_invalidate_all (w_current);
-  }
+  o_invalidate_all (w_current);
   i_update_menus(w_current);
 
   /* restore saved undo structures */

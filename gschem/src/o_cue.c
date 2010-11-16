@@ -39,7 +39,6 @@ void o_cue_redraw_all (GSCHEM_TOPLEVEL *w_current, GList *list, gboolean draw_se
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
   GList *iter;
-  int redraw_state = w_current->toplevel->DONT_REDRAW;
 
   iter = list;
   while (iter != NULL) {
@@ -48,38 +47,27 @@ void o_cue_redraw_all (GSCHEM_TOPLEVEL *w_current, GList *list, gboolean draw_se
       case(OBJ_NET):
       case(OBJ_BUS):
       case(OBJ_PIN):
-	if (o_current->dont_redraw ||
-            (o_current->selected && !draw_selected)) {
-	  w_current->toplevel->DONT_REDRAW = 1 || redraw_state;
-	}
-	else {
-	  w_current->toplevel->DONT_REDRAW = 0 || redraw_state;
-	}
-        o_cue_draw_single(w_current, o_current);
-
-	if (o_current->selected && w_current->draw_grips) {
-	  o_line_draw_grips (w_current, o_current);
-	}
+	if (!(o_current->dont_redraw ||
+              (o_current->selected && !draw_selected))) {
+          o_cue_draw_single(w_current, o_current);
+          if (o_current->selected && w_current->draw_grips) {
+            o_line_draw_grips (w_current, o_current);
+          }
+        }
         break;
 
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-	if (o_current->dont_redraw ||
-            (o_current->selected && !draw_selected)) {
-	  toplevel->DONT_REDRAW = 1 || redraw_state;
-	}
-	else {
-	  toplevel->DONT_REDRAW = 0 || redraw_state;
-	}
-        o_cue_redraw_all(w_current, o_current->complex->prim_objs, 
-			 draw_selected);
-	break;
-
+	if (!(o_current->dont_redraw ||
+              (o_current->selected && !draw_selected))) {
+          o_cue_redraw_all(w_current, o_current->complex->prim_objs, 
+                           draw_selected);
+        }
+        break;
     }
     
     iter = g_list_next (iter);
   }
-  toplevel->DONT_REDRAW = redraw_state;
 }
 
 
@@ -116,9 +104,6 @@ static void draw_junction_cue (GSCHEM_TOPLEVEL *w_current,
 {
   int size;
   int line_width;
-
-  if (w_current->toplevel->DONT_REDRAW)
-    return;
 
   if (bus_involved) {
     size = JUNCTION_CUE_SIZE_BUS / 2;
@@ -201,11 +186,9 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
       if (object->type == OBJ_NET) { /* only nets have these cues */
         if (count < 1) { /* Didn't find anything connected there */
           size = CUE_BOX_SIZE;
-          if (toplevel->DONT_REDRAW == 0) {
-            gschem_cairo_center_box (w_current, -1, -1, x, y, size, size);
-            o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
-            cairo_fill (w_current->cr);
-          }
+          gschem_cairo_center_box (w_current, -1, -1, x, y, size, size);
+          o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
+          cairo_fill (w_current->cr);
 
         } else if (count >= 2) {
           draw_junction_cue (w_current, x, y, bus_involved);
@@ -221,34 +204,32 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
           if (toplevel->pin_style == THICK )
             pinsize = object->line_width;
 
-          if (toplevel->DONT_REDRAW == 0) {
-            o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
-            if (object->line->y[whichone] == object->line->y[otherone]) {
-              /* horizontal line */
-              if (object->line->x[whichone] <= object->line->x[otherone]) {
-                gschem_cairo_line (w_current, END_NONE, pinsize, x,        y,
-                                                                 x + size, y);
-              } else {
-                gschem_cairo_line (w_current, END_NONE, pinsize, x,        y,
-                                                                 x - size, y);
-              }
-              gschem_cairo_stroke (w_current, TYPE_SOLID,
-                                   END_NONE, pinsize, -1, -1);
-            } else if (object->line->x[0] == object->line->x[1]) {
-              /* vertical line */
-              if (object->line->y[whichone] <= object->line->y[otherone]) {
-                gschem_cairo_line (w_current, END_NONE, pinsize, x, y,
-                                                                 x, y + size);
-              } else {
-                gschem_cairo_line (w_current, END_NONE, pinsize, x, y,
-                                                                 x, y - size);
-              }
-              gschem_cairo_stroke (w_current, TYPE_SOLID,
-                                   END_NONE, pinsize, -1, -1);
+          o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
+          if (object->line->y[whichone] == object->line->y[otherone]) {
+            /* horizontal line */
+            if (object->line->x[whichone] <= object->line->x[otherone]) {
+              gschem_cairo_line (w_current, END_NONE, pinsize, x,        y,
+                                 x + size, y);
             } else {
-              /* angled line */
-              /* not supporting rendering of que for angled pin for now. hack */
+              gschem_cairo_line (w_current, END_NONE, pinsize, x,        y,
+                                 x - size, y);
             }
+            gschem_cairo_stroke (w_current, TYPE_SOLID,
+                                 END_NONE, pinsize, -1, -1);
+          } else if (object->line->x[0] == object->line->x[1]) {
+            /* vertical line */
+            if (object->line->y[whichone] <= object->line->y[otherone]) {
+                gschem_cairo_line (w_current, END_NONE, pinsize, x, y,
+                                   x, y + size);
+            } else {
+              gschem_cairo_line (w_current, END_NONE, pinsize, x, y,
+                                 x, y - size);
+            }
+            gschem_cairo_stroke (w_current, TYPE_SOLID,
+                                 END_NONE, pinsize, -1, -1);
+          } else {
+            /* angled line */
+            /* not supporting rendering of que for angled pin for now. hack */
           }
 
         }
