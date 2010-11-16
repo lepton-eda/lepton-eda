@@ -24,8 +24,8 @@ AC_DEFUN([AX_PROG_GUILE_SNARF],
 
   AC_ARG_VAR([GUILE_SNARF], [path to guile-snarf utility])
 
-  AC_CHECK_PROG([GUILE_SNARF], [guile-snarf], [guile-snarf], [no])
-  if test "x$GUILE_SNARF" = x ; then
+  AC_CHECK_PROGS([GUILE_SNARF], [guile-snarf guile-1.8-snarf], [no])
+  if test "x$GUILE_SNARF" = xno ; then
     AC_MSG_ERROR([The `guile-snarf' tool could not be found. Please ensure that the
 Guile development headers and tools are correctly installed, and rerun
 configure.])
