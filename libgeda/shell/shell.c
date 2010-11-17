@@ -33,7 +33,7 @@
 #include <libgeda/libgeda.h>
 #include <libgeda/libgedaguile.h>
 
-#define GETOPT_OPTIONS "s:c:L:l:qhv"
+#define GETOPT_OPTIONS "s:c:L:l:qhV"
 
 /* Print help info and exit with exit_status */
 static void
@@ -55,7 +55,7 @@ usage (int exit_status)
 "  -l FILE        load Scheme source code from FILE\n"
 "  -q             inhibit loading of gafrc files\n"
 "  -h             display this message and exit\n"
-"  -v             display version information and exit\n"
+"  -V             display version information and exit\n"
 "\n"
 "Please report bugs to geda-bug@seul.org\n"
   );
@@ -66,15 +66,17 @@ usage (int exit_status)
 static void
 version ()
 {
-  printf (
-"gEDA " PACKAGE_GIT_VERSION "\n"
+  char *git7 = g_strndup (PACKAGE_GIT_COMMIT, 7);
+  printf(
+"gEDA %s (g%s)\n"
 "Copyright (C) 1998-2010 gEDA developers\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"
 "included in the gEDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
-  );
-  exit(0);
+"There is NO WARRANTY, to the extent permitted by law.\n",
+         PACKAGE_DOTTED_VERSION, git7);
+  g_free (git7);
+  exit (0);
 }
 
 /* Some symbols we need */
@@ -142,7 +144,7 @@ shell_main (void *data, int argc, char **argv)
       break;
     case 'h':
       usage (0);
-    case 'v':
+    case 'V':
       version();
     case '?':
       if ((optopt != ':') && (strchr (GETOPT_OPTIONS, optopt) != NULL)) {
