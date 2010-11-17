@@ -62,16 +62,14 @@ void usage(char *cmd)
 static void
 version ()
 {
-  char *git7 = g_strndup (PACKAGE_GIT_COMMIT, 7);
   printf(_(
-"gEDA %s (g%s)\n"
+"gEDA %s (g%.7s)\n"
 "Copyright (C) 1998-2010 gEDA developers\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"
 "included in the gEDA distribution.\n"
 "There is NO WARRANTY, to the extent permitted by law.\n"),
-         PACKAGE_DOTTED_VERSION, git7);
-  g_free (git7);
+         PACKAGE_DOTTED_VERSION, PACKAGE_GIT_COMMIT);
   exit (0);
 }
 

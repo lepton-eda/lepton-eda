@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-11-07 10:51+0000\n"
+"POT-Creation-Date: 2010-11-17 11:37+0000\n"
 "PO-Revision-Date: 2010-01-31 13:00+0000\n"
 "Last-Translator: lambert63 <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
-"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: nl\n"
 "X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "X-Poedit-Country: NETHERLANDS\n"
@@ -386,8 +386,8 @@ msgstr ""
 msgid ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
-"Een komponent met een ongeldige spiegel vlag gevonden [ %c %d %d %d %d %d "
-"%s ]\n"
+"Een komponent met een ongeldige spiegel vlag gevonden [ %c %d %d %d %d %d %"
+"s ]\n"
 
 #: libgeda/src/o_complex_basic.c:1008
 #, c-format
@@ -589,8 +589,8 @@ msgstr "Pen met een lengte van nul gevonden: [ %s ]\n"
 #, c-format
 msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
-"Tekst string met een afmeting van nul gevonden [ %c %d %d %d %d %d %d %d "
-"%d ]\n"
+"Tekst string met een afmeting van nul gevonden [ %c %d %d %d %d %d %d %d %"
+"d ]\n"
 
 #: libgeda/src/o_text_basic.c:389
 #, c-format
