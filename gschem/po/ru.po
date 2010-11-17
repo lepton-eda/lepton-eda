@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-11-17 11:38+0000\n"
+"POT-Creation-Date: 2010-11-07 13:37+0000\n"
 "PO-Revision-Date: 2010-02-14 01:05+0000\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ru\n"
 "X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
@@ -291,18 +291,18 @@ msgstr "Черчение дуг"
 msgid "Pin Mode"
 msgstr "Добавление выводов"
 
-#: gschem/src/i_basic.c:135 gschem/src/i_callbacks.c:542
-#: gschem/src/i_callbacks.c:566
+#: gschem/src/i_basic.c:135 gschem/src/i_callbacks.c:544
+#: gschem/src/i_callbacks.c:568
 msgid "Copy"
 msgstr "Копировать"
 
-#: gschem/src/i_basic.c:137 gschem/src/i_callbacks.c:632
-#: gschem/src/i_callbacks.c:656
+#: gschem/src/i_basic.c:137 gschem/src/i_callbacks.c:634
+#: gschem/src/i_callbacks.c:658
 msgid "Move"
 msgstr "Переместить"
 
-#: gschem/src/i_basic.c:139 gschem/src/i_callbacks.c:587
-#: gschem/src/i_callbacks.c:611
+#: gschem/src/i_basic.c:139 gschem/src/i_callbacks.c:589
+#: gschem/src/i_callbacks.c:613
 msgid "Multiple Copy"
 msgstr "Множественное копирование"
 
@@ -357,7 +357,7 @@ msgstr "Сетка (%s, %s)"
 msgid "Documentation for [%s,%s,%s,%s]\n"
 msgstr "Документация для [%s, %s, %s, %s]\n"
 
-#: gschem/src/i_callbacks.c:123 gschem/src/i_callbacks.c:1696
+#: gschem/src/i_callbacks.c:123 gschem/src/i_callbacks.c:1699
 #, c-format
 msgid "New page created [%s]\n"
 msgstr "Создана новая страница [%s]\n"
@@ -379,69 +379,69 @@ msgstr "Всё сохранено"
 msgid "Closing Window\n"
 msgstr "Закрытие окна\n"
 
-#: gschem/src/i_callbacks.c:547 gschem/src/i_callbacks.c:592
-#: gschem/src/i_callbacks.c:637
+#: gschem/src/i_callbacks.c:549 gschem/src/i_callbacks.c:594
+#: gschem/src/i_callbacks.c:639
 msgid "Select objs first"
 msgstr "Сначала нужно выделить что-либо"
 
-#: gschem/src/i_callbacks.c:676 gschem/src/x_multiattrib.c:1491
+#: gschem/src/i_callbacks.c:678 gschem/src/x_multiattrib.c:1491
 msgid "Delete"
 msgstr "Удалить"
 
-#: gschem/src/i_callbacks.c:701
+#: gschem/src/i_callbacks.c:703
 msgid "Edit"
 msgstr "Правка"
 
-#: gschem/src/i_callbacks.c:716
+#: gschem/src/i_callbacks.c:718
 msgid "Edit pin type"
 msgstr "Правка типа вывода"
 
-#: gschem/src/i_callbacks.c:735
+#: gschem/src/i_callbacks.c:737
 msgid "Edit Text"
 msgstr "Правка текста"
 
-#: gschem/src/i_callbacks.c:758
+#: gschem/src/i_callbacks.c:760
 msgid "Slot"
 msgstr "Слот"
 
-#: gschem/src/i_callbacks.c:775
+#: gschem/src/i_callbacks.c:777
 msgid "Color"
 msgstr "Цвет"
 
-#: gschem/src/i_callbacks.c:812 gschem/src/i_callbacks.c:857
+#: gschem/src/i_callbacks.c:814 gschem/src/i_callbacks.c:859
 msgid "Rotate"
 msgstr "Вращать"
 
-#: gschem/src/i_callbacks.c:879 gschem/src/i_callbacks.c:904
+#: gschem/src/i_callbacks.c:882 gschem/src/i_callbacks.c:907
 msgid "Mirror"
 msgstr "Зеркалировать"
 
-#: gschem/src/i_callbacks.c:925 gschem/src/x_dialog.c:2315
+#: gschem/src/i_callbacks.c:928 gschem/src/x_dialog.c:2315
 #: gschem/lib/system-gschemrc.scm:1422
 msgid "Lock"
 msgstr "Блокировать"
 
-#: gschem/src/i_callbacks.c:943 gschem/lib/system-gschemrc.scm:1423
+#: gschem/src/i_callbacks.c:946 gschem/lib/system-gschemrc.scm:1423
 msgid "Unlock"
 msgstr "Разблокировать"
 
-#: gschem/src/i_callbacks.c:961 gschem/src/x_dialog.c:1734
+#: gschem/src/i_callbacks.c:964 gschem/src/x_dialog.c:1734
 msgid "Translate"
 msgstr "Перемещение"
 
-#: gschem/src/i_callbacks.c:964
+#: gschem/src/i_callbacks.c:967
 msgid "WARNING: Do not translate with snap off!\n"
 msgstr "ВНИМАНИЕ! не перемещайте с выключенной привязкой!\n"
 
-#: gschem/src/i_callbacks.c:965
+#: gschem/src/i_callbacks.c:968
 msgid "WARNING: Turning snap on and continuing with translate.\n"
 msgstr "ВНИМАНИЕ! Включите привязку продолжите перемещение.\n"
 
-#: gschem/src/i_callbacks.c:972
+#: gschem/src/i_callbacks.c:975
 msgid "WARNING: Snap grid size is not equal to 100!\n"
 msgstr "ВНИМАНИЕ! размер сетки привязки не равен 100!\n"
 
-#: gschem/src/i_callbacks.c:974
+#: gschem/src/i_callbacks.c:977
 msgid ""
 "WARNING: If you are translating a symbol to the origin, the snap grid size "
 "should be set to 100\n"
@@ -449,176 +449,176 @@ msgstr ""
 "ВНИМАНИЕ! Если перемещается символ к началу отсчёта, размер сетки привязки "
 "должен быть установлен в 100\n"
 
-#: gschem/src/i_callbacks.c:1005
+#: gschem/src/i_callbacks.c:1008
 msgid "Embed"
 msgstr "Внедрить"
 
-#: gschem/src/i_callbacks.c:1044
+#: gschem/src/i_callbacks.c:1047
 msgid "Unembed"
 msgstr "Исключить"
 
-#: gschem/src/i_callbacks.c:1086
+#: gschem/src/i_callbacks.c:1089
 msgid "Update"
 msgstr "Обновить"
 
-#: gschem/src/i_callbacks.c:1133
+#: gschem/src/i_callbacks.c:1136
 msgid "ShowHidden"
 msgstr "Показать скрытые"
 
-#: gschem/src/i_callbacks.c:1157
+#: gschem/src/i_callbacks.c:1160
 msgid "MakeVisible"
 msgstr "Сделать видимым"
 
-#: gschem/src/i_callbacks.c:1463 gschem/src/i_callbacks.c:1535
+#: gschem/src/i_callbacks.c:1466 gschem/src/i_callbacks.c:1538
 msgid "Pan"
 msgstr "Центрировать"
 
-#: gschem/src/i_callbacks.c:1740
+#: gschem/src/i_callbacks.c:1743
 msgid "Really revert page?"
 msgstr "Действительно вернуть сохранённую страницу?"
 
-#: gschem/src/i_callbacks.c:1810
+#: gschem/src/i_callbacks.c:1813
 msgid "Copy to clipboard"
 msgstr "Копировать в буфер"
 
-#: gschem/src/i_callbacks.c:1828
+#: gschem/src/i_callbacks.c:1831
 msgid "Cut to clipboard"
 msgstr "Вырезать в буфер"
 
-#: gschem/src/i_callbacks.c:1846
+#: gschem/src/i_callbacks.c:1849
 msgid "Paste from clipboard"
 msgstr "Вставить из буфера"
 
-#: gschem/src/i_callbacks.c:1858 gschem/src/i_callbacks.c:2097
-#: gschem/src/i_callbacks.c:2119 gschem/src/i_callbacks.c:2141
-#: gschem/src/i_callbacks.c:2163 gschem/src/i_callbacks.c:2185
+#: gschem/src/i_callbacks.c:1861 gschem/src/i_callbacks.c:2100
+#: gschem/src/i_callbacks.c:2122 gschem/src/i_callbacks.c:2144
+#: gschem/src/i_callbacks.c:2166 gschem/src/i_callbacks.c:2188
 msgid "Empty buffer"
 msgstr "Очистить буфер"
 
-#: gschem/src/i_callbacks.c:1903
+#: gschem/src/i_callbacks.c:1906
 msgid "Copy 1"
 msgstr "Копировать в 1"
 
-#: gschem/src/i_callbacks.c:1922
+#: gschem/src/i_callbacks.c:1925
 msgid "Copy 2"
 msgstr "Копировать в 2"
 
-#: gschem/src/i_callbacks.c:1941
+#: gschem/src/i_callbacks.c:1944
 msgid "Copy 3"
 msgstr "Копировать в 3"
 
-#: gschem/src/i_callbacks.c:1960
+#: gschem/src/i_callbacks.c:1963
 msgid "Copy 4"
 msgstr "Копировать в 4"
 
-#: gschem/src/i_callbacks.c:1979
+#: gschem/src/i_callbacks.c:1982
 msgid "Copy 5"
 msgstr "Копировать в 5"
 
-#: gschem/src/i_callbacks.c:1998
+#: gschem/src/i_callbacks.c:2001
 msgid "Cut 1"
 msgstr "Вырезать в 1"
 
-#: gschem/src/i_callbacks.c:2017
+#: gschem/src/i_callbacks.c:2020
 msgid "Cut 2"
 msgstr "Вырезать в 2"
 
-#: gschem/src/i_callbacks.c:2036
+#: gschem/src/i_callbacks.c:2039
 msgid "Cut 3"
 msgstr "Вырезать в 3"
 
-#: gschem/src/i_callbacks.c:2055
+#: gschem/src/i_callbacks.c:2058
 msgid "Cut 4"
 msgstr "Вырезать в 4"
 
-#: gschem/src/i_callbacks.c:2074
+#: gschem/src/i_callbacks.c:2077
 msgid "Cut 5"
 msgstr "Вырезать в 5"
 
-#: gschem/src/i_callbacks.c:2090
+#: gschem/src/i_callbacks.c:2093
 msgid "Paste 1"
 msgstr "Вставить из 1"
 
-#: gschem/src/i_callbacks.c:2112
+#: gschem/src/i_callbacks.c:2115
 msgid "Paste 2"
 msgstr "Вставить из 2"
 
-#: gschem/src/i_callbacks.c:2134
+#: gschem/src/i_callbacks.c:2137
 msgid "Paste 3"
 msgstr "Вставить из 3"
 
-#: gschem/src/i_callbacks.c:2156
+#: gschem/src/i_callbacks.c:2159
 msgid "Paste 4"
 msgstr "Вставить из 4"
 
-#: gschem/src/i_callbacks.c:2178
+#: gschem/src/i_callbacks.c:2181
 msgid "Paste 5"
 msgstr "Вставить из 5"
 
-#: gschem/src/i_callbacks.c:2315 gschem/src/x_window.c:355
+#: gschem/src/i_callbacks.c:2318 gschem/src/x_window.c:355
 msgid "Component"
 msgstr "Элемент"
 
-#: gschem/src/i_callbacks.c:2351 gschem/src/i_callbacks.c:2370
+#: gschem/src/i_callbacks.c:2354 gschem/src/i_callbacks.c:2373
 #: gschem/src/x_dialog.c:2285
 msgid "Attribute"
 msgstr "Атрибут"
 
-#: gschem/src/i_callbacks.c:2392 gschem/src/i_callbacks.c:2419
+#: gschem/src/i_callbacks.c:2395 gschem/src/i_callbacks.c:2422
 #: gschem/src/x_dialog.c:2282
 msgid "Net"
 msgstr "Соединение"
 
-#: gschem/src/i_callbacks.c:2463 gschem/src/i_callbacks.c:2490
+#: gschem/src/i_callbacks.c:2466 gschem/src/i_callbacks.c:2493
 #: gschem/src/x_dialog.c:2300 gschem/src/x_window.c:375
 msgid "Bus"
 msgstr "Шину"
 
-#: gschem/src/i_callbacks.c:2571 gschem/src/i_callbacks.c:2594
+#: gschem/src/i_callbacks.c:2574 gschem/src/i_callbacks.c:2597
 msgid "Line"
 msgstr "Отрезок"
 
-#: gschem/src/i_callbacks.c:2616 gschem/src/i_callbacks.c:2639
+#: gschem/src/i_callbacks.c:2619 gschem/src/i_callbacks.c:2642
 msgid "Box"
 msgstr "Прямоугольник"
 
-#: gschem/src/i_callbacks.c:2695 gschem/src/i_callbacks.c:2719
+#: gschem/src/i_callbacks.c:2698 gschem/src/i_callbacks.c:2722
 msgid "Circle"
 msgstr "Окружность"
 
-#: gschem/src/i_callbacks.c:2741 gschem/src/i_callbacks.c:2764
+#: gschem/src/i_callbacks.c:2744 gschem/src/i_callbacks.c:2767
 msgid "Arc"
 msgstr "Дугу"
 
-#: gschem/src/i_callbacks.c:2786 gschem/src/i_callbacks.c:2809
+#: gschem/src/i_callbacks.c:2789 gschem/src/i_callbacks.c:2812
 #: gschem/src/x_dialog.c:2273
 msgid "Pin"
 msgstr "Вывод"
 
-#: gschem/src/i_callbacks.c:2868
+#: gschem/src/i_callbacks.c:2871
 #, c-format
 msgid "Searching for source [%s]\n"
 msgstr "Поиск источника [%s]\n"
 
-#: gschem/src/i_callbacks.c:2892
+#: gschem/src/i_callbacks.c:2895
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "Невозможно найти источник [%s]\n"
 
-#: gschem/src/i_callbacks.c:2961
+#: gschem/src/i_callbacks.c:2964
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "Поиск символа [%s]\n"
 
-#: gschem/src/i_callbacks.c:2967
+#: gschem/src/i_callbacks.c:2970
 msgid "Symbol is not a real file. Symbol cannot be loaded.\n"
 msgstr "Символ не является файлом. Символ не может быть загружен.\n"
 
-#: gschem/src/i_callbacks.c:2998
+#: gschem/src/i_callbacks.c:3001
 msgid "Cannot find any schematics above the current one!\n"
 msgstr "Невозможно найти какую-либо схему над текущей!\n"
 
-#: gschem/src/i_callbacks.c:3052
+#: gschem/src/i_callbacks.c:3055
 msgid ""
 "This command retrieves the component documentation from the web, but there "
 "is no component selected"
@@ -626,84 +626,84 @@ msgstr ""
 "Эта команда используется для поиска документации по компоненту в Интернет, "
 "но ни один компонент не выбран"
 
-#: gschem/src/i_callbacks.c:3080
+#: gschem/src/i_callbacks.c:3083
 msgid "Attach"
 msgstr "Присоединить"
 
-#: gschem/src/i_callbacks.c:3127
+#: gschem/src/i_callbacks.c:3130
 msgid "Detach"
 msgstr "Отсоединить"
 
-#: gschem/src/i_callbacks.c:3162
+#: gschem/src/i_callbacks.c:3165
 msgid "ShowN"
 msgstr "Показать И"
 
-#: gschem/src/i_callbacks.c:3198
+#: gschem/src/i_callbacks.c:3201
 msgid "ShowV"
 msgstr "Показать З"
 
-#: gschem/src/i_callbacks.c:3234
+#: gschem/src/i_callbacks.c:3237
 msgid "ShowB"
 msgstr "Показать И З"
 
-#: gschem/src/i_callbacks.c:3271
+#: gschem/src/i_callbacks.c:3274
 msgid "VisToggle"
 msgstr "Перекл. видимости"
 
-#: gschem/src/i_callbacks.c:3301
+#: gschem/src/i_callbacks.c:3304
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "Извините, но это этот пункт меню не работает\n"
 
-#: gschem/src/i_callbacks.c:3391
+#: gschem/src/i_callbacks.c:3394
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr "Обратная связь установлена по КОНТУРУ\n"
 
-#: gschem/src/i_callbacks.c:3394
+#: gschem/src/i_callbacks.c:3397
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr "Обратная связь установлена по ОГРАНИЧ. ПРЯМОУГОЛЬНИКУ\n"
 
-#: gschem/src/i_callbacks.c:3419
+#: gschem/src/i_callbacks.c:3422
 msgid "Grid OFF\n"
 msgstr "Сетка ВЫКЛ\n"
 
-#: gschem/src/i_callbacks.c:3420
+#: gschem/src/i_callbacks.c:3423
 msgid "Dot grid selected\n"
 msgstr "Выбрана сетка из точек\n"
 
-#: gschem/src/i_callbacks.c:3421
+#: gschem/src/i_callbacks.c:3424
 msgid "Mesh grid selected\n"
 msgstr "Выбрана сетка из линий\n"
 
-#: gschem/src/i_callbacks.c:3442
+#: gschem/src/i_callbacks.c:3445
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "Привязка ВЫКЛ (ОСТОРОЖНО!)\n"
 
-#: gschem/src/i_callbacks.c:3445
+#: gschem/src/i_callbacks.c:3448
 msgid "Snap ON\n"
 msgstr "Привязка ВКЛ\n"
 
-#: gschem/src/i_callbacks.c:3448
+#: gschem/src/i_callbacks.c:3451
 msgid "Snap back to the grid (CAUTION!)\n"
 msgstr "Включите привязку к сетке (ВНИМАНИЕ!)\n"
 
-#: gschem/src/i_callbacks.c:3474
+#: gschem/src/i_callbacks.c:3477
 msgid "Rubber band OFF \n"
 msgstr "Резиновая лента ВЫКЛ \n"
 
-#: gschem/src/i_callbacks.c:3477
+#: gschem/src/i_callbacks.c:3480
 msgid "Rubber band ON\n"
 msgstr "Резиновая лента ВКЛ\n"
 
-#: gschem/src/i_callbacks.c:3492
+#: gschem/src/i_callbacks.c:3495
 msgid "magnetic net mode: ON\n"
 msgstr "режим магнитного соединения: ВКЛ\n"
 
-#: gschem/src/i_callbacks.c:3495
+#: gschem/src/i_callbacks.c:3498
 msgid "magnetic net mode: OFF\n"
 msgstr "режим магнитного соединения: ВЫКЛ\n"
 
-#: gschem/src/o_box.c:150
+#: gschem/src/o_box.c:153
 #, c-format
 msgid "Unknown type for box (fill)!\n"
 msgstr "Неизвестный тип для прямоугольника (с заливкой)!\n"
@@ -723,17 +723,17 @@ msgstr "o_buffer_cut: неверный буфер %i\n"
 msgid "Got an invalid buffer_number [o_buffer_paste_start]\n"
 msgstr "Получен неверный buffer_number [o_buffer_paste_start]\n"
 
-#: gschem/src/o_bus.c:117
+#: gschem/src/o_bus.c:118
 #, c-format
 msgid "Got an invalid which one in o_bus_draw_stretch\n"
 msgstr "Получен неверный параметр в o_bus_draw_stretch\n"
 
-#: gschem/src/o_circle.c:131
+#: gschem/src/o_circle.c:134
 #, c-format
 msgid "Unknown type for circle (fill)!\n"
 msgstr "Неизвестный тип для окружности (заливки)!\n"
 
-#: gschem/src/o_complex.c:237 gschem/src/o_complex.c:241
+#: gschem/src/o_complex.c:243 gschem/src/o_complex.c:247
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr "Перемещение схемы [%d %d]\n"
@@ -751,37 +751,37 @@ msgstr "Объект уже заблокирован\n"
 msgid "Object already unlocked\n"
 msgstr "Объект уже разблокирован\n"
 
-#: gschem/src/o_misc.c:409
+#: gschem/src/o_misc.c:413
 msgid "Hidden text is now visible\n"
 msgstr "Скрытый текст стал видим\n"
 
-#: gschem/src/o_misc.c:411
+#: gschem/src/o_misc.c:415
 msgid "Hidden text is now invisible\n"
 msgstr "Скрытый текст стал невидим\n"
 
-#: gschem/src/o_misc.c:664
+#: gschem/src/o_misc.c:668
 #, c-format
 msgid "Could not find symbol [%s] in library. Update failed.\n"
 msgstr "Не найден символ [%s] в библиотеке. Обновление не выполнено.\n"
 
-#: gschem/src/o_misc.c:779
+#: gschem/src/o_misc.c:783
 #, c-format
 msgid "o_autosave_backups: Can't get the real filename of %s."
 msgstr "o_autosave_backups: невозможно получить реально имя файла для %s."
 
-#: gschem/src/o_misc.c:823
+#: gschem/src/o_misc.c:827
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 "Невозможно установить режим чтения-записи для предыдущей резервной копии "
 "файла [%s]\n"
 
-#: gschem/src/o_misc.c:841
+#: gschem/src/o_misc.c:845
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr "Невозможно установить режим только для чтения резервного файла [%s]\n"
 
-#: gschem/src/o_misc.c:846
+#: gschem/src/o_misc.c:850
 #, c-format
 msgid "Could NOT save backup file [%s]\n"
 msgstr "Невозможно сохранить резервный файл [%s]\n"
@@ -801,38 +801,38 @@ msgstr "Ох! Попытка найти что-либо, но ничего не 
 msgid "Got a non line object in o_move_check_endpoint\n"
 msgstr "Получен объект не линия в o_move_check_endpoint\n"
 
-#: gschem/src/o_net.c:158
+#: gschem/src/o_net.c:159
 #, c-format
 msgid "Got an invalid which one in o_net_draw_stretch\n"
 msgstr "Получен неверный параметр в o_net_draw_stretche\n"
 
-#: gschem/src/o_net.c:537
+#: gschem/src/o_net.c:538
 msgid "Warning: Starting net at off grid coordinate\n"
 msgstr "Внимание: начальная координата соединения не расположена по сетке\n"
 
-#: gschem/src/o_net.c:599
+#: gschem/src/o_net.c:600
 msgid "Warning: Ending net at off grid coordinate\n"
 msgstr "Внимание: конечная координата соединения не расположена по сетке\n"
 
-#: gschem/src/o_net.c:931 gschem/src/o_net.c:968 gschem/src/o_net.c:1039
-#: gschem/src/o_net.c:1075
+#: gschem/src/o_net.c:932 gschem/src/o_net.c:969 gschem/src/o_net.c:1040
+#: gschem/src/o_net.c:1076
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr "Попытка добавить более двух разрывов шины. Внутренняя ошибка gschem.\n"
 
-#: gschem/src/o_net.c:1143
+#: gschem/src/o_net.c:1144
 #, c-format
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
 msgstr ""
 "Невозможно найти символ разрыва шины [%s] ни в одной из библиотек "
 "компонентов\n"
 
-#: gschem/src/o_path.c:349
+#: gschem/src/o_path.c:352
 #, c-format
 msgid "Unknown type for path (fill)!\n"
 msgstr "Неизвестный тип для контура (с заливкой)!\n"
 
-#: gschem/src/o_picture.c:163 gschem/src/o_picture.c:538
+#: gschem/src/o_picture.c:163 gschem/src/o_picture.c:539
 #, c-format
 msgid "Failed to load picture: %s"
 msgstr "Невозможно загрузить изображение: [%s]"
@@ -841,7 +841,7 @@ msgstr "Невозможно загрузить изображение: [%s]"
 msgid "Picture"
 msgstr "Изображение"
 
-#: gschem/src/o_picture.c:446 gschem/src/x_attribedit.c:141
+#: gschem/src/o_picture.c:447 gschem/src/x_attribedit.c:141
 #, c-format
 msgid "ERROR: NULL object!\n"
 msgstr "ОШИБКА: объект NULL!\n"
@@ -866,8 +866,8 @@ msgstr "Номер нового слота выходит за пределы\n"
 msgid "Undo/Redo disabled in rc file\n"
 msgstr "Отмена/повтор выключены в rc-файле\n"
 
-#: gschem/src/parsecmd.c:48
-#, fuzzy, c-format
+#: gschem/src/parsecmd.c:47
+#, c-format
 msgid ""
 "Usage: %s [OPTIONS] schematic_filename1 ... schematic_filenameN\n"
 "  -q            Quiet mode\n"
@@ -877,7 +877,6 @@ msgid ""
 "  -o filename   Output filename (for printing)\n"
 "  -p            Automatically place the window\n"
 "  -t            Print stroke information\n"
-"  -V            Show version information\n"
 "  -h            Help; this message\n"
 "\n"
 msgstr ""
@@ -891,17 +890,6 @@ msgstr ""
 "  -t            Печатать штриховую информацию\n"
 "  -h            Помощь; это сообщение\n"
 "\n"
-
-#: gschem/src/parsecmd.c:66
-#, c-format
-msgid ""
-"gEDA %s (g%.7s)\n"
-"Copyright (C) 1998-2010 gEDA developers\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the gEDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
-msgstr ""
 
 #: gschem/src/x_attribedit.c:127
 #, c-format
@@ -1849,7 +1837,7 @@ msgid "Right click on the filename for more options..."
 msgstr ""
 "Щёлчок правой кнопкой на имени файла даёт дополнительных возможности..."
 
-#: gschem/src/x_preview.c:232
+#: gschem/src/x_preview.c:234
 msgid "Preview Buffer"
 msgstr "Буфер предпросмотра"
 
@@ -2047,35 +2035,35 @@ msgstr "Ошибка при загрузке файла"
 msgid "New file [%s]\n"
 msgstr "Новый файл [%s]\n"
 
-#: gschem/src/x_window.c:855
+#: gschem/src/x_window.c:857
 #, c-format
 msgid "Could NOT save page [%s]\n"
 msgstr "Не удалось сохранить страницу [%s]\n"
 
-#: gschem/src/x_window.c:856
+#: gschem/src/x_window.c:858
 msgid "Error while trying to save"
 msgstr "Ошибка при попытке сохранения"
 
-#: gschem/src/x_window.c:865
+#: gschem/src/x_window.c:867
 #, c-format
 msgid "Saved as [%s]\n"
 msgstr "Сохранено как [%s]\n"
 
-#: gschem/src/x_window.c:867
+#: gschem/src/x_window.c:869
 #, c-format
 msgid "Saved [%s]\n"
 msgstr "Сохранено [%s]\n"
 
-#: gschem/src/x_window.c:869
+#: gschem/src/x_window.c:871
 msgid "Saved"
 msgstr "Сохранено"
 
-#: gschem/src/x_window.c:943
+#: gschem/src/x_window.c:945
 #, c-format
 msgid "Discarding page [%s]\n"
 msgstr "Отвержение страницы [%s]\n"
 
-#: gschem/src/x_window.c:943
+#: gschem/src/x_window.c:945
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "Закрытие [%s]\n"

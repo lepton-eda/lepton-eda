@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-11-17 11:37+0000\n"
+"POT-Creation-Date: 2010-11-07 10:51+0000\n"
 "PO-Revision-Date: 2010-02-06 22:10+0000\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ru\n"
 "X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
@@ -603,8 +603,8 @@ msgstr "Ошибка при выполнении команды над библ�
 #, c-format
 msgid "Library command failed [%s]: Uncaught signal %i.\n"
 msgstr ""
-"Ошибка при выполнении команды над библиотекой [%s]: необработанный сигнал %"
-"i.\n"
+"Ошибка при выполнении команды над библиотекой [%s]: необработанный сигнал "
+"%i.\n"
 
 #: libgeda/src/s_clib.c:473
 #, c-format

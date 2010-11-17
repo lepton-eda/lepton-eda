@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-11-17 11:37+0000\n"
+"POT-Creation-Date: 2010-11-07 10:51+0000\n"
 "PO-Revision-Date: 2010-01-31 13:00+0000\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
 "X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
@@ -383,8 +383,8 @@ msgstr ""
 msgid ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
-"Bauteil mit fehlerhafter Spiegelungsangabe entdeckt [ %c %d %d %d %d %d %"
-"s ]\n"
+"Bauteil mit fehlerhafter Spiegelungsangabe entdeckt [ %c %d %d %d %d %d "
+"%s ]\n"
 
 #: libgeda/src/o_complex_basic.c:1008
 #, c-format
@@ -392,8 +392,8 @@ msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse symbol file symversion=%s\n"
 msgstr ""
-"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz '%"
-"s':\n"
+"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz "
+"'%s':\n"
 "\tKonnte das Attribut symversion=%s nicht zerlegen\n"
 
 #: libgeda/src/o_complex_basic.c:1012
@@ -402,8 +402,8 @@ msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse symbol file symversion=\n"
 msgstr ""
-"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz '%"
-"s':\n"
+"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz "
+"'%s':\n"
 "\tKonnte das Attribut symversion= nicht zerlegen\n"
 
 #: libgeda/src/o_complex_basic.c:1028
@@ -412,8 +412,8 @@ msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse attached symversion=%s\n"
 msgstr ""
-"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz '%"
-"s':\n"
+"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz "
+"'%s':\n"
 "\tKonnte das angehängte Attribut symversion=%s nicht zerlegen\n"
 
 #: libgeda/src/o_complex_basic.c:1053
@@ -423,8 +423,8 @@ msgid ""
 "\tsymversion=%s attached to instantiated symbol, but no symversion= inside "
 "symbol file\n"
 msgstr ""
-"ACHTUNG: Seltsame Konstellation der Version des Symbols mit der Referenz '%"
-"s':\n"
+"ACHTUNG: Seltsame Konstellation der Version des Symbols mit der Referenz "
+"'%s':\n"
 "\tsymversion=%s existiert bei dem Symbol im Schaltplan, fehlt aber innerhalb "
 "der Schaltsymbol-Datei\n"
 
@@ -434,16 +434,16 @@ msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
 "\tSymbol in library is newer than instantiated symbol\n"
 msgstr ""
-"Achtung: Die Version des Symbols mit der Referenz %s stimmt nicht überein (%"
-"s):\n"
+"Achtung: Die Version des Symbols mit der Referenz %s stimmt nicht überein "
+"(%s):\n"
 "\tDas Symbol in der Bibliothek ist neuer als das Symbol im Schaltplan\n"
 
 #: libgeda/src/o_complex_basic.c:1095
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr ""
-"\tGROSSE VERSIONSÄNDERUNG (Symboldatei %.3f, Symbol im Schaltplan %.3f, %"
-"s)!\n"
+"\tGROSSE VERSIONSÄNDERUNG (Symboldatei %.3f, Symbol im Schaltplan %.3f, "
+"%s)!\n"
 
 #: libgeda/src/o_complex_basic.c:1113
 #, c-format
@@ -600,15 +600,15 @@ msgstr ""
 #, c-format
 msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
-"Text mit nicht unterstützer Winkelangabe entdeckt [ %c %d %d %d %d %d %d %d %"
-"d ]\n"
+"Text mit nicht unterstützer Winkelangabe entdeckt [ %c %d %d %d %d %d %d %d "
+"%d ]\n"
 
 #: libgeda/src/o_text_basic.c:411
 #, c-format
 msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
-"Text mit nicht unterstützer Ausrichtung entdeckt [ %c %d %d %d %d %d %d %d %"
-"d ]\n"
+"Text mit nicht unterstützer Ausrichtung entdeckt [ %c %d %d %d %d %d %d %d "
+"%d ]\n"
 
 #: libgeda/src/o_text_basic.c:413
 msgid "Setting alignment to LOWER_LEFT\n"
