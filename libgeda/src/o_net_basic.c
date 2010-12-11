@@ -524,22 +524,16 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
   GList *c_current;
   CONN *conn;
   OBJECT *other_object;
-  int changed = 0;
   PAGE *page;
+  int changed = 0;
 
-  if (object == NULL) {
-    return(0);
-  }
+  g_return_val_if_fail ((toplevel != NULL), 0);
+  g_return_val_if_fail ((object != NULL), 0);
+  g_return_val_if_fail ((object->type == OBJ_NET), 0);
 
-  if (object->type != OBJ_NET) {
-    return(0);
-  }
-
-  /* It's meaningless to do anything here without a valid current page. */
-  page = o_get_page_compat (toplevel, object);
-  if (page == NULL) {
-    return (0);
-  }
+  /* It's meaningless to do anything here if the object isn't in a page. */
+  page = o_get_page (toplevel, object);
+  g_return_val_if_fail ((page != NULL), 0);
 
   object_orient = o_net_orientation(object);
 
@@ -598,18 +592,20 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
 
 /*! \brief consolidate all net objects
  *  \par Function Description
- *  This function consolidates all net objects until no more consolidations
- *  are posible.
+ *  This function consolidates all net objects in a page until no more
+ *  consolidations are possible.
  *
- *  \param toplevel  The TOPLEVEL object
- *
+ *  \param toplevel  The TOPLEVEL object.
+ *  \param page      The PAGE to consolidate nets in.
  */
-void o_net_consolidate(TOPLEVEL *toplevel)
+void o_net_consolidate(TOPLEVEL *toplevel, PAGE *page)
 {
   OBJECT *o_current;
   const GList *iter;
   int status = 0;
-  PAGE *page = toplevel->page_current;
+
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (page != NULL);
 
   iter = s_page_objects (page);
 

@@ -104,7 +104,7 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
      * triggered before it was removed from o_save_buffer().
      */
     if (toplevel->net_consolidate == TRUE)
-      o_net_consolidate (w_current->toplevel);
+      o_net_consolidate (toplevel, toplevel->page_current);
   }
 
   if (w_current->undo_type == UNDO_DISK && flag == UNDO_ALL) {
