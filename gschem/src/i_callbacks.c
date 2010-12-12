@@ -2829,9 +2829,9 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
   OBJECT *object=NULL;
   PAGE *save_first_page=NULL;
   PAGE *parent=NULL;
+  PAGE *child = NULL;
   int loaded_flag=FALSE;
   int page_control = 0;
-  int saved_page_control = 0;
   int pcount = 0;
   int looking_inside=FALSE;
 
@@ -2866,36 +2866,34 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
     while(current_filename != NULL) {
 
       s_log_message(_("Searching for source [%s]\n"), current_filename);
-      saved_page_control = page_control;
-      page_control =
-        s_hierarchy_down_schematic_single(w_current->toplevel,
-                                          current_filename,
-                                          parent,
-                                          page_control,
-                                          HIERARCHY_NORMAL_LOAD);
+      child = s_hierarchy_down_schematic_single(w_current->toplevel,
+                                                current_filename,
+                                                parent,
+                                                page_control,
+                                                HIERARCHY_NORMAL_LOAD);
 
       /* s_hierarchy_down_schematic_single() will not zoom the loaded page */
-      if (page_control != -1) {
+      if (child != NULL) {
+        s_page_goto (w_current->toplevel, child);
         a_zoom_extents(w_current,
                        s_page_objects (w_current->toplevel->page_current),
                        A_PAN_DONT_REDRAW);
         o_undo_savestate(w_current, UNDO_ALL);
+        s_page_goto (w_current->toplevel, parent);
       }
 
       /* save the first page */
-      if ( !loaded_flag && page_control > 0 ) {
-        save_first_page = w_current->toplevel->page_current;
+      if ( !loaded_flag && (child != NULL)) {
+        save_first_page = child;
       }
 
       /* now do some error fixing */
-      if (page_control == -1) {
+      if (child == NULL) {
         s_log_message(_("Cannot find source [%s]\n"), current_filename);
-
-        /* restore this for the next page */
-        page_control = saved_page_control;
       } else {
         /* this only signifies that we tried */
         loaded_flag = TRUE;
+        page_control = child->page_control;
       }
 
       g_free(current_filename);
@@ -2932,12 +2930,8 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
     }
   }
 
-  if (loaded_flag) {
-
-    if (save_first_page) {
-      w_current->toplevel->page_current = save_first_page;
-    }
-    x_window_set_current_page( w_current, w_current->toplevel->page_current );
+  if (loaded_flag && (save_first_page != NULL)) {
+    x_window_set_current_page (w_current, save_first_page);
   }
 }
 

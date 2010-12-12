@@ -494,21 +494,23 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
           pcount = 0;
           current_filename = u_basic_breakup_string(attrib, ',', pcount);
           if (current_filename != NULL) {
-            page_control =
+            PAGE *child_page =
               s_hierarchy_down_schematic_single(toplevel,
                                                 current_filename,
                                                 parent,
                                                 page_control,
                                                 HIERARCHY_NORMAL_LOAD);
-            /* o_invalidate_all (w_current); */
 
-            rv = o_edit_find_text (w_current,
-                                   s_page_objects (toplevel->page_current),
-                                   stext, descend, skiplast);
-            if (!rv) {
-              return 0;
+            if (child_page != NULL) {
+              page_control = child_page->page_control;
+              rv = o_edit_find_text (w_current,
+                                     s_page_objects (child_page),
+                                     stext, descend, skiplast);
+              if (!rv) {
+                s_page_goto( toplevel, child_page );
+                return 0;
+              }
             }
-            s_page_goto( toplevel, parent );
           }
         }
       }

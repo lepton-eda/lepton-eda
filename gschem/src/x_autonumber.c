@@ -655,7 +655,9 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   scope_text = g_list_first(autotext->scope_text)->data;
 
   /* Step1: get all pages of the hierarchy */
-  pages = s_hierarchy_traversepages(w_current->toplevel, HIERARCHY_NODUPS);
+  pages = s_hierarchy_traversepages (w_current->toplevel,
+                                     w_current->toplevel->page_current,
+                                     HIERARCHY_NODUPS);
 
   /*  g_list_foreach(pages, (GFunc) s_hierarchy_print_page, NULL); */
 
