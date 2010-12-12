@@ -218,7 +218,8 @@ preview_update (Preview *preview)
     g_assert ((preview->filename == NULL) || (preview->buffer == NULL));
     if (preview->filename != NULL) {
       /* open up file in current page */
-      f_open_flags (preview_toplevel, preview->filename,
+      f_open_flags (preview_toplevel, preview_toplevel->page_current,
+                    preview->filename,
                     F_OPEN_RC | F_OPEN_RESTORE_CWD, NULL);
       /* test value returned by f_open... - Fix me */
       /* we should display something if there an error occured - Fix me */

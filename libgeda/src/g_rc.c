@@ -137,7 +137,7 @@ gint g_rc_parse_general(TOPLEVEL *toplevel,
 
   /* Now try to read in contents of RC file.  */
   if (access (fname, R_OK) == 0) {
-    g_read_file (fname);
+    g_read_file (toplevel, fname);
     found_rc = 1;
     /* Everything was OK.  Now add this file to list of read RC files. */
     toplevel->RC_list = g_list_append (toplevel->RC_list,

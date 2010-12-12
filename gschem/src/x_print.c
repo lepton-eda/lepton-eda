@@ -725,13 +725,17 @@ x_print_setup (GSCHEM_TOPLEVEL *w_current, char *filename)
 	/* Print to file */
 	{
 	  destination = filename;
-	  result = f_print_file (toplevel, filename);
+	  result = f_print_file (toplevel,
+                                 toplevel->page_current,
+                                 filename);
 	}
       else if (command[0])
 	/* Print to command and save command for later use. */
 	{
 	  destination = command;
-	  result = f_print_command (toplevel, command);
+	  result = f_print_command (toplevel,
+                                    toplevel->page_current,
+                                    command);
 	  
 	  g_free (w_current->print_command);
 	  w_current->print_command = g_strdup (command);

@@ -103,7 +103,7 @@ int s_hierarchy_down_schematic_single(TOPLEVEL *toplevel,
       found = s_page_new (toplevel, string);
       s_page_goto (toplevel, found);
       
-      f_open (toplevel, found->page_filename, NULL);
+      f_open (toplevel, found, found->page_filename, NULL);
     }
     break;
 
@@ -111,7 +111,7 @@ int s_hierarchy_down_schematic_single(TOPLEVEL *toplevel,
     {
       PAGE *page = s_page_new (toplevel, string);
       s_page_goto (toplevel, page);
-      f_open (toplevel, page->page_filename, NULL);
+      f_open (toplevel, page, page->page_filename, NULL);
     }
     break;
   }
@@ -157,7 +157,7 @@ void s_hierarchy_down_symbol (TOPLEVEL *toplevel,
 
   s_page_goto (toplevel, page);
 
-  f_open(toplevel, page->page_filename, NULL);
+  f_open(toplevel, page, page->page_filename, NULL);
 
   page->up = parent->pid;
   page_control_counter++;

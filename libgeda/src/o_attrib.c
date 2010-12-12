@@ -131,10 +131,6 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object,
 
   if (set_color)
     o_set_color (toplevel, attrib, ATTRIBUTE_COLOR);
-
-  /* can't do this here since just selecting something */
-  /* will cause this to be set */
-  /* toplevel->page_current->CHANGED=1;*/
 }
 
 

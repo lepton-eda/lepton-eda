@@ -90,14 +90,15 @@ void f_print_set_color(TOPLEVEL *toplevel, FILE *fp, int color)
  *  This function will print a document preamble and header
  *  for a postscript document.
  *
- *  \param [in] toplevel     The TOPLEVEL object to create document for.
+ *  \param [in] toplevel     The TOPLEVEL object.
+ *  \param [in] page          The page to create document for.
  *  \param [in] fp            The postscript document to write to.
  *  \param [in] paper_size_x  The width of the document on paper in inches.
  *  \param [in] paper_size_y  The height of the document on paper in inches.
  *  \param [in] eps           whether to create a eps of a ps document
  *  \return 0 on success, -1 on failure.
  */
-int f_print_header(TOPLEVEL *toplevel, FILE *fp,
+int f_print_header(TOPLEVEL *toplevel, PAGE *page, FILE *fp,
 		   int paper_size_x, int paper_size_y, int eps) 
 {
   char *buf = NULL;
@@ -137,7 +138,7 @@ int f_print_header(TOPLEVEL *toplevel, FILE *fp,
 	  "%%%%BeginProlog\n",
 	  PACKAGE_GIT_VERSION,
 	  ctime(&current_time),
-	  toplevel->page_current->page_filename,
+	  page->page_filename,
 #ifdef HAVE_GETLOGIN
 	  getlogin(),
 #endif
@@ -349,11 +350,12 @@ void f_print_objects (TOPLEVEL *toplevel, FILE *fp, const GList *obj_list,
  *
  *  \par Function Description
  *
- *  \param [in] toplevel  The TOPLEVEL object to print.
+ *  \param [in] toplevel   The TOPLEVEL object.
+ *  \param [in] page       The PAGE to print.
  *  \param [in] filename   The file name of the output postscript document.
  *  \return 0 on success, -1 on failure.
  */
-int f_print_file (TOPLEVEL *toplevel, const char *filename)
+int f_print_file (TOPLEVEL *toplevel, PAGE *page, const char *filename)
 {
   FILE *fp;
   int result;
@@ -367,7 +369,7 @@ int f_print_file (TOPLEVEL *toplevel, const char *filename)
     return -1;
   }
 
-  result = f_print_stream(toplevel, fp);
+  result = f_print_stream(toplevel, page, fp);
   
   if (result != 0) {
     /* If there was an error in f_print_stream, then unlink the output file. */
@@ -382,11 +384,12 @@ int f_print_file (TOPLEVEL *toplevel, const char *filename)
  *
  *  \par Function Description
  *
- *  \param [in] toplevel  The TOPLEVEL object to print.
+ *  \param [in] toplevel   The TOPLEVEL object.
+ *  \param [in] page       The PAGE to print.
  *  \param [in] command    The command to print to.
  *  \return 0 on success, -1 on failure.
  */
-int f_print_command (TOPLEVEL *toplevel, const char *command)
+int f_print_command (TOPLEVEL *toplevel, PAGE *page, const char *command)
 {
   FILE *fp;
   int result;
@@ -401,7 +404,7 @@ int f_print_command (TOPLEVEL *toplevel, const char *command)
       return -1;
     }
 
-  result = f_print_stream (toplevel, fp);
+  result = f_print_stream (toplevel, page, fp);
   pclose (fp);
   return result;
 }
@@ -415,7 +418,7 @@ int f_print_command (TOPLEVEL *toplevel, const char *command)
  *  \return 0 on success, -1 on failure.
  */
 
-int f_print_stream(TOPLEVEL *toplevel, FILE *fp)
+int f_print_stream(TOPLEVEL *toplevel, PAGE *page, FILE *fp)
 {
   int origin_x, origin_y, bottom, right;
   int margin_x, margin_y;
@@ -425,7 +428,6 @@ int f_print_stream(TOPLEVEL *toplevel, FILE *fp)
   gunichar unicode_table [128];  /* to contain the list of unicode
 				    characters that need mapping */
   int eps;
-  
 
   /* Unicode support */
   f_print_initialize_glyph_table();  /* Fill up unicode map */
@@ -433,13 +435,13 @@ int f_print_stream(TOPLEVEL *toplevel, FILE *fp)
   /* Find all the unicode characters */
   unicode_count =
     f_print_get_unicode_chars (toplevel,
-                               s_page_objects (toplevel->page_current),
+                               s_page_objects (page),
                                0, unicode_table);
 
   /*	printf("%d %d\n", toplevel->paper_width, toplevel->paper_height);*/
 
   world_get_object_glist_bounds (toplevel,
-                                 s_page_objects (toplevel->page_current),
+                                 s_page_objects (page),
                                  &origin_x, &origin_y,
                                  &right, &bottom);
 
@@ -459,12 +461,12 @@ int f_print_stream(TOPLEVEL *toplevel, FILE *fp)
     break;
 
   case WINDOW:
-    dx = toplevel->page_current->right - toplevel->page_current->left;
-    dy = toplevel->page_current->bottom - toplevel->page_current->top;
-    origin_x = toplevel->page_current->left;
-    origin_y = toplevel->page_current->top;
-    right = toplevel->page_current->right;
-    bottom = toplevel->page_current->bottom;
+    dx = page->right - page->left;
+    dy = page->bottom - page->top;
+    origin_x = page->left;
+    origin_y = page->top;
+    right = page->right;
+    bottom = page->bottom;
     break;
 
   case EXTENTS_NOMARGINS:
@@ -514,7 +516,7 @@ int f_print_stream(TOPLEVEL *toplevel, FILE *fp)
 #endif  
 
   /* Output the header */
-  if (f_print_header(toplevel, fp,
+  if (f_print_header(toplevel, page, fp,
 		     toplevel->paper_width,
 		     toplevel->paper_height,
 		     eps) != 0) {
@@ -597,7 +599,7 @@ int f_print_stream(TOPLEVEL *toplevel, FILE *fp)
 	  scale, scale);
 
   /* Print the objects */
-  f_print_objects (toplevel, fp, s_page_objects (toplevel->page_current),
+  f_print_objects (toplevel, fp, s_page_objects (page),
                    origin_x, origin_y, scale, unicode_count, unicode_table);
 
   f_print_footer(fp);

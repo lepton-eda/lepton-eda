@@ -3,7 +3,6 @@
 const gchar *o_file_format_header();
 gchar *o_save_buffer (TOPLEVEL *toplevel, const GList *object_list);
 int o_save (TOPLEVEL *toplevel, const GList *object_list, const char *filename);
-int o_save_curr_page (TOPLEVEL *toplevel, const char *filename);
 GList *o_read_buffer(TOPLEVEL *toplevel, GList *object_list, char *buffer, const int size, const char *name);
 GList *o_read(TOPLEVEL *toplevel, GList *object_list, char *filename, GError **err);
 void o_scale(TOPLEVEL *toplevel, GList *list, int x_scale, int y_scale);
@@ -11,25 +10,25 @@ void o_scale(TOPLEVEL *toplevel, GList *list, int x_scale, int y_scale);
 /* f_basic.c */
 gchar *f_get_autosave_filename (const gchar *filename);
 gboolean f_has_active_autosave (const gchar *filename, GError **err);
-int f_open(TOPLEVEL *toplevel, const gchar *filename, GError **err);
-int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
+int f_open(TOPLEVEL *toplevel, PAGE *page, const gchar *filename, GError **err);
+int f_open_flags(TOPLEVEL *toplevel, PAGE *page, const gchar *filename,
                  const gint flags, GError **err);
 void f_close(TOPLEVEL *toplevel);
-int f_save(TOPLEVEL *toplevel, const char *filename);
+int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename);
 gchar *f_normalize_filename (const gchar *filename, GError **error);
 char *follow_symlinks (const gchar *filename, GError **error);
 
 /* f_print.c */
-int f_print_file (TOPLEVEL *toplevel, const char *filename);
-int f_print_command (TOPLEVEL *toplevel, const char *command);
-int f_print_stream(TOPLEVEL *toplevel, FILE *fp);
+int f_print_file (TOPLEVEL *toplevel, PAGE *page, const char *filename);
+int f_print_command (TOPLEVEL *toplevel, PAGE *page, const char *command);
+int f_print_stream(TOPLEVEL *toplevel, PAGE *page, FILE *fp);
 void f_print_set_type(TOPLEVEL *toplevel, int type);
 
 /* g_basic.c */
 SCM g_scm_eval_protected (SCM exp, SCM module_or_state);
 SCM g_scm_eval_string_protected (SCM str);
 SCM g_scm_c_eval_string_protected (const gchar *str);
-int g_read_file(const gchar *filename);
+int g_read_file(TOPLEVEL *toplevel, const gchar *filename);
 
 /* g_rc.c */
 SCM g_rc_mode_general(SCM scmmode, const char *rc_name, int *mode_var, 

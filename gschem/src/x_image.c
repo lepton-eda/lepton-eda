@@ -291,7 +291,7 @@ void x_image_write_eps(GSCHEM_TOPLEVEL *w_current, const char* filename)
   toplevel->paper_height = 0;
   toplevel->print_orientation = PORTRAIT;
   toplevel->print_output_type = EXTENTS_NOMARGINS;
-  result = f_print_file (toplevel, filename);
+  result = f_print_file (toplevel, toplevel->page_current, filename);
   if (result) {
     s_log_message(_("x_image_lowlevel: Unable to write eps file %s.\n"),
         filename);

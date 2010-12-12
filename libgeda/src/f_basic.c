@@ -162,9 +162,10 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err)
  *
  *  \return 0 on failure, 1 on success.
  */
-int f_open(TOPLEVEL *toplevel, const gchar *filename, GError **err)
+int f_open(TOPLEVEL *toplevel, PAGE *page,
+           const gchar *filename, GError **err)
 {
-  return f_open_flags (toplevel, filename,
+  return f_open_flags (toplevel, page, filename,
                        F_OPEN_RC | F_OPEN_CHECK_BACKUP, err);
 }
 
@@ -187,7 +188,8 @@ int f_open(TOPLEVEL *toplevel, const gchar *filename, GError **err)
  *
  *  \return 0 on failure, 1 on success.
  */
-int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
+int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
+                 const gchar *filename,
                  const gint flags, GError **err)
 {
   int opened=FALSE;
@@ -202,7 +204,7 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
   /* has the head been freed yet? */
   /* probably not hack PAGE */
 
-  set_window(toplevel, toplevel->page_current,
+  set_window(toplevel, page,
              toplevel->init_left, toplevel->init_right,
              toplevel->init_top,  toplevel->init_bottom);
 
@@ -222,9 +224,9 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
     return 0;
   }
 
-  /* write full, absolute filename into page_current->page_filename */
-  g_free(toplevel->page_current->page_filename);
-  toplevel->page_current->page_filename = g_strdup(full_filename);
+  /* write full, absolute filename into page->page_filename */
+  g_free(page->page_filename);
+  page->page_filename = g_strdup(full_filename);
 
   /* Before we open the page, let's load the corresponding gafrc. */
   /* First cd into file's directory. */
@@ -296,11 +298,11 @@ int f_open_flags(TOPLEVEL *toplevel, const gchar *filename,
 
   if (load_backup_file == 0) {
     /* If it's not the backup file */
-    toplevel->page_current->CHANGED=0; /* added 4/7/98 */
+    page->CHANGED=0; /* added 4/7/98 */
   } else {
     /* We are loading the backup file, so gschem should ask
        the user if save it or not when closing the page. */
-    toplevel->page_current->CHANGED=1;
+    page->CHANGED=1;
   }
 
   g_free(full_filename);
@@ -339,7 +341,7 @@ void f_close(TOPLEVEL *toplevel)
  *  \param [in]      filename  The file name to save the schematic to.
  *  \return 1 on success, 0 on failure.
  */
-int f_save(TOPLEVEL *toplevel, const char *filename)
+int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename)
 {
   gchar *backup_filename;
   gchar *real_filename;
@@ -361,7 +363,7 @@ int f_save(TOPLEVEL *toplevel, const char *filename)
   only_filename = g_path_get_basename(real_filename);  
 
   /* Do a backup if it's not an undo file backup and it was never saved. */
-  if (toplevel->page_current->saved_since_first_loaded == 0) {
+  if (page->saved_since_first_loaded == 0) {
     if ( (g_file_test (real_filename, G_FILE_TEST_EXISTS)) && 
 	 (!g_file_test(real_filename, G_FILE_TEST_IS_DIR)) )
     {
@@ -424,14 +426,14 @@ int f_save(TOPLEVEL *toplevel, const char *filename)
   g_free (dirname);
   g_free (only_filename);
   
-  if (o_save_curr_page (toplevel, real_filename)) {
+  if (o_save (toplevel, s_page_objects (page), real_filename)) {
 
-    toplevel->page_current->saved_since_first_loaded = 1;
+    page->saved_since_first_loaded = 1;
 
     /* Reset the last saved timer */
-    g_get_current_time (&toplevel->page_current->last_load_or_save_time);
-    toplevel->page_current->ops_since_last_backup = 0;
-    toplevel->page_current->do_autosave_backup = 0;
+    g_get_current_time (&page->last_load_or_save_time);
+    page->ops_since_last_backup = 0;
+    page->do_autosave_backup = 0;
 
     /* Restore permissions. */
     chmod (real_filename, st.st_mode);

@@ -248,7 +248,7 @@ void main_prog(void *closure, int argc, char *argv[])
     s_log_message (_("Couldn't find init scm file [%s]\n"), "gschem.scm");
   }
   input_str = scm_to_locale_string (scm_tmp);
-  if (g_read_file(input_str) != -1) {
+  if (g_read_file(w_current->toplevel, input_str) != -1) {
     s_log_message(_("Read init scm file [%s]\n"), input_str);
   } else {
     /*! \todo These two messages are the same. Should be
@@ -323,7 +323,7 @@ void main_prog(void *closure, int argc, char *argv[])
   if (script_filename) {
     s_log_message(_("Executing guile script [%s]\n"),
                   script_filename);
-    g_read_file(script_filename);
+    g_read_file(w_current->toplevel, script_filename);
   }
 
   /* open up log window on startup */

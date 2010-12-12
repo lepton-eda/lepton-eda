@@ -235,10 +235,12 @@ SCM g_scm_eval_string_protected (SCM str)
  *  \par Function Description
  *  Start reading a scheme file
  *
+ *  \param [in] toplevel  The TOPLEVEL structure.
  *  \param [in] filename  The file name to start reading from.
  *  \return 0 on success, -1 on failure.
  */
-int g_read_file(const gchar *filename)
+int
+g_read_file(TOPLEVEL *toplevel, const gchar *filename)
 {
 	SCM eval_result = SCM_BOOL_F;
         SCM expr;
