@@ -75,6 +75,8 @@ void x_log_open ()
     gchar *contents;
     
     log_dialog = GTK_WIDGET (g_object_new (TYPE_LOG,
+                                           /* GtkWindow */
+                                           "type", GTK_WINDOW_TOPLEVEL,
                                            /* GschemDialog */
                                            "settings-name", "log",
                                            /* "toplevel", TOPEVEL * */
@@ -283,7 +285,6 @@ static void log_init (Log *log)
                 /* GtkContainer */
                 "border-width",    0,
                 /* GtkWindow */
-                "type",            GTK_WINDOW_TOPLEVEL,
                 "title",           _("Status"),
                 "default-width",   600,
                 "default-height",  200,
