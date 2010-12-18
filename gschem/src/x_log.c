@@ -17,6 +17,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
+
+/*
+ * \file x_log.c
+ * \brief GType class and functions to support the gschem log window.
+ */
+
 #include <config.h>
 
 #include <stdio.h>
@@ -53,10 +59,15 @@ static void log_init       (Log *log);
 
 static GtkWidget *log_dialog = NULL;
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*!
+ *  \brief Open the Log window
+ *
  *  \par Function Description
+ *  If the log dialog instance doesn't exist, create it, and read
+ *  the current log file contents (if they exist) and insert
+ *  them into the log dialog.
  * 
+ *  If the log dialog instance does exist, present it to the user.
  */
 void x_log_open ()
 {
@@ -99,10 +110,10 @@ void x_log_open ()
 
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*!
+ *  \brief Close the Log window
  *  \par Function Description
- * 
+ *  If the log window exists, destroy it.
  */
 void x_log_close ()
 {
@@ -115,10 +126,14 @@ void x_log_close ()
 
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*!
+ *  \brief Add a message to the Log window
  *  \par Function Description
- * 
+ *  Add a message to the Log window.
+ *  Calls log_message() to do the actual logging.
+ *  \param [in] log_domain
+ *  \param [in] log_level The severity of the message
+ *  \param [in] message   The message to be displayed
  */
 void x_log_message (const gchar *log_domain, GLogLevelFlags log_level,
                     const gchar *message)
@@ -137,10 +152,11 @@ void x_log_message (const gchar *log_domain, GLogLevelFlags log_level,
   log_message (LOG(log_dialog), message, style);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*!
+ *  \brief Log window callback function
+ *
  *  \par Function Description
- * 
+ *  Callback function for the Log window. Only used to close the window.
  */
 static void x_log_callback_response (GtkDialog *dialog,
 				     gint arg1,
@@ -158,10 +174,13 @@ static void x_log_callback_response (GtkDialog *dialog,
   
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*!
+ *  \brief Add a message to the log window
+ *
  *  \par Function Description
- * 
+ *  \param [in] log The log instance
+ *  \param [in] message The message to be logged
+ *  \param [in] style   The style to use in the text rendering
  */
 static void log_message (Log *log, const gchar *message, 
                          const gchar *style)
@@ -195,10 +214,14 @@ static void log_message (Log *log, const gchar *message,
   gtk_text_buffer_delete_mark (buffer, mark);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*!
+ *  \brief Get the Log class type
+ *
  *  \par Function Description
- * 
+ *
+ * On first call, registers the Log class with the GType dynamic type system.
+ * On subsequent calls, returns the saved value from first execution.
+ * \returns the type identifier for the Log class
  */
 GType log_get_type ()
 {
@@ -225,10 +248,13 @@ GType log_get_type ()
   return log_type;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*!
+ *  \brief Log class initialization function
+ *
  *  \par Function Description
- * 
+ *
+ * Class initialization function for the Log class. Currently
+ * does nothing.
  */
 static void log_class_init (LogClass *klass)
 {
@@ -236,10 +262,15 @@ static void log_class_init (LogClass *klass)
 	
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*!
+ *  \brief Log class instance initialization function
+ *
  *  \par Function Description
- * 
+ *
+ * Instance initialization for the Log class. Sets up the log parameters,
+ * creates a scrollable text view with highlighting and a Close button.
+ *
+ * \param log the instance of the class to initialize
  */
 static void log_init (Log *log)
 {
