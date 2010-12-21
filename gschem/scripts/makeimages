@@ -1,6 +1,5 @@
 #!/bin/sh
 #
-# $Id$
 
 # This script requires the following packages :
 #	- gschem (located the your PATH )

@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* gsch2pcb
 |
 |  Bill Wilson    billw@wt.net

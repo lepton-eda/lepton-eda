@@ -1,6 +1,3 @@
-## $Id$
-##
-
 EXTRA_DIST = populatemkfiles.sh copygitignores.sh
 
 MOSTLYCLEANFILES =	*.log *~

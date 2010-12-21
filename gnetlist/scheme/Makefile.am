@@ -1,6 +1,3 @@
-## $Id$
-##
-
 M4=		@M4@
 PCBM4DIR=	@PCBM4DIR@
 PCBCONFDIR=	@PCBCONFDIR@

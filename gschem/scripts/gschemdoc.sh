@@ -1,6 +1,4 @@
 #!/bin/sh
-# $Id$
-#
 # NOTE: built from gschemdoc.sh
 #
 # Present as relevant documentation as possible wrt a component

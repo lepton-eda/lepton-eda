@@ -1,6 +1,4 @@
 #!/usr/bin/awk -f 
-# 	$Id$	
-#       $Author$
 # awk script to convert viewlogic symbol files to geda files
 #
 #

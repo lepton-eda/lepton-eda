@@ -1,7 +1,5 @@
 #!/bin/sh
 #
-# $Id$
-#
 
 # Copyright (C) 2007-2008 Dan McMahill
  

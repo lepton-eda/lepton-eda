@@ -1,5 +1,3 @@
-;; $Id$
-;;
 ;; This file may be used to print gschem schematics from the
 ;; command line.  Typical usage is:
 ;;

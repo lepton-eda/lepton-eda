@@ -1,7 +1,5 @@
 %{
-/*  $Id$
-
-    olib.lex - Orcad to gEDA lib converter
+/*  olib.lex - Orcad to gEDA lib converter
     Copyright (C) 2002 Mario Pascucci <m.pas@libero.it>
 
     This program is free software; you can redistribute it and/or modify

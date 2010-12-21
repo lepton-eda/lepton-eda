@@ -53,7 +53,6 @@
 (use-modules (ice-9 popen))
 
 (gschem-log "Loading the PCB major mode\n")
-(gschem-log "PCB-mode version $Id$\n")
 (gschem-log "The PCB major mode is incomplete and considered experimental at this time\n")
 
 ;; These may be changed by the user in their gafrc files (FIXME -- make this
@@ -214,7 +213,6 @@
 (define (pcb:about)
   (gschem-msg (string-append
 	       "This is the pcb major mode for gschem\n"
-	       "pcb.scm version $Id$\n"
 	       "***** WARNING *****\n"
 	       "This is highly experimental\n"
 	       "You should save your work often\n"
