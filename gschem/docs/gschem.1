@@ -1,103 +1,96 @@
-.TH gschem 1 "February 14th, 2010" Version 1.6.1.20100214
+.TH gschem 1 "February 14th, 2010" "gEDA Project" 1.6.1.20100214
 .SH NAME
 gschem - gEDA/gaf Schematic Capture
 .SH SYNOPSIS
 .B gschem
-[\-q] [\-v] [\-r rcfilename] [\-s scriptfilename] [\-o outputfilename] [\-p] [\-h] [schematic1 ... schematicN]
+[\fIOPTION\fR ...] [\fIFILE\fR ...]
 .SH DESCRIPTION
 .PP
-\fIgschem\fP is the schematic capture program which is part gEDA 
-(GPL Electronic Design Automation) toolset.  This program is used to draw
-electronic schematics.  Schematics consist of standard symbols (which 
-are either part of a standard library or created by the user) which 
-represent the various gates and components.  These components are then 
-interconnected by nets (wires).  Schematics may be printed to a
-PostScript file for printing or further conversion to other output
+.B gschem
+is a schematic capture application, and is part of the
+gEDA (GPL Electronic Design Automation) toolset.  It is used to draw
+electronic schematics, which describe the logical structure of an
+circuit.  Schematics are made up of symbols, which represent the
+various components in the circuit, and are obtained either from a
+standard library or created by the user.  The connections between
+components represented by nets (wires).  Schematics may be printed to
+a PostScript file for printing or further conversion to other output
 formats.  Output to various image formats is also supported.
 
-\fIgschem\fP is also the symbol creation editor.  All the standard 
-methods of creating schematics are used in the creation of symbols. There
-are a few special rules when creating symbols, so please refer to the
-(non-existant as of now) symbol creation document.
-
-Please read the official documentation (very minimal at this point)
-on how to use \fIgschem\fP, since this man page just describes the command
-line arguments and a few examples on how to run \fIgschem\fP.
+.B gschem
+can also be used for editing symbols for use in
+schematics.
 
 .SH OPTIONS
-\fIgschem\fP accepts the following options:
 .TP 8
 .B -q
-Quiet mode on.  This mode turns off all warnings/notes/messages. (optional)
+Quiet mode. Turn off all warnings/notes/messages.
 .TP 8
-.B -v 
-Verbose mode on.  This mode gives as much feedback to the user as possible. (optional)
+.B -v
+Verbose mode.  Output all diagnostic information.
 .TP 8
 .B -r filename
-Specify a rc filename.  Normally \fIgschem\fP searches for the system-gschemrc, then
-~/.gEDA/gschemrc, and finally for a gschemrc in the current directory.  This
-options allows the user to specify an additional rc file which is read after
-all the other rc files are read. (optional)
+Specify a rc filename.  Normally
+.B gschem
+searches for the system configuration file, then
+`$HOME/.gEDA/gschemrc', and finally for a `gschemrc' file in the
+current working directory.  This option allows the user to specify an
+additional rc file which is read after all the other rc files have
+been are read.
 .TP 8
 .B -s filename
-Specify a guile script to be executed at startup. (optional)
+Specify a Scheme script to be executed at startup.
 .TP 8
 .B -o filename
-Specify a filename for postscript output.  This command line argument is 
-useful when running \fIgschem\fP from a shell script and with a guile script.  The 
-filename can be changed through
-the print dialog box.
+Specify a filename for PostScript output.  This command line argument
+is useful when running
+.B gschem
+from a shell script and with a Scheme script.  The filename can be
+changed through the print dialog box.
 .TP 8
-.B -p 
-Automatically place the window, especially useful if running gschem from the
-command line and generating output.
+.B -p
+Automatically place the window. This may be useful if running gschem
+from the command line and generating output.
 .TP 8
-.B -h 
-Print out short command line help.
+.B -h
+Print a help message.
 .TP 8
-.B schematic1 [... schematicN]
-Schematic file to be loaded.  Specifying a schematic file is optional.  If
-multiple schematic files are specified they are read in sequentially and 
-put on separate pages.  It is important that the schematic(s) follow
-all the options (ie last).
+.B -V
+Print
+.B gschem
+version information.
 
-.SH EXAMPLES 
-These examples assume that you have a schematic called stack_1.sch in
-the current directory
+.SH SCHEMATIC AND SYMBOL FILES
+Optionally, schematic or symbol filenames may be specified on the
+command line.  Any schematic or symbols specified are loaded at
+startup as separate documents in the schematic editor.
 
-To run \fIgschem\fP and then interact with the program:
-
-	gschem 
-.br
-
-To run \fIgschem\fP in interactive mode but load a sample schematic:
-
-	gschem adders_1.sch
-
-To run \fIgschem\fP and load up all schematics in the current subdirectory:
-
-	gschem *.sch
-
-.SH "ENVIRONMENT"
-\fIgschem\fP respects the following environment variable:
-.PP
+.SH ENVIRONMENT
 .TP 8
-.B GEDADATA 
-specifies where the various required scheme and rc files are located
-(the default is ${prefix}/share/gEDA).  This environment variables does
-not need to be set by the end user unless they are moving the executables
-to a new install ${prefix}.
+.B GEDADATA
+specifies the search directory for Scheme and rc files.  The default
+is `${prefix}/share/gEDA').
+.TP 8
+.B GEDADATARC
+specifies the search directory for rc files.  The default is `$GEDADATA'.
 
-.SH "AUTHOR"
-Ales Hvezda and many others
+.SH AUTHORS
+See the `AUTHORS' file included with this program.
 
-.SH SEE ALSO
-.BR gnetlist (1),
-.BR gsymcheck (1)
 .SH COPYRIGHT
 .nf
-Copyright \(co  1999-2008 Ales Hvezda
+Copyright \(co 1999-2010 gEDA Contributors.  License GPLv2+: GNU GPL
+version 2 or later.  Please see the `COPYING' file included with this
+program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
 
-This document can be freely redistributed according to the terms of the 
-GNU General Public License version 2.0
-
+.SH SEE ALSO
+.BR gnetlist (1)
+.BR gsymcheck (1)
+.PP
+The full documentation for
+.B gschem
+is available from within the program by selecting the `gEDA
+Documentation' option from the program's `Help' menu.
