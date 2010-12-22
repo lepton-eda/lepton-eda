@@ -31,7 +31,7 @@
 #include <dmalloc.h>
 #endif
 
-#define OPTIONS "hqvr:s:o:ptV"
+#define OPTIONS "hqvr:s:o:pV"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -86,10 +86,6 @@ int parse_commandline(int argc, char *argv[])
     switch (ch) {
       case 'v':
         verbose_mode = TRUE;
-        break;
-
-      case 't':
-        stroke_info_mode = TRUE;
         break;
 
       case 'q':

@@ -3,7 +3,7 @@
 gschem - gEDA/gaf Schematic Capture
 .SH SYNOPSIS
 .B gschem
-[\-q] [\-v] [\-t] [\-r rcfilename] [\-s scriptfilename] [\-o outputfilename] [\-p] [\-h] [schematic1 ... schematicN]
+[\-q] [\-v] [\-r rcfilename] [\-s scriptfilename] [\-o outputfilename] [\-p] [\-h] [schematic1 ... schematicN]
 .SH DESCRIPTION
 .PP
 \fIgschem\fP is the schematic capture program which is part gEDA 
@@ -32,12 +32,6 @@ Quiet mode on.  This mode turns off all warnings/notes/messages. (optional)
 .TP 8
 .B -v 
 Verbose mode on.  This mode gives as much feedback to the user as possible. (optional)
-.TP 8
-.B -t 
-Print out more information when using mouse strokes.  With this command
-line flag and the middle button configured for mouse strokes, gschem
-will output the stroke sequence numbers as the user executes strokes.
-These numbers can be used to define new strokes in the system-gschemrc file.
 .TP 8
 .B -r filename
 Specify a rc filename.  Normally \fIgschem\fP searches for the system-gschemrc, then

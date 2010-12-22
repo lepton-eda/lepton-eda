@@ -49,7 +49,6 @@ int logging_dest = LOG_WINDOW;
 /* command line options */
 int quiet_mode = FALSE;
 int verbose_mode = FALSE;
-int stroke_info_mode = FALSE;
 int auto_place_mode = FALSE;
 
 /* Global buffers */

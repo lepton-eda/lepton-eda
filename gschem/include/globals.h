@@ -43,7 +43,6 @@ extern int logging_dest;
 /* command line options */
 extern int quiet_mode;
 extern int verbose_mode;
-extern int stroke_info_mode;
 extern int auto_place_mode;
 
 #define MAX_BUFFERS 	5
