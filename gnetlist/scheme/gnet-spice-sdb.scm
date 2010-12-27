@@ -149,7 +149,6 @@
 )))
 
 
-
 ;;--------------------------------------------------------------------------
 ;; handle-spice-file:  This wraps insert-text-file.
 ;; Calling form: (handle-spice-file file-name)
@@ -165,7 +164,6 @@
 	(spice-sdb:insert-text-file file-name port)                     ;; -I not found: invoke insert-text-file
     )  ;; end of if (calling-flag
 ))
-
 
 
 ;;--------------------------------------------------------------------------
@@ -198,6 +196,7 @@
      ) ;; end of outer let
   )
 )
+
 
 ;;----------------------------------------------------------
 ;; Figure out if this schematic is a .SUBCKT lower level.
@@ -264,6 +263,7 @@
  )
 )
 
+
 ;;----------------------------------------------------------------
 ;;  This takes the list of io-pin-packages and sorts it in order of 
 ;;  refdes.
@@ -301,7 +301,6 @@
     )
   )
 )
-
 
 
 ;;----------------------------------------------------------------
@@ -346,6 +345,7 @@
     )
   )
 )
+
 
 ;;----------------------------------------------------------
 ;;  This returns #t if the string is composed only of
@@ -513,8 +513,6 @@
 ))
 	    
 
-
-
 ;;**********************************************************************************
 ;;***************  Dealing with nets, devices, & SPICE cards.    *******************
 ;;**********************************************************************************
@@ -530,6 +528,7 @@
     )
   )
 )
+
 
 ;;---------------------------------------------------------------------
 ;; write netnames connected to pin-a and pin-b
@@ -950,8 +949,6 @@
 )
 
 
-
-
 ;;-----------------------------------------------------------
 ;;  write npn bipolar transistor
 ;;  This writes out a valid transistor refdes & then calls
@@ -989,6 +986,7 @@
   )
 )
 
+
 ;;-----------------------------------------------------------
 ;;  write p-channel jfet transistor
 ;;-----------------------------------------------------------
@@ -1011,6 +1009,7 @@
       (spice-sdb:write-transistor-diode package "M" "PMOS" attrib-list port))
   )
 )
+
 
 ;;------------------------------------------------------
 ;;  write nmos transistor
@@ -1177,6 +1176,7 @@
   )
 )
 
+
 ;;-------------------------------------------------------------------------
 ;;  write independent current source
 ;;  The behavior of the current source is held in the "value" attribute
@@ -1198,6 +1198,7 @@
     (newline port)
   )
 )
+
 
 ;;----------------------------------------------------------------------------
 ;;  write Josephson junction in wrspice format. Paul Bunyk, Sep 2, 2005
@@ -1230,6 +1231,7 @@
     (newline port)
   )
 )
+
 
 ;;----------------------------------------------------------------------------
 ;;  write mutual inductance(actually K). Paul Bunyk, Sep 2, 2005
@@ -1478,6 +1480,7 @@
      ) ;; end of cond
 )))
 
+
 ;;----------------------------------------------------------
 ;; Include an option using an .OPTIONS directive
 ;;----------------------------------------------------------
@@ -1533,8 +1536,6 @@
 ) ;; close of define
 
 
-
-
 ;;-------------------------------------------------------------------
 ;;  This writes out the default component (i.e. the "device" attribute
 ;;  was not recognized).  This function does the following:
@@ -1580,7 +1581,6 @@
      )  ;; end let
   )
 )
-
 
 
 ;;**********************************************************************************
@@ -1680,7 +1680,6 @@
 	 ))))
 
 
-
 ;;----------------------------------------------------------------------
 ;; create-file-info-list: This takes as arugment the list of packages (refdesses).
 ;;   It runs through the package list, and for each gets the attributes.  If there is a
@@ -1752,7 +1751,6 @@
 )
 
 
-
 ;;  in-file-info-list? -- helper function.  Returns #t if file is already in file-info-list, otherwise #f
 ;;  assumes file-info-list of form: ((model1 file1 file-type1)  (model2 file2 file-type2) . . . .)
 (define spice-sdb:in-file-info-list?
@@ -1776,8 +1774,6 @@
 ))  ;; end define spice-sdb:in-file-info-list?
 
 
-
-
 ;;--------------------------------------------------------------
 ;; Write out spice netlist header
 ;;--------------------------------------------------------------
@@ -1791,6 +1787,7 @@
     (display "*********************************************************\n" port)
   )
 )
+
 
 ;;--------------------------------------------------------------
 ;; Write out .SUBCKT netlist header
@@ -1942,7 +1939,6 @@
 	  )
           (spice-sdb:write-bottom-footer ".end" port)
       )
-
 
 
 ;;
