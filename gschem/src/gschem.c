@@ -259,11 +259,6 @@ void main_prog(void *closure, int argc, char *argv[])
   free (input_str); /* M'allocated by scm_to_locale_string() */
   scm_remember_upto_here_1 (scm_tmp);
 
-  /* Load recent files list. This must be done
-   * before calling x_window_setup(). */
-  recent_files_load();
-  gschem_atexit(recent_files_save, NULL);
-
   /* Set default icon */
   x_window_set_default_icon();
 

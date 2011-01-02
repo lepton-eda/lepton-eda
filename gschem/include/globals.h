@@ -27,6 +27,9 @@ extern GSCHEM_TOPLEVEL *global_window_current;
 /* window list */
 extern GList *global_window_list;
 
+/* Manager for recently used files */
+GtkRecentManager *recent_manager;
+
 /* colors */
 extern GdkColor white;
 extern GdkColor black;

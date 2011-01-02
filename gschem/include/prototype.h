@@ -828,9 +828,6 @@ gint do_popup(GSCHEM_TOPLEVEL *w_current, GdkEventButton *event);
 void x_menus_sensitivity(GSCHEM_TOPLEVEL *w_current, const char *buf, int flag);
 void x_menus_popup_sensitivity(GSCHEM_TOPLEVEL *w_current, const char *buf, int flag);
 void x_menu_attach_recent_files_submenu(GSCHEM_TOPLEVEL *w_current);
-void recent_files_load();
-void recent_files_save(gpointer user_data);
-void recent_files_add(const char *filename);
 /* x_multiattrib.c */
 void x_multiattrib_open (GSCHEM_TOPLEVEL *w_current);
 void x_multiattrib_close (GSCHEM_TOPLEVEL *w_current);

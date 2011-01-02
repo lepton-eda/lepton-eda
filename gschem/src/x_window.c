@@ -743,7 +743,7 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
       gtk_widget_destroy (dialog);
       g_error_free (err);
     } else {
-      recent_files_add (fn);
+      gtk_recent_manager_add_item (recent_manager, g_filename_to_uri(fn, NULL, NULL));
     }
   } else {
     if (!quiet_mode)
@@ -871,8 +871,8 @@ x_window_save_page (GSCHEM_TOPLEVEL *w_current, PAGE *page, const gchar *filenam
     /* reset page CHANGED flag */
     page->CHANGED = 0;
 
-    /* update recent file list */
-    recent_files_add(filename);
+    /* add to recent file list */
+    gtk_recent_manager_add_item (recent_manager, g_filename_to_uri(filename, NULL, NULL));
   }
 
   /* log status of operation */
