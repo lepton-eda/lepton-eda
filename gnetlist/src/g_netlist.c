@@ -513,6 +513,7 @@ SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
     } else {
       scm_return_value = scm_makfrom0str ("unknown");
     }
+    g_free (return_value);
 
     free (uref);
     free (wanted_attrib);
