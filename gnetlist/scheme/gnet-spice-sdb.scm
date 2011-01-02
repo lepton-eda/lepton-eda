@@ -1887,7 +1887,8 @@
 	    (spice-sdb:write-bottom-footer (string-append ".ends " model-name) port)
 	    (display "*******************************\n" port)
 	  )
-          (spice-sdb:write-bottom-footer ".end" port)
+          (if (not (calling-flag? "no_end_card" (gnetlist:get-calling-flags)))  
+              (spice-sdb:write-bottom-footer ".end" port))
       )
 
 
