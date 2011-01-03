@@ -1,3 +1,5 @@
+/* $Id$ */
+
 /* gschem_toplevel.c */
 GSCHEM_TOPLEVEL *gschem_toplevel_new();
 /* a_pan.c */

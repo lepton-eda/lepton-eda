@@ -1,3 +1,5 @@
+;; $Id$
+;;
 ;; This file may be used to produce png files from gschem schematics from the
 ;; command line.  Typical usage is:
 ;;

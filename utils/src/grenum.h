@@ -1,3 +1,4 @@
+/* $Id$ */
 #include <stdio.h>
 #define GRVERSION "24052006"
 #define COMP_DATE __DATE__

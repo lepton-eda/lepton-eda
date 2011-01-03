@@ -1,3 +1,4 @@
+/* $Id$ */
 /*	This is grenum, an advanced refdes renumber utility for gEDA's gschem.
  *
  *	Copyright (C) 2005-2010  Levente Kovacs

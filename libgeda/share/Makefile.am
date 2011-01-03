@@ -1,3 +1,6 @@
+# $Id$
+#
+
 prologdatadir = $(GEDADATADIR)
 prologdata_DATA = prolog.ps
 

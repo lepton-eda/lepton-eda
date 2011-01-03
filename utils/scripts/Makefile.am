@@ -1,3 +1,5 @@
+## $Id$
+##
 ## Process this file with automake to produce Makefile.in
 
 bin_SCRIPTS = sarlacc_sym gschupdate gsymupdate refdes_renum \

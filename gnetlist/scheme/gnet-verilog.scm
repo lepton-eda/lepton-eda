@@ -179,6 +179,10 @@
 	      (display "/* WARNING: This is a generated file, edits */\n" p)
 	      (display "/*        made here will be lost next time  */\n" p)
 	      (display "/*        you run gnetlist!                 */\n" p)
+	      (display "/* Id ..........$Id$ */\n" p)
+	      (display "/* Source.......$Source$ */\n" p)
+	      (display "/* Revision.....$Revision$ */\n" p)
+	      (display "/* Author.......$Author$ */\n" p)
 	      (newline p)
 	      (verilog:write-module-declaration verilog:get-module-name
 						port-list p)
