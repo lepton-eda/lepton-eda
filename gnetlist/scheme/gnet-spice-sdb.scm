@@ -87,7 +87,13 @@
 ;;               netlist patch from Jeff Mallatt.  SDB.
 ;;  4.28.2007 -- Fixed slotted part stuff so that it uses pinseq to emit pins.  SDB
 ;;  1.9.2008 -- Fix slotted part handling to work without a modified pinseq.  pcjc2
-;;               
+;;  1.3.2011 -- Combine write-ic and write-subcircuit with a fix to the unbound
+;;              type variable.  Fully document a check for the special "?" value
+;;              explaining why it fails silently.  Clean up
+;;              write-net-names-on-component to make it a bit more flexible.
+;;              Combine write-probe-item and write-net-names-on-component.  Add
+;;              a range utility function.  CC
+;;
 ;;**********************************************************************************
 ;;
 ;;  Organization of gnet-spice-sdb.scm file:
@@ -106,7 +112,7 @@
 ;;**********************************************************************************
 
 ;; The following is needed to make guile 1.8.x happy.
-(use-modules (ice-9 rdelim))
+(use-modules (ice-9 rdelim) (srfi srfi-1))
 
 ;;--------------------------------------------------------------------------------
 ;; spice-sdb:loop-through-files -- loops through the model-file list, and for each file
@@ -359,6 +365,22 @@
   )
 )
 
+
+;;----------------------------------------------------------
+;;  This returns a list of all the integers from start to
+;;  stop. It is similar to perl's range operator '..'
+;;----------------------------------------------------------
+(define (range start stop . step)
+  (if (null? step)
+    (iota (+ (- stop start) 1) start)
+    (begin
+      (set! step (car step))
+      (iota (+ (ceiling (/ (- stop start) step)) 1) start step)
+    )
+  )
+)
+
+
 ;;----------------------------------------------------------
 ;; Given a filename, open the file, get the first line,
 ;; and see if it is a .MODEL or .SUBCKT file.  
@@ -598,7 +620,7 @@
           ;; implement the controlled current source
           ;; the user should create a refdes label beginning with a g
       (display (string-append package " ") port)
-      (spice-sdb:write-net-names-on-component package (length (gnetlist:get-pins package)) port)
+      (spice-sdb:write-net-names-on-component package port)
        (display  (string-append (spice-sdb:component-value package) "\n")  port)
           ;; implement the voltage measuring current source
           ;; imagine yourself copying the voltage of a voltage source with an internal
@@ -621,7 +643,7 @@
           ;; implement the controlled voltage source
           ;; the user should create a refdes label beginning with an e
       (display (string-append package " ") port)
-      (spice-sdb:write-net-names-on-component package (length (gnetlist:get-pins package)) port)
+      (spice-sdb:write-net-names-on-component package port)
       (display (string-append (gnetlist:get-package-attribute package "value") "\n" ) port)
           ;; implement the voltage measuring current source
           ;; imagine yourself copying the voltage of a voltage source with an internal
@@ -647,7 +669,7 @@
       (display "* begin nullor expansion, e<name>\n" port)
           ;; implement the controlled voltage source
       (display (string-append "E-" package " ") port)
-      (spice-sdb:write-net-names-on-component package (length (gnetlist:get-pins package)) port)
+      (spice-sdb:write-net-names-on-component package port)
       (display (string-append (gnetlist:get-package-attribute package "value") "\n" ) port)
           ;; implement the voltage measuring current source
           ;; imagine yourself copying the voltage of a voltage source with an internal
@@ -774,32 +796,37 @@
 
 ;;----------------------------------------------------------------
 ;;  spice-sdb:write-ic
-;;  This writes out a valid ic line.
+;;  This writes out a valid ic or subcircuit line.
 ;;  The algorithm is as follows:
-;;  1.  Figure out what type of model goes with this part from 
+;;  1.  Figure out what type of model goes with this part from
 ;;      file-info-list.  If it isn't listed, look for a MODEL attribute.
 ;;      If MODEL attribute is attached, write out SPICE card, and then
 ;;      write out .MODEL on next line.
-;;      If no MODEL attribute is attached, just write out what litte 
+;;      If no MODEL attribute is attached, just write out what little
 ;;      we know.  Then return
 ;;  2.  If the model-name is in the file-info-list, get the associated
 ;;      file-type.  Compare it against the component's refdes.  If model-type 
-;;      == .SUBCKT and refdes doesn't begin with X, prepend an X to the refdes.
+;;      is .MODEL or .SUBCKT and refdes doesn't begin with a U or X
+;;      respectively, prepend the correct prefix to the refdes.
 ;; 3.   Print out the rest of the line.     
 ;;
 ;;----------------------------------------------------------------
-(define spice-sdb:write-ic
-  (lambda (package file-info-list port)
-
-    (debug-spew (string-append "Found ic.  Refdes = " package "\n"))
+(define (spice-sdb:write-ic package file-info-list port)
 
     ;; First do local assignments
-    (let ((model-name (gnetlist:get-package-attribute package "model-name"))
+    (let ((first-char (string (string-ref package 0)))  ;; extract first char of refdes
+	  (model-name (gnetlist:get-package-attribute package "model-name"))
 	  (model (gnetlist:get-package-attribute package "model"))
 	  (value (gnetlist:get-package-attribute package "value"))
+          (type  (gnetlist:get-package-attribute package "type"))
 	  (model-file (gnetlist:get-package-attribute package "file"))
 	  (list-item (list))
 	 )   ;; end of local assignments
+
+      (cond
+        ((string=? first-char "U") (debug-spew (string-append "Found ic.  Refdes = " package "\n")))
+        ((string=? first-char "X") (debug-spew (string-append "Found subcircuit.  Refdes = " package "\n")))
+      )
 
     ;; First, if model-name is empty, we use value attribute instead.
     ;; We do this by sticking the contents of "value" into "model-name".
@@ -819,7 +846,9 @@
 	      (debug-spew "Model info not found in model file list, but model attribute exists.  Write out spice card and .model line..\n") 
               (spice-sdb:write-component-no-value package port)
               (display (string-append model-name "\n" ) port)
-	      (display (string-append ".MODEL " model-name " " type " (" model ")\n") port)
+	      (display (string-append ".MODEL " model-name " ") port)
+	      (if (not (string=? type "unknown")) (display (string-append type " ") port))  ;; If no type then just skip it.
+	      (display (string-append "(" model ")\n") port)
 	    )
 	    (begin                                     ;; no model attribute either.  Just write out card.
 	      (debug-spew "Model info not found in model file list.  No model attribute either.  Just write what we know.\n")
@@ -835,7 +864,7 @@
 	      ((string=? file-type ".MODEL") 
 	       (begin
 		(debug-spew (string-append "Found .MODEL with model-file and model-name for " package "\n")) 
-                 (spice-sdb:write-prefix package "U" port)  ;; this appends an "U" to the refdes since we have a .model
+                 (spice-sdb:write-prefix package "U" port)  ;; this prepends an "U" to the refdes if needed, since we have a .model
                  (spice-sdb:write-component-no-value package port)
                  (display (string-append model-name "\n" ) port)
 		(debug-spew "We'll handle the file contents later . . .\n")
@@ -845,7 +874,7 @@
 	      ((string=? file-type ".SUBCKT") 
 	       (begin
 		 (debug-spew (string-append "Found .SUBCKT with model-file and model-name for " package "\n")) 
-                 (spice-sdb:write-prefix package "X" port)  ;; this appends an "X" to the refdes since we have a .subckt
+                 (spice-sdb:write-prefix package "X" port)  ;; this prepends an "X" to the refdes if needed, since we have a .subckt
                  (spice-sdb:write-component-no-value package port)
                  (display (string-append model-name "\n" ) port)
 		 (debug-spew "We'll handle the file contents later . . .\n")
@@ -855,97 +884,6 @@
        )  ;; end of if (null? list-item
 
   ) ;; end of outer let
- )
-)
-
-
-;;----------------------------------------------------------------
-;;  spice-sdb:write-subcircuit
-;;  This writes out a valid subcircuit line.
-;;  The algorithm is as follows:
-;;  1.  Figure out what type of model goes with this part from 
-;;      file-info-list.  If it isn't listed, look for a MODEL attribute.
-;;      If MODEL attribute is attached, write out SPICE card, and then
-;;      write out .MODEL on next line.
-;;      If no MODEL attribute is attached, just write out what little 
-;;      we know.  Then return.
-;;  2.  If the model-name is in the file-info-list, get the associated
-;;      file-type.  Compare it against the component's refdes.  If model-type 
-;;      == .MODEL and refdes doesn't begin with U, prepend an U to the refdes.
-;; 3.   Print out the rest of the line.     
-;;
-;;  Note:  This is basically a clone of write-ic.  I can probably just
-;;         eliminate this fcn and call write-ic for all U or X refdeses.
-;;         Maybe on the next revision?
-;;----------------------------------------------------------------
-(define spice-sdb:write-subcircuit
-  (lambda (package file-info-list port)
-
-    (debug-spew (string-append "Found subcircuit.  Refdes = " package "\n"))
-
-    ;; First do local assignments
-    (let ((model-name (gnetlist:get-package-attribute package "model-name"))
-	  (model (gnetlist:get-package-attribute package "model"))
-	  (value (gnetlist:get-package-attribute package "value"))
-	  (model-file (gnetlist:get-package-attribute package "file"))
-	  (list-item (list))
-	 )   ;; end of local assignments
-
-    ;; First, if model-name is empty, we use value attribute instead.
-    ;; We do this by sticking the contents of "value" into "model-name".
-      (if (string=? model-name "unknown")
-	  (set! model-name value))
-      
-    ;; Now get item from file-info-list using model-name as key
-      (set! list-item (spice-sdb:get-file-info-list-item model-name file-info-list))
-
-    ;; check to see if list-item is null.
-      (if (null? list-item)
-
-    ;; list-item is null.  Evidently, we didn't discover any files holding this model.  
-    ;; Instead we look for model attribute
-	  (if (not (string=? model "unknown"))             
-	    (begin                                     ;; model attribute exists -- write out card and model.
-	      (debug-spew "Model info not found in model file list, but model attribute exists.  Write out spice card and .model line..\n") 
-              (spice-sdb:write-component-no-value package port)
-              (display (string-append model-name "\n" ) port)
-	      (display (string-append ".MODEL " model-name " " type " (" model ")\n") port)
-	    )
-	    (begin                                     ;; no model attribute either.  Just write out card.
-	      (debug-spew "Model info not found in model file list.  No model attribute either.  Just write what we know.\n")
-              (spice-sdb:write-component-no-value package port)
-              (display (string-append model-name "\n" ) port)
-	    )
-	  )   ;; end if (not (string=? . . . .
-
-    ;; list-item is not null.  Therefore we process line depending upon contents of list-item
-	  (let ((file-type (caddr list-item)) )
-	   (cond 
-	      ;; ---- file holds a model ----
-	      ((string=? file-type ".MODEL") 
-	       (begin
-		(debug-spew (string-append "Found .MODEL with model-file and model-name for " package "\n")) 
-                 (spice-sdb:write-prefix package "U" port)  ;; this prepends an "U" to the refdes if needed
-                 (spice-sdb:write-component-no-value package port)
-                 (display (string-append model-name "\n" ) port)
-		(debug-spew "We'll handle the file contents later . . .\n")
-	       ))
-
-	      ;; ---- file holds a subcircuit ----
-	      ((string=? file-type ".SUBCKT") 
-	       (begin
-		 (debug-spew (string-append "Found .SUBCKT with model-file and model-name for " package "\n")) 
-                 (spice-sdb:write-prefix package "X" port)  ;; this appends an "X" to the refdes if needed
-                 (spice-sdb:write-component-no-value package port)
-                 (display (string-append model-name "\n" ) port)
-		 (debug-spew "We'll handle the file contents later . . .\n")
-	       ))
-	   )  ;; close of inner cond
-	 )   ;; end of inner let
-       )  ;; end of if (null? list-item
-
-  ) ;; end of outer let
- )
 )
 
 
@@ -1258,41 +1196,11 @@
   )
 )
 
-; most of this code is shamelessly copied from write-net-names-on-component
-; probably net-on-component could take one more argument that will be formater
-; which receives pin data those generated in let, etc
-; then this cruft might just provide own formater and reuse code
-(define spice-sdb:write-probe-item
-  (lambda (refdes number-of-pins port)
-    (if (> number-of-pins 0)
-      (begin
-        (spice-sdb:write-probe-item refdes (- number-of-pins 1) port)
-        (let* ((pin-name (number->string number-of-pins))
-	       (pinnumber (gnetlist:get-attribute-by-pinseq refdes pin-name "pinnumber"))
-	       (pinseq (gnetlist:get-attribute-by-pinseq refdes pin-name "pinseq"))
-	       (netname (car (spice-sdb:get-net refdes pinnumber)) )
-	       )
 
-;; -------  Super debug stuff  --------
-	  (debug-spew "  In write-probe-item. . . . \n")
-	  (debug-spew (string-append "     pin-name = " pin-name "\n"))
-	  (debug-spew (string-append "     pinnumber = " pinnumber "\n"))
-	  (debug-spew (string-append "     pinseq = " pinseq "\n"))
-	  (debug-spew (string-append "     netname = " netname "\n"))
-;; ------------------------------ 
-
-	  (if (not (string=? netname "ERROR_INVALID_PIN"))
-             (display (string-append "V(" netname ") ") port)     ;; write out attached net if OK.
-             (debug-spew (string-append "For " refdes ", found pin with no pinseq attribute.  Ignoring. . . .\n"))
-          )
-        )  ;; let*
-      ) ;; begin
-    ) ;; if
-  ) ;; lambda
-)
-
-(define spice-sdb:write-probe
-  (lambda (package port)
+;;----------------------------------------------------------------------------
+; write a voltage probe
+;;----------------------------------------------------------------------------
+(define (spice-sdb:write-probe package port)
     ;; fetch only one attr we care about, so far
     (let ((value (gnetlist:get-package-attribute package "value"))
 	 ) ;; end of local assignments
@@ -1303,50 +1211,57 @@
       (set! value "TRAN"))
 
     (display (string-append "* Probe device " package " on nets ") port)
-    (spice-sdb:write-probe-item package (length (gnetlist:get-pins package)) port)
+    (spice-sdb:write-net-names-on-component package port)
     (newline port)
     (display (string-append ".print " value " +") port)
-    (spice-sdb:write-probe-item package (length (gnetlist:get-pins package)) port)
+    (spice-sdb:write-net-names-on-component package port
+      (string-join (map (lambda (x) "V(~a)") (gnetlist:get-pins package)) " " 'infix) )	;; make format string
     (newline port)
   ) ;; end of let
- ) ;; close of lambda
 ) ;; close of define
 
+
 ;;--------------------------------------------------------------------
-;; Given a refdes and number of pins, this writes out the nets
-;; attached to the component's pins.  This is used to write out
-;; non-slotted parts.  Call it with a component refdes and the number 
-;; of pins left on this component to look at.
+;; Given a refdes and port, and optionaly a format string, this writes
+;; out the nets attached to the component's pins.  This is used to write
+;; out non-slotted parts.
 ;;--------------------------------------------------------------------
-(define spice-sdb:write-net-names-on-component
-  (lambda (refdes number-of-pins port)
-    (if (> number-of-pins 0)
-      (begin
-            ;; first find pin1 and then start writing the connected net name
-        (spice-sdb:write-net-names-on-component refdes (- number-of-pins 1) port)
-            ;; generate a pin-name e.g. pin1, pin2, pin3 ...
-        (let* ((pin-name (number->string number-of-pins))
-	       (pinnumber (gnetlist:get-attribute-by-pinseq refdes pin-name "pinnumber"))
-	       (pinseq (gnetlist:get-attribute-by-pinseq refdes pin-name "pinseq"))
-	       (netname (car (spice-sdb:get-net refdes pinnumber)) )
-	       )
+(define (spice-sdb:write-net-names-on-component refdes port . format)
+
+;; get-net-name -- helper function. Called with pinseq, returns net name,
+;; unless net name is "ERROR_INVALID_PIN" then it returns false.
+    (define (get-net-name pin)
+        (set! pin (number->string pin))
 
 ;; -------  Super debug stuff  --------
-	  (debug-spew "  In write-net-names-on-component. . . . \n")
-	  (debug-spew (string-append "     pin-name = " pin-name "\n"))
-	  (debug-spew (string-append "     pinnumber = " pinnumber "\n"))
-	  (debug-spew (string-append "     pinseq = " pinseq "\n"))
-	  (debug-spew (string-append "     netname = " netname "\n"))
-;; ------------------------------ 
+          (if #f
+	    (begin
+	      (debug-spew "  In write-net-names-on-component. . . . \n")
+	      (debug-spew (string-append "     pin-name = " pin "\n"))
+	      (debug-spew (string-append "     pinnumber = " (gnetlist:get-attribute-by-pinseq refdes pin "pinnumber") "\n"))
+	      (debug-spew (string-append "     pinseq = " (gnetlist:get-attribute-by-pinseq refdes pin "pinseq")))
+	      (if (not (string=? pin (gnetlist:get-attribute-by-pinseq refdes pin "pinseq")))
+		(debug-spew " <== INCONSISTANT!\n")
+		(debug-spew "\n") )
+	      (debug-spew (string-append "     netname = " (car (spice-sdb:get-net refdes (gnetlist:get-attribute-by-pinseq refdes pin "pinnumber"))) "\n"))
+	  )) ;; if #T for super debugging
+;; -------------------------------------
 
-	  (if (not (string=? netname "ERROR_INVALID_PIN"))
-             (display (string-append netname " ") port)     ;; write out attached net if OK.
-             (debug-spew (string-append "For " refdes ", found pin with no pinseq attribute.  Ignoring. . . .\n"))
-          )
-        )  ;; let*
-      )    ;; begin
-    )
-  )
+	(set! pin (car (spice-sdb:get-net refdes (gnetlist:get-attribute-by-pinseq refdes pin "pinnumber"))))
+	(if (string=? pin "ERROR_INVALID_PIN")
+	  (begin
+	    (debug-spew (string-append "For " refdes ", found pin with no pinseq attribute.  Ignoring. . . .\n"))
+	    #f)  ;; begin
+	pin)  ;; if
+    )  ;; define get-net-name
+
+    ;; First do local assignments
+    (let ((netnames (filter-map get-net-name (range 1 (length (gnetlist:get-pins refdes)))))
+         )  ;; let
+      (if (null? format)
+        (display (string-join netnames " " 'suffix) port)			;; write out nets.
+        (apply simple-format (cons port (cons (car format) netnames))) )	;; write out nets with format string
+    )  ;; let
 )
 
 
@@ -1358,7 +1273,7 @@
 (define spice-sdb:write-component-no-value
   (lambda (package port)
     (display (string-append package " ") port)  ;; write component refdes
-    (spice-sdb:write-net-names-on-component package (length (gnetlist:get-pins package)) port)
+    (spice-sdb:write-net-names-on-component package port)
   )
 )
 
@@ -1549,8 +1464,8 @@
 ;;            has been careless.)
 ;;      U? -- Invokes write-ic. This provides the opportunity for a component
 ;;            model to be instantiated.
-;;      X? -- Invokes write-subcircuit.  This provides the opportunity for a component
-;;            model to be instantiated. 
+;;      X? -- Invokes write-ic.  This provides the opportunity for a component
+;;            subcircuit to be instantiated.
 ;;      V? -- Invokes write-independent-voltage-source
 ;;      I? -- Invokes write-independent-current-source
 ;;      Otherwise, it just outputs the refdes, the attached nets, and the 
@@ -1568,7 +1483,7 @@
        ((string=? first-char "U") (spice-sdb:write-ic package file-info-list port))
        ((string=? first-char "V") (spice-sdb:write-independent-voltage-source package port))
        ((string=? first-char "I") (spice-sdb:write-independent-current-source package port))
-       ((string=? first-char "X") (spice-sdb:write-subcircuit package file-info-list port))
+       ((string=? first-char "X") (spice-sdb:write-ic package file-info-list port))
        (else 
 	(display (string-append "Found unknown component.  Refdes = " package "\n"))
         (spice-sdb:write-component-no-value package port)
@@ -1702,7 +1617,13 @@
 	  (set! value (gnetlist:get-package-attribute package "value") )
 	  (set! model-file (gnetlist:get-package-attribute package "file") )
 
-	  ;; sometimes get-package-attribute returns "?" instead of "unknown".  WTF?  This should fix that . . .
+	  ;; Sometimes get-package-attribute returns "?" instead of "unknown".
+	  ;; This is because some symbols use file=? as a place holder value to indicate that
+	  ;; it needs to be filled in. It is simular other place holders like  footprint=none, and refdes=R?.
+	  ;; ? seems to be an ad hoc place holder for other attributes as well, like value for example.
+	  ;; FIXME: Of couse there could be many other places that this problem occurs. An effort should be
+	  ;; made to come up with a consistant way of representing place holders.
+
 	  (if (string-ci=? model-file "?")
 	      (set! model-file "unknown"))
 
