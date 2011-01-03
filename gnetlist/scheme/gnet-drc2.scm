@@ -416,7 +416,9 @@
 	
 	(let* ( (numslots_string (gnetlist:get-package-attribute uref "numslots"))
 		(numslots (string->number numslots_string))
-		(slot_string (gnetlist:get-package-attribute uref "slot"))
+		(slot_string (let ((slots (gnetlist:get-all-package-attributes uref "slot")))
+                               (if (or (null? slots) (not (car slots)))
+                                   "unknown" (car slots))))
 		(slot (string->number slot_string))
 		)
 	  (let ()
