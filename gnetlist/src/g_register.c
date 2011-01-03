@@ -81,7 +81,7 @@ static struct gsubr_t gnetlist_funcs[] = {
   { "gnetlist:get-nets",            2, 0, 0, g_get_nets },
   { "gnetlist:get-pins-nets",       1, 0, 0, g_get_pins_nets },
 
-  { "gnetlist:get-package-attribute",  2, 0, 0, g_get_package_attribute },
+  { "gnetlist:get-all-package-attributes", 2, 0, 0, g_get_all_package_attributes },
   { "gnetlist:get-toplevel-attribute", 1, 0, 0, g_get_toplevel_attribute },
   /* { "gnetlist:set-netlist-mode", 1, 0, 0, g_set_netlist_mode }, no longer needed */
   { "gnetlist:get-renamed-nets",    1, 0, 0, g_get_renamed_nets },

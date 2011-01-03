@@ -17,6 +17,8 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
+(use-modules (srfi srfi-1))
+
 ;;----------------------------------------------------------------------
 ;; The below functions added by SDB in Sept 2003 to support command-line flag
 ;; processing.
@@ -93,6 +95,45 @@
     (substring str 0 (min len (string-length str)))
   )
 )
+
+;; Default resolver: returns value associated with first symbol instance
+;; in file order and warns if instances have different values.
+(define (unique-attribute refdes name values)
+    (let ((value (car values)))
+      (or (every (lambda (x) (equal? x value)) values)
+          (format (current-error-port) "\
+Possible attribute conflict for refdes: ~A
+name: ~A
+values: ~A
+" refdes name values))
+      value))
+
+(define (gnetlist:get-package-attribute refdes name)
+  "Return the value associated with attribute NAME on package
+identified by REFDES.
+
+It actually computes a single value from the full list of values
+produced by 'gnetlist:get-all-package-attributes' as that list is
+passed through 'unique-attribute'.
+
+For backward compatibility, the default behavior is to return the
+value associated with the first symbol instance for REFDES. If all
+instances of REFDES do not have the same value for NAME, it prints a
+warning.
+
+This can be modified by redefining 'unique-attribute' that is a
+procedure that gets provided a non-empty list of attribute values, the
+REFDES and the NAME used for the search. It is expected to return a
+single value as a string or #f for an empty or non-existent attribute
+value.
+
+Note that given the current load sequence of gnetlist, this
+customization can only happen in the backend itself or in a file
+loaded after the backend ('-m' option of gnetlist)."
+  (let* ((values (gnetlist:get-all-package-attributes refdes name))
+         (value  (and (not (null? values))
+                      (unique-attribute refdes name values))))
+    (or value "unknown")))
 
 ;;
 ;; Given a uref, returns the device attribute value (unknown if not defined)
