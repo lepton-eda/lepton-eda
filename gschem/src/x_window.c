@@ -799,6 +799,8 @@ x_window_set_current_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (page != NULL);
 
+  o_redraw_cleanstates (w_current);
+
   s_page_goto (toplevel, page);
 
   i_update_menus (w_current);
