@@ -68,7 +68,7 @@ DEFINE_I_CALLBACK(file_new)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*)data;
   PAGE *page;
 
-  exit_if_null (w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* create a new page */
   page = x_window_open_page (w_current, NULL);
@@ -87,7 +87,7 @@ DEFINE_I_CALLBACK(file_new)
 void i_callback_toolbar_file_new(GtkWidget* widget, gpointer data)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   if (!w_current->window) return;
     
   i_callback_file_new(data, 0, NULL);
@@ -138,7 +138,7 @@ DEFINE_I_CALLBACK(file_open)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   x_fileselect_open (w_current);
 }
@@ -156,7 +156,7 @@ DEFINE_I_CALLBACK(file_open)
 void i_callback_toolbar_file_open(GtkWidget* widget, gpointer data)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   if (!w_current->window) return;
 
   i_callback_file_open(data, 0, NULL);
@@ -171,7 +171,7 @@ DEFINE_I_CALLBACK(file_script)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   setup_script_selector(w_current);
 }
 
@@ -188,7 +188,7 @@ DEFINE_I_CALLBACK(file_save)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /*! \todo probably there should be a flag that says whether
    *   page_filename is derived from untitled_name or specified by
@@ -218,7 +218,7 @@ DEFINE_I_CALLBACK(file_save)
 void i_callback_toolbar_file_save(GtkWidget* widget, gpointer data)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   if (!w_current->window) return;
 
   i_callback_file_save(data, 0, NULL);
@@ -236,7 +236,7 @@ DEFINE_I_CALLBACK(file_save_all)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (s_page_save_all(w_current->toplevel)) {
      i_set_state_msg(w_current, SELECT, _("Failed to Save All"));
@@ -258,7 +258,7 @@ DEFINE_I_CALLBACK(file_save_as)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   x_fileselect_save (w_current);
 }
 
@@ -273,8 +273,8 @@ DEFINE_I_CALLBACK(file_print)
   char *base=NULL, *filename;
   char *ps_filename=NULL;
   
-  exit_if_null(w_current);
-  exit_if_null(w_current->toplevel->page_current->page_filename);
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->toplevel->page_current->page_filename != NULL);
 
   /* shortcut */
   filename = w_current->toplevel->page_current->page_filename;
@@ -310,7 +310,7 @@ DEFINE_I_CALLBACK(file_write_png)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   x_image_setup(w_current);
 }
@@ -329,7 +329,7 @@ DEFINE_I_CALLBACK(file_close)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   s_log_message(_("Closing Window\n"));
   x_window_close(w_current);
@@ -349,7 +349,7 @@ int i_callback_close(gpointer data, guint callback_action, GtkWidget *widget)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_val_if_fail ((w_current != NULL), FALSE);
   i_callback_file_close(w_current, 0, widget);
   return(FALSE);
 }
@@ -363,7 +363,7 @@ DEFINE_I_CALLBACK(file_quit)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   x_window_close_all(w_current);
 }
 
@@ -406,7 +406,7 @@ DEFINE_I_CALLBACK(edit_undo)
 void i_callback_toolbar_edit_undo(GtkWidget* widget, gpointer data)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   if (!w_current->window) return;
 
   i_callback_edit_undo(data, 0, NULL);
@@ -435,7 +435,7 @@ DEFINE_I_CALLBACK(edit_redo)
 void i_callback_toolbar_edit_redo(GtkWidget* widget, gpointer data)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   if (!w_current->window) return;
 
   i_callback_edit_redo(data, 0, NULL);
@@ -470,7 +470,7 @@ DEFINE_I_CALLBACK(edit_select)
 void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   if (!w_current->window) return;
 
   if (GTK_TOGGLE_BUTTON (widget)->active) {
@@ -524,7 +524,7 @@ DEFINE_I_CALLBACK(edit_copy)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_edit_copy, _("Copy"));
   if (o_select_return_first_object(w_current)) {
@@ -545,7 +545,7 @@ DEFINE_I_CALLBACK(edit_copy_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
     return;
@@ -569,7 +569,7 @@ DEFINE_I_CALLBACK(edit_mcopy)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_edit_copy, _("Multiple Copy"));
   if (o_select_return_first_object(w_current)) {
@@ -590,7 +590,7 @@ DEFINE_I_CALLBACK(edit_mcopy_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
     return;
@@ -614,7 +614,7 @@ DEFINE_I_CALLBACK(edit_move)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_edit_move, _("Move"));
   if (o_select_return_first_object(w_current)) {
@@ -635,7 +635,7 @@ DEFINE_I_CALLBACK(edit_move_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
     return;
@@ -658,7 +658,7 @@ DEFINE_I_CALLBACK(edit_delete)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_edit_delete, _("Delete"));
 
@@ -683,7 +683,7 @@ DEFINE_I_CALLBACK(edit_edit)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_edit_edit, _("Edit"));
   o_edit(w_current, geda_list_get_glist( w_current->toplevel->page_current->selection_list ) );
@@ -698,7 +698,7 @@ DEFINE_I_CALLBACK(edit_pin_type)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button (w_current, i_callback_edit_pin_type, _("Edit pin type"));
 
@@ -717,7 +717,7 @@ DEFINE_I_CALLBACK(edit_text)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *object;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_edit_text, _("Edit Text"));
   object = o_select_return_first_object(w_current);
@@ -738,7 +738,7 @@ DEFINE_I_CALLBACK(edit_slot)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *object;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   object = o_select_return_first_object(w_current);
 
@@ -757,7 +757,7 @@ DEFINE_I_CALLBACK(edit_color)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_edit_color, _("Color"));
 
@@ -774,7 +774,7 @@ DEFINE_I_CALLBACK(edit_rotate_90)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* If inside an appropriate action, send a button 2 released,
    * so rotating will be handled by x_event.c */
@@ -811,7 +811,7 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
   GList *object_list;
   gint wx, wy; 
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
     return;
@@ -860,7 +860,7 @@ DEFINE_I_CALLBACK(edit_mirror)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_set_state(w_current, ENDMIRROR);
   i_update_middle_button(w_current, i_callback_edit_mirror, _("Mirror"));
@@ -877,7 +877,7 @@ DEFINE_I_CALLBACK(edit_mirror_hotkey)
   GList *object_list;
   gint wx, wy; 
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
     return;
@@ -907,7 +907,7 @@ DEFINE_I_CALLBACK(edit_lock)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_edit_lock, _("Lock"));
 
@@ -925,7 +925,7 @@ DEFINE_I_CALLBACK(edit_unlock)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_edit_unlock, _("Unlock"));
   if (o_select_return_first_object(w_current)) {
@@ -942,7 +942,7 @@ DEFINE_I_CALLBACK(edit_translate)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current,
                          i_callback_edit_translate, _("Translate"));
@@ -970,7 +970,7 @@ DEFINE_I_CALLBACK(edit_invoke_macro)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   gtk_widget_show(w_current->macro_box);
   gtk_widget_grab_focus(w_current->macro_entry);
@@ -987,7 +987,7 @@ DEFINE_I_CALLBACK(edit_embed)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *o_current;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_edit_embed, _("Embed"));
   /* anything selected ? */
@@ -1026,7 +1026,7 @@ DEFINE_I_CALLBACK(edit_unembed)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *o_current;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_edit_unembed, _("Unembed"));
   /* anything selected ? */
@@ -1108,7 +1108,7 @@ DEFINE_I_CALLBACK(edit_show_hidden)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
@@ -1132,7 +1132,7 @@ DEFINE_I_CALLBACK(edit_find)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
@@ -1151,7 +1151,7 @@ DEFINE_I_CALLBACK(edit_hide_text)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
@@ -1170,7 +1170,7 @@ DEFINE_I_CALLBACK(edit_show_text)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
@@ -1189,7 +1189,7 @@ DEFINE_I_CALLBACK(edit_autonumber_text)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
@@ -1208,7 +1208,7 @@ DEFINE_I_CALLBACK(edit_linetype)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   line_type_dialog(w_current);
 }
@@ -1222,7 +1222,7 @@ DEFINE_I_CALLBACK(edit_filltype)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   fill_type_dialog(w_current);
 }
@@ -1240,7 +1240,7 @@ DEFINE_I_CALLBACK(view_redraw)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   o_invalidate_all (w_current);
 }
 
@@ -1255,7 +1255,7 @@ DEFINE_I_CALLBACK(view_zoom_full)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* scroll bar stuff */
   a_zoom(w_current, ZOOM_FULL, DONTCARE, 0);
@@ -1276,7 +1276,7 @@ DEFINE_I_CALLBACK(view_zoom_extents)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* scroll bar stuff */
   a_zoom_extents (w_current,
@@ -1297,7 +1297,7 @@ DEFINE_I_CALLBACK(view_zoom_box)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   o_redraw_cleanstates(w_current);	
   w_current->inside_action = 0;
@@ -1314,7 +1314,7 @@ DEFINE_I_CALLBACK(view_zoom_box_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!x_event_get_pointer_position(w_current, FALSE, &wx, &wy))
     return;
@@ -1337,7 +1337,7 @@ DEFINE_I_CALLBACK(view_zoom_in)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   a_zoom(w_current, ZOOM_IN, MENU, 0);
 
@@ -1357,7 +1357,7 @@ DEFINE_I_CALLBACK(view_zoom_out)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   a_zoom(w_current, ZOOM_OUT, MENU, 0);
  
@@ -1378,7 +1378,7 @@ DEFINE_I_CALLBACK(view_zoom_in_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   a_zoom(w_current, ZOOM_IN, HOTKEY, 0);
 
@@ -1398,7 +1398,7 @@ DEFINE_I_CALLBACK(view_zoom_out_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   a_zoom(w_current, ZOOM_OUT, HOTKEY, 0);
 
@@ -1416,7 +1416,7 @@ DEFINE_I_CALLBACK(view_pan)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   o_redraw_cleanstates(w_current);	
   w_current->inside_action = 0;
@@ -1434,7 +1434,7 @@ DEFINE_I_CALLBACK(view_pan_left)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   a_pan_mouse(w_current, w_current->keyboardpan_gain, 0);
 }
@@ -1447,7 +1447,7 @@ DEFINE_I_CALLBACK(view_pan_right)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* yes, that's a negative sign there */
   a_pan_mouse(w_current, -w_current->keyboardpan_gain, 0);
@@ -1461,7 +1461,7 @@ DEFINE_I_CALLBACK(view_pan_up)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   a_pan_mouse(w_current, 0, w_current->keyboardpan_gain);
 }
@@ -1474,7 +1474,7 @@ DEFINE_I_CALLBACK(view_pan_down)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* yes, that's a negative sign there */
   a_pan_mouse(w_current, 0, -w_current->keyboardpan_gain);
@@ -1490,7 +1490,7 @@ DEFINE_I_CALLBACK(view_pan_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!x_event_get_pointer_position(w_current, FALSE, &wx, &wy))
     return;
@@ -1565,7 +1565,7 @@ DEFINE_I_CALLBACK(page_manager)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   x_pagesel_open (w_current);
 }
@@ -1583,7 +1583,7 @@ DEFINE_I_CALLBACK(page_next)
   PAGE *p_new;
   GList *iter;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   iter = g_list_find( geda_list_get_glist( toplevel->pages ), p_current );
   iter = g_list_next( iter );
@@ -1618,7 +1618,7 @@ DEFINE_I_CALLBACK(page_prev)
   PAGE *p_new;
   GList *iter;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   iter = g_list_find( geda_list_get_glist( toplevel->pages ), p_current );
   iter = g_list_previous( iter );
@@ -1651,7 +1651,7 @@ DEFINE_I_CALLBACK(page_new)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*)data;
   PAGE *page;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* create a new page */
   page = x_window_open_page (w_current, NULL);
@@ -1668,7 +1668,7 @@ DEFINE_I_CALLBACK(page_close)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (w_current->toplevel->page_current->CHANGED) {
     x_dialog_close_changed_page (w_current, w_current->toplevel->page_current);
@@ -1694,7 +1694,7 @@ DEFINE_I_CALLBACK(page_revert)
   int response;
   GtkWidget* dialog;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   dialog = gtk_message_dialog_new ((GtkWindow*) w_current->main_window,
                                    GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -1740,7 +1740,7 @@ DEFINE_I_CALLBACK(page_discard)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*)data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   x_window_close_page (w_current, w_current->toplevel->page_current);
 }
@@ -1766,7 +1766,7 @@ DEFINE_I_CALLBACK(clipboard_copy)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null (w_current);
+  g_return_if_fail (w_current != NULL);
   if (!o_select_selected (w_current)) return;
 
   i_update_middle_button (w_current, i_callback_clipboard_copy,
@@ -1784,7 +1784,7 @@ DEFINE_I_CALLBACK(clipboard_cut)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null (w_current);
+  g_return_if_fail (w_current != NULL);
   if (!o_select_selected (w_current)) return;
 
   i_update_middle_button (w_current, i_callback_clipboard_cut,
@@ -1804,7 +1804,7 @@ DEFINE_I_CALLBACK(clipboard_paste)
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *object_list = NULL;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button (w_current, i_callback_buffer_paste1, _("Paste from clipboard"));
 
@@ -1834,7 +1834,7 @@ DEFINE_I_CALLBACK(clipboard_paste_hotkey)
   GList *object_list = NULL;
   gint wx, wy;
 
-  exit_if_null (w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!x_event_get_pointer_position (w_current, TRUE, &wx, &wy))
     return;
@@ -1858,7 +1858,7 @@ DEFINE_I_CALLBACK(buffer_copy1)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!o_select_selected (w_current))
     return;
@@ -1877,7 +1877,7 @@ DEFINE_I_CALLBACK(buffer_copy2)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!o_select_selected (w_current))
     return;
@@ -1896,7 +1896,7 @@ DEFINE_I_CALLBACK(buffer_copy3)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!o_select_selected (w_current))
     return;
@@ -1915,7 +1915,7 @@ DEFINE_I_CALLBACK(buffer_copy4)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!o_select_selected (w_current))
     return;
@@ -1934,7 +1934,7 @@ DEFINE_I_CALLBACK(buffer_copy5)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!o_select_selected (w_current))
     return;
@@ -1953,7 +1953,7 @@ DEFINE_I_CALLBACK(buffer_cut1)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!o_select_selected (w_current))
     return;
@@ -1972,7 +1972,7 @@ DEFINE_I_CALLBACK(buffer_cut2)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!o_select_selected (w_current))
     return;
@@ -1991,7 +1991,7 @@ DEFINE_I_CALLBACK(buffer_cut3)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!o_select_selected (w_current))
     return;
@@ -2010,7 +2010,7 @@ DEFINE_I_CALLBACK(buffer_cut4)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!o_select_selected (w_current))
     return;
@@ -2029,7 +2029,7 @@ DEFINE_I_CALLBACK(buffer_cut5)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!o_select_selected (w_current))
     return;
@@ -2048,7 +2048,7 @@ DEFINE_I_CALLBACK(buffer_paste1)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_buffer_paste1, _("Paste 1"));
   if (object_buffer[0] != NULL) {
@@ -2070,7 +2070,7 @@ DEFINE_I_CALLBACK(buffer_paste2)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_buffer_paste2, _("Paste 2"));
   if (object_buffer[1] != NULL) {
@@ -2092,7 +2092,7 @@ DEFINE_I_CALLBACK(buffer_paste3)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_buffer_paste3, _("Paste 3"));
   if (object_buffer[2] != NULL) {
@@ -2114,7 +2114,7 @@ DEFINE_I_CALLBACK(buffer_paste4)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_buffer_paste4, _("Paste 4"));
   if (object_buffer[3] != NULL) {
@@ -2136,7 +2136,7 @@ DEFINE_I_CALLBACK(buffer_paste5)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_buffer_paste5, _("Paste 5"));
   if (object_buffer[4] != NULL) {
@@ -2159,7 +2159,7 @@ DEFINE_I_CALLBACK(buffer_paste1_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (object_buffer[0] == NULL) {
     return;
@@ -2181,7 +2181,7 @@ DEFINE_I_CALLBACK(buffer_paste2_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (object_buffer[1] == NULL) {
     return;
@@ -2203,7 +2203,7 @@ DEFINE_I_CALLBACK(buffer_paste3_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (object_buffer[2] == NULL) {
     return;
@@ -2225,7 +2225,7 @@ DEFINE_I_CALLBACK(buffer_paste4_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (object_buffer[3] == NULL) {
     return;
@@ -2247,7 +2247,7 @@ DEFINE_I_CALLBACK(buffer_paste5_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (object_buffer[4] == NULL) {
     return;
@@ -2269,7 +2269,7 @@ DEFINE_I_CALLBACK(add_component)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   o_redraw_cleanstates (w_current);
   x_compselect_open (w_current);
@@ -2292,7 +2292,7 @@ DEFINE_I_CALLBACK(add_component)
 void i_callback_toolbar_add_component(GtkWidget* widget, gpointer data)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   if (!w_current->window) return;
 
   i_callback_add_component(data, 0, NULL);
@@ -2307,7 +2307,7 @@ DEFINE_I_CALLBACK(add_attribute)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   attrib_edit_dialog(w_current, NULL, FROM_MENU);
   i_update_middle_button(w_current, i_callback_add_attribute,
@@ -2326,7 +2326,7 @@ DEFINE_I_CALLBACK(add_attribute_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   attrib_edit_dialog(w_current, NULL, FROM_HOTKEY);
   i_update_middle_button(w_current, i_callback_add_attribute_hotkey,
@@ -2345,7 +2345,7 @@ DEFINE_I_CALLBACK(add_net)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   o_redraw_cleanstates(w_current);	
   o_invalidate_rubber (w_current);
@@ -2369,7 +2369,7 @@ DEFINE_I_CALLBACK(add_net_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
     return;
@@ -2400,7 +2400,7 @@ DEFINE_I_CALLBACK(add_net_hotkey)
 void i_callback_toolbar_add_net(GtkWidget* widget, gpointer data)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   if (!w_current->window) return;
 
   if (GTK_TOGGLE_BUTTON (widget)->active) {
@@ -2417,7 +2417,7 @@ DEFINE_I_CALLBACK(add_bus)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   o_redraw_cleanstates(w_current);	
   o_invalidate_rubber (w_current);
@@ -2441,7 +2441,7 @@ DEFINE_I_CALLBACK(add_bus_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
     return;
@@ -2471,7 +2471,7 @@ DEFINE_I_CALLBACK(add_bus_hotkey)
 void i_callback_toolbar_add_bus(GtkWidget* widget, gpointer data)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   if (!w_current->window) return;
 
   if (GTK_TOGGLE_BUTTON (widget)->active) {
@@ -2488,7 +2488,7 @@ DEFINE_I_CALLBACK(add_text)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   
   o_redraw_cleanstates(w_current);	
   o_invalidate_rubber (w_current);
@@ -2511,7 +2511,7 @@ DEFINE_I_CALLBACK(add_text)
 void i_callback_toolbar_add_text(GtkWidget* widget, gpointer data)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   if (!w_current->window) return;
 
   i_callback_add_text(data, 0, NULL);
@@ -2526,7 +2526,7 @@ DEFINE_I_CALLBACK(add_line)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   o_redraw_cleanstates(w_current);	
   o_invalidate_rubber (w_current);
@@ -2546,7 +2546,7 @@ DEFINE_I_CALLBACK(add_line_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy;
   
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
     return;
@@ -2571,7 +2571,7 @@ DEFINE_I_CALLBACK(add_box)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   o_redraw_cleanstates(w_current);	
   o_invalidate_rubber (w_current);
@@ -2591,7 +2591,7 @@ DEFINE_I_CALLBACK(add_box_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
     return;
@@ -2616,7 +2616,7 @@ DEFINE_I_CALLBACK(add_picture)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   o_redraw_cleanstates(w_current);	
   o_invalidate_rubber (w_current);
@@ -2650,7 +2650,7 @@ DEFINE_I_CALLBACK(add_circle)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   o_redraw_cleanstates(w_current);	
   o_invalidate_rubber (w_current);
@@ -2670,7 +2670,7 @@ DEFINE_I_CALLBACK(add_circle_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
     return;
@@ -2696,7 +2696,7 @@ DEFINE_I_CALLBACK(add_arc)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   
   o_redraw_cleanstates(w_current);	
   o_invalidate_rubber (w_current);
@@ -2716,7 +2716,7 @@ DEFINE_I_CALLBACK(add_arc_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
     return;
@@ -2741,7 +2741,7 @@ DEFINE_I_CALLBACK(add_pin)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   o_redraw_cleanstates(w_current);	
   o_invalidate_rubber (w_current);
@@ -2761,7 +2761,7 @@ DEFINE_I_CALLBACK(add_pin_hotkey)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
     return;
@@ -2798,7 +2798,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
   int pcount = 0;
   int looking_inside=FALSE;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   object = o_select_return_first_object(w_current);
 
@@ -2909,7 +2909,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
   OBJECT *object;
   const CLibSymbol *sym;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   object = o_select_return_first_object(w_current);
   if (object != NULL) {
@@ -2947,7 +2947,7 @@ DEFINE_I_CALLBACK(hierarchy_up)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   PAGE *up_page;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   up_page = s_hierarchy_find_up_page (w_current->toplevel->pages,
                                       w_current->toplevel->page_current);
@@ -2971,7 +2971,7 @@ DEFINE_I_CALLBACK(attributes_attach)
   GList *s_current;
   GList *attached_objects = NULL;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
@@ -3027,7 +3027,7 @@ DEFINE_I_CALLBACK(attributes_detach)
   OBJECT *o_current;
   GList *detached_attribs = NULL;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
@@ -3071,7 +3071,7 @@ DEFINE_I_CALLBACK(attributes_show_name)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   TOPLEVEL *toplevel = w_current->toplevel;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
@@ -3108,7 +3108,7 @@ DEFINE_I_CALLBACK(attributes_show_value)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   TOPLEVEL *toplevel = w_current->toplevel;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
@@ -3145,7 +3145,7 @@ DEFINE_I_CALLBACK(attributes_show_both)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   TOPLEVEL *toplevel = w_current->toplevel;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
@@ -3182,7 +3182,7 @@ DEFINE_I_CALLBACK(attributes_visibility_toggle)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   TOPLEVEL *toplevel = w_current->toplevel;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
@@ -3222,7 +3222,7 @@ DEFINE_I_CALLBACK(script_console)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   printf(_("Sorry but this is a non-functioning menu option\n"));
 }
 
@@ -3240,7 +3240,7 @@ DEFINE_I_CALLBACK(options_text_size)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   text_size_dialog(w_current);
 }
 
@@ -3253,7 +3253,7 @@ DEFINE_I_CALLBACK(options_snap_size)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   snap_size_dialog(w_current);
 }
 
@@ -3266,7 +3266,7 @@ DEFINE_I_CALLBACK(options_scale_up_snap_size)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   w_current->snap_size *= 2;
   w_current->toplevel->page_current->CHANGED=1;  /* maybe remove those two lines */
@@ -3285,7 +3285,7 @@ DEFINE_I_CALLBACK(options_scale_down_snap_size)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (w_current->snap_size % 2 == 0)
     w_current->snap_size /= 2;
@@ -3309,7 +3309,7 @@ DEFINE_I_CALLBACK(options_afeedback)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (w_current->actionfeedback_mode == BOUNDINGBOX) {
     w_current->actionfeedback_mode = OUTLINE;
@@ -3332,7 +3332,7 @@ DEFINE_I_CALLBACK(options_grid)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   switch (w_current->grid) {
     case GRID_NONE: w_current->grid = GRID_DOTS; break;
@@ -3432,7 +3432,7 @@ DEFINE_I_CALLBACK(options_show_log_window)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   x_log_open ();
 }
 
@@ -3484,7 +3484,7 @@ DEFINE_I_CALLBACK(cancel)
   TOPLEVEL *toplevel = w_current->toplevel;
   GValue value = { 0, };
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (w_current->event_state == ENDCOMP &&
       w_current->cswindow) {
@@ -3548,7 +3548,7 @@ DEFINE_I_CALLBACK(help_about)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   about_dialog(w_current);
 }
 
@@ -3561,7 +3561,7 @@ DEFINE_I_CALLBACK(help_hotkeys)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   x_dialog_hotkeys(w_current);
 }
 
@@ -3574,7 +3574,7 @@ DEFINE_I_CALLBACK(options_show_coord_window)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
   coord_dialog (w_current, 0, 0);
 }
 
@@ -3596,7 +3596,7 @@ gboolean i_callback_close_wm ( GtkWidget *widget, GdkEvent *event,
 {
 
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  exit_if_null(w_current);
+  g_return_val_if_fail ((w_current != NULL), TRUE);
 
   x_window_close(w_current);
 

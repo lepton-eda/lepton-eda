@@ -59,7 +59,7 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
   printf("EXPOSE\n");
 #endif
 
-  exit_if_null(w_current);
+  g_return_val_if_fail ((w_current != NULL), 0);
 
   save_cr = w_current->cr;
   save_pl = w_current->pl;
@@ -97,10 +97,10 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
+  g_return_val_if_fail ((w_current != NULL), 0);
+
   scm_dynwind_begin (0);
   g_dynwind_window (w_current);
-
-  exit_if_null(w_current);
 
 #if DEBUG
   printf("pressed button %d! \n", event->button);
@@ -527,7 +527,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 {
   int unsnapped_wx, unsnapped_wy;
 
-  exit_if_null(w_current);
+  g_return_val_if_fail ((w_current != NULL), 0);
 
 #if DEBUG
   printf("released! %d \n", w_current->event_state);
@@ -734,7 +734,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
   int do_move;
   GdkEvent *test_event;
 
-  exit_if_null(w_current);
+  g_return_val_if_fail ((w_current != NULL), 0);
 
   w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
   w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
@@ -1074,7 +1074,7 @@ void x_event_hschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
   int new_left;
   GtkAdjustment        *hadjustment;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (w_current->scrollbars_flag == FALSE) {
     return;
@@ -1106,7 +1106,7 @@ void x_event_vschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
   int new_bottom;
   GtkAdjustment        *vadjustment;
 
-  exit_if_null(w_current);
+  g_return_if_fail (w_current != NULL);
 
   if (w_current->scrollbars_flag == FALSE) {
     return;
@@ -1141,7 +1141,7 @@ void x_event_vschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
 gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
                    GSCHEM_TOPLEVEL *w_current)
 {
-  exit_if_null(w_current);
+  g_return_val_if_fail ((w_current != NULL), 0);
   /* do nothing or now */
   return(0);
 }
@@ -1289,7 +1289,7 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
   int pan_direction = 1;
   int zoom_direction = ZOOM_IN;
 
-  exit_if_null(w_current);
+  g_return_val_if_fail ((w_current != NULL), 0);
 
   /* update the state of the modifiers */
   w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;

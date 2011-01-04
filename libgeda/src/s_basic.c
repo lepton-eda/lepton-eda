@@ -58,20 +58,6 @@ void error_if_called(void)
 	g_assert(0);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void exit_if_null(void *ptr) 
-{
-  if (ptr == NULL) {
-    fprintf(stderr, "gEDA: Got NULL ptr!, please e-mail maintainer\n");
-    g_assert(0);
-    exit(-1);
-  }	
-}
-
 
 /*! \brief Initialize an already-allocated object.
  *  \par Function Description

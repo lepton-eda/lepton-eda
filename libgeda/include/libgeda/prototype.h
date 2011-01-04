@@ -262,7 +262,6 @@ char *s_attrib_get(int counter);
 
 /* s_basic.c */
 void error_if_called(void);
-void exit_if_null(void *ptr);
 OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name);
 OBJECT *s_basic_new_object(int type, char const *prefix);
 void print_struct_forw(GList *list);
