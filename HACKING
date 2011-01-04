@@ -2,7 +2,7 @@
  'gschem and Friends' Electronic Design Suite
 ==============================================
 
-Copyright (C) 1998-2010 gEDA Developers
+Copyright (C) 1998-2011 gEDA Developers
 
 This file contains information which you may find useful if you wish
 to contribute to gEDA.
@@ -15,7 +15,7 @@ Please submit patches to the patch tracker on SourceForge.net:
   <https://sourceforge.net/tracker/?group_id=161080&atid=818428>
 
 Once you've submitted your patches, you may wish to also e-mail the
-`gEDA-user' mailing list to announce that you've done so and to ask
+`gEDA-user' mailing list [1] to announce that you've done so and to ask
 for feedback.
 
 To make it easier for developers to promptly verify your patches and
@@ -25,12 +25,14 @@ integrate them, please try to follow the following guidelines:
     logical steps, and use a separate patch for each.
 
   - Avoid unnecessary whitespace changes. Please do not add trailing
-    whitespace.
+    whitespace.  If you must make bulk whitespace changes
+    (e.g. because a file or function is formatted in a way that is
+    *offensively ugly*) then please do so as a separate patch.
 
   - Ensure that each of your patches applies cleanly against the
     `master' branch of the gaf main git repository.
 
-  - Please format your patches with `git format-patch', and ensure
+  - Please format your patches with `git format-patch' [2], and ensure
     that they contain good commit messages.  The commit messages
     should include:
 
@@ -49,11 +51,16 @@ integrate them, please try to follow the following guidelines:
       * If your patch fixes a regression, and you know which commit
         introduced the regression, include the broken commit's ID.
 
+    If you don't use `git format-patch' to create your patch, please
+    include the commands needed to apply it when you submit it.
+    Assume the reader's current working directory is the top level of
+    the gEDA/gaf source tree.
+
   - Make sure it's clear whether, and in what ways, you've tested your
     patch.
 
   - If you add functions, or change function definitions, make sure
-    that the doxygen comments are up-to-date.
+    that the doxygen [3] comments are up-to-date.
 
 Sometimes, you may submit a patch and not hear anything back for a
 while.  This can be for a number of reasons, and it's only very rarely
@@ -65,3 +72,68 @@ you should e-mail the `gEDA-user' mailing list with a reminder.
 
 A final thought: to get your patches included, make it easy to accept
 them!
+
+[1] http://www.seul.org/cgi-bin/mailman/listinfo/geda-user
+[2] http://www.kernel.org/pub/software/scm/git/docs/git-format-patch.html
+[3] http://www.stack.nl/~dimitri/doxygen/
+
+C coding style
+==============
+
+gEDA C coding style is fairly flexible.  However, there are a few requests.
+
+  - Indent using spaces only, with an indentation step of two spaces.
+
+  - Avoid C++ style comments (`//').
+
+  - `switch' statements should always include a `default' label.
+
+  - Do not comment out code or omit it using `#if 0', unless
+    absolutely necessary for documentation purposes.  If code is not
+    needed, delete it.
+
+  - Wrap code at 80 columns.
+
+  - Wrap the body of an `if' statement in braces `{}', even if the
+    body only contains one statement.
+
+  - When checking a pointer for validity, explicitly compare it with
+    `NULL'.
+
+       if (ptr == NULL) { return; } /* Good */
+       if (!ptr) { return; }        /* Bad */
+
+Obviously, all these rules are made to be broken, and it'll be obvious
+when it's appropriate to do so. ;-)
+
+Here is a set of options to GNU `indent' which approximates the gEDA
+indentation style:
+
+  -br -blf -bls -cdw -ce -cs -ts2 -sc -nut -bap -pcs -psl -lp l80 -bbo
+
+Scheme coding style
+===================
+
+gEDA Scheme coding style is also fairly flexible.  Once again, though,
+there are a few things to bear in mind!
+
+  - When you need to iterate over a list, it's often better to use
+    `map', `for-each' or SRFI-1 `fold' than to make your function
+    recursive [1][2].
+
+  - Predicate functions should have names ending in `?', and
+    destructive functions should have names ending in `!'.
+
+  - When defining a function, please use the "implicit define" form of
+    `define' [3]:
+
+    (define (<name> <formals>) <body>)
+
+  - It's often clearer to use `format' to format strings rather than
+    using a combination of `string-append', `display' and `newline'.
+    This function is always available in Guile 1.8.x [4].
+
+[1] http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-9.html#%_idx_558
+[2] http://www.gnu.org/software/guile/manual/html_node/SRFI_002d1-Fold-and-Map.html#index-fold-3609
+[3] http://www.schemers.org/Documents/Standards/R5RS/HTML/r5rs-Z-H-8.html#%_sec_5.2
+[4] http://www.gnu.org/software/guile/manual/html_node/Writing.html#index-simple_002dformat-2052
