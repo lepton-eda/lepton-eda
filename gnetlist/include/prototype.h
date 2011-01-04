@@ -15,8 +15,6 @@ SCM g_get_all_package_attributes(SCM scm_uref, SCM scm_wanted_attrib);
 SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq, SCM scm_wanted_attrib);
 SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM scm_wanted_attrib);
 SCM g_get_toplevel_attribute(SCM scm_wanted_attrib);
-SCM g_get_slots(SCM scm_uref);
-SCM g_get_unique_slots(SCM scm_uref);
 SCM g_graphical_objs_in_net_with_attrib_get_attrib(SCM scm_netname, SCM scm_has_attribute, SCM scm_wanted_attribute);
 /* g_rc.c */
 SCM g_rc_gnetlist_version(SCM version);

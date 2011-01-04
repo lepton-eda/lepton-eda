@@ -135,6 +135,31 @@ loaded after the backend ('-m' option of gnetlist)."
                       (unique-attribute refdes name values))))
     (or value "unknown")))
 
+(define (gnetlist:get-slots refdes)
+  "Return a sorted list of slots used by package REFDES.
+
+It collects the slot attribute values of each symbol instance of
+REFDES. As a result, slots may be repeated in the returned list."
+  (sort-list!
+   (filter-map
+    (lambda (slot)
+      (if slot
+          ;; convert string attribute value to number
+          (or (string->number slot)
+              ;; conversion failed, invalid slot, ignore value
+              (begin
+                (format (current-error-port)
+                        "Uref ~a: Bad slot number: ~a.\n" refdes slot)
+                #f))
+          ;; no slot attribute, assume slot number is 1
+          1))
+    (gnetlist:get-all-package-attributes refdes "slot"))
+   <))
+
+(define (gnetlist:get-unique-slots refdes)
+  "Return a sorted list of unique slots used by package REFDES."
+  (delete-duplicates! (gnetlist:get-slots refdes)))
+
 ;;
 ;; Given a uref, returns the device attribute value (unknown if not defined)
 ;;
