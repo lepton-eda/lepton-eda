@@ -1,8 +1,8 @@
 # geda-doxygen.m4                                       -*-Autoconf-*-
-# serial 1.0
+# serial 2
 
 dnl Optional Doxygen API documentation support
-dnl Copyright (C) 2009  Peter Brett <peter@peter-b.co.uk>
+dnl Copyright (C) 2009-2011  Peter Brett <peter@peter-b.co.uk>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -50,6 +50,14 @@ found. Ensure it is installed and in your path, or configure without
       AC_MSG_ERROR([API documentation generation was requested, but
 neither Inkscape nor ImageMagick were found. Ensure one of these is
 installed and in your path, or configure without --enable-doxygen.])
+    fi
+
+    # We need pdflatex to create PDF format API docs.
+    AC_CHECK_PROG([PDFLATEX], [pdflatex], [pdflatex], [no])
+    if test "X$PDFLATEX" = "Xno"; then
+      AC_MSG_ERROR([API documentation generation was requested, but pdflatex was not
+found.  Ensure it is installed and in your path, or configure without
+--enable-doxygen.])
     fi
 
   else
