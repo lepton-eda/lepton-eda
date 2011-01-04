@@ -17,6 +17,8 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
+(use-modules (ice-9 optargs))
+
 ;; --------------------------------------------------------------------------
 ;;
 ;; protelII netlist format specific functions go here 
@@ -113,6 +115,12 @@
 ;; ...more net options...
 ;; }
 ;;
+
+;; We redefine the newline function, because this file format requires
+;; Windows-style "\r\n" line endings rather than Unix-style "\n"
+;; endings.
+(define* (newline #:optional port)
+  (display "\r\n" (or port (current-output-port))))
 
 ;;
 ;; Top level header
