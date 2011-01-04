@@ -122,7 +122,7 @@ void main_prog(void *closure, int argc, char *argv[])
     argv_index = parse_commandline(argc, argv);
     cwd = g_get_current_dir();
 
-    command_line = create_command_line(argc, argv);
+    scm_set_program_arguments (argc, argv, NULL);
 
     /* this is a kludge to make sure that spice mode gets set */
     /*  Hacked by SDB to allow spice netlisters of arbitrary name

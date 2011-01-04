@@ -94,8 +94,6 @@ static struct gsubr_t gnetlist_funcs[] = {
 
   /* SDB -- 9.1.2003 */
   { "gnetlist:get-calling-flags",   0, 0, 0, g_get_calling_flags },
-  /* SDB -- 8.22.2004 */
-  { "gnetlist:get-command-line",    0, 0, 0, g_get_command_line },
   { NULL,                           0, 0, 0, NULL } };
 
 

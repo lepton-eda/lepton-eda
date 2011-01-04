@@ -1,7 +1,6 @@
 /* g_netlist.c */
 void g_set_project_current(TOPLEVEL *pr_current);
 SCM g_scm_c_get_uref(TOPLEVEL *toplevel, OBJECT *object);
-SCM g_get_command_line();   /* SDB -- 8.22.2004 */
 SCM g_get_calling_flags();  /* SDB -- 9.1.2003  */
 SCM g_get_packages(SCM level);
 SCM g_get_non_unique_packages(SCM level);
@@ -43,7 +42,6 @@ int main(int argc, char *argv[]);
 void i_vars_set(TOPLEVEL *pr_current);
 /* parsecmd.c */
 void usage(char *cmd);
-char *create_command_line(int argc, char *argv[]);
 int parse_commandline(int argc, char *argv[]);
 /* s_cpinlist.c */
 CPINLIST *s_cpinlist_return_tail(CPINLIST *head);

@@ -89,26 +89,6 @@ void usage(char *cmd)
     exit(0);
 }
 
-/* --------------------------------------------------------------- *
- * create_command_line takes argc and argv, and returns a single 
- * string which is the command line used to invoke the program.
- * It is used to pass the command invocation to the SPICE netlist
- * for inclusion on the first SPICE line.
- * 8.22.2004 -- SDB.
- * --------------------------------------------------------------- */
-char *create_command_line(int argc, char *argv[]) 
-{
-  int i;
-  char *local_command_line = NULL;
-
-  local_command_line = g_strdup (argv[0]);   /*  Initialize command line string  */
-  for (i = 1; i < argc; i++) {
-    local_command_line = g_strconcat (local_command_line, " ", argv[i], NULL);
-  }
-  return local_command_line;
-}
-    
-
 
 /* from guile (libguile/gh_init.c) */
 static SCM

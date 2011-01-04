@@ -785,22 +785,6 @@ SCM g_get_calling_flags()
 }
 
 
-/* -------------------------------------------------------------------- *
- * This fcn returns the command line with which gnetlist was invoked.
- * It is used to write the first line of a SPICE file when netlisting 
- * to SPICE.
- * SDB -- 8.22.2004.
- * -------------------------------------------------------------------- */
-SCM g_get_command_line()
-{
-     SCM commandline;
-
-     commandline = scm_makfrom0str (command_line);
-
-     return (commandline);
-}
-
-
 /* given a net name, an attribute, and a wanted attribute, return all 
    the given attribute of all the graphical objects connected to that 
    net name */
