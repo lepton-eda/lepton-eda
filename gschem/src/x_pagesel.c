@@ -372,7 +372,6 @@ static void pagesel_init (Pagesel *pagesel)
                 /* GtkContainer */
                 "border-width",    0,
                 /* GtkWindow */
-                "type",            GTK_WINDOW_TOPLEVEL,
                 "title",           _("Page Manager"),
                 "default-height",  180,
                 "default-width",   515,

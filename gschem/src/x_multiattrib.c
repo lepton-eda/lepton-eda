@@ -1704,7 +1704,6 @@ static void multiattrib_init(Multiattrib *multiattrib)
                 /* GtkContainer */
                 "border-width",    0,
                 /* GtkWindow */
-                "type",            GTK_WINDOW_TOPLEVEL,
                 "title",           _("Edit Attributes"),
                 "default-width",   320,
                 "default-height",  350,
