@@ -45,6 +45,10 @@ Notable changes in gEDA/gaf 1.7.0
 * On Windows, `gschem' and `gattrib' will no longer launch with a
   command window visible.
 
+* The undocumented `mk_verilog_syms' program is no longer installed.
+  The symbols it creates are still installed to
+  `${prefix}/share/gEDA/sym/verilog'.
+
 Notable changes in gEDA/gaf 1.6.1
 =================================
 
