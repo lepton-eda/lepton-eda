@@ -1341,7 +1341,8 @@
     ("Control c" . clipboard-copy)
     ("Control v" . clipboard-paste-hotkey)
     ("Control z" . edit-undo)
-    ("Control y" . edit-redo)))
+    ("Control y" . edit-redo)
+    ("Control a" . edit-select-all)))
 
 ; finally set the keymap point to the newly created datastructure 
 (define current-keymap global-keymap)
@@ -1406,6 +1407,7 @@
            (,(N_ "_Delete")            edit-delete            edit-delete             "gtk-delete"  )
            ("SEPARATOR"               #f                     #f                      #f)
            (,(N_ "Select Mode")        edit-select            edit-select             #f)
+           (,(N_ "Select All")         edit-select-all        edit-select-all         "gtk-select-all")
            (,(N_ "Copy Mode")          edit-copy              edit-copy-hotkey        #f)
            (,(N_ "Multiple Copy Mode") edit-mcopy             edit-mcopy-hotkey       #f)
            (,(N_ "Move Mode")          edit-move              edit-move-hotkey        #f)

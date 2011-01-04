@@ -63,6 +63,7 @@ SCM g_keys_file_quit(SCM rest);
 SCM g_keys_edit_undo(SCM rest);
 SCM g_keys_edit_redo(SCM rest);
 SCM g_keys_edit_select(SCM rest);
+SCM g_keys_edit_select_all(SCM rest);
 SCM g_keys_edit_copy(SCM rest);
 SCM g_keys_edit_copy_hotkey(SCM rest);
 SCM g_keys_edit_mcopy(SCM rest);
@@ -323,6 +324,7 @@ void i_callback_edit_redo(gpointer data, guint callback_action, GtkWidget *widge
 void i_callback_toolbar_edit_redo(GtkWidget *widget, gpointer data);
 void i_callback_edit_select(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_toolbar_edit_select(GtkWidget *widget, gpointer data);
+void i_callback_edit_select_all(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_copy(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_copy_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_mcopy(gpointer data, guint callback_action, GtkWidget *widget);
@@ -689,6 +691,7 @@ OBJECT *o_select_return_first_object(GSCHEM_TOPLEVEL *w_current);
 int o_select_selected(GSCHEM_TOPLEVEL *w_current);
 void o_select_unselect_list(GSCHEM_TOPLEVEL *w_current, SELECTION *selection);
 void o_select_unselect_all(GSCHEM_TOPLEVEL *w_current);
+void o_select_visible_unlocked(GSCHEM_TOPLEVEL *w_current);
 void o_select_move_to_place_list(GSCHEM_TOPLEVEL *w_current);
 /* o_slot.c */
 void o_slot_start(GSCHEM_TOPLEVEL *w_current, OBJECT *object);

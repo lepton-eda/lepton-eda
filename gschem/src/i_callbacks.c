@@ -528,6 +528,23 @@ void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
   }
 }
 
+/*! \brief Select all objects on page.
+ * \par Function Description
+ * Sets all objects on page as selected.
+ */
+DEFINE_I_CALLBACK (edit_select_all)
+{
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) data;
+  o_redraw_cleanstates (w_current);
+
+  o_select_visible_unlocked (w_current);
+
+  i_set_state (w_current, SELECT);
+  w_current->inside_action = 0;
+  i_update_toolbar (w_current);
+  i_update_menus (w_current);
+}
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

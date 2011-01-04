@@ -535,6 +535,48 @@ void o_select_unselect_all(GSCHEM_TOPLEVEL *w_current)
   o_select_unselect_list( w_current, toplevel->page_current->selection_list );
 }
 
+/*! \brief Selects all visible objects on the current page.
+ * \par Function Description
+ * Clears any existing selection, then selects everything visible and
+ * unlocked on the current page, and any attached attributes whether
+ * visible or invisible..
+ *
+ * \param w_current  The current #GSCHEM_TOPLEVEL structure.
+ */
+void
+o_select_visible_unlocked (GSCHEM_TOPLEVEL *w_current)
+{
+  TOPLEVEL *toplevel = w_current->toplevel;
+  const GList *iter;
+
+  o_select_unselect_all (w_current);
+  for (iter = s_page_objects (toplevel->page_current);
+       iter != NULL;
+       iter = g_list_next (iter)) {
+    OBJECT *obj = (OBJECT *) iter->data;
+
+    /* Skip invisible objects. */
+    if (obj->visibility != VISIBLE && !toplevel->show_hidden_text)
+      continue;
+
+    /* Skip locked objects. */
+    if (obj->sel_func == NULL) continue;
+
+    /* Run selection hooks & add object to selection. */
+    /*! \bug We can't call obj->sel_func, because o_select_object()
+     * behaves differently depending on the state of
+     * w_current->SHIFTKEY and w_current->CONTROLKEY, which may well
+     * be set if this function is called via a keystroke
+     * (e.g. Ctrl-A). */
+    o_select_run_hooks (w_current, obj, 1);
+    o_selection_add (toplevel, toplevel->page_current->selection_list, obj);
+
+    /* Add any attributes of object to selection as well. */
+    o_attrib_add_selected (w_current, toplevel->page_current->selection_list,
+                           obj);
+  }
+}
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

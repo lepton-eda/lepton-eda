@@ -13,6 +13,9 @@ Notable changes in gEDA/gaf 1.7.0
 * `gschem' no longer supports the `-t' option. It supports a new `-V'
   option to display version information.
 
+* `gschem' now provides a "Select All" function, which is bound to
+  <Control a> by default.
+
 * In the `gschem' "Add component" dialog, filtering the component
   library will expand matching libraries.  If the filter is cancelled,
   all libraries are collapsed.  Components can now be selected by
