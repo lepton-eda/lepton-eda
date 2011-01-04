@@ -380,11 +380,11 @@ static gint compare_source_name (gconstpointer a, gconstpointer b)
   const CLibSource *src1 = a;
   const CLibSource *src2 = b;
 
-  g_assert (src1 != NULL);
-  g_assert (src2 != NULL);
+  g_return_val_if_fail ((src1 != NULL), 0);
+  g_return_val_if_fail ((src2 != NULL), 0);
 
-  g_assert (src1->name != NULL);
-  g_assert (src2->name != NULL);
+  g_return_val_if_fail ((src1->name != NULL), 0);
+  g_return_val_if_fail ((src2->name != NULL), 0);
 
   return strcasecmp(src1->name, src2->name);
 }
@@ -405,11 +405,11 @@ static gint compare_symbol_name (gconstpointer a, gconstpointer b)
   const CLibSymbol *sym1 = a;
   const CLibSymbol *sym2 = b;
 
-  g_assert (sym1 != NULL);
-  g_assert (sym2 != NULL);
+  g_return_val_if_fail ((sym1 != NULL), 0);
+  g_return_val_if_fail ((sym2 != NULL), 0);
 
-  g_assert (sym1->name != NULL);
-  g_assert (sym2->name != NULL);
+  g_return_val_if_fail ((sym1->name != NULL), 0);
+  g_return_val_if_fail ((sym2->name != NULL), 0);
 
   return strcasecmp(sym1->name, sym2->name);
 }

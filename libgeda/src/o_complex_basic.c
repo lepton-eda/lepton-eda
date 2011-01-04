@@ -123,7 +123,10 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *head,
   /* Find the first object with bounds, and set the bounds variables, then expand as necessary */
   while ( s_current != NULL ) {
     o_current = (OBJECT *) s_current->data;
-    g_assert (o_current != NULL);
+
+    /* Sanity check */
+    g_return_val_if_fail ((o_current != NULL), found);
+
     if ( world_get_single_object_bounds( toplevel, o_current, &rleft, &rtop, &rright, &rbottom) ) {
       if ( found ) {
         *left = min( *left, rleft );

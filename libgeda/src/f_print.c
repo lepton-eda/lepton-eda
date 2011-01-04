@@ -338,8 +338,7 @@ void f_print_objects (TOPLEVEL *toplevel, FILE *fp, const GList *obj_list,
       break;
 
       default:
-        fprintf(stderr, "Error type!\n");
-        exit(-1);
+        g_return_if_reached ();
         break;
     }
     iter = g_list_next (iter);

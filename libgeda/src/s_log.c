@@ -258,7 +258,7 @@ static void s_log_handler (const gchar *log_domain,
   if (do_logging == FALSE) {
     return;
   }
-  g_assert (logfile_fd != -1);
+  g_return_if_fail (logfile_fd != -1);
   
   status = write (logfile_fd, message, strlen (message));
   if (status == -1) {

@@ -121,10 +121,7 @@ char *s_slib_search_dirs(const char *basename)
 
     ptr = opendir(slib[i].dir_name);
 
-    if (ptr == NULL) {
-      fprintf(stderr, "Oops got a null dir_name!\n");
-      exit(-1);
-    }
+    g_return_val_if_fail ((ptr != NULL), NULL);
 
     dptr = readdir(ptr);
 
@@ -506,9 +503,7 @@ char *s_slib_getfiles(char *directory, int flag)
             whole_dir[count] = g_strdup (dptr->d_name);
             count++;
           } else {
-            fprintf(stderr, 
-                    "uggg. too many files in s_slib_getfiles!\n");
-            exit(-1);
+            g_error ("uggg. too many files in s_slib_getfiles!\n");
           }
         }
 
