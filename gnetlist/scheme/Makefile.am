@@ -37,17 +37,17 @@ gnet-gsch2pcb.scm: $(srcdir)/gnet-gsch2pcb.scm.in
 		$(srcdir)/gnet-gsch2pcb.scm.in > $@
 
 all-local:
-	if test "$(srcdir)" != "$(builddir)" ; then \
+	if test "$(srcdir)" != "@builddir@" ; then \
 		echo "copying scheme files" ; \
-		cp -f $(srcdir)/*.scm $(builddir) ; \
+		cp -f $(srcdir)/*.scm @builddir@/ ; \
 	else \
 		echo "source directory = build directory" ; \
 	fi
 
 clean-local:
-	if test "$(srcdir)" != "$(builddir)" ; then \
+	if test "$(srcdir)" != "@builddir@" ; then \
 		echo "cleaning scheme files" ; \
-		rm -f $(builddir)/*.scm ; \
+		rm -f @builddir@/*.scm ; \
 	else \
 		echo "source directory = build directory" ; \
 	fi
