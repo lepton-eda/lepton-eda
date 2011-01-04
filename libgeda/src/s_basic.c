@@ -47,18 +47,6 @@
 /*! this is modified here and in o_list.c */
 int global_sid=0;
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void error_if_called(void)
-{
-	fprintf(stderr, "Somebody called error_if_called!\n");
-	g_assert(0);
-}
-
-
 /*! \brief Initialize an already-allocated object.
  *  \par Function Description
  *  Initializes the members of the OBJECT structure.
