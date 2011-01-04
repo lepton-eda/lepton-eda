@@ -191,9 +191,9 @@ void text_input_dialog (GSCHEM_TOPLEVEL *w_current)
     gtk_window_position(GTK_WINDOW (w_current->tiwindow),
                         GTK_WIN_POS_NONE);
 
-    gtk_signal_connect(GTK_OBJECT (w_current->tiwindow), "response",
-                       GTK_SIGNAL_FUNC(text_input_dialog_response),
-                       w_current);
+    g_signal_connect (G_OBJECT (w_current->tiwindow), "response",
+                      G_CALLBACK (text_input_dialog_response),
+                      w_current);
 
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->tiwindow),
                                     GTK_RESPONSE_ACCEPT);
@@ -453,8 +453,9 @@ void text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->tewindow),
                                     GTK_RESPONSE_ACCEPT);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->tewindow), "response",
-                       GTK_SIGNAL_FUNC(text_edit_dialog_response), w_current);
+    g_signal_connect (G_OBJECT (w_current->tewindow), "response",
+                      G_CALLBACK (text_edit_dialog_response),
+                      w_current);
 
     gtk_window_position(GTK_WINDOW (w_current->tewindow),
                         GTK_WIN_POS_MOUSE);
@@ -933,9 +934,9 @@ void line_type_dialog (GSCHEM_TOPLEVEL *w_current)
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
 
-  gtk_signal_connect(GTK_OBJECT(dialog), "response",
-                     GTK_SIGNAL_FUNC(line_type_dialog_response),
-                     line_type_data);
+  g_signal_connect (G_OBJECT (dialog), "response",
+                    G_CALLBACK (line_type_dialog_response),
+                    line_type_data);
 
   gtk_container_border_width(GTK_CONTAINER(dialog),
                              DIALOG_BORDER_SPACING);
@@ -980,9 +981,9 @@ void line_type_dialog (GSCHEM_TOPLEVEL *w_current)
   gtk_table_attach_defaults(GTK_TABLE(table), width_entry,
                             1,2,1,2);
 
-  gtk_signal_connect(GTK_OBJECT (optionmenu), "changed",
-                     (GtkSignalFunc) line_type_dialog_linetype_change,
-                     line_type_data);
+  g_signal_connect(G_OBJECT (optionmenu), "changed",
+                   G_CALLBACK (line_type_dialog_linetype_change),
+                   line_type_data);
 
   length_entry = gtk_entry_new();
   gtk_entry_set_activates_default (GTK_ENTRY(length_entry), TRUE);
@@ -1424,8 +1425,9 @@ void fill_type_dialog(GSCHEM_TOPLEVEL *w_current)
   gtk_dialog_set_default_response(GTK_DIALOG(dialog),
                                   GTK_RESPONSE_ACCEPT);
 
-  gtk_signal_connect(GTK_OBJECT(dialog), "response",
-                     GTK_SIGNAL_FUNC(fill_type_dialog_response), fill_type_data);
+  g_signal_connect (G_OBJECT (dialog), "response",
+                    G_CALLBACK (fill_type_dialog_response),
+                    fill_type_data);
 
   gtk_container_border_width(GTK_CONTAINER(dialog), DIALOG_BORDER_SPACING);
   vbox = GTK_DIALOG(dialog)->vbox;
@@ -1472,9 +1474,9 @@ void fill_type_dialog(GSCHEM_TOPLEVEL *w_current)
   gtk_table_attach_defaults(GTK_TABLE(table), optionmenu,
                             1,2,0,1);
 
-  gtk_signal_connect(GTK_OBJECT (optionmenu), "changed",
-                     (GtkSignalFunc) fill_type_dialog_filltype_change,
-                     fill_type_data);
+  g_signal_connect (G_OBJECT (optionmenu), "changed",
+                    G_CALLBACK (fill_type_dialog_filltype_change),
+                    fill_type_data);
 
   width_entry = gtk_entry_new();
   gtk_entry_set_activates_default (GTK_ENTRY(width_entry), TRUE);
@@ -1607,8 +1609,9 @@ void arc_angle_dialog (GSCHEM_TOPLEVEL *w_current, OBJECT *arc_object)
     gtk_window_position(GTK_WINDOW(w_current->aawindow),
                         GTK_WIN_POS_MOUSE);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->aawindow), "response",
-                       GTK_SIGNAL_FUNC(arc_angle_dialog_response), w_current);
+    g_signal_connect (G_OBJECT (w_current->aawindow), "response",
+                      G_CALLBACK (arc_angle_dialog_response),
+                      w_current);
 
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->aawindow),
                                     GTK_RESPONSE_ACCEPT);
@@ -1750,8 +1753,9 @@ void translate_dialog (GSCHEM_TOPLEVEL *w_current)
     gtk_window_position(GTK_WINDOW (w_current->trwindow),
                         GTK_WIN_POS_MOUSE);
 
-    gtk_signal_connect(GTK_OBJECT (w_current->trwindow), "response",
-                       GTK_SIGNAL_FUNC(translate_dialog_response), w_current);
+    g_signal_connect (G_OBJECT (w_current->trwindow), "response",
+                      G_CALLBACK (translate_dialog_response),
+                      w_current);
 
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->trwindow),
                                     GTK_RESPONSE_ACCEPT);
@@ -1848,9 +1852,9 @@ void text_size_dialog (GSCHEM_TOPLEVEL *w_current)
     gtk_window_position(GTK_WINDOW(w_current->tswindow),
                         GTK_WIN_POS_MOUSE);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->tswindow), "response",
-                       GTK_SIGNAL_FUNC(text_size_dialog_response),
-                       w_current);
+    g_signal_connect (G_OBJECT (w_current->tswindow), "response",
+                      G_CALLBACK (text_size_dialog_response),
+                      w_current);
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->tswindow),
                                     GTK_RESPONSE_ACCEPT);
 
@@ -1954,9 +1958,9 @@ void snap_size_dialog (GSCHEM_TOPLEVEL *w_current)
     gtk_window_position(GTK_WINDOW(w_current->tswindow),
                         GTK_WIN_POS_MOUSE);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->tswindow), "response",
-                       GTK_SIGNAL_FUNC(snap_size_dialog_response),
-                       w_current);
+    g_signal_connect (G_OBJECT (w_current->tswindow), "response",
+                      G_CALLBACK (snap_size_dialog_response),
+                      w_current);
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->tswindow),
                                     GTK_RESPONSE_ACCEPT);
 
@@ -2064,9 +2068,9 @@ void slot_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string)
     gtk_dialog_set_default_response (GTK_DIALOG (w_current->sewindow),
                                      GTK_RESPONSE_ACCEPT);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->sewindow), "response",
-                       GTK_SIGNAL_FUNC(slot_edit_dialog_response),
-                       w_current);
+    g_signal_connect (G_OBJECT (w_current->sewindow), "response",
+                      G_CALLBACK (slot_edit_dialog_response),
+                      w_current);
 
     gtk_container_border_width(GTK_CONTAINER(w_current->sewindow),
                                DIALOG_BORDER_SPACING);
@@ -2209,9 +2213,9 @@ void coord_dialog (GSCHEM_TOPLEVEL *w_current, int x, int y)
     gtk_window_position (GTK_WINDOW (w_current->cowindow),
                          GTK_WIN_POS_NONE);
 
-    gtk_signal_connect (GTK_OBJECT (w_current->cowindow), "response",
-                        GTK_SIGNAL_FUNC(coord_dialog_response),
-                        w_current);
+    g_signal_connect (G_OBJECT (w_current->cowindow), "response",
+                      G_CALLBACK (coord_dialog_response),
+                      w_current);
 
     gtk_container_border_width (GTK_CONTAINER(w_current->cowindow),
                                 DIALOG_BORDER_SPACING);
@@ -2544,9 +2548,9 @@ void color_edit_dialog (GSCHEM_TOPLEVEL *w_current)
     gtk_dialog_set_default_response (GTK_DIALOG (w_current->clwindow),
                                      GTK_RESPONSE_ACCEPT);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->clwindow), "response",
-                       GTK_SIGNAL_FUNC(color_edit_dialog_response),
-                       w_current);
+    g_signal_connect (G_OBJECT (w_current->clwindow), "response",
+                      G_CALLBACK (color_edit_dialog_response),
+                      w_current);
 
     gtk_container_border_width(GTK_CONTAINER(w_current->clwindow),
                                DIALOG_BORDER_SPACING);
@@ -2622,9 +2626,9 @@ void x_dialog_hotkeys (GSCHEM_TOPLEVEL *w_current)
     gtk_window_position (GTK_WINDOW (w_current->hkwindow),
                          GTK_WIN_POS_NONE);
 
-    gtk_signal_connect (GTK_OBJECT (w_current->hkwindow), "response",
-                        GTK_SIGNAL_FUNC(x_dialog_hotkeys_response),
-                        w_current);
+    g_signal_connect (G_OBJECT (w_current->hkwindow), "response",
+                      G_CALLBACK (x_dialog_hotkeys_response),
+                      w_current);
 
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->hkwindow),
                                     GTK_RESPONSE_ACCEPT);
@@ -3007,9 +3011,9 @@ void find_text_dialog(GSCHEM_TOPLEVEL *w_current)
     gtk_window_position(GTK_WINDOW(w_current->tfindwindow),
                         GTK_WIN_POS_MOUSE);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->tfindwindow), "response",
-                       GTK_SIGNAL_FUNC(find_text_dialog_response),
-                       w_current);
+    g_signal_connect (G_OBJECT (w_current->tfindwindow), "response",
+                      G_CALLBACK (find_text_dialog_response),
+                      w_current);
 
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->tfindwindow),
                                      GTK_RESPONSE_ACCEPT);
@@ -3113,9 +3117,9 @@ void hide_text_dialog(GSCHEM_TOPLEVEL * w_current)
     gtk_window_position(GTK_WINDOW(w_current->thidewindow),
                         GTK_WIN_POS_MOUSE);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->thidewindow), "response",
-                       GTK_SIGNAL_FUNC(hide_text_dialog_response),
-                       w_current);
+    g_signal_connect (G_OBJECT (w_current->thidewindow), "response",
+                      G_CALLBACK (hide_text_dialog_response),
+                      w_current);
 
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->thidewindow),
                                     GTK_RESPONSE_ACCEPT);
@@ -3213,9 +3217,9 @@ void show_text_dialog(GSCHEM_TOPLEVEL * w_current)
     gtk_window_position(GTK_WINDOW(w_current->tshowwindow),
                         GTK_WIN_POS_MOUSE);
 
-    gtk_signal_connect(GTK_OBJECT(w_current->tshowwindow), "response",
-                       GTK_SIGNAL_FUNC(show_text_dialog_response),
-                       w_current);
+    g_signal_connect (G_OBJECT (w_current->tshowwindow), "response",
+                      G_CALLBACK (show_text_dialog_response),
+                      w_current);
 
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->tshowwindow),
                                     GTK_RESPONSE_ACCEPT);

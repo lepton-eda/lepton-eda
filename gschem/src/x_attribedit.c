@@ -341,8 +341,9 @@ void attrib_edit_dialog (GSCHEM_TOPLEVEL *w_current, OBJECT *attr_obj, int flag)
 					  GTK_RESPONSE_REJECT,
 					  -1);
 					 
-  gtk_signal_connect(GTK_OBJECT(aewindow), "response",
-		     GTK_SIGNAL_FUNC(attribute_edit_dialog_response), w_current);
+  g_signal_connect (G_OBJECT (aewindow), "response",
+                    G_CALLBACK (attribute_edit_dialog_response),
+                    w_current);
 
   gtk_window_set_position (GTK_WINDOW (aewindow), GTK_WIN_POS_MOUSE);
 

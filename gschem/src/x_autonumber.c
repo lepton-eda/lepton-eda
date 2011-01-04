@@ -1401,14 +1401,13 @@ void autonumber_text_dialog(GSCHEM_TOPLEVEL *w_current)
     gtk_dialog_set_default_response (GTK_DIALOG (autotext->dialog), 
                                      GTK_RESPONSE_ACCEPT);
 
-    gtk_signal_connect(GTK_OBJECT(autotext->dialog), "response",
-		       GTK_SIGNAL_FUNC(autonumber_text_response),
-		       autotext);
+    g_signal_connect (G_OBJECT (autotext->dialog), "response",
+                      G_CALLBACK (autonumber_text_response),
+                      autotext);
 
-    gtk_signal_connect(GTK_OBJECT(opt_removenum),
-		       "clicked",
-		       GTK_SIGNAL_FUNC(autonumber_removenum_toggled),
-		       autotext);
+    g_signal_connect (G_OBJECT (opt_removenum), "clicked",
+                      G_CALLBACK (autonumber_removenum_toggled),
+                      autotext);
 
     autonumber_set_state(autotext);
 
