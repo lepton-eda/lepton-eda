@@ -308,11 +308,6 @@ void main_prog(void *closure, int argc, char *argv[])
   scm_c_eval_string ("(display \"hello guile\n\")");
 #endif
 
-  if (w_current->toplevel->scheme_directory == NULL) {
-    fprintf(stderr, _("Scheme directory NOT set!\n"));
-    exit(-1);
-  }
-
 
   /* Execute a script if it exists */
   if (script_filename) {
