@@ -41,6 +41,9 @@ Notable changes in gEDA/gaf 1.7.0
 * `gnetlist' now provides a `-V' or `--version' option, which displays
   version information.
 
+* When run with invalid command-line arguments, `gnetlist' now exits
+  with non-zero exit status.
+
 * Several `gnetlist' backends have now been fixed so that it should no
   longer be necessary to set an expanded Guile stack in gEDA's config
   files.

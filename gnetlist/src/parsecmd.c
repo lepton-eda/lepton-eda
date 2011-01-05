@@ -219,9 +219,24 @@ parse_commandline (int argc, char *argv[])
       break;
 
     case '?':
+#ifndef HAVE_GETOPT_LONG
+        if ((optopt != ':') && (strchr (GETOPT_OPTIONS, optopt) != NULL)) {
+          fprintf (stderr,
+                   "ERROR: -%c option requires an argument.\n\n",
+                   optopt);
+        } else if (isprint (optopt)) {
+          fprintf (stderr, "ERROR: Unknown option -%c.\n\n", optopt);
+        } else {
+          fprintf (stderr, "ERROR: Unknown option character `\\x%x'.\n\n",
+                   optopt);
+        }
+#endif
+        fprintf (stderr, "\nRun `%s --help' for more information.\n", argv[0]);
+        exit (1);
+        break;
+
     default:
-      usage(argv[0]);
-      break;
+      g_assert_not_reached ();
     }
   }
 
