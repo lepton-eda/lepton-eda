@@ -52,7 +52,6 @@ void usage(char *cmd)
          "  -s filename   Script (guile) filename\n"
          "  -o filename   Output filename (for printing)\n"
          "  -p            Automatically place the window\n"
-         "  -t            Print stroke information\n"
          "  -V            Show version information\n"
          "  -h            Help; this message\n"
          "\n"), cmd);
