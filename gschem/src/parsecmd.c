@@ -32,7 +32,7 @@
 #include <dmalloc.h>
 #endif
 
-#define GETOPT_OPTIONS "hqvr:s:o:pV"
+#define GETOPT_OPTIONS "hL:o:pqr:s:vV"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -56,6 +56,17 @@ struct option long_options[] =
   };
 #endif
 
+/*! Contains a Scheme expression arising from command-line arguments.
+ *  This is evaluated after initialising gschem, but before loading
+ *  any rc files. */
+SCM s_pre_load_expr = SCM_EOL;
+
+/*! Contains a Scheme expression arising from command-line arguments.
+ *  This is evaluated after loading gschem and any schematic
+ *  files specified on the command-line.
+ */
+SCM s_post_load_expr = SCM_EOL;
+
 /*! \brief Print brief help message and exit.
  * \par Function Description
  * Print brief help message describing gschem usage & command-line
@@ -77,6 +88,7 @@ usage(char *cmd)
 "  -q, --quiet              Quiet mode.\n"
 "  -v, --verbose            Verbose mode.\n"
 "  -r, --config-file=FILE   Additional configuration file to load.\n"
+"  -L DIR                   Add DIR to Scheme search path.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
 "  -o, --output=FILE        Output filename (for printing).\n"
 "  -p                       Automatically place the window.\n"
@@ -122,6 +134,11 @@ int
 parse_commandline(int argc, char *argv[])
 {
   int ch;
+  SCM sym_cons = scm_from_locale_symbol ("cons");
+  SCM sym_set_x = scm_from_locale_symbol ("set!");
+  SCM sym_load_path = scm_from_locale_symbol ("%load-path");
+  SCM sym_begin = scm_from_locale_symbol ("begin");
+
 #ifdef HAVE_GETOPT_LONG
   while ((ch = getopt_long (argc, argv, GETOPT_OPTIONS, long_options, NULL)) != -1) {
 #else
@@ -150,6 +167,19 @@ parse_commandline(int argc, char *argv[])
 
       case 'p':
         auto_place_mode = TRUE;
+        break;
+
+      case 'L':
+        /* Argument is a directory to add to the Scheme load path.
+         * Add the necessary expression to be evaluated before rc file
+         * loading. */
+        s_pre_load_expr =
+          scm_cons (scm_list_3 (sym_set_x,
+                                sym_load_path,
+                                scm_list_3 (sym_cons,
+                                            scm_from_locale_string (optarg),
+                                            sym_load_path)),
+                    s_pre_load_expr);
         break;
 
       case 'h':
@@ -185,5 +215,12 @@ parse_commandline(int argc, char *argv[])
     verbose_mode = FALSE;
   }
 
+  /* Make sure Scheme expressions can be passed straight to eval */
+  s_pre_load_expr = scm_cons (sym_begin,
+                              scm_reverse_x (s_pre_load_expr, SCM_UNDEFINED));
+  scm_gc_protect_object (s_pre_load_expr);
+  s_post_load_expr = scm_cons (sym_begin,
+                               scm_reverse_x (s_post_load_expr, SCM_UNDEFINED));
+  scm_gc_protect_object (s_post_load_expr);
   return(optind);
 }

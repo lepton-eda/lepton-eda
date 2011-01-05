@@ -16,6 +16,9 @@ Notable changes in gEDA/gaf 1.7.0
 
   - Several command-line options now support a long-form alternative.
 
+  - A new `-L' option is available, which adds a directory to the
+    Scheme load path.
+
   - A new `-V' or `--version' option is available, which displays
     version information.
 
