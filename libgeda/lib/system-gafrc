@@ -17,9 +17,6 @@
 ;; The directory containing gaf Scheme code.
 (define geda-scheme-path (string-append geda-data-path path-sep "scheme"))
 ; We need to add gaf's scheme library to the Guile load path.
-(set! %load-path (append (list geda-scheme-path) %load-path))
-; This is used in some places for error messages/listing gnetlist
-; backends
 (scheme-directory geda-scheme-path)
 
 ; The libgeda Scheme library provides a number of useful functions for

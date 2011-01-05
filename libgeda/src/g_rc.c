@@ -734,37 +734,37 @@ SCM g_rc_untitled_name(SCM name)
 }
 
 
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
+/*! \brief Add a directory to the Guile load path.
+ * \par Function Description
+ * Prepends \a s_path to the Guile system '%load-path', after
+ * expanding environment variables.
  *
- *  \param [in] path  
- *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
+ *  \param [in] s_path  Path to be added.
+ *  \return SCM_BOOL_T.
  */
-SCM g_rc_scheme_directory(SCM path)
+SCM g_rc_scheme_directory(SCM s_path)
 {
-  gchar *string;
   char *temp;
+  gchar *expanded;
+  SCM s_load_path_var;
+  SCM s_load_path;
 
-  SCM_ASSERT (scm_is_string (path), path,
+  SCM_ASSERT (scm_is_string (s_path), s_path,
               SCM_ARG1, "scheme-directory");
 
   /* take care of any shell variables */
-  temp = scm_to_locale_string (path);
-  string = s_expand_env_variables (temp);
+  temp = scm_to_locale_string (s_path);
+  expanded = s_expand_env_variables (temp);
+  s_path = scm_from_locale_string (expanded);
   free (temp);
+  g_free (expanded);
 
-  /* invalid path? */
-  if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
-    fprintf (stderr,
-             "Invalid path [%s] passed to scheme-directory\n",
-             string);
-    g_free(string);
-    return SCM_BOOL_F;
-  }
+  s_load_path_var = scm_c_lookup ("%load-path");
+  s_load_path = scm_variable_ref (s_load_path_var);
+  scm_variable_set_x (s_load_path_var, scm_cons (s_path, s_load_path));
 
-  g_free(default_scheme_directory);
-  default_scheme_directory = string;
+  scm_remember_upto_here_2 (s_load_path_var, s_load_path);
+  scm_remember_upto_here_1 (s_path);
 
   return SCM_BOOL_T;
 }

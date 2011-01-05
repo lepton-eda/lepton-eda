@@ -38,7 +38,6 @@
  * defaults used when default_... is NULL.
  */
 #define DEFAULT_UNTITLED_NAME    "untitled"
-#define DEFAULT_SCHEME_DIRECTORY "./"
 #define DEFAULT_BITMAP_DIRECTORY "../lib/bitmaps"
 #define DEFAULT_BUS_RIPPER_SYMNAME "busripper-1.sym"
 #define DEFAULT_POSTSCRIPT_PROLOG  "prolog.ps"
@@ -46,7 +45,6 @@
 int   default_init_right = WIDTH_C;
 int   default_init_bottom = HEIGHT_C;
 char *default_untitled_name = NULL;
-char *default_scheme_directory = NULL;
 char *default_bitmap_directory = NULL;
 char *default_bus_ripper_symname = NULL;
 char *default_postscript_prolog = NULL;
@@ -85,7 +83,6 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
   /* you cannot free the default* strings here since new windows */
   /* need them */
   INIT_STR(toplevel, untitled_name   , DEFAULT_UNTITLED_NAME   );
-  INIT_STR(toplevel, scheme_directory, DEFAULT_SCHEME_DIRECTORY);
   INIT_STR(toplevel, bitmap_directory, DEFAULT_BITMAP_DIRECTORY);
   INIT_STR(toplevel, bus_ripper_symname, DEFAULT_BUS_RIPPER_SYMNAME);
   INIT_STR(toplevel, postscript_prolog,  DEFAULT_POSTSCRIPT_PROLOG);
@@ -100,7 +97,6 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
 void i_vars_libgeda_freenames()
 {
   g_free(default_untitled_name);
-  g_free(default_scheme_directory);
   g_free(default_bitmap_directory);
   g_free(default_bus_ripper_symname);
   g_free(default_postscript_prolog);
