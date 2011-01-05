@@ -61,6 +61,7 @@ void libgeda_init(void)
 
   g_register_libgeda_funcs();
   g_register_libgeda_vars();
+  g_register_libgeda_dirs();
 
   g_init_object_smob();
   g_init_attrib_smob();

@@ -116,3 +116,18 @@ void g_register_libgeda_vars (void)
   scm_c_define("OBJ_PLACEHOLDER", SCM_MAKE_CHAR((unsigned char) OBJ_PLACEHOLDER));
   scm_c_define("OBJ_PATH", SCM_MAKE_CHAR((unsigned char) OBJ_PATH));
 }
+
+/*! \brief Register some libgeda directories with Scheme.
+ * \par Function Description
+ * Ensures that the default gEDA Scheme directory is added to the
+ * Guile load path.
+ */
+void
+g_register_libgeda_dirs (void)
+{
+  char *scheme_dir;
+
+  scheme_dir = g_build_filename (s_path_sys_data (), "scheme", NULL);
+  g_rc_scheme_directory (scm_from_locale_string (scheme_dir));
+  g_free (scheme_dir);
+}
