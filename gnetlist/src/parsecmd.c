@@ -1,5 +1,5 @@
 /* gEDA - GPL Electronic Design Automation
- * gnetlist - gEDA Netlist 
+ * gnetlist - gEDA Netlist
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
  *
@@ -53,16 +53,16 @@ extern int optind;
 /* Added by SDB 3.3.2006.  */
 #ifdef HAVE_GETOPT_LONG
 struct option long_options[] =
-{
-  {"help", 0, 0, 'h'},
-  {"nomunge", 0, 0, 'n'},
-  {"verbose", 0, 0, 'v'},
-  {"version", 0, 0, 'V'},
-  {"sort", 0, 0, 's'},
-  {"embedd", 0, 0, 'e'},
-  {"include", 0, 0, 'I'},
-  {0, 0, 0, 0}
-};
+  {
+    {"help", 0, 0, 'h'},
+    {"nomunge", 0, 0, 'n'},
+    {"verbose", 0, 0, 'v'},
+    {"version", 0, 0, 'V'},
+    {"sort", 0, 0, 's'},
+    {"embedd", 0, 0, 'e'},
+    {"include", 0, 0, 'I'},
+    {0, 0, 0, 0}
+  };
 #endif
 
 
@@ -96,7 +96,7 @@ void usage(char *cmd)
 "\n"
 "Report bugs to <geda-bug@seul.org>.\n"
 "gEDA/gaf homepage: <http://gpleda.org>\n",
-           cmd);
+          cmd);
   exit (0);
 }
 
@@ -131,104 +131,103 @@ catch_handler (void *data, SCM tag, SCM throw_args)
 }
 
 
-int parse_commandline(int argc, char *argv[])
+int
+parse_commandline (int argc, char *argv[])
 {
-    int ch;
+  int ch;
 
-    /* Converted to getopt_long by SDB 3.3.2006 */
+  /* Converted to getopt_long by SDB 3.3.2006 */
 #ifdef HAVE_GETOPT_LONG
-    /* int option_index = 0; */
+  /* int option_index = 0; */
 
-    while ((ch = getopt_long(argc, argv, OPTIONS, long_options, NULL /* &option_index */)) != -1) {
+  while ((ch = getopt_long(argc, argv, OPTIONS, long_options, NULL /* &option_index */)) != -1) {
 #else
-    while ((ch = getopt(argc, argv, OPTIONS)) != -1) {
+  while ((ch = getopt(argc, argv, OPTIONS)) != -1) {
 #endif
-	switch (ch) {
+    switch (ch) {
 
-	case 'v':
-	    backend_params = g_slist_append(backend_params, "verbose_mode");
-	    verbose_mode = TRUE;
-	    break;
+    case 'v':
+      backend_params = g_slist_append(backend_params, "verbose_mode");
+      verbose_mode = TRUE;
+      break;
 
-	case 'i':
-	    backend_params = g_slist_append(backend_params, "interactive_mode");
-	    interactive_mode = TRUE;
-	    break;
+    case 'i':
+      backend_params = g_slist_append(backend_params, "interactive_mode");
+      interactive_mode = TRUE;
+      break;
 
-        case 'I':
-	    backend_params = g_slist_append(backend_params, "include_mode");
-            include_mode = TRUE;
-            break;
+    case 'I':
+      backend_params = g_slist_append(backend_params, "include_mode");
+      include_mode = TRUE;
+      break;
 
-        case 'e':
-	    backend_params = g_slist_append(backend_params, "embedd_mode");
-            embedd_mode = TRUE;
-            break;
+    case 'e':
+      backend_params = g_slist_append(backend_params, "embedd_mode");
+      embedd_mode = TRUE;
+      break;
 
-	case 'q':
-	    backend_params = g_slist_append(backend_params, "quiet_mode");
-	    quiet_mode = TRUE;
-	    break;
+    case 'q':
+      backend_params = g_slist_append(backend_params, "quiet_mode");
+      quiet_mode = TRUE;
+      break;
 
-	case 'g':
-	    guile_proc = g_strdup(optarg);
+    case 'g':
+      guile_proc = g_strdup(optarg);
+      break;
 
-	    break;
+    case 'l':
+      pre_backend_list = g_slist_append(pre_backend_list, optarg);
+      break;
 
-        case 'l':        
-           pre_backend_list = g_slist_append(pre_backend_list, optarg);
-           break;
+    case 'm':
+      post_backend_list = g_slist_append(post_backend_list, optarg);
+      break;
 
-        case 'm':        
-           post_backend_list = g_slist_append(post_backend_list, optarg);
-           break;
+    case 'n':
+      backend_params = g_slist_append(backend_params, "nomunge_mode");
+      nomunge_mode = TRUE;
+      break;
 
-        case 'n':
-	   backend_params = g_slist_append(backend_params, "nomunge_mode");
-	   nomunge_mode = TRUE;
-           break;
+    case 'o':
+      g_free(output_filename);
+      output_filename = g_strdup(optarg);
+      break;
 
-	case 'o':
-	    g_free(output_filename);
-	    output_filename = g_strdup(optarg);
-	    break;
+    case 'O':
+      backend_params = g_slist_append(backend_params, optarg);
+      break;
 
-	case 'O':        
-	  backend_params = g_slist_append(backend_params, optarg);
-	  break;
+    case 'c':
+      scm_internal_stack_catch (SCM_BOOL_T,
+                                (scm_t_catch_body) scm_c_eval_string,
+                                (void *) optarg,
+                                (scm_t_catch_handler) catch_handler,
+                                (void *) optarg);
+      break;
 
-	case 'c':
-        scm_internal_stack_catch (SCM_BOOL_T,
-                                  (scm_t_catch_body) scm_c_eval_string,
-                                  (void *) optarg,
-                                  (scm_t_catch_handler) catch_handler,
-                                  (void *) optarg);
-	    break;
+    case 's':
+      backend_params = g_slist_append(backend_params, "sort_mode");
+      sort_mode = TRUE;
+      break;
 
-        case 's':
- 	    backend_params = g_slist_append(backend_params, "sort_mode");
-            sort_mode = TRUE;
-            break;
+    case 'h':
+      usage(argv[0]);
+      break;
 
+    case 'V':
+      version();
+      break;
 
-	case 'h':
-	    usage(argv[0]);
-	    break;
-
-	case 'V':
-          version();
-          break;
-
-	case '?':
-	default:
-	    usage(argv[0]);
-	    break;
-	}
+    case '?':
+    default:
+      usage(argv[0]);
+      break;
     }
+  }
 
-    if (quiet_mode) {
-	verbose_mode = FALSE;
-    }
+  if (quiet_mode) {
+    verbose_mode = FALSE;
+  }
 
-    return (optind);
+  return (optind);
 }
