@@ -1,9 +1,9 @@
-.TH gschem 1 "February 14th, 2010" "gEDA Project" 1.6.1.20100214
+.TH gschem 1 "January 5th, 2010" "gEDA Project" 1.6.1.20100214
 .SH NAME
 gschem - gEDA/gaf Schematic Capture
 .SH SYNOPSIS
 .B gschem
-[\fIOPTION\fR ...] [\fIFILE\fR ...]
+[\fIOPTION\fR ...] [\fI--\fR] [\fIFILE\fR ...]
 .SH DESCRIPTION
 .PP
 .B gschem
@@ -23,53 +23,56 @@ schematics.
 
 .SH OPTIONS
 .TP 8
-.B -q
+\fB-q\fR, \fB--quiet\fR
 Quiet mode. Turn off all warnings/notes/messages.
 .TP 8
-.B -v
+\fB-v\fR, \fB--verbose\fR
 Verbose mode.  Output all diagnostic information.
 .TP 8
-.B -r filename
-Specify a rc filename.  Normally
-.B gschem
+\fB-r\fR, \fB--config-file\fR=\fIFILE\fR
+Specify an additional configuration file.  Normally \fBgschem\fR
 searches for the system configuration file, then
 `$HOME/.gEDA/gschemrc', and finally for a `gschemrc' file in the
 current working directory.  This option allows the user to specify an
 additional rc file which is read after all the other rc files have
 been are read.
 .TP 8
-.B -s filename
+\fB-s\fR \fIFILE\fR
 Specify a Scheme script to be executed at startup.
 .TP 8
-.B -o filename
+\fB-o\fR, \fB--output\fR=\fIFILE\fR
 Specify a filename for PostScript output.  This command line argument
-is useful when running
-.B gschem
-from a shell script and with a Scheme script.  The filename can be
-changed through the print dialog box.
+is useful when running \fBgschem\fR from a shell script and with a
+Scheme script.  The filename can be changed through the print dialog
+box.
 .TP 8
-.B -p
-Automatically place the window. This may be useful if running gschem
+\fB-p\fR
+Automatically place the window. This may be useful if running \fBgschem\fR
 from the command line and generating output.
 .TP 8
-.B -h
+\fB-h\fR, \fB--help\fR
 Print a help message.
 .TP 8
-.B -V
-Print
-.B gschem
-version information.
+\fB-V\fR, \fB--version\fR
+Print \fBgschem\fR version information.
+.TP 8
+\fB--\fR
+Treat all remaining arguments as schematic or symbol filenames.  Use
+this if you have a schematic or symbol filename which begins with `-'.
 
 .SH SCHEMATIC AND SYMBOL FILES
-Optionally, schematic or symbol filenames may be specified on the
+Optionally, schematic or symbol \fIFILE\fRs may be specified on the
 command line.  Any schematic or symbols specified are loaded at
 startup as separate documents in the schematic editor.
+.PP
+If no \fIFILE\fRs are specified, a blank schematic is created for
+editing.
 
 .SH ENVIRONMENT
 .TP 8
 .B GEDADATA
 specifies the search directory for Scheme and rc files.  The default
-is `${prefix}/share/gEDA').
+is `${prefix}/share/gEDA'.
 .TP 8
 .B GEDADATARC
 specifies the search directory for rc files.  The default is `$GEDADATA'.
@@ -79,7 +82,7 @@ See the `AUTHORS' file included with this program.
 
 .SH COPYRIGHT
 .nf
-Copyright \(co 1999-2010 gEDA Contributors.  License GPLv2+: GNU GPL
+Copyright \(co 1999-2011 gEDA Contributors.  License GPLv2+: GNU GPL
 version 2 or later.  Please see the `COPYING' file included with this
 program for full details.
 .PP
@@ -87,8 +90,7 @@ This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 
 .SH SEE ALSO
-.BR gnetlist (1)
-.BR gsymcheck (1)
+\fBgnetlist\fR(1), \fBgsymcheck\fR(1)
 .PP
 The full documentation for
 .B gschem

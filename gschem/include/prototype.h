@@ -713,7 +713,6 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type);
 void o_undo_cleanup(void);
 void o_undo_remove_last_undo(GSCHEM_TOPLEVEL *w_current);
 /* parsecmd.c */
-void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);
 /* s_stretch.c */
 GList *s_stretch_add(GList *list, OBJECT *object, int whichone);

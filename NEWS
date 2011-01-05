@@ -10,8 +10,14 @@ more information, please consult the `ChangeLog' file.
 Notable changes in gEDA/gaf 1.7.0
 =================================
 
-* `gschem' no longer supports the `-t' option. It supports a new `-V'
-  option to display version information.
+* Several changes to `gschem' command-line options:
+
+  - The `-t' option is no longer supported.
+
+  - Several command-line options now support a long-form alternative.
+
+  - A new `-V' or `--version' option is available, which displays
+    version information.
 
 * `gschem' now provides a "Select All" function, which is bound to
   <Control a> by default.

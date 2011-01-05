@@ -21,6 +21,7 @@
 #include <version.h>
 
 #include <stdio.h>
+#include <ctype.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -31,39 +32,75 @@
 #include <dmalloc.h>
 #endif
 
-#define OPTIONS "hqvr:s:o:pV"
+#define GETOPT_OPTIONS "hqvr:s:o:pV"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
 extern int optind;
 #endif
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- * 
+#ifdef HAVE_GETOPT_H
+#include <getopt.h>
+#endif
+
+#ifdef HAVE_GETOPT_LONG
+struct option long_options[] =
+  {
+    {"help", 0, 0, 'h'},
+    {"version", 0, 0, 'V'},
+    {"quiet", 0, 0, 'q'},
+    {"verbose", 0, 0, 'v'},
+    {"config-file", 0, 0, 'r'},
+    {"output", 0, 0, 'o'},
+    {0, 0, 0, 0}
+  };
+#endif
+
+/*! \brief Print brief help message and exit.
+ * \par Function Description
+ * Print brief help message describing gschem usage & command-line
+ * options, then exit with \a exit_status.
+ *
+ * \param cmd         First element of argv (name of program as run).
  */
-void usage(char *cmd)
+static void
+usage(char *cmd)
 {
-  printf(_("Usage: %s [OPTIONS] schematic_filename1 ... schematic_filenameN\n"
-         "  -q            Quiet mode\n"
-         "  -v            Verbose mode on\n"
-         "  -r filename   Rc filename\n"
-         "  -s filename   Script (guile) filename\n"
-         "  -o filename   Output filename (for printing)\n"
-         "  -p            Automatically place the window\n"
-         "  -V            Show version information\n"
-         "  -h            Help; this message\n"
-         "\n"), cmd);
+  printf(_(
+"Usage: %s [OPTION ...] [--] [FILE ...]\n"
+"\n"
+"Interactively edit gEDA schematics or symbols.  If one or more FILEs\n"
+"are specified, open them for editing; otherwise, create a new, empty\n"
+"schematic.\n"
+"\n"
+"Options:\n"
+"  -q, --quiet              Quiet mode.\n"
+"  -v, --verbose            Verbose mode.\n"
+"  -r, --config-file=FILE   Additional configuration file to load.\n"
+"  -s FILE                  Scheme script to run at startup.\n"
+"  -o, --output=FILE        Output filename (for printing).\n"
+"  -p                       Automatically place the window.\n"
+"  -V, --version            Show version information.\n"
+"  -h, --help               Help; this message.\n"
+"  --                       Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs to <geda-bug@seul.org>\n"
+"gEDA/gaf homepage: <http://gpleda.org>\n"),
+         cmd);
   exit(0);
 }
 
+/*! \brief Print version info and exit.
+ * \par Function Description
+ * Print gEDA version, and copyright/warranty notices, and exit with
+ * exit status 0.
+ */
 static void
 version ()
 {
   printf(_(
 "gEDA %s (g%.7s)\n"
-"Copyright (C) 1998-2010 gEDA developers\n"
+"Copyright (C) 1998-2011 gEDA developers\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"
 "included in the gEDA distribution.\n"
@@ -72,16 +109,24 @@ version ()
   exit (0);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- * 
+/*! \brief Parse gschem command-line options.
+ * \par Function Description
+ * Parse command line options, displaying usage message or version
+ * information as required.
+ *
+ * \param argc Number of command-line arguments.
+ * \param argv Array of command-line arguments.
+ * \return index into \a argv of first non-option argument.
  */
-int parse_commandline(int argc, char *argv[])
+int
+parse_commandline(int argc, char *argv[])
 {
   int ch;
-
-  while ((ch = getopt (argc, argv, OPTIONS)) != -1) {
+#ifdef HAVE_GETOPT_LONG
+  while ((ch = getopt_long (argc, argv, GETOPT_OPTIONS, long_options, NULL)) != -1) {
+#else
+  while ((ch = getopt (argc, argv, GETOPT_OPTIONS)) != -1) {
+#endif
     switch (ch) {
       case 'v':
         verbose_mode = TRUE;
@@ -116,9 +161,23 @@ int parse_commandline(int argc, char *argv[])
         break;
 
       case '?':
-      default:
-        usage(argv[0]);
+#ifndef HAVE_GETOPT_LONG
+        if ((optopt != ':') && (strchr (GETOPT_OPTIONS, optopt) != NULL)) {
+          fprintf (stderr,
+                   "ERROR: -%c option requires an argument.\n\n",
+                   optopt);
+        } else if (isprint (optopt)) {
+          fprintf (stderr, "ERROR: Unknown option -%c.\n\n", optopt);
+        } else {
+          fprintf (stderr, "ERROR: Unknown option character `\\x%x'.\n\n",
+                   optopt);
+        }
+#endif
+        fprintf (stderr, "\nRun `%s --help' for more information.\n", argv[0]);
+        exit (1);
         break;
+      default:
+        g_assert_not_reached ();
     }
   }
 
