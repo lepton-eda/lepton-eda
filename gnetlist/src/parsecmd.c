@@ -67,26 +67,34 @@ struct option long_options[] =
 
 void usage(char *cmd)
 {
-    printf("Usage: %s [OPTIONS] filename1 ... filenameN\n", cmd);
-    printf("  -e  --embedd       Force embedding contents of .include file (spice-sdb)\n");
-    printf("  -h  --help         Print this help string\n");
-    printf("  -i                 Interactive scheme mode\n");
-    printf("  -I  --include      Put .INCLUDE <filename> in output file instead\n");
-    printf("                     of model file's contents (spice-sdb)\n");
-    printf("  -q                 Quiet mode\n");
-    printf("  -l  filename       Load scheme file before loading backend\n");
-    printf("  -m  filename       Load scheme file after loading backend,\n");
-    printf("                     but still before executing procedure\n");
-    printf("  -n  --nomunge      Don't autocorrect refdeses (spice-sdb)\n");
-    printf("  -g  proc           Scheme procedure (netlister backend) to execute.\n");
-    printf("                     Use '-g help' to list available backends.\n");
-    printf("  -o  filename       Output netlist filename\n");
-    printf("  -c  string         Execute string as a scheme script\n");
-    printf("  -O  option         Pass the given option to the backend\n");
-    printf("  -v  --verbose      Verbose mode on\n");
-    printf("  -s  --sort         Sort output netlist (spice-sdb)\n");
-    printf("\n");
-    exit(0);
+  printf (
+"Usage: %s [OPTION ...] [-g BACKEND] [--] FILE ...\n"
+"\n"
+"Generate a netlist from one or more gEDA schematic FILEs.\n"
+"\n"
+"General options:\n"
+"  -q              Quiet mode.\n"
+"  -v, --verbose   Verbose mode.\n"
+"  -g BACKEND      Specify netlist backend to use.\n"
+"  -O STRING       Pass an option string to backend.\n"
+"  -l FILE         Load Scheme file before loading backend.\n"
+"  -m FILE         Load Scheme file after loading backend.\n"
+"  -c EXPR         Evaluate Scheme expression at startup.\n"
+"  -i              Enter interactive Scheme REPL after loading.\n"
+"  -h, --help      Help; this message.\n"
+"  --              Treat all remaining arguments as filenames.\n"
+"\n"
+"A list of available backends can be obtained using `-g help'.\n"
+"\n"
+"Backend-specific options:\n"
+"  -e, --embedd    Force embedding of .include file contents (spice-sdb).\n"
+"  -n, --nomunge   Do not autocorrect component refdes (spice-sdb).\n"
+"  -s, --sort      Sort output netlist (spice-sdb).\n"
+"\n"
+"Report bugs to <geda-bug@seul.org>.\n"
+"gEDA/gaf homepage: <http://gpleda.org>\n",
+           cmd);
+  exit (0);
 }
 
 
