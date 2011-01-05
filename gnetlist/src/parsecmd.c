@@ -19,6 +19,7 @@
  */
 
 #include <config.h>
+#include <version.h>
 
 #include <stdio.h>
 #ifdef HAVE_STRING_H
@@ -41,7 +42,7 @@
 #include <dmalloc.h>
 #endif
 
-#define OPTIONS "o:qieIhvsg:c:l:m:O:n"
+#define OPTIONS "o:qieIhvsg:c:l:m:O:nV"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -56,6 +57,7 @@ struct option long_options[] =
   {"help", 0, 0, 'h'},
   {"nomunge", 0, 0, 'n'},
   {"verbose", 0, 0, 'v'},
+  {"version", 0, 0, 'V'},
   {"sort", 0, 0, 's'},
   {"embedd", 0, 0, 'e'},
   {"include", 0, 0, 'I'},
@@ -82,6 +84,7 @@ void usage(char *cmd)
 "  -c EXPR         Evaluate Scheme expression at startup.\n"
 "  -i              Enter interactive Scheme REPL after loading.\n"
 "  -h, --help      Help; this message.\n"
+"  -V, --version   Show version information.\n"
 "  --              Treat all remaining arguments as filenames.\n"
 "\n"
 "A list of available backends can be obtained using `-g help'.\n"
@@ -97,6 +100,24 @@ void usage(char *cmd)
   exit (0);
 }
 
+/*! \brief Print version info and exit.
+ * \par Function Description
+ * Print gEDA version, and copyright/warranty notices, and exit with
+ * exit status 0.
+ */
+static void
+version ()
+{
+  printf(
+"gEDA %s (g%.7s)\n"
+"Copyright (C) 1998-2011 gEDA developers\n"
+"This is free software, and you are welcome to redistribute it under\n"
+"certain conditions. For details, see the file `COPYING', which is\n"
+"included in the gEDA distribution.\n"
+"There is NO WARRANTY, to the extent permitted by law.\n",
+         PACKAGE_DOTTED_VERSION, PACKAGE_GIT_COMMIT);
+  exit (0);
+}
 
 /* from guile (libguile/gh_init.c) */
 static SCM
@@ -193,6 +214,10 @@ int parse_commandline(int argc, char *argv[])
 	case 'h':
 	    usage(argv[0]);
 	    break;
+
+	case 'V':
+          version();
+          break;
 
 	case '?':
 	default:

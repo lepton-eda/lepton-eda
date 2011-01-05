@@ -38,6 +38,9 @@ Notable changes in gEDA/gaf 1.7.0
 * Special characters, including commas, are now escaped or quoted
   appropriately in `gattrib' CSV output.
 
+* `gnetlist' now provides a `-V' or `--version' option, which displays
+  version information.
+
 * Several `gnetlist' backends have now been fixed so that it should no
   longer be necessary to set an expanded Guile stack in gEDA's config
   files.
