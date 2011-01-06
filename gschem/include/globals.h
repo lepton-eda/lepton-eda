@@ -35,7 +35,6 @@ extern GdkColor white;
 extern GdkColor black;
 
 extern char *rc_filename; 
-extern char *script_filename;
 extern char *output_filename;
 
 

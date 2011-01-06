@@ -37,7 +37,6 @@ GSCHEM_TOPLEVEL *global_window_current = NULL;
 GList *global_window_list = NULL;
 
 char *rc_filename     = NULL;
-char *script_filename = NULL;
 char *output_filename = NULL;
 
 /* colors */

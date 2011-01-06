@@ -318,13 +318,6 @@ void main_prog(void *closure, int argc, char *argv[])
   /* Run post-load expressions */
   g_scm_eval_protected (s_post_load_expr, scm_current_module ());
 
-  /* Execute a script if it exists */
-  if (script_filename) {
-    s_log_message(_("Executing guile script [%s]\n"),
-                  script_filename);
-    g_read_file(w_current->toplevel, script_filename);
-  }
-
   /* open up log window on startup */
   if (w_current->log_window == MAP_ON_STARTUP) {
     x_log_open ();

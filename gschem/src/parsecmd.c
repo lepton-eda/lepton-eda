@@ -138,6 +138,7 @@ parse_commandline(int argc, char *argv[])
   SCM sym_set_x = scm_from_locale_symbol ("set!");
   SCM sym_load_path = scm_from_locale_symbol ("%load-path");
   SCM sym_begin = scm_from_locale_symbol ("begin");
+  SCM sym_load = scm_from_locale_symbol ("load");
 
 #ifdef HAVE_GETOPT_LONG
   while ((ch = getopt_long (argc, argv, GETOPT_OPTIONS, long_options, NULL)) != -1) {
@@ -158,7 +159,13 @@ parse_commandline(int argc, char *argv[])
         break;
 
       case 's':
-        script_filename = g_strdup (optarg);
+        /* Argument is filename of a Scheme script to be run on gschem
+         * load.  Add the necessary expression to be evaluated after
+         * loading. */
+        s_post_load_expr =
+          scm_cons (scm_list_2 (sym_load,
+                                scm_from_locale_string (optarg)),
+                    s_post_load_expr);
         break;
 
       case 'o':
