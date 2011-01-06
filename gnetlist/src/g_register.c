@@ -93,7 +93,7 @@ static struct gsubr_t gnetlist_funcs[] = {
     3, 0, 0, g_graphical_objs_in_net_with_attrib_get_attrib },
 
   /* SDB -- 9.1.2003 */
-  { "gnetlist:get-calling-flags",   0, 0, 0, g_get_calling_flags },
+  { "gnetlist:get-backend-arguments", 0, 0, 0, g_get_backend_arguments },
   { NULL,                           0, 0, 0, NULL } };
 
 

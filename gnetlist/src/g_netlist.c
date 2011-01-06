@@ -728,38 +728,24 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
   return (scm_return_value);
 }
 
-/* 
-   This function returns certain calling flags to the calling guile prog. 
-   The calling flags are returned to Guile as a list of option/value pairs [e.g. 
-   ((verbose_mode #t) (interactive_mode #f) . . . ) ]
-   It is used primarily to enable refdes sorting during netlisting via 
-   the -s flag.  Note that this prog is not very flexible -- the allowed 
-   calling flags are hard coded into the function.  At some point this 
-   should be fixed . . . 
-   9.1.2003 -- SDB 
- 
-   8.2.2005 -- Carlos Nieves Onega
-   Different modes are now included in the backend_params list, as well as
-   the backend parameters given from the command line. Since the function 
-   calling-flag? in scheme/gnetlist.scm returns false if the calling flag was
-   not found, it's only necessary to include the flags being true.
-*/
-SCM g_get_calling_flags()
-{
-    SCM arglist = SCM_EOL;
 
-    GSList *aux;
-  
-    aux = backend_params;
-    while (aux != NULL) {
-      arglist = scm_cons (scm_list_n (scm_from_locale_string (aux->data),
-				      SCM_BOOL (TRUE),
-				      SCM_UNDEFINED), 
-			  arglist);
-      aux = aux->next;
-    }
-    
-    return (arglist);
+/*! \brief Obtain a list of `-O' backend arguments.
+ * \par Function Description
+ * Returns a list of arguments passed to the gnetlist backend via the
+ * `-O' gnetlist command-line option.
+ */
+SCM
+g_get_backend_arguments()
+{
+  SCM result = SCM_EOL;
+  GSList *iter;
+
+  for (iter = backend_params; iter != NULL; iter = g_slist_next (iter)) {
+    result = scm_cons (scm_from_locale_string ((char *) iter->data),
+                       result);
+  }
+
+  return scm_reverse_x (result, SCM_UNDEFINED);
 }
 
 
