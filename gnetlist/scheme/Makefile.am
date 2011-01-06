@@ -6,7 +6,7 @@ PCBM4DIR=	@PCBM4DIR@
 PCBCONFDIR=	@PCBCONFDIR@
 
 scmdatadir = @GEDADATADIR@/scheme
-scmdata_DATA = $(DIST_SCM) $(BUILT_SCM)
+nobase_scmdata_DATA = $(DIST_SCM) $(BUILT_SCM)
 
 DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-geda.scm \
 	   gnet-spice.scm gnet-tango.scm gnet-verilog.scm \
@@ -20,7 +20,8 @@ DIST_SCM = gnet-PCB.scm gnet-allegro.scm gnet-bom.scm gnet-geda.scm \
 	   gnet-futurenet2.scm gnet-cascade.scm \
 	   gnet-redac.scm gnet-systemc.scm gnet-eagle.scm \
 	   gnet-pcbpins.scm gnet-calay.scm gnet-osmond.scm \
-	   gnet-mathematica.scm gnet-liquidpcb.scm
+	   gnet-mathematica.scm gnet-liquidpcb.scm \
+	   gnetlist/backend-getopt.scm
 
 
 EXTRA_DIST = $(DIST_SCM) $(SCM_SRCS)
