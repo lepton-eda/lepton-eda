@@ -243,9 +243,9 @@ void main_prog(void *closure, int argc, char *argv[])
     /* free(cwd); - Defered; see below */
 
     if (argv[argv_index] == NULL) {
-        fprintf(stderr,
-                "\nERROR! You must specify at least one filename\n\n");
-        usage(argv[0]);
+        fprintf (stderr, "ERROR: No schematics files specified for processing.\n");
+        fprintf (stderr, "\nRun `%s --help' for more information.\n", argv[0]);
+        exit (1);
     }
 
     g_set_project_current(pr_current);
