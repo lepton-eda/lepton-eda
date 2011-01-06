@@ -10,9 +10,9 @@ to contribute to gEDA.
 How to submit patches
 =====================
 
-Please submit patches to the patch tracker on SourceForge.net:
+Please submit patches to the bug tracker on Launchpad:
 
-  <https://sourceforge.net/tracker/?group_id=161080&atid=818428>
+  <https://bugs.launchpad.net/geda>
 
 Once you've submitted your patches, you may wish to also e-mail the
 `gEDA-user' mailing list [1] to announce that you've done so and to ask
@@ -44,9 +44,8 @@ integrate them, please try to follow the following guidelines:
         Sometimes, the commit message will be considerably longer than
         the patch itself.
 
-      * If the patch is related to another ticket in the
-        SourceForge.net tracker (i.e. a bug or feature request),
-        include its tracker item number.
+      * If the patch is related to another bug in the Launchpad
+        tracker, include its bug number.
 
       * If your patch fixes a regression, and you know which commit
         introduced the regression, include the broken commit's ID.

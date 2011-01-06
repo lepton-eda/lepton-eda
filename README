@@ -2,7 +2,7 @@
  'gschem and Friends' Electronic Design Suite
 ==============================================
 
-Copyright (C) 1998-2010 gEDA Developers
+Copyright (C) 1998-2011 gEDA Developers
 
 Introduction
 ============
@@ -197,9 +197,12 @@ There are several ways to get help with installing and using gEDA:
    `geda-user' mailing list.
    <http://www.gpleda.org/mailinglists.html>
 
+ - Alternatively, you can add your question to the gEDA Answers page
+   on Launchpad. <https://answers.launchpad.net/geda>
+
  - If you have discovered a bug, have a feature request, or have
-   written a patch to gEDA, please create an item on the gEDA issue
-   tracker.  <http://sourceforge.net/tracker/?group_id=161080>
+   written a patch to gEDA, please create an item on the gEDA Bugs
+   page on Launchpad. <http://bugs.launchpad.net/geda>
 
 License
 =======
@@ -210,7 +213,7 @@ the `COPYING' file for the full text of the license.
 
 The programs and associated files are:
 
-  Copyright (C) 1998-2010 by Ales Hvezda and the respective original
+  Copyright (C) 1998-2011 by Ales Hvezda and the respective original
   authors.
 
 See the `AUTHORS' file for a more extensive list of contributors to
