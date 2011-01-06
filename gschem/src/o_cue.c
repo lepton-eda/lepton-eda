@@ -36,7 +36,6 @@
  */
 void o_cue_redraw_all (GSCHEM_TOPLEVEL *w_current, GList *list, gboolean draw_selected)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
   GList *iter;
 

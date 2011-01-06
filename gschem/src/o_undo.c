@@ -296,7 +296,6 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
   UNDO *save_current;
   int save_logging;
   int find_prev_data=FALSE;
-  int prev_status;
 
   char *save_filename;
 

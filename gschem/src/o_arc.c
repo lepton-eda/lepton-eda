@@ -43,8 +43,6 @@
  */
 void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-
   if (o_current->arc == NULL) {
     return;
   }

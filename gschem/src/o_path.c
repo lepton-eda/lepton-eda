@@ -299,7 +299,6 @@ static void o_path_fill_mesh (GdkDrawable *w, GdkGC *gc, COLOR *color,
  */
 void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   PATH *path = o_current->path;
   int angle1, pitch1, angle2, pitch2;
   FILL_FUNC fill_func;

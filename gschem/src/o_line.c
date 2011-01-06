@@ -43,7 +43,6 @@
  */
 void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
 
   if (o_current->line == NULL) {

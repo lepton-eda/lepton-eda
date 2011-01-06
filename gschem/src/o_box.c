@@ -56,7 +56,6 @@ typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, COLOR *color,
  */
 void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int angle1, pitch1, angle2, pitch2;
   FILL_FUNC fill_func;
 

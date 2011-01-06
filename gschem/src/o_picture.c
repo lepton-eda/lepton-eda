@@ -298,7 +298,6 @@ void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_picture_draw (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
 
   if (o_current->picture == NULL) {

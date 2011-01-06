@@ -96,7 +96,6 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
                             GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int prev_state;
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
@@ -518,8 +517,6 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
                              GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int prev_state;
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 

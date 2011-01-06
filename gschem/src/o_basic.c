@@ -189,7 +189,6 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
  */
 void o_redraw (GSCHEM_TOPLEVEL *w_current, GList *object_list, gboolean draw_selected)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
   GList *iter;
 
@@ -217,8 +216,6 @@ void o_redraw (GSCHEM_TOPLEVEL *w_current, GList *object_list, gboolean draw_sel
  */
 void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-
   if (o_current == NULL)
   return;
 

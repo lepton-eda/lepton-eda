@@ -323,7 +323,6 @@ preview_event_configure (GtkWidget         *widget,
                          gpointer           user_data)
 {
   gboolean retval;
-  int save_redraw;
   GSCHEM_TOPLEVEL *preview_w_current = PREVIEW (widget)->preview_w_current;
   PAGE     *preview_page = preview_w_current->toplevel->page_current;
 

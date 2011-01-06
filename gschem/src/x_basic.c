@@ -172,7 +172,6 @@ void x_vscrollbar_update(GSCHEM_TOPLEVEL *w_current)
  */
 void x_scrollbars_update(GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   if (w_current->scrollbars_flag == FALSE) {
     return;
   }
