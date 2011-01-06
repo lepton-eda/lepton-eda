@@ -42,7 +42,7 @@
 #include <dmalloc.h>
 #endif
 
-#define OPTIONS "o:qieIhvsg:c:l:m:O:nV"
+#define OPTIONS "c:eg:hiIl:L:m:o:O:nqsvV"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -77,6 +77,7 @@ void usage(char *cmd)
 "General options:\n"
 "  -q              Quiet mode.\n"
 "  -v, --verbose   Verbose mode.\n"
+"  -L DIR          Add DIR to Scheme search path.\n"
 "  -g BACKEND      Specify netlist backend to use.\n"
 "  -O STRING       Pass an option string to backend.\n"
 "  -l FILE         Load Scheme file before loading backend.\n"
@@ -136,7 +137,10 @@ parse_commandline (int argc, char *argv[])
 {
   int ch;
   SCM sym_begin = scm_from_locale_symbol ("begin");
+  SCM sym_cons = scm_from_locale_symbol ("cons");
   SCM sym_load = scm_from_locale_symbol ("load");
+  SCM sym_set_x = scm_from_locale_symbol ("set!");
+  SCM sym_load_path = scm_from_locale_symbol ("%load-path");
 
 #ifdef HAVE_GETOPT_LONG
   /* int option_index = 0; */
@@ -170,6 +174,19 @@ parse_commandline (int argc, char *argv[])
     case 'q':
       backend_params = g_slist_append(backend_params, "quiet_mode");
       quiet_mode = TRUE;
+      break;
+
+    case 'L':
+      /* Argument is a directory to add to the Scheme load path.
+       * Add the necessary expression to be evaluated before rc file
+       * loading. */
+      pre_rc_list =
+        scm_cons (scm_list_3 (sym_set_x,
+                              sym_load_path,
+                              scm_list_3 (sym_cons,
+                                          scm_from_locale_string (optarg),
+                                          sym_load_path)),
+                  pre_rc_list);
       break;
 
     case 'g':
@@ -254,6 +271,9 @@ parse_commandline (int argc, char *argv[])
   }
 
   /* Make sure Scheme expressions can be passed straight to eval */
+  pre_rc_list = scm_cons (sym_begin,
+                          scm_reverse_x (pre_rc_list, SCM_UNDEFINED));
+  scm_gc_protect_object (pre_rc_list);
   pre_backend_list = scm_cons (sym_begin,
                                scm_reverse_x (pre_backend_list, SCM_UNDEFINED));
   scm_gc_protect_object (pre_backend_list);

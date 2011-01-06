@@ -184,6 +184,11 @@ void main_prog(void *closure, int argc, char *argv[])
     g_register_funcs();
 
     pr_current = s_toplevel_new ();
+
+    /* Evaluate Scheme expressions that need to be run before rc files
+     * are loaded. */
+    g_scm_eval_protected (pre_rc_list, scm_current_module ());
+
     g_rc_parse(pr_current, "gnetlistrc", rc_filename);
     /* immediately setup user params */
     i_vars_set (pr_current);

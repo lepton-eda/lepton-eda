@@ -37,6 +37,7 @@ extern int sort_mode;
 extern int embedd_mode;
 extern int nomunge_mode;
 extern char *output_filename;
+extern SCM pre_rc_list;       /* before rc loaded */
 extern SCM pre_backend_list;  /* before backend loaded */
 extern SCM post_backend_list; /* after backend loaded, before execute */
 extern GSList *backend_params;  /* Parameters passed to the backend from the command line */

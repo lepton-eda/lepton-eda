@@ -56,6 +56,9 @@ int nomunge_mode = FALSE;
 int netlist_mode=gEDA;
 char *output_filename=NULL;
 
+/* scheme expression to evaluate before loading of rc files */
+SCM pre_rc_list = SCM_EOL;
+
 /* scheme expression to evaluate before loading of the backend */
 SCM pre_backend_list = SCM_EOL;
 
