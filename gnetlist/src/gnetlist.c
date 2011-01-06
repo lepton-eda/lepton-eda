@@ -187,7 +187,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
     /* Evaluate Scheme expressions that need to be run before rc files
      * are loaded. */
-    g_scm_eval_protected (pre_rc_list, scm_current_module ());
+    scm_eval_x (pre_rc_list, scm_current_module ());
 
     g_rc_parse(pr_current, "gnetlistrc", rc_filename);
     /* immediately setup user params */
@@ -202,7 +202,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
     /* Evaluate the first set of Scheme expressions before we load any
      * schematic files */
-    g_scm_eval_protected (pre_backend_list, scm_current_module ());
+    scm_eval_x (pre_backend_list, scm_current_module ());
 
     i = argv_index;
     while (argv[i] != NULL) {
@@ -278,7 +278,7 @@ void main_prog(void *closure, int argc, char *argv[])
       scm_primitive_load (s_backend_path);
 
       /* Evaluate second set of Scheme expressions. */
-      g_scm_eval_protected (post_backend_list, scm_current_module ());
+      scm_eval_x (post_backend_list, scm_current_module ());
     }
 
     s_traverse_init();
