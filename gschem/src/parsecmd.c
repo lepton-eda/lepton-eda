@@ -32,7 +32,7 @@
 #include <dmalloc.h>
 #endif
 
-#define GETOPT_OPTIONS "hL:o:pqr:s:vV"
+#define GETOPT_OPTIONS "c:hL:o:pqr:s:vV"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -89,6 +89,7 @@ usage(char *cmd)
 "  -v, --verbose            Verbose mode.\n"
 "  -r, --config-file=FILE   Additional configuration file to load.\n"
 "  -L DIR                   Add DIR to Scheme search path.\n"
+"  -c EXPR                  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
 "  -o, --output=FILE        Output filename (for printing).\n"
 "  -p                       Automatically place the window.\n"
@@ -139,6 +140,7 @@ parse_commandline(int argc, char *argv[])
   SCM sym_load_path = scm_from_locale_symbol ("%load-path");
   SCM sym_begin = scm_from_locale_symbol ("begin");
   SCM sym_load = scm_from_locale_symbol ("load");
+  SCM sym_eval_string = scm_from_locale_symbol ("eval-string");
 
 #ifdef HAVE_GETOPT_LONG
   while ((ch = getopt_long (argc, argv, GETOPT_OPTIONS, long_options, NULL)) != -1) {
@@ -164,6 +166,16 @@ parse_commandline(int argc, char *argv[])
          * loading. */
         s_post_load_expr =
           scm_cons (scm_list_2 (sym_load,
+                                scm_from_locale_string (optarg)),
+                    s_post_load_expr);
+        break;
+
+      case 'c':
+        /* Argument is a Scheme expression to be evaluated on gschem
+         * load.  Add the necessary expression to be evaluated after
+         * loading. */
+        s_post_load_expr =
+          scm_cons (scm_list_2 (sym_eval_string,
                                 scm_from_locale_string (optarg)),
                     s_post_load_expr);
         break;

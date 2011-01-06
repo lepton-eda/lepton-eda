@@ -19,6 +19,9 @@ Notable changes in gEDA/gaf 1.7.0
   - The `-s' option can now be used to run multiple Scheme scripts
     during `gschem' startup.
 
+  - A new `-c' option is available, which runs a Scheme expression
+    during `gschem' startup.
+
   - A new `-L' option is available, which adds a directory to the
     Scheme load path.
 
