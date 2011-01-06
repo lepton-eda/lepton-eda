@@ -135,8 +135,9 @@ int
 parse_commandline (int argc, char *argv[])
 {
   int ch;
+  SCM sym_begin = scm_from_locale_symbol ("begin");
+  SCM sym_load = scm_from_locale_symbol ("load");
 
-  /* Converted to getopt_long by SDB 3.3.2006 */
 #ifdef HAVE_GETOPT_LONG
   /* int option_index = 0; */
 
@@ -176,11 +177,19 @@ parse_commandline (int argc, char *argv[])
       break;
 
     case 'l':
-      pre_backend_list = g_slist_append(pre_backend_list, optarg);
+      /* Argument is filename of a Scheme script to be run before
+       * loading gnetlist backend. */
+      pre_backend_list =
+        scm_cons (scm_list_2 (sym_load, scm_from_locale_string (optarg)),
+                  pre_backend_list);
       break;
 
     case 'm':
-      post_backend_list = g_slist_append(post_backend_list, optarg);
+      /* Argument is filename of a Scheme script to be run after
+       * loading gnetlist backend. */
+      post_backend_list =
+        scm_cons (scm_list_2 (sym_load, scm_from_locale_string (optarg)),
+                  post_backend_list);
       break;
 
     case 'n':
@@ -243,6 +252,14 @@ parse_commandline (int argc, char *argv[])
   if (quiet_mode) {
     verbose_mode = FALSE;
   }
+
+  /* Make sure Scheme expressions can be passed straight to eval */
+  pre_backend_list = scm_cons (sym_begin,
+                               scm_reverse_x (pre_backend_list, SCM_UNDEFINED));
+  scm_gc_protect_object (pre_backend_list);
+  post_backend_list = scm_cons (sym_begin,
+                                scm_reverse_x (post_backend_list, SCM_UNDEFINED));
+  scm_gc_protect_object (post_backend_list);
 
   return (optind);
 }

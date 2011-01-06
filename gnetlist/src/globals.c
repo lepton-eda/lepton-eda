@@ -56,12 +56,12 @@ int nomunge_mode = FALSE;
 int netlist_mode=gEDA;
 char *output_filename=NULL;
 
-/* list of filenames to load before loading of the backend */
-GSList *pre_backend_list=NULL;
+/* scheme expression to evaluate before loading of the backend */
+SCM pre_backend_list = SCM_EOL;
 
-/* list of filenames to load after loading of the backend but before the */
-/* execution of the backend procedure */
-GSList *post_backend_list=NULL;
+/* scheme expression to evaluate after loading of the backend but
+ * before the execution of the backend procedure */
+SCM post_backend_list = SCM_EOL;
 
 /* Parameters passed to the backend from the command line */
 GSList *backend_params = NULL;  

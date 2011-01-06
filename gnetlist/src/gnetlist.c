@@ -137,7 +137,6 @@ void main_prog(void *closure, int argc, char *argv[])
     int i;
     int argv_index;
     char *cwd;
-    GSList *list_pnt;
     gchar *str;
     gchar *filename;
 
@@ -198,22 +197,9 @@ void main_prog(void *closure, int argc, char *argv[])
             }
     }
 
-    /* Load the first set of scm files before we load any schematic files */
-    list_pnt = pre_backend_list;
-    while (list_pnt) {
-      if (g_read_file(pr_current, list_pnt->data) != -1) {
-        s_log_message("Read scm file [%s]\n",
-                      (char *) list_pnt->data);
-      } else {
-        s_log_message("Failed to read scm file [%s]\n",
-                      (char *) list_pnt->data);
-        fprintf(stderr, "Failed to read scm file [%s]\n",
-                (char *) list_pnt->data);
-      }
-      list_pnt = g_slist_next(list_pnt);
-    }
-    /* Free now the list of configuration files */
-    g_slist_free(pre_backend_list);
+    /* Evaluate the first set of Scheme expressions before we load any
+     * schematic files */
+    g_scm_eval_protected (pre_backend_list, scm_current_module ());
 
     i = argv_index;
     while (argv[i] != NULL) {
@@ -273,22 +259,8 @@ void main_prog(void *closure, int argc, char *argv[])
         scm_primitive_load_path (scm_from_locale_string (str));
         g_free (str);
 
-        /* Load second set of scm files */
-        list_pnt = post_backend_list;
-        while (list_pnt) {
-          if (g_read_file(pr_current, list_pnt->data) != -1) {
-            s_log_message("Read scm file [%s]\n",
-                          (char *) list_pnt->data);
-          } else {
-            s_log_message("Failed to read scm file [%s]\n",
-                          (char *) list_pnt->data);
-            fprintf(stderr, "Failed to read scm file [%s]\n",
-                 (char *) list_pnt->data);
-          }
-          list_pnt = g_slist_next(list_pnt);
-        }
-        /* Free now the list of configuration files */
-        g_slist_free(post_backend_list);
+        /* Evaluate second set of Scheme expressions. */
+        g_scm_eval_protected (post_backend_list, scm_current_module ());
     }
 
     s_traverse_init();
