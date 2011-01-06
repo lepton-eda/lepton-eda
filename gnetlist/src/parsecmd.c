@@ -55,6 +55,7 @@ extern int optind;
 struct option long_options[] =
   {
     {"help", 0, 0, 'h'},
+    {"list-backends", 0, &list_backends, TRUE},
     {"nomunge", 0, 0, 'n'},
     {"verbose", 0, 0, 'v'},
     {"version", 0, 0, 'V'},
@@ -84,11 +85,10 @@ void usage(char *cmd)
 "  -m FILE         Load Scheme file after loading backend.\n"
 "  -c EXPR         Evaluate Scheme expression at startup.\n"
 "  -i              Enter interactive Scheme REPL after loading.\n"
+"  --list-backends Print a list of available netlist backends.\n"
 "  -h, --help      Help; this message.\n"
 "  -V, --version   Show version information.\n"
 "  --              Treat all remaining arguments as filenames.\n"
-"\n"
-"A list of available backends can be obtained using `-g help'.\n"
 "\n"
 "Backend-specific options:\n"
 "  -e, --embedd    Force embedding of .include file contents (spice-sdb).\n"
@@ -150,6 +150,11 @@ parse_commandline (int argc, char *argv[])
   while ((ch = getopt(argc, argv, OPTIONS)) != -1) {
 #endif
     switch (ch) {
+
+    case 0:
+      /* This is a long-form-only flag option, and has already been
+       * dealt with by getopt_long(). */
+      break;
 
     case 'v':
       backend_params = g_slist_append(backend_params, "verbose_mode");

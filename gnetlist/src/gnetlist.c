@@ -195,11 +195,9 @@ void main_prog(void *closure, int argc, char *argv[])
 
     s_rename_init();
 
-    if(guile_proc!=NULL) {
-        if(!strcmp(guile_proc, "help")) {
-                gnetlist_backends(pr_current);
-                exit(0);
-            }
+    if(list_backends) {
+      gnetlist_backends(pr_current);
+      exit (0);
     }
 
     /* Evaluate the first set of Scheme expressions before we load any

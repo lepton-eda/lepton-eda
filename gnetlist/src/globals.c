@@ -44,6 +44,7 @@ char *guile_proc=NULL;
 
 
 /* command line arguments */
+int list_backends=FALSE;
 int verbose_mode=FALSE;
 int interactive_mode=FALSE;
 int quiet_mode=FALSE;
