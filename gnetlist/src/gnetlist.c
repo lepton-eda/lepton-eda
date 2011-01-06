@@ -257,13 +257,28 @@ void main_prog(void *closure, int argc, char *argv[])
     scm_primitive_load_path (scm_from_locale_string ("gnetlist.scm"));
 
     if (guile_proc) {
-        /* Load the backend scm file */
-        str = g_strdup_printf("gnet-%s.scm", guile_proc);
-        scm_primitive_load_path (scm_from_locale_string (str));
-        g_free (str);
+      SCM s_backend_path;
 
-        /* Evaluate second set of Scheme expressions. */
-        g_scm_eval_protected (post_backend_list, scm_current_module ());
+      /* Search for backend scm file in load path */
+      str = g_strdup_printf("gnet-%s.scm", guile_proc);
+      s_backend_path = scm_sys_search_load_path (scm_from_locale_string (str));
+      g_free (str);
+
+      /* If it couldn't be found, fail. */
+      if (scm_is_false (s_backend_path)) {
+        fprintf (stderr, "ERROR: Could not find backend `%s' in load path.\n",
+                 guile_proc);
+        fprintf (stderr,
+                 "\nRun `%s --list-backends' for a full list of available backends.\n",
+                 argv[0]);
+        exit (1);
+      }
+
+      /* Load backend code. */
+      scm_primitive_load (s_backend_path);
+
+      /* Evaluate second set of Scheme expressions. */
+      g_scm_eval_protected (post_backend_list, scm_current_module ());
     }
 
     s_traverse_init();
