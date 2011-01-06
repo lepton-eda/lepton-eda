@@ -42,7 +42,7 @@
 #include <dmalloc.h>
 #endif
 
-#define OPTIONS "c:eg:hiIl:L:m:o:O:nqsvV"
+#define OPTIONS "c:g:hil:L:m:o:O:qvV"
 
 #ifndef OPTARG_IN_UNISTD
 extern char *optarg;
@@ -56,12 +56,8 @@ struct option long_options[] =
   {
     {"help", 0, 0, 'h'},
     {"list-backends", 0, &list_backends, TRUE},
-    {"nomunge", 0, 0, 'n'},
     {"verbose", 0, 0, 'v'},
     {"version", 0, 0, 'V'},
-    {"sort", 0, 0, 's'},
-    {"embedd", 0, 0, 'e'},
-    {"include", 0, 0, 'I'},
     {0, 0, 0, 0}
   };
 #endif
@@ -89,11 +85,6 @@ void usage(char *cmd)
 "  -h, --help      Help; this message.\n"
 "  -V, --version   Show version information.\n"
 "  --              Treat all remaining arguments as filenames.\n"
-"\n"
-"Backend-specific options:\n"
-"  -e, --embedd    Force embedding of .include file contents (spice-sdb).\n"
-"  -n, --nomunge   Do not autocorrect component refdes (spice-sdb).\n"
-"  -s, --sort      Sort output netlist (spice-sdb).\n"
 "\n"
 "Report bugs to <geda-bug@seul.org>.\n"
 "gEDA/gaf homepage: <http://gpleda.org>\n",
@@ -166,16 +157,6 @@ parse_commandline (int argc, char *argv[])
       interactive_mode = TRUE;
       break;
 
-    case 'I':
-      backend_params = g_slist_append(backend_params, "include_mode");
-      include_mode = TRUE;
-      break;
-
-    case 'e':
-      backend_params = g_slist_append(backend_params, "embedd_mode");
-      embedd_mode = TRUE;
-      break;
-
     case 'q':
       backend_params = g_slist_append(backend_params, "quiet_mode");
       quiet_mode = TRUE;
@@ -214,11 +195,6 @@ parse_commandline (int argc, char *argv[])
                   post_backend_list);
       break;
 
-    case 'n':
-      backend_params = g_slist_append(backend_params, "nomunge_mode");
-      nomunge_mode = TRUE;
-      break;
-
     case 'o':
       g_free(output_filename);
       output_filename = g_strdup(optarg);
@@ -234,11 +210,6 @@ parse_commandline (int argc, char *argv[])
                                 (void *) optarg,
                                 (scm_t_catch_handler) catch_handler,
                                 (void *) optarg);
-      break;
-
-    case 's':
-      backend_params = g_slist_append(backend_params, "sort_mode");
-      sort_mode = TRUE;
       break;
 
     case 'h':

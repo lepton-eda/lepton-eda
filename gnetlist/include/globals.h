@@ -31,12 +31,8 @@ extern char *guile_proc;
 extern int list_backends;
 extern int verbose_mode;
 extern int interactive_mode;
-extern int include_mode;
 extern int quiet_mode;
 extern int netlist_mode;
-extern int sort_mode;
-extern int embedd_mode;
-extern int nomunge_mode;
 extern char *output_filename;
 extern SCM pre_rc_list;       /* before rc loaded */
 extern SCM pre_backend_list;  /* before backend loaded */

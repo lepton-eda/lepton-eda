@@ -76,23 +76,6 @@ Print \fBgnetlist\fR version information.
 Treat all remaining arguments as schematic filenames.  Use this if you
 have a schematic filename which begins with `-'.
 
-.SH BACKEND-SPECIFIC OPTIONS
-.PP
-The following options are ignored unless using the `spice-sdb' backend:
-.TP 8
-\fB-e\fR, \fB--embedd\fR
-Force embedding contents of `.include' files.
-.TP 8
-\fB-n\fR, \fB--nomunge\fR
-Do not autocorrect the refdes attributes.
-.TP 8
-\fB-I\fR, \fB--include\fR
-Put .INCLUDE <filename> in output file instead of model file's contents.
-.TP 8
-\fB-s\fR
-Sorts netlist output for better compatibility with \fBgnucap\fR(1).
-Equivalent to `-O sort_mode'.
-
 .SH BACKENDS
 .PP
 Currently, \fBgnetlist\fR includes the following backends:

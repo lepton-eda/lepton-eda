@@ -49,6 +49,15 @@ Notable changes in gEDA/gaf 1.7.0
 
 * Several changes to `gnetlist' command-line options:
 
+  - Four command-line options specific to the `spice-sdb' backend have
+    been removed.  They can be replaced with `-O <option>' according
+    to the following table:
+
+        -e, --embedd              -O embedd_mode
+        -I, --include             -O include_mode
+        -n, --nomunge             -O nomunge_mode
+        -s, --sort                -O sort_mode
+
   - The list of available backends is now obtained using a new
     `--list-backends' option.  `-g help' no longer outputs a list of
     backends.
