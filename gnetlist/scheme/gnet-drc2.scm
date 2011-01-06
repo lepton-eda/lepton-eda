@@ -537,6 +537,32 @@
 ;
 
 ;;
+;; Check for NoConnection nets with more than one pin connected.
+;;
+;; Example of all-nets: (net1 net2 net3 net4)
+(define (drc2:check-connected-noconnects port all-nets)
+  (for-each
+    (lambda (netname)
+      (let
+        ((directives (gnetlist:graphical-objs-in-net-with-attrib-get-attrib
+                    netname
+                    "device=DRC_Directive"
+                    "value")))
+        ;Only check nets with a NoConnection directive
+        (and
+          (member "NoConnection" directives)
+          ( >  (length (gnetlist:get-all-connections netname)) '1)
+          (begin
+            (display (string-append "ERROR: Net '"
+                            netname "' has connections, but "
+                            "has the NoConnection DRC directive: ") port)
+            (drc2:display-pins-of-type port "all" (gnetlist:get-all-connections netname))
+            (display "." port)
+            (newline port)
+            (set! errors_number (1+ errors_number))))))
+    all-nets))
+
+;;
 ;; Check for nets with less than two pins connected.
 ;;
 ;; Example of all-nets: (net1 net2 net3 net4)
@@ -914,6 +940,14 @@
 		  (display "Checking duplicated references..." port)
 		  (newline port)
 		  (drc2:check-duplicated-references port packages)
+		  (newline port)))
+
+	    ;; Check for NoConnection nets with more than one pin connected.
+	    (if (not (defined? 'dont-check-connected-noconnects))
+		(begin
+		  (display "Checking NoConnection nets for connections..." port)
+		  (newline port)
+		  (drc2:check-connected-noconnects port (gnetlist:get-all-unique-nets "dummy"))
 		  (newline port)))
 
 	    ;; Check nets with only one connection
