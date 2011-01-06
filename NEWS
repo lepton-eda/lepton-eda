@@ -49,6 +49,10 @@ Notable changes in gEDA/gaf 1.7.0
 
 * Several changes to `gnetlist' command-line options:
 
+  - The list of available backends is now obtained using a new
+    `--list-backends' option.  `-g help' no longer outputs a list of
+    backends.
+
   - A new `-L' option is available, which adds a directory to the
     Scheme load path.
 
