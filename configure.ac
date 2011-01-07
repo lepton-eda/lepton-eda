@@ -249,7 +249,6 @@ AC_CONFIG_FILES([Makefile
                  utils/include/Makefile
                  utils/lib/Makefile
                  utils/lib/system-gschlasrc
-                 utils/man/Makefile
                  utils/scripts/Makefile
                  utils/src/Makefile
                  utils/tests/Makefile
