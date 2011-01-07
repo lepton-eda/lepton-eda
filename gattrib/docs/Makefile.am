@@ -20,9 +20,9 @@ dist_man_MANS = gattrib.1
 html_man_files = gattrib.html
 SUFFIXES = .1 .html
 
-if ENABLE_GROFF_HTML
 docsmandir=$(docdir)/man
 dist_docsman_DATA=$(html_man_files)
+if ENABLE_GROFF_HTML
 .1.html:
 	rm -rf $@.tmp && \
 	LC_NUMERIC=C $(GROFF) -man -T html  $< >$@.tmp && \
