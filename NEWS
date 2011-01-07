@@ -2,10 +2,24 @@
  'gschem and Friends' Electronic Design Suite
 ==============================================
 
-Copyright (C) 1998-2010 gEDA Developers
+Copyright (C) 1998-2011 gEDA Developers
 
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
+
+Notable changes in gEDA/gaf 1.6.2
+=================================
+
+ * PNG export from `gschem' will now be cropped correctly.
+
+ * The `partlist' backends for `gnetlist' now handle hierarchical
+   refdes correctly.
+
+ * On Windows, `gschem' and `gattrib' will no longer launch with a
+   command window visible.
+
+Several other bugs were fixed, including a major crash bug in
+gnetlist.
 
 Notable changes in gEDA/gaf 1.6.1
 =================================
