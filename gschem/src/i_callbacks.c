@@ -545,6 +545,23 @@ DEFINE_I_CALLBACK (edit_select_all)
   i_update_menus (w_current);
 }
 
+/*! \brief Deselect all objects on page.
+ * \par Function Description
+ * Sets all objects on page as deselected.
+ */
+DEFINE_I_CALLBACK (edit_deselect)
+{
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) data;
+  o_redraw_cleanstates (w_current);
+
+  o_select_unselect_all (w_current);
+
+  i_set_state (w_current, SELECT);
+  w_current->inside_action = 0;
+  i_update_toolbar (w_current);
+  i_update_menus (w_current);
+}
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

@@ -166,6 +166,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "edit-redo",                 0, 0, 0, g_keys_edit_redo },
   { "edit-select",               0, 0, 0, g_keys_edit_select },
   { "edit-select-all",           0, 0, 0, g_keys_edit_select_all },
+  { "edit-deselect",             0, 0, 0, g_keys_edit_deselect },
   { "edit-copy",                 0, 0, 0, g_keys_edit_copy },
   { "edit-copy-hotkey",          0, 0, 0, g_keys_edit_copy_hotkey },
   { "edit-mcopy",                0, 0, 0, g_keys_edit_mcopy },

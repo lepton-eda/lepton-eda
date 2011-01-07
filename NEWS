@@ -29,7 +29,8 @@ Notable changes in gEDA/gaf 1.7.0
     version information.
 
 * `gschem' now provides a "Select All" function, which is bound to
-  <Control a> by default.
+  <Control a> by default, along with a corresponding "Deselect"
+  function.
 
 * In the `gschem' "Add component" dialog, filtering the component
   library will expand matching libraries.  If the filter is cancelled,
