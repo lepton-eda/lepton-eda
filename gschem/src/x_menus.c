@@ -231,7 +231,11 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
 static gchar* gettext_fn(const gchar *path,
 			 gpointer func_data ATTRIBUTE_UNUSED)
 {
-	return gettext(path);
+  /*! \bug Note that we have to discard the 'const' qualifier here to
+   * avoid build warnings when gettext is disabled.  This is required
+   * due to the prototype of the function pointer argument to
+   * gtk_item_factory_set_translate_func() */
+  return (gchar *) gettext(path);
 }
 
 GtkWidget *get_main_popup(GSCHEM_TOPLEVEL *w_current)

@@ -214,9 +214,10 @@ void main_prog(void *closure, int argc, char *argv[])
   o_undo_init(); 
 
   if (s_path_sys_data () == NULL) {
-    gchar *message = _("You must set the GEDADATA environment variable!\n\n"
-                       "gschem cannot locate its data files. You must set the GEDADATA\n"
-                       "environment variable to point to the correct location.\n");
+    const gchar *message = 
+      _("You must set the GEDADATA environment variable!\n\n"
+        "gschem cannot locate its data files. You must set the GEDADATA\n"
+        "environment variable to point to the correct location.\n");
     GtkWidget* error_diag =
       gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_ERROR,
                               GTK_BUTTONS_OK,

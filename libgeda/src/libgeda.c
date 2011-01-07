@@ -46,9 +46,11 @@
  */
 void libgeda_init(void)
 {
+#ifdef ENABLE_NLS
   /* Initialise gettext */
   bindtextdomain (LIBGEDA_GETTEXT_DOMAIN, LOCALEDIR);
   bind_textdomain_codeset(LIBGEDA_GETTEXT_DOMAIN, "UTF-8");
+#endif
 
   /* Initialise gobject */
   g_type_init ();

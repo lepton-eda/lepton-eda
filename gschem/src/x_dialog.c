@@ -3702,6 +3702,7 @@ close_confirmation_dialog_constructor (GType type,
   GtkTreeIter iter;
   gboolean ret, single_page;
   gchar *tmp, *str;
+  const gchar *cstr;
 
   /* chain up to constructor of parent class */
   object =
@@ -3811,7 +3812,7 @@ close_confirmation_dialog_constructor (GType type,
   }
 
   /* secondary label */
-  str = _("If you don't save, all your changes will be permanently lost.");
+  cstr = _("If you don't save, all your changes will be permanently lost.");
   label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
                                     /* GtkMisc */
                                     "xalign",     0.0,
