@@ -28,6 +28,8 @@ EXTRA_DIST = duplicated-refdes.sch duplicated-refdes.drc2 \
 	     slot-not-defined.drc2 \
 	     slot_out_of_range.sch \
 	     slot_out_of_range.drc2 \
+			 connected-noconnects.sch \
+			 connected-noconnects.drc2 \
 	     unconnected-pin.sch \
 	     unconnected-pin.drc2 \
 	     unconnected-pin-with-drc-directive.sch \
