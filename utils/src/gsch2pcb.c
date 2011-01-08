@@ -1110,9 +1110,6 @@ parse_config (gchar * config, gchar * arg)
     add_m4_file (arg);
   else if (!strcmp (config, "gnetlist"))
     extra_gnetlist_list = g_list_append (extra_gnetlist_list, g_strdup (arg));
-  else if (!strcmp (config, "gnetlist-arg"))
-    extra_gnetlist_arg_list =
-      g_list_append (extra_gnetlist_arg_list, g_strdup (arg));
   else if (!strcmp (config, "empty-footprint"))
     empty_footprint_name = g_strdup (arg);
   else
@@ -1225,10 +1222,10 @@ static gchar *usage_string1 =
   "   --gnetlist backend    A convenience run of extra gnetlist -g commands.\n"
   "                         Example:  gnetlist partslist3\n"
   "                         Creates:  myproject.partslist3\n"
-  "   --gnetlist-arg arg    Allows additional arguments to be passed to gnetlist.\n"
   " --empty-footprint name  See the project.sample file.\n"
   "\n"
   "options (not recognized in a project file):\n"
+  "   --gnetlist-arg arg    Allows additional arguments to be passed to gnetlist.\n"
   "       --fix-elements    If a schematic component footprint is not equal\n"
   "                         to its PCB element Description, update the\n"
   "                         Description instead of replacing the element.\n"
@@ -1276,6 +1273,11 @@ get_args (gint argc, gchar ** argv)
         continue;
       } else if (!strcmp (opt, "fix-elements")) {
         fix_elements = TRUE;
+        continue;
+      } else if (!strcmp (opt, "gnetlist-arg")) {
+        extra_gnetlist_arg_list =
+          g_list_append (extra_gnetlist_arg_list, g_strdup (arg));
+        i++;
         continue;
       } else if (!strcmp (opt, "help") || !strcmp (opt, "h"))
         usage ();
