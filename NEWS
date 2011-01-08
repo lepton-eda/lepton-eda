@@ -18,6 +18,8 @@ Notable changes in gEDA/gaf 1.6.2
  * On Windows, `gschem' and `gattrib' will no longer launch with a
    command window visible.
 
+ * `gnetlist-arg' is no longer valid in `gsch2pcb' project files.
+
 Several other bugs were fixed, including a major crash bug in
 gnetlist.
 
