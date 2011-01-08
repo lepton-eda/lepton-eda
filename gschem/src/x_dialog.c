@@ -3820,7 +3820,7 @@ close_confirmation_dialog_constructor (GType type,
                                     "selectable", TRUE,
                                     /* GtkLabel */
                                     "wrap",       TRUE,
-                                    "label",      str,
+                                    "label",      cstr,
                                     NULL));
   gtk_box_pack_start (GTK_BOX (vbox), label,
                       FALSE, FALSE, 0);
