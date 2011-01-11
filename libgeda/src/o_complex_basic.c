@@ -348,6 +348,9 @@ GList *o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
         g_list_remove (object->complex->prim_objs, o_removed);
     }
     promoted = promotable;
+    /* Invalidate the object's bounds since we may have
+     * stolen objects from inside it. */
+    o_bounds_invalidate (toplevel, object);
   }
 
   /* Attach promoted attributes to the original complex object */
@@ -392,6 +395,7 @@ static void o_complex_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *obj
     }
   }
 
+  o_bounds_invalidate (toplevel, object);
   g_list_free (promotable);
 }
 
