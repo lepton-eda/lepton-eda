@@ -585,6 +585,21 @@ void o_set_color (TOPLEVEL *toplevel, OBJECT *object, int color)
     o_glist_set_color (toplevel, object->complex->prim_objs, color);
 }
 
+/*! \brief Query visibility of the object.
+ *  \par Function Description
+ *  Attribute getter for the visible field within the object.
+ *
+ *  \param toplevel The TOPLEVEL structure
+ *  \param object   The OBJECT structure to be queried
+ *  \return TRUE when VISIBLE, FALSE otherwise
+ */
+gboolean
+o_is_visible (TOPLEVEL *toplevel, OBJECT *object)
+{
+  g_return_val_if_fail (object != NULL, FALSE);
+  return object->visibility == VISIBLE;
+}
+
 /*! \brief Set visibility of the object.
  *  \par Function Description
  *  Set value of visibility field within the object.
