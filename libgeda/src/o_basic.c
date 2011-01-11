@@ -555,11 +555,10 @@ double o_shortest_distance_full (OBJECT *object, int x, int y, int force_solid)
 
 /*! \brief Mark an OBJECT's cached bounds as invalid
  *  \par Function Description
- *  Marks the cached bounds of the given OBJECT as having been
- *  invalidated and in need of an update. They will be recalculated
- *  next time the OBJECT's bounds are requested (e.g. via
- *  world_get_single_object_bounds() ).
- *
+ *  Recursively marks the cached bounds of the given OBJECT and its
+ *  parents as having been invalidated and in need of an update. They
+ *  will be recalculated next time the OBJECT's bounds are requested
+ *  (e.g. via world_get_single_object_bounds() ).
  *  \param [in] toplevel
  *  \param [in] obj
  *
@@ -567,7 +566,9 @@ double o_shortest_distance_full (OBJECT *object, int x, int y, int force_solid)
  */
 void o_bounds_invalidate(TOPLEVEL *toplevel, OBJECT *obj)
 {
-  obj->w_bounds_valid = FALSE;
+  do {
+      obj->w_bounds_valid = FALSE;
+  } while ((obj = obj->parent) != NULL);
 }
 
 
