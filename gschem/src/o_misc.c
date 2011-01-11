@@ -430,7 +430,7 @@ void o_edit_make_visible (GSCHEM_TOPLEVEL *w_current, const GList *o_list)
 
     if (o_current->type == OBJ_TEXT) {
       if (!o_is_visible (toplevel, o_current)) {
-        o_current->visibility = VISIBLE;
+        o_set_visibility (toplevel, o_current, VISIBLE);
         o_text_recreate(toplevel, o_current);
 
         toplevel->page_current->CHANGED = 1;
@@ -579,7 +579,7 @@ void o_edit_hide_specific_text (GSCHEM_TOPLEVEL *w_current,
       const gchar *str = o_text_get_string (w_current->toplevel, o_current);
       if (!strncmp (stext, str, strlen (stext))) {
         if (o_is_visible (toplevel, o_current)) {
-          o_current->visibility = INVISIBLE;
+          o_set_visibility (toplevel, o_current, INVISIBLE);
           o_text_recreate(toplevel, o_current);
 
           toplevel->page_current->CHANGED = 1;
@@ -613,7 +613,7 @@ void o_edit_show_specific_text (GSCHEM_TOPLEVEL *w_current,
       const gchar *str = o_text_get_string (w_current->toplevel, o_current);
       if (!strncmp (stext, str, strlen (stext))) {
         if (!o_is_visible (toplevel, o_current)) {
-          o_current->visibility = VISIBLE;
+          o_set_visibility (toplevel, o_current, VISIBLE);
           o_text_recreate(toplevel, o_current);
 
           toplevel->page_current->CHANGED = 1;

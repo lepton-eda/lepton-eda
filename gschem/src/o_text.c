@@ -701,7 +701,7 @@ void o_text_change(GSCHEM_TOPLEVEL *w_current, OBJECT *object, char *string,
 
   o_text_set_string (toplevel, object, string);
 
-  object->visibility = visibility;
+  o_set_visibility (toplevel, object, visibility);
   object->show_name_value = show;
   o_text_recreate(toplevel, object);
 

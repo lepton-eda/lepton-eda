@@ -1033,7 +1033,7 @@ static void multiattrib_callback_toggled_visible(GtkCellRendererToggle *cell_ren
       ? INVISIBLE : VISIBLE;
 
   /* actually modifies the attribute */
-  o_attrib->visibility = visibility;
+  o_set_visibility (w_current->toplevel, o_attrib, visibility);
   o_text_recreate (w_current->toplevel, o_attrib);
   o_undo_savestate (w_current, UNDO_ALL);
 
