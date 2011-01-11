@@ -770,3 +770,24 @@ o_emit_change_notify (TOPLEVEL *toplevel, OBJECT *object)
     }
   }
 }
+
+/*! \brief Set visibility of the object.
+ *  \par Function Description
+ *  Set value of visibility field within the object.
+ *  If resulting visibility value is changed,
+ *  invalidate the bounds of the object and parent objects.
+ *
+ *  \param toplevel The #TOPLEVEL structure
+ *  \param object   The #OBJECT structure to be modified
+ */
+void
+o_set_visibility (TOPLEVEL *toplevel, OBJECT *object, int visibility)
+{
+  g_return_if_fail (object != NULL);
+  if (visibility == LEAVE_VISIBILITY_ALONE)
+    return;
+  if (object->visibility != visibility) {
+    object->visibility = visibility;
+    o_bounds_invalidate (toplevel, object);
+  }
+}

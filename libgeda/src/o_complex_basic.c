@@ -333,7 +333,7 @@ GList *o_complex_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
     for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
       OBJECT *o_kept = (OBJECT *) iter->data;
       OBJECT *o_copy = o_object_copy (toplevel, o_kept);
-      o_kept->visibility = INVISIBLE;
+      o_set_visibility (toplevel, o_kept, INVISIBLE);
       o_copy->parent = NULL;
       promoted = g_list_prepend (promoted, o_copy);
     }
@@ -382,7 +382,7 @@ static void o_complex_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *obj
   for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
     OBJECT *a_object = iter->data;
     if (toplevel->keep_invisible == TRUE) {   /* Hide promotable attributes */
-      a_object->visibility = INVISIBLE;
+      o_set_visibility (toplevel, a_object, INVISIBLE);
     } else {                                /* Delete promotable attributes */
       object->complex->prim_objs =
         g_list_remove (object->complex->prim_objs, a_object);
