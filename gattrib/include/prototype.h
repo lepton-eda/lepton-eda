@@ -85,7 +85,6 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet,
 /* ------------- s_toplevel.c ------------- */
 int s_toplevel_read_page(char *filename);
 void s_toplevel_verify_design(TOPLEVEL *pr_current);
-void s_toplevel_empty_project();
 void s_toplevel_gtksheet_to_toplevel();
 void s_toplevel_add_new_attrib(gchar *new_attrib_name);
 void s_toplevel_delete_attrib_col();

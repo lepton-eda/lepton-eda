@@ -122,25 +122,6 @@ void s_toplevel_verify_design(TOPLEVEL *pr_current)
   }
 }
 
-
-
-/*------------------------------------------------------------------*/
-/*! \brief Detect empty project
- *
- * Test if there is data in the current project.
- * \returns 1 if the project is empty (i.e. pr_current is
- * not filled out yet), and 0 if the project is non-empty (i.e. there
- * is some data in pr_current).
- * \todo Doesn't do anything. Candidate for removal?
- */
-void s_toplevel_empty_project()
-{
-  /* Nothing here yet.  Is this necessary in current program
-   * architecture? */
-}
-
-
-
 /*------------------------------------------------------------------*/
 /*! \brief Copy data from gtksheet into TOPLEVEL struct
  *
