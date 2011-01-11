@@ -273,7 +273,7 @@ void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name)
  * Attach the name=value pair to the OBJECT "object". This function
  * was stolen from gschem/src/o_attrib.c:o_attrib_add_attrib and
  * hacked for gattrib.
- * \param pr_current TOPLEVEL to operate on
+ * \param toplevel TOPLEVEL to operate on
  * \param text_string
  * \param visibility
  * \param show_name_value
@@ -281,9 +281,12 @@ void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name)
  * \returns pointer to the object
  * \todo Does it need to return OBJECT?
  */
-OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_string,
-			    int visibility, int show_name_value,
-			    OBJECT * object)
+OBJECT *
+s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
+                                      char *text_string,
+                                      int visibility,
+                                      int show_name_value,
+                                      OBJECT * object)
 {
   int world_x = -1, world_y = -1;
   int color;
@@ -316,9 +319,9 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
       exit(-1);
     }
   } else {    /* This must be a floating attrib, but what is that !?!?!?!?!  */
-    world_get_object_glist_bounds(pr_current,
-                                  s_page_objects (pr_current->page_current),
-                                  &left, &top, &right, &bottom);
+    world_get_object_glist_bounds (toplevel,
+                                   s_page_objects (toplevel->page_current),
+                                   &left, &top, &right, &bottom);
 
     /* this really is the lower left hand corner */
     world_x = left;
@@ -333,30 +336,30 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
   printf("===  In s_object_attrib_add_attrib_in_object, about to attach new text attrib with properties:\n");
   printf("     color = %d\n", color);
   printf("     text_string = %s \n", text_string);
-  printf("     text_size = %d \n", pr_current->text_size);
+  printf("     text_size = %d \n", toplevel->text_size);
   printf("     visibility = %d \n", visibility);
   printf("     show_name_value = %d \n", show_name_value);
 #endif
 
-  new_obj = o_text_new (pr_current, OBJ_TEXT, color, world_x, world_y,
+  new_obj = o_text_new (toplevel, OBJ_TEXT, color, world_x, world_y,
                         LOWER_LEFT, 0, /* zero is angle */
                         text_string, DEFAULT_TEXT_SIZE,
                         visibility, show_name_value);
-  s_page_append (pr_current, pr_current->page_current, new_obj);
+  s_page_append (toplevel, toplevel->page_current, new_obj);
 
-  /* now pr_current->page_current->object_tail contains new text item */
+  /* now toplevel->page_current->object_tail contains new text item */
 
   /* now attach the attribute to the object (if o_current is not NULL) */
   /* remember that o_current contains the object to get the attribute */
   if (o_current) {
-    o_attrib_attach (pr_current, new_obj, o_current, FALSE);
+    o_attrib_attach (toplevel, new_obj, o_current, FALSE);
   }
 
-  o_selection_add (pr_current,
-                   pr_current->page_current->selection_list, new_obj);
+  o_selection_add (toplevel,
+                   toplevel->page_current->selection_list, new_obj);
 
 
-  pr_current->page_current->CHANGED = 1;
+  toplevel->page_current->CHANGED = 1;
 
   return new_obj;
 }
@@ -370,14 +373,16 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
  * Delete the text object pointed to by text_object.  This function
  * was shamelessly stolen from gschem/src/o_delete.c and hacked
  * for gattrib by SDB.
- * \param pr_current TOPLEVEL to be operated on
+ * \param toplevel TOPLEVEL to be operated on
  * \param test_object text object to be deleted
  */
-void s_object_delete_text_object_in_object(TOPLEVEL * pr_current, OBJECT * text_object)
+void
+s_object_delete_text_object_in_object (TOPLEVEL *toplevel,
+                                       OBJECT * text_object)
 {
-  s_page_remove (pr_current, pr_current->page_current, text_object);
-  s_delete_object (pr_current, text_object);
-  pr_current->page_current->CHANGED = 1;
+  s_page_remove (toplevel, toplevel->page_current, text_object);
+  s_delete_object (toplevel, text_object);
+  toplevel->page_current->CHANGED = 1;
 }
                                                                                                     
 

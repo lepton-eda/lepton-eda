@@ -51,15 +51,15 @@
  *
  * ------------------------------------------------------------- */
 #if 0 /* not used, but leaving it here in case we need it later */
-static void i_update_status(TOPLEVEL * w_current, const char *string)
+static void i_update_status(TOPLEVEL *toplevel, const char *string)
 {
-  if (!w_current->status_label) {
+  if (!toplevel->status_label) {
     return;
   }
 
   if (string) {
     /* NOTE: consider optimizing this if same label */
-    gtk_label_set(GTK_LABEL(w_current->status_label), (char *) string);
+    gtk_label_set(GTK_LABEL(toplevel->status_label), (char *) string);
   }
 }
 #endif

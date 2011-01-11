@@ -93,14 +93,14 @@ int s_toplevel_read_page(char *filename)
  *
  *  \param pr_current pointer to the toplevel object to be verified
  */
-void s_toplevel_verify_design(TOPLEVEL *pr_current)
+void s_toplevel_verify_design (TOPLEVEL *toplevel)
 {
   GList *p_iter;
   const GList *o_iter;
 
   int missing_sym_flag = 0;
 
-  for (p_iter = geda_list_get_glist (pr_current->pages);
+  for (p_iter = geda_list_get_glist (toplevel->pages);
        p_iter != NULL;
        p_iter = g_list_next (p_iter)) {
     PAGE *p_current = p_iter->data;
