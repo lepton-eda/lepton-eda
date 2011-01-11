@@ -51,7 +51,7 @@ static gboolean find_single_object (GSCHEM_TOPLEVEL *w_current, OBJECT *object,
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   if (object->sel_func != NULL &&
-      (object->visibility == VISIBLE || toplevel->show_hidden_text) &&
+      (o_is_visible (toplevel, object) || toplevel->show_hidden_text) &&
       inside_region (object->w_left  - w_slack, object->w_top    - w_slack,
                      object->w_right + w_slack, object->w_bottom + w_slack,
                      w_x, w_y) &&
@@ -176,7 +176,7 @@ gboolean o_find_selected_object(GSCHEM_TOPLEVEL *w_current,
       printf("Screen pointer at: (%i,%i)\n", screen_x, screen_y);
 #endif
       if (o_current->sel_func != NULL &&
-          (o_current->visibility == VISIBLE || toplevel->show_hidden_text)) {
+          (o_is_visible (toplevel, o_current) || toplevel->show_hidden_text)) {
         return TRUE;
       }
     }

@@ -359,7 +359,7 @@ void o_select_box_search(GSCHEM_TOPLEVEL *w_current)
   while (iter != NULL) {
     o_current = iter->data;
     /* only select visible objects */
-    if (o_current->visibility == VISIBLE || toplevel->show_hidden_text) {
+    if (o_is_visible (toplevel, o_current) || toplevel->show_hidden_text) {
 
       if ( o_current->w_left   >= left &&
            o_current->w_right  <= right  &&
@@ -556,7 +556,7 @@ o_select_visible_unlocked (GSCHEM_TOPLEVEL *w_current)
     OBJECT *obj = (OBJECT *) iter->data;
 
     /* Skip invisible objects. */
-    if (obj->visibility != VISIBLE && !toplevel->show_hidden_text)
+    if (!o_is_visible (toplevel, obj) && !toplevel->show_hidden_text)
       continue;
 
     /* Skip locked objects. */

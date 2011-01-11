@@ -238,7 +238,7 @@ int o_text_get_rendered_bounds (void *user_data, OBJECT *o_current,
   g_return_val_if_fail (o_current != NULL, FALSE);
   g_return_val_if_fail (o_current->text != NULL, FALSE);
 
-  if (o_current->visibility == INVISIBLE &&
+  if (!o_is_visible (toplevel, o_current) &&
       !toplevel->show_hidden_text)
     return FALSE;
 
@@ -383,7 +383,7 @@ static void o_text_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   g_return_if_fail (o_current != NULL);
   g_return_if_fail (o_current->text != NULL);
 
-  if (o_current->visibility == INVISIBLE &&
+  if (!o_is_visible (toplevel, o_current) &&
       !toplevel->show_hidden_text)
     return;
 
@@ -442,7 +442,7 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   g_return_if_fail (o_current->type == OBJ_TEXT);
   g_return_if_fail (o_current->text != NULL);
 
-  if (o_current->visibility == INVISIBLE && !toplevel->show_hidden_text) {
+  if (!o_is_visible (toplevel, o_current) && !toplevel->show_hidden_text) {
     return;
   }
 
@@ -453,7 +453,7 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
     /* Indicate on the schematic that the text is invisible by */
     /* drawing a little I on the screen at the origin */
-    if (o_current->visibility == INVISIBLE && toplevel->show_hidden_text) {
+    if (!o_is_visible (toplevel, o_current) && toplevel->show_hidden_text) {
       if (toplevel->override_color != -1 ) {
         gdk_gc_set_foreground(w_current->gc, 
                               x_get_color(toplevel->override_color));
@@ -551,7 +551,7 @@ void o_text_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cu
   TOPLEVEL *toplevel = w_current->toplevel;
   int factor;
 
-  if (o_current->visibility == INVISIBLE && !toplevel->show_hidden_text) {
+  if (!o_is_visible (toplevel, o_current) && !toplevel->show_hidden_text) {
     return;
   }
 

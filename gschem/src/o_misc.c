@@ -371,7 +371,7 @@ void o_edit_show_hidden_lowlevel (GSCHEM_TOPLEVEL *w_current,
   iter = o_list;
   while (iter != NULL) {
     o_current = (OBJECT *)iter->data;
-    if (o_current->type == OBJ_TEXT && o_current->visibility == INVISIBLE) {
+    if (o_current->type == OBJ_TEXT && !o_is_visible (toplevel, o_current)) {
 
       /* don't toggle the visibility flag */
       o_text_recreate (toplevel, o_current);
@@ -429,7 +429,7 @@ void o_edit_make_visible (GSCHEM_TOPLEVEL *w_current, const GList *o_list)
     o_current = (OBJECT *)iter->data;
 
     if (o_current->type == OBJ_TEXT) {
-      if (o_current->visibility == INVISIBLE) {
+      if (!o_is_visible (toplevel, o_current)) {
         o_current->visibility = VISIBLE;
         o_text_recreate(toplevel, o_current);
 
@@ -578,7 +578,7 @@ void o_edit_hide_specific_text (GSCHEM_TOPLEVEL *w_current,
     if (o_current->type == OBJ_TEXT) {
       const gchar *str = o_text_get_string (w_current->toplevel, o_current);
       if (!strncmp (stext, str, strlen (stext))) {
-        if (o_current->visibility == VISIBLE) {
+        if (o_is_visible (toplevel, o_current)) {
           o_current->visibility = INVISIBLE;
           o_text_recreate(toplevel, o_current);
 
@@ -612,7 +612,7 @@ void o_edit_show_specific_text (GSCHEM_TOPLEVEL *w_current,
     if (o_current->type == OBJ_TEXT) {
       const gchar *str = o_text_get_string (w_current->toplevel, o_current);
       if (!strncmp (stext, str, strlen (stext))) {
-        if (o_current->visibility == INVISIBLE) {
+        if (!o_is_visible (toplevel, o_current)) {
           o_current->visibility = VISIBLE;
           o_text_recreate(toplevel, o_current);
 

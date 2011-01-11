@@ -99,12 +99,14 @@ SCM g_set_attrib_value_x(SCM attrib_smob, SCM scm_value)
   TOPLEVEL *toplevel;
   OBJECT *o_attrib;
   char *new_string;
+  int visibility;
 
   returned = g_set_attrib_value_internal(attrib_smob, scm_value, 
                                          &toplevel, &o_attrib, &new_string);
 
+  visibility = o_is_visible (toplevel, o_attrib) ? VISIBLE : INVISIBLE;
   o_text_change(global_window_current, o_attrib, new_string,
-                o_attrib->visibility, o_attrib->show_name_value);
+                visibility, o_attrib->show_name_value);
 
   g_free(new_string);
 

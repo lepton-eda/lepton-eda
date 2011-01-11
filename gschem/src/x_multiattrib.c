@@ -642,10 +642,12 @@ static void multiattrib_action_duplicate_attribute(GSCHEM_TOPLEVEL *w_current,
 						   OBJECT *o_attrib) 
 {
   OBJECT *o_new;
-  
+  int visibility = o_is_visible (w_current->toplevel, o_attrib)
+      ? VISIBLE : INVISIBLE;
+
   o_new = o_attrib_add_attrib (w_current,
                                o_text_get_string (w_current->toplevel, o_attrib),
-                               o_attrib->visibility,
+                               visibility,
                                o_attrib->show_name_value,
                                object);
   w_current->toplevel->page_current->CHANGED = 1;
@@ -665,11 +667,11 @@ static void multiattrib_action_promote_attribute (GSCHEM_TOPLEVEL *w_current,
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_new;
 
-  if (o_attrib->visibility) {
+  if (o_is_visible (toplevel, o_attrib)) {
     /* If the attribute we're promoting is visible, don't clone its location */
     o_new = o_attrib_add_attrib (w_current,
                                  o_text_get_string (w_current->toplevel, o_attrib),
-                                 o_attrib->visibility,
+                                 VISIBLE,
                                  o_attrib->show_name_value,
                                  object);
   } else {
@@ -780,6 +782,7 @@ static void multiattrib_column_set_data_visible(GtkTreeViewColumn *tree_column,
 						gpointer data)
 {
   OBJECT *o_attrib;
+  GschemDialog *dialog = GSCHEM_DIALOG (data);
   int inherited;
 
   gtk_tree_model_get (tree_model, iter,
@@ -790,7 +793,7 @@ static void multiattrib_column_set_data_visible(GtkTreeViewColumn *tree_column,
   inherited = o_attrib_is_inherited (o_attrib);
 
   g_object_set (cell,
-                "active", (o_attrib->visibility == VISIBLE),
+                "active", o_is_visible (dialog->w_current->toplevel, o_attrib),
                 "sensitive",   !inherited,
                 "activatable", !inherited,
                 NULL);
@@ -894,6 +897,7 @@ static void multiattrib_callback_edited_name(GtkCellRendererText *cellrendererte
   OBJECT *o_attrib;
   GSCHEM_TOPLEVEL *w_current;
   gchar *value, *newtext;
+  int visibility;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
   w_current = GSCHEM_DIALOG (multiattrib)->w_current;
@@ -929,10 +933,12 @@ static void multiattrib_callback_edited_name(GtkCellRendererText *cellrendererte
     return;
   }
 
-  
+  visibility = o_is_visible (w_current->toplevel, o_attrib)
+      ? VISIBLE : INVISIBLE;
+
   /* actually modifies the attribute */
   o_text_change (w_current, o_attrib,
-                 newtext, o_attrib->visibility, o_attrib->show_name_value);
+                 newtext, visibility, o_attrib->show_name_value);
 
   g_free (value);
   g_free (newtext);
@@ -955,6 +961,7 @@ static void multiattrib_callback_edited_value(GtkCellRendererText *cell_renderer
   OBJECT *o_attrib;
   GSCHEM_TOPLEVEL *w_current;
   gchar *name, *newtext;
+  int visibility;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
   w_current = GSCHEM_DIALOG (multiattrib)->w_current;
@@ -977,9 +984,12 @@ static void multiattrib_callback_edited_value(GtkCellRendererText *cell_renderer
     return;
   }
   
+  visibility = o_is_visible (w_current->toplevel, o_attrib)
+      ? VISIBLE : INVISIBLE;
+
   /* actually modifies the attribute */
   o_text_change (w_current, o_attrib,
-                 newtext, o_attrib->visibility, o_attrib->show_name_value);
+                 newtext, visibility, o_attrib->show_name_value);
   
   /* request an update of display for this row */
   update_row_display (model, &iter);
@@ -1018,7 +1028,9 @@ static void multiattrib_callback_toggled_visible(GtkCellRendererToggle *cell_ren
   g_assert (o_attrib->type == OBJ_TEXT);
   o_invalidate (w_current, o_attrib);
 
-  visibility = o_attrib->visibility == VISIBLE ? INVISIBLE : VISIBLE;
+  /* toggle visibility */
+  visibility = o_is_visible (w_current->toplevel, o_attrib)
+      ? INVISIBLE : VISIBLE;
 
   /* actually modifies the attribute */
   o_attrib->visibility = visibility;
@@ -1827,7 +1839,7 @@ static void multiattrib_init(Multiattrib *multiattrib)
   gtk_tree_view_column_pack_start (column, renderer, TRUE);
   gtk_tree_view_column_set_cell_data_func (column, renderer,
 					   multiattrib_column_set_data_visible,
-					   NULL, NULL);
+					   multiattrib, NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
   /*       - column 4: show name */
   renderer = GTK_CELL_RENDERER (

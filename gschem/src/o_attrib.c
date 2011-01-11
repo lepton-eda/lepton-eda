@@ -94,7 +94,7 @@ void o_attrib_deselect_invisible (GSCHEM_TOPLEVEL *w_current,
        a_iter = g_list_next (a_iter)) {
     a_current = a_iter->data;
 
-    if (a_current->selected && a_current->visibility == INVISIBLE)
+    if (a_current->selected && !o_is_visible(w_current->toplevel, a_current))
       o_selection_remove (w_current->toplevel, selection, a_current);
   }
 }
@@ -114,7 +114,7 @@ void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 
   g_return_if_fail (object != NULL && object->type == OBJ_TEXT);
 
-  if (object->visibility == VISIBLE) {
+  if (o_is_visible (toplevel, object)) {
     /* only erase if we are not showing hidden text */
     if (!toplevel->show_hidden_text) {
       o_invalidate (w_current, object);
