@@ -303,7 +303,8 @@ void o_text_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   int left, right, top, bottom;
 
-  if (o_current->visibility == INVISIBLE && !toplevel->show_hidden_text) {
+  if ((!o_is_visible (toplevel, o_current)) &&
+      (!toplevel->show_hidden_text)) {
     return;
   }
 

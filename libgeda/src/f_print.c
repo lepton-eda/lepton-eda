@@ -299,7 +299,7 @@ void f_print_objects (TOPLEVEL *toplevel, FILE *fp, const GList *obj_list,
         break;
 
       case(OBJ_TEXT):
-        if (o_current->visibility == VISIBLE) {
+        if (o_is_visible (toplevel, o_current)) {
           /* Output text */
           save_last_ps_color = toplevel->last_ps_color;
           fprintf(fp, "gsave\n");
@@ -656,7 +656,7 @@ static int f_print_get_unicode_chars (TOPLEVEL *toplevel,
         break;
 
       case (OBJ_TEXT):
-        if (o_current->visibility == VISIBLE) {
+        if (o_is_visible (toplevel, o_current)) {
 
           aux = o_current->text->string;
           while (aux && ((gunichar) (*aux) != 0)) {

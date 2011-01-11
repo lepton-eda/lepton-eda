@@ -65,8 +65,8 @@ int world_get_single_object_bounds(TOPLEVEL *toplevel, OBJECT *o_current,
       case(OBJ_TEXT):
         /* only do bounding boxes for visible or doing show_hidden_text*/
         /* you might lose some attrs though */
-        if (! (o_current->visibility == VISIBLE ||
-               toplevel->show_hidden_text )) {
+        if (! (o_is_visible (toplevel, o_current) ||
+                toplevel->show_hidden_text)) {
           return 0;
         }
         /* This case falls through intentionally */
@@ -227,7 +227,8 @@ static int o_complex_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
   }
 
   /* object is invisible and we do not want to promote invisible text */
-  if (object->visibility == INVISIBLE && toplevel->promote_invisible == FALSE)
+  if ((!o_is_visible (toplevel, object)) &&
+      (toplevel->promote_invisible == FALSE))
     return FALSE; /* attribute not eligible for promotion */
 
   /* yup, attribute can be promoted */

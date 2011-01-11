@@ -115,6 +115,7 @@ double o_shortest_distance_full(OBJECT *object, int x, int y, int force_solid);
 PAGE *o_get_page_compat (TOPLEVEL *toplevel, OBJECT *object);
 void o_emit_pre_change_notify(TOPLEVEL *toplevel, OBJECT *object);
 void o_emit_change_notify(TOPLEVEL *toplevel, OBJECT *object);
+gboolean o_is_visible (TOPLEVEL *toplevel, OBJECT *object);
 void o_set_visibility (TOPLEVEL *toplevel, OBJECT *object, int visibility);
 
 /* o_box_basic.c */
