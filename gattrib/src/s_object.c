@@ -70,17 +70,20 @@
  *    calls o_text_new() to add position info and name=value string
  *    to attrib_graphic.
  * -# It calls o_attrib_add() to wrap attrib_graphic with (attribute OBJECT )
+ * \param toplevel TOPLEVEL structure
  * \param o_current pointer to object to add attribute to
  * \param new_attrib_name name of the attribute to add
  * \param new_attrib_value value of the attribute to add
  * \param visibility Is the attribute visible?
  * \param show_name_value Control visibility of name and value.
  */
-void s_object_add_comp_attrib_to_object(OBJECT *o_current, 
-					char *new_attrib_name, 
-					char *new_attrib_value,
-					gint visibility,
-					gint show_name_value)
+void
+s_object_add_comp_attrib_to_object (TOPLEVEL *toplevel,
+                                    OBJECT *o_current,
+                                    char *new_attrib_name,
+                                    char *new_attrib_value,
+                                    gint visibility,
+                                    gint show_name_value)
 {
   char *name_value_pair;
   OBJECT *attrib_graphic_object;
@@ -89,8 +92,12 @@ void s_object_add_comp_attrib_to_object(OBJECT *o_current,
   /* One last sanity check, then add attrib */
   if (strlen(new_attrib_value) != 0) {
     name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-    attrib_graphic_object = s_object_attrib_add_attrib_in_object(pr_current, name_value_pair, visibility, 
-							 show_name_value, o_current);
+    attrib_graphic_object =
+      s_object_attrib_add_attrib_in_object (toplevel,
+                                            name_value_pair,
+                                            visibility,
+                                            show_name_value,
+                                            o_current);
   }
   
   return;
@@ -102,8 +109,11 @@ void s_object_add_comp_attrib_to_object(OBJECT *o_current,
 /*!
  * \todo This needs to be filled in.
  */
-void s_object_add_net_attrib_to_object(OBJECT *o_current, char *new_attrib_name, 
-				char *new_attrib_value)
+void
+s_object_add_net_attrib_to_object (TOPLEVEL *toplevel,
+                                   OBJECT *o_current,
+                                   char *new_attrib_name,
+                                   char *new_attrib_value)
 {
   /* TBD */
 }
@@ -120,14 +130,18 @@ void s_object_add_net_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
  *    calls o_text_new() to add position info and name=value string
  *    to attrib_graphic.
  * -# It calls o_attrib_add() to wrap attrib_graphic with (attribute OBJECT )
+ * \param toplevel TOPLEVEL structure
  * \param o_current Pointer to pin object
  * \param new_attrib_name Name of attribute to add
  * \parma new_attrib_value Value of attribute to add
  * \todo Do I really need separate fcns for comps, nets, and
  * pins???
  */
-void s_object_add_pin_attrib_to_object(OBJECT *o_current, char *new_attrib_name, 
-				char *new_attrib_value)
+void
+s_object_add_pin_attrib_to_object (TOPLEVEL *toplevel,
+                                   OBJECT *o_current,
+                                   char *new_attrib_name,
+                                   char *new_attrib_value)
 {
   char *name_value_pair;
   OBJECT *attrib_graphic_object;
@@ -136,13 +150,15 @@ void s_object_add_pin_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
   /* One last sanity check */
   if (strlen(new_attrib_value) != 0) {
     name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-    attrib_graphic_object = s_object_attrib_add_attrib_in_object(pr_current, name_value_pair, 
-								 INVISIBLE, 
-								 SHOW_NAME_VALUE, o_current);
+    attrib_graphic_object =
+      s_object_attrib_add_attrib_in_object (toplevel,
+                                            name_value_pair,
+                                            INVISIBLE,
+                                            SHOW_NAME_VALUE,
+                                            o_current);
   }
-  
-  return;
 
+  return;
 }
 
 
@@ -151,13 +167,15 @@ void s_object_add_pin_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
  *
  * Find the instance of attrib_name on o_current, and
  * replace its value with the new_attrib_value.
+ * \param toplevel TOPLEVEL object
  * \param o_current object to operate on
  * \param new_attrib_name name of attribute to replace
  * \param new_attrib_value value to set attribute to
  * \param visibility set visibility of attribute
  * \param show_name_value set visibility of attribute name and value
  */
-void s_object_replace_attrib_in_object(OBJECT *o_current, 
+void s_object_replace_attrib_in_object(TOPLEVEL *toplevel,
+				       OBJECT *o_current,
 				       char *new_attrib_name, 
 				       char *new_attrib_value,
 				       gint visibility, 
@@ -181,7 +199,7 @@ void s_object_replace_attrib_in_object(OBJECT *o_current,
       old_attrib_name = u_basic_breakup_string(old_attrib_text, '=', 0);
       
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {
-	/* create attrib=value text string & stuff it back into pr_current */
+	/* create attrib=value text string & stuff it back into toplevel */
 	new_attrib_text = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
 	g_free(a_current->text->string);   /* remove old attrib string */
 	a_current->text->string = g_strdup(new_attrib_text);   /* insert new attrib string */
@@ -216,10 +234,14 @@ void s_object_replace_attrib_in_object(OBJECT *o_current,
  * \brief Remove attribute from object
  *
  * Remove an attribute from an object.
+ * \param toplevel TOPLEVEL structure
  * \param o_current Object to remove attribute from
  * \param new_attrib_name Name of attribute to remove
  */
-void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name) 
+void
+s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
+                                  OBJECT *o_current,
+                                  char *new_attrib_name)
 {
   GList *a_iter;
   OBJECT *a_current;
@@ -245,7 +267,7 @@ void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name)
 #endif
 
 	attribute_object = a_current;
-	s_object_delete_text_object_in_object(pr_current, attribute_object);
+	s_object_delete_text_object_in_object (toplevel, attribute_object);
 
 	g_free(old_attrib_text);
 	g_free(old_attrib_name);

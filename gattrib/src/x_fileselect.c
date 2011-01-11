@@ -139,7 +139,7 @@ x_fileselect_load_files (GSList *filenames)
 
     s_page_goto (pr_current, s_page_new (pr_current, string));
 
-    if(s_toplevel_read_page(string) == 0) {
+    if(s_toplevel_read_page(pr_current, string) == 0) {
        fprintf(stderr, "Couldn't load schematic [%s]\n", string);
        return FALSE;
     }
