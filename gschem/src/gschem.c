@@ -247,7 +247,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
   /* Now read in RC files. */
   g_rc_parse_gtkrc();
-  g_rc_parse (w_current->toplevel, argv[0], "gschemrc", rc_filename);
+  x_rc_parse_gschem (w_current, rc_filename);
 
   /* By this point, libgeda should have setup the Guile load path, so
    * we can take advantage of that.  */
