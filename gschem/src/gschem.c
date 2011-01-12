@@ -256,7 +256,7 @@ void main_prog(void *closure, int argc, char *argv[])
     s_log_message (_("Couldn't find init scm file [%s]\n"), "gschem.scm");
   }
   input_str = scm_to_locale_string (scm_tmp);
-  if (g_read_file(w_current->toplevel, input_str) != -1) {
+  if (g_read_file(w_current->toplevel, input_str)) {
     s_log_message(_("Read init scm file [%s]\n"), input_str);
   } else {
     /*! \todo These two messages are the same. Should be

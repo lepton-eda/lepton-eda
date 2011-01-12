@@ -163,9 +163,9 @@ SCM g_scm_eval_string_protected (SCM str)
  *
  *  \param [in] toplevel  The TOPLEVEL structure.
  *  \param [in] filename  The file name to start reading from.
- *  \return 0 on success, -1 on failure.
+ *  \return TRUE on success, FALSE on failure.
  */
-int
+gboolean
 g_read_file(TOPLEVEL *toplevel, const gchar *filename)
 {
   SCM eval_result = SCM_BOOL_F;
@@ -173,19 +173,19 @@ g_read_file(TOPLEVEL *toplevel, const gchar *filename)
   char * full_filename;
 
   if (filename == NULL) {
-    return(-1);
+    return FALSE;
   }
 
   /* get full, absolute path to file */
   full_filename = f_normalize_filename (filename, NULL);
   if (full_filename == NULL) {
-    return(-1);
+    return FALSE;
   }
 
   if (access(full_filename, R_OK) != 0) {
     s_log_message(_("Could not find [%s] for interpretation\n"),
                   full_filename);
-    return(-1);
+    return FALSE;
   }
 
   expr = scm_list_2 (scm_from_locale_symbol ("load"),
