@@ -39,6 +39,8 @@
 #include <dmalloc.h>
 #endif
 
+static void process_error_stack (SCM s_stack, SCM s_key, SCM s_args, GError **err);
+
 /* Pre-unwind handler called in the context in which the exception was
  * thrown. */
 static SCM protected_pre_unwind_handler (void *data, SCM key, SCM args)
@@ -56,66 +58,8 @@ static SCM protected_post_unwind_handler (void *data, SCM key, SCM args)
 { 
   /* The stack was captured pre-unwind */
   SCM s_stack = *(SCM *) data;
-  char *message = NULL;
-  
-  /* Capture the error message */
-  if (scm_list_p (scm_caddr (args)) == SCM_BOOL_T) {
-    SCM s_msg = scm_simple_format (SCM_BOOL_F, 
-                                   scm_cadr (args), 
-                                   scm_caddr (args));
-    message = scm_to_locale_string (s_msg);
-  } else {
-    message = scm_to_locale_string (scm_cadr (args));
-  }
 
-  /* If a stack was captured, extract debugging information */
-  if (scm_stack_p (s_stack) == SCM_BOOL_T) {
-    SCM s_port, s_source, s_filename, s_line_num, s_col_num;
-    char *filename, *trace;
-
-    /* Capture & log backtrace */
-    s_port = scm_open_output_string();
-    scm_display_backtrace (s_stack, s_port,
-                           SCM_BOOL_F, SCM_BOOL_F);
-    trace = scm_to_locale_string (scm_get_output_string (s_port));
-    scm_close_output_port (s_port);
-    s_log_message ("\n%s\n", trace);
-    free (trace);
-    trace = NULL;
-
-    /* Capture & log location */
-    s_source = scm_frame_source (scm_stack_ref (s_stack, scm_from_int (0)));
-
-    s_filename = scm_source_property (s_source,
-                                      scm_from_locale_symbol ("filename"));
-    s_line_num = scm_source_property (s_source,
-                                      scm_from_locale_symbol ("line"));
-    s_col_num = scm_source_property (s_source,
-                                     scm_from_locale_symbol ("column"));
-    
-    if (scm_is_string (s_filename)
-         && scm_is_integer (s_line_num)
-         && scm_is_integer (s_col_num)) {
-
-       filename = scm_to_locale_string (s_filename);
-       s_log_message (_("%s:%i:%i: %s\n"), filename,
-                      scm_to_int (s_line_num),
-                      scm_to_int (s_col_num), message);
-       free (filename);
-
-    } else {
-
-      s_log_message (_("Unknown file: %s\n"), message);
-
-    }
-
-  } else {
-    /* No stack, so can't display debugging info */
-    s_log_message (_("Evaluation failed: %s\n"), message);
-    s_log_message (_("Enable debugging for more detailed information\n"));
-  }
-
-  free (message);
+  process_error_stack (s_stack, key, args, NULL);
 
   return SCM_BOOL_F;
 }
@@ -252,4 +196,49 @@ g_read_file(TOPLEVEL *toplevel, const gchar *filename)
 	g_free(full_filename);
 
 	return (eval_result != SCM_BOOL_F);
+}
+
+
+/*! \brief Process a Scheme error into the log and/or a GError
+ * \par Function Description
+ * Process a captured Guile exception with the given \a s_key and \a
+ * s_args, and optionally the stack trace \a s_stack.  The stack trace
+ * and source location are logged, and if a GError return location \a
+ * err is provided, it is populated with an informative error message.
+ */
+static void
+process_error_stack (SCM s_stack, SCM s_key, SCM s_args, GError **err) {
+  char *long_message;
+  char *short_message;
+  SCM s_port, s_subr, s_message, s_message_args, s_rest;
+
+  /* Split s_args up */
+  s_rest = s_args;
+  s_subr = scm_car (s_rest);         s_rest = scm_cdr (s_rest);
+  s_message = scm_car (s_rest);      s_rest = scm_cdr (s_rest);
+  s_message_args = scm_car (s_rest); s_rest = scm_cdr (s_rest);
+
+  /* Capture short error message */
+  s_port = scm_open_output_string ();
+  scm_display_error_message (s_message, s_message_args, s_port);
+  short_message = scm_to_locale_string (scm_get_output_string (s_port));
+  scm_close_output_port (s_port);
+
+  /* Capture long error message (including possible backtrace) */
+  s_port = scm_open_output_string ();
+  if (scm_is_true (scm_stack_p (s_stack))) {
+    scm_puts (_("\nBacktrace:\n"), s_port);
+    scm_display_backtrace (s_stack, s_port, SCM_BOOL_F, SCM_BOOL_F);
+    scm_puts ("\n", s_port);
+  }
+  scm_display_error (s_stack, s_port, s_subr,
+                     s_message, s_message_args, s_rest);
+  long_message = scm_to_locale_string (scm_get_output_string (s_port));
+  scm_close_output_port (s_port);
+
+  /* Send long message to log */
+  s_log_message ("%s", long_message);
+
+  /* Populate any GError */
+  g_set_error (err, EDA_ERROR, EDA_ERROR_SCHEME, "%s", short_message);
 }
