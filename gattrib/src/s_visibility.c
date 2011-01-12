@@ -375,10 +375,9 @@ void s_visibility_set_cell(gint cur_page, gint row, gint col,
   }
 
   /* Question:  how to sanity check (row, col) selection? */
-  if (visibility != LEAVE_VISIBILITY_ALONE) {
-    local_table[row][col].visibility = visibility;
-    sheet_head->CHANGED = 1;  /* cell has been updated.  */  
-  }
+  local_table[row][col].visibility = visibility;
+  sheet_head->CHANGED = 1;  /* cell has been updated.  */
+
   if (show_name_value != LEAVE_NAME_VALUE_ALONE) { 
     local_table[row][col].show_name_value = show_name_value;
     sheet_head->CHANGED = 1;  /* cell has been updated.  */
