@@ -662,4 +662,7 @@ typedef struct {
   char *m_str;
 } vstbl_entry;
 
+/* Used by g_rc_parse_handler() */
+typedef void (*ConfigParseErrorFunc)(GError **, void *);
+
 #endif

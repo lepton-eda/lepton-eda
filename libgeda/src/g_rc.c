@@ -280,7 +280,7 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile, GError **err)
 }
 
 static void
-g_rc_parse__process_error (const gchar *pname, GError **err)
+g_rc_parse__process_error (GError **err, const gchar *pname)
 {
   char *pbase;
 
@@ -295,9 +295,6 @@ g_rc_parse__process_error (const gchar *pname, GError **err)
     /* Config files are allowed to be missing; check for this. */
     if (g_error_matches (*err, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
       s_log_message ("%s\n", (*err)->message);
-      /* Clear the error */
-      g_error_free (*err);
-      *err = NULL;
       return;
     }
 
@@ -315,13 +312,9 @@ g_rc_parse__process_error (const gchar *pname, GError **err)
 
 /*! \brief General RC file parsing function.
  * \par Function Description
- * Attempt to load system, user and local (current working directory)
- * configuration files, first with the default "gafrc" basename and
- * then with the basename \a rcname, if \a rcname is not NULL.
- * Additionally, attempt to load configuration from \a rcfile if \a
- * rcfile is not NULL.  If any error other than ENOENT occurs while
- * parsing a configuration file, prints an informative message and
- * calls exit(1).
+ * Calls g_rc_parse_handler() with the default error handler. If any
+ * error other than ENOENT occurs while parsing a configuration file,
+ * prints an informative message and calls exit(1).
  *
  * \bug libgeda shouldn't call exit().
  *
@@ -338,32 +331,61 @@ void
 g_rc_parse (TOPLEVEL *toplevel, const gchar *pname,
             const gchar *rcname, const gchar *rcfile)
 {
+  g_rc_parse_handler (toplevel, rcname, rcfile,
+                      (ConfigParseErrorFunc) g_rc_parse__process_error,
+                      (void *) pname);
+}
+
+/*! \brief General RC file parsing function.
+ * \par Function Description
+ * Attempt to load system, user and local (current working directory)
+ * configuration files, first with the default "gafrc" basename and
+ * then with the basename \a rcname, if \a rcname is not NULL.
+ * Additionally, attempt to load configuration from \a rcfile if \a
+ * rcfile is not NULL.
+ *
+ * If an error occurs, calls \a handler with the provided \a user_data
+ * and a GError.
+ *
+ * \see g_rc_parse().
+ *
+ * \param toplevel  The current #TOPLEVEL structure.
+ * \param rcname    Config file basename, or NULL.
+ * \param rcfile    Specific config file path, or NULL.
+ * \param handler   Handler function for config parse errors.
+ * \param user_data Data to be passed to \a handler.
+ */
+void
+g_rc_parse_handler (TOPLEVEL *toplevel,
+                    const gchar *rcname, const gchar *rcfile,
+                    ConfigParseErrorFunc handler, void *user_data)
+{
   GError *err = NULL;
 
-  /* Load configuration files in order. This might be tidier with a
-   * macro. */
+#ifdef HANDLER_DISPATCH
+#  error HANDLER_DISPATCH already defined
+#endif
+#define HANDLER_DISPATCH \
+  do { if (err == NULL) break;  handler (&err, user_data);        \
+       g_error_free (err); err = NULL; } while (0)
+
+  /* Load configuration files in order. */
   /* First gafrc files. */
-  g_rc_parse_system (toplevel, NULL, &err);
-  if (err != NULL) g_rc_parse__process_error (pname, &err);
-  g_rc_parse_user (toplevel, NULL, &err);
-  if (err != NULL) g_rc_parse__process_error (pname, &err);
-  g_rc_parse_local (toplevel, NULL, NULL, &err);
-  if (err != NULL) g_rc_parse__process_error (pname, &err);
+  g_rc_parse_system (toplevel, NULL, &err); HANDLER_DISPATCH;
+  g_rc_parse_user (toplevel, NULL, &err); HANDLER_DISPATCH;
+  g_rc_parse_local (toplevel, NULL, NULL, &err); HANDLER_DISPATCH;
   /* Next application-specific rcname. */
   if (rcname != NULL) {
-    g_rc_parse_system (toplevel, rcname, &err);
-    if (err != NULL) g_rc_parse__process_error (pname, &err);
-    g_rc_parse_user (toplevel, rcname, &err);
-    if (err != NULL) g_rc_parse__process_error (pname, &err);
-    g_rc_parse_local (toplevel, rcname, NULL, &err);
-    if (err != NULL) g_rc_parse__process_error (pname, &err);
+    g_rc_parse_system (toplevel, rcname, &err); HANDLER_DISPATCH;
+    g_rc_parse_user (toplevel, rcname, &err); HANDLER_DISPATCH;
+    g_rc_parse_local (toplevel, rcname, NULL, &err); HANDLER_DISPATCH;
   }
-  /* Finally, optional additional config file. Note that since this
-   * was specially specified, we require it to be present.*/
+  /* Finally, optional additional config file. */
   if (rcfile != NULL) {
-    g_rc_parse_file (toplevel, rcfile, &err);
-    if (err != NULL) g_rc_parse__process_error (pname, &err);
+    g_rc_parse_file (toplevel, rcfile, &err); HANDLER_DISPATCH;
   }
+
+#undef HANDLER_DISPATCH
 }
 
 /*! \brief

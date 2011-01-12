@@ -38,7 +38,7 @@ gboolean g_rc_parse_user (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
 gboolean g_rc_parse_local (TOPLEVEL *toplevel, const gchar *rcname, const gchar *path, GError **err);
 gboolean g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile, GError **err);
 void g_rc_parse(TOPLEVEL *toplevel, const gchar* pname, const gchar* rcname, const gchar* rcfile);
-
+void g_rc_parse_handler (TOPLEVEL *toplevel, const gchar *rcname, const gchar *rcfile, ConfigParseErrorFunc handler, void *user_data);
 /* g_smob.c */
 SCM g_make_attrib_smob(TOPLEVEL *curr_w, OBJECT *curr_attr);
 SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value, TOPLEVEL **world, OBJECT **o_attrib, char *new_string[]);
