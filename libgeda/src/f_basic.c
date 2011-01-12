@@ -242,7 +242,12 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
   /* Now open RC and process file */
   if (flags & F_OPEN_RC) {
     full_rcfilename = g_build_filename (file_directory, "gafrc", NULL);
-    g_rc_parse_specified_rc(toplevel, full_rcfilename);
+    g_rc_parse_file (toplevel, full_rcfilename, &tmp_err);
+    if (tmp_err != NULL) {
+      s_log_message ("%s\n", tmp_err->message);
+      g_error_free (tmp_err);
+      tmp_err = NULL;
+    }
   }
 
   g_free (file_directory);
