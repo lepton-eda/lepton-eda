@@ -269,8 +269,9 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile, GError **err)
     g_error_free (tmp_err);
   } else {
     gchar *orig_msg = tmp_err->message;
-    tmp_err->message = g_strdup_printf (_("Unable to parse config from [%s]: %s"),
-                                        rcfile, orig_msg);
+    tmp_err->message =
+      g_strdup_printf (_("Unable to parse config from [%s]: %s"),
+                       (name_norm != NULL) ? name_norm : rcfile, orig_msg);
     g_free (orig_msg);
     *err = tmp_err;
   }
@@ -278,21 +279,38 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile, GError **err)
   return FALSE;
 }
 
-static gboolean
-g_rc_parse__process_error (GError **err)
+static void
+g_rc_parse__process_error (const gchar *pname, GError **err)
 {
-  g_return_val_if_fail ((err != NULL), FALSE);
+  char *pbase;
 
-  /* For now, just print a log message to say whether or not the RC
-   * file loaded okay. */
+  /* Take no chances; if err was not set for some reason, bail out. */
   if (*err == NULL) {
-    return TRUE;
+    const gchar *msgl =
+      _("ERROR: An unknown error occurred while parsing configuration files.");
+    s_log_message ("%s\n", msgl);
+    fprintf(stderr, "%s\n", msgl);
+
   } else {
-    s_log_message ("%s\n", (*err)->message);
-    g_error_free (*err);
-    *err = NULL;
-    return FALSE;
+    /* Config files are allowed to be missing; check for this. */
+    if (g_error_matches (*err, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
+      s_log_message ("%s\n", (*err)->message);
+      /* Clear the error */
+      g_error_free (*err);
+      *err = NULL;
+      return;
+    }
+
+    s_log_message (_("ERROR: %s\n"), (*err)->message);
+    fprintf (stderr, _("ERROR: %s\n"), (*err)->message);
   }
+
+  /* g_path_get_basename() allocates memory, but we don't care
+   * because we're about to exit. */
+  pbase = g_path_get_basename (pname);
+  fprintf (stderr, _("ERROR: The %s log may contain more information.\n"),
+           pbase);
+  exit (1);
 }
 
 /*! \brief General RC file parsing function.
@@ -301,54 +319,50 @@ g_rc_parse__process_error (GError **err)
  * configuration files, first with the default "gafrc" basename and
  * then with the basename \a rcname, if \a rcname is not NULL.
  * Additionally, attempt to load configuration from \a rcfile if \a
- * rcfile is not NULL.  If all attempts fail, call exit(1) to
- * terminate the program.
+ * rcfile is not NULL.  If any error other than ENOENT occurs while
+ * parsing a configuration file, prints an informative message and
+ * calls exit(1).
  *
  * \bug libgeda shouldn't call exit().
  *
- * \deprecated New code should call the g_rc_parse_system(),
- *   g_rc_parse_user(), g_rc_parse_local(), or g_rc_parse_file()
- *   functions directly, and use the GError information to determine
- *   how to deal with errors (e.g. displaying a dialog box to the
- *   user).
+ * \warning Since this function may not return, it should only be used
+ * on application startup or when there is no chance of data loss from
+ * an unexpected exit().
  *
  * \param [in] toplevel  The current #TOPLEVEL structure.
+ * \param [in] pname     The name of the application (usually argv[0]).
  * \param [in] rcname    Config file basename, or NULL.
  * \param [in] rcfile    Specific config file path, or NULL.
  */
 void
-g_rc_parse(TOPLEVEL *toplevel, const gchar *rcname, const gchar *rcfile)
+g_rc_parse (TOPLEVEL *toplevel, const gchar *pname,
+            const gchar *rcname, const gchar *rcfile)
 {
-  gint found_rc = 0;
   GError *err = NULL;
 
-  /* Load configuration files in order. */
+  /* Load configuration files in order. This might be tidier with a
+   * macro. */
   /* First gafrc files. */
   g_rc_parse_system (toplevel, NULL, &err);
-  found_rc |= g_rc_parse__process_error (&err);
+  if (err != NULL) g_rc_parse__process_error (pname, &err);
   g_rc_parse_user (toplevel, NULL, &err);
-  found_rc |= g_rc_parse__process_error (&err);
+  if (err != NULL) g_rc_parse__process_error (pname, &err);
   g_rc_parse_local (toplevel, NULL, NULL, &err);
-  found_rc |= g_rc_parse__process_error (&err);
+  if (err != NULL) g_rc_parse__process_error (pname, &err);
   /* Next application-specific rcname. */
   if (rcname != NULL) {
     g_rc_parse_system (toplevel, rcname, &err);
-    found_rc |= g_rc_parse__process_error (&err);
+    if (err != NULL) g_rc_parse__process_error (pname, &err);
     g_rc_parse_user (toplevel, rcname, &err);
-    found_rc |= g_rc_parse__process_error (&err);
+    if (err != NULL) g_rc_parse__process_error (pname, &err);
     g_rc_parse_local (toplevel, rcname, NULL, &err);
-    found_rc |= g_rc_parse__process_error (&err);
+    if (err != NULL) g_rc_parse__process_error (pname, &err);
   }
-  /* Finally, optional additional config file. */
+  /* Finally, optional additional config file. Note that since this
+   * was specially specified, we require it to be present.*/
   if (rcfile != NULL) {
     g_rc_parse_file (toplevel, rcfile, &err);
-    found_rc |= g_rc_parse__process_error (&err);
-  }
-
-  /*! Exit if no config files could be loaded. */
-  if (!found_rc) {
-    s_log_message (_("ERROR: Could not load any config files."));
-    exit (1);
+    if (err != NULL) g_rc_parse__process_error (pname, &err);
   }
 }
 
