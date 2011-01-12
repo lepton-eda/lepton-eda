@@ -156,46 +156,73 @@ SCM g_scm_eval_string_protected (SCM str)
   return g_scm_eval_protected (expr, SCM_UNDEFINED);
 }
 
+/* Data to be passed to g_read_file()'s worker functions. */
+struct g_read_file_data_t
+{
+  SCM stack;
+  SCM filename;
+  GError *err;
+};
 
-/*! \brief Start reading a scheme file
- *  \par Function Description
- *  Start reading a scheme file
+/* Body function for g_read_file(). Simply loads the specified
+ * file. */
+SCM
+g_read_file__body (struct g_read_file_data_t *data)
+{
+  return scm_primitive_load (data->filename);
+}
+
+/* Post-unwind handler for g_read_file(). Processes the stack captured
+ * in the pre-unwind handler. */
+SCM
+g_read_file__post_handler (struct g_read_file_data_t *data, SCM key, SCM args)
+{
+  process_error_stack (data->stack, key, args, &data->err);
+  return SCM_BOOL_F;
+}
+
+/* Pre-unwind handler for g_read_file().  Captures the Guile stack for
+ * processing in the post-unwind handler. */
+SCM
+g_read_file__pre_handler (struct g_read_file_data_t *data, SCM key, SCM args)
+{
+  data->stack = scm_make_stack (SCM_BOOL_T, SCM_EOL);
+  return SCM_BOOL_F;
+}
+
+/*! \brief Load a Scheme file, catching and logging errors.
+ * \par Function Description
+ * Loads \a filename, catching any uncaught errors and logging them.
  *
- *  \param [in] toplevel  The TOPLEVEL structure.
- *  \param [in] filename  The file name to start reading from.
+ * \bug Most other functions in the libgeda API return TRUE on success
+ * and FALSE on failure. g_read_file() shouldn't be an exception.
+ *
+ * \param toplevel  The TOPLEVEL structure.
+ * \param filename  The file name of the Scheme file to load.
+ * \param err       Return location for errors, or NULL.
  *  \return TRUE on success, FALSE on failure.
  */
 gboolean
-g_read_file(TOPLEVEL *toplevel, const gchar *filename)
+g_read_file(TOPLEVEL *toplevel, const gchar *filename, GError **err)
 {
-  SCM eval_result = SCM_BOOL_F;
-  SCM expr;
-  char * full_filename;
+  struct g_read_file_data_t data;
 
-  if (filename == NULL) {
-    return FALSE;
-  }
+  g_return_val_if_fail ((filename != NULL), FALSE);
 
-  /* get full, absolute path to file */
-  full_filename = f_normalize_filename (filename, NULL);
-  if (full_filename == NULL) {
-    return FALSE;
-  }
+  data.stack = SCM_BOOL_F;
+  data.filename = scm_from_locale_string (filename);
+  data.err = NULL;
 
-  if (access(full_filename, R_OK) != 0) {
-    s_log_message(_("Could not find [%s] for interpretation\n"),
-                  full_filename);
-    return FALSE;
-  }
+  scm_c_catch (SCM_BOOL_T,
+               (scm_t_catch_body) g_read_file__body, &data,
+               (scm_t_catch_handler) g_read_file__post_handler, &data,
+               (scm_t_catch_handler) g_read_file__pre_handler, &data);
 
-  expr = scm_list_2 (scm_from_locale_symbol ("load"),
-                     scm_from_locale_string (full_filename));
-  eval_result = g_scm_eval_protected (expr,
-                                      scm_interaction_environment ());
+  /* If no error occurred, indicate success. */
+  if (data.err == NULL) return TRUE;
 
-  g_free(full_filename);
-
-  return (eval_result != SCM_BOOL_F);
+  g_propagate_error (err, data.err);
+  return FALSE;
 }
 
 

@@ -252,35 +252,13 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile, GError **err)
   name_norm = f_normalize_filename (rcfile, &tmp_err);
   if (name_norm == NULL) goto parse_file_error;
 
-  /* Test that we can read the file. */
-  /*! \bug This is unsafe; there is a potential race condition between
-   * this check and the subsequent call to g_read_file().  This test
-   * should be done at the time that the file is opened for
-   * reading. See 'man access' for more information on the problems
-   * with access(). */
-  /*! \bug This reports EACCES if the file does not exist.  Testing
-   * whether the file exists, is not a directory, and is readable all
-   * ought to be done at the same time as actually opening it for
-   * loading. */
-  if (access (name_norm, R_OK) != 0) {
-    g_set_error (&tmp_err, G_FILE_ERROR,
-                 g_file_error_from_errno (EACCES),
-                 g_strerror (EACCES));
-    goto parse_file_error;
-  }
-
   /* Attempt to load the rc file, if it hasn't been loaded already.
    * If g_rc_try_mark_read() succeeds, it stores name_norm in
    * toplevel, so we *don't* free it. */
-  if (g_rc_try_mark_read (toplevel, name_norm, &tmp_err)) {
-    /*! \bug We should *definitely* populate err if loading the file
-     * causes errors.  g_read_file() needs an update to support
-     * this. */
-    g_read_file (toplevel, name_norm);
+  if (g_rc_try_mark_read (toplevel, name_norm, &tmp_err)
+      && g_read_file (toplevel, name_norm, &tmp_err)) {
     s_log_message (_("Parsed config from [%s]\n"), name_norm);
     return TRUE;
-  } else {
-    goto parse_file_error;
   }
 
  parse_file_error:
