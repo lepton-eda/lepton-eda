@@ -174,13 +174,6 @@ SCM g_scm_eval_protected (SCM exp, SCM module_or_state)
   return result;
 }
 
-/* Actually carries out evaluation for protected eval-string */
-static SCM protected_body_eval_string (void *data)
-{
-  SCM str = *((SCM *)data);
-  return scm_eval_string (str);
-}
-
 /*! \brief Evaluate a C string as a Scheme expression safely
  *  \par Function Description
  *
@@ -213,21 +206,10 @@ SCM g_scm_c_eval_string_protected (const gchar *str) {
  */
 SCM g_scm_eval_string_protected (SCM str)
 {
-  SCM stack = SCM_BOOL_T;
-  SCM result;
+  SCM expr = scm_list_2 (scm_from_locale_symbol ("eval-string"),
+                         str);
 
-  result = scm_c_catch (SCM_BOOL_T,
-                        protected_body_eval_string,    /* catch body */
-                        &str,                          /* body data */
-                        protected_post_unwind_handler, /* post handler */
-                        &stack,                        /* post data */
-                        protected_pre_unwind_handler,  /* pre handler */
-                        &stack                         /* pre data */
-                        );
-
-  scm_remember_upto_here_1 (stack);
-
-  return result;
+  return g_scm_eval_protected (expr, SCM_UNDEFINED);
 }
 
 
