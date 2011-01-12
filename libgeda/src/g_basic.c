@@ -168,34 +168,34 @@ SCM g_scm_eval_string_protected (SCM str)
 int
 g_read_file(TOPLEVEL *toplevel, const gchar *filename)
 {
-	SCM eval_result = SCM_BOOL_F;
-        SCM expr;
-	char * full_filename;
+  SCM eval_result = SCM_BOOL_F;
+  SCM expr;
+  char * full_filename;
 
-	if (filename == NULL) {
-		return(-1);
-	}
+  if (filename == NULL) {
+    return(-1);
+  }
 
-	/* get full, absolute path to file */
-	full_filename = f_normalize_filename (filename, NULL);
-	if (full_filename == NULL) {
-		return(-1);
-	}
-	
-	if (access(full_filename, R_OK) != 0) {
-          s_log_message(_("Could not find [%s] for interpretation\n"),
-                        full_filename);
-		return(-1);
-  	}
+  /* get full, absolute path to file */
+  full_filename = f_normalize_filename (filename, NULL);
+  if (full_filename == NULL) {
+    return(-1);
+  }
 
-        expr = scm_list_2 (scm_from_locale_symbol ("load"),
-                           scm_from_locale_string (full_filename));
-        eval_result = g_scm_eval_protected (expr,
-                                            scm_interaction_environment ());
+  if (access(full_filename, R_OK) != 0) {
+    s_log_message(_("Could not find [%s] for interpretation\n"),
+                  full_filename);
+    return(-1);
+  }
 
-	g_free(full_filename);
+  expr = scm_list_2 (scm_from_locale_symbol ("load"),
+                     scm_from_locale_string (full_filename));
+  eval_result = g_scm_eval_protected (expr,
+                                      scm_interaction_environment ());
 
-	return (eval_result != SCM_BOOL_F);
+  g_free(full_filename);
+
+  return (eval_result != SCM_BOOL_F);
 }
 
 
