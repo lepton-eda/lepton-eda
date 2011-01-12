@@ -19,6 +19,7 @@
  */
 #include <config.h>
 
+#include <errno.h>
 #include <stdio.h>
 #include <sys/stat.h>
 #include <ctype.h>
@@ -104,238 +105,287 @@ SCM g_rc_mode_general(SCM scmmode,
   return ret;
 }
 
-
-/*! \brief Reads the gafrc file.
- *  \par Function Description
- *  This is the function which actually reads in the RC file.
- *  First, it looks in a list of previously read RC files.  If the file has
- *  already been read, it just says OK.  After reading the file, it places
- *  the filename in the list of read files.
+/*! \brief Load a system configuration file.
+ * \par Function Description
+ * Attempts to load the system configuration file with basename \a
+ * rcname.  The string "system-" is prefixed to \a rcname.  If \a
+ * rcname is NULL, the default value of "gafrc" is used.
  *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] fname      RC file name to read.
- *  \param [in] ok_msg     Message to print if file is read ok.
- *  \param [in] err_msg    Message to print if file read error occurs
- *  \return 1 on success, 0 otherwise.
+ * \param toplevel  The current #TOPLEVEL structure.
+ * \param rcfile    The basename of the configuration file to load, or NULL.
+ * \param err       Return location for errors, or NULL.
+ * \return TRUE on success, FALSE on failure.
  */
-gint g_rc_parse_general(TOPLEVEL *toplevel,
-			const gchar *fname, 
-			const gchar *ok_msg, const gchar *err_msg)
+gboolean
+g_rc_parse_system (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
 {
-  gint found_rc = FALSE;
-  GList *found_rc_filename_element;
+  gchar *sysname = NULL;
+  gboolean status;
 
-  /* First see if fname is in list of previously read RC files. */
-  found_rc_filename_element = g_list_find_custom(toplevel->RC_list,
-                                                 (gconstpointer) fname,
-                                                 (GCompareFunc) strcmp);
-  if (found_rc_filename_element != NULL) {
-    /* We've already read this one in. */
-    s_log_message(_("RC file [%s] already read in.\n"), fname);
-    return 0;
-  }
+  /* Default to gafrc */
+  rcname = (rcname != NULL) ? rcname : "gafrc";
 
-  /* Now try to read in contents of RC file.  */
-  if (access (fname, R_OK) == 0) {
-    g_read_file (toplevel, fname);
-    found_rc = 1;
-    /* Everything was OK.  Now add this file to list of read RC files. */
-    toplevel->RC_list = g_list_append (toplevel->RC_list,
-                                        g_strdup (fname));
-    s_log_message (ok_msg, fname);
+  sysname = g_strdup_printf ("system-%s", rcname);
+  status = g_rc_parse_local (toplevel, sysname, s_path_sys_config (), err);
+  g_free (sysname);
+  return status;
+}
+
+/*! \brief Load a user configuration file.
+ * \par Function Description
+ * Attempts to load the user configuration file with basename \a
+ * rcname.  If \a rcname is NULL, the default value of "gafrc" is
+ * used.
+ *
+ * \param toplevel  The current #TOPLEVEL structure.
+ * \param rcfile    The basename of the configuration file to load, or NULL.
+ * \param err       Return location for errors, or NULL.
+ * \return TRUE on success, FALSE on failure.
+ */
+gboolean
+g_rc_parse_user (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
+{
+  /* Default to gafrc */
+  rcname = (rcname != NULL) ? rcname : "gafrc";
+
+  return g_rc_parse_local (toplevel, rcname, s_path_user_config (), err);
+}
+
+/*! \brief Load a local configuration file.
+ * \par Function Description
+ * Attempts to load the configuration file with basename \a rcname
+ * corresponding to \a path, reporting errors via \a err.  If \a path
+ * is a directory, looks for a file named \a rcname in that
+ * directory. Otherwise, looks for a file named \a rcname in the same
+ * directory as \a path. If \a path is NULL, looks in the current
+ * directory. If \a rcname is NULL, the default value of "gafrc" is
+ * used.
+ *
+ * \param toplevel  The current #TOPLEVEL structure.
+ * \param rcname    The basename of the configuration file to load, or NULL.
+ * \param path      The path to load a configuration file for, or NULL.
+ * \param err       Return location for errors, or NULL.
+ * \return TRUE on success, FALSE on failure.
+ */
+gboolean
+g_rc_parse_local (TOPLEVEL *toplevel, const gchar *rcname, const gchar *path,
+                  GError **err)
+{
+  gchar *dir = NULL;
+  gchar *rcfile = NULL;
+  gboolean status;
+  g_return_val_if_fail ((toplevel != NULL), FALSE);
+
+  /* Default to gafrc */
+  rcname = (rcname != NULL) ? rcname : "gafrc";
+  /* Default to cwd */
+  path = (path != NULL) ? path : ".";
+
+  /* If path isn't a directory, get the dirname. */
+  if (g_file_test (path, G_FILE_TEST_IS_DIR)) {
+    dir = g_strdup (path);
   } else {
-    found_rc = 0;
-    s_log_message (err_msg, fname);
+    dir = g_path_get_dirname (path);
   }
 
-  return found_rc;
+  rcfile = g_build_filename (dir, rcname, NULL);
+  status = g_rc_parse_file (toplevel, rcfile, err);
+
+  g_free (dir);
+  g_free (rcfile);
+  return status;
 }
 
-
-/*! \brief Parses a system RC file.
- *  \par Function Description
- *  This function wil open and parse a system rc file.
+/*! \brief Mark a configuration file as read.
+ * \par Function Description
+ * If the config file \a filename has not already been loaded, mark it
+ * as loaded and return TRUE, storing \a filename in \a toplevel (\a
+ * filename should not subsequently be freed).  Otherwise, return
+ * FALSE, and set \a err appropriately.
  *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] rcname     System RC file name to parse.
- *  \return 1 on success, 0 on failure.
+ * \note Should only be called by g_rc_parse_file().
+ *
+ * \param toplevel  The current #TOPLEVEL structure.
+ * \param filename  The config file name to test.
+ * \param err       Return location for errors, or NULL.
+ * \return TRUE if \a filename not already loaded, FALSE otherwise.
  */
-gint g_rc_parse_system_rc(TOPLEVEL *toplevel, const gchar *rcname)
+static gboolean
+g_rc_try_mark_read (TOPLEVEL *toplevel, gchar *filename, GError **err)
 {
-  gint found_rc;
-  gchar *tmp;
-  char *filename;
-  gchar *ok_msg, *err_msg;
+  GList *found = NULL;
+  g_return_val_if_fail ((toplevel != NULL), FALSE);
+  g_return_val_if_fail ((filename != NULL), FALSE);
 
-  tmp = g_strconcat (s_path_sys_config (),
-                     G_DIR_SEPARATOR_S,
-                     "system-", rcname,
-                     NULL);
-  filename = f_normalize_filename (tmp, NULL);
-  if (filename == NULL) {
-    return 0;
+  /* Test if marked read already */
+  found = g_list_find_custom (toplevel->RC_list, filename,
+                              (GCompareFunc) strcmp);
+  if (found != NULL) {
+    g_set_error (err, EDA_ERROR, EDA_ERROR_RC_TWICE,
+                 _("Config file already loaded"));
+    return FALSE;
   }
 
-  ok_msg  = g_strdup_printf (_("Read system config file [%%s]\n"));
-  err_msg = g_strdup_printf (_("Did not find required system config file [%%s]\n"));
-  found_rc = g_rc_parse_general(toplevel, filename, ok_msg, err_msg);
-
-  g_free(ok_msg);
-  g_free(err_msg);  
-  g_free(tmp);
-  g_free(filename);
-
-  return found_rc;
+  toplevel->RC_list = g_list_append (toplevel->RC_list, filename);
+  /* N.b. don't free name_norm here; it's stored in the TOPLEVEL. */
+  return TRUE;
 }
 
-/*! \brief Parse a RC file in users home directory.
- *  \par Function Description
- *  This function will open and parse a RC file in the users home directory.
+/*! \brief Load a configuration file.
+ * \par Function Description
+ * Load the configuration file \a rcfile, reporting errors via \a err.
  *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] rcname     User's RC file name.
- *  \return 1 on success, 0 on failure.
+ * \param toplevel  The current #TOPLEVEL structure.
+ * \param rcfile    The filename of the configuration file to load.
+ * \param err       Return location for errors, or NULL;
+ * \return TRUE on success, FALSE on failure.
  */
-gint g_rc_parse_home_rc(TOPLEVEL *toplevel, const gchar *rcname)
+gboolean
+g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile, GError **err)
 {
-  gint found_rc;
-  gchar *tmp;
-  char *filename;
-  gchar *ok_msg, *err_msg;
+  gchar *name_norm = NULL;
+  GError *tmp_err = NULL;
+  g_return_val_if_fail ((toplevel != NULL), FALSE);
+  g_return_val_if_fail ((rcfile != NULL), FALSE);
 
-  if (s_path_user_config () == NULL) return 0;
+  /* Normalise filename */
+  name_norm = f_normalize_filename (rcfile, &tmp_err);
+  if (name_norm == NULL) goto parse_file_error;
 
-  tmp = g_build_filename (s_path_user_config (), rcname, NULL);
-  filename = f_normalize_filename (tmp, NULL);
-  if (filename == NULL) {
-    return 0;
+  /* Attempt to load the rc file, if it hasn't been loaded already.
+   * If g_rc_try_mark_read() succeeds, it stores name_norm in
+   * toplevel, so we *don't* free it. */
+  if (g_rc_try_mark_read (toplevel, name_norm, &tmp_err)
+      && g_read_file (toplevel, name_norm, &tmp_err)) {
+    s_log_message (_("Parsed config from [%s]\n"), name_norm);
+    return TRUE;
   }
 
-  ok_msg  = g_strdup_printf (_("Read user config file [%%s]\n"));
-  err_msg = g_strdup_printf (_("Did not find optional user config file [%%s]\n"));
-  found_rc = g_rc_parse_general(toplevel, filename, ok_msg, err_msg);
-  
-  g_free(ok_msg);
-  g_free(err_msg);
-  g_free(tmp);
-  g_free(filename);
-
-  return found_rc;
+ parse_file_error:
+  /* Copy tmp_err into err, with a prefixed message. */
+  /*! \todo We should upgrade to GLib >= 2.16 and use
+   * g_propagate_prefixed_error(). */
+  if (err == NULL) {
+    g_error_free (tmp_err);
+  } else {
+    gchar *orig_msg = tmp_err->message;
+    tmp_err->message =
+      g_strdup_printf (_("Unable to parse config from [%s]: %s"),
+                       (name_norm != NULL) ? name_norm : rcfile, orig_msg);
+    g_free (orig_msg);
+    *err = tmp_err;
+  }
+  g_free (name_norm);
+  return FALSE;
 }
 
-/*! \brief Parse rc file in current working directory.
- *  \par Function Description
- *  This function will open and parse a RC file in the current working directory.
- *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] rcname     Local directory RC file name.
- *  \return 1 on success, 0 on failure.
- */
-gint g_rc_parse_local_rc(TOPLEVEL *toplevel, const gchar *rcname)
+static void
+g_rc_parse__process_error (GError **err, const gchar *pname)
 {
-  gint found_rc;
-  char *filename;
-  gchar *ok_msg;
-  gchar *err_msg;
+  char *pbase;
 
-  filename = f_normalize_filename (rcname, NULL);
-  if (filename == NULL) {
-    return 0;
+  /* Take no chances; if err was not set for some reason, bail out. */
+  if (*err == NULL) {
+    const gchar *msgl =
+      _("ERROR: An unknown error occurred while parsing configuration files.");
+    s_log_message ("%s\n", msgl);
+    fprintf(stderr, "%s\n", msgl);
+
+  } else {
+    /* Config files are allowed to be missing; check for this. */
+    if (g_error_matches (*err, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
+      s_log_message ("%s\n", (*err)->message);
+      return;
+    }
+
+    s_log_message (_("ERROR: %s\n"), (*err)->message);
+    fprintf (stderr, _("ERROR: %s\n"), (*err)->message);
   }
 
-  ok_msg  = g_strdup_printf (_("Read local config file [%%s]\n"));
-  err_msg = g_strdup_printf (_("Did not find optional local config file [%%s]\n"));
-  found_rc = g_rc_parse_general(toplevel, filename, ok_msg, err_msg);
-
-  g_free(ok_msg);
-  g_free(err_msg);
-  g_free(filename);
-
-  return found_rc;
-}
-
-/*! \brief Parse a RC file from a specified location.
- *  \par Function Description
- *  This function will open and parse a RC file from a specified location.
- *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] rcname     Specified location RC file name.
- *  \return 1 on success, 0 on failure.
- */
-gint g_rc_parse_specified_rc(TOPLEVEL *toplevel, const gchar *rcname)
-{
-  gint found_rc = 0;
-  char *filename;
-  gchar *rcbasename;
-  gchar *ok_msg;
-  gchar *err_msg;
-
-  if (rcname == NULL) {
-    return 0;
-  }
-
-  filename = f_normalize_filename (rcname, NULL);
-  if (filename == NULL) {
-    return 0;
-  }
-
-  rcbasename = g_path_get_basename (rcname);
-
-  ok_msg  = g_strdup_printf (_("Read specified %s file [%%s]\n"),
-                             rcbasename);
-  err_msg = g_strdup_printf (_("Did not find specified %s file [%%s]\n"),
-                             rcbasename);
-  found_rc = g_rc_parse_general(toplevel, filename, ok_msg, err_msg);
-  
-  g_free(ok_msg);
-  g_free(err_msg);
-  g_free(filename);
-  g_free(rcbasename);
-
-  return found_rc;
+  /* g_path_get_basename() allocates memory, but we don't care
+   * because we're about to exit. */
+  pbase = g_path_get_basename (pname);
+  fprintf (stderr, _("ERROR: The %s log may contain more information.\n"),
+           pbase);
+  exit (1);
 }
 
 /*! \brief General RC file parsing function.
- *  \par Function Description
- *  This function will check for System, HOME and Local RC files matching
- *  the rcname input parameter.  If none of those three are found it will
- *  search for the specified_rc_filename.  When none are found it will
- *  call exit(-1) to terminate the program.
+ * \par Function Description
+ * Calls g_rc_parse_handler() with the default error handler. If any
+ * error other than ENOENT occurs while parsing a configuration file,
+ * prints an informative message and calls exit(1).
  *
- *  \param [in] toplevel              The TOPLEVEL object.
- *  \param [in] rcname                 RC file name.
- *  \param [in] specified_rc_filename  Specific location RC file name.
- *  \return calls exit(-1) when no RC file matching either rcname or
- *          specified_rc_filename is found.
+ * \bug libgeda shouldn't call exit().
+ *
+ * \warning Since this function may not return, it should only be used
+ * on application startup or when there is no chance of data loss from
+ * an unexpected exit().
+ *
+ * \param [in] toplevel  The current #TOPLEVEL structure.
+ * \param [in] pname     The name of the application (usually argv[0]).
+ * \param [in] rcname    Config file basename, or NULL.
+ * \param [in] rcfile    Specific config file path, or NULL.
  */
-void g_rc_parse(TOPLEVEL *toplevel,
-		const gchar *rcname, const gchar *specified_rc_filename)
+void
+g_rc_parse (TOPLEVEL *toplevel, const gchar *pname,
+            const gchar *rcname, const gchar *rcfile)
 {
-  gint found_rc = 0;
+  g_rc_parse_handler (toplevel, rcname, rcfile,
+                      (ConfigParseErrorFunc) g_rc_parse__process_error,
+                      (void *) pname);
+}
 
-  /* visit rc files in order */
-  /* Changed by SDB 1.2.2005 in response to Peter Kaiser's bug report.
-   * Read gafrc files first */
-  found_rc |= g_rc_parse_system_rc(toplevel, "gafrc");
-  found_rc |= g_rc_parse_home_rc(toplevel, "gafrc");
-  found_rc |= g_rc_parse_local_rc(toplevel, "gafrc");
-  /* continue support for individual rc files for each program.  */
-  found_rc |= g_rc_parse_system_rc(toplevel, rcname);
-  found_rc |= g_rc_parse_home_rc(toplevel, rcname);
-  found_rc |= g_rc_parse_local_rc(toplevel, rcname);
+/*! \brief General RC file parsing function.
+ * \par Function Description
+ * Attempt to load system, user and local (current working directory)
+ * configuration files, first with the default "gafrc" basename and
+ * then with the basename \a rcname, if \a rcname is not NULL.
+ * Additionally, attempt to load configuration from \a rcfile if \a
+ * rcfile is not NULL.
+ *
+ * If an error occurs, calls \a handler with the provided \a user_data
+ * and a GError.
+ *
+ * \see g_rc_parse().
+ *
+ * \param toplevel  The current #TOPLEVEL structure.
+ * \param rcname    Config file basename, or NULL.
+ * \param rcfile    Specific config file path, or NULL.
+ * \param handler   Handler function for config parse errors.
+ * \param user_data Data to be passed to \a handler.
+ */
+void
+g_rc_parse_handler (TOPLEVEL *toplevel,
+                    const gchar *rcname, const gchar *rcfile,
+                    ConfigParseErrorFunc handler, void *user_data)
+{
+  GError *err = NULL;
 
-  /* New fcn introduced by SDB to consolidate this & make it available 
-   * for other programs */
-  found_rc |= g_rc_parse_specified_rc(toplevel, specified_rc_filename);
+#ifdef HANDLER_DISPATCH
+#  error HANDLER_DISPATCH already defined
+#endif
+#define HANDLER_DISPATCH \
+  do { if (err == NULL) break;  handler (&err, user_data);        \
+       g_error_free (err); err = NULL; } while (0)
 
-  /* Oh well, I couldn't find any rcfile, exit! */
-  if (!found_rc) {
-    /*! \todo these two are basically the
-     * same. Inefficient!
-     */
-    s_log_message(_("Could not find any %s file!\n"), rcname);
-    exit(-1);
+  /* Load configuration files in order. */
+  /* First gafrc files. */
+  g_rc_parse_system (toplevel, NULL, &err); HANDLER_DISPATCH;
+  g_rc_parse_user (toplevel, NULL, &err); HANDLER_DISPATCH;
+  g_rc_parse_local (toplevel, NULL, NULL, &err); HANDLER_DISPATCH;
+  /* Next application-specific rcname. */
+  if (rcname != NULL) {
+    g_rc_parse_system (toplevel, rcname, &err); HANDLER_DISPATCH;
+    g_rc_parse_user (toplevel, rcname, &err); HANDLER_DISPATCH;
+    g_rc_parse_local (toplevel, rcname, NULL, &err); HANDLER_DISPATCH;
   }
+  /* Finally, optional additional config file. */
+  if (rcfile != NULL) {
+    g_rc_parse_file (toplevel, rcfile, &err); HANDLER_DISPATCH;
+  }
+
+#undef HANDLER_DISPATCH
 }
 
 /*! \brief

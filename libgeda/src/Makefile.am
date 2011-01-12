@@ -4,6 +4,7 @@ lib_LTLIBRARIES = libgeda.la
 
 libgeda_la_SOURCES = \
 	a_basic.c \
+	edaerrors.c \
 	f_basic.c \
 	f_print.c \
 	g_basic.c \

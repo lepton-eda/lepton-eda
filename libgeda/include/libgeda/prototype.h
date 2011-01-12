@@ -28,21 +28,17 @@ void f_print_set_type(TOPLEVEL *toplevel, int type);
 SCM g_scm_eval_protected (SCM exp, SCM module_or_state);
 SCM g_scm_eval_string_protected (SCM str);
 SCM g_scm_c_eval_string_protected (const gchar *str);
-int g_read_file(TOPLEVEL *toplevel, const gchar *filename);
+gboolean g_read_file(TOPLEVEL *toplevel, const gchar *filename, GError **err);
 
 /* g_rc.c */
 SCM g_rc_mode_general(SCM scmmode, const char *rc_name, int *mode_var, 
                       const vstbl_entry *table, int table_size);
-gint g_rc_parse_general(TOPLEVEL *toplevel,
-                        const gchar *fname, 
-                        const gchar *ok_msg, const gchar *err_msg);
-gint g_rc_parse_system_rc(TOPLEVEL *toplevel, const gchar *rcname);
-gint g_rc_parse_home_rc(TOPLEVEL *toplevel, const gchar *rcname);
-gint g_rc_parse_local_rc(TOPLEVEL *toplevel, const gchar *rcname);
-void g_rc_parse(TOPLEVEL *toplevel, const gchar* rcname,
-                const gchar* specified_rc_filename);
-gint g_rc_parse_specified_rc(TOPLEVEL *toplevel, const gchar *rcfilename);
-
+gboolean g_rc_parse_system (TOPLEVEL *toplevel, const gchar *rcname, GError **err);
+gboolean g_rc_parse_user (TOPLEVEL *toplevel, const gchar *rcname, GError **err);
+gboolean g_rc_parse_local (TOPLEVEL *toplevel, const gchar *rcname, const gchar *path, GError **err);
+gboolean g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile, GError **err);
+void g_rc_parse(TOPLEVEL *toplevel, const gchar* pname, const gchar* rcname, const gchar* rcfile);
+void g_rc_parse_handler (TOPLEVEL *toplevel, const gchar *rcname, const gchar *rcfile, ConfigParseErrorFunc handler, void *user_data);
 /* g_smob.c */
 SCM g_make_attrib_smob(TOPLEVEL *curr_w, OBJECT *curr_attr);
 SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value, TOPLEVEL **world, OBJECT **o_attrib, char *new_string[]);

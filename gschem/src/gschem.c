@@ -247,7 +247,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
   /* Now read in RC files. */
   g_rc_parse_gtkrc();
-  g_rc_parse(w_current->toplevel, "gschemrc", rc_filename);
+  x_rc_parse_gschem (w_current, rc_filename);
 
   /* By this point, libgeda should have setup the Guile load path, so
    * we can take advantage of that.  */
@@ -256,7 +256,7 @@ void main_prog(void *closure, int argc, char *argv[])
     s_log_message (_("Couldn't find init scm file [%s]\n"), "gschem.scm");
   }
   input_str = scm_to_locale_string (scm_tmp);
-  if (g_read_file(w_current->toplevel, input_str) != -1) {
+  if (g_read_file(w_current->toplevel, input_str, NULL)) {
     s_log_message(_("Read init scm file [%s]\n"), input_str);
   } else {
     /*! \todo These two messages are the same. Should be

@@ -10,6 +10,10 @@ more information, please consult the `ChangeLog' file.
 Notable changes in gEDA/gaf 1.7.0
 =================================
 
+* All gEDA/gaf applications now handle configuration files much more
+  strictly, and provide much more useful feedback when an error
+  occurs.
+
 * Several changes to `gschem' command-line options:
 
   - The `-t' option is no longer supported.

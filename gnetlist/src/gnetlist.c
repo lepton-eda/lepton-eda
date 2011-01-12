@@ -189,7 +189,7 @@ void main_prog(void *closure, int argc, char *argv[])
      * are loaded. */
     scm_eval_x (pre_rc_list, scm_current_module ());
 
-    g_rc_parse(pr_current, "gnetlistrc", rc_filename);
+    g_rc_parse (pr_current, argv[0], "gnetlistrc", rc_filename);
     /* immediately setup user params */
     i_vars_set (pr_current);
 
