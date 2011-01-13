@@ -656,8 +656,6 @@ void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \param [in] release_ver  The release number gEDA
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list
- *
- *  \todo Don't use fixed-length string for symbol basename
  */
 OBJECT *o_complex_read (TOPLEVEL *toplevel,
                         char buf[], unsigned int release_ver,
@@ -668,8 +666,8 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
   int x1, y1;
   int angle;
 
-  char basename[256]; /* FIXME This is a hack */
-	
+  char *basename = g_malloc (1 + strlen (buf));
+
   int selectable;
   int mirror;
 
@@ -718,6 +716,8 @@ OBJECT *o_complex_read (TOPLEVEL *toplevel,
     /* Delete or hide attributes eligible for promotion inside the complex */
      o_complex_remove_promotable_attribs (toplevel, new_obj);
   }
+
+  g_free (basename);
 
   return new_obj;
 }
