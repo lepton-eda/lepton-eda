@@ -44,8 +44,6 @@ Notable changes in gEDA/gaf 1.7.0
 * The `gschem' "Edit Text Properties" dialog now has an easier to use
   "Alignment" menu.
 
-* PNG export from `gschem' will now be cropped correctly.
-
 * Printed text size now better matches on-screen text size in
   `gschem'.
 
@@ -80,20 +78,28 @@ Notable changes in gEDA/gaf 1.7.0
   longer be necessary to set an expanded Guile stack in gEDA's config
   files.
 
-* The `partlist' backends for `gnetlist' now handle hierarchical
-  refdes correctly.
-
 * The `spice-sdb' backend for `gnetlist' now supports probes
   (`TESTPOINT' devices).
-
-* On Windows, `gschem' and `gattrib' will no longer launch with a
-  command window visible.
-
- * `gnetlist-arg' is no longer valid in `gsch2pcb' project files.
 
 * The undocumented `mk_verilog_syms' program is no longer installed.
   The symbols it creates are still installed to
   `${prefix}/share/gEDA/sym/verilog'.
+
+Notable changes in gEDA/gaf 1.6.2
+=================================
+
+ * PNG export from `gschem' will now be cropped correctly.
+
+ * The `partlist' backends for `gnetlist' now handle hierarchical
+   refdes correctly.
+
+ * On Windows, `gschem' and `gattrib' will no longer launch with a
+   command window visible.
+
+ * `gnetlist-arg' is no longer valid in `gsch2pcb' project files.
+
+Several other bugs were fixed, including a major crash bug in
+gnetlist.
 
 Notable changes in gEDA/gaf 1.6.1
 =================================
