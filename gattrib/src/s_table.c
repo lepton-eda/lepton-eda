@@ -327,7 +327,8 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
             attrib_text = g_strdup(a_current->text->string);
             attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
             attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
-	    old_visibility = a_current->visibility;
+            old_visibility = o_is_visible (pr_current, a_current)
+              ? VISIBLE : INVISIBLE;
 	    old_show_name_value = a_current->show_name_value;
 
 	    /* Don't include "refdes" or "slot" because they form the row name. */
