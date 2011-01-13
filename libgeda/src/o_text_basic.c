@@ -492,7 +492,8 @@ char *o_text_save(TOPLEVEL *toplevel, OBJECT *object)
   num_lines = o_text_num_lines(string);
 
   buf = g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d\n%s", object->type,
-                         x, y, object->color, size, object->visibility,
+                         x, y, object->color, size,
+                         o_is_visible (toplevel, object) ? VISIBLE : INVISIBLE,
                          object->show_name_value, object->text->angle,
                          object->text->alignment, num_lines, string);
 
@@ -552,7 +553,7 @@ OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current)
                         o_current->text->angle,
                         o_current->text->string,
                         o_current->text->size,
-                        o_current->visibility,
+                        o_is_visible (toplevel, o_current) ? VISIBLE : INVISIBLE,
                         o_current->show_name_value);
 
   return new_obj;
