@@ -799,8 +799,6 @@ void
 o_set_visibility (TOPLEVEL *toplevel, OBJECT *object, int visibility)
 {
   g_return_if_fail (object != NULL);
-  if (visibility == LEAVE_VISIBILITY_ALONE)
-    return;
   if (object->visibility != visibility) {
     object->visibility = visibility;
     o_bounds_invalidate (toplevel, object);
