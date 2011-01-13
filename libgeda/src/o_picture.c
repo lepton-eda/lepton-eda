@@ -215,6 +215,7 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
  *  This function formats a string in the buffer <B>*buff</B> to describe
  *  the picture object <B>*object</B>.
  *
+ *  \param [in] toplevel  a TOPLEVEL structure
  *  \param [in] object  Picture OBJECT to create string from.
  *  \return A pointer to the picture OBJECT character string.
  *
@@ -222,7 +223,7 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
  *  Caller must g_free returned character string.
  *
  */
-char *o_picture_save(OBJECT *object)
+char *o_picture_save(TOPLEVEL *toplevel, OBJECT *object)
 {
   int width, height, x1, y1;
   gchar *encoded_picture=NULL;

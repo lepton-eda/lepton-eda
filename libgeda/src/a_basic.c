@@ -71,7 +71,7 @@ gchar *o_save_buffer (TOPLEVEL *toplevel, const GList *object_list)
 
   acc = g_string_new (o_file_format_header());
 
-  buffer = o_save_objects (object_list, FALSE);
+  buffer = o_save_objects (toplevel, object_list, FALSE);
   g_string_append (acc, buffer);
   g_free (buffer);
 
@@ -89,11 +89,12 @@ gchar *o_save_buffer (TOPLEVEL *toplevel, const GList *object_list)
  *  we recurse for saving out those attributes, the function must be called
  *  with save_attribs passed as TRUE.
  *
+ *  \param [in] toplevel      A TOPLEVEL structure.
  *  \param [in] object_list   The head of a GList of objects to save.
  *  \param [in] save_attribs  Should attribute objects encounterd be saved?
  *  \returns a buffer containing schematic data or NULL on failure.
  */
-gchar *o_save_objects (const GList *object_list, gboolean save_attribs)
+gchar *o_save_objects (TOPLEVEL *toplevel, const GList *object_list, gboolean save_attribs)
 {
   OBJECT *o_current;
   const GList *iter;
@@ -113,27 +114,27 @@ gchar *o_save_objects (const GList *object_list, gboolean save_attribs)
       switch (o_current->type) {
 
         case(OBJ_LINE):
-          out = o_line_save(o_current);
+          out = o_line_save(toplevel, o_current);
           break;
 
         case(OBJ_NET):
-          out = o_net_save(o_current);
+          out = o_net_save(toplevel, o_current);
           break;
 
         case(OBJ_BUS):
-          out = o_bus_save(o_current);
+          out = o_bus_save(toplevel, o_current);
           break;
 
         case(OBJ_BOX):
-          out = o_box_save(o_current);
+          out = o_box_save(toplevel, o_current);
           break;
 
         case(OBJ_CIRCLE):
-          out = o_circle_save(o_current);
+          out = o_circle_save(toplevel, o_current);
           break;
 
         case(OBJ_COMPLEX):
-          out = o_complex_save(o_current);
+          out = o_complex_save(toplevel, o_current);
           g_string_append_printf(acc, "%s\n", out);
           already_wrote = TRUE;
           g_free(out); /* need to free here because of the above flag */
@@ -141,7 +142,7 @@ gchar *o_save_objects (const GList *object_list, gboolean save_attribs)
           if (o_complex_is_embedded(o_current)) {
             g_string_append(acc, "[\n");
 
-            out = o_save_objects(o_current->complex->prim_objs, FALSE);
+            out = o_save_objects(toplevel, o_current->complex->prim_objs, FALSE);
             g_string_append (acc, out);
             g_free(out);
 
@@ -150,27 +151,27 @@ gchar *o_save_objects (const GList *object_list, gboolean save_attribs)
           break;
 
         case(OBJ_PLACEHOLDER):  /* new type by SDB 1.20.2005 */
-          out = o_complex_save(o_current);
+          out = o_complex_save(toplevel, o_current);
           break;
 
         case(OBJ_TEXT):
-          out = o_text_save(o_current);
+          out = o_text_save(toplevel, o_current);
           break;
 
         case(OBJ_PATH):
-          out = o_path_save(o_current);
+          out = o_path_save(toplevel, o_current);
           break;
 
         case(OBJ_PIN):
-          out = o_pin_save(o_current);
+          out = o_pin_save(toplevel, o_current);
           break;
 
         case(OBJ_ARC):
-          out = o_arc_save(o_current);
+          out = o_arc_save(toplevel, o_current);
           break;
 
         case(OBJ_PICTURE):
-          out = o_picture_save(o_current);
+          out = o_picture_save(toplevel, o_current);
           break;
 
         default:
@@ -197,7 +198,7 @@ gchar *o_save_objects (const GList *object_list, gboolean save_attribs)
       if (o_current->attribs != NULL) {
         g_string_append (acc, "{\n");
 
-        out = o_save_objects (o_current->attribs, TRUE);
+        out = o_save_objects (toplevel, o_current->attribs, TRUE);
         g_string_append (acc, out);
         g_free(out);
 

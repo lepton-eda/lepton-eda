@@ -291,6 +291,7 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, char buf[],
  *  It follows the post-20000704 release file format that handle the
  *  line type and fill options - filling is irrelevant here.
  *
+ *  \param [in] toplevel  a TOPLEVEL structure.
  *  \param [in] object  Line OBJECT to create string from.
  *  \return A pointer to the line OBJECT character string.
  *
@@ -298,7 +299,7 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, char buf[],
  *  Caller must g_free returned character string.
  *
  */
-char *o_line_save(OBJECT *object)
+char *o_line_save(TOPLEVEL *toplevel, OBJECT *object)
 {
   int x1, x2, y1, y2;
   int line_width, line_space, line_length;

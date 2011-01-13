@@ -366,13 +366,14 @@ OBJECT *o_box_read (TOPLEVEL *toplevel, char buf[],
  *  It follows the post-20000704 release file format that handle the line type
  *  and fill options.
  *
+ *  \param [in] toplevel  The TOPLEVEL structure.
  *  \param [in] object  The BOX OBJECT to create string from.
  *  \return A pointer to the BOX character string.
  *
  *  \warning
  *  Caller must g_free returned character string.
  */
-char *o_box_save(OBJECT *object)
+char *o_box_save(TOPLEVEL *toplevel, OBJECT *object)
 {
   int x1, y1; 
   int width, height;
