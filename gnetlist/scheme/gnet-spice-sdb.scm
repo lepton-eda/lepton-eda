@@ -93,6 +93,8 @@
 ;;              write-net-names-on-component to make it a bit more flexible.
 ;;              Combine write-probe-item and write-net-names-on-component.  Add
 ;;              a range utility function.  CC
+;;  1.13.2011 -- Add four lines of code (and some comments) that allow formaitting strings
+;;               to be used for netlisting NGspice device models. CC
 ;;
 ;;**********************************************************************************
 ;;
@@ -534,7 +536,7 @@
 	  )  ;; end of let*
      )  ;; end of if
 ))
-	    
+
 
 ;;**********************************************************************************
 ;;***************  Dealing with nets, devices, & SPICE cards.    *******************
@@ -1245,7 +1247,9 @@
 
 ;;--------------------------------------------------------------------
 ;; Given a refdes and port, and optionaly a format string, this writes
-;; out the nets attached to the component's pins.  This is used to write
+;; out the nets attached to the component's pins. If it's not called
+;; with a format string it looks for one in the net-format attribute,
+;; otherwise it writes out the pins unformated. This is used to write
 ;; out non-slotted parts.
 ;;--------------------------------------------------------------------
 (define (spice-sdb:write-net-names-on-component refdes port . format)
@@ -1280,9 +1284,12 @@
     ;; First do local assignments
     (let ((netnames (filter-map get-net-name (range 1 (length (gnetlist:get-pins refdes)))))
          )  ;; let
-      (if (null? format)
-        (display (string-join netnames " " 'suffix) port)			;; write out nets.
-        (apply simple-format (cons port (cons (car format) netnames))) )	;; write out nets with format string
+      (if (null? format) ;; Format agument take priority, otherwise use attribute
+        (set! format (gnetlist:get-package-attribute refdes "net-format"))
+        (set! format (car format)) )
+      (if (string=? format "unknown")
+        (display (string-join netnames " " 'suffix) port)		;; write out nets.
+        (apply simple-format (cons port (cons format netnames))) )	;; write out nets with format string
     )  ;; let
 )
 
@@ -1480,6 +1487,8 @@
 ;;  1.  Gets the refdes (package).
 ;;  2.  Checks the refdes against a short list of possible values.
 ;;      Depending upon the refdes, it does the following thing:
+;;      A? -- Invokes write-ic. This provides the opportunity for a code model
+;;            which may include a .model line.
 ;;      D? -- Invokes write-diode
 ;;      Q? -- Invokes write-transistor-diode. (The "type" attribute is <unknown> 
 ;;            in this case so that the spice simulator will barf if the user
@@ -1500,6 +1509,7 @@
 
     (let ((first-char (string (string-ref package 0)) ))  ;; extract first char of refdes.
       (cond
+       ((string=? first-char "A") (spice-sdb:write-ic package file-info-list port))
        ((string=? first-char "D") (spice-sdb:write-diode package port))
        ((string=? first-char "Q") (spice-sdb:write-transistor-diode package #f "<unknown>" (list) port))
        ((string=? first-char "M") (spice-sdb:write-transistor-diode package #f "<unknown>" (list) port))
