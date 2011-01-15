@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-02-14 08:42-0500\n"
+"POT-Creation-Date: 2011-01-14 23:17-0500\n"
 "PO-Revision-Date: 2010-02-06 22:11+0000\n"
 "Last-Translator: Carlos Nieves Ónega <Unknown>\n"
 "Language-Team: geda-dev <geda-dev@seul.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -257,8 +258,8 @@ msgstr "Leído archivo de configuración de sistema [%%s]\n"
 #, c-format
 msgid "Did not find required system config file [%%s]\n"
 msgstr ""
-"No se ha encontrado el archivo imprescindible de configuración de sistema [%%"
-"s]\n"
+"No se ha encontrado el archivo imprescindible de configuración de sistema "
+"[%%s]\n"
 
 #: libgeda/src/g_rc.c:212
 #, c-format
@@ -269,8 +270,8 @@ msgstr "Leído el archivo de configuración de usuario [%%s]\n"
 #, c-format
 msgid "Did not find optional user config file [%%s]\n"
 msgstr ""
-"No se ha podido encontrar el archivo opcional de configuración de usuario [%%"
-"s]\n"
+"No se ha podido encontrar el archivo opcional de configuración de usuario "
+"[%%s]\n"
 
 #: libgeda/src/g_rc.c:244
 #, c-format
@@ -315,7 +316,7 @@ msgstr ""
 #: libgeda/src/o_bus_basic.c:188 libgeda/src/o_circle_basic.c:286
 #: libgeda/src/o_line_basic.c:262 libgeda/src/o_net_basic.c:180
 #: libgeda/src/o_path_basic.c:192 libgeda/src/o_pin_basic.c:193
-#: libgeda/src/o_text_basic.c:416
+#: libgeda/src/o_text_basic.c:417
 #, c-format
 msgid "Found an invalid color [ %s ]\n"
 msgstr "Se ha encontrado un color no válido [%s]\n"
@@ -324,7 +325,7 @@ msgstr "Se ha encontrado un color no válido [%s]\n"
 #: libgeda/src/o_bus_basic.c:189 libgeda/src/o_circle_basic.c:287
 #: libgeda/src/o_line_basic.c:263 libgeda/src/o_net_basic.c:181
 #: libgeda/src/o_path_basic.c:193 libgeda/src/o_pin_basic.c:194
-#: libgeda/src/o_text_basic.c:417
+#: libgeda/src/o_text_basic.c:418
 msgid "Setting color to default color\n"
 msgstr "Asignando el color por defecto al color\n"
 
@@ -349,8 +350,8 @@ msgstr "Se ha especificado una longitud no válida, se corrige a 100\n"
 #, c-format
 msgid "Found a zero width/height box [ %c %d %d %d %d %d ]\n"
 msgstr ""
-"Se ha encontrado un rectángulo con altura o anchura cero [ %c %d %d %d %d %"
-"d ]\n"
+"Se ha encontrado un rectángulo con altura o anchura cero [ %c %d %d %d %d "
+"%d ]\n"
 
 #: libgeda/src/o_bus_basic.c:179
 #, c-format
@@ -361,8 +362,8 @@ msgstr "Se ha encontrado un bus de longitud cero [ %c %d %d %d %d %d ]\n"
 #, c-format
 msgid "Found an invalid bus ripper direction [ %s ]\n"
 msgstr ""
-"Se ha encontrado una dirección del símbolo de extracción de bus no válida [ %"
-"s ]\n"
+"Se ha encontrado una dirección del símbolo de extracción de bus no válida "
+"[ %s ]\n"
 
 #: libgeda/src/o_bus_basic.c:195
 msgid "Resetting direction to neutral (no direction)\n"
@@ -377,7 +378,7 @@ msgstr "No se permiten círculos con radio cero\n"
 msgid "Found a zero radius circle [ %c %d %d %d %d ]\n"
 msgstr "Se ha encontrado un círculo con radio cero [ %c %d %d %d %d ]\n"
 
-#: libgeda/src/o_complex_basic.c:481
+#: libgeda/src/o_complex_basic.c:486
 #, c-format
 msgid ""
 "Component not found:\n"
@@ -386,14 +387,14 @@ msgstr ""
 "No se ha encontrado el componente:\n"
 " %s"
 
-#: libgeda/src/o_complex_basic.c:695
+#: libgeda/src/o_complex_basic.c:700
 #, c-format
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
-"Se ha encontrado un componente con un ángulo de rotación no válido [ %c %d %"
-"d %d %d %d %s ]\n"
+"Se ha encontrado un componente con un ángulo de rotación no válido [ %c %d "
+"%d %d %d %d %s ]\n"
 
-#: libgeda/src/o_complex_basic.c:707
+#: libgeda/src/o_complex_basic.c:712
 #, c-format
 msgid ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
@@ -401,7 +402,7 @@ msgstr ""
 "Se ha encontrado un componente con un atributo de simetría no válido [ %c %d "
 "%d %d %d %d %s ]\n"
 
-#: libgeda/src/o_complex_basic.c:1020
+#: libgeda/src/o_complex_basic.c:1025
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -410,7 +411,7 @@ msgstr ""
 "ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
 "\tNo se ha podido procesar el atributo de versión de archivo symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:1024
+#: libgeda/src/o_complex_basic.c:1029
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -419,7 +420,7 @@ msgstr ""
 "ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
 "\tNo se ha podido procesar el atributo de versión de archivo symversion=\n"
 
-#: libgeda/src/o_complex_basic.c:1040
+#: libgeda/src/o_complex_basic.c:1045
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -428,7 +429,7 @@ msgstr ""
 "ADVERTENCIA: Error al obtener la versión de símbolo en la referencia %s:\n"
 "\tNo se ha podido procesar el atributo añadido symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:1065
+#: libgeda/src/o_complex_basic.c:1070
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -440,29 +441,29 @@ msgstr ""
 "\tse ha añadido el atributo symversion=%s a la instancia del símbolo, pero "
 "no hay ningún atributo symversion= dentro del archivo del símbolo\n"
 
-#: libgeda/src/o_complex_basic.c:1079
+#: libgeda/src/o_complex_basic.c:1084
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
 "\tSymbol in library is newer than instantiated symbol\n"
 msgstr ""
-"ADVERTENCIA: Las versiones de los símbolos no coinciden para la referencia %"
-"s (%s):\n"
+"ADVERTENCIA: Las versiones de los símbolos no coinciden para la referencia "
+"%s (%s):\n"
 "\t El símbolo en la librería es más reciente que el instanciado en el "
 "esquema\n"
 
-#: libgeda/src/o_complex_basic.c:1107
+#: libgeda/src/o_complex_basic.c:1112
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr ""
 "\t¡CAMBIO DE VERSIÓN IMPORTANTE (archivo %.3f, instanciado %.3f, %s)!\n"
 
-#: libgeda/src/o_complex_basic.c:1125
+#: libgeda/src/o_complex_basic.c:1130
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\tCambio menor en la versión (archivo %.3f, instanciado %.3f)\n"
 
-#: libgeda/src/o_complex_basic.c:1136
+#: libgeda/src/o_complex_basic.c:1141
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -539,7 +540,7 @@ msgid "Found an unsupported picture angle [ %d ]\n"
 msgstr ""
 "Se ha encontrado una imagen con un ángulo de rotación no válido [ %d ]\n"
 
-#: libgeda/src/o_picture.c:116 libgeda/src/o_text_basic.c:388
+#: libgeda/src/o_picture.c:116 libgeda/src/o_text_basic.c:389
 msgid "Setting angle to 0\n"
 msgstr "Cambiando el parámetro 'ángulo' a 0\n"
 
@@ -606,27 +607,27 @@ msgstr ""
 msgid "Found a zero length pin: [ %s ]\n"
 msgstr "Se ha encontrado una pata con longitud cero [ %s ]\n"
 
-#: libgeda/src/o_text_basic.c:374
+#: libgeda/src/o_text_basic.c:375
 #, c-format
 msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
 "Se ha encontrado un texto con tamaño cero [ %c %d %d %d %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_text_basic.c:386
+#: libgeda/src/o_text_basic.c:387
 #, c-format
 msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
-"Se ha encontrado un texto con ángulo no válido [ %c %d %d %d %d %d %d %d %"
-"d ]\n"
+"Se ha encontrado un texto con ángulo no válido [ %c %d %d %d %d %d %d %d "
+"%d ]\n"
 
-#: libgeda/src/o_text_basic.c:408
+#: libgeda/src/o_text_basic.c:409
 #, c-format
 msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
-"Se ha encontrado un texto con alineamiento no válido [ %c %d %d %d %d %d %d %"
-"d %d ]\n"
+"Se ha encontrado un texto con alineamiento no válido [ %c %d %d %d %d %d %d "
+"%d %d ]\n"
 
-#: libgeda/src/o_text_basic.c:410
+#: libgeda/src/o_text_basic.c:411
 msgid "Setting alignment to LOWER_LEFT\n"
 msgstr "Cambiando el alineamiento a 'Abajo a la izquierda'\n"
 

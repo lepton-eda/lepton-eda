@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2010-02-14 08:42-0500\n"
+"POT-Creation-Date: 2011-01-14 23:17-0500\n"
 "PO-Revision-Date: 2010-01-31 13:00+0000\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: deutsch <de@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -308,7 +309,7 @@ msgstr "Kreisbogen mit Radius 0 entdeckt [%c %d, %d, %d, %d, %d, %d ]\n"
 #: libgeda/src/o_bus_basic.c:188 libgeda/src/o_circle_basic.c:286
 #: libgeda/src/o_line_basic.c:262 libgeda/src/o_net_basic.c:180
 #: libgeda/src/o_path_basic.c:192 libgeda/src/o_pin_basic.c:193
-#: libgeda/src/o_text_basic.c:416
+#: libgeda/src/o_text_basic.c:417
 #, c-format
 msgid "Found an invalid color [ %s ]\n"
 msgstr "Fehlerhafte Farbangabe entdeckt [%s]\n"
@@ -317,7 +318,7 @@ msgstr "Fehlerhafte Farbangabe entdeckt [%s]\n"
 #: libgeda/src/o_bus_basic.c:189 libgeda/src/o_circle_basic.c:287
 #: libgeda/src/o_line_basic.c:263 libgeda/src/o_net_basic.c:181
 #: libgeda/src/o_path_basic.c:193 libgeda/src/o_pin_basic.c:194
-#: libgeda/src/o_text_basic.c:417
+#: libgeda/src/o_text_basic.c:418
 msgid "Setting color to default color\n"
 msgstr "Verwende die Default Farbe\n"
 
@@ -367,7 +368,7 @@ msgstr "Kreise mit dem Radius 0 sind nicht erlaubt\n"
 msgid "Found a zero radius circle [ %c %d %d %d %d ]\n"
 msgstr "Kreis mit dem Radius 0 entdeckt [ %c %d %d %d %d ]\n"
 
-#: libgeda/src/o_complex_basic.c:481
+#: libgeda/src/o_complex_basic.c:486
 #, c-format
 msgid ""
 "Component not found:\n"
@@ -376,86 +377,86 @@ msgstr ""
 "Bauteil wurde nicht gefunden:\n"
 " %s"
 
-#: libgeda/src/o_complex_basic.c:695
+#: libgeda/src/o_complex_basic.c:700
 #, c-format
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
 "Bauteil mit fehlerhafter Rotationsangabe entdeckt [ %c %d %d %d %d %d %s ]\n"
 
-#: libgeda/src/o_complex_basic.c:707
+#: libgeda/src/o_complex_basic.c:712
 #, c-format
 msgid ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
-"Bauteil mit fehlerhafter Spiegelungsangabe entdeckt [ %c %d %d %d %d %d %"
-"s ]\n"
+"Bauteil mit fehlerhafter Spiegelungsangabe entdeckt [ %c %d %d %d %d %d "
+"%s ]\n"
 
-#: libgeda/src/o_complex_basic.c:1020
+#: libgeda/src/o_complex_basic.c:1025
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse symbol file symversion=%s\n"
 msgstr ""
-"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz '%"
-"s':\n"
+"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz "
+"'%s':\n"
 "\tKonnte das Attribut symversion=%s nicht zerlegen\n"
 
-#: libgeda/src/o_complex_basic.c:1024
+#: libgeda/src/o_complex_basic.c:1029
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse symbol file symversion=\n"
 msgstr ""
-"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz '%"
-"s':\n"
+"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz "
+"'%s':\n"
 "\tKonnte das Attribut symversion= nicht zerlegen\n"
 
-#: libgeda/src/o_complex_basic.c:1040
+#: libgeda/src/o_complex_basic.c:1045
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse attached symversion=%s\n"
 msgstr ""
-"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz '%"
-"s':\n"
+"ACHTUNG: Fehler bei der Analyse der Version des Symbols mit der Referenz "
+"'%s':\n"
 "\tKonnte das angehängte Attribut symversion=%s nicht zerlegen\n"
 
-#: libgeda/src/o_complex_basic.c:1065
+#: libgeda/src/o_complex_basic.c:1070
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
 "\tsymversion=%s attached to instantiated symbol, but no symversion= inside "
 "symbol file\n"
 msgstr ""
-"ACHTUNG: Seltsame Konstellation der Version des Symbols mit der Referenz '%"
-"s':\n"
+"ACHTUNG: Seltsame Konstellation der Version des Symbols mit der Referenz "
+"'%s':\n"
 "\tsymversion=%s existiert bei dem Symbol im Schaltplan, fehlt aber innerhalb "
 "der Schaltsymbol-Datei\n"
 
-#: libgeda/src/o_complex_basic.c:1079
+#: libgeda/src/o_complex_basic.c:1084
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
 "\tSymbol in library is newer than instantiated symbol\n"
 msgstr ""
-"Achtung: Die Version des Symbols mit der Referenz %s stimmt nicht überein (%"
-"s):\n"
+"Achtung: Die Version des Symbols mit der Referenz %s stimmt nicht überein "
+"(%s):\n"
 "\tDas Symbol in der Bibliothek ist neuer als das Symbol im Schaltplan\n"
 
-#: libgeda/src/o_complex_basic.c:1107
+#: libgeda/src/o_complex_basic.c:1112
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr ""
-"\tGROSSE VERSIONSÄNDERUNG (Symboldatei %.3f, Symbol im Schaltplan %.3f, %"
-"s)!\n"
+"\tGROSSE VERSIONSÄNDERUNG (Symboldatei %.3f, Symbol im Schaltplan %.3f, "
+"%s)!\n"
 
-#: libgeda/src/o_complex_basic.c:1125
+#: libgeda/src/o_complex_basic.c:1130
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr ""
 "\tKleine Versionsänderung (Symboldatei %.3f, Symbol im Schaltplan %.3f)!\n"
 
-#: libgeda/src/o_complex_basic.c:1136
+#: libgeda/src/o_complex_basic.c:1141
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -526,7 +527,7 @@ msgstr "Setze die Einbettung auf 0\n"
 msgid "Found an unsupported picture angle [ %d ]\n"
 msgstr "Bild mit fehlerhafter Winkelangabe entdeckt [%d]\n"
 
-#: libgeda/src/o_picture.c:116 libgeda/src/o_text_basic.c:388
+#: libgeda/src/o_picture.c:116 libgeda/src/o_text_basic.c:389
 msgid "Setting angle to 0\n"
 msgstr "Setze die Winkelangabe auf 0\n"
 
@@ -594,27 +595,27 @@ msgstr ""
 msgid "Found a zero length pin: [ %s ]\n"
 msgstr "Pin mit der Länge 0 entdeckt: [ %s ]\n"
 
-#: libgeda/src/o_text_basic.c:374
+#: libgeda/src/o_text_basic.c:375
 #, c-format
 msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
 "Textstring mit der Zeichengröße 0 entdeckt [ %c %d %d %d %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_text_basic.c:386
+#: libgeda/src/o_text_basic.c:387
 #, c-format
 msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
-"Text mit nicht unterstützer Winkelangabe entdeckt [ %c %d %d %d %d %d %d %d %"
-"d ]\n"
+"Text mit nicht unterstützer Winkelangabe entdeckt [ %c %d %d %d %d %d %d %d "
+"%d ]\n"
 
-#: libgeda/src/o_text_basic.c:408
+#: libgeda/src/o_text_basic.c:409
 #, c-format
 msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
-"Text mit nicht unterstützer Ausrichtung entdeckt [ %c %d %d %d %d %d %d %d %"
-"d ]\n"
+"Text mit nicht unterstützer Ausrichtung entdeckt [ %c %d %d %d %d %d %d %d "
+"%d ]\n"
 
-#: libgeda/src/o_text_basic.c:410
+#: libgeda/src/o_text_basic.c:411
 msgid "Setting alignment to LOWER_LEFT\n"
 msgstr "Verwende die Ausrichtung 'Links Unten'\n"
 
