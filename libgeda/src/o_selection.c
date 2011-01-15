@@ -43,6 +43,7 @@ SELECTION *o_selection_new( void )
 /*! \brief Selects the given object and adds it to the selection list
  *  \par Selects the given object and does the needed work to make the
  *  object visually selected.
+ *  Skip objects that are already selected.
  *
  *  \param [in] toplevel   The TOPLEVEL object
  *  \param [in] selection  Pointer to the selection list
@@ -50,8 +51,11 @@ SELECTION *o_selection_new( void )
  */
 void o_selection_add (TOPLEVEL *toplevel, SELECTION *selection, OBJECT *o_selected)
 {
-  o_selection_select (toplevel, o_selected);
-  geda_list_add( (GedaList *)selection, o_selected );
+  if (o_selected->selected == FALSE)
+  {
+    o_selection_select (toplevel, o_selected);
+    geda_list_add( (GedaList *)selection, o_selected );
+  }
 }
 
 /*! \brief Removes the given object from the selection list
