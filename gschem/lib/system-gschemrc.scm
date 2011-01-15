@@ -1199,8 +1199,7 @@
     ("b" . edit-embed)
     ("u" . edit-unembed)
     ("p" . edit-update)
-    ("n" . edit-show-hidden)
-    ("v" . edit-make-text-visible)))
+    ("n" . edit-show-hidden)))
 
 
 ;;;    ("h" . edit-stretch-hotkey)  Obsolete
@@ -1429,8 +1428,7 @@
            (,(N_ "Embed Component/Picture")    edit-embed     edit-embed              #f)
            (,(N_ "Unembed Component/Picture")  edit-unembed   edit-unembed            #f)
            (,(N_ "Update Component")   edit-update            edit-update             "gtk-refresh")
-           (,(N_ "Show/Hide Inv Text") edit-show-hidden       edit-show-hidden        #f)
-           (,(N_ "Make Inv Text Vis")  edit-make-text-visible edit-make-text-visible  #f)))
+           (,(N_ "Show/Hide Inv Text") edit-show-hidden       edit-show-hidden        #f)))
 
 (define buffer-menu-items 
 ;;

@@ -1175,30 +1175,6 @@ DEFINE_I_CALLBACK(edit_show_hidden)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_make_visible)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  exit_if_null(w_current);
-
-  /* This is a new addition 3/15 to prevent this from executing
-   * inside an action */
-  if (w_current->inside_action)
-    return;
-
-  i_update_middle_button(w_current,
-                         i_callback_edit_make_visible,
-                         _("MakeVisible"));
-
-  o_edit_make_visible (w_current,
-                       s_page_objects (w_current->toplevel->page_current));
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 DEFINE_I_CALLBACK(edit_find)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;

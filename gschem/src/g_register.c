@@ -192,7 +192,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "edit-unembed",              0, 0, 0, g_keys_edit_unembed },
   { "edit-update",               0, 0, 0, g_keys_edit_update },
   { "edit-show-hidden",          0, 0, 0, g_keys_edit_show_hidden },
-  { "edit-make-text-visible",    0, 0, 0, g_keys_edit_make_visible },
   { "edit-find-text",            0, 0, 0, g_keys_edit_find },
   { "edit-show-text",            0, 0, 0, g_keys_edit_show_text },
   { "edit-hide-text",            0, 0, 0, g_keys_edit_hide_text },

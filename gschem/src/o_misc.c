@@ -412,36 +412,6 @@ void o_edit_show_hidden (GSCHEM_TOPLEVEL *w_current, const GList *o_list)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_edit_make_visible (GSCHEM_TOPLEVEL *w_current, const GList *o_list)
-{
-  /* this function actually changes the visibility flag */
-  TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_current;
-  const GList *iter;
-
-  iter = o_list;
-  while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
-
-    if (o_current->type == OBJ_TEXT) {
-      if (!o_is_visible (toplevel, o_current)) {
-        o_set_visibility (toplevel, o_current, VISIBLE);
-        o_text_recreate(toplevel, o_current);
-
-        toplevel->page_current->CHANGED = 1;
-      }
-    }
-    iter = g_list_next (iter);
-  }
-  o_undo_savestate(w_current, UNDO_ALL);
-
-}
-
 #define FIND_WINDOW_HALF_SIZE (5000)
 
 OBJECT *last_o = NULL;
