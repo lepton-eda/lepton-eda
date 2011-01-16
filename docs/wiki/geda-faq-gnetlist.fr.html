@@ -11,82 +11,73 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#problemes_avec_gnetlist_lors_de_l_installation_execution" class="toc">Problèmes avec gnetlist lors de l&#039;installation/exécution</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#la_bom_de_gnetlist_ne_fonctionne_pas._d_ou_vient_le_probleme" class="toc">la bom de gnetlist ne fonctionne pas. D&#039;où vient le problème?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#quelques_unes_des_commandes_de_gnetlist_debordent_la_pile._comment_je_resoud_ce_probleme" class="toc">Quelques unes des commandes de gnetlist débordent la pile. Comment je résoud ce problème?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#gnetlist_a_cree_une_netlist_qui_duplique_les_broches" class="toc">gnetlist a créé une netlist qui duplique les broches!?</a></span></div></li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="problemes_avec_gnetlist_lors_de_l_installation_execution" id="problemes_avec_gnetlist_lors_de_l_installation_execution">Problèmes avec gnetlist lors de l&#039;installation/exécution</a></h1>
+<h1 class="sectionedit303"><a name="problemes_avec_gnetlist_lors_de_l_installation_execution" id="problemes_avec_gnetlist_lors_de_l_installation_execution">Problèmes avec gnetlist lors de l&#039;installation/exécution</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Problèmes avec gnetlist lors de l'installation/exécution" [1-73] -->
-<h2><a name="la_bom_de_gnetlist_ne_fonctionne_pas._d_ou_vient_le_probleme" id="la_bom_de_gnetlist_ne_fonctionne_pas._d_ou_vient_le_probleme">la bom de gnetlist ne fonctionne pas. D&#039;où vient le problème?</a></h2>
+<!-- EDIT303 SECTION "Problèmes avec gnetlist lors de l'installation/exécution" [1-73] -->
+<h2 class="sectionedit304"><a name="la_bom_de_gnetlist_ne_fonctionne_pas_d_ou_vient_le_probleme" id="la_bom_de_gnetlist_ne_fonctionne_pas_d_ou_vient_le_probleme">la bom de gnetlist ne fonctionne pas. D&#039;où vient le problème?</a></h2>
 <div class="level2">
 
 <p>
-Si, lorsque vous lancez gnetlist comme ceci: 
+Si, lorsque vous lancez gnetlist comme ceci:
+
 </p>
 <pre class="code">gnetlist -g bom filename.sch</pre>
 
 <p>
-gnetlist vous sort un message d’erreur tel que: 
+gnetlist vous sort un message d&#039;erreur tel que:
+
 </p>
 <pre class="code">Loading schematic [filename.sch]
 ERROR: In procedure open-file:
 ERROR: No such file or directory: “attribs”</pre>
 
 <p>
-alors vous avez besoin de créer un fichier appelé «·attribs·» dans le répertoire courant qui contient les attributss que vous voulez dans le fichier de bom. Un exemple de ce fichier ressemblerait à: <pre STYLE="background : LightGreen;
+alors vous avez besoin de créer un fichier appelé «·attribs·» dans le répertoire courant qui contient les attributss que vous voulez dans le fichier de bom. Un exemple de ce fichier ressemblerait à:
+<pre STYLE="background : LightGreen;
 margin-left : 2em"><font size="+0">refdes
 device
 value</font></pre>
 </p>
 
 </div>
-<!-- SECTION "la bom de gnetlist ne fonctionne pas. D'où vient le problème?" [74-654] -->
-<h2><a name="quelques_unes_des_commandes_de_gnetlist_debordent_la_pile._comment_je_resoud_ce_probleme" id="quelques_unes_des_commandes_de_gnetlist_debordent_la_pile._comment_je_resoud_ce_probleme">Quelques unes des commandes de gnetlist débordent la pile. Comment je résoud ce problème?</a></h2>
+<!-- EDIT304 SECTION "la bom de gnetlist ne fonctionne pas. D'où vient le problème?" [74-654] -->
+<h2 class="sectionedit305"><a name="quelques_unes_des_commandes_de_gnetlist_debordent_la_pile_comment_je_resoud_ce_probleme" id="quelques_unes_des_commandes_de_gnetlist_debordent_la_pile_comment_je_resoud_ce_probleme">Quelques unes des commandes de gnetlist débordent la pile. Comment je résoud ce problème?</a></h2>
 <div class="level2">
 
 <p>
-Si vous avez un message tel que: 
+Si vous avez un message tel que:
+
 </p>
 <pre class="code">ERROR: Stack overflow</pre>
 
 <p>
-lorsque vous faites passer des schémas de grande taille par une des commandes, ajoutez alors ce qui suit à <strong><code>~/.gEDA/gnetlistrc</code></strong> ou un <strong><code>gnetlistrc</code></strong> local (dans le répertoire de travail courant): 
+lorsque vous faites passer des schémas de grande taille par une des commandes, ajoutez alors ce qui suit à <strong><code>~/.gEDA/gnetlistrc</code></strong> ou un <strong><code>gnetlistrc</code></strong> local (dans le répertoire de travail courant):
+
 </p>
 <pre class="code">(debug-options (list &#039;stack 200000))
 (eval-options (list &#039;stack 200000))</pre>
 
 <p>
-Si cela ne fonctionne pas, éditez alors la commande appropriée (habituellement appelée: gnet-backend_name.scm) et insérez les lignes précédentes en haut de ce fichier. Les commandes gnetlist peuvent être trouvées dans <strong><code>${prefix}/share/gEDA/scheme</code></strong>. Envoyez aussi un courriel à geda-dev rappelant aux développeurs de corriger ceci. Rappelez-vous que vous devez être inscrits sur geda-dev avant d’y envoyer des courriels.
+Si cela ne fonctionne pas, éditez alors la commande appropriée (habituellement appelée: gnet-backend_name.scm) et insérez les lignes précédentes en haut de ce fichier. Les commandes gnetlist peuvent être trouvées dans <strong><code>${prefix}/share/gEDA/scheme</code></strong>. Envoyez aussi un courriel à geda-dev rappelant aux développeurs de corriger ceci. Rappelez-vous que vous devez être inscrits sur geda-dev avant d&#039;y envoyer des courriels.
 </p>
 
 </div>
-<!-- SECTION "Quelques unes des commandes de gnetlist débordent la pile. Comment je résoud ce problème?" [655-1562] -->
-<h2><a name="gnetlist_a_cree_une_netlist_qui_duplique_les_broches" id="gnetlist_a_cree_une_netlist_qui_duplique_les_broches">gnetlist a créé une netlist qui duplique les broches!?</a></h2>
+<!-- EDIT305 SECTION "Quelques unes des commandes de gnetlist débordent la pile. Comment je résoud ce problème?" [655-1562] -->
+<h2 class="sectionedit306"><a name="gnetlist_a_cree_une_netlist_qui_duplique_les_broches" id="gnetlist_a_cree_une_netlist_qui_duplique_les_broches">gnetlist a créé une netlist qui duplique les broches!?</a></h2>
 <div class="level2">
 
 <p>
-Il y a eu au moins un rapport sur le message suivant venant de PCB après avoir chargé une netlist créée par gnetlist: 
+Il y a eu au moins un rapport sur le message suivant venant de PCB après avoir chargé une netlist créée par gnetlist:
+
 </p>
 <pre class="code">28: Error! Element R117 pin 2 appears multiple times in the netlist file.
 29: Error! Element C167 pin 2 appears multiple times in the netlist file.</pre>
 
 <p>
-Ce qui s’est produit est que gnetlist (libgeda en fait) a créé deux nets au lieu d’un seul. Ceci se produit lorsque vous dessinez deux nets l’un sur l’autre avec une broche connectant une intersection de deux nets se chevauchants. Notez que les nets chevauchés ne sont pas connectés ensemble. Un schéma pour la démonstration ressemble à ceci:
+Ce qui s&#039;est produit est que gnetlist (libgeda en fait) a créé deux nets au lieu d&#039;un seul. Ceci se produit lorsque vous dessinez deux nets l&#039;un sur l&#039;autre avec une broche connectant une intersection de deux nets se chevauchants. Notez que les nets chevauchés ne sont pas connectés ensemble. Un schéma pour la démonstration ressemble à ceci:
 </p>
 
 <p>
@@ -94,13 +85,14 @@ Ce qui s’est produit est que gnetlist (libgeda en fait) a créé deux nets au 
 </p>
 
 <p>
-Les développeurs débattent pour savoir si c’est un bogue ou non de gnetlist mais jusqu’à maintenant, assurez-vous de vos connexions de nets, spécialement celles qui impliquent des broches connectant des milieu de nets, sont correctement dessinées. Vous avez ici la manière dont la connexion ci-dessus devrait être correctement dessinée pour que netlist fasse son travail proprement:
+Les développeurs débattent pour savoir si c&#039;est un bogue ou non de gnetlist mais jusqu&#039;à maintenant, assurez-vous de vos connexions de nets, spécialement celles qui impliquent des broches connectant des milieu de nets, sont correctement dessinées. Vous avez ici la manière dont la connexion ci-dessus devrait être correctement dessinée pour que netlist fasse son travail proprement:
 </p>
 
 <p>
-<a href="media/geda/ambiguous1_fixed.png" class="media" target="_blank" title="geda:ambiguous1_fixed.png"><img src="media/geda/ambiguous1_fixed.png" class="media" alt="" /></a> 
+<a href="media/geda/ambiguous1_fixed.png" class="media" target="_blank" title="geda:ambiguous1_fixed.png"><img src="media/geda/ambiguous1_fixed.png" class="media" alt="" /></a>
+
 </p>
 
 </div>
-<!-- SECTION "gnetlist a créé une netlist qui duplique les broches!?" [1563-] --></body>
+<!-- EDIT306 SECTION "gnetlist a créé une netlist qui duplique les broches!?" [1563-] --></body>
 </html>

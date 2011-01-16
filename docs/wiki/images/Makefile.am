@@ -3,9 +3,9 @@
 docname=wiki
 docsdir = $(docdir)/$(docname)/images
 
-SUBDIRS = interwiki smileys 
+SUBDIRS = smileys interwiki 
 
-docs_DATA = interwiki.png link_icon.gif button-dw.png open.gif button-php.gif windows.gif button-rss.png bullet.gif button-donate.gif mail_icon.gif button-cc.gif tocdot2.gif closed.gif button-css.png button-xhtml.png 
+docs_DATA = link_icon.gif open.gif interwiki.png closed.gif button-cc.gif button-donate.gif mail_icon.gif tocdot2.gif button-rss.png button-php.gif button-xhtml.png bullet.gif button-css.png button-dw.png windows.gif 
 
 EXTRA_DIST = $(docs_DATA)
 

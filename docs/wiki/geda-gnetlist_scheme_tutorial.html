@@ -12,13 +12,12 @@
 <body>
 
 
-
-
-<h1><a name="scripting_a_gnetlist_backend_in_scheme" id="scripting_a_gnetlist_backend_in_scheme">Scripting a gnetlist backend in Scheme</a></h1>
+<h1 class="sectionedit13"><a name="scripting_a_gnetlist_backend_in_scheme" id="scripting_a_gnetlist_backend_in_scheme">Scripting a gnetlist backend in Scheme</a></h1>
 <div class="level1">
 
 <p>
- <strong>by John Doty</strong>
+
+<strong>by John Doty</strong>
 </p>
 
 <p>
@@ -26,19 +25,23 @@
 </p>
 
 <p>
-Don’t Panic!
+Don&#039;t Panic!
 </p>
 
 <p>
-If you’ve never written a program in Lisp, it looks daunting. But it’s a lot easier than it looks. Wrap a little bit of “syntactic   sugar” around Lisp, and it becomes Logo, which elementary school children can learn.
+If you&#039;ve never written a program in Lisp, it looks daunting. But it&#039;s a lot easier than it looks. Wrap a little bit of “syntactic  
+sugar” around Lisp, and it becomes Logo, which elementary school children can learn.
 </p>
 
 <p>
-And, just to make it clear what some of the funny words mean, <a href="http://en.wikipedia.org/wiki/Lisp_%28programming_language%29" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Lisp_%28programming_language%29">Lisp</a> is a computer language, <a href="http://en.wikipedia.org/wiki/Scheme_%28programming_language%29" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Scheme_%28programming_language%29">Scheme</a> is a dialect of Lisp, and <a href="http://en.wikipedia.org/wiki/GNU_Guile" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/GNU_Guile">Guile</a> is an   implementation of Scheme. Guile is used for “scripting” gEDA. In particular, the gnetlist front end, written in C, extracts topology   and attribute information from schematics, and then presents that data to “back end” Guile scripts for processing and output.
+And, just to make it clear what some of the funny words mean, <a href="http://en.wikipedia.org/wiki/Lisp_(programming_language)" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Lisp_(programming_language)">Lisp</a> is a computer language, <a href="http://en.wikipedia.org/wiki/Scheme_(programming_language)" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Scheme_(programming_language)">Scheme</a> is a dialect of Lisp, and <a href="http://en.wikipedia.org/wiki/GNU_Guile" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/GNU_Guile">Guile</a> is an  
+implementation of Scheme. Guile is used for “scripting” gEDA. In particular, the gnetlist front end, written in C, extracts topology  
+and attribute information from schematics, and then presents that data to “back end” Guile scripts for processing and output.
 </p>
 
 <p>
-This tutorial is specifically about programming gnetlist back ends in Scheme. If you don’t already know Scheme, you should probably look at   other material too, such as:
+This tutorial is specifically about programming gnetlist back ends in Scheme. If you don&#039;t already know Scheme, you should probably look at  
+other material too, such as:
 </p>
 
 <p>
@@ -62,86 +65,84 @@ may also be useful.
 </p>
 
 <p>
-OK, let’s get started. Here’s a particularly simple back end:
+OK, let&#039;s get started. Here&#039;s a particularly simple back end:
 </p>
-<pre class="code scheme"><span class="co1">;; gnetlist development playground</span>
+<pre class="code scheme"><pre class="code scheme"><span class="co1">;; gnetlist development playground</span>
 &nbsp;
 <span class="br0">&#40;</span>use-modules <span class="br0">&#40;</span>ice<span class="nu0">-9</span> readline<span class="br0">&#41;</span><span class="br0">&#41;</span>
 <span class="br0">&#40;</span>activate-readline<span class="br0">&#41;</span>
 &nbsp;
 <span class="br0">&#40;</span><span class="kw1">define</span> <span class="br0">&#40;</span>devel output-filename<span class="br0">&#41;</span>
 	<span class="br0">&#40;</span>scm-style-repl<span class="br0">&#41;</span>
-<span class="br0">&#41;</span></pre>
+<span class="br0">&#41;</span></pre></pre>
+
 <p>
-To use this, put it in a file called <code>gnet-devel.scm</code>. Copy this file   to wherever gnetlist Scheme files are kept on your system. On the   machine I’m using today, the command is:
+To use this, put it in a file called <code>gnet-devel.scm</code>. Copy this file  
+to wherever gnetlist Scheme files are kept on your system. On the  
+machine I&#039;m using today, the command is:
 </p>
-<pre class="code bash">$ sudo cp gnet-devel.scm /sw/share/gEDA/scheme/</pre>
+<pre class="code bash"><pre class="code bash">$ sudo cp gnet-devel.scm /sw/share/gEDA/scheme/</pre></pre>
+
 <p>
-The <code>”/sw/&quot;</code> will be <code>”/usr/&quot;</code> for most Linux package installations, maybe <code>”/usr/local”</code> or <code>”~/mygeda/&quot;</code> for a tarball installation. You’ll have to figure that out. If the target location is writable by you without superuser privileges, you won’t need the <code>“sudo”</code>.
+The <code>”/sw/”</code> will be <code>”/usr/”</code> for most Linux package installations, maybe <code>”/usr/local”</code> or <code>”~/mygeda/”</code> for a tarball installation. You&#039;ll have to figure that out. If the target location is writable by you without superuser privileges, you won&#039;t need the <code>“sudo”</code>.
 </p>
 
 <p>
-Now, translating <code>”/sw/&quot;</code> as needed, type:
+Now, translating <code>”/sw/”</code> as needed, type:
 </p>
-<pre class="code bash">$ gnetlist -g devel /sw/share/gEDA/examples/lightning_detector/lightning.sch</pre>
+<pre class="code bash"><pre class="code bash">$ gnetlist -g devel /sw/share/gEDA/examples/lightning_detector/lightning.sch</pre></pre>
+
 <p>
 You should see the usual gnetlist boiler plate, followed by:
 </p>
-<pre class="code">
-guile&gt;
-</pre>
+<pre class="code">guile&gt;</pre>
 
 <p>
 Try:
 </p>
-<pre class="code">
-guile&gt; packages
-</pre>
+<pre class="code">guile&gt; packages</pre>
 
 <p>
 You should see:
 </p>
-<pre class="code scheme"><span class="br0">&#40;</span><span class="st0">&quot;Q3&quot;</span> <span class="st0">&quot;R5&quot;</span> <span class="st0">&quot;Q2&quot;</span> <span class="st0">&quot;R4&quot;</span> <span class="st0">&quot;Q1&quot;</span> <span class="st0">&quot;C6&quot;</span> <span class="st0">&quot;R3&quot;</span> <span class="st0">&quot;L2&quot;</span> <span class="st0">&quot;A1&quot;</span> <span class="st0">&quot;bat(+3v)&quot;</span> <span class="st0">&quot;lamp(1)&quot;</span> <span class="st0">&quot;R2&quot;</span> <span class="st0">&quot;C5&quot;</span> <span class="st0">&quot;L1&quot;</span> <span class="st0">&quot;R1&quot;</span> <span class="st0">&quot;C4&quot;</span> <span class="st0">&quot;lamp(2)&quot;</span> <span class="st0">&quot;C3&quot;</span> <span class="st0">&quot;C2&quot;</span> <span class="st0">&quot;C1&quot;</span> <span class="st0">&quot;D1&quot;</span> <span class="st0">&quot;bat(0v)&quot;</span> <span class="st0">&quot;R7&quot;</span> <span class="st0">&quot;Q4&quot;</span> <span class="st0">&quot;R6&quot;</span><span class="br0">&#41;</span></pre>
+<pre class="code scheme"><pre class="code scheme"><span class="br0">&#40;</span><span class="st0">&quot;Q3&quot;</span> <span class="st0">&quot;R5&quot;</span> <span class="st0">&quot;Q2&quot;</span> <span class="st0">&quot;R4&quot;</span> <span class="st0">&quot;Q1&quot;</span> <span class="st0">&quot;C6&quot;</span> <span class="st0">&quot;R3&quot;</span> <span class="st0">&quot;L2&quot;</span> <span class="st0">&quot;A1&quot;</span> <span class="st0">&quot;bat(+3v)&quot;</span> <span class="st0">&quot;lamp(1)&quot;</span> <span class="st0">&quot;R2&quot;</span> <span class="st0">&quot;C5&quot;</span> <span class="st0">&quot;L1&quot;</span> <span class="st0">&quot;R1&quot;</span> <span class="st0">&quot;C4&quot;</span> <span class="st0">&quot;lamp(2)&quot;</span> <span class="st0">&quot;C3&quot;</span> <span class="st0">&quot;C2&quot;</span> <span class="st0">&quot;C1&quot;</span> <span class="st0">&quot;D1&quot;</span> <span class="st0">&quot;bat(0v)&quot;</span> <span class="st0">&quot;R7&quot;</span> <span class="st0">&quot;Q4&quot;</span> <span class="st0">&quot;R6&quot;</span><span class="br0">&#41;</span></pre></pre>
+
 <p>
-<code>“packages”</code> is a handy variable, containing a list of all unique <code>“refdes=&quot;</code> attribute values. By typing it, you fed it to the “REPL”,   the Read, Evaluate, Print Loop. So, the REPL read it, evaluated it (getting a list), and printed it.
+<code>“packages”</code> is a handy variable, containing a list of all unique <code>“refdes=”</code> attribute values. By typing it, you fed it to the “REPL”,  
+the Read, Evaluate, Print Loop. So, the REPL read it, evaluated it (getting a list), and printed it.
 </p>
 
 <p>
 Now try:
 </p>
-<pre class="code">
-guile&gt; (length packages)
-25
-</pre>
+<pre class="code">guile&gt; (length packages)
+25</pre>
 
 <p>
 What happened here? Here, the REPL evaluated the list 
 </p>
-<pre class="code scheme"><span class="br0">&#40;</span><span class="kw1">length</span> packages<span class="br0">&#41;</span></pre>
+<pre class="code scheme"><pre class="code scheme"><span class="br0">&#40;</span><span class="kw1">length</span> packages<span class="br0">&#41;</span></pre></pre>
+
 <p>
-In most programming languages, you’d write this expression in more traditional functional notation as <code>“length( packages )&quot;</code>. <code>“length”</code> is a function, which tells you the length of a list.
+In most programming languages, you&#039;d write this expression in more traditional functional notation as <code>“length( packages )”</code>. <code>“length”</code> is a function, which tells you the length of a list.
 </p>
 
 <p>
 Use the same notation to do arithmetic. For example, calculate “2+3” as:
 </p>
-<pre class="code">
-guile&gt; (+ 2 3)
-5
-</pre>
+<pre class="code">guile&gt; (+ 2 3)
+5</pre>
 
 <p>
-Note that the procedure &quot;+&quot; can be used to add any number of quantities, including none at all:
+Note that the procedure ”+” can be used to add any number of quantities, including none at all:
 </p>
-<pre class="code">
-guile&gt; (+)
+<pre class="code">guile&gt; (+)
 0
 guile&gt; (+ 1 2 3)
-6
-</pre>
+6</pre>
 
 <p>
-We’ll make use of this later on.
+We&#039;ll make use of this later on.
 </p>
 
 <p>
@@ -149,53 +150,45 @@ The readline stuff in our <code>gnet-devel.scm</code> back end allows you to use
 </p>
 
 <p>
-Another useful variable gnetlist defines is <code>“all-unique-nets”</code> (type it). Just as <code>”(length packages)&quot;</code> tells you how many packages you   have, <code>”(length all-unique-nets)&quot;</code> will tell you how many nets you have.
+Another useful variable gnetlist defines is <code>“all-unique-nets”</code> (type it). Just as <code>”(length packages)”</code> tells you how many packages you  
+have, <code>”(length all-unique-nets)”</code> will tell you how many nets you have.
 </p>
 
 <p>
-Then there’s <code>all-pins</code>:
+Then there&#039;s <code>all-pins</code>:
 </p>
-<pre class="code">
-guile&gt; all-pins
-((&quot;1&quot; &quot;2&quot; &quot;3&quot;) (&quot;2&quot; &quot;3&quot; &quot;1&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;1&quot;) (&quot;1&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;2&quot; &quot;3&quot; &quot;1&quot;) (&quot;2&quot; &quot;3&quot; &quot;1&quot;) (&quot;1&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;2&quot; &quot;3&quot; &quot;1&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot;) (&quot;1&quot;))
-</pre>
+<pre class="code">guile&gt; all-pins
+((&quot;1&quot; &quot;2&quot; &quot;3&quot;) (&quot;2&quot; &quot;3&quot; &quot;1&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;1&quot;) (&quot;1&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;2&quot; &quot;3&quot; &quot;1&quot;) (&quot;2&quot; &quot;3&quot; &quot;1&quot;) (&quot;1&quot;) (&quot;2&quot; &quot;1&quot;) (&quot;2&quot; &quot;3&quot; &quot;1&quot;) (&quot;1&quot; &quot;2&quot;) (&quot;1&quot;) (&quot;1&quot;))</pre>
 
 <p>
-Note that this is a little more complicated than the previous examples: it’s a list of lists, not just a list of strings. Each of the lists corresponds to the pins on one package. One thing we might want to extract from this is a count of the number of pins. We can’t just take the length of <code>all-pins</code> to get this: that gives us the number of lists it contains, which is the number of packages:
+Note that this is a little more complicated than the previous examples: it&#039;s a list of lists, not just a list of strings. Each of the lists corresponds to the pins on one package. One thing we might want to extract from this is a count of the number of pins. We can&#039;t just take the length of <code>all-pins</code> to get this: that gives us the number of lists it contains, which is the number of packages:
 </p>
-<pre class="code">
-guile&gt; (length all-pins)
-25
-</pre>
+<pre class="code">guile&gt; (length all-pins)
+25</pre>
 
 <p>
 To get the pin count, first get the individual pin counts for each package:
 </p>
-<pre class="code">
-guile&gt; (map length all-pins)
-(3 3 2 2 2 2 2 2 2 2 2 2 2 2 1 1 2 3 3 1 2 3 2 1 1)
-</pre>
+<pre class="code">guile&gt; (map length all-pins)
+(3 3 2 2 2 2 2 2 2 2 2 2 2 2 1 1 2 3 3 1 2 3 2 1 1)</pre>
 
 <p>
 This is one of the easy ways to do a “loop” in Scheme; <code>(map p x)</code> yields a list of the results of calling procedure <code>p</code> individually for each element of <code>x</code>. Then we can add them up with a slightly different kind of “loop”:
 </p>
-<pre class="code">
-guile&gt; (apply + (map length all-pins))
-50
-</pre>
+<pre class="code">guile&gt; (apply + (map length all-pins))
+50</pre>
 
 <p>
 (apply p x) calls procedure p once, with all of the elements of x as arguments. So the expression above winds up evaluating:
 </p>
-<pre class="code scheme"><span class="br0">&#40;</span>+ <span class="nu0">3</span> <span class="nu0">3</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">3</span> <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">2</span> <span class="nu0">1</span> <span class="nu0">1</span><span class="br0">&#41;</span></pre>
+<pre class="code scheme"><pre class="code scheme"><span class="br0">&#40;</span>+ <span class="nu0">3</span> <span class="nu0">3</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">3</span> <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">2</span> <span class="nu0">1</span> <span class="nu0">1</span><span class="br0">&#41;</span></pre></pre>
+
 <p>
-Thus far we’ve been using predefined variables and procedures. We’ll want to be able to define our own. It’s easy:
+Thus far we&#039;ve been using predefined variables and procedures. We&#039;ll want to be able to define our own. It&#039;s easy:
 </p>
-<pre class="code">
-guile&gt; (define the-answer 42)
+<pre class="code">guile&gt; (define the-answer 42)
 guile&gt; the-answer
-42
-</pre>
+42</pre>
 
 <p>
 This defines a variable, <code>the-answer</code>, and gives it the value 42.
@@ -204,46 +197,44 @@ This defines a variable, <code>the-answer</code>, and gives it the value 42.
 <p>
 We can also define procedures:
 </p>
-<pre class="code">
-guile&gt; (define add1 (lambda (x) (+ x 1)))
+<pre class="code">guile&gt; (define add1 (lambda (x) (+ x 1)))
 guile&gt; (add1 100)
-101
-</pre>
+101</pre>
 
 <p>
-When you see <code>“lambda”</code> think “procedure”. The first thing (the technical term is “form”) following <code>“lambda”</code> is a list of the arguments of the procedure, in this case <code>”(x)&quot;</code>. When the the procedure is called, Guile evaluates the remaining forms, in this case just one, <code>”(+ x 1)&quot;</code>, with actual arguments substituted. The result of the procedure is the result of evaluating the last form. So, <code>”(add1 100)&quot;</code> becomes <code>”(+ 100 1)&quot;</code>, which evaluates to 101.
+When you see <code>“lambda”</code> think “procedure”. The first thing (the technical term is “form”) following <code>“lambda”</code> is a list of the arguments of the procedure, in this case <code>”(x)”</code>. When the the procedure is called, Guile evaluates the remaining forms, in this case just one, <code>”(+ x 1)”</code>, with actual arguments substituted. The result of the procedure is the result of evaluating the last form. So, <code>”(add1 100)”</code> becomes <code>”(+ 100 1)”</code>, which evaluates to 101.
 </p>
 
 <p>
 Now we can put our statistics collection together into a back end. First, define a procedure to write a line of output:
 </p>
-<pre class="code scheme"><span class="br0">&#40;</span><span class="kw1">define</span> format-line
+<pre class="code scheme"><pre class="code scheme"><span class="br0">&#40;</span><span class="kw1">define</span> format-line
      <span class="br0">&#40;</span><span class="kw1">lambda</span> <span class="br0">&#40;</span>name value<span class="br0">&#41;</span>
          <span class="br0">&#40;</span><span class="kw1">display</span> name<span class="br0">&#41;</span>
          <span class="br0">&#40;</span><span class="kw1">display</span> value<span class="br0">&#41;</span>
          <span class="br0">&#40;</span><span class="kw1">newline</span><span class="br0">&#41;</span>
      <span class="br0">&#41;</span>
-<span class="br0">&#41;</span></pre>
+<span class="br0">&#41;</span></pre></pre>
+
 <p>
-We’re using two new builtin procedures here, <code>“display”</code> and <code>“newline”</code>, which should be self-explanatory. Now:
+We&#039;re using two new builtin procedures here, <code>“display”</code> and <code>“newline”</code>, which should be self-explanatory. Now:
 </p>
-<pre class="code scheme"><span class="br0">&#40;</span><span class="kw1">define</span> display-stats
+<pre class="code scheme"><pre class="code scheme"><span class="br0">&#40;</span><span class="kw1">define</span> display-stats
      <span class="br0">&#40;</span><span class="kw1">lambda</span> <span class="br0">&#40;</span><span class="br0">&#41;</span>                  <span class="co1">; no arguments</span>
          <span class="br0">&#40;</span>format-line <span class="st0">&quot;pins:     &quot;</span> <span class="br0">&#40;</span>apply + <span class="br0">&#40;</span><span class="kw1">map</span> <span class="kw1">length</span> all-pins<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
          <span class="br0">&#40;</span>format-line <span class="st0">&quot;packages: &quot;</span> <span class="br0">&#40;</span><span class="kw1">length</span> packages<span class="br0">&#41;</span><span class="br0">&#41;</span>
          <span class="br0">&#40;</span>format-line <span class="st0">&quot;nets:     &quot;</span> <span class="br0">&#40;</span><span class="kw1">length</span> all-unique-nets<span class="br0">&#41;</span><span class="br0">&#41;</span>
      <span class="br0">&#41;</span>
-<span class="br0">&#41;</span></pre><pre class="code">
-guile&gt; (display-stats)
+<span class="br0">&#41;</span></pre></pre>
+<pre class="code">guile&gt; (display-stats)
 pins:     50
 packages: 25
-nets:     13
-</pre>
+nets:     13</pre>
 
 <p>
 To finish off a back end, we need a “main program”. By convention, that has the name of the back end. It has the responsibility of opening the output file, too. So, for a “stats” back end for collecting the stats, the entire file looks like:
 </p>
-<pre class="code scheme"><span class="co1">;; gnetlist back end for extracting design statistics</span>
+<pre class="code scheme"><pre class="code scheme"><span class="co1">;; gnetlist back end for extracting design statistics</span>
 <span class="co1">;;</span>
 <span class="co1">;; Legal boilerplate here as needed</span>
 &nbsp;
@@ -272,17 +263,23 @@ To finish off a back end, we need a “main program”. By convention, that has 
          <span class="br0">&#40;</span><span class="kw1">display</span> value<span class="br0">&#41;</span>
          <span class="br0">&#40;</span><span class="kw1">newline</span><span class="br0">&#41;</span>
      <span class="br0">&#41;</span>
-<span class="br0">&#41;</span></pre>
+<span class="br0">&#41;</span></pre></pre>
+
 <p>
-Put this in a file named <code>gnet-stats.scm</code>, copy it to where it belongs with something like  
+Put this in a file named <code>gnet-stats.scm</code>, copy it to where it belongs with something like 
+
 </p>
-<pre class="code bash">$ sudo cp gnet-stats.scm /sw/share/gEDA/scheme/</pre>
+<pre class="code bash"><pre class="code bash">$ sudo cp gnet-stats.scm /sw/share/gEDA/scheme/</pre></pre>
+
 <p>
- and then <code>“gnetlist -g stats”</code> followed by the usual other arguments and schematic pathnames will put your design’s statistics in the   output file (default <code>output.net</code>).
+
+and then <code>“gnetlist -g stats”</code> followed by the usual other arguments and schematic pathnames will put your design&#039;s statistics in the  
+output file (default <code>output.net</code>).
 </p>
 
 <p>
-Pretty easy, huh? Useful, too. Lately I’ve been designing systems that consist of stacks of boards: statistics like these are helpful   in figuring out which subsystems I should combine on each board.
+Pretty easy, huh? Useful, too. Lately I&#039;ve been designing systems that consist of stacks of boards: statistics like these are helpful  
+in figuring out which subsystems I should combine on each board.
 </p>
 
 </div>

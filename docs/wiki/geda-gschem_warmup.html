@@ -12,13 +12,12 @@
 <body>
 
 
-
-
-<h1><a name="gschem_warmup_for_beginners" id="gschem_warmup_for_beginners">gschem Warmup for Beginners</a></h1>
+<h1 class="sectionedit1161"><a name="gschem_warmup_for_beginners" id="gschem_warmup_for_beginners">gschem Warmup for Beginners</a></h1>
 <div class="level1">
 
 <p>
- You need to become familiar with doing a few things in <em><strong>gschem</strong></em>, so just run <em><strong>gschem</strong></em> and start playing around:
+
+You need to become familiar with doing a few things in <em><strong>gschem</strong></em>, so just run <em><strong>gschem</strong></em> and start playing around:
 </p>
 
 <p>
@@ -26,10 +25,11 @@ You get an initial blank page with menus and a toolbar at the top. As you select
 </p>
 
 <p>
-When drawing a schematic, It’s a good idea to always start by setting some schematic boundaries to draw within, so we will do this by adding a title-block. I find that using a B sized title-block lets my schematics print at a nice size on letter sized paper:  
+When drawing a schematic, It&#039;s a good idea to always start by setting some schematic boundaries to draw within, so we will do this by adding a title-block. I find that using a B sized title-block lets my schematics print at a nice size on letter sized paper: 
+
 </p>
 <ul>
-<li class="level1"><div class="li"> Bring up the <strong>Select Component</strong> window by selecting from the menu <strong>Add&rarr;Component</strong> or hit keyboard shortcut <strong>i</strong>. Or you could click the add component icon on the toobar (<a href="media/geda/warmup_add_component.png" class="media" target="_blank" title="geda:warmup_add_component.png"><img src="media/geda/warmup_add_component.png" class="media" alt="" /></a>).</div>
+<li class="level1"><div class="li"> Bring up the <strong>Select Component</strong> window by selecting from the menu <strong>Add→Component</strong> or hit keyboard shortcut <strong>i</strong>. Or you could click the add component icon on the toobar (<a href="media/geda/warmup_add_component.png" class="media" target="_blank" title="geda:warmup_add_component.png"><img src="media/geda/warmup_add_component.png" class="media" alt="" /></a>).</div>
 </li>
 <li class="level1"><div class="li"> In the <strong>Libraries</strong> list, select <strong>title-block</strong>.</div>
 </li>
@@ -40,20 +40,22 @@ When drawing a schematic, It’s a good idea to always start by setting some sch
 </ul>
 
 <p>
- <a href="media/geda/warmup_gschem01.png" class="media" target="_blank" title="geda:warmup_gschem01.png"><img src="media/geda/warmup_gschem01.png" class="media" alt="" /></a> 
+
+<a href="media/geda/warmup_gschem01.png" class="media" target="_blank" title="geda:warmup_gschem01.png"><img src="media/geda/warmup_gschem01.png" class="media" alt="" /></a>
+
 </p>
 <ul>
-<li class="level1"><div class="li"> With the mouse in the <em><strong>gschem</strong></em> drawing area, hit the keys <strong>ve</strong> (or select from menu <strong>View&rarr;Zoom Extents</strong>) to zoom the view to the title-block symbol extents.</div>
+<li class="level1"><div class="li"> With the mouse in the <em><strong>gschem</strong></em> drawing area, hit the keys <strong>ve</strong> (or select from menu <strong>View→Zoom Extents</strong>) to zoom the view to the title-block symbol extents.</div>
 </li>
 <li class="level1"><div class="li"> Back in the select components window, (bring it up again if you closed it), select the <strong>analog</strong> library and then select the component <strong>resistor-1.sym</strong> and place a couple of resistors on the schematic with the left mouse button. Notice that as you place each one it is an orange color and that indicates it is selected.</div>
 </li>
 <li class="level1"><div class="li"> Zoom in (keyboard shortcut <strong>z</strong>) and zoom out (keyboard shortcut <strong>SHIFT z</strong>) in the area where you placed the resistors. If you get lost, zoom back to extents with <strong>ve</strong>. Notice that as you zoom in or out the viewable area centers around the mouse cursor.</div>
 </li>
-<li class="level1"><div class="li"> Alternate left clicking on both resistors to select them, but notice that if you don’t hit the resistor just right, the title-block is selected instead. We really don’t want to ever select the title-block again, so we can lock it to prevent its irritating selection: click so the title-block IS selected, then select <strong>Edit&rarr;Lock</strong>. Now it’s easier to select the resistors as we like.</div>
+<li class="level1"><div class="li"> Alternate left clicking on both resistors to select them, but notice that if you don&#039;t hit the resistor just right, the title-block is selected instead. We really don&#039;t want to ever select the title-block again, so we can lock it to prevent its irritating selection: click so the title-block IS selected, then select <strong>Edit→Lock</strong>. Now it&#039;s easier to select the resistors as we like.</div>
 </li>
 <li class="level1"><div class="li"> Move the resistors around with the middle mouse button.</div>
 </li>
-<li class="level1"><div class="li"> Select a resistor and then rotate with the <strong>er</strong> keys or the <strong>Edit&rarr;Rotate 90 Mode</strong>.</div>
+<li class="level1"><div class="li"> Select a resistor and then rotate with the <strong>er</strong> keys or the <strong>Edit→Rotate 90 Mode</strong>.</div>
 </li>
 <li class="level1"><div class="li"> Move the resistors relatively close together and then zoom in on them.</div>
 </li>
@@ -62,21 +64,24 @@ When drawing a schematic, It’s a good idea to always start by setting some sch
 </ul>
 
 <p>
- <a href="media/geda/warmup_gschem02.png" class="media" target="_blank" title="geda:warmup_gschem02.png"><img src="media/geda/warmup_gschem02.png" class="media" alt="" /></a> 
+
+<a href="media/geda/warmup_gschem02.png" class="media" target="_blank" title="geda:warmup_gschem02.png"><img src="media/geda/warmup_gschem02.png" class="media" alt="" /></a>
+
 </p>
 <ul>
-<li class="level1"><div class="li"> Look at the toolbar and see that your mode has switched to adding nets. Before you can change resistor selections again, you will have to re-enter select mode with the <strong>s</strong> key or by clicking the select toolbar icon or by using the menu <strong>Edit&rarr;Select Mode</strong>. But if you try to move a resistor with the middle mouse button, you can do it and you will automatically re-enter select mode. You will have to play with doing things to get used to the <em><strong>gschem</strong></em> modes.</div>
+<li class="level1"><div class="li"> Look at the toolbar and see that your mode has switched to adding nets. Before you can change resistor selections again, you will have to re-enter select mode with the <strong>s</strong> key or by clicking the select toolbar icon or by using the menu <strong>Edit→Select Mode</strong>. But if you try to move a resistor with the middle mouse button, you can do it and you will automatically re-enter select mode. You will have to play with doing things to get used to the <em><strong>gschem</strong></em> modes.</div>
 </li>
 <li class="level1"><div class="li"> If when you added the net between the resistors you get something that looks like this:</div>
 </li>
 </ul>
 
 <p>
- <a href="media/geda/warmup_gschem03.png" class="media" target="_blank" title="geda:warmup_gschem03.png"><img src="media/geda/warmup_gschem03.png" class="media" alt="" /></a>
+
+<a href="media/geda/warmup_gschem03.png" class="media" target="_blank" title="geda:warmup_gschem03.png"><img src="media/geda/warmup_gschem03.png" class="media" alt="" /></a>
 </p>
 
 <p>
-it means you missed the pin on the right resistor. Look closely and you’ll see the tip of the pin is red and you must start and stop nets with the mouse on this red spot to make a connection to the pin.
+it means you missed the pin on the right resistor. Look closely and you&#039;ll see the tip of the pin is red and you must start and stop nets with the mouse on this red spot to make a connection to the pin.
 </p>
 <ul>
 <li class="level1"><div class="li"> Select the net between the resistors and delete it with the <strong>Delete</strong> key.</div>
@@ -86,12 +91,14 @@ it means you missed the pin on the right resistor. Look closely and you’ll see
 </ul>
 
 <p>
- Now go back to <a href="geda-gsch2pcb_tutorial.html" class="wikilink1" title="geda-gsch2pcb_tutorial.html">the tutorial</a> and try working through the simple example there. If you encounter steps that aren’t clear, look through the <em><strong>gschem</strong></em> user documentation and attributes documentation on the <a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">gschem Documentation</a> page. 
+
+Now go back to <a href="geda-gsch2pcb_tutorial.html" class="wikilink1" title="geda-gsch2pcb_tutorial.html">the tutorial</a> and try working through the simple example there. If you encounter steps that aren&#039;t clear, look through the <em><strong>gschem</strong></em> user documentation and attributes documentation on the <a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">gschem Documentation</a> page.
+
 </p>
 <hr />
 
 <p>
-tutorial by Bill Wilson (bill&ndash;at&ndash;gkrellm.net)
+tutorial by Bill Wilson (bill–at–gkrellm.net)
 </p>
 
 </div>

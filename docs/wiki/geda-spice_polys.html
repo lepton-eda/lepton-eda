@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+<h1 class="sectionedit1442"><a name="spice_poly_constructs" id="spice_poly_constructs">Spice POLY Constructs</a></h1>
+<div class="level1">
+
+<p>
+
+This is a draft of what I&#039;ve learned about POLYs. I&#039;m not sure 
+it&#039;s completely accurate, so anyone should feel free to make corrections.
+</p>
+
+<p>
+Different versions of spice use different methods of modeling non-linear 
+dependent sources, Eg. ASRC, Bxxxx, Exxxx, Gxxxx, Fxxxx, Hxxxx, etc…
+</p>
+
+<p>
+Some like NGspice use arbitrary expressions with conditionals, others like GNUcap use polynomials and curve fitting. The POLY function seems to be the least common denominator of these, though Spice3 doesn&#039;t support them. Polynomials were the first tool used to approximate non-linear relationships because they are well behaved functions, and spice can easily find the derivative at a point which is used in the numerical solutions. The down side is you have to do some extra work with other tools to get the coefficients for your polynomial description.
+</p>
+
+<p>
+Some common problems with polynomial approximations are:
+
+</p>
+<ol>
+<li class="level1"><div class="li"> They rapidly become useless outside a limited domain. BSIM models are indeed prone to unphysical behavior at operating points outside the domain of their approximations because they use polynomial adjustments for some computations.</div>
+</li>
+<li class="level1"><div class="li"> It takes a lot of terms to do a decent approximation of a function whose shape isn&#039;t very “polynomial like”.</div>
+</li>
+</ol>
+
+<p>
+
+The other method is to use an arbitrary expression with something like if-then-else functionality or the piece wise linear functions. They are simpler to formulate but incur the risk of discontinuities which can cause serious convergence problems. However they are much more convenient for hacking something together.
+</p>
+
+<p>
+A lot of effort has gone into having the best of both worlds. The PWL functions often use small curves to smooth the transition from one derivative to the next. and the expressions using the if-then-else 
+functions are forced to make gradual transitions between different values. In general the libraries use polynomial approximations where they can and constrain them to areas where they are useful. Examples of this in Gnucap are the fit and table statements.
+</p>
+
+<p>
+However, if you want to try out your models in other spice versions you&#039;ll probably want to do the extra work to describe their behavior in terms of the POLY statement which unfortunately (as of this writing) is not documented very well in Ngspice or Gnucap. Here is one place it is:
+</p>
+
+<p>
+<a href="http://newton.ex.ac.uk/teaching/CDHW/Electronics2/userguide/secC.html" class="urlextern" title="http://newton.ex.ac.uk/teaching/CDHW/Electronics2/userguide/secC.html"  rel="nofollow">http://newton.ex.ac.uk/teaching/CDHW/Electronics2/userguide/secC.html</a>
+</p>
+
+<p>
+To do the curve fitting I suppose you could use tools like <a href="http://www.gnuplot.info" class="urlextern" title="http://www.gnuplot.info"  rel="nofollow">Gnuplot</a>, <a href="http://plasma-gate.weizmann.ac.il/Grace" class="urlextern" title="http://plasma-gate.weizmann.ac.il/Grace"  rel="nofollow">Grace</a>, or <a href="http://www.simfit.man.ac.uk" class="urlextern" title="http://www.simfit.man.ac.uk"  rel="nofollow">Simfit</a>.
+</p>
+
+<p>
+Note that for Ngspice to support POLYs you need to set that compile time option see:
+<a href="http://www.brorson.com/gEDA/SPICE/x496.html" class="urlextern" title="http://www.brorson.com/gEDA/SPICE/x496.html"  rel="nofollow">http://www.brorson.com/gEDA/SPICE/x496.html</a>
+</p>
+
+<p>
+
+ — <em><a href="mailto:&#x63;&#x6c;&#x69;&#x66;&#x40;&#x65;&#x75;&#x67;&#x65;&#x6e;&#x65;&#x77;&#x65;&#x62;&#x2e;&#x63;&#x6f;&#x6d;" class="mail JSnocheck" title="&#x63;&#x6c;&#x69;&#x66;&#x40;&#x65;&#x75;&#x67;&#x65;&#x6e;&#x65;&#x77;&#x65;&#x62;&#x2e;&#x63;&#x6f;&#x6d;">Clif Eugene</a> 2010/11/23 01:31</em>
+
+</p>
+
+</div>
+</body>
+</html>

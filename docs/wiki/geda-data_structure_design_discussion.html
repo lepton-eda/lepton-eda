@@ -11,71 +11,47 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#data_structure_design_discussion" class="toc">Data structure design discussion</a></span></div></li>
-<li class="level1"><div class="li"><span class="li"><a href="#concept_diagram" class="toc">Concept diagram</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#concepts_behind_the_structures" class="toc">Concepts behind the structures</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#design" class="toc">Design</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#circuit" class="toc">Circuit</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#mport" class="toc">MPort</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#instance" class="toc">Instance</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#attrib" class="toc">Attrib</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#netlist" class="toc">Netlist</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#net" class="toc">Net</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#page" class="toc">Page</a></span></div></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="level1"><div class="li"><span class="li"><a href="#brainstorms" class="toc">Brainstorms</a></span></div></li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="data_structure_design_discussion" id="data_structure_design_discussion">Data structure design discussion</a></h1>
+<h1 class="sectionedit105"><a name="data_structure_design_discussion" id="data_structure_design_discussion">Data structure design discussion</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Data structure design discussion" [1-48] -->
-<h1><a name="concept_diagram" id="concept_diagram">Concept diagram</a></h1>
+<!-- EDIT105 SECTION "Data structure design discussion" [1-48] -->
+<h1 class="sectionedit106"><a name="concept_diagram" id="concept_diagram">Concept diagram</a></h1>
 <div class="level1">
 
 <p>
- (Inspired by gnetman, by Bill Cox)
+
+(Inspired by gnetman, by Bill Cox)
 </p>
 
 <p>
-<a href="./lib/exe/fetch.php?cache=cache&amp;media=http%3A%2F%2Fwww2.eng.cam.ac.uk%2F%7Epcjc2%2Fgeda%2Fdatastructures.png" class="media" title="http://www2.eng.cam.ac.uk/~pcjc2/geda/datastructures.png"><img src="media/http///www2.eng.cam.ac.uk/~pcjc2/geda/datastructures.png" class="media" alt="" /></a>
+<a href="/./lib/exe/fetch.php?hash=d4505f&amp;media=http%3A%2F%2Fwww2.eng.cam.ac.uk%2F%7Epcjc2%2Fgeda%2Fdatastructures.png" class="media" title="http://www2.eng.cam.ac.uk/~pcjc2/geda/datastructures.png"><img src="media/http///www2.eng.cam.ac.uk/~pcjc2/geda/datastructures.png" class="media" alt="" /></a>
 </p>
 
 </div>
-<!-- SECTION "Concept diagram" [49-178] -->
-<h2><a name="concepts_behind_the_structures" id="concepts_behind_the_structures">Concepts behind the structures</a></h2>
+<!-- EDIT106 SECTION "Concept diagram" [49-178] -->
+<h2 class="sectionedit107"><a name="concepts_behind_the_structures" id="concepts_behind_the_structures">Concepts behind the structures</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Concepts behind the structures" [179-222] -->
-<h3><a name="design" id="design">Design</a></h3>
+<!-- EDIT107 SECTION "Concepts behind the structures" [179-222] -->
+<h3 class="sectionedit108"><a name="design" id="design">Design</a></h3>
 <div class="level3">
 
 <p>
- This is might not exist as a “file”, as such, but exists as a data structure entity to be the owner of the circuits required in a particular design. The “root circuit” is the uppermost level of hierarchy.
+
+This is might not exist as a “file”, as such, but exists as a data structure entity to be the owner of the circuits required in a particular design. The “root circuit” is the uppermost level of hierarchy.
 </p>
 
 </div>
-<!-- SECTION "Design" [223-446] -->
-<h3><a name="circuit" id="circuit">Circuit</a></h3>
+<!-- EDIT108 SECTION "Design" [223-446] -->
+<h3 class="sectionedit109"><a name="circuit" id="circuit">Circuit</a></h3>
 <div class="level3">
 
 <p>
- A <strong>circuit</strong> entity is the key concept in this model. It defines an electrical block by a its external connections (<strong>MPort</strong>s). A schematic is one way of representing a circuit, hence a circuit object may own or more <strong>page</strong> of schematics.
+
+A <strong>circuit</strong> entity is the key concept in this model. It defines an electrical block by a its external connections (<strong>MPort</strong>s). A schematic is one way of representing a circuit, hence a circuit object may own or more <strong>page</strong> of schematics.
 </p>
 
 <p>
@@ -83,47 +59,51 @@ We may also define a <strong>symbolic</strong> (graphic) representation of a cir
 </p>
 
 </div>
-<!-- SECTION "Circuit" [447-1004] -->
-<h3><a name="mport" id="mport">MPort</a></h3>
+<!-- EDIT109 SECTION "Circuit" [447-1004] -->
+<h3 class="sectionedit110"><a name="mport" id="mport">MPort</a></h3>
 <div class="level3">
 
 <p>
- If it is to be useful as a re-usable block, a sub-<strong>circuit</strong> must expose electrical connectivity for a parent <strong>circuit</strong> to connect with. Each such connection is represented by an <strong>Mport</strong> (Master port). This term (re-used from gnetman) represents the fact that once a circuit is instantiated, we need to differentiate between the connections of each specific instance. This is done with instance specific <strong>Port</strong> structures. The <strong>port</strong>s point back at the <strong>Mport</strong>s (master ports) of the circuit representation.
+
+If it is to be useful as a re-usable block, a sub-<strong>circuit</strong> must expose electrical connectivity for a parent <strong>circuit</strong> to connect with. Each such connection is represented by an <strong>Mport</strong> (Master port). This term (re-used from gnetman) represents the fact that once a circuit is instantiated, we need to differentiate between the connections of each specific instance. This is done with instance specific <strong>Port</strong> structures. The <strong>port</strong>s point back at the <strong>Mport</strong>s (master ports) of the circuit representation.
 </p>
 
 </div>
-<!-- SECTION "MPort" [1005-1541] -->
-<h3><a name="instance" id="instance">Instance</a></h3>
+<!-- EDIT110 SECTION "MPort" [1005-1541] -->
+<h3 class="sectionedit111"><a name="instance" id="instance">Instance</a></h3>
 <div class="level3">
 
 <p>
- A <strong>circuit</strong> represents a re-usable electrical entity which we may replicate at various points in our design hierarchy. This is done by instantiating the sub-<strong>circuit </strong> in a higher level of hierarchy. Each instance is associated with an <strong>Instance</strong> structure, which is a placeholder for instance specific attributes such as the sub-circuit’s hierarchical refdes.
+
+A <strong>circuit</strong> represents a re-usable electrical entity which we may replicate at various points in our design hierarchy. This is done by instantiating the sub-<strong>circuit </strong> in a higher level of hierarchy. Each instance is associated with an <strong>Instance</strong> structure, which is a placeholder for instance specific attributes such as the sub-circuit&#039;s hierarchical refdes.
 </p>
 
 </div>
-<!-- SECTION "Instance" [1542-1929] -->
-<h3><a name="attrib" id="attrib">Attrib</a></h3>
+<!-- EDIT111 SECTION "Instance" [1542-1929] -->
+<h3 class="sectionedit112"><a name="attrib" id="attrib">Attrib</a></h3>
 <div class="level3">
 
 <p>
- An <strong>Attrib</strong> defines meta-data attached which might be attached to a <strong>circuit</strong>, a <strong>circuit</strong>‘s <strong>Mport</strong>, a specific <strong>circuit</strong> <strong>instance</strong>, or a <strong>Net</strong>.
+
+An <strong>Attrib</strong> defines meta-data attached which might be attached to a <strong>circuit</strong>, a <strong>circuit</strong>&#039;s <strong>Mport</strong>, a specific <strong>circuit</strong> <strong>instance</strong>, or a <strong>Net</strong>.
 </p>
 
 <p>
-In a break from gEDA’s current <strong>attrib</strong> model, it makes sense to associate the meta-data directly with the particular entity it pertains to, rather than the graphic representation. This is because some forms of sub-<strong>circuit</strong> entity may be defined without a schematic, and could still require this meta-data. It will be possible to reference any <strong>attrib</strong> within the realm of a <strong>circuit</strong> for display on its schematic <strong>page</strong>(s) where that is desired.
+In a break from gEDA&#039;s current <strong>attrib</strong> model, it makes sense to associate the meta-data directly with the particular entity it pertains to, rather than the graphic representation. This is because some forms of sub-<strong>circuit</strong> entity may be defined without a schematic, and could still require this meta-data. It will be possible to reference any <strong>attrib</strong> within the realm of a <strong>circuit</strong> for display on its schematic <strong>page</strong>(s) where that is desired.
 </p>
 
 </div>
-<!-- SECTION "Attrib" [1930-2569] -->
-<h3><a name="netlist" id="netlist">Netlist</a></h3>
+<!-- EDIT112 SECTION "Attrib" [1930-2569] -->
+<h3 class="sectionedit113"><a name="netlist" id="netlist">Netlist</a></h3>
 <div class="level3">
 
 <p>
- A <strong>Netlist</strong> defines the electrical connectivity of a <strong>circuit</strong>. It owns a number of <strong>Net</strong>s, which individually represent a single connection between <strong>Mport</strong>s belonging to this <strong>circuit</strong>, and <strong>ports</strong> of instantiated sub-<strong>circuits</strong>. 
+
+A <strong>Netlist</strong> defines the electrical connectivity of a <strong>circuit</strong>. It owns a number of <strong>Net</strong>s, which individually represent a single connection between <strong>Mport</strong>s belonging to this <strong>circuit</strong>, and <strong>ports</strong> of instantiated sub-<strong>circuits</strong>. 
 </p>
 
 <p>
-Initially, it is likely there will only be one netlist for a <strong>circuit</strong> - the one constructed from processing the electrically relevant objects on <strong>page</strong>(s) of the <strong>circuit</strong>‘s schematic.
+Initially, it is likely there will only be one netlist for a <strong>circuit</strong> - the one constructed from processing the electrically relevant objects on <strong>page</strong>(s) of the <strong>circuit</strong>&#039;s schematic.
 </p>
 
 <p>
@@ -135,29 +115,32 @@ This has real applications in back-annotation and in design verification.
 </p>
 
 </div>
-<!-- SECTION "Netlist" [2570-3435] -->
-<h3><a name="net" id="net">Net</a></h3>
+<!-- EDIT113 SECTION "Netlist" [2570-3435] -->
+<h3 class="sectionedit114"><a name="net" id="net">Net</a></h3>
 <div class="level3">
 
 <p>
- A <strong>net</strong> associates with structures forming a given electrical connection within this <strong>circuit</strong>.
+
+A <strong>net</strong> associates with structures forming a given electrical connection within this <strong>circuit</strong>.
 </p>
 
 <p>
-As we also have a graphical representation of the wires (<strong>ConnSegment</strong>s) which make up this connection, each <strong>Net</strong> can be associated with multiple <strong>ConnSegment</strong>s. The association to <strong>Pins</strong> representing <strong>Mport</strong>s of this <strong>circuit</strong> and to the <strong>Pins</strong> of any instantiated sub-<strong>circuits</strong> is made via a <strong>net</strong>‘s association to the appropriate <strong>Mport</strong> and <strong>port</strong> structures.
+As we also have a graphical representation of the wires (<strong>ConnSegment</strong>s) which make up this connection, each <strong>Net</strong> can be associated with multiple <strong>ConnSegment</strong>s. The association to <strong>Pins</strong> representing <strong>Mport</strong>s of this <strong>circuit</strong> and to the <strong>Pins</strong> of any instantiated sub-<strong>circuits</strong> is made via a <strong>net</strong>&#039;s association to the appropriate <strong>Mport</strong> and <strong>port</strong> structures.
 </p>
 
 </div>
-<!-- SECTION "Net" [3436-3940] -->
-<h3><a name="page" id="page">Page</a></h3>
+<!-- EDIT114 SECTION "Net" [3436-3940] -->
+<h3 class="sectionedit115"><a name="page" id="page">Page</a></h3>
 <div class="level3">
 
 <p>
- A <strong>page</strong> is a canvas for placing graphical objects representing a circuit. A <strong>page</strong> can be used to draw an electrically meaningful schematic, or it can be used to draw a symbolic representation of the circuit entity.
+
+A <strong>page</strong> is a canvas for placing graphical objects representing a circuit. A <strong>page</strong> can be used to draw an electrically meaningful schematic, or it can be used to draw a symbolic representation of the circuit entity.
 </p>
 
 <p>
-Whilst most objects on a <strong>page</strong> are graphic primitives, there are some which have a relation to the <strong>circuit</strong>‘s electrical specification. 
+Whilst most objects on a <strong>page</strong> are graphic primitives, there are some which have a relation to the <strong>circuit</strong>&#039;s electrical specification.
+
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>ConnSegments</strong> (or <strong>net</strong>s) represent connected electrical signals within the circuit represented.</div>
@@ -176,7 +159,7 @@ Whilst most objects on a <strong>page</strong> are graphic primitives, there are
 </li>
 <li class="level2"><div class="li"> Each <strong>pin</strong> (or group of pins?) represent an external electrical connection with this <strong>circuit</strong>.</div>
 </li>
-<li class="level2"><div class="li"> There is a necessary link between a <strong>pin</strong> and the circuit’s <strong>Mport</strong> which it represents.</div>
+<li class="level2"><div class="li"> There is a necessary link between a <strong>pin</strong> and the circuit&#039;s <strong>Mport</strong> which it represents.</div>
 </li>
 </ul>
 </li>
@@ -193,15 +176,17 @@ Whilst most objects on a <strong>page</strong> are graphic primitives, there are
 </ul>
 
 </div>
-<!-- SECTION "Page" [3941-5460] -->
-<h1><a name="brainstorms" id="brainstorms">Brainstorms</a></h1>
+<!-- EDIT115 SECTION "Page" [3941-5460] -->
+<h1 class="sectionedit116"><a name="brainstorms" id="brainstorms">Brainstorms</a></h1>
 <div class="level1">
 
 <p>
- (from conversation on MSN/<acronym title="Internet Relay Chat">IRC</acronym> on 10th April 2007 &ndash; Peter Brett / Peter Clifton) 
+
+(from conversation on MSN/<acronym title="Internet Relay Chat">IRC</acronym> on 10th April 2007 – Peter Brett / Peter Clifton)
+
 </p>
 <ul>
-<li class="level1"><div class="li"> In order to do back annotation, need to be able to change the board part references for anywhere in the schematic.  It then makes sense to dissociate the concepts of <strong>InstanceID</strong> and <strong>Board Reference</strong>, and use an <strong>override table</strong> that can override an attribute at any given path within the current <strong>circuit</strong> based on a path composed of <strong>InstanceID</strong>s.  <strong>InstanceID</strong>s would be special-cased throughout libgeda as a means for uniquely identifying circuits and instances.  An entry in the override table might have the form &quot;/id1/id2/id3:refdes:U3”</div>
+<li class="level1"><div class="li"> In order to do back annotation, need to be able to change the board part references for anywhere in the schematic.  It then makes sense to dissociate the concepts of <strong>InstanceID</strong> and <strong>Board Reference</strong>, and use an <strong>override table</strong> that can override an attribute at any given path within the current <strong>circuit</strong> based on a path composed of <strong>InstanceID</strong>s.  <strong>InstanceID</strong>s would be special-cased throughout libgeda as a means for uniquely identifying circuits and instances.  An entry in the override table might have the form ”/id1/id2/id3:refdes:U3”</div>
 </li>
 </ul>
 <ul>
@@ -213,7 +198,7 @@ Whilst most objects on a <strong>page</strong> are graphic primitives, there are
 </li>
 </ul>
 <ul>
-<li class="level1"><div class="li"> We need to do lazy netlisting, on a circuit-by-circuit basis &ndash; the netlists should only be combined into a flat netlist when required by a tool (and even then, most tools can potentially make good use of hierarchy information).</div>
+<li class="level1"><div class="li"> We need to do lazy netlisting, on a circuit-by-circuit basis – the netlists should only be combined into a flat netlist when required by a tool (and even then, most tools can potentially make good use of hierarchy information).</div>
 </li>
 </ul>
 <ul>
@@ -222,5 +207,5 @@ Whilst most objects on a <strong>page</strong> are graphic primitives, there are
 </ul>
 
 </div>
-<!-- SECTION "Brainstorms" [5461-] --></body>
+<!-- EDIT116 SECTION "Brainstorms" [5461-] --></body>
 </html>

@@ -11,25 +11,14 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#overview" class="toc">Overview</a></span></div></li>
-<li class="level1"><div class="li"><span class="li"><a href="#setup" class="toc">Setup</a></span></div></li>
-<li class="level1"><div class="li"><span class="li"><a href="#adding_some_spice_stuff" class="toc">Adding some SPICE stuff</a></span></div></li>
-<li class="level1"><div class="li"><span class="li"><a href="#simulation" class="toc">Simulation</a></span></div></li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="overview" id="overview">Overview</a></h1>
+<h1 class="sectionedit1250"><a name="overview" id="overview">Overview</a></h1>
 <div class="level1">
 
 <p>
- It is possible to use gschem to make circuit diagrams which can then be simulated with ngspice. The advantage is that you can iteratively design and simulate before you commit to fabrication. The purpose of this tutorial is not to teach the details of SPICE but rather to work a very simple example so that the required steps are made clear. More detailed documents on both Spice and gEDA can be found at: 
+
+It is possible to use gschem to make circuit diagrams which can then be simulated with ngspice. The advantage is that you can iteratively design and simulate before you commit to fabrication. The purpose of this tutorial is not to teach the details of SPICE but rather to work a very simple example so that the required steps are made clear. More detailed documents on both Spice and gEDA can be found at:
+
 </p>
 <ul>
 <li class="level1"><div class="li"> <a href="http://ngspice.sourceforge.net/index.html" class="urlextern" title="http://ngspice.sourceforge.net/index.html"  rel="nofollow">ngspice</a></div>
@@ -39,20 +28,24 @@
 </ul>
 
 <p>
- There is a <acronym title="Frequently Asked Questions">FAQ</acronym> in the wiki that may be of help: <a href="geda-faq-simulation.html" class="wikilink1" title="geda-faq-simulation.html">faq-simulation</a>
+
+There is a <acronym title="Frequently Asked Questions">FAQ</acronym> in the wiki that may be of help: <a href="geda-faq-simulation.html" class="wikilink1" title="geda-faq-simulation.html">faq-simulation</a>
 </p>
 
 <p>
- This tutorial is based on the example ‘TwoStageAmp.sch’ in the examples which ship in gEDA’s documentation and constructs the first half of that example step by step.
+
+This tutorial is based on the example &#039;TwoStageAmp.sch&#039; in the examples which ship in gEDA&#039;s documentation and constructs the first half of that example step by step.
 </p>
 
 </div>
-<!-- SECTION "Overview" [1-772] -->
-<h1><a name="setup" id="setup">Setup</a></h1>
+<!-- EDIT1250 SECTION "Overview" [1-772] -->
+<h1 class="sectionedit1251"><a name="setup" id="setup">Setup</a></h1>
 <div class="level1">
 
 <p>
- It is assumed that you are able to construct schematics with gschem. If you are unsure how to do this please visit <a href="geda-gsch2pcb_tutorial.html" class="wikilink1" title="geda-gsch2pcb_tutorial.html">gsch2pcb_tutorial</a>. So let’s start by making a project directory ‘simpleSPICE’ and creating a schematic file named  ‘simplespice.sch’ in that directory.
+
+It is assumed that you are able to construct schematics with gschem. If you are unsure how to do this please visit <a href="geda-gsch2pcb_tutorial.html" class="wikilink1" title="geda-gsch2pcb_tutorial.html">gsch2pcb_tutorial</a>. So let&#039;s start by making a project directory &#039;simpleSPICE&#039; and creating a schematic file named 
+&#039;simplespice.sch&#039; in that directory.
 </p>
 
 <p>
@@ -64,16 +57,18 @@ Use gschem to build up a schematic that looks like:
 </p>
 
 <p>
-Note that three named nets have been created, “Vin”, “Vout”, and “Vbase”. Although this is not necessary, it is an easy way to keep track of important points in the circuit. Naming nets is done by editing either by right-clicking or by hitting ‘ee’ while a net is selected; then just add the attribute ‘netname’ and give it an appropriate name. Although we now have a circuit to simulate, we need to add some SPICE specific information before we can get any results.
+Note that three named nets have been created, “Vin”, “Vout”, and “Vbase”. Although this is not necessary, it is an easy way to keep track of important points in the circuit. Naming nets is done by editing either by right-clicking or by hitting &#039;ee&#039; while a net is selected; then just add the attribute &#039;netname&#039; and give it an appropriate name. Although we now have a circuit to simulate, we need to add some SPICE specific information before we can get any results.
 </p>
 
 </div>
-<!-- SECTION "Setup" [773-1612] -->
-<h1><a name="adding_some_spice_stuff" id="adding_some_spice_stuff">Adding some SPICE stuff</a></h1>
+<!-- EDIT1251 SECTION "Setup" [773-1613] -->
+<h1 class="sectionedit1252"><a name="adding_some_spice_stuff" id="adding_some_spice_stuff">Adding some SPICE stuff</a></h1>
 <div class="level1">
 
 <p>
- There are four things that we will need to add to the schematic to make it suitable for simulation. We must include an input signal, describe the properties of the transistor, explicitly define Vcc, and add some lines to the SPICE file. When all these things are done the schematic will look like:
+
+There are four things that we will need to add to the schematic to make it suitable for simulation. We must include an input signal, describe the properties of the transistor, explicitly define Vcc, and add some lines to the SPICE file. When all these things are done
+the schematic will look like:
 </p>
 
 <p>
@@ -81,7 +76,7 @@ Note that three named nets have been created, “Vin”, “Vout”, and “Vbas
 </p>
 
 <p>
-The input signal is added by choosing ‘SPICE simulation elements&rarr;vac-1.sym’ from the components menu and, after placing the device, editing its properties to read:
+The input signal is added by choosing &#039;SPICE simulation elements→vac-1.sym&#039; from the components menu and, after placing the device, editing its properties to read:
 </p>
 
 <p>
@@ -89,11 +84,11 @@ The input signal is added by choosing ‘SPICE simulation elements&rarr;vac-1.sy
 </p>
 
 <p>
-Notice that the ‘value’ is a string that will be read by SPICE. You learn about SPICE syntax in the links given above.
+Notice that the &#039;value&#039; is a string that will be read by SPICE. You learn about SPICE syntax in the links given above.
 </p>
 
 <p>
-Vcc is set in basically the same way except we choose ‘SPICE simulation elements&rarr;vdc-1.sym’ from the components menu. Its properties should be edited to read:
+Vcc is set in basically the same way except we choose &#039;SPICE simulation elements→vdc-1.sym&#039; from the components menu. Its properties should be edited to read:
 </p>
 
 <p>
@@ -101,7 +96,7 @@ Vcc is set in basically the same way except we choose ‘SPICE simulation elemen
 </p>
 
 <p>
-The transistor setup is a bit more complicated. We must first have access to a SPICE model for the transistor of interest. This can usually be found from the transistor datasheet or downloaded from a manufacturer website. For this example we will consider the ubiquitous 2N3904. Which has the following model:
+The transistor setup is a bit more complicated. We must first have access to a SPICE model for the transistor of interest. This can usually be found on the manufacturer&#039;s website or the part&#039;s datasheet, but it may need to be modified to work with your favorite simulator.  The easiest way to get the model is from <a href="http://www.h-renrew.de/h/spicelib/doc/index.html" class="urlextern" title="http://www.h-renrew.de/h/spicelib/doc/index.html"  rel="nofollow"> spicelib</a>.  For this example we will consider the ubiquitous 2N3904. Which has the following model:
 </p>
 <pre class="code">.model 2N3904   NPN(Is=6.734f Xti=3 Eg=1.11 Vaf=74.03 Bf=416.4 Ne=1.259
 +               Ise=6.734f Ikf=66.78m Xtb=1.5 Br=.7371 Nc=2 Isc=0 Ikr=0 Rc=1
@@ -111,7 +106,7 @@ The transistor setup is a bit more complicated. We must first have access to a S
 *               88-09-08 bam    creation </pre>
 
 <p>
-Make a sub-folder named ‘models’ in our project folder ‘simpleSPICE’ and make a file named ‘2N3904.mod’ in that folder and fill it with the model text given above. Make sure that there is a newline at the end of the file, this is important so that when the final SPICE file is created everything will be on its own line. Okay, now that we have a model for the transistor we have to apply it. Edit the transistor properties to read:
+Make a sub-folder named &#039;models&#039; in our project folder &#039;simpleSPICE&#039; and make a file named &#039;2N3904.mod&#039; in that folder and fill it with the model text given above. Make sure that there is a newline at the end of the file, this is important so that when the final SPICE file is created everything will be on its own line. Okay, now that we have a model for the transistor we have to apply it. Edit the transistor properties to read:
 </p>
 
 <p>
@@ -119,7 +114,8 @@ Make a sub-folder named ‘models’ in our project folder ‘simpleSPICE’ and
 </p>
 
 <p>
-Now we also need to inform gschem of the model file we created. This is done by adding a ‘spice-model-1.sym’ symbol to the schematic. Edit its properties to read:
+Now we also need to inform gschem of the model file we created. This is done by adding a &#039;spice-model-1.sym&#039; symbol to the schematic.
+Edit its properties to read:
 </p>
 
 <p>
@@ -127,7 +123,8 @@ Now we also need to inform gschem of the model file we created. This is done by 
 </p>
 
 <p>
-Okay, there are two more symbols to add. The first is ‘spice-include-1.sym’ which will include a text file which describes the SPICE simulation you may want to run and the other is ‘spice-directive-1.sym’ which allows additional lines to be added to the SPICE file. The properties of these symbols can be set as:
+Okay, there are two more symbols to add. The first is &#039;spice-include-1.sym&#039; which will include a text file which describes the SPICE simulation you may want to run and the other is &#039;spice-directive-1.sym&#039; which allows additional lines to be added to the SPICE file.
+The properties of these symbols can be set as:
 </p>
 
 <p>
@@ -143,12 +140,14 @@ Congratulations! We now have a schematic that is ready for simulation.
 </p>
 
 </div>
-<!-- SECTION "Adding some SPICE stuff" [1613-4297] -->
-<h1><a name="simulation" id="simulation">Simulation</a></h1>
+<!-- EDIT1252 SECTION "Adding some SPICE stuff" [1614-4457] -->
+<h1 class="sectionedit1253"><a name="simulation" id="simulation">Simulation</a></h1>
 <div class="level1">
 
 <p>
- Although the schematic is in place, we still need to write out what the simulation will do. This information will be written in the &#039;./Simulation.cmd’ that was referenced in the include symbol added in the last section. For now, create a file &#039;./Simulation.cmd’ and make it read:
+
+Although the schematic is in place, we still need to write out what the simulation will do. This information will be written in the &#039;./Simulation.cmd&#039; that was referenced in the include symbol added in the last section. For now, create a file &#039;./Simulation.cmd&#039;
+and make it read:
 </p>
 <pre class="code">.OP
 .AC DEC 20 1Hz 100MegHz
@@ -162,19 +161,23 @@ Which does one AC analysis while two lines for DC analysis are commented out. Th
 </p>
 
 <p>
-Now that we have described the simulation we want done, open a terminal, move to the ‘simpleSPICE’ directory and type the command: 
+Now that we have described the simulation we want done, open a terminal, move to the &#039;simpleSPICE&#039; directory and type the command:
+
 </p>
 <pre class="code">gnetlist -g spice-sdb -o spice.net simplespice.sch</pre>
 
 <p>
- to produce the SPICE file ‘spice.net’. Now the simulation can be run in batch mode by typing: 
+
+to produce the SPICE file &#039;spice.net&#039;. Now the simulation can be run in batch mode by typing:
+
 </p>
 <pre class="code">ngspice -b spice.net &gt; result.txt</pre>
 
 <p>
- which will spew a great deal of text to ‘result.txt’. The file should include the numerical output we requested as well as a crude ascii plot of the results. Note that the 10mV input signal has been amplified to about -280mV over a wide frequency range. If you want to veiw graphical plots ngspice can be operated in interactive mode by removing the -b option. The ngspice website describes this in more detail. In any event, we now have the simulation results in a nice text format suitable for reading with a script, perhaps something written in python or octave, for further graphing or analysis.
+
+which will spew a great deal of text to &#039;result.txt&#039;. The file should include the numerical output we requested as well as a crude ascii plot of the results. Note that the 10mV input signal has been amplified to about -280mV over a wide frequency range. If you want to veiw graphical plots ngspice can be operated in interactive mode by removing the -b option. The ngspice website describes this in more detail. In any event, we now have the simulation results in a nice text format suitable for reading with a script, perhaps something written in python or octave, for further graphing or analysis.
 </p>
 
 </div>
-<!-- SECTION "Simulation" [4298-] --></body>
+<!-- EDIT1253 SECTION "Simulation" [4458-] --></body>
 </html>

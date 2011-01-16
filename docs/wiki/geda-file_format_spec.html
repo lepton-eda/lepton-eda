@@ -11,45 +11,8 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#geda_gaf_file_format_document" class="toc">gEDA/gaf File Format Document</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#overview" class="toc">Overview</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#coordinate_space" class="toc">Coordinate Space</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#filenames" class="toc">Filenames</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#object_types" class="toc">Object types</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#version" class="toc">version</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#line" class="toc">line</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#picture" class="toc">picture</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#box" class="toc">box</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#circle" class="toc">circle</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#arc" class="toc">arc</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#text" class="toc">text</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#net" class="toc">net</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#bus" class="toc">bus</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#pin" class="toc">pin</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#component" class="toc">component</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#path" class="toc">path</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#font" class="toc">font</a></span></div></li>
-</ul>
-</li>
-<li class="level2"><div class="li"><span class="li"><a href="#colors" class="toc">Colors</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#attributes" class="toc">Attributes</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#embedded_components" class="toc">Embedded Components</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#path_data" class="toc">Path data</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#document_revision_history" class="toc">Document Revision History</a></span></div></li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="geda_gaf_file_format_document" id="geda_gaf_file_format_document">gEDA/gaf File Format Document</a></h1>
+<h1 class="sectionedit699"><a name="geda_gaf_file_format_document" id="geda_gaf_file_format_document">gEDA/gaf File Format Document</a></h1>
 <div class="level1">
 
 <p>
@@ -65,19 +28,21 @@ December 31st, 2003
 </p>
 
 </div>
-<!-- SECTION "gEDA/gaf File Format Document" [1-187] -->
-<h2><a name="overview" id="overview">Overview</a></h2>
+<!-- EDIT699 SECTION "gEDA/gaf File Format Document" [1-187] -->
+<h2 class="sectionedit700"><a name="overview" id="overview">Overview</a></h2>
 <div class="level2">
 
 <p>
 This file is the official documentation for the file formats in gEDA/gaf (gschem And Friends). The primary file format used in gEDA/gaf is the schematic/symbol format. Files which end with .sch or .sym are schematics or symbol files. Until there is another file type in gEDA/gaf, then this document will only cover the symbol/schematic file format.<br/>
- This file format document is current as of gEDA/gaf version 20040111. This document covers file format version 1 and 2.<br/>
- Note, this file format and any other file formats associated with gEDA are placed under the General Public License (<acronym title="GNU General Public License">GPL</acronym>) version 2.0. The gEDA/gaf symbol and schematic file format is Copyright (C) 1998-2004 Ales Hvezda.
+
+This file format document is current as of gEDA/gaf version 20040111. This document covers file format version 1 and 2.<br/>
+
+Note, this file format and any other file formats associated with gEDA are placed under the General Public License (<acronym title="GNU General Public License">GPL</acronym>) version 2.0. The gEDA/gaf symbol and schematic file format is Copyright (C) 1998-2004 Ales Hvezda.
 </p>
 
 </div>
-<!-- SECTION "Overview" [188-902] -->
-<h2><a name="coordinate_space" id="coordinate_space">Coordinate Space</a></h2>
+<!-- EDIT700 SECTION "Overview" [188-902] -->
+<h2 class="sectionedit701"><a name="coordinate_space" id="coordinate_space">Coordinate Space</a></h2>
 <div class="level2">
 
 <p>
@@ -94,31 +59,35 @@ All coordinates are in mils (1/1000 or an inch). This is an arbitrary decision. 
 </ul>
 
 <p>
- The following figure shows how the coordinate space is setup: 
-</p>
-<table class="inline">
-	<tr>
-		<td><a href="media/geda/coordinatespace.jpg" class="media" target="_blank" title="geda:coordinatespace.jpg"><img src="media/geda/coordinatespace.jpg" class="mediaright" title=":geda:coordinatespace.jpg " alt=":geda:coordinatespace.jpg " /></a></td>
-	</tr>
-</table>
 
+The following figure shows how the coordinate space is setup:
+
+</p>
+<div class="table sectionedit702"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><a href="media/geda/coordinatespace.jpg" class="media" target="_blank" title="geda:coordinatespace.jpg"><img src="media/geda/coordinatespace.jpg" class="mediaright" title=":geda:coordinatespace.jpg " alt=":geda:coordinatespace.jpg " /></a></td>
+	</tr>
+</table></div>
+<!-- EDIT702 TABLE [1498-1557] -->
 <p>
- X axis increases going to the right. Y axis increase going up. Coordinate system is landscape and corresponds to a sheet of paper turned on its side.
+
+X axis increases going to the right. Y axis increase going up. Coordinate system is landscape and corresponds to a sheet of paper turned on its side.
 </p>
 
 </div>
-<!-- SECTION "Coordinate Space" [903-1709] -->
-<h2><a name="filenames" id="filenames">Filenames</a></h2>
+<!-- EDIT701 SECTION "Coordinate Space" [903-1709] -->
+<h2 class="sectionedit703"><a name="filenames" id="filenames">Filenames</a></h2>
 <div class="level2">
 
 <p>
-Symbols end in .sym. The only symbol filename convention that is used in gEDA/gaf is that if there are multiple instances of a symbol with the same name (like a 7400), then a -1, -2, -3, &hellip; -N suffix is added to the end of the filename. Example: 7400-1.sym, 7400-2.sym, 7400-3.sym&hellip;<br/>
- Schematics end in .sch. There used to be a schematic filename convention (adding a -1 .. -N to the end of the basename), but this convention is now obsolete. Schematic filenames can be anything that makes sense to the creator.
+Symbols end in .sym. The only symbol filename convention that is used in gEDA/gaf is that if there are multiple instances of a symbol with the same name (like a 7400), then a -1, -2, -3, … -N suffix is added to the end of the filename. Example: 7400-1.sym, 7400-2.sym, 7400-3.sym…<br/>
+
+Schematics end in .sch. There used to be a schematic filename convention (adding a -1 .. -N to the end of the basename), but this convention is now obsolete. Schematic filenames can be anything that makes sense to the creator.
 </p>
 
 </div>
-<!-- SECTION "Filenames" [1710-2246] -->
-<h2><a name="object_types" id="object_types">Object types</a></h2>
+<!-- EDIT703 SECTION "Filenames" [1710-2246] -->
+<h2 class="sectionedit704"><a name="object_types" id="object_types">Object types</a></h2>
 <div class="level2">
 
 <p>
@@ -138,36 +107,42 @@ A schematic/symbol file for gEDA/gaf consists of:
 </ul>
 
 <p>
- The “object type” id is a single letter and this id must start in the first column. The object type id is case sensitive.<br/>
- The schematic and symbol files share the same file layout. A symbol is nothing more than a collection of primitive objects (lines, boxes, circles, arcs, text, and pins). A schematic is a collection of symbols (components), nets, and buses.<br/>
- The following sections describe the specifics of each recognized object type. Each section has the name of the object, which file type (sch/sym) the object can appear in, the format of the data, a description of each individual field, details and caveats of the fields, and finally an example with description.<br/>
- For information on the color index (which is used in practically all objects), see the Color section.
+
+The “object type” id is a single letter and this id must start in the first column. The object type id is case sensitive.<br/>
+
+The schematic and symbol files share the same file layout. A symbol is nothing more than a collection of primitive objects (lines, boxes, circles, arcs, text, and pins). A schematic is a collection of symbols (components), nets, and buses.<br/>
+
+The following sections describe the specifics of each recognized object type. Each section has the name of the object, which file type (sch/sym) the object can appear in, the format of the data, a description of each individual field, details and caveats of the fields, and finally an example with description.<br/>
+
+For information on the color index (which is used in practically all objects), see the Color section.
 </p>
 
 </div>
-<!-- SECTION "Object types" [2247-3519] -->
-<h3><a name="version" id="version">version</a></h3>
+<!-- EDIT704 SECTION "Object types" [2247-3519] -->
+<h3 class="sectionedit705"><a name="version" id="version">version</a></h3>
 <div class="level3">
 
 <p>
 Valid in: Schematic and Symbol files<br/>
- <strong><code>type version fileformat_version</code></strong> 
+
+<strong><code>type version fileformat_version</code></strong>
+
 </p>
-<table class="inline">
-	<tr>
-		<th>Field</th><th>Type/unit</th><th>Description</th>
+<div class="table sectionedit706"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Field</th><th class="col1">Type/unit</th><th class="col2">Description</th>
 	</tr>
-	<tr>
-		<td>type</td><td>char</td><td>v</td>
+	<tr class="row1">
+		<td class="col0">type</td><td class="col1">char</td><td class="col2">v</td>
 	</tr>
-	<tr>
-		<td>version</td><td>int</td><td>version of gEDA/gaf that wrote this file</td>
+	<tr class="row2">
+		<td class="col0">version</td><td class="col1">int</td><td class="col2">version of gEDA/gaf that wrote this file</td>
 	</tr>
-	<tr>
-		<td>fileformat_version</td><td>int</td><td>gEDA/gaf file format version number</td>
+	<tr class="row3">
+		<td class="col0">fileformat_version</td><td class="col1">int</td><td class="col2">gEDA/gaf file format version number</td>
 	</tr>
-</table>
-<ul>
+</table></div>
+<!-- EDIT706 TABLE [3618-3777] --><ul>
 <li class="level1"><div class="li"> The type is a lower case “v” (as in Victor).</div>
 </li>
 <li class="level1"><div class="li"> This object must be in every file used or created by the gEDA/gaf tools.</div>
@@ -186,70 +161,74 @@ Valid in: Schematic and Symbol files<br/>
 </li>
 <li class="level1"><div class="li"> fileformat version is just an integer with no minor number.</div>
 </li>
-<li class="level1"><div class="li"> Development versions include: 19990601, 19990610, 19990705, 19990829, 19990919, 19991011, 20000220, 20000704, 20001006, 20001217, 20010304, 20010708, 20010722, 20020209, 20020414, 20020527, 20020825, 20021103, 20030223, 20030525, 20030901, 20040111, 20040710, 20041228, 20050313, 20050820, 20060123, 20060824, 20060906, 20061020, 20070216, 20070705, 20070708, 20070818, 20071229, 20080110, 20080127, 20080706, 20081220, 20081221, 20090328, 20090829, 20090830</div>
+<li class="level1"><div class="li"> Development versions include: 19990601, 19990610, 19990705, 19990829, 19990919, 19991011, 20000220, 20000704, 20001006, 20001217, 20010304, 20010708, 20010722, 20020209, 20020414, 20020527, 20020825, 20021103, 20030223, 20030525, 20030901, 20040111, 20040710, 20041228, 20050313, 20050820, 20060123, 20060824, 20060906, 20061020, 20070216, 20070705, 20070708, 20070818, 20071229, 20080110, 20080127, 20080706, 20081220, 20081221, 20090328, 20090829, 20090830, 20110116</div>
 </li>
-<li class="level1"><div class="li"> Stable versions include: 20070526, 20070626, 20070902, 20071231, 20080127, 20080929, 20081220, 20081231, 20091004, 20100214</div>
+<li class="level1"><div class="li"> Stable versions include: 20070526, 20070626, 20070902, 20071231, 20080127, 20080929, 20081220, 20081231, 20091004, 20100214, 20110115</div>
 </li>
 <li class="level1"><div class="li"> <acronym title="Concurrent Versions System">CVS</acronym> or test versions (should not be used): 20030921, 20031004, 20031019, 20031231, 20050814</div>
 </li>
-<li class="level1"><div class="li"> Keep in mind that each of the above listed versions might have had file format variations. This document only covers the last version’s file format.</div>
+<li class="level1"><div class="li"> Keep in mind that each of the above listed versions might have had file format variations. This document only covers the last version&#039;s file format.</div>
 </li>
 </ul>
 
 <p>
- Example:<br/>
- 
+
+Example:<br/>
+
+
 </p>
 <pre class="code">v 20040111 1</pre>
 
 </div>
-<!-- SECTION "version" [3520-5597] -->
-<h3><a name="line" id="line">line</a></h3>
+<!-- EDIT705 SECTION "version" [3520-5607] -->
+<h3 class="sectionedit707"><a name="line" id="line">line</a></h3>
 <div class="level3">
 
 <p>
 Valid in: Schematic and Symbol files<br/>
- <strong><code>type x1 y1 x2 y2 color width capstyle dashstyle dashlength dashspace</code></strong> 
+
+<strong><code>type x1 y1 x2 y2 color width capstyle dashstyle dashlength dashspace</code></strong>
+
 </p>
-<table class="inline">
-	<tr>
-		<th>Field</th><th>Type/unit</th><th>Description</th>
+<div class="table sectionedit708"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Field</th><th class="col1">Type/unit</th><th class="col2">Description</th>
 	</tr>
-	<tr>
-		<td>type</td><td>char</td><td>L</td>
+	<tr class="row1">
+		<td class="col0">type</td><td class="col1">char</td><td class="col2">L</td>
 	</tr>
-	<tr>
-		<td>x1</td><td>int/mils</td><td>First X coordinate</td>
+	<tr class="row2">
+		<td class="col0">x1</td><td class="col1">int/mils</td><td class="col2">First X coordinate</td>
 	</tr>
-	<tr>
-		<td>y1</td><td>int/mils</td><td>First Y coordinate</td>
+	<tr class="row3">
+		<td class="col0">y1</td><td class="col1">int/mils</td><td class="col2">First Y coordinate</td>
 	</tr>
-	<tr>
-		<td>x2</td><td>int/mils</td><td>Second X coordinate</td>
+	<tr class="row4">
+		<td class="col0">x2</td><td class="col1">int/mils</td><td class="col2">Second X coordinate</td>
 	</tr>
-	<tr>
-		<td>y2</td><td>int/mils</td><td>Second Y coordinate</td>
+	<tr class="row5">
+		<td class="col0">y2</td><td class="col1">int/mils</td><td class="col2">Second Y coordinate</td>
 	</tr>
-	<tr>
-		<td>color</td><td>int</td><td>Color index</td>
+	<tr class="row6">
+		<td class="col0">color</td><td class="col1">int</td><td class="col2">Color index</td>
 	</tr>
-	<tr>
-		<td>width</td><td>int/mils</td><td>Width of line</td>
+	<tr class="row7">
+		<td class="col0">width</td><td class="col1">int/mils</td><td class="col2">Width of line</td>
 	</tr>
-	<tr>
-		<td>capstyle</td><td>int</td><td>Line cap style</td>
+	<tr class="row8">
+		<td class="col0">capstyle</td><td class="col1">int</td><td class="col2">Line cap style</td>
 	</tr>
-	<tr>
-		<td>dashstyle</td><td>int</td><td>Type of dash style</td>
+	<tr class="row9">
+		<td class="col0">dashstyle</td><td class="col1">int</td><td class="col2">Type of dash style</td>
 	</tr>
-	<tr>
-		<td>dashlength</td><td>int</td><td>Length of dash</td>
+	<tr class="row10">
+		<td class="col0">dashlength</td><td class="col1">int</td><td class="col2">Length of dash</td>
 	</tr>
-	<tr>
-		<td>dashspace</td><td>int</td><td>Space inbetween dashes</td>
+	<tr class="row11">
+		<td class="col0">dashspace</td><td class="col1">int</td><td class="col2">Space inbetween dashes</td>
 	</tr>
-</table>
-<ul>
+</table></div>
+<!-- EDIT708 TABLE [5740-6108] --><ul>
 <li class="level1"><div class="li"> The capstyle is an enumerated type:</div>
 <ul>
 <li class="level2"><div class="li"> END NONE = 0</div>
@@ -281,8 +260,10 @@ Valid in: Schematic and Symbol files<br/>
 </ul>
 
 <p>
- Example:<br/>
- 
+
+Example:<br/>
+
+
 </p>
 <pre class="code">L 23000 69000 28000 69000 3 40 0 1 -1 75</pre>
 
@@ -291,59 +272,61 @@ A line segment from (23000, 69000) to (28000, 69000) with color index 3, 40 mils
 </p>
 
 </div>
-<!-- SECTION "line" [5598-6832] -->
-<h3><a name="picture" id="picture">picture</a></h3>
+<!-- EDIT707 SECTION "line" [5608-6842] -->
+<h3 class="sectionedit709"><a name="picture" id="picture">picture</a></h3>
 <div class="level3">
 
 <p>
 Valid in: Schematic and Symbol files<br/>
- <strong><code>type x1 y1 width height angle ratio mirrored embedded<br/>
+
+<strong><code>type x1 y1 width height angle ratio mirrored embedded<br/>
 
 filename<br/>
 
 [encoded picture data<br/>
 
-encoded picture end]</code></strong> 
+encoded picture end]</code></strong>
+
 </p>
-<table class="inline">
-	<tr>
-		<th>Field</th><th>Type/unit</th><th>Description</th>
+<div class="table sectionedit710"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Field</th><th class="col1">Type/unit</th><th class="col2">Description</th>
 	</tr>
-	<tr>
-		<td>type</td><td>char</td><td>G</td>
+	<tr class="row1">
+		<td class="col0">type</td><td class="col1">char</td><td class="col2">G</td>
 	</tr>
-	<tr>
-		<td>x</td><td>int/mils</td><td>Lower left X coordinate</td>
+	<tr class="row2">
+		<td class="col0">x</td><td class="col1">int/mils</td><td class="col2">Lower left X coordinate</td>
 	</tr>
-	<tr>
-		<td>y</td><td>int/mils</td><td>Lower left Y coordinate</td>
+	<tr class="row3">
+		<td class="col0">y</td><td class="col1">int/mils</td><td class="col2">Lower left Y coordinate</td>
 	</tr>
-	<tr>
-		<td>width</td><td>int/mils</td><td>Width of the picture</td>
+	<tr class="row4">
+		<td class="col0">width</td><td class="col1">int/mils</td><td class="col2">Width of the picture</td>
 	</tr>
-	<tr>
-		<td>height</td><td>int/mils</td><td>Height of the picture</td>
+	<tr class="row5">
+		<td class="col0">height</td><td class="col1">int/mils</td><td class="col2">Height of the picture</td>
 	</tr>
-	<tr>
-		<td>angle</td><td>int/degrees</td><td>Angle of the picture</td>
+	<tr class="row6">
+		<td class="col0">angle</td><td class="col1">int/degrees</td><td class="col2">Angle of the picture</td>
 	</tr>
-	<tr>
-		<td>mirrored</td><td>char</td><td>Mirrored or normal picture</td>
+	<tr class="row7">
+		<td class="col0">mirrored</td><td class="col1">char</td><td class="col2">Mirrored or normal picture</td>
 	</tr>
-	<tr>
-		<td>embedded</td><td>char</td><td>Embedded or link to the picture file</td>
+	<tr class="row8">
+		<td class="col0">embedded</td><td class="col1">char</td><td class="col2">Embedded or link to the picture file</td>
 	</tr>
-	<tr>
-		<td>filename</td><td>string</td><td>path and filename of a not embedded picture</td>
+	<tr class="row9">
+		<td class="col0">filename</td><td class="col1">string</td><td class="col2">path and filename of a not embedded picture</td>
 	</tr>
-	<tr>
-		<td>encoded picture data</td><td>string</td><td>Serialized picture encoded using base64</td>
+	<tr class="row10">
+		<td class="col0">encoded picture data</td><td class="col1">string</td><td class="col2">Serialized picture encoded using base64</td>
 	</tr>
-	<tr>
-		<td>encoded picture end</td><td>string</td><td>A line containing only a dot character</td>
+	<tr class="row11">
+		<td class="col0">encoded picture end</td><td class="col1">string</td><td class="col2">A line containing only a dot character</td>
 	</tr>
-</table>
-<ul>
+</table></div>
+<!-- EDIT710 TABLE [7021-7553] --><ul>
 <li class="level1"><div class="li"> This object is a picture object. The first line contains all the picture parameters, and the second line is the path and filename of the picture. The filename is not used if the picture is embedded.</div>
 </li>
 <li class="level1"><div class="li"> The angle of the picture can only take on one of the following values: 0, 90, 180, 270.</div>
@@ -375,17 +358,22 @@ encoded picture end]</code></strong>
 </ul>
 
 <p>
- Example:<br/>
- 
+
+Example:<br/>
+
+
 </p>
 <pre class="code">G 16900 35800 1400 2175 0 6.435331e-01 0 0
 ../bitmaps/logo.jpg</pre>
 
 <p>
 A picture object with the lower left corner at (16900, 35800). The width of the image is 1400 mils, and its height is 2175 mils (i.e.: the ratio is 0.6353). The picture rotation is 0 degrees and the picture is not mirrored, neither embedded.<br/>
- The picture path and filename is showed in the second line.<br/>
- Example:<br/>
- 
+
+The picture path and filename is showed in the second line.<br/>
+
+Example:<br/>
+
+
 </p>
 <pre class="code">G 16900 35800 1400 2175 0 6.435331e-01 0 1
 ../bitmaps/logo.jpg
@@ -395,78 +383,83 @@ BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
 <p>
 A picture object with the lower left corner at (16900, 35800). The width of the image is 1400 mils, and its height is 2175 mils (i.e.: the ratio is 0.6353).<br/>
- The picture rotation is 0 degrees, it is not mirrored, and it is embedded.<br/>
- The picture path and filename is showed in the second line. Since this is an embedded picture, the filename and path are not used.<br/>
- The encoded picture data is only an example (it is not real data). The last line containing a single dot &#039;.&#039; character marks the end of the encoded picture data.
+
+The picture rotation is 0 degrees, it is not mirrored, and it is embedded.<br/>
+
+The picture path and filename is showed in the second line. Since this is an embedded picture, the filename and path are not used.<br/>
+
+The encoded picture data is only an example (it is not real data). The last line containing a single dot &#039;.&#039; character marks the end of the encoded picture data.
 </p>
 
 </div>
-<!-- SECTION "picture" [6833-9626] -->
-<h3><a name="box" id="box">box</a></h3>
+<!-- EDIT709 SECTION "picture" [6843-9636] -->
+<h3 class="sectionedit711"><a name="box" id="box">box</a></h3>
 <div class="level3">
 
 <p>
 Valid in: Schematic and Symbol files<br/>
- <strong><code>type x y width height color width capstyle dashtype dashlength dashspace
-filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong> 
+
+<strong><code>type x y width height color width capstyle dashtype dashlength dashspace
+filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong>
+
 </p>
-<table class="inline">
-	<tr>
-		<th>Field</th><th>Type/unit</th><th>Description</th>
+<div class="table sectionedit712"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Field</th><th class="col1">Type/unit</th><th class="col2">Description</th>
 	</tr>
-	<tr>
-		<td>type</td><td>char</td><td>B</td>
+	<tr class="row1">
+		<td class="col0">type</td><td class="col1">char</td><td class="col2">B</td>
 	</tr>
-	<tr>
-		<td>x</td><td>int/mils</td><td>Lower left hand X coordinate</td>
+	<tr class="row2">
+		<td class="col0">x</td><td class="col1">int/mils</td><td class="col2">Lower left hand X coordinate</td>
 	</tr>
-	<tr>
-		<td>y</td><td>int/mils</td><td>Lower left hand Y coordinate</td>
+	<tr class="row3">
+		<td class="col0">y</td><td class="col1">int/mils</td><td class="col2">Lower left hand Y coordinate</td>
 	</tr>
-	<tr>
-		<td>width</td><td>int/mils</td><td>Width of the box (x direction)</td>
+	<tr class="row4">
+		<td class="col0">width</td><td class="col1">int/mils</td><td class="col2">Width of the box (x direction)</td>
 	</tr>
-	<tr>
-		<td>height</td><td>int/mils</td><td>Height of the box (y direction)</td>
+	<tr class="row5">
+		<td class="col0">height</td><td class="col1">int/mils</td><td class="col2">Height of the box (y direction)</td>
 	</tr>
-	<tr>
-		<td>color</td><td>int</td><td>Color index</td>
+	<tr class="row6">
+		<td class="col0">color</td><td class="col1">int</td><td class="col2">Color index</td>
 	</tr>
-	<tr>
-		<td>width</td><td>int/mils</td><td>Width of lines</td>
+	<tr class="row7">
+		<td class="col0">width</td><td class="col1">int/mils</td><td class="col2">Width of lines</td>
 	</tr>
-	<tr>
-		<td>capstyle</td><td>int/mils</td><td>Line cap style</td>
+	<tr class="row8">
+		<td class="col0">capstyle</td><td class="col1">int/mils</td><td class="col2">Line cap style</td>
 	</tr>
-	<tr>
-		<td>dashstyle</td><td>int</td><td>Type of dash style</td>
+	<tr class="row9">
+		<td class="col0">dashstyle</td><td class="col1">int</td><td class="col2">Type of dash style</td>
 	</tr>
-	<tr>
-		<td>dashlength</td><td>int/mils</td><td>Length of dash</td>
+	<tr class="row10">
+		<td class="col0">dashlength</td><td class="col1">int/mils</td><td class="col2">Length of dash</td>
 	</tr>
-	<tr>
-		<td>dashspace</td><td>int/mils</td><td>Space inbetween dashes</td>
+	<tr class="row11">
+		<td class="col0">dashspace</td><td class="col1">int/mils</td><td class="col2">Space inbetween dashes</td>
 	</tr>
-	<tr>
-		<td>filltype</td><td>int</td><td>Type of fill</td>
+	<tr class="row12">
+		<td class="col0">filltype</td><td class="col1">int</td><td class="col2">Type of fill</td>
 	</tr>
-	<tr>
-		<td>fillwidth</td><td>int/mils</td><td>Width of the fill lines</td>
+	<tr class="row13">
+		<td class="col0">fillwidth</td><td class="col1">int/mils</td><td class="col2">Width of the fill lines</td>
 	</tr>
-	<tr>
-		<td>angle1</td><td>int/degrees</td><td>First angle of fill</td>
+	<tr class="row14">
+		<td class="col0">angle1</td><td class="col1">int/degrees</td><td class="col2">First angle of fill</td>
 	</tr>
-	<tr>
-		<td>pitch1</td><td>int/mils</td><td>First pitch/spacing of fill</td>
+	<tr class="row15">
+		<td class="col0">pitch1</td><td class="col1">int/mils</td><td class="col2">First pitch/spacing of fill</td>
 	</tr>
-	<tr>
-		<td>angle2</td><td>int/degrees</td><td>Second angle of fill</td>
+	<tr class="row16">
+		<td class="col0">angle2</td><td class="col1">int/degrees</td><td class="col2">Second angle of fill</td>
 	</tr>
-	<tr>
-		<td>pitch2</td><td>int/mils</td><td>Second pitch/spacing of fill</td>
+	<tr class="row17">
+		<td class="col0">pitch2</td><td class="col1">int/mils</td><td class="col2">Second pitch/spacing of fill</td>
 	</tr>
-</table>
-<ul>
+</table></div>
+<!-- EDIT712 TABLE [9819-10500] --><ul>
 <li class="level1"><div class="li"> The capstyle is an enumerated type:</div>
 <ul>
 <li class="level2"><div class="li"> END NONE = 0</div>
@@ -520,8 +513,10 @@ filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong>
 </ul>
 
 <p>
- Example:<br/>
- 
+
+Example:<br/>
+
+
 </p>
 <pre class="code">B 33000 67300 2000 2000 3 60 0 2 75 50 0 -1 -1 -1 -1 -1</pre>
 
@@ -530,69 +525,71 @@ A box with the lower left hand corner at (33000, 67300) and a width and height o
 </p>
 
 </div>
-<!-- SECTION "box" [9627-11833] -->
-<h3><a name="circle" id="circle">circle</a></h3>
+<!-- EDIT711 SECTION "box" [9637-11843] -->
+<h3 class="sectionedit713"><a name="circle" id="circle">circle</a></h3>
 <div class="level3">
 
 <p>
 Valid in: Schematic and Symbol files<br/>
- <strong><code>type x y radius color width capstyle dashtype dashlength dashspace
-filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong> 
+
+<strong><code>type x y radius color width capstyle dashtype dashlength dashspace
+filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong>
+
 </p>
-<table class="inline">
-	<tr>
-		<th>Field</th><th>Type/unit</th><th>Description</th>
+<div class="table sectionedit714"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Field</th><th class="col1">Type/unit</th><th class="col2">Description</th>
 	</tr>
-	<tr>
-		<td>type</td><td>char</td><td>V</td>
+	<tr class="row1">
+		<td class="col0">type</td><td class="col1">char</td><td class="col2">V</td>
 	</tr>
-	<tr>
-		<td>x</td><td>int/mils</td><td>Center X coordinate</td>
+	<tr class="row2">
+		<td class="col0">x</td><td class="col1">int/mils</td><td class="col2">Center X coordinate</td>
 	</tr>
-	<tr>
-		<td>y</td><td>int/mils</td><td>Center Y coordinate</td>
+	<tr class="row3">
+		<td class="col0">y</td><td class="col1">int/mils</td><td class="col2">Center Y coordinate</td>
 	</tr>
-	<tr>
-		<td>radius</td><td>int/mils</td><td>Radius of the circle</td>
+	<tr class="row4">
+		<td class="col0">radius</td><td class="col1">int/mils</td><td class="col2">Radius of the circle</td>
 	</tr>
-	<tr>
-		<td>color</td><td>int</td><td>Color index</td>
+	<tr class="row5">
+		<td class="col0">color</td><td class="col1">int</td><td class="col2">Color index</td>
 	</tr>
-	<tr>
-		<td>width</td><td>int/mils</td><td>Width of circle line</td>
+	<tr class="row6">
+		<td class="col0">width</td><td class="col1">int/mils</td><td class="col2">Width of circle line</td>
 	</tr>
-	<tr>
-		<td>capstyle</td><td>int/mils</td><td>0 unused</td>
+	<tr class="row7">
+		<td class="col0">capstyle</td><td class="col1">int/mils</td><td class="col2">0 unused</td>
 	</tr>
-	<tr>
-		<td>dashstyle</td><td>int</td><td>Type of dash style</td>
+	<tr class="row8">
+		<td class="col0">dashstyle</td><td class="col1">int</td><td class="col2">Type of dash style</td>
 	</tr>
-	<tr>
-		<td>dashlength</td><td>int/mils</td><td>Length of dash</td>
+	<tr class="row9">
+		<td class="col0">dashlength</td><td class="col1">int/mils</td><td class="col2">Length of dash</td>
 	</tr>
-	<tr>
-		<td>dashspace</td><td>int/mils</td><td>Space inbetween dashes</td>
+	<tr class="row10">
+		<td class="col0">dashspace</td><td class="col1">int/mils</td><td class="col2">Space inbetween dashes</td>
 	</tr>
-	<tr>
-		<td>filltype</td><td>int</td><td>Type of fill</td>
+	<tr class="row11">
+		<td class="col0">filltype</td><td class="col1">int</td><td class="col2">Type of fill</td>
 	</tr>
-	<tr>
-		<td>fillwidth</td><td>int/mils</td><td>Width of the fill lines</td>
+	<tr class="row12">
+		<td class="col0">fillwidth</td><td class="col1">int/mils</td><td class="col2">Width of the fill lines</td>
 	</tr>
-	<tr>
-		<td>angle1</td><td>int/degrees</td><td>First angle of fill</td>
+	<tr class="row13">
+		<td class="col0">angle1</td><td class="col1">int/degrees</td><td class="col2">First angle of fill</td>
 	</tr>
-	<tr>
-		<td>pitch1</td><td>int/mils</td><td>First pitch/spacing of fill</td>
+	<tr class="row14">
+		<td class="col0">pitch1</td><td class="col1">int/mils</td><td class="col2">First pitch/spacing of fill</td>
 	</tr>
-	<tr>
-		<td>angle2</td><td>int/degrees</td><td>Second angle of fill</td>
+	<tr class="row15">
+		<td class="col0">angle2</td><td class="col1">int/degrees</td><td class="col2">Second angle of fill</td>
 	</tr>
-	<tr>
-		<td>pitch2</td><td>int/mils</td><td>Second pitch/spacing of fill</td>
+	<tr class="row16">
+		<td class="col0">pitch2</td><td class="col1">int/mils</td><td class="col2">Second pitch/spacing of fill</td>
 	</tr>
-</table>
-<ul>
+</table></div>
+<!-- EDIT714 TABLE [12023-12627] --><ul>
 <li class="level1"><div class="li"> The dashstyle is an enumerated type:</div>
 <ul>
 <li class="level2"><div class="li"> TYPE SOLID = 0</div>
@@ -636,8 +633,10 @@ filltype fillwidth angle1 pitch1 angle2 pitch2</code></strong>
 </ul>
 
 <p>
- Example:<br/>
- 
+
+Example:<br/>
+
+
 </p>
 <pre class="code">V 38000 67000 900 3 0 0 2 75 50 2 10 20 30 90 50</pre>
 
@@ -646,57 +645,59 @@ A circle with the center at (38000, 67000) and a radius of 900 mils, color index
 </p>
 
 </div>
-<!-- SECTION "circle" [11834-13959] -->
-<h3><a name="arc" id="arc">arc</a></h3>
+<!-- EDIT713 SECTION "circle" [11844-13969] -->
+<h3 class="sectionedit715"><a name="arc" id="arc">arc</a></h3>
 <div class="level3">
 
 <p>
 Valid in: Schematic and Symbol files<br/>
- <strong><code>type x y radius startangle sweepangle color width capstyle dashtype
-dashlength dashspace</code></strong> 
+
+<strong><code>type x y radius startangle sweepangle color width capstyle dashtype
+dashlength dashspace</code></strong>
+
 </p>
-<table class="inline">
-	<tr>
-		<th>Field</th><th>Type/unit</th><th>Description</th>
+<div class="table sectionedit716"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Field</th><th class="col1">Type/unit</th><th class="col2">Description</th>
 	</tr>
-	<tr>
-		<td>type</td><td>char</td><td>A</td>
+	<tr class="row1">
+		<td class="col0">type</td><td class="col1">char</td><td class="col2">A</td>
 	</tr>
-	<tr>
-		<td>x</td><td>int/mils</td><td>Center X coordinate</td>
+	<tr class="row2">
+		<td class="col0">x</td><td class="col1">int/mils</td><td class="col2">Center X coordinate</td>
 	</tr>
-	<tr>
-		<td>y</td><td>int/mils</td><td>Center Y coordinate</td>
+	<tr class="row3">
+		<td class="col0">y</td><td class="col1">int/mils</td><td class="col2">Center Y coordinate</td>
 	</tr>
-	<tr>
-		<td>radius</td><td>int/mils</td><td>Radius of the arc</td>
+	<tr class="row4">
+		<td class="col0">radius</td><td class="col1">int/mils</td><td class="col2">Radius of the arc</td>
 	</tr>
-	<tr>
-		<td>startangle</td><td>int/degrees</td><td>Starting angle of the arc</td>
+	<tr class="row5">
+		<td class="col0">startangle</td><td class="col1">int/degrees</td><td class="col2">Starting angle of the arc</td>
 	</tr>
-	<tr>
-		<td>sweepangle</td><td>int/degrees</td><td>Amount the arc sweeps</td>
+	<tr class="row6">
+		<td class="col0">sweepangle</td><td class="col1">int/degrees</td><td class="col2">Amount the arc sweeps</td>
 	</tr>
-	<tr>
-		<td>color</td><td>int</td><td>Color index</td>
+	<tr class="row7">
+		<td class="col0">color</td><td class="col1">int</td><td class="col2">Color index</td>
 	</tr>
-	<tr>
-		<td>width</td><td>int/mils</td><td>Width of circle line</td>
+	<tr class="row8">
+		<td class="col0">width</td><td class="col1">int/mils</td><td class="col2">Width of circle line</td>
 	</tr>
-	<tr>
-		<td>capstyle</td><td>int</td><td>Cap style</td>
+	<tr class="row9">
+		<td class="col0">capstyle</td><td class="col1">int</td><td class="col2">Cap style</td>
 	</tr>
-	<tr>
-		<td>dashstyle</td><td>int</td><td>Type of dash style</td>
+	<tr class="row10">
+		<td class="col0">dashstyle</td><td class="col1">int</td><td class="col2">Type of dash style</td>
 	</tr>
-	<tr>
-		<td>dashlength</td><td>int/mils</td><td>Length of dash</td>
+	<tr class="row11">
+		<td class="col0">dashlength</td><td class="col1">int/mils</td><td class="col2">Length of dash</td>
 	</tr>
-	<tr>
-		<td>dashspace</td><td>int/mils</td><td>Space inbetween dashes</td>
+	<tr class="row12">
+		<td class="col0">dashspace</td><td class="col1">int/mils</td><td class="col2">Space inbetween dashes</td>
 	</tr>
-</table>
-<ul>
+</table></div>
+<!-- EDIT716 TABLE [14121-14567] --><ul>
 <li class="level1"><div class="li"> The startangle can be negative, but not recommended.</div>
 </li>
 <li class="level1"><div class="li"> The sweepangle can be negative, but not recommended.</div>
@@ -732,23 +733,27 @@ dashlength dashspace</code></strong>
 </ul>
 
 <p>
- Example:<br/>
- 
+
+Example:<br/>
+
+
 </p>
 <pre class="code">A 30600 75000 2000 0 45 3 0 0 3 75 50</pre>
 
 <p>
- An arc with the center at (30600, 75000) and a radius of 2000 mils, a starting angle of 0, sweeping 45 degrees, color index 3, line width of 0 mils (smallest size), no cap, center line type, dash length of 75 mils, dash spacing of 50 mils.
+
+An arc with the center at (30600, 75000) and a radius of 2000 mils, a starting angle of 0, sweeping 45 degrees, color index 3, line width of 0 mils (smallest size), no cap, center line type, dash length of 75 mils, dash spacing of 50 mils.
 </p>
 
 </div>
-<!-- SECTION "arc" [13960-15476] -->
-<h3><a name="text" id="text">text</a></h3>
+<!-- EDIT715 SECTION "arc" [13970-15486] -->
+<h3 class="sectionedit717"><a name="text" id="text">text</a></h3>
 <div class="level3">
 
 <p>
 Valid in: Schematic and Symbol files<br/>
- <strong><code>type x y color size visibility show_name_value angle alignment num_lines<br/>
+
+<strong><code>type x y color size visibility show_name_value angle alignment num_lines<br/>
 
 string line 1<br/>
 
@@ -756,52 +761,53 @@ string line 2<br/>
 
 string line 3<br/>
 
-&hellip;<br/>
+…<br/>
 
-string line N</code></strong> 
+string line N</code></strong>
+
 </p>
-<table class="inline">
-	<tr>
-		<th>Field</th><th>Type/unit</th><th>Description</th>
+<div class="table sectionedit718"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Field</th><th class="col1">Type/unit</th><th class="col2">Description</th>
 	</tr>
-	<tr>
-		<td>type</td><td>char</td><td>T</td>
+	<tr class="row1">
+		<td class="col0">type</td><td class="col1">char</td><td class="col2">T</td>
 	</tr>
-	<tr>
-		<td>x</td><td>int/mils</td><td>First X coordinate</td>
+	<tr class="row2">
+		<td class="col0">x</td><td class="col1">int/mils</td><td class="col2">First X coordinate</td>
 	</tr>
-	<tr>
-		<td>y</td><td>int/mils</td><td>First Y coordinate</td>
+	<tr class="row3">
+		<td class="col0">y</td><td class="col1">int/mils</td><td class="col2">First Y coordinate</td>
 	</tr>
-	<tr>
-		<td>color</td><td>int</td><td>Color index</td>
+	<tr class="row4">
+		<td class="col0">color</td><td class="col1">int</td><td class="col2">Color index</td>
 	</tr>
-	<tr>
-		<td>size</td><td>int/points</td><td>Size of text</td>
+	<tr class="row5">
+		<td class="col0">size</td><td class="col1">int/points</td><td class="col2">Size of text</td>
 	</tr>
-	<tr>
-		<td>visibility</td><td>int</td><td>Visibility of text</td>
+	<tr class="row6">
+		<td class="col0">visibility</td><td class="col1">int</td><td class="col2">Visibility of text</td>
 	</tr>
-	<tr>
-		<td>show_name_value</td><td>int</td><td>Attribute visibility control</td>
+	<tr class="row7">
+		<td class="col0">show_name_value</td><td class="col1">int</td><td class="col2">Attribute visibility control</td>
 	</tr>
-	<tr>
-		<td>angle</td><td>int/degrees</td><td>Angle of the text</td>
+	<tr class="row8">
+		<td class="col0">angle</td><td class="col1">int/degrees</td><td class="col2">Angle of the text</td>
 	</tr>
-	<tr>
-		<td>alignment</td><td>int</td><td>Alignment/origin of the text</td>
+	<tr class="row9">
+		<td class="col0">alignment</td><td class="col1">int</td><td class="col2">Alignment/origin of the text</td>
 	</tr>
-	<tr>
-		<td>num_lines</td><td>int</td><td>Number of lines of text (1 based)</td>
+	<tr class="row10">
+		<td class="col0">num_lines</td><td class="col1">int</td><td class="col2">Number of lines of text (1 based)</td>
 	</tr>
-	<tr>
-		<td>string line 1 &hellip; N</td><td>string</td><td>The text strings, on a seperate line</td>
+	<tr class="row11">
+		<td class="col0">string line 1 … N</td><td class="col1">string</td><td class="col2">The text strings, on a seperate line</td>
 	</tr>
-</table>
-<ul>
+</table></div>
+<!-- EDIT718 TABLE [15693-16141] --><ul>
 <li class="level1"><div class="li"> This object is a multi line object. The first line contains all the text parameters and the subsequent lines are the text strings.</div>
 </li>
-<li class="level1"><div class="li"> There must be exactly num lines of text following the T &hellip; string.</div>
+<li class="level1"><div class="li"> There must be exactly num lines of text following the T … string.</div>
 </li>
 <li class="level1"><div class="li"> The maximum length of any single text string is 1024, however there is no limit to the number of text string lines.</div>
 </li>
@@ -836,16 +842,16 @@ string line N</code></strong>
 <li class="level1"><div class="li"> The alignment/origin field controls the relative location of the origin.</div>
 </li>
 <li class="level1"><div class="li"> The alignment field can take a value from 0 to 8. <br/>
- The following diagram shows what the values for the alignment field mean:</div>
+The following diagram shows what the values for the alignment field mean:</div>
 </li>
 </ul>
 
 <p>
- <a href="media/geda/fileformat_textgraphic.jpg" class="media" target="_blank" title="geda:fileformat_textgraphic.jpg"><img src="media/geda/fileformat_textgraphic.jpg" class="media" alt="" /></a> 
+ <a href="media/geda/fileformat_textgraphic.jpg" class="media" target="_blank" title="geda:fileformat_textgraphic.jpg"><img src="media/geda/fileformat_textgraphic.jpg" class="media" alt="" /></a>
 </p>
 <ul>
 <li class="level1"><div class="li"> The num_lines field always starts at 1.<br/>
- The num_lines field was added starting with file format version 1. Past versions (0 or earlier) only supported single line text objects.</div>
+The num_lines field was added starting with file format version 1. Past versions (0 or earlier) only supported single line text objects.</div>
 </li>
 <li class="level1"><div class="li"> The text strings of the string line(s) can have overbars if the text is embedded in two overbar markers <strong>“\_”</strong>. A single backslash needs to be written as <strong>“\\”</strong>.</div>
 </li>
@@ -853,18 +859,21 @@ string line N</code></strong>
 
 <p>
 Example1:<br/>
- 
+
+
 </p>
 <pre class="code">T 16900 35800 3 10 1 0 0 0 1
 Text string!</pre>
 
 <p>
-A text object with the origin at (16900, 35800), color index 3, 10 points in size, visible, attribute  ags not valid (not an attribute), origin at lower left, not rotated, string: Text string!
+A text object with the origin at (16900, 35800), color index 3, 10 points in size, visible, attribute 
+ags not valid (not an attribute), origin at lower left, not rotated, string: Text string!
 </p>
 
 <p>
 Example2:<br/>
- 
+
+
 </p>
 <pre class="code">T 16900 35800 3 10 1 0 0 0 5
 Text string line 1
@@ -879,7 +888,8 @@ This is a similar text object as the above example, however here there are five 
 
 <p>
 Example3:<br/>
- 
+
+
 </p>
 <pre class="code">T 10000 20000 3 10 1 1 8 90 1
 pinlabel=R/\_W\_</pre>
@@ -889,38 +899,40 @@ A text object with the origin at (10000, 20000), color index 3, 10 points in siz
 </p>
 
 </div>
-<!-- SECTION "text" [15477-18631] -->
-<h3><a name="net" id="net">net</a></h3>
+<!-- EDIT717 SECTION "text" [15487-18641] -->
+<h3 class="sectionedit719"><a name="net" id="net">net</a></h3>
 <div class="level3">
 
 <p>
 Valid in: Schematic files ONLY<br/>
- <strong><code>type x1 y1 x2 y2 color</code></strong> 
+
+<strong><code>type x1 y1 x2 y2 color</code></strong>
+
 </p>
-<table class="inline">
-	<tr>
-		<th>Field</th><th>Type/unit</th><th>Description</th>
+<div class="table sectionedit720"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Field</th><th class="col1">Type/unit</th><th class="col2">Description</th>
 	</tr>
-	<tr>
-		<td>type</td><td>char</td><td>N</td>
+	<tr class="row1">
+		<td class="col0">type</td><td class="col1">char</td><td class="col2">N</td>
 	</tr>
-	<tr>
-		<td>x1</td><td>int/mils</td><td>First X coordinate</td>
+	<tr class="row2">
+		<td class="col0">x1</td><td class="col1">int/mils</td><td class="col2">First X coordinate</td>
 	</tr>
-	<tr>
-		<td>y1</td><td>int/mils</td><td>First Y coordinate</td>
+	<tr class="row3">
+		<td class="col0">y1</td><td class="col1">int/mils</td><td class="col2">First Y coordinate</td>
 	</tr>
-	<tr>
-		<td>x2</td><td>int/mils</td><td>Second X coordinate</td>
+	<tr class="row4">
+		<td class="col0">x2</td><td class="col1">int/mils</td><td class="col2">Second X coordinate</td>
 	</tr>
-	<tr>
-		<td>y2</td><td>int/mils</td><td>Second Y coordinate</td>
+	<tr class="row5">
+		<td class="col0">y2</td><td class="col1">int/mils</td><td class="col2">Second Y coordinate</td>
 	</tr>
-	<tr>
-		<td>color</td><td>int</td><td>Color index</td>
+	<tr class="row6">
+		<td class="col0">color</td><td class="col1">int</td><td class="col2">Color index</td>
 	</tr>
-</table>
-<ul>
+</table></div>
+<!-- EDIT720 TABLE [18721-18922] --><ul>
 <li class="level1"><div class="li"> Nets can only appear in schematic files.</div>
 </li>
 <li class="level1"><div class="li"> You cannot have a zero length net (the tools will throw them away).</div>
@@ -928,8 +940,10 @@ Valid in: Schematic files ONLY<br/>
 </ul>
 
 <p>
- Example:<br/>
- 
+
+Example:<br/>
+
+
 </p>
 <pre class="code">N 12700 29400 32900 29400 4</pre>
 
@@ -938,41 +952,43 @@ A net segment from (12700, 29400) to (32900, 29400) with color index 4.
 </p>
 
 </div>
-<!-- SECTION "net" [18632-19157] -->
-<h3><a name="bus" id="bus">bus</a></h3>
+<!-- EDIT719 SECTION "net" [18642-19167] -->
+<h3 class="sectionedit721"><a name="bus" id="bus">bus</a></h3>
 <div class="level3">
 
 <p>
 Valid in: Schematic files ONLY<br/>
- <strong><code>type x1 y1 x2 y2 color ripperdir</code></strong> 
+
+<strong><code>type x1 y1 x2 y2 color ripperdir</code></strong>
+
 </p>
-<table class="inline">
-	<tr>
-		<th>Field</th><th>Type/unit</th><th>Description</th>
+<div class="table sectionedit722"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Field</th><th class="col1">Type/unit</th><th class="col2">Description</th>
 	</tr>
-	<tr>
-		<td>type</td><td>char</td><td>U</td>
+	<tr class="row1">
+		<td class="col0">type</td><td class="col1">char</td><td class="col2">U</td>
 	</tr>
-	<tr>
-		<td>x1</td><td>int/mils</td><td>First X coordinate</td>
+	<tr class="row2">
+		<td class="col0">x1</td><td class="col1">int/mils</td><td class="col2">First X coordinate</td>
 	</tr>
-	<tr>
-		<td>y1</td><td>int/mils</td><td>First Y coordinate</td>
+	<tr class="row3">
+		<td class="col0">y1</td><td class="col1">int/mils</td><td class="col2">First Y coordinate</td>
 	</tr>
-	<tr>
-		<td>x2</td><td>int/mils</td><td>Second X coordinate</td>
+	<tr class="row4">
+		<td class="col0">x2</td><td class="col1">int/mils</td><td class="col2">Second X coordinate</td>
 	</tr>
-	<tr>
-		<td>y2</td><td>int/mils</td><td>Second Y coordinate</td>
+	<tr class="row5">
+		<td class="col0">y2</td><td class="col1">int/mils</td><td class="col2">Second Y coordinate</td>
 	</tr>
-	<tr>
-		<td>color</td><td>int</td><td>Color index</td>
+	<tr class="row6">
+		<td class="col0">color</td><td class="col1">int</td><td class="col2">Color index</td>
 	</tr>
-	<tr>
-		<td>ripperdir</td><td>int</td><td>Direction of bus rippers</td>
+	<tr class="row7">
+		<td class="col0">ripperdir</td><td class="col1">int</td><td class="col2">Direction of bus rippers</td>
 	</tr>
-</table>
-<ul>
+</table></div>
+<!-- EDIT722 TABLE [19257-19499] --><ul>
 <li class="level1"><div class="li"> The ripperdir field for an brand new bus is 0.</div>
 </li>
 <li class="level1"><div class="li"> The ripperdir field takes on a value of 1 or -1 when a net is connected to the bus for the first time. This value indicates the direction of the ripper symbol. The ripper direction is set to the same value for the entire life of the bus object.</div>
@@ -984,8 +1000,10 @@ Valid in: Schematic files ONLY<br/>
 </ul>
 
 <p>
- Example:<br/>
- 
+
+Example:<br/>
+
+
 </p>
 <pre class="code">U 27300 37400 27300 35300 3 0</pre>
 
@@ -994,44 +1012,46 @@ A bus segment from (27300, 37400) to (27300, 35300) with color index 3 and no ne
 </p>
 
 </div>
-<!-- SECTION "bus" [19158-20089] -->
-<h3><a name="pin" id="pin">pin</a></h3>
+<!-- EDIT721 SECTION "bus" [19168-20099] -->
+<h3 class="sectionedit723"><a name="pin" id="pin">pin</a></h3>
 <div class="level3">
 
 <p>
 Valid in: Symbol files ONLY<br/>
- <strong><code>type x1 y1 x2 y2 color pintype whichend</code></strong> 
+
+<strong><code>type x1 y1 x2 y2 color pintype whichend</code></strong>
+
 </p>
-<table class="inline">
-	<tr>
-		<th>Field</th><th>Type/unit</th><th>Description</th>
+<div class="table sectionedit724"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Field</th><th class="col1">Type/unit</th><th class="col2">Description</th>
 	</tr>
-	<tr>
-		<td>type</td><td>char</td><td>P</td>
+	<tr class="row1">
+		<td class="col0">type</td><td class="col1">char</td><td class="col2">P</td>
 	</tr>
-	<tr>
-		<td>x1</td><td>int/mils</td><td>First X coordinate</td>
+	<tr class="row2">
+		<td class="col0">x1</td><td class="col1">int/mils</td><td class="col2">First X coordinate</td>
 	</tr>
-	<tr>
-		<td>y1</td><td>int/mils</td><td>First Y coordinate</td>
+	<tr class="row3">
+		<td class="col0">y1</td><td class="col1">int/mils</td><td class="col2">First Y coordinate</td>
 	</tr>
-	<tr>
-		<td>x2</td><td>int/mils</td><td>Second X coordinate</td>
+	<tr class="row4">
+		<td class="col0">x2</td><td class="col1">int/mils</td><td class="col2">Second X coordinate</td>
 	</tr>
-	<tr>
-		<td>y2</td><td>int/mils</td><td>Second Y coordinate</td>
+	<tr class="row5">
+		<td class="col0">y2</td><td class="col1">int/mils</td><td class="col2">Second Y coordinate</td>
 	</tr>
-	<tr>
-		<td>color</td><td>int</td><td>Color index</td>
+	<tr class="row6">
+		<td class="col0">color</td><td class="col1">int</td><td class="col2">Color index</td>
 	</tr>
-	<tr>
-		<td>pintype</td><td>int</td><td>Type of pin</td>
+	<tr class="row7">
+		<td class="col0">pintype</td><td class="col1">int</td><td class="col2">Type of pin</td>
 	</tr>
-	<tr>
-		<td>whichend</td><td>int</td><td>Specifies the active end</td>
+	<tr class="row8">
+		<td class="col0">whichend</td><td class="col1">int</td><td class="col2">Specifies the active end</td>
 	</tr>
-</table>
-<ul>
+</table></div>
+<!-- EDIT724 TABLE [20193-20460] --><ul>
 <li class="level1"><div class="li"> The pintype is an enumerated type:</div>
 <ul>
 <li class="level2"><div class="li"> NORMAL <acronym title="Personal Identification Number">PIN</acronym> = 0</div>
@@ -1051,8 +1071,10 @@ Valid in: Symbol files ONLY<br/>
 </ul>
 
 <p>
- Example:<br/>
- 
+
+Example:<br/>
+
+
 </p>
 <pre class="code">P 0 200 200 200 1 0 0</pre>
 
@@ -1061,43 +1083,46 @@ A pin from (0, 200) to (200, 200) with color index 1, a regular pin, and the fir
 </p>
 
 </div>
-<!-- SECTION "pin" [20090-21086] -->
-<h3><a name="component" id="component">component</a></h3>
+<!-- EDIT723 SECTION "pin" [20100-21096] -->
+<h3 class="sectionedit725"><a name="component" id="component">component</a></h3>
 <div class="level3">
 
 <p>
 Valid in: Schematic files ONLY<br/>
- <strong><code>type x y selectable angle mirror basename</code></strong> 
-</p>
-<table class="inline">
-	<tr>
-		<th>Field</th><th>Type/unit</th><th>Description</th>
-	</tr>
-	<tr>
-		<td>type</td><td>char</td><td>C</td>
-	</tr>
-	<tr>
-		<td>x</td><td>int/mils</td><td>Origin X coordinate</td>
-	</tr>
-	<tr>
-		<td>y</td><td>int/mils</td><td>Origin Y coordinate</td>
-	</tr>
-	<tr>
-		<td>selectable</td><td>int</td><td>Selectable flag</td>
-	</tr>
-	<tr>
-		<td>angle</td><td>int/degrees</td><td>Angle of the component</td>
-	</tr>
-	<tr>
-		<td>mirror</td><td>int</td><td>Mirror around Y axis</td>
-	</tr>
-	<tr>
-		<td>basename</td><td>string</td><td>The filename of the component</td>
-	</tr>
-</table>
 
+<strong><code>type x y selectable angle mirror basename</code></strong>
+
+</p>
+<div class="table sectionedit726"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Field</th><th class="col1">Type/unit</th><th class="col2">Description</th>
+	</tr>
+	<tr class="row1">
+		<td class="col0">type</td><td class="col1">char</td><td class="col2">C</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">x</td><td class="col1">int/mils</td><td class="col2">Origin X coordinate</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">y</td><td class="col1">int/mils</td><td class="col2">Origin Y coordinate</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">selectable</td><td class="col1">int</td><td class="col2">Selectable flag</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">angle</td><td class="col1">int/degrees</td><td class="col2">Angle of the component</td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">mirror</td><td class="col1">int</td><td class="col2">Mirror around Y axis</td>
+	</tr>
+	<tr class="row7">
+		<td class="col0">basename</td><td class="col1">string</td><td class="col2">The filename of the component</td>
+	</tr>
+</table></div>
+<!-- EDIT726 TABLE [21201-21468] -->
 <p>
- The selectable field is either 1 for selectable or 0 if not selectable.
+
+The selectable field is either 1 for selectable or 0 if not selectable.
 </p>
 <ul>
 <li class="level1"><div class="li"> The angle field can only take on the following values: 0, 90, 180, 270.</div>
@@ -1113,24 +1138,28 @@ Valid in: Schematic files ONLY<br/>
 </ul>
 
 <p>
- Example:<br/>
- 
+
+Example:<br/>
+
+
 </p>
 <pre class="code">C 18600 19900 1 0 0 7400-1.sym</pre>
 
 <p>
-A component who’s origin is at (18600,19900), is selectable, not rotated, not mirrored, and the basename of the component is 7400-1.sym.
+A component who&#039;s origin is at (18600,19900), is selectable, not rotated, not mirrored, and the basename of the component is 7400-1.sym.
 </p>
 
 </div>
-<!-- SECTION "component" [21087-22091] -->
-<h3><a name="path" id="path">path</a></h3>
+<!-- EDIT725 SECTION "component" [21097-22101] -->
+<h3 class="sectionedit727"><a name="path" id="path">path</a></h3>
 <div class="level3">
 
 <p>
 Valid in: Schematic and Symbol files<br/>
- Valid since: Fileformat version 2 (release 1.5.1)<br/>
- <strong><code>type color width capstyle dashstyle dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2 numlines<br/>
+
+Valid since: Fileformat version 2 (release 1.5.1)<br/>
+
+<strong><code>type color width capstyle dashstyle dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2 numlines<br/>
 
 path data line 1<br/>
 
@@ -1138,61 +1167,62 @@ path data line 2<br/>
 
 path data line 3<br/>
 
-&hellip;<br/>
+…<br/>
 
-path data line N</code></strong> 
+path data line N</code></strong>
+
 </p>
-<table class="inline">
-	<tr>
-		<th>Field</th><th>Type/unit</th><th>Description</th>
+<div class="table sectionedit728"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Field</th><th class="col1">Type/unit</th><th class="col2">Description</th>
 	</tr>
-	<tr>
-		<td>type</td><td>char</td><td>H</td>
+	<tr class="row1">
+		<td class="col0">type</td><td class="col1">char</td><td class="col2">H</td>
 	</tr>
-	<tr>
-		<td>color</td><td>int</td><td>Color index</td>
+	<tr class="row2">
+		<td class="col0">color</td><td class="col1">int</td><td class="col2">Color index</td>
 	</tr>
-	<tr>
-		<td>width</td><td>int/mils</td><td>Width of line</td>
+	<tr class="row3">
+		<td class="col0">width</td><td class="col1">int/mils</td><td class="col2">Width of line</td>
 	</tr>
-	<tr>
-		<td>capstyle</td><td>int</td><td>Line cap style</td>
+	<tr class="row4">
+		<td class="col0">capstyle</td><td class="col1">int</td><td class="col2">Line cap style</td>
 	</tr>
-	<tr>
-		<td>dashstyle</td><td>int</td><td>Type of dash style</td>
+	<tr class="row5">
+		<td class="col0">dashstyle</td><td class="col1">int</td><td class="col2">Type of dash style</td>
 	</tr>
-	<tr>
-		<td>dashlength</td><td>int</td><td>Length of dash</td>
+	<tr class="row6">
+		<td class="col0">dashlength</td><td class="col1">int</td><td class="col2">Length of dash</td>
 	</tr>
-	<tr>
-		<td>dashspace</td><td>int</td><td>Space inbetween dashes</td>
+	<tr class="row7">
+		<td class="col0">dashspace</td><td class="col1">int</td><td class="col2">Space inbetween dashes</td>
 	</tr>
-	<tr>
-		<td>filltype</td><td>int</td><td>Type of fill</td>
+	<tr class="row8">
+		<td class="col0">filltype</td><td class="col1">int</td><td class="col2">Type of fill</td>
 	</tr>
-	<tr>
-		<td>fillwidth</td><td>int/mils</td><td>Width of the fill lines</td>
+	<tr class="row9">
+		<td class="col0">fillwidth</td><td class="col1">int/mils</td><td class="col2">Width of the fill lines</td>
 	</tr>
-	<tr>
-		<td>angle1</td><td>int/degrees</td><td>First angle of fill</td>
+	<tr class="row10">
+		<td class="col0">angle1</td><td class="col1">int/degrees</td><td class="col2">First angle of fill</td>
 	</tr>
-	<tr>
-		<td>pitch1</td><td>int/mils</td><td>First pitch/spacing of fill</td>
+	<tr class="row11">
+		<td class="col0">pitch1</td><td class="col1">int/mils</td><td class="col2">First pitch/spacing of fill</td>
 	</tr>
-	<tr>
-		<td>angle2</td><td>int/degrees</td><td>Second angle of fill</td>
+	<tr class="row12">
+		<td class="col0">angle2</td><td class="col1">int/degrees</td><td class="col2">Second angle of fill</td>
 	</tr>
-	<tr>
-		<td>pitch2</td><td>int/mils</td><td>Second pitch/spacing of fill</td>
+	<tr class="row13">
+		<td class="col0">pitch2</td><td class="col1">int/mils</td><td class="col2">Second pitch/spacing of fill</td>
 	</tr>
-	<tr>
-		<td>num_lines</td><td>int</td><td>Number of lines of path data (1 based)</td>
+	<tr class="row14">
+		<td class="col0">num_lines</td><td class="col1">int</td><td class="col2">Number of lines of path data (1 based)</td>
 	</tr>
-	<tr>
-		<td>path data line 1 &hellip; N</td><td>path data</td><td>The path data, on seperate lines</td>
+	<tr class="row15">
+		<td class="col0">path data line 1 … N</td><td class="col1">path data</td><td class="col2">The path data, on seperate lines</td>
 	</tr>
-</table>
-<ul>
+</table></div>
+<!-- EDIT728 TABLE [22412-23018] --><ul>
 <li class="level1"><div class="li"> The capstyle is an enumerated type:</div>
 <ul>
 <li class="level2"><div class="li"> END NONE = 0</div>
@@ -1260,7 +1290,9 @@ path data line N</code></strong>
 </ul>
 
 <p>
- Example: 
+
+Example:
+
 </p>
 <pre class="code">H 3 10 0 0 -1 -1 0 -1 -1 -1 -1 -1 5
 M 410,240
@@ -1274,32 +1306,34 @@ A path starting at (410,240) with lines drawn from there, and joining points (50
 </p>
 
 </div>
-<!-- SECTION "path" [22092-24942] -->
-<h3><a name="font" id="font">font</a></h3>
+<!-- EDIT727 SECTION "path" [22102-24952] -->
+<h3 class="sectionedit729"><a name="font" id="font">font</a></h3>
 <div class="level3">
 
 <p>
 Valid in: Special font files ONLY<br/>
- <strong><code>type character width flag</code></strong> 
+
+<strong><code>type character width flag</code></strong>
+
 </p>
-<table class="inline">
-	<tr>
-		<th>Field</th><th>Type/unit</th><th>Description</th>
+<div class="table sectionedit730"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Field</th><th class="col1">Type/unit</th><th class="col2">Description</th>
 	</tr>
-	<tr>
-		<td>type</td><td>char</td><td>F</td>
+	<tr class="row1">
+		<td class="col0">type</td><td class="col1">char</td><td class="col2">F</td>
 	</tr>
-	<tr>
-		<td>character</td><td>char</td><td>The character being defined</td>
+	<tr class="row2">
+		<td class="col0">character</td><td class="col1">char</td><td class="col2">The character being defined</td>
 	</tr>
-	<tr>
-		<td>width</td><td>int/mils</td><td>Width of the character (mils)</td>
+	<tr class="row3">
+		<td class="col0">width</td><td class="col1">int/mils</td><td class="col2">Width of the character (mils)</td>
 	</tr>
-	<tr>
-		<td>flag</td><td>int</td><td>Special space flag</td>
+	<tr class="row4">
+		<td class="col0">flag</td><td class="col1">int</td><td class="col2">Special space flag</td>
 	</tr>
-</table>
-<ul>
+</table></div>
+<!-- EDIT730 TABLE [25039-25204] --><ul>
 <li class="level1"><div class="li"> This is a special tag and should ONLY show up in font definition files.</div>
 </li>
 <li class="level1"><div class="li"> If the font character being defined is the space character (32) then flag should be 1, otherwise 0.</div>
@@ -1307,8 +1341,10 @@ Valid in: Special font files ONLY<br/>
 </ul>
 
 <p>
- Example:<br/>
- 
+
+Example:<br/>
+
+
 </p>
 <pre class="code">F 11 1</pre>
 
@@ -1317,102 +1353,105 @@ The above font definition is for the space character.
 </p>
 
 </div>
-<!-- SECTION "font" [24943-25464] -->
-<h2><a name="colors" id="colors">Colors</a></h2>
+<!-- EDIT729 SECTION "font" [24953-25474] -->
+<h2 class="sectionedit731"><a name="colors" id="colors">Colors</a></h2>
 <div class="level2">
 
 <p>
-In the gEDA/gaf schematic and symbol file format colors are specified via an integer index. The relationship between integer and color is based on object type. Each object type typically has one or more colors. Here is a table of color index to object type: 
-</p>
-<table class="inline">
-	<tr>
-		<th>Index</th><th>Object type</th>
-	</tr>
-	<tr>
-		<td>0</td><td>BACKGROUND_COLOR</td>
-	</tr>
-	<tr>
-		<td>1</td><td><acronym title="Personal Identification Number">PIN</acronym>_COLOR</td>
-	</tr>
-	<tr>
-		<td>2</td><td>NET_ENDPOINT_COLOR</td>
-	</tr>
-	<tr>
-		<td>3</td><td>GRAPHIC_COLOR</td>
-	</tr>
-	<tr>
-		<td>4</td><td>NET_COLOR</td>
-	</tr>
-	<tr>
-		<td>5</td><td>ATTRIBUTE_COLOR</td>
-	</tr>
-	<tr>
-		<td>6</td><td>LOGIC_BUBBLE_COLOR</td>
-	</tr>
-	<tr>
-		<td>7</td><td>DOTS_GRID_COLOR</td>
-	</tr>
-	<tr>
-		<td>8</td><td>DETACHED_ATTRIBUTE_COLOR</td>
-	</tr>
-	<tr>
-		<td>9</td><td>TEXT_COLOR</td>
-	</tr>
-	<tr>
-		<td>10</td><td>BUS_COLOR</td>
-	</tr>
-	<tr>
-		<td>11</td><td>SELECT_COLOR</td>
-	</tr>
-	<tr>
-		<td>12</td><td>BOUNDINGBOX_COLOR</td>
-	</tr>
-	<tr>
-		<td>13</td><td>ZOOM_BOX_COLOR</td>
-	</tr>
-	<tr>
-		<td>14</td><td>STROKE_COLOR</td>
-	</tr>
-	<tr>
-		<td>15</td><td>LOCK_COLOR</td>
-	</tr>
-	<tr>
-		<td>16</td><td>OUTPUT_BACKGROUND_COLOR</td>
-	</tr>
-	<tr>
-		<td>17</td><td>FREESTYLE1_COLOR</td>
-	</tr>
-	<tr>
-		<td>18</td><td>FREESTYLE2_COLOR</td>
-	</tr>
-	<tr>
-		<td>19</td><td>FREESTYLE3_COLOR</td>
-	</tr>
-	<tr>
-		<td>20</td><td>FREESTYLE4_COLOR</td>
-	</tr>
-	<tr>
-		<td>21</td><td>JUNCTION_COLOR</td>
-	</tr>
-	<tr>
-		<td>22</td><td>MESH_GRID_MAJOR_COLOR</td>
-	</tr>
-	<tr>
-		<td>23</td><td>MESH_GRID_MINOR_COLOR</td>
-	</tr>
-</table>
+In the gEDA/gaf schematic and symbol file format colors are specified via an integer index. The relationship between integer and color is based on object type. Each object type typically has one or more colors. Here is a table of color index to object type:
 
+</p>
+<div class="table sectionedit732"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Index</th><th class="col1">Object type</th>
+	</tr>
+	<tr class="row1">
+		<td class="col0">0</td><td class="col1">BACKGROUND_COLOR</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">1</td><td class="col1"><acronym title="Personal Identification Number">PIN</acronym>_COLOR</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">2</td><td class="col1">NET_ENDPOINT_COLOR</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">3</td><td class="col1">GRAPHIC_COLOR</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">4</td><td class="col1">NET_COLOR</td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">5</td><td class="col1">ATTRIBUTE_COLOR</td>
+	</tr>
+	<tr class="row7">
+		<td class="col0">6</td><td class="col1">LOGIC_BUBBLE_COLOR</td>
+	</tr>
+	<tr class="row8">
+		<td class="col0">7</td><td class="col1">DOTS_GRID_COLOR</td>
+	</tr>
+	<tr class="row9">
+		<td class="col0">8</td><td class="col1">DETACHED_ATTRIBUTE_COLOR</td>
+	</tr>
+	<tr class="row10">
+		<td class="col0">9</td><td class="col1">TEXT_COLOR</td>
+	</tr>
+	<tr class="row11">
+		<td class="col0">10</td><td class="col1">BUS_COLOR</td>
+	</tr>
+	<tr class="row12">
+		<td class="col0">11</td><td class="col1">SELECT_COLOR</td>
+	</tr>
+	<tr class="row13">
+		<td class="col0">12</td><td class="col1">BOUNDINGBOX_COLOR</td>
+	</tr>
+	<tr class="row14">
+		<td class="col0">13</td><td class="col1">ZOOM_BOX_COLOR</td>
+	</tr>
+	<tr class="row15">
+		<td class="col0">14</td><td class="col1">STROKE_COLOR</td>
+	</tr>
+	<tr class="row16">
+		<td class="col0">15</td><td class="col1">LOCK_COLOR</td>
+	</tr>
+	<tr class="row17">
+		<td class="col0">16</td><td class="col1">OUTPUT_BACKGROUND_COLOR</td>
+	</tr>
+	<tr class="row18">
+		<td class="col0">17</td><td class="col1">FREESTYLE1_COLOR</td>
+	</tr>
+	<tr class="row19">
+		<td class="col0">18</td><td class="col1">FREESTYLE2_COLOR</td>
+	</tr>
+	<tr class="row20">
+		<td class="col0">19</td><td class="col1">FREESTYLE3_COLOR</td>
+	</tr>
+	<tr class="row21">
+		<td class="col0">20</td><td class="col1">FREESTYLE4_COLOR</td>
+	</tr>
+	<tr class="row22">
+		<td class="col0">21</td><td class="col1">JUNCTION_COLOR</td>
+	</tr>
+	<tr class="row23">
+		<td class="col0">22</td><td class="col1">MESH_GRID_MAJOR_COLOR</td>
+	</tr>
+	<tr class="row24">
+		<td class="col0">23</td><td class="col1">MESH_GRID_MINOR_COLOR</td>
+	</tr>
+</table></div>
+<!-- EDIT732 TABLE [25753-26270] -->
 <p>
- The actual color associated with the color index is defined on a per tool bases. Objects are typically assigned their corresponding color index, but it is permissible (sometimes) to assign other color index values to different object types.
+
+The actual color associated with the color index is defined on a per tool bases. Objects are typically assigned their corresponding color index, but it is permissible (sometimes) to assign other color index values to different object types.
 </p>
 
 </div>
-<!-- SECTION "Colors" [25465-26503] -->
-<h2><a name="attributes" id="attributes">Attributes</a></h2>
+<!-- EDIT731 SECTION "Colors" [25475-26513] -->
+<h2 class="sectionedit733"><a name="attributes" id="attributes">Attributes</a></h2>
 <div class="level2">
 
 <p>
-Attributes are enclosed in braces {} and can only be text. Attributes are text items which take on the form name=value. If it doesn’t have name=value, it’s not an attribute. Attributes are attached to the previous object. Here’s an example: 
+Attributes are enclosed in braces {} and can only be text. Attributes are text items which take on the form name=value. If it doesn&#039;t have name=value, it&#039;s not an attribute. Attributes are attached to the previous object. Here&#039;s an example:
+
 </p>
 <pre class="code">P 988 500 1300 500 1
 {
@@ -1423,18 +1462,21 @@ pinnumber=3
 }</pre>
 
 <p>
-The object is a pin which has an attribute pinnumber=3 and pinseq=3 (name=value). You can have multiple text objects (both the T &hellip; and text string are required) in between the braces {}. As of 20021103, you can only attached text items as attributes. Attaching other object types as attributes is unsupported.<br/>
- You can also have “toplevel” attributes. These attributes are not attached to any object, but instead are just text objects that take on the form name=value.<br/>
- These attributes are useful when you need to convey some info about a schematic page or symbol and need the netlister to have access to this info.
+The object is a pin which has an attribute pinnumber=3 and pinseq=3 (name=value). You can have multiple text objects (both the T … and text string are required) in between the braces {}. As of 20021103, you can only attached text items as attributes. Attaching other object types as attributes is unsupported.<br/>
+
+You can also have “toplevel” attributes. These attributes are not attached to any object, but instead are just text objects that take on the form name=value.<br/>
+
+These attributes are useful when you need to convey some info about a schematic page or symbol and need the netlister to have access to this info.
 </p>
 
 </div>
-<!-- SECTION "Attributes" [26504-27491] -->
-<h2><a name="embedded_components" id="embedded_components">Embedded Components</a></h2>
+<!-- EDIT733 SECTION "Attributes" [26514-27501] -->
+<h2 class="sectionedit734"><a name="embedded_components" id="embedded_components">Embedded Components</a></h2>
 <div class="level2">
 
 <p>
-Embedded components are components which have all of their definition stored within the schematic file. When a users place a component onto a schematic page, they have the option of making the component embedded. Other than storing all the symbol information inside of the schematic, an embedded component is just any other component. Embedded components are defined as: 
+Embedded components are components which have all of their definition stored within the schematic file. When a users place a component onto a schematic page, they have the option of making the component embedded. Other than storing all the symbol information inside of the schematic, an embedded component is just any other component. Embedded components are defined as:
+
 </p>
 <pre class="code">C 18600 21500 1 0 0 EMBEDDED555-1.sym
 [
@@ -1448,12 +1490,13 @@ In the example above, <strong>555-1.sym</strong> is the component. The EMBEDDED 
 </p>
 
 </div>
-<!-- SECTION "Embedded Components" [27492-28256] -->
-<h2><a name="path_data" id="path_data">Path data</a></h2>
+<!-- EDIT734 SECTION "Embedded Components" [27502-28266] -->
+<h2 class="sectionedit735"><a name="path_data" id="path_data">Path data</a></h2>
 <div class="level2">
 
 <p>
-The gEDA/gaf path data format has been deliberately specified to match a subset of <a href="http://www.w3.org/TR/SVG/paths.html" class="urlextern" title="http://www.w3.org/TR/SVG/paths.html"  rel="nofollow">that in the W3C SVG standard.</a>. 
+The gEDA/gaf path data format has been deliberately specified to match a subset of <a href="http://www.w3.org/TR/SVG/paths.html" class="urlextern" title="http://www.w3.org/TR/SVG/paths.html"  rel="nofollow">that in the W3C SVG standard.</a>.
+
 </p>
 <ul>
 <li class="level1"><div class="li"> As an implementation detail; libgeda takes code from librsvg, an <acronym title="Scalable Vector Graphics">SVG</acronym> parsing library. As a result, the majority of <acronym title="Scalable Vector Graphics">SVG</acronym> path syntax is read correctly, however this is always normalised to absolute move, line, bezier curve and close-path commands internally (and is saved as such).</div>
@@ -1468,7 +1511,8 @@ The gEDA/gaf path data format has been deliberately specified to match a subset 
 </ul>
 
 <p>
-(Text taken from the above <acronym title="Scalable Vector Graphics">SVG</acronym> specification). 
+(Text taken from the above <acronym title="Scalable Vector Graphics">SVG</acronym> specification).
+
 </p>
 <ul>
 <li class="level1"><div class="li"> In the table below, the following notation is used:</div>
@@ -1480,38 +1524,39 @@ The gEDA/gaf path data format has been deliberately specified to match a subset 
 </ul>
 </li>
 </ul>
-<table class="inline">
-	<tr>
-		<th>Command</th><th>Name</th><th>Parameters</th><th>Description</th>
+<div class="table sectionedit736"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Command</th><th class="col1">Name</th><th class="col2">Parameters</th><th class="col3">Description</th>
 	</tr>
-	<tr>
-		<td>M (absolute)</td><td>moveto</td><td>(x,y)+</td><td>Start a new sub-path at the given (x,y) coordinate. M (uppercase) indicates that absolute coordinates will follow; m (lowercase) indicates that relative coordinates will follow. If a relative moveto (m) appears as the first element of the path, then it is treated as a pair of absolute coordinates. If a moveto is followed by multiple pairs of coordinates, the subsequent pairs are treated as implicit lineto commands.</td>
+	<tr class="row1">
+		<td class="col0">M (absolute)</td><td class="col1">moveto</td><td class="col2">(x,y)+</td><td class="col3">Start a new sub-path at the given (x,y) coordinate. M (uppercase) indicates that absolute coordinates will follow; m (lowercase) indicates that relative coordinates will follow. If a relative moveto (m) appears as the first element of the path, then it is treated as a pair of absolute coordinates. If a moveto is followed by multiple pairs of coordinates, the subsequent pairs are treated as implicit lineto commands.</td>
 	</tr>
-	<tr>
-		<td>L (absolute)</td><td>lineto</td><td>(x,y)+</td><td>Draw a line from the current point to the given (x,y) coordinate which becomes the new current point. L (uppercase) indicates that absolute coordinates will follow; l (lowercase) indicates that relative coordinates will follow. A number of coordinates pairs may be specified to draw a polyline. At the end of the command, the new current point is set to the final set of coordinates provided.</td>
+	<tr class="row2">
+		<td class="col0">L (absolute)</td><td class="col1">lineto</td><td class="col2">(x,y)+</td><td class="col3">Draw a line from the current point to the given (x,y) coordinate which becomes the new current point. L (uppercase) indicates that absolute coordinates will follow; l (lowercase) indicates that relative coordinates will follow. A number of coordinates pairs may be specified to draw a polyline. At the end of the command, the new current point is set to the final set of coordinates provided.</td>
 	</tr>
-	<tr>
-		<td>C (absolute)</td><td>curveto</td><td>(x1,y1 x2,y2 x,y)+</td><td>Draws a cubic Bézier curve from the current point to (x,y) using (x1,y1) as the control point at the beginning of the curve and (x2,y2) as the control point at the end of the curve. C (uppercase) indicates that absolute coordinates will follow; c (lowercase) indicates that relative coordinates will follow. Multiple sets of coordinates may be specified to draw a polybézier. At the end of the command, the new current point becomes the final (x,y) coordinate pair used in the polybézier.</td>
+	<tr class="row3">
+		<td class="col0">C (absolute)</td><td class="col1">curveto</td><td class="col2">(x1,y1 x2,y2 x,y)+</td><td class="col3">Draws a cubic Bézier curve from the current point to (x,y) using (x1,y1) as the control point at the beginning of the curve and (x2,y2) as the control point at the end of the curve. C (uppercase) indicates that absolute coordinates will follow; c (lowercase) indicates that relative coordinates will follow. Multiple sets of coordinates may be specified to draw a polybézier. At the end of the command, the new current point becomes the final (x,y) coordinate pair used in the polybézier.</td>
 	</tr>
-	<tr>
-		<td>Z or z</td><td>closepath</td><td>(none)</td><td>Close the current subpath by drawing a straight line from the current point to current subpath’s initial point.</td>
+	<tr class="row4">
+		<td class="col0">Z or z</td><td class="col1">closepath</td><td class="col2">(none)</td><td class="col3">Close the current subpath by drawing a straight line from the current point to current subpath&#039;s initial point.</td>
 	</tr>
-</table>
-<ul>
-<li class="level1"><div class="li"> gEDA’s output currently emits only the absolute coordinate versions of the above commands.</div>
+</table></div>
+<!-- EDIT736 TABLE [29114-30693] --><ul>
+<li class="level1"><div class="li"> gEDA&#039;s output currently emits only the absolute coordinate versions of the above commands.</div>
 </li>
-<li class="level1"><div class="li"> gEDA’s output currently emits the commands, M, L, C before every set of coordinates, even where they could be omited according to the <acronym title="Scalable Vector Graphics">SVG</acronym> specification.</div>
+<li class="level1"><div class="li"> gEDA&#039;s output currently emits the commands, M, L, C before every set of coordinates, even where they could be omited according to the <acronym title="Scalable Vector Graphics">SVG</acronym> specification.</div>
 </li>
-<li class="level1"><div class="li"> gEDA’s output places commas between x,y coordinates. These may be replaced with whitespace according to the <acronym title="Scalable Vector Graphics">SVG</acronym> specification.</div>
+<li class="level1"><div class="li"> gEDA&#039;s output places commas between x,y coordinates. These may be replaced with whitespace according to the <acronym title="Scalable Vector Graphics">SVG</acronym> specification.</div>
 </li>
-<li class="level1"><div class="li"> gEDA’s does not currently support more than one sub-path.</div>
+<li class="level1"><div class="li"> gEDA&#039;s does not currently support more than one sub-path.</div>
 </li>
 <li class="level1"><div class="li"> gEDA currently emits one path data line per command + coordinate set.</div>
 </li>
 </ul>
 
 <p>
- As example, lets draw the outline of an AND gate. The path data is:
+
+As example, lets draw the outline of an AND gate. The path data is:
 </p>
 <pre class="code">M 100,100 L 500,100 C 700,100 800,275 800,400
 C 800,525 700,700 500,700 L 100,700 z</pre>
@@ -1537,27 +1582,27 @@ The resulting path (with control points drawn on to illustrate their positions) 
 </p>
 
 </div>
-<!-- SECTION "Path data" [28257-31685] -->
-<h2><a name="document_revision_history" id="document_revision_history">Document Revision History</a></h2>
+<!-- EDIT735 SECTION "Path data" [28267-31695] -->
+<h2 class="sectionedit737"><a name="document_revision_history" id="document_revision_history">Document Revision History</a></h2>
 <div class="level2">
-<table class="inline">
-	<tr>
-		<td>November 30th, 2002</td><td>Created fleformats.tex from fleformats.html.</td>
+<div class="table sectionedit738"><table class="inline">
+	<tr class="row0">
+		<td class="col0">November 30th, 2002</td><td class="col1">Created fleformats.tex from fleformats.html.</td>
 	</tr>
-	<tr>
-		<td>December 1st, 2002</td><td>Continued work on this document.</td>
+	<tr class="row1">
+		<td class="col0">December 1st, 2002</td><td class="col1">Continued work on this document.</td>
 	</tr>
-	<tr>
-		<td>October 4th, 2003</td><td>Added new file format version flag info.</td>
+	<tr class="row2">
+		<td class="col0">October 4th, 2003</td><td class="col1">Added new file format version flag info.</td>
 	</tr>
-	<tr>
-		<td>October 19th, 2003</td><td>Added num lines text field.</td>
+	<tr class="row3">
+		<td class="col0">October 19th, 2003</td><td class="col1">Added num lines text field.</td>
 	</tr>
-	<tr>
-		<td>November 2nd, 2008</td><td>Added path object, bumping file format version to 2</td>
+	<tr class="row4">
+		<td class="col0">November 2nd, 2008</td><td class="col1">Added path object, bumping file format version to 2</td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT738 TABLE [31734-32037] -->
 </div>
-<!-- SECTION "Document Revision History" [31686-] --></body>
+<!-- EDIT737 SECTION "Document Revision History" [31696-] --></body>
 </html>

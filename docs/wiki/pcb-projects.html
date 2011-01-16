@@ -12,10 +12,105 @@
 <body>
 
 
-
-
-<h3><a name="pcb_layout_editor" id="pcb_layout_editor">PCB Layout Editor</a></h3>
+<h3 class="sectionedit1581"><a name="pcb_layout_editor" id="pcb_layout_editor">PCB Layout Editor</a></h3>
 <div class="level3">
+
+</div>
+
+<h5><a name="plow_feature" id="plow_feature">Plow feature</a></h5>
+<div class="level5">
+
+<p>
+
+A “plow” feature where the line tool shoves existing traces aside
+preserving the design rules when possible.  
+</p>
+
+<p>
+Difficulty = 4-5
+</p>
+
+</div>
+
+<h5><a name="fast_snap_rounding_algorithm" id="fast_snap_rounding_algorithm">Fast snap rounding Algorithm</a></h5>
+<div class="level5">
+
+<p>
+
+Implement a fast snap rounding algorithm and resolve the case where
+inserted point cause self-intersection. 
+</p>
+
+<p>
+PCB uses an integer coordinate system for all of its objects. The polygon
+clipping code computes all points of intersection between two
+non-self-intersecting contours, (among many other things it does) but these
+points of intersection must also have integer coordinates.
+</p>
+
+<p>
+A snap-rounding algorithm replaces two segments that intersect at other than
+their end points with four segments where each has an end point on an
+integer coordinate near the original (non-integer) intersection. Because
+this rounding operation on the point of intersection can change the slopes
+of the four segments compare to that of the original two, it raises the
+possibility that new intersections between the replacement segments and
+other segments of the contours occur that did not exist with the original
+segments. The snap rounding algorithm needs to produce a collection of
+segments where all intersections occur at segment end points having integer
+coordinates. The existing code in pcb does this already, but it uses a
+theoretically slow algorithm, compared to others that are known, such as:
+</p>
+
+<p>
+ “Improved output-sensitive snap rounding,” John Hershberger, Proceedings of
+the 22nd annual symposium on Computational geomerty, 2006, pp 357-366.
+ <a href="http://doi.acm.org/10.1145/1137856.1137909" class="urlextern" title="http://doi.acm.org/10.1145/1137856.1137909"  rel="nofollow">http://doi.acm.org/10.1145/1137856.1137909</a>
+</p>
+
+<p>
+Algorithms described by de Berg, or Goodrich or Halperin, or Hobby would
+probably also be better than what we currently have implemented.
+</p>
+
+<p>
+In addition, there are rare-but-real degenerate situations where the snap
+rounding results in one (or both) contourss having a self-intersection that
+did not exist before. This self-intersection is fatal to our polygon
+clipping core. We do not know if the snap rounding algorithms in the
+literature deal with this issue or not, but if they do not, we need to
+develop a variant algorithm that does, whether done by judicious choice of
+the rounding points that are created, or a post-processing step that
+eliminates the self-intersection with minimal geometric distortion to the
+original contours.
+</p>
+
+<p>
+Difficulty = 4-5
+</p>
+
+</div>
+
+<h5><a name="auto-routed_drawing_tool" id="auto-routed_drawing_tool">Auto-routed drawing tool</a></h5>
+<div class="level5">
+
+<p>
+
+Basically with this tool, you would click on a starting point, then drag the
+crosshair to some other (typically intermediate point), possibly on another
+layer and an auto-routing tool would show a prospective path to that point
+(meeting design rules and style requirements). If you didn&#039;t like the
+offered path, you could hit a key to see a more expensive candidate, or a
+different key to (back up) to a less expensive candidate. The prospective
+route would dynamically change to reach the crosshair end-point as the
+crosshair is moved. It would disappear if no path could be found. Clicking
+would place the prospective path as copper and anchor a new starting point
+for the tool (much like the line tool does now).
+</p>
+
+<p>
+Difficulty = 5
+</p>
 
 </div>
 
@@ -23,7 +118,8 @@
 <div class="level5">
 
 <p>
- Build a footprint calculator that can take the IPC rules and produce a pcb footprint. Preferably write this in a way where the core program is independent of a gui so that you can script it for generating entire large families of footprints or hook it up to a <acronym title="Graphical User Interface">GUI</acronym> of choice (lesstif, gtk, maybe even cgi). Would require the purchase of IPC-7351 (approximately U.S.A. $100)and verifying that one is allowed to produce such a calculator.
+
+Build a footprint calculator that can take the IPC rules and produce a pcb footprint. Preferably write this in a way where the core program is independent of a gui so that you can script it for generating entire large families of footprints or hook it up to a <acronym title="Graphical User Interface">GUI</acronym> of choice (lesstif, gtk, maybe even cgi). Would require the purchase of IPC-7351 (approximately U.S.A. $100)and verifying that one is allowed to produce such a calculator.
 </p>
 
 <p>
@@ -36,7 +132,8 @@ Difficulty = 2
 <div class="level5">
 
 <p>
- IPC-D-356 is a specification for a netlist output format used for manufacturing test of PCBs.  It specifies both connectivity as well as pad position information, thereby facilitating the use of automated testing after PCB manufacture.  In this project, you would implement an exporter which would write an IPC-D-356 compliant file from within PCB.  The IPC-D-356 <acronym title="specification">spec</acronym> is available at: <a href="http://www.solidigm.com/downloads/ipc356.pdf" class="urlextern" title="http://www.solidigm.com/downloads/ipc356.pdf"  rel="nofollow">http://www.solidigm.com/downloads/ipc356.pdf</a>
+
+IPC-D-356 is a specification for a netlist output format used for manufacturing test of PCBs.  It specifies both connectivity as well as pad position information, thereby facilitating the use of automated testing after PCB manufacture.  In this project, you would implement an exporter which would write an IPC-D-356 compliant file from within PCB.  The IPC-D-356 <acronym title="specification">spec</acronym> is available at: <a href="http://www.solidigm.com/downloads/ipc356.pdf" class="urlextern" title="http://www.solidigm.com/downloads/ipc356.pdf"  rel="nofollow">http://www.solidigm.com/downloads/ipc356.pdf</a>
 </p>
 
 <p>
@@ -49,20 +146,8 @@ Difficulty = 3
 <div class="level5">
 
 <p>
- Presently pcb does not present a list of recently loaded files in the file menu. It would be nice if pcb kept track of the last few files a user loaded. This is a common feature found in other programs.
-</p>
 
-<p>
-Difficulty = 1
-</p>
-
-</div>
-
-<h5><a name="remember_dialog_size_and_positions" id="remember_dialog_size_and_positions">Remember dialog size and positions</a></h5>
-<div class="level5">
-
-<p>
- pcb dialogs should remember their size and position. Some of pcb’s dialogs remember their size, but this isn’t universal. Several users have complained since they have to reposition and/or resize the dialog boxes every time they are opened.
+Presently pcb does not present a list of recently loaded files in the file menu. It would be nice if pcb kept track of the last few files a user loaded. This is a common feature found in other programs.
 </p>
 
 <p>

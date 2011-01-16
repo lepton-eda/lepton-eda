@@ -5,7 +5,7 @@ docsdir = $(docdir)/$(docname)/media/tragesym
 
 SUBDIRS = tragesym 
 
-docs_DATA = kpdf_pinconfiguration.png ooo_changedpins.png xemacs_modifiedselection.png gschem_showhidden.png ooo_attributes.png template.ods ooo_rearanged.png xemacs_rawselection.png kpdf_pindescription.png acroread_selectiontable.png template.txt template2.ods template2.txt.src gschem_finished.png ooo_selection.png 
+docs_DATA = gschem_finished.png ooo_rearanged.png kpdf_pindescription.png acroread_selectiontable.png xemacs_rawselection.png gschem_showhidden.png template.txt kpdf_pinconfiguration.png template2.ods template.ods ooo_attributes.png ooo_selection.png xemacs_modifiedselection.png ooo_changedpins.png template2.txt.src 
 
 EXTRA_DIST = $(docs_DATA)
 

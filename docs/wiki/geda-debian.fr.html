@@ -12,16 +12,15 @@
 <body>
 
 
-
-
-<h1><a name="notes_d_installation_debian_de_la_version_20060825" id="notes_d_installation_debian_de_la_version_20060825">Notes d&#039;installation Debian de la version 20060825</a></h1>
+<h1 class="sectionedit131"><a name="notes_d_installation_debian_de_la_version_20060825" id="notes_d_installation_debian_de_la_version_20060825">Notes d&#039;installation Debian de la version 20060825</a></h1>
 <div class="level1">
 
 <p>
- Voici un rapport d’utilisateur qui fournit quelques éléments aux personnes installant avec le CDROM 20060825 sur une Debian. Notez que l’utilisateur avec pré-ajouté les paquets -dev sur son système au lieu de laisser l’installateur les trouver. C’est une manière parfaitement acceptable &ndash; et souvent préférable &ndash; de traiter les dépendances de gEDA.
+
+Voici un rapport d&#039;utilisateur qui fournit quelques éléments aux personnes installant avec le CDROM 20060825 sur une Debian.
+Notez que l&#039;utilisateur avec pré-ajouté les paquets -dev sur son système au lieu de laisser l&#039;installateur les trouver. C&#039;est une manière parfaitement acceptable – et souvent préférable – de traiter les dépendances de gEDA.
 </p>
-<pre class="code">
-Just completed an install on my main desktop box which is Debian
+<pre class="code">Just completed an install on my main desktop box which is Debian
 etch/testing with patches of sid/unstable.
 
 Lib packages I had to add to my system:
@@ -38,8 +37,7 @@ On my system /usr/lib/libqthreads.so pointed to a non existing
 rules. Thus the installer failed with:
         gcc: /usr/lib/libqthreads.so: No such file or directory make[2]:*** [libgeda.la] Error 1
 I resolved the issue by faking a link:
-        sudo ln -s libqthreads.so.12.3.0 libqthreads.so.12.3.1
-</pre>
+        sudo ln -s libqthreads.so.12.3.0 libqthreads.so.12.3.1</pre>
 
 </div>
 </body>

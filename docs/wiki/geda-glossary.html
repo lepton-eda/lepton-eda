@@ -12,30 +12,37 @@
 <body>
 
 
-
-
-<h1><a name="glossary_of_geda_and_eda_terms" id="glossary_of_geda_and_eda_terms">Glossary of gEDA (and EDA) terms</a></h1>
+<h1 class="sectionedit842"><a name="glossary_of_geda_and_eda_terms" id="glossary_of_geda_and_eda_terms">Glossary of gEDA (and EDA) terms</a></h1>
 <div class="level1">
 
 <p>
- The design of electronics involves a host of specific terms. Some words have a meaning that only vaguely resembles the use in everyday life. This glossary aims to be a dictionary of terms specific to the gEDA suite, as well as to the larger world of CAD for electronics. Unfortunately, there is no universal naming scheme for concepts in the area of electronic design. The glossary will give hints on how things are called in other design suites.
+
+The design of electronics involves a host of specific terms. Some words have a meaning that only vaguely resembles the use in everyday life. This glossary aims to be a dictionary of terms specific to the gEDA suite, as well as to the larger world of CAD for electronics. Unfortunately, there is no universal naming scheme for concepts in the area of electronic design. The glossary will give hints on how things are called in other design suites.
 </p>
 
 <p>
 <span class="hilited">(Wiki-authors: Please insert new terms according to the alphabet)</span>
 </p>
 <ul>
+<li class="level1"><div class="li"> <strong>action</strong>: In pcb, an action is an internal command. Actions can be triggered via the <acronym title="Graphical User Interface">GUI</acronym> or via the command line interface. A sequence of assembled in a file can be executed on start-up of the application.</div>
+</li>
 <li class="level1"><div class="li"> <strong>annular ring</strong>: The annular ring, sometimes also called <strong>annulus</strong>, is a diameter of copper that needs to be placed arround metalized holes like pads and vias. The minimum size of the annular ring is specified by the pcb-fab. A common requirements is 16 mil larger than the hole.</div>
 </li>
 <li class="level1"><div class="li"> <strong>dead copper</strong>: A part of the copper layer which is not connected to any net defined in the netlist. By definition, this may be any object pcb defines. However, the term commonly refers to unconnected snippets of a polygon which is divided by a track. </div>
 </li>
 <li class="level1"><div class="li"> <strong>design flow</strong>: The order or stages through which you take your design as you progress from initial concept, through schematic capture, attribute attachment, netlisting, and layout. The gEDA Suite uses entirely separate programs for different stages of the flow; each tool in the suite reads the output file produced by the previous tool, and writes a file to be read by the next tool in the flow. The gEDA design flow for designing a PCB is illustrated <a href="http://geda.seul.org/wiki/geda:usage#what_does_the_design_flow_in_geda_look_like" class="urlextern" title="http://geda.seul.org/wiki/geda:usage#what_does_the_design_flow_in_geda_look_like"  rel="nofollow">here</a>. Note that the design flow for different tasks might look different. For example, if your goal is to simulate your circuit, you will use a different flow than that shown in the link above.</div>
 </li>
+<li class="level1"><div class="li"> <strong>flag</strong>: Objects can contain a number of flags. These indicate specific properties of the object. Examples are the <code>square</code> flag for angular pads, or the <code>onsolder</code> flag for objects on the other side of the board.  </div>
+</li>
 <li class="level1"><div class="li"> <strong>footprint</strong>: The pattern of metal and silkscreen which defines where you place a component on a PCB. Footprints are the placed by the user onto the PC board during the “placement” phase of PCB layout (using e.g. the open-source tool PCB). A footprint is also sometimes called called a “decal” (PADS), or a “land-pattern”.</div>
+</li>
+<li class="level1"><div class="li"> <strong>gedasymbols.org</strong>: A website dedicated to present symbols, footprints, scripts, plug-ins and other stuff users contributed to the geda project. Contributions can be accessed by mouse click. The whole site can be downloaded via concurrent versions system (<a href="http://en.wikipedia.org/wiki/Concurrent_Versions_System" class="urlextern" title="http://en.wikipedia.org/wiki/Concurrent_Versions_System"  rel="nofollow">CVS</a>). This also the way users maintain their page on the site. See, <a href="http://gedasymbols.org" class="urlextern" title="http://gedasymbols.org"  rel="nofollow">http://gedasymbols.org</a>.</div>
+</li>
+<li class="level1"><div class="li"> <strong>gerbers</strong>: A set of files sent to a fab representing the geometry of tracks, silk, solder mask and the outline of the board. Because each layer is represented by a separate file, it is customary to bundle them in a zip file. The offical name of the file format is “Gerber 247X”. See <a href="http://www.artwork.com/gerber/appl2.htm" class="urlextern" title="http://www.artwork.com/gerber/appl2.htm"  rel="nofollow">this web page</a> for a cursory description of the format and <a href="http://www.artwork.com/gerber/appl2.htm" class="urlextern" title="http://www.artwork.com/gerber/appl2.htm"  rel="nofollow">this PDF</a> for a comprehensive specification.</div>
 </li>
 <li class="level1"><div class="li"> <strong>GTK-HID</strong>: The GTK version of the pcb user interface. “HID” is an acronym for “human interface device”. As the name sugests, GTK-HID uses the GTK+ widgetset and tries to comply with GTK usability standards.This is the default <acronym title="Graphical User Interface">GUI</acronym> of pcb. Menu and keyboard configuration is read from gpcb-menu.res. (See Lesstif-HID for an alternative)</div>
 </li>
-<li class="level1"><div class="li"> <strong>Lesstif-HID</strong>: The Lesstif version of the pcb user interface.  It uses the Lesstif widgetset, which is the open source version of Motif. Menu and keyboard configuration read from <code>pcb-menu.res</code> try to comply with Lesstif usability standards. If you want to give this interface a try, you have to give the option <code>&ndash;with-gui=lesstif</code> at compile time.</div>
+<li class="level1"><div class="li"> <strong>Lesstif-HID</strong>: The Lesstif version of the pcb user interface.  It uses the Lesstif widgetset, which is the open source version of Motif. Menu and keyboard configuration read from <code>pcb-menu.res</code> try to comply with Lesstif usability standards. If you want to give this interface a try, you have to give the option <code>–with-gui=lesstif</code> at compile time.</div>
 </li>
 <li class="level1"><div class="li"> <strong>net</strong>: A net is the representation of a wire, or electrical connection in your schematic diagram. It is basically a line connecting two symbol pins. The term “net” is also sometimes used loosely to talk about an electrical connection (via a wire or PCB trace) in a real circuit. Some schematic capture tools call a net a “wire”.</div>
 </li>
@@ -49,7 +56,7 @@
 <ol>
 <li class="level2"><div class="li"> An abbreviation of “printed circuit board”. This is the actual hardware that is used to connect electronic components. It is also sometimes called a “printed wiring board” (PWB), although this usage may be dying out.</div>
 </li>
-<li class="level2"><div class="li"> A powerful, open-source tool used to design the layout of a printed circuit board. The output of the gaf tools can be used as an input to pcb.(<a href="http://pcb.sourceforge.net/index.html" class="urlextern" title="http://pcb.sourceforge.net/index.html"  rel="nofollow">homepage of pcb</a>)</div>
+<li class="level2"><div class="li"> A powerful, open-source tool used to design the layout of a printed circuit board. The output of the gaf tools can be used as an input to pcb.(<a href="http://pcb.gpleda.org" class="urlextern" title="http://pcb.gpleda.org"  rel="nofollow">home page of pcb</a>)</div>
 </li>
 </ol>
 </li>
@@ -67,9 +74,9 @@
 </li>
 <li class="level1"><div class="li"> <strong>component layer</strong>: This is the side of the board where traditional, thru hole components sit, Usually the top side of the board. (Protel: “Top Layer”)</div>
 </li>
-<li class="level1"><div class="li"> <strong>thermal</strong>, short for <a href="http://en.wikipedia.org/wiki/Thermal_relief_pad" class="urlextern" title="http://en.wikipedia.org/wiki/Thermal_relief_pad"  rel="nofollow"> thermal relief pad</a>: A thermal is a way to connect a via with a copper plane through narrow bridges. The aim is to connect electrically, but provide enough thermal resistance to allow for convenient soldering. There is a special mode in pcb to convert the annular ring of vias into thermals. (However, vias never need thermals, since they are never soldered &ndash; only thru-holes need vias).</div>
+<li class="level1"><div class="li"> <strong>thermal</strong>, short for <a href="http://en.wikipedia.org/wiki/Thermal_relief_pad" class="urlextern" title="http://en.wikipedia.org/wiki/Thermal_relief_pad"  rel="nofollow"> thermal relief pad</a>: A thermal is a way to connect a via with a copper plane through narrow bridges. The aim is to connect electrically, but provide enough thermal resistance to allow for convenient soldering. There is a special mode in pcb to convert the annular ring of vias into thermals. (However, vias never need thermals, since they are never soldered – only thru-holes need vias).</div>
 </li>
-<li class="level1"><div class="li"> <strong>via</strong>: A via is a metalized hole that is meant to electrically connect different layers of the pcb. Usually, vias are as small as possible to save valuable real estate on the pcb. A via is made the same way as a thru-hole, but since no pin will be pushed through, it’s OK for the metal to completely fill the hole (“filled”) and for the solder mask to completely cover the hole (“tented”).</div>
+<li class="level1"><div class="li"> <strong>via</strong>: A via is a metalized hole that is meant to electrically connect different layers of the pcb. Usually, vias are as small as possible to save valuable real estate on the pcb. A via is made the same way as a thru-hole, but since no pin will be pushed through, it&#039;s OK for the metal to completely fill the hole (“filled”) and for the solder mask to completely cover the hole (“tented”).</div>
 </li>
 </ul>
 

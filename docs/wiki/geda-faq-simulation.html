@@ -11,32 +11,13 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#simulation" class="toc">Simulation</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#i_want_to_simulate_my_analog_circuit_design._what_are_my_options" class="toc">I want to simulate my analog circuit design. What are my options?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#what_about_tclspice_what_is_it_should_i_use_it" class="toc">What about tclspice? What is it? Should I use it?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#isn_t_there_a_nice_graphical_schematic_capture_front_end_so_i_can_just_place_components_and_press_a_simulate_button" class="toc">Isn&#039;t there a nice graphical (schematic capture) front end so I can just place components and press a &quot;simulate&quot; button?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#how_do_i_create_my_schematic_to_facilitate_analog_simulation" class="toc">How do I create my schematic to facilitate analog simulation?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#which_spice_netlister_backend_to_gnetlist_should_i_use_there_are_several_of_them" class="toc">Which spice netlister backend to gnetlist should I use? There are several of them. . . .</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#how_about_if_i_want_to_use_gnucap_can_i_use_spice-sdb_to_create_my_gnucap_netlists" class="toc">How about if I want to use gnucap, can I use spice-sdb to create my gnucap netlists?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#why_not_reuse_my_simulation_schematic_for_layout" class="toc">Why not reuse my simulation schematic for layout?</a></span></div></li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="simulation" id="simulation">Simulation</a></h1>
+<h1 class="sectionedit442"><a name="simulation" id="simulation">Simulation</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Simulation" [1-26] -->
-<h2><a name="i_want_to_simulate_my_analog_circuit_design._what_are_my_options" id="i_want_to_simulate_my_analog_circuit_design._what_are_my_options">I want to simulate my analog circuit design. What are my options?</a></h2>
+<!-- EDIT442 SECTION "Simulation" [1-26] -->
+<h2 class="sectionedit443"><a name="i_want_to_simulate_my_analog_circuit_design_what_are_my_options" id="i_want_to_simulate_my_analog_circuit_design_what_are_my_options">I want to simulate my analog circuit design. What are my options?</a></h2>
 <div class="level2">
 
 <p>
@@ -50,7 +31,8 @@ Within the cannonical gEDA Suite apps there are two analog circuit simulators: n
 </ul>
 
 <p>
- Both are CLI (command line interface) programs, meaning that you intereact with the simulator by typing commands at a command line. It also means that you need to learn the simulator-specific command set.
+
+Both are CLI (command line interface) programs, meaning that you intereact with the simulator by typing commands at a command line. It also means that you need to learn the simulator-specific command set.
 </p>
 
 <p>
@@ -58,8 +40,8 @@ If you prefer a graphical interface, the new gEDA app GSpiceUI provides a nice <
 </p>
 
 </div>
-<!-- SECTION "I want to simulate my analog circuit design. What are my options?" [27-1384] -->
-<h2><a name="what_about_tclspice_what_is_it_should_i_use_it" id="what_about_tclspice_what_is_it_should_i_use_it">What about tclspice? What is it? Should I use it?</a></h2>
+<!-- EDIT443 SECTION "I want to simulate my analog circuit design. What are my options?" [27-1384] -->
+<h2 class="sectionedit444"><a name="what_about_tclspice_what_is_it_should_i_use_it" id="what_about_tclspice_what_is_it_should_i_use_it">What about tclspice? What is it? Should I use it?</a></h2>
 <div class="level2">
 
 <p>
@@ -67,7 +49,8 @@ If you prefer a graphical interface, the new gEDA app GSpiceUI provides a nice <
 </p>
 
 <p>
-As it turns out, this goal was partially met – with tclspice you can indeed do something like this: 
+As it turns out, this goal was partially met – with tclspice you can indeed do something like this:
+
 </p>
 <pre class="code">#! tclsh 
 package require spice 
@@ -80,7 +63,7 @@ spice::plot Vout
 puts &quot;All done now!&quot;</pre>
 
 <p>
-Unfortunately, tclspice lacks certain important features, like providing you a return code which tells you whether your simulation actually worked or errored out instead. Also, the graphics functionality never seemed to work (at least for me &hellip; and the developers admit that the graphics stink). Converting TCL variables to and from SPICE vectors never seemed to work – again at least for me. Finally, ngspice (at least) has a lot of memory leaks, making long simulation runs difficult. Therefore, tclspice doesn’t meet the promise it originally held out: a convenient, scriptable way to drive SPICE simulations.
+Unfortunately, tclspice lacks certain important features, like providing you a return code which tells you whether your simulation actually worked or errored out instead. Also, the graphics functionality never seemed to work (at least for me … and the developers admit that the graphics stink). Converting TCL variables to and from SPICE vectors never seemed to work – again at least for me. Finally, ngspice (at least) has a lot of memory leaks, making long simulation runs difficult. Therefore, tclspice doesn’t meet the promise it originally held out: a convenient, scriptable way to drive SPICE simulations.
 </p>
 
 <p>
@@ -88,8 +71,25 @@ Developement on tclspice effectively stopped in 2004. Perhaps some day somebody 
 </p>
 
 </div>
-<!-- SECTION "What about tclspice? What is it? Should I use it?" [1385-3314] -->
-<h2><a name="isn_t_there_a_nice_graphical_schematic_capture_front_end_so_i_can_just_place_components_and_press_a_simulate_button" id="isn_t_there_a_nice_graphical_schematic_capture_front_end_so_i_can_just_place_components_and_press_a_simulate_button">Isn&#039;t there a nice graphical (schematic capture) front end so I can just place components and press a &quot;simulate&quot; button?</a></h2>
+<!-- EDIT444 SECTION "What about tclspice? What is it? Should I use it?" [1385-3313] -->
+<h2 class="sectionedit445"><a name="where_are_the_models" id="where_are_the_models">Where are the models?</a></h2>
+<div class="level2">
+
+<p>
+There are only very few open source models made available by enthusiasts. This is why there is no extensive library of models included in the gnucap or ngspice package. If you rolled your own and feel like contributing to the project, this would be an excellent opportunity (hint, hint…).
+</p>
+
+<p>
+Although many manufaturers provide SPICE models free of charge, they keep the license propriatary. This means, that the models can&#039;t be distributed with the gEDA suite. In addition, different implementations of SPICE have slightly different ideas about the correct syntax. As a consequence, some models as supplied by the manufacturer need to be tweaked to work with specific implementation. 
+</p>
+
+<p>
+Spicelib provides a way to receive models tweaked for gnucap and ngpice. It is a set of scripts that will fetch vendors&#039; models directly from the source, solving the redistribution problem. Then it will patch them for compatibility with gnucap and ng-spice. You can download spicelib from <a href="http://www.h-renrew.de/h/spicelib/doc/index.html" class="urlextern" title="http://www.h-renrew.de/h/spicelib/doc/index.html"  rel="nofollow">http://www.h-renrew.de/h/spicelib/doc/index.html</a>.
+</p>
+
+</div>
+<!-- EDIT445 SECTION "Where are the models?" [3314-4377] -->
+<h2 class="sectionedit446"><a name="isn_t_there_a_nice_graphical_schematic_capture_front_end_so_i_can_just_place_components_and_press_a_simulate_button" id="isn_t_there_a_nice_graphical_schematic_capture_front_end_so_i_can_just_place_components_and_press_a_simulate_button">Isn&#039;t there a nice graphical (schematic capture) front end so I can just place components and press a &quot;simulate&quot; button?</a></h2>
 <div class="level2">
 
 <p>
@@ -97,8 +97,8 @@ No. The best you can do is use <a href="http://www.geda.seul.org/tools/gspiceui/
 </p>
 
 </div>
-<!-- SECTION "Isn't there a nice graphical (schematic capture) front end so I can just place components and press a simulate button?" [3315-3544] -->
-<h2><a name="how_do_i_create_my_schematic_to_facilitate_analog_simulation" id="how_do_i_create_my_schematic_to_facilitate_analog_simulation">How do I create my schematic to facilitate analog simulation?</a></h2>
+<!-- EDIT446 SECTION "Isn't there a nice graphical (schematic capture) front end so I can just place components and press a simulate button?" [4378-4607] -->
+<h2 class="sectionedit447"><a name="how_do_i_create_my_schematic_to_facilitate_analog_simulation" id="how_do_i_create_my_schematic_to_facilitate_analog_simulation">How do I create my schematic to facilitate analog simulation?</a></h2>
 <div class="level2">
 
 <p>
@@ -110,12 +110,13 @@ The <a href="geda-csygas.html" class="wikilink1" title="geda-csygas.html">Circui
 </p>
 
 <p>
- Some <a href="http://www.brorson.com/gEDA/SPICE/" class="urlextern" title="http://www.brorson.com/gEDA/SPICE/"  rel="nofollow">SPICE resources</a> will help you understand how to use spice-sdb.
+
+Some <a href="http://www.brorson.com/gEDA/SPICE/" class="urlextern" title="http://www.brorson.com/gEDA/SPICE/"  rel="nofollow">SPICE resources</a> will help you understand how to use spice-sdb.
 </p>
 
 </div>
-<!-- SECTION "How do I create my schematic to facilitate analog simulation?" [3545-4097] -->
-<h2><a name="which_spice_netlister_backend_to_gnetlist_should_i_use_there_are_several_of_them" id="which_spice_netlister_backend_to_gnetlist_should_i_use_there_are_several_of_them">Which spice netlister backend to gnetlist should I use? There are several of them. . . .</a></h2>
+<!-- EDIT447 SECTION "How do I create my schematic to facilitate analog simulation?" [4608-5160] -->
+<h2 class="sectionedit448"><a name="which_spice_netlister_backend_to_gnetlist_should_i_use_there_are_several_of_them" id="which_spice_netlister_backend_to_gnetlist_should_i_use_there_are_several_of_them">Which spice netlister backend to gnetlist should I use? There are several of them. . . .</a></h2>
 <div class="level2">
 
 <p>
@@ -123,8 +124,8 @@ Use spice-sdb. It is by far the most advanced and feature rich. The others are t
 </p>
 
 </div>
-<!-- SECTION "Which spice netlister backend to gnetlist should I use? There are several of them. . . ." [4098-4438] -->
-<h2><a name="how_about_if_i_want_to_use_gnucap_can_i_use_spice-sdb_to_create_my_gnucap_netlists" id="how_about_if_i_want_to_use_gnucap_can_i_use_spice-sdb_to_create_my_gnucap_netlists">How about if I want to use gnucap, can I use spice-sdb to create my gnucap netlists?</a></h2>
+<!-- EDIT448 SECTION "Which spice netlister backend to gnetlist should I use? There are several of them. . . ." [5161-5501] -->
+<h2 class="sectionedit449"><a name="how_about_if_i_want_to_use_gnucap_can_i_use_spice-sdb_to_create_my_gnucap_netlists" id="how_about_if_i_want_to_use_gnucap_can_i_use_spice-sdb_to_create_my_gnucap_netlists">How about if I want to use gnucap, can I use spice-sdb to create my gnucap netlists?</a></h2>
 <div class="level2">
 
 <p>
@@ -136,8 +137,8 @@ It is better to just draw the circuit, without directives, and run the simulator
 </p>
 
 </div>
-<!-- SECTION "How about if I want to use gnucap, can I use spice-sdb to create my gnucap netlists?" [4439-4743] -->
-<h2><a name="why_not_reuse_my_simulation_schematic_for_layout" id="why_not_reuse_my_simulation_schematic_for_layout">Why not reuse my simulation schematic for layout?</a></h2>
+<!-- EDIT449 SECTION "How about if I want to use gnucap, can I use spice-sdb to create my gnucap netlists?" [5502-5806] -->
+<h2 class="sectionedit450"><a name="why_not_reuse_my_simulation_schematic_for_layout" id="why_not_reuse_my_simulation_schematic_for_layout">Why not reuse my simulation schematic for layout?</a></h2>
 <div class="level2">
 
 <p>
@@ -153,13 +154,15 @@ Newbies commonly want to create a single schematic for both design simulation/va
 </ul>
 
 <p>
- Therefore, I (SDB) normally recommend that you shouldn’t try too hard to use the same schematic for simulation and for layout. If you can do it, great! But usually you can’t.
+
+Therefore, I (SDB) normally recommend that you shouldn’t try too hard to use the same schematic for simulation and for layout. If you can do it, great! But usually you can’t.
 </p>
 
 <p>
-Personally, I tend to create SPICE models of only the critical analog sections of my design. A larger project might therefore have a couple of simulation schematics validating a couple of analog subcircuits. Besides the simulation schematics, I’ll have a main schematic which is used for layout. 
+Personally, I tend to create SPICE models of only the critical analog sections of my design. A larger project might therefore have a couple of simulation schematics validating a couple of analog subcircuits. Besides the simulation schematics, I’ll have a main schematic which is used for layout.
+
 </p>
 
 </div>
-<!-- SECTION "Why not reuse my simulation schematic for layout?" [4744-] --></body>
+<!-- EDIT450 SECTION "Why not reuse my simulation schematic for layout?" [5807-] --></body>
 </html>

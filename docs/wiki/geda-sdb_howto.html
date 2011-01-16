@@ -11,69 +11,22 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#spice_on_geda_howto" class="toc">SPICE on gEDA HOWTO</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#introduction" class="toc">Introduction</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#overview" class="toc">Overview</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#spice-sdb_netlister_installation_and_configuration" class="toc">Spice-sdb netlister installation and configuration</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#design_simulation_flow_summary" class="toc">Design/simulation flow summary</a></span></div></li>
-</ul>
-</li>
-<li class="level2"><div class="li"><span class="li"><a href="#preliminary_notes_about_symbols_and_spice_model_files" class="toc">Preliminary notes about symbols and SPICE model files</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#symbol_creation_for_spice_netlisting" class="toc">Symbol creation for SPICE netlisting.</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#spice_file_configuration" class="toc">SPICE file configuration</a></span></div></li>
-</ul>
-</li>
-<li class="level2"><div class="li"><span class="li"><a href="#schematic_capture" class="toc">Schematic capture</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#gschem_attributes_for_spice_netlisting" class="toc">Gschem attributes for spice netlisting</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#handling_hierarchical_models" class="toc">Handling hierarchical models</a></span></div></li>
-</ul>
-</li>
-<li class="level2"><div class="li"><span class="li"><a href="#spice_netlist_generation" class="toc">SPICE netlist generation</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#creating_the_netlist" class="toc">Creating the netlist</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#common_netlisting_problems" class="toc">Common netlisting problems</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#spice_simulation" class="toc">SPICE simulation</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#ltspice" class="toc">LTSpice</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#ngspice_and_tclspice" class="toc">Ngspice and tclspice</a></span></div></li>
-</ul>
-</li>
-<li class="level2"><div class="li"><span class="li"><a href="#appendix" class="toc">Appendix</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#component_attribute_summary" class="toc">Component attribute summary</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#valid_type_values" class="toc">Valid &quot;type&quot; values</a></span></div></li>
-</ul>
-</li>
-<li class="level2"><div class="li"><span class="li"><a href="#document_history" class="toc">Document History</a></span></div></li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="spice_on_geda_howto" id="spice_on_geda_howto">SPICE on gEDA HOWTO</a></h1>
+<h1 class="sectionedit811"><a name="spice_on_geda_howto" id="spice_on_geda_howto">SPICE on gEDA HOWTO</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "SPICE on gEDA HOWTO" [1-34] -->
-<h2><a name="introduction" id="introduction">Introduction</a></h2>
+<!-- EDIT811 SECTION "SPICE on gEDA HOWTO" [1-34] -->
+<h2 class="sectionedit812"><a name="introduction" id="introduction">Introduction</a></h2>
 <div class="level2">
 
 <p>
-The purpose of this document is to explain how to use the gEDA tools (running on Linux) to perform SPICE simulations. In particular, this HOWTO documents the usage of spice-sdb, which is an advanced backend for the gEDA netlister (gnetlist) used to create SPICE netlists. This HOWTO also provides advice about using LTSpice and/or ngspice to simulate a circuit netlisted with spice-sdb. I assume that you are already familiar with electronic design, the mechanics of schematic capture using EDA tools, and SPICE simulation in general. I also assume that you are reasonably familiar with the Linux operating system and its development environment.   
+The purpose of this document is to explain how to use the gEDA tools (running on Linux) to perform SPICE simulations. In particular, this HOWTO documents the usage of spice-sdb, which is an advanced backend for the gEDA netlister (gnetlist) used to create SPICE netlists. This HOWTO also provides advice about using LTSpice and/or ngspice to simulate a circuit netlisted with spice-sdb. I assume that you are already familiar with electronic design, the mechanics of schematic capture using EDA tools, and SPICE simulation in general. I also assume that you are reasonably familiar with the Linux operating system and its development environment.
 </p>
 
 </div>
-<!-- SECTION "Introduction" [35-708] -->
-<h3><a name="overview" id="overview">Overview</a></h3>
+<!-- EDIT812 SECTION "Introduction" [35-708] -->
+<h3 class="sectionedit813"><a name="overview" id="overview">Overview</a></h3>
 <div class="level3">
 
 <p>
@@ -91,7 +44,8 @@ From the top level, SPICE simulation in gEDA proceeds via the following steps:
 </ol>
 
 <p>
- To create a SPICE netlist, the netlister (gnetlist) iterates through the entire schematic and looks at several parts of each component’s symbol in order to create a blob of SPICE code. In general, each component can generate one or more lines of SPICE code. Component information needed by the netlister is held in two places:
+
+To create a SPICE netlist, the netlister (gnetlist) iterates through the entire schematic and looks at several parts of each component&#039;s symbol in order to create a blob of SPICE code. In general, each component can generate one or more lines of SPICE code. Component information needed by the netlister is held in two places:
 </p>
 <ol>
 <li class="level1"><div class="li"> The symbol itself, in the “device” attribute, which is attached when the symbol is created, and is typically accessed through the symbol editor.</div>
@@ -101,28 +55,29 @@ From the top level, SPICE simulation in gEDA proceeds via the following steps:
 </ol>
 
 <p>
- Since there are two places the netlister looks for information, you must make sure that the required information is available in both places.
+
+Since there are two places the netlister looks for information, you must make sure that the required information is available in both places.
 </p>
 
 </div>
-<!-- SECTION "Overview" [709-1877] -->
-<h3><a name="spice-sdb_netlister_installation_and_configuration" id="spice-sdb_netlister_installation_and_configuration">Spice-sdb netlister installation and configuration</a></h3>
+<!-- EDIT813 SECTION "Overview" [709-1877] -->
+<h3 class="sectionedit814"><a name="spice-sdb_netlister_installation_and_configuration" id="spice-sdb_netlister_installation_and_configuration">Spice-sdb netlister installation and configuration</a></h3>
 <div class="level3">
 
 <p>
-This document was originally written around gEDA/gaf 20030223, and the SPICE netlister spice-SDB. Starting with gEDA/gaf 20030525, my netlister was incorporated into the main gEDA distribution, and renamed spice-sdb (lower case sdb). <strong>For smoothest operation, you are best off just downloading and installing the latest version of gEDA.</strong> However, if you have a gEDA version predating 20030525, and you want to hack, you can download and install spice-SDB using the instructions provided on <a href="http://www.brorson.com/gEDA/SPICE/SPICEonLinux.html" class="urlextern" title="http://www.brorson.com/gEDA/SPICE/SPICEonLinux.html"  rel="nofollow">http://www.brorson.com/gEDA/SPICE/SPICEonLinux.html</a>. In any event, it’s a good idea to make sure that the file gnet-spice-sdb.scm is present in your scheme directory (usually <strong><code>${prefix}/geda/share/gEDA/scheme</code></strong>) if you are interested in performing SPICE simulations with gEDA as described in this HOWTO.
+This document was originally written around gEDA/gaf 20030223, and the SPICE netlister spice-SDB. Starting with gEDA/gaf 20030525, my netlister was incorporated into the main gEDA distribution, and renamed spice-sdb (lower case sdb). <strong>For smoothest operation, you are best off just downloading and installing the latest version of gEDA.</strong> However, if you have a gEDA version predating 20030525, and you want to hack, you can download and install spice-SDB using the instructions provided on <a href="http://www.brorson.com/gEDA/SPICE/SPICEonLinux.html" class="urlextern" title="http://www.brorson.com/gEDA/SPICE/SPICEonLinux.html"  rel="nofollow">http://www.brorson.com/gEDA/SPICE/SPICEonLinux.html</a>. In any event, it&#039;s a good idea to make sure that the file gnet-spice-sdb.scm is present in your scheme directory (usually <strong><code>${prefix}/geda/share/gEDA/scheme</code></strong>) if you are interested in performing SPICE simulations with gEDA as described in this HOWTO.
 </p>
 
 </div>
-<!-- SECTION "Spice-sdb netlister installation and configuration" [1878-2744] -->
-<h3><a name="design_simulation_flow_summary" id="design_simulation_flow_summary">Design/simulation flow summary</a></h3>
+<!-- EDIT814 SECTION "Spice-sdb netlister installation and configuration" [1878-2744] -->
+<h3 class="sectionedit815"><a name="design_simulation_flow_summary" id="design_simulation_flow_summary">Design/simulation flow summary</a></h3>
 <div class="level3">
 
 <p>
 The detailed steps required to create a circuit and simulate it with gEDA look like this:
 </p>
 <ol>
-<li class="level1"><div class="li"> Schematic symbol creation with correct “device” attribute. (Usually, the symbols have already been created with the correct “device” attribute, but if you are having problems, it doesn’t hurt to check them.)</div>
+<li class="level1"><div class="li"> Schematic symbol creation with correct “device” attribute. (Usually, the symbols have already been created with the correct “device” attribute, but if you are having problems, it doesn&#039;t hurt to check them.)</div>
 </li>
 <li class="level1"><div class="li"> Schematic capture using gschem.</div>
 </li>
@@ -141,38 +96,42 @@ The detailed steps required to create a circuit and simulate it with gEDA look l
 </ol>
 
 <p>
- The purpose of this HOWTO is to provide the detailed understanding necessary to successfully navigate this process.
+
+The purpose of this HOWTO is to provide the detailed understanding necessary to successfully navigate this process.
 </p>
 
 </div>
-<!-- SECTION "Design/simulation flow summary" [2745-3673] -->
-<h2><a name="preliminary_notes_about_symbols_and_spice_model_files" id="preliminary_notes_about_symbols_and_spice_model_files">Preliminary notes about symbols and SPICE model files</a></h2>
+<!-- EDIT815 SECTION "Design/simulation flow summary" [2745-3673] -->
+<h2 class="sectionedit816"><a name="preliminary_notes_about_symbols_and_spice_model_files" id="preliminary_notes_about_symbols_and_spice_model_files">Preliminary notes about symbols and SPICE model files</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Preliminary notes about symbols and SPICE model files" [3674-3739] -->
-<h3><a name="symbol_creation_for_spice_netlisting" id="symbol_creation_for_spice_netlisting">Symbol creation for SPICE netlisting.</a></h3>
+<!-- EDIT816 SECTION "Preliminary notes about symbols and SPICE model files" [3674-3739] -->
+<h3 class="sectionedit817"><a name="symbol_creation_for_spice_netlisting" id="symbol_creation_for_spice_netlisting">Symbol creation for SPICE netlisting.</a></h3>
 <div class="level3">
 
 <p>
 The SPICE netlister recognizes a particular symbol in two ways:
 </p>
 <ol>
-<li class="level1"><div class="li"> The symbol’s “device” attribute</div>
+<li class="level1"><div class="li"> The symbol&#039;s “device” attribute</div>
 </li>
-<li class="level1"><div class="li"> The symbol’s <strong><code>refdes</code></strong>. Both of these attributes are attached to the symbol when the symbol is created.</div>
+<li class="level1"><div class="li"> The symbol&#039;s <strong><code>refdes</code></strong>. Both of these attributes are attached to the symbol when the symbol is created.</div>
 </li>
 </ol>
 
 <p>
- Each symbol has a <strong><code>device</code></strong> attribute attached to it. The <strong><code>device</code></strong> attribute is the first thing the netlister examines when processing the symbol. There are a number of devices which are native to the netlister, meaning that the netlister knows exactly how to deal with these types of devices. Native device types include RESISTOR, CAPACITOR, NPN_TRANSISTOR, etc. The entire list of native devices is present in the <a href="#appendix" title=":geda:sdb_howto.txt &crarr;" class="wikilink1">Appendix</a>.<br/>
- The <strong><code>device</code></strong> attribute is hidden during normal use of gschem. Most often, the symbol’s creator has already given the symbol the correct <strong><code>device</code></strong> attribute. However, because the <strong><code>device</code></strong> attribute is hidden from the ordinary user, it can sometimes cause problems with SPICE netlist creation when it is set to an unexpected value. To view the <strong><code>device</code></strong> attribute, go into the symbol editor (select the symbol to edit, and do “Hierarchy” &rarr; “down symbol”), and turn on invisible attributes (Edit &rarr; show/hide inv text). If the <strong><code>device</code></strong> attribute is incorrect, you may change it by editing the symbol itself using a text editor.<br/>
- If a symbol is not native (i.e. the netlister doesn’t recognize it as a built-in type), the netlister relies upon the first letter of the <strong><code>refdes</code></strong> to determine how to process the symbol. The <strong><code>refdes</code></strong> prefix is also built into the symbol when it is created. Example <strong><code>refdes</code></strong> prefixes are R for resistors, C for capacitors, Q for transistors, etc. <strong><code>refdes</code></strong> prefixes correct for SPICE are listed in the <a href="#appendix" title=":geda:sdb_howto.txt &crarr;" class="wikilink1">Appendix</a>. Note that relying upon the <strong><code>refdes</code></strong> to identify the component for SPICE is not foolproof &ndash; for example, the netlister cannot distinguish between NPN and PNP transistors based upon the <strong><code>refdes</code></strong>. Therefore, it is always best to use a native “device” in your symbols.
+
+Each symbol has a <strong><code>device</code></strong> attribute attached to it. The <strong><code>device</code></strong> attribute is the first thing the netlister examines when processing the symbol. There are a number of devices which are native to the netlister, meaning that the netlister knows exactly how to deal with these types of devices. Native device types include RESISTOR, CAPACITOR, NPN_TRANSISTOR, etc. The entire list of native devices is present in the <a href="#appendix" title=":geda:sdb_howto.txt &crarr;" class="wikilink1">Appendix</a>.<br/>
+
+The <strong><code>device</code></strong> attribute is hidden during normal use of gschem. Most often, the symbol&#039;s creator has already given the symbol the correct <strong><code>device</code></strong> attribute. However, because the <strong><code>device</code></strong> attribute is hidden from the ordinary user, it can sometimes cause problems with SPICE netlist creation when it is set to an unexpected value. To view the <strong><code>device</code></strong> attribute, go into the symbol editor (select the symbol to edit, and do “Hierarchy” → “down symbol”), and turn on invisible attributes (Edit → show/hide inv text). If the <strong><code>device</code></strong> attribute is incorrect, you may change it by editing the symbol itself using a text editor.<br/>
+
+If a symbol is not native (i.e. the netlister doesn&#039;t recognize it as a built-in type), the netlister relies upon the first letter of the <strong><code>refdes</code></strong> to determine how to process the symbol. The <strong><code>refdes</code></strong> prefix is also built into the symbol when it is created. Example <strong><code>refdes</code></strong> prefixes are R for resistors, C for capacitors, Q for transistors, etc. <strong><code>refdes</code></strong> prefixes correct for SPICE are listed in the <a href="#appendix" title=":geda:sdb_howto.txt &crarr;" class="wikilink1">Appendix</a>. Note that relying upon the <strong><code>refdes</code></strong> to identify the component for SPICE is not foolproof – for example, the netlister cannot distinguish between NPN and PNP transistors based upon the <strong><code>refdes</code></strong>. Therefore, it is always best to use a native “device” in your symbols.
 </p>
 
 </div>
-<!-- SECTION "Symbol creation for SPICE netlisting." [3740-5819] -->
-<h3><a name="spice_file_configuration" id="spice_file_configuration">SPICE file configuration</a></h3>
+<!-- EDIT817 SECTION "Symbol creation for SPICE netlisting." [3740-5819] -->
+<h3 class="sectionedit818"><a name="spice_file_configuration" id="spice_file_configuration">SPICE file configuration</a></h3>
 <div class="level3">
 
 <p>
@@ -181,24 +140,24 @@ Files holding complicated SPICE models or other SPICE code may be incorporated i
 <ul>
 <li class="level1"><div class="li"> It is usually prudent to place these files into a dedicated directory distinct from the symbol directories.</div>
 </li>
-<li class="level1"><div class="li"> Make sure that the SPICE files pin assignments correctly correspond to the pins as defined in the component’s symbol.</div>
+<li class="level1"><div class="li"> Make sure that the SPICE files pin assignments correctly correspond to the pins as defined in the component&#039;s symbol.</div>
 </li>
 <li class="level1"><div class="li"> Make sure that the last character in a SPICE model file is a carriage return. If no carriage return exists, then the next component listed in the netlist may be placed on the same line as the last line of the SPICE model file.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "SPICE file configuration" [5820-6689] -->
-<h2><a name="schematic_capture" id="schematic_capture">Schematic capture</a></h2>
+<!-- EDIT818 SECTION "SPICE file configuration" [5820-6689] -->
+<h2 class="sectionedit819"><a name="schematic_capture" id="schematic_capture">Schematic capture</a></h2>
 <div class="level2">
 
 <p>
-Schematic capture is the process by which one uses a special-purpose drawing program to draw a schematic diagram of the circuit under design. In the gEDA environment, the schematic capture program is called “gschem”. I assume you already know how to use gschem. For the purposes of creating SPICE netlists, you must use gschem to attach attributes to components, and possibly also incorporate other SPICE directives into your netlist. After you are done with schematic capture, you create the SPICE netlist by running gEDA’s netlister “gnetlist” on your design.
+Schematic capture is the process by which one uses a special-purpose drawing program to draw a schematic diagram of the circuit under design. In the gEDA environment, the schematic capture program is called “gschem”. I assume you already know how to use gschem. For the purposes of creating SPICE netlists, you must use gschem to attach attributes to components, and possibly also incorporate other SPICE directives into your netlist. After you are done with schematic capture, you create the SPICE netlist by running gEDA&#039;s netlister “gnetlist” on your design.
 </p>
 
 </div>
-<!-- SECTION "Schematic capture" [6690-7282] -->
-<h3><a name="gschem_attributes_for_spice_netlisting" id="gschem_attributes_for_spice_netlisting">Gschem attributes for spice netlisting</a></h3>
+<!-- EDIT819 SECTION "Schematic capture" [6690-7282] -->
+<h3 class="sectionedit820"><a name="gschem_attributes_for_spice_netlisting" id="gschem_attributes_for_spice_netlisting">Gschem attributes for spice netlisting</a></h3>
 <div class="level3">
 
 <p>
@@ -211,29 +170,30 @@ There are several ways that spice attributes may be associated with a component 
 <div class="level4">
 
 <p>
-The following attributes are meaningful for SPICE netlisting, and may be attached from within gschem: 
-</p>
-<table class="inline">
-	<tr>
-		<td><strong><code>refdes</code></strong></td><td>The reference designator of the component. Valid values depend upon the component type and are given in the appendix.</td>
-	</tr>
-	<tr>
-		<td><strong><code>value</code></strong></td><td>For passives, this is the component value. For actives, this is the type (model no) of the component (e.g. 2N3904, uA741). When a model for an active is instantiated separately from the component itself, the “value” attribute holds the name of the spice model.</td>
-	</tr>
-	<tr>
-		<td><strong><code>model</code></strong></td><td>This holds a one line spice model for the component.</td>
-	</tr>
-	<tr>
-		<td><strong><code>file</code></strong></td><td>This holds the name of a file. Typically, this is a file holding e.g. a SPICE .MODEL, .SUBCKT, or other SPICE code.</td>
-	</tr>
-	<tr>
-		<td><strong><code>model-name</code></strong></td><td>This holds the name of the spice model referred to in a .MODEL or .SUBCKT statement. “model-name” is mainly used to identify the spice model name in the symbol “spice-model-1.sym”. Active components should call out this name in the “device” attribute to associate the component with its particular spice model or subcircuit.</td>
-	</tr>
-	<tr>
-		<td><strong><code>type</code></strong></td><td>This specifies the type of component and is used by spice when interpreting the model parameters. Valid values depend upon the device being modeled.</td>
-	</tr>
-</table>
+The following attributes are meaningful for SPICE netlisting, and may be attached from within gschem:
 
+</p>
+<div class="table sectionedit821"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><strong><code>refdes</code></strong></td><td class="col1">The reference designator of the component. Valid values depend upon the component type and are given in the appendix.</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"><strong><code>value</code></strong></td><td class="col1">For passives, this is the component value. For actives, this is the type (model no) of the component (e.g. 2N3904, uA741). When a model for an active is instantiated separately from the component itself, the “value” attribute holds the name of the spice model.</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"><strong><code>model</code></strong></td><td class="col1">This holds a one line spice model for the component.</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"><strong><code>file</code></strong></td><td class="col1">This holds the name of a file. Typically, this is a file holding e.g. a SPICE .MODEL, .SUBCKT, or other SPICE code.</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"><strong><code>model-name</code></strong></td><td class="col1">This holds the name of the spice model referred to in a .MODEL or .SUBCKT statement. “model-name” is mainly used to identify the spice model name in the symbol “spice-model-1.sym”. Active components should call out this name in the “device” attribute to associate the component with its particular spice model or subcircuit.</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0"><strong><code>type</code></strong></td><td class="col1">This specifies the type of component and is used by spice when interpreting the model parameters. Valid values depend upon the device being modeled.</td>
+	</tr>
+</table></div>
+<!-- EDIT821 TABLE [7706-8827] -->
 </div>
 
 <h4><a name="refdes_conventions" id="refdes_conventions">refdes conventions</a></h4>
@@ -241,7 +201,8 @@ The following attributes are meaningful for SPICE netlisting, and may be attache
 
 <p>
 As a prerequisite to handling SPICE-related attributes, the SPICE netlister requires that all components must have a refdes attached to them. The refdes may be attached either by hand (which is laborious), or using the program refdes_renum included in the gEDA distribution.<br/>
- Note that the first letter of the refdes must correspond to the appropriate letter for spice simulation. The refdes convention is given in the <a href="#appendix" title=":geda:sdb_howto.txt &crarr;" class="wikilink1">Appendix</a>.
+
+Note that the first letter of the refdes must correspond to the appropriate letter for spice simulation. The refdes convention is given in the <a href="#appendix" title=":geda:sdb_howto.txt &crarr;" class="wikilink1">Appendix</a>.
 </p>
 
 </div>
@@ -255,20 +216,24 @@ As a prerequisite to handling SPICE-related attributes, the SPICE netlister requ
 <div class="level5">
 
 <p>
-The most basic components which one encounters in spice are passive components like resistors and capacitors which have numeric values, but no other modeling attributes. In this case the following attributes must be filled in: 
-</p>
-<table class="inline">
-	<tr>
-		<td><strong><code>refdes</code></strong></td><td>The correct <strong><code>refdes</code></strong> for the component.</td>
-	</tr>
-	<tr>
-		<td><strong><code>value</code></strong></td><td>For passives, this is the numeric value of the component (e.g. 100pF). For actives, this attribute may be filled in, but if no model attribute is available elsewhere in the schematic, the value is not used (in SPICE netlisting, anyway).</td>
-	</tr>
-</table>
+The most basic components which one encounters in spice are passive components like resistors and capacitors which have numeric values, but no other modeling attributes. In this case the following attributes must be filled in:
 
+</p>
+<div class="table sectionedit822"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><strong><code>refdes</code></strong></td><td class="col1">The correct <strong><code>refdes</code></strong> for the component.</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"><strong><code>value</code></strong></td><td class="col1">For passives, this is the numeric value of the component (e.g. 100pF). For actives, this attribute may be filled in, but if no model attribute is available elsewhere in the schematic, the value is not used (in SPICE netlisting, anyway).</td>
+	</tr>
+</table></div>
+<!-- EDIT822 TABLE [9558-9873] -->
 <p>
- If only a <strong><code>refdes</code></strong> and value attribute are encountered, the netlister will write a single line into the output file.<br/>
- Example resistor: 
+
+If only a <strong><code>refdes</code></strong> and value attribute are encountered, the netlister will write a single line into the output file.<br/>
+
+Example resistor:
+
 </p>
 <pre class="code">refdes = R2
 value = 220
@@ -276,7 +241,9 @@ SPICE line generated: R2 0 4 220</pre>
 
 <p>
 Note that “0” and “4” correspond to the net nodes connected to the component, and are generated automatically by gnetlist.<br/>
- Example capacitor: 
+
+Example capacitor:
+
 </p>
 <pre class="code">refdes = C22
 value = 1UF
@@ -288,23 +255,27 @@ SPICE line generated: C22 4 23 1UF</pre>
 <div class="level5">
 
 <p>
-Oftentimes, passive components have additional attributes attached to them for spice simulation. Examples of such attributes are temperature coefficients (for resistors) and initial conditions (for reactive components). These additional components may be incorporated into the SPICE file by simply attaching them to the component’s “model” attribute. Specifically, the required attributes are: 
-</p>
-<table class="inline">
-	<tr>
-		<td><strong><code>refdes</code></strong></td><td>Correct component <strong><code>refdes</code></strong>.</td>
-	</tr>
-	<tr>
-		<td><strong><code>value</code></strong></td><td>Numerical component value, as always.</td>
-	</tr>
-	<tr>
-		<td><strong><code>model</code></strong></td><td>One line string holding additional parameters, formatted as a valid SPICE string.</td>
-	</tr>
-</table>
+Oftentimes, passive components have additional attributes attached to them for spice simulation. Examples of such attributes are temperature coefficients (for resistors) and initial conditions (for reactive components). These additional components may be incorporated into the SPICE file by simply attaching them to the component&#039;s “model” attribute. Specifically, the required attributes are:
 
+</p>
+<div class="table sectionedit823"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><strong><code>refdes</code></strong></td><td class="col1">Correct component <strong><code>refdes</code></strong>.</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"><strong><code>value</code></strong></td><td class="col1">Numerical component value, as always.</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"><strong><code>model</code></strong></td><td class="col1">One line string holding additional parameters, formatted as a valid SPICE string.</td>
+	</tr>
+</table></div>
+<!-- EDIT823 TABLE [10744-10946] -->
 <p>
- This string is placed after the component value in the line generated by gnetlist. Therefore, it is important to format the string placed in the <strong><code>model</code></strong> line to be valid SPICE code. Otherwise, you will risk causing the SPICE simulator to barf.<br/>
- Example resistor: 
+
+This string is placed after the component value in the line generated by gnetlist. Therefore, it is important to format the string placed in the <strong><code>model</code></strong> line to be valid SPICE code. Otherwise, you will risk causing the SPICE simulator to barf.<br/>
+
+Example resistor:
+
 </p>
 <pre class="code">refdes = R5
 value = 1MEG
@@ -317,7 +288,7 @@ SPICE line generated: R2 0 4 220 TC=0.001,0.015</pre>
 <div class="level4">
 
 <p>
-Transistors and diodes are generally accompanied by a device-specific model &ndash; otherwise, SPICE simulation is pointless. The SPICE model may be either a short, one-line string of parameters, or a multi-line set of SPICE parameters. A typical one-line parameter string is a short list of parameters describing a small-signal diode. Typical multi-line models come from component vendors, who often provide models for their components in a text file. Since there are two broad formats of SPICE information, there are two approaches to incorporating these parameters into the schematic:
+Transistors and diodes are generally accompanied by a device-specific model – otherwise, SPICE simulation is pointless. The SPICE model may be either a short, one-line string of parameters, or a multi-line set of SPICE parameters. A typical one-line parameter string is a short list of parameters describing a small-signal diode. Typical multi-line models come from component vendors, who often provide models for their components in a text file. Since there are two broad formats of SPICE information, there are two approaches to incorporating these parameters into the schematic:
 </p>
 
 </div>
@@ -326,25 +297,28 @@ Transistors and diodes are generally accompanied by a device-specific model &nda
 <div class="level5">
 
 <p>
-To incorporate a one line string of SPICE parameters into the netlist, the following attributes must be attached to the component: 
-</p>
-<table class="inline">
-	<tr>
-		<td><strong><code>refdes</code></strong></td><td>Correct component refdes.</td>
-	</tr>
-	<tr>
-		<td><strong><code>value</code></strong></td><td>The model number or part number of the component.</td>
-	</tr>
-	<tr>
-		<td><strong><code>model-name</code></strong></td><td>The name you wish to give the SPICE model. This is usually the model number or part number of the component. If you have already attached a “value” attribute to the component, this parameter is optional.</td>
-	</tr>
-	<tr>
-		<td><strong><code>model</code></strong></td><td>One line string holding additional parameters. Do not place the model parameters in parentheses &ndash; gnetlist will do this for you.</td>
-	</tr>
-</table>
+To incorporate a one line string of SPICE parameters into the netlist, the following attributes must be attached to the component:
 
+</p>
+<div class="table sectionedit824"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><strong><code>refdes</code></strong></td><td class="col1">Correct component refdes.</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"><strong><code>value</code></strong></td><td class="col1">The model number or part number of the component.</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"><strong><code>model-name</code></strong></td><td class="col1">The name you wish to give the SPICE model. This is usually the model number or part number of the component. If you have already attached a “value” attribute to the component, this parameter is optional.</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"><strong><code>model</code></strong></td><td class="col1">One line string holding additional parameters. Do not place the model parameters in parentheses – gnetlist will do this for you.</td>
+	</tr>
+</table></div>
+<!-- EDIT824 TABLE [12117-12596] -->
 <p>
- Example diode: 
+
+Example diode:
+
 </p>
 <pre class="code">refdes = D5
 model-name = 1N1004
@@ -359,25 +333,27 @@ MODEL 1N1004 D (IS=0.5UA RS=6 BV=5.20)</pre>
 <div class="level5">
 
 <p>
-To incorporate a file-full of SPICE parameters into the netlist, the following attributes must be attached to the component: 
-</p>
-<table class="inline">
-	<tr>
-		<td><strong><code>refdes</code></strong></td><td>Correct component refdes.</td>
-	</tr>
-	<tr>
-		<td><strong><code>value</code></strong></td><td>The model number or part number of the component.</td>
-	</tr>
-	<tr>
-		<td><strong><code>model-name</code></strong></td><td>The name you wish to give the SPICE model. This is usually the model number or part number of the component. If you have already attached a “value” attribute to the component, this parameter is optional.</td>
-	</tr>
-	<tr>
-		<td><strong><code>file</code></strong></td><td>The file name of the SPICE model which you wish to incorporate into the netlist. This file name may specify either a relative or an absolute path, but it is probably better to use an absolute path to avoid problems if you ever move your schematic directory.</td>
-	</tr>
-</table>
+To incorporate a file-full of SPICE parameters into the netlist, the following attributes must be attached to the component:
 
+</p>
+<div class="table sectionedit825"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><strong><code>refdes</code></strong></td><td class="col1">Correct component refdes.</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"><strong><code>value</code></strong></td><td class="col1">The model number or part number of the component.</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"><strong><code>model-name</code></strong></td><td class="col1">The name you wish to give the SPICE model. This is usually the model number or part number of the component. If you have already attached a “value” attribute to the component, this parameter is optional.</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"><strong><code>file</code></strong></td><td class="col1">The file name of the SPICE model which you wish to incorporate into the netlist. This file name may specify either a relative or an absolute path, but it is probably better to use an absolute path to avoid problems if you ever move your schematic directory.</td>
+	</tr>
+</table></div>
+<!-- EDIT825 TABLE [12914-13520] -->
 <p>
- Note that you need to make sure that the model name held in your SPICE model file is the same as the <strong><code>value</code></strong> or <strong><code>model-name</code></strong> attributes you attached to the component. It is also a good idea to verify that the pin assignments in the model file correspond to the pin assignments made by the component symbol.
+
+Note that you need to make sure that the model name held in your SPICE model file is the same as the <strong><code>value</code></strong> or <strong><code>model-name</code></strong> attributes you attached to the component. It is also a good idea to verify that the pin assignments in the model file correspond to the pin assignments made by the component symbol.
 </p>
 
 </div>
@@ -395,46 +371,48 @@ Integrated circuits are incorporated into the netlist similarly to transistors a
 <div class="level5">
 
 <p>
-To incorporate a one line string of SPICE parameters into the netlist, the following attributes must be attached to the component: 
-</p>
-<table class="inline">
-	<tr>
-		<td><strong><code>refdes</code></strong></td><td>Correct component refdes.</td>
-	</tr>
-	<tr>
-		<td><strong><code>value</code></strong></td><td>The model number or part number of the component.</td>
-	</tr>
-	<tr>
-		<td><strong><code>model-name</code></strong></td><td>the name you wish to give the SPICE model. This is usually the model number or part number of the component. If you have already attached a “value” attribute to the component, this parameter is optional.</td>
-	</tr>
-	<tr>
-		<td><strong><code>model</code></strong></td><td>One line string holding additional parameters. Do not place the model parameters in parentheses &ndash; gnetlist will do this for you.</td>
-	</tr>
-</table>
+To incorporate a one line string of SPICE parameters into the netlist, the following attributes must be attached to the component:
 
+</p>
+<div class="table sectionedit826"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><strong><code>refdes</code></strong></td><td class="col1">Correct component refdes.</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"><strong><code>value</code></strong></td><td class="col1">The model number or part number of the component.</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"><strong><code>model-name</code></strong></td><td class="col1">the name you wish to give the SPICE model. This is usually the model number or part number of the component. If you have already attached a “value” attribute to the component, this parameter is optional.</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"><strong><code>model</code></strong></td><td class="col1">One line string holding additional parameters. Do not place the model parameters in parentheses – gnetlist will do this for you.</td>
+	</tr>
+</table></div>
+<!-- EDIT826 TABLE [14257-14736] -->
 </div>
 
-<h5><a name="spice_.model_or_.subckt_file" id="spice_.model_or_.subckt_file">SPICE .MODEL or .SUBCKT file</a></h5>
+<h5><a name="spice_model_or_subckt_file" id="spice_model_or_subckt_file">SPICE .MODEL or .SUBCKT file</a></h5>
 <div class="level5">
 
 <p>
-To incorporate a file-full of SPICE parameters into the netlist, the following attributes must be attached to the component: 
-</p>
-<table class="inline">
-	<tr>
-		<td><strong><code>refdes</code></strong></td><td>Correct component refdes. <strong>Note that if the file holds a .MODEL, the refdes should start with U; if the file holds a .SUBCKT, the refdes should start with X.</strong> The netlister checks for the file type and tries to “do the right thing”, but problems can arise if you don’t follow this rule.</td>
-	</tr>
-	<tr>
-		<td><strong><code>value</code></strong></td><td>The model number or part number of the component.</td>
-	</tr>
-	<tr>
-		<td><strong><code>model-name</code></strong></td><td>The name you wish to give the SPICE model. This is usually the model number or part number of the component. If you have already attached a “value” attribute to the component, this parameter is optional.</td>
-	</tr>
-	<tr>
-		<td><strong><code>file</code></strong></td><td>The name of the file holding the SPICE .MODEL or .SUBCKT which you wish to incorporate into the netlist. This file name may specify either a relative or an absolute path, but it is probably better to use an absolute path to avoid problems if you ever move your schematic directory.</td>
-	</tr>
-</table>
+To incorporate a file-full of SPICE parameters into the netlist, the following attributes must be attached to the component:
 
+</p>
+<div class="table sectionedit827"><table class="inline">
+	<tr class="row0">
+		<td class="col0"><strong><code>refdes</code></strong></td><td class="col1">Correct component refdes. <strong>Note that if the file holds a .MODEL, the refdes should start with U; if the file holds a .SUBCKT, the refdes should start with X.</strong> The netlister checks for the file type and tries to “do the right thing”, but problems can arise if you don&#039;t follow this rule.</td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"><strong><code>value</code></strong></td><td class="col1">The model number or part number of the component.</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"><strong><code>model-name</code></strong></td><td class="col1">The name you wish to give the SPICE model. This is usually the model number or part number of the component. If you have already attached a “value” attribute to the component, this parameter is optional.</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"><strong><code>file</code></strong></td><td class="col1">The name of the file holding the SPICE .MODEL or .SUBCKT which you wish to incorporate into the netlist. This file name may specify either a relative or an absolute path, but it is probably better to use an absolute path to avoid problems if you ever move your schematic directory.</td>
+	</tr>
+</table></div>
+<!-- EDIT827 TABLE [14899-15792] -->
 </div>
 
 <h4><a name="independent_sources" id="independent_sources">Independent sources</a></h4>
@@ -444,7 +422,7 @@ To incorporate a file-full of SPICE parameters into the netlist, the following a
 There are two independent sources: voltage sources and current sources. For incorporation into a SPICE netlist, they both work the same way. To incorporate an independent source into your SPICE netlist, do the following:
 </p>
 <ol>
-<li class="level1"><div class="li"> Place the independent source on your schematic. (Do “Add” &rarr; “Component” &rarr; “spice” &rarr; &quot;&lt;independent source name&gt;.sym”)</div>
+<li class="level1"><div class="li"> Place the independent source on your schematic. (Do “Add” → “Component” → “spice” → ”&lt;independent source name&gt;.sym”)</div>
 </li>
 <li class="level1"><div class="li"> Double click on the block and add/edit the following attributes:</div>
 <ul>
@@ -485,7 +463,7 @@ In certain situations, you may wish to embed a spice model block directly into y
 <ol>
 <li class="level1"><div class="li"> One line SPICE model:</div>
 <ol>
-<li class="level2"><div class="li"> Place a spice model block on your schematic. (Do “Add” &rarr; “Component” &rarr; “spice” &rarr; “spice-model-1.sym”)</div>
+<li class="level2"><div class="li"> Place a spice model block on your schematic. (Do “Add” → “Component” → “spice” → “spice-model-1.sym”)</div>
 </li>
 <li class="level2"><div class="li"> Double click on the block and add/edit the following attributes:</div>
 <ul>
@@ -503,7 +481,7 @@ In certain situations, you may wish to embed a spice model block directly into y
 </li>
 <li class="level1"><div class="li"> Multi-line SPICE model:</div>
 <ol>
-<li class="level2"><div class="li"> Place a spice model block on your schematic.(Do “Add” &rarr; “Component” &rarr; “spice” &rarr; “spice-model-1.sym”)</div>
+<li class="level2"><div class="li"> Place a spice model block on your schematic.(Do “Add” → “Component” → “spice” → “spice-model-1.sym”)</div>
 </li>
 <li class="level2"><div class="li"> Double click on the block and add/edit the following attributes:</div>
 <ul>
@@ -528,7 +506,7 @@ In certain situations, you may wish to embed a spice model block directly into y
 The include block places a .INCLUDE directive into your netlist.
 </p>
 <ol>
-<li class="level1"><div class="li"> Place a spice model block on your schematic. (Do “Add” &rarr; “Component” &rarr; “spice” &rarr; “spice-include-1.sym”)</div>
+<li class="level1"><div class="li"> Place a spice model block on your schematic. (Do “Add” → “Component” → “spice” → “spice-include-1.sym”)</div>
 </li>
 <li class="level1"><div class="li"> Double click on the block and add/edit the following attributes:</div>
 <ul>
@@ -558,10 +536,11 @@ Placing a SPICE directive block into your schematic creates an arbitrary block o
 </ul>
 
 <p>
- To place a SPICE directive on your schematic, do the following:
+
+To place a SPICE directive on your schematic, do the following:
 </p>
 <ol>
-<li class="level1"><div class="li"> Place a SPICE directive block on your schematic. (Do “Add” &rarr; “Component” &rarr; “spice” &rarr; “spice-directive-1.sym”)</div>
+<li class="level1"><div class="li"> Place a SPICE directive block on your schematic. (Do “Add” → “Component” → “spice” → “spice-directive-1.sym”)</div>
 </li>
 <li class="level1"><div class="li"> Double click on the block and add/edit the following attributes:</div>
 <ul>
@@ -574,30 +553,31 @@ Placing a SPICE directive block into your schematic creates an arbitrary block o
 </ol>
 
 </div>
-<!-- SECTION "Gschem attributes for spice netlisting" [7283-18697] -->
-<h3><a name="handling_hierarchical_models" id="handling_hierarchical_models">Handling hierarchical models</a></h3>
+<!-- EDIT820 SECTION "Gschem attributes for spice netlisting" [7283-18697] -->
+<h3 class="sectionedit828"><a name="handling_hierarchical_models" id="handling_hierarchical_models">Handling hierarchical models</a></h3>
 <div class="level3">
 
 <p>
-In SPICE modeling, there are often situations where you wish to create a schematic representation of some particular component as a .SUBCKT, and then embed that component’s model in a higher level schematic. A common example might be as follows: You are doing a microwave simulation, and want to use a capacitor model which includes parasitic inductances and resistances, as well as the capacitance. Capacitor manufacturers often supply a printed schematic showing a circuit topology incorporating parasitics, and specify values for the parasitics. You would like to draw the capacitor model using gschem, netlist it to create a .SUBCKT, and then use the .SUBCKT to model capacitors in a higher lever schematic.<br/>
- Since this kind of task is very common in SPICE simulation, gnet-spice-sdb now supports it (starting with rev 20030331). To create a lower level .SUBCKT and use it in a higher level schematic, do the following:
+In SPICE modeling, there are often situations where you wish to create a schematic representation of some particular component as a .SUBCKT, and then embed that component&#039;s model in a higher level schematic. A common example might be as follows: You are doing a microwave simulation, and want to use a capacitor model which includes parasitic inductances and resistances, as well as the capacitance. Capacitor manufacturers often supply a printed schematic showing a circuit topology incorporating parasitics, and specify values for the parasitics. You would like to draw the capacitor model using gschem, netlist it to create a .SUBCKT, and then use the .SUBCKT to model capacitors in a higher lever schematic.<br/>
+
+Since this kind of task is very common in SPICE simulation, gnet-spice-sdb now supports it (starting with rev 20030331). To create a lower level .SUBCKT and use it in a higher level schematic, do the following:
 </p>
 <ol>
 <li class="level1"><div class="li"> Draw the schematic of the lower level component (e.g. the capacitor + parasitics) using gschem.</div>
 </li>
 <li class="level1"><div class="li"> On the lower level schematic, place a spice-subcircuit-LL block (spice-subcircuit-LL-1.sym). This alerts the netlister that the schematic is a Lower Level .SUBCKT. Attach the following attributes to the symbol:<br/>
- <br/>
- <strong><code>model-name</code></strong> = cap_with_parasitics<br/>
- <br/>
- (Of course, “cap_with_parasitics” is the example we use here. Use your own model name in your schematic.) Upon netlisting, this schematic symbol will cause the netlist to insert &quot;.SUBCKT cap_with_parasitics &quot; into the first line of the netlist file.</div>
+<br/>
+<strong><code>model-name</code></strong> = cap_with_parasitics<br/>
+<br/>
+(Of course, “cap_with_parasitics” is the example we use here. Use your own model name in your schematic.) Upon netlisting, this schematic symbol will cause the netlist to insert ”.SUBCKT cap_with_parasitics ” into the first line of the netlist file.</div>
 </li>
 <li class="level1"><div class="li"> On the lower level schematic, attach a spice-subcircuit-IO symbol (spice-subcircuit-IO-1.sym) to each IO net (i.e. connection to the upper level). Number the refdeses of the IO symbols in the same order as you would like the IO nets to be listed in the .SUBCKT line in the output file. (i.e. P1 = first, P2 = second, etc.)</div>
 </li>
 <li class="level1"><div class="li"> When you are done with the lower level schematic, netlist it in the usual way. For example, if your schematic is called cap_with_parasitics.sch, netlist it by saying:<br/>
- <br/>
- <strong><code>gnetlist -g spice-sdb -o cap_with_parasitics.cir cap_with_parasitics.sch</code></strong><br/>
- <br/>
- This will dump the SPICE netlist into the file called “cap_with_parasitics.cir”. Visually inspect the .cir file to make sure that netlisting worked correctly.</div>
+<br/>
+<strong><code>gnetlist -g spice-sdb -o cap_with_parasitics.cir cap_with_parasitics.sch</code></strong><br/>
+<br/>
+This will dump the SPICE netlist into the file called “cap_with_parasitics.cir”. Visually inspect the .cir file to make sure that netlisting worked correctly.</div>
 </li>
 <li class="level1"><div class="li"> Next, create a symbol for the upper level schematic which will point to the .SUBCKT. Note that the symbol must have a refdes starting with the letter “X”. To ensure that this happens, do the following:</div>
 <ul>
@@ -607,18 +587,18 @@ In SPICE modeling, there are often situations where you wish to create a schemat
 </li>
 <li class="level2"><div class="li"> Using a text editor, give the symbol a “DEVICE” attribute like “capacitor-model”. Do not assign the symbol one of the native device types listed in the appendix! The goal is to create a symbol whose refdes starts with “X”, and if the “DEVICE” is a recognized type, this will not happen.</div>
 </li>
-<li class="level2"><div class="li"> Using a text editor, give the symbol the “REFDES” attribute “X?&quot;</div>
+<li class="level2"><div class="li"> Using a text editor, give the symbol the “REFDES” attribute “X?”</div>
 </li>
 </ul>
 </li>
 <li class="level1"><div class="li"> Create the upper level schematic. Place your newly created symbol on the schematic as many times as required &amp; wire up the schematic in the usual way.</div>
 </li>
 <li class="level1"><div class="li"> To point your symbol to the lower level .SUBCKT, double click on the symbol and set the following attributes:<br/>
- <br/>
- <strong><code>file</code></strong> = cap_with_parasitics.cir<br/>
- <strong><code>model-name</code></strong> = cap_with_parasitics<br/>
- <br/>
- as well as any other attributes required (e.g. refdes).</div>
+<br/>
+<strong><code>file</code></strong> = cap_with_parasitics.cir<br/>
+<strong><code>model-name</code></strong> = cap_with_parasitics<br/>
+<br/>
+as well as any other attributes required (e.g. refdes).</div>
 </li>
 <li class="level1"><div class="li"> Now netlist your upper level schematic the usual way. The contents of each .SUBCKT file is dumped into the main netlist. Inspect your netlist visually using a text editor to ensure that it is correct. It is a good idea to pay particular attention to the following:</div>
 <ul>
@@ -631,7 +611,8 @@ In SPICE modeling, there are often situations where you wish to create a schemat
 </ol>
 
 <p>
- Once the netlist is created, you may simulate your design using any SPICE simulator desired.<br/>
+
+Once the netlist is created, you may simulate your design using any SPICE simulator desired.<br/>
 
 </p>
 
@@ -640,8 +621,8 @@ One final note: The netlister writes the contents of the lower level .SUBCKT fil
 </p>
 
 </div>
-<!-- SECTION "Handling hierarchical models" [18698-23545] -->
-<h2><a name="spice_netlist_generation" id="spice_netlist_generation">SPICE netlist generation</a></h2>
+<!-- EDIT828 SECTION "Handling hierarchical models" [18698-23545] -->
+<h2 class="sectionedit829"><a name="spice_netlist_generation" id="spice_netlist_generation">SPICE netlist generation</a></h2>
 <div class="level2">
 
 <p>
@@ -649,8 +630,8 @@ Once the schematic is captured, a SPICE netlist can be generated running the gED
 </p>
 
 </div>
-<!-- SECTION "SPICE netlist generation" [23546-24039] -->
-<h2><a name="creating_the_netlist" id="creating_the_netlist">Creating the netlist</a></h2>
+<!-- EDIT829 SECTION "SPICE netlist generation" [23546-24039] -->
+<h2 class="sectionedit830"><a name="creating_the_netlist" id="creating_the_netlist">Creating the netlist</a></h2>
 <div class="level2">
 
 <p>
@@ -659,19 +640,19 @@ Creating a netlist from a schematic is easy. To generate a SPICE netlist, just d
 <ul>
 <li class="level1"><div class="li"> Save your schematic to &lt;filename.sch&gt;</div>
 </li>
-<li class="level1"><div class="li"> Create the SPICE netlist by doing “gnetlist –g spice-sdb &lt;filename.sch&gt;&quot;. The output is a netlist held in the file output.net. Alternatively, if you wish to give your output file a different name, set the output name using the -o switch. For example:<br/>
- <br/>
- <strong><code>gnetlist -g spice-sdb -o amplifier.cir amplifier.sch</code></strong> <br/>
- <br/>
- takes the design schematic called “amplifier.sch” and outputs a SPICE netlist named “amplifier.cir”.</div>
+<li class="level1"><div class="li"> Create the SPICE netlist by doing “gnetlist –g spice-sdb &lt;filename.sch&gt;”. The output is a netlist held in the file output.net. Alternatively, if you wish to give your output file a different name, set the output name using the -o switch. For example:<br/>
+<br/>
+<strong><code>gnetlist -g spice-sdb -o amplifier.cir amplifier.sch</code></strong> <br/>
+<br/>
+takes the design schematic called “amplifier.sch” and outputs a SPICE netlist named “amplifier.cir”.</div>
 </li>
 <li class="level1"><div class="li"> Inspect your SPICE netlist using a text editor. Verify that there are no missing attributes or other netlist problems.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Creating the netlist" [24040-24765] -->
-<h2><a name="common_netlisting_problems" id="common_netlisting_problems">Common netlisting problems</a></h2>
+<!-- EDIT830 SECTION "Creating the netlist" [24040-24765] -->
+<h2 class="sectionedit831"><a name="common_netlisting_problems" id="common_netlisting_problems">Common netlisting problems</a></h2>
 <div class="level2">
 
 <p>
@@ -683,8 +664,8 @@ It is important to manually inspect your SPICE netlist prior to using it in simu
 </ul>
 
 </div>
-<!-- SECTION "Common netlisting problems" [24766-25301] -->
-<h2><a name="spice_simulation" id="spice_simulation">SPICE simulation</a></h2>
+<!-- EDIT831 SECTION "Common netlisting problems" [24766-25301] -->
+<h2 class="sectionedit832"><a name="spice_simulation" id="spice_simulation">SPICE simulation</a></h2>
 <div class="level2">
 
 <p>
@@ -700,17 +681,19 @@ There are several options for doing SPICE simulations under Linux; I will highli
 </ul>
 
 <p>
- There is also a <acronym title="GNU General Public License">GPL</acronym>‘ed simulator called “gnucap”, which is based upon (or is the descendent of) Al’s Circuit Simulator (ACS). I haven’t used it at all; information about gnucap is therefore TBD.
+
+There is also a <acronym title="GNU General Public License">GPL</acronym>&#039;ed simulator called “gnucap”, which is based upon (or is the descendent of) Al&#039;s Circuit Simulator (ACS). I haven&#039;t used it at all; information about gnucap is therefore TBD.
 </p>
 
 </div>
-<!-- SECTION "SPICE simulation" [25302-26547] -->
-<h3><a name="ltspice" id="ltspice">LTSpice</a></h3>
+<!-- EDIT832 SECTION "SPICE simulation" [25302-26547] -->
+<h3 class="sectionedit833"><a name="ltspice" id="ltspice">LTSpice</a></h3>
 <div class="level3">
 
 <p>
-LTSpice was written by Mike Englehardt at Linear Technologies, and was originally given away by LinearTech as a design aid for engineers wishing to simulate the performance of LinearTech’s switch mode power supply controllers. The package incorporates a schematic capture front end, fast and powerful SPICE engine, and the capability for plotting the results of many different types of SPICE analysis. Personally, I think the schematic capture front-end is hard to use and clunky; gschem knocks its socks off for ease of use and features. However, the SPICE engine and analysis stuff in LTSpice is simply great.<br/>
- LTSpice was originally developed to run under Windows, but Mike has tweaked it so that it runs fairly well on Linux under wine. (Only the help menu system is broken &ndash; the rest of the package runs well.) Another good feature of LTSpice is that it is well supported &ndash; Mike reads the newsgroup sci.electronics.cad regularly and is generally happy to help people who experience problems with it. Therefore, despite its Windoze heritage, I recommend LTSpice as a powerful, professional-quality simulation and analysis back end for gEDA. 
+LTSpice was written by Mike Englehardt at Linear Technologies, and was originally given away by LinearTech as a design aid for engineers wishing to simulate the performance of LinearTech&#039;s switch mode power supply controllers. The package incorporates a schematic capture front end, fast and powerful SPICE engine, and the capability for plotting the results of many different types of SPICE analysis. Personally, I think the schematic capture front-end is hard to use and clunky; gschem knocks its socks off for ease of use and features. However, the SPICE engine and analysis stuff in LTSpice is simply great.<br/>
+
+LTSpice was originally developed to run under Windows, but Mike has tweaked it so that it runs fairly well on Linux under wine. (Only the help menu system is broken – the rest of the package runs well.) Another good feature of LTSpice is that it is well supported – Mike reads the newsgroup sci.electronics.cad regularly and is generally happy to help people who experience problems with it. Therefore, despite its Windoze heritage, I recommend LTSpice as a powerful, professional-quality simulation and analysis back end for gEDA. 
 </p>
 
 </div>
@@ -739,7 +722,7 @@ To install and configure LTSpice, do the following:
 LTSpice can read a file holding a gEDA SPICE netlist. I have had success doing LTSpice sumulations in the following way:
 </p>
 <ol>
-<li class="level1"><div class="li"> First of all, make sure that you are logged in as a normal user &ndash; Wine doesn’t like to run when invoked by root.</div>
+<li class="level1"><div class="li"> First of all, make sure that you are logged in as a normal user – Wine doesn&#039;t like to run when invoked by root.</div>
 </li>
 <li class="level1"><div class="li"> Create a file in your project directory called “Simulation.cmd”. In this file place your spice analysis commands (e.g. .OP, .AC, .DC, etc.)</div>
 </li>
@@ -751,41 +734,43 @@ LTSpice can read a file holding a gEDA SPICE netlist. I have had success doing L
 </li>
 <li class="level1"><div class="li"> Run LTSpice: cd into the directory where SwCADIII lives and say “wine scad3.exe”</div>
 </li>
-<li class="level1"><div class="li"> From the SwCADIII <acronym title="Graphical User Interface">GUI</acronym>, do: File &rarr; Open &rarr; (files of type netlist [.cir]), and select your file.</div>
+<li class="level1"><div class="li"> From the SwCADIII <acronym title="Graphical User Interface">GUI</acronym>, do: File → Open → (files of type netlist [.cir]), and select your file.</div>
 </li>
-<li class="level1"><div class="li"> Run the simulator by clicking on the run button, or doing: Simulate &rarr; Run.</div>
+<li class="level1"><div class="li"> Run the simulator by clicking on the run button, or doing: Simulate → Run.</div>
 </li>
 <li class="level1"><div class="li"> Select the variables to graph, and then click OK. SwCADIII does the rest of the work.</div>
 </li>
 </ol>
 
 <p>
- Naturally, it is very important to play around with LTSpice to understand how to use it effectively, but the above description should suffice to get you started.
+
+Naturally, it is very important to play around with LTSpice to understand how to use it effectively, but the above description should suffice to get you started.
 </p>
 
 </div>
-<!-- SECTION "LTSpice" [26548-29363] -->
-<h3><a name="ngspice_and_tclspice" id="ngspice_and_tclspice">Ngspice and tclspice</a></h3>
+<!-- EDIT833 SECTION "LTSpice" [26548-29363] -->
+<h3 class="sectionedit834"><a name="ngspice_and_tclspice" id="ngspice_and_tclspice">Ngspice and tclspice</a></h3>
 <div class="level3">
 
 <p>
-Ngspice was started at the University of Rome by Paolo Nenzi as an attempt to create a <acronym title="GNU General Public License">GPL</acronym>‘ed version of the standard Berkeley SPICE version 3 by re-writing the entire SPICE package. Plans were also laid to create better, more robust computational algorithms for the simulation engine. More information is available at the <a href="http://ngspice.sourceforge.net/" class="urlextern" title="http://ngspice.sourceforge.net/"  rel="nofollow">ngspice website</a>. Unfortunately, development on ngspice seems to have ceased at the end of 2001. Moreover, my initial experiences with ngspice were not good &ndash; it crashed and burned when run on many of my netlists, and it couldn’t deal with SPICE 2’s POLY construct in dependent sources. Dependent sources with PLOY attributes are common in vendor models, so this represents a real deficiency.
+Ngspice was started at the University of Rome by Paolo Nenzi as an attempt to create a <acronym title="GNU General Public License">GPL</acronym>&#039;ed version of the standard Berkeley SPICE version 3 by re-writing the entire SPICE package. Plans were also laid to create better, more robust computational algorithms for the simulation engine. More information is available at the <a href="http://ngspice.sourceforge.net/" class="urlextern" title="http://ngspice.sourceforge.net/"  rel="nofollow">ngspice website</a>. Unfortunately, development on ngspice seems to have ceased at the end of 2001. Moreover, my initial experiences with ngspice were not good – it crashed and burned when run on many of my netlists, and it couldn&#039;t deal with SPICE 2&#039;s POLY construct in dependent sources. Dependent sources with PLOY attributes are common in vendor models, so this represents a real deficiency.
 </p>
 
 <p>
 Fortunately, some friendly people at <a href="http://www.multigig.com" class="urlextern" title="http://www.multigig.com"  rel="nofollow">MultiGig Ltd.</a> were busy developing a branch of ngspice which they called “tclspice”. The purpose of tclspice is to enable SPICE commands to be embedded into TCL scripts, thereby enabling automated circuit optimization. The project homepage is at <a href="http://tclspice.sourceforge.net/" class="urlextern" title="http://tclspice.sourceforge.net/"  rel="nofollow">http://tclspice.sourceforge.net/</a>. Since the tclspice branch of the code was alive, I decided to work on it, instead of the seemingly dead main ngspice branch. During spring 2003, I fixed tclspice in three useful (IMNSHO) ways:
 </p>
 <ol>
-<li class="level1"><div class="li"> I fixed the parser so that it would handle netnames with non-numeric/non-alphabetic characters like &quot;+&quot; or &quot;-&quot; which are common in real netlists (e.g. “Vin+&quot;, or “Vout1_pull-up”).</div>
+<li class="level1"><div class="li"> I fixed the parser so that it would handle netnames with non-numeric/non-alphabetic characters like ”+” or ”-” which are common in real netlists (e.g. “Vin+”, or “Vout1_pull-up”).</div>
 </li>
 <li class="level1"><div class="li"> I fixed the parser so that it would correctly handle hierarchical schematics, and correctly deal with the netnames inside the blocks.</div>
 </li>
-<li class="level1"><div class="li"> I got the POLY translation code (which exists in XSPICE) working so that one can now run SPICE 2 netlists with tclspice.</div>
+<li class="level1"><div class="li"> I got the <a href="geda-spice_polys.html" class="wikilink1" title="geda-spice_polys.html">POLY</a> translation code (which exists in XSPICE) working so that one can now run SPICE 2 netlists with tclspice.</div>
 </li>
 </ol>
 
 <p>
- Tclspice seems to work nicely now (although there are still some issues with memory leaks). Moreover, because the tclspice code is a superset of ngspice, <strong>if you build tclspice, you will also build the command-line driven ngspice program</strong>. Therefore, I recommend getting and installing tclspice if you want to do Linux-native SPICE simulations.
+
+Tclspice seems to work nicely now (although there are still some issues with memory leaks). Moreover, because the tclspice code is a superset of ngspice, <strong>if you build tclspice, you will also build the command-line driven ngspice program</strong>. Therefore, I recommend getting and installing tclspice if you want to do Linux-native SPICE simulations.
 </p>
 
 </div>
@@ -801,21 +786,21 @@ To install ngspice and tclspice, do the following:
 </li>
 <li class="level1"><div class="li"> Do the usual “gunzip ; tar -xvf” dance to create a source directory for tclspice.</div>
 </li>
-<li class="level1"><div class="li"> First build ngspice. Do &quot;./configure &ndash;enable-xspice &ndash;prefix=/usr/local/geda” in the source directory. Of course, &quot;&ndash;prefix=&quot; should point to the place where you put your geda stuff. Note that you also must do &quot;&ndash;enable-xspice” to be able to use SPICE 2 POLYs (and other XSpice goodies).</div>
+<li class="level1"><div class="li"> First build ngspice. Do ”./configure –enable-xspice –prefix=/usr/local/geda” in the source directory. Of course, ”–prefix=” should point to the place where you put your geda stuff. Note that you also must do ”–enable-xspice” to be able to use SPICE 2 <a href="geda-spice_polys.html" class="wikilink1" title="geda-spice_polys.html">POLYs</a> (and other XSpice goodies).</div>
 </li>
 <li class="level1"><div class="li"> Do “make &amp;&amp; make install” to compile and install ngspice. As always, you will probably need to be root in order to install the packages in a public directory.</div>
 </li>
-<li class="level1"><div class="li"> At this point, you should be able to use ngspice. You can test your installation by trying one of the test circuits held in the tests directory. I recommend running the TransImpedanceAmp test, since it tests the SPICE2 POLY functionality. Information how to use ngspice is provided in the next section below.</div>
+<li class="level1"><div class="li"> At this point, you should be able to use ngspice. You can test your installation by trying one of the test circuits held in the tests directory. I recommend running the TransImpedanceAmp test, since it tests the SPICE2 <a href="geda-spice_polys.html" class="wikilink1" title="geda-spice_polys.html">POLY</a> functionality. Information how to use ngspice is provided in the next section below.</div>
 </li>
 <li class="level1"><div class="li"> If you only want to use ngspice, you can stop now. Otherwise, next build tclspice. To build tclspice, you need to have the following other packages already installed:<br/>
- <br/>
- * TclX (tclx8.3.5 works for me.)<br/>
- * tclreadline (tclreadline-2.1.0 works for me.)<br/>
- * BLT for TCL (blt2.4z works for me.)<br/>
- <br/>
- If you don’t have these packages already on your Linux box, you need to get them and build them. Note that building TclX requires having the sources for TCL and Tk, so you will also need to get those sources if you don’t have them installed already. I am running successfully with TCL/Tk 8.4.3, although 8.3.X versions are also supposed to work.</div>
+<br/>
+* TclX (tclx8.3.5 works for me.)<br/>
+* tclreadline (tclreadline-2.1.0 works for me.)<br/>
+* BLT for TCL (blt2.4z works for me.)<br/>
+<br/>
+If you don&#039;t have these packages already on your Linux box, you need to get them and build them. Note that building TclX requires having the sources for TCL and Tk, so you will also need to get those sources if you don&#039;t have them installed already. I am running successfully with TCL/Tk 8.4.3, although 8.3.X versions are also supposed to work.</div>
 </li>
-<li class="level1"><div class="li"> Assuming you have gotten the additional packages mentioned above installed, Do &quot;./configure &ndash;enable-xspice &ndash;prefix=/usr/local/geda &ndash;enable-tcl &ndash;enable-experimental &ndash;disable-shared” to configure the Makefiles for tclspice. (If you don’t have the additional packages installed correctly , configure will complain and barf, so this step acts as a check on your installation.)</div>
+<li class="level1"><div class="li"> Assuming you have gotten the additional packages mentioned above installed, Do ”./configure –enable-xspice –prefix=/usr/local/geda –enable-tcl –enable-experimental –disable-shared” to configure the Makefiles for tclspice. (If you don&#039;t have the additional packages installed correctly , configure will complain and barf, so this step acts as a check on your installation.)</div>
 </li>
 <li class="level1"><div class="li"> Do “make tcl &amp;&amp; make install-tcl” to compile and install tclspice.</div>
 </li>
@@ -824,7 +809,8 @@ To install ngspice and tclspice, do the following:
 </ol>
 
 <p>
- Finally, if you are interested in hacking tclspice (or even if you are not), it’s a good idea to read the NOTES file living in the top source directory for a couple of useful pointers.
+
+Finally, if you are interested in hacking tclspice (or even if you are not), it&#039;s a good idea to read the NOTES file living in the top source directory for a couple of useful pointers.
 </p>
 
 </div>
@@ -834,8 +820,10 @@ To install ngspice and tclspice, do the following:
 
 <p>
 Running ngspice is very simple. Just issue the command “ngspice filename.net” at the unix command prompt, and ngspice will load the SPICE netlist called “filename.net” into its workspace, and leave you at an ngspice command prompt. You can run the simulator by saying “run”. Your results will be stored in SPICE vectors for later printing or plotting. The command set available to you is documented at <a href="http://newton.ex.ac.uk/teaching/CDHW/Electronics2/userguide/sec5.html#5" class="urlextern" title="http://newton.ex.ac.uk/teaching/CDHW/Electronics2/userguide/sec5.html#5"  rel="nofollow">http://newton.ex.ac.uk/teaching/CDHW/Electronics2/userguide/sec5.html#5</a>.<br/>
- To make use of the SPICE2 POLY codemodel, you need to load it into ngspice <strong>before</strong> you load your netlist. (If you load it after loading your netlist, POLYs in your netlist are not translated, and therefore won’t be simulated correctly.) To load the codemodel, just say “codemodel /usr/local/src/tclspice-0.2.12/src/xspice/icm/spice2poly.cm” at the ngspice prompt. Note that you must provide the <strong>absolute path</strong> to the location of the codemodel; ngspice isn’t smart enough to look for it in any default locations. (Also note that you should specify the location where spice2poly.cm lives on your machine; the path above is for mine.)<br/>
- A better way to read in the spice2poly codemodel is to include it in the ngspice initialization file, “spinit”. The initialization file lives in the directory /usr/local/geda/share/ng-spice-rework/scripts (or where ever you placed your geda installation). Other ngspice customizations may also be placed into the spinit file.
+
+To make use of the SPICE2 <a href="geda-spice_polys.html" class="wikilink1" title="geda-spice_polys.html">POLY</a> codemodel, you need to load it into ngspice <strong>before</strong> you load your netlist. (If you load it after loading your netlist, <a href="geda-spice_polys.html" class="wikilink1" title="geda-spice_polys.html">POLYs</a> in your netlist are not translated, and therefore won&#039;t be simulated correctly.) To load the codemodel, just say “codemodel /usr/local/src/tclspice-0.2.12/src/xspice/icm/spice2poly.cm” at the ngspice prompt. Note that you must provide the <strong>absolute path</strong> to the location of the codemodel; ngspice isn&#039;t smart enough to look for it in any default locations. (Also note that you should specify the location where spice2poly.cm lives on your machine; the path above is for mine.)<br/>
+
+A better way to read in the spice2poly codemodel is to include it in the ngspice initialization file, “spinit”. The initialization file lives in the directory /usr/local/geda/share/ng-spice-rework/scripts (or where ever you placed your geda installation). Other ngspice customizations may also be placed into the spinit file.
 </p>
 
 </div>
@@ -845,7 +833,9 @@ Running ngspice is very simple. Just issue the command “ngspice filename.net�
 
 <p>
 The tclspice package is a superset of ngspice. Not only does the package include the ngspice interactive environment; tclspice also provides a facility which exports the ngspice command set as TCL commands for inclusion into a TCL script. This is a very powerful tool: With tclspice you can write a TCL script which runs a loop, tweaks component values, runs an analysis, and then evaluates the circuit performance with the tweaked components before looping again. Obviously, this ability can be used to perform automated, multi-dimensional circuit optimization.<br/>
- To use tclspice, you just need to say “package require spice” at the beginning of your TCL program. Thereafter, to invoke a SPICE command, you just call it in the spice namesapce. For example, the following TCL program will read in a SPICE netlist, command a transient analysis, run the simulation, and then plot the voltage observed over time on net Vout: 
+
+To use tclspice, you just need to say “package require spice” at the beginning of your TCL program. Thereafter, to invoke a SPICE command, you just call it in the spice namesapce. For example, the following TCL program will read in a SPICE netlist, command a transient analysis, run the simulation, and then plot the voltage observed over time on net Vout:
+
 </p>
 <pre class="code">#! tclsh
 package require spice
@@ -858,9 +848,12 @@ spice::plot Vout
 puts &quot;All done now!&quot;</pre>
 
 <p>
-Note that since tclspice doesn’t read the ngspice initialization file “spinit”, you will need to put any initialization commands directly into the TCL program. For example, in the above example we read the spice2poly codemodel directly into the workspace. Many other commands are also available; the entire tclspice commandset is documented at <a href="http://tclspice.sourceforge.net/docs/tclspice_com.html" class="urlextern" title="http://tclspice.sourceforge.net/docs/tclspice_com.html"  rel="nofollow">http://tclspice.sourceforge.net/docs/tclspice_com.html</a>.<br/>
- A major problem with tclspice (which was inherited from ngspice) is that it leaks memory. Therefore, the time over which you may run a simulation is limited. This means that if you want to do an optimization by looping through a circuit many, many times, you may run out of memory before your program has completed its optimization. This is a known issue with tclspice, and efforts are underway to plug the leaks.<br/>
- Meanwhile, there are some workarounds which can be used on moderate-sized designs to facilitate long optimization runs. One method I have employed is to have the optimizer write its current state into a file after every circuit analysis, and read its starting state from the same file. The optimizer also stores the current list of best components in another file, and reads this file at the start of every run. Then, I have a TCL program called TaskMgr.tcl which runs in a loop; at each iteration of the loop it forks a child process to run the optimizer. Meanwhile, the parent process waits for 5 minutes (a heuristically determined time), and then issues a “KILL” signal to the child before looping and starting the optimizer again. This way, the optimizer never runs long enough to consume all the memory in my machine. The TaskMgr.tcl program is shown here: 
+Note that since tclspice doesn&#039;t read the ngspice initialization file “spinit”, you will need to put any initialization commands directly into the TCL program. For example, in the above example we read the spice2poly codemodel directly into the workspace. Many other commands are also available; the entire tclspice commandset is documented at <a href="http://tclspice.sourceforge.net/docs/tclspice_com.html" class="urlextern" title="http://tclspice.sourceforge.net/docs/tclspice_com.html"  rel="nofollow">http://tclspice.sourceforge.net/docs/tclspice_com.html</a>.<br/>
+
+A major problem with tclspice (which was inherited from ngspice) is that it leaks memory. Therefore, the time over which you may run a simulation is limited. This means that if you want to do an optimization by looping through a circuit many, many times, you may run out of memory before your program has completed its optimization. This is a known issue with tclspice, and efforts are underway to plug the leaks.<br/>
+
+Meanwhile, there are some workarounds which can be used on moderate-sized designs to facilitate long optimization runs. One method I have employed is to have the optimizer write its current state into a file after every circuit analysis, and read its starting state from the same file. The optimizer also stores the current list of best components in another file, and reads this file at the start of every run. Then, I have a TCL program called TaskMgr.tcl which runs in a loop; at each iteration of the loop it forks a child process to run the optimizer. Meanwhile, the parent process waits for 5 minutes (a heuristically determined time), and then issues a “KILL” signal to the child before looping and starting the optimizer again. This way, the optimizer never runs long enough to consume all the memory in my machine. The TaskMgr.tcl program is shown here:
+
 </p>
 <pre class="code">#! tclsh
 package require Tclx
@@ -887,181 +880,187 @@ while {1} {
 }</pre>
 
 <p>
-Note that TaskMgr.tcl needs the TclX package you already installed to run tclspice. Also, you may want to change the wait time to a different value depending upon the memory and speed of your machine. Finally, the parent has to wait on $PID because that causes the child process’s corpse to be taken off the Linux kernal’s task list when it dies. Otherwise, you will end up with a lot of zombie processes lurking around your machine as the optimizer runs &ndash; a long optimization could turn your system into “the night of the living dead”!<br/>
- This method of waiting a specific amout of time for the child process is preferable if a single analysis run takes a relativly short time compared to the time required to eat all memory in the machine. If the analysis time is comparable to the time taken to eat all memory in the machine, a better approach is to have the parent keep track of the analysis state, kick off a single analysis run, and then have the run terminate after every iteration. Whether this is preferable depends upon the size and complexity of your design; you may want to experiment with your analysis to see just how long it takes and how much memory it consumes. I have found that a design comprised of six op amps (with corresponding vendor models) and 50 or so passives will run in under 10 seconds on a PIII 333MHz with 128MB RAM. Therefore, your design must be very big before a single analysis will eat a significant amount of RAM.
+Note that TaskMgr.tcl needs the TclX package you already installed to run tclspice. Also, you may want to change the wait time to a different value depending upon the memory and speed of your machine. Finally, the parent has to wait on $PID because that causes the child process&#039;s corpse to be taken off the Linux kernal&#039;s task list when it dies. Otherwise, you will end up with a lot of zombie processes lurking around your machine as the optimizer runs – a long optimization could turn your system into “the night of the living dead”!<br/>
+
+This method of waiting a specific amout of time for the child process is preferable if a single analysis run takes a relativly short time compared to the time required to eat all memory in the machine. If the analysis time is comparable to the time taken to eat all memory in the machine, a better approach is to have the parent keep track of the analysis state, kick off a single analysis run, and then have the run terminate after every iteration. Whether this is preferable depends upon the size and complexity of your design; you may want to experiment with your analysis to see just how long it takes and how much memory it consumes. I have found that a design comprised of six op amps (with corresponding vendor models) and 50 or so passives will run in under 10 seconds on a PIII 333MHz with 128MB RAM. Therefore, your design must be very big before a single analysis will eat a significant amount of RAM.
 </p>
 
 </div>
-<!-- SECTION "Ngspice and tclspice" [29364-40393] -->
-<h2><a name="appendix" id="appendix">Appendix</a></h2>
+<!-- EDIT834 SECTION "Ngspice and tclspice" [29364-40473] -->
+<h2 class="sectionedit835"><a name="appendix" id="appendix">Appendix</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Appendix" [40394-40415] -->
-<h3><a name="component_attribute_summary" id="component_attribute_summary">Component attribute summary</a></h3>
+<!-- EDIT835 SECTION "Appendix" [40474-40495] -->
+<h3 class="sectionedit836"><a name="component_attribute_summary" id="component_attribute_summary">Component attribute summary</a></h3>
 <div class="level3">
 
 <p>
-Native components and their attributes are given in the table below. <strong>Bold faced</strong> attributes are <strong>required</strong>, normal typeface attributes are optional. Note that the “device” attribute is invisible, and is normally attached to the symbol when it is created. The other attributes are attached to the symbol during schematic capture using gschem. 
-</p>
-<table class="inline">
-	<tr>
-		<th><strong><code>device</code></strong></th><th><strong><code>refdes</code></strong></th><th><strong><code>value</code></strong></th><th><strong><code>model</code></strong></th><th><strong><code>file</code></strong></th><th><strong><code>model-name</code></strong></th><th><strong><code>type</code></strong></th><th>Comment</th>
-	</tr>
-	<tr>
-		<td><strong>RESISTOR</strong></td><td><strong>R?</strong></td><td><strong>Numeric comp. value</strong></td><td>One line of spice model parameters (e.g. TC)</td><td> </td><td>Name of model.</td><td> </td><td>“model” parameters are placed inside parentheses after the component value.</td>
-	</tr>
-	<tr>
-		<td><strong>CAPACITOR</strong></td><td><strong>C?</strong></td><td><strong>Numeric comp. value</strong></td><td>One line of spice model parameters (e.g. IC, POLY, etc.)</td><td> </td><td>Name of model.</td><td> </td><td>“model” parameters are placed inside parentheses after the component value.</td>
-	</tr>
-	<tr>
-		<td><strong>POLARIZED_CAPACITOR</strong></td><td><strong>C?</strong></td><td><strong>Numeric comp. value</strong></td><td>One line of spice model parameters (e.g. IC, POLY, etc.)</td><td> </td><td>Name of model.</td><td> </td><td>“model” parameters are placed inside parentheses after the component value.</td>
-	</tr>
-	<tr>
-		<td><strong>INDUCTOR</strong></td><td><strong>L?</strong></td><td><strong>Numeric comp. value</strong></td><td>One line of spice model parameters (e.g. IC, POLY, etc.)</td><td> </td><td>Name of model.</td><td> </td><td>“model” parameters are placed inside parentheses after the component value.</td>
-	</tr>
-	<tr>
-		<td><strong>SPICE-ccvs</strong></td><td><strong>H?</strong></td><td><strong>String describing source behavior</strong></td><td> </td><td> </td><td> </td><td> </td><td> </td>
-	</tr>
-	<tr>
-		<td><strong>SPICE-cccs</strong></td><td><strong>F?</strong></td><td><strong>String describing source behavior</strong></td><td> </td><td> </td><td> </td><td> </td><td> </td>
-	</tr>
-	<tr>
-		<td><strong>SPICE-vcvs</strong></td><td><strong>E?</strong></td><td><strong>String describing source behavior</strong></td><td> </td><td> </td><td> </td><td> </td><td> </td>
-	</tr>
-	<tr>
-		<td><strong>SPICE-vccs</strong></td><td><strong>G?</strong></td><td><strong>String describing source behavior</strong></td><td> </td><td> </td><td> </td><td> </td><td> </td>
-	</tr>
-	<tr>
-		<td><strong>SPICE-nullor</strong></td><td><strong>E?</strong></td><td><strong>String describing source behavior</strong></td><td> </td><td> </td><td> </td><td> </td><td> </td>
-	</tr>
-	<tr>
-		<td><strong>DIODE</strong></td><td><strong>D?</strong></td><td>Part number</td><td>One line SPICE model.</td><td>Model file name.</td><td><strong>Name of model.</strong></td><td> </td><td>For modeling, one must include either “model” or “file”.</td>
-	</tr>
-	<tr>
-		<td><strong>PMOS_TRANSISTOR</strong></td><td><strong>M?</strong></td><td>Part number</td><td>One line SPICE model.</td><td>Model file name.</td><td><strong>Name of model.</strong></td><td> </td><td>For modeling, one must include either “model” or “file”.</td>
-	</tr>
-	<tr>
-		<td><strong>NMOS_TRANSISTOR</strong></td><td><strong>M?</strong></td><td>Part number</td><td>One line SPICE model.</td><td>Model file name.</td><td><strong>Name of model.</strong></td><td> </td><td>For modeling, one must include either “model” or “file”.</td>
-	</tr>
-	<tr>
-		<td><strong>PNP_TRANSISTOR</strong></td><td><strong>Q?</strong></td><td>Part number</td><td>One line SPICE model.</td><td>Model file name.</td><td><strong>Name of model.</strong></td><td> </td><td>For modeling, one must include either “model” or “file”.</td>
-	</tr>
-	<tr>
-		<td><strong>NPN_TRANSISTOR</strong></td><td><strong>Q?</strong></td><td>Part number</td><td>One line SPICE model.</td><td>Model file name.</td><td><strong>Name of model.</strong></td><td> </td><td>For modeling, one must include either “model” or “file”.</td>
-	</tr>
-	<tr>
-		<td><strong>PFET_TRANSISTOR (JFET)</strong></td><td><strong>J?</strong></td><td>Part number</td><td>One line SPICE model.</td><td>Model file name.</td><td><strong>Name of model.</strong></td><td> </td><td>For modeling, one must include either “model” or “file”.</td>
-	</tr>
-	<tr>
-		<td><strong>NFET_TRANSISTOR (JFET)</strong></td><td><strong>J?</strong></td><td>Part number</td><td>One line SPICE model.</td><td>Model file name.</td><td><strong>Name of model.</strong></td><td> </td><td>For modeling, one must include either “model” or “file”.</td>
-	</tr>
-	<tr>
-		<td><strong>MESFET_TRANSISTOR</strong></td><td><strong>B?</strong></td><td>Part number</td><td>One line SPICE model.</td><td>Model file name.</td><td><strong>Name of model.</strong></td><td> </td><td>For modeling, one must include either “model” or “file”.</td>
-	</tr>
-	<tr>
-		<td><strong>IC</strong></td><td><strong>U?</strong></td><td>Part number</td><td>One line SPICE model.</td><td>Model file name.</td><td><strong>Name of model.</strong></td><td> </td><td>IC with .MODEL file</td>
-	</tr>
-	<tr>
-		<td><strong>IC</strong></td><td><strong>X?</strong></td><td>Part number</td><td> </td><td>Model file name.</td><td><strong>Name of model.</strong></td><td> </td><td>IC with .SUBCKT file</td>
-	</tr>
-	<tr>
-		<td><strong>model</strong></td><td colspan="2"><strong>A?</strong></td><td>One line spice model</td><td>Model file name.</td><td><strong>Name of model pointed to by other components.</strong></td><td><strong>Corresponding SPICE model type (valid types given below)</strong>.</td><td>For modeling, one must include either “model” or “file”.</td>
-	</tr>
-	<tr>
-		<td><strong>include</strong></td><td><strong>A?</strong></td><td> </td><td> </td><td><strong>Include file name.</strong></td><td> </td><td> </td><td>Places .INCLUDE directive in SPICE netlist.</td>
-	</tr>
-	<tr>
-		<td><strong>options</strong></td><td><strong>A?</strong></td><td><strong>Line of options to include.</strong></td><td> </td><td> </td><td> </td><td> </td><td>Places .OPTIONS directive in SPICE netlist.</td>
-	</tr>
-	<tr>
-		<td><strong>directive</strong></td><td><strong>A?</strong></td><td><strong>One line string holding SPICE statements for inclusion in netlist.</strong></td><td> </td><td> </td><td> </td><td> </td><td>For modeling, one must include either “model” or “file”.</td>
-	</tr>
-	<tr>
-		<td><strong>VOLTAGE_SOURCE</strong></td><td><strong>V?</strong></td><td><strong>One line string holding voltage source behavior.</strong></td><td> </td><td> </td><td> </td><td> </td><td>Independent voltage source</td>
-	</tr>
-	<tr>
-		<td><strong>CURRENT_SOURCE</strong></td><td><strong>I?</strong></td><td><strong>One line string holding current source behavior.</strong></td><td> </td><td> </td><td> </td><td> </td><td>Independent current source</td>
-	</tr>
-</table>
+Native components and their attributes are given in the table below. <strong>Bold faced</strong> attributes are <strong>required</strong>, normal typeface attributes are optional. Note that the “device” attribute is invisible, and is normally attached to the symbol when it is created. The other attributes are attached to the symbol during schematic capture using gschem.
 
+</p>
+<div class="table sectionedit837"><table class="inline">
+	<tr class="row0">
+		<th class="col0"><strong><code>device</code></strong></th><th class="col1"><strong><code>refdes</code></strong></th><th class="col2"><strong><code>value</code></strong></th><th class="col3"><strong><code>model</code></strong></th><th class="col4"><strong><code>file</code></strong></th><th class="col5"><strong><code>model-name</code></strong></th><th class="col6"><strong><code>type</code></strong></th><th class="col7">Comment</th>
+	</tr>
+	<tr class="row1">
+		<td class="col0"><strong>RESISTOR</strong></td><td class="col1"><strong>R?</strong></td><td class="col2"><strong>Numeric comp. value</strong></td><td class="col3">One line of spice model parameters (e.g. TC)</td><td class="col4"> </td><td class="col5">Name of model.</td><td class="col6"> </td><td class="col7">“model” parameters are placed inside parentheses after the component value.</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"><strong>CAPACITOR</strong></td><td class="col1"><strong>C?</strong></td><td class="col2"><strong>Numeric comp. value</strong></td><td class="col3">One line of spice model parameters (e.g. IC, POLY, etc.)</td><td class="col4"> </td><td class="col5">Name of model.</td><td class="col6"> </td><td class="col7">“model” parameters are placed inside parentheses after the component value.</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"><strong>POLARIZED_CAPACITOR</strong></td><td class="col1"><strong>C?</strong></td><td class="col2"><strong>Numeric comp. value</strong></td><td class="col3">One line of spice model parameters (e.g. IC, POLY, etc.)</td><td class="col4"> </td><td class="col5">Name of model.</td><td class="col6"> </td><td class="col7">“model” parameters are placed inside parentheses after the component value.</td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"><strong>INDUCTOR</strong></td><td class="col1"><strong>L?</strong></td><td class="col2"><strong>Numeric comp. value</strong></td><td class="col3">One line of spice model parameters (e.g. IC, POLY, etc.)</td><td class="col4"> </td><td class="col5">Name of model.</td><td class="col6"> </td><td class="col7">“model” parameters are placed inside parentheses after the component value.</td>
+	</tr>
+	<tr class="row5">
+		<td class="col0"><strong>SPICE-ccvs</strong></td><td class="col1"><strong>H?</strong></td><td class="col2"><strong>String describing source behavior</strong></td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td><td class="col7"> </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0"><strong>SPICE-cccs</strong></td><td class="col1"><strong>F?</strong></td><td class="col2"><strong>String describing source behavior</strong></td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td><td class="col7"> </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0"><strong>SPICE-vcvs</strong></td><td class="col1"><strong>E?</strong></td><td class="col2"><strong>String describing source behavior</strong></td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td><td class="col7"> </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0"><strong>SPICE-vccs</strong></td><td class="col1"><strong>G?</strong></td><td class="col2"><strong>String describing source behavior</strong></td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td><td class="col7"> </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0"><strong>SPICE-nullor</strong></td><td class="col1"><strong>E?</strong></td><td class="col2"><strong>String describing source behavior</strong></td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td><td class="col7"> </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0"><strong>DIODE</strong></td><td class="col1"><strong>D?</strong></td><td class="col2">Part number</td><td class="col3">One line SPICE model.</td><td class="col4">Model file name.</td><td class="col5"><strong>Name of model.</strong></td><td class="col6"> </td><td class="col7">For modeling, one must include either “model” or “file”.</td>
+	</tr>
+	<tr class="row11">
+		<td class="col0"><strong>PMOS_TRANSISTOR</strong></td><td class="col1"><strong>M?</strong></td><td class="col2">Part number</td><td class="col3">One line SPICE model.</td><td class="col4">Model file name.</td><td class="col5"><strong>Name of model.</strong></td><td class="col6"> </td><td class="col7">For modeling, one must include either “model” or “file”.</td>
+	</tr>
+	<tr class="row12">
+		<td class="col0"><strong>NMOS_TRANSISTOR</strong></td><td class="col1"><strong>M?</strong></td><td class="col2">Part number</td><td class="col3">One line SPICE model.</td><td class="col4">Model file name.</td><td class="col5"><strong>Name of model.</strong></td><td class="col6"> </td><td class="col7">For modeling, one must include either “model” or “file”.</td>
+	</tr>
+	<tr class="row13">
+		<td class="col0"><strong>PNP_TRANSISTOR</strong></td><td class="col1"><strong>Q?</strong></td><td class="col2">Part number</td><td class="col3">One line SPICE model.</td><td class="col4">Model file name.</td><td class="col5"><strong>Name of model.</strong></td><td class="col6"> </td><td class="col7">For modeling, one must include either “model” or “file”.</td>
+	</tr>
+	<tr class="row14">
+		<td class="col0"><strong>NPN_TRANSISTOR</strong></td><td class="col1"><strong>Q?</strong></td><td class="col2">Part number</td><td class="col3">One line SPICE model.</td><td class="col4">Model file name.</td><td class="col5"><strong>Name of model.</strong></td><td class="col6"> </td><td class="col7">For modeling, one must include either “model” or “file”.</td>
+	</tr>
+	<tr class="row15">
+		<td class="col0"><strong>PFET_TRANSISTOR (JFET)</strong></td><td class="col1"><strong>J?</strong></td><td class="col2">Part number</td><td class="col3">One line SPICE model.</td><td class="col4">Model file name.</td><td class="col5"><strong>Name of model.</strong></td><td class="col6"> </td><td class="col7">For modeling, one must include either “model” or “file”.</td>
+	</tr>
+	<tr class="row16">
+		<td class="col0"><strong>NFET_TRANSISTOR (JFET)</strong></td><td class="col1"><strong>J?</strong></td><td class="col2">Part number</td><td class="col3">One line SPICE model.</td><td class="col4">Model file name.</td><td class="col5"><strong>Name of model.</strong></td><td class="col6"> </td><td class="col7">For modeling, one must include either “model” or “file”.</td>
+	</tr>
+	<tr class="row17">
+		<td class="col0"><strong>MESFET_TRANSISTOR</strong></td><td class="col1"><strong>B?</strong></td><td class="col2">Part number</td><td class="col3">One line SPICE model.</td><td class="col4">Model file name.</td><td class="col5"><strong>Name of model.</strong></td><td class="col6"> </td><td class="col7">For modeling, one must include either “model” or “file”.</td>
+	</tr>
+	<tr class="row18">
+		<td class="col0"><strong>IC</strong></td><td class="col1"><strong>U?</strong></td><td class="col2">Part number</td><td class="col3">One line SPICE model.</td><td class="col4">Model file name.</td><td class="col5"><strong>Name of model.</strong></td><td class="col6"> </td><td class="col7">IC with .MODEL file</td>
+	</tr>
+	<tr class="row19">
+		<td class="col0"><strong>IC</strong></td><td class="col1"><strong>X?</strong></td><td class="col2">Part number</td><td class="col3"> </td><td class="col4">Model file name.</td><td class="col5"><strong>Name of model.</strong></td><td class="col6"> </td><td class="col7">IC with .SUBCKT file</td>
+	</tr>
+	<tr class="row20">
+		<td class="col0"><strong>model</strong></td><td class="col1" colspan="2"><strong>A?</strong></td><td class="col3">One line spice model</td><td class="col4">Model file name.</td><td class="col5"><strong>Name of model pointed to by other components.</strong></td><td class="col6"><strong>Corresponding SPICE model type (valid types given below)</strong>.</td><td class="col7">For modeling, one must include either “model” or “file”.</td>
+	</tr>
+	<tr class="row21">
+		<td class="col0"><strong>include</strong></td><td class="col1"><strong>A?</strong></td><td class="col2"> </td><td class="col3"> </td><td class="col4"><strong>Include file name.</strong></td><td class="col5"> </td><td class="col6"> </td><td class="col7">Places .INCLUDE directive in SPICE netlist.</td>
+	</tr>
+	<tr class="row22">
+		<td class="col0"><strong>options</strong></td><td class="col1"><strong>A?</strong></td><td class="col2"><strong>Line of options to include.</strong></td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td><td class="col7">Places .OPTIONS directive in SPICE netlist.</td>
+	</tr>
+	<tr class="row23">
+		<td class="col0"><strong>directive</strong></td><td class="col1"><strong>A?</strong></td><td class="col2"><strong>One line string holding SPICE statements for inclusion in netlist.</strong></td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td><td class="col7">For modeling, one must include either “model” or “file”.</td>
+	</tr>
+	<tr class="row24">
+		<td class="col0"><strong>VOLTAGE_SOURCE</strong></td><td class="col1"><strong>V?</strong></td><td class="col2"><strong>One line string holding voltage source behavior.</strong></td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td><td class="col7">Independent voltage source</td>
+	</tr>
+	<tr class="row25">
+		<td class="col0"><strong>CURRENT_SOURCE</strong></td><td class="col1"><strong>I?</strong></td><td class="col2"><strong>One line string holding current source behavior.</strong></td><td class="col3"> </td><td class="col4"> </td><td class="col5"> </td><td class="col6"> </td><td class="col7">Independent current source</td>
+	</tr>
+</table></div>
+<!-- EDIT837 TABLE [40882-44432] -->
 <p>
- “Native to the netlister” means that there is a corresponding blob of scheme code which knows exactly how to handle these components and is guaranteed (almost) to generate correct spice code. Symbols having “device” attributes not on the above list are handled using the scheme function “spice-sdb:write-default-component”, which looks at the refdes of the component to make a decision about how to treat the component. In general, this function will “do the right thing” when generating spice code, but it is not guaranteed. In particular, this function cannot distinguish between N and P type transistors, and will generate an &lt;unknown&gt; type for the .MODEL string in the netlist. This will probably cause your SPICE simulator to barf. Therefore, it is best to make sure that all devices used have the proper “device” attribute.
+
+“Native to the netlister” means that there is a corresponding blob of scheme code which knows exactly how to handle these components and is guaranteed (almost) to generate correct spice code. Symbols having “device” attributes not on the above list are handled using the scheme function “spice-sdb:write-default-component”, which looks at the refdes of the component to make a decision about how to treat the component. In general, this function will “do the right thing” when generating spice code, but it is not guaranteed. In particular, this function cannot distinguish between N and P type transistors, and will generate an &lt;unknown&gt; type for the .MODEL string in the netlist. This will probably cause your SPICE simulator to barf. Therefore, it is best to make sure that all devices used have the proper “device” attribute.
 </p>
 
 </div>
-<!-- SECTION "Component attribute summary" [40416-45184] -->
-<h3><a name="valid_type_values" id="valid_type_values">Valid &quot;type&quot; values</a></h3>
+<!-- EDIT836 SECTION "Component attribute summary" [40496-45264] -->
+<h3 class="sectionedit838"><a name="valid_type_values" id="valid_type_values">Valid &quot;type&quot; values</a></h3>
 <div class="level3">
 
 <p>
-The “type” attribute is a flag signaling the spice engine the component type, and prepares it to accept model parameters specific to that component type. The following values are valid SPICE “type”s: 
-</p>
-<table class="inline">
-	<tr>
-		<th>Component</th><th>“type”</th><th>Comment</th>
-	</tr>
-	<tr>
-		<td>RESISTOR</td><td>RES</td><td> </td>
-	</tr>
-	<tr>
-		<td>CAPACITOR</td><td>CAP</td><td> </td>
-	</tr>
-	<tr>
-		<td>POLARIZED_CAPACITOR</td><td>CAP</td><td> </td>
-	</tr>
-	<tr>
-		<td>INDUCTOR</td><td>IND</td><td> </td>
-	</tr>
-	<tr>
-		<td>DIODE</td><td>D</td><td> </td>
-	</tr>
-	<tr>
-		<td>PMOS_TRANSISTOR</td><td>PMOS</td><td> </td>
-	</tr>
-	<tr>
-		<td>NMOS_TRANSISTOR</td><td>NMOS</td><td> </td>
-	</tr>
-	<tr>
-		<td>PNP_TRANSISTOR</td><td>PNP</td><td> </td>
-	</tr>
-	<tr>
-		<td>NPN_TRANSISTOR</td><td>NPN</td><td> </td>
-	</tr>
-	<tr>
-		<td>PFET_TRANSISTOR</td><td>PJF</td><td> </td>
-	</tr>
-	<tr>
-		<td>NFET_TRANSISTOR</td><td>NJF</td><td> </td>
-	</tr>
-	<tr>
-		<td>MESFET_TRANSISTOR</td><td> </td><td> </td>
-	</tr>
-</table>
+The “type” attribute is a flag signaling the spice engine the component type, and prepares it to accept model parameters specific to that component type. The following values are valid SPICE “type”s:
 
+</p>
+<div class="table sectionedit839"><table class="inline">
+	<tr class="row0">
+		<th class="col0">Component</th><th class="col1">“type”</th><th class="col2">Comment</th>
+	</tr>
+	<tr class="row1">
+		<td class="col0">RESISTOR</td><td class="col1">RES</td><td class="col2"> </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0">CAPACITOR</td><td class="col1">CAP</td><td class="col2"> </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0">POLARIZED_CAPACITOR</td><td class="col1">CAP</td><td class="col2"> </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0">INDUCTOR</td><td class="col1">IND</td><td class="col2"> </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0">DIODE</td><td class="col1">D</td><td class="col2"> </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0">PMOS_TRANSISTOR</td><td class="col1">PMOS</td><td class="col2"> </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0">NMOS_TRANSISTOR</td><td class="col1">NMOS</td><td class="col2"> </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0">PNP_TRANSISTOR</td><td class="col1">PNP</td><td class="col2"> </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0">NPN_TRANSISTOR</td><td class="col1">NPN</td><td class="col2"> </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0">PFET_TRANSISTOR</td><td class="col1">PJF</td><td class="col2"> </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0">NFET_TRANSISTOR</td><td class="col1">NJF</td><td class="col2"> </td>
+	</tr>
+	<tr class="row12">
+		<td class="col0">MESFET_TRANSISTOR</td><td class="col1"> </td><td class="col2"> </td>
+	</tr>
+</table></div>
+<!-- EDIT839 TABLE [45496-45782] -->
 </div>
-<!-- SECTION "Valid type values" [45185-45703] -->
-<h2><a name="document_history" id="document_history">Document History</a></h2>
+<!-- EDIT838 SECTION "Valid type values" [45265-45783] -->
+<h2 class="sectionedit840"><a name="document_history" id="document_history">Document History</a></h2>
 <div class="level2">
-<table class="inline">
-	<tr>
-		<td>Revision 1.0</td><td>3.10.2003</td><td>SDB</td><td>Document creation.</td>
+<div class="table sectionedit841"><table class="inline">
+	<tr class="row0">
+		<td class="col0">Revision 1.0</td><td class="col1">3.10.2003</td><td class="col2">SDB</td><td class="col3">Document creation.</td>
 	</tr>
-	<tr>
-		<td>Revision 1.1</td><td>3.19.2003</td><td>SDB</td><td>Added .SUBCKT stuff &amp; stuff about LTSpice</td>
+	<tr class="row1">
+		<td class="col0">Revision 1.1</td><td class="col1">3.19.2003</td><td class="col2">SDB</td><td class="col3">Added .SUBCKT stuff &amp; stuff about LTSpice</td>
 	</tr>
-	<tr>
-		<td>Revision 1.2</td><td>3.31.2003</td><td>SDB</td><td>Added stuff about creating hierarchical projects (i.e. creating .SUBCKTs using gschem and incorporating a lower level .SUBCKT into a higher level schematic).</td>
+	<tr class="row2">
+		<td class="col0">Revision 1.2</td><td class="col1">3.31.2003</td><td class="col2">SDB</td><td class="col3">Added stuff about creating hierarchical projects (i.e. creating .SUBCKTs using gschem and incorporating a lower level .SUBCKT into a higher level schematic).</td>
 	</tr>
-	<tr>
-		<td>Revision 2.0</td><td>7.23.2003</td><td>SDB</td><td>Split doc into sections. Edited netlisting stuff to correspond to gEDA-20030525, which now includes spice-sdb in the distribution. Added new section about ngspice/tclspice.</td>
+	<tr class="row3">
+		<td class="col0">Revision 2.0</td><td class="col1">7.23.2003</td><td class="col2">SDB</td><td class="col3">Split doc into sections. Edited netlisting stuff to correspond to gEDA-20030525, which now includes spice-sdb in the distribution. Added new section about ngspice/tclspice.</td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT841 TABLE [45813-46320] -->
 <p>
- The most recent copy of this document is always available at <a href="http://www.brorson.com/gEDA/SPICE/" class="urlextern" title="http://www.brorson.com/gEDA/SPICE/"  rel="nofollow">http://www.brorson.com/gEDA/SPICE/</a> 
+
+The most recent copy of this document is always available at <a href="http://www.brorson.com/gEDA/SPICE/" class="urlextern" title="http://www.brorson.com/gEDA/SPICE/"  rel="nofollow">http://www.brorson.com/gEDA/SPICE/</a>
+
 </p>
 
 </div>
-<!-- SECTION "Document History" [45704-] --></body>
+<!-- EDIT840 SECTION "Document History" [45784-] --></body>
 </html>

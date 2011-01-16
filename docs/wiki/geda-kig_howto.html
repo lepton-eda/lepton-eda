@@ -11,41 +11,13 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#how_to_setup_keymapping_in_gschem" class="toc">How To Setup Keymapping In gschem</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#about_this_document" class="toc">About this document</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#functionality" class="toc">Functionality</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#keymaps" class="toc">Keymaps</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#an_example_on_keymaps" class="toc">An example on keymaps</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#description_of_keys" class="toc">Description of keys</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#actions" class="toc">Actions</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#function_calls" class="toc">Function calls</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#another_keymap" class="toc">Another keymap</a></span></div></li>
-</ul>
-</li>
-<li class="level2"><div class="li"><span class="li"><a href="#where_are_the_key_mappings_stored" class="toc">Where are the key mappings stored</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#appendix_a_--_dictionary" class="toc">Appendix A -- Dictionary</a></span></div></li>
-</ul>
-</li>
-<li class="level2"><div class="li"><span class="li"><a href="#appendix_b_--_built-in_actions_in_gschem" class="toc">Appendix B -- Built-in actions in gschem</a></span></div></li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="how_to_setup_keymapping_in_gschem" id="how_to_setup_keymapping_in_gschem">How To Setup Keymapping In gschem</a></h1>
+<h1 class="sectionedit117"><a name="how_to_setup_keymapping_in_gschem" id="how_to_setup_keymapping_in_gschem">How To Setup Keymapping In gschem</a></h1>
 <div class="level1">
 
 <p>
-by: Stefan Petersen, spe@geda.seul.org This document is released under <a href="http://www.fsf.org/copyleft/gpl.html" class="urlextern" title="http://www.fsf.org/copyleft/gpl.html"  rel="nofollow">GPL</a>
+by: Stefan Petersen, spe@geda.seul.org
+This document is released under <a href="http://www.fsf.org/copyleft/gpl.html" class="urlextern" title="http://www.fsf.org/copyleft/gpl.html"  rel="nofollow">GPL</a>
 </p>
 
 <p>
@@ -53,27 +25,28 @@ by: Stefan Petersen, spe@geda.seul.org This document is released under <a href="
 </p>
 
 </div>
-<!-- SECTION "How To Setup Keymapping In gschem" [1-177] -->
-<h2><a name="about_this_document" id="about_this_document">About this document</a></h2>
+<!-- EDIT117 SECTION "How To Setup Keymapping In gschem" [1-177] -->
+<h2 class="sectionedit118"><a name="about_this_document" id="about_this_document">About this document</a></h2>
 <div class="level2">
 
 <p>
-The purpose of this document is to try to explain how key mapping works in gEDA/gschem schematic entry program. It uses the langauge Scheme a lot, which is a Lisp-dialect and is used in gschem as a scripting language. If you’re not familiar with this language, please see the dictionary (see appendix A, page X, for a short description of common data structures used in Scheme.
+The purpose of this document is to try to explain how key mapping works in gEDA/gschem schematic entry program. It uses the langauge Scheme a lot, which is a Lisp-dialect and is used in gschem as a scripting language. If you&#039;re not familiar with this language, please see the dictionary (see appendix A, page X, for a short description of common data structures used in Scheme.
 </p>
 
 </div>
-<!-- SECTION "About this document" [178-588] -->
-<h2><a name="functionality" id="functionality">Functionality</a></h2>
+<!-- EDIT118 SECTION "About this document" [178-588] -->
+<h2 class="sectionedit119"><a name="functionality" id="functionality">Functionality</a></h2>
 <div class="level2">
 
 <p>
 When you press a button in gschem, a Scheme function is called. This function (press-key) accepts one argument, the name of the pressed key. Then there are Scheme routines to evaluate which key you pressed and call the appropriate action.<br/>
- Since the evaluation routines are written in Scheme it’s simple to change the behaviour of what happens when you presses a key. You can implement macros or do several things at each key press. For example, the “repeat-last-key” command is implemented completly in Scheme.
+
+Since the evaluation routines are written in Scheme it&#039;s simple to change the behaviour of what happens when you presses a key. You can implement macros or do several things at each key press. For example, the “repeat-last-key” command is implemented completly in Scheme.
 </p>
 
 </div>
-<!-- SECTION "Functionality" [589-1128] -->
-<h2><a name="keymaps" id="keymaps">Keymaps</a></h2>
+<!-- EDIT119 SECTION "Functionality" [589-1128] -->
+<h2 class="sectionedit120"><a name="keymaps" id="keymaps">Keymaps</a></h2>
 <div class="level2">
 
 <p>
@@ -81,8 +54,8 @@ The current implementation is built-up around “keymaps”. A keymap is a list 
 </p>
 
 </div>
-<!-- SECTION "Keymaps" [1129-1427] -->
-<h3><a name="an_example_on_keymaps" id="an_example_on_keymaps">An example on keymaps</a></h3>
+<!-- EDIT120 SECTION "Keymaps" [1129-1427] -->
+<h3 class="sectionedit121"><a name="an_example_on_keymaps" id="an_example_on_keymaps">An example on keymaps</a></h3>
 <div class="level3">
 
 <p>
@@ -97,7 +70,7 @@ Figure 1: First example of an simple keymap
 </p>
 
 <p>
-In figure 1 is the keymap called global-keymap. This keymap is the first keymap used. If you for example press the ‘a’-key, global-keymap tells us that next key pressed will be interpreted by add-keymap (see figure 2).
+In figure 1 is the keymap called global-keymap. This keymap is the first keymap used. If you for example press the &#039;a&#039;-key, global-keymap tells us that next key pressed will be interpreted by add-keymap (see figure 2).
 </p>
 <pre class="code">(define add-keymap
   &#039;((&quot;c&quot; . add-component)
@@ -109,36 +82,41 @@ Figure 2: Second example of an simple keymap
 </p>
 
 <p>
-If you, after you pressed ‘a’, press a ‘c’ the built-in action add-component comes to live. This is exactly what had happend if you had selected Add, Component&hellip;in the menubar.<br/>
- When an action has been performed the current keymap is reset back to global-keymap.<br/>
- Available built-in actions are listed in appendix B.
+If you, after you pressed &#039;a&#039;, press a &#039;c&#039; the built-in action add-component comes to live. This is exactly what had happend if you had selected Add, Component…in the menubar.<br/>
+
+When an action has been performed the current keymap is reset back to
+global-keymap.<br/>
+
+Available built-in actions are listed in appendix B.
 </p>
 
 </div>
-<!-- SECTION "An example on keymaps" [1428-2357] -->
-<h3><a name="description_of_keys" id="description_of_keys">Description of keys</a></h3>
+<!-- EDIT121 SECTION "An example on keymaps" [1428-2358] -->
+<h3 class="sectionedit122"><a name="description_of_keys" id="description_of_keys">Description of keys</a></h3>
 <div class="level3">
 
 <p>
-The key are described as: 
-</p>
-<table class="inline">
-	<tr>
-		<td> For a </td><td> “a” </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> For Shift-A  </td><td> “Shift A” </td>
-	</tr>
-	<tr>
-		<td> For Control-a </td><td> “Control a” </td>
-	</tr>
-	<tr>
-		<td> For Alt-a </td><td> “Alt a” </td>
-	</tr>
-</table>
+The keys are described as:
 
+</p>
+<div class="table sectionedit123"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> For a </td><td class="col1"> “a” </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> For Shift-A  </td><td class="col1"> “Shift A” </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> For Control-a </td><td class="col1"> “Control a” </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> For Alt-a </td><td class="col1"> “Alt a” </td>
+	</tr>
+</table></div>
+<!-- EDIT123 TABLE [2417-2517] -->
 <p>
- There are a few simple rules to follow when keys for a new keymap is defined:
+
+There are a few simple rules to follow when keys for a new keymap are defined:
 </p>
 <ul>
 <li class="level1"><div class="li"> Everything is case sensitive</div>
@@ -152,28 +130,30 @@ The key are described as:
 </ul>
 
 </div>
-<!-- SECTION "Description of keys" [2358-2925] -->
-<h3><a name="actions" id="actions">Actions</a></h3>
+<!-- EDIT122 SECTION "Description of keys" [2359-2928] -->
+<h3 class="sectionedit124"><a name="actions" id="actions">Actions</a></h3>
 <div class="level3">
 
 <p>
 The built-in actions that can be called are listed in Appendix B.<br/>
- Sometimes you may notice that there are similar actions, like edit-rotate-90 and edit-rotate-90-hotkey. They do the same thing, just that the -hotkey actions is run immediately, while the other wait for you to select something.
+
+Sometimes you may notice that there are similar actions, like edit-rotate-90 and edit-rotate-90-hotkey. They do the same thing, just that the -hotkey actions is run immediately, while the other wait for you to select something.
 </p>
 
 </div>
-<!-- SECTION "Actions" [2926-3240] -->
-<h3><a name="function_calls" id="function_calls">Function calls</a></h3>
+<!-- EDIT124 SECTION "Actions" [2929-3243] -->
+<h3 class="sectionedit125"><a name="function_calls" id="function_calls">Function calls</a></h3>
 <div class="level3">
 
 <p>
-If the cdr-element is an ordinary Scheme function that function is called. The function can’t receive any arguments.<br/>
- This can be used if you want to do complex tasks, like several actions in a row or do some calculation. You can do rather advanced actions since the Guile dialect of Scheme used in gschem is extended from plain Scheme. For further information on Guile, please see the Guile documentation.
+If the cdr-element is an ordinary Scheme function that function is called. The function can&#039;t receive any arguments.<br/>
+
+This can be used if you want to do complex tasks, like several actions in a row or do some calculation. You can do rather advanced actions since the Guile dialect of Scheme used in gschem is extended from plain Scheme. For further information on Guile, please see the Guile documentation.
 </p>
 
 </div>
-<!-- SECTION "Function calls" [3241-3674] -->
-<h3><a name="another_keymap" id="another_keymap">Another keymap</a></h3>
+<!-- EDIT125 SECTION "Function calls" [3244-3677] -->
+<h3 class="sectionedit126"><a name="another_keymap" id="another_keymap">Another keymap</a></h3>
 <div class="level3">
 
 <p>
@@ -181,51 +161,55 @@ If the cdr-element is another keymap then that command is a multi-key command, i
 </p>
 
 </div>
-<!-- SECTION "Another keymap" [3675-3997] -->
-<h2><a name="where_are_the_key_mappings_stored" id="where_are_the_key_mappings_stored">Where are the key mappings stored</a></h2>
+<!-- EDIT126 SECTION "Another keymap" [3678-4000] -->
+<h2 class="sectionedit127"><a name="where_are_the_key_mappings_stored" id="where_are_the_key_mappings_stored">Where are the key mappings stored</a></h2>
 <div class="level2">
 
 <p>
 The keymap is stored in the startup file for gschem, namely <code>&lt;startpath, typically /usr/local&gt;/share/gEDA/system-gschemrc</code>.<br/>
- You can then redefine or add keymaps as you like (I think) in your local setup file for gschem, ~/.gEDA/gschemrc
+
+You can then redefine or add keymaps as you like (I think) in your local setup file for gschem,
+~/.gEDA/gschemrc
 </p>
 
 <p>
-The Scheme functions used to resolve keypresses to actions are stored at <code>&lt;startpath, typically /usr/local&gt;/share/gEDA/scheme/gschem.scm</code>. This is configurable in the gschemrc files.
+The Scheme functions used to resolve keypresses to actions are stored at <code>&lt;startpath, typically /usr/local&gt;/share/gEDA/scheme/gschem.scm</code>.
+This is configurable in the gschemrc files.
 </p>
 
 </div>
-<!-- SECTION "Where are the key mappings stored" [3998-4471] -->
-<h3><a name="appendix_a_--_dictionary" id="appendix_a_--_dictionary">Appendix A -- Dictionary</a></h3>
+<!-- EDIT127 SECTION "Where are the key mappings stored" [4001-4474] -->
+<h3 class="sectionedit128"><a name="appendix_a_--_dictionary" id="appendix_a_--_dictionary">Appendix A -- Dictionary</a></h3>
 <div class="level3">
-<table class="inline">
-	<tr>
-		<td> <strong>function</strong> </td><td>A subprogram in Scheme, C or other programming languages. </td>
+<div class="table sectionedit129"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> <strong>function</strong> </td><td class="col1">A subprogram in Scheme, C or other programming languages. </td>
 	</tr>
-	<tr>
-		<td><strong>action</strong> </td><td>What gschem (in this case) does when you press a key or a set of keys. </td>
+	<tr class="row1">
+		<td class="col0"><strong>action</strong> </td><td class="col1">What gschem (in this case) does when you press a key or a set of keys. </td>
 	</tr>
-	<tr>
-		<td><strong>list</strong> </td><td>A data structure very common in Lisp-looking languages like Scheme. Simply put, a long list of values. </td>
+	<tr class="row2">
+		<td class="col0"><strong>list</strong> </td><td class="col1">A data structure very common in Lisp-looking languages like Scheme. Simply put, a long list of values. </td>
 	</tr>
-	<tr>
-		<td><strong>pair</strong> </td><td>(also dotted pair) A datstructure also very common in Lisp-looking languages. </td>
+	<tr class="row3">
+		<td class="col0"><strong>pair</strong> </td><td class="col1">(also dotted pair) A datstructure also very common in Lisp-looking languages. </td>
 	</tr>
-	<tr>
-		<td><strong>car element</strong> </td><td>First element in a pair. Since lists are decendents from pairs, car is also the first element in a list. </td>
+	<tr class="row4">
+		<td class="col0"><strong>car element</strong> </td><td class="col1">First element in a pair. Since lists are decendents from pairs, car is also the first element in a list. </td>
 	</tr>
-	<tr>
-		<td><strong>cdr element</strong> </td><td>(pronounced cudr) The second element in a pair. In the list case it denotes the rest of list. </td>
+	<tr class="row5">
+		<td class="col0"><strong>cdr element</strong> </td><td class="col1">(pronounced cudr) The second element in a pair. In the list case it denotes the rest of list. </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT129 TABLE [4510-5117] -->
 </div>
-<!-- SECTION "Appendix A -- Dictionary" [4472-5116] -->
-<h2><a name="appendix_b_--_built-in_actions_in_gschem" id="appendix_b_--_built-in_actions_in_gschem">Appendix B -- Built-in actions in gschem</a></h2>
+<!-- EDIT128 SECTION "Appendix A -- Dictionary" [4475-5119] -->
+<h2 class="sectionedit130"><a name="appendix_b_--_built-in_actions_in_gschem" id="appendix_b_--_built-in_actions_in_gschem">Appendix B -- Built-in actions in gschem</a></h2>
 <div class="level2">
 
 <p>
-Run: <pre STYLE="background : LightGreen;
+Run:
+<pre STYLE="background : LightGreen;
 margin-left : 2em"><font size="+0">grep gh_register_procedure_0_0 gschem/src/g_register.c</font></pre>
 </p>
 
@@ -312,9 +296,10 @@ options-snap
 options-show-log-window
 options-show-coord-window
 misc-misc
-cancel</font></pre> 
+cancel</font></pre>
+
 </p>
 
 </div>
-<!-- SECTION "Appendix B -- Built-in actions in gschem" [5117-] --></body>
+<!-- EDIT130 SECTION "Appendix B -- Built-in actions in gschem" [5120-] --></body>
 </html>

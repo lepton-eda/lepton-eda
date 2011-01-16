@@ -11,23 +11,8 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#installer_20060825_on_fedora_core_4_install_notes" class="toc">Installer 20060825 on Fedora Core 4 install notes</a></span></div></li>
-<li class="level1"><div class="li"><span class="li"><a href="#installer_2005080x_on_fedora_core_4_install_notes" class="toc">Installer 2005080X on Fedora Core 4 install notes</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#prerequisites" class="toc">Prerequisites:</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#problems" class="toc">Problems:</a></span></div></li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="installer_20060825_on_fedora_core_4_install_notes" id="installer_20060825_on_fedora_core_4_install_notes">Installer 20060825 on Fedora Core 4 install notes</a></h1>
+<h1 class="sectionedit689"><a name="installer_20060825_on_fedora_core_4_install_notes" id="installer_20060825_on_fedora_core_4_install_notes">Installer 20060825 on Fedora Core 4 install notes</a></h1>
 <div class="level1">
 
 <p>
@@ -47,17 +32,17 @@ The latest CD installer will work fine on Fedora Core 4.  All gEDA Suite program
 </ul>
 
 <p>
-If you are missing most of these -devel packages, the installer will do the right thing, but it’s better to pre-install them so the installer doesn’t have to become root to do it.
+If you are missing most of these -devel packages, the installer will do the right thing, but it&#039;s better to pre-install them so the installer doesn&#039;t have to become root to do it.
 </p>
 
 </div>
-<!-- SECTION "Installer 20060825 on Fedora Core 4 install notes" [1-650] -->
-<h1><a name="installer_2005080x_on_fedora_core_4_install_notes" id="installer_2005080x_on_fedora_core_4_install_notes">Installer 2005080X on Fedora Core 4 install notes</a></h1>
+<!-- EDIT689 SECTION "Installer 20060825 on Fedora Core 4 install notes" [1-650] -->
+<h1 class="sectionedit690"><a name="installer_2005080x_on_fedora_core_4_install_notes" id="installer_2005080x_on_fedora_core_4_install_notes">Installer 2005080X on Fedora Core 4 install notes</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Installer 2005080X on Fedora Core 4 install notes" [651-714] -->
-<h2><a name="prerequisites" id="prerequisites">Prerequisites:</a></h2>
+<!-- EDIT690 SECTION "Installer 2005080X on Fedora Core 4 install notes" [651-714] -->
+<h2 class="sectionedit691"><a name="prerequisites" id="prerequisites">Prerequisites:</a></h2>
 <div class="level2">
 
 <p>
@@ -81,7 +66,8 @@ Also, the following additional RPMs are required:
 </ul>
 
 <p>
- These RPMs are not automatically installed by RedHat’s installer; you need to install them manually. The devel packages live on the 4th FC4 disk. The gcc compatability compiler lives on the 3rd FC4 disk. Install all these packages before trying to build the gEDA Suite.
+
+These RPMs are not automatically installed by RedHat’s installer; you need to install them manually. The devel packages live on the 4th FC4 disk. The gcc compatability compiler lives on the 3rd FC4 disk. Install all these packages before trying to build the gEDA Suite.
 </p>
 
 <p>
@@ -89,8 +75,8 @@ Before installing the gEDA Suite on an FC4 system, you should set the CC environ
 </p>
 
 </div>
-<!-- SECTION "Prerequisites:" [715-1851] -->
-<h2><a name="problems" id="problems">Problems:</a></h2>
+<!-- EDIT691 SECTION "Prerequisites:" [715-1851] -->
+<h2 class="sectionedit692"><a name="problems" id="problems">Problems:</a></h2>
 <div class="level2">
 
 <p>
@@ -98,17 +84,18 @@ The 200508XX installer will fail on FC4 systems. There seem to be several indepe
 </p>
 <ol>
 <li class="level1"><div class="li"> The installer doesn’t find guile, even though it comes pre-installed on the platform.<br/>
- The problem here is that the installer tries to find guile by issuing the “guile-config” command. This command lives in the guile-devel RPM which is not installed by default (see above). To fix the problem, install the guile-devel RPM which lives on the FC4 install CD no. 4.</div>
+The problem here is that the installer tries to find guile by issuing the “guile-config” command. This command lives in the guile-devel RPM which is not installed by default (see above). To fix the problem, install the guile-devel RPM which lives on the FC4 install CD no. 4.</div>
 </li>
 <li class="level1"><div class="li"> The installer doesn’t find gettext, even though it comes pre-installed on the platform. Gettext is used by gschem, so this error is raised during the configure stage for gschem.<br/>
- Again, the gettext header files live in the gettext-devel RPM which is not installed by default (see above). To fix this problem, install the gettext-devel RPM which lives on the FC4 install CD no. 4.</div>
+Again, the gettext header files live in the gettext-devel RPM which is not installed by default (see above). To fix this problem, install the gettext-devel RPM which lives on the FC4 install CD no. 4.</div>
 </li>
 <li class="level1"><div class="li"> Many different applications (e.g. GTKWave, GSpiceUI, Icarus Verilog) fail during compilation. The error message typically says something about a problem involving a “type”.</div>
 </li>
 </ol>
 
 <p>
- This problem obtains because FC4 incorporates the new gcc-4.0 compiler. Gcc-4.0 incorporates much stricter type checking than the older gcc versions. This has caused many open-source applications to fail to compile.
+
+This problem obtains because FC4 incorporates the new gcc-4.0 compiler. Gcc-4.0 incorporates much stricter type checking than the older gcc versions. This has caused many open-source applications to fail to compile.
 </p>
 
 <p>
@@ -124,13 +111,15 @@ Once they are installed, set the gcc environment variables as follows:
 </p>
 
 <p>
-for bash: 
+for bash:
+
 </p>
 <pre class="code">export CC=gcc32
 export CXX=g++32</pre>
 
 <p>
-for csh: 
+for csh:
+
 </p>
 <pre class="code">setenv CC gcc32
 setenv CXX g++32</pre>
@@ -140,5 +129,5 @@ and then run the installer. Make sure you run the installer from the same window
 </p>
 
 </div>
-<!-- SECTION "Problems:" [1852-] --></body>
+<!-- EDIT692 SECTION "Problems:" [1852-] --></body>
 </html>

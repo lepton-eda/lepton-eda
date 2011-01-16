@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+<h1 class="sectionedit1446"><a name="geda_gaf_and_pcb_bug_feature_request_triage_guide" id="geda_gaf_and_pcb_bug_feature_request_triage_guide">gEDA/gaf and PCB Bug/Feature Request Triage Guide</a></h1>
+<div class="level1">
+
+<p>
+
+gEDA/gaf uses <a href="http://launchpad.net" class="urlextern" title="http://launchpad.net"  rel="nofollow">Launchpad</a> for bug and feature request tracking - the gEDA landing page is <a href="http://bugs.launchpad.net/geda" class="urlextern" title="http://bugs.launchpad.net/geda"  rel="nofollow"> here</a>.
+</p>
+
+<p>
+Newly filed bugs and feature requests must be triaged periodically by the developers and others close to the project, in order to progress them smoothly through development and avoid them getting stuck.
+</p>
+
+<p>
+Anyone who wants to help triage bugs for the community, please apply to
+join the geda-bugs team for <a href="https://launchpad.net/~geda-bugs/+join" class="urlextern" title="https://launchpad.net/~geda-bugs/+join"  rel="nofollow">gEDA/gaf</a> and/or <a href="https://launchpad.net/~pcb-bugs/+join" class="urlextern" title="https://launchpad.net/~pcb-bugs/+join"  rel="nofollow">PCB</a>.
+</p>
+
+</div>
+<!-- EDIT1446 SECTION "gEDA/gaf and PCB Bug/Feature Request Triage Guide" [1-633] -->
+<h2 class="sectionedit1447"><a name="triaging_bugs" id="triaging_bugs">Triaging bugs</a></h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li"> Choose a bug from</div>
+<ul>
+<li class="level2"><div class="li"> <a href="https://launchpad.net/geda/+bugs?search=Search&amp;field.status=New" class="urlextern" title="https://launchpad.net/geda/+bugs?search=Search&amp;field.status=New"  rel="nofollow">https://launchpad.net/geda/+bugs?search=Search&amp;field.status=New</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="https://launchpad.net/pcb/+bugs?search=Search&amp;field.status=New" class="urlextern" title="https://launchpad.net/pcb/+bugs?search=Search&amp;field.status=New"  rel="nofollow">https://launchpad.net/pcb/+bugs?search=Search&amp;field.status=New</a></div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Grab “git HEAD” of whichever package the bug is in (if you don&#039;t have it already) and try to confirm whether the bug is still present or not.</div>
+</li>
+<li class="level1"><div class="li"> If the bug is still present, move the status from “New” to “Confirmed”</div>
+<ul>
+<li class="level2"><div class="li"> If and only if there is a good testcase uploaded that reproduces the bug (or you have created and uploaded one as part of triage), you can move the status to “Triaged”</div>
+</li>
+<li class="level2"><div class="li">  <em><strong>Note:</strong> it is not good form to mark your own bug “Confirmed”.</em></div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> If the bug is absent, make a comment and set the status to one of </div>
+<ul>
+<li class="level2"><div class="li"> “Invalid,” if you are confident that the bug is bogus or misfiled.</div>
+<ul>
+<li class="level3"><div class="li"> If the bug is tagged with “sf-patches” shouldn&#039;t be closed “Invalid”. If the patch cannot or will not be accepted, mark it as “WontFix”.</div>
+</li>
+</ul>
+</li>
+<li class="level2"><div class="li"> “Fix Committed,” if you believe a fix has been committed in git since the last release;</div>
+</li>
+<li class="level2"><div class="li"> “Fix Released,” if you believe a fix has been committed that has been in a released version; </div>
+</li>
+<li class="level2"><div class="li"> “Incomplete,” if you ask the reporter a question which needs to be answered to properly assess the bug.</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> If the bug affects you personally, hit the link under the title of the bug that lets you state that.</div>
+</li>
+<li class="level1"><div class="li"> If you want to be emailed when the bug is modified, click “Subscribe” on the right hand toolbar.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT1447 SECTION "Triaging bugs" [634-2091] -->
+<h2 class="sectionedit1448"><a name="triaging_feature_requests" id="triaging_feature_requests">Triaging Feature Requests</a></h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li"> Choose a feature request from</div>
+<ul>
+<li class="level2"><div class="li"> <a href="https://launchpad.net/geda/+bugs?search=Search&amp;field.status=New" class="urlextern" title="https://launchpad.net/geda/+bugs?search=Search&amp;field.status=New"  rel="nofollow">https://launchpad.net/geda/+bugs?search=Search&amp;field.status=New</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="https://launchpad.net/pcb/+bugs?search=Search&amp;field.status=New" class="urlextern" title="https://launchpad.net/pcb/+bugs?search=Search&amp;field.status=New"  rel="nofollow">https://launchpad.net/pcb/+bugs?search=Search&amp;field.status=New</a></div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> If it&#039;s not already set, set the Importance to “Wishlist”</div>
+</li>
+<li class="level1"><div class="li"> If you agree with the feature request, select the “Bug affects me” option. This will allow us to track the popularity of a request.</div>
+</li>
+<li class="level1"><div class="li"> A developer who is sufficiently familiar with the design issues will move the Status from “New” to either “Confirmed”, “WontFix” or “Opinion”.</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT1448 SECTION "Triaging Feature Requests" [2092-] --></body>
+</html>

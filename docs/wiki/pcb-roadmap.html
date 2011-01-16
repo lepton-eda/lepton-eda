@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+<h1 class="sectionedit1614"><a name="pcb_roadmap" id="pcb_roadmap">PCB Roadmap</a></h1>
+<div class="level1">
+
+<p>
+
+This is a guide to the future direction of the PCB layout editor.
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="geda-design_flow_and_hierarchy_roadmap.html" class="wikilink1" title="geda-design_flow_and_hierarchy_roadmap.html"> gEDA roadmap</a> has some PCB items.</div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-todos.html" class="wikilink1" title="geda-todos.html"> gEDA To-Dos</a> also has some PCB items.</div>
+</li>
+<li class="level1"><div class="li"> <a href="pcb-projects.html" class="wikilink1" title="pcb-projects.html"> PCB Projects</a> lists some wish-list items.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT1614 SECTION "PCB Roadmap" [1-302] -->
+<h2 class="sectionedit1615"><a name="general_guidelines_for_releases" id="general_guidelines_for_releases">General Guidelines for Releases</a></h2>
+<div class="level2">
+
+<p>
+
+In general, there are three types of changes that go into PCB - bug
+fixes, new features, and incompatible changes.  A <em>bug fix</em> is when
+PCB doesn&#039;t do what it&#039;s supposed to do - this includes documentation
+bugs as well as code problems.  A <em>new feature</em> is something that
+adds functionality to PCB but doesn&#039;t change any existing
+functionality.  An <em>incompatible change</em> is anything that causes
+(intentional) compatibility issues with older versions of PCB, and
+usually means a large design change.  Note that a new feature that
+adds a backwards-incompatible change to the file format <em>when it&#039;s
+used</em> is not in this category.
+</p>
+
+<p>
+The current plans are as follows:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Bug fix releases every two months or so until we clear the backlog.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Start on a PCB 4.0 release that folds in some large design changes we&#039;ve been talking about for years.</div>
+</li>
+</ul>
+
+<p>
+
+At the moment, bugfix releases will be of the form <code>pcb-YYYYMMDD</code>.
+Once 4.0 is released, the major.minor.bugfix numbers will correspond
+to the three categories listed above: bugfixes cause a *.*.N release,
+new features cause a *.N release, major changes cause a N.0 release.
+The <code>YYYYMMDD</code> release numbers will then be used for regular
+non-release snapshots.
+</p>
+
+<p>
+The remainder of this page will list the various changes that are
+planned (or at least hoped for) for upcoming and future releases.
+</p>
+
+<p>
+Bugs, patches, and feature requests should be added to the
+<a href="https://bugs.launchpad.net/pcb" class="urlextern" title="https://bugs.launchpad.net/pcb"  rel="nofollow">Launchpad
+trackers</a>.  The default status <strong>undecided</strong>.  Requests with that
+priority will be considered “unreviewed”.
+
+</p>
+
+</div>
+<!-- EDIT1615 SECTION "General Guidelines for Releases" [303-1908] -->
+<h2 class="sectionedit1616"><a name="next_bug_release" id="next_bug_release">Next Bug Release</a></h2>
+<div class="level2">
+
+<p>
+
+This is a list of fixes that <em>must</em> be fixed before the next bug
+release, in addition to any “next bug release” artifacts in the bug tracker.
+</p>
+
+</div>
+<!-- EDIT1616 SECTION "Next Bug Release" [1909-2083] -->
+<h2 class="sectionedit1617"><a name="future_bug_releases" id="future_bug_releases">Future Bug Releases</a></h2>
+<div class="level2">
+
+<p>
+
+This is a list of fixes that should be fixed eventually.
+</p>
+
+</div>
+<!-- EDIT1617 SECTION "Future Bug Releases" [2084-2175] -->
+<h2 class="sectionedit1618"><a name="next_feature_release" id="next_feature_release">Next Feature Release</a></h2>
+<div class="level2">
+
+<p>
+
+This is a list of new features that will be added before the next
+feature release (or, perhaps the next bug release, if time permits).
+</p>
+
+<p>
+Make the code C++ compatible.
+</p>
+
+<p>
+Allow via annulii to overlap each other.
+</p>
+
+<p>
+More route styles.
+</p>
+
+<p>
+Nanometer resolution - this is the “metric units” change we&#039;ve talked
+about many times.
+</p>
+
+<p>
+Real layer types.  Silks, keepouts, mask docs at least.  Maybe
+anti-draw or paste.
+</p>
+
+</div>
+<!-- EDIT1618 SECTION "Next Feature Release" [2176-2611] -->
+<h2 class="sectionedit1619"><a name="future_feature_releases" id="future_feature_releases">Future Feature Releases</a></h2>
+<div class="level2">
+
+<p>
+
+Other features that should be added eventually.
+</p>
+
+</div>
+<!-- EDIT1619 SECTION "Future Feature Releases" [2612-2697] -->
+<h2 class="sectionedit1620"><a name="next_incompatible_release" id="next_incompatible_release">Next Incompatible Release</a></h2>
+<div class="level2">
+
+<p>
+
+This is a list of major changes that we think are desirable to include
+in PCB, and wish to put effort into.
+</p>
+
+</div>
+<!-- EDIT1620 SECTION "Next Incompatible Release" [2698-2845] -->
+<h2 class="sectionedit1621"><a name="future_incompatible_releases" id="future_incompatible_releases">Future Incompatible Releases</a></h2>
+<div class="level2">
+
+<p>
+
+This is a list of other major changes that we think are desirable to
+include in PCB, but so far have not committed any effort to.
+</p>
+
+</div>
+<!-- EDIT1621 SECTION "Future Incompatible Releases" [2846-3018] -->
+<h2 class="sectionedit1622"><a name="wish_list" id="wish_list">Wish List</a></h2>
+<div class="level2">
+
+<p>
+
+This section lists possible projects for future releases, which either
+haven&#039;t been agreed on, or haven&#039;t been scheduled.  If you&#039;d like to
+work on one of these, go ahead <img src="images/smileys/icon_smile.gif" align="middle" alt=":-)" />
+</p>
+
+<p>
+
+Other <acronym title="Graphical User Interface">GUI</acronym> cleanups.  Gtk upgraded to “best practices”.  Importer config.
+</p>
+
+<p>
+“New layout” templates and wizards. (instead of defaulting to 4&times;4 8-layer)
+</p>
+
+<p>
+import/wizard plugins (as well as exports)
+</p>
+
+<p>
+DRC cleanups/rewrite
+</p>
+
+<p>
+CAM engine?  (i.e. ability to say “draw outline on top soldermask” via script/config)
+</p>
+
+<p>
+Ability to hook into layer exporters (i.e. thindraw as a HID)
+</p>
+
+<p>
+New file format we&#039;ve been discussing.
+</p>
+
+<p>
+Variable-angle arcs. 90 degrees is extremely limiting.
+</p>
+
+<p>
+Filled circles, sans kludge.  Currently, to get a filled circle you
+create a zero-length trace of the right width.
+</p>
+
+<p>
+Having all shapes that are supported for traces supported for 
+footprint copper (arcs, polygons, circles, etcetera).
+</p>
+
+<p>
+Unification of shortcuts in gschem and PCB, or at least an easy option 
+for PCB to mimic gschem&#039;s shortcuts.
+</p>
+
+<p>
+Better support for free-rotated components: assert that pads at funky 
+angles are rendered correctly, fix autorouter for components at weird 
+angles (the latest git version has a tendency to either ignore the route 
+command or to segfault, depending on the specifics), add rotation to the 
+ctrl-R report, etcetera.
+</p>
+
+<p>
+Ability to copy a footprint&#039;s name from the library dialogue (so it 
+can be pasted into gschem&#039;s attribute list).
+</p>
+
+<p>
+Ability to edit netlist in-situ (possibly by drawing on the rat lines 
+layer) - e.g, when you want to add a heatsink soldered to ground, it 
+will always show up as shorted until the netlist is edited to 
+incorporate it.
+</p>
+
+<p>
+Last but not least, blind and buried vias. It&#039;s big, reasonably 
+important, and has been on people&#039;s wish lists for years.
+</p>
+
+<p>
+Trace impedance calculator, with automatic adjustment capability (fill 
+in thickness, stray capacitance and desired impedance, and the width is 
+adjusted to satisfy the conditions).
+</p>
+
+<p>
+Integrated footprint lookup and fetch from gedasymbols.org.
+</p>
+
+<p>
+Heirarchical pcb model - subcells, footprints-as-pcb, etc.
+</p>
+
+<p>
+A shape I&#039;ve often wanted on a pad is circle with the sides cut off.
+This is slightly different than an oval.  Something like Inkscape&#039;s
+boolean operations would be excellent.
+</p>
+
+<p>
+How about text at not-90 degree angles?  Or support for rotated square
+pads (I know, the file format doesn&#039;t support those two.)
+</p>
+
+<p>
+Editing on the grid has got to go!  Counting grid points is the worst
+possible way to enter positional information into a computer.
+</p>
+
+<p>
+Make every field in object reports editable.
+</p>
+
+<p>
+Allow direct entry of offsets and absolute positions when editing.
+</p>
+
+<p>
+Add “offset” and “trim” feature à la 2D CAD programs.
+</p>
+
+<p>
+Add “point to tangent” and “tangent to tangent” line drawing feature
+à la 2D CAD programs.
+</p>
+
+<p>
+Also, trim polygons against “outline” layer.  Fix polygons in general.
+</p>
+
+<p>
+square/rectangular holes (e.g. mounting tabs)
+</p>
+
+<p>
+Automatic least version required file saving.  Set the file format
+version based on features used, not the version of PCB This will
+become valuable as we add features like blind vias, custom pad stacks
+etc….
+
+</p>
+
+</div>
+<!-- EDIT1622 SECTION "Wish List" [3019-] --></body>
+</html>

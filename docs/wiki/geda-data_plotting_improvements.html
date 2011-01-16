@@ -11,34 +11,19 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#simulation_data_plotting" class="toc">Simulation Data Plotting</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#rationale" class="toc">Rationale</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#draft1extend_gtkwaves" class="toc">Draft1: Extend gtkwaves</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#draft2improve_gwave" class="toc">Draft2: improve gwave</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#draft3search_for_existing_data_exploring_programs" class="toc">Draft3: Search for existing data exploring programs</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#draft4a_new_plotting_application" class="toc">Draft4: A new plotting application</a></span></div></li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="simulation_data_plotting" id="simulation_data_plotting">Simulation Data Plotting</a></h1>
+<h1 class="sectionedit80"><a name="simulation_data_plotting" id="simulation_data_plotting">Simulation Data Plotting</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Simulation Data Plotting" [1-41] -->
-<h2><a name="rationale" id="rationale">Rationale</a></h2>
+<!-- EDIT80 SECTION "Simulation Data Plotting" [1-41] -->
+<h2 class="sectionedit81"><a name="rationale" id="rationale">Rationale</a></h2>
 <div class="level2">
 
 <p>
-This article discusses on how data plotting can be improved. There are various programs out there, each has it’s own pros and cons: 
+This article discusses on how data plotting can be improved.
+There are various programs out there, each has it&#039;s own pros and cons:
+
 </p>
 <ul>
 <li class="level1"><div class="li"> <a href="http://home.nc.rr.com/gtkwave/" class="urlextern" title="http://home.nc.rr.com/gtkwave/"  rel="nofollow"> gtkwave</a>: a great viewer for digital simulation data</div>
@@ -49,33 +34,35 @@ This article discusses on how data plotting can be improved. There are various p
 </li>
 <li class="level1"><div class="li"> buildin plotting functions in ngspice</div>
 </li>
-<li class="level1"><div class="li"> gnuplot / octave / scipy / &hellip; or similar programs as postprocessing script languages</div>
+<li class="level1"><div class="li"> gnuplot / octave / scipy / … or similar programs as postprocessing script languages</div>
 </li>
-<li class="level1"><div class="li"> &hellip;</div>
+<li class="level1"><div class="li"> …</div>
 </li>
 </ul>
 
 <p>
- There have been various suggestions on the mailing lists about the feature a plotting program could have: 
+
+There have been various suggestions on the mailing lists about the feature a plotting program could have:
+
 </p>
 <ul>
-<li class="level1"><div class="li"> postprocessing: integrate, add, diff, fft, &hellip;</div>
+<li class="level1"><div class="li"> postprocessing: integrate, add, diff, fft, …</div>
 </li>
-<li class="level1"><div class="li"> view, examine: cursors, multiple windows, &hellip;</div>
+<li class="level1"><div class="li"> view, examine: cursors, multiple windows, …</div>
 </li>
-<li class="level1"><div class="li"> data import, file format: circuit simulation data (gnucap, spice, &hellip;) <a href="http://www.hdfgroup.org/HDF5/" class="urlextern" title="http://www.hdfgroup.org/HDF5/"  rel="nofollow"> hdf5 </a>, measured data from oscilloscopes, spectrum analysers, &hellip;</div>
+<li class="level1"><div class="li"> data import, file format: circuit simulation data (gnucap, spice, …) <a href="http://www.hdfgroup.org/HDF5/" class="urlextern" title="http://www.hdfgroup.org/HDF5/"  rel="nofollow"> hdf5 </a>, measured data from oscilloscopes, spectrum analysers, …</div>
 </li>
-<li class="level1"><div class="li"> data export, file format: hdf5, pictures (png, ps, &hellip;), ascii</div>
+<li class="level1"><div class="li"> data export, file format: hdf5, pictures (png, ps, …), ascii</div>
 </li>
-<li class="level1"><div class="li"> communication backends: dbus, &hellip;</div>
+<li class="level1"><div class="li"> communication backends: dbus, …</div>
 </li>
 <li class="level1"><div class="li"> extension/scripting language</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Rationale" [42-1133] -->
-<h2><a name="draft1extend_gtkwaves" id="draft1extend_gtkwaves">Draft1: Extend gtkwaves</a></h2>
+<!-- EDIT81 SECTION "Rationale" [42-1133] -->
+<h2 class="sectionedit82"><a name="draft1extend_gtkwaves" id="draft1extend_gtkwaves">Draft1: Extend gtkwaves</a></h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> write some import functions for analog data</div>
@@ -83,12 +70,14 @@ This article discusses on how data plotting can be improved. There are various p
 </ul>
 
 </div>
-<!-- SECTION "Draft1: Extend gtkwaves" [1134-1219] -->
-<h2><a name="draft2improve_gwave" id="draft2improve_gwave">Draft2: improve gwave</a></h2>
+<!-- EDIT82 SECTION "Draft1: Extend gtkwaves" [1134-1219] -->
+<h2 class="sectionedit83"><a name="draft2improve_gwave" id="draft2improve_gwave">Draft2: improve gwave</a></h2>
 <div class="level2">
 
 <p>
- gwave requires an old <a href="http://www.gnu.org/software/guile-gtk/" class="urlextern" title="http://www.gnu.org/software/guile-gtk/"  rel="nofollow"> guile-gtk</a> for GTK1.2. 
+
+gwave requires an old <a href="http://www.gnu.org/software/guile-gtk/" class="urlextern" title="http://www.gnu.org/software/guile-gtk/"  rel="nofollow"> guile-gtk</a> for GTK1.2.
+
 </p>
 <ul>
 <li class="level1"><div class="li"> port gwave to guile-gtk2.0 for GTK2.x</div>
@@ -98,21 +87,26 @@ This article discusses on how data plotting can be improved. There are various p
 </ul>
 
 </div>
-<!-- SECTION "Draft2: improve gwave" [1220-1479] -->
-<h2><a name="draft3search_for_existing_data_exploring_programs" id="draft3search_for_existing_data_exploring_programs">Draft3: Search for existing data exploring programs</a></h2>
+<!-- EDIT83 SECTION "Draft2: improve gwave" [1220-1479] -->
+<h2 class="sectionedit84"><a name="draft3search_for_existing_data_exploring_programs" id="draft3search_for_existing_data_exploring_programs">Draft3: Search for existing data exploring programs</a></h2>
 <div class="level2">
 
 <p>
- Are there any programs out there that can show and postprocess simulation data? If yes, how can they be extended to work as a waveform viewer for the simulators (gnucap, ngspice)
+
+Are there any programs out there that can show and postprocess simulation data?
+If yes, how can they be extended to work as a waveform viewer for the simulators (gnucap, ngspice)
 </p>
 
 </div>
-<!-- SECTION "Draft3: Search for existing data exploring programs" [1480-1724] -->
-<h2><a name="draft4a_new_plotting_application" id="draft4a_new_plotting_application">Draft4: A new plotting application</a></h2>
+<!-- EDIT84 SECTION "Draft3: Search for existing data exploring programs" [1480-1725] -->
+<h2 class="sectionedit85"><a name="draft4a_new_plotting_application" id="draft4a_new_plotting_application">Draft4: A new plotting application</a></h2>
 <div class="level2">
 
 <p>
- Some vague notes on how a new plotting application could be written. This notes currently relate on python as programming language. 
+
+Some vague notes on how a new plotting application could be written.
+This notes currently relate on python as programming language.
+
 </p>
 <ul>
 <li class="level1"><div class="li"> the <acronym title="Graphical User Interface">GUI</acronym> could be created with <a href="http://www.jamesh.id.au/software/libglade/" class="urlextern" title="http://www.jamesh.id.au/software/libglade/"  rel="nofollow">libglade</a></div>
@@ -128,9 +122,26 @@ This article discusses on how data plotting can be improved. There are various p
 </ul>
 
 <p>
- Disadvantage: This configuration has a huge rucksack of additional required packages.
+
+Disadvantage: This configuration has a huge rucksack of additional required packages.
 </p>
 
+<p>
+<strong>Update</strong>
+</p>
+
+<p>
+There are now some programs out there, that use the python, numpy, matplotlib tool chain.
+</p>
+<ul>
+<li class="level1"><div class="li"> oscopy: <a href="http://repo.or.cz/w/oscopy.git" class="urlextern" title="http://repo.or.cz/w/oscopy.git"  rel="nofollow">http://repo.or.cz/w/oscopy.git</a></div>
+</li>
+<li class="level1"><div class="li"> dataplot: <a href="http://www.h-renrew.de/h/dataplot/dataplot.html" class="urlextern" title="http://www.h-renrew.de/h/dataplot/dataplot.html"  rel="nofollow">http://www.h-renrew.de/h/dataplot/dataplot.html</a>, <a href="http://repo.or.cz/w/dataplot.git" class="urlextern" title="http://repo.or.cz/w/dataplot.git"  rel="nofollow">http://repo.or.cz/w/dataplot.git</a></div>
+</li>
+<li class="level1"><div class="li"> gsim: <a href="http://kiwiki.fmtnuni.sk/mediawiki/index.php/Description_of_gsim" class="urlextern" title="http://kiwiki.fmtnuni.sk/mediawiki/index.php/Description_of_gsim"  rel="nofollow">http://kiwiki.fmtnuni.sk/mediawiki/index.php/Description_of_gsim</a></div>
+</li>
+</ul>
+
 </div>
-<!-- SECTION "Draft4: A new plotting application" [1725-] --></body>
+<!-- EDIT85 SECTION "Draft4: A new plotting application" [1726-] --></body>
 </html>
