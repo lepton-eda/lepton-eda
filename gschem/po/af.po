@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2011-01-16 00:11-0500\n"
+"POT-Creation-Date: 2011-01-16 01:15-0500\n"
 "PO-Revision-Date: 2010-02-14 01:03+0000\n"
 "Last-Translator: Bernd Jendrissek <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -1345,8 +1345,8 @@ msgstr "gEDA: GPL Elektroniese Ontwerp Outomatisering"
 
 #: gschem/src/x_dialog.c:2146
 msgid ""
-"Copyright © 1998-2009 Ales Hvezda <ahvezda@geda.seul.org>\n"
-"Copyright © 1998-2009 gEDA Contributors (see ChangeLog for details)"
+"Copyright © 1998-2011 Ales Hvezda <ahvezda@geda.seul.org>\n"
+"Copyright © 1998-2011 gEDA Contributors (see ChangeLog for details)"
 msgstr ""
 
 # FIXME: May need to have a deëlteken on second 'o'.
