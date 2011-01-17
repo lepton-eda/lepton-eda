@@ -961,6 +961,27 @@
 )
 
 
+;;------------------------------------------------------
+;;  write subckt pmos transistor
+;;------------------------------------------------------
+(define spice-sdb:write-subckt-pmos-transistor
+  (lambda (package port)
+    (debug-spew (string-append "Found PMOS subcircuit transistor.  Refdes = " package "\n"))
+    (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic" "m")))
+      (spice-sdb:write-transistor-diode package "X" "PMOS" attrib-list port))
+  )
+)
+
+;;------------------------------------------------------
+;;  write subckt nmos transistor
+;;------------------------------------------------------
+(define spice-sdb:write-subckt-nmos-transistor
+  (lambda (package port)
+    (debug-spew (string-append "Found NMOS subcircuit transistor.  Refdes = " package "\n"))
+    (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic" "m")))
+      (spice-sdb:write-transistor-diode package "X" "NMOS" attrib-list port))
+  )
+)
 ;;------------------------------------------------------------
 ;;  write mesfet transistor
 ;;------------------------------------------------------------
@@ -1588,6 +1609,10 @@
               (spice-sdb:write-include package port))
           ( (string=? device "TESTPOINT")
               (spice-sdb:write-probe package port))
+          ( (string=? device "SUBCKT_PMOS")
+              (spice-sdb:write-subckt-pmos-transistor package port))
+          ( (string=? device "SUBCKT_NMOS")
+              (spice-sdb:write-subckt-nmos-transistor package port))
           ( else 
 	      (spice-sdb:write-default-component package file-info-list port))
         ) ;; end of cond
