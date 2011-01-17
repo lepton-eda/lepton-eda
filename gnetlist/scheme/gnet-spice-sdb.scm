@@ -93,6 +93,8 @@
 ;;              write-net-names-on-component to make it a bit more flexible.
 ;;              Combine write-probe-item and write-net-names-on-component.  Add
 ;;              a range utility function.  CC
+;;  1.3.2011 -- Updated the Problematci name=? symbols to name=unknown and removed the
+;;              FIXME check for them. This should be a step closer to place holder consistancy. CC
 ;;
 ;;**********************************************************************************
 ;;
@@ -1641,16 +1643,6 @@
 	  (set! model (gnetlist:get-package-attribute package "model-name") )
 	  (set! value (gnetlist:get-package-attribute package "value") )
 	  (set! model-file (gnetlist:get-package-attribute package "file") )
-
-	  ;; Sometimes get-package-attribute returns "?" instead of "unknown".
-	  ;; This is because some symbols use file=? as a place holder value to indicate that
-	  ;; it needs to be filled in. It is simular other place holders like  footprint=none, and refdes=R?.
-	  ;; ? seems to be an ad hoc place holder for other attributes as well, like value for example.
-	  ;; FIXME: Of couse there could be many other places that this problem occurs. An effort should be
-	  ;; made to come up with a consistant way of representing place holders.
-
-	  (if (string-ci=? model-file "?")
-	      (set! model-file "unknown"))
 
 	  ;; Now run a series of checks to see if we should stick this file into the file-info-list
 	  ;; Check to see if "file" attribute is non-empty

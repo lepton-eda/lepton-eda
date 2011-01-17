@@ -7,7 +7,7 @@ refdes=A?
 T 600 300 9 10 1 0 0 0 1
 Gnucap include
 T 500 0 8 10 1 1 0 0 1
-file=?
+file=unknown
 T 100 0 9 10 1 0 0 0 1
 File:
 T 300 600 8 10 0 0 0 0 1

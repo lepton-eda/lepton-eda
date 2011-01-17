@@ -7,6 +7,6 @@ refdes=A?
 T 600 400 9 10 1 0 0 0 1
 SPICE directive
 T 100 100 8 10 1 1 0 0 1
-file=?
+file=unknown
 T 100 100 8 10 1 1 0 0 1
-value=?
+value=unknown
