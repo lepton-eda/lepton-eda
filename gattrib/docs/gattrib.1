@@ -1,0 +1,48 @@
+.TH gattrib 1 "January 16th, 2011" "gEDA Project" 1.7.0.20110116
+.SH NAME
+gattrib - gEDA/gaf Schematic Attribute Editor
+.SH SYNOPSIS
+.B gattrib
+[\fIOPTION\fR ...] [\fIFILE\fR ...]
+.SH DESCRIPTION
+.PP
+\fBgattrib\fR is a spreadsheet-like tool for bulk editing of
+attributes in gEDA schematics, usually created in \fBgschem\fR(1).
+.PP
+If no \fIFILE\fRs to open are specified on the command line,
+\fBgattrib\fR will display a file selector dialog on startup.
+
+.SH OPTIONS
+.TP 8
+\fB-q\fR, \fB--quiet\fR
+Quiet mode. Turn off all warnings/notes/messages.
+.TP 8
+\fB-v\fR, \fB--verbose\fR
+Verbose mode.  Output all diagnostic information.
+.TP 8
+\fB-h\fR, \fB--help\fR
+Print a help message.
+
+.SH ENVIRONMENT
+.TP 8
+.B GEDADATA
+specifies the search directory for Scheme and rc files.  The default
+is `${prefix}/share/gEDA'.
+.TP 8
+.B GEDADATARC
+specifies the search directory for rc files.  The default is `$GEDADATA'.
+
+.SH AUTHORS
+See the `AUTHORS' file included with this program.
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 1999-2011 gEDA Contributors.  License GPLv2+: GNU GPL
+version 2 or later.  Please see the `COPYING' file included with this
+program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+.SH SEE ALSO
+\fBgschem\fR(1)

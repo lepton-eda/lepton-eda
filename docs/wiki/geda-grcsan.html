@@ -11,40 +11,8 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#geda_gaf_rf_cascade_symbols_and_netlister" class="toc">gEDA/gaf RF Cascade Symbols and Netlister</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#overview" class="toc">Overview</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#requirements" class="toc">Requirements</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#creating_schematics" class="toc">Creating Schematics</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#extracting_the_cascade_input_file" class="toc">Extracting the Cascade Input File</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#running_cascade" class="toc">Running Cascade</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#appendix_a_--_symbols_in_the_library" class="toc">Appendix A -- Symbols in the Library</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#sources_cascade-source" class="toc">Sources (cascade-source)</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#defaults_cascade-default" class="toc">Defaults (cascade-default)</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#elements" class="toc">Elements</a></span></div></li>
-</ul>
-</li>
-<li class="level2"><div class="li"><span class="li"><a href="#example" class="toc">Example</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#example_schematics" class="toc">Example Schematics</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#netlist_the_design" class="toc">Netlist the Design</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#run_the_analysis" class="toc">Run the Analysis</a></span></div></li>
-</ul>
-</li>
-<li class="level2"><div class="li"><span class="li"><a href="#document_revision_history" class="toc">Document Revision History</a></span></div></li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="geda_gaf_rf_cascade_symbols_and_netlister" id="geda_gaf_rf_cascade_symbols_and_netlister">gEDA/gaf RF Cascade Symbols and Netlister</a></h1>
+<h1 class="sectionedit257"><a name="geda_gaf_rf_cascade_symbols_and_netlister" id="geda_gaf_rf_cascade_symbols_and_netlister">gEDA/gaf RF Cascade Symbols and Netlister</a></h1>
 <div class="level1">
 
 <p>
@@ -60,13 +28,14 @@ December 3rd, 2003
 </p>
 
 </div>
-<!-- SECTION "gEDA/gaf RF Cascade Symbols and Netlister" [1-173] -->
-<h2><a name="overview" id="overview">Overview</a></h2>
+<!-- EDIT257 SECTION "gEDA/gaf RF Cascade Symbols and Netlister" [1-173] -->
+<h2 class="sectionedit258"><a name="overview" id="overview">Overview</a></h2>
 <div class="level2">
 
 <p>
 This document describes the symbol library and gnetlist backend which support driving RF Cascade (<a href="http://rfcascade.sourceforge.net" class="urlextern" title="http://rfcascade.sourceforge.net"  rel="nofollow">http://rfcascade.sourceforge.net</a>) simulations from the gEDA/gaf system. Cascade is a noise figure and distortion analysis tool geared towards radio receiver design.<br/>
- The basic steps involved with using gEDA as the frontend for Cascade simulations are:
+
+The basic steps involved with using gEDA as the frontend for Cascade simulations are:
 </p>
 <ol>
 <li class="level1"><div class="li"> Create schematics of the circuit.</div>
@@ -78,8 +47,8 @@ This document describes the symbol library and gnetlist backend which support dr
 </ol>
 
 </div>
-<!-- SECTION "Overview" [174-630] -->
-<h2><a name="requirements" id="requirements">Requirements</a></h2>
+<!-- EDIT258 SECTION "Overview" [174-630] -->
+<h2 class="sectionedit259"><a name="requirements" id="requirements">Requirements</a></h2>
 <div class="level2">
 
 <p>
@@ -93,27 +62,30 @@ You will need the following programs to be installed:
 </ul>
 
 </div>
-<!-- SECTION "Requirements" [631-1103] -->
-<h2><a name="creating_schematics" id="creating_schematics">Creating Schematics</a></h2>
+<!-- EDIT259 SECTION "Requirements" [631-1103] -->
+<h2 class="sectionedit260"><a name="creating_schematics" id="creating_schematics">Creating Schematics</a></h2>
 <div class="level2">
 
 <p>
 When creating a block diagram in the gschem schematic editor, use only the symbols from the cascade library. Every block diagram must have a \cascadesource” element. In addition, the block diagram must be a simple cascade. No parallel paths or branches are allowed.<br/>
- All instances must have a unique reference designator. For a receiver block diagram, this is often times best achieved by manually entering them. The only restriction on reference designator names is that they contain no spaces. A descriptive name such as \RF Filter” or \First Mixer” is useful as it will show up in the cascade output report.
+
+All instances must have a unique reference designator. For a receiver block diagram, this is often times best achieved by manually entering them. The only restriction on reference designator names is that they contain no spaces. A descriptive name such as \RF Filter” or \First Mixer” is useful as it will show up in the cascade output report.
 </p>
 
 </div>
-<!-- SECTION "Creating Schematics" [1104-1748] -->
-<h2><a name="extracting_the_cascade_input_file" id="extracting_the_cascade_input_file">Extracting the Cascade Input File</a></h2>
+<!-- EDIT260 SECTION "Creating Schematics" [1104-1748] -->
+<h2 class="sectionedit261"><a name="extracting_the_cascade_input_file" id="extracting_the_cascade_input_file">Extracting the Cascade Input File</a></h2>
 <div class="level2">
 
 <p>
-To extract the Cascade input file, run: 
+To extract the Cascade input file, run:
+
 </p>
 <pre class="code">gnetlist -g cascade -o test.cas file1.sch [file2.sch ...]</pre>
 
 <p>
-For the example file contained in this archive, you can run: 
+For the example file contained in this archive, you can run:
+
 </p>
 <pre class="code">gnetlist -g cascade -o example.cas example.sch</pre>
 
@@ -122,12 +94,13 @@ The netlist will be left in <strong><code>example.cas</code></strong>.
 </p>
 
 </div>
-<!-- SECTION "Extracting the Cascade Input File" [1749-2078] -->
-<h2><a name="running_cascade" id="running_cascade">Running Cascade</a></h2>
+<!-- EDIT261 SECTION "Extracting the Cascade Input File" [1749-2078] -->
+<h2 class="sectionedit262"><a name="running_cascade" id="running_cascade">Running Cascade</a></h2>
 <div class="level2">
 
 <p>
-Cascade is exceptionally simple to run. Just run: 
+Cascade is exceptionally simple to run. Just run:
+
 </p>
 <pre class="code">cascade example.cas &gt; example.out</pre>
 
@@ -136,8 +109,8 @@ to run the analysis on the system contained in the file <strong><code>example.ca
 </p>
 
 </div>
-<!-- SECTION "Running Cascade" [2079-2393] -->
-<h2><a name="appendix_a_--_symbols_in_the_library" id="appendix_a_--_symbols_in_the_library">Appendix A -- Symbols in the Library</a></h2>
+<!-- EDIT262 SECTION "Running Cascade" [2079-2393] -->
+<h2 class="sectionedit263"><a name="appendix_a_--_symbols_in_the_library" id="appendix_a_--_symbols_in_the_library">Appendix A -- Symbols in the Library</a></h2>
 <div class="level2">
 
 <p>
@@ -145,12 +118,13 @@ Please note that all instances must have the <strong><code>refdes=</code></stron
 </p>
 
 </div>
-<!-- SECTION "Appendix A -- Symbols in the Library" [2394-2519] -->
-<h3><a name="sources_cascade-source" id="sources_cascade-source">Sources (cascade-source)</a></h3>
+<!-- EDIT263 SECTION "Appendix A -- Symbols in the Library" [2394-2519] -->
+<h3 class="sectionedit264"><a name="sources_cascade-source" id="sources_cascade-source">Sources (cascade-source)</a></h3>
 <div class="level3">
 
 <p>
-Source. Attributes:
+Source.
+Attributes:
 </p>
 <ul>
 <li class="level1"><div class="li"> C=Carrier level in dBm. Optional.</div>
@@ -164,12 +138,13 @@ Source. Attributes:
 </ul>
 
 </div>
-<!-- SECTION "Sources (cascade-source)" [2520-2798] -->
-<h3><a name="defaults_cascade-default" id="defaults_cascade-default">Defaults (cascade-default)</a></h3>
+<!-- EDIT264 SECTION "Sources (cascade-source)" [2520-2798] -->
+<h3 class="sectionedit265"><a name="defaults_cascade-default" id="defaults_cascade-default">Defaults (cascade-default)</a></h3>
 <div class="level3">
 
 <p>
-This symbol sets the default impedance levels as well as the correlation coeffcient used for third order distortion calculations. There are two versions of this symbol. One is used to set the defaults at the beginnng of the definition. The other can be placed in series with the cascade to change the defaults part way through. This is useful if you wish to change impedance levels in the middle of the receiver chain. Attributes:
+This symbol sets the default impedance levels as well as the correlation coeffcient used for third order distortion calculations. There are two versions of this symbol. One is used to set the defaults at the beginnng of the definition. The other can be placed in series with the cascade to change the defaults part way through. This is useful if you wish to change impedance levels in the middle of the receiver chain.
+Attributes:
 </p>
 <ul>
 <li class="level1"><div class="li"> RIN=Default block input resistance in Ohms. Optional.</div>
@@ -181,34 +156,36 @@ This symbol sets the default impedance levels as well as the correlation coeffci
 </ul>
 
 </div>
-<!-- SECTION "Defaults (cascade-default)" [2799-3458] -->
-<h3><a name="elements" id="elements">Elements</a></h3>
+<!-- EDIT265 SECTION "Defaults (cascade-default)" [2799-3458] -->
+<h3 class="sectionedit266"><a name="elements" id="elements">Elements</a></h3>
 <div class="level3">
 
 <p>
-Cascade characterizes each block in a system by its gain and optionally noise figure and third order intercept point. As such, there is no distinction between various elements such as amplifiers, filters, and mixers. The gEDA/gaf RF Cascade symbol library contains different symbols for clarity in the diagram only. The currently available element symbols are: Attributes: 
+Cascade characterizes each block in a system by its gain and optionally noise figure and third order intercept point. As such, there is no distinction between various elements such as amplifiers, filters, and mixers. The gEDA/gaf RF Cascade symbol library contains different symbols for clarity in the diagram
+only. The currently available element symbols are: Attributes:
+
 </p>
-<table class="inline">
-	<tr>
-		<td>cascade-amp</td><td>Amplifier</td>
+<div class="table sectionedit267"><table class="inline">
+	<tr class="row0">
+		<td class="col0">cascade-amp</td><td class="col1">Amplifier</td>
 	</tr>
-	<tr>
-		<td>cascade-filter</td><td>Filter</td>
+	<tr class="row1">
+		<td class="col0">cascade-filter</td><td class="col1">Filter</td>
 	</tr>
-	<tr>
-		<td>cascade-mixer</td><td>Mixer</td>
+	<tr class="row2">
+		<td class="col0">cascade-mixer</td><td class="col1">Mixer</td>
 	</tr>
-	<tr>
-		<td>cascade-transformer</td><td>Transformer</td>
+	<tr class="row3">
+		<td class="col0">cascade-transformer</td><td class="col1">Transformer</td>
 	</tr>
-	<tr>
-		<td colspan="2"> </td>
+	<tr class="row4">
+		<td class="col0" colspan="2"> </td>
 	</tr>
-	<tr>
-		<td colspan="2"> Table 1: Element Types </td>
+	<tr class="row5">
+		<td class="col0" colspan="2"> Table 1: Element Types </td>
 	</tr>
-</table>
-<ul>
+</table></div>
+<!-- EDIT267 TABLE [3852-3988] --><ul>
 <li class="level1"><div class="li"> Gain is specified by one of the following:</div>
 <ul>
 <li class="level2"><div class="li"> <strong>G</strong>=Power gain in dB.</div>
@@ -232,8 +209,8 @@ Cascade characterizes each block in a system by its gain and optionally noise fi
 </ul>
 
 </div>
-<!-- SECTION "Elements" [3459-4416] -->
-<h2><a name="example" id="example">Example</a></h2>
+<!-- EDIT266 SECTION "Elements" [3459-4416] -->
+<h2 class="sectionedit268"><a name="example" id="example">Example</a></h2>
 <div class="level2">
 
 <p>
@@ -241,53 +218,57 @@ This appendix provides a simple example of the entire process of generating a sc
 </p>
 
 </div>
-<!-- SECTION "Example" [4417-4605] -->
-<h3><a name="example_schematics" id="example_schematics">Example Schematics</a></h3>
+<!-- EDIT268 SECTION "Example" [4417-4605] -->
+<h3 class="sectionedit269"><a name="example_schematics" id="example_schematics">Example Schematics</a></h3>
 <div class="level3">
 
 <p>
 Figure 1 shows the schematic of a simple receiver signal chain.<br/>
- Figure 2 shows the contents of the example.cas file. 
-</p>
-<table class="inline">
-	<tr>
-		<td> <a href="media/geda/rf_cascade_figure1.jpg" class="media" target="_blank" title="geda:rf_cascade_figure1.jpg"><img src="media/geda/rf_cascade_figure1.jpg" class="media" alt="" /></a> </td>
-	</tr>
-	<tr>
-		<td> <a href="media/geda/rf_cascade_figure2.jpg" class="media" target="_blank" title="geda:rf_cascade_figure2.jpg"><img src="media/geda/rf_cascade_figure2.jpg" class="media" alt="" /></a> </td>
-	</tr>
-</table>
 
+Figure 2 shows the contents of the example.cas file.
+
+</p>
+<div class="table sectionedit270"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> <a href="media/geda/rf_cascade_figure1.jpg" class="media" target="_blank" title="geda:rf_cascade_figure1.jpg"><img src="media/geda/rf_cascade_figure1.jpg" class="media" alt="" /></a> </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> <a href="media/geda/rf_cascade_figure2.jpg" class="media" target="_blank" title="geda:rf_cascade_figure2.jpg"><img src="media/geda/rf_cascade_figure2.jpg" class="media" alt="" /></a> </td>
+	</tr>
+</table></div>
+<!-- EDIT270 TABLE [4755-4828] -->
 </div>
-<!-- SECTION "Example Schematics" [4606-4829] -->
-<h3><a name="netlist_the_design" id="netlist_the_design">Netlist the Design</a></h3>
+<!-- EDIT269 SECTION "Example Schematics" [4606-4829] -->
+<h3 class="sectionedit271"><a name="netlist_the_design" id="netlist_the_design">Netlist the Design</a></h3>
 <div class="level3">
 
 <p>
-To netlist the design, run: 
+To netlist the design, run:
+
 </p>
 <pre class="code">gnetlist -g cascade example.cas example.sch</pre>
 
 </div>
-<!-- SECTION "Netlist the Design" [4830-4944] -->
-<h3><a name="run_the_analysis" id="run_the_analysis">Run the Analysis</a></h3>
+<!-- EDIT271 SECTION "Netlist the Design" [4830-4944] -->
+<h3 class="sectionedit272"><a name="run_the_analysis" id="run_the_analysis">Run the Analysis</a></h3>
 <div class="level3">
 
 <p>
-Run the analysis with: 
+Run the analysis with:
+
 </p>
 <pre class="code">cascade example.cas</pre>
 
 </div>
-<!-- SECTION "Run the Analysis" [4945-5028] -->
-<h2><a name="document_revision_history" id="document_revision_history">Document Revision History</a></h2>
+<!-- EDIT272 SECTION "Run the Analysis" [4945-5028] -->
+<h2 class="sectionedit273"><a name="document_revision_history" id="document_revision_history">Document Revision History</a></h2>
 <div class="level2">
-<table class="inline">
-	<tr>
-		<td>December 3rd, 2003</td><td>Created cascade.tex</td>
+<div class="table sectionedit274"><table class="inline">
+	<tr class="row0">
+		<td class="col0">December 3rd, 2003</td><td class="col1">Created cascade.tex</td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT274 TABLE [5068-5108] -->
 </div>
-<!-- SECTION "Document Revision History" [5029-] --></body>
+<!-- EDIT273 SECTION "Document Revision History" [5029-] --></body>
 </html>

@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 #include <config.h>
@@ -464,19 +464,34 @@ SCM g_get_pins_nets(SCM scm_uref)
 }
 
 
-SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
+/*! \brief Get attribute value(s) from a package with given uref.
+ *  \par Function Description
+ *  This function returns the values of a specific attribute type
+ *  attached to the symbol instances with the given refdes.
+ *
+ *  Every first attribute value found is added to the return list. A
+ *  Scheme false value is added if the instance has no such attribute.
+ *
+ *  \note The order of the values in the return list is the order of
+ *  symbol instances within gnetlist (the first element is the value
+ *  associated with the first symbol instance).
+ *
+ *  \param [in] scm_uref           Package reference.
+ *  \param [in] scm_wanted_attrib  Attribute name.
+ *  \return A list of attribute values as strings and #f.
+ */
+SCM g_get_all_package_attributes(SCM scm_uref, SCM scm_wanted_attrib)
 {
-    SCM scm_return_value;
+    SCM ret = SCM_EOL;
     NETLIST *nl_current;
     char *uref;
     char *wanted_attrib;
-    char *return_value = NULL;
 
     SCM_ASSERT(scm_is_string (scm_uref),
-	       scm_uref, SCM_ARG1, "gnetlist:get-package-attribute");
+	       scm_uref, SCM_ARG1, "gnetlist:get-all-package-attributes");
 
     SCM_ASSERT(scm_is_string (scm_wanted_attrib),
-	       scm_wanted_attrib, SCM_ARG2, "gnetlist:get-package-attribute");
+	       scm_wanted_attrib, SCM_ARG2, "gnetlist:get-all-package-attributes");
 
     uref          = scm_to_locale_string (scm_uref);
     wanted_attrib = scm_to_locale_string (scm_wanted_attrib);
@@ -484,32 +499,27 @@ SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib)
     /* here is where you make it multi page aware */
     nl_current = netlist_head;
 
-    /* search for the first instance */
-    /* through the entire list */
+    /* search for uref instances and through the entire list */
     while (nl_current != NULL) {
 
 	if (nl_current->component_uref) {
 	    if (strcmp(nl_current->component_uref, uref) == 0) {
-
-		return_value =
+		char *value =
 		    o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
 		                                            wanted_attrib, 0);
-		break;
+
+		ret = scm_cons (value ? scm_from_locale_string (value) : SCM_BOOL_F, ret);
+
+		g_free (value);
 	    }
 	}
 	nl_current = nl_current->next;
     }
 
-    if (return_value) {
-      scm_return_value = scm_makfrom0str (return_value);
-    } else {
-      scm_return_value = scm_makfrom0str ("unknown");
-    }
-
     free (uref);
     free (wanted_attrib);
 
-    return (scm_return_value);
+    return scm_reverse_x (ret, SCM_EOL);
 }
 
 /* takes a uref and pinseq number and returns wanted_attribute associated */
@@ -732,123 +742,6 @@ SCM g_set_netlist_mode(SCM mode)
 }
 #endif
 
-/* Given an uref, return a list of used slots in the schematic */
-/* in the form: (1 2 3 4). Repeated slots are returned. */
-SCM g_get_slots(SCM scm_uref)
-{
-    NETLIST *nl_current;
-    char *uref;
-    gchar *slot = NULL;
-    char *slot_tmp = NULL;
-    SCM slots_list = SCM_EOL;
-    SCM slot_number;
-
-
-    SCM_ASSERT(scm_is_string (scm_uref),
-	       scm_uref, SCM_ARG1, "gnetlist:get-slots-used-of-package");
-
-    uref = SCM_STRING_CHARS (scm_uref);
-    
-    /* here is where you make it multi page aware */
-    nl_current = netlist_head;
-
-    /* search for the first instance */
-    /* through the entire list */
-    while (nl_current != NULL) {
-
-	if (nl_current->component_uref) {
-	    if (strcmp(nl_current->component_uref, uref) == 0) {
-
-		/* first search outside the symbol */
-		slot_tmp =
-		  o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
-		                                          "slot", 0);
-
-		/* When a package has no slot attribute, then assume it's slot number 1 */
-		if (!slot_tmp) {
-		  slot_tmp=g_strdup("1");
-		}
-		slot = g_strconcat ("#d", slot_tmp, NULL);
-		  slot_number = scm_string_to_number(scm_makfrom0str (slot),
-                                             scm_from_int(10));
-		  g_free (slot);
-		  if (slot_number != SCM_BOOL_F) {
-		    slots_list = scm_cons (slot_number, slots_list);
-		  }
-		  else 
-		    fprintf(stderr, "Uref %s: Bad slot number: %s.\n", uref, slot_tmp);
-		  g_free (slot_tmp);
-	    }
-	}
-	nl_current = nl_current->next;
-    }
-
-    slots_list = scm_sort_list_x(slots_list,
-                                 SCM_VARIABLE_REF (scm_c_module_lookup (
-                                   scm_current_module (), "<")));
-
-    return (slots_list);
-}
-
-/* Given an uref, return a unique list of used slots in the schematic */
-/* in the form: (1 2 3 4). Repeated slots are NOT returned */
-SCM g_get_unique_slots(SCM scm_uref)
-{
-    NETLIST *nl_current;
-    char *uref;
-    gchar *slot = NULL;
-    char *slot_tmp = NULL;
-    SCM slots_list = SCM_EOL;
-    SCM slot_number;
-
-
-    SCM_ASSERT(scm_is_string (scm_uref),
-	       scm_uref, SCM_ARG1, "gnetlist:get-unique-slots-used-of-package");
-
-    uref = SCM_STRING_CHARS (scm_uref);
-    
-    /* here is where you make it multi page aware */
-    nl_current = netlist_head;
-
-    /* search for the first instance */
-    /* through the entire list */
-    while (nl_current != NULL) {
-
-	if (nl_current->component_uref) {
-	    if (strcmp(nl_current->component_uref, uref) == 0) {
-
-		/* first search outside the symbol */
-		slot_tmp =
-		  o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
-		                                          "slot", 0);
-
-		/* When a package has no slot attribute, then assume it's slot number 1 */
-		if (!slot_tmp) {
-		  slot_tmp=g_strdup("1");
-		}
-		slot = g_strconcat ("#d", slot_tmp, NULL);
-		slot_number = scm_string_to_number(scm_makfrom0str (slot),
-                                           scm_from_int(10));
-		g_free (slot);
-		if (slot_number != SCM_BOOL_F) {
-		  if (scm_member(slot_number, slots_list) ==  SCM_BOOL_F) {
-		    slots_list = scm_cons (slot_number, slots_list);
-		  }
-		}
-		else 
-		  fprintf(stderr, "Uref %s: Bad slot number: %s.\n", uref, slot_tmp);
-		g_free (slot_tmp);
-	    }
-	}
-	nl_current = nl_current->next;
-    }
-
-    slots_list = scm_sort_list_x(slots_list,
-                                 SCM_VARIABLE_REF (scm_c_module_lookup (
-                                   scm_current_module (), "<")));
-    return (slots_list);
-}
-
 
 /* 
    This function returns certain calling flags to the calling guile prog. 
@@ -882,22 +775,6 @@ SCM g_get_calling_flags()
     }
     
     return (arglist);
-}
-
-
-/* -------------------------------------------------------------------- *
- * This fcn returns the command line with which gnetlist was invoked.
- * It is used to write the first line of a SPICE file when netlisting 
- * to SPICE.
- * SDB -- 8.22.2004.
- * -------------------------------------------------------------------- */
-SCM g_get_command_line()
-{
-     SCM commandline;
-
-     commandline = scm_makfrom0str (command_line);
-
-     return (commandline);
 }
 
 

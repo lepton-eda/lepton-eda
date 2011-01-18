@@ -11,36 +11,17 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#required_for_production_circuits" class="toc">Required for production circuits</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#intermediate_translation_file_format_vhdl_edif" class="toc">intermediate translation file format VHDL? EDIF?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#hierarchical_buses" class="toc">Hierarchical Buses</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#ipc_improvements" class="toc">IPC Improvements</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#robust_function" class="toc">Robust Function</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#other_improvements" class="toc">Other Improvements</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#too_detailed" class="toc">Too Detailed</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#implementation" class="toc">Implementation</a></span></div></li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="required_for_production_circuits" id="required_for_production_circuits">Required for production circuits</a></h1>
+<h1 class="sectionedit178"><a name="required_for_production_circuits" id="required_for_production_circuits">Required for production circuits</a></h1>
 <div class="level1">
 <ul>
-<li class="level1"><div class="li"> hierarchy in schematic and netlist and pcb &ndash; modules that can be reused, arrayed.</div>
+<li class="level1"><div class="li"> hierarchy in schematic and netlist and pcb – modules that can be reused, arrayed.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Required for production circuits" [1-135] -->
-<h2><a name="intermediate_translation_file_format_vhdl_edif" id="intermediate_translation_file_format_vhdl_edif">intermediate translation file format VHDL? EDIF?</a></h2>
+<!-- EDIT178 SECTION "Required for production circuits" [1-135] -->
+<h2 class="sectionedit179"><a name="intermediate_translation_file_format_vhdl_edif" id="intermediate_translation_file_format_vhdl_edif">intermediate translation file format VHDL? EDIF?</a></h2>
 <div class="level2">
 
 </div>
@@ -49,15 +30,15 @@
 <div class="level4">
 
 <p>
- In an *AMS language, nets have types.  It’s not just “wire”. The schematic needs to be extended so that pins on symbols can have types.  It is not prohibited to mix types.  Verilog has something called a “connectmodule” to define how to resolve mixed types.  <strong>gschem attributes need to have types.</strong> [Al Davis]
+ In an *AMS language, nets have types.  It&#039;s not just “wire”. The schematic needs to be extended so that pins on symbols can have types.  It is not prohibited to mix types.  Verilog has something called a “connectmodule” to define how to resolve mixed types.  <strong>gschem attributes need to have types.</strong> [Al Davis]
 </p>
 
 <p>
- I certainly agree that the (gnetlist-ed.) Verilog output is not ‘lossless’ &ndash; it’s only an interchange format for the interconnect&hellip;[Mike Jarabek]
+ I certainly agree that the (gnetlist-ed.) Verilog output is not &#039;lossless&#039; – it&#039;s only an interchange format for the interconnect…[Mike Jarabek]
 </p>
 
 <p>
- He’s not actually proposing to use VHDL (as modeling language-ed.) but to steal some <strong>syntax from VHDL</strong> and interpret it as he sees fit for the task. In particular, he’s only interested in the <strong>entity-architecture separation</strong>[Steve Williams]
+ He&#039;s not actually proposing to use VHDL (as modeling language-ed.) but to steal some <strong>syntax from VHDL</strong> and interpret it as he sees fit for the task. In particular, he&#039;s only interested in the <strong>entity-architecture separation</strong>[Steve Williams]
 </p>
 
 <p>
@@ -65,7 +46,7 @@ More useful, (than creating intermediate file formats-ed.) is to <strong>refacto
 </p>
 
 <p>
- Any extraction should preserve hierarchy, in hopes that the target tool also benefits from it.  Translation must be 100%, lossless, from  netlist to PCB refdes, and from PCB refdes used to create a module or back annotate a schematic. [Al Davis]  [paraphrased heavily by JGriessen &ndash; correct?]
+ Any extraction should preserve hierarchy, in hopes that the target tool also benefits from it.  Translation must be 100%, lossless, from  netlist to PCB refdes, and from PCB refdes used to create a module or back annotate a schematic. [Al Davis]  [paraphrased heavily by JGriessen – correct?]
 </p>
 
 <p>
@@ -73,29 +54,33 @@ More useful, (than creating intermediate file formats-ed.) is to <strong>refacto
 </p>
 
 <p>
- If EDIF has layout objects or schematic objects  built-in, that is actually a weakness.  Just like SPICE having  resistors and transistors built-in has become a weakness.[Al Davis]
+ If EDIF has layout objects or schematic objects 
+built-in, that is actually a weakness.  Just like SPICE having 
+resistors and transistors built-in has become a weakness.[Al Davis]
 </p>
 
 <p>
- <strong>EDIF’s not mainstream.</strong>  VHDL and Verilog are mainstream.  That is  one reason for my preference.  It’s not all technical[Al Davis]
+ <strong>EDIF&#039;s not mainstream.</strong>  VHDL and Verilog are mainstream.  That is 
+one reason for my preference.  It&#039;s not all technical[Al Davis]
 </p>
 
 <p>
- <strong>PCB behavior with a hierarchic netlist</strong>   Right click on a symbol, select “go inside”, and another drawing opens up showing what’s inside.  gschem also should act this way. [Al Davis]  Display in place what’s inside, <strong>turn on/off the visibility</strong> or “editability” of any subcells. [Igor] <strong>Ability to visually toggle</strong> [Dan McMahill]  <strong>“blocks” should be translucent.</strong>  (To show in place)ed. even when you’re not editing it. [DJ Delorie]  Yep. [John Griessen]  Dive into a block so you can edit it.  When done, <strong>close and updated in place</strong>. [DJ Delorie]
+
+<strong>PCB behavior with a hierarchic netlist</strong>   Right click on a symbol, select “go inside”, and another drawing opens up showing what&#039;s inside.  gschem also should act this way. [Al Davis]  Display in place what&#039;s inside, <strong>turn on/off the visibility</strong> or “editability” of any subcells. [Igor] <strong>Ability to visually toggle</strong> [Dan McMahill]  <strong>“blocks” should be translucent.</strong>  (To show in place)ed. even when you&#039;re not editing it. [DJ Delorie]  Yep. [John Griessen]  Dive into a block so you can edit it.  When done, <strong>close and updated in place</strong>. [DJ Delorie]
 </p>
 
 <p>
-<strong>how to handle re-use blocks?</strong>  [Stuart Brorson] That is, if I have a sub-schematic which I instantiate four times, how should it be refdesed in the netlist?     
+<strong>how to handle re-use blocks?</strong>  [Stuart Brorson] That is, if I have a sub-schematic which I instantiate four times, how should it be refdesed in the netlist?   
 </p>
 
 </div>
-<!-- SECTION "intermediate translation file format VHDL? EDIF?" [136-2788] -->
-<h2><a name="hierarchical_buses" id="hierarchical_buses">Hierarchical Buses</a></h2>
+<!-- EDIT179 SECTION "intermediate translation file format VHDL? EDIF?" [136-2788] -->
+<h2 class="sectionedit180"><a name="hierarchical_buses" id="hierarchical_buses">Hierarchical Buses</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Hierarchical Buses" [2789-2821] -->
-<h2><a name="ipc_improvements" id="ipc_improvements">IPC Improvements</a></h2>
+<!-- EDIT180 SECTION "Hierarchical Buses" [2789-2821] -->
+<h2 class="sectionedit181"><a name="ipc_improvements" id="ipc_improvements">IPC Improvements</a></h2>
 <div class="level2">
 
 <p>
@@ -103,7 +88,7 @@ More useful, (than creating intermediate file formats-ed.) is to <strong>refacto
 </p>
 
 <p>
- Peter Brett and I put together a graphical frontend to gsch2pcb which uses gsch2pcb’s output to feed changes into a live PCB layout. [Peter Clifton]
+ Peter Brett and I put together a graphical frontend to gsch2pcb which uses gsch2pcb&#039;s output to feed changes into a live PCB layout. [Peter Clifton]
 </p>
 
 <p>
@@ -111,16 +96,16 @@ More useful, (than creating intermediate file formats-ed.) is to <strong>refacto
 </p>
 
 </div>
-<!-- SECTION "IPC Improvements" [2822-3368] -->
-<h2><a name="robust_function" id="robust_function">Robust Function</a></h2>
+<!-- EDIT181 SECTION "IPC Improvements" [2822-3368] -->
+<h2 class="sectionedit182"><a name="robust_function" id="robust_function">Robust Function</a></h2>
 <div class="level2">
 
 <p>
- libgeda could/should evolve - as a backend to different tools.   Since the PCB file-format is PCB’s, and may change, it is wiser to use a defined <acronym title="Application Programming Interface">API</acronym> to PCB to make PCB write the file. This entails adding to PCB’s action interface as necessary, and making gsch2pcb output a script of actions rather than a “PCB” file.  [Peter Clifton]
+ libgeda could/should evolve - as a backend to different tools.   Since the PCB file-format is PCB&#039;s, and may change, it is wiser to use a defined <acronym title="Application Programming Interface">API</acronym> to PCB to make PCB write the file. This entails adding to PCB&#039;s action interface as necessary, and making gsch2pcb output a script of actions rather than a “PCB” file.  [Peter Clifton]
 </p>
 
 <p>
- I’m hoping to separate much of the <acronym title="Graphical User Interface">GUI</acronym> structure and cram that back in the applications it belongs in, re-structuring libgeda to be design data-oriented.[Peter Clifton]
+ I&#039;m hoping to separate much of the <acronym title="Graphical User Interface">GUI</acronym> structure and cram that back in the applications it belongs in, re-structuring libgeda to be design data-oriented.[Peter Clifton]
 </p>
 
 <p>
@@ -128,7 +113,7 @@ More useful, (than creating intermediate file formats-ed.) is to <strong>refacto
 </p>
 
 <p>
- It would not fall out of sync with the changing file-formats, because you wouldn’t write yet another implementation of the parser, data-structures etc, nor would you copy-paste code.  You would have one library which is used by all tools (probably in C as this is what the suite mostly uses), then you would provide language bindings so people can write the useful utilities they want.  If this means having to split code out of existing tools and into a library, that is the way forward in terms of code reuse. [Peter Clifton]
+ It would not fall out of sync with the changing file-formats, because you wouldn&#039;t write yet another implementation of the parser, data-structures etc, nor would you copy-paste code.  You would have one library which is used by all tools (probably in C as this is what the suite mostly uses), then you would provide language bindings so people can write the useful utilities they want.  If this means having to split code out of existing tools and into a library, that is the way forward in terms of code reuse. [Peter Clifton]
 </p>
 
 <p>
@@ -140,8 +125,8 @@ More useful, (than creating intermediate file formats-ed.) is to <strong>refacto
 </p>
 
 </div>
-<!-- SECTION "Robust Function" [3369-4944] -->
-<h2><a name="other_improvements" id="other_improvements">Other Improvements</a></h2>
+<!-- EDIT182 SECTION "Robust Function" [3369-4944] -->
+<h2 class="sectionedit183"><a name="other_improvements" id="other_improvements">Other Improvements</a></h2>
 <div class="level2">
 
 <p>
@@ -153,7 +138,7 @@ It is very useful I think to let DRC run to completion and <strong>have a DRC la
 </p>
 
 <p>
- have a block (in PCB)ed. that is a modular entity.  Normally, you can’t do anything but move it around as a whole.  A special action “opens” this block (and hides everything else) so you can edit it.  When you’re done, it’s closed again - and any copies of the block are automatically updated in place. [DJ Delorie]
+ have a block (in PCB)ed. that is a modular entity.  Normally, you can&#039;t do anything but move it around as a whole.  A special action “opens” this block (and hides everything else) so you can edit it.  When you&#039;re done, it&#039;s closed again - and any copies of the block are automatically updated in place. [DJ Delorie]
 </p>
 
 <p>
@@ -161,7 +146,8 @@ It is very useful I think to let DRC run to completion and <strong>have a DRC la
 </p>
 
 <p>
- <strong>gschem attribute editable  as symbols placed</strong>, (such as description of the layout footprint attribute) [CP Tarun]
+
+<strong>gschem attribute editable  as symbols placed</strong>, (such as description of the layout footprint attribute) [CP Tarun]
 </p>
 
 <p>
@@ -169,7 +155,7 @@ It is very useful I think to let DRC run to completion and <strong>have a DRC la
 </p>
 
 <p>
- Yeah, you’d need the “layer types” patch to really manage that, as you’d be able to tag multiple pcb layers as “outline” layers[DJ Delorie]
+ Yeah, you&#039;d need the “layer types” patch to really manage that, as you&#039;d be able to tag multiple pcb layers as “outline” layers[DJ Delorie]
 </p>
 
 <p>
@@ -185,12 +171,13 @@ It is very useful I think to let DRC run to completion and <strong>have a DRC la
 </p>
 
 <p>
- <strong>a PCB interface for presenting dynamic dialog boxes</strong> for importers [Igor]  I think this is part of having easy scripting of user’s choice, so an important design flow consideration[John Griessen]
+
+<strong>a PCB interface for presenting dynamic dialog boxes</strong> for importers [Igor]  I think this is part of having easy scripting of user&#039;s choice, so an important design flow consideration[John Griessen]
 </p>
 
 </div>
-<!-- SECTION "Other Improvements" [4945-6847] -->
-<h2><a name="too_detailed" id="too_detailed">Too Detailed</a></h2>
+<!-- EDIT183 SECTION "Other Improvements" [4945-6847] -->
+<h2 class="sectionedit184"><a name="too_detailed" id="too_detailed">Too Detailed</a></h2>
 <div class="level2">
 
 <p>
@@ -202,7 +189,7 @@ It is very useful I think to let DRC run to completion and <strong>have a DRC la
 </p>
 
 <p>
- PCB doesn’t care     what the refdes is, a heirarchical one is just as valid [DJ Delorie]
+ PCB doesn&#039;t care     what the refdes is, a heirarchical one is just as valid [DJ Delorie]
 </p>
 
 <p>
@@ -210,7 +197,7 @@ It is very useful I think to let DRC run to completion and <strong>have a DRC la
 </p>
 
 <p>
- Can be putoff and done as a <acronym title="Graphical User Interface">GUI</acronym> plugin script &ndash; a detail of easy scripting wants [JGriessen]
+ Can be putoff and done as a <acronym title="Graphical User Interface">GUI</acronym> plugin script – a detail of easy scripting wants [JGriessen]
 </p>
 
 <p>
@@ -218,16 +205,18 @@ It is very useful I think to let DRC run to completion and <strong>have a DRC la
 </p>
 
 <p>
- Can be putoff and done as a <acronym title="Graphical User Interface">GUI</acronym> plugin script &ndash; a detail of easy scripting wants [JGriessen]
+ Can be putoff and done as a <acronym title="Graphical User Interface">GUI</acronym> plugin script – a detail of easy scripting wants [JGriessen]
 </p>
 
 </div>
-<!-- SECTION "Too Detailed" [6848-7493] -->
-<h2><a name="implementation" id="implementation">Implementation</a></h2>
+<!-- EDIT184 SECTION "Too Detailed" [6848-7493] -->
+<h2 class="sectionedit185"><a name="implementation" id="implementation">Implementation</a></h2>
 <div class="level2">
 
 <p>
- <strong>What kind of data structures are desirable?</strong>  How would they look?  [Stuart Brorson] <strong>Once a datastructure is decided upon, then what does the file format look like?</strong>    Preserving the current close mapping of files to data structures is a desirable goal.  The data structures defining hierarchy dictate what the file format should look like.  [Stuart Brorson]
+
+<strong>What kind of data structures are desirable?</strong>  How would they look?  [Stuart Brorson]
+<strong>Once a datastructure is decided upon, then what does the file format look like?</strong>    Preserving the current close mapping of files to data structures is a desirable goal.  The data structures defining hierarchy dictate what the file format should look like.  [Stuart Brorson]
 </p>
 
 <p>
@@ -235,15 +224,15 @@ It is very useful I think to let DRC run to completion and <strong>have a DRC la
 </p>
 
 <p>
- PCB has a second format it uses called a “resource file”.  It’s a semi-lisp-ish format that allows for arbitrarily nested data.  It could be used to hold pretty much anything, but it isn’t “designed for the data”.[DJ Delorie]
+ PCB has a second format it uses called a “resource file”.  It&#039;s a semi-lisp-ish format that allows for arbitrarily nested data.  It could be used to hold pretty much anything, but it isn&#039;t “designed for the data”.[DJ Delorie]
 </p>
 
 <p>
-<strong>How should gschem behave once hierarchy is architected in?</strong> Right now you attach a source= attribute to a symbol.  Then you do “schematic down” on that symbol to dive into the sub-schematic.  Is that OK?  Or what’s a better scheme?
+<strong>How should gschem behave once hierarchy is architected in?</strong> Right now you attach a source= attribute to a symbol.  Then you do “schematic down” on that symbol to dive into the sub-schematic.  Is that OK?  Or what&#039;s a better scheme?
 </p>
 
 <p>
-<strong>Some work has already been done using gnetman by Bill Cox,</strong> but it has never been part of the distribution gnetlist.  Dan McMahill wrote:  “a reason to use the gnetman database as opposed to one designed by one of us” is that without availing Bill Cox’s substantial tested work,  we may “find that the underlying database structure and methods for accessing it still aren’t complete enough, fast enough, or scalable enough.&quot;
+<strong>Some work has already been done using gnetman by Bill Cox,</strong> but it has never been part of the distribution gnetlist.  Dan McMahill wrote:  “a reason to use the gnetman database as opposed to one designed by one of us” is that without availing Bill Cox&#039;s substantial tested work,  we may “find that the underlying database structure and methods for accessing it still aren&#039;t complete enough, fast enough, or scalable enough.”
 </p>
 
 <p>
@@ -251,9 +240,10 @@ It is very useful I think to let DRC run to completion and <strong>have a DRC la
 </p>
 
 <p>
-<strong>Some design work has been done by Peter Brett and Peter Clifton,</strong> producing a concept diagram of a sub-circuit oriented data-structure based on gnetman’s structure diagram for netlisting. See <a href="geda-data_structure_design_discussion.html" class="wikilink1" title="geda-data_structure_design_discussion.html">data structure design discussion</a> 
+<strong>Some design work has been done by Peter Brett and Peter Clifton,</strong> producing a concept diagram of a sub-circuit oriented data-structure based on gnetman&#039;s structure diagram for netlisting. See <a href="geda-data_structure_design_discussion.html" class="wikilink1" title="geda-data_structure_design_discussion.html">data structure design discussion</a>
+
 </p>
 
 </div>
-<!-- SECTION "Implementation" [7494-] --></body>
+<!-- EDIT185 SECTION "Implementation" [7494-] --></body>
 </html>

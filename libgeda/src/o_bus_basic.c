@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 /*! \file o_bus_basic.c 
@@ -200,10 +200,11 @@ OBJECT *o_bus_read (TOPLEVEL *toplevel, char buf[],
  *  This function takes a bus \a object and return a string
  *  according to the file format definition.
  *
+ *  \param [in] toplevel  a TOPLEVEL structure
  *  \param [in] object  a bus OBJECT
  *  \return the string representation of the bus OBJECT
  */
-char *o_bus_save(OBJECT *object)
+char *o_bus_save(TOPLEVEL *toplevel, OBJECT *object)
 {
   int x1, x2, y1, y2;
   char *buf;

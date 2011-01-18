@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 #include <config.h>
@@ -655,7 +655,9 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   scope_text = g_list_first(autotext->scope_text)->data;
 
   /* Step1: get all pages of the hierarchy */
-  pages = s_hierarchy_traversepages(w_current->toplevel, HIERARCHY_NODUPS);
+  pages = s_hierarchy_traversepages (w_current->toplevel,
+                                     w_current->toplevel->page_current,
+                                     HIERARCHY_NODUPS);
 
   /*  g_list_foreach(pages, (GFunc) s_hierarchy_print_page, NULL); */
 
@@ -1399,14 +1401,13 @@ void autonumber_text_dialog(GSCHEM_TOPLEVEL *w_current)
     gtk_dialog_set_default_response (GTK_DIALOG (autotext->dialog), 
                                      GTK_RESPONSE_ACCEPT);
 
-    gtk_signal_connect(GTK_OBJECT(autotext->dialog), "response",
-		       GTK_SIGNAL_FUNC(autonumber_text_response),
-		       autotext);
+    g_signal_connect (G_OBJECT (autotext->dialog), "response",
+                      G_CALLBACK (autonumber_text_response),
+                      autotext);
 
-    gtk_signal_connect(GTK_OBJECT(opt_removenum),
-		       "clicked",
-		       GTK_SIGNAL_FUNC(autonumber_removenum_toggled),
-		       autotext);
+    g_signal_connect (G_OBJECT (opt_removenum), "clicked",
+                      G_CALLBACK (autonumber_removenum_toggled),
+                      autotext);
 
     autonumber_set_state(autotext);
 

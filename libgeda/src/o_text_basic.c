@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 /*! \file o_text_basic.c
@@ -281,7 +281,7 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
   new_node->sel_func = select_func;  
 
   new_node->color = color;
-  new_node->visibility = visibility; 
+  o_set_visibility (toplevel, new_node, visibility);
   new_node->show_name_value = show_name_value;
 
   update_disp_string (new_node);
@@ -303,7 +303,8 @@ void o_text_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   int left, right, top, bottom;
 
-  if (o_current->visibility == INVISIBLE && !toplevel->show_hidden_text) {
+  if ((!o_is_visible (toplevel, o_current)) &&
+      (!toplevel->show_hidden_text)) {
     return;
   }
 
@@ -469,10 +470,11 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
  *  This function takes a text \a object and return a string
  *  according to the file format definition.
  *
+ *  \param [in] toplevel  a TOPLEVEL structure
  *  \param [in] object  a text OBJECT
  *  \return the string representation of the text OBJECT
  */
-char *o_text_save(OBJECT *object)
+char *o_text_save(TOPLEVEL *toplevel, OBJECT *object)
 {
   int x, y;
   int size;
@@ -490,7 +492,8 @@ char *o_text_save(OBJECT *object)
   num_lines = o_text_num_lines(string);
 
   buf = g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d\n%s", object->type,
-                         x, y, object->color, size, object->visibility,
+                         x, y, object->color, size,
+                         o_is_visible (toplevel, object) ? VISIBLE : INVISIBLE,
                          object->show_name_value, object->text->angle,
                          object->text->alignment, num_lines, string);
 
@@ -550,7 +553,7 @@ OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current)
                         o_current->text->angle,
                         o_current->text->string,
                         o_current->text->size,
-                        o_current->visibility,
+                        o_is_visible (toplevel, o_current) ? VISIBLE : INVISIBLE,
                         o_current->show_name_value);
 
   return new_obj;

@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*! \todo STILL NEED to clean up line lengths in aa and tr
  */
@@ -341,8 +341,9 @@ void attrib_edit_dialog (GSCHEM_TOPLEVEL *w_current, OBJECT *attr_obj, int flag)
 					  GTK_RESPONSE_REJECT,
 					  -1);
 					 
-  gtk_signal_connect(GTK_OBJECT(aewindow), "response",
-		     GTK_SIGNAL_FUNC(attribute_edit_dialog_response), w_current);
+  g_signal_connect (G_OBJECT (aewindow), "response",
+                    G_CALLBACK (attribute_edit_dialog_response),
+                    w_current);
 
   gtk_window_set_position (GTK_WINDOW (aewindow), GTK_WIN_POS_MOUSE);
 
@@ -489,7 +490,7 @@ void attrib_edit_dialog (GSCHEM_TOPLEVEL *w_current, OBJECT *attr_obj, int flag)
   if (attr_obj) {
     o_attrib_get_name_value (attr_obj, &name, &val);
     attrib = attr_obj;
-    if (attrib->visibility == VISIBLE) {
+    if (o_is_visible (toplevel, attrib)) {
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton), TRUE);
     } else {
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton), FALSE);

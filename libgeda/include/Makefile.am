@@ -4,6 +4,7 @@ libgedaincludedir = $(includedir)/libgeda
 libgedainclude_HEADERS = \
 	libgeda/colors.h \
 	libgeda/defines.h \
+	libgeda/edaerrors.h \
 	libgeda/funcs.h \
 	libgeda/geda_list.h \
 	libgeda/globals.h \
@@ -13,6 +14,7 @@ libgedainclude_HEADERS = \
 	libgeda/prototype.h \
 	libgeda/libgedaguile.h \
 	libgeda/struct.h
+
 
 noinst_HEADERS = \
 	gettext_priv.h \

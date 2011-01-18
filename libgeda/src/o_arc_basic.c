@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 /*! \file o_arc_basic.c
@@ -304,10 +304,11 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, char buf[],
  *  A pointer to the new allocated and formated string is returned.
  *  The string must be freed at some point.
  *
+ *  \param [in] toplevel
  *  \param [in] object
  *  \return the string representation of the arc object
  */
-char *o_arc_save(OBJECT *object)
+char *o_arc_save(TOPLEVEL *toplevel, OBJECT *object)
 {
   int x, y, radius, start_angle, end_angle;
   int arc_width, arc_length, arc_space;

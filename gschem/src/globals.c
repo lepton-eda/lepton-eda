@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*! \todo Add global variable documentation!!!
  *
@@ -33,7 +33,6 @@
 GList *global_window_list = NULL;
 
 char *rc_filename     = NULL;
-char *script_filename = NULL;
 char *output_filename = NULL;
 
 /* colors */
@@ -45,7 +44,6 @@ int logging_dest = LOG_WINDOW;
 /* command line options */
 int quiet_mode = FALSE;
 int verbose_mode = FALSE;
-int stroke_info_mode = FALSE;
 int auto_place_mode = FALSE;
 
 /* Global buffers */

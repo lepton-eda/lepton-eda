@@ -1,0 +1,152 @@
+.TH gsch2pcb 1 "January 16th, 2011" "gEDA Project" 1.7.0.20110116
+.SH NAME
+gsch2pcb - Update PCB layouts from gEDA/gaf schematics
+.SH SYNOPSIS
+\fBgsch2pcb\fR [\fIOPTION\fR ...] {\fIPROJECT\fR | \fIFILE\fR ...}
+.SH DESCRIPTION
+.PP
+\fBgsch2pcb\fR is a frontend to \fBgnetlist\fR(1) which aids in
+creating and updating \fBpcb\fR(1) printed circuit board layouts based
+on a set of electronic schematics created with \fBgschem\fR(1).
+
+.PP
+Instead of specifying all options and input gEDA schematic \fIFILE\fRs
+on the command line, \fBgsch2pcb\fR can use a \fIPROJECT\fR file
+instead.
+
+.PP
+\fBgsch2pcb\fR first runs \fBgnetlist\fR(1) with the `PCB' backend to
+create a `<name>.net' file containing a \fBpcb\fR(1) formatted netlist for
+the design.
+
+.PP
+The second step is to run \fBgnetlist\fR(1) again with the `gsch2pcb'
+backend to find any \fBM4\fR(1) elements required by the schematics.
+Any missing elements are found by searching a set of file element
+directories.  If no `<name>.pcb' file exists for the design yet, it is
+created with the required elements; otherwise, any new elements
+are output to a `<name>.new.pcb' file.
+
+.PP
+If a `<name>.pcb' file exists, it is searched for elements with a
+non-empty element name with no matching schematic symbol.  These
+elements are removed from the `<name>.pcb' file, with a backup in a
+`<name>.pcb.bak' file.
+
+.PP
+Finally, \fBgnetlist\fR(1) is run a third time with the `pcbpins'
+backend to create a `<name>.cmd' file.  This can be loaded into
+\fBpcb\fR(1) to rename all pin names in the PCB layout to match the
+schematic.
+
+.SH OPTIONS
+.TP 8
+\fB-o\fR, \fB--output-name\fR=\fIBASENAME\fR
+Use output filenames `\fIBASENAME\fR.net', `\fIBASENAME\fR.pcb', and
+`\fIBASENAME\fR.new.pcb'.  By default, the basename of the first
+schematic file in the list of input files is used.
+.TP 8
+\fB-d\fR, \fB--elements-dir\fR=\fIDIRECTORY\fR
+Add \fIDIRECTORY\fR to the list of directories to search for PCB file
+elements.  By default, the following directories are searched if they
+exist: `./packages', `/usr/local/share/pcb/newlib',
+`/usr/share/pcb/newlib', `/usr/local/lib/pcb_lib', `/usr/lib/pcb_lib',
+`/usr/local/pcb_lib'.
+.TP 8
+\fB-f\fR, \fB--use-files\fR
+Force use of file elements in preference to elements generated with
+\fBM4\fR(1).
+.TP 8
+\fB-s\fR, \fB--skip-m4\fR
+Disable element generation using \fBM4\fR(1) entirely.
+.TP 8
+\fB--m4-file\fR \fIFILE\fR
+Use the \fBM4\fR(1) file \fIFILE\fR in addition to the default M4
+files `./pcb.inc' and `~/.pcb/pcb.inc'.
+.TP 8
+\fB--m4-pcbdir\fR \fIDIRECTORY\fR
+Set \fIDIRECTORY\fR as the directory where \fBgsch2pcb\fR should look
+for \fBM4\fR(1) files installed by \fBpcb\fR(1).
+.TP 8
+\fB-r\fR, \fB--remove-unfound\fR
+Don't include references to unfound elements in the generated `.pcb'
+files.  Use if you want \fBpcb\fR(1) to be able to load the
+(incomplete) `.pcb' file.  This is enabled by default.
+.TP 8
+\fB-k\fR, \fB--keep-unfound\fR
+Keep include references to unfound elements in the generated `.pcb'
+files.  Use if you want to hand edit or otherwise preprocess the
+generated `.pcb' file before running \fBpcb\fR(1).
+.TP 8
+\fB-p\fR, \fB--preserve\fR
+Preserve elements in PCB files which are not found in the schematics.
+Since elements with an empty element name (schematic "refdes") are
+never deleted, this option is rarely useful.
+.TP 8
+\fB--gnetlist\fR \fIBACKEND\fR
+In addition to the default backends, run \fBgnetlist\fR(1) with `-g
+\fIBACKEND\fR', with output to `<name>.\fIBACKEND\fR'.
+.TP 8
+\fB--gnetlist-arg\fR \fIARG\fR
+Pass \fIARG\fR as an additional argument to \fBgnetlist\fR(1).
+.TP 8
+\fB--empty-footprint\fR \fINAME\fR
+If \fINAME\fR is not `none', \fBgsch2pcb\fR will not add elements for
+components with that name to the PCB file.  Note that if the omitted
+components have net connections, they will still appear in the netlist
+and \fBpcb\fR(1) will warn that they are missing.
+.TP 8
+\fB--fix-elements\fR
+If a schematic component's `footprint' attribute is not equal to the
+`Description' of the corresponding PCB element, update the
+`Description' instead of replacing the element.
+.TP 8
+\fB-q\fR, \fB--quiet\fR
+Don't output information on steps to take after running \fBgsch2pcb\fR.
+.TP 8
+\fB-v\fR, \fB--verbose\fR
+Output extra debugging information.  This option can be specified
+twice (`-v -v') to obtain additional debugging for file elements.
+.TP 8
+\fB-h\fR, \fB--help\fR
+Print a help message.
+.TP 8
+\fB-V\fR, \fB--version\fR
+Print \fBgsch2pcb\fR version information.
+
+.SH PROJECT FILES
+.PP
+A \fBgsch2pcb\fR project file is a file (not ending in `.sch')
+containing a list of schematics to process and some options.  Any
+long-form command line option can appear in the project file with the
+leading `--' removed, with the exception of `--gnetlist-arg',
+`--fix-elements', `--verbose', and `--version'.  Schematics should be
+listed on a line beginning with `schematics'.
+.PP
+An example project file might look like:
+
+.nf
+	schematics partA.sch partB.sch
+	output-name design
+.ad b
+
+.SH ENVIRONMENT
+.TP 8
+.B GNETLIST
+specifies the \fBgnetlist\fR(1) program to run.  The default is
+`gnetlist'.
+
+.SH AUTHORS
+See the `AUTHORS' file included with this program.
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 1999-2011 gEDA Contributors.  License GPLv2+: GNU GPL
+version 2 or later.  Please see the `COPYING' file included with this
+program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+.SH SEE ALSO
+\fBgschem\fR(1), \fBgnetlist\fR(1), \fBpcb\fR(1)

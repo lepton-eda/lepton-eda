@@ -12,52 +12,69 @@
 <body>
 
 
-
-<h1><a name="pcb_sowforward_annotationideas_commentary_and_examples_from_users" id="pcb_sowforward_annotationideas_commentary_and_examples_from_users">PCB SoW: Forward Annotation: Ideas, commentary, and examples from users</a></h1>
+<h1 class="sectionedit1"><a name="pcb_sowforward_annotationideas_commentary_and_examples_from_users" id="pcb_sowforward_annotationideas_commentary_and_examples_from_users">PCB SoW: Forward Annotation: Ideas, commentary, and examples from users</a></h1>
 <div class="level1">
 
 <p>
- <em>Anyone with any ideas or commentary about how this task should be completed may add
-them here.  Ideas about the details behind the implementation, too.  Please refrain from deleting or significantly changing the meaning of someone else’s entry.</em>
+
+<em>Anyone with any ideas or commentary about how this task should be completed may add
+them here.  Ideas about the details behind the implementation, too.  Please refrain from deleting or significantly changing the meaning of someone else&#039;s entry.</em>
 </p>
 
 </div>
-<!-- SECTION "PCB SoW: Forward Annotation: Ideas, commentary, and examples from users" [1-337] -->
-<h2><a name="dj_s_implementation_ideas" id="dj_s_implementation_ideas">DJ&#039;s Implementation Ideas</a></h2>
+<!-- EDIT1 SECTION "PCB SoW: Forward Annotation: Ideas, commentary, and examples from users" [1-337] -->
+<h2 class="sectionedit2"><a name="dj_s_implementation_ideas" id="dj_s_implementation_ideas">DJ&#039;s Implementation Ideas</a></h2>
 <div class="level2">
 
 <p>
-This is what I’m thinking for the forward annotation (gsch2pcb) design:
+This is what I&#039;m thinking for the forward annotation (gsch2pcb) design:
 </p>
 
 <p>
-The PCB has a list of schematics that it gets info from.  Do we need path support, or is full-paths (or relative to the pcb) ok? Wildcards?  Anyway, the list of schematics is stored in the .pcb file somehow.  The <acronym title="Graphical User Interface">GUI</acronym> needs a way to manage these, too.
+The PCB has a list of schematics that it gets info from.  Do we need
+path support, or is full-paths (or relative to the pcb) ok?
+Wildcards?  Anyway, the list of schematics is stored in the .pcb file
+somehow.  The <acronym title="Graphical User Interface">GUI</acronym> needs a way to manage these, too.
 </p>
 
 <p>
-When the user asks, PCB uses the list of schematics to run a gnetlist command with my new backend, passing the list of schematics.  The gnetlist spits out a list of actions, which pcb runs.  These actions update the netlist, add any missing elements, and remove any appropriate elements.  Elements which need new footprints are updated (magically! in place! we hope ;).
+When the user asks, PCB uses the list of schematics to run a gnetlist
+command with my new backend, passing the list of schematics.  The
+gnetlist spits out a list of actions, which pcb runs.  These actions
+update the netlist, add any missing elements, and remove any
+appropriate elements.  Elements which need new footprints are updated
+(magically! in place! we hope ;).
 </p>
 
 <p>
-Also, some additional attributes will be propogated to elements, like vendor, vendor_part_number, etc.
+Also, some additional attributes will be propogated to elements, like
+vendor, vendor_part_number, etc.
 </p>
 
 <p>
-If the import is part of a “new board” step, we place the parts and disperse them, optimize the rats nest, etc.  No problem there.
+If the import is part of a “new board” step, we place the parts and
+disperse them, optimize the rats nest, etc.  No problem there.
 </p>
 
 <p>
-What do we do with new elements if it’s just an update?  Eventually, I’d like to have some separate container for “unplaced elements” but I mean, what do we do for now?  I’m wondering if disperse or autoplace is smart enough to do something useful if we place the parts and select them, on a partially laid out board.
+What do we do with new elements if it&#039;s just an update?  Eventually,
+I&#039;d like to have some separate container for “unplaced elements” but I
+mean, what do we do for now?  I&#039;m wondering if disperse or autoplace
+is smart enough to do something useful if we place the parts and
+select them, on a partially laid out board.
 </p>
 
 <p>
-I think this is enough information in the .pcb file that we can get rid of gsch2pcb and the “project” file it uses.
+I think this is enough information in the .pcb file that we can get
+rid of gsch2pcb and the “project” file it uses.
 </p>
 
 <p>
-It does mean that the pcb cares which schematics go with it, but the schematics don’t care which pcb they go with.  Schematics can be reused/shared, boards generally can’t.
+It does mean that the pcb cares which schematics go with it, but the
+schematics don&#039;t care which pcb they go with.  Schematics can be
+reused/shared, boards generally can&#039;t.
 </p>
 
 </div>
-<!-- SECTION "DJ's Implementation Ideas" [338-] --></body>
+<!-- EDIT2 SECTION "DJ's Implementation Ideas" [338-] --></body>
 </html>

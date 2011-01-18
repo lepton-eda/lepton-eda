@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 
@@ -48,7 +48,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->RC_list = NULL;
 
   toplevel->untitled_name      = NULL;
-  toplevel->scheme_directory   = NULL;
   toplevel->bitmap_directory   = NULL;
 
   toplevel->init_left = 0;
@@ -160,7 +159,6 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
   }
 
   g_free (toplevel->untitled_name);
-  g_free (toplevel->scheme_directory);
   g_free (toplevel->bitmap_directory);
   g_free (toplevel->bus_ripper_symname);
   

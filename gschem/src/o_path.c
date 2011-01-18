@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 
@@ -299,7 +299,6 @@ static void o_path_fill_mesh (GdkDrawable *w, GdkGC *gc, COLOR *color,
  */
 void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   PATH *path = o_current->path;
   int angle1, pitch1, angle2, pitch2;
   FILL_FUNC fill_func;

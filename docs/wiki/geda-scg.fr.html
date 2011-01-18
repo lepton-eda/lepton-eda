@@ -11,46 +11,8 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#geda_gaf_symbol_creation_document" class="toc">gEDA/gaf Symbol Creation Document</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#overview" class="toc">Overview</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#component_symbol_creation" class="toc">Component symbol creation</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#requirements" class="toc">Requirements</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#style" class="toc">Style</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#text" class="toc">Text</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#attributes" class="toc">Attributes</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#graphics" class="toc">Graphics</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#pins" class="toc">Pins</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#electrical" class="toc">Electrical</a></span></div></li>
-</ul>
-</li>
-<li class="level2"><div class="li"><span class="li"><a href="#footprint_naming_conventions" class="toc">Footprint naming conventions</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#notes" class="toc">Notes</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#integrated_circuit_packages" class="toc">Integrated circuit packages</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#integrated_circuit_smt_packages" class="toc">Integrated circuit SMT packages</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#basic_semiconductors" class="toc">Basic semiconductors</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#basic_smt_semiconductors" class="toc">Basic SMT semiconductors</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#passive_components" class="toc">Passive components</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#passive_smt_components" class="toc">Passive SMT components</a></span></div></li>
-</ul>
-</li>
-<li class="level2"><div class="li"><span class="li"><a href="#hints_and_tips" class="toc">Hints and Tips</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#example" class="toc">Example</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#document_revision_history" class="toc">Document Revision History</a></span></div></li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="geda_gaf_symbol_creation_document" id="geda_gaf_symbol_creation_document">gEDA/gaf Symbol Creation Document</a></h1>
+<h1 class="sectionedit669"><a name="geda_gaf_symbol_creation_document" id="geda_gaf_symbol_creation_document">gEDA/gaf Symbol Creation Document</a></h1>
 <div class="level1">
 
 <p>
@@ -66,8 +28,8 @@ This document is released under the <a href="geda-gfdl.html" class="wikilink1" t
 </p>
 
 </div>
-<!-- SECTION "gEDA/gaf Symbol Creation Document" [1-264] -->
-<h2><a name="overview" id="overview">Overview</a></h2>
+<!-- EDIT669 SECTION "gEDA/gaf Symbol Creation Document" [1-264] -->
+<h2 class="sectionedit670"><a name="overview" id="overview">Overview</a></h2>
 <div class="level2">
 
 <p>
@@ -75,15 +37,18 @@ This document describes the creation of component symbols, including style conve
 </p>
 
 </div>
-<!-- SECTION "Overview" [265-462] -->
-<h2><a name="component_symbol_creation" id="component_symbol_creation">Component symbol creation</a></h2>
+<!-- EDIT670 SECTION "Overview" [265-462] -->
+<h2 class="sectionedit671"><a name="component_symbol_creation" id="component_symbol_creation">Component symbol creation</a></h2>
 <div class="level2">
 
 <p>
 Component symbols (from here on known as “symbols”) are drawn using gschem just like drawing a schematic sheet. Here are the steps in a symbol in the gEDA/gaf system:<br/>
- 1. Run gschem and find a blank page or run: gschem filename-1.sym<br/>
- 2. Draw the symbol (see the style guide below for some conventions).<br/>
- 3. Translate the symbol to the origin using Edit/Symbol Translate&hellip;<br/>
+
+1. Run gschem and find a blank page or run: gschem filename-1.sym<br/>
+
+2. Draw the symbol (see the style guide below for some conventions).<br/>
+
+3. Translate the symbol to the origin using Edit/Symbol Translate…<br/>
 
 </p>
 <ul>
@@ -93,7 +58,7 @@ Component symbols (from here on known as “symbols”) are drawn using gschem j
 </li>
 <li class="level1"><div class="li"> Make sure grid snap size is set to 100 (this is critical).</div>
 </li>
-<li class="level1"><div class="li"> Select “Symbol Translate&hellip;” or the press equivalent hotkey.</div>
+<li class="level1"><div class="li"> Select “Symbol Translate…” or the press equivalent hotkey.</div>
 </li>
 <li class="level1"><div class="li"> Enter 0 into the entry field and press OK.<br/>
 </div>
@@ -105,7 +70,8 @@ Translating the symbol to the origin is a required step. To translate a symbol e
 </p>
 
 <p>
-4. Save the symbol using Save or SaveAs&hellip; Here are some symbol naming conventions:<br/>
+4. Save the symbol using Save or SaveAs… Here are some symbol naming
+conventions:<br/>
 
 </p>
 <ul>
@@ -122,23 +88,32 @@ Translating the symbol to the origin is a required step. To translate a symbol e
 </ul>
 
 <p>
- 5. Place the symbol in one of the directories specified by the componentlibrary keyword in the system-gafrc file. Once this is done, the symbol should be visible immediately and can be selected and placed with the “Add/Select Component&hellip;” menu item.
+
+5. Place the symbol in one of the directories specified by the componentlibrary keyword in the system-gafrc file. Once this is done, the symbol should be visible immediately and can be selected and placed with the “Add/Select Component…” menu item.
 </p>
 
 </div>
-<!-- SECTION "Component symbol creation" [463-2082] -->
-<h2><a name="requirements" id="requirements">Requirements</a></h2>
+<!-- EDIT671 SECTION "Component symbol creation" [463-2082] -->
+<h2 class="sectionedit672"><a name="requirements" id="requirements">Requirements</a></h2>
 <div class="level2">
 
 <p>
-This section describes the various requirements which must be met in order to create a valid symbol which will display and netlist in the gEDA/gaf system. Most of the requirements center around having certain attributes attached or inside the symbol.<br/>
- Running gsymcheck will check that all of these requirements are met. gsymcheck will output fatal errors which are quite serious and must be corrected. gsymcheck will also output warnings on things which should be fixed but are not fatal.<br/>
- For more information on the attributes presented here, please see the Master Attribute Document.
+This section describes the various requirements which must be met in order to
+create a valid symbol which will display and netlist in the gEDA/gaf system.
+Most of the requirements center around having certain attributes attached or
+inside the symbol.<br/>
+
+Running gsymcheck will check that all of these requirements are met. gsymcheck
+will output fatal errors which are quite serious and must be corrected. gsymcheck
+will also output warnings on things which should be fixed but are not fatal.<br/>
+
+For more information on the attributes presented here, please see the Master
+Attribute Document.
 </p>
 <ul>
 <li class="level1"><div class="li"> device=DEVICENAME should be placed somewhere in the symbol and made invisible. device= is the device name and is required. Typically the devicename is in all caps (capital letters). This attribute should not be used as a label. Use a separate text object for the label. If the object is a graphic then device= should be set to none (device=none). It is no longer required to attach this attribute anything; just having it exist as device=DEVICENAME is good enough.</div>
 </li>
-<li class="level1"><div class="li"> graphical=1 should exist somewhere in a symbol which is purely graphical (such as a title block or decon symbol). Symbols which have this attribute have no electrical or circuit significance. Don’t forget to set device=none.</div>
+<li class="level1"><div class="li"> graphical=1 should exist somewhere in a symbol which is purely graphical (such as a title block or decon symbol). Symbols which have this attribute have no electrical or circuit significance. Don&#039;t forget to set device=none.</div>
 </li>
 <li class="level1"><div class="li"> description=text should exist somewhere in the symbol. This attribute provides an one line description of the symbol.</div>
 </li>
@@ -150,7 +125,7 @@ This section describes the various requirements which must be met in order to cr
 </li>
 <li class="level1"><div class="li"> If a component has multiple slots in a package (such as a 7400 (NAND) which has 4 NANDs per package) then you need a numslots=# attribute. The # is the number of slots the device has. numslots= should be exist somewhere in the symbol and made invisible. Additional slot related required attributes are described below.</div>
 </li>
-<li class="level1"><div class="li"> If a component has multiple slots in a physical package then you also need to include a slotdef=#:#,#,#&hellip; for every slot. The first # corresponds to the slot number. If a device has 4 slots then there should be slotdef=1:&hellip;, slotdef=2:&hellip;, slotdef=3:&hellip;, and slotdef=4:&hellip;, attributes existing somewhere in the symbol and made invisible. The subsequent # have a one-to-one correspondence to pinseq=# attributes and specify what corresponding pinnumber=# should be when that slot is set. See The attached 7400-1.sym as an example of how this should all work.</div>
+<li class="level1"><div class="li"> If a component has multiple slots in a physical package then you also need to include a slotdef=#:#,#,#… for every slot. The first # corresponds to the slot number. If a device has 4 slots then there should be slotdef=1:…, slotdef=2:…, slotdef=3:…, and slotdef=4:…, attributes existing somewhere in the symbol and made invisible. The subsequent # have a one-to-one correspondence to pinseq=# attributes and specify what corresponding pinnumber=# should be when that slot is set. See The attached 7400-1.sym as an example of how this should all work.</div>
 </li>
 <li class="level1"><div class="li"> It is recommended that all symbols which have slots have a slot=1 attribute inside the symbol.</div>
 </li>
@@ -167,8 +142,8 @@ This section describes the various requirements which must be met in order to cr
 </ul>
 
 </div>
-<!-- SECTION "Requirements" [2083-6223] -->
-<h2><a name="style" id="style">Style</a></h2>
+<!-- EDIT672 SECTION "Requirements" [2083-6223] -->
+<h2 class="sectionedit673"><a name="style" id="style">Style</a></h2>
 <div class="level2">
 
 <p>
@@ -176,8 +151,8 @@ This section describes the style in which is used in the standard gEDA/gaf symbo
 </p>
 
 </div>
-<!-- SECTION "Style" [6224-6333] -->
-<h3><a name="text" id="text">Text</a></h3>
+<!-- EDIT673 SECTION "Style" [6224-6333] -->
+<h3 class="sectionedit674"><a name="text" id="text">Text</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> All Text labels should all be 10 pt in size.</div>
@@ -187,8 +162,8 @@ This section describes the style in which is used in the standard gEDA/gaf symbo
 </ul>
 
 </div>
-<!-- SECTION "Text" [6334-6472] -->
-<h3><a name="attributes" id="attributes">Attributes</a></h3>
+<!-- EDIT674 SECTION "Text" [6334-6472] -->
+<h3 class="sectionedit675"><a name="attributes" id="attributes">Attributes</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Pin numbers (which are attributes) should all be 8 pt in size.</div>
@@ -206,8 +181,8 @@ This section describes the style in which is used in the standard gEDA/gaf symbo
 </ul>
 
 </div>
-<!-- SECTION "Attributes" [6473-7569] -->
-<h3><a name="graphics" id="graphics">Graphics</a></h3>
+<!-- EDIT675 SECTION "Attributes" [6473-7569] -->
+<h3 class="sectionedit676"><a name="graphics" id="graphics">Graphics</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Lines, boxes, arcs, and any other graphics should be color number 3 (graphic | green).</div>
@@ -219,8 +194,8 @@ This section describes the style in which is used in the standard gEDA/gaf symbo
 </ul>
 
 </div>
-<!-- SECTION "Graphics" [7570-7920] -->
-<h3><a name="pins" id="pins">Pins</a></h3>
+<!-- EDIT676 SECTION "Graphics" [7570-7920] -->
+<h3 class="sectionedit677"><a name="pins" id="pins">Pins</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Pins should all be 300 mils (3 grid spaces) long.</div>
@@ -250,8 +225,8 @@ This section describes the style in which is used in the standard gEDA/gaf symbo
 </ul>
 
 </div>
-<!-- SECTION "Pins" [7921-9876] -->
-<h3><a name="electrical" id="electrical">Electrical</a></h3>
+<!-- EDIT677 SECTION "Pins" [7921-9876] -->
+<h3 class="sectionedit678"><a name="electrical" id="electrical">Electrical</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Do not draw power and ground pins. That information will be conveyed using attributes (see the netattrib document).</div>
@@ -265,18 +240,19 @@ This section describes the style in which is used in the standard gEDA/gaf symbo
 </ul>
 
 </div>
-<!-- SECTION "Electrical" [9877-10499] -->
-<h2><a name="footprint_naming_conventions" id="footprint_naming_conventions">Footprint naming conventions</a></h2>
+<!-- EDIT678 SECTION "Electrical" [9877-10499] -->
+<h2 class="sectionedit679"><a name="footprint_naming_conventions" id="footprint_naming_conventions">Footprint naming conventions</a></h2>
 <div class="level2">
 
 <p>
 This section describes the conventions for naming of footprints used in gEDA/gaf.<br/>
- The purpose of the naming convention is to establish a standard to maintain the same naming convention through the different phases of the CAD chain. This helps in ensuring that the collaborative effort of gEDA/gaf is not lost.
+
+The purpose of the naming convention is to establish a standard to maintain the same naming convention through the different phases of the CAD chain. This helps in ensuring that the collaborative effort of gEDA/gaf is not lost.
 </p>
 
 </div>
-<!-- SECTION "Footprint naming conventions" [10500-10853] -->
-<h3><a name="notes" id="notes">Notes</a></h3>
+<!-- EDIT679 SECTION "Footprint naming conventions" [10500-10853] -->
+<h3 class="sectionedit680"><a name="notes" id="notes">Notes</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Unless otherwise noted, numerical pin names will be used, starting from 1.</div>
@@ -292,8 +268,8 @@ This section describes the conventions for naming of footprints used in gEDA/gaf
 </ul>
 
 </div>
-<!-- SECTION "Notes" [10854-11196] -->
-<h3><a name="integrated_circuit_packages" id="integrated_circuit_packages">Integrated circuit packages</a></h3>
+<!-- EDIT680 SECTION "Notes" [10854-11196] -->
+<h3 class="sectionedit681"><a name="integrated_circuit_packages" id="integrated_circuit_packages">Integrated circuit packages</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Dual in line packages with up to 22 100 mil spaced pins and 300 mil row spacing are called DIPn.</div>
@@ -317,8 +293,8 @@ This section describes the conventions for naming of footprints used in gEDA/gaf
 </ul>
 
 </div>
-<!-- SECTION "Integrated circuit packages" [11197-12065] -->
-<h3><a name="integrated_circuit_smt_packages" id="integrated_circuit_smt_packages">Integrated circuit SMT packages</a></h3>
+<!-- EDIT681 SECTION "Integrated circuit packages" [11197-12065] -->
+<h3 class="sectionedit682"><a name="integrated_circuit_smt_packages" id="integrated_circuit_smt_packages">Integrated circuit SMT packages</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Small outline SMT packages with up to 16 50 mil spaced pins and 150 mil total width are called SOn.</div>
@@ -382,8 +358,8 @@ This section describes the conventions for naming of footprints used in gEDA/gaf
 </ul>
 
 </div>
-<!-- SECTION "Integrated circuit SMT packages" [12066-14996] -->
-<h3><a name="basic_semiconductors" id="basic_semiconductors">Basic semiconductors</a></h3>
+<!-- EDIT682 SECTION "Integrated circuit SMT packages" [12066-14996] -->
+<h3 class="sectionedit683"><a name="basic_semiconductors" id="basic_semiconductors">Basic semiconductors</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Axial diodes are called ALFm. Pin 1 is the cathode.</div>
@@ -395,8 +371,8 @@ This section describes the conventions for naming of footprints used in gEDA/gaf
 </ul>
 
 </div>
-<!-- SECTION "Basic semiconductors" [14997-15399] -->
-<h3><a name="basic_smt_semiconductors" id="basic_smt_semiconductors">Basic SMT semiconductors</a></h3>
+<!-- EDIT683 SECTION "Basic semiconductors" [14997-15399] -->
+<h3 class="sectionedit684"><a name="basic_smt_semiconductors" id="basic_smt_semiconductors">Basic SMT semiconductors</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> SOD diode SMT packages use their standard package name, e.g. SOD80, SOD87, SOD106A, SOD110. There are also SOD123, SOD323 with narrow pads.</div>
@@ -410,8 +386,8 @@ This section describes the conventions for naming of footprints used in gEDA/gaf
 </ul>
 
 </div>
-<!-- SECTION "Basic SMT semiconductors" [15400-15855] -->
-<h3><a name="passive_components" id="passive_components">Passive components</a></h3>
+<!-- EDIT684 SECTION "Basic SMT semiconductors" [15400-15855] -->
+<h3 class="sectionedit685"><a name="passive_components" id="passive_components">Passive components</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Axial non-polar components (typically resistor, capacitor) are called ACYm.</div>
@@ -445,8 +421,8 @@ This section describes the conventions for naming of footprints used in gEDA/gaf
 </ul>
 
 </div>
-<!-- SECTION "Passive components" [15856-16977] -->
-<h3><a name="passive_smt_components" id="passive_smt_components">Passive SMT components</a></h3>
+<!-- EDIT685 SECTION "Passive components" [15856-16977] -->
+<h3 class="sectionedit686"><a name="passive_smt_components" id="passive_smt_components">Passive SMT components</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Standard SMT resistors, inductors, capacitors etc are 0201, 0402, 0603, 0805, 1206, 1210, 1806, 1812, 1825, 2020, 2706.</div>
@@ -458,34 +434,35 @@ This section describes the conventions for naming of footprints used in gEDA/gaf
 </ul>
 
 </div>
-<!-- SECTION "Passive SMT components" [16978-17330] -->
-<h2><a name="hints_and_tips" id="hints_and_tips">Hints and Tips</a></h2>
+<!-- EDIT686 SECTION "Passive SMT components" [16978-17330] -->
+<h2 class="sectionedit687"><a name="hints_and_tips" id="hints_and_tips">Hints and Tips</a></h2>
 <div class="level2">
 
 <p>
-This section describes some hints and tips which will make your symbol creation experience easier.<br/>
+This section describes some hints and tips which will make your symbol creation
+experience easier.<br/>
 
 </p>
 <ul>
 <li class="level1"><div class="li"> Avoid drawing things off of the grid. If you do, you cannot move the object(s) using the move command (if the grid is on) since the object will be snapped to the grid. [This was an old bug, which I think has been fixed, but avoid doing this anyway]. Use the symbol translate command instead (or move the object with grid snap off)</div>
 </li>
-<li class="level1"><div class="li"> If you need a finer grid then use Options/Snap Grid Spacing&hellip; to set a finer grid snap spacing. Just remember to set this back to 100 once you are ready to translate the symbol to the origin.</div>
+<li class="level1"><div class="li"> If you need a finer grid then use Options/Snap Grid Spacing… to set a finer grid snap spacing. Just remember to set this back to 100 once you are ready to translate the symbol to the origin.</div>
 </li>
 <li class="level1"><div class="li"> If you want to translate a symbol from the origin to elsewhere, then use the “Symbol translate” command and enter a non zero number. Make sure this number is a multiple of 100 (ie 1000, or 1100).</div>
 </li>
 <li class="level1"><div class="li"> Pins MUST be snapped on the 100 spaced grid (at least the end which will have nets connected to it).</div>
 </li>
-<li class="level1"><div class="li"> Pins MUST be snapped on the 100 spaced grid (at least the end which will have nets connected to it). Yes this is line a duplicate. I can’t stress this point enough.</div>
+<li class="level1"><div class="li"> Pins MUST be snapped on the 100 spaced grid (at least the end which will have nets connected to it). Yes this is line a duplicate. I can&#039;t stress this point enough.</div>
 </li>
 <li class="level1"><div class="li"> Remember that pins are special objects; if you want to add a pin, make sure it is a pin and not a line or net. Use the Add/Pin command to place a pin.</div>
 </li>
-<li class="level1"><div class="li"> Don’t include nets or buses inside symbols. That is not supported and doesn’t make much sense anyway.</div>
+<li class="level1"><div class="li"> Don&#039;t include nets or buses inside symbols. That is not supported and doesn&#039;t make much sense anyway.</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Hints and Tips" [17331-18726] -->
-<h2><a name="example" id="example">Example</a></h2>
+<!-- EDIT687 SECTION "Hints and Tips" [17331-18726] -->
+<h2 class="sectionedit688"><a name="example" id="example">Example</a></h2>
 <div class="level2">
 
 <p>
@@ -561,48 +538,26 @@ net=Vcc:14
 T 500 3050 5 10 0 0 0 0 1
 net=GND:7
 T 500 2650 5 10 0 0 0 0 1
-documentation=http://www-s.ti.com/sc/ds/sn74hc00.pdf
-</font></pre>
-</p>
+documentation=http:<em>www-s.ti.com/sc/ds/sn74hc00.pdf
+&lt;/xterm&gt;
 
-<p>
 This example produces the following (using gschem):
-</p>
 
-<p>
 <a href="media/geda/symbol_7400-1_hidden.png" class="media" target="_blank" title="geda:symbol_7400-1_hidden.png"><img src="media/geda/symbol_7400-1_hidden.png" class="media" title=":geda:symbol_7400-1_hidden.png" alt=":geda:symbol_7400-1_hidden.png" /></a>
-</p>
 
-<p>
 This is the same symbol with all the hidden text visible (via Edit/Show/Hide Inv Text):
-</p>
 
-<p>
 <a href="media/geda/symbol_7400-1.png" class="media" target="_blank" title="geda:symbol_7400-1.png"><img src="media/geda/symbol_7400-1.png" class="media" title=":geda:symbol_7400-1.png" alt=":geda:symbol_7400-1.png" /></a>
+
+===== Document Revision History =====
+| September 14th, 2002|Created symbol.tex from symbols.html |
+| October 31st, 2002|Fixed bad example symbol |
+| February 11th, 2003|Footprint naming conventions added |
+| September 27th, 2003|Applied Dan McMahill&#039;s QFP and QFN patch |
+| July 6th, 2004|Added a bunch more details/hints to the pin section |
+
 </p>
 
 </div>
-<!-- SECTION "Example" [18727-20443] -->
-<h2><a name="document_revision_history" id="document_revision_history">Document Revision History</a></h2>
-<div class="level2">
-<table class="inline">
-	<tr>
-		<td> September 14th, 2002</td><td>Created symbol.tex from symbols.html </td>
-	</tr>
-	<tr>
-		<td> October 31st, 2002</td><td>Fixed bad example symbol </td>
-	</tr>
-	<tr>
-		<td> February 11th, 2003</td><td>Footprint naming conventions added </td>
-	</tr>
-	<tr>
-		<td> September 27th, 2003</td><td>Applied Dan McMahill’s QFP and QFN patch </td>
-	</tr>
-	<tr>
-		<td> July 6th, 2004</td><td>Added a bunch more details/hints to the pin section </td>
-	</tr>
-</table>
-
-</div>
-<!-- SECTION "Document Revision History" [20444-] --></body>
+<!-- EDIT688 SECTION "Example" [18727-] --></body>
 </html>

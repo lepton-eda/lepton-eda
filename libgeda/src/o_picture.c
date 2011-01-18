@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 /*! \file o_picture.c
@@ -215,6 +215,7 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
  *  This function formats a string in the buffer <B>*buff</B> to describe
  *  the picture object <B>*object</B>.
  *
+ *  \param [in] toplevel  a TOPLEVEL structure
  *  \param [in] object  Picture OBJECT to create string from.
  *  \return A pointer to the picture OBJECT character string.
  *
@@ -222,7 +223,7 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
  *  Caller must g_free returned character string.
  *
  */
-char *o_picture_save(OBJECT *object)
+char *o_picture_save(TOPLEVEL *toplevel, OBJECT *object)
 {
   int width, height, x1, y1;
   gchar *encoded_picture=NULL;

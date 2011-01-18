@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 
@@ -40,6 +40,8 @@
 #include <dmalloc.h>
 #endif
 
+static void process_error_stack (SCM s_stack, SCM s_key, SCM s_args, GError **err);
+
 /* Pre-unwind handler called in the context in which the exception was
  * thrown. */
 static SCM protected_pre_unwind_handler (void *data, SCM key, SCM args)
@@ -57,66 +59,8 @@ static SCM protected_post_unwind_handler (void *data, SCM key, SCM args)
 { 
   /* The stack was captured pre-unwind */
   SCM s_stack = *(SCM *) data;
-  char *message = NULL;
-  
-  /* Capture the error message */
-  if (scm_list_p (scm_caddr (args)) == SCM_BOOL_T) {
-    SCM s_msg = scm_simple_format (SCM_BOOL_F, 
-                                   scm_cadr (args), 
-                                   scm_caddr (args));
-    message = scm_to_locale_string (s_msg);
-  } else {
-    message = scm_to_locale_string (scm_cadr (args));
-  }
 
-  /* If a stack was captured, extract debugging information */
-  if (scm_stack_p (s_stack) == SCM_BOOL_T) {
-    SCM s_port, s_source, s_filename, s_line_num, s_col_num;
-    char *filename, *trace;
-
-    /* Capture & log backtrace */
-    s_port = scm_open_output_string();
-    scm_display_backtrace (s_stack, s_port,
-                           SCM_BOOL_F, SCM_BOOL_F);
-    trace = scm_to_locale_string (scm_get_output_string (s_port));
-    scm_close_output_port (s_port);
-    s_log_message ("\n%s\n", trace);
-    free (trace);
-    trace = NULL;
-
-    /* Capture & log location */
-    s_source = scm_frame_source (scm_stack_ref (s_stack, scm_from_int (0)));
-
-    s_filename = scm_source_property (s_source,
-                                      scm_from_locale_symbol ("filename"));
-    s_line_num = scm_source_property (s_source,
-                                      scm_from_locale_symbol ("line"));
-    s_col_num = scm_source_property (s_source,
-                                     scm_from_locale_symbol ("column"));
-    
-    if (scm_is_string (s_filename)
-         && scm_is_integer (s_line_num)
-         && scm_is_integer (s_col_num)) {
-
-       filename = scm_to_locale_string (s_filename);
-       s_log_message (_("%s:%i:%i: %s\n"), filename,
-                      scm_to_int (s_line_num),
-                      scm_to_int (s_col_num), message);
-       free (filename);
-
-    } else {
-
-      s_log_message (_("Unknown file: %s\n"), message);
-
-    }
-
-  } else {
-    /* No stack, so can't display debugging info */
-    s_log_message (_("Evaluation failed: %s\n"), message);
-    s_log_message (_("Enable debugging for more detailed information\n"));
-  }
-
-  free (message);
+  process_error_stack (s_stack, key, args, NULL);
 
   return SCM_BOOL_F;
 }
@@ -175,13 +119,6 @@ SCM g_scm_eval_protected (SCM exp, SCM module_or_state)
   return result;
 }
 
-/* Actually carries out evaluation for protected eval-string */
-static SCM protected_body_eval_string (void *data)
-{
-  SCM str = *((SCM *)data);
-  return scm_eval_string (str);
-}
-
 /*! \brief Evaluate a C string as a Scheme expression safely
  *  \par Function Description
  *
@@ -214,69 +151,127 @@ SCM g_scm_c_eval_string_protected (const gchar *str) {
  */
 SCM g_scm_eval_string_protected (SCM str)
 {
-  SCM stack = SCM_BOOL_T;
-  SCM result;
+  SCM expr = scm_list_2 (scm_from_locale_symbol ("eval-string"),
+                         str);
 
-  result = scm_c_catch (SCM_BOOL_T,
-                        protected_body_eval_string,    /* catch body */
-                        &str,                          /* body data */
-                        protected_post_unwind_handler, /* post handler */
-                        &stack,                        /* post data */
-                        protected_pre_unwind_handler,  /* pre handler */
-                        &stack                         /* pre data */
-                        );
+  return g_scm_eval_protected (expr, SCM_UNDEFINED);
+}
 
-  scm_remember_upto_here_1 (stack);
+/* Data to be passed to g_read_file()'s worker functions. */
+struct g_read_file_data_t
+{
+  SCM stack;
+  SCM filename;
+  GError *err;
+};
 
-  return result;
+/* Body function for g_read_file(). Simply loads the specified
+ * file. */
+SCM
+g_read_file__body (struct g_read_file_data_t *data)
+{
+  return scm_primitive_load (data->filename);
+}
+
+/* Post-unwind handler for g_read_file(). Processes the stack captured
+ * in the pre-unwind handler. */
+SCM
+g_read_file__post_handler (struct g_read_file_data_t *data, SCM key, SCM args)
+{
+  process_error_stack (data->stack, key, args, &data->err);
+  return SCM_BOOL_F;
+}
+
+/* Pre-unwind handler for g_read_file().  Captures the Guile stack for
+ * processing in the post-unwind handler. */
+SCM
+g_read_file__pre_handler (struct g_read_file_data_t *data, SCM key, SCM args)
+{
+  data->stack = scm_make_stack (SCM_BOOL_T, SCM_EOL);
+  return SCM_BOOL_F;
+}
+
+/*! \brief Load a Scheme file, catching and logging errors.
+ * \par Function Description
+ * Loads \a filename, catching any uncaught errors and logging them.
+ *
+ * \bug Most other functions in the libgeda API return TRUE on success
+ * and FALSE on failure. g_read_file() shouldn't be an exception.
+ *
+ * \param toplevel  The TOPLEVEL structure.
+ * \param filename  The file name of the Scheme file to load.
+ * \param err       Return location for errors, or NULL.
+ *  \return TRUE on success, FALSE on failure.
+ */
+gboolean
+g_read_file(TOPLEVEL *toplevel, const gchar *filename, GError **err)
+{
+  struct g_read_file_data_t data;
+
+  g_return_val_if_fail ((filename != NULL), FALSE);
+
+  data.stack = SCM_BOOL_F;
+  data.filename = scm_from_locale_string (filename);
+  data.err = NULL;
+
+  scm_dynwind_begin (SCM_F_DYNWIND_REWINDABLE);
+  edascm_dynwind_toplevel (toplevel);
+
+  scm_c_catch (SCM_BOOL_T,
+               (scm_t_catch_body) g_read_file__body, &data,
+               (scm_t_catch_handler) g_read_file__post_handler, &data,
+               (scm_t_catch_handler) g_read_file__pre_handler, &data);
+
+  scm_dynwind_end ();
+
+  /* If no error occurred, indicate success. */
+  if (data.err == NULL) return TRUE;
+
+  g_propagate_error (err, data.err);
+  return FALSE;
 }
 
 
-/*! \brief Start reading a scheme file
- *  \par Function Description
- *  Start reading a scheme file
- *
- *  \param [in] toplevel  The TOPLEVEL structure.
- *  \param [in] filename  The file name to start reading from.
- *  \return 0 on success, -1 on failure.
+/*! \brief Process a Scheme error into the log and/or a GError
+ * \par Function Description
+ * Process a captured Guile exception with the given \a s_key and \a
+ * s_args, and optionally the stack trace \a s_stack.  The stack trace
+ * and source location are logged, and if a GError return location \a
+ * err is provided, it is populated with an informative error message.
  */
-int
-g_read_file(TOPLEVEL *toplevel, const gchar *filename)
-{
-	SCM eval_result = SCM_BOOL_F;
-        SCM expr;
-        SCM s_filename;
-	char * full_filename;
+static void
+process_error_stack (SCM s_stack, SCM s_key, SCM s_args, GError **err) {
+  char *long_message;
+  char *short_message;
+  SCM s_port, s_subr, s_message, s_message_args, s_rest;
 
-	if (filename == NULL) {
-		return(-1);
-	}
+  /* Split s_args up */
+  s_rest = s_args;
+  s_subr = scm_car (s_rest);         s_rest = scm_cdr (s_rest);
+  s_message = scm_car (s_rest);      s_rest = scm_cdr (s_rest);
+  s_message_args = scm_car (s_rest); s_rest = scm_cdr (s_rest);
 
-	/* get full, absolute path to file */
-	full_filename = f_normalize_filename (filename, NULL);
-	if (full_filename == NULL) {
-		return(-1);
-	}
-	
-	if (access(full_filename, R_OK) != 0) {
-          s_log_message(_("Could not find [%s] for interpretation\n"),
-                        full_filename);
-		return(-1);
-  	}
+  /* Capture short error message */
+  s_port = scm_open_output_string ();
+  scm_display_error_message (s_message, s_message_args, s_port);
+  short_message = scm_to_locale_string (scm_get_output_string (s_port));
+  scm_close_output_port (s_port);
 
-        s_filename = scm_from_locale_string (full_filename);
-        g_free (full_filename);
+  /* Capture long error message (including possible backtrace) */
+  s_port = scm_open_output_string ();
+  if (scm_is_true (scm_stack_p (s_stack))) {
+    scm_puts (_("\nBacktrace:\n"), s_port);
+    scm_display_backtrace (s_stack, s_port, SCM_BOOL_F, SCM_BOOL_F);
+    scm_puts ("\n", s_port);
+  }
+  scm_display_error (s_stack, s_port, s_subr,
+                     s_message, s_message_args, s_rest);
+  long_message = scm_to_locale_string (scm_get_output_string (s_port));
+  scm_close_output_port (s_port);
 
-        scm_dynwind_begin (SCM_F_DYNWIND_REWINDABLE);
-        edascm_dynwind_toplevel (toplevel);
+  /* Send long message to log */
+  s_log_message ("%s", long_message);
 
-        expr = scm_list_2 (scm_from_locale_symbol ("load"), s_filename);
-        eval_result = g_scm_eval_protected (expr,
-                                            scm_interaction_environment ());
-
-        scm_dynwind_end ();
-
-        scm_remember_upto_here_1 (s_filename);
-
-	return (eval_result != SCM_BOOL_F);
+  /* Populate any GError */
+  g_set_error (err, EDA_ERROR, EDA_ERROR_SCHEME, "%s", short_message);
 }

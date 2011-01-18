@@ -436,7 +436,6 @@ struct st_toplevel {
   GList *RC_list;                       /* List of RC files which have been read in. */
 
   char *untitled_name;			/* untitled sch basename */
-  char *scheme_directory; 		/* path of the scheme scripts */
   char *bitmap_directory; 		/* path of the bitmaps */
 
   int init_left, init_right; 		/* Starting values for above */
@@ -662,5 +661,8 @@ typedef struct {
   int   m_val;
   char *m_str;
 } vstbl_entry;
+
+/* Used by g_rc_parse_handler() */
+typedef void (*ConfigParseErrorFunc)(GError **, void *);
 
 #endif

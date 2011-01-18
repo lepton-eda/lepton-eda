@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 
@@ -165,6 +165,8 @@ static struct gsubr_t gschem_funcs[] = {
   { "edit-undo",                 0, 0, 0, g_keys_edit_undo },
   { "edit-redo",                 0, 0, 0, g_keys_edit_redo },
   { "edit-select",               0, 0, 0, g_keys_edit_select },
+  { "edit-select-all",           0, 0, 0, g_keys_edit_select_all },
+  { "edit-deselect",             0, 0, 0, g_keys_edit_deselect },
   { "edit-copy",                 0, 0, 0, g_keys_edit_copy },
   { "edit-copy-hotkey",          0, 0, 0, g_keys_edit_copy_hotkey },
   { "edit-mcopy",                0, 0, 0, g_keys_edit_mcopy },
@@ -190,7 +192,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "edit-unembed",              0, 0, 0, g_keys_edit_unembed },
   { "edit-update",               0, 0, 0, g_keys_edit_update },
   { "edit-show-hidden",          0, 0, 0, g_keys_edit_show_hidden },
-  { "edit-make-text-visible",    0, 0, 0, g_keys_edit_make_visible },
   { "edit-find-text",            0, 0, 0, g_keys_edit_find },
   { "edit-show-text",            0, 0, 0, g_keys_edit_show_text },
   { "edit-hide-text",            0, 0, 0, g_keys_edit_hide_text },

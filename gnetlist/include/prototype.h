@@ -1,7 +1,6 @@
 /* g_netlist.c */
 void g_set_project_current(TOPLEVEL *pr_current);
 SCM g_scm_c_get_uref(TOPLEVEL *toplevel, OBJECT *object);
-SCM g_get_command_line();   /* SDB -- 8.22.2004 */
 SCM g_get_calling_flags();  /* SDB -- 9.1.2003  */
 SCM g_get_packages(SCM level);
 SCM g_get_non_unique_packages(SCM level);
@@ -11,12 +10,10 @@ SCM g_get_all_unique_nets(SCM scm_level);
 SCM g_get_all_connections(SCM scm_netname);
 SCM g_get_nets(SCM scm_uref, SCM scm_pin);
 SCM g_get_pins_nets(SCM scm_uref);
-SCM g_get_package_attribute(SCM scm_uref, SCM scm_wanted_attrib);
+SCM g_get_all_package_attributes(SCM scm_uref, SCM scm_wanted_attrib);
 SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq, SCM scm_wanted_attrib);
 SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM scm_wanted_attrib);
 SCM g_get_toplevel_attribute(SCM scm_wanted_attrib);
-SCM g_get_slots(SCM scm_uref);
-SCM g_get_unique_slots(SCM scm_uref);
 SCM g_graphical_objs_in_net_with_attrib_get_attrib(SCM scm_netname, SCM scm_has_attribute, SCM scm_wanted_attribute);
 /* g_rc.c */
 SCM g_rc_gnetlist_version(SCM version);
@@ -45,7 +42,6 @@ int main(int argc, char *argv[]);
 void i_vars_set(TOPLEVEL *pr_current);
 /* parsecmd.c */
 void usage(char *cmd);
-char *create_command_line(int argc, char *argv[]);
 int parse_commandline(int argc, char *argv[]);
 /* s_cpinlist.c */
 CPINLIST *s_cpinlist_return_tail(CPINLIST *head);

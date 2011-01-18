@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*------------------------------------------------------------------*/
 /*! \file
@@ -139,7 +139,7 @@ x_fileselect_load_files (GSList *filenames)
 
     s_page_goto (pr_current, s_page_new (pr_current, string));
 
-    if(s_toplevel_read_page(string) == 0) {
+    if(s_toplevel_read_page(pr_current, string) == 0) {
        fprintf(stderr, "Couldn't load schematic [%s]\n", string);
        return FALSE;
     }

@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License 
  * along with this program; if not, write to the Free Software 
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 /*!
@@ -279,7 +279,7 @@ void s_rename_all_lowlevel(NETLIST * netlist_head, char *src, char *dest)
 
 }
 
-void s_rename_all(TOPLEVEL * pr_current, NETLIST * netlist_head)
+void s_rename_all (TOPLEVEL *toplevel, NETLIST * netlist_head)
 {
     int i;
 

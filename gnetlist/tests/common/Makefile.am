@@ -9,6 +9,7 @@ input_files = \
 	inputs/netattrib.sch \
 	inputs/powersupply.sch \
 	inputs/singlenet.sch \
+	inputs/stack-torture.sch \
 	inputs/attribs \
 	\
 	inputs/models/2N3904.mod \

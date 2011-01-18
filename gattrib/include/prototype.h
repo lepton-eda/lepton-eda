@@ -83,53 +83,60 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet,
 			      TABLE **local_table, int num_rows, int num_cols);
 
 /* ------------- s_toplevel.c ------------- */
-int s_toplevel_read_page(char *filename);
-void s_toplevel_verify_design(TOPLEVEL *pr_current);
-void s_toplevel_empty_project();
-void s_toplevel_gtksheet_to_toplevel();
+int s_toplevel_read_page(TOPLEVEL *toplevel, char *filename);
+void s_toplevel_verify_design(TOPLEVEL *toplevel);
+void s_toplevel_gtksheet_to_toplevel(TOPLEVEL *toplevel);
 void s_toplevel_add_new_attrib(gchar *new_attrib_name);
 void s_toplevel_delete_attrib_col();
 void s_toplevel_select_object();
-void s_toplevel_sheetdata_to_toplevel(PAGE *page);
+void s_toplevel_sheetdata_to_toplevel(TOPLEVEL *toplevel, PAGE *page);
 
 STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes);
-void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current, 
-					 STRING_LIST *new_comp_attrib_list);
+void s_toplevel_update_component_attribs_in_toplevel(
+					    TOPLEVEL *toplevel,
+					    OBJECT *o_current,
+					    STRING_LIST *new_comp_attrib_list);
 STRING_LIST *s_toplevel_get_net_attribs_in_sheet(char *netname);
 void s_toplevel_update_net_attribs_in_toplevel(OBJECT *o_current, 
 					 STRING_LIST *new_net_attrib_list);
 STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin);
-void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *pin,
+void s_toplevel_update_pin_attribs_in_toplevel(TOPLEVEL *toplevel,
+					 char *refdes, OBJECT *pin,
 					 STRING_LIST *new_pin_attrib_list);
 
 
 /* ------------- s_object.c ------------- */
-void s_object_add_comp_attrib_to_object(OBJECT *o_current, 
-					char *new_attrib_name, 
-					char *new_attrib_value,
-					gint visibility,
-					gint show_name_value);
-void s_object_add_net_attrib_to_object(OBJECT *o_current, 
-				       char *new_attrib_name, 
-				       char *new_attrib_value);
-void s_object_add_pin_attrib_to_object(OBJECT *o_current, 
-				       char *new_attrib_name, 
-				       char *new_attrib_value);
+void s_object_add_comp_attrib_to_object (TOPLEVEL *toplevel,
+                                         OBJECT *o_current,
+                                         char *new_attrib_name,
+                                         char *new_attrib_value,
+                                         gint visibility,
+                                         gint show_name_value);
+void s_object_add_net_attrib_to_object (TOPLEVEL *toplevel,
+                                        OBJECT *o_current,
+                                        char *new_attrib_name,
+                                        char *new_attrib_value);
+void s_object_add_pin_attrib_to_object (TOPLEVEL *toplevel,
+                                        OBJECT *o_current,
+                                        char *new_attrib_name,
+                                        char *new_attrib_value);
 
-void s_object_replace_attrib_in_object(OBJECT *o_current, 
-				       char *new_attrib_name, 
-				       char *new_attrib_value,
-				       gint visibility,
-				       gint show_name_value);
-void s_object_remove_attrib_in_object(OBJECT *o_current, 
-				      char *new_attrib_name);
+void s_object_replace_attrib_in_object (TOPLEVEL *toplevel,
+                                        OBJECT *o_current,
+                                        char *new_attrib_name,
+                                        char *new_attrib_value,
+                                        gint visibility,
+                                        gint show_name_value);
+void s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
+                                       OBJECT *o_current,
+                                       char *new_attrib_name);
 
-OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * w_current, 
-					     char *text_string,
-					     gint visibility, 
-					     gint show_name_value,
-					     OBJECT * object);
-void s_object_delete_text_object_in_object(TOPLEVEL *w_current, OBJECT *test_object);
+OBJECT *s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
+                                              char *text_string,
+                                              gint visibility,
+                                              gint show_name_value,
+                                              OBJECT * object);
+void s_object_delete_text_object_in_object(TOPLEVEL *toplevel, OBJECT *test_object);
 int s_object_has_sym_file(OBJECT *object);
 
 /* ------------- s_rename.c ------------- */
@@ -140,7 +147,7 @@ void s_rename_print(void);
 int s_rename_search(char *src, char *dest, int quiet_flag);
 void s_rename_add(char *src, char *dest);
 void s_rename_all_lowlevel(NETLIST * netlist_head, char *src, char *dest);
-void s_rename_all(TOPLEVEL * pr_current, NETLIST * netlist_head);
+void s_rename_all(TOPLEVEL *toplevel, NETLIST *netlist_head);
 
 /* ------------- s_misc.c ------------- */
 void verbose_print(char *string);
@@ -157,8 +164,8 @@ void s_visibility_set_cell(gint cur_page, gint row, gint col,
 			   gint visibility, gint show_name_value);
 
 /* ------------- i_vars.c ------------- */
-void i_vars_set(TOPLEVEL * pr_current);
-void i_window_vars_set(TOPLEVEL * w_current);
+void i_vars_set(TOPLEVEL *toplevel);
+void i_window_vars_set(TOPLEVEL *toplevel);
 
 /* ------------- x_dialog.c ------------- */
 void x_dialog_newattrib();

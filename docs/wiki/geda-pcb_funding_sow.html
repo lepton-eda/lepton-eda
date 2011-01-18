@@ -11,51 +11,39 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
-
-<ul class="toc">
-<li class="clear">
-
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#background_and_motivation" class="toc">Background and motivation</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#statement_of_work" class="toc">Statement of work</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#general_guidelines" class="toc">General guidelines</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#forward_annotation_upgrade" class="toc">Forward annotation upgrade</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#gui_modernization" class="toc">GUI modernization</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#footprint_editor_implementation" class="toc">Footprint editor implementation</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#upgrade_of_layer_and_design_objects" class="toc">Upgrade of layer and design objects</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#design_rule_checking_upgrade" class="toc">Design Rule Checking Upgrade</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#project_milestones_duration_and_budget_estimates" class="toc">Project milestones, duration, and budget estimates</a></span></div></li></ul>
-</li></ul>
-</li></ul>
-</div>
-</div>
 
 <p>
-<strong>Statement of work:  Improving PCB’s usability within the gEDA Suite framework</strong>
+<strong>Statement of work:  Improving PCB&#039;s usability within the gEDA Suite framework</strong>
 </p>
 
-
-
-<h2><a name="background_and_motivation" id="background_and_motivation">Background and motivation</a></h2>
+<h2 class="sectionedit485"><a name="background_and_motivation" id="background_and_motivation">Background and motivation</a></h2>
 <div class="level2">
 
 <p>
-The open-source layout tool <a href="http://pcb.sourceforge.net/" class="urlextern" title="http://pcb.sourceforge.net/"  rel="nofollow">PCB</a> has been a member of the gEDA Project for many years.  It is an essential part of the end-to-end design flow offered by the gEDA tool set.  That is, although gschem/gnetlist can (in principle) support many back-end PCB layout tools, the most advanced forward annotation tools have been developed for PCB, and the vast majority (if not all) of the gEDA Project’s user base uses PCB as their layout tool.  PCB is a core part of the gEDA Project’s software offerings. 
+The open-source layout tool <a href="http://pcb.gpleda.org/" class="urlextern" title="http://pcb.gpleda.org/"  rel="nofollow">PCB</a> has been a member of the gEDA Project for many
+years.  It is an essential part of the end-to-end design flow offered by the
+gEDA tool set.  That is, although gschem/gnetlist can (in principle) support
+many back-end PCB layout tools, the most advanced forward annotation tools
+have been developed for PCB, and the vast majority (if not all) of the gEDA
+Project&#039;s user base uses PCB as their layout tool.  PCB is a core part of the
+gEDA Project&#039;s software offerings. 
 </p>
 
 <p>
-For a variety of reasons, many electronics designers find PCB’s user interface difficult to master.  Many tasks are best performed using PCB’s internal command line (instead of menus or buttons), dropping to the unix shell, or even hand-editing design files using scripts or emacs.  Some specific shortcomings of PCB have been widely noted on the geda-* e-mail lists, along with reasonable solutions.   A list of the biggest issues includes:  
+For a variety of reasons, many electronics designers find PCB&#039;s user interface
+difficult to master.  Many tasks are best performed using PCB&#039;s internal
+command line (instead of menus or buttons), dropping to the unix shell, or
+even hand-editing design files using scripts or emacs.  Some specific
+shortcomings of PCB have been widely noted on the geda-* e-mail lists, along
+with reasonable solutions.   A list of the biggest issues includes: 
+
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Forward annotation:</strong>  Difficulty forward annotating designs from gschem/gnetlist.  A separate command-line tool is used to carry the design from gschem to PCB.  This tool can produce design files out of synch with PCB.  Also, many electronics designers are unfamiliar with using the unix command line.</div>
 </li>
 </ul>
 <ul>
-<li class="level1"><div class="li"> <strong><acronym title="Graphical User Interface">GUI</acronym>:</strong>  PCB’s <acronym title="Graphical User Interface">GUI</acronym> shows its age.  It has the following infelicitous properties:</div>
+<li class="level1"><div class="li"> <strong><acronym title="Graphical User Interface">GUI</acronym>:</strong>  PCB&#039;s <acronym title="Graphical User Interface">GUI</acronym> shows its age.  It has the following infelicitous properties:</div>
 <ul>
 <li class="level2"><div class="li"> It uses a mixture of noun/verb and verb/noun actions.  (Modern <acronym title="Graphical User Interface">GUI</acronym> programs are noun/verb only.)</div>
 </li>
@@ -65,7 +53,7 @@ For a variety of reasons, many electronics designers find PCB’s user interface
 </li>
 <li class="level2"><div class="li"> Unlike many other graphical GUIs a dialog to edit properties of an object is missing in pcb. Properties to be edited might be layer, thickness, connected flag, polygon clearance, the net it belongs to, position, orientation, etc.</div>
 </li>
-<li class="level2"><div class="li"> Underlying the user interface, there is strong belief amongst PCB’s developers that the supporting datastructures and methods are inadequate, and require upgrade as part of any <acronym title="Graphical User Interface">GUI</acronym> upgrade.</div>
+<li class="level2"><div class="li"> Underlying the user interface, there is strong belief amongst PCB&#039;s developers that the supporting datastructures and methods are inadequate, and require upgrade as part of any <acronym title="Graphical User Interface">GUI</acronym> upgrade.</div>
 </li>
 </ul>
 </li>
@@ -84,14 +72,19 @@ For a variety of reasons, many electronics designers find PCB’s user interface
 </ul>
 
 <p>
- We envision that addressing the above problems will provide a significant, powerful benefit to PCB’s usability within the larger framework of the gEDA toolkit.  Addressing the usability issues will bring the following specific benefits to the gEDA Project:  
+
+We envision that addressing the above problems will provide a significant,
+powerful benefit to PCB&#039;s usability within the larger framework of the gEDA
+toolkit.  Addressing the usability issues will bring the following specific
+benefits to the gEDA Project: 
+
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Adoption:</strong> Making PCB easier to use will lead to greater uptake of the entire gEDA electronic design toolkit by practicing engineers, including those working in commercial organizations.</div>
 </li>
 </ul>
 <ul>
-<li class="level1"><div class="li"> <strong>Contribution:</strong>  More users implies more contributors.   In the context of the gEDA Project, this means not only software developers, but also people who will contribute schematic symbols, PCB footprints, utility scripts, and other collateral necessary to a thriving design environment.  (A strong focal point for contributors is &ndash; and will remain &ndash; the <a href="http://www.gedasymbols.org" class="urlextern" title="http://www.gedasymbols.org"  rel="nofollow">www.gedasymbols.org</a> website.)</div>
+<li class="level1"><div class="li"> <strong>Contribution:</strong>  More users implies more contributors.   In the context of the gEDA Project, this means not only software developers, but also people who will contribute schematic symbols, PCB footprints, utility scripts, and other collateral necessary to a thriving design environment.  (A strong focal point for contributors is – and will remain – the <a href="http://www.gedasymbols.org" class="urlextern" title="http://www.gedasymbols.org"  rel="nofollow">www.gedasymbols.org</a> website.)</div>
 </li>
 </ul>
 <ul>
@@ -100,22 +93,27 @@ For a variety of reasons, many electronics designers find PCB’s user interface
 </ul>
 
 <p>
- Therefore, the purpose of this document is to specify modifications to PCB which we hope will bring about a renaissance in the gEDA Project itself by making the critical tool PCB more accessible to the ordinary electronics engineer. 
+
+Therefore, the purpose of this document is to specify modifications to PCB
+which we hope will bring about a renaissance in the gEDA Project itself by
+making the critical tool PCB more accessible to the ordinary electronics
+engineer. 
 </p>
 
 </div>
-<!-- SECTION "Background and motivation" [86-4750] -->
-<h2><a name="statement_of_work" id="statement_of_work">Statement of work</a></h2>
+<!-- EDIT485 SECTION "Background and motivation" [86-4745] -->
+<h2 class="sectionedit486"><a name="statement_of_work" id="statement_of_work">Statement of work</a></h2>
 <div class="level2">
 
 <p>
-This section provides descriptions of what work is desired in each area of PCB’s functionality.  This is not a full specification;  it is assumed that the person chosen to perform this work is familiar enough with the concepts associated with PCB design and the internals of PCB that this statement of work provides sufficient guidance about what to do.   
+This section provides descriptions of what work is desired in each area of PCB&#039;s functionality.  This is not a full specification;  it is assumed that the person chosen to perform this work is familiar enough with the concepts associated with PCB design and the internals of PCB that this statement of work provides sufficient guidance about what to do.  
+
 </p>
 <hr />
 
 </div>
-<!-- SECTION "Statement of work" [4751-5140] -->
-<h3><a name="general_guidelines" id="general_guidelines">General guidelines</a></h3>
+<!-- EDIT486 SECTION "Statement of work" [4746-5135] -->
+<h3 class="sectionedit487"><a name="general_guidelines" id="general_guidelines">General guidelines</a></h3>
 <div class="level3">
 
 </div>
@@ -124,7 +122,8 @@ This section provides descriptions of what work is desired in each area of PCB�
 <div class="level4">
 
 <p>
-PCB supports several HIDs.  The HID is the interface layer which the user interacts with.  The two major HIDs provided for interactive use are based upon 1) the GTK <acronym title="Graphical User Interface">GUI</acronym> widget set, and 2) The X/Motif <acronym title="Graphical User Interface">GUI</acronym> widget set.  <strong>The work called out for this project shall be targeted at the GTK HID.</strong>  The reason for this is simple:  The rest of gEDA uses GTK.  A primary goal the renovation work in PCB is to more tightly bind PCB into the entire gEDA workflow.  More to the point:  the gEDA tool chain should present a more uniform interface to the user.  Users expect to see the same “look and feel” in all the tools they use. However, any changes made as part of this work shall not break any feature present in any other HID, including the Motif HID.
+PCB supports several HIDs.  The HID is the interface layer which the user interacts with.  The two major HIDs provided for interactive use are based upon 1) the GTK <acronym title="Graphical User Interface">GUI</acronym> widget set, and 2) The X/Motif <acronym title="Graphical User Interface">GUI</acronym> widget set.  <strong>The work called out for this project shall be targeted at the GTK HID.</strong>  The reason for this is simple:  The rest of gEDA uses GTK.  A primary goal the renovation work in PCB is to more tightly bind PCB into the entire gEDA workflow.  More to the point:  the gEDA tool chain should present a more uniform interface to the user.  Users expect to see the same “look and feel” in all the tools they use.
+However, any changes made as part of this work shall not break any feature present in any other HID, including the Motif HID.
 </p>
 
 </div>
@@ -171,17 +170,20 @@ Hooks for support on Windows systems are outside the scope of this project.  How
 
 <p>
 <strong>Any changes made to PCB should not break the ability of PCB to import existing
-.pcb files.</strong>  It <strong>is</strong> allowed to break import of .new.pcb files (i.e. the output of gsch2pcb). 
+.pcb files.</strong>  It <strong>is</strong> allowed to break import of .new.pcb files (i.e. the output
+of gsch2pcb).
+
 </p>
 <hr />
 
 </div>
-<!-- SECTION "General guidelines" [5141-7262] -->
-<h3><a name="forward_annotation_upgrade" id="forward_annotation_upgrade">Forward annotation upgrade</a></h3>
+<!-- EDIT487 SECTION "General guidelines" [5136-7257] -->
+<h3 class="sectionedit488"><a name="forward_annotation_upgrade" id="forward_annotation_upgrade">Forward annotation upgrade</a></h3>
 <div class="level3">
 
 <p>
- <a href="geda-pcb_funding_sow-fwdann_ideas.html" class="wikilink1" title="geda-pcb_funding_sow-fwdann_ideas.html">Ideas, commentary, and examples from users</a>
+
+<a href="geda-pcb_funding_sow-fwdann_ideas.html" class="wikilink1" title="geda-pcb_funding_sow-fwdann_ideas.html">Ideas, commentary, and examples from users</a>
 </p>
 
 </div>
@@ -190,7 +192,11 @@ Hooks for support on Windows systems are outside the scope of this project.  How
 <div class="level4">
 
 <p>
-The goal of forward annotation is to read the design information output from e.g. a netlister, and use it to import all information required into PCB, ready for use in creating or modifying a layout.  Reading the following information is a required part of creating a PCB layout: 
+The goal of forward annotation is to read the design information output from
+e.g. a netlister, and use it to import all information required into PCB,
+ready for use in creating or modifying a layout.  Reading the following
+information is a required part of creating a PCB layout:
+
 </p>
 <ul>
 <li class="level1"><div class="li"> Footprints with associated refdeses and their associated layers (if assigned).</div>
@@ -210,23 +216,43 @@ The goal of forward annotation is to read the design information output from e.g
 </ul>
 
 <p>
- The scheme currently used by PCB is to read a file &ndash; already in PCB format &ndash; containing the actual footprints embedded within it.  The netlist is read in using a separate step.
+
+The scheme currently used by PCB is to read a file – already in PCB format –
+containing the actual footprints embedded within it.  The netlist is read in
+using a separate step.
 </p>
 
 <p>
-The new scheme would read a file containing a list of actions.  Each line in the file would correspond to a separate action.  The file would be generated by a forward annotation tool (e.g. gsch2pcb).  The actions would correspond to the atomic actions performed by PCB itself when it finds a footprint by searching its footprint library.  
+The new scheme would read a file containing a list of actions.  Each line in
+the file would correspond to a separate action.  The file would be generated
+by a forward annotation tool (e.g. gsch2pcb).  The actions would correspond to
+the atomic actions performed by PCB itself when it finds a footprint by
+searching its footprint library.  
 </p>
 
 <p>
-For example, one line in the forward annotation file might say “(load-element-data SOT-23 U6)”.  This would make PCB look for an SOT-23 package in its footprint library (using PCB’s $FOOTPRINT_PATH), place it in a waiting position on the PCB, and give it the refdes “U6”.  Another action might say “(add-line &lt;layer&gt; &lt;X1&gt; &lt;Y1&gt; &lt;X2&gt; &lt;Y2&gt; &lt;width&gt; &lt;flags&gt;)”, which would add a straight line segment onto layer &lt;layer&gt; from position (X1, Y1) to position (X2, Y2) having width &lt;width&gt; and flags &lt;flags&gt;.  (The flags would specify things like whether the line ends are round or square, along with the other properties of a line.)
+For example, one line in the forward annotation file might say
+“(load-element-data SOT-23 U6)”.  This would make PCB look for an SOT-23
+package in its footprint library (using PCB&#039;s $FOOTPRINT_PATH), place it in a
+waiting position on the PCB, and give it the refdes “U6”.  Another action
+might say “(add-line &lt;layer&gt; &lt;X1&gt; &lt;Y1&gt; &lt;X2&gt; &lt;Y2&gt; &lt;width&gt; &lt;flags&gt;)”, which
+would add a straight line segment onto layer &lt;layer&gt; from position (X1, Y1) to
+position (X2, Y2) having width &lt;width&gt; and flags &lt;flags&gt;.  (The flags would
+specify things like whether the line ends are round or square, along with the
+other properties of a line.)
 </p>
 
 <p>
-Besides importing footprint and graphical information, the new PCB forward annotation facility should import the netlist at the same time as the rest of the layout information.  (This is currently a separate step, which is inconsistent with the goal of ease-of-use.)
+Besides importing footprint and graphical information, the new PCB forward
+annotation facility should import the netlist at the same time as the rest of
+the layout information.  (This is currently a separate step, which is
+inconsistent with the goal of ease-of-use.)
 </p>
 
 <p>
-Note that the above descriptions of the actions are meant to provide examples of how PCB should be modified.  The details of each action are to be determined by the developer and the architecture of PCB itself.
+Note that the above descriptions of the actions are meant to provide examples
+of how PCB should be modified.  The details of each action are to be
+determined by the developer and the architecture of PCB itself.
 </p>
 
 </div>
@@ -248,11 +274,11 @@ Once the forward annotation changes are complete, the following use cases should
 </li>
 <li class="level1"><div class="li"> The user starts PCB.</div>
 </li>
-<li class="level1"><div class="li"> He clicks “File &rarr; new PCB”.  A window pops up, providing a place to enter the new board’s layer count and size.  The window may also provide a way to specify common board templates (PC-104, 3U Eurocard, etc.)</div>
+<li class="level1"><div class="li"> He clicks “File → new PCB”.  A window pops up, providing a place to enter the new board&#039;s layer count and size.  The window may also provide a way to specify common board templates (PC-104, 3U Eurocard, etc.)</div>
 </li>
-<li class="level1"><div class="li"> The new board is shown in PCB’s main window as a white area on a darker background (as currently implemented).</div>
+<li class="level1"><div class="li"> The new board is shown in PCB&#039;s main window as a white area on a darker background (as currently implemented).</div>
 </li>
-<li class="level1"><div class="li"> The user clicks “File &rarr; Import forward annotation file”.</div>
+<li class="level1"><div class="li"> The user clicks “File → Import forward annotation file”.</div>
 </li>
 <li class="level1"><div class="li"> A file selection window pops up.  The user clicks on his .pfa file and clicks OK.</div>
 </li>
@@ -260,12 +286,13 @@ Once the forward annotation changes are complete, the following use cases should
 </li>
 <li class="level1"><div class="li"> The PCB netlist is also imported during this activity.  No separate netlist readin step is required.</div>
 </li>
-<li class="level1"><div class="li"> At the end of the file’s read-in, the footprints should be present on the board (*not* in the paste buffer), ready to be disbursed and placed.</div>
+<li class="level1"><div class="li"> At the end of the file&#039;s read-in, the footprints should be present on the board (*not* in the paste buffer), ready to be disbursed and placed.</div>
 </li>
 </ol>
 
 <p>
- <strong>Existing PCB</strong>
+
+<strong>Existing PCB</strong>
 </p>
 <ol>
 <li class="level1"><div class="li"> The user has a pre-existing .pcb file for the design under consideration.  He makes changes to his design using e.g. gschem or gattrib.  </div>
@@ -274,7 +301,7 @@ Once the forward annotation changes are complete, the following use cases should
 </li>
 <li class="level1"><div class="li"> The user starts PCB (or re-activates an existing PCB session running in its window).</div>
 </li>
-<li class="level1"><div class="li"> The user clicks “File &rarr; Import forward annotation file”.</div>
+<li class="level1"><div class="li"> The user clicks “File → Import forward annotation file”.</div>
 </li>
 <li class="level1"><div class="li"> A file selection window pops up.  The user clicks on his .pfa file and clicks OK.</div>
 </li>
@@ -305,14 +332,15 @@ Once the forward annotation changes are complete, the following use cases should
 <div class="level4">
 
 <p>
-Some of the support for forward annotation already exists.  Specifically, many actions are already supported.  Therefore, this project involves: 
+Some of the support for forward annotation already exists.  Specifically, many
+actions are already supported.  Therefore, this project involves:
 </p>
 <ol>
 <li class="level1"><div class="li"> Creating the missing actions required for full forward annotation.</div>
 </li>
 <li class="level1"><div class="li"> Creating a method for reading in an action script.</div>
 </li>
-<li class="level1"><div class="li"> Integrating the new script-based forward annotation into PCB’s <acronym title="Graphical User Interface">GUI</acronym>.</div>
+<li class="level1"><div class="li"> Integrating the new script-based forward annotation into PCB&#039;s <acronym title="Graphical User Interface">GUI</acronym>.</div>
 </li>
 <li class="level1"><div class="li"> Testing and bug cleanup.</div>
 </li>
@@ -320,19 +348,23 @@ Some of the support for forward annotation already exists.  Specifically, many a
 <hr />
 
 </div>
-<!-- SECTION "Forward annotation upgrade" [7263-12536] -->
-<h3><a name="gui_modernization" id="gui_modernization">GUI modernization</a></h3>
+<!-- EDIT488 SECTION "Forward annotation upgrade" [7258-12531] -->
+<h3 class="sectionedit489"><a name="gui_modernization" id="gui_modernization">GUI modernization</a></h3>
 <div class="level3">
 
 <p>
- <a href="geda-pcb_funding_sow-gui_ideas.html" class="wikilink1" title="geda-pcb_funding_sow-gui_ideas.html">Ideas, commentary, and examples from users</a>
+
+<a href="geda-pcb_funding_sow-gui_ideas.html" class="wikilink1" title="geda-pcb_funding_sow-gui_ideas.html">Ideas, commentary, and examples from users</a>
 </p>
 
 <p>
-The basic goal is to make the upgraded PCB behave exactly as an inexperienced user might expect, based upon his familiarity with modern <acronym title="Graphical User Interface">GUI</acronym>-based tools like OpenOffice.  This means: 
+The basic goal is to make the upgraded PCB behave exactly as an inexperienced
+user might expect, based upon his familiarity with modern <acronym title="Graphical User Interface">GUI</acronym>-based tools like
+OpenOffice.  This means:
+
 </p>
 <ul>
-<li class="level1"><div class="li"> PCB should support all the “normal” keystrokes which have become defacto standards for <acronym title="Graphical User Interface">GUI</acronym> programs.  Examples include &lt;ctrl&gt;-c for copy, &lt;ctrl&gt;-x for delete, etc.  PCB may continue to support the old key strokes to maintain backward compatibility for those who are already experienced with the program, but in the event that one of PCB’s current keystrokes conflicts with the “defacto standard”, the defacto standard shall be implemented.</div>
+<li class="level1"><div class="li"> PCB should support all the “normal” keystrokes which have become defacto standards for <acronym title="Graphical User Interface">GUI</acronym> programs.  Examples include &lt;ctrl&gt;-c for copy, &lt;ctrl&gt;-x for delete, etc.  PCB may continue to support the old key strokes to maintain backward compatibility for those who are already experienced with the program, but in the event that one of PCB&#039;s current keystrokes conflicts with the “defacto standard”, the defacto standard shall be implemented.</div>
 </li>
 </ul>
 <ul>
@@ -344,12 +376,13 @@ The basic goal is to make the upgraded PCB behave exactly as an inexperienced us
 </li>
 </ul>
 <ul>
-<li class="level1"><div class="li"> PCB’s internals should be upgraded to easily support enhanced menus and button bars.  This means upgraded callbacks and possibly also a resource file which specifies things like menu layout, menu options available, and keybindings.</div>
+<li class="level1"><div class="li"> PCB&#039;s internals should be upgraded to easily support enhanced menus and button bars.  This means upgraded callbacks and possibly also a resource file which specifies things like menu layout, menu options available, and keybindings.</div>
 </li>
 </ul>
 
 <p>
- If the descriptions in this specification are ambiguous or unclear, use the behaviors implemented in gschem as the preferred example.
+
+If the descriptions in this specification are ambiguous or unclear, use the behaviors implemented in gschem as the preferred example.
 </p>
 
 </div>
@@ -358,7 +391,13 @@ The basic goal is to make the upgraded PCB behave exactly as an inexperienced us
 <div class="level4">
 
 <p>
-The following actions should be modified to support a “noun/verb” actions, if they do not support it already.  Where possible, support for the current “verb/noun” actions should not be dropped to maintain compatibility for users who have learned the old actions.  However, if there is a conflict between the new noun/verb and the old verb/noun actions, the new noun/verb actions take presidence. 
+The following actions should be modified to support a “noun/verb” actions,
+if they do not support it already.  Where possible, support for the current
+“verb/noun” actions should not be dropped to maintain compatibility for
+users who have learned the old actions.  However, if there is a conflict
+between the new noun/verb and the old verb/noun actions, the new noun/verb
+actions take presidence.
+
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>select/delete</strong>  Using any of: menu item, &lt;ctrl&gt;-x.  Delete should move the deleted object(s) from the layout into the copy buffer, so the user may place them elsewhere with a subsequent action.  (NOTE:  The copy buffer should probably be implemented separately from the existing “element buffer”.)</div>
@@ -394,9 +433,9 @@ The following actions should be modified to support a “noun/verb” actions, i
 </ul>
 <ul>
 <li class="level1"><div class="li"> <strong>select/edit object properties</strong>  Using menu item or double click on single object.  This is a new action.<br/>
- If the selected object is a graphical primitive (line, arc, etc), PCB will open up a window displaying the object properties in an editable window, allowing for the user to modify the object’s properties.  For example double clicking on a Cu track should open up the edit window, showing the track’s width, current layer, end type (round vs. square), and its beginning and end coordinates.<br/>
- If the selected object is a footprint, PCB will open up a window allowing the user to select a different footprint name.  Some type of footprint browsing window with previewing should be presented to the user for this.  The footprints should be found by looking through PCB’s footprint search path.  Recommendation: steal the symbol browser window from gschem for this task.  (Question:  how to back annotate this info into the .sch files?)<br/>
- If the selected object is text, then PCB should open up the text edit dialog box, allow the user to edit his text, click OK, and the text on the layout should be updated.</div>
+If the selected object is a graphical primitive (line, arc, etc), PCB will open up a window displaying the object properties in an editable window, allowing for the user to modify the object&#039;s properties.  For example double clicking on a Cu track should open up the edit window, showing the track&#039;s width, current layer, end type (round vs. square), and its beginning and end coordinates.<br/>
+If the selected object is a footprint, PCB will open up a window allowing the user to select a different footprint name.  Some type of footprint browsing window with previewing should be presented to the user for this.  The footprints should be found by looking through PCB&#039;s footprint search path.  Recommendation: steal the symbol browser window from gschem for this task.  (Question:  how to back annotate this info into the .sch files?)<br/>
+If the selected object is text, then PCB should open up the text edit dialog box, allow the user to edit his text, click OK, and the text on the layout should be updated.</div>
 </li>
 </ul>
 <ul>
@@ -452,12 +491,15 @@ This project involves:
 <hr />
 
 </div>
-<!-- SECTION "GUI modernization" [12537-18472] -->
-<h3><a name="footprint_editor_implementation" id="footprint_editor_implementation">Footprint editor implementation</a></h3>
+<!-- EDIT489 SECTION "GUI modernization" [12532-18467] -->
+<h3 class="sectionedit490"><a name="footprint_editor_implementation" id="footprint_editor_implementation">Footprint editor implementation</a></h3>
 <div class="level3">
 
 <p>
-Incorporating a good footprint editor into PCB is a common request from users. It is important for PCB to clearly distinguish between editing a footprint and editing an entire PCB design.  Here are two possible methods to accomplish this:
+Incorporating a good footprint editor into PCB is a common request from users.
+It is important for PCB to clearly distinguish between editing a footprint and
+editing an entire PCB design.  Here are two possible methods to accomplish
+this:
 </p>
 <ol>
 <li class="level1"><div class="li"> Although it is not optimal, the symbol editing mode present in gschem provides a reference for how this might be implemented.  Specifically, editing a footprint may be implemented as a “mode”, in which the user drills down into the footprint, and is placed into a special mode of the standard PCB editing window which is reserved for editing footprints.  </div>
@@ -476,17 +518,18 @@ Optionally, features involving editing footprints via the buffer will be removed
 <div class="level4">
 
 <p>
-There are two ways to invoke the footprint editor:  
+There are two ways to invoke the footprint editor:
 </p>
 <ol>
-<li class="level1"><div class="li"> Create a new footprint.  In this case the user will have no object selected on the PCB drawing window.  He will then choose an option from the menu, like “tools &rarr; down footprint”.  This will place the user into the footprint editor, and the drawing area will be empty</div>
+<li class="level1"><div class="li"> Create a new footprint.  In this case the user will have no object selected on the PCB drawing window.  He will then choose an option from the menu, like “tools → down footprint”.  This will place the user into the footprint editor, and the drawing area will be empty</div>
 </li>
-<li class="level1"><div class="li"> Edit an existing footprint.  In this case, the user will select a footprint present on the board by clicking on it.  Then he will select an option from the menu, like “tools &rarr; down footprint”.  This will place the user into the footprint editor, and the drawing area will hold a copy of the selected footprint, ready for editing.</div>
+<li class="level2"><div class="li"> Edit an existing footprint.  In this case, the user will select a footprint present on the board by clicking on it.  Then he will select an option from the menu, like “tools → down footprint”.  This will place the user into the footprint editor, and the drawing area will hold a copy of the selected footprint, ready for editing.</div>
 </li>
 </ol>
 
 <p>
- As a third possibility, the user should be able to do “tools &rarr; create new footprint”, go into the editor, and then do “file &rarr; open” and select a footprint from the library to edit.
+
+As a third possibility, the user should be able to do “tools → create new footprint”, go into the editor, and then do “file → open” and select a footprint from the library to edit.
 </p>
 
 <p>
@@ -499,7 +542,8 @@ As a fourth possibility, allow a mode similar to gschem, where a library browser
 <div class="level4">
 
 <p>
-The footprint editor should be a graphical drawing environment similar to that presented by PCB for layout editing. 
+The footprint editor should be a graphical drawing environment similar to that presented by PCB for layout editing.
+
 </p>
 <ul>
 <li class="level1"><div class="li"> Buttons and menus.  The footprint editor should have all the same menus and buttons as are available from the PCB editor.  Those menu items and buttons which are not useful for footprint editing should be greyed out.</div>
@@ -511,7 +555,8 @@ The footprint editor should be a graphical drawing environment similar to that p
 </ul>
 
 <p>
- The design choice of which environment is better is left to the developer to decide based upon factors including input from the community, ease of implementation, etc.
+
+The design choice of which environment is better is left to the developer to decide based upon factors including input from the community, ease of implementation, etc.
 </p>
 
 </div>
@@ -520,11 +565,19 @@ The footprint editor should be a graphical drawing environment similar to that p
 <div class="level4">
 
 <p>
-Once the user has edited his footprint, he will want to save it out.  This is a problematic action, since it’s not a good idea to allow the user to overwrite a footprint living in the footprint libraries.  Moreover, the user may not have write access to the library directories.   
+Once the user has edited his footprint, he will want to save it out.  This is
+a problematic action, since it&#039;s not a good idea to allow the user to
+overwrite a footprint living in the footprint libraries.  Moreover, the user
+may not have write access to the library directories.   
 </p>
 
 <p>
-Therefore, when the user is done editing his footprint, there should be only one save action available under the file menu:  “file &rarr; save footprint as”. This will call up the file save dialog, which will default to sticking the footprint in the current working directory (or the last directory he saved a footprint into during this session).  The user will then be required to browse to his preferred save directory, and save the footprint there.  
+Therefore, when the user is done editing his footprint, there should be only
+one save action available under the file menu:  “file → save footprint as”.
+This will call up the file save dialog, which will default to sticking the
+footprint in the current working directory (or the last directory he saved a
+footprint into during this session).  The user will then be required to browse
+to his preferred save directory, and save the footprint there.  
 </p>
 
 </div>
@@ -533,7 +586,11 @@ Therefore, when the user is done editing his footprint, there should be only one
 <div class="level4">
 
 <p>
-Once the footprint editing session is done, the user may leave the editor and return to his main PCB editing session.  This may be accomplished using a menu item like “tools &rarr; up to layout”.  If any unsaved changes remain in the footprint, then the user should be prompted to either save or discard his changes before leaving the footprint editor.
+Once the footprint editing session is done, the user may leave the editor and
+return to his main PCB editing session.  This may be accomplished using a menu
+item like “tools → up to layout”.  If any unsaved changes remain in the
+footprint, then the user should be prompted to either save or discard his
+changes before leaving the footprint editor.
 </p>
 
 </div>
@@ -542,12 +599,14 @@ Once the footprint editing session is done, the user may leave the editor and re
 <div class="level4">
 
 <p>
-After editing a footprint and saving it out, the user will often want to update a footprint already present on the PCB.  Here is the preferred method (use case) to do this: 
+After editing a footprint and saving it out, the user will often want to
+update a footprint already present on the PCB.  Here is the preferred method
+(use case) to do this:
 </p>
 <ol>
 <li class="level1"><div class="li"> User selects footprint to update.</div>
 </li>
-<li class="level1"><div class="li"> From menu, user selects “tools &rarr; update footprint”.  A keystroke to start this action may also be provided.</div>
+<li class="level1"><div class="li"> From menu, user selects “tools → update footprint”.  A keystroke to start this action may also be provided.</div>
 </li>
 <li class="level1"><div class="li"> A pop-up window opens, giving the user the footprint browser (as described above).  The window will have has default footprint the name of the currently selected footprint.  </div>
 </li>
@@ -580,8 +639,8 @@ This project involves:
 <hr />
 
 </div>
-<!-- SECTION "Footprint editor implementation" [18473-24061] -->
-<h3><a name="upgrade_of_layer_and_design_objects" id="upgrade_of_layer_and_design_objects">Upgrade of layer and design objects</a></h3>
+<!-- EDIT490 SECTION "Footprint editor implementation" [18468-24056] -->
+<h3 class="sectionedit491"><a name="upgrade_of_layer_and_design_objects" id="upgrade_of_layer_and_design_objects">Upgrade of layer and design objects</a></h3>
 <div class="level3">
 
 </div>
@@ -590,7 +649,13 @@ This project involves:
 <div class="level4">
 
 <p>
-Currently, PCB’s internal data structures only “know” about metal and silk layers.  Other layers commonly used in PCB design are either missing (e.g. DRC layer, outline layer), or are simply derived from the metal layer (solder mask).  This task involves implementing full support for layers of arbitrary type and layer count.  Also, support for other design objects is part of this upgrade.  Specific features required are: 
+Currently, PCB&#039;s internal data structures only “know” about metal and silk
+layers.  Other layers commonly used in PCB design are either missing (e.g. DRC
+layer, outline layer), or are simply derived from the metal layer (solder
+mask).  This task involves implementing full support for layers of arbitrary
+type and layer count.  Also, support for other design objects is part of this
+upgrade.  Specific features required are:
+
 </p>
 <ul>
 <li class="level1"><div class="li"> Upgrade of existing datastructures to support layers of arbitrary type including: DRC, mechanical outline, annotation, solder mask, paste mask, plated through-hole, unplated through-hole, metal, silk.  The upgrade must also provide support for an arbitrary number of layers.  Also, allowing for per-layer clearance settings is an important feature for inclusion here.</div>
@@ -605,7 +670,7 @@ Currently, PCB’s internal data structures only “know” about metal and silk
 </li>
 </ul>
 <ul>
-<li class="level1"><div class="li"> Implement a window widget allowing for easy editing of the pad stack’s properties, including: metal annulus outer diameter (per layer), solder mask diameter (per layer), paste mask diameter (per layer), clearance width (per layer), hole diameter.</div>
+<li class="level1"><div class="li"> Implement a window widget allowing for easy editing of the pad stack&#039;s properties, including: metal annulus outer diameter (per layer), solder mask diameter (per layer), paste mask diameter (per layer), clearance width (per layer), hole diameter.</div>
 </li>
 </ul>
 <ul>
@@ -636,8 +701,8 @@ This project involves:
 <hr />
 
 </div>
-<!-- SECTION "Upgrade of layer and design objects" [24062-26087] -->
-<h3><a name="design_rule_checking_upgrade" id="design_rule_checking_upgrade">Design Rule Checking Upgrade</a></h3>
+<!-- EDIT491 SECTION "Upgrade of layer and design objects" [24057-26082] -->
+<h3 class="sectionedit492"><a name="design_rule_checking_upgrade" id="design_rule_checking_upgrade">Design Rule Checking Upgrade</a></h3>
 <div class="level3">
 
 </div>
@@ -646,23 +711,41 @@ This project involves:
 <div class="level4">
 
 <p>
-The goal of design rule checking (DRC) is to insure that a printed circuit board layout conforms to a set of design rules.  Design rules will consist of specifications like minimum copper line width, minimum copper spacing, etc. Generating a manufacturable PCB layout without DRC is tedious at best
+The goal of design rule checking (DRC) is to insure that a printed circuit
+board layout conforms to a set of design rules.  Design rules will consist of
+specifications like minimum copper line width, minimum copper spacing,
+etc. Generating a manufacturable PCB layout without DRC is tedious at best
 </p>
 
 <p>
-The current PCB DRC steps through design rule violations one by one using a dialog box that reports the error, the coordinate position of the error and places the cursor at the error. Bouncing back and forth between the layout and the dialog box is time consuming. Knowing all of the errors prior to starting error correction is usually more productive.
+The current PCB DRC steps through design rule violations one by one using a
+dialog box that reports the error, the coordinate position of the error and
+places the cursor at the error. Bouncing back and forth between the layout and
+the dialog box is time consuming. Knowing all of the errors prior to starting
+error correction is usually more productive.
 </p>
 
 <p>
-A preferred method of reporting DRC violations would be to graphically indicate all errors on the layout. With this method all errors are quickly visible. DJ has suggested a layer for displaying DRC errors.  The user should be able to turn the layer visibility on and off.
+A preferred method of reporting DRC violations would be to graphically
+indicate all errors on the layout. With this method all errors are quickly
+visible. DJ has suggested a layer for displaying DRC errors.  The user should
+be able to turn the layer visibility on and off.
 </p>
 
 <p>
-A useful option for DRC would be to have it run periodically.  A proactive DRC should help novices avoid creating multiple similar errors.  Threaded operation,  or a DRC which works in packets of time where the mainloop hits idle would be possibilities here. Both have their merits and draw-backs. If the operation is slow, we’ll need some way to queue the work such that updates to the board in the mean time queue updates for new DRC checking. 
+A useful option for DRC would be to have it run periodically.  A proactive DRC
+should help novices avoid creating multiple similar errors.  Threaded operation, 
+or a DRC which works in packets of time where the
+mainloop hits idle would be possibilities here. Both have their merits
+and draw-backs. If the operation is slow, we&#039;ll need some way to queue
+the work such that updates to the board in the mean time queue updates
+for new DRC checking. 
 </p>
 
 <p>
-Similarly, we’d need to ensure that removing or changing objects on the board doesn’t crash the DRC code - if it is running in a thread.
+Similarly, we&#039;d need to ensure that removing or
+changing objects on the board doesn&#039;t crash the DRC code - if it is
+running in a thread.
 </p>
 
 </div>
@@ -685,7 +768,8 @@ Similarly, we’d need to ensure that removing or changing objects on the board 
 </ol>
 
 <p>
- <strong>Automatic DRC</strong>
+
+<strong>Automatic DRC</strong>
 </p>
 <ol>
 <li class="level1"><div class="li"> Using a menu item the user can set the appropriate time interval for running DRC. A default value is used if a new value is not set.</div>
@@ -723,12 +807,17 @@ This project involves:
 <hr />
 
 </div>
-<!-- SECTION "Design Rule Checking Upgrade" [26088-29273] -->
-<h3><a name="project_milestones_duration_and_budget_estimates" id="project_milestones_duration_and_budget_estimates">Project milestones, duration, and budget estimates</a></h3>
+<!-- EDIT492 SECTION "Design Rule Checking Upgrade" [26083-29268] -->
+<h3 class="sectionedit493"><a name="project_milestones_duration_and_budget_estimates" id="project_milestones_duration_and_budget_estimates">Project milestones, duration, and budget estimates</a></h3>
 <div class="level3">
 
 <p>
-Although they are intertwined, the major focus areas are scoped independently here.  Ordinarily, a project manager would put a Gantt chart here, but that level of detail is probably too fine for the purposes of an open source project.  Therefore, I simply call out an estimated time required for each subtask.  The project duration times are SWAGs based upon my limited experience in estimating software projects.  They are based upon 8 hour work days (i.e. this work is performed as a full-time job) at a nominal billing rate of $50/hour.  <strong>It is up to the developer to
+Although they are intertwined, the major focus areas are scoped independently
+here.  Ordinarily, a project manager would put a Gantt chart here, but that
+level of detail is probably too fine for the purposes of an open source
+project.  Therefore, I simply call out an estimated time required for each
+subtask.  The project duration times are SWAGs based upon my limited experience in estimating software projects.  They are based upon 8 hour work days (i.e. this work is performed
+as a full-time job) at a nominal billing rate of $50/hour.  <strong>It is up to the developer to
 validate these estimations and negotiate his own billing rate before he agrees to perform this work.</strong>
 </p>
 
@@ -747,14 +836,15 @@ validate these estimations and negotiate his own billing rate before he agrees t
 </li>
 <li class="level1"><div class="li"> Creating a method for reading in an action script (2 days)</div>
 </li>
-<li class="level1"><div class="li"> Integrating the new script-based forward annotation into PCB’s <acronym title="Graphical User Interface">GUI</acronym> (1 day)</div>
+<li class="level1"><div class="li"> Integrating the new script-based forward annotation into PCB&#039;s <acronym title="Graphical User Interface">GUI</acronym> (1 day)</div>
 </li>
 <li class="level1"><div class="li"> Testing and bug cleanup (5 days).</div>
 </li>
 </ol>
 
 <p>
-Total duration:  16 days = 128 hours. Cost: $6400
+Total duration:  16 days = 128 hours.
+Cost: $6400
 </p>
 
 </div>
@@ -777,7 +867,8 @@ Total duration:  16 days = 128 hours. Cost: $6400
 </ol>
 
 <p>
-Total duration: 26 days = 208 hours Cost: $10400
+Total duration: 26 days = 208 hours
+Cost: $10400
 </p>
 
 </div>
@@ -796,7 +887,8 @@ Total duration: 26 days = 208 hours Cost: $10400
 </ol>
 
 <p>
-Total duration: 14 days = 112 hours. Cost: $5600
+Total duration: 14 days = 112 hours.
+Cost: $5600
 </p>
 
 </div>
@@ -817,7 +909,8 @@ Total duration: 14 days = 112 hours. Cost: $5600
 </ol>
 
 <p>
-Total duration: 20 days = 160 hours. Cost: $8000
+Total duration: 20 days = 160 hours.
+Cost: $8000
 </p>
 
 </div>
@@ -836,9 +929,11 @@ Total duration: 20 days = 160 hours. Cost: $8000
 </ol>
 
 <p>
-Total duration: 10 days = 80 hours. Cost: $4000 
+Total duration: 10 days = 80 hours.
+Cost: $4000
+
 </p>
 
 </div>
-<!-- SECTION "Project milestones, duration, and budget estimates" [29274-] --></body>
+<!-- EDIT493 SECTION "Project milestones, duration, and budget estimates" [29269-] --></body>
 </html>

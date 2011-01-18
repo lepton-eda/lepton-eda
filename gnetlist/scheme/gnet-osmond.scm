@@ -16,68 +16,42 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-;;
-;; Parts list 
-;;
-(define osmond:parts
-   (lambda (port ls)
-      (if (not (null? ls))
-         (let ((package (car ls)))
-            (begin
-	       (display "Part " port)
-               (display (gnetlist:get-package-attribute package "footprint") port)
-	       (display " { Name " port)
-	       (display package port )
-	       (display " }" port)
-               (newline port)
-               (osmond:parts port (cdr ls)))))))
+; Export a design to Osmond PCB
 
-;;
-;; List all connections to a net
-;;
-(define (osmond:list-connections nets)
-  (let ((k ""))
-    (for-each (lambda (in-string)
-                (set! k (string-append k in-string)))
-              (map (lambda (net)
-                     (string-append " " (car net) "-" (car (cdr net))))
-                   nets))
-   k))
-
-;
-; Write out each signal
-;
-(define osmond:write-signal
-   (lambda (port signals)
-      (if (not (null? signals))
-         (let ((signal (car signals)))
-	    (begin
-	       (display "Signal " port )
-	       (write-char #\" port)
-	       (display signal port)
-	       (write-char #\" port)
-               (newline port)
-	       (display "  {" port)
-               (display (osmond:list-connections 
-	          (gnetlist:get-all-connections signal)) port)
-	       (display " }" port)
-	       (newline port)
-	       (osmond:write-signal port (cdr signals)))))))
-	              
-;;
-;; Write out all the signals
-;;	       
-(define osmond:signal
-   (lambda (port)
-      (let ((all-uniq-nets (gnetlist:get-all-unique-nets "dummy")))
-         (osmond:write-signal port all-uniq-nets))))
+(define (osmond filename)
+	(set-current-output-port (open-output-file filename))
+	(for-each osmond:part packages)
+	(for-each osmond:signal all-unique-nets))
 
 
-(define osmond 
-   (lambda (output-filename)
-      (let ((port (open-output-file output-filename)))
-         (begin
-	    (osmond:parts port packages)
-	    (osmond:signal port)
-         )
-         (close-output-port port))))
+; The first section of the file consists of a list of packages,
+; one per line. For example:
+; Part 0603 { Name R4 }
+
+(define (osmond:part package)
+	(format #t
+		"Part ~A { Name ~A }\n"
+		(gnetlist:get-package-attribute package "footprint")
+		package))
+
+
+; The next section of the file consists of a list of nets.
+; Each entry takes two lines. For example:
+; Signal "unnamed_net6"
+;   { R4-1 R3-2 C3-2 }
+
+(define (osmond:signal net)
+	(format #t "Signal \"~A\"\n  {" net)
+	(for-each osmond:pin (gnetlist:get-all-connections net))
+	(format #t " }\n"))
+
+
+; gnetlist represents a connection as a two-element list of the form:
+; (refdes pinnumber)
+; Convert to " refdes-pinnumber"
+
+(define (osmond:pin connection)
+	(format #t
+		" ~A-~A"
+		(car connection)	; refdes
+		(cadr connection)))	; pin number

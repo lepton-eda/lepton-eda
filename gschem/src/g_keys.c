@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 
@@ -228,6 +228,8 @@ DEFINE_G_KEYS(file_quit)
 DEFINE_G_KEYS(edit_undo)
 DEFINE_G_KEYS(edit_redo)
 DEFINE_G_KEYS(edit_select)
+DEFINE_G_KEYS(edit_select_all)
+DEFINE_G_KEYS(edit_deselect)
 DEFINE_G_KEYS(edit_copy)
 DEFINE_G_KEYS(edit_copy_hotkey)
 DEFINE_G_KEYS(edit_mcopy)
@@ -254,7 +256,6 @@ DEFINE_G_KEYS(edit_embed)
 DEFINE_G_KEYS(edit_unembed)
 DEFINE_G_KEYS(edit_update)
 DEFINE_G_KEYS(edit_show_hidden)
-DEFINE_G_KEYS(edit_make_visible)
 DEFINE_G_KEYS(edit_find)
 DEFINE_G_KEYS(edit_show_text)
 DEFINE_G_KEYS(edit_hide_text)

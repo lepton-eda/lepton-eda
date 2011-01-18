@@ -3,3 +3,6 @@ Makefile.in
 html
 latex
 *~
+grenum.html
+gsch2pcb.html
+gxyrs.html

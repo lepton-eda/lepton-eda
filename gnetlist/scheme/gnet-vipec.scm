@@ -71,14 +71,12 @@
             (newline)
             (cons (cons device "error") '())))))
 
-(define vipec:write-net-name-of-node 
-   (lambda (uref number-of-pin netnumbers port)
-      (if (> number-of-pin 0)
-         (begin          
-            (vipec:write-net-name-of-node uref (- number-of-pin 1) netnumbers port)
-            (let ((pin-name (number->string number-of-pin)))
-               (display (get-net-number (car (gnetlist:get-nets uref (gnetlist:get-attribute-by-pinseq uref pin-name "pinnumber"))) netnumbers) port)
-               (write-char #\space port))))))
+(define (vipec:write-net-name-of-node uref number-of-pin netnumbers port)
+  (do ((i 1 (1+ i)))
+      ((> i number-of-pin))
+    (let ((pin-name (number->string i)))
+      (display (get-net-number (car (gnetlist:get-nets uref (gnetlist:get-attribute-by-pinseq uref pin-name "pinnumber"))) netnumbers) port)
+      (write-char #\space port))))
 
 (define vipec:write-attribs
    (lambda (package attribs port term)

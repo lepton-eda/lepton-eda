@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 /*! \file
@@ -51,15 +51,15 @@
  *
  * ------------------------------------------------------------- */
 #if 0 /* not used, but leaving it here in case we need it later */
-static void i_update_status(TOPLEVEL * w_current, const char *string)
+static void i_update_status(TOPLEVEL *toplevel, const char *string)
 {
-  if (!w_current->status_label) {
+  if (!toplevel->status_label) {
     return;
   }
 
   if (string) {
     /* NOTE: consider optimizing this if same label */
-    gtk_label_set(GTK_LABEL(w_current->status_label), (char *) string);
+    gtk_label_set(GTK_LABEL(toplevel->status_label), (char *) string);
   }
 }
 #endif

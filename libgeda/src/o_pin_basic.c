@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 
@@ -204,10 +204,11 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, char buf[],
  *  This function takes a pin \a object and return a string
  *  according to the file format definition.
  *
+ *  \param [in] toplevel  a TOPLEVEL structure
  *  \param [in] object  a pin OBJECT
  *  \return the string representation of the pin OBJECT
  */
-char *o_pin_save(OBJECT *object)
+char *o_pin_save(TOPLEVEL *toplevel, OBJECT *object)
 {
   int x1, x2, y1, y2;
   int pin_type, whichend;

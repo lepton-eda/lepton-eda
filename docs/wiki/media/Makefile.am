@@ -3,7 +3,7 @@
 docname=wiki
 docsdir = $(docdir)/$(docname)/media
 
-SUBDIRS = devel_tips wiki tragesym geda 
+SUBDIRS = geda wiki tragesym devel_tips 
 
 docs_DATA = 
 

@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 
@@ -49,7 +49,7 @@ static int page_control_counter=0;
  *  \param [in] parent        The parent page of the schematic.
  *  \param [in] page_control
  *  \param [in] flag
- *  \return The number of pages loaded, -1 otherwise.
+ *  \return The page loaded, or NULL if failed.
  *
  *  \note
  *  This function goes and finds the associated source files and
@@ -59,77 +59,77 @@ static int page_control_counter=0;
  *  flag can either be HIERARCHY_NORMAL_LOAD or HIERARCHY_FORCE_LOAD
  *  flag is mainly used by gnetlist where pushed down schematics MUST be unique
  */
-int s_hierarchy_down_schematic_single(TOPLEVEL *toplevel,
-				      const gchar *filename, PAGE *parent,
-				      int page_control, int flag) 
+PAGE *
+s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename,
+                                  PAGE *parent, int page_control, int flag)
 {
   gchar *string;
-  PAGE *found;
+  PAGE *found = NULL;
   PAGE *forbear;
+
+  g_return_val_if_fail ((toplevel != NULL), NULL);
+  g_return_val_if_fail ((filename != NULL), NULL);
+  g_return_val_if_fail ((parent != NULL), NULL);
 
   string = s_slib_search_single(filename);
   if (string == NULL) {
-    return -1;
+    return NULL;
   }
 
   switch (flag) {
-    case HIERARCHY_NORMAL_LOAD:
+  case HIERARCHY_NORMAL_LOAD:
     {
       gchar *filename = f_normalize_filename (string, NULL);
       found = s_page_search (toplevel, filename);
       g_free (filename);
-      
-      if (found) {
-	/* check whether this page is in the parents list */
-	for (forbear = parent; 
-	     forbear != NULL && found->pid != forbear->pid && forbear->up >= 0;
-	     forbear = s_page_search_by_page_id (toplevel->pages, forbear->up))
-	  ; /* void */
 
-	if (found->pid == forbear->pid) {
-	  s_log_message(_("hierarchy loop detected while visiting page:\n"
+      if (found) {
+        /* check whether this page is in the parents list */
+        for (forbear = parent;
+             forbear != NULL && found->pid != forbear->pid && forbear->up >= 0;
+             forbear = s_page_search_by_page_id (toplevel->pages, forbear->up))
+          ; /* void */
+
+        if (found->pid == forbear->pid) {
+          s_log_message(_("hierarchy loop detected while visiting page:\n"
                           "  \"%s\"\n"), found->page_filename);
-	  return -1;  /* error signal */
-	}
+          return NULL;  /* error signal */
+        }
         s_page_goto (toplevel, found);
         if (page_control != 0) {
           found->page_control = page_control;
         }
         found->up = parent->pid;
         g_free (string);
-        return found->page_control;
+        return found;
       }
-      
+
       found = s_page_new (toplevel, string);
-      s_page_goto (toplevel, found);
-      
+
       f_open (toplevel, found, found->page_filename, NULL);
     }
     break;
 
-    case HIERARCHY_FORCE_LOAD:
+  case HIERARCHY_FORCE_LOAD:
     {
-      PAGE *page = s_page_new (toplevel, string);
-      s_page_goto (toplevel, page);
-      f_open (toplevel, page, page->page_filename, NULL);
+      found = s_page_new (toplevel, string);
+      f_open (toplevel, found, found->page_filename, NULL);
     }
     break;
   }
 
   if (page_control == 0) {
     page_control_counter++;
-    toplevel->page_current->page_control = page_control_counter;
+    found->page_control = page_control_counter;
   } else {
-    toplevel->page_current->page_control = page_control;
+    found->page_control = page_control;
   }
 
-  toplevel->page_current->up = parent->pid;
-
-  s_page_goto(toplevel, toplevel->page_current);
+  found->up = parent->pid;
 
   g_free (string);
 
-  return(page_control_counter);
+  return found;
 }
 
 /*! \todo Finish function documentation!!!
@@ -137,8 +137,9 @@ int s_hierarchy_down_schematic_single(TOPLEVEL *toplevel,
  *  \par Function Description
  *
  */
-void s_hierarchy_down_symbol (TOPLEVEL *toplevel,
-			      const CLibSymbol *symbol, PAGE *parent)
+void
+s_hierarchy_down_symbol (TOPLEVEL *toplevel, const CLibSymbol *symbol,
+                         PAGE *parent)
 {
   PAGE *page;
   gchar *filename;
@@ -179,7 +180,8 @@ void s_hierarchy_down_symbol (TOPLEVEL *toplevel,
  *  \param [in] current_page The reference page for the search.
  *  \returns A pointer on the page found or NULL if not found.
  */
-PAGE *s_hierarchy_find_up_page (GedaPageList *page_list, PAGE *current_page)
+PAGE *
+s_hierarchy_find_up_page (GedaPageList *page_list, PAGE *current_page)
 {
   if (current_page->up < 0) {
     s_log_message(_("There are no schematics above the current one!\n"));
@@ -189,46 +191,48 @@ PAGE *s_hierarchy_find_up_page (GedaPageList *page_list, PAGE *current_page)
   return s_page_search_by_page_id (page_list, current_page->up);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Find page hierarchy below a page.
  *  \par Function Description
- *  This function traverses the hierarchy tree of pages and returns a flat
- *  list of pages that are below the current page. There are two
- *  <B>flags</B>: <B>HIERARCHY_NODUPS</B>: returns a list without
- *  duplicate pages 
- *  <B>HIERARCHY_POSTORDER</B>: traverses the hierarchy tree and
- *  returns a postorder list instead of preorder.
+ *  This function traverses the hierarchy tree of pages and returns a
+ *  flat list of pages that are below \a p_current. There are two \a
+ *  flags that can be used to control the way that the return value is
+ *  constructed: <B>HIERARCHY_NODUPS</B> returns a list without
+ *  duplicate pages, and <B>HIERARCHY_POSTORDER</B> traverses the
+ *  hierarchy tree and returns a postorder list instead of preorder.
  *
+ *  \param toplevel The TOPLEVEL structure.
+ *  \param p_current The PAGE to traverse hierarchy for.
+ *  \param flags Flags controlling form of return value.
  *  \return A GList of PAGE pointers.
  *
  *  \warning
- *  Call must g_list_free returned GList.
+ *  Caller must destroy returned GList with g_list_free().
  */
-GList *s_hierarchy_traversepages(TOPLEVEL *toplevel,
-				 gint flags)
+GList *
+s_hierarchy_traversepages (TOPLEVEL *toplevel, PAGE *p_current, gint flags)
 {
-  PAGE *p_current;
   OBJECT *o_current;
+  PAGE *child_page;
   char *filename = NULL;
-  gint page_control = 0;
   static GList *pages = NULL;
   const GList *iter;
-  
+
+  g_return_val_if_fail ((toplevel != NULL), NULL);
+  g_return_val_if_fail ((p_current != NULL), NULL);
+
   /* init static variables the first time*/
   if (!(flags & HIERARCHY_INNERLOOP)) {
     pages = NULL;
   }
 
-  p_current = toplevel->page_current;
-
   /* preorder traversing */
   if (!(flags & HIERARCHY_POSTORDER)) {
     /* check whether we already visited this page */
     if ((flags & HIERARCHY_NODUPS)
-	&& (g_list_find(pages, p_current) != NULL)) {
+        && (g_list_find (pages, p_current) != NULL)) {
       return pages;  /* drop the page subtree */
       }
-    pages = g_list_append(pages, p_current);
+    pages = g_list_append (pages, p_current);
   }
 
   /* walk throught the page objects and search for underlaying schematics */
@@ -238,50 +242,45 @@ GList *s_hierarchy_traversepages(TOPLEVEL *toplevel,
     o_current = (OBJECT *)iter->data;
 
     /* only complex things like symbols can contain attributes */
-    if (o_current->type == OBJ_COMPLEX) {
-      filename =
-        o_attrib_search_attached_attribs_by_name (o_current, "source", 0);
-      
-      /* if above is NULL, then look inside symbol */
-      if (filename == NULL) {
-	filename =
-          o_attrib_search_inherited_attribs_by_name (o_current, "source", 0);
-      }
+    if (o_current->type != OBJ_COMPLEX) continue;
 
-      if (filename != NULL) {
-	/* we got a schematic source attribute 
-	   lets load the page and dive into it */
-	page_control =s_hierarchy_down_schematic_single(toplevel,
-							filename,
-							p_current,
-							0,
-							HIERARCHY_NORMAL_LOAD);
-	if (page_control != -1) {
-	  /* call the recursive function */
-	  s_hierarchy_traversepages(toplevel,
-				    flags | HIERARCHY_INNERLOOP);
-	  s_page_goto(toplevel, p_current);
-	}
-	else {
-	  s_log_message(_("ERROR in s_hierarchy_traverse: "
-                          "schematic not found: %s\n"),
-			filename);
-	}
-	
-	g_free(filename);
-	filename = NULL;
-      }
+    filename =
+      o_attrib_search_attached_attribs_by_name (o_current, "source", 0);
+
+    /* if above is NULL, then look inside symbol */
+    if (filename == NULL) {
+      filename =
+        o_attrib_search_inherited_attribs_by_name (o_current, "source", 0);
     }
+
+    if (filename == NULL) continue;
+
+    /* we got a schematic source attribute
+       lets load the page and dive into it */
+    child_page =
+      s_hierarchy_down_schematic_single (toplevel, filename, p_current, 0,
+                                         HIERARCHY_NORMAL_LOAD);
+    if (child_page != NULL) {
+      /* call the recursive function */
+      s_hierarchy_traversepages (toplevel, child_page, flags | HIERARCHY_INNERLOOP);
+    } else {
+      s_log_message (_("ERROR in s_hierarchy_traverse: "
+                       "schematic not found: %s\n"),
+                     filename);
+    }
+
+    g_free (filename);
+    filename = NULL;
   }
 
   /* postorder traversing */
   if (flags & HIERARCHY_POSTORDER) {
     /* check whether we already visited this page */
     if ((flags & HIERARCHY_NODUPS)
-	&& (g_list_find(pages, p_current) != NULL)) {
+        && (g_list_find (pages, p_current) != NULL)) {
       return pages;  /* don't append it */
     }
-    pages = g_list_append(pages, p_current);
+    pages = g_list_append (pages, p_current);
   }
 
   return pages;
@@ -294,9 +293,10 @@ GList *s_hierarchy_traversepages(TOPLEVEL *toplevel,
  *  \note
  *  Test function which only prints the name of a page and it's number.
  */
-gint s_hierarchy_print_page(PAGE *p_current, void * data)
+gint
+s_hierarchy_print_page (PAGE *p_current, void * data)
 {
-  printf("pagefilename: %s pageid: %d\n", 
+  printf("pagefilename: %s pageid: %d\n",
          p_current->page_filename, p_current->pid);
   return 0;
 }
@@ -316,7 +316,8 @@ gint s_hierarchy_print_page(PAGE *p_current, void * data)
  *  \param [in] current_page The reference page for the search.
  *  \returns A pointer on the page found or NULL if not found.
   */
-PAGE *s_hierarchy_find_prev_page (GedaPageList *page_list, PAGE *current_page)
+PAGE *
+s_hierarchy_find_prev_page (GedaPageList *page_list, PAGE *current_page)
 {
   const GList *iter;
 
@@ -349,7 +350,8 @@ PAGE *s_hierarchy_find_prev_page (GedaPageList *page_list, PAGE *current_page)
  *  \param [in] current_page The reference page for the search.
  *  \returns A pointer on the page found or NULL if not found.
   */
-PAGE *s_hierarchy_find_next_page (GedaPageList *page_list, PAGE *current_page)
+PAGE *
+s_hierarchy_find_next_page (GedaPageList *page_list, PAGE *current_page)
 {
   const GList *iter;
 

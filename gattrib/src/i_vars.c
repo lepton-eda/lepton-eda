@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 /*! \file
@@ -60,16 +60,16 @@ int   default_paper_height = 85000;/*!< height for letter paper (landscape)
 
 
 /*------------------------------------------------------------------*/
-/*! \brief Initialise variables in pr_current
+/*! \brief Initialise variables in the TOPLEVEL
  *
- * Initialize the variables in pr_current. In practice, this is only
+ * Initialize the variables in toplevel. In practice, this is only
  * the paper size for the sheet.
- * \param pr_current pointer to the TOPLEVEL to set paper size in.
+ * \param toplevel pointer to the TOPLEVEL to set paper size in.
  */
-void i_vars_set(TOPLEVEL * pr_current)
+void i_vars_set (TOPLEVEL *toplevel)
 {
-  i_vars_libgeda_set(pr_current);
+  i_vars_libgeda_set (toplevel);
 
-  pr_current->paper_width = default_paper_width;
-  pr_current->paper_height = default_paper_height;
+  toplevel->paper_width = default_paper_width;
+  toplevel->paper_height = default_paper_height;
 }

@@ -11,45 +11,17 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#generation_de_bom_bill_of_materials" class="toc">Génération de BOM (Bill Of Materials)</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#j_ai_cree_un_nouveau_dessin._comment_je_cree_une_bom" class="toc">J&#039;ai créé un nouveau dessin. Comment je crée une BOM?</a></span></div></li>
-</ul>
-</li>
-<li class="level1"><div class="li"><span class="li"><a href="#drc" class="toc">DRC</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#comment_je_controle_mes_schemas" class="toc">Comment je contrôle mes schémas?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#comment_je_peux_voir_la_sortie_de_drc_a_l_ecran_sans_l_ecrire_dans_un_fichier" class="toc">Comment je peux voir la sortie de DRC à l&#039;écran, sans l&#039;écrire dans un fichier?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#je_veux_desactiver_quelque_uns_des_controles_de_drc_du_schema._comment_faire" class="toc">Je veux désactiver quelque uns des contrôles de DRC du schéma. Comment faire?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#puis-je_inclure_le_controle_de_drc_dans_un_makefile_et_stopper_lorsque_des_erreurs_ou_des_avertissements_sont_trouves" class="toc">Puis-je inclure le contrôle de DRC dans un Makefile et stopper lorsque des erreurs ou des avertissements sont trouvés?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#il_y_a_quelques_avertissements_sur_mon_schema_que_je_connais._puis-je_les_ignorer_dans_la_return_value" class="toc">Il y a quelques avertissements sur mon schéma que je connais. Puis-je les ignorer dans la return value?</a></span></div></li>
-</ul>
-</li>
-<li class="level1"><div class="li"><span class="li"><a href="#gestion_d_attribut" class="toc">Gestion d&#039;attribut</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#au_secours_mon_schema_a_des_centaines_de_composants_et_c_est_penible_d_utiliser_gschem_pour_attacher_tous_mes_attributs" class="toc">Au secours! Mon schéma a des centaines de composants et c&#039;est pénible d&#039;utiliser gschem pour attacher tous mes attributs!</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#comment_savoir_que_nom_d_empreinte_utiliser_pour_le_placement_avec_pcb" class="toc">Comment savoir que nom d&#039;empreinte utiliser pour le placement avec PCB?</a></span></div></li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="generation_de_bom_bill_of_materials" id="generation_de_bom_bill_of_materials">Génération de BOM (Bill Of Materials)</a></h1>
+<h1 class="sectionedit284"><a name="generation_de_bom_bill_of_materials" id="generation_de_bom_bill_of_materials">Génération de BOM (Bill Of Materials)</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Génération de BOM (Bill Of Materials)" [1-55] -->
-<h2><a name="j_ai_cree_un_nouveau_dessin._comment_je_cree_une_bom" id="j_ai_cree_un_nouveau_dessin._comment_je_cree_une_bom">J&#039;ai créé un nouveau dessin. Comment je crée une BOM?</a></h2>
+<!-- EDIT284 SECTION "Génération de BOM (Bill Of Materials)" [1-55] -->
+<h2 class="sectionedit285"><a name="j_ai_cree_un_nouveau_dessin_comment_je_cree_une_bom" id="j_ai_cree_un_nouveau_dessin_comment_je_cree_une_bom">J&#039;ai créé un nouveau dessin. Comment je crée une BOM?</a></h2>
 <div class="level2">
 
 <p>
-Il existe plusieurs manières d’exporter une BOM depuis votre dessin car il existe des extensions de gEDA. En fait, il existe 5 ou 6 interfaces différentes à gnetlist qui vous permet d’exporter une BOM. C’est la raison pour laquelle, il est facile pour le débutant d’être perturbé sur l’approche à utiliser. Une raison, bonne simple et raisonnablemant complète est celle-ci:
+Il existe plusieurs manières d&#039;exporter une BOM depuis votre dessin car il existe des extensions de gEDA. En fait, il existe 5 ou 6 interfaces différentes à gnetlist qui vous permet d&#039;exporter une BOM. C&#039;est la raison pour laquelle, il est facile pour le débutant d&#039;être perturbé sur l&#039;approche à utiliser. Une raison, bonne simple et raisonnablemant complète est celle-ci:
 </p>
 <ul>
 <li class="level1"><div class="li"> Créer un fichier appelé «·attribs·» dans votre répertoire de projet. Dans ce fichier, placez chaque attribut dont vous voulez exporter les valeurs sur une ligne séparée. Vous avez un exemple ici:<pre STYLE="background : LightGreen;
@@ -60,27 +32,28 @@ Vendor
 Vendor_PN</font></pre></div>
 </li>
 <li class="level1"><div class="li"> Netlistez votre schéma en utilisant la commande suivante:<br/>
- <br/>
- <code>gnetlist -v -g bom2 -o MyDesign.bom MyDesign.sch</code> <br/>
- <br/>
- Notez que le drapeau <strong><code>-v</code></strong> fournira une sortie bavarde, vous indiquant ce qui entre dans gnetlist lors de son lancement. Cela peut être utile si vous avez besoin de diagnostiquer un problème avec le netlisting.</div>
+<br/>
+<code>gnetlist -v -g bom2 -o MyDesign.bom MyDesign.sch</code> <br/>
+<br/>
+Notez que le drapeau <strong><code>-v</code></strong> fournira une sortie bavarde, vous indiquant ce qui entre dans gnetlist lors de son lancement. Cela peut être utile si vous avez besoin de diagnostiquer un problème avec le netlisting.</div>
 </li>
-<li class="level1"><div class="li"> Avec cette commande, gnetlist sauvegardera une BOM dans le ficheir «·MyDesign.bom·». Les éléments de la BOM seront séparés en utilisant un caractère «·:·» (deux points). Vous pouvez alors lire ce fichier avec un tableur. Assurez-vous d’importer la BOM comme un fichier .csv et spécifiez le caractère  «·:·» comme séparateur.</div>
+<li class="level1"><div class="li"> Avec cette commande, gnetlist sauvegardera une BOM dans le ficheir «·MyDesign.bom·». Les éléments de la BOM seront séparés en utilisant un caractère «·:·» (deux points). Vous pouvez alors lire ce fichier avec un tableur. Assurez-vous d&#039;importer la BOM comme un fichier .csv et spécifiez le caractère  «·:·» comme séparateur.</div>
 </li>
 </ul>
 
 <p>
- Plusieurs autres méthodes pour créer des BOM existent. Peut-être que d’autres geda-users posteront leur méthode favorite ici?!?!?
+
+Plusieurs autres méthodes pour créer des BOM existent. Peut-être que d&#039;autres geda-users posteront leur méthode favorite ici?!?!?
 </p>
 
 </div>
-<!-- SECTION "J'ai créé un nouveau dessin. Comment je crée une BOM?" [56-1593] -->
-<h1><a name="drc" id="drc">DRC</a></h1>
+<!-- EDIT285 SECTION "J'ai créé un nouveau dessin. Comment je crée une BOM?" [56-1593] -->
+<h1 class="sectionedit286"><a name="drc" id="drc">DRC</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "DRC" [1594-1611] -->
-<h2><a name="comment_je_controle_mes_schemas" id="comment_je_controle_mes_schemas">Comment je contrôle mes schémas?</a></h2>
+<!-- EDIT286 SECTION "DRC" [1594-1611] -->
+<h2 class="sectionedit287"><a name="comment_je_controle_mes_schemas" id="comment_je_controle_mes_schemas">Comment je contrôle mes schémas?</a></h2>
 <div class="level2">
 
 <p>
@@ -88,7 +61,8 @@ Vous pouvez contrôler votre schéma en utilisant le programme de gnetlist drc2.
 </p>
 
 <p>
-Lancez le programme drc2 avec la commande suivante: 
+Lancez le programme drc2 avec la commande suivante:
+
 </p>
 <pre class="code">gnetlist -g drc2 -o MyDesign.drc MyDesign.sch</pre>
 
@@ -97,12 +71,13 @@ Avec cette commande, la sortie DRC est écrite dans le ficheir «·MyDesign.drc�
 </p>
 
 </div>
-<!-- SECTION "Comment je contrôle mes schémas?" [1612-2221] -->
-<h2><a name="comment_je_peux_voir_la_sortie_de_drc_a_l_ecran_sans_l_ecrire_dans_un_fichier" id="comment_je_peux_voir_la_sortie_de_drc_a_l_ecran_sans_l_ecrire_dans_un_fichier">Comment je peux voir la sortie de DRC à l&#039;écran, sans l&#039;écrire dans un fichier?</a></h2>
+<!-- EDIT287 SECTION "Comment je contrôle mes schémas?" [1612-2221] -->
+<h2 class="sectionedit288"><a name="comment_je_peux_voir_la_sortie_de_drc_a_l_ecran_sans_l_ecrire_dans_un_fichier" id="comment_je_peux_voir_la_sortie_de_drc_a_l_ecran_sans_l_ecrire_dans_un_fichier">Comment je peux voir la sortie de DRC à l&#039;écran, sans l&#039;écrire dans un fichier?</a></h2>
 <div class="level2">
 
 <p>
-Lancez drc2 avec la commande suivante: 
+Lancez drc2 avec la commande suivante:
+
 </p>
 <pre class="code">gnetlist -g drc2 -o - MyDesign.sch</pre>
 
@@ -111,12 +86,12 @@ De cette manière, vous verrez la sortie DRC directement sur votre écran.
 </p>
 
 </div>
-<!-- SECTION "Comment je peux voir la sortie de DRC à l'écran, sans l'écrire dans un fichier?" [2222-2480] -->
-<h2><a name="je_veux_desactiver_quelque_uns_des_controles_de_drc_du_schema._comment_faire" id="je_veux_desactiver_quelque_uns_des_controles_de_drc_du_schema._comment_faire">Je veux désactiver quelque uns des contrôles de DRC du schéma. Comment faire?</a></h2>
+<!-- EDIT288 SECTION "Comment je peux voir la sortie de DRC à l'écran, sans l'écrire dans un fichier?" [2222-2480] -->
+<h2 class="sectionedit289"><a name="je_veux_desactiver_quelque_uns_des_controles_de_drc_du_schema_comment_faire" id="je_veux_desactiver_quelque_uns_des_controles_de_drc_du_schema_comment_faire">Je veux désactiver quelque uns des contrôles de DRC du schéma. Comment faire?</a></h2>
 <div class="level2">
 
 <p>
-drc2 est hautement configurable. Vous devez placer quelques commandes spéciales dans un fichier et utiliser l’option «·-l·» de gnetlist.
+drc2 est hautement configurable. Vous devez placer quelques commandes spéciales dans un fichier et utiliser l&#039;option «·-l·» de gnetlist.
 </p>
 
 <p>
@@ -152,11 +127,13 @@ Les commandes les plus habituelles sont:
 </ul>
 
 <p>
- Il y a d’autres commandes avancées pour modifier la matrice DRC et le type de broche qui peut piloter un  net. Voyez le fichier «·gnet-drc2.scm·» avec un éditeur de texte. Au début, vous y avez la documentation de disponible.
+
+Il y a d&#039;autres commandes avancées pour modifier la matrice DRC et le type de broche qui peut piloter un  net. Voyez le fichier «·gnet-drc2.scm·» avec un éditeur de texte. Au début, vous y avez la documentation de disponible.
 </p>
 
 <p>
-Copiez les lignes ci-dessus que vous voulez dans un fichier (par exemple «·drc_rules.txt·»), une par ligne etlancez le contrôleur de drc: 
+Copiez les lignes ci-dessus que vous voulez dans un fichier (par exemple «·drc_rules.txt·»), une par ligne etlancez le contrôleur de drc:
+
 </p>
 <pre class="code">gnetlist -g drc2 -l drc_rules.txt -o MyDesign.drc MyDesign.sch</pre>
 
@@ -165,34 +142,37 @@ Avec cette commande, la sortie de DRC est écrite dans un ficheir «·MyDesign.d
 </p>
 
 </div>
-<!-- SECTION "Je veux désactiver quelque uns des contrôles de DRC du schéma. Comment faire?" [2481-4415] -->
-<h2><a name="puis-je_inclure_le_controle_de_drc_dans_un_makefile_et_stopper_lorsque_des_erreurs_ou_des_avertissements_sont_trouves" id="puis-je_inclure_le_controle_de_drc_dans_un_makefile_et_stopper_lorsque_des_erreurs_ou_des_avertissements_sont_trouves">Puis-je inclure le contrôle de DRC dans un Makefile et stopper lorsque des erreurs ou des avertissements sont trouvés?</a></h2>
+<!-- EDIT289 SECTION "Je veux désactiver quelque uns des contrôles de DRC du schéma. Comment faire?" [2481-4415] -->
+<h2 class="sectionedit290"><a name="puis-je_inclure_le_controle_de_drc_dans_un_makefile_et_stopper_lorsque_des_erreurs_ou_des_avertissements_sont_trouves" id="puis-je_inclure_le_controle_de_drc_dans_un_makefile_et_stopper_lorsque_des_erreurs_ou_des_avertissements_sont_trouves">Puis-je inclure le contrôle de DRC dans un Makefile et stopper lorsque des erreurs ou des avertissements sont trouvés?</a></h2>
 <div class="level2">
 
 <p>
-Oui. drc2 renverra une erreur s’il y a des erreurs ou des avertissements, donc vous pouvez ajouter ce qui suit dans votre Makefile: 
+Oui. drc2 renverra une erreur s&#039;il y a des erreurs ou des avertissements, donc vous pouvez ajouter ce qui suit dans votre Makefile:
+
 </p>
 <pre class="code">$(objects).drc : $(objects).sch
           gnetlist -g drc2 $(objects).sch -o $(objects).drc</pre>
 
 <p>
-Si vous devez simuler votre dessin, vous pouvez alors ajouter ce qui suit à votre Makefile: 
+Si vous devez simuler votre dessin, vous pouvez alors ajouter ce qui suit à votre Makefile:
+
 </p>
 <pre class="code">$(objects).cir : $(objects).sch $(objects).drc
           grep -v ERROR $(objects).drc &gt;/dev/null 2&gt;&amp;1
           gnetlist -g spice-sdb $(objects).sch  -o $(objects).cir</pre>
 
 <p>
-Sinon, utilisez l’exemple ci-dessus et adaptez-le à votre propre workflow.
+Sinon, utilisez l&#039;exemple ci-dessus et adaptez-le à votre propre workflow.
 </p>
 
 </div>
-<!-- SECTION "Puis-je inclure le contrôle de DRC dans un Makefile et stopper lorsque des erreurs ou des avertissements sont trouvés?" [4416-5138] -->
-<h2><a name="il_y_a_quelques_avertissements_sur_mon_schema_que_je_connais._puis-je_les_ignorer_dans_la_return_value" id="il_y_a_quelques_avertissements_sur_mon_schema_que_je_connais._puis-je_les_ignorer_dans_la_return_value">Il y a quelques avertissements sur mon schéma que je connais. Puis-je les ignorer dans la return value?</a></h2>
+<!-- EDIT290 SECTION "Puis-je inclure le contrôle de DRC dans un Makefile et stopper lorsque des erreurs ou des avertissements sont trouvés?" [4416-5138] -->
+<h2 class="sectionedit291"><a name="il_y_a_quelques_avertissements_sur_mon_schema_que_je_connais_puis-je_les_ignorer_dans_la_return_value" id="il_y_a_quelques_avertissements_sur_mon_schema_que_je_connais_puis-je_les_ignorer_dans_la_return_value">Il y a quelques avertissements sur mon schéma que je connais. Puis-je les ignorer dans la return value?</a></h2>
 <div class="level2">
 
 <p>
-Utilisez l’option «·-O ignore-warnings-in-return-value·»: 
+Utilisez l&#039;option «·-O ignore-warnings-in-return-value·»:
+
 </p>
 <pre class="code">gnetlist -g drc2 -o - MyDesign.sch -O ignore-warnings-in-return-value</pre>
 
@@ -201,17 +181,17 @@ Faites attention! Vous allez rater tous les avertissements·!
 </p>
 
 </div>
-<!-- SECTION "Il y a quelques avertissements sur mon schéma que je connais. Puis-je les ignorer dans la return value?" [5139-5464] -->
-<h1><a name="gestion_d_attribut" id="gestion_d_attribut">Gestion d&#039;attribut</a></h1>
+<!-- EDIT291 SECTION "Il y a quelques avertissements sur mon schéma que je connais. Puis-je les ignorer dans la return value?" [5139-5464] -->
+<h1 class="sectionedit292"><a name="gestion_d_attribut" id="gestion_d_attribut">Gestion d&#039;attribut</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Gestion d'attribut" [5465-5498] -->
-<h2><a name="au_secours_mon_schema_a_des_centaines_de_composants_et_c_est_penible_d_utiliser_gschem_pour_attacher_tous_mes_attributs" id="au_secours_mon_schema_a_des_centaines_de_composants_et_c_est_penible_d_utiliser_gschem_pour_attacher_tous_mes_attributs">Au secours! Mon schéma a des centaines de composants et c&#039;est pénible d&#039;utiliser gschem pour attacher tous mes attributs!</a></h2>
+<!-- EDIT292 SECTION "Gestion d'attribut" [5465-5498] -->
+<h2 class="sectionedit293"><a name="au_secours_mon_schema_a_des_centaines_de_composants_et_c_est_penible_d_utiliser_gschem_pour_attacher_tous_mes_attributs" id="au_secours_mon_schema_a_des_centaines_de_composants_et_c_est_penible_d_utiliser_gschem_pour_attacher_tous_mes_attributs">Au secours! Mon schéma a des centaines de composants et c&#039;est pénible d&#039;utiliser gschem pour attacher tous mes attributs!</a></h2>
 <div class="level2">
 
 <p>
-Ici, la réponse est l’utilitaire de gEDA/gaf, «·gattrib·». Gattrib est un éditeur d’attribut pour gEDA. Il lit votre(s) fichier(s) .sch et crée une feuille de calcul montrant tous les composants, nets et broches en ligne, avec les attributs associés listés dans les colonnes. Gattrib vous permet d’ajouter, modifier ou effacer les attributs depuis l’extérieur de gschem puis de sauvegarder les fichiers .sch. Vous avez une capture d’écran:
+Ici, la réponse est l&#039;utilitaire de gEDA/gaf, «·gattrib·». Gattrib est un éditeur d&#039;attribut pour gEDA. Il lit votre(s) fichier(s) .sch et crée une feuille de calcul montrant tous les composants, nets et broches en ligne, avec les attributs associés listés dans les colonnes. Gattrib vous permet d&#039;ajouter, modifier ou effacer les attributs depuis l&#039;extérieur de gschem puis de sauvegarder les fichiers .sch. Vous avez une capture d&#039;écran:
 </p>
 
 <p>
@@ -219,22 +199,23 @@ Ici, la réponse est l’utilitaire de gEDA/gaf, «·gattrib·». Gattrib est un
 </p>
 
 <p>
-Notez que gattrib est la réponse actuelle du Projet gEDA à la question des symboles lourds. Ceci étant, au lieu de mettre tous les attributs (tels que les fichiers de modèle SPICE, les noms d’empreintes, les numéros d’éléments des fabricants et le reste), vous êtes encouragés à mettre cette information dans votre schéma en utilisant gattrib, où il est visible et facilement manipulable avec gattrib.
+Notez que gattrib est la réponse actuelle du Projet gEDA à la question des symboles lourds. Ceci étant, au lieu de mettre tous les attributs (tels que les fichiers de modèle SPICE, les noms d&#039;empreintes, les numéros d&#039;éléments des fabricants et le reste), vous êtes encouragés à mettre cette information dans votre schéma en utilisant gattrib, où il est visible et facilement manipulable avec gattrib.
 </p>
 
 <p>
-Lors de l’utilisation de gattrib, assurez-vous de d’abord quitter gschem. Gattrib et gschem sauvegardent tous les deux le travail dans le même fichier, donc vous ne devez avoir qu’un programme fonctionnant au même moment pour éviter les conflits. Il n’y a pas (encore) de mécanisme de vérouillage dans gEDA/gaf, cela reste donc de votre responsabilité.
+Lors de l&#039;utilisation de gattrib, assurez-vous de d&#039;abord quitter gschem. Gattrib et gschem sauvegardent tous les deux le travail dans le même fichier, donc vous ne devez avoir qu&#039;un programme fonctionnant au même moment pour éviter les conflits. Il n&#039;y a pas (encore) de mécanisme de vérouillage dans gEDA/gaf, cela reste donc de votre responsabilité.
 </p>
 
 </div>
-<!-- SECTION "Au secours! Mon schéma a des centaines de composants et c'est pénible d'utiliser gschem pour attacher tous mes attributs!" [5499-6887] -->
-<h2><a name="comment_savoir_que_nom_d_empreinte_utiliser_pour_le_placement_avec_pcb" id="comment_savoir_que_nom_d_empreinte_utiliser_pour_le_placement_avec_pcb">Comment savoir que nom d&#039;empreinte utiliser pour le placement avec PCB?</a></h2>
+<!-- EDIT293 SECTION "Au secours! Mon schéma a des centaines de composants et c'est pénible d'utiliser gschem pour attacher tous mes attributs!" [5499-6887] -->
+<h2 class="sectionedit294"><a name="comment_savoir_que_nom_d_empreinte_utiliser_pour_le_placement_avec_pcb" id="comment_savoir_que_nom_d_empreinte_utiliser_pour_le_placement_avec_pcb">Comment savoir que nom d&#039;empreinte utiliser pour le placement avec PCB?</a></h2>
 <div class="level2">
 
 <p>
-La <a href="geda-pcb_tips.fr.html#je_veux_utiliser_pcb_pour_faire_le_placement._comment_connaitre_la_valeur_a_utiliser_pour_l_attribut_d_empreinte" class="wikilink1" title="geda-pcb_tips.fr.html">réponse est ici</a>. 
+La <a href="geda-pcb_tips.fr.html#je_veux_utiliser_pcb_pour_faire_le_placement._comment_connaitre_la_valeur_a_utiliser_pour_l_attribut_d_empreinte" class="wikilink1" title="geda-pcb_tips.fr.html">réponse est ici</a>.
+
 </p>
 
 </div>
-<!-- SECTION "Comment savoir que nom d'empreinte utiliser pour le placement avec PCB?" [6888-] --></body>
+<!-- EDIT294 SECTION "Comment savoir que nom d'empreinte utiliser pour le placement avec PCB?" [6888-] --></body>
 </html>

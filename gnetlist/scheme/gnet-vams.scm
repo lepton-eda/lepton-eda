@@ -24,6 +24,8 @@
 ;;;
 ;;; --------------------------------------------------------------------------
 
+(use-modules (srfi srfi-1))
+
 ;;; ===================================================================================
 ;;;                  TOP LEVEL FUNCTION
 ;;;                        BEGIN
@@ -942,17 +944,8 @@
 
 ;; returns all elements from ls, that are not in without-ls.  
 ;; a simple list function.
-
-(define vams:only-different-nets
-  (lambda (ls without-ls)
-     (if (null? ls)
-	'()
-	(append 
-	 (if (not (member (car ls) without-ls)) 
-	     (list (car ls))
-	     '())
-	 (vams:only-different-nets (cdr ls) without-ls)))))
-
+(define (vams:only-different-nets ls without-ls)
+  (lset-difference equal? ls without-ls))
 
 
 ;; sort all port-components out

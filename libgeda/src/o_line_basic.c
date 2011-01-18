@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 /*! \file o_line_basic.c
@@ -291,6 +291,7 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, char buf[],
  *  It follows the post-20000704 release file format that handle the
  *  line type and fill options - filling is irrelevant here.
  *
+ *  \param [in] toplevel  a TOPLEVEL structure.
  *  \param [in] object  Line OBJECT to create string from.
  *  \return A pointer to the line OBJECT character string.
  *
@@ -298,7 +299,7 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, char buf[],
  *  Caller must g_free returned character string.
  *
  */
-char *o_line_save(OBJECT *object)
+char *o_line_save(TOPLEVEL *toplevel, OBJECT *object)
 {
   int x1, x2, y1, y2;
   int line_width, line_space, line_length;

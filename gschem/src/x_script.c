@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*! \todo CLEAN up line length in this file */
 #include <config.h>
@@ -64,7 +64,7 @@ void setup_script_selector (GSCHEM_TOPLEVEL *w_current)
 
     if (!(g_file_test(filename, G_FILE_TEST_IS_DIR))) {
       s_log_message(_("Executing guile script [%s]\n"), filename);
-      g_read_file(w_current->toplevel, filename);
+      g_read_file(w_current->toplevel, filename, NULL);
     }
     g_free (filename);
   }

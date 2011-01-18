@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include "config.h"
 
@@ -108,7 +108,6 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
   char **raw_menu_name = g_malloc (sizeof(char *));
   char *menu_item_name;
   char *raw_menu_item_name;
-  char *menu_item_func;
   char *menu_item_hotkey_func;
   char *menu_item_stock;
   char *menu_item_keys;
@@ -159,11 +158,6 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
 
       raw_menu_item_name = SCM_STRING_CHARS (scm_item_name);
 
-      if (scm_is_false (scm_item_func))
-        menu_item_func = "no-action";
-      else
-        menu_item_func = SCM_SYMBOL_CHARS (scm_item_func);
-
       if (scm_is_false (scm_item_hotkey_func))
         menu_item_hotkey_func = NULL;
       else
@@ -197,17 +191,21 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
           menu_item_keys = "";
         }
 
-        action = gschem_action_new (menu_item_func,  /* Action name */
-                                    menu_item_name,  /* Text */
-                                    menu_item_name,  /* Tooltip */
-                                    menu_item_stock, /* Icon stock ID */
-                                    menu_item_keys); /* Accelerator string */
-        menu_item = gtk_action_create_menu_item (GTK_ACTION (action));
-        gtk_menu_append (GTK_MENU (menu), menu_item);
+        if(scm_is_false (scm_item_func)) {
+          menu_item = gtk_menu_item_new_with_mnemonic(menu_item_name);
+        } else {
+          action = gschem_action_new (SCM_SYMBOL_CHARS (scm_item_func),  /* Action name */
+                                      menu_item_name,  /* Text */
+                                      menu_item_name,  /* Tooltip */
+                                      menu_item_stock, /* Icon stock ID */
+                                      menu_item_keys); /* Accelerator string */
+          menu_item = gtk_action_create_menu_item (GTK_ACTION (action));
+          g_signal_connect (G_OBJECT(action), "activate",
+                            G_CALLBACK(g_menu_execute),
+                            w_current);
+        }
 
-        g_signal_connect (G_OBJECT(action), "activate",
-                          G_CALLBACK(g_menu_execute),
-                          w_current);
+        gtk_menu_append (GTK_MENU (menu), menu_item);
       }
 
       gtk_widget_show (menu_item);
@@ -244,7 +242,11 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
 static gchar* gettext_fn(const gchar *path,
 			 gpointer func_data ATTRIBUTE_UNUSED)
 {
-	return gettext(path);
+  /*! \bug Note that we have to discard the 'const' qualifier here to
+   * avoid build warnings when gettext is disabled.  This is required
+   * due to the prototype of the function pointer argument to
+   * gtk_item_factory_set_translate_func() */
+  return (gchar *) gettext(path);
 }
 
 GtkWidget *get_main_popup(GSCHEM_TOPLEVEL *w_current)
@@ -370,91 +372,26 @@ void x_menus_popup_sensitivity (GSCHEM_TOPLEVEL *w_current, const char *buf, int
   }
 }
 
-/* The list of recently loaded files. */
-static GList *recent_files = NULL;
-
-#define RECENT_FILES_STORE "gschem-recent-files"
 #define MAX_RECENT_FILES 10
-
-struct recent_file_menu_data {
-  GSCHEM_TOPLEVEL *w_current;
+/*! \brief Callback for recent-chooser.
+ *
+ * Will be called if element of recent-file-list is activated
+ */
+void
+recent_chooser_item_activated (GtkRecentChooser *chooser, GSCHEM_TOPLEVEL *w_current)
+{
+  PAGE *page;
+  gchar *uri;
   gchar *filename;
-};
 
-/*! \brief Make all toplevels reflect changes to the
- *         recent files list.
- */
-static void update_recent_files_menus()
-{
-   GSCHEM_TOPLEVEL *w_current;
-   GtkWidget *submenu, *recent_menu_item;
-   GList *iter;
+  uri = gtk_recent_chooser_get_current_uri (chooser);
+  filename = g_filename_from_uri(uri, NULL, NULL);
+  gtk_recent_manager_add_item(recent_manager, uri);
+  page = x_window_open_page(w_current, (char *)filename);
+  x_window_set_current_page(w_current, page);
 
-   for (iter = global_window_list;
-        iter != NULL;
-        iter = g_list_next (iter)) {
-      w_current = (GSCHEM_TOPLEVEL *)iter->data;
-
-      if (w_current->menubar == NULL)
-        continue;
-
-      recent_menu_item =
-        (GtkWidget *) gtk_object_get_data(GTK_OBJECT(w_current->menubar),
-                                          "_File/Open Recen_t");
-      if(recent_menu_item == NULL)
-         return;
-
-      submenu = gtk_menu_item_get_submenu(GTK_MENU_ITEM(recent_menu_item));
-      gtk_widget_destroy(submenu);
-      x_menu_attach_recent_files_submenu(w_current);
-   }
-}
-
-/*! \brief Remove all entries from the recent files
- *         list and update all toplevels.
- */
-static void clear_recent_file_list(gpointer data)
-{
-   GList *p;
-
-   p = recent_files;
-   while(p) {
-      g_free(p->data);
-      p = g_list_next(p);
-   }
-   g_list_free(recent_files);
-   recent_files = NULL;
-
-   update_recent_files_menus();
-}
-
-static void
-recent_file_free_menu_data (gpointer data, GClosure *closure) {
-  g_free (data);
-}
-
-static void recent_file_clicked(GtkMenuItem *menuitem, gpointer user_data)
-{
-   FILE *fp;
-   PAGE *page;
-   struct recent_file_menu_data *data =
-     (struct recent_file_menu_data *) user_data;
-   GSCHEM_TOPLEVEL *w_current = data->w_current;
-   gchar *filename = data->filename;
-
-   /* Check if the file exists */
-   fp = fopen((char *) filename, "r");
-   if(fp == NULL) {
-      /* Remove this entry from all menus */
-      s_log_message(_("Couldn't open file %s\n"), (char *) filename);
-      recent_files = g_list_remove(recent_files, filename);
-      update_recent_files_menus();
-      return;
-   }
-   fclose(fp);
-
-   page = x_window_open_page(w_current, (char *)filename);
-   x_window_set_current_page(w_current, page);
+  g_free(uri);
+  g_free(filename);
 }
 
 /*! \brief Attach a submenu with filenames to the 'Open Recent'
@@ -464,203 +401,30 @@ static void recent_file_clicked(GtkMenuItem *menuitem, gpointer user_data)
  */
 void x_menu_attach_recent_files_submenu(GSCHEM_TOPLEVEL *w_current)
 {
-   gulong id;
-   GtkWidget *tmp;
-   GtkWidget *recent_menu_item, *recent_submenu;
+  GtkWidget* menuitem_to_append_to = NULL;
+  GtkRecentFilter *recent_filter;
+  GtkWidget *menuitem_file_recent_items;
+  recent_manager = gtk_recent_manager_get_default();
 
-   recent_menu_item = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(
-            w_current->menubar), "_File/Open Recen_t");
-   if(recent_menu_item == NULL)
-      return;
+  menuitem_file_recent_items = gtk_recent_chooser_menu_new_for_manager(recent_manager);
 
-   /* disconnect all unblocked signals */
-   while(1) {
-      id = g_signal_handler_find(recent_menu_item, G_SIGNAL_MATCH_UNBLOCKED,
-            0, 0, NULL, NULL, NULL);
-      if(id == 0)
-         break;
-      gtk_signal_disconnect(recent_menu_item, id);
-   }
+  /* Show only schematic- and symbol-files (*.sch and *.sym) in list */
+  recent_filter = gtk_recent_filter_new();
+  gtk_recent_filter_add_mime_type(recent_filter, "application/x-geda-schematic");
+  gtk_recent_filter_add_mime_type(recent_filter, "application/x-geda-symbol");
+  gtk_recent_chooser_add_filter(GTK_RECENT_CHOOSER(menuitem_file_recent_items), recent_filter);
 
-   recent_submenu = gtk_menu_new();
-   GList *p = recent_files;
-   while(p) {
-     struct recent_file_menu_data *menu_data = g_new0 (struct recent_file_menu_data, 1);
-     menu_data->filename = p->data;
-     menu_data->w_current = w_current;
-     tmp = gtk_menu_item_new_with_label((gchar *)p->data);
-     g_signal_connect_data (GTK_OBJECT(tmp), "activate",
-                            (GCallback) recent_file_clicked,
-                            menu_data,
-                            (GClosureNotify) recent_file_free_menu_data,
-                            0);
-     gtk_menu_append(GTK_MENU(recent_submenu), tmp);
-     p = g_list_next(p);
-   }
+  gtk_recent_chooser_set_show_tips(GTK_RECENT_CHOOSER(menuitem_file_recent_items), TRUE);
+  gtk_recent_chooser_set_sort_type(GTK_RECENT_CHOOSER(menuitem_file_recent_items),
+                                   GTK_RECENT_SORT_MRU);
+  gtk_recent_chooser_set_limit(GTK_RECENT_CHOOSER(menuitem_file_recent_items), MAX_RECENT_FILES);
+  gtk_recent_chooser_set_local_only(GTK_RECENT_CHOOSER(menuitem_file_recent_items), FALSE);
+  gtk_recent_chooser_menu_set_show_numbers(GTK_RECENT_CHOOSER_MENU(menuitem_file_recent_items), TRUE);
+  g_signal_connect(GTK_OBJECT(menuitem_file_recent_items), "item-activated",
+                   G_CALLBACK(recent_chooser_item_activated), w_current);
 
-   if(recent_files != NULL) {
-      /* Append the 'Clear' menu item to the submenu */
-      GtkWidget *alignment = gtk_alignment_new(0.5, 0, 0, 0);
-
-      tmp = gtk_menu_item_new();
-      gtk_container_add(GTK_CONTAINER(alignment), gtk_label_new(_("Clear")));
-      gtk_container_add(GTK_CONTAINER(tmp), alignment);
-
-      gtk_signal_connect_object(GTK_OBJECT(tmp), "activate",
-            GTK_SIGNAL_FUNC (clear_recent_file_list), NULL);
-
-      gtk_menu_append(GTK_MENU(recent_submenu), gtk_separator_menu_item_new());
-      gtk_menu_append(GTK_MENU(recent_submenu), tmp);
-   }
-
-   gtk_widget_show_all(recent_submenu);
-   gtk_menu_item_set_submenu(GTK_MENU_ITEM(recent_menu_item), recent_submenu);
-}
-
-/*! \brief Add a filename to the list of recent files.
- *
- *  If filename is already in the list, moves it to the head of the
- *  list.
- */
-void recent_files_add(const char *filename)
-{
-   gchar *basename;
-   gchar *save_fn;
-   GError *err = NULL;
-   GList *p = recent_files;
-
-   basename = g_path_get_basename(filename);
-   if(strstr(basename, "untitled_") == basename) {
-      g_free(basename);
-      return;
-   }
-
-   g_free(basename);
-
-   /* Normalize the filename. */
-   save_fn = f_normalize_filename (filename, &err);
-   if (err != NULL) {
-     save_fn = g_strdup (filename);
-     g_error_free (err);
-   }
-
-   /* Check if the file is already in the list.  */
-   while (p != NULL) {
-     if (strcmp (save_fn, (gchar *) p->data) == 0) {
-       break;
-     }
-     p = g_list_next (p);
-   }
-
-   if (p != NULL) {
-     /* Since we found the filename already in the list, move it to
-      * the head of the list. */
-     g_free (save_fn);
-     save_fn = (gchar *) p->data;
-     recent_files = g_list_delete_link (recent_files, p);
-     recent_files = g_list_prepend (recent_files, save_fn);
-   } else {
-     /* Otherwise, just add the new filename to the front of the
-      * list. */
-     recent_files = g_list_prepend (recent_files, save_fn);
-   }
-
-   update_recent_files_menus();
-}
-
-/*! \brief Make RECENT_FILES_STORE contain an empty file list.
- */
-static void recent_files_create_empty()
-{
-   gchar *c;
-   const gchar * const tmp[] = { NULL };
-   GKeyFile *kf = g_key_file_new();
-   gchar *file = g_build_filename(s_path_user_config (), RECENT_FILES_STORE, NULL);
-
-   g_key_file_set_string_list(kf, "Recent files", "Files", tmp, 0);
-   c = g_key_file_to_data(kf, NULL, NULL);
-   g_key_file_free(kf);
-
-   g_file_set_contents(file, c, -1, NULL);
-   g_free(c);
-   g_free(file);
-}
-
-/*! \brief Save the list of recent files to RECENT_FILES_STORE.
- *
- *  \param [in] user_data unused
- */
-void recent_files_save(gpointer user_data)
-{
-   gchar *files[MAX_RECENT_FILES];
-   int num = 0;
-   gchar *c;
-   gchar *file = g_build_filename(s_path_user_config (), RECENT_FILES_STORE, NULL);
-
-   GList *p = recent_files;
-   if(p == NULL) {
-      recent_files_create_empty();
-      return;
-   }
-
-   while((p != NULL) && (num < MAX_RECENT_FILES)) {
-     files[num++] = (gchar *)p->data;
-     p = g_list_next(p);
-   }
-
-   GKeyFile *kf = g_key_file_new();
-
-   g_key_file_set_string_list(kf, "Recent files", "Files", 
-         (const gchar **)files, num);
-   c = g_key_file_to_data(kf, NULL, NULL);
-   g_file_set_contents(file, c, -1, NULL);
-
-   g_free(c);
-   g_free(file);
-   g_key_file_free(kf);
-}
-
-/*! \brief Load the recent file list using data from
- *         RECENT_FILES_STORE. 
- *
- *  Must be called before any other recent-files-related
- *  functions.
- */
-void recent_files_load()
-{
-   GKeyFile *kf = g_key_file_new();
-   gchar *file = g_build_filename(s_path_user_config (), RECENT_FILES_STORE, NULL);
-
-   if(!g_file_test(file, G_FILE_TEST_EXISTS)) {
-     g_mkdir(s_path_user_config (), S_IRWXU | S_IRWXG);
-
-      recent_files_create_empty();
-   }
-
-   if(!g_key_file_load_from_file(kf, file, G_KEY_FILE_NONE, NULL)) {
-      /* error opening key file, create an empty one and try again */
-      recent_files_create_empty();
-      if(!g_key_file_load_from_file(kf, file, G_KEY_FILE_NONE, NULL))
-         return;
-   }
-
-   gsize len;
-   gchar **list = g_key_file_get_string_list(kf, "Recent files",
-         "Files", &len, NULL);
-
-   if(list == NULL) {
-      /* error reading key file, don't bother to correct;
-       * just overwrite it with an empty one */
-      recent_files_create_empty();
-      return;
-   }
-
-   while(len > 0) {
-      len--;
-      recent_files = g_list_prepend(recent_files, list[len]);
-   }
-
-   g_free(list);
-   g_free(file);
-   g_key_file_free(kf);
+  menuitem_to_append_to = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(w_current->menubar), "_File/Open Recen_t");
+  if(menuitem_to_append_to == NULL)
+    return;
+  gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem_to_append_to), menuitem_file_recent_items);
 }

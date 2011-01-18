@@ -16,7 +16,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 
@@ -47,9 +47,11 @@
  */
 void libgeda_init(void)
 {
+#ifdef ENABLE_NLS
   /* Initialise gettext */
   bindtextdomain (LIBGEDA_GETTEXT_DOMAIN, LOCALEDIR);
   bind_textdomain_codeset(LIBGEDA_GETTEXT_DOMAIN, "UTF-8");
+#endif
 
   /* Initialise gobject */
   g_type_init ();
@@ -62,6 +64,7 @@ void libgeda_init(void)
 
   g_register_libgeda_funcs();
   g_register_libgeda_vars();
+  g_register_libgeda_dirs();
 
   edascm_init ();
 }

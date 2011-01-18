@@ -24,7 +24,7 @@ Options
 Description
 
 $0 reads a file, backends.list,  describing backends to run tests on.
-For each backend, run_backend_test.sh is run with that backend name
+For each backend, run_backend_tests.sh is run with that backend name
 as a parameter.
 
 Examples
@@ -100,7 +100,7 @@ for backend in $all_tests ; do
     fi
 
     if test $rc -ne 0 ; then
-        echo "FAILED:  run_backend_test.sh returned $rc failures"
+        echo "FAILED:  run_backend_tests.sh returned $rc failures"
         fail=`expr $fail + 1`
         continue
     fi

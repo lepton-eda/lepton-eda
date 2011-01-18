@@ -11,26 +11,8 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#net_attribute_mini-howto" class="toc">net= attribute mini-HOWTO</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#what_is_the_net_attribute_used_for" class="toc">What is the net= attribute used for?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#what_is_the_format_of_the_net_attribute" class="toc">What is the format of the net= attribute?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#how_do_you_actually_use_the_net_attribute" class="toc">How do you actually use the net= attribute?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#caveats_bugs" class="toc">Caveats / Bugs</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#example" class="toc">Example</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#final_notes" class="toc">Final notes</a></span></div></li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="net_attribute_mini-howto" id="net_attribute_mini-howto">net= attribute mini-HOWTO</a></h1>
+<h1 class="sectionedit169"><a name="net_attribute_mini-howto" id="net_attribute_mini-howto">net= attribute mini-HOWTO</a></h1>
 <div class="level1">
 
 <p>
@@ -50,54 +32,62 @@ The information in this document is current as of 19991011.
 </p>
 
 </div>
-<!-- SECTION "net= attribute mini-HOWTO" [1-216] -->
-<h2><a name="what_is_the_net_attribute_used_for" id="what_is_the_net_attribute_used_for">What is the net= attribute used for?</a></h2>
+<!-- EDIT169 SECTION "net= attribute mini-HOWTO" [1-216] -->
+<h2 class="sectionedit170"><a name="what_is_the_net_attribute_used_for" id="what_is_the_net_attribute_used_for">What is the net= attribute used for?</a></h2>
 <div class="level2">
 
 <p>
 The <strong><code>net=</code></strong> attribute is used to specify power, ground, and/or arbitrary nets in the gEDA system.<br/>
- The <strong><code>net=</code></strong> attribute is used instead some of the other systems of specifying power/ground (such as having power/ground pins on symbols or power boxes). Some devices have lots of power/ground pins and having all of these pins on the symbol would increase its size and make it unmanageable. The <strong><code>net=</code></strong> attribute is the power/ground specification of choice in the gEDA system because of its simplicity and versatility. Now having said all this, you can have power/ground pins on a symbol, but gnetlist will probably not recognize these nets connected to these pins as separate power/ground nets. Please keep this in mind as you draw symbols.
+
+The <strong><code>net=</code></strong> attribute is used instead some of the other systems of specifying power/ground (such as having power/ground pins on symbols or power boxes). Some devices have lots of power/ground pins and having all of these pins on the symbol would increase its size and make it unmanageable. The <strong><code>net=</code></strong> attribute is the power/ground specification of choice in the gEDA system because of its simplicity and versatility.
+Now having said all this, you can have power/ground pins on a symbol, but gnetlist will probably not recognize these nets connected to these pins as separate power/ground nets. Please keep this in mind as you draw symbols.
 </p>
 
 </div>
-<!-- SECTION "What is the net= attribute used for?" [217-1022] -->
-<h2><a name="what_is_the_format_of_the_net_attribute" id="what_is_the_format_of_the_net_attribute">What is the format of the net= attribute?</a></h2>
+<!-- EDIT170 SECTION "What is the net= attribute used for?" [217-1022] -->
+<h2 class="sectionedit171"><a name="what_is_the_format_of_the_net_attribute" id="what_is_the_format_of_the_net_attribute">What is the format of the net= attribute?</a></h2>
 <div class="level2">
 
 <p>
 Attributes in gEDA are simple text items which are in the form <code>name=value</code>. All proper attributes follow this form. Attribute names are always lower case, but the value can be upper or lower case. gnetlist and friends are case sensitive. Typically net/signal names by default are upper case.<br/>
- Attribute can be attached to an object or in certain cases (like the <strong><code>net=</code></strong> attribute) can be free oating (not attached to anything). The free floating attributes are also called toplevel attributes.<br/>
- The <strong><code>net=</code></strong> attribute is a text item which takes on the following form: 
+
+Attribute can be attached to an object or in certain cases (like the <strong><code>net=</code></strong> attribute) can be free oating (not attached to anything). The free floating attributes
+are also called toplevel attributes.<br/>
+
+The <strong><code>net=</code></strong> attribute is a text item which takes on the following form:
+
 </p>
 <pre class="code">net=signalname:pinname,pinname,pinname,...</pre>
 
 <p>
 where:
 </p>
-<table class="inline">
-	<tr>
-		<td> <strong><code>net=</code></strong> </td><td> The attribute name (always the same, lowercase) </td>
+<div class="table sectionedit172"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> <strong><code>net=</code></strong> </td><td class="col1"> The attribute name (always the same, lowercase) </td>
 	</tr>
-	<tr>
-		<td> signalname </td><td> The signal or net being defines (like +5V, GND, etc&hellip;) </td>
+	<tr class="row1">
+		<td class="col0"> signalname </td><td class="col1"> The signal or net being defines (like +5V, GND, etc…) </td>
 	</tr>
-	<tr>
-		<td> pinname </td><td> The pin name (or number) which is assigned to this signal/net (or pin names/numbers) </td>
+	<tr class="row2">
+		<td class="col0"> pinname </td><td class="col1"> The pin name (or number) which is assigned to this signal/net (or pin names/numbers) </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT172 TABLE [1723-1961] -->
 <p>
- The signalname cannot contain the &quot;:&quot; character (since it is a delimiter). The pinname is the pin name (A1, P2, D1, etc&hellip;) or pin number (1, 2, 5, 13, etc&hellip;). The pinname cannot contain the &quot;,&quot; character (since it is also a delimiter). pinnames are typically the same sort of numbers/names like the <code>pin#=#</code> attribute (if you are familiar with that attribute).<br/>
- You can only have ONE signalname per <strong><code>net=</code></strong> attribute, but you can have as many pinnames/numbers as you want.
+
+The signalname cannot contain the ”:” character (since it is a delimiter). The pinname is the pin name (A1, P2, D1, etc…) or pin number (1, 2, 5, 13, etc…). The pinname cannot contain the ”,” character (since it is also a delimiter). pinnames are typically the same sort of numbers/names like the <code>pin#=#</code> attribute (if you are familiar with that attribute).<br/>
+
+You can only have ONE signalname per <strong><code>net=</code></strong> attribute, but you can have as many pinnames/numbers as you want.
 </p>
 
 </div>
-<!-- SECTION "What is the format of the net= attribute?" [1023-2446] -->
-<h2><a name="how_do_you_actually_use_the_net_attribute" id="how_do_you_actually_use_the_net_attribute">How do you actually use the net= attribute?</a></h2>
+<!-- EDIT171 SECTION "What is the format of the net= attribute?" [1023-2446] -->
+<h2 class="sectionedit173"><a name="how_do_you_actually_use_the_net_attribute" id="how_do_you_actually_use_the_net_attribute">How do you actually use the net= attribute?</a></h2>
 <div class="level2">
 
 <p>
-You can place the <strong><code>net=</code></strong> attribute in several places. Here’s the list so far:
+You can place the <strong><code>net=</code></strong> attribute in several places. Here&#039;s the list so far:
 </p>
 <ul>
 <li class="level1"><div class="li"> Inside a symbol either as an attached attribute or an unattached attribute (toplevel attribute). Example which creates power/gnd nets: <strong><code>net=GND:7</code></strong> or <strong><code>net=+5V:14</code></strong></div>
@@ -107,19 +97,19 @@ You can place the <strong><code>net=</code></strong> attribute in several places
 <li class="level1"><div class="li"> Outside or inside a symbol to connect a net to a visible pin automatically. This is still untested and still might have some undesirable (negative) side effects. Use with caution.</div>
 </li>
 <li class="level1"><div class="li"> Attached to one of those special power/gnd symbol (like vcc/gnd/vdd) and you can change what that symbol represents. You could change the ground symbol to create a net called DIGITAL GND without editing the symbol (<strong><code>net=DIGITAL_GND:1</code></strong>).<br/>
- In the current symbol (19991011) library there are symbols named <strong>vdd-1.sym</strong>, <strong>vcc-1.sym</strong>, <strong>vee-1.sym</strong>, etc&hellip; which do not have a <strong><code>net=</code></strong> attribute inside, so you must attach the <strong><code>net=</code></strong> attribute yourself (in the schematic).<br/>
- There also symbols named 5V-minus-1.sym, 12V-plus-1.sym, 9V-plus-1.sym, etc&hellip; which have the appropriate <strong><code>net=</code></strong> attribute in them already (can be overridden though). You can use these symbol as examples of how to use the <strong><code>net=</code></strong> attribute.<br/>
+In the current symbol (19991011) library there are symbols named <strong>vdd-1.sym</strong>, <strong>vcc-1.sym</strong>, <strong>vee-1.sym</strong>, etc… which do not have a <strong><code>net=</code></strong> attribute inside, so you must attach the <strong><code>net=</code></strong> attribute yourself (in the schematic).<br/>
+There also symbols named 5V-minus-1.sym, 12V-plus-1.sym, 9V-plus-1.sym, etc… which have the appropriate <strong><code>net=</code></strong> attribute in them already (can be overridden though). You can use these symbol as examples of how to use the <strong><code>net=</code></strong> attribute.<br/>
 </div>
 </li>
 </ul>
 
 <p>
-You can have as many <strong><code>net=</code></strong> attributes as you want. Just remember that <strong><code>net=</code></strong> attributes attached to the outside of a symbol override any equivalent internal (inside the symbol) <strong><code>net=</code></strong> attributes. If you run into a case where this doesn’t work, please let <strong>ahvezdaATgeda.seul.org</strong>. In fact, send any bug reports to that individual.
+You can have as many <strong><code>net=</code></strong> attributes as you want. Just remember that <strong><code>net=</code></strong> attributes attached to the outside of a symbol override any equivalent internal (inside the symbol) <strong><code>net=</code></strong> attributes. If you run into a case where this doesn&#039;t work, please let <strong>ahvezdaATgeda.seul.org</strong>. In fact, send any bug reports to that individual.
 </p>
 
 </div>
-<!-- SECTION "How do you actually use the net= attribute?" [2447-4387] -->
-<h2><a name="caveats_bugs" id="caveats_bugs">Caveats / Bugs</a></h2>
+<!-- EDIT173 SECTION "How do you actually use the net= attribute?" [2447-4387] -->
+<h2 class="sectionedit174"><a name="caveats_bugs" id="caveats_bugs">Caveats / Bugs</a></h2>
 <div class="level2">
 
 <p>
@@ -137,20 +127,21 @@ The <strong><code>net=</code></strong> attribute/mechanism is fairly new, so the
 </ul>
 
 </div>
-<!-- SECTION "Caveats / Bugs" [4388-5599] -->
-<h2><a name="example" id="example">Example</a></h2>
+<!-- EDIT174 SECTION "Caveats / Bugs" [4388-5599] -->
+<h2 class="sectionedit175"><a name="example" id="example">Example</a></h2>
 <div class="level2">
 
 <p>
-Here’s a schematic which uses standard symbols (note: the 7400 does not have the <strong><code>net=</code></strong> attribute inside yet). This schematic consists of a 7400 with the <strong><code>net=</code></strong> attributes attached for power and ground, One of the input pins grounded using a gnd symbol and the other at a logic one using the vcc symbol (with an attached <strong><code>net=</code></strong> attribute). One of the input net is named, but as you will see, the netname is replaced by the <strong><code>net=</code></strong> signal name (see above for more info on this). The output is pulled up with a pull up resistor which has power specified using the +5V symbol.<br/>
- 
+Here&#039;s a schematic which uses standard symbols (note: the 7400 does not have the <strong><code>net=</code></strong> attribute inside yet). This schematic consists of a 7400 with the <strong><code>net=</code></strong> attributes attached for power and ground, One of the input pins grounded using a gnd symbol and the other at a logic one using the vcc symbol (with an attached <strong><code>net=</code></strong> attribute). One of the input net is named, but as you will see, the netname is replaced by the <strong><code>net=</code></strong> signal name (see above for more info on this). The output is pulled up with a pull up resistor which has power specified using the +5V symbol.<br/>
+
+
 </p>
-<table class="inline">
-	<tr>
-		<td> <a href="media/geda/net.jpg" class="media" target="_blank" title="geda:net.jpg"><img src="media/geda/net.jpg" class="media" alt="" /></a> </td>
+<div class="table sectionedit176"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> <a href="media/geda/net.jpg" class="media" target="_blank" title="geda:net.jpg"><img src="media/geda/net.jpg" class="media" alt="" /></a> </td>
 	</tr>
-</table>
-<pre class="code">v 19991011
+</table></div>
+<!-- EDIT176 TABLE [6220-6241] --><pre class="code">v 19991011
 C 38700 58100 1 0 0 7400-1.sym
 {
 T 39000 59000 5 10 1 1 0
@@ -189,7 +180,8 @@ N 40600 59900 40600 59700 4
 C 40400 59900 1 0 0 5V-plus-1.sym</pre>
 
 <p>
-<strong>gnetlist</strong> (using the geda netlist format) run using this sample schematic outputs this: 
+<strong>gnetlist</strong> (using the geda netlist format) run using this sample schematic outputs this:
+
 </p>
 <pre class="code">START header
 
@@ -224,14 +216,16 @@ Notice how NETLABEL was renamed (aliased to the +5V net).
 </p>
 
 </div>
-<!-- SECTION "Example" [5600-7377] -->
-<h2><a name="final_notes" id="final_notes">Final notes</a></h2>
+<!-- EDIT175 SECTION "Example" [5600-7377] -->
+<h2 class="sectionedit177"><a name="final_notes" id="final_notes">Final notes</a></h2>
 <div class="level2">
 
 <p>
-Send all bugs to <strong>ahvezdaATgeda.seul.org</strong> or <strong>geda-devATgeda.seul.org</strong> (mailing list, please subscribe first). [I’m sure there’s more to say here] 
+Send all bugs to <strong>ahvezdaATgeda.seul.org</strong> or <strong>geda-devATgeda.seul.org</strong> (mailing list, please subscribe first).
+[I&#039;m sure there&#039;s more to say here]
+
 </p>
 
 </div>
-<!-- SECTION "Final notes" [7378-] --></body>
+<!-- EDIT177 SECTION "Final notes" [7378-] --></body>
 </html>

@@ -11,112 +11,38 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#installing_geda_rpm_packages_on_fedora" class="toc">Installing gEDA rpm packages on Fedora</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#geda_gaf_for_fedora" class="toc">gEDA/gaf for fedora</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#how_to_install_geda_gaf_on_fedora" class="toc">How to install gEDA/gaf on Fedora</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#the_easiest_way" class="toc">The easiest way</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#compile_it_yourself" class="toc">Compile it yourself</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#rebuild_your_own_rpms" class="toc">Rebuild your own rpms</a></span></div></li></ul>
-</li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="installing_geda_rpm_packages_on_fedora" id="installing_geda_rpm_packages_on_fedora">Installing gEDA rpm packages on Fedora</a></h1>
+<h1 class="sectionedit694"><a name="installing_geda_rpm_packages_on_fedora" id="installing_geda_rpm_packages_on_fedora">Installing gEDA rpm packages on Fedora</a></h1>
 <div class="level1">
 
-</div>
-<!-- SECTION "Installing gEDA rpm packages on Fedora" [1-54] -->
-<h2><a name="geda_gaf_for_fedora" id="geda_gaf_for_fedora">gEDA/gaf for fedora</a></h2>
-<div class="level2">
-
 <p>
- gEDA/gaf applications are available for free download 
-</p>
-<ul>
-<li class="level1"><div class="li"> on fedora official mirrors maintained by Chitlesh Goorah</div>
-</li>
-<li class="level1"><div class="li"> and on Wojciech Kazubski’s <a href="http://www.sp5pbe.waw.pl/~sp5smk/software.html" class="urlextern" title="http://www.sp5pbe.waw.pl/~sp5smk/software.html"  rel="nofollow"> website </a></div>
-</li>
-</ul>
 
-<p>
- Each gEDA/gaf release is supposed to be on the fedora collection in one or two days time until the fedora mirrors are synced.
-</p>
-
-<p>
-The Fedora Project provides gEDA/gaf releases 
-</p>
-<ul>
-<li class="level1"><div class="li"> Fedora Core 5</div>
-</li>
-<li class="level1"><div class="li"> Fedora Core 6 (Zod)</div>
-</li>
-<li class="level1"><div class="li"> Fedora 7 (moonshine)</div>
-</li>
-<li class="level1"><div class="li"> Fedora development (rawhide)</div>
-</li>
-</ul>
-
-<p>
-under the following architectures:
-</p>
-<ul>
-<li class="level1"><div class="li"> i386</div>
-</li>
-<li class="level1"><div class="li"> x86_64</div>
-</li>
-<li class="level1"><div class="li"> ppc</div>
-</li>
-<li class="level1"><div class="li"> ppc64 (as from F7)</div>
-</li>
-</ul>
-
-<p>
- The Fedora Project will <strong>perhaps</strong> even provide gEDA/gaf releases for sparc and alpha machines when F8 will be released.(it is still not yet confirmed.)
+gEDA/gaf applications are available in the default Fedora repositories.  The Fedora packages are maintained by Chitlesh Goorah.
 </p>
 
 </div>
-<!-- SECTION "gEDA/gaf for fedora" [55-823] -->
-<h2><a name="how_to_install_geda_gaf_on_fedora" id="how_to_install_geda_gaf_on_fedora">How to install gEDA/gaf on Fedora</a></h2>
-<div class="level2">
-
-</div>
-<!-- SECTION "How to install gEDA/gaf on Fedora" [824-870] -->
-<h3><a name="the_easiest_way" id="the_easiest_way">The easiest way</a></h3>
+<!-- EDIT694 SECTION "Installing gEDA rpm packages on Fedora" [1-183] -->
+<h3 class="sectionedit695"><a name="installing_from_fedora_repositories" id="installing_from_fedora_repositories">Installing from Fedora repositories</a></h3>
 <div class="level3">
 
 <p>
- It is recommended to install gEDA/gaf releases on Fedora via yum or pirut. Pirut, also known under the name of “Add/Remove Software”, is a graphical interface for yum.
+
+It is recommended to install gEDA/gaf releases on Fedora using <code>yum</code> or <code>pirut</code>. Pirut (listed in the menu as “Add/Remove Software”) is a graphical interface for <code>yum</code>.
+
+</p>
+<pre class="code">yum install geda\* pcb gerbv</pre>
+
+<p>
+
+Note: you have to be root (<code>su -</code>) to install packages.
 </p>
 
 <p>
-<code><strong>yum install geda\* pcb gerbv</strong></code>
+Each gEDA/gaf release takes one to two days to be packaged up and synchronised with the Fedora mirrors.  If a release seems to be missing, you could file a bug report (Request for Enhancement, RFE) on <a href="http://bugzilla.redhat.com" class="urlextern" title="http://bugzilla.redhat.com"  rel="nofollow">Fedora&#039;s bugzilla</a> asking them to update gEDA/gaf for you.
 </p>
 
 <p>
-Note: you have to be under root (su -) to install packages.
-</p>
-
-<p>
-A Fedora user will have every gEDA/gaf release which provides bug fixes and enhancement upon old releases in one or two days until the mirrors are synced.
-</p>
-
-<p>
-If it is not the case, you can kindly file a bug report (Request for Enhancement, RFE) on <a href="http://bugzilla.redhat.com" class="urlextern" title="http://bugzilla.redhat.com"  rel="nofollow">Fedora&#039;s bugzilla</a> asking them to update gEDA/gaf for you.
-</p>
-
-<p>
-One can follow up 
+You can follow:
 </p>
 <ul>
 <li class="level1"><div class="li"> the releases on <a href="http://clunixchit.blogspot.com" class="urlextern" title="http://clunixchit.blogspot.com"  rel="nofollow">Chitlesh Goorah&#039;s blog</a>, or</div>
@@ -125,75 +51,33 @@ One can follow up
 </li>
 </ul>
 
-<p>
- Note: As from 29th of June 2007, Fedora Core 5 has been marked as End Of Life (<acronym title="End of file">EOF</acronym>). gEDA/gaf 1.0.1-20070626 is the last update on FC5.
-</p>
-
 </div>
-<!-- SECTION "The easiest way" [871-1851] -->
-<h3><a name="compile_it_yourself" id="compile_it_yourself">Compile it yourself</a></h3>
+<!-- EDIT695 SECTION "Installing from Fedora repositories" [184-998] -->
+<h3 class="sectionedit696"><a name="compile_it_yourself" id="compile_it_yourself">Compile it yourself</a></h3>
 <div class="level3">
 
 <p>
- If one want to get their hands dirty by building gEDA/gaf on Fedora, he/she will need
-</p>
 
-<p>
-libstroke-devel, groff, autoconf, gtk2-devel, gd-devel, gettext-devel and guile-devel installed.
-</p>
+If you want to get their hands dirty by building gEDA/gaf on Fedora, you will need to install the dependencies listed in the gEDA/gaf <code>README</code> file.  They can be installed with <code>yum</code>:
 
-<p>
-They can be installed via yum:
 </p>
-
-<p>
-<code> <strong> yum install libstroke-devel groff autoconf gtk2-devel gd-devel gettext-devel and guile-devel </strong> </code>
-</p>
-
-<p>
-The recommended procedure is to compile and install (one by one): 
-</p>
-<ol>
-<li class="level1"><div class="li"> libgeda</div>
-</li>
-<li class="level1"><div class="li"> geda-symbols</div>
-</li>
-<li class="level1"><div class="li"> geda-docs</div>
-</li>
-<li class="level1"><div class="li"> geda-examples</div>
-</li>
-<li class="level1"><div class="li"> geda-gschem</div>
-</li>
-<li class="level1"><div class="li"> geda-gattrib</div>
-</li>
-<li class="level1"><div class="li"> geda-gnetlist</div>
-</li>
-<li class="level1"><div class="li"> geda-gsymcheck</div>
-</li>
-<li class="level1"><div class="li"> geda-utils</div>
-</li>
-</ol>
-
-<p>
- Note: Fedora Core 5 has guile 1.6.x whereas Fedora Core 6 and onwards has guile 1.8.x
-</p>
+<pre class="code">yum install libstroke-devel groff autoconf gtk2-devel gd-devel gettext-devel guile-devel</pre>
 
 </div>
-<!-- SECTION "Compile it yourself" [1852-2506] -->
-<h3><a name="rebuild_your_own_rpms" id="rebuild_your_own_rpms">Rebuild your own rpms</a></h3>
+<!-- EDIT696 SECTION "Compile it yourself" [999-1310] -->
+<h3 class="sectionedit697"><a name="rebuild_your_own_rpms" id="rebuild_your_own_rpms">Rebuild your own RPMs</a></h3>
 <div class="level3">
 
 <p>
- The Fedora Project provides simple tools for one to rebuild any RPMs from SRPMs. SRPM contains the upstream sources, the <acronym title="specification">spec</acronym> file and the patches if any.
+
+The Fedora Project provides simple tools for anyone to rebuild RPMs from SRPMs. An SRPM contains the upstream sources, the <acronym title="specification">spec</acronym> file and the patches required (if any).
 </p>
 
 <p>
-To be able to build RPMs, one will need a build platform, which does <strong>NOT</strong> require root access. rpmdevtools provides the requires tools to do so.
-</p>
+To be able to build RPMs, you will need a build platform, which does <strong>NOT</strong> require root access. <code>rpmdevtools</code> provides the requires tools to do so.
 
-<p>
-<code><strong>yum install rpmdevtools</strong></code> (as root)
 </p>
+<pre class="code">yum install rpmdevtools</pre>
 
 </div>
 
@@ -201,15 +85,15 @@ To be able to build RPMs, one will need a build platform, which does <strong>NOT
 <div class="level4">
 
 <p>
- The build platform should be built under a NON-root account.
+
+The build platform should be built under a NON-root account.
+
 </p>
+<pre class="code">fedora-buildrpmtree</pre>
 
 <p>
-<code>$ <strong>fedora-buildrpmtree</strong></code>
-</p>
 
-<p>
-You can see a <code>rpmbuild</code> folder under your $HOME directory. This directory will be your build platform.
+You will see a <code>rpmbuild</code> folder in your <code>$HOME</code> directory. This directory will be your build platform.
 </p>
 
 </div>
@@ -218,35 +102,36 @@ You can see a <code>rpmbuild</code> folder under your $HOME directory. This dire
 <div class="level4">
 
 <p>
- Fedora provides SRPM of every package it has. You can download those SRPMs via <code>yumdownloader</code> from the yum-utils package.
+
+Fedora provides SRPM of every package it has. You can download those SRPMs using the <code>yumdownloader</code> tool from the <code>yum-utils</code> package.
+
+</p>
+<pre class="code">yum install yum-utils</pre>
+
+<p>
+if you don&#039;t have <code>yum-utils</code> installed already.
 </p>
 
 <p>
-<code> <strong> yum install yum-utils </strong> </code> (as root, if you don’t have yum-utils installed)
+Download a the <code>geda-gaf</code> SRPM  (under a NON-root account) using:
+
+</p>
+<pre class="code">yumdownloader --source geda-gaf</pre>
+
+<p>
+
+Once the download is complete the package can be found under the current directory under the filename <code>geda-gaf-%{version}-%{dist}.src.rpm</code>, where <code>%{version}</code> is the current version of gEDA/gaf packaged by Fedora, and <code>%{dist}</code> is the current Fedora version.  For example, the gEDA/gaf SRPM for Fedora 14 is called <code>geda-gaf-1.6.1-1.fc14.src.rpm</code>.
 </p>
 
 <p>
- Download a particular SRPM  (under a NON-root account) by <code>$ <strong>yumdownloader &ndash;source package &ndash;enablerepo=development-source</strong> </code>
+The <acronym title="specification">spec</acronym> file, upstream sources and distribution patches can be extracted from the SRPM using:
+
 </p>
+<pre class="code">rpm -ivh geda-gaf-%{version}-%{dist}.src.rpm</pre>
 
 <p>
-package is the name of the package you want to download.
-</p>
 
-<p>
-Once the download is complete the package can be found under the current directory under the filename  %{name}-%{version}-%{dist}.src.rpm.
-</p>
-
-<p>
-Since a SRPM contains the upstream sources, the <acronym title="specification">spec</acronym> file and the patches if any we will extract them with:
-</p>
-
-<p>
-<code>$ <strong>rpm -ivh %{name}-%{version}-%{dist}.src.rpm</strong></code>
-</p>
-
-<p>
-(I remind you that this should at no cost be executed as root !)
+(I remind you that this should never be executed as root!)
 </p>
 
 <p>
@@ -263,43 +148,41 @@ You will see
 
 <h4><a name="building_new_rpms_from_new_sources" id="building_new_rpms_from_new_sources">Building new RPMS from new sources</a></h4>
 <div class="level4">
-<ul>
-<li class="level1"><div class="li"> download your new sources</div>
+
+<p>
+
+First:
+
+</p>
+<ol>
+<li class="level1"><div class="li"> Download your new sources, as described in the previous section.</div>
 </li>
-<li class="level1"><div class="li"> edit the rpmbuild/SPECS/%{name}.<acronym title="specification">spec</acronym></div>
-<ul>
-<li class="level3"><div class="li"> edit version tag</div>
+<li class="level1"><div class="li"> Edit the rpmbuild/SPECS/%{name}.<acronym title="specification">spec</acronym></div>
+<ol>
+<li class="level2"><div class="li"> Edit version tag</div>
 </li>
-<li class="level3"><div class="li"> edit release tag</div>
+<li class="level2"><div class="li"> Edit release tag</div>
 </li>
-</ul>
+</ol>
 </li>
-</ul>
+<li class="level1"><div class="li"> Make any other changes you require</div>
+</li>
+</ol>
 
 <p>
-with repect to your newly downloaded sources.
+
+Once the previous steps have been completed, you can compile the new RPMs.
+
 </p>
+<pre class="code">cd $HOME/rpmbuild/SPECS/
+rpmbuild -ba %{name}.spec</pre>
 
 <p>
-<code><strong> cd rpmbuild/SPECS/ </strong></code>
-</p>
 
-<p>
-now start building the RPMS:
-</p>
+The successfully built RPMS will be found in <code>$HOME/rpmbuild/RPMS/</code>, and the corresponding SRPM in <code>$HOME/rpmbuild/SPRMS</code>.
 
-<p>
-<code> <strong> rpmbuild -ba %{name}.<acronym title="specification">spec</acronym></strong></code>
-</p>
-
-<p>
-replace %{name} by the name of the package (example, libgeda, geda-gschem&hellip;).
-</p>
-
-<p>
-The successfully build RPMS will be found in the folders of ~/rpmbuild/RPMS/. 
 </p>
 
 </div>
-<!-- SECTION "Rebuild your own rpms" [2507-] --></body>
+<!-- EDIT697 SECTION "Rebuild your own RPMs" [1311-] --></body>
 </html>

@@ -60,7 +60,6 @@
 /* for visibility in st_objects */
 #define INVISIBLE               0
 #define VISIBLE                 1
-#define LEAVE_VISIBILITY_ALONE -1
 
 /* For pin and net styles */
 #define THIN            0     

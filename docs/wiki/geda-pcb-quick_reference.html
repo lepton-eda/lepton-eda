@@ -11,272 +11,308 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#pcbquick_reference" class="toc">PCB: Quick Reference</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#key_mapping" class="toc">Key Mapping</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#pcb_keystrokes" class="toc">PCB Keystrokes</a></span></div></li>
-</ul>
-</li>
-<li class="level2"><div class="li"><span class="li"><a href="#viewport_keystrokes" class="toc">Viewport Keystrokes</a></span></div></li>
-</ul>
-</li>
-<li class="level1"><div class="li"><span class="li"><a href="#footprint_reference" class="toc">Footprint Reference</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#general_syntax" class="toc">General syntax</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#elements" class="toc">Elements</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#pads" class="toc">Pads</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#pins" class="toc">Pins</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#examples" class="toc">Examples</a></span></div></li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="pcbquick_reference" id="pcbquick_reference">PCB: Quick Reference</a></h1>
+<h1 class="sectionedit1269"><a name="pcbquick_reference" id="pcbquick_reference">PCB: Quick Reference</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "PCB: Quick Reference" [1-35] -->
-<h2><a name="key_mapping" id="key_mapping">Key Mapping</a></h2>
+<!-- EDIT1269 SECTION "PCB: Quick Reference" [1-36] -->
+<h2 class="sectionedit1270"><a name="default_key_mapping" id="default_key_mapping">Default Key Mapping</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Key Mapping" [36-62] -->
-<h3><a name="pcb_keystrokes" id="pcb_keystrokes">PCB Keystrokes</a></h3>
+<!-- EDIT1270 SECTION "Default Key Mapping" [37-69] -->
+<h3 class="sectionedit1271"><a name="all_keystrokes" id="all_keystrokes">All Keystrokes</a></h3>
 <div class="level3">
-<table class="inline">
-	<tr>
-		<th class="centeralign">  KEY		</th><th class="leftalign"> MNEMONIC	</th><th class="centeralign">  DESCRIPTION  </th>
+<div class="table sectionedit1272"><table class="inline">
+	<tr class="row0">
+		<th class="col0 centeralign">  Key		</th><th class="col1 leftalign"> Mnenonic	</th><th class="col2 leftalign"> Description  </th>
 	</tr>
-	<tr>
-		<td class="centeralign">  esc		</td><td class="leftalign"> panner	</td><td> enter panning mode </td>
+	<tr class="row1">
+		<td class="col0 centeralign">  esc		</td><td class="col1 leftalign"> select	</td><td class="col2 leftalign"> enter select mode (same as [space], or [F11])  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  insert	</td><td class="leftalign"> insert point	</td><td> enter insert point mode. Click and drag on track to insert a point </td>
+	<tr class="row2">
+		<td class="col0 centeralign">  esc		</td><td class="col1 leftalign"> end of action	</td><td class="col2 leftalign"> terminate the current action, e.g. stop drawing tracks  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  space	</td><td class="leftalign"> select	</td><td class="leftalign"> enter select mode  </td>
+	<tr class="row3">
+		<td class="col0 centeralign">  insert	</td><td class="col1 leftalign"> insert point	</td><td class="col2 leftalign"> enter insert point mode. Click and drag on track to insert a point  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  tab		</td><td class="leftalign"> flip view	</td><td class="leftalign"> view: flip board  </td>
+	<tr class="row4">
+		<td class="col0 centeralign">  return	</td><td class="col1 leftalign"> click		</td><td class="col2 leftalign"> same as a click on the left mouse button  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-del	</td><td class="leftalign"> del-cu	</td><td class="leftalign"> deletes connected copper (rats are considered a connection)  </td>
+	<tr class="row5">
+		<td class="col0 centeralign">  space	</td><td class="col1 leftalign"> select	</td><td class="col2 leftalign"> enter select mode (same as [exs], or [F11])  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  \		</td><td class="leftalign"> thin-draw	</td><td class="leftalign"> toggles thin draw mode  </td>
+	<tr class="row6">
+		<td class="col0 centeralign">  tab		</td><td class="col1 leftalign"> flip up/down 	</td><td class="col2 leftalign"> view: vertical flip  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-alt-a  </td><td class="leftalign"> unselect	</td><td class="leftalign"> clear selection  </td>
+	<tr class="row7">
+		<td class="col0 centeralign">  shift-tab	</td><td class="col1 leftalign"> flip left/right 	</td><td class="col2 leftalign"> view: horizontal flip  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  b 		</td><td class="leftalign"> to other side	</td><td class="leftalign"> flip object to the other side of the board  </td>
+	<tr class="row8">
+		<td class="col0 centeralign">  ctrl-shift-tab	</td><td class="col1 leftalign"> far side	</td><td class="col2 leftalign"> view: exchange the roles of front side and far side  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-b  	</td><td class="leftalign"> flip view	</td><td class="leftalign"> view: flip board  </td>
+	<tr class="row9">
+		<td class="col0 centeralign">  del		</td><td class="col1 leftalign"> delete	</td><td class="col2"> delete object under the mouse cursor </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  c  		</td><td class="leftalign"> center	</td><td class="leftalign"> view: center display at cursor position  </td>
+	<tr class="row10">
+		<td class="col0 centeralign">  shift-del	</td><td class="col1 leftalign"> del-sel	</td><td class="col2"> delete objects in selection </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  ctrl-c  	</td><td> copy to buffer</td><td class="leftalign"> copy selection to buffer and unselect  </td>
+	<tr class="row11">
+		<td class="col0 centeralign">  backspace	</td><td class="col1 leftalign"> del-sel	</td><td class="col2"> delete objects in selection </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  d		</td><td class="leftalign"> display name	</td><td class="leftalign"> display pin or pad name  </td>
+	<tr class="row12">
+		<td class="col0 centeralign">  shift-backspace	</td><td class="col1 leftalign"> del-copper	</td><td class="col2 leftalign"> deletes connected copper under the cursor. Rats are considered a connection.  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-d  	</td><td class="leftalign"> pinout dialog	</td><td class="leftalign"> open pinout window for element under mouse cursor  </td>
+	<tr class="row13">
+		<td class="col0 centeralign">  |		</td><td class="col1 leftalign"> thin-draw	</td><td class="col2 leftalign"> toggles thin draw mode  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  e		</td><td> eliminate rats</td><td class="leftalign"> delete all rats  </td>
+	<tr class="row14">
+		<td class="col0 centeralign">  a		</td><td class="col1 leftalign"> set same	</td><td class="col2 leftalign"> read the parameters to use for new objects from the object below the cursor.  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-e	</td><td class="leftalign"> eliminate some rats	</td><td class="leftalign"> delete selected rats  </td>
+	<tr class="row15">
+		<td class="col0 centeralign">  alt-a	</td><td class="col1 leftalign"> select-all	</td><td class="col2 leftalign"> select all objects on active layers. Deactivated layers are ignored.	</td>
 	</tr>
-	<tr>
-		<td class="centeralign">  f  		</td><td class="leftalign"> find		</td><td class="leftalign"> highlight connections to object under mouse cursor  </td>
+	<tr class="row16">
+		<td class="col0 centeralign">  shift-alt-a  </td><td class="col1 leftalign"> unselect	</td><td class="col2 leftalign"> clear selection  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-f  	</td><td class="leftalign"> un-find	</td><td class="leftalign"> un-highlight found connections  </td>
+	<tr class="row17">
+		<td class="col0 centeralign">  b 		</td><td class="col1 leftalign"> to other side	</td><td class="col2 leftalign"> flip object to the other side of the board  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  g  		</td><td class="leftalign"> increase grid	</td><td class="leftalign"> increment grid by configured grid increment  </td>
+	<tr class="row18">
+		<td class="col0 centeralign">  c  		</td><td class="col1 leftalign"> center	</td><td class="col2 leftalign"> view: center display at cursor position  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-g  	</td><td class="leftalign"> decrease grid	</td><td class="leftalign"> decrement grid by configured grid increment  </td>
+	<tr class="row19">
+		<td class="col0 centeralign">  ctrl-c  	</td><td class="col1"> copy to buffer</td><td class="col2 leftalign"> copy selection to buffer and unselect  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  h  		</td><td class="leftalign"> hide		</td><td class="leftalign"> toggle the visiblity of the refdes or value attached to the current component  </td>
+	<tr class="row20">
+		<td class="col0 centeralign">  d		</td><td class="col1 leftalign"> display name	</td><td class="col2 leftalign"> display pin or pad name  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  ctrl-h  	</td><td class="leftalign"> holeplate	</td><td class="leftalign"> toggle plating of a via. Used to produce non metalized mounting holes  </td>
+	<tr class="row21">
+		<td class="col0 centeralign">  shift-d  	</td><td class="col1 leftalign"> pinout dialog	</td><td class="col2 leftalign"> open pinout window for element under mouse cursor  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  j            </td><td class="leftalign"> lineclear     </td><td class="leftalign"> toggles line clears polygon  </td>
+	<tr class="row22">
+		<td class="col0 centeralign">  e		</td><td class="col1"> eliminate rats</td><td class="col2 leftalign"> delete all rats  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  k  		</td><td class="leftalign"> klearance	</td><td class="leftalign"> increment clearance (soldermask to copper edge)  </td>
+	<tr class="row23">
+		<td class="col0 centeralign">  shift-e	</td><td class="col1 leftalign"> eliminate some rats	</td><td class="col2 leftalign"> delete selected rats  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-k  	</td><td class="leftalign"> klear (-)  	</td><td class="leftalign"> decrement clearance (soldermask to copper edge (NOTE: can go negative!))  </td>
+	<tr class="row24">
+		<td class="col0 centeralign">  f  		</td><td class="col1 leftalign"> find		</td><td class="col2 leftalign"> highlight connections to object under mouse cursor  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  l  		</td><td class="leftalign"> increase line	</td><td class="leftalign"> increment width of the line tool, adds to the settings of the current line style  </td>
+	<tr class="row25">
+		<td class="col0 centeralign">  shift-f  	</td><td class="col1 leftalign"> un-find	</td><td class="col2 leftalign"> un-highlight found connections  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-l  	</td><td class="leftalign"> decrease line	</td><td> reduce the current linewidth </td>
+	<tr class="row26">
+		<td class="col0 centeralign">  g  		</td><td class="col1 leftalign"> incr grid mil	</td><td class="col2 leftalign"> increment grid by configured imperial increment  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  m  		</td><td class="leftalign"> move to layer	</td><td class="leftalign"> move the object under the cursor to the current layer  </td>
+	<tr class="row27">
+		<td class="col0 centeralign">  shift-g  	</td><td class="col1 leftalign"> decr grid mil	</td><td class="col2 leftalign"> decrement grid by configured imperial increment  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-m  	</td><td class="leftalign"> move selection to layer	</td><td class="leftalign"> move selected objects to the current working layer (see <a href="geda-pcb_tips.html#how_do_i_move_one_set_of_layer_tracks_to_another_layer" class="wikilink1" title="geda-pcb_tips.html">pcb tip</a>)  </td>
+	<tr class="row28">
+		<td class="col0 centeralign">  ctrl-g  	</td><td class="col1 leftalign"> incr grid mm	</td><td class="col2 leftalign"> increment grid by configured metric increment  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  ctrl-m	</td><td class="leftalign"> move origin	</td><td> set the origin to the current position of the mouse pointer </td>
+	<tr class="row29">
+		<td class="col0 centeralign">  ctrl-shift-g	</td><td class="col1 leftalign"> decr grid mm	</td><td class="col2 leftalign"> decrement grid by configured metric increment  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  n		</td><td class="leftalign"> name		</td><td> show object refdes / pin number at mouse pointer </td>
+	<tr class="row30">
+		<td class="col0 centeralign">  h  		</td><td class="col1 leftalign"> hide		</td><td class="col2"> toggle the visiblity of the refdes or value attached to the comonent under the cursor </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-n	</td><td class="leftalign"> next		</td><td> Select the shortest unselected rat on the board </td>
+	<tr class="row31">
+		<td class="col0 centeralign">  shift-h  	</td><td class="col1 leftalign"> hide sel	</td><td class="col2 leftalign"> toggle the visiblity of the refdes or value attached to selected components  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  o		</td><td class="leftalign"> optimize rats	</td><td> optimize and redraw all rats </td>
+	<tr class="row32">
+		<td class="col0 centeralign">  ctrl-h  	</td><td class="col1 leftalign"> holeplate	</td><td class="col2 leftalign"> toggle plating of a via. Used to produce non metalized mounting holes  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-o	</td><td class="leftalign"> optimize some rats	</td><td> optimize and redraw selected nets only </td>
+	<tr class="row33">
+		<td class="col0 centeralign">  j		</td><td class="col1 leftalign"> lineclear	</td><td class="col2 leftalign"> toggle the polygon clear flag of the line under the cursor  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-p	</td><td class="leftalign"> polygon close	</td><td class="leftalign"> connect the first point of a polygon with the last  </td>
+	<tr class="row34">
+		<td class="col0 centeralign">  shift-j	</td><td class="col1 leftalign"> lineclear sel	</td><td class="col2 leftalign"> toggle the polygon clear flag of selected lines  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  q		</td><td class="leftalign"> square toggle	</td><td class="leftalign"> toggle square/round corners on pads  </td>
+	<tr class="row35">
+		<td class="col0 centeralign">  k  		</td><td class="col1 leftalign"> klear		</td><td class="col2 leftalign"> increment clearance (soldermask to copper edge)  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  ctrl-r	</td><td class="leftalign"> report	</td><td class="leftalign"> show object report  </td>
+	<tr class="row36">
+		<td class="col0 centeralign">  shift-k  	</td><td class="col1 leftalign"> klear (-)  	</td><td class="col2 leftalign"> decrement clearance (soldermask to copper edge (NOTE: can go negative!))  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  s            </td><td class="leftalign"> solid-poly    </td><td> toggles polygon-clear of lines and pins (compare: thermal) </td>
+	<tr class="row37">
+		<td class="col0 centeralign">  ctrl-k	</td><td class="col1 leftalign"> klear sel	</td><td class="col2 leftalign"> increment clearance of selected objects (soldermask to copper edge)  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  s		</td><td class="leftalign"> size		</td><td class="leftalign"> increment size  </td>
+	<tr class="row38">
+		<td class="col0 centeralign">  shift-ctrl-k	</td><td class="col1 leftalign"> klear sel (-)	</td><td class="col2 leftalign"> decrement clearance of selected objects (soldermask to copper edge)  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-s	</td><td class="leftalign"> size (-)	</td><td class="leftalign"> decrement size  </td>
+	<tr class="row39">
+		<td class="col0 centeralign">  l  		</td><td class="col1 leftalign"> increase line	</td><td class="col2 leftalign"> increment width of the line tool, adds to the settings of the current line style  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  alt-s	</td><td class="leftalign"> sizehole	</td><td class="leftalign"> increase the hole size  </td>
+	<tr class="row40">
+		<td class="col0 centeralign">  shift-l  	</td><td class="col1 leftalign"> decrease line	</td><td class="col2"> reduce the current linewidth </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  alt-shift-s	</td><td class="leftalign"> sizehole (-)	</td><td class="leftalign"> decrease the hole size  </td>
+	<tr class="row41">
+		<td class="col0 centeralign">  m  		</td><td class="col1 leftalign"> move to layer	</td><td class="col2 leftalign"> move the object under the cursor to the current layer  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  ctrl-s	</td><td class="leftalign"> sizehole	</td><td class="leftalign"> increase the hole size  </td>
+	<tr class="row42">
+		<td class="col0 centeralign">  shift-m  	</td><td class="col1 leftalign"> move selection to layer	</td><td class="col2 leftalign"> move selected objects to the current working layer (see <a href="geda-pcb_tips.html#how_do_i_move_one_set_of_layer_tracks_to_another_layer" class="wikilink1" title="geda-pcb_tips.html">pcb tip</a>)  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  ctrl-shift-s	</td><td class="leftalign"> sizehole (-)	</td><td class="leftalign"> decrease the hole size  </td>
+	<tr class="row43">
+		<td class="col0 centeralign">  ctrl-m	</td><td class="col1 leftalign"> move origin	</td><td class="col2"> set the origin to the current position of the mouse pointer </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  v		</td><td class="leftalign"> view extents	</td><td class="leftalign"> global view of working area  </td>
+	<tr class="row44">
+		<td class="col0 centeralign">  n		</td><td class="col1 leftalign"> name		</td><td class="col2"> show object refdes / pin number at mouse pointer </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  z		</td><td class="leftalign"> zoom		</td><td class="leftalign"> view: zoom in  </td>
+	<tr class="row45">
+		<td class="col0 centeralign">  shift-n	</td><td class="col1 leftalign"> next		</td><td class="col2"> Select the shortest unselected rat on the board </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-z	</td><td class="leftalign"> un-zoom	</td><td class="leftalign"> view: zoom out  </td>
+	<tr class="row46">
+		<td class="col0 centeralign">  o		</td><td class="col1 leftalign"> optimize rats	</td><td class="col2"> optimize and redraw all rats </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  F1		</td><td class="leftalign"> via		</td><td> enter via tool </td>
+	<tr class="row47">
+		<td class="col0 centeralign">  shift-o	</td><td class="col1 leftalign"> optimize some rats	</td><td class="col2"> optimize and redraw selected nets only </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  F2		</td><td class="leftalign"> line		</td><td class="leftalign"> enter line tool  </td>
+	<tr class="row48">
+		<td class="col0 centeralign">  ctrl-o	</td><td class="col1 leftalign"> octagon	</td><td class="col2 leftalign"> toggle the octagon flag of the object under the cursor  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  F3		</td><td class="leftalign"> arc		</td><td> enter arc tool </td>
+	<tr class="row49">
+		<td class="col0 centeralign">  shift-p	</td><td class="col1 leftalign"> polygon close	</td><td class="col2 leftalign"> connect the first point of a polygon with the last  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  F4		</td><td class="leftalign"> text		</td><td> enter text tool </td>
+	<tr class="row50">
+		<td class="col0 centeralign">  q		</td><td class="col1 leftalign"> square toggle	</td><td class="col2 leftalign"> toggle square/round corners on pads  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  F5		</td><td class="leftalign"> rectangle	</td><td> enter rectangle tool</td>
+	<tr class="row51">
+		<td class="col0 centeralign">  shift-r	</td><td class="col1 leftalign"> redo		</td><td class="col2 leftalign"> redo what was undone with undo  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  F6		</td><td class="leftalign"> polygon	</td><td> enter polygon tool </td>
+	<tr class="row52">
+		<td class="col0 centeralign">  ctrl-r	</td><td class="col1 leftalign"> report	</td><td class="col2 leftalign"> show object report  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  F7		</td><td class="leftalign"> buffer	</td><td> enter buffer mode </td>
+	<tr class="row53">
+		<td class="col0 centeralign">  s		</td><td class="col1 leftalign"> size		</td><td class="col2 leftalign"> increment size of the object under the cursor  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  F8		</td><td class="leftalign"> delete	</td><td> enter remove mode </td>
+	<tr class="row54">
+		<td class="col0 centeralign">  shift-s	</td><td class="col1 leftalign"> size (-)	</td><td class="col2 leftalign"> decrement size of the object under the cursor  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  F9		</td><td class="leftalign"> rotate	</td><td class="leftalign"> enter rotate mode  </td>
+	<tr class="row55">
+		<td class="col0 centeralign">  alt-s	</td><td class="col1 leftalign"> sizehole	</td><td class="col2 leftalign"> increase the hole of the object under the cursor  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  F10		</td><td class="leftalign"> file menu	</td><td> file menu </td>
+	<tr class="row56">
+		<td class="col0 centeralign">  alt-shift-s	</td><td class="col1 leftalign"> sizehole (-)	</td><td class="col2 leftalign"> decrease the hole of the object under the cursor  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  F11		</td><td class="leftalign"> select	</td><td class="leftalign"> enter select mode (same as [space])  </td>
+	<tr class="row57">
+		<td class="col0 centeralign">  ctrl-s	</td><td class="col1 leftalign"> sizehole	</td><td class="col2 leftalign"> increase the hole of the object under the cursor  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  F12		</td><td class="leftalign"> lock		</td><td> enter lock mode </td>
+	<tr class="row58">
+		<td class="col0 centeralign">  ctrl-shift-s	</td><td class="col1 leftalign"> sizehole (-)	</td><td class="col2 leftalign"> decrease the hole size  </td>
 	</tr>
-</table>
-
+	<tr class="row59">
+		<td class="col0 centeralign">  t		</td><td class="col1"> text tool size </td><td class="col2 leftalign"> increase the size of new text by 10 mil  </td>
+	</tr>
+	<tr class="row60">
+		<td class="col0 centeralign">  shift-t	</td><td class="col1"> text tool size (-)</td><td class="col2 leftalign"> decrease the size of new text by 10 mil  </td>
+	</tr>
+	<tr class="row61">
+		<td class="col0 centeralign">  v		</td><td class="col1 leftalign"> view extents	</td><td class="col2 leftalign"> global view of working area  </td>
+	</tr>
+	<tr class="row62">
+		<td class="col0 centeralign">  shift-v	</td><td class="col1 leftalign"> via tool dia  </td><td class="col2 leftalign"> increase the diameter of new vias by 5 mil  </td>
+	</tr>
+	<tr class="row63">
+		<td class="col0 centeralign">  ctrl-shift-v	</td><td class="col1"> via tool dia (-)</td><td class="col2 leftalign"> decrease the diameter of new vias by 5 mil  </td>
+	</tr>
+	<tr class="row64">
+		<td class="col0 centeralign">  alt-v	</td><td class="col1 leftalign"> via tool drill  </td><td class="col2 leftalign"> increase the drill diameter of new vias by 5 mil  </td>
+	</tr>
+	<tr class="row65">
+		<td class="col0 centeralign">  alt-shift-v	</td><td class="col1"> via tool drill (-) </td><td class="col2 leftalign"> decrease the drill diameter of new vias by 5 mil  </td>
+	</tr>
+	<tr class="row66">
+		<td class="col0 centeralign">  z		</td><td class="col1 leftalign"> zoom		</td><td class="col2 leftalign"> view: zoom in  </td>
+	</tr>
+	<tr class="row67">
+		<td class="col0 centeralign">  shift-z	</td><td class="col1 leftalign"> un-zoom	</td><td class="col2 leftalign"> view: zoom out  </td>
+	</tr>
+	<tr class="row68">
+		<td class="col0 centeralign">  F1		</td><td class="col1 leftalign"> via		</td><td class="col2"> enter via tool </td>
+	</tr>
+	<tr class="row69">
+		<td class="col0 centeralign">  F2		</td><td class="col1 leftalign"> line		</td><td class="col2 leftalign"> enter line tool  </td>
+	</tr>
+	<tr class="row70">
+		<td class="col0 centeralign">  F3		</td><td class="col1 leftalign"> arc		</td><td class="col2"> enter arc tool </td>
+	</tr>
+	<tr class="row71">
+		<td class="col0 centeralign">  F4		</td><td class="col1 leftalign"> text		</td><td class="col2"> enter text tool </td>
+	</tr>
+	<tr class="row72">
+		<td class="col0 centeralign">  F5		</td><td class="col1 leftalign"> rectangle	</td><td class="col2"> enter rectangle tool</td>
+	</tr>
+	<tr class="row73">
+		<td class="col0 centeralign">  F6		</td><td class="col1 leftalign"> polygon	</td><td class="col2"> enter polygon tool </td>
+	</tr>
+	<tr class="row74">
+		<td class="col0 centeralign">  F7		</td><td class="col1 leftalign"> buffer	</td><td class="col2"> enter buffer mode </td>
+	</tr>
+	<tr class="row75">
+		<td class="col0 centeralign">  F8		</td><td class="col1 leftalign"> delete	</td><td class="col2"> enter remove mode </td>
+	</tr>
+	<tr class="row76">
+		<td class="col0 centeralign">  F9		</td><td class="col1 leftalign"> rotate	</td><td class="col2 leftalign"> enter rotate mode  </td>
+	</tr>
+	<tr class="row77">
+		<td class="col0 centeralign">  F10		</td><td class="col1 leftalign"> file menu	</td><td class="col2"> file menu </td>
+	</tr>
+	<tr class="row78">
+		<td class="col0 centeralign">  F11		</td><td class="col1 leftalign"> select	</td><td class="col2 leftalign"> enter select mode (same as [space])  </td>
+	</tr>
+	<tr class="row79">
+		<td class="col0 centeralign">  F12		</td><td class="col1 leftalign"> lock		</td><td class="col2"> enter lock mode </td>
+	</tr>
+</table></div>
+<!-- EDIT1272 TABLE [96-5643] -->
 </div>
-<!-- SECTION "PCB Keystrokes" [63-3697] -->
-<h2><a name="viewport_keystrokes" id="viewport_keystrokes">Viewport Keystrokes</a></h2>
-<div class="level2">
-<table class="inline">
-	<tr>
-		<th class="centeralign">  KEY  </th><th class="centeralign">  MNEMONIC  </th><th class="centeralign">  DESCRIPTION  </th>
+<!-- EDIT1271 SECTION "All Keystrokes" [70-5644] -->
+<h3 class="sectionedit1273"><a name="viewport_keystrokes" id="viewport_keystrokes">Viewport Keystrokes</a></h3>
+<div class="level3">
+<div class="table sectionedit1274"><table class="inline">
+	<tr class="row0">
+		<th class="col0 centeralign">  Key  </th><th class="col1 centeralign">  Mnenonic  </th><th class="col2 leftalign"> Description  </th>
 	</tr>
-	<tr>
-		<td class="centeralign">  esc  </td><td class="centeralign">  panner  </td><td class="rightalign">  </td>
+	<tr class="row1">
+		<td class="col0 centeralign">  v		</td><td class="col1 leftalign"> view extents	</td><td class="col2 leftalign"> global view of working area  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  v  </td><td class="centeralign">  view extents  </td><td>global view of working area</td>
+	<tr class="row2">
+		<td class="col0 centeralign">  c		</td><td class="col1 leftalign"> center	</td><td class="col2 leftalign"> centers view on cursor  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  c  </td><td class="centeralign">  center  </td><td>centers view on cursor</td>
+	<tr class="row3">
+		<td class="col0 centeralign">  z		</td><td class="col1 leftalign"> zoom		</td><td class="col2 leftalign"> zoom in  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  z  </td><td class="centeralign">  zoom  </td><td>zoom in</td>
+	<tr class="row4">
+		<td class="col0 centeralign">  shift-z	</td><td class="col1 leftalign"> un-zoom	</td><td class="col2 leftalign"> zoom out  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-z  </td><td class="centeralign">  un-zoom  </td><td class="rightalign">  </td>
+	<tr class="row5">
+		<td class="col0 centeralign">  |	</td><td class="col1 leftalign"> thin-draw	</td><td class="col2 leftalign"> toggles thin draw mode  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  \  </td><td class="centeralign">  thin-draw on/off  </td><td>toggles thin draw mode</td>
+	<tr class="row6">
+		<td class="col0 centeralign">  tab		</td><td class="col1 leftalign"> flip up/down 	</td><td class="col2 leftalign"> vertical flip  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  tab  </td><td class="centeralign">  flip view  </td><td>flip board</td>
+	<tr class="row7">
+		<td class="col0 centeralign">  shift-tab	</td><td class="col1 leftalign"> flip left/right 	</td><td class="col2 leftalign"> horizontal flip  </td>
 	</tr>
-	<tr>
-		<td class="centeralign">  shift-b  </td><td class="centeralign">  flip view  </td><td>flip board</td>
+	<tr class="row8">
+		<td class="col0 centeralign">  ctrl-shift-tab	</td><td class="col1 leftalign"> far side	</td><td class="col2 leftalign"> exchange the roles of front and far side  </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT1274 TABLE [5676-6105] -->
 </div>
-<!-- SECTION "Viewport Keystrokes" [3698-4071] -->
-<h1><a name="footprint_reference" id="footprint_reference">Footprint Reference</a></h1>
+<!-- EDIT1273 SECTION "Viewport Keystrokes" [5645-6106] -->
+<h1 class="sectionedit1275"><a name="footprint_reference" id="footprint_reference">Footprint Reference</a></h1>
 <div class="level1">
 
 <p>
-The Master document for footprint creation is the <a href="http://pcb.sourceforge.net/index.html#dir" class="urlextern" title="http://pcb.sourceforge.net/index.html#dir"  rel="nofollow">PCB Manual</a>. There is also Stuart Brorson’s <a href="http://www.brorson.com/gEDA/land_patterns_20050129.pdf" class="urlextern" title="http://www.brorson.com/gEDA/land_patterns_20050129.pdf"  rel="nofollow">Footprint Creation for the Open-Source Layout Program PCB</a>.
+The Master document for footprint creation is the <a href="http://pcb.gpleda.org/manual.html" class="urlextern" title="http://pcb.gpleda.org/manual.html"  rel="nofollow">PCB Manual</a>. There is also Stuart Brorson’s <a href="http://www.brorson.com/gEDA/land_patterns_20050129.pdf" class="urlextern" title="http://www.brorson.com/gEDA/land_patterns_20050129.pdf"  rel="nofollow">Footprint Creation for the Open-Source Layout Program PCB</a>.
 </p>
 
 </div>
-<!-- SECTION "Footprint Reference" [4072-4365] -->
-<h2><a name="general_syntax" id="general_syntax">General syntax</a></h2>
+<!-- EDIT1275 SECTION "Footprint Reference" [6107-6392] -->
+<h2 class="sectionedit1276"><a name="general_syntax" id="general_syntax">General syntax</a></h2>
 <div class="level2">
 
 <p>
@@ -298,140 +334,143 @@ A pcb footprint file may contain any of the following commands:
 </ul>
 
 </div>
-<!-- SECTION "General syntax" [4366-4978] -->
-<h2><a name="elements" id="elements">Elements</a></h2>
+<!-- EDIT1276 SECTION "General syntax" [6393-7005] -->
+<h2 class="sectionedit1277"><a name="elements" id="elements">Elements</a></h2>
 <div class="level2">
 
 <p>
-<strong><code>Element [element_flags, description, pcb-name, value, mark_x, mark_y, text_x, text_y, text_direction, text_scale, text_flags]</code></strong> 
-</p>
-<table class="inline">
-	<tr>
-		<th class="centeralign">  item  </th><th class="centeralign">  allowed value  </th><th class="centeralign">  explanation  </th><th class="centeralign">  comment  </th>
-	</tr>
-	<tr>
-		<td class="centeralign">  element_flags  </td><td class="centeralign">  unsigned hex value  </td><td class="rightalign">  </td><td class="rightalign">  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  description  </td><td class="centeralign">  string  </td><td class="centeralign">  text description of footprint  </td><td class="leftalign">written by footprint author  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  pcb name  </td><td class="centeralign">  string  </td><td class="centeralign">  refdes used on this particular pcb  </td><td class="leftalign">xxx  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  value  </td><td class="centeralign">  string  </td><td class="centeralign">  value of component on this particular pcb layout  </td><td class="leftalign">xxx  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  mark_x  </td><td class="centeralign">  1/100th mils  </td><td class="rightalign">  </td><td class="rightalign">  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  mark_y  </td><td class="centeralign">  1/100th mils  </td><td class="rightalign">  </td><td class="rightalign">  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  text_x  </td><td class="centeralign">  1/100th mils  </td><td class="rightalign">  </td><td class="rightalign">  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  text_y  </td><td class="centeralign">  1/100th mils  </td><td class="rightalign">  </td><td class="rightalign">  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  text direction  </td><td class="centeralign">  decimal integer  </td><td class="centeralign">  0=horiz; 1=ccw90; 2=180; 3=cw90  </td><td class="rightalign">  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  text_scale  </td><td class="centeralign">  decimal integer  </td><td class="rightalign">  </td><td class="leftalign">usu. set 100  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  text_flags  </td><td class="centeralign">  unsigned hex  </td><td class="rightalign">  </td><td class="rightalign">  </td>
-	</tr>
-</table>
+<strong><code>Element [element_flags, description, pcb-name, value, mark_x, mark_y, text_x, text_y, text_direction, text_scale, text_flags]</code></strong>
 
+</p>
+<div class="table sectionedit1278"><table class="inline">
+	<tr class="row0">
+		<th class="col0 centeralign">  item  </th><th class="col1 centeralign">  allowed value  </th><th class="col2 centeralign">  explanation  </th><th class="col3 centeralign">  comment  </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 centeralign">  element_flags  </td><td class="col1 centeralign">  unsigned hex value  </td><td class="col2 leftalign">  </td><td class="col3 leftalign">  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  description  </td><td class="col1 centeralign">  string  </td><td class="col2 centeralign">  text description of footprint  </td><td class="col3 leftalign">written by footprint author  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  pcb name  </td><td class="col1 centeralign">  string  </td><td class="col2 centeralign">  refdes used on this particular pcb  </td><td class="col3 leftalign">xxx  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  value  </td><td class="col1 centeralign">  string  </td><td class="col2 centeralign">  value of component on this particular pcb layout  </td><td class="col3 leftalign">xxx  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 centeralign">  mark_x  </td><td class="col1 centeralign">  1/100th mils  </td><td class="col2 leftalign">  </td><td class="col3 leftalign">  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 centeralign">  mark_y  </td><td class="col1 centeralign">  1/100th mils  </td><td class="col2 leftalign">  </td><td class="col3 leftalign">  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 centeralign">  text_x  </td><td class="col1 centeralign">  1/100th mils  </td><td class="col2 leftalign">  </td><td class="col3 leftalign">  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 centeralign">  text_y  </td><td class="col1 centeralign">  1/100th mils  </td><td class="col2 leftalign">  </td><td class="col3 leftalign">  </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 centeralign">  text direction  </td><td class="col1 centeralign">  decimal integer  </td><td class="col2 centeralign">  0=horiz; 1=ccw90; 2=180; 3=cw90  </td><td class="col3 leftalign">  </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 centeralign">  text_scale  </td><td class="col1 centeralign">  decimal integer  </td><td class="col2 leftalign">  </td><td class="col3 leftalign">usu. set 100  </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 centeralign">  text_flags  </td><td class="col1 centeralign">  unsigned hex  </td><td class="col2 leftalign">  </td><td class="col3 leftalign">  </td>
+	</tr>
+</table></div>
+<!-- EDIT1278 TABLE [7162-7832] -->
 </div>
-<!-- SECTION "Elements" [4979-5806] -->
-<h2><a name="pads" id="pads">Pads</a></h2>
+<!-- EDIT1277 SECTION "Elements" [7006-7833] -->
+<h2 class="sectionedit1279"><a name="pads" id="pads">Pads</a></h2>
 <div class="level2">
 
 <p>
-<strong><code>Pad[x1 y1 x2 y2 thickness clearance mask name pad_number flags]</code></strong> 
-</p>
-<table class="inline">
-	<tr>
-		<th class="centeralign">  Item  </th><th class="centeralign">  Allowed Value  </th><th class="centeralign">  Explanation  </th><th class="centeralign">  Comment  </th>
-	</tr>
-	<tr>
-		<td class="centeralign">  x1  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  x(1st point)  </td><td class="rightalign">  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  y1  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  y(1st point)  </td><td class="rightalign">  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  x2  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  x(2nd point)  </td><td class="rightalign">  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  y2  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  y(2nd point)  </td><td class="rightalign">  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  thickness  </td><td class="centeralign">  1/100 mils  </td><td class="centeralign">  width of metal surrounding line segment  </td><td class="leftalign">see Brorson .pdf  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  clearance  </td><td class="centeralign">  1/100 mils  </td><td class="centeralign">  distance to any other copper on any layer  </td><td class="leftalign">actually 1/2 of this number is used!  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  mask  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  width of mask relief  </td><td class="leftalign">actual width of the mask centered on pad copper  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  name  </td><td class="centeralign">  string  </td><td class="centeralign">  name of pad (arb. string)  </td><td class="leftalign">e.g. “pad_1” or “positive” or any other string  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  pad_number  </td><td class="centeralign">  string  </td><td class="centeralign">  pad #  </td><td class="leftalign">used for nets. it MUST be consistent with the definitions on the netlist.  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  flags  </td><td class="centeralign">  hex value  </td><td class="centeralign">  xxx  </td><td class="rightalign">  </td>
-	</tr>
-</table>
+<strong><code>Pad[x1 y1 x2 y2 thickness clearance mask name pad_number flags]</code></strong>
 
+</p>
+<div class="table sectionedit1280"><table class="inline">
+	<tr class="row0">
+		<th class="col0 centeralign">  Item  </th><th class="col1 centeralign">  Allowed Value  </th><th class="col2 centeralign">  Explanation  </th><th class="col3 centeralign">  Comment  </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 centeralign">  x1  </td><td class="col1 centeralign">  1/100th mils  </td><td class="col2 centeralign">  x(1st point)  </td><td class="col3 leftalign">  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  y1  </td><td class="col1 centeralign">  1/100th mils  </td><td class="col2 centeralign">  y(1st point)  </td><td class="col3 leftalign">  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  x2  </td><td class="col1 centeralign">  1/100th mils  </td><td class="col2 centeralign">  x(2nd point)  </td><td class="col3 leftalign">  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  y2  </td><td class="col1 centeralign">  1/100th mils  </td><td class="col2 centeralign">  y(2nd point)  </td><td class="col3 leftalign">  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 centeralign">  thickness  </td><td class="col1 centeralign">  1/100 mils  </td><td class="col2 centeralign">  width of metal surrounding line segment  </td><td class="col3 leftalign">see Brorson .pdf  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 centeralign">  clearance  </td><td class="col1 centeralign">  1/100 mils  </td><td class="col2 centeralign">  distance to any other copper on any layer  </td><td class="col3 leftalign">actually 1/2 of this number is used!  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 centeralign">  mask  </td><td class="col1 centeralign">  1/100th mils  </td><td class="col2 centeralign">  width of mask relief  </td><td class="col3 leftalign">actual width of the mask centered on pad copper  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 centeralign">  name  </td><td class="col1 centeralign">  string  </td><td class="col2 centeralign">  name of pad (arb. string)  </td><td class="col3 leftalign">e.g. “pad_1” or “positive” or any other string  </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 centeralign">  pad_number  </td><td class="col1 centeralign">  string  </td><td class="col2 centeralign">  pad #  </td><td class="col3 leftalign">used for nets. it MUST be consistent with the definitions on the netlist.  </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 centeralign">  flags  </td><td class="col1 centeralign">  hex value  </td><td class="col2 centeralign">  xxx  </td><td class="col3 leftalign">  </td>
+	</tr>
+</table></div>
+<!-- EDIT1280 TABLE [7924-8737] -->
 </div>
-<!-- SECTION "Pads" [5807-6711] -->
-<h2><a name="pins" id="pins">Pins</a></h2>
+<!-- EDIT1279 SECTION "Pads" [7834-8738] -->
+<h2 class="sectionedit1281"><a name="pins" id="pins">Pins</a></h2>
 <div class="level2">
 
 <p>
-<strong><code>Pin[x y thickness clearance mask drillholedia name number flags]</code></strong> 
-</p>
-<table class="inline">
-	<tr>
-		<th class="centeralign">  Item  </th><th class="leftalign"> Allowed Value  </th><th class="centeralign">  Explanation  </th><th class="centeralign">  Comment  </th>
-	</tr>
-	<tr>
-		<td class="centeralign">  x  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  pin x coord.  </td><td class="rightalign">  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  y  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  pin y coord.  </td><td class="rightalign">  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  thickness  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  copper diameter  </td><td class="rightalign">  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  clearance  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  2*(cu to cu clearance)  </td><td class="leftalign">if you want a 10 mil clearance, put 2000 (20 mils) here  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  mask  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  diameter of mask aperture  </td><td class="leftalign">actual dia. of hole in mask  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  drillholedia  </td><td class="centeralign">  1/100th mils  </td><td class="centeralign">  dia. of hole  </td><td class="rightalign">  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  name  </td><td class="centeralign">  string  </td><td class="centeralign">  arb. pin name  </td><td class="rightalign">  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  number  </td><td class="centeralign">  decimal integer  </td><td class="centeralign">  pin number used by nets/rats  </td><td class="rightalign">  </td>
-	</tr>
-	<tr>
-		<td class="centeralign">  flags  </td><td class="centeralign">  hex  </td><td class="centeralign">  xxx  </td><td class="rightalign">  </td>
-	</tr>
-</table>
+<strong><code>Pin[x y thickness clearance mask drillholedia name number flags]</code></strong>
 
+</p>
+<div class="table sectionedit1282"><table class="inline">
+	<tr class="row0">
+		<th class="col0 centeralign">  Item  </th><th class="col1 leftalign"> Allowed Value  </th><th class="col2 centeralign">  Explanation  </th><th class="col3 centeralign">  Comment  </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 centeralign">  x  </td><td class="col1 centeralign">  1/100th mils  </td><td class="col2 centeralign">  pin x coord.  </td><td class="col3 leftalign">  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 centeralign">  y  </td><td class="col1 centeralign">  1/100th mils  </td><td class="col2 centeralign">  pin y coord.  </td><td class="col3 leftalign">  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 centeralign">  thickness  </td><td class="col1 centeralign">  1/100th mils  </td><td class="col2 centeralign">  copper diameter  </td><td class="col3 leftalign">  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 centeralign">  clearance  </td><td class="col1 centeralign">  1/100th mils  </td><td class="col2 centeralign">  2*(cu to cu clearance)  </td><td class="col3 leftalign">if you want a 10 mil clearance, put 2000 (20 mils) here  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 centeralign">  mask  </td><td class="col1 centeralign">  1/100th mils  </td><td class="col2 centeralign">  diameter of mask aperture  </td><td class="col3 leftalign">actual dia. of hole in mask  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 centeralign">  drillholedia  </td><td class="col1 centeralign">  1/100th mils  </td><td class="col2 centeralign">  dia. of hole  </td><td class="col3 leftalign">  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 centeralign">  name  </td><td class="col1 centeralign">  string  </td><td class="col2 centeralign">  arb. pin name  </td><td class="col3 leftalign">  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 centeralign">  number  </td><td class="col1 centeralign">  decimal integer  </td><td class="col2 centeralign">  pin number used by nets/rats  </td><td class="col3 leftalign">  </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 centeralign">  flags  </td><td class="col1 centeralign">  hex  </td><td class="col2 centeralign">  xxx  </td><td class="col3 leftalign">  </td>
+	</tr>
+</table></div>
+<!-- EDIT1282 TABLE [8830-9436] -->
 </div>
-<!-- SECTION "Pins" [6712-7410] -->
-<h2><a name="examples" id="examples">Examples</a></h2>
+<!-- EDIT1281 SECTION "Pins" [8739-9437] -->
+<h2 class="sectionedit1283"><a name="examples" id="examples">Examples</a></h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <strong><code>Pad[-24606 14760 -19538 14760 1181 2000 3181 “” “16” “square”]</code></strong></div>
@@ -449,5 +488,47 @@ A pcb footprint file may contain any of the following commands:
 </ul>
 
 </div>
-<!-- SECTION "Examples" [7411-] --></body>
+<!-- EDIT1283 SECTION "Examples" [9438-9884] -->
+<h1 class="sectionedit1284"><a name="pcb_command_line_action_reference_abridged" id="pcb_command_line_action_reference_abridged">PCB Command Line Action Reference (abridged)</a></h1>
+<div class="level1">
+<div class="table sectionedit1285"><table class="inline">
+	<tr class="row0">
+		<td class="col0" colspan="2">:FreeRotateBuffer(degrees)</td><td class="col2">Rotate buffer arbitrarily </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0" colspan="2">:MoveObject(x,y,unit) </td><td class="col2">Move Absolute (x,y,mil) or Relative(+x,-y,mil)</td>
+	</tr>
+	<tr class="row2">
+		<td class="col0" colspan="2">:ChangeClearSize(Selected,&lt;amount&gt;,&lt;unit&gt;)</td><td class="col2"> Clearance Size</td>
+	</tr>
+	<tr class="row3">
+		<td class="col0" colspan="2">:ChangeSize(SelectedPins, SIZE)</td><td class="col2"> Pin Size </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0" colspan="2">:ChangeSize(SelectedLines,+N,mils)</td><td class="col2"> Line Size </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0" colspan="2">:MinClearGap(Selected,&lt;amount&gt;,&lt;unit&gt;)</td><td class="col2"> Clearance Gap </td>
+	</tr>
+</table></div>
+<!-- EDIT1285 TABLE [9944-10289] --><ul>
+<li class="level1"><div class="li"> units can be specified as mm or mil.</div>
+</li>
+<li class="level1"><div class="li"> <a href="http://pcb.gpleda.org/pcb-20100929/pcb.html#Action-Reference" class="urlextern" title="http://pcb.gpleda.org/pcb-20100929/pcb.html#Action-Reference"  rel="nofollow">Action Reference from the PCB Manual</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT1284 SECTION "PCB Command Line Action Reference (abridged)" [9885-10439] -->
+<h1 class="sectionedit1286"><a name="pcb_physical_layer_reference" id="pcb_physical_layer_reference">PCB Physical Layer Reference</a></h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> ouline layer reference</div>
+</li>
+<li class="level1"><div class="li"> physical layer how-to (outline, direct (x,y) footprint placement, part insertion)</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT1286 SECTION "PCB Physical Layer Reference" [10440-] --></body>
 </html>

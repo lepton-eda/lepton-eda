@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 
@@ -278,9 +278,9 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
    	gtk_widget_set_uposition (w_current->main_window, 10, 10);
 
   /* this should work fine */
-  gtk_signal_connect (GTK_OBJECT (w_current->main_window), "delete_event",
-                      GTK_SIGNAL_FUNC (i_callback_close_wm),
-                      w_current);
+  g_signal_connect (G_OBJECT (w_current->main_window), "delete_event",
+                    G_CALLBACK (i_callback_close_wm),
+                    w_current);
 
   /* Containers first */
   main_box = gtk_vbox_new(FALSE, 1);
@@ -434,10 +434,10 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
     gtk_box_pack_start (GTK_BOX (drawbox), w_current->v_scrollbar,
                         FALSE, FALSE, 0);
 
-    gtk_signal_connect (GTK_OBJECT (w_current->v_adjustment),
-                        "value_changed",
-                        GTK_SIGNAL_FUNC (x_event_vschanged),
-                        w_current);
+    g_signal_connect (G_OBJECT (w_current->v_adjustment),
+                      "value_changed",
+                      G_CALLBACK (x_event_vschanged),
+                      w_current);
 
     w_current->h_adjustment = gtk_adjustment_new (0.0, 0.0,
                                                   toplevel->init_right,
@@ -452,10 +452,10 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
     gtk_box_pack_start (GTK_BOX (main_box), w_current->h_scrollbar,
                         FALSE, FALSE, 0);
 
-    gtk_signal_connect (GTK_OBJECT (w_current->h_adjustment),
-                        "value_changed",
-                        GTK_SIGNAL_FUNC (x_event_hschanged),
-                        w_current);
+    g_signal_connect (G_OBJECT (w_current->h_adjustment),
+                      "value_changed",
+                      G_CALLBACK (x_event_hschanged),
+                      w_current);
   }
 
   /* macro box */
@@ -754,7 +754,7 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
       gtk_widget_destroy (dialog);
       g_error_free (err);
     } else {
-      recent_files_add (fn);
+      gtk_recent_manager_add_item (recent_manager, g_filename_to_uri(fn, NULL, NULL));
     }
   } else {
     if (!quiet_mode)
@@ -882,8 +882,8 @@ x_window_save_page (GSCHEM_TOPLEVEL *w_current, PAGE *page, const gchar *filenam
     /* reset page CHANGED flag */
     page->CHANGED = 0;
 
-    /* update recent file list */
-    recent_files_add(filename);
+    /* add to recent file list */
+    gtk_recent_manager_add_item (recent_manager, g_filename_to_uri(filename, NULL, NULL));
   }
 
   /* log status of operation */

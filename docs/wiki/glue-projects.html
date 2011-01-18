@@ -12,13 +12,12 @@
 <body>
 
 
-
-
-<h3><a name="general_glue_and_related_gaf_projects" id="general_glue_and_related_gaf_projects">General, &quot;glue&quot; and related gaf projects</a></h3>
+<h3 class="sectionedit1493"><a name="general_glue_and_related_gaf_projects" id="general_glue_and_related_gaf_projects">General, &quot;glue&quot; and related gaf projects</a></h3>
 <div class="level3">
 
 <p>
- These projects make the others work together as a system.
+
+These projects make the others work together as a system.
 </p>
 
 </div>
@@ -27,7 +26,8 @@
 <div class="level5">
 
 <p>
- This project involves creating a system which can create an annotated fab drawing from the drill file output by PCB, along with other inputs.  In one possible implementation, you could use LaTeX/metapost driven from an external script.  The script would read in some type of template holding boilerplate fab notes, insert a .eps version of the drill file, also read in some type of file holding stack-up information and other info for the PCB fab house, run LaTeX on it all, and then output an annotated .ps or .pdf fab drawing.  
+
+This project involves creating a system which can create an annotated fab drawing from the drill file output by PCB, along with other inputs.  In one possible implementation, you could use LaTeX/metapost driven from an external script.  The script would read in some type of template holding boilerplate fab notes, insert a .eps version of the drill file, also read in some type of file holding stack-up information and other info for the PCB fab house, run LaTeX on it all, and then output an annotated .ps or .pdf fab drawing.  
 </p>
 
 <p>
@@ -40,7 +40,8 @@ Difficulty: 2
 <div class="level5">
 
 <p>
- This project encompasses the functionality of the entire gEDA PCB design flow. You would develop a test framework for as much of these tools as possible. This likely means creating a large regression test suite. Some examples are sets of layouts (using PCB) that just barely pass and just barely fail each of the different DRC checks, generate BOM’s, x-y files, generate gerbers and maybe use gerbv to do a graphical xor against a “golden” file. For gnetlist, reference netlists that have been placed into some canonical form should be generated from gschem schematics (.sch files).
+
+This project encompasses the functionality of the entire gEDA PCB design flow. You would develop a test framework for as much of these tools as possible. This likely means creating a large regression test suite. Some examples are sets of layouts (using PCB) that just barely pass and just barely fail each of the different DRC checks, generate BOM&#039;s, x-y files, generate gerbers and maybe use gerbv to do a graphical xor against a “golden” file. For gnetlist, reference netlists that have been placed into some canonical form should be generated from gschem schematics (.sch files).
 </p>
 
 <p>
@@ -57,11 +58,13 @@ Difficulty = 3
 <div class="level5">
 
 <p>
- Ngspice and Gnucap are the gEDA Project’s analog circuit simulators. They are both command-line tools, meaning that you type commands into a shell-like program at a prompt. However, some popular commercial simulators support easy simulation and analysis directly from within a schematic capture <acronym title="Graphical User Interface">GUI</acronym>. This method of working is particularly well suited to newbies.
+
+Ngspice and Gnucap are the gEDA Project&#039;s analog circuit simulators. They are both command-line tools, meaning that you type commands into a shell-like program at a prompt. However, some popular commercial simulators support easy simulation and analysis directly from within a schematic capture <acronym title="Graphical User Interface">GUI</acronym>. This method of working is particularly well suited to newbies.
 </p>
 
 <p>
-A new user would like to do the following things inside gschem: 
+A new user would like to do the following things inside gschem:
+
 </p>
 <ul>
 <li class="level1"><div class="li"> Specify what kinds of simulations should be run</div>
@@ -73,11 +76,12 @@ A new user would like to do the following things inside gschem:
 </ul>
 
 <p>
- The simulation runs and the postprocessing may be in an extra program that is triggered by IPC. More thoughts about the project have been entered by Werner Hoch on the gEDA Wiki (<a href="geda-circuit_simulation_improvements.html" class="wikilink1" title="geda-circuit_simulation_improvements.html">Circuit simulation improvements</a>, <a href="geda-data_plotting_improvements.html" class="wikilink1" title="geda-data_plotting_improvements.html"> Plotting improvements</a>).
+
+The simulation runs and the postprocessing may be in an extra program that is triggered by IPC. More thoughts about the project have been entered by Werner Hoch on the gEDA Wiki (<a href="geda-circuit_simulation_improvements.html" class="wikilink1" title="geda-circuit_simulation_improvements.html">Circuit simulation improvements</a>, <a href="geda-data_plotting_improvements.html" class="wikilink1" title="geda-data_plotting_improvements.html"> Plotting improvements</a>).
 </p>
 
 <p>
-This project involves tightening the link between gschem and the back-end simulation programs. This might be done using some type of IPC, such as DBUS. Indeed, a preliminary DBUS implementation for gschem &harr; PCB already exists; the student might leverage the DBUS work for this project.
+This project involves tightening the link between gschem and the back-end simulation programs. This might be done using some type of IPC, such as DBUS. Indeed, a preliminary DBUS implementation for gschem ↔ PCB already exists; the student might leverage the DBUS work for this project.
 </p>
 
 <p>
@@ -90,7 +94,8 @@ Difficulty = 3
 <div class="level5">
 
 <p>
- In this project, you would create a parts manager that takes a graphical symbol and a physical footprint, and marries the two to produce a heavy part. In addition, this tool should be able to support multiple backend flows. By this I mean that the parts manager should be able to also indicate how the symbol should be netlisted for spice, gnucap, or other backends. If possible it would be nice to integrate this into gschem in a way that allowed symbols to be placed and the footprint attribute to come up with a list of choices.
+
+In this project, you would create a parts manager that takes a graphical symbol and a physical footprint, and marries the two to produce a heavy part. In addition, this tool should be able to support multiple backend flows. By this I mean that the parts manager should be able to also indicate how the symbol should be netlisted for spice, gnucap, or other backends. If possible it would be nice to integrate this into gschem in a way that allowed symbols to be placed and the footprint attribute to come up with a list of choices.
 </p>
 
 <p>
@@ -107,7 +112,8 @@ Difficulty = 4
 <div class="level5">
 
 <p>
- The goal of this project is to create a scalable, professional-grade netlister. The project might involve re-writing gnetlist to enable hierarchical designs, or might involve upgrading “gnetman” to incorporate scripted back-ends. The upgrade would be done with an eye towards scalability. Ideally, highly capable and efficient internal data structures and methods for accessing the netlist database should be used. Then a scheme/guile <acronym title="Application Programming Interface">API</acronym> provided for an external script engine. (It may be beneficial to use swig to allow easy interfacing to multiple scripting languages.) The idea is to produce a netlister capable of handling large, hierarchical designs while still allowing users to write their own netlisters for their favorite netlist format (as gnetlist does now).
+
+The goal of this project is to create a scalable, professional-grade netlister. The project might involve re-writing gnetlist to enable hierarchical designs, or might involve upgrading “gnetman” to incorporate scripted back-ends. The upgrade would be done with an eye towards scalability. Ideally, highly capable and efficient internal data structures and methods for accessing the netlist database should be used. Then a scheme/guile <acronym title="Application Programming Interface">API</acronym> provided for an external script engine. (It may be beneficial to use swig to allow easy interfacing to multiple scripting languages.) The idea is to produce a netlister capable of handling large, hierarchical designs while still allowing users to write their own netlisters for their favorite netlist format (as gnetlist does now).
 </p>
 
 <p>
@@ -124,7 +130,8 @@ Difficulty = 3
 <div class="level5">
 
 <p>
- The goal of this project is to write a driver file format translation, particularly for import and export of foreign formats.  A start already exists with gnucap language plugins.  It would be sort of like the existing “gnetlist” but be universal and able to translate in both directions.
+
+The goal of this project is to write a driver file format translation, particularly for import and export of foreign formats.  A start already exists with gnucap language plugins.  It would be sort of like the existing “gnetlist” but be universal and able to translate in both directions.
 </p>
 
 <p>
@@ -141,7 +148,8 @@ Difficulty = 1
 <div class="level5">
 
 <p>
- After we have the “translator main program”, above, we need plugins for the formats to import and export.  Gnucap already has support for Spice, Spectre, and Verilog, as plugins.  These plugins can be used with the system, and as examples of how others can be written.  The plugin needs to translate in both directions.
+
+After we have the “translator main program”, above, we need plugins for the formats to import and export.  Gnucap already has support for Spice, Spectre, and Verilog, as plugins.  These plugins can be used with the system, and as examples of how others can be written.  The plugin needs to translate in both directions.
 </p>
 
 <p>
@@ -149,7 +157,7 @@ Obvious formats needed by the gEDA system are gschem, PCB, and Gerber.
 </p>
 
 <p>
-Foreign formats needed, to provide a migration path between gEDA and other flows, include kicad, oregano, orcad, QUCS, LTspice, &hellip;.
+Foreign formats needed, to provide a migration path between gEDA and other flows, include kicad, oregano, orcad, QUCS, LTspice, ….
 </p>
 
 <p>

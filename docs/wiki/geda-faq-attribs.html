@@ -11,247 +11,13 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#bom_generation" class="toc">BOM generation</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#how_do_i_create_a_bill_of_materials_bom" class="toc">How do I create a bill of materials (BOM)?</a></span></div></li>
-</ul>
-</li>
-<li class="level1"><div class="li"><span class="li"><a href="#design_rule_check_drc" class="toc">Design Rule Check (DRC)</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#how_do_i_check_my_schematics" class="toc">How do I check my schematics?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#how_do_i_see_the_drc_output_in_the_screen_without_writing_to_a_file" class="toc">How do I see the DRC output in the screen, without writing to a file?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#i_want_to_disable_some_of_the_schematic_drc_checks._how_can_i_do_it" class="toc">I want to disable some of the schematic DRC checks. How can I do it?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#can_i_include_the_drc_checking_into_a_makefile_and_stop_when_errors_or_warnings_are_found" class="toc">Can I include the DRC checking into a Makefile and stop when errors or warnings are found?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#there_are_some_warnings_in_my_design_i_m_aware_of._can_i_ignore_the_warnings_in_the_return_value" class="toc">There are some warnings in my design I&#039;m aware of. Can I ignore the warnings in the return value?</a></span></div></li>
-</ul>
-</li>
-<li class="level1"><div class="li"><span class="li"><a href="#attribute_management" class="toc">Attribute management</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#help_my_design_has_hundreds_of_components_and_it_s_a_pain_to_use_gschem_to_attach_all_my_attributes" class="toc">Help! My design has hundreds of components, and it&#039;s a pain to use gschem to attach all my attributes!</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#how_do_i_know_what_footprint_name_to_use_for_layout_using_pcb" class="toc">How do I know what footprint name to use for layout using PCB?</a></span></div></li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="bom_generation" id="bom_generation">BOM generation</a></h1>
+<h1 class="sectionedit299"><a name="attribute_management" id="attribute_management">Attribute management</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "BOM generation" [1-32] -->
-<h2><a name="how_do_i_create_a_bill_of_materials_bom" id="how_do_i_create_a_bill_of_materials_bom">How do I create a bill of materials (BOM)?</a></h2>
-<div class="level2">
-
-<p>
-There are five different backends for <a href="http://geda.seul.org/tools/gnetlist/index.html" class="urlextern" title="http://geda.seul.org/tools/gnetlist/index.html"  rel="nofollow">gnetlist</a> which enable you to export a BOM. Call them with -g and be sure to give the output file name with the -o option: 
-</p>
-<pre class="code">
-   gnetlist -g partslist3 -o output.bom schematic.sch 
-</pre>
-
-<p>
-gnetlist descends into sub sheets and list the contents of these schematics along with the parts from the top document. 
-</p>
-
-<p>
-The backends bom and bom2 require read access to a local file called attribs. This file should contain the name of the attributes to be listed each in a seperate line. E.g: 
-</p>
-<pre class="code">
-value
-footprint
-description
-</pre>
-
-<p>
-Each of the backends lists and sorts the parts in different ways in an ascii file. Choose the one you like best:
-</p>
-
-</div>
-
-<h4><a name="bom" id="bom">bom</a></h4>
-<div class="level4">
-
-<p>
-The bom backend needs to read an attribs file (see above). The list produced by &quot;-g bom” will contain as many lines as there are components. Columns are seperated by tab characters. Lines are not sorted.
-</p>
-
-</div>
-
-<h4><a name="bom2" id="bom2">bom2</a></h4>
-<div class="level4">
-
-<p>
-The bom2 backend also needs to read an attribs file. With &quot;-g bom2” the refdeses of all components with the same value will be collected into a single line. Columns are seperated by colons. Different items in the same column are seperated by a komma character.
-</p>
-
-</div>
-
-<h4><a name="partslist1" id="partslist1">partslist1</a></h4>
-<div class="level4">
-
-<p>
-A list produced by the partlist1 backend gives a line for each and every component. Lines are sorted alphabetically by refdes. Columns are “refdes”, “device”, “value”, “footprint” and “quantity”. Since every line contains just one part, the quantity is always “1”.
-</p>
-
-</div>
-
-<h4><a name="partslist2" id="partslist2">partslist2</a></h4>
-<div class="level4">
-
-<p>
-This backend produces output similar to partslist1. Lines are sorted by the value of the device attribute.
-</p>
-
-</div>
-
-<h4><a name="partslist3" id="partslist3">partslist3</a></h4>
-<div class="level4">
-
-<p>
-The backend partslist3 assembles all parts with the same value in a single line, very much like bom2. Lines are sorted by the value of the device attribute. The fourth column reports the number of parts in a line. Columns are seperated by the tab character, items by space.
-</p>
-
-</div>
-<!-- SECTION "How do I create a bill of materials (BOM)?" [33-2022] -->
-<h1><a name="design_rule_check_drc" id="design_rule_check_drc">Design Rule Check (DRC)</a></h1>
-<div class="level1">
-
-</div>
-<!-- SECTION "Design Rule Check (DRC)" [2023-2060] -->
-<h2><a name="how_do_i_check_my_schematics" id="how_do_i_check_my_schematics">How do I check my schematics?</a></h2>
-<div class="level2">
-
-<p>
-You can check your schematics using the drc2 gnetlist’s backend. It will check your schematics for some common errors, like duplicate references, unconnected pins, unused slots and more.
-</p>
-
-<p>
-Run the drc2 backend with the following command: 
-</p>
-<pre class="code">gnetlist -g drc2 -o MyDesign.drc MyDesign.sch</pre>
-
-<p>
-With this command, the DRC output is written into the file “MyDesign.drc”. You can then view this file with a text editor and see the DRC warnings and errors.
-</p>
-
-</div>
-<!-- SECTION "How do I check my schematics?" [2061-2565] -->
-<h2><a name="how_do_i_see_the_drc_output_in_the_screen_without_writing_to_a_file" id="how_do_i_see_the_drc_output_in_the_screen_without_writing_to_a_file">How do I see the DRC output in the screen, without writing to a file?</a></h2>
-<div class="level2">
-
-<p>
-Run the drc2 backend with the following command: 
-</p>
-<pre class="code">gnetlist -g drc2 -o - MyDesign.sch</pre>
-
-<p>
-This way, you will see the DRC output directly in your screen.
-</p>
-
-</div>
-<!-- SECTION "How do I see the DRC output in the screen, without writing to a file?" [2566-2809] -->
-<h2><a name="i_want_to_disable_some_of_the_schematic_drc_checks._how_can_i_do_it" id="i_want_to_disable_some_of_the_schematic_drc_checks._how_can_i_do_it">I want to disable some of the schematic DRC checks. How can I do it?</a></h2>
-<div class="level2">
-
-<p>
-The drc2 backend is highly configurable. You have to put some special commands into a file and use the “-l” option of gnetlist with it.
-</p>
-
-<p>
-The most common commands are:
-</p>
-<ul>
-<li class="level1"><div class="li"> (define dont-check-non-numbered-parts 1) ;; Disable the non-numbered parts check</div>
-</li>
-<li class="level1"><div class="li"> (define dont-check-duplicated-references 1) ;; Disable the duplicate references check</div>
-</li>
-<li class="level1"><div class="li"> (define dont-check-one-connection-nets 1) ;; Disable the check for nets with only one connection.</div>
-</li>
-<li class="level1"><div class="li"> (define dont-check-pintypes-of-nets 1) ;; Disable the pintype check</div>
-</li>
-<li class="level1"><div class="li"> (define dont-check-not-driven-nets 1) ;; Disable the driven net check</div>
-</li>
-<li class="level1"><div class="li"> (define dont-check-unconnected-pins 1) ;; Disable the unconnected pins check</div>
-</li>
-<li class="level1"><div class="li"> (define dont-check-duplicated-slots 1) ;; Disable the duplicated slots check</div>
-</li>
-<li class="level1"><div class="li"> (define dont-check-unused-slots 1) ;; Disable the unused slots check</div>
-</li>
-<li class="level1"><div class="li"> (define dont-check-slots 1) ;; Disable slot number check</div>
-</li>
-<li class="level1"><div class="li"> (define action-unused-slots #\w) ;; Output an unused slots as a warning</div>
-</li>
-<li class="level1"><div class="li"> (define action-unused-slots #\e) ;; Output an unused slots as an error</div>
-</li>
-<li class="level1"><div class="li"> (define action-unused-slots #\c) ;; An unused slot is OK.</div>
-</li>
-<li class="level1"><div class="li"> (define case_insensitive 1) ;; Do all checks case insensitive</div>
-</li>
-</ul>
-
-<p>
- There are some other advanced commands, to modify the DRC matrix and the pintype which can drive a net. See the backend file “gnet-drc2.scm” with a text editor. At the beginning there is the available documentation.
-</p>
-
-<p>
-Copy the above lines you want into a file (for example “drc_rules.txt”), one per line, and run the drc checker: 
-</p>
-<pre class="code">gnetlist -g drc2 -l drc_rules.txt -o MyDesign.drc MyDesign.sch</pre>
-
-<p>
-With this command, the DRC output is written into the file “MyDesign.drc”. You can then view this file with a text editor and see the DRC warnings and errors.
-</p>
-
-</div>
-<!-- SECTION "I want to disable some of the schematic DRC checks. How can I do it?" [2810-4638] -->
-<h2><a name="can_i_include_the_drc_checking_into_a_makefile_and_stop_when_errors_or_warnings_are_found" id="can_i_include_the_drc_checking_into_a_makefile_and_stop_when_errors_or_warnings_are_found">Can I include the DRC checking into a Makefile and stop when errors or warnings are found?</a></h2>
-<div class="level2">
-
-<p>
-Yes. The drc2 backend will return an error if there are errors or warnings, so you can add the following to your Makefile: 
-</p>
-<pre class="code">$(objects).drc : $(objects).sch
-          gnetlist -g drc2 $(objects).sch -o $(objects).drc</pre>
-
-<p>
-If you are going to simulate your design, then you can add the following to your Makefile: 
-</p>
-<pre class="code">$(objects).cir : $(objects).sch $(objects).drc
-          grep -v ERROR $(objects).drc &gt;/dev/null 2&gt;&amp;1
-          gnetlist -g spice-sdb $(objects).sch  -o $(objects).cir</pre>
-
-<p>
-If not, please use the above example and adapt it to your own workflow.
-</p>
-
-</div>
-<!-- SECTION "Can I include the DRC checking into a Makefile and stop when errors or warnings are found?" [4639-5316] -->
-<h2><a name="there_are_some_warnings_in_my_design_i_m_aware_of._can_i_ignore_the_warnings_in_the_return_value" id="there_are_some_warnings_in_my_design_i_m_aware_of._can_i_ignore_the_warnings_in_the_return_value">There are some warnings in my design I&#039;m aware of. Can I ignore the warnings in the return value?</a></h2>
-<div class="level2">
-
-<p>
-Use the “-O ignore-warnings-in-return-value” option: 
-</p>
-<pre class="code">gnetlist -g drc2 -o - MyDesign.sch -O ignore-warnings-in-return-value</pre>
-
-<p>
-Do this with caution! You will be missing all the warnings!
-</p>
-
-</div>
-<!-- SECTION "There are some warnings in my design I'm aware of. Can I ignore the warnings in the return value?" [5317-5628] -->
-<h1><a name="attribute_management" id="attribute_management">Attribute management</a></h1>
-<div class="level1">
-
-</div>
-<!-- SECTION "Attribute management" [5629-5664] -->
-<h2><a name="help_my_design_has_hundreds_of_components_and_it_s_a_pain_to_use_gschem_to_attach_all_my_attributes" id="help_my_design_has_hundreds_of_components_and_it_s_a_pain_to_use_gschem_to_attach_all_my_attributes">Help! My design has hundreds of components, and it&#039;s a pain to use gschem to attach all my attributes!</a></h2>
+<!-- EDIT299 SECTION "Attribute management" [3-38] -->
+<h2 class="sectionedit300"><a name="help_my_design_has_hundreds_of_components_and_it_s_a_pain_to_use_gschem_to_attach_all_my_attributes" id="help_my_design_has_hundreds_of_components_and_it_s_a_pain_to_use_gschem_to_attach_all_my_attributes">Help! My design has hundreds of components, and it&#039;s a pain to use gschem to attach all my attributes!</a></h2>
 <div class="level2">
 
 <p>
@@ -271,14 +37,15 @@ When using gattrib, make sure you exit gschem first. Gattrib and gschem both sav
 </p>
 
 </div>
-<!-- SECTION "Help! My design has hundreds of components, and it's a pain to use gschem to attach all my attributes!" [5665-6834] -->
-<h2><a name="how_do_i_know_what_footprint_name_to_use_for_layout_using_pcb" id="how_do_i_know_what_footprint_name_to_use_for_layout_using_pcb">How do I know what footprint name to use for layout using PCB?</a></h2>
+<!-- EDIT300 SECTION "Help! My design has hundreds of components, and it's a pain to use gschem to attach all my attributes!" [39-1208] -->
+<h2 class="sectionedit301"><a name="how_do_i_know_what_footprint_name_to_use_for_layout_using_pcb" id="how_do_i_know_what_footprint_name_to_use_for_layout_using_pcb">How do I know what footprint name to use for layout using PCB?</a></h2>
 <div class="level2">
 
 <p>
-<a href="geda-pcb_tips.html#i_want_to_use_pcb_to_do_layout._how_do_i_know_what_value_to_use_for_the_footprint_attribute" class="wikilink1" title="geda-pcb_tips.html">Answered here</a>. 
+<a href="geda-pcb_tips.html#i_want_to_use_pcb_to_do_layout._how_do_i_know_what_value_to_use_for_the_footprint_attribute" class="wikilink1" title="geda-pcb_tips.html">Answered here</a>.
+
 </p>
 
 </div>
-<!-- SECTION "How do I know what footprint name to use for layout using PCB?" [6835-] --></body>
+<!-- EDIT301 SECTION "How do I know what footprint name to use for layout using PCB?" [1209-] --></body>
 </html>

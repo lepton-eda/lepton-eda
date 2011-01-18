@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 #ifndef H_GSCHEM_GLOBALS_H
@@ -25,12 +25,14 @@
 /* window list */
 extern GList *global_window_list;
 
+/* Manager for recently used files */
+GtkRecentManager *recent_manager;
+
 /* colors */
 extern GdkColor white;
 extern GdkColor black;
 
 extern char *rc_filename; 
-extern char *script_filename;
 extern char *output_filename;
 
 
@@ -41,7 +43,6 @@ extern int logging_dest;
 /* command line options */
 extern int quiet_mode;
 extern int verbose_mode;
-extern int stroke_info_mode;
 extern int auto_place_mode;
 
 #define MAX_BUFFERS 	5

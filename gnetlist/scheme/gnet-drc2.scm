@@ -21,6 +21,7 @@
 ;;
 ;; DRC backend written by Carlos Nieves Onega starts here.
 ;;
+;;  2010-12-11: Fix stack overflows with large designs.
 ;;  2010-10-02: Applied patch from Karl Hammar. Do drc-matrix lower triangular
 ;;                    and let get-drc-matrixelement swap row/column if row < column.
 ;;  2006-04-22: Display the pins when reporting a net with only one connection.
@@ -165,6 +166,8 @@
 ;; -------------------------------------------------------------------------------
 ;; IMPORTANT: Don't modify anything below unless you know what you are doing.
 ;; -------------------------------------------------------------------------------
+
+(use-modules (srfi srfi-1))
 
 ;;
 ;; Some internal definitions
@@ -413,7 +416,9 @@
 	
 	(let* ( (numslots_string (gnetlist:get-package-attribute uref "numslots"))
 		(numslots (string->number numslots_string))
-		(slot_string (gnetlist:get-package-attribute uref "slot"))
+		(slot_string (let ((slots (gnetlist:get-all-package-attributes uref "slot")))
+                               (if (or (null? slots) (not (car slots)))
+                                   "unknown" (car slots))))
 		(slot (string->number slot_string))
 		)
 	  (let ()
@@ -496,18 +501,11 @@
     ))
 
 ;; Count the ocurrences of a given reference in the given list.
-(define drc2:count-reference-in-list
-  (lambda (refdes list)
-    (if (null? list)
-	0
-	(let ( (comparison (if (defined? 'case_insensitive)
-			       (string-ci=? refdes (car list))
-			       (string=? refdes (car list)))))
-	  (if comparison
-	      (+ 1 (drc2:count-reference-in-list refdes (cdr list)))
-	      (+ 0 (drc2:count-reference-in-list refdes (cdr list))))
-	  ))
-))
+(define (drc2:count-reference-in-list refdes lst)
+  (define refdes=? (if (defined? 'case_insensitive) string-ci=? string=?))
+  (fold
+   (lambda (x count) (if (refdes=? refdes x) (1+ count) count))
+   0 lst))
 
 ;; Check duplicated references of the given list
 ;;   If the number of ocurrences of a reference in the schematic doesn't match the number
@@ -537,6 +535,32 @@
 ;-----------------------------------------------------------------------
 ;  NETs checking functions
 ;
+
+;;
+;; Check for NoConnection nets with more than one pin connected.
+;;
+;; Example of all-nets: (net1 net2 net3 net4)
+(define (drc2:check-connected-noconnects port all-nets)
+  (for-each
+    (lambda (netname)
+      (let
+        ((directives (gnetlist:graphical-objs-in-net-with-attrib-get-attrib
+                    netname
+                    "device=DRC_Directive"
+                    "value")))
+        ;Only check nets with a NoConnection directive
+        (and
+          (member "NoConnection" directives)
+          ( >  (length (gnetlist:get-all-connections netname)) '1)
+          (begin
+            (display (string-append "ERROR: Net '"
+                            netname "' has connections, but "
+                            "has the NoConnection DRC directive: ") port)
+            (drc2:display-pins-of-type port "all" (gnetlist:get-all-connections netname))
+            (display "." port)
+            (newline port)
+            (set! errors_number (1+ errors_number))))))
+    all-nets))
 
 ;;
 ;; Check for nets with less than two pins connected.
@@ -854,40 +878,28 @@
     ))
 
 ; Report pins without the 'pintype' attribute (pintype=unknown)
-(define drc2:report-unknown-pintypes
-  (lambda (port nets)
-    (define count-unknown-pintypes
-      (lambda (port nets)
-	(if (null? nets)
-	    0
-	    (begin
-	      (let*  ( (netname     (car nets))
-		       (connections (gnetlist:get-all-connections netname))
-		       (pintypes    (drc2:get-pintypes-of-net-connections 
-				     connections
-				     '()))
-		       (pintype-count (drc2:count-pintypes-of-net pintypes port)))
-		(+ (list-ref pintype-count (drc2:position-of-pintype "unknown"))
-		   (count-unknown-pintypes port (cdr nets))))))))
-    (define display-unknown-pintypes
-      (lambda (port nets)
-	(if (not (null? nets))
-	    (begin
-	      (let*  ( (netname     (car nets))
-		       (connections (gnetlist:get-all-connections netname))
-		       )
-		(drc2:display-pins-of-type port (drc2:position-of-pintype "unknown")
-					   connections)		   
-		(display-unknown-pintypes port (cdr nets)))))))
-
-    (if (> (count-unknown-pintypes port nets) 0)
-	(begin
-	  (display "NOTE: Found pins without the 'pintype' attribute: " port)
-	  (display-unknown-pintypes port nets)
-	  (display "\n")))
-))
-	
-
+(define (drc2:report-unknown-pintypes port nets)
+  (define (count-unknown-pintypes nets)
+    (fold
+     (lambda (netname count)
+       (let* ((connections (gnetlist:get-all-connections netname))
+              (pintypes (drc2:get-pintypes-of-net-connections connections '()))
+              (pintype-count (drc2:count-pintypes-of-net pintypes port)))
+         (+ count
+            (list-ref pintype-count (drc2:position-of-pintype "unknown")))))
+     0 nets))
+  (define (display-unknown-pintypes nets)
+    (for-each
+     (lambda (netname)
+       (drc2:display-pins-of-type port
+                                  (drc2:position-of-pintype "unknown")
+                                  (gnetlist:get-all-connections netname)))
+     nets))
+  (and (> (count-unknown-pintypes nets) 0)
+       (begin
+         (display "NOTE: Found pins without the 'pintype' attribute: " port)
+         (display-unknown-pintypes nets)
+         (display "\n"))))
 
 ;
 ;  End of Net checking functions
@@ -928,6 +940,14 @@
 		  (display "Checking duplicated references..." port)
 		  (newline port)
 		  (drc2:check-duplicated-references port packages)
+		  (newline port)))
+
+	    ;; Check for NoConnection nets with more than one pin connected.
+	    (if (not (defined? 'dont-check-connected-noconnects))
+		(begin
+		  (display "Checking NoConnection nets for connections..." port)
+		  (newline port)
+		  (drc2:check-connected-noconnects port (gnetlist:get-all-unique-nets "dummy"))
 		  (newline port)))
 
 	    ;; Check nets with only one connection

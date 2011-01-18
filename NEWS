@@ -2,10 +2,104 @@
  'gschem and Friends' Electronic Design Suite
 ==============================================
 
-Copyright (C) 1998-2010 gEDA Developers
+Copyright (C) 1998-2011 gEDA Developers
 
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
+
+Notable changes in gEDA/gaf 1.7.0
+=================================
+
+* All gEDA/gaf applications now handle configuration files much more
+  strictly, and provide much more useful feedback when an error
+  occurs.
+
+* Several changes to `gschem' command-line options:
+
+  - The `-t' option is no longer supported.
+
+  - Several command-line options now support a long-form alternative.
+
+  - The `-s' option can now be used to run multiple Scheme scripts
+    during `gschem' startup.
+
+  - A new `-c' option is available, which runs a Scheme expression
+    during `gschem' startup.
+
+  - A new `-L' option is available, which adds a directory to the
+    Scheme load path.
+
+  - A new `-V' or `--version' option is available, which displays
+    version information.
+
+* `gschem' now provides a "Select All" function, which is bound to
+  <Control a> by default, along with a corresponding "Deselect"
+  function.
+
+* In the `gschem' "Add component" dialog, filtering the component
+  library will expand matching libraries.  If the filter is cancelled,
+  all libraries are collapsed.  Components can now be selected by
+  double-clicking on them in the component list.
+
+* The `gschem' "Edit Text Properties" dialog now has an easier to use
+  "Alignment" menu.
+
+* Printed text size now better matches on-screen text size in
+  `gschem'.
+
+* Special characters, including commas, are now escaped or quoted
+  appropriately in `gattrib' CSV output.
+
+* Several changes to `gnetlist' command-line options:
+
+  - Four command-line options specific to the `spice-sdb' backend have
+    been removed.  They can be replaced with `-O <option>' according
+    to the following table:
+
+        -e, --embedd              -O embedd_mode
+        -I, --include             -O include_mode
+        -n, --nomunge             -O nomunge_mode
+        -s, --sort                -O sort_mode
+
+  - The list of available backends is now obtained using a new
+    `--list-backends' option.  `-g help' no longer outputs a list of
+    backends.
+
+  - A new `-L' option is available, which adds a directory to the
+    Scheme load path.
+
+  - A new `-V' or `--version' option is available, which displays
+    version information.
+
+  - When run with invalid command-line arguments, `gnetlist' now exits
+    with non-zero exit status.
+
+* Several `gnetlist' backends have now been fixed so that it should no
+  longer be necessary to set an expanded Guile stack in gEDA's config
+  files.
+
+* The `spice-sdb' backend for `gnetlist' now supports probes
+  (`TESTPOINT' devices).
+
+* The undocumented `mk_verilog_syms' program is no longer installed.
+  The symbols it creates are still installed to
+  `${prefix}/share/gEDA/sym/verilog'.
+
+Notable changes in gEDA/gaf 1.6.2
+=================================
+
+ * PNG export from `gschem' will now be cropped correctly.
+
+ * The `partlist' backends for `gnetlist' now handle hierarchical
+   refdes correctly.
+
+ * On Windows, `gschem' and `gattrib' will no longer launch with a
+   command window visible.
+
+ * `gnetlist-arg' is no longer valid in `gsch2pcb' project files.
+
+Several other bugs were fixed, including a major crash bug in
+gnetlist.
 
 Notable changes in gEDA/gaf 1.6.1
 =================================

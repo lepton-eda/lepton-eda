@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+<h2 class="sectionedit1400"><a name="building_the_geda_gaf_git_repository_version" id="building_the_geda_gaf_git_repository_version">Building the gEDA/gaf git repository version</a></h2>
+<div class="level2">
+
+<p>
+To build the git repository version of gEDA/gaf, follow these instructions:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Download and install all the following dependencies.  You will probably want to use your distributions package management system (such as apt-get or yum) to install the dependencies.</div>
+<ul>
+<li class="level2"><div class="li"> A C compiler and C standard library (<a href="http://gcc.gnu.org/" class="urlextern" title="http://gcc.gnu.org/"  rel="nofollow"> GCC </a> and <a href="http://www.gnu.org/software/libc/" class="urlextern" title="http://www.gnu.org/software/libc/"  rel="nofollow"> GNU Libc </a> are recommended)</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://flex.sourceforge.net/" class="urlextern" title="http://flex.sourceforge.net/"  rel="nofollow"> flex </a> current</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://www.gnu.org/software/gawk/" class="urlextern" title="http://www.gnu.org/software/gawk/"  rel="nofollow"> GNU awk </a> current</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://www.gnu.org/software/automake" class="urlextern" title="http://www.gnu.org/software/automake"  rel="nofollow"> automake </a> 1.6.x or later</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://www.gnu.org/software/autoconf/" class="urlextern" title="http://www.gnu.org/software/autoconf/"  rel="nofollow"> autoconf </a>  2.60 or later</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://www.gnu.org/software/libtool/" class="urlextern" title="http://www.gnu.org/software/libtool/"  rel="nofollow"> libtool </a> current</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://pkgconfig.freedesktop.org/wiki" class="urlextern" title="http://pkgconfig.freedesktop.org/wiki"  rel="nofollow"> pkg-config </a> current</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://www.gnu.org/software/gettext/" class="urlextern" title="http://www.gnu.org/software/gettext/"  rel="nofollow"> gettext </a>  0.16 or later</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://www.gnu.org/software/guile%22" class="urlextern" title="http://www.gnu.org/software/guile&quot;"  rel="nofollow"> guile </a>  1.8.x (1.6.x is no longer supported)</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://www.gtk.org/" class="urlextern" title="http://www.gtk.org/"  rel="nofollow"> gtk+ </a> 2.10.x or later</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://www.gnu.org/software/groff/groff.html" class="urlextern" title="http://www.gnu.org/software/groff/groff.html"  rel="nofollow"> groff </a> current</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://git-scm.com" class="urlextern" title="http://git-scm.com"  rel="nofollow"> git </a> 1.6.x or later</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://www.nongnu.org/cvs/" class="urlextern" title="http://www.nongnu.org/cvs/"  rel="nofollow"> cvs </a> current</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://freedesktop.org/Software/shared-mime-info" class="urlextern" title="http://freedesktop.org/Software/shared-mime-info"  rel="nofollow"> freedesktop.org MIME info database </a> current</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://www.freedesktop.org/software/desktop-file-utils/releases" class="urlextern" title="http://www.freedesktop.org/software/desktop-file-utils/releases"  rel="nofollow"> freedesktop.org utilities for manipulating .desktop files </a> current </div>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> It is pretty important to have all of the above programs (especially automake, autoconf, libtool, gtk, and guile) installed in the same prefix (like /usr or /usr/local).  If you do not have them all installed in the same prefix, then building and installing gEDA/gaf is much harder.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Clone the source from the official git repository.  For information on how to do this, read the <a href="geda-scm.html" class="wikilink1" title="geda-scm.html"> gEDA SCM page </a></div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Build the software by executing the following commands inside of the newly cloned git repository:</div>
+</li>
+</ul>
+<pre class="code">    ./autogen.sh
+    ./configure --prefix=$HOME/geda
+    make 
+    make install</pre>
+<ul>
+<li class="level1"><div class="li"> If the above commands execute without <strong>any</strong> error messages, then you have successfully built and installed gEDA/gaf.  If you encounter any errors, be sure to read the README and INSTALL files contained within the tarball.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> You can now run the various programs in the gEDA suite.  Please read the toplevel README file which describes what is available.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> gschem is the schematic capture program and can be run by executing: <code>PATH_WHERE_gEDA_GAF_IS_INSTALLED/bin/gschem</code></div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> It is recommended that you add <code>PATH_WHERE_gEDA_GAF_IS_INSTALLED/bin</code> to your PATH environment variable (typically done by modifying one of the following files: <code>$HOME/.bashrc</code>, <code>$HOME/.bash_profile</code>, or <code>$HOME/.profile</code>).</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> It is highly recommended that you read the gEDA documentation at this point.  You can access the gEDA documentation by running gschem and select Help/gEDA Documentation… from the top menu.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> If you want to get gEDA/gaf repository commit log e-mail messages, please subscribe to the geda-cvs mailing list.  Please see the <a href="geda-mailinglists.html" class="wikilink1" title="geda-mailinglists.html"> mailing lists page </a> for info on how to do this.</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> For build problems, please be sure to read the <a href="geda-mailinglists.html" class="wikilink1" title="geda-mailinglists.html"> mailing list archives </a> or <a href="http://www.gpleda.org/search.html" class="urlextern" title="http://www.gpleda.org/search.html"  rel="nofollow"> search </a> this site.  Also look at the <a href="start.html" class="wikilink1" title="start.html"> gEDA wiki </a> for more hints.</div>
+</li>
+</ul>
+
+</div>
+</body>
+</html>

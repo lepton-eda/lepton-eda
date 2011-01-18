@@ -1,223 +1,252 @@
-.TH gnetlist 1 "February 14th, 2010" Version 1.6.1.20100214
+.TH gnetlist 1 "January 16th, 2011" "gEDA Project" 1.7.0.20110116
 .SH NAME
-gnetlist - gEDA/gaf Netlist extraction/generation
+gnetlist - gEDA/gaf Netlist Extraction and Generation
 .SH SYNOPSIS
 .B gnetlist
-[\-e] [\-i] [\-I] [\-q] [\-s] [\-v] [\-l schem_file] [\-m schem_file ] [\-n] [ \-O option ] [\-h | \-\-help] [\-g guile_procedure] [\-c scheme_string ] [\-o output_filename] schematic1 [... schematicN]
+[\fIOPTION\fR ...] [\fB-g\fR \fIBACKEND\fR] [\fI--\fR] \fIFILE\fR ...
+
 .SH DESCRIPTION
 .PP
-\fIgnetlist\fP is the netlist extraction/generation program which is part gEDA 
-(GPL Electronic Design Automation) toolset.  This program takes a schematic
-for its input and outputs a netlist.  
 
-gnetlist depends heavily on guile (a scheme based scripting language).  It 
-uses guile to define the output format.  Basically gnetlist reads a schematic,
-creates an internal representation of the various connections, and then a
-guile script extracts the connections into some netlist format.  
+\fBgnetlist\fR is a netlist extraction and generation tool, and is
+part of the gEDA (GPL Electronic Design Automation) toolset.  It takes
+one or electronic schematics as input, and outputs a netlist.  A
+netlist is a machine-interpretable description of the way that
+components in an electronic circuit are connected together, and is
+commonly used as the input to a PCB layout program such as
+\fBpcb\fR(1) or to a simulator such as \fBgnucap\fR(1).
 
-gnetlist is very much so a work in progress.  Currently it supports the
-following backends: 
+A normal \fBgnetlist\fR run is carried out in two steps.  First, the
+\fBgnetlist\fR frontend loads the specified human-readable schematic
+\fIFILE\fRs, and compiles them to an in-memory netlist description.
+Next, a `backend' is used to export the connection and component data
+to one of many supported netlist formats.
 
-.IP \[bu] 2 
-Allegro netlist format (\-g allegro)
-.IP \[bu]
-BOM / BOM2 - Bill of Materials (\-g bom and \-g bom2)
-.IP \[bu]
-Partslist 1,2,3 - More Bill of Materials (\-g partslist[1-3])
-.IP \[bu]
-DRC - Start of a design rule checker (\-g drc)
-.IP \[bu]
-DRC2 - A second design rule checker (\-g drc2)
-.IP \[bu]
-gEDA - native format, mainly used for testing (\-g geda)
-.IP \[bu]
-Gossip netlist format (\-g gossip)
-.IP \[bu]
-PADS netlist format (\-g pads)
-.IP \[bu]
-PCB / PCBboard (\-g PCB and \-g PCBboard)
-.IP \[bu]
-PCB actions file for forward annotating pin/pad names from
-schematic to layout (\-g pcbpins)
-.IP \[bu]
-gsch2pcb backend (\-g gsch2pcb)
-.IP \[bu]
-ProtelII netlist format (\-g protelII)
-.IP \[bu]
-Spice compatible netlist format (\-g spice)
-.IP \[bu]
-Enhanced spice compatible netlist format (\-g spice-sdb)
-.IP \[bu]
-Tango netlist format (\-g tango)
-.IP \[bu]
-Verilog code (\-g verilog)
-.IP \[bu]
-VHDL code (\-g vhdl)
-.IP \[bu]
-VIPEC netlist format (\-g vipec)
-.IP \[bu]
-Bartels Autoengineer netlist format (\-g bae)
-.IP \[bu]
-GOSSIP system simulation system netlist format (\-g gossip)
-.IP \[bu]
-MAXASCII netlist format (\-g maxascii)
-.IP \[bu]
-VHDL-AMS netlist format (\-g vams)
-.IP \[bu]
-Futurenet2 netlist format (\-g futurenet2)
-.IP \[bu]
-SWITCAP switched capacitor simulator netlist format (\-g switcap)
-.IP \[bu]
-RF Cascade netlist format (\-g cascade)
-.IP \[bu]
-RACAL-REDAC netlist format (\-g redac)
-.IP \[bu]
-SystemC netlist backend (\-g systemc)
-.IP \[bu]
-Calay format netlist backend (\-g calay)
-.IP \[bu]
-Osmond format netlist backend (\-g osmond)
-.IP \[bu]
-Eagle netlist format (\-g eagle)
-.IP \[bu]
-Netlister for symbolic circuit analysis using Mathematica (\-g mathematica)
-.IP \[bu]
-LiquidPCB format netlist backend (\-g liquidpcb)
+\fBgnetlist\fR is extensible, using the Scheme programming language.
 
-For more info on these formats please look at the README.*
+.SH GENERAL OPTIONS
+.TP 8
+\fB-q\fR
+Quiet mode. Turns off all warnings/notes/messages.
+.TP 8
+\fB-v\fR, \fB--verbose\fR
+Verbose mode.  Output all diagnostic information.
+.TP 8
+\fB-L\fR \fIDIRECTORY\fR
+Prepend \fIDIRECTORY\fR to the list of directories to be searched for
+Scheme files.
+.TP 8
+\fB-g\fR \fIBACKEND\fR
+Specify the netlist backend to be used.
+.TP 8
+\fB-O\fR \fISTRING\fR
+Pass an option string to the backend.
+.TP 8
+\fB--list-backends\fR
+Print a list of available netlist backends.
+.TP 8
+\fB-o\fR \fIFILE\fR
+Specify the filename for the generated netlist.  By default, output is
+directed to `output.net'.
+.TP 8
+\fB-l\fR \fIFILE\fR
+Specify a Scheme file to be loaded before the backend is loaded or
+executed.  This option can be specified multiple times.
+.TP 8
+\fB-m\fR \fIFILE\fR
+Specify a Scheme file to be loaded between loading the backend and
+executing it.  This option can be specified multiple times.
+.TP 8
+\fB-c\fR \fIEXPR\fR
+Specify a Scheme expression to be executed during \fBgnetlist\fR
+startup.  This option can be specified multiple times.
+.TP 8
+\fB-i\fR
+After the schematic files have been loaded and compiled, and after all
+Scheme files have been loaded, but before running the backend, enter a
+Scheme read-eval-print loop.
+.TP 8
+\fB-h\fR, \fB--help\fR
+Print a help message.
+.TP 8
+\fB-V\fR, \fB--version\fR
+Print \fBgnetlist\fR version information.
+.TP 8
+\fB--\fR
+Treat all remaining arguments as schematic filenames.  Use this if you
+have a schematic filename which begins with `-'.
 
-Please read the official documentation on how to use
-gnetlist, since this man page just describes the command line arguments
-and a few examples on how to run gnetlist.
+.SH BACKENDS
+.PP
+Currently, \fBgnetlist\fR includes the following backends:
 
-.SH OPTIONS
-\fIgnelist\fP accepts the following options:
 .TP 8
-.B -q
-Quiet mode on.  This mode turns off all warnings/notes/messages. (optional)
+\fBallegro\fR
+Allegro netlist format.
 .TP 8
-.B -v 
-Verbose mode on.  This mode gives as much feedback to the user as possible. (optional)
+\fBbae\fR
+Bartels Autoengineer netlist format.
 .TP 8
-.B -g guile_procedure
-Specify the guile procedure which is executed to create the netlist. Use "\-g help" to display a list of available backends.
+\fBbom\fR, \fBbom2\fR
+Bill of materials generation.
 .TP 8
-.B -o output_filename
-Specify the filename which will contain the netlist generated by gnetlist.  If this option is not specified the default filename is "output.net".
+\fBcalay\fR
+Calay netlist format.
 .TP 8
-.B -l scheme_file
-Specify a filename which contains scheme code to be loaded and
-execute before any backend is loaded or any guile procedure (using \-g flag) 
-is executed.  This flag can be specified multiple times and can be used to 
-pass information to backends.
+\fBcascade\fR
+RF Cascade netlist format
 .TP 8
-.B -e, --embed 
-Force embedding contents of .include file when using the spice-sdb backend.
+\fBdrc\fR, \fBdrc2\fR
+Design rule checkers (\fBdrc2\fR is recommended).
 .TP 8
-.B -O string
-Pass the given option to the specified backend.
+\fBeagle\fR
+Eagle netlist format.
 .TP 8
-.B -m scheme_file
-Specify a filename which contains scheme code to be loaded and
-execute after the backend is loaded but still before any guile procedure 
-(using \-g flag) is executed.  This flag can be specified multiple times 
-and can be used to pass information to backends.  This flag, for example, 
-allows the user to override variables inside of the backends (such as paths).
+\fBfuturenet2\fR
+Futurenet2 netlist format.
 .TP 8
-.B -n, --nomunge
-Do not autocorrect the refdes attributes.  Only applies to the spice-sdb backend.
+\fBgeda\fR
+Native gEDA netlist format (mainly used for testing and diagnostics).
 .TP 8
-.B -c string
-Pass the specified string to the guile interpreter.  This allows you to 
-execute arbitrary guile scripts from the command line.  Be sure to surround
-the string with either single or double quotes to satisfy your shell.  The
-string is execute before any init or netlist backend scheme code is
-loaded or executed.
+\fBgossip\fR
+Gossip netlist format.
 .TP 8
-.B -I, --include 
-Put .INCLUDE <filename> in output file instead of model file's contents.
+\fBgsch2pcb\fR
+Backend used for \fBpcb\fR(1) file layout generation by
+\fBgsch2pcb\fR(1).  It is not recommended to use this backend
+directly.
 .TP 8
-.B -h, --help
-Print out short command line help.
+\fBliquidpcb\fR
+LiquidPCB netlist format.
 .TP 8
-.B -i 
-Interactive mode.  After the schematic is read in and parsed then go into 
-interactive mode.  Interactive mode allows the user to execute guile 
-procedures directly. 
+\fBmathematica\fR
+Netlister for analytical circuit solving using Mathematica.
 .TP 8
-.B -s 
-Sort output netlist (for Gnucap)
+\fBmaxascii\fR
+MAXASCII netlist format.
 .TP 8
-schematic1 [... schematicN]
-At least one schematic file must be specified.  If multiple schematics are 
-specified then they are sequentially read in and parsed with the assumption 
-that they are all part of the same design.  It is important that the 
-schematic(s) follow all the options (ie last).
+\fBosmond\fR
+Osmond netlist format.
+.TP 8
+\fBpads\fR
+PADS netlist format.
+.TP 8
+\fBpartslist1\fR, \fBpartslist2\fR, \fBpartslist3\fR
+Bill of materials generation backends (alternatives to \fBbom\fR and
+\fBbom2\fR).
+.TP 8
+\fBPCB\fR
+\fBpcb\fR(1) netlist format.
+.TP 8
+\fBpcbpins\fR
+Generates a \fBpcb\fR(1) action file for forward annotating pin/pad
+names from schematic to layout.
+.TP 8
+\fBprotelII\fR
+Protel II netlist format.
+.TP 8
+\fBredac\fR
+RACAL-REDAC netlist format.
+.TP 8
+\fBspice\fR, \fBspice-sdb\fR
+SPICE-compatible netlist format (\fBspice-sdb\fR is recommended).
+Suitable for use with \fBgnucap\fR(1).
+.TP 8
+\fBswitcap\fR
+SWITCAP switched capacitor simulator netlist format.
+.TP 8
+\fBsystemc\fR
+Structural SystemC code generation.
+.TP 8
+\fBtango\fR
+Tango netlist format.
+.TP 8
+\fBvams\fR
+VHDL-AMS code generation.
+.TP 8
+\fBverilog\fR
+Verilog code generation.
+.TP 8
+\fBvhdl\fR
+VHDL code generation.
+.TP 8
+\fBvipec\fR
+ViPEC Network Analyser netlist format.
 
-.SH EXAMPLES 
-These examples assume that you have a stack_1.sch in the current directory.
 
-gnetlist requires that at least one schematic to be specified on the command line:
+.SH EXAMPLES
+.PP
+These examples assume that you have a `stack_1.sch' in the current directory.
+.PP
+\fBgnetlist\fR requires that at least one schematic to be specified on the
+command line:
 
 .nf
-	./gnetlist stack_1.sch 
-.ad b 
+	./gnetlist stack_1.sch
+.ad b
 
-This is not very useful since it does not direct gnetlist to do 
-anything.  
-
-Specify a guile procedure name to get gnetlist to output a netlist:
+.PP
+This is not very useful since it does not direct \fBgnetlist\fR to do
+anything.
+.PP
+Specify a backend name with `\-g' to get \fBgnetlist\fR to output a
+netlist:
 
 .nf
-	./gnetlist \-g geda stack_1.sch 
-.ad b 
+	./gnetlist \-g geda stack_1.sch
+.ad b
 
-The netlist output will be written to a file called "output.net" 
+.PP
+The netlist output will be written to a file called `output.net'
 in the current working directory.
 
-You can specify the output filename by using the \-o flag:
-
-.nf
-	./gnetlist \-g geda stack_1.sch \-o stack.netlist
-.ad b 
-
-The spice backend is run against the schematic(s) if you specify 
-\-g spice and the tango backend is run if you specify \-g tango.
-
-To interact with the guile interpreter:
-
-.nf
-	./gnetlist \-i stack_1.sch 
-.ad b 
-
-You will get a prompt where you can execute guile procedures.
-
-To get a more verbose feedback as to what gnetlist is doing run 
-with the \-v flag:
-
-.nf
-	./gnetlist \-v \-g geda stack_1.sch 
-.ad b 
-
-.SH "ENVIRONMENT"
-\fIgnetlist\fP respects the following environment variable:
 .PP
-.TP 8
-.B GEDADATA 
-Specifies where the various required scheme and rc files are located
-(the default is ${prefix}/share/gEDA).  This environment variables does
-not need to be set by the end user unless they are moving the executables
-to a new install ${prefix}.
+You can specify the output filename by using the `\-o' option:
 
-.SH "AUTHOR"
-Ales Hvezda and many others
+.nf
+	./gnetlist \-g geda stack_1.sch \-o /tmp/stack.netlist
+.ad b
+
+.PP
+Output will now be directed to `/tmp/stack.netlist'.
+
+.PP
+You could run (for example) the `spice-sdb' backend against the
+schematic if you specified `\-g spice-sdb', or you could generate a
+bill of materials for the schematic using `\-g partslist1'.
+
+.PP
+To obtain a Scheme prompt to run Scheme expressions directly, you can
+use the `\-i' option.
+
+.nf
+	./gnetlist \-i stack_1.sch
+.ad b
+
+.PP
+\fBgnetlist\fR will load `stack_1.sh', and then enter an interactive
+Scheme read-eval-print loop.
+
+.SH ENVIRONMENT
+.TP 8
+.B GEDADATA
+specifies the search directory for Scheme and rc files.  The default
+is `${prefix}/share/gEDA'.
+.TP 8
+.B GEDADATARC
+specifies the search directory for rc files.  The default is `$GEDADATA'.
+
+.SH AUTHORS
+See the `AUTHORS' file included with this program.
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 1999-2011 gEDA Contributors.  License GPLv2+: GNU GPL
+version 2 or later.  Please see the `COPYING' file included with this
+program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
 
 .SH SEE ALSO
-.BR gschem (1),
-.BR gsymcheck (1)
-.SH COPYRIGHT
-Copyright \(co  1999-2008 Ales Hvezda
-
-This document can be freely redistributed according to the terms of the 
-GNU General Public License version 2.0.
-
+\fBgschem\fR(1), \fBgsymcheck\fR(1), \fBpcb\fR(1), \fBgnucap\fR(1)

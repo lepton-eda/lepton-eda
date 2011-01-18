@@ -25,6 +25,7 @@ scheme_api_sources = \
 libgeda_la_SOURCES = \
 	$(scheme_api_sources) \
 	a_basic.c \
+	edaerrors.c \
 	f_basic.c \
 	f_print.c \
 	g_basic.c \

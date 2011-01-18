@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 #include <config.h>
@@ -46,8 +46,6 @@
 #include <dmalloc.h>
 #endif
 
-#define BACKEND_LIST_COLS      3
-
 void gnetlist_quit(void)
 {
     s_clib_free();
@@ -59,59 +57,87 @@ void gnetlist_quit(void)
     g_slist_free (backend_params);
 }
 
-/** @brief Prints a list of all installed gnetlist backends to standard output.
+
+/* \brief Print a list of available backends.
+ * \par Function Description
+ * Prints a list of available gnetlist backends by searching for files
+ * in each of the directories in the current Guile %load-path.  A file
+ * is considered to be a gnetlist backend if its basename begins with
+ * "gnet-" and ends with ".scm".
  *
- * @param current Pointer to the toplevel struct.
+ * \param pr_current  Current #TOPLEVEL structure.
  */
-void gnetlist_backends(TOPLEVEL *current)
+void
+gnetlist_backends (TOPLEVEL *pr_current)
 {
-    DIR *schemedir;
-    struct dirent *entry;
-    char *filename;
-    int n;
+  SCM s_load_path;
+  GList *backend_names = NULL, *iter = NULL;
 
-    schemedir=opendir(current->scheme_directory);
-    if(schemedir==NULL) {
-        fprintf(stderr, "\nERROR! Can't open directory %s: %s\n",
-                        current->scheme_directory,
-                        strerror(errno));
-        return;
+  /* Look up the current Guile %load-path */
+  s_load_path = scm_variable_ref (scm_c_lookup ("%load-path"));
+
+  for ( ; s_load_path != SCM_EOL; s_load_path = scm_cdr (s_load_path)) {
+    SCM s_dir_name = scm_car (s_load_path);
+    char *dir_name;
+    DIR *dptr;
+    struct dirent *dentry;
+
+    /* Get directory name from Scheme */
+    g_assert (scm_is_true (scm_list_p (s_load_path))); /* Sanity check */
+    g_assert (scm_is_string (scm_car (s_load_path))); /* Sanity check */
+    dir_name = scm_to_locale_string (s_dir_name);
+
+    /* Open directory */
+    dptr = opendir (dir_name);
+    if (dptr == NULL) {
+      g_warning ("Can't open directory %s: %s\n",
+                 dir_name, strerror (errno));
+      continue;
+    }
+    free (dir_name);
+
+    while (1) {
+      char *name;
+
+      dentry = readdir (dptr);
+      if (dentry == NULL) break;
+
+      /* Check that filename has the right format to be a gnetlist
+       * backend */
+      if (!(g_str_has_prefix (dentry->d_name, "gnet-")
+            && g_str_has_suffix (dentry->d_name, ".scm")))
+        continue;
+
+      /* Copy filename and remove prefix & suffix.  Add to list of
+       * backend names. */
+      name = g_strdup (dentry->d_name + 5);
+      name[strlen(name)-4] = '\0';
+      backend_names = g_list_prepend (backend_names, name);
     }
 
-    printf("List of available backends:\n\n");
+    /* Close directory */
+    closedir (dptr);
+  }
 
-    n=1;
-    while(1) {
-        entry=readdir(schemedir);
-        if(entry==NULL) break;
+  /* Sort the list of backends */
+  backend_names = g_list_sort (backend_names, (GCompareFunc) strcmp);
 
-        filename=strdup(entry->d_name);
+  printf ("List of available backends: \n\n");
 
-        if(g_str_has_prefix(filename, "gnet-")&&
-           g_str_has_suffix(filename, ".scm")) {
+  for (iter = backend_names; iter != NULL; iter = g_list_next (iter)) {
+    printf ("%s\n", (char *) iter->data);
+  }
+  printf ("\n");
 
-            /* strip the suffix */
-            filename[strlen(filename)-4]='\0';
-            /* and skip the prefix */
-            printf("%-25s", &filename[5]);
-            if(n>=BACKEND_LIST_COLS) {
-                printf("\n");
-                n=0;
-            }
-            n++;
-        }
-
-        free(filename);
-    }
-    printf("\n");
+  scm_remember_upto_here_1 (s_load_path);
 }
+
 
 void main_prog(void *closure, int argc, char *argv[])
 {
     int i;
     int argv_index;
     char *cwd;
-    GSList *list_pnt;
     gchar *str;
     gchar *filename;
 
@@ -123,7 +149,7 @@ void main_prog(void *closure, int argc, char *argv[])
     argv_index = parse_commandline(argc, argv);
     cwd = g_get_current_dir();
 
-    command_line = create_command_line(argc, argv);
+    scm_set_program_arguments (argc, argv, NULL);
 
     /* this is a kludge to make sure that spice mode gets set */
     /*  Hacked by SDB to allow spice netlisters of arbitrary name
@@ -162,35 +188,24 @@ void main_prog(void *closure, int argc, char *argv[])
     pr_current = s_toplevel_new ();
     edascm_dynwind_toplevel (pr_current);
 
-    g_rc_parse(pr_current, "gnetlistrc", rc_filename);
+    /* Evaluate Scheme expressions that need to be run before rc files
+     * are loaded. */
+    scm_eval_x (pre_rc_list, scm_current_module ());
+
+    g_rc_parse (pr_current, argv[0], "gnetlistrc", rc_filename);
     /* immediately setup user params */
     i_vars_set (pr_current);
 
     s_rename_init();
 
-    if(guile_proc!=NULL) {
-        if(!strcmp(guile_proc, "help")) {
-                gnetlist_backends(pr_current);
-                exit(0);
-            }
+    if(list_backends) {
+      gnetlist_backends(pr_current);
+      exit (0);
     }
 
-    /* Load the first set of scm files before we load any schematic files */
-    list_pnt = pre_backend_list;
-    while (list_pnt) {
-      if (g_read_file(pr_current, list_pnt->data) != -1) {
-        s_log_message("Read scm file [%s]\n",
-                      (char *) list_pnt->data);
-      } else {
-        s_log_message("Failed to read scm file [%s]\n",
-                      (char *) list_pnt->data);
-        fprintf(stderr, "Failed to read scm file [%s]\n",
-                (char *) list_pnt->data);
-      }
-      list_pnt = g_slist_next(list_pnt);
-    }
-    /* Free now the list of configuration files */
-    g_slist_free(pre_backend_list);
+    /* Evaluate the first set of Scheme expressions before we load any
+     * schematic files */
+    scm_eval_x (pre_backend_list, scm_current_module ());
 
     i = argv_index;
     while (argv[i] != NULL) {
@@ -231,53 +246,41 @@ void main_prog(void *closure, int argc, char *argv[])
     /* free(cwd); - Defered; see below */
 
     if (argv[argv_index] == NULL) {
-        fprintf(stderr,
-                "\nERROR! You must specify at least one filename\n\n");
-        usage(argv[0]);
+        fprintf (stderr, "ERROR: No schematics files specified for processing.\n");
+        fprintf (stderr, "\nRun `%s --help' for more information.\n", argv[0]);
+        exit (1);
     }
 
 #if DEBUG
     s_page_print_all(pr_current);
 #endif
 
-    filename = g_build_filename (pr_current->scheme_directory, "gnetlist.scm", NULL);
-    if (g_read_file (pr_current, filename) != -1) {
-      s_log_message ("Read init scm file [%s]\n", filename);
-    } else {
-      s_log_message ("Failed to read init scm file [%s]\n", filename);
-      fprintf (stderr, "Failed to read init scm file [%s]\n", filename);
-    }
-    g_free (filename);
+    /* Load basic gnetlist functions */
+    scm_primitive_load_path (scm_from_locale_string ("gnetlist.scm"));
 
     if (guile_proc) {
-        /* load the appropriate scm file */
-        str = g_strdup_printf("gnet-%s.scm", guile_proc);
-        filename = g_build_filename (pr_current->scheme_directory, str, NULL);
-        g_free (str);
-        if (g_read_file (pr_current, filename) != -1) {
-          s_log_message ("Read %s scm file [%s]\n", guile_proc, filename);
-        } else {
-          s_log_message ("Failed to read %s scm file [%s]\n", guile_proc, filename);
-          fprintf (stderr, "Failed to read %s scm file [%s]\n", guile_proc, filename);
-        }
-        g_free (filename);
+      SCM s_backend_path;
 
-        /* Load second set of scm files */
-        list_pnt = post_backend_list;
-        while (list_pnt) {
-          if (g_read_file(pr_current, list_pnt->data) != -1) {
-            s_log_message("Read scm file [%s]\n",
-                          (char *) list_pnt->data);
-          } else {
-            s_log_message("Failed to read scm file [%s]\n",
-                          (char *) list_pnt->data);
-            fprintf(stderr, "Failed to read scm file [%s]\n",
-                 (char *) list_pnt->data);
-          }
-          list_pnt = g_slist_next(list_pnt);
-        }
-        /* Free now the list of configuration files */
-        g_slist_free(post_backend_list);
+      /* Search for backend scm file in load path */
+      str = g_strdup_printf("gnet-%s.scm", guile_proc);
+      s_backend_path = scm_sys_search_load_path (scm_from_locale_string (str));
+      g_free (str);
+
+      /* If it couldn't be found, fail. */
+      if (scm_is_false (s_backend_path)) {
+        fprintf (stderr, "ERROR: Could not find backend `%s' in load path.\n",
+                 guile_proc);
+        fprintf (stderr,
+                 "\nRun `%s --list-backends' for a full list of available backends.\n",
+                 argv[0]);
+        exit (1);
+      }
+
+      /* Load backend code. */
+      scm_primitive_load (s_backend_path);
+
+      /* Evaluate second set of Scheme expressions. */
+      scm_eval_x (post_backend_list, scm_current_module ());
     }
 
     s_traverse_init();
@@ -291,14 +294,8 @@ void main_prog(void *closure, int argc, char *argv[])
     }
     g_free(cwd);
 
-    filename = g_build_filename (pr_current->scheme_directory, "gnetlist-post.scm", NULL);
-    if (g_read_file (pr_current, filename) != -1) {
-      s_log_message ("Read post traversal scm file [%s]\n", filename);
-    } else {
-      s_log_message ("Failed to read post traversal scm file [%s]\n", filename);
-      fprintf (stderr, "Failed to read post traversal scm file [%s]\n", filename);
-    }
-    g_free (filename);
+    /* Run post-traverse code. */
+    scm_primitive_load_path (scm_from_locale_string ("gnetlist-post.scm"));
 
     if (guile_proc) {
         /* check size here hack */

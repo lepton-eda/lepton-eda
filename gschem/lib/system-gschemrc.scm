@@ -1201,8 +1201,7 @@
     ("b" . edit-embed)
     ("u" . edit-unembed)
     ("p" . edit-update)
-    ("n" . edit-show-hidden)
-    ("v" . edit-make-text-visible)))
+    ("n" . edit-show-hidden)))
 
 
 ;;;    ("h" . edit-stretch-hotkey)  Obsolete
@@ -1343,7 +1342,8 @@
     ("Control c" . clipboard-copy)
     ("Control v" . clipboard-paste-hotkey)
     ("Control z" . edit-undo)
-    ("Control y" . edit-redo)))
+    ("Control y" . edit-redo)
+    ("Control a" . edit-select-all)))
 
 ; finally set the keymap point to the newly created datastructure 
 (define current-keymap global-keymap)
@@ -1408,6 +1408,8 @@
            (,(N_ "_Delete")            edit-delete            edit-delete             "gtk-delete"  )
            ("SEPARATOR"               #f                     #f                      #f)
            (,(N_ "Select Mode")        edit-select            edit-select             #f)
+           (,(N_ "Select All")         edit-select-all        edit-select-all         "gtk-select-all")
+           (,(N_ "Deselect")           edit-deselect          edit-deselect           "gtk-select-all")
            (,(N_ "Copy Mode")          edit-copy              edit-copy-hotkey        #f)
            (,(N_ "Multiple Copy Mode") edit-mcopy             edit-mcopy-hotkey       #f)
            (,(N_ "Move Mode")          edit-move              edit-move-hotkey        #f)
@@ -1428,8 +1430,7 @@
            (,(N_ "Embed Component/Picture")    edit-embed     edit-embed              #f)
            (,(N_ "Unembed Component/Picture")  edit-unembed   edit-unembed            #f)
            (,(N_ "Update Component")   edit-update            edit-update             "gtk-refresh")
-           (,(N_ "Show/Hide Inv Text") edit-show-hidden       edit-show-hidden        #f)
-           (,(N_ "Make Inv Text Vis")  edit-make-text-visible edit-make-text-visible  #f)))
+           (,(N_ "Show/Hide Inv Text") edit-show-hidden       edit-show-hidden        #f)))
 
 (define buffer-menu-items 
 ;;

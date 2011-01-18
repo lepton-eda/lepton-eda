@@ -28,20 +28,17 @@ void f_print_set_type(TOPLEVEL *toplevel, int type);
 SCM g_scm_eval_protected (SCM exp, SCM module_or_state);
 SCM g_scm_eval_string_protected (SCM str);
 SCM g_scm_c_eval_string_protected (const gchar *str);
-int g_read_file(TOPLEVEL *toplevel, const gchar *filename);
+gboolean g_read_file(TOPLEVEL *toplevel, const gchar *filename, GError **err);
 
 /* g_rc.c */
 SCM g_rc_mode_general(SCM scmmode, const char *rc_name, int *mode_var, 
                       const vstbl_entry *table, int table_size);
-gint g_rc_parse_general(TOPLEVEL *toplevel,
-                        const gchar *fname, 
-                        const gchar *ok_msg, const gchar *err_msg);
-gint g_rc_parse_system_rc(TOPLEVEL *toplevel, const gchar *rcname);
-gint g_rc_parse_home_rc(TOPLEVEL *toplevel, const gchar *rcname);
-gint g_rc_parse_local_rc(TOPLEVEL *toplevel, const gchar *rcname);
-void g_rc_parse(TOPLEVEL *toplevel, const gchar* rcname,
-                const gchar* specified_rc_filename);
-gint g_rc_parse_specified_rc(TOPLEVEL *toplevel, const gchar *rcfilename);
+gboolean g_rc_parse_system (TOPLEVEL *toplevel, const gchar *rcname, GError **err);
+gboolean g_rc_parse_user (TOPLEVEL *toplevel, const gchar *rcname, GError **err);
+gboolean g_rc_parse_local (TOPLEVEL *toplevel, const gchar *rcname, const gchar *path, GError **err);
+gboolean g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile, GError **err);
+void g_rc_parse(TOPLEVEL *toplevel, const gchar* pname, const gchar* rcname, const gchar* rcfile);
+void g_rc_parse_handler (TOPLEVEL *toplevel, const gchar *rcname, const gchar *rcfile, ConfigParseErrorFunc handler, void *user_data);
 
 /* i_vars.c */
 void i_vars_libgeda_set(TOPLEVEL *toplevel);
@@ -109,6 +106,8 @@ void o_set_color(TOPLEVEL *toplevel, OBJECT *object, int color);
 PAGE *o_get_page (TOPLEVEL *toplevel, OBJECT *object);
 void o_add_change_notify(TOPLEVEL *toplevel, ChangeNotifyFunc pre_change_func, ChangeNotifyFunc change_func, void *user_data);
 void o_remove_change_notify(TOPLEVEL *toplevel, ChangeNotifyFunc pre_change_func, ChangeNotifyFunc change_func, void *user_data);
+gboolean o_is_visible (TOPLEVEL *toplevel, OBJECT *object);
+void o_set_visibility (TOPLEVEL *toplevel, OBJECT *object, int visibility);
 
 /* o_box_basic.c */
 OBJECT *o_box_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
@@ -186,7 +185,7 @@ OBJECT *o_net_copy(TOPLEVEL *toplevel, OBJECT *o_current);
 void o_net_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_net_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 int o_net_orientation(OBJECT *object);
-void o_net_consolidate(TOPLEVEL *toplevel);
+void o_net_consolidate(TOPLEVEL *toplevel, PAGE *page);
 void o_net_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 
 /* o_path_basic.c */
@@ -320,10 +319,10 @@ void s_cue_output_lowlevel_midpoints(TOPLEVEL *toplevel, OBJECT *object, FILE *f
 void s_cue_output_single(TOPLEVEL *toplevel, OBJECT *object, FILE *fp, int type);
 
 /* s_hierarchy.c */
-int s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename, PAGE *parent, int page_control, int flag);
+PAGE *s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename, PAGE *parent, int page_control, int flag);
 void s_hierarchy_down_symbol (TOPLEVEL *toplevel, const CLibSymbol *symbol, PAGE *parent);
 PAGE *s_hierarchy_find_up_page(GedaPageList *page_list, PAGE *current_page);
-GList* s_hierarchy_traversepages(TOPLEVEL *toplevel, gint flags);
+GList* s_hierarchy_traversepages(TOPLEVEL *toplevel, PAGE *p_current, gint flags);
 gint s_hierarchy_print_page(PAGE *p_current, void * data);
 PAGE *s_hierarchy_find_prev_page(GedaPageList *page_list, PAGE *current_page);
 PAGE *s_hierarchy_find_next_page(GedaPageList *page_list, PAGE *current_page);

@@ -77,7 +77,7 @@ main_prog(void *closure, int argc, char *argv[])
   g_register_funcs();
 
   pr_current = s_toplevel_new ();
-  g_rc_parse(pr_current, "gsymcheckrc", rc_filename);
+  g_rc_parse (pr_current, argv[0], "gsymcheckrc", rc_filename);
 
   i_vars_set(pr_current);
   

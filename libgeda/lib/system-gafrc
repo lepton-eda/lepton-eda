@@ -14,14 +14,6 @@
 (debug-enable 'backtrace)
 (read-enable 'positions)
 
-;; The directory containing gaf Scheme code.
-(define geda-scheme-path (string-append geda-data-path path-sep "scheme"))
-; We need to add gaf's scheme library to the Guile load path.
-(set! %load-path (append (list geda-scheme-path) %load-path))
-; This is used in some places for error messages/listing gnetlist
-; backends
-(scheme-directory geda-scheme-path)
-
 ; The libgeda Scheme library provides a number of useful functions for
 ; writing Scheme code for embedding in gaf.
 (load-from-path "geda.scm")
@@ -37,6 +29,15 @@
 ; pasted into the postscript output after the DSC comments, but
 ; before the main script.
 (postscript-prolog (build-path geda-data-path "prolog.ps"))
+
+; scheme-directory dir
+;
+; This keyword allows additional directories to be added to the list
+; of directories which are used by gEDA to load Scheme code.
+; Environment variables in 'dir' are expanded.  By default,
+; '${GEDADATA}/scheme' is in the load path, as are all of the standard
+; Guile Scheme libraries.
+;(scheme-directory "${HOME}/.gEDA/scheme")
 
 ;
 ; Start of attribute promotion keywords

@@ -1,0 +1,4 @@
+.START
+..device	value	footprint	quantity	refdes
+CAPACITOR	unknown	unknown	1	C?
+.END

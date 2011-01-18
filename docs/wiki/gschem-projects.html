@@ -12,9 +12,7 @@
 <body>
 
 
-
-
-<h3><a name="gschem_schematic_capture_tool" id="gschem_schematic_capture_tool">Gschem schematic capture tool</a></h3>
+<h3 class="sectionedit1494"><a name="gschem_schematic_capture_tool" id="gschem_schematic_capture_tool">Gschem schematic capture tool</a></h3>
 <div class="level3">
 
 </div>
@@ -23,7 +21,8 @@
 <div class="level5">
 
 <p>
- In this project, you would expand libgeda (if needed) to provide a complete enough guile interface to be able to do more complex database manipulations. One use would be to have a back annotation tool that used libgeda instead of relying on perl. The problem with perl is that you’ve involved Yet Another Gschem Parser. This actually may be combined with the previous project about rewriting the gnetlist internals.
+
+In this project, you would expand libgeda (if needed) to provide a complete enough guile interface to be able to do more complex database manipulations. One use would be to have a back annotation tool that used libgeda instead of relying on perl. The problem with perl is that you&#039;ve involved Yet Another Gschem Parser. This actually may be combined with the previous project about rewriting the gnetlist internals.
 </p>
 
 <p>
@@ -36,7 +35,8 @@ Difficulty = 3
 <div class="level5">
 
 <p>
- In gschem, please add a why to show hidden text for just one symbol only. Currently [en] will show all the hidden text for all symbols and that makes a real visual mess. Implement this by just showing the hidden text for the currently selected symbols.
+
+In gschem, please add a why to show hidden text for just one symbol only. Currently [en] will show all the hidden text for all symbols and that makes a real visual mess. Implement this by just showing the hidden text for the currently selected symbols.
 </p>
 
 <p>
@@ -49,7 +49,8 @@ Difficulty = 1
 <div class="level5">
 
 <p>
- In gschem, the size of the handles for lines, nets, and objects scale with increasing zoom. Thus for small lines the handles overlap, and if I zoom in closely, it becomes very hard to pick the right object to manipulate. Please let the size of the handles be constant, regardless of the zoom factor. This is virtually how all vector graphics applications work.
+
+In gschem, the size of the handles for lines, nets, and objects scale with increasing zoom. Thus for small lines the handles overlap, and if I zoom in closely, it becomes very hard to pick the right object to manipulate. Please let the size of the handles be constant, regardless of the zoom factor. This is virtually how all vector graphics applications work.
 </p>
 
 <p>
@@ -62,7 +63,8 @@ Difficulty = 1
 <div class="level5">
 
 <p>
- In gschem, implement a mechanism that would (when turned enabled) automatically fill in proper global attributes for the design. These attributes could be the date of the last modification, name of the project, author, number of sheets, etc&hellip;
+
+In gschem, implement a mechanism that would (when turned enabled) automatically fill in proper global attributes for the design. These attributes could be the date of the last modification, name of the project, author, number of sheets, etc…
 </p>
 
 <p>
@@ -75,7 +77,8 @@ Difficulty = 1 to 2
 <div class="level5">
 
 <p>
- Improve error messages in gschem when a rc file doesn’t load correctly. Currently the error messages are cryptic and not useful at all. There are several other places in gschem where the error messages could be vastly improved.
+
+Improve error messages in gschem when a rc file doesn&#039;t load correctly. Currently the error messages are cryptic and not useful at all. There are several other places in gschem where the error messages could be vastly improved.
 </p>
 
 <p>
@@ -88,7 +91,8 @@ Difficulty = 1
 <div class="level5">
 
 <p>
- Add a dialog box that lets you do a global search and replace. Currently you can do a find for a specific attribute, but several users have asked if gschem could also provide a way of doing a replace operation as well.
+
+Add a dialog box that lets you do a global search and replace. Currently you can do a find for a specific attribute, but several users have asked if gschem could also provide a way of doing a replace operation as well.
 </p>
 
 <p>
@@ -101,7 +105,8 @@ Difficulty = 1 to 2
 <div class="level5">
 
 <p>
- Add hooks into gschem needed to fully support things like backannotation of simulation results and click-to-plot results. Specifically, this would enable you to draw a schematic in gschem, then simulate it in ngspice without leaving gschem. The simulation plots would then appear in a graphical pop-up window.
+
+Add hooks into gschem needed to fully support things like backannotation of simulation results and click-to-plot results. Specifically, this would enable you to draw a schematic in gschem, then simulate it in ngspice without leaving gschem. The simulation plots would then appear in a graphical pop-up window.
 </p>
 
 <p>
@@ -114,7 +119,8 @@ Difficulty = 3
 <div class="level5">
 
 <p>
- In gschem, add some sort of visual feedback to tell the user which attribute is attached to which component. This would be useful since sometimes you move attributes/components around and things get a little bit separated distance wise.
+
+In gschem, add some sort of visual feedback to tell the user which attribute is attached to which component. This would be useful since sometimes you move attributes/components around and things get a little bit separated distance wise.
 </p>
 
 <p>
@@ -127,7 +133,8 @@ Difficulty = 1 to 2
 <div class="level5">
 
 <p>
- Add schematic and symbol modes to gschem. Right now users can do invalid things like add a net or bus inside a symbol and gschem allows this quite happily. If there was a symbol mode that disallowed certain actions, then users will not be able to hurt themselves so easily when creating symbols. Like wise a schematic mode wouldn’t allow certain operations (such as adding a pin).
+
+Add schematic and symbol modes to gschem. Right now users can do invalid things like add a net or bus inside a symbol and gschem allows this quite happily. If there was a symbol mode that disallowed certain actions, then users will not be able to hurt themselves so easily when creating symbols. Like wise a schematic mode wouldn&#039;t allow certain operations (such as adding a pin).
 </p>
 
 <p>
@@ -140,7 +147,8 @@ Difficulty = 2 to 3
 <div class="level5">
 
 <p>
- Add the ability to move the origin of a symbol in gschem. Right now the origin is always at 0,0 and users have to translate the symbol to the origin. It would be nice if the origin was movable so that you wouldn’t have to translate the symbol manually anymore. This would also allow the user to pick the insert point of the symbol when adding components to a schematic.
+
+Add the ability to move the origin of a symbol in gschem. Right now the origin is always at 0,0 and users have to translate the symbol to the origin. It would be nice if the origin was movable so that you wouldn&#039;t have to translate the symbol manually anymore. This would also allow the user to pick the insert point of the symbol when adding components to a schematic.
 </p>
 
 <p>
@@ -153,7 +161,8 @@ Difficulty = 2 to 3
 <div class="level5">
 
 <p>
- Add the ability to move pins/attributes/whatever on instantiated components in a schematic. This one is quite tricky, but it would allow for various things that people have been requesting (this might be a good foundation for a greatly improved back annotation mechanism from PCB).
+
+Add the ability to move pins/attributes/whatever on instantiated components in a schematic. This one is quite tricky, but it would allow for various things that people have been requesting (this might be a good foundation for a greatly improved back annotation mechanism from PCB).
 </p>
 
 <p>
@@ -166,7 +175,8 @@ Difficulty = 3 to 4
 <div class="level5">
 
 <p>
- In gschem, add a finer grid when moving attributes or text around.
+
+In gschem, add a finer grid when moving attributes or text around.
 </p>
 
 <p>
@@ -179,7 +189,9 @@ Difficulty = 2
 <div class="level5">
 
 <p>
- Adding some more useful buttons to the gschem toolbar. Typical functionalities that gschem does not have on the toolbar: 
+
+Adding some more useful buttons to the gschem toolbar. Typical functionalities that gschem does not have on the toolbar:
+
 </p>
 <ul>
 <li class="level1"><div class="li"> Up/down schematic/symbol</div>
@@ -199,7 +211,8 @@ Difficulty = 2
 </ul>
 
 <p>
- It would be really nice if the toolbar buttons were configurable either on the fly or through an rc file.
+
+It would be really nice if the toolbar buttons were configurable either on the fly or through an rc file.
 </p>
 
 <p>
@@ -212,11 +225,12 @@ Difficulty = 2 to 3
 <div class="level5">
 
 <p>
- In gschem hierarchical design is accomplished by symbols in the top sheet that represent sub sheets. Currently these sub sheet symbols and the sub sheet itself have to be created manually. The purpose of this project is to design and implement an interactive generator of such symbols and sub sheets. It should work both strategies of hierachical design, bottom-up and top-down. Top-down refers to the case where the  parent sheet is designed first and diverts into sub sheets. With bottom-up the sub sheets are designed first. The generator should accept user input on the number and the name of input and output signals. The generator may present a list of named net on the current sheet and let the user pick those that should link to the sub sheet. Power nets to be available on the sub sheet may be specified too. In case of a top-down approach the generator should additionally create a draft of the sub sheet with symbols for the in and out signals placed at some default position. The generator should integrate into the main <acronym title="Graphical User Interface">GUI</acronym> of gschem. 
+
+In gschem hierarchical design is accomplished by symbols in the top sheet that represent sub sheets. Currently these sub sheet symbols and the sub sheet itself have to be created manually. The purpose of this project is to design and implement an interactive generator of such symbols and sub sheets. It should work both strategies of hierachical design, bottom-up and top-down. Top-down refers to the case where the  parent sheet is designed first and diverts into sub sheets. With bottom-up the sub sheets are designed first. The generator should accept user input on the number and the name of input and output signals. The generator may present a list of named net on the current sheet and let the user pick those that should link to the sub sheet. Power nets to be available on the sub sheet may be specified too. In case of a top-down approach the generator should additionally create a draft of the sub sheet with symbols for the in and out signals placed at some default position. The generator should integrate into the main <acronym title="Graphical User Interface">GUI</acronym> of gschem. 
 </p>
 
 <p>
-Some work has already been done to deal with the bottom-up case. See <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1800913&amp;group_id=161080&amp;atid=818428" class="urlextern" title="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1800913&amp;group_id=161080&amp;atid=818428"  rel="nofollow">the bash script geda_sch2sym</a> available at sourceforge. This may be used as a starting point. However, a restart from scratch would be welcome too.
+Some work has already been done to deal with the bottom-up case. See <a href="https://bugs.launchpad.net/geda/+bug/698670" class="urlextern" title="https://bugs.launchpad.net/geda/+bug/698670"  rel="nofollow">the bash script geda_sch2sym</a> in the bug tracker. This may be used as a starting point. However, a restart from scratch would be welcome too.
 </p>
 
 <p>

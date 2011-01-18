@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 
@@ -186,10 +186,11 @@ OBJECT *o_net_read (TOPLEVEL *toplevel, char buf[],
  *  This function takes a net \a object and return a string
  *  according to the file format definition.
  *
+ *  \param [in] toplevel  a TOPLEVEL structure
  *  \param [in] object  a net OBJECT
  *  \return the string representation of the net OBJECT
  */
-char *o_net_save(OBJECT *object)
+char *o_net_save(TOPLEVEL *toplevel, OBJECT *object)
 {
   int x1, x2, y1, y2;
   char *buf;
@@ -524,22 +525,16 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
   GList *c_current;
   CONN *conn;
   OBJECT *other_object;
-  int changed = 0;
   PAGE *page;
+  int changed = 0;
 
-  if (object == NULL) {
-    return(0);
-  }
+  g_return_val_if_fail ((toplevel != NULL), 0);
+  g_return_val_if_fail ((object != NULL), 0);
+  g_return_val_if_fail ((object->type == OBJ_NET), 0);
 
-  if (object->type != OBJ_NET) {
-    return(0);
-  }
-
-  /* It's meaningless to do anything here without a valid current page. */
-  page = o_get_page_compat (toplevel, object);
-  if (page == NULL) {
-    return (0);
-  }
+  /* It's meaningless to do anything here if the object isn't in a page. */
+  page = o_get_page (toplevel, object);
+  g_return_val_if_fail ((page != NULL), 0);
 
   object_orient = o_net_orientation(object);
 
@@ -598,18 +593,20 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
 
 /*! \brief consolidate all net objects
  *  \par Function Description
- *  This function consolidates all net objects until no more consolidations
- *  are posible.
+ *  This function consolidates all net objects in a page until no more
+ *  consolidations are possible.
  *
- *  \param toplevel  The TOPLEVEL object
- *
+ *  \param toplevel  The TOPLEVEL object.
+ *  \param page      The PAGE to consolidate nets in.
  */
-void o_net_consolidate(TOPLEVEL *toplevel)
+void o_net_consolidate(TOPLEVEL *toplevel, PAGE *page)
 {
   OBJECT *o_current;
   const GList *iter;
   int status = 0;
-  PAGE *page = toplevel->page_current;
+
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (page != NULL);
 
   iter = s_page_objects (page);
 

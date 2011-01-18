@@ -59,6 +59,8 @@ SCM g_keys_file_quit(SCM rest);
 SCM g_keys_edit_undo(SCM rest);
 SCM g_keys_edit_redo(SCM rest);
 SCM g_keys_edit_select(SCM rest);
+SCM g_keys_edit_select_all(SCM rest);
+SCM g_keys_edit_deselect(SCM rest);
 SCM g_keys_edit_copy(SCM rest);
 SCM g_keys_edit_copy_hotkey(SCM rest);
 SCM g_keys_edit_mcopy(SCM rest);
@@ -85,7 +87,6 @@ SCM g_keys_edit_embed(SCM rest);
 SCM g_keys_edit_unembed(SCM rest);
 SCM g_keys_edit_update(SCM rest);
 SCM g_keys_edit_show_hidden(SCM rest);
-SCM g_keys_edit_make_visible(SCM rest);
 SCM g_keys_edit_find(SCM rest);
 SCM g_keys_edit_show_text(SCM rest);
 SCM g_keys_edit_hide_text(SCM rest);
@@ -325,6 +326,8 @@ void i_callback_edit_redo(gpointer data, guint callback_action, GtkWidget *widge
 void i_callback_toolbar_edit_redo(GtkWidget *widget, gpointer data);
 void i_callback_edit_select(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_toolbar_edit_select(GtkWidget *widget, gpointer data);
+void i_callback_edit_select_all(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_edit_deselect(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_copy(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_copy_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_mcopy(gpointer data, guint callback_action, GtkWidget *widget);
@@ -349,7 +352,6 @@ void i_callback_edit_embed(gpointer data, guint callback_action, GtkWidget *widg
 void i_callback_edit_unembed(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_update(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_show_hidden(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_edit_make_visible(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_find(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_hide_text(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_show_text(gpointer data, guint callback_action, GtkWidget *widget);
@@ -604,7 +606,6 @@ void o_rotate_call_hooks(GSCHEM_TOPLEVEL *w_current, GList *list);
 void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery, GList *list);
 void o_edit_show_hidden_lowlevel(GSCHEM_TOPLEVEL *w_current, const GList *o_list);
 void o_edit_show_hidden(GSCHEM_TOPLEVEL *w_current, const GList *o_list);
-void o_edit_make_visible(GSCHEM_TOPLEVEL *w_current, const GList *o_list);
 int o_edit_find_text(GSCHEM_TOPLEVEL *w_current, const GList *o_list, char *stext, int descend, int skip);
 void o_edit_hide_specific_text(GSCHEM_TOPLEVEL *w_current, const GList *o_list, char *stext);
 void o_edit_show_specific_text(GSCHEM_TOPLEVEL *w_current, const GList *o_list, char *stext);
@@ -691,6 +692,7 @@ OBJECT *o_select_return_first_object(GSCHEM_TOPLEVEL *w_current);
 int o_select_selected(GSCHEM_TOPLEVEL *w_current);
 void o_select_unselect_list(GSCHEM_TOPLEVEL *w_current, SELECTION *selection);
 void o_select_unselect_all(GSCHEM_TOPLEVEL *w_current);
+void o_select_visible_unlocked(GSCHEM_TOPLEVEL *w_current);
 void o_select_move_to_place_list(GSCHEM_TOPLEVEL *w_current);
 /* o_slot.c */
 void o_slot_start(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
@@ -712,7 +714,6 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type);
 void o_undo_cleanup(void);
 void o_undo_remove_last_undo(GSCHEM_TOPLEVEL *w_current);
 /* parsecmd.c */
-void usage(char *cmd);
 int parse_commandline(int argc, char *argv[]);
 /* s_stretch.c */
 GList *s_stretch_add(GList *list, OBJECT *object, int whichone);
@@ -830,9 +831,6 @@ gint do_popup(GSCHEM_TOPLEVEL *w_current, GdkEventButton *event);
 void x_menus_sensitivity(GSCHEM_TOPLEVEL *w_current, const char *buf, int flag);
 void x_menus_popup_sensitivity(GSCHEM_TOPLEVEL *w_current, const char *buf, int flag);
 void x_menu_attach_recent_files_submenu(GSCHEM_TOPLEVEL *w_current);
-void recent_files_load();
-void recent_files_save(gpointer user_data);
-void recent_files_add(const char *filename);
 /* x_multiattrib.c */
 void x_multiattrib_open (GSCHEM_TOPLEVEL *w_current);
 void x_multiattrib_close (GSCHEM_TOPLEVEL *w_current);
@@ -845,6 +843,8 @@ void x_pagesel_update (GSCHEM_TOPLEVEL *w_current);
 /* x_preview.c */
 /* x_print.c */
 void x_print_setup(GSCHEM_TOPLEVEL *w_current, char *filename);
+/* x_rc.c */
+void x_rc_parse_gschem (GSCHEM_TOPLEVEL *w_current, const gchar *rcfile);
 /* x_script.c */
 void setup_script_selector(GSCHEM_TOPLEVEL *w_current);
 /* x_stroke.c */

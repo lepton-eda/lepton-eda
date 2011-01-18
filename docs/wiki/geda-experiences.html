@@ -12,9 +12,7 @@
 <body>
 
 
-
-
-<h1><a name="this_page_should_include_user_experiences_with_the_geda_suite" id="this_page_should_include_user_experiences_with_the_geda_suite">This page should include user experiences with the gEDA suite.</a></h1>
+<h1 class="sectionedit282"><a name="this_page_should_include_user_experiences_with_the_geda_suite" id="this_page_should_include_user_experiences_with_the_geda_suite">This page should include user experiences with the gEDA suite.</a></h1>
 <div class="level1">
 
 <p>
@@ -38,11 +36,12 @@ I tried first the gEDA <acronym title="Graphical User Interface">GUI</acronym>, 
 </p>
 
 <p>
-I have tried several times gEDA tools to make some simple projects. Up to the present I learn how to use gschem tool very easily.  I made schematics easily. 
+I have tried several times gEDA tools to make some simple projects. Up to the present I learn how to use gschem tool very easily. 
+I made schematics easily. 
 </p>
 
 <p>
-But then I need a symbol that I can’t find in gschem library, so I decide to make it. I follow the tutorial <a href="http://geda.seul.org/wiki/geda:tragesym_tutorial" class="urlextern" title="http://geda.seul.org/wiki/geda:tragesym_tutorial"  rel="nofollow">http://geda.seul.org/wiki/geda:tragesym_tutorial</a> and ask some questions on the mailing list geda-user <a href="http://www.seul.org/cgi-bin/mailman/listinfo/geda-user" class="urlextern" title="http://www.seul.org/cgi-bin/mailman/listinfo/geda-user"  rel="nofollow">http://www.seul.org/cgi-bin/mailman/listinfo/geda-user</a>.
+But then I need a symbol that I can&#039;t find in gschem library, so I decide to make it. I follow the tutorial <a href="http://geda.seul.org/wiki/geda:tragesym_tutorial" class="urlextern" title="http://geda.seul.org/wiki/geda:tragesym_tutorial"  rel="nofollow">http://geda.seul.org/wiki/geda:tragesym_tutorial</a> and ask some questions on the mailing list geda-user <a href="http://www.seul.org/cgi-bin/mailman/listinfo/geda-user" class="urlextern" title="http://www.seul.org/cgi-bin/mailman/listinfo/geda-user"  rel="nofollow">http://www.seul.org/cgi-bin/mailman/listinfo/geda-user</a>.
 </p>
 
 <p>
@@ -80,12 +79,13 @@ From the “Tragesym tutorial”:
 </li>
 <li class="level1"><div class="li"> gzip -d tragesym_template.gz</div>
 </li>
-<li class="level1"><div class="li"> Open in OpenOffice the tragesym_template file. I get OpenOffice Calc with opened file. “Set the type, style and position column to the most common value.&quot; I have saved this <strong>tragesym_template</strong> file for the future use.</div>
+<li class="level1"><div class="li"> Open in OpenOffice the tragesym_template file. I get OpenOffice Calc with opened file. “Set the type, style and position column to the most common value.” I have saved this <strong>tragesym_template</strong> file for the future use.</div>
 </li>
 </ul>
 
 <p>
- <strong>Step2: Download the part data sheet and find the pin list</strong>
+
+<strong>Step2: Download the part data sheet and find the pin list</strong>
 </p>
 
 <p>
@@ -97,15 +97,17 @@ From the “Tragesym tutorial”:
 </ul>
 
 <p>
- <strong>Step4: Insert all missing data into the spreadsheet</strong>
+
+<strong>Step4: Insert all missing data into the spreadsheet</strong>
 </p>
 <ul>
-<li class="level1"><div class="li">In OpenOffice Calc I inserted all missing data. The label of the Pin 36 is ‘IN SEL’ and have a negation overbar, so I write in the approppriate column: \_IN\ SEL\_ Note that here is a space between ‘IN’ and ‘SEL’. Maybe it is trivial, but if one have a space in the label this works.</div>
+<li class="level1"><div class="li">In OpenOffice Calc I inserted all missing data. The label of the Pin 36 is &#039;IN SEL&#039; and have a negation overbar, so I write in the approppriate column: \_IN\ SEL\_ Note that here is a space between &#039;IN&#039; and &#039;SEL&#039;. Maybe it is trivial, but if one have a space in the label this works.</div>
 </li>
 </ul>
 
 <p>
- <strong>Step5: Export the spreadsheet into a tab seperated text file</strong>
+
+<strong>Step5: Export the spreadsheet into a tab seperated text file</strong>
 </p>
 <ul>
 <li class="level1"><div class="li">In OpenOffice I did File / Save As / Filename: tragesym_template-for_36-pin_centronics_connector / Filetype: Structural text (CSV) (.csv) / Filter setup: on / Save / Text boundary: empty</div>
@@ -113,7 +115,8 @@ From the “Tragesym tutorial”:
 </ul>
 
 <p>
- <strong>Step6: execute tragesym and create the symbol</strong>
+
+<strong>Step6: execute tragesym and create the symbol</strong>
 </p>
 <ul>
 <li class="level1"><div class="li">tragesym tragesym_template-for_36-pin_centronics_connector 36-pin-centronics.sch</div>
@@ -121,12 +124,13 @@ From the “Tragesym tutorial”:
 </ul>
 
 <p>
- <strong>Step7: check the result with gschem and do some artwork</strong>
+
+<strong>Step7: check the result with gschem and do some artwork</strong>
 </p>
 <ul>
-<li class="level1"><div class="li">“Now we have a complete symbol.&quot;</div>
+<li class="level1"><div class="li">“Now we have a complete symbol.”</div>
 </li>
-<li class="level1"><div class="li">“You can copy the symbol to your local symbol library e.g. /usr/local/share/gEDA/sym/local/ and use it.&quot; <br/>
+<li class="level1"><div class="li">“You can copy the symbol to your local symbol library e.g. /usr/local/share/gEDA/sym/local/ and use it.” <br/>
 </div>
 </li>
 </ul>
@@ -137,18 +141,22 @@ cp 36-pin_centronics.sch /home/username/gEDA/gaf/gschem-sym/connectors/36-pin_ce
 
 <p>
 This symbol can be viewed here: <br/>
- <a href="http://www.mediamax.com/paul_csanyi/Hosted/gschem_schems/36-pin-centronics.sym" class="urlextern" title="http://www.mediamax.com/paul_csanyi/Hosted/gschem_schems/36-pin-centronics.sym"  rel="nofollow">http://www.mediamax.com/paul_csanyi/Hosted/gschem_schems/36-pin-centronics.sym</a>
+
+<a href="http://www.mediamax.com/paul_csanyi/Hosted/gschem_schems/36-pin-centronics.sym" class="urlextern" title="http://www.mediamax.com/paul_csanyi/Hosted/gschem_schems/36-pin-centronics.sym"  rel="nofollow">http://www.mediamax.com/paul_csanyi/Hosted/gschem_schems/36-pin-centronics.sym</a>
 </p>
 
 <p>
-In this symbol I put the footprint: “SUBD_FEMALE_LAY 25” but this is not the approppriate footprint for the 36-pin Centronics connector. I tried to find footprint for the 36-pin Centronics connector here: <a href="http://www.gedasymbols.org/" class="urlextern" title="http://www.gedasymbols.org/"  rel="nofollow">http://www.gedasymbols.org/</a>, but with no success.
+In this symbol I put the footprint: “SUBD_FEMALE_LAY 25” but this is not the approppriate footprint for the 36-pin Centronics connector. I tried to find footprint for the 36-pin Centronics connector here:
+<a href="http://www.gedasymbols.org/" class="urlextern" title="http://www.gedasymbols.org/"  rel="nofollow">http://www.gedasymbols.org/</a>, but with no success.
 </p>
 
 <p>
 I think I gone to make one 36-pin Centronics footprint soon, using “PCB Footprint Guide” here:<br/>
- <a href="http://geda.seul.org/wiki/geda:pcb_footprints" class="urlextern" title="http://geda.seul.org/wiki/geda:pcb_footprints"  rel="nofollow">http://geda.seul.org/wiki/geda:pcb_footprints</a>. <img src="images/smileys/icon_smile.gif" align="middle" alt=":-)" /> 
+
+<a href="http://geda.seul.org/wiki/geda:pcb_footprints" class="urlextern" title="http://geda.seul.org/wiki/geda:pcb_footprints"  rel="nofollow">http://geda.seul.org/wiki/geda:pcb_footprints</a>. <img src="images/smileys/icon_smile.gif" align="middle" alt=":-)" />
+
 </p>
 
 </div>
-<!-- SECTION "This page should include user experiences with the gEDA suite." [24-] --></body>
+<!-- EDIT282 SECTION "This page should include user experiences with the gEDA suite." [24-] --></body>
 </html>

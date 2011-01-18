@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 
@@ -323,7 +323,6 @@ preview_event_configure (GtkWidget         *widget,
                          gpointer           user_data)
 {
   gboolean retval;
-  int save_redraw;
   GSCHEM_TOPLEVEL *preview_w_current = PREVIEW (widget)->preview_w_current;
   PAGE     *preview_page = preview_w_current->toplevel->page_current;
 

@@ -11,42 +11,41 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#gsch2pcb" class="toc">gsch2pcb</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#where_is_the_gsch2pcb_tutorial" class="toc">Where is the gsch2pcb tutorial?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#where_can_i_download_gsch2pcb" class="toc">Where can I download gsch2pcb?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#gsch2pcb_can_t_find_some_of_my_footprints_or_errors_out._what_can_i_do_to_diagnose_my_problem" class="toc">gsch2pcb can&#039;t find some of my footprints, or errors out. What can I do to diagnose my problem?</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#i_don_t_like_the_default_layer_stack_of_gschem2pcb._how_can_i_change_this" class="toc">I don&#039;t like the default layer stack of gschem2pcb. How can I change this?</a></span></div></li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="gsch2pcb" id="gsch2pcb">gsch2pcb</a></h1>
+<h1 class="sectionedit327"><a name="gsch2pcb" id="gsch2pcb">gsch2pcb</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "gsch2pcb" [1-24] -->
-<h2><a name="where_is_the_gsch2pcb_tutorial" id="where_is_the_gsch2pcb_tutorial">Where is the gsch2pcb tutorial?</a></h2>
+<!-- EDIT327 SECTION "gsch2pcb" [1-24] -->
+<h2 class="sectionedit328"><a name="overview" id="overview">Overview</a></h2>
 <div class="level2">
 
 <p>
-Currently, the best information about how to get started with gsch2pcb is contained in Bill Wilson’s outstanding <a href="geda-gsch2pcb_tutorial.html" class="wikilink1" title="geda-gsch2pcb_tutorial.html">tutorial</a>. 
+gsch2pcb is a shell script that will automate the process of moving a design from gschem to PCB.  It takes the footprint and part value information from your schematic (or set of schematics) and runs them thru the netlister.  The end result is a set of files that, in PCB, are the basics of your design: the part footprints, the netlist that shows all of the connections from one part to another, the physical circuit board and whatever other physical information you included in your schematic as graphical objects (like board outlines).
 </p>
 
 <p>
-There is a wrapper script for gsch2pcb called sch2pcb.  Read about it in the <a href="geda-pcb_tips.html" class="wikilink1" title="geda-pcb_tips.html">pcb_tips</a> section of this wiki.
+gsch2pcb is included in gEDA/gaf.  It is installed by default with gEDA/gaf.  Run it from the command line with ./gsch2pcb.
 </p>
 
 </div>
-<!-- SECTION "Where is the gsch2pcb tutorial?" [25-336] -->
-<h2><a name="where_can_i_download_gsch2pcb" id="where_can_i_download_gsch2pcb">Where can I download gsch2pcb?</a></h2>
+<!-- EDIT328 SECTION "Overview" [25-709] -->
+<h2 class="sectionedit329"><a name="gsch2pcb_resources" id="gsch2pcb_resources">gsch2pcb Resources</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Bill Wilson&#039;s gsch2pcb outstanding tutorial: <a href="geda-gsch2pcb_tutorial.html" class="wikilink1" title="geda-gsch2pcb_tutorial.html">tutorial</a>. </div>
+</li>
+<li class="level1"><div class="li"> sch2pcb wrapper script for gsch2pcb </div>
+</li>
+<li class="level1"><div class="li"> </div>
+</li>
+<li class="level1"><div class="li"> </div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT329 SECTION "gsch2pcb Resources" [710-879] -->
+<h2 class="sectionedit330"><a name="where_can_i_download_gsch2pcb" id="where_can_i_download_gsch2pcb">Where can I download gsch2pcb?</a></h2>
 <div class="level2">
 
 <p>
@@ -58,7 +57,8 @@ gsch2pcb is part of gEDA/gaf, in the utils. It is normally installed by default 
 </ul>
 
 <p>
- or grab it directly from git at:
+
+or grab it directly from git at:
 </p>
 <ul>
 <li class="level1"><div class="li"> <a href="http://git.gpleda.org/?p=gaf.git;a=tree;f=utils/src;h=abf7590274f82f17c67bb1eecdc0d1da5029718a;hb=HEAD" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=tree;f=utils/src;h=abf7590274f82f17c67bb1eecdc0d1da5029718a;hb=HEAD"  rel="nofollow">http://git.gpleda.org/?p=gaf.git;a=tree;f=utils/src;h=abf7590274f82f17c67bb1eecdc0d1da5029718a;hb=HEAD</a></div>
@@ -66,8 +66,8 @@ gsch2pcb is part of gEDA/gaf, in the utils. It is normally installed by default 
 </ul>
 
 </div>
-<!-- SECTION "Where can I download gsch2pcb?" [337-831] -->
-<h2><a name="gsch2pcb_can_t_find_some_of_my_footprints_or_errors_out._what_can_i_do_to_diagnose_my_problem" id="gsch2pcb_can_t_find_some_of_my_footprints_or_errors_out._what_can_i_do_to_diagnose_my_problem">gsch2pcb can&#039;t find some of my footprints, or errors out. What can I do to diagnose my problem?</a></h2>
+<!-- EDIT330 SECTION "Where can I download gsch2pcb?" [880-1374] -->
+<h2 class="sectionedit331"><a name="gsch2pcb_can_t_find_some_of_my_footprints_or_errors_out_what_can_i_do_to_diagnose_my_problem" id="gsch2pcb_can_t_find_some_of_my_footprints_or_errors_out_what_can_i_do_to_diagnose_my_problem">gsch2pcb can&#039;t find some of my footprints, or errors out. What can I do to diagnose my problem?</a></h2>
 <div class="level2">
 
 <p>
@@ -75,17 +75,20 @@ Try running gsch2pcb in double verbose mode: “gsch2pcb -v -v”. This will pro
 </p>
 
 </div>
-<!-- SECTION "gsch2pcb can't find some of my footprints, or errors out. What can I do to diagnose my problem?" [832-1177] -->
-<h2><a name="i_don_t_like_the_default_layer_stack_of_gschem2pcb._how_can_i_change_this" id="i_don_t_like_the_default_layer_stack_of_gschem2pcb._how_can_i_change_this">I don&#039;t like the default layer stack of gschem2pcb. How can I change this?</a></h2>
+<!-- EDIT331 SECTION "gsch2pcb can't find some of my footprints, or errors out. What can I do to diagnose my problem?" [1375-1720] -->
+<h2 class="sectionedit332"><a name="i_don_t_like_the_default_layer_stack_of_gschem2pcb_how_can_i_change_this" id="i_don_t_like_the_default_layer_stack_of_gschem2pcb_how_can_i_change_this">I don&#039;t like the default layer stack of gschem2pcb. How can I change this?</a></h2>
 <div class="level2">
 
 <p>
-Edit $INSTALLDIR/share/gEDA/scheme/gnet-gsch2pcb.scm to reflect your preferred layer stack. In particular you may have to modify the line that defines the layer groups: 
+Edit $INSTALLDIR/share/gEDA/scheme/gnet-gsch2pcb.scm to reflect your preferred layer stack. In particular you may have to modify the line that defines the layer groups:
+
 </p>
 <pre class="code">    (display &quot;Groups(\&quot;1,2,3,s:4,5,6,c:7:8\&quot;)\n&quot; port) </pre>
 
 <p>
- and the layer stack itself: 
+
+and the layer stack itself:
+
 </p>
 <pre class="code">(lambda (port)
     (display &quot;Layer(1 \&quot;bottom\&quot;)\n(\n)\n&quot; port)
@@ -97,9 +100,11 @@ Edit $INSTALLDIR/share/gEDA/scheme/gnet-gsch2pcb.scm to reflect your preferred l
     (newline port)))</pre>
 
 <p>
- Note, the last two layers will map to silk on both sides of the board. So you will have to define two more layers than you want for your copper layout. 
+
+Note, the last two layers will map to silk on both sides of the board. So you will have to define two more layers than you want for your copper layout.
+
 </p>
 
 </div>
-<!-- SECTION "I don't like the default layer stack of gschem2pcb. How can I change this?" [1178-] --></body>
+<!-- EDIT332 SECTION "I don't like the default layer stack of gschem2pcb. How can I change this?" [1721-] --></body>
 </html>

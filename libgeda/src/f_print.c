@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 /*! \file f_print.c
@@ -299,7 +299,7 @@ void f_print_objects (TOPLEVEL *toplevel, FILE *fp, const GList *obj_list,
         break;
 
       case(OBJ_TEXT):
-        if (o_current->visibility == VISIBLE) {
+        if (o_is_visible (toplevel, o_current)) {
           /* Output text */
           save_last_ps_color = toplevel->last_ps_color;
           fprintf(fp, "gsave\n");
@@ -656,7 +656,7 @@ static int f_print_get_unicode_chars (TOPLEVEL *toplevel,
         break;
 
       case (OBJ_TEXT):
-        if (o_current->visibility == VISIBLE) {
+        if (o_is_visible (toplevel, o_current)) {
 
           aux = o_current->text->string;
           while (aux && ((gunichar) (*aux) != 0)) {

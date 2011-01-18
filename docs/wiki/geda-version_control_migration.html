@@ -11,46 +11,34 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
 
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#version_control_migration" class="toc">Version Control Migration</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#status_quo" class="toc">Status Quo</a></span></div></li>
-<li class="level2"><div class="li"><span class="li"><a href="#what_we_need" class="toc">What We Need</a></span></div></li></ul>
-</li></ul>
-</div>
-</div>
-
-
-
-<h1><a name="version_control_migration" id="version_control_migration">Version Control Migration</a></h1>
+<h1 class="sectionedit1387"><a name="version_control_migration" id="version_control_migration">Version Control Migration</a></h1>
 <div class="level1">
 
 </div>
-<!-- SECTION "Version Control Migration" [1-41] -->
-<h2><a name="status_quo" id="status_quo">Status Quo</a></h2>
+<!-- EDIT1387 SECTION "Version Control Migration" [1-41] -->
+<h2 class="sectionedit1388"><a name="status_quo" id="status_quo">Status Quo</a></h2>
 <div class="level2">
 
 <p>
- Currently, gEDA uses <acronym title="Concurrent Versions System">CVS</acronym>.  <acronym title="Concurrent Versions System">CVS</acronym> is the “original” version control system used for collaborating on open source projects.
+
+Currently, gEDA uses <acronym title="Concurrent Versions System">CVS</acronym>.  <acronym title="Concurrent Versions System">CVS</acronym> is the “original” version control system used for collaborating on open source projects.
 </p>
 
 <p>
-Unfortunately, <acronym title="Concurrent Versions System">CVS</acronym> has a number of problems: 
+Unfortunately, <acronym title="Concurrent Versions System">CVS</acronym> has a number of problems:
+
 </p>
 <ol>
-<li class="level1"><div class="li"> <acronym title="Concurrent Versions System">CVS</acronym> does not support the concept of patch sets.  That is, it’s very difficult to work out what changes went into <acronym title="Concurrent Versions System">CVS</acronym> together without using dodgy tools like <a href="http://www.cobite.com/cvsps/" class="urlextern" title="http://www.cobite.com/cvsps/"  rel="nofollow">cvsps</a>.</div>
+<li class="level1"><div class="li"> <acronym title="Concurrent Versions System">CVS</acronym> does not support the concept of patch sets.  That is, it&#039;s very difficult to work out what changes went into <acronym title="Concurrent Versions System">CVS</acronym> together without using dodgy tools like <a href="http://www.cobite.com/cvsps/" class="urlextern" title="http://www.cobite.com/cvsps/"  rel="nofollow">cvsps</a>.</div>
 </li>
 <li class="level1"><div class="li"> Merging with <acronym title="Concurrent Versions System">CVS</acronym> is painful, especially when there is keyword expansion brokenness such as the <code>Log</code> keyword.</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Concurrent Versions System">CVS</acronym> doesn’t support renames preserving history.</div>
+<li class="level1"><div class="li"> <acronym title="Concurrent Versions System">CVS</acronym> doesn&#039;t support renames preserving history.</div>
 </li>
 <li class="level1"><div class="li"> The overhead involved in creating and managing a branch in <acronym title="Concurrent Versions System">CVS</acronym> is such that people tend to do one of the following:</div>
 <ol>
-<li class="level2"><div class="li"> Don’t bother</div>
+<li class="level2"><div class="li"> Don&#039;t bother</div>
 </li>
 <li class="level2"><div class="li"> Use another VCS locally, then export patches, then commit patches to <acronym title="Concurrent Versions System">CVS</acronym>.  This is a big hassle for everyone.</div>
 </li>
@@ -58,21 +46,23 @@ Unfortunately, <acronym title="Concurrent Versions System">CVS</acronym> has a n
 </li>
 </ol>
 </li>
-<li class="level1"><div class="li"> You can’t do anything in <acronym title="Concurrent Versions System">CVS</acronym> (view logs, view “blame” for a line of code, create diffs to previous versions) without being online &amp; connecting to the repository.</div>
+<li class="level1"><div class="li"> You can&#039;t do anything in <acronym title="Concurrent Versions System">CVS</acronym> (view logs, view “blame” for a line of code, create diffs to previous versions) without being online &amp; connecting to the repository.</div>
 </li>
 </ol>
 
 </div>
-<!-- SECTION "Status Quo" [42-1144] -->
-<h2><a name="what_we_need" id="what_we_need">What We Need</a></h2>
+<!-- EDIT1388 SECTION "Status Quo" [42-1144] -->
+<h2 class="sectionedit1389"><a name="what_we_need" id="what_we_need">What We Need</a></h2>
 <div class="level2">
 
 <p>
- gEDA has a development process that involves a number of people working independently on separate changes.  Some of these are a single changeset hacked together in a few minutes, some involve several major changes and are developed over a matter of months.  Often,  in order to track down a tricky bug, it is necessary for a developer to try and work out what a fellow developer did several months ago.
+
+gEDA has a development process that involves a number of people working independently on separate changes.  Some of these are a single changeset hacked together in a few minutes, some involve several major changes and are developed over a matter of months.  Often,  in order to track down a tricky bug, it is necessary for a developer to try and work out what a fellow developer did several months ago.
 </p>
 
 <p>
-The following features would be deemed desirable in a version control system: 
+The following features would be deemed desirable in a version control system:
+
 </p>
 <ol>
 <li class="level1"><div class="li"> Free as in beer as well as free as in speech.</div>
@@ -92,11 +82,13 @@ The following features would be deemed desirable in a version control system:
 </ol>
 
 <p>
- Using the <a href="http://en.wikipedia.org/wiki/Comparison_of_revision_control_software" class="urlextern" title="http://en.wikipedia.org/wiki/Comparison_of_revision_control_software"  rel="nofollow">comparison matrix at Wikipedia</a>, it looks like only <a href="http://www.selenic.com/mercurial/wiki/" class="urlextern" title="http://www.selenic.com/mercurial/wiki/"  rel="nofollow">Mercurial</a> and <a href="http://git.or.cz/" class="urlextern" title="http://git.or.cz/"  rel="nofollow">git</a> have the features we require.
+
+Using the <a href="http://en.wikipedia.org/wiki/Comparison_of_revision_control_software" class="urlextern" title="http://en.wikipedia.org/wiki/Comparison_of_revision_control_software"  rel="nofollow">comparison matrix at Wikipedia</a>, it looks like only <a href="http://www.selenic.com/mercurial/wiki/" class="urlextern" title="http://www.selenic.com/mercurial/wiki/"  rel="nofollow">Mercurial</a> and <a href="http://git.or.cz/" class="urlextern" title="http://git.or.cz/"  rel="nofollow">git</a> have the features we require.
 </p>
 
 <p>
-A number of factors militate in favour of using git: 
+A number of factors militate in favour of using git:
+
 </p>
 <ul>
 <li class="level1"><div class="li"> Existing experience within the the gEDA development community.</div>
@@ -106,5 +98,5 @@ A number of factors militate in favour of using git:
 </ul>
 
 </div>
-<!-- SECTION "What We Need" [1145-] --></body>
+<!-- EDIT1389 SECTION "What We Need" [1145-] --></body>
 </html>

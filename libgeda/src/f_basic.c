@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 /*! \file f_basic.c
@@ -242,7 +242,12 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
   /* Now open RC and process file */
   if (flags & F_OPEN_RC) {
     full_rcfilename = g_build_filename (file_directory, "gafrc", NULL);
-    g_rc_parse_specified_rc(toplevel, full_rcfilename);
+    g_rc_parse_file (toplevel, full_rcfilename, &tmp_err);
+    if (tmp_err != NULL) {
+      s_log_message ("%s\n", tmp_err->message);
+      g_error_free (tmp_err);
+      tmp_err = NULL;
+    }
   }
 
   g_free (file_directory);
@@ -283,11 +288,11 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
    * the RC file, it's time to read in the file. */
   if (load_backup_file == 1) {
     /* Load the backup file */
-    s_page_append_list (toplevel, toplevel->page_current,
+    s_page_append_list (toplevel, page,
                         o_read (toplevel, NULL, backup_filename, &tmp_err));
   } else {
     /* Load the original file */
-    s_page_append_list (toplevel, toplevel->page_current,
+    s_page_append_list (toplevel, page,
                         o_read (toplevel, NULL, full_filename, &tmp_err));
   }
 

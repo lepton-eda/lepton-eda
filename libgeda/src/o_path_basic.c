@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 
@@ -235,6 +235,7 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
  *  The function formats a string in the buffer <B>*buff</B> to describe
  *  the path object <B>*object</B>.
  *
+ *  \param [in] toplevel  a TOPLEVEL structure
  *  \param [in] object  path OBJECT to create string from.
  *  \return A pointer to the path OBJECT character string.
  *
@@ -242,7 +243,7 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
  *  Caller must g_free returned character string.
  *
  */
-char *o_path_save (OBJECT *object)
+char *o_path_save (TOPLEVEL *toplevel, OBJECT *object)
 {
   int line_width, line_space, line_length;
   char *buf;

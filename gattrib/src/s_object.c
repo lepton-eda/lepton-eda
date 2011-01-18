@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 /*------------------------------------------------------------------*/
@@ -70,17 +70,20 @@
  *    calls o_text_new() to add position info and name=value string
  *    to attrib_graphic.
  * -# It calls o_attrib_add() to wrap attrib_graphic with (attribute OBJECT )
+ * \param toplevel TOPLEVEL structure
  * \param o_current pointer to object to add attribute to
  * \param new_attrib_name name of the attribute to add
  * \param new_attrib_value value of the attribute to add
  * \param visibility Is the attribute visible?
  * \param show_name_value Control visibility of name and value.
  */
-void s_object_add_comp_attrib_to_object(OBJECT *o_current, 
-					char *new_attrib_name, 
-					char *new_attrib_value,
-					gint visibility,
-					gint show_name_value)
+void
+s_object_add_comp_attrib_to_object (TOPLEVEL *toplevel,
+                                    OBJECT *o_current,
+                                    char *new_attrib_name,
+                                    char *new_attrib_value,
+                                    gint visibility,
+                                    gint show_name_value)
 {
   char *name_value_pair;
   OBJECT *attrib_graphic_object;
@@ -89,8 +92,12 @@ void s_object_add_comp_attrib_to_object(OBJECT *o_current,
   /* One last sanity check, then add attrib */
   if (strlen(new_attrib_value) != 0) {
     name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-    attrib_graphic_object = s_object_attrib_add_attrib_in_object(pr_current, name_value_pair, visibility, 
-							 show_name_value, o_current);
+    attrib_graphic_object =
+      s_object_attrib_add_attrib_in_object (toplevel,
+                                            name_value_pair,
+                                            visibility,
+                                            show_name_value,
+                                            o_current);
   }
   
   return;
@@ -102,8 +109,11 @@ void s_object_add_comp_attrib_to_object(OBJECT *o_current,
 /*!
  * \todo This needs to be filled in.
  */
-void s_object_add_net_attrib_to_object(OBJECT *o_current, char *new_attrib_name, 
-				char *new_attrib_value)
+void
+s_object_add_net_attrib_to_object (TOPLEVEL *toplevel,
+                                   OBJECT *o_current,
+                                   char *new_attrib_name,
+                                   char *new_attrib_value)
 {
   /* TBD */
 }
@@ -120,14 +130,18 @@ void s_object_add_net_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
  *    calls o_text_new() to add position info and name=value string
  *    to attrib_graphic.
  * -# It calls o_attrib_add() to wrap attrib_graphic with (attribute OBJECT )
+ * \param toplevel TOPLEVEL structure
  * \param o_current Pointer to pin object
  * \param new_attrib_name Name of attribute to add
  * \parma new_attrib_value Value of attribute to add
  * \todo Do I really need separate fcns for comps, nets, and
  * pins???
  */
-void s_object_add_pin_attrib_to_object(OBJECT *o_current, char *new_attrib_name, 
-				char *new_attrib_value)
+void
+s_object_add_pin_attrib_to_object (TOPLEVEL *toplevel,
+                                   OBJECT *o_current,
+                                   char *new_attrib_name,
+                                   char *new_attrib_value)
 {
   char *name_value_pair;
   OBJECT *attrib_graphic_object;
@@ -136,13 +150,15 @@ void s_object_add_pin_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
   /* One last sanity check */
   if (strlen(new_attrib_value) != 0) {
     name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-    attrib_graphic_object = s_object_attrib_add_attrib_in_object(pr_current, name_value_pair, 
-								 INVISIBLE, 
-								 SHOW_NAME_VALUE, o_current);
+    attrib_graphic_object =
+      s_object_attrib_add_attrib_in_object (toplevel,
+                                            name_value_pair,
+                                            INVISIBLE,
+                                            SHOW_NAME_VALUE,
+                                            o_current);
   }
-  
-  return;
 
+  return;
 }
 
 
@@ -151,13 +167,15 @@ void s_object_add_pin_attrib_to_object(OBJECT *o_current, char *new_attrib_name,
  *
  * Find the instance of attrib_name on o_current, and
  * replace its value with the new_attrib_value.
+ * \param toplevel TOPLEVEL object
  * \param o_current object to operate on
  * \param new_attrib_name name of attribute to replace
  * \param new_attrib_value value to set attribute to
  * \param visibility set visibility of attribute
  * \param show_name_value set visibility of attribute name and value
  */
-void s_object_replace_attrib_in_object(OBJECT *o_current, 
+void s_object_replace_attrib_in_object(TOPLEVEL *toplevel,
+				       OBJECT *o_current,
 				       char *new_attrib_name, 
 				       char *new_attrib_value,
 				       gint visibility, 
@@ -181,12 +199,11 @@ void s_object_replace_attrib_in_object(OBJECT *o_current,
       old_attrib_name = u_basic_breakup_string(old_attrib_text, '=', 0);
       
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {
-	/* create attrib=value text string & stuff it back into pr_current */
+	/* create attrib=value text string & stuff it back into toplevel */
 	new_attrib_text = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
 	g_free(a_current->text->string);   /* remove old attrib string */
 	a_current->text->string = g_strdup(new_attrib_text);   /* insert new attrib string */
-	if (visibility != LEAVE_VISIBILITY_ALONE) 
-	  a_current->visibility = visibility;
+	o_set_visibility (toplevel, a_current, visibility);
 	if (show_name_value != LEAVE_NAME_VALUE_ALONE)
 	  a_current->show_name_value = show_name_value;
 	g_free(new_attrib_text);
@@ -216,10 +233,14 @@ void s_object_replace_attrib_in_object(OBJECT *o_current,
  * \brief Remove attribute from object
  *
  * Remove an attribute from an object.
+ * \param toplevel TOPLEVEL structure
  * \param o_current Object to remove attribute from
  * \param new_attrib_name Name of attribute to remove
  */
-void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name) 
+void
+s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
+                                  OBJECT *o_current,
+                                  char *new_attrib_name)
 {
   GList *a_iter;
   OBJECT *a_current;
@@ -245,7 +266,7 @@ void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name)
 #endif
 
 	attribute_object = a_current;
-	s_object_delete_text_object_in_object(pr_current, attribute_object);
+	s_object_delete_text_object_in_object (toplevel, attribute_object);
 
 	g_free(old_attrib_text);
 	g_free(old_attrib_name);
@@ -273,7 +294,7 @@ void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name)
  * Attach the name=value pair to the OBJECT "object". This function
  * was stolen from gschem/src/o_attrib.c:o_attrib_add_attrib and
  * hacked for gattrib.
- * \param pr_current TOPLEVEL to operate on
+ * \param toplevel TOPLEVEL to operate on
  * \param text_string
  * \param visibility
  * \param show_name_value
@@ -281,9 +302,12 @@ void s_object_remove_attrib_in_object(OBJECT *o_current, char *new_attrib_name)
  * \returns pointer to the object
  * \todo Does it need to return OBJECT?
  */
-OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_string,
-			    int visibility, int show_name_value,
-			    OBJECT * object)
+OBJECT *
+s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
+                                      char *text_string,
+                                      int visibility,
+                                      int show_name_value,
+                                      OBJECT * object)
 {
   int world_x = -1, world_y = -1;
   int color;
@@ -316,9 +340,9 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
       exit(-1);
     }
   } else {    /* This must be a floating attrib, but what is that !?!?!?!?!  */
-    world_get_object_glist_bounds(pr_current,
-                                  s_page_objects (pr_current->page_current),
-                                  &left, &top, &right, &bottom);
+    world_get_object_glist_bounds (toplevel,
+                                   s_page_objects (toplevel->page_current),
+                                   &left, &top, &right, &bottom);
 
     /* this really is the lower left hand corner */
     world_x = left;
@@ -333,30 +357,30 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
   printf("===  In s_object_attrib_add_attrib_in_object, about to attach new text attrib with properties:\n");
   printf("     color = %d\n", color);
   printf("     text_string = %s \n", text_string);
-  printf("     text_size = %d \n", pr_current->text_size);
+  printf("     text_size = %d \n", toplevel->text_size);
   printf("     visibility = %d \n", visibility);
   printf("     show_name_value = %d \n", show_name_value);
 #endif
 
-  new_obj = o_text_new (pr_current, OBJ_TEXT, color, world_x, world_y,
+  new_obj = o_text_new (toplevel, OBJ_TEXT, color, world_x, world_y,
                         LOWER_LEFT, 0, /* zero is angle */
                         text_string, DEFAULT_TEXT_SIZE,
                         visibility, show_name_value);
-  s_page_append (pr_current, pr_current->page_current, new_obj);
+  s_page_append (toplevel, toplevel->page_current, new_obj);
 
-  /* now pr_current->page_current->object_tail contains new text item */
+  /* now toplevel->page_current->object_tail contains new text item */
 
   /* now attach the attribute to the object (if o_current is not NULL) */
   /* remember that o_current contains the object to get the attribute */
   if (o_current) {
-    o_attrib_attach (pr_current, new_obj, o_current, FALSE);
+    o_attrib_attach (toplevel, new_obj, o_current, FALSE);
   }
 
-  o_selection_add (pr_current,
-                   pr_current->page_current->selection_list, new_obj);
+  o_selection_add (toplevel,
+                   toplevel->page_current->selection_list, new_obj);
 
 
-  pr_current->page_current->CHANGED = 1;
+  toplevel->page_current->CHANGED = 1;
 
   return new_obj;
 }
@@ -370,14 +394,16 @@ OBJECT *s_object_attrib_add_attrib_in_object(TOPLEVEL * pr_current, char *text_s
  * Delete the text object pointed to by text_object.  This function
  * was shamelessly stolen from gschem/src/o_delete.c and hacked
  * for gattrib by SDB.
- * \param pr_current TOPLEVEL to be operated on
+ * \param toplevel TOPLEVEL to be operated on
  * \param test_object text object to be deleted
  */
-void s_object_delete_text_object_in_object(TOPLEVEL * pr_current, OBJECT * text_object)
+void
+s_object_delete_text_object_in_object (TOPLEVEL *toplevel,
+                                       OBJECT * text_object)
 {
-  s_page_remove (pr_current, pr_current->page_current, text_object);
-  s_delete_object (pr_current, text_object);
-  pr_current->page_current->CHANGED = 1;
+  s_page_remove (toplevel, toplevel->page_current, text_object);
+  s_delete_object (toplevel, text_object);
+  toplevel->page_current->CHANGED = 1;
 }
                                                                                                     
 

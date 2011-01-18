@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 /*------------------------------------------------------------------*/
@@ -55,22 +55,22 @@
 /*! \brief Read a schematic page
  *
  * Reads in a schematic page & calls f_open, which fills out the
- * pr_current structure.
+ * toplevel structure.
  *
+ *  \param toplevel TOPLEVEL structure
  *  \param filename file to be opened
  *  \returns 1 on success, 0 on failure
  */
-int s_toplevel_read_page(char *filename)
+int s_toplevel_read_page(TOPLEVEL *toplevel, char *filename)
 {
   int file_return_code;
   GError *err = NULL;
     
   /* Set the new filename */
-  pr_current->page_current->page_filename = g_strdup(filename);
+  toplevel->page_current->page_filename = g_strdup(filename);
   
-  /* read in and fill out pr_current using f_open and its callees */
-  file_return_code = f_open(pr_current, pr_current->page_current,
-                            filename, &err);
+  /* read in and fill out toplevel using f_open and its callees */
+  file_return_code = f_open (toplevel, toplevel->page_current, filename, &err);
 
   /* If an error occurred, print message */
   if (err != NULL) {
@@ -91,16 +91,16 @@ int s_toplevel_read_page(char *filename)
  *  no symbol file is found.  If this function finds a
  *  placeholder, it warns the user.
  *
- *  \param pr_current pointer to the toplevel object to be verified
+ *  \param toplevel pointer to the toplevel object to be verified
  */
-void s_toplevel_verify_design(TOPLEVEL *pr_current)
+void s_toplevel_verify_design (TOPLEVEL *toplevel)
 {
   GList *p_iter;
   const GList *o_iter;
 
   int missing_sym_flag = 0;
 
-  for (p_iter = geda_list_get_glist (pr_current->pages);
+  for (p_iter = geda_list_get_glist (toplevel->pages);
        p_iter != NULL;
        p_iter = g_list_next (p_iter)) {
     PAGE *p_current = p_iter->data;
@@ -122,25 +122,6 @@ void s_toplevel_verify_design(TOPLEVEL *pr_current)
   }
 }
 
-
-
-/*------------------------------------------------------------------*/
-/*! \brief Detect empty project
- *
- * Test if there is data in the current project.
- * \returns 1 if the project is empty (i.e. pr_current is
- * not filled out yet), and 0 if the project is non-empty (i.e. there
- * is some data in pr_current).
- * \todo Doesn't do anything. Candidate for removal?
- */
-void s_toplevel_empty_project()
-{
-  /* Nothing here yet.  Is this necessary in current program
-   * architecture? */
-}
-
-
-
 /*------------------------------------------------------------------*/
 /*! \brief Copy data from gtksheet into TOPLEVEL struct
  *
@@ -151,7 +132,7 @@ void s_toplevel_empty_project()
  * stuff in SHEET_DATA into the libgeda TOPLEVEL structure.
  */
 void
-s_toplevel_gtksheet_to_toplevel()
+s_toplevel_gtksheet_to_toplevel(TOPLEVEL *toplevel)
 {
   GList *iter;
   PAGE *p_current;
@@ -166,15 +147,15 @@ s_toplevel_gtksheet_to_toplevel()
 #endif
 
   /* must iterate over all pages in design */
-  for ( iter = geda_list_get_glist( pr_current->pages );
+  for ( iter = geda_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
     p_current = (PAGE *)iter->data;
-    pr_current->page_current = p_current;
+    toplevel->page_current = p_current;
     /* only traverse pages which are toplevel */
     if (p_current->page_control == 0) {
-      s_toplevel_sheetdata_to_toplevel (p_current);    /* adds all objects from page */
+      s_toplevel_sheetdata_to_toplevel (toplevel, p_current);    /* adds all objects from page */
     }
   }
 
@@ -417,10 +398,11 @@ void s_toplevel_select_object()
  * -# First find and update component attribs.
  * -# Then find and update net attribs.
  * -# Finally find and update pin attribs.
+ * \param toplevel TOPLEVEL structure
  * \param page schematic page to copy
  */
 void
-s_toplevel_sheetdata_to_toplevel (PAGE *page)
+s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
 {
   GList *copy_list;
   GList *o_iter, *prim_iter;
@@ -470,7 +452,8 @@ s_toplevel_sheetdata_to_toplevel (PAGE *page)
 
 
 	/* Now update attribs in toplevel using this list.  */
-	s_toplevel_update_component_attribs_in_toplevel(o_current, 
+	s_toplevel_update_component_attribs_in_toplevel(toplevel,
+							o_current,
 							new_comp_attrib_pair_list);
 
 	g_free(temp_uref);
@@ -530,10 +513,14 @@ s_toplevel_sheetdata_to_toplevel (PAGE *page)
              prim_iter = g_list_next (prim_iter)) {
           OBJECT *comp_prim_obj = prim_iter->data;
 
-	  if (comp_prim_obj->type == OBJ_PIN) { 
-	    new_pin_attrib_list = s_toplevel_get_pin_attribs_in_sheet(temp_uref, comp_prim_obj);
-	    s_toplevel_update_pin_attribs_in_toplevel(temp_uref, comp_prim_obj, new_pin_attrib_list);
-	  }
+          if (comp_prim_obj->type == OBJ_PIN) {
+            new_pin_attrib_list =
+              s_toplevel_get_pin_attribs_in_sheet (temp_uref, comp_prim_obj);
+           s_toplevel_update_pin_attribs_in_toplevel (toplevel,
+                                                      temp_uref,
+                                                      comp_prim_obj,
+                                                      new_pin_attrib_list);
+         }
         }
       }     /* if(temp_uref  */
       
@@ -638,12 +625,16 @@ STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes)
  * -# If the attribs doesn't exist on o_current, but is non-null in
  *    the name=value pair, create an attrib object and add it to the part
  *    on o_current.
+ * \param toplevel TOPLEVEL structure
  * \param o_current Component (complex) to be updated.
  * \param new_comp_attrib_list list of name=value attribute pairs
  *                             from SHEET_DATA.
  */
-void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current, 
-						     STRING_LIST *new_comp_attrib_list) 
+void
+s_toplevel_update_component_attribs_in_toplevel (
+                                        TOPLEVEL *toplevel,
+                                        OBJECT *o_current,
+                                        STRING_LIST *new_comp_attrib_list)
 {
   STRING_LIST *local_list;
   STRING_LIST *complete_comp_attrib_list;
@@ -789,7 +780,8 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
       printf("               visibility = %d, show_name_value = %d.\n",
 	     visibility, show_name_value);
 #endif
-      s_object_replace_attrib_in_object(o_current, 
+      s_object_replace_attrib_in_object(toplevel,
+					o_current,
 					new_attrib_name, 
 					new_attrib_value, 
 					visibility, 
@@ -803,7 +795,7 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
       printf("     -- In s_toplevel_update_component_attribs_in_toplevel, about to remove old attrib with name= %s, value= %s\n",
 	     old_attrib_name, old_attrib_value);
 #endif
-      s_object_remove_attrib_in_object(o_current, old_attrib_name);
+      s_object_remove_attrib_in_object (toplevel, o_current, old_attrib_name);
     }
 
     /* -------  Four cases to consider: Case 3 ----- */
@@ -815,11 +807,12 @@ void s_toplevel_update_component_attribs_in_toplevel(OBJECT *o_current,
 	     new_attrib_name, new_attrib_value);
 #endif 
 
-      s_object_add_comp_attrib_to_object(o_current, 
-					 new_attrib_name, 
-					 new_attrib_value, 
-					 visibility,
-					 show_name_value);
+      s_object_add_comp_attrib_to_object (toplevel,
+                                          o_current,
+                                          new_attrib_name,
+                                          new_attrib_value,
+                                          visibility,
+                                          show_name_value);
 
       /* -------  Four cases to consider: Case 4 ----- */
     } else {
@@ -973,12 +966,16 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
  *    delete the attrib.
  * -# If the attribs doesn't exist on pin, but is non-null in
  *    the name=value pair, create an attrib object and add it to the pin.
+ * \param toplevel TOPLEVEL structure
  * \param refdes Unused - needs refactored out
  * \param [in,out] o_pin pin to update
  * \param [in] new_pin_attrib_list New pin attribute list to apply
  */
-void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin, 
-				   STRING_LIST *new_pin_attrib_list)
+void
+s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
+                                           char *refdes,
+                                           OBJECT *o_pin,
+                                           STRING_LIST *new_pin_attrib_list)
 {
   STRING_LIST *local_list;
   char *new_name_value_pair;
@@ -1014,10 +1011,11 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
       printf("In s_toplevel_update_pin_attribs_in_toplevel, about to replace old attrib with new one: name= %s, value= %s\n",
              new_attrib_name, new_attrib_value);
 #endif
-      s_object_replace_attrib_in_object(o_pin, 
+      s_object_replace_attrib_in_object(toplevel,
+					o_pin,
 					new_attrib_name, 
 					new_attrib_value, 
-					LEAVE_VISIBILITY_ALONE,
+					o_is_visible (toplevel, o_pin) ? VISIBLE : INVISIBLE,
 					LEAVE_NAME_VALUE_ALONE); 
     }
                                                                                                        
@@ -1028,7 +1026,7 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
       printf("In s_toplevel_update_pin_attribs_in_toplevel, about to remove old attrib with name= %s, value= %s\n",
              new_attrib_name, old_attrib_value);
 #endif
-      s_object_remove_attrib_in_object(o_pin, new_attrib_name);
+      s_object_remove_attrib_in_object (toplevel, o_pin, new_attrib_name);
     }
                                                                                                        
     /* -------  Four cases to consider: Case 3: No old attrib, new one exists. ----- */
@@ -1039,9 +1037,12 @@ void s_toplevel_update_pin_attribs_in_toplevel(char *refdes, OBJECT *o_pin,
       printf("In s_toplevel_update_pin_attribs_in_toplevel, about to add new attrib with name= %s, value= %s\n",
              new_attrib_name, new_attrib_value);
 #endif
-                                                                                                       
-      s_object_add_pin_attrib_to_object(o_pin, new_attrib_name, new_attrib_value);
-                                                                                                       
+
+      s_object_add_pin_attrib_to_object (toplevel,
+                                         o_pin,
+                                         new_attrib_name,
+                                         new_attrib_value);
+
       /* -------  Four cases to consider: Case 4 ----- */
     } else {
       /* Do nothing. */

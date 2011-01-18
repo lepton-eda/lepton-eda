@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 
@@ -94,7 +94,7 @@ void o_attrib_deselect_invisible (GSCHEM_TOPLEVEL *w_current,
        a_iter = g_list_next (a_iter)) {
     a_current = a_iter->data;
 
-    if (a_current->selected && a_current->visibility == INVISIBLE)
+    if (a_current->selected && !o_is_visible(w_current->toplevel, a_current))
       o_selection_remove (w_current->toplevel, selection, a_current);
   }
 }
@@ -114,13 +114,13 @@ void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 
   g_return_if_fail (object != NULL && object->type == OBJ_TEXT);
 
-  if (object->visibility == VISIBLE) {
+  if (o_is_visible (toplevel, object)) {
     /* only erase if we are not showing hidden text */
     if (!toplevel->show_hidden_text) {
       o_invalidate (w_current, object);
     }
 
-    object->visibility = INVISIBLE;
+    o_set_visibility (toplevel, object, INVISIBLE);
 
     if (toplevel->show_hidden_text) {
       /* draw text so that little I is drawn */
@@ -134,7 +134,7 @@ void o_attrib_toggle_visibility(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
       o_invalidate (w_current, object);
     }
 
-    object->visibility = VISIBLE;
+    o_set_visibility (toplevel, object, VISIBLE);
     o_text_recreate(toplevel, object);
   }
 

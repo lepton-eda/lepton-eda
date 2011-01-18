@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 
@@ -367,7 +367,7 @@ void o_edit_show_hidden_lowlevel (GSCHEM_TOPLEVEL *w_current,
   iter = o_list;
   while (iter != NULL) {
     o_current = (OBJECT *)iter->data;
-    if (o_current->type == OBJ_TEXT && o_current->visibility == INVISIBLE) {
+    if (o_current->type == OBJ_TEXT && !o_is_visible (toplevel, o_current)) {
 
       /* don't toggle the visibility flag */
       o_text_recreate (toplevel, o_current);
@@ -406,36 +406,6 @@ void o_edit_show_hidden (GSCHEM_TOPLEVEL *w_current, const GList *o_list)
   } else {
     s_log_message(_("Hidden text is now invisible\n"));
   }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_edit_make_visible (GSCHEM_TOPLEVEL *w_current, const GList *o_list)
-{
-  /* this function actually changes the visibility flag */
-  TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_current;
-  const GList *iter;
-
-  iter = o_list;
-  while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
-
-    if (o_current->type == OBJ_TEXT) {
-      if (o_current->visibility == INVISIBLE) {
-        o_current->visibility = VISIBLE;
-        o_text_recreate(toplevel, o_current);
-
-        toplevel->page_current->CHANGED = 1;
-      }
-    }
-    iter = g_list_next (iter);
-  }
-  o_undo_savestate(w_current, UNDO_ALL);
-
 }
 
 #define FIND_WINDOW_HALF_SIZE (5000)
@@ -490,21 +460,23 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
           pcount = 0;
           current_filename = u_basic_breakup_string(attrib, ',', pcount);
           if (current_filename != NULL) {
-            page_control =
+            PAGE *child_page =
               s_hierarchy_down_schematic_single(toplevel,
                                                 current_filename,
                                                 parent,
                                                 page_control,
                                                 HIERARCHY_NORMAL_LOAD);
-            /* o_invalidate_all (w_current); */
 
-            rv = o_edit_find_text (w_current,
-                                   s_page_objects (toplevel->page_current),
-                                   stext, descend, skiplast);
-            if (!rv) {
-              return 0;
+            if (child_page != NULL) {
+              page_control = child_page->page_control;
+              rv = o_edit_find_text (w_current,
+                                     s_page_objects (child_page),
+                                     stext, descend, skiplast);
+              if (!rv) {
+                s_page_goto( toplevel, child_page );
+                return 0;
+              }
             }
-            s_page_goto( toplevel, parent );
           }
         }
       }
@@ -572,8 +544,8 @@ void o_edit_hide_specific_text (GSCHEM_TOPLEVEL *w_current,
     if (o_current->type == OBJ_TEXT) {
       const gchar *str = o_text_get_string (w_current->toplevel, o_current);
       if (!strncmp (stext, str, strlen (stext))) {
-        if (o_current->visibility == VISIBLE) {
-          o_current->visibility = INVISIBLE;
+        if (o_is_visible (toplevel, o_current)) {
+          o_set_visibility (toplevel, o_current, INVISIBLE);
           o_text_recreate(toplevel, o_current);
 
           toplevel->page_current->CHANGED = 1;
@@ -606,8 +578,8 @@ void o_edit_show_specific_text (GSCHEM_TOPLEVEL *w_current,
     if (o_current->type == OBJ_TEXT) {
       const gchar *str = o_text_get_string (w_current->toplevel, o_current);
       if (!strncmp (stext, str, strlen (stext))) {
-        if (o_current->visibility == INVISIBLE) {
-          o_current->visibility = VISIBLE;
+        if (!o_is_visible (toplevel, o_current)) {
+          o_set_visibility (toplevel, o_current, VISIBLE);
           o_text_recreate(toplevel, o_current);
 
           toplevel->page_current->CHANGED = 1;

@@ -19,18 +19,21 @@ singlenet | singlenet.sch | | |
 
 # The two stage amp
 TwoStageAmp | TwoStageAmp.sch | Simulation.cmd gafrc models/2N3904.mod sym/transistor.sym | |
-TwoStageAmp_Include | TwoStageAmp.sch | Simulation.cmd gafrc models/2N3904.mod sym/transistor.sym | -I
-TwoStageAmp_Sort | TwoStageAmp.sch | Simulation.cmd gafrc models/2N3904.mod sym/transistor.sym | -s
+TwoStageAmp_Include | TwoStageAmp.sch | Simulation.cmd gafrc models/2N3904.mod sym/transistor.sym | -O include_mode
+TwoStageAmp_Sort | TwoStageAmp.sch | Simulation.cmd gafrc models/2N3904.mod sym/transistor.sym | -O sort_mode
 
 # John Doty's test circuit
 # First test mangling
 JD | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | |
-JD_Include | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -I
-JD_Sort | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -s
+JD_Include | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -O include_mode
+JD_Sort | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -O sort_mode
 # Now test non-munged version.
-JD_nomunge | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -n
-JD_Include_nomunge | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -I -n
-JD_Sort_nomunge | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -s -n
+JD_nomunge | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -O nomunge_mode
+JD_Include_nomunge | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -O include_mode -O nomunge_mode
+JD_Sort_nomunge | LVDfoo.sch | gafrc models/openIP_5.cir sym/LVD.sym | -O sort_mode -O nomunge_mode
 
 # Tests for slotted parts
 SlottedOpamps | SlottedOpamps.sch | gafrc sym/LM324_slotted-1.sym | |
+
+# Stack torture test
+stack-torture | stack-torture.sch | | |

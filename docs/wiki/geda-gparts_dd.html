@@ -11,41 +11,25 @@
 </head>
 <body>
 
-<div class="toc">
-<div class="tocheader toctoggle" id="toc__header">Table of Contents</div>
-<div id="toc__inside">
-
-<ul class="toc">
-<li class="level1"><div class="li"><span class="li"><a href="#part_manager" class="toc">Part Manager</a></span></div>
-<ul class="toc">
-<li class="level2"><div class="li"><span class="li"><a href="#part_database" class="toc">Part Database</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#entities" class="toc">Entities</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#part_categories" class="toc">Part Categories</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#part_hierarchy" class="toc">Part Hierarchy</a></span></div></li>
-</ul>
-</li>
-<li class="level2"><div class="li"><span class="li"><a href="#part_manager_gui" class="toc">Part Manager GUI</a></span></div>
-<ul class="toc">
-<li class="level3"><div class="li"><span class="li"><a href="#use_cases" class="toc">Use Cases</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#ui_design" class="toc">UI Design</a></span></div></li>
-<li class="level3"><div class="li"><span class="li"><a href="#configuration" class="toc">Configuration</a></span></div></li></ul>
-</li></ul>
-</li></ul>
-</div>
-</div>
 
 <p>
 This page serves as a working document for the design of a parts manager for gEDA. Please submit feedback to the geda-dev or geda-user mailing lists.
 </p>
 
+<p>
+For implementation details, see <a href="geda-gparts_id.html" class="wikilink1" title="geda-gparts_id.html">gparts_id</a>.
+</p>
 
+<p>
+Or, return to the <a href="geda-gparts_tc.html" class="wikilink1" title="geda-gparts_tc.html">part manager top level</a> page.
+</p>
 
-<h1><a name="part_manager" id="part_manager">Part Manager</a></h1>
+<h1 class="sectionedit134"><a name="part_manager" id="part_manager">Part Manager</a></h1>
 <div class="level1">
 
 <p>
- The part manager uses a relational database to store parts used in the development of electronic assemblies.  The part manager also stores attributes for these parts and can place these attributes into a component or symbol for placement into schematics.
+
+The part manager uses a relational database to store parts used in the development of electronic assemblies.  The part manager also stores attributes for these parts and can place these attributes into a component or symbol for placement into schematics.
 </p>
 
 <p>
@@ -65,12 +49,13 @@ The part database can be configured as either local or remote.  In the remote co
 </p>
 
 </div>
-<!-- SECTION "Part Manager" [152-914] -->
-<h2><a name="part_database" id="part_database">Part Database</a></h2>
+<!-- EDIT134 SECTION "Part Manager" [262-1024] -->
+<h2 class="sectionedit135"><a name="part_database" id="part_database">Part Database</a></h2>
 <div class="level2">
 
 <p>
- The following figure shows the entity relationships for a part in the resistor category. The category does not reference any tables in the resistor category, but only contains the view name and stored procedures to manipulate a part within the resistor category. This mechanism allows the tables and relationships to vary by category.
+
+The following figure shows the entity relationships for a part in the resistor category. The category does not reference any tables in the resistor category, but only contains the view name and stored procedures to manipulate a part within the resistor category. This mechanism allows the tables and relationships to vary by category.
 </p>
 
 <p>
@@ -78,12 +63,13 @@ The part database can be configured as either local or remote.  In the remote co
 </p>
 
 </div>
-<!-- SECTION "Part Database" [915-1308] -->
-<h3><a name="entities" id="entities">Entities</a></h3>
+<!-- EDIT135 SECTION "Part Database" [1025-1418] -->
+<h3 class="sectionedit136"><a name="entities" id="entities">Entities</a></h3>
 <div class="level3">
 
 <p>
- The database always contains tables to store the following entities.  The database contains additional tables to store specific categories of parts (e.g. a capacitor table, a diode table, a resistor table, etc&hellip;).  This list excludes junction tables and metadata tables.
+
+The database always contains tables to store the following entities.  The database contains additional tables to store specific categories of parts (e.g. a capacitor table, a diode table, a resistor table, etc…).  This list excludes junction tables and metadata tables.
 </p>
 
 </div>
@@ -92,190 +78,205 @@ The part database can be configured as either local or remote.  In the remote co
 <div class="level4">
 
 <p>
- A class of parts (e.g. capacitors, diodes, resistors, transistors, etc&hellip;).  A category can contain sub-categories (e.g. small-signal diodes, TVS diodes, zener diodes, etc&hellip;)  Sub-categories can include additional sub-categories. All parts within a category or sub-category share the same set of attributes (e.g. forward voltage, maximum current, power dissipation, etc&hellip;).  Sub-categories do not need to inherit the attributes of their parent.
+
+A class of parts (e.g. capacitors, diodes, resistors, transistors, etc…).  A category can contain sub-categories (e.g. small-signal diodes, TVS diodes, zener diodes, etc…)  Sub-categories can include additional sub-categories. All parts within a category or sub-category share the same set of attributes (e.g. forward voltage, maximum current, power dissipation, etc…).  Sub-categories do not need to inherit the attributes of their parent.
 </p>
 
 <p>
-The category stores metadata for mapping the part’s database columns to the component attributes.  For numeric attributes, the category stores the column’s unit of measure (e.g. amps, farads, ohms, volts, etc&hellip;).
+The category stores metadata for mapping the part’s database columns to the component attributes.  For numeric attributes, the category stores the column’s unit of measure (e.g. amps, farads, ohms, volts, etc…).
 </p>
 
 <p>
-The category also stores the names of database views and stored procedures to access and manipulate the tables of parts within the category. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Field        </th><th class="leftalign"> Type   </th><th class="leftalign"> Description                     </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> CategoryID   </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                   </td>
-	</tr>
-	<tr>
-		<td> CategoryName </td><td> String </td><td> The unique name of the category </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> ParentID     </td><td class="rightalign">        </td><td class="leftalign"> Foreign key to Category         </td>
-	</tr>
-</table>
+The category also stores the names of database views and stored procedures to access and manipulate the tables of parts within the category.
 
+</p>
+<div class="table sectionedit137"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field        </th><th class="col1 leftalign"> Type   </th><th class="col2 leftalign"> Description                     </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> CategoryID   </td><td class="col1 leftalign">        </td><td class="col2 leftalign"> Surrogate key                   </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> CategoryName </td><td class="col1"> String </td><td class="col2"> The unique name of the category </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> ParentID     </td><td class="col1 leftalign">        </td><td class="col2 leftalign"> Foreign key to Category         </td>
+	</tr>
+</table></div>
+<!-- EDIT137 TABLE [2539-2778] -->
 </div>
 
 <h4><a name="company" id="company">Company</a></h4>
 <div class="level4">
 
 <p>
- Currently, a company represents a part’s manufacturer.   
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Field       </th><th class="leftalign"> Type   </th><th class="leftalign"> Description                    </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> CompanyID   </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                  </td>
-	</tr>
-	<tr>
-		<td> CompanyName </td><td> String </td><td> The unique name of the company </td>
-	</tr>
-</table>
 
+Currently, a company represents a part’s manufacturer.  
+
+</p>
+<div class="table sectionedit138"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field       </th><th class="col1 leftalign"> Type   </th><th class="col2 leftalign"> Description                    </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> CompanyID   </td><td class="col1 leftalign">        </td><td class="col2 leftalign"> Surrogate key                  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> CompanyName </td><td class="col1"> String </td><td class="col2"> The unique name of the company </td>
+	</tr>
+</table></div>
+<!-- EDIT138 TABLE [2857-3030] -->
 </div>
 
 <h4><a name="device" id="device">Device</a></h4>
 <div class="level4">
 
 <p>
- A type of part.  The device name only provides a mechanism to map parts to symbols.  A part in the library of device resistor can use all the symbols in the library where device is resistor.  Similarly, a symbol where device is resistor can represent any part of device resistor.  When importing a symbol, the database uses the value of the symbol attribute DEVICE as the initial value for the device field.  The user can change the device field after import using the part manager <acronym title="Graphical User Interface">GUI</acronym>. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Field      </th><th class="leftalign"> Type   </th><th class="leftalign"> Description                   </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> DeviceID   </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                 </td>
-	</tr>
-	<tr>
-		<td> DeviceName </td><td> String </td><td> The unique name of the device </td>
-	</tr>
-</table>
 
+A type of part.  The device name only provides a mechanism to map parts to symbols.  A part in the library of device resistor can use all the symbols in the library where device is resistor.  Similarly, a symbol where device is resistor can represent any part of device resistor.  When importing a symbol, the database uses the value of the symbol attribute DEVICE as the initial value for the device field.  The user can change the device field after import using the part manager <acronym title="Graphical User Interface">GUI</acronym>.
+
+</p>
+<div class="table sectionedit139"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field      </th><th class="col1 leftalign"> Type   </th><th class="col2 leftalign"> Description                   </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> DeviceID   </td><td class="col1 leftalign">        </td><td class="col2 leftalign"> Surrogate key                 </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> DeviceName </td><td class="col1"> String </td><td class="col2"> The unique name of the device </td>
+	</tr>
+</table></div>
+<!-- EDIT139 TABLE [3536-3703] -->
 </div>
 
 <h4><a name="document" id="document">Document</a></h4>
 <div class="level4">
 
 <p>
- Any file associated with a part.  Documents can include datasheets, erata, user manuals, etc&hellip; This entity stores a path to the actual document file.  The path could either be local or network.  The path stored in the database is relative to the base path stored in the configuration file. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Field        </th><th class="leftalign"> Type   </th><th class="leftalign"> Description                                                        </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> DocumentID   </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                                                      </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> Category     </td><td> String </td><td> The document’s category (e.g. “Datasheet”, “Erata”, “User Manual”) </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> Title        </td><td> String </td><td class="leftalign"> The document’s title                                               </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> SourceURL    </td><td> String </td><td class="leftalign"> The <acronym title="Uniform Resource Locator">URL</acronym> where the document can be obtained on the Internet         </td>
-	</tr>
-	<tr>
-		<td> FileLocation </td><td> String </td><td class="leftalign"> The location of the locally stored document                        </td>
-	</tr>
-</table>
 
+Any file associated with a part.  Documents can include datasheets, erata, user manuals, etc… This entity stores a path to the actual document file.  The path could either be local or network.  The path stored in the database is relative to the base path stored in the configuration file.
+
+</p>
+<div class="table sectionedit140"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field        </th><th class="col1 leftalign"> Type   </th><th class="col2 leftalign"> Description                                                        </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> DocumentID   </td><td class="col1 leftalign">        </td><td class="col2 leftalign"> Surrogate key                                                      </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> Category     </td><td class="col1"> String </td><td class="col2"> The document&#039;s category (e.g. “Datasheet”, “Erata”, “User Manual”) </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> Title        </td><td class="col1"> String </td><td class="col2 leftalign"> The document&#039;s title                                               </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> SourceURL    </td><td class="col1"> String </td><td class="col2 leftalign"> The <acronym title="Uniform Resource Locator">URL</acronym> where the document can be obtained on the Internet         </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0"> FileLocation </td><td class="col1"> String </td><td class="col2 leftalign"> The location of the locally stored document                        </td>
+	</tr>
+</table></div>
+<!-- EDIT140 TABLE [4015-4584] -->
 </div>
 
 <h4><a name="footprint" id="footprint">Footprint</a></h4>
 <div class="level4">
 
 <p>
- The PCB artwork associated with a package.  This entity stores a path to the actual PCB footprint file.  The path could either be local or network.  The path stored in the database is relative to the base path stored in the configuration file. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Field         </th><th class="leftalign"> Type   </th><th class="leftalign"> Description                      </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> FootprintID   </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                    </td>
-	</tr>
-	<tr>
-		<td> FootprintName </td><td> String </td><td> The unique name of the footprint </td>
-	</tr>
-</table>
 
+The PCB artwork associated with a package.  This entity stores a path to the actual PCB footprint file.  The path could either be local or network.  The path stored in the database is relative to the base path stored in the configuration file.
+
+</p>
+<div class="table sectionedit141"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field         </th><th class="col1 leftalign"> Type   </th><th class="col2 leftalign"> Description                      </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> FootprintID   </td><td class="col1 leftalign">        </td><td class="col2 leftalign"> Surrogate key                    </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> FootprintName </td><td class="col1"> String </td><td class="col2"> The unique name of the footprint </td>
+	</tr>
+</table></div>
+<!-- EDIT141 TABLE [4850-5035] -->
 </div>
 
 <h4><a name="model" id="model">Model</a></h4>
 <div class="level4">
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Field     </th><th class="leftalign"> Type   </th><th class="leftalign"> Description                                        </th>
+<div class="table sectionedit142"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field     </th><th class="col1 leftalign"> Type   </th><th class="col2 leftalign"> Description                                        </th>
 	</tr>
-	<tr>
-		<td class="leftalign"> ModelID   </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                                      </td>
+	<tr class="row1">
+		<td class="col0 leftalign"> ModelID   </td><td class="col1 leftalign">        </td><td class="col2 leftalign"> Surrogate key                                      </td>
 	</tr>
-	<tr>
-		<td> ModelName </td><td> String </td><td class="leftalign"> The name of the MODEL within the model file.       </td>
+	<tr class="row2">
+		<td class="col0"> ModelName </td><td class="col1"> String </td><td class="col2 leftalign"> The name of the MODEL within the model file.       </td>
 	</tr>
-	<tr>
-		<td> ModelPath </td><td> String </td><td class="leftalign"> Absolute path to the model file.                   </td>
+	<tr class="row3">
+		<td class="col0"> ModelPath </td><td class="col1"> String </td><td class="col2 leftalign"> Absolute path to the model file.                   </td>
 	</tr>
-	<tr>
-		<td> ModelType </td><td> String </td><td class="leftalign"> The model type: IBIS, PSPICE, etc&hellip;               </td>
+	<tr class="row4">
+		<td class="col0"> ModelType </td><td class="col1"> String </td><td class="col2 leftalign"> The model type: IBIS, PSPICE, etc…               </td>
 	</tr>
-</table>
-
+</table></div>
+<!-- EDIT142 TABLE [5052-5431] -->
 </div>
 
 <h5><a name="spice" id="spice">Spice</a></h5>
 <div class="level5">
 
 <p>
- When instantiating a component or creating a heavy symbol that uses a Spice model, the following database columns map to the following attributes. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Column          </th><th class="leftalign"> Attribute  </th><th class="leftalign"> Notes                     </th>
-	</tr>
-	<tr>
-		<td> Model.ModelName </td><td> MODEL-NAME </td><td class="rightalign">                           </td>
-	</tr>
-	<tr>
-		<td> Model.ModelPath </td><td class="leftalign"> FILE       </td><td> Should use absolute path. </td>
-	</tr>
-</table>
 
+When instantiating a component or creating a heavy symbol that uses a Spice model, the following database columns map to the following attributes.
+
+</p>
+<div class="table sectionedit143"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Column          </th><th class="col1 leftalign"> Attribute  </th><th class="col2 leftalign"> Notes                     </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> Model.ModelName </td><td class="col1"> MODEL-NAME </td><td class="col2 leftalign">                           </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> Model.ModelPath </td><td class="col1 leftalign"> FILE       </td><td class="col2"> Should use absolute path. </td>
+	</tr>
+</table></div>
+<!-- EDIT143 TABLE [5594-5776] -->
 </div>
 
 <h4><a name="part_flat" id="part_flat">Part (Flat)</a></h4>
 <div class="level4">
 
 <p>
- A part represents a class of components. The database uses this version of the part table when configured to use a flat part table. The flat and hierarchical parts tables are mutually exclusive. The database uses one or the other. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Field      </th><th> Type </th><th class="leftalign"> Description                                   </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> PartID     </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                                 </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> CompanyID  </td><td class="rightalign">        </td><td> Foreign key to company specifies manufacturer </td>
-	</tr>
-	<tr>
-		<td> PartNumber </td><td> String </td><td class="leftalign"> The manufacturers’s part number               </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> DeviceID   </td><td class="rightalign">        </td><td class="leftalign"> Foreign key to Device                         </td>
-	</tr>
-</table>
 
+A part represents a class of components. The database uses this version of the part table when configured to use a flat part table. The flat and hierarchical parts tables are mutually exclusive. The database uses one or the other.
+
+</p>
+<div class="table sectionedit144"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field      </th><th class="col1"> Type </th><th class="col2 leftalign"> Description                                   </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID     </td><td class="col1 leftalign">        </td><td class="col2 leftalign"> Surrogate key                                 </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> CompanyID  </td><td class="col1 leftalign">        </td><td class="col2"> Foreign key to company specifies manufacturer </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> PartNumber </td><td class="col1"> String </td><td class="col2 leftalign"> The manufacturers&#039;s part number               </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> DeviceID   </td><td class="col1 leftalign">        </td><td class="col2 leftalign"> Foreign key to Device                         </td>
+	</tr>
+</table></div>
+<!-- EDIT144 TABLE [6031-6388] -->
 <p>
- Other columns TBD.
+
+Other columns TBD.
 </p>
 
 </div>
@@ -284,79 +285,86 @@ The category also stores the names of database views and stored procedures to ac
 <div class="level4">
 
 <p>
- A part represents a class of components. The database uses this version of the part table when configured to use hierarchical part tables. The flat and hierarchical parts tables are mutually exclusive. The database uses one or the other.  
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Field      </th><th> Type </th><th class="leftalign"> Description                                   </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> PartID     </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                                 </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> CompanyID  </td><td class="rightalign">        </td><td> Foreign key to company specifies manufacturer </td>
-	</tr>
-	<tr>
-		<td> PartNumber </td><td> String </td><td class="leftalign"> The manufacturers’s part number               </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> DeviceID   </td><td class="rightalign">        </td><td class="leftalign"> Foreign key to Device                         </td>
-	</tr>
-</table>
 
+A part represents a class of components. The database uses this version of the part table when configured to use hierarchical part tables. The flat and hierarchical parts tables are mutually exclusive. The database uses one or the other. 
+
+</p>
+<div class="table sectionedit145"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field      </th><th class="col1"> Type </th><th class="col2 leftalign"> Description                                   </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID     </td><td class="col1 leftalign">        </td><td class="col2 leftalign"> Surrogate key                                 </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> CompanyID  </td><td class="col1 leftalign">        </td><td class="col2"> Foreign key to company specifies manufacturer </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> PartNumber </td><td class="col1"> String </td><td class="col2 leftalign"> The manufacturers&#039;s part number               </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> DeviceID   </td><td class="col1 leftalign">        </td><td class="col2 leftalign"> Foreign key to Device                         </td>
+	</tr>
+</table></div>
+<!-- EDIT145 TABLE [6679-7036] -->
 </div>
 
 <h4><a name="package" id="package">Package</a></h4>
 <div class="level4">
 
 <p>
- The physical structure, or form-factor, of a part (i.e. 0603, SOT-23, PDIP16).  Each package can associate with zero or more footprints.  Also, each footprint could represent zero or more packages. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Field       </th><th class="leftalign"> Type   </th><th class="leftalign"> Description                                </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> PackageID   </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                              </td>
-	</tr>
-	<tr>
-		<td> PackageName </td><td> String </td><td class="leftalign"> The unique name of the package             </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> Technology  </td><td> String </td><td> The type of package.  Either “SMT” or “TH” </td>
-	</tr>
-</table>
 
+The physical structure, or form-factor, of a part (i.e. 0603, SOT-23, PDIP16).  Each package can associate with zero or more footprints.  Also, each footprint could represent zero or more packages.
+
+</p>
+<div class="table sectionedit146"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field       </th><th class="col1 leftalign"> Type   </th><th class="col2 leftalign"> Description                                </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PackageID   </td><td class="col1 leftalign">        </td><td class="col2 leftalign"> Surrogate key                              </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> PackageName </td><td class="col1"> String </td><td class="col2 leftalign"> The unique name of the package             </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> Technology  </td><td class="col1"> String </td><td class="col2"> The type of package.  Either “SMT” or “TH” </td>
+	</tr>
+</table></div>
+<!-- EDIT146 TABLE [7254-7533] -->
 </div>
 
 <h4><a name="symbol" id="symbol">Symbol</a></h4>
 <div class="level4">
 
 <p>
- The graphical representation of a part. This entity uses the symbol base filename as the unique name of the symbol. This base filename is relative to one of the component libraries found in the configuration files. The component library paths can either be local or network. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Field      </th><th class="leftalign"> Type   </th><th class="leftalign"> Description                   </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> SymbolID   </td><td class="rightalign">        </td><td class="leftalign"> Surrogate key                                                                       </td>
-	</tr>
-	<tr>
-		<td> SymbolName </td><td> String </td><td> The unique name of the symbol. This field contains the base filename of the symbol. </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> DeviceID   </td><td class="rightalign">        </td><td class="leftalign"> Foreign key to Device                                                               </td>
-	</tr>
-</table>
 
+The graphical representation of a part. This entity uses the symbol base filename as the unique name of the symbol. This base filename is relative to one of the component libraries found in the configuration files. The component library paths can either be local or network.
+
+</p>
+<div class="table sectionedit147"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field      </th><th class="col1 leftalign"> Type   </th><th class="col2 leftalign"> Description                   </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> SymbolID   </td><td class="col1 leftalign">        </td><td class="col2 leftalign"> Surrogate key                                                                       </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> SymbolName </td><td class="col1"> String </td><td class="col2"> The unique name of the symbol. This field contains the base filename of the symbol. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> DeviceID   </td><td class="col1 leftalign">        </td><td class="col2 leftalign"> Foreign key to Device                                                               </td>
+	</tr>
+</table></div>
+<!-- EDIT147 TABLE [7827-8212] -->
 </div>
-<!-- SECTION "Entities" [1309-8103] -->
-<h3><a name="part_categories" id="part_categories">Part Categories</a></h3>
+<!-- EDIT136 SECTION "Entities" [1419-8213] -->
+<h3 class="sectionedit148"><a name="part_categories" id="part_categories">Part Categories</a></h3>
 <div class="level3">
 
 <p>
- Part categories break down classes of parts hierarchically. The category hierarchy exists separately than the part hierarchy. The category hierarchy only provides the user with a system to locate parts quickly. A child in the category hierarchy does not need to inherit the attributes of a parent.
+
+Part categories break down classes of parts hierarchically. The category hierarchy exists separately than the part hierarchy. The category hierarchy only provides the user with a system to locate parts quickly. A child in the category hierarchy does not need to inherit the attributes of a parent.
 </p>
 
 <p>
@@ -371,7 +379,8 @@ It may be difficult to change the categories, using a <acronym title="Graphical 
 </div>
 
 <p>
-The default hierarchy of parts follow: 
+The default hierarchy of parts follow:
+
 </p>
 <ul>
 <li class="level1"><div class="li"> Discretes</div>
@@ -401,19 +410,21 @@ The default hierarchy of parts follow:
 </ul>
 
 </div>
-<!-- SECTION "Part Categories" [8104-9162] -->
-<h3><a name="part_hierarchy" id="part_hierarchy">Part Hierarchy</a></h3>
+<!-- EDIT148 SECTION "Part Categories" [8214-9277] -->
+<h3 class="sectionedit149"><a name="part_hierarchy" id="part_hierarchy">Part Hierarchy</a></h3>
 <div class="level3">
 
 <p>
- The part hierarchy allows the database to attach additional attributes to a class of parts.  These attributes provide a faster means to locate and select parts, especially commodity parts. The database only provides these additional attributes when configured to use hierarchical part tables.
+
+The part hierarchy allows the database to attach additional attributes to a class of parts.  These attributes provide a faster means to locate and select parts, especially commodity parts. The database only provides these additional attributes when configured to use hierarchical part tables.
 </p>
 
 <p>
 These additional attributes, stored in numeric format, allow <acronym title="Structured Query Language">SQL</acronym> to select parts. For example, to locate diodes with reverse voltage greater than 60 volts, use the following <acronym title="Structured Query Language">SQL</acronym> statement.
 </p>
-<pre class="code sql"><span class="kw1">SELECT</span> * <span class="kw1">FROM</span> DiodeV
-    <span class="kw1">WHERE</span> VR &gt; <span class="nu0">60</span>;</pre>
+<pre class="code sql"><pre class="code sql"><span class="kw1">SELECT</span> * <span class="kw1">FROM</span> DiodeV
+    <span class="kw1">WHERE</span> VR &gt; <span class="nu0">60</span>;</pre></pre>
+
 <p>
 The intent of the part hierarchy does not include exhaustively classifying all electronic parts or fully parameterizing any class of electronic part.  The part hierarchy simply intends to allow the user to quickly locate a part, such as a 4.75 kΩ 1% 0603.
 </p>
@@ -423,7 +434,8 @@ The intent of the part hierarchy does not include exhaustively classifying all e
 </p>
 
 <p>
-Proposed guidelines for including attributes: 
+Proposed guidelines for including attributes:
+
 </p>
 <ul>
 <li class="level1"><div class="li"> Include attributes that are encoded in the manufacturer part number.</div>
@@ -435,228 +447,388 @@ Proposed guidelines for including attributes:
 </ul>
 
 <p>
- These attributes may not work for everyone, so the database allows the user to customize these part tables.
+
+These attributes may not work for everyone, so the database allows the user to customize these part tables.
 </p>
 
+</div>
+
+<h4><a name="bjts" id="bjts">BJTs</a></h4>
+<div class="level4">
+
+<p>
+
+Bipolar Junction Transistors (BJTs) extend part with one additional table of attributes.
+</p>
+
+<p>
+Table name: BJT
+</p>
+
+<p>
+View name: BJTV
+
+</p>
+<div class="table sectionedit150"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field                         </th><th class="col1 leftalign"> Type     </th><th class="col2 leftalign"> Units   </th><th class="col3 leftalign"> Description                                                 </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID                        </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Foreign key to Part                                         </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PackageID                     </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Foreign key to Package                                      </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> Polarity                      </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Either NPN or PNP                                           </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> MaxCollectorCurrent           </td><td class="col1"> Physical </td><td class="col2 leftalign"> AMPS    </td><td class="col3 leftalign"> Maximum collector current (Absolute maximum rating)         </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> MaxCollectorEmitterVoltage    </td><td class="col1"> Physical </td><td class="col2 leftalign"> VOLTS   </td><td class="col3"> Maximum collector-emitter voltage (Absolute maximum rating) </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> TransitionFrequency           </td><td class="col1"> Physical </td><td class="col2 leftalign"> HERTZ   </td><td class="col3 leftalign">                                                             </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> PowerDissipation              </td><td class="col1"> Physical </td><td class="col2 leftalign"> WATTS   </td><td class="col3 leftalign"> Power dissipation (Pd) not including any derating           </td>
+	</tr>
+</table></div>
+<!-- EDIT150 TABLE [10688-11623] -->
+<p>
+
+The same table contains small-signal and power BJTs. These transistors can be
+placed into separate views using the following criteria.
+
+</p>
+<div class="table sectionedit151"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Category         </th><th class="col1 leftalign"> Criteria                </th><th class="col2"> View Name </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> Small-signal BJT </td><td class="col1"> PowerDissipation &lt;  1.0 </td><td class="col2 leftalign"> TBD       </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> Power BJT        </td><td class="col1"> PowerDissipation &gt;= 1.0 </td><td class="col2 leftalign"> TBD       </td>
+	</tr>
+</table></div>
+<!-- EDIT151 TABLE [11761-11937] -->
 </div>
 
 <h4><a name="capacitors" id="capacitors">Capacitors</a></h4>
 <div class="level4">
 
 <p>
- Capacitors extend part with one additional table of attributes. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Field       </th><th class="leftalign"> Type     </th><th class="leftalign"> Units   </th><th class="leftalign"> Description            </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> PartID      </td><td class="rightalign">          </td><td class="rightalign">         </td><td class="leftalign"> Foreign key to Part    </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> PackageID   </td><td class="rightalign">          </td><td class="rightalign">         </td><td> Foreign key to Package </td>
-	</tr>
-	<tr>
-		<td> Capacitance </td><td> Physical </td><td class="leftalign"> FARADS  </td><td class="leftalign"> Capacitance            </td>
-	</tr>
-</table>
 
+Capacitors extend part with one additional table of attributes.
+
+</p>
+<div class="table sectionedit152"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field       </th><th class="col1 leftalign"> Type     </th><th class="col2 leftalign"> Units   </th><th class="col3 leftalign"> Description            </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID      </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Foreign key to Part    </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PackageID   </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3"> Foreign key to Package </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> Capacitance </td><td class="col1"> Physical </td><td class="col2 leftalign"> FARADS  </td><td class="col3 leftalign"> Capacitance            </td>
+	</tr>
+</table></div>
+<!-- EDIT152 TABLE [12024-12271] -->
 <p>
- When instantiating a component or creating a heavy symbol, the following database columns map to the following attributes. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Column                </th><th> Attribute </th><th class="leftalign"> Notes                  </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> Device.DeviceName     </td><td class="leftalign"> DEVICE    </td><td class="rightalign">                        </td>
-	</tr>
-	<tr>
-		<td> Capacitor.Capacitance </td><td class="leftalign"> VALUE     </td><td class="rightalign">                        </td>
-	</tr>
-</table>
 
+When instantiating a component or creating a heavy symbol, the following database columns map to the following attributes.
+
+</p>
+<div class="table sectionedit153"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Column                </th><th class="col1"> Attribute </th><th class="col2 leftalign"> Notes                  </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> Device.DeviceName     </td><td class="col1 leftalign"> DEVICE    </td><td class="col2 leftalign">                        </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> Capacitor.Capacitance </td><td class="col1 leftalign"> VALUE     </td><td class="col2 leftalign">                        </td>
+	</tr>
+</table></div>
+<!-- EDIT153 TABLE [12397-12585] -->
 </div>
 
 <h4><a name="inductors" id="inductors">Inductors</a></h4>
 <div class="level4">
 
 <p>
- Inductors extend part with one additional table of attributes. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Field      </th><th class="leftalign"> Type     </th><th class="leftalign"> Units   </th><th class="leftalign"> Description            </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> PartID     </td><td class="rightalign">          </td><td class="rightalign">         </td><td class="leftalign"> Foreign key to Part    </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> PackageID  </td><td class="rightalign">          </td><td class="rightalign">         </td><td> Foreign key to Package </td>
-	</tr>
-	<tr>
-		<td> Inductance </td><td> Physical </td><td class="leftalign"> HENRYS  </td><td class="leftalign"> Inductance             </td>
-	</tr>
-</table>
 
+Inductors extend part with one additional table of attributes.
+
+</p>
+<div class="table sectionedit154"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field      </th><th class="col1 leftalign"> Type     </th><th class="col2 leftalign"> Units   </th><th class="col3 leftalign"> Description            </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID     </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Foreign key to Part    </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PackageID  </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3"> Foreign key to Package </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> Inductance </td><td class="col1"> Physical </td><td class="col2 leftalign"> HENRYS  </td><td class="col3 leftalign"> Inductance             </td>
+	</tr>
+</table></div>
+<!-- EDIT154 TABLE [12670-12913] -->
 <p>
- When instantiating a component or creating a heavy symbol, the following database columns map to the following attributes. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Column              </th><th> Attribute </th><th class="leftalign"> Notes                  </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> Device.DeviceName   </td><td class="leftalign"> DEVICE    </td><td class="rightalign">                        </td>
-	</tr>
-	<tr>
-		<td> Inductor.Inductance </td><td class="leftalign"> VALUE     </td><td class="rightalign">                        </td>
-	</tr>
-</table>
 
+When instantiating a component or creating a heavy symbol, the following database columns map to the following attributes.
+
+</p>
+<div class="table sectionedit155"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Column              </th><th class="col1"> Attribute </th><th class="col2 leftalign"> Notes                  </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> Device.DeviceName   </td><td class="col1 leftalign"> DEVICE    </td><td class="col2 leftalign">                        </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> Inductor.Inductance </td><td class="col1 leftalign"> VALUE     </td><td class="col2 leftalign">                        </td>
+	</tr>
+</table></div>
+<!-- EDIT155 TABLE [13039-13221] -->
 </div>
 
-<h4><a name="rectifier_and_switching_diodes" id="rectifier_and_switching_diodes">Rectifier and Switching Diodes</a></h4>
+<h4><a name="mosfets" id="mosfets">MOSFETs</a></h4>
 <div class="level4">
 
 <p>
- Rectifier and switching diodes extend part with one additional table of attributes. Most diodes can be placed into this table. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Field             </th><th class="leftalign"> Type     </th><th> Units </th><th class="leftalign"> Description            </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> PartID            </td><td class="rightalign">          </td><td class="rightalign">       </td><td class="leftalign"> Foreign key to Part                               </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> PackageID         </td><td class="rightalign">          </td><td class="rightalign">       </td><td class="leftalign"> Foreign key to Package                            </td>
-	</tr>
-	<tr>
-		<td> MaxReverseVoltage </td><td> Physical </td><td> VOLTS </td><td> Maximum reverse voltage (Absolute maximum rating) </td>
-	</tr>
-	<tr>
-		<td> MaxForwardCurrent </td><td> Physical </td><td class="leftalign"> AMPS  </td><td> Maximum forward current (Absolute maximum rating) </td>
-	</tr>
-	<tr>
-		<td> TypForwardVoltage </td><td> Physical </td><td> VOLTS </td><td class="leftalign"> Typical forward voltage                           </td>
-	</tr>
-	<tr>
-		<td> AveForwardCurrent </td><td> Physical </td><td class="leftalign"> AMPS  </td><td class="leftalign"> Average forward current                           </td>
-	</tr>
-</table>
 
+MOSFETs extend part with one additional table of attributes.
+
+</p>
+<div class="table sectionedit156"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field                   </th><th class="col1 leftalign"> Type     </th><th class="col2 leftalign"> Units   </th><th class="col3 leftalign"> Description                                                </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID                  </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Foreign key to Part                                        </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PackageID               </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Foreign key to Package                                     </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> Polarity                </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Either N or P                                              </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> MaxDrainSourceVoltage   </td><td class="col1"> Physical </td><td class="col2 leftalign"> VOLTS   </td><td class="col3 leftalign"> Maximum drain-source voltage (Absolute maximum rating)     </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> MaxDrainCurrent         </td><td class="col1"> Physical </td><td class="col2 leftalign"> AMPS    </td><td class="col3"> Maximum continuous drain current (Absolute maximum rating) </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0"> TypGateThresholdVoltage </td><td class="col1"> Physical </td><td class="col2 leftalign"> VOLTS   </td><td class="col3 leftalign"> Typical gate threshold voltage                             </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> PowerDissipation        </td><td class="col1"> Physical </td><td class="col2 leftalign"> WATTS   </td><td class="col3 leftalign"> Power dissipation (Pd) not including any derating          </td>
+	</tr>
+</table></div>
+<!-- EDIT156 TABLE [13302-14181] -->
+</div>
+
+<h4><a name="rectifier_small-signal_and_switching_diodes" id="rectifier_small-signal_and_switching_diodes">Rectifier, Small-signal and Switching Diodes</a></h4>
+<div class="level4">
+
+<p>
+
+Rectifier, small-signal and switching diodes extend part with one additional table of
+attributes. Most diodes can be placed into this table.
+</p>
+
+<p>
+Table name: Diode
+</p>
+
+<p>
+View name: DiodeV
+
+</p>
+<div class="table sectionedit157"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field             </th><th class="col1 leftalign"> Type     </th><th class="col2"> Units </th><th class="col3 leftalign"> Description                                       </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID            </td><td class="col1 leftalign">          </td><td class="col2 leftalign">       </td><td class="col3 leftalign"> Foreign key to Part                               </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PackageID         </td><td class="col1 leftalign">          </td><td class="col2 leftalign">       </td><td class="col3 leftalign"> Foreign key to Package                            </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> MaxReverseVoltage </td><td class="col1"> Physical </td><td class="col2"> VOLTS </td><td class="col3"> Maximum reverse voltage (Absolute maximum rating) </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"> MaxForwardCurrent </td><td class="col1"> Physical </td><td class="col2 leftalign"> AMPS  </td><td class="col3"> Maximum forward current (Absolute maximum rating) </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0"> TypForwardVoltage </td><td class="col1"> Physical </td><td class="col2"> VOLTS </td><td class="col3 leftalign"> Typical forward voltage                           </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0"> AveForwardCurrent </td><td class="col1"> Physical </td><td class="col2 leftalign"> AMPS  </td><td class="col3 leftalign"> Average forward current                           </td>
+	</tr>
+</table></div>
+<!-- EDIT157 TABLE [14417-15067] -->
+<p>
+
+The same table contains rectifier, small-signal and switching diodes. These diodes can be
+placed into separate views using the following criteria.
+
+</p>
+<div class="table sectionedit158"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Category                          </th><th class="col1 leftalign"> Criteria                 </th><th class="col2"> View Name </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> Small-signal and switching diodes </td><td class="col1"> AveForwardCurrent &lt;  0.5 </td><td class="col2 leftalign"> TBD       </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> Rectifier diodes                  </td><td class="col1"> AveForwardCurrent &gt;= 0.5 </td><td class="col2 leftalign"> TBD       </td>
+	</tr>
+</table></div>
+<!-- EDIT158 TABLE [15217-15447] -->
 </div>
 
 <h4><a name="resistors" id="resistors">Resistors</a></h4>
 <div class="level4">
 
 <p>
- Resistors extend part with one additional table of attributes. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Field      </th><th class="leftalign"> Type     </th><th class="leftalign"> Units   </th><th class="leftalign"> Description            </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> PartID     </td><td class="rightalign">          </td><td class="rightalign">         </td><td class="leftalign"> Foreign key to Part    </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> PackageID  </td><td class="rightalign">          </td><td class="rightalign">         </td><td> Foreign key to Package </td>
-	</tr>
-	<tr>
-		<td> Resistance </td><td> Physical </td><td class="leftalign"> OHMS    </td><td class="leftalign"> Resistance             </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> Tolerance  </td><td> Physical </td><td> PERCENT </td><td class="leftalign"> Tolerance              </td>
-	</tr>
-</table>
 
+Resistors extend part with one additional table of attributes.
+
+</p>
+<div class="table sectionedit159"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field      </th><th class="col1 leftalign"> Type     </th><th class="col2 leftalign"> Units   </th><th class="col3 leftalign"> Description            </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID     </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Foreign key to Part    </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PackageID  </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3"> Foreign key to Package </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> Resistance </td><td class="col1"> Physical </td><td class="col2 leftalign"> OHMS    </td><td class="col3 leftalign"> Resistance             </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> Tolerance  </td><td class="col1"> Physical </td><td class="col2"> PERCENT </td><td class="col3 leftalign"> Tolerance              </td>
+	</tr>
+</table></div>
+<!-- EDIT159 TABLE [15532-15836] -->
 <p>
- When instantiating a component or creating a heavy symbol, the following database columns map to the following attributes. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Column              </th><th> Attribute </th><th class="leftalign"> Notes                  </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> Device.DeviceName   </td><td class="leftalign"> DEVICE    </td><td class="rightalign">                        </td>
-	</tr>
-	<tr>
-		<td> Resistor.Resistance </td><td class="leftalign"> VALUE     </td><td class="rightalign">                        </td>
-	</tr>
-</table>
 
+When instantiating a component or creating a heavy symbol, the following database columns map to the following attributes.
+
+</p>
+<div class="table sectionedit160"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Column              </th><th class="col1"> Attribute </th><th class="col2 leftalign"> Notes                  </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> Device.DeviceName   </td><td class="col1 leftalign"> DEVICE    </td><td class="col2 leftalign">                        </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> Resistor.Resistance </td><td class="col1 leftalign"> VALUE     </td><td class="col2 leftalign">                        </td>
+	</tr>
+</table></div>
+<!-- EDIT160 TABLE [15962-16144] -->
 </div>
 
 <h4><a name="tvs_diodes" id="tvs_diodes">TVS Diodes</a></h4>
 <div class="level4">
 
 <p>
- TVS diodes extend part with one additional table of attributes. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Field            </th><th class="leftalign"> Type     </th><th> Units </th><th class="leftalign"> Description            </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> PartID           </td><td class="rightalign">          </td><td class="rightalign">       </td><td class="leftalign"> Foreign key to Part    </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> PackageID        </td><td class="rightalign">          </td><td class="rightalign">       </td><td> Foreign key to Package </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> WorkingVoltage   </td><td> Physical </td><td> VOLTS </td><td class="leftalign"> Working voltage        </td>
-	</tr>
-	<tr>
-		<td> BreakdownVoltage </td><td> Physical </td><td> VOLTS </td><td class="leftalign"> Breakdown voltage      </td>
-	</tr>
-</table>
 
+TVS diodes extend part with one additional table of attributes.
+
+</p>
+<div class="table sectionedit161"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field            </th><th class="col1 leftalign"> Type     </th><th class="col2"> Units </th><th class="col3 leftalign"> Description            </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID           </td><td class="col1 leftalign">          </td><td class="col2 leftalign">       </td><td class="col3 leftalign"> Foreign key to Part    </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PackageID        </td><td class="col1 leftalign">          </td><td class="col2 leftalign">       </td><td class="col3"> Foreign key to Package </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> WorkingVoltage   </td><td class="col1"> Physical </td><td class="col2"> VOLTS </td><td class="col3 leftalign"> Working voltage        </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"> BreakdownVoltage </td><td class="col1"> Physical </td><td class="col2"> VOLTS </td><td class="col3 leftalign"> Breakdown voltage      </td>
+	</tr>
+</table></div>
+<!-- EDIT161 TABLE [16231-16555] -->
 </div>
 
 <h4><a name="zener_diodes" id="zener_diodes">Zener Diodes</a></h4>
 <div class="level4">
 
 <p>
- Zener diodes extend part with one additional table of attributes. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Field        </th><th class="leftalign"> Type     </th><th> Units </th><th class="leftalign"> Description            </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> PartID       </td><td class="rightalign">          </td><td class="rightalign">       </td><td class="leftalign"> Foreign key to Part    </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> PackageID    </td><td class="rightalign">          </td><td class="rightalign">       </td><td> Foreign key to Package </td>
-	</tr>
-	<tr>
-		<td> ZenerVoltage </td><td> Physical </td><td> VOLTS </td><td class="leftalign"> Zener voltage          </td>
-	</tr>
-</table>
 
+Zener diodes extend part with one additional table of attributes.
+</p>
+
+<p>
+Table name: ZenerDiode
+</p>
+
+<p>
+View name: ZenerDiodeV
+
+</p>
+<div class="table sectionedit162"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field            </th><th class="col1 leftalign"> Type     </th><th class="col2"> Units </th><th class="col3 leftalign"> Description                                       </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID           </td><td class="col1 leftalign">          </td><td class="col2 leftalign">       </td><td class="col3 leftalign"> Foreign key to Part                               </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PackageID        </td><td class="col1 leftalign">          </td><td class="col2 leftalign">       </td><td class="col3 leftalign"> Foreign key to Package                            </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> TypZenerVoltage  </td><td class="col1"> Physical </td><td class="col2"> VOLTS </td><td class="col3 leftalign"> Zener voltage                                     </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"> PowerDissipation </td><td class="col1"> Physical </td><td class="col2"> WATTS </td><td class="col3"> Power dissipation (Pd) not including any derating </td>
+	</tr>
+</table></div>
+<!-- EDIT162 TABLE [16694-17153] -->
 </div>
-<!-- SECTION "Part Hierarchy" [9163-13953] -->
-<h2><a name="part_manager_gui" id="part_manager_gui">Part Manager GUI</a></h2>
+<!-- EDIT149 SECTION "Part Hierarchy" [9278-17154] -->
+<h2 class="sectionedit163"><a name="part_manager_gui" id="part_manager_gui">Part Manager GUI</a></h2>
 <div class="level2">
 
 <p>
- The part manager <acronym title="Graphical User Interface">GUI</acronym> is the main component of the part management system.  The part manager <acronym title="Graphical User Interface">GUI</acronym> allows the user to browse and manipulate the part database and to cut and paste symbols into the schematic editor.
+
+The part manager <acronym title="Graphical User Interface">GUI</acronym> is the main component of the part management system.  The part manager <acronym title="Graphical User Interface">GUI</acronym> allows the user to browse and manipulate the part database and to cut and paste symbols into the schematic editor.
 </p>
 
 </div>
-<!-- SECTION "Part Manager GUI" [13954-14195] -->
-<h3><a name="use_cases" id="use_cases">Use Cases</a></h3>
+<!-- EDIT163 SECTION "Part Manager GUI" [17155-17396] -->
+<h3 class="sectionedit164"><a name="use_cases" id="use_cases">Use Cases</a></h3>
 <div class="level3">
 
 </div>
 
-<h4><a name="uc.component.copy.clipboard" id="uc.component.copy.clipboard">uc.component.copy.clipboard</a></h4>
+<h4><a name="uccomponentcopyclipboard" id="uccomponentcopyclipboard">uc.component.copy.clipboard</a></h4>
 <div class="level4">
 
 <p>
- Copy a part to the clipboard as a component (light symbol). 
+
+Copy a part to the clipboard as a component (light symbol).
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects a part in the database.</div>
@@ -677,11 +849,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.component.export.file" id="uc.component.export.file">uc.component.export.file</a></h4>
+<h4><a name="uccomponentexportfile" id="uccomponentexportfile">uc.component.export.file</a></h4>
 <div class="level4">
 
 <p>
- Export a part to a file as a heavy symbol. 
+
+Export a part to a file as a heavy symbol.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects a part in the database.</div>
@@ -702,11 +876,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.database.create" id="uc.database.create">uc.database.create</a></h4>
+<h4><a name="ucdatabasecreate" id="ucdatabasecreate">uc.database.create</a></h4>
 <div class="level4">
 
 <p>
- Create a new part database. 
+
+Create a new part database.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> TBD</div>
@@ -715,11 +891,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.database.destroy" id="uc.database.destroy">uc.database.destroy</a></h4>
+<h4><a name="ucdatabasedestroy" id="ucdatabasedestroy">uc.database.destroy</a></h4>
 <div class="level4">
 
 <p>
- Destroy an existing database. 
+
+Destroy an existing database.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects the destroy database action.</div>
@@ -732,11 +910,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.document.add" id="uc.document.add">uc.document.add</a></h4>
+<h4><a name="ucdocumentadd" id="ucdocumentadd">uc.document.add</a></h4>
 <div class="level4">
 
 <p>
- Add a new document to the database. 
+
+Add a new document to the database.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects the add document action.</div>
@@ -749,11 +929,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.document.attach" id="uc.document.attach">uc.document.attach</a></h4>
+<h4><a name="ucdocumentattach" id="ucdocumentattach">uc.document.attach</a></h4>
 <div class="level4">
 
 <p>
- Associate a document(s) with a part(s). 
+
+Associate a document(s) with a part(s).
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects one or more parts from the database.</div>
@@ -770,11 +952,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.document.delete" id="uc.document.delete">uc.document.delete</a></h4>
+<h4><a name="ucdocumentdelete" id="ucdocumentdelete">uc.document.delete</a></h4>
 <div class="level4">
 
 <p>
- Delete a document(s) from the database.  Remove all references. 
+
+Delete a document(s) from the database.  Remove all references.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects one or more documents in the database.</div>
@@ -789,11 +973,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.document.detach" id="uc.document.detach">uc.document.detach</a></h4>
+<h4><a name="ucdocumentdetach" id="ucdocumentdetach">uc.document.detach</a></h4>
 <div class="level4">
 
 <p>
- Disassociate a document(s) from a part(s).  All parts and documents remain in the database.  Only the relationship is removed. 
+
+Disassociate a document(s) from a part(s).  All parts and documents remain in the database.  Only the relationship is removed.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects one or more parts from the database.</div>
@@ -812,11 +998,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.document.edit" id="uc.document.edit">uc.document.edit</a></h4>
+<h4><a name="ucdocumentedit" id="ucdocumentedit">uc.document.edit</a></h4>
 <div class="level4">
 
 <p>
- Edit the metadata associated with a document. 
+
+Edit the metadata associated with a document.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> TBD</div>
@@ -825,11 +1013,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.document.view" id="uc.document.view">uc.document.view</a></h4>
+<h4><a name="ucdocumentview" id="ucdocumentview">uc.document.view</a></h4>
 <div class="level4">
 
 <p>
- View a document. 
+
+View a document.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> TBD</div>
@@ -838,11 +1028,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.footprint.delete" id="uc.footprint.delete">uc.footprint.delete</a></h4>
+<h4><a name="ucfootprintdelete" id="ucfootprintdelete">uc.footprint.delete</a></h4>
 <div class="level4">
 
 <p>
- Delete a footprint(s) from the database.  Remove all references. 
+
+Delete a footprint(s) from the database.  Remove all references.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects one or more footprints in the database.</div>
@@ -857,20 +1049,23 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.footprint.edit" id="uc.footprint.edit">uc.footprint.edit</a></h4>
+<h4><a name="ucfootprintedit" id="ucfootprintedit">uc.footprint.edit</a></h4>
 <div class="level4">
 
 <p>
- Edit the metadata associated with a footprint.
+
+Edit the metadata associated with a footprint.
 </p>
 
 </div>
 
-<h4><a name="uc.footprint.import.file" id="uc.footprint.import.file">uc.footprint.import.file</a></h4>
+<h4><a name="ucfootprintimportfile" id="ucfootprintimportfile">uc.footprint.import.file</a></h4>
 <div class="level4">
 
 <p>
- Import a single footprint file into the database. 
+
+Import a single footprint file into the database.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects the import footprint file action.</div>
@@ -885,11 +1080,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.footprint.import.library" id="uc.footprint.import.library">uc.footprint.import.library</a></h4>
+<h4><a name="ucfootprintimportlibrary" id="ucfootprintimportlibrary">uc.footprint.import.library</a></h4>
 <div class="level4">
 
 <p>
- Import all footprint files from the library into the database. 
+
+Import all footprint files from the library into the database.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects the import footprint library action.</div>
@@ -904,11 +1101,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.model.add" id="uc.model.add">uc.model.add</a></h4>
+<h4><a name="ucmodeladd" id="ucmodeladd">uc.model.add</a></h4>
 <div class="level4">
 
 <p>
- Add a new model to the database. 
+
+Add a new model to the database.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects the add model action.</div>
@@ -921,11 +1120,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.model.attach" id="uc.model.attach">uc.model.attach</a></h4>
+<h4><a name="ucmodelattach" id="ucmodelattach">uc.model.attach</a></h4>
 <div class="level4">
 
 <p>
- Associate a model(s) with a part(s). 
+
+Associate a model(s) with a part(s).
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects one or more parts from the database.</div>
@@ -942,11 +1143,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.model.delete" id="uc.model.delete">uc.model.delete</a></h4>
+<h4><a name="ucmodeldelete" id="ucmodeldelete">uc.model.delete</a></h4>
 <div class="level4">
 
 <p>
- Delete a model(s) from the database.  Remove all references. 
+
+Delete a model(s) from the database.  Remove all references.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects one or more models in the database.</div>
@@ -961,11 +1164,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.model.detach" id="uc.model.detach">uc.model.detach</a></h4>
+<h4><a name="ucmodeldetach" id="ucmodeldetach">uc.model.detach</a></h4>
 <div class="level4">
 
 <p>
- Disassociate a model(s) from a part(s).  All parts and models remain in the database.  Only the relationship is removed. 
+
+Disassociate a model(s) from a part(s).  All parts and models remain in the database.  Only the relationship is removed.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects one or more parts from the database.</div>
@@ -984,11 +1189,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.model.import.library.spice" id="uc.model.import.library.spice">uc.model.import.library.spice</a></h4>
+<h4><a name="ucmodelimportlibraryspice" id="ucmodelimportlibraryspice">uc.model.import.library.spice</a></h4>
 <div class="level4">
 
 <p>
- Import all Spice files from the library into the database. 
+
+Import all Spice files from the library into the database.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects the import Spice library action.</div>
@@ -1005,20 +1212,23 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.model.view" id="uc.model.view">uc.model.view</a></h4>
+<h4><a name="ucmodelview" id="ucmodelview">uc.model.view</a></h4>
 <div class="level4">
 
 <p>
- TBD
+
+TBD
 </p>
 
 </div>
 
-<h4><a name="uc.package.add" id="uc.package.add">uc.package.add</a></h4>
+<h4><a name="ucpackageadd" id="ucpackageadd">uc.package.add</a></h4>
 <div class="level4">
 
 <p>
- Add a new package to the database. 
+
+Add a new package to the database.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> TBD</div>
@@ -1027,11 +1237,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.package.delete" id="uc.package.delete">uc.package.delete</a></h4>
+<h4><a name="ucpackagedelete" id="ucpackagedelete">uc.package.delete</a></h4>
 <div class="level4">
 
 <p>
- Delete a package(s) from the database.  Remove all references. 
+
+Delete a package(s) from the database.  Remove all references.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects one or more packages in the database.</div>
@@ -1046,11 +1258,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.package.edit" id="uc.package.edit">uc.package.edit</a></h4>
+<h4><a name="ucpackageedit" id="ucpackageedit">uc.package.edit</a></h4>
 <div class="level4">
 
 <p>
- Edit the package data. 
+
+Edit the package data.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> TBD</div>
@@ -1059,11 +1273,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.part.add" id="uc.part.add">uc.part.add</a></h4>
+<h4><a name="ucpartadd" id="ucpartadd">uc.part.add</a></h4>
 <div class="level4">
 
 <p>
- Add a new part to the database. 
+
+Add a new part to the database.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> TBD</div>
@@ -1072,11 +1288,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.part.delete" id="uc.part.delete">uc.part.delete</a></h4>
+<h4><a name="ucpartdelete" id="ucpartdelete">uc.part.delete</a></h4>
 <div class="level4">
 
 <p>
- Delete a part(s) from the database.  Remove all references. 
+
+Delete a part(s) from the database.  Remove all references.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects one or more parts in the database.</div>
@@ -1091,11 +1309,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.part.edit" id="uc.part.edit">uc.part.edit</a></h4>
+<h4><a name="ucpartedit" id="ucpartedit">uc.part.edit</a></h4>
 <div class="level4">
 
 <p>
- Edit the part data. 
+
+Edit the part data.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> TBD</div>
@@ -1104,20 +1324,23 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.part.search" id="uc.part.search">uc.part.search</a></h4>
+<h4><a name="ucpartsearch" id="ucpartsearch">uc.part.search</a></h4>
 <div class="level4">
 
 <p>
- Search for a part in the database using the manufacturer part number.
+
+Search for a part in the database using the manufacturer part number.
 </p>
 
 </div>
 
-<h4><a name="uc.symbol.delete" id="uc.symbol.delete">uc.symbol.delete</a></h4>
+<h4><a name="ucsymboldelete" id="ucsymboldelete">uc.symbol.delete</a></h4>
 <div class="level4">
 
 <p>
- Delete a symbol(s) from the database.  Remove all references. 
+
+Delete a symbol(s) from the database.  Remove all references.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects one or more symbols in the database.</div>
@@ -1132,11 +1355,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.symbol.edit" id="uc.symbol.edit">uc.symbol.edit</a></h4>
+<h4><a name="ucsymboledit" id="ucsymboledit">uc.symbol.edit</a></h4>
 <div class="level4">
 
 <p>
- Edit the metadata associated with a symbol. 
+
+Edit the metadata associated with a symbol.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> TBD</div>
@@ -1145,11 +1370,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.symbol.import.file" id="uc.symbol.import.file">uc.symbol.import.file</a></h4>
+<h4><a name="ucsymbolimportfile" id="ucsymbolimportfile">uc.symbol.import.file</a></h4>
 <div class="level4">
 
 <p>
- Import a single symbol file into the database. 
+
+Import a single symbol file into the database.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects the import symbol file action.</div>
@@ -1164,11 +1391,13 @@ Proposed guidelines for including attributes:
 
 </div>
 
-<h4><a name="uc.symbol.import.library" id="uc.symbol.import.library">uc.symbol.import.library</a></h4>
+<h4><a name="ucsymbolimportlibrary" id="ucsymbolimportlibrary">uc.symbol.import.library</a></h4>
 <div class="level4">
 
 <p>
- Import the contents of the component library into the database. 
+
+Import the contents of the component library into the database.
+
 </p>
 <ol>
 <li class="level1"><div class="li"> The user selects the import symbol library action.</div>
@@ -1182,8 +1411,8 @@ Proposed guidelines for including attributes:
 </ol>
 
 </div>
-<!-- SECTION "Use Cases" [14196-22131] -->
-<h3><a name="ui_design" id="ui_design">UI Design</a></h3>
+<!-- EDIT164 SECTION "Use Cases" [17397-25332] -->
+<h3 class="sectionedit165"><a name="ui_design" id="ui_design">UI Design</a></h3>
 <div class="level3">
 
 </div>
@@ -1192,7 +1421,8 @@ Proposed guidelines for including attributes:
 <div class="level4">
 
 <p>
- The company view lists all the companies in the database.
+
+The company view lists all the companies in the database.
 </p>
 
 <p>
@@ -1205,7 +1435,8 @@ Proposed guidelines for including attributes:
 <div class="level4">
 
 <p>
- The device view lists all the devices stored in the database.
+
+The device view lists all the devices stored in the database.
 </p>
 
 <p>
@@ -1218,7 +1449,8 @@ Proposed guidelines for including attributes:
 <div class="level4">
 
 <p>
- The documentation view shows all the documents stored in the database.
+
+The documentation view shows all the documents stored in the database.
 </p>
 
 <p>
@@ -1231,7 +1463,8 @@ Proposed guidelines for including attributes:
 <div class="level4">
 
 <p>
- The footprint view shows all the footprints stored in the database.
+
+The footprint view shows all the footprints stored in the database.
 </p>
 
 <p>
@@ -1244,7 +1477,8 @@ Proposed guidelines for including attributes:
 <div class="level4">
 
 <p>
- The package view shows all the packages stored in the database.
+
+The package view shows all the packages stored in the database.
 </p>
 
 <p>
@@ -1257,11 +1491,20 @@ Proposed guidelines for including attributes:
 <div class="level4">
 
 <p>
- The part view shows parts stored in the database. The user selects the category from the left pane.  The parts within the given category show in the middle pane. After selecting a part from the middle pane, the symbols available for that part show in the lower right pane.  The upper right pane shows the symbol preview. 
+
+The part view shows parts stored in the database. The user selects the category from the left pane.  The parts within the given category show in the middle pane. After selecting a part from the middle pane, the symbols available for that part show in the lower right pane.  The upper right pane shows the symbol preview. 
 </p>
 
 <p>
-<a href="media/geda/gparts-ss-parts-2.png" class="media" target="_blank" title="geda:gparts-ss-parts-2.png"><img src="media/geda/gparts-ss-parts-2.png" class="media" title="" alt="" /></a>
+<a href="media/geda/gparts-ss-parts-4.png" class="media" target="_blank" title="geda:gparts-ss-parts-4.png"><img src="media/geda/gparts-ss-parts-4.png" class="media" title="" alt="" /></a>
+</p>
+
+<p>
+The edit→copy command places the component on the clipboard. The component can then be pasted into gschem.
+</p>
+
+<p>
+<a href="media/geda/gparts-ss-parts-4b.png" class="media" target="_blank" title="geda:gparts-ss-parts-4b.png"><img src="media/geda/gparts-ss-parts-4b.png" class="media" title="" alt="" /></a>
 </p>
 
 </div>
@@ -1270,7 +1513,8 @@ Proposed guidelines for including attributes:
 <div class="level4">
 
 <p>
- The symbol view shows all the symbols stored in the database.  The upper right pane shows the symbol preview.
+
+The symbol view shows all the symbols stored in the database.  The upper right pane shows the symbol preview.
 </p>
 
 <p>
@@ -1278,12 +1522,14 @@ Proposed guidelines for including attributes:
 </p>
 
 </div>
-<!-- SECTION "UI Design" [22132-23316] -->
-<h3><a name="configuration" id="configuration">Configuration</a></h3>
+<!-- EDIT165 SECTION "UI Design" [25333-26660] -->
+<h3 class="sectionedit166"><a name="configuration" id="configuration">Configuration</a></h3>
 <div class="level3">
 
 <p>
- The parts manager reads gaf’s Scheme configuration files using Guile-1.8. The parts manager reads the following configuration files in order.  The parts manager attempts reading the file in each of the given paths in order.   
+
+The parts manager reads gaf&#039;s Scheme configuration files using Guile-1.8. The parts manager reads the following configuration files in order.  The parts manager attempts reading the file in each of the given paths in order.  
+
 </p>
 <ol>
 <li class="level1"><div class="li"> system-gafrc</div>
@@ -1337,84 +1583,90 @@ Proposed guidelines for including attributes:
 </ol>
 
 <p>
- The parts manager supports the following configuration items from gaf. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Item                      </th><th class="leftalign"> Parser  </th><th> Description </th>
-	</tr>
-	<tr>
-		<td> always-promote-attributes </td><td> libgeda </td><td class="rightalign">                                                     </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> attribute-promotion       </td><td> libgeda </td><td class="rightalign">                                                     </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> bitmap-directory          </td><td> libgeda </td><td class="leftalign"> Specifies the directory for bitmap images           </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> bus-style                 </td><td class="leftalign"> gschem  </td><td class="leftalign"> Specifies the line thickness for busses             </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> component-library         </td><td> libgeda </td><td class="leftalign"> Adds a directory to the component library           </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> display-color-map         </td><td class="leftalign"> gschem  </td><td class="leftalign"> Specifies schematic colors for display              </td>
-	</tr>
-	<tr>
-		<td> display-outline-color-map </td><td class="leftalign"> gschem  </td><td class="rightalign">                                                     </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> eval-protected            </td><td> libgeda </td><td class="leftalign"> For the parts manager, simply ‘eval’                </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> keep-invisible            </td><td> libgeda </td><td class="rightalign">                                                     </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> net-style                 </td><td class="leftalign"> gschem  </td><td class="leftalign"> Specifies the line thickness for nets               </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> postscript-prolog         </td><td> libgeda </td><td class="leftalign"> Ignored by the parts manager                        </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> print-color-map           </td><td> libgeda </td><td class="leftalign"> Specifies schematic colors for printing             </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> promote-invisible         </td><td> libgeda </td><td class="rightalign">                                                     </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> scheme-directory          </td><td> libgeda </td><td> Specifies the directory for additional scheme files </td>
-	</tr>
-</table>
 
+The parts manager supports the following configuration items from gaf.
+
+</p>
+<div class="table sectionedit167"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Item                      </th><th class="col1 leftalign"> Parser  </th><th class="col2"> Description </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> always-promote-attributes </td><td class="col1"> libgeda </td><td class="col2 leftalign">                                                     </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> attribute-promotion       </td><td class="col1"> libgeda </td><td class="col2 leftalign">                                                     </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> bitmap-directory          </td><td class="col1"> libgeda </td><td class="col2 leftalign"> Specifies the directory for bitmap images           </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> bus-style                 </td><td class="col1 leftalign"> gschem  </td><td class="col2 leftalign"> Specifies the line thickness for busses             </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> component-library         </td><td class="col1"> libgeda </td><td class="col2 leftalign"> Adds a directory to the component library           </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> display-color-map         </td><td class="col1 leftalign"> gschem  </td><td class="col2 leftalign"> Specifies schematic colors for display              </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0"> display-outline-color-map </td><td class="col1 leftalign"> gschem  </td><td class="col2 leftalign">                                                     </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> eval-protected            </td><td class="col1"> libgeda </td><td class="col2 leftalign"> For the parts manager, simply &#039;eval&#039;                </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> keep-invisible            </td><td class="col1"> libgeda </td><td class="col2 leftalign">                                                     </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> net-style                 </td><td class="col1 leftalign"> gschem  </td><td class="col2 leftalign"> Specifies the line thickness for nets               </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 leftalign"> postscript-prolog         </td><td class="col1"> libgeda </td><td class="col2 leftalign"> Ignored by the parts manager                        </td>
+	</tr>
+	<tr class="row12">
+		<td class="col0 leftalign"> print-color-map           </td><td class="col1"> libgeda </td><td class="col2 leftalign"> Specifies schematic colors for printing             </td>
+	</tr>
+	<tr class="row13">
+		<td class="col0 leftalign"> promote-invisible         </td><td class="col1"> libgeda </td><td class="col2 leftalign">                                                     </td>
+	</tr>
+	<tr class="row14">
+		<td class="col0 leftalign"> scheme-directory          </td><td class="col1"> libgeda </td><td class="col2"> Specifies the directory for additional scheme files </td>
+	</tr>
+</table></div>
+<!-- EDIT167 TABLE [27627-28996] -->
 <p>
- The parts manager supports the following private configuration items. 
-</p>
-<table class="inline">
-	<tr>
-		<th class="leftalign"> Item                      </th><th> Parser </th><th> Description </th>
-	</tr>
-	<tr>
-		<td class="leftalign"> database-interface        </td><td> gparts </td><td class="leftalign"> Adds a database interface module          </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> document-library          </td><td> gparts </td><td class="leftalign"> Adds a directory to the document library  </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> footprint-library         </td><td> gparts </td><td> Adds a directory to the footprint library </td>
-	</tr>
-	<tr>
-		<td class="leftalign"> spice-library             </td><td> gparts </td><td class="leftalign"> Adds a directory to the spice library     </td>
-	</tr>
-</table>
 
+The parts manager supports the following private configuration items.
+
+</p>
+<div class="table sectionedit168"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Item                      </th><th class="col1"> Parser </th><th class="col2"> Description </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> database-interface        </td><td class="col1"> gparts </td><td class="col2 leftalign"> Adds a database interface module          </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> document-library          </td><td class="col1"> gparts </td><td class="col2 leftalign"> Adds a directory to the document library  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> footprint-library         </td><td class="col1"> gparts </td><td class="col2"> Adds a directory to the footprint library </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> spice-library             </td><td class="col1"> gparts </td><td class="col2 leftalign"> Adds a directory to the spice library     </td>
+	</tr>
+</table></div>
+<!-- EDIT168 TABLE [29069-29453] -->
 </div>
 
 <h4><a name="database-interface" id="database-interface">database-interface</a></h4>
 <div class="level4">
 
 <p>
- The parts manager uses dynamically loadable modules to support the various database engines.  The parts manager uses a separate module to support each database engine. 
+
+The parts manager uses dynamically loadable modules to support the various database engines.  The parts manager uses a separate module to support each database engine.
+
 </p>
 <ul>
 <li class="level1"><div class="li"> MySQL</div>
@@ -1431,7 +1683,8 @@ Proposed guidelines for including attributes:
 <div class="level4">
 
 <p>
- Adds a directory to the list of directories where documentation is stored.
+
+Adds a directory to the list of directories where documentation is stored.
 </p>
 
 </div>
@@ -1440,7 +1693,8 @@ Proposed guidelines for including attributes:
 <div class="level4">
 
 <p>
- Adds a directory to the list of directories where footprints are stored. The parts manager can import newlib footprints from these directories.
+
+Adds a directory to the list of directories where footprints are stored. The parts manager can import newlib footprints from these directories.
 </p>
 
 </div>
@@ -1449,9 +1703,10 @@ Proposed guidelines for including attributes:
 <div class="level4">
 
 <p>
- Adds a directory to the list of directories where SPICE models are stored. The parts manager can import these models from these directories.
+
+Adds a directory to the list of directories where SPICE models are stored. The parts manager can import these models from these directories.
 </p>
 
 </div>
-<!-- SECTION "Configuration" [23317-] --></body>
+<!-- EDIT166 SECTION "Configuration" [26661-] --></body>
 </html>

@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 #include <config.h>
@@ -44,27 +44,24 @@ char *guile_proc=NULL;
 
 
 /* command line arguments */
+int list_backends=FALSE;
 int verbose_mode=FALSE;
 int interactive_mode=FALSE;
 int quiet_mode=FALSE;
-int sort_mode=FALSE;
-int include_mode=FALSE;
-int embedd_mode=FALSE;
-int nomunge_mode = FALSE;
 
 /* what kind of netlist are we generating? see define.h for #defs */
 int netlist_mode=gEDA;
 char *output_filename=NULL;
 
-/* list of filenames to load before loading of the backend */
-GSList *pre_backend_list=NULL;
+/* scheme expression to evaluate before loading of rc files */
+SCM pre_rc_list = SCM_EOL;
 
-/* list of filenames to load after loading of the backend but before the */
-/* execution of the backend procedure */
-GSList *post_backend_list=NULL;
+/* scheme expression to evaluate before loading of the backend */
+SCM pre_backend_list = SCM_EOL;
 
-/* String holding command line */
-char *command_line = NULL;
+/* scheme expression to evaluate after loading of the backend but
+ * before the execution of the backend procedure */
+SCM post_backend_list = SCM_EOL;
 
 /* Parameters passed to the backend from the command line */
 GSList *backend_params = NULL;  

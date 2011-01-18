@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 #include <math.h>
@@ -298,7 +298,6 @@ void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current)
  */
 void o_picture_draw (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
 
   if (o_current->picture == NULL) {

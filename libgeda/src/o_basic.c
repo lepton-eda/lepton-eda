@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 /*! \file o_basic.c
@@ -557,11 +557,10 @@ double o_shortest_distance_full (OBJECT *object, int x, int y, int force_solid)
 
 /*! \brief Mark an OBJECT's cached bounds as invalid
  *  \par Function Description
- *  Marks the cached bounds of the given OBJECT as having been
- *  invalidated and in need of an update. They will be recalculated
- *  next time the OBJECT's bounds are requested (e.g. via
- *  world_get_single_object_bounds() ).
- *
+ *  Recursively marks the cached bounds of the given OBJECT and its
+ *  parents as having been invalidated and in need of an update. They
+ *  will be recalculated next time the OBJECT's bounds are requested
+ *  (e.g. via world_get_single_object_bounds() ).
  *  \param [in] toplevel
  *  \param [in] obj
  *
@@ -569,7 +568,9 @@ double o_shortest_distance_full (OBJECT *object, int x, int y, int force_solid)
  */
 void o_bounds_invalidate(TOPLEVEL *toplevel, OBJECT *obj)
 {
-  obj->w_bounds_valid = FALSE;
+  do {
+      obj->w_bounds_valid = FALSE;
+  } while ((obj = obj->parent) != NULL);
 }
 
 
@@ -769,5 +770,39 @@ o_emit_change_notify (TOPLEVEL *toplevel, OBJECT *object)
     if ((entry != NULL) && (entry->change_func != NULL)) {
       entry->change_func (entry->user_data, object);
     }
+  }
+}
+
+/*! \brief Query visibility of the object.
+ *  \par Function Description
+ *  Attribute getter for the visible field within the object.
+ *
+ *  \param toplevel The TOPLEVEL structure
+ *  \param object   The OBJECT structure to be queried
+ *  \return TRUE when VISIBLE, FALSE otherwise
+ */
+gboolean
+o_is_visible (TOPLEVEL *toplevel, OBJECT *object)
+{
+  g_return_val_if_fail (object != NULL, FALSE);
+  return object->visibility == VISIBLE;
+}
+
+/*! \brief Set visibility of the object.
+ *  \par Function Description
+ *  Set value of visibility field within the object.
+ *  If resulting visibility value is changed,
+ *  invalidate the bounds of the object and parent objects.
+ *
+ *  \param toplevel The #TOPLEVEL structure
+ *  \param object   The #OBJECT structure to be modified
+ */
+void
+o_set_visibility (TOPLEVEL *toplevel, OBJECT *object, int visibility)
+{
+  g_return_if_fail (object != NULL);
+  if (object->visibility != visibility) {
+    object->visibility = visibility;
+    o_bounds_invalidate (toplevel, object);
   }
 }

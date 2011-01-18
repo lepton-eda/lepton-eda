@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*------------------------------------------------------------------*/
 /*! \file
@@ -375,10 +375,9 @@ void s_visibility_set_cell(gint cur_page, gint row, gint col,
   }
 
   /* Question:  how to sanity check (row, col) selection? */
-  if (visibility != LEAVE_VISIBILITY_ALONE) {
-    local_table[row][col].visibility = visibility;
-    sheet_head->CHANGED = 1;  /* cell has been updated.  */  
-  }
+  local_table[row][col].visibility = visibility;
+  sheet_head->CHANGED = 1;  /* cell has been updated.  */
+
   if (show_name_value != LEAVE_NAME_VALUE_ALONE) { 
     local_table[row][col].show_name_value = show_name_value;
     sheet_head->CHANGED = 1;  /* cell has been updated.  */

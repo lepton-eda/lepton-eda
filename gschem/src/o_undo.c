@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 
@@ -104,7 +104,7 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
      * triggered before it was removed from o_save_buffer().
      */
     if (toplevel->net_consolidate == TRUE)
-      o_net_consolidate (w_current->toplevel);
+      o_net_consolidate (toplevel, toplevel->page_current);
   }
 
   if (w_current->undo_type == UNDO_DISK && flag == UNDO_ALL) {
@@ -296,7 +296,6 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
   UNDO *save_current;
   int save_logging;
   int find_prev_data=FALSE;
-  int prev_status;
 
   char *save_filename;
 

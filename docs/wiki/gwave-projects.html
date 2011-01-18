@@ -12,13 +12,12 @@
 <body>
 
 
-
-
-<h3><a name="gwave_--_analog_waveform_viewer" id="gwave_--_analog_waveform_viewer">Gwave -- analog waveform viewer</a></h3>
+<h3 class="sectionedit1563"><a name="gwave_--_analog_waveform_viewer" id="gwave_--_analog_waveform_viewer">Gwave -- analog waveform viewer</a></h3>
 <div class="level3">
 
 <p>
- Gwave is an analog waveform viewer which is used to view the output files produced by ngspice or gnucap.  Here are some feature suggestions.  You might choose a large handful of features to implement as your GSoC project.
+
+Gwave is an analog waveform viewer which is used to view the output files produced by ngspice or gnucap.  Here are some feature suggestions.  You might choose a large handful of features to implement as your GSoC project.
 </p>
 
 </div>
@@ -27,16 +26,21 @@
 <div class="level5">
 
 <p>
- This project involves improving the integration of gwave into the  interprocess-communication to and from the other tools, especialy gschem and gnucap.  While gwave has an X11-based remote mechanism, Dbus is now the standard, and should probably be used instead.
+
+This project involves improving the integration of gwave into the 
+interprocess-communication to and from the other tools, especialy gschem
+and gnucap.  While gwave has an X11-based remote mechanism, Dbus is now the
+standard, and should probably be used instead.
 </p>
 
 </div>
 
-<h5><a name="developing_unit_tests_for_gtk_-2.0" id="developing_unit_tests_for_gtk_-2.0">Developing unit tests for GTK+-2.0</a></h5>
+<h5><a name="developing_unit_tests_for_gtk_-20" id="developing_unit_tests_for_gtk_-20">Developing unit tests for GTK+-2.0</a></h5>
 <div class="level5">
 
 <p>
- Gwave has been ported to Gtk2.  As part of this effort, developing a battery of unit tests for gwave would be useful.  The idea is to create a variety of different input files which exercise gwave’s ability to import and display waveforms.  An important feature for testing will be to compare the displayed waveform against a “golden” waveform to verify rendering correctness.
+
+Gwave has been ported to Gtk2.  As part of this effort, developing a battery of unit tests for gwave would be useful.  The idea is to create a variety of different input files which exercise gwave&#039;s ability to import and display waveforms.  An important feature for testing will be to compare the displayed waveform against a “golden” waveform to verify rendering correctness.
 </p>
 
 </div>

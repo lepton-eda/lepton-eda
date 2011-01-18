@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+<h1 class="sectionedit1439"><a name="part_manager_user_guide" id="part_manager_user_guide">Part Manager User Guide</a></h1>
+<div class="level1">
+
+</div>
+<!-- EDIT1439 SECTION "Part Manager User Guide" [1-39] -->
+<h2 class="sectionedit1440"><a name="bulk_import" id="bulk_import">Bulk Import</a></h2>
+<div class="level2">
+
+<p>
+Currently, the part manager only provides a command line interface for bulk import of data. <acronym title="Extensible Stylesheet Language Transformations">XSLT</acronym> converts <acronym title="Extensible Markup Language">XML</acronym> data into <acronym title="Structured Query Language">SQL</acronym> using a stylesheet. Then, the <acronym title="Structured Query Language">SQL</acronym> can be read by a command line interface for the database. The following diagram shows the dataflow for a bulk import:
+</p>
+
+<p>
+<a href="media/geda/gparts-bulk-import.png" class="media" target="_blank" title="geda:gparts-bulk-import.png"><img src="media/geda/gparts-bulk-import.png" class="media" title="Bulk Import Dataflow" alt="Bulk Import Dataflow" /></a>
+</p>
+
+<p>
+The import can be accomplished with the following command line when in the gparts/sql/sqlite directory:
+</p>
+
+<p>
+<pre STYLE="background : LightGreen;
+margin-left : 2em"><font size="+0">$ xsltproc convert.xml ../../data/companies.xml | sqlite3 sample.db</font></pre>
+</p>
+
+<p>
+See the <acronym title="Extensible Markup Language">XML</acronym> files in the gparts/data directory for examples. Any combination of company, package, and part elements can be used within the data element.
+</p>
+
+<p>
+Use the following as an example for specifying a company. 
+</p>
+<pre class="file">    &lt;company&gt;
+        &lt;company-name&gt;Altera&lt;/company-name&gt;
+        &lt;website&gt;http://www.altera.com&lt;/website&gt;
+    &lt;/company&gt;</pre>
+
+<p>
+Use the following as an example for specifying a package.
+
+</p>
+<pre class="file">    &lt;package&gt;
+        &lt;package-name&gt;0201(0603)&lt;/package-name&gt;
+        &lt;technology&gt;SMT&lt;/technology&gt;
+    &lt;/package&gt;</pre>
+
+<p>
+Use the following as an example for specifying a resistor. The resistor, as any part, can have multiple document elements associated with it. The category specifies the type of document, such as datasheet, user manual, errata, etc…
+</p>
+<pre class="file">    &lt;resistor&gt;
+        &lt;company-name&gt;Bourns&lt;/company-name&gt;
+        &lt;part-number&gt;CR0603-FX-10R0ELF&lt;/part-number&gt;
+        &lt;package-name&gt;0603(1608)&lt;/package-name&gt;
+        &lt;device-name&gt;resistor&lt;/device-name&gt;
+        &lt;resistance&gt;10.000000&lt;/resistance&gt;
+        &lt;tolerance&gt;0.010000&lt;/tolerance&gt;
+        &lt;document category=&quot;Datasheet&quot;&gt;http://www.bourns.com/data/global/pdfs/CHPREZTR.pdf&lt;/document&gt;
+    &lt;/resistor&gt;</pre>
+
+</div>
+<!-- EDIT1440 SECTION "Bulk Import" [40-1774] -->
+<h2 class="sectionedit1441"><a name="part_attributes" id="part_attributes">Part Attributes</a></h2>
+<div class="level2">
+
+<p>
+The part manager places database fields into component attributes using macros. The macros use the form $(column_name). Unfortunately, this mechanism requires modification of symbols in the library for use with the part manager. The part manager performs the operation in the following steps:
+
+</p>
+<ol>
+<li class="level1"><div class="li"> loads the symbol drawing</div>
+</li>
+<li class="level1"><div class="li"> instantiates a component from the symbol drawing</div>
+</li>
+<li class="level1"><div class="li"> places inherited attributes in the component</div>
+</li>
+<li class="level1"><div class="li"> performs macro expansion on inherited attributes</div>
+</li>
+</ol>
+
+<p>
+
+Currently, macros can only be used in attributes that get promoted. The logic for attribute promotion must match between gschem and the part manager.
+</p>
+
+<p>
+The following gschem file snippet shows the macro used place the field from the database column &#039;Resistance&#039; into the &#039;VALUE&#039; attribute.
+</p>
+<pre class="file">T 195 200 8 10 1 1 0 0 1 
+VALUE=$(Resistance)</pre>
+
+</div>
+<!-- EDIT1441 SECTION "Part Attributes" [1775-] --></body>
+</html>

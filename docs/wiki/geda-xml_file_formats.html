@@ -12,9 +12,7 @@
 <body>
 
 
-
-
-<h1><a name="xml_file_formats" id="xml_file_formats">XML File Formats</a></h1>
+<h1 class="sectionedit1394"><a name="xml_file_formats" id="xml_file_formats">XML File Formats</a></h1>
 <div class="level1">
 
 <p>
@@ -30,7 +28,8 @@ Another main goal is to start addressing the Symbol Library Hacker task discusse
 </p>
 
 <p>
-Yes, this effort is self concious because of <a href="geda-usage.html#can_we_change_geda_to_use_an_xml_file_format" class="wikilink1" title="geda-usage.html">can_we_change_geda_to_use_an_xml_file_format</a> The concerns expressed there will hopefully be addressed as part of this effort to minimize the impact to existing file formats, and not tie up core developer time on this work.  Specifically issues 2,3,4 and 5 are valid concerns, but they can be overcome with good design and a little bit of coding, especially if this is treated as a wrapper or evolution rather than a totally new file format.
+Yes, this effort is self concious because of <a href="geda-usage.html#can_we_change_geda_to_use_an_xml_file_format" class="wikilink1" title="geda-usage.html">can_we_change_geda_to_use_an_xml_file_format</a>
+The concerns expressed there will hopefully be addressed as part of this effort to minimize the impact to existing file formats, and not tie up core developer time on this work.  Specifically issues 2,3,4 and 5 are valid concerns, but they can be overcome with good design and a little bit of coding, especially if this is treated as a wrapper or evolution rather than a totally new file format.
 </p>
 
 <p>
@@ -50,11 +49,13 @@ An initial git repository is at <a href="http://github.com/oblivian/geda-xml/tre
 </p>
 
 <p>
-Right now it provides schema for gschem symbol and schematic files, and a PCB file format (adapted from parse.y). The part/part.xsd schema is for combining the individual schemas into a part format capable of both regular and heavy parts.
+Right now it provides schema for gschem symbol and schematic files, and a PCB file format (adapted from parse.y).
+The part/part.xsd schema is for combining the individual schemas into a part format capable of both regular and heavy parts.
 </p>
 
 <p>
-convert-symbol.pl (when it is done) will write a gschem symbol to the <acronym title="Extensible Markup Language">XML</acronym> format. It also performs validation against the <acronym title="Extensible Markup Language">XML</acronym> Schema itself and Schematron rules also stored in the schema files.
+convert-symbol.pl (when it is done) will write a gschem symbol to the <acronym title="Extensible Markup Language">XML</acronym> format.
+It also performs validation against the <acronym title="Extensible Markup Language">XML</acronym> Schema itself and Schematron rules also stored in the schema files.
 </p>
 
 <p>

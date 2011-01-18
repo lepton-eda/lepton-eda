@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 /*! \file
@@ -125,11 +125,18 @@ void f_export_components(gchar *filename)
     /*  Now export the attrib values for first n-1 cols */
     for (j = 0; j < num_cols-1; j++) {
       if ( (sheet_head->component_table)[i][j].attrib_value ) { /* found a string */
-        text = (gchar *) g_strdup( (sheet_head->component_table)[i][j].attrib_value );
+        /* make a copy of the text, escaping any special chars, like " */
+        text = (gchar *) g_strescape( (sheet_head->component_table)[i][j].attrib_value, "" );
 #ifdef DEBUG
   printf("In f_export_components, output attribute %s.\n", text);
 #endif
-	fprintf(fp, "%s, ", text);
+        /* if there's a comma anywhere in the field, wrap the field in " */
+        gboolean havecomma = ( g_strstr_len(text, -1, ",") != NULL );
+        if(havecomma) fprintf(fp, "\"");
+        fprintf(fp, "%s", text);
+        if(havecomma) fprintf(fp, "\"");
+        fprintf(fp, ", ");
+
 	g_free(text);
       } else {                                                  /* no attrib string */
 #ifdef DEBUG
@@ -140,11 +147,18 @@ void f_export_components(gchar *filename)
     }  /* end of for over cols  */
     /* Now export attrib value for last col (with no "," and with "\n" */
     if ( (sheet_head->component_table)[i][j].attrib_value ) { /* found a string */
-      text = (gchar *) g_strdup( (sheet_head->component_table)[i][j].attrib_value );
+      /* make a copy of the text, escaping any special chars, like " */
+      text = (gchar *) g_strescape( (sheet_head->component_table)[i][j].attrib_value, "" );
 #ifdef DEBUG
   printf("In f_export_components, output final attribute %s.\n", text);
 #endif
-      fprintf(fp, "%s\n", text);
+      /* if there's a comma anywhere in the field, wrap the field in " */
+      gboolean havecomma = ( g_strstr_len(text, -1, ",") != NULL );
+      if(havecomma) fprintf(fp, "\"");
+      fprintf(fp, "%s", text);
+      if(havecomma) fprintf(fp, "\"");
+      fprintf(fp, "\n");
+
       g_free(text);
     } else {                                                  /* no attrib string */
 #ifdef DEBUG

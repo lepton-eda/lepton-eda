@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
 
@@ -94,7 +94,6 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
                             GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int prev_state;
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
@@ -523,8 +522,6 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
                              GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int prev_state;
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 

@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 #include <config.h>
@@ -102,4 +102,19 @@ void g_register_libgeda_vars (void)
 	       scm_from_locale_string (s_path_sys_data ()));
   scm_c_define("path-sep", 
 	       scm_from_locale_string(G_DIR_SEPARATOR_S));
+}
+
+/*! \brief Register some libgeda directories with Scheme.
+ * \par Function Description
+ * Ensures that the default gEDA Scheme directory is added to the
+ * Guile load path.
+ */
+void
+g_register_libgeda_dirs (void)
+{
+  char *scheme_dir;
+
+  scheme_dir = g_build_filename (s_path_sys_data (), "scheme", NULL);
+  g_rc_scheme_directory (scm_from_locale_string (scheme_dir));
+  g_free (scheme_dir);
 }
