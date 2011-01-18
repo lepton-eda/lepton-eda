@@ -210,11 +210,9 @@ shell_main (void *data, int argc, char **argv)
   }
 
   /* Now load rc files, if necessary */
-  if (!inhibit_rc) {
-    g_rc_parse_system_rc (toplevel, "gafrc");
-    g_rc_parse_home_rc (toplevel, "gafrc");
-    g_rc_parse_local_rc (toplevel, "gafrc");
-  }
+  if (!inhibit_rc)
+    g_rc_parse (toplevel, argv[0], NULL, NULL);
+
   i_vars_libgeda_set (toplevel); /* Ugh */
 
   /* Finally evaluate run list */
