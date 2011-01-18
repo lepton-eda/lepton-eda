@@ -139,3 +139,29 @@
                  (cons (cons (cdr entry) 
                              (string-join (reverse (cons key keys)) " "))
                        (loop (cdr keymap) keys))))))))
+
+;; Predicate to test if entry is keymap or action
+(define gschem:keymap? list?)
+
+;; Map over keymap tree, applying f to every node before descending
+(define (gschem:for-each-keymap f kmap)
+  (if (gschem:keymap? kmap)
+    (for-each
+      (lambda (kmap-entry)
+        (apply f (list kmap-entry))
+        (gschem:for-each-keymap f (eval-cm (cdr kmap-entry))))
+      kmap)))
+
+;; Sorting multiple key modifiers for unambiguos keymaps
+(define gschem:normalize-accel!
+  (lambda (kmap-entry)
+    (let* ((accel-list (reverse (string-split (car kmap-entry) #\space)))
+           (modifiers (cdr accel-list))
+           (key (car accel-list))
+           (sorted (sort modifiers string<?))
+           (appended (append sorted (list key)))
+           (joined (string-join appended " ")))
+      (set-car! kmap-entry joined))))
+
+;; Once at startup normalize the global keymap
+(gschem:for-each-keymap gschem:normalize-accel! global-keymap)
