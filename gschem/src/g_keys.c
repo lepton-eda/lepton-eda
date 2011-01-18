@@ -49,6 +49,7 @@ int g_keys_execute(GSCHEM_TOPLEVEL *w_current, int state, int keyval)
   char *guile_string = NULL;
   char *modifier = NULL;
   char *key_name = NULL;
+  char *mod_end = NULL;
   SCM scm_retval;
 
   if (keyval == 0) {
@@ -67,14 +68,19 @@ int g_keys_execute(GSCHEM_TOPLEVEL *w_current, int state, int keyval)
     return 0;
   }
 
+  /* Allocate space for concatenation of all strings below */
+  modifier = mod_end = g_strnfill(3*10, '\0');
+
+  /* The accels below must be in alphabetic order! */
+  if (state & GDK_MOD1_MASK) {
+    mod_end = g_stpcpy(mod_end, "Alt ");
+  }
+  if (state & GDK_CONTROL_MASK) {
+    mod_end = g_stpcpy(mod_end, "Control ");
+  }
   if (state & GDK_SHIFT_MASK) {
-    modifier = g_strdup_printf("Shift ");
-  } else if (state & GDK_CONTROL_MASK) {
-    modifier = g_strdup_printf("Control ");
-  } else if (state & GDK_MOD1_MASK) {
-    modifier = g_strdup_printf("Alt ");
-  } else
-    modifier = g_strdup("");
+    mod_end = g_stpcpy(mod_end, "Shift ");
+  }
 
   if(strcmp(key_name, "Escape") == 0) {
      g_free(w_current->keyaccel_string);
