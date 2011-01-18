@@ -7,6 +7,6 @@ refdes=A?
 T 500 300 9 10 1 0 0 0 1
 Gnucap options
 T 100 0 8 10 1 1 0 0 1
-value=unknown
+value=?
 T 100 600 8 10 0 0 0 0 1
 numslots=0
