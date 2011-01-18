@@ -37,7 +37,7 @@ version.h: stamp-git $(top_builddir)/configure $(srcdir)/version.h.in
 
 	@date_ver=$(DATE_VERSION); dotted_ver=$(DOTTED_VERSION); \
 	git_commit=`cd $(srcdir) && $(GIT) rev-parse HEAD`; \
-	git_ver=`cd $(srcdir) && $(GIT) describe --always HEAD`; \
+	git_ver=`cd $(srcdir) && $(GIT) describe HEAD`; \
 	sed -e"s:^.*\(PACKAGE_DATE_VERSION\).*$$:#define \1 \"$$date_ver\":" \
 	    -e"s:^.*\(PACKAGE_DOTTED_VERSION\).*$$:#define \1 \"$$dotted_ver\":" \
 	    -e"s:^.*\(PACKAGE_GIT_VERSION\).*$$:#define \1 \"$$git_ver\":" \
