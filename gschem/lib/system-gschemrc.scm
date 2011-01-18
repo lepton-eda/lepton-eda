@@ -1151,8 +1151,6 @@
 ; 	- For Shift-A   --  "Shift A"
 ; 	- For Control-a --  "Control a"
 ; 	- For Alt-a     --  "Alt a"
-; 	- At this point in time you can only have one modifier 
-;	  (shift, control, alt) at a time.
 ; 	- Keys must be unique in each keymap, especially the global one
 ;	- Strings (without any modifers) are the same strings specified
 ; 	  for the keys in the file /usr/lib/X11/XKeysymDB (at least on 
@@ -1341,7 +1339,8 @@
     ("Control v" . clipboard-paste-hotkey)
     ("Control z" . edit-undo)
     ("Control y" . edit-redo)
-    ("Control a" . edit-select-all)))
+    ("Control a" . edit-select-all)
+    ("Control Shift A" . edit-deselect)))
 
 ; finally set the keymap point to the newly created datastructure 
 (define current-keymap global-keymap)
