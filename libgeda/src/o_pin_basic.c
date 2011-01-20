@@ -179,10 +179,6 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, char buf[],
     whichend = 0;
   }
 
-  if (x1 == x2 && y1 == y2) {
-    s_log_message (_("Found a zero length pin: [ %s ]\n"), buf);
-  }
-
   if (color < 0 || color > MAX_COLORS) {
     s_log_message (_("Found an invalid color [ %s ]\n"), buf);
     s_log_message (_("Setting color to default color\n"));
