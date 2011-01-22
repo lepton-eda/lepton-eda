@@ -199,38 +199,10 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
 
           otherone = !whichone;
 
-          pinsize = 0;
-          if (toplevel->pin_style == THICK )
-            pinsize = object->line_width;
-
           o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
-          if (object->line->y[whichone] == object->line->y[otherone]) {
-            /* horizontal line */
-            if (object->line->x[whichone] <= object->line->x[otherone]) {
-              gschem_cairo_line (w_current, END_NONE, pinsize, x,        y,
-                                 x + size, y);
-            } else {
-              gschem_cairo_line (w_current, END_NONE, pinsize, x,        y,
-                                 x - size, y);
-            }
-            gschem_cairo_stroke (w_current, TYPE_SOLID,
-                                 END_NONE, pinsize, -1, -1);
-          } else if (object->line->x[0] == object->line->x[1]) {
-            /* vertical line */
-            if (object->line->y[whichone] <= object->line->y[otherone]) {
-                gschem_cairo_line (w_current, END_NONE, pinsize, x, y,
-                                   x, y + size);
-            } else {
-              gschem_cairo_line (w_current, END_NONE, pinsize, x, y,
-                                 x, y - size);
-            }
-            gschem_cairo_stroke (w_current, TYPE_SOLID,
-                                 END_NONE, pinsize, -1, -1);
-          } else {
-            /* angled line */
-            /* not supporting rendering of que for angled pin for now. hack */
-          }
-
+          gschem_cairo_center_box (w_current, -1, -1, x, y, size, size);
+          o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
+          cairo_fill (w_current->cr);
         }
       }
       break;
