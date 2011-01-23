@@ -182,6 +182,13 @@ void s_cue_output_lowlevel(TOPLEVEL * toplevel, OBJECT * object, int whichone,
             s_cue_postscript_junction (toplevel, fp, x, y, bus_involved);
         }
       }
+      else if (object->type == OBJ_PIN
+               && count == 0
+               && whichone == object->whichend) {
+        if (output_type == POSTSCRIPT) {
+          s_cue_postscript_fillbox(toplevel, fp, x, y);
+        }
+      }
       break;
 
     case (CONN_MIDPOINT):
