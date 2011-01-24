@@ -81,6 +81,8 @@ Notable changes in gEDA/gaf 1.7.0
 * The `spice-sdb' backend for `gnetlist' now supports probes
   (`TESTPOINT' devices).
 
+* `gsch2pcb' now correctly handles footprint names with hyphens (`-').
+
 * The undocumented `mk_verilog_syms' program is no longer installed.
   The symbols it creates are still installed to
   `${prefix}/share/gEDA/sym/verilog'.
