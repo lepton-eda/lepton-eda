@@ -72,30 +72,45 @@
    (lambda (x) (not (string=? "" x)))
    (string-split the-string #\space)))
 
+;; Check if `str' contains only characters valid in an M4 function
+;; name.  Note that this *doesn't* check that str is a valid M4
+;; function name.
+(define gsch2pcb:m4-valid?
+  (let ((rx (make-regexp "^[A-Za-z0-9_]*$")))
+    (lambda (str)
+      (regexp-exec rx str))))
 
-(define gsch2pcb:write-value-footprint
-  (lambda (pipe ls)
-    (if (not (null? ls))
-;;       refdes contains the first element of ls        
-        (let* ((refdes (car ls))
-               (value (gnetlist:get-package-attribute refdes "value"))
-               (footprint (gsch2pcb:split-to-list
-                          (gnetlist:get-package-attribute refdes  "footprint") ) ) 
-	       (lquote (if gsch2pcb:use-m4 "`" ""))
-	       (rquote (if gsch2pcb:use-m4 "'" ""))
+;; Quote a string to protect from M4 macro expansion
+(define (gsch2pcb:m4-quote str)
+  (string-append "`" str "'"))
 
-	       )
+;; Write the footprint for the package `refdes' to `port'.  If M4
+;; footprints are enabled, writes in a format suitable for
+;; macro-expansion by M4.  Any footprint names that obviously can't be
+;; M4 footprints are protected from macro-expansion.
+(define (gsch2pcb:write-value-footprint refdes port)
 
-               (display (string-append "PKG_" (car footprint)) pipe)
-               (display (string-append "(" lquote (car footprint)) pipe)
-               (display (string-join (cdr footprint) "-" 'prefix) pipe)
-               (display (string-append rquote "," lquote refdes rquote "," lquote ) pipe)
+  (let* ((value (gnetlist:get-package-attribute refdes "value"))
+         (footprint (gsch2pcb:split-to-list
+                     (gnetlist:get-package-attribute refdes "footprint")))
+         (fp (car footprint))
+         (fp-args (cdr footprint))
 
-               (display value pipe)
-               (display (string-join (cdr footprint) (string-append rquote "," lquote) 'prefix) pipe)
-               (display (string-append rquote ")") pipe)
-               (newline pipe)
-               (gsch2pcb:write-value-footprint pipe (cdr ls))) )))
+         (nq (lambda (x) x)) ; A non-quoting operator
+         (q (if gsch2pcb:use-m4 gsch2pcb:m4-quote nq))) ; A quoting operator
+
+    (format port "~A(~A,~A,~A~A)\n"
+            ;; If the footprint is obviously not an M4 footprint,
+            ;; protect it from macro-expansion.
+            ((if (gsch2pcb:m4-valid? fp) nq q) (string-append "PKG_" fp))
+            (q (string-join footprint "-"))
+            (q refdes)
+            (q value)
+            (string-join (map q fp-args) "," 'prefix))))
+
+;; Write the footprints for all the refdes' in `lst'.
+(define (gsch2pcb:write-value-footprints port lst)
+  (for-each (lambda (x) (gsch2pcb:write-value-footprint x port)) lst))
 
 ;;
 ;;
@@ -188,13 +203,13 @@
 	
 	(display "Using the m4 processor for pcb footprints\n")
 	;; packages is a list with the different refdes value
-	(gsch2pcb:write-value-footprint pipe packages)
+	(gsch2pcb:write-value-footprints pipe packages)
 	(close-pipe pipe)
 	)
       
       (let ((port  (open output-filename (logior O_WRONLY O_APPEND))))
 	(display "Skipping the m4 processor for pcb footprints\n")
-	(gsch2pcb:write-value-footprint port packages)
+	(gsch2pcb:write-value-footprints port packages)
 	(close-port port)
 	)
       )
