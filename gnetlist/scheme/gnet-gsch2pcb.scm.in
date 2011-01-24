@@ -72,14 +72,6 @@
    (lambda (x) (not (string=? "" x)))
    (string-split the-string #\space)))
 
-;; Joins the elements of a list of strings into a single string,
-;; with each element prefixed by a given prefix string.
-(define (gsch2pcb:list-join-with-prefixes the-list prefix)
-  (if (null? the-list)
-      ""
-      (string-append prefix (car the-list)
-                     (gsch2pcb:list-join-with-prefixes (cdr the-list) prefix))))
-
 
 (define gsch2pcb:write-value-footprint
   (lambda (pipe ls)
@@ -96,11 +88,11 @@
 
                (display (string-append "PKG_" (car footprint)) pipe)
                (display (string-append "(" lquote (car footprint)) pipe)
-               (display (gsch2pcb:list-join-with-prefixes (cdr footprint) "-") pipe)
+               (display (string-join (cdr footprint) "-" 'prefix) pipe)
                (display (string-append rquote "," lquote refdes rquote "," lquote ) pipe)
 
                (display value pipe)
-               (display (gsch2pcb:list-join-with-prefixes (cdr footprint) (string-append rquote "," lquote)) pipe)
+               (display (string-join (cdr footprint) (string-append rquote "," lquote) 'prefix) pipe)
                (display (string-append rquote ")") pipe)
                (newline pipe)
                (gsch2pcb:write-value-footprint pipe (cdr ls))) )))
