@@ -1105,10 +1105,6 @@ static void o_grips_end_box(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 static void o_grips_end_path(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                              int whichone)
 {
-  /* erase the temporary path */
-  /* if (w_current->rubber_visible) */
-  /*  o_path_invalidate_rubber (w_current); */
-
   o_path_modify (w_current->toplevel, o_current,
                  w_current->second_wx, w_current->second_wy, whichone);
 }
@@ -1125,9 +1121,6 @@ static void o_grips_end_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                                 int whichone)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-
-  /* erase the temporary picture */
-  /* o_picture_invalidate_rubber (w_current); */
 
   /* don't allow zero width/height picturees
    * this ends the picture drawing behavior
@@ -1166,9 +1159,6 @@ static void o_grips_end_circle(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 {
   TOPLEVEL *toplevel = w_current->toplevel;
 
-  /* erase the temporary circle */
-  /* o_circle_invalidate_rubber (w_current); */
-
   /* don't allow zero radius circles
    * this ends the circle drawing behavior
    * we want this? hack */
@@ -1202,9 +1192,6 @@ static void o_grips_end_line(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                              int whichone)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-
-  /* erase the temporary line */
-  /* o_line_invalidate_rubber (w_current); */
 
   /* don't allow zero length nets / lines / pins
    * this ends the net drawing behavior
@@ -1243,9 +1230,6 @@ static void o_grips_end_net(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *connected_objects;
-
-  /* erase the temporary line */
-  /* o_line_invalidate_rubber (w_current); */
 
   /* don't allow zero length net
    * this ends the net drawing behavior
@@ -1288,9 +1272,6 @@ static void o_grips_end_pin(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 {
   TOPLEVEL *toplevel = w_current->toplevel;
 
-  /* erase the temporary line */
-  /* o_line_invalidate_rubber (w_current); */
-
   /* don't allow zero length pin
    * this ends the pin changing behavior
    * we want this? hack */
@@ -1326,9 +1307,6 @@ static void o_grips_end_bus(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                             int whichone)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-
-  /* erase the temporary line */
-  /* o_line_invalidate_rubber (w_current); */
 
   /* don't allow zero length bus
    * this ends the bus changing behavior
