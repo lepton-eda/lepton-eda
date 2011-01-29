@@ -28,10 +28,10 @@
 #endif
 
 
-typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, COLOR *color,
-                           GSCHEM_TOPLEVEL *w_current, CIRCLE *circle,
+typedef void (*FILL_FUNC) (GSCHEM_TOPLEVEL *w_current,
+                           COLOR *color, CIRCLE *circle,
                            gint fill_width, gint angle1, gint pitch1,
-                           gint angle2, gint pitch2 );
+                           gint angle2, gint pitch2);
 
 
 /*! \brief Draw a circle on the screen.
@@ -134,10 +134,9 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     fill_func = o_circle_fill_fill;
   }
 
-  (*fill_func) (w_current->drawable, w_current->gc,
-                o_drawing_color (w_current, o_current),
-                w_current, o_current->circle,
-                o_current->fill_width, angle1, pitch1, angle2, pitch2);
+  (*fill_func) (w_current, o_drawing_color (w_current, o_current),
+                o_current->circle, o_current->fill_width,
+                angle1, pitch1, angle2, pitch2);
 
   gschem_cairo_arc (w_current, o_current->line_width,
                                o_current->circle->center_x,
@@ -168,10 +167,8 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *  The unit for <B>width</B>, <B>pitch1</B> and <B>pitch2</B> is pixel and unit
  *  for <B>angle1</B> and <B>angle2</B> is degree.
  *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Circle fill color. 
  *  \param [in] w_current   Schematic top level
+ *  \param [in] color       Circle fill color.
  *  \param [in] circle      Circle to be drawn
  *  \param [in] fill_width
  *  \param [in] angle1      1st angle for pattern.
@@ -179,8 +176,8 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *  \param [in] angle2      2nd angle for pattern.
  *  \param [in] pitch2      2nd pitch for pattern.
  */
-void o_circle_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                           GSCHEM_TOPLEVEL *w_current, CIRCLE *circle,
+void o_circle_fill_hollow (GSCHEM_TOPLEVEL *w_current,
+                           COLOR *color, CIRCLE *circle,
                            gint fill_width,
                            gint angle1, gint pitch1,
                            gint angle2, gint pitch2)
@@ -201,10 +198,8 @@ void o_circle_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  The unit for <B>width</B>, <B>pitch1</B> and <B>pitch2</B> is pixel and unit
  *  for <B>angle1</B> and <B>angle2</B> is degree.
  *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Circle fill color. 
  *  \param [in] w_current   Schematic top level
+ *  \param [in] color       Circle fill color.
  *  \param [in] circle      Circle to be drawn
  *  \param [in] fill_width
  *  \param [in] angle1      (unused)
@@ -212,8 +207,8 @@ void o_circle_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] angle2      (unused)
  *  \param [in] pitch2      (unused)
  */
-void o_circle_fill_fill (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                         GSCHEM_TOPLEVEL *w_current, CIRCLE *circle,
+void o_circle_fill_fill (GSCHEM_TOPLEVEL *w_current,
+                         COLOR *color, CIRCLE *circle,
                          gint fill_width,
                          gint angle1, gint pitch1,
                          gint angle2, gint pitch2)
@@ -242,10 +237,8 @@ void o_circle_fill_fill (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  Negative or null values for <B>pitch1</B> are not allowed as it leads to
  *  an endless loop.
  *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Circle fill color. 
  *  \param [in] w_current   Schematic top level
+ *  \param [in] color       Circle fill color.
  *  \param [in] circle      Circle to be drawn
  *  \param [in] fill_width
  *  \param [in] angle1      1st angle for pattern.
@@ -253,8 +246,8 @@ void o_circle_fill_fill (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] angle2      (unused)
  *  \param [in] pitch2      (unused)
  */
-void o_circle_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                          GSCHEM_TOPLEVEL *w_current, CIRCLE *circle,
+void o_circle_fill_hatch (GSCHEM_TOPLEVEL *w_current,
+                          COLOR *color, CIRCLE *circle,
                           gint fill_width,
                           gint angle1, gint pitch1,
                           gint angle2, gint pitch2)
@@ -296,10 +289,8 @@ void o_circle_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  #o_circle_fill_hatch() respectively with <B>angle1</B>, <B>pitch1</B> and
  *  <B>angle2</B>, <B>pitch2</B> for parameters.
  *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Circle fill color. 
  *  \param [in] w_current   Schematic top level
+ *  \param [in] color       Circle fill color.
  *  \param [in] circle      Circle to be drawn
  *  \param [in] fill_width
  *  \param [in] angle1      1st angle for pattern.
@@ -307,15 +298,15 @@ void o_circle_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] angle2      2nd angle for pattern.
  *  \param [in] pitch2      2nd pitch for pattern.
  */
-void o_circle_fill_mesh (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                         GSCHEM_TOPLEVEL *w_current, CIRCLE *circle,
+void o_circle_fill_mesh (GSCHEM_TOPLEVEL *w_current,
+                         COLOR *color, CIRCLE *circle,
                          gint fill_width,
                          gint angle1, gint pitch1,
                          gint angle2, gint pitch2)
 {
-  o_circle_fill_hatch (w, gc, color, w_current, circle,
+  o_circle_fill_hatch (w_current, color, circle,
                        fill_width, angle1, pitch1, -1, -1);
-  o_circle_fill_hatch (w, gc, color, w_current, circle,
+  o_circle_fill_hatch (w_current, color, circle,
                        fill_width, angle2, pitch2, -1, -1);
 	
 }
