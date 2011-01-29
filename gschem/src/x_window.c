@@ -417,13 +417,11 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
 
   if (w_current->scrollbars_flag == TRUE) {
     /* setup scroll bars */
-    w_current->v_adjustment =
-      gtk_adjustment_new (toplevel->init_bottom,
-                          0.0, toplevel->init_bottom,
-                          100.0, 100.0, 10.0);
+    w_current->v_adjustment = GTK_ADJUSTMENT (
+      gtk_adjustment_new (toplevel->init_bottom, 0.0, toplevel->init_bottom,
+                          100.0, 100.0, 10.0));
 
-    w_current->v_scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (
-                                                                 w_current->v_adjustment));
+    w_current->v_scrollbar = gtk_vscrollbar_new (w_current->v_adjustment);
 
     gtk_range_set_update_policy (GTK_RANGE (w_current->v_scrollbar),
                                  GTK_UPDATE_CONTINUOUS);
@@ -431,17 +429,15 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
     gtk_box_pack_start (GTK_BOX (drawbox), w_current->v_scrollbar,
                         FALSE, FALSE, 0);
 
-    g_signal_connect (G_OBJECT (w_current->v_adjustment),
+    g_signal_connect (w_current->v_adjustment,
                       "value_changed",
                       G_CALLBACK (x_event_vschanged),
                       w_current);
 
-    w_current->h_adjustment = gtk_adjustment_new (0.0, 0.0,
-                                                  toplevel->init_right,
-                                                  100.0, 100.0, 10.0);
+    w_current->h_adjustment = GTK_ADJUSTMENT (
+      gtk_adjustment_new (0.0, 0.0, toplevel->init_right, 100.0, 100.0, 10.0));
 
-    w_current->h_scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (
-                                                                 w_current->h_adjustment));
+    w_current->h_scrollbar = gtk_hscrollbar_new (w_current->h_adjustment);
 
     gtk_range_set_update_policy (GTK_RANGE (w_current->h_scrollbar),
                                  GTK_UPDATE_CONTINUOUS);
@@ -449,7 +445,7 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
     gtk_box_pack_start (GTK_BOX (main_box), w_current->h_scrollbar,
                         FALSE, FALSE, 0);
 
-    g_signal_connect (G_OBJECT (w_current->h_adjustment),
+    g_signal_connect (w_current->h_adjustment,
                       "value_changed",
                       G_CALLBACK (x_event_hschanged),
                       w_current);

@@ -19,8 +19,8 @@ struct st_gschem_toplevel {
 
   GtkWidget *h_scrollbar;
   GtkWidget *v_scrollbar;
-  GtkObject *h_adjustment;
-  GtkObject *v_adjustment;
+  GtkAdjustment *h_adjustment;
+  GtkAdjustment *v_adjustment;
 
   GtkWidget *macro_box;
   GtkWidget *macro_entry;
