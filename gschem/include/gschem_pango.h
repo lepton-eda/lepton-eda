@@ -25,7 +25,6 @@
 #ifndef __GSCHEM_PANGO_H__
 #define __GSCHEM_PANGO_H__
 
-#include <gdk/gdktypes.h>
 
 G_BEGIN_DECLS
 
