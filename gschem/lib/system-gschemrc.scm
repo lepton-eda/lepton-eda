@@ -451,8 +451,7 @@
 
 ; snap-size number
 ;
-; Sets the default spacing which objects snap to.  This is not the grid 
-; spacing (that's independent of this variable)
+; Sets the default grid spacing at start-up of gschem.
 ; 
 (snap-size 100)
 
