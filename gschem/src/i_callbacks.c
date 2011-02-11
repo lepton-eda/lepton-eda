@@ -3173,7 +3173,8 @@ DEFINE_I_CALLBACK(attributes_show_name)
          s_current != NULL;
          s_current = g_list_next (s_current)) {
       OBJECT *object = (OBJECT*)s_current->data;
-      o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME);
+      if (object->type == OBJ_TEXT)
+        o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME);
     }
 
     o_undo_savestate (w_current, UNDO_ALL);
@@ -3209,7 +3210,8 @@ DEFINE_I_CALLBACK(attributes_show_value)
          s_current != NULL;
          s_current = g_list_next (s_current)) {
       OBJECT *object = (OBJECT*)s_current->data;
-      o_attrib_toggle_show_name_value (w_current, object, SHOW_VALUE);
+      if (object->type == OBJ_TEXT)
+        o_attrib_toggle_show_name_value (w_current, object, SHOW_VALUE);
     }
 
     o_undo_savestate (w_current, UNDO_ALL);
@@ -3245,7 +3247,8 @@ DEFINE_I_CALLBACK(attributes_show_both)
          s_current != NULL;
          s_current = g_list_next (s_current)) {
       OBJECT *object = (OBJECT*)s_current->data;
-      o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME_VALUE);
+      if (object->type == OBJ_TEXT)
+        o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME_VALUE);
     }
 
     o_undo_savestate (w_current, UNDO_ALL);
@@ -3282,7 +3285,8 @@ DEFINE_I_CALLBACK(attributes_visibility_toggle)
          s_current != NULL;
          s_current = g_list_next (s_current)) {
       OBJECT *object = (OBJECT*)s_current->data;
-      o_attrib_toggle_visibility (w_current, object);
+      if (object->type == OBJ_TEXT)
+        o_attrib_toggle_visibility (w_current, object);
     }
 
     o_undo_savestate (w_current, UNDO_ALL);
