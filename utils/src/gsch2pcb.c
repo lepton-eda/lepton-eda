@@ -1306,9 +1306,9 @@ static gchar *usage_string1 =
   "\n"
   "Additional Resources:\n"
   "\n"
-  "  gEDA homepage:  http://www.geda.seul.org\n"
-  "  PCB homepage:   http://pcb.sf.net\n"
-  "  gEDA Wiki:      http://geda.seul.org/dokuwiki/doku.php?id=geda\n" "\n";
+  "  gnetlist user guide:  http://geda.seul.org/wiki/geda:gnetlist_ug\n"
+  "  gEDA homepage:        http://www.gpleda.org\n"
+  "  PCB homepage:         http://pcb.gpleda.org\n"  "\n";
 
 static void
 usage ()

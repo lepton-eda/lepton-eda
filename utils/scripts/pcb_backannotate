@@ -20,7 +20,7 @@
 
 
 # This script is used to process annotation files from the PCB
-# program (http://pcb.sf.net) to backannotate
+# program (http://pcb.gpleda.org) to backannotate
 # changes to gEDA schematics.
 #
 # It is heavily based on the pads_backannotate program which is also 
