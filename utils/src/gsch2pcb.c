@@ -1051,6 +1051,29 @@ add_schematic (gchar * sch)
     sch_basename = g_strndup (sch, s - sch);
 }
 
+static void
+add_multiple_schematics (gchar * sch)
+{
+  /* parse the string using shell semantics */
+  gint count;
+  gchar** args = NULL;
+  GError* error = NULL;
+
+  if (g_shell_parse_argv (sch, &count, &args, &error)) {
+    int i;
+    for (i = 0; i < count; ++i)
+    {
+      add_schematic (args[i]);
+    }
+    g_strfreev (args);
+  } else {
+    fprintf (stderr,
+             "invalid `schematics' option: %s\n",
+             error->message);
+    g_error_free (error);
+  }
+}
+
 static gint
 parse_config (gchar * config, gchar * arg)
 {
@@ -1101,7 +1124,7 @@ parse_config (gchar * config, gchar * arg)
   } else if (!strcmp (config, "output-name") || !strcmp (config, "o"))
     sch_basename = g_strdup (arg);
   else if (!strcmp (config, "schematics"))
-    add_schematic (arg);
+    add_multiple_schematics (arg);
   else if (!strcmp (config, "m4-command"))
     m4_command = g_strdup (arg);
   else if (!strcmp (config, "m4-pcbdir"))
