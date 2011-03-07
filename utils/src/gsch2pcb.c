@@ -200,120 +200,95 @@ static void
 run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
               gchar * basename, GList * largs)
 {
-  gchar *command, *out_file, *args1, *s;
-  GList *list;
   struct stat st;
   time_t mtime;
   static const gchar *gnetlist = NULL;
-  gchar *args = NULL;
-
-  /* Prepend the gnetlist arguments (including the list of schematics)
-   * with those the user has specified with gnetlist-arg directives */
-  if (extra_gnetlist_arg_list || largs) {
-    int count = 0;
-    gchar **str_array =
-      g_new0 (char *,
-              1
-              + g_list_length (extra_gnetlist_arg_list)
-              + g_list_length (largs));
-    for (list = extra_gnetlist_arg_list; list; list = g_list_next (list)) {
-      str_array[count++] = list->data;
-    }
-    for (list = largs; list; list = g_list_next (list)) {
-      str_array[count++] = list->data;
-    }
-    args = g_strjoinv (" ", str_array);
-    g_free (str_array);
-  }
+  GList *list = NULL;
+  GList *verboseList = NULL;
+  GList *args1 = NULL;
 
   /* Allow the user to specify a full path or a different name for
    * the gnetlist command.  Especially useful if multiple copies
    * are installed at once.
    */
-
   if (gnetlist == NULL)
     gnetlist = g_getenv ("GNETLIST");
   if (gnetlist == NULL)
     gnetlist = "gnetlist";
 
-  if (verbose) {
-    command =
-      g_strconcat (gnetlist, " -g pcbpins -o ", pins_file, " ", args, NULL);
-    printf ("Running command:\n\t%s\n", command);
-    printf (SEP_STRING);
-  } else
-    command =
-      g_strconcat (gnetlist, " -q -g pcbpins -o ", pins_file, " ", args, NULL);
-  g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-  g_free (command);
+  if (!verbose)
+    verboseList = g_list_append (verboseList, "-q");
 
-  if (verbose) {
-    command = g_strconcat (gnetlist, " -g PCB -o ", net_file, " ", args, NULL);
-    printf ("Running command:\n\t%s\n", command);
-    printf (SEP_STRING);
-  } else
-    command =
-      g_strconcat (gnetlist, " -q -g PCB -o ", net_file, " ", args, NULL);
-  g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-  g_free (command);
+  build_and_run_command ("%s %l -g pcbpins -o %s %l %l",
+                         gnetlist,
+                         verboseList,
+                         pins_file,
+                         extra_gnetlist_arg_list,
+                         largs);
 
+  build_and_run_command ("%s %l -g PCB -o %s %l %l",
+                         gnetlist,
+                         verboseList,
+                         net_file,
+                         extra_gnetlist_arg_list,
+                         largs);
   create_m4_override_file ();
-  if (m4_override_file)
-    args1 = g_strconcat ("-m ", m4_override_file, " ", args, NULL);
-  else
-    args1 = g_strdup (args);
+
+  if (m4_override_file) {
+    args1 = g_list_append (args1, "-m");
+    args1 = g_list_append (args1, m4_override_file);
+  }
 
   mtime = (stat (pcb_file, &st) == 0) ? st.st_mtime : 0;
 
-  if (verbose) {
-    printf (SEP_STRING);
-    command = g_strconcat (gnetlist, " -g gsch2pcb -o ", pcb_file,
-                           " ", args1, NULL);
-    printf ("Running command:\n\t%s\n", command);
-    printf (SEP_STRING);
-  } else
-    command = g_strconcat (gnetlist, " -q -g gsch2pcb -o ", pcb_file,
-                           " ", args1, NULL);
-
-  g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-
-  if (verbose)
-    printf (SEP_STRING);
+  build_and_run_command ("%s %l -g gsch2pcb -o %s %l %l %l",
+                         gnetlist,
+                         verboseList,
+                         pcb_file,
+                         args1,
+                         extra_gnetlist_arg_list,
+                         largs);
 
   if (stat (pcb_file, &st) != 0 || mtime == st.st_mtime) {
-    fprintf (stderr, "gsch2pcb: gnetlist command (%s) failed.\n", command);
+    fprintf (stderr,
+             "gsch2pcb: gnetlist command failed, `%s' not updated\n",
+             pcb_file
+            );
     if (m4_override_file)
       fprintf (stderr,
                "    At least gnetlist 20030901 is required for m4-xxx options.\n");
     exit (1);
   }
-  g_free (command);
-  g_free (args1);
+
   if (m4_override_file)
     unlink (m4_override_file);
 
   for (list = extra_gnetlist_list; list; list = g_list_next (list)) {
-    s = (gchar *) list->data;
-    if (!strstr (s, " -o "))
-      out_file = g_strconcat (" -o ", basename, ".", s, NULL);
-    else
-      out_file = g_strdup (" ");
+    const gchar *s = (gchar *) list->data;
+    const gchar *s2 = strstr (s, " -o ");
+    gchar *out_file;
+    gchar *backend;
+    if (!s2) {
+      out_file = g_strconcat (basename, ".", s, NULL);
+      backend = g_strdup (s);
+    } else {
+      out_file = g_strdup (s2 + 4);
+      backend = g_strndup (s, s2 - s);
+    }
 
-    if (verbose) {
-      printf (SEP_STRING);
-      command = g_strconcat (gnetlist, " -g ", s, out_file, " ", args, NULL);
-      printf ("Running command:\n\t%s\n", command);
-      printf (SEP_STRING);
-    } else
-      command = g_strconcat (gnetlist, " -q -g ", s, out_file, " ", args, NULL);
-
-    g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-    g_free (command);
+    build_and_run_command ("%s %l -g %s -o %s %l %l",
+                           gnetlist,
+                           verboseList,
+                           backend,
+                           out_file,
+                           extra_gnetlist_arg_list,
+                           largs);
     g_free (out_file);
-    if (verbose)
-      printf (SEP_STRING);
+    g_free (backend);
   }
-  g_free (args);
+
+  g_list_free (args1);
+  g_list_free (verboseList);
 }
 
 static gchar *
