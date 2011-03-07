@@ -63,7 +63,9 @@ ElementMap;
 static GList *pcb_element_list,
   *element_directory_list, *extra_gnetlist_list, *extra_gnetlist_arg_list;
 
-static gchar *schematics, *sch_basename;
+static gchar *sch_basename;
+
+static GList *schematics;
 
 static gchar *m4_command,
   *m4_pcbdir, *default_m4_pcbdir, *m4_files, *m4_override_file;
@@ -126,29 +128,32 @@ create_m4_override_file ()
  */
 static void
 run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
-              gchar * basename, gchar * args)
+              gchar * basename, GList * largs)
 {
   gchar *command, *out_file, *args1, *s;
   GList *list;
   struct stat st;
   time_t mtime;
   static const gchar *gnetlist = NULL;
+  gchar *args = NULL;
 
   /* Prepend the gnetlist arguments (including the list of schematics)
    * with those the user has specified with gnetlist-arg directives */
-  if (extra_gnetlist_arg_list != NULL) {
+  if (extra_gnetlist_arg_list || largs) {
     int count = 0;
     gchar **str_array =
-      g_new0 (char *, 2 + g_list_length (extra_gnetlist_arg_list));
-    for (list = extra_gnetlist_arg_list;
-         list != NULL; list = g_list_next (list)) {
+      g_new0 (char *,
+              1
+              + g_list_length (extra_gnetlist_arg_list)
+              + g_list_length (largs));
+    for (list = extra_gnetlist_arg_list; list; list = g_list_next (list)) {
       str_array[count++] = list->data;
     }
-    str_array[count++] = args;
+    for (list = largs; list; list = g_list_next (list)) {
+      str_array[count++] = list->data;
+    }
     args = g_strjoinv (" ", str_array);
     g_free (str_array);
-  } else {
-    args = g_strdup (args);
   }
 
   /* Allow the user to specify a full path or a different name for
@@ -1039,14 +1044,8 @@ add_default_m4_files (void)
 static void
 add_schematic (gchar * sch)
 {
-  gchar *s;
-
-  s = schematics;
-  if (s)
-    schematics = g_strconcat (s, " ", sch, NULL);
-  else
-    schematics = g_strdup (sch);
-  g_free (s);
+  const gchar* s;
+  schematics = g_list_append (schematics, g_strdup (sch));
   if (!sch_basename && (s = g_strrstr (sch, ".sch")) != NULL && strlen(s) == 4)
     sch_basename = g_strndup (sch, s - sch);
 }
