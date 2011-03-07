@@ -121,6 +121,76 @@ create_m4_override_file ()
   }
 }
 
+/**
+ * Build and run a command. No redirection or error handling is
+ * done.  Format string is split on whitespace. Specifiers %l and %s
+ * are replaced with contents of positional args. To be recognized,
+ * specifiers must be separated from other arguments in the format by
+ * whitespace.
+ *  - %l expects a GList, contents used as separate arguments
+ *  - %s expects a gchar*, contents used as a single argument
+ * @param[in] format  used to specify command to be executed
+ * @param[in] ...     positional parameters
+ */
+static void
+build_and_run_command (const gchar *format, ...)
+{
+  va_list vargs;
+  gchar ** split;
+  GList *tmp = NULL;
+  gint num_split;
+  gint i;
+
+  va_start (vargs, format);
+  split = g_strsplit_set (format, " \t\n\v", 0);
+  num_split = g_strv_length (split);
+  for (i = 0; i < num_split; ++i) {
+    gchar *chunk = split[i];
+    if (strcmp (chunk, "%l") == 0) {
+      /* append contents of list into command args - shared data */
+      tmp = g_list_concat (tmp, g_list_copy (va_arg (vargs, GList*)));
+    } else if (strcmp (chunk, "%s") == 0) {
+      /* insert contents of string into output */
+      tmp = g_list_append (tmp, va_arg (vargs, gchar*));
+    } else {
+      /* bare string, use as is */
+      tmp = g_list_append (tmp, chunk);
+    }
+  }
+  va_end (vargs);
+
+  if (tmp) {
+    /* we have something in the list, build & call command */
+    GList *p;
+    gint i = 0;
+    gchar ** args = g_new0 (gchar*, g_list_length (tmp));
+
+    if (verbose)
+      printf ("Running command:\n\t");
+
+    for (p = tmp; p; p = g_list_next (p)) {
+      args[i++] = (gchar*) p->data;
+      if (verbose)
+        printf ("%s ", p->data);
+    }
+
+    if (verbose)
+      printf ("\n%s", SEP_STRING);
+
+    g_spawn_sync (".", args, NULL, G_SPAWN_SEARCH_PATH,
+                  NULL, NULL, NULL, NULL, NULL, NULL);
+
+    if (verbose)
+      printf ("\n%s", SEP_STRING);
+
+    g_free (args);
+    /* free the list, but leave data untouched */
+    g_list_free (tmp);
+  }
+
+  g_strfreev (split);
+}
+
 /* Run gnetlist to generate a netlist and a PCB board file.  gnetlist
  * has exit status of 0 even if it's given an invalid arg, so do some
  * stat() hoops to decide if gnetlist successfully generated the PCB
