@@ -1047,7 +1047,7 @@ add_schematic (gchar * sch)
   else
     schematics = g_strdup (sch);
   g_free (s);
-  if (!sch_basename && (s = strstr (sch, ".sch")) != NULL)
+  if (!sch_basename && (s = g_strrstr (sch, ".sch")) != NULL && strlen(s) == 4)
     sch_basename = g_strndup (sch, s - sch);
 }
 
@@ -1291,7 +1291,7 @@ get_args (gint argc, gchar ** argv)
       printf ("gsch2pcb: bad or incomplete arg: %s\n", argv[i]);
       usage ();
     } else {
-      if ((s = strstr (argv[i], ".sch")) == NULL) {
+      if (!g_str_has_suffix (argv[i], ".sch")) {
         load_extra_project_files ();
         load_project (argv[i]);
       } else
