@@ -889,11 +889,9 @@ add_elements (gchar * pcb_file)
 
   total = n_added_ef + n_added_m4 + n_not_found;
   if (total == 0)
-    command = g_strconcat ("rm ", tmp_file, NULL);
+    build_and_run_command ("rm %s", tmp_file);
   else
-    command = g_strconcat ("mv ", tmp_file, " ", pcb_file, NULL);
-  g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-  g_free (command);
+    build_and_run_command ("mv %s %s", tmp_file, pcb_file);
   g_free (tmp_file);
   return total;
 }
@@ -945,15 +943,11 @@ update_element_descriptions (gchar * pcb_file, gchar * bak)
   fclose (f_out);
 
   if (!bak_done) {
-    command = g_strconcat ("mv ", pcb_file, " ", bak, NULL);
-    g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-    g_free (command);
+    build_and_run_command ("mv %s %s", pcb_file, bak);
     bak_done = TRUE;
   }
 
-  command = g_strconcat ("mv ", tmp, " ", pcb_file, NULL);
-  g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-  g_free (command);
+  build_and_run_command ("mv %s %s", tmp, pcb_file);
   g_free (tmp);
 }
 
@@ -1032,15 +1026,11 @@ prune_elements (gchar * pcb_file, gchar * bak)
   fclose (f_out);
 
   if (!bak_done) {
-    command = g_strconcat ("mv ", pcb_file, " ", bak, NULL);
-    g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-    g_free (command);
+    build_and_run_command ("mv %s %s", pcb_file, bak);
     bak_done = TRUE;
   }
 
-  command = g_strconcat ("mv ", tmp, " ", pcb_file, NULL);
-  g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-  g_free (command);
+  build_and_run_command ("mv %s %s", tmp, pcb_file);
   g_free (tmp);
 }
 
@@ -1447,9 +1437,7 @@ main (gint argc, gchar ** argv)
                 sch_basename, schematics);
 
   if (add_elements (pcb_new_file_name) == 0) {
-    tmp = g_strconcat ("rm ", pcb_new_file_name, NULL);
-    g_spawn_command_line_sync (tmp, NULL, NULL, NULL, NULL);
-    g_free (tmp);
+    build_and_run_command ("rm %s", pcb_new_file_name);
     if (initial_pcb) {
       printf ("No elements found, so nothing to do.\n");
       exit (0);
