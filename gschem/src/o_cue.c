@@ -258,8 +258,12 @@ void o_cue_draw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
       }
 
   if (object->type != OBJ_PIN) {
-    o_cue_draw_lowlevel(w_current, object, 0);
-    o_cue_draw_lowlevel(w_current, object, 1);
+    if (object->type != OBJ_NET
+        || ((object->type == OBJ_NET)
+            && !o_net_is_fully_connected (w_current->toplevel, object))) {
+      o_cue_draw_lowlevel(w_current, object, 0);
+      o_cue_draw_lowlevel(w_current, object, 1);
+    }
     o_cue_draw_lowlevel_midpoints(w_current, object);
   } else {
     o_cue_draw_lowlevel(w_current, object, object->whichend);
