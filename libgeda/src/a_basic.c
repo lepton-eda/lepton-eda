@@ -218,18 +218,17 @@ gchar *o_save_objects (TOPLEVEL *toplevel, const GList *object_list, gboolean sa
  *  \param [in] toplevel    The current TOPLEVEL.
  *  \param [in] object_list The head of a GList of OBJECTs to save.
  *  \param [in] filename    The filename to save the data to.
+ *  \param [in,out] err     #GError structure for error reporting.
  *  \return 1 on success, 0 on failure.
  */
 int o_save (TOPLEVEL *toplevel, const GList *object_list,
-            const char *filename)
+            const char *filename, GError **err)
 {
   char *buffer;
-  GError *err = NULL;
 
   buffer = o_save_buffer (toplevel, object_list);
-  if (!g_file_set_contents (filename, buffer, strlen(buffer), &err)) {
+  if (!g_file_set_contents (filename, buffer, strlen(buffer), err)) {
     g_free (buffer);
-    g_error_free (err);
     return 0;
   }
   g_free (buffer);

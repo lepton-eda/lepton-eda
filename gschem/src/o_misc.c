@@ -800,7 +800,7 @@ void o_autosave_backups(GSCHEM_TOPLEVEL *w_current)
 
         if (o_save (toplevel,
                     s_page_objects (toplevel->page_current),
-                    backup_filename)) {
+                    backup_filename, NULL)) {
 
           p_current->ops_since_last_backup = 0;
                 p_current->do_autosave_backup = 0;

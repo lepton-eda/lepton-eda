@@ -845,7 +845,7 @@ x_window_save_page (GSCHEM_TOPLEVEL *w_current, PAGE *page, const gchar *filenam
   /* change to page */
   s_page_goto (toplevel, page);
   /* and try saving current page to filename */
-  ret = (gint)f_save (toplevel, toplevel->page_current, filename);
+  ret = (gint)f_save (toplevel, toplevel->page_current, filename, NULL);
   if (ret != 1) {
     /* an error occured when saving page to file */
     log_msg   = _("Could NOT save page [%s]\n");

@@ -495,7 +495,7 @@ gint s_page_save_all (TOPLEVEL *toplevel)
     p_current = (PAGE *)iter->data;
 
     if (f_save (toplevel, p_current,
-                p_current->page_filename)) {
+                p_current->page_filename, NULL)) {
       s_log_message (_("Saved [%s]\n"),
                      p_current->page_filename);
       /* reset the CHANGED flag of p_current */

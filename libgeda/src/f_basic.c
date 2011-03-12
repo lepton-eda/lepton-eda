@@ -344,9 +344,11 @@ void f_close(TOPLEVEL *toplevel)
  *
  *  \param [in,out] toplevel  The TOPLEVEL object containing the schematic.
  *  \param [in]      filename  The file name to save the schematic to.
+ *  \param [in,out] err       #GError structure for error reporting, or
+ *                            NULL to disable error reporting
  *  \return 1 on success, 0 on failure.
  */
-int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename)
+int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
 {
   gchar *backup_filename;
   gchar *real_filename;
@@ -431,7 +433,7 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename)
   g_free (dirname);
   g_free (only_filename);
   
-  if (o_save (toplevel, s_page_objects (page), real_filename)) {
+  if (o_save (toplevel, s_page_objects (page), real_filename, err)) {
 
     page->saved_since_first_loaded = 1;
 
