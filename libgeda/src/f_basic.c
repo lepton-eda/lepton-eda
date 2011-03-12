@@ -356,12 +356,16 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
   gchar *dirname;
   mode_t saved_umask, mask;
   struct stat st;
+  GError *tmp_err = NULL;
 
   /* Get the real filename and file permissions */
-  real_filename = follow_symlinks (filename, NULL);
+  real_filename = follow_symlinks (filename, &tmp_err);
 
   if (real_filename == NULL) {
-    s_log_message (_("Can't get the real filename of %s."), filename);
+    g_set_error (err, tmp_err->domain, tmp_err->code,
+                 _("Can't get the real filename of %s: %s"),
+                 filename,
+                 tmp_err->message);
     return 0;
   }
   
@@ -433,7 +437,7 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
   g_free (dirname);
   g_free (only_filename);
   
-  if (o_save (toplevel, s_page_objects (page), real_filename, err)) {
+  if (o_save (toplevel, s_page_objects (page), real_filename, &tmp_err)) {
 
     page->saved_since_first_loaded = 1;
 
@@ -455,6 +459,9 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
     return 1;
   }
   else {
+    g_set_error (err, tmp_err->domain, tmp_err->code,
+                 _("Could NOT save file: %s"), tmp_err->message);
+    g_clear_error (&tmp_err);
     g_free (real_filename);
     return 0;
   }
