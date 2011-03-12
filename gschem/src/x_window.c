@@ -834,6 +834,7 @@ x_window_save_page (GSCHEM_TOPLEVEL *w_current, PAGE *page, const gchar *filenam
   PAGE *old_current;
   const gchar *log_msg, *state_msg;
   gint ret;
+  GError *err = NULL;
 
   g_return_val_if_fail (toplevel != NULL, 0);
   g_return_val_if_fail (page     != NULL, 0);
@@ -845,12 +846,23 @@ x_window_save_page (GSCHEM_TOPLEVEL *w_current, PAGE *page, const gchar *filenam
   /* change to page */
   s_page_goto (toplevel, page);
   /* and try saving current page to filename */
-  ret = (gint)f_save (toplevel, toplevel->page_current, filename, NULL);
+  ret = (gint)f_save (toplevel, toplevel->page_current, filename, &err);
   if (ret != 1) {
-    /* an error occured when saving page to file */
     log_msg   = _("Could NOT save page [%s]\n");
     state_msg = _("Error while trying to save");
 
+    GtkWidget *dialog;
+
+    dialog = gtk_message_dialog_new (GTK_WINDOW (w_current->main_window),
+                                     GTK_DIALOG_DESTROY_WITH_PARENT,
+                                     GTK_MESSAGE_ERROR,
+                                     GTK_BUTTONS_CLOSE,
+                                     "%s",
+                                     err->message);
+    gtk_window_set_title (GTK_WINDOW (dialog), _("Failed to save file"));
+    gtk_dialog_run (GTK_DIALOG (dialog));
+    gtk_widget_destroy (dialog);
+    g_clear_error (&err);
   } else {
     /* successful save of page to file, update page... */
     /* change page name if necessary and prepare log message */
