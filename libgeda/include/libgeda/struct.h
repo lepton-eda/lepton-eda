@@ -276,6 +276,10 @@ struct st_object {
   int whichend;    /* for pins only, either 0 or 1 */
   int pin_type;    /* for pins only, either NET or BUS */
 
+  /* Tracking total number of entities connected by this net */
+  int net_num_connected;          /* for nets only */
+  gboolean valid_num_connected;   /* for nets only */
+
   GList *attribs;       /* attribute stuff */
   int show_name_value;
   int visibility;

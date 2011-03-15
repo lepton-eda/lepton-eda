@@ -189,6 +189,8 @@ void o_net_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery
 int o_net_orientation(OBJECT *object);
 void o_net_consolidate(TOPLEVEL *toplevel, PAGE *page);
 void o_net_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
+void o_net_refresh_conn_cache(TOPLEVEL *toplevel, OBJECT *object);
+gboolean o_net_is_fully_connected(TOPLEVEL *toplevel, OBJECT *object);
 
 /* o_path_basic.c */
 OBJECT *o_path_new(TOPLEVEL *toplevel, char type, int color, const char *path_string);

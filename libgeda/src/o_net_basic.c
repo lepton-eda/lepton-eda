@@ -637,3 +637,149 @@ void o_net_modify(TOPLEVEL *toplevel, OBJECT *object,
 
   s_tile_update_object(toplevel, object);
 }
+
+/*! \brief Refresh & cache number of connected entities.
+ *
+ *  \par Function Description
+ *  Traverse all network segments reachable from this net and count
+ *  total number of unique entities connected to all net segments.
+ *
+ *  For the purpose of this function, an entity is:
+ *    - pin
+ *    - bus
+ *    - attached netname attribute
+ *
+ *  Computed number of entities is afterwards stored in all traversed
+ *  net segments.
+ *
+ *  The algorithm does not handle corner cases, ie two bus segments
+ *  belonging to the same bus will be counted twice.
+ *
+ *  \param [in] toplevel    The TOPLEVEL object
+ *  \param [in] o_current   The NET OBJECT to check connectivity of
+ */
+void o_net_refresh_conn_cache(TOPLEVEL *toplevel, OBJECT *o_current)
+{
+  gint            num_conns = 0;
+  GHashTable     *visited;
+  GHashTableIter  iter;
+  GList          *stack = NULL;
+  OBJECT         *obj;
+  gpointer       *key;
+
+  g_return_if_fail (toplevel);
+  g_return_if_fail (o_current);
+  g_return_if_fail (o_current->type == OBJ_NET);
+
+  /* Keep track of visited nets, pins and buses in the hash table.
+   * This way we short-circuit the search and avoid loops.
+   */
+  visited = g_hash_table_new (NULL, NULL);
+
+  /*
+   * Add the starting net to the hash so:
+   *   1. it is not traversed twice
+   *   2. it is updated at the end if no connections are found
+   */
+  g_hash_table_insert (visited, o_current, o_current);
+
+  /* Check if a netname= is attached to the starting net segment */
+  if (NULL != o_attrib_search_object_attribs_by_name (o_current,
+                                                      "netname",
+                                                      0)) {
+    num_conns += 1;
+  }
+
+  /* Keep track of connections to search at each net segment in a stack.
+   * Each stack entry points to an entry in obj->conn_list.
+   * Pop the stack when we have no more connections to check.
+   * Push next entry on the stack if we encounter a net segment.
+   */
+
+  /* Initialise the stack for the starting net segment. */
+  stack = g_list_prepend (stack, o_current->conn_list);
+
+  while (stack != NULL) {
+    /* At start of the loop, take a new connection from the stack. */
+    GList *conn_list = (GList*) stack->data;
+    CONN *conn;
+
+    if (conn_list == NULL) {
+      /* No more connections to check at this level. Pop the stack. */
+      stack = g_list_delete_link (stack, stack);
+      continue;
+    }
+
+    /* Extract the next connected object and advance the connection list. */
+    conn = (CONN*) conn_list->data;
+    obj = conn->other_object;
+    stack->data = (gpointer) g_list_next (conn_list);
+
+    /* Act upon the object that is connected to the segment. */
+    switch (obj->type) {
+      case OBJ_PIN:
+      case OBJ_BUS:
+        if (NULL == g_hash_table_lookup (visited, obj)) {
+          g_hash_table_insert (visited, obj, obj);
+          num_conns += 1;
+        }
+        break;
+      case OBJ_NET:
+        if (NULL == g_hash_table_lookup (visited, obj)) {
+          g_hash_table_insert (visited, obj, obj);
+          /* Check if a netname= is attached to this net segment */
+          if (NULL != o_attrib_search_object_attribs_by_name (obj,
+                                                              "netname",
+                                                              0)) {
+            num_conns += 1;
+          }
+          /* Push new list of connections to check onto the stack */
+          stack = g_list_prepend (stack, obj->conn_list);
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  /* Cache value of num_conns in all visited objects */
+  g_hash_table_iter_init (&iter, visited);
+
+  while (g_hash_table_iter_next (&iter, &key, NULL)) {
+    obj = (OBJECT*) key;
+    if (obj->type == OBJ_NET) {
+      obj->net_num_connected = num_conns;
+      obj->valid_num_connected = TRUE;
+    }
+  }
+
+  g_hash_table_destroy (visited);
+  g_list_free (stack);
+}
+
+/*! \brief Check if net is fully connected.
+ *
+ *  \par Function Description
+ *  Net is fully connected when it connects at least
+ *  two separate entities.
+ *
+ *  \sa o_net_refresh_conn_cache
+ *
+ *  \param [in] toplevel    The TOPLEVEL object
+ *  \param [in] o_current   The OBJECT to check connectivity of
+ *  \return TRUE if net is fully connected, FALSE otherwise
+ */
+gboolean o_net_is_fully_connected (TOPLEVEL *toplevel,
+                                   OBJECT   *o_current)
+{
+  g_return_val_if_fail (toplevel, FALSE);
+  g_return_val_if_fail (o_current, FALSE);
+  g_return_val_if_fail (o_current->type == OBJ_NET, FALSE);
+
+  if (!o_current->valid_num_connected)
+    o_net_refresh_conn_cache (toplevel, o_current);
+
+  g_return_val_if_fail (o_current->valid_num_connected, FALSE);
+
+  return o_current->net_num_connected > 1 ? TRUE : FALSE;
+}
