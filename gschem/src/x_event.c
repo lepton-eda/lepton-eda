@@ -718,6 +718,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
   int skip_event=0;
+  int do_move;
   GdkEvent *test_event;
 
   exit_if_null(w_current);
@@ -791,20 +792,37 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     break;
 
     case(STARTSELECT):
-    if (!o_find_selected_object (w_current,
-                                 w_current->first_wx, w_current->first_wy)) {
+    /* Don't move anything if the shift key is pressed, that means
+     * the user definately wants to drag out a selection box.
+     */
+    do_move = 0;
+    if (!w_current->SHIFTKEY) {
+      /* If there is a selected object under the cursor, start moving it.
+       * If we don't find anything selected, look for an object we could
+       * select to start moving it.
+       */
+      if (o_find_selected_object (w_current, w_current->first_wx, w_current->first_wy) ||
+          (o_find_object (w_current,
+                          w_current->first_wx, w_current->first_wy, TRUE) &&
+           o_select_selected (w_current)))
+        do_move = 1;
+    }
+
+    if (!do_move) {
+      /* Drag out a selection box */
       if (o_select_box_start(w_current, unsnapped_wx, unsnapped_wy)) {
         w_current->event_state = SBOX;
         w_current->inside_action = 1;
       }
       break;
     } else {
-      /* Start the object movement */
+      /* Start moving the selected object(s) */
       o_move_start(w_current, w_x, w_y);
       w_current->event_state = ENDMOVE;
       w_current->inside_action = 1;
+      /* Fall through bottom of case to finish the move */
     }
-    /* Fall through */
+    /* Fall through to handle move */
     case(ENDMOVE):
     case(MOVE):
     if (w_current->inside_action)
