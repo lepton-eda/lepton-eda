@@ -422,7 +422,7 @@ void o_select_connected_nets(GSCHEM_TOPLEVEL *w_current, OBJECT* o_net)
       o_current = iter1->data;
       if (o_current->type == OBJ_NET && 
 	  (!o_current->selected || count == 0)) {
-	(*o_current->sel_func)(w_current, o_current, SINGLE, count);
+	o_select_object (w_current, o_current, SINGLE, count);
 	if (w_current->net_selection_state > 1) {
 	  /* collect nets */
 	  netstack = g_list_concat(s_conn_return_others(NULL, o_current), netstack);
@@ -560,10 +560,10 @@ o_select_visible_unlocked (GSCHEM_TOPLEVEL *w_current)
       continue;
 
     /* Skip locked objects. */
-    if (obj->sel_func == NULL) continue;
+    if (!obj->selectable) continue;
 
     /* Run selection hooks & add object to selection. */
-    /*! \bug We can't call obj->sel_func, because o_select_object()
+    /*! \bug We can't call o_select_object() because it
      * behaves differently depending on the state of
      * w_current->SHIFTKEY and w_current->CONTROLKEY, which may well
      * be set if this function is called via a keystroke

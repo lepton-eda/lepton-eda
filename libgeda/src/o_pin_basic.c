@@ -106,7 +106,6 @@ OBJECT *o_pin_new(TOPLEVEL *toplevel,
   o_pin_recalc (toplevel, new_node);
 
   new_node->draw_func = pin_draw_func;  
-  new_node->sel_func = select_func;  
 
   new_node->whichend = whichend;
 

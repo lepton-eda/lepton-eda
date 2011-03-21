@@ -117,7 +117,7 @@ void o_lock(GSCHEM_TOPLEVEL *w_current)
     if (object) {
       /* check to see if locked_color is already being used */
       if (object->locked_color == -1) {
-        object->sel_func = NULL;
+        object->selectable = FALSE;
         object->locked_color = object->color;
         object->color = LOCK_COLOR;
         w_current->toplevel->page_current->CHANGED=1;
@@ -153,9 +153,9 @@ void o_unlock(GSCHEM_TOPLEVEL *w_current)
   while(s_current != NULL) {
     object = (OBJECT *) s_current->data;
     if (object) {
-      /* only unlock if sel_func is not set to something */
-      if (object->sel_func == NULL) {
-        object->sel_func = select_func;
+      /* only unlock if the object is locked */
+      if (object->selectable == FALSE) {
+        object->selectable = TRUE;
         object->color = object->locked_color;
         object->locked_color = -1;
         w_current->toplevel->page_current->CHANGED = 1;

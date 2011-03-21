@@ -101,7 +101,6 @@ OBJECT *o_net_new(TOPLEVEL *toplevel, char type,
   o_net_recalc (toplevel, new_node);
 
   new_node->draw_func = net_draw_func;
-  new_node->sel_func = select_func;
 
   return new_node;
 }

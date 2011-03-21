@@ -58,9 +58,6 @@
 #include <dmalloc.h>
 #endif
 
-/*! Default setting for object selection function. */
-void (*select_func)() = NULL;
-
 
 /*! \brief Check if point is inside a region
  *  \par Function Description

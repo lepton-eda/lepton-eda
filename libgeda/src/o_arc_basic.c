@@ -112,7 +112,6 @@ OBJECT *o_arc_new(TOPLEVEL *toplevel,
   /* new_node->graphical = arc; eventually */
 	
   new_node->draw_func = arc_draw_func;  
-  new_node->sel_func = select_func;
 
   return new_node;
 }

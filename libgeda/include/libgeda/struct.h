@@ -258,11 +258,11 @@ struct st_object {
   /* unused for now */
   void (*action_func)();			/* Execute function */
 
-  void (*sel_func)();			/* Selected function */
   void (*draw_func)();			/* Draw function */
 
   int color; 				/* Which color */
   int dont_redraw;			/* Flag to skip redrawing */
+  int selectable;			/* object selectable flag */
   int selected;				/* object selected flag */
   int locked_color; 			/* Locked color (used to save */
   /* the object's real color */

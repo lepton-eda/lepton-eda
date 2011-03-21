@@ -36,15 +36,6 @@ char *rc_filename = NULL;
 int logfile_fd=-1;
 int logging_dest=LOG_WINDOW;
 
-/* this is just a dummy function, so that compoments are saved properly */
-void
-o_select_dummy(TOPLEVEL * w_current, OBJECT * o_current,
-		int type, int count)
-{
-	// nop
-}
-
-
 /* command line arguments */
 int verbose_mode=FALSE;
 int interactive_mode=FALSE;

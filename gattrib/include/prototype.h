@@ -88,7 +88,6 @@ void s_toplevel_verify_design(TOPLEVEL *toplevel);
 void s_toplevel_gtksheet_to_toplevel(TOPLEVEL *toplevel);
 void s_toplevel_add_new_attrib(gchar *new_attrib_name);
 void s_toplevel_delete_attrib_col();
-void s_toplevel_select_object();
 void s_toplevel_sheetdata_to_toplevel(TOPLEVEL *toplevel, PAGE *page);
 
 STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes);

@@ -179,7 +179,6 @@ void main_prog(void *closure, int argc, char *argv[])
   path_draw_func = o_path_draw;
   pin_draw_func = o_pin_draw;
   text_draw_func = o_text_draw;
-  select_func = o_select_object;
 
   /* create log file right away even if logging is enabled */
   s_log_init ("gschem");

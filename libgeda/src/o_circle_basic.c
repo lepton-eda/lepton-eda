@@ -101,7 +101,6 @@ OBJECT *o_circle_new(TOPLEVEL *toplevel,
 		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
   
   new_node->draw_func = circle_draw_func;  
-  new_node->sel_func = select_func;  
   
   /* compute the bounding box coords */
   o_circle_recalc(toplevel, new_node);

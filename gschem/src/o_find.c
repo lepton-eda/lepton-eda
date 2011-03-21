@@ -48,8 +48,7 @@ static gboolean
 is_object_hit (GSCHEM_TOPLEVEL *w_current, OBJECT *object,
                int w_x, int w_y, int w_slack)
 {
-  /* Objects without sel_func set are not selectable */
-  if (object->sel_func == NULL)
+  if (!object->selectable)
     return FALSE;
 
   /* We can't hit invisible (text) objects unless show_hidden_text is active.
@@ -99,7 +98,7 @@ find_single_object (GSCHEM_TOPLEVEL *w_current, OBJECT *object,
     if (object->type == OBJ_NET && w_current->net_selection_mode)
       o_select_connected_nets (w_current, object);
     else
-      (*object->sel_func) (w_current, object, SINGLE, 0); /* 0 is count */
+      o_select_object (w_current, object, SINGLE, 0); /* 0 is count */
   }
 
   w_current->toplevel->page_current->object_lastplace = object;

@@ -89,7 +89,6 @@ OBJECT *o_line_new(TOPLEVEL *toplevel,
 		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
   
   new_node->draw_func = line_draw_func;
-  new_node->sel_func = select_func;  
   
   /* compute bounding box */
   o_line_recalc(toplevel, new_node);

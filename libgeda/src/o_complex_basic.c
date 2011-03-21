@@ -430,6 +430,7 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
 
   new_node->complex_embedded = FALSE;
   new_node->color = color;
+  new_node->selectable = selectable;
 
   new_node->complex = (COMPLEX *) g_malloc(sizeof(COMPLEX));
   new_node->complex->angle = angle;
@@ -438,12 +439,6 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
   new_node->complex->y = y;
 
   new_node->draw_func = complex_draw_func;
-
-  if (selectable) {
-    new_node->sel_func = select_func;
-  } else {
-    new_node->sel_func = NULL;
-  }
 
   prim_objs = NULL;
 
@@ -602,15 +597,9 @@ OBJECT *o_complex_new_embedded(TOPLEVEL *toplevel,
   new_node->complex_embedded = TRUE;
 
   new_node->color = color;
+  new_node->selectable = selectable;
 
   new_node->draw_func = complex_draw_func;  
-
-  /* (for a title block) an object that isn't selectable */
-  if (selectable) { 
-    new_node->sel_func = select_func;
-  } else {
-    new_node->sel_func = NULL;
-  }
 
   new_node->complex->prim_objs = NULL;
 
@@ -739,10 +728,7 @@ char *o_complex_save(TOPLEVEL *toplevel, OBJECT *object)
 
   g_return_val_if_fail (object != NULL, NULL);
 
-  if (object->sel_func != NULL) 
-  selectable = 1;
-  else 
-  selectable = 0;
+  selectable = (object->selectable) ? 1 : 0;
 
   if ((object->type == OBJ_COMPLEX) || (object->type == OBJ_PLACEHOLDER)) {
     basename = g_strdup_printf ("%s%s",
@@ -801,9 +787,9 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 
   o_new = s_basic_new_object(o_current->type, "complex");
   o_new->color = o_current->color;
+  o_new->selectable = o_current->selectable;
   o_new->complex_basename = g_strdup(o_current->complex_basename);
   o_new->complex_embedded = o_current->complex_embedded;
-  o_new->sel_func = o_current->sel_func;
   o_new->draw_func = o_current->draw_func;
 
   o_new->complex = g_malloc0(sizeof(COMPLEX));

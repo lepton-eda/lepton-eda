@@ -278,7 +278,6 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
   new_node->text = text;
 
   new_node->draw_func = text_draw_func;  
-  new_node->sel_func = select_func;  
 
   new_node->color = color;
   o_set_visibility (toplevel, new_node, visibility);

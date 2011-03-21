@@ -5,7 +5,6 @@ SCM g_rc_force_boundingbox(SCM mode);
 void g_register_funcs(void);
 SCM g_quit(void);
 /* globals.c */
-void o_select_dummy(TOPLEVEL *w_current, OBJECT *o_current, int type, int count);
 /* gschlas.c */
 void gschlas_quit(void);
 void main_prog(void *closure, int argc, char *argv[]);

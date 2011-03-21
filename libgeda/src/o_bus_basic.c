@@ -106,7 +106,6 @@ OBJECT *o_bus_new(TOPLEVEL *toplevel,
   o_bus_recalc (toplevel, new_node);
 
   new_node->draw_func = bus_draw_func;  
-  new_node->sel_func = select_func;  
 
   return new_node;
 }

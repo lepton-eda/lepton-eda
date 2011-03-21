@@ -9,6 +9,5 @@ extern void (*bus_draw_func)();
 extern void (*text_draw_func)();
 extern void (*pin_draw_func)();
 extern void (*path_draw_func)();
-extern void (*select_func)();
 extern void (*x_log_update_func)();
 

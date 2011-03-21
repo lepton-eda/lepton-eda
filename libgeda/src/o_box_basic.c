@@ -87,7 +87,6 @@ OBJECT *o_box_new(TOPLEVEL *toplevel,
 		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
   new_node->draw_func = box_draw_func; 
-  new_node->sel_func  = select_func;  
 
   /* compute the bounding box */
   o_box_recalc(toplevel, new_node);

@@ -347,7 +347,6 @@ OBJECT *o_picture_new(TOPLEVEL *toplevel, GdkPixbuf *pixbuf,
   picture->embedded = embedded;
 
   new_node->draw_func = picture_draw_func;
-  new_node->sel_func  = select_func;
 
   /* compute the bounding picture */
   o_picture_recalc(toplevel, new_node);
@@ -707,7 +706,6 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
   picture->pixbuf = gdk_pixbuf_copy (object->picture->pixbuf);
 
   new_node->draw_func = object->draw_func;
-  new_node->sel_func  = object->sel_func;
 
   /* compute the bounding picture */
   o_picture_recalc(toplevel, new_node);
