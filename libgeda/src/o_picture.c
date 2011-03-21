@@ -680,6 +680,7 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
   new_node->picture = picture;
 
   new_node->color = object->color;
+  new_node->selectable = object->selectable;
 
   /* describe the picture with its upper left and lower right corner */
   picture->upper_x = object->picture->upper_x;
