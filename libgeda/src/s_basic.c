@@ -117,7 +117,6 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
 
   new_node->bus_ripper_direction = 0;
 
-  new_node->action_func = error_if_called; 
   new_node->draw_func = error_if_called; 
 
   new_node->line_end = END_NONE;

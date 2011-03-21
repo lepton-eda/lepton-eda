@@ -255,9 +255,6 @@ struct st_object {
   gchar *complex_basename;              /* Component Library Symbol name */
   OBJECT *parent;                       /* Parent object pointer */
 
-  /* unused for now */
-  void (*action_func)();			/* Execute function */
-
   void (*draw_func)();			/* Draw function */
 
   int color; 				/* Which color */
