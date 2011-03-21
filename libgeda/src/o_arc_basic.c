@@ -33,9 +33,6 @@
 #include <dmalloc.h>
 #endif
 
-/*! Default setting for arc draw function. */
-void (*arc_draw_func)() = NULL;
-
 /*! \brief
  *  \par Function Description
  *  The function creates a new OBJECT of type arc.
@@ -110,8 +107,6 @@ OBJECT *o_arc_new(TOPLEVEL *toplevel,
   o_arc_recalc(toplevel, new_node);
 
   /* new_node->graphical = arc; eventually */
-	
-  new_node->draw_func = arc_draw_func;  
 
   return new_node;
 }

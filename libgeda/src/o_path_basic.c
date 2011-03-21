@@ -29,9 +29,6 @@
 #include <dmalloc.h>
 #endif
 
-/*! Default setting for path draw function. */
-void (*path_draw_func)() = NULL;
-
 
 typedef void (*DRAW_FUNC) (TOPLEVEL *toplevel, FILE *fp, PATH *path,
                            int line_width, int length, int space,
@@ -90,8 +87,6 @@ OBJECT *o_path_new (TOPLEVEL *toplevel,
                       END_NONE, TYPE_SOLID, 0, -1, -1);
   o_set_fill_options (toplevel, new_node,
                       FILLING_HOLLOW, -1, -1, -1, -1, -1);
-
-  new_node->draw_func = path_draw_func;
 
   /* compute bounding box */
   o_path_recalc (toplevel, new_node);

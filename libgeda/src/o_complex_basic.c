@@ -41,9 +41,6 @@
 #include <dmalloc.h>
 #endif
 
-/*! Default setting for complex draw function. */
-void (*complex_draw_func)() = NULL;
-
 
 /*! \brief Return the bounds of the given object.
  *  \par Given an object, calculate the bounds coordinates.
@@ -438,8 +435,6 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
   new_node->complex->x = x;
   new_node->complex->y = y;
 
-  new_node->draw_func = complex_draw_func;
-
   prim_objs = NULL;
 
   /* get the symbol data */
@@ -598,8 +593,6 @@ OBJECT *o_complex_new_embedded(TOPLEVEL *toplevel,
 
   new_node->color = color;
   new_node->selectable = selectable;
-
-  new_node->draw_func = complex_draw_func;  
 
   new_node->complex->prim_objs = NULL;
 
@@ -790,7 +783,6 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   o_new->selectable = o_current->selectable;
   o_new->complex_basename = g_strdup(o_current->complex_basename);
   o_new->complex_embedded = o_current->complex_embedded;
-  o_new->draw_func = o_current->draw_func;
 
   o_new->complex = g_malloc0(sizeof(COMPLEX));
   o_new->complex->x = o_current->complex->x;

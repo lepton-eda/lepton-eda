@@ -32,9 +32,6 @@
  *  \brief functions for the pin object
  */
 
-/*! Default setting for pin draw function. */
-void (*pin_draw_func)() = NULL;
-
 /*! \brief calculate and return the boundaries of a pin object
  *  \par Function Description
  *  This function calculates the object boudaries of a pin \a object.
@@ -104,8 +101,6 @@ OBJECT *o_pin_new(TOPLEVEL *toplevel,
   o_pin_set_type (toplevel, new_node, pin_type);
 
   o_pin_recalc (toplevel, new_node);
-
-  new_node->draw_func = pin_draw_func;  
 
   new_node->whichend = whichend;
 

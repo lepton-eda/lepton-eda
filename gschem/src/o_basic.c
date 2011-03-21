@@ -89,11 +89,11 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
     OBJECT *o_current = iter->data;
 
-    if ((o_current->draw_func != NULL)
-        && !(o_current->dont_redraw
-             || (!draw_selected && o_current->selected))) {
-      (*o_current->draw_func)(w_current, o_current);
-    }
+    if (o_current->dont_redraw ||
+        (!draw_selected && o_current->selected))
+      continue;
+
+    o_redraw_single (w_current, o_current);
   }
 
   o_cue_redraw_all (w_current, obj_list, draw_selected);
@@ -192,17 +192,14 @@ void o_redraw (GSCHEM_TOPLEVEL *w_current, GList *object_list, gboolean draw_sel
   OBJECT *o_current;
   GList *iter;
 
-  iter = object_list;
-  while (iter != NULL) {
+  for (iter = object_list; iter != NULL; iter = g_list_next (iter)) {
     o_current = (OBJECT *)iter->data;
 
-    if ((o_current->draw_func != NULL)
-        && !(o_current->dont_redraw
-             || (!draw_selected && o_current->selected))) {
-      (*o_current->draw_func)(w_current, o_current);
-    }
+    if (o_current->dont_redraw ||
+        (!draw_selected && o_current->selected))
+      continue;
 
-    iter = g_list_next (iter);
+    o_redraw_single (w_current, o_current);
   }
 }
 
@@ -216,12 +213,31 @@ void o_redraw (GSCHEM_TOPLEVEL *w_current, GList *object_list, gboolean draw_sel
  */
 void o_redraw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
-  if (o_current == NULL)
-  return;
+  void (*func) (GSCHEM_TOPLEVEL *, OBJECT *) = NULL;
 
-  if (o_current->draw_func != NULL) {
-    (*o_current->draw_func)(w_current, o_current);
+  if (o_current == NULL)
+    return;
+
+  switch (o_current->type) {
+      case OBJ_LINE:    func = o_line_draw;    break;
+      case OBJ_NET:     func = o_net_draw;     break;
+      case OBJ_BUS:     func = o_bus_draw;     break;
+      case OBJ_BOX:     func = o_box_draw;     break;
+      case OBJ_PICTURE: func = o_picture_draw; break;
+      case OBJ_CIRCLE:  func = o_circle_draw;  break;
+      case OBJ_PLACEHOLDER:
+      case OBJ_COMPLEX: func = o_complex_draw; break;
+      case OBJ_TEXT:    func = o_text_draw;    break;
+      case OBJ_PATH:    func = o_path_draw;    break;
+      case OBJ_PIN:     func = o_pin_draw;     break;
+      case OBJ_ARC:     func = o_arc_draw;     break;
+      default:
+        g_critical ("o_redraw_single: object %p has bad type '%c'\n",
+                    o_current, o_current->type);
   }
+
+  if (func != NULL)
+    (*func) (w_current, o_current);
 }
 
 

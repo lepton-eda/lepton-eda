@@ -32,9 +32,6 @@
  *  \brief functions for the net object
  */
 
-/*! Default setting for net draw function. */
-void (*net_draw_func)() = NULL;
-
 /*! \brief get the position of the first net point
  *  \par Function Description
  *  This function gets the position of the first point of a net object.
@@ -99,8 +96,6 @@ OBJECT *o_net_new(TOPLEVEL *toplevel, char type,
   new_node->line_width = NET_WIDTH;
 
   o_net_recalc (toplevel, new_node);
-
-  new_node->draw_func = net_draw_func;
 
   return new_node;
 }

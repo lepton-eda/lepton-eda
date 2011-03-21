@@ -34,9 +34,6 @@
 
 #include "libgeda_priv.h"
 
-/*! Default setting for picture draw function. */
-void (*picture_draw_func)() = NULL;
-
 /*! \brief Create picture OBJECT from character string.
  *  \par Function Description
  *  This function will get the description of a picture from the
@@ -345,8 +342,6 @@ OBJECT *o_picture_new(TOPLEVEL *toplevel, GdkPixbuf *pixbuf,
   picture->angle = angle;
   picture->mirrored = mirrored;
   picture->embedded = embedded;
-
-  new_node->draw_func = picture_draw_func;
 
   /* compute the bounding picture */
   o_picture_recalc(toplevel, new_node);
@@ -705,8 +700,6 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
 
   /* Copy the picture data */
   picture->pixbuf = gdk_pixbuf_copy (object->picture->pixbuf);
-
-  new_node->draw_func = object->draw_func;
 
   /* compute the bounding picture */
   o_picture_recalc(toplevel, new_node);

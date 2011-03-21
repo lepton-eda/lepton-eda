@@ -167,19 +167,6 @@ void main_prog(void *closure, int argc, char *argv[])
   
   libgeda_init();
 
-  /* Install various libgeda callbacks */
-  arc_draw_func = o_arc_draw;
-  box_draw_func = o_box_draw;
-  bus_draw_func = o_bus_draw;
-  circle_draw_func = o_circle_draw;
-  complex_draw_func = o_complex_draw;
-  line_draw_func = o_line_draw;
-  net_draw_func = o_net_draw;
-  picture_draw_func = o_picture_draw;
-  path_draw_func = o_path_draw;
-  pin_draw_func = o_pin_draw;
-  text_draw_func = o_text_draw;
-
   /* create log file right away even if logging is enabled */
   s_log_init ("gschem");
 

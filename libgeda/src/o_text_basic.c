@@ -97,9 +97,6 @@
  */
 #define PRINT_LINE_SPACING 1.12
 
-/*! Default setting for text draw function. */
-void (*text_draw_func)() = NULL;
-
 /*! Size of a tab in characters */
 int tab_in_chars = 8;
 
@@ -276,8 +273,6 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
   text->angle = angle;
 
   new_node->text = text;
-
-  new_node->draw_func = text_draw_func;  
 
   new_node->color = color;
   o_set_visibility (toplevel, new_node, visibility);
