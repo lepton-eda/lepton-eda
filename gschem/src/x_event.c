@@ -791,10 +791,8 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     break;
 
     case(STARTSELECT):
-    if ( (!w_current->drag_can_move) ||
-         (w_current->drag_can_move &&
-          (! o_find_selected_object(w_current,
-                                    w_current->first_wx, w_current->first_wy)))) {
+    if (!o_find_selected_object (w_current,
+                                 w_current->first_wx, w_current->first_wy)) {
       if (o_select_box_start(w_current, unsnapped_wx, unsnapped_wy)) {
         w_current->event_state = SBOX;
         w_current->inside_action = 1;

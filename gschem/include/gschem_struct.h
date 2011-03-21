@@ -201,7 +201,6 @@ struct st_gschem_toplevel {
   /* attributes when they are attached to vertical or horizontal nets */
   int add_attribute_offset;
 
-  int drag_can_move;      /* Controls if drag can move objects or not */
   int mousepan_gain;      /* Controls the gain of the mouse pan */
   int keyboardpan_gain;   /* Controls the gain of the keyboard pan */
   int select_slack_pixels; /* Number of pixels around an object we can still select it with */

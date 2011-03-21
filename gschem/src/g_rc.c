@@ -1397,23 +1397,6 @@ SCM g_rc_auto_save_interval(SCM seconds)
  *  \par Function Description
  *
  */
-SCM g_rc_drag_can_move(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE,  "enabled" },
-    {FALSE, "disabled"  }
-  };
-
-  RETURN_G_RC_MODE("drag-can-move",
-		   default_drag_can_move,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_mousepan_gain(SCM gain)
 {
   int val;

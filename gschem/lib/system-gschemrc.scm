@@ -664,12 +664,6 @@
 (image-color "enabled")
 ;(image-color "disabled")
 
-; drag-can-move string
-;
-; If enabled, the drag movement over selected objects can move the objects.
-(drag-can-move "enabled")
-;(drag-can-move "disabled")
-
 ; middle-button string
 ;
 ; Controls if the middle mouse button draws strokes, repeats the last 
