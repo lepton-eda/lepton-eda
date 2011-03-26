@@ -62,17 +62,4 @@ AC_DEFUN([AX_PCB_DIRS],
       fi ], [])
   AC_MSG_RESULT([$PCBLIBPATH])
   AC_SUBST([PCBLIBPATH])
-
-  # PCB configuration files
-  AC_MSG_CHECKING([where to look for PCB configuration])
-  PCBCONFDIR="${sysconfdir}/pcb"
-  AC_ARG_WITH([pcb-confdir],
-    AS_HELP_STRING([--with-pcb-confdir=DIR],
-      [directory where PCB site configuration files are installed [[SYSCONFDIR/pcb]]]),
-   [ if (test "X$with_pcb_confdir" != "Xno" &&
-          test "X$with_pcb_confdir" != "Xyes"); then
-        PCBCONFDIR="$with_pcb_confdir"
-     fi ], [])
-  AC_MSG_RESULT([$PCBCONFDIR])
-  AC_SUBST([PCBCONFDIR])
 ])dnl AX_PCB_DIRS

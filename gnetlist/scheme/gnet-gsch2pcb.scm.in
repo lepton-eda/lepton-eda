@@ -122,11 +122,10 @@
 ;; where pcb stores its m4 files and the pcb config directory.
 (if (not (defined? 'gsch2pcb:pcb-m4-command)) (define gsch2pcb:pcb-m4-command "@m4@"))
 (if (not (defined? 'gsch2pcb:pcb-m4-dir)) (define gsch2pcb:pcb-m4-dir "@pcbm4dir@"))
-(if (not (defined? 'gsch2pcb:pcb-m4-confdir)) (define gsch2pcb:pcb-m4-confdir "@pcbconfdir@"))
 
 ;; Let the user override the m4 search path
 (if (not (defined? 'gsch2pcb:pcb-m4-path))
-    (define gsch2pcb:pcb-m4-path (list gsch2pcb:pcb-m4-dir gsch2pcb:pcb-m4-confdir "$HOME/.pcb" "."))
+    (define gsch2pcb:pcb-m4-path (list gsch2pcb:pcb-m4-dir "$HOME/.pcb" "."))
 )
 
 ;; Build up the m4 command line
@@ -181,7 +180,6 @@
 	    "   ----------------------------------------\n"
 	    "   gsch2pcb:pcb-m4-command:    " gsch2pcb:pcb-m4-command "\n"
 	    "   gsch2pcb:pcb-m4-dir:        " gsch2pcb:pcb-m4-dir "\n"
-	    "   gsch2pcb:pcb-m4-confdir:    " gsch2pcb:pcb-m4-confdir "\n"
 	    "   gsch2pcb:pcb-m4-path:       " gsch2pcb:pcb-m4-path-str "\n"
 	    "   gsch2pcb:m4-command-line:   " gsch2pcb:pcb-m4-command-line  "\n"
 	    "\n"

@@ -33,7 +33,6 @@ gnet-gsch2pcb.scm: $(srcdir)/gnet-gsch2pcb.scm.in
 	sed \
 		-e 's;@m4@;${M4};g' \
 		-e 's;@pcbm4dir@;${PCBM4DIR};g' \
-		-e 's;@pcbconfdir@;${PCBCONFDIR};g' \
 		$(srcdir)/gnet-gsch2pcb.scm.in > $@
 
 all-local:
