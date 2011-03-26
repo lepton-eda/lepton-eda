@@ -426,6 +426,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
            * o_complex_translate_world (toplevel, object_list->x,
            *                            object_list->y, object_list->complex);
            */
+          object_list = g_list_reverse (object_list);
 
           new_obj = object_list_save->data;
           new_obj->complex->prim_objs = object_list;
