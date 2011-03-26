@@ -997,7 +997,7 @@ s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
 					o_pin,
 					new_attrib_name, 
 					new_attrib_value, 
-					o_is_visible (toplevel, o_pin) ? VISIBLE : INVISIBLE,
+					LEAVE_VISIBILITY_ALONE,
 					LEAVE_NAME_VALUE_ALONE); 
     }
                                                                                                        
