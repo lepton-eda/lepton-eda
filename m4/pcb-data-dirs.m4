@@ -71,7 +71,7 @@ AC_DEFUN([AX_PCB_DIRS],
       [directory where PCB site configuration files are installed [[SYSCONFDIR/pcb]]]),
    [ if (test "X$with_pcb_confdir" != "Xno" &&
           test "X$with_pcb_confdir" != "Xyes"); then
-        PCBCONFDIR="$with_pcb_m4dir"
+        PCBCONFDIR="$with_pcb_confdir"
      fi ], [])
   AC_MSG_RESULT([$PCBCONFDIR])
   AC_SUBST([PCBCONFDIR])
