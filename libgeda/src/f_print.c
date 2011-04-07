@@ -65,24 +65,28 @@ void f_print_set_line_width(FILE *fp, int width)
  *  \param [in]     toplevel The current #TOPLEVEL structure.
  *  \param [in]     fp     The postscript document to print the color to.
  *  \param [in]     color  Integer color to convert and print.
+ *
+ *  \returns 1 if the colour is enabled, 0 if disabled.
  */
-void f_print_set_color(TOPLEVEL *toplevel, FILE *fp, int color) 
+int f_print_set_color(TOPLEVEL *toplevel, FILE *fp, int color)
 {
   gchar *string;
 
-  if (!toplevel->print_color || (toplevel->last_ps_color == color)) return;
+  if (!toplevel->print_color || (toplevel->last_ps_color == color)) return 1;
 
   string = s_color_ps_string(color);
 
   if (string) {
     fprintf(fp, "%s setrgbcolor\n", string);
   } else {
-    fprintf(fp, "0 0 0 setrgbcolor\n");
+    toplevel->last_ps_color = -1;
+    return 0;
   }
 
   g_free (string);
 
   toplevel->last_ps_color = color;
+  return 1;
 }
 
 /*! \brief Prints the header to a postscript document.
@@ -573,11 +577,10 @@ int f_print_stream(TOPLEVEL *toplevel, PAGE *page, FILE *fp)
 
   /* Now the output is defined in terms of mils */
   /* Draw a box with the background colour covering the whole page */
-  if (toplevel->print_color) {
-    f_print_set_color(toplevel, fp, toplevel->print_color_background);
-    fprintf(fp,"%d %d 0 0 fbox\n",
-	    toplevel->paper_height,
-	    toplevel->paper_width);
+  if (toplevel->print_color &&
+      f_print_set_color(toplevel, fp, toplevel->print_color_background)) {
+    fprintf (fp, "%d %d 0 0 fbox\n", toplevel->paper_height,
+                                     toplevel->paper_width);
   }
 
   /* Now rotate and translate the graphics to fit onto the desired

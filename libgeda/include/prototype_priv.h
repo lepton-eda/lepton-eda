@@ -3,7 +3,7 @@ gchar *o_save_objects(TOPLEVEL *toplevel, const GList *object_list, gboolean sav
 
 /* f_print.c */
 void f_print_set_line_width(FILE *fp, int width);
-void f_print_set_color(TOPLEVEL *toplevel, FILE *fp, int color);
+int f_print_set_color(TOPLEVEL *toplevel, FILE *fp, int color);
 int f_print_header(TOPLEVEL *toplevel, PAGE *page, FILE *fp, int paper_size_x, int paper_size_y, int eps);
 void f_print_footer(FILE *fp);
 void f_print_objects(TOPLEVEL *toplevel, FILE *fp, const GList *obj_list, int start_x, int start_y, float scale, int unicode_count, gunichar *unicode_table);
