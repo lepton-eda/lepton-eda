@@ -129,6 +129,9 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
   new_node->attrib_notify_freeze_count = 0;
   new_node->attrib_notify_pending = 0;
 
+  new_node->conn_notify_freeze_count = 0;
+  new_node->conn_notify_pending = 0;
+
   return(new_node);
 }
 
