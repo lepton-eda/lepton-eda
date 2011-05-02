@@ -398,7 +398,8 @@ void s_papersizes_get_size(char *string, int *width, int *height);
 PATH *s_path_parse (const char *path_str);
 char *s_path_string_from_path (const PATH *path);
 
-/* s_project.c */
+/* s_toplevel.c */
+void s_toplevel_append_new_hook (NewToplevelFunc func, void *user_data);
 TOPLEVEL *s_toplevel_new (void);
 void s_toplevel_delete (TOPLEVEL *toplevel);
 void s_toplevel_weak_ref (TOPLEVEL *toplevel, void (*notify_func)(void *, void *), void *user_data);
