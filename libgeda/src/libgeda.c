@@ -64,6 +64,7 @@ void libgeda_init(void)
   s_menu_init();
   s_attrib_init();
   s_color_init();
+  s_conn_init();
 
   g_register_libgeda_funcs();
   g_register_libgeda_dirs();
