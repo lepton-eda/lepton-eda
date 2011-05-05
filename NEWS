@@ -7,6 +7,26 @@ Copyright (C) 1998-2011 gEDA Developers
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
 
+Notable changes in gEDA/gaf 1.7.1
+=================================
+
+* `gschem' allows objects to be moved by dragging without having to
+  select them first.
+
+* `gnetlist' correctly handles multiple renames of the same net.  This
+  resolves some long-standing bugs with multipage schematics.
+
+* Visibility of embedded component attributes are now preserved by
+  `gattrib'.
+
+* `gsch2pcb' correctly handles footprint names with hyphens (`-').
+
+* `gsch2pcb' project files support quoting and escaping in
+  `schematics' entries.
+
+* Considerable enhancements to Unicode support when printing
+  schematics or exporting PostScript.
+
 Notable changes in gEDA/gaf 1.7.0
 =================================
 
@@ -80,8 +100,6 @@ Notable changes in gEDA/gaf 1.7.0
 
 * The `spice-sdb' backend for `gnetlist' now supports probes
   (`TESTPOINT' devices).
-
-* `gsch2pcb' now correctly handles footprint names with hyphens (`-').
 
 * The undocumented `mk_verilog_syms' program is no longer installed.
   The symbols it creates are still installed to
