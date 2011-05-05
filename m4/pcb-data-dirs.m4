@@ -1,8 +1,9 @@
 # pcb-data-dirs.m4                                      -*-Autoconf-*-
-# serial 1.0
+# serial 2
 
 dnl PCB prefix and m4 library directory (needed by gnetlist)
 dnl Copyright (C) 2009  Peter Brett <peter@peter-b.co.uk>
+dnl Copyright (C) 2011  Peter Clifton <pcjc2@cam.ac.uk>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
