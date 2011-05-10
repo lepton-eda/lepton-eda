@@ -163,7 +163,7 @@ build_and_run_command (const gchar *format, ...)
     /* we have something in the list, build & call command */
     GList *p;
     gint i = 0;
-    gchar ** args = g_new0 (gchar*, g_list_length (tmp));
+    gchar ** args = g_new0 (gchar*, g_list_length (tmp) + 1/* NULL terminate the list */);
 
     if (verbose)
       printf ("Running command:\n\t");
