@@ -177,8 +177,18 @@ build_and_run_command (const gchar *format, ...)
     if (verbose)
       printf ("\n%s", SEP_STRING);
 
-    g_spawn_sync (".", args, NULL, G_SPAWN_SEARCH_PATH,
-                  NULL, NULL, NULL, NULL, NULL, NULL);
+    g_spawn_sync (".",                  /* Working directory */
+                  args,                 /* argv */
+                  NULL,                 /* envp */
+                  G_SPAWN_SEARCH_PATH | /* flags */
+                  G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL,
+                  NULL,                 /* child_setup */
+                  NULL,                 /* user data */
+                  NULL,                 /* standard output */
+                  NULL,                 /* standard error */
+                  NULL,                 /* exit status return */
+                  NULL                  /* GError return */
+                 );
 
     if (verbose)
       printf ("\n%s", SEP_STRING);
