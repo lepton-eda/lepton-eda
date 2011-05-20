@@ -401,6 +401,8 @@ void x_menu_attach_recent_files_submenu(GSCHEM_TOPLEVEL *w_current)
   recent_filter = gtk_recent_filter_new();
   gtk_recent_filter_add_mime_type(recent_filter, "application/x-geda-schematic");
   gtk_recent_filter_add_mime_type(recent_filter, "application/x-geda-symbol");
+  gtk_recent_filter_add_pattern(recent_filter, "*.sch");
+  gtk_recent_filter_add_pattern(recent_filter, "*.sym");
   gtk_recent_chooser_add_filter(GTK_RECENT_CHOOSER(menuitem_file_recent_items), recent_filter);
 
   gtk_recent_chooser_set_show_tips(GTK_RECENT_CHOOSER(menuitem_file_recent_items), TRUE);
