@@ -19,39 +19,51 @@
 
 (use-modules (ice-9 regex))
 
-(define prefix-list '())
+;; Two level associative list - page at first level, refdes prefix at second
+(define page-prefix-list '())
 
+;; Modify attributes of an object to assign next unused refdes value
 (define (auto-uref attribs)
 
+  ; Map of refdes prefix and next available number for current page
+  (define refdes-map
+    (let ((old (assoc-ref page-prefix-list (get-current-page))))
+      (if old old '())))
+
+  ; Retrieve next available number for given refdes prefix
+  ; Update refdes-map to track used refdeses
   (define (get-next-uref prefix)
-    (let ((available-prefix (assoc prefix prefix-list)))
-      (cond (available-prefix 
-	     (assoc-set! prefix-list
-			 (car available-prefix)
-			 (+ (cdr available-prefix) 1))
-	     (cdr available-prefix))
-	    (else ; First time prefix was seen
-	     (set! prefix-list (acons  prefix 1 prefix-list))
-	     1))))
+    (let* ((old (assoc-ref refdes-map prefix))
+           (new (if old (1+ old) 1)))
+      (set! refdes-map (assoc-set! refdes-map prefix new))
+      new))
   
-  
-  ;; Total Guile
+  ; Extract prefix from a refdes attribute value
   (define (get-prefix value)
     (let ((prefix (string-match "^[A-Z]*" value)))
       (if (= 0 (match:end prefix))
 	  #f
 	  (match:substring prefix))))
-  
 
+  ; Process object attributes
   (for-each 
-   (lambda (attrib) 
-     (let* ((name-value (get-attribute-name-value attrib))
-	    (name (car name-value))
-	    (value (cdr name-value))
-	    (prefix (get-prefix value)))
-       ; If get-prefix fails (returns #f) there is no ? in the string
-       (if (and prefix (string=? name "refdes") (not (attrib-inherited? attrib)))
-	   (set-attribute-value! attrib (string-append 
-					 prefix 
-					 (number->string (get-next-uref prefix)))))))
-   attribs))
+    (lambda (attrib)
+      (let* ((name-value (get-attribute-name-value attrib))
+             (name (car name-value))
+             (value (cdr name-value))
+             (prefix (get-prefix value)))
+        ; If get-prefix fails (returns #f) there is no ? in the string
+        (if (and prefix
+                 (string=? name "refdes")
+                 (not (attrib-inherited? attrib)))
+          (set-attribute-value! attrib
+                                (string-append
+                                  prefix
+                                  (number->string
+                                    (get-next-uref prefix)))))))
+    attribs)
+
+  ; Update global map with modified map for current page
+  (set! page-prefix-list (assoc-set! page-prefix-list
+                                     (get-current-page)
+                                     refdes-map)))
