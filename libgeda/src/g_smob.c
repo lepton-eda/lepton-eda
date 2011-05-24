@@ -768,6 +768,32 @@ static int g_print_page_smob(SCM page_smob, SCM port,
   return 1;
 }
 
+/*! \brief Compare two page smobs.
+ *  \par Function Description
+ *  This function compares two given page smobs for equality.
+ *  Two smobs are equal if they point to same PAGE structure.
+ *
+ *  \param [in] page_smob1   The first page smob.
+ *  \param [in] page_smob2   The second page smob.
+ *  \return SCM_BOOL_T or SCM_BOOL_F
+ */
+static SCM g_equalp_page_smob (SCM page_smob1,
+                               SCM page_smob2)
+{
+  struct st_page_smob *page1 =
+  (struct st_page_smob *) SCM_CDR (page_smob1);
+
+  struct st_page_smob *page2 =
+  (struct st_page_smob *) SCM_CDR (page_smob2);
+
+  if (page1 &&
+      page2 &&
+      page1->page == page2->page)
+    return SCM_BOOL_T;
+  else
+    return SCM_BOOL_F;
+}
+
 /*! \brief Initialize the framework to support a page smob.
  *  \par Function Description
  *  Initialize the framework to support a page smob.
@@ -781,6 +807,7 @@ void g_init_page_smob(void)
   scm_set_smob_mark(page_smob_tag, 0);
   scm_set_smob_free(page_smob_tag, g_free_page_smob);
   scm_set_smob_print(page_smob_tag, g_print_page_smob);
+  scm_set_smob_equalp(page_smob_tag, g_equalp_page_smob);
 
   scm_c_define_gsubr ("get-page-filename", 1, 0, 0, g_get_page_filename);
   scm_c_define_gsubr ("set-page-filename", 2, 0, 0, g_set_page_filename);
