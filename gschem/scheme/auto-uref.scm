@@ -50,7 +50,7 @@
 	    (value (cdr name-value))
 	    (prefix (get-prefix value)))
        ; If get-prefix fails (returns #f) there is no ? in the string
-       (if (and prefix (string=? name "refdes"))
+       (if (and prefix (string=? name "refdes") (not (attrib-inherited? attrib)))
 	   (set-attribute-value! attrib (string-append 
 					 prefix 
 					 (number->string (get-next-uref prefix)))))))
