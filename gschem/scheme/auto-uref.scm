@@ -17,7 +17,7 @@
 ;; along with this program; if not, write to the Free Software
 ;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
-(use-modules (ice-9 regex))
+(use-modules (ice-9 regex) (srfi srfi-1))
 
 ;; Two level associative list - page at first level, refdes prefix at second
 (define page-prefix-list '())
@@ -67,3 +67,46 @@
   (set! page-prefix-list (assoc-set! page-prefix-list
                                      (get-current-page)
                                      refdes-map)))
+
+
+;; Scan for existing refdeses in the page and initialise page-prefix-list
+(define (auto-uref-init-page page)
+
+  ; Return (prefix . number) on match or #f on failure
+  (define (split-attr value)
+    (let ((match (string-match "^([A-Z]+)([0-9]+)$" value)))
+      (if match
+        (cons (match:substring match 1)
+              (string->number (match:substring match 2)))
+        #f)))
+
+  ; Update refdes map with given prefix-num pair
+  (define (update-refdes-map prefix-num)
+    (let* ((prefix (car prefix-num))
+           (value (cdr prefix-num))
+           (old-value (assoc-ref refdes-map prefix))
+           (new-value (if old-value (max old-value value) value)))
+    (set! refdes-map (assoc-set! refdes-map prefix new-value))))
+
+  ; Execute update for a single object
+  (define (handle-object object)
+    (let* ((all-attribs (get-object-attributes object))
+           (own-attribs (filter (lambda (a)
+                                  (not (attrib-inherited? a))) all-attribs))
+           (name-vals (map get-attribute-name-value own-attribs))
+           (refdeses (filter (lambda (a)
+                               (string=? "refdes" (car a)))
+                             name-vals))
+           (prefix-pairs (filter-map (lambda (a)
+                                       (split-attr (cdr a)))
+                                     refdeses)))
+      (for-each update-refdes-map prefix-pairs)))
+
+  ; Clear refdes map for given page
+  (define (refdes-map) '())
+
+  ; Update refdes maps for objects in given page
+  (for-each handle-object (get-objects-in-page page))
+
+  ; Overwrite map for given page
+  (set! page-prefix-list (assoc-set! page-prefix-list page refdes-map)))
