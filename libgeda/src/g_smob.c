@@ -357,6 +357,7 @@ void g_init_attrib_smob(void)
   scm_c_define_gsubr ("get-attribute-angle", 1, 0, 0, g_get_attrib_angle);
   scm_c_define_gsubr ("calcule-new-attrib-bounds", 5, 0, 0, 
 		      g_calcule_new_attrib_bounds);
+  scm_c_define_gsubr ("attrib-inherited?", 1, 0, 0, g_attrib_is_inherited);
   
 
   return;
@@ -429,6 +430,26 @@ SCM g_get_attrib_angle(SCM attrib_smob)
                attrib_smob, SCM_ARG1, "get-attribute-angle");
 
   return scm_from_int(attribute->attribute->text->angle);
+}
+
+/*! \brief Check if attribute is inherited.
+ *  \par Function Description
+ *  Return result of o_attrib_is_inherited().
+ *  \param [in] attrib_smob Attribute to check.
+ *  \return SCM_BOOL_F or SCM_BOOL_T.
+ */
+SCM g_attrib_is_inherited (SCM attrib_smob)
+{
+  struct st_attrib_smob *attribute =
+  (struct st_attrib_smob *) SCM_CDR (attrib_smob);
+
+  if (attribute && attribute->attribute) {
+    OBJECT *object = attribute->attribute;
+    if (object && object->text && o_attrib_is_inherited (object))
+       return SCM_BOOL_T;
+  }
+
+  return SCM_BOOL_F;
 }
 
 /*! \brief Free object smob memory.

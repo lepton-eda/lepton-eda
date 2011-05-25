@@ -46,6 +46,7 @@ SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
 SCM g_get_attrib_bounds(SCM attrib_smob);
 SCM g_get_attrib_angle(SCM attrib_smob);
 SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name);
+SCM g_attrib_is_inherited (SCM attrib_smob);
 void g_init_object_smob(void);
 SCM g_get_object_type(SCM object_smob);
 SCM g_get_line_width(SCM object_smob);
