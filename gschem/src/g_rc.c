@@ -563,8 +563,8 @@ SCM g_rc_paper_size(SCM width, SCM height)
               SCM_ARG2, FUNC_NAME);
   
   /* yes this is legit, we are casting the resulting double to an int */
-  default_paper_width  = (int) (SCM_NUM2DOUBLE (0, width)  * MILS_PER_INCH);
-  default_paper_height = (int) (SCM_NUM2DOUBLE (0, height) * MILS_PER_INCH);
+  default_paper_width  = (int) (scm_to_double (width)  * MILS_PER_INCH);
+  default_paper_height = (int) (scm_to_double (height) * MILS_PER_INCH);
 
   return SCM_BOOL_T;
 }
@@ -591,8 +591,8 @@ SCM g_rc_paper_sizes(SCM scm_papername, SCM scm_width, SCM scm_height)
               SCM_ARG3, FUNC_NAME);
 
   papername = SCM_STRING_CHARS (scm_papername);
-  width  = (int) (SCM_NUM2DOUBLE (0, scm_width)  * MILS_PER_INCH);
-  height = (int) (SCM_NUM2DOUBLE (0, scm_height) * MILS_PER_INCH);
+  width  = (int) (scm_to_double (scm_width)  * MILS_PER_INCH);
+  height = (int) (scm_to_double (scm_height) * MILS_PER_INCH);
 
   if (!s_papersizes_uniq(papername)) {
     ret = SCM_BOOL_F;
