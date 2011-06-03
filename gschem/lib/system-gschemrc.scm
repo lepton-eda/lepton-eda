@@ -842,7 +842,6 @@
 ; placing new component and copying components
 ;
 ;(load-from-path "auto-uref.scm")
-;(add-hook! new-page-hook auto-uref-init-page)
 ;(add-hook! add-component-hook auto-uref)
 ;(add-hook! copy-component-hook auto-uref)
 

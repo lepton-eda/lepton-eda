@@ -19,94 +19,78 @@
 
 (use-modules (ice-9 regex) (srfi srfi-1))
 
-;; Two level associative list - page at first level, refdes prefix at second
-(define page-prefix-list '())
-
 ;; Modify attributes of an object to assign next unused refdes value
 (define (auto-uref attribs)
 
-  ; Map of refdes prefix and next available number for current page
-  (define refdes-map
-    (let ((old (assoc-ref page-prefix-list (get-current-page))))
-      (if old old '())))
-
-  ; Retrieve next available number for given refdes prefix
-  ; Update refdes-map to track used refdeses
-  (define (get-next-uref prefix)
-    (let* ((old (assoc-ref refdes-map prefix))
-           (new (if old (1+ old) 1)))
-      (set! refdes-map (assoc-set! refdes-map prefix new))
-      new))
-  
-  ; Extract prefix from a refdes attribute value
-  (define (get-prefix value)
-    (let ((prefix (string-match "^[A-Z]*" value)))
-      (if (= 0 (match:end prefix))
-	  #f
-	  (match:substring prefix))))
-
-  ; Process object attributes
-  (for-each 
-    (lambda (attrib)
-      (let* ((name-value (get-attribute-name-value attrib))
-             (name (car name-value))
-             (value (cdr name-value))
-             (prefix (get-prefix value)))
-        ; If get-prefix fails (returns #f) there is no ? in the string
-        (if (and prefix
-                 (string=? name "refdes")
-                 (not (attrib-inherited? attrib)))
-          (set-attribute-value! attrib
-                                (string-append
-                                  prefix
-                                  (number->string
-                                    (get-next-uref prefix)))))))
-    attribs)
-
-  ; Update global map with modified map for current page
-  (set! page-prefix-list (assoc-set! page-prefix-list
-                                     (get-current-page)
-                                     refdes-map)))
-
-
-;; Scan for existing refdeses in the page and initialise page-prefix-list
-(define (auto-uref-init-page page)
-
   ; Return (prefix . number) on match or #f on failure
-  (define (split-attr value)
-    (let ((match (string-match "^([A-Z]+)([0-9]+)$" value)))
+  (define (split-value value)
+    (let ((match (string-match "^([A-Za-z]+)([0-9]+)$" value)))
       (if match
         (cons (match:substring match 1)
               (string->number (match:substring match 2)))
         #f)))
 
-  ; Update refdes map with given prefix-num pair
-  (define (update-refdes-map prefix-num)
-    (let* ((prefix (car prefix-num))
-           (value (cdr prefix-num))
-           (old-value (assoc-ref refdes-map prefix))
-           (new-value (if old-value (max old-value value) value)))
-    (set! refdes-map (assoc-set! refdes-map prefix new-value))))
+  ; Extract prefix from a refdes attribute value
+  (define (get-prefix value)
+    (let ((prefix (string-match "^[A-Za-z]+" value)))
+      (if (= 0 (match:end prefix))
+	  #f
+	  (match:substring prefix))))
 
-  ; Execute update for a single object
-  (define (handle-object object)
-    (let* ((all-attribs (get-object-attributes object))
-           (own-attribs (filter (lambda (a)
-                                  (not (attrib-inherited? a))) all-attribs))
-           (name-vals (map get-attribute-name-value own-attribs))
-           (refdeses (filter (lambda (a)
-                               (string=? "refdes" (car a)))
-                             name-vals))
-           (prefix-pairs (filter-map (lambda (a)
-                                       (split-attr (cdr a)))
-                                     refdeses)))
-      (for-each update-refdes-map prefix-pairs)))
+  ; Filter non-inherited refdes values
+  (define (refdes-attrs attribs)
+    (filter (lambda (a)
+              (and
+                (not (attrib-inherited? a))
+                (string=? "refdes" (car (get-attribute-name-value a)))))
+            attribs))
 
-  ; Clear refdes map for given page
-  (define (refdes-map) '())
+  ; Extract numbers from refdeses that have given prefix
+  (define (extract-numbers object prefix)
+    (let* ((refdeses (refdes-attrs (get-object-attributes object)))
+           (vals (map (lambda (a)
+                        (cdr (get-attribute-name-value a)))
+                      refdeses))
+           (prefix-numbers (filter-map split-value vals))
+           (numbers (filter-map (lambda (n.v)
+                                  (if (string=? prefix (car n.v))
+                                      (cdr n.v)
+                                      #f))
+                                prefix-numbers)))
+      numbers))
 
-  ; Update refdes maps for objects in given page
-  (for-each handle-object (get-objects-in-page page))
+  ; Collect all numbers associated with prefix on current page
+  (define (collect-all-numbers prefix)
+    (let ((objects (get-objects-in-page (get-current-page))))
+      (concatenate (map (lambda (o)
+                          (extract-numbers o prefix))
+                        objects))))
 
-  ; Overwrite map for given page
-  (set! page-prefix-list (assoc-set! page-prefix-list page refdes-map)))
+  ; Return first number not present in used greater or equal to minimum
+  (define (find-first-unused used minimum)
+    (define (go n xs)
+      (cond ((null? xs) n)
+            ((< n (car xs)) n)
+            ((= n (car xs)) (go (1+ n) (cdr xs)))
+            (else (go n (cdr xs)))))
+    (go minimum used))
+
+  ; Do the work - first check if attributes contain refdes with prefix
+  (let* ((refdeses (refdes-attrs attribs))
+         (refdes (if (null? refdeses)
+                     #f
+                     (car refdeses)))
+         (prefix (if refdes
+                     (get-prefix (cdr (get-attribute-name-value refdes)))
+                     #f)))
+    (if prefix
+        (let* ((used-nums (sort-list (collect-all-numbers prefix) <))
+               (next-num (find-first-unused used-nums 1)))
+          ;(simple-format #t "~A: ~A -> ~A~%"
+          ;                  prefix
+          ;                  used-nums
+          ;                  next-num)
+          (set-attribute-value!
+            refdes
+            (string-append prefix (number->string next-num)))))))
+
