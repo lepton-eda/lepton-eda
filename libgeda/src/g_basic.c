@@ -258,7 +258,7 @@ process_error_stack (SCM s_stack, SCM s_key, SCM s_args, GError **err) {
     scm_display_backtrace (s_stack, s_port, SCM_BOOL_F, SCM_BOOL_F);
     scm_puts ("\n", s_port);
   }
-  scm_display_error (s_stack, s_port, s_subr,
+  scm_display_error (SCM_BOOL_F, s_port, s_subr,
                      s_message, s_message_args, s_rest);
   long_message = scm_to_locale_string (scm_get_output_string (s_port));
   scm_close_output_port (s_port);
