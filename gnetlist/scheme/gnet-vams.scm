@@ -1054,12 +1054,11 @@
 
 
 ;;; set generate-mode to default (1), when not defined before.
-
-(if (not (defined? 'generate-mode)) (define generate-mode '1))
+(define generate-mode (if (defined? 'generate-mode) generate-mode '1))
 
 
 ;;; set to-attribs list empty, when not needed.
-(if (not (defined? 'top-attribs)) (define top-attribs '()))
+(define top-attribs (if (defined? 'top-attribs) top-attribs '()))
 
 (display "loaded gnet-vams.scm\n")
 
