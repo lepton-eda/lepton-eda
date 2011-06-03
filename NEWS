@@ -10,6 +10,8 @@ more information, please consult the `ChangeLog' file.
 Notable changes in gEDA/gaf 1.7.1
 =================================
 
+* gEDA is now compatible with Guile 2.0.
+
 * `gschem' allows objects to be moved by dragging without having to
   select them first.
 
