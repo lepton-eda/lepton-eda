@@ -55,7 +55,7 @@ vams_get_attribs_list (OBJECT *object)
       val = o_attrib_get_name_value (a_current, &found_name, NULL);
 
       if (val) {
-        list = scm_cons (scm_makfrom0str (found_name), list);
+        list = scm_cons (scm_from_locale_string (found_name), list);
       }
 
       g_free (found_name);

@@ -73,7 +73,7 @@ static int g_print_attrib_smob(SCM attrib_smob, SCM port,
       attribute->attribute->text &&
       attribute->attribute->text->string ) {
     scm_puts("#<attribute ", port);
-    scm_display (scm_makfrom0str (attribute->attribute->text->string),
+    scm_display (scm_from_locale_string (attribute->attribute->text->string),
                  port);
     scm_puts(">", port);
   }
@@ -130,8 +130,8 @@ SCM g_get_attrib_name_value(SCM attrib_smob)
   if (attribute != NULL &&
       attribute->attribute != NULL &&
       o_attrib_get_name_value (attribute->attribute, &name, &value)) {
-    returned = scm_cons (scm_makfrom0str (name),
-                         scm_makfrom0str (value));
+    returned = scm_cons (scm_from_locale_string (name),
+                         scm_from_locale_string (value));
     g_free(name);
     g_free(value);
   }
@@ -489,7 +489,7 @@ static int g_print_object_smob(SCM object_smob, SCM port,
       object->object &&
       object->object->name) {
     scm_puts("#<object ", port);
-    scm_display (scm_makfrom0str (object->object->name),
+    scm_display (scm_from_locale_string (object->object->name),
                  port);
     scm_puts(">", port);
   }
@@ -600,7 +600,7 @@ SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
       if (a_current != NULL &&
           o_attrib_get_name_value (a_current, &name, &value)) {
         if (strcmp(name, attrib_name) == 0)
-          returned = scm_cons (scm_makfrom0str (value), returned);
+          returned = scm_cons (scm_from_locale_string (value), returned);
         g_free (name);
         g_free (value);
       }
@@ -759,7 +759,7 @@ static int g_print_page_smob(SCM page_smob, SCM port,
       page->page &&
       page->page->page_filename) {
     scm_puts("#<page ", port);
-    scm_display (scm_makfrom0str (page->page->page_filename),
+    scm_display (scm_from_locale_string (page->page->page_filename),
                  port);
     scm_puts(">", port);
   }
@@ -886,7 +886,7 @@ SCM g_get_page_filename(SCM page_smob)
     (((struct st_page_smob *)SCM_CDR(page_smob))->page);
 
   if (page->page_filename) 
-    returned = scm_makfrom0str (page->page_filename);
+    returned = scm_from_locale_string (page->page_filename);
 
   return (returned);
 }

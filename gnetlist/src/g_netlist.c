@@ -76,7 +76,8 @@ SCM g_get_packages(SCM level)
         if (g_hash_table_lookup (ht, nl_current->component_uref) == NULL) {
           g_hash_table_insert (ht, nl_current->component_uref,
                                    nl_current->component_uref);
-          list = scm_cons (scm_makfrom0str (nl_current->component_uref), list);
+          list = scm_cons (scm_from_locale_string (nl_current->component_uref),
+                           list);
         }
       }
     }
@@ -97,7 +98,7 @@ SCM g_get_non_unique_packages(SCM level)
     for (nl_current = netlist_head; nl_current != NULL;
          nl_current = nl_current->next) {
       if (nl_current->component_uref != NULL) {
-        list = scm_cons (scm_makfrom0str (nl_current->component_uref),
+        list = scm_cons (scm_from_locale_string (nl_current->component_uref),
                          list);
       }
     }
@@ -127,7 +128,7 @@ SCM g_get_pins(SCM uref)
 		pl_current = nl_current->cpins;
 		while (pl_current != NULL) {
 		    if (pl_current->pin_number) {
-              list = scm_cons (scm_makfrom0str (pl_current->pin_number),
+              list = scm_cons (scm_from_locale_string (pl_current->pin_number),
                                list);
 		    }
 		    pl_current = pl_current->next;
@@ -171,8 +172,8 @@ SCM g_get_all_nets(SCM scm_level)
 		    printf("Got net: `%s'\n", net_name);
 		    printf("pin %s\n", pl_current->pin_number);
 #endif
-		    list = scm_cons (scm_makfrom0str (net_name),
-                             list);
+		    list = scm_cons (scm_from_locale_string (net_name),
+                                     list);
 		}
 	    }
 	    pl_current = pl_current->next;
@@ -212,7 +213,7 @@ SCM g_get_all_unique_nets(SCM scm_level)
 		    /* add the net name to the list */
 		    /*printf("Got net: `%s'\n",net_name); */
 
-		    x = scm_makfrom0str (net_name);
+		    x = scm_from_locale_string (net_name);
 		    if (scm_member(x, list) == SCM_BOOL_F) {
               list = scm_cons (x, list);
 		    }
@@ -290,8 +291,8 @@ SCM g_get_all_connections(SCM scm_netname)
 			    sscanf(n_current->connected_to,
 				   "%s %s", uref, pin);
 
-			    pairlist = scm_list_n (scm_makfrom0str (uref),
-                                       scm_makfrom0str (pin),
+			    pairlist = scm_list_n (scm_from_locale_string (uref),
+                                       scm_from_locale_string (pin),
                                        SCM_UNDEFINED);
 
 			    x = pairlist;
@@ -383,8 +384,8 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
 				    sscanf(n_current->connected_to,
 					   "%s %s", uref, pin);
 
-				    pairlist = scm_list_n (scm_makfrom0str (uref),
-                                           scm_makfrom0str (pin),
+				    pairlist = scm_list_n (scm_from_locale_string (uref),
+                                           scm_from_locale_string (pin),
                                            SCM_UNDEFINED);
 
 				    pinslist = scm_cons (pairlist, pinslist);
@@ -404,9 +405,9 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
     }
 
     if (net_name != NULL) {
-      outerlist = scm_cons (scm_makfrom0str (net_name), pinslist);
+      outerlist = scm_cons (scm_from_locale_string (net_name), pinslist);
     } else {
-      outerlist = scm_cons (scm_makfrom0str ("ERROR_INVALID_PIN"),
+      outerlist = scm_cons (scm_from_locale_string ("ERROR_INVALID_PIN"),
                             outerlist);
 	fprintf(stderr, "Invalid wanted_pin passed to get-nets [%s]\n",
 		wanted_pin);
@@ -454,8 +455,8 @@ SCM g_get_pins_nets(SCM scm_uref)
 			    pin = pl_current->pin_number;
 			    net_name = pl_current->net_name;
 
-			    pairlist = scm_cons (scm_makfrom0str (pin),
-                                     scm_makfrom0str (net_name));
+			    pairlist = scm_cons (scm_from_locale_string (pin),
+                                                 scm_from_locale_string (net_name));
 			    pinslist = scm_cons (pairlist, pinslist);
 			}
 
@@ -594,9 +595,9 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
   }
 
   if (return_value) {
-    scm_return_value = scm_makfrom0str (return_value);
+    scm_return_value = scm_from_locale_string (return_value);
   } else {
-    scm_return_value = scm_makfrom0str ("unknown");
+    scm_return_value = scm_from_locale_string ("unknown");
   }
 
 #if DEBUG
@@ -679,9 +680,9 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
     }
 
     if (return_value) {
-      scm_return_value = scm_makfrom0str (return_value);
+      scm_return_value = scm_from_locale_string (return_value);
     } else {
-      scm_return_value = scm_makfrom0str ("unknown");
+      scm_return_value = scm_from_locale_string ("unknown");
     }
 
     return (scm_return_value);
@@ -718,10 +719,10 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
   }
 
   if (attrib_value != NULL) {
-    scm_return_value = scm_makfrom0str (attrib_value);
+    scm_return_value = scm_from_locale_string (attrib_value);
     g_free (attrib_value);
   } else {
-    scm_return_value = scm_makfrom0str ("not found");
+    scm_return_value = scm_from_locale_string ("not found");
   }
 
   return (scm_return_value);
@@ -774,7 +775,7 @@ SCM g_get_calling_flags()
   
     aux = backend_params;
     while (aux != NULL) {
-      arglist = scm_cons (scm_list_n (scm_makfrom0str (aux->data),
+      arglist = scm_cons (scm_list_n (scm_from_locale_string (aux->data),
 				      SCM_BOOL (TRUE),
 				      SCM_UNDEFINED), 
 			  arglist);
@@ -849,7 +850,7 @@ SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has
 		        o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
 		                                                wanted_attrib, 0);
 		      if (attrib_value) {
-			list = scm_cons (scm_makfrom0str (attrib_value), list);
+			list = scm_cons (scm_from_locale_string (attrib_value), list);
 		      }
 		      g_free (attrib_value);
 		    }
