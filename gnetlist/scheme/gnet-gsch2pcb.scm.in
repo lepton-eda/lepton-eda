@@ -23,6 +23,8 @@
 ;;  Bill Wilson    billw@wt.net
 ;;  6/17/2003
 
+(use-modules (ice-9 popen))
+(use-modules (ice-9 syncase))
 
 ;;
 ;;
@@ -117,16 +119,22 @@
 
 (define gsch2pcb:use-m4 #f)
 
+;; Macro that defines and sets a variable only if it's not already defined.
+(define-syntax define-undefined
+  (syntax-rules ()
+    ((_ name expr)
+     (define name
+       (if (defined? (quote name))
+           name
+           expr)))))
 
 ;; Let the user override the m4 command, the directory
 ;; where pcb stores its m4 files and the pcb config directory.
-(if (not (defined? 'gsch2pcb:pcb-m4-command)) (define gsch2pcb:pcb-m4-command "@m4@"))
-(if (not (defined? 'gsch2pcb:pcb-m4-dir)) (define gsch2pcb:pcb-m4-dir "@pcbm4dir@"))
+(define-undefined gsch2pcb:pcb-m4-command "@m4@")
+(define-undefined gsch2pcb:pcb-m4-dir "@pcbm4dir@")
 
 ;; Let the user override the m4 search path
-(if (not (defined? 'gsch2pcb:pcb-m4-path))
-    (define gsch2pcb:pcb-m4-path (list gsch2pcb:pcb-m4-dir "$HOME/.pcb" "."))
-)
+(define-undefined gsch2pcb:pcb-m4-path (list gsch2pcb:pcb-m4-dir "$HOME/.pcb" "."))
 
 ;; Build up the m4 command line
 
@@ -155,12 +163,7 @@
 		      )
       )
 
-(if (not (defined? 'gsch2pcb:pcb-m4-command-line))
-    (define gsch2pcb:pcb-m4-command-line
-      gsch2pcb:m4-command-line-tmp)
-    )
-
-(use-modules (ice-9 popen))
+(define-undefined gsch2pcb:pcb-m4-command-line gsch2pcb:m4-command-line-tmp)
 
 (define (gsch2pcb output-filename)
   (let ((port (open-output-file output-filename)))
