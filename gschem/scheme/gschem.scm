@@ -22,9 +22,10 @@
 ; If this version of guile has an R5RS-compatible eval (that requires a
 ; second argument specfying the environment), and a current-module function
 ; (like 1.6) use them to define eval-cm. else define eval-cm to eval (for 1.4)
-(if (false-if-exception (eval 'display (current-module)))
-    (define (eval-cm exp) (eval exp (current-module)))
-    (define eval-cm eval))
+(define eval-cm
+  (if (false-if-exception (eval 'display (current-module)))
+      (lambda (exp) (eval exp (current-module)))
+      eval))
 
 (define last-command-sequence #f)
 (define current-command-sequence '())
