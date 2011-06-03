@@ -8,34 +8,30 @@ PolyArea[200000000.000000]
 Thermal[0.500000]
 DRC[1000 1000 1000 1000 1500 1000]
 Flags("nameonpcb,uniquename,clearnew,snappin")
-Groups("1,c:2,s:3:4:5:6:7:8")
+Groups("1,c:2:3:4:5:6,s:7:8")
 Styles["Signal,1000,3600,2000,1000:Power,2500,6000,3500,1000:Fat,4000,6000,3500,1000:Skinny,600,2402,1181,600"]
-PKG_unknown(unknown,F1,unknown)
-PKG_DIP14(DIP14,U300,unknown)
-PKG_DIP14(DIP14,U200,unknown)
-PKG_DIP14(DIP14,U100,unknown)
-Layer(1 "component")
+Layer(1 "top")
 (
 )
-Layer(2 "solder")
+Layer(2 "ground")
 (
 )
-Layer(3 "outline")
+Layer(3 "signal2")
 (
 )
-Layer(4 "GND")
+Layer(4 "signal3")
 (
 )
 Layer(5 "power")
 (
 )
-Layer(6 "signal1")
+Layer(6 "bottom")
 (
 )
-Layer(7 "signal2")
+Layer(7 "outline")
 (
 )
-Layer(8 "signal3")
+Layer(8 "spare")
 (
 )
 Layer(9 "silk")
