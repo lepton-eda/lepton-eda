@@ -45,7 +45,7 @@ static long page_smob_tag;   /*! Page SMOB tag */
 static scm_sizet g_free_attrib_smob(SCM attrib_smob)
 {
   struct st_attrib_smob *attribute = 
-  (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+    (struct st_attrib_smob *) SCM_SMOB_DATA (attrib_smob);
   scm_sizet size = sizeof(struct st_attrib_smob);
 
   free(attribute); /* this should stay as free (allocated from guile) */
@@ -66,7 +66,7 @@ static int g_print_attrib_smob(SCM attrib_smob, SCM port,
 			       scm_print_state *pstate)
 {
   struct st_attrib_smob *attribute = 
-  (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+    (struct st_attrib_smob *) SCM_SMOB_DATA (attrib_smob);
 
   if (attribute &&
       attribute->attribute &&
@@ -124,7 +124,7 @@ SCM g_get_attrib_name_value(SCM attrib_smob)
                ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
                attrib_smob, SCM_ARG1, "get-attribute-name-value");
 
-  attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+  attribute = (struct st_attrib_smob *) SCM_SMOB_DATA (attrib_smob);
 
   if (attribute != NULL &&
       attribute->attribute != NULL &&
@@ -166,7 +166,7 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
   SCM_ASSERT (scm_is_string(scm_value), scm_value, SCM_ARG2, 
 	      "set-attribute-value!");
 
-  attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+  attribute = (struct st_attrib_smob *) SCM_SMOB_DATA (attrib_smob);
   value = scm_to_locale_string (scm_value);
 
   if (attribute != NULL &&
@@ -286,7 +286,7 @@ SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
 		SCM_ARG2, "calcule-new-attrib-bounds");
   }
 
-  attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+  attribute = (struct st_attrib_smob *) SCM_SMOB_DATA (attrib_smob);
   toplevel = attribute->world;
   
   SCM_ASSERT ( attribute &&
@@ -386,7 +386,7 @@ SCM g_get_attrib_bounds(SCM attrib_smob)
                ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
                attrib_smob, SCM_ARG1, "get-attribute-bounds");
   
-  attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+  attribute = (struct st_attrib_smob *) SCM_SMOB_DATA (attrib_smob);
   toplevel = attribute->world;
 
   if (attribute &&
@@ -420,7 +420,7 @@ SCM g_get_attrib_angle(SCM attrib_smob)
                ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
                attrib_smob, SCM_ARG1, "get-attribute-angle");
   
-  attribute = (struct st_attrib_smob *)SCM_CDR(attrib_smob);
+  attribute = (struct st_attrib_smob *) SCM_SMOB_DATA (attrib_smob);
   toplevel = attribute->world;
 
   SCM_ASSERT ( attribute && 
@@ -440,7 +440,7 @@ SCM g_get_attrib_angle(SCM attrib_smob)
 SCM g_attrib_is_inherited (SCM attrib_smob)
 {
   struct st_attrib_smob *attribute =
-  (struct st_attrib_smob *) SCM_CDR (attrib_smob);
+    (struct st_attrib_smob *) SCM_SMOB_DATA (attrib_smob);
 
   if (attribute && attribute->attribute) {
     OBJECT *object = attribute->attribute;
@@ -780,10 +780,10 @@ static SCM g_equalp_page_smob (SCM page_smob1,
                                SCM page_smob2)
 {
   struct st_page_smob *page1 =
-  (struct st_page_smob *) SCM_CDR (page_smob1);
+    (struct st_page_smob *) SCM_SMOB_DATA (page_smob1);
 
   struct st_page_smob *page2 =
-  (struct st_page_smob *) SCM_CDR (page_smob2);
+    (struct st_page_smob *) SCM_SMOB_DATA (page_smob2);
 
   if (page1 &&
       page2 &&
@@ -856,11 +856,11 @@ gboolean g_get_data_from_page_smob(SCM page_smob, TOPLEVEL **toplevel,
   }
   if (toplevel != NULL) {
     *toplevel = (TOPLEVEL *) 
-    (((struct st_page_smob *)SCM_CDR(page_smob))->world);
+    (((struct st_page_smob *) SCM_SMOB_DATA (page_smob))->world);
   }
   if (page != NULL) {
     *page = (PAGE *) 
-    (((struct st_page_smob *)SCM_CDR(page_smob))->page);
+    (((struct st_page_smob *) SCM_SMOB_DATA (page_smob))->page);
   }
   return (TRUE);
 }
@@ -882,7 +882,7 @@ SCM g_get_page_filename(SCM page_smob)
                page_smob, SCM_ARG1, "get-page-filename");
 
   page = (PAGE *) 
-    (((struct st_page_smob *)SCM_CDR(page_smob))->page);
+    (((struct st_page_smob *) SCM_SMOB_DATA (page_smob))->page);
 
   if (page->page_filename) 
     returned = scm_from_locale_string (page->page_filename);
@@ -911,7 +911,7 @@ SCM g_set_page_filename(SCM page_smob, SCM scm_filename)
 	      SCM_ARG2, "set-page-filename");
 
   page = (PAGE *) 
-    (((struct st_page_smob *)SCM_CDR(page_smob))->page);
+    (((struct st_page_smob *) SCM_SMOB_DATA (page_smob))->page);
 
   filename = SCM_STRING_CHARS (scm_filename);
 
