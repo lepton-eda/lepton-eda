@@ -97,8 +97,7 @@ SCM g_make_attrib_smob(TOPLEVEL *curr_w, OBJECT *curr_attr)
   struct st_attrib_smob *smob_attribute;
 
   smob_attribute = (struct st_attrib_smob *)
-    			scm_must_malloc(sizeof(struct st_attrib_smob),
-					"attribute");
+    scm_malloc (sizeof(struct st_attrib_smob));
 
   smob_attribute->world     = curr_w;
   smob_attribute->attribute = curr_attr;
@@ -512,7 +511,7 @@ SCM g_make_object_smob(TOPLEVEL *curr_w, OBJECT *object)
   struct st_object_smob *smob_object;
 
   smob_object = (struct st_object_smob *)
-    scm_must_malloc(sizeof(struct st_object_smob), "object");
+    scm_malloc (sizeof(struct st_object_smob));
 
   smob_object->world  = curr_w;
   smob_object->object = object;
@@ -829,7 +828,7 @@ SCM g_make_page_smob(TOPLEVEL *curr_w, PAGE *page)
   struct st_page_smob *smob_page;
 
   smob_page = (struct st_page_smob *)
-    scm_must_malloc(sizeof(struct st_page_smob), "page");
+    scm_malloc (sizeof(struct st_page_smob));
 
   smob_page->world  = curr_w;
   smob_page->page = page;
