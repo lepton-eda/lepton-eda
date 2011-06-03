@@ -728,29 +728,6 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
   return (scm_return_value);
 }
 
-#if 0	      /* No longer needed, but the netlist_mode variable is still used */
-SCM g_set_netlist_mode(SCM mode)
-{
-    char *string;
-
-    string = SCM_STRING_CHARS (mode);
-
-    if (strcmp(string, "gEDA") == 0) {
-	netlist_mode = gEDA;
-    } else if (strcmp(string, "SPICE") == 0) {
-	netlist_mode = SPICE;
-    } else if (strcmp(string, "TANGO") == 0) {
-	netlist_mode = TANGO;
-    }
-#if DEBUG
-    printf("netlist_mode: %s %d\n", string, netlist_mode);
-#endif
-
-    return (scm_from_int (0));
-}
-#endif
-
-
 /* 
    This function returns certain calling flags to the calling guile prog. 
    The calling flags are returned to Guile as a list of option/value pairs [e.g. 
