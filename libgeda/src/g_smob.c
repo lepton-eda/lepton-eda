@@ -120,8 +120,7 @@ SCM g_get_attrib_name_value(SCM attrib_smob)
   char *value = NULL;
   SCM returned = SCM_EOL;
 
-  SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
-               ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
+  SCM_ASSERT ( SCM_SMOB_PREDICATE (attrib_smob_tag, attrib_smob),
                attrib_smob, SCM_ARG1, "get-attribute-name-value");
 
   attribute = (struct st_attrib_smob *) SCM_SMOB_DATA (attrib_smob);
@@ -160,9 +159,8 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
   char *name = NULL;
   char *value = NULL;
 
-  SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
-               ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
-               attrib_smob, SCM_ARG1, "set-attribute-value!");
+  SCM_ASSERT (SCM_SMOB_PREDICATE (attrib_smob_tag, attrib_smob),
+              attrib_smob, SCM_ARG1, "set-attribute-value!");
   SCM_ASSERT (scm_is_string(scm_value), scm_value, SCM_ARG2, 
 	      "set-attribute-value!");
 
@@ -382,9 +380,8 @@ SCM g_get_attrib_bounds(SCM attrib_smob)
   int left=0, right=0, bottom=0, top=0; 
   SCM returned = SCM_EOL;
 
-  SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
-               ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
-               attrib_smob, SCM_ARG1, "get-attribute-bounds");
+  SCM_ASSERT (SCM_SMOB_PREDICATE (attrib_smob_tag, attrib_smob),
+              attrib_smob, SCM_ARG1, "get-attribute-bounds");
   
   attribute = (struct st_attrib_smob *) SCM_SMOB_DATA (attrib_smob);
   toplevel = attribute->world;
@@ -416,9 +413,8 @@ SCM g_get_attrib_angle(SCM attrib_smob)
   TOPLEVEL *toplevel;
   struct st_attrib_smob *attribute;
 
-  SCM_ASSERT ( SCM_NIMP(attrib_smob) && 
-               ((long) SCM_CAR(attrib_smob) == attrib_smob_tag),
-               attrib_smob, SCM_ARG1, "get-attribute-angle");
+  SCM_ASSERT (SCM_SMOB_PREDICATE (attrib_smob_tag, attrib_smob),
+              attrib_smob, SCM_ARG1, "get-attribute-angle");
   
   attribute = (struct st_attrib_smob *) SCM_SMOB_DATA (attrib_smob);
   toplevel = attribute->world;
@@ -535,9 +531,8 @@ SCM g_get_object_attributes(SCM object_smob)
   GList *a_iter;
   OBJECT *a_current;
 
-  SCM_ASSERT ( SCM_NIMP(object_smob) && 
-               ((long) SCM_CAR(object_smob) == object_smob_tag),
-               object_smob, SCM_ARG1, "get-object-attributes");
+  SCM_ASSERT (SCM_SMOB_PREDICATE (object_smob_tag, object_smob),
+              object_smob, SCM_ARG1, "get-object-attributes");
 
   object = (struct st_object_smob *)SCM_CDR(object_smob);
 
@@ -579,9 +574,8 @@ SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
   GList *a_iter;
   OBJECT *a_current;
 
-  SCM_ASSERT ( SCM_NIMP(object_smob) && 
-               ((long) SCM_CAR(object_smob) == object_smob_tag),
-               object_smob, SCM_ARG1, "get-attrib-value-by-attrib-name");
+  SCM_ASSERT (SCM_SMOB_PREDICATE (object_smob_tag, object_smob),
+              object_smob, SCM_ARG1, "get-attrib-value-by-attrib-name");
 
   SCM_ASSERT (scm_is_string(scm_attrib_name), scm_attrib_name,
 	      SCM_ARG2, "get-attrib-value-by-attrib-name");
@@ -626,9 +620,8 @@ SCM g_get_object_type(SCM object_smob)
   OBJECT *object;
   SCM returned = SCM_EOL;
 
-  SCM_ASSERT ( SCM_NIMP(object_smob) && 
-               ((long) SCM_CAR(object_smob) == object_smob_tag),
-               object_smob, SCM_ARG1, "get-object-type");
+  SCM_ASSERT (SCM_SMOB_PREDICATE (object_smob_tag, object_smob),
+              object_smob, SCM_ARG1, "get-object-type");
 
   object_struct = (struct st_object_smob *)SCM_CDR(object_smob);
 
@@ -655,9 +648,8 @@ SCM g_get_line_width(SCM object_smob)
   OBJECT *object;
   SCM returned = SCM_EOL;
 
-  SCM_ASSERT ( SCM_NIMP(object_smob) && 
-               ((long) SCM_CAR(object_smob) == object_smob_tag),
-               object_smob, SCM_ARG1, "get-line-width");
+  SCM_ASSERT (SCM_SMOB_PREDICATE (object_smob_tag, object_smob),
+              object_smob, SCM_ARG1, "get-line-width");
 
   object_struct = (struct st_object_smob *)SCM_CDR(object_smob);
 
@@ -706,8 +698,7 @@ gboolean g_get_data_from_object_smob(SCM object_smob, TOPLEVEL **toplevel,
 				     OBJECT **object)
 {
   
-  if ( (!SCM_NIMP(object_smob)) || 
-       ((long) SCM_CAR(object_smob) != object_smob_tag) ) {
+  if (!SCM_SMOB_PREDICATE (object_smob_tag, object_smob)) {
     return(FALSE);
   }
   if (toplevel != NULL) {
@@ -850,8 +841,7 @@ gboolean g_get_data_from_page_smob(SCM page_smob, TOPLEVEL **toplevel,
 				   PAGE **page)
 {
   
-  if ( (!SCM_NIMP(page_smob)) || 
-       ((long) SCM_CAR(page_smob) != page_smob_tag) ) {
+  if (!SCM_SMOB_PREDICATE (page_smob_tag, page_smob)) {
     return(FALSE);
   }
   if (toplevel != NULL) {
@@ -877,9 +867,8 @@ SCM g_get_page_filename(SCM page_smob)
   SCM returned = SCM_EOL;
   PAGE *page;
 
-  SCM_ASSERT ( SCM_NIMP(page_smob) &&
-	       ((long) SCM_CAR(page_smob) == page_smob_tag),
-               page_smob, SCM_ARG1, "get-page-filename");
+  SCM_ASSERT (SCM_SMOB_PREDICATE (page_smob_tag, page_smob),
+              page_smob, SCM_ARG1, "get-page-filename");
 
   page = (PAGE *) 
     (((struct st_page_smob *) SCM_SMOB_DATA (page_smob))->page);
@@ -903,9 +892,8 @@ SCM g_set_page_filename(SCM page_smob, SCM scm_filename)
   PAGE *page;
   char *filename = NULL;
 
-  SCM_ASSERT ( SCM_NIMP(page_smob) &&
-	       ((long) SCM_CAR(page_smob) == page_smob_tag),
-               page_smob, SCM_ARG1, "set-page-filename");
+  SCM_ASSERT (SCM_SMOB_PREDICATE (page_smob_tag, page_smob),
+              page_smob, SCM_ARG1, "set-page-filename");
 
   SCM_ASSERT (scm_is_string(scm_filename), scm_filename,
 	      SCM_ARG2, "set-page-filename");
