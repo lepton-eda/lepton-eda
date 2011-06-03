@@ -435,6 +435,9 @@ SCM g_get_attrib_angle(SCM attrib_smob)
  */
 SCM g_attrib_is_inherited (SCM attrib_smob)
 {
+  SCM_ASSERT (SCM_SMOB_PREDICATE (attrib_smob_tag, attrib_smob),
+              attrib_smob, SCM_ARG1, "attrib-inherited?");
+
   struct st_attrib_smob *attribute =
     (struct st_attrib_smob *) SCM_SMOB_DATA (attrib_smob);
 
