@@ -244,7 +244,12 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
     full_rcfilename = g_build_filename (file_directory, "gafrc", NULL);
     g_rc_parse_file (toplevel, full_rcfilename, &tmp_err);
     if (tmp_err != NULL) {
-      s_log_message ("%s\n", tmp_err->message);
+      /* Config files are allowed to be missing or skipped; check for
+       * this. */
+      if (!g_error_matches (tmp_err, G_FILE_ERROR, G_FILE_ERROR_NOENT) &&
+          !g_error_matches (tmp_err, EDA_ERROR, EDA_ERROR_RC_TWICE)) {
+        s_log_message ("%s\n", tmp_err->message);
+      }
       g_error_free (tmp_err);
       tmp_err = NULL;
     }
