@@ -197,10 +197,6 @@
 (define pintype-full-names (list "unknown" "input" "output" "input/output" "open collector" "open emitter" "passive" "totem-pole" "tristate" "clock" "power" "unconnected"))
 
 ; define if a specified pin can drive a net
-(define-undefined pintype-can-drive
-;         unk in out io oc oe pas tp tri clk pwr undef
-  (list 1   0  1   1  1  1  1   1  1   0   1    0 ))
-
 (define (pintype-can-drive-valid? lst)
   (define (int01? x)
     (and (integer? x)
@@ -210,11 +206,19 @@
        (= (length lst) (length pintype-names))
        (every int01? lst)))
 
-(or (pintype-can-drive-valid? pintype-can-drive)
-    (begin
-      (display "INTERNAL ERROR: List of pins which can drive a net bad specified. Using default value.")
-      (newline)
-      (set! pintype-can-drive 1)))
+(define pintype-can-drive
+  (if (defined? 'pintype-can-drive)
+    (if (pintype-can-drive-valid? pintype-can-drive)
+        pintype-can-drive
+        (begin
+          (display "INTERNAL ERROR: List of pins which can drive a net bad specified. Using default value.")
+          (newline)
+          #f))
+    #f))
+
+(if (not pintype-can-drive)
+;                                unk in out io oc oe pas tp tri clk pwr undef
+    (set! pintype-can-drive (list 1   0  1   1  1  1  1   1  1   0   1    0 )))
 
 ; DRC matrix
 ;
