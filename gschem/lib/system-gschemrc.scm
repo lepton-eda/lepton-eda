@@ -1367,8 +1367,7 @@
 ;;
 ;;          menu item name      menu action             menu hotkey function    menu stock icon
 ;;
-        `( (,(N_ "New Window")        file-new-window         file-new-window         #f)
-           (,(N_ "_New")              file-new                file-new                "gtk-new")
+        `( (,(N_ "_New")              file-new                file-new                "gtk-new")
            (,(N_ "_Open...")          file-open               file-open               "gtk-open")
 ;; The entry below will be removed from the menu if glib < 2.6 is detected
            (,(N_ "Open Recen_t")      #f                      #f                      #f)
@@ -1383,7 +1382,8 @@
            ("SEPARATOR"              #f                      #f                      #f)
            (,(N_ "Execute Script...") file-script             file-script             "gtk-execute")
            ("SEPARATOR"              #f                      #f                      #f)
-           (,(N_ "_Close")            file-close-window       file-close-window       "gtk-close")
+           (,(N_ "New Window")        file-new-window         file-new-window         #f)
+           (,(N_ "_Close Window")     file-close-window       file-close-window       "gtk-close")
            (,(N_ "_Quit")             file-quit               file-quit               "gtk-quit")))
 
 (define edit-menu-items 
