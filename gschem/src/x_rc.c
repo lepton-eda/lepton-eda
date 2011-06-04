@@ -46,8 +46,10 @@ x_rc_parse_gschem_error (GError **err, GSCHEM_TOPLEVEL *w_current)
                   "\n\nThe gschem log may contain more information."));
   } else {
 
-    /* Config files are allowed to be missing; check for this. */
-    if (g_error_matches (*err, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
+    /* Config files are allowed to be missing or skipped; check for
+     * this. */
+    if (g_error_matches (*err, G_FILE_ERROR, G_FILE_ERROR_NOENT) ||
+        g_error_matches (*err, EDA_ERROR, EDA_ERROR_RC_TWICE)) {
       return;
     }
 

@@ -292,8 +292,10 @@ g_rc_parse__process_error (GError **err, const gchar *pname)
     fprintf(stderr, "%s\n", msgl);
 
   } else {
-    /* Config files are allowed to be missing; check for this. */
-    if (g_error_matches (*err, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
+    /* Config files are allowed to be missing or skipped; check for
+     * this. */
+    if (g_error_matches (*err, G_FILE_ERROR, G_FILE_ERROR_NOENT) ||
+        g_error_matches (*err, EDA_ERROR, EDA_ERROR_RC_TWICE)) {
       return;
     }
 
