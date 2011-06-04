@@ -136,13 +136,13 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
       scm_item_stock = scm_is_pair (SCM_CDDDR (scm_item)) ?
                          SCM_CADDDR (scm_item) : SCM_BOOL_F;
       SCM_ASSERT(scm_is_string(scm_item_name), scm_item_name, SCM_ARGn, "get_main_menu item_name");
-      SCM_ASSERT(SCM_SYMBOLP (scm_item_func) ||
+      SCM_ASSERT(scm_is_symbol (scm_item_func) ||
                     scm_is_false (scm_item_func),
                  scm_item_func, SCM_ARGn, "get_main_menu item_func");
-      SCM_ASSERT (SCM_SYMBOLP (scm_item_hotkey_func) ||
+      SCM_ASSERT (scm_is_symbol (scm_item_hotkey_func) ||
                     scm_is_false (scm_item_hotkey_func),
                   scm_item_hotkey_func, SCM_ARGn, "get_main_menu hotkey_func");
-      SCM_ASSERT (SCM_STRINGP (scm_item_stock) ||
+      SCM_ASSERT (scm_is_string (scm_item_stock) ||
                     scm_is_false (scm_item_stock),
                   scm_item_stock, SCM_ARGn, "get_main_menu stock");
 
