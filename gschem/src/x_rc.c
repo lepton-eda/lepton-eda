@@ -48,7 +48,6 @@ x_rc_parse_gschem_error (GError **err, GSCHEM_TOPLEVEL *w_current)
 
     /* Config files are allowed to be missing; check for this. */
     if (g_error_matches (*err, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
-      s_log_message ("%s\n", (*err)->message);
       return;
     }
 

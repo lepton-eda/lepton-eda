@@ -294,7 +294,6 @@ g_rc_parse__process_error (GError **err, const gchar *pname)
   } else {
     /* Config files are allowed to be missing; check for this. */
     if (g_error_matches (*err, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
-      s_log_message ("%s\n", (*err)->message);
       return;
     }
 
