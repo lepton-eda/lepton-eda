@@ -458,7 +458,7 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
 
   w_current->macro_box = gtk_hbox_new(FALSE, 0);
   gtk_box_pack_start(GTK_BOX(w_current->macro_box), w_current->macro_entry,
-		     FALSE, FALSE, 2);
+		     TRUE, TRUE, 2);
   gtk_container_border_width(GTK_CONTAINER(w_current->macro_box), 1);
   gtk_box_pack_start (GTK_BOX (main_box), w_current->macro_box,
 		      FALSE, FALSE, 0);
