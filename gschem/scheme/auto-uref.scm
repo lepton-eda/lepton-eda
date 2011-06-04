@@ -19,6 +19,17 @@
 
 (use-modules (ice-9 regex) (srfi srfi-1))
 
+(define auto-uref-page-offset 0)
+
+;; Redefine value of page-offset.
+;; Refdeses will be numbered from integer multiples of page-offset,
+;; depending on the lowest refdes value found on the page.
+;; If lowest value is 323 and page offset is 100, then next refdes
+;; will be 301.
+;; Setting to 0 disables the feature.
+(define (auto-uref-set-page-offset new-offset)
+  (set! auto-uref-page-offset new-offset))
+
 ;; Modify attributes of an object to assign next unused refdes value
 (define (auto-uref attribs)
 
@@ -85,7 +96,16 @@
                      #f)))
     (if prefix
         (let* ((used-nums (sort-list (collect-all-numbers prefix) <))
-               (next-num (find-first-unused used-nums 1)))
+               ; minimum value considering the page-offset
+               (min-num (if (or
+                              (null? used-nums)
+                              (<= auto-uref-page-offset 0))
+                            0
+                            (* (floor (/ (car used-nums)
+                                         auto-uref-page-offset))
+                               auto-uref-page-offset)))
+               ; next refdes number to be assigned
+               (next-num (find-first-unused used-nums (1+ min-num))))
           ;(simple-format #t "~A: ~A -> ~A~%"
           ;                  prefix
           ;                  used-nums
