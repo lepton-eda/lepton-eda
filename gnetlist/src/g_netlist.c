@@ -214,7 +214,7 @@ SCM g_get_all_unique_nets(SCM scm_level)
 		    /*printf("Got net: `%s'\n",net_name); */
 
 		    x = scm_from_locale_string (net_name);
-		    if (scm_member(x, list) == SCM_BOOL_F) {
+		    if (scm_is_false (scm_member (x, list))) {
               list = scm_cons (x, list);
 		    }
 		}
@@ -298,7 +298,7 @@ SCM g_get_all_connections(SCM scm_netname)
 			    x = pairlist;
 			    is_member = scm_member(x, connlist);
 
-			    if (is_member == SCM_BOOL_F) {
+			    if (scm_is_false (is_member)) {
 				connlist = scm_cons (pairlist, connlist);
 			    }
 

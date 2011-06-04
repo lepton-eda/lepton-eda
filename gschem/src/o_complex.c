@@ -138,7 +138,7 @@ void o_complex_place_changed_run_hook(GSCHEM_TOPLEVEL *w_current) {
   GList *ptr = NULL;
 
   /* Run the complex place list changed hook */
-  if (scm_hook_empty_p(complex_place_list_changed_hook) == SCM_BOOL_F &&
+  if (scm_is_false (scm_hook_empty_p (complex_place_list_changed_hook)) &&
       toplevel->page_current->place_list != NULL) {
     ptr = toplevel->page_current->place_list;
     while (ptr) {
@@ -177,13 +177,13 @@ void o_complex_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int continue_pl
        iter = g_list_next (iter)) {
     o_current = iter->data;
 
-    if (scm_hook_empty_p(add_component_hook) == SCM_BOOL_F) {
+    if (scm_is_false (scm_hook_empty_p (add_component_hook))) {
       scm_run_hook(add_component_hook,
                    scm_cons(g_make_attrib_smob_list(w_current, o_current),
                             SCM_EOL));
     }
 
-    if (scm_hook_empty_p(add_component_object_hook) == SCM_BOOL_F) {
+    if (scm_is_false (scm_hook_empty_p (add_component_object_hook))) {
       scm_run_hook(add_component_object_hook,
                    scm_cons(g_make_object_smob(w_current->toplevel,
                                                o_current), SCM_EOL));

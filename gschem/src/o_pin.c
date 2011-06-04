@@ -142,7 +142,7 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
                       PIN_TYPE_NET, 0);
   s_page_append (toplevel, toplevel->page_current, new_obj);
 
-  if (scm_hook_empty_p (add_pin_hook) == SCM_BOOL_F) {
+  if (scm_is_false (scm_hook_empty_p (add_pin_hook))) {
     scm_run_hook (add_pin_hook,
                   scm_cons (g_make_object_smob (toplevel, new_obj), SCM_EOL));
   }

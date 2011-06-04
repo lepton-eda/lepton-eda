@@ -709,7 +709,7 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
   
 
   /* Run the add component hook for the new component */
-  if (scm_hook_empty_p(add_component_object_hook) == SCM_BOOL_F) {
+  if (scm_is_false (scm_hook_empty_p (add_component_object_hook))) {
     scm_run_hook(add_component_object_hook,
 		 scm_cons(g_make_object_smob(toplevel,
 					     new_obj), SCM_EOL));

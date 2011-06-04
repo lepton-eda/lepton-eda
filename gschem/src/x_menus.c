@@ -171,7 +171,7 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
           scm_keys = g_scm_c_eval_string_protected (buf);
           g_free (buf);
 
-          if (scm_keys == SCM_BOOL_F) {
+          if (scm_is_false (scm_keys)) {
             menu_item_keys = "";
           } else {
             menu_item_keys = SCM_STRING_CHARS (scm_keys);

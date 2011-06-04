@@ -747,7 +747,7 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
                      toplevel->page_current->page_filename);
   }
 
-  if (scm_hook_empty_p (new_page_hook) == SCM_BOOL_F)
+  if (scm_is_false (scm_hook_empty_p (new_page_hook)))
     scm_run_hook (new_page_hook,
                   scm_cons (g_make_page_smob (toplevel, page), SCM_EOL));
 
