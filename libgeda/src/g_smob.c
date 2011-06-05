@@ -49,7 +49,7 @@ static scm_sizet g_free_attrib_smob(SCM attrib_smob)
   scm_sizet size = sizeof(struct st_attrib_smob);
 
   free(attribute); /* this should stay as free (allocated from guile) */
-  return size;
+  return 0;
 }
 
 /*! \brief Prints attribute smob to port.
@@ -464,7 +464,7 @@ static scm_sizet g_free_object_smob(SCM object_smob)
   scm_sizet size = sizeof(struct st_object_smob);
 
   free(object); /* this should stay as free (allocated from guile) */
-  return size;
+  return 0;
 }
 
 /*! \brief Prints object smob to port.
@@ -729,7 +729,7 @@ static scm_sizet g_free_page_smob(SCM page_smob)
   scm_sizet size = sizeof(struct st_page_smob);
 
   free(page); /* this should stay as free (allocated from guile) */
-  return size;
+  return 0;
 }
 
 /*! \brief Prints page smob to port.
