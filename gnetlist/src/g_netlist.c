@@ -749,6 +749,26 @@ g_get_backend_arguments()
 }
 
 
+/*! \brief Get input files from command line.
+ *  \par Function Description
+ *  This function returns a list of the files named on the command line.
+ *
+ *  \return A list of filenames as strings.
+ */
+SCM g_get_input_files()
+{
+    SCM list = SCM_EOL;
+    GSList *current = input_files;
+
+    while (current != NULL) {
+        list = scm_cons (scm_from_locale_string (current->data), list);
+        current = g_slist_next(current);
+    }
+
+    return scm_reverse_x (list, SCM_EOL);
+}
+
+
 /* given a net name, an attribute, and a wanted attribute, return all 
    the given attribute of all the graphical objects connected to that 
    net name */

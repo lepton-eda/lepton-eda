@@ -38,3 +38,5 @@ extern SCM pre_rc_list;       /* before rc loaded */
 extern SCM pre_backend_list;  /* before backend loaded */
 extern SCM post_backend_list; /* after backend loaded, before execute */
 extern GSList *backend_params;  /* Parameters passed to the backend from the command line */
+
+extern GSList *input_files;

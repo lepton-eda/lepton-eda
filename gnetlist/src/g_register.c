@@ -94,6 +94,7 @@ static struct gsubr_t gnetlist_funcs[] = {
 
   /* SDB -- 9.1.2003 */
   { "gnetlist:get-backend-arguments", 0, 0, 0, g_get_backend_arguments },
+  { "gnetlist:get-input-files",     0, 0, 0, g_get_input_files },
   { NULL,                           0, 0, 0, NULL } };
 
 

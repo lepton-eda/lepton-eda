@@ -54,6 +54,8 @@ void gnetlist_quit(void)
 
     /* Free GSList *backend_params */
     g_slist_free (backend_params);
+
+    g_slist_free (input_files);
 }
 
 
@@ -227,6 +229,9 @@ void main_prog(void *closure, int argc, char *argv[])
         fprintf (stderr, "%s\n", err->message);
         g_error_free (err);
       }
+
+      /* collect input filenames for backend use */
+      input_files = g_slist_append(input_files, argv[i]);
 
       i++;
       g_free (filename);
