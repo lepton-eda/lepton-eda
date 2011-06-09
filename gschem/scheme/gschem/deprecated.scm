@@ -29,9 +29,9 @@
 
 (define-public (set-attribute-value! attrib value)
   (let ((params (text-info attrib))
-        (name-value (attrib-parse attrib))
-       (list-set! params 3 (simple-format "~A=~A" (car name-value) value))
-       (apply set-text! attrib params))))
+        (name-value (attrib-parse attrib)))
+    (list-set! params 3 (simple-format "~A=~A" (car name-value) value))
+    (apply set-text! attrib params)))
 
 (define-public (get-objects-in-page page)
   (reverse! (page-contents page)))
