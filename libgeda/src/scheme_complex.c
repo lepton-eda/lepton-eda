@@ -159,7 +159,7 @@ SCM_DEFINE (set_complex_x, "%set-complex!", 6, 0, 0,
                      obj);
   obj->complex->angle = angle;
   obj->complex->mirror = scm_is_true (mirror_s);
-  obj->sel_func = scm_is_true (locked_s) ? NULL : select_func;
+  obj->selectable = scm_is_false (locked_s);
 
   o_complex_recalc (toplevel, obj); /* We need to do this explicitly... */
 
@@ -201,7 +201,7 @@ SCM_DEFINE (complex_info, "%complex-info", 1, 0, 0,
                      scm_from_int (obj->complex->y),
                      scm_from_int (obj->complex->angle),
                      obj->complex->mirror ? SCM_BOOL_T : SCM_BOOL_F,
-                     (obj->sel_func == NULL) ? SCM_BOOL_T : SCM_BOOL_F,
+                     obj->selectable ? SCM_BOOL_F : SCM_BOOL_T,
                      SCM_UNDEFINED);
 }
 
