@@ -65,8 +65,10 @@ tests:
 	    GEDADATARC=$(top_builddir)/gnetlist/lib \
 	    SCMDIR=${top_builddir}/gnetlist/scheme \
 	    SYMDIR=${top_srcdir}/symbols \
-	    $(GNETLIST) -g drc2 -o $(BUILDDIR)/new_$$file_basename.drc2 \
-            $$file ); \
+	    $(GNETLIST) -L$(top_srcdir)/libgeda/scheme \
+	                -g drc2 \
+	                -o $(BUILDDIR)/new_$$file_basename.drc2 \
+	                $$file ); \
           diff $(SRCDIR)/$$file_basename.drc2 \
                  $(BUILDDIR)/new_$$file_basename.drc2; \
           if [ $$? -ne 0 ]; then \

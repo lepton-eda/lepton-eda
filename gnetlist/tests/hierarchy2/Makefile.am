@@ -18,6 +18,7 @@ tests:
 	  SCMDIR=${top_builddir}/gnetlist/scheme \
 	  SYMDIR=${top_srcdir}/symbols \
 	  $(GNETLIST) \
+	     -L $(top_srcdir)/libgeda/scheme \
 	     -o $(BUILDDIR)/new_hierarchy2.geda -g geda \
 	     $(SRCDIR)/top.sch )
 	diff $(SRCDIR)/hierarchy2.geda $(BUILDDIR)/new_hierarchy2.geda;
