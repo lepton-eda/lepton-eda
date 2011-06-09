@@ -41,7 +41,7 @@
 
 (define-module (unit-test)
   #:use-module (ice-9 pretty-print)
-  #:use-syntax (ice-9 syncase)
+  #:use-module (ice-9 syncase)
   #:export (assert-true
             assert-equal
             %assert-thrown
