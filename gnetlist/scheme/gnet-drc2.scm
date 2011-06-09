@@ -168,6 +168,12 @@
 ;; -------------------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))
+(use-modules (ice-9 syncase))
+
+(define-syntax define-undefined
+  (syntax-rules ()
+    ((_ name expr)
+     (define name (if (defined? (quote name)) name expr)))))
 
 ;;
 ;; Some internal definitions
@@ -191,36 +197,34 @@
 (define pintype-full-names (list "unknown" "input" "output" "input/output" "open collector" "open emitter" "passive" "totem-pole" "tristate" "clock" "power" "unconnected"))
 
 ; define if a specified pin can drive a net
-(if (defined? 'pintype-can-drive)
-    (begin
-      (define is-integer-list?
-	(lambda (list)
-	  (if (not (null? list))
-	      (if (integer? (car list))
-		  (if (or (< (car list) 0)
-			  (> (car list) 1))
-		      #f
-		      (is-integer-list? (cdr list)))
-		  #f)
-	      #t)))
-      (if (or (not (list? pintype-can-drive))
-	      (not (= (length pintype-can-drive) (length pintype-names)))
-	      (not (is-integer-list? pintype-can-drive)))
-	  (begin
-	    (display "INTERNAL ERROR: List of pins which can drive a net bad specified. Using default value.")
-	    (newline)
-	    (define pintype-can-drive 1))))
-    (define pintype-can-drive 1))     ; Later is redefined if it's not a list.
+(define (pintype-can-drive-valid? lst)
+  (define (int01? x)
+    (and (integer? x)
+         (or (= x 0)
+             (= x 1))))
+  (and (list? lst)
+       (= (length lst) (length pintype-names))
+       (every int01? lst)))
 
-(if (not (list? pintype-can-drive))
-;                                  unk in out io oc oe pas tp tri clk pwr undef
-    (define pintype-can-drive (list 1   0  1   1  1  1  1   1  1   0   1    0 )))
+(define pintype-can-drive
+  (if (defined? 'pintype-can-drive)
+    (if (pintype-can-drive-valid? pintype-can-drive)
+        pintype-can-drive
+        (begin
+          (display "INTERNAL ERROR: List of pins which can drive a net bad specified. Using default value.")
+          (newline)
+          #f))
+    #f))
+
+(if (not pintype-can-drive)
+;                                unk in out io oc oe pas tp tri clk pwr undef
+    (set! pintype-can-drive (list 1   0  1   1  1  1  1   1  1   0   1    0 )))
 
 ; DRC matrix
 ;
 ; #\e: error    #\w: warning   #\c: correct
-(if (not (defined? 'drc-matrix))
-    (define drc-matrix (list
+(define-undefined drc-matrix
+  (list
 ;  Order is important !
 ;             unknown in    out   io    oc    oe    pas   tp    tri   clk   pwr unconnected
 ;unknown
@@ -247,25 +251,22 @@
   '(            #\c   #\c   #\e   #\w   #\e   #\e   #\c   #\e   #\e   #\e   #\c  )
 ;unconnected
   '(            #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e   #\e )
-)))
+))
 
 ;; Number of errors and warnings found
 (define errors_number 0)
 (define warnings_number 0)
 
-(if (not (defined? 'action-unused-slots))
-    (define action-unused-slots #\w)
+(define-undefined action-unused-slots #\w)
+
+(if (or (not (char? action-unused-slots))
+        (not (or (char=? action-unused-slots #\w)
+                 (char=? action-unused-slots #\c)
+                 (char=? action-unused-slots #\e))))
     (begin
-      (if (or (not (char? action-unused-slots))
- 	      (not (or (char=? action-unused-slots #\w) (char=? action-unused-slots #\c)
-		       (char=? action-unused-slots #\e))))
-	  (begin
-	    (display "INTERNAL ERROR: Action when unused slots are found has a wrong value. Using default.")
-	    (newline)
-	    (define action-unused-slots #\w))
-	  )
-      )
-    )
+      (display "INTERNAL ERROR: Action when unused slots are found has a wrong value. Using default.")
+      (newline)
+      (set! action-unused-slots #\w)))
 
 ;-----------------------------------------------------------------------
 ;   DRC matrix functions

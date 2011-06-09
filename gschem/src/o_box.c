@@ -36,10 +36,153 @@
 #define GET_BOX_TOP(w)				\
         max((w)->first_wy, (w)->second_wy)
 
-typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, COLOR *color,
-                           GSCHEM_TOPLEVEL *w_current, BOX *box,
-                           gint fill_width, gint angle1, gint pitch1,
-                           gint angle2, gint pitch2 );
+typedef void (*FILL_FUNC) (GSCHEM_TOPLEVEL *w_current,
+                           COLOR *color, BOX *box,
+                           gint fill_width,
+                           gint angle1, gint pitch1,
+                           gint angle2, gint pitch2);
+
+/*! \brief Placeholder filling function.
+ *  \par Function Description
+ *  This function does nothing. It has the same prototype as all the
+ *  filling functions. It prevent from making a difference between filling
+ *  in function #o_box_draw().
+ *
+ *  \param [in] w_current   Schematic top level
+ *  \param [in] color       Box fill color.
+ *  \param [in] box         Box definition
+ *  \param [in] fill_width  BOX pattern fill width.
+ *  \param [in] angle1      1st angle for pattern.
+ *  \param [in] pitch1      1st pitch for pattern.
+ *  \param [in] angle2      2nd angle for pattern.
+ *  \param [in] pitch2      2nd pitch for pattern.
+ */
+static void
+o_box_fill_hollow (GSCHEM_TOPLEVEL *w_current,
+                   COLOR *color, BOX *box,
+                   gint fill_width,
+                   gint angle1, gint pitch1,
+                   gint angle2, gint pitch2)
+{
+}
+
+/*! \brief Fill inside of box with a solid pattern.
+ *  \par Function Description
+ *  This function fills the inside of the box with a solid pattern.
+ *  Parameters <B>angle1</B>, <B>pitch1</B> and <B>angle2</B>,
+ *  <B>pitch2</B> and <B>fill_width</B> are unused here but kept for compatibility
+ *  with other box filling functions.
+ *
+ *  The box is defined in the same way as it is in GDK : one point and
+ *  the width and height of the box.
+ *
+ *  All parameters are given in pixel.
+ *
+ *  \param [in] w_current   Schematic top level
+ *  \param [in] color       Box fill color.
+ *  \param [in] box         Box definition
+ *  \param [in] fill_width  BOX pattern fill width.
+ *  \param [in] angle1      (unused)
+ *  \param [in] pitch1      (unused)
+ *  \param [in] angle2      (unused)
+ *  \param [in] pitch2      (unused)
+ */
+static void
+o_box_fill_fill (GSCHEM_TOPLEVEL *w_current,
+                 COLOR *color, BOX *box,
+                 gint fill_width,
+                 gint angle1, gint pitch1,
+                 gint angle2, gint pitch2)
+{
+  /* NOP: We'll fill it when we do the stroking */
+}
+
+/*! \brief Fill inside of box with single line pattern.
+ *  \par Function Description
+ *  This function fills the inside of the box with a pattern made of lines.
+ *  The lines are drawn inside the box with an angle <B>angle1</B> from the
+ *  horizontal. The distance between two of these lines is given by
+ *  <B>pitch1</B> and their width by <B>fill_width</B>.
+ *  Parameters <B>angle2</B> and <B>pitch2</B> are unused here but kept for
+ *  compatbility with other box filling functions.
+ *
+ *  The box is defined in the same way as it is in GDK : one point and the
+ *  width and height of the box.
+ *
+ *  All parameters are given in pixel.
+ *
+ *  Negative or null values for <B>pitch1</B> are not allowed as it leads to
+ *  an endless loop.
+ *
+ *  \param [in] w_current   Schematic top level
+ *  \param [in] color       Box fill color.
+ *  \param [in] box         Box definition
+ *  \param [in] fill_width  BOX pattern fill width.
+ *  \param [in] angle1      1st angle for pattern.
+ *  \param [in] pitch1      1st pitch for pattern.
+ *  \param [in] angle2      (unused)
+ *  \param [in] pitch2      (unused)
+ */
+static void
+o_box_fill_hatch (GSCHEM_TOPLEVEL *w_current,
+                  COLOR *color, BOX *box,
+                  gint fill_width,
+                  gint angle1, gint pitch1,
+                  gint angle2, gint pitch2)
+{
+  int i;
+  GArray *lines;
+
+  gschem_cairo_set_source_color (w_current, color);
+
+  lines = g_array_new (FALSE, FALSE, sizeof (LINE));
+  m_hatch_box (box, angle1, pitch1, lines);
+
+  for (i=0; i < lines->len; i++) {
+    LINE *line = &g_array_index (lines, LINE, i);
+
+    gschem_cairo_line (w_current, END_NONE, fill_width, line->x[0], line->y[0],
+                                                        line->x[1], line->y[1]);
+  }
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, fill_width, -1, -1);
+
+  g_array_free (lines, TRUE);
+}
+
+/*! \brief Fill inside of box with mesh pattern.
+ *  \par Function Description
+ *  This function fills the inside of the box with a pattern made of two
+ *  sets of parallel lines in two directions. The first set is drawn inside
+ *  the box with an angle <B>angle1</B> from the horizontal. The distance
+ *  between two of these lines is given by <B>pitch1</B>.
+ *  The second set is drawn inside the box with an angle <B>angle2</B> from
+ *  the horizontal. The distance between two of these lines is given
+ *  by <B>pitch2</B>.
+ *  Every lines have the same width given be <B>fill_width</B>.
+ *
+ *  This function simply makes two successive calls to the function
+ *  #o_box_fill_hatch() respectively with <B>angle1</B>, <B>pitch1</B> and
+ *  <B>angle2</B>, <B>pitch2</B> for parameters.
+ *  \param [in] w_current   Schematic top level
+ *  \param [in] color       Box fill color.
+ *  \param [in] box         Box definition
+ *  \param [in] fill_width  BOX pattern fill width.
+ *  \param [in] angle1      1st angle for pattern.
+ *  \param [in] pitch1      1st pitch for pattern.
+ *  \param [in] angle2      2nd angle for pattern.
+ *  \param [in] pitch2      2nd pitch for pattern.
+ */
+static void
+o_box_fill_mesh (GSCHEM_TOPLEVEL *w_current,
+                 COLOR *color, BOX *box,
+                 gint fill_width,
+                 gint angle1, gint pitch1,
+                 gint angle2, gint pitch2)
+{
+  o_box_fill_hatch (w_current, color, box, fill_width, angle1, pitch1, -1, -1);
+  o_box_fill_hatch (w_current, color, box, fill_width, angle2, pitch2, -1, -1);
+}
+
 
 /*! \brief Draw a box on the screen.
  *  \par Function Description
@@ -112,8 +255,8 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   pitch1 = o_current->fill_pitch1;
   angle2 = o_current->fill_angle2;
   pitch2 = o_current->fill_pitch2;
-	
-  switch(o_current->fill_type) {
+
+  switch (o_current->fill_type) {
     case FILLING_HOLLOW:
       angle1 = -1; angle2 = -1;
       pitch1 = 1; pitch2 = 1;
@@ -124,13 +267,13 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
        */
       fill_func = o_box_fill_hollow;
       break;
-		
+
     case FILLING_FILL:
       angle1 = -1; angle2 = -1;
       pitch1 = 1; pitch2 = 1;
       fill_func = o_box_fill_fill;
       break;
-			
+
     case FILLING_MESH:
       fill_func = o_box_fill_mesh;
       break;
@@ -140,23 +283,21 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
       pitch2 = 1;
       fill_func = o_box_fill_hatch;
       break;
-			
+
     case FILLING_VOID:
     default:
       angle1 = -1; angle2 = -1;
       pitch1 = 1; pitch2 = 1;
       fill_func = o_box_fill_hollow;
-      fprintf(stderr, _("Unknown type for box (fill)!\n"));
+      fprintf (stderr, _("Unknown type for box (fill)!\n"));
   }
 
-  if((pitch1 <= 0) || (pitch2 <= 0)) {
+  if ((pitch1 <= 0) || (pitch2 <= 0))
     fill_func = o_box_fill_fill;
-  }
 
-  (*fill_func) (w_current->drawable, w_current->gc,
-                o_drawing_color (w_current, o_current),
-                w_current, o_current->box,
-                o_current->fill_width, angle1, pitch1, angle2, pitch2);
+  (*fill_func) (w_current, o_drawing_color (w_current, o_current),
+                o_current->box, o_current->fill_width,
+                angle1, pitch1, angle2, pitch2);
 
   gschem_cairo_set_source_color (w_current,
                                  o_drawing_color (w_current, o_current));
@@ -173,156 +314,8 @@ void o_box_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                                   o_current->line_length,
                                   o_current->line_space);
 
-  if (o_current->selected && w_current->draw_grips) {
+  if (o_current->selected && w_current->draw_grips)
     o_box_draw_grips (w_current, o_current);
-  }
-}
-
-/*! \brief Placeholder filling function.
- *  \par Function Description
- *  This function does nothing. It has the same prototype as all the
- *  filling functions. It prevent from making a difference between filling
- *  in function #o_box_draw().
- *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box fill color. 
- *  \param [in] w_current   Schematic top level
- *  \param [in] box         Box definition
- *  \param [in] fill_width  BOX pattern fill width.
- *  \param [in] angle1      1st angle for pattern.
- *  \param [in] pitch1      1st pitch for pattern.
- *  \param [in] angle2      2nd angle for pattern.
- *  \param [in] pitch2      2nd pitch for pattern.
- */
-void o_box_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                        GSCHEM_TOPLEVEL *w_current, BOX *box,
-                        gint fill_width,
-                        gint angle1, gint pitch1,
-                        gint angle2, gint pitch2)
-{
-}
-
-/*! \brief Fill inside of box with a solid pattern.
- *  \par Function Description
- *  This function fills the inside of the box with a solid pattern.
- *  Parameters <B>angle1</B>, <B>pitch1</B> and <B>angle2</B>,
- *  <B>pitch2</B> and <B>fill_width</B> are unused here but kept for compatibility
- *  with other box filling functions.
- *
- *  The box is defined in the same way as it is in GDK : one point and
- *  the width and height of the box.
- *
- *  All parameters are given in pixel.
- *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box fill color.
- *  \param [in] w_current   Schematic top level
- *  \param [in] box         Box definition
- *  \param [in] fill_width  BOX pattern fill width.
- *  \param [in] angle1      (unused)
- *  \param [in] pitch1      (unused)
- *  \param [in] angle2      (unused)
- *  \param [in] pitch2      (unused)
- */
-void o_box_fill_fill (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                      GSCHEM_TOPLEVEL *w_current, BOX *box,
-                      gint fill_width,
-                      gint angle1, gint pitch1,
-                      gint angle2, gint pitch2)
-{
-  /* NOP: We'll fill it when we do the stroking */
-}
-
-/*! \brief Fill inside of box with single line pattern.
- *  \par Function Description
- *  This function fills the inside of the box with a pattern made of lines.
- *  The lines are drawn inside the box with an angle <B>angle1</B> from the
- *  horizontal. The distance between two of these lines is given by
- *  <B>pitch1</B> and their width by <B>fill_width</B>.
- *  Parameters <B>angle2</B> and <B>pitch2</B> are unused here but kept for
- *  compatbility with other box filling functions.
- *
- *  The box is defined in the same way as it is in GDK : one point and the
- *  width and height of the box.
- *
- *  All parameters are given in pixel.
- *
- *  Negative or null values for <B>pitch1</B> are not allowed as it leads to
- *  an endless loop.
- *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box fill color. 
- *  \param [in] w_current   Schematic top level
- *  \param [in] box         Box definition
- *  \param [in] fill_width  BOX pattern fill width.
- *  \param [in] angle1      1st angle for pattern.
- *  \param [in] pitch1      1st pitch for pattern.
- *  \param [in] angle2      (unused)
- *  \param [in] pitch2      (unused)
- */
-void o_box_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                       GSCHEM_TOPLEVEL *w_current, BOX *box,
-                       gint fill_width,
-                       gint angle1, gint pitch1,
-                       gint angle2, gint pitch2)
-{
-  int i;
-  GArray *lines;
-
-  gschem_cairo_set_source_color (w_current, color);
-
-  lines = g_array_new (FALSE, FALSE, sizeof (LINE));
-  m_hatch_box (box, angle1, pitch1, lines);
-
-  for (i=0; i < lines->len; i++) {
-    LINE *line = &g_array_index (lines, LINE, i);
-
-    gschem_cairo_line (w_current, END_NONE, fill_width, line->x[0], line->y[0],
-                                                        line->x[1], line->y[1]);
-  }
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, fill_width, -1, -1);
-
-  g_array_free (lines, TRUE);
-}
-
-/*! \brief Fill inside of box with mesh pattern.
- *  \par Function Description
- *  This function fills the inside of the box with a pattern made of two
- *  sets of parallel lines in two directions. The first set is drawn inside
- *  the box with an angle <B>angle1</B> from the horizontal. The distance
- *  between two of these lines is given by <B>pitch1</B>.
- *  The second set is drawn inside the box with an angle <B>angle2</B> from
- *  the horizontal. The distance between two of these lines is given
- *  by <B>pitch2</B>.
- *  Every lines have the same width given be <B>fill_width</B>.
- *
- *  This function simply makes two successive calls to the function
- *  #o_box_fill_hatch() respectively with <B>angle1</B>, <B>pitch1</B> and
- *  <B>angle2</B>, <B>pitch2</B> for parameters.
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box fill color. 
- *  \param [in] w_current   Schematic top level
- *  \param [in] box         Box definition
- *  \param [in] fill_width  BOX pattern fill width.
- *  \param [in] angle1      1st angle for pattern.
- *  \param [in] pitch1      1st pitch for pattern.
- *  \param [in] angle2      2nd angle for pattern.
- *  \param [in] pitch2      2nd pitch for pattern.
- */
-void o_box_fill_mesh (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                      GSCHEM_TOPLEVEL *w_current, BOX *box,
-                      gint fill_width,
-                      gint angle1, gint pitch1,
-                      gint angle2, gint pitch2)
-{
-  o_box_fill_hatch (w, gc, color, w_current, box,
-                    fill_width, angle1, pitch1, -1, -1);
-  o_box_fill_hatch (w, gc, color, w_current, box,
-                    fill_width, angle2, pitch2, -1, -1);
 }
 
 

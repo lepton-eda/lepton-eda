@@ -28,136 +28,11 @@
 #endif
 
 
-typedef void (*FILL_FUNC)( GdkDrawable *w, GdkGC *gc, COLOR *color,
-                           GSCHEM_TOPLEVEL *w_current, CIRCLE *circle,
+typedef void (*FILL_FUNC) (GSCHEM_TOPLEVEL *w_current,
+                           COLOR *color, CIRCLE *circle,
                            gint fill_width, gint angle1, gint pitch1,
-                           gint angle2, gint pitch2 );
+                           gint angle2, gint pitch2);
 
-
-/*! \brief Draw a circle on the screen.
- *  \par Function Description
- *  This function is used to draw a circle on screen. The circle is described
- *  by the OBJECT which is referred by <B>o_current</B>. The display is done 
- *  according to the current state, given by the GSCHEM_TOPLEVEL object pointed by
- *  <B>w_current</B>.
- *
- *  It first checks if the OBJECT pointed is valid or not. If not it
- *  returns and do not output anything. That should never happen though.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Circle OBJECT to draw.
- */
-void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  int angle1, pitch1, angle2, pitch2;
-  FILL_FUNC fill_func;
-
-  if (o_current->circle == NULL) {
-    return;
-  }
-
-#if DEBUG
-  printf("drawing circle\n\n");
-#endif
-	
-  /*
-   * The draw of the circle is divided in two steps : first step is to draw
-   * the outline, the second is to draw the filling pattern inside (if any).
-   *
-   * Finally the function takes care of the grips.
-   */
-
-  /*
-   * The values needed for the fill operation are taken from the
-   * <B>o_current</B> pointed OBJECT. It include the type of fill required, the
-   * width of the lines (if the fill use line) and angles and pitchs for hatch
-   * based filling.
-   *
-   * Once again the width of the line is important as if it is equal to 0 it
-   * may not be displayed. That is definetely not what we are looking for.
-   *
-   * Depending on the type of fill that has to be used inside the circle the
-   * right function is called. Values of <B>angle1</B>, <B>angle2</B>,
-   * <B>pitch1</B> and <B>pitch2</B> are adapted to the type of filling. The
-   * possible functions are the following : #o_circle_fill_hollow(),
-   * #o_circle_fill_fill(), #o_circle_fill_mesh() and #o_circle_fill_hatch().
-   *
-   * The combination <B>pitch1</B> <= 0 and <B>pitch2</B> <= 0 is avoided as it
-   * lead to an endless loop in function called after. It happens when the
-   * zoom factor is too small for two lines separated by the pitch to be
-   * distinct. If such a case is encountered the circle is filled hollow
-   * (e.q. not filled).
-   */
-
-  angle1 = o_current->fill_angle1;
-  pitch1 = o_current->fill_pitch1;
-  angle2 = o_current->fill_angle2;
-  pitch2 = o_current->fill_pitch2;
-	
-  switch(o_current->fill_type) {
-    case FILLING_HOLLOW:
-      angle1 = -1; angle2 = -1;
-      pitch1 = 1; pitch2 = 1;
-      /*
-       * this function is empty ! however if it do not use it we have to add
-       * a test before the call. Simply putting a return here instead is not
-       * possible as it would prevent any hollow circle from having its grips
-       */
-      fill_func = o_circle_fill_hollow;
-      break;
-		
-    case FILLING_FILL:
-      angle1 = -1; angle2 = -1;
-      pitch1 = 1; pitch2 = 1;
-      fill_func = o_circle_fill_fill;
-      break;
-			
-    case FILLING_MESH:
-      fill_func = o_circle_fill_mesh;
-      break;
-
-    case FILLING_HATCH:
-      angle2 = -1;
-      pitch2 = 1;
-      fill_func = o_circle_fill_hatch;
-      break;
-			
-    case FILLING_VOID:
-    default:
-      angle1 = -1; angle2 = -1;
-      pitch1 = 1; pitch2 = 1;
-      fill_func = o_circle_fill_hollow;			
-      fprintf(stderr, _("Unknown type for circle (fill)!\n"));
-  }
-
-  if((pitch1 <= 0) || (pitch2 <= 0)) {
-    fill_func = o_circle_fill_fill;
-  }
-
-  (*fill_func) (w_current->drawable, w_current->gc,
-                o_drawing_color (w_current, o_current),
-                w_current, o_current->circle,
-                o_current->fill_width, angle1, pitch1, angle2, pitch2);
-
-  gschem_cairo_arc (w_current, o_current->line_width,
-                               o_current->circle->center_x,
-                               o_current->circle->center_y,
-                               o_current->circle->radius, 0, 360);
-
-  gschem_cairo_set_source_color (w_current,
-                                 o_drawing_color (w_current, o_current));
-  if (o_current->fill_type == FILLING_FILL)
-    cairo_fill_preserve (w_current->cr);
-  gschem_cairo_stroke (w_current, o_current->line_type,
-                                  o_current->line_end,
-                                  o_current->line_width,
-                                  o_current->line_length,
-                                  o_current->line_space);
-
-  if (o_current->selected && w_current->draw_grips) {
-    o_circle_draw_grips (w_current, o_current);
-  }
-}
 
 /*! \brief Placeholder filling function.
  *  \par Function Description
@@ -168,10 +43,8 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *  The unit for <B>width</B>, <B>pitch1</B> and <B>pitch2</B> is pixel and unit
  *  for <B>angle1</B> and <B>angle2</B> is degree.
  *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Circle fill color. 
  *  \param [in] w_current   Schematic top level
+ *  \param [in] color       Circle fill color.
  *  \param [in] circle      Circle to be drawn
  *  \param [in] fill_width
  *  \param [in] angle1      1st angle for pattern.
@@ -179,11 +52,12 @@ void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *  \param [in] angle2      2nd angle for pattern.
  *  \param [in] pitch2      2nd pitch for pattern.
  */
-void o_circle_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                           GSCHEM_TOPLEVEL *w_current, CIRCLE *circle,
-                           gint fill_width,
-                           gint angle1, gint pitch1,
-                           gint angle2, gint pitch2)
+static void
+o_circle_fill_hollow (GSCHEM_TOPLEVEL *w_current,
+                      COLOR *color, CIRCLE *circle,
+                      gint fill_width,
+                      gint angle1, gint pitch1,
+                      gint angle2, gint pitch2)
 {
 }
 
@@ -201,10 +75,8 @@ void o_circle_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  The unit for <B>width</B>, <B>pitch1</B> and <B>pitch2</B> is pixel and unit
  *  for <B>angle1</B> and <B>angle2</B> is degree.
  *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Circle fill color. 
  *  \param [in] w_current   Schematic top level
+ *  \param [in] color       Circle fill color.
  *  \param [in] circle      Circle to be drawn
  *  \param [in] fill_width
  *  \param [in] angle1      (unused)
@@ -212,11 +84,12 @@ void o_circle_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] angle2      (unused)
  *  \param [in] pitch2      (unused)
  */
-void o_circle_fill_fill (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                         GSCHEM_TOPLEVEL *w_current, CIRCLE *circle,
-                         gint fill_width,
-                         gint angle1, gint pitch1,
-                         gint angle2, gint pitch2)
+static void
+o_circle_fill_fill (GSCHEM_TOPLEVEL *w_current,
+                    COLOR *color, CIRCLE *circle,
+                    gint fill_width,
+                    gint angle1, gint pitch1,
+                    gint angle2, gint pitch2)
 {
   /* NOP: We'll fill it when we do the stroking */
 }
@@ -242,10 +115,8 @@ void o_circle_fill_fill (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  Negative or null values for <B>pitch1</B> are not allowed as it leads to
  *  an endless loop.
  *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Circle fill color. 
  *  \param [in] w_current   Schematic top level
+ *  \param [in] color       Circle fill color.
  *  \param [in] circle      Circle to be drawn
  *  \param [in] fill_width
  *  \param [in] angle1      1st angle for pattern.
@@ -253,11 +124,12 @@ void o_circle_fill_fill (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] angle2      (unused)
  *  \param [in] pitch2      (unused)
  */
-void o_circle_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                          GSCHEM_TOPLEVEL *w_current, CIRCLE *circle,
-                          gint fill_width,
-                          gint angle1, gint pitch1,
-                          gint angle2, gint pitch2)
+static void
+o_circle_fill_hatch (GSCHEM_TOPLEVEL *w_current,
+                     COLOR *color, CIRCLE *circle,
+                     gint fill_width,
+                     gint angle1, gint pitch1,
+                     gint angle2, gint pitch2)
 {
   int i;
   GArray *lines;
@@ -296,10 +168,8 @@ void o_circle_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  #o_circle_fill_hatch() respectively with <B>angle1</B>, <B>pitch1</B> and
  *  <B>angle2</B>, <B>pitch2</B> for parameters.
  *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Circle fill color. 
  *  \param [in] w_current   Schematic top level
+ *  \param [in] color       Circle fill color.
  *  \param [in] circle      Circle to be drawn
  *  \param [in] fill_width
  *  \param [in] angle1      1st angle for pattern.
@@ -307,17 +177,137 @@ void o_circle_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] angle2      2nd angle for pattern.
  *  \param [in] pitch2      2nd pitch for pattern.
  */
-void o_circle_fill_mesh (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                         GSCHEM_TOPLEVEL *w_current, CIRCLE *circle,
-                         gint fill_width,
-                         gint angle1, gint pitch1,
-                         gint angle2, gint pitch2)
+static void
+o_circle_fill_mesh (GSCHEM_TOPLEVEL *w_current,
+                    COLOR *color, CIRCLE *circle,
+                    gint fill_width,
+                    gint angle1, gint pitch1,
+                    gint angle2, gint pitch2)
 {
-  o_circle_fill_hatch (w, gc, color, w_current, circle,
+  o_circle_fill_hatch (w_current, color, circle,
                        fill_width, angle1, pitch1, -1, -1);
-  o_circle_fill_hatch (w, gc, color, w_current, circle,
+  o_circle_fill_hatch (w_current, color, circle,
                        fill_width, angle2, pitch2, -1, -1);
 	
+}
+
+
+/*! \brief Draw a circle on the screen.
+ *  \par Function Description
+ *  This function is used to draw a circle on screen. The circle is described
+ *  by the OBJECT which is referred by <B>o_current</B>. The display is done
+ *  according to the current state, given by the GSCHEM_TOPLEVEL object pointed by
+ *  <B>w_current</B>.
+ *
+ *  It first checks if the OBJECT pointed is valid or not. If not it
+ *  returns and do not output anything. That should never happen though.
+ *
+ *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] o_current  Circle OBJECT to draw.
+ */
+void o_circle_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
+{
+  int angle1, pitch1, angle2, pitch2;
+  FILL_FUNC fill_func;
+
+  if (o_current->circle == NULL) {
+    return;
+  }
+
+  /*
+   * The draw of the circle is divided in two steps : first step is to draw
+   * the outline, the second is to draw the filling pattern inside (if any).
+   *
+   * Finally the function takes care of the grips.
+   */
+
+  /*
+   * The values needed for the fill operation are taken from the
+   * <B>o_current</B> pointed OBJECT. It include the type of fill required, the
+   * width of the lines (if the fill use line) and angles and pitchs for hatch
+   * based filling.
+   *
+   * Once again the width of the line is important as if it is equal to 0 it
+   * may not be displayed. That is definetely not what we are looking for.
+   *
+   * Depending on the type of fill that has to be used inside the circle the
+   * right function is called. Values of <B>angle1</B>, <B>angle2</B>,
+   * <B>pitch1</B> and <B>pitch2</B> are adapted to the type of filling. The
+   * possible functions are the following : #o_circle_fill_hollow(),
+   * #o_circle_fill_fill(), #o_circle_fill_mesh() and #o_circle_fill_hatch().
+   *
+   * The combination <B>pitch1</B> <= 0 and <B>pitch2</B> <= 0 is avoided as it
+   * lead to an endless loop in function called after. It happens when the
+   * zoom factor is too small for two lines separated by the pitch to be
+   * distinct. If such a case is encountered the circle is filled hollow
+   * (e.q. not filled).
+   */
+
+  angle1 = o_current->fill_angle1;
+  pitch1 = o_current->fill_pitch1;
+  angle2 = o_current->fill_angle2;
+  pitch2 = o_current->fill_pitch2;
+
+  switch(o_current->fill_type) {
+    case FILLING_HOLLOW:
+      angle1 = -1; angle2 = -1;
+      pitch1 = 1; pitch2 = 1;
+      /*
+       * this function is empty ! however if it do not use it we have to add
+       * a test before the call. Simply putting a return here instead is not
+       * possible as it would prevent any hollow circle from having its grips
+       */
+      fill_func = o_circle_fill_hollow;
+      break;
+
+    case FILLING_FILL:
+      angle1 = -1; angle2 = -1;
+      pitch1 = 1; pitch2 = 1;
+      fill_func = o_circle_fill_fill;
+      break;
+
+    case FILLING_MESH:
+      fill_func = o_circle_fill_mesh;
+      break;
+
+    case FILLING_HATCH:
+      angle2 = -1;
+      pitch2 = 1;
+      fill_func = o_circle_fill_hatch;
+      break;
+
+    case FILLING_VOID:
+    default:
+      angle1 = -1; angle2 = -1;
+      pitch1 = 1; pitch2 = 1;
+      fill_func = o_circle_fill_hollow;
+      fprintf (stderr, _("Unknown type for circle (fill)!\n"));
+  }
+
+  if ((pitch1 <= 0) || (pitch2 <= 0))
+    fill_func = o_circle_fill_fill;
+
+  (*fill_func) (w_current, o_drawing_color (w_current, o_current),
+                o_current->circle, o_current->fill_width,
+                angle1, pitch1, angle2, pitch2);
+
+  gschem_cairo_arc (w_current, o_current->line_width,
+                               o_current->circle->center_x,
+                               o_current->circle->center_y,
+                               o_current->circle->radius, 0, 360);
+
+  gschem_cairo_set_source_color (w_current,
+                                 o_drawing_color (w_current, o_current));
+  if (o_current->fill_type == FILLING_FILL)
+    cairo_fill_preserve (w_current->cr);
+  gschem_cairo_stroke (w_current, o_current->line_type,
+                                  o_current->line_end,
+                                  o_current->line_width,
+                                  o_current->line_length,
+                                  o_current->line_space);
+
+  if (o_current->selected && w_current->draw_grips)
+    o_circle_draw_grips (w_current, o_current);
 }
 
 

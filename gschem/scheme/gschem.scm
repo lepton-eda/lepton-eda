@@ -17,7 +17,15 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-(define (eval-cm exp) (eval exp (current-module)))
+
+; guile 1.4/1.6 compatibility:  Define an eval-in-currentmodule procedure
+; If this version of guile has an R5RS-compatible eval (that requires a
+; second argument specfying the environment), and a current-module function
+; (like 1.6) use them to define eval-cm. else define eval-cm to eval (for 1.4)
+(define eval-cm
+  (if (false-if-exception (eval 'display (current-module)))
+      (lambda (exp) (eval exp (current-module)))
+      eval))
 
 (define last-command-sequence #f)
 (define current-command-sequence '())
@@ -132,3 +140,29 @@
                  (cons (cons (cdr entry) 
                              (string-join (reverse (cons key keys)) " "))
                        (loop (cdr keymap) keys))))))))
+
+;; Predicate to test if entry is keymap or action
+(define gschem:keymap? list?)
+
+;; Map over keymap tree, applying f to every node before descending
+(define (gschem:for-each-keymap f kmap)
+  (if (gschem:keymap? kmap)
+    (for-each
+      (lambda (kmap-entry)
+        (apply f (list kmap-entry))
+        (gschem:for-each-keymap f (eval-cm (cdr kmap-entry))))
+      kmap)))
+
+;; Sorting multiple key modifiers for unambiguos keymaps
+(define gschem:normalize-accel!
+  (lambda (kmap-entry)
+    (let* ((accel-list (reverse (string-split (car kmap-entry) #\space)))
+           (modifiers (cdr accel-list))
+           (key (car accel-list))
+           (sorted (sort modifiers string<?))
+           (appended (append sorted (list key)))
+           (joined (string-join appended " ")))
+      (set-car! kmap-entry joined))))
+
+;; Once at startup normalize the global keymap
+(gschem:for-each-keymap gschem:normalize-accel! global-keymap)

@@ -287,6 +287,43 @@ static void celltextview_class_init (CellTextViewClass *klass);
 static void celltextview_init       (CellTextView *self);
 static void celltextview_cell_editable_init (GtkCellEditableIface *iface);
 
+enum {
+    PROP_EDIT_CANCELED = 1
+};
+
+static void celltextview_set_property (GObject *object,
+                                       guint property_id,
+                                       const GValue *value,
+                                       GParamSpec *pspec)
+{
+  CellTextView *celltextview = (CellTextView*) object;
+
+  switch (property_id) {
+      case PROP_EDIT_CANCELED:
+        celltextview->editing_canceled = g_value_get_boolean (value);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+  }
+}
+
+static void celltextview_get_property (GObject *object,
+                                       guint property_id,
+                                       GValue *value,
+                                       GParamSpec *pspec)
+{
+  CellTextView *celltextview = (CellTextView*) object;
+
+  switch (property_id) {
+      case PROP_EDIT_CANCELED:
+        g_value_set_boolean (value, celltextview->editing_canceled);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+  }
+}
+
+
 /*! \todo Finish function documentation
  *  \brief
  *  \par Function Description
@@ -377,7 +414,19 @@ GType celltextview_get_type()
  */
 static void celltextview_class_init(CellTextViewClass *klass)
 {
-/*   GObjectClass *gobject_class = G_OBJECT_CLASS (klass); */
+  GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
+
+  gobject_class->get_property = celltextview_get_property;
+  gobject_class->set_property = celltextview_set_property;
+
+  g_object_class_install_property (
+    gobject_class,
+    PROP_EDIT_CANCELED,
+    g_param_spec_boolean ("editing-canceled",
+                          "",
+                          "",
+                          FALSE,
+                          G_PARAM_READWRITE));
 }
 
 /*! \todo Finish function documentation

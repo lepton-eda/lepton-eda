@@ -133,6 +133,9 @@ AC_SEARCH_LIBS([getopt_long], [gnugetopt],
 # Check for misc features of awk
 AX_AWK_FEATURES
 
+# Check Guile features
+AX_GUILE_DISPLAY_ERROR
+
 #####################################################################
 # Optional things
 #####################################################################

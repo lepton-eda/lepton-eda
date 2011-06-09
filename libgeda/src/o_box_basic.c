@@ -32,9 +32,6 @@
 #include <dmalloc.h>
 #endif
 
-/*! Default setting for draw function. */
-void (*box_draw_func)() = NULL;
-
 /*! \brief Create a BOX OBJECT
  *  \par Function Description
  *  This function creates a new object representing a box.
@@ -85,9 +82,6 @@ OBJECT *o_box_new(TOPLEVEL *toplevel,
 		     END_NONE, TYPE_SOLID, 0, -1, -1);
   o_set_fill_options(toplevel, new_node,
 		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
-
-  new_node->draw_func = box_draw_func; 
-  new_node->sel_func  = select_func;  
 
   /* compute the bounding box */
   o_box_recalc(toplevel, new_node);

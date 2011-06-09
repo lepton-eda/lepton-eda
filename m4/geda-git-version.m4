@@ -1,8 +1,8 @@
 # geda-git-version.m4                                   -*-Autoconf-*-
-# serial 1.0
+# serial 2
 
 dnl Extract gEDA version parameters from a git repository, if present.
-dnl Copyright (C) 2009  Peter Brett <peter@peter-b.co.uk>
+dnl Copyright (C) 2009-2011  Peter Brett <peter@peter-b.co.uk>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ changequote([,])
   # describe.
   if test "X$HAVE_GIT_REPO" = "Xyes"; then
     AC_MSG_CHECKING([version from git repository])
-    GIT_VERSION=`cd $srcdir && $GIT describe --always`
+    GIT_VERSION=`cd $srcdir && $GIT describe`
     AC_MSG_RESULT([$GIT_VERSION])
   fi
 

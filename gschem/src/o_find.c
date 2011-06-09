@@ -32,6 +32,46 @@
 /*! \brief Tests a if a given OBJECT was hit at a given set of coordinates
  *
  *  \par Function Description
+ *  Tests a if a given OBJECT was hit at a given set of coordinates. If an
+ *  object is not selectable (e.g. it is locked), or it is invisible and
+ *  not being rendered, this function will return FALSE.
+ *
+ *  \param [in] w_current         The GSCHEM_TOPLEVEL object.
+ *  \param [in] object            The OBJECT being hit-tested.
+ *  \param [in] w_x               The X coordinate to test (in world coords).
+ *  \param [in] w_y               The Y coordinate to test (in world coords).
+ *  \param [in] w_slack           The slack applied to the hit-test.
+ *
+ *  \returns TRUE if the OBJECT was hit, otherwise FALSE.
+ */
+static gboolean
+is_object_hit (GSCHEM_TOPLEVEL *w_current, OBJECT *object,
+               int w_x, int w_y, int w_slack)
+{
+  if (!object->selectable)
+    return FALSE;
+
+  /* We can't hit invisible (text) objects unless show_hidden_text is active.
+   */
+  if (!o_is_visible (w_current->toplevel, object) &&
+      !w_current->toplevel->show_hidden_text)
+    return FALSE;
+
+  /* Do a coarse test first to avoid computing distances for objects ouside
+   * of the hit range.
+   */
+  if (!inside_region (object->w_left  - w_slack, object->w_top    - w_slack,
+                      object->w_right + w_slack, object->w_bottom + w_slack,
+                      w_x, w_y))
+    return FALSE;
+
+  return (o_shortest_distance (object, w_x, w_y) < w_slack);
+}
+
+
+/*! \brief Tests a if a given OBJECT was hit at a given set of coordinates
+ *
+ *  \par Function Description
  *  Tests a if a given OBJECT was hit at a given set of coordinates. If so,
  *  processes selection changes as appropriate for the object and passed
  *  flag. Saves a pointer to the found object so future find operations
@@ -45,30 +85,25 @@
  *  \param [in] change_selection  Whether to select the found object or not.
  *  \returns TRUE if the OBJECT was hit, otherwise FALSE.
  */
-static gboolean find_single_object (GSCHEM_TOPLEVEL *w_current, OBJECT *object,
-                                    int w_x, int w_y, int w_slack,
-                                    int change_selection)
+static gboolean
+find_single_object (GSCHEM_TOPLEVEL *w_current, OBJECT *object,
+                    int w_x, int w_y, int w_slack,
+                    int change_selection)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
-  if (object->sel_func != NULL &&
-      (o_is_visible (toplevel, object) || toplevel->show_hidden_text) &&
-      inside_region (object->w_left  - w_slack, object->w_top    - w_slack,
-                     object->w_right + w_slack, object->w_bottom + w_slack,
-                     w_x, w_y) &&
-      o_shortest_distance (object, w_x, w_y) < w_slack) {
-    if (change_selection) {
-      /* FIXME: should this be moved to o_select_object()? (Werner) */
-      if (object->type == OBJ_NET && w_current->net_selection_mode) {
-        o_select_connected_nets (w_current, object);
-      } else {
-        (*object->sel_func) (w_current, object, SINGLE, 0); /* 0 is count */
-      }
-    }
-    toplevel->page_current->object_lastplace = object;
-    i_update_menus (w_current);
-    return TRUE;
+  if (!is_object_hit (w_current, object, w_x, w_y, w_slack))
+    return FALSE;
+
+  if (change_selection) {
+    /* FIXME: should this be moved to o_select_object()? (Werner) */
+    if (object->type == OBJ_NET && w_current->net_selection_mode)
+      o_select_connected_nets (w_current, object);
+    else
+      o_select_object (w_current, object, SINGLE, 0); /* 0 is count */
   }
-  return FALSE;
+
+  w_current->toplevel->page_current->object_lastplace = object;
+  i_update_menus (w_current);
+  return TRUE;
 }
 
 
@@ -151,38 +186,20 @@ gboolean o_find_object (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
  *  \par Function Description
  *
  */
-gboolean o_find_selected_object(GSCHEM_TOPLEVEL *w_current,
-				int w_x, int w_y)
+gboolean
+o_find_selected_object (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_current=NULL;
+  int w_slack = WORLDabs (w_current, w_current->select_slack_pixels);
   GList *s_current;
-  int w_slack;
 
-  w_slack = WORLDabs (w_current, w_current->select_slack_pixels);
+  for (s_current = geda_list_get_glist (toplevel->page_current->selection_list);
+       s_current != NULL; s_current = g_list_next (s_current)) {
+    OBJECT *o_current = s_current->data;
 
-  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
-  /* do first search */
-  while (s_current != NULL) {
-    o_current = (OBJECT *) s_current->data;
-    if (inside_region(o_current->w_left - w_slack, o_current->w_top - w_slack,
-                      o_current->w_right + w_slack, o_current->w_bottom + w_slack,
-                      w_x, w_y)) {
-
-#if DEBUG
-      printf("o_find_selected_object:\n");
-      printf("Object bounds:\n\tL: %i\tR: %i\n\tT: %i\tB: %i.\n",
-             o_current->w_left, o_current->w_right, o_current->w_top, o_current->w_bottom);
-      printf("Screen pointer at: (%i,%i)\n", screen_x, screen_y);
-#endif
-      if (o_current->sel_func != NULL &&
-          (o_is_visible (toplevel, o_current) || toplevel->show_hidden_text)) {
-        return TRUE;
-      }
-    }
-
-    s_current = g_list_next(s_current);
+    if (is_object_hit (w_current, o_current, w_x, w_y, w_slack))
+      return TRUE;
   }
 
-  return (FALSE);
+  return FALSE;
 }

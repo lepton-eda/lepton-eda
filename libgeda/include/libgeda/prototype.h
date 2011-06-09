@@ -2,7 +2,7 @@
 /* a_basic.c */
 const gchar *o_file_format_header();
 gchar *o_save_buffer (TOPLEVEL *toplevel, const GList *object_list);
-int o_save (TOPLEVEL *toplevel, const GList *object_list, const char *filename);
+int o_save (TOPLEVEL *toplevel, const GList *object_list, const char *filename, GError **err);
 GList *o_read_buffer(TOPLEVEL *toplevel, GList *object_list, char *buffer, const int size, const char *name);
 GList *o_read(TOPLEVEL *toplevel, GList *object_list, char *filename, GError **err);
 void o_scale(TOPLEVEL *toplevel, GList *list, int x_scale, int y_scale);
@@ -14,7 +14,7 @@ int f_open(TOPLEVEL *toplevel, PAGE *page, const gchar *filename, GError **err);
 int f_open_flags(TOPLEVEL *toplevel, PAGE *page, const gchar *filename,
                  const gint flags, GError **err);
 void f_close(TOPLEVEL *toplevel);
-int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename);
+int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **error);
 gchar *f_normalize_filename (const gchar *filename, GError **error);
 char *follow_symlinks (const gchar *filename, GError **error);
 

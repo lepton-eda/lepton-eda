@@ -59,11 +59,6 @@
 #endif
 
 
-
-/*! Default setting for object selection function. */
-void (*select_func)() = error_if_called;
-
-
 /*! \brief Check if point is inside a region
  *  \par Function Description
  *  This function takes a rectangular region and a point.  It will check

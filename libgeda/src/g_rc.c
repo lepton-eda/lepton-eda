@@ -292,9 +292,10 @@ g_rc_parse__process_error (GError **err, const gchar *pname)
     fprintf(stderr, "%s\n", msgl);
 
   } else {
-    /* Config files are allowed to be missing; check for this. */
-    if (g_error_matches (*err, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
-      s_log_message ("%s\n", (*err)->message);
+    /* Config files are allowed to be missing or skipped; check for
+     * this. */
+    if (g_error_matches (*err, G_FILE_ERROR, G_FILE_ERROR_NOENT) ||
+        g_error_matches (*err, EDA_ERROR, EDA_ERROR_RC_TWICE)) {
       return;
     }
 
@@ -742,9 +743,9 @@ SCM g_rc_world_size(SCM width, SCM height, SCM border)
               SCM_ARG3, FUNC_NAME);
   
   /* yes this is legit, we are casing the resulting double to an int */
-  i_width  = (int) (SCM_NUM2DOUBLE (0, width)  * MILS_PER_INCH);
-  i_height = (int) (SCM_NUM2DOUBLE (0, height) * MILS_PER_INCH);
-  i_border = (int) (SCM_NUM2DOUBLE (0, border) * MILS_PER_INCH);
+  i_width  = (int) (scm_to_double (width)  * MILS_PER_INCH);
+  i_height = (int) (scm_to_double (height) * MILS_PER_INCH);
+  i_border = (int) (scm_to_double (border) * MILS_PER_INCH);
 
   PAPERSIZEtoWORLD(i_width, i_height, i_border,
                    &init_right, &init_bottom);

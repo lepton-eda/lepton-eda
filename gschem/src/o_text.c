@@ -432,11 +432,14 @@ static void o_text_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  *  \par Function Description
  *
  */
+#define I_OFFSET      10
+#define I_SMALL_DIST  20
+#define X_SMALL_DIST  10
 void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  int screen_x1, screen_y1;
-  int small_dist, offset;
+  int x, y;
+  int color;
 
   g_return_if_fail (o_current != NULL);
   g_return_if_fail (o_current->type == OBJ_TEXT);
@@ -453,38 +456,26 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
     /* Indicate on the schematic that the text is invisible by */
     /* drawing a little I on the screen at the origin */
-    if (!o_is_visible (toplevel, o_current) && toplevel->show_hidden_text) {
-      if (toplevel->override_color != -1 ) {
-        gdk_gc_set_foreground(w_current->gc, 
-                              x_get_color(toplevel->override_color));
-      } else {
+    if (!o_is_visible (toplevel, o_current)  && toplevel->show_hidden_text) {
+      if (toplevel->override_color != -1 )
+        color = toplevel->override_color;
+      else
+        color = LOCK_COLOR;
 
-        gdk_gc_set_foreground (w_current->gc, x_get_color (LOCK_COLOR));
-      }
+      x = o_current->text->x + I_OFFSET;
+      y = o_current->text->y - I_OFFSET;
 
-      offset = SCREENabs (w_current, 10);
-      small_dist = SCREENabs (w_current, 20);
-      WORLDtoSCREEN (w_current, o_current->text->x, o_current->text->y, &screen_x1, &screen_y1);
-      screen_x1 += offset;
-      screen_y1 += offset;
       /* Top part of the I */
-      gdk_draw_line (w_current->drawable, w_current->gc,
-                     screen_x1,
-                     screen_y1,
-                     screen_x1+small_dist,
-                     screen_y1);
+      gschem_cairo_line (w_current, END_NONE, 1, x, y, x + I_SMALL_DIST, y);
       /* Middle part of the I */
-      gdk_draw_line (w_current->drawable, w_current->gc,
-                     screen_x1+small_dist/2,
-                     screen_y1,
-                     screen_x1+small_dist/2,
-                     screen_y1+small_dist);
+      gschem_cairo_line (w_current, END_NONE, 1, x + I_SMALL_DIST / 2, y,
+                         x + I_SMALL_DIST / 2, y - I_SMALL_DIST);
       /* Bottom part of the I */
-      gdk_draw_line (w_current->drawable, w_current->gc,
-                     screen_x1,
-                     screen_y1+small_dist,
-                     screen_x1+small_dist,
-                     screen_y1+small_dist);
+      gschem_cairo_line (w_current, END_NONE, 1, x, y - I_SMALL_DIST,
+                         x + I_SMALL_DIST, y - I_SMALL_DIST);
+
+      gschem_cairo_set_source_color (w_current, x_color_lookup (color));
+      gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 1, -1, -1);
     }
   } else {
     /* draw a box in it's place */
@@ -504,41 +495,30 @@ void o_text_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     return;
   }
 
-  small_dist = SCREENabs (w_current, 10);
-
   /* Switch of mark drawing for non-selected text, and at small sizes */
-  if (!o_current->selected || small_dist < MINIMUM_MARK_SMALL_DIST)
+  if (!o_current->selected ||
+      SCREENabs (w_current, X_SMALL_DIST) < MINIMUM_MARK_SMALL_DIST)
     return;
 
-  WORLDtoSCREEN (w_current, o_current->text->x, o_current->text->y, &screen_x1, &screen_y1);
+  if (toplevel->override_color != -1 )
+    color = toplevel->override_color;
+  else
+    color = LOCK_COLOR;
 
-  /* this is not really a fix, but a lame patch */
-  /* not having this will cause a bad draw of things when coords */
-  /* get close to the 2^15 limit of X */
-  if (screen_x1+small_dist > 32767 || screen_y1+small_dist > 32767) {
-    return;
-  }
-
-  if (toplevel->override_color != -1 ) {
-    gdk_gc_set_foreground(w_current->gc, 
-                          x_get_color(toplevel->override_color));
-  } else {
-
-    gdk_gc_set_foreground (w_current->gc, x_get_color (LOCK_COLOR));
-  }
-
-  gdk_draw_line (w_current->drawable, w_current->gc,
-                 screen_x1-small_dist,
-                 screen_y1+small_dist,
-                 screen_x1+small_dist,
-                 screen_y1-small_dist);
-
-  gdk_draw_line (w_current->drawable, w_current->gc,
-                 screen_x1+small_dist,
-                 screen_y1+small_dist,
-                 screen_x1-small_dist,
-                 screen_y1-small_dist);
+  /* reference point */
+  x = o_current->text->x;
+  y = o_current->text->y;
+  gschem_cairo_line (w_current, END_NONE, 1,
+                     x - X_SMALL_DIST, y + X_SMALL_DIST,
+                     x + X_SMALL_DIST, y - X_SMALL_DIST);
+  gschem_cairo_line (w_current, END_NONE, 1,
+                     x + X_SMALL_DIST, y + X_SMALL_DIST,
+                     x - X_SMALL_DIST, y - X_SMALL_DIST);
+  gschem_cairo_set_source_color (w_current, x_color_lookup (color));
+  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 1, -1, -1);
 }
+#undef OFFSET
+#undef SMALL_DIST
 
 
 /*! \todo Finish function documentation!!!

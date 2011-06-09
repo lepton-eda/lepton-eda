@@ -110,15 +110,12 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
 		
   /* Setup the color */
   new_node->color = DEFAULT_COLOR;
-  new_node->selected = FALSE;
   new_node->dont_redraw = FALSE;
+  new_node->selectable = TRUE;
+  new_node->selected = FALSE;
   new_node->locked_color = -1;
 
   new_node->bus_ripper_direction = 0;
-
-  new_node->action_func = error_if_called; 
-  new_node->sel_func = error_if_called; 
-  new_node->draw_func = error_if_called; 
 
   new_node->line_end = END_NONE;
   new_node->line_type = TYPE_SOLID;

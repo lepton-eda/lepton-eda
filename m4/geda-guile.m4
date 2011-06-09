@@ -31,12 +31,12 @@ AC_DEFUN([AX_CHECK_GUILE],
   GUILE_MIN_TEENY=`echo ${GUILE_MIN_VER} | sed -e 's;.*\.;;'`
 
   _found_pkg_config_guile=yes
-  PKG_CHECK_MODULES(GUILE, [guile-1.8] , ,
+  PKG_CHECK_MODULES(GUILE, [guile-2.0] , ,
     [_found_pkg_config_guile=no])
 
   if test "${_found_pkg_config_guile}" = "no" ; then
     _found_pkg_config_guile=yes
-    PKG_CHECK_MODULES(GUILE, [guile-2.0] , ,
+    PKG_CHECK_MODULES(GUILE, [guile-1.8] , ,
       [_found_pkg_config_guile=no])
   fi
 

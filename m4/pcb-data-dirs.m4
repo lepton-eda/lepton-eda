@@ -1,8 +1,9 @@
 # pcb-data-dirs.m4                                      -*-Autoconf-*-
-# serial 1.0
+# serial 2
 
 dnl PCB prefix and m4 library directory (needed by gnetlist)
 dnl Copyright (C) 2009  Peter Brett <peter@peter-b.co.uk>
+dnl Copyright (C) 2011  Peter Clifton <pcjc2@cam.ac.uk>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -62,17 +63,4 @@ AC_DEFUN([AX_PCB_DIRS],
       fi ], [])
   AC_MSG_RESULT([$PCBLIBPATH])
   AC_SUBST([PCBLIBPATH])
-
-  # PCB configuration files
-  AC_MSG_CHECKING([where to look for PCB configuration])
-  PCBCONFDIR="${sysconfdir}/pcb"
-  AC_ARG_WITH([pcb-confdir],
-    AS_HELP_STRING([--with-pcb-confdir=DIR],
-      [directory where PCB site configuration files are installed [[SYSCONFDIR/pcb]]]),
-   [ if (test "X$with_pcb_confdir" != "Xno" &&
-          test "X$with_pcb_confdir" != "Xyes"); then
-        PCBCONFDIR="$with_pcb_m4dir"
-     fi ], [])
-  AC_MSG_RESULT([$PCBCONFDIR])
-  AC_SUBST([PCBCONFDIR])
 ])dnl AX_PCB_DIRS

@@ -420,13 +420,11 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
 
   if (w_current->scrollbars_flag == TRUE) {
     /* setup scroll bars */
-    w_current->v_adjustment =
-      gtk_adjustment_new (toplevel->init_bottom,
-                          0.0, toplevel->init_bottom,
-                          100.0, 100.0, 10.0);
+    w_current->v_adjustment = GTK_ADJUSTMENT (
+      gtk_adjustment_new (toplevel->init_bottom, 0.0, toplevel->init_bottom,
+                          100.0, 100.0, 10.0));
 
-    w_current->v_scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (
-                                                                 w_current->v_adjustment));
+    w_current->v_scrollbar = gtk_vscrollbar_new (w_current->v_adjustment);
 
     gtk_range_set_update_policy (GTK_RANGE (w_current->v_scrollbar),
                                  GTK_UPDATE_CONTINUOUS);
@@ -434,17 +432,15 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
     gtk_box_pack_start (GTK_BOX (drawbox), w_current->v_scrollbar,
                         FALSE, FALSE, 0);
 
-    g_signal_connect (G_OBJECT (w_current->v_adjustment),
+    g_signal_connect (w_current->v_adjustment,
                       "value_changed",
                       G_CALLBACK (x_event_vschanged),
                       w_current);
 
-    w_current->h_adjustment = gtk_adjustment_new (0.0, 0.0,
-                                                  toplevel->init_right,
-                                                  100.0, 100.0, 10.0);
+    w_current->h_adjustment = GTK_ADJUSTMENT (
+      gtk_adjustment_new (0.0, 0.0, toplevel->init_right, 100.0, 100.0, 10.0));
 
-    w_current->h_scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (
-                                                                 w_current->h_adjustment));
+    w_current->h_scrollbar = gtk_hscrollbar_new (w_current->h_adjustment);
 
     gtk_range_set_update_policy (GTK_RANGE (w_current->h_scrollbar),
                                  GTK_UPDATE_CONTINUOUS);
@@ -452,7 +448,7 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
     gtk_box_pack_start (GTK_BOX (main_box), w_current->h_scrollbar,
                         FALSE, FALSE, 0);
 
-    g_signal_connect (G_OBJECT (w_current->h_adjustment),
+    g_signal_connect (w_current->h_adjustment,
                       "value_changed",
                       G_CALLBACK (x_event_hschanged),
                       w_current);
@@ -762,7 +758,7 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
                      toplevel->page_current->page_filename);
   }
 
-  if (scm_hook_empty_p (new_page_hook) == SCM_BOOL_F)
+  if (scm_is_false (scm_hook_empty_p (new_page_hook)))
     scm_run_hook (new_page_hook,
                   scm_list_1 (edascm_from_page (page)));
 
@@ -849,6 +845,7 @@ x_window_save_page (GSCHEM_TOPLEVEL *w_current, PAGE *page, const gchar *filenam
   PAGE *old_current;
   const gchar *log_msg, *state_msg;
   gint ret;
+  GError *err = NULL;
 
   g_return_val_if_fail (toplevel != NULL, 0);
   g_return_val_if_fail (page     != NULL, 0);
@@ -860,12 +857,23 @@ x_window_save_page (GSCHEM_TOPLEVEL *w_current, PAGE *page, const gchar *filenam
   /* change to page */
   s_page_goto (toplevel, page);
   /* and try saving current page to filename */
-  ret = (gint)f_save (toplevel, toplevel->page_current, filename);
+  ret = (gint)f_save (toplevel, toplevel->page_current, filename, &err);
   if (ret != 1) {
-    /* an error occured when saving page to file */
     log_msg   = _("Could NOT save page [%s]\n");
     state_msg = _("Error while trying to save");
 
+    GtkWidget *dialog;
+
+    dialog = gtk_message_dialog_new (GTK_WINDOW (w_current->main_window),
+                                     GTK_DIALOG_DESTROY_WITH_PARENT,
+                                     GTK_MESSAGE_ERROR,
+                                     GTK_BUTTONS_CLOSE,
+                                     "%s",
+                                     err->message);
+    gtk_window_set_title (GTK_WINDOW (dialog), _("Failed to save file"));
+    gtk_dialog_run (GTK_DIALOG (dialog));
+    gtk_widget_destroy (dialog);
+    g_clear_error (&err);
   } else {
     /* successful save of page to file, update page... */
     /* change page name if necessary and prepare log message */

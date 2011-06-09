@@ -180,7 +180,7 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
       case (OBJ_COMPLEX):
       case (OBJ_PLACEHOLDER):
 
-        if (scm_hook_empty_p(move_component_hook) == SCM_BOOL_F &&
+        if (scm_is_false (scm_hook_empty_p (move_component_hook)) &&
             object != NULL) {
           scm_run_hook(move_component_hook,
                        scm_cons (g_make_attrib_smob_list

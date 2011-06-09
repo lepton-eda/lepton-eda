@@ -762,7 +762,7 @@ create_inuse_tree_model (Compselect *compselect)
                         -1);
   }
 
-  g_list_free (symlist);
+  g_list_free (symhead);
 
   return (GtkTreeModel*)store;
 }
@@ -822,6 +822,7 @@ compselect_callback_refresh_library (GtkButton *button, gpointer user_data)
 {
   Compselect *compselect = COMPSELECT (user_data);
   GtkTreeModel *model;
+  GtkTreeSelection *selection;
 
   /* Rescan the libraries for symbols */
   s_clib_refresh ();
@@ -838,11 +839,26 @@ compselect_callback_refresh_library (GtkButton *button, gpointer user_data)
                                           compselect,
                                           NULL);
 
+  /* Block handling selection updated for duration of model changes */
+  selection = gtk_tree_view_get_selection (compselect->libtreeview);
+  g_signal_handlers_block_by_func (selection,
+                                   compselect_callback_tree_selection_changed,
+                                   compselect);
+
+  /* Update the view model with signals blocked */
   gtk_tree_view_set_model (compselect->libtreeview, model);
 
   /* Refresh the "In Use" view */
   model = create_inuse_tree_model (compselect);
+
+  /* Here we can update the model without blocking signals
+   * as this is the second (final) tree view we are updating */
   gtk_tree_view_set_model (compselect->inusetreeview, model);
+
+  /* Unblock & fire handler for libtreeview selection */
+  g_signal_handlers_unblock_by_func (selection,
+                                     compselect_callback_tree_selection_changed,
+                                     compselect);
 }
 
 /*! \brief Creates the treeview for the "In Use" view. */

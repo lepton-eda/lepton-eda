@@ -54,8 +54,7 @@ void o_select_run_hooks(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int flag)
    * are selecting a component.  This will likely be used for cross probing
    * between schematics and PCB layout or schematics and simulation results.
    */
-  if ( (scm_hook_empty_p(deselect_all_hook) == SCM_BOOL_F) 
-       && flag == 2 )
+  if ( scm_is_false (scm_hook_empty_p (deselect_all_hook)) && flag == 2 )
   {
     scm_run_hook(deselect_all_hook, 
 		 scm_cons (g_make_attrib_smob_list(w_current, o_current),
@@ -67,7 +66,7 @@ void o_select_run_hooks(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int flag)
    * are selecting a component.  This will likely be used for cross probing
    * between schematics and PCB layout or schematics and simulation results.
    */
-  if ( (scm_hook_empty_p(select_component_hook) == SCM_BOOL_F) 
+  if ( scm_is_false (scm_hook_empty_p (select_component_hook))
        && o_current
        && (o_current->type == OBJ_COMPLEX) 
        && flag == 1 )
@@ -82,7 +81,7 @@ void o_select_run_hooks(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int flag)
    * are deselecting a component.  This will likely be used for cross probing
    * between schematics and PCB layout or schematics and simulation results.
    */
-  if ( (scm_hook_empty_p(deselect_component_hook) == SCM_BOOL_F) 
+  if ( scm_is_false (scm_hook_empty_p(deselect_component_hook))
        && o_current
        && (o_current->type == OBJ_COMPLEX) 
        && flag == 0 )
@@ -97,7 +96,7 @@ void o_select_run_hooks(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int flag)
    * are selecting a net.  This will likely be used for cross probing
    * between schematics and PCB layout or schematics and simulation results.
    */
-  if ( (scm_hook_empty_p(select_net_hook) == SCM_BOOL_F) 
+  if ( scm_is_false (scm_hook_empty_p (select_net_hook))
        && o_current
        && (o_current->type == OBJ_NET) 
        && flag == 1) 
@@ -112,7 +111,7 @@ void o_select_run_hooks(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int flag)
    * are deselecting a net.  This will likely be used for cross probing
    * between schematics and PCB layout or schematics and simulation results.
    */
-  if ( (scm_hook_empty_p(select_net_hook) == SCM_BOOL_F) 
+  if ( scm_is_false (scm_hook_empty_p (select_net_hook))
        && o_current
        && (o_current->type == OBJ_NET) 
        && flag == 0) 
@@ -422,7 +421,7 @@ void o_select_connected_nets(GSCHEM_TOPLEVEL *w_current, OBJECT* o_net)
       o_current = iter1->data;
       if (o_current->type == OBJ_NET && 
 	  (!o_current->selected || count == 0)) {
-	(*o_current->sel_func)(w_current, o_current, SINGLE, count);
+	o_select_object (w_current, o_current, SINGLE, count);
 	if (w_current->net_selection_state > 1) {
 	  /* collect nets */
 	  netstack = g_list_concat(s_conn_return_others(NULL, o_current), netstack);
@@ -560,10 +559,10 @@ o_select_visible_unlocked (GSCHEM_TOPLEVEL *w_current)
       continue;
 
     /* Skip locked objects. */
-    if (obj->sel_func == NULL) continue;
+    if (!obj->selectable) continue;
 
     /* Run selection hooks & add object to selection. */
-    /*! \bug We can't call obj->sel_func, because o_select_object()
+    /*! \bug We can't call o_select_object() because it
      * behaves differently depending on the state of
      * w_current->SHIFTKEY and w_current->CONTROLKEY, which may well
      * be set if this function is called via a keystroke

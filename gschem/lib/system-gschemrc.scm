@@ -453,8 +453,7 @@
 
 ; snap-size number
 ;
-; Sets the default spacing which objects snap to.  This is not the grid 
-; spacing (that's independent of this variable)
+; Sets the default grid spacing at start-up of gschem.
 ; 
 (snap-size 100)
 
@@ -667,12 +666,6 @@
 (image-color "enabled")
 ;(image-color "disabled")
 
-; drag-can-move string
-;
-; If enabled, the drag movement over selected objects can move the objects.
-(drag-can-move "enabled")
-;(drag-can-move "disabled")
-
 ; middle-button string
 ;
 ; Controls if the middle mouse button draws strokes, repeats the last 
@@ -851,6 +844,7 @@
 ; placing new component and copying components
 ;
 ;(load-from-path "auto-uref.scm")
+;(add-hook! new-page-hook auto-uref-init-page)
 ;(add-hook! add-component-hook auto-uref)
 ;(add-hook! copy-component-hook auto-uref)
 
@@ -1153,8 +1147,6 @@
 ; 	- For Shift-A   --  "Shift A"
 ; 	- For Control-a --  "Control a"
 ; 	- For Alt-a     --  "Alt a"
-; 	- At this point in time you can only have one modifier 
-;	  (shift, control, alt) at a time.
 ; 	- Keys must be unique in each keymap, especially the global one
 ;	- Strings (without any modifers) are the same strings specified
 ; 	  for the keys in the file /usr/lib/X11/XKeysymDB (at least on 
@@ -1343,7 +1335,8 @@
     ("Control v" . clipboard-paste-hotkey)
     ("Control z" . edit-undo)
     ("Control y" . edit-redo)
-    ("Control a" . edit-select-all)))
+    ("Control a" . edit-select-all)
+    ("Control Shift A" . edit-deselect)))
 
 ; finally set the keymap point to the newly created datastructure 
 (define current-keymap global-keymap)
@@ -1376,8 +1369,7 @@
 ;;
 ;;          menu item name      menu action             menu hotkey function    menu stock icon
 ;;
-        `( (,(N_ "New Window")        file-new-window         file-new-window         #f)
-           (,(N_ "_New")              file-new                file-new                "gtk-new")
+        `( (,(N_ "_New")              file-new                file-new                "gtk-new")
            (,(N_ "_Open...")          file-open               file-open               "gtk-open")
 ;; The entry below will be removed from the menu if glib < 2.6 is detected
            (,(N_ "Open Recen_t")      #f                      #f                      #f)
@@ -1392,7 +1384,8 @@
            ("SEPARATOR"              #f                      #f                      #f)
            (,(N_ "Execute Script...") file-script             file-script             "gtk-execute")
            ("SEPARATOR"              #f                      #f                      #f)
-           (,(N_ "_Close")            file-close-window       file-close-window       "gtk-close")
+           (,(N_ "New Window")        file-new-window         file-new-window         #f)
+           (,(N_ "_Close Window")     file-close-window       file-close-window       "gtk-close")
            (,(N_ "_Quit")             file-quit               file-quit               "gtk-quit")))
 
 (define edit-menu-items 
@@ -1409,7 +1402,7 @@
            ("SEPARATOR"               #f                     #f                      #f)
            (,(N_ "Select Mode")        edit-select            edit-select             #f)
            (,(N_ "Select All")         edit-select-all        edit-select-all         "gtk-select-all")
-           (,(N_ "Deselect")           edit-deselect          edit-deselect           "gtk-select-all")
+           (,(N_ "Deselect")           edit-deselect          edit-deselect           #f)
            (,(N_ "Copy Mode")          edit-copy              edit-copy-hotkey        #f)
            (,(N_ "Multiple Copy Mode") edit-mcopy             edit-mcopy-hotkey       #f)
            (,(N_ "Move Mode")          edit-move              edit-move-hotkey        #f)

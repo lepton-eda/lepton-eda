@@ -5,6 +5,7 @@
     <_comment>gEDA circuit schematic</_comment>
     <glob pattern="*.sch"/>
     <magic priority="70">
+      <match value="v 201" type="string" offset="0"/>
       <match value="v 200" type="string" offset="0"/>
     </magic>
   </mime-type>
@@ -13,6 +14,7 @@
     <_comment>gEDA schematic symbol</_comment>
     <glob pattern="*.sym"/>
     <magic priority="70">
+      <match value="v 201" type="string" offset="0"/>
       <match value="v 200" type="string" offset="0"/>
     </magic>
   </mime-type>

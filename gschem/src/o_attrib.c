@@ -271,7 +271,7 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
   }
 
   /* Run the add attribute hook */
-  if (scm_hook_empty_p(add_attribute_hook) == SCM_BOOL_F &&
+  if (scm_is_false (scm_hook_empty_p (add_attribute_hook)) &&
       o_current != NULL) {
     scm_run_hook (add_attribute_hook,
                   scm_list_1 (edascm_from_object (o_current)));

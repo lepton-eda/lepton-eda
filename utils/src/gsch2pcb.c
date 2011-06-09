@@ -63,7 +63,9 @@ ElementMap;
 static GList *pcb_element_list,
   *element_directory_list, *extra_gnetlist_list, *extra_gnetlist_arg_list;
 
-static gchar *schematics, *sch_basename;
+static gchar *sch_basename;
+
+static GList *schematics;
 
 static gchar *m4_command,
   *m4_pcbdir, *default_m4_pcbdir, *m4_files, *m4_override_file;
@@ -119,6 +121,86 @@ create_m4_override_file ()
   }
 }
 
+/**
+ * Build and run a command. No redirection or error handling is
+ * done.  Format string is split on whitespace. Specifiers %l and %s
+ * are replaced with contents of positional args. To be recognized,
+ * specifiers must be separated from other arguments in the format by
+ * whitespace.
+ *  - %l expects a GList, contents used as separate arguments
+ *  - %s expects a gchar*, contents used as a single argument
+ * @param[in] format  used to specify command to be executed
+ * @param[in] ...     positional parameters
+ */
+static void
+build_and_run_command (const gchar *format, ...)
+{
+  va_list vargs;
+  gchar ** split;
+  GList *tmp = NULL;
+  gint num_split;
+  gint i;
+
+  va_start (vargs, format);
+  split = g_strsplit_set (format, " \t\n\v", 0);
+  num_split = g_strv_length (split);
+  for (i = 0; i < num_split; ++i) {
+    gchar *chunk = split[i];
+    if (strcmp (chunk, "%l") == 0) {
+      /* append contents of list into command args - shared data */
+      tmp = g_list_concat (tmp, g_list_copy (va_arg (vargs, GList*)));
+    } else if (strcmp (chunk, "%s") == 0) {
+      /* insert contents of string into output */
+      tmp = g_list_append (tmp, va_arg (vargs, gchar*));
+    } else {
+      /* bare string, use as is */
+      tmp = g_list_append (tmp, chunk);
+    }
+  }
+  va_end (vargs);
+
+  if (tmp) {
+    /* we have something in the list, build & call command */
+    GList *p;
+    gint i = 0;
+    gchar ** args = g_new0 (gchar*, g_list_length (tmp) + 1/* NULL terminate the list */);
+
+    if (verbose)
+      printf ("Running command:\n\t");
+
+    for (p = tmp; p; p = g_list_next (p)) {
+      args[i++] = (gchar*) p->data;
+      if (verbose)
+        printf ("%s ", p->data);
+    }
+
+    if (verbose)
+      printf ("\n%s", SEP_STRING);
+
+    g_spawn_sync (".",                  /* Working directory */
+                  args,                 /* argv */
+                  NULL,                 /* envp */
+                  G_SPAWN_SEARCH_PATH | /* flags */
+                  G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL,
+                  NULL,                 /* child_setup */
+                  NULL,                 /* user data */
+                  NULL,                 /* standard output */
+                  NULL,                 /* standard error */
+                  NULL,                 /* exit status return */
+                  NULL                  /* GError return */
+                 );
+
+    if (verbose)
+      printf ("\n%s", SEP_STRING);
+
+    g_free (args);
+    /* free the list, but leave data untouched */
+    g_list_free (tmp);
+  }
+
+  g_strfreev (split);
+}
+
 /* Run gnetlist to generate a netlist and a PCB board file.  gnetlist
  * has exit status of 0 even if it's given an invalid arg, so do some
  * stat() hoops to decide if gnetlist successfully generated the PCB
@@ -126,119 +208,97 @@ create_m4_override_file ()
  */
 static void
 run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
-              gchar * basename, gchar * args)
+              gchar * basename, GList * largs)
 {
-  gchar *command, *out_file, *args1, *s;
-  GList *list;
   struct stat st;
   time_t mtime;
   static const gchar *gnetlist = NULL;
-
-  /* Prepend the gnetlist arguments (including the list of schematics)
-   * with those the user has specified with gnetlist-arg directives */
-  if (extra_gnetlist_arg_list != NULL) {
-    int count = 0;
-    gchar **str_array =
-      g_new0 (char *, 2 + g_list_length (extra_gnetlist_arg_list));
-    for (list = extra_gnetlist_arg_list;
-         list != NULL; list = g_list_next (list)) {
-      str_array[count++] = list->data;
-    }
-    str_array[count++] = args;
-    args = g_strjoinv (" ", str_array);
-    g_free (str_array);
-  } else {
-    args = g_strdup (args);
-  }
+  GList *list = NULL;
+  GList *verboseList = NULL;
+  GList *args1 = NULL;
 
   /* Allow the user to specify a full path or a different name for
    * the gnetlist command.  Especially useful if multiple copies
    * are installed at once.
    */
-
   if (gnetlist == NULL)
     gnetlist = g_getenv ("GNETLIST");
   if (gnetlist == NULL)
     gnetlist = "gnetlist";
 
-  if (verbose) {
-    command =
-      g_strconcat (gnetlist, " -g pcbpins -o ", pins_file, " ", args, NULL);
-    printf ("Running command:\n\t%s\n", command);
-    printf (SEP_STRING);
-  } else
-    command =
-      g_strconcat (gnetlist, " -q -g pcbpins -o ", pins_file, " ", args, NULL);
-  g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-  g_free (command);
+  if (!verbose)
+    verboseList = g_list_append (verboseList, "-q");
 
-  if (verbose) {
-    command = g_strconcat (gnetlist, " -g PCB -o ", net_file, " ", args, NULL);
-    printf ("Running command:\n\t%s\n", command);
-    printf (SEP_STRING);
-  } else
-    command =
-      g_strconcat (gnetlist, " -q -g PCB -o ", net_file, " ", args, NULL);
-  g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-  g_free (command);
+  build_and_run_command ("%s %l -g pcbpins -o %s %l %l",
+                         gnetlist,
+                         verboseList,
+                         pins_file,
+                         extra_gnetlist_arg_list,
+                         largs);
 
+  build_and_run_command ("%s %l -g PCB -o %s %l %l",
+                         gnetlist,
+                         verboseList,
+                         net_file,
+                         extra_gnetlist_arg_list,
+                         largs);
   create_m4_override_file ();
-  if (m4_override_file)
-    args1 = g_strconcat ("-m ", m4_override_file, " ", args, NULL);
-  else
-    args1 = g_strdup (args);
+
+  if (m4_override_file) {
+    args1 = g_list_append (args1, "-m");
+    args1 = g_list_append (args1, m4_override_file);
+  }
 
   mtime = (stat (pcb_file, &st) == 0) ? st.st_mtime : 0;
 
-  if (verbose) {
-    printf (SEP_STRING);
-    command = g_strconcat (gnetlist, " -g gsch2pcb -o ", pcb_file,
-                           " ", args1, NULL);
-    printf ("Running command:\n\t%s\n", command);
-    printf (SEP_STRING);
-  } else
-    command = g_strconcat (gnetlist, " -q -g gsch2pcb -o ", pcb_file,
-                           " ", args1, NULL);
-
-  g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-
-  if (verbose)
-    printf (SEP_STRING);
+  build_and_run_command ("%s %l -g gsch2pcb -o %s %l %l %l",
+                         gnetlist,
+                         verboseList,
+                         pcb_file,
+                         args1,
+                         extra_gnetlist_arg_list,
+                         largs);
 
   if (stat (pcb_file, &st) != 0 || mtime == st.st_mtime) {
-    fprintf (stderr, "gsch2pcb: gnetlist command (%s) failed.\n", command);
+    fprintf (stderr,
+             "gsch2pcb: gnetlist command failed, `%s' not updated\n",
+             pcb_file
+            );
     if (m4_override_file)
       fprintf (stderr,
                "    At least gnetlist 20030901 is required for m4-xxx options.\n");
     exit (1);
   }
-  g_free (command);
-  g_free (args1);
+
   if (m4_override_file)
     unlink (m4_override_file);
 
   for (list = extra_gnetlist_list; list; list = g_list_next (list)) {
-    s = (gchar *) list->data;
-    if (!strstr (s, " -o "))
-      out_file = g_strconcat (" -o ", basename, ".", s, NULL);
-    else
-      out_file = g_strdup (" ");
+    const gchar *s = (gchar *) list->data;
+    const gchar *s2 = strstr (s, " -o ");
+    gchar *out_file;
+    gchar *backend;
+    if (!s2) {
+      out_file = g_strconcat (basename, ".", s, NULL);
+      backend = g_strdup (s);
+    } else {
+      out_file = g_strdup (s2 + 4);
+      backend = g_strndup (s, s2 - s);
+    }
 
-    if (verbose) {
-      printf (SEP_STRING);
-      command = g_strconcat (gnetlist, " -g ", s, out_file, " ", args, NULL);
-      printf ("Running command:\n\t%s\n", command);
-      printf (SEP_STRING);
-    } else
-      command = g_strconcat (gnetlist, " -q -g ", s, out_file, " ", args, NULL);
-
-    g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-    g_free (command);
+    build_and_run_command ("%s %l -g %s -o %s %l %l",
+                           gnetlist,
+                           verboseList,
+                           backend,
+                           out_file,
+                           extra_gnetlist_arg_list,
+                           largs);
     g_free (out_file);
-    if (verbose)
-      printf (SEP_STRING);
+    g_free (backend);
   }
-  g_free (args);
+
+  g_list_free (args1);
+  g_list_free (verboseList);
 }
 
 static gchar *
@@ -839,11 +899,9 @@ add_elements (gchar * pcb_file)
 
   total = n_added_ef + n_added_m4 + n_not_found;
   if (total == 0)
-    command = g_strconcat ("rm ", tmp_file, NULL);
+    build_and_run_command ("rm %s", tmp_file);
   else
-    command = g_strconcat ("mv ", tmp_file, " ", pcb_file, NULL);
-  g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-  g_free (command);
+    build_and_run_command ("mv %s %s", tmp_file, pcb_file);
   g_free (tmp_file);
   return total;
 }
@@ -895,15 +953,11 @@ update_element_descriptions (gchar * pcb_file, gchar * bak)
   fclose (f_out);
 
   if (!bak_done) {
-    command = g_strconcat ("mv ", pcb_file, " ", bak, NULL);
-    g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-    g_free (command);
+    build_and_run_command ("mv %s %s", pcb_file, bak);
     bak_done = TRUE;
   }
 
-  command = g_strconcat ("mv ", tmp, " ", pcb_file, NULL);
-  g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-  g_free (command);
+  build_and_run_command ("mv %s %s", tmp, pcb_file);
   g_free (tmp);
 }
 
@@ -982,15 +1036,11 @@ prune_elements (gchar * pcb_file, gchar * bak)
   fclose (f_out);
 
   if (!bak_done) {
-    command = g_strconcat ("mv ", pcb_file, " ", bak, NULL);
-    g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-    g_free (command);
+    build_and_run_command ("mv %s %s", pcb_file, bak);
     bak_done = TRUE;
   }
 
-  command = g_strconcat ("mv ", tmp, " ", pcb_file, NULL);
-  g_spawn_command_line_sync (command, NULL, NULL, NULL, NULL);
-  g_free (command);
+  build_and_run_command ("mv %s %s", tmp, pcb_file);
   g_free (tmp);
 }
 
@@ -1039,16 +1089,33 @@ add_default_m4_files (void)
 static void
 add_schematic (gchar * sch)
 {
-  gchar *s;
-
-  s = schematics;
-  if (s)
-    schematics = g_strconcat (s, " ", sch, NULL);
-  else
-    schematics = g_strdup (sch);
-  g_free (s);
-  if (!sch_basename && (s = strstr (sch, ".sch")) != NULL)
+  const gchar* s;
+  schematics = g_list_append (schematics, g_strdup (sch));
+  if (!sch_basename && (s = g_strrstr (sch, ".sch")) != NULL && strlen(s) == 4)
     sch_basename = g_strndup (sch, s - sch);
+}
+
+static void
+add_multiple_schematics (gchar * sch)
+{
+  /* parse the string using shell semantics */
+  gint count;
+  gchar** args = NULL;
+  GError* error = NULL;
+
+  if (g_shell_parse_argv (sch, &count, &args, &error)) {
+    int i;
+    for (i = 0; i < count; ++i)
+    {
+      add_schematic (args[i]);
+    }
+    g_strfreev (args);
+  } else {
+    fprintf (stderr,
+             "invalid `schematics' option: %s\n",
+             error->message);
+    g_error_free (error);
+  }
 }
 
 static gint
@@ -1101,7 +1168,7 @@ parse_config (gchar * config, gchar * arg)
   } else if (!strcmp (config, "output-name") || !strcmp (config, "o"))
     sch_basename = g_strdup (arg);
   else if (!strcmp (config, "schematics"))
-    add_schematic (arg);
+    add_multiple_schematics (arg);
   else if (!strcmp (config, "m4-command"))
     m4_command = g_strdup (arg);
   else if (!strcmp (config, "m4-pcbdir"))
@@ -1239,9 +1306,9 @@ static gchar *usage_string1 =
   "\n"
   "Additional Resources:\n"
   "\n"
-  "  gEDA homepage:  http://www.geda.seul.org\n"
-  "  PCB homepage:   http://pcb.sf.net\n"
-  "  gEDA Wiki:      http://geda.seul.org/dokuwiki/doku.php?id=geda\n" "\n";
+  "  gnetlist user guide:  http://geda.seul.org/wiki/geda:gnetlist_ug\n"
+  "  gEDA homepage:        http://www.gpleda.org\n"
+  "  PCB homepage:         http://pcb.gpleda.org\n"  "\n";
 
 static void
 usage ()
@@ -1291,7 +1358,7 @@ get_args (gint argc, gchar ** argv)
       printf ("gsch2pcb: bad or incomplete arg: %s\n", argv[i]);
       usage ();
     } else {
-      if ((s = strstr (argv[i], ".sch")) == NULL) {
+      if (!g_str_has_suffix (argv[i], ".sch")) {
         load_extra_project_files ();
         load_project (argv[i]);
       } else
@@ -1380,9 +1447,7 @@ main (gint argc, gchar ** argv)
                 sch_basename, schematics);
 
   if (add_elements (pcb_new_file_name) == 0) {
-    tmp = g_strconcat ("rm ", pcb_new_file_name, NULL);
-    g_spawn_command_line_sync (tmp, NULL, NULL, NULL, NULL);
-    g_free (tmp);
+    build_and_run_command ("rm %s", pcb_new_file_name);
     if (initial_pcb) {
       printf ("No elements found, so nothing to do.\n");
       exit (0);

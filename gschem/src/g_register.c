@@ -106,8 +106,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "undo-type",                 1, 0, 0, g_rc_undo_type },
   { "undo-panzoom",              1, 0, 0, g_rc_undo_panzoom },
 
-  { "drag-can-move",             1, 0, 0, g_rc_drag_can_move },
-
   { "draw-grips",                1, 0, 0, g_rc_draw_grips },
   { "netconn-rubberband",        1, 0, 0, g_rc_netconn_rubberband },
   { "magnetic-net-mode",         1, 0, 0, g_rc_magnetic_net_mode },

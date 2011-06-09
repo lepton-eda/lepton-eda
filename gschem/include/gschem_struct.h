@@ -19,8 +19,8 @@ struct st_gschem_toplevel {
 
   GtkWidget *h_scrollbar;
   GtkWidget *v_scrollbar;
-  GtkObject *h_adjustment;
-  GtkObject *v_adjustment;
+  GtkAdjustment *h_adjustment;
+  GtkAdjustment *v_adjustment;
 
   GtkWidget *macro_box;
   GtkWidget *macro_entry;
@@ -201,7 +201,6 @@ struct st_gschem_toplevel {
   /* attributes when they are attached to vertical or horizontal nets */
   int add_attribute_offset;
 
-  int drag_can_move;      /* Controls if drag can move objects or not */
   int mousepan_gain;      /* Controls the gain of the mouse pan */
   int keyboardpan_gain;   /* Controls the gain of the keyboard pan */
   int select_slack_pixels; /* Number of pixels around an object we can still select it with */

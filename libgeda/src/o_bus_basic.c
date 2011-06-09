@@ -32,9 +32,6 @@
 #include <dmalloc.h>
 #endif
 
-/*! Default setting for bus draw function. */
-void (*bus_draw_func)() = NULL;
-
 /*! \brief get the position of the first bus point
  *  \par Function Description
  *  This function gets the position of the first point of a bus object.
@@ -104,9 +101,6 @@ OBJECT *o_bus_new(TOPLEVEL *toplevel,
   new_node->bus_ripper_direction = bus_ripper_direction;
 
   o_bus_recalc (toplevel, new_node);
-
-  new_node->draw_func = bus_draw_func;  
-  new_node->sel_func = select_func;  
 
   return new_node;
 }

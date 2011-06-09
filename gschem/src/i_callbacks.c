@@ -2414,12 +2414,8 @@ DEFINE_I_CALLBACK(add_net)
 DEFINE_I_CALLBACK(add_net_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  gint wx, wy; 
 
   exit_if_null(w_current);
-
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
-    return;
 
   o_redraw_cleanstates(w_current);	
   o_invalidate_rubber (w_current);
@@ -2430,9 +2426,6 @@ DEFINE_I_CALLBACK(add_net_hotkey)
   i_set_state(w_current, STARTDRAWNET);
   i_update_toolbar(w_current);
 
-  o_net_start(w_current, wx, wy);
-
-  w_current->event_state=DRAWNET;
   w_current->inside_action = 1;
 }
 
@@ -2486,12 +2479,8 @@ DEFINE_I_CALLBACK(add_bus)
 DEFINE_I_CALLBACK(add_bus_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  gint wx, wy; 
 
   exit_if_null(w_current);
-
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
-    return;
 
   o_redraw_cleanstates(w_current);	
   o_invalidate_rubber (w_current);
@@ -2501,9 +2490,6 @@ DEFINE_I_CALLBACK(add_bus_hotkey)
   i_set_state(w_current, STARTDRAWBUS);
   i_update_toolbar(w_current);
 
-  o_bus_start(w_current, wx, wy);
-
-  w_current->event_state=DRAWBUS;
   w_current->inside_action = 1;
 }
 
@@ -3173,7 +3159,8 @@ DEFINE_I_CALLBACK(attributes_show_name)
          s_current != NULL;
          s_current = g_list_next (s_current)) {
       OBJECT *object = (OBJECT*)s_current->data;
-      o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME);
+      if (object->type == OBJ_TEXT)
+        o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME);
     }
 
     o_undo_savestate (w_current, UNDO_ALL);
@@ -3209,7 +3196,8 @@ DEFINE_I_CALLBACK(attributes_show_value)
          s_current != NULL;
          s_current = g_list_next (s_current)) {
       OBJECT *object = (OBJECT*)s_current->data;
-      o_attrib_toggle_show_name_value (w_current, object, SHOW_VALUE);
+      if (object->type == OBJ_TEXT)
+        o_attrib_toggle_show_name_value (w_current, object, SHOW_VALUE);
     }
 
     o_undo_savestate (w_current, UNDO_ALL);
@@ -3245,7 +3233,8 @@ DEFINE_I_CALLBACK(attributes_show_both)
          s_current != NULL;
          s_current = g_list_next (s_current)) {
       OBJECT *object = (OBJECT*)s_current->data;
-      o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME_VALUE);
+      if (object->type == OBJ_TEXT)
+        o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME_VALUE);
     }
 
     o_undo_savestate (w_current, UNDO_ALL);
@@ -3282,7 +3271,8 @@ DEFINE_I_CALLBACK(attributes_visibility_toggle)
          s_current != NULL;
          s_current = g_list_next (s_current)) {
       OBJECT *object = (OBJECT*)s_current->data;
-      o_attrib_toggle_visibility (w_current, object);
+      if (object->type == OBJ_TEXT)
+        o_attrib_toggle_visibility (w_current, object);
     }
 
     o_undo_savestate (w_current, UNDO_ALL);

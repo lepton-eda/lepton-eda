@@ -365,24 +365,6 @@ void s_toplevel_delete_attrib_col() {
 }
 
 
-/*------------------------------------------------------------------*/
-/*! \brief Select object in the top level.
- *
- * This function is a hack.  It gives a non-NULL value to the select_func
- * defined in globals.c for libgeda.  A non-NULL value for this function
- * makes sure that object->sel_func = 1 when the project is saved out,
- * which keeps the objects selectable in gschem.
- * Perhaps I should just set the variable myself when saving the 
- * project out . . . . .
- * \todo Function is a NOP - candidate for removal?
- */
-void s_toplevel_select_object()
-{
-  /* I don't know if I should do anything in here to prevent
-   * the function from being optimized away by gcc.  */
-}
-
-
 /* =======================  Private functions  ====================== */
 
 /*------------------------------------------------------------------*/
@@ -1015,7 +997,7 @@ s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
 					o_pin,
 					new_attrib_name, 
 					new_attrib_value, 
-					o_is_visible (toplevel, o_pin) ? VISIBLE : INVISIBLE,
+					LEAVE_VISIBILITY_ALONE,
 					LEAVE_NAME_VALUE_ALONE); 
     }
                                                                                                        

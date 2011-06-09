@@ -32,9 +32,6 @@
  *  \brief functions for the pin object
  */
 
-/*! Default setting for pin draw function. */
-void (*pin_draw_func)() = NULL;
-
 /*! \brief calculate and return the boundaries of a pin object
  *  \par Function Description
  *  This function calculates the object boudaries of a pin \a object.
@@ -105,9 +102,6 @@ OBJECT *o_pin_new(TOPLEVEL *toplevel,
 
   o_pin_recalc (toplevel, new_node);
 
-  new_node->draw_func = pin_draw_func;  
-  new_node->sel_func = select_func;  
-
   new_node->whichend = whichend;
 
   return new_node;
@@ -177,10 +171,6 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, char buf[],
     s_log_message (_("Found an invalid whichend on a pin (reseting to zero): %d\n"),
                    whichend);
     whichend = 0;
-  }
-
-  if (x1 == x2 && y1 == y2) {
-    s_log_message (_("Found a zero length pin: [ %s ]\n"), buf);
   }
 
   if (color < 0 || color > MAX_COLORS) {

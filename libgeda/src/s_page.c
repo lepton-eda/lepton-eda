@@ -495,7 +495,7 @@ gint s_page_save_all (TOPLEVEL *toplevel)
     p_current = (PAGE *)iter->data;
 
     if (f_save (toplevel, p_current,
-                p_current->page_filename)) {
+                p_current->page_filename, NULL)) {
       s_log_message (_("Saved [%s]\n"),
                      p_current->page_filename);
       /* reset the CHANGED flag of p_current */
@@ -785,18 +785,20 @@ GList *s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page,
 
   for (iter = page->_object_list; iter != NULL; iter = g_list_next (iter)) {
     OBJECT *object = iter->data;
+    int left, top, right, bottom;
+    int visible;
 
-    for (i = 0; i < n_rects; i++) {
-      int left, top, right, bottom;
-
-      if (world_get_single_object_bounds (toplevel, object,
-                                          &left, &top, &right, &bottom) &&
-          right  >= rects[i].lower_x &&
-          left   <= rects[i].upper_x &&
-          top    <= rects[i].upper_y &&
-          bottom >= rects[i].lower_y) {
-        list = g_list_prepend (list, object);
-        break;
+    visible = world_get_single_object_bounds (toplevel, object,
+                                              &left, &top, &right, &bottom);
+    if (visible) {
+      for (i = 0; i < n_rects; i++) {
+        if (right  >= rects[i].lower_x &&
+            left   <= rects[i].upper_x &&
+            top    <= rects[i].upper_y &&
+            bottom >= rects[i].lower_y) {
+          list = g_list_prepend (list, object);
+          break;
+        }
       }
     }
   }

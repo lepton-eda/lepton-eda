@@ -199,7 +199,7 @@ SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags)
   /*! \bug FIXME -- how to deal with conflicting flags? 
    * Should I throw a scheme error?  Just deal in the c code?
    */
-  for (c_flags = 0; scm_pair_p (flags) == SCM_BOOL_T; flags = SCM_CDR (flags)) {
+  for (c_flags = 0; scm_is_pair (flags); flags = SCM_CDR (flags)) {
     SCM f = SCM_CAR (flags);
     if (strcmp (SCM_STRING_CHARS (f), "may_exist") == 0) {
       c_flags |= FSB_MAY_EXIST;
@@ -226,7 +226,7 @@ SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags)
 			      c_flags
 			      );
 
-  v = scm_makfrom0str (r);
+  v = scm_from_locale_string (r);
   g_free (r);
 
   return v;
@@ -261,7 +261,7 @@ hash_table_2_list (gpointer key,
                    gpointer user_data)
 {
   SCM *plist = (SCM*)user_data;
-  *plist = scm_cons (scm_makfrom0str ((char*)value), *plist);
+  *plist = scm_cons (scm_from_locale_string ((char*)value), *plist);
 }
 
 /*! \todo Finish function documentation!!!

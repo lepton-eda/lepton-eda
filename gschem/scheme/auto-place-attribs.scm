@@ -17,6 +17,8 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
+(use-modules (ice-9 regex))
+
 ;; --------------------------------------------------------------------------
 ;;
 ;; Code to place new text attributes automatically 

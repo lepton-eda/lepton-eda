@@ -244,7 +244,12 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
     full_rcfilename = g_build_filename (file_directory, "gafrc", NULL);
     g_rc_parse_file (toplevel, full_rcfilename, &tmp_err);
     if (tmp_err != NULL) {
-      s_log_message ("%s\n", tmp_err->message);
+      /* Config files are allowed to be missing or skipped; check for
+       * this. */
+      if (!g_error_matches (tmp_err, G_FILE_ERROR, G_FILE_ERROR_NOENT) &&
+          !g_error_matches (tmp_err, EDA_ERROR, EDA_ERROR_RC_TWICE)) {
+        s_log_message ("%s\n", tmp_err->message);
+      }
       g_error_free (tmp_err);
       tmp_err = NULL;
     }
@@ -344,9 +349,11 @@ void f_close(TOPLEVEL *toplevel)
  *
  *  \param [in,out] toplevel  The TOPLEVEL object containing the schematic.
  *  \param [in]      filename  The file name to save the schematic to.
+ *  \param [in,out] err       #GError structure for error reporting, or
+ *                            NULL to disable error reporting
  *  \return 1 on success, 0 on failure.
  */
-int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename)
+int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
 {
   gchar *backup_filename;
   gchar *real_filename;
@@ -354,12 +361,16 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename)
   gchar *dirname;
   mode_t saved_umask, mask;
   struct stat st;
+  GError *tmp_err = NULL;
 
   /* Get the real filename and file permissions */
-  real_filename = follow_symlinks (filename, NULL);
+  real_filename = follow_symlinks (filename, &tmp_err);
 
   if (real_filename == NULL) {
-    s_log_message (_("Can't get the real filename of %s."), filename);
+    g_set_error (err, tmp_err->domain, tmp_err->code,
+                 _("Can't get the real filename of %s: %s"),
+                 filename,
+                 tmp_err->message);
     return 0;
   }
   
@@ -431,7 +442,7 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename)
   g_free (dirname);
   g_free (only_filename);
   
-  if (o_save (toplevel, s_page_objects (page), real_filename)) {
+  if (o_save (toplevel, s_page_objects (page), real_filename, &tmp_err)) {
 
     page->saved_since_first_loaded = 1;
 
@@ -453,6 +464,9 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename)
     return 1;
   }
   else {
+    g_set_error (err, tmp_err->domain, tmp_err->code,
+                 _("Could NOT save file: %s"), tmp_err->message);
+    g_clear_error (&tmp_err);
     g_free (real_filename);
     return 0;
   }

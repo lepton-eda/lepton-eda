@@ -32,8 +32,8 @@
 #define NUM_BEZIER_SEGMENTS 100
 
 
-typedef void (*FILL_FUNC) (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                           GSCHEM_TOPLEVEL *w_currentm, PATH *path,
+typedef void (*FILL_FUNC) (GSCHEM_TOPLEVEL *w_current,
+                           COLOR *color, PATH *path,
                            gint fill_width,
                            gint angle1, gint pitch1, gint angle2, gint pitch2);
 
@@ -160,10 +160,8 @@ static PATH *path_copy_modify (PATH *path, int dx, int dy,
  *  filling functions. It prevent from making a difference between filling
  *  in function #o_path_draw().
  *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box fill color.
  *  \param [in] w_current   Schematic top level
+ *  \param [in] color       Box fill color.
  *  \param [in] path        The PATH object to draw
  *  \param [in] fill_width  PATH pattern fill width.
  *  \param [in] angle1      1st angle for pattern.
@@ -171,8 +169,8 @@ static PATH *path_copy_modify (PATH *path, int dx, int dy,
  *  \param [in] angle2      2nd angle for pattern.
  *  \param [in] pitch2      2nd pitch for pattern.
  */
-static void o_path_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                                GSCHEM_TOPLEVEL *w_current, PATH *path,
+static void o_path_fill_hollow (GSCHEM_TOPLEVEL *w_current,
+                                COLOR *color, PATH *path,
                                 gint fill_width,
                                 gint angle1, gint pitch1,
                                 gint angle2, gint pitch2)
@@ -187,10 +185,8 @@ static void o_path_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  <B>pitch2</B> and <B>fill_width</B> are unused here but kept for compatibility
  *  with other path filling functions.
  *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box fill color.
  *  \param [in] w_current   Schematic top level
+ *  \param [in] color       Box fill color.
  *  \param [in] path        The PATH object to draw
  *  \param [in] fill_width  PATH pattern fill width.
  *  \param [in] angle1      (unused)
@@ -198,8 +194,8 @@ static void o_path_fill_hollow (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] angle2      (unused)
  *  \param [in] pitch2      (unused)
  */
-static void o_path_fill_fill (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                              GSCHEM_TOPLEVEL *w_current, PATH *path,
+static void o_path_fill_fill (GSCHEM_TOPLEVEL *w_current,
+                              COLOR *color, PATH *path,
                               gint fill_width,
                               gint angle1, gint pitch1,
                               gint angle2, gint pitch2)
@@ -216,10 +212,8 @@ static void o_path_fill_fill (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  Parameters <B>angle2</B> and <B>pitch2</B> are unused here but kept for
  *  compatbility with other path filling functions.
  *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box fill color.
  *  \param [in] w_current   Schematic top level
+ *  \param [in] color       Box fill color.
  *  \param [in] path        The PATH object to draw
  *  \param [in] fill_width  PATH pattern fill width.
  *  \param [in] angle1      1st angle for pattern.
@@ -227,8 +221,8 @@ static void o_path_fill_fill (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] angle2      (unused)
  *  \param [in] pitch2      (unused)
  */
-static void o_path_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                               GSCHEM_TOPLEVEL *w_current, PATH *path,
+static void o_path_fill_hatch (GSCHEM_TOPLEVEL *w_current,
+                               COLOR *color, PATH *path,
                                gint fill_width,
                                gint angle1, gint pitch1,
                                gint angle2, gint pitch2)
@@ -263,10 +257,8 @@ static void o_path_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  the horizontal. The distance between two of these lines is given
  *  by <B>pitch2</B>.
  *
- *  \param [in] w           GdkDrawable to draw in.
- *  \param [in] gc          GdkGC graphics context to draw on.
- *  \param [in] color       Box fill color.
  *  \param [in] w_current   Schematic top level
+ *  \param [in] color       Box fill color.
  *  \param [in] path        The PATH object to draw
  *  \param [in] fill_width  PATH pattern fill width.
  *  \param [in] angle1      1st angle for pattern.
@@ -274,15 +266,15 @@ static void o_path_fill_hatch (GdkDrawable *w, GdkGC *gc, COLOR *color,
  *  \param [in] angle2      2nd angle for pattern.
  *  \param [in] pitch2      2nd pitch for pattern.
  */
-static void o_path_fill_mesh (GdkDrawable *w, GdkGC *gc, COLOR *color,
-                              GSCHEM_TOPLEVEL *w_current, PATH *path,
+static void o_path_fill_mesh (GSCHEM_TOPLEVEL *w_current,
+                              COLOR *color, PATH *path,
                               gint fill_width,
                               gint angle1, gint pitch1,
                               gint angle2, gint pitch2)
 {
-  o_path_fill_hatch (w, gc, color, w_current, path,
+  o_path_fill_hatch (w_current, color, path,
                      fill_width, angle1, pitch1, -1, -1);
-  o_path_fill_hatch (w, gc, color, w_current, path,
+  o_path_fill_hatch (w_current, color, path,
                      fill_width, angle2, pitch2, -1, -1);
 }
 
@@ -352,10 +344,8 @@ void o_path_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     fill_func = o_path_fill_fill;
   }
 
-  (*fill_func) (w_current->drawable, w_current->gc,
-                o_drawing_color (w_current, o_current),
-                w_current, path, o_current->fill_width,
-                angle1, pitch1, angle2, pitch2);
+  (*fill_func) (w_current, o_drawing_color (w_current, o_current),
+                path, o_current->fill_width, angle1, pitch1, angle2, pitch2);
 
   path_path (w_current, o_current);
 

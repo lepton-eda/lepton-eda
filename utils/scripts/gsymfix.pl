@@ -152,14 +152,14 @@ if( $found_numslots_attr == 0 ) {
   print OUTNET "numslots=0\n";
 }
 if( $found_device_attr == 0 ) {
-  if($verbose){print "  Adding attr device=XXX\n";}
+  if($verbose){print "  Adding attr device=none\n";}
   print OUTNET "T 600 100 9 10 0 0 0 0 1\n";
-  print OUTNET "device=XXX\n";
+  print OUTNET "device=none\n";
 }
 if( $found_footprint_attr == 0 ) {
-  if($verbose){print "  Adding attr footprint=XXX\n";}
+  if($verbose){print "  Adding attr footprint=unknown\n";}
   print OUTNET "T 600 100 9 10 0 0 0 0 1\n";
-  print OUTNET "footprint=XXX\n";
+  print OUTNET "footprint=unknown\n";
 }
 
 close(NETLIST);

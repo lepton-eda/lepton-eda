@@ -84,7 +84,7 @@ static void o_copy_end_generic(GSCHEM_TOPLEVEL *w_current, int multiple)
        iter = g_list_next (iter)) {
     object = iter->data;
     if ( (object->type == OBJ_COMPLEX) &&
-         (scm_hook_empty_p(copy_component_hook) == SCM_BOOL_F)) {
+         scm_is_false (scm_hook_empty_p (copy_component_hook))) {
       scm_run_hook(copy_component_hook,
                    scm_cons (g_make_attrib_smob_list(w_current, object),
                    SCM_EOL));

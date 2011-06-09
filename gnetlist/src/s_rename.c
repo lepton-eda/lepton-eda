@@ -156,6 +156,31 @@ int s_rename_search(char *src, char *dest, int quiet_flag)
     return (FALSE);
 }
 
+static void s_rename_add_lowlevel (const char *src, const char *dest)
+{
+    RENAME *new_rename;
+
+    g_return_if_fail(last_set != NULL);
+
+    new_rename = g_malloc(sizeof (RENAME));
+
+    g_return_if_fail(new_rename != NULL);
+
+    new_rename->next = NULL;
+    new_rename->src = g_strdup(src);
+    new_rename->dest = g_strdup(dest);
+
+    if (last_set->first_rename == NULL)
+    {
+        last_set->first_rename = last_set->last_rename = new_rename;
+    }
+    else
+    {
+        last_set->last_rename->next = new_rename;
+        last_set->last_rename = new_rename;
+    }
+}
+
 void s_rename_add(char *src, char *dest)
 {
     int flag;
@@ -177,27 +202,35 @@ void s_rename_add(char *src, char *dest)
 	last = last_set->last_rename;
 	for (temp = last_set->first_rename; ; temp = temp->next)
 	{
-            if (strcmp(dest, temp->src) == 0) 
-	    {
+        if ((strcmp(dest, temp->src) == 0)
+            && (strcmp(src, temp->dest) != 0))
+        {
+            /* we found a -> b, while adding c -> a.
+             * hence we would have c -> a -> b, so add c -> b.
+             * avoid renaming if b is same as c!
+             */
 #if DEBUG
-                printf("Found dest [%s] in src [%s] and that had a dest as: [%s]\nSo you want rename [%s] to [%s]\n",
-                       dest, temp->src, temp->dest, src, temp->dest);
+            printf("Found dest [%s] in src [%s] and that had a dest as: [%s]\n"
+                   "So you want rename [%s] to [%s]\n",
+                   dest, temp->src, temp->dest, src, temp->dest);
 #endif
-                new_rename = g_malloc(sizeof(RENAME));
-		     new_rename->next = NULL;
-                     new_rename->src = g_strdup(src);
-                     new_rename->dest = g_strdup(temp->dest);
-		     /* If the rename pair was found then a set already exists, so there's no need the check it */
-		     if (last_set->first_rename == NULL)
-		     {
-		         last_set->first_rename = last_set->last_rename = new_rename;
-		     }
-		     else
-		     {
-		         last_set->last_rename->next = new_rename;
-			 last_set->last_rename = new_rename;
-		     } 
-            }
+            s_rename_add_lowlevel(src, temp->dest);
+
+        }
+        else if ((strcmp(src, temp->src) == 0)
+                 && (strcmp(dest, temp->dest) != 0))
+        {
+            /* we found a -> b, while adding a -> c.
+             * hence b <==> c, so add c -> b.
+             * avoid renaming if b is same as c!
+             */
+#if DEBUG
+            printf("Found src [%s] that had a dest as: [%s]\n"
+                   "Unify nets by renaming [%s] to [%s]\n",
+                   src, temp->dest, dest, temp->dest);
+#endif
+            s_rename_add_lowlevel(dest, temp->dest);
+        }
             if (temp == last)
             {
                 break;
@@ -290,7 +323,9 @@ SCM g_get_renamed_nets(SCM scm_level)
     {
         for (temp_rename = temp_set->first_rename; temp_rename; temp_rename = temp_rename->next)
         {
-            pairlist = scm_list_n (scm_makfrom0str (temp_rename->src), scm_makfrom0str (temp_rename->dest), SCM_UNDEFINED);
+            pairlist = scm_list_n (scm_from_locale_string (temp_rename->src),
+                                   scm_from_locale_string (temp_rename->dest),
+                                   SCM_UNDEFINED);
             outerlist = scm_cons (pairlist, outerlist);
         }
     }

@@ -1,8 +1,8 @@
 # geda-git.m4                                           -*-Autoconf-*-
-# serial 1.0
+# serial 2
 
 dnl Generic checks relating to git tools & repositories
-dnl Copyright (C) 2009  Peter Brett <peter@peter-b.co.uk>
+dnl Copyright (C) 2009-2011  Peter Brett <peter@peter-b.co.uk>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ AC_DEFUN([AX_GIT_REPO],
   HAVE_GIT_REPO=no
   if test "X$GIT" != "Xno"; then
     AC_MSG_CHECKING([if the source directory is a git repository])
-    if (cd $srcdir && $GIT describe --always > /dev/null); then
+    if (cd $srcdir && $GIT rev-parse --git-dir > /dev/null 2>&1); then
       AC_MSG_RESULT([yes])
       HAVE_GIT_REPO=yes
     else

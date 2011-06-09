@@ -38,6 +38,15 @@
 )))
 
 
+(define (gnetlist:get-calling-flags) ; DEPRECATED
+  "Returns a list of `-O' arguments in the form:
+
+  ((ARGUMENT #t) ...)
+
+This function is deprecated, and should not be used in new code.  New
+code should use `gnetlist:get-backend-arguments' directly."
+  (map (lambda (x) (list x #t)) (gnetlist:get-backend-arguments)))
+
 ;;---------------------------------------------------------------
 ;; calling-flag?
 ;;   Returns #t or #f depending upon the corresponding flag

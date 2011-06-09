@@ -117,7 +117,7 @@ void o_lock(GSCHEM_TOPLEVEL *w_current)
     if (object) {
       /* check to see if locked_color is already being used */
       if (object->locked_color == -1) {
-        object->sel_func = NULL;
+        object->selectable = FALSE;
         object->locked_color = object->color;
         object->color = LOCK_COLOR;
         w_current->toplevel->page_current->CHANGED=1;
@@ -153,9 +153,9 @@ void o_unlock(GSCHEM_TOPLEVEL *w_current)
   while(s_current != NULL) {
     object = (OBJECT *) s_current->data;
     if (object) {
-      /* only unlock if sel_func is not set to something */
-      if (object->sel_func == NULL) {
-        object->sel_func = select_func;
+      /* only unlock if the object is locked */
+      if (object->selectable == FALSE) {
+        object->selectable = TRUE;
         object->color = object->locked_color;
         object->locked_color = -1;
         w_current->toplevel->page_current->CHANGED = 1;
@@ -252,7 +252,7 @@ void o_rotate_call_hooks (GSCHEM_TOPLEVEL *w_current, GList *list)
     switch (o_current->type) {
       case OBJ_PIN:
         /* Run the rotate pin hook */
-        if (scm_hook_empty_p (rotate_pin_hook) == SCM_BOOL_F) {
+        if (scm_is_false (scm_hook_empty_p (rotate_pin_hook))) {
           scm_run_hook (rotate_pin_hook,
                         scm_list_1 (edascm_from_object (o_current)));
         }
@@ -260,7 +260,7 @@ void o_rotate_call_hooks (GSCHEM_TOPLEVEL *w_current, GList *list)
 
       case OBJ_COMPLEX:
         /* Run the rotate hook */
-        if (scm_hook_empty_p (rotate_component_object_hook) == SCM_BOOL_F) {
+        if (scm_is_false (scm_hook_empty_p (rotate_component_object_hook))) {
           scm_run_hook (rotate_component_object_hook,
                         scm_list_1 (edascm_from_object (o_current)));
         }
@@ -326,7 +326,7 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
     switch(o_current->type) {
       case(OBJ_PIN):
         /* Run the mirror pin hook */
-        if (scm_hook_empty_p(mirror_pin_hook) == SCM_BOOL_F &&
+        if (scm_is_false (scm_hook_empty_p (mirror_pin_hook)) &&
             o_current != NULL) {
           scm_run_hook(mirror_pin_hook,
                        scm_list_1 (edascm_from_object (o_current)));
@@ -335,7 +335,7 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
 
       case (OBJ_COMPLEX):
         /* Run the mirror pin hook */
-        if (scm_hook_empty_p(mirror_component_object_hook) == SCM_BOOL_F &&
+        if (scm_is_false (scm_hook_empty_p(mirror_component_object_hook)) &&
             o_current != NULL) {
           scm_run_hook(mirror_component_object_hook,
                        scm_list_1 (edascm_from_object (o_current)));
@@ -796,7 +796,7 @@ void o_autosave_backups(GSCHEM_TOPLEVEL *w_current)
 
         if (o_save (toplevel,
                     s_page_objects (toplevel->page_current),
-                    backup_filename)) {
+                    backup_filename, NULL)) {
 
           p_current->ops_since_last_backup = 0;
                 p_current->do_autosave_backup = 0;
