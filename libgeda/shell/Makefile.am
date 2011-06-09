@@ -25,4 +25,4 @@ snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 .c.x:
 	$(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
 
-cleanfiles = $(BUILT_SOURCES)
+CLEANFILES = $(BUILT_SOURCES)
