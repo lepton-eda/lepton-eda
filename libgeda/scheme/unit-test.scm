@@ -42,7 +42,6 @@
 
 (define-module (unit-test)
   #:use-module (ice-9 pretty-print)
-  #:use-module (ice-9 syncase)
   #:export (assert-true
             assert-equal
             %assert-thrown
@@ -52,6 +51,9 @@
   #:export-syntax (skip-test
                    begin-test
                    assert-thrown))
+
+(or (defined? 'define-syntax)
+    (use-modules (ice-9 syncase)))
 
 (define *failed-tests* '())
 (define *passed-tests* '())

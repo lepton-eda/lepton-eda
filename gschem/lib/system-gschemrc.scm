@@ -1358,7 +1358,8 @@
 ; The SEPARATOR keyword is case sensitive and puts a seperator into the menu.
 ;
 
-(use-modules (ice-9 syncase))
+(or (defined? 'define-syntax)
+    (use-modules (ice-9 syncase)))
 
 ;; Define a no-op macro for flagging strings as translatable.
 (define-syntax N_
