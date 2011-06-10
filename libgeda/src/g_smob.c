@@ -46,7 +46,6 @@ static scm_sizet g_free_attrib_smob(SCM attrib_smob)
 {
   struct st_attrib_smob *attribute = 
     (struct st_attrib_smob *) SCM_SMOB_DATA (attrib_smob);
-  scm_sizet size = sizeof(struct st_attrib_smob);
 
   free(attribute); /* this should stay as free (allocated from guile) */
   return 0;
@@ -461,7 +460,6 @@ static scm_sizet g_free_object_smob(SCM object_smob)
 {
   struct st_object_smob *object = 
   (struct st_object_smob *)SCM_CDR(object_smob);
-  scm_sizet size = sizeof(struct st_object_smob);
 
   free(object); /* this should stay as free (allocated from guile) */
   return 0;
@@ -726,7 +724,6 @@ static scm_sizet g_free_page_smob(SCM page_smob)
 {
   struct st_page_smob *page = 
   (struct st_page_smob *)SCM_CDR(page_smob);
-  scm_sizet size = sizeof(struct st_page_smob);
 
   free(page); /* this should stay as free (allocated from guile) */
   return 0;
