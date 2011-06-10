@@ -31,12 +31,13 @@
 ;;
 ;; Produces the output:
 ;;
-;;   SuccessfulTest... passed
-;;   FailTest... failed
+;;   PASS: SuccessfulTest
+;;   FAIL: FailTest
 ;;     assert-equal: expected: #t got: "string"
 ;;   Test summary
 ;;   Passed: 1
 ;;   Failed: 1
+;;   Skipped: 0
 ;;
 
 (define-module (unit-test)
@@ -82,7 +83,6 @@
   (gc)
   (let ((test-success #t)
         (test-fail-msg #f))
-    (display name) (display "... ")
 
     (catch #t test-thunk
            (lambda (key . args)
@@ -94,16 +94,13 @@
 
     (if test-success
         (begin
-          (display "passed")
+          (format #t "PASS: ~A\n" name)
           (set! *passed-tests* (cons name *passed-tests*)))
         (begin
-          (display "failed")
-          (if test-fail-msg
-              (begin
-                (newline)
-                (display test-fail-msg)))
-          (set! *failed-tests* (cons name *failed-tests*))))
-    (newline)))
+          (format #t "FAIL: ~A\n" name)
+          (and test-fail-msg
+               (format #t "~A\n" test-fail-msg))
+          (set! *failed-tests* (cons name *failed-tests*))))))
 
 (define-syntax begin-test
     (syntax-rules ()
@@ -114,7 +111,7 @@
   (syntax-rules ()
     ((_ name . test-forms)
      (begin
-       (format #t "~A... skipped\n" name)
+       (format #t "SKIP: ~A\n" name)
        (set! *skipped-tests* (cons name *skipped-tests*))))))
 
 (define-syntax assert-thrown
