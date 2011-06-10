@@ -575,12 +575,14 @@ const char *s_path_sys_data () {
   if (p == NULL) {
     p = g_getenv ("GEDADATA");
   }
-# if !defined (_WIN32)
   if (p == NULL) {
+# if !defined (_WIN32)
     p = GEDADATADIR;
+# else
+    p = g_get_current_dir ();
+# endif
     g_setenv ("GEDADATA", p, FALSE);
   }
-# endif
   return p;
 }
 
@@ -605,7 +607,7 @@ const char *s_path_sys_config () {
     p = g_getenv ("GEDADATARC");
   }
   if (p == NULL) {
-#ifdef GEDARCDIR
+#if defined (GEDARCDIR) && !defined(_WIN32)
     /* If available, use the rc directory set during configure. */
     p = GEDARCDIR;
 #else
