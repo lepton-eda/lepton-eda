@@ -43,7 +43,7 @@ SCM_DEFINE (make_complex, "%make-complex", 1, 0, 0,
 {
   SCM_ASSERT (scm_is_string (basename_s), basename_s, SCM_ARG1, s_make_complex);
 
-  char *tmp = scm_to_locale_string (basename_s);
+  char *tmp = scm_to_utf8_string (basename_s);
   OBJECT *obj = o_complex_new_embedded (edascm_c_current_toplevel (),
                                         OBJ_COMPLEX, DEFAULT_COLOR, 0, 0, 0,
                                         FALSE, tmp, TRUE);
@@ -81,7 +81,7 @@ SCM_DEFINE (make_complex_library, "%make-complex/library", 1, 0, 0,
   SCM_ASSERT (scm_is_string (basename_s), basename_s, SCM_ARG1,
               s_make_complex_library);
 
-  char *basename = scm_to_locale_string (basename_s);
+  char *basename = scm_to_utf8_string (basename_s);
   scm_dynwind_begin (0);
   scm_dynwind_unwind_handler (free, basename, SCM_F_WIND_EXPLICITLY);
 
@@ -196,7 +196,7 @@ SCM_DEFINE (complex_info, "%complex-info", 1, 0, 0,
 
   OBJECT *obj = edascm_to_object (complex_s);
 
-  return scm_list_n (scm_from_locale_string (obj->complex_basename),
+  return scm_list_n (scm_from_utf8_string (obj->complex_basename),
                      scm_from_int (obj->complex->x),
                      scm_from_int (obj->complex->y),
                      scm_from_int (obj->complex->angle),

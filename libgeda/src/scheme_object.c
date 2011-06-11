@@ -105,8 +105,8 @@ edascm_to_object_glist (SCM objs, const char *subr)
     EDASCM_ASSERT_SMOB_VALID (smob);
     if (!EDASCM_OBJECTP (smob)) {
       scm_error_scm (wrong_type_arg_sym,
-                     scm_from_locale_string (subr),
-                     scm_from_locale_string (_("Expected a gEDA object, found ~A")),
+                     scm_from_utf8_string (subr),
+                     scm_from_utf8_string (_("Expected a gEDA object, found ~A")),
                      scm_list_1 (smob), scm_list_1 (smob));
     }
     result = g_list_prepend (result, (gpointer) edascm_to_object (smob));
@@ -1400,7 +1400,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
 
   o_emit_change_notify (toplevel, obj);
 
-  char *tmp = scm_to_locale_string (string_s);
+  char *tmp = scm_to_utf8_string (string_s);
   o_text_set_string (toplevel, obj, tmp);
   free (tmp);
 
@@ -1484,7 +1484,7 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
                      scm_from_int (obj->text->y),
                      align_s,
                      scm_from_int (obj->text->angle),
-                     scm_from_locale_string (o_text_get_string (toplevel, obj)),
+                     scm_from_utf8_string (o_text_get_string (toplevel, obj)),
                      scm_from_int (obj->text->size),
                      visible_s,
                      show_s,

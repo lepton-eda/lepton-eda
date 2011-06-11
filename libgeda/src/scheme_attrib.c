@@ -58,8 +58,8 @@ SCM_DEFINE (parse_attrib, "%parse-attrib", 1, 0, 0,
   scm_dynwind_unwind_handler (g_free, value, SCM_F_WIND_EXPLICITLY);
 
   if (o_attrib_get_name_value (text, &name, &value)) {
-    result = scm_cons (scm_from_locale_string (name),
-                           scm_from_locale_string (value));
+    result = scm_cons (scm_from_utf8_string (name),
+                       scm_from_utf8_string (value));
   }
   scm_dynwind_end ();
 

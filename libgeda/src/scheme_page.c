@@ -76,7 +76,7 @@ SCM_DEFINE (new_page, "%new-page", 1, 0, 0,
   SCM_ASSERT (scm_is_string (filename_s), filename_s,
               SCM_ARG1, s_new_page);
 
-  filename = scm_to_locale_string (filename_s);
+  filename = scm_to_utf8_string (filename_s);
   page = s_page_new (toplevel, filename);
   g_free (filename);
 
@@ -131,7 +131,7 @@ SCM_DEFINE (page_filename, "%page-filename", 1, 0, 0,
 
 
   page = edascm_to_page (page_s);
-  return scm_from_locale_string (page->page_filename);
+  return scm_from_utf8_string (page->page_filename);
 }
 
 /*! \brief Change the filename associated with a page.
@@ -154,7 +154,7 @@ SCM_DEFINE (set_page_filename_x, "%set-page-filename!", 2, 0, 0,
               SCM_ARG2, s_set_page_filename_x);
 
   PAGE *page = edascm_to_page (page_s);
-  char *new_fn = scm_to_locale_string (filename_s);
+  char *new_fn = scm_to_utf8_string (filename_s);
   if (page->page_filename != NULL) {
     g_free (page->page_filename);
   }

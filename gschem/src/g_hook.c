@@ -624,7 +624,7 @@ g_get_hook_by_name (const char *name)
 {
   SCM exp = scm_list_3 (at_sym,
                         scm_list_3 (gschem_sym, core_sym, hook_sym),
-                        scm_from_locale_symbol (name));
+                        scm_from_utf_symbol (name));
   return g_scm_eval_protected (exp, SCM_UNDEFINED);
 }
 
