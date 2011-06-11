@@ -20,6 +20,7 @@
 /*! \todo STILL NEED to clean up line lengths in aa and tr */
 #include <config.h>
 #include <version.h>
+#include <missing.h>
 
 #include <stdio.h>
 #ifdef HAVE_STDLIB_H

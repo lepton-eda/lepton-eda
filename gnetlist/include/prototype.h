@@ -2,6 +2,7 @@
 void g_set_project_current(TOPLEVEL *pr_current);
 SCM g_scm_c_get_uref(TOPLEVEL *toplevel, OBJECT *object);
 SCM g_get_backend_arguments ();
+SCM g_get_input_files();
 SCM g_get_packages(SCM level);
 SCM g_get_non_unique_packages(SCM level);
 SCM g_get_pins(SCM uref);
@@ -42,6 +43,7 @@ int main(int argc, char *argv[]);
 void i_vars_set(TOPLEVEL *pr_current);
 /* parsecmd.c */
 void usage(char *cmd);
+GSList *create_input_files_list(int argi, int argc, char *argv[]);
 int parse_commandline(int argc, char *argv[]);
 /* s_cpinlist.c */
 CPINLIST *s_cpinlist_return_tail(CPINLIST *head);

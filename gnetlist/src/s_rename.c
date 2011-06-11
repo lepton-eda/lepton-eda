@@ -25,6 +25,7 @@
   */
   
 #include <config.h>
+#include <missing.h>
 
 #include <stdio.h>
 #include <ctype.h>
@@ -323,8 +324,8 @@ SCM g_get_renamed_nets(SCM scm_level)
     {
         for (temp_rename = temp_set->first_rename; temp_rename; temp_rename = temp_rename->next)
         {
-            pairlist = scm_list_n (scm_from_locale_string (temp_rename->src),
-                                   scm_from_locale_string (temp_rename->dest),
+            pairlist = scm_list_n (scm_from_utf8_string (temp_rename->src),
+                                   scm_from_utf8_string (temp_rename->dest),
                                    SCM_UNDEFINED);
             outerlist = scm_cons (pairlist, outerlist);
         }

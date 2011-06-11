@@ -19,6 +19,7 @@
  */
 #include <config.h>
 #include <version.h>
+#include <missing.h>
 
 #include <stdio.h>
 #include <ctype.h>
@@ -135,12 +136,12 @@ int
 parse_commandline(int argc, char *argv[])
 {
   int ch;
-  SCM sym_cons = scm_from_locale_symbol ("cons");
-  SCM sym_set_x = scm_from_locale_symbol ("set!");
-  SCM sym_load_path = scm_from_locale_symbol ("%load-path");
-  SCM sym_begin = scm_from_locale_symbol ("begin");
-  SCM sym_load = scm_from_locale_symbol ("load");
-  SCM sym_eval_string = scm_from_locale_symbol ("eval-string");
+  SCM sym_cons = scm_from_utf8_symbol ("cons");
+  SCM sym_set_x = scm_from_utf8_symbol ("set!");
+  SCM sym_load_path = scm_from_utf8_symbol ("%load-path");
+  SCM sym_begin = scm_from_utf8_symbol ("begin");
+  SCM sym_load = scm_from_utf8_symbol ("load");
+  SCM sym_eval_string = scm_from_utf8_symbol ("eval-string");
 
 #ifdef HAVE_GETOPT_LONG
   while ((ch = getopt_long (argc, argv, GETOPT_OPTIONS, long_options, NULL)) != -1) {

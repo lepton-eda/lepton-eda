@@ -19,6 +19,7 @@
  */
 
 #include <config.h>
+#include <missing.h>
 
 #include <stdio.h>
 #ifdef HAVE_STRING_H
@@ -196,7 +197,7 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
       scm_uref = g_scm_c_get_uref(pr_current, o_current);
 
       if (scm_is_string( scm_uref )) {
-        temp_uref = scm_to_locale_string( scm_uref );
+        temp_uref = scm_to_utf8_string (scm_uref);
         netlist->component_uref =
           s_hierarchy_create_uref(pr_current, temp_uref, hierarchy_tag);
         g_free(temp_uref);

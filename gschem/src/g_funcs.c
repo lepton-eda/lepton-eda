@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
+#include <missing.h>
 
 #include <stdio.h>
 #include <sys/stat.h>
@@ -226,7 +227,7 @@ SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags)
 			      c_flags
 			      );
 
-  v = scm_from_locale_string (r);
+  v = scm_from_utf8_string (r);
   g_free (r);
 
   return v;
@@ -261,7 +262,7 @@ hash_table_2_list (gpointer key,
                    gpointer user_data)
 {
   SCM *plist = (SCM*)user_data;
-  *plist = scm_cons (scm_from_locale_string ((char*)value), *plist);
+  *plist = scm_cons (scm_from_utf8_string ((char*)value), *plist);
 }
 
 /*! \todo Finish function documentation!!!

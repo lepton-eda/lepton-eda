@@ -12,11 +12,20 @@ Notable changes in gEDA/gaf 1.7.1
 
 * gEDA is now compatible with Guile 2.0.
 
+* gEDA/gaf applications no longer complain when trying to load an rc
+  file twice, or when an rc file doesn't exist.
+
 * `gschem' allows objects to be moved by dragging without having to
   select them first.
 
+* `gschem' now supports keybindings with more than one modifier key,
+  and "Deselect" is bound to <Control Shift A> by default.
+
 * `gnetlist' correctly handles multiple renames of the same net.  This
   resolves some long-standing bugs with multipage schematics.
+
+* The `spice-sdb' backend for `gnetlist' now has built-in support for
+  `SUBCKT_NMOS' and `SUBCKT_PMOS' devices.
 
 * Visibility of embedded component attributes are now preserved by
   `gattrib'.

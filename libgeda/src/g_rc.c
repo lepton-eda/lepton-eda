@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
+#include <missing.h>
 
 #include <errno.h>
 #include <stdio.h>
@@ -85,7 +86,7 @@ SCM g_rc_mode_general(SCM scmmode,
   SCM_ASSERT (scm_is_string (scmmode), scmmode,
               SCM_ARG1, rc_name);
   
-  mode = scm_to_locale_string (scmmode);
+  mode = scm_to_utf8_string (scmmode);
   
   index = vstbl_lookup_str(table, table_size, mode);
   /* no match? */
@@ -408,11 +409,11 @@ SCM g_rc_component_library(SCM path, SCM name)
   if (name != SCM_UNDEFINED) {
     SCM_ASSERT (scm_is_string (name), name,
 		SCM_ARG2, "component-library");
-    namestr = scm_to_locale_string (name);
+    namestr = scm_to_utf8_string (name);
   }
   
   /* take care of any shell variables */
-  temp = scm_to_locale_string (path);
+  temp = scm_to_utf8_string (path);
   string = s_expand_env_variables (temp);
   free (temp);
 
@@ -474,17 +475,17 @@ SCM g_rc_component_library_command (SCM listcmd, SCM getcmd,
 
   /* take care of any shell variables */
   /*! \bug this may be a security risk! */
-  tmp_str = scm_to_locale_string (listcmd);
+  tmp_str = scm_to_utf8_string (listcmd);
   lcmdstr = s_expand_env_variables (tmp_str);
   free (tmp_str); /* this should stay as free (allocated from guile) */
 
   /* take care of any shell variables */
   /*! \bug this may be a security risk! */
-  tmp_str = scm_to_locale_string (getcmd);
+  tmp_str = scm_to_utf8_string (getcmd);
   gcmdstr = s_expand_env_variables (tmp_str);
   free (tmp_str); /* this should stay as free (allocated from guile) */
 
-  namestr = scm_to_locale_string (name);
+  namestr = scm_to_utf8_string (name);
 
   src = s_clib_add_command (lcmdstr, gcmdstr, namestr);
 
@@ -525,7 +526,7 @@ SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name)
   SCM_ASSERT (scm_is_string (name), name, SCM_ARG1, 
 	      "component-library-funcs");
 
-  namestr = scm_to_locale_string (name);
+  namestr = scm_to_utf8_string (name);
 
   if (s_clib_add_scm (listfunc, getfunc, namestr) != NULL) {
     result = SCM_BOOL_T;
@@ -553,7 +554,7 @@ SCM g_rc_component_library_search(SCM path)
               SCM_ARG1, "component-library-search");
 
   /* take care of any shell variables */
-  temp = scm_to_locale_string (path);
+  temp = scm_to_utf8_string (path);
   string = s_expand_env_variables (temp);
   free (temp);
 
@@ -620,7 +621,7 @@ SCM g_rc_source_library(SCM path)
               SCM_ARG1, "source-library");
 
   /* take care of any shell variables */
-  temp = scm_to_locale_string (path);
+  temp = scm_to_utf8_string (path);
   string = s_expand_env_variables (temp);
   free (temp);
   
@@ -667,7 +668,7 @@ SCM g_rc_source_library_search(SCM path)
               SCM_ARG1, "source-library-search");
 
   /* take care of any shell variables */
-  temp = scm_to_locale_string (path);
+  temp = scm_to_utf8_string (path);
   string = s_expand_env_variables (temp);
   free (temp);
 
@@ -777,7 +778,7 @@ SCM g_rc_untitled_name(SCM name)
 
   g_free(default_untitled_name);
 
-  temp = scm_to_locale_string (name);
+  temp = scm_to_utf8_string (name);
   default_untitled_name = g_strdup (temp);
   free (temp);
 
@@ -804,9 +805,9 @@ SCM g_rc_scheme_directory(SCM s_path)
               SCM_ARG1, "scheme-directory");
 
   /* take care of any shell variables */
-  temp = scm_to_locale_string (s_path);
+  temp = scm_to_utf8_string (s_path);
   expanded = s_expand_env_variables (temp);
-  s_path = scm_from_locale_string (expanded);
+  s_path = scm_from_utf8_string (expanded);
   free (temp);
   g_free (expanded);
 
@@ -836,7 +837,7 @@ SCM g_rc_bitmap_directory(SCM path)
               SCM_ARG1, "bitmap-directory");
   
   /* take care of any shell variables */
-  temp = scm_to_locale_string (path);
+  temp = scm_to_utf8_string (path);
   string = s_expand_env_variables (temp);
   free (temp);
 
@@ -871,7 +872,7 @@ SCM g_rc_bus_ripper_symname(SCM scmsymname)
 
   g_free(default_bus_ripper_symname);
 
-  temp = scm_to_locale_string (scmsymname);
+  temp = scm_to_utf8_string (scmsymname);
   default_bus_ripper_symname = g_strdup (temp);
   free (temp);
 
@@ -895,7 +896,7 @@ SCM g_rc_postscript_prolog(SCM scmsymname)
   g_free(default_postscript_prolog);
 
   /* take care of any shell variables */
-  temp = scm_to_locale_string (scmsymname);
+  temp = scm_to_utf8_string (scmsymname);
   default_postscript_prolog =
     s_expand_env_variables (temp);
   free (temp);
@@ -1005,7 +1006,7 @@ SCM g_rc_always_promote_attributes(SCM attrlist)
 		    " is deprecated. Use a list of strings instead\n"));
 
     /* convert the space separated strings into a GList */
-    temp = scm_to_locale_string (attrlist);
+    temp = scm_to_utf8_string (attrlist);
     attr2 = g_strsplit(temp," ", 0);
     free (temp);
 
@@ -1024,7 +1025,7 @@ SCM g_rc_always_promote_attributes(SCM attrlist)
       SCM_ASSERT(scm_is_string(scm_list_ref(attrlist, scm_from_int(i))), 
 		 scm_list_ref(attrlist, scm_from_int(i)), SCM_ARG1, 
 		 "always-promote-attribute: list element is not a string");
-      temp = scm_to_locale_string (scm_list_ref (attrlist, scm_from_int (i)));
+      temp = scm_to_utf8_string (scm_list_ref (attrlist, scm_from_int (i)));
       attr = g_strdup(temp);
       free (temp);
       list = g_list_prepend(list, attr);

@@ -63,5 +63,8 @@ SCM pre_backend_list = SCM_EOL;
  * before the execution of the backend procedure */
 SCM post_backend_list = SCM_EOL;
 
+/* List of input filenames */
+GSList *input_files;
+
 /* Parameters passed to the backend from the command line */
 GSList *backend_params = NULL;  

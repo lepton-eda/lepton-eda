@@ -19,6 +19,7 @@
  */
 
 #include <config.h>
+#include <missing.h>
 
 #include <stdio.h> 
 #ifdef HAVE_STRING_H
@@ -68,7 +69,7 @@ SCM g_get_packages(SCM level)
         if (g_hash_table_lookup (ht, nl_current->component_uref) == NULL) {
           g_hash_table_insert (ht, nl_current->component_uref,
                                    nl_current->component_uref);
-          list = scm_cons (scm_from_locale_string (nl_current->component_uref),
+          list = scm_cons (scm_from_utf8_string (nl_current->component_uref),
                            list);
         }
       }
@@ -90,7 +91,7 @@ SCM g_get_non_unique_packages(SCM level)
     for (nl_current = netlist_head; nl_current != NULL;
          nl_current = nl_current->next) {
       if (nl_current->component_uref != NULL) {
-        list = scm_cons (scm_from_locale_string (nl_current->component_uref),
+        list = scm_cons (scm_from_utf8_string (nl_current->component_uref),
                          list);
       }
     }
@@ -120,7 +121,7 @@ SCM g_get_pins(SCM uref)
 		pl_current = nl_current->cpins;
 		while (pl_current != NULL) {
 		    if (pl_current->pin_number) {
-              list = scm_cons (scm_from_locale_string (pl_current->pin_number),
+              list = scm_cons (scm_from_utf8_string (pl_current->pin_number),
                                list);
 		    }
 		    pl_current = pl_current->next;
@@ -164,7 +165,7 @@ SCM g_get_all_nets(SCM scm_level)
 		    printf("Got net: `%s'\n", net_name);
 		    printf("pin %s\n", pl_current->pin_number);
 #endif
-		    list = scm_cons (scm_from_locale_string (net_name),
+		    list = scm_cons (scm_from_utf8_string (net_name),
                                      list);
 		}
 	    }
@@ -205,7 +206,7 @@ SCM g_get_all_unique_nets(SCM scm_level)
 		    /* add the net name to the list */
 		    /*printf("Got net: `%s'\n",net_name); */
 
-		    x = scm_from_locale_string (net_name);
+		    x = scm_from_utf8_string (net_name);
 		    if (scm_is_false (scm_member (x, list))) {
               list = scm_cons (x, list);
 		    }
@@ -283,8 +284,8 @@ SCM g_get_all_connections(SCM scm_netname)
 			    sscanf(n_current->connected_to,
 				   "%s %s", uref, pin);
 
-			    pairlist = scm_list_n (scm_from_locale_string (uref),
-                                       scm_from_locale_string (pin),
+			    pairlist = scm_list_n (scm_from_utf8_string (uref),
+                                       scm_from_utf8_string (pin),
                                        SCM_UNDEFINED);
 
 			    x = pairlist;
@@ -376,8 +377,8 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
 				    sscanf(n_current->connected_to,
 					   "%s %s", uref, pin);
 
-				    pairlist = scm_list_n (scm_from_locale_string (uref),
-                                           scm_from_locale_string (pin),
+				    pairlist = scm_list_n (scm_from_utf8_string (uref),
+                                           scm_from_utf8_string (pin),
                                            SCM_UNDEFINED);
 
 				    pinslist = scm_cons (pairlist, pinslist);
@@ -397,9 +398,9 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
     }
 
     if (net_name != NULL) {
-      outerlist = scm_cons (scm_from_locale_string (net_name), pinslist);
+      outerlist = scm_cons (scm_from_utf8_string (net_name), pinslist);
     } else {
-      outerlist = scm_cons (scm_from_locale_string ("ERROR_INVALID_PIN"),
+      outerlist = scm_cons (scm_from_utf8_string ("ERROR_INVALID_PIN"),
                             outerlist);
 	fprintf(stderr, "Invalid wanted_pin passed to get-nets [%s]\n",
 		wanted_pin);
@@ -447,8 +448,8 @@ SCM g_get_pins_nets(SCM scm_uref)
 			    pin = pl_current->pin_number;
 			    net_name = pl_current->net_name;
 
-			    pairlist = scm_cons (scm_from_locale_string (pin),
-                                                 scm_from_locale_string (net_name));
+			    pairlist = scm_cons (scm_from_utf8_string (pin),
+                                                 scm_from_utf8_string (net_name));
 			    pinslist = scm_cons (pairlist, pinslist);
 			}
 
@@ -494,8 +495,8 @@ SCM g_get_all_package_attributes(SCM scm_uref, SCM scm_wanted_attrib)
     SCM_ASSERT(scm_is_string (scm_wanted_attrib),
 	       scm_wanted_attrib, SCM_ARG2, "gnetlist:get-all-package-attributes");
 
-    uref          = scm_to_locale_string (scm_uref);
-    wanted_attrib = scm_to_locale_string (scm_wanted_attrib);
+    uref          = scm_to_utf8_string (scm_uref);
+    wanted_attrib = scm_to_utf8_string (scm_wanted_attrib);
 
     /* here is where you make it multi page aware */
     nl_current = netlist_head;
@@ -509,7 +510,7 @@ SCM g_get_all_package_attributes(SCM scm_uref, SCM scm_wanted_attrib)
 		    o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
 		                                            wanted_attrib, 0);
 
-		ret = scm_cons (value ? scm_from_locale_string (value) : SCM_BOOL_F, ret);
+		ret = scm_cons (value ? scm_from_utf8_string (value) : SCM_BOOL_F, ret);
 
 		g_free (value);
 	    }
@@ -587,9 +588,9 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
   }
 
   if (return_value) {
-    scm_return_value = scm_from_locale_string (return_value);
+    scm_return_value = scm_from_utf8_string (return_value);
   } else {
-    scm_return_value = scm_from_locale_string ("unknown");
+    scm_return_value = scm_from_utf8_string ("unknown");
   }
 
 #if DEBUG
@@ -672,9 +673,9 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
     }
 
     if (return_value) {
-      scm_return_value = scm_from_locale_string (return_value);
+      scm_return_value = scm_from_utf8_string (return_value);
     } else {
-      scm_return_value = scm_from_locale_string ("unknown");
+      scm_return_value = scm_from_utf8_string ("unknown");
     }
 
     return (scm_return_value);
@@ -712,10 +713,10 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
   }
 
   if (attrib_value != NULL) {
-    scm_return_value = scm_from_locale_string (attrib_value);
+    scm_return_value = scm_from_utf8_string (attrib_value);
     g_free (attrib_value);
   } else {
-    scm_return_value = scm_from_locale_string ("not found");
+    scm_return_value = scm_from_utf8_string ("not found");
   }
 
   return (scm_return_value);
@@ -739,6 +740,26 @@ g_get_backend_arguments()
   }
 
   return scm_reverse_x (result, SCM_UNDEFINED);
+}
+
+
+/*! \brief Get input files from command line.
+ *  \par Function Description
+ *  This function returns a list of the files named on the command line.
+ *
+ *  \return A list of filenames as strings.
+ */
+SCM g_get_input_files()
+{
+    SCM list = SCM_EOL;
+    GSList *current = input_files;
+
+    while (current != NULL) {
+        list = scm_cons (scm_from_locale_string (current->data), list);
+        current = g_slist_next(current);
+    }
+
+    return scm_reverse_x (list, SCM_EOL);
 }
 
 
@@ -806,7 +827,7 @@ SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has
 		        o_attrib_search_object_attribs_by_name (nl_current->object_ptr,
 		                                                wanted_attrib, 0);
 		      if (attrib_value) {
-			list = scm_cons (scm_from_locale_string (attrib_value), list);
+			list = scm_cons (scm_from_utf8_string (attrib_value), list);
 		      }
 		      g_free (attrib_value);
 		    }

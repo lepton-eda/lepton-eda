@@ -34,6 +34,16 @@
 #include <dmalloc.h>
 #endif
 
+#ifdef G_OS_WIN32
+#  define STRICT
+#  include <windows.h>
+#  undef STRICT
+#  ifndef GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS
+#    define GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT 2
+#    define GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS 4
+#  endif
+#endif
+
 /*! this is modified here and in o_list.c */
 int global_sid=0;
 
@@ -556,6 +566,41 @@ s_expand_env_variables (const gchar *string)
 
 /* -------------------------------------------------- */
 
+#ifdef G_OS_WIN32
+
+/* Get a module handle for the libgeda DLL.
+ *
+ * Adapted from GLib, originally licensed under LGPLv2+. */
+static gpointer
+libgeda_module_handle ()
+{
+  typedef BOOL (WINAPI *t_GetModuleHandleExA) (DWORD, LPCTSTR, HMODULE *);
+  static t_GetModuleHandleExA p_GetModuleHandleExA = NULL;
+  static gconstpointer address = (void (*)(void)) &libgeda_module_handle;
+  static HMODULE hmodule = NULL;
+
+  if (hmodule != NULL) return (gpointer) hmodule;
+
+  if (p_GetModuleHandleExA == NULL) {
+    p_GetModuleHandleExA =
+      (t_GetModuleHandleExA) GetProcAddress (GetModuleHandle ("kernel32.dll"),
+                                             "GetModuleHandleExA");
+  }
+
+  if (p_GetModuleHandleExA == NULL ||
+      !(*p_GetModuleHandleExA) (GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT |
+                                GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,
+                                address, &hmodule)) {
+    MEMORY_BASIC_INFORMATION mbi;
+    VirtualQuery (address, &mbi, sizeof (mbi));
+    hmodule = (HMODULE) mbi.AllocationBase;
+  }
+
+  return (gpointer) hmodule;
+}
+
+#endif /* G_OS_WIN32 */
+
 /*! \brief Get the directory with the gEDA system data.
  *  \par Function description
  *  Returns the path to be searched for gEDA data shared between all
@@ -568,19 +613,31 @@ s_expand_env_variables (const gchar *string)
  *  \warning The returned string is owned by libgeda and should not be
  *  modified or free'd.
  *
+ *  \todo On UNIX platforms we should follow the XDG Base Directory
+ *  Specification.
+ *
  *  \return the gEDA shared data path, or NULL if none could be found.
  */
 const char *s_path_sys_data () {
   static const char *p = NULL;
+  /* If GEDADATA is set in the environment, use that path */
   if (p == NULL) {
     p = g_getenv ("GEDADATA");
   }
-# if !defined (_WIN32)
   if (p == NULL) {
+# if defined (G_OS_WIN32)
+    /* On Windows, guess the path from the location of the libgeda
+     * DLL. */
+    gchar *d =
+      g_win32_get_package_installation_directory_of_module (libgeda_module_handle ());
+    p = g_build_filename (d, "share", "gEDA", NULL);
+    g_free (d);
+# else
+    /* On other platforms, use the compiled-in path */
     p = GEDADATADIR;
+# endif
     g_setenv ("GEDADATA", p, FALSE);
   }
-# endif
   return p;
 }
 
@@ -594,6 +651,9 @@ const char *s_path_sys_data () {
  *  \warning The returned string is owned by libgeda and should not be
  *  modified or free'd.
  *
+ *  \todo On UNIX platforms we should follow the XDG Base Directory
+ *  Specification.
+ *
  *  \return the gEDA shared config path, or NULL if none could be
  *  found.
  */
@@ -605,7 +665,7 @@ const char *s_path_sys_config () {
     p = g_getenv ("GEDADATARC");
   }
   if (p == NULL) {
-#ifdef GEDARCDIR
+#if defined (GEDARCDIR) && !defined(_WIN32)
     /* If available, use the rc directory set during configure. */
     p = GEDARCDIR;
 #else
@@ -627,6 +687,9 @@ const char *s_path_sys_config () {
  *  modified or free'd.
  *
  *  \todo On Windows, we should use APPDATA.
+ *
+ *  \todo On UNIX platforms we should follow the XDG Base Directory
+ *  Specification.
  */
 const char *s_path_user_config () {
   static const char *p = NULL;

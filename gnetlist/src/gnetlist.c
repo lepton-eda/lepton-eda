@@ -20,6 +20,7 @@
 
 #include <config.h>
 #include <version.h>
+#include <missing.h>
 
 #include <stdio.h>
 #include <sys/param.h>
@@ -55,6 +56,8 @@ void gnetlist_quit(void)
 
     /* Free GSList *backend_params */
     g_slist_free (backend_params);
+
+    g_slist_free (input_files);
 }
 
 
@@ -85,7 +88,7 @@ gnetlist_backends (TOPLEVEL *pr_current)
     /* Get directory name from Scheme */
     g_assert (scm_is_true (scm_list_p (s_load_path))); /* Sanity check */
     g_assert (scm_is_string (scm_car (s_load_path))); /* Sanity check */
-    dir_name = scm_to_locale_string (s_dir_name);
+    dir_name = scm_to_utf8_string (s_dir_name);
 
     /* Open directory */
     dptr = opendir (dir_name);
@@ -231,6 +234,9 @@ void main_prog(void *closure, int argc, char *argv[])
         g_error_free (err);
       }
 
+      /* collect input filenames for backend use */
+      input_files = g_slist_append(input_files, argv[i]);
+
       i++;
       g_free (filename);
     }
@@ -256,7 +262,7 @@ void main_prog(void *closure, int argc, char *argv[])
 #endif
 
     /* Load basic gnetlist functions */
-    scm_primitive_load_path (scm_from_locale_string ("gnetlist.scm"));
+    scm_primitive_load_path (scm_from_utf8_string ("gnetlist.scm"));
 
     if (guile_proc) {
       SCM s_backend_path;
@@ -295,7 +301,7 @@ void main_prog(void *closure, int argc, char *argv[])
     g_free(cwd);
 
     /* Run post-traverse code. */
-    scm_primitive_load_path (scm_from_locale_string ("gnetlist-post.scm"));
+    scm_primitive_load_path (scm_from_utf8_string ("gnetlist-post.scm"));
 
     if (guile_proc) {
         /* check size here hack */

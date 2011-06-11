@@ -19,6 +19,7 @@
  */
 
 #include <config.h>
+#include <missing.h>
 
 #include <stdio.h>
 #include <sys/stat.h>
@@ -97,11 +98,11 @@ void g_register_libgeda_funcs (void)
 void g_register_libgeda_vars (void)
 {
   scm_c_define("geda-rc-path", 
-	       scm_from_locale_string (s_path_sys_config ()));
+	       scm_from_utf8_string (s_path_sys_config ()));
   scm_c_define("geda-data-path",
-	       scm_from_locale_string (s_path_sys_data ()));
+	       scm_from_utf8_string (s_path_sys_data ()));
   scm_c_define("path-sep", 
-	       scm_from_locale_string(G_DIR_SEPARATOR_S));
+	       scm_from_utf8_string(G_DIR_SEPARATOR_S));
 }
 
 /*! \brief Register some libgeda directories with Scheme.
@@ -115,6 +116,6 @@ g_register_libgeda_dirs (void)
   char *scheme_dir;
 
   scheme_dir = g_build_filename (s_path_sys_data (), "scheme", NULL);
-  g_rc_scheme_directory (scm_from_locale_string (scheme_dir));
+  g_rc_scheme_directory (scm_from_utf8_string (scheme_dir));
   g_free (scheme_dir);
 }

@@ -19,6 +19,7 @@
  */
 #include <config.h>
 #include <version.h>
+#include <missing.h>
 
 #include <stdio.h>
 #ifdef HAVE_STRING_H
@@ -242,11 +243,11 @@ void main_prog(void *closure, int argc, char *argv[])
 
   /* By this point, libgeda should have setup the Guile load path, so
    * we can take advantage of that.  */
-  scm_tmp = scm_sys_search_load_path (scm_from_locale_string ("gschem.scm"));
+  scm_tmp = scm_sys_search_load_path (scm_from_utf8_string ("gschem.scm"));
   if (scm_is_false (scm_tmp)) {
     s_log_message (_("Couldn't find init scm file [%s]\n"), "gschem.scm");
   }
-  input_str = scm_to_locale_string (scm_tmp);
+  input_str = scm_to_utf8_string (scm_tmp);
   if (g_read_file(w_current->toplevel, input_str, NULL)) {
     s_log_message(_("Read init scm file [%s]\n"), input_str);
   } else {
@@ -255,7 +256,7 @@ void main_prog(void *closure, int argc, char *argv[])
     s_log_message(_("Failed to read init scm file [%s]\n"),
                   input_str);
   }
-  free (input_str); /* M'allocated by scm_to_locale_string() */
+  free (input_str); /* M'allocated by scm_to_utf8_string() */
   scm_remember_upto_here_1 (scm_tmp);
 
   /* Set default icon */
