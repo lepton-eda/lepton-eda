@@ -1,6 +1,6 @@
 ;; gEDA - GPL Electronic Design Automation
 ;; libgeda - gEDA's library - Scheme API
-;; Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
+;; Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -506,6 +506,15 @@
 ;; Returns #t if the text object t is set to be visible.
 (define-public (text-visible? t)
   (list-ref (text-info t) 5))
+
+;; set-text-visibility! t visible
+;;
+;; If visible is #f, sets object t to be invisible; otherwise, sets t
+;; to be visible.
+(define-public (set-text-visibility! t visible)
+  (let ((i (text-info t)))
+    (list-set! i 5 (not (not visible)))
+    (apply set-text! t i)))
 
 ;; text-attribute-mode t
 ;;

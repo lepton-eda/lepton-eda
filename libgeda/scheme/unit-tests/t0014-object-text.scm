@@ -54,3 +54,19 @@
     (assert-thrown 'misc-error
       (set-text! a '(3 . 4) 'upper-right 1 "more text" 20 #f 'name))
     ))
+
+(begin-test 'set-text-visibility!
+  (let ((a (make-text '(1 . 2) 'lower-left 0 "test text" 10 #t 'both 21))
+        (b (make-text '(1 . 2) 'lower-left 0 "test text" 10 #t 'both 21)))
+    (assert-true (text-visible? a))
+
+    (set-text-visibility! a #f)
+    (assert-true (not (text-visible? a)))
+
+    (set-text-visibility! a #t)
+    (assert-true (text-visible? a))
+    (assert-equal (text-info a) (text-info b))
+
+    (set-text-visibility! a 'bork)
+    (assert-true (text-visible? a))
+    (assert-equal (text-info a) (text-info b))))
