@@ -18,7 +18,7 @@ DISTCHECK_CONFIGURE_FLAGS = \
 	--disable-update-xdg-database
 
 BUILT_SOURCES = version.h
-EXTRA_DIST = autogen.sh version.h version.h.in README.Cygwin HACKING \
+EXTRA_DIST = autogen.sh version.h version.h.in missing.h README.Cygwin HACKING \
 	COPYING.LGPL
 
 # Generate version.h. This works by looking at any git repository that
