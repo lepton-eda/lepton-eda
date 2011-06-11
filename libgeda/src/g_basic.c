@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
+#include <missing.h>
 
 #include <stdio.h>
 #include <sys/stat.h>
@@ -131,7 +132,7 @@ SCM g_scm_eval_protected (SCM exp, SCM module_or_state)
 SCM g_scm_c_eval_string_protected (const gchar *str) {
   SCM s_str;
   g_return_val_if_fail ((str != NULL), SCM_BOOL_F);
-  s_str = scm_from_locale_string (str);
+  s_str = scm_from_utf8_string (str);
   return g_scm_eval_string_protected (s_str);
 }
 
@@ -150,7 +151,7 @@ SCM g_scm_c_eval_string_protected (const gchar *str) {
  */
 SCM g_scm_eval_string_protected (SCM str)
 {
-  SCM expr = scm_list_2 (scm_from_locale_symbol ("eval-string"),
+  SCM expr = scm_list_2 (scm_from_utf8_symbol ("eval-string"),
                          str);
 
   return g_scm_eval_protected (expr, SCM_UNDEFINED);
@@ -210,7 +211,7 @@ g_read_file(TOPLEVEL *toplevel, const gchar *filename, GError **err)
   g_return_val_if_fail ((filename != NULL), FALSE);
 
   data.stack = SCM_BOOL_F;
-  data.filename = scm_from_locale_string (filename);
+  data.filename = scm_from_utf8_string (filename);
   data.err = NULL;
 
   scm_c_catch (SCM_BOOL_T,
@@ -248,7 +249,7 @@ process_error_stack (SCM s_stack, SCM s_key, SCM s_args, GError **err) {
   /* Capture short error message */
   s_port = scm_open_output_string ();
   scm_display_error_message (s_message, s_message_args, s_port);
-  short_message = scm_to_locale_string (scm_get_output_string (s_port));
+  short_message = scm_to_utf8_string (scm_get_output_string (s_port));
   scm_close_output_port (s_port);
 
   /* Capture long error message (including possible backtrace) */
@@ -271,7 +272,7 @@ process_error_stack (SCM s_stack, SCM s_key, SCM s_args, GError **err) {
   scm_display_error (s_location, s_port, s_subr,
                      s_message, s_message_args, s_rest);
 
-  long_message = scm_to_locale_string (scm_get_output_string (s_port));
+  long_message = scm_to_utf8_string (scm_get_output_string (s_port));
   scm_close_output_port (s_port);
 
   /* Send long message to log */

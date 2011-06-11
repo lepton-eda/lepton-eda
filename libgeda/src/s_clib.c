@@ -111,6 +111,7 @@
  */
 
 #include <config.h>
+#include <missing.h>
 
 #include <stdio.h>
 #include <glib.h>
@@ -746,7 +747,7 @@ static void refresh_scm (CLibSource *source)
 
       /* Need to make sure that the correct free() function is called
        * on strings allocated by Guile. */
-      tmp = scm_to_locale_string (symname);
+      tmp = scm_to_utf8_string (symname);
       symbol->name = g_strdup(tmp);
       free (tmp);
 
@@ -1136,7 +1137,7 @@ static gchar *get_data_scm (const CLibSymbol *symbol)
   g_return_val_if_fail ((symbol->source->type == CLIB_SCM), NULL);
 
   symdata = scm_call_1 (symbol->source->get_fn, 
-			scm_from_locale_string (symbol->name));
+			scm_from_utf8_string (symbol->name));
 
   if (!scm_is_string (symdata)) {
     s_log_message (_("Failed to load symbol data [%s] from source [%s]\n"),
@@ -1146,7 +1147,7 @@ static gchar *get_data_scm (const CLibSymbol *symbol)
 
   /* Need to make sure that the correct free() function is called
    * on strings allocated by Guile. */
-  tmp = scm_to_locale_string (symdata);
+  tmp = scm_to_utf8_string (symdata);
   result = g_strdup(tmp);
   free (tmp);
 

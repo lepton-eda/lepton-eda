@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
+#include <missing.h>
 
 #include <math.h>
 #include <stdio.h>
@@ -72,7 +73,7 @@ static int g_print_attrib_smob(SCM attrib_smob, SCM port,
       attribute->attribute->text &&
       attribute->attribute->text->string ) {
     scm_puts("#<attribute ", port);
-    scm_display (scm_from_locale_string (attribute->attribute->text->string),
+    scm_display (scm_from_utf8_string (attribute->attribute->text->string),
                  port);
     scm_puts(">", port);
   }
@@ -127,8 +128,8 @@ SCM g_get_attrib_name_value(SCM attrib_smob)
   if (attribute != NULL &&
       attribute->attribute != NULL &&
       o_attrib_get_name_value (attribute->attribute, &name, &value)) {
-    returned = scm_cons (scm_from_locale_string (name),
-                         scm_from_locale_string (value));
+    returned = scm_cons (scm_from_utf8_string (name),
+                         scm_from_utf8_string (value));
     g_free(name);
     g_free(value);
   }
@@ -164,7 +165,7 @@ SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value,
 	      "set-attribute-value!");
 
   attribute = (struct st_attrib_smob *) SCM_SMOB_DATA (attrib_smob);
-  value = scm_to_locale_string (scm_value);
+  value = scm_to_utf8_string (scm_value);
 
   if (attribute != NULL &&
       attribute->attribute != NULL) {
@@ -242,7 +243,7 @@ SCM g_calcule_new_attrib_bounds (SCM attrib_smob, SCM scm_alignment,
   x = scm_to_int(scm_x);
   y = scm_to_int(scm_y);
   
-  alignment_string = scm_to_locale_string (scm_alignment);
+  alignment_string = scm_to_utf8_string (scm_alignment);
 
   if (strlen(alignment_string) == 0) {
     alignment = -1;
@@ -485,7 +486,7 @@ static int g_print_object_smob(SCM object_smob, SCM port,
       object->object &&
       object->object->name) {
     scm_puts("#<object ", port);
-    scm_display (scm_from_locale_string (object->object->name),
+    scm_display (scm_from_utf8_string (object->object->name),
                  port);
     scm_puts(">", port);
   }
@@ -583,7 +584,7 @@ SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
 
   /* Get parameters */
   object = (struct st_object_smob *)SCM_CDR(object_smob);
-  attrib_name = scm_to_locale_string (scm_attrib_name);
+  attrib_name = scm_to_utf8_string (scm_attrib_name);
 
   if (object && object->object) {
 
@@ -594,7 +595,7 @@ SCM g_get_attrib_value_by_attrib_name(SCM object_smob, SCM scm_attrib_name)
       if (a_current != NULL &&
           o_attrib_get_name_value (a_current, &name, &value)) {
         if (strcmp(name, attrib_name) == 0)
-          returned = scm_cons (scm_from_locale_string (value), returned);
+          returned = scm_cons (scm_from_utf8_string (value), returned);
         g_free (name);
         g_free (value);
       }
@@ -749,7 +750,7 @@ static int g_print_page_smob(SCM page_smob, SCM port,
       page->page &&
       page->page->page_filename) {
     scm_puts("#<page ", port);
-    scm_display (scm_from_locale_string (page->page->page_filename),
+    scm_display (scm_from_utf8_string (page->page->page_filename),
                  port);
     scm_puts(">", port);
   }
@@ -874,7 +875,7 @@ SCM g_get_page_filename(SCM page_smob)
     (((struct st_page_smob *) SCM_SMOB_DATA (page_smob))->page);
 
   if (page->page_filename) 
-    returned = scm_from_locale_string (page->page_filename);
+    returned = scm_from_utf8_string (page->page_filename);
 
   return (returned);
 }

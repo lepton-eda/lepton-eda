@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
+#include <missing.h>
 
 #include <stdio.h>
 #include <math.h>
@@ -229,7 +230,7 @@ s_color_map_to_scm (const COLOR *map)
     if (map[i].enabled) {
       COLOR c = map[i];
       gchar *rgba = s_color_rgba_encode (c.r, c.g, c.b, c.a);
-      color_val = scm_from_locale_string (rgba);
+      color_val = scm_from_utf8_string (rgba);
       g_free (rgba);
     }
     result = scm_cons (scm_list_2 (scm_from_int (i), color_val), result);
@@ -244,8 +245,8 @@ void
 s_color_map_from_scm (COLOR *map, SCM lst, const char *scheme_proc_name)
 {
   SCM curr = lst;
-  SCM wrong_type_arg_sym = scm_from_locale_symbol ("wrong-type-arg");
-  SCM proc_name = scm_from_locale_string (scheme_proc_name);
+  SCM wrong_type_arg_sym = scm_from_utf8_symbol ("wrong-type-arg");
+  SCM proc_name = scm_from_utf8_string (scheme_proc_name);
   while (curr != SCM_EOL) {
     int i;
     char *rgba;
@@ -258,7 +259,7 @@ s_color_map_from_scm (COLOR *map, SCM lst, const char *scheme_proc_name)
     if (!scm_is_true (scm_list_p (entry))
         || (scm_to_int (scm_length (entry)) != 2)) {
       scm_error_scm (wrong_type_arg_sym, proc_name,
-                     scm_from_locale_string (_("Color map entry must be a two-element list")),
+                     scm_from_utf8_string (_("Color map entry must be a two-element list")),
                      SCM_EOL, scm_list_1 (entry));
     }
 
@@ -266,7 +267,7 @@ s_color_map_from_scm (COLOR *map, SCM lst, const char *scheme_proc_name)
     s = scm_car (entry);
     if (!scm_is_integer (s)) {
       scm_error_scm (wrong_type_arg_sym, proc_name,
-                     scm_from_locale_string (_("Index in color map entry must be an integer")),
+                     scm_from_utf8_string (_("Index in color map entry must be an integer")),
                      SCM_EOL, scm_list_1 (s));
     }
     i = scm_to_int (s);
@@ -292,10 +293,10 @@ s_color_map_from_scm (COLOR *map, SCM lst, const char *scheme_proc_name)
     s = scm_cadr (entry);
     if (!scm_is_string (s)) {
       scm_error_scm (wrong_type_arg_sym, proc_name,
-                     scm_from_locale_string (_("Value in color map entry must be #f or a string")),
+                     scm_from_utf8_string (_("Value in color map entry must be #f or a string")),
                      SCM_EOL, scm_list_1 (s));
     }
-    rgba = scm_to_locale_string (s);
+    rgba = scm_to_utf8_string (s);
 
     result = s_color_rgba_decode (rgba, &c.r, &c.g, &c.b, &c.a);
 

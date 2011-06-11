@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
+#include <missing.h>
 
 #include <stdio.h>
 
@@ -226,8 +227,8 @@ static void x_window_invoke_macro(GtkEntry *entry, void *userdata)
   GSCHEM_TOPLEVEL *w_current = userdata;
   SCM interpreter;
 
-  interpreter = scm_list_2(scm_from_locale_symbol("invoke-macro"),
-			   scm_from_locale_string(gtk_entry_get_text(entry)));
+  interpreter = scm_list_2(scm_from_utf8_symbol("invoke-macro"),
+			   scm_from_utf8_string(gtk_entry_get_text(entry)));
 
   g_scm_eval_protected(interpreter, SCM_UNDEFINED);
 
