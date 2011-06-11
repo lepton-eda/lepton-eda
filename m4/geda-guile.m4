@@ -161,4 +161,25 @@ configure.])
     fi
   fi
 
+  # Check for functions in `libguile'
+  # ---------------------------------
+
+  # Save build-related variables
+  save_CFLAGS="${CFLAGS}"
+  save_LIBS="${LIBS}"
+
+  CFLAGS="${GUILE_CFLAGS} ${CFLAGS}"
+  LIBS="${GUILE_LIBS}"
+
+  AC_CHECK_FUNCS([scm_from_utf8_string])
+  AC_CHECK_FUNCS([scm_from_utf8_stringn])
+  AC_CHECK_FUNCS([scm_to_utf8_string])
+  AC_CHECK_FUNCS([scm_to_utf8_stringn])
+  AC_CHECK_FUNCS([scm_from_utf8_symbol])
+  AC_CHECK_FUNCS([scm_from_utf8_symboln])
+
+  # Restore build-related variables
+  CFLAGS="${save_CFLAGS}"
+  LIBS="${save_LIBS}"
+
 ])dnl AX_CHECK_GUILE
