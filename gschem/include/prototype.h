@@ -18,6 +18,8 @@ void a_zoom_box_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void a_zoom_box_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 void a_zoom_box_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void correct_aspect(GSCHEM_TOPLEVEL *w_current);
+/* g_attrib.c */
+void g_init_attrib ();
 /* g_funcs.c */
 SCM g_funcs_print(SCM filename);
 SCM g_funcs_postscript(SCM filename);

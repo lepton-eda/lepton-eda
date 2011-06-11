@@ -1,6 +1,7 @@
 bin_PROGRAMS = gschem
 
 BUILT_SOURCES = \
+	g_attrib.x \
 	g_hook.x \
 	g_window.x \
 	g_select.x
@@ -8,6 +9,7 @@ BUILT_SOURCES = \
 gschem_SOURCES = \
 	a_pan.c \
 	a_zoom.c \
+	g_attrib.c \
 	g_funcs.c \
 	g_hook.c \
 	g_keys.c \
