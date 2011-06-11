@@ -1348,7 +1348,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
   else {
     scm_misc_error (s_set_text_x,
                     _("Invalid text alignment ~A."),
-                    scm_list_1 (angle_s));
+                    scm_list_1 (align_s));
   }
 
   /* Angle */
@@ -1383,7 +1383,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
   else {
     scm_misc_error (s_set_text_x,
                     _("Invalid text name/value visibility ~A."),
-                    scm_list_1 (angle_s));
+                    scm_list_1 (show_s));
   }
 
   /* Actually make changes */
