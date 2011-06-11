@@ -476,7 +476,9 @@ void
 o_select_visible_unlocked (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  SELECTION *selection = toplevel->page_current->selection_list;
   const GList *iter;
+  GList *added;
 
   o_select_unselect_all (w_current);
   for (iter = s_page_objects (toplevel->page_current);
@@ -491,18 +493,22 @@ o_select_visible_unlocked (GSCHEM_TOPLEVEL *w_current)
     /* Skip locked objects. */
     if (!obj->selectable) continue;
 
-    /* Run selection hooks & add object to selection. */
+    /* Add object to selection. */
     /*! \bug We can't call o_select_object() because it
      * behaves differently depending on the state of
      * w_current->SHIFTKEY and w_current->CONTROLKEY, which may well
      * be set if this function is called via a keystroke
      * (e.g. Ctrl-A). */
-    o_select_run_hooks (w_current, obj, 1);
-    o_selection_add (toplevel, toplevel->page_current->selection_list, obj);
+    o_selection_add (toplevel, selection, obj);
 
     /* Add any attributes of object to selection as well. */
-    o_attrib_add_selected (w_current, toplevel->page_current->selection_list,
-                           obj);
+    o_attrib_add_selected (w_current, selection, obj);
+  }
+
+  /* Run hooks for all items selected */
+  added = geda_list_get_glist (selection);
+  if (added != NULL) {
+    g_run_hook_object_list ("%select-objects-hook", added);
   }
 }
 
