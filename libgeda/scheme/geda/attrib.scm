@@ -1,6 +1,6 @@
 ;; gEDA - GPL Electronic Design Automation
 ;; libgeda - gEDA's library - Scheme API
-;; Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
+;; Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -22,7 +22,8 @@
   ; Import C procedures
   #:use-module (geda core attrib)
 
-  #:use-module (geda object))
+  #:use-module (geda object)
+  #:use-module (geda page))
 
 (define-public parse-attrib %parse-attrib)
 (define-public object-attribs %object-attribs)
@@ -64,3 +65,31 @@
       (filter! (lambda (x) (and (attribute? x) (not (attrib-attachment x))))
                (component-contents object))
       '()))
+
+;; promote-attribs! object
+;;
+;; Promotes any promotable attributes from an object into its current
+;; page, if object is a component, keeping the original attributes as
+;; invisible attributes inside the component.  Returns a list of the
+;; objects that were added to the page.  If object is not a component,
+;; returns the empty list.  If object is not in a page, throws an
+;; object-state error.
+;;
+;; See also promotable-attribs.
+(define-public (promote-attribs! object)
+  (let ((p (or (object-page object)
+               (scm-error 'object-state #f
+                          "Object ~A is not part of a page" (list object) #f))))
+    (if (component? object)
+        (map (lambda (x)
+               (let ((y (copy-object x)))
+                 ;; Make original object invisible
+                 (set-text-visibility! x #f)
+                 ;; Append copy of the object to page
+                 (page-append! p y)
+                 ;; Attach it to object
+                 (attach-attrib! object y)
+                 ;; Return copy
+                 y))
+               (promotable-attribs object))
+        #f)))

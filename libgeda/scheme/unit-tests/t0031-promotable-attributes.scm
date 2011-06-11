@@ -12,3 +12,6 @@
 ;; [1] This is a good thing -- it shouldn't be necessary!
 (begin-test 'promotable-attributes
             (throw 'missing-unit-test "We can't test this at the moment"))
+
+(begin-test 'promote-attribs!
+            (throw 'missing-unit-test "We can't test this at the moment"))
