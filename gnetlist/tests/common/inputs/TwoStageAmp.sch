@@ -166,7 +166,7 @@ value=.options TEMP=25
 T 26600 54000 5 10 0 1 0 0 1
 device=directive
 T 26600 53800 5 10 1 1 0 0 1
-file=?
+file=unknown
 }
 N 27000 49700 28100 49700 4
 {

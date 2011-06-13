@@ -777,17 +777,35 @@
 (define vams:write-component-attributes 
  (lambda (port uref generic-list)
    (if (not (null? generic-list))
-       (let ((attrib (car generic-list)))
+       (let ((attrib (car generic-list))
+	     (value (gnetlist:get-package-attribute uref (car generic-list))))
 	 (begin
-	   (display "\t\t\t" port)
-	   (display attrib port)  
-	   (display " => " port)
-	   (display (gnetlist:get-package-attribute uref attrib) port)
-	   (if (not (null? (cdr generic-list)))
-	       (begin
-		 (display ", " port)
-		 (newline port)
-		 (vams:write-component-attributes port uref (cdr generic-list)))))))))
+
+	   (if (string=? value "unknown")
+	     (vams:write-component-attributes port uref (cdr generic-list))
+	     (begin
+	       (display "\t\t\t" port)
+	       (display attrib port)  
+	       (display " => " port)
+	       (display value port)
+	       (vams:write-component-attributes-helper port uref (cdr generic-list)))))))))
+
+(define vams:write-component-attributes-helper 
+ (lambda (port uref generic-list)
+   (if (not (null? generic-list))
+       (let ((attrib (car generic-list))
+	     (value (gnetlist:get-package-attribute uref (car generic-list))))
+	 (begin
+
+	   (if (not (string=? value "unknown"))
+	     (begin
+               (display ", " port)
+               (newline port)
+	       (display "\t\t\t" port)
+	       (display attrib port)  
+	       (display " => " port)
+	       (display value port)
+	       (vams:write-component-attributes-helper port uref (cdr generic-list)))))))))
 
 
 ;;;           ARCHITECTURE GENERATING PART
