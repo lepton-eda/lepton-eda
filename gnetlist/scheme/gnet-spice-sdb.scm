@@ -368,7 +368,8 @@
 
 ;;----------------------------------------------------------
 ;;  This returns a list of all the integers from start to
-;;  stop. It is similar to perl's range operator '..'
+;;  stop, with the optional step size.
+;;  It is similar to perl's range operator '..'
 ;;----------------------------------------------------------
 (define (range start stop . step)
   (if (null? step)
@@ -1219,7 +1220,7 @@
 
 
 ;;----------------------------------------------------------------------------
-; write a voltage probe
+;; write a voltage probe
 ;;----------------------------------------------------------------------------
 (define (spice-sdb:write-probe package port)
     ;; fetch only one attr we care about, so far
@@ -1483,6 +1484,7 @@
 ;;      Q? -- Invokes write-transistor-diode. (The "type" attribute is <unknown> 
 ;;            in this case so that the spice simulator will barf if the user
 ;;            has been careless.)
+;;      M? -- Same as Q
 ;;      U? -- Invokes write-ic. This provides the opportunity for a component
 ;;            model to be instantiated.
 ;;      X? -- Invokes write-ic.  This provides the opportunity for a component
