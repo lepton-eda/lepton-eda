@@ -19,7 +19,7 @@
 
 (define-module (gschem attrib)
 
-  #:use-module (gschem attrib))
+  #:use-module (gschem core attrib))
 
 ;; add-attrib! target name value visible attribute-mode
 ;;
