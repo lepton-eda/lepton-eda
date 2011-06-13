@@ -24,6 +24,7 @@
  * by Scheme API source files.
  */
 
+#include <missing.h>
 #include <libgeda/libgedaguile.h>
 
 void edascm_init_smob ();

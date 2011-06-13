@@ -18,6 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
+#include <missing.h>
+
 #include <stdio.h>
 #ifdef HAVE_STRING_H
 #include <string.h>
@@ -624,7 +626,7 @@ g_get_hook_by_name (const char *name)
 {
   SCM exp = scm_list_3 (at_sym,
                         scm_list_3 (gschem_sym, core_sym, hook_sym),
-                        scm_from_utf_symbol (name));
+                        scm_from_utf8_symbol (name));
   return g_scm_eval_protected (exp, SCM_UNDEFINED);
 }
 
