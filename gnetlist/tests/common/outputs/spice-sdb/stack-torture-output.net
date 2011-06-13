@@ -6,5 +6,5 @@
 * Documentation at http://www.brorson.com/gEDA/SPICE/   *
 *********************************************************
 *==============  Begin SPICE netlist of main design ============
-C? 1024 1025
+C? 1024 1025  
 .end
