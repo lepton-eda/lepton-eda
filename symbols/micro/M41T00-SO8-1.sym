@@ -75,7 +75,7 @@ footprint=SO8
 T 300 2950 5 10 0 0 0 0 1
 description=Serial RTC (Real Time Clock)
 T 300 2720 5 10 0 0 0 0 1
-author=Bjørnar Ness bjornar.nessATsubdimension.com
+author=BjÃ¸rnar Ness bjornar.nessATsubdimension.com
 T 310 3374 5 10 0 0 0 0 1
 net=GND:4
 T 310 3174 5 10 0 0 0 0 1
