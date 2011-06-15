@@ -102,9 +102,11 @@ SCM g_funcs_postscript(SCM scm_filename)
  *  \par Function Description
  *
  */
-SCM g_funcs_image(SCM filename)
+SCM g_funcs_image(SCM scm_filename)
 {
-  SCM_ASSERT (scm_is_string (filename), filename,
+  char *filename;
+
+  SCM_ASSERT (scm_is_string (scm_filename), scm_filename,
               SCM_ARG1, "gschem-image");
 
   if (output_filename) {
@@ -113,10 +115,12 @@ SCM g_funcs_image(SCM filename)
                       global_window_current->image_height,
 		      g_strdup("png"));
   } else  {
-    x_image_lowlevel (global_window_current, SCM_STRING_CHARS (filename),
+    filename = scm_to_utf8_string (scm_filename);
+    x_image_lowlevel (global_window_current, filename,
                       global_window_current->image_width,
                       global_window_current->image_height,
 		      g_strdup("png"));
+    free(filename);
   }
   
   return SCM_BOOL_T;
