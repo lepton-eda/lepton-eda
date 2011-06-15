@@ -362,7 +362,7 @@ SCM g_funcs_browse_wiki(SCM wikiname)
   /* Extract wiki name string from Scheme value structure.
    * If not a string, use the empty string */
   if (scm_is_string (wikiname)) {
-    wikistr = SCM_STRING_CHARS(wikiname);
+    wikistr = scm_to_utf8_string(wikiname);
   } else {
     wikistr = "";
   }
@@ -374,10 +374,14 @@ SCM g_funcs_browse_wiki(SCM wikiname)
   if (pid < 0) {
     /* Fork failed. Still in parent process, so can use the log
      * window */
+    if (scm_is_string (wikiname))
+      free(wikistr);
     s_log_message(_("Could not fork\n"));
     return SCM_BOOL_F;
   } else if (pid > 0) {
     /* Parent process, we're finished here */
+    if (scm_is_string (wikiname))
+      free(wikistr);
     return SCM_BOOL_T;
   }
   
