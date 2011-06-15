@@ -73,11 +73,12 @@ SCM g_funcs_print(SCM scm_filename)
  *  \par Function Description
  *
  */
-SCM g_funcs_postscript(SCM filename)
+SCM g_funcs_postscript(SCM scm_filename)
 {
+  char *filename;
   TOPLEVEL *toplevel = global_window_current->toplevel;
 
-  SCM_ASSERT (scm_is_string (filename), filename,
+  SCM_ASSERT (scm_is_string (scm_filename), scm_filename,
               SCM_ARG1, "gschem-postscript");
 
   if (output_filename) {
@@ -85,9 +86,12 @@ SCM g_funcs_postscript(SCM filename)
                       output_filename))
       return SCM_BOOL_F;
   } else  {
-    if (f_print_file (toplevel, toplevel->page_current,
-                      SCM_STRING_CHARS (filename)))
+    filename = scm_to_utf8_string(scm_filename);
+    if (f_print_file (toplevel, toplevel->page_current, filename)) {
+      free(filename);
       return SCM_BOOL_F;
+    }
+    free(filename);
   }
   
   return SCM_BOOL_T;
