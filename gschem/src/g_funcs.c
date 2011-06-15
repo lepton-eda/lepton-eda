@@ -202,16 +202,16 @@ SCM g_funcs_confirm(SCM scm_msg)
  *  \par Function Description
  *
  */
-SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags)
+SCM g_funcs_filesel(SCM scm_msg, SCM scm_templ, SCM scm_flags)
 {
   int c_flags;
-  char * r;
+  char *r, *msg, *templ;
   SCM v;
 
-  SCM_ASSERT (scm_is_string (msg), msg,
+  SCM_ASSERT (scm_is_string (scm_msg), scm_msg,
 	      SCM_ARG1, "gschem-filesel");
   
-  SCM_ASSERT (scm_is_string (templ), templ,
+  SCM_ASSERT (scm_is_string (scm_templ), scm_templ,
 	      SCM_ARG1, "gschem-filesel");
   
   /*! \bug FIXME -- figure out the magic SCM_ASSERT for the flags */
@@ -219,32 +219,40 @@ SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags)
   /*! \bug FIXME -- how to deal with conflicting flags? 
    * Should I throw a scheme error?  Just deal in the c code?
    */
-  for (c_flags = 0; scm_is_pair (flags); flags = SCM_CDR (flags)) {
-    SCM f = SCM_CAR (flags);
-    if (strcmp (SCM_STRING_CHARS (f), "may_exist") == 0) {
+  for (c_flags = 0; scm_is_pair (scm_flags); scm_flags = SCM_CDR (scm_flags)) {
+    char *flag;
+    SCM scm_flag = SCM_CAR (scm_flags);
+
+    flag = scm_to_utf8_string (scm_flag);
+    if (strcmp (flag, "may_exist") == 0) {
       c_flags |= FSB_MAY_EXIST;
 
-    } else if (strcmp (SCM_STRING_CHARS (f), "must_exist") == 0) {
+    } else if (strcmp (flag, "must_exist") == 0) {
       c_flags |= FSB_MUST_EXIST;
       
-    } else if (strcmp (SCM_STRING_CHARS (f), "must_not_exist") == 0) {
+    } else if (strcmp (flag, "must_not_exist") == 0) {
       c_flags |= FSB_SHOULD_NOT_EXIST;
 
-    } else if (strcmp (SCM_STRING_CHARS (f), "save") == 0) {
+    } else if (strcmp (flag, "save") == 0) {
       c_flags |= FSB_SAVE;
 
-    } else if (strcmp (SCM_STRING_CHARS (f), "open") == 0) {
+    } else if (strcmp (flag, "open") == 0) {
       c_flags |= FSB_LOAD;
 
     } else {
-      scm_wrong_type_arg ("gschem-filesel", 1, f);
+      free(flag);
+      scm_wrong_type_arg ("gschem-filesel", SCM_ARG1, scm_flag);
     }
+    free(flag);
   }
 
-  r = generic_filesel_dialog (SCM_STRING_CHARS (msg),
-			      SCM_STRING_CHARS (templ),
-			      c_flags
-			      );
+  msg = scm_to_utf8_string (scm_msg);
+  templ = scm_to_utf8_string (scm_templ);
+
+  r = generic_filesel_dialog (msg, templ, c_flags);
+
+  free(msg);
+  free(templ);
 
   v = scm_from_utf8_string (r);
   g_free (r);
