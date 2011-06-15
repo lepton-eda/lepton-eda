@@ -93,6 +93,10 @@
 ;;              write-net-names-on-component to make it a bit more flexible.
 ;;              Combine write-probe-item and write-net-names-on-component.  Add
 ;;              a range utility function.  CC
+;;  1.13.2011 -- Add four lines of code (and some comments) that allow formaitting strings
+;;               to be used for netlisting NGspice device models. CC
+;;  6.12.2011 -- Updated the Problematci name=? symbols to name=unknown and removed the
+;;               FIXME check for them. This should be a step closer to place holder consistancy. CC
 ;;
 ;;**********************************************************************************
 ;;
@@ -368,7 +372,8 @@
 
 ;;----------------------------------------------------------
 ;;  This returns a list of all the integers from start to
-;;  stop. It is similar to perl's range operator '..'
+;;  stop, with the optional step size.
+;;  It is similar to perl's range operator '..'
 ;;----------------------------------------------------------
 (define (range start stop . step)
   (if (null? step)
@@ -533,7 +538,7 @@
 	  )  ;; end of let*
      )  ;; end of if
 ))
-	    
+
 
 ;;**********************************************************************************
 ;;***************  Dealing with nets, devices, & SPICE cards.    *******************
@@ -1219,7 +1224,7 @@
 
 
 ;;----------------------------------------------------------------------------
-; write a voltage probe
+;; write a voltage probe
 ;;----------------------------------------------------------------------------
 (define (spice-sdb:write-probe package port)
     ;; fetch only one attr we care about, so far
@@ -1244,7 +1249,9 @@
 
 ;;--------------------------------------------------------------------
 ;; Given a refdes and port, and optionaly a format string, this writes
-;; out the nets attached to the component's pins.  This is used to write
+;; out the nets attached to the component's pins. If it's not called
+;; with a format string it looks for one in the net-format attribute,
+;; otherwise it writes out the pins unformated. This is used to write
 ;; out non-slotted parts.
 ;;--------------------------------------------------------------------
 (define (spice-sdb:write-net-names-on-component refdes port . format)
@@ -1279,9 +1286,12 @@
     ;; First do local assignments
     (let ((netnames (filter-map get-net-name (range 1 (length (gnetlist:get-pins refdes)))))
          )  ;; let
-      (if (null? format)
-        (display (string-join netnames " " 'suffix) port)			;; write out nets.
-        (apply simple-format (cons port (cons (car format) netnames))) )	;; write out nets with format string
+      (if (null? format) ;; Format agument take priority, otherwise use attribute
+        (set! format (gnetlist:get-package-attribute refdes "net-format"))
+        (set! format (car format)) )
+      (if (string=? format "unknown")
+        (display (string-join netnames " " 'suffix) port)		;; write out nets.
+        (apply simple-format (cons port (cons format netnames))) )	;; write out nets with format string
     )  ;; let
 )
 
@@ -1479,10 +1489,13 @@
 ;;  1.  Gets the refdes (package).
 ;;  2.  Checks the refdes against a short list of possible values.
 ;;      Depending upon the refdes, it does the following thing:
+;;      A? -- Invokes write-ic. This provides the opportunity for a code model
+;;            which may include a .model line.
 ;;      D? -- Invokes write-diode
 ;;      Q? -- Invokes write-transistor-diode. (The "type" attribute is <unknown> 
 ;;            in this case so that the spice simulator will barf if the user
 ;;            has been careless.)
+;;      M? -- Same as Q
 ;;      U? -- Invokes write-ic. This provides the opportunity for a component
 ;;            model to be instantiated.
 ;;      X? -- Invokes write-ic.  This provides the opportunity for a component
@@ -1498,6 +1511,7 @@
 
     (let ((first-char (string (string-ref package 0)) ))  ;; extract first char of refdes.
       (cond
+       ((string=? first-char "A") (spice-sdb:write-ic package file-info-list port))
        ((string=? first-char "D") (spice-sdb:write-diode package port))
        ((string=? first-char "Q") (spice-sdb:write-transistor-diode package #f "<unknown>" (list) port))
        ((string=? first-char "M") (spice-sdb:write-transistor-diode package #f "<unknown>" (list) port))
@@ -1641,16 +1655,6 @@
 	  (set! model (gnetlist:get-package-attribute package "model-name") )
 	  (set! value (gnetlist:get-package-attribute package "value") )
 	  (set! model-file (gnetlist:get-package-attribute package "file") )
-
-	  ;; Sometimes get-package-attribute returns "?" instead of "unknown".
-	  ;; This is because some symbols use file=? as a place holder value to indicate that
-	  ;; it needs to be filled in. It is simular other place holders like  footprint=none, and refdes=R?.
-	  ;; ? seems to be an ad hoc place holder for other attributes as well, like value for example.
-	  ;; FIXME: Of couse there could be many other places that this problem occurs. An effort should be
-	  ;; made to come up with a consistant way of representing place holders.
-
-	  (if (string-ci=? model-file "?")
-	      (set! model-file "unknown"))
 
 	  ;; Now run a series of checks to see if we should stick this file into the file-info-list
 	  ;; Check to see if "file" attribute is non-empty

@@ -44,11 +44,12 @@
  *  \par Function Description
  *
  */
-SCM g_funcs_print(SCM filename)
+SCM g_funcs_print(SCM scm_filename)
 {
+  char *filename;
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   
-  SCM_ASSERT (scm_is_string (filename), filename,
+  SCM_ASSERT (scm_is_string (scm_filename), scm_filename,
               SCM_ARG1, "gschem-print");
 
   if (output_filename) {
@@ -56,9 +57,12 @@ SCM g_funcs_print(SCM filename)
                       output_filename))
       return SCM_BOOL_F;
   } else  {
-    if (f_print_file (toplevel, toplevel->page_current,
-                      SCM_STRING_CHARS (filename)))
+    filename = scm_to_utf8_string(scm_filename);
+    if (f_print_file (toplevel, toplevel->page_current, filename)) {
+      free(filename);
       return SCM_BOOL_F;
+    }
+    free(filename);
   }
   
   return SCM_BOOL_T;
@@ -69,11 +73,12 @@ SCM g_funcs_print(SCM filename)
  *  \par Function Description
  *
  */
-SCM g_funcs_postscript(SCM filename)
+SCM g_funcs_postscript(SCM scm_filename)
 {
+  char *filename;
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
-  SCM_ASSERT (scm_is_string (filename), filename,
+  SCM_ASSERT (scm_is_string (scm_filename), scm_filename,
               SCM_ARG1, "gschem-postscript");
 
   if (output_filename) {
@@ -81,9 +86,12 @@ SCM g_funcs_postscript(SCM filename)
                       output_filename))
       return SCM_BOOL_F;
   } else  {
-    if (f_print_file (toplevel, toplevel->page_current,
-                      SCM_STRING_CHARS (filename)))
+    filename = scm_to_utf8_string(scm_filename);
+    if (f_print_file (toplevel, toplevel->page_current, filename)) {
+      free(filename);
       return SCM_BOOL_F;
+    }
+    free(filename);
   }
   
   return SCM_BOOL_T;
@@ -94,9 +102,11 @@ SCM g_funcs_postscript(SCM filename)
  *  \par Function Description
  *
  */
-SCM g_funcs_image(SCM filename)
+SCM g_funcs_image(SCM scm_filename)
 {
-  SCM_ASSERT (scm_is_string (filename), filename,
+  char *filename;
+
+  SCM_ASSERT (scm_is_string (scm_filename), scm_filename,
               SCM_ARG1, "gschem-image");
 
   GSCHEM_TOPLEVEL *w_current = g_current_window ();
@@ -107,10 +117,12 @@ SCM g_funcs_image(SCM filename)
                       w_current->image_height,
 		      g_strdup("png"));
   } else  {
-    x_image_lowlevel (w_current, SCM_STRING_CHARS (filename),
+    filename = scm_to_utf8_string (scm_filename);
+    x_image_lowlevel (w_current, filename,
                       w_current->image_width,
                       w_current->image_height,
 		      g_strdup("png"));
+    free(filename);
   }
   
   return SCM_BOOL_T;
@@ -131,13 +143,16 @@ SCM g_funcs_exit(void)
  *  \par Function Description
  *
  */
-SCM g_funcs_log(SCM msg)
+SCM g_funcs_log(SCM scm_msg)
 {
+  char *msg;
 
-  SCM_ASSERT (scm_is_string (msg), msg,
+  SCM_ASSERT (scm_is_string (scm_msg), scm_msg,
               SCM_ARG1, "gschem-log");
 
-  s_log_message ("%s", SCM_STRING_CHARS (msg));
+  msg = scm_to_utf8_string (scm_msg);
+  s_log_message ("%s", msg);
+  free(msg);
 
   return SCM_BOOL_T;
 }
@@ -147,13 +162,16 @@ SCM g_funcs_log(SCM msg)
  *  \par Function Description
  *
  */
-SCM g_funcs_msg(SCM msg)
+SCM g_funcs_msg(SCM scm_msg)
 {
+  char *msg;
 
-  SCM_ASSERT (scm_is_string (msg), msg,
+  SCM_ASSERT (scm_is_string (scm_msg), scm_msg,
               SCM_ARG1, "gschem-msg");
 
-  generic_msg_dialog (SCM_STRING_CHARS (msg));
+  msg = scm_to_utf8_string (scm_msg);
+  generic_msg_dialog (msg);
+  free(msg);
 
   return SCM_BOOL_T;
 }
@@ -163,14 +181,17 @@ SCM g_funcs_msg(SCM msg)
  *  \par Function Description
  *
  */
-SCM g_funcs_confirm(SCM msg)
+SCM g_funcs_confirm(SCM scm_msg)
 {
   int r;
+  char *msg;
 
-  SCM_ASSERT (scm_is_string (msg), msg,
+  SCM_ASSERT (scm_is_string (scm_msg), scm_msg,
 	      SCM_ARG1, "gschem-msg");
   
-  r = generic_confirm_dialog (SCM_STRING_CHARS (msg));
+  msg = scm_to_utf8_string (scm_msg);
+  r = generic_confirm_dialog (msg);
+  free(msg);
 
   if (r)
     return SCM_BOOL_T;
@@ -183,16 +204,16 @@ SCM g_funcs_confirm(SCM msg)
  *  \par Function Description
  *
  */
-SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags)
+SCM g_funcs_filesel(SCM scm_msg, SCM scm_templ, SCM scm_flags)
 {
   int c_flags;
-  char * r;
+  char *r, *msg, *templ;
   SCM v;
 
-  SCM_ASSERT (scm_is_string (msg), msg,
+  SCM_ASSERT (scm_is_string (scm_msg), scm_msg,
 	      SCM_ARG1, "gschem-filesel");
   
-  SCM_ASSERT (scm_is_string (templ), templ,
+  SCM_ASSERT (scm_is_string (scm_templ), scm_templ,
 	      SCM_ARG1, "gschem-filesel");
   
   /*! \bug FIXME -- figure out the magic SCM_ASSERT for the flags */
@@ -200,32 +221,40 @@ SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags)
   /*! \bug FIXME -- how to deal with conflicting flags? 
    * Should I throw a scheme error?  Just deal in the c code?
    */
-  for (c_flags = 0; scm_is_pair (flags); flags = SCM_CDR (flags)) {
-    SCM f = SCM_CAR (flags);
-    if (strcmp (SCM_STRING_CHARS (f), "may_exist") == 0) {
+  for (c_flags = 0; scm_is_pair (scm_flags); scm_flags = SCM_CDR (scm_flags)) {
+    char *flag;
+    SCM scm_flag = SCM_CAR (scm_flags);
+
+    flag = scm_to_utf8_string (scm_flag);
+    if (strcmp (flag, "may_exist") == 0) {
       c_flags |= FSB_MAY_EXIST;
 
-    } else if (strcmp (SCM_STRING_CHARS (f), "must_exist") == 0) {
+    } else if (strcmp (flag, "must_exist") == 0) {
       c_flags |= FSB_MUST_EXIST;
       
-    } else if (strcmp (SCM_STRING_CHARS (f), "must_not_exist") == 0) {
+    } else if (strcmp (flag, "must_not_exist") == 0) {
       c_flags |= FSB_SHOULD_NOT_EXIST;
 
-    } else if (strcmp (SCM_STRING_CHARS (f), "save") == 0) {
+    } else if (strcmp (flag, "save") == 0) {
       c_flags |= FSB_SAVE;
 
-    } else if (strcmp (SCM_STRING_CHARS (f), "open") == 0) {
+    } else if (strcmp (flag, "open") == 0) {
       c_flags |= FSB_LOAD;
 
     } else {
-      scm_wrong_type_arg ("gschem-filesel", 1, f);
+      free(flag);
+      scm_wrong_type_arg ("gschem-filesel", SCM_ARG1, scm_flag);
     }
+    free(flag);
   }
 
-  r = generic_filesel_dialog (SCM_STRING_CHARS (msg),
-			      SCM_STRING_CHARS (templ),
-			      c_flags
-			      );
+  msg = scm_to_utf8_string (scm_msg);
+  templ = scm_to_utf8_string (scm_templ);
+
+  r = generic_filesel_dialog (msg, templ, c_flags);
+
+  free(msg);
+  free(templ);
 
   v = scm_from_utf8_string (r);
   g_free (r);
@@ -335,7 +364,7 @@ SCM g_funcs_browse_wiki(SCM wikiname)
   /* Extract wiki name string from Scheme value structure.
    * If not a string, use the empty string */
   if (scm_is_string (wikiname)) {
-    wikistr = SCM_STRING_CHARS(wikiname);
+    wikistr = scm_to_utf8_string(wikiname);
   } else {
     wikistr = "";
   }
@@ -347,10 +376,14 @@ SCM g_funcs_browse_wiki(SCM wikiname)
   if (pid < 0) {
     /* Fork failed. Still in parent process, so can use the log
      * window */
+    if (scm_is_string (wikiname))
+      free(wikistr);
     s_log_message(_("Could not fork\n"));
     return SCM_BOOL_F;
   } else if (pid > 0) {
     /* Parent process, we're finished here */
+    if (scm_is_string (wikiname))
+      free(wikistr);
     return SCM_BOOL_T;
   }
   
