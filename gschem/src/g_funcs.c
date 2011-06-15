@@ -141,13 +141,16 @@ SCM g_funcs_exit(void)
  *  \par Function Description
  *
  */
-SCM g_funcs_log(SCM msg)
+SCM g_funcs_log(SCM scm_msg)
 {
+  char *msg;
 
-  SCM_ASSERT (scm_is_string (msg), msg,
+  SCM_ASSERT (scm_is_string (scm_msg), scm_msg,
               SCM_ARG1, "gschem-log");
 
-  s_log_message ("%s", SCM_STRING_CHARS (msg));
+  msg = scm_to_utf8_string (scm_msg);
+  s_log_message ("%s", msg);
+  free(msg);
 
   return SCM_BOOL_T;
 }
