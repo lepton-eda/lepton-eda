@@ -1482,10 +1482,11 @@ SCM g_rc_print_command(SCM scm_command)
   SCM_ASSERT (scm_is_string (scm_command), scm_command,
               SCM_ARG1, FUNC_NAME);
   
-  command = SCM_STRING_CHARS (scm_command);
+  command = scm_to_utf8_string (scm_command);
 
   g_free (default_print_command);
   default_print_command = g_strdup (command);
+  free (command);
 
   return SCM_BOOL_T;
 }
