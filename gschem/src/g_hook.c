@@ -714,12 +714,15 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
 	       SCM_ARG7, "add-component-at-xy");
 
   /* Get the parameters */
-  comp_name = SCM_STRING_CHARS(scm_comp_name);
   x = scm_to_int(scm_x);
   y = scm_to_int(scm_y);
   angle = scm_to_int(scm_angle);  
   selectable = SCM_NFALSEP(scm_selectable);
   mirror = SCM_NFALSEP(scm_mirror);
+  comp_name = scm_to_utf8_string(scm_comp_name);
+
+  scm_dynwind_begin(0);
+  scm_dynwind_free(comp_name);
 
   SCM_ASSERT (comp_name, scm_comp_name,
 	      SCM_ARG2, "add-component-at-xy");
@@ -735,7 +738,8 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
   s_page_append_list (toplevel, page,
                       o_complex_promote_attribs (toplevel, new_obj));
   s_page_append (toplevel, page, new_obj);
-  
+
+  scm_dynwind_end();
 
   /* Run the add component hook for the new component */
   if (scm_is_false (scm_hook_empty_p (add_component_object_hook))) {
