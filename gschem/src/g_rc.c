@@ -615,7 +615,7 @@ SCM g_rc_paper_sizes(SCM scm_papername, SCM scm_width, SCM scm_height)
   SCM_ASSERT (SCM_NIMP (scm_height) && SCM_REALP (scm_height), scm_height,
               SCM_ARG3, FUNC_NAME);
 
-  papername = SCM_STRING_CHARS (scm_papername);
+  papername = scm_to_utf8_string (scm_papername);
   width  = (int) (scm_to_double (scm_width)  * MILS_PER_INCH);
   height = (int) (scm_to_double (scm_height) * MILS_PER_INCH);
 
@@ -626,6 +626,7 @@ SCM g_rc_paper_sizes(SCM scm_papername, SCM scm_width, SCM scm_height)
     ret = SCM_BOOL_T;
   }
 
+  free(papername);
   return ret;
 }
 #undef FUNC_NAME
