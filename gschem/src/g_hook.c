@@ -319,7 +319,7 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_coloridx,
   x = scm_to_int(scm_x);
   y = scm_to_int(scm_y);
   
-  alignment_string = SCM_STRING_CHARS(scm_alignment);
+  alignment_string = scm_to_utf8_string(scm_alignment);
 
   if (strlen(alignment_string) == 0) {
     alignment = -1;
@@ -351,6 +351,9 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_coloridx,
   if (strcmp(alignment_string, "Upper Right") == 0) {
     alignment = 8;
   }
+
+  free(alignment_string);
+
   if (alignment == -2) {
     /* Bad specified */
     SCM_ASSERT (scm_is_string(scm_alignment), scm_alignment,
