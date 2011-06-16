@@ -48,6 +48,21 @@
                   (v 'value)
                   (else 'both))))) ;; Default
 
+;; add-component-at-xy page basename x y angle selectable mirror
+;;
+;; Adds the component called basename from the component library to a
+;; page, at the coordinates (x, y) and rotated by the given angle.  If
+;; selectable is false, the component will be locked.  If mirror is
+;; true, the component will be mirrored.
+(define-public (add-component-at-xy page basename x y angle selectable mirror)
+  (if (or (null? basename) (not basename) (string=? basename ""))
+      #f
+      (let ((C (make-component/library basename
+                                       (cons x y) angle mirror
+                                       (not selectable))))
+        (page-append! page C)
+        (run-hook add-objects-hook (cons C (promote-attribs! C))))))
+
 ;; set-attribute-value! attrib value
 ;;
 ;; Set the value part of the text object attrib.

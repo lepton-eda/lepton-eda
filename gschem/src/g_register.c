@@ -335,7 +335,6 @@ void g_register_funcs (void)
   /* Hook stuff */
   scm_c_define_gsubr ("get-object-bounds", 3, 0, 0, g_get_object_bounds);
   scm_c_define_gsubr ("set-attribute-text-properties!", 7, 0, 0, g_set_attrib_text_properties);
-  scm_c_define_gsubr ("add-component-at-xy", 7, 0, 0, g_add_component);
 
   complex_place_list_changed_hook = create_hook ("complex-place-list-changed-hook", 1);
 }
