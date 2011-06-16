@@ -543,7 +543,7 @@ SCM g_rc_attribute_name(SCM scm_path)
   SCM_ASSERT (scm_is_string (scm_path), scm_path,
               SCM_ARG1, "attribute-name");
 
-  path = SCM_STRING_CHARS (scm_path);
+  path = scm_to_utf8_string (scm_path);
 
   /* not unique? */
   if (!s_attrib_uniq(path)) {
@@ -552,7 +552,8 @@ SCM g_rc_attribute_name(SCM scm_path)
     s_attrib_add_entry (path);
     ret = SCM_BOOL_T;
   }
-  
+
+  free(path);
   return ret;
 }
 
