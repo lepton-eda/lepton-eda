@@ -152,3 +152,22 @@
     (attach-attrib! p x)
 
     (assert-equal (list y) (inherited-attribs C))))
+
+(begin-test 'attrib-inherited?
+  (let* ((P (make-page "/test/page/1"))
+         (A (make-component "test component" '(0 . 0) 0 #t #f))
+         (p (make-net-pin '(0 . 0) '(100 . 0)))
+         (w (make-text '(1 . 2) 'lower-left 0 "name=x" 10 #t 'both))
+         (x (make-text '(1 . 2) 'lower-left 0 "name=x" 10 #t 'both))
+         (y (make-text '(1 . 2) 'lower-left 0 "name=y" 10 #t 'both))
+         (z (make-text '(1 . 2) 'lower-left 0 "name=z" 10 #t 'both)))
+
+    (page-append! P A w x)
+    (attach-attrib! A x)
+    (component-append! A p y z)
+    (attach-attrib! p y)
+
+    (assert-true (not (attrib-inherited? w)))
+    (assert-true (not (attrib-inherited? x)))
+    (assert-true (not (attrib-inherited? y)))
+    (assert-true (attrib-inherited? z))))

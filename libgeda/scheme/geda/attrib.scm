@@ -93,3 +93,11 @@
                  y))
                (promotable-attribs object))
         #f)))
+
+;; attrib-inherited? attrib
+;;
+;; Returns #t if attrib is a toplevel un-attached attribute inside a
+;; component.
+(define-public (attrib-inherited? attrib)
+  (not (or (attrib-attachment attrib)
+           (not (object-component attrib)))))
