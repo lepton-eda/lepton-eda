@@ -527,6 +527,17 @@ static void custom_world_get_object_glist_bounds
   }
 }
 
+static void
+free_string_glist(void *data)
+{
+  GList *iter, *glst = *((GList **) data);
+
+  for (iter = glst; iter != NULL; iter = g_list_next (iter)) {
+    free (iter->data);
+  }
+  g_list_free (glst);
+}
+
 /*! \brief Get the object bounds of the given object, excluding the object
  *  types or the attributes given as parameters.
  *  \par Function Description
@@ -565,24 +576,26 @@ SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclu
 	      SCM_ARG3, "get-object-bounds");
 
   /* Build the exclude attrib list */
+  scm_dynwind_begin(0);
+  scm_dynwind_unwind_handler(free_string_glist, (void *) &exclude_attrib_list, 0);
+  scm_dynwind_unwind_handler(free_string_glist, (void *) &exclude_obj_type_list, 0);
+
   for (i=0; i <= scm_to_int(scm_length(scm_exclude_attribs))-1; i++) {
-    SCM_ASSERT (scm_is_string(scm_list_ref(scm_exclude_attribs, scm_from_int(i))), 
-		scm_exclude_attribs, 
-		SCM_ARG2, "get-object-bounds"); 
-    exclude_attrib_list = g_list_append(exclude_attrib_list, 
-					SCM_STRING_CHARS(scm_list_ref(scm_exclude_attribs,
-								      scm_from_int(i))));
+    SCM elem = scm_list_ref(scm_exclude_attribs, scm_from_int(i));
+
+    SCM_ASSERT (scm_is_string(elem), scm_exclude_attribs, SCM_ARG2, "get-object-bounds");
+    exclude_attrib_list = g_list_append(exclude_attrib_list, scm_to_utf8_string(elem));
   }
 
   /* Build the exclude object type list */
   for (i=0; i <= scm_to_int(scm_length(scm_exclude_object_type))-1; i++) {
-    SCM_ASSERT (scm_is_string(scm_list_ref(scm_exclude_object_type, scm_from_int(i))), 
-		scm_exclude_object_type, 
-		SCM_ARG3, "get-object-bounds"); 
-    exclude_obj_type_list = g_list_append(exclude_obj_type_list, 
-					SCM_STRING_CHARS(scm_list_ref(scm_exclude_object_type,
-								      scm_from_int(i))));
+    SCM elem = scm_list_ref(scm_exclude_object_type, scm_from_int(i));
+
+    SCM_ASSERT (scm_is_string(elem), scm_exclude_object_type, SCM_ARG3, "get-object-bounds");
+    exclude_obj_type_list = g_list_append(exclude_obj_type_list, scm_to_utf8_string(elem));
   }
+
+  scm_dynwind_end();
 
   /* Get toplevel and o_current. */
   g_get_data_from_object_smob (object_smob, &toplevel, &object);
