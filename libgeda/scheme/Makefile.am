@@ -23,11 +23,15 @@ TESTS = unit-tests/t0001-geda-conf-lib.scm \
 	unit-tests/t0110-object-transform.scm \
 	unit-tests/t0200-page.scm \
 	unit-tests/t0201-page-dirty.scm \
+	unit-tests/t0202-page-string.scm \
+	unit-tests/t0203-page-string-syntax.scm \
 	unit-tests/t0300-attribute.scm \
 	unit-tests/t0301-promotable-attributes.scm \
 	unit-tests/t1000-deprecated.scm
 
-XFAIL_TESTS = unit-tests/t0301-promotable-attributes.scm
+XFAIL_TESTS = \
+	unit-tests/t0203-page-string-syntax.scm \
+	unit-tests/t0301-promotable-attributes.scm
 
 dist_noinst_DATA = unit-test.scm $(TESTS)
 

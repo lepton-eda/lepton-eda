@@ -385,6 +385,26 @@ Sets the filename of @var{page} to @var{filename}.  Returns
 @var{page}.
 @end defun
 
+@subsection Page serialisation
+
+Pages can be converted to and from strings in the gEDA schematic file
+format.
+
+@defun string->page filename string
+Parses @var{string}, which should be in the gEDA file format, to
+create a new @code{page}.  The initial filename for the new
+@code{page} is @var{filename}.
+
+@strong{Warning}: Due to missing functionality in the underlying C
+library, this @code{string->page} cannot currently report invalid
+syntax or other problems in the @var{string} passed.
+@end defun
+
+@defun page->string page
+Returns a string representation of @var{page} in the gEDA file
+format.
+@end defun
+
 @subsection Page contents
 
 A schematic or symbol @code{page} is composed of a set of

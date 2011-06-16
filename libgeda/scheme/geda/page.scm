@@ -35,6 +35,8 @@
 (define-public set-page-filename! %set-page-filename!)
 (define-public page-contents %page-contents)
 (define-public page-dirty? %page-dirty?)
+(define-public page->string %page->string)
+(define-public string->page %string->page)
 
 (define-public (page-append! P . objects)
   (for-each (lambda (x) (%page-append! P x)) objects)

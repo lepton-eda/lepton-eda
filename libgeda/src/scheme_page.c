@@ -368,6 +368,76 @@ SCM_DEFINE (set_page_dirty_x, "%set-page-dirty!", 2, 0, 0,
   return page_s;
 }
 
+/*! \brief Create a string representation of a page.
+ * \par Function Description
+ * Returns a string representation of the contents of \a page_s.
+ *
+ * \note Scheme API: Implements the %page->string procedure of the
+ * (geda core page) module.
+ *
+ * \param page_s page to convert to a string.
+ * \return a string representation of \a page_s.
+ */
+SCM_DEFINE (page_to_string, "%page->string", 1, 0, 0,
+            (SCM page_s),
+            "Create a string representation of a page.")
+{
+  /* Ensure that the argument is a page smob */
+  SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
+              SCM_ARG1, s_page_to_string);
+
+  PAGE *page = edascm_to_page (page_s);
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+
+  gchar *buf = o_save_buffer (toplevel, s_page_objects (page));
+  scm_dynwind_begin (0);
+  scm_dynwind_unwind_handler (g_free, buf, SCM_F_WIND_EXPLICITLY);
+  SCM result = scm_from_utf8_string (buf);
+  scm_dynwind_end ();
+  return result;
+}
+
+/*! \brief Create a page from a string representation.
+ * \par Function Description
+ * Returns a page with filename \a filename_s created by parsing \a
+ * str_s.
+ *
+ * \note Scheme API: Implements the %string->page procedure of the
+ * (geda core page) module.
+ *
+ * \bug Should throw an error if \a str_s contains invalid gEDA file
+ * format syntax.  Requires support in gEDA file parser.
+ *
+ * \param filename_s Filename for new page.
+ * \param str_s      String to parse to create page.
+ * \return a new page created by parsing \a str_s.
+ */
+SCM_DEFINE (string_to_page, "%string->page", 2, 0, 0,
+            (SCM filename_s, SCM str_s),
+            "Create a new page from a string.")
+{
+  /* Ensure that the arguments are strings */
+  SCM_ASSERT (scm_is_string (filename_s), filename_s,
+              SCM_ARG1, s_string_to_page);
+  SCM_ASSERT (scm_is_string (str_s), str_s,
+              SCM_ARG2, s_string_to_page);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  char *filename = scm_to_utf8_string (filename_s);
+  PAGE *page = s_page_new (toplevel, filename);
+  free (filename);
+
+  size_t len;
+  char *str = scm_to_utf8_stringn (str_s, &len);
+  GList *objects = o_read_buffer (toplevel, NULL, str, len,
+                                  page->page_filename);
+  free (str);
+
+  s_page_append_list (toplevel, page, objects);
+
+  return edascm_from_page (page);
+}
+
 /*!
  * \brief Create the (geda core page) Scheme module.
  * \par Function Description
@@ -385,7 +455,7 @@ init_module_geda_core_page ()
   scm_c_export (s_active_pages, s_new_page, s_close_page_x,
                 s_page_filename, s_set_page_filename_x, s_page_contents,
                 s_object_page, s_page_append_x, s_page_remove_x, s_page_dirty,
-                s_set_page_dirty_x, NULL);
+                s_set_page_dirty_x, s_page_to_string, s_string_to_page, NULL);
 }
 
 /*!
