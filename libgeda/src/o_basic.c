@@ -643,6 +643,27 @@ o_get_page_compat (TOPLEVEL *toplevel, OBJECT *object) {
   }
 }
 
+/*! \brief Get an object's containing complex object.
+ *
+ * \par Function Description
+ * If \a object is part of a complex #OBJECT, returns that
+ * #OBJECT. Otherwise, returns NULL.
+ *
+ * \param [in] toplevel  The TOPLEVEL structure.
+ * \param [in] object    The OBJECT for which to get the containing OBJECT.
+ * \return The complex OBJECT which owns \a object, or NULL.
+ */
+OBJECT *
+o_get_parent (TOPLEVEL *toplevel, OBJECT *object)
+{
+  g_return_val_if_fail ((object != NULL), NULL);
+
+  if (object->parent != NULL) {
+    return object->parent;
+  }
+  return NULL;
+}
+
 /* Structure for each entry in a TOPLEVEL's list of registered change
  * notification handlers */
 struct change_notify_entry {
