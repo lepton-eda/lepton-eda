@@ -114,6 +114,7 @@ void o_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OB
 double o_shortest_distance(OBJECT *object, int x, int y);
 void o_set_color(TOPLEVEL *toplevel, OBJECT *object, int color);
 PAGE *o_get_page (TOPLEVEL *toplevel, OBJECT *object);
+OBJECT *o_get_parent (TOPLEVEL *toplevel, OBJECT *object);
 void o_add_change_notify(TOPLEVEL *toplevel, ChangeNotifyFunc pre_change_func, ChangeNotifyFunc change_func, void *user_data);
 void o_remove_change_notify(TOPLEVEL *toplevel, ChangeNotifyFunc pre_change_func, ChangeNotifyFunc change_func, void *user_data);
 gboolean o_is_visible (TOPLEVEL *toplevel, OBJECT *object);
