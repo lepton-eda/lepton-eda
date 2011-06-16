@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
+#include <missing.h>
 #include <version.h>
 
 #include <stdio.h>
@@ -62,21 +63,23 @@ void g_rc_parse_gtkrc()
  *  \par Function Description
  *
  */
-SCM g_rc_gschem_version(SCM version)
+SCM g_rc_gschem_version(SCM scm_version)
 {
   SCM ret;
+  char *version;
   
-  SCM_ASSERT (scm_is_string (version), version,
+  SCM_ASSERT (scm_is_string (scm_version), scm_version,
               SCM_ARG1, "gschem-version");
 
-  if (g_strcasecmp (SCM_STRING_CHARS (version), PACKAGE_DATE_VERSION) != 0) {
+  version = scm_to_utf8_string (scm_version);
+  if (g_strcasecmp (version, PACKAGE_DATE_VERSION) != 0) {
     fprintf(stderr,
             "You are running gEDA/gaf version [%s%s.%s],\n",
             PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
             PACKAGE_DATE_VERSION);
     fprintf(stderr,
             "but you have a version [%s] gschemrc file:\n[%s]\n",
-            SCM_STRING_CHARS (version), rc_filename);
+            version, rc_filename);
     fprintf(stderr,
             "Please be sure that you have the latest rc file.\n");
     ret = SCM_BOOL_F;
@@ -84,6 +87,7 @@ SCM g_rc_gschem_version(SCM version)
     ret = SCM_BOOL_T;
   }
 
+  free(version);
   return ret;
 }
 
@@ -365,6 +369,17 @@ SCM g_rc_embed_components(SCM mode)
 		   2);
 }
 
+static void
+free_string_glist(void *data)
+{
+  GList *iter, *glst = *((GList **) data);
+
+  for (iter = glst; iter != NULL; iter = g_list_next (iter)) {
+    g_free (iter->data);
+  }
+  g_list_free (glst);
+}
+
 /*! \brief read the configuration string list for the component dialog
  *  \par Function Description
  *  This function reads the string list from the component-dialog-attributes
@@ -385,14 +400,23 @@ SCM g_rc_component_dialog_attributes(SCM stringlist)
   g_list_foreach(default_component_select_attrlist, (GFunc)g_free, NULL);
   g_list_free(default_component_select_attrlist);
 
+  scm_dynwind_begin(0);
+  scm_dynwind_unwind_handler(free_string_glist, (void *) &list, 0);
+
   /* convert the scm list into a GList */
   for (i=0; i < length; i++) {
-    SCM_ASSERT(scm_is_string(scm_list_ref(stringlist, scm_from_int(i))), 
-	       scm_list_ref(stringlist, scm_from_int(i)), SCM_ARG1, 
-	       "list element is not a string");
-    attr = g_strdup(SCM_STRING_CHARS(scm_list_ref(stringlist, scm_from_int(i))));
+    char *str;
+    SCM elem = scm_list_ref(stringlist, scm_from_int(i));
+
+    SCM_ASSERT(scm_is_string(elem), elem, SCM_ARG1, "list element is not a string");
+
+    str = scm_to_utf8_string(elem);
+    attr = g_strdup(str);
+    free(str);
     list = g_list_prepend(list, attr);
   }
+
+  scm_dynwind_end();
 
   default_component_select_attrlist = g_list_reverse(list);
 
@@ -519,7 +543,7 @@ SCM g_rc_attribute_name(SCM scm_path)
   SCM_ASSERT (scm_is_string (scm_path), scm_path,
               SCM_ARG1, "attribute-name");
 
-  path = SCM_STRING_CHARS (scm_path);
+  path = scm_to_utf8_string (scm_path);
 
   /* not unique? */
   if (!s_attrib_uniq(path)) {
@@ -528,7 +552,8 @@ SCM g_rc_attribute_name(SCM scm_path)
     s_attrib_add_entry (path);
     ret = SCM_BOOL_T;
   }
-  
+
+  free(path);
   return ret;
 }
 
@@ -590,7 +615,7 @@ SCM g_rc_paper_sizes(SCM scm_papername, SCM scm_width, SCM scm_height)
   SCM_ASSERT (SCM_NIMP (scm_height) && SCM_REALP (scm_height), scm_height,
               SCM_ARG3, FUNC_NAME);
 
-  papername = SCM_STRING_CHARS (scm_papername);
+  papername = scm_to_utf8_string (scm_papername);
   width  = (int) (scm_to_double (scm_width)  * MILS_PER_INCH);
   height = (int) (scm_to_double (scm_height) * MILS_PER_INCH);
 
@@ -601,6 +626,7 @@ SCM g_rc_paper_sizes(SCM scm_papername, SCM scm_width, SCM scm_height)
     ret = SCM_BOOL_T;
   }
 
+  free(papername);
   return ret;
 }
 #undef FUNC_NAME
@@ -1064,14 +1090,18 @@ SCM g_rc_sort_component_library(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_add_menu(SCM menu_name, SCM menu_items)
+SCM g_rc_add_menu(SCM scm_menu_name, SCM scm_menu_items)
 {
-  SCM_ASSERT (scm_is_string (menu_name), menu_name,
+  char *menu_name;
+
+  SCM_ASSERT (scm_is_string (scm_menu_name), scm_menu_name,
               SCM_ARG1, "add-menu");
-  SCM_ASSERT (SCM_NIMP (menu_items) && SCM_CONSP (menu_items), menu_items,
+  SCM_ASSERT (SCM_NIMP (scm_menu_items) && SCM_CONSP (scm_menu_items), scm_menu_items,
               SCM_ARG2, "add-menu");
 
-  s_menu_add_entry(SCM_STRING_CHARS (menu_name), menu_items);  
+  menu_name = scm_to_utf8_string (scm_menu_name);
+  s_menu_add_entry(menu_name, scm_menu_items);
+  free (menu_name);
 
   return SCM_BOOL_T;
 }
@@ -1452,10 +1482,11 @@ SCM g_rc_print_command(SCM scm_command)
   SCM_ASSERT (scm_is_string (scm_command), scm_command,
               SCM_ARG1, FUNC_NAME);
   
-  command = SCM_STRING_CHARS (scm_command);
+  command = scm_to_utf8_string (scm_command);
 
   g_free (default_print_command);
   default_print_command = g_strdup (command);
+  free (command);
 
   return SCM_BOOL_T;
 }

@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
+#include <missing.h>
 
 #include <stdio.h>
 #include <sys/stat.h>
@@ -154,12 +155,20 @@ g_keys_dump_keymap (void)
   for (; scm_ret != SCM_EOL; scm_ret = SCM_CDR (scm_ret)) {
     SCM scm_keymap_entry = SCM_CAR (scm_ret);
     struct keyseq_action_t keymap_entry;
+    char *str;
 
     g_return_val_if_fail (SCM_CONSP (scm_keymap_entry) &&
                           scm_is_symbol (SCM_CAR (scm_keymap_entry)) &&
                           scm_is_string (SCM_CDR (scm_keymap_entry)), ret);
-    keymap_entry.action = g_strdup (SCM_SYMBOL_CHARS (SCM_CAR (scm_keymap_entry)));
-    keymap_entry.keyseq = g_strdup (SCM_STRING_CHARS (SCM_CDR (scm_keymap_entry)));
+
+    str = scm_to_utf8_string (scm_symbol_to_string (SCM_CAR (scm_keymap_entry)));
+    keymap_entry.action = g_strdup (str);
+    free(str);
+
+    str = scm_to_utf8_string (SCM_CDR (scm_keymap_entry));
+    keymap_entry.keyseq = g_strdup (str);
+    free(str);
+
     ret = g_array_append_val (ret, keymap_entry);
   }
 

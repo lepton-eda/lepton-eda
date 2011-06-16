@@ -131,9 +131,15 @@ SCM g_add_attrib(SCM object, SCM scm_attrib_name,
 	      object, SCM_ARG1, "add-attribute-to-object");
   o_current = edascm_to_object (object);
 
+  scm_dynwind_begin(0);
+
   /* Get parameters */
-  attrib_name = SCM_STRING_CHARS(scm_attrib_name);
-  attrib_value = SCM_STRING_CHARS(scm_attrib_value);
+  attrib_name = scm_to_utf8_string(scm_attrib_name);
+  scm_dynwind_free(attrib_name);
+
+  attrib_value = scm_to_utf8_string(scm_attrib_value);
+  scm_dynwind_free(attrib_value);
+
   vis = SCM_NFALSEP(scm_vis);
 
   for (i=0; i<=scm_to_int(scm_length(scm_show))-1; i++) {
@@ -145,8 +151,11 @@ SCM g_add_attrib(SCM object, SCM scm_attrib_name,
 	       scm_show,
 	       SCM_ARG5, "add-attribute-to-object"); 
     
-    value = SCM_STRING_CHARS(scm_list_ref(scm_show, scm_from_int(i)));
-    
+    scm_dynwind_begin(0);
+
+    value = scm_to_utf8_string(scm_list_ref(scm_show, scm_from_int(i)));
+    scm_dynwind_free(value);
+
     SCM_ASSERT(value, scm_show,
 	       SCM_ARG5, "add-attribute-to-object"); 
 
@@ -164,6 +173,8 @@ SCM g_add_attrib(SCM object, SCM scm_attrib_name,
     else if (strcasecmp(value, "name") == 0) {
       show |= 2;
     }	  
+
+    scm_dynwind_end();
   }
   /* Show name and value (show = 3) => show=0 for gschem */
   if (show == 3) {
@@ -174,6 +185,7 @@ SCM g_add_attrib(SCM object, SCM scm_attrib_name,
   o_attrib_add_attrib (w_current, newtext, vis, show, o_current);
   g_free(newtext);
 
+  scm_dynwind_end();
   return SCM_BOOL_T;
 
 }
@@ -239,7 +251,7 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_coloridx,
   x = scm_to_int(scm_x);
   y = scm_to_int(scm_y);
   
-  alignment_string = SCM_STRING_CHARS(scm_alignment);
+  alignment_string = scm_to_utf8_string(scm_alignment);
 
   if (strlen(alignment_string) == 0) {
     alignment = -1;
@@ -271,6 +283,9 @@ SCM g_set_attrib_text_properties(SCM attrib_smob, SCM scm_coloridx,
   if (strcmp(alignment_string, "Upper Right") == 0) {
     alignment = 8;
   }
+
+  free(alignment_string);
+
   if (alignment == -2) {
     /* Bad specified */
     SCM_ASSERT (scm_is_string(scm_alignment), scm_alignment,
@@ -440,6 +455,17 @@ static void custom_world_get_object_glist_bounds
   }
 }
 
+static void
+free_string_glist(void *data)
+{
+  GList *iter, *glst = *((GList **) data);
+
+  for (iter = glst; iter != NULL; iter = g_list_next (iter)) {
+    free (iter->data);
+  }
+  g_list_free (glst);
+}
+
 /*! \brief Get the object bounds of the given object, excluding the object
  *  types or the attributes given as parameters.
  *  \par Function Description
@@ -478,24 +504,26 @@ SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclu
 	      SCM_ARG3, "get-object-bounds");
 
   /* Build the exclude attrib list */
+  scm_dynwind_begin(0);
+  scm_dynwind_unwind_handler(free_string_glist, (void *) &exclude_attrib_list, 0);
+  scm_dynwind_unwind_handler(free_string_glist, (void *) &exclude_obj_type_list, 0);
+
   for (i=0; i <= scm_to_int(scm_length(scm_exclude_attribs))-1; i++) {
-    SCM_ASSERT (scm_is_string(scm_list_ref(scm_exclude_attribs, scm_from_int(i))), 
-		scm_exclude_attribs, 
-		SCM_ARG2, "get-object-bounds"); 
-    exclude_attrib_list = g_list_append(exclude_attrib_list, 
-					SCM_STRING_CHARS(scm_list_ref(scm_exclude_attribs,
-								      scm_from_int(i))));
+    SCM elem = scm_list_ref(scm_exclude_attribs, scm_from_int(i));
+
+    SCM_ASSERT (scm_is_string(elem), scm_exclude_attribs, SCM_ARG2, "get-object-bounds");
+    exclude_attrib_list = g_list_append(exclude_attrib_list, scm_to_utf8_string(elem));
   }
 
   /* Build the exclude object type list */
   for (i=0; i <= scm_to_int(scm_length(scm_exclude_object_type))-1; i++) {
-    SCM_ASSERT (scm_is_string(scm_list_ref(scm_exclude_object_type, scm_from_int(i))), 
-		scm_exclude_object_type, 
-		SCM_ARG3, "get-object-bounds"); 
-    exclude_obj_type_list = g_list_append(exclude_obj_type_list, 
-					SCM_STRING_CHARS(scm_list_ref(scm_exclude_object_type,
-								      scm_from_int(i))));
+    SCM elem = scm_list_ref(scm_exclude_object_type, scm_from_int(i));
+
+    SCM_ASSERT (scm_is_string(elem), scm_exclude_object_type, SCM_ARG3, "get-object-bounds");
+    exclude_obj_type_list = g_list_append(exclude_obj_type_list, scm_to_utf8_string(elem));
   }
+
+  scm_dynwind_end();
 
   /* Get toplevel and o_current. */
   object = edascm_to_object (object_smob);
@@ -580,12 +608,15 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
 	       SCM_ARG7, "add-component-at-xy");
 
   /* Get the parameters */
-  comp_name = SCM_STRING_CHARS(scm_comp_name);
   x = scm_to_int(scm_x);
   y = scm_to_int(scm_y);
   angle = scm_to_int(scm_angle);  
   selectable = SCM_NFALSEP(scm_selectable);
   mirror = SCM_NFALSEP(scm_mirror);
+  comp_name = scm_to_utf8_string(scm_comp_name);
+
+  scm_dynwind_begin(0);
+  scm_dynwind_free(comp_name);
 
   SCM_ASSERT (comp_name, scm_comp_name,
 	      SCM_ARG2, "add-component-at-xy");
@@ -603,7 +634,8 @@ SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y,
   s_page_append_list (toplevel, page,
                       g_list_copy (added_objects));
   s_page_append (toplevel, page, new_obj);
-  
+
+  scm_dynwind_end();
 
   /* Run the add-objects-hook for the new component & attributes */
   added_objects = g_list_prepend (added_objects, new_obj);
