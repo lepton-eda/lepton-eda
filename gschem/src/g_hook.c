@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
+#include <missing.h>
 #include <stdio.h>
 #ifdef HAVE_STRING_H
 #include <string.h>
@@ -153,9 +154,15 @@ SCM g_add_attrib(SCM object, SCM scm_attrib_name,
   SCM_ASSERT (g_get_data_from_object_smob (object, &toplevel, &o_current),
 	      object, SCM_ARG1, "add-attribute-to-object");
 
+  scm_dynwind_begin(0);
+
   /* Get parameters */
-  attrib_name = SCM_STRING_CHARS(scm_attrib_name);
-  attrib_value = SCM_STRING_CHARS(scm_attrib_value);
+  attrib_name = scm_to_utf8_string(scm_attrib_name);
+  scm_dynwind_free(attrib_name);
+
+  attrib_value = scm_to_utf8_string(scm_attrib_value);
+  scm_dynwind_free(attrib_value);
+
   vis = SCM_NFALSEP(scm_vis);
 
   for (i=0; i<=scm_to_int(scm_length(scm_show))-1; i++) {
@@ -167,8 +174,11 @@ SCM g_add_attrib(SCM object, SCM scm_attrib_name,
 	       scm_show,
 	       SCM_ARG5, "add-attribute-to-object"); 
     
-    value = SCM_STRING_CHARS(scm_list_ref(scm_show, scm_from_int(i)));
-    
+    scm_dynwind_begin(0);
+
+    value = scm_to_utf8_string(scm_list_ref(scm_show, scm_from_int(i)));
+    scm_dynwind_free(value);
+
     SCM_ASSERT(value, scm_show,
 	       SCM_ARG5, "add-attribute-to-object"); 
 
@@ -186,6 +196,8 @@ SCM g_add_attrib(SCM object, SCM scm_attrib_name,
     else if (strcasecmp(value, "name") == 0) {
       show |= 2;
     }	  
+
+    scm_dynwind_end();
   }
   /* Show name and value (show = 3) => show=0 for gschem */
   if (show == 3) {
@@ -196,6 +208,7 @@ SCM g_add_attrib(SCM object, SCM scm_attrib_name,
   o_attrib_add_attrib (w_current, newtext, vis, show, o_current);
   g_free(newtext);
 
+  scm_dynwind_end();
   return SCM_BOOL_T;
 
 }
