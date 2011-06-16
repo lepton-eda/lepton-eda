@@ -1527,6 +1527,33 @@ SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
   return result;
 }
 
+/*! \brief Get the complex object that contains an object.
+ * \par Function Description
+ * Returns the complex object that contains the object \a obj_s.  If
+ * \a obj_s is not part of a component, returns SCM_BOOL_F.
+ *
+ * \note Scheme API: Implements the %object-complex procedure of the
+ * (geda core object) module.
+ *
+ * \param obj_s #OBJECT smob for object to get component of.
+ * \return the #OBJECT smob of the containing component, or SCM_BOOL_F.
+ */
+SCM_DEFINE (object_complex, "%object-complex", 1, 0, 0,
+            (SCM obj_s), "Get containing complex object of an object.")
+{
+  /* Ensure that the argument is an object smob */
+  SCM_ASSERT (edascm_is_object (obj_s), obj_s,
+              SCM_ARG1, s_object_complex);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (obj_s);
+  OBJECT *parent = o_get_parent (toplevel, obj);
+
+  if (parent == NULL) return SCM_BOOL_F;
+
+  return edascm_from_object (parent);
+}
+
 /*!
  * \brief Create the (geda core object) Scheme module.
  * \par Function Description
@@ -1551,7 +1578,7 @@ init_module_geda_core_object ()
                 s_make_circle, s_set_circle_x, s_circle_info,
                 s_make_arc, s_set_arc_x, s_arc_info,
                 s_make_text, s_set_text_x, s_text_info,
-                s_object_connections,
+                s_object_connections, s_object_complex,
                 NULL);
 }
 

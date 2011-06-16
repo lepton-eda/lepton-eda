@@ -44,6 +44,8 @@
 
 (define-public object-connections %object-connections)
 
+(define-public object-component %object-complex)
+
 ;;;; Lines
 
 ;; line? x

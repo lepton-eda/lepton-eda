@@ -171,3 +171,10 @@
 
 ;; Clear component library again
 (reset-component-library)
+
+(begin-test 'object-component
+  (let* ((A (make-component "test component" '(0 . 0) 0 #t #f))
+         (x (make-box '(0 . 2) '(2 . 0))))
+    (assert-equal #f (object-component x))
+    (component-append! A x)
+    (assert-equal A (object-component x))))
