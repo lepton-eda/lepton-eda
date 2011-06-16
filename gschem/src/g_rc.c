@@ -1090,14 +1090,18 @@ SCM g_rc_sort_component_library(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_add_menu(SCM menu_name, SCM menu_items)
+SCM g_rc_add_menu(SCM scm_menu_name, SCM scm_menu_items)
 {
-  SCM_ASSERT (scm_is_string (menu_name), menu_name,
+  char *menu_name;
+
+  SCM_ASSERT (scm_is_string (scm_menu_name), scm_menu_name,
               SCM_ARG1, "add-menu");
-  SCM_ASSERT (SCM_NIMP (menu_items) && SCM_CONSP (menu_items), menu_items,
+  SCM_ASSERT (SCM_NIMP (scm_menu_items) && SCM_CONSP (scm_menu_items), scm_menu_items,
               SCM_ARG2, "add-menu");
 
-  s_menu_add_entry(SCM_STRING_CHARS (menu_name), menu_items);  
+  menu_name = scm_to_utf8_string (scm_menu_name);
+  s_menu_add_entry(menu_name, scm_menu_items);
+  free (menu_name);
 
   return SCM_BOOL_T;
 }
