@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include "config.h"
+#include <missing.h>
 
 #ifdef HAVE_STRING_H
 #include <string.h>
@@ -102,6 +103,7 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
   SCM scm_index;
   SCM scm_keys;
   char *menu_name;
+  char *action_name;
   char **raw_menu_name = g_malloc (sizeof(char *));
   char *menu_item_name;
   char *raw_menu_item_name;
@@ -146,17 +148,9 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
                     scm_is_false (scm_item_stock),
                   scm_item_stock, SCM_ARGn, "get_main_menu stock");
 
-      raw_menu_item_name = SCM_STRING_CHARS (scm_item_name);
-
-      if (scm_is_false (scm_item_hotkey_func))
-        menu_item_hotkey_func = NULL;
-      else
-        menu_item_hotkey_func = SCM_SYMBOL_CHARS (scm_item_hotkey_func);
-
-      if (scm_is_false (scm_item_stock))
-        menu_item_stock = NULL;
-      else
-        menu_item_stock = SCM_SYMBOL_CHARS (scm_item_stock);
+      raw_menu_item_name = scm_to_utf8_string(scm_item_name);
+      scm_dynwind_begin(0);
+      scm_dynwind_free(raw_menu_item_name);
 
       menu_item_name = (char *) gettext(raw_menu_item_name);
 
@@ -165,16 +159,23 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
         gtk_menu_append(GTK_MENU(menu), menu_item);
       } else {
 
+        if (scm_is_false (scm_item_hotkey_func))
+          menu_item_hotkey_func = NULL;
+        else
+          menu_item_hotkey_func = scm_to_utf8_string (scm_symbol_to_string (scm_item_hotkey_func));
+
         if (menu_item_hotkey_func != NULL) {
 
           buf = g_strdup_printf ("(find-key '%s)", menu_item_hotkey_func);
           scm_keys = g_scm_c_eval_string_protected (buf);
           g_free (buf);
+          free(menu_item_hotkey_func);
 
           if (scm_is_false (scm_keys)) {
             menu_item_keys = "";
           } else {
-            menu_item_keys = SCM_STRING_CHARS (scm_keys);
+            menu_item_keys = scm_to_utf8_string (scm_keys);
+            scm_dynwind_free(menu_item_keys);
           }
 
         } else {
@@ -184,11 +185,20 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
         if(scm_is_false (scm_item_func)) {
           menu_item = gtk_menu_item_new_with_mnemonic(menu_item_name);
         } else {
-          action = gschem_action_new (SCM_SYMBOL_CHARS (scm_item_func),  /* Action name */
+          if (scm_is_false (scm_item_stock))
+            menu_item_stock = NULL;
+          else
+            menu_item_stock = scm_to_utf8_string (scm_item_stock);
+
+          action_name = scm_to_utf8_string (scm_symbol_to_string (scm_item_func));
+          action = gschem_action_new (action_name,  /* Action name */
                                       menu_item_name,  /* Text */
                                       menu_item_name,  /* Tooltip */
                                       menu_item_stock, /* Icon stock ID */
                                       menu_item_keys); /* Accelerator string */
+          free(action_name);
+          free(menu_item_stock);
+
           menu_item = gtk_action_create_menu_item (GTK_ACTION (action));
           g_signal_connect (G_OBJECT(action), "activate",
                             G_CALLBACK(g_menu_execute),
@@ -205,7 +215,8 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
       buf = g_strdup_printf("%s/%s", *raw_menu_name, raw_menu_item_name);
       gtk_object_set_data(GTK_OBJECT(menu_bar), buf, menu_item);
       g_free(buf);
-      
+
+      scm_dynwind_end();
     }
     
     menu_name = (char *) gettext(*raw_menu_name);
