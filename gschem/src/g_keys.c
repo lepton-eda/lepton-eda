@@ -396,18 +396,6 @@ being called with a null, I suppose we should call it with the right param.
 hack */
 DEFINE_G_KEYS(cancel)
 
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/*help for generate-netlist hot key*/
-SCM g_get_selected_filename(void)                     
-{                                                     
-  return (get_selected_filename(g_current_window ()));
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

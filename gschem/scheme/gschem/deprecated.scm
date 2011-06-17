@@ -49,6 +49,13 @@
   (let ((params (line-info pin)))
     (cons (list-ref params 0) (list-ref params 1))))
 
+;; get-selected-filename
+;;
+;; Returns the filename associated with the active page in the current
+;; gschem window.
+(define-public (get-selected-filename)
+  (page-filename (active-page)))
+
 ;;;; Old-style hooks
 
 ;; Adds a function to src-hook.  The function is called with a single

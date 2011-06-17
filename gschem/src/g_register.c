@@ -297,7 +297,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "cancel",                    0, 0, 0, g_keys_cancel },
 
   /*help functions for generating netlists*/
-  { "get-selected-filename",     0, 0, 0, g_get_selected_filename },
   { "get-selected-component-attributes", 0, 0, 0, g_get_selected_component_attributes },
   
   { NULL,                        0, 0, 0, NULL } };

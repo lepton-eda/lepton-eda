@@ -327,26 +327,6 @@ SCM get_selected_component_attributes(GSCHEM_TOPLEVEL *w_current)
   return list;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief Get selected filename of current schematic.
- *  \par Function Description
- *  This function gets the whole filename of the current schematic.
- *  Specifically, the <B>page_filename</B> of the current page.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object to get filename from.
- *  \return whole filename of current schematic.
- */
-SCM get_selected_filename(GSCHEM_TOPLEVEL *w_current)
-{
-  SCM return_value;
-  
-  exit_if_null(w_current);
-  
-  return_value = scm_take0str (w_current->toplevel->page_current->page_filename);
-
-  return(return_value);
-}
-
 /*! \brief Use gschemdoc to open a browser to a specific wiki page
  *
  * \param [in] wikiname the name of the wiki page
