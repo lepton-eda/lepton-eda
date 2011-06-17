@@ -190,7 +190,6 @@ SCM g_keys_misc3(SCM rest);
 SCM g_keys_help_about(SCM rest);
 SCM g_keys_help_hotkeys(SCM rest);
 SCM g_keys_cancel(SCM rest);
-SCM g_get_selected_component_attributes(void);
 /* g_rc.c */
 void g_rc_parse_gtkrc();
 SCM g_rc_gschem_version(SCM version);

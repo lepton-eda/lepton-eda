@@ -296,9 +296,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "misc-misc3",                0, 0, 0, g_keys_misc3 },
   { "cancel",                    0, 0, 0, g_keys_cancel },
 
-  /*help functions for generating netlists*/
-  { "get-selected-component-attributes", 0, 0, 0, g_get_selected_component_attributes },
-  
   { NULL,                        0, 0, 0, NULL } };
 
 /*! \brief Define a hook.

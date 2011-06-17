@@ -395,13 +395,3 @@ DEFINE_G_KEYS(help_hotkeys)
 being called with a null, I suppose we should call it with the right param.
 hack */
 DEFINE_G_KEYS(cancel)
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_get_selected_component_attributes(void)                 
-{
-  return (get_selected_component_attributes(g_current_window ()));
-}

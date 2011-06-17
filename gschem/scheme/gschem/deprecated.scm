@@ -108,6 +108,15 @@
 (define-public (get-selected-filename)
   (page-filename (active-page)))
 
+;; get-selected-component-attributes
+;;
+;; Returns a list of all selected text object strings, with duplicate
+;; values removed (i.e. the name is pretty much unrelated to the
+;; behaviour).  Really, seriously, just don't use this in new code.
+(define-public (get-selected-component-attributes)
+  (delete-duplicates!
+   (map text-string (filter! text? (page-selection (active-page))))))
+
 ;;;; Old-style hooks
 
 ;; Adds a function to src-hook.  The function is called with a single

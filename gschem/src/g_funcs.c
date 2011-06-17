@@ -273,60 +273,6 @@ SCM g_funcs_use_rc_values(void)
   return SCM_BOOL_T;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/*
- * Gets names from all objects of current page which selected-flags are true.
- */
-/* all of the declaration part is copied from some other c-code of
- * gEDA gschem. 
- * I don't really know, whether this all are necessary or not, but 
- * it works :-). */
-static void
-hash_table_2_list (gpointer key,
-                   gpointer value,
-                   gpointer user_data)
-{
-  SCM *plist = (SCM*)user_data;
-  *plist = scm_cons (scm_from_utf8_string ((char*)value), *plist);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM get_selected_component_attributes(GSCHEM_TOPLEVEL *w_current)
-{
-  SCM list = SCM_EOL;
-  OBJECT *obj;
-  GHashTable *ht;
-  const GList *iter;
- 
-  /* build a hash table */
-  ht = g_hash_table_new (g_str_hash, g_str_equal);
-  for (iter = s_page_objects (w_current->toplevel->page_current);
-       iter != NULL;
-       iter = g_list_next (iter)) {
-    obj = (OBJECT *)iter->data;
-    if (obj->selected && obj->type == OBJ_TEXT) {
-      const gchar *str = o_text_get_string (w_current->toplevel, obj);
-      if (str == NULL) continue;
-      /* add text string in the hash table */
-      g_hash_table_insert (ht, (gchar *) str, (gchar *) str);
-     }
-   }
-  /* now create a scheme list of the entries in the hash table */
-  g_hash_table_foreach (ht, hash_table_2_list, &list);
-  /* and get ride of the hast table */
-  g_hash_table_destroy (ht);
-
-  return list;
-}
-
 /*! \brief Use gschemdoc to open a browser to a specific wiki page
  *
  * \param [in] wikiname the name of the wiki page
