@@ -347,9 +347,13 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
     SCM_ASSERT(scm_is_string (scm_pin), scm_pin, SCM_ARG2, 
 	       "gnetlist:get-nets");
 
+    scm_dynwind_begin (0);
 
-    wanted_uref = SCM_STRING_CHARS (scm_uref);
-    wanted_pin  = SCM_STRING_CHARS (scm_pin);
+    wanted_uref = scm_to_utf8_string (scm_uref);
+    scm_dynwind_free (wanted_uref);
+
+    wanted_pin = scm_to_utf8_string (scm_pin);
+    scm_dynwind_free (wanted_pin);
 
     nl_current = netlist_head;
 
@@ -410,6 +414,8 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
 	}
 	nl_current = nl_current->next;
     }
+
+    scm_dynwind_end ();
 
     if (net_name != NULL) {
       outerlist = scm_cons (scm_from_utf8_string (net_name), pinslist);
