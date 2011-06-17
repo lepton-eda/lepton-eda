@@ -53,44 +53,6 @@ static void custom_world_get_object_glist_bounds
    GList *exclude_attrib_list,
    GList *exclude_obj_type_list);
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* Makes a list of all attributes currently connected to object.
- * Uses the attribute list returned by o_attrib_return_attribs()
- */
-SCM g_make_attrib_smob_list (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
-{
-  GList *attrib_list;
-  GList *a_iter;
-  OBJECT *a_current;
-  SCM smob_list = SCM_EOL;
-
-  if (object == NULL) {
-    return SCM_EOL;
-  }
-
-  attrib_list = o_attrib_return_attribs (object);
-
-  if (attrib_list == NULL)
-    return SCM_EOL;
-
-  /* go through attribs */
-  for (a_iter = attrib_list; a_iter != NULL;
-       a_iter = g_list_next (a_iter)) {
-    a_current = a_iter->data;
-
-    smob_list = scm_cons (edascm_from_object (a_current),
-                          smob_list);
-  }
-
-  g_list_free (attrib_list);
-
-  return smob_list;
-}
-
 /*! \brief Get the object bounds of the given object, excluding the object
  *  types given as parameters.
  *  \par Function Description
