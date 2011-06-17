@@ -29,22 +29,40 @@
   #:use-module (gschem hook)
   #:use-module (gschem selection))
 
+;; set-attribute-value! attrib value
+;;
+;; Set the value part of the text object attrib.
 (define-public (set-attribute-value! attrib value)
   (let ((params (text-info attrib))
         (name-value (attrib-parse attrib)))
     (list-set! params 3 (simple-format "~A=~A" (car name-value) value))
     (apply set-text! attrib params)))
 
+;; get-objects-in-page page
+;;
+;; Get the contents of page, in reverse order.
 (define-public (get-objects-in-page page)
   (reverse! (page-contents page)))
 
+;; get-current-page
+;;
+;; Return the page which currently has focus in gschem.
 (define-public get-current-page active-page)
 
+;; get-object-pins object
+;;
+;; Return the pin objects from a component's contents, in reverse
+;; order, or the empty list if object is not a component.
 (define-public (get-object-pins object)
   (if (component? object)
       (reverse! (filter! pin? (component-contents object)))
       '()))
 
+;; get-pin-ends pin
+;;
+;; Return the coordinates of the endpoints of a pin, in the format:
+;;
+;;   ((x1 . y1) x2 . y2)
 (define-public (get-pin-ends pin)
   (let ((params (line-info pin)))
     (cons (list-ref params 0) (list-ref params 1))))
