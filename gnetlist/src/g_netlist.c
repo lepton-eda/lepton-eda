@@ -253,7 +253,7 @@ SCM g_get_all_connections(SCM scm_netname)
     SCM_ASSERT(scm_is_string(scm_netname), scm_netname, SCM_ARG1, 
 	       "gnetlist:get-all-connections");
 
-    wanted_net_name = SCM_STRING_CHARS (scm_netname);
+    wanted_net_name = scm_to_utf8_string (scm_netname);
 
     if (wanted_net_name == NULL) {
 	return list;
@@ -320,6 +320,7 @@ SCM g_get_all_connections(SCM scm_netname)
 	nl_current = nl_current->next;
     }
 
+    free (wanted_net_name);
     return connlist;
 }
 
