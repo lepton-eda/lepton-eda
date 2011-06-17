@@ -655,9 +655,16 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
     SCM_ASSERT(scm_is_string (scm_wanted_attrib),
 	       scm_wanted_attrib, SCM_ARG3, "gnetlist:get-pin-attribute");
 
-    uref          = SCM_STRING_CHARS (scm_uref);
-    pin           = SCM_STRING_CHARS (scm_pin);
-    wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
+    scm_dynwind_begin (0);
+
+    uref = scm_to_utf8_string (scm_uref);
+    scm_dynwind_free (uref);
+
+    pin = scm_to_utf8_string (scm_pin);
+    scm_dynwind_free (pin);
+
+    wanted_attrib = scm_to_utf8_string (scm_wanted_attrib);
+    scm_dynwind_free (wanted_attrib);
 
     /* here is where you make it multi page aware */
     nl_current = netlist_head;
@@ -702,6 +709,8 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
 	}
 	nl_current = nl_current->next;
     }
+
+    scm_dynwind_end ();
 
     if (return_value) {
       scm_return_value = scm_from_utf8_string (return_value);
