@@ -48,6 +48,63 @@
                   (v 'value)
                   (else 'both))))) ;; Default
 
+;; set-attribute-text-properties! attrib color size alignment
+;;                                rotation x y
+;;
+;; Sets several parameters of the text object attrib.  x and y are the
+;; coordinates of the text anchor.  color is the colormap index of the
+;; color with which to draw the text.  size is the font size, and
+;; angle is the angle at which to draw the text.
+;;
+;; All of the former parameters may be set to -1 to leave the current
+;; value unchanged.
+;;
+;; alignment should be one of the following strings:
+;;
+;;    "Lower Left"
+;;    "Middle Left"
+;;    "Upper Left"
+;;    "Lower Middle"
+;;    "Middle Middle"
+;;    "Upper Middle"
+;;    "Lower Right"
+;;    "Middle Right"
+;;    "Upper Right"
+;;
+;; or the empty string "" to leave the alignment unchanged.
+(define-public (set-attribute-text-properties!
+                  attrib color size alignment rotation x y)
+  (set-text! attrib
+             ;; anchor
+             (let ((anchor (text-anchor attrib)))
+               (cons (if (= x -1) (car anchor) x)
+                     (if (= y -1) (cdr anchor) y)))
+             ;; align
+             (or
+              (assoc-ref
+               '(("Lower Left" . lower-left)
+                 ("Middle Left" . middle-left)
+                 ("Upper Left" . upper-left)
+                 ("Lower Middle" . lower-center)
+                 ("Middle Middle" . middle-center)
+                 ("Upper Middle" . upper-center)
+                 ("Lower Right" . lower-right)
+                 ("Middle Right" . middle-right)
+                 ("Upper Right" . upper-right))
+               alignment)
+              (and (string=? "" alignment) (text-align attrib))
+              (error "Invalid text alignment ~A." alignment))
+             ;; angle
+             (if (= rotation -1) (text-angle attrib) rotation)
+             ;; string
+             (text-string attrib)
+             ;; size
+             (if (= size -1) (text-size attrib) size)
+             ;; visible
+             (text-visible? attrib)
+             ;; show
+             (text-attribute-mode attrib)))
+
 ;; add-component-at-xy page basename x y angle selectable mirror
 ;;
 ;; Adds the component called basename from the component library to a
