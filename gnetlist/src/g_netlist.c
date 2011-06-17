@@ -832,14 +832,20 @@ SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has
 	       scm_has_attribute, SCM_ARG3, 
 	       "gnetlist:get-attr-of-conn-graph-objs-with-attr");
 
-    wanted_net_name = SCM_STRING_CHARS (scm_netname);
-    wanted_attrib = SCM_STRING_CHARS (scm_wanted_attribute);
-    has_attrib = SCM_STRING_CHARS (scm_has_attribute);
-    
+    scm_dynwind_begin (0);
+
+    wanted_net_name = scm_to_utf8_string (scm_netname);
     if (wanted_net_name == NULL) {
 	return list;
     }
 
+    scm_dynwind_free (wanted_net_name);
+
+    wanted_attrib = scm_to_utf8_string (scm_wanted_attribute);
+    scm_dynwind_free (wanted_attrib);
+
+    has_attrib = scm_to_utf8_string (scm_has_attribute);
+    scm_dynwind_free (has_attrib);
 
     nl_current = graphical_netlist_head;
     
@@ -882,6 +888,7 @@ SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has
 	nl_current = nl_current->next;
     }
 
+    scm_dynwind_end ();
     return list;
 }
 
