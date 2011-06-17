@@ -27,7 +27,26 @@
   #:use-module (geda attrib)
   #:use-module (gschem window)
   #:use-module (gschem hook)
-  #:use-module (gschem selection))
+  #:use-module (gschem selection)
+  #:use-module (gschem attrib))
+
+;; add-attribute-to-object object name value visible show
+;;
+;; Add an attribute "name=value" to object.  If visible is #f, the new
+;; attribute will be invisible.  show should be a list containing one
+;; or both of the strings "name and "value" (if neither is specified,
+;; both are assumed).
+;;
+;; See also add-attrib! in the (gschem attrib) module.
+(define-public (add-attribute-to-object object name value visible show)
+  (add-attrib! object name value visible
+               (let ((n (member "name" show))
+                     (v (member "value" show)))
+                 (cond
+                  ((and n v) 'both)
+                  (n 'name)
+                  (v 'value)
+                  (else 'both))))) ;; Default
 
 ;; set-attribute-value! attrib value
 ;;
