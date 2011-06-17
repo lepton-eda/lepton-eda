@@ -569,9 +569,16 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
   SCM_ASSERT(scm_is_string (scm_wanted_attrib),
              scm_wanted_attrib, SCM_ARG3, "gnetlist:get-pin-attribute-seq");
 
-  uref          = SCM_STRING_CHARS (scm_uref);
-  pinseq        = SCM_STRING_CHARS (scm_pinseq);
-  wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
+  scm_dynwind_begin (0);
+
+  uref = scm_to_utf8_string (scm_uref);
+  scm_dynwind_free (uref);
+
+  pinseq = scm_to_utf8_string (scm_pinseq);
+  scm_dynwind_free (pinseq);
+
+  wanted_attrib = scm_to_utf8_string (scm_wanted_attrib);
+  scm_dynwind_free (wanted_attrib);
 
 #if DEBUG
   printf("gnetlist:g_netlist.c:g_get_attribute_by_pinseq -- \n");
@@ -608,6 +615,8 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
     }
     nl_current = nl_current->next;
   }
+
+  scm_dynwind_end ();
 
   if (return_value) {
     scm_return_value = scm_from_utf8_string (return_value);
