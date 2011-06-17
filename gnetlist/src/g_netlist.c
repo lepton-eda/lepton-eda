@@ -441,7 +441,7 @@ SCM g_get_pins_nets(SCM scm_uref)
     SCM_ASSERT(scm_is_string (scm_uref),
 	       scm_uref, SCM_ARG1, "gnetlist:get-pins-nets");
 
-    wanted_uref = SCM_STRING_CHARS (scm_uref);
+    wanted_uref = scm_to_utf8_string (scm_uref);
 
     /* search for the any instances */
     /* through the entire list */
@@ -472,6 +472,8 @@ SCM g_get_pins_nets(SCM scm_uref)
 	    }
 	}
     }
+
+    free (wanted_uref);
 
     pinslist = scm_reverse (pinslist);	/* pins are in reverse order on the way 
 					 * out 
