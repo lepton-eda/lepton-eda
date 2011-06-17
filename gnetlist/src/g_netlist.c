@@ -711,7 +711,7 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
   SCM_ASSERT(scm_is_string (scm_wanted_attrib),
              scm_wanted_attrib, SCM_ARG1, "gnetlist:get-toplevel-attribute");
 
-  wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
+  wanted_attrib = scm_to_utf8_string (scm_wanted_attrib);
 
   for (p_iter = geda_list_get_glist (project_current->pages); p_iter != NULL;
        p_iter = g_list_next (p_iter)) {
@@ -726,6 +726,8 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
     if (attrib_value != NULL)
       break;
   }
+
+  free (wanted_attrib);
 
   if (attrib_value != NULL) {
     scm_return_value = scm_from_utf8_string (attrib_value);
