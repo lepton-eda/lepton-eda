@@ -108,13 +108,16 @@ SCM g_get_non_unique_packages(SCM level)
 }
 
 
-SCM g_get_pins(SCM uref)
+SCM g_get_pins(SCM scm_uref)
 {
+    char *uref;
     SCM list = SCM_EOL;
     NETLIST *nl_current;
     CPINLIST *pl_current;
 
-    SCM_ASSERT(scm_is_string (uref), uref, SCM_ARG1, "gnetlist:get-pins");
+    SCM_ASSERT(scm_is_string (scm_uref), scm_uref, SCM_ARG1, "gnetlist:get-pins");
+
+    uref = scm_to_utf8_string (scm_uref);
 
     /* here is where you make it multi page aware */
     nl_current = netlist_head;
@@ -124,7 +127,7 @@ SCM g_get_pins(SCM uref)
     while (nl_current != NULL) {
 
 	if (nl_current->component_uref) {
-	    if (strcmp(nl_current->component_uref, SCM_STRING_CHARS (uref)) == 0) {
+	    if (strcmp(nl_current->component_uref, uref) == 0) {
 
 		pl_current = nl_current->cpins;
 		while (pl_current != NULL) {
@@ -138,6 +141,8 @@ SCM g_get_pins(SCM uref)
 	}
 	nl_current = nl_current->next;
     }
+
+    free (uref);
 
     return (list);
 }
