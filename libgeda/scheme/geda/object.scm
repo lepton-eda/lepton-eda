@@ -37,8 +37,6 @@
 
 (define-public copy-object %copy-object)
 
-(define-public object-bounds %object-bounds)
-
 (define-public object-color %object-color)
 (define-public set-object-color! %set-object-color!)
 
@@ -672,3 +670,33 @@
 
 (define-public object-fill %object-fill)
 (define-public set-object-fill! %set-object-fill!)
+
+;;;; Object bounds
+
+;; object-bounds object [object...]
+;;
+;; Return the bounds containing one or more objects.  The bounds
+;; returned are in world coordinates, and are given in the form:
+;;
+;;  ((left . top) . (right . bottom))
+;;
+;; Note that this function always returns the actual bounds of the
+;; objects, not the visible bounds.
+(define-public object-bounds %object-bounds)
+
+;; fold-bounds a b
+;;
+;; Calculate the bounds of the smallest rectangle containing both the
+;; bounds a and b, which should be bounds as returned by
+;; object-bounds.  If either a or b is #f, it is ignored; if both are
+;; #f, #f is returned.
+(define-public (fold-bounds a b)
+  (if (and a b)
+      ;; calc bounds
+      (cons (cons (min (caar a) (caar b))    ; left
+                  (max (cdar a) (cdar b)))   ; top
+            (cons (max (cadr a) (cadr b))    ; right
+                  (min (cddr a) (cddr b)))) ; bottom
+
+      ;; return whichever isn't #f
+      (or a b)))
