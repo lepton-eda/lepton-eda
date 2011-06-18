@@ -27,3 +27,4 @@
 
 (define-public active-page %active-page)
 (define-public set-active-page! %set-active-page!)
+(define-public pointer-position %pointer-position)
