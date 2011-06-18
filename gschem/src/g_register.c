@@ -330,7 +330,5 @@ void g_register_funcs (void)
   }
 
   /* Hook stuff */
-  scm_c_define_gsubr ("get-object-bounds", 3, 0, 0, g_get_object_bounds);
-
   complex_place_list_changed_hook = create_hook ("complex-place-list-changed-hook", 1);
 }

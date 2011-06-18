@@ -33,7 +33,6 @@ SCM g_funcs_browse_wiki(SCM wikiname);
 SCM g_funcs_use_rc_values(void);
 SCM get_selected_component_attributes(GSCHEM_TOPLEVEL *w_current);
 /* g_hook.c */
-SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclude_object_type);
 void g_init_hook ();
 void g_run_hook_object (const char *name, OBJECT *obj);
 void g_run_hook_object_list (const char *name, GList *obj_lst);

@@ -28,7 +28,11 @@
   #:use-module (gschem window)
   #:use-module (gschem hook)
   #:use-module (gschem selection)
-  #:use-module (gschem attrib))
+  #:use-module (gschem attrib)
+
+  #:use-module (geda deprecated)
+
+  #:use-module (srfi srfi-1))
 
 ;; add-attribute-to-object object name value visible show
 ;;
@@ -148,6 +152,67 @@
   (if (component? object)
       (reverse! (filter! pin? (component-contents object)))
       '()))
+
+;; get-object-bounds object exclude-attribs exclude-types
+;;
+;; Return the bounds of an object, excluding attributes with
+;; particular names or certain object types.
+;;
+;; The exclude-attribs should be a list of attribute names to be
+;; omitted, as strings. If the special string "all" appears in the
+;; list, all attributes are excluded.
+;;
+;; The exclude-types should be a list of single-character strings
+;; containing object type characters (as returned by the deprecated
+;; get-object-type function).
+;;
+;; Note that attributes attached to pins (but not attached to anything
+;; else) are included in the bounds.
+;;
+;; The bounds are returned in the form:
+;;
+;;   ((left . right) . (bottom . top))
+;;
+;; N.b. that this is a different form to that returned by
+;; object-bounds, so you can't use fold-bounds directly with bounds
+;; returned by this function.
+(define-public (get-object-bounds object exclude-attribs exclude-types)
+  (define no-attribs (member "all" exclude-attribs))
+
+  (define (exclude? object)
+    (or
+     ;; Is it an excluded type?
+     (member (string (get-object-type object)) exclude-types)
+     ;; Is it invisible text?
+     (and (text? object) (not (text-visible? object)))
+     ;; Is it an excluded attribute?
+     (and (attribute? object)
+          (or no-attribs
+              (member (attrib-name object) exclude-attribs)))))
+
+  (define (excluding-bounds object)
+    (cond
+     ;; If it's excluded, no bounds!
+     ((exclude? object) #f)
+     ;; If it's a component, recurse
+     ((component? object)
+      (fold fold-bounds #f
+            (map excluding-bounds (component-contents object))))
+     ;; If it's a pin, include its attributes
+     ((pin? object)
+      (fold fold-bounds #f
+            (cons (object-bounds object)
+                  (map excluding-bounds (object-attribs object)))))
+     ;; Otherwise, just return the object bounds
+     (else (object-bounds object))))
+
+  (let ((bounds (excluding-bounds object)))
+    (if bounds
+        ;; Re-arrange the bounds into the format expected
+        (cons (cons (caar bounds) (cadr bounds))
+              (cons (cddr bounds) (cdar bounds)))
+        ;; Stupid default
+        '((1000000 . 0) . (1000000 . 0)))))
 
 ;; get-pin-ends pin
 ;;
