@@ -27,6 +27,9 @@ Notable changes in gEDA/gaf 1.7.1
 * The `spice-sdb' backend for `gnetlist' now has built-in support for
   `SUBCKT_NMOS' and `SUBCKT_PMOS' devices.
 
+* A new `makedepend' backend has been added to `gnetlist'.  It
+  generates Makefile code for SPICE simulation dependencies.
+
 * Visibility of embedded component attributes are now preserved by
   `gattrib'.
 

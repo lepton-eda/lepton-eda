@@ -2119,11 +2119,9 @@ void about_dialog (GSCHEM_TOPLEVEL *w_current)
   GdkPixbuf *logo;
   GError *error = NULL;
 
-  version_string = g_strdup_printf(_("%s%s (%s)"),
-                                   PREPEND_VERSION_STRING,
-                                   PACKAGE_DOTTED_VERSION,
-                                   PACKAGE_DATE_VERSION);
-
+  version_string = g_strdup_printf (_("%s (g%.7s)"),
+                                    PACKAGE_DOTTED_VERSION,
+                                    PACKAGE_GIT_COMMIT);
 
   logo_file = g_strconcat (w_current->toplevel->bitmap_directory,
                            G_DIR_SEPARATOR_S, "gschem-about-logo.png", NULL);

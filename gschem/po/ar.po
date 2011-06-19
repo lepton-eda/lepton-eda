@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2011-01-16 01:15-0500\n"
+"POT-Creation-Date: 2011-06-19 10:15-0400\n"
 "PO-Revision-Date: 2010-02-14 06:08+0000\n"
 "Last-Translator: عبدالله شلي (Abdellah Chelli) <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -23,31 +23,31 @@ msgstr ""
 msgid "Zoom too small!  Cannot zoom further.\n"
 msgstr "التبعيد كبير جدا! لا يمكن التبعيد أكثر.\n"
 
-#: gschem/src/g_funcs.c:347 gschem/src/i_callbacks.c:68
+#: gschem/src/g_funcs.c:379 gschem/src/i_callbacks.c:68
 #, c-format
 msgid "Could not fork\n"
 msgstr "تعذّر التشعيب\n"
 
-#: gschem/src/g_funcs.c:363 gschem/src/i_callbacks.c:78
+#: gschem/src/g_funcs.c:397 gschem/src/i_callbacks.c:78
 #, c-format
 msgid "Could not invoke %s\n"
 msgstr "تعذّر استحضار %s\n"
 
-#: gschem/src/g_funcs.c:369 gschem/src/i_callbacks.c:82
+#: gschem/src/g_funcs.c:403 gschem/src/i_callbacks.c:82
 msgid "Documentation commands not supported under MinGW.\n"
 msgstr "أوامر التوثيق غير مدعومة تحت MinGW.\n"
 
-#: gschem/src/g_rc.c:291
+#: gschem/src/g_rc.c:295
 #, c-format
 msgid "Invalid zoomfactor [%d] passed to %s\n"
 msgstr "مرّر معامل تقريب غير صالح [%d] إلى %s\n"
 
-#: gschem/src/g_rc.c:417
+#: gschem/src/g_rc.c:441
 #, c-format
 msgid "Invalid size [%d] passed to text-size\n"
 msgstr "مرّر حجم غير صالح [%d] إلى 'حجم النص'\n"
 
-#: gschem/src/g_rc.c:438
+#: gschem/src/g_rc.c:462
 msgid ""
 "\n"
 "The config option postscript-font-scale is deprecated and will be removed in "
@@ -62,88 +62,88 @@ msgstr ""
 "الإعداد لديك.\n"
 "\n"
 
-#: gschem/src/g_rc.c:481
+#: gschem/src/g_rc.c:505
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "مرّر حجم غير صالح [%d] إلى 'حجم الجذب'\n"
 
-#: gschem/src/g_rc.c:936
+#: gschem/src/g_rc.c:962
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "مرّر عدد مستويات غير صالح [%d] إلى 'مستويات التراجع'\n"
 
-#: gschem/src/g_rc.c:1194
+#: gschem/src/g_rc.c:1224
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "مرّر حجم غير صالح [%d] إلى 'حجم كسار الناقل'\n"
 
-#: gschem/src/g_rc.c:1269
+#: gschem/src/g_rc.c:1299
 #, c-format
 msgid "Invalid dot size [%d] passed to dots-grid-dot-size\n"
 msgstr "مرّر حجم نقط غير صالح [%d] إلى 'حجم النقط للشبيكة النقطية'\n"
 
-#: gschem/src/g_rc.c:1310
+#: gschem/src/g_rc.c:1340
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to dots-grid-fixed-threshold\n"
 msgstr "مرّر تباعد بكسل غير صالح [%d] إلى 'العتبة الثابتة للشبيكة النقطية'\n"
 
-#: gschem/src/g_rc.c:1336
+#: gschem/src/g_rc.c:1366
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to mesh-grid-display-threshold\n"
 msgstr "مرّر تباعد بكسل غير صالح [%d] إلى 'عتبة العرض لشبيكة الشُرَط'\n"
 
-#: gschem/src/g_rc.c:1361
+#: gschem/src/g_rc.c:1391
 #, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr "مرّرت قيمة إزاحة غير صالحة [%d] إلى 'إزاحة إضافة السمة'\n"
 
-#: gschem/src/g_rc.c:1385
+#: gschem/src/g_rc.c:1415
 #, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr "مرّر عدد ثواني غير صالح [%d] إلى 'مدّة الحفظ الآلي'\n"
 
-#: gschem/src/g_rc.c:1426
+#: gschem/src/g_rc.c:1439
 #, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr "مرّر معامل ربح غير صالح [%d] إلى 'معامل ربح الفأرة'\n"
 
-#: gschem/src/g_rc.c:1449
+#: gschem/src/g_rc.c:1462
 #, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr "مرّر معامل ربح غير صالح [%d] إلى 'معامل ربح لوحة المفاتيح'\n"
 
-#: gschem/src/g_rc.c:1495
+#: gschem/src/g_rc.c:1509
 #, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr "مرّر عدد بكسلات غير صالح [%d] إلى 'بكسلات مهملة للانتقاء'\n"
 
-#: gschem/src/g_rc.c:1521
+#: gschem/src/g_rc.c:1535
 #, c-format
 msgid "Invalid gain [%d] passed to zoom-gain\n"
 msgstr "مرّر معامل ربح غير صالح [%d] إلى 'معامل ربح التقريب'\n"
 
-#: gschem/src/g_rc.c:1546
+#: gschem/src/g_rc.c:1560
 #, c-format
 msgid "Invalid number of steps [%d] scrollpan-steps\n"
 msgstr "مرّر عدد خطوات غير صالح [%d] إلى 'خطوات شريط التمرير'\n"
 
-#: gschem/src/gschem.c:188
+#: gschem/src/gschem.c:175
 #, c-format
 msgid "gEDA/gschem version %s%s.%s\n"
 msgstr "إصدار gEDA/gschem‫ %s%s.%s\n"
 
-#: gschem/src/gschem.c:191
+#: gschem/src/gschem.c:178
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
 msgstr "يقدم gEDA/gschem بلا أي ضمان، راجع COPYING لتفاصيل أكثر.\n"
 
-#: gschem/src/gschem.c:193
+#: gschem/src/gschem.c:180
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr "هذا برنامج حر، مرحب بإعادة توزيعه مع بعض الشروط،\n"
 
-#: gschem/src/gschem.c:195
+#: gschem/src/gschem.c:182
 msgid ""
 "conditions; please see the COPYING file for more details.\n"
 "\n"
@@ -151,17 +151,17 @@ msgstr ""
 "من فضلك راجع الملف COPYING لتفاصيل أكثر.\n"
 "\n"
 
-#: gschem/src/gschem.c:198
+#: gschem/src/gschem.c:185
 #, c-format
 msgid "This is the MINGW32 port.\n"
 msgstr "هذا نقل(Port) عن طريق MINGW32.\n"
 
-#: gschem/src/gschem.c:202
+#: gschem/src/gschem.c:189
 #, c-format
 msgid "Current locale settings: %s\n"
 msgstr "الإعدادات المحلية الحالية: %s\n"
 
-#: gschem/src/gschem.c:218
+#: gschem/src/gschem.c:205
 msgid ""
 "You must set the GEDADATA environment variable!\n"
 "\n"
@@ -173,17 +173,17 @@ msgstr ""
 "لا يمكن لـ gschem تحديد مكان ملفات البيانات خاصته. يجب أن تعيّن متغيّر البيئة\n"
 "‏GEDADATA ليشير إلى المكان الصّحيح.\n"
 
-#: gschem/src/gschem.c:256
+#: gschem/src/gschem.c:243
 #, c-format
 msgid "Couldn't find init scm file [%s]\n"
 msgstr "تعذّر العثور على ملف الاستهلال [‎%s‬]\n"
 
-#: gschem/src/gschem.c:260
+#: gschem/src/gschem.c:247
 #, c-format
 msgid "Read init scm file [%s]\n"
 msgstr "قراءة ملف الاستهلال [‎%s‬]\n"
 
-#: gschem/src/gschem.c:264
+#: gschem/src/gschem.c:251
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr "فشل قراءة ملف الاستهلال [‎%s‬]\n"
@@ -198,8 +198,8 @@ msgstr "نهاية السطر (%d) مجهولة\n"
 msgid "Unknown type for stroke (%d) !\n"
 msgstr "نوع مجهول للجرّة-‪stroke‬ (%d) !\n"
 
-#: gschem/src/i_basic.c:77 gschem/src/x_window.c:522
-#: gschem/lib/system-gschemrc.scm:1408
+#: gschem/src/i_basic.c:77 gschem/src/x_window.c:519
+#: gschem/lib/system-gschemrc.scm:1401
 msgid "Select Mode"
 msgstr "وضع الانتقاء"
 
@@ -211,11 +211,11 @@ msgstr "وضع المكون"
 msgid "Text Mode"
 msgstr "وضع النص"
 
-#: gschem/src/i_basic.c:84 gschem/lib/system-gschemrc.scm:1411
+#: gschem/src/i_basic.c:84 gschem/lib/system-gschemrc.scm:1404
 msgid "Copy Mode"
 msgstr "وضع النسخ"
 
-#: gschem/src/i_basic.c:87 gschem/lib/system-gschemrc.scm:1413
+#: gschem/src/i_basic.c:87 gschem/lib/system-gschemrc.scm:1406
 msgid "Move Mode"
 msgstr "وضع التّحريك"
 
@@ -223,7 +223,7 @@ msgstr "وضع التّحريك"
 msgid "Rotate Mode"
 msgstr "وضع الإستدارة"
 
-#: gschem/src/i_basic.c:91 gschem/lib/system-gschemrc.scm:1415
+#: gschem/src/i_basic.c:91 gschem/lib/system-gschemrc.scm:1408
 msgid "Mirror Mode"
 msgstr "وضع المرآة"
 
@@ -291,7 +291,7 @@ msgstr "حرّك"
 msgid "Multiple Copy"
 msgstr "نسخ متعدد"
 
-#: gschem/src/i_basic.c:142 gschem/lib/system-gschemrc.scm:1412
+#: gschem/src/i_basic.c:142 gschem/lib/system-gschemrc.scm:1405
 msgid "Multiple Copy Mode"
 msgstr "وضع النسخ المتعدد"
 
@@ -307,16 +307,16 @@ msgstr "إيقاف الجذب"
 msgid "Resnap Active"
 msgstr "تفعيل إعادة الجذب"
 
-#: gschem/src/i_basic.c:254 gschem/src/x_window.c:496
+#: gschem/src/i_basic.c:254 gschem/src/x_window.c:493
 msgid "Action"
 msgstr "إجراء"
 
-#: gschem/src/i_basic.c:260 gschem/src/x_dialog.c:2316
-#: gschem/src/x_window.c:491
+#: gschem/src/i_basic.c:260 gschem/src/x_dialog.c:2315
+#: gschem/src/x_window.c:488
 msgid "Stroke"
 msgstr "جرة (Stroke)"
 
-#: gschem/src/i_basic.c:266 gschem/src/x_window.c:493
+#: gschem/src/i_basic.c:266 gschem/src/x_window.c:490
 msgid "none"
 msgstr "لا شيء"
 
@@ -324,15 +324,15 @@ msgstr "لا شيء"
 msgid "Repeat/"
 msgstr "كرّر/"
 
-#: gschem/src/i_basic.c:547 gschem/src/i_basic.c:561
+#: gschem/src/i_basic.c:566 gschem/src/i_basic.c:580
 msgid "OFF"
 msgstr "إيقاف"
 
-#: gschem/src/i_basic.c:565
+#: gschem/src/i_basic.c:584
 msgid "NONE"
 msgstr "لا شيئ"
 
-#: gschem/src/i_basic.c:570
+#: gschem/src/i_basic.c:589
 #, c-format
 msgid "Grid(%s, %s)"
 msgstr "شبيكة(%s, %s)"
@@ -369,7 +369,7 @@ msgstr "إغلاق النافذة\n"
 msgid "Select objs first"
 msgstr "انتق الكائنات أولا"
 
-#: gschem/src/i_callbacks.c:710 gschem/src/x_multiattrib.c:1503
+#: gschem/src/i_callbacks.c:710 gschem/src/x_multiattrib.c:1552
 msgid "Delete"
 msgstr "احذف"
 
@@ -401,16 +401,16 @@ msgstr "أدر"
 msgid "Mirror"
 msgstr "مرآة"
 
-#: gschem/src/i_callbacks.c:959 gschem/src/x_dialog.c:2319
-#: gschem/lib/system-gschemrc.scm:1424
+#: gschem/src/i_callbacks.c:959 gschem/src/x_dialog.c:2318
+#: gschem/lib/system-gschemrc.scm:1417
 msgid "Lock"
 msgstr "أقفل"
 
-#: gschem/src/i_callbacks.c:977 gschem/lib/system-gschemrc.scm:1425
+#: gschem/src/i_callbacks.c:977 gschem/lib/system-gschemrc.scm:1418
 msgid "Unlock"
 msgstr "فكّ القفل"
 
-#: gschem/src/i_callbacks.c:995 gschem/src/x_dialog.c:1737
+#: gschem/src/i_callbacks.c:995 gschem/src/x_dialog.c:1738
 msgid "Translate"
 msgstr "اسحب"
 
@@ -535,153 +535,153 @@ msgstr "ألصق 4"
 msgid "Paste 5"
 msgstr "ألصق 5"
 
-#: gschem/src/i_callbacks.c:2325 gschem/src/x_window.c:355
+#: gschem/src/i_callbacks.c:2325 gschem/src/x_window.c:356
 msgid "Component"
 msgstr "مكوّن"
 
 #: gschem/src/i_callbacks.c:2361 gschem/src/i_callbacks.c:2380
-#: gschem/src/x_dialog.c:2289
+#: gschem/src/x_dialog.c:2288
 msgid "Attribute"
 msgstr "سمة"
 
-#: gschem/src/i_callbacks.c:2402 gschem/src/i_callbacks.c:2429
-#: gschem/src/x_dialog.c:2286
+#: gschem/src/i_callbacks.c:2402 gschem/src/i_callbacks.c:2425
+#: gschem/src/x_dialog.c:2285
 msgid "Net"
 msgstr "شبكة"
 
-#: gschem/src/i_callbacks.c:2473 gschem/src/i_callbacks.c:2500
-#: gschem/src/x_dialog.c:2304 gschem/src/x_window.c:375
+#: gschem/src/i_callbacks.c:2466 gschem/src/i_callbacks.c:2489
+#: gschem/src/x_dialog.c:2303 gschem/src/x_window.c:376
 msgid "Bus"
 msgstr "ناقل"
 
-#: gschem/src/i_callbacks.c:2581 gschem/src/i_callbacks.c:2604
+#: gschem/src/i_callbacks.c:2567 gschem/src/i_callbacks.c:2590
 msgid "Line"
 msgstr "خط"
 
-#: gschem/src/i_callbacks.c:2626 gschem/src/i_callbacks.c:2649
+#: gschem/src/i_callbacks.c:2612 gschem/src/i_callbacks.c:2635
 msgid "Box"
 msgstr "إطار"
 
-#: gschem/src/i_callbacks.c:2705 gschem/src/i_callbacks.c:2729
+#: gschem/src/i_callbacks.c:2691 gschem/src/i_callbacks.c:2715
 msgid "Circle"
 msgstr "دائرة"
 
-#: gschem/src/i_callbacks.c:2751 gschem/src/i_callbacks.c:2774
+#: gschem/src/i_callbacks.c:2737 gschem/src/i_callbacks.c:2760
 msgid "Arc"
 msgstr "قوس"
 
-#: gschem/src/i_callbacks.c:2796 gschem/src/i_callbacks.c:2819
-#: gschem/src/x_dialog.c:2277
+#: gschem/src/i_callbacks.c:2782 gschem/src/i_callbacks.c:2805
+#: gschem/src/x_dialog.c:2276
 msgid "Pin"
 msgstr "دبوس"
 
-#: gschem/src/i_callbacks.c:2878
+#: gschem/src/i_callbacks.c:2864
 #, c-format
 msgid "Searching for source [%s]\n"
 msgstr "البحث عن المنبع [%s]\n"
 
-#: gschem/src/i_callbacks.c:2902
+#: gschem/src/i_callbacks.c:2888
 #, c-format
 msgid "Cannot find source [%s]\n"
 msgstr "يتعذر العثور على المنبع [%s]\n"
 
-#: gschem/src/i_callbacks.c:2965
+#: gschem/src/i_callbacks.c:2951
 #, c-format
 msgid "Searching for symbol [%s]\n"
 msgstr "البحث عن الرمز [%s]\n"
 
-#: gschem/src/i_callbacks.c:2971
+#: gschem/src/i_callbacks.c:2957
 msgid "Symbol is not a real file. Symbol cannot be loaded.\n"
 msgstr "الرمز ليس ملفا حقيقيا. يتعذر تحميل الرمز.\n"
 
-#: gschem/src/i_callbacks.c:3002
+#: gschem/src/i_callbacks.c:2988
 msgid "Cannot find any schematics above the current one!\n"
 msgstr "يتعذر إيجاد أي مخطط فوق الحالي!\n"
 
-#: gschem/src/i_callbacks.c:3056
+#: gschem/src/i_callbacks.c:3042
 msgid ""
 "This command retrieves the component documentation from the web, but there "
 "is no component selected"
 msgstr "هذا الأمر يستردّ توثيق المكوّن من الموقع، لكن لا يوجد أي مكوّن منتقى"
 
-#: gschem/src/i_callbacks.c:3084
+#: gschem/src/i_callbacks.c:3070
 msgid "Attach"
 msgstr "أرفق"
 
-#: gschem/src/i_callbacks.c:3131
+#: gschem/src/i_callbacks.c:3117
 msgid "Detach"
 msgstr "افصل"
 
-#: gschem/src/i_callbacks.c:3166
+#: gschem/src/i_callbacks.c:3152
 msgid "ShowN"
 msgstr "أظهرN"
 
-#: gschem/src/i_callbacks.c:3202
+#: gschem/src/i_callbacks.c:3189
 msgid "ShowV"
 msgstr "أظهرV"
 
-#: gschem/src/i_callbacks.c:3238
+#: gschem/src/i_callbacks.c:3226
 msgid "ShowB"
 msgstr "أظهرB"
 
-#: gschem/src/i_callbacks.c:3275
+#: gschem/src/i_callbacks.c:3264
 msgid "VisToggle"
 msgstr "تبديل الرؤية"
 
-#: gschem/src/i_callbacks.c:3305
+#: gschem/src/i_callbacks.c:3295
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "عذرا خيار القائمة هذا غير فعّال\n"
 
-#: gschem/src/i_callbacks.c:3395
+#: gschem/src/i_callbacks.c:3385
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr "وضع ردود الإجراء معيّن إلى حد الخارجي\n"
 
-#: gschem/src/i_callbacks.c:3398
+#: gschem/src/i_callbacks.c:3388
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr "وضع ردود الإجراء معيّن إلى الإطار المحيط\n"
 
-#: gschem/src/i_callbacks.c:3423
+#: gschem/src/i_callbacks.c:3413
 msgid "Grid OFF\n"
 msgstr "شبيكة موقفة\n"
 
-#: gschem/src/i_callbacks.c:3424
+#: gschem/src/i_callbacks.c:3414
 msgid "Dot grid selected\n"
 msgstr "انتقيت الشبيكة النقطية\n"
 
-#: gschem/src/i_callbacks.c:3425
+#: gschem/src/i_callbacks.c:3415
 msgid "Mesh grid selected\n"
 msgstr "انتقيت شبيكة الشرط\n"
 
-#: gschem/src/i_callbacks.c:3446
+#: gschem/src/i_callbacks.c:3436
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "الجذب موقف (تنبيه)\n"
 
-#: gschem/src/i_callbacks.c:3449
+#: gschem/src/i_callbacks.c:3439
 msgid "Snap ON\n"
 msgstr "الجذب مشغّل\n"
 
-#: gschem/src/i_callbacks.c:3452
+#: gschem/src/i_callbacks.c:3442
 msgid "Snap back to the grid (CAUTION!)\n"
 msgstr "جذب نحو الشبيكة (تنبيه!)\n"
 
-#: gschem/src/i_callbacks.c:3478
+#: gschem/src/i_callbacks.c:3468
 msgid "Rubber band OFF \n"
 msgstr "الشريط المطاطي موقف \n"
 
-#: gschem/src/i_callbacks.c:3481
+#: gschem/src/i_callbacks.c:3471
 msgid "Rubber band ON\n"
 msgstr "الشريط المطاطي مشغل\n"
 
-#: gschem/src/i_callbacks.c:3496
+#: gschem/src/i_callbacks.c:3486
 msgid "magnetic net mode: ON\n"
 msgstr "وضع الشبكة المغناطيسية: مشغل\n"
 
-#: gschem/src/i_callbacks.c:3499
+#: gschem/src/i_callbacks.c:3489
 msgid "magnetic net mode: OFF\n"
 msgstr "وضع الشبكة المغناطيسية: موقف\n"
 
-#: gschem/src/o_box.c:149
+#: gschem/src/o_box.c:292
 #, c-format
 msgid "Unknown type for box (fill)!\n"
 msgstr "نوع مجهول للإطار (الملء)!\n"
@@ -706,7 +706,7 @@ msgstr "حصلت على buffer_number غير صالح [o_buffer_paste_start]\n"
 msgid "Got an invalid which one in o_bus_draw_stretch\n"
 msgstr "﻿حصلت على أيّ-واحد غير صالح في o_bus_draw_stretch\n"
 
-#: gschem/src/o_circle.c:130
+#: gschem/src/o_circle.c:284
 #, c-format
 msgid "Unknown type for circle (fill)!\n"
 msgstr "نوع مجهول للدائرة (الملء)!\n"
@@ -801,7 +801,7 @@ msgstr "﻿حاولت إضافة أكثر من اثنين من كسارات ال
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
 msgstr "﻿لم يتم العثور على رمز كسار الناقل [%s] في أي مكتبة مكون\n"
 
-#: gschem/src/o_path.c:348
+#: gschem/src/o_path.c:340
 #, c-format
 msgid "Unknown type for path (fill)!\n"
 msgstr "﻿نوع مجهول للمسار (ملء)!\n"
@@ -840,7 +840,7 @@ msgstr "عدد شق جديد خارج النطاق\n"
 msgid "Undo/Redo disabled in rc file\n"
 msgstr "التراجع/الإعادة معطلين في الملف rc\n"
 
-#: gschem/src/parsecmd.c:81
+#: gschem/src/parsecmd.c:82
 #, c-format
 msgid ""
 "Usage: %s [OPTION ...] [--] [FILE ...]\n"
@@ -866,7 +866,7 @@ msgid ""
 "gEDA/gaf homepage: <http://gpleda.org>\n"
 msgstr ""
 
-#: gschem/src/parsecmd.c:115
+#: gschem/src/parsecmd.c:116
 #, c-format
 msgid ""
 "gEDA %s (g%.7s)\n"
@@ -894,15 +894,15 @@ msgstr "<b>حرّر السّمة</b>"
 msgid "<b>Add Attribute</b>"
 msgstr "<b>أضف سمة</b>"
 
-#: gschem/src/x_attribedit.c:377 gschem/src/x_multiattrib.c:1927
+#: gschem/src/x_attribedit.c:377 gschem/src/x_multiattrib.c:1976
 msgid "Name:"
 msgstr "الاسم:"
 
-#: gschem/src/x_attribedit.c:394 gschem/src/x_multiattrib.c:1946
+#: gschem/src/x_attribedit.c:394 gschem/src/x_multiattrib.c:1995
 msgid "Value:"
 msgstr "القيمة:"
 
-#: gschem/src/x_attribedit.c:410 gschem/src/x_multiattrib.c:1989
+#: gschem/src/x_attribedit.c:410 gschem/src/x_multiattrib.c:2038
 msgid "Visible"
 msgstr "مرئي"
 
@@ -914,7 +914,7 @@ msgstr "أظهر القيمة فقط"
 msgid "Show Name Only"
 msgstr "أظهر الاسم فقط"
 
-#: gschem/src/x_attribedit.c:434 gschem/src/x_multiattrib.c:1466
+#: gschem/src/x_attribedit.c:434 gschem/src/x_multiattrib.c:1515
 msgid "Show Name & Value"
 msgstr "أظهر الاسم و القيمة"
 
@@ -926,12 +926,12 @@ msgstr "﻿<b>أرفق الخيارات</b>"
 msgid "All"
 msgstr "الكل"
 
-#: gschem/src/x_attribedit.c:464 gschem/src/x_compselect.c:904
-#: gschem/src/x_compselect.c:1018
+#: gschem/src/x_attribedit.c:464 gschem/src/x_compselect.c:920
+#: gschem/src/x_compselect.c:1034
 msgid "Components"
 msgstr "مكونات"
 
-#: gschem/src/x_attribedit.c:472 gschem/src/x_window.c:365
+#: gschem/src/x_attribedit.c:472 gschem/src/x_window.c:366
 msgid "Nets"
 msgstr "شبكات"
 
@@ -1073,56 +1073,56 @@ msgstr "حاول الحصول على لون غير صالح: %d\n"
 msgid "Tried to get an invalid outline color: %d\n"
 msgstr "حاول الحصول على لون خط خارجي غير صالح: %d\n"
 
-#: gschem/src/x_compselect.c:1048
+#: gschem/src/x_compselect.c:1064
 msgid "Filter:"
 msgstr "المرشح:"
 
-#: gschem/src/x_compselect.c:1151 gschem/src/x_dialog.c:3667
-#: gschem/src/x_multiattrib.c:1793
+#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3666
+#: gschem/src/x_multiattrib.c:1842
 msgid "Name"
 msgstr "اسم"
 
-#: gschem/src/x_compselect.c:1160 gschem/src/x_multiattrib.c:1817
+#: gschem/src/x_compselect.c:1176 gschem/src/x_multiattrib.c:1866
 msgid "Value"
 msgstr "قيمة"
 
-#: gschem/src/x_compselect.c:1199
+#: gschem/src/x_compselect.c:1215
 msgid "Default behavior - reference component"
 msgstr "﻿السلوك الافتراضي - العنصر المرجعي"
 
-#: gschem/src/x_compselect.c:1202
+#: gschem/src/x_compselect.c:1218
 msgid "Embed component in schematic"
 msgstr "﻿ضمّن المكون في المخطط"
 
-#: gschem/src/x_compselect.c:1205
+#: gschem/src/x_compselect.c:1221
 msgid "Include component as individual objects"
 msgstr "ضمّن المكون ككائنات فردية"
 
-#: gschem/src/x_compselect.c:1362
+#: gschem/src/x_compselect.c:1378
 msgid "Select Component..."
 msgstr "انتق مكونا..."
 
-#: gschem/src/x_compselect.c:1385
+#: gschem/src/x_compselect.c:1401
 msgid "In Use"
 msgstr "قيد الاستخدام"
 
-#: gschem/src/x_compselect.c:1389
+#: gschem/src/x_compselect.c:1405
 msgid "Libraries"
 msgstr "مكتبات"
 
-#: gschem/src/x_compselect.c:1398 gschem/src/x_fileselect.c:122
+#: gschem/src/x_compselect.c:1414 gschem/src/x_fileselect.c:122
 msgid "Preview"
 msgstr "معاينة"
 
-#: gschem/src/x_compselect.c:1426
+#: gschem/src/x_compselect.c:1442
 msgid "Attributes"
 msgstr "سمات"
 
-#: gschem/src/x_dialog.c:175
+#: gschem/src/x_dialog.c:176
 msgid "Text Entry..."
 msgstr "مدخل نص..."
 
-#: gschem/src/x_dialog.c:206
+#: gschem/src/x_dialog.c:207
 msgid ""
 "Enter text, click apply,\n"
 "move cursor into window, click to place text.\n"
@@ -1132,179 +1132,179 @@ msgstr ""
 "حرّك المؤشر إلى داخل النافذة،ثم انقر لوضع النص.\n"
 "الزر الأوسط للتدوير عند الوضع."
 
-#: gschem/src/x_dialog.c:300
+#: gschem/src/x_dialog.c:301
 msgid "Upper Left"
 msgstr "اليسار العلوي"
 
-#: gschem/src/x_dialog.c:303
+#: gschem/src/x_dialog.c:304
 msgid "Upper Middle"
 msgstr "الوسط العلوي"
 
-#: gschem/src/x_dialog.c:306
+#: gschem/src/x_dialog.c:307
 msgid "Upper Right"
 msgstr "اليمين العلوي"
 
-#: gschem/src/x_dialog.c:310
+#: gschem/src/x_dialog.c:311
 msgid "Middle Left"
 msgstr "اليسار الوسطي"
 
-#: gschem/src/x_dialog.c:313
+#: gschem/src/x_dialog.c:314
 msgid "Middle Middle"
 msgstr "الوسط الوسطي"
 
-#: gschem/src/x_dialog.c:316
+#: gschem/src/x_dialog.c:317
 msgid "Middle Right"
 msgstr "اليمين الوسطي"
 
-#: gschem/src/x_dialog.c:320
+#: gschem/src/x_dialog.c:321
 msgid "Lower Left"
 msgstr "اليسار السفلي"
 
-#: gschem/src/x_dialog.c:323
+#: gschem/src/x_dialog.c:324
 msgid "Lower Middle"
 msgstr "الوسط السفلي"
 
-#: gschem/src/x_dialog.c:326
+#: gschem/src/x_dialog.c:327
 msgid "Lower Right"
 msgstr "اليمين السفلي"
 
-#: gschem/src/x_dialog.c:437
+#: gschem/src/x_dialog.c:438
 msgid "Edit Text Properties"
 msgstr "حرّر خصائص النص"
 
-#: gschem/src/x_dialog.c:472
+#: gschem/src/x_dialog.c:473
 msgid "<b>Text Content</b>"
 msgstr "<b>محتوى النص</b>"
 
-#: gschem/src/x_dialog.c:508
+#: gschem/src/x_dialog.c:509
 msgid "<b>Text Properties</b>"
 msgstr "<b>خصائص النص</b>"
 
-#: gschem/src/x_dialog.c:523
+#: gschem/src/x_dialog.c:524
 msgid "Color:"
 msgstr "اللون:"
 
-#: gschem/src/x_dialog.c:530
+#: gschem/src/x_dialog.c:531
 msgid "Size:"
 msgstr "الحجم:"
 
-#: gschem/src/x_dialog.c:539
+#: gschem/src/x_dialog.c:540
 msgid "Alignment:"
 msgstr "المحاذاة:"
 
-#: gschem/src/x_dialog.c:588
+#: gschem/src/x_dialog.c:589
 msgid "Solid"
 msgstr "متواصل"
 
-#: gschem/src/x_dialog.c:589
+#: gschem/src/x_dialog.c:590
 msgid "Dotted"
 msgstr "منقط"
 
-#: gschem/src/x_dialog.c:590
+#: gschem/src/x_dialog.c:591
 msgid "Dashed"
 msgstr "شُرَط"
 
-#: gschem/src/x_dialog.c:591
+#: gschem/src/x_dialog.c:592
 msgid "Center"
 msgstr "وسط"
 
-#: gschem/src/x_dialog.c:592
+#: gschem/src/x_dialog.c:593
 msgid "Phantom"
 msgstr "وهم"
 
-#: gschem/src/x_dialog.c:593 gschem/src/x_dialog.c:690
-#: gschem/src/x_dialog.c:699 gschem/src/x_dialog.c:708
-#: gschem/src/x_dialog.c:809 gschem/src/x_dialog.c:811
-#: gschem/src/x_dialog.c:813 gschem/src/x_dialog.c:1039
-#: gschem/src/x_dialog.c:1142 gschem/src/x_dialog.c:1151
-#: gschem/src/x_dialog.c:1160 gschem/src/x_dialog.c:1169
-#: gschem/src/x_dialog.c:1178 gschem/src/x_dialog.c:1291
-#: gschem/src/x_dialog.c:1293 gschem/src/x_dialog.c:1295
-#: gschem/src/x_dialog.c:1297 gschem/src/x_dialog.c:1299
+#: gschem/src/x_dialog.c:594 gschem/src/x_dialog.c:691
+#: gschem/src/x_dialog.c:700 gschem/src/x_dialog.c:709
+#: gschem/src/x_dialog.c:810 gschem/src/x_dialog.c:812
+#: gschem/src/x_dialog.c:814 gschem/src/x_dialog.c:1040
+#: gschem/src/x_dialog.c:1143 gschem/src/x_dialog.c:1152
+#: gschem/src/x_dialog.c:1161 gschem/src/x_dialog.c:1170
+#: gschem/src/x_dialog.c:1179 gschem/src/x_dialog.c:1292
+#: gschem/src/x_dialog.c:1294 gschem/src/x_dialog.c:1296
+#: gschem/src/x_dialog.c:1298 gschem/src/x_dialog.c:1300
 msgid "*unchanged*"
 msgstr "*لم يغيّر*"
 
-#: gschem/src/x_dialog.c:917
+#: gschem/src/x_dialog.c:918
 msgid "Edit Line Width & Type"
 msgstr "حرّر عرض و نوع الخط"
 
-#: gschem/src/x_dialog.c:956 gschem/src/x_print.c:307
+#: gschem/src/x_dialog.c:957 gschem/src/x_print.c:307
 msgid "Type:"
 msgstr "النّوع:"
 
-#: gschem/src/x_dialog.c:960
+#: gschem/src/x_dialog.c:961
 msgid "Width:"
 msgstr "العرض:"
 
-#: gschem/src/x_dialog.c:964
+#: gschem/src/x_dialog.c:965
 msgid "Dash Length:"
 msgstr "طول الشرطة:"
 
-#: gschem/src/x_dialog.c:968
+#: gschem/src/x_dialog.c:969
 msgid "Dash Space:"
 msgstr "فراغ الشرطة:"
 
-#: gschem/src/x_dialog.c:1035
+#: gschem/src/x_dialog.c:1036
 msgid "Hollow"
 msgstr "مجوّف"
 
-#: gschem/src/x_dialog.c:1036
+#: gschem/src/x_dialog.c:1037
 msgid "Filled"
 msgstr "مملوء"
 
-#: gschem/src/x_dialog.c:1037
+#: gschem/src/x_dialog.c:1038
 msgid "Mesh"
 msgstr "خيط الشبكة"
 
-#: gschem/src/x_dialog.c:1038
+#: gschem/src/x_dialog.c:1039
 msgid "Hatch"
 msgstr "تهشير"
 
-#: gschem/src/x_dialog.c:1407
+#: gschem/src/x_dialog.c:1408
 msgid "Edit Fill Type"
 msgstr "حرّر نوع الملء"
 
-#: gschem/src/x_dialog.c:1446
+#: gschem/src/x_dialog.c:1447
 msgid "Fill Type:"
 msgstr "نوع الملء:"
 
-#: gschem/src/x_dialog.c:1450
+#: gschem/src/x_dialog.c:1451
 msgid "Line Width:"
 msgstr "عرض الخط:"
 
-#: gschem/src/x_dialog.c:1454
+#: gschem/src/x_dialog.c:1455
 msgid "Angle 1:"
 msgstr "الزاوية 1:"
 
-#: gschem/src/x_dialog.c:1458
+#: gschem/src/x_dialog.c:1459
 msgid "Pitch 1:"
 msgstr "الإنحدار 1:"
 
-#: gschem/src/x_dialog.c:1462
+#: gschem/src/x_dialog.c:1463
 msgid "Angle 2:"
 msgstr "الزاوية 2:"
 
-#: gschem/src/x_dialog.c:1466
+#: gschem/src/x_dialog.c:1467
 msgid "Pitch 2:"
 msgstr "الإنحدار 2:"
 
-#: gschem/src/x_dialog.c:1593
+#: gschem/src/x_dialog.c:1594
 msgid "Arc Params"
 msgstr "معاملات القوس"
 
-#: gschem/src/x_dialog.c:1634
+#: gschem/src/x_dialog.c:1635
 msgid "Arc Radius:"
 msgstr "﻿شعاع القوس:"
 
-#: gschem/src/x_dialog.c:1642
+#: gschem/src/x_dialog.c:1643
 msgid "Start Angle:"
 msgstr "زاوية البدأ:"
 
-#: gschem/src/x_dialog.c:1650
+#: gschem/src/x_dialog.c:1651
 msgid "Degrees of Sweep:"
 msgstr "درجات الاجتياح:"
 
-#: gschem/src/x_dialog.c:1768
+#: gschem/src/x_dialog.c:1769
 msgid ""
 "Offset to translate?\n"
 "(0 for origin)"
@@ -1312,198 +1312,198 @@ msgstr ""
 "قيمة الإزاحة من أجل السحب؟\n"
 "(0 من أجل المبدأ)"
 
-#: gschem/src/x_dialog.c:1836
+#: gschem/src/x_dialog.c:1837
 msgid "Text Size"
 msgstr "حجم النص"
 
-#: gschem/src/x_dialog.c:1866
+#: gschem/src/x_dialog.c:1867
 msgid "Enter new text size:"
 msgstr "أدخل حجم نص جديد:"
 
-#: gschem/src/x_dialog.c:1942
+#: gschem/src/x_dialog.c:1943
 msgid "Snap Size"
 msgstr "حجم الجذب"
 
-#: gschem/src/x_dialog.c:1972
+#: gschem/src/x_dialog.c:1973
 msgid "Enter new snap grid spacing:"
 msgstr "﻿أدخل تباعد جديد لشبيكة الجذب:"
 
-#: gschem/src/x_dialog.c:2049
+#: gschem/src/x_dialog.c:2050
 msgid "Edit slot number"
 msgstr "﻿حرّر عدد الشقّ"
 
-#: gschem/src/x_dialog.c:2080
+#: gschem/src/x_dialog.c:2081
 msgid "Edit slot number:"
 msgstr "﻿تحرير عدد الشقّ:"
 
-#: gschem/src/x_dialog.c:2121
+#: gschem/src/x_dialog.c:2122
 #, c-format
-msgid "%s%s (%s)"
+msgid "%s (g%.7s)"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2144
+#: gschem/src/x_dialog.c:2143
 msgid "About gschem"
 msgstr "عن gschem"
 
-#: gschem/src/x_dialog.c:2145
+#: gschem/src/x_dialog.c:2144
 msgid "gEDA: GPL Electronic Design Automation"
 msgstr "gEDA: GPL Electronic Design Automation (أتمتة التصميم الإلكتروني)"
 
-#: gschem/src/x_dialog.c:2146
+#: gschem/src/x_dialog.c:2145
 msgid ""
 "Copyright © 1998-2011 Ales Hvezda <ahvezda@geda.seul.org>\n"
 "Copyright © 1998-2011 gEDA Contributors (see ChangeLog for details)"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2205
+#: gschem/src/x_dialog.c:2204
 msgid "Coords"
 msgstr "إحداثيات"
 
-#: gschem/src/x_dialog.c:2226
+#: gschem/src/x_dialog.c:2225
 msgid "Screen"
 msgstr "شاشة"
 
-#: gschem/src/x_dialog.c:2235
+#: gschem/src/x_dialog.c:2234
 msgid "World"
 msgstr "عالم"
 
-#: gschem/src/x_dialog.c:2274
+#: gschem/src/x_dialog.c:2273
 msgid "Background"
 msgstr "خلفيّة"
 
-#: gschem/src/x_dialog.c:2280
+#: gschem/src/x_dialog.c:2279
 msgid "Net endpoint"
 msgstr "﻿نقطة النهاية للشبكة"
 
-#: gschem/src/x_dialog.c:2283
+#: gschem/src/x_dialog.c:2282
 msgid "Graphic"
 msgstr "رسم"
 
-#: gschem/src/x_dialog.c:2292
+#: gschem/src/x_dialog.c:2291
 msgid "Logic bubble"
 msgstr "﻿فقاعة المنطق"
 
-#: gschem/src/x_dialog.c:2295
+#: gschem/src/x_dialog.c:2294
 msgid "Grid point"
 msgstr "﻿نقطة شبيكة"
 
-#: gschem/src/x_dialog.c:2298
+#: gschem/src/x_dialog.c:2297
 msgid "Detached attribute"
 msgstr "سمة مفصولة"
 
-#: gschem/src/x_dialog.c:2301 gschem/src/x_window.c:383
+#: gschem/src/x_dialog.c:2300 gschem/src/x_window.c:384
 msgid "Text"
 msgstr "نص"
 
-#: gschem/src/x_dialog.c:2307
+#: gschem/src/x_dialog.c:2306
 msgid "Selection"
 msgstr "منتقى"
 
-#: gschem/src/x_dialog.c:2310
+#: gschem/src/x_dialog.c:2309
 msgid "Bounding box"
 msgstr "مربع إحاطة"
 
-#: gschem/src/x_dialog.c:2313
+#: gschem/src/x_dialog.c:2312
 msgid "Zoom box"
 msgstr "قرّب المربع"
 
-#: gschem/src/x_dialog.c:2322
+#: gschem/src/x_dialog.c:2321
 msgid "Output background"
 msgstr "﻿خلفية الإخراج"
 
-#: gschem/src/x_dialog.c:2325
+#: gschem/src/x_dialog.c:2324
 msgid "Net junction"
 msgstr "وصلة شبكة"
 
-#: gschem/src/x_dialog.c:2328
+#: gschem/src/x_dialog.c:2327
 msgid "Mesh grid major"
 msgstr "أساسي - خيط الشبيكة"
 
-#: gschem/src/x_dialog.c:2331
+#: gschem/src/x_dialog.c:2330
 msgid "Mesh grid minor"
 msgstr "ثانوي - خيط الشبيكة"
 
-#: gschem/src/x_dialog.c:2334
+#: gschem/src/x_dialog.c:2333
 msgid "Unknown"
 msgstr "مجهول"
 
-#: gschem/src/x_dialog.c:2485
+#: gschem/src/x_dialog.c:2484
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr "﻿خطأ: كائن فارغ (NULL) في color_edit_dialog_apply!\n"
 
-#: gschem/src/x_dialog.c:2529
+#: gschem/src/x_dialog.c:2528
 msgid "Color Edit"
 msgstr "تحرير اللون"
 
-#: gschem/src/x_dialog.c:2560
+#: gschem/src/x_dialog.c:2559
 msgid "Object color:"
 msgstr "لون الكائن:"
 
-#: gschem/src/x_dialog.c:2618
+#: gschem/src/x_dialog.c:2617
 msgid "Hotkeys"
 msgstr "مفاتيح ساخنة"
 
-#: gschem/src/x_dialog.c:2682
+#: gschem/src/x_dialog.c:2681
 msgid "Function"
 msgstr "وظيفة"
 
-#: gschem/src/x_dialog.c:2689
+#: gschem/src/x_dialog.c:2688
 msgid "Keystroke(s)"
 msgstr "ضغطة مفاتيح"
 
-#: gschem/src/x_dialog.c:2995
+#: gschem/src/x_dialog.c:2994
 msgid "Find Text"
 msgstr "ابحث عن نص"
 
-#: gschem/src/x_dialog.c:3026
+#: gschem/src/x_dialog.c:3025
 msgid "Text to find:"
 msgstr "النص المطلوب:"
 
-#: gschem/src/x_dialog.c:3036
+#: gschem/src/x_dialog.c:3035
 msgid "descend into hierarchy"
 msgstr "﻿انحدر في التسلسل الهرمي"
 
-#: gschem/src/x_dialog.c:3101
+#: gschem/src/x_dialog.c:3100
 msgid "Hide Text"
 msgstr "أخف النص"
 
-#: gschem/src/x_dialog.c:3132
+#: gschem/src/x_dialog.c:3131
 msgid "Hide text starting with:"
 msgstr "أخف النص البادئ بـ:"
 
-#: gschem/src/x_dialog.c:3201
+#: gschem/src/x_dialog.c:3200
 msgid "Show Text"
 msgstr "أظهر النص"
 
-#: gschem/src/x_dialog.c:3232
+#: gschem/src/x_dialog.c:3231
 msgid "Show text starting with:"
 msgstr "أظهر النص البادئ بـ:"
 
-#: gschem/src/x_dialog.c:3689
+#: gschem/src/x_dialog.c:3688
 msgid "S_elect the schematics you want to save:"
 msgstr "انتق المخططات التي تريد حفظها:"
 
-#: gschem/src/x_dialog.c:3784
+#: gschem/src/x_dialog.c:3783
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr "﻿هل تريد حفظ التغييرات إلى المخطط \"%s\" قبل الإغلاق؟"
 
-#: gschem/src/x_dialog.c:3790
+#: gschem/src/x_dialog.c:3789
 #, c-format
 msgid ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
 msgstr "﻿هناك %d مخطط مع تغييرات غير محفوظة. هل تريد حفظ التغييرات قبل الإغلاق؟"
 
-#: gschem/src/x_dialog.c:3819
+#: gschem/src/x_dialog.c:3818
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr "ستضيع جميع التّغييرات للأبد إذا لم تحفظ."
 
-#: gschem/src/x_dialog.c:3839
+#: gschem/src/x_dialog.c:3838
 msgid "_Close without saving"
 msgstr "أ_غلق دون حفظ"
 
-#: gschem/src/x_dialog.c:4175
+#: gschem/src/x_dialog.c:4174
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -1520,19 +1520,19 @@ msgstr ""
 "لا يمكن أن ينتهي الاسم بمسافة.\n"
 "لا يمكن بدء القيمة بمسافة."
 
-#: gschem/src/x_dialog.c:4177
+#: gschem/src/x_dialog.c:4176
 msgid "Invalid Attribute"
 msgstr "﻿سمة غير صالحة"
 
-#: gschem/src/x_dialog.c:4213
+#: gschem/src/x_dialog.c:4212
 msgid "Pin type"
 msgstr "نوع الدبوس"
 
-#: gschem/src/x_dialog.c:4237
+#: gschem/src/x_dialog.c:4236
 msgid "Net pin"
 msgstr "دبوس لشبكة"
 
-#: gschem/src/x_dialog.c:4239
+#: gschem/src/x_dialog.c:4238
 msgid "Bus pin (graphical)"
 msgstr "دبوس لناقل (رسومي)"
 
@@ -1640,132 +1640,132 @@ msgstr "‏﻿** UTF-8 غير صالح في رسالة سجل. راجع stderr �
 msgid "Status"
 msgstr "الحالة"
 
-#: gschem/src/x_menus.c:36
+#: gschem/src/x_menus.c:37
 msgid "/Add Net"
 msgstr "/أضف شبكة"
 
-#: gschem/src/x_menus.c:37
+#: gschem/src/x_menus.c:38
 msgid "/Add Attribute..."
 msgstr "/أضف سمة..."
 
-#: gschem/src/x_menus.c:38
+#: gschem/src/x_menus.c:39
 msgid "/Add Component..."
 msgstr "/أضف مكونا..."
 
-#: gschem/src/x_menus.c:39
+#: gschem/src/x_menus.c:40
 msgid "/Add Bus"
 msgstr "/أضف ناقلا"
 
-#: gschem/src/x_menus.c:40
+#: gschem/src/x_menus.c:41
 msgid "/Add Text"
 msgstr "/أضف نصا"
 
-#: gschem/src/x_menus.c:42
+#: gschem/src/x_menus.c:43
 msgid "/Zoom In"
 msgstr "/قرّب"
 
-#: gschem/src/x_menus.c:43
+#: gschem/src/x_menus.c:44
 msgid "/Zoom Out"
 msgstr "/بعّد"
 
-#: gschem/src/x_menus.c:44
+#: gschem/src/x_menus.c:45
 msgid "/Zoom Box"
 msgstr "/قرب الإطار"
 
-#: gschem/src/x_menus.c:45
+#: gschem/src/x_menus.c:46
 msgid "/Zoom Extents"
 msgstr "/قرّب مع شمل الامتدادات"
 
-#: gschem/src/x_menus.c:47
+#: gschem/src/x_menus.c:48
 msgid "/Select"
 msgstr "/انتق"
 
-#: gschem/src/x_menus.c:48
+#: gschem/src/x_menus.c:49
 msgid "/Edit..."
 msgstr "/حرّر..."
 
-#: gschem/src/x_menus.c:49
+#: gschem/src/x_menus.c:50
 msgid "/Edit pin type..."
 msgstr "/حرّر نوع الدبوس"
 
-#: gschem/src/x_menus.c:50
+#: gschem/src/x_menus.c:51
 msgid "/Copy"
 msgstr "/انسخ"
 
-#: gschem/src/x_menus.c:51
+#: gschem/src/x_menus.c:52
 msgid "/Move"
 msgstr "/حرّك"
 
-#: gschem/src/x_menus.c:52
+#: gschem/src/x_menus.c:53
 msgid "/Delete"
 msgstr "/احذف"
 
-#: gschem/src/x_menus.c:55
+#: gschem/src/x_menus.c:56
 msgid "/Down Schematic"
 msgstr "/انزل إلى المخطط"
 
-#: gschem/src/x_menus.c:56
+#: gschem/src/x_menus.c:57
 msgid "/Down Symbol"
 msgstr "/انزل إلى الرمز"
 
-#: gschem/src/x_menus.c:57
+#: gschem/src/x_menus.c:58
 msgid "/Up"
 msgstr "/اصعد"
 
-#: gschem/src/x_menus.c:323
+#: gschem/src/x_menus.c:334
 #, c-format
 msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
 msgstr "محاولة تعيين الحساسية على عنصر قائمة غير موجود '%s'\n"
 
-#: gschem/src/x_menus.c:347
+#: gschem/src/x_menus.c:358
 msgid "Popup_menu_item_factory doesn't exist!\n"
 msgstr "مصنع-عنصر-القائمة-المنبثقة غير موجود!\n"
 
-#: gschem/src/x_menus.c:360
+#: gschem/src/x_menus.c:371
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
 msgstr "محاولة تعيين الحساسية على عنصر قائمة منبثقة غير موجود '%s'\n"
 
-#: gschem/src/x_multiattrib.c:915
+#: gschem/src/x_multiattrib.c:964
 msgid "Attributes with empty name are not allowed. Please set a name."
 msgstr "غير مسموح بسمات مع اسم فارغ. الرجاء تعيين اسم."
 
-#: gschem/src/x_multiattrib.c:1468
+#: gschem/src/x_multiattrib.c:1517
 msgid "Show Value only"
 msgstr "أظهر القيمة فقط"
 
-#: gschem/src/x_multiattrib.c:1470
+#: gschem/src/x_multiattrib.c:1519
 msgid "Show Name only"
 msgstr "أظهر الاسم فقط"
 
-#: gschem/src/x_multiattrib.c:1498
+#: gschem/src/x_multiattrib.c:1547
 msgid "Promote"
 msgstr "رَقِّ"
 
-#: gschem/src/x_multiattrib.c:1502
+#: gschem/src/x_multiattrib.c:1551
 msgid "Duplicate"
 msgstr "ضاعف"
 
-#: gschem/src/x_multiattrib.c:1719
+#: gschem/src/x_multiattrib.c:1768
 msgid "Edit Attributes"
 msgstr "حرّر المواصفات"
 
-#: gschem/src/x_multiattrib.c:1837
+#: gschem/src/x_multiattrib.c:1886
 msgid "Vis?"
 msgstr "ظاهر؟"
 
-#: gschem/src/x_multiattrib.c:1855
+#: gschem/src/x_multiattrib.c:1904
 msgid "N"
 msgstr "N"
 
-#: gschem/src/x_multiattrib.c:1873
+#: gschem/src/x_multiattrib.c:1922
 msgid "V"
 msgstr "V"
 
-#: gschem/src/x_multiattrib.c:1895
+#: gschem/src/x_multiattrib.c:1944
 msgid "Show inherited attributes"
 msgstr "أظهر السمات الموروثة"
 
-#: gschem/src/x_multiattrib.c:1911
+#: gschem/src/x_multiattrib.c:1960
 msgid "Add Attribute"
 msgstr "أضف سمة"
 
@@ -1884,7 +1884,7 @@ msgstr ""
 msgid "Printed current schematic to [%s]\n"
 msgstr "طُبع المخطط الحالي إلى [‎%s‬]\n"
 
-#: gschem/src/x_script.c:47 gschem/lib/system-gschemrc.scm:1391
+#: gschem/src/x_script.c:47 gschem/lib/system-gschemrc.scm:1383
 msgid "Execute Script..."
 msgstr "نفذ مخطوطا (سكربت)..."
 
@@ -1893,52 +1893,52 @@ msgstr "نفذ مخطوطا (سكربت)..."
 msgid "Executing guile script [%s]\n"
 msgstr "تنفيذ مخطوط guile [‎%s‬]\n"
 
-#: gschem/src/x_window.c:81
+#: gschem/src/x_window.c:82
 #, c-format
 msgid "Couldn't allocate gc\n"
 msgstr "تعذر تحديد موقع gc\n"
 
-#: gschem/src/x_window.c:317
+#: gschem/src/x_window.c:318
 msgid "New"
 msgstr "جديد"
 
-#: gschem/src/x_window.c:318
+#: gschem/src/x_window.c:319
 msgid "New file"
 msgstr "ملف جديد"
 
-#: gschem/src/x_window.c:324
+#: gschem/src/x_window.c:325
 msgid "Open"
 msgstr "افتح"
 
-#: gschem/src/x_window.c:325
+#: gschem/src/x_window.c:326
 msgid "Open file..."
 msgstr "افتح ملفا..."
 
-#: gschem/src/x_window.c:331
+#: gschem/src/x_window.c:332
 msgid "Save"
 msgstr "احفظ"
 
-#: gschem/src/x_window.c:332
+#: gschem/src/x_window.c:333
 msgid "Save file"
 msgstr "احفظ الملف"
 
-#: gschem/src/x_window.c:339
+#: gschem/src/x_window.c:340
 msgid "Undo"
 msgstr "تراجع"
 
-#: gschem/src/x_window.c:340
+#: gschem/src/x_window.c:341
 msgid "Undo last operation"
 msgstr "تراجع عن العملية الأخيرة"
 
-#: gschem/src/x_window.c:346
+#: gschem/src/x_window.c:347
 msgid "Redo"
 msgstr "كرّر"
 
-#: gschem/src/x_window.c:347
+#: gschem/src/x_window.c:348
 msgid "Redo last undo"
 msgstr "أعد آخر عملية متراجع عنها"
 
-#: gschem/src/x_window.c:356
+#: gschem/src/x_window.c:357
 msgid ""
 "Add component...\n"
 "Select library and component from list, move the mouse into main window, "
@@ -1950,7 +1950,7 @@ msgstr ""
 "لوضعه\n"
 "الزر الأيمن للفارة للإلغاء"
 
-#: gschem/src/x_window.c:366
+#: gschem/src/x_window.c:367
 msgid ""
 "Add nets mode\n"
 "Right mouse button to cancel"
@@ -1958,7 +1958,7 @@ msgstr ""
 "وضع إضافة شبكات\n"
 "الزر الأيمن للفارة للإلغاء"
 
-#: gschem/src/x_window.c:376
+#: gschem/src/x_window.c:377
 msgid ""
 "Add buses mode\n"
 "Right mouse button to cancel"
@@ -1966,77 +1966,82 @@ msgstr ""
 "وضع إضافة النواقل\n"
 "الزر الأيمن للفارة للإلغاء"
 
-#: gschem/src/x_window.c:384
+#: gschem/src/x_window.c:385
 msgid "Add Text..."
 msgstr "أضف نصا..."
 
-#: gschem/src/x_window.c:394
+#: gschem/src/x_window.c:395
 msgid "Select"
 msgstr "انتق"
 
-#: gschem/src/x_window.c:395
+#: gschem/src/x_window.c:396
 msgid "Select mode"
 msgstr "وضع الإنتقاء"
 
-#: gschem/src/x_window.c:482
+#: gschem/src/x_window.c:479
 msgid "Pick"
 msgstr "التقط"
 
-#: gschem/src/x_window.c:498
+#: gschem/src/x_window.c:495
 msgid "Repeat/none"
 msgstr "كرّر/لا شيء"
 
-#: gschem/src/x_window.c:508
+#: gschem/src/x_window.c:505
 msgid "Menu/Cancel"
 msgstr "قائمة/ألغِ"
 
-#: gschem/src/x_window.c:510
+#: gschem/src/x_window.c:507
 msgid "Pan/Cancel"
 msgstr "انتقل/ألغِ"
 
-#: gschem/src/x_window.c:729
+#: gschem/src/x_window.c:726
 #, c-format
 msgid "Loading schematic [%s]\n"
 msgstr "تحميل المخطط [‎%s‬]\n"
 
-#: gschem/src/x_window.c:741
+#: gschem/src/x_window.c:738
 msgid "Failed to load file"
 msgstr "فشل تحميل الملف"
 
-#: gschem/src/x_window.c:750
+#: gschem/src/x_window.c:747
 #, c-format
 msgid "New file [%s]\n"
 msgstr "ملف جديد [‎%s‬]\n"
 
-#: gschem/src/x_window.c:855
+#: gschem/src/x_window.c:852
 #, c-format
 msgid "Could NOT save page [%s]\n"
 msgstr "تعذّر حفظ الصفحة [‎%s‬]\n"
 
-#: gschem/src/x_window.c:856
+#: gschem/src/x_window.c:853
 msgid "Error while trying to save"
 msgstr "خطا عند محاولة الحفظ"
 
-#: gschem/src/x_window.c:865
+#: gschem/src/x_window.c:863
+#, fuzzy
+msgid "Failed to save file"
+msgstr "فشل تحميل الملف"
+
+#: gschem/src/x_window.c:874
 #, c-format
 msgid "Saved as [%s]\n"
 msgstr "حُفظ كـ [‎%s‬]\n"
 
-#: gschem/src/x_window.c:867
+#: gschem/src/x_window.c:876
 #, c-format
 msgid "Saved [%s]\n"
 msgstr "‏حُفظ [‎%s‬]\n"
 
-#: gschem/src/x_window.c:869
+#: gschem/src/x_window.c:878
 msgid "Saved"
 msgstr "محفوظ"
 
-#: gschem/src/x_window.c:943
+#: gschem/src/x_window.c:952
 #, c-format
 msgid "Discarding page [%s]\n"
 msgstr "إهمال الصفحة [‎%s‬]\n"
 
-#: gschem/src/x_window.c:943
+#: gschem/src/x_window.c:952
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "غلق [‎%s‬]\n"
@@ -2049,466 +2054,471 @@ msgstr "محرّر المخططات gEDA"
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr "أنشء و حرّر المخططات الكهربائية والرموز مع gschem"
 
-#: gschem/lib/system-gschemrc.scm:1377
-msgid "New Window"
-msgstr "نافذة جديدة"
-
-#: gschem/lib/system-gschemrc.scm:1378
+#: gschem/lib/system-gschemrc.scm:1370
 msgid "_New"
 msgstr "_جديد"
 
-#: gschem/lib/system-gschemrc.scm:1379
+#: gschem/lib/system-gschemrc.scm:1371
 msgid "_Open..."
 msgstr "ا_فتح..."
 
-#: gschem/lib/system-gschemrc.scm:1381
+#: gschem/lib/system-gschemrc.scm:1373
 msgid "Open Recen_t"
 msgstr "افتح الأح_دث"
 
-#: gschem/lib/system-gschemrc.scm:1383
+#: gschem/lib/system-gschemrc.scm:1375
 msgid "_Save"
 msgstr "ا_حفظ"
 
-#: gschem/lib/system-gschemrc.scm:1384
+#: gschem/lib/system-gschemrc.scm:1376
 msgid "Save _As..."
 msgstr "احفظ _ك‍..."
 
-#: gschem/lib/system-gschemrc.scm:1385
+#: gschem/lib/system-gschemrc.scm:1377
 msgid "Save All"
 msgstr "احفظ الكل"
 
-#: gschem/lib/system-gschemrc.scm:1386 gschem/lib/system-gschemrc.scm:1478
+#: gschem/lib/system-gschemrc.scm:1378 gschem/lib/system-gschemrc.scm:1471
 msgid "_Revert"
 msgstr "ت_راجع"
 
-#: gschem/lib/system-gschemrc.scm:1388
+#: gschem/lib/system-gschemrc.scm:1380
 msgid "_Print..."
 msgstr "ا_طبع..."
 
-#: gschem/lib/system-gschemrc.scm:1389
+#: gschem/lib/system-gschemrc.scm:1381
 msgid "Write _image..."
 msgstr "أكتب _صورة..."
 
-#: gschem/lib/system-gschemrc.scm:1393 gschem/lib/system-gschemrc.scm:1479
-msgid "_Close"
-msgstr "أ_غلق"
+#: gschem/lib/system-gschemrc.scm:1385
+msgid "New Window"
+msgstr "نافذة جديدة"
 
-#: gschem/lib/system-gschemrc.scm:1394
+#: gschem/lib/system-gschemrc.scm:1386
+#, fuzzy
+msgid "_Close Window"
+msgstr "أغلق النافذة"
+
+#: gschem/lib/system-gschemrc.scm:1387
 msgid "_Quit"
 msgstr "أ_خرج"
 
-#: gschem/lib/system-gschemrc.scm:1400
+#: gschem/lib/system-gschemrc.scm:1393
 msgid "_Undo"
 msgstr "ت_راجع"
 
-#: gschem/lib/system-gschemrc.scm:1401
+#: gschem/lib/system-gschemrc.scm:1394
 msgid "_Redo"
 msgstr "_كرّر"
 
-#: gschem/lib/system-gschemrc.scm:1403
+#: gschem/lib/system-gschemrc.scm:1396
 msgid "Cu_t"
 msgstr "_قصّ"
 
-#: gschem/lib/system-gschemrc.scm:1404
+#: gschem/lib/system-gschemrc.scm:1397
 msgid "_Copy"
 msgstr "ا_نسخ"
 
-#: gschem/lib/system-gschemrc.scm:1405
+#: gschem/lib/system-gschemrc.scm:1398
 msgid "_Paste"
 msgstr "أ_لصق"
 
-#: gschem/lib/system-gschemrc.scm:1406
+#: gschem/lib/system-gschemrc.scm:1399
 msgid "_Delete"
 msgstr "ا_حذف"
 
-#: gschem/lib/system-gschemrc.scm:1409
+#: gschem/lib/system-gschemrc.scm:1402
 #, fuzzy
 msgid "Select All"
 msgstr "انتق"
 
-#: gschem/lib/system-gschemrc.scm:1410
+#: gschem/lib/system-gschemrc.scm:1403
 #, fuzzy
 msgid "Deselect"
 msgstr "انتق"
 
-#: gschem/lib/system-gschemrc.scm:1414
+#: gschem/lib/system-gschemrc.scm:1407
 msgid "Rotate 90 Mode"
 msgstr "وضع الاستدارة 90"
 
-#: gschem/lib/system-gschemrc.scm:1417
+#: gschem/lib/system-gschemrc.scm:1410
 msgid "Edit..."
 msgstr "حرّر..."
 
-#: gschem/lib/system-gschemrc.scm:1418
+#: gschem/lib/system-gschemrc.scm:1411
 msgid "Edit Text..."
 msgstr "حرّر النص..."
 
-#: gschem/lib/system-gschemrc.scm:1419
+#: gschem/lib/system-gschemrc.scm:1412
 msgid "Slot..."
 msgstr "شقّ..."
 
-#: gschem/lib/system-gschemrc.scm:1420
+#: gschem/lib/system-gschemrc.scm:1413
 msgid "Color..."
 msgstr "لون..."
 
-#: gschem/lib/system-gschemrc.scm:1421
+#: gschem/lib/system-gschemrc.scm:1414
 msgid "Line Width & Type..."
 msgstr "عرض و نوع الخط..."
 
-#: gschem/lib/system-gschemrc.scm:1422
+#: gschem/lib/system-gschemrc.scm:1415
 msgid "Fill Type..."
 msgstr "نوع الملء..."
 
-#: gschem/lib/system-gschemrc.scm:1423
+#: gschem/lib/system-gschemrc.scm:1416
 msgid "Symbol Translate..."
 msgstr "سحب الرمز..."
 
-#: gschem/lib/system-gschemrc.scm:1427
+#: gschem/lib/system-gschemrc.scm:1420
 msgid "Invoke Macro"
 msgstr "استدع ماكرو"
 
-#: gschem/lib/system-gschemrc.scm:1428
+#: gschem/lib/system-gschemrc.scm:1421
 msgid "Embed Component/Picture"
 msgstr "ضمّن المكون/الصورة"
 
-#: gschem/lib/system-gschemrc.scm:1429
+#: gschem/lib/system-gschemrc.scm:1422
 msgid "Unembed Component/Picture"
 msgstr "لا تضمّن المكون/الصورة"
 
-#: gschem/lib/system-gschemrc.scm:1430
+#: gschem/lib/system-gschemrc.scm:1423
 msgid "Update Component"
 msgstr "حدّث المكون"
 
-#: gschem/lib/system-gschemrc.scm:1431
+#: gschem/lib/system-gschemrc.scm:1424
 msgid "Show/Hide Inv Text"
 msgstr "أظهر/أخف النص الخفي"
 
-#: gschem/lib/system-gschemrc.scm:1437
+#: gschem/lib/system-gschemrc.scm:1430
 msgid "Copy into 1"
 msgstr "انسخ إلى 1"
 
-#: gschem/lib/system-gschemrc.scm:1438
+#: gschem/lib/system-gschemrc.scm:1431
 msgid "Copy into 2"
 msgstr "انسخ إلى 2"
 
-#: gschem/lib/system-gschemrc.scm:1439
+#: gschem/lib/system-gschemrc.scm:1432
 msgid "Copy into 3"
 msgstr "انسخ إلى 3"
 
-#: gschem/lib/system-gschemrc.scm:1440
+#: gschem/lib/system-gschemrc.scm:1433
 msgid "Copy into 4"
 msgstr "انسخ إلى 4"
 
-#: gschem/lib/system-gschemrc.scm:1441
+#: gschem/lib/system-gschemrc.scm:1434
 msgid "Copy into 5"
 msgstr "انسخ إلى 5"
 
-#: gschem/lib/system-gschemrc.scm:1442
+#: gschem/lib/system-gschemrc.scm:1435
 msgid "Cut into 1"
 msgstr "قص إلى 1"
 
-#: gschem/lib/system-gschemrc.scm:1443
+#: gschem/lib/system-gschemrc.scm:1436
 msgid "Cut into 2"
 msgstr "قص إلى 2"
 
-#: gschem/lib/system-gschemrc.scm:1444
+#: gschem/lib/system-gschemrc.scm:1437
 msgid "Cut into 3"
 msgstr "قص إلى 3"
 
-#: gschem/lib/system-gschemrc.scm:1445
+#: gschem/lib/system-gschemrc.scm:1438
 msgid "Cut into 4"
 msgstr "قص إلى 4"
 
-#: gschem/lib/system-gschemrc.scm:1446
+#: gschem/lib/system-gschemrc.scm:1439
 msgid "Cut into 5"
 msgstr "قص إلى 5"
 
-#: gschem/lib/system-gschemrc.scm:1447
+#: gschem/lib/system-gschemrc.scm:1440
 msgid "Paste from 1"
 msgstr "ألصق من 1"
 
-#: gschem/lib/system-gschemrc.scm:1448
+#: gschem/lib/system-gschemrc.scm:1441
 msgid "Paste from 2"
 msgstr "ألصق من 2"
 
-#: gschem/lib/system-gschemrc.scm:1449
+#: gschem/lib/system-gschemrc.scm:1442
 msgid "Paste from 3"
 msgstr "ألصق من 3"
 
-#: gschem/lib/system-gschemrc.scm:1450
+#: gschem/lib/system-gschemrc.scm:1443
 msgid "Paste from 4"
 msgstr "ألصق من 4"
 
-#: gschem/lib/system-gschemrc.scm:1451
+#: gschem/lib/system-gschemrc.scm:1444
 msgid "Paste from 5"
 msgstr "ألصق من 5"
 
-#: gschem/lib/system-gschemrc.scm:1457
+#: gschem/lib/system-gschemrc.scm:1450
 msgid "_Redraw"
 msgstr "أ_عد الرسم"
 
-#: gschem/lib/system-gschemrc.scm:1458
+#: gschem/lib/system-gschemrc.scm:1451
 msgid "_Pan"
 msgstr "ا_نتقل"
 
-#: gschem/lib/system-gschemrc.scm:1459
+#: gschem/lib/system-gschemrc.scm:1452
 msgid "Zoom _Box"
 msgstr "قرّب الم_ربع"
 
-#: gschem/lib/system-gschemrc.scm:1460
+#: gschem/lib/system-gschemrc.scm:1453
 msgid "Zoom _Extents"
 msgstr "قرّب مع شمل الا_متدادات"
 
-#: gschem/lib/system-gschemrc.scm:1461
+#: gschem/lib/system-gschemrc.scm:1454
 msgid "Zoom _In"
 msgstr "_قرّب"
 
-#: gschem/lib/system-gschemrc.scm:1462
+#: gschem/lib/system-gschemrc.scm:1455
 msgid "Zoom _Out"
 msgstr "_بعّد"
 
-#: gschem/lib/system-gschemrc.scm:1463
+#: gschem/lib/system-gschemrc.scm:1456
 msgid "Zoom _Full"
 msgstr "بعّد لل_حد الأقصى"
 
-#: gschem/lib/system-gschemrc.scm:1465
+#: gschem/lib/system-gschemrc.scm:1458
 msgid "_Dark color scheme"
 msgstr "مخطط ألوان _داكنة"
 
-#: gschem/lib/system-gschemrc.scm:1466
+#: gschem/lib/system-gschemrc.scm:1459
 msgid "_Light color scheme"
 msgstr "مخطط ألوان _فاتحة"
 
-#: gschem/lib/system-gschemrc.scm:1467
+#: gschem/lib/system-gschemrc.scm:1460
 #, fuzzy
 msgid "B_W color scheme"
 msgstr "مخطط ألوان _داكنة"
 
-#: gschem/lib/system-gschemrc.scm:1474
+#: gschem/lib/system-gschemrc.scm:1467
 msgid "_Manager..."
 msgstr "م_دير..."
 
-#: gschem/lib/system-gschemrc.scm:1475
+#: gschem/lib/system-gschemrc.scm:1468
 msgid "_Previous"
 msgstr "ال_سّابقة"
 
-#: gschem/lib/system-gschemrc.scm:1476
+#: gschem/lib/system-gschemrc.scm:1469
 msgid "_Next"
 msgstr "ال_تّالية"
 
-#: gschem/lib/system-gschemrc.scm:1477
+#: gschem/lib/system-gschemrc.scm:1470
 msgid "Ne_w"
 msgstr "_جديدة"
 
-#: gschem/lib/system-gschemrc.scm:1481
+#: gschem/lib/system-gschemrc.scm:1472
+msgid "_Close"
+msgstr "أ_غلق"
+
+#: gschem/lib/system-gschemrc.scm:1474
 msgid "_Discard"
 msgstr "أ_همل"
 
-#: gschem/lib/system-gschemrc.scm:1487
+#: gschem/lib/system-gschemrc.scm:1480
 msgid "_Component..."
 msgstr "م_كون..."
 
-#: gschem/lib/system-gschemrc.scm:1488
+#: gschem/lib/system-gschemrc.scm:1481
 msgid "_Net"
 msgstr "_شبكة"
 
-#: gschem/lib/system-gschemrc.scm:1489
+#: gschem/lib/system-gschemrc.scm:1482
 msgid "B_us"
 msgstr "نا_قل"
 
-#: gschem/lib/system-gschemrc.scm:1490
+#: gschem/lib/system-gschemrc.scm:1483
 msgid "_Attribute..."
 msgstr "_سمة..."
 
-#: gschem/lib/system-gschemrc.scm:1491
+#: gschem/lib/system-gschemrc.scm:1484
 msgid "_Text..."
 msgstr "_نص..."
 
-#: gschem/lib/system-gschemrc.scm:1493
+#: gschem/lib/system-gschemrc.scm:1486
 msgid "_Line"
 msgstr "_خط"
 
-#: gschem/lib/system-gschemrc.scm:1494
+#: gschem/lib/system-gschemrc.scm:1487
 msgid "_Box"
 msgstr "_إطار"
 
-#: gschem/lib/system-gschemrc.scm:1495
+#: gschem/lib/system-gschemrc.scm:1488
 msgid "C_ircle"
 msgstr "_دائرة"
 
-#: gschem/lib/system-gschemrc.scm:1496
+#: gschem/lib/system-gschemrc.scm:1489
 msgid "A_rc"
 msgstr "ق_وس"
 
-#: gschem/lib/system-gschemrc.scm:1497
+#: gschem/lib/system-gschemrc.scm:1490
 msgid "_Pin"
 msgstr "د_بوس"
 
-#: gschem/lib/system-gschemrc.scm:1498
+#: gschem/lib/system-gschemrc.scm:1491
 msgid "Pictu_re..."
 msgstr "_صورة..."
 
-#: gschem/lib/system-gschemrc.scm:1504
+#: gschem/lib/system-gschemrc.scm:1497
 msgid "_Down Schematic"
 msgstr "ا_نزل إلى المخطّط"
 
-#: gschem/lib/system-gschemrc.scm:1505
+#: gschem/lib/system-gschemrc.scm:1498
 msgid "Down _Symbol"
 msgstr "انزل إلى ال_رمز"
 
-#: gschem/lib/system-gschemrc.scm:1506
+#: gschem/lib/system-gschemrc.scm:1499
 msgid "_Up"
 msgstr "ا_صعد"
 
-#: gschem/lib/system-gschemrc.scm:1507
+#: gschem/lib/system-gschemrc.scm:1500
 msgid "D_ocumentation..."
 msgstr "ت_وثيق"
 
-#: gschem/lib/system-gschemrc.scm:1513
+#: gschem/lib/system-gschemrc.scm:1506
 msgid "_Attach"
 msgstr "أ_رفق"
 
-#: gschem/lib/system-gschemrc.scm:1514
+#: gschem/lib/system-gschemrc.scm:1507
 msgid "_Detach"
 msgstr "ا_فصل"
 
-#: gschem/lib/system-gschemrc.scm:1515
+#: gschem/lib/system-gschemrc.scm:1508
 msgid "Show _Value"
 msgstr "أظهر ال_قيمة"
 
-#: gschem/lib/system-gschemrc.scm:1516
+#: gschem/lib/system-gschemrc.scm:1509
 msgid "Show _Name"
 msgstr "أظهر ال_اسم"
 
-#: gschem/lib/system-gschemrc.scm:1517
+#: gschem/lib/system-gschemrc.scm:1510
 msgid "Show _Both"
 msgstr "أظهر الإ_ثنين"
 
-#: gschem/lib/system-gschemrc.scm:1518
+#: gschem/lib/system-gschemrc.scm:1511
 msgid "_Toggle Visibility"
 msgstr "_بدل الرؤية"
 
-#: gschem/lib/system-gschemrc.scm:1520
+#: gschem/lib/system-gschemrc.scm:1513
 msgid "_Find Specific Text..."
 msgstr "اب_حث عن نص معين..."
 
-#: gschem/lib/system-gschemrc.scm:1521
+#: gschem/lib/system-gschemrc.scm:1514
 msgid "_Hide Specific Text..."
 msgstr "أ_خف نصا معينا..."
 
-#: gschem/lib/system-gschemrc.scm:1522
+#: gschem/lib/system-gschemrc.scm:1515
 msgid "_Show Specific Text..."
 msgstr "أ_ظهر نصا معينا..."
 
-#: gschem/lib/system-gschemrc.scm:1523
+#: gschem/lib/system-gschemrc.scm:1516
 msgid "A_utonumber Text..."
 msgstr "_نص الترقيم الآلي..."
 
-#: gschem/lib/system-gschemrc.scm:1529
+#: gschem/lib/system-gschemrc.scm:1522
 msgid "_Text Size..."
 msgstr "حجم ال_نص..."
 
-#: gschem/lib/system-gschemrc.scm:1530
+#: gschem/lib/system-gschemrc.scm:1523
 msgid "Cycle _grid styles"
 msgstr "دوّر أنماط ال_شبيكة"
 
-#: gschem/lib/system-gschemrc.scm:1531
+#: gschem/lib/system-gschemrc.scm:1524
 msgid "Toggle _Snap On/Off"
 msgstr "شغل/أوقف ال_جذب"
 
-#: gschem/lib/system-gschemrc.scm:1532
+#: gschem/lib/system-gschemrc.scm:1525
 msgid "Snap Grid S_pacing..."
 msgstr "ت_باعد شبيكة الجذب..."
 
-#: gschem/lib/system-gschemrc.scm:1533
+#: gschem/lib/system-gschemrc.scm:1526
 msgid "Scale _up Grid Spacing"
 msgstr "_كبّر تباعد الشبيكة"
 
-#: gschem/lib/system-gschemrc.scm:1535
+#: gschem/lib/system-gschemrc.scm:1528
 msgid "Scale _down Grid Spacing"
 msgstr "_صغّر تباعد الشبيكة"
 
-#: gschem/lib/system-gschemrc.scm:1537
+#: gschem/lib/system-gschemrc.scm:1530
 msgid "Toggle _Outline/Box"
 msgstr "بدّل ال_حد الخارجي/الإطار"
 
-#: gschem/lib/system-gschemrc.scm:1539
+#: gschem/lib/system-gschemrc.scm:1532
 msgid "Toggle Net _Rubberband"
 msgstr "بدّل الشريط الم_طاطي للشبكة"
 
-#: gschem/lib/system-gschemrc.scm:1540
+#: gschem/lib/system-gschemrc.scm:1533
 msgid "Toggle _Magnetic Net"
 msgstr "وضع الشبكة الم_غناطيسية"
 
-#: gschem/lib/system-gschemrc.scm:1541
+#: gschem/lib/system-gschemrc.scm:1534
 msgid "Show _Log Window..."
 msgstr "أظهر نافذة ال_سجل..."
 
-#: gschem/lib/system-gschemrc.scm:1543
+#: gschem/lib/system-gschemrc.scm:1536
 msgid "Show _Coord Window..."
 msgstr "أظهر نافذة الم_علم..."
 
-#: gschem/lib/system-gschemrc.scm:1559
+#: gschem/lib/system-gschemrc.scm:1552
 msgid "gEDA Docu_mentation..."
 msgstr "تو_ثيق gEDA"
 
-#: gschem/lib/system-gschemrc.scm:1560
+#: gschem/lib/system-gschemrc.scm:1553
 msgid "gschem _FAQ..."
 msgstr "الأ_سئلة الأكثر شيوعا لـ gschem"
 
-#: gschem/lib/system-gschemrc.scm:1561
+#: gschem/lib/system-gschemrc.scm:1554
 msgid "gEDA _Wiki..."
 msgstr "_ويكي gEDA..."
 
-#: gschem/lib/system-gschemrc.scm:1562
+#: gschem/lib/system-gschemrc.scm:1555
 msgid "Component D_ocumentation..."
 msgstr "توثيق الم_كونات"
 
-#: gschem/lib/system-gschemrc.scm:1564
+#: gschem/lib/system-gschemrc.scm:1557
 msgid "_Hotkeys..."
 msgstr "مفاتيح _ساخنة"
 
-#: gschem/lib/system-gschemrc.scm:1565
+#: gschem/lib/system-gschemrc.scm:1558
 msgid "_About..."
 msgstr "_عن..."
 
-#: gschem/lib/system-gschemrc.scm:1571
+#: gschem/lib/system-gschemrc.scm:1564
 msgid "_File"
 msgstr "_ملف"
 
-#: gschem/lib/system-gschemrc.scm:1572
+#: gschem/lib/system-gschemrc.scm:1565
 msgid "_Edit"
 msgstr "_تحرير"
 
-#: gschem/lib/system-gschemrc.scm:1573
+#: gschem/lib/system-gschemrc.scm:1566
 msgid "_Buffer"
 msgstr "م_خزن"
 
-#: gschem/lib/system-gschemrc.scm:1574
+#: gschem/lib/system-gschemrc.scm:1567
 msgid "_View"
 msgstr "_عرض"
 
-#: gschem/lib/system-gschemrc.scm:1575
+#: gschem/lib/system-gschemrc.scm:1568
 msgid "_Page"
 msgstr "_صفحة"
 
-#: gschem/lib/system-gschemrc.scm:1576
+#: gschem/lib/system-gschemrc.scm:1569
 msgid "_Add"
 msgstr "_أضف"
 
-#: gschem/lib/system-gschemrc.scm:1577
+#: gschem/lib/system-gschemrc.scm:1570
 msgid "Hie_rarchy"
 msgstr "تسلسل​_هرمي"
 
-#: gschem/lib/system-gschemrc.scm:1578
+#: gschem/lib/system-gschemrc.scm:1571
 msgid "A_ttributes"
 msgstr "_سمات"
 
-#: gschem/lib/system-gschemrc.scm:1579
+#: gschem/lib/system-gschemrc.scm:1572
 msgid "_Options"
 msgstr "_خيارات"
 
-#: gschem/lib/system-gschemrc.scm:1580
+#: gschem/lib/system-gschemrc.scm:1573
 msgid "_Help"
 msgstr "مساع_دة"
 
@@ -2573,9 +2583,6 @@ msgstr "مساع_دة"
 #~ "‫Ales Hvezda\n"
 #~ "‫ahvezda@geda.seul.org\n"
 #~ "وكثيرين غيره (طالع الملف AUTHORS)"
-
-#~ msgid "Close Window"
-#~ msgstr "أغلق النافذة"
 
 #~ msgid "Manual"
 #~ msgstr "يدوي"

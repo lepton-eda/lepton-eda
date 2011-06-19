@@ -100,13 +100,16 @@ SCM g_get_non_unique_packages(SCM level)
 }
 
 
-SCM g_get_pins(SCM uref)
+SCM g_get_pins(SCM scm_uref)
 {
+    char *uref;
     SCM list = SCM_EOL;
     NETLIST *nl_current;
     CPINLIST *pl_current;
 
-    SCM_ASSERT(scm_is_string (uref), uref, SCM_ARG1, "gnetlist:get-pins");
+    SCM_ASSERT(scm_is_string (scm_uref), scm_uref, SCM_ARG1, "gnetlist:get-pins");
+
+    uref = scm_to_utf8_string (scm_uref);
 
     /* here is where you make it multi page aware */
     nl_current = netlist_head;
@@ -116,7 +119,7 @@ SCM g_get_pins(SCM uref)
     while (nl_current != NULL) {
 
 	if (nl_current->component_uref) {
-	    if (strcmp(nl_current->component_uref, SCM_STRING_CHARS (uref)) == 0) {
+	    if (strcmp(nl_current->component_uref, uref) == 0) {
 
 		pl_current = nl_current->cpins;
 		while (pl_current != NULL) {
@@ -130,6 +133,8 @@ SCM g_get_pins(SCM uref)
 	}
 	nl_current = nl_current->next;
     }
+
+    free (uref);
 
     return (list);
 }
@@ -240,7 +245,7 @@ SCM g_get_all_connections(SCM scm_netname)
     SCM_ASSERT(scm_is_string(scm_netname), scm_netname, SCM_ARG1, 
 	       "gnetlist:get-all-connections");
 
-    wanted_net_name = SCM_STRING_CHARS (scm_netname);
+    wanted_net_name = scm_to_utf8_string (scm_netname);
 
     if (wanted_net_name == NULL) {
 	return list;
@@ -307,6 +312,7 @@ SCM g_get_all_connections(SCM scm_netname)
 	nl_current = nl_current->next;
     }
 
+    free (wanted_net_name);
     return connlist;
 }
 
@@ -333,9 +339,13 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
     SCM_ASSERT(scm_is_string (scm_pin), scm_pin, SCM_ARG2, 
 	       "gnetlist:get-nets");
 
+    scm_dynwind_begin (0);
 
-    wanted_uref = SCM_STRING_CHARS (scm_uref);
-    wanted_pin  = SCM_STRING_CHARS (scm_pin);
+    wanted_uref = scm_to_utf8_string (scm_uref);
+    scm_dynwind_free (wanted_uref);
+
+    wanted_pin = scm_to_utf8_string (scm_pin);
+    scm_dynwind_free (wanted_pin);
 
     nl_current = netlist_head;
 
@@ -397,6 +407,8 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
 	nl_current = nl_current->next;
     }
 
+    scm_dynwind_end ();
+
     if (net_name != NULL) {
       outerlist = scm_cons (scm_from_utf8_string (net_name), pinslist);
     } else {
@@ -427,7 +439,7 @@ SCM g_get_pins_nets(SCM scm_uref)
     SCM_ASSERT(scm_is_string (scm_uref),
 	       scm_uref, SCM_ARG1, "gnetlist:get-pins-nets");
 
-    wanted_uref = SCM_STRING_CHARS (scm_uref);
+    wanted_uref = scm_to_utf8_string (scm_uref);
 
     /* search for the any instances */
     /* through the entire list */
@@ -458,6 +470,8 @@ SCM g_get_pins_nets(SCM scm_uref)
 	    }
 	}
     }
+
+    free (wanted_uref);
 
     pinslist = scm_reverse (pinslist);	/* pins are in reverse order on the way 
 					 * out 
@@ -547,9 +561,16 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
   SCM_ASSERT(scm_is_string (scm_wanted_attrib),
              scm_wanted_attrib, SCM_ARG3, "gnetlist:get-pin-attribute-seq");
 
-  uref          = SCM_STRING_CHARS (scm_uref);
-  pinseq        = SCM_STRING_CHARS (scm_pinseq);
-  wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
+  scm_dynwind_begin (0);
+
+  uref = scm_to_utf8_string (scm_uref);
+  scm_dynwind_free (uref);
+
+  pinseq = scm_to_utf8_string (scm_pinseq);
+  scm_dynwind_free (pinseq);
+
+  wanted_attrib = scm_to_utf8_string (scm_wanted_attrib);
+  scm_dynwind_free (wanted_attrib);
 
 #if DEBUG
   printf("gnetlist:g_netlist.c:g_get_attribute_by_pinseq -- \n");
@@ -586,6 +607,8 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
     }
     nl_current = nl_current->next;
   }
+
+  scm_dynwind_end ();
 
   if (return_value) {
     scm_return_value = scm_from_utf8_string (return_value);
@@ -624,9 +647,16 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
     SCM_ASSERT(scm_is_string (scm_wanted_attrib),
 	       scm_wanted_attrib, SCM_ARG3, "gnetlist:get-pin-attribute");
 
-    uref          = SCM_STRING_CHARS (scm_uref);
-    pin           = SCM_STRING_CHARS (scm_pin);
-    wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
+    scm_dynwind_begin (0);
+
+    uref = scm_to_utf8_string (scm_uref);
+    scm_dynwind_free (uref);
+
+    pin = scm_to_utf8_string (scm_pin);
+    scm_dynwind_free (pin);
+
+    wanted_attrib = scm_to_utf8_string (scm_wanted_attrib);
+    scm_dynwind_free (wanted_attrib);
 
     /* here is where you make it multi page aware */
     nl_current = netlist_head;
@@ -672,6 +702,8 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
 	nl_current = nl_current->next;
     }
 
+    scm_dynwind_end ();
+
     if (return_value) {
       scm_return_value = scm_from_utf8_string (return_value);
     } else {
@@ -696,7 +728,7 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
   SCM_ASSERT(scm_is_string (scm_wanted_attrib),
              scm_wanted_attrib, SCM_ARG1, "gnetlist:get-toplevel-attribute");
 
-  wanted_attrib = SCM_STRING_CHARS (scm_wanted_attrib);
+  wanted_attrib = scm_to_utf8_string (scm_wanted_attrib);
 
   for (p_iter = geda_list_get_glist (toplevel->pages); p_iter != NULL;
        p_iter = g_list_next (p_iter)) {
@@ -711,6 +743,8 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
     if (attrib_value != NULL)
       break;
   }
+
+  free (wanted_attrib);
 
   if (attrib_value != NULL) {
     scm_return_value = scm_from_utf8_string (attrib_value);
@@ -791,14 +825,20 @@ SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has
 	       scm_has_attribute, SCM_ARG3, 
 	       "gnetlist:get-attr-of-conn-graph-objs-with-attr");
 
-    wanted_net_name = SCM_STRING_CHARS (scm_netname);
-    wanted_attrib = SCM_STRING_CHARS (scm_wanted_attribute);
-    has_attrib = SCM_STRING_CHARS (scm_has_attribute);
-    
+    scm_dynwind_begin (0);
+
+    wanted_net_name = scm_to_utf8_string (scm_netname);
     if (wanted_net_name == NULL) {
 	return list;
     }
 
+    scm_dynwind_free (wanted_net_name);
+
+    wanted_attrib = scm_to_utf8_string (scm_wanted_attribute);
+    scm_dynwind_free (wanted_attrib);
+
+    has_attrib = scm_to_utf8_string (scm_has_attribute);
+    scm_dynwind_free (has_attrib);
 
     nl_current = graphical_netlist_head;
     
@@ -841,6 +881,7 @@ SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has
 	nl_current = nl_current->next;
     }
 
+    scm_dynwind_end ();
     return list;
 }
 

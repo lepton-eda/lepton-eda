@@ -19,6 +19,7 @@
  */
 
 #include <config.h>
+#include <missing.h>
 #include <version.h>
 
 #include <stdio.h>
@@ -44,25 +45,30 @@
 #include <dmalloc.h>
 #endif
 
-SCM g_rc_gnetlist_version(SCM version)
+SCM g_rc_gnetlist_version(SCM scm_version)
 {
-  SCM_ASSERT (scm_is_string (version), version,
+  char *version;
+  SCM ret = SCM_BOOL_T;
+
+  SCM_ASSERT (scm_is_string (scm_version), scm_version,
               SCM_ARG1, "gnetlist-version");
 
-  if (strcmp (SCM_STRING_CHARS (version), PACKAGE_DATE_VERSION) != 0) {
+  version = scm_to_utf8_string (scm_version);
+  if (strcmp (version, PACKAGE_DATE_VERSION) != 0) {
     fprintf(stderr,
 	    "You are running gEDA/gaf version [%s%s.%s],\n", 
             PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
             PACKAGE_DATE_VERSION);
     fprintf(stderr,
 	    "but you have a version [%s] gnetlistrc file:\n[%s]\n",
-	    SCM_STRING_CHARS (version), rc_filename);
+	    version, rc_filename);
     fprintf(stderr,
 	    "Please be sure that you have the latest rc file.\n");
-    return SCM_BOOL_F;
+    ret = SCM_BOOL_F;
   }
 
-  return SCM_BOOL_T;
+  free (version);
+  return ret;
 }
 
 
@@ -121,6 +127,17 @@ SCM g_rc_hierarchy_netattrib_mangle(SCM mode)
                    default_hierarchy_netattrib_mangle, 2);
 }
 
+static char *
+g_strdup_scm_string(SCM scm_s)
+{
+  char *s, *ret;
+
+  s = scm_to_utf8_string (scm_s);
+  ret = g_strdup (s);
+  free (s);
+  return ret;
+}
+
 SCM g_rc_hierarchy_netname_separator(SCM name)
 {
   SCM_ASSERT (scm_is_string (name), name,
@@ -128,7 +145,7 @@ SCM g_rc_hierarchy_netname_separator(SCM name)
 
   g_free(default_hierarchy_netname_separator);
 
-  default_hierarchy_netname_separator = g_strdup (SCM_STRING_CHARS (name));
+  default_hierarchy_netname_separator = g_strdup_scm_string (name);
 
   return SCM_BOOL_T;
 }
@@ -140,7 +157,7 @@ SCM g_rc_hierarchy_netattrib_separator(SCM name)
 
   g_free(default_hierarchy_netattrib_separator);
 
-  default_hierarchy_netattrib_separator = g_strdup (SCM_STRING_CHARS (name));
+  default_hierarchy_netattrib_separator = g_strdup_scm_string (name);
 
   return SCM_BOOL_T;
 }
@@ -152,7 +169,7 @@ SCM g_rc_hierarchy_uref_separator(SCM name)
 
   g_free(default_hierarchy_uref_separator);
 
-  default_hierarchy_uref_separator = g_strdup (SCM_STRING_CHARS (name));
+  default_hierarchy_uref_separator = g_strdup_scm_string (name);
 
   return SCM_BOOL_T;
 }
@@ -197,7 +214,7 @@ SCM g_rc_unnamed_netname(SCM name)
 
   g_free(default_unnamed_netname);
 
-  default_unnamed_netname = g_strdup (SCM_STRING_CHARS (name));
+  default_unnamed_netname = g_strdup_scm_string (name);
 
   return SCM_BOOL_T;
 }
@@ -209,7 +226,7 @@ SCM g_rc_unnamed_busname(SCM name)
 
   g_free(default_unnamed_busname);
 
-  default_unnamed_busname = g_strdup (SCM_STRING_CHARS (name));
+  default_unnamed_busname = g_strdup_scm_string (name);
 
   return SCM_BOOL_T;
 }

@@ -25,6 +25,7 @@
  */
 
 #include <config.h>
+#include <missing.h>
 #include <version.h>
 
 #include <stdio.h>
@@ -60,27 +61,30 @@
  * \param version Version being tested
  * \returns false if incorrect version, true if OK
  */
-SCM g_rc_gattrib_version(SCM version)
+SCM g_rc_gattrib_version(SCM scm_version)
 {
-  SCM_ASSERT (scm_is_string (version), version,
+  char *version;
+  SCM ret = SCM_BOOL_T;
+
+  SCM_ASSERT (scm_is_string (scm_version), scm_version,
 	      SCM_ARG1, "gattrib-version");
-  
-  if (g_strcasecmp (SCM_STRING_CHARS (version),
-                    PACKAGE_DATE_VERSION) != 0) {
+
+  version = scm_to_utf8_string (scm_version);
+  if (g_strcasecmp (version, PACKAGE_DATE_VERSION) != 0) {
     fprintf(stderr,
             "You are running gEDA/gaf version [%s%s.%s],\n",
             PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
             PACKAGE_DATE_VERSION);
     fprintf(stderr,
             "but you have a version [%s] gattribrc file.\n",
-            SCM_STRING_CHARS (version));
+            version);
     fprintf(stderr,
             "Please be sure that you have the latest rc file.\n");
-    return SCM_BOOL_F;
+    ret = SCM_BOOL_F;
   }
-  
-  return SCM_BOOL_T;
 
+  free (version);
+  return ret;
 }
 
 
