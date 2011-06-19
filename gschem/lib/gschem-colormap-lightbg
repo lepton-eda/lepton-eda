@@ -15,7 +15,7 @@
 ; that color will never be drawn.
 
 (display-color-map
- '((background         "#f0f0f0")
+ '((background         "#ffffff")
    (pin                "#000000")
    (net-endpoint       "#ff0000")
    (graphic            "#008b00")
@@ -23,8 +23,8 @@
    (attribute          "#000000")
    (logic-bubble       "#008b8b")
    (dots-grid          "#7f7f7f")
-   (mesh-grid-major    "#e1e1e1")
-   (mesh-grid-minor    "#e8e8e8")
+   (mesh-grid-major    "#d8d8d8")
+   (mesh-grid-minor    "#eaeaea")
    (detached-attribute "#ff0000")
    (text               "#008b00")
    (bus                "#00ee00")
