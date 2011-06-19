@@ -1,0 +1,437 @@
+\input texinfo                              @c -*-texinfo-*-
+@setfilename geda-scheme.info
+@include version.texi
+@settitle gEDA Scheme Reference Manual @value{VERSION}
+
+@copying
+This manual is for gEDA/gaf, version @value{VERSION}.
+
+Copyright @copyright{} 2011 Peter TB Brett
+
+The text of and illustrations in this document are licensed under a
+Creative Commons Attribution–Share Alike 3.0 Unported license
+("CC-BY-SA"). An explanation of CC-BY-SA is available at
+http://creativecommons.org/licenses/by-sa/3.0/. The original authors
+of this document designate the gEDA Project as the "Attribution Party"
+for purposes of CC-BY-SA. In accordance with CC-BY-SA, if you
+distribute this document or an adaptation of it, you must provide the
+URL for the original version.
+@end copying
+
+@titlepage
+@title gEDA Scheme Reference Manual
+@author Peter TB Brett
+
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+
+@end titlepage
+
+@contents
+
+@ifnottex
+@node Top
+@top gEDA Scheme Reference Manual
+@insertcopying
+@end ifnottex
+
+@menu
+* Introduction::
+
+* Schematic Document Model::
+* Core API Reference::
+* gschem API Reference::
+
+* Concept Index::
+* Function Index::
+@end menu
+
+@node Introduction
+@unnumbered Introduction
+
+@section About gEDA
+
+@dfn{gEDA}, or @emph{GPL Electronic Design Automation}, is a suite of
+free software tools for designing electronics.  The gEDA project has
+produced and continues working on a full GPL'd suite and toolkit of
+Electronic Design Automation (EDA) tools. These tools are used for
+electrical circuit design, schematic capture, simulation, prototyping,
+and production. Currently, the gEDA project offers a mature suite of
+free software applications for electronics design, including schematic
+capture, attribute management, bill of materials (BOM) generation,
+netlisting into over 20 netlist formats, analog and digital
+simulation, and printed circuit board (PCB) layout.
+
+The gEDA project was started because of the lack of free EDA tools for
+POSIX systems with the primary purpose of advancing the state of free
+hardware or open source hardware. The suite is mainly being developed
+on the GNU/Linux platform with some development effort going into
+making sure the tools run on other platforms as well.
+
+@section About the gEDA Scheme API
+
+The @dfn{gEDA Scheme API}, documented in this manual, is a set of
+Scheme functions which can be used to enhance gEDA applications by
+adding new functionality or modify existing behaviour.
+
+gEDA has always used a Scheme interpreter for interpreting
+configuration files, managing keybindings in gschem, and implementing
+netlist exporter backends in gnetlist.  However, for a long time the
+utility of embedding a Scheme interpreter was diminished by the lack
+of a low-level API for inspecting and modifying schematic documents.
+The Scheme types and functions documented here were added to gEDA to
+address that need.
+
+gEDA uses the @emph{Guile} Scheme implementation (otherwise known as
+the @emph{GNU Ubiquitous Intelligent Language for Extensions}) as its
+embedded Scheme.  For more information about Guile, please visit
+@uref{http://www.gnu.org/s/guile/}.
+
+@section Getting Additional Help
+@cindex Reporting bugs
+
+If you think you have found a bug, please file a bug report in
+Launchpad: @uref{http://bugs.launchpad.net/geda}. Please add the tag
+@samp{scheme-api}.  It will help us to fix your bug quickly if you can
+describe in detail how to reproduce the bug.
+
+If you have a question about using gEDA, or about extending gEDA using
+Scheme, you may wish to send a message to one of the gEDA mailing
+lists.  You may also find additional information in the gEDA
+wiki.
+
+Both the mailing lists and wiki can be accessed from the main gEDA
+website: @uref{http://gpleda.org/}.
+
+@section We Need Feedback!
+
+If you find a typographical error in this manual, or if you have
+thought of a way to make this manual better, we would love to hear
+from you! Please submit a report in Launchpad:
+@uref{http://bugs.launchpad.net/geda}, with the tag @samp{scheme-api}.
+
+@node Schematic Document Model
+@chapter The Schematic Document Model
+
+When using gEDA to design an electronic circuit, users use the
+schematic editor, gschem, to choose and place @emph{schematic symbols}
+on a @emph{schematic page}, and connect the @emph{pins} of the symbols
+together by drawing @emph{nets}.  The user may add various
+@emph{attributes} to symbols, nets or pins to modify how the circuit
+diagrams should be interpreted.  The resulting schematics are then
+processed with the gnetlist tool to generate a @emph{netlist}.
+
+This chapter describes the different data types used by the Scheme API
+to represent gEDA documents (both schematics and symbols), and how
+they relate to each other.
+
+@menu
+* Pages::
+* Objects::
+* Component objects::
+* Attributes::
+* Coordinate system::
+@end menu
+
+@node Pages
+@section Pages
+@cindex Pages
+@cindex Schematics
+@cindex Symbols
+
+Schematics and symbols are presented as different types of document to
+the user, with different file extensions, icons and mime-types.
+However, when they are loaded into a gEDA application such as gschem
+for editing, they are internally represented in exactly the same way,
+by the @code{page} type.  The @code{page} is the top-level gEDA document
+data type.
+
+Internally, the main difference between a @code{page} for a schematic
+and a @code{page} for a symbol is the types of schematic element they
+are permitted to contain (@pxref{Objects}).  For example, a symbol is
+not permitted to contain nets, buses, or instances of other symbols,
+and a schematic is not permitted to contain pins.
+
+@strong{Note}: Although the restrictions on what types of primitive
+element schematics and symbols may contain are not enforced by the
+API, designs which violate these restrictions may cause the netlister
+not to work as expected.
+
+Each @code{page} is associated with a filename, although the filename is
+not required by the API either to be valid or to be associated with a
+accessible file in the filesystem.
+
+Pages are not garbage-collected; once you create a @code{page}, you are
+responsible for making sure that it is disposed of when it is no
+longer required.
+
+@node Objects
+@section Objects
+@cindex Objects
+@cindex Schematic elements
+
+Each @code{page} contains some number of @dfn{schematic elements},
+represented by the @code{object} type.  There are several sub-types of
+@code{object}, including:
+
+@itemize @bullet
+@item
+graphical lines, circles, arcs, rectangles and paths;
+
+@item
+nets and net pins;
+
+@item
+buses and bus pins;
+
+@item
+pictures;
+
+@item
+text;
+
+@item
+and symbol instances, known as 'components'.
+@end itemize
+
+Each @code{object} can be part of at most a single @code{page} -- they
+cannot be shared between pages.  @code{object}s are automatically
+garbage collected.
+
+Most of different @code{object} sub-types are quite straightforward to
+understand.  The main exceptions are components, and the text
+@code{object}-based attribute mechanism, which are described in the
+following sections.
+
+@node Component objects
+@section Component objects
+@cindex Component
+@cindex Component library
+@cindex Embedded component
+
+When a symbol is instantiated in a schematic (e.g. by the user
+selecting it from the gschem component library and placing it on the
+page), a compound @code{object} known as a @dfn{component} is created.
+
+Like a @code{page}, a component contains some number of @code{object}
+elements.  When a component is created from a symbol, the contents of
+the symbol's @code{page} are copied into the component.
+
+In order to allow the component to appear in the correct place on the
+schematic page, at the correct orientation, etc., a transformation is
+applied to every @code{object} in the component.
+
+Normally, when the schematic @code{page} is closed, the parameters of
+the transformation are stored in the schematic file along with the
+basename of the original symbol, but the @code{object} contents of the
+component are discarded.  When the schematic is subsequently
+re-opened, the original symbol is retrieved from the component
+library, and used to recreate the component.
+
+However, a component may optionally be @emph{embedded}.  In this case,
+its contents @emph{are} stored in the schematic file.
+
+@strong{Note}: A component cannot contain another component -- only
+other types of @code{object}.
+
+@node Attributes
+@section Attributes
+@cindex Attribute
+@cindex Attribute format
+
+A gEDA user is able to annotate schematic elements with additional
+data, such as footprints for components or net names for nets.  This
+is carried out using @dfn{attributes}.
+
+An attribute is text @code{object} which contains a text string in the
+form @samp{@var{name}=@var{value}}.  Currently, the restrictions on
+attribute format that are enforced by the API are:
+
+@itemize @bullet
+@item
+Attribute @var{name}s:
+
+@enumerate
+@item
+must contain at least one character;
+@item
+must not contain a @samp{=} character (Unicode @code{U+003D});
+@item
+must not end with a space (@samp{ }, Unicode @code{U+0020}).
+@end enumerate
+
+@item
+Attribute @var{value}s:
+
+@enumerate
+@item
+must contain at least one character;
+@item
+must not begin with a space (@samp{ }, Unicode @code{U+0020}).
+@end enumerate
+@end itemize
+
+@strong{Note}: Due to assumptions made by some gEDA tools, it is
+@emph{strongly recommended} that you use attribute @var{NAME}s which
+contain only lower-case Latin characters, decimal digits, full stops
+@samp{.}  (@code{U+002E}), and hyphens @samp{-} (@code{U+002D}).
+
+There are two types of attribute:
+
+@cindex Attached attribute
+@emph{Attached attributes} are attribute text @code{object}s that are
+linked to another @code{object}.  To attach an attribute to another
+schematic element, both @code{object}s must be part of the same
+component or part of the same @code{object}.  For example, a
+@samp{netname=@var{NAME}} attribute attached to a net @code{object}
+can be used to give that net a specific name in netlist output, such
+as @samp{VCC} or @samp{GND}.
+
+@cindex Floating attribute
+@emph{Floating attributes} are attribute text @code{object}s that are
+not linked to another @code{object}.  These attributes affect the
+schematic or symbol that they're part of as a whole.  For example, a
+floating @samp{documentation=@var{url}} attribute in a symbol tells
+gschem's @strong{Help → Component Documentation} command how to find
+the component's data sheet.
+
+@node Coordinate system
+@section Coordinate system
+
+gEDA documents use a @dfn{coordinate system} (internally referred to
+as `world' coordinates) with coordinates increasing upwards and to the
+right (i.e. a conventional right-handed Cartesian coordinate
+system).
+
+Although all coordinates may be positive or negative, gschem only
+displays objects with positive coordinates (i.e. in the upper right
+quadrant of the coordinate system).  It is therefore recommended to
+use only positive coordinates.
+
+In the Scheme API, the coordinate of a point is expressed in the format:
+
+@example
+(x . y)
+@end example
+
+and a set of @dfn{bounds} (i.e. a rectangular area in the document
+plane) is expressed in the format:
+
+@example
+((left . top) . (right . bottom))
+@end example
+
+where @code{left} is the smaller x coordinate, @code{right} is the
+larger x coordinate, and @code{bottom} and @code{top} are respectively
+the smaller and larger y coordinates.
+
+@node Core API Reference
+@chapter Core API Reference
+
+The Scheme modules and functions described in this chapter are
+primitive operations for working with schematics and symbols, and are
+available to be used in all gEDA applications.
+
+@menu
+* Core page functions::
+* Core object functions::
+* Core attribute functions::
+@end menu
+
+@node Core page functions
+@section Core page functions
+
+@node Core object functions
+@section Core object functions
+
+To use the functions described in this section, you will need to load
+the @code{(geda object)} module.
+
+@menu
+* General object functions::
+* Lines::
+* Nets and buses::
+* Pins::
+* Boxes::
+* Circles::
+* Arcs::
+* Paths::
+* Pictures::
+* Text::
+* Components::
+@end menu
+
+@node General object functions
+@subsection General object functions
+
+@node Lines
+@subsection Lines
+
+@node Nets and buses
+@subsection Nets and buses
+
+@node Pins
+@subsection Pins
+
+@node Boxes
+@subsection Boxes
+
+@node Circles
+@subsection Circles
+
+@node Arcs
+@subsection Arcs
+
+@node Paths
+@subsection Paths
+
+@node Pictures
+@subsection Pictures
+
+@node Text
+@subsection Text
+
+@node Components
+@subsection Components
+
+@node Core attribute functions
+@section Core attribute functions
+
+@node gschem API Reference
+@chapter gschem API Reference
+
+The Scheme modules and functions described in this chapter are
+available in the gschem schematic editor application.  They are more
+focused on enabling and responding to user editing operations.
+
+@menu
+* Windows and views::
+* Selections::
+* Hooks::
+* Miscellanous gschem functions::
+@end menu
+
+@node Windows and views
+@section Windows and views
+
+@node Selections
+@section Selections
+
+@node Hooks
+@section Hooks
+
+@node Miscellanous gschem functions
+@section Miscellaneous gschem functions
+
+@node Concept Index
+@unnumbered Concept Index
+
+@printindex cp
+
+@node Function Index
+@unnumbered Function Index
+
+@printindex fn
+
+@bye

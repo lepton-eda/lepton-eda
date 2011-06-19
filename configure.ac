@@ -264,6 +264,7 @@ AC_CONFIG_FILES([Makefile
                  symbols/documentation/Makefile
 
                  docs/Makefile
+                 docs/scheme-api/Makefile
                  docs/scripts/Makefile
                  docs/toplevel/Makefile
                  docs/toplevel/gedadocs.html
