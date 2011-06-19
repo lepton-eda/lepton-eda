@@ -54,6 +54,13 @@
   (let ((v (parse-attrib a)))
     (if v (cdr v) v)))
 
+;; set-attrib-value! a val
+;;
+;; Updates the attribute a with the new value val.
+(define-public (set-attrib-value! a val)
+  (let ((name (attrib-name a)))
+    (set-text-string! a (string-join (list name val) "="))))
+
 ;; inherited-attribs object
 ;;
 ;; Returns the inherited attributes of object, if object is a

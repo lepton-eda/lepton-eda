@@ -171,3 +171,9 @@
     (assert-true (not (attrib-inherited? x)))
     (assert-true (not (attrib-inherited? y)))
     (assert-true (attrib-inherited? z))))
+
+(begin-test 'set-attrib-value!
+  (let ((a (make-text '(1 . 2) 'lower-left 0 "name=value" 10 #t 'both)))
+    (set-attrib-value! a "foo")
+    (assert-equal "name" (attrib-name a))
+    (assert-equal "foo" (attrib-value a))))
