@@ -70,3 +70,15 @@
     (set-text-visibility! a 'bork)
     (assert-true (text-visible? a))
     (assert-equal (text-info a) (text-info b))))
+
+(begin-test 'set-text-string!
+  (let ((a (make-text '(1 . 2) 'lower-left 0 "test text" 10 #t 'both 21))
+        (b (make-text '(1 . 2) 'lower-left 0 "test text" 10 #t 'both 21)))
+    (assert-equal "test text" (text-string a))
+
+    (set-text-string! a "new test text")
+    (assert-equal "new test text" (text-string a))
+
+    (set-text-string! a "test text")
+    (assert-equal "test text" (text-string a))
+    (assert-equal (text-info a) (text-info b))))

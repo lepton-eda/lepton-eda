@@ -495,6 +495,14 @@
 (define-public (text-string t)
   (list-ref (text-info t) 3))
 
+;; set-text-string! t str
+;;
+;; Set the string contained by the text object t.
+(define-public (set-text-string! t str)
+  (let ((i (text-info t)))
+    (list-set! i 3 str)
+    (apply set-text! t i)))
+
 ;; text-size t
 ;;
 ;; Returns the font size of the text object t.
