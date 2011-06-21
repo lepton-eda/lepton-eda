@@ -342,6 +342,118 @@ available to be used in all gEDA applications.
 @node Core page functions
 @section Core page functions
 
+To use the functions described in this section, you will need to load
+the @code{(geda page)} module.
+
+@xref{Pages}.
+
+@defun page? obj
+Returns @samp{#t} if and only if @var{obj} is a @code{page}.
+@end defun
+
+@defun active-pages
+Returns a list of all open @code{page}s.
+@end defun
+
+@subsection Page creation, disposal and filenames
+
+Every @code{page} is associated with a @emph{filename}.  The filename
+does not necessarily have to be a file which exists and/or is
+accessible in the filesystem.
+
+@defun make-page filename
+Creates and returns a new, empty @code{page}, with the given
+string @var{filename}.
+@end defun
+
+@defun close-page! page
+Destroys @var{page}.  The returned value is undefined.
+
+@strong{Warning}: This function closes and destroys @var{page}
+immediately, regardless of whether the page has been modified since
+loading or saving, and without asking the user.
+@end defun
+
+@defun page-filename page
+Returns the filename associated with @var{page} as a string.
+@end defun
+
+@defun set-page-filename! page filename
+Sets the filename of @var{page} to @var{filename}.  Returns
+@var{page}.
+@end defun
+
+@subsection Page contents
+
+A schematic or symbol @code{page} is composed of a set of
+@code{object}s which determine both its graphical appearance and its
+electrical meaning.
+
+@defun page-contents page
+Returns a list of the @code{object}s which make up @var{page}.  The
+list can be freely modified without changing the contents of
+@var{page}.
+@end defun
+
+@defun page-append! page objects...
+Appends zero or more @var{objects} to the contents of @var{page} in
+the order given.  Returns @var{page}.
+
+If any of the @var{objects} is already part of a @code{page} other
+than @var{page}, or is part of a component @code{object}, raises an
+@code{object-state} error.  Any of the @var{objects} that are already
+in the @var{page} are ignored.
+@end defun
+
+@defun page-remove! page objects...
+Removes zero or more @var{objects} from the contents of @var{page}.
+Returns @var{page}.
+
+Any @var{objects} that are not part of a @code{page} or component
+@code{object} are ignored.
+
+An @samp{object-state} error will be thrown if any of the
+@var{objects} satisfies any of the following conditions:
+
+@itemize
+@item
+part of a @code{page} other than @var{page};
+@item
+part of component @code{object};
+@item
+has attached attributes (@pxref{Attributes});
+@item
+is attached as an attribute.
+@end itemize
+@end defun
+
+@defun object-page object
+Returns the @code{page} which contains @var{object} (either directly
+or indirectly), or @samp{#f} if @var{object} is not part of a
+@code{page}.
+
+@strong{Note}: If the @var{object} argument to @code{object-page} is
+part of a component @code{object} which is itself part of a
+@code{page}, that @code{page} will be returned.
+@end defun
+
+@subsection Page dirty flags
+
+A @code{page} has a @emph{dirty flag} that is used to indicate to
+applications that the @code{page} has been modified since it was last
+loaded or saved.
+
+@defun page-dirty? page
+Returns @samp{#t} if the @var{page}'s page has been marked as dirty;
+otherwise, returns @samp{#f}.
+@end defun
+
+@defun set-page-dirty! page [state]
+Sets the dirty flag for @var{page}.  If @var{state} is @samp{#f},
+clears the dirty flag; otherwise, or if @var{state} is omitted, marks
+the page as dirty.  Returns @var{page}.
+@end defun
+
 @node Core object functions
 @section Core object functions
 

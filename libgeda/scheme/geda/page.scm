@@ -36,25 +36,13 @@
 (define-public page-contents %page-contents)
 (define-public page-dirty? %page-dirty?)
 
-;; page-append! P obj ...
-;;
-;; Adds obj (and any additional objects) to the contents of the page
-;; P. Returns P.
 (define-public (page-append! P . objects)
   (for-each (lambda (x) (%page-append! P x)) objects)
   P)
 
-;; page-remove! P obj ...
-;;
-;; Removes obj (and any additional objects) from the contents of the
-;; page P. Returns P.
 (define-public (page-remove! P . objects)
   (for-each (lambda (x) (%page-remove! P x)) objects)
   P)
 
-;; set-page-dirty! [state]
-;;
-;; Set whether page is flagged as changed according to the optional
-;; flag state.  If state is omitted, the page is marked as changed.
 (define*-public (set-page-dirty! page #:optional (state #t))
   (%set-page-dirty! page state))
