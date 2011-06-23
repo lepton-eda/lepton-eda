@@ -780,6 +780,45 @@ Creates and returns a new bus @code{object}.  Arguments are as for
 @node Pins
 @subsection Pins
 
+Pin @code{objects} are straight line segments which represent
+connectable points in symbols or subcircuits, such as the pins of a
+semiconductor package.  Only one end of a pin can be connected to
+nets, buses or other pins; the rest of a pin is purely graphical.
+
+Pins come in two varieties: @dfn{net pins} and @dfn{bus pins}, which
+are used for connections to nets and buses respectively (@pxref{Nets
+and buses}).
+
+All of the functions that work on line @code{object}s also work with
+pins (@pxref{Lines}).  Note that @code{line?} will return @code{#f} if
+called with a pin argument.
+
+@defun pin? object
+Returns @samp{#t} if and only if @var{object} is a pin @code{object}.
+@end defun
+
+@defun net-pin? object
+Returns @samp{#t} if and only if @var{object} is a net pin.
+@end defun
+
+@defun make-net-pin start end [color]
+Creates and returns a new net pin @code{object}.  @var{start} is the
+position of the start of the new pin (the connectable end) in the form
+@code{(x . y)} and @var{end} is the position of end of the pin.  If
+@var{color} is specified, it should be the integer color map index of
+the color with which to draw the pin.  If @var{color} is not
+specified, the default pin color is used.
+@end defun
+
+@defun bus-pin? object
+Returns @samp{#t} if and only if @var{object} is a bus pin.
+@end defun
+
+@defun make-bus-pin start end [color]
+Creates and returns a new bus pin @code{object}.  Arguments are as for
+@code{make-net-pin}.
+@end defun
+
 @node Boxes
 @subsection Boxes
 

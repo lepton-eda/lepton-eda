@@ -79,80 +79,37 @@
 
 ;;;; Nets
 
-;; net? x
-;;
-;; Returns #t if x is a gEDA net object.
 (define-public (net? l)
   (object-type? l 'net))
 
-;; make-net start end [color]
-;;
-;; Creates a new net. start is the coordinates (x . y) of the start
-;; of the net, and end is the coordinates (x . y) of the end of the
-;; net.  The optional color argument is the color index of the color
-;; with which to draw the net.  If color is not specified, the
-;; default color is used.
 (define*-public (make-net start end #:optional color)
   (let ((l (%make-net)))
     (set-line! l start end color)))
 
 ;;;; Buses
 
-;; bus? x
-;;
-;; Returns #t if x is a gEDA bus object.
 (define-public (bus? l)
   (object-type? l 'bus))
 
-;; make-bus start end [color]
-;;
-;; Creates a new bus. start is the coordinates (x . y) of the start
-;; of the bus, and end is the coordinates (x . y) of the end of the
-;; bus.  The optional color argument is the color index of the color
-;; with which to draw the bus.  If color is not specified, the
-;; default color is used.
 (define*-public (make-bus start end #:optional color)
   (let ((l (%make-bus)))
     (set-line! l start end color)))
 
 ;;;; Pins
 
-;; pin? x
-;;
-;; Returns #t if x is a gEDA pin object
 (define-public (pin? l)
   (object-type? l 'pin))
 
-;; net-pin? x
-;;
-;; Returns #t if x is a gEDA net pin object
 (define-public (net-pin? l)
   (and (pin? l) (equal? (%pin-type l) 'net)))
 
-;; bus-pin? x
-;;
-;; Returns #t if x is a gEDA bus pin object
 (define-public (bus-pin? l)
   (and (pin? l) (equal? (%pin-type l) 'bus)))
 
-;; make-net-pin start end [color]
-;;
-;; Creates a new net pin.  start is the coordinates (x . y) of the
-;; start (the connectable end) of the pin, and end is the coordinates
-;; (x . y) of the end of the pin.  The optional color argument is the
-;; color index of the color with which to draw the bus.  If color is
-;; not specified, the default color is used.
 (define*-public (make-net-pin start end #:optional color)
   (let ((l (%make-pin 'net)))
     (set-line! l start end color)))
 
-;; make-bus-pin start end [color]
-;;
-;; Creates a new bus pin.  start is the coordinates (x . y) of the
-;; start (the connectable end) of the pin, and end is the coordinates
-;; (x . y) of the end of the pin.  The optional color argument is the
-;; color index of the color with which to draw the bus.  If color is
-;; not specified, the default color is used.
 (define*-public (make-bus-pin start end #:optional color)
   (let ((l (%make-pin 'bus)))
     (set-line! l start end color)))
