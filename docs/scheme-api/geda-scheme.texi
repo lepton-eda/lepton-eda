@@ -869,8 +869,58 @@ form @code{(x . y)}.
 @node Circles
 @subsection Circles
 
+Circle @code{objects} are specified by center position and radius, and
+are purely graphical with no electrical meaning.  They can be drawn in
+different colors, and with various stroke and fill settings.
+
+@xref{Object color}.
+@xref{Object fill and stroke}.
+
+@defun circle? object
+Returns @samp{#t} if and only of @var{object} is a circle @code{object}.
+@end defun
+
+@defun make-circle center radius [color]
+Creates and returns a new circle @code{object}.  @var{center} is the
+position of the center of the new circle in the form @code{(x . y)},
+and @var{radius} is the integer radius of the circle.  If @var{color}
+is specified, it should be the integer color map index of the color
+with which to draw the circle.  If @var{color} is not specified, the
+default circle color is used.
+@end defun
+
+@defun set-circle! circle center radius [color]
+Sets the parameters of @var{circle}. The arguments are the same as to
+@code{make-circle}.  Returns @var{circle}.
+@end defun
+
+@defun circle-info circle
+Returns the parameters of @var{circle} as a list of the form:
+
+@example
+((center-x . center-y) radius color)
+@end example
+@end defun
+
+@defun circle-center circle
+Returns the position of the center of @var{circle} as in the form
+@code{(x . y)}.
+@end defun
+
+@defun circle-radius circle
+Returns the radius of @var{circle} as an integer.
+@end defun
+
 @node Arcs
 @subsection Arcs
+Arc @code{objects} are specified by center position, radius, and start
+and end angles.  They are purely graphical with no electrical
+meaning. They can be drawn in different colors, and with various
+stroke settings.
+
+@defun arc? object
+Returns @samp{#t} if and only if @var{object} is an arc @code{object}.
+@end defun
 
 @node Paths
 @subsection Paths
