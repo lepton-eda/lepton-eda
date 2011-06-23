@@ -681,10 +681,11 @@
 
 ;;;; Object bounds
 
-;; object-bounds object [object...]
+;; object-bounds [object...]
 ;;
-;; Return the bounds containing one or more objects.  The bounds
-;; returned are in world coordinates, and are given in the form:
+;; Return the bounds containing the objects passed as arguments.  The
+;; bounds returned are in world coordinates, and are given in the
+;; form:
 ;;
 ;;  ((left . top) . (right . bottom))
 ;;

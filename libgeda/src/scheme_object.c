@@ -241,37 +241,32 @@ SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
 
 /*! \brief Get the bounds of a list of objects
  * \par Function Description
- * Returns the bounds of the objects in the list formed by prepending
- * \a obj_s to \a rst_s. The bounds are returned as a pair structure
- * of the form:
+ * Returns the bounds of the objects in the variable-length argument
+ * list \a rst_s. The bounds are returned as a pair structure of the
+ * form:
  *
  * <code>((left . top) . (right . bottom))</code>
  *
- * If none of the objects has any bounds (e.g. because they are all
- * empty components and/or text strings), returns SCM_BOOL_F.
+ * If \a rst_s is empty, or none of the objects has any bounds
+ * (e.g. because they are all empty components and/or text strings),
+ * returns SCM_BOOL_F.
  *
  * \warning This function always returns the actual bounds of the
  * objects, not the visible bounds.
  *
- * \note Scheme API: Implements the %object-bounds procedure in
- * the (geda core object) module.  The procedure takes one or more
+ * \note Scheme API: Implements the %object-bounds procedure in the
+ * (geda core object) module.  The procedure takes any number of
  * #OBJECT smobs as arguments.
  *
- * \param [in] obj_s #OBJECT to get bounds for.
- * \param [in] rst_s Variable-length list of additional #OBJECT arguments.
+ * \param [in] rst_s Variable-length list of #OBJECT arguments.
  * \return bounds of objects or SCM_BOOL_F.
  */
-SCM_DEFINE (object_bounds, "%object-bounds", 1, 0, 1,
-            (SCM obj_s, SCM rst_s), "Get the bounds of one or more objects")
+SCM_DEFINE (object_bounds, "%object-bounds", 0, 0, 1,
+            (SCM rst_s), "Get the bounds of a list of objects")
 {
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_object_bounds);
-
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
-  OBJECT *obj = edascm_to_object (obj_s);
 
   GList *obj_list = edascm_to_object_glist (rst_s, s_object_bounds);
-  obj_list = g_list_prepend (obj_list, obj);
 
   int success, left, top, right, bottom;
   if (toplevel->show_hidden_text) {
@@ -296,7 +291,7 @@ SCM_DEFINE (object_bounds, "%object-bounds", 1, 0, 1,
                                  scm_from_int (min(top, bottom))));
   }
 
-  scm_remember_upto_here_2 (obj_s, rst_s);
+  scm_remember_upto_here_1 (rst_s);
   return result;
 }
 

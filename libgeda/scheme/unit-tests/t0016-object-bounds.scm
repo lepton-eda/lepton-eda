@@ -9,6 +9,9 @@
         (t (make-text '(1 . 2) 'lower-left 0 "test text" 10 #t 'both))
         (C (make-component "test component" '(0 . 0) 0 #t #f)))
 
+    ;; No arguments
+    (assert-equal #f (object-bounds))
+
     ;; Single argument
     (assert-equal '((0 . 1) . (1 . 0)) (object-bounds x))
 
