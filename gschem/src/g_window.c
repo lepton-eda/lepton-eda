@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
- * Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -215,11 +215,7 @@ SCM_DEFINE (close_page_x, "%close-page!", 1, 0, 0,
   if (reset_page)
     x_window_set_current_page (w_current, page);
 
-  if (w_current->toplevel->page_current->CHANGED) {
-    x_dialog_close_changed_page (w_current, w_current->toplevel->page_current);
-  } else {
-    x_window_close_page (w_current, w_current->toplevel->page_current);
-  }
+  x_window_close_page (w_current, w_current->toplevel->page_current);
 
   if (reset_page)
     x_window_set_current_page (w_current, curr_page);
