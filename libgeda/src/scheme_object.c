@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library - Scheme API
- * Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -231,9 +231,9 @@ SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
   case OBJ_PIN:     result = pin_sym;        break;
   case OBJ_ARC:     result = arc_sym;        break;
   default:
-    g_critical ("o_mirror_world: object %p has bad type '%c'\n",
-                obj, obj->type);
-    result = SCM_BOOL_F;
+    scm_misc_error (s_object_type, _("Object ~A has bad type '~A'"),
+                    scm_list_2 (obj_s,
+                                scm_integer_to_char (scm_from_int (obj->type))));
   }
 
   return result;
