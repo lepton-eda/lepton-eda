@@ -822,6 +822,50 @@ Creates and returns a new bus pin @code{object}.  Arguments are as for
 @node Boxes
 @subsection Boxes
 
+Boxes are rectangles specified by the coordinates of their top left
+and bottom right corners.  They are purely graphical, and have no
+electrical meaning.  They can be drawn in different colors, and with
+various stroke and fill settings.
+
+@xref{Object color}.
+@xref{Object fill and stroke}.
+
+@defun box? object
+Returns @samp{#t} if and only of @var{object} is a box @code{object}.
+@end defun
+
+@defun make-box top-left bottom-right [color]
+Creates and returns a new box @code{object}.  @var{top-left} is the
+position of the top left of the new box in the form @code{(x . y)},
+and @var{bottom-right} is the position of the bottom right of the box.
+If @var{color} is specified, it should be the integer color map index
+of the color with which to draw the box.  If @var{color} is not
+specified, the default box color is used.
+@end defun
+
+@defun set-box! box top-left bottom-right [color]
+Sets the parameters of @var{box}. The arguments are the same as to
+@code{make-box}.  Returns @var{box}.
+@end defun
+
+@defun box-info box
+Returns the parameters of @var{box}.  The return value is a list in the form:
+
+@example
+((top-left-x . top-left-y) (bottom-right-x . bottom-right-y) color)
+@end example
+@end defun
+
+@defun box-top-left box
+Returns the position of the top left corner of @var{box} in the form
+@code{(x . y)}.
+@end defun
+
+@defun box-bottom-right box
+Returns the position of the bottom right corner of @var{box} in the
+form @code{(x . y)}.
+@end defun
+
 @node Circles
 @subsection Circles
 
