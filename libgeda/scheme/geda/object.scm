@@ -178,19 +178,9 @@
 
 ;;;; Arcs
 
-;; arc? x
-;;
-;; Returns #t if x is a gEDA arc object.
 (define-public (arc? a)
   (object-type? a 'arc))
 
-;; set-arc! a center radius start-angle end-angle [color]
-;;
-;; Sets the parameters of an arc. center is the new coordinates (x
-;; . y) of the center of the arc, and radius is the new radius of the
-;; arc.  start-angle and end-angle are the angles in degrees between
-;; which to draw the arc.  The optional color argument is the new
-;; colormap index of the arc's color. Returns a after modifications.
 (define*-public (set-arc! a center radius start-angle end-angle
                           #:optional color)
   (%set-arc! a
@@ -200,23 +190,10 @@
                  (object-color a)
                  color)))
 
-;; make-arc center radius start-angle end-angle [color]
-;;
-;; Creates a new arc.  center is the coordinates (x . y) of the center
-;; of the arc, and radius is the radius of the circle.  start-angle
-;; and end-angle are the angles between which to draw the arc.  The
-;; optional color argument is the colormap index of the color with
-;; which to draw the arc.  If color is not specified, the default
-;; color is used.
 (define*-public (make-arc center radius start-angle end-angle #:optional color)
   (let ((c (%make-arc)))
     (set-arc! c center radius start-angle end-angle color)))
 
-;; arc-info c
-;;
-;; Returns the parameters of the arc a as a list of the form:
-;;
-;;   ((center-x . center-y) radius start-angle end-angle color)
 (define-public (arc-info c)
   (let* ((params (%arc-info c))
          (tail (cddr params)))
@@ -224,44 +201,25 @@
                 (list-ref params 1))
           tail)))
 
-;; arc-center a
-;;
-;; Returns the coordinates (x . y) of the center of the gEDA arc
-;; object c.
 (define-public (arc-center a)
   (list-ref (arc-info a) 0))
 
-;; arc-radius a
-;;
-;; Returns the radius of the gEDA arc object a.
 (define-public (arc-radius a)
   (list-ref (arc-info a) 1))
 
-;; arc-start-angle a
-;;
-;; Returns the start angle of the gEDA arc object a.
 (define-public (arc-start-angle a)
   (list-ref (arc-info a) 2))
 
-;; arc-end-angle a
-;;
-;; Returns the end angle of the gEDA arc object a.
 (define-public (arc-end-angle a)
   (list-ref (arc-info a) 3))
 
 ;;;; Paths
 
-;; path? x
-;;
-;; Returns #t if x is a gEDA path object.
 (define-public (path? x)
   (object-type? x 'path))
 
 ;;;; Pictures
 
-;; picture? x
-;;
-;; Returns #t if x is a gEDA picture object.
 (define-public (picture? x)
   (object-type? x 'picture))
 

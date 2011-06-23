@@ -965,8 +965,16 @@ Returns the end angle of @var{arc} as an integer number of degrees.
 @node Paths
 @subsection Paths
 
+@defun path? object
+Returns @samp{#t} if and only if @var{object} is a path @code{object}.
+@end defun
+
 @node Pictures
 @subsection Pictures
+
+@defun picture? object
+Returns @samp{#t} if and only if @var{object} is a picture @code{object}.
+@end defun
 
 @node Text
 @subsection Text
