@@ -25,7 +25,9 @@
   #:use-module (geda core complex)
 
   ; Optional arguments
-  #:use-module (ice-9 optargs))
+  #:use-module (ice-9 optargs)
+
+  #:use-module (srfi srfi-1))
 
 (define-public object-type %object-type)
 (define-public object? %object?)
@@ -693,19 +695,23 @@
 ;; objects, not the visible bounds.
 (define-public object-bounds %object-bounds)
 
-;; fold-bounds a b
+;; fold-bounds bounds...
 ;;
-;; Calculate the bounds of the smallest rectangle containing both the
-;; bounds a and b, which should be bounds as returned by
-;; object-bounds.  If either a or b is #f, it is ignored; if both are
-;; #f, #f is returned.
-(define-public (fold-bounds a b)
-  (if (and a b)
-      ;; calc bounds
-      (cons (cons (min (caar a) (caar b))    ; left
-                  (max (cdar a) (cdar b)))   ; top
-            (cons (max (cadr a) (cadr b))    ; right
-                  (min (cddr a) (cddr b)))) ; bottom
+;; Calculate the extent of the smallest rectangle containing all of
+;; the bounds passed as arguments, which should be bounds as returned
+;; by object-bounds.  If any set of bounds is #f, it is ignored; if
+;; all are #f, #f is returned.
+(define-public (fold-bounds . bounds)
+  (fold
+   (lambda (a b)
+     (if (and a b)
+         ;; calc bounds
+         (cons (cons (min (caar a) (caar b))    ; left
+                     (max (cdar a) (cdar b)))   ; top
+               (cons (max (cadr a) (cadr b))    ; right
+                     (min (cddr a) (cddr b)))) ; bottom
 
-      ;; return whichever isn't #f
-      (or a b)))
+         ;; return whichever isn't #f
+         (or a b)))
+   #f ;; default
+   bounds))

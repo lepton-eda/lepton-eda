@@ -30,3 +30,24 @@
     (component-append! C x)
     (assert-equal '((0 . 1) . (1 . 0)) (object-bounds x))
     ))
+
+(begin-test 'fold-bounds
+  (let ((x (make-box '(0 . 1) '(1 . 0)))
+        (y (make-box '(2 . 3) '(3 . 2))))
+
+    ;; No arguments
+    (assert-equal #f (fold-bounds #f))
+
+    ;; One argument
+    (let ((a (object-bounds x)))
+      (assert-equal a (fold-bounds a))
+      (assert-equal #f (fold-bounds #f)))
+
+    ;; > 1 argument
+    (let ((a (object-bounds x))
+          (b (object-bounds y)))
+      (assert-equal '((0 . 3) . (3 . 0))
+                    (fold-bounds a b))
+      (assert-equal a (fold-bounds #f a))
+      (assert-equal a (fold-bounds a #f))
+      (assert-equal #f (fold-bounds #f #f)))))
