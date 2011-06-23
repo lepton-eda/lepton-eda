@@ -922,6 +922,46 @@ stroke settings.
 Returns @samp{#t} if and only if @var{object} is an arc @code{object}.
 @end defun
 
+@defun make-arc center radius start-angle end-angle [color]
+Creates and returns a new arc @code{object}.  @var{center} is the
+position of the center of the new arc in the form @code{(x . y)}, and
+@var{radius} is the integer radius of the arc.  @var{start-angle} and
+@var{end-angle} are the angles at which to start and end the arc, in
+degrees. If @var{color} is specified, it should be the integer color
+map index of the color with which to draw the arc.  If @var{color}
+is not specified, the default arc color is used.
+@end defun
+
+@defun set-arc! arc center radius start-angle end-angle [color]
+Sets the parameters of @var{arc}. The arguments are the same as to
+@code{make-arc}. Returns @var{arc}.
+@end defun
+
+@defun arc-info arc
+Returns the parameters of @var{arc} as a list of the form:
+
+@example
+((center-x . center-y) radius start-angle end-angle color)
+@end example
+@end defun
+
+@defun arc-center arc
+Returns the position of the center of @var{arc} in the form
+@code{(x . y)}.
+@end defun
+
+@defun arc-radius arc
+Returns the radius of @var{arc} as an integer.
+@end defun
+
+@defun arc-start-angle arc
+Returns the start angle of @var{arc} as an integer number of degrees.
+@end defun
+
+@defun arc-end-angle arc
+Returns the end angle of @var{arc} as an integer number of degrees.
+@end defun
+
 @node Paths
 @subsection Paths
 
