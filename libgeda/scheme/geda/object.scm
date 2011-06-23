@@ -48,19 +48,9 @@
 
 ;;;; Lines
 
-;; line? x
-;;
-;; Returns #t if x is a gEDA line object.
 (define-public (line? l)
   (object-type? l 'line))
 
-;; set-line! l start end [color]
-;;
-;; Sets the parameters of a line, net, bus or pin object l. start is
-;; the new coordinates (x . y) of the start of the line (for pins,
-;; this is the connectable point), and end is the new coordinates of the
-;; end of the line. The optional color argument is the new colormap
-;; index of the line's color. Returns l after modifications.
 (define*-public (set-line! l start end #:optional color)
   (%set-line! l
               (car start) (cdr start)
@@ -69,25 +59,10 @@
                   (object-color l)
                   color)))
 
-;; make-line start end [color]
-;;
-;; Creates a new line. start is the coordinates (x . y) of the start
-;; of the line, and end is the coordinates (x . y) of the end of the
-;; line.  The optional color argument is the color index of the color
-;; with which to draw the line.  If color is not specified, the
-;; default color is used.
 (define*-public (make-line start end #:optional color)
   (let ((l (%make-line)))
     (set-line! l start end color)))
 
-;; line-info l
-;;
-;; Returns the parameters of the line, net, bus or pin l as a list of
-;; the form:
-;;
-;;  ((start-x . start-y) (end-x . end-y) color)
-;;
-;; For pins, start is the connectable point on the pin.
 (define-public (line-info l)
   (let ((params (%line-info l)))
     (list (cons (list-ref params 0)
@@ -96,18 +71,9 @@
                 (list-ref params 3))
           (list-ref params 4))))
 
-;; line-start l
-;;
-;; Returns the coordinates (x . y) of the start of the gEDA line, net,
-;; bus or pin object l.  For pins, this is is the connectable point on
-;; the pin.
 (define-public (line-start l)
   (list-ref (line-info l) 0))
 
-;; line-end l
-;;
-;; Returns the coordinates (x . y) of the end of the gEDA line, net or
-;; bus object l.
 (define-public (line-end l)
   (list-ref (line-info l) 1))
 

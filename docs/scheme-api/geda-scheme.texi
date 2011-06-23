@@ -694,6 +694,55 @@ list returned by @code{object-fill}.  Returns @var{object}.
 
 @node Lines
 @subsection Lines
+Line @code{object}s are straight graphical line segments with no
+electrical meaning.  A line's geometrical parameters are a start point
+and end point, and it supports different colors and stroke styles.
+
+Many of the functions for manipulating lines are also used to
+manipulate line-like objects such as nets, buses or pins.
+
+@defun line? object
+Returns @samp{#t} if and only if @var{object} is a line @code{object}.
+@end defun
+
+@defun make-line start end [color]
+Creates and returns a new line @code{object}.  @var{start} is the
+position of the start of the new line in the form @code{(x . y)} and
+@var{end} is the position of end of the line.  If @var{color} is
+specified, it should be the integer color map index of the color with
+which to draw the line.  If @var{color} is not specified, the default
+line color is used.
+@end defun
+
+@defun set-line! line start end [color]
+Sets the parameters of @var{line} (which may be a line, net, bus or
+pin @code{object}).  The arguments are the same as to
+@code{make-line}.  Returns @var{line}.
+@end defun
+
+@defun line-info line
+Returns the parameters of @var{line} (which may be a line, net, bus or
+pin @code{object}).  The return value is a list in the form:
+
+@example
+((start-x . start-y) (end-x . end-y) color)
+@end example
+
+@strong{Note}: For pin @code{object}s, first coordinate is the
+connectable point on the pin.
+@end defun
+
+@defun line-start line
+Returns the position @samp{(x . y)} of the start of @var{line} (which
+may be a line, net, bus or pin @code{object}).  For pin
+@code{objects}, this is the position of the connectable point on the
+pin.
+@end defun
+
+@defun line-end line
+Returns the position @samp{(x . y)} of the end of @var{line} (which
+may be a line, net, bus or pin @code{object}).
+@end defun
 
 @node Nets and buses
 @subsection Nets and buses
