@@ -979,6 +979,170 @@ Returns @samp{#t} if and only if @var{object} is a picture @code{object}.
 @node Text
 @subsection Text
 
+Text fulfils two roles, as straightforward labels and notes on
+schematics and symbols, and as attached or floating attributes
+(@pxref{Attributes}).  A text @code{object} can be aligned in
+different ways relative to its anchor position, and can be displayed
+in different font sizes.
+
+Any text can be set to be visible or invisible on printed output (and
+gschem provides ways to preview invisible text).  When a text
+@code{object} is an attribute (i.e. its string is in a
+@samp{@var{name}=@var{value}} format) then the visibility settings are
+more fine-grained: the text can be set to display just the attribute
+name, just the attribute value, or both.
+
+@xref{Attributes}.
+
+@defun text? object
+Returns @samp{#t} if and only if @var{object} is a text @code{object}.
+@end defun
+
+@defun make-text anchor align angle string size visible show [color]
+Creates and returns a new text @code{object}.  @var{anchor} is the
+position of the anchor of the new text in the form @code{(x . y)}, and
+@var{align} is a symbol determining how the text should be aligned
+relative to the anchor.  @var{align} must be one of the following
+symbols:
+
+@itemize
+@item
+@samp{lower-left}
+@item
+@samp{middle-left}
+@item
+@samp{upper-left}
+@item
+@samp{lower-center}
+@item
+@samp{middle-center}
+@item
+@samp{upper-center}
+@item
+@samp{lower-right}
+@item
+@samp{middle-right}
+@item
+@samp{upper-right}
+@end itemize
+
+For example, if @var{align} is @samp{upper-center}, the anchor will be
+located at the top center of the rendered text block.
+
+@var{angle} should be an integer multiple of 90 degrees, determining
+the angle which the text should be displayed at.  @var{string} is the
+string contents for the @code{text} object, and must not contain any
+null characters (@samp{#\0} in Scheme, Unicode
+@samp{U+0000}. @var{size} is the font size to use.  If @var{visible}
+is @samp{#f}, the text will be invisible; otherwise, it will be
+visible.
+
+When the @var{string} is in an attribute format (@pxref{Attributes}),
+the @var{show} argument determines which parts of the @var{string}
+will be displayed.  It must be one of the following symbols:
+
+@itemize
+@item
+@samp{name}
+@item
+@samp{value}
+@item
+@samp{both}
+@end itemize
+
+If @var{color} is specified, it should be the integer color map index
+of the color with which to draw the text.  If @var{color} is not
+specified, the default arc color is used.
+@end defun
+
+@defun set-text! text anchor align angle string size visible show [color]
+Sets the parameters of @var{text}. The arguments are the same as to
+@code{make-text}. Returns @var{text}.
+@end defun
+
+@defun text-info text
+Returns the parameters of @var{text} as a list in the form:
+
+@example
+((anchor-x . anchor-y) align angle string size visible show color)
+@end example
+
+See @code{make-text} for a description of all of these parameters.
+@end defun
+
+@defun text-center text
+Returns the position of the anchor of @var{text} in the form
+@code{(x . y)}.
+@end defun
+
+@defun text-align text
+Returns the alignment of @var{text} as one of the following symbols:
+
+@itemize
+@item
+@samp{lower-left}
+@item
+@samp{middle-left}
+@item
+@samp{upper-left}
+@item
+@samp{lower-center}
+@item
+@samp{middle-center}
+@item
+@samp{upper-center}
+@item
+@samp{lower-right}
+@item
+@samp{middle-right}
+@item
+@samp{upper-right}
+@end itemize
+@end defun
+
+@defun text-angle text
+Returns the angle that @var{text} is displayed at as an integer
+multiple of 90 degrees.
+@end defun
+
+@defun text-string text
+Returns the string content of @var{text}.
+@end defun
+
+@defun set-text-string! text str
+Set the string content of @var{text} to @var{str}.  @var{str} must not
+contain any null characters (@samp{#\0} in Scheme, Unicode
+@samp{U+0000}).
+@end defun
+
+@defun text-size text
+Return the font size of @var{text} as an integer.
+@end defun
+
+@defun text-visible? text
+Returns @samp{#t} if and only if @var{text} is set to be visible.
+@end defun
+
+@defun set-text-visibility! text visible?
+If @var{visible?} is @samp{#f}, sets @var{text} to be invisible;
+otherwise, sets it to be visible.
+@end defun
+
+@defun text-attribute-mode text
+Returns a symbol indicating which parts of @var{text} will be
+displayed when @var{text} is a valid attribute.  The returned value
+will be one of the following symbols:
+
+@itemize
+@item
+@samp{name}
+@item
+@samp{value}
+@item
+@samp{both}
+@end itemize
+@end defun
+
 @node Components
 @subsection Components
 
