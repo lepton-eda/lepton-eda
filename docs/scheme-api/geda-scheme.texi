@@ -747,6 +747,36 @@ may be a line, net, bus or pin @code{object}).
 @node Nets and buses
 @subsection Nets and buses
 
+Net and bus @code{object}s are straight line segments which represent
+electrical connectivity.  Nets represent single wires, and buses
+multi-wire connections of arbitrary composition.
+
+All of the functions that work on line @code{object}s also work with
+nets and buses (@pxref{Lines}).  Note that @code{line?} will return
+@code{#f} if called with a net or bus argument.
+
+@defun net? object
+Returns @samp{#t} if and only if @var{object} is a net.
+@end defun
+
+@defun make-net start end [color]
+Creates and returns a new net @code{object}.  @var{start} is the
+position of the start of the new net in the form @code{(x . y)} and
+@var{end} is the position of end of the net.  If @var{color} is
+specified, it should be the integer color map index of the color with
+which to draw the net.  If @var{color} is not specified, the default
+net color is used.
+@end defun
+
+@defun bus? object
+Returns @samp{#t} if and only if @var{object} is a bus.
+@end defun
+
+@defun make-bus start end [color]
+Creates and returns a new bus @code{object}.  Arguments are as for
+@code{make-net}.
+@end defun
+
 @node Pins
 @subsection Pins
 
