@@ -655,26 +655,12 @@
 (define-public object-stroke %object-stroke)
 (define-public set-object-stroke! %set-object-stroke!)
 
-;; object-stroke-width obj
-;;
-;; Returns the stroke width used to draw obj
 (define-public (object-stroke-width obj)
   (list-ref (object-stroke obj) 0))
 
-;; object-stroke-cap obj
-;;
-;; Returns the cap style used to draw obj. One of the symbols none,
-;; square or round.
 (define-public (object-stroke-cap obj)
   (list-ref (object-stroke obj) 1))
 
-;; object-stroke-dash obj
-;;
-;; Returns the dash style used to draw obj.  The style is returned as
-;; a list, where the first element is the style itself (one of the
-;; symbols solid, dotted, dashed, center or phantom), and the
-;; remaining elements (if present) are the dot/dash spacing and dash
-;; length used in the dash style.
 (define-public (object-stroke-dash obj)
   (list-tail (object-stroke obj) 2))
 
@@ -683,24 +669,8 @@
 
 ;;;; Object bounds
 
-;; object-bounds [object...]
-;;
-;; Return the bounds containing the objects passed as arguments.  The
-;; bounds returned are in world coordinates, and are given in the
-;; form:
-;;
-;;  ((left . top) . (right . bottom))
-;;
-;; Note that this function always returns the actual bounds of the
-;; objects, not the visible bounds.
 (define-public object-bounds %object-bounds)
 
-;; fold-bounds bounds...
-;;
-;; Calculate the extent of the smallest rectangle containing all of
-;; the bounds passed as arguments, which should be bounds as returned
-;; by object-bounds.  If any set of bounds is #f, it is ignored; if
-;; all are #f, #f is returned.
 (define-public (fold-bounds . bounds)
   (fold
    (lambda (a b)

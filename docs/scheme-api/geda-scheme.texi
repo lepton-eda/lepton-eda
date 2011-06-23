@@ -477,6 +477,221 @@ the @code{(geda object)} module.
 @node General object functions
 @subsection General object functions
 
+@defun object? obj
+Returns @samp{#t} if and only if @var{obj} is an @code{object}.
+@end defun
+
+@defun copy-object object
+Returns a deep copy of @var{object}.  The new @code{object} returned
+has no attached attributes, and is not part of a @code{page} or part
+of a component @code{object}.
+@end defun
+
+@defun object-component object
+Returns the component @code{object} that contains @var{object}, or
+@samp{#f} if @var{object} is not part of a component.
+@end defun
+
+@defun object-connections object
+Returns a list of other @code{object}s that are @emph{directly}
+connected to @var{object}.  If @code{object} is not included in a
+@code{page}, raises an @samp{object-state} error.  The connections
+reported are independent of inclusion in components.
+
+For example, consider a page containing a net and a component, and the
+component contains a single pin.  If the connectable end of the pin
+intersects the net, then @code{(object-connections <net>)} will return
+a list containing the pin @code{object}, and @emph{not} the component.
+@end defun
+
+@menu
+* Object sub-types::
+* Object bounds::
+* Object color::
+* Object fill and stroke::
+@end menu
+
+@node Object sub-types
+@subsubsection Object sub-types
+
+Schematic element @code{object}s come in several subtypes.
+
+@defun object-type object
+Returns the sub-type of @var{object} as a symbol.  The subtype will be
+one of the following symbols:
+
+@itemize
+@item
+@samp{arc}
+@item
+@samp{box}
+@item
+@samp{bus}
+@item
+@samp{circle}
+@item
+@samp{complex} (indicates a component @code{object})
+@item
+@samp{line}
+@item
+@samp{net}
+@item
+@samp{path}
+@item
+@samp{picture}
+@item
+@samp{pin}
+@item
+@samp{text}
+@end itemize
+@end defun
+
+@defun object-type? object type
+Returns @samp{#t} if and only if @var{object} is an @code{object} and
+that its subtype is @var{type}, which should be a symbol.
+@end defun
+
+@node Object bounds
+@subsubsection Object bounds
+
+The bounds of an object is the smallest bounding rectangle of the
+object, expressed in document coordinates (@pxref{Coordinate system}).
+
+@defun object-bounds objects...
+Returns the world coordinate bounding box containing all of the
+@var{objects} passed as arguments, or @samp{#f} if none of the
+@var{objects} have bounds (for example, this can occur if no
+@var{objects} are specified, or if they are all empty component
+@code{object}s).
+
+@strong{Note}: @code{object-bounds} always returns the actual bounds
+of the @var{objects}, not the visible bounds.  This means that the bounds of
+invisible text is always included.
+@end defun
+
+@defun fold-bounds bounds...
+Calculates the union of several sets of @var{bounds} (as returned by
+@code{object-bounds}).  If any of the @var{bounds} are @samp{#f}, they
+are skipped; if all of the @var{bounds} are @samp{#f}, @samp{#f} is
+returned.
+@end defun
+
+@node Object color
+@subsubsection Object color
+
+Object colors in gEDA documents are specified as indices into a color
+map.  This allows users to specify the color map that suits them when
+viewing schematics and symbols.
+
+@defun object-color object
+Returns the integer color map index of the the color used to draw
+@var{object}.
+@end defun
+
+@defun set-object-color! object color
+Sets the integer color map index for @var{object} to @var{color}.
+Returns @var{object}.
+@end defun
+
+@node Object fill and stroke
+@subsubsection Object fill and stroke
+
+Graphical object subtypes -- lines, boxes, circles, arcs and paths --
+are drawn with a stroke pattern that can be configured in detail.
+
+@defun object-stroke object
+Returns the stroke settings of the @var{object}, which must be a line,
+box, circle, arc or path @code{object}.  The return value is a list of
+parameters:
+
+@enumerate
+@item
+stroke width, as an integer number of world units
+@item
+cap style, one of the symbols @code{none}, @code{square} or
+@code{round}.
+@item
+dash style, one of the symbols @code{solid}, @code{dotted},
+@code{dashed}, @code{center} or @code{phantom}.
+@item
+up to two dash parameters, depending on the dash style:
+@itemize
+@item
+for solid lines, no parameters;
+@item
+for dotted lines, dot spacing;
+@item
+for other styles, dot/dash spacing and dash length.
+@end itemize
+@end enumerate
+@end defun
+
+@defun set-object-stroke! object width cap dash [dash-space [dash-length]]
+Set the stroke settings of the @var{object}, which must be a line,
+box, circle, arc or path @code{object}.  The arguments are the same as
+the contents of the list returned by @code{object-stroke}.  Returns
+@var{object}.
+@end defun
+
+@defun object-stroke-width object
+Returns the integer stroke width of @var{object}, which must be a
+line, box, circle, arc or path @code{object}.
+@end defun
+
+@defun object-stroke-cap object
+Returns the stroke cap style of @var{object}, which must be a line,
+box, circle, arc or path @code{object}.  The returned value is one of
+the symbols @code{none}, @code{square} or @code{round}.
+@end defun
+
+@defun object-stroke-dash object
+Returns the dash style of @var{object}, which must be a line, box,
+circle, arc or path @code{object}.  The return value is a list of
+between one and three parameters:
+
+@enumerate
+@item
+dash style, one of the symbols @code{solid}, @code{dotted},
+@code{dashed}, @code{center} or @code{phantom}.
+@item
+for styles other than @code{solid}, dot/dash spacing;
+@item
+for @code{dashed}, @code{center} and @code{phantom}, dash length.
+@end enumerate
+@end defun
+
+Some types of @code{object} -- boxes, circles and paths -- can have
+their interiors filled with a variety of patterns.
+
+@defun object-fill object
+Returns the fill settings of @var{object}, which must be a box, circle
+or path @code{object}.  The return value is a list of one to six
+parameters:
+
+@enumerate
+@item
+fill style, one of the symbols @code{hollow}, @code{solid},
+@code{mesh} or @code{hatch};
+@item
+up to five fill parameters, depending on fill style:
+@enumerate
+@item
+none for @code{hollow} or @code{solid} fills;
+@item
+line width, line angle (in degrees) and line spacing for @code{hatch} fills;
+@item
+line width, first angle and spacing, and second angle and spacing for
+@code{mesh} fills.
+@end enumerate
+@end enumerate
+@end defun
+
+@defun set-object-fill! object fill-type . fill-args
+Sets the fill settings of @var{object}, which must be a box, circle or
+path @code{object}.  The arguments are the same as the contents of the
+list returned by @code{object-fill}.  Returns @var{object}.
+@end defun
+
 @node Lines
 @subsection Lines
 
