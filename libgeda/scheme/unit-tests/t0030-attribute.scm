@@ -132,6 +132,9 @@
 
     (page-append! page pin1 pin2 x)
 
+    ;; Detach when already detached
+    (assert-equal pin1 (detach-attribs! pin1 x))
+
     (attach-attribs! pin1 x)
 
     (assert-thrown 'object-state

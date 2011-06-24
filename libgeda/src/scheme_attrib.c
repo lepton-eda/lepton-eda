@@ -222,6 +222,11 @@ SCM_DEFINE (detach_attrib_x, "%detach-attrib!", 2, 0, 0,
   OBJECT *obj = edascm_to_object (obj_s);
   OBJECT *attrib = edascm_to_object (attrib_s);
 
+  /* If attrib isn't attached, do nothing */
+  if (attrib->attached_to == NULL) {
+    return obj_s;
+  }
+
   /* Check that attrib isn't attached elsewhere */
   if (attrib->attached_to != obj) {
     scm_error (edascm_object_state_sym, s_detach_attrib_x,
