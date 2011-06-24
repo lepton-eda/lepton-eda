@@ -45,6 +45,7 @@ URL for the original version.
 
 * Concept Index::
 * Function Index::
+* Variable Index::
 @end menu
 
 @node Introduction
@@ -1455,6 +1456,8 @@ Adds @var{object} to the selection of its containing @code{page}.  If
 @var{object} is not directly included in a @code{page}, raises an
 @samp{object-state} error.  If @var{object} is already selected, does
 nothing.  Returns @var{object}.
+
+@strong{Note}: This function does not call @code{select-objects-hook}.
 @end defun
 
 @defun deselect-object! object
@@ -1462,10 +1465,85 @@ Removes @var{object} from the selection of its containing @code{page}.
 If @var{object} is not directly included in a @code{page}, raises an
 @samp{object-state} error.  If @var{object} is not selected, does
 nothing.  Returns @var{object}.
+
+@strong{Note}: This function does not call
+@code{deselect-objects-hook}.
 @end defun
 
 @node Hooks
 @section Hooks
+
+To use the hooks described in this section, you will need to load the
+@code{(gschem hook)} module.
+
+gschem defines a number of hooks that allow functions to be
+automatically run whenever a number of built-in actions are invoked by
+the user.
+
+Most Scheme functions do not call these hooks.  If it makes sense for
+your code to invoke a standard hook, you should normally do so
+explicitly.
+
+@strong{Warning}: Functions added to these standard hooks should not
+normally modify their arguments.
+
+For more information on hooks in Guile, @pxref{Hooks, , Hooks, guile,
+Guile Reference Manual}.
+
+@defvar add-object-hook
+Called after objects are added to the page, at their initial creation.
+The argument is a list of the objects being added.
+@end defvar
+
+@defvar remove-objects-hook
+Called after objects are removed from the page.  Argument is a list of
+the objects being removed.
+@end defvar
+
+@defvar move-objects-hook
+Called after objects are moved.  Argument is a list of the objects
+that were mirrored.
+@end defvar
+
+@defvar mirror-objects-hook
+Called after objects are mirrored.  Argument is a list of the objects
+that were mirrored.
+@end defvar
+
+@defvar rotate-objects-hook
+Called after objects are rotated.  Argument is a list of the objects
+that were rotated.
+@end defvar
+
+@defvar paste-objects-hook
+Called after objects are pasted to the page, either via @strong{Edit →
+Copy Mode} or similar, or via buffers, or via the clipboard.  Argument
+is a list of the objects that were pasted.
+@end defvar
+
+@defvar attach-attribs-hook
+Called after attributes are attached to something.  The argument is a
+list of the attributes that were attached.
+@end defvar
+
+@defvar detach-attribs-hook
+Called after attributes are detached from something.  The argument is
+a list of the attributes that were detached.
+@end defvar
+
+@defvar select-objects-hook
+Called after objects are added to the selection.  The argument is a
+list of objects that were selected.
+@end defvar
+
+@defvar deselect-objects-hook
+Called after objects are removed from the selection.  The argument is
+a list of objects that were deselected.
+@end defvar
+
+@defvar new-page-hook
+Called when a new page is created. The argument is the new page.
+@end defvar
 
 @node Miscellanous gschem functions
 @section Miscellaneous gschem functions
@@ -1479,5 +1557,10 @@ nothing.  Returns @var{object}.
 @unnumbered Function Index
 
 @printindex fn
+
+@node Variable Index
+@unnumbered Variable Index
+
+@printindex vr
 
 @bye
