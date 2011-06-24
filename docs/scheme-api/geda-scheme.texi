@@ -1409,6 +1409,23 @@ focused on enabling and responding to user editing operations.
 @node Windows and views
 @section Windows and views
 
+To use the functions described in this section, you will need to load
+the @code{(gschem window)} module.
+
+@defun active-page
+Returns the @code{page} currently being displayed for editing.
+@end defun
+
+@defun set-active-page! page
+Sets the current @code{page} to @var{page}.
+@end defun
+
+@defun pointer-position
+Returns the current mouse pointer position in world coordinates in the
+form @samp{(x . y)}.  If the pointer is outside the display area,
+returns @samp{#f}.
+@end defun
+
 @node Selections
 @section Selections
 
