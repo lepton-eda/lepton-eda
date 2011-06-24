@@ -1429,6 +1429,41 @@ returns @samp{#f}.
 @node Selections
 @section Selections
 
+To use the functions described in this section, you will need to load
+the @code{(gschem selection)} module.
+
+Each @code{page} in gschem has a @dfn{selection} associated with it,
+which is some subset of the @code{page}s contents.  Most actions in
+gschem operate on the currently selected objects.
+
+@defun page-selection page
+Returns the current selection for @var{page}, as a list of
+@code{object}s.
+@end defun
+
+@defun object-selected? object
+Returns @samp{#t} if @var{object} is in its containing page's
+selection. Otherwise, returns @samp{#f}.  If @var{object} is not in a
+@code{page}, raises an @samp{object-state} error.
+
+@strong{Note}: @var{object} must be @emph{directly} included in a
+@code{page}, not via inclusion in a component @code{object}.
+@end defun
+
+@defun select-object! object
+Adds @var{object} to the selection of its containing @code{page}.  If
+@var{object} is not directly included in a @code{page}, raises an
+@samp{object-state} error.  If @var{object} is already selected, does
+nothing.  Returns @var{object}.
+@end defun
+
+@defun deselect-object! object
+Removes @var{object} from the selection of its containing @code{page}.
+If @var{object} is not directly included in a @code{page}, raises an
+@samp{object-state} error.  If @var{object} is not selected, does
+nothing.  Returns @var{object}.
+@end defun
+
 @node Hooks
 @section Hooks
 
