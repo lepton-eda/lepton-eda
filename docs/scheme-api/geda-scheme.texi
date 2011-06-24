@@ -1284,6 +1284,114 @@ are attached as an attribute.
 @node Core attribute functions
 @section Core attribute functions
 
+To use the functions described in this section, you will need to load
+the @code{(geda attrib)} module.
+
+Attributes are text @code{object}s with a particular format of string.
+They can be floating, or they can be attached to another
+@code{object}.
+
+@defun attribute? object
+Returns true if and only if @var{object} is an attribute (i.e. a text
+@code{object} and in attribute format).
+@end defun
+
+@subsection Attribute names and values
+
+@defun parse-attrib text
+Splits the string from @var{text} (a text @code{object}) into name and
+value, if it is in attribute format.  If it is not in attribute
+format, raises an @samp{attribute-format} error.  The return value is
+in the form @samp{(@var{name} . @var{value})}.
+@end defun
+
+@defun attrib-name attrib
+Returns the name part of @var{attrib}, as a string.
+@end defun
+
+@defun attrib-value attrib
+Returns the value part of @var{attrib}, as a string.
+@end defun
+
+@defun set-attrib-value! attrib value
+Sets the value part of @var{attrib} to @var{value}.
+@end defun
+
+@subsection Attribute attachment
+
+@defun attrib-attachment attrib
+If @var{attrib} is attached to another @code{object}, returns that
+object.  Otherwise, returns @samp{#f}.
+@end defun
+
+@defun object-attribs object
+Returns a list of all attributes attached to @var{object}.
+@end defun
+
+@defun attach-attribs! object [attribs...]
+Attach @var{attribs} to @var{object}.  All the @var{attribs} must be
+text @code{object}s.  The following conditions must be satisfied, or
+an @samp{object-state} error will be raised:
+
+@itemize
+@item
+Neither @var{object} nor any of the @var{attribs} may be already
+attached as an attribute;
+@item
+Both @var{object} and all @var{attribs} must be part of the same
+@code{page} and/or component @code{object};
+@end itemize
+
+Any @var{attribs} that are already attached to @var{object} are
+ignored.  Returns @var{object}.
+
+@strong{Note}: For historical reasons, @code{attach-attribs!} does not
+require that all @var{attribs} satisfy @code{attribute?}.
+Nevertheless, avoid attaching non-attribute text objects as attributes.
+@end defun
+
+@defun detach-attribs! object [attribs...]
+Detach @var{attribs} from @var{object}.  Any @var{attribs} that are
+not attached as attributes are ignored.  If any @var{attribs} are
+attached to @code{object}s other than @var{object}, an
+@samp{object-state} error is raised.
+@end defun
+
+@subsection Inherited and promoted attributes
+
+@dfn{Inherited attributes} are unattached attributes inside a
+component @code{object}.
+
+@defun inherited-attribs object
+Returns the inherited attributes of @var{object}, if @var{object} is a
+component.  If @var{object} is not a component, returns the empty
+list.
+@end defun
+
+@defun attrib-inherited? attrib
+Returns @samp{#t} if @var{attrib} is an inherited attribute.
+@end defun
+
+@dfn{promotable attributes} are inherited attributes that are both
+visible and have names that are in the list of promotable attributes
+set with the @code{always-promote-attributes} rc file parameter.
+
+@defun promotable-attribs component
+Returns a list of promotable attributes of @var{component}.
+@end defun
+
+@defun promote-attribs! component
+Promote all promotable attributes from @var{component} into the
+@code{page} that contains @var{component}.  If @var{component} is not
+in a page, an @samp{object-state} error is raised.
+
+All promotable attributes are copied, and made invisible.  The copies
+are added to the @code{page}, and attached as attributes of @var{component}.
+
+The promoted attributes are returned.  If @var{component} is not in
+fact a component @code{object}, does nothing and returns the empty list.
+@end defun
+
 @node gschem API Reference
 @chapter gschem API Reference
 
