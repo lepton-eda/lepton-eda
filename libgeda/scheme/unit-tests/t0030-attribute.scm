@@ -9,8 +9,8 @@
   (let ((good (make-text '(1 . 2) 'lower-left 0 "name=value" 10 #t 'both))
         (bad (make-text '(1 . 2) 'lower-left 0 "name value" 10 #t 'both)))
 
-    (assert-true (attribute? good))
-    (assert-true (not (attribute? bad)))
+    (assert-equal #t (attribute? good))
+    (assert-equal #f (attribute? bad))
 
     (assert-equal "name" (attrib-name good))
     (assert-equal "value" (attrib-value good))

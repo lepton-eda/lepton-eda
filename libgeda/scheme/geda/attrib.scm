@@ -36,7 +36,7 @@
 ;;
 ;; Returns #t if a is an text object in attribute format.
 (define-public (attribute? a)
-  (and (text? a) (parse-attrib a)))
+  (and (text? a) (parse-attrib a) #t))
 
 ;; attrib-name a
 ;;
