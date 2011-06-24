@@ -1548,6 +1548,36 @@ Called when a new page is created. The argument is the new page.
 @node Miscellanous gschem functions
 @section Miscellaneous gschem functions
 
+@subsection gschem Attribute Helpers
+
+To use the functions described in this section, you will need to load
+the @code{(gschem attrib)} module.
+
+@defun add-attrib! target name value visible show
+Create a new attribute, either attached to a @var{target}
+@code{object} in the current @code{page}, or floating in the current
+@code{page} if @var{target} is @samp{#f}.  The @var{name} and
+@var{value} for the attribute must be strings, and if visible is
+@samp{#f}, the attribute will be invisible.  The @var{show} argument
+controls which parts of the attribute will be visible, and must be one
+of the following symbols:
+
+@itemize
+@item
+@samp{name}
+@item
+@samp{value}
+@item
+@samp{both}
+@end itemize
+
+This function exists to provide a way for actions defined in Scheme to
+use the same attribute placement heuristics as gschem's built-in
+@strong{Add Attribute} action.
+
+@xref{Text}, @ref{Attributes} and @ref{Windows and views}.
+@end defun
+
 @node Concept Index
 @unnumbered Concept Index
 
