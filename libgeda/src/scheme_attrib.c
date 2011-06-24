@@ -139,6 +139,9 @@ SCM_DEFINE (attrib_attachment, "%attrib-attachment", 1, 0, 0,
  * API, and are required in order to ensure that the Scheme API is
  * safe.
  *
+ * If \a attrib_s is already attached to \a obj_s, does nothing
+ * successfully.
+ *
  * \note Scheme API: Implements the %attach-attrib! procedure of
  * the (geda core attrib) module.
  *
@@ -157,6 +160,9 @@ SCM_DEFINE (attach_attrib_x, "%attach-attrib!", 2, 0, 0,
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   OBJECT *attrib = edascm_to_object (attrib_s);
+
+  /* Check that attachment doesn't already exist */
+  if (attrib->attached_to == obj) return obj_s;
 
   /* Check that both are in the same page and/or complex object */
   if ((obj->parent != attrib->parent)

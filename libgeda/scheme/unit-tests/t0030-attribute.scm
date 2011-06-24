@@ -44,6 +44,11 @@
     (assert-equal (list x) (object-attribs p))
     (assert-equal p (attrib-attachment x))
 
+    ;; Attach attribute twice
+    (assert-equal p (attach-attribs! p x))
+    (assert-equal (list x) (object-attribs p))
+    (assert-equal p (attrib-attachment x))
+
     ;; Attach attribute which is already attached, within same
     ;; component
     (assert-thrown 'object-state (attach-attribs! q x))
