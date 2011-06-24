@@ -1,6 +1,7 @@
 \input texinfo                              @c -*-texinfo-*-
 @setfilename geda-scheme.info
 @include version.texi
+@documentencoding utf-8
 @settitle gEDA Scheme Reference Manual @value{VERSION}
 
 @copying
@@ -11,11 +12,11 @@ Copyright @copyright{} 2011 Peter TB Brett
 The text of and illustrations in this document are licensed under a
 Creative Commons Attribution–Share Alike 3.0 Unported license
 ("CC-BY-SA"). An explanation of CC-BY-SA is available at
-http://creativecommons.org/licenses/by-sa/3.0/. The original authors
-of this document designate the gEDA Project as the "Attribution Party"
-for purposes of CC-BY-SA. In accordance with CC-BY-SA, if you
-distribute this document or an adaptation of it, you must provide the
-URL for the original version.
+@uref{http://creativecommons.org/licenses/by-sa/3.0/}. The original
+authors of this document designate the gEDA Project as the
+"Attribution Party" for purposes of CC-BY-SA. In accordance with
+CC-BY-SA, if you distribute this document or an adaptation of it, you
+must provide the URL for the original version.
 @end copying
 
 @titlepage
@@ -274,7 +275,7 @@ must not begin with a space (@samp{ }, Unicode @code{U+0020}).
 @end itemize
 
 @strong{Note}: Due to assumptions made by some gEDA tools, it is
-@emph{strongly recommended} that you use attribute @var{NAME}s which
+@emph{strongly recommended} that you use attribute @var{name}s which
 contain only lower-case Latin characters, decimal digits, full stops
 @samp{.}  (@code{U+002E}), and hyphens @samp{-} (@code{U+002D}).
 
@@ -285,7 +286,7 @@ There are two types of attribute:
 linked to another @code{object}.  To attach an attribute to another
 schematic element, both @code{object}s must be part of the same
 component or part of the same @code{object}.  For example, a
-@samp{netname=@var{NAME}} attribute attached to a net @code{object}
+@samp{netname=@var{name}} attribute attached to a net @code{object}
 can be used to give that net a specific name in netlist output, such
 as @samp{VCC} or @samp{GND}.
 
