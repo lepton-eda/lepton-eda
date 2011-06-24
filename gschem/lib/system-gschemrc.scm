@@ -839,14 +839,23 @@
 ; Start of hooks
 ;
 
-;
-; Comment in this scheme code if you want automatic numbering when
-; placing new component and copying components
+;;
+;; Comment in this scheme code if you want automatic numbering when
+;; placing new component and copying components.
 ;
 ;(load-from-path "auto-uref.scm")
-;(add-hook! new-page-hook auto-uref-init-page)
 ;(add-hook! add-component-hook auto-uref)
 ;(add-hook! copy-component-hook auto-uref)
+;
+;; Define value of page-offset for auto number on insert.
+;; Refdeses will be numbered from integer multiples of page-offset,
+;; depending on the lowest refdes value found on the page.
+;; If lowest value is 323 and page offset is 100, then next refdes
+;; will be 301.
+;; Setting to 0 disables the feature.
+;
+;(auto-uref-set-page-offset 100)
+
 
 ; Define default pin attributes
 ; Attributes: 
