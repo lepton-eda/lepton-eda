@@ -99,18 +99,18 @@
           (page-append! P t C) (component-append! C p)
 
           ; Attach attribute to component
-          (assert-dirties P (attach-attrib! C t))
+          (assert-dirties P (attach-attribs! C t))
           ; Detach attribute from component
-          (assert-dirties P (detach-attrib! C t))
+          (assert-dirties P (detach-attribs! C t))
 
           ; Move attribute into component
           (page-remove! P t)
           (component-append! C t)
 
           ; Attach attribute to pin
-          (assert-dirties P (attach-attrib! p t))
+          (assert-dirties P (attach-attribs! p t))
           ; Detach attribute from pin
-          (assert-dirties P (detach-attrib! p t))
+          (assert-dirties P (detach-attribs! p t))
           )
         (lambda ()
           (close-page! P)))

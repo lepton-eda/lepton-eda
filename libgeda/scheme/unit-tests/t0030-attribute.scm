@@ -31,7 +31,7 @@
         (z (make-text '(0 . 0) 'lower-left 0 "name=z" 10 #t 'both)))
 
     ;; Attach attribute outside component or page
-    (assert-thrown 'object-state (attach-attrib! C x))
+    (assert-thrown 'object-state (attach-attribs! C x))
     (assert-equal '() (object-attribs C))
     (assert-true (not (attrib-attachment x)))
 
@@ -40,37 +40,37 @@
     (component-append! D z)
 
     ;; Attach attribute to object in same component
-    (assert-equal x (attach-attrib! p x))
+    (assert-equal p (attach-attribs! p x))
     (assert-equal (list x) (object-attribs p))
     (assert-equal p (attrib-attachment x))
 
     ;; Attach attribute which is already attached, within same
     ;; component
-    (assert-thrown 'object-state (attach-attrib! q x))
+    (assert-thrown 'object-state (attach-attribs! q x))
 
     ;; Attach attribute to object in different component
-    (assert-thrown 'object-state (attach-attrib! p z))
+    (assert-thrown 'object-state (attach-attribs! p z))
     (assert-equal (list x) (object-attribs p))
     (assert-true (not (attrib-attachment z)))
 
     ;; Attach internal attribute to containing component
-    (assert-thrown 'object-state (attach-attrib! D z))
+    (assert-thrown 'object-state (attach-attribs! D z))
     (assert-equal '() (object-attribs D))
     (assert-true (not (attrib-attachment z)))
 
     ;; Attach attribute in component to floating object
-    (assert-thrown 'object-state (attach-attrib! C z))
+    (assert-thrown 'object-state (attach-attribs! C z))
     (assert-equal '() (object-attribs C))
     (assert-true (not (attrib-attachment z)))
 
     ;; Attach floating attribute to object in component
     (component-remove! D z)
-    (assert-thrown 'object-state (attach-attrib! p z))
+    (assert-thrown 'object-state (attach-attribs! p z))
     (assert-equal (list x) (object-attribs p))
     (assert-true (not (attrib-attachment z)))
 
     ;; Attach multiple attributes
-    (assert-equal y (attach-attrib! p y))
+    (assert-equal p (attach-attribs! p y))
     (assert-equal (list x y) (object-attribs p))
     (assert-equal p (attrib-attachment y))
     ))
@@ -94,7 +94,7 @@
           (page-append! Q z)
 
           ; Attach attribute to component in same page
-          (attach-attrib! C x)
+          (attach-attribs! C x)
           (assert-equal (list x) (object-attribs C))
           (assert-equal C (attrib-attachment x))
 
@@ -103,10 +103,10 @@
           (assert-thrown 'object-state (page-remove! P C))
 
           ; Attach attribute to component in different page
-          (assert-thrown 'object-state (attach-attrib! C z))
+          (assert-thrown 'object-state (attach-attribs! C z))
 
           ; Attach attribute to pin in component in page
-          (attach-attrib! p y)
+          (attach-attribs! p y)
           (assert-equal (list y) (object-attribs p))
           (assert-equal p (attrib-attachment y))
 
@@ -127,12 +127,12 @@
 
     (page-append! page pin1 pin2 x)
 
-    (attach-attrib! pin1 x)
+    (attach-attribs! pin1 x)
 
     (assert-thrown 'object-state
-      (detach-attrib! pin2 x))
+      (detach-attribs! pin2 x))
 
-    (assert-equal x (detach-attrib! pin1 x))
+    (assert-equal pin1 (detach-attribs! pin1 x))
     (assert-equal '() (object-attribs pin1)) ))
 
 (begin-test 'inherited-attribs
@@ -149,7 +149,7 @@
 
     (assert-equal (list x y) (inherited-attribs C))
 
-    (attach-attrib! p x)
+    (attach-attribs! p x)
 
     (assert-equal (list y) (inherited-attribs C))))
 
@@ -163,9 +163,9 @@
          (z (make-text '(1 . 2) 'lower-left 0 "name=z" 10 #t 'both)))
 
     (page-append! P A w x)
-    (attach-attrib! A x)
+    (attach-attribs! A x)
     (component-append! A p y z)
-    (attach-attrib! p y)
+    (attach-attribs! p y)
 
     (assert-true (not (attrib-inherited? w)))
     (assert-true (not (attrib-inherited? x)))

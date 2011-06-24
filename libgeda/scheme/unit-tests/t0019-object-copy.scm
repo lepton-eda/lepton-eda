@@ -20,19 +20,19 @@
     (assert-equal P (object-page x))
     (assert-equal #f (object-page (copy-object x)))
 
-    (attach-attrib! A x)
+    (attach-attribs! A x)
 
     (assert-equal A (attrib-attachment x))
     (assert-equal #f (attrib-attachment (copy-object x)))
 
-    (detach-attrib! A x)
+    (detach-attribs! A x)
     (page-remove! P x)
     (component-append! A p x)
 
     (assert-equal A (object-component x))
     (assert-equal #f (object-component (copy-object x)))
 
-    (attach-attrib! p x)
+    (attach-attribs! p x)
     (assert-equal p (attrib-attachment x))
     (assert-equal #f (attrib-attachment (copy-object x)))))
 

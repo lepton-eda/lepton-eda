@@ -144,7 +144,7 @@ SCM_DEFINE (attrib_attachment, "%attrib-attachment", 1, 0, 0,
  *
  * \param obj_s the object to which to attach an attribute.
  * \param attrib_s the attribute to attach.
- * \return \a attrib_s.
+ * \return \a obj_s.
  */
 SCM_DEFINE (attach_attrib_x, "%attach-attrib!", 2, 0, 0,
             (SCM obj_s, SCM attrib_s), "Attach an attribute to an object.")
@@ -186,7 +186,8 @@ SCM_DEFINE (attach_attrib_x, "%attach-attrib!", 2, 0, 0,
 
   o_page_changed (toplevel, obj);
 
-  return attrib_s;
+  scm_remember_upto_here_1 (attrib_s);
+  return obj_s;
 }
 
 /*! \brief Detach an attribute from an object.
@@ -230,7 +231,8 @@ SCM_DEFINE (detach_attrib_x, "%detach-attrib!", 2, 0, 0,
 
   o_page_changed (toplevel, obj);
 
-  return attrib_s;
+  scm_remember_upto_here_1 (attrib_s);
+  return obj_s;
 }
 
 /*! \brief Get a complex object's promotable attribs.

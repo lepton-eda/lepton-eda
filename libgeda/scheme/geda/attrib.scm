@@ -28,8 +28,6 @@
 (define-public parse-attrib %parse-attrib)
 (define-public object-attribs %object-attribs)
 (define-public attrib-attachment %attrib-attachment)
-(define-public attach-attrib! %attach-attrib!)
-(define-public detach-attrib! %detach-attrib!)
 (define-public promotable-attribs %promotable-attribs)
 
 ;; attribute? a
@@ -108,3 +106,11 @@
 (define-public (attrib-inherited? attrib)
   (not (or (attrib-attachment attrib)
            (not (object-component attrib)))))
+
+(define-public (attach-attribs! obj . attribs)
+  (for-each (lambda (x) (%attach-attrib! obj x)) attribs)
+  obj)
+
+(define-public (detach-attribs! obj . attribs)
+  (for-each (lambda (x) (%detach-attrib! obj x)) attribs)
+  obj)

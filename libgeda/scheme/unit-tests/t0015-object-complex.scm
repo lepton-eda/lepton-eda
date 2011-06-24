@@ -143,7 +143,7 @@
         (pin (make-net-pin '(0 . 0) '(100 . 0)))
         (attrib (make-text '(0 . 0) 'lower-left 0 "name=x" 10 #t 'both)))
     (component-append! comp pin attrib)
-    (attach-attrib! pin attrib)
+    (attach-attribs! pin attrib)
     (assert-thrown 'object-state (component-remove! comp pin))
     (assert-thrown 'object-state (component-remove! comp attrib))))
 
