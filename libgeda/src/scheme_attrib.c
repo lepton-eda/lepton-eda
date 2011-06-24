@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library - Scheme API
- * Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,8 @@ SCM_SYMBOL (attribute_format_sym, "attribute-format");
  * \par Function Description
  * Tries to parse the underlying string of the text object \a text_s
  * into name and value strings.  If successful, returns a pair of the
- * form <tt>(name . value)</tt>.  Otherwise, returns SCM_BOOL_F.
+ * form <tt>(name . value)</tt>.  Otherwise, raises an
+ * <tt>attribute-format</tt> error.
  *
  * \note Scheme API: Implements the %attrib-parse procedure of the
  * (geda core attrib) module.
@@ -51,6 +52,7 @@ SCM_DEFINE (parse_attrib, "%parse-attrib", 1, 0, 0,
   SCM_ASSERT (edascm_is_object_type (text_s, OBJ_TEXT), text_s,
               SCM_ARG1, s_parse_attrib);
 
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *text = edascm_to_object (text_s);
 
   scm_dynwind_begin (0);
@@ -60,6 +62,12 @@ SCM_DEFINE (parse_attrib, "%parse-attrib", 1, 0, 0,
   if (o_attrib_get_name_value (text, &name, &value)) {
     result = scm_cons (scm_from_utf8_string (name),
                        scm_from_utf8_string (value));
+  } else {
+    scm_error (attribute_format_sym, s_parse_attrib,
+               _("~A is not a valid attribute: invalid string '~A'."),
+               scm_list_2 (text_s,
+                           scm_from_utf8_string (o_text_get_string (toplevel, text))),
+               SCM_EOL);
   }
   scm_dynwind_end ();
 

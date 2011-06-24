@@ -36,20 +36,20 @@
 ;;
 ;; Returns #t if a is an text object in attribute format.
 (define-public (attribute? a)
-  (and (text? a) (parse-attrib a) #t))
+  (false-if-exception (and (parse-attrib a) #t)))
 
 ;; attrib-name a
 ;;
-;; Returns the attribute name of a, or #f if a is not in attribute
-;; format.
+;; Returns the attribute name of a, or raises an attribute-format
+;; error if a is not in attribute format.
 (define-public (attrib-name a)
   (let ((v (parse-attrib a)))
     (if v (car v) v)))
 
 ;; attrib-value a
 ;;
-;; Returns the attribute value of a, or #f if a is not in attribute
-;; format.
+;; Returns the attribute value of a, or raises an attribute-format
+;; error if a is not in attribute format.
 (define-public (attrib-value a)
   (let ((v (parse-attrib a)))
     (if v (cdr v) v)))

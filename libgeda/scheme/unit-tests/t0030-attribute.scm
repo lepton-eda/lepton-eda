@@ -17,9 +17,9 @@
     (assert-equal (cons (attrib-name good) (attrib-value good))
                   (parse-attrib good))
 
-    (assert-true (not (parse-attrib bad)))
-    (assert-true (not (attrib-name bad)))
-    (assert-true (not (attrib-value bad))) ))
+    (assert-thrown 'attribute-format (parse-attrib bad))
+    (assert-thrown 'attribute-format (attrib-name bad))
+    (assert-thrown 'attribute-format (attrib-value bad)) ))
 
 (begin-test 'attach-attrib
   (let ((C (make-component "testcomponent1" '(0 . 0) 0 #f #f))
