@@ -1146,6 +1146,141 @@ will be one of the following symbols:
 @node Components
 @subsection Components
 
+Component @code{object}s represent instances of symbols.  They contain
+other @code{object}s copied from the original symbol when it is
+instantiated into a schematic.
+
+A component's @var{basename} is a string used to identify which symbol
+it originated from.  When instantiating a symbol on initial placement
+in a schematic, or when recreating a component while loading a
+schematic, the @var{basename} is used to find the underlying symbol
+file in the component library.
+
+@xref{Component objects}.
+
+@strong{Note}: In the gEDA C source code, these are normally called
+``complex'' objects.  However, as Guile Scheme supports complex
+numbers, and the procedures related to working with complex numbers
+use the word @samp{complex} to describe them, this API uses
+@samp{component} to avoid ambiguity.
+
+The @var{position}, @var{angle} and @var{mirror} flag of a component
+indicates the transformation that was applied to the contents of the
+original symbol.  The transformation is applied in the following order:
+
+@enumerate
+@item
+If @var{mirror} is true, the symbol is reflected in the line x = 0.
+@item
+The symbol is rotated anti-clockwise by @var{angle} degrees about the
+point (0,0) (@var{angle} may only be an integer multiple of 90
+degrees).
+@item
+Finally, the symbol is translated by @var{position}.
+@end enumerate
+
+The component's contents (as returned by @code{component-contents})
+have the transformation already applied to them.  Updating the
+translation information using e.g. @code{set-component!} will not
+alter them -- that must be done separately (e.g. by reloading the
+symbol).
+
+@defun component? object
+Returns @samp{#t} if and only if @var{object} is a component @code{object}.
+@end defun
+
+@defun make-component basename position angle mirror locked
+Creates and returns a new, empty component @code{object} with the
+given @var{basename}.  @var{position}, @var{angle} and @var{mirror}
+specify the symbol transformation.  If @var{locked} is true, the
+component will be protected against accidental selection by the user
+(this is used in gschem e.g. for titleblocks).
+
+No attempt is made to load a symbol matching @var{basename} from
+component libraries, and the returned component is flagged as
+embedded.
+@end defun
+
+@defun make-component/library basename position angle mirror locked
+Searches the component libraries for a symbol matching @var{basename},
+and if found, instantiates the symbol and returns the resulting
+component (which is not flagged as embedded).  Arguments are as for
+@code{make-component}.
+
+If no match for @var{basename} is found, @samp{#f} is returned.
+@end defun
+
+@defun set-component! component position angle mirror locked
+Sets the parameters of @var{component}.  Arguments are the same as to
+@code{make-component}.  Returns @var{component}.
+
+@strong{Note}: Remember that modifying the transformation parameters
+of a component does not update the component's contents.
+@end defun
+
+@defun component-info component
+Returns the parameters of @var{component} as a list of the form:
+
+@example
+(basename (x . y) angle mirror locked)
+@end example
+@end defun
+
+@defun component-basename component
+Returns the basename of @var{component}.
+@end defun
+
+@defun component-position component
+Returns the position to which the original symbol was translated when
+creating @var{component}.
+@end defun
+
+@defun component-angle component
+Returns the angle by which the original symbol was rotated when
+creating @var{component}, as an integer number of degrees.
+@end defun
+
+@defun component-mirror? component
+Returns true if the original symbol was mirrored when creating
+@var{component}.
+@end defun
+
+@defun component-locked? component
+Returns true if @var{component} is non-selectable.
+@end defun
+
+@defun component-contents component
+Returns the contents of @var{components} as a list of objects.
+@end defun
+
+@defun component-append! component objects...
+Appends @var{objects} (which must not be component @code{object}s) to
+the contents of @var{component}.  Any @var{objects} which are already
+included in @var{component} are ignored.  If any @var{objects} are
+already part of a @code{page} or of another component @code{object},
+an @samp{object-state} error is raised. Returns @var{component}.
+@end defun
+
+@defun component-remove! component objects...
+Removes @var{objects} from the contents of @var{component}.  Any
+@var{objects} which are not part of a component or of a page are
+ignored. Returns @var{component}.
+
+An @samp{object-state} error will be raised if any @var{objects}
+satisfy any of the following conditions:
+
+@itemize
+@item
+are part of a @code{page};
+@item
+are part of a component @code{object} other than @var{component};
+@item
+have attached attributes
+@item
+are attached as an attribute.
+@end itemize
+@end defun
+
 @node Core attribute functions
 @section Core attribute functions
 
