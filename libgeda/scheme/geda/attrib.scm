@@ -97,7 +97,7 @@
                  ;; Return copy
                  y))
                (promotable-attribs object))
-        #f)))
+        '())))
 
 ;; attrib-inherited? attrib
 ;;

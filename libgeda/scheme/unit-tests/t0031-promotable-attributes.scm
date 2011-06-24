@@ -1,6 +1,9 @@
 ;; Test promotable-attributes function
 
 (use-modules (unit-test))
+(use-modules (geda page))
+(use-modules (geda object))
+(use-modules (geda attrib))
 
 ;; Unfortunately, we can't test this at the moment, because the
 ;; default list of promotable attribute names is empty.  We suppress
@@ -15,3 +18,13 @@
 
 (begin-test 'promote-attribs!
             (throw 'missing-unit-test "We can't test this at the moment"))
+
+(begin-test 'promote-attribs!/not-in-page
+  (let ((p (make-net-pin '(0 . 0) '(100 . 0))))
+    (assert-thrown 'object-state (promote-attribs! p))))
+
+(begin-test 'promote-attribs!/non-component
+  (let ((P (make-page "/test/page/A"))
+        (p (make-net-pin '(0 . 0) '(100 . 0))))
+    (page-append! P p)
+    (assert-equal '() (promote-attribs! p))))
