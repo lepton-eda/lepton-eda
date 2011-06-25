@@ -30,3 +30,32 @@
     (assert-equal '(1 . 2) (component-position C))
     (assert-equal '(1 . 2) (line-start b))
     (assert-equal '(3 . 4) (line-end b)) ))
+
+(begin-test 'rotate-objects!
+  (let ((C (make-component "test component" '(1 . 2) 0 #t #f))
+        (a (make-line '(1 . 2) '(3 . 4)))
+        (b (make-line '(1 . 2) '(3 . 4))))
+
+    ;; Rotate nothing
+    (assert-equal '() (rotate-objects! '(1 . 2) 90))
+
+    ;; Rotate a line
+    (assert-equal (list a) (rotate-objects! '(1 . 2) 90 a))
+    (assert-equal '(1 . 2) (line-start a))
+    (assert-equal '(-1 . 4) (line-end a))
+
+    ;; Rotate a component
+    (component-append! C b)
+    (assert-equal (list C) (rotate-objects! '(1 . 2) -270 C))
+    (assert-equal '(1 . 2) (component-position C))
+    (assert-equal 90 (component-angle C))
+    (assert-equal '(1 . 2) (line-start b))
+    (assert-equal '(-1 . 4) (line-end b))
+
+    ;; Rotate multiple objects
+    (assert-equal (list a C) (rotate-objects! '(1 . 2) -90 a C))
+    (assert-equal '(1 . 2) (line-start a))
+    (assert-equal '(3 . 4) (line-end a))
+    (assert-equal 0 (component-angle C))
+    (assert-equal '(1 . 2) (line-start b))
+    (assert-equal '(3 . 4) (line-end b)) ))

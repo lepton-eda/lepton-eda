@@ -368,3 +368,9 @@
    (lambda (x) (%translate-object! x (car vector) (cdr vector)))
    objects)
   objects)
+
+(define-public (rotate-objects! center angle . objects)
+  (for-each
+   (lambda (x) (%rotate-object! x (car center) (cdr center) angle))
+   objects)
+  objects)

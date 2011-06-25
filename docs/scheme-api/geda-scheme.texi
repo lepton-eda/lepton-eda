@@ -565,6 +565,13 @@ in the form @samp{(x . y)}.  Returns a list of the modified
 @var{objects}.
 @end defun
 
+@defun rotate-objects! center angle [objects...]
+Translate @var{objects} anti-clockwise by @var{angle} about
+@var{center}, a world coordinate position in the form @samp{(x . y)}.
+@var{angle} must be an integer multiple of 90 degrees.  Returns a list
+of the modified @var{objects}.
+@end defun
+
 @node Object bounds
 @subsubsection Object bounds
 

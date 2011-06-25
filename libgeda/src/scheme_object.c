@@ -1586,6 +1586,57 @@ SCM_DEFINE (translate_object_x, "%translate-object!", 3, 0, 0,
   return obj_s;
 }
 
+/*! \brief Rotate an object.
+ * \par Function Description
+ * Rotates \a obj_s anti-clockwise by \a angle_s about the point
+ * specified by \a x_s and \a y_s.  \a angle_s must be an integer
+ * multiple of 90 degrees.
+ *
+ * \note Scheme API: Implements the %rotate-object! procedure of the
+ * (geda core object) module.
+ *
+ * \param obj_s    #OBJECT smob for object to translate.
+ * \param x_s      x-coordinate of centre of rotation.
+ * \param y_s      y-coordinate of centre of rotation.
+ * \param angle_s  Angle to rotate by.
+ * \return \a obj_s.
+ */
+SCM_DEFINE (rotate_object_x, "%rotate-object!", 4, 0, 0,
+            (SCM obj_s, SCM x_s, SCM y_s, SCM angle_s),
+            "Rotate an object.")
+{
+  /* Check argument types */
+  SCM_ASSERT (edascm_is_object (obj_s), obj_s,
+              SCM_ARG1, s_rotate_object_x);
+  SCM_ASSERT (scm_is_integer (x_s), x_s,
+              SCM_ARG2, s_rotate_object_x);
+  SCM_ASSERT (scm_is_integer (y_s), y_s,
+              SCM_ARG3, s_rotate_object_x);
+  SCM_ASSERT (scm_is_integer (angle_s), angle_s,
+              SCM_ARG4, s_rotate_object_x);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (obj_s);
+  int x = scm_to_int (x_s);
+  int y = scm_to_int (y_s);
+  int angle = scm_to_int (angle_s);
+
+  /* FIXME Work around horribly broken libgeda behaviour.  Some
+   * libgeda functions treat a rotation of -90 degrees as a rotation
+   * of +90 degrees, etc., which is not sane. */
+  while (angle < 0) angle += 360;
+  while (angle >= 360) angle -= 360;
+  SCM_ASSERT (angle % 90 == 0, angle_s,
+              SCM_ARG4, s_rotate_object_x);
+
+  o_emit_pre_change_notify (toplevel, obj);
+  o_rotate_world (toplevel, x, y, angle, obj);
+  o_emit_change_notify (toplevel, obj);
+  o_page_changed (toplevel, obj);
+
+  return obj_s;
+}
+
 /*!
  * \brief Create the (geda core object) Scheme module.
  * \par Function Description
@@ -1611,7 +1662,7 @@ init_module_geda_core_object ()
                 s_make_arc, s_set_arc_x, s_arc_info,
                 s_make_text, s_set_text_x, s_text_info,
                 s_object_connections, s_object_complex,
-                s_translate_object_x,
+                s_translate_object_x, s_rotate_object_x,
                 NULL);
 }
 
