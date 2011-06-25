@@ -360,3 +360,11 @@
          (or a b)))
    #f ;; default
    bounds))
+
+;;;; Object transformations
+
+(define-public (translate-objects! vector . objects)
+  (for-each
+   (lambda (x) (%translate-object! x (car vector) (cdr vector)))
+   objects)
+  objects)

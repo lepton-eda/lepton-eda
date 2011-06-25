@@ -20,6 +20,7 @@ TESTS = unit-tests/t0001-geda-conf-lib.scm \
 	unit-tests/t0107-object-stroke-fill.scm \
 	unit-tests/t0108-object-connections.scm \
 	unit-tests/t0109-object-copy.scm \
+	unit-tests/t0110-object-transform.scm \
 	unit-tests/t0200-page.scm \
 	unit-tests/t0201-page-dirty.scm \
 	unit-tests/t0300-attribute.scm \

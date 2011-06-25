@@ -508,6 +508,7 @@ a list containing the pin @code{object}, and @emph{not} the component.
 
 @menu
 * Object sub-types::
+* Object transformations::
 * Object bounds::
 * Object color::
 * Object fill and stroke::
@@ -551,6 +552,17 @@ one of the following symbols:
 @defun object-type? object type
 Returns @samp{#t} if and only if @var{object} is an @code{object} and
 that its subtype is @var{type}, which should be a symbol.
+@end defun
+
+@node Object transformations
+@subsubsection Object transformations
+
+Objects can be translated, rotated, or mirrored about a point.
+
+@defun translate-objects! vector [objects...]
+Translate @var{objects} by @var{vector}, a world coordinate distance
+in the form @samp{(x . y)}.  Returns a list of the modified
+@var{objects}.
 @end defun
 
 @node Object bounds
