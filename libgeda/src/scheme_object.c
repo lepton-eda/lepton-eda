@@ -1637,6 +1637,39 @@ SCM_DEFINE (rotate_object_x, "%rotate-object!", 4, 0, 0,
   return obj_s;
 }
 
+/*! \brief Mirror an object.
+ * \par Function Description
+ * Mirrors \a obj_s in the line x = \a x_s.
+ *
+ * \note Scheme API: Implements the %mirror-object! procedure of the
+ * (geda core object) module.
+ *
+ * \param obj_s    #OBJECT smob for object to translate.
+ * \param x_s      x-coordinate of centre of rotation.
+ * \return \a obj_s.
+ */
+SCM_DEFINE (mirror_object_x, "%mirror-object!", 2, 0, 0,
+            (SCM obj_s, SCM x_s),
+            "Mirror an object.")
+{
+  /* Check argument types */
+  SCM_ASSERT (edascm_is_object (obj_s), obj_s,
+              SCM_ARG1, s_mirror_object_x);
+  SCM_ASSERT (scm_is_integer (x_s), x_s,
+              SCM_ARG2, s_mirror_object_x);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (obj_s);
+  int x = scm_to_int (x_s);
+
+  o_emit_pre_change_notify (toplevel, obj);
+  o_mirror_world (toplevel, x, 0, obj);
+  o_emit_change_notify (toplevel, obj);
+  o_page_changed (toplevel, obj);
+
+  return obj_s;
+}
+
 /*!
  * \brief Create the (geda core object) Scheme module.
  * \par Function Description
@@ -1663,6 +1696,7 @@ init_module_geda_core_object ()
                 s_make_text, s_set_text_x, s_text_info,
                 s_object_connections, s_object_complex,
                 s_translate_object_x, s_rotate_object_x,
+                s_mirror_object_x,
                 NULL);
 }
 

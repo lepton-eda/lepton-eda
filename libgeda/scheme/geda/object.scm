@@ -374,3 +374,9 @@
    (lambda (x) (%rotate-object! x (car center) (cdr center) angle))
    objects)
   objects)
+
+(define-public (mirror-objects! x . objects)
+  (for-each
+   (lambda (obj) (%mirror-object! obj x))
+   objects)
+  objects)

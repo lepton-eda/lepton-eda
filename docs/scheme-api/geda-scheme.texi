@@ -572,6 +572,11 @@ Translate @var{objects} anti-clockwise by @var{angle} about
 of the modified @var{objects}.
 @end defun
 
+@defun mirror-objects! x-offset [objects...]
+Mirror @var{objects} in the line @samp{x = @var{x-offset}}.  Returns a
+list of the modified @var{objects}.
+@end defun
+
 @node Object bounds
 @subsubsection Object bounds
 
