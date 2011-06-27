@@ -172,6 +172,7 @@ AC_CONFIG_FILES([Makefile
                  libgeda/libgeda.pc
                  libgeda/po/domain.mak
                  libgeda/po/Makefile.in
+                 libgeda/shell/Makefile
                  libgeda/data/Makefile
                  libgeda/docs/Makefile
                  libgeda/docs/images/Makefile
@@ -263,6 +264,7 @@ AC_CONFIG_FILES([Makefile
                  symbols/documentation/Makefile
 
                  docs/Makefile
+                 docs/scheme-api/Makefile
                  docs/scripts/Makefile
                  docs/toplevel/Makefile
                  docs/toplevel/gedadocs.html

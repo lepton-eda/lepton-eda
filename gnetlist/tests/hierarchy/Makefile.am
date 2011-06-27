@@ -20,7 +20,10 @@ tests:
 	  GEDADATARC=$(top_builddir)/gnetlist/lib \
 	  SCMDIR=${top_builddir}/gnetlist/scheme \
 	  SYMDIR=$(top_srcdir)/symbols \
-	    $(GNETLIST) -o $(BUILDDIR)/new_hierarchy.geda -g geda $(SRCDIR)/top.sch )
+	    $(GNETLIST) \
+	      -L $(top_srcdir)/libgeda/scheme \
+	      -o $(BUILDDIR)/new_hierarchy.geda \
+	      -g geda $(SRCDIR)/top.sch )
 	diff $(SRCDIR)/hierarchy.geda $(BUILDDIR)/new_hierarchy.geda;
 	rm -f $(BUILDDIR)/gnetlistrc
 

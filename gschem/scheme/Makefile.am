@@ -1,11 +1,20 @@
 ## -*- Makefile -*-
 
 scmdatadir = $(GEDADATADIR)/scheme
-scmdata_DATA = auto-uref.scm generate_netlist.scm gschem.scm list-keys.scm \
-	       print-NB-attribs.scm auto-place-attribs.scm pcb.scm \
-               default-attrib-positions.scm
-
-EXTRA_DIST = $(scmdata_DATA)
+nobase_dist_scmdata_DATA = \
+	auto-uref.scm \
+	generate_netlist.scm \
+	gschem.scm \
+	list-keys.scm \
+	print-NB-attribs.scm \
+	auto-place-attribs.scm \
+	pcb.scm \
+	default-attrib-positions.scm \
+	gschem/window.scm \
+	gschem/selection.scm \
+	gschem/deprecated.scm \
+	gschem/hook.scm \
+	gschem/attrib.scm
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~

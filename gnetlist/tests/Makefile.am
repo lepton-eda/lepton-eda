@@ -138,7 +138,8 @@ tests_ales:
 		$(BUILDDIR) $(SRCDIR)
 
 # switcap (does not work with make distcheck due to local test.ana file)
-	$(GNETLIST) -o $(BUILDDIR)/new_skt.switcap -g switcap \
+	$(GNETLIST) -L $(top_srcdir)/libgeda/scheme \
+		-o $(BUILDDIR)/new_skt.switcap -g switcap \
 		$(SRCDIR)/../examples/switcap/ckt.sch \
 		$(SRCDIR)/../examples/switcap/clocks.sch \
 		$(SRCDIR)/../examples/switcap/analysis.sch

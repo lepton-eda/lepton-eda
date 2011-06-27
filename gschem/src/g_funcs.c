@@ -47,7 +47,7 @@
 SCM g_funcs_print(SCM scm_filename)
 {
   char *filename;
-  TOPLEVEL *toplevel = global_window_current->toplevel;
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   
   SCM_ASSERT (scm_is_string (scm_filename), scm_filename,
               SCM_ARG1, "gschem-print");
@@ -76,7 +76,7 @@ SCM g_funcs_print(SCM scm_filename)
 SCM g_funcs_postscript(SCM scm_filename)
 {
   char *filename;
-  TOPLEVEL *toplevel = global_window_current->toplevel;
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
   SCM_ASSERT (scm_is_string (scm_filename), scm_filename,
               SCM_ARG1, "gschem-postscript");
@@ -109,16 +109,18 @@ SCM g_funcs_image(SCM scm_filename)
   SCM_ASSERT (scm_is_string (scm_filename), scm_filename,
               SCM_ARG1, "gschem-image");
 
+  GSCHEM_TOPLEVEL *w_current = g_current_window ();
+
   if (output_filename) {
-    x_image_lowlevel (global_window_current, output_filename,
-                      global_window_current->image_width,
-                      global_window_current->image_height,
+    x_image_lowlevel (w_current, output_filename,
+                      w_current->image_width,
+                      w_current->image_height,
 		      g_strdup("png"));
   } else  {
     filename = scm_to_utf8_string (scm_filename);
-    x_image_lowlevel (global_window_current, filename,
-                      global_window_current->image_width,
-                      global_window_current->image_height,
+    x_image_lowlevel (w_current, filename,
+                      w_current->image_width,
+                      w_current->image_height,
 		      g_strdup("png"));
     free(filename);
   }
@@ -267,82 +269,8 @@ SCM g_funcs_filesel(SCM scm_msg, SCM scm_templ, SCM scm_flags)
  */
 SCM g_funcs_use_rc_values(void)
 {
-  i_vars_set(global_window_current);
+  i_vars_set(g_current_window ());
   return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/*
- * Gets names from all objects of current page which selected-flags are true.
- */
-/* all of the declaration part is copied from some other c-code of
- * gEDA gschem. 
- * I don't really know, whether this all are necessary or not, but 
- * it works :-). */
-static void
-hash_table_2_list (gpointer key,
-                   gpointer value,
-                   gpointer user_data)
-{
-  SCM *plist = (SCM*)user_data;
-  *plist = scm_cons (scm_from_utf8_string ((char*)value), *plist);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM get_selected_component_attributes(GSCHEM_TOPLEVEL *w_current)
-{
-  SCM list = SCM_EOL;
-  OBJECT *obj;
-  GHashTable *ht;
-  const GList *iter;
- 
-  /* build a hash table */
-  ht = g_hash_table_new (g_str_hash, g_str_equal);
-  for (iter = s_page_objects (w_current->toplevel->page_current);
-       iter != NULL;
-       iter = g_list_next (iter)) {
-    obj = (OBJECT *)iter->data;
-    if (obj->selected && obj->type == OBJ_TEXT) {
-      const gchar *str = o_text_get_string (w_current->toplevel, obj);
-      if (str == NULL) continue;
-      /* add text string in the hash table */
-      g_hash_table_insert (ht, (gchar *) str, (gchar *) str);
-     }
-   }
-  /* now create a scheme list of the entries in the hash table */
-  g_hash_table_foreach (ht, hash_table_2_list, &list);
-  /* and get ride of the hast table */
-  g_hash_table_destroy (ht);
-
-  return list;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief Get selected filename of current schematic.
- *  \par Function Description
- *  This function gets the whole filename of the current schematic.
- *  Specifically, the <B>page_filename</B> of the current page.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object to get filename from.
- *  \return whole filename of current schematic.
- */
-SCM get_selected_filename(GSCHEM_TOPLEVEL *w_current)
-{
-  SCM return_value;
-  
-  exit_if_null(w_current);
-  
-  return_value = scm_take0str (w_current->toplevel->page_current->page_filename);
-
-  return(return_value);
 }
 
 /*! \brief Use gschemdoc to open a browser to a specific wiki page

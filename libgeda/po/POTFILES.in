@@ -27,6 +27,10 @@ libgeda/src/s_color.c
 libgeda/src/s_hierarchy.c
 libgeda/src/s_page.c
 libgeda/src/s_slib.c
+libgeda/src/scheme_attrib.c
+libgeda/src/scheme_complex.c
+libgeda/src/scheme_object.c
+libgeda/src/scheme_page.c
 
 intl/plural.c
 

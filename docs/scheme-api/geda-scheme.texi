@@ -1,0 +1,1645 @@
+\input texinfo                              @c -*-texinfo-*-
+@setfilename geda-scheme.info
+@include version.texi
+@documentencoding utf-8
+@dircategory The Algorithmic Language Scheme
+@direntry
+* gEDA Scheme: (geda-scheme).  gEDA extensibility with Guile Scheme.
+@end direntry
+@settitle gEDA Scheme Reference Manual @value{VERSION}
+
+@copying
+This manual is for gEDA/gaf, version @value{VERSION}.
+
+Copyright @copyright{} 2011 Peter TB Brett
+
+The text of and illustrations in this document are licensed under a
+Creative Commons Attribution–Share Alike 3.0 Unported license
+("CC-BY-SA"). An explanation of CC-BY-SA is available at
+@uref{http://creativecommons.org/licenses/by-sa/3.0/}. The original
+authors of this document designate the gEDA Project as the
+"Attribution Party" for purposes of CC-BY-SA. In accordance with
+CC-BY-SA, if you distribute this document or an adaptation of it, you
+must provide the URL for the original version.
+@end copying
+
+@titlepage
+@title gEDA Scheme Reference Manual
+@author Peter TB Brett
+
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+
+@end titlepage
+
+@contents
+
+@ifnottex
+@node Top
+@top gEDA Scheme Reference Manual
+@insertcopying
+@end ifnottex
+
+@menu
+* Introduction::
+
+* Schematic Document Model::
+* Core API Reference::
+* gschem API Reference::
+
+* Concept Index::
+* Function Index::
+* Variable Index::
+@end menu
+
+@node Introduction
+@unnumbered Introduction
+
+@section About gEDA
+
+@dfn{gEDA}, or @emph{GPL Electronic Design Automation}, is a suite of
+free software tools for designing electronics.  The gEDA project has
+produced and continues working on a full GPL'd suite and toolkit of
+Electronic Design Automation (EDA) tools. These tools are used for
+electrical circuit design, schematic capture, simulation, prototyping,
+and production. Currently, the gEDA project offers a mature suite of
+free software applications for electronics design, including schematic
+capture, attribute management, bill of materials (BOM) generation,
+netlisting into over 20 netlist formats, analog and digital
+simulation, and printed circuit board (PCB) layout.
+
+The gEDA project was started because of the lack of free EDA tools for
+POSIX systems with the primary purpose of advancing the state of free
+hardware or open source hardware. The suite is mainly being developed
+on the GNU/Linux platform with some development effort going into
+making sure the tools run on other platforms as well.
+
+@section About the gEDA Scheme API
+
+The @dfn{gEDA Scheme API}, documented in this manual, is a set of
+Scheme functions which can be used to enhance gEDA applications by
+adding new functionality or modify existing behaviour.
+
+gEDA has always used a Scheme interpreter for interpreting
+configuration files, managing keybindings in gschem, and implementing
+netlist exporter backends in gnetlist.  However, for a long time the
+utility of embedding a Scheme interpreter was diminished by the lack
+of a low-level API for inspecting and modifying schematic documents.
+The Scheme types and functions documented here were added to gEDA to
+address that need.
+
+gEDA uses the @emph{Guile} Scheme implementation (otherwise known as
+the @emph{GNU Ubiquitous Intelligent Language for Extensions}) as its
+embedded Scheme.  For more information about Guile, please visit
+@uref{http://www.gnu.org/s/guile/}.
+
+@section Getting Additional Help
+@cindex Reporting bugs
+
+If you think you have found a bug, please file a bug report in
+Launchpad: @uref{http://bugs.launchpad.net/geda}. Please add the tag
+@samp{scheme-api}.  It will help us to fix your bug quickly if you can
+describe in detail how to reproduce the bug.
+
+If you have a question about using gEDA, or about extending gEDA using
+Scheme, you may wish to send a message to one of the gEDA mailing
+lists.  You may also find additional information in the gEDA
+wiki.
+
+Both the mailing lists and wiki can be accessed from the main gEDA
+website: @uref{http://gpleda.org/}.
+
+@section We Need Feedback!
+
+If you find a typographical error in this manual, or if you have
+thought of a way to make this manual better, we would love to hear
+from you! Please submit a report in Launchpad:
+@uref{http://bugs.launchpad.net/geda}, with the tag @samp{scheme-api}.
+
+@node Schematic Document Model
+@chapter The Schematic Document Model
+
+When using gEDA to design an electronic circuit, users use the
+schematic editor, gschem, to choose and place @emph{schematic symbols}
+on a @emph{schematic page}, and connect the @emph{pins} of the symbols
+together by drawing @emph{nets}.  The user may add various
+@emph{attributes} to symbols, nets or pins to modify how the circuit
+diagrams should be interpreted.  The resulting schematics are then
+processed with the gnetlist tool to generate a @emph{netlist}.
+
+This chapter describes the different data types used by the Scheme API
+to represent gEDA documents (both schematics and symbols), and how
+they relate to each other.
+
+@menu
+* Pages::
+* Objects::
+* Component objects::
+* Attributes::
+* Coordinate system::
+@end menu
+
+@node Pages
+@section Pages
+@cindex Pages
+@cindex Schematics
+@cindex Symbols
+
+Schematics and symbols are presented as different types of document to
+the user, with different file extensions, icons and mime-types.
+However, when they are loaded into a gEDA application such as gschem
+for editing, they are internally represented in exactly the same way,
+by the @code{page} type.  The @code{page} is the top-level gEDA document
+data type.
+
+Internally, the main difference between a @code{page} for a schematic
+and a @code{page} for a symbol is the types of schematic element they
+are permitted to contain (@pxref{Objects}).  For example, a symbol is
+not permitted to contain nets, buses, or instances of other symbols,
+and a schematic is not permitted to contain pins.
+
+@strong{Note}: Although the restrictions on what types of primitive
+element schematics and symbols may contain are not enforced by the
+API, designs which violate these restrictions may cause the netlister
+not to work as expected.
+
+Each @code{page} is associated with a filename, although the filename is
+not required by the API either to be valid or to be associated with a
+accessible file in the filesystem.
+
+Pages are not garbage-collected; once you create a @code{page}, you are
+responsible for making sure that it is disposed of when it is no
+longer required.
+
+@node Objects
+@section Objects
+@cindex Objects
+@cindex Schematic elements
+
+Each @code{page} contains some number of @dfn{schematic elements},
+represented by the @code{object} type.  There are several sub-types of
+@code{object}, including:
+
+@itemize @bullet
+@item
+graphical lines, circles, arcs, rectangles and paths;
+
+@item
+nets and net pins;
+
+@item
+buses and bus pins;
+
+@item
+pictures;
+
+@item
+text;
+
+@item
+and symbol instances, known as 'components'.
+@end itemize
+
+Each @code{object} can be part of at most a single @code{page} -- they
+cannot be shared between pages.  @code{object}s are automatically
+garbage collected.
+
+Most of different @code{object} sub-types are quite straightforward to
+understand.  The main exceptions are components, and the text
+@code{object}-based attribute mechanism, which are described in the
+following sections.
+
+@node Component objects
+@section Component objects
+@cindex Component
+@cindex Component library
+@cindex Embedded component
+
+When a symbol is instantiated in a schematic (e.g. by the user
+selecting it from the gschem component library and placing it on the
+page), a compound @code{object} known as a @dfn{component} is created.
+
+Like a @code{page}, a component contains some number of @code{object}
+elements.  When a component is created from a symbol, the contents of
+the symbol's @code{page} are copied into the component.
+
+In order to allow the component to appear in the correct place on the
+schematic page, at the correct orientation, etc., a transformation is
+applied to every @code{object} in the component.
+
+Normally, when the schematic @code{page} is closed, the parameters of
+the transformation are stored in the schematic file along with the
+basename of the original symbol, but the @code{object} contents of the
+component are discarded.  When the schematic is subsequently
+re-opened, the original symbol is retrieved from the component
+library, and used to recreate the component.
+
+However, a component may optionally be @emph{embedded}.  In this case,
+its contents @emph{are} stored in the schematic file.
+
+@strong{Note}: A component cannot contain another component -- only
+other types of @code{object}.
+
+@node Attributes
+@section Attributes
+@cindex Attribute
+@cindex Attribute format
+
+A gEDA user is able to annotate schematic elements with additional
+data, such as footprints for components or net names for nets.  This
+is carried out using @dfn{attributes}.
+
+An attribute is text @code{object} which contains a text string in the
+form @samp{@var{name}=@var{value}}.  Currently, the restrictions on
+attribute format that are enforced by the API are:
+
+@itemize @bullet
+@item
+Attribute @var{name}s:
+
+@enumerate
+@item
+must contain at least one character;
+@item
+must not contain a @samp{=} character (Unicode @code{U+003D});
+@item
+must not end with a space (@samp{ }, Unicode @code{U+0020}).
+@end enumerate
+
+@item
+Attribute @var{value}s:
+
+@enumerate
+@item
+must contain at least one character;
+@item
+must not begin with a space (@samp{ }, Unicode @code{U+0020}).
+@end enumerate
+@end itemize
+
+@strong{Note}: Due to assumptions made by some gEDA tools, it is
+@emph{strongly recommended} that you use attribute @var{name}s which
+contain only lower-case Latin characters, decimal digits, full stops
+@samp{.}  (@code{U+002E}), and hyphens @samp{-} (@code{U+002D}).
+
+There are two types of attribute:
+
+@cindex Attached attribute
+@emph{Attached attributes} are attribute text @code{object}s that are
+linked to another @code{object}.  To attach an attribute to another
+schematic element, both @code{object}s must be part of the same
+component or part of the same @code{object}.  For example, a
+@samp{netname=@var{name}} attribute attached to a net @code{object}
+can be used to give that net a specific name in netlist output, such
+as @samp{VCC} or @samp{GND}.
+
+@cindex Floating attribute
+@emph{Floating attributes} are attribute text @code{object}s that are
+not linked to another @code{object}.  These attributes affect the
+schematic or symbol that they're part of as a whole.  For example, a
+floating @samp{documentation=@var{url}} attribute in a symbol tells
+gschem's @strong{Help → Component Documentation} command how to find
+the component's data sheet.
+
+@node Coordinate system
+@section Coordinate system
+
+gEDA documents use a @dfn{coordinate system} (internally referred to
+as `world' coordinates) with coordinates increasing upwards and to the
+right (i.e. a conventional right-handed Cartesian coordinate
+system).
+
+Although all coordinates may be positive or negative, gschem only
+displays objects with positive coordinates (i.e. in the upper right
+quadrant of the coordinate system).  It is therefore recommended to
+use only positive coordinates.
+
+In the Scheme API, the coordinate of a point is expressed in the format:
+
+@example
+(x . y)
+@end example
+
+and a set of @dfn{bounds} (i.e. a rectangular area in the document
+plane) is expressed in the format:
+
+@example
+((left . top) . (right . bottom))
+@end example
+
+where @code{left} is the smaller x coordinate, @code{right} is the
+larger x coordinate, and @code{bottom} and @code{top} are respectively
+the smaller and larger y coordinates.
+
+@node Core API Reference
+@chapter Core API Reference
+
+The Scheme modules and functions described in this chapter are
+primitive operations for working with schematics and symbols, and are
+available to be used in all gEDA applications.
+
+@menu
+* Core page functions::
+* Core object functions::
+* Core attribute functions::
+@end menu
+
+@node Core page functions
+@section Core page functions
+
+To use the functions described in this section, you will need to load
+the @code{(geda page)} module.
+
+@xref{Pages}.
+
+@defun page? obj
+Returns @samp{#t} if and only if @var{obj} is a @code{page}.
+@end defun
+
+@defun active-pages
+Returns a list of all open @code{page}s.
+@end defun
+
+@subsection Page creation, disposal and filenames
+
+Every @code{page} is associated with a @emph{filename}.  The filename
+does not necessarily have to be a file which exists and/or is
+accessible in the filesystem.
+
+@defun make-page filename
+Creates and returns a new, empty @code{page}, with the given
+string @var{filename}.
+@end defun
+
+@defun close-page! page
+Destroys @var{page}.  The returned value is undefined.
+
+@strong{Warning}: This function closes and destroys @var{page}
+immediately, regardless of whether the page has been modified since
+loading or saving, and without asking the user.
+@end defun
+
+@defun page-filename page
+Returns the filename associated with @var{page} as a string.
+@end defun
+
+@defun set-page-filename! page filename
+Sets the filename of @var{page} to @var{filename}.  Returns
+@var{page}.
+@end defun
+
+@subsection Page serialisation
+
+Pages can be converted to and from strings in the gEDA schematic file
+format.
+
+@defun string->page filename string
+Parses @var{string}, which should be in the gEDA file format, to
+create a new @code{page}.  The initial filename for the new
+@code{page} is @var{filename}.
+
+@strong{Warning}: Due to missing functionality in the underlying C
+library, this @code{string->page} cannot currently report invalid
+syntax or other problems in the @var{string} passed.
+@end defun
+
+@defun page->string page
+Returns a string representation of @var{page} in the gEDA file
+format.
+@end defun
+
+@subsection Page contents
+
+A schematic or symbol @code{page} is composed of a set of
+@code{object}s which determine both its graphical appearance and its
+electrical meaning.
+
+@defun page-contents page
+Returns a list of the @code{object}s which make up @var{page}.  The
+list can be freely modified without changing the contents of
+@var{page}.
+@end defun
+
+@defun page-append! page objects...
+Appends zero or more @var{objects} to the contents of @var{page} in
+the order given.  Returns @var{page}.
+
+If any of the @var{objects} is already part of a @code{page} other
+than @var{page}, or is part of a component @code{object}, raises an
+@code{object-state} error.  Any of the @var{objects} that are already
+in the @var{page} are ignored.
+@end defun
+
+@defun page-remove! page objects...
+Removes zero or more @var{objects} from the contents of @var{page}.
+Returns @var{page}.
+
+Any @var{objects} that are not part of a @code{page} or component
+@code{object} are ignored.
+
+An @samp{object-state} error will be thrown if any of the
+@var{objects} satisfies any of the following conditions:
+
+@itemize
+@item
+part of a @code{page} other than @var{page};
+@item
+part of component @code{object};
+@item
+has attached attributes (@pxref{Attributes});
+@item
+is attached as an attribute.
+@end itemize
+@end defun
+
+@defun object-page object
+Returns the @code{page} which contains @var{object} (either directly
+or indirectly), or @samp{#f} if @var{object} is not part of a
+@code{page}.
+
+@strong{Note}: If the @var{object} argument to @code{object-page} is
+part of a component @code{object} which is itself part of a
+@code{page}, that @code{page} will be returned.
+@end defun
+
+@subsection Page dirty flags
+
+A @code{page} has a @emph{dirty flag} that is used to indicate to
+applications that the @code{page} has been modified since it was last
+loaded or saved.
+
+@defun page-dirty? page
+Returns @samp{#t} if the @var{page}'s page has been marked as dirty;
+otherwise, returns @samp{#f}.
+@end defun
+
+@defun set-page-dirty! page [state]
+Sets the dirty flag for @var{page}.  If @var{state} is @samp{#f},
+clears the dirty flag; otherwise, or if @var{state} is omitted, marks
+the page as dirty.  Returns @var{page}.
+@end defun
+
+@node Core object functions
+@section Core object functions
+
+To use the functions described in this section, you will need to load
+the @code{(geda object)} module.
+
+@menu
+* General object functions::
+* Lines::
+* Nets and buses::
+* Pins::
+* Boxes::
+* Circles::
+* Arcs::
+* Paths::
+* Pictures::
+* Text::
+* Components::
+@end menu
+
+@node General object functions
+@subsection General object functions
+
+@defun object? obj
+Returns @samp{#t} if and only if @var{obj} is an @code{object}.
+@end defun
+
+@defun copy-object object
+Returns a deep copy of @var{object}.  The new @code{object} returned
+has no attached attributes, and is not part of a @code{page} or part
+of a component @code{object}.
+@end defun
+
+@defun object-component object
+Returns the component @code{object} that contains @var{object}, or
+@samp{#f} if @var{object} is not part of a component.
+@end defun
+
+@defun object-connections object
+Returns a list of other @code{object}s that are @emph{directly}
+connected to @var{object}.  If @code{object} is not included in a
+@code{page}, raises an @samp{object-state} error.  The connections
+reported are independent of inclusion in components.
+
+For example, consider a page containing a net and a component, and the
+component contains a single pin.  If the connectable end of the pin
+intersects the net, then @code{(object-connections <net>)} will return
+a list containing the pin @code{object}, and @emph{not} the component.
+@end defun
+
+@menu
+* Object sub-types::
+* Object transformations::
+* Object bounds::
+* Object color::
+* Object fill and stroke::
+@end menu
+
+@node Object sub-types
+@subsubsection Object sub-types
+
+Schematic element @code{object}s come in several subtypes.
+
+@defun object-type object
+Returns the sub-type of @var{object} as a symbol.  The subtype will be
+one of the following symbols:
+
+@itemize
+@item
+@samp{arc}
+@item
+@samp{box}
+@item
+@samp{bus}
+@item
+@samp{circle}
+@item
+@samp{complex} (indicates a component @code{object})
+@item
+@samp{line}
+@item
+@samp{net}
+@item
+@samp{path}
+@item
+@samp{picture}
+@item
+@samp{pin}
+@item
+@samp{text}
+@end itemize
+@end defun
+
+@defun object-type? object type
+Returns @samp{#t} if and only if @var{object} is an @code{object} and
+that its subtype is @var{type}, which should be a symbol.
+@end defun
+
+@node Object transformations
+@subsubsection Object transformations
+
+Objects can be translated, rotated, or mirrored about a point.
+
+@defun translate-objects! vector [objects...]
+Translate @var{objects} by @var{vector}, a world coordinate distance
+in the form @samp{(x . y)}.  Returns a list of the modified
+@var{objects}.
+@end defun
+
+@defun rotate-objects! center angle [objects...]
+Translate @var{objects} anti-clockwise by @var{angle} about
+@var{center}, a world coordinate position in the form @samp{(x . y)}.
+@var{angle} must be an integer multiple of 90 degrees.  Returns a list
+of the modified @var{objects}.
+@end defun
+
+@defun mirror-objects! x-offset [objects...]
+Mirror @var{objects} in the line @samp{x = @var{x-offset}}.  Returns a
+list of the modified @var{objects}.
+@end defun
+
+@node Object bounds
+@subsubsection Object bounds
+
+The bounds of an object is the smallest bounding rectangle of the
+object, expressed in document coordinates (@pxref{Coordinate system}).
+
+@defun object-bounds objects...
+Returns the world coordinate bounding box containing all of the
+@var{objects} passed as arguments, or @samp{#f} if none of the
+@var{objects} have bounds (for example, this can occur if no
+@var{objects} are specified, or if they are all empty component
+@code{object}s).
+
+@strong{Note}: @code{object-bounds} always returns the actual bounds
+of the @var{objects}, not the visible bounds.  This means that the bounds of
+invisible text is always included.
+@end defun
+
+@defun fold-bounds bounds...
+Calculates the union of several sets of @var{bounds} (as returned by
+@code{object-bounds}).  If any of the @var{bounds} are @samp{#f}, they
+are skipped; if all of the @var{bounds} are @samp{#f}, @samp{#f} is
+returned.
+@end defun
+
+@node Object color
+@subsubsection Object color
+
+Object colors in gEDA documents are specified as indices into a color
+map.  This allows users to specify the color map that suits them when
+viewing schematics and symbols.
+
+@defun object-color object
+Returns the integer color map index of the the color used to draw
+@var{object}.
+@end defun
+
+@defun set-object-color! object color
+Sets the integer color map index for @var{object} to @var{color}.
+Returns @var{object}.
+@end defun
+
+@node Object fill and stroke
+@subsubsection Object fill and stroke
+
+Graphical object subtypes -- lines, boxes, circles, arcs and paths --
+are drawn with a stroke pattern that can be configured in detail.
+
+@defun object-stroke object
+Returns the stroke settings of the @var{object}, which must be a line,
+box, circle, arc or path @code{object}.  The return value is a list of
+parameters:
+
+@enumerate
+@item
+stroke width, as an integer number of world units
+@item
+cap style, one of the symbols @code{none}, @code{square} or
+@code{round}.
+@item
+dash style, one of the symbols @code{solid}, @code{dotted},
+@code{dashed}, @code{center} or @code{phantom}.
+@item
+up to two dash parameters, depending on the dash style:
+@itemize
+@item
+for solid lines, no parameters;
+@item
+for dotted lines, dot spacing;
+@item
+for other styles, dot/dash spacing and dash length.
+@end itemize
+@end enumerate
+@end defun
+
+@defun set-object-stroke! object width cap dash [dash-space [dash-length]]
+Set the stroke settings of the @var{object}, which must be a line,
+box, circle, arc or path @code{object}.  The arguments are the same as
+the contents of the list returned by @code{object-stroke}.  Returns
+@var{object}.
+@end defun
+
+@defun object-stroke-width object
+Returns the integer stroke width of @var{object}, which must be a
+line, box, circle, arc or path @code{object}.
+@end defun
+
+@defun object-stroke-cap object
+Returns the stroke cap style of @var{object}, which must be a line,
+box, circle, arc or path @code{object}.  The returned value is one of
+the symbols @code{none}, @code{square} or @code{round}.
+@end defun
+
+@defun object-stroke-dash object
+Returns the dash style of @var{object}, which must be a line, box,
+circle, arc or path @code{object}.  The return value is a list of
+between one and three parameters:
+
+@enumerate
+@item
+dash style, one of the symbols @code{solid}, @code{dotted},
+@code{dashed}, @code{center} or @code{phantom}.
+@item
+for styles other than @code{solid}, dot/dash spacing;
+@item
+for @code{dashed}, @code{center} and @code{phantom}, dash length.
+@end enumerate
+@end defun
+
+Some types of @code{object} -- boxes, circles and paths -- can have
+their interiors filled with a variety of patterns.
+
+@defun object-fill object
+Returns the fill settings of @var{object}, which must be a box, circle
+or path @code{object}.  The return value is a list of one to six
+parameters:
+
+@enumerate
+@item
+fill style, one of the symbols @code{hollow}, @code{solid},
+@code{mesh} or @code{hatch};
+@item
+up to five fill parameters, depending on fill style:
+@enumerate
+@item
+none for @code{hollow} or @code{solid} fills;
+@item
+line width, line angle (in degrees) and line spacing for @code{hatch} fills;
+@item
+line width, first angle and spacing, and second angle and spacing for
+@code{mesh} fills.
+@end enumerate
+@end enumerate
+@end defun
+
+@defun set-object-fill! object fill-type . fill-args
+Sets the fill settings of @var{object}, which must be a box, circle or
+path @code{object}.  The arguments are the same as the contents of the
+list returned by @code{object-fill}.  Returns @var{object}.
+@end defun
+
+@node Lines
+@subsection Lines
+Line @code{object}s are straight graphical line segments with no
+electrical meaning.  A line's geometrical parameters are a start point
+and end point, and it supports different colors and stroke styles.
+
+Many of the functions for manipulating lines are also used to
+manipulate line-like objects such as nets, buses or pins.
+
+@defun line? object
+Returns @samp{#t} if and only if @var{object} is a line @code{object}.
+@end defun
+
+@defun make-line start end [color]
+Creates and returns a new line @code{object}.  @var{start} is the
+position of the start of the new line in the form @code{(x . y)} and
+@var{end} is the position of end of the line.  If @var{color} is
+specified, it should be the integer color map index of the color with
+which to draw the line.  If @var{color} is not specified, the default
+line color is used.
+@end defun
+
+@defun set-line! line start end [color]
+Sets the parameters of @var{line} (which may be a line, net, bus or
+pin @code{object}).  The arguments are the same as to
+@code{make-line}.  Returns @var{line}.
+@end defun
+
+@defun line-info line
+Returns the parameters of @var{line} (which may be a line, net, bus or
+pin @code{object}).  The return value is a list in the form:
+
+@example
+((start-x . start-y) (end-x . end-y) color)
+@end example
+
+@strong{Note}: For pin @code{object}s, first coordinate is the
+connectable point on the pin.
+@end defun
+
+@defun line-start line
+Returns the position @samp{(x . y)} of the start of @var{line} (which
+may be a line, net, bus or pin @code{object}).  For pin
+@code{objects}, this is the position of the connectable point on the
+pin.
+@end defun
+
+@defun line-end line
+Returns the position @samp{(x . y)} of the end of @var{line} (which
+may be a line, net, bus or pin @code{object}).
+@end defun
+
+@node Nets and buses
+@subsection Nets and buses
+
+Net and bus @code{object}s are straight line segments which represent
+electrical connectivity.  Nets represent single wires, and buses
+multi-wire connections of arbitrary composition.
+
+All of the functions that work on line @code{object}s also work with
+nets and buses (@pxref{Lines}).  Note that @code{line?} will return
+@code{#f} if called with a net or bus argument.
+
+@defun net? object
+Returns @samp{#t} if and only if @var{object} is a net.
+@end defun
+
+@defun make-net start end [color]
+Creates and returns a new net @code{object}.  @var{start} is the
+position of the start of the new net in the form @code{(x . y)} and
+@var{end} is the position of end of the net.  If @var{color} is
+specified, it should be the integer color map index of the color with
+which to draw the net.  If @var{color} is not specified, the default
+net color is used.
+@end defun
+
+@defun bus? object
+Returns @samp{#t} if and only if @var{object} is a bus.
+@end defun
+
+@defun make-bus start end [color]
+Creates and returns a new bus @code{object}.  Arguments are as for
+@code{make-net}.
+@end defun
+
+@node Pins
+@subsection Pins
+
+Pin @code{objects} are straight line segments which represent
+connectable points in symbols or subcircuits, such as the pins of a
+semiconductor package.  Only one end of a pin can be connected to
+nets, buses or other pins; the rest of a pin is purely graphical.
+
+Pins come in two varieties: @dfn{net pins} and @dfn{bus pins}, which
+are used for connections to nets and buses respectively (@pxref{Nets
+and buses}).
+
+All of the functions that work on line @code{object}s also work with
+pins (@pxref{Lines}).  Note that @code{line?} will return @code{#f} if
+called with a pin argument.
+
+@defun pin? object
+Returns @samp{#t} if and only if @var{object} is a pin @code{object}.
+@end defun
+
+@defun net-pin? object
+Returns @samp{#t} if and only if @var{object} is a net pin.
+@end defun
+
+@defun make-net-pin start end [color]
+Creates and returns a new net pin @code{object}.  @var{start} is the
+position of the start of the new pin (the connectable end) in the form
+@code{(x . y)} and @var{end} is the position of end of the pin.  If
+@var{color} is specified, it should be the integer color map index of
+the color with which to draw the pin.  If @var{color} is not
+specified, the default pin color is used.
+@end defun
+
+@defun bus-pin? object
+Returns @samp{#t} if and only if @var{object} is a bus pin.
+@end defun
+
+@defun make-bus-pin start end [color]
+Creates and returns a new bus pin @code{object}.  Arguments are as for
+@code{make-net-pin}.
+@end defun
+
+@node Boxes
+@subsection Boxes
+
+Boxes are rectangles specified by the coordinates of their top left
+and bottom right corners.  They are purely graphical, and have no
+electrical meaning.  They can be drawn in different colors, and with
+various stroke and fill settings.
+
+@xref{Object color}.
+@xref{Object fill and stroke}.
+
+@defun box? object
+Returns @samp{#t} if and only of @var{object} is a box @code{object}.
+@end defun
+
+@defun make-box top-left bottom-right [color]
+Creates and returns a new box @code{object}.  @var{top-left} is the
+position of the top left of the new box in the form @code{(x . y)},
+and @var{bottom-right} is the position of the bottom right of the box.
+If @var{color} is specified, it should be the integer color map index
+of the color with which to draw the box.  If @var{color} is not
+specified, the default box color is used.
+@end defun
+
+@defun set-box! box top-left bottom-right [color]
+Sets the parameters of @var{box}. The arguments are the same as to
+@code{make-box}.  Returns @var{box}.
+@end defun
+
+@defun box-info box
+Returns the parameters of @var{box}.  The return value is a list in the form:
+
+@example
+((top-left-x . top-left-y) (bottom-right-x . bottom-right-y) color)
+@end example
+@end defun
+
+@defun box-top-left box
+Returns the position of the top left corner of @var{box} in the form
+@code{(x . y)}.
+@end defun
+
+@defun box-bottom-right box
+Returns the position of the bottom right corner of @var{box} in the
+form @code{(x . y)}.
+@end defun
+
+@node Circles
+@subsection Circles
+
+Circle @code{objects} are specified by center position and radius, and
+are purely graphical with no electrical meaning.  They can be drawn in
+different colors, and with various stroke and fill settings.
+
+@xref{Object color}.
+@xref{Object fill and stroke}.
+
+@defun circle? object
+Returns @samp{#t} if and only of @var{object} is a circle @code{object}.
+@end defun
+
+@defun make-circle center radius [color]
+Creates and returns a new circle @code{object}.  @var{center} is the
+position of the center of the new circle in the form @code{(x . y)},
+and @var{radius} is the integer radius of the circle.  If @var{color}
+is specified, it should be the integer color map index of the color
+with which to draw the circle.  If @var{color} is not specified, the
+default circle color is used.
+@end defun
+
+@defun set-circle! circle center radius [color]
+Sets the parameters of @var{circle}. The arguments are the same as to
+@code{make-circle}.  Returns @var{circle}.
+@end defun
+
+@defun circle-info circle
+Returns the parameters of @var{circle} as a list of the form:
+
+@example
+((center-x . center-y) radius color)
+@end example
+@end defun
+
+@defun circle-center circle
+Returns the position of the center of @var{circle} as in the form
+@code{(x . y)}.
+@end defun
+
+@defun circle-radius circle
+Returns the radius of @var{circle} as an integer.
+@end defun
+
+@node Arcs
+@subsection Arcs
+Arc @code{objects} are specified by center position, radius, and start
+and end angles.  They are purely graphical with no electrical
+meaning. They can be drawn in different colors, and with various
+stroke settings.
+
+@defun arc? object
+Returns @samp{#t} if and only if @var{object} is an arc @code{object}.
+@end defun
+
+@defun make-arc center radius start-angle end-angle [color]
+Creates and returns a new arc @code{object}.  @var{center} is the
+position of the center of the new arc in the form @code{(x . y)}, and
+@var{radius} is the integer radius of the arc.  @var{start-angle} and
+@var{end-angle} are the angles at which to start and end the arc, in
+degrees. If @var{color} is specified, it should be the integer color
+map index of the color with which to draw the arc.  If @var{color}
+is not specified, the default arc color is used.
+@end defun
+
+@defun set-arc! arc center radius start-angle end-angle [color]
+Sets the parameters of @var{arc}. The arguments are the same as to
+@code{make-arc}. Returns @var{arc}.
+@end defun
+
+@defun arc-info arc
+Returns the parameters of @var{arc} as a list of the form:
+
+@example
+((center-x . center-y) radius start-angle end-angle color)
+@end example
+@end defun
+
+@defun arc-center arc
+Returns the position of the center of @var{arc} in the form
+@code{(x . y)}.
+@end defun
+
+@defun arc-radius arc
+Returns the radius of @var{arc} as an integer.
+@end defun
+
+@defun arc-start-angle arc
+Returns the start angle of @var{arc} as an integer number of degrees.
+@end defun
+
+@defun arc-end-angle arc
+Returns the end angle of @var{arc} as an integer number of degrees.
+@end defun
+
+@node Paths
+@subsection Paths
+
+@defun path? object
+Returns @samp{#t} if and only if @var{object} is a path @code{object}.
+@end defun
+
+@node Pictures
+@subsection Pictures
+
+@defun picture? object
+Returns @samp{#t} if and only if @var{object} is a picture @code{object}.
+@end defun
+
+@node Text
+@subsection Text
+
+Text fulfils two roles, as straightforward labels and notes on
+schematics and symbols, and as attached or floating attributes
+(@pxref{Attributes}).  A text @code{object} can be aligned in
+different ways relative to its anchor position, and can be displayed
+in different font sizes.
+
+Any text can be set to be visible or invisible on printed output (and
+gschem provides ways to preview invisible text).  When a text
+@code{object} is an attribute (i.e. its string is in a
+@samp{@var{name}=@var{value}} format) then the visibility settings are
+more fine-grained: the text can be set to display just the attribute
+name, just the attribute value, or both.
+
+@xref{Attributes}.
+
+@defun text? object
+Returns @samp{#t} if and only if @var{object} is a text @code{object}.
+@end defun
+
+@defun make-text anchor align angle string size visible show [color]
+Creates and returns a new text @code{object}.  @var{anchor} is the
+position of the anchor of the new text in the form @code{(x . y)}, and
+@var{align} is a symbol determining how the text should be aligned
+relative to the anchor.  @var{align} must be one of the following
+symbols:
+
+@itemize
+@item
+@samp{lower-left}
+@item
+@samp{middle-left}
+@item
+@samp{upper-left}
+@item
+@samp{lower-center}
+@item
+@samp{middle-center}
+@item
+@samp{upper-center}
+@item
+@samp{lower-right}
+@item
+@samp{middle-right}
+@item
+@samp{upper-right}
+@end itemize
+
+For example, if @var{align} is @samp{upper-center}, the anchor will be
+located at the top center of the rendered text block.
+
+@var{angle} should be an integer multiple of 90 degrees, determining
+the angle which the text should be displayed at.  @var{string} is the
+string contents for the @code{text} object, and must not contain any
+null characters (@samp{#\0} in Scheme, Unicode
+@samp{U+0000}. @var{size} is the font size to use.  If @var{visible}
+is @samp{#f}, the text will be invisible; otherwise, it will be
+visible.
+
+When the @var{string} is in an attribute format (@pxref{Attributes}),
+the @var{show} argument determines which parts of the @var{string}
+will be displayed.  It must be one of the following symbols:
+
+@itemize
+@item
+@samp{name}
+@item
+@samp{value}
+@item
+@samp{both}
+@end itemize
+
+If @var{color} is specified, it should be the integer color map index
+of the color with which to draw the text.  If @var{color} is not
+specified, the default arc color is used.
+@end defun
+
+@defun set-text! text anchor align angle string size visible show [color]
+Sets the parameters of @var{text}. The arguments are the same as to
+@code{make-text}. Returns @var{text}.
+@end defun
+
+@defun text-info text
+Returns the parameters of @var{text} as a list in the form:
+
+@example
+((anchor-x . anchor-y) align angle string size visible show color)
+@end example
+
+See @code{make-text} for a description of all of these parameters.
+@end defun
+
+@defun text-center text
+Returns the position of the anchor of @var{text} in the form
+@code{(x . y)}.
+@end defun
+
+@defun text-align text
+Returns the alignment of @var{text} as one of the following symbols:
+
+@itemize
+@item
+@samp{lower-left}
+@item
+@samp{middle-left}
+@item
+@samp{upper-left}
+@item
+@samp{lower-center}
+@item
+@samp{middle-center}
+@item
+@samp{upper-center}
+@item
+@samp{lower-right}
+@item
+@samp{middle-right}
+@item
+@samp{upper-right}
+@end itemize
+@end defun
+
+@defun text-angle text
+Returns the angle that @var{text} is displayed at as an integer
+multiple of 90 degrees.
+@end defun
+
+@defun text-string text
+Returns the string content of @var{text}.
+@end defun
+
+@defun set-text-string! text str
+Set the string content of @var{text} to @var{str}.  @var{str} must not
+contain any null characters (@samp{#\0} in Scheme, Unicode
+@samp{U+0000}).
+@end defun
+
+@defun text-size text
+Return the font size of @var{text} as an integer.
+@end defun
+
+@defun text-visible? text
+Returns @samp{#t} if and only if @var{text} is set to be visible.
+@end defun
+
+@defun set-text-visibility! text visible?
+If @var{visible?} is @samp{#f}, sets @var{text} to be invisible;
+otherwise, sets it to be visible.
+@end defun
+
+@defun text-attribute-mode text
+Returns a symbol indicating which parts of @var{text} will be
+displayed when @var{text} is a valid attribute.  The returned value
+will be one of the following symbols:
+
+@itemize
+@item
+@samp{name}
+@item
+@samp{value}
+@item
+@samp{both}
+@end itemize
+@end defun
+
+@node Components
+@subsection Components
+
+Component @code{object}s represent instances of symbols.  They contain
+other @code{object}s copied from the original symbol when it is
+instantiated into a schematic.
+
+A component's @var{basename} is a string used to identify which symbol
+it originated from.  When instantiating a symbol on initial placement
+in a schematic, or when recreating a component while loading a
+schematic, the @var{basename} is used to find the underlying symbol
+file in the component library.
+
+@xref{Component objects}.
+
+@strong{Note}: In the gEDA C source code, these are normally called
+``complex'' objects.  However, as Guile Scheme supports complex
+numbers, and the procedures related to working with complex numbers
+use the word @samp{complex} to describe them, this API uses
+@samp{component} to avoid ambiguity.
+
+The @var{position}, @var{angle} and @var{mirror} flag of a component
+indicates the transformation that was applied to the contents of the
+original symbol.  The transformation is applied in the following order:
+
+@enumerate
+@item
+If @var{mirror} is true, the symbol is reflected in the line x = 0.
+@item
+The symbol is rotated anti-clockwise by @var{angle} degrees about the
+point (0,0) (@var{angle} may only be an integer multiple of 90
+degrees).
+@item
+Finally, the symbol is translated by @var{position}.
+@end enumerate
+
+The component's contents (as returned by @code{component-contents})
+have the transformation already applied to them.  Updating the
+translation information using e.g. @code{set-component!} will not
+alter them -- that must be done separately (e.g. by reloading the
+symbol).
+
+@defun component? object
+Returns @samp{#t} if and only if @var{object} is a component @code{object}.
+@end defun
+
+@defun make-component basename position angle mirror locked
+Creates and returns a new, empty component @code{object} with the
+given @var{basename}.  @var{position}, @var{angle} and @var{mirror}
+specify the symbol transformation.  If @var{locked} is true, the
+component will be protected against accidental selection by the user
+(this is used in gschem e.g. for titleblocks).
+
+No attempt is made to load a symbol matching @var{basename} from
+component libraries, and the returned component is flagged as
+embedded.
+@end defun
+
+@defun make-component/library basename position angle mirror locked
+Searches the component libraries for a symbol matching @var{basename},
+and if found, instantiates the symbol and returns the resulting
+component (which is not flagged as embedded).  Arguments are as for
+@code{make-component}.
+
+If no match for @var{basename} is found, @samp{#f} is returned.
+@end defun
+
+@defun set-component! component position angle mirror locked
+Sets the parameters of @var{component}.  Arguments are the same as to
+@code{make-component}.  Returns @var{component}.
+
+@strong{Note}: Remember that modifying the transformation parameters
+of a component does not update the component's contents.
+@end defun
+
+@defun component-info component
+Returns the parameters of @var{component} as a list of the form:
+
+@example
+(basename (x . y) angle mirror locked)
+@end example
+@end defun
+
+@defun component-basename component
+Returns the basename of @var{component}.
+@end defun
+
+@defun component-position component
+Returns the position to which the original symbol was translated when
+creating @var{component}.
+@end defun
+
+@defun component-angle component
+Returns the angle by which the original symbol was rotated when
+creating @var{component}, as an integer number of degrees.
+@end defun
+
+@defun component-mirror? component
+Returns true if the original symbol was mirrored when creating
+@var{component}.
+@end defun
+
+@defun component-locked? component
+Returns true if @var{component} is non-selectable.
+@end defun
+
+@defun component-contents component
+Returns the contents of @var{components} as a list of objects.
+@end defun
+
+@defun component-append! component objects...
+Appends @var{objects} (which must not be component @code{object}s) to
+the contents of @var{component}.  Any @var{objects} which are already
+included in @var{component} are ignored.  If any @var{objects} are
+already part of a @code{page} or of another component @code{object},
+an @samp{object-state} error is raised. Returns @var{component}.
+@end defun
+
+@defun component-remove! component objects...
+Removes @var{objects} from the contents of @var{component}.  Any
+@var{objects} which are not part of a component or of a page are
+ignored. Returns @var{component}.
+
+An @samp{object-state} error will be raised if any @var{objects}
+satisfy any of the following conditions:
+
+@itemize
+@item
+are part of a @code{page};
+@item
+are part of a component @code{object} other than @var{component};
+@item
+have attached attributes
+@item
+are attached as an attribute.
+@end itemize
+@end defun
+
+@node Core attribute functions
+@section Core attribute functions
+
+To use the functions described in this section, you will need to load
+the @code{(geda attrib)} module.
+
+Attributes are text @code{object}s with a particular format of string.
+They can be floating, or they can be attached to another
+@code{object}.
+
+@defun attribute? object
+Returns true if and only if @var{object} is an attribute (i.e. a text
+@code{object} and in attribute format).
+@end defun
+
+@subsection Attribute names and values
+
+@defun parse-attrib text
+Splits the string from @var{text} (a text @code{object}) into name and
+value, if it is in attribute format.  If it is not in attribute
+format, raises an @samp{attribute-format} error.  The return value is
+in the form @samp{(@var{name} . @var{value})}.
+@end defun
+
+@defun attrib-name attrib
+Returns the name part of @var{attrib}, as a string.
+@end defun
+
+@defun attrib-value attrib
+Returns the value part of @var{attrib}, as a string.
+@end defun
+
+@defun set-attrib-value! attrib value
+Sets the value part of @var{attrib} to @var{value}.
+@end defun
+
+@subsection Attribute attachment
+
+@defun attrib-attachment attrib
+If @var{attrib} is attached to another @code{object}, returns that
+object.  Otherwise, returns @samp{#f}.
+@end defun
+
+@defun object-attribs object
+Returns a list of all attributes attached to @var{object}.
+@end defun
+
+@defun attach-attribs! object [attribs...]
+Attach @var{attribs} to @var{object}.  All the @var{attribs} must be
+text @code{object}s.  The following conditions must be satisfied, or
+an @samp{object-state} error will be raised:
+
+@itemize
+@item
+Neither @var{object} nor any of the @var{attribs} may be already
+attached as an attribute;
+@item
+Both @var{object} and all @var{attribs} must be part of the same
+@code{page} and/or component @code{object};
+@end itemize
+
+Any @var{attribs} that are already attached to @var{object} are
+ignored.  Returns @var{object}.
+
+@strong{Note}: For historical reasons, @code{attach-attribs!} does not
+require that all @var{attribs} satisfy @code{attribute?}.
+Nevertheless, avoid attaching non-attribute text objects as attributes.
+@end defun
+
+@defun detach-attribs! object [attribs...]
+Detach @var{attribs} from @var{object}.  Any @var{attribs} that are
+not attached as attributes are ignored.  If any @var{attribs} are
+attached to @code{object}s other than @var{object}, an
+@samp{object-state} error is raised.
+@end defun
+
+@subsection Inherited and promoted attributes
+
+@dfn{Inherited attributes} are unattached attributes inside a
+component @code{object}.
+
+@defun inherited-attribs object
+Returns the inherited attributes of @var{object}, if @var{object} is a
+component.  If @var{object} is not a component, returns the empty
+list.
+@end defun
+
+@defun attrib-inherited? attrib
+Returns @samp{#t} if @var{attrib} is an inherited attribute.
+@end defun
+
+@dfn{promotable attributes} are inherited attributes that are both
+visible and have names that are in the list of promotable attributes
+set with the @code{always-promote-attributes} rc file parameter.
+
+@defun promotable-attribs component
+Returns a list of promotable attributes of @var{component}.
+@end defun
+
+@defun promote-attribs! component
+Promote all promotable attributes from @var{component} into the
+@code{page} that contains @var{component}.  If @var{component} is not
+in a page, an @samp{object-state} error is raised.
+
+All promotable attributes are copied, and made invisible.  The copies
+are added to the @code{page}, and attached as attributes of @var{component}.
+
+The promoted attributes are returned.  If @var{component} is not in
+fact a component @code{object}, does nothing and returns the empty list.
+@end defun
+
+@node gschem API Reference
+@chapter gschem API Reference
+
+The Scheme modules and functions described in this chapter are
+available in the gschem schematic editor application.  They are more
+focused on enabling and responding to user editing operations.
+
+@menu
+* Windows and views::
+* Selections::
+* Hooks::
+* Miscellanous gschem functions::
+@end menu
+
+@node Windows and views
+@section Windows and views
+
+To use the functions described in this section, you will need to load
+the @code{(gschem window)} module.
+
+@defun active-page
+Returns the @code{page} currently being displayed for editing.
+@end defun
+
+@defun set-active-page! page
+Sets the current @code{page} to @var{page}.
+@end defun
+
+@defun pointer-position
+Returns the current mouse pointer position in world coordinates in the
+form @samp{(x . y)}.  If the pointer is outside the display area,
+returns @samp{#f}.
+@end defun
+
+@node Selections
+@section Selections
+
+To use the functions described in this section, you will need to load
+the @code{(gschem selection)} module.
+
+Each @code{page} in gschem has a @dfn{selection} associated with it,
+which is some subset of the @code{page}s contents.  Most actions in
+gschem operate on the currently selected objects.
+
+@defun page-selection page
+Returns the current selection for @var{page}, as a list of
+@code{object}s.
+@end defun
+
+@defun object-selected? object
+Returns @samp{#t} if @var{object} is in its containing page's
+selection. Otherwise, returns @samp{#f}.  If @var{object} is not in a
+@code{page}, raises an @samp{object-state} error.
+
+@strong{Note}: @var{object} must be @emph{directly} included in a
+@code{page}, not via inclusion in a component @code{object}.
+@end defun
+
+@defun select-object! object
+Adds @var{object} to the selection of its containing @code{page}.  If
+@var{object} is not directly included in a @code{page}, raises an
+@samp{object-state} error.  If @var{object} is already selected, does
+nothing.  Returns @var{object}.
+
+@strong{Note}: This function does not call @code{select-objects-hook}.
+@end defun
+
+@defun deselect-object! object
+Removes @var{object} from the selection of its containing @code{page}.
+If @var{object} is not directly included in a @code{page}, raises an
+@samp{object-state} error.  If @var{object} is not selected, does
+nothing.  Returns @var{object}.
+
+@strong{Note}: This function does not call
+@code{deselect-objects-hook}.
+@end defun
+
+@node Hooks
+@section Hooks
+
+To use the hooks described in this section, you will need to load the
+@code{(gschem hook)} module.
+
+gschem defines a number of hooks that allow functions to be
+automatically run whenever a number of built-in actions are invoked by
+the user.
+
+Most Scheme functions do not call these hooks.  If it makes sense for
+your code to invoke a standard hook, you should normally do so
+explicitly.
+
+@strong{Warning}: Functions added to these standard hooks should not
+normally modify their arguments.
+
+For more information on hooks in Guile, @pxref{Hooks, , Hooks, guile,
+Guile Reference Manual}.
+
+@defvar add-object-hook
+Called after objects are added to the page, at their initial creation.
+The argument is a list of the objects being added.
+@end defvar
+
+@defvar remove-objects-hook
+Called after objects are removed from the page.  Argument is a list of
+the objects being removed.
+@end defvar
+
+@defvar move-objects-hook
+Called after objects are moved.  Argument is a list of the objects
+that were mirrored.
+@end defvar
+
+@defvar mirror-objects-hook
+Called after objects are mirrored.  Argument is a list of the objects
+that were mirrored.
+@end defvar
+
+@defvar rotate-objects-hook
+Called after objects are rotated.  Argument is a list of the objects
+that were rotated.
+@end defvar
+
+@defvar paste-objects-hook
+Called after objects are pasted to the page, either via @strong{Edit →
+Copy Mode} or similar, or via buffers, or via the clipboard.  Argument
+is a list of the objects that were pasted.
+@end defvar
+
+@defvar attach-attribs-hook
+Called after attributes are attached to something.  The argument is a
+list of the attributes that were attached.
+@end defvar
+
+@defvar detach-attribs-hook
+Called after attributes are detached from something.  The argument is
+a list of the attributes that were detached.
+@end defvar
+
+@defvar select-objects-hook
+Called after objects are added to the selection.  The argument is a
+list of objects that were selected.
+@end defvar
+
+@defvar deselect-objects-hook
+Called after objects are removed from the selection.  The argument is
+a list of objects that were deselected.
+@end defvar
+
+@defvar new-page-hook
+Called when a new page is created. The argument is the new page.
+@end defvar
+
+@node Miscellanous gschem functions
+@section Miscellaneous gschem functions
+
+@subsection gschem Attribute Helpers
+
+To use the functions described in this section, you will need to load
+the @code{(gschem attrib)} module.
+
+@defun add-attrib! target name value visible show
+Create a new attribute, either attached to a @var{target}
+@code{object} in the current @code{page}, or floating in the current
+@code{page} if @var{target} is @samp{#f}.  The @var{name} and
+@var{value} for the attribute must be strings, and if visible is
+@samp{#f}, the attribute will be invisible.  The @var{show} argument
+controls which parts of the attribute will be visible, and must be one
+of the following symbols:
+
+@itemize
+@item
+@samp{name}
+@item
+@samp{value}
+@item
+@samp{both}
+@end itemize
+
+This function exists to provide a way for actions defined in Scheme to
+use the same attribute placement heuristics as gschem's built-in
+@strong{Add Attribute} action.
+
+@xref{Text}, @ref{Attributes} and @ref{Windows and views}.
+@end defun
+
+@node Concept Index
+@unnumbered Concept Index
+
+@printindex cp
+
+@node Function Index
+@unnumbered Function Index
+
+@printindex fn
+
+@node Variable Index
+@unnumbered Variable Index
+
+@printindex vr
+
+@bye

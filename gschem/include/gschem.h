@@ -3,6 +3,7 @@
 #include <gtk/gtk.h>
 #include <libguile.h>
 #include <libgeda/libgeda.h>
+#include <libgeda/libgedaguile.h>
 
 /* gschem headers */
 #include "gschem_defines.h"

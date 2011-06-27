@@ -208,6 +208,8 @@ struct st_gschem_toplevel {
   int scrollpan_steps;    /* Number of scroll pan events required to traverse the viewed area */
 
   char *print_command;    /* The command to send postscript to when printing */
+
+  SCM smob;               /* The Scheme representation of this window */
 };
 
 

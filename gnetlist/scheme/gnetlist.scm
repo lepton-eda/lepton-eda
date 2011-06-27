@@ -18,6 +18,7 @@
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 (use-modules (srfi srfi-1))
+(use-modules (geda deprecated))
 
 ;;----------------------------------------------------------------------
 ;; The below functions added by SDB in Sept 2003 to support command-line flag

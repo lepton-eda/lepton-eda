@@ -2,6 +2,7 @@
 
 /* gschem_toplevel.c */
 GSCHEM_TOPLEVEL *gschem_toplevel_new();
+
 /* a_pan.c */
 void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
 		   double relativ_zoom_factor, int flags);
@@ -17,6 +18,8 @@ void a_zoom_box_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void a_zoom_box_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 void a_zoom_box_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void correct_aspect(GSCHEM_TOPLEVEL *w_current);
+/* g_attrib.c */
+void g_init_attrib ();
 /* g_funcs.c */
 SCM g_funcs_print(SCM filename);
 SCM g_funcs_postscript(SCM filename);
@@ -29,23 +32,11 @@ SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags);
 SCM g_funcs_browse_wiki(SCM wikiname);
 SCM g_funcs_use_rc_values(void);
 SCM get_selected_component_attributes(GSCHEM_TOPLEVEL *w_current);
-SCM get_selected_filename(GSCHEM_TOPLEVEL *w_current);
 /* g_hook.c */
-SCM g_make_attrib_smob_list(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
-SCM g_set_attrib_value_x(SCM attrib_smob, SCM scm_value);
-SCM g_add_attrib(SCM object, SCM attrib_name, 
-		 SCM attrib_value, SCM scm_vis, SCM scm_show);
-SCM g_get_pin_ends(SCM object);
-SCM
-g_set_attrib_text_properties(SCM attrib_smob, SCM scm_colorname, SCM scm_size, 
-			     SCM scm_alignment, SCM scm_rotation, SCM scm_x,
-			     SCM scm_y);
-SCM g_get_object_bounds (SCM object_smob, SCM scm_exclude_attribs, SCM scm_exclude_object_type);
-SCM g_get_object_pins (SCM object_smob);
-SCM g_add_component(SCM page_smob, SCM scm_comp_name, SCM scm_x, SCM scm_y, 
-		    SCM scm_angle, SCM scm_selectable, SCM scm_mirror);
-SCM g_get_objects_in_page(SCM page_smob);
-SCM g_get_current_page(void);
+void g_init_hook ();
+void g_run_hook_object (const char *name, OBJECT *obj);
+void g_run_hook_object_list (const char *name, GList *obj_lst);
+void g_run_hook_page (const char *name, PAGE *page);
 /* g_keys.c */
 int g_keys_execute(GSCHEM_TOPLEVEL *w_current, int state, int keyval);
 GArray *g_keys_dump_keymap (void);
@@ -193,8 +184,6 @@ SCM g_keys_misc3(SCM rest);
 SCM g_keys_help_about(SCM rest);
 SCM g_keys_help_hotkeys(SCM rest);
 SCM g_keys_cancel(SCM rest);
-SCM g_get_selected_filename(void);
-SCM g_get_selected_component_attributes(void);
 /* g_rc.c */
 void g_rc_parse_gtkrc();
 SCM g_rc_gschem_version(SCM version);
@@ -277,6 +266,12 @@ SCM g_rc_display_color_map (SCM scm_map);
 SCM g_rc_display_outline_color_map (SCM scm_map);
 /* g_register.c */
 void g_register_funcs(void);
+/* g_select.c */
+void g_init_select ();
+/* g_window.c */
+GSCHEM_TOPLEVEL *g_current_window ();
+void g_dynwind_window (GSCHEM_TOPLEVEL *w_current);
+void g_init_window ();
 /* globals.c */
 /* gschem.c */
 typedef void (*gschem_atexit_func)(gpointer data);
@@ -542,7 +537,6 @@ void o_complex_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_complex_draw_place(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *complex);
 void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const CLibSymbol *sym);
 void o_complex_place_changed_run_hook(GSCHEM_TOPLEVEL *w_current);
-void o_complex_end(GSCHEM_TOPLEVEL *w_current, int x, int y, int continue_placing);
 void o_complex_translate_all(GSCHEM_TOPLEVEL *w_current, int offset);
 /* o_copy.c */
 void o_copy_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -591,7 +585,6 @@ void o_edit(GSCHEM_TOPLEVEL *w_current, GList *list);
 void o_lock(GSCHEM_TOPLEVEL *w_current);
 void o_unlock(GSCHEM_TOPLEVEL *w_current);
 void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery, int angle, GList *list);
-void o_rotate_call_hooks(GSCHEM_TOPLEVEL *w_current, GList *list);
 void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery, GList *list);
 void o_edit_show_hidden_lowlevel(GSCHEM_TOPLEVEL *w_current, const GList *o_list);
 void o_edit_show_hidden(GSCHEM_TOPLEVEL *w_current, const GList *o_list);
@@ -662,7 +655,7 @@ void o_pin_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_pin_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 /* o_place.c */
 void o_place_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_place_end(GSCHEM_TOPLEVEL *w_current, int x, int y, int continue_placing, GList **ret_new_objects);
+void o_place_end(GSCHEM_TOPLEVEL *w_current, int x, int y, int continue_placing, GList **ret_new_objects, const char *hook_name);
 void o_place_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_place_invalidate_rubber(GSCHEM_TOPLEVEL *w_current, int drawing);
 void o_place_draw_rubber(GSCHEM_TOPLEVEL *w_current, int drawing);
@@ -679,7 +672,6 @@ void o_select_box_search(GSCHEM_TOPLEVEL *w_current);
 void o_select_connected_nets(GSCHEM_TOPLEVEL *w_current, OBJECT* o_current);
 OBJECT *o_select_return_first_object(GSCHEM_TOPLEVEL *w_current);
 int o_select_selected(GSCHEM_TOPLEVEL *w_current);
-void o_select_unselect_list(GSCHEM_TOPLEVEL *w_current, SELECTION *selection);
 void o_select_unselect_all(GSCHEM_TOPLEVEL *w_current);
 void o_select_visible_unlocked(GSCHEM_TOPLEVEL *w_current);
 void o_select_move_to_place_list(GSCHEM_TOPLEVEL *w_current);

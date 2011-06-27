@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,8 @@ void o_place_start (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_place_end (GSCHEM_TOPLEVEL *w_current,
                   int w_x, int w_y,
                   int continue_placing,
-                  GList **ret_new_objects)
+                  GList **ret_new_objects,
+                  const char* hook_name)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int w_diff_x, w_diff_y;
@@ -86,9 +87,6 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
 
   o_glist_translate_world(toplevel, w_diff_x, w_diff_y, temp_dest_list);
 
-  /* Clear the old selection list */
-  o_select_unselect_all (w_current);
-
   /* Attach each item back onto the page's object list. Update object
    * connectivity and add the new objects to the selection list.*/
   p_current = toplevel->page_current;
@@ -98,12 +96,13 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
 
     s_page_append (toplevel, p_current, o_current);
 
-    o_selection_add (toplevel,
-                     toplevel->page_current->selection_list, o_current);
-
     /* Update object connectivity */
     s_conn_update_object (toplevel, o_current);
     connected_objects = s_conn_return_others (connected_objects, o_current);
+  }
+
+  if (hook_name != NULL) {
+    g_run_hook_object_list (hook_name, temp_dest_list);
   }
 
   o_invalidate_glist (w_current, connected_objects);
@@ -320,6 +319,9 @@ void o_place_rotate (GSCHEM_TOPLEVEL *w_current)
   o_glist_rotate_world (toplevel,
                         w_current->first_wx, w_current->first_wy, 90,
                         toplevel->page_current->place_list);
-  /* All objects were rotated. Run the rotate hooks */
-  o_rotate_call_hooks (w_current, toplevel->page_current->place_list);
+
+
+  /* Run rotate-objects-hook */
+  g_run_hook_object_list ("%rotate-objects-hook",
+                          toplevel->page_current->place_list);
 }

@@ -111,9 +111,13 @@ int g_keys_execute(GSCHEM_TOPLEVEL *w_current, int state, int keyval)
 #if DEBUG 
   printf("_%s_\n", guile_string);
 #endif
+
+  scm_dynwind_begin (0);
+  scm_dynwind_unwind_handler (g_free, guile_string, SCM_F_WIND_EXPLICITLY);
+  scm_dynwind_unwind_handler (g_free, modifier, SCM_F_WIND_EXPLICITLY);
+  g_dynwind_window (w_current);
   scm_retval = g_scm_c_eval_string_protected (guile_string);
-  g_free(guile_string);
-  g_free(modifier);
+  scm_dynwind_end ();
 
   return (SCM_FALSEP (scm_retval)) ? 0 : 1;
 }
@@ -199,8 +203,9 @@ static gboolean clear_keyaccel_string(gpointer data)
 #define DEFINE_G_KEYS(name)				\
 SCM g_keys_ ## name(SCM rest)				\
 {							\
-   g_timeout_add(400, clear_keyaccel_string, global_window_current); \
-   i_callback_ ## name(global_window_current, 0, NULL); \
+   GSCHEM_TOPLEVEL *w_current = g_current_window ();	\
+   g_timeout_add(400, clear_keyaccel_string, w_current);       \
+   i_callback_ ## name(w_current, 0, NULL);                   \
    return SCM_BOOL_T;				\
 }
 
@@ -390,25 +395,3 @@ DEFINE_G_KEYS(help_hotkeys)
 being called with a null, I suppose we should call it with the right param.
 hack */
 DEFINE_G_KEYS(cancel)
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/*help for generate-netlist hot key*/
-SCM g_get_selected_filename(void)                     
-{                                                     
-	return (get_selected_filename(global_window_current));
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_get_selected_component_attributes(void)                 
-{
-  return (get_selected_component_attributes(global_window_current));
-}

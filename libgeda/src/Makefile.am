@@ -2,7 +2,28 @@
 # Build a libtool library for installation in libdir.
 lib_LTLIBRARIES = libgeda.la
 
+BUILT_SOURCES = \
+	scheme_init.x \
+	scheme_smob.x \
+	scheme_toplevel.x \
+	scheme_object.x \
+	scheme_complex.x \
+	scheme_page.x \
+	scheme_attrib.x \
+	scheme_deprecated.x
+
+scheme_api_sources = \
+	scheme_init.c \
+	scheme_smob.c \
+	scheme_toplevel.c \
+	scheme_object.c \
+	scheme_complex.c \
+	scheme_page.c \
+	scheme_attrib.c \
+	scheme_deprecated.c
+
 libgeda_la_SOURCES = \
+	$(scheme_api_sources) \
 	a_basic.c \
 	edaerrors.c \
 	f_basic.c \
@@ -11,7 +32,6 @@ libgeda_la_SOURCES = \
 	geda_list.c \
 	g_rc.c \
 	g_register.c \
-	g_smob.c \
 	i_vars.c \
 	libgeda.c \
 	m_basic.c \
@@ -70,8 +90,16 @@ libgeda_la_LDFLAGS = -version-info $(LIBGEDA_SHLIB_VERSION) \
 	$(GLIB_LIBS) $(GDK_PIXBUF_LIBS)
 LIBTOOL=@LIBTOOL@ --silent
 
+# This is used to generate boilerplate for defining Scheme functions
+# in C.
+SUFFIXES = .x
+snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(libgeda_la_CPPFLAGS) $(AM_CFLAGS) $(libgeda_la_CFLAGS)
+.c.x:
+	$(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
+
 MOSTLYCLEANFILES = *.log core FILE *~
-CLEANFILES = *.log core FILE *~
+CLEANFILES = *.log core FILE *~ $(BUILT_SOURCES)
 DISTCLEANFILES = *.log core FILE *~
 MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in
 

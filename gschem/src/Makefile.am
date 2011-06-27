@@ -1,13 +1,22 @@
 bin_PROGRAMS = gschem
 
+BUILT_SOURCES = \
+	g_attrib.x \
+	g_hook.x \
+	g_window.x \
+	g_select.x
+
 gschem_SOURCES = \
 	a_pan.c \
 	a_zoom.c \
+	g_attrib.c \
 	g_funcs.c \
 	g_hook.c \
 	g_keys.c \
 	g_rc.c \
 	g_register.c \
+	g_select.c \
+	g_window.c \
 	globals.c \
 	gschem.c \
 	gschem_accel_label.c \
@@ -78,10 +87,19 @@ gschem_LDFLAGS = $(LIBSTROKE_LDFLAGS) $(GLIB_LIBS) $(GTK_LIBS) \
 	$(GTHREAD_LIBS) $(GUILE_LIBS) $(MINGW_GUI_LDFLAGS)
 gschem_LDADD = $(top_builddir)/libgeda/src/libgeda.la @LIBINTL@
 
+
+# This is used to generate boilerplate for defining Scheme functions
+# in C.
+SUFFIXES = .x
+snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(gschem_CPPFLAGS) $(AM_CFLAGS) $(gschem_CFLAGS)
+.c.x:
+	$(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
+
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 MOSTLYCLEANFILES = *.log core FILE *~
-CLEANFILES = *.log core FILE *~
+CLEANFILES = *.log core FILE *~ $(BUILT_SOURCES)
 DISTCLEANFILES = *.log core FILE *~
 MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in

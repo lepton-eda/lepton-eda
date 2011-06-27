@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -194,6 +194,10 @@ void main_prog(void *closure, int argc, char *argv[])
 
   /* register guile (scheme) functions */
   g_register_funcs();
+  g_init_window ();
+  g_init_select ();
+  g_init_hook ();
+  g_init_attrib ();
 
   /* initialise color map (need to do this before reading rc files */
   x_color_init ();
@@ -216,7 +220,6 @@ void main_prog(void *closure, int argc, char *argv[])
   /* Allocate w_current */
   w_current = gschem_toplevel_new ();
   w_current->toplevel = s_toplevel_new ();
-  global_window_current = w_current;
 
   w_current->toplevel->load_newer_backup_func = x_fileselect_load_backup;
   w_current->toplevel->load_newer_backup_data = w_current;
@@ -228,6 +231,9 @@ void main_prog(void *closure, int argc, char *argv[])
   o_add_change_notify (w_current->toplevel,
                        (ChangeNotifyFunc) o_invalidate,
                        (ChangeNotifyFunc) o_invalidate, w_current);
+
+  scm_dynwind_begin (0);
+  g_dynwind_window (w_current);
 
   /* Run pre-load Scheme expressions */
   g_scm_eval_protected (s_pre_load_expr, scm_current_module ());
@@ -314,7 +320,9 @@ void main_prog(void *closure, int argc, char *argv[])
   /* if there were any symbols which had major changes, put up an error */
   /* dialog box */
   major_changed_dialog(w_current);
-    
+
+  scm_dynwind_end ();
+
   /* enter main loop */
   gtk_main();
 }

@@ -67,16 +67,19 @@ int npopup_items = sizeof(popup_items) / sizeof(popup_items[0]);
  */
 static void g_menu_execute(GtkAction *action, gpointer user_data)
 {
-  gchar *guile_string;
+  gchar *guile_string = NULL;
   const gchar *func = gtk_action_get_name (action);
-  /* GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) user_data; */
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) user_data;
 
   guile_string = g_strdup_printf("(%s)", func);
 #if DEBUG
   printf("%s\n", guile_string);
 #endif
+  scm_dynwind_begin (0);
+  scm_dynwind_unwind_handler (g_free, guile_string, SCM_F_WIND_EXPLICITLY);
+  g_dynwind_window (w_current);
   g_scm_c_eval_string_protected (guile_string);
-  g_free(guile_string);
+  scm_dynwind_end ();
 }
 
 /*! \todo Finish function documentation!!!
@@ -113,6 +116,13 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
   int i, j;
 
   menu_bar = gtk_menu_bar_new ();
+
+  scm_dynwind_begin (0);
+  g_dynwind_window (w_current);
+  /*! \bug This function may leak memory if there is a non-local exit
+   * in Guile code. At some point, unwind handlers need to be added to
+   * clean up heap-allocated strings. */
+
   for (i = 0 ; i < s_menu_return_num(); i++) {
     
     scm_items = s_menu_return_entry(i, raw_menu_name);   
@@ -229,6 +239,7 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
     gtk_menu_item_set_submenu (GTK_MENU_ITEM (root_menu), menu);
     gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), root_menu);
   }
+  scm_dynwind_end ();
 
   g_free(raw_menu_name);
   return menu_bar;

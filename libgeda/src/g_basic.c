@@ -35,6 +35,7 @@
 #endif
 
 #include "libgeda_priv.h"
+#include "libgedaguile.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -214,10 +215,15 @@ g_read_file(TOPLEVEL *toplevel, const gchar *filename, GError **err)
   data.filename = scm_from_utf8_string (filename);
   data.err = NULL;
 
+  scm_dynwind_begin (SCM_F_DYNWIND_REWINDABLE);
+  edascm_dynwind_toplevel (toplevel);
+
   scm_c_catch (SCM_BOOL_T,
                (scm_t_catch_body) g_read_file__body, &data,
                (scm_t_catch_handler) g_read_file__post_handler, &data,
                (scm_t_catch_handler) g_read_file__pre_handler, &data);
+
+  scm_dynwind_end ();
 
   /* If no error occurred, indicate success. */
   if (data.err == NULL) return TRUE;

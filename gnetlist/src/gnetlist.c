@@ -38,6 +38,7 @@
 
 
 #include <libgeda/libgeda.h>
+#include <libgeda/libgedaguile.h>
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
@@ -186,7 +187,9 @@ void main_prog(void *closure, int argc, char *argv[])
     /* register guile (scheme) functions */
     g_register_funcs();
 
+    scm_dynwind_begin (0);
     pr_current = s_toplevel_new ();
+    edascm_dynwind_toplevel (pr_current);
 
     /* Evaluate Scheme expressions that need to be run before rc files
      * are loaded. */
@@ -254,7 +257,6 @@ void main_prog(void *closure, int argc, char *argv[])
         exit (1);
     }
 
-    g_set_project_current(pr_current);
 #if DEBUG
     s_page_print_all(pr_current);
 #endif
@@ -316,6 +318,8 @@ void main_prog(void *closure, int argc, char *argv[])
     }
 
     gnetlist_quit();
+
+    scm_dynwind_end();
 }
 
 int main(int argc, char *argv[])

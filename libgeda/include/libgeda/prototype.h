@@ -39,16 +39,6 @@ gboolean g_rc_parse_local (TOPLEVEL *toplevel, const gchar *rcname, const gchar 
 gboolean g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile, GError **err);
 void g_rc_parse(TOPLEVEL *toplevel, const gchar* pname, const gchar* rcname, const gchar* rcfile);
 void g_rc_parse_handler (TOPLEVEL *toplevel, const gchar *rcname, const gchar *rcfile, ConfigParseErrorFunc handler, void *user_data);
-/* g_smob.c */
-SCM g_make_attrib_smob(TOPLEVEL *curr_w, OBJECT *curr_attr);
-SCM g_set_attrib_value_internal(SCM attrib_smob, SCM scm_value, TOPLEVEL **world, OBJECT **o_attrib, char *new_string[]);
-gboolean g_get_data_from_object_smob(SCM object_smob, TOPLEVEL **toplevel, 
-				     OBJECT **object);
-SCM g_make_object_smob(TOPLEVEL *curr_w, OBJECT *object);
-SCM g_get_object_attributes(SCM object_smob);
-SCM g_make_page_smob(TOPLEVEL *curr_w, PAGE *page);
-gboolean g_get_data_from_page_smob(SCM object_smob, TOPLEVEL **toplevel, 
-				   PAGE **object);
 
 /* i_vars.c */
 void i_vars_libgeda_set(TOPLEVEL *toplevel);

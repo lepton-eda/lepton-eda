@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -562,6 +562,9 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   GList *prev_conn_objects;
   OBJECT *new_net = NULL;
 
+  /* Save a list of added objects to run the %add-objects-hook later */
+  GList *added_objects = NULL;
+
   g_assert( w_current->inside_action != 0 );
 
   o_net_invalidate_rubber (w_current);
@@ -605,6 +608,8 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
                           w_current->second_wx, w_current->second_wy);
       s_page_append (toplevel, toplevel->page_current, new_net);
 
+      added_objects = g_list_prepend (added_objects, new_net);
+
       /* conn stuff */
       /* LEAK CHECK 1 */
       prev_conn_objects = s_conn_return_others (NULL, new_net);
@@ -638,6 +643,8 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
                           w_current->third_wx, w_current->third_wy);
       s_page_append (toplevel, toplevel->page_current, new_net);
 
+      added_objects = g_list_prepend (added_objects, new_net);
+
       /* conn stuff */
       /* LEAK CHECK 2 */
       prev_conn_objects = s_conn_return_others (NULL, new_net);
@@ -646,6 +653,12 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 #if DEBUG
       s_conn_print(new_net->conn_list);
 #endif
+  }
+
+  /* Call add-objects-hook */
+  if (added_objects != NULL) {
+    g_run_hook_object_list ("%add-objects-hook", added_objects);
+    g_list_free (added_objects);
   }
 
   toplevel->page_current->CHANGED = 1;

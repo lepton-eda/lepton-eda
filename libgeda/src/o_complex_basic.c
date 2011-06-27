@@ -260,19 +260,16 @@ int o_complex_is_embedded(OBJECT *o_current)
  *  Returns a GList of OBJECTs which are eligible for promotion from
  *  within the passed complex OBJECT.
  *
- *  If detach is TRUE, the function removes these attribute objects from
- *  the prim_objs of the complex. It detached, the returned OBJECTs are
- *  isolated from each other, having their next and prev pointers set to NULL.
- *
- *  If detach is FALSE, the OBJECTs are left in place. Their next and prev
- *  pointers form part of the complex's prim_objs linked list.
+ *  If detach is TRUE, the function removes these attribute objects
+ *  from the prim_objs of the complex.  If detach is FALSE, the
+ *  OBJECTs are left in place.
  *
  *  \param [in]  toplevel The toplevel environment.
  *  \param [in]  object   The complex object being modified.
  *  \param [in]  detach   Should the attributes be detached?
  *  \returns              A linked list of OBJECTs to promote.
  */
-static GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
+GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
 {
   GList *promoted = NULL;
   GList *attribs;
@@ -617,6 +614,9 @@ void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
   /* o_recalc(toplevel, o_current->complex);*/
 
   if ((!o_current) || (o_current->type != OBJ_COMPLEX && o_current->type != OBJ_PLACEHOLDER))
+    return;
+
+  if (o_current->complex->prim_objs == NULL)
     return;
 
   world_get_complex_bounds(toplevel, o_current, &left, &top, &right, &bottom);

@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -296,10 +296,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "misc-misc3",                0, 0, 0, g_keys_misc3 },
   { "cancel",                    0, 0, 0, g_keys_cancel },
 
-  /*help functions for generating netlists*/
-  { "get-selected-filename",     0, 0, 0, g_get_selected_filename },
-  { "get-selected-component-attributes", 0, 0, 0, g_get_selected_component_attributes },
-  
   { NULL,                        0, 0, 0, NULL } };
 
 /*! \brief Define a hook.
@@ -334,33 +330,5 @@ void g_register_funcs (void)
   }
 
   /* Hook stuff */
-  scm_c_define_gsubr ("add-attribute-to-object", 5, 0, 0, g_add_attrib);
-  scm_c_define_gsubr ("get-object-attributes", 1, 0, 0, g_get_object_attributes);
-  scm_c_define_gsubr ("get-object-bounds", 3, 0, 0, g_get_object_bounds);
-  scm_c_define_gsubr ("get-object-pins", 1, 0, 0, g_get_object_pins);
-  scm_c_define_gsubr ("get-pin-ends", 1, 0, 0, g_get_pin_ends);
-  scm_c_define_gsubr ("set-attribute-text-properties!", 7, 0, 0, g_set_attrib_text_properties);
-  scm_c_define_gsubr ("set-attribute-value!", 2, 0, 0, g_set_attrib_value_x);
-  scm_c_define_gsubr ("add-component-at-xy", 7, 0, 0, g_add_component);
-  scm_c_define_gsubr ("get-objects-in-page", 1, 0, 0, g_get_objects_in_page);
-  scm_c_define_gsubr ("get-current-page", 0, 0, 0, g_get_current_page);
-
-  add_component_hook  = create_hook ("add-component-hook", 1);
-  add_component_object_hook  = create_hook ("add-component-object-hook", 1);
-  rotate_component_object_hook  = create_hook ("rotate-component-object-hook", 1);
-  mirror_component_object_hook  = create_hook ("mirror-component-object-hook", 1);
-  copy_component_hook = create_hook ("copy-component-hook", 1);
-  move_component_hook = create_hook ("move-component-hook", 1);
-  deselect_component_hook = create_hook ("deselect-component-hook", 1);
-  deselect_net_hook = create_hook ("deselect-net-hook", 1);
-  deselect_all_hook = create_hook ("deselect-all-hook", 1);
-  select_component_hook = create_hook ("select-component-hook", 1);
-  select_net_hook = create_hook ("select-net-hook", 1);
-
-  add_pin_hook = create_hook ("add-pin-hook", 1);
-  mirror_pin_hook = create_hook ("mirror-pin-hook", 1);
-  rotate_pin_hook = create_hook ("rotate-pin-hook", 1);
-  add_attribute_hook = create_hook ("add-attribute-hook", 1);
-  new_page_hook = create_hook ("new-page-hook", 1);
   complex_place_list_changed_hook = create_hook ("complex-place-list-changed-hook", 1);
 }

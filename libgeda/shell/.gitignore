@@ -1,0 +1,5 @@
+*.x
+*.o
+geda-shell
+.deps
+.objs

@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,6 +54,7 @@ void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection,
 {
   OBJECT *a_current;
   GList *a_iter;
+  GList *selected_objects = NULL;
 
   g_assert( selection != NULL );
 
@@ -62,8 +63,16 @@ void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection,
     a_current = a_iter->data;
 
     /* make sure object isn't selected already */
-    if (!a_current->selected)
+    if (!a_current->selected) {
       o_selection_add (w_current->toplevel, selection, a_current);
+      selected_objects = g_list_prepend (selected_objects, a_current);
+    }
+  }
+
+  if (selected_objects != NULL) {
+    /* Run select-objects-hook */
+    g_run_hook_object_list ("%select-objects-hook", selected_objects);
+    g_list_free (selected_objects);
   }
 }
 
@@ -270,13 +279,9 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
     o_slot_end (w_current, o_current, text_string);
   }
 
-  /* Run the add attribute hook */
-  if (scm_is_false (scm_hook_empty_p (add_attribute_hook)) &&
-      o_current != NULL) {
-    scm_run_hook (add_attribute_hook,
-                  scm_cons (g_make_object_smob (toplevel, o_current),
-                            SCM_EOL));
-  }
+  /* Call add-objects-hook. */
+  g_run_hook_object ("%add-objects-hook", new_obj);
+  g_run_hook_object ("%select-objects-hook", new_obj);
 
   toplevel->page_current->CHANGED = 1;
 

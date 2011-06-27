@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -3055,6 +3055,7 @@ DEFINE_I_CALLBACK(attributes_attach)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   OBJECT *first_object;
   GList *s_current;
+  GList *attached_objects = NULL;
 
   exit_if_null(w_current);
 
@@ -3086,10 +3087,17 @@ DEFINE_I_CALLBACK(attributes_attach)
     OBJECT *object = s_current->data;
     if (object != NULL) {
       o_attrib_attach (w_current->toplevel, object, first_object, TRUE);
+      attached_objects = g_list_prepend (attached_objects, object);
       w_current->toplevel->page_current->CHANGED=1;
     }
     s_current = g_list_next(s_current);
   }
+
+  if (attached_objects != NULL) {
+    g_run_hook_object_list ("%attach-attribs-hook", attached_objects);
+    g_list_free (attached_objects);
+  }
+
   o_undo_savestate(w_current, UNDO_ALL);
 }
 
@@ -3103,6 +3111,7 @@ DEFINE_I_CALLBACK(attributes_detach)
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   GList *s_current;
   OBJECT *o_current;
+  GList *detached_attribs = NULL;
 
   exit_if_null(w_current);
 
@@ -3121,12 +3130,20 @@ DEFINE_I_CALLBACK(attributes_detach)
     o_current = (OBJECT *) s_current->data;
     if (o_current) {
       if (o_current->attribs) {
+        detached_attribs = g_list_concat (g_list_copy (o_current->attribs),
+                                          detached_attribs);
         o_attrib_detach_all (w_current->toplevel, o_current);
         w_current->toplevel->page_current->CHANGED=1;
       }
     }
     s_current = g_list_next(s_current);
   }
+
+  if (detached_attribs != NULL) {
+    g_run_hook_object_list ("%detach-attribs-hook", detached_attribs);
+    g_list_free (detached_attribs);
+  }
+
   o_undo_savestate(w_current, UNDO_ALL);
 }
 

@@ -7,6 +7,14 @@ Copyright (C) 1998-2011 gEDA Developers
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
 
+Notable changes in gEDA/gaf 1.7.2
+=================================
+
+* A greatly expanded Scheme API has been added to gEDA/gaf for use by
+  extension authors.  See the `geda-scheme' Info manual for more
+  details.  Existing extensions may need to be modified to load the
+  `(geda deprecated)' or `(gschem deprecated)' modules.
+
 Notable changes in gEDA/gaf 1.7.1
 =================================
 

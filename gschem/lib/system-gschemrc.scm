@@ -3,6 +3,8 @@
 ; Init file for gschem
 ;
 
+(use-modules (gschem deprecated))
+
 ;  ;'s are comments
 ;  keywords are case sensitive (guile feature)
 ;  mode strings are case sensitive
@@ -946,7 +948,7 @@
     (use-modules (ice-9 regex))
     (display "Your Guile installation doesn't provide the regex module.\n"))
 
-(add-hook! new-page-hook (lambda (page)
+(add-hook! (@ (gschem hook) new-page-hook) (lambda (page)
    ; Only place the titleblock if there are no objects in the page
    ; and the page filename ends in ".sym".
    (if (and (null? (get-objects-in-page page))
@@ -1365,7 +1367,8 @@
 ; The SEPARATOR keyword is case sensitive and puts a seperator into the menu.
 ;
 
-(use-modules (ice-9 syncase))
+(or (defined? 'define-syntax)
+    (use-modules (ice-9 syncase)))
 
 ;; Define a no-op macro for flagging strings as translatable.
 (define-syntax N_

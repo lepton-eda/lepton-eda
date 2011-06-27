@@ -5,6 +5,7 @@ gschem/src/g_hook.c
 gschem/src/g_keys.c
 gschem/src/g_rc.c
 gschem/src/g_register.c
+gschem/src/g_window.c
 gschem/src/globals.c
 gschem/src/gschem.c
 gschem/src/gschem_accel_label.c
