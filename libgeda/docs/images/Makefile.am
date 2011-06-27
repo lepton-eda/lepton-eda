@@ -18,7 +18,7 @@ all:
 
 images: $(png_images) $(pdf_images)
 
-clean:
+clean-local:
 	rm -rf $(png_images) $(pdf_images)
 
 .svg.png:
