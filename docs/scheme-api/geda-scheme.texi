@@ -2,6 +2,10 @@
 @setfilename geda-scheme.info
 @include version.texi
 @documentencoding utf-8
+@dircategory The Algorithmic Language Scheme
+@direntry
+* gEDA Scheme: (geda-scheme).  gEDA extensibility with Guile Scheme.
+@end direntry
 @settitle gEDA Scheme Reference Manual @value{VERSION}
 
 @copying
