@@ -1,10 +1,12 @@
 *~
+compile
 config.guess
 config.rpath
 config.sub
 depcomp
 install-sh
 ltmain.sh
+mdate-sh
 missing
+texinfo.tex
 ylwrap
-compile
