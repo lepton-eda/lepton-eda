@@ -212,5 +212,5 @@ fi
   run_tool "$LIBTOOLIZE" --force --copy &&
   run_tool "$ACLOCAL" $aclocal_flags &&
   run_tool "$AUTOHEADER" &&
-  run_tool "$AUTOMAKE" --copy --add-missing --gnu &&
+  run_tool "$AUTOMAKE" -Wall --copy --add-missing --gnu &&
   run_tool "$AUTOCONF" )
