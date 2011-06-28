@@ -23,6 +23,6 @@ SUFFIXES = .x
 snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(geda_shell_CPPFLAGS) $(AM_CFLAGS) $(geda_shell_CFLAGS)
 .c.x:
-	$(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
+	CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
 
 CLEANFILES = $(BUILT_SOURCES)

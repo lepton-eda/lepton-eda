@@ -96,7 +96,7 @@ SUFFIXES = .x
 snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(libgeda_la_CPPFLAGS) $(AM_CFLAGS) $(libgeda_la_CFLAGS)
 .c.x:
-	$(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
+	CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
 
 MOSTLYCLEANFILES = *.log core FILE *~
 CLEANFILES = *.log core FILE *~ $(BUILT_SOURCES)
