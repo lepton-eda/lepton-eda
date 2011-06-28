@@ -325,13 +325,14 @@ void o_text_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \param [in] tb           a text buffer (usually a line of a schematic file)
  *  \param [in] release_ver  The release number gEDA
  *  \param [in] fileformat_ver a integer value of the file format
- *  \return The object list
+ *  \return The object list, or NULL on error.
  */
 OBJECT *o_text_read (TOPLEVEL *toplevel,
 		    const char *first_line,
 		    TextBuffer *tb,
 		    unsigned int release_ver,
-		    unsigned int fileformat_ver)
+            unsigned int fileformat_ver,
+            GError **err)
 {
   OBJECT *new_obj;
   char type; 
@@ -348,24 +349,33 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
   GString *textstr;
 
   if (fileformat_ver >= 1) {
-    sscanf(first_line, "%c %d %d %d %d %d %d %d %d %d\n", &type, &x, &y, 
-           &color, &size,
-           &visibility, &show_name_value, 
-           &angle, &alignment, &num_lines);	
+    if (sscanf(first_line, "%c %d %d %d %d %d %d %d %d %d\n", &type, &x, &y, 
+	       &color, &size,
+	       &visibility, &show_name_value, 
+	       &angle, &alignment, &num_lines) != 10) {
+      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse text object\n"));
+      return NULL;
+    }
   } else if (release_ver < VERSION_20000220) {
     /* yes, above less than (not less than and equal) is correct. The format */
     /* change occurred in 20000220 */
-    sscanf(first_line, "%c %d %d %d %d %d %d %d\n", &type, &x, &y, 
-           &color, &size,
-           &visibility, &show_name_value, 
-           &angle);	
+    if (sscanf(first_line, "%c %d %d %d %d %d %d %d\n", &type, &x, &y, 
+	       &color, &size,
+	       &visibility, &show_name_value, 
+	       &angle) != 8) {
+      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse text object\n"));
+      return NULL;
+    }
     alignment = LOWER_LEFT; /* older versions didn't have this */
     num_lines = 1; /* only support a single line */
   } else {
-    sscanf(first_line, "%c %d %d %d %d %d %d %d %d\n", &type, &x, &y, 
-           &color, &size,
-           &visibility, &show_name_value, 
-           &angle, &alignment);	
+    if (sscanf(first_line, "%c %d %d %d %d %d %d %d %d\n", &type, &x, &y, 
+	       &color, &size,
+	       &visibility, &show_name_value, 
+           &angle, &alignment) != 9) {
+      g_set_error (err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse text object\n"));
+      return NULL;
+    }
     num_lines = 1; /* only support a single line */
   }
 
@@ -425,10 +435,13 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
     
     line = s_textbuffer_next_line (tb);
 
-    if (line != NULL)
-      {
-	textstr = g_string_append (textstr, line);
-      }
+    if (line == NULL) {
+      g_string_free (textstr, TRUE);
+      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Premature end of data after %d lines\n"), i);
+      return NULL;
+    }
+
+    textstr = g_string_append (textstr, line);
   }
   /* retrieve the character string from the GString */
   string = g_string_free (textstr, FALSE);

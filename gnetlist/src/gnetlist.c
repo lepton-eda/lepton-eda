@@ -232,6 +232,7 @@ void main_prog(void *closure, int argc, char *argv[])
         g_warning ("%s\n", err->message);
         fprintf (stderr, "%s\n", err->message);
         g_error_free (err);
+	exit(2);
       }
 
       /* collect input filenames for backend use */

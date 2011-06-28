@@ -143,10 +143,10 @@ void o_bus_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \param [in] buf          a text buffer (usually a line of a schematic file)
  *  \param [in] release_ver  The release number gEDA
  *  \param [in] fileformat_ver a integer value of the file format
- *  \return The object list
+ *  \return The object list, or NULL on error.
  */
 OBJECT *o_bus_read (TOPLEVEL *toplevel, char buf[],
-                    unsigned int release_ver, unsigned int fileformat_ver)
+                    unsigned int release_ver, unsigned int fileformat_ver, GError **err)
 {
   OBJECT *new_obj;
   char type; 
@@ -156,11 +156,17 @@ OBJECT *o_bus_read (TOPLEVEL *toplevel, char buf[],
   int ripper_dir;
 
   if (release_ver <= VERSION_20020825) {
-    sscanf (buf, "%c %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color);
+    if (sscanf (buf, "%c %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color) != 6) {
+      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse bus object\n"));
+      return NULL;
+    }
     ripper_dir = 0;
   } else {
-    sscanf (buf, "%c %d %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color,
-            &ripper_dir);
+    if (sscanf (buf, "%c %d %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color,
+		&ripper_dir) != 7) {
+      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse bus object\n"));
+      return NULL;
+    }
   }
 
   if (x1 == x2 && y1 == y2) {

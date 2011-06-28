@@ -204,10 +204,10 @@ void o_line_modify(TOPLEVEL *toplevel, OBJECT *object,
  *  \param [in]  buf             Character string with line description.
  *  \param [in]  release_ver     libgeda release version number.
  *  \param [in]  fileformat_ver  libgeda file format version number.
- *  \return A pointer to the new line object.
+ *  \return A pointer to the new line object, or NULL on error.
  */
 OBJECT *o_line_read (TOPLEVEL *toplevel, char buf[],
-                     unsigned int release_ver, unsigned int fileformat_ver)
+                     unsigned int release_ver, unsigned int fileformat_ver, GError ** err)
 {
   OBJECT *new_obj;
   char type;
@@ -224,8 +224,11 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, char buf[],
      * not handle the line type and the filling - here filling is irrelevant.
      * They are set to default.
      */
-    sscanf (buf, "%c %d %d %d %d %d\n", &type,
-            &x1, &y1, &x2, &y2, &color);
+    if (sscanf (buf, "%c %d %d %d %d %d\n", &type,
+		&x1, &y1, &x2, &y2, &color) != 6) {
+      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse line object\n"));
+      return NULL;
+    }
 
     line_width = 0;
     line_end   = END_NONE;
@@ -238,9 +241,12 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, char buf[],
      * list of characters and numbers in plain ASCII on a single line.
      * The meaning of each item is described in the file format documentation.
      */
-    sscanf (buf, "%c %d %d %d %d %d %d %d %d %d %d\n", &type,
-            &x1, &y1, &x2, &y2, &color,
-            &line_width, &line_end, &line_type, &line_length, &line_space);
+      if (sscanf (buf, "%c %d %d %d %d %d %d %d %d %d %d\n", &type,
+		  &x1, &y1, &x2, &y2, &color,
+		  &line_width, &line_end, &line_type, &line_length, &line_space) != 11) {
+        g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse line object\n"));
+        return NULL;
+      }
   }
 
   /*

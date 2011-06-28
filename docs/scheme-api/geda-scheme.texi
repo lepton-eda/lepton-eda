@@ -400,10 +400,7 @@ Parses @var{string}, which should be in the gEDA file format, to
 create a new @code{page}.  The initial filename for the new
 @code{page} is @var{filename}.
 
-@strong{Warning}: Due to missing functionality in the underlying C
-library, this @code{string->page} cannot currently report invalid
-syntax or other problems in the @var{string} passed.
-@end defun
+If the string is not in gEDA format, raises an @code{invalid-string} error.
 
 @defun page->string page
 Returns a string representation of @var{page} in the gEDA file

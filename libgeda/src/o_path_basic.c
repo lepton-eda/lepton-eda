@@ -150,11 +150,11 @@ OBJECT *o_path_copy (TOPLEVEL *toplevel, OBJECT *o_current)
  *  \param [in]  tb              Text buffer containing the path string.
  *  \param [in]  release_ver     libgeda release version number.
  *  \param [in]  fileformat_ver  libgeda file format version number.
- *  \return A pointer to the new path object.
+ *  \return A pointer to the new path object, or NULL on error;
  */
 OBJECT *o_path_read (TOPLEVEL *toplevel,
                      const char *first_line, TextBuffer *tb,
-                     unsigned int release_ver, unsigned int fileformat_ver)
+                     unsigned int release_ver, unsigned int fileformat_ver, GError **err)
 {
   OBJECT *new_obj;
   char type;
@@ -174,10 +174,13 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
    * The meaning of each item is described in the file format documentation.
    */
   /* Allocate enough space */
-  sscanf (first_line, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
-          &type, &color, &line_width, &line_end, &line_type,
-          &line_length, &line_space, &fill_type, &fill_width, &angle1,
-          &pitch1, &angle2, &pitch2, &num_lines);
+  if (sscanf (first_line, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
+	      &type, &color, &line_width, &line_end, &line_type,
+	      &line_length, &line_space, &fill_type, &fill_width, &angle1,
+	      &pitch1, &angle2, &pitch2, &num_lines) != 14) {
+    g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse path object\n"));
+    return NULL;
+  }
 
   /*
    * Checks if the required color is valid.
@@ -200,9 +203,13 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
 
     line = s_textbuffer_next_line (tb);
 
-    if (line != NULL) {
-      pathstr = g_string_append (pathstr, line);
+    if (line == NULL) {
+      g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_FAILED, _("Premature eof when reading path\n"));
+      g_free (string);
+      return NULL;
     }
+
+    pathstr = g_string_append (pathstr, line);
   }
 
   /* retrieve the character string from the GString */

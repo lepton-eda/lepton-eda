@@ -70,7 +70,7 @@ void m_transform_scale(TRANSFORM *transform, gdouble factor);
 void m_transform_translate(TRANSFORM *transform, gdouble dx, gdouble dy);
 
 /* o_arc_basic.c */
-OBJECT *o_arc_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
+OBJECT *o_arc_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_arc_save(TOPLEVEL *toplevel, OBJECT *object);
 void o_arc_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void o_arc_print_solid(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int angle1, int angle2, int color, int arc_width, int length, int space, int origin_x, int origin_y);
@@ -86,11 +86,10 @@ void o_arc_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 
 /* o_attrib.c */
 GList *o_read_attribs(TOPLEVEL *toplevel,
-                      GList *list,
                       OBJECT *object_to_get_attribs,
                       TextBuffer *tb,
                       unsigned int release_ver,
-                      unsigned int fileformat_ver);
+                      unsigned int fileformat_ver, GError **err);
 OBJECT *o_attrib_find_attrib_by_name(const GList *list, char *name, int count);
 
 /* o_basic.c */
@@ -101,7 +100,7 @@ void o_emit_pre_change_notify(TOPLEVEL *toplevel, OBJECT *object);
 void o_emit_change_notify(TOPLEVEL *toplevel, OBJECT *object);
 
 /* o_box_basic.c */
-OBJECT *o_box_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
+OBJECT *o_box_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_box_save(TOPLEVEL *toplevel, OBJECT *object);
 void o_box_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void o_box_print_solid(TOPLEVEL *toplevel, FILE *fp, int x, int y, int width, int height, int color, int line_width, int length, int space, int origin_x, int origin_y);
@@ -118,7 +117,7 @@ gboolean o_box_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object
 void o_box_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 
 /* o_bus_basic.c */
-OBJECT *o_bus_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
+OBJECT *o_bus_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_bus_save(TOPLEVEL *toplevel, OBJECT *object);
 void o_bus_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void world_get_bus_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
@@ -126,7 +125,7 @@ gboolean o_bus_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object
 void o_bus_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 
 /* o_circle_basic.c */
-OBJECT *o_circle_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
+OBJECT *o_circle_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_circle_save(TOPLEVEL *toplevel, OBJECT *object);
 void o_circle_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void o_circle_print_solid(TOPLEVEL *toplevel, FILE *fp, int x, int y, int radius, int color, int circle_width, int length, int space, int origin_x, int origin_y);
@@ -143,7 +142,7 @@ gboolean o_circle_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *obj
 void o_circle_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 
 /* o_complex_basic.c */
-OBJECT *o_complex_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
+OBJECT *o_complex_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_complex_save(TOPLEVEL *toplevel, OBJECT *object);
 double o_complex_shortest_distance(OBJECT *object, int x, int y, int force_soild);
 void world_get_complex_bounds(TOPLEVEL *toplevel, OBJECT *complex, int *left, int *top, int *right, int *bottom);
@@ -152,7 +151,7 @@ void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach);
 
 /* o_line_basic.c */
-OBJECT *o_line_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
+OBJECT *o_line_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_line_save(TOPLEVEL *toplevel, OBJECT *object);
 void o_line_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void o_line_print_solid(TOPLEVEL *toplevel, FILE *fp, int x1, int y1, int x2, int y2, int color, int line_width, int length, int space, int origin_x, int origin_y);
@@ -166,7 +165,7 @@ gboolean o_line_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *objec
 void o_line_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 
 /* o_net_basic.c */
-OBJECT *o_net_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
+OBJECT *o_net_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_net_save(TOPLEVEL *toplevel, OBJECT *object);
 void o_net_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void world_get_net_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
@@ -174,7 +173,7 @@ gboolean o_net_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object
 void o_net_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 
 /* o_path_basic.c */
-OBJECT *o_path_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver);
+OBJECT *o_path_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_path_save(TOPLEVEL *toplevel, OBJECT *object);
 void o_path_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 double o_path_shortest_distance(OBJECT *object, int x, int y, int force_soild);
@@ -184,7 +183,7 @@ void o_path_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 
 
 /* o_picture.c */
-OBJECT *o_picture_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver);
+OBJECT *o_picture_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_picture_save(TOPLEVEL *toplevel, OBJECT *object);
 void o_picture_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 		     int origin_x, int origin_y);
@@ -196,7 +195,7 @@ void o_picture_embed(TOPLEVEL *toplevel, OBJECT *object);
 void o_picture_unembed(TOPLEVEL *toplevel, OBJECT *object);
 
 /* o_pin_basic.c */
-OBJECT *o_pin_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver);
+OBJECT *o_pin_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_pin_save(TOPLEVEL *toplevel, OBJECT *object);
 void o_pin_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void world_get_pin_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
@@ -204,7 +203,7 @@ gboolean o_pin_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object
 void o_pin_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 
 /* o_text_basic.c */
-OBJECT *o_text_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver);
+OBJECT *o_text_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_text_save(TOPLEVEL *toplevel, OBJECT *object);
 void o_text_print_text_string(FILE *fp, char *string, int unicode_count, gunichar *unicode_table);
 void o_text_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y, int unicode_count, gunichar *unicode_table);

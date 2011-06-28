@@ -224,6 +224,7 @@ x_clipboard_get (GSCHEM_TOPLEVEL *w_current)
   GtkSelectionData *selection_data;
   GList *object_list = NULL;
   const guchar *buf;
+  GError * err = NULL;
 
   /* Try to get the contents of the clipboard */
   selection_data = gtk_clipboard_wait_for_contents (cb, type);
@@ -237,8 +238,15 @@ x_clipboard_get (GSCHEM_TOPLEVEL *w_current)
 #endif
 
   object_list = o_read_buffer (toplevel, object_list,
-                               (gchar *) buf, -1, "Clipboard");
+                               (gchar *) buf, -1, "Clipboard", &err);
 
+  if (err) {
+     char * msg = g_strdup_printf(_("Invalid schematic on clipboard: %s"), err->message);
+
+     generic_msg_dialog(msg);
+     g_free(msg);
+     g_error_free(err);
+  }
   gtk_selection_data_free (selection_data);
   return object_list;
 }

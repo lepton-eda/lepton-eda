@@ -230,10 +230,10 @@ void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object,
  *  \param [in] buf
  *  \param [in] release_ver
  *  \param [in] fileformat_ver
- *  \return
+ *  \return The ARC OBJECT that was created, or NULL on error.
  */
 OBJECT *o_arc_read (TOPLEVEL *toplevel, char buf[],
-		   unsigned int release_ver, unsigned int fileformat_ver)
+           unsigned int release_ver, unsigned int fileformat_ver, GError **err)
 {
   OBJECT *new_obj;
   char type; 
@@ -251,8 +251,11 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, char buf[],
    *  restrictive - the oldest - file format are set to common values
    */
   if(release_ver <= VERSION_20000704) {
-    sscanf(buf, "%c %d %d %d %d %d %d", &type,
-           &x1, &y1, &radius, &start_angle, &end_angle, &color);
+    if (sscanf(buf, "%c %d %d %d %d %d %d", &type,
+	       &x1, &y1, &radius, &start_angle, &end_angle, &color) != 7) {
+      g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_FAILED, _("Failed to parse arc object\n"));
+      return NULL;
+    }
 
     arc_width = 0;
     arc_end   = END_NONE;
@@ -260,16 +263,19 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, char buf[],
     arc_space = -1;
     arc_length= -1;
   } else {
-    sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d", &type,
-           &x1, &y1, &radius, &start_angle, &end_angle, &color,
-           &arc_width, &arc_end, &arc_type, &arc_length, &arc_space);
-
+    if (sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d", &type,
+	       &x1, &y1, &radius, &start_angle, &end_angle, &color,
+	       &arc_width, &arc_end, &arc_type, &arc_length, &arc_space) != 12) {
+      g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_FAILED, _("Failed to parse arc object\n"));
+      return NULL;
+    }
   }
 
   /* Error check */
   if (radius <= 0) {
     s_log_message (_("Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"),
                    type, x1, y1, radius, start_angle, end_angle, color);
+    radius = 0;
   }
 	
   if (color < 0 || color > MAX_COLORS) {

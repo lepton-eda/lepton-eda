@@ -4,7 +4,7 @@ G_BEGIN_DECLS
 const gchar *o_file_format_header();
 gchar *o_save_buffer (TOPLEVEL *toplevel, const GList *object_list);
 int o_save (TOPLEVEL *toplevel, const GList *object_list, const char *filename, GError **err);
-GList *o_read_buffer(TOPLEVEL *toplevel, GList *object_list, char *buffer, const int size, const char *name);
+GList *o_read_buffer(TOPLEVEL *toplevel, GList *object_list, char *buffer, const int size, const char *name, GError **err);
 GList *o_read(TOPLEVEL *toplevel, GList *object_list, char *filename, GError **err);
 void o_scale(TOPLEVEL *toplevel, GList *list, int x_scale, int y_scale);
 

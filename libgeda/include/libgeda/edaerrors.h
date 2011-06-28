@@ -27,6 +27,7 @@ typedef enum {
   EDA_ERROR_SCHEME,   /* A Scheme error occurred */
   EDA_ERROR_RC_TWICE, /* Attempted to read a configuration file twice */
   EDA_ERROR_NUM_ERRORS,
+  EDA_ERROR_READ,
 } EdaError;
 
 GQuark eda_error_quark (void);

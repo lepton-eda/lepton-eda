@@ -226,26 +226,22 @@ void o_attrib_remove(TOPLEVEL *toplevel, GList **list, OBJECT *remove)
  *  Read attributes from a TextBuffer.
  *
  *  \param [in]  toplevel               The TOPLEVEL object.
- *  \param [out] list                   Storage for attributes.
  *  \param [in]  object_to_get_attribs  Object which gets these attribs.
  *  \param [in]  tb                     The text buffer to read from.
  *  \param [in]  release_ver            libgeda release version number.
  *  \param [in]  fileformat_ver         file format version number.
- *  \return GList of attributes read.
+ *  \return GList of attributes read, or NULL on error.
  */
 GList *o_read_attribs (TOPLEVEL *toplevel,
-                       GList *list,
                        OBJECT *object_to_get_attribs,
                        TextBuffer *tb,
-                       unsigned int release_ver, unsigned int fileformat_ver)
+                       unsigned int release_ver, unsigned int fileformat_ver, GError ** err)
 {
-  GList *object_list;
+  GList *object_list = NULL;
   OBJECT *new_obj;
   char *line = NULL;
   char objtype;
   int ATTACH=FALSE;
-
-  object_list = g_list_reverse (list);
 
   while (1) {
 
@@ -256,66 +252,78 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
     switch (objtype) {
 
       case(OBJ_LINE):
-        new_obj = o_line_read (toplevel, line, release_ver, fileformat_ver);
+        if ((new_obj = o_line_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+          goto error;
         object_list = g_list_prepend (object_list, new_obj);
         break;
 
 
       case(OBJ_NET):
-        new_obj = o_net_read (toplevel, line, release_ver, fileformat_ver);
+        if ((new_obj = o_net_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+          goto error;
         object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_BUS):
-        new_obj = o_bus_read (toplevel, line, release_ver, fileformat_ver);
+        if ((new_obj = o_bus_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+          goto error;
         object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_BOX):
-        new_obj = o_box_read (toplevel, line, release_ver, fileformat_ver);
+        if ((new_obj = o_box_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+          goto error;
         object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_CIRCLE):
-        new_obj = o_circle_read (toplevel, line, release_ver, fileformat_ver);
+        if ((new_obj = o_circle_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+          goto error;
         object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-        new_obj = o_complex_read (toplevel, line, release_ver, fileformat_ver);
+        if ((new_obj = o_complex_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+          goto error;
         object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_PATH):
         line = g_strdup (line);
-        new_obj = o_path_read (toplevel, line, tb, release_ver, fileformat_ver);
+        new_obj = o_path_read (toplevel, line, tb, release_ver, fileformat_ver, err);
         g_free (line);
+        if (new_obj == NULL)
+          goto error;
         object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_PIN):
-        new_obj = o_pin_read (toplevel, line, release_ver, fileformat_ver);
+        if ((new_obj = o_pin_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+          goto error;
         object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_ARC):
-        new_obj = o_arc_read (toplevel, line, release_ver, fileformat_ver);
+        if ((new_obj = o_arc_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+          goto error;
         object_list = g_list_prepend (object_list, new_obj);
         break;
 
       case(OBJ_TEXT):
         line = g_strdup (line);
-        new_obj = o_text_read (toplevel, line, tb, release_ver, fileformat_ver);
+        new_obj = o_text_read (toplevel, line, tb, release_ver, fileformat_ver, err);
         g_free (line);
+        if (new_obj == NULL)
+          goto error;
         object_list = g_list_prepend (object_list, new_obj);
         ATTACH=TRUE;
 
         break;
 
-      case(ENDATTACH_ATTR): 
+      case(ENDATTACH_ATTR):
         object_list = g_list_reverse (object_list);
-        return(object_list);
+        return object_list;
         break;
 
     }
@@ -324,11 +332,17 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
       o_attrib_attach (toplevel, new_obj, object_to_get_attribs, FALSE);
       ATTACH=FALSE;
     } else {
-      fprintf(stderr, "Tried to attach a non-text item as an attribute\n");
+      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Tried to attach a non-text item as an attribute\n"));
+      goto error;
     }
   }
   object_list = g_list_reverse (object_list);
+
   return(object_list);
+
+error:
+  s_delete_object_glist(toplevel, object_list);
+  return NULL;
 }
 
 

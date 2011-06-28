@@ -72,6 +72,7 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const CLibSymbol *sym)
   OBJECT *o_current;
   char *buffer;
   const gchar *sym_name = s_clib_symbol_get_name (sym);
+  GError *err = NULL;
 
   /* remove the old place list if it exists */
   s_delete_object_glist(toplevel, toplevel->page_current->place_list);
@@ -91,7 +92,11 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const CLibSymbol *sym)
     temp_list = o_read_buffer (toplevel,
                                temp_list,
                                buffer, -1,
-                               sym_name);
+                               sym_name,
+                               &err);
+    // FIXME: How can we improve the error handling here? Currently err is ignored.
+    if (err)
+        g_error_free(err);
     g_free (buffer);
 
     /* Take the added objects */

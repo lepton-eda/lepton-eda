@@ -256,10 +256,10 @@ void o_box_modify(TOPLEVEL *toplevel, OBJECT *object,
  *  \param [in]     buf             Character string with box description.
  *  \param [in]     release_ver     libgeda release version number.
  *  \param [in]     fileformat_ver  libgeda file format version number.
- *  \return The BOX OBJECT that was created.
+ *  \return The BOX OBJECT that was created, or NULL on error.
  */
 OBJECT *o_box_read (TOPLEVEL *toplevel, char buf[],
-                    unsigned int release_ver, unsigned int fileformat_ver)
+                    unsigned int release_ver, unsigned int fileformat_ver, GError **err)
 {
   OBJECT *new_obj;
   char type;
@@ -282,8 +282,11 @@ OBJECT *o_box_read (TOPLEVEL *toplevel, char buf[],
    *  to default.
    */
 
-    sscanf (buf, "%c %d %d %d %d %d\n",
-            &type, &x1, &y1, &width, &height, &color);
+    if (sscanf (buf, "%c %d %d %d %d %d\n",
+		&type, &x1, &y1, &width, &height, &color) != 6) {
+      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse box object\n"));
+      return NULL;
+    }
 
     box_width   = 0;
     box_end     = END_NONE;
@@ -305,11 +308,14 @@ OBJECT *o_box_read (TOPLEVEL *toplevel, char buf[],
      *  characters and numbers in plain ASCII on a single line. The meaning of
      *  each item is described in the file format documentation.
      */
-    sscanf (buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
-            &type, &x1, &y1, &width, &height, &color,
-            &box_width, &box_end, &box_type, &box_length,
-            &box_space, &box_filling,
-            &fill_width, &angle1, &pitch1, &angle2, &pitch2);
+    if (sscanf (buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
+		&type, &x1, &y1, &width, &height, &color,
+		&box_width, &box_end, &box_type, &box_length,
+		&box_space, &box_filling,
+		&fill_width, &angle1, &pitch1, &angle2, &pitch2) != 17) {
+      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse box object\n"));
+      return NULL;
+    }
   }
 
   if (width == 0 || height == 0) {

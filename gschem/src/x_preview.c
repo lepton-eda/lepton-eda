@@ -204,6 +204,7 @@ preview_update (Preview *preview)
   TOPLEVEL *preview_toplevel = preview_w_current->toplevel;
   int left, top, right, bottom;
   int width, height;
+  GError * err = NULL;
 
   if (preview_toplevel->page_current == NULL) {
     return;
@@ -230,7 +231,14 @@ preview_update (Preview *preview)
       s_page_append_list (preview_toplevel, preview_toplevel->page_current,
                           o_read_buffer (preview_toplevel,
                                          NULL, preview->buffer, -1,
-                                         _("Preview Buffer")));
+                                         _("Preview Buffer"), &err));
+      if (err) {
+          char * msg = g_strdup_printf(_("Invalid schematic: %s"), err->message);
+
+          generic_msg_dialog(msg);
+          g_free(msg);
+          g_error_free(err);
+      }
     }
   }
 
