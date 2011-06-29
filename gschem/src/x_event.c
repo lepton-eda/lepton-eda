@@ -97,6 +97,9 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
+  scm_dynwind_begin (0);
+  g_dynwind_window (w_current);
+
   exit_if_null(w_current);
 
 #if DEBUG
@@ -120,6 +123,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
     if (o_select_selected (w_current)) {
        o_edit(w_current, geda_list_get_glist( toplevel->page_current->selection_list ));
        i_set_state(w_current, SELECT);
+       scm_dynwind_end ();
        return(0);
     }
   }
@@ -131,8 +135,6 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   /* Huge switch statement to evaluate state transitions. Jump to
    * end_button_pressed label to escape the state evaluation rather than
    * returning from the function directly. */
-  scm_dynwind_begin (0);
-  g_dynwind_window (w_current);
 
   if (event->button == 1) {
     switch(w_current->event_state) {
