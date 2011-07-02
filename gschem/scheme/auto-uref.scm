@@ -35,18 +35,16 @@
 
   ; Return (prefix . number) on match or #f on failure
   (define (split-value value)
-    (let ((match (string-match "^([A-Za-z]+)([0-9]+)$" value)))
+    (let ((match (string-match "^([A-Za-z]*)([0-9]+)$" value)))
       (if match
-        (cons (match:substring match 1)
-              (string->number (match:substring match 2)))
-        #f)))
+          (cons (match:substring match 1)
+                (string->number (match:substring match 2)))
+          #f)))
 
   ; Extract prefix from a refdes attribute value
   (define (get-prefix value)
-    (let ((prefix (string-match "^[A-Za-z]+" value)))
-      (if (= 0 (match:end prefix))
-	  #f
-	  (match:substring prefix))))
+    (let ((prefix (string-match "^[A-Za-z]*" value)))
+      (if prefix (match:substring prefix) #f)))
 
   ; Filter non-inherited refdes values
   (define (refdes-attrs attribs)
