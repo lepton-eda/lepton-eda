@@ -17,7 +17,11 @@
 ;; along with this program; if not, write to the Free Software
 ;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
-(use-modules (ice-9 regex) (srfi srfi-1))
+(use-modules (ice-9 regex)
+             (srfi srfi-1)
+             (geda page)
+             (geda attrib)
+             (gschem window))
 
 (define auto-uref-page-offset 0)
 
@@ -51,15 +55,13 @@
     (filter (lambda (a)
               (and
                 (not (attrib-inherited? a))
-                (string=? "refdes" (car (get-attribute-name-value a)))))
+                (string=? "refdes" (attrib-name a))))
             attribs))
 
   ; Extract numbers from refdeses that have given prefix
   (define (extract-numbers object prefix)
-    (let* ((refdeses (refdes-attrs (get-object-attributes object)))
-           (vals (map (lambda (a)
-                        (cdr (get-attribute-name-value a)))
-                      refdeses))
+    (let* ((refdeses (refdes-attrs (object-attribs object)))
+           (vals (map attrib-value refdeses))
            (prefix-numbers (filter-map split-value vals))
            (numbers (filter-map (lambda (n.v)
                                   (if (string=? prefix (car n.v))
@@ -70,7 +72,7 @@
 
   ; Collect all numbers associated with prefix on current page
   (define (collect-all-numbers prefix)
-    (let ((objects (get-objects-in-page (get-current-page))))
+    (let ((objects (page-contents (active-page))))
       (concatenate (map (lambda (o)
                           (extract-numbers o prefix))
                         objects))))
@@ -90,7 +92,7 @@
                      #f
                      (car refdeses)))
          (prefix (if refdes
-                     (get-prefix (cdr (get-attribute-name-value refdes)))
+                     (get-prefix (attrib-value refdes))
                      #f)))
     (if prefix
         (let* ((used-nums (sort-list (collect-all-numbers prefix) <))
@@ -108,7 +110,7 @@
           ;                  prefix
           ;                  used-nums
           ;                  next-num)
-          (set-attribute-value!
+          (set-attrib-value!
             refdes
             (string-append prefix (number->string next-num)))))))
 
