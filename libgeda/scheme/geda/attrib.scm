@@ -63,7 +63,7 @@
                  ;; Append copy of the object to page
                  (page-append! p y)
                  ;; Attach it to object
-                 (%attach-attrib! object y)
+                 (attach-attribs! object y)
                  ;; Return copy
                  y))
                (promotable-attribs object))
