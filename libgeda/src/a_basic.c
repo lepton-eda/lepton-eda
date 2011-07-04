@@ -215,6 +215,10 @@ gchar *o_save_objects (TOPLEVEL *toplevel, const GList *object_list, gboolean sa
 /*! \brief Save a file
  *  \par Function Description
  *  This function saves the data in a libgeda format to a file
+ *
+ *  \bug g_access introduces a race condition in certain cases, but
+ *  solves bug #698565 in the normal use-case
+ *
  *  \param [in] toplevel    The current TOPLEVEL.
  *  \param [in] object_list The head of a GList of OBJECTs to save.
  *  \param [in] filename    The filename to save the data to.
@@ -225,6 +229,15 @@ int o_save (TOPLEVEL *toplevel, const GList *object_list,
             const char *filename, GError **err)
 {
   char *buffer;
+
+  /* Check to see if real filename is writable; if file doesn't exists
+     we assume all is well */
+  if (g_file_test(filename, G_FILE_TEST_EXISTS) && 
+      g_access(filename, W_OK) != 0) {
+    g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_PERM,
+                 _("File %s is read-only"), filename);
+    return 0;      
+  }
 
   buffer = o_save_buffer (toplevel, object_list);
   if (!g_file_set_contents (filename, buffer, strlen(buffer), err)) {

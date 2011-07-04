@@ -347,6 +347,9 @@ void f_close(TOPLEVEL *toplevel)
  *  \par Function Description
  *  This function saves the current schematic file in the toplevel object.
  *
+ *  \bug g_access introduces a race condition in certain cases, but
+ *  solves bug #698565 in the normal use-case
+ *
  *  \param [in,out] toplevel  The TOPLEVEL object containing the schematic.
  *  \param [in]      filename  The file name to save the schematic to.
  *  \param [in,out] err       #GError structure for error reporting, or
@@ -372,6 +375,14 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
                  filename,
                  tmp_err->message);
     return 0;
+  }
+
+  /* Check to see if filename is writable */
+  if (g_file_test(filename, G_FILE_TEST_EXISTS) && 
+      g_access(filename, W_OK) != 0) {
+    g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_PERM,
+                 _("File %s is read-only"), filename);
+    return 0;      
   }
   
   /* Get the directory in which the real filename lives */
