@@ -132,7 +132,7 @@ create_m4_override_file ()
  * @param[in] format  used to specify command to be executed
  * @param[in] ...     positional parameters
  */
-static void
+static gboolean
 build_and_run_command (const gchar *format, ...)
 {
   va_list vargs;
@@ -140,6 +140,11 @@ build_and_run_command (const gchar *format, ...)
   GList *tmp = NULL;
   gint num_split;
   gint i;
+  gint status;
+  gboolean result = FALSE;
+  gboolean spawn_result;
+  gchar *standard_error = NULL;
+  GError * error = NULL;
 
   va_start (vargs, format);
   split = g_strsplit_set (format, " \t\n\v", 0);
@@ -171,34 +176,48 @@ build_and_run_command (const gchar *format, ...)
     for (p = tmp; p; p = g_list_next (p)) {
       args[i++] = (gchar*) p->data;
       if (verbose)
-        printf ("%s ", p->data);
+        printf ("%s ", (char*)p->data);
+    }
+
+    if (verbose)
+      printf ("\n%s", SEP_STRING);
+    
+    if (g_spawn_sync (".",                  /* Working directory */
+		      args,                 /* argv */
+		      NULL,                 /* envp */
+		      G_SPAWN_SEARCH_PATH | /* flags */
+		      G_SPAWN_STDOUT_TO_DEV_NULL,
+		      NULL,                 /* child_setup */
+		      NULL,                 /* user data */
+		      NULL,                 /* standard output */
+		      &standard_error,       /* standard error */
+		      &status,              /* exit status return */
+              &error)) {              /* GError return */
+      if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
+	result = TRUE;
+      else {
+	if (standard_error)
+      fputs(standard_error, stderr);
+      }
+    }
+    else {
+      fprintf(stderr, "Failed to execute external program: %s\n", error->message);
+      g_error_free(error);
     }
 
     if (verbose)
       printf ("\n%s", SEP_STRING);
 
-    g_spawn_sync (".",                  /* Working directory */
-                  args,                 /* argv */
-                  NULL,                 /* envp */
-                  G_SPAWN_SEARCH_PATH | /* flags */
-                  G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL,
-                  NULL,                 /* child_setup */
-                  NULL,                 /* user data */
-                  NULL,                 /* standard output */
-                  NULL,                 /* standard error */
-                  NULL,                 /* exit status return */
-                  NULL                  /* GError return */
-                 );
-
-    if (verbose)
-      printf ("\n%s", SEP_STRING);
-
+    g_free(standard_error);
+    
     g_free (args);
     /* free the list, but leave data untouched */
     g_list_free (tmp);
   }
 
   g_strfreev (split);
+
+  return result;
 }
 
 /* Run gnetlist to generate a netlist and a PCB board file.  gnetlist
@@ -206,7 +225,7 @@ build_and_run_command (const gchar *format, ...)
  * stat() hoops to decide if gnetlist successfully generated the PCB
  * board file (only gnetlist >= 20030901 recognizes -m).
  */
-static void
+static gboolean
 run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
               gchar * basename, GList * largs)
 {
@@ -229,19 +248,21 @@ run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
   if (!verbose)
     verboseList = g_list_append (verboseList, "-q");
 
-  build_and_run_command ("%s %l -g pcbpins -o %s %l %l",
-                         gnetlist,
-                         verboseList,
-                         pins_file,
-                         extra_gnetlist_arg_list,
-                         largs);
+  if (!build_and_run_command ("%s %l -g pcbpins -o %s %l %l",
+			      gnetlist,
+			      verboseList,
+			      pins_file,
+			      extra_gnetlist_arg_list,
+			      largs))
+    return FALSE;
 
-  build_and_run_command ("%s %l -g PCB -o %s %l %l",
-                         gnetlist,
-                         verboseList,
-                         net_file,
-                         extra_gnetlist_arg_list,
-                         largs);
+  if (!build_and_run_command ("%s %l -g PCB -o %s %l %l",
+			      gnetlist,
+			      verboseList,
+			      net_file,
+			      extra_gnetlist_arg_list,
+			      largs))
+    return FALSE;
   create_m4_override_file ();
 
   if (m4_override_file) {
@@ -251,23 +272,24 @@ run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
 
   mtime = (stat (pcb_file, &st) == 0) ? st.st_mtime : 0;
 
-  build_and_run_command ("%s %l -g gsch2pcb -o %s %l %l %l",
-                         gnetlist,
-                         verboseList,
-                         pcb_file,
-                         args1,
-                         extra_gnetlist_arg_list,
-                         largs);
-
-  if (stat (pcb_file, &st) != 0 || mtime == st.st_mtime) {
-    fprintf (stderr,
-             "gsch2pcb: gnetlist command failed, `%s' not updated\n",
-             pcb_file
-            );
-    if (m4_override_file)
-      fprintf (stderr,
-               "    At least gnetlist 20030901 is required for m4-xxx options.\n");
-    exit (1);
+  if (!build_and_run_command ("%s %l -g gsch2pcb -o %s %l %l %l",
+			      gnetlist,
+			      verboseList,
+			      pcb_file,
+			      args1,
+			      extra_gnetlist_arg_list,
+                  largs)) {
+      if (stat (pcb_file, &st) != 0 || mtime == st.st_mtime) {
+          fprintf (stderr,
+                   "gsch2pcb: gnetlist command failed, `%s' not updated\n",
+                   pcb_file
+                   );
+          if (m4_override_file)
+              fprintf (stderr,
+                       "    At least gnetlist 20030901 is required for m4-xxx options.\n");
+          return FALSE;
+      }
+      return FALSE;
   }
 
   if (m4_override_file)
@@ -286,19 +308,22 @@ run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
       backend = g_strndup (s, s2 - s);
     }
 
-    build_and_run_command ("%s %l -g %s -o %s %l %l",
-                           gnetlist,
-                           verboseList,
-                           backend,
-                           out_file,
-                           extra_gnetlist_arg_list,
-                           largs);
+    if (!build_and_run_command ("%s %l -g %s -o %s %l %l",
+				gnetlist,
+				verboseList,
+				backend,
+				out_file,
+				extra_gnetlist_arg_list,
+				largs))
+      return FALSE;
     g_free (out_file);
     g_free (backend);
   }
 
   g_list_free (args1);
   g_list_free (verboseList);
+
+  return TRUE;
 }
 
 static gchar *
@@ -1443,8 +1468,11 @@ main (gint argc, gchar ** argv)
   } else
     pcb_new_file_name = g_strdup (pcb_file_name);
 
-  run_gnetlist (pins_file_name, net_file_name, pcb_new_file_name,
-                sch_basename, schematics);
+  if (!run_gnetlist (pins_file_name, net_file_name, pcb_new_file_name,
+		     sch_basename, schematics)) {
+    fprintf(stderr, "Failed to run gnetlist\n");
+    exit (1);
+  }
 
   if (add_elements (pcb_new_file_name) == 0) {
     build_and_run_command ("rm %s", pcb_new_file_name);
