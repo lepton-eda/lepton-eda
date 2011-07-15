@@ -30,18 +30,37 @@
 ;;; Questions? Contact matt@ettus.com
 ;;; This software is released under the terms of the GNU GPL
 
-(use-modules (ice-9 rdelim)) ;; guile-1.8 fix
+(use-modules (ice-9 rdelim) ;; guile-1.8 fix
+             (gnetlist backend-getopt))
+
+(define bom2:open-input-file
+  (lambda (options)
+    (let ((filename (backend-option-ref options 'attrib_file "attribs")))
+      (if (file-exists? filename)
+	  (open-input-file filename)
+	  (if (backend-option-ref options 'attribs) #f
+              (begin
+                (display (string-append "ERROR: Attribute file '" filename "' not found. You must do one of the following:\n"))
+                (display "         - Create an 'attribs' file\n")
+                (display "         - Specify an attribute file using -Oattrib_file=<filename>\n")
+                (display "         - Specify which attributes to include using -Oattribs=attrib1,attrib2,... (no spaces)\n")
+                #f))))))
 
 (define bom2
   (lambda (output-filename)
-    (let ((port (if (string=? "-" output-filename)
-		      (current-output-port)
-		      (open-output-file output-filename)))
-	  (attriblist (bom2:parseconfig (open-input-file "attribs"))))
-      (bom2:printlist (append (cons 'refdes attriblist) (list "qty")) port #\:)
-      (newline port)
-      (bom2:printbom port (bom2:components packages attriblist) 0)
-      (close-output-port port))))
+    (let* ((options (backend-getopt
+                     (gnetlist:get-backend-arguments)
+                     '((attrib_file (value #t)) (attribs (value #t)))))
+           (port (if (string=? "-" output-filename)
+                     (current-output-port)
+                     (open-output-file output-filename)))
+           (attriblist (bom2:parseconfig (bom2:open-input-file options) options)))
+      (and attriblist
+	   (begin
+	     (bom2:printlist (append (cons 'refdes attriblist) (list "qty")) port #\:)
+	     (newline port)
+	     (bom2:printbom port (bom2:components packages attriblist) 0)
+	     (close-output-port port))))))
 
 (define bom2:printbom
   (lambda (port bomlist count)
@@ -74,14 +93,17 @@
 
 ; Parses attrib file. Returns a list of read attributes.
 (define bom2:parseconfig
-  (lambda (port)
-    (let ((read-from-file (read-delimited " \n\t" port)))
-      (cond ((eof-object? read-from-file)
-	     '())
-	    ((= 0 (string-length read-from-file))
-	     (bom2:parseconfig port))
-	    (else
-	     (cons read-from-file (bom2:parseconfig port)))))))
+  (lambda (port options)
+    (let ((attribs (backend-option-ref options 'attribs)))
+      (if attribs (string-split attribs #\,)
+          (and port
+               (let ((read-from-file (read-delimited " \n\t" port)))
+                 (cond ((eof-object? read-from-file)
+                        '())
+                       ((= 0 (string-length read-from-file))
+                        (bom2:parseconfig port options))
+                       (else
+                        (cons read-from-file (bom2:parseconfig port options))))))))))
 
 (define bom2:match-list?
   (lambda (l1 l2)
