@@ -601,6 +601,7 @@ SCM g_rc_component_library_search(SCM path)
   }
 
   g_free(string);
+  g_dir_close(dir);
 
   return SCM_BOOL_T;
 }
@@ -717,6 +718,7 @@ SCM g_rc_source_library_search(SCM path)
   }
 
   g_free(string);
+  g_dir_close(dir);
 
   return SCM_BOOL_T;
 }
