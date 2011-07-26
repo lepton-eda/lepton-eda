@@ -818,11 +818,11 @@ SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has
 	       "gnetlist:get-attr-of-conn-graph-objs-with-attr");
 
     SCM_ASSERT(scm_is_string (scm_wanted_attribute),
-	       scm_wanted_attribute, SCM_ARG2, 
+	       scm_wanted_attribute, SCM_ARG3, 
 	       "gnetlist:get-attr-of-conn-graph-objs-with-attr");
 
     SCM_ASSERT(scm_is_string (scm_has_attribute),
-	       scm_has_attribute, SCM_ARG3, 
+	       scm_has_attribute, SCM_ARG2, 
 	       "gnetlist:get-attr-of-conn-graph-objs-with-attr");
 
     scm_dynwind_begin (0);

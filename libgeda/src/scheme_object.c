@@ -1200,11 +1200,11 @@ SCM_DEFINE (set_arc_x, "%set-arc!", 7, 0, 0,
   SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_arc_x);
   SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_arc_x);
   SCM_ASSERT (scm_is_integer (r_s),     r_s,     SCM_ARG4, s_set_arc_x);
-  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG5, s_set_arc_x);
+  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG7, s_set_arc_x);
   SCM_ASSERT (scm_is_integer (start_angle_s),
-                                  start_angle_s, SCM_ARG3, s_set_arc_x);
+                                  start_angle_s, SCM_ARG5, s_set_arc_x);
   SCM_ASSERT (scm_is_integer (end_angle_s),
-                                  end_angle_s, SCM_ARG4, s_set_arc_x);
+                                  end_angle_s, SCM_ARG6, s_set_arc_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (arc_s);

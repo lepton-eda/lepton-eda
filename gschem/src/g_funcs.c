@@ -214,7 +214,7 @@ SCM g_funcs_filesel(SCM scm_msg, SCM scm_templ, SCM scm_flags)
 	      SCM_ARG1, "gschem-filesel");
   
   SCM_ASSERT (scm_is_string (scm_templ), scm_templ,
-	      SCM_ARG1, "gschem-filesel");
+	      SCM_ARG2, "gschem-filesel");
   
   /*! \bug FIXME -- figure out the magic SCM_ASSERT for the flags */
 
@@ -243,7 +243,7 @@ SCM g_funcs_filesel(SCM scm_msg, SCM scm_templ, SCM scm_flags)
 
     } else {
       free(flag);
-      scm_wrong_type_arg ("gschem-filesel", SCM_ARG1, scm_flag);
+      scm_wrong_type_arg ("gschem-filesel", SCM_ARG3, scm_flag);
     }
     free(flag);
   }

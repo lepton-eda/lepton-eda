@@ -259,7 +259,7 @@ SCM_DEFINE (promotable_attribs, "%promotable-attribs", 1, 0, 0,
             (SCM complex_s), "Get a component's promotable attributes")
 {
   SCM_ASSERT (edascm_is_object_type (complex_s, OBJ_COMPLEX), complex_s,
-              SCM_ARG2, s_promotable_attribs);
+              SCM_ARG1, s_promotable_attribs);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (complex_s);

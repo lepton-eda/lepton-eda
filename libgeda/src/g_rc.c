@@ -523,7 +523,7 @@ SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name)
 	      "component-library-funcs");
   SCM_ASSERT (scm_is_true (scm_procedure_p (getfunc)), getfunc, SCM_ARG2,
 	      "component-library-funcs");
-  SCM_ASSERT (scm_is_string (name), name, SCM_ARG1, 
+  SCM_ASSERT (scm_is_string (name), name, SCM_ARG3, 
 	      "component-library-funcs");
 
   namestr = scm_to_utf8_string (name);
