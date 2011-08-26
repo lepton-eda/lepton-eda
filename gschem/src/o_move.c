@@ -432,6 +432,22 @@ int o_move_return_whichone(OBJECT * object, int x, int y)
   return (-1);
 }
 
+
+static GList *add_dummy_stretch_net (GSCHEM_TOPLEVEL *w_current,
+                                     GList *new_nets, CONN *conn,
+                                     int x1_percent, int y1_percent,
+                                     int x2_percent, int y2_percent)
+{
+  OBJECT *new_net = o_net_new (w_current->toplevel, OBJ_NET, NET_COLOR,
+                               conn->x, conn->y, conn->x, conn->y);
+
+  w_current->stretch_list = s_stretch_add (w_current->stretch_list, new_net,
+                                           x1_percent, y1_percent,
+                                           x2_percent, y2_percent);
+
+  return g_list_prepend (new_nets, new_net);
+}
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -444,6 +460,7 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
   CONN *c_current;
   OBJECT *other;
   int whichone;
+  GList *new_nets = NULL;
 
   if (!object)
   return;
@@ -485,16 +502,33 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
      /* (object->type == OBJ_NET &&
           other->type == OBJ_PIN && other->pin_type == PIN_TYPE_NET) */
 
-      OBJECT *new_net;
-      /* other object is a pin, insert a net */
-      new_net = o_net_new (toplevel, OBJ_NET, NET_COLOR,
-                           c_current->x, c_current->y,
-                           c_current->x, c_current->y);
-      s_page_append (toplevel, toplevel->page_current, new_net);
-      /* This new net object is only picked up for stretching later,
-       * somewhat of a kludge. If the move operation is cancelled, these
-       * new 0 length nets are removed by the "undo" operation invoked.
+      /* other object is a pin, insert some nets to take up the slack */
+
+      /* This new net objects are explicitly added with the appropriate
+       * coefficients for them to take up the stretch between the pins.
+       * These nets become added to the page's connectivity list when
+       * they are added to the page at the end of this function, but won't
+       * really be important until they are rubber-banded into place.
+       *
+       * If the move operation is cancelled, the dummy 0 length nets
+       * are removed by the "undo" operation invoked.
+       *
+       * The following isn't a complete, there needs to be far better
+       * heuristics to adding these intermediate stretch nets.
        */
+
+      /* ASSUME CASE FOR TWO BUTTING HORIZONTAL PINS */
+      if (1) {
+        /* Absorb half X movement */
+        new_nets = add_dummy_stretch_net (w_current, new_nets,
+                                          c_current, 0, 0, 50, 0);
+        /* Absorb the Y movement, shift by half X movement */
+        new_nets = add_dummy_stretch_net (w_current, new_nets,
+                                          c_current, 50, 0, 50, 100);
+        /* Absorb half X movement, shift by half X movement */
+        new_nets = add_dummy_stretch_net (w_current, new_nets,
+                                          c_current, 50, 100, 100, 100);
+      }
     }
 
     /* Only attempt to stretch nets and buses */
@@ -522,6 +556,7 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
     }
   }
 
+  s_page_append_list (toplevel, toplevel->page_current, new_nets);
 }
 
 /*! \todo Finish function documentation!!!
