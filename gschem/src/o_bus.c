@@ -96,25 +96,11 @@ void o_bus_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_cur
  *  \par Function Description
  *
  */
-void o_bus_draw_stretch (GSCHEM_TOPLEVEL *w_current,
-                         int dx, int dy, int whichone, OBJECT *o_current)
+void o_bus_draw_stretch (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
+                         int dx1, int dy1, int dx2, int dy2)
 {
-  int dx1= - 1, dy1 = - 1, dx2 = -1, dy2 = -1;
-
   if (o_current->line == NULL) {
     return;
-  }
-
-  if (whichone == 0) {
-    dx1 = dx;
-    dy1 = dy;
-    dx2 = dy2 = 0;
-  } else if (whichone == 1) {
-    dx1 = dy1 = 0;
-    dx2 = dx;
-    dy2 = dy;
-  } else {
-    fprintf(stderr, _("Got an invalid which one in o_bus_draw_stretch\n"));
   }
 
   gschem_cairo_line (w_current, END_NONE, 0,
