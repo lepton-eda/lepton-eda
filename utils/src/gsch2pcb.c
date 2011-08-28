@@ -193,7 +193,7 @@ build_and_run_command (const gchar *format, ...)
                       &standard_error,      /* standard error */
                       &status,              /* exit status return */
                       &error)) {            /* GError return */
-      if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
+      if (status == 0)
         result = TRUE;
       else {
         if (standard_error)
