@@ -183,21 +183,21 @@ build_and_run_command (const gchar *format, ...)
       printf ("\n%s", SEP_STRING);
     
     if (g_spawn_sync (".",                  /* Working directory */
-		      args,                 /* argv */
-		      NULL,                 /* envp */
-		      G_SPAWN_SEARCH_PATH | /* flags */
-		      G_SPAWN_STDOUT_TO_DEV_NULL,
-		      NULL,                 /* child_setup */
-		      NULL,                 /* user data */
-		      NULL,                 /* standard output */
-		      &standard_error,       /* standard error */
-		      &status,              /* exit status return */
-              &error)) {              /* GError return */
+                      args,                 /* argv */
+                      NULL,                 /* envp */
+                      G_SPAWN_SEARCH_PATH | /* flags */
+                      G_SPAWN_STDOUT_TO_DEV_NULL,
+                      NULL,                 /* child_setup */
+                      NULL,                 /* user data */
+                      NULL,                 /* standard output */
+                      &standard_error,      /* standard error */
+                      &status,              /* exit status return */
+                      &error)) {            /* GError return */
       if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
-	result = TRUE;
+        result = TRUE;
       else {
-	if (standard_error)
-      fputs(standard_error, stderr);
+        if (standard_error)
+          fputs(standard_error, stderr);
       }
     }
     else {
