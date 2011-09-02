@@ -40,8 +40,6 @@
  */
 static void i_update_status(GSCHEM_TOPLEVEL *w_current, const char *string)
 {
-  return;
-
   if (!w_current->status_label)
     return;
 
@@ -589,7 +587,7 @@ void i_update_grid_info (GSCHEM_TOPLEVEL *w_current)
   }
 
   print_string = g_strdup_printf(_("Grid(%s, %s)"), snap, grid);
-//  gtk_label_set(GTK_LABEL(w_current->grid_label), print_string);
+  gtk_label_set(GTK_LABEL(w_current->grid_label), print_string);
   
   g_free(print_string);
   g_free(grid);

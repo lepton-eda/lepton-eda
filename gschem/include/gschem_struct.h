@@ -216,8 +216,5 @@ struct st_gschem_toplevel {
 struct st_stretch
 {
   OBJECT *object;
-  int x1_percent;
-  int y1_percent;
-  int x2_percent;
-  int y2_percent;
+  int whichone;
 };

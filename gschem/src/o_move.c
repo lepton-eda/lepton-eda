@@ -339,15 +339,11 @@ void o_move_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 void o_move_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
 {
   GList *s_iter;
-  int diff_x, diff_y;
   int dx1, dx2, dy1, dy2;
   int x1, y1, x2, y2;
 
   o_place_invalidate_rubber (w_current, drawing);
   if (w_current->netconn_rubberband) {
-
-    diff_x = w_current->second_wx - w_current->first_wx;
-    diff_y = w_current->second_wy - w_current->first_wy;
 
     for (s_iter = w_current->stretch_list;
          s_iter != NULL; s_iter = g_list_next (s_iter)) {
@@ -357,8 +353,15 @@ void o_move_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
       switch (object->type) {
         case (OBJ_NET):
         case (OBJ_BUS):
-          s_stretch_calc_deltas (w_current, s_current,
-                                 diff_x, diff_y, &dx1, &dy1, &dx2, &dy2);
+          if (s_current->whichone == 0) {
+            dx1 = w_current->second_wx - w_current->first_wx;
+            dy1 = w_current->second_wy - w_current->first_wy;
+            dx2 = dy2 = 0;
+          } else {
+            dx1 = dy1 = 0;
+            dx2 = w_current->second_wx - w_current->first_wx;
+            dy2 = w_current->second_wy - w_current->first_wy;
+          }
 
           WORLDtoSCREEN (w_current, object->line->x[0] + dx1,
                                     object->line->y[0] + dy1, &x1, &y1);
@@ -381,7 +384,6 @@ void o_move_draw_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
 {
   GList *s_iter;
   int diff_x, diff_y;
-  int dx1, dy1, dx2, dy2;
 
   o_place_draw_rubber (w_current, drawing);
 
@@ -395,17 +397,15 @@ void o_move_draw_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
        s_iter != NULL; s_iter = g_list_next (s_iter)) {
     STRETCH *s_current = s_iter->data;
     OBJECT *object = s_current->object;
-
-    s_stretch_calc_deltas (w_current, s_current,
-                           diff_x, diff_y, &dx1, &dy1, &dx2, &dy2);
+    int whichone = s_current->whichone;
 
     switch (object->type) {
       case (OBJ_NET):
-        o_net_draw_stretch (w_current, object, dx1, dy1, dx2, dy2);
+        o_net_draw_stretch (w_current, diff_x, diff_y, whichone, object);
         break;
 
       case (OBJ_BUS):
-        o_bus_draw_stretch (w_current, object, dx1, dy1, dx2, dy2);
+        o_bus_draw_stretch (w_current, diff_x, diff_y, whichone, object);
         break;
     }
   }
@@ -432,22 +432,6 @@ int o_move_return_whichone(OBJECT * object, int x, int y)
   return (-1);
 }
 
-
-static GList *add_dummy_stretch_net (GSCHEM_TOPLEVEL *w_current,
-                                     GList *new_nets, CONN *conn,
-                                     int x1_percent, int y1_percent,
-                                     int x2_percent, int y2_percent)
-{
-  OBJECT *new_net = o_net_new (w_current->toplevel, OBJ_NET, NET_COLOR,
-                               conn->x, conn->y, conn->x, conn->y);
-
-  w_current->stretch_list = s_stretch_add (w_current->stretch_list, new_net,
-                                           x1_percent, y1_percent,
-                                           x2_percent, y2_percent);
-
-  return g_list_prepend (new_nets, new_net);
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -460,7 +444,6 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
   CONN *c_current;
   OBJECT *other;
   int whichone;
-  GList *new_nets = NULL;
 
   if (!object)
   return;
@@ -502,38 +485,23 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
      /* (object->type == OBJ_NET &&
           other->type == OBJ_PIN && other->pin_type == PIN_TYPE_NET) */
 
-      /* other object is a pin, insert some nets to take up the slack */
-
-      /* This new net objects are explicitly added with the appropriate
-       * coefficients for them to take up the stretch between the pins.
-       * These nets become added to the page's connectivity list when
-       * they are added to the page at the end of this function, but won't
-       * really be important until they are rubber-banded into place.
-       *
-       * If the move operation is cancelled, the dummy 0 length nets
-       * are removed by the "undo" operation invoked.
-       *
-       * The following isn't a complete, there needs to be far better
-       * heuristics to adding these intermediate stretch nets.
+      OBJECT *new_net;
+      /* other object is a pin, insert a net */
+      new_net = o_net_new (toplevel, OBJ_NET, NET_COLOR,
+                           c_current->x, c_current->y,
+                           c_current->x, c_current->y);
+      s_page_append (toplevel, toplevel->page_current, new_net);
+      /* This new net object is only picked up for stretching later,
+       * somewhat of a kludge. If the move operation is cancelled, these
+       * new 0 length nets are removed by the "undo" operation invoked.
        */
-
-      /* ASSUME CASE FOR TWO BUTTING HORIZONTAL PINS */
-      if (1) {
-        /* Absorb half X movement */
-        new_nets = add_dummy_stretch_net (w_current, new_nets,
-                                          c_current, 0, 0, 50, 0);
-        /* Absorb the Y movement, shift by half X movement */
-        new_nets = add_dummy_stretch_net (w_current, new_nets,
-                                          c_current, 50, 0, 50, 100);
-        /* Absorb half X movement, shift by half X movement */
-        new_nets = add_dummy_stretch_net (w_current, new_nets,
-                                          c_current, 50, 100, 100, 100);
-      }
     }
 
     /* Only attempt to stretch nets and buses */
     if (other->type != OBJ_NET && other->type != OBJ_BUS)
       continue;
+
+    whichone = o_move_return_whichone (other, c_current->x, c_current->y);
 
 #if DEBUG
     printf ("FOUND: %s type: %d, whichone: %d, x,y: %d %d\n",
@@ -546,17 +514,12 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
            c_current->other_whichone);
 #endif
 
-    whichone = o_move_return_whichone (other, c_current->x, c_current->y);
-    if (whichone == 0) {
-      w_current->stretch_list =
-        s_stretch_add (w_current->stretch_list, other, 100, 100, 0, 0);
-    } else if (whichone == 1) {
-      w_current->stretch_list =
-        s_stretch_add (w_current->stretch_list, other, 0, 0, 100, 100);
+    if (whichone >= 0 && whichone <= 1) {
+      w_current->stretch_list = s_stretch_add (w_current->stretch_list,
+                                               other, whichone);
     }
   }
 
-  s_page_append_list (toplevel, toplevel->page_current, new_nets);
 }
 
 /*! \todo Finish function documentation!!!
@@ -633,12 +596,12 @@ void o_move_end_rubberband (GSCHEM_TOPLEVEL *w_current,
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_iter, *s_iter_next;
-  int dx1, dy1, dx2, dy2;
 
   for (s_iter = w_current->stretch_list;
        s_iter != NULL; s_iter = s_iter_next) {
     STRETCH *s_current = s_iter->data;
     OBJECT *object = s_current->object;
+    int whichone = s_current->whichone;
 
     /* Store this now, since we may delete the current item */
     s_iter_next = g_list_next (s_iter);
@@ -649,14 +612,12 @@ void o_move_end_rubberband (GSCHEM_TOPLEVEL *w_current,
       /* remove the object's connections */
       s_conn_remove_object (toplevel, object);
 
-      s_stretch_calc_deltas (w_current, s_current,
-                             w_dx, w_dy, &dx1, &dy1, &dx2, &dy2);
-      object->line->x[0] += dx1;  object->line->y[0] += dy1;
-      object->line->x[1] += dx2;  object->line->y[1] += dy2;
+      object->line->x[whichone] += w_dx;
+      object->line->y[whichone] += w_dy;
 
       if (o_move_zero_length (object)) {
         w_current->stretch_list =
-          s_stretch_remove_object (w_current->stretch_list, object);
+          s_stretch_remove (w_current->stretch_list, object);
         o_delete (w_current, object);
         continue;
       }

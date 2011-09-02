@@ -33,9 +33,7 @@
  *  \par Function Description
  *
  */
-GList *s_stretch_add (GList *list, OBJECT *object,
-                      int x1_percent, int y1_percent,
-                      int x2_percent, int y2_percent)
+GList *s_stretch_add (GList *list, OBJECT *object, int whichone)
 {
   GList *s_iter;
   STRETCH *s_new;
@@ -50,10 +48,7 @@ GList *s_stretch_add (GList *list, OBJECT *object,
 
   s_new = g_malloc (sizeof (STRETCH));
   s_new->object = object;
-  s_new->x1_percent = x1_percent;
-  s_new->y1_percent = y1_percent;
-  s_new->x2_percent = x2_percent;
-  s_new->y2_percent = y2_percent;
+  s_new->whichone = whichone;
 
   return g_list_append (list, s_new);
 }
@@ -80,7 +75,7 @@ static gint find_object (gconstpointer a, gconstpointer b)
  *  \par Function Description
  *
  */
-GList *s_stretch_remove_object (GList *list, OBJECT *object)
+GList *s_stretch_remove (GList *list, OBJECT *object)
 {
   GList *item;
 
@@ -111,6 +106,8 @@ void s_stretch_print_all (GList *list)
     } else {
       printf("Object is NULL\n");
     }
+
+    printf("which one: %d\n", s_current->whichone);
   }
   printf("DONE printing stretch ********************\n\n");
 }
@@ -124,29 +121,4 @@ void s_stretch_destroy_all (GList *list)
 {
   g_list_foreach (list, (GFunc)g_free, NULL);
   g_list_free (list);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void s_stretch_calc_deltas (GSCHEM_TOPLEVEL *w_current,
-                            STRETCH *stretch, int diff_x, int diff_y,
-                            int *dx1, int *dy1, int *dx2, int *dy2)
-{
-  /* Calculate line-end deltas from stretch percentages */
-  *dx1 = diff_x * stretch->x1_percent / 100;
-  *dy1 = diff_y * stretch->y1_percent / 100;
-  *dx2 = diff_x * stretch->x2_percent / 100;
-  *dy2 = diff_y * stretch->y2_percent / 100;
-
-  if (w_current->snap != SNAP_OFF) {
-    /* Round (down) to snap-grid */
-    /* NB: This might not be quite right for SNAP_RESNAP. */
-    *dx1 = (*dx1 / w_current->snap_size) * w_current->snap_size;
-    *dy1 = (*dy1 / w_current->snap_size) * w_current->snap_size;
-    *dx2 = (*dx2 / w_current->snap_size) * w_current->snap_size;
-    *dy2 = (*dy2 / w_current->snap_size) * w_current->snap_size;
-  }
 }

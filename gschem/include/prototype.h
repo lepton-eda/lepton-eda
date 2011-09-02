@@ -517,7 +517,7 @@ void o_buffer_free(GSCHEM_TOPLEVEL *w_current);
 /* o_bus.c */
 void o_bus_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_bus_draw_place(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
-void o_bus_draw_stretch(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int dx1, int dy1, int dx2, int dy2);
+void o_bus_draw_stretch(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int whichone, OBJECT *o_current);
 void o_bus_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 int o_bus_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_bus_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
@@ -610,7 +610,7 @@ void o_move_end_rubberband(GSCHEM_TOPLEVEL *w_current, int world_diff_x, int wor
 void o_net_reset(GSCHEM_TOPLEVEL *w_current); 
 void o_net_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_net_draw_place(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
-void o_net_draw_stretch(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int dx1, int dy1, int dx2, int dy2);
+void o_net_draw_stretch(GSCHEM_TOPLEVEL *w_current, int dx, int dy, int whichone, OBJECT *o_current);
 void o_net_guess_direction(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current, int event_x, int event_y);
 void o_net_finishmagnetic(GSCHEM_TOPLEVEL *w_current);
@@ -697,11 +697,10 @@ void o_undo_remove_last_undo(GSCHEM_TOPLEVEL *w_current);
 /* parsecmd.c */
 int parse_commandline(int argc, char *argv[]);
 /* s_stretch.c */
-GList *s_stretch_add(GList *list, OBJECT *object, int x1_percent, int y1_percent, int x2_percent, int y2_percent);
-GList *s_stretch_remove_object(GList *list, OBJECT *object);
+GList *s_stretch_add(GList *list, OBJECT *object, int whichone);
+GList *s_stretch_remove(GList *list, OBJECT *object);
 void s_stretch_print_all(GList *list);
 void s_stretch_destroy_all(GList *list);
-void s_stretch_calc_deltas(GSCHEM_TOPLEVEL *w_current, STRETCH *stretch, int diff_x, int diff_y, int *dx1, int *dy1, int *dx2, int *dy2);
 /* x_attribedit.c */
 gint option_menu_get_history(GtkOptionMenu *option_menu);
 void attrib_edit_dialog_ok(GtkWidget *w, GSCHEM_TOPLEVEL *w_current);
