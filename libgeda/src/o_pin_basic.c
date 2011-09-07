@@ -142,7 +142,7 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, const char buf[],
   }
 
   if (whichend == -1) {
-    s_log_message (_("Found a pin which did not have the whichone field set.\n"
+    s_log_message (_("Found a pin which did not have the whichend field set.\n"
                      "Verify and correct manually.\n"));
   } else if (whichend < -1 || whichend > 1) {
     s_log_message (_("Found an invalid whichend on a pin (reseting to zero): %d\n"),
