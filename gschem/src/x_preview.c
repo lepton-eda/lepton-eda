@@ -60,7 +60,6 @@ static void preview_get_property (GObject *object,
                                   GParamSpec *pspec);
 static void preview_dispose (GObject *self);
 
-
 /*! \brief Completes initialitation of the widget after realization.
  *  \par Function Description
  *  This function terminates the initialization of preview's GSCHEM_TOPLEVEL
@@ -226,18 +225,20 @@ preview_update (Preview *preview)
       /* we should display something if there an error occured - Fix me */
     }
     if (preview->buffer != NULL) {
-
       /* Load the data buffer */
-      s_page_append_list (preview_toplevel, preview_toplevel->page_current,
-                          o_read_buffer (preview_toplevel,
-                                         NULL, preview->buffer, -1,
-                                         _("Preview Buffer"), &err));
-      if (err) {
-          char * msg = g_strdup_printf(_("Invalid schematic: %s"), err->message);
+      GList * objects = o_read_buffer (preview_toplevel,
+                                       NULL, preview->buffer, -1,
+                                       _("Preview Buffer"), &err);
 
-          generic_msg_dialog(msg);
-          g_free(msg);
-          g_error_free(err);
+      if (err == NULL) {
+        s_page_append_list (preview_toplevel, preview_toplevel->page_current,
+                            objects);
+      }
+      else {
+        s_page_append (preview_toplevel, preview_toplevel->page_current,
+                       o_text_new(preview_toplevel, OBJ_TEXT, 2, 100, 100, LOWER_MIDDLE, 0,
+                                  err->message, 10, VISIBLE, SHOW_NAME_VALUE));
+        g_error_free(err);
       }
     }
   }
