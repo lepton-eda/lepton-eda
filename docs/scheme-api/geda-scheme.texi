@@ -401,6 +401,7 @@ create a new @code{page}.  The initial filename for the new
 @code{page} is @var{filename}.
 
 If the string is not in gEDA format, raises an @code{invalid-string} error.
+@end defun
 
 @defun page->string page
 Returns a string representation of @var{page} in the gEDA file
