@@ -284,7 +284,7 @@ OBJECT *o_box_read (TOPLEVEL *toplevel, char buf[],
 
     if (sscanf (buf, "%c %d %d %d %d %d\n",
 		&type, &x1, &y1, &width, &height, &color) != 6) {
-      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse box object\n"));
+      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse box object\n"));
       return NULL;
     }
 
@@ -313,7 +313,7 @@ OBJECT *o_box_read (TOPLEVEL *toplevel, char buf[],
 		&box_width, &box_end, &box_type, &box_length,
 		&box_space, &box_filling,
 		&fill_width, &angle1, &pitch1, &angle2, &pitch2) != 17) {
-      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse box object\n"));
+      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse box object\n"));
       return NULL;
     }
   }

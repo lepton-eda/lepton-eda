@@ -332,7 +332,7 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
       o_attrib_attach (toplevel, new_obj, object_to_get_attribs, FALSE);
       ATTACH=FALSE;
     } else {
-      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Tried to attach a non-text item as an attribute\n"));
+      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Tried to attach a non-text item as an attribute\n"));
       goto error;
     }
   }

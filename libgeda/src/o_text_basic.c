@@ -353,7 +353,7 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
 	       &color, &size,
 	       &visibility, &show_name_value, 
 	       &angle, &alignment, &num_lines) != 10) {
-      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse text object\n"));
+      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse text object\n"));
       return NULL;
     }
   } else if (release_ver < VERSION_20000220) {
@@ -363,7 +363,7 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
 	       &color, &size,
 	       &visibility, &show_name_value, 
 	       &angle) != 8) {
-      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse text object\n"));
+      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse text object\n"));
       return NULL;
     }
     alignment = LOWER_LEFT; /* older versions didn't have this */
@@ -373,7 +373,7 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
 	       &color, &size,
 	       &visibility, &show_name_value, 
            &angle, &alignment) != 9) {
-      g_set_error (err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse text object\n"));
+      g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse text object\n"));
       return NULL;
     }
     num_lines = 1; /* only support a single line */
@@ -437,7 +437,7 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
 
     if (line == NULL) {
       g_string_free (textstr, TRUE);
-      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Premature end of data after %d lines\n"), i);
+      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Premature end of data after %d lines\n"), i);
       return NULL;
     }
 

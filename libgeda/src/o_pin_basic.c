@@ -157,7 +157,7 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, char buf[],
 
   if (release_ver <= VERSION_20020825) {
     if (sscanf (buf, "%c %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color) != 6) {
-      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse pin object\n"));
+      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse pin object\n"));
       return NULL;
     }
     pin_type = PIN_TYPE_NET;
@@ -165,7 +165,7 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, char buf[],
   } else {
     if (sscanf (buf, "%c %d %d %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2,
 		&color, &pin_type, &whichend) != 8) {
-      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse pin object\n"));
+      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse pin object\n"));
       return NULL;
     }
   }

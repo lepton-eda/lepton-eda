@@ -226,7 +226,7 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, char buf[],
      */
     if (sscanf (buf, "%c %d %d %d %d %d\n", &type,
 		&x1, &y1, &x2, &y2, &color) != 6) {
-      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse line object\n"));
+      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse line object\n"));
       return NULL;
     }
 
@@ -244,7 +244,7 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, char buf[],
       if (sscanf (buf, "%c %d %d %d %d %d %d %d %d %d %d\n", &type,
 		  &x1, &y1, &x2, &y2, &color,
 		  &line_width, &line_end, &line_type, &line_length, &line_space) != 11) {
-        g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse line object\n"));
+        g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse line object\n"));
         return NULL;
       }
   }

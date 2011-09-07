@@ -253,7 +253,7 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, char buf[],
   if(release_ver <= VERSION_20000704) {
     if (sscanf(buf, "%c %d %d %d %d %d %d", &type,
 	       &x1, &y1, &radius, &start_angle, &end_angle, &color) != 7) {
-      g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_FAILED, _("Failed to parse arc object\n"));
+      g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse arc object\n"));
       return NULL;
     }
 
@@ -266,7 +266,7 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, char buf[],
     if (sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d", &type,
 	       &x1, &y1, &radius, &start_angle, &end_angle, &color,
 	       &arc_width, &arc_end, &arc_type, &arc_length, &arc_space) != 12) {
-      g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_FAILED, _("Failed to parse arc object\n"));
+      g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse arc object\n"));
       return NULL;
     }
   }

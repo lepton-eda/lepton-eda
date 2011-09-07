@@ -428,7 +428,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
           new_obj = NULL;
         }
         else {
-          g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_FAILED, _("Read unexpected attach "
+          g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Read unexpected attach "
                                                                  "symbol start marker in [%s] :\n>>\n%s<<\n"),
                        name, line);
           goto error;
@@ -447,7 +447,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
 
           embedded_level++;
         } else {
-          g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_FAILED, _("Read unexpected embedded "
+          g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Read unexpected embedded "
                                                                  "symbol start marker in [%s] :\n>>\n%s<<\n"),
                        name, line);
           goto error;
@@ -478,7 +478,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
 
           embedded_level--;
         } else {
-          g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_FAILED, _("Read unexpected embedded "
+          g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Read unexpected embedded "
                                                                  "symbol end marker in [%s] :\n>>\n%s<<\n"),
                        name, line);
           goto error;
@@ -501,7 +501,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         itemsread = sscanf(line, "v %u %u\n", &release_ver, &fileformat_ver);
 
         if (itemsread == 0) {
-          g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_FAILED, "Failed to parse version from buffer.\n");
+          g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, "Failed to parse version from buffer.\n");
           goto error;
         }
 
@@ -519,7 +519,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         break;
 
       default:
-        g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_FAILED, _("Read garbage in [%s] :\n>>\n%s<<\n"), name, line);
+        g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Read garbage in [%s] :\n>>\n%s<<\n"), name, line);
         new_obj = NULL;
         goto error;
     }

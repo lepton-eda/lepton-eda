@@ -243,7 +243,7 @@ OBJECT *o_circle_read (TOPLEVEL *toplevel, char buf[],
      * to default.
      */
     if (sscanf(buf, "%c %d %d %d %d\n", &type, &x1, &y1, &radius, &color) != 5) {
-      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse circle object\n"));
+      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse circle object\n"));
       return NULL;
     }
 
@@ -272,7 +272,7 @@ OBJECT *o_circle_read (TOPLEVEL *toplevel, char buf[],
 	       &circle_width, &circle_end, &circle_type,
 	       &circle_length, &circle_space, &circle_fill,
 	       &fill_width, &angle1, &pitch1, &angle2, &pitch2) != 16) {
-      g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse circle object\n"));
+      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse circle object\n"));
       return NULL;
     }
   }

@@ -153,7 +153,7 @@ OBJECT *o_net_read (TOPLEVEL *toplevel, char buf[],
   int color;
 
   if (sscanf (buf, "%c %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color) != 6) {
-        g_set_error(err, EDA_ERROR, EDA_ERROR_READ, _("Failed to parse net object\n"));
+        g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse net object\n"));
     return NULL;
   }
 
