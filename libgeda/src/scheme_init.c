@@ -30,7 +30,7 @@
 static int init_called = 0;
 
 SCM_GLOBAL_SYMBOL (edascm_object_state_sym, "object-state");
-SCM_GLOBAL_SYMBOL (edascm_invalid_string_sym , "invalid-string");
+SCM_GLOBAL_SYMBOL (edascm_string_format_sym , "string-format");
 
 /*! \brief Initialise the Scheme API.
  * \par Function Description

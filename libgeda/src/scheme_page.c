@@ -436,8 +436,8 @@ SCM_DEFINE (string_to_page, "%string->page", 2, 0, 0,
       SCM error_message = scm_from_utf8_string (err->message);
 
       g_error_free(err);
-      scm_error (edascm_invalid_string_sym, s_string_to_page,
-                 _("Invalid string: ~s"), scm_list_1 (error_message), SCM_EOL);
+      scm_error (edascm_string_format_sym, s_string_to_page,
+                 _("Parse error: ~s"), scm_list_1 (error_message), SCM_EOL);
   }
 
   s_page_append_list (toplevel, page, objects);

@@ -8,4 +8,4 @@
 ;; string->page should bork if the string contains invalid syntax.  It
 ;; might not throw a misc-error; this is just a placeholder key.
 (begin-test 'string->page
-  (assert-thrown 'invalid-string (string->page "/test/page/A" "__GARBAGE__")))
+  (assert-thrown 'string-format (string->page "/test/page/A" "__GARBAGE__")))
