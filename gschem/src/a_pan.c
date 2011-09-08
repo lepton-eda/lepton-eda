@@ -143,13 +143,13 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
 #if DEBUG
   printf("zoom_old: %f, zoom_new: %f \n ",zoom_old, zoom_new);
   printf("left: %d, right: %d, top: %d, bottom: %d\n",
-         w_current->page_current->left, w_current->page_current->right, 
-	 w_current->page_current->top, w_current->page_current->bottom);
+         toplevel->page_current->left, toplevel->page_current->right, 
+	 toplevel->page_current->top, toplevel->page_current->bottom);
   printf("aspect: %f\n",
-         (float) fabs(w_current->page_current->right  
-		      - w_current->page_current->left) /
-         (float) fabs(w_current->page_current->bottom 
-		      - w_current->page_current->top ));
+         (float) fabs(toplevel->page_current->right  
+		      - toplevel->page_current->left) /
+         (float) fabs(toplevel->page_current->bottom 
+		      - toplevel->page_current->top ));
 #endif
 	
   /* set_window */
@@ -209,8 +209,8 @@ void a_pan_mouse(GSCHEM_TOPLEVEL *w_current, int diff_x, int diff_y)
   world_cy = page_cy + WORLDabs (w_current, diff_y);
 
 #if DEBUG
-  printf("  world_cx=%f, world_cy=%f, world_dx=%d, world_dy=%d\n",
-	 world_cx, world_cy, world_dx, world_dy);
+  printf("  world_cx=%f, world_cy=%f\n",
+	 world_cx, world_cy);
 #endif
   
   a_pan_general(w_current, world_cx, world_cy, 1, 0);
