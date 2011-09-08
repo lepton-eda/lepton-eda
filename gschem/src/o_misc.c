@@ -416,13 +416,15 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
       }
     }
 
-    if (o_current->type == OBJ_TEXT) {
+    if (o_current->type == OBJ_TEXT &&
+        (o_is_visible (toplevel, o_current) || toplevel->show_hidden_text)) {
+
       const gchar *str = o_text_get_string (toplevel, o_current);
      /* replaced strcmp with strstr to simplify the search */
       if (strstr (str,stext)) {
         if (!skiplast) {
           a_zoom(w_current, ZOOM_FULL, DONTCARE, A_PAN_DONT_REDRAW);
-          world_get_single_object_bounds (toplevel, o_current, &x1, &y1, &x2, &y2);
+          g_assert( world_get_single_object_bounds (toplevel, o_current, &x1, &y1, &x2, &y2) );
           text_screen_height = SCREENabs (w_current, y2 - y1);
           /* this code will zoom/pan till the text screen height is about */
           /* 50 pixels high, perhaps a future enhancement will be to make */
