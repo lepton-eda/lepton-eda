@@ -365,7 +365,6 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
   int page_control = 0;
   int pcount = 0;
   int rv;
-  int x1, y1, x2, y2;
   int text_screen_height;
   const GList *iter;
 
@@ -423,6 +422,8 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
      /* replaced strcmp with strstr to simplify the search */
       if (strstr (str,stext)) {
         if (!skiplast) {
+          int x1, y1, x2, y2;
+
           a_zoom(w_current, ZOOM_FULL, DONTCARE, A_PAN_DONT_REDRAW);
           g_assert( world_get_single_object_bounds (toplevel, o_current, &x1, &y1, &x2, &y2) );
           text_screen_height = SCREENabs (w_current, y2 - y1);
