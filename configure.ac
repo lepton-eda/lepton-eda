@@ -118,6 +118,8 @@ AC_CHECK_LIB([m], [lrint],
              AC_DEFINE([HAVE_LRINT], 1,
                        [If your math library has lrint in it, define this]))
 
+AC_CHECK_LIB([m], [atan2])
+
 AC_CHECK_FUNCS([chown getlogin])
 
 # Check if the getopt header is present
