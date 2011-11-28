@@ -10,7 +10,8 @@
 ; geda-rc-path   -- path to gEDA system-wide config directory
 
 ;; Set some flags to aid in debugging rc files
-(debug-enable 'debug)
+(cond-expand (guile-2 #t)
+             (guile (debug-enable 'debug)))
 (debug-enable 'backtrace)
 (read-enable 'positions)
 
