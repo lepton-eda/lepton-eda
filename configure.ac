@@ -112,8 +112,7 @@ AC_CHECK_HEADERS([errno.h fcntl.h])
 # to be able to build gschem/src/gschem.c
 AC_CHECK_HEADERS([locale.h])
 
-# Check for rint in math library. FIXME do we actually need to test
-# this? Should we use lrint instead?
+# Check for lrint in math library.
 AC_CHECK_LIB([m], [lrint],
              AC_DEFINE([HAVE_LRINT], 1,
                        [If your math library has lrint in it, define this]))
