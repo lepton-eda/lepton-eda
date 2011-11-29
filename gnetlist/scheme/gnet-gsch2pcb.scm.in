@@ -138,13 +138,13 @@
 
 ;; Build up the m4 command line
 
-(define gsch2pcb:m4-command-line-tmp (string-append
+(define gsch2pcb:m4-command-line (string-append
 				  gsch2pcb:pcb-m4-command " -d ") )
 (define gsch2pcb:pcb-m4-path-str #f)
 (for-each (lambda (d)
-	    (set! gsch2pcb:m4-command-line-tmp (string-append
-						gsch2pcb:m4-command-line-tmp
-						" -I" d))
+            (set! gsch2pcb:m4-command-line (string-append
+                                            gsch2pcb:m4-command-line
+                                            " -I" d))
 	    (if gsch2pcb:pcb-m4-path-str
 		(set! gsch2pcb:pcb-m4-path-str (string-append
 						gsch2pcb:pcb-m4-path-str
@@ -157,13 +157,11 @@
 
 
 
-(set! gsch2pcb:m4-command-line-tmp
-      ( string-append gsch2pcb:m4-command-line-tmp
+(set! gsch2pcb:m4-command-line
+      ( string-append gsch2pcb:m4-command-line
 		      " " gsch2pcb:pcb-m4-dir "/common.m4 - >> "
 		      )
       )
-
-(define-undefined gsch2pcb:pcb-m4-command-line gsch2pcb:m4-command-line-tmp)
 
 (define (gsch2pcb output-filename)
   (let ((port (open-output-file output-filename)))

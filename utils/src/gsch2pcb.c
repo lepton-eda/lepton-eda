@@ -67,8 +67,7 @@ static gchar *sch_basename;
 
 static GList *schematics;
 
-static gchar *m4_command,
-  *m4_pcbdir, *default_m4_pcbdir, *m4_files, *m4_override_file;
+static gchar *m4_pcbdir, *default_m4_pcbdir, *m4_files, *m4_override_file;
 
 static gboolean use_m4 = TRUE;
 
@@ -99,8 +98,6 @@ create_m4_override_file ()
     m4_override_file = NULL;
     return;
   }
-  if (m4_command)
-    fprintf (f, "(define m4-command \"%s\")\n", m4_command);
   if (m4_pcbdir)
     fprintf (f, "(define m4-pcbdir \"%s\")\n", m4_pcbdir);
   if (m4_files)
@@ -111,8 +108,6 @@ create_m4_override_file ()
   if (verbose) {
     printf ("Default m4-pcbdir: %s\n", default_m4_pcbdir);
     printf ("--------\ngnet-gsch2pcb-tmp.scm override file:\n");
-    if (m4_command)
-      printf ("    (define m4-command \"%s\")\n", m4_command);
     if (m4_pcbdir)
       printf ("    (define m4-pcbdir \"%s\")\n", m4_pcbdir);
     if (m4_files)
@@ -1194,8 +1189,6 @@ parse_config (gchar * config, gchar * arg)
     sch_basename = g_strdup (arg);
   else if (!strcmp (config, "schematics"))
     add_multiple_schematics (arg);
-  else if (!strcmp (config, "m4-command"))
-    m4_command = g_strdup (arg);
   else if (!strcmp (config, "m4-pcbdir"))
     m4_pcbdir = g_strdup (arg);
   else if (!strcmp (config, "m4-file"))
