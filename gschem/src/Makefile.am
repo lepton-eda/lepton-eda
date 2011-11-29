@@ -3,6 +3,7 @@ bin_PROGRAMS = gschem
 BUILT_SOURCES = \
 	g_attrib.x \
 	g_hook.x \
+	g_keys.x \
 	g_window.x \
 	g_select.x
 

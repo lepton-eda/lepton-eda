@@ -1451,6 +1451,7 @@ focused on enabling and responding to user editing operations.
 
 @menu
 * Windows and views::
+* Key mapping::
 * Selections::
 * Hooks::
 * Miscellanous gschem functions::
@@ -1474,6 +1475,50 @@ Sets the current @code{page} to @var{page}.
 Returns the current mouse pointer position in world coordinates in the
 form @samp{(x . y)}.  If the pointer is outside the display area,
 returns @samp{#f}.
+@end defun
+
+@node Key mapping
+@section Key mapping
+
+To use the functions described in this section, you will need to load
+the @code{(gschem keymap)} module.
+
+@subsection Key combinations
+
+gschem treats key combinations as first-class objects.  A key
+combination consists of a non-modifier key press with some number of
+modifiers applied.  For example, the key combination @kbd{Ctrl+Shift+A}
+(which calls @strong{Edit→Deselect} by default) is typed by
+holding the @key{Ctrl} and @key{Shift} keys down, and then pressing
+@key{A}.
+
+@defun key? obj
+Returns @samp{#t} if and only if @var{obj} is a key combination.
+@end defun
+
+@defun string->key str
+Parses @var{str} to create a new key combination.  The expected format
+looks like @samp{<Control>a} or @samp{<Shift><Alt>F1}.  Key names are
+parsed using @code{gdk_keyval_from_name()}, and modifiers may appear in
+any order.  If @var{str} has invalid syntax or does not represent a
+valid key combination, raises a @samp{key-format} error.
+@end defun
+
+@defun key->string key
+Converts @var{key} to a string, using a format suitable for passing to
+@code{string->key}.
+@end defun
+
+@defun key->display-string key
+Converts @var{key} to a string, using a format suitable for
+display. This should be used when the key combination needs to be
+displayed to the user e.g. in the gschem menus or status area.  The
+returned string is translated according to the user's current locale.
+
+@example
+(key->display-string (string->key ``<Control>bracketright''))
+=> ``Ctrl+]''
+@end example
 @end defun
 
 @node Selections

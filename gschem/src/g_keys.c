@@ -39,6 +39,8 @@
 #include <dmalloc.h>
 #endif
 
+#include <gdk/gdkkeysyms.h>
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -395,3 +397,259 @@ DEFINE_G_KEYS(help_hotkeys)
 being called with a null, I suppose we should call it with the right param.
 hack */
 DEFINE_G_KEYS(cancel)
+
+/*! Contains the smob tag for key smobs */
+static scm_t_bits g_key_smob_tag;
+#define G_SCM_IS_KEY(x) SCM_SMOB_PREDICATE (g_key_smob_tag, (x))
+
+/*! Type for keybindings. Used internally by gschem key smobs. */
+typedef struct {
+  guint keyval;
+  GdkModifierType modifiers;
+  gchar *str; /* UTF-8. Free with g_free(). */
+  gchar *disp_str; /* UTF-8. Free with g_free(). */
+} GschemKey;
+
+/*! \brief Test if a key is valid.
+ * \par Function Description
+ * Test if the key combination defined by \a keyval and \a modifiers
+ * is valid for key binding.  This is a less restrictive version of
+ * gtk_accelerator_valid() from GTK 2.
+ *
+ * \param keyval     The key that was pressed.
+ * \param modifiers  The active modifiers when the key was pressed.
+ *
+ * \return TRUE if the key combination is valid for keybinding.
+ */
+static gboolean
+g_key_is_valid (guint keyval, GdkModifierType modifiers)
+{
+  static const guint invalid_keyvals[] = {
+    GDK_Shift_L, GDK_Shift_R, GDK_Shift_Lock, GDK_Caps_Lock, GDK_ISO_Lock,
+    GDK_Control_L, GDK_Control_R, GDK_Meta_L, GDK_Meta_R,
+    GDK_Alt_L, GDK_Alt_R, GDK_Super_L, GDK_Super_R, GDK_Hyper_L, GDK_Hyper_R,
+    GDK_ISO_Level3_Shift, GDK_ISO_Next_Group, GDK_ISO_Prev_Group,
+    GDK_ISO_First_Group, GDK_ISO_Last_Group,
+    GDK_Mode_switch, GDK_Num_Lock, GDK_Multi_key,
+    GDK_Scroll_Lock, GDK_Sys_Req,
+    GDK_Tab, GDK_ISO_Left_Tab, GDK_KP_Tab,
+    GDK_First_Virtual_Screen, GDK_Prev_Virtual_Screen,
+    GDK_Next_Virtual_Screen, GDK_Last_Virtual_Screen,
+    GDK_Terminate_Server, GDK_AudibleBell_Enable,
+  };
+  const guint *val;
+
+  /* Exclude a bunch of control chars */
+  if (keyval <= 0xFF) return keyval >= 0x20;
+
+  /* Exclude special & modifier keys */
+  val = invalid_keyvals;
+  while (*val) {
+    if (keyval == *val++) return FALSE;
+  }
+
+  return TRUE;
+}
+
+/*! \brief Create a new bindable key object.
+ * \par Function Description
+ * Create and return a new gschem key object from a \a keyval and a
+ * set of \a modifiers.  If the key combination is invalid, return
+ * SCM_BOOL_F.
+ *
+ * \param keyval     the pressed key.
+ * \param modifiers  the active modifiers for the key.
+ *
+ * \return a new bindable key object, or SCM_BOOL_F.
+ */
+static SCM
+g_make_key (guint keyval, GdkModifierType modifiers)
+{
+  SCM result = SCM_BOOL_F;
+  if (g_key_is_valid (keyval, modifiers)) {
+    GschemKey *k = g_new0 (GschemKey, 1);
+    k->keyval = keyval;
+    k->modifiers = modifiers & GDK_MODIFIER_MASK;
+    SCM_NEWSMOB (result, g_key_smob_tag, k);
+  }
+  return result;
+}
+
+/*! \brief Test if a Scheme value is a bindable key object.
+ * \par Function Description
+ * Returns SCM_BOOL_T if \a key_s is a gschem key object.  Otherwise,
+ * returns SCM_BOOL_F.
+ *
+ * \note Scheme API: Implements the %key? procedure in the
+ * (gschem core keymap) module.
+ *
+ * \param key_s          value to test
+ * \return SCM_BOOL_T iff value is a key, otherwise SCM_BOOL_F.
+ */
+SCM_DEFINE (g_keyp, "%key?", 1, 0, 0, (SCM key_s),
+            "Test if value is a gschem key.")
+{
+  if (G_SCM_IS_KEY (key_s)) {
+    return SCM_BOOL_T;
+  } else {
+    return SCM_BOOL_F;
+  }
+}
+
+/*! \brief Create a bindable key object from a string.
+ * \par Function Description
+ * Parse the string key description \a str_s to create and return a
+ * new gschem key object.  If \a str_s contains syntax errors, or does
+ * not represent a valid bindable key combination, returns SCM_BOOL_F.
+ *
+ * \note Scheme API: Implements the %string-key procedure in the
+ * (gschem core keymap) module.
+ *
+ * \param str_s  string to parse.
+ * \return a new gschem key object, or SCM_BOOL_F.
+ */
+SCM_DEFINE (g_string_to_key, "%string->key", 1, 0, 0, (SCM str_s),
+            "Create a gschem key by parsing a string.")
+{
+  SCM_ASSERT (scm_is_string (str_s), str_s, SCM_ARG1, s_g_string_to_key);
+
+  guint keyval;
+  GdkModifierType modifiers;
+  char *str = scm_to_utf8_string (str_s);
+  gtk_accelerator_parse (str, &keyval, &modifiers);
+  if ((keyval == 0) && (modifiers == 0)) return SCM_BOOL_F;
+  return g_make_key (keyval, modifiers);
+}
+
+/*! \brief Convert a bindable key object to a string.
+ * \par Function Description
+ * Returns a string representation of the gschem key object \a key_s,
+ * in a format suitable for parsing with %string->key.
+ *
+ * \note Scheme API: Implements the %key->string procedure in the
+ * (gschem core keymap) module.
+ *
+ * \param key_s  Bindable key object to convert to string.
+ * \return a string representation of the key combination.
+ */
+SCM_DEFINE (g_key_to_string, "%key->string", 1, 0, 0, (SCM key_s),
+            "Create a string from a gschem key.")
+{
+  SCM_ASSERT (G_SCM_IS_KEY (key_s), key_s, SCM_ARG1, s_g_key_to_string);
+
+  GschemKey *key = (GschemKey *) SCM_SMOB_DATA (key_s);
+  if (key->str != NULL) return scm_from_utf8_string (key->str);
+
+  key->str = gtk_accelerator_name (key->keyval, key->modifiers);
+  return scm_from_utf8_string (key->str);
+}
+
+/*! \brief Convert a bindable key object to a displayable string.
+ * \par Function Description
+ * Returns a string representation of the gschem key object \a key_s,
+ * in a format suitable for display to the user (e.g. as accelerator
+ * text in a menu).
+ *
+ * \note Scheme API: Implements the %key->display-string procedure in
+ * the (gschem core keymap) module.
+ *
+ * \param key_s  Bindable key object to convert to string.
+ * \return a string representation of the key combination.
+ */
+SCM_DEFINE (g_key_to_display_string, "%key->display-string", 1, 0, 0,
+            (SCM key_s), "Create a display string from a gschem key.")
+{
+  SCM_ASSERT (G_SCM_IS_KEY (key_s), key_s, SCM_ARG1,
+              s_g_key_to_display_string);
+
+  GschemKey *key = (GschemKey *) SCM_SMOB_DATA (key_s);
+  if (key->disp_str != NULL) return scm_from_utf8_string (key->disp_str);
+
+  key->disp_str = gtk_accelerator_get_label (key->keyval, key->modifiers);
+  return scm_from_utf8_string (key->disp_str);
+}
+
+/*! \brief Print a representation of a key smob
+ * \par Function Description
+ * Outputs a string representing the \a smob to a Scheme output \a
+ * port.  The format used is "#<gschem-key \"Ctrl+A\">".
+ *
+ * Used internally to Guile.
+ */
+static int
+g_key_print (SCM smob, SCM port, scm_print_state *pstate)
+{
+  scm_puts ("#<gschem-key ", port);
+  scm_write (g_key_to_display_string (smob), port);
+  scm_puts (">", port);
+
+  /* Non-zero means success */
+  return 1;
+}
+
+/* \brief Test if two key combinations are equivalent.
+ * \par Function Description
+ * Tests if the two gschem key objects \a a and \a b represent the
+ * same key event.
+ *
+ * Used internally to Guile.
+ */
+static SCM
+g_key_equalp (SCM a, SCM b)
+{
+  GschemKey *akey = (GschemKey *) SCM_SMOB_DATA (a);
+  GschemKey *bkey = (GschemKey *) SCM_SMOB_DATA (b);
+  if (akey->keyval != bkey->keyval) return SCM_BOOL_F;
+  if (akey->modifiers != bkey->modifiers) return SCM_BOOL_F;
+  return SCM_BOOL_T;
+}
+
+/* \brief Destroy a bindable key object
+ * \par Function Description
+ * Destroys the contents of a gschem key object on garbage collection.
+ *
+ * Used internally to Guile.
+ */
+static size_t
+g_key_free (SCM key) {
+  GschemKey *k = (GschemKey *) SCM_SMOB_DATA (key);
+  g_free (k->str);
+  g_free (k->disp_str);
+  g_free (k);
+  return 0;
+}
+
+/*! \brief Create the (gschem core keymap) Scheme module
+ * \par Function Description
+ * Defines procedures in the (gschem core keymap) module.  The module
+ * can be accessed using (use-modules (gschem core keymap)).
+ */
+static void
+init_module_gschem_core_keymap ()
+{
+  /* Register the functions */
+  #include "g_keys.x"
+
+  /* Add them to the module's public definitions */
+  scm_c_export (s_g_keyp, s_g_string_to_key, s_g_key_to_string,
+                s_g_key_to_display_string, NULL);
+}
+
+/*! \brief Initialise the key combination procedures
+ * \par Function Description
+ * Registers some Scheme procedures for working with key combinations.
+ * Should only be called by main_prog().
+ */
+void
+g_init_keys ()
+{
+  /* Register key smob type */
+  g_key_smob_tag = scm_make_smob_type ("gschem-key", 0);
+  scm_set_smob_print (g_key_smob_tag, g_key_print);
+  scm_set_smob_equalp (g_key_smob_tag, g_key_equalp);
+  scm_set_smob_free (g_key_smob_tag, g_key_free);
+
+  scm_c_define_module ("gschem core keymap",
+                       init_module_gschem_core_keymap,
+                       NULL);
+}
