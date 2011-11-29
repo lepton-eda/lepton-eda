@@ -104,7 +104,7 @@ the key `option-error'."
 Search OPTIONS for a backend option named KEY and return its value,
 if found.  If the option has no value, but was given, return `#t'.  If
 the option was not given, return DEFAULT, or if DEFAULT was not
-specified, `#f'.  OPTIONS must be the ruslt of a call to
+specified, `#f'.  OPTIONS must be the result of a call to
 `backend-getopt'."
   (or (assoc-ref options key) default))
 
