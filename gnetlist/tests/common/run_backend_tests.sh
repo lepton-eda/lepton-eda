@@ -245,7 +245,15 @@ for t in $all_tests ; do
     fi
     
     if test "X$regen" = "Xyes" ; then
-	cp ${out} ${ref}
+
+        # Copy output on top of golden output, accounting for the case
+        # that no output file was generated.
+        if test -f ${out} ; then
+            cp ${out} ${ref}
+        else
+            rm ${ref}
+        fi
+
 	echo "$rc" > $refcode
 	echo "Regenerated ${ref}"
         good=1
@@ -259,6 +267,10 @@ for t in $all_tests ; do
 
 	if diff -w ${out}.tmp1 ${out}.tmp2 >/dev/null ; then
 	    echo "PASS"
+            good=1
+        # If neither output nor golden file exists, then succeed
+        elif test ! -f ${out} -a ! -f ${ref} ; then
+            echo "PASS"
             good=1
 	else
 	    echo "FAILED:  See diff -w ${ref} ${out}"
