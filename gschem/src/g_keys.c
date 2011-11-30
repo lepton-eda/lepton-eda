@@ -41,142 +41,6 @@
 
 #include <gdk/gdkkeysyms.h>
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* for now this only supports single chars, not shift/alt/ctrl etc... */
-int g_keys_execute(GSCHEM_TOPLEVEL *w_current, int state, int keyval)
-{
-  char *guile_string = NULL;
-  char *modifier = NULL;
-  char *key_name = NULL;
-  char *mod_end = NULL;
-  SCM scm_retval;
-
-  if (keyval == 0) {
-    return 0;
-  }
-
-  key_name = gdk_keyval_name(keyval);
-  if ( key_name == NULL ) {
-    return 0;
-  }
-
-  /* don't pass the raw modifier key presses to the guile code */
-  if (strstr(key_name, "Alt")    ||
-      strstr(key_name, "Shift")  ||
-      strstr(key_name, "Control") ) {
-    return 0;
-  }
-
-  /* Allocate space for concatenation of all strings below */
-  modifier = mod_end = g_strnfill(3*10, '\0');
-
-  /* The accels below must be in alphabetic order! */
-  if (state & GDK_MOD1_MASK) {
-    mod_end = g_stpcpy(mod_end, "Alt ");
-  }
-  if (state & GDK_CONTROL_MASK) {
-    mod_end = g_stpcpy(mod_end, "Control ");
-  }
-  if (state & GDK_SHIFT_MASK) {
-    mod_end = g_stpcpy(mod_end, "Shift ");
-  }
-
-  if(strcmp(key_name, "Escape") == 0) {
-     g_free(w_current->keyaccel_string);
-     w_current->keyaccel_string = NULL;
-  } else if(w_current->keyaccel_string &&
-        strlen(w_current->keyaccel_string) + strlen(key_name) > 10) {
-     g_free(w_current->keyaccel_string);
-     w_current->keyaccel_string = g_strconcat(modifier, key_name, NULL);
-  } else {
-     gchar *p, *r;
-
-     p = w_current->keyaccel_string;
-     w_current->keyaccel_string = g_strconcat(modifier, key_name, NULL);
-     if(p) {
-        r = g_strconcat(p, w_current->keyaccel_string, NULL);
-        g_free(p);
-        g_free(w_current->keyaccel_string);
-        w_current->keyaccel_string = r;
-     }
-  }
-
-  i_show_state(w_current, NULL);
-
-  guile_string = g_strdup_printf("(press-key \"%s%s\")",
-                                 modifier, key_name);
-
-#if DEBUG 
-  printf("_%s_\n", guile_string);
-#endif
-
-  scm_dynwind_begin (0);
-  scm_dynwind_unwind_handler (g_free, guile_string, SCM_F_WIND_EXPLICITLY);
-  scm_dynwind_unwind_handler (g_free, modifier, SCM_F_WIND_EXPLICITLY);
-  g_dynwind_window (w_current);
-  scm_retval = g_scm_c_eval_string_protected (guile_string);
-  scm_dynwind_end ();
-
-  return (SCM_FALSEP (scm_retval)) ? 0 : 1;
-}
-
-/*! \brief Exports the keymap in scheme to a GLib GArray.
- *  \par Function Description
- *  This function converts the list of key sequence/action pairs
- *  returned by the scheme function \c dump-current-keymap into an
- *  array of C structures.
- *
- *  The returned value must be freed by caller.
- *
- *  \return A GArray with keymap data.
-  */
-GArray*
-g_keys_dump_keymap (void)
-{
-  SCM dump_proc = scm_c_lookup ("dump-current-keymap");
-  SCM scm_ret;
-  GArray *ret = NULL;
-  struct keyseq_action_t {
-    gchar *keyseq, *action;
-  };
-
-  dump_proc = scm_variable_ref (dump_proc);
-  g_return_val_if_fail (SCM_NFALSEP (scm_procedure_p (dump_proc)), NULL);
-
-  scm_ret = scm_call_0 (dump_proc);
-  g_return_val_if_fail (SCM_CONSP (scm_ret), NULL);
-
-  ret = g_array_sized_new (FALSE,
-                           FALSE,
-                           sizeof (struct keyseq_action_t),
-                           (guint)scm_ilength (scm_ret));
-  for (; scm_ret != SCM_EOL; scm_ret = SCM_CDR (scm_ret)) {
-    SCM scm_keymap_entry = SCM_CAR (scm_ret);
-    struct keyseq_action_t keymap_entry;
-    char *str;
-
-    g_return_val_if_fail (SCM_CONSP (scm_keymap_entry) &&
-                          scm_is_symbol (SCM_CAR (scm_keymap_entry)) &&
-                          scm_is_string (SCM_CDR (scm_keymap_entry)), ret);
-
-    str = scm_to_utf8_string (scm_symbol_to_string (SCM_CAR (scm_keymap_entry)));
-    keymap_entry.action = g_strdup (str);
-    free(str);
-
-    str = scm_to_utf8_string (SCM_CDR (scm_keymap_entry));
-    keymap_entry.keyseq = g_strdup (str);
-    free(str);
-
-    ret = g_array_append_val (ret, keymap_entry);
-  }
-
-  return ret;
-}
-
 /*! \brief Clear the current key accelerator string
  *
  *  \par Function Description
@@ -619,6 +483,174 @@ g_key_free (SCM key) {
   return 0;
 }
 
+SCM_SYMBOL (press_key_sym, "press-key");
+
+/*! \brief Evaluate a user keystroke.
+ * \par Function Description
+ * Evaluates the key combination specified by \a event using the
+ * current keymap.  Updates the gschem status bar with the current key
+ * sequence.
+ *
+ * \param w_current  The active #GSCHEM_TOPLEVEL context.
+ * \param event      A GdkEventKey structure.
+ *
+ * \return 1 if a binding was found for the keystroke, 0 otherwise.
+ */
+int
+g_keys_execute(GSCHEM_TOPLEVEL *w_current, GdkEventKey *event)
+{
+  SCM s_retval, s_key, s_expr;
+  guint key, mods, upper, lower, caps;
+  GdkDisplay *display;
+  GdkKeymap *keymap;
+  GdkModifierType consumed_modifiers;
+
+  g_return_val_if_fail (w_current != NULL, 0);
+  g_return_val_if_fail (event != NULL, 0);
+
+  display = gtk_widget_get_display (w_current->main_window);
+  keymap = gdk_keymap_get_for_display (display);
+
+  /* Figure out what modifiers went into determining the key symbol */
+  gdk_keymap_translate_keyboard_state (keymap,
+                                       event->hardware_keycode,
+                                       event->state, event->group,
+                                       NULL, NULL, NULL, &consumed_modifiers);
+
+  key = event->keyval;
+  gdk_keyval_convert_case (event->keyval, &lower, &upper);
+  mods = (event->state & gtk_accelerator_get_default_mod_mask ()
+                & ~consumed_modifiers);
+
+  /* Handle Caps Lock. The idea is to obtain the same keybindings
+   * whether Caps Lock is enabled or not. */
+  if (upper != lower) {
+    caps = gdk_keymap_get_caps_lock_state (keymap);
+    if ((caps && (key == lower)) || (!caps && (key == upper))) {
+      mods |= GDK_SHIFT_MASK;
+    }
+  }
+
+  /* Always process key as lower case */
+  key = lower;
+
+  /* Validate the key -- there are some keystrokes we mask out. */
+  if (!g_key_is_valid (key, mods)) {
+    return 0;
+  }
+
+  /* Create Scheme key value */
+  /* FIXME Escape as cancel key shouldn't be hardcoded in. */
+  if (key == GDK_Escape) {
+    s_key = SCM_BOOL_F;
+  } else {
+    s_key = g_make_key (key, mods);
+  }
+
+  /* Update key hint string for status bar. */
+  if (s_key == SCM_BOOL_F) {
+    /* Cancelled key sequence, so clear hint string */
+    g_free (w_current->keyaccel_string);
+    w_current->keyaccel_string = NULL;
+
+  } else {
+    gchar *keystr = gtk_accelerator_get_label (key, mods);
+
+    /* If no current hint string, use key string directly */
+    if (w_current->keyaccel_string == NULL) {
+      w_current->keyaccel_string = keystr;
+
+    } else {
+      /* If concatenating key string onto current hint string would be
+       * longer than 14 characters, truncate and prefix with
+       * ellipsis. Otherwise, add key string to current hint
+       * string. */
+      /* FIXME this limit probably shouldn't be hardcoded */
+      if (strlen (w_current->keyaccel_string) + strlen (keystr) > 14) {
+        g_free (w_current->keyaccel_string);
+        w_current->keyaccel_string = g_strconcat ("\342\200\246 ",
+                                                  keystr, NULL);
+
+      } else {
+        gchar *p = w_current->keyaccel_string;
+        w_current->keyaccel_string = g_strconcat (p, " ", keystr, NULL);
+        g_free (p);
+      }
+      g_free (keystr);
+    }
+  }
+
+  /* Update status bar */
+  i_show_state(w_current, NULL);
+
+  /* Build and evaluate Scheme expression. */
+  scm_dynwind_begin (0);
+  g_dynwind_window (w_current);
+  s_expr = scm_list_2 (press_key_sym, s_key);
+  s_retval = g_scm_eval_protected (s_expr, scm_interaction_environment ());
+  scm_dynwind_end ();
+
+  return !scm_is_false (s_retval);
+}
+
+/*! \brief Exports the keymap in Scheme to a GtkListStore
+ *  \par Function Description
+ *  This function converts the list of key sequence/action pairs
+ *  returned by the Scheme function \c dump-global-keymap into a
+ *  GtkListStore with two columns.  The first column contains the name
+ *  of the action executed by the keybinding as a string, and the
+ *  second contains the keybinding itself as a string suitable for
+ *  display.
+ *
+ *  The returned value must be freed by caller.
+ *
+ *  \return A GtkListStore containing keymap data.
+  */
+GtkListStore *
+g_keys_to_list_store (void)
+{
+  SCM s_expr;
+  SCM s_lst;
+  SCM s_iter;
+  GtkListStore *list_store;
+
+  /* Call Scheme procedure to dump global keymap into list */
+  s_expr = scm_list_1 (scm_from_utf8_symbol ("dump-global-keymap"));
+  s_lst = g_scm_eval_protected (s_expr, scm_interaction_environment ());
+
+  g_return_val_if_fail (scm_is_true (scm_list_p (s_lst)), NULL);
+
+  /* Convert to  */
+  scm_dynwind_begin (0);
+  list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+  scm_dynwind_unwind_handler (g_object_unref, list_store, 0);
+
+  for (s_iter = s_lst; !scm_is_null (s_iter); s_iter = scm_cdr (s_iter)) {
+    SCM s_binding = scm_caar (s_iter);
+    SCM s_keys = scm_cdar (s_iter);
+    char *binding, *keys;
+    GtkTreeIter iter;
+
+    scm_dynwind_begin (0);
+
+    binding = scm_to_utf8_string (s_binding);
+    scm_dynwind_free (binding);
+
+    keys = scm_to_utf8_string (s_keys);
+    scm_dynwind_free (keys);
+
+    gtk_list_store_insert_with_values (list_store, &iter, -1,
+                                       0, binding,
+                                       1, keys,
+                                       -1);
+
+    scm_dynwind_end ();
+  }
+
+  scm_dynwind_end ();
+  return list_store;
+}
+
 /*! \brief Create the (gschem core keymap) Scheme module
  * \par Function Description
  * Defines procedures in the (gschem core keymap) module.  The module
@@ -653,3 +685,4 @@ g_init_keys ()
                        init_module_gschem_core_keymap,
                        NULL);
 }
+

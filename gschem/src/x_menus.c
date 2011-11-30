@@ -169,17 +169,20 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
         gtk_menu_append(GTK_MENU(menu), menu_item);
       } else {
 
-        if (scm_is_false (scm_item_hotkey_func))
+        if (scm_is_false (scm_item_hotkey_func)) {
           menu_item_hotkey_func = NULL;
-        else
+        } else {
           menu_item_hotkey_func = scm_to_utf8_string (scm_symbol_to_string (scm_item_hotkey_func));
+          scm_dynwind_free (menu_item_hotkey_func);
+        }
 
         if (menu_item_hotkey_func != NULL) {
+          SCM s_expr =
+            scm_list_2 (scm_from_utf8_symbol ("find-key"),
+                        scm_list_2 (scm_from_utf8_symbol ("quote"),
+                                    scm_from_utf8_symbol (menu_item_hotkey_func)));
 
-          buf = g_strdup_printf ("(find-key '%s)", menu_item_hotkey_func);
-          scm_keys = g_scm_c_eval_string_protected (buf);
-          g_free (buf);
-          free(menu_item_hotkey_func);
+          scm_keys = g_scm_eval_protected (s_expr, scm_interaction_environment ());
 
           if (scm_is_false (scm_keys)) {
             menu_item_keys = "";

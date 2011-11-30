@@ -2607,11 +2607,6 @@ void x_dialog_hotkeys (GSCHEM_TOPLEVEL *w_current)
   GtkWidget *treeview;
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
-  GArray *keymap;
-  gint i;
-  struct keyseq_action_t {
-    gchar *keyseq, *action;
-  };
 
   if (!w_current->hkwindow) {
     w_current->hkwindow = gschem_dialog_new_with_buttons(_("Hotkeys"),
@@ -2646,31 +2641,7 @@ void x_dialog_hotkeys (GSCHEM_TOPLEVEL *w_current)
                                     GTK_POLICY_AUTOMATIC);
 
     /* the model */
-    store = gtk_list_store_new (2,G_TYPE_STRING, G_TYPE_STRING);
-
-    /* retrieve current keymap */
-    keymap = g_keys_dump_keymap ();
-    /* add each keymap entry to the list store of the dialog */
-    for (i = 0; i < keymap->len; i++) {
-      GtkTreeIter iter;
-      struct keyseq_action_t *keymap_entry;
-
-      keymap_entry = &g_array_index (keymap, struct keyseq_action_t, i);
-      gtk_list_store_append (store, &iter);
-      gtk_list_store_set (store, &iter,
-                          0, keymap_entry->action,
-                          1, keymap_entry->keyseq,
-                          -1);
-    }
-
-    /* finally free the array for keymap */
-    for (i = 0; i < keymap->len; i++) {
-      struct keyseq_action_t *keymap_entry;
-      keymap_entry = &g_array_index (keymap, struct keyseq_action_t, i);
-      g_free (keymap_entry->keyseq);
-      g_free (keymap_entry->action);
-    }
-    g_array_free (keymap, TRUE);
+    store = g_keys_to_list_store ();
 
     /* the tree view */
     treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));

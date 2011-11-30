@@ -1149,206 +1149,189 @@
 ; Start of keymapping related keywords
 ;
 
-; Keymapping rules:
-;
-;	- Everything is case sensitive
-; 	- For a         --  "a"
-; 	- For Shift-A   --  "Shift A"
-; 	- For Control-a --  "Control a"
-; 	- For Alt-a     --  "Alt a"
-; 	- Keys must be unique in each keymap, especially the global one
-;	- Strings (without any modifers) are the same strings specified
-; 	  for the keys in the file /usr/lib/X11/XKeysymDB (at least on 
-; 	  a linux box)
-;
+;;;; Keymapping
+;;
+;; Everything is case-sensitive.  Any number of keys may be bound in
+;; sequence, and each keystroke consists of a non-modifier key with
+;; some number of modifiers applied.  Examples:
+;;
+;;  * (global-set-key "F N" 'file-new-window)
+;;
+;;    The "New Window" command will be run when an <F> is typed,
+;;    followed by an <A>.
+;;
+;;  * (global-set-key "<Control><Shift>A" 'edit-deselect)
+;;
+;;    The "Deselect All" command will be run when the <Ctrl> and
+;;    <Shift> keys are held down, and the <A> key is pressed.
+;;
+;;  * (global-set-key "O <Shift>S" 'options-snapsize)
+;;
+;;    The "Snap Size" dialog box will be shown when an <O> is typed,
+;;    followed by an <S> typed with the <Shift> key held down.
+;;
+;; Key names can be found in /usr/include/gtk-2.0/gdk/gdkkeysyms.h on
+;; most Linux systems.  For other systems, please see your platform
+;; documentation.
+;;
+;; Later keybindings override earlier ones.
 
-; All keys in this keymap *must* be unique
-(define file-keymap
-  '(("w" . file-new-window)
-    ("n" . file-new)
-    ("o" . file-open)
-    ("s" . file-save)
-    ("e" . page-close)   ; yes this is okay; reusing page-close 
-    ("a" . file-save-as)
-    ("l" . file-save-all)
-    ("p" . file-print)
-    ("r" . page-revert)  ; yes this is okay; resuing page-revert
-    ("i" . file-image)
-    ("t" . file-script)
-    ("c" . file-close-window)
-    ("q" . file-quit)))
+(global-set-key "A C" 'add-component)
+(global-set-key "A A" 'add-attribute-hotkey)
+(global-set-key "A N" 'add-net-hotkey)
+(global-set-key "A U" 'add-bus-hotkey)
+(global-set-key "A T" 'add-text)
+(global-set-key "A L" 'add-line-hotkey)
+(global-set-key "A B" 'add-box-hotkey)
+(global-set-key "A I" 'add-circle-hotkey)
+(global-set-key "A R" 'add-arc-hotkey)
+(global-set-key "A P" 'add-pin-hotkey)
+(global-set-key "A G" 'add-picture-hotkey)
 
-; All keys in this keymap *must* be unique
-(define edit-keymap
-  '(("Shift U" . edit-undo)
-    ("Shift R" . edit-redo)
-    ("s" . edit-select)
-    ("c" . edit-copy-hotkey)    ; This can also just be edit-copy and then
-    ("e" . edit-edit)           ; you must pick the anchor point
-    ("y" . edit-mcopy-hotkey)   ; This can also just be edit-mcopy
-    ("x" . edit-text)           
-    ("m" . edit-move-hotkey)    ; This can also just be edit-move 
-    ("d" . edit-delete)
-    ("r" . edit-rotate-90-hotkey)
-    ("i" . edit-mirror-hotkey)
-    ("Shift S" . edit-slot)
-    ("o" . edit-color)
-    ("l" . edit-lock)
-    ("Shift L" . edit-unlock)
-    ("w" . edit-linetype)
-    ("f" . edit-filltype)
-    ("t" . edit-translate)
-    (":" . edit-invoke-macro)
-    ("b" . edit-embed)
-    ("u" . edit-unembed)
-    ("p" . edit-update)
-    ("n" . edit-show-hidden)))
+(global-set-key "<Control>A" 'edit-select-all)
+(global-set-key "<Control><Shift>A" 'edit-deselect)
 
+(global-set-key "B" 'add-box-hotkey)
+(global-set-key "<Shift>B" 'add-bus-hotkey)
+(global-set-key "C" 'edit-copy-hotkey)
+(global-set-key "<Control>C" 'clipboard-copy)
+(global-set-key "D" 'edit-delete)
 
-;;;    ("h" . edit-stretch-hotkey)  Obsolete
+(global-set-key "E <Shift>U" 'edit-undo)
+(global-set-key "E <Shift>R" 'edit-redo)
+(global-set-key "E S" 'edit-select)
+(global-set-key "E C" 'edit-copy-hotkey)
+(global-set-key "E E" 'edit-edit)
+(global-set-key "E Y" 'edit-mcopy-hotkey)
+(global-set-key "E X" 'edit-text)
+(global-set-key "E M" 'edit-move-hotkey)
+(global-set-key "E D" 'edit-delete)
+(global-set-key "E R" 'edit-rotate-90-hotkey)
+(global-set-key "E I" 'edit-mirror-hotkey)
+(global-set-key "E <Shift>S" 'edit-slot)
+(global-set-key "E O" 'edit-color)
+(global-set-key "E L" 'edit-lock)
+(global-set-key "E <Shift>L" 'edit-unlock)
+(global-set-key "E W" 'edit-linetype)
+(global-set-key "E F" 'edit-filltype)
+(global-set-key "E T" 'edit-translate)
+(global-set-key "E <Shift>colon" 'edit-invoke-macro)
+(global-set-key "E B" 'edit-embed)
+(global-set-key "E U" 'edit-unembed)
+(global-set-key "E P" 'edit-update)
+(global-set-key "E N" 'edit-show-hidden)
 
-; All keys in this keymap *must* be unique
-(define view-keymap
-  '(("r" . view-redraw)
-    ("b" . view-zoom-box-hotkey)
-    ("f" . view-zoom-full)
-    ("e" . view-zoom-extents)
-    ("p" . view-pan-hotkey)
-    ("o" . view-zoom-out-hotkey)
-    ("i" . view-zoom-in-hotkey)
-    ("d" . view-dark-colors)
-    ("l" . view-light-colors)
-    ("w" . view-bw-colors)
-   ))
+(global-set-key "F W" 'file-new-window)
+(global-set-key "F N" 'file-new)
+(global-set-key "F O" 'file-open)
+(global-set-key "F S" 'file-save)
+(global-set-key "F E" 'page-close)
+(global-set-key "F A" 'file-save-as)
+(global-set-key "F L" 'file-save-all)
+(global-set-key "F P" 'file-print)
+(global-set-key "F R" 'page-revert)
+(global-set-key "F I" 'file-image)
+(global-set-key "F T" 'file-script)
+(global-set-key "F C" 'file-close-window)
+(global-set-key "F Q" 'file-quit)
 
-(define buffer-keymap
-  '(("c" . buffer-copy1)
-    ("u" . buffer-cut1)
-    ("p" . buffer-paste1-hotkey)))
+(global-set-key "H A" 'help-about)
+(global-set-key "H M" 'help-manual)
+(global-set-key "H F" 'help-faq)
+(global-set-key "H W" 'help-wiki)
+(global-set-key "H H" 'help-hotkeys)
+(global-set-key "H C" 'hierarchy-documentation)
 
-; All keys in this keymap *must* be unique
-(define page-keymap
-  '(("m" . page-manager)
-    ("n" . page-next)
-    ("p" . page-prev)
-    ("e" . page-new)
-    ("r" . page-revert)
-    ("c" . page-close)
-    ("d" . page-discard)
-    ("Shift P" . page-print)))
+(global-set-key "<Shift>H D" 'hierarchy-down-schematic)
+(global-set-key "<Shift>H S" 'hierarchy-down-symbol)
+(global-set-key "<Shift>H U" 'hierarchy-up)
+(global-set-key "<Shift>H O" 'hierarchy-documentation)
 
-; All keys in this keymap *must* be unique
-(define add-keymap
-  '(("c" . add-component)
-    ("a" . add-attribute-hotkey)
-    ("n" . add-net-hotkey)
-    ("u" . add-bus-hotkey)
-    ("t" . add-text)
-    ("l" . add-line-hotkey)
-    ("b" . add-box-hotkey)
-    ("i" . add-circle-hotkey)
-    ("r" . add-arc-hotkey)
-    ("p" . add-pin-hotkey)
-    ("g" . add-picture-hotkey)))
+(global-set-key "I" 'add-component)
+(global-set-key "L" 'add-line-hotkey)
+(global-set-key "M" 'edit-move-hotkey)
+(global-set-key "N" 'add-net-hotkey)
 
-; All keys in this keymap *must* be unique
-(define hierarchy-keymap
-  '(("d" . hierarchy-down-schematic)
-    ("s" . hierarchy-down-symbol)
-    ("u" . hierarchy-up)
-    ("o" . hierarchy-documentation)))
+(global-set-key "O T" 'options-text-size)
+(global-set-key "O A" 'options-action-feedback)
+(global-set-key "O G" 'options-grid)
+(global-set-key "O S" 'options-snap)
+(global-set-key "O R" 'options-rubberband)
+(global-set-key "O M" 'options-magneticnet)
+(global-set-key "O <Shift>S" 'options-snap-size)
+(global-set-key "O L" 'options-show-log-window)
+(global-set-key "O C" 'options-show-coord-window)
 
-; All keys in this keymap *must* be unique
-(define attributes-keymap
-  '(("a" . attributes-attach)
-    ("d" . attributes-detach)
-    ("n" . attributes-show-name)
-    ("v" . attributes-show-value)
-    ("b" . attributes-show-both)
-    ("t" . attributes-visibility-toggle)
-    ("Shift F" . edit-find-text)
-    ("h" . edit-hide-text)
-    ("Shift H" . edit-show-text)
-    ("u" . edit-autonumber)))
+(global-set-key "P M" 'page-manager)
+(global-set-key "P N" 'page-next)
+(global-set-key "P P" 'page-prev)
+(global-set-key "P E" 'page-new)
+(global-set-key "P R" 'page-revert)
+(global-set-key "P C" 'page-close)
+(global-set-key "P D" 'page-discard)
+(global-set-key "P <Shift>P" 'page-print)
 
-; All keys in this keymap *must* be unique
-(define options-keymap
-  '(("t" . options-text-size)
-    ("a" . options-action-feedback)
-    ("g" . options-grid)
-    ("s" . options-snap)
-    ("r" . options-rubberband)
-    ("m" . options-magneticnet)
-    ("Shift S" . options-snap-size)
-    ("l" . options-show-log-window)
-    ("c" . options-show-coord-window)))
+(global-set-key "<Alt>Q" 'file-quit)
+(global-set-key "R" 'view-redraw)
+(global-set-key "<Shift>R" 'edit-redo)
+(global-set-key "S" 'edit-select)
 
-; All keys in this keymap *must* be unique
-(define help-keymap
-  '(("a" . help-about)
-    ("m" . help-manual)
-    ("f" . help-faq)
-    ("w" . help-wiki)
-    ("h" . help-hotkeys)
-    ("c" . hierarchy-documentation))) ; yes this is okay; reusing
+(global-set-key "T A" 'attributes-attach)
+(global-set-key "T D" 'attributes-detach)
+(global-set-key "T N" 'attributes-show-name)
+(global-set-key "T V" 'attributes-show-value)
+(global-set-key "T B" 'attributes-show-both)
+(global-set-key "T T" 'attributes-visibility-toggle)
+(global-set-key "T <Shift>F" 'edit-find-text)
+(global-set-key "T H" 'edit-hide-text)
+(global-set-key "T <Shift>H" 'edit-show-text)
+(global-set-key "T U" 'edit-autonumber)
 
-; All keys in the global-keymap *must* be unique
-(define global-keymap
-  '(("Escape" . cancel)
-    ("a" . add-keymap)
-    ("b" . add-box-hotkey)
-    ("c" . edit-copy-hotkey)
-    ("d" . edit-delete)
-    ("e" . edit-keymap)
-    ("f" . file-keymap)
-    ("h" . help-keymap)
-    ("i" . add-component)
-    ("l" . add-line-hotkey) 
-    ("m" . edit-move-hotkey)
-    ("n" . add-net-hotkey)
-    ("o" . options-keymap)
-    ("bracketright" . options-scale-up-snap-size)
-    ("bracketleft" . options-scale-down-snap-size)
-    ("p" . page-keymap)
-    ("r" . view-redraw)
-    ("s" . edit-select)
-    ("t" . attributes-keymap)
-    ("u" . edit-undo)
-    ("v" . view-keymap)
-    ("w" . view-zoom-box-hotkey)
-    ("x" . view-pan-hotkey)
-    ("Left" . view-pan-left)
-    ("Right" . view-pan-right)
-    ("Up" . view-pan-up)
-    ("Down" . view-pan-down)
-    ("y" . buffer-keymap)
-    ("z" . view-zoom-in-hotkey)
-    ("period" . repeat-last-command)
-    ("Shift colon" . edit-invoke-macro)
-    ("comma" . misc-misc)
-    ("equal" . misc-misc2)
-    ("Shift plus" . misc-misc3)
-    ("Delete" . edit-delete)
-    ("Shift greater" . page-next) ; Deprecated; preserved for backward compat
-    ("Page_Down" . page-next)
-    ("Shift less" . page-prev) ; Deprecated; preserved for backward compat
-    ("Page_Up" . page-prev)
-    ("Alt q" . file-quit)
-    ("Shift B" . add-bus-hotkey)
-    ("Shift H" . hierarchy-keymap)
-    ("Shift U" . edit-undo)
-    ("Shift R" . edit-redo)
-    ("Shift Z" . view-zoom-out-hotkey)
-    ("Control x" . clipboard-cut)
-    ("Control c" . clipboard-copy)
-    ("Control v" . clipboard-paste-hotkey)
-    ("Control z" . edit-undo)
-    ("Control y" . edit-redo)
-    ("Control a" . edit-select-all)
-    ("Control Shift A" . edit-deselect)))
+(global-set-key "U" 'edit-undo)
+(global-set-key "<Shift>U" 'edit-undo)
 
-; finally set the keymap point to the newly created datastructure 
-(define current-keymap global-keymap)
+(global-set-key "V R" 'view-redraw)
+(global-set-key "V B" 'view-zoom-box-hotkey)
+(global-set-key "V F" 'view-zoom-full)
+(global-set-key "V E" 'view-zoom-extents)
+(global-set-key "V P" 'view-pan-hotkey)
+(global-set-key "V O" 'view-zoom-out-hotkey)
+(global-set-key "V I" 'view-zoom-in-hotkey)
+(global-set-key "V D" 'view-dark-colors)
+(global-set-key "V L" 'view-light-colors)
+(global-set-key "V W" 'view-bw-colors)
+
+(global-set-key "<Control>V" 'clipboard-paste-hotkey)
+(global-set-key "W" 'view-zoom-box-hotkey)
+(global-set-key "X" 'view-pan-hotkey)
+(global-set-key "<Control>X" 'clipboard-cut)
+
+(global-set-key "Y C" 'buffer-copy1)
+(global-set-key "Y U" 'buffer-cut1)
+(global-set-key "Y P" 'buffer-paste1-hotkey)
+
+(global-set-key "<Control>Y" 'edit-redo)
+(global-set-key "Z" 'view-zoom-in-hotkey)
+(global-set-key "<Shift>Z" 'view-zoom-out-hotkey)
+(global-set-key "<Control>Z" 'edit-undo)
+
+(global-set-key "Escape" 'cancel)
+(global-set-key "bracketright" 'options-scale-up-snap-size)
+(global-set-key "bracketleft" 'options-scale-down-snap-size)
+(global-set-key "Left" 'view-pan-left)
+(global-set-key "Right" 'view-pan-right)
+(global-set-key "Up" 'view-pan-up)
+(global-set-key "Down" 'view-pan-down)
+(global-set-key "period" 'repeat-last-command)
+(global-set-key "colon" 'edit-invoke-macro)
+(global-set-key "comma" 'misc-misc)
+(global-set-key "equal" 'misc-misc2)
+(global-set-key "plus" 'misc-misc3)
+(global-set-key "Delete" 'edit-delete)
+(global-set-key "greater" 'page-next)
+(global-set-key "Page_Down" 'page-next)
+(global-set-key "less" 'page-prev)
+(global-set-key "Page_Up" 'page-prev)
 
 ;
 ; Here are the definitions for the top pull down menu bar

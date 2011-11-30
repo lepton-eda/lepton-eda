@@ -15,6 +15,19 @@ Notable changes in gEDA/gaf 1.7.2
   details.  Existing extensions may need to be modified to load the
   `(geda deprecated)' or `(gschem deprecated)' modules.
 
+* `gschem' keybinding improvements:
+
+  - Keybindings are now unaffected by Caps Lock.
+
+  - Keystrokes are displayed using the same characters as on keycaps
+    (e.g. `:' instead of `colon').
+
+  - Keystrokes may use extended modifiers (Super, Hyper and Meta).
+
+  - Key bindings can be modified in any rc file or interactively using
+    the `global-set-key' function.  See notes in `system-gschemrc' for
+    examples.
+
 Notable changes in gEDA/gaf 1.7.1
 =================================
 

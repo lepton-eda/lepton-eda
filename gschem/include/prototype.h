@@ -38,8 +38,8 @@ void g_run_hook_object (const char *name, OBJECT *obj);
 void g_run_hook_object_list (const char *name, GList *obj_lst);
 void g_run_hook_page (const char *name, PAGE *page);
 /* g_keys.c */
-int g_keys_execute(GSCHEM_TOPLEVEL *w_current, int state, int keyval);
-GArray *g_keys_dump_keymap (void);
+int g_keys_execute(GSCHEM_TOPLEVEL *w_current, GdkEventKey *event);
+GtkListStore *g_keys_to_list_store (void);
 SCM g_keys_file_new(SCM rest);
 SCM g_keys_file_new_window(SCM rest);
 SCM g_keys_file_open(SCM rest);

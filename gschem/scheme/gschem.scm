@@ -1,7 +1,7 @@
 ;;; gEDA - GPL Electronic Design Automation
 ;;; gschem - gEDA Schematic Capture
 ;;; Copyright (C) 1998-2010 Ales Hvezda
-;;; Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+;;; Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -17,57 +17,80 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
+(use-modules (gschem keymap))
 
-; guile 1.4/1.6 compatibility:  Define an eval-in-currentmodule procedure
-; If this version of guile has an R5RS-compatible eval (that requires a
-; second argument specfying the environment), and a current-module function
-; (like 1.6) use them to define eval-cm. else define eval-cm to eval (for 1.4)
-(define eval-cm
-  (if (false-if-exception (eval 'display (current-module)))
-      (lambda (exp) (eval exp (current-module)))
-      eval))
+;; Define an eval-in-currentmodule procedure
+(define (eval-cm expr) (eval expr (current-module)))
 
-(define last-command-sequence #f)
-(define current-command-sequence '())
+(define last-action #f)
+(define current-keys '())
 
-; Doers
+(define %global-keymap (make-keymap))
+(define current-keymap %global-keymap)
+
+;; Set a global keybinding
+(define (global-set-key key binding)
+  (bind-keys! %global-keymap key binding))
+
+;; Called from C code to evaluate keys.
 (define (press-key key)
   (eval-pressed-key current-keymap key))
 
+;; Does the work of evaluating a key.  Adds the key to the current key
+;; sequence, then looks up the key sequence in the current keymap.  If
+;; the key sequence resolves to an action, calls the action.  If the
+;; key sequence can be resolved (either to a keymap or an action),
+;; returns #t; otherwise, returns #f.  If the key is #f, clears the
+;; current key sequence.
 (define (eval-pressed-key keymap key)
-  (and keymap
-       (let ((lookup (assoc key keymap)))
-         (cond ((pair? lookup)
-                (if (not (equal? 'repeat-last-command (cdr lookup)))
-                    (set! current-command-sequence 
-                          (cons key current-command-sequence)))
-                (perform-action (cdr lookup)))
-               (else
-                (set! current-keymap global-keymap)
-                ;(display "No keymap found")
-                ;(newline)
-                #f
-                )))))
+  ;; Function for resetting current key sequence
+  (define (reset-keys) (set! current-keys '()) #f)
 
-(define (perform-action action)
-    (let ((local-action (eval-cm action)))
-      (cond ((list? local-action)
-             (set! current-keymap local-action))
-            ((equal? 'repeat-last-command action)
-             (repeat-last-command))
-            (else
-             (set! last-command-sequence current-command-sequence)
-             (set! current-command-sequence '())
-             (local-action)
-             (set! current-keymap global-keymap)))))
+  (if key
+      (begin
+        ;; Add key to current key sequence
+        (set! current-keys (cons key current-keys))
+        (let* ((keys (list->vector (reverse current-keys)))
+               (bound (lookup-keys keymap keys)))
+          (cond
+           ;; Keys are a prefix -- do nothing successfully
+           ((keymap? bound) #t)
+           ;; Keys are bound to something -- reset current key
+           ;; sequence, then try to run the action
+           (bound (begin
+                    (reset-keys)
+                    (eval-keymap-action bound)))
+           ;; No binding
+           (else (reset-keys)))))
 
-(define (repeat-last-command)
-  ;; need to `reverse' because the sequence was "push"ed initially
-  ;(display last-command-sequence)
-  ;(newline)
-  (and last-command-sequence
-       (not (null? last-command-sequence))
-       (for-each press-key (reverse last-command-sequence))))
+      (reset-keys)))
+
+;; Evaluates a keymap action.  A keymap action is expected to be a
+;; symbol naming a thunk variable in the current module.
+;;
+;; The special-case symbol repeat-last-command causes the last action
+;; executed via keypress to be repeated.
+(define (eval-keymap-action action)
+  (define (invalid-action-error)
+    (error "~S is not a valid action for keybinding." action))
+
+  (cond
+   ;; Handle repeat-last-command
+   ((equal? 'repeat-last-command action)
+    (eval-keymap-action last-action))
+
+   ;; Normal actions
+   ((symbol? action)
+    (let ((proc (false-if-exception (eval-cm action))))
+      (if (thunk? proc)
+          (begin
+            (set! last-action action)
+            (proc)
+            #t)
+          (invalid-action-error))))
+
+   ;; Otherwise, fail
+   (else (invalid-action-error))))
 
 (define (eval-stroke stroke)
   (let ((action (assoc stroke strokes)))
@@ -82,87 +105,38 @@
            ((eval-cm (cdr action)))
            #t))))
 
-
-;; Search the keymap for a particular scheme function and return the keys
-;; which execute this hotkey
-(define foundkey "")
-(define temp "")
-
-(define find-key-lowlevel 
-  (let ((keys '()))
-    (lambda (keymap function)
-      (for-each 
-       (lambda (mapped-key) ; Receives a pair
-         (if (list? (eval-cm (cdr mapped-key)))
-             (begin
-               (set! temp (car mapped-key))
-               (find-key-lowlevel (eval-cm (cdr mapped-key)) function)
-               (set! temp "")
-               )
-             (if (eq? (cdr mapped-key) function)	
-                 (set! foundkey (string-append temp (car mapped-key)))
-                 
-                 )
-             )
-         ) 
-       keymap))))
-
-(define find-key 
-  (lambda(function)
-    (set! temp "")
-    (set! foundkey "")
-;;    (display function) (newline)
-    (find-key-lowlevel global-keymap function)
-    (if (eq? (string-length foundkey) 0) 
-        #f
-        foundkey
-        )
-    ))
+;; Search the global keymap for a particular symbol and return the
+;; keys which execute this hotkey, as a string suitable for display to
+;; the user. This is used by the gschem menu system.
+(define (find-key action)
+  (let ((keys (lookup-binding %global-keymap action)))
+    (and keys (keys->display-string keys))))
 
 ;; Printing out current key bindings for gEDA (gschem)
+(define (dump-global-keymap)
+  (dump-keymap %global-keymap))
 
-(define (dump-current-keymap)
-  (dump-keymap global-keymap))
-
-(use-modules (srfi srfi-13))
 (define (dump-keymap keymap)
-  (let loop ((keymap keymap)
-             (keys   '()))
-    (if (null? keymap)
-        '()
-        (let* ((entry  (car keymap))
-               (key    (car entry))
-               (action (eval-cm (cdr entry))))
-          (cond ((list? action)
-                 (append (loop action (cons key keys))
-                         (loop (cdr keymap) keys)))
-                (else
-                 (cons (cons (cdr entry) 
-                             (string-join (reverse (cons key keys)) " "))
-                       (loop (cdr keymap) keys))))))))
 
-;; Predicate to test if entry is keymap or action
-(define gschem:keymap? list?)
+  (define lst '())
 
-;; Map over keymap tree, applying f to every node before descending
-(define (gschem:for-each-keymap f kmap)
-  (if (gschem:keymap? kmap)
-    (for-each
-      (lambda (kmap-entry)
-        (apply f (list kmap-entry))
-        (gschem:for-each-keymap f (eval-cm (cdr kmap-entry))))
-      kmap)))
+  (define (binding->entry prefix key binding)
+    (let ((keys (list->vector (reverse (cons key prefix)))))
+      (set! lst (cons (cons (symbol->string binding)
+                            (keys->display-string keys))
+                      lst))))
 
-;; Sorting multiple key modifiers for unambiguos keymaps
-(define gschem:normalize-accel!
-  (lambda (kmap-entry)
-    (let* ((accel-list (reverse (string-split (car kmap-entry) #\space)))
-           (modifiers (cdr accel-list))
-           (key (car accel-list))
-           (sorted (sort modifiers string<?))
-           (appended (append sorted (list key)))
-           (joined (string-join appended " ")))
-      (set-car! kmap-entry joined))))
+  (define (build-dump! km prefix)
+    (keymap-for-each
+     (lambda (key binding)
+       (cond
+        ((symbol? binding)
+         (binding->entry prefix key binding))
+        ((keymap? binding)
+         (build-dump! binding (cons key prefix)))
+        (else (error "Invalid action ~S bound to ~S"
+                     binding (list->vector (reverse (cons key prefix)))))))
+     km))
 
-;; Once at startup normalize the global keymap
-(gschem:for-each-keymap gschem:normalize-accel! global-keymap)
+  (build-dump! keymap '())
+  lst)

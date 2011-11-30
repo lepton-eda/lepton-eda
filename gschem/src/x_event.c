@@ -1269,8 +1269,7 @@ gboolean x_event_key (GtkWidget *widget, GdkEventKey *event,
   }
 
   if (pressed)
-    retval = g_keys_execute (w_current, event->state, event->keyval)
-               ? TRUE : FALSE;
+    retval = g_keys_execute (w_current, event) ? TRUE : FALSE;
 
   scm_dynwind_end ();
 
