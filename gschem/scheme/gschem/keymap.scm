@@ -32,3 +32,25 @@
   (or (%string->key str)
       (scm-error 'key-format #f
                  "~S is not a valid key combination." (list str) #f)))
+
+;; -------------------- Key sequences --------------------
+
+(define-public (keys? obj)
+  (and (vector? obj)
+       (> (vector-length obj) 0)
+       (call/cc
+        (lambda (return)
+          (array-for-each
+           (lambda (x) (or (key? x) (return #f)))
+           obj)))))
+
+(define-public (keys->string keys)
+  (string-join (map key->string (vector->list keys)) " "))
+
+(define-public (string->keys str)
+  (list->vector (map string->key
+                     (filter! (lambda (x) (not (string-null? x)))
+                              (string-split str #\space)))))
+
+(define-public (keys->display-string keys)
+  (string-join (map key->display-string (vector->list keys)) " "))

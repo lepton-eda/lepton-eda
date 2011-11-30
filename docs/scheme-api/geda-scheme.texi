@@ -1521,6 +1521,42 @@ returned string is translated according to the user's current locale.
 @end example
 @end defun
 
+@subsection Key sequences
+
+Most gschem functionality is bound not to single key combinations but to
+sequences of them.  For example, @strong{File→New} is bound to @kbd{F N}
+by default (i.e. press @key{F} followed by @key{N}).  Key sequences are
+simply vectors of key bindings.  For example:
+
+@example
+(string->keys ``F N'')
+=> #(#<gschem-key "F"> #<gschem-key "N">)
+@end example
+
+In this case, @key{F} is a @dfn{prefix key}, because pressing it does
+not cause an action to be carried out directly, but just changes the
+effect of pressing subsequent keys.
+
+@defun keys? obj
+Returns @samp{#t} if and only if @var{obj} is a valid key sequence.
+@end defun
+
+@defun string->keys str
+Parses @var{str} into a key sequence.  The expected format is a sequence
+of key combination specifications (as could be passed to
+@code{string->key}) separated by spaces.
+@end defun
+
+@defun keys->string keys
+Converts the key sequence @var{keys} to a string, using a format
+suitable for passing to @code{string->keys}.
+@end defun
+
+@defun keys->display-string keys
+Converts the key sequence @var{keys} to a string, using a format
+suitable for display.
+@end defun
+
 @node Selections
 @section Selections
 
