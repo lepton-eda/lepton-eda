@@ -1591,6 +1591,42 @@ Applies @var{proc} to each binding in @var{keymap}.  @var{proc} should
 take two arguments: the bound key, and its binding.
 @end defun
 
+Actions are bound to key sequences by binding the first key
+combination to a keymap, then in the resulting keymap binding the
+second key combination, etc.  This results in a directed graph of
+keymaps.
+
+For example, to bind the key sequence @kbd{F N}, a keymap is created
+containing a binding for @key{N} to the desired action, and then in the
+main keymap the prefix key @key{F} is bound to the new keymap.
+
+Three helper functions are provided for working with key sequence
+bindings.
+
+@defun bind-keys! keymap keys [bindable]
+Bind @var{keys} to @var{bindable}.  Keys may be a key sequence vector, a
+single key combination, or a string representing a key sequence or key
+combination.  If @var{bindable} is @samp{#f} or not specified, removes
+the binding for @var{keys}.  @var{bindable} should be a thunk or a
+keymap.
+
+If @var{keys} contains invalid prefix keys (e.g. because one of the
+prefix keys is already bound to something other than a keymap), raises
+an error.  Missing prefix keymaps are created as required.
+@end defun
+
+@defun lookup-keys keymap keys
+Looks up the binding for @var{keys} in @var{keymap}.  @var{keys} is
+interpreted the same as for @code{bind-keys!}.  If @var{keys} is not
+bound, returns @samp{#f}.
+@end defun
+
+@defun lookup-binding keymap bindable
+Recursively searches @var{keymap} for the key sequence bound to
+@var{bindable}, which should be a thunk or a keymap.  If
+@var{bindable} is not bound, returns @samp{#f}.
+@end defun
+
 @node Selections
 @section Selections
 

@@ -95,3 +95,100 @@
   (for-each
    (lambda (x) (proc (car x) (cdr x)))
    (keymap-key-table keymap)))
+
+;; -------------------- Recursive keymaps --------------------
+
+;; This helper function takes a string, key or key sequence, and
+;; returns a key sequence.
+(define (resolve-keys keys)
+  (cond
+   ((keys? keys) keys)
+   ((key? keys) (vector keys))
+   ((string? keys) (resolve-keys (string->keys keys)))
+   (error "~S is not a valid key sequence" keys)))
+
+;; This helper function recursively looks up the prefix of a key
+;; sequence (i.e. all keystrokes apart from the last one) and returns
+;; the corresponding keymap, or #f if there is no prefix keymap for
+;; the given key sequence. If create is #t, it creates empty keymaps
+;; for missing prefix keys as it goes.
+(define* (keymap-for-prefix-keys! keymap keys #:optional (create #f))
+
+  ;; Returns a new key sequence containing only the prefix key
+  ;; combinations from KEYS.  This is relatively expensive, so it's
+  ;; only used when constructing error messages.
+  (define (prefix-keys keys)
+    (let* ((N (1- (vector-length keys)))
+           (p (make-vector N)))
+      (vector-move-left! keys 0 N p 0)
+      p))
+
+  ;; Recursive function that does the heavy lifting.
+  (define (lookup keymap keys ofs)
+    (if (= (1+ ofs) (vector-length keys))
+        ;; We've seen all the prefix keys, so return the keymap.
+        keymap
+
+        ;; Otherwise, check that the current key is bound to a keymap.
+        ;; If so, recurse; otherwise, error.
+        (let* ((key (vector-ref keys ofs))
+               (binding (keymap-lookup-key keymap key)))
+          (cond
+           ;; If not bound and we're creating new keymaps, create a
+           ;; new one, bind it, and recurse.
+           ((and create (not binding))
+            (let ((km (make-keymap)))
+              (keymap-bind-key! keymap key km)
+              (lookup km keys (1+ ofs))))
+
+           ;; If not bound and we're not creating new keymaps, return
+           ;; #f.
+           ((not binding) #f)
+
+           ;; If bound to a keymap already, recurse.
+           ((keymap? binding) (lookup binding keys (1+ ofs)))
+
+           ;; Otherwise, generate an error.
+           (else (error "~S is not a prefix key sequence."
+                        (keys->display-string (prefix-keys keys))))))))
+
+  (lookup keymap keys 0))
+
+(define-public (lookup-keys keymap keys)
+  (let* ((keyseq (resolve-keys keys))
+         (km (keymap-for-prefix-keys! keymap keyseq)))
+    (and km (keymap-lookup-key
+             km
+             (vector-ref keyseq (1- (vector-length keyseq)))))))
+
+(define*-public (bind-keys! keymap keys #:optional (bindable #f))
+  (let* ((keyseq (resolve-keys keys))
+         (km (keymap-for-prefix-keys! keymap keyseq #t)))
+    (keymap-bind-key! km
+                      (vector-ref keyseq (1- (vector-length keyseq)))
+                      bindable)))
+
+(define-public (lookup-binding keymap bindable)
+
+  ;; Recursive function that does the heavy lifting. This ends up
+  ;; being a depth-first search, unfortunately. Return is a
+  ;; continuation to pass the result to.
+  (define (lookup-binding-recursive km prefix return)
+    (keymap-for-each
+     (lambda (key bound)
+       (cond
+        ;; Success! Return the full key sequence.
+        ((eq? bound bindable)
+         (return (list->vector (reverse (cons key prefix)))))
+
+        ;; If a keymap, recurse.
+        ((keymap? bound)
+         (lookup-binding-recursive bound (cons key prefix) return))
+
+        (else #f)))
+        km))
+
+  (call/cc
+   (lambda (return)
+     (lookup-binding-recursive keymap '() return)
+     #f)))  ;; Return #f if no binding found.
