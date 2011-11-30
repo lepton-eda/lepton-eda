@@ -129,7 +129,7 @@
 ;; Set the value part of the text object attrib.
 (define-public (set-attribute-value! attrib value)
   (let ((params (text-info attrib))
-        (name-value (attrib-parse attrib)))
+        (name-value (parse-attrib attrib)))
     (list-set! params 3 (simple-format "~A=~A" (car name-value) value))
     (apply set-text! attrib params)))
 
