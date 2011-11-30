@@ -28,6 +28,17 @@ Notable changes in gEDA/gaf 1.7.2
     the `global-set-key' function.  See notes in `system-gschemrc' for
     examples.
 
+* The `bom' and `bom2' backends to `gnetlist' now give error messages
+  if no attribute file can be found.  The `-O attrib_file=FILE' and
+  `-O attribs=ATTRIB,ATTRIB...' options have also been added.
+
+* A new `ewnet' backend has been added to `gnetlist'.  This outputs
+  netlists for use with the National Instruments ULTIboard layout
+  tool.
+
+* `gsch2pcb' no longer supports the `m4_command' parameter in project
+  files.
+
 Notable changes in gEDA/gaf 1.7.1
 =================================
 
