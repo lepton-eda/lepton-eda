@@ -239,10 +239,6 @@ void main_prog(void *closure, int argc, char *argv[])
   /* Run pre-load Scheme expressions */
   g_scm_eval_protected (s_pre_load_expr, scm_current_module ());
 
-  /* Now read in RC files. */
-  g_rc_parse_gtkrc();
-  x_rc_parse_gschem (w_current, rc_filename);
-
   /* By this point, libgeda should have setup the Guile load path, so
    * we can take advantage of that.  */
   scm_tmp = scm_sys_search_load_path (scm_from_utf8_string ("gschem.scm"));
@@ -260,6 +256,10 @@ void main_prog(void *closure, int argc, char *argv[])
   }
   free (input_str); /* M'allocated by scm_to_utf8_string() */
   scm_remember_upto_here_1 (scm_tmp);
+
+  /* Now read in RC files. */
+  g_rc_parse_gtkrc();
+  x_rc_parse_gschem (w_current, rc_filename);
 
   /* Set default icon */
   x_window_set_default_icon();
