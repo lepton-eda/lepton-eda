@@ -1557,6 +1557,40 @@ Converts the key sequence @var{keys} to a string, using a format
 suitable for display.
 @end defun
 
+@subsection Keymaps
+
+A @dfn{keymap} maps key combinations to actions or other keymaps.
+
+@defun keymap? obj
+Returns @samp{#t} if and only if @var{obj} is a keymap.
+@end defun
+
+@defun make-keymap
+Creates and returns a new, empty keymap.
+@end defun
+
+@defun keymap-bind-key! keymap key [bindable]
+Binds @var{key} to @var{bindable} in @var{keymap}.  If @var{bindable} is
+@samp{#f} or not specified, removes the binding for @var{key}.
+@var{bindable} should be a thunk or a keymap.
+@end defun
+
+@defun keymap-lookup-key keymap key
+Looks up the binding for @var{key} in @var{keymap}.  If @var{key} is not
+bound, returns @samp{#f}.
+@end defun
+
+@defun keymap-lookup-binding keymap bindable
+Carries out a reverse lookup in @var{keymap} to find the key bound to
+@var{bindable}.  If @var{bindable} is not bound in @var{keymap},
+returns @samp{#f}.
+@end defun
+
+@defun keymap-for-each proc keymap
+Applies @var{proc} to each binding in @var{keymap}.  @var{proc} should
+take two arguments: the bound key, and its binding.
+@end defun
+
 @node Selections
 @section Selections
 

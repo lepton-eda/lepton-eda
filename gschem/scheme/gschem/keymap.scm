@@ -18,7 +18,11 @@
 ;;
 
 (define-module (gschem keymap)
-  #:use-module (gschem core keymap))
+  #:use-module (gschem core keymap)
+  #:use-module (ice-9 optargs)
+  #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-9)
+  #:use-module (srfi srfi-69))
 
 ;; -------------------- Key combinations --------------------
 
@@ -54,3 +58,40 @@
 
 (define-public (keys->display-string keys)
   (string-join (map key->display-string (vector->list keys)) " "))
+
+;; -------------------- Keymaps --------------------
+
+;; We use a record type here in case we later want to add additional
+;; information into the keymap (e.g. default actions, canonical
+;; ordering, keymap names, etc).
+(define <keymap> (make-record-type "gschem-keymap" '(key-table)))
+(define %make-keymap (record-constructor <keymap> '(key-table)))
+(define keymap-key-table (record-accessor <keymap> 'key-table))
+(define set-keymap-key-table! (record-modifier <keymap> 'key-table))
+
+(define-public keymap? (record-predicate <keymap>))
+
+(define*-public (make-keymap)
+  (%make-keymap
+   ;; This is actually an association list.
+   '()))
+
+(define-public (keymap-lookup-key keymap key)
+  (assoc-ref (keymap-key-table keymap) key))
+
+(define*-public (keymap-bind-key! keymap key #:optional (bindable #f))
+  (let ((alist (keymap-key-table keymap)))
+    (set-keymap-key-table! keymap
+                           (if bindable
+                               (assoc-set! alist key bindable)
+                               (assoc-remove! alist key)))))
+
+(define-public (keymap-lookup-binding keymap bindable)
+  (let ((entry (find (lambda (x) (eq? bindable (cdr x)))
+                     (keymap-key-table keymap))))
+    (and entry (car entry))))
+
+(define-public (keymap-for-each proc keymap)
+  (for-each
+   (lambda (x) (proc (car x) (cdr x)))
+   (keymap-key-table keymap)))
