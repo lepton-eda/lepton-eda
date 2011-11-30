@@ -538,15 +538,29 @@ gchar *f_normalize_filename (const gchar *name, GError **error)
    * back slashes.
    */
   DWORD len = GetFullPathName (name, MAX_PATH, buf, NULL);
+  gchar *result;
+
   if (len == 0 || len > MAX_PATH - 1) {
-    return g_strdup (name);
+    result = g_strdup (name);
   } else {
     /* The file system is case-preserving but case-insensitive,
      * canonicalize to lowercase, using the codepage associated
      * with the process locale.  */
     CharLowerBuff (buf, len);
-    return g_strdup (buf);
+    result = g_strdup (buf);
   }
+
+  /* Test that the file actually exists, and fail if it doesn't.  We
+   * do this to be consistent with the behaviour on POSIX
+   * platforms. */
+  if (!g_file_test (result, G_FILE_TEST_EXISTS)) {
+    g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_NOENT,
+                 "%s", g_strerror (ENOENT));
+    g_free (result);
+    return NULL;
+  }
+  return result;
+
 #else
 #define ROOT_MARKER_LEN 1
 
