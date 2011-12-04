@@ -272,10 +272,7 @@ void cross(int pos_x,int pos_y,int color)
 void pin_add(int pos_x,int pos_y,char *pin,int shape,int dir,char *name, char *type)
 { int x,y;
   int xdir=0,ydir=0,font_size=8;
-  int shape_offset=0;
 
-  if (shape == DOT_SHAPE)
-     shape_offset = 75;
   switch (dir)
     {
     case L_SIDE: xdir =  1; ydir =  0;
