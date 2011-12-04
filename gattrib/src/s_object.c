@@ -86,18 +86,16 @@ s_object_add_comp_attrib_to_object (TOPLEVEL *toplevel,
                                     gint show_name_value)
 {
   char *name_value_pair;
-  OBJECT *attrib_graphic_object;
 
 
   /* One last sanity check, then add attrib */
   if (strlen(new_attrib_value) != 0) {
     name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-    attrib_graphic_object =
-      s_object_attrib_add_attrib_in_object (toplevel,
-                                            name_value_pair,
-                                            visibility,
-                                            show_name_value,
-                                            o_current);
+    s_object_attrib_add_attrib_in_object (toplevel,
+                                          name_value_pair,
+                                          visibility,
+                                          show_name_value,
+                                          o_current);
   }
   
   return;
@@ -144,18 +142,15 @@ s_object_add_pin_attrib_to_object (TOPLEVEL *toplevel,
                                    char *new_attrib_value)
 {
   char *name_value_pair;
-  OBJECT *attrib_graphic_object;
-
 
   /* One last sanity check */
   if (strlen(new_attrib_value) != 0) {
     name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-    attrib_graphic_object =
-      s_object_attrib_add_attrib_in_object (toplevel,
-                                            name_value_pair,
-                                            INVISIBLE,
-                                            SHOW_NAME_VALUE,
-                                            o_current);
+    s_object_attrib_add_attrib_in_object (toplevel,
+                                          name_value_pair,
+                                          INVISIBLE,
+                                          SHOW_NAME_VALUE,
+                                          o_current);
   }
 
   return;
