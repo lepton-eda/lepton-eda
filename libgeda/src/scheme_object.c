@@ -68,6 +68,11 @@ SCM_SYMBOL (hollow_sym , "hollow");
 SCM_SYMBOL (mesh_sym , "mesh");
 SCM_SYMBOL (hatch_sym , "hatch");
 
+SCM_SYMBOL (moveto_sym , "moveto");
+SCM_SYMBOL (lineto_sym , "lineto");
+SCM_SYMBOL (curveto_sym , "curveto");
+SCM_SYMBOL (closepath_sym , "closepath");
+
 void o_page_changed (TOPLEVEL *t, OBJECT *o)
 {
   PAGE *p = o_get_page (t, o);
@@ -1549,6 +1554,291 @@ SCM_DEFINE (object_complex, "%object-complex", 1, 0, 0,
   return edascm_from_object (parent);
 }
 
+/*! \brief Make a new, empty path object.
+ * \par Function Description
+ * Creates a new, empty path object with default color, stroke and
+ * fill options.
+ *
+ * \note Scheme API: Implements the %make-path procedure in the (geda
+ * core object) module.
+ *
+ * \return a newly-created path object.
+ */
+SCM_DEFINE (make_path, "%make-path", 0, 0, 0,
+            (), "Create a new path object")
+{
+  OBJECT *obj = o_path_new (edascm_c_current_toplevel (),
+                            OBJ_PATH, DEFAULT_COLOR, "");
+
+  SCM result = edascm_from_object (obj);
+
+  /* At the moment, the only pointer to the object is owned by the
+   * smob. */
+  edascm_c_set_gc (result, TRUE);
+
+  return result;
+}
+
+/*! \brief Get the number of elements in a path.
+ * \par Function Description
+ * Retrieves the number of path elements in the path object \a obj_s.
+ *
+ * \note Scheme API: Implements the %path-length procedure in the
+ * (geda core object) module.
+ *
+ * \param obj_s #OBJECT smob for path object to inspect.
+ * \return The number of path elements in \a obj_s.
+ */
+SCM_DEFINE (path_length, "%path-length", 1, 0, 0,
+            (SCM obj_s), "Get number of elements in a path object.")
+{
+  /* Ensure that the argument is a path object */
+  SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PATH), obj_s,
+              SCM_ARG1, s_path_length);
+
+  OBJECT *obj = edascm_to_object (obj_s);
+  return scm_from_int (obj->path->num_sections);
+}
+
+/*! \brief Get one of the elements from a path.
+ * \par Function Description
+ * Retrieves a path element at index \a index_s from the path object
+ * \a obj_s.  If \a index_s is not a valid index, raises a Scheme
+ * "out-of-range" error.
+ *
+ * The return value is a list.  The first element in the list is a
+ * symbol indicating the type of path element ("moveto", "lineto",
+ * "curveto" or "closepath"), and the remainder of the list contains
+ * zero or more control point coordinates, depending on the type of
+ * path element.  Each element is evaluated relative to the current
+ * path position.
+ *
+ * - moveto: x and y coordinates of position to step to.
+ * - lineto: x and y coordinates of straight line endpoint.
+ * - curveto: coordinates of first Bezier control point; coordinates
+ *   of second control point; and coordinates of curve endpoint.
+ * - closepath: No coordinate parameters.
+ *
+ * All coordinates are absolute.
+ *
+ * \note Scheme API: Implements the %path-ref procedure in the (geda
+ * core object) module.
+ *
+ * \param obj_s   #OBJECT smob of path object to get element from.
+ * \param index_s Index of element to retrieve from \a obj_s
+ * \return A list containing the requested path element data.
+ */
+SCM_DEFINE (path_ref, "%path-ref", 2, 0, 0,
+            (SCM obj_s, SCM index_s),
+            "Get a path element from a path object.")
+{
+  /* Ensure that the arguments are a path object and integer */
+  SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PATH), obj_s,
+              SCM_ARG1, s_path_ref);
+  SCM_ASSERT (scm_is_integer (index_s), index_s, SCM_ARG2, s_path_ref);
+
+  OBJECT *obj = edascm_to_object (obj_s);
+  int idx = scm_to_int (index_s);
+
+  /* Check index is valid for path */
+  if ((idx < 0) || (idx >= obj->path->num_sections)) {
+    scm_out_of_range (s_path_ref, index_s);
+  }
+
+  PATH_SECTION *section = &obj->path->sections[idx];
+
+  switch (section->code) {
+  case PATH_MOVETO:
+  case PATH_MOVETO_OPEN:
+    return scm_list_3 (moveto_sym,
+                       scm_from_int (section->x3),
+                       scm_from_int (section->y3));
+  case PATH_LINETO:
+    return scm_list_3 (lineto_sym,
+                       scm_from_int (section->x3),
+                       scm_from_int (section->y3));
+  case PATH_CURVETO:
+    return scm_list_n (curveto_sym,
+                       scm_from_int (section->x1),
+                       scm_from_int (section->y1),
+                       scm_from_int (section->x2),
+                       scm_from_int (section->y2),
+                       scm_from_int (section->x3),
+                       scm_from_int (section->y3),
+                       SCM_UNDEFINED);
+  case PATH_END:
+    return scm_list_1 (closepath_sym);
+  default:
+    scm_misc_error (s_path_ref,
+                    _("Path object ~A has invalid element type ~A at index ~A"),
+                    scm_list_3 (obj_s, scm_from_int (section->code), index_s));
+  }
+
+}
+
+/*! \brief Remove an element from a path.
+ * \par Function Description
+ * Removes the path element at index \a index_s from the path object
+ * \a obj_s. If \a index_s is not a valid index, raises a Scheme
+ * "out-of-range" error.
+ *
+ * \note Scheme API: Implements the %path-remove! procedure in the
+ * (geda core object) module.
+ *
+ * \param obj_s   #OBJECT smob of path object to remove element from.
+ * \param index_s Index of element to remove from \a obj_s.
+ * \return \a obj_s.
+ */
+SCM_DEFINE (path_remove_x, "%path-remove!", 2, 0, 0,
+            (SCM obj_s, SCM index_s),
+            "Remove a path element from a path object.")
+{
+  /* Ensure that the arguments are a path object and integer */
+  SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PATH), obj_s,
+              SCM_ARG1, s_path_ref);
+  SCM_ASSERT (scm_is_integer (index_s), index_s, SCM_ARG2, s_path_ref);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (obj_s);
+  int idx = scm_to_int (index_s);
+
+  if ((idx < 0) || (idx >= obj->path->num_sections)) {
+    /* Index is valid for path */
+    scm_out_of_range (s_path_ref, index_s);
+
+  }
+
+  o_emit_pre_change_notify (toplevel, obj);
+
+  if (idx + 1 == obj->path->num_sections) {
+    /* Section is last in path */
+    obj->path->num_sections--;
+
+  } else {
+    /* Remove section at index by moving all sections above index one
+     * location down. */
+    memmove (&obj->path->sections[idx],
+             &obj->path->sections[idx+1],
+             sizeof (PATH_SECTION) * (obj->path->num_sections - idx - 1));
+    obj->path->num_sections--;
+  }
+
+  o_emit_change_notify (toplevel, obj);
+  o_page_changed (toplevel, obj);
+
+  return obj_s;
+}
+
+/*! \brief Insert an element into a path.
+ * \par Function Description
+ * Inserts a path element into the path object \a obj_s at index \a
+ * index_s.  The type of element to be inserted is specified by the
+ * symbol \a type_s, and the remaining optional integer arguments
+ * provide as many absolute coordinate pairs as are required by that
+ * element type:
+ *
+ * - "closepath" elements require no coordinate arguments;
+ * - "moveto" and "lineto" elements require one coordinate pair, for
+ *   the endpoint;
+ * - "curveto" elements require the coordinates of the first control
+ *   point, coordinates of the second control point, and coordinates
+ *   of the endpoint.
+ *
+ * If the index is negative, or is greater than or equal to the number
+ * of elements currently in the path, the new element will be appended
+ * to the path.
+ *
+ * \note Scheme API: Implements the %path-insert! procedure of the
+ * (geda core object) module.
+ *
+ * \param obj_s   #OBJECT smob for the path object to modify.
+ * \param index_s Index at which to insert new element.
+ * \param type_s  Symbol indicating what type of element to insert.
+ * \param x1_s    X-coordinate of first coordinate pair.
+ * \param y1_s    Y-coordinate of first coordinate pair.
+ * \param x2_s    X-coordinate of second coordinate pair.
+ * \param y2_s    Y-coordinate of second coordinate pair.
+ * \param x3_s    X-coordinate of third coordinate pair.
+ * \param y3_s    Y-coordinate of third coordinate pair.
+ * \return \a obj_s.
+ */
+SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
+            (SCM obj_s, SCM index_s, SCM type_s,
+             SCM x1_s, SCM y1_s, SCM x2_s, SCM y2_s, SCM x3_s, SCM y3_s),
+            "Insert a path element into a path object.")
+{
+  SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PATH), obj_s,
+              SCM_ARG1, s_path_insert_x);
+  SCM_ASSERT (scm_is_integer (index_s), index_s, SCM_ARG2, s_path_insert_x);
+  SCM_ASSERT (scm_is_symbol (type_s), type_s, SCM_ARG3, s_path_insert_x);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (obj_s);
+  PATH *path = obj->path;
+  PATH_SECTION section;
+
+  /* Check & extract path element type. */
+  if      (type_s == closepath_sym) { section.code = PATH_END;     }
+  else if (type_s == moveto_sym)    { section.code = PATH_MOVETO;  }
+  else if (type_s == lineto_sym)    { section.code = PATH_LINETO;  }
+  else if (type_s == curveto_sym)   { section.code = PATH_CURVETO; }
+  else {
+    scm_misc_error (s_path_insert_x,
+                    _("Invalid path element type ~A."),
+                    scm_list_1 (type_s));
+  }
+
+  /* Check the right number of coordinates have been provided. */
+  switch (section.code) {
+  case PATH_CURVETO:
+    SCM_ASSERT (scm_is_integer (x2_s), x2_s, SCM_ARG6, s_path_insert_x);
+    section.x1 = scm_to_int (x2_s);
+    SCM_ASSERT (scm_is_integer (y2_s), y2_s, SCM_ARG7, s_path_insert_x);
+    section.y1 = scm_to_int (y2_s);
+    SCM_ASSERT (scm_is_integer (x3_s), x3_s, 8, s_path_insert_x);
+    section.x2 = scm_to_int (x3_s);
+    SCM_ASSERT (scm_is_integer (y3_s), y3_s, 9, s_path_insert_x);
+    section.y2 = scm_to_int (y3_s);
+    /* Intentionally falls through */
+  case PATH_MOVETO:
+  case PATH_MOVETO_OPEN:
+  case PATH_LINETO:
+    SCM_ASSERT (scm_is_integer (x1_s), x1_s, SCM_ARG4, s_path_insert_x);
+    section.x3 = scm_to_int (x1_s);
+    SCM_ASSERT (scm_is_integer (y1_s), y1_s, SCM_ARG5, s_path_insert_x);
+    section.y3 = scm_to_int (y1_s);
+  case PATH_END:
+    break;
+  }
+
+  /* Start making changes */
+  o_emit_pre_change_notify (toplevel, obj);
+
+  /* Make sure there's enough space for the new element */
+  if (path->num_sections == path->num_sections_max) {
+    path->sections = g_realloc (path->sections,
+                                (path->num_sections_max <<= 1) * sizeof (PATH_SECTION));
+  }
+
+  /* Move path contents to make a gap in the right place. */
+  int idx = scm_to_int (index_s);
+
+  if ((idx < 0) || (idx > path->num_sections)) {
+    idx = path->num_sections;
+  } else {
+    memmove (&path->sections[idx+1], &path->sections[idx],
+             sizeof (PATH_SECTION) * (path->num_sections - idx));
+  }
+
+  path->num_sections++;
+  path->sections[idx] = section;
+
+  o_emit_change_notify (toplevel, obj);
+  o_page_changed (toplevel, obj);
+
+  return obj_s;
+}
+
 /*! \brief Translate an object.
  * \par Function Description
  * Translates \a obj_s by \a dx_s in the x-axis and \a dy_s in the
@@ -1695,6 +1985,8 @@ init_module_geda_core_object ()
                 s_make_arc, s_set_arc_x, s_arc_info,
                 s_make_text, s_set_text_x, s_text_info,
                 s_object_connections, s_object_complex,
+                s_make_path, s_path_length, s_path_ref,
+                s_path_remove_x, s_path_insert_x,
                 s_translate_object_x, s_rotate_object_x,
                 s_mirror_object_x,
                 NULL);

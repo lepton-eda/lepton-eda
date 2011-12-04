@@ -218,6 +218,47 @@
 (define-public (path? x)
   (object-type? x 'path))
 
+(define*-public (make-path #:optional color)
+  (let ((p (%make-path)))
+    (and color (set-object-color! p color))
+    p))
+
+(define-public path-length %path-length)
+
+(define-public (path-ref p idx)
+
+  ;; This recursive function transforms the list of coordinates thus:
+  ;;
+  ;; (x y ...) --> ((x . y) ...)
+  (define (transform-points lst acc)
+    (if (null? lst)
+        acc
+        (transform-points
+         (cddr lst)
+         (append! acc
+                  (list (cons (car lst) (cadr lst)))))))
+
+  (let ((element (%path-ref p idx)))
+    (cons (car element)
+          (transform-points (cdr element) '()))))
+
+(define-public path-remove! %path-remove!)
+
+(define-public (path-insert! p idx type . points)
+
+  ;; This recursive function transforms the list of coordinates thus:
+  ;;
+  ;; ((x . y) ...) --> (x y ...)
+  (define (transform-points lst acc)
+    (if (null? lst)
+        acc
+        (transform-points
+         (cdr lst)
+         (list (caar lst) (cdar lst)))))
+
+  (apply %path-insert p idx type (transform-points points '())))
+
+
 ;;;; Pictures
 
 (define-public (picture? x)

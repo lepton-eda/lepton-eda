@@ -1015,8 +1015,69 @@ Returns the end angle of @var{arc} as an integer number of degrees.
 @node Paths
 @subsection Paths
 
+Paths are arbitrary shapes comprised of straight lines and Bézier
+curves.  Each path contains a sequence of @emph{path elements}, each
+of which requires zero or more absolute position parameters.  The
+element types supported by gEDA are:
+
+@itemize
+@item
+@samp{moveto} elements represent a step (without drawing) to another
+point in the schematic, and begin a new subpath.  @samp{moveto}
+elements need a single position parameter, which is the position of
+the endpoint of the move.
+@item
+@samp{lineto} elements draw a straight line from the current point to
+the point specified by a single position parameter.
+@item
+@samp{curveto} elements draw a Bézier curve from the current point.
+The curve requires three position parameters: the position of the
+first control point; the position of the second control point; and the
+endpoint of the curve.
+@item
+@samp{closepath} elements close the current subpath by drawing a
+straight line from the current point to the subpath's initial point.
+They take no parameters.
+@end itemize
+
 @defun path? object
 Returns @samp{#t} if and only if @var{object} is a path @code{object}.
+@end defun
+
+@defun path-length path
+Returns the number of path elements in @var{path}.
+@end defun
+
+@defun path-ref path K
+Returns the @var{K}th element in @var{path}.  The return value is a
+list.  The first item in the list is a symbol indicating the type of
+element, and any additional items are the position parameters of the
+element.  For example, a call to @code{path-ref} might return:
+
+@example
+(curveto (800 . 525) (700 . 700) (500 . 700))
+@end example
+
+If @var{K} is not a valid offset into @var{path}, raises an
+@samp{out-of-range} error.
+@end defun
+
+@defun path-remove! path K
+Removes the @var{K}th element in @var{path}, returning @var{path}.  If
+@var{K} is not a valid offset, raises an @samp{out-of-range} error.
+@end defun
+
+@defun path-insert! path K type [positions...]
+Inserts a new element into @var{path} at index @var{K}.  @var{type} is
+a symbol indicating the type of element to insert, using the
+parameters @var{positions}.  If @var{K} is less than zero or greater
+than the number of elements @var{path} already contains, the new
+element is appended to the path.  For example, to append a straight
+line section to the current path:
+
+@example
+(path-insert! path -1 'lineto '(500. 100))
+@end example
 @end defun
 
 @node Pictures
