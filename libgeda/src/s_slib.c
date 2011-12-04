@@ -208,7 +208,6 @@ char *s_slib_search_lowlevel(const char *basename)
 char *s_slib_getbasename(const char *rawname)
 {
   char *return_filename;
-  char *copy;
   int i;
   int done=0;
   int lastchar;
@@ -232,10 +231,6 @@ char *s_slib_getbasename(const char *rawname)
 
 
   return_filename[i] = '\0';
-
-
-  /* keep filename for safe keeping */
-  copy = return_filename;
 
   /* skip null terminator */
   i--;

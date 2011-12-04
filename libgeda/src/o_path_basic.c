@@ -899,13 +899,10 @@ static void o_path_print_mesh (TOPLEVEL *toplevel, FILE *fp, PATH *path,
 void o_path_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
                   int origin_x, int origin_y)
 {
-  int color;
   int line_width, length, space;
   int fill_width, angle1, pitch1, angle2, pitch2;
   DRAW_FUNC outl_func = NULL;
   FILL_FUNC fill_func = NULL;
-
-  color  = o_current->color;
 
   /*! \note
    *  Depending on the type of the line for this particular path, the

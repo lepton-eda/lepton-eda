@@ -263,8 +263,7 @@ OBJECT *o_net_copy(TOPLEVEL *toplevel,  OBJECT *o_current)
 void o_net_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 		 int origin_x, int origin_y)
 {
-  int offset, offset2;
-  int cross, net_width;
+  int net_width;
   int x1, y1;
   int x2, y2;
 
@@ -272,11 +271,6 @@ void o_net_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
     printf("got null in o_net_print\n");
     return;
   }
-
-  offset = 7 * 6;
-  offset2 = 7;
-
-  cross = offset;
 
   f_print_set_color(toplevel, fp, o_current->color);
 

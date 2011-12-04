@@ -860,7 +860,7 @@ void o_arc_print_dashed(TOPLEVEL *toplevel, FILE *fp,
 			int arc_width, int length, int space,
 			int origin_x, int origin_y)
 {
-  int da, db, a1, a2, d;
+  int da, db, a1, d;
 
   f_print_set_color(toplevel, fp, color);
   
@@ -917,10 +917,8 @@ void o_arc_print_dashed(TOPLEVEL *toplevel, FILE *fp,
 
   if ((d + da) < (angle1 + angle2)) {
     a1 = d;
-    a2 = da;
   } else {
     a1 = d;
-    a2 = (angle1 + angle2) - d;
   }
 
   fprintf(fp,"[%d %d] ",
@@ -967,7 +965,7 @@ void o_arc_print_center(TOPLEVEL *toplevel, FILE *fp,
 			int arc_width, int length, int space,
 			int origin_x, int origin_y)
 {
-  int da, db, a1, a2, d;
+  int da, db, a1, d;
 
   f_print_set_color(toplevel, fp, color);
 
@@ -1031,12 +1029,10 @@ void o_arc_print_center(TOPLEVEL *toplevel, FILE *fp,
   
   if ((d + da) < (angle1 + angle2)) {
     a1 = d;
-    a2 = da;
     
     d = d + da;
   } else {
     a1 = d;
-    a2 = (angle1 + angle2) - d;
     
     d = d + da;
   }
@@ -1097,7 +1093,7 @@ void o_arc_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 			 int arc_width, int length, int space,
 			 int origin_x, int origin_y)
 {
-  int da, db, a1, a2, d;
+  int da, db, a1, d;
 
   f_print_set_color(toplevel, fp, color);
 
@@ -1175,11 +1171,9 @@ void o_arc_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 
   if ((d + da) < (angle1 + angle2)) {
     a1 = d;
-    a2 = da;
     d = d + da;
   } else {
     a1 = d;
-    a2 = (angle1 + angle2) - d;
     d = d + da;
   }
   

@@ -569,7 +569,7 @@ OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 void o_text_print_text_string(FILE *fp, char *string, int unicode_count, 
 			      gunichar *unicode_table)
 {
-  int len, j;
+  int j;
   gchar *aux;
   gunichar current_char, c;
 
@@ -579,8 +579,7 @@ void o_text_print_text_string(FILE *fp, char *string, int unicode_count,
   }
 
   aux = string;
-  len = g_utf8_strlen(string, -1);
-  
+
   fprintf(fp, "(");
 
   while (aux && ((gunichar) (*aux) != 0)) {
