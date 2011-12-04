@@ -525,7 +525,6 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
                              GSCHEM_TOPLEVEL *w_current)
 {
-  int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
   exit_if_null(w_current);
@@ -540,8 +539,6 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
   SCREENtoWORLD (w_current, (int) event->x, (int) event->y,
                  &unsnapped_wx, &unsnapped_wy);
-  w_x = snap_grid (w_current, unsnapped_wx);
-  w_y = snap_grid (w_current, unsnapped_wy);
 
   /* Huge switch statement to evaluate state transitions. Jump to
    * end_button_released label to escape the state evaluation rather

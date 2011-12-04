@@ -242,14 +242,13 @@ int snap_grid(GSCHEM_TOPLEVEL *w_current, int input)
  */
 int SCREENabs(GSCHEM_TOPLEVEL *w_current, int val)
 {
-  double fs,f0,f1,f;
+  double f0,f1,f;
 
   double i;
   int j;
 
   f0 = w_current->toplevel->page_current->left;
   f1 = w_current->toplevel->page_current->right;
-  fs = w_current->toplevel->width;
   f = w_current->toplevel->width / (f1 - f0);
   i = f * (double)(val);
 

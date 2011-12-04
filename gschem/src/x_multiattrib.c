@@ -660,7 +660,6 @@ static void multiattrib_action_add_attribute(GSCHEM_TOPLEVEL *w_current,
 					     gint visible,
 					     gint show_name_value) 
 {
-  OBJECT *o_attrib;
   gchar *newtext;
   
   newtext = g_strdup_printf ("%s=%s", name, value);
@@ -671,8 +670,8 @@ static void multiattrib_action_add_attribute(GSCHEM_TOPLEVEL *w_current,
   }
 
   /* create a new attribute and link it */
-  o_attrib = o_attrib_add_attrib (w_current, newtext,
-                                  visible, show_name_value, object);
+  o_attrib_add_attrib (w_current, newtext,
+                       visible, show_name_value, object);
 
   w_current->toplevel->page_current->CHANGED = 1;
   o_undo_savestate (w_current, UNDO_ALL);
@@ -690,15 +689,14 @@ static void multiattrib_action_duplicate_attribute(GSCHEM_TOPLEVEL *w_current,
 						   OBJECT *object,
 						   OBJECT *o_attrib) 
 {
-  OBJECT *o_new;
   int visibility = o_is_visible (w_current->toplevel, o_attrib)
       ? VISIBLE : INVISIBLE;
 
-  o_new = o_attrib_add_attrib (w_current,
-                               o_text_get_string (w_current->toplevel, o_attrib),
-                               visibility,
-                               o_attrib->show_name_value,
-                               object);
+  o_attrib_add_attrib (w_current,
+                       o_text_get_string (w_current->toplevel, o_attrib),
+                       visibility,
+                       o_attrib->show_name_value,
+                       object);
   w_current->toplevel->page_current->CHANGED = 1;
   o_undo_savestate (w_current, UNDO_ALL);
 
@@ -2144,7 +2142,6 @@ static void multiattrib_get_property (GObject *object,
  */
 void multiattrib_update (Multiattrib *multiattrib)
 {
-  TOPLEVEL *toplevel;
   GtkListStore *liststore;
   GtkTreeIter iter;
   GList *object_attribs;
@@ -2155,7 +2152,6 @@ void multiattrib_update (Multiattrib *multiattrib)
   gboolean show_inherited;
 
   g_assert (GSCHEM_DIALOG (multiattrib)->w_current != NULL);
-  toplevel = GSCHEM_DIALOG (multiattrib)->w_current->toplevel;
 
   /* clear the list of attributes */
   liststore = (GtkListStore*)gtk_tree_view_get_model (multiattrib->treeview);
