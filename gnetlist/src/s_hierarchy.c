@@ -587,7 +587,6 @@ char *s_hierarchy_return_baseuref(TOPLEVEL * pr_current, char *uref)
     char *return_value = NULL;
     char *start_of_base = NULL;
     char *end_of_base = NULL;
-    char *cptr = NULL;
 
     /* use hierarchy separator */
 
@@ -616,8 +615,6 @@ char *s_hierarchy_return_baseuref(TOPLEVEL * pr_current, char *uref)
 	if (end_of_base == NULL) {
 	    return (g_strdup (uref));
 	}
-
-	cptr = uref;
 
 	return_value = g_strndup(uref, end_of_base - uref);
     }

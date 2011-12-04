@@ -149,8 +149,6 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
     char *temp_uref = NULL;
     char *string;
     char *misc;
-    int hierarchy_tag_len = 0;
-
 
     o_current = object;
 
@@ -164,12 +162,6 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
 
     if (scm_is_string( scm_uref )) {
       temp_uref = scm_to_utf8_string (scm_uref);
-    }
-
-    if (hierarchy_tag) {
-	hierarchy_tag_len = strlen(hierarchy_tag)+1;
-    } else {
-	hierarchy_tag_len = 0;
     }
 
     /* apply the hierarchy name to the uref */
@@ -352,7 +344,6 @@ char *s_net_name (TOPLEVEL * pr_current, NETLIST * netlist_head,
     CPINLIST *pl_current;
     char *net_name = NULL;
     int found = 0;
-    int hierarchy_tag_len;
     char *temp;
     int *unnamed_counter;
     char *unnamed_string;
@@ -415,13 +406,6 @@ char *s_net_name (TOPLEVEL * pr_current, NETLIST * netlist_head,
 
 	return (string);
 
-    }
-
-    if (hierarchy_tag) {
-	/* + 1 is for the '/' character */
-	hierarchy_tag_len = strlen(hierarchy_tag) + 1;
-    } else {
-	hierarchy_tag_len = 0;
     }
 
     switch (type) {

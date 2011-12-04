@@ -142,14 +142,12 @@ void s_netlist_post_process(TOPLEVEL * pr_current, NETLIST * head)
 {
     NETLIST *nl_current;
     CPINLIST *pl_current;
-    int vi = 0;
 
     nl_current = head;
 
     if (verbose_mode) {
 	printf("\n- Staring post processing\n");
 	printf("- Naming nets:\n");
-	vi = 0;
     }
 
     /* this pass gives all nets a name, whether specified or creates a */
