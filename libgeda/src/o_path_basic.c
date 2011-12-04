@@ -477,17 +477,19 @@ void o_path_recalc (TOPLEVEL *toplevel, OBJECT *o_current)
 {
   int left, right, top, bottom;
 
-  if (o_current->path == NULL) {
-    return;
-  }
+  g_return_if_fail (o_current->path != NULL);
 
   /* Update the bounding box */
-  world_get_path_bounds (toplevel, o_current, &left, &top, &right, &bottom);
-  o_current->w_left   = left;
-  o_current->w_top    = top;
-  o_current->w_right  = right;
-  o_current->w_bottom = bottom;
-  o_current->w_bounds_valid = TRUE;
+  if (o_current->path->num_sections > 0) {
+    world_get_path_bounds (toplevel, o_current, &left, &top, &right, &bottom);
+    o_current->w_left   = left;
+    o_current->w_top    = top;
+    o_current->w_right  = right;
+    o_current->w_bottom = bottom;
+    o_current->w_bounds_valid = TRUE;
+  } else {
+    o_current->w_bounds_valid = FALSE;
+  }
 }
 
 
