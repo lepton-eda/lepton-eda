@@ -61,6 +61,9 @@
           (assert-dirties P (apply set-component! C
                                    (list-tail (component-info C) 1)))
 
+          (assert-dirties P (apply set-object-stroke! l (object-stroke l)))
+          (assert-dirties P (apply set-object-fill! b (object-fill b)))
+
           ; Remove primitives from page
           (assert-dirties P (for-each (lambda (x) (page-remove! P x))
                                       (list l b c a t)))
@@ -75,6 +78,9 @@
           (assert-dirties P (apply set-circle! c (circle-info c)))
           (assert-dirties P (apply set-arc! a (arc-info a)))
           (assert-dirties P (apply set-text! t (text-info t)))
+
+          (assert-dirties P (apply set-object-stroke! l (object-stroke l)))
+          (assert-dirties P (apply set-object-fill! b (object-fill b)))
 
           ; Remove primitives from component
           (for-each (lambda (x) (assert-dirties P (component-remove! C x)))
