@@ -444,10 +444,9 @@ void o_picture_exchange (GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf,
     OBJECT *object;
 
     object = (OBJECT *) list->data;
-    if (object == NULL) {
-      fprintf(stderr, _("ERROR: NULL object!\n"));
-      exit(-1);
-    }
+
+    g_assert (object != NULL);
+
     if (!object->attached_to) {
       /* It's selected. Then change picture if it's a picture */
       if (object->type == OBJ_PICTURE) {
