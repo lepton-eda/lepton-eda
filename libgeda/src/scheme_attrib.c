@@ -18,8 +18,8 @@
  */
 
 /*!
- * \file scheme_page.c
- * \brief Scheme API page manipulation procedures.
+ * \file scheme_attrib.c
+ * \brief Scheme API attribute manipulation procedures.
  */
 
 #include <config.h>

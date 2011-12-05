@@ -19,7 +19,7 @@
 
 /*!
  * \file scheme_init.c
- * Scheme API initialisation
+ * \brief Scheme API initialisation
  */
 #include <config.h>
 

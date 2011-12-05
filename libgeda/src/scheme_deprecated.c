@@ -18,8 +18,8 @@
  */
 
 /*!
- * \file scheme_init.c
- * Deprecated Scheme API functions
+ * \file scheme_deprecated.c
+ * \brief Deprecated Scheme API functions
  */
 #include <config.h>
 
