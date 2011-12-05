@@ -54,3 +54,6 @@ int edascm_is_page (SCM smob);
 
 /* Test if smob is a gEDA object. */
 int edascm_is_object (SCM smob);
+
+/* Set whether a gEDA object may be garbage collected. */
+void edascm_c_set_gc (SCM smob, int gc);

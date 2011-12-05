@@ -121,9 +121,6 @@ SCM edascm_from_toplevel (TOPLEVEL *toplevel);
   SCM_SET_SMOB_FLAGS (x, gc ? (SCM_SMOB_FLAGS (x) | GEDA_SMOB_GC_FLAG) \
                             : (SCM_SMOB_FLAGS (x) & ~GEDA_SMOB_GC_FLAG))
 
-/* Set whether a gEDA object may be garbage collected. */
-void edascm_c_set_gc (SCM smob, int gc);
-
 /* ---------------------------------------- */
 
 GList *edascm_to_object_glist (SCM objs, const char *subr);
