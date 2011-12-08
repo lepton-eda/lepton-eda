@@ -51,6 +51,7 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->toolbar_bus    = NULL;
 
   w_current->keyaccel_string = NULL;
+  w_current->keyaccel_string_source_id = FALSE;
 
   /* ------------ */
   /* Dialog boxes */

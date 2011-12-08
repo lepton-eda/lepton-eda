@@ -44,8 +44,9 @@
 ;; Does the work of evaluating a key.  Adds the key to the current key
 ;; sequence, then looks up the key sequence in the current keymap.  If
 ;; the key sequence resolves to an action, calls the action.  If the
-;; key sequence can be resolved (either to a keymap or an action),
-;; returns #t; otherwise, returns #f.  If the key is #f, clears the
+;; key sequence can be resolved to an action, returns #t; if it
+;; resolves to a keymap (i.e. it's a prefix key), returns the "prefix"
+;; symbol; otherwise, returns #f.  If the key is #f, clears the
 ;; current key sequence.
 (define (eval-pressed-key keymap key)
   ;; Function for resetting current key sequence
@@ -59,7 +60,7 @@
                (bound (lookup-keys keymap keys)))
           (cond
            ;; Keys are a prefix -- do nothing successfully
-           ((keymap? bound) #t)
+           ((keymap? bound) 'prefix)
            ;; Keys are bound to something -- reset current key
            ;; sequence, then try to run the action
            (bound (begin

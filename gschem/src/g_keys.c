@@ -41,36 +41,11 @@
 
 #include <gdk/gdkkeysyms.h>
 
-/*! \brief Clear the current key accelerator string
- *
- *  \par Function Description
- *  This function clears the current keyboard accelerator
- *  string in the status bar of the relevant toplevel.
- *  Called after the action specifed by the keyboard
- *  accelerator is executed and the associated timeout interval
- *  has passed.
- *
- *  \param [in] data a pointer to the GSCHEM_TOPLEVEL
- */
-static gboolean clear_keyaccel_string(gpointer data)
-{
-  GSCHEM_TOPLEVEL *w_current = data;
-
-  /* Find out if the GSCHEM_TOPLEVEL is present... */
-  if (g_list_find(global_window_list, w_current) != NULL) {
-    g_free(w_current->keyaccel_string);
-    w_current->keyaccel_string = NULL;
-    i_show_state(w_current, NULL);
-  }
-
-  return FALSE;
-}
 
 #define DEFINE_G_KEYS(name)				\
 SCM g_keys_ ## name(SCM rest)				\
 {							\
    GSCHEM_TOPLEVEL *w_current = g_current_window ();	\
-   g_timeout_add(400, clear_keyaccel_string, w_current);       \
    i_callback_ ## name(w_current, 0, NULL);                   \
    return SCM_BOOL_T;				\
 }
@@ -483,6 +458,33 @@ g_key_free (SCM key) {
 }
 
 SCM_SYMBOL (press_key_sym, "press-key");
+SCM_SYMBOL (prefix_sym, "prefix");
+
+/*! \brief Clear the current key accelerator string.
+ * \par Function Description
+ * This function clears the current keyboard accelerator string in
+ * the status bar of the relevant toplevel.  Called some time after a
+ * keystroke is pressed.  If the current key sequence was a prefix,
+ * let it persist.
+ *
+ * \param [in] data a pointer to the GSCHEM_TOPLEVEL to update.
+ * \return FALSE (this is a one-shot timer).
+ */
+static gboolean clear_keyaccel_string(gpointer data)
+{
+  GSCHEM_TOPLEVEL *w_current = data;
+
+  /* If the window context has disappeared, do nothing. */
+  if (g_list_find(global_window_list, w_current) == NULL) {
+    return FALSE;
+  }
+
+  g_free(w_current->keyaccel_string);
+  w_current->keyaccel_string = NULL;
+  w_current->keyaccel_string_source_id = 0;
+  i_show_state(w_current, NULL);
+  return FALSE;
+}
 
 /*! \brief Evaluate a user keystroke.
  * \par Function Description
@@ -555,26 +557,17 @@ g_keys_execute(GSCHEM_TOPLEVEL *w_current, GdkEventKey *event)
   } else {
     gchar *keystr = gtk_accelerator_get_label (key, mods);
 
-    /* If no current hint string, use key string directly */
-    if (w_current->keyaccel_string == NULL) {
+    /* If no current hint string, or the hint string is going to be
+     * cleared anyway, use key string directly */
+    if ((w_current->keyaccel_string == NULL) ||
+        w_current->keyaccel_string_source_id) {
+      g_free (w_current->keyaccel_string);
       w_current->keyaccel_string = keystr;
 
     } else {
-      /* If concatenating key string onto current hint string would be
-       * longer than 14 characters, truncate and prefix with
-       * ellipsis. Otherwise, add key string to current hint
-       * string. */
-      /* FIXME this limit probably shouldn't be hardcoded */
-      if (strlen (w_current->keyaccel_string) + strlen (keystr) > 14) {
-        g_free (w_current->keyaccel_string);
-        w_current->keyaccel_string = g_strconcat ("\342\200\246 ",
-                                                  keystr, NULL);
-
-      } else {
-        gchar *p = w_current->keyaccel_string;
-        w_current->keyaccel_string = g_strconcat (p, " ", keystr, NULL);
-        g_free (p);
-      }
+      gchar *p = w_current->keyaccel_string;
+      w_current->keyaccel_string = g_strconcat (p, " ", keystr, NULL);
+      g_free (p);
       g_free (keystr);
     }
   }
@@ -588,6 +581,21 @@ g_keys_execute(GSCHEM_TOPLEVEL *w_current, GdkEventKey *event)
   s_expr = scm_list_2 (press_key_sym, s_key);
   s_retval = g_scm_eval_protected (s_expr, scm_interaction_environment ());
   scm_dynwind_end ();
+
+  /* If the keystroke was not part of a prefix, start a timer to clear
+   * the status bar display. */
+  if (w_current->keyaccel_string_source_id) {
+    /* Cancel any existing timers that haven't fired yet. */
+    GSource *timer =
+      g_main_context_find_source_by_id (NULL,
+                                        w_current->keyaccel_string_source_id);
+    g_source_destroy (timer);
+    w_current->keyaccel_string_source_id = 0;
+  }
+  if (!scm_is_eq (s_retval, prefix_sym)) {
+    w_current->keyaccel_string_source_id =
+      g_timeout_add(400, clear_keyaccel_string, w_current);
+  }
 
   return !scm_is_false (s_retval);
 }
