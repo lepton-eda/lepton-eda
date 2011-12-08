@@ -10,6 +10,7 @@ BUILT_SOURCES = \
 	scheme_complex.x \
 	scheme_page.x \
 	scheme_attrib.x \
+	scheme_os.x \
 	scheme_deprecated.x
 
 scheme_api_sources = \
@@ -18,6 +19,7 @@ scheme_api_sources = \
 	scheme_toplevel.c \
 	scheme_object.c \
 	scheme_complex.c \
+	scheme_os.c \
 	scheme_page.c \
 	scheme_attrib.c \
 	scheme_deprecated.c

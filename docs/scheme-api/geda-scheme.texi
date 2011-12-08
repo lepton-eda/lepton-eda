@@ -343,6 +343,7 @@ available to be used in all gEDA applications.
 * Core page functions::
 * Core object functions::
 * Core attribute functions::
+* System information::
 @end menu
 
 @node Core page functions
@@ -1501,6 +1502,78 @@ are added to the @code{page}, and attached as attributes of @var{component}.
 
 The promoted attributes are returned.  If @var{component} is not in
 fact a component @code{object}, does nothing and returns the empty list.
+@end defun
+
+@node System information
+@section System information
+
+To use the functions described in this section, you will need to load
+the @code{(geda os)} module.
+
+This section describes some functions and variables that are useful
+for Scheme code that needs to behave differently depending on which
+operating system gEDA is running on.
+
+@defvar separator-char
+The directory separator character that should be used on the host
+platform.
+@end defvar
+
+@defvar separator
+A string containing @code{separator-char}.
+@end defvar
+
+@defvar path-separator-char
+The character used for separating the elements in @samp{PATH}-like
+environment variables on the host platform.
+@end defvar
+
+@defvar path-separator
+A string containing @code{path-separator-char}.
+@end defvar
+
+@defun platform
+Returns a list of symbols describing the host platform.  The returned
+symbols may include:
+
+@itemize
+@item
+@samp{carbon}
+@item
+@samp{cygwin}
+@item
+@samp{linux}
+@item
+@samp{win32}
+@item
+@samp{win32-native}
+@end itemize
+@end defun
+
+@defun platform? type
+Returns @samp{#t} if the platform description list returned by
+@code{platform} contains the symbol @var{type}, and @samp{#f}
+otherwise.
+@end defun
+
+@defun sys-data-dirs
+Returns an ordered list of directories in which to access system-wide
+gEDA data.
+@end defun
+
+@defun sys-config-dirs
+Returns an ordered list of directories in which to access system-wide
+gEDA configuration information.
+@end defun
+
+@defun user-data-dir
+Returns an ordered list of directories in which to store user-specific
+gEDA data.
+@end defun
+
+@defun user-config-dir
+Returns the directory in which to store user-specific gEDA
+configuration information.
 @end defun
 
 @node gschem API Reference
