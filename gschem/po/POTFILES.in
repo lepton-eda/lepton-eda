@@ -50,6 +50,7 @@ gschem/src/x_grid.c
 gschem/src/x_image.c
 gschem/src/x_log.c
 gschem/src/x_menus.c
+gschem/src/x_misc.c
 gschem/src/x_multiattrib.c
 gschem/src/x_pagesel.c
 gschem/src/x_preview.c

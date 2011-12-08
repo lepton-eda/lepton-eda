@@ -70,6 +70,7 @@ gschem_SOURCES = \
 	x_image.c \
 	x_log.c \
 	x_menus.c \
+	x_misc.c \
 	x_multiattrib.c \
 	x_pagesel.c \
 	x_preview.c \

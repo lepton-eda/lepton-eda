@@ -806,6 +806,8 @@ void x_log_close ();
 void x_log_message (const gchar *log_domain,
                     GLogLevelFlags log_level,
                     const gchar *message);
+/* x_misc.c */
+gboolean x_show_uri (GSCHEM_TOPLEVEL *w_current, const gchar *buf, GError **err);
 /* x_menus.c */
 GtkWidget *get_main_menu(GSCHEM_TOPLEVEL *w_current);
 GtkWidget *get_main_popup(GSCHEM_TOPLEVEL *w_current);

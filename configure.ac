@@ -138,6 +138,8 @@ AX_AWK_FEATURES
 
 # Assertions
 AX_OPTION_ASSERT
+# Viewing documentation
+AX_OPTION_URI_VIEWER
 # API documentation
 AX_OPTION_DOXYGEN
 # XDG desktop files
