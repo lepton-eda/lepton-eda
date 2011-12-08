@@ -4,6 +4,7 @@ BUILT_SOURCES = \
 	g_attrib.x \
 	g_hook.x \
 	g_keys.x \
+	g_util.x \
 	g_window.x \
 	g_select.x
 
@@ -17,6 +18,7 @@ gschem_SOURCES = \
 	g_rc.c \
 	g_register.c \
 	g_select.c \
+	g_util.c \
 	g_window.c \
 	globals.c \
 	gschem.c \

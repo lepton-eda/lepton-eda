@@ -199,6 +199,7 @@ void main_prog(void *closure, int argc, char *argv[])
   g_init_hook ();
   g_init_attrib ();
   g_init_keys ();
+  g_init_util ();
 
   /* initialise color map (need to do this before reading rc files */
   x_color_init ();

@@ -269,6 +269,8 @@ SCM g_rc_display_outline_color_map (SCM scm_map);
 void g_register_funcs(void);
 /* g_select.c */
 void g_init_select ();
+/* g_util.c */
+void g_init_util ();
 /* g_window.c */
 GSCHEM_TOPLEVEL *g_current_window ();
 void g_dynwind_window (GSCHEM_TOPLEVEL *w_current);

@@ -1839,6 +1839,24 @@ use the same attribute placement heuristics as gschem's built-in
 @xref{Text}, @ref{Attributes} and @ref{Windows and views}.
 @end defun
 
+@subsection Miscellaneous utility functions
+
+To use the functions described in this section, you will need to load
+the @code{(gschem util)} module.
+
+@defun show-uri uri
+Open @var{uri} in the registered default application associated for
+that type of file or protocol.  URI should be fully-qualified URI;
+which URIs can be handled by @code{show-uri} will depend on the system
+configuration.
+@end defun
+
+@defun show-file filename
+Displays a file in the registered default application for files of
+that type. @var{filename} should be the absolute path and filename of
+a local file.
+@end defun
+
 @node Concept Index
 @unnumbered Concept Index
 
