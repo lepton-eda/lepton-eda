@@ -56,6 +56,9 @@ void libgeda_init(void)
   /* Initialise gobject */
   g_type_init ();
 
+  s_path_sys_data ();
+  s_path_sys_config ();
+
   s_clib_init();
   s_slib_init();
   s_menu_init();
