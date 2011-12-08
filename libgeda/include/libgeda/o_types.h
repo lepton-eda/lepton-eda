@@ -21,9 +21,6 @@
 #define _O_TYPES_H_INCL
 
 /* Object types */
-/* Object types are also available in scheme */
-/* If there is any addition, add them also in g_register.c 
-   (function g_register_libgeda_vars) */
 #define OBJ_LINE        'L'
 #define OBJ_PATH        'H'
 #define OBJ_BOX         'B'

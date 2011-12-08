@@ -1,4 +1,9 @@
 ; -*-Scheme-*-
+(use-modules (geda os))
+(define path-sep separator)
+(define geda-data-path (car (sys-data-dirs)))
+(define geda-rc-path (car (sys-config-dirs)))
+
 (define (build-path first . rest)
   (if (null? rest) first
       (apply build-path 

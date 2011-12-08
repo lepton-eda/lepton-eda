@@ -90,21 +90,6 @@ void g_register_libgeda_funcs (void)
   
 }
 
-
-/*! \brief Register some libgeda variables with scheme.
- *  \par Function Description
- *  Define some variables to be visible to Scheme.
- */
-void g_register_libgeda_vars (void)
-{
-  scm_c_define("geda-rc-path", 
-	       scm_from_utf8_string (s_path_sys_config ()));
-  scm_c_define("geda-data-path",
-	       scm_from_utf8_string (s_path_sys_data ()));
-  scm_c_define("path-sep", 
-	       scm_from_utf8_string(G_DIR_SEPARATOR_S));
-}
-
 /*! \brief Register some libgeda directories with Scheme.
  * \par Function Description
  * Ensures that the default gEDA Scheme directory is added to the

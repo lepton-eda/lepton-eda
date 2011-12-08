@@ -35,7 +35,6 @@ SCM g_rc_print_color_map (SCM scm_map);
 
 /* g_register.c */
 void g_register_libgeda_funcs(void);
-void g_register_libgeda_vars (void);
 void g_register_libgeda_dirs (void);
 
 /* m_bounds.c */

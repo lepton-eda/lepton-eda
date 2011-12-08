@@ -66,7 +66,6 @@ void libgeda_init(void)
   s_color_init();
 
   g_register_libgeda_funcs();
-  g_register_libgeda_vars();
   g_register_libgeda_dirs();
 
   edascm_init ();
