@@ -36,36 +36,18 @@ dnl Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 AC_DEFUN([AX_WINDOWS_FLAGS],
 [
   AC_PREREQ([2.60])dnl
-  AC_REQUIRE([AC_CANONICAL_HOST])dnl
+  AC_REQUIRE([AX_HOST])dnl
 
-  AC_MSG_CHECKING([for Windows platform])
-  case "$host" in
-    *-*-mingw*|*-*-cygwin*)
-      windows_platform=yes
-      WINDOWS_LIBTOOL_FLAGS=-no-undefined
-      ;;
-    *)
-      windows_platform=no
-      ;;
-  esac
-  AC_MSG_RESULT([$windows_platform])
+  if test "$PLATFORM_WIN32" = "yes"; then
+    WINDOWS_LIBTOOL_FLAGS=-no-undefined
+  fi
 
-  AC_MSG_CHECKING([for native Windows])
-  case "$host" in
-    *-*-mingw*)
-      native_windows=yes
-      MINGW_GUI_LDFLAGS=-mwindows
-      MINGW_CFLAGS="-mms-bitfields"
-      ;;
-    *)
-      native_windows=no
-      ;;
-  esac
-  AC_MSG_RESULT([$native_windows])
+  if test "$PLATFORM_WIN32_NATIVE" = "yes"; then
+    MINGW_GUI_LDFLAGS=-mwindows
+    MINGW_CFLAGS="-mms-bitfields"
+  fi
 
   AC_SUBST(WINDOWS_LIBTOOL_FLAGS)
   AC_SUBST(MINGW_GUI_LDFLAGS)
   AC_SUBST(MINGW_CFLAGS)
-
-]
-)
+])
