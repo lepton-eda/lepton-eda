@@ -46,7 +46,7 @@ In order to compile gEDA from the distributed source archives, you
  - Guile ("GNU's Ubiquitous Intelligent Language for Extensions"),
    version 1.8.0 or later.  <http://www.gnu.org/software/guile/>
 
- - GTK+ (the Gimp Toolkit), version 2.10.0 or later.
+ - GTK+ (the Gimp Toolkit), version 2.16.0 or later.
    <http://www.gtk.org/>
 
  - The `lex' tool for generating lexical scanners.  The `flex'

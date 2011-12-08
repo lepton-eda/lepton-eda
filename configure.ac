@@ -72,17 +72,17 @@ PKG_PROG_PKG_CONFIG
 
 AX_CHECK_GUILE([1.8.0])
 
-PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.12.0], ,
-  AC_MSG_ERROR([GLib 2.12.0 or later is required.]))
+PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.20.0], ,
+  AC_MSG_ERROR([GLib 2.20.0 or later is required.]))
 
-PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.10.0], ,
-  AC_MSG_ERROR([GTK+ 2.10.0 or later is required.]))
+PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.16.0], ,
+  AC_MSG_ERROR([GTK+ 2.16.0 or later is required.]))
 
-PKG_CHECK_MODULES(GDK_PIXBUF, [gdk-pixbuf-2.0 >= 0.15.0], ,
-  AC_MSG_ERROR([GDK_PIXBUF 0.15.0 or later is required.]))
+PKG_CHECK_MODULES(GDK_PIXBUF, [gdk-pixbuf-2.0 >= 2.16.0], ,
+  AC_MSG_ERROR([GDK_PIXBUF 2.16.0 or later is required.]))
 
-PKG_CHECK_MODULES(CAIRO, [cairo >= 1.2.0], ,
-  AC_MSG_ERROR([CAIRO 1.2.0 or later is required.]))
+PKG_CHECK_MODULES(CAIRO, [cairo >= 1.8.0], ,
+  AC_MSG_ERROR([CAIRO 1.8.0 or later is required.]))
 
 #####################################################################
 # Header files & particular functions
