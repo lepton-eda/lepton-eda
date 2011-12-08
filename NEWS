@@ -30,6 +30,10 @@ Notable changes in gEDA/gaf 1.7.2
     the `global-set-key' function.  See notes in `system-gschemrc' for
     examples.
 
+* `gschem' now displays help files and component documentation on all
+  platforms, including Windows.  The `locate' tool is no longer used
+  to search for component documentation files.
+
 * The `bom' and `bom2' backends to `gnetlist' now give error messages
   if no attribute file can be found.  The `-O attrib_file=FILE' and
   `-O attribs=ATTRIB,ATTRIB...' options have also been added.

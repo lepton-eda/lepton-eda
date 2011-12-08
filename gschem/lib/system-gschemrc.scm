@@ -1531,14 +1531,6 @@
 	   (,(N_ "Show _Coord Window...")   options-show-coord-window   
 				     options-show-coord-window)))
 
-; Set up some functions used to open help files for the help menu
-(define (help-manual)
-  (gschem-browse-wiki "geda:documentation"))
-(define (help-faq)
-  (gschem-browse-wiki "geda:faq-gschem"))
-(define (help-wiki)
-  (gschem-browse-wiki))
-
 (define help-menu-items 
 ;;
 ;;          menu item name                menu action               menu hotkey action        menu stock icon

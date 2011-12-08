@@ -146,7 +146,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "gschem-msg",                1, 0, 0, g_funcs_msg },
   { "gschem-confirm",            1, 0, 0, g_funcs_confirm },
   { "gschem-filesel",            2, 0, 1, g_funcs_filesel },
-  { "gschem-browse-wiki",        0, 1, 0, g_funcs_browse_wiki },
 
   /* keymapping callbacks */
   { "file-new-window",           0, 0, 0, g_keys_file_new_window },
@@ -270,7 +269,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "hierarchy-down-schematic",  0, 0, 0, g_keys_hierarchy_down_schematic },
   { "hierarchy-down-symbol",     0, 0, 0, g_keys_hierarchy_down_symbol },
   { "hierarchy-up",              0, 0, 0, g_keys_hierarchy_up },
-  { "hierarchy-documentation",   0, 0, 0, g_keys_hierarchy_documentation },
   { "attributes-attach",         0, 0, 0, g_keys_attributes_attach },
   { "attributes-detach",         0, 0, 0, g_keys_attributes_detach },
   { "attributes-show-name",      0, 0, 0, g_keys_attributes_show_name },
@@ -290,7 +288,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "options-show-coord-window", 0, 0, 0, g_keys_options_show_coord_window },
   { "help-about",                0, 0, 0, g_keys_help_about },
   { "help-hotkeys",              0, 0, 0, g_keys_help_hotkeys },
-  { "help-component",            0, 0, 0, g_keys_hierarchy_documentation },
   { "misc-misc",                 0, 0, 0, g_keys_misc },
   { "misc-misc2",                0, 0, 0, g_keys_misc2 },
   { "misc-misc3",                0, 0, 0, g_keys_misc3 },

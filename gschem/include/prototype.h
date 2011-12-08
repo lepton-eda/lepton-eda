@@ -29,7 +29,6 @@ SCM g_funcs_log(SCM msg);
 SCM g_funcs_msg(SCM msg);
 SCM g_funcs_confirm(SCM msg);
 SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags);
-SCM g_funcs_browse_wiki(SCM wikiname);
 SCM g_funcs_use_rc_values(void);
 SCM get_selected_component_attributes(GSCHEM_TOPLEVEL *w_current);
 /* g_hook.c */
@@ -159,7 +158,6 @@ SCM g_keys_add_pin_hotkey(SCM rest);
 SCM g_keys_hierarchy_down_schematic(SCM rest);
 SCM g_keys_hierarchy_down_symbol(SCM rest);
 SCM g_keys_hierarchy_up(SCM rest);
-SCM g_keys_hierarchy_documentation(SCM rest);
 SCM g_keys_attributes_attach(SCM rest);
 SCM g_keys_attributes_detach(SCM rest);
 SCM g_keys_attributes_show_name(SCM rest);
@@ -430,7 +428,6 @@ void i_callback_add_pin_hotkey(gpointer data, guint callback_action, GtkWidget *
 void i_callback_hierarchy_down_schematic(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_hierarchy_down_symbol(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_hierarchy_up(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_hierarchy_documentation(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_attributes_attach(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_attributes_detach(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_attributes_show_name(gpointer data, guint callback_action, GtkWidget *widget);

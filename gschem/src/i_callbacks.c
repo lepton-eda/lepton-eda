@@ -41,53 +41,6 @@
  *  \par Function Description
  *
  */
-/* Egil Kvaleberg <egil@kvaleberg.no> on October 7, 2002 - 
- * Initiate the gschemdoc utility to provide the used with as much
- * documentation on the symbol (i.e. component) as we can manage.
- */
-static void initiate_gschemdoc(const char* documentation,const char *device,
-			       const char *value,
-			       const char* symfile, const char *sympath)
-{
-
-#ifndef __MINGW32__
-
-  int pid;
-
-  if (!documentation) documentation="";
-  if (!device) device="";
-  if (!value) value="";
-  if (!symfile) symfile="";
-  if (!sympath) sympath="";
-
-  s_log_message( _("Documentation for [%s,%s,%s,%s]\n"),
-		    documentation,device,value,symfile);
-
-
-  if ((pid = fork()) < 0) {
-    fprintf(stderr, _("Could not fork\n"));
-  } else if (pid == 0) {
-    /* daughter process */
-
-    /* assume gschemdoc is part of path */
-    char *gschemdoc = "gschemdoc";
-
-    execlp(gschemdoc, gschemdoc, documentation, device, value, symfile, sympath, NULL);
-
-    /* if we return, then nothing happened */
-    fprintf(stderr, _("Could not invoke %s\n"), gschemdoc);
-    _exit(0);
-  }
-#else
-  s_log_message(_("Documentation commands not supported under MinGW.\n"));
-#endif
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 /* every i_callback functions have the same footprint */
 #define DEFINE_I_CALLBACK(name)				\
 	void i_callback_ ## name(gpointer data,		\
@@ -3002,59 +2955,6 @@ DEFINE_I_CALLBACK(hierarchy_up)
     s_log_message(_("Cannot find any schematics above the current one!\n"));
   } else {
     x_window_set_current_page(w_current, up_page);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  Egil Kvaleberg <egil@kvaleberg.no> on October 7, 2002 - 
- *  Provide documentation for symbol (i.e. component)
- */
-DEFINE_I_CALLBACK(hierarchy_documentation)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  char *attrib_doc = NULL;
-  char *attrib_device = NULL;
-  char *attrib_value = NULL;
-  OBJECT *object = NULL;
-  const gchar *sourcename = NULL;
-  const CLibSymbol *sym = NULL;
-
-  exit_if_null(w_current);
-
-  object = o_select_return_first_object(w_current);
-  if (object != NULL) {
-    /* only allow going into symbols */
-    if (object->type == OBJ_COMPLEX) {
-
-      /* look for "documentation" */
-      attrib_doc = o_attrib_search_object_attribs_by_name (object, "documentation", 0);
-      /* look for "device" */
-      attrib_device = o_attrib_search_object_attribs_by_name (object, "device", 0);
-      /* look for "value" */
-      attrib_value = o_attrib_search_object_attribs_by_name (object, "value", 0);
-
-      sym = s_clib_get_symbol_by_name (object->complex_basename);
-      if (sym != NULL) {
-        sourcename = s_clib_source_get_name (s_clib_symbol_get_source(sym));
-      }
-
-      initiate_gschemdoc(attrib_doc,
-                         attrib_device,
-                         attrib_value,
-                         object->complex_basename,
-                         sourcename);
-
-      g_free(attrib_doc);
-      g_free(attrib_device);
-      g_free(attrib_value);
-    }
-  } else {
-    generic_msg_dialog(_("This command retrieves the component documentation from the web, but there is no component selected"));
-
   }
 }
 

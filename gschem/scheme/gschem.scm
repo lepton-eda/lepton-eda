@@ -17,7 +17,12 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-(use-modules (gschem keymap))
+(use-modules (gschem keymap)
+             (gschem selection)
+             (gschem window)
+             (gschem gschemdoc)
+             (geda object)
+             (srfi srfi-1))
 
 ;; Define an eval-in-currentmodule procedure
 (define (eval-cm expr) (eval expr (current-module)))
@@ -140,3 +145,42 @@
 
   (build-dump! keymap '())
   lst)
+
+;;;; Documentation-related actions
+
+(define (hierarchy-documentation)
+  "hierarchy-documentation
+
+If a component is selected, search for and display corresponding
+documentation in a browser or PDF viewer. If no documentation can be
+found, shows a dialog with an error message."
+  (catch
+   'misc-error
+   (lambda ()
+     (let ((component
+            (any (lambda (obj) (and (component? obj) obj))
+                 (page-selection (active-page)))))
+       (and component (show-component-documentation component))))
+   (lambda (key subr msg args . rest)
+     (gschem-msg (string-append
+                  "Could not show documentation for selected component:\n\n"
+                  (apply format #f msg args))))))
+
+
+(define (help-manual)
+  "help-manual
+
+Display the front page of the gEDA manuals in a browser."
+  (show-wiki "geda:documentation"))
+
+(define (help-faq)
+  "help-faq
+
+Display the gschem Frequently Asked Questions in a browser."
+  (show-wiki "geda:faq-gschem"))
+
+(define (help-wiki)
+  "help-faq
+
+Display the gEDA wiki in a browser."
+  (show-wiki))
