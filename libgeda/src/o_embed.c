@@ -62,7 +62,7 @@ void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
 
   /* If it's a picture and it's not embedded */
   if ( (o_current->type == OBJ_PICTURE) &&
-       (o_current->picture->embedded == 0) ) {
+       !o_picture_is_embedded (toplevel, o_current) ) {
     o_picture_embed (toplevel, o_current);
 
     page_modified = 1;
@@ -116,7 +116,7 @@ void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current)
 
   /* If it's a picture and it's embedded */
   if ( (o_current->type == OBJ_PICTURE) &&
-       (o_current->picture->embedded == 1) ) {
+       o_picture_is_embedded (toplevel, o_current)) {
     o_picture_unembed (toplevel, o_current);
 
     page_modified = 1;

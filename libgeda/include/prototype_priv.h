@@ -192,6 +192,8 @@ double o_picture_shortest_distance(OBJECT *object, int x, int y, int force_soild
 void world_get_picture_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 gboolean o_picture_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
 void o_picture_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
+void o_picture_embed(TOPLEVEL *toplevel, OBJECT *object);
+void o_picture_unembed(TOPLEVEL *toplevel, OBJECT *object);
 
 /* o_pin_basic.c */
 OBJECT *o_pin_read(TOPLEVEL *toplevel, char buf[], unsigned int release_ver, unsigned int fileformat_ver);

@@ -103,9 +103,9 @@ void o_picture_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   }
 
   /* create the object */
-  new_obj = o_picture_new(toplevel, w_current->current_pixbuf,
+  new_obj = o_picture_new(toplevel,
                           NULL, 0, w_current->pixbuf_filename,
-                          w_current->pixbuf_wh_ratio, OBJ_PICTURE,
+                          OBJ_PICTURE,
                           picture_left, picture_top,
                           picture_left + picture_width,
                           picture_top - picture_height,
@@ -302,10 +302,36 @@ void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 void o_picture_draw (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 {
   int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
+  GdkPixbuf *pixbuf;
 
-  if (o_current->picture == NULL) {
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->toplevel != NULL);
+  g_return_if_fail (o_current != NULL);
+  g_return_if_fail (o_current->picture != NULL);
+
+  pixbuf = o_picture_get_pixbuf (w_current->toplevel, o_current);
+
+  /* If the image failed to load, get the fallback image. */
+  if (pixbuf == NULL) pixbuf = o_picture_get_fallback_pixbuf (w_current->toplevel);
+  /* If the fallback image failed to load, draw a box with a cross in it. */
+  if (pixbuf == NULL) {
+    int line_width = (w_current->toplevel->line_style == THICK) ? LINE_WIDTH : 2;
+    gschem_cairo_set_source_color (w_current,
+                                   o_drawing_color (w_current, o_current));
+    gschem_cairo_box (w_current, line_width,
+                      o_current->picture->lower_x, o_current->picture->lower_y,
+                      o_current->picture->upper_x, o_current->picture->upper_y);
+    gschem_cairo_line (w_current, END_ROUND, line_width,
+                      o_current->picture->lower_x, o_current->picture->lower_y,
+                      o_current->picture->upper_x, o_current->picture->upper_y);
+    gschem_cairo_line (w_current, END_ROUND, line_width,
+                      o_current->picture->lower_x, o_current->picture->upper_y,
+                      o_current->picture->upper_x, o_current->picture->lower_y);
+    gschem_cairo_stroke (w_current, TYPE_SOLID, END_ROUND, line_width, -1, -1);
     return;
   }
+
+  g_assert (GDK_IS_PIXBUF (pixbuf));
 
   WORLDtoSCREEN (w_current, o_current->picture->upper_x,
                             o_current->picture->upper_y, &s_upper_x, &s_upper_y);
@@ -315,10 +341,10 @@ void o_picture_draw (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   cairo_save (w_current->cr);
 
   int swap_wh = (o_current->picture->angle == 90 || o_current->picture->angle == 270);
-  float orig_width  = swap_wh ? gdk_pixbuf_get_height (o_current->picture->pixbuf) :
-                                gdk_pixbuf_get_width  (o_current->picture->pixbuf);
-  float orig_height = swap_wh ? gdk_pixbuf_get_width  (o_current->picture->pixbuf) :
-                                gdk_pixbuf_get_height (o_current->picture->pixbuf);
+  float orig_width  = swap_wh ? gdk_pixbuf_get_height (pixbuf) :
+                                gdk_pixbuf_get_width  (pixbuf);
+  float orig_height = swap_wh ? gdk_pixbuf_get_width  (pixbuf) :
+                                gdk_pixbuf_get_height (pixbuf);
 
   cairo_translate (w_current->cr, s_upper_x, s_upper_y);
   cairo_scale (w_current->cr,
@@ -335,14 +361,16 @@ void o_picture_draw (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
     case 270:  cairo_translate (w_current->cr, orig_width, 0          );  break;
   }
   cairo_rotate (w_current->cr, -o_current->picture->angle * M_PI / 180.);
-  if (o_current->picture->mirrored)
+  if (o_current->picture->mirrored) {
+    cairo_translate (w_current->cr, gdk_pixbuf_get_width (pixbuf), 0);
     cairo_scale (w_current->cr, -1, 1);
+  }
 
   gdk_cairo_set_source_pixbuf (w_current->cr,
-                               o_current->picture->pixbuf, 0,0);
+                               pixbuf, 0,0);
   cairo_rectangle (w_current->cr, 0, 0,
-                   gdk_pixbuf_get_width (o_current->picture->pixbuf),
-                   gdk_pixbuf_get_height (o_current->picture->pixbuf));
+                   gdk_pixbuf_get_width (pixbuf),
+                   gdk_pixbuf_get_height (pixbuf));
 
   cairo_clip (w_current->cr);
   cairo_paint (w_current->cr);
@@ -352,6 +380,8 @@ void o_picture_draw (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if (o_current->selected && w_current->draw_grips) {
     o_picture_draw_grips (w_current, o_current);
   }
+
+  g_object_unref (pixbuf);
 }
 
 /*! \brief Draw grip marks on picture.
@@ -424,68 +454,42 @@ void o_picture_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o
 }
 
 /*! \brief Replace all selected pictures with a new picture
- *  \par Function Description
- *  This function replaces all pictures in the current selection with a 
- *  new image.
- *   
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object
- *  \param [in] pixbuf     New GdkPixbuf object
- *  \param [in] filename   The filename of the new picture
- *  
+ * \par Function Description
+ * Replaces all pictures in the current selection with a new image.
+ *
+ * \param [in] w_current  The GSCHEM_TOPLEVEL object
+ * \param [in] filename   The filename of the new picture
+ * \param [out] error     The location to return error information.
+ * \return TRUE on success, FALSE on failure.
  */
-void o_picture_exchange (GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf,
-			 const gchar *filename)
+gboolean
+o_picture_exchange (GSCHEM_TOPLEVEL *w_current,
+                    const gchar *filename, GError **error)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
-  GList *list;  
+  GList *iter;
 
-  list = geda_list_get_glist( toplevel->page_current->selection_list );
-  while (list != NULL) {
-    OBJECT *object;
+  for (iter = geda_list_get_glist (toplevel->page_current->selection_list);
+       iter != NULL;
+       iter = g_list_next (iter)) {
 
-    object = (OBJECT *) list->data;
-
+    OBJECT *object = (OBJECT *) iter->data;
     g_assert (object != NULL);
 
-    if (!object->attached_to) {
-      /* It's selected. Then change picture if it's a picture */
-      if (object->type == OBJ_PICTURE) {
+    if (object->type == OBJ_PICTURE) {
+      gboolean status;
 
-        /* Erase previous picture */
-        o_invalidate (w_current, object);
+      /* Erase previous picture */
+      o_invalidate (w_current, object);
 
-        g_free(object->picture->filename);
+      status = o_picture_set_from_file (toplevel, object, filename, error);
+      if (!status) return FALSE;
 
-        object->picture->filename = (char *) g_strdup(filename);
-
-        /* Unref the old pixmap */
-        if (object->picture->pixbuf != NULL) {
-          g_object_unref (object->picture->pixbuf);
-          object->picture->pixbuf = NULL;
-        }
-
-        if (object->picture->embedded) {
-          /* For embedded pictures, call o_picture_embed() to update the
-           * embedded picture data from the new file and reload the pixmap */
-          o_picture_embed(toplevel, object);
-        } else {
-          /* For non-embedded pictures, create a copy of the passed pixbuf
-           * and insert it manually */
-          object->picture->pixbuf = gdk_pixbuf_copy (pixbuf);
-          if (object->picture->pixbuf == NULL) {
-            fprintf(stderr, "change picture: Couldn't get enough memory for the new picture\n");
-            return;
-          }
-        }
-
-        object->picture->ratio = (double)gdk_pixbuf_get_width(pixbuf) /
-                                         gdk_pixbuf_get_height(pixbuf);
-        /* Draw new picture */
-        o_invalidate (w_current, object);
-      }
+      /* Draw new picture */
+      o_invalidate (w_current, object);
     }
-    list = g_list_next(list);
   }
+  return TRUE;
 }
 
 /*! \brief Create dialog to exchange picture objects
@@ -499,7 +503,7 @@ void picture_change_filename_dialog (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   gchar *filename;
-  GdkPixbuf *pixbuf;
+  gboolean result;
   GError *error = NULL;
   
   w_current->pfswindow = gtk_file_chooser_dialog_new ("Select a picture file...",
@@ -527,38 +531,24 @@ void picture_change_filename_dialog (GSCHEM_TOPLEVEL *w_current)
     gtk_widget_destroy(w_current->pfswindow);
     w_current->pfswindow=NULL;
 
-    pixbuf = gdk_pixbuf_new_from_file (filename, &error);
-    
-    if (!pixbuf) {
+    /* Actually update the pictures */
+    result = o_picture_exchange (w_current, filename, &error);
+
+    if (!result) {
       GtkWidget *dialog;
-      
+
       dialog = gtk_message_dialog_new (GTK_WINDOW (w_current->main_window),
 				       GTK_DIALOG_DESTROY_WITH_PARENT,
 				       GTK_MESSAGE_ERROR,
 				       GTK_BUTTONS_CLOSE,
-				       _("Failed to load picture: %s"),
+				       _("Failed to replace pictures: %s"),
 				       error->message);
       /* Wait for any user response */
       gtk_dialog_run (GTK_DIALOG (dialog));
-      
+
       g_error_free (error);
       gtk_widget_destroy(dialog);
-    }
-    else {
-#if DEBUG
-      printf("Picture loaded succesfully.\n");
-#endif
-
-      o_invalidate_rubber(w_current);
-      w_current->inside_action = 0;
-
-      /* \FIXME Should we set the pixbuf buffer in GSCHEM_TOPLEVEL to store
-	 the current pixbuf? (Werner)
-	 o_picture_set_pixbuf(w_current, pixbuf, filename); */
-
-      o_picture_exchange(w_current, pixbuf, filename);
-
-      g_object_unref(pixbuf);
+    } else {
       toplevel->page_current->CHANGED=1;
     }
     g_free (filename);

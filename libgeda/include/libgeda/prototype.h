@@ -198,21 +198,29 @@ void o_path_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_center
 void o_path_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 
 /* o_picture.c */
-OBJECT *o_picture_new(TOPLEVEL *toplevel, GdkPixbuf *pixbuf,
-                      gchar *file_content, gsize file_length, char *filename,
-                      double ratio, char type,
-                      int x1, int y1, int x2, int y2, int angle, char mirrored,
-                      char embedded);
+OBJECT *o_picture_new(TOPLEVEL *toplevel,
+                      const gchar *file_content, gsize file_length,
+                      const gchar *filename, char type,
+                      int x1, int y1, int x2, int y2, int angle, int mirrored,
+                      int embedded) G_GNUC_WARN_UNUSED_RESULT;
+double o_picture_get_ratio (TOPLEVEL *toplevel, OBJECT *object);
 void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
+void o_picture_modify_all (TOPLEVEL *toplevel, OBJECT *object, int x1, int y1, int x2, int y2);
 void o_picture_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle,OBJECT *object);
 void o_picture_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
 void o_picture_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object);
-OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *o_current);
-guint8 *o_picture_rgb_data(GdkPixbuf *image);
-guint8 *o_picture_mask_data(GdkPixbuf *image);
-void o_picture_embed(TOPLEVEL *toplevel, OBJECT *object);
-void o_picture_unembed(TOPLEVEL *toplevel, OBJECT *object);
-GdkPixbuf *o_picture_pixbuf_from_buffer (gchar *file_content, gsize file_length, GError **err);
+OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *o_current) G_GNUC_WARN_UNUSED_RESULT;
+gboolean o_picture_is_embedded (TOPLEVEL *toplevel, OBJECT *object);
+GdkPixbuf *o_picture_get_pixbuf (TOPLEVEL *toplevel, OBJECT *object) G_GNUC_WARN_UNUSED_RESULT;
+const char *o_picture_get_data (TOPLEVEL *toplevel, OBJECT *object,
+                                size_t *len);
+gboolean o_picture_set_from_buffer (TOPLEVEL *toplevel, OBJECT *object,
+                                    const gchar *filename, const gchar *data,
+                                    size_t len, GError **error);
+gboolean o_picture_set_from_file (TOPLEVEL *toplevel, OBJECT *object,
+                                  const gchar *filename, GError **error);
+const gchar *o_picture_get_filename (TOPLEVEL *toplevel, OBJECT *object);
+GdkPixbuf *o_picture_get_fallback_pixbuf (TOPLEVEL *toplevel) G_GNUC_WARN_UNUSED_RESULT;
 
 /* o_pin_basic.c */
 OBJECT *o_pin_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2, int pin_type, int whichend);

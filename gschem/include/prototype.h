@@ -632,7 +632,7 @@ void o_picture_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_picture_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_picture_draw_place(GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current);
-void o_picture_exchange(GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf, const gchar *filename);
+gboolean o_picture_exchange(GSCHEM_TOPLEVEL *w_current, const gchar *filename, GError **error);
 void picture_change_filename_dialog (GSCHEM_TOPLEVEL *w_current);
 void o_picture_set_pixbuf(GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf, char *filename);
 

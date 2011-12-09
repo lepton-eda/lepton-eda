@@ -725,11 +725,13 @@ static void o_grips_start_path(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
 static void o_grips_start_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
                                   int x, int y, int whichone)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
-  w_current->current_pixbuf = o_current->picture->pixbuf;
-  w_current->pixbuf_filename = o_current->picture->filename;
-  w_current->pixbuf_wh_ratio = o_current->picture->ratio;
+  w_current->current_pixbuf = o_picture_get_pixbuf (toplevel, o_current);
+  w_current->pixbuf_filename =
+    g_strdup (o_picture_get_filename (toplevel, o_current));
+  w_current->pixbuf_wh_ratio = o_picture_get_ratio (toplevel, o_current);
 
   /* (second_wx,second_wy) is the selected corner */
   /* (first_wx, first_wy) is the opposite corner */
@@ -1134,7 +1136,9 @@ static void o_grips_end_picture(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
   o_picture_modify(toplevel, o_current, 
 		   w_current->second_wx, w_current->second_wy, whichone);
 
+  g_object_unref (w_current->current_pixbuf);
   w_current->current_pixbuf = NULL;
+  g_free (w_current->pixbuf_filename);
   w_current->pixbuf_filename = NULL;
   w_current->pixbuf_wh_ratio = 0;
 }
