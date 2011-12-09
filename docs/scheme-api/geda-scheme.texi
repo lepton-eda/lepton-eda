@@ -1084,8 +1084,74 @@ line section to the current path:
 @node Pictures
 @subsection Pictures
 
+A picture object displays an image in the schematic, and is a purely
+graphical element.  Pictures may be in any format supported by the
+user's GdkPixbuf installation (but note that images that can't be
+loaded for some reason are preserved).  The @var{top-left},
+@var{bottom-right}, @var{angle} and @var{mirror} properties of a
+picture object indicate the transformation that was applied to the
+original image.  The transformation is applied as follows:
+
+@enumerate
+@item
+If @var{mirror} is true, the picture is reflected about its vertical
+centerline.
+@item
+The picture is rotated by @var{angle} anticlockwise about its center
+(@var{angle} may only be an integer multiple of 90 degrees).
+@item
+The picture is scaled and translated to fit within the rectangle
+defined by the points @var{top-left} and @var{bottom-right}.
+@end enumerate
+
 @defun picture? object
 Returns @samp{#t} if and only if @var{object} is a picture @code{object}.
+@end defun
+
+@defun make-picture/vector vector filename top-left bottom-right angle mirror
+Creates and returns a new picture object for @var{filename}, by
+reading image data from @var{vector} (which should be in a standard
+image file format).  If @var{vector} could not be loaded, an error is
+raised.  @var{top-left}, @var{bottom-right}, @var{angle} and
+@var{mirror} specify the picture transformation.
+
+The points @var{top-left} and @var{bottom-right} should be specified
+in the form @samp{(x . y)}.
+@end defun
+
+@defun set-picture! picture top-left bottom-right angle mirror
+Sets the picture transformation for @var{picture}.
+@end defun
+
+@defun picture-info picture
+Returns the parameters of @var{picture} as a list in the form:
+
+@example
+((top-left-x . top-left-y) (bottom-right-x . bottom-right-y) angle mirror)
+@end example
+@end defun
+
+@defun picture-filename picture
+Returns the filename associated with @var{picture} as a string.
+@end defun
+
+@defun picture-top-left picture
+Returns the position of the top left corner of @samp{picture} in the
+form @samp{(x . y)}.
+@end defun
+
+@defun picture-bottom-right picture
+Returns the position of the bottom right corner of @samp{picture} in
+the form @samp{(x . y)}.
+@end defun
+
+@defun picture-angle picture
+Returns the angle to rotate @samp{picture} by, as an integer number of
+degrees.
+@end defun
+
+@defun picture-mirror? picture
+Returns true if @samp{picture} is mirrored.
 @end defun
 
 @node Text

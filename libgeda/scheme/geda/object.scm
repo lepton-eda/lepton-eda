@@ -264,6 +264,41 @@
 (define-public (picture? x)
   (object-type? x 'picture))
 
+(define-public (set-picture! p top-left bottom-right angle mirror)
+  (%set-picture! p (car top-left) (cdr top-left)
+                 (car bottom-right) (cdr bottom-right) angle mirror))
+
+(define-public (make-picture/vector vec filename . args)
+  (let ((p (%make-picture)))
+    (%set-picture-data/vector! p vec filename)
+    (apply set-picture! p args)))
+
+(define-public (picture-info p)
+  (let* ((params (%picture-info p))
+         (filename (car params))
+         (tail (cdr params)))
+    (apply list filename
+           (cons (list-ref tail 0)
+                 (list-ref tail 1))
+           (cons (list-ref tail 2)
+                 (list-ref tail 3))
+           (list-tail tail 4))))
+
+(define-public (picture-filename p)
+  (list-ref (picture-info p) 0))
+
+(define-public (picture-top-left p)
+  (list-ref (picture-info p) 1))
+
+(define-public (picture-bottom-right p)
+  (list-ref (picture-info p) 2))
+
+(define-public (picture-angle p)
+  (list-ref (picture-info p) 3))
+
+(define-public (picture-mirror? p)
+  (list-ref (picture-info p) 4))
+
 ;;;; Text
 
 (define-public (text? t)

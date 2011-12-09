@@ -1841,6 +1841,206 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
   return obj_s;
 }
 
+/*! \brief Create a new, empty picture object.
+ * \par Function Description
+ * Creates a new picture object with no filename, no image data and
+ * all other parameters set to default values.  It is initially set to
+ * be embedded.
+ *
+ * \note Scheme API: Implements the %make-picture procedure in the
+ * (geda core object) module.
+ *
+ * \return a newly-created picture object.
+ */
+SCM_DEFINE (make_picture, "%make-picture", 0, 0, 0, (),
+            "Create a new picture object")
+{
+  OBJECT *obj = o_picture_new (edascm_c_current_toplevel (),
+                               NULL, 0, NULL, OBJ_PICTURE,
+                               0, 0, 0, 0, 0, FALSE, TRUE);
+  SCM result = edascm_from_object (obj);
+
+  /* At the moment, the only pointer to the object is owned by the
+   * smob. */
+  edascm_c_set_gc (result, 1);
+
+  return result;
+}
+
+/*! \brief Get picture object parameters.
+ * \par Function Description
+ * Retrieves the parameters of a picture object.  The return value is
+ * a list of parameters:
+ *
+ * -# Filename of picture.
+ * -# X-coordinate of top left of picture.
+ * -# Y-coordinate of top left of picture.
+ * -# X-coordinate of bottom right of picture.
+ * -# Y-coordinate of bottom right of picture.
+ * -# Rotation angle.
+ * -# Whether object is mirrored.
+ *
+ * \note Scheme API: Implements the %picture-info procedure in the
+ * (geda core object) module.
+ *
+ * \param obj_s the picture object to inspect.
+ * \return a list of picture object parameters.
+ */
+SCM_DEFINE (picture_info, "%picture-info", 1, 0, 0,
+            (SCM obj_s), "Get picture object parameters")
+{
+  SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PICTURE), obj_s,
+              SCM_ARG1, s_picture_info);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (obj_s);
+  const gchar *filename = o_picture_get_filename (toplevel, obj);
+
+  SCM filename_s = SCM_BOOL_F;
+  if (filename != NULL) {
+    filename_s = scm_from_utf8_string (filename);
+  }
+
+  return scm_list_n (filename_s,
+                     scm_from_int (obj->picture->upper_x),
+                     scm_from_int (obj->picture->upper_y),
+                     scm_from_int (obj->picture->lower_x),
+                     scm_from_int (obj->picture->lower_y),
+                     scm_from_int (obj->picture->angle),
+                     (obj->picture->mirrored ? SCM_BOOL_T : SCM_BOOL_F),
+                     SCM_UNDEFINED);
+}
+
+/* \brief Set picture object parameters.
+ * \par Function Description
+ * Sets the parameters of the picture object \a obj_s.
+ *
+ * \note Scheme API: Implements the %set-picture! procedure in the
+ * (geda core object) module.
+ *
+ * \param obj_s       the picture object to modify
+ * \param x1_s  the new x-coordinate of the top left of the picture.
+ * \param y1_s  the new y-coordinate of the top left of the picture.
+ * \param x2_s  the new x-coordinate of the bottom right of the picture.
+ * \param y2_s  the new y-coordinate of the bottom right of the picture.
+ * \param angle_s     the new rotation angle.
+ * \param mirror_s    whether the picture object should be mirrored.
+ * \return the modify \a obj_s.
+ */
+SCM_DEFINE (set_picture_x, "%set-picture!", 7, 0, 0,
+            (SCM obj_s, SCM x1_s, SCM y1_s, SCM x2_s, SCM y2_s, SCM angle_s,
+             SCM mirror_s), "Set picture object parameters")
+{
+  SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PICTURE), obj_s,
+              SCM_ARG1, s_set_picture_x);
+  SCM_ASSERT (scm_is_integer (x1_s), x1_s, SCM_ARG2, s_set_picture_x);
+  SCM_ASSERT (scm_is_integer (y1_s), x1_s, SCM_ARG3, s_set_picture_x);
+  SCM_ASSERT (scm_is_integer (x2_s), x1_s, SCM_ARG4, s_set_picture_x);
+  SCM_ASSERT (scm_is_integer (y2_s), x1_s, SCM_ARG5, s_set_picture_x);
+  SCM_ASSERT (scm_is_integer (angle_s), angle_s, SCM_ARG6, s_set_picture_x);
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (obj_s);
+
+  /* Angle */
+  int angle = scm_to_int (angle_s);
+  switch (angle) {
+  case 0:
+  case 90:
+  case 180:
+  case 270:
+    /* These are all fine. */
+    break;
+  default:
+    /* Otherwise, not fine. */
+    scm_misc_error (s_set_picture_x,
+                    _("Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"),
+                    scm_list_1 (angle_s));
+  }
+
+  o_emit_pre_change_notify (toplevel, obj);
+
+  obj->picture->angle = scm_to_int (angle_s);
+  obj->picture->mirrored = scm_is_true (mirror_s);
+  o_picture_modify_all (toplevel, obj,
+                        scm_to_int (x1_s), scm_to_int (y1_s),
+                        scm_to_int (x2_s), scm_to_int (y2_s));
+
+  o_emit_change_notify (toplevel, obj);
+  return obj_s;
+}
+
+/*! \brief Set a picture object's data from a vector.
+ * \par Function Description
+ * Sets the image data for the picture object \a obj_s from the vector
+ * \a data_s, and set its \a filename.  If the contents of \a data_s
+ * could not be successfully loaded as an image, raises an error.  The
+ * contents of \a data_s should be image data encoded in on-disk
+ * format.
+ *
+ * \note Scheme API: Implements the %set-picture-data/vector!
+ * procedure in the (geda core object) module.
+ *
+ * \param obj_s       The picture object to modify.
+ * \param data_s      Vector containing encoded image data.
+ * \param filename_s  New filename for \a obj_s.
+ * \return \a obj_s.
+ */
+SCM_DEFINE (set_picture_data_vector_x, "%set-picture-data/vector!",
+            3, 0, 0, (SCM obj_s, SCM data_s, SCM filename_s),
+            "Set a picture object's data from a vector.")
+{
+  SCM vec_s = scm_any_to_s8vector (data_s);
+  /* Check argument types */
+  SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PICTURE), obj_s,
+              SCM_ARG1, s_set_picture_data_vector_x);
+  SCM_ASSERT (scm_is_true (scm_s8vector_p (vec_s)), data_s, SCM_ARG2,
+              s_set_picture_data_vector_x);
+  SCM_ASSERT (scm_is_string (filename_s), filename_s, SCM_ARG3,
+              s_set_picture_data_vector_x);
+
+  scm_dynwind_begin (0);
+
+  /* Convert vector to contiguous buffer */
+  scm_t_array_handle handle;
+  size_t len;
+  ssize_t inc;
+  const scm_t_int8 *elt = scm_s8vector_elements (vec_s, &handle, &len, &inc);
+  gchar *buf = g_malloc (len);
+  int i;
+
+  scm_dynwind_unwind_handler (g_free, buf, SCM_F_WIND_EXPLICITLY);
+
+  for (i = 0; i < len; i++, elt += inc) {
+    buf[i] = (gchar) *elt;
+  }
+  scm_array_handle_release (&handle);
+
+  gboolean status;
+  GError *error = NULL;
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  OBJECT *obj = edascm_to_object (obj_s);
+  gchar *filename = scm_to_utf8_string (filename_s);
+  scm_dynwind_unwind_handler (g_free, filename, SCM_F_WIND_EXPLICITLY);
+
+  status = o_picture_set_from_buffer (toplevel, obj, filename,
+                                      buf, len, &error);
+
+  if (!status) {
+    scm_dynwind_unwind_handler ((void (*)(void *)) g_error_free, error,
+                                SCM_F_WIND_EXPLICITLY);
+    scm_misc_error (s_set_picture_data_vector_x,
+                    "Failed to set picture image data from vector: ~S",
+                    scm_list_1 (scm_from_utf8_string (error->message)));
+  }
+
+  o_page_changed (toplevel, obj);
+  scm_dynwind_end ();
+  return obj_s;
+}
+
+
+
 /*! \brief Translate an object.
  * \par Function Description
  * Translates \a obj_s by \a dx_s in the x-axis and \a dy_s in the
@@ -1989,6 +2189,8 @@ init_module_geda_core_object ()
                 s_object_connections, s_object_complex,
                 s_make_path, s_path_length, s_path_ref,
                 s_path_remove_x, s_path_insert_x,
+                s_make_picture, s_picture_info, s_set_picture_x,
+                s_set_picture_data_vector_x,
                 s_translate_object_x, s_rotate_object_x,
                 s_mirror_object_x,
                 NULL);
