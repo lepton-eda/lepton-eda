@@ -50,9 +50,13 @@ SCM_DEFINE (show_uri, "%show-uri", 1, 0, 0, (SCM uri_s),
   GError *err = NULL;
 
   if (!x_show_uri (w_current, uri, &err)) {
+    scm_dynwind_begin (0);
+    scm_dynwind_unwind_handler ((void (*)(void *)) g_error_free,
+                                err, SCM_F_WIND_EXPLICITLY);
     scm_misc_error (s_show_uri, _("Could not launch URI ~S: ~A"),
                     scm_list_2 (uri_s,
                                 scm_from_utf8_string (err->message)));
+    scm_dynwind_end ();
   }
   return SCM_UNDEFINED;
 }
