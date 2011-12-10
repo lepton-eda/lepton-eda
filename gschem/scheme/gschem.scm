@@ -41,6 +41,9 @@
 (define (press-key key)
   (eval-pressed-key current-keymap key))
 
+;; Function for resetting current key sequence
+(define (reset-keys) (set! current-keys '()) #f)
+
 ;; Does the work of evaluating a key.  Adds the key to the current key
 ;; sequence, then looks up the key sequence in the current keymap.  If
 ;; the key sequence resolves to an action, calls the action.  If the
@@ -49,9 +52,6 @@
 ;; symbol; otherwise, returns #f.  If the key is #f, clears the
 ;; current key sequence.
 (define (eval-pressed-key keymap key)
-  ;; Function for resetting current key sequence
-  (define (reset-keys) (set! current-keys '()) #f)
-
   (if key
       (begin
         ;; Add key to current key sequence

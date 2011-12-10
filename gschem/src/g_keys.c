@@ -457,6 +457,7 @@ g_key_free (SCM key) {
   return 0;
 }
 
+SCM_SYMBOL (reset_keys_sym, "reset-keys");
 SCM_SYMBOL (press_key_sym, "press-key");
 SCM_SYMBOL (prefix_sym, "prefix");
 
@@ -484,6 +485,30 @@ static gboolean clear_keyaccel_string(gpointer data)
   w_current->keyaccel_string_source_id = 0;
   i_show_state(w_current, NULL);
   return FALSE;
+}
+
+/*! \brief Reset the current key sequence.
+ * \par Function Description
+ * If any prefix keys are stored in the current key sequence, clears
+ * them.
+ *
+ * \param w_current  The active #GSCHEM_TOPLEVEL context.
+ */
+void
+g_keys_reset (GSCHEM_TOPLEVEL *w_current)
+{
+  SCM s_expr = scm_list_1 (reset_keys_sym);
+
+  /* Reset the status bar */
+  g_free (w_current->keyaccel_string);
+  w_current->keyaccel_string = NULL;
+  i_show_state(w_current, NULL);
+
+  /* Reset the Scheme keybinding state */
+  scm_dynwind_begin (0);
+  g_dynwind_window (w_current);
+  g_scm_eval_protected (s_expr, scm_interaction_environment ());
+  scm_dynwind_end ();
 }
 
 /*! \brief Evaluate a user keystroke.
@@ -537,39 +562,33 @@ g_keys_execute(GSCHEM_TOPLEVEL *w_current, GdkEventKey *event)
 
   /* Validate the key -- there are some keystrokes we mask out. */
   if (!g_key_is_valid (key, mods)) {
-    return 0;
+    return FALSE;
   }
 
   /* Create Scheme key value */
   /* FIXME Escape as cancel key shouldn't be hardcoded in. */
   if (key == GDK_Escape) {
-    s_key = SCM_BOOL_F;
-  } else {
-    s_key = g_make_key (key, mods);
+    g_keys_reset (w_current);
+    return FALSE;
   }
 
+  s_key = g_make_key (key, mods);
+
   /* Update key hint string for status bar. */
-  if (s_key == SCM_BOOL_F) {
-    /* Cancelled key sequence, so clear hint string */
+  gchar *keystr = gtk_accelerator_get_label (key, mods);
+
+  /* If no current hint string, or the hint string is going to be
+   * cleared anyway, use key string directly */
+  if ((w_current->keyaccel_string == NULL) ||
+      w_current->keyaccel_string_source_id) {
     g_free (w_current->keyaccel_string);
-    w_current->keyaccel_string = NULL;
+    w_current->keyaccel_string = keystr;
 
   } else {
-    gchar *keystr = gtk_accelerator_get_label (key, mods);
-
-    /* If no current hint string, or the hint string is going to be
-     * cleared anyway, use key string directly */
-    if ((w_current->keyaccel_string == NULL) ||
-        w_current->keyaccel_string_source_id) {
-      g_free (w_current->keyaccel_string);
-      w_current->keyaccel_string = keystr;
-
-    } else {
-      gchar *p = w_current->keyaccel_string;
-      w_current->keyaccel_string = g_strconcat (p, " ", keystr, NULL);
-      g_free (p);
-      g_free (keystr);
-    }
+    gchar *p = w_current->keyaccel_string;
+    w_current->keyaccel_string = g_strconcat (p, " ", keystr, NULL);
+    g_free (p);
+    g_free (keystr);
   }
 
   /* Update status bar */

@@ -3529,7 +3529,7 @@ DEFINE_I_CALLBACK(cancel)
   i_update_toolbar(w_current);
 
   /* clear the key guile command-sequence */
-  scm_c_eval_string ("(set! current-command-sequence '())");
+  g_keys_reset (w_current);
 
   if (w_current->inside_action) { 
      o_invalidate_all (w_current);
