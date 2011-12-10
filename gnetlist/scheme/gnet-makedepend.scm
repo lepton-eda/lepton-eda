@@ -28,6 +28,51 @@
 ;; See the following for the intended usage:
 ;; http://www.gnu.org/software/make/manual/make.html#Automatic-Prerequisites
 ;;
+;; Backend example description
+;; ---------------------------
+;; A two-page schematic (idac-1.sch idac-2.sch) contains two sub-schematic
+;; symbols: inv1-1.sym and idac_8p-1.sym.  `inv1-1' is implemented with a
+;; single page indicated by the symbol's attribute `source=inv1-1.sch'.  The
+;; second block `idac_8p' is a three-page schematic whose symbol has a
+;; `source=idac_8p-1.sch,idac_8p-2.sch,idac_8p-3.sch' attribute.  Additionally,
+;; the top-level schematic pages include two `spice-include-1.sym' components
+;; with `file=' attribute values `dactune.pwl' and `idac.param'.
+;;
+;; Such a top-level schematic depends on the following files:
+;;      inv1-1.sch      - `inv1' sub-schematic
+;;      idac_8p-1.sch   - `idac_8p' sub-schematic, page 1
+;;      idac_8p-2.sch   - ... page 2
+;;      idac_8p-3.sch   - ... page 3
+;;
+;;      Note: The symbol files inv1-1.sym etc. are also dependencies and not
+;;            currently handled.
+;;
+;; For top-level SPICE simulation of `idac.cir' with hierarchical subckts, the
+;; additional files are dependencies:
+;;      inv1.cir    - from `gnetlist -g spice-sdb -o inv1.cir inv1-1.sch'
+;;      idac_8p.cir - `gnetlist -g spice-sdb -o idac_8p.cir idac_8p-*.sch'
+;;      dactune.pwl - additional SPICE include file
+;;      idac.param  - ...
+;;
+;; Calling this backend as:
+;;      gnetlist -g makedepend -o idac.d idac-*.sch
+;;
+;; generates the `idac.d' file contents as:
+;;
+;; idac-1.sch idac-2.sch: inv1-1.sch idac_8p-1.sch idac_8p-2.sch idac_8p-3.sch
+;; idac.cir: idac-1.sch idac-2.sch inv1.cir idac_8p.cir dactune.pwl idac.param
+;;
+;; Makefile snippet for use:
+;; ###
+;; modules=idac
+;; depends=$(addsuffix .d, $(modules))
+;;
+;; depend: $(depends)
+;; idac.d: $(wildcard idac-*.sch)
+;;     gnetlist -g makedepend -o $@ $^
+;;
+;; include $(depends)
+;; ###
 ;; --------------------------------------------------------------------------
 ;;
 
