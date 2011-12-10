@@ -107,13 +107,6 @@ edascm_to_object_glist (SCM objs, const char *subr)
 
   for (lst = objs; lst != SCM_EOL; lst = SCM_CDR (lst)) {
     SCM smob = SCM_CAR (lst);
-    EDASCM_ASSERT_SMOB_VALID (smob);
-    if (!EDASCM_OBJECTP (smob)) {
-      scm_error_scm (wrong_type_arg_sym,
-                     scm_from_utf8_string (subr),
-                     scm_from_utf8_string (_("Expected a gEDA object, found ~A")),
-                     scm_list_1 (smob), scm_list_1 (smob));
-    }
     result = g_list_prepend (result, (gpointer) edascm_to_object (smob));
   }
 
