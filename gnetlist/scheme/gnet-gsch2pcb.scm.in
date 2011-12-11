@@ -163,6 +163,8 @@
 		      )
       )
 
+(define-undefined gsch2pcb:pcb-m4-command-line gsch2pcb:m4-command-line)
+
 (define (gsch2pcb output-filename)
   (let ((port (open-output-file output-filename)))
     (gsch2pcb:write-top-header port)
