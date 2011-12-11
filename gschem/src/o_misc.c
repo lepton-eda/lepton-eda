@@ -557,10 +557,9 @@ o_update_component (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
 
   page = o_get_page (toplevel, o_current);
 
-  /* This should be replaced with API to invalidate only the specific
-   * symbol name we want to update */
-  s_clib_flush_symbol_cache ();
+  /* Force symbol data to be reloaded from source */
   clib = s_clib_get_symbol_by_name (o_current->complex_basename);
+  s_clib_symbol_invalidate_data (clib);
 
   if (clib == NULL) {
     s_log_message (_("Could not find symbol [%s] in library. Update failed.\n"),

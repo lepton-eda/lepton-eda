@@ -1226,7 +1226,6 @@ gchar *s_clib_symbol_get_data (const CLibSymbol *symbol)
   return data;
 }
 
-
 /*! \brief Find all symbols matching a pattern.  
  *
  *  \par Function Description 
@@ -1352,6 +1351,18 @@ void s_clib_flush_search_cache ()
 void s_clib_flush_symbol_cache ()
 {
   g_hash_table_remove_all (clib_symbol_cache);  /* Introduced in glib 2.12 */
+}
+
+/*! \brief Invalidate all cached data about a symbol.
+ * \par Function Description
+ * Removes all cached symbol data for \a symbol.
+ *
+ * \param symbol Symbol to flush cached data for.
+ */
+void
+s_clib_symbol_invalidate_data (CLibSymbol *symbol)
+{
+  g_hash_table_remove (clib_symbol_cache, (gpointer) symbol);
 }
 
 /*! \brief Get symbol structure for a given symbol name.
