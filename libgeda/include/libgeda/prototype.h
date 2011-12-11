@@ -299,7 +299,7 @@ gchar *s_clib_symbol_get_data (const CLibSymbol *symbol);
 GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode);
 void s_clib_flush_search_cache ();
 void s_clib_flush_symbol_cache ();
-void s_clib_symbol_invalidate_data (CLibSymbol *symbol);
+void s_clib_symbol_invalidate_data (const CLibSymbol *symbol);
 const CLibSymbol *s_clib_get_symbol_by_name (const gchar *name);
 gchar *s_clib_symbol_get_data_by_name (const gchar *name);
 GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel);

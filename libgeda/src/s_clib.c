@@ -1360,7 +1360,7 @@ void s_clib_flush_symbol_cache ()
  * \param symbol Symbol to flush cached data for.
  */
 void
-s_clib_symbol_invalidate_data (CLibSymbol *symbol)
+s_clib_symbol_invalidate_data (const CLibSymbol *symbol)
 {
   g_hash_table_remove (clib_symbol_cache, (gpointer) symbol);
 }
