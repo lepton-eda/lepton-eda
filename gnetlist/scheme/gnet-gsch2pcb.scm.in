@@ -132,74 +132,66 @@
 ;; where pcb stores its m4 files and the pcb config directory.
 (define-undefined gsch2pcb:pcb-m4-command "@m4@")
 (define-undefined gsch2pcb:pcb-m4-dir "@pcbm4dir@")
+(define-undefined gsch2pcb:m4-files "")
 
 ;; Let the user override the m4 search path
-(define-undefined gsch2pcb:pcb-m4-path (list gsch2pcb:pcb-m4-dir "$HOME/.pcb" "."))
+(define-undefined gsch2pcb:pcb-m4-path '("$HOME/.pcb" "."))
 
 ;; Build up the m4 command line
-
-(define gsch2pcb:m4-command-line (string-append
-				  gsch2pcb:pcb-m4-command " -d ") )
-(define gsch2pcb:pcb-m4-path-str #f)
-(for-each (lambda (d)
-            (set! gsch2pcb:m4-command-line (string-append
-                                            gsch2pcb:m4-command-line
-                                            " -I" d))
-	    (if gsch2pcb:pcb-m4-path-str
-		(set! gsch2pcb:pcb-m4-path-str (string-append
-						gsch2pcb:pcb-m4-path-str
-						"  " d) )
-		(set! gsch2pcb:pcb-m4-path-str d)
-		)
-	    )
-	  gsch2pcb:pcb-m4-path
-	  )
-
-
-
-(set! gsch2pcb:m4-command-line
-      ( string-append gsch2pcb:m4-command-line
-		      " " gsch2pcb:pcb-m4-dir "/common.m4 - >> "
-		      )
-      )
-
-(define-undefined gsch2pcb:pcb-m4-command-line gsch2pcb:m4-command-line)
+(define (gsch2pcb:build-m4-command-line output-filename)
+  (string-append gsch2pcb:pcb-m4-command
+                 " -d"
+                 (string-join (cons gsch2pcb:pcb-m4-dir
+                                    gsch2pcb:pcb-m4-path)
+                              " -I" 'prefix)
+                 " " gsch2pcb:pcb-m4-dir "/common.m4"
+                 " " gsch2pcb:m4-files
+                 " - >> " output-filename))
 
 (define (gsch2pcb output-filename)
+  (define command-line (gsch2pcb:build-m4-command-line output-filename))
+
   (let ((port (open-output-file output-filename)))
     (gsch2pcb:write-top-header port)
     (close-port port)
     )
 
-  (set! gsch2pcb:pcb-m4-command-line (string-append
-				  gsch2pcb:pcb-m4-command-line
-				  output-filename))
-  (display (string-append
-	    "=====================================================\n"
-	    "gsch2pcb backend configuration:\n"
-	    "\n"
-	    "   ----------------------------------------\n"
-	    "   Variables which may be changed in gafrc:\n"
-	    "   ----------------------------------------\n"
-	    "   gsch2pcb:pcb-m4-command:    " gsch2pcb:pcb-m4-command "\n"
-	    "   gsch2pcb:pcb-m4-dir:        " gsch2pcb:pcb-m4-dir "\n"
-	    "   gsch2pcb:pcb-m4-path:       " gsch2pcb:pcb-m4-path-str "\n"
-	    "   gsch2pcb:m4-command-line:   " gsch2pcb:pcb-m4-command-line  "\n"
-	    "\n"
-	    "   ---------------------------------------------------\n"
-	    "   Variables which may be changed in the project file:\n"
-	    "   ---------------------------------------------------\n"
-	    "   gsch2pcb:use-m4:            " (if gsch2pcb:use-m4 "yes" "no") "\n"
-	    "\n"
-	    "=====================================================\n"
-	    )
-	   )
+  (format #t
+"=====================================================
+gsch2pcb backend configuration:
+
+   ----------------------------------------
+   Variables which may be changed in gafrc:
+   ----------------------------------------
+   gsch2pcb:pcb-m4-command:    ~S
+   gsch2pcb:pcb-m4-dir:        ~S
+   gsch2pcb:pcb-m4-path:       ~S
+   gsch2pcb:m4-files:          ~S
+
+   ---------------------------------------------------
+   Variables which may be changed in the project file:
+   ---------------------------------------------------
+   gsch2pcb:use-m4:            ~A
+
+   ----------------
+   M4 command line:
+   ----------------
+   ~A
+
+=====================================================
+"
+   gsch2pcb:pcb-m4-command
+   gsch2pcb:pcb-m4-dir
+   gsch2pcb:pcb-m4-path
+   gsch2pcb:m4-files
+   (if gsch2pcb:use-m4 "yes" "no")
+   command-line)
 
   ;; If we have defined gsch2pcb:use-m4 then run the footprints
   ;; through the pcb m4 setup.  Otherwise skip m4 entirely
   (if gsch2pcb:use-m4
       ;; pipe with the macro define in pcb program
-      (let ((pipe (open-output-pipe gsch2pcb:pcb-m4-command-line))
+      (let ((pipe (open-output-pipe command-line))
 	    )
 	
 	(display "Using the m4 processor for pcb footprints\n")
