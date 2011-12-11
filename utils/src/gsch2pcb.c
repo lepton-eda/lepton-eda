@@ -1192,9 +1192,10 @@ parse_config (gchar * config, gchar * arg)
     sch_basename = g_strdup (arg);
   else if (!strcmp (config, "schematics"))
     add_multiple_schematics (arg);
-  else if (!strcmp (config, "m4-pcbdir"))
+  else if (!strcmp (config, "m4-pcbdir")) {
+    g_free (m4_pcbdir);
     m4_pcbdir = g_strdup (arg);
-  else if (!strcmp (config, "m4-file"))
+  } else if (!strcmp (config, "m4-file"))
     add_m4_file (arg);
   else if (!strcmp (config, "gnetlist"))
     extra_gnetlist_list = g_list_append (extra_gnetlist_list, g_strdup (arg));
