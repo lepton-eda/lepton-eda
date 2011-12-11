@@ -22,6 +22,8 @@
 #ifndef __GEDA_LIST_H__
 #define __GEDA_LIST_H__
 
+G_BEGIN_DECLS
+
 #define GEDA_TYPE_LIST            (geda_list_get_type())
 #define GEDA_LIST(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), GEDA_TYPE_LIST, GedaList))
 #define GEDA_LIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST((klass),  GEDA_TYPE_LIST, GedaListClass))
@@ -55,6 +57,8 @@ void geda_list_remove_all( GedaList *list );
 
 /*const GList *geda_list_get_glist( GedaList *list ); */
 #define geda_list_get_glist(list) (list->glist)
+
+G_END_DECLS
 
 #endif /* __GEDA_LIST_H__ */
 

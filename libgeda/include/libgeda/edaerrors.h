@@ -17,6 +17,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
  */
 
+G_BEGIN_DECLS
+
 /*! Domain for GErrors originating in libgeda. */
 #define EDA_ERROR eda_error_quark ()
 
@@ -28,3 +30,5 @@ typedef enum {
 } EdaError;
 
 GQuark eda_error_quark (void);
+
+G_END_DECLS
