@@ -138,6 +138,7 @@ build_and_run_command (const gchar *format, ...)
   gint status;
   gboolean result = FALSE;
   gboolean spawn_result;
+  gchar *standard_output = NULL;
   gchar *standard_error = NULL;
   GError * error = NULL;
 
@@ -180,14 +181,15 @@ build_and_run_command (const gchar *format, ...)
     if (g_spawn_sync (".",                  /* Working directory */
                       args,                 /* argv */
                       NULL,                 /* envp */
-                      G_SPAWN_SEARCH_PATH | /* flags */
-                      G_SPAWN_STDOUT_TO_DEV_NULL,
+                      G_SPAWN_SEARCH_PATH,  /* flags */
                       NULL,                 /* child_setup */
                       NULL,                 /* user data */
-                      NULL,                 /* standard output */
+                      &standard_output,     /* standard output */
                       &standard_error,      /* standard error */
                       &status,              /* exit status return */
                       &error)) {            /* GError return */
+      if (verbose)
+        fputs(standard_output, stdout);
       if (status == 0)
         result = TRUE;
       else {
@@ -204,6 +206,7 @@ build_and_run_command (const gchar *format, ...)
       printf ("\n%s", SEP_STRING);
 
     g_free(standard_error);
+    g_free (standard_output);
     
     g_free (args);
     /* free the list, but leave data untouched */
