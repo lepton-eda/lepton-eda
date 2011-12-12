@@ -2001,7 +2001,10 @@ static void multiattrib_init(Multiattrib *multiattrib)
 					   "shadow-type",
 					   GTK_SHADOW_IN,
 					   NULL));
+  /*! \fixme Forcing the size request is a horrible band-aid and
+   *  should be replaced by a better heuristic. */
   textview = GTK_WIDGET (g_object_new (GTK_TYPE_TEXT_VIEW,
+                                       "height-request", 50,
 				       NULL));
   g_signal_connect (textview,
 		    "key_press_event",
