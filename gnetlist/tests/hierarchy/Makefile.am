@@ -22,6 +22,7 @@ tests:
 	  SYMDIR=$(top_srcdir)/symbols \
 	    $(GNETLIST) \
 	      -L $(top_srcdir)/libgeda/scheme \
+	      -L $(top_builddir)/libgeda/scheme \
 	      -o $(BUILDDIR)/new_hierarchy.geda \
 	      -g geda $(SRCDIR)/top.sch )
 	diff $(SRCDIR)/hierarchy.geda $(BUILDDIR)/new_hierarchy.geda;

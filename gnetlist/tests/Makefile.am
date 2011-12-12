@@ -139,6 +139,7 @@ tests_ales:
 
 # switcap (does not work with make distcheck due to local test.ana file)
 	$(GNETLIST) -L $(top_srcdir)/libgeda/scheme \
+		-L $(top_builddir)/libgeda/scheme \
 		-o $(BUILDDIR)/new_skt.switcap -g switcap \
 		$(SRCDIR)/../examples/switcap/ckt.sch \
 		$(SRCDIR)/../examples/switcap/clocks.sch \
