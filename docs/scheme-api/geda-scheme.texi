@@ -1633,8 +1633,7 @@ gEDA configuration information.
 @end defun
 
 @defun user-data-dir
-Returns an ordered list of directories in which to store user-specific
-gEDA data.
+Returns the directory in which to store user-specific gEDA data.
 @end defun
 
 @defun user-config-dir
