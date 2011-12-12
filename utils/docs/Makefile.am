@@ -15,11 +15,11 @@ else
 	@echo 'The documentation cannot be built from the sources.'
 endif
 
-dist_man_MANS = gsch2pcb.1 grenum.1 gxyrs.1
+dist_man_MANS = gsch2pcb.1 grenum.1 gxyrs.1 refdes_renum.1
 
 
 # Rules for converting man->html
-html_man_files = gsch2pcb.html grenum.html gxyrs.html
+html_man_files = gsch2pcb.html grenum.html gxyrs.html refdes_renum.html
 SUFFIXES = .1 .html
 
 docsmandir=$(docdir)/man
