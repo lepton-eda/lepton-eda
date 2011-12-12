@@ -10,6 +10,7 @@ nobase_dist_scmdata_DATA = \
 	auto-place-attribs.scm \
 	pcb.scm \
 	default-attrib-positions.scm \
+	gschem/core/gettext.scm \
 	gschem/gschemdoc.scm \
 	gschem/window.scm \
 	gschem/selection.scm \

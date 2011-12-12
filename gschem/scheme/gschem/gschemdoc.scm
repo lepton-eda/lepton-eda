@@ -18,6 +18,7 @@
 ;;
 
 (define-module (gschem gschemdoc)
+  #:use-module (gschem core gettext)
   #:use-module (geda os)
   #:use-module (geda object)
   #:use-module (geda attrib)
@@ -221,4 +222,4 @@ system associated viewer application."
          (directory-doc-search (sys-doc-dir) name ".pdf"))))
 
      ;; 4) Fail miserably
-     (error "No documentation found"))))
+     (error (_ "No documentation found")))))

@@ -22,6 +22,8 @@
   ; Import C procedures
   #:use-module (geda core attrib)
 
+  #:use-module (geda core gettext)
+
   #:use-module (geda object)
   #:use-module (geda page))
 
@@ -54,7 +56,8 @@
 (define-public (promote-attribs! object)
   (let ((p (or (object-page object)
                (scm-error 'object-state #f
-                          "Object ~A is not part of a page" (list object) #f))))
+                          (_ "Object ~A is not part of a page")
+                          (list object) #f))))
     (if (component? object)
         (map (lambda (x)
                (let ((y (copy-object x)))

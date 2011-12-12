@@ -94,11 +94,13 @@ GEDADATA="${srcdir}/../.." # HACKHACKHACK
 GEDADATARC="${builddir}/../../lib"
 SCMDIR="${builddir}/../../scheme"
 GEDASCMDIR="${srcdir}/../../../libgeda/scheme"
+GEDABUILTSCMDIR="${builddir}/../../../libgeda/scheme"
 SYMDIR="${srcdir}/../../../symbols"
 export GEDADATA
 export GEDADATARC
 export SCMDIR
 export GEDASCMDIR
+export GEDABUILTSCMDIR
 export SYMDIR
 
 rundir=${here}/run
@@ -144,6 +146,7 @@ GEDADATA:   ${GEDATADA}
 GEDADATARC: ${GEDATADARC}
 SCMDIR:     ${SCMDIR}
 GEDASCMDIR: ${GEDASCMDIR}
+GEDABUILTSCMDIR: ${GEDABUILTSCMDIR}
 SYMDIR:     ${SYMDIR}
 all_tests:
 

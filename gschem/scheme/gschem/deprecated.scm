@@ -22,6 +22,8 @@
 
 (define-module (gschem deprecated)
 
+  #:use-module (gschem core gettext)
+
   #:use-module (geda page)
   #:use-module (geda object)
   #:use-module (geda attrib)
@@ -97,7 +99,7 @@
                  ("Upper Right" . upper-right))
                alignment)
               (and (string=? "" alignment) (text-align attrib))
-              (error "Invalid text alignment ~A." alignment))
+              (error (_ "Invalid text alignment ~A.") alignment))
              ;; angle
              (if (= rotation -1) (text-angle attrib) rotation)
              ;; string

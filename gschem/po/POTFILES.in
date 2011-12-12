@@ -1,10 +1,12 @@
 gschem/src/a_pan.c
 gschem/src/a_zoom.c
+gschem/src/g_attrib.c
 gschem/src/g_funcs.c
 gschem/src/g_hook.c
 gschem/src/g_keys.c
 gschem/src/g_rc.c
 gschem/src/g_register.c
+gschem/src/g_select.c
 gschem/src/g_util.c
 gschem/src/g_window.c
 gschem/src/globals.c
@@ -63,3 +65,7 @@ gschem/src/x_window.c
 gschem/data/geda-gschem.desktop.in
 
 gschem/lib/system-gschemrc.scm
+
+gschem/scheme/gschem/deprecated.scm
+gschem/scheme/gschem/gschemdoc.scm
+gschem/scheme/gschem/keymap.scm
