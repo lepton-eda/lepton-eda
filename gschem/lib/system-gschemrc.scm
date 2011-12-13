@@ -1058,7 +1058,7 @@
 ("125789" . view-zoom-box)
 ("1254789" . view-zoom-box)
 ("1235789" . view-zoom-box)
-("2354789" .view-zoom-box)
+("2354789" . view-zoom-box)
 ("2324789" . view-zoom-box)
 ("12354789" . view-zoom-box)
 ("12324789" . view-zoom-box)
