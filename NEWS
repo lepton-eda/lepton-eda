@@ -45,6 +45,9 @@ Notable changes in gEDA/gaf 1.7.2
 * `gsch2pcb' no longer supports the `m4_command' parameter in project
   files.
 
+* The `--m4-pcbdir' and `--m4-file' arguments to `gsch2pcb' now work
+  again.
+
 Notable changes in gEDA/gaf 1.7.1
 =================================
 
