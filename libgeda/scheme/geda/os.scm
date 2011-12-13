@@ -22,7 +22,9 @@
   ; Import C procedures and variables
   #:use-module (geda core os)
 
-  #:use-module (srfi srfi-1))
+  #:use-module (srfi srfi-1)
+
+  #:use-module (ice-9 regex))
 
 (define-public platform %platform)
 
@@ -55,3 +57,24 @@
   (string-join (list (getenv "HOME") ".gEDA") separator))
 
 (define-public user-config-dir user-data-dir)
+
+(define-public expand-env-variables
+  ;; Only compile regular expression once
+  (let ((rx (make-regexp "\\$\\{(\\w*)\\}")))
+    ;; This is the actual expand-env-variables function -- it's a
+    ;; closure around rx.
+    (lambda (str)
+      ;; Returns result of expanding the environment variable name
+      ;; found in match, or "".
+      (define (match-getenv m)
+        (or (getenv (match:substring m 1)) ""))
+      ;; Carries out a single round of environment variable expansion
+      ;; on str
+      (define (expand-once str)
+        (regexp-substitute/global #f rx str 'pre match-getenv 'post))
+      ;; Tail-recursively expands str until no more environment variables
+      ;; can be expanded.
+      (let ((result (expand-once str)))
+        (if (string=? str result)
+            result
+            (expand-env-variables result))))))

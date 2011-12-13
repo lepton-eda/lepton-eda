@@ -1641,6 +1641,17 @@ Returns the directory in which to store user-specific gEDA
 configuration information.
 @end defun
 
+@defun expand-env-variables str
+Recursively expands @var{str} until no more environment variables can be
+expanded, and return the expanded string. Environment variables are in
+the form @samp{$@{VAR@}}.
+
+@example
+(expand-env-variables "$@{HOME@}/path/to/dir")
+@end example
+
+@end defun
+
 @node gschem API Reference
 @chapter gschem API Reference
 
