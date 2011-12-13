@@ -152,7 +152,7 @@
 		(list-elt-file-type (caddr list-element))
 	       )
 	  (if (string=? list-elt-model-name model-name)
-	      list-element                                                        ;; found model-name.  Reutrn list-element.
+	      list-element                                                        ;; found model-name.  Return list-element.
 	      (spice-sdb:get-file-info-list-item model-name (cdr file-info-list)) ;; otherwise, recurse.
 	  )
         )  ;; end of let*
@@ -734,12 +734,12 @@
       (spice-sdb:write-component-no-value package port)
 
    ;; next look for "model-name" attribute.  Write it out if it exists.
-   ;; otherwise look for "device" attribute.
+   ;; otherwise look for "value" attribute.
       (if (not (string=? model-name "unknown"))
           (display (string-append model-name " " ) port)  ;; display model-name if known
-          (display (string-append value " ") port))       ;; otherwise display device
+          (display (string-append value " ") port))       ;; otherwise display value
 
-  ;; Next write out attribtes if they exist
+  ;; Next write out attributes if they exist
   ;; First attribute is area.  It is written as a simple string
       (if (not (string=? area "unknown"))
           (display (string-append area " ") port))
@@ -1001,7 +1001,7 @@
 ;;-----------------------------------------------------------
 (define spice-sdb:write-vc-switch
   (lambda (package port)
-    (debug-spew (string-append "Found voltage controled switch.  Refdes = " package "\n"))
+    (debug-spew (string-append "Found voltage controlled switch.  Refdes = " package "\n"))
     (let ((attrib-list (list " " ) ))
       (spice-sdb:write-transistor-diode package "S" "SW" attrib-list port))
   )
@@ -1070,7 +1070,7 @@
 		(display (string-append model-name " " ) port))
     )
 
-    ;; Next write out attribtes if they exist.  Use 
+    ;; Next write out attributes if they exist.  Use
     ;; a list of attributes which can be attached to a capacitor.
     ;; I include non-standard "area" attrib here per request of Peter Kaiser.
     (let ((attrib-list (list "area" "l" "w" "ic")))
@@ -1248,10 +1248,10 @@
 
 
 ;;--------------------------------------------------------------------
-;; Given a refdes and port, and optionaly a format string, this writes
+;; Given a refdes and port, and optionally a format string, this writes
 ;; out the nets attached to the component's pins. If it's not called
 ;; with a format string it looks for one in the net-format attribute,
-;; otherwise it writes out the pins unformated. This is used to write
+;; otherwise it writes out the pins unformatted. This is used to write
 ;; out non-slotted parts.
 ;;--------------------------------------------------------------------
 (define (spice-sdb:write-net-names-on-component refdes port . format)
@@ -1269,7 +1269,7 @@
 	      (debug-spew (string-append "     pinnumber = " (gnetlist:get-attribute-by-pinseq refdes pin "pinnumber") "\n"))
 	      (debug-spew (string-append "     pinseq = " (gnetlist:get-attribute-by-pinseq refdes pin "pinseq")))
 	      (if (not (string=? pin (gnetlist:get-attribute-by-pinseq refdes pin "pinseq")))
-		(debug-spew " <== INCONSISTANT!\n")
+		(debug-spew " <== INCONSISTENT!\n")
 		(debug-spew "\n") )
 	      (debug-spew (string-append "     netname = " (car (spice-sdb:get-net refdes (gnetlist:get-attribute-by-pinseq refdes pin "pinnumber"))) "\n"))
 	  )) ;; if #T for super debugging
@@ -1382,7 +1382,7 @@
 
 ;;----------------------------------------------------------
 ;; Include a file using an .INCLUDE directive
-;; Changed on 6.12.2005: to embedd the contents of the file,
+;; Changed on 6.12.2005: to embed the contents of the file,
 ;; you must call gnetlist with the -e flag set.
 ;;----------------------------------------------------------
 (define spice-sdb:write-include
@@ -1416,7 +1416,7 @@
 	  (if (calling-flag? "embedd_mode" (gnetlist:get-calling-flags))
 	      (begin
 		(spice-sdb:insert-text-file file port)                 ;; -e found: invoke insert-text-file
-		(debug-spew (string-append "embedding contents of " value " into netlist.\n")))
+		(debug-spew (string-append "embedding contents of file " file " into netlist.\n")))
 	      (begin
 		(display (string-append ".INCLUDE " file "\n") port)   ;; -e not found: just print out .INCLUDE card
 		(debug-spew "placing .include directive string into netlist.\n"))
@@ -1538,7 +1538,7 @@
 ;;**********************************************************************************
 
 ;;----------------------------------------------------------------------
-;; write-netlist is passed a list of refdess (ls).  It uses 
+;; write-netlist is passed a list of refdesses (ls).  It uses
 ;; each refdes to get the corresponding
 ;; "device" attribute.  Depending upon the device, it then invokes one or another of the 
 ;; spice line output fcns to output a line of the spice netlist.
@@ -1635,7 +1635,7 @@
 
 
 ;;----------------------------------------------------------------------
-;; create-file-info-list: This takes as arugment the list of packages (refdesses).
+;; create-file-info-list: This takes as argument the list of packages (refdesses).
 ;;   It runs through the package list, and for each gets the attributes.  If there is a
 ;;   "FILE" attribute, it gets the file info & uses it to build the
 ;;   file-info-list.  When done, it returns the file-info-list.
@@ -1782,7 +1782,7 @@
 ;;       attribute.  Every time a "file" attribute is found do this:
 ;;       --  Open the file and find out what kind of file it is (.SUBCKT or .MODEL).
 ;;       --  Determine if the file has previously been processed.  If not: stick the 
-;;           follwing info into the file-info list: (model-name file-name file-type). 
+;;           following info into the file-info list: (model-name file-name file-type).
 ;;           Otherwise just continue.
 ;;   3.  Loop through all components again, and write out a SPICE card for each.  
 ;;   4.  Afterwards, for each item in the file-info list, open the file, and
