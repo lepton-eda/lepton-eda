@@ -1,0 +1,50 @@
+.TH tragesym 1 "June 19th, 2011" "gEDA project" 1.7.1.20110619
+
+.SH NAME
+tragesym \- create gEDA symbols from structured textfiles
+
+.SH SYNOPSIS
+.B tragesym
+.I sourcefile symbolfile
+
+.SH DESCRIPTION
+.B tragesym
+creates gschem symbols from structured textfiles.
+.PP
+.B tragesym
+can:
+.IP \(bu
+create pins and arrange their elements (clocksign, dot, type, pinnumber,
+label);
+.IP \(bu
+sort pins alphabetical and numerical;
+.IP \(bu
+swap words of pinlabels if wished;
+.IP \(bu
+draw negation lines on the labels (since version 0.0.9, gschem will do that);
+.IP \(bu
+rotate pinlabels if wished;
+.IP \(bu
+do some syntax check to the input file.
+.PP
+.B tragesym
+requires python.
+.SH TUTORIAL
+There is a tutorial on the use of
+.B tragesym
+at:
+.IP
+http://geda.seul.org/wiki/geda:tragesym_tutorial
+.SH AUTHOR
+Werner Hoch <werner.ho@gmx.de>
+.SH SEE ALSO
+.BR gschem (1),
+.BR pcb (1)
+.SH COPYRIGHT
+.nf
+Copyright \(co 1999-2011 gEDA Contributors.  License GPLv2+: GNU GPL
+version 2 or later.  Please see the `COPYING' file included with this
+program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
