@@ -207,7 +207,7 @@ system associated viewer application."
      (and
       value
       ;; e) If there's a value attribute, search for it with Google.
-      (internet-pdf-search value))
+      (internet-doc-search value))
 
      ;; 3) Checks based on component basename
      (and
