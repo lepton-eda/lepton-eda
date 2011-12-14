@@ -20,6 +20,8 @@
 ;;
 ;; Verilog netlist backend written by Mike Jarabek starts here
 ;;
+;; 14 July 2011 - VERY basic concatenation support added by Frank Thomson
+;;
 ;; --------------------------------------------------------------------------
 
 ;; some useful regexes for working with net-names
@@ -28,6 +30,14 @@
 
 (define id-regexp "[a-zA-Z_][a-zA-Z0-9_$]*")
 (define numeric  "[0-9]+")
+;; match on a verilog concatened net like:  {netname[x:y],othernet}
+;; Will not expand a bus for replication so 
+(define concat-bus-reg (make-regexp
+		       (string-append "^[[:space:]]*" 
+				      "\\{"
+				      ".*"
+				      "\\}")))
+
 ;; match on a verilog identifier like:  netname[x:y]
 (define bit-range-reg (make-regexp
 		       (string-append "^(" id-regexp ")[[:space:]]*" 
@@ -213,6 +223,7 @@
   (lambda (netname)
     (let 
 	((bit-range (regexp-exec bit-range-reg netname))
+	 (concat-bus (regexp-exec concat-bus-reg netname))
 	 (single-bit (regexp-exec single-bit-reg netname))
 	 (simple-id (regexp-exec simple-id-reg netname)))
 
@@ -259,14 +270,16 @@
   (lambda (netname)
     (let 
 	((bit-range (regexp-exec bit-range-reg netname))
+	 (concat-bus (regexp-exec concat-bus-reg netname))
 	 (single-bit (regexp-exec single-bit-reg netname))
 	 (simple-id (regexp-exec simple-id-reg netname)))
 
       ;; check over each expression type, return
       ;; result
-      ;(display netname) (display ": ")
+      ;;(display netname) (display ": ")(display concat-bus)(display "\n")
       (cond
        (bit-range  `#t )
+       (concat-bus  `#t )
        (single-bit `#t )
        (simple-id  `#t )
        (else       `#f )
@@ -488,12 +501,20 @@
     (display "/* Wires from the design */" p)
     (newline p)
     (for-each (lambda (wire)          ; print a wire statement for each
-		(display "wire " p)   ; net in the design
-		(verilog:display-wire wire p)
-		(display " ;" p)
-		(newline p))
-	      verilog:get-nets ) 
-    (newline p)))
+		; if it does not appear to be a concatenated bus then print it
+		(if (not (regexp-exec concat-bus-reg (car(cdr(cdr(cdr(cdr(cadr wire))))))))
+			(begin
+			(display "wire " p)   ; net in the design
+			(verilog:display-wire wire p)
+			(display " ;" p)
+			(newline p)
+			) ;; begin
+		 ) ;; if
+		) ;; lambda
+	      verilog:get-nets ) ;; for-each
+    (newline p)
+	) ;; lambda
+) ;; define
 
 ;;
 ;;  Output any continuous assignment statements generated

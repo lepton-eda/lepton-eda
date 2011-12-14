@@ -42,6 +42,9 @@ Notable changes in gEDA/gaf 1.7.2
   netlists for use with the National Instruments ULTIboard layout
   tool.
 
+* The `verilog' backend to `gnetlist' now supports concatenated net
+  naming like "{a,b,c[3:0]}".
+
 * `gsch2pcb' no longer supports the `m4_command' parameter in project
   files.
 
