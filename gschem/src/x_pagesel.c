@@ -166,17 +166,11 @@ static void pagesel_callback_selection_changed (GtkTreeSelection *selection,
                       COLUMN_PAGE, &page,
                       -1);
 
-  /* temp */
-  s_page_goto (w_current->toplevel, page);
-  i_set_filename (w_current, w_current->toplevel->page_current->page_filename);
-  x_scrollbars_update (w_current);
-  o_invalidate_all (w_current);
-
-  /* We would like to use the following call, but since it calls 
-   * x_pagesel_update() it would cause an infinite loop.
-   */
-  /*  x_window_set_current_page (toplevel, page); */
-
+  /* Since setting the current page may call x_pagesel_update(), which
+   * might change the current page selection, make sure we do nothing
+   * if the newly-selected page is already the current page. */
+  if (page == w_current->toplevel->page_current) return;
+  x_window_set_current_page (w_current, page);
 }
 
 /*! \todo Finish function documentation!!!
