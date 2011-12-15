@@ -2,25 +2,31 @@
 
 usage ()
 {
-  echo Usage: 
-  echo \\tschdiff firstfile secondfile
-  echo \\tView a graphical diff of gschem schematics
-  echo
-  echo \\tTo use with git, just place this script in your PATH and do
-  echo \\tgit difftool -x schdiff ...
-  echo
-  echo \\tTo use with mercurial, add the following lines to your .hgrc:
-  echo \\t\\t[extensions]
-  echo \\t\\thgext.extdiff =
-  echo \\t\\t[extdiff]
-  echo \\t\\tcmd.schdiff = /PATH/TO/schdiff
-  echo \\tthen to invoke it, do
-  echo \\thg schdiff ...
-  echo
-  echo \\tTo use with subversion, place it in your PATH and do
-  echo \\tsvn diff --diff-cmd schdiff ...
+  cat <<EOF
+Usage: schdiff old new
 
-  echo \\tRequirements: Imagemagick and gschem be installed
+View a graphical diff of gEDA schematics using gschem and ImageMagick.
+
+Usage with git:
+  git difftool -x schdiff ...
+
+Usage with Mercurial:
+  Add the following to .hgrc:
+
+    [extensions]
+    hgext.extdiff =
+    [extdiff]
+    cmd.schdiff = /path/to/schdiff
+
+  Then use: hg schdiff ...
+
+Usage with Subversion:
+  svn diff --diff-cmd schdiff
+
+Report bugs to <http://bugs.launchpad.net/geda>
+gEDA/gaf homepage <http://gpleda.org/>
+EOF
+
 }
 
 for PROG in gschem composite display
