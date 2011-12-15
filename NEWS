@@ -34,6 +34,10 @@ Notable changes in gEDA/gaf 1.7.2
   platforms, including Windows.  The `locate' tool is no longer used
   to search for component documentation files.
 
+* The `schdiff' tool for generating visual diffs of schematics and
+  symbols has been added.  It can be used with most version control
+  systems.  See `man schdiff' for more details.
+
 * The `bom' and `bom2' backends to `gnetlist' now give error messages
   if no attribute file can be found.  The `-O attrib_file=FILE' and
   `-O attribs=ATTRIB,ATTRIB...' options have also been added.

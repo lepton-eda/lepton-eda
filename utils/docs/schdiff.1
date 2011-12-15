@@ -1,0 +1,80 @@
+.TH schdiff 1 "December 11th, 2011" "gEDA Project" 1.7.1.20110619
+
+.SH NAME
+.B schdiff
+\- Graphical diff tool for schematics
+
+.SH SYNOPSIS
+.B schdiff
+.I infile1.sch infile2.sch
+
+
+.SH DESCRIPTION
+
+The
+.B schdiff
+program will use 
+.B ImageMagick(1)
+to display a graphical diff of two gschem schematic files.  It's most useful
+when combined with a revision control system so it can compare two revisions of
+the same file, review changes, etc.  However, it is limited in that it can only
+compare two files at a time; it cannot diff entire directories nor can it diff
+an entire revision (unless that revision affected only one file).  It can
+easily be configured to work with most revision control systems.  Here are
+instructions for three:
+
+.B git:
+Use the 
+.B difftool
+command exactly as you would use
+.B diff
+, but supply the
+.B \-x schdiff
+option.
+
+.B mercurial:
+Use the 
+.B schdiff
+command exactly as you would use
+.B diff
+, but add the following lines to your .hgrc:
+
+.RS
+  [extensions]
+  hgext.extdiff =
+  [extdiff]
+  cmd.schdiff = schdiff
+.RE
+
+.B subversion:
+Use the
+.B diff
+command like normal, but supply the
+.B --diff-cmd schdiff
+option.
+
+.SH EXAMPLES
+
+.TP
+Use git to view the changes to a file between two revisions
+git difftool -x schdiff 182110f690c51eb53ea1799fd022e87322d742e3 039e012397f2638d1577dd7c80fb862a5503dbfd cpu.sch
+
+.TP
+Use mercurial to see all the changes since a specific revision
+hg schdiff -r 8442880f9835 cpld.sch
+
+.TP
+Use subversion to review a specific revision
+svn diff --diff-cmd schdiff -c 49 power.sch
+
+.SH BUGS
+
+If you find one, please report it at https://bugs.launchpad.net/geda
+
+.SH AUTHOR
+
+Alan Somers
+
+.SH SEE ALSO
+
+.B composite(1), display(1), git(1), gschem(1), hg(1), svn(1)
