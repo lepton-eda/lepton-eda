@@ -1231,11 +1231,11 @@ o_picture_get_fallback_pixbuf (TOPLEVEL *toplevel)
 
     filename = g_build_filename (toplevel->bitmap_directory,
                                  "gschem-warning.png", NULL);
-    pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+    pixbuf = gdk_pixbuf_new_from_file (filename, &error);
 
     if (pixbuf == NULL) {
       g_warning ( _("Failed to load fallback image %s: %s.\n"),
-                      filename, error->message);
+                  filename, error->message);
       g_error_free (error);
       failed = TRUE;
     }
