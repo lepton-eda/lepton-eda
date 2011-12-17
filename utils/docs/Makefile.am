@@ -16,7 +16,7 @@ else
 endif
 
 dist_man_MANS = gsch2pcb.1 grenum.1 gxyrs.1 pads_backannotate.1 \
-	pcb_backannotate.1 refdes_renum.1 schdiff.1
+	pcb_backannotate.1 refdes_renum.1 schdiff.1 sw2asc.1
 
 
 # Rules for converting man->html
