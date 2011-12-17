@@ -1,0 +1,86 @@
+.TH olib 1 "June 19th, 2011" "gEDA Project" 1.7.1.20110619
+
+.SH NAME
+.B olib
+\- OrCAD(tm) library part to gEDA .sym converter
+
+.SH SYNOPSIS
+.B olib
+.I filename prefix
+
+.SH DESCRIPTION
+.B olib
+is a simple automated converter from OrCAD v4 (in SDT version 1.10)
+ASCII parts library to gEDA component definition in .sym format
+file. It allow an initial dumb conversion file to file, with one lib
+converted in multiple .sym file, one per component in library.  The
+converted component file may need a little editing to become usable,
+but in some case needs no editing at all.
+.B olib
+will write one file per part in the current directory.
+.PP
+.B olib
+will:
+.IP \(bu
+Convert box-shaped components in OrCAD lib to .sym file in gEDA format;
+.IP \(bu
+Place pin, pin name, pin type, pin number;
+.IP \(bu
+Place logic bubble when needed (DOT attribute in OrCAD (TM), for logic
+negation);
+.IP \(bu
+Place clock arrow when needed (CLK attribute);
+.IP \(bu
+Place reference, from REFERENCE statement in OrCAD;
+.IP \(bu
+Place part name as label and device name as attribute;
+.IP \(bu
+Parse and draw non-box component, with LINE, ARC, CIRCLE and TEXT;
+.IP \(bu
+Add power pin as invisible net=name:pin attribute when detected (in OrCAD,
+invisible pin has typically T0 and B0 coords);
+.IP \(bu
+Through a command line switch, hides pin name in VECTOR drawn symbols,
+for a better appearance;
+.IP \(bu
+Write both new (post-20020825) and old (20020209) file format for .sym files
+through a switch on the command line;
+.PP
+.SH OPTIONS
+.TP
+filename
+The OrCAD library to convert. This should have been
+previously converted to ASCII format using the OrCAD 'decomp' utility.
+.TP
+prefix
+The prefix used to generate the filenames of the output gEDA symbols e.g.
+prefix-partname-1.sym
+.SH LIMITATIONS
+.B olib
+has the following limitations:
+.IP \(bu
+.B olib
+will not parse and store alternate component drawing (statement CONVERT in
+OrCAD);
+.IP \(bu
+.B olib
+will not handle drawing part using VECTOR list from another part (statement
+VECTOR 'partname' in OrCAD);
+.IP \(bu
+.B olib
+will not handle FILL statement in VECTOR statement (no equivalent in gEDA);
+.IP \(bu
+.B olib
+will not handle multiple part in one package (slots in gEDA).
+.SH AUTHOR
+Mario Pascucci <m.pas@libero.it>
+.SH SEE ALSO
+.BR gschem (1)
+.SH COPYRIGHT
+.nf
+Copyright \(co 1999-2011 gEDA Contributors.  License GPLv2+: GNU GPL
+version 2 or later.  Please see the `COPYING' file included with this
+program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
