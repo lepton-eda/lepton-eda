@@ -239,7 +239,6 @@ AC_CONFIG_FILES([Makefile
                  gnetlist/scripts/annotate.sh
                  gnetlist/scripts/bom_xref.sh
                  gnetlist/scripts/bompp.sh
-                 gnetlist/scripts/sw2asc
                  gnetlist/lib/system-gnetlistrc
 
                  utils/Makefile
@@ -254,6 +253,7 @@ AC_CONFIG_FILES([Makefile
                  utils/lib/Makefile
                  utils/lib/system-gschlasrc
                  utils/scripts/Makefile
+                 utils/scripts/sw2asc
                  utils/src/Makefile
                  utils/tests/Makefile
                  utils/tests/gxyrs/Makefile

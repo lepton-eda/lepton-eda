@@ -1,0 +1,231 @@
+#!@AWK@ -f
+#
+# gEDA - GPL Electronic Design Automation
+#
+# Copyright (C) 2003-2010 Dan McMahill
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+
+#
+# This is a script to extract out PRINT data from a SWITCAP simulation 
+# and write it to a format which gwave can read
+#
+
+BEGIN {
+  state_wait = 0;
+  state_skip_blank = 1;
+  state_read_data = 2;
+  state = state_wait;
+
+  analysis_none = 0;
+  analysis_SSS = 1;
+  analysis_SPECTRUM = 2;
+  analysis_FREQCOMP = 3;
+  analysis_TRAN = 4;
+  analysis = analysis_none;
+
+  progn = "sw2asc";
+
+  pat = "none";
+
+  variable_offset = 0;
+  nvars = 0;
+
+  for(i=1; i<ARGC; i=i+1) {
+    if(ARGV[i] ~ /^(-c)|(--copyright)$/) {
+      copyright();
+      exit 0;
+    } else if(ARGV[i] ~ /^((-h)|(--help))$/) {
+      usage();
+      exit 0;
+    } else if(ARGV[i] ~ /^((-v)|(--version))$/) {
+      copyright();
+      exit 0;
+    } else if(ARGV[i] ~ /^-.*/) {
+      printf("Unknown option: ""%s""\n", ARGV[i]) > "/dev/stderr";
+      usage();
+      close("/dev/stderr");
+      exit 1;
+    } 
+    printf("ARGV[%d] = %s\n", i, ARGV[i]);
+  }
+  infile = ARGV[ARGC-1];
+  
+  copyright();
+
+  printf("Loading SWITCAP output file [%s]\n", infile);
+}
+
+/^ Sinusoidal Steady State/ {
+  if( debug ) { printf("Start of SSS analysis\n"); }
+  analysis = analysis_SSS;
+  cnt_SSS = cnt_SSS + 1;
+  fileid = ".SSS." cnt_SSS;
+  pat = "^[ \t]*frequency";
+}
+
+/^ Spectral Analysis$/ {
+  if( debug ) { printf("Start of SPECTRUM analysis\n"); }
+  analysis = analysis_SPECTRUM;
+  cnt_SPECTRUM = cnt_SPECTRUM + 1;
+  fileid = ".SPECTRUM." cnt_SPECTRUM;
+  pat = "^not_implemented_yet$";
+  printf("Ignoring data from SPECTRUM analysis.\n");
+  printf("I haven't fully worked out how to always parse this\n");
+  printf("correctly.  Please write code to do this!!!\n\n");
+}
+
+/^ Spectral Analysis by Components$/ {
+  if( debug ) { printf("Start of FREQCOMP analysis\n"); }
+  analysis = analysis_FREQCOMP;
+  cnt_FREQCOMP = cnt_FREQCOMP + 1;
+  fileid = ".FREQCOMP." cnt_FREQCOMP;
+  pat = "^not_implemented_yet$";
+  printf("Ignoring data from FREQCOMP analysis.\n");
+  printf("I haven't fully worked out how to always parse this\n");
+  printf("correctly.  Please write code to do this!!!\n\n");
+}
+
+/^ Transient Analysis$/ {
+  if( debug ) { printf("Start of TRAN analysis\n"); }
+  analysis = analysis_TRAN;
+  cnt_TRAN = cnt_TRAN + 1;
+  fileid = ".TRAN." cnt_TRAN;
+  pat = "^[ \t]*time";
+}
+
+/^ Run Report$/ {
+  if( debug ) { printf("Start of Run Report\n"); }
+  analysis = analysis_none;
+  fileid = "none";
+  pat = "^this_is_the_run_report$";
+}
+
+/\*SWITCAP/ {
+  if( debug ) { printf("Saw *SWITCAP line\n"); }
+
+  if( variable_offset > 0 ) {
+    outf = infile fileid ".asc";
+    printf("Writing data to ""%s""\n", outf);
+    printf( "" ) > outf;
+    for(i = 1; i <= variable_offset; i = i + 1) {
+      printf("%s ", vnames[i]) >> outf;
+    }
+    printf("\n") >> outf;
+    
+    for(pt = 1; pt < cnt ; pt = pt + 1) {
+      if( debug > 1) { printf("point #%d: ", pt); }
+      for(i = 1; i <= variable_offset; i = i + 1) {
+	printf("%s ", data[i ":" pt]) >> outf;
+      }
+      printf("\n") >> outf;
+    }
+    close(outf);
+
+    variable_offset = 0;
+    nvars = 0;
+    for(k in data) { delete data[k]; }
+    num_analysis = num_analysis + 1;
+
+  } else {
+    if( debug ) { printf("No data to output yet\n"); }
+  }
+
+  next;
+}
+
+
+state == state_wait {
+  if( $0 ~ pat ) {
+    if( debug) { printf("state_wait: Variable start line:"); }
+    for(i=1; i<=NF; i=i+1) {
+      if( debug ) { printf("\tVariable #%d = %s\n", i, $i); }
+      vnames[i + variable_offset] = $i;
+    }
+    
+    nvars = NF;
+    
+    if( debug ) { printf("state_wait:  moving to state_skip_blank\n") };
+    state = state_skip_blank;
+  }
+  next;
+}
+
+state == state_skip_blank {
+  if( $0 == "" ) {
+    if( debug) { printf("state_skip_blank:  skipping blank line\n"); }
+    next; 
+  }
+  
+  cnt = 1;
+  if( debug ) { printf("state_skip_blank:  moving to state_read_data\n") };
+  state = state_read_data;
+}
+
+state == state_read_data {
+  if( $0 == "" ) {
+    variable_offset = variable_offset + nvars;
+    nvars = 0;
+    if( debug ) { printf("state_read_data:  moving to state_wait\n") };
+    state = state_wait;
+    next;
+  }
+
+  if( debug > 1 ) { printf("state_read_data: data = %s\n", $0); }
+  for(i=1; i<=NF; i=i+1) {
+    gsub(/d$/, "", $i);
+    data[i+variable_offset ":" cnt] = $i;
+  }
+  cnt = cnt + 1;
+  next;
+}
+
+END {
+  if( debug ) { printf("END.  Processed %d analyses.\n", num_analysis); };
+}
+
+
+function copyright() {
+  printf("gEDA/%s version %s\n", progn, "@VERSION@");
+  printf("gEDA/%s comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n", progn);
+  printf("This is free software, and you are welcome to redistribute it under certain\n");
+  printf("conditions; please see the COPYING file for more details.\n\n");
+}
+
+function usage() {
+  printf("Usage:\n\n");
+  printf("\t%s -- -c|--copyright\n", progn);
+  printf("\t%s -- -h|--help\n", progn);
+  printf("\t%s -- -v|--version\n", progn);
+  printf("\t%s switcap.out\n", progn);
+  printf("\n");
+  printf("%s process the output file generated by the SWITCAP switched capacitor\n", progn);
+  printf("circuit simulator.  Data generated by SWITCAP ""PRINT"" statements is\n");
+  printf("extracted and written to an output file in an ASCII format which can be\n");
+  printf("directly loaded by the gwave waveform viewer or more easily loaded into\n");
+  printf("a tool such as scilab, octave, grace, or matlab.\n");
+  printf("\n");
+  printf("If multiple analyses are in the SWITCAP output file, then they are written\n");
+  printf("to individual files by %s.  The output file names are derived from the input\n", progn);
+  printf("file name by appending "".{SSS,TRAN}.#.asc"" to the name of the input file.\n");
+  printf("SSS is used for Sinusoidal Steady State analysis output and TRAN is used for.\n");
+  printf("TRANsient analysis output.  # corresponds to the analysis number (ie if you \n");
+  printf("have 3 SSS analyses in your file, you will end up with .SSS.1.asc, .SSS.2.asc,\n");
+  printf("and .SSS.3.asc.\n");
+  printf("\n");
+  
+}
+
