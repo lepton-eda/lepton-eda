@@ -20,7 +20,7 @@ dist_man_MANS = gsch2pcb.1 grenum.1 gxyrs.1 pads_backannotate.1 \
 
 
 # Rules for converting man->html
-html_man_files = gsch2pcb.html grenum.html gxyrs.html refdes_renum.html
+html_man_files = $(dist_man_MANS:%.1,%.html)
 SUFFIXES = .1 .html
 
 docsmandir=$(docdir)/man
