@@ -3,4 +3,5 @@ Makefile.in
 html
 latex
 gnetlist.html
+mk_verilog_syms.html
 *~
