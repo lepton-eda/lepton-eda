@@ -1,0 +1,73 @@
+.TH garchive 1 "June 19th, 2011" "gEDA project" 1.7.1.20110619
+
+.SH NAME
+garchive \- create and extract gEDA design archives
+
+.SH SYNOPSIS
+.B garchive [
+.I options
+.B ] [-o
+.I output_file
+.B ]
+.I file
+.B ...
+
+.SH DESCRIPTION
+.B garchive
+creates and extracts gEDA designs from an archive. The two modes of
+operation are "archive mode" (archive creation) and "extract mode".
+In archive mode it creates a project archive from a bunch of project
+files, and in extract mode it extracts the files from the archive and
+places them in the local dir.
+.PP
+Archive mode is the default.
+
+.SH OPTIONS
+.TP
+-f filename 
+Optional.  Used in archive mode.  Read files to archive from <filename> 
+instead of garchiverc.
+.TP
+-v
+Verbose mode.
+.TP
+-e
+Extract the archive specified on the command line.
+.TP
+-a
+Create an archive. This is the default.
+.TP
+-o outfile
+Optional.  Used in archive mode.  Specifies the name of the
+output archive file.  The output file extension should be ".tar.gz".
+If this flag is not specified, the output file name is
+"ProjectArchive.tar.gz".
+.SH EXAMPLES
+To create an archive named MyArchive.tar.gz (the files to store listed in
+garchiverc):
+.IP
+garchive -o MyArchive.tar.gz
+.PP
+Verbosely create an archive (archives files listed on cmd line
+as well as those listed in garchiverc):
+.IP
+garchive -v -o MyArchive.tar.gz README Schematic1.sch Schematic2.sch Schematic3.sch
+.PP
+Extract an archive:
+.IP
+garchive -e ProjectArchive.tar.gz
+
+.SH AUTHOR
+Stuart Brorson <sdb@cloud9.net>
+
+.SH SEE ALSO
+.BR gschem (1)
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 1999-2011 gEDA Contributors.  License GPLv2+: GNU GPL
+version 2 or later.  Please see the `COPYING' file included with this
+program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
