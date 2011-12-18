@@ -1,0 +1,82 @@
+.TH gmk_sym 1 "June 19th, 2011" "gEDA project" 1.7.1.20110619
+
+.SH
+gmk_sym \- create rectangular symbols for gschem from a text file
+
+.SH SYNOPSIS
+.B gmk_sym [ -d ]
+.I inputfile.txt
+.B >
+.I outputfile.sym
+.PP
+.B gmk_sym -h|-?
+
+.SH DESCRIPTION
+.B gmk_sym
+is a program to create rectangular symbols for gschem from a file
+composed of comma separated lines.
+
+.SH OPTIONS
+.TP
+-d
+Turn on debug output
+.TP
+-h, -?
+Display usage information
+
+.SH FILE FORMAT
+The input file format is:
+.IP \(bu
+lines starting with ';' are comment lines and are not processed;
+.IP \(bu
+The 1st valid line describes a device:
+.RS
+.IP \(bu
+1st value: device name
+.IP \(bu
+2nd value: visible name
+.IP \(bu
+3rd value: visible name location on package
+.IP \(bu
+4th value: box's hoz size, in pins spacings
+.IP \(bu
+5th value: box's ver size, in pins spacings
+.IP \(bu
+6th value: uref prefix, like U or J
+.IP \(bu
+7th value: Footprint
+.IP \(bu
+8th value: Total number of pins on device (including hidden)
+.RE
+.IP \(bu
+All other valid lines describes the symbol's pins:
+.RS
+.IP \(bu
+1st value: pin name
+.IP \(bu
+2nd value: pin number
+.IP \(bu
+3rd value: pin shape, choice of: line, clock, dot&line
+.IP \(bu
+4th value: side of box to attach the pin,choice of: R, L, T, B
+.IP \(bu
+5th value: location of pin on side of box, in pin spacings
+.IP \(bu
+6th value: (optional) pin type attribute: in, out, io, oc, oe,
+pas, tp, tri, clk, pwr
+.RE
+
+.SH AUTHOR
+Jerry O'Keefe <jerryok@pacbell.net>
+
+.SH SEE ALSO
+.BR gschem (1)
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 1999-2011 gEDA Contributors.  License GPLv2+: GNU GPL
+version 2 or later.  Please see the `COPYING' file included with this
+program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
