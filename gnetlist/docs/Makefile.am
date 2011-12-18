@@ -14,7 +14,7 @@ dist_man_MANS = gnetlist.1
 noinst_MANS = mk_verilog_syms.1
 
 # Rules for converting man->html
-html_man_files = $(dist_man_MANS:%.1,%.html)
+html_man_files = $(dist_man_MANS:%.1=%.html)
 SUFFIXES = .1 .html
 
 docsmandir=$(docdir)/man
