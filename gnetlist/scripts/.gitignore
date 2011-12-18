@@ -1,6 +1,5 @@
 Makefile
 Makefile.in
-sw2asc
 annotate.sh
 bom_xref.sh
 bompp.sh
