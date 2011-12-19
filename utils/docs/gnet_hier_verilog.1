@@ -1,0 +1,45 @@
+.TH gnet_hier_verilog.sh 1 "June 19th, 2011" "gEDA project" 1.7.1.20110619
+
+.SH NAME
+gnet_hier_verilog.sh \- generate a non-flattened hierarchical Verilog netlist.
+
+.SH SYNOPSIS
+.B gnet_hier_verilog.sh
+.I filename.sch
+
+.SH DESCRIPTION
+.B gnet_hier_verilog.sh
+is a simple script to produce a
+hierarchical verilog netlist in a single file.
+It gathers hierarchical information from a list of
+unique symbols/schematics originating from the top level
+schematic all the way down to the lowest level of the
+design hierarchy. It then successively invokes the
+existing gEDA verilog netlister to produce each single
+level netlists, and concatinates all the unique
+module netlists into one single hierarchical netlist
+file.
+.PP
+Currently,
+.B gnet_hier_verilog
+assumes that one or more hierarchical symbol
+can be represented by a single schematic file. If needed,
+feature for mutiple schematic files mapped to a single symbol
+can be easily added. In that case, multiple source attrib
+are used in that symbol.
+
+.SH AUTHOR
+Paul Tan
+
+.SH SEE ALSO
+.BR gschem (1),
+.BR gnetlist (1)
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 1999-2011 gEDA Contributors.  License GPLv2+: GNU GPL
+version 2 or later.  Please see the `COPYING' file included with this
+program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
