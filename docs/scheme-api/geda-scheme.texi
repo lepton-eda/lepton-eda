@@ -1687,6 +1687,12 @@ form @samp{(x . y)}.  If the pointer is outside the display area,
 returns @samp{#f}.
 @end defun
 
+@defun snap-point point
+Snaps the given @var{point} to the current snap grid, i.e. returns the
+closest grid location to @var{point}.  Expects a point in the form
+@samp{(x . y)}, and returns a point in the same format.
+@end defun
+
 @node Key mapping
 @section Key mapping
 

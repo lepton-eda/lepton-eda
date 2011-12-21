@@ -1,6 +1,6 @@
 ;; gEDA - GPL Electronic Design Automation
 ;; gschem - gEDA Schematic Capture - Scheme API
-;; Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
+;; Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -28,3 +28,6 @@
 (define-public active-page %active-page)
 (define-public set-active-page! %set-active-page!)
 (define-public pointer-position %pointer-position)
+
+(define-public (snap-point point)
+  (%snap-point (car point) (cdr point)))

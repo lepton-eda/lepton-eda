@@ -251,6 +251,42 @@ SCM_DEFINE (pointer_position, "%pointer-position", 0, 0, 0,
 }
 
 /*!
+ * \brief Snap a point to the snap grid.
+ * \par Function Description
+ * Snaps the point (\a x_s, \a y_s) to the snap grid, returning the
+ * snapped point position as a cons in the form:
+ *
+ * <code>(x . y)</code>
+ *
+ * This always snaps the given point to the grid, disregarding the
+ * current user snap settings.
+ *
+ * \note Scheme API: Implements the %snap-point procedure in the
+ * (gschem core window) module.
+ *
+ * \param x_s the x-coordinate of the point to be snapped to grid.
+ * \param y_s the y-coordinate of the point to be snapped to grid.
+ * \return the snapped coordinates.
+ */
+SCM_DEFINE (snap_point, "%snap-point", 2, 0, 0,
+            (SCM x_s, SCM y_s), "Get the current snap grid size.")
+{
+  SCM_ASSERT (scm_is_integer (x_s), x_s, SCM_ARG1, s_snap_point);
+  SCM_ASSERT (scm_is_integer (y_s), y_s, SCM_ARG2, s_snap_point);
+
+  /* We save and restore the current snap setting, because we want to
+   * *always* snap the requested cordinates. */
+  GSCHEM_TOPLEVEL *w_current = g_current_window ();
+  int save_snap = w_current->snap;
+  w_current->snap = SNAP_GRID;
+  int x = snap_grid (w_current, scm_to_int (x_s));
+  int y = snap_grid (w_current, scm_to_int (y_s));
+  w_current->snap = save_snap;
+
+  return scm_cons (scm_from_int (x), scm_from_int (y));
+}
+
+/*!
  * \brief Create the (gschem core window) Scheme module
  * \par Function Description
  * Defines procedures in the (gschem core window) module. The module
@@ -264,7 +300,8 @@ init_module_gschem_core_window ()
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_current_window, s_active_page, s_set_active_page_x,
-                s_override_close_page_x, s_pointer_position, NULL);
+                s_override_close_page_x, s_pointer_position,
+                s_snap_point, NULL);
 
   /* Override procedures in the (geda core page) module */
   {
