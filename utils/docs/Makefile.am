@@ -17,7 +17,7 @@ endif
 
 dist_man_MANS = gsch2pcb.1 grenum.1 gxyrs.1 olib.1 pads_backannotate.1 \
 	pcb_backannotate.1 refdes_renum.1 schdiff.1 sw2asc.1 tragesym.1 \
-	smash_megafile.1 convert_sym.1 garchive.1 gmk_sym.1
+	smash_megafile.1 convert_sym.1 garchive.1 gmk_sym.1 gschlas.1
 
 noinst_MANS = gnet_hier_verilog.1
 
