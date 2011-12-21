@@ -224,7 +224,7 @@ SCM_DEFINE (override_close_page_x, "%close-page!", 1, 0, 0,
 }
 
 /*!
- * Get the current pointer position
+ * \brief Get the current pointer position
  * \par Function Description
  * Returns the current mouse pointer position, expressed in world
  * coordinates.  If the pointer is outside the schematic drawing area,
@@ -233,6 +233,9 @@ SCM_DEFINE (override_close_page_x, "%close-page!", 1, 0, 0,
  * The coordinates are returned as a cons:
  *
  * <code>(x . y)</code>
+ *
+ * \note Scheme API: Implements the %pointer-position procedure in the
+ * (gschem core window) module.
  *
  * \return The current pointer position, or SCM_BOOL_F.
  */
