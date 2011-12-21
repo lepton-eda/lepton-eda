@@ -91,6 +91,14 @@
 ; End of attribute promotion keywords
 ; 
 
+; make-backup-files
+;
+; Enable the creation of backup files (name.sch~) when saving a schematic.
+; It may be useful to disable this if your schematic is under version control
+; as you can always recover any mistakes from the revision history.
+;(make-backup-files "disabled")
+(make-backup-files "enabled")
+
 ;;;; Color maps
 
 ;; Load functions for handling color maps

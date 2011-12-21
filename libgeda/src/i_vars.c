@@ -54,6 +54,8 @@ int   default_attribute_promotion = TRUE;
 int   default_promote_invisible = FALSE;
 int   default_keep_invisible = TRUE;
 
+int   default_make_backup_files = TRUE;
+
 /*! \brief Initialize variables in TOPLEVEL object
  *  \par Function Description
  *  This function will initialize variables to default values.
@@ -71,6 +73,8 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
   toplevel->attribute_promotion = default_attribute_promotion;
   toplevel->promote_invisible = default_promote_invisible;
   toplevel->keep_invisible = default_keep_invisible;
+
+  toplevel->make_backup_files = default_make_backup_files;
 
   /* copy the always_promote_attributes list from the default */
   g_list_foreach(toplevel->always_promote_attributes, (GFunc) g_free, NULL);

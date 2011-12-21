@@ -503,6 +503,9 @@ struct st_toplevel {
   /* controls if invisible attribs are kept and not deleted */
   int keep_invisible;   
 
+  /* controls the generation of backup (~) files */
+  int make_backup_files;
+
   /* either window or limits */
   int print_output_type;
 

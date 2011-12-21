@@ -101,6 +101,8 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->promote_invisible   = FALSE;
   toplevel->keep_invisible      = FALSE;
 
+  toplevel->make_backup_files = TRUE;
+
   toplevel->print_output_type = 0;
 
   toplevel->print_output_capstyle = BUTT_CAP;

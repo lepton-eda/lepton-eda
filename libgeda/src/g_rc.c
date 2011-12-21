@@ -1039,6 +1039,27 @@ SCM g_rc_always_promote_attributes(SCM attrlist)
   return SCM_BOOL_T;
 }
 
+/*! \brief Enable the creation of backup files when saving
+ *  \par Function Description
+ *  If enabled then a backup file, of the form 'example.sch~', is created when
+ *  saving a file.
+ *
+ *  \param [in] mode  String. 'enabled' or 'disabled'
+ *  \return           Bool. False if mode is not a valid value; true if it is.
+ *
+ */
+SCM g_rc_make_backup_files(SCM mode)
+{
+  static const vstbl_entry mode_table[] = {
+    {TRUE , "enabled" },
+    {FALSE, "disabled"},
+  };
+
+  RETURN_G_RC_MODE("make-backup-files",
+                  default_make_backup_files,
+                  2);
+}
+
 extern COLOR print_colors[MAX_COLORS];
 
 SCM g_rc_print_color_map (SCM scm_map)

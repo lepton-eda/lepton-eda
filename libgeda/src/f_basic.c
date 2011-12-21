@@ -389,8 +389,9 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
   dirname = g_path_get_dirname (real_filename);
   only_filename = g_path_get_basename(real_filename);  
 
-  /* Do a backup if it's not an undo file backup and it was never saved. */
-  if (page->saved_since_first_loaded == 0) {
+  /* Do a backup if it's not an undo file backup and it was never saved.
+   * Only do a backup if backup files are enabled */
+  if (page->saved_since_first_loaded == 0 && toplevel->make_backup_files == TRUE) {
     if ( (g_file_test (real_filename, G_FILE_TEST_EXISTS)) && 
 	 (!g_file_test(real_filename, G_FILE_TEST_IS_DIR)) )
     {
