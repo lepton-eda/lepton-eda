@@ -1,0 +1,57 @@
+.TH gschlas 1 "June 19th, 2011" "gEDA project" 1.7.1.20110619
+
+.SH NAME
+gschlas \- gEDA schematic load and save
+
+.SH SYNOPSIS
+.B gschlas [ \-e | \-u ] [ \-q | \-v ]
+.I file
+.B [
+.I file ...
+.B ]
+.PP
+.B gschlas -h
+
+.SH DESCRIPTION
+.B gschlas
+can embed the in-use schematic symbols and pictures into a schematic
+or set of schematics. It allow, for instance, putting a schematic on a
+website or in an email without the recipient needing to download lots
+of custom symbols for the design.
+.PP
+.B gschlas
+can also unembed symbol references from a schematic, but note that the
+symbols revert to library references; if the symbol doesn't exist in
+the current gEDA project's library path, a broken schematic results.
+
+.SH OPTIONS
+.TP
+\-e
+Embed all components/pictures.
+.TP
+\-u
+Unembed all components/pictures.
+.TP
+\-q
+Quiet mode.
+.TP
+\-v
+Verbose mode.
+.TP
+\-h
+Print usage information.
+
+.SH AUTHOR
+Ales Hvezda
+
+.SH SEE ALSO
+.BR gschem(1)
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 1999-2011 gEDA Contributors.  License GPLv2+: GNU GPL
+version 2 or later.  Please see the `COPYING' file included with this
+program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
