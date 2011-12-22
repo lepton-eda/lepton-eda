@@ -1,0 +1,67 @@
+.TH gsymfix 1 "June 19th, 2011" "gEDA project" 1.7.1.20110619
+
+.SH NAME
+gsymfix \- automatically fix common issues with gEDA symbols
+
+.SH SYNOPSIS
+.B gsymfix [
+.I options
+.B ]
+.I symbol_file
+.SH DESCRIPTION
+.B gsymfix
+reads a gEDA symbol file and does the following:
+.IP \(bu
+prints a warning if there is no pinnumber attribute on a pin;
+.IP \(bu
+Renumbers pinseq attributes on all pins, starting with 1;
+.IP \(bu
+Adds a pinseq attribute to a pin if none exists;
+.IP \(bu
+Adds a pinlabel=n_a attribute to a pin if none exists;
+.IP \(bu
+Adds a pintype=io attribute to a pin if none exists;
+.IP \(bu
+Adds a numslots=0 attribute to the symbol if none exists;
+.IP \(bu
+Adds a device=XXX attribute to the symbol if none exists;
+.IP \(bu
+Adds a footprint=XXX attribute to the symbol if none exists.
+.PP
+The idea here is to fix common cut-and-paste issues and fix up
+the symbol so that it will pass
+.BR gsymcheck (1)
+with no errors or
+warnings.
+
+.SH OPTIONS
+.B gsymfix
+accepts the following options:
+.TP
+\-\-help
+Displays this help message.
+.TP
+\-\-verbose
+Enables verbose output.
+.TP
+\-\-vverbose
+Enables *very* verbose output.
+.TP
+\-\-version
+Shows the version of this program.
+
+.SH AUTHOR
+Mike Skerritt <mike@acornpacket.com>.
+
+.SH SEE ALSO
+.BR gschem (1),
+.BR gsymcheck (1)
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 1999-2011 gEDA Contributors.  License GPLv2+: GNU GPL
+version 2 or later.  Please see the `COPYING' file included with this
+program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
