@@ -15,7 +15,6 @@ int vstbl_get_val(const vstbl_entry *table, int index);
 SCM g_rc_component_library(SCM path, SCM name);
 SCM g_rc_component_library_command (SCM listcmd, SCM getcmd, SCM name);
 SCM g_rc_component_library_funcs (SCM listfunc, SCM getfunc, SCM name);
-SCM g_rc_component_library_search(SCM path);
 SCM g_rc_source_library(SCM path);
 SCM g_rc_source_library_search(SCM path);
 SCM g_rc_world_size(SCM width, SCM height, SCM border);
