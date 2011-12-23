@@ -1,0 +1,43 @@
+.TH sarlacc_schem 1 "June 19th, 2011" "gEDA project" 1.7.1.20110619
+
+.SH NAME
+sarlacc_schem \- convert OrCAD SDT IV files to gEDA format.
+
+.SH SYNOPSIS
+.B sarlacc_schem [
+.I options
+.B ]
+.I infile
+.B >
+.I outfile
+
+.SH DESCRIPTION
+.B sarlacc_schem
+converts OrCAD schematic files (in 16-bit format) to gEDA format.
+
+.SH OPTIONS
+.TP
+-s<n>
+Scale by n%. The default is 200%.
+.TP
+-h
+Print the help message.
+.TP
+-v
+Print the version.
+
+.SH AUTHOR
+Matthew Ettus <matt@ettus.com>
+
+.SH SEE ALSO
+.BR gschem (1),
+.BR sarlacc_sym (1)
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 1999-2011 gEDA Contributors.  License GPLv2+: GNU GPL
+version 2 or later.  Please see the `COPYING' file included with this
+program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.

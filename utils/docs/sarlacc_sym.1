@@ -1,0 +1,44 @@
+.TH sarlacc_sym 1 "June 19th, 2011" "gEDA project" 1.7.1.20110619
+
+.SH NAME
+sarlacc_sym \- convert OrCAD text libraries to gEDA components
+
+.SH SYNOPSIS
+.B sarlacc_sym [
+.I options
+.B ]
+.I library_file
+
+.SH DESCRIPTION
+.B sarlacc_sym
+converts OrCAD text format libraries into gEDA components
+for use in the
+.BR gschem (1)
+program.
+
+.SH OPTIONS
+.TP
+-s <n>
+Scale by n%. The default is 200%.
+.TP
+-h
+Print out the usage information.
+.TP
+-v
+Print out the version.
+
+.SH AUTHOR
+Matthew Ettus <matt@ettus.com>
+
+.SH SEE ALSO
+.BR gschem (1),
+.BR sarlacc_schem (1)
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 1999-2011 gEDA Contributors.  License GPLv2+: GNU GPL
+version 2 or later.  Please see the `COPYING' file included with this
+program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
