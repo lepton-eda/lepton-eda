@@ -566,12 +566,6 @@ g_keys_execute(GSCHEM_TOPLEVEL *w_current, GdkEventKey *event)
   }
 
   /* Create Scheme key value */
-  /* FIXME Escape as cancel key shouldn't be hardcoded in. */
-  if (key == GDK_Escape) {
-    g_keys_reset (w_current);
-    return FALSE;
-  }
-
   s_key = g_make_key (key, mods);
 
   /* Update key hint string for status bar. */
