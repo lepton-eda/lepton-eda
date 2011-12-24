@@ -17,6 +17,9 @@ Notable changes in gEDA/gaf 1.7.2
   details.  Existing extensions may need to be modified to load the
   `(geda deprecated)' or `(gschem deprecated)' modules.
 
+* The `component-library-search' function for `gafrc' files now skips
+  directories without symbols, and searches for libraries recursively.
+
 * `gschem' keybinding improvements:
 
   - Keybindings are now unaffected by Caps Lock.
@@ -56,6 +59,9 @@ Notable changes in gEDA/gaf 1.7.2
   again.
 
 * `gsymfix.pl' has been renamed to `gsymfix'.
+
+* Man pages are now available for all programs installed as part of
+  gEDA/gaf.
 
 Notable changes in gEDA/gaf 1.7.1
 =================================
