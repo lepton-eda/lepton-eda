@@ -132,7 +132,7 @@
 (define-public (set-attribute-value! attrib value)
   (let ((params (text-info attrib))
         (name-value (parse-attrib attrib)))
-    (list-set! params 3 (simple-format "~A=~A" (car name-value) value))
+    (list-set! params 3 (simple-format #f "~A=~A" (car name-value) value))
     (apply set-text! attrib params)))
 
 ;; get-objects-in-page page
