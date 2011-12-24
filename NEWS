@@ -63,6 +63,9 @@ Notable changes in gEDA/gaf 1.7.2
 * Man pages are now available for all programs installed as part of
   gEDA/gaf.
 
+* The undocumented programs `gnet_hier_verilog', `gsymupdate', `gschupdate'
+  and `sch2eaglepos.sh' are no longer installed to ${prefix}/bin.
+
 Notable changes in gEDA/gaf 1.7.1
 =================================
 
