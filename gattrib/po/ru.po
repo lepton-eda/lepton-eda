@@ -1,15 +1,16 @@
-# Russian translation for geda
+# Russian translation for gEDA gattrib
 # Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
 # This file is distributed under the same license as the geda package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+# Vladimir Zhbanov <vzhbanov@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: geda\n"
+"Project-Id-Version: geda gattrib\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2011-01-16 00:12-0500\n"
-"PO-Revision-Date: 2010-01-29 15:51+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2011-12-27 18:43+0400\n"
+"PO-Revision-Date: 2011-12-28 23:57+0400\n"
+"Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -20,8 +21,8 @@ msgstr ""
 
 #: gattrib/data/geda-gattrib.desktop.in:3
 msgid "gEDA Attribute Editor"
-msgstr "gEDA редактор атрибутов"
+msgstr "Редактор атрибутов gEDA"
 
 #: gattrib/data/geda-gattrib.desktop.in:4
 msgid "Manipulate component attributes with gattrib"
-msgstr "Редактировать атрибуты компонента с помощью gattrib"
+msgstr "Управление атрибутами компонента с помощью gattrib"
