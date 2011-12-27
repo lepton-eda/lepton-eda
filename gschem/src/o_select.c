@@ -459,8 +459,11 @@ void o_select_unselect_all(GSCHEM_TOPLEVEL *w_current)
 
   /* Call hooks */
   if (removed != NULL) {
+    scm_dynwind_begin (0);
+    g_dynwind_window (w_current);
+    scm_dynwind_unwind_handler (g_list_free, removed, SCM_F_WIND_EXPLICITLY);
     g_run_hook_object_list ("%deselect-objects-hook", removed);
-    g_list_free (removed);
+    scm_dynwind_end ();
   }
 }
 
