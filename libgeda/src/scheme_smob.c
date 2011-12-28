@@ -110,7 +110,11 @@ smob_free (SCM smob)
     s_page_weak_unref ((PAGE *) data, smob_weakref_notify, smob);
     break;
   case GEDA_SMOB_OBJECT:
+    /* See edascm_from_object() for an explanation of why OBJECT
+     * smobs store a TOPLEVEL in the second data word */
     s_object_weak_unref ((OBJECT *) data, smob_weakref_notify, smob);
+    s_toplevel_weak_unref ((TOPLEVEL *) SCM_SMOB_DATA_2 (smob),
+                           smob_weakref2_notify, smob);
     break;
   default:
     /* This should REALLY definitely never be run */
@@ -134,8 +138,8 @@ smob_free (SCM smob)
                  __FUNCTION__, data);
       break;
     case GEDA_SMOB_OBJECT:
-      /*! See edascm_from_object() for an explanation of why OBJECT
-       *  smobs store a TOPLEVEL in the second data word */
+      /* See edascm_from_object() for an explanation of why OBJECT
+       * smobs store a TOPLEVEL in the second data word */
       s_delete_object ((TOPLEVEL *) SCM_SMOB_DATA_2 (smob), (OBJECT *) data);
       break;
     default:
