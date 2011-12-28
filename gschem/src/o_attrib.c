@@ -71,7 +71,8 @@ void o_attrib_add_selected(GSCHEM_TOPLEVEL *w_current, SELECTION *selection,
 
   if (selected_objects != NULL) {
     /* Run select-objects-hook */
-    g_run_hook_object_list ("%select-objects-hook", selected_objects);
+    g_run_hook_object_list (w_current, "%select-objects-hook",
+                            selected_objects);
     g_list_free (selected_objects);
   }
 }
@@ -280,8 +281,8 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
   }
 
   /* Call add-objects-hook. */
-  g_run_hook_object ("%add-objects-hook", new_obj);
-  g_run_hook_object ("%select-objects-hook", new_obj);
+  g_run_hook_object (w_current, "%add-objects-hook", new_obj);
+  g_run_hook_object (w_current, "%select-objects-hook", new_obj);
 
   toplevel->page_current->CHANGED = 1;
 

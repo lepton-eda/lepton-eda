@@ -657,7 +657,7 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
 
   /* Call add-objects-hook */
   if (added_objects != NULL) {
-    g_run_hook_object_list ("%add-objects-hook", added_objects);
+    g_run_hook_object_list (w_current, "%add-objects-hook", added_objects);
     g_list_free (added_objects);
   }
 

@@ -66,17 +66,23 @@ g_get_hook_by_name (const char *name)
  * \param obj_lst list of #OBJECT smobs as hook argument.
  */
 void
-g_run_hook_object_list (const char *name, GList *obj_lst)
+g_run_hook_object_list (GSCHEM_TOPLEVEL *w_current, const char *name,
+                        GList *obj_lst)
 {
   SCM lst = SCM_EOL;
   GList *iter;
   for (iter = obj_lst; iter != NULL; iter = g_list_next (iter)) {
     lst = scm_cons (edascm_from_object ((OBJECT *) iter->data), lst);
   }
-  SCM args = scm_list_1 (scm_reverse_x (lst, SCM_EOL));
+  SCM expr = scm_cons (run_hook_sym,
+                       scm_cons (g_get_hook_by_name (name),
+                                 scm_reverse_x (lst, SCM_EOL)));
 
-  scm_run_hook (g_get_hook_by_name (name), args);
-  scm_remember_upto_here_2 (lst, args);
+  scm_dynwind_begin (0);
+  g_dynwind_window (w_current);
+  g_scm_eval_protected (expr, scm_interaction_environment ());
+  scm_dynwind_end ();
+  scm_remember_upto_here_1 (expr);
 }
 
 /*! \brief Runs a object hook with a single OBJECT.
@@ -90,11 +96,17 @@ g_run_hook_object_list (const char *name, GList *obj_lst)
  * \param obj  #OBJECT argument for hook.
  */
 void
-g_run_hook_object (const char *name, OBJECT *obj)
+g_run_hook_object (GSCHEM_TOPLEVEL *w_current, const char *name, OBJECT *obj)
 {
-  SCM args = scm_list_1 (scm_list_1 (edascm_from_object (obj)));
-  scm_run_hook (g_get_hook_by_name (name), args);
-  scm_remember_upto_here_1 (args);
+  SCM expr = scm_list_3 (run_hook_sym,
+                         g_get_hook_by_name (name),
+                         scm_list_1 (edascm_from_object (obj)));
+
+  scm_dynwind_begin (0);
+  g_dynwind_window (w_current);
+  g_scm_eval_protected (expr, scm_interaction_environment ());
+  scm_dynwind_end ();
+  scm_remember_upto_here_1 (expr);
 }
 
 /*! \brief Runs a page hook.
@@ -106,11 +118,17 @@ g_run_hook_object (const char *name, OBJECT *obj)
  * \param page #PAGE argument for hook.
  */
 void
-g_run_hook_page (const char *name, PAGE *page)
+g_run_hook_page (GSCHEM_TOPLEVEL *w_current, const char *name, PAGE *page)
 {
-  SCM args = scm_list_1 (edascm_from_page (page));
-  scm_run_hook (g_get_hook_by_name (name), args);
-  scm_remember_upto_here_1 (args);
+  SCM expr = scm_list_3 (run_hook_sym,
+                         g_get_hook_by_name (name),
+                         edascm_from_page (page));
+
+  scm_dynwind_begin (0);
+  g_dynwind_window (w_current);
+  g_scm_eval_protected (expr, scm_interaction_environment ());
+  scm_dynwind_end ();
+  scm_remember_upto_here_1 (expr);
 }
 
 /*! \brief Create the (gschem core hook) Scheme module.

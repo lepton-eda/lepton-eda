@@ -102,7 +102,7 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
   }
 
   if (hook_name != NULL) {
-    g_run_hook_object_list (hook_name, temp_dest_list);
+    g_run_hook_object_list (w_current, hook_name, temp_dest_list);
   }
 
   o_invalidate_glist (w_current, connected_objects);
@@ -322,6 +322,6 @@ void o_place_rotate (GSCHEM_TOPLEVEL *w_current)
 
 
   /* Run rotate-objects-hook */
-  g_run_hook_object_list ("%rotate-objects-hook",
+  g_run_hook_object_list (w_current, "%rotate-objects-hook",
                           toplevel->page_current->place_list);
 }

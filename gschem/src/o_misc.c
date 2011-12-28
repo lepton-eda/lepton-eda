@@ -226,7 +226,7 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
   o_invalidate_glist (w_current, list);
 
   /* Run rotate-objects-hook */
-  g_run_hook_object_list ("%rotate-objects-hook", list);
+  g_run_hook_object_list (w_current, "%rotate-objects-hook", list);
 
   /* Don't save the undo state if we are inside an action */
   /* This is useful when rotating the selection while moving, for example */
@@ -280,7 +280,7 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
   o_invalidate_glist (w_current, list);
 
   /* Run mirror-objects-hook */
-  g_run_hook_object_list ("%mirror-objects-hook", list);
+  g_run_hook_object_list (w_current, "%mirror-objects-hook", list);
 
   toplevel->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);

@@ -52,11 +52,11 @@ void o_select_run_hooks(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int flag)
   switch (flag) {
   /* If flag == 0, then we are deselecting something. */
   case 0:
-    g_run_hook_object ("%deselect-objects-hook", o_current);
+    g_run_hook_object (w_current, "%deselect-objects-hook", o_current);
     break;
   /* If flag == 1, then we are selecting something. */
   case 1:
-    g_run_hook_object ("%select-objects-hook", o_current);
+    g_run_hook_object (w_current, "%select-objects-hook", o_current);
     break;
   default:
     g_assert_not_reached ();
@@ -459,11 +459,7 @@ void o_select_unselect_all(GSCHEM_TOPLEVEL *w_current)
 
   /* Call hooks */
   if (removed != NULL) {
-    scm_dynwind_begin (0);
-    g_dynwind_window (w_current);
-    scm_dynwind_unwind_handler (g_list_free, removed, SCM_F_WIND_EXPLICITLY);
-    g_run_hook_object_list ("%deselect-objects-hook", removed);
-    scm_dynwind_end ();
+    g_run_hook_object_list (w_current, "%deselect-objects-hook", removed);
   }
 }
 
@@ -511,7 +507,7 @@ o_select_visible_unlocked (GSCHEM_TOPLEVEL *w_current)
   /* Run hooks for all items selected */
   added = geda_list_get_glist (selection);
   if (added != NULL) {
-    g_run_hook_object_list ("%select-objects-hook", added);
+    g_run_hook_object_list (w_current, "%select-objects-hook", added);
   }
 }
 

@@ -226,7 +226,7 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
                                      rubbernet_objects);
   toplevel->page_current->place_list = NULL;
   rubbernet_objects = NULL;
-  g_run_hook_object_list ("%move-objects-hook", moved_list);
+  g_run_hook_object_list (w_current, "%move-objects-hook", moved_list);
   g_list_free (moved_list);
 
   toplevel->page_current->CHANGED = 1;

@@ -758,10 +758,7 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
       s_log_message (_("New file [%s]\n"),
                      toplevel->page_current->page_filename);
 
-    scm_dynwind_begin (0);
-    g_dynwind_window (w_current);
-    g_run_hook_page ("%new-page-hook", toplevel->page_current);
-    scm_dynwind_end ();
+    g_run_hook_page (w_current, "%new-page-hook", toplevel->page_current);
   }
 
   a_zoom_extents (w_current,

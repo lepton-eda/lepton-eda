@@ -3008,7 +3008,8 @@ DEFINE_I_CALLBACK(attributes_attach)
   }
 
   if (attached_objects != NULL) {
-    g_run_hook_object_list ("%attach-attribs-hook", attached_objects);
+    g_run_hook_object_list (w_current, "%attach-attribs-hook",
+                            attached_objects);
     g_list_free (attached_objects);
   }
 
@@ -3054,7 +3055,8 @@ DEFINE_I_CALLBACK(attributes_detach)
   }
 
   if (detached_attribs != NULL) {
-    g_run_hook_object_list ("%detach-attribs-hook", detached_attribs);
+    g_run_hook_object_list (w_current, "%detach-attribs-hook",
+                            detached_attribs);
     g_list_free (detached_attribs);
   }
 

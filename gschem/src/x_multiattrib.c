@@ -730,7 +730,7 @@ static void multiattrib_action_promote_attribute (GSCHEM_TOPLEVEL *w_current,
       /* note: this object is unselected (not added to selection). */
 
       /* Call add-objects-hook */
-      g_run_hook_object ("%add-objects-hook", o_new);
+      g_run_hook_object (w_current, "%add-objects-hook", o_new);
   }
   w_current->toplevel->page_current->CHANGED = 1;
   o_undo_savestate (w_current, UNDO_ALL);

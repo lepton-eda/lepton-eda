@@ -174,7 +174,7 @@ void o_line_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   s_page_append (toplevel, toplevel->page_current, new_obj);
 
   /* Call add-objects-hook */
-  g_run_hook_object ("%add-objects-hook", new_obj);
+  g_run_hook_object (w_current, "%add-objects-hook", new_obj);
 
   toplevel->page_current->CHANGED=1;
   o_undo_savestate(w_current, UNDO_ALL);
