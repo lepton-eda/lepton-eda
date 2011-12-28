@@ -72,6 +72,19 @@ smob_weakref_notify (void *target, void *smob) {
   SCM_SET_SMOB_DATA (s, NULL);
 }
 
+/*! \brief Weak reference notify function for double-length gEDA smobs.
+ * \par Function Description
+ * Clears a gEDA smob's second pointer when the target object is
+ * destroyed.
+ *
+ * \see edascm_from_object().
+ */
+static void
+smob_weakref2_notify (void *target, void *smob) {
+  SCM s = (SCM) smob;
+  SCM_SET_SMOB_DATA_2 (s, NULL);
+}
+
 /*! \brief Free a gEDA smob.
  * \par Function Description
  * Finalizes a gEDA smob for deletion, removing the weak reference.
@@ -121,7 +134,9 @@ smob_free (SCM smob)
                  __FUNCTION__, data);
       break;
     case GEDA_SMOB_OBJECT:
-      s_delete_object (edascm_c_current_toplevel(), (OBJECT *) data);
+      /*! See edascm_from_object() for an explanation of why OBJECT
+       *  smobs store a TOPLEVEL in the second data word */
+      s_delete_object ((TOPLEVEL *) SCM_SMOB_DATA_2 (smob), (OBJECT *) data);
       break;
     default:
       /* This should REALLY definitely never be run */
@@ -271,6 +286,12 @@ edascm_to_page (SCM smob)
  *   edascm_c_set_gc (x, 1);
  * \endcode
  *
+ * \fixme We currently have to bake a TOPLEVEL pointer into the smob,
+ * so that if the object becomes garbage-collectable we can obtain a
+ * TOPLEVEL to use for deleting the smob without accessing the
+ * TOPLEVEL fluid and potentially causing a race condition (see bug
+ * 909358).
+ *
  * \param object #OBJECT to create a smob for.
  * \return a smob representing \a object.
  */
@@ -278,12 +299,14 @@ SCM
 edascm_from_object (OBJECT *object)
 {
   SCM smob;
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
-  SCM_NEWSMOB (smob, geda_smob_tag, object);
+  SCM_NEWSMOB2 (smob, geda_smob_tag, object, toplevel);
   SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_OBJECT);
 
-  /* Set weak reference */
+  /* Set weak references */
   s_object_weak_ref (object, smob_weakref_notify, smob);
+  s_toplevel_weak_ref (toplevel, smob_weakref2_notify, smob);
 
   return smob;
 }
