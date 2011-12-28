@@ -26,6 +26,7 @@
 #endif
 
 #include "gschem.h"
+#include <missing.h>
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -141,12 +142,17 @@ void o_complex_place_changed_run_hook(GSCHEM_TOPLEVEL *w_current) {
   if (scm_is_false (scm_hook_empty_p (complex_place_list_changed_hook)) &&
       toplevel->page_current->place_list != NULL) {
     ptr = toplevel->page_current->place_list;
+
+    scm_dynwind_begin (0);
+    g_dynwind_window (w_current);
     while (ptr) {
-      scm_run_hook(complex_place_list_changed_hook, 
-		   scm_list_1 (edascm_from_object ((OBJECT *) ptr->data)));
+      SCM expr = scm_list_3 (scm_from_utf8_symbol ("run-hook"),
+                             complex_place_list_changed_hook,
+                             edascm_from_object ((OBJECT *) ptr->data));
+      g_scm_eval_protected (expr, scm_interaction_environment ());
       ptr = g_list_next(ptr);
     }
-
+    scm_dynwind_end ();
   }
 }
 
