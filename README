@@ -1,0 +1,3 @@
+The code here is a "back end" for the gnetlist program, which is part of gEDA. See http://gpleda.org/ for details on gEDA and gnetlist.
+
+This back end produces output in SPICE format. It is intended to allow the designer to produce schematics that can be used as input for both SPICE simulation and printed circuit layout. It supports this by providing flexible methods for mapping schematic symbol attributes into the parameters of SPICE declarations and commands.
