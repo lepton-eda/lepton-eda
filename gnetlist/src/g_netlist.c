@@ -407,8 +407,6 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
 	nl_current = nl_current->next;
     }
 
-    scm_dynwind_end ();
-
     if (net_name != NULL) {
       outerlist = scm_cons (scm_from_utf8_string (net_name), pinslist);
     } else {
@@ -417,6 +415,8 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
 	fprintf(stderr, "Invalid wanted_pin passed to get-nets [%s]\n",
 		wanted_pin);
     }
+
+    scm_dynwind_end ();
 
     return (outerlist);
 }
