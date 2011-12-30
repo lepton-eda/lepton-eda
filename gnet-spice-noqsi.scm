@@ -9,6 +9,37 @@
         (format #f "~A errors.\n" error-count)
         (primitive-exit 1))))
 
+;;
+
+(define (process-part refdes)
+    (let (
+        (proto (gnetlist:get-package-attribute refdes "spice-prototype"))
+        (card '()))
+        
+        (if (equal? proto "unknown") 
+            (set! proto (lookup-proto refdes)))   
+	(set! card (expand-string refdes proto))
+        (if (string-prefix-ci? ".subckt" card) 
+            (subckt card)
+            (set cards (append card cards))))
+
+;; If no spice-prototype attribute, get prototype by other means.
+
+(define (lookup-proto refdes)
+    (or 
+        (hash-ref prototypes 
+            (gnetlist:get-package-attribute refdes "device"))
+        (hash-ref prototypes "unknown")))
+
+;; record a subcircuit card, error if more than one
+
+(define (subckt card)
+    (if subcircuit
+        (begin
+            (format #f "More than one .subckt card generated!\n)
+            (set! error-count (1+ error-count)))
+        (set! subcircuit card)))
+        
 ;; This variable will hold the .subckt card if given.
 (define subcircuit #f)
 
@@ -117,11 +148,12 @@
 
 ;; prevent munging from accidentally duplicating an existing refdes
 
-(define (reserve-refdes r) (hash-set! r r))
+(define (reserve-refdes r) (hash-set! refdes-reserved r r))
 
 ;; Get the munged version of refdes
+;; "left" is the required prefix
 
-(define (get-munged munged left refdes)
+(define (get-munged left refdes)
     (or 
         (hash-ref munges refdes)
         (make-munged refdes (string-append left refdes))))
@@ -169,3 +201,55 @@
         (if (equal? value "unknown")
             default
             value)))
+
+;; Prototypes
+
+(define prototypes (make-hash-table))
+
+(define (prototype-set! device proto) (hash-set! prototypes device proto))
+
+;; Standard prototypes
+
+(prototype-set! "unknown" "? ## value@ model-name@ spice-args@")
+(prototype-set! "AOP-Standard" "X? ## model-name@")
+(prototype-set! "BATTERY" "V? #1 #2 spice-args@")
+(prototype-set! "SPICE-cccs" "F? #1 #2 V? value@\n?? #3 #4 DC 0")
+(prototype-set! "SPICE-ccvs" "H? #1 #2 V? value@\n?? #3 #4 DC 0")
+(prototype-set! "directive" "value@")
+(prototype-set! "include" ".INCLUDE value@")
+(prototype-set! "options" ".OPTIONS value@")
+(prototype-set! "CURRENT_SOURCE" "I? ## value@")
+(prototype-set! "K" "K? inductors@ value@")
+(prototype-set! "SPICE-nullor" "N? ##")
+(prototype-set! "SPICE-NPN" "Q? ## model-name@ spice-args@ ic= temp=")
+(prototype-set! "PNP_TRANSISTOR" "Q? ## model-name@ spice-args@ ic= temp=")
+(prototype-set! "NPN_TRANSISTOR" "Q? ## model-name@ spice-args@ ic= temp=")
+(prototype-set! "spice-subcircuit-LL" ".SUBCKT ##P model-name@")
+(prototype-set! "SPICE-VC-switch" "S? ## model-name@ value@")
+(prototype-set! "T-line" "T? ## value@")
+(prototype-set! "vac" "V? ## value@")
+(prototype-set! "SPICE-vccs" "G? ## value@")
+(prototype-set! "SPICE-vcvs" "E? ## value@")
+(prototype-set! "VOLTAGE_SOURCE" "V? ## value@")
+(prototype-set! "vexp" "V? ## value@")
+(prototype-set! "vpulse" "V? ## value@")
+(prototype-set! "vpwl" "V? ## value@")
+(prototype-set! "vsin" "V? ## value@")
+(prototype-set! "VOLTAGE_SOURCE" "V? ## value@")
+(prototype-set! 
+    "CAPACITOR" "C? ## value@ model-name@ spice-args@ l= w= area= ic=")
+(prototype-set! "DIODE" "D? ## model-name@ spice-args@ area= ic= temp=")
+(prototype-set! "NMOS_TRANSISTOR" 
+    "M? ## model-name@ spice-args@ l= w= as= ad= pd= ps= nrd= nrs= temp= ic= m=")
+(prototype-set! "PMOS_TRANSISTOR" 
+    "M? ## model-name@ spice-args@ l= w= as= ad= pd= ps= nrd= nrs= temp= ic= m=")
+(prototype-set! "RESISTOR" 
+    "R? ## value@ model-name@ spice-args@ w= l= area= temp=")
+(prototype-set! "DUAL_OPAMP" 
+    "X? #3 #2 #8 #4 #1 model-name@\nX? #5 #6 #8 #4 #7 model-name@")
+(prototype-set! "QUAD_OPAMP"
+    "X? #3 #2 #11 #4 #1 model-name@
+X? #5 #6 #11 #4 #7 model-name@
+X? #10 #9 #11 #4 #8 model-name@
+X? #12 #13 #11 #4 #14 model-name@")
+
