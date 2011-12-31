@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2011-12-23 20:46+0000\n"
+"POT-Creation-Date: 2011-12-31 15:55-0500\n"
 "PO-Revision-Date: 2010-02-12 13:16+0000\n"
 "Last-Translator: Krzysztof Kościuszkiewicz <k.kosciuszkiewicz@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -40,79 +40,69 @@ msgstr "Nieprawidłowa skala powiększenia [%d] przekazana do funkcji %s\n"
 msgid "Invalid size [%d] passed to text-size\n"
 msgstr "Nieprawidłowa wartość [%d] przekazana do funkcji text-size\n"
 
-#: gschem/src/g_rc.c:462
-msgid ""
-"\n"
-"The config option postscript-font-scale is deprecated and will be removed in "
-"gEDA 1.8.0.\n"
-"Printed text is fixed to match on-screen sizes. Please remove this option "
-"from your config files.\n"
-"\n"
-msgstr ""
-
-#: gschem/src/g_rc.c:505
+#: gschem/src/g_rc.c:484
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "Nieprawidłowy rozmiar [%d] przekazany do funkcji snap-size\n"
 
-#: gschem/src/g_rc.c:962
+#: gschem/src/g_rc.c:941
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "Nieprawidłowa liczba poziomów [%d] przekazana do funkcji undo-levels\n"
 
-#: gschem/src/g_rc.c:1224
+#: gschem/src/g_rc.c:1203
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Nieprawidłowy rozmiar [%d] przekazany do funkcji bus-ripper-size\n"
 
-#: gschem/src/g_rc.c:1299
+#: gschem/src/g_rc.c:1278
 #, c-format
 msgid "Invalid dot size [%d] passed to dots-grid-dot-size\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1340
+#: gschem/src/g_rc.c:1319
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to dots-grid-fixed-threshold\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1366
+#: gschem/src/g_rc.c:1345
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to mesh-grid-display-threshold\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1391
+#: gschem/src/g_rc.c:1370
 #, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr "Nieprawidłowy offset [%d] przekazany do funkcji add-attribute-offset\n"
 
-#: gschem/src/g_rc.c:1415
+#: gschem/src/g_rc.c:1394
 #, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr ""
 "Nieprawidłowa liczba sekund [%d] przekazana do funkcji auto-save-interval\n"
 
-#: gschem/src/g_rc.c:1439
+#: gschem/src/g_rc.c:1418
 #, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr "Nieprawidłowa wartość [%d] przekazana do funkcji mousepan-gain\n"
 
-#: gschem/src/g_rc.c:1462
+#: gschem/src/g_rc.c:1441
 #, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr "Nieprawidłowa wartość [%d] przekazana do funkcji keyboardpan-gain\n"
 
-#: gschem/src/g_rc.c:1509
+#: gschem/src/g_rc.c:1488
 #, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr ""
 "Nieprawidłowa ilość pikseli [%d] przekazana do funkcji select-slack-pixels\n"
 
-#: gschem/src/g_rc.c:1535
+#: gschem/src/g_rc.c:1514
 #, c-format
 msgid "Invalid gain [%d] passed to zoom-gain\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1560
+#: gschem/src/g_rc.c:1539
 #, c-format
 msgid "Invalid number of steps [%d] scrollpan-steps\n"
 msgstr "Niepoprawna liczba kroków [%d] w funkcji scrollpan-steps\n"
@@ -313,7 +303,7 @@ msgstr ""
 msgid "Action"
 msgstr "Czynność"
 
-#: gschem/src/i_basic.c:260 gschem/src/x_dialog.c:2315
+#: gschem/src/i_basic.c:260 gschem/src/x_dialog.c:2317
 #: gschem/src/x_window.c:493
 msgid "Stroke"
 msgstr "Gest"
@@ -398,7 +388,7 @@ msgstr "Obróć"
 msgid "Mirror"
 msgstr "Lustrzane odbicie"
 
-#: gschem/src/i_callbacks.c:912 gschem/src/x_dialog.c:2318
+#: gschem/src/i_callbacks.c:912 gschem/src/x_dialog.c:2320
 #: gschem/lib/system-gschemrc.scm:1412
 msgid "Lock"
 msgstr "Zablokuj"
@@ -536,17 +526,17 @@ msgid "Component"
 msgstr "Element"
 
 #: gschem/src/i_callbacks.c:2314 gschem/src/i_callbacks.c:2333
-#: gschem/src/x_dialog.c:2288
+#: gschem/src/x_dialog.c:2290
 msgid "Attribute"
 msgstr "Atrybut"
 
 #: gschem/src/i_callbacks.c:2355 gschem/src/i_callbacks.c:2382
-#: gschem/src/x_dialog.c:2285
+#: gschem/src/x_dialog.c:2287
 msgid "Net"
 msgstr "Połączenie"
 
 #: gschem/src/i_callbacks.c:2426 gschem/src/i_callbacks.c:2453
-#: gschem/src/x_dialog.c:2303 gschem/src/x_window.c:379
+#: gschem/src/x_dialog.c:2305 gschem/src/x_window.c:379
 msgid "Bus"
 msgstr "Magistralę"
 
@@ -567,7 +557,7 @@ msgid "Arc"
 msgstr "Łuk"
 
 #: gschem/src/i_callbacks.c:2749 gschem/src/i_callbacks.c:2772
-#: gschem/src/x_dialog.c:2276
+#: gschem/src/x_dialog.c:2278
 msgid "Pin"
 msgstr ""
 
@@ -598,76 +588,76 @@ msgstr "Nie znaleziono żadnego schematu wyżej w hierarchii!\n"
 msgid "Attach"
 msgstr "Dołącz"
 
-#: gschem/src/i_callbacks.c:3040
+#: gschem/src/i_callbacks.c:3041
 msgid "Detach"
 msgstr "Odłącz"
 
-#: gschem/src/i_callbacks.c:3083
+#: gschem/src/i_callbacks.c:3085
 msgid "ShowN"
 msgstr "Wyśw. nazwę"
 
-#: gschem/src/i_callbacks.c:3120
+#: gschem/src/i_callbacks.c:3122
 msgid "ShowV"
 msgstr "Wyśw. wartość"
 
-#: gschem/src/i_callbacks.c:3157
+#: gschem/src/i_callbacks.c:3159
 msgid "ShowB"
 msgstr "Wyśw. oba"
 
-#: gschem/src/i_callbacks.c:3195
+#: gschem/src/i_callbacks.c:3197
 msgid "VisToggle"
 msgstr "Przeł. widoczność"
 
-#: gschem/src/i_callbacks.c:3226
+#: gschem/src/i_callbacks.c:3228
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "Niestety to polecenie jeszcze nie działa\n"
 
-#: gschem/src/i_callbacks.c:3316
+#: gschem/src/i_callbacks.c:3318
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr "Tryb wyświetlania przemieszczanych elementów\n"
 
-#: gschem/src/i_callbacks.c:3319
+#: gschem/src/i_callbacks.c:3321
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr "Tryb wyświetlania obwiedni przemieszczanych elementów\n"
 
-#: gschem/src/i_callbacks.c:3344
+#: gschem/src/i_callbacks.c:3346
 msgid "Grid OFF\n"
 msgstr "Siatka: włączona\n"
 
-#: gschem/src/i_callbacks.c:3345
+#: gschem/src/i_callbacks.c:3347
 msgid "Dot grid selected\n"
 msgstr "Siatka kropkowana\n"
 
-#: gschem/src/i_callbacks.c:3346
+#: gschem/src/i_callbacks.c:3348
 msgid "Mesh grid selected\n"
 msgstr "Siatka z linii\n"
 
-#: gschem/src/i_callbacks.c:3367
+#: gschem/src/i_callbacks.c:3369
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "Przyciąganie do siatki: wyłączone (OSTROŻNIE!)\n"
 
-#: gschem/src/i_callbacks.c:3370
+#: gschem/src/i_callbacks.c:3372
 msgid "Snap ON\n"
 msgstr "Przyciąganie do siatki: włączone\n"
 
-#: gschem/src/i_callbacks.c:3373
+#: gschem/src/i_callbacks.c:3375
 msgid "Snap back to the grid (CAUTION!)\n"
 msgstr ""
 
-#: gschem/src/i_callbacks.c:3399
+#: gschem/src/i_callbacks.c:3401
 msgid "Rubber band OFF \n"
 msgstr "Uzupełnianie połączeń przy przesuwaniu: włączone \n"
 
-#: gschem/src/i_callbacks.c:3402
+#: gschem/src/i_callbacks.c:3404
 msgid "Rubber band ON\n"
 msgstr "Uzupełnianie połączeń przy przesuwaniu: wyłączone\n"
 
-#: gschem/src/i_callbacks.c:3417
+#: gschem/src/i_callbacks.c:3419
 msgid "magnetic net mode: ON\n"
 msgstr "tryb \"magnesu\": włączony\n"
 
-#: gschem/src/i_callbacks.c:3420
+#: gschem/src/i_callbacks.c:3422
 msgid "magnetic net mode: OFF\n"
 msgstr "tryb \"magnesu\": wyłączony\n"
 
@@ -703,7 +693,7 @@ msgstr ""
 msgid "Unknown type for circle (fill)!\n"
 msgstr "Nieznany typ dla okręgu (wypełnienie)!\n"
 
-#: gschem/src/o_complex.c:194 gschem/src/o_complex.c:198
+#: gschem/src/o_complex.c:200 gschem/src/o_complex.c:204
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr ""
@@ -1079,7 +1069,7 @@ msgstr "Próba użycia nieprawidłowego koloru obwiedni: %d\n"
 msgid "Filter:"
 msgstr "Filtr:"
 
-#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3637
+#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3639
 #: gschem/src/x_multiattrib.c:1839
 msgid "Name"
 msgstr "Nazwa"
@@ -1349,161 +1339,162 @@ msgstr "O programie"
 msgid "gEDA: GPL Electronic Design Automation"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2145
+#. TRANSLATORS: "ChangeLog" is a literal filename; please don't translate it.
+#: gschem/src/x_dialog.c:2147
 msgid ""
 "Copyright © 1998-2011 Ales Hvezda <ahvezda@geda.seul.org>\n"
 "Copyright © 1998-2011 gEDA Contributors (see ChangeLog for details)"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2204
+#: gschem/src/x_dialog.c:2206
 msgid "Coords"
 msgstr "Współrzędne"
 
-#: gschem/src/x_dialog.c:2225
+#: gschem/src/x_dialog.c:2227
 msgid "Screen"
 msgstr "Ekran"
 
-#: gschem/src/x_dialog.c:2234
+#: gschem/src/x_dialog.c:2236
 msgid "World"
 msgstr "Świat"
 
-#: gschem/src/x_dialog.c:2273
+#: gschem/src/x_dialog.c:2275
 msgid "Background"
 msgstr "Tło"
 
-#: gschem/src/x_dialog.c:2279
+#: gschem/src/x_dialog.c:2281
 msgid "Net endpoint"
 msgstr "Koniec połączeni"
 
-#: gschem/src/x_dialog.c:2282
+#: gschem/src/x_dialog.c:2284
 msgid "Graphic"
 msgstr "Graficzne"
 
-#: gschem/src/x_dialog.c:2291
+#: gschem/src/x_dialog.c:2293
 msgid "Logic bubble"
 msgstr "Negacja logiczna"
 
-#: gschem/src/x_dialog.c:2294
+#: gschem/src/x_dialog.c:2296
 msgid "Grid point"
 msgstr "Punkt siatki"
 
-#: gschem/src/x_dialog.c:2297
+#: gschem/src/x_dialog.c:2299
 msgid "Detached attribute"
 msgstr "Odłączony atrybut"
 
-#: gschem/src/x_dialog.c:2300 gschem/src/x_window.c:387
+#: gschem/src/x_dialog.c:2302 gschem/src/x_window.c:387
 msgid "Text"
 msgstr "Tekst"
 
-#: gschem/src/x_dialog.c:2306
+#: gschem/src/x_dialog.c:2308
 msgid "Selection"
 msgstr "Zaznaczenie"
 
-#: gschem/src/x_dialog.c:2309
+#: gschem/src/x_dialog.c:2311
 msgid "Bounding box"
 msgstr "Obwiednia"
 
-#: gschem/src/x_dialog.c:2312
+#: gschem/src/x_dialog.c:2314
 msgid "Zoom box"
 msgstr "Obszar powiększenia"
 
-#: gschem/src/x_dialog.c:2321
+#: gschem/src/x_dialog.c:2323
 msgid "Output background"
 msgstr "Tło wydruku"
 
-#: gschem/src/x_dialog.c:2324
+#: gschem/src/x_dialog.c:2326
 msgid "Net junction"
 msgstr "Połączenie przewodów"
 
-#: gschem/src/x_dialog.c:2327
+#: gschem/src/x_dialog.c:2329
 msgid "Mesh grid major"
 msgstr "Siatka zgrubna"
 
-#: gschem/src/x_dialog.c:2330
+#: gschem/src/x_dialog.c:2332
 msgid "Mesh grid minor"
 msgstr "Siatka dokładna"
 
-#: gschem/src/x_dialog.c:2333
+#: gschem/src/x_dialog.c:2335
 msgid "Unknown"
 msgstr "Nieznane"
 
-#: gschem/src/x_dialog.c:2484
+#: gschem/src/x_dialog.c:2486
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr "BŁĄD: obiekt NULL w funkcji color_edit_dialog_apply!\n"
 
-#: gschem/src/x_dialog.c:2528
+#: gschem/src/x_dialog.c:2530
 msgid "Color Edit"
 msgstr "Edycja koloru"
 
-#: gschem/src/x_dialog.c:2559
+#: gschem/src/x_dialog.c:2561
 msgid "Object color:"
 msgstr "Kolor obiektu:"
 
-#: gschem/src/x_dialog.c:2612
+#: gschem/src/x_dialog.c:2614
 msgid "Hotkeys"
 msgstr "Klawisze skrótów"
 
-#: gschem/src/x_dialog.c:2652
+#: gschem/src/x_dialog.c:2654
 msgid "Function"
 msgstr "Funkcja"
 
-#: gschem/src/x_dialog.c:2659
+#: gschem/src/x_dialog.c:2661
 msgid "Keystroke(s)"
 msgstr "Klawisz(e)"
 
-#: gschem/src/x_dialog.c:2965
+#: gschem/src/x_dialog.c:2967
 msgid "Find Text"
 msgstr "Znajdź tekst"
 
-#: gschem/src/x_dialog.c:2996
+#: gschem/src/x_dialog.c:2998
 msgid "Text to find:"
 msgstr "Szukany tekst:"
 
-#: gschem/src/x_dialog.c:3006
+#: gschem/src/x_dialog.c:3008
 msgid "descend into hierarchy"
 msgstr "Szukaj również wewnątrz elementów"
 
-#: gschem/src/x_dialog.c:3071
+#: gschem/src/x_dialog.c:3073
 msgid "Hide Text"
 msgstr "Ukryj tekst"
 
-#: gschem/src/x_dialog.c:3102
+#: gschem/src/x_dialog.c:3104
 msgid "Hide text starting with:"
 msgstr "Ukryj tekst zaczynający się od:"
 
-#: gschem/src/x_dialog.c:3171
+#: gschem/src/x_dialog.c:3173
 msgid "Show Text"
 msgstr "Wyświetl tekst"
 
-#: gschem/src/x_dialog.c:3202
+#: gschem/src/x_dialog.c:3204
 msgid "Show text starting with:"
 msgstr "Wyświetl tekst zaczynający się od:"
 
-#: gschem/src/x_dialog.c:3659
+#: gschem/src/x_dialog.c:3661
 msgid "S_elect the schematics you want to save:"
 msgstr "Wybi_erz schematy, które chcesz zapisać:"
 
-#: gschem/src/x_dialog.c:3754
+#: gschem/src/x_dialog.c:3756
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr "Zapisać zmiany w schemacie \"%s\" przed wyjściem?"
 
-#: gschem/src/x_dialog.c:3760
+#: gschem/src/x_dialog.c:3762
 #, c-format
 msgid ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
 msgstr "Niezapisane zmiany w %d schematach. Zapisać zmiany przed wyjściem?"
 
-#: gschem/src/x_dialog.c:3789
+#: gschem/src/x_dialog.c:3791
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr "Jeżeli nie zapiszesz, wszystkie zmiany zostaną bezpowrotnie utracone."
 
-#: gschem/src/x_dialog.c:3809
+#: gschem/src/x_dialog.c:3811
 msgid "_Close without saving"
 msgstr "_Zamknij bez zapisywania"
 
-#: gschem/src/x_dialog.c:4145
+#: gschem/src/x_dialog.c:4147
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -1520,19 +1511,19 @@ msgstr ""
 "Nazwa nie może zaczynać się od spacji.\n"
 "Wartość nie może zaczynać się od spacji."
 
-#: gschem/src/x_dialog.c:4147
+#: gschem/src/x_dialog.c:4149
 msgid "Invalid Attribute"
 msgstr "Nieprawidłowy atrybut"
 
-#: gschem/src/x_dialog.c:4183
+#: gschem/src/x_dialog.c:4185
 msgid "Pin type"
 msgstr ""
 
-#: gschem/src/x_dialog.c:4207
+#: gschem/src/x_dialog.c:4209
 msgid "Net pin"
 msgstr ""
 
-#: gschem/src/x_dialog.c:4209
+#: gschem/src/x_dialog.c:4211
 msgid "Bus pin (graphical)"
 msgstr ""
 
@@ -2023,40 +2014,40 @@ msgstr "Otwarcie pliku nie powiodło się"
 msgid "New file [%s]\n"
 msgstr "Nowy plik [%s]\n"
 
-#: gschem/src/x_window.c:864
+#: gschem/src/x_window.c:861
 #, c-format
 msgid "Could NOT save page [%s]\n"
 msgstr "Zapisanie arkusza [%s] nie powiodło się\n"
 
-#: gschem/src/x_window.c:865
+#: gschem/src/x_window.c:862
 msgid "Error while trying to save"
 msgstr "Błąd podczas próby zapisania"
 
-#: gschem/src/x_window.c:875
+#: gschem/src/x_window.c:872
 #, fuzzy
 msgid "Failed to save file"
 msgstr "Otwarcie pliku nie powiodło się"
 
-#: gschem/src/x_window.c:886
+#: gschem/src/x_window.c:883
 #, c-format
 msgid "Saved as [%s]\n"
 msgstr "Zapisano jako [%s]\n"
 
-#: gschem/src/x_window.c:888
+#: gschem/src/x_window.c:885
 #, c-format
 msgid "Saved [%s]\n"
 msgstr "Zapisano [%s]\n"
 
-#: gschem/src/x_window.c:890
+#: gschem/src/x_window.c:887
 msgid "Saved"
 msgstr "Zapisano"
 
-#: gschem/src/x_window.c:964
+#: gschem/src/x_window.c:961
 #, c-format
 msgid "Discarding page [%s]\n"
 msgstr "Porzucanie arkusza [%s]\n"
 
-#: gschem/src/x_window.c:964
+#: gschem/src/x_window.c:961
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "Zamykanie [%s]\n"

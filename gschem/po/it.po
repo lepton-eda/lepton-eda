@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2011-12-23 20:46+0000\n"
+"POT-Creation-Date: 2011-12-31 15:55-0500\n"
 "PO-Revision-Date: 2010-02-14 01:07+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -42,86 +42,70 @@ msgstr "Fattore di ingrandimento [%d] passato a %s non valido.\n"
 msgid "Invalid size [%d] passed to text-size\n"
 msgstr "Grandezza [%d] passata alla dimensione del testo, non valida\n"
 
-#: gschem/src/g_rc.c:462
-msgid ""
-"\n"
-"The config option postscript-font-scale is deprecated and will be removed in "
-"gEDA 1.8.0.\n"
-"Printed text is fixed to match on-screen sizes. Please remove this option "
-"from your config files.\n"
-"\n"
-msgstr ""
-"\n"
-"L'opzione  di configurazione postscript-font-scale è deprecata e sarà "
-"rimossa in gEDA 1.8.0.\n"
-"Il testo stampato si conforma alle dimensioni su schermo. Si consiglia di "
-"rimuovere questa opzione dai file di configurazione.\n"
-"\n"
-
-#: gschem/src/g_rc.c:505
+#: gschem/src/g_rc.c:484
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "L'ampiezza [%d] , assegnata alla snap size, non è corretta\n"
 
-#: gschem/src/g_rc.c:962
+#: gschem/src/g_rc.c:941
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "Il numero di livelli [%d] assegnato ai livelli Cancella non è valido\n"
 
-#: gschem/src/g_rc.c:1224
+#: gschem/src/g_rc.c:1203
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Dimensione non valida [%d] passata a bus-ripper-size\n"
 
-#: gschem/src/g_rc.c:1299
+#: gschem/src/g_rc.c:1278
 #, c-format
 msgid "Invalid dot size [%d] passed to dots-grid-dot-size\n"
 msgstr "Dimensione punto non valida [%d] passata a dots-grid-dot-size\n"
 
-#: gschem/src/g_rc.c:1340
+#: gschem/src/g_rc.c:1319
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to dots-grid-fixed-threshold\n"
 msgstr "Spaziatura pixel non valida [%d] passata a dots-grid-fixed-threshold\n"
 
-#: gschem/src/g_rc.c:1366
+#: gschem/src/g_rc.c:1345
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to mesh-grid-display-threshold\n"
 msgstr ""
 "Spaziatura pixel non valida [%d] passata a mesh-grid-display-threshold\n"
 
-#: gschem/src/g_rc.c:1391
+#: gschem/src/g_rc.c:1370
 #, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr "Offset non valido [%d] passato a  add-attribute-offset\n"
 
-#: gschem/src/g_rc.c:1415
+#: gschem/src/g_rc.c:1394
 #, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr ""
 "Il numero di secondi indicati [%d] non è valido ai fini dell'intervallo di "
 "auto salvataggio\n"
 
-#: gschem/src/g_rc.c:1439
+#: gschem/src/g_rc.c:1418
 #, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr "Guadagno non valido [%d] passato a mousepan-gain\n"
 
-#: gschem/src/g_rc.c:1462
+#: gschem/src/g_rc.c:1441
 #, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr "Guadagno non valido [%d] passato a keyboardpan-gain\n"
 
-#: gschem/src/g_rc.c:1509
+#: gschem/src/g_rc.c:1488
 #, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr "Il numero [%d] di pixel indicati non è valido\n"
 
-#: gschem/src/g_rc.c:1535
+#: gschem/src/g_rc.c:1514
 #, c-format
 msgid "Invalid gain [%d] passed to zoom-gain\n"
 msgstr "Guadagno non valido [%d] passato a zoom-gain\n"
 
-#: gschem/src/g_rc.c:1560
+#: gschem/src/g_rc.c:1539
 #, c-format
 msgid "Invalid number of steps [%d] scrollpan-steps\n"
 msgstr "Numero passi non valido [%d] scrollpan-steps\n"
@@ -328,7 +312,7 @@ msgstr "Resnap Attivo"
 msgid "Action"
 msgstr "Azione"
 
-#: gschem/src/i_basic.c:260 gschem/src/x_dialog.c:2315
+#: gschem/src/i_basic.c:260 gschem/src/x_dialog.c:2317
 #: gschem/src/x_window.c:493
 msgid "Stroke"
 msgstr "Tratto"
@@ -413,7 +397,7 @@ msgstr "Ruota"
 msgid "Mirror"
 msgstr "Specchio"
 
-#: gschem/src/i_callbacks.c:912 gschem/src/x_dialog.c:2318
+#: gschem/src/i_callbacks.c:912 gschem/src/x_dialog.c:2320
 #: gschem/lib/system-gschemrc.scm:1412
 msgid "Lock"
 msgstr "Blocca"
@@ -555,17 +539,17 @@ msgid "Component"
 msgstr "Componente"
 
 #: gschem/src/i_callbacks.c:2314 gschem/src/i_callbacks.c:2333
-#: gschem/src/x_dialog.c:2288
+#: gschem/src/x_dialog.c:2290
 msgid "Attribute"
 msgstr "Attributo"
 
 #: gschem/src/i_callbacks.c:2355 gschem/src/i_callbacks.c:2382
-#: gschem/src/x_dialog.c:2285
+#: gschem/src/x_dialog.c:2287
 msgid "Net"
 msgstr "Collegamento"
 
 #: gschem/src/i_callbacks.c:2426 gschem/src/i_callbacks.c:2453
-#: gschem/src/x_dialog.c:2303 gschem/src/x_window.c:379
+#: gschem/src/x_dialog.c:2305 gschem/src/x_window.c:379
 msgid "Bus"
 msgstr "Bus"
 
@@ -586,7 +570,7 @@ msgid "Arc"
 msgstr "Arco"
 
 #: gschem/src/i_callbacks.c:2749 gschem/src/i_callbacks.c:2772
-#: gschem/src/x_dialog.c:2276
+#: gschem/src/x_dialog.c:2278
 msgid "Pin"
 msgstr "Pin"
 
@@ -617,76 +601,76 @@ msgstr "Impossibile trovare uno schema a livello più alto di questo!\n"
 msgid "Attach"
 msgstr "Collega"
 
-#: gschem/src/i_callbacks.c:3040
+#: gschem/src/i_callbacks.c:3041
 msgid "Detach"
 msgstr "Scollega"
 
-#: gschem/src/i_callbacks.c:3083
+#: gschem/src/i_callbacks.c:3085
 msgid "ShowN"
 msgstr "MostraN"
 
-#: gschem/src/i_callbacks.c:3120
+#: gschem/src/i_callbacks.c:3122
 msgid "ShowV"
 msgstr "MostraV"
 
-#: gschem/src/i_callbacks.c:3157
+#: gschem/src/i_callbacks.c:3159
 msgid "ShowB"
 msgstr "MostraB"
 
-#: gschem/src/i_callbacks.c:3195
+#: gschem/src/i_callbacks.c:3197
 msgid "VisToggle"
 msgstr "Visibilità Strumenti"
 
-#: gschem/src/i_callbacks.c:3226
+#: gschem/src/i_callbacks.c:3228
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "Spiacente, ma questa non è una funzione del menù opzioni\n"
 
-#: gschem/src/i_callbacks.c:3316
+#: gschem/src/i_callbacks.c:3318
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr "Controllo azioni in modalità CONTORNO\n"
 
-#: gschem/src/i_callbacks.c:3319
+#: gschem/src/i_callbacks.c:3321
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr "Controllo azioni in modalità PERIMETRO\n"
 
-#: gschem/src/i_callbacks.c:3344
+#: gschem/src/i_callbacks.c:3346
 msgid "Grid OFF\n"
 msgstr "Griglia NON ATTIVA\n"
 
-#: gschem/src/i_callbacks.c:3345
+#: gschem/src/i_callbacks.c:3347
 msgid "Dot grid selected\n"
 msgstr "Selezionata griglia a punti\n"
 
-#: gschem/src/i_callbacks.c:3346
+#: gschem/src/i_callbacks.c:3348
 msgid "Mesh grid selected\n"
 msgstr "Selezionata griglia a maglie\n"
 
-#: gschem/src/i_callbacks.c:3367
+#: gschem/src/i_callbacks.c:3369
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "Snap OFF (ATTENZIONE!)\n"
 
-#: gschem/src/i_callbacks.c:3370
+#: gschem/src/i_callbacks.c:3372
 msgid "Snap ON\n"
 msgstr "Snap ON\n"
 
-#: gschem/src/i_callbacks.c:3373
+#: gschem/src/i_callbacks.c:3375
 msgid "Snap back to the grid (CAUTION!)\n"
 msgstr "Snap alla griglia (ATTENZIONE)!\n"
 
-#: gschem/src/i_callbacks.c:3399
+#: gschem/src/i_callbacks.c:3401
 msgid "Rubber band OFF \n"
 msgstr "Rubber band OFF \n"
 
-#: gschem/src/i_callbacks.c:3402
+#: gschem/src/i_callbacks.c:3404
 msgid "Rubber band ON\n"
 msgstr "Rubber band ON\n"
 
-#: gschem/src/i_callbacks.c:3417
+#: gschem/src/i_callbacks.c:3419
 msgid "magnetic net mode: ON\n"
 msgstr "modalià net magnetiche: ON\n"
 
-#: gschem/src/i_callbacks.c:3420
+#: gschem/src/i_callbacks.c:3422
 msgid "magnetic net mode: OFF\n"
 msgstr "modalià net magnetiche: OFF\n"
 
@@ -720,7 +704,7 @@ msgstr "Ottenuto un non valido which one in o_bus_draw_stretch\n"
 msgid "Unknown type for circle (fill)!\n"
 msgstr "Tipo sconosciuto per il cerchio (riempimento)!\n"
 
-#: gschem/src/o_complex.c:194 gschem/src/o_complex.c:198
+#: gschem/src/o_complex.c:200 gschem/src/o_complex.c:204
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr "Spostamento schema [%d %d]\n"
@@ -1101,7 +1085,7 @@ msgstr "Provato a ottenere un colore outline non valido: %d\n"
 msgid "Filter:"
 msgstr "Filtro:"
 
-#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3637
+#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3639
 #: gschem/src/x_multiattrib.c:1839
 msgid "Name"
 msgstr "Nome"
@@ -1374,147 +1358,148 @@ msgstr "Informazioni su gschem"
 msgid "gEDA: GPL Electronic Design Automation"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2145
+#. TRANSLATORS: "ChangeLog" is a literal filename; please don't translate it.
+#: gschem/src/x_dialog.c:2147
 msgid ""
 "Copyright © 1998-2011 Ales Hvezda <ahvezda@geda.seul.org>\n"
 "Copyright © 1998-2011 gEDA Contributors (see ChangeLog for details)"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2204
+#: gschem/src/x_dialog.c:2206
 msgid "Coords"
 msgstr "Coordinate"
 
-#: gschem/src/x_dialog.c:2225
+#: gschem/src/x_dialog.c:2227
 msgid "Screen"
 msgstr "Schermo"
 
-#: gschem/src/x_dialog.c:2234
+#: gschem/src/x_dialog.c:2236
 msgid "World"
 msgstr "Mondo"
 
-#: gschem/src/x_dialog.c:2273
+#: gschem/src/x_dialog.c:2275
 msgid "Background"
 msgstr "Sfondo"
 
-#: gschem/src/x_dialog.c:2279
+#: gschem/src/x_dialog.c:2281
 msgid "Net endpoint"
 msgstr "Fine net"
 
-#: gschem/src/x_dialog.c:2282
+#: gschem/src/x_dialog.c:2284
 msgid "Graphic"
 msgstr "Grafico"
 
-#: gschem/src/x_dialog.c:2291
+#: gschem/src/x_dialog.c:2293
 msgid "Logic bubble"
 msgstr "Bolla logica"
 
-#: gschem/src/x_dialog.c:2294
+#: gschem/src/x_dialog.c:2296
 msgid "Grid point"
 msgstr "Punto della griglia"
 
-#: gschem/src/x_dialog.c:2297
+#: gschem/src/x_dialog.c:2299
 msgid "Detached attribute"
 msgstr "Attributo staccato"
 
-#: gschem/src/x_dialog.c:2300 gschem/src/x_window.c:387
+#: gschem/src/x_dialog.c:2302 gschem/src/x_window.c:387
 msgid "Text"
 msgstr "Testo"
 
-#: gschem/src/x_dialog.c:2306
+#: gschem/src/x_dialog.c:2308
 msgid "Selection"
 msgstr "Selezione"
 
-#: gschem/src/x_dialog.c:2309
+#: gschem/src/x_dialog.c:2311
 msgid "Bounding box"
 msgstr "Riquadro di selezione"
 
-#: gschem/src/x_dialog.c:2312
+#: gschem/src/x_dialog.c:2314
 msgid "Zoom box"
 msgstr "Riquadro di Zoom"
 
-#: gschem/src/x_dialog.c:2321
+#: gschem/src/x_dialog.c:2323
 msgid "Output background"
 msgstr "Sfondo uscita"
 
-#: gschem/src/x_dialog.c:2324
+#: gschem/src/x_dialog.c:2326
 msgid "Net junction"
 msgstr "Giunzione di traccia"
 
-#: gschem/src/x_dialog.c:2327
+#: gschem/src/x_dialog.c:2329
 msgid "Mesh grid major"
 msgstr "Griglia a maglie grandi"
 
-#: gschem/src/x_dialog.c:2330
+#: gschem/src/x_dialog.c:2332
 msgid "Mesh grid minor"
 msgstr "Griglia a maglie piccole"
 
-#: gschem/src/x_dialog.c:2333
+#: gschem/src/x_dialog.c:2335
 msgid "Unknown"
 msgstr "Sconosciuto"
 
-#: gschem/src/x_dialog.c:2484
+#: gschem/src/x_dialog.c:2486
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr "ERRORE: oggetto NULLO in color_edit_dialog_apply!\n"
 
-#: gschem/src/x_dialog.c:2528
+#: gschem/src/x_dialog.c:2530
 msgid "Color Edit"
 msgstr "Modifica Colore"
 
-#: gschem/src/x_dialog.c:2559
+#: gschem/src/x_dialog.c:2561
 msgid "Object color:"
 msgstr "Colore dell'oggetto:"
 
-#: gschem/src/x_dialog.c:2612
+#: gschem/src/x_dialog.c:2614
 msgid "Hotkeys"
 msgstr "Tasti scelta rapida"
 
-#: gschem/src/x_dialog.c:2652
+#: gschem/src/x_dialog.c:2654
 msgid "Function"
 msgstr "Funzione"
 
-#: gschem/src/x_dialog.c:2659
+#: gschem/src/x_dialog.c:2661
 msgid "Keystroke(s)"
 msgstr "Tasto(i)"
 
-#: gschem/src/x_dialog.c:2965
+#: gschem/src/x_dialog.c:2967
 msgid "Find Text"
 msgstr "Trova testo"
 
-#: gschem/src/x_dialog.c:2996
+#: gschem/src/x_dialog.c:2998
 msgid "Text to find:"
 msgstr "Testo da trovare:"
 
-#: gschem/src/x_dialog.c:3006
+#: gschem/src/x_dialog.c:3008
 msgid "descend into hierarchy"
 msgstr "discende nella gerarchia"
 
-#: gschem/src/x_dialog.c:3071
+#: gschem/src/x_dialog.c:3073
 msgid "Hide Text"
 msgstr "Nascondi testo"
 
-#: gschem/src/x_dialog.c:3102
+#: gschem/src/x_dialog.c:3104
 msgid "Hide text starting with:"
 msgstr "Nascondi il testo iniziando con:"
 
-#: gschem/src/x_dialog.c:3171
+#: gschem/src/x_dialog.c:3173
 msgid "Show Text"
 msgstr "Mostra testo"
 
-#: gschem/src/x_dialog.c:3202
+#: gschem/src/x_dialog.c:3204
 msgid "Show text starting with:"
 msgstr "Mostra il testo iniziando con:"
 
-#: gschem/src/x_dialog.c:3659
+#: gschem/src/x_dialog.c:3661
 msgid "S_elect the schematics you want to save:"
 msgstr "S_eleziona lo schema che vuoi salvare:"
 
-#: gschem/src/x_dialog.c:3754
+#: gschem/src/x_dialog.c:3756
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr "Salvare i cambi allo schema \"%s\" prima di chiudere?"
 
-#: gschem/src/x_dialog.c:3760
+#: gschem/src/x_dialog.c:3762
 #, c-format
 msgid ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
@@ -1522,15 +1507,15 @@ msgstr ""
 "Ci sono %d schemi che presentano cambi non salvati. Salvare i cambi prima di "
 "chiudere?"
 
-#: gschem/src/x_dialog.c:3789
+#: gschem/src/x_dialog.c:3791
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr "Se non salvi, tutte le modifiche saranno perse definitivamente."
 
-#: gschem/src/x_dialog.c:3809
+#: gschem/src/x_dialog.c:3811
 msgid "_Close without saving"
 msgstr "_Chiudi senza salvare"
 
-#: gschem/src/x_dialog.c:4145
+#: gschem/src/x_dialog.c:4147
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -1548,19 +1533,19 @@ msgstr ""
 "Il nome non deve terminare con uno spazio.\n"
 "Il valore non deve iniziare con uno spazio."
 
-#: gschem/src/x_dialog.c:4147
+#: gschem/src/x_dialog.c:4149
 msgid "Invalid Attribute"
 msgstr "Attributo non valido"
 
-#: gschem/src/x_dialog.c:4183
+#: gschem/src/x_dialog.c:4185
 msgid "Pin type"
 msgstr "Tipo di pin"
 
-#: gschem/src/x_dialog.c:4207
+#: gschem/src/x_dialog.c:4209
 msgid "Net pin"
 msgstr "Net pin"
 
-#: gschem/src/x_dialog.c:4209
+#: gschem/src/x_dialog.c:4211
 msgid "Bus pin (graphical)"
 msgstr "Bus pin (grafico)"
 
@@ -2063,40 +2048,40 @@ msgstr "Impossibile caricare il file"
 msgid "New file [%s]\n"
 msgstr "Nuovo file [%s]\n"
 
-#: gschem/src/x_window.c:864
+#: gschem/src/x_window.c:861
 #, c-format
 msgid "Could NOT save page [%s]\n"
 msgstr "Non è possibile salvare la pagina [%s]\n"
 
-#: gschem/src/x_window.c:865
+#: gschem/src/x_window.c:862
 msgid "Error while trying to save"
 msgstr "Errore durante il salvataggio"
 
-#: gschem/src/x_window.c:875
+#: gschem/src/x_window.c:872
 #, fuzzy
 msgid "Failed to save file"
 msgstr "Impossibile caricare il file"
 
-#: gschem/src/x_window.c:886
+#: gschem/src/x_window.c:883
 #, c-format
 msgid "Saved as [%s]\n"
 msgstr "Salvato con il nome [%s]\n"
 
-#: gschem/src/x_window.c:888
+#: gschem/src/x_window.c:885
 #, c-format
 msgid "Saved [%s]\n"
 msgstr "Salvato [%s]\n"
 
-#: gschem/src/x_window.c:890
+#: gschem/src/x_window.c:887
 msgid "Saved"
 msgstr "Salvato"
 
-#: gschem/src/x_window.c:964
+#: gschem/src/x_window.c:961
 #, c-format
 msgid "Discarding page [%s]\n"
 msgstr "Annulla pagina [%s]\n"
 
-#: gschem/src/x_window.c:964
+#: gschem/src/x_window.c:961
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "Chiusura [%s]\n"
@@ -2596,6 +2581,21 @@ msgstr ""
 #, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr ""
+
+#~ msgid ""
+#~ "\n"
+#~ "The config option postscript-font-scale is deprecated and will be removed "
+#~ "in gEDA 1.8.0.\n"
+#~ "Printed text is fixed to match on-screen sizes. Please remove this option "
+#~ "from your config files.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "L'opzione  di configurazione postscript-font-scale è deprecata e sarà "
+#~ "rimossa in gEDA 1.8.0.\n"
+#~ "Il testo stampato si conforma alle dimensioni su schermo. Si consiglia di "
+#~ "rimuovere questa opzione dai file di configurazione.\n"
+#~ "\n"
 
 #~ msgid "Could not fork\n"
 #~ msgstr "Impossibile creare un nuovo processo\n"
