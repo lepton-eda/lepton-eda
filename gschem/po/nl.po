@@ -1368,7 +1368,7 @@ msgid ""
 "Copyright © 1998-2011 gEDA Contributors (see ChangeLog for details)"
 msgstr ""
 "Copyright © 1998-2011 Ales Hvezda <ahvezda@geda.seul.org>\n"
-"Copyright © 1998-2011 gEDA Contributors (zie het WijzigingsLogboek voor details)"
+"Copyright © 1998-2011 gEDA Contributors (zie het ChangeLog voor details)"
 
 #: gschem/src/x_dialog.c:2204
 msgid "Coords"
