@@ -1,3 +1,4 @@
+
 (define (spice-noqsi filename)
     (set-current-output-port(open-output-file filename))
     (for-each reserve-refdes packages)
@@ -21,7 +22,7 @@
 	(set! card (expand-string refdes proto))
         (if (string-prefix-ci? ".subckt" card) 
             (subckt card)
-            (set cards (append card cards))))
+            (set cards (append card cards)))))
 
 ;; If no spice-prototype attribute, get prototype by other means.
 
@@ -31,12 +32,13 @@
             (gnetlist:get-package-attribute refdes "device"))
         (hash-ref prototypes "unknown")))
 
+
 ;; record a subcircuit card, error if more than one
 
 (define (subckt card)
     (if subcircuit
         (begin
-            (format #f "More than one .subckt card generated!\n)
+            (format #f "More than one .subckt card generated!\n")
             (set! error-count (1+ error-count)))
         (set! subcircuit card)))
         
@@ -54,6 +56,7 @@
 
 (define (range n)
     (if (positive? n) (append (range (1- n)) (list n)) '()))
+
 
 ;; gnetlist associates net with pinnumber, but traditionally SPICE
 ;; backends for gnetlist have keyed on pinseq. This function implements that.
@@ -125,9 +128,9 @@
 (define (expand-field refdes left key right)
     ((case key
         (("?") expand-refdes)
-        (("#") expand-pin)
+        ((("#") expand-pin)
         (("=") expand-attr)
-        (("@") expand-value)) refdes left right))
+        (("@") expand-value)) refdes left right)))
 
 ;; Expand refdes, munging if asked
 
@@ -139,7 +142,7 @@
         right))
 
 (define (get-value-or-default refdes attr default)
-    (if (equal? value "unknown") default value)
+    (if (equal? value "unknown") default value))
 
 ;; forward and reverse refdes maps
 
@@ -171,7 +174,7 @@
 
 (define (expand-pin refdes left right)
     (if (equal? left "")
-        (if (equal? right "#")
+        (if (equal? right ("#"))
             (all-by-pinseq refdes)
             (get-net refdes right))
         (expand-pin left "" right)))
