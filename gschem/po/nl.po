@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2011-12-23 20:46+0000\n"
-"PO-Revision-Date: 2010-02-14 01:04+0000\n"
+"POT-Creation-Date: 2011-12-30 19:30+0100\n"
+"PO-Revision-Date: 2011-12-31 10:55+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: nl\n"
@@ -23,11 +23,11 @@ msgstr "Vergroting te klein! Kan niet verder vergroten.\n"
 
 #: gschem/src/g_attrib.c:92
 msgid "Object ~A is not included in the current gschem page."
-msgstr ""
+msgstr "Objekt ~A is niet bijgevoegd in de huidige gschem pagina."
 
 #: gschem/src/g_attrib.c:112
 msgid "Invalid text name/value visibility ~A."
-msgstr ""
+msgstr "Ongeldige tekst naam/waarde zichtbaarheid ~A."
 
 #: gschem/src/g_rc.c:295
 #, c-format
@@ -42,17 +42,13 @@ msgstr "Ongeldige waarde [%d] overgedragen aan text-size\n"
 #: gschem/src/g_rc.c:462
 msgid ""
 "\n"
-"The config option postscript-font-scale is deprecated and will be removed in "
-"gEDA 1.8.0.\n"
-"Printed text is fixed to match on-screen sizes. Please remove this option "
-"from your config files.\n"
+"The config option postscript-font-scale is deprecated and will be removed in gEDA 1.8.0.\n"
+"Printed text is fixed to match on-screen sizes. Please remove this option from your config files.\n"
 "\n"
 msgstr ""
 "\n"
-"De configuratie optie postscript-font-scale is vervallen en zal verwijderd "
-"worden in gEDA 1.8.0.\n"
-"Afgedrukte tekst is vast afgestemd op op-het-scherm afmetingen. Verwijder "
-"deze optie altublieft uit uw configuratie bestanden.\n"
+"De configuratie optie postscript-font-scale is vervallen en zal verwijderd worden in gEDA 1.8.0.\n"
+"Afgedrukte tekst is vast afgestemd op op-het-scherm afmetingen. Verwijder deze optie altublieft uit uw configuratie bestanden.\n"
 "\n"
 
 #: gschem/src/g_rc.c:505
@@ -78,15 +74,12 @@ msgstr "Ongeldige punt afmeting [%d] overgedragen aan dots-grid-dot-size\n"
 #: gschem/src/g_rc.c:1340
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to dots-grid-fixed-threshold\n"
-msgstr ""
-"Ongeldige beeldpunt ruimte [%d] overgedragen aan dots-grid-fixed-threshold\n"
+msgstr "Ongeldige beeldpunt ruimte [%d] overgedragen aan dots-grid-fixed-threshold\n"
 
 #: gschem/src/g_rc.c:1366
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to mesh-grid-display-threshold\n"
-msgstr ""
-"Ongeldige beeldpunt ruimte [%d] overgedragen aan mesh-grid-display-"
-"threshold\n"
+msgstr "Ongeldige beeldpunt ruimte [%d] overgedragen aan mesh-grid-display-threshold\n"
 
 #: gschem/src/g_rc.c:1391
 #, c-format
@@ -111,8 +104,7 @@ msgstr "Ongeldige versterking [%d] overgedragen aan keyboardpan-gain\n"
 #: gschem/src/g_rc.c:1509
 #, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
-msgstr ""
-"Ongeldig aantal beeldpunten [%d] overgedragen aan select-slack-pixels\n"
+msgstr "Ongeldig aantal beeldpunten [%d] overgedragen aan select-slack-pixels\n"
 
 #: gschem/src/g_rc.c:1535
 #, c-format
@@ -127,15 +119,15 @@ msgstr "Ongeldig aantal stappen [%d] scrollpan-steps\n"
 #: gschem/src/g_select.c:79 gschem/src/g_select.c:116
 #: gschem/src/g_select.c:152
 msgid "Object ~A is not directly included in a page."
-msgstr ""
+msgstr "Object ~A is niet direct bijgevoegd in een pagina."
 
 #: gschem/src/g_util.c:56
 msgid "Could not launch URI ~S: ~A"
-msgstr ""
+msgstr "Kan URI ~S: ~A niet starten"
 
 #: gschem/src/g_window.c:136
 msgid "Found invalid gschem window smob ~S"
-msgstr ""
+msgstr "Ongeldige gschem venster smob ~S gevonden"
 
 #: gschem/src/gschem.c:175
 #, c-format
@@ -143,19 +135,12 @@ msgid "gEDA/gschem version %s%s.%s\n"
 msgstr "gEDA/gschem versie %s%s.%s\n"
 
 #: gschem/src/gschem.c:178
-msgid ""
-"gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
-"details.\n"
-msgstr ""
-"gEDA/gschem komt ABSOLUUT ZONDER GARANTIE; zie het COPYING bestand voor meer "
-"informatie.\n"
+msgid "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n"
+msgstr "gEDA/gschem komt ABSOLUUT ZONDER GARANTIE; zie het COPYING bestand voor meer informatie.\n"
 
 #: gschem/src/gschem.c:180
-msgid ""
-"This is free software, and you are welcome to redistribute it under certain\n"
-msgstr ""
-"Dit is vrije software, en je wordt aangemoedigt dit te herdistribueren onder "
-"bepaalde\n"
+msgid "This is free software, and you are welcome to redistribute it under certain\n"
+msgstr "Dit is vrije software, en je wordt aangemoedigt dit te herdistribueren onder bepaalde\n"
 
 #: gschem/src/gschem.c:182
 msgid ""
@@ -436,12 +421,8 @@ msgid "WARNING: Snap grid size is not equal to 100!\n"
 msgstr "WAARSCHUWING: Snap grid waarde is niet gelijk aan 100!\n"
 
 #: gschem/src/i_callbacks.c:961
-msgid ""
-"WARNING: If you are translating a symbol to the origin, the snap grid size "
-"should be set to 100\n"
-msgstr ""
-"WAARSCHUWING: Als je een symbool naar de oorsprong verschuift, dan moet de "
-"snap grip waarde op 100 gezet worden\n"
+msgid "WARNING: If you are translating a symbol to the origin, the snap grid size should be set to 100\n"
+msgstr "WAARSCHUWING: Als je een symbool naar de oorsprong verschuift, dan moet de snap grip waarde op 100 gezet worden\n"
 
 #: gschem/src/i_callbacks.c:992
 msgid "Embed"
@@ -612,76 +593,76 @@ msgstr "Kan geen schema's vinden boven het huidige schema!\n"
 msgid "Attach"
 msgstr "Vastmaken"
 
-#: gschem/src/i_callbacks.c:3040
+#: gschem/src/i_callbacks.c:3041
 msgid "Detach"
 msgstr "Losmaken"
 
-#: gschem/src/i_callbacks.c:3083
+#: gschem/src/i_callbacks.c:3085
 msgid "ShowN"
 msgstr "ToonN"
 
-#: gschem/src/i_callbacks.c:3120
+#: gschem/src/i_callbacks.c:3122
 msgid "ShowV"
 msgstr "ToonW"
 
-#: gschem/src/i_callbacks.c:3157
+#: gschem/src/i_callbacks.c:3159
 msgid "ShowB"
 msgstr "ToonB"
 
-#: gschem/src/i_callbacks.c:3195
+#: gschem/src/i_callbacks.c:3197
 msgid "VisToggle"
 msgstr "SchakelZichtbaarheid"
 
-#: gschem/src/i_callbacks.c:3226
+#: gschem/src/i_callbacks.c:3228
 #, c-format
 msgid "Sorry but this is a non-functioning menu option\n"
 msgstr "Sorry, maar dit is een niet werkende menu optie\n"
 
-#: gschem/src/i_callbacks.c:3316
+#: gschem/src/i_callbacks.c:3318
 msgid "Action feedback mode set to OUTLINE\n"
 msgstr "Aktie terugkoppel mode is ingesteld op OUTLINE\n"
 
-#: gschem/src/i_callbacks.c:3319
+#: gschem/src/i_callbacks.c:3321
 msgid "Action feedback mode set to BOUNDINGBOX\n"
 msgstr "Aktie terugkoppel mode is ingesteld op BOUNDINGBOX.\n"
 
-#: gschem/src/i_callbacks.c:3344
+#: gschem/src/i_callbacks.c:3346
 msgid "Grid OFF\n"
 msgstr "Raster UIT\n"
 
-#: gschem/src/i_callbacks.c:3345
+#: gschem/src/i_callbacks.c:3347
 msgid "Dot grid selected\n"
 msgstr "Punt raster geselecteerd\n"
 
-#: gschem/src/i_callbacks.c:3346
+#: gschem/src/i_callbacks.c:3348
 msgid "Mesh grid selected\n"
 msgstr "Maas raster geselecteerd\n"
 
-#: gschem/src/i_callbacks.c:3367
+#: gschem/src/i_callbacks.c:3369
 msgid "Snap OFF (CAUTION!)\n"
 msgstr "Snap UIT (PAS OP!)\n"
 
-#: gschem/src/i_callbacks.c:3370
+#: gschem/src/i_callbacks.c:3372
 msgid "Snap ON\n"
 msgstr "Snap AAN\n"
 
-#: gschem/src/i_callbacks.c:3373
+#: gschem/src/i_callbacks.c:3375
 msgid "Snap back to the grid (CAUTION!)\n"
 msgstr "Snap terug op raster (PAS OP!)\n"
 
-#: gschem/src/i_callbacks.c:3399
+#: gschem/src/i_callbacks.c:3401
 msgid "Rubber band OFF \n"
 msgstr "Elastiek band UIT \n"
 
-#: gschem/src/i_callbacks.c:3402
+#: gschem/src/i_callbacks.c:3404
 msgid "Rubber band ON\n"
 msgstr "Elastiek band AAN\n"
 
-#: gschem/src/i_callbacks.c:3417
+#: gschem/src/i_callbacks.c:3419
 msgid "magnetic net mode: ON\n"
 msgstr "magnetische draad mode: AAN\n"
 
-#: gschem/src/i_callbacks.c:3420
+#: gschem/src/i_callbacks.c:3422
 msgid "magnetic net mode: OFF\n"
 msgstr "magnetische draad mode: UIT\n"
 
@@ -715,7 +696,7 @@ msgstr "Ontving ereen die ongeldig is in o_bus_draw_stretch\n"
 msgid "Unknown type for circle (fill)!\n"
 msgstr "Onbekend type voor cirkel (arcering)!\n"
 
-#: gschem/src/o_complex.c:194 gschem/src/o_complex.c:198
+#: gschem/src/o_complex.c:200 gschem/src/o_complex.c:204
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr "Vertaal schema [%d %d]\n"
@@ -754,9 +735,7 @@ msgstr "o_autosave_backups: Kan de echte bestandsnaam van %s niet krijgen."
 #: gschem/src/o_misc.c:727
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
-msgstr ""
-"Voorgaande reserve bestand [%s] kan NIET op lezen-schrijven ingesteld "
-"worden\n"
+msgstr "Voorgaande reserve bestand [%s] kan NIET op lezen-schrijven ingesteld worden\n"
 
 #: gschem/src/o_misc.c:747
 #, c-format
@@ -800,14 +779,12 @@ msgstr "Waarschuwing: einde van draad niet op raster coordinaat\n"
 #: gschem/src/o_net.c:1088
 #, c-format
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
-msgstr ""
-"Probeerde meer dan twee busrippers toe te voegen. Interne gschem fout.\n"
+msgstr "Probeerde meer dan twee busrippers toe te voegen. Interne gschem fout.\n"
 
 #: gschem/src/o_net.c:1156
 #, c-format
 msgid "Bus ripper symbol [%s] was not found in any component library\n"
-msgstr ""
-"Bus ripper symbool [%s] niet gevonden in een van de component bibliotheken\n"
+msgstr "Bus ripper symbool [%s] niet gevonden in een van de component bibliotheken\n"
 
 #: gschem/src/o_path.c:340
 #, c-format
@@ -824,9 +801,9 @@ msgid "Picture"
 msgstr "Afbeelding"
 
 #: gschem/src/o_picture.c:544
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to replace pictures: %s"
-msgstr "Fout bij het lezen van afbeelding: %s"
+msgstr "Fout bij het vervangen van afbeeldingen: %s"
 
 #: gschem/src/o_slot.c:81
 msgid "Slot attribute malformed\n"
@@ -873,6 +850,27 @@ msgid ""
 "Report bugs to <geda-bug@seul.org>\n"
 "gEDA/gaf homepage: <http://gpleda.org>\n"
 msgstr ""
+"Gebruik: %s [OPTIE ...] [--] [BESTAND ...]\n"
+"\n"
+"Interactief bewerken van gEDA schema's of symbolen.  Als een of meer BESTANDen\n"
+"gespecificeerd zijn, open deze voor bewerken; of, creëer een nieuw, leeg\n"
+"schema.\n"
+"\n"
+"Opties:\n"
+"  -q, --quiet              Stille mode.\n"
+"  -v, --verbose            Verbale mode.\n"
+"  -r, --config-file=FILE   Additioneel configuratie bestand laden.\n"
+"  -L DIR                   Voeg DIR toe aan Scheme zoekpad.\n"
+"  -c EXPR                  Scheme expressie uitvoeren tijdens opstarten.\n"
+"  -s FILE                  Scheme script uitvoeren tijdens opstarten.\n"
+"  -o, --output=FILE        Uitvoer bestandsnaam (voor afdrukken).\n"
+"  -p                       Automatisch geplaatst in het venster.\n"
+"  -V, --version            Toon versie informatie.\n"
+"  -h, --help               Help; dit bericht.\n"
+"  --                       Behandel alle overblijvende argumenten als bestandnamen.\n"
+"\n"
+"Rapporteer fouten aan <geda-bug@seul.org>\n"
+"gEDA/gaf startpagina: <http://gpleda.org>\n"
 
 #: gschem/src/parsecmd.c:116
 #, c-format
@@ -884,6 +882,12 @@ msgid ""
 "included in the gEDA distribution.\n"
 "There is NO WARRANTY, to the extent permitted by law.\n"
 msgstr ""
+"gEDA %s (g%.7s)\n"
+"Copyright (C) 1998-2011 gEDA developers\n"
+"Dit is vrije software, en jij bent welkom om deze te herdistribueren onder\n"
+"bepaalde condities. Voor details, zie het bestand `COPYING', welke is\n"
+"bijgevoegd in de gEDA distributie.\n"
+"Er is GEEN GARANTIE, voor zover de wet dit toelaat.\n"
 
 #: gschem/src/x_attribedit.c:127
 #, c-format
@@ -953,19 +957,13 @@ msgid "Replace existing attributes"
 msgstr "Vervang bestaande attributen"
 
 #: gschem/src/x_autonumber.c:415
-msgid ""
-"slotted object without slot attribute may cause problems when autonumbering "
-"slots\n"
-msgstr ""
-"geslotte objecten zonder slot attribuut kunnen een probleem geven bij het "
-"automatisch nummeren van slots\n"
+msgid "slotted object without slot attribute may cause problems when autonumbering slots\n"
+msgstr "geslotte objecten zonder slot attribuut kunnen een probleem geven bij het automatisch nummeren van slots\n"
 
 #: gschem/src/x_autonumber.c:430
 #, c-format
-msgid ""
-"duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
-msgstr ""
-"een dubbel slot kan een probleem geven: [symbolname=%s, number=%d, slot=%d]\n"
+msgid "duplicate slot may cause problems: [symbolname=%s, number=%d, slot=%d]\n"
+msgstr "een dubbel slot kan een probleem geven: [symbolname=%s, number=%d, slot=%d]\n"
 
 #: gschem/src/x_autonumber.c:672
 msgid "No searchstring given in autonumber text.\n"
@@ -973,8 +971,7 @@ msgstr "Geen zoektekst gegeven in automatisch nummeren tekst.\n"
 
 #: gschem/src/x_autonumber.c:724
 msgid "No '*' or '?' given at the end of the autonumber text.\n"
-msgstr ""
-"Geen '*' of '?' gegeven aan het einden van de automatisch nummeren tekst.\n"
+msgstr "Geen '*' of '?' gegeven aan het einden van de automatisch nummeren tekst.\n"
 
 #: gschem/src/x_autonumber.c:859
 msgid "Diagonal"
@@ -1353,9 +1350,9 @@ msgid "Edit slot number:"
 msgstr "Bewerk slot nummer:"
 
 #: gschem/src/x_dialog.c:2122
-#, fuzzy, c-format
+#, c-format
 msgid "%s (g%.7s)"
-msgstr "%s%s (%s)"
+msgstr "%s (g%.7s)"
 
 #: gschem/src/x_dialog.c:2143
 msgid "About gschem"
@@ -1366,14 +1363,12 @@ msgid "gEDA: GPL Electronic Design Automation"
 msgstr "gEDA: GPL Elektronische Ontwerp Automatisering"
 
 #: gschem/src/x_dialog.c:2145
-#, fuzzy
 msgid ""
 "Copyright © 1998-2011 Ales Hvezda <ahvezda@geda.seul.org>\n"
 "Copyright © 1998-2011 gEDA Contributors (see ChangeLog for details)"
 msgstr ""
-"Copyright © 1998-2009 Ales Hvezda <ahvezda@geda.seul.org>\n"
-"Copyright © 1998-2009 gEDA Contributors (zie het WijzigingsLogboek voor "
-"details)"
+"Copyright © 1998-2011 Ales Hvezda <ahvezda@geda.seul.org>\n"
+"Copyright © 1998-2011 gEDA Contributors (zie het WijzigingsLogboek voor details)"
 
 #: gschem/src/x_dialog.c:2204
 msgid "Coords"
@@ -1511,10 +1506,8 @@ msgstr "Wijzigingen in schema \"%s\" opslaan voor het afsluiten?"
 
 #: gschem/src/x_dialog.c:3760
 #, c-format
-msgid ""
-"There are %d schematics with unsaved changes. Save changes before closing?"
-msgstr ""
-"Er zijn %d schema's met wijzigingen. Wijzigingen opslaan voor het afsluiten?"
+msgid "There are %d schematics with unsaved changes. Save changes before closing?"
+msgstr "Er zijn %d schema's met wijzigingen. Wijzigingen opslaan voor het afsluiten?"
 
 #: gschem/src/x_dialog.c:3789
 msgid "If you don't save, all your changes will be permanently lost."
@@ -1534,8 +1527,7 @@ msgid ""
 "The name cannot end with a space.\n"
 "The value cannot start with a space."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">De invoer attribuut \"%s\" is "
-"ongeldig\n"
+"<span weight=\"bold\" size=\"larger\">De invoer attribuut \"%s\" is ongeldig\n"
 "Alstublieft corrigeren voor dat je doorgaat</span>\n"
 "\n"
 "De naam en waarde mogen niet leeg zijn.\n"
@@ -1623,8 +1615,7 @@ msgid ""
 "\n"
 "%s.\n"
 msgstr ""
-"De volgende fout ontstond tijdens het opslaan van afbeelding met type %s "
-"naar bestandnaam:\n"
+"De volgende fout ontstond tijdens het opslaan van afbeelding met type %s naar bestandnaam:\n"
 "%s\n"
 "\n"
 "%s.\n"
@@ -1738,8 +1729,7 @@ msgstr "/Omhoog"
 #: gschem/src/x_menus.c:348
 #, c-format
 msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
-msgstr ""
-"Probeerde de gevoeligheid in te stellen op een niet bestaand menu_item '%s'\n"
+msgstr "Probeerde de gevoeligheid in te stellen op een niet bestaand menu_item '%s'\n"
 
 #: gschem/src/x_menus.c:372
 msgid "Popup_menu_item_factory doesn't exist!\n"
@@ -1747,18 +1737,16 @@ msgstr "Popup_menu_item_factory bestaat niet!\n"
 
 #: gschem/src/x_menus.c:385
 msgid "Tried to set the sensitivity on a non-existent popup menu_item\n"
-msgstr ""
-"Probeerde de gevoeligheid in te stellen op een niet bestaand popup "
-"menu_item\n"
+msgstr "Probeerde de gevoeligheid in te stellen op een niet bestaand popup menu_item\n"
 
 #: gschem/src/x_misc.c:74
 msgid "The operating system is out of memory or resources."
-msgstr ""
+msgstr "Het besturingssysteem heeft niet meer geheugen of bronnen."
 
 #: gschem/src/x_misc.c:155
 #, c-format
 msgid "%s failed to launch URI"
-msgstr ""
+msgstr "%s faalde om URI te starten"
 
 #: gschem/src/x_multiattrib.c:961
 msgid "Attributes with empty name are not allowed. Please set a name."
@@ -1977,13 +1965,11 @@ msgstr "Herstel de laatste ongedaanmaking"
 #: gschem/src/x_window.c:360
 msgid ""
 "Add component...\n"
-"Select library and component from list, move the mouse into main window, "
-"click to place\n"
+"Select library and component from list, move the mouse into main window, click to place\n"
 "Right mouse button to cancel"
 msgstr ""
 "Voeg een component toe...\n"
-"Selecteer een bibliotheek en component uit delijst, verplaats de "
-"muisindicator in het hoofdvensterklik om component te plaatsen\n"
+"Selecteer een bibliotheek en component uit delijst, verplaats de muisindicator in het hoofdvensterklik om component te plaatsen\n"
 "Rechter muisknop om af te breken"
 
 #: gschem/src/x_window.c:370
@@ -2016,7 +2002,7 @@ msgstr "Selectie mode"
 
 #: gschem/src/x_window.c:465
 msgid "Evaluate:"
-msgstr ""
+msgstr "Evalueer:"
 
 #: gschem/src/x_window.c:484
 msgid "Pick"
@@ -2048,40 +2034,39 @@ msgstr "Fout bij het lezen van bestand"
 msgid "New file [%s]\n"
 msgstr "Nieuw bestand [%s]\n"
 
-#: gschem/src/x_window.c:864
+#: gschem/src/x_window.c:861
 #, c-format
 msgid "Could NOT save page [%s]\n"
 msgstr "Pagina [%s] kan NIET opgeslagen worden\n"
 
-#: gschem/src/x_window.c:865
+#: gschem/src/x_window.c:862
 msgid "Error while trying to save"
 msgstr "Fout tijdens het opslaan"
 
-#: gschem/src/x_window.c:875
-#, fuzzy
+#: gschem/src/x_window.c:872
 msgid "Failed to save file"
-msgstr "Fout bij het lezen van bestand"
+msgstr "Fout bij het opslaan van bestand"
 
-#: gschem/src/x_window.c:886
+#: gschem/src/x_window.c:883
 #, c-format
 msgid "Saved as [%s]\n"
 msgstr "Opgeslagen Als [%s]\n"
 
-#: gschem/src/x_window.c:888
+#: gschem/src/x_window.c:885
 #, c-format
 msgid "Saved [%s]\n"
 msgstr "Opgeslagen [%s]\n"
 
-#: gschem/src/x_window.c:890
+#: gschem/src/x_window.c:887
 msgid "Saved"
 msgstr "Opgeslagen"
 
-#: gschem/src/x_window.c:964
+#: gschem/src/x_window.c:961
 #, c-format
 msgid "Discarding page [%s]\n"
 msgstr "Pagina [%s] wegdoen\n"
 
-#: gschem/src/x_window.c:964
+#: gschem/src/x_window.c:961
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "Sluiten [%s]\n"
@@ -2135,7 +2120,6 @@ msgid "New Window"
 msgstr "Nieuw Venster"
 
 #: gschem/lib/system-gschemrc.scm:1381
-#, fuzzy
 msgid "_Close Window"
 msgstr "Sluit Venster"
 
@@ -2168,14 +2152,12 @@ msgid "_Delete"
 msgstr "Verwij_der"
 
 #: gschem/lib/system-gschemrc.scm:1397
-#, fuzzy
 msgid "Select All"
-msgstr "Selecteer"
+msgstr "Selecteer Alles"
 
 #: gschem/lib/system-gschemrc.scm:1398
-#, fuzzy
 msgid "Deselect"
-msgstr "Selecteer"
+msgstr "Deselecteer"
 
 #: gschem/lib/system-gschemrc.scm:1402
 msgid "Rotate 90 Mode"
@@ -2326,9 +2308,8 @@ msgid "_Light color scheme"
 msgstr "_Licht kleuren schema"
 
 #: gschem/lib/system-gschemrc.scm:1455
-#, fuzzy
 msgid "B_W color scheme"
-msgstr "_Donker kleuren schema"
+msgstr "Z_W kleuren schema"
 
 #: gschem/lib/system-gschemrc.scm:1462
 msgid "_Manager..."
@@ -2565,22 +2546,21 @@ msgstr "_Help"
 #: gschem/scheme/gschem/deprecated.scm:102
 #, scheme-format
 msgid "Invalid text alignment ~A."
-msgstr ""
+msgstr "Ongeldige tekst uitlijning ~A."
 
 #: gschem/scheme/gschem/gschemdoc.scm:225
-#, fuzzy
 msgid "No documentation found"
-msgstr "D_ocumentatie..."
+msgstr "Geen documentatie gevonden"
 
 #: gschem/scheme/gschem/keymap.scm:39
 #, scheme-format
 msgid "~S is not a valid key combination."
-msgstr ""
+msgstr "~S is geen geldige toetsencombinatie."
 
 #: gschem/scheme/gschem/keymap.scm:154
 #, scheme-format
 msgid "~S is not a prefix key sequence."
-msgstr ""
+msgstr "~S is geen voorafgaande toetsen combinatie."
 
 #~ msgid "Could not fork\n"
 #~ msgstr "Kan niet afsplitsen\n"
