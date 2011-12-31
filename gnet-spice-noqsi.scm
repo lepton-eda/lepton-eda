@@ -16,13 +16,12 @@
     (let (
         (proto (gnetlist:get-package-attribute refdes "spice-prototype"))
         (card '()))
-        
         (if (equal? proto "unknown") 
-            (set! proto (lookup-proto refdes)))   
+            (set! proto (lookup-proto refdes)))
 	(set! card (expand-string refdes proto))
         (if (string-prefix-ci? ".subckt" card) 
             (subckt card)
-            (set cards (append card cards)))))
+            (set! cards (cons card cards)))))
 
 ;; If no spice-prototype attribute, get prototype by other means.
 
@@ -97,17 +96,30 @@
 ;; Split string into whitespace and ink.
 
 (define (parse-fields s)
-    (if (equal? s "")
-        '()
-        (let ((i (or 
-            (string-skip s char-set:whitespace)
-            (string-skip s 
-                (char-set-complement char-set:whitespace)))))
+    (let ((i (or 
+        (field-skip s char-set:whitespace)
+        (field-skip s 
+            (char-set-complement char-set:whitespace)))))
 
+        (if i    
             (append 
-                (string-take s i) 
-                (parse-fields (string-drop s i))))))    
-        
+                (list (string-take s i))
+                (parse-fields (string-drop s i)))
+            (list s))))
+ 
+;; string-skip is a bit difficult to use directly, yielding 0 for no match,
+;; and #f when the whole string matches! Yielding only a positive number or
+;; #f simplifies the logic above, so that's what I do here.
+
+(define (field-skip s cs)
+    (let ((i (string-skip s cs)))
+    
+    (if i 
+        (if (zero? i) 
+            #f 
+            i)
+        #f)))
+   
 ;; Magic characters for field expansion
 
 (define magic (string->char-set "?#=@"))
@@ -119,18 +131,18 @@
         (if i 
             (expand-field refdes
                 (string-take field i)
-                (substring field i i)
+                (substring field i (+ i 1))
                 (string-drop field (+ i 1)))
             field)))
 
 ;; Dispatch to the chosen expander
 
 (define (expand-field refdes left key right)
-    ((case key
-        (("?") expand-refdes)
-        ((("#") expand-pin)
-        (("=") expand-attr)
-        (("@") expand-value)) refdes left right)))
+    ((cond
+        ((equal? key "?") expand-refdes)
+        ((equal? key "#") expand-pin)
+        ((equal? key "=") expand-attr)
+        ((equal? key "@") expand-value)) refdes left right))
 
 ;; Expand refdes, munging if asked
 
@@ -174,7 +186,7 @@
 
 (define (expand-pin refdes left right)
     (if (equal? left "")
-        (if (equal? right ("#"))
+        (if (equal? right "#")
             (all-by-pinseq refdes)
             (get-net refdes right))
         (expand-pin left "" right)))
