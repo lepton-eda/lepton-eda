@@ -274,6 +274,7 @@ g_key_is_valid (guint keyval, GdkModifierType modifiers)
     GDK_First_Virtual_Screen, GDK_Prev_Virtual_Screen,
     GDK_Next_Virtual_Screen, GDK_Last_Virtual_Screen,
     GDK_Terminate_Server, GDK_AudibleBell_Enable,
+    0
   };
   const guint *val;
 
