@@ -24,4 +24,4 @@
 (define-module (geda core gettext))
 
 (define %libgeda-gettext-domain "@LIBGEDA_GETTEXT_DOMAIN@")
-(define (_ msg) (gettext msg %libgeda-gettext-domain))
+(define-public (_ msg) (gettext msg %libgeda-gettext-domain))
