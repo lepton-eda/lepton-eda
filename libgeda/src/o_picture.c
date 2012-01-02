@@ -150,46 +150,6 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
       embedded = 0;
     }
   }
-
-  /* If we have embedded data, try loading from the decoded buffer */
-  if (file_content != NULL) {
-    pixbuf = o_picture_pixbuf_from_buffer (file_content, file_length, err);
-    if (err != NULL) {
-      s_log_message (_("Failed to load image from embedded data [%s]: %s\n"),
-                     filename, *err->message);
-      s_log_message (_("Falling back to file loading. Picture unembedded.\n"));
-      g_error_free (err);
-      *err = NULL;
-      embedded = 0;
-    }
-  }
-
-  /* If we haven't loaded the pixbuf above, try loading from file */
-  if (pixbuf == NULL) {
-    pixbuf = gdk_pixbuf_new_from_file (filename, err);
-    if (*err != NULL) {
-      s_log_message (_("Failed to load image from file [%s]: %s\n"),
-                     filename, *err->message);
-      g_error_free (*err);
-      *err = NULL;
-    }
-  }
-
-  /* If the pixbuf couldn't be loaded, then try to load a warning picture */
-  if (pixbuf == NULL) {
-    char *temp_filename;
-
-    s_log_message (_("Loading warning picture.\n"));
-    
-    temp_filename = g_build_filename (toplevel->bitmap_directory,
-                                      "gschem-warning.png", NULL);
-    pixbuf = gdk_pixbuf_new_from_file (temp_filename, NULL);
-    if (pixbuf == NULL) {
-      s_log_message( _("Error loading picture from file: %s.\n"),
-                     temp_filename);
-    }      
-    g_free (temp_filename);
-  }
   
   /* create the picture */
   /* The picture is described by its upper left and lower right corner */
@@ -203,7 +163,6 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
 
   return new_obj;
 }
-
 
 /*! \brief Create a character string representation of a picture OBJECT.
  *  \par Function Description
