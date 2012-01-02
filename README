@@ -137,6 +137,12 @@ tools *in addition to* the ones listed above:
 
   - GNU Libtool.  <http://www.gnu.org/software/libtool/>
 
+  - GNU Texinfo documentation system.
+    <http://www.gnu.org/software/texinfo/>
+
+    Note that on some distributions the TeX support for Texinfo is
+    packaged separately.
+
 Once you have these installed, you need to clone the gEDA `git'
 repository:
 
