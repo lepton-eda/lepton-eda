@@ -27,6 +27,8 @@
 #include "libgeda_priv.h"
 #include "libgedaguile_priv.h"
 
+SCM_SYMBOL (edascm_string_format_sym , "string-format");
+
 /*! \brief Get a of open pages.
  * \par Function Description
  * Retrieves a Scheme list of currently-opened pages.

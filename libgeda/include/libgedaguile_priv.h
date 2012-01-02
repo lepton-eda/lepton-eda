@@ -136,4 +136,3 @@ extern inline void o_page_changed (TOPLEVEL *t, OBJECT *o);
 /* ---------------------------------------- */
 
 extern SCM edascm_object_state_sym;
-extern SCM edascm_string_format_sym;
