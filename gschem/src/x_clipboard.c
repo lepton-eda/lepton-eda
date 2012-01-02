@@ -244,7 +244,7 @@ x_clipboard_get (GSCHEM_TOPLEVEL *w_current)
      GtkWidget * dialog = gtk_message_dialog_new (w_current->main_window,
                                       GTK_DIALOG_DESTROY_WITH_PARENT,
                                       GTK_MESSAGE_ERROR,
-                                      GTK_BUTTONS_CLOSE,
+                                      GTK_BUTTONS_OK,
                                       _("Invalid schematic on clipboard: %s"),
                                       err->message);
 
