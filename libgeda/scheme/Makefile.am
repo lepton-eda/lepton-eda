@@ -36,7 +36,6 @@ TESTS = unit-tests/t0001-geda-conf-lib.scm \
 	unit-tests/t1000-deprecated.scm
 
 XFAIL_TESTS = \
-	unit-tests/t0203-page-string-syntax.scm \
 	unit-tests/t0301-promotable-attributes.scm
 
 dist_noinst_DATA = geda/core/gettext.scm.in unit-test.scm $(TESTS)
