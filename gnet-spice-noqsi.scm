@@ -1,3 +1,9 @@
+;; Essentially, this back end works by collecting lists of output "cards"
+;; and then generating output.
+;;
+;; "files" holds a list of files to include.
+;; "subcircuit" holds the .SUBCKT card, if any.
+;; "cards" holds the rest.
 
 (define (spice-noqsi filename)
     (set-current-output-port(open-output-file filename))
@@ -23,7 +29,9 @@
 * Send requests or bug reports to jpd@noqsi.com
 "))
 
-;; Collect file= attribute values
+;; Collect file= attribute values.
+;; Unlike previous SPICE back ends for gnetlist, this one allows
+;; any symbol to request a file to be included.
 
 (define (collect-file refdes)
     (let ((f (gnetlist:get-package-attribute refdes "file")))
@@ -35,7 +43,9 @@
 
 (define files '())
 
-;;
+;; To process a part, we must find a suitable prototype,
+;; fill in that prototype with instance data, and the figure
+;; out if this is an ordinary "card" or a .SUBCKT
 
 (define (process-part refdes)
     (let (
@@ -48,7 +58,9 @@
             (subckt card)
             (set! cards (cons card cards)))))
 
-;; If no spice-prototype attribute, get prototype by other means.
+;; If no spice-prototype attribute, get prototype according to
+;; the device attribute, or use the default for the "unknown"
+;; device.
 
 (define (lookup-proto refdes)
     (or 
@@ -66,15 +78,24 @@
                 "More than one .subckt card generated!\n")
             (set! error-count (1+ error-count)))
         (set! subcircuit card)))
-        
+
+     
 ;; This variable will hold the .subckt card if given.
+
 (define subcircuit #f)
 
+
 ;; List of cards in the circuit or subcircuit.
+;; Note that a string here might actually represent a group
+;; of cards, using embedded newline characters.
+
 (define cards '())
 
+
 ;; If this isn't zero, exit with nonzero status when done.
+
 (define error-count 0)
+
 
 ;; Get a list of numbers 1..n
 ;; Why isn't this basic function in Guile?
@@ -96,8 +117,21 @@
             (pinseq-error refdes pinseq)
             (get-net refdes pinnumber))))
 
+
+
+;; Get the net attached to a particular pin.
+;; This really should be a helper in gnetlist.scm, or even
+;; replace the partially broken (gnetlist:get-nets).
+
+(define (get-net refdes pin)
+    (let ((net (car (gnetlist:get-nets refdes pin))))
+        (if (equal? "ERROR_INVALID_PIN" net)
+            (pinnumber-error refdes pin)
+            net)))
+
+
 ;; If we can't get the pinnumber, return "" for the net, which should be 
-;; adequately toxic in the resulting file in most cases.
+;; adequately toxic in the resulting SPICE file in most cases.
             
 (define (pinseq-error refdes pinseq)
     (format (current-error-port)
@@ -105,19 +139,25 @@
     (set! error-count (1+ error-count))
     "")
 
-;; Get the net attached to a particular pin.
-;; This really should be a helper in gnetlist.scm, or even
-;; replace the partially broken (gnetlist:get-nets).
 
-(define (get-net refdes pin)
-    (car (gnetlist:get-nets refdes pin)))
+;; Similarly when we can't get the net
+
+(define (pinnumber-error refdes pin)
+    (format (current-error-port)
+        "Error: pinnumber=~A not found for refdes=~A\n" pin refdes)
+    (set! error-count (1+ error-count))
+    "")
+
 
 ;; Expand a string in context of a particular refdes
+;; This is how we convert symbol data and connections into
+;; SPICE cards.
 
 (define (expand-string refdes s)
     (string-concatenate (map
         (lambda (f) (check-field refdes f))
         (parse-fields s))))
+
 
 ;; Split string into whitespace and ink.
 
@@ -132,7 +172,9 @@
                 (list (string-take s i))
                 (parse-fields (string-drop s i)))
             (list s))))
- 
+
+
+
 ;; string-skip is a bit difficult to use directly, yielding 0 for no match,
 ;; and #f when the whole string matches! Yielding only a positive number or
 ;; #f simplifies the logic above, so that's what I do here.
@@ -145,12 +187,15 @@
             #f 
             i)
         #f)))
-   
-;; Magic characters for field expansion
+
+  
+;; Magic characters for field expansion.
 
 (define magic (string->char-set "?#=@%"))
 
-;; Check field for magic, expand if necessary
+
+;; Check field for magic, expand if necessary.
+;; We only expand a given field once, on the first magic character discovered.
 
 (define (check-field refdes field)
     (let ((i (string-index field magic)))
@@ -161,7 +206,8 @@
                 (string-drop field (+ i 1)))
             field)))
 
-;; Dispatch to the chosen expander
+
+;; Dispatch to the chosen expander.
 
 (define (expand-field refdes left key right)
     ((cond
@@ -171,7 +217,9 @@
         ((equal? key "@") expand-value)
         ((equal? key "%") expand-variable)) refdes left right))
 
-;; Expand refdes, munging if asked
+
+;; Expand refdes, munging if asked. Note that an empty prefix
+;; matches any string, here, so The Right Thing (nothing) happens.
 
 (define (expand-refdes refdes left right)
     (string-append
@@ -180,32 +228,36 @@
             (get-munged left refdes))
         right))
 
+
+;; Replace "unknown" with a default
+
 (define (get-value-or-default refdes attr default)
     (if (equal? value "unknown") default value))
+
 
 ;; forward and reverse refdes maps
 
 (define munges (make-hash-table))
 (define refdes-reserved (make-hash-table))
 
+
 ;; prevent munging from accidentally duplicating an existing refdes
+;; by reserving all existing refdeses.
 
 (define (reserve-refdes r) (hash-set! refdes-reserved r r))
 
+
 ;; Get the munged version of refdes
-;; "left" is the required prefix
+;; 
 
 (define (get-munged prefix refdes)
-    (let ((munged
-            (or 
-                (hash-ref munges (list prefix refdes))
-                (make-munged prefix refdes (string-append prefix refdes)))))
-        (set! last-munged munged)
-        munged))
+    (or 
+        (hash-ref munges (list prefix refdes))
+        (make-munged prefix refdes (string-append prefix refdes))))
 
-(define last-munged "")
 
-;; Make unique munged version
+;; Make unique munged version.
+;; Recursively append X until we have a unique refdes.
 
 (define (make-munged prefix refdes candidate)
     (if (hash-ref refdes-reserved candidate)
@@ -214,21 +266,26 @@
             (hash-set! refdes-reserved candidate refdes)
             (hash-set! munges (list prefix refdes) candidate))))
 
-;; Get name of net connected to pin
+
+;; Get name of net connected to pin.
+;; The only issue is whether "left" specifies an alternate refdes.
 
 (define (expand-pin refdes left right)
     (if (equal? left "")
         (get-net refdes right)
         (get-net left right)))
 
-;; 
+
+;; Expand "%" variables.
 
 (define (expand-variable refdes left right)
     (string-append left
         (cond
-            ((equal? right "refdes") last-refdes)
             ((equal? right "pinseq") (all-by-pinseq refdes))
             ((equal? right "io") (all-spice-io)))))
+
+
+;; get all net connections in pinseq order
 
 (define (all-by-pinseq refdes)
     (string-join
@@ -238,13 +295,15 @@
         " "))
 
 
-;; Expand attribute. Empty string if it doesn't exist, and no default given.
+;; Expand attribute. Result is name=value.
+;; Empty string if it doesn't exist, and no default given.
 
 (define (expand-attr refdes name default)
     (let ((value (expand-value refdes name default)))
         (if (equal? value "")
             ""
             (string-append name "=" value))))
+
 
 ;; Expand value. Empty string if it doesn't exist, and no default given.
 
@@ -254,21 +313,23 @@
             default
             value)))
 
-;; Prototypes
+;; Default prototypes by device
+;; Note that the "unknown" prototype applies to all unlisted devices.
 
 (define prototypes (make-hash-table))
 
 (define (spice-device device proto) (hash-set! prototypes device proto))
 
-;; Standard prototypes
+;; Standard prototypes. Most of these are intended to be similar to the 
+;; hard-wired behavior of spice-sdb.
 
 (spice-device "unknown" "? %pinseq value@ model-name@ spice-args@")
 (spice-device "AOP-Standard" "X? %pinseq model-name@")
 (spice-device "BATTERY" "V? #1 #2 spice-args@")
-(spice-device "SPICE-cccs" "F? #1 #2 V? value@\n%refdes #3 #4 DC 0")
-(spice-device "SPICE-ccvs" "H? #1 #2 V? value@\n%refdes #3 #4 DC 0")
+(spice-device "SPICE-cccs" "F? #1 #2 V? value@\nV? #3 #4 DC 0")
+(spice-device "SPICE-ccvs" "H? #1 #2 V? value@\nV? #3 #4 DC 0")
 (spice-device "directive" "value@")
-(spice-device "include" "")               ; just a place to hang file=
+(spice-device "include" "*")               ; just a place to hang file=
 (spice-device "options" ".OPTIONS value@")
 (spice-device "CURRENT_SOURCE" "I? %pinseq value@")
 (spice-device "K" "K? inductors@ value@")
@@ -276,7 +337,7 @@
 (spice-device "SPICE-NPN" "Q? %pinseq model-name@ spice-args@ ic= temp=")
 (spice-device "PNP_TRANSISTOR" "Q? %pinseq model-name@ spice-args@ ic= temp=")
 (spice-device "NPN_TRANSISTOR" "Q? %pinseq model-name@ spice-args@ ic= temp=")
-(spice-device "spice-subcircuit-LL" ".SUBCKT %pinseq# model-name@")
+(spice-device "spice-subcircuit-LL" ".SUBCKT model-name@ %io")
 (spice-device "SPICE-VC-switch" "S? %pinseq model-name@ value@")
 (spice-device "T-line" "T? %pinseq value@")
 (spice-device "vac" "V? %pinseq value@")
@@ -300,8 +361,8 @@
 (spice-device "DUAL_OPAMP" 
     "X1? #3 #2 #8 #4 #1 model-name@\nX2? #5 #6 #8 #4 #7 model-name@")
 (spice-device "QUAD_OPAMP"
-    "X? #3 #2 #11 #4 #1 model-name@
-X? #5 #6 #11 #4 #7 model-name@
-X? #10 #9 #11 #4 #8 model-name@
-X? #12 #13 #11 #4 #14 model-name@")
+    "X1? #3 #2 #11 #4 #1 model-name@
+X2? #5 #6 #11 #4 #7 model-name@
+X3? #10 #9 #11 #4 #8 model-name@
+X4? #12 #13 #11 #4 #14 model-name@")
 
