@@ -204,7 +204,7 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
     line = s_textbuffer_next_line (tb);
 
     if (line == NULL) {
-      g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Premature eof when reading path\n"));
+      g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Unexpected end-of-file when reading path\n"));
       g_free (string);
       return NULL;
     }

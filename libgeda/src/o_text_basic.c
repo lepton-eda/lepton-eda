@@ -437,7 +437,7 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
 
     if (line == NULL) {
       g_string_free (textstr, TRUE);
-      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Premature end of data after %d lines\n"), i);
+      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Unexpected end-of-file after %d lines\n"), i);
       return NULL;
     }
 
