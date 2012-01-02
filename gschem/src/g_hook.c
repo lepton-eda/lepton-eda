@@ -37,6 +37,7 @@ SCM_SYMBOL (gschem_sym, "gschem");
 SCM_SYMBOL (core_sym, "core");
 SCM_SYMBOL (hook_sym, "hook");
 SCM_SYMBOL (run_hook_sym, "run-hook");
+SCM_SYMBOL (list_sym, "list");
 
 /*! \brief Gets a Scheme hook object by name.
  * \par Function Description
@@ -78,9 +79,10 @@ g_run_hook_object_list (GSCHEM_TOPLEVEL *w_current, const char *name,
   for (iter = obj_lst; iter != NULL; iter = g_list_next (iter)) {
     lst = scm_cons (edascm_from_object ((OBJECT *) iter->data), lst);
   }
-  SCM expr = scm_cons (run_hook_sym,
-                       scm_cons (g_get_hook_by_name (name),
-                                 scm_reverse_x (lst, SCM_EOL)));
+  SCM expr = scm_list_3 (run_hook_sym,
+                         g_get_hook_by_name (name),
+                         scm_cons (list_sym,
+                                   scm_reverse_x (lst, SCM_EOL)));
 
   g_scm_eval_protected (expr, scm_interaction_environment ());
   scm_dynwind_end ();
@@ -105,7 +107,7 @@ g_run_hook_object (GSCHEM_TOPLEVEL *w_current, const char *name, OBJECT *obj)
 
   SCM expr = scm_list_3 (run_hook_sym,
                          g_get_hook_by_name (name),
-                         scm_list_1 (edascm_from_object (obj)));
+                         scm_list_2 (list_sym, edascm_from_object (obj)));
 
   g_scm_eval_protected (expr, scm_interaction_environment ());
   scm_dynwind_end ();
