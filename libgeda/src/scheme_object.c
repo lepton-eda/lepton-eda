@@ -1786,15 +1786,19 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
   /* Check the right number of coordinates have been provided. */
   switch (section.code) {
   case PATH_CURVETO:
+    SCM_ASSERT (scm_is_integer (x1_s), x1_s, SCM_ARG4, s_path_insert_x);
+    section.x1 = scm_to_int (x1_s);
+    SCM_ASSERT (scm_is_integer (y1_s), y1_s, SCM_ARG5, s_path_insert_x);
+    section.y1 = scm_to_int (y1_s);
     SCM_ASSERT (scm_is_integer (x2_s), x2_s, SCM_ARG6, s_path_insert_x);
-    section.x1 = scm_to_int (x2_s);
+    section.x2 = scm_to_int (x2_s);
     SCM_ASSERT (scm_is_integer (y2_s), y2_s, SCM_ARG7, s_path_insert_x);
-    section.y1 = scm_to_int (y2_s);
+    section.y2 = scm_to_int (y2_s);
     SCM_ASSERT (scm_is_integer (x3_s), x3_s, 8, s_path_insert_x);
-    section.x2 = scm_to_int (x3_s);
+    section.x3 = scm_to_int (x3_s);
     SCM_ASSERT (scm_is_integer (y3_s), y3_s, 9, s_path_insert_x);
-    section.y2 = scm_to_int (y3_s);
-    /* Intentionally falls through */
+    section.y3 = scm_to_int (y3_s);
+    break;
   case PATH_MOVETO:
   case PATH_MOVETO_OPEN:
   case PATH_LINETO:
@@ -1802,6 +1806,7 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
     section.x3 = scm_to_int (x1_s);
     SCM_ASSERT (scm_is_integer (y1_s), y1_s, SCM_ARG5, s_path_insert_x);
     section.y3 = scm_to_int (y1_s);
+    break;
   case PATH_END:
     break;
   }

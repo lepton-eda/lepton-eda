@@ -254,7 +254,7 @@
         acc
         (transform-points
          (cdr lst)
-         (list (caar lst) (cdar lst)))))
+         (append acc (list (caar lst) (cdar lst))))))
 
   (apply %path-insert p idx type (transform-points points '())))
 
