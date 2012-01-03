@@ -29,6 +29,27 @@
     (set-object-stroke! a 1 'round 'phantom 7 8)
     (assert-equal '(phantom 7 8) (object-stroke-dash a))
     (assert-equal a (apply set-object-stroke! a (object-stroke a)))
+
+    ;; Invalid symbol arguments
+    (assert-thrown 'misc-error
+                   (set-object-stroke! a 1 'BAD-VALUE 'solid))
+    (assert-thrown 'misc-error
+                   (set-object-stroke! a 1 'none 'BAD-VALUE))
+    ;; Missing dash length/space arguments
+    (assert-thrown 'misc-error
+                   (set-object-stroke! a 1 'none 'dashed 5))
+    (assert-thrown 'misc-error
+                   (set-object-stroke! a 1 'none 'dashed))
+    (assert-thrown 'misc-error
+                   (set-object-stroke! a 1 'none 'center 5))
+    (assert-thrown 'misc-error
+                   (set-object-stroke! a 1 'none 'center))
+    (assert-thrown 'misc-error
+                   (set-object-stroke! a 1 'none 'phantom 5))
+    (assert-thrown 'misc-error
+                   (set-object-stroke! a 1 'none 'phantom))
+    (assert-thrown 'misc-error
+                   (set-object-stroke! a 1 'none 'dotted))
     ))
 
 (begin-test 'fill
@@ -49,4 +70,25 @@
     (assert-equal a (set-object-fill! a 'mesh 4 5 6 7 8))
     (assert-equal '(mesh 4 5 6 7 8) (object-fill a))
     (assert-equal a (apply set-object-fill! a (object-fill a)))
+
+    ;; Invalid symbol arguments
+    (assert-thrown 'misc-error
+                   (set-object-fill! a 'BAD-VALUE))
+    ;; Missing fill width/angle/space arguments
+    (assert-thrown 'misc-error
+                   (set-object-fill! a 'hatch))
+    (assert-thrown 'misc-error
+                   (set-object-fill! a 'hatch 1))
+    (assert-thrown 'misc-error
+                   (set-object-fill! a 'hatch 1 2))
+    (assert-thrown 'misc-error
+                   (set-object-fill! a 'mesh))
+    (assert-thrown 'misc-error
+                   (set-object-fill! a 'mesh 1))
+    (assert-thrown 'misc-error
+                   (set-object-fill! a 'mesh 1 2))
+    (assert-thrown 'misc-error
+                   (set-object-fill! a 'mesh 1 2 3))
+    (assert-thrown 'misc-error
+                   (set-object-fill! a 'mesh 1 2 3 4))
     ))

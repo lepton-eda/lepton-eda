@@ -8,6 +8,8 @@
 (begin-test 'page
    (let ((page-a (make-page "/test/page/A"))
          (page-b (make-page "/test/page/B")))
+     (assert-true (page? page-a))
+
      (assert-equal "/test/page/A" (page-filename page-a))
      (assert-equal (list page-a page-b) (active-pages))
 

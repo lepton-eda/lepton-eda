@@ -55,4 +55,13 @@ static char * test_image_xpm[] = {
     (assert-equal '(3 . 3) (picture-top-left a))
     (assert-equal '(7 . 1) (picture-bottom-right a))
     (assert-equal 0 (picture-angle a))
-    (assert-equal #f (picture-mirror? a))))
+    (assert-equal #f (picture-mirror? a))
+
+    ;; Bad angle
+    (assert-thrown 'misc-error (set-picture! a '(1 . 2) '(5 . 4) 45 #f))
+    ;; Bad data
+    (assert-thrown 'misc-error
+                   (make-picture/vector
+                    (map char->integer (string->list "THIS IS NOT AN IMAGE"))
+                    "not_an_image" '(1 . 2) '(5 . 4) 0 #f))
+))

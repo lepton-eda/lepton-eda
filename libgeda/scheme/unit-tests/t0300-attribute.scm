@@ -53,6 +53,9 @@
     ;; component
     (assert-thrown 'object-state (attach-attribs! q x))
 
+    ;; Attach attribute to attached attribute, within same component
+    (assert-thrown 'object-state (attach-attribs! x y))
+
     ;; Attach attribute to object in different component
     (assert-thrown 'object-state (attach-attribs! p z))
     (assert-equal (list x) (object-attribs p))
