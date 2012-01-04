@@ -17,6 +17,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
+/*! \file g_rc.c
+ *  \brief Parse configuration files.
+ *
+ * Contains functions to open, parse and manage gEDA configuration
+ * (RC) files.
+ */
+
 #include <config.h>
 #include <missing.h>
 
@@ -318,7 +325,8 @@ g_rc_parse__process_error (GError **err, const gchar *pname)
  * error other than ENOENT occurs while parsing a configuration file,
  * prints an informative message and calls exit(1).
  *
- * \bug libgeda shouldn't call exit().
+ * \bug libgeda shouldn't call exit() - this function calls
+ *      g_rc_parse__process_error(), which does.
  *
  * \warning Since this function may not return, it should only be used
  * on application startup or when there is no chance of data loss from
