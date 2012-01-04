@@ -17,6 +17,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
+/*! \file g_rc.c
+ *  \brief Parse configuration files.
+ *
+ * Contains functions to open, parse and manage gEDA configuration
+ * (RC) files.
+ */
+
 #include <config.h>
 #include <missing.h>
 
@@ -328,6 +335,9 @@ g_rc_parse__process_error (GError **err, const gchar *pname)
  * \param [in] pname     The name of the application (usually argv[0]).
  * \param [in] rcname    Config file basename, or NULL.
  * \param [in] rcfile    Specific config file path, or NULL.
+ *
+ * \todo This function definition looks out of date - no call to exit()
+ * here or elsewhere in the file.
  */
 void
 g_rc_parse (TOPLEVEL *toplevel, const gchar *pname,
