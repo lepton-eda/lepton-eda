@@ -51,6 +51,7 @@ edascm_init_impl (void *data)
 }
 
 /*! \brief Initialise the Scheme API.
+ * \ingroup guile_c_iface
  * \par Function Description
  * Registers all modules, procedures and variables exported by the
  * libgeda Scheme API.

@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library - Scheme API
- * Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2010-2012 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +15,65 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
+ */
+
+/*! \defgroup guile_c_iface gEDA Scheme API: C interface
+ * \brief Interface to the gEDA Scheme API for programs written in C.
+ *
+ * This module contains a variety of functions for use in applications
+ * that use libgeda and which need to make use of or extend the gEDA
+ * Scheme API.
+ *
+ * To initialise the API, edascm_init() needs to be called before any
+ * Scheme code is executed or any of the other functions listed in
+ * this module are called.  Normally, this will be called
+ * automatically by libgeda_init().
+ *
+ * The Scheme API requires a libgeda #TOPLEVEL context to be available
+ * at any given time.  The #TOPLEVEL can be set on a per-thread basis
+ * using the edascm_dynwind_toplevel() or edascm_c_with_toplevel()
+ * functions.  For example:
+ *
+ * \code
+ * static SCM worker (void *user_data)
+ * {
+ *   // ...run Scheme code and/or call Scheme API C functions...
+ * }
+ *
+ * void myfunc(TOPLEVEL *toplevel)
+ * {
+ *   void *mydata;
+ *
+ *   // ...set up mydata... //
+ *
+ *   // Set current toplevel using edascm_c_with_toplevel()
+ *   edascm_c_with_toplevel (toplevel, worker, mydata);
+ *
+ *   // Set current toplevel using dynamic wind
+ *   scm_dynwind_begin (0);
+ *   edascm_dynwind_toplevel (toplevel);
+ *   worker (mydata);
+ *   // ...run Scheme code and/or call Scheme API C functions...
+ *   scm_dynwind_end ();
+ * }
+ * \endcode
+ *
+ * For more information on dynamic wind, see the Guile Reference
+ * Manual.
+ *
+ * The remaining functions in this module allow you to convert gEDA
+ * #OBJECT and #PAGE structures to and from Scheme values ("smobs").
+ *
+ * When an #OBJECT is created by Scheme code, it is permitted to be
+ * garbage-collected if all references to it are lost; this is an
+ * important part of allowing Scheme programmers to write efficient
+ * code.  However, because #OBJECT instances are not reference
+ * counted, each Scheme object that contains an #OBJECT has a flag
+ * that indicates whether it is wholly owned by Scheme or whether
+ * there are any remaining references to it from C code.  If you use
+ * edascm_from_object() to create a Scheme value for an #OBJECT that
+ * has no remaining references from other C structures, you should use
+ * edascm_c_set_gc() to mark it as garbage-collectable.
  */
 
 /*!

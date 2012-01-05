@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library - Scheme API
- * Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2010-2012 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ SCM scheme_toplevel_fluid = SCM_UNDEFINED;
 
 /*!
  * \brief Set the #TOPLEVEL fluid in the current dynamic context.
+ * \ingroup guile_c_iface
  * \par Function Description
  * This function must be used inside a pair of calls to
  * scm_dynwind_begin() and scm_dynwind_end(). During the dynwind
@@ -61,6 +62,7 @@ SCM_DEFINE (edascm_current_toplevel, "%current-toplevel", 0, 0, 0,
 
 /*!
  * \brief Get the value of the #TOPLEVEL fluid.
+ * \ingroup guile_c_iface
  * \par Function Description
  * Return the value of the #TOPLEVEL fluid in the current dynamic
  * context.
@@ -91,6 +93,7 @@ SCM_DEFINE (edascm_with_toplevel, "%with-toplevel", 2, 0, 0,
 
 /*!
  * \brief Set the current #TOPLEVEL temporarily.
+ * \ingroup guile_c_iface
  * \par Function Description
  * Set the #TOPLEVEL fluid to \a toplevel and call \a func with \a
  * user_data.

@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library - Scheme API
- * Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2010-2012 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -243,7 +243,9 @@ SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
  * list \a rst_s. The bounds are returned as a pair structure of the
  * form:
  *
- * <code>((left . top) . (right . bottom))</code>
+ * \code
+ * ((left . top) . (right . bottom))
+ * \endcode
  *
  * If \a rst_s is empty, or none of the objects has any bounds
  * (e.g. because they are all empty components and/or text strings),

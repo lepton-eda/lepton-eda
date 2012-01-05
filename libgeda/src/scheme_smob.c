@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library - Scheme API
- * Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2010-2012 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -217,6 +217,7 @@ smob_equalp (SCM obj1, SCM obj2)
 }
 
 /*! \brief Get the smob for a TOPLEVEL.
+ * \ingroup guile_c_iface
  * \par Function Description
  * Create a new smob representing \a toplevel.
  *
@@ -238,6 +239,7 @@ edascm_from_toplevel (TOPLEVEL *toplevel)
 }
 
 /*! \brief Get a smob for a page.
+ * \ingroup guile_c_iface
  * \par Function Description
  * Create a new smob representing \a page.
  *
@@ -258,7 +260,8 @@ edascm_from_page (PAGE *page)
   return smob;
 }
 
-/* \brief Get a page from a smob.
+/*! \brief Get a page from a smob.
+ * \ingroup guile_c_iface
  * \par Function Description
  * Return the #PAGE represented by \a smob.
  *
@@ -278,6 +281,7 @@ edascm_to_page (SCM smob)
 }
 
 /*! \brief Get a smob for a schematic object.
+ * \ingroup guile_c_iface
  * \par Function Description
  * Create a new smob representing \a object.
  *
@@ -286,11 +290,11 @@ edascm_to_page (SCM smob)
  *   should set the garbage-collectable flag by calling:
  *
  * \code
- *   SCM x = edascm_c_make_object (object);
+ *   SCM x = edascm_from_object (object);
  *   edascm_c_set_gc (x, 1);
  * \endcode
  *
- * \fixme We currently have to bake a TOPLEVEL pointer into the smob,
+ * \note We currently have to bake a TOPLEVEL pointer into the smob,
  * so that if the object becomes garbage-collectable we can obtain a
  * TOPLEVEL to use for deleting the smob without accessing the
  * TOPLEVEL fluid and potentially causing a race condition (see bug
@@ -315,7 +319,8 @@ edascm_from_object (OBJECT *object)
   return smob;
 }
 
-/* \brief Get a schematic object from a smob.
+/*! \brief Get a schematic object from a smob.
+ * \ingroup guile_c_iface
  * \par Function Description
  * Return the #OBJECT represented by \a smob.
  *
@@ -335,13 +340,14 @@ edascm_to_object (SCM smob)
 }
 
 /*! \brief Set whether a gEDA object may be garbage collected.
+ * \ingroup guile_c_iface
  * \par Function Description
  * If \a gc is non-zero, allow the structure represented by \a smob to
  * be destroyed when \a smob is garbage-collected.
  *
  * \param [in,out] smob Smob for which to set garbage-collection
  *                      permission.
- * \param [in]     x    If non-zero, permit garbage collection.
+ * \param [in]     gc    If non-zero, permit garbage collection.
  */
 void
 edascm_c_set_gc (SCM smob, int gc)
@@ -351,6 +357,7 @@ edascm_c_set_gc (SCM smob, int gc)
 }
 
 /*! \brief Test whether a smob is a #OBJECT instance
+ * \ingroup guile_c_iface
  * \par Function Description
  * If \a smob is a #OBJECT instance, returns non-zero. Otherwise,
  * returns zero.
@@ -366,6 +373,7 @@ edascm_is_object (SCM smob)
 }
 
 /*! \brief Test whether a smob is a #PAGE instance
+ * \ingroup guile_c_iface
  * \par Function Description
  * If \a smob is a #PAGE instance, returns non-zero. Otherwise,
  * returns zero.
