@@ -35,7 +35,7 @@ SCM_GLOBAL_SYMBOL (edascm_object_state_sym, "object-state");
  * \par Function Description
  * Called by edascm_init() with current thread in Guile mode.
  */
-static void
+static void *
 edascm_init_impl (void *data)
 {
   #include "scheme_init.x"
@@ -48,6 +48,7 @@ edascm_init_impl (void *data)
   edascm_init_attrib ();
   edascm_init_os ();
   edascm_init_deprecated ();
+  return NULL;
 }
 
 /*! \brief Initialise the Scheme API.
