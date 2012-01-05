@@ -395,4 +395,4 @@
 X2? #5 #6 #11 #4 #7 model-name@
 X3? #10 #9 #11 #4 #8 model-name@
 X4? #12 #13 #11 #4 #14 model-name@")
-
+(spice-device "model" "* refdes@")
