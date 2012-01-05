@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library - Scheme API
- * Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2010-2012 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,25 @@ static int init_called = 0;
 
 SCM_GLOBAL_SYMBOL (edascm_object_state_sym, "object-state");
 
+/*! \brief Scheme API initialisation worker function.
+ * \par Function Description
+ * Called by edascm_init() with current thread in Guile mode.
+ */
+static void
+edascm_init_impl (void *data)
+{
+  #include "scheme_init.x"
+
+  edascm_init_smob ();
+  edascm_init_toplevel ();
+  edascm_init_object ();
+  edascm_init_complex ();
+  edascm_init_page ();
+  edascm_init_attrib ();
+  edascm_init_os ();
+  edascm_init_deprecated ();
+}
+
 /*! \brief Initialise the Scheme API.
  * \par Function Description
  * Registers all modules, procedures and variables exported by the
@@ -42,14 +61,5 @@ edascm_init ()
   if (init_called) return;
   init_called = 1;
 
-  #include "scheme_init.x"
-
-  edascm_init_smob ();
-  edascm_init_toplevel ();
-  edascm_init_object ();
-  edascm_init_complex ();
-  edascm_init_page ();
-  edascm_init_attrib ();
-  edascm_init_os ();
-  edascm_init_deprecated ();
+  scm_with_guile (edascm_init_impl, NULL);
 }
