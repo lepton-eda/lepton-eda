@@ -324,7 +324,6 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
       case(ENDATTACH_ATTR):
         return object_list;
         break;
-
     }
 
     if (ATTACH) {
@@ -336,7 +335,9 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
     }
   }
 
-  return(object_list);
+  /* The attribute list wasn't terminated, so it's a parse error! */
+  g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE,
+               _("Unexpected end-of-file in attribute list\n"));
 
 error:
   s_delete_object_glist(toplevel, object_list);
