@@ -495,7 +495,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         itemsread = sscanf(line, "v %u %u\n", &release_ver, &fileformat_ver);
 
         if (itemsread == 0) {
-          g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, "Failed to parse version from buffer.\n");
+          g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, "Failed to parse version from buffer.");
           goto error;
         }
 

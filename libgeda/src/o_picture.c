@@ -69,7 +69,7 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
 	 &type, &x1, &y1, &width, &height, &angle, &mirrored, &embedded);
   
   if (num_conv != 8) {
-    g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse picture definition\n"));
+    g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse picture definition"));
     return NULL;
   }
 

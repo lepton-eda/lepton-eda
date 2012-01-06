@@ -326,14 +326,14 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
       o_attrib_attach (toplevel, new_obj, object_to_get_attribs, FALSE);
       ATTACH=FALSE;
     } else {
-      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Tried to attach a non-text item as an attribute\n"));
+      g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Tried to attach a non-text item as an attribute"));
       goto error;
     }
   }
 
   /* The attribute list wasn't terminated, so it's a parse error! */
   g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE,
-               _("Unexpected end-of-file in attribute list\n"));
+               _("Unexpected end-of-file in attribute list"));
 
 error:
   s_delete_object_glist(toplevel, object_list);
