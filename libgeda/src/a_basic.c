@@ -407,7 +407,9 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
           new_attrs_list = o_read_attribs (toplevel, new_obj, tb, release_ver, fileformat_ver, err);
           if (new_attrs_list == NULL)
             goto error;
-          new_object_list = g_list_concat (new_object_list, new_attrs_list);
+
+	  new_attrs_list = g_list_reverse(new_attrs_list);
+          new_object_list = g_list_concat (new_attrs_list, new_object_list);
 
           /* by now we have finished reading all the attributes */
           /* did we just finish attaching to a complex object? */
