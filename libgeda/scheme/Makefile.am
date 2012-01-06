@@ -29,6 +29,7 @@ TESTS = unit-tests/t0001-geda-conf-lib.scm \
 	unit-tests/t0201-page-dirty.scm \
 	unit-tests/t0202-page-string.scm \
 	unit-tests/t0203-page-string-syntax.scm \
+	unit-tests/t0204-page-parse-ordering.scm \
 	unit-tests/t0300-attribute.scm \
 	unit-tests/t0301-promotable-attributes.scm \
 	unit-tests/t0400-os.scm \

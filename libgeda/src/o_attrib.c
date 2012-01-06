@@ -322,7 +322,6 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
         break;
 
       case(ENDATTACH_ATTR):
-        object_list = g_list_reverse (object_list);
         return object_list;
         break;
 
@@ -336,7 +335,6 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
       goto error;
     }
   }
-  object_list = g_list_reverse (object_list);
 
   return(object_list);
 
