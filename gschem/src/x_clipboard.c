@@ -241,7 +241,7 @@ x_clipboard_get (GSCHEM_TOPLEVEL *w_current)
                                (gchar *) buf, -1, "Clipboard", &err);
 
   if (err) {
-     GtkWidget * dialog = gtk_message_dialog_new (w_current->main_window,
+    GtkWidget * dialog = gtk_message_dialog_new (GTK_WINDOW (w_current->main_window),
                                       GTK_DIALOG_DESTROY_WITH_PARENT,
                                       GTK_MESSAGE_ERROR,
                                       GTK_BUTTONS_OK,
