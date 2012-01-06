@@ -114,6 +114,7 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
   if (strlen (filename) == 0) {
     s_log_message (_("Found an image with no filename."));
     g_free (filename);
+    filename = NULL;
   }
 
   if (embedded == 1) {
