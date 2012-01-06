@@ -205,7 +205,6 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
 
     if (line == NULL) {
       g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Unexpected end-of-file when reading path\n"));
-      g_free (string);
       return NULL;
     }
 
