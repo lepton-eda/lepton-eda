@@ -4,27 +4,31 @@
 @documentencoding utf-8
 @dircategory The Algorithmic Language Scheme
 @direntry
-* gEDA Scheme: (geda-scheme).  gEDA extensibility with Guile Scheme.
+* gEDA Scheme: (geda-scheme).  gEDA uitbreiding met Guile Scheme.
 @end direntry
-@settitle gEDA Scheme Reference Manual @value{VERSION}
+@settitle gEDA Scheme Referentie handleiding @value{VERSION}
 
 @copying
-This manual is for gEDA/gaf, version @value{VERSION}.
+Deze handleiding is voor  gEDA/gaf, versie @value{VERSION}.
 
 Copyright @copyright{} 2011 Peter TB Brett
 
-The text of and illustrations in this document are licensed under a
-Creative Commons Attribution–Share Alike 3.0 Unported license
-("CC-BY-SA"). An explanation of CC-BY-SA is available at
-@uref{http://creativecommons.org/licenses/by-sa/3.0/}. The original
-authors of this document designate the gEDA Project as the
-"Attribution Party" for purposes of CC-BY-SA. In accordance with
-CC-BY-SA, if you distribute this document or an adaptation of it, you
-must provide the URL for the original version.
+Vertaald door Bert Timmerman.
+
+De tekst van, en de illustraties in, dit document zijn onder de
+Creative Commons Attribution–Share Alike 3.0 Unported licensie
+gelicenseerd ("CC-BY-SA").
+Een verklaring van de CC-BY-SA is beschikbaar op
+@uref{http://creativecommons.org/licenses/by-sa/3.0/}.
+De originele auteurs van dit document wijzen het gEDA Project aan
+als de "Attribution Party" voor de doeleinden van de CC-BY-SA.
+Indien dit document verspreid wordt, of een aanpassing hiervan,
+dan moet in overeenstemming met de CC-BY-SA, de URL van de originele
+versie verstrekt worden.
 @end copying
 
 @titlepage
-@title gEDA Scheme Reference Manual
+@title gEDA Scheme Referenie handleiding
 @author Peter TB Brett
 
 @page
@@ -37,87 +41,93 @@ must provide the URL for the original version.
 
 @ifnottex
 @node Top
-@top gEDA Scheme Reference Manual
+@top gEDA Scheme Referentie handleiding
 @insertcopying
 @end ifnottex
 
 @menu
-* Introduction::
+* Introductie::
 
-* Schematic Document Model::
-* Core API Reference::
-* gschem API Reference::
+* Schematisch Document Model::
+* Kern API Referentie::
+* gschem API Referentie::
 
 * Concept Index::
-* Function Index::
-* Variable Index::
+* Functie Index::
+* Variabelen Index::
 @end menu
 
-@node Introduction
-@unnumbered Introduction
+@node Introductie
+@unnumbered Introductie
 
-@section About gEDA
+@section Over gEDA
 
-@dfn{gEDA}, or @emph{GPL Electronic Design Automation}, is a suite of
-free software tools for designing electronics.  The gEDA project has
-produced and continues working on a full GPL'd suite and toolkit of
-Electronic Design Automation (EDA) tools. These tools are used for
-electrical circuit design, schematic capture, simulation, prototyping,
-and production. Currently, the gEDA project offers a mature suite of
-free software applications for electronics design, including schematic
-capture, attribute management, bill of materials (BOM) generation,
-netlisting into over 20 netlist formats, analog and digital
-simulation, and printed circuit board (PCB) layout.
+@dfn{gEDA}, of @emph{GPL Electronic Design Automation}, is een pakket
+van vrije software gereedschappen voor het ontwerpen van elektronica.
+Het gEDA Project heeft een werkend softwarepakket en gereedschapkist
+geproduceerd, en blijft werken aan deze volledige onder GPL
+gelicenseerde Electronic Design Automation (EDA) gereedschappen.
+Deze gereedschappen worden gebruikt voor elektrisch circuit ontwerp,
+schema opstellen, simulatie, prototype ontwerpen en productie.
+In de huidige staat biedt het gEDA Project een volwassen softwarepakket
+aan van vrije software applicaties voor elekttronica ontwerp, inclusief
+schema opstellen, attributen management, materiaallijst (BOM) genereren,
+netlijsten in meer dan 20 netlijst formaten, analoge en digitale
+simulatie, en bedrukte printplaat (PCB) opmaak.
 
-The gEDA project was started because of the lack of free EDA tools for
-POSIX systems with the primary purpose of advancing the state of free
-hardware or open source hardware. The suite is mainly being developed
-on the GNU/Linux platform with some development effort going into
-making sure the tools run on other platforms as well.
+Het gEDA Project is gestart omwille van het gebrek aan vrije EDA
+gereedschappen voor POSIX systemen met als primair doel de staat van
+vrije hardware of open bron hardware te verbeteren.
+Het pakket wordt voornamelkijk ontwikkeld op het GNU/Linux platform met
+deels een ontwikkelings-inspanning om te borgen dat de gereedschappen
+ook op andere platforms werken.
 
-@section About the gEDA Scheme API
+@section Over de gEDA Scheme API
 
-The @dfn{gEDA Scheme API}, documented in this manual, is a set of
-Scheme functions which can be used to enhance gEDA applications by
-adding new functionality or modify existing behaviour.
+De @dfn{gEDA Scheme API}, zoals gedocumenteerd in deze handleiding,
+is een set van Scheme functies die gebruikt kunnen worden om  gEDA
+applicaties te verbeteren door nieuwe funktionaliteit toe te voegen of
+door huidige gedrag aan te passen.
 
-gEDA has always used a Scheme interpreter for interpreting
-configuration files, managing keybindings in gschem, and implementing
-netlist exporter backends in gnetlist.  However, for a long time the
-utility of embedding a Scheme interpreter was diminished by the lack
-of a low-level API for inspecting and modifying schematic documents.
-The Scheme types and functions documented here were added to gEDA to
-address that need.
+gEDA heeft altijd de Scheme vertaler gebruikt voor het interpreteren
+van configuratiebstanden, het beheren van toetsbindingen in gschem, en
+het implementeren van netlijst backends in gnetlist.
+Hoewel, gedurende een lange tijd was het gebruik van een ingesloten
+Scheme vertaler niet goed mogelijk door gebrek aan een laag-niveau API
+voor het inspecteren en aanpassen van schematische documenten.
+De scheme types en functies die hier gedocumenteerd zijn, zijn
+toegevoegd aan gEDA om in deze behoefte te voldoen.
 
-gEDA uses the @emph{Guile} Scheme implementation (otherwise known as
-the @emph{GNU Ubiquitous Intelligent Language for Extensions}) as its
-embedded Scheme.  For more information about Guile, please visit
+gEDA gebruikt de @emph{Guile} Scheme implementatie (ook wel bekend als
+de @emph{GNU Ubiquitous Intelligent Language for Extensions}) als haar
+ingesloten Scheme.  Voor meer informatie over Guile, bezoek alstublieft
 @uref{http://www.gnu.org/s/guile/}.
 
-@section Getting Additional Help
-@cindex Reporting bugs
+@section Verkrijgen van Additionele Hulp
+@cindex Rapporteren van fouten
 
-If you think you have found a bug, please file a bug report in
-Launchpad: @uref{http://bugs.launchpad.net/geda}. Please add the tag
-@samp{scheme-api}.  It will help us to fix your bug quickly if you can
-describe in detail how to reproduce the bug.
+Als U denkt een fout gevonde te hebben, wilt U deze dan alstublieft
+rapporteren in Launchpad: @uref{http://bugs.launchpad.net/geda}.
+Gaarne het label @samp{scheme-api} toevoegen.
+Het helpt ons om de fout snel te herstellen als U in detail beschrijft
+hoe de fout gereproduceerd kan worden.
 
-If you have a question about using gEDA, or about extending gEDA using
-Scheme, you may wish to send a message to one of the gEDA mailing
-lists.  You may also find additional information in the gEDA
-wiki.
+Als U een vraag heeft over het gebruik van gEDA, of over het uitbreiden
+van gEDA gebruikmakend van Scheme, dan kunt U een bericht sturen aan een
+van de gEDA e-mail berichtlijsten.
+U kunt ook additionele informatie vinden in de gEDA wiki.
 
-Both the mailing lists and wiki can be accessed from the main gEDA
-website: @uref{http://gpleda.org/}.
+Beide e-mail berichtlijsten en de wiki kunnen bereikt worden vanaf de
+startpagina van de gEDA website: @uref{http://gpleda.org/}.
 
-@section We Need Feedback!
+@section Wij willen uw terugkoppeling!
 
-If you find a typographical error in this manual, or if you have
-thought of a way to make this manual better, we would love to hear
-from you! Please submit a report in Launchpad:
-@uref{http://bugs.launchpad.net/geda}, with the tag @samp{scheme-api}.
+Als U een typfout vindt in deze handleiding, of als U een manier bedacht
+heeft om deze handleiding te verbeteren, dan zouden wij dat graag van U
+vernemen.  Gaarne een rapport insturen in Launchpad:
+@uref{http://bugs.launchpad.net/geda}, met het label @samp{scheme-api}.
 
-@node Schematic Document Model
+@node Schematisch Document Model
 @chapter The Schematic Document Model
 
 When using gEDA to design an electronic circuit, users use the
@@ -332,7 +342,7 @@ where @code{left} is the smaller x coordinate, @code{right} is the
 larger x coordinate, and @code{bottom} and @code{top} are respectively
 the smaller and larger y coordinates.
 
-@node Core API Reference
+@node Kern API Referentie
 @chapter Core API Reference
 
 The Scheme modules and functions described in this chapter are
@@ -1652,7 +1662,7 @@ the form @samp{$@{VAR@}}.
 
 @end defun
 
-@node gschem API Reference
+@node gschem API Referentie
 @chapter gschem API Reference
 
 The Scheme modules and functions described in this chapter are
@@ -2017,12 +2027,12 @@ a local file.
 
 @printindex cp
 
-@node Function Index
+@node Functie Index
 @unnumbered Function Index
 
 @printindex fn
 
-@node Variable Index
+@node Variabelen Index
 @unnumbered Variable Index
 
 @printindex vr
