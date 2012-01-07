@@ -239,7 +239,7 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
 {
   GList *object_list = NULL;
   OBJECT *new_obj;
-  char *line = NULL;
+  const char *line = NULL;
   char objtype;
   int ATTACH=FALSE;
 
@@ -290,9 +290,7 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
         break;
 
       case(OBJ_PATH):
-        line = g_strdup (line);
         new_obj = o_path_read (toplevel, line, tb, release_ver, fileformat_ver, err);
-        g_free (line);
         if (new_obj == NULL)
           goto error;
         object_list = g_list_prepend (object_list, new_obj);
@@ -311,9 +309,7 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
         break;
 
       case(OBJ_TEXT):
-        line = g_strdup (line);
         new_obj = o_text_read (toplevel, line, tb, release_ver, fileformat_ver, err);
-        g_free (line);
         if (new_obj == NULL)
           goto error;
         object_list = g_list_prepend (object_list, new_obj);

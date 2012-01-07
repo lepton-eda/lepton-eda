@@ -206,7 +206,7 @@ void o_line_modify(TOPLEVEL *toplevel, OBJECT *object,
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new line object, or NULL on error.
  */
-OBJECT *o_line_read (TOPLEVEL *toplevel, char buf[],
+OBJECT *o_line_read (TOPLEVEL *toplevel, const char buf[],
                      unsigned int release_ver, unsigned int fileformat_ver, GError ** err)
 {
   OBJECT *new_obj;

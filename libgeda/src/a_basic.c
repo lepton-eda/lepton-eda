@@ -270,7 +270,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
                       char *buffer, const int size,
                       const char *name, GError **err)
 {
-  char *line = NULL;
+  const char *line = NULL;
   TextBuffer *tb = NULL;
 
   char objtype;
@@ -345,9 +345,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         break;
 
       case(OBJ_PICTURE):
-        line = g_strdup (line);
         new_obj = o_picture_read (toplevel, line, tb, release_ver, fileformat_ver, err);
-        g_free (line);
         if (new_obj == NULL)
           goto error;
         new_object_list = g_list_prepend (new_object_list, new_obj);
@@ -370,18 +368,14 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         break;
 
       case(OBJ_TEXT):
-        line = g_strdup (line);
         new_obj = o_text_read (toplevel, line, tb, release_ver, fileformat_ver, err);
-        g_free (line);
         if (new_obj == NULL)
           goto error;
         new_object_list = g_list_prepend (new_object_list, new_obj);
         break;
 
       case(OBJ_PATH):
-        line = g_strdup(line);
         new_obj = o_path_read (toplevel, line, tb, release_ver, fileformat_ver, err);
-        g_free (line);
         if (new_obj == NULL)
           goto error;
         new_object_list = g_list_prepend (new_object_list, new_obj);

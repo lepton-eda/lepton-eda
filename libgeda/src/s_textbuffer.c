@@ -35,7 +35,7 @@
 
 struct _TextBuffer
 {
-  gchar *buffer;
+  const gchar *buffer;
   gsize size;
 
   gchar *line;
@@ -59,7 +59,7 @@ struct _TextBuffer
  *  \param size The length of the buffer.
  *  \retval Pointer to a new TextBuffer struct.
  */
-TextBuffer *s_textbuffer_new (gchar *data, const gint size)
+TextBuffer *s_textbuffer_new (const gchar *data, const gint size)
 {
   TextBuffer *result;
   gsize realsize;
@@ -151,7 +151,8 @@ void s_textbuffer_seek (TextBuffer *tb, const gint offset)
  *  \param count Maximum number of characters to read.
  *  \retval      Character array, or NULL if no characters left.
  */
-gchar *s_textbuffer_next (TextBuffer *tb, const gsize count)
+const gchar *
+s_textbuffer_next (TextBuffer *tb, const gsize count)
 {
   gsize len = count;
   gsize maxlen = tb->size - tb->offset;
@@ -192,7 +193,8 @@ gchar *s_textbuffer_next (TextBuffer *tb, const gsize count)
  *  \param tb    TextBuffer to read from.
  *  \retval      Character array, or NULL if no characters left.
  */
-gchar *s_textbuffer_next_line (TextBuffer *tb)
+const gchar *
+s_textbuffer_next_line (TextBuffer *tb)
 {
   int len = 0;
   gchar *line;
@@ -215,7 +217,7 @@ gchar *s_textbuffer_next_line (TextBuffer *tb)
 
   len++;
 
-  line = s_textbuffer_next (tb, len);
+  line = (gchar *) s_textbuffer_next (tb, len);
 
   /* wipe out all trailing CR characters */
   while (len > 1 && line[len-2] == '\r') {

@@ -258,7 +258,7 @@ void o_box_modify(TOPLEVEL *toplevel, OBJECT *object,
  *  \param [in]     fileformat_ver  libgeda file format version number.
  *  \return The BOX OBJECT that was created, or NULL on error.
  */
-OBJECT *o_box_read (TOPLEVEL *toplevel, char buf[],
+OBJECT *o_box_read (TOPLEVEL *toplevel, const char buf[],
                     unsigned int release_ver, unsigned int fileformat_ver, GError **err)
 {
   OBJECT *new_obj;

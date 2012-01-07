@@ -199,7 +199,7 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
 
   pathstr = g_string_new ("");
   for (i = 0; i < num_lines; i++) {
-    gchar *line;
+    const gchar *line;
 
     line = s_textbuffer_next_line (tb);
 

@@ -144,7 +144,7 @@ void o_pin_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list, or NULL on error.
  */
-OBJECT *o_pin_read (TOPLEVEL *toplevel, char buf[],
+OBJECT *o_pin_read (TOPLEVEL *toplevel, const char buf[],
                     unsigned int release_ver, unsigned int fileformat_ver, GError **err)
 {
   OBJECT *new_obj;

@@ -636,7 +636,7 @@ void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \return The object list, or NULL on error.
  */
 OBJECT *o_complex_read (TOPLEVEL *toplevel,
-                        char buf[], unsigned int release_ver,
+                        const char buf[], unsigned int release_ver,
                         unsigned int fileformat_ver, GError **err)
 {
   OBJECT *new_obj;

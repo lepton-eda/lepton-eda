@@ -431,7 +431,7 @@ OBJECT *o_text_read (TOPLEVEL *toplevel,
 
   textstr = g_string_new ("");
   for (i = 0; i < num_lines; i++) {
-    gchar *line;
+    const gchar *line;
     
     line = s_textbuffer_next_line (tb);
 

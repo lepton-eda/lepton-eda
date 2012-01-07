@@ -60,7 +60,7 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
   int mirrored, embedded;
   int num_conv;
   gchar type;
-  gchar *line = NULL;
+  const gchar *line = NULL;
   gchar *filename;
   gchar *file_content = NULL;
   guint file_length = 0;

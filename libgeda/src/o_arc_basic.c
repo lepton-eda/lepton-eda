@@ -232,7 +232,7 @@ void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object,
  *  \param [in] fileformat_ver
  *  \return The ARC OBJECT that was created, or NULL on error.
  */
-OBJECT *o_arc_read (TOPLEVEL *toplevel, char buf[],
+OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
            unsigned int release_ver, unsigned int fileformat_ver, GError **err)
 {
   OBJECT *new_obj;

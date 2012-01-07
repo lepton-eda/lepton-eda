@@ -143,7 +143,7 @@ void o_net_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
  *  \return The object list, or NULL on error.
  *
  */
-OBJECT *o_net_read (TOPLEVEL *toplevel, char buf[],
+OBJECT *o_net_read (TOPLEVEL *toplevel, const char buf[],
                     unsigned int release_ver, unsigned int fileformat_ver, GError **err)
 {
   OBJECT *new_obj;
