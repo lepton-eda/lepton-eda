@@ -104,38 +104,6 @@ TextBuffer *s_textbuffer_free (TextBuffer *tb)
   return NULL;
 }
 
-/*! \brief Change the current position within a text buffer
- *
- *  \par Function description
- *  Changes where the next call to s_textbuffer_next() will start
- *  reading.  If offset is negative, it is considered as a distance
- *  from the end of the buffer.
- *
- *  \param tb     A TextBuffer to seek within.
- *  \param offset A new position within the buffer.
- */
-void s_textbuffer_seek (TextBuffer *tb, const gint offset)
-{
-  gint ofs;
-  gsize realoffset;
-
-  if (tb == NULL) return;
-
-  ofs = offset;
-  if (ofs > tb->size)
-    ofs = tb->size;
-
-  if (ofs < -tb->size)
-    ofs = 0;
-
-  if (ofs < 0)
-    realoffset = tb->size - ofs;
-  else
-    realoffset = ofs;
-
-  tb->offset = realoffset;
-}
-
 /*! \brief Fetch a number of characters from a text buffer
  *
  *  \par Function description

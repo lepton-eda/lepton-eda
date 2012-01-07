@@ -237,7 +237,6 @@ double s_path_shortest_distance (PATH *path, int x, int y, int solid);
 /* s_textbuffer.c */
 TextBuffer *s_textbuffer_new (const gchar *data, const gint size);
 TextBuffer *s_textbuffer_free (TextBuffer *tb);
-void s_textbuffer_seek (TextBuffer *tb, const gint offset);
 const gchar *s_textbuffer_next (TextBuffer *tb, const gsize count);
 const gchar *s_textbuffer_next_line (TextBuffer *tb);
 
