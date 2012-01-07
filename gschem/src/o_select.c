@@ -286,6 +286,7 @@ void o_select_box_search(GSCHEM_TOPLEVEL *w_current)
   OBJECT *o_current=NULL;
   int count = 0; /* object count */
   int SHIFTKEY = w_current->SHIFTKEY;
+  int CONTROLKEY = w_current->CONTROLKEY;
   int left, right, top, bottom;
   const GList *iter;
 	
@@ -313,9 +314,9 @@ void o_select_box_search(GSCHEM_TOPLEVEL *w_current)
   }
 
   /* if there were no objects to be found in select box, count will be */
-  /* zero, and you need to deselect anything remaining (unless the shift */
-  /* key was pressed */
-  if (count == 0 && !SHIFTKEY) {
+  /* zero, and you need to deselect anything remaining (except when the */
+  /* shift or control keys are pressed) */
+  if (count == 0 && !SHIFTKEY && !CONTROLKEY) {
     o_select_unselect_all (w_current);
   }
   i_update_menus(w_current);
