@@ -128,19 +128,21 @@ vernemen.  Gaarne een rapport insturen in Launchpad:
 @uref{http://bugs.launchpad.net/geda}, met het label @samp{scheme-api}.
 
 @node Schematisch Document Model
-@chapter The Schematic Document Model
+@chapter Het Schematisch Document Model
 
-When using gEDA to design an electronic circuit, users use the
-schematic editor, gschem, to choose and place @emph{schematic symbols}
-on a @emph{schematic page}, and connect the @emph{pins} of the symbols
-together by drawing @emph{nets}.  The user may add various
-@emph{attributes} to symbols, nets or pins to modify how the circuit
-diagrams should be interpreted.  The resulting schematics are then
-processed with the gnetlist tool to generate a @emph{netlist}.
+Wanneer gEDA gebruikt wordt voor het ontwerpen van een electronische
+schakeling, dan gebruikt men gschem, het schema tekenprogramma, voor het
+kiezen en plaatsen van @emph{schematische symbolen} op een
+@emph{schema pagina}, en verbinden deze met elkaar door het tekenen van
+@emph{netten}.
+De gebruiker kan diverse @emph{attributen} toevoegen aan de symbolen,
+netten en pennen om de interpretatie van het circuit aan te passen.
+De resulterende schema's kunnen dan bewerkt worden met het gnetlist
+programma om een @emph{netlijst} te genereren.
 
-This chapter describes the different data types used by the Scheme API
-to represent gEDA documents (both schematics and symbols), and how
-they relate to each other.
+Dit hoofdstuk beschrijft de verschillende dat typen die gebruikt worden
+door de Scheme API om gEDA documenten (zowel schema's en symbolen) te
+presenteren, en hoe deze tot elkaar relateren.
 
 @menu
 * Pages::
@@ -156,31 +158,32 @@ they relate to each other.
 @cindex Schematics
 @cindex Symbols
 
-Schematics and symbols are presented as different types of document to
-the user, with different file extensions, icons and mime-types.
-However, when they are loaded into a gEDA application such as gschem
-for editing, they are internally represented in exactly the same way,
-by the @code{page} type.  The @code{page} is the top-level gEDA document
-data type.
+Schema's en symbolen worden als verschillende documenttypen
+gepresenteerd aan de gebruiker, met verschillende bestand extensies,
+iconen en mime-typen.
+Hoe dan ook, als zij in een gEDA applicatie geladen worden zoals gschem
+voor bewerken, dan worden zij intern op exact dezelfde wijze
+gepresenteerd door de @code{page} type.  De @code{page} is het top-level
+gEDA document data type.
 
-Internally, the main difference between a @code{page} for a schematic
-and a @code{page} for a symbol is the types of schematic element they
-are permitted to contain (@pxref{Objects}).  For example, a symbol is
-not permitted to contain nets, buses, or instances of other symbols,
-and a schematic is not permitted to contain pins.
+Inwendig, is het grote verschil tussen een @code{page} voor een schema
+en een @code{page} voor een symbool het type schema element dat zij
+mogen bevatten (@pxref{Objects}).
+Bijvoorbeeld, een symbool mag geen netten, bussen, of instanties van
+andere symbolen bevatten, en een schema mag geen pennen bevatten.
 
-@strong{Note}: Although the restrictions on what types of primitive
-element schematics and symbols may contain are not enforced by the
-API, designs which violate these restrictions may cause the netlister
-not to work as expected.
+@strong{Noot}: Alhoewel de beperkingen van welk type primitieve element
+de schema's en symbolen mogen bevatten niet bekrachtigd worden door de
+API, kunnen ontwerpen die in strijd zijn met deze beperkingen
+onverwachte werking van de netlister veroorzaken.
 
-Each @code{page} is associated with a filename, although the filename is
-not required by the API either to be valid or to be associated with a
-accessible file in the filesystem.
+Elke @code{page} is geassocieerd met een bestandsnaam, alhoewel het door
+de API niet vereist wordt dat de bestandsnaam bestandsnaam geldig is, of
+geassocieerd wordt met een toegankelijk bestand in het bestandensysteem.
 
-Pages are not garbage-collected; once you create a @code{page}, you are
-responsible for making sure that it is disposed of when it is no
-longer required.
+Pages worden niet garbage-collected; wanneer men een @code{page}
+creeërt, is men verantwoordelijk voor het geborgd verwijderen wanneer
+deze niet langer gewenst is.
 
 @node Objects
 @section Objects
