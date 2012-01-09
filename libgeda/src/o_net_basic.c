@@ -712,8 +712,15 @@ void o_net_refresh_conn_cache(TOPLEVEL *toplevel, OBJECT *o_current)
 
     /* Extract the next connected object and advance the connection list. */
     conn = (CONN*) conn_list->data;
-    obj = conn->other_object;
     stack->data = (gpointer) g_list_next (conn_list);
+
+    if (conn == NULL)
+        /* should not happen */
+        continue;
+    obj = conn->other_object;
+    if (obj == NULL)
+        /* should not happen */
+        continue;
 
     /* Act upon the object that is connected to the segment. */
     switch (obj->type) {
