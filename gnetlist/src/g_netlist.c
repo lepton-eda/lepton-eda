@@ -351,60 +351,53 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
 
   /* search for the first instance */
   /* through the entire list */
-  while (nl_current != NULL) {
+  for (nl_current = netlist_head;
+       nl_current != NULL;
+       nl_current = nl_current->next) {
 
-    if (nl_current->component_uref) {
+    if (!nl_current->component_uref) continue;
+    if (strcmp (nl_current->component_uref, wanted_uref) != 0) continue;
 
-      if (strcmp(nl_current->component_uref, wanted_uref) == 0) {
+    for (pl_current = nl_current->cpins;
+         pl_current != NULL;
+         pl_current = pl_current->next) {
 
-        pl_current = nl_current->cpins;
-        while (pl_current != NULL) {
+      if (!pl_current->pin_number) continue;
+      if (strcmp(pl_current->pin_number, wanted_pin) != 0) continue;
 
-          if (pl_current->pin_number) {
-            if (strcmp(pl_current->pin_number, wanted_pin) ==
-                0) {
+      if (pl_current->net_name) {
+        net_name = pl_current->net_name;
+      }
 
-              n_current = pl_current->nets;
+      for (n_current = pl_current->nets;
+           n_current != NULL;
+           n_current = n_current->next) {
 
-              if (pl_current->net_name) {
-                net_name = pl_current->net_name;
-              }
+        if (!n_current->connected_to) continue;
 
-              while (n_current != NULL) {
+        pairlist = SCM_EOL;
+        pin = (char *) g_malloc(sizeof(char) *
+                                strlen
+                                (n_current->
+                                 connected_to));
+        uref =
+          (char *) g_malloc(sizeof(char) *
+                            strlen(n_current->
+                                   connected_to));
 
-                if (n_current->connected_to) {
+        sscanf(n_current->connected_to,
+               "%s %s", uref, pin);
 
-                  pairlist = SCM_EOL;
-                  pin = (char *) g_malloc(sizeof(char) *
-                                          strlen
-                                          (n_current->
-                                           connected_to));
-                  uref =
-                    (char *) g_malloc(sizeof(char) *
-                                      strlen(n_current->
-                                             connected_to));
+        pairlist = scm_list_n (scm_from_utf8_string (uref),
+                               scm_from_utf8_string (pin),
+                               SCM_UNDEFINED);
 
-                  sscanf(n_current->connected_to,
-                         "%s %s", uref, pin);
+        pinslist = scm_cons (pairlist, pinslist);
 
-                  pairlist = scm_list_n (scm_from_utf8_string (uref),
-                                         scm_from_utf8_string (pin),
-                                         SCM_UNDEFINED);
-
-                  pinslist = scm_cons (pairlist, pinslist);
-
-                  g_free(uref);
-                  g_free(pin);
-                }
-                n_current = n_current->next;
-              }
-            }
-          }
-          pl_current = pl_current->next;
-        }
+        g_free(uref);
+        g_free(pin);
       }
     }
-    nl_current = nl_current->next;
   }
 
   if (net_name != NULL) {
