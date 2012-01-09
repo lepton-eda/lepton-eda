@@ -72,6 +72,7 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const CLibSymbol *sym)
   OBJECT *o_current;
   char *buffer;
   const gchar *sym_name = s_clib_symbol_get_name (sym);
+  GError *err = NULL;
 
   /* remove the old place list if it exists */
   s_delete_object_glist(toplevel, toplevel->page_current->place_list);
@@ -91,8 +92,20 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const CLibSymbol *sym)
     temp_list = o_read_buffer (toplevel,
                                temp_list,
                                buffer, -1,
-                               sym_name);
+                               sym_name,
+                               &err);
     g_free (buffer);
+
+    if (err) {
+      /* If an error occurs here, we can assume that the preview also has failed to load,
+         and the error message is displayed there. We therefore ignore this error, but
+         end the component insertion.
+         */
+
+      g_error_free(err);
+      i_set_state (w_current, SELECT);
+      return;
+    }
 
     /* Take the added objects */
     toplevel->page_current->place_list =
@@ -104,16 +117,26 @@ void o_complex_prepare_place(GSCHEM_TOPLEVEL *w_current, const CLibSymbol *sym)
     new_object = o_complex_new (toplevel, OBJ_COMPLEX, DEFAULT_COLOR,
                                 0, 0, 0, 0, sym, sym_name, 1);
 
-    toplevel->page_current->place_list =
-      g_list_concat (toplevel->page_current->place_list,
-        o_complex_promote_attribs (toplevel, new_object));
-    toplevel->page_current->place_list =
-      g_list_append (toplevel->page_current->place_list, new_object);
+    if (new_object->type == OBJ_PLACEHOLDER) {
+      /* If created object is a placeholder, the loading failed and we end the insert action */
 
-    /* Flag the symbol as embedded if necessary */
-    o_current = (g_list_last (toplevel->page_current->place_list))->data;
-    if (w_current->embed_complex) {
-      o_current->complex_embedded = TRUE;
+      s_delete_object(toplevel, new_object);
+      i_set_state (w_current, SELECT);
+      return;
+    }
+    else {
+
+      toplevel->page_current->place_list =
+          g_list_concat (toplevel->page_current->place_list,
+                         o_complex_promote_attribs (toplevel, new_object));
+      toplevel->page_current->place_list =
+          g_list_append (toplevel->page_current->place_list, new_object);
+
+      /* Flag the symbol as embedded if necessary */
+      o_current = (g_list_last (toplevel->page_current->place_list))->data;
+      if (w_current->embed_complex) {
+        o_current->complex_embedded = TRUE;
+      }
     }
   }
 

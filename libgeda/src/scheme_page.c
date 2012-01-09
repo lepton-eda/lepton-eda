@@ -27,6 +27,8 @@
 #include "libgeda_priv.h"
 #include "libgedaguile_priv.h"
 
+SCM_SYMBOL (edascm_string_format_sym , "string-format");
+
 /*! \brief Get a of open pages.
  * \par Function Description
  * Retrieves a Scheme list of currently-opened pages.
@@ -400,13 +402,11 @@ SCM_DEFINE (page_to_string, "%page->string", 1, 0, 0,
 /*! \brief Create a page from a string representation.
  * \par Function Description
  * Returns a page with filename \a filename_s created by parsing \a
- * str_s.
+ * str_s. Throws an error if \a str_s contains invalid gEDA file
+ * format syntax.
  *
  * \note Scheme API: Implements the %string->page procedure of the
  * (geda core page) module.
- *
- * \bug Should throw an error if \a str_s contains invalid gEDA file
- * format syntax.  Requires support in gEDA file parser.
  *
  * \param filename_s Filename for new page.
  * \param str_s      String to parse to create page.
@@ -428,10 +428,19 @@ SCM_DEFINE (string_to_page, "%string->page", 2, 0, 0,
   free (filename);
 
   size_t len;
+  GError * err = NULL;
   char *str = scm_to_utf8_stringn (str_s, &len);
   GList *objects = o_read_buffer (toplevel, NULL, str, len,
-                                  page->page_filename);
+                                  page->page_filename, &err);
   free (str);
+
+  if (err) {
+      SCM error_message = scm_from_utf8_string (err->message);
+
+      g_error_free(err);
+      scm_error (edascm_string_format_sym, s_string_to_page,
+                 _("Parse error: ~s"), scm_list_1 (error_message), SCM_EOL);
+  }
 
   s_page_append_list (toplevel, page, objects);
 

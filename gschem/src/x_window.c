@@ -740,12 +740,13 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
       GtkWidget *dialog;
 
       g_warning ("%s\n", err->message);
-      dialog = gtk_message_dialog_new (GTK_WINDOW (w_current->main_window),
-                                       GTK_DIALOG_DESTROY_WITH_PARENT,
-                                       GTK_MESSAGE_ERROR,
-                                       GTK_BUTTONS_CLOSE,
-                                       "%s",
-                                       err->message);
+      dialog = gtk_message_dialog_new_with_markup
+        (GTK_WINDOW (w_current->main_window),
+         GTK_DIALOG_DESTROY_WITH_PARENT,
+         GTK_MESSAGE_ERROR,
+         GTK_BUTTONS_CLOSE,
+         _("<b>An error occurred while loading the requested file.</b>\n\nLoading from '%s' failed: %s. The gschem log may contain more information."),
+         fn, err->message);
       gtk_window_set_title (GTK_WINDOW (dialog), _("Failed to load file"));
       gtk_dialog_run (GTK_DIALOG (dialog));
       gtk_widget_destroy (dialog);

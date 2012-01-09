@@ -35,7 +35,7 @@
 
 struct _TextBuffer
 {
-  gchar *buffer;
+  const gchar *buffer;
   gsize size;
 
   gchar *line;
@@ -59,7 +59,7 @@ struct _TextBuffer
  *  \param size The length of the buffer.
  *  \retval Pointer to a new TextBuffer struct.
  */
-TextBuffer *s_textbuffer_new (gchar *data, const gint size)
+TextBuffer *s_textbuffer_new (const gchar *data, const gint size)
 {
   TextBuffer *result;
   gsize realsize;
@@ -104,44 +104,17 @@ TextBuffer *s_textbuffer_free (TextBuffer *tb)
   return NULL;
 }
 
-/*! \brief Change the current position within a text buffer
- *
- *  \par Function description
- *  Changes where the next call to s_textbuffer_next() will start
- *  reading.  If offset is negative, it is considered as a distance
- *  from the end of the buffer.
- *
- *  \param tb     A TextBuffer to seek within.
- *  \param offset A new position within the buffer.
- */
-void s_textbuffer_seek (TextBuffer *tb, const gint offset)
-{
-  gint ofs;
-  gsize realoffset;
-
-  if (tb == NULL) return;
-
-  ofs = offset;
-  if (ofs > tb->size)
-    ofs = tb->size;
-
-  if (ofs < -tb->size)
-    ofs = 0;
-
-  if (ofs < 0)
-    realoffset = tb->size - ofs;
-  else
-    realoffset = ofs;
-
-  tb->offset = realoffset;
-}
-
 /*! \brief Fetch a number of characters from a text buffer
  *
  *  \par Function description
  *  Get some number of characters from a TextBuffer, starting at the
  *  current position.  If the end of the buffer has been reached (and
- *  thus no more characters remain) returns null.
+ *  thus no more characters remain) returns null.  If \a count is -1,
+ *  obtains all characters up to and including the next newline.
+ *
+ *  A newline is detected as '\n', or '\r' together with its
+ *  immediately following '\n', or '\r', in that order.  All newlines
+ *  are collapsed into a single '\n'.
  *
  *  The returned character array should be considered highly volatile,
  *  and is only valid until the next call to s_textbuffer_next() or
@@ -151,30 +124,54 @@ void s_textbuffer_seek (TextBuffer *tb, const gint offset)
  *  \param count Maximum number of characters to read.
  *  \retval      Character array, or NULL if no characters left.
  */
-gchar *s_textbuffer_next (TextBuffer *tb, const gsize count)
+const gchar *
+s_textbuffer_next (TextBuffer *tb, const gssize count)
 {
-  gsize len = count;
-  gsize maxlen = tb->size - tb->offset;
+  gboolean eol = FALSE;
+  gchar c;
+  gsize len;
 
-  if (tb == NULL) return NULL;
+  g_return_val_if_fail (tb != NULL, NULL);
 
-  if (count == 0) return NULL;
+  if (tb->offset >= tb->size) return NULL;
 
-  if (tb->offset >= tb->size) 
-    return NULL;
+  const gchar *src = tb->buffer + tb->offset;
+  gchar *dest = tb->line;
+  const gchar *buf_end = tb->buffer + tb->size;
 
-  if (len > maxlen) 
-    len = maxlen;
+  while (1) {
+    if (src >= buf_end) break;
+    if (count >= 0 && dest - tb->line >= count) break;
+    if (count < 0 && eol) break;
 
-  if (tb->linesize < len + 1) {
-    tb->line = g_realloc(tb->line, len + 1);
-    tb->linesize = len + 1;
+    /* Expand line buffer, if necessary, leaving space for a null */
+    len = dest - tb->line + 2;
+    if (len >= tb->linesize) {
+      tb->linesize += TEXT_BUFFER_LINE_SIZE;
+      tb->line = g_realloc(tb->line, tb->linesize);
+    }
+
+    eol = FALSE;
+    c = *src;
+    if (c == '\n') {
+      *dest = '\n';
+      eol = TRUE;
+    } else if (c == '\r') {
+      *dest = '\n';
+      eol = TRUE;
+      /* Peek ahead to absorb a '\n' */
+      src++;
+      if (src >= buf_end || *src != '\n') src--;
+    } else {
+      *dest = c;
+    }
+
+    src++;
+    dest++;
   }
 
-  strncpy (tb->line, tb->buffer + tb->offset, len);
-
-  tb->line[len] = 0;
-  tb->offset += len;
+  *dest = 0;
+  tb->offset = src - tb->buffer;
 
   return tb->line;
 }
@@ -192,36 +189,8 @@ gchar *s_textbuffer_next (TextBuffer *tb, const gsize count)
  *  \param tb    TextBuffer to read from.
  *  \retval      Character array, or NULL if no characters left.
  */
-gchar *s_textbuffer_next_line (TextBuffer *tb)
+const gchar *
+s_textbuffer_next_line (TextBuffer *tb)
 {
-  int len = 0;
-  gchar *line;
-
-  if (tb == NULL) return NULL;
-
-  if (tb->offset >= tb->size) 
-    return NULL;
-
-  /* skip leading CR characters */
-  while (tb->buffer[tb->offset] == '\r'
-	 && tb->offset < tb->size - 1) {
-    tb->offset += 1;
-  }
-
-  while ((tb->buffer[tb->offset + len] != '\n')
-	 && (len < tb->size - tb->offset - 1)) {
-    len++;
-  }
-
-  len++;
-
-  line = s_textbuffer_next (tb, len);
-
-  /* wipe out all trailing CR characters */
-  while (len > 1 && line[len-2] == '\r') {
-    line[len-1] = 0;
-    len--;
-  }
-
-  return line;
+  return s_textbuffer_next (tb, -1);
 }

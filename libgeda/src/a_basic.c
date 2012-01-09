@@ -268,15 +268,16 @@ int o_save (TOPLEVEL *toplevel, const GList *object_list,
  */
 GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
                       char *buffer, const int size,
-                      const char *name)
+                      const char *name, GError **err)
 {
-  char *line = NULL;
+  const char *line = NULL;
   TextBuffer *tb = NULL;
 
   char objtype;
   GList *object_list_save=NULL;
   OBJECT *new_obj=NULL;
-  GList *new_obj_list;
+  GList *new_attrs_list;
+  GList *new_object_list = NULL;
   GList *iter;
   unsigned int release_ver;
   unsigned int fileformat_ver;
@@ -294,8 +295,6 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
   g_return_val_if_fail ((buffer != NULL), NULL);
 
   tb = s_textbuffer_new (buffer, size);
-
-  object_list = g_list_reverse (object_list);
 
   while (1) {
 
@@ -321,116 +320,133 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
     switch (objtype) {
 
       case(OBJ_LINE):
-        new_obj = o_line_read (toplevel, line, release_ver, fileformat_ver);
-        object_list = g_list_prepend (object_list, new_obj);
+        if ((new_obj = o_line_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+          goto error;
+        new_object_list = g_list_prepend (new_object_list, new_obj);
         break;
 
 
       case(OBJ_NET):
-        new_obj = o_net_read (toplevel, line, release_ver, fileformat_ver);
-        object_list = g_list_prepend (object_list, new_obj);
+        if ((new_obj = o_net_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+          goto error;
+        new_object_list = g_list_prepend (new_object_list, new_obj);
         break;
 
       case(OBJ_BUS):
-        new_obj = o_bus_read (toplevel, line, release_ver, fileformat_ver);
-        object_list = g_list_prepend (object_list, new_obj);
+        if ((new_obj = o_bus_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+          goto error;
+        new_object_list = g_list_prepend (new_object_list, new_obj);
         break;
 
       case(OBJ_BOX):
-        new_obj = o_box_read (toplevel, line, release_ver, fileformat_ver);
-        object_list = g_list_prepend (object_list, new_obj);
+        if ((new_obj = o_box_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+          goto error;
+        new_object_list = g_list_prepend (new_object_list, new_obj);
         break;
 
       case(OBJ_PICTURE):
-        line = g_strdup (line);
-        new_obj = o_picture_read (toplevel, line, tb, release_ver, fileformat_ver);
-        g_free (line);
-        object_list = g_list_prepend (object_list, new_obj);
+        new_obj = o_picture_read (toplevel, line, tb, release_ver, fileformat_ver, err);
+        if (new_obj == NULL)
+          goto error;
+        new_object_list = g_list_prepend (new_object_list, new_obj);
         break;
 
       case(OBJ_CIRCLE):
-        new_obj = o_circle_read (toplevel, line, release_ver, fileformat_ver);
-        object_list = g_list_prepend (object_list, new_obj);
+        if ((new_obj = o_circle_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+	  goto error;
+        new_object_list = g_list_prepend (new_object_list, new_obj);
         break;
 
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-        new_obj = o_complex_read (toplevel, line, release_ver, fileformat_ver);
-        object_list = g_list_prepend (object_list, new_obj);
+        if ((new_obj = o_complex_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+          goto error;
+        new_object_list = g_list_prepend (new_object_list, new_obj);
 
         /* last_complex is used for verifying symversion attribute */
         last_complex = new_obj;
         break;
 
       case(OBJ_TEXT):
-        line = g_strdup (line);
-        new_obj = o_text_read (toplevel, line, tb, release_ver, fileformat_ver);
-        g_free (line);
-        object_list = g_list_prepend (object_list, new_obj);
+        new_obj = o_text_read (toplevel, line, tb, release_ver, fileformat_ver, err);
+        if (new_obj == NULL)
+          goto error;
+        new_object_list = g_list_prepend (new_object_list, new_obj);
         break;
 
       case(OBJ_PATH):
-        line = g_strdup(line);
-        new_obj = o_path_read (toplevel, line, tb, release_ver, fileformat_ver);
-        g_free (line);
-        object_list = g_list_prepend (object_list, new_obj);
+        new_obj = o_path_read (toplevel, line, tb, release_ver, fileformat_ver, err);
+        if (new_obj == NULL)
+          goto error;
+        new_object_list = g_list_prepend (new_object_list, new_obj);
         break;
 
       case(OBJ_PIN):
-        new_obj = o_pin_read (toplevel, line, release_ver, fileformat_ver);
-        object_list = g_list_prepend (object_list, new_obj);
+        if ((new_obj = o_pin_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+          goto error;
+        new_object_list = g_list_prepend (new_object_list, new_obj);
         found_pin++;
         break;
 
       case(OBJ_ARC):
-        new_obj = o_arc_read (toplevel, line, release_ver, fileformat_ver);
-        object_list = g_list_prepend (object_list, new_obj);
+        if ((new_obj = o_arc_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+          goto error;
+        new_object_list = g_list_prepend (new_object_list, new_obj);
         break;
 
       case(STARTATTACH_ATTR): 
-        o_attrib_freeze_hooks (toplevel, new_obj);
         /* first is the fp */
         /* 2nd is the object to get the attributes */
-        new_obj_list = o_read_attribs (toplevel, NULL, new_obj, tb, release_ver, fileformat_ver);
-        new_obj_list = g_list_reverse (new_obj_list);
-        object_list = g_list_concat (new_obj_list, object_list);
-        o_attrib_thaw_hooks (toplevel, new_obj);
+        if (new_obj != NULL) {
+          o_attrib_freeze_hooks (toplevel, new_obj);
+          new_attrs_list = o_read_attribs (toplevel, new_obj, tb, release_ver, fileformat_ver, err);
+          if (new_attrs_list == NULL)
+            goto error;
+          new_object_list = g_list_concat (new_attrs_list, new_object_list);
+          o_attrib_thaw_hooks (toplevel, new_obj);
 
-        /* by now we have finished reading all the attributes */
-        /* did we just finish attaching to a complex object? */
-        if (last_complex)
-        {
-          /* yes */
-          /* verify symbol version (not file format but rather contents) */
-          o_complex_check_symversion(toplevel, last_complex);
-          last_complex = NULL;
+          /* by now we have finished reading all the attributes */
+          /* did we just finish attaching to a complex object? */
+          if (last_complex)
+          {
+            /* yes */
+            /* verify symbol version (not file format but rather contents) */
+            o_complex_check_symversion(toplevel, last_complex);
+            last_complex = NULL;
+          }
+
+          /* slots only apply to complex objects */
+          if (new_obj != NULL &&
+              (new_obj->type == OBJ_COMPLEX ||
+               new_obj->type == OBJ_PLACEHOLDER)) {
+            s_slot_update_object (toplevel, new_obj);
+          }
+          new_obj = NULL;
         }
-
-        /* slots only apply to complex objects */
-        if (new_obj != NULL &&
-            (new_obj->type == OBJ_COMPLEX ||
-             new_obj->type == OBJ_PLACEHOLDER)) {
-          s_slot_update_object (toplevel, new_obj);
+        else {
+          g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Read unexpected attach "
+                                                                 "symbol start marker in [%s] :\n>>\n%s<<\n"),
+                       name, line);
+          goto error;
         }
-
-        new_obj = NULL;
         break;
 
       case(START_EMBEDDED):
-        new_obj = object_list->data;
+        new_obj = new_object_list->data;
 
         if (new_obj != NULL &&
             (new_obj->type == OBJ_COMPLEX ||
              new_obj->type == OBJ_PLACEHOLDER)) {
 
-          object_list_save = object_list;
-          object_list = new_obj->complex->prim_objs;
+          object_list_save = new_object_list;
+          new_object_list = new_obj->complex->prim_objs;
 
           embedded_level++;
         } else {
-          fprintf(stderr, _("Read unexpected embedded "
-                            "symbol start marker in [%s] :\n>>\n%s<<\n"),
-                          name, line);
+          g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Read unexpected embedded "
+                                                                 "symbol start marker in [%s] :\n>>\n%s<<\n"),
+                       name, line);
+          goto error;
         }
         break;
 
@@ -438,14 +454,14 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         if (embedded_level>0) {
           /* don't do this since objects are already
            * stored/read translated
-           * o_complex_translate_world (toplevel, object_list->x,
-           *                            object_list->y, object_list->complex);
+           * o_complex_translate_world (toplevel, new_object_list->x,
+           *                            new_object_list->y, new_object_list->complex);
            */
-          object_list = g_list_reverse (object_list);
+          new_object_list = g_list_reverse (new_object_list);
 
           new_obj = object_list_save->data;
-          new_obj->complex->prim_objs = object_list;
-          object_list = object_list_save;
+          new_obj->complex->prim_objs = new_object_list;
+          new_object_list = object_list_save;
 
           /* set the parent field now */
           for (iter = new_obj->complex->prim_objs;
@@ -458,9 +474,10 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
 
           embedded_level--;
         } else {
-          fprintf(stderr, _("Read unexpected embedded "
-                            "symbol end marker in [%s] :\n>>\n%s<<\n"),
-                          name, line);
+          g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Read unexpected embedded "
+                                                                 "symbol end marker in [%s] :\n>>\n%s<<\n"),
+                       name, line);
+          goto error;
         }
         break;
 
@@ -479,6 +496,11 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
       case(VERSION_CHAR):
         itemsread = sscanf(line, "v %u %u\n", &release_ver, &fileformat_ver);
 
+        if (itemsread == 0) {
+          g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, "Failed to parse version from buffer.");
+          goto error;
+        }
+
         /* 20030921 was the last version which did not have a fileformat */
         /* version.  The below latter test should not happen, but it is here */
         /* just in in case. */
@@ -493,10 +515,9 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         break;
 
       default:
-        fprintf(stderr, _("Read garbage in [%s] :\n>>\n%s<<\n"),
-                name, line);
+        g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Read garbage in [%s] :\n>>\n%s<<\n"), name, line);
         new_obj = NULL;
-        break;
+        goto error;
     }
 
   }
@@ -512,16 +533,19 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
 
   if (found_pin) {
     if (release_ver <= VERSION_20020825) {
-      o_pin_update_whichend (toplevel, object_list, found_pin);
+      o_pin_update_whichend (toplevel, new_object_list, found_pin);
     }
   }
 
   tb = s_textbuffer_free(tb);
 
-  object_list = g_list_reverse (object_list);
+  new_object_list = g_list_reverse(new_object_list);
+  object_list = g_list_concat (object_list, new_object_list);
 
   return(object_list);
-
+ error:
+  s_delete_object_glist(toplevel, new_object_list);
+  return NULL;
 }
 
 /*! \brief Read a file
@@ -551,7 +575,7 @@ GList *o_read (TOPLEVEL *toplevel, GList *object_list, char *filename,
   } 
 
   /* Parse file contents */
-  result = o_read_buffer (toplevel, object_list, buffer, size, filename);
+  result = o_read_buffer (toplevel, object_list, buffer, size, filename, err);
   g_free (buffer);
   return result;
 }

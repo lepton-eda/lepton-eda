@@ -45,13 +45,14 @@
  *  \param [in]  tb              Text buffer to load embedded data from.
  *  \param [in]  release_ver     libgeda release version number.
  *  \param [in]  fileformat_ver  libgeda file format version number.
- *  \return A pointer to the new picture object.
+ *  \return A pointer to the new picture object, or NULL on error.
  */
 OBJECT *o_picture_read (TOPLEVEL *toplevel,
 		       const char *first_line,
 		       TextBuffer *tb,
 		       unsigned int release_ver,
-		       unsigned int fileformat_ver)
+               unsigned int fileformat_ver,
+               GError **err)
 {
   OBJECT *new_obj;
   int x1, y1;
@@ -59,7 +60,7 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
   int mirrored, embedded;
   int num_conv;
   gchar type;
-  gchar *line = NULL;
+  const gchar *line = NULL;
   gchar *filename;
   gchar *file_content = NULL;
   guint file_length = 0;
@@ -68,8 +69,8 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
 	 &type, &x1, &y1, &width, &height, &angle, &mirrored, &embedded);
   
   if (num_conv != 8) {
-    s_log_message (_("Error reading picture definition line: %s.\n"),
-                   first_line);
+    g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse picture definition"));
+    return NULL;
   }
 
   if (width == 0 || height == 0) {
@@ -149,7 +150,7 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
       embedded = 0;
     }
   }
-
+  
   /* create the picture */
   /* The picture is described by its upper left and lower right corner */
   new_obj = o_picture_new (toplevel, file_content, file_length, filename,
@@ -162,7 +163,6 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
 
   return new_obj;
 }
-
 
 /*! \brief Create a character string representation of a picture OBJECT.
  *  \par Function Description
