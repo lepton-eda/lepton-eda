@@ -188,40 +188,41 @@ deze niet langer gewenst is.
 @node Objects
 @section Objects
 @cindex Objects
-@cindex Schematic elements
+@cindex Schematische elementen
 
-Each @code{page} contains some number of @dfn{schematic elements},
-represented by the @code{object} type.  There are several sub-types of
-@code{object}, including:
+Elke @code{page} bevat een aantal @dfn{schematische elementen},
+gerepresenteerd door het @code{object} type.  Er zijn verschillende
+sub-typen van @code{object}, te weten:
 
 @itemize @bullet
 @item
-graphical lines, circles, arcs, rectangles and paths;
+grafische lijnen, cirkels, bogen, rechthoeken en paden;
 
 @item
-nets and net pins;
+netten en netpennen;
 
 @item
-buses and bus pins;
+bussen en buspennen;
 
 @item
-pictures;
+afbeeldingen;
 
 @item
-text;
+tekst;
 
 @item
-and symbol instances, known as 'components'.
+en symbool instanties, ook bekend als 'componenten'.
 @end itemize
 
-Each @code{object} can be part of at most a single @code{page} -- they
-cannot be shared between pages.  @code{object}s are automatically
-garbage collected.
+Elk @code{object} kan deel uitmaken van ten hoogste een enkele 
+@code{page} -- zij kunnen niet gedeeld worden tussen pages.
+@code{object}en worden automatisch garbage collected.
 
-Most of different @code{object} sub-types are quite straightforward to
-understand.  The main exceptions are components, and the text
-@code{object}-based attribute mechanism, which are described in the
-following sections.
+De meest verschillende @code{object} sub-types zijn erg eenvoudig te
+begrijpen.
+De grootste uitzonderingen zijn componenten, en de op tekst@code{object}
+gebaseerde attribuut mechanisme, welke in de volgende secties beschreven
+zijn.
 
 @node Component objects
 @section Component objects
