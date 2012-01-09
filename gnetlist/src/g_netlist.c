@@ -405,8 +405,8 @@ SCM g_get_nets(SCM scm_uref, SCM scm_pin)
   } else {
     outerlist = scm_cons (scm_from_utf8_string ("ERROR_INVALID_PIN"),
                           outerlist);
-    fprintf(stderr, "Invalid wanted_pin passed to get-nets [%s]\n",
-            wanted_pin);
+    fprintf(stderr, "Invalid refdes ('%s') and pin ('%s') passed to get-nets\n",
+            wanted_uref, wanted_pin);
   }
 
   scm_dynwind_end ();
