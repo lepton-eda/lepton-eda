@@ -230,7 +230,8 @@ void main_prog(void *closure, int argc, char *argv[])
 
       if (!f_open (pr_current, pr_current->page_current, filename, &err)) {
         g_warning ("%s\n", err->message);
-        fprintf (stderr, "%s\n", err->message);
+        fprintf (stderr, "ERROR: Failed to load '%s': %s\n",
+                 filename, err->message);
         g_error_free (err);
 	exit(2);
       }
