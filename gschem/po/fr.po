@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2011-12-31 15:55-0500\n"
+"POT-Creation-Date: 2012-01-10 01:05+0000\n"
 "PO-Revision-Date: 2010-02-14 01:03+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -122,25 +122,25 @@ msgstr ""
 msgid "Found invalid gschem window smob ~S"
 msgstr ""
 
-#: gschem/src/gschem.c:175
+#: gschem/src/gschem.c:186
 #, c-format
 msgid "gEDA/gschem version %s%s.%s\n"
 msgstr "gEDA/gschem version %s%s.%s\n"
 
-#: gschem/src/gschem.c:178
+#: gschem/src/gschem.c:189
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
 msgstr "gEDA/gschem n'est accompagné d'ABSOLUMENT AUCUNE GARANTIE.\n"
 
-#: gschem/src/gschem.c:180
+#: gschem/src/gschem.c:191
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Ceci est un logiciel libre et vous êtes invité à le redistribuer en "
 "respectant\n"
 
-#: gschem/src/gschem.c:182
+#: gschem/src/gschem.c:193
 msgid ""
 "conditions; please see the COPYING file for more details.\n"
 "\n"
@@ -149,17 +149,17 @@ msgstr ""
 "COPYING.\n"
 "\n"
 
-#: gschem/src/gschem.c:185
+#: gschem/src/gschem.c:196
 #, c-format
 msgid "This is the MINGW32 port.\n"
 msgstr "Ceci est le portage sous MINGW32\n"
 
-#: gschem/src/gschem.c:189
+#: gschem/src/gschem.c:200
 #, c-format
 msgid "Current locale settings: %s\n"
 msgstr "Locale en cours : %s\n"
 
-#: gschem/src/gschem.c:211
+#: gschem/src/gschem.c:222
 msgid ""
 "You must set the GEDADATA environment variable!\n"
 "\n"
@@ -167,17 +167,17 @@ msgid ""
 "environment variable to point to the correct location.\n"
 msgstr "Vous devez positionner la variable d'environnement GEDADATA!\n"
 
-#: gschem/src/gschem.c:247
+#: gschem/src/gschem.c:263
 #, c-format
 msgid "Couldn't find init scm file [%s]\n"
 msgstr "Impossible de trouver le fichier scm d'init [%s]\n"
 
-#: gschem/src/gschem.c:251
+#: gschem/src/gschem.c:267
 #, c-format
 msgid "Read init scm file [%s]\n"
 msgstr "Lecture du fichier scm de démarrage [%s]\n"
 
-#: gschem/src/gschem.c:255
+#: gschem/src/gschem.c:271
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr "Échec de la lecture du fichier scm de démarrage [%s]\n"
@@ -193,7 +193,7 @@ msgid "Unknown type for stroke (%d) !\n"
 msgstr ""
 
 #: gschem/src/i_basic.c:77 gschem/src/x_window.c:524
-#: gschem/lib/system-gschemrc.scm:1396
+#: gschem/lib/system-gschemrc.scm:1399
 msgid "Select Mode"
 msgstr "Mode Sélection"
 
@@ -205,11 +205,11 @@ msgstr "Mode Composant"
 msgid "Text Mode"
 msgstr "Mode Texte"
 
-#: gschem/src/i_basic.c:84 gschem/lib/system-gschemrc.scm:1399
+#: gschem/src/i_basic.c:84 gschem/lib/system-gschemrc.scm:1402
 msgid "Copy Mode"
 msgstr "Mode Copie"
 
-#: gschem/src/i_basic.c:87 gschem/lib/system-gschemrc.scm:1401
+#: gschem/src/i_basic.c:87 gschem/lib/system-gschemrc.scm:1404
 msgid "Move Mode"
 msgstr "Mode Déplacement"
 
@@ -217,7 +217,7 @@ msgstr "Mode Déplacement"
 msgid "Rotate Mode"
 msgstr "Mode Rotation"
 
-#: gschem/src/i_basic.c:91 gschem/lib/system-gschemrc.scm:1403
+#: gschem/src/i_basic.c:91 gschem/lib/system-gschemrc.scm:1406
 msgid "Mirror Mode"
 msgstr "Mode Miroir"
 
@@ -285,7 +285,7 @@ msgstr "Déplacer"
 msgid "Multiple Copy"
 msgstr "Copie Multiple"
 
-#: gschem/src/i_basic.c:142 gschem/lib/system-gschemrc.scm:1400
+#: gschem/src/i_basic.c:142 gschem/lib/system-gschemrc.scm:1403
 msgid "Multiple Copy Mode"
 msgstr "Mode Copie Multiple"
 
@@ -391,11 +391,11 @@ msgid "Mirror"
 msgstr "Miroir"
 
 #: gschem/src/i_callbacks.c:912 gschem/src/x_dialog.c:2320
-#: gschem/lib/system-gschemrc.scm:1412
+#: gschem/lib/system-gschemrc.scm:1415
 msgid "Lock"
 msgstr "Verrouiller"
 
-#: gschem/src/i_callbacks.c:930 gschem/lib/system-gschemrc.scm:1413
+#: gschem/src/i_callbacks.c:930 gschem/lib/system-gschemrc.scm:1416
 msgid "Unlock"
 msgstr "Déverrouiller"
 
@@ -695,7 +695,7 @@ msgstr ""
 msgid "Unknown type for circle (fill)!\n"
 msgstr "Type de remplissage pour cercle inconnu !\n"
 
-#: gschem/src/o_complex.c:200 gschem/src/o_complex.c:204
+#: gschem/src/o_complex.c:223 gschem/src/o_complex.c:227
 #, c-format
 msgid "Translating schematic [%d %d]\n"
 msgstr "Translation du schéma [%d %d]\n"
@@ -1835,7 +1835,7 @@ msgstr "Modifié"
 msgid "Right click on the filename for more options..."
 msgstr "Utilisez le clic droit sur le nom de fichier pour plus d'options..."
 
-#: gschem/src/x_preview.c:233
+#: gschem/src/x_preview.c:231
 msgid "Preview Buffer"
 msgstr "Prévisualisation du tampon"
 
@@ -1914,7 +1914,7 @@ msgstr ""
 msgid "Printed current schematic to [%s]\n"
 msgstr "Schéma en cours imprimé dans fichier [%s]\n"
 
-#: gschem/src/x_script.c:47 gschem/lib/system-gschemrc.scm:1378
+#: gschem/src/x_script.c:47 gschem/lib/system-gschemrc.scm:1381
 msgid "Execute Script..."
 msgstr "Exécuter le script..."
 
@@ -2033,49 +2033,57 @@ msgstr "Panoramique/Annuler"
 msgid "Loading schematic [%s]\n"
 msgstr "Chargement du schéma [%s]\n"
 
-#: gschem/src/x_window.c:749
+#: gschem/src/x_window.c:748
+#, c-format
+msgid ""
+"<b>An error occurred while loading the requested file.</b>\n"
+"\n"
+"Loading from '%s' failed: %s. The gschem log may contain more information."
+msgstr ""
+
+#: gschem/src/x_window.c:750
 msgid "Failed to load file"
 msgstr "Échec lors du chargement du fichier"
 
-#: gschem/src/x_window.c:758
+#: gschem/src/x_window.c:759
 #, c-format
 msgid "New file [%s]\n"
 msgstr "Nouveau fichier [%s]\n"
 
-#: gschem/src/x_window.c:861
+#: gschem/src/x_window.c:862
 #, c-format
 msgid "Could NOT save page [%s]\n"
 msgstr "Échec sauvegarde de la page [%s]\n"
 
-#: gschem/src/x_window.c:862
+#: gschem/src/x_window.c:863
 msgid "Error while trying to save"
 msgstr "Erreur lors de la tentative de sauvegarde"
 
-#: gschem/src/x_window.c:872
+#: gschem/src/x_window.c:873
 #, fuzzy
 msgid "Failed to save file"
 msgstr "Échec lors du chargement du fichier"
 
-#: gschem/src/x_window.c:883
+#: gschem/src/x_window.c:884
 #, c-format
 msgid "Saved as [%s]\n"
 msgstr "Enregistré sous [%s]\n"
 
-#: gschem/src/x_window.c:885
+#: gschem/src/x_window.c:886
 #, c-format
 msgid "Saved [%s]\n"
 msgstr "Sauvegarder [%s]\n"
 
-#: gschem/src/x_window.c:887
+#: gschem/src/x_window.c:888
 msgid "Saved"
 msgstr "Sauvegarder"
 
-#: gschem/src/x_window.c:961
+#: gschem/src/x_window.c:962
 #, c-format
 msgid "Discarding page [%s]\n"
 msgstr "Abandonne page [%s]\n"
 
-#: gschem/src/x_window.c:961
+#: gschem/src/x_window.c:962
 #, c-format
 msgid "Closing [%s]\n"
 msgstr "Ferme [%s]\n"
@@ -2088,470 +2096,470 @@ msgstr "Éditeur de schémas gEDA"
 msgid "Create and edit electrical schematics and symbols with gschem"
 msgstr "Créer et éditer des schémas électriques et des symboles avec gschem"
 
-#: gschem/lib/system-gschemrc.scm:1365
+#: gschem/lib/system-gschemrc.scm:1368
 msgid "_New"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1366
+#: gschem/lib/system-gschemrc.scm:1369
 msgid "_Open..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1368
+#: gschem/lib/system-gschemrc.scm:1371
 msgid "Open Recen_t"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1370
+#: gschem/lib/system-gschemrc.scm:1373
 msgid "_Save"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1371
+#: gschem/lib/system-gschemrc.scm:1374
 msgid "Save _As..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1372
+#: gschem/lib/system-gschemrc.scm:1375
 msgid "Save All"
 msgstr "Enregistrer toutes les pages"
 
-#: gschem/lib/system-gschemrc.scm:1373 gschem/lib/system-gschemrc.scm:1466
+#: gschem/lib/system-gschemrc.scm:1376 gschem/lib/system-gschemrc.scm:1469
 msgid "_Revert"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1375
+#: gschem/lib/system-gschemrc.scm:1378
 msgid "_Print..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1376
+#: gschem/lib/system-gschemrc.scm:1379
 msgid "Write _image..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1380
+#: gschem/lib/system-gschemrc.scm:1383
 msgid "New Window"
 msgstr "Nouvelle fenêtre"
 
-#: gschem/lib/system-gschemrc.scm:1381
+#: gschem/lib/system-gschemrc.scm:1384
 #, fuzzy
 msgid "_Close Window"
 msgstr "Fermer la fenêtre"
 
-#: gschem/lib/system-gschemrc.scm:1382
+#: gschem/lib/system-gschemrc.scm:1385
 msgid "_Quit"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1388
+#: gschem/lib/system-gschemrc.scm:1391
 msgid "_Undo"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1389
+#: gschem/lib/system-gschemrc.scm:1392
 msgid "_Redo"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1391
+#: gschem/lib/system-gschemrc.scm:1394
 msgid "Cu_t"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1392
+#: gschem/lib/system-gschemrc.scm:1395
 msgid "_Copy"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1393
+#: gschem/lib/system-gschemrc.scm:1396
 msgid "_Paste"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1394
+#: gschem/lib/system-gschemrc.scm:1397
 msgid "_Delete"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1397
+#: gschem/lib/system-gschemrc.scm:1400
 #, fuzzy
 msgid "Select All"
 msgstr "Sélectionner"
 
-#: gschem/lib/system-gschemrc.scm:1398
+#: gschem/lib/system-gschemrc.scm:1401
 #, fuzzy
 msgid "Deselect"
 msgstr "Sélectionner"
 
-#: gschem/lib/system-gschemrc.scm:1402
+#: gschem/lib/system-gschemrc.scm:1405
 msgid "Rotate 90 Mode"
 msgstr "Mode Rotation 90"
 
-#: gschem/lib/system-gschemrc.scm:1405
+#: gschem/lib/system-gschemrc.scm:1408
 msgid "Edit..."
 msgstr "Éditer"
 
-#: gschem/lib/system-gschemrc.scm:1406
+#: gschem/lib/system-gschemrc.scm:1409
 msgid "Edit Text..."
 msgstr "Éditer le texte..."
 
-#: gschem/lib/system-gschemrc.scm:1407
+#: gschem/lib/system-gschemrc.scm:1410
 msgid "Slot..."
 msgstr "Slot..."
 
-#: gschem/lib/system-gschemrc.scm:1408
+#: gschem/lib/system-gschemrc.scm:1411
 msgid "Color..."
 msgstr "Couleur..."
 
-#: gschem/lib/system-gschemrc.scm:1409
+#: gschem/lib/system-gschemrc.scm:1412
 msgid "Line Width & Type..."
 msgstr "Épaisseur & type de ligne..."
 
-#: gschem/lib/system-gschemrc.scm:1410
+#: gschem/lib/system-gschemrc.scm:1413
 msgid "Fill Type..."
 msgstr "Type de remplissage..."
 
-#: gschem/lib/system-gschemrc.scm:1411
+#: gschem/lib/system-gschemrc.scm:1414
 msgid "Symbol Translate..."
 msgstr "Translater le symbole..."
 
-#: gschem/lib/system-gschemrc.scm:1415
+#: gschem/lib/system-gschemrc.scm:1418
 msgid "Invoke Macro"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1416
+#: gschem/lib/system-gschemrc.scm:1419
 msgid "Embed Component/Picture"
 msgstr "Embarquer le composant/l'image"
 
-#: gschem/lib/system-gschemrc.scm:1417
+#: gschem/lib/system-gschemrc.scm:1420
 msgid "Unembed Component/Picture"
 msgstr "Débarquer le composant/l'image"
 
-#: gschem/lib/system-gschemrc.scm:1418
+#: gschem/lib/system-gschemrc.scm:1421
 msgid "Update Component"
 msgstr "Mise à jour du composant"
 
-#: gschem/lib/system-gschemrc.scm:1419
+#: gschem/lib/system-gschemrc.scm:1422
 msgid "Show/Hide Inv Text"
 msgstr "Afficher/Cacher le texte invisible"
 
-#: gschem/lib/system-gschemrc.scm:1425
+#: gschem/lib/system-gschemrc.scm:1428
 msgid "Copy into 1"
 msgstr "Copier dans 1"
 
-#: gschem/lib/system-gschemrc.scm:1426
+#: gschem/lib/system-gschemrc.scm:1429
 msgid "Copy into 2"
 msgstr "Copier dans 2"
 
-#: gschem/lib/system-gschemrc.scm:1427
+#: gschem/lib/system-gschemrc.scm:1430
 msgid "Copy into 3"
 msgstr "Copier dans 3"
 
-#: gschem/lib/system-gschemrc.scm:1428
+#: gschem/lib/system-gschemrc.scm:1431
 msgid "Copy into 4"
 msgstr "Copier dans 4"
 
-#: gschem/lib/system-gschemrc.scm:1429
+#: gschem/lib/system-gschemrc.scm:1432
 msgid "Copy into 5"
 msgstr "Copier dans 5"
 
-#: gschem/lib/system-gschemrc.scm:1430
+#: gschem/lib/system-gschemrc.scm:1433
 msgid "Cut into 1"
 msgstr "Couper dans 1"
 
-#: gschem/lib/system-gschemrc.scm:1431
+#: gschem/lib/system-gschemrc.scm:1434
 msgid "Cut into 2"
 msgstr "Couper dans 2"
 
-#: gschem/lib/system-gschemrc.scm:1432
+#: gschem/lib/system-gschemrc.scm:1435
 msgid "Cut into 3"
 msgstr "Couper dans 3"
 
-#: gschem/lib/system-gschemrc.scm:1433
+#: gschem/lib/system-gschemrc.scm:1436
 msgid "Cut into 4"
 msgstr "Couper dans 4"
 
-#: gschem/lib/system-gschemrc.scm:1434
+#: gschem/lib/system-gschemrc.scm:1437
 msgid "Cut into 5"
 msgstr "Couper dans 5"
 
-#: gschem/lib/system-gschemrc.scm:1435
+#: gschem/lib/system-gschemrc.scm:1438
 msgid "Paste from 1"
 msgstr "Coller depuis 1"
 
-#: gschem/lib/system-gschemrc.scm:1436
+#: gschem/lib/system-gschemrc.scm:1439
 msgid "Paste from 2"
 msgstr "Coller depuis 2"
 
-#: gschem/lib/system-gschemrc.scm:1437
+#: gschem/lib/system-gschemrc.scm:1440
 msgid "Paste from 3"
 msgstr "Coller depuis 3"
 
-#: gschem/lib/system-gschemrc.scm:1438
+#: gschem/lib/system-gschemrc.scm:1441
 msgid "Paste from 4"
 msgstr "Coller depuis 4"
 
-#: gschem/lib/system-gschemrc.scm:1439
+#: gschem/lib/system-gschemrc.scm:1442
 msgid "Paste from 5"
 msgstr "Coller depuis 5"
 
-#: gschem/lib/system-gschemrc.scm:1445
+#: gschem/lib/system-gschemrc.scm:1448
 msgid "_Redraw"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1446
+#: gschem/lib/system-gschemrc.scm:1449
 msgid "_Pan"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1447
+#: gschem/lib/system-gschemrc.scm:1450
 msgid "Zoom _Box"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1448
+#: gschem/lib/system-gschemrc.scm:1451
 msgid "Zoom _Extents"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1449
+#: gschem/lib/system-gschemrc.scm:1452
 msgid "Zoom _In"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1450
+#: gschem/lib/system-gschemrc.scm:1453
 msgid "Zoom _Out"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1451
+#: gschem/lib/system-gschemrc.scm:1454
 msgid "Zoom _Full"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1453
+#: gschem/lib/system-gschemrc.scm:1456
 msgid "_Dark color scheme"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1454
+#: gschem/lib/system-gschemrc.scm:1457
 msgid "_Light color scheme"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1455
+#: gschem/lib/system-gschemrc.scm:1458
 msgid "B_W color scheme"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1462
+#: gschem/lib/system-gschemrc.scm:1465
 msgid "_Manager..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1463
+#: gschem/lib/system-gschemrc.scm:1466
 msgid "_Previous"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1464
+#: gschem/lib/system-gschemrc.scm:1467
 msgid "_Next"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1465
+#: gschem/lib/system-gschemrc.scm:1468
 msgid "Ne_w"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1467
+#: gschem/lib/system-gschemrc.scm:1470
 msgid "_Close"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1469
+#: gschem/lib/system-gschemrc.scm:1472
 msgid "_Discard"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1475
+#: gschem/lib/system-gschemrc.scm:1478
 msgid "_Component..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1476
+#: gschem/lib/system-gschemrc.scm:1479
 msgid "_Net"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1477
+#: gschem/lib/system-gschemrc.scm:1480
 msgid "B_us"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1478
+#: gschem/lib/system-gschemrc.scm:1481
 msgid "_Attribute..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1479
+#: gschem/lib/system-gschemrc.scm:1482
 msgid "_Text..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1481
+#: gschem/lib/system-gschemrc.scm:1484
 msgid "_Line"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1482
+#: gschem/lib/system-gschemrc.scm:1485
 msgid "_Box"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1483
+#: gschem/lib/system-gschemrc.scm:1486
 msgid "C_ircle"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1484
+#: gschem/lib/system-gschemrc.scm:1487
 msgid "A_rc"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1485
+#: gschem/lib/system-gschemrc.scm:1488
 msgid "_Pin"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1486
+#: gschem/lib/system-gschemrc.scm:1489
 msgid "Pictu_re..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1492
+#: gschem/lib/system-gschemrc.scm:1495
 msgid "_Down Schematic"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1493
+#: gschem/lib/system-gschemrc.scm:1496
 msgid "Down _Symbol"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1494
+#: gschem/lib/system-gschemrc.scm:1497
 msgid "_Up"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1495
+#: gschem/lib/system-gschemrc.scm:1498
 msgid "D_ocumentation..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1501
+#: gschem/lib/system-gschemrc.scm:1504
 msgid "_Attach"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1502
+#: gschem/lib/system-gschemrc.scm:1505
 msgid "_Detach"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1503
+#: gschem/lib/system-gschemrc.scm:1506
 msgid "Show _Value"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1504
+#: gschem/lib/system-gschemrc.scm:1507
 msgid "Show _Name"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1505
+#: gschem/lib/system-gschemrc.scm:1508
 msgid "Show _Both"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1506
+#: gschem/lib/system-gschemrc.scm:1509
 msgid "_Toggle Visibility"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1508
+#: gschem/lib/system-gschemrc.scm:1511
 msgid "_Find Specific Text..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1509
+#: gschem/lib/system-gschemrc.scm:1512
 msgid "_Hide Specific Text..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1510
+#: gschem/lib/system-gschemrc.scm:1513
 msgid "_Show Specific Text..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1511
+#: gschem/lib/system-gschemrc.scm:1514
 msgid "A_utonumber Text..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1517
+#: gschem/lib/system-gschemrc.scm:1520
 msgid "_Text Size..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1518
+#: gschem/lib/system-gschemrc.scm:1521
 msgid "Cycle _grid styles"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1519
+#: gschem/lib/system-gschemrc.scm:1522
 msgid "Toggle _Snap On/Off"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1520
+#: gschem/lib/system-gschemrc.scm:1523
 msgid "Snap Grid S_pacing..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1521
+#: gschem/lib/system-gschemrc.scm:1524
 msgid "Scale _up Grid Spacing"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1523
+#: gschem/lib/system-gschemrc.scm:1526
 msgid "Scale _down Grid Spacing"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1525
+#: gschem/lib/system-gschemrc.scm:1528
 msgid "Toggle _Outline/Box"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1527
+#: gschem/lib/system-gschemrc.scm:1530
 msgid "Toggle Net _Rubberband"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1528
+#: gschem/lib/system-gschemrc.scm:1531
 msgid "Toggle _Magnetic Net"
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1529
+#: gschem/lib/system-gschemrc.scm:1532
 msgid "Show _Log Window..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1531
+#: gschem/lib/system-gschemrc.scm:1534
 msgid "Show _Coord Window..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1539
+#: gschem/lib/system-gschemrc.scm:1542
 msgid "gEDA Docu_mentation..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1540
+#: gschem/lib/system-gschemrc.scm:1543
 msgid "gschem _FAQ..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1541
+#: gschem/lib/system-gschemrc.scm:1544
 msgid "gEDA _Wiki..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1542
+#: gschem/lib/system-gschemrc.scm:1545
 msgid "Component D_ocumentation..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1544
+#: gschem/lib/system-gschemrc.scm:1547
 msgid "_Hotkeys..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1545
+#: gschem/lib/system-gschemrc.scm:1548
 msgid "_About..."
 msgstr ""
 
-#: gschem/lib/system-gschemrc.scm:1551
+#: gschem/lib/system-gschemrc.scm:1554
 msgid "_File"
 msgstr "_Fichier"
 
-#: gschem/lib/system-gschemrc.scm:1552
+#: gschem/lib/system-gschemrc.scm:1555
 msgid "_Edit"
 msgstr "Édition"
 
-#: gschem/lib/system-gschemrc.scm:1553
+#: gschem/lib/system-gschemrc.scm:1556
 msgid "_Buffer"
 msgstr "Tampon"
 
-#: gschem/lib/system-gschemrc.scm:1554
+#: gschem/lib/system-gschemrc.scm:1557
 msgid "_View"
 msgstr "Affichage"
 
-#: gschem/lib/system-gschemrc.scm:1555
+#: gschem/lib/system-gschemrc.scm:1558
 msgid "_Page"
 msgstr "_Page"
 
-#: gschem/lib/system-gschemrc.scm:1556
+#: gschem/lib/system-gschemrc.scm:1559
 msgid "_Add"
 msgstr "_Ajouter"
 
-#: gschem/lib/system-gschemrc.scm:1557
+#: gschem/lib/system-gschemrc.scm:1560
 msgid "Hie_rarchy"
 msgstr "Hié_rarchie"
 
-#: gschem/lib/system-gschemrc.scm:1558
+#: gschem/lib/system-gschemrc.scm:1561
 msgid "A_ttributes"
 msgstr "A_ttributs"
 
-#: gschem/lib/system-gschemrc.scm:1559
+#: gschem/lib/system-gschemrc.scm:1562
 msgid "_Options"
 msgstr "_Options"
 
-#: gschem/lib/system-gschemrc.scm:1560
+#: gschem/lib/system-gschemrc.scm:1563
 msgid "_Help"
 msgstr "Aide"
 
