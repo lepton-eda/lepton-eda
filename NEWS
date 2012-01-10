@@ -2,10 +2,19 @@
  'gschem and Friends' Electronic Design Suite
 ==============================================
 
-Copyright (C) 1998-2011 gEDA Developers
+Copyright (C) 1998-2012 gEDA Developers
 
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
+
+Notable changes in gEDA/gaf 1.8.0
+=================================
+
+* All tools now give more informative error messages if they are
+  unable to load schematic or symbol files due to syntax errors.
+
+* Unconnected pin ends and net ends are now all drawn with the same
+  box marker in `gschem' and printed output.
 
 Notable changes in gEDA/gaf 1.7.2
 =================================
