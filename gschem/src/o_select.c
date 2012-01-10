@@ -181,7 +181,9 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
     o_attrib_deselect_invisible (w_current,
                                  toplevel->page_current->selection_list,
                                  o_current);
-  } else {
+  /* Don't select attributes if the type is MULTIPLE, as this causes
+   * issues with invert selection (CONTROLKEY pressed). */
+  } else if( type != MULTIPLE) {
     o_attrib_add_selected (w_current, toplevel->page_current->selection_list,
                            o_current);
   }
