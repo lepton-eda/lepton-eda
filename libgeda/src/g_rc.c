@@ -661,6 +661,39 @@ SCM g_rc_source_library_search(SCM path)
   return SCM_BOOL_T;
 }
 
+/*!
+ * \brief Get the name of the RC filename being evaluated.
+ * \par Function Description
+ *
+ * Creates a Guile stack object, extracts the topmost frame from that
+ * stack and gets the sourcefile name.
+ *
+ * \returns If the interpreter can resolve the filename, returns a
+ * Scheme object with the full path to the RC file, otherwise #f
+ */
+SCM
+g_rc_rc_filename()
+{
+  SCM stack, frame, source;
+
+  stack = scm_make_stack (SCM_BOOL_T, SCM_EOL);
+  if (scm_is_false (stack)) {
+    return SCM_BOOL_F;
+  }
+
+  frame = scm_stack_ref (stack, scm_from_int(0));
+  if (scm_is_false (frame)) {
+    return SCM_BOOL_F;
+  }
+
+  source = scm_frame_source (frame);
+  if (scm_is_false (source)) {
+    return SCM_BOOL_F;
+  }
+
+  return scm_source_property (source, scm_sym_filename);
+}
+
 /*! \todo Finish function description!!!
  *  \brief
  *  \par Function Description
