@@ -58,10 +58,17 @@ void g_rc_parse_gtkrc()
   g_free (filename);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Verify the version of the RC file under evaluation.
  *  \par Function Description
  *
+ *  Implements the Scheme function "gschem-version". Tests the version
+ *  string in the argument against the version of the application
+ *  itself.
+ *
+ *  \param [in] scm_version Scheme object containing RC file version string
+ *
+ *  \returns #t if the version of the RC file matches the application,
+ *           else #f.
  */
 SCM g_rc_gschem_version(SCM scm_version)
 {
