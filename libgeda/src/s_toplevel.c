@@ -62,10 +62,15 @@ static void call_new_toplevel_hook (gpointer hook, gpointer toplevel)
   h->func (t, h->data);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*!
+ *  \brief Create a TOPLEVEL object
  *  \par Function Description
+ *  Create and return an empty TOPLEVEL object with sensible defaults
+ *  for its properties.
  *
+ *  \returns the newly created TOPLEVEL.
+ *
+ *  \todo rethink block below that is set in gschem but used in libgeda.
  */
 TOPLEVEL *s_toplevel_new (void)
 {
