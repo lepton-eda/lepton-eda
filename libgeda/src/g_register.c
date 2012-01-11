@@ -72,6 +72,7 @@ static struct gsubr_t libgeda_funcs[] = {
   { "always-promote-attributes",1, 0, 0, g_rc_always_promote_attributes },
   { "make-backup-files",        1, 0, 0, g_rc_make_backup_files },
   { "print-color-map", 0, 1, 0, g_rc_print_color_map },
+  { "rc-filename",              0, 0, 0, g_rc_rc_filename },
   { NULL,                       0, 0, 0, NULL } };
 
 /*! \brief Register all libgeda functions with scheme.

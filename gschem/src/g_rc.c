@@ -74,29 +74,38 @@ SCM g_rc_gschem_version(SCM scm_version)
 {
   SCM ret;
   char *version;
+  SCM rc_filename;
+  char *sourcefile;
   
   SCM_ASSERT (scm_is_string (scm_version), scm_version,
               SCM_ARG1, "gschem-version");
 
+  scm_dynwind_begin (0);
   version = scm_to_utf8_string (scm_version);
+  scm_dynwind_free (version);
+
   if (g_strcasecmp (version, PACKAGE_DATE_VERSION) != 0) {
+    sourcefile = NULL;
+    rc_filename = g_rc_rc_filename ();
+    sourcefile = scm_to_utf8_string (rc_filename);
+    scm_dynwind_free (sourcefile);
     fprintf(stderr,
             "You are running gEDA/gaf version [%s%s.%s],\n",
             PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
             PACKAGE_DATE_VERSION);
     fprintf(stderr,
             "but you have a version [%s] gschemrc file:\n[%s]\n",
-            version, rc_filename);
+            version, sourcefile);
     fprintf(stderr,
             "Please be sure that you have the latest rc file.\n");
     ret = SCM_BOOL_F;
   } else {
     ret = SCM_BOOL_T;
   }
-
-  free(version);
+  scm_dynwind_end();
   return ret;
 }
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
