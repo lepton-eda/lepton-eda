@@ -248,17 +248,18 @@ SCM g_funcs_filesel(SCM scm_msg, SCM scm_templ, SCM scm_flags)
     free(flag);
   }
 
+  scm_dynwind_begin (0);
   msg = scm_to_utf8_string (scm_msg);
+  scm_dynwind_free (msg);
   templ = scm_to_utf8_string (scm_templ);
+  scm_dynwind_free (templ);
 
   r = generic_filesel_dialog (msg, templ, c_flags);
-
-  free(msg);
-  free(templ);
+  scm_dynwind_unwind_handler (g_free, r, SCM_F_WIND_EXPLICITLY);
 
   v = scm_from_utf8_string (r);
-  g_free (r);
 
+  scm_dynwind_end();
   return v;
 }
 
