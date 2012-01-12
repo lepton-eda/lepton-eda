@@ -668,7 +668,7 @@ void o_net_refresh_conn_cache(TOPLEVEL *toplevel, OBJECT *o_current)
   GHashTableIter  iter;
   GList          *stack = NULL;
   OBJECT         *obj;
-  gpointer       *key;
+  gpointer       key;
 
   g_return_if_fail (toplevel);
   g_return_if_fail (o_current);
