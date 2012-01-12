@@ -270,35 +270,7 @@ DEFINE_I_CALLBACK(file_save_as)
 DEFINE_I_CALLBACK(file_print)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  char *base=NULL, *filename;
-  char *ps_filename=NULL;
-  
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->toplevel->page_current->page_filename != NULL);
-
-  /* shortcut */
-  filename = w_current->toplevel->page_current->page_filename;
-
-  /* get the base file name */
-  if (g_str_has_suffix(filename, ".sch")) {
-    /* the filename ends with ".sch", remove it */
-    base = g_strndup(filename, strlen(filename) - strlen(".sch"));
-  } else {
-    /* the filename does not end with .sch */
-    base = g_strdup (filename);
-  }
-
-  /* add ".ps" tp the base filename */
-  ps_filename = g_strconcat (base, ".ps", NULL);
-  g_free(base);
-
-  if (output_filename) {
-    x_print_setup(w_current, output_filename);
-  } else {
-    x_print_setup(w_current, ps_filename);
-  }
-
-  g_free(ps_filename);
+  x_print (w_current);
 }
 
 /*! \todo Finish function documentation!!!

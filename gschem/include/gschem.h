@@ -19,7 +19,6 @@
 #include "x_log.h"
 #include "x_multiattrib.h"
 #include "x_pagesel.h"
-#include "x_print.h"
 #include "x_states.h"
 #include "globals.h"
 #include "prototype.h"

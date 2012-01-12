@@ -44,57 +44,24 @@
  *  \par Function Description
  *
  */
-SCM g_funcs_print(SCM scm_filename)
-{
-  char *filename;
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
-  
-  SCM_ASSERT (scm_is_string (scm_filename), scm_filename,
-              SCM_ARG1, "gschem-print");
-
-  if (output_filename) {
-    if (f_print_file (toplevel, toplevel->page_current,
-                      output_filename))
-      return SCM_BOOL_F;
-  } else  {
-    filename = scm_to_utf8_string(scm_filename);
-    if (f_print_file (toplevel, toplevel->page_current, filename)) {
-      free(filename);
-      return SCM_BOOL_F;
-    }
-    free(filename);
-  }
-  
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_funcs_postscript(SCM scm_filename)
 {
   char *filename;
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  gboolean status;
+  GSCHEM_TOPLEVEL *w_current = g_current_window ();
 
   SCM_ASSERT (scm_is_string (scm_filename), scm_filename,
               SCM_ARG1, "gschem-postscript");
 
   if (output_filename) {
-    if (f_print_file (toplevel, toplevel->page_current,
-                      output_filename))
-      return SCM_BOOL_F;
+    status = x_print_export_postscript (w_current, output_filename);
   } else  {
     filename = scm_to_utf8_string(scm_filename);
-    if (f_print_file (toplevel, toplevel->page_current, filename)) {
-      free(filename);
-      return SCM_BOOL_F;
-    }
+    status = x_print_export_postscript (w_current, filename);
     free(filename);
   }
   
-  return SCM_BOOL_T;
+  return (status ? SCM_BOOL_T : SCM_BOOL_F);
 }
 
 /*! \todo Finish function documentation!!!

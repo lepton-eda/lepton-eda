@@ -269,40 +269,6 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
   g_free(new_image_filename);
 }
 
-/*! \brief Write eps image file.
- *  \par This function writes the eps file, using the postscript print code
- *  from libgeda. Orientation is portrait and type is extents without margins.
- *  \param w_current [in] the GSCHEM_TOPLEVEL structure.
- *  \param filename  [in] the image filename.
- *  \return nothing
- *
- */
-void x_image_write_eps(GSCHEM_TOPLEVEL *w_current, const char* filename)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int result;
-  int w, h, orientation, type;
-  w = toplevel->paper_width;
-  h = toplevel->paper_height;
-  orientation = toplevel->print_orientation;
-  type = toplevel->print_output_type;
-
-  toplevel->paper_width = 0;
-  toplevel->paper_height = 0;
-  toplevel->print_orientation = PORTRAIT;
-  toplevel->print_output_type = EXTENTS_NOMARGINS;
-  result = f_print_file (toplevel, toplevel->page_current, filename);
-  if (result) {
-    s_log_message(_("x_image_lowlevel: Unable to write eps file %s.\n"),
-        filename);
-  }   
-
-  toplevel->paper_width = w;
-  toplevel->paper_height = h;
-  toplevel->print_orientation = orientation;
-  toplevel->print_output_type = type;
-}
-
 /*! \brief Write the image file, with the desired options.
  *  \par This function writes the image file, with the options set in the
  *  dialog by the user.
@@ -366,7 +332,7 @@ void x_image_lowlevel(GSCHEM_TOPLEVEL *w_current, const char* filename,
   o_select_unselect_all( w_current );
 
   if (strcmp(filetype, "eps") == 0) /*WK - catch EPS export case*/
-    x_image_write_eps(w_current, filename);
+    x_print_export_eps (w_current, filename);
   else {
     pixbuf = x_image_get_pixbuf(w_current);
     if (pixbuf != NULL) {
