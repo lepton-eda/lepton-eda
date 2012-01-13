@@ -56,6 +56,7 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -6285,7 +6286,7 @@ create_sheet_entry(GtkSheet *sheet)
 
    if(!found_entry){
 
-     g_warning ("Entry type must be GtkEntry subclass, using default");
+     g_warning (_("Entry type must be GtkEntry subclass, using default"));
      entry = gtk_entry_new ();
      sheet->sheet_entry = entry;
 
@@ -8503,7 +8504,7 @@ gtk_sheet_move_child(GtkSheet *sheet, GtkWidget *widget, gint x, gint y)
        children = g_list_next(children);
     }
 
-  g_warning("Widget must be a GtkSheet child"); 
+  g_warning(_("Widget must be a GtkSheet child"));
 
 }
 
