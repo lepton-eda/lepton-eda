@@ -413,16 +413,19 @@ SCM g_rc_component_library(SCM path, SCM name)
 
   SCM_ASSERT (scm_is_string (path), path,
               SCM_ARG1, "component-library");
-  
+
+  scm_dynwind_begin (0);
   if (name != SCM_UNDEFINED) {
     SCM_ASSERT (scm_is_string (name), name,
 		SCM_ARG2, "component-library");
     namestr = scm_to_utf8_string (name);
+    scm_dynwind_free(namestr);
   }
-  
+
   /* take care of any shell variables */
   temp = scm_to_utf8_string (path);
   string = s_expand_env_variables (temp);
+  scm_dynwind_unwind_handler (g_free, string, SCM_F_WIND_EXPLICITLY);
   free (temp);
 
   /* invalid path? */
@@ -430,10 +433,7 @@ SCM g_rc_component_library(SCM path, SCM name)
     fprintf(stderr,
             "Invalid path [%s] passed to component-library\n",
             string);
-    if (namestr != NULL) {
-      free (namestr);
-    }
-    g_free(string);
+    scm_dynwind_end();
     return SCM_BOOL_F;
   }
 
@@ -448,11 +448,7 @@ SCM g_rc_component_library(SCM path, SCM name)
     g_free(cwd);
   }
 
-  if (namestr != NULL) {
-    free (namestr);
-  }
-  g_free(string);
-
+  scm_dynwind_end();
   return SCM_BOOL_T;
 }
 
@@ -481,16 +477,20 @@ SCM g_rc_component_library_command (SCM listcmd, SCM getcmd,
   SCM_ASSERT (scm_is_string (name), name, SCM_ARG3, 
               "component-library-command");
 
+  scm_dynwind_begin(0);
+
   /* take care of any shell variables */
   /*! \bug this may be a security risk! */
   tmp_str = scm_to_utf8_string (listcmd);
   lcmdstr = s_expand_env_variables (tmp_str);
+  scm_dynwind_unwind_handler (g_free, lcmdstr, SCM_F_WIND_EXPLICITLY);
   free (tmp_str); /* this should stay as free (allocated from guile) */
 
   /* take care of any shell variables */
   /*! \bug this may be a security risk! */
   tmp_str = scm_to_utf8_string (getcmd);
   gcmdstr = s_expand_env_variables (tmp_str);
+  scm_dynwind_unwind_handler (g_free, gcmdstr, SCM_F_WIND_EXPLICITLY);
   free (tmp_str); /* this should stay as free (allocated from guile) */
 
   namestr = scm_to_utf8_string (name);
@@ -498,8 +498,8 @@ SCM g_rc_component_library_command (SCM listcmd, SCM getcmd,
   src = s_clib_add_command (lcmdstr, gcmdstr, namestr);
 
   free (namestr); /* this should stay as free (allocated from guile) */
-  g_free (lcmdstr);
-  g_free (gcmdstr);
+
+  scm_dynwind_end();
 
   if (src != NULL) return SCM_BOOL_T;
 
