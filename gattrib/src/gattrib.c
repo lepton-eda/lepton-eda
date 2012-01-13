@@ -130,6 +130,7 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -174,7 +175,7 @@ gint gattrib_quit(gint return_code)
 #ifdef DEBUG
   fflush(stderr);
   fflush(stdout);
-  printf("In gattrib_quit, calling gtk_main_quit()\n");
+  printf(_("In gattrib_quit, calling gtk_main_quit()\n"));
 #endif
   gtk_main_quit();
   exit(return_code);
@@ -231,14 +232,14 @@ void gattrib_main(void *closure, int argc, char *argv[])
   s_log_init ("gattrib");
 
   s_log_message
-    ("gEDA/gattrib version %s%s.%s\n", PREPEND_VERSION_STRING, 
+    (_("gEDA/gattrib version %s%s.%s\n"), PREPEND_VERSION_STRING, 
      PACKAGE_DOTTED_VERSION, PACKAGE_DATE_VERSION);
   s_log_message
-    ("gEDA/gattrib comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
+    (_("gEDA/gattrib comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n"));
   s_log_message
-    ("This is free software, and you are welcome to redistribute it under certain\n");
+    (_("This is free software, and you are welcome to redistribute it under certain\n"));
   s_log_message
-    ("conditions; please see the COPYING file for more details.\n\n");
+    (_("conditions; please see the COPYING file for more details.\n\n"));
 
   /* ------  register guile (scheme) functions.  Necessary to parse RC file.  ------ */
   g_register_funcs();
@@ -272,7 +273,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
         if (filename != NULL) {
             file_list = g_slist_append(file_list, filename);
         } else {
-            fprintf(stderr, "Couldn't find file [%s]\n", argv[argv_index]);
+            fprintf(stderr, _("Couldn't find file [%s]\n"), argv[argv_index]);
             exit(1);
         }
         argv_index++;
