@@ -54,6 +54,7 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
+#include "../include/gettext.h"
 
 
 #ifdef HAVE_LIBDMALLOC
@@ -82,7 +83,7 @@ x_gtksheet_init()
   if ((sheet_head->comp_count > 0) && (sheet_head->comp_attrib_count >0)) {
     sheets[0] = (GtkSheet *) gtk_sheet_new((guint) sheet_head->comp_count, (guint) sheet_head->comp_attrib_count, "Components");
   } else {
-    x_dialog_fatal_error("No components found in design.  Please check your schematic and try again!\n", 1);
+    x_dialog_fatal_error(_("No components found in design.  Please check your schematic and try again!\n"), 1);
   }
   
 
@@ -92,7 +93,7 @@ x_gtksheet_init()
     sheets[1] = (GtkSheet *) gtk_sheet_new(sheet_head->net_count, sheet_head->net_attrib_count, "Nets");
     gtk_sheet_set_locked(GTK_SHEET(sheets[1]), TRUE);   /* disallow editing of attribs for now */
   } else {
-    sheets[1] = (GtkSheet *) gtk_sheet_new(1, 1, "Nets");
+    sheets[1] = (GtkSheet *) gtk_sheet_new(1, 1, _("Nets"));
     gtk_sheet_row_button_add_label(sheets[1], 0, "TBD");
     gtk_sheet_row_button_justify(sheets[1], 0, GTK_JUSTIFY_LEFT);
     gtk_sheet_column_button_add_label(sheets[1], 0, "TBD");
@@ -108,7 +109,7 @@ x_gtksheet_init()
     sheets[2] = (GtkSheet *) gtk_sheet_new(sheet_head->pin_count, sheet_head->pin_attrib_count, "Pins");
     gtk_sheet_set_locked(GTK_SHEET(sheets[2]), TRUE);   /* disallow editing of attribs for now */
   } else {
-    sheets[2] = (GtkSheet *) gtk_sheet_new(1, 1, "Pins");
+    sheets[2] = (GtkSheet *) gtk_sheet_new(1, 1, _("Pins"));
     gtk_sheet_set_locked(GTK_SHEET(sheets[2]), TRUE);    /* disallow editing of attribs for now */
   }
 #endif
@@ -356,7 +357,7 @@ void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col,
   }
 
   if (!gdk_colormap_alloc_color (cmap, color, FALSE, FALSE)) {
-    g_error ("couldn't allocate color");
+    g_error (_("couldn't allocate color"));
     return;
   }
   /*   g_free(cmap); */
