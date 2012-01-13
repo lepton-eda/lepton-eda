@@ -66,6 +66,7 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -87,23 +88,23 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
   
   /* file filter for schematic files (*.sch) */
   filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, "Schematics");
+  gtk_file_filter_set_name (filter, _("Schematics"));
   gtk_file_filter_add_pattern (filter, "*.sch");
   gtk_file_chooser_add_filter (filechooser, filter);
   /* file filter for symbol files (*.sym) */
   filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, "Symbols");
+  gtk_file_filter_set_name (filter, _("Symbols"));
   gtk_file_filter_add_pattern (filter, "*.sym");
   gtk_file_chooser_add_filter (filechooser, filter);
   /* file filter for both symbol and schematic files (*.sym+*.sch) */
   filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, "Schematics and symbols");
+  gtk_file_filter_set_name (filter, _("Schematics and symbols"));
   gtk_file_filter_add_pattern (filter, "*.sym");
   gtk_file_filter_add_pattern (filter, "*.sch");
   gtk_file_chooser_add_filter (filechooser, filter);
   /* file filter that match any file */
   filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, "All files");
+  gtk_file_filter_set_name (filter, _("All files"));
   gtk_file_filter_add_pattern (filter, "*");
   gtk_file_chooser_add_filter (filechooser, filter);
 
@@ -134,13 +135,13 @@ x_fileselect_load_files (GSList *filenames)
     gchar *string = (gchar*)filename->data;
     
     if (!quiet_mode) {
-      s_log_message("Loading file [%s]\n", string);
+      s_log_message(_("Loading file [%s]\n"), string);
     }
 
     s_page_goto (pr_current, s_page_new (pr_current, string));
 
     if(s_toplevel_read_page(pr_current, string) == 0) {
-       fprintf(stderr, "Couldn't load schematic [%s]\n", string);
+       fprintf(stderr, _("Couldn't load schematic [%s]\n"), string);
        return FALSE;
     }
 
@@ -275,7 +276,7 @@ x_fileselect_save (void)
 {
   GtkWidget *dialog;
 
-  dialog = gtk_file_chooser_dialog_new ("Save as...",
+  dialog = gtk_file_chooser_dialog_new (_("Save as..."),
                                         GTK_WINDOW(window),
                                         GTK_FILE_CHOOSER_ACTION_SAVE,
                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -304,7 +305,7 @@ x_fileselect_save (void)
     /* try saving current page of toplevel to file filename */
     if (filename != NULL &&
         f_save (pr_current, pr_current->page_current, filename, NULL)) {
-      s_log_message ("Saved As [%s]\n", filename);
+      s_log_message (_("Saved As [%s]\n"), filename);
 
       /* replace page filename with new one, do not free filename */
       g_free (pr_current->page_current->page_filename);
@@ -315,7 +316,7 @@ x_fileselect_save (void)
 
     } else {
       /* report error in log and status bar */
-      s_log_message ("Could NOT save [%s]\n",
+      s_log_message (_("Could NOT save [%s]\n"),
                      pr_current->page_current->page_filename);
 
       g_free (filename);
