@@ -43,6 +43,7 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -184,7 +185,7 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
   gint cur_page;  /* current page in notbook  */
   gint old_comp_attrib_count;
 
-  if (strcmp(new_attrib_name, "_cancel") == 0) {
+  if (strcmp(new_attrib_name, _("_cancel")) == 0) {
     return;  /* user pressed cancel or closed window with no value in entry */
   }
 
@@ -547,7 +548,7 @@ STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes)
   if (row == -1) {
     /* we didn't find the item in the list */
     fprintf(stderr, 
-	    "In s_toplevel_get_component_attribs_in_sheet, we didn't find the refdes in the master list!\n");
+	    _("In s_toplevel_get_component_attribs_in_sheet, we didn't find the refdes in the master list!\n"));
     return NULL;
   }
 
@@ -575,7 +576,7 @@ STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes)
     if (count != i+1) {
       /* for some reason, we have lost a name_value_pair somewhere . . .  */
       fprintf(stderr, 
-	      "In s_toplevel_get_component_attribs_in_sheet, count != i!  Exiting . . . .\n");
+	      _("In s_toplevel_get_component_attribs_in_sheet, count != i!  Exiting . . . .\n"));
       exit(-1);
     }
 
@@ -884,7 +885,7 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
     row_label = g_strconcat(refdes, ":", pinnumber, NULL);
   } else {
     fprintf(stderr, 
-	    "In s_toplevel_get_pin_attribs_in_sheet, either refdes or pinnumber of object missing!\n");
+	    _("In s_toplevel_get_pin_attribs_in_sheet, either refdes or pinnumber of object missing!\n"));
     return NULL;
   }
   row = s_table_get_index(sheet_head->master_pin_list_head, row_label);
@@ -893,7 +894,7 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
   if (row == -1) {
     /* we didn't find the item in the list */
     fprintf(stderr, 
-	    "In s_toplevel_get_pin_attribs_in_sheet, we didn't find the refdes:pin in the master list!\n");
+	    _("In s_toplevel_get_pin_attribs_in_sheet, we didn't find the refdes:pin in the master list!\n"));
     return NULL;
   }
 
@@ -921,7 +922,7 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
     if (count != i+1) {
       /* for some reason, we have lost a name_value_pair somewhere . . .  */
       fprintf(stderr, 
-	      "In s_toplevel_get_pin_attribs_in_sheet, count != i!  Exiting . . . .\n");
+	      _("In s_toplevel_get_pin_attribs_in_sheet, count != i!  Exiting . . . .\n"));
       exit(-1);
     }
 
