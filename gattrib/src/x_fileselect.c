@@ -231,7 +231,7 @@ x_fileselect_open (void)
   GtkWidget *dialog;
   GSList *filenames = NULL;
 
-  dialog = gtk_file_chooser_dialog_new ("Open...",
+  dialog = gtk_file_chooser_dialog_new (_("Open..."),
                                         GTK_WINDOW(window),
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
