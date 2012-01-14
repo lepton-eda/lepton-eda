@@ -312,7 +312,7 @@ void s_toplevel_delete_attrib_col() {
       printf("In s_toplevel_delete_attrib_col, attrib to delete = %s\n", attrib_name);
 #endif
     } else {
-      fprintf(stderr, "In s_toplevel_delete_attrib_col, can't get attrib name\n");
+      fprintf(stderr, _("In s_toplevel_delete_attrib_col, can't get attrib name\n"));
       return;
     }
     
