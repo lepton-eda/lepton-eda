@@ -77,30 +77,31 @@ extern int optind;
 
 void usage(char *cmd)
 {
-    printf("\n");
-    printf(_("Gattrib:  The gEDA project\'s attribute editor.\n"));
-    printf(_("Presents schematic attributes in easy-to-edit spreadsheet format.\n"));
-    printf("\n");
-    printf(_("Usage: %s [OPTIONS] filename1 ... filenameN\n"), cmd);
-    printf(_("  -q, --quiet            Quiet mode\n"));
-    printf(_("  -v, --verbose          Verbose mode on\n"));
-    printf(_("  -h, --help             This help menu\n"));
-    printf("\n");
-    printf(_("  FAQ:\n"));
-    printf(_("  *  What do the colors of the cell text mean?\n"));
-    printf(_("     The cell colors indicate the visibility of the attribute.\n"));
-    printf(_("     Black = Visible attribute, value displayed only.\n"));
-    printf(_("     Grey  = Invisible attribute.\n"));
-    printf(_("     Red   = Visible attribute, name displayed only.\n"));
-    printf(_("     Blue  = Visible attribute, both name and value displayed.\n"));
-    printf("\n");
-    printf(_("  *  What does the period (\".\") at the end of some component refdeses mean?\n"));
-    printf(_("     The period is placed after the refdeses of slotted components.\n"));
-    printf(_("     If slots are present on the component, then the different slots appear\n"));
-    printf(_("     in different rows with the slot number after the period.  Example:  C101.2.\n"));
-    printf("\n");
-    printf(_("Copyright (C) 2003 -- 2006 Stuart D. Brorson.  E-mail: sdb (AT) cloud9 (DOT) net.\n"));
-    printf("\n");
+    printf(_(
+"\n"
+"Gattrib:  The gEDA project\'s attribute editor.\n"
+"Presents schematic attributes in easy-to-edit spreadsheet format.\n"
+"\n"
+"Usage: %s [OPTIONS] filename1 ... filenameN\n"
+"  -q, --quiet            Quiet mode\n"
+"  -v, --verbose          Verbose mode on\n"
+"  -h, --help             This help menu\n"
+"\n"
+"  FAQ:\n"
+"  *  What do the colors of the cell text mean?\n"
+"     The cell colors indicate the visibility of the attribute.\n"
+"     Black = Visible attribute, value displayed only.\n"
+"     Grey  = Invisible attribute.\n"
+"     Red   = Visible attribute, name displayed only.\n"
+"     Blue  = Visible attribute, both name and value displayed.\n"
+"\n"
+"  *  What does the period (\".\") at the end of some component refdeses mean?\n"
+"     The period is placed after the refdeses of slotted components.\n"
+"     If slots are present on the component, then the different slots appear\n"
+"     in different rows with the slot number after the period.  Example:  C101.2.\n"
+"\n"
+"Copyright (C) 2003 -- 2006 Stuart D. Brorson.  E-mail: sdb (AT) cloud9 (DOT) net.\n"
+"\n"), cmd);
     exit(0);
 }
 
