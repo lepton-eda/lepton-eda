@@ -171,10 +171,9 @@ int s_rename_search(char *src, char *dest, int quiet_flag)
 	    if (strcmp(dest, rename_pairs[cur_set][i].src) == 0) {
 		if (!quiet_flag) {
 		    fprintf(stderr,
-			    _("WARNING: Trying to rename something twice:\n\t%s and %s\nare both a src and dest name\n"),
-			    dest, rename_pairs[cur_set][i].src);
-		    fprintf(stderr,
-			    _("This warning is okay if you have multiple levels of hierarchy!\n"));
+			    _("WARNING: Trying to rename something twice:\n\t%s and %s\nare both a src and dest name\n"
+                             "This warning is okay if you have multiple levels of hierarchy!\n"),
+                            dest, rename_pairs[cur_set][i].src);
 		}
 		return (TRUE);
 	    }
