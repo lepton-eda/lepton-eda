@@ -109,6 +109,40 @@ void o_attrib_deselect_invisible (GSCHEM_TOPLEVEL *w_current,
   }
 }
 
+/*! \brief Add invisible attributes of an object to the selection list.
+ *  \par Function Description
+ *
+ *  Add all invisible attributes attached to the given object
+ *  to the selection list. If hidden text is being shown, this
+ *  function returns immediately.
+ *
+ *  \param [in]     w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in,out] selection  The SELECTION list to add to.
+ *  \param [in]     object     The OBJECT whose invisible attributes to add.
+ */
+void o_attrib_select_invisible (GSCHEM_TOPLEVEL *w_current,
+                                  SELECTION *selection,
+                                  OBJECT *selected)
+{
+  OBJECT *a_current;
+  GList *a_iter;
+
+  g_assert( selection != NULL );
+
+  if (w_current->toplevel->show_hidden_text) {
+    return;
+  }
+
+  for (a_iter = selected->attribs; a_iter != NULL;
+       a_iter = g_list_next (a_iter)) {
+    a_current = a_iter->data;
+
+    if (!a_current->selected && !o_is_visible(w_current->toplevel, a_current)) {
+      o_selection_add (w_current->toplevel, selection, a_current);
+    }
+  }
+}
+
 /*! \brief Change visibility status of attribute object.
  *  \par Function Description
  *  This function toggles the visibility status of the attribute \a
