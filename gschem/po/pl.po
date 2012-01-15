@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-10 01:05+0000\n"
+"POT-Creation-Date: 2012-01-15 18:45+0000\n"
 "PO-Revision-Date: 2010-02-12 13:16+0000\n"
 "Last-Translator: Krzysztof Kościuszkiewicz <k.kosciuszkiewicz@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -30,79 +30,79 @@ msgstr ""
 msgid "Invalid text name/value visibility ~A."
 msgstr ""
 
-#: gschem/src/g_rc.c:295
+#: gschem/src/g_rc.c:311
 #, c-format
 msgid "Invalid zoomfactor [%d] passed to %s\n"
 msgstr "Nieprawidłowa skala powiększenia [%d] przekazana do funkcji %s\n"
 
-#: gschem/src/g_rc.c:441
+#: gschem/src/g_rc.c:457
 #, c-format
 msgid "Invalid size [%d] passed to text-size\n"
 msgstr "Nieprawidłowa wartość [%d] przekazana do funkcji text-size\n"
 
-#: gschem/src/g_rc.c:484
+#: gschem/src/g_rc.c:500
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "Nieprawidłowy rozmiar [%d] przekazany do funkcji snap-size\n"
 
-#: gschem/src/g_rc.c:941
+#: gschem/src/g_rc.c:957
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "Nieprawidłowa liczba poziomów [%d] przekazana do funkcji undo-levels\n"
 
-#: gschem/src/g_rc.c:1203
+#: gschem/src/g_rc.c:1219
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "Nieprawidłowy rozmiar [%d] przekazany do funkcji bus-ripper-size\n"
 
-#: gschem/src/g_rc.c:1278
+#: gschem/src/g_rc.c:1294
 #, c-format
 msgid "Invalid dot size [%d] passed to dots-grid-dot-size\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1319
+#: gschem/src/g_rc.c:1335
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to dots-grid-fixed-threshold\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1345
+#: gschem/src/g_rc.c:1361
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to mesh-grid-display-threshold\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1370
+#: gschem/src/g_rc.c:1386
 #, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr "Nieprawidłowy offset [%d] przekazany do funkcji add-attribute-offset\n"
 
-#: gschem/src/g_rc.c:1394
+#: gschem/src/g_rc.c:1410
 #, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr ""
 "Nieprawidłowa liczba sekund [%d] przekazana do funkcji auto-save-interval\n"
 
-#: gschem/src/g_rc.c:1418
+#: gschem/src/g_rc.c:1434
 #, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr "Nieprawidłowa wartość [%d] przekazana do funkcji mousepan-gain\n"
 
-#: gschem/src/g_rc.c:1441
+#: gschem/src/g_rc.c:1457
 #, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr "Nieprawidłowa wartość [%d] przekazana do funkcji keyboardpan-gain\n"
 
-#: gschem/src/g_rc.c:1488
+#: gschem/src/g_rc.c:1504
 #, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr ""
 "Nieprawidłowa ilość pikseli [%d] przekazana do funkcji select-slack-pixels\n"
 
-#: gschem/src/g_rc.c:1514
+#: gschem/src/g_rc.c:1530
 #, c-format
 msgid "Invalid gain [%d] passed to zoom-gain\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1539
+#: gschem/src/g_rc.c:1555
 #, c-format
 msgid "Invalid number of steps [%d] scrollpan-steps\n"
 msgstr "Niepoprawna liczba kroków [%d] w funkcji scrollpan-steps\n"
@@ -1885,6 +1885,34 @@ msgstr ""
 #, c-format
 msgid "Printed current schematic to [%s]\n"
 msgstr "Wydrukowano bieżący arkusz do [%s]\n"
+
+#: gschem/src/x_rc.c:40
+msgid "ERROR: An unknown error occurred while parsing configuration files.\n"
+msgstr ""
+
+#: gschem/src/x_rc.c:45
+msgid ""
+"An unknown error occurred while parsing configuration files.\n"
+"\n"
+"The gschem log may contain more information."
+msgstr ""
+
+#: gschem/src/x_rc.c:57
+#, c-format
+msgid "ERROR: %s\n"
+msgstr ""
+
+#: gschem/src/x_rc.c:60
+#, c-format
+msgid ""
+"%s\n"
+"\n"
+"The gschem log may contain more information."
+msgstr ""
+
+#: gschem/src/x_rc.c:68
+msgid "Cannot load gschem configuration."
+msgstr ""
 
 #: gschem/src/x_script.c:47 gschem/lib/system-gschemrc.scm:1381
 msgid "Execute Script..."

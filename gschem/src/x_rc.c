@@ -37,7 +37,7 @@ x_rc_parse_gschem_error (GError **err, GSCHEM_TOPLEVEL *w_current)
    * problem. */
   if (*err == NULL) {
     /* Log message */
-    s_log_message (_("ERROR: An unknown error occurred while parsing"
+    s_log_message (_("ERROR: An unknown error occurred while parsing "
                      "configuration files.\n"));
 
     /* Dialog message */

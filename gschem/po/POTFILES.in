@@ -58,6 +58,7 @@ gschem/src/x_multiattrib.c
 gschem/src/x_pagesel.c
 gschem/src/x_preview.c
 gschem/src/x_print.c
+gschem/src/x_rc.c
 gschem/src/x_script.c
 gschem/src/x_stroke.c
 gschem/src/x_window.c
