@@ -23,5 +23,5 @@
 
 (define-module (gschem core gettext))
 
-(define %gschem-gettext-domain "gschem")
+(define %gschem-gettext-domain "geda-gschem")
 (define-public (_ msg) (gettext msg %gschem-gettext-domain))
