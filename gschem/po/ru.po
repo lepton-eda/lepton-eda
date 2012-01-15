@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: geda gschem\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2012-01-19 18:45+0000\n"
-"PO-Revision-Date: 2011-12-28 23:56+0400\n"
+"PO-Revision-Date: 2012-01-22 21:42+0400\n"
 "Last-Translator: Vladimir Zhbanov<vzhbanov@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: ru\n"
@@ -219,11 +219,11 @@ msgstr "Неизвестный тип линии (%d) !\n"
 
 #: gschem/src/gschem_pango.c:289
 msgid "cairo context"
-msgstr ""
+msgstr "cairo-контекст"
 
 #: gschem/src/gschem_pango.c:290
 msgid "the cairo context for the renderer"
-msgstr ""
+msgstr "cairo-контекст для рендерера"
 
 #: gschem/src/i_basic.c:77 gschem/src/x_window.c:524
 #: gschem/lib/system-gschemrc.scm:1399
@@ -1162,10 +1162,14 @@ msgid ""
 "\n"
 "An error occurred while inserting clipboard data: %s."
 msgstr ""
+"<b>Недопустимые данные схемы в системном буфере обмена.</b>\n"
+"\n"
+"Ошибка при вставке данных из буфера: %s."
 
+# Заголовок окна ошибки
 #: gschem/src/x_clipboard.c:251
 msgid "Clipboard insertion failed"
-msgstr ""
+msgstr "Ошибка вставки данных из буфера обмена"
 
 # Здесь я написал "Не удалось выделить цвет" вместо "назначить", так
 # как речь идёт о резервировании поля в colormap.
@@ -2078,7 +2082,7 @@ msgstr "Текущая схема распечатана с использова
 
 #: gschem/src/x_rc.c:40
 msgid "ERROR: An unknown error occurred while parsing configuration files.\n"
-msgstr ""
+msgstr "ОШИБКА: неизвестная ошибка при анализе файлов настроек.\n"
 
 #: gschem/src/x_rc.c:45
 msgid ""
@@ -2086,11 +2090,14 @@ msgid ""
 "\n"
 "The gschem log may contain more information."
 msgstr ""
+"Неизвестная ошибка при анализе файлов настроек.\n"
+"\n"
+"В журнале gschem может быть больше информации."
 
 #: gschem/src/x_rc.c:57
 #, c-format
 msgid "ERROR: %s\n"
-msgstr ""
+msgstr "ОШИБКА: %s\n"
 
 #: gschem/src/x_rc.c:60
 #, c-format
@@ -2099,10 +2106,13 @@ msgid ""
 "\n"
 "The gschem log may contain more information."
 msgstr ""
+"%s\n"
+"\n"
+"В журнале gschem может быть больше информации."
 
 #: gschem/src/x_rc.c:68
 msgid "Cannot load gschem configuration."
-msgstr ""
+msgstr "Не удалось загрузить файлы настроек gschem"
 
 #: gschem/src/x_script.c:47 gschem/lib/system-gschemrc.scm:1381
 msgid "Execute Script..."
@@ -2237,6 +2247,10 @@ msgid ""
 "\n"
 "Loading from '%s' failed: %s. The gschem log may contain more information."
 msgstr ""
+"<b>При загрузке указанного файла произошла ошибка.</b>\n"
+"\n"
+"Не удалось загрузить файл '%s': %s. В журнале gschem может быть больше "
+"информации."
 
 #: gschem/src/x_window.c:750
 msgid "Failed to load file"
@@ -2354,7 +2368,7 @@ msgstr "_Вырезать"
 
 #: gschem/lib/system-gschemrc.scm:1395
 msgid "_Copy"
-msgstr "_Копировать"
+msgstr "С_копировать"
 
 #: gschem/lib/system-gschemrc.scm:1396
 msgid "_Paste"
@@ -2429,23 +2443,23 @@ msgstr "Показать/скрыть невидимый текст"
 
 #: gschem/lib/system-gschemrc.scm:1428
 msgid "Copy into 1"
-msgstr "Копировать в 1"
+msgstr "Скопировать в 1"
 
 #: gschem/lib/system-gschemrc.scm:1429
 msgid "Copy into 2"
-msgstr "Копировать в 2"
+msgstr "Скопировать в 2"
 
 #: gschem/lib/system-gschemrc.scm:1430
 msgid "Copy into 3"
-msgstr "Копировать в 3"
+msgstr "Скопировать в 3"
 
 #: gschem/lib/system-gschemrc.scm:1431
 msgid "Copy into 4"
-msgstr "Копировать в 4"
+msgstr "Скопировать в 4"
 
 #: gschem/lib/system-gschemrc.scm:1432
 msgid "Copy into 5"
-msgstr "Копировать в 5"
+msgstr "Скопировать в 5"
 
 #: gschem/lib/system-gschemrc.scm:1433
 msgid "Cut into 1"
@@ -2700,11 +2714,11 @@ msgstr "Окно _координат..."
 
 #: gschem/lib/system-gschemrc.scm:1542
 msgid "gEDA Docu_mentation..."
-msgstr "Документация _gEDA"
+msgstr "Документация _gEDA..."
 
 #: gschem/lib/system-gschemrc.scm:1543
 msgid "gschem _FAQ..."
-msgstr "gschem _FAQ"
+msgstr "gschem _FAQ..."
 
 #: gschem/lib/system-gschemrc.scm:1544
 msgid "gEDA _Wiki..."
@@ -2712,7 +2726,7 @@ msgstr "gEDA _Wiki..."
 
 #: gschem/lib/system-gschemrc.scm:1545
 msgid "Component D_ocumentation..."
-msgstr "Документация на _компонент"
+msgstr "Документация на _компонент..."
 
 #: gschem/lib/system-gschemrc.scm:1547
 msgid "_Hotkeys..."
@@ -2780,18 +2794,3 @@ msgstr "Недопустимая комбинация клавиш ~S."
 #, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr "~S не является префиксом клавишной последовательности."
-
-#~ msgid ""
-#~ "\n"
-#~ "The config option postscript-font-scale is deprecated and will be removed "
-#~ "in gEDA 1.8.0.\n"
-#~ "Printed text is fixed to match on-screen sizes. Please remove this option "
-#~ "from your config files.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Параметр настройки postscript-font-scale устарел и будет удалён в gEDA "
-#~ "1.8.0.\n"
-#~ "Размер текста, выводимого на печать, теперь всегда соответствует размеру "
-#~ "текста на экране. Удалите этот параметр из своего файла настроек.\n"
-#~ "\n"

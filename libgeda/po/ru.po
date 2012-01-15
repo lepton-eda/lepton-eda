@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2012-01-19 18:45+0000\n"
-"PO-Revision-Date: 2011-12-31 09:24+0400\n"
+"PO-Revision-Date: 2012-01-24 14:53+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: ru\n"
@@ -67,13 +67,13 @@ msgid "File %s is read-only"
 msgstr "Файл %s только для чтения"
 
 #: libgeda/src/a_basic.c:427
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Read unexpected attach symbol start marker in [%s] :\n"
 ">>\n"
 "%s<<\n"
 msgstr ""
-"Неуместный маркер начала внедрённого символа в [%s]:\n"
+"Неуместный маркер начала списка прикреплённых атрибутов в [%s]:\n"
 ">>\n"
 "%s<<\n"
 
@@ -259,21 +259,21 @@ msgstr ""
 
 #: libgeda/src/g_rc.c:233
 msgid "Config file already loaded"
-msgstr "Файл конфигурации уже загружен"
+msgstr "Файл настроек уже загружен"
 
 #: libgeda/src/g_rc.c:268
 #, c-format
 msgid "Parsed config from [%s]\n"
-msgstr "Анализ файла конфигурации [%s]\n"
+msgstr "Анализ файла настроек [%s]\n"
 
 #: libgeda/src/g_rc.c:281
 #, c-format
 msgid "Unable to parse config from [%s]: %s"
-msgstr "Ошибка при анализе файла конфигурации [%s]: %s"
+msgstr "Ошибка при анализе файла настроек [%s]: %s"
 
 #: libgeda/src/g_rc.c:298
 msgid "ERROR: An unknown error occurred while parsing configuration files."
-msgstr "ОШИБКА: неизвестная ошибка при анализе файлов конфигурации"
+msgstr "ОШИБКА: неизвестная ошибка при анализе файлов настроек"
 
 #: libgeda/src/g_rc.c:310 libgeda/src/g_rc.c:311
 #, c-format
@@ -295,12 +295,12 @@ msgstr ""
 
 #: libgeda/src/o_arc_basic.c:256 libgeda/src/o_arc_basic.c:269
 msgid "Failed to parse arc object"
-msgstr ""
+msgstr "Ошибка в определении дуги"
 
 #: libgeda/src/o_arc_basic.c:276
 #, c-format
 msgid "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"
-msgstr "Нулевой радиус в определении дуги [%c %d, %d, %d, %d, %d, %d]\n"
+msgstr "Дуга с нулевым радиусом [%c %d, %d, %d, %d, %d, %d]\n"
 
 #: libgeda/src/o_arc_basic.c:282 libgeda/src/o_box_basic.c:327
 #: libgeda/src/o_bus_basic.c:182 libgeda/src/o_circle_basic.c:289
@@ -329,13 +329,12 @@ msgid "Attempt to attach attribute [%s] to more than one object\n"
 msgstr "Попытка прикрепить атрибут [%s] к более чем одному объекту\n"
 
 #: libgeda/src/o_attrib.c:341
-#, fuzzy
 msgid "Tried to attach a non-text item as an attribute"
-msgstr "Попытка прикрепить не текстовый элемент как атрибут!\n"
+msgstr "Попытка прикрепить не текстовый элемент как атрибут!"
 
 #: libgeda/src/o_attrib.c:348
 msgid "Unexpected end-of-file in attribute list"
-msgstr ""
+msgstr "Неожиданный конец файла при обработке списка атрибутов"
 
 # В функции o_set_line_options() задаются свойства линий разных объектов
 #: libgeda/src/o_basic.c:196 libgeda/src/o_basic.c:208
@@ -348,7 +347,7 @@ msgstr "Недопустимое значение длины штриха, ус�
 
 #: libgeda/src/o_box_basic.c:287 libgeda/src/o_box_basic.c:316
 msgid "Failed to parse box object"
-msgstr ""
+msgstr "Ошибка в определении прямоугольника"
 
 #: libgeda/src/o_box_basic.c:322
 #, c-format
@@ -357,7 +356,7 @@ msgstr "Прямоугольник нулевой ширины или высот
 
 #: libgeda/src/o_bus_basic.c:160 libgeda/src/o_bus_basic.c:167
 msgid "Failed to parse bus object"
-msgstr ""
+msgstr "Ошибка в определении шины"
 
 #: libgeda/src/o_bus_basic.c:173
 #, c-format
@@ -381,17 +380,16 @@ msgstr "Окружности с нулевым радиусом недопуст
 
 #: libgeda/src/o_circle_basic.c:246 libgeda/src/o_circle_basic.c:275
 msgid "Failed to parse circle object"
-msgstr ""
+msgstr "Ошибка в определении окружности"
 
 #: libgeda/src/o_circle_basic.c:282
-#, fuzzy, c-format
+#, c-format
 msgid "Found a zero or negative radius circle [ %c %d %d %d %d ]\n"
-msgstr "Окружность с нулевым радиусом [%c %d %d %d %d]\n"
+msgstr "Окружность с нулевым или отрицательным радиусом [%c %d %d %d %d]\n"
 
 #: libgeda/src/o_circle_basic.c:284
-#, fuzzy
 msgid "Setting radius to 0\n"
-msgstr "Установка угла поворота в 0\n"
+msgstr "Установка радиуса в 0\n"
 
 #: libgeda/src/o_complex_basic.c:422
 #, c-format
@@ -404,7 +402,7 @@ msgstr ""
 
 #: libgeda/src/o_complex_basic.c:654
 msgid "Failed to parse complex object"
-msgstr ""
+msgstr "Ошибка в определении составного объекта"
 
 #: libgeda/src/o_complex_basic.c:667
 #, c-format
@@ -427,9 +425,8 @@ msgstr ""
 "%d %s]\n"
 
 #: libgeda/src/o_complex_basic.c:681
-#, fuzzy
 msgid "Setting mirror to 0\n"
-msgstr "Установка 'mirrored' в 0\n"
+msgstr "Установка 'mirror' в 0\n"
 
 #: libgeda/src/o_complex_basic.c:994
 #, c-format
@@ -524,7 +521,7 @@ msgstr "Компонент [%s] успешно исключён\n"
 
 #: libgeda/src/o_line_basic.c:229 libgeda/src/o_line_basic.c:247
 msgid "Failed to parse line object"
-msgstr ""
+msgstr "Ошибка в определении линии"
 
 #: libgeda/src/o_line_basic.c:259
 #, c-format
@@ -533,7 +530,7 @@ msgstr "Линия нулевой длины [%c %d %d %d %d %d]\n"
 
 #: libgeda/src/o_net_basic.c:156
 msgid "Failed to parse net object"
-msgstr ""
+msgstr "Ошибка в определении соединения"
 
 #: libgeda/src/o_net_basic.c:161
 #, c-format
@@ -542,15 +539,15 @@ msgstr "Соединение нулевой длины [%c %d %d %d %d %d]\n"
 
 #: libgeda/src/o_path_basic.c:181
 msgid "Failed to parse path object"
-msgstr ""
+msgstr "Ошибка в определении контура"
 
 #: libgeda/src/o_path_basic.c:207
 msgid "Unexpected end-of-file when reading path"
-msgstr ""
+msgstr "Неожиданный конец файла при обработке контура"
 
 #: libgeda/src/o_picture.c:72
 msgid "Failed to parse picture definition"
-msgstr ""
+msgstr "Ошибка в определении изображения"
 
 #: libgeda/src/o_picture.c:77
 #, c-format
@@ -653,7 +650,7 @@ msgstr "Не удалось загрузить копию изображения
 
 #: libgeda/src/o_pin_basic.c:160 libgeda/src/o_pin_basic.c:168
 msgid "Failed to parse pin object"
-msgstr ""
+msgstr "Ошибка в определении вывода"
 
 # В оригинальном тексте неправильно используется "whichone" вместо "whichend"
 #: libgeda/src/o_pin_basic.c:174
@@ -673,7 +670,7 @@ msgstr ""
 #: libgeda/src/o_text_basic.c:356 libgeda/src/o_text_basic.c:366
 #: libgeda/src/o_text_basic.c:376
 msgid "Failed to parse text object"
-msgstr ""
+msgstr "Ошибка в определении текстового объекта"
 
 #: libgeda/src/o_text_basic.c:383
 #, c-format
@@ -701,7 +698,7 @@ msgstr "Установка выравнивания по левому нижне
 #: libgeda/src/o_text_basic.c:440
 #, c-format
 msgid "Unexpected end-of-file after %d lines"
-msgstr ""
+msgstr "Неожиданный конец файла после %d строк"
 
 #: libgeda/src/s_clib.c:465
 #, c-format
@@ -858,19 +855,19 @@ msgstr "Не удалось найти [%s] в библиотеках источ
 
 #: libgeda/src/s_slot.c:162
 msgid "Did not find slotdef=#:#,#,#... attribute\n"
-msgstr ""
+msgstr "Не удалось найти атрибут slotdef=#:#,#,#...\n"
 
 #: libgeda/src/s_slot.c:168
 msgid "Improper slotdef syntax: missing \":\".\n"
-msgstr ""
+msgstr "Неверный синтаксис атрибута slotdef: отсутствует \":\".\n"
 
 #: libgeda/src/s_slot.c:183
 msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
-msgstr ""
+msgstr "Не удалось найти атрибут slotdef=#:#,#,#... в допустимом формате\n"
 
 #: libgeda/src/s_slot.c:213
 msgid "component missing pinseq= attribute\n"
-msgstr ""
+msgstr "Отсутствует атрибут pinseq= для вывода компонента\n"
 
 #: libgeda/src/scheme_attrib.c:67
 msgid "~A is not a valid attribute: invalid string '~A'."
@@ -1032,12 +1029,9 @@ msgstr ""
 
 #: libgeda/src/scheme_page.c:442
 msgid "Parse error: ~s"
-msgstr ""
+msgstr "Ошибка обработки: ~s"
 
 #: libgeda/scheme/geda/attrib.scm:59
 #, scheme-format
 msgid "Object ~A is not part of a page"
 msgstr "Объект ~A не является частью схемы"
-
-#~ msgid "Error reading picture definition line: %s.\n"
-#~ msgstr "Ошибка при чтении строки определения изображения: %s.\n"
