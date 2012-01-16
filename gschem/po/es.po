@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-15 18:45+0000\n"
+"POT-Creation-Date: 2012-01-19 18:45+0000\n"
 "PO-Revision-Date: 2010-02-14 01:04+0000\n"
 "Last-Translator: Carlos Nieves Ónega <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -209,6 +209,14 @@ msgstr "Final de línea desconocido (%d)\n"
 #, c-format
 msgid "Unknown type for stroke (%d) !\n"
 msgstr "¡ Tipo desconocido para gesto (%d) !\n"
+
+#: gschem/src/gschem_pango.c:289
+msgid "cairo context"
+msgstr ""
+
+#: gschem/src/gschem_pango.c:290
+msgid "the cairo context for the renderer"
+msgstr ""
 
 #: gschem/src/i_basic.c:77 gschem/src/x_window.c:524
 #: gschem/lib/system-gschemrc.scm:1399
@@ -1075,6 +1083,18 @@ msgstr "Borrar los números"
 #: gschem/src/x_autonumber.c:1349
 msgid "Automatic slotting"
 msgstr "Asignar números de elemento automáticamente"
+
+#: gschem/src/x_clipboard.c:249
+#, c-format
+msgid ""
+"<b>Invalid schematic on clipboard.</b>\n"
+"\n"
+"An error occurred while inserting clipboard data: %s."
+msgstr ""
+
+#: gschem/src/x_clipboard.c:251
+msgid "Clipboard insertion failed"
+msgstr ""
 
 #: gschem/src/x_color.c:94 gschem/src/x_color.c:103
 #, c-format

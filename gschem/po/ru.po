@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda gschem\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-15 18:45+0000\n"
+"POT-Creation-Date: 2012-01-19 18:45+0000\n"
 "PO-Revision-Date: 2011-12-28 23:56+0400\n"
 "Last-Translator: Vladimir Zhbanov<vzhbanov@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -216,6 +216,14 @@ msgstr "Неизвестный тип конца линии (%d)\n"
 #, c-format
 msgid "Unknown type for stroke (%d) !\n"
 msgstr "Неизвестный тип линии (%d) !\n"
+
+#: gschem/src/gschem_pango.c:289
+msgid "cairo context"
+msgstr ""
+
+#: gschem/src/gschem_pango.c:290
+msgid "the cairo context for the renderer"
+msgstr ""
 
 #: gschem/src/i_basic.c:77 gschem/src/x_window.c:524
 #: gschem/lib/system-gschemrc.scm:1399
@@ -1146,6 +1154,18 @@ msgstr "Удалить все номера"
 #: gschem/src/x_autonumber.c:1349
 msgid "Automatic slotting"
 msgstr "Автоматически нумеровать секции"
+
+#: gschem/src/x_clipboard.c:249
+#, c-format
+msgid ""
+"<b>Invalid schematic on clipboard.</b>\n"
+"\n"
+"An error occurred while inserting clipboard data: %s."
+msgstr ""
+
+#: gschem/src/x_clipboard.c:251
+msgid "Clipboard insertion failed"
+msgstr ""
 
 # Здесь я написал "Не удалось выделить цвет" вместо "назначить", так
 # как речь идёт о резервировании поля в colormap.

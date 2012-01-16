@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-15 18:45+0000\n"
+"POT-Creation-Date: 2012-01-19 18:45+0000\n"
 "PO-Revision-Date: 2010-02-13 10:43+0000\n"
 "Last-Translator: kop <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -185,6 +185,14 @@ msgstr ""
 #: gschem/src/gschem_cairo.c:318
 #, c-format
 msgid "Unknown type for stroke (%d) !\n"
+msgstr ""
+
+#: gschem/src/gschem_pango.c:289
+msgid "cairo context"
+msgstr ""
+
+#: gschem/src/gschem_pango.c:290
+msgid "the cairo context for the renderer"
 msgstr ""
 
 #: gschem/src/i_basic.c:77 gschem/src/x_window.c:524
@@ -1022,6 +1030,18 @@ msgstr "Számok törlése"
 #: gschem/src/x_autonumber.c:1349
 msgid "Automatic slotting"
 msgstr "Automatikus slot-kiválasztás"
+
+#: gschem/src/x_clipboard.c:249
+#, c-format
+msgid ""
+"<b>Invalid schematic on clipboard.</b>\n"
+"\n"
+"An error occurred while inserting clipboard data: %s."
+msgstr ""
+
+#: gschem/src/x_clipboard.c:251
+msgid "Clipboard insertion failed"
+msgstr ""
 
 #: gschem/src/x_color.c:94 gschem/src/x_color.c:103
 #, c-format

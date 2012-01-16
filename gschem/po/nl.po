@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-15 18:45+0000\n"
+"POT-Creation-Date: 2012-01-19 18:45+0000\n"
 "PO-Revision-Date: 2011-12-31 10:55+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -195,6 +195,14 @@ msgstr "Onbekend einde voor lijn (%d)\n"
 #, c-format
 msgid "Unknown type for stroke (%d) !\n"
 msgstr "Onbekend type voor strook (%d) !\n"
+
+#: gschem/src/gschem_pango.c:289
+msgid "cairo context"
+msgstr ""
+
+#: gschem/src/gschem_pango.c:290
+msgid "the cairo context for the renderer"
+msgstr ""
 
 #: gschem/src/i_basic.c:77 gschem/src/x_window.c:524
 #: gschem/lib/system-gschemrc.scm:1399
@@ -1068,6 +1076,18 @@ msgstr "Verwijder nummers"
 #: gschem/src/x_autonumber.c:1349
 msgid "Automatic slotting"
 msgstr "Automatisch slotten"
+
+#: gschem/src/x_clipboard.c:249
+#, c-format
+msgid ""
+"<b>Invalid schematic on clipboard.</b>\n"
+"\n"
+"An error occurred while inserting clipboard data: %s."
+msgstr ""
+
+#: gschem/src/x_clipboard.c:251
+msgid "Clipboard insertion failed"
+msgstr ""
 
 #: gschem/src/x_color.c:94 gschem/src/x_color.c:103
 #, c-format
