@@ -181,27 +181,14 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
   switch(type) {
 
     case(CONN_ENDPOINT):
-      if (object->type == OBJ_NET) { /* only nets have these cues */
+      if (object->type == OBJ_NET || object->type == OBJ_PIN) {
         if (count < 1) { /* Didn't find anything connected there */
           size = CUE_BOX_SIZE;
           gschem_cairo_center_box (w_current, -1, -1, x, y, size, size);
           o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
           cairo_fill (w_current->cr);
-
         } else if (count >= 2) {
           draw_junction_cue (w_current, x, y, bus_involved);
-        }
-      } else if (object->type == OBJ_PIN) {
-        /* Didn't find anything connected there */
-        if (count < 1 && object->whichend == whichone) {
-          size = (bus_involved) ? PIN_CUE_SIZE_BUS : PIN_CUE_SIZE_NET;
-
-          otherone = !whichone;
-
-          o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
-          gschem_cairo_center_box (w_current, -1, -1, x, y, size, size);
-          o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
-          cairo_fill (w_current->cr);
         }
       }
       break;
