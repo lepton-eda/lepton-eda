@@ -170,7 +170,7 @@ void s_cue_output_lowlevel(TOPLEVEL * toplevel, OBJECT * object, int whichone,
   switch (type) {
 
     case (CONN_ENDPOINT):
-      if (object->type == OBJ_NET) {	/* only nets have these cues */
+      if (object->type == OBJ_NET || object->type == OBJ_PIN) {
         if (count < 1) {	/* Didn't find anything connected there */
           if (output_type == POSTSCRIPT) {
             s_cue_postscript_fillbox(toplevel, fp, x, y);
@@ -180,13 +180,6 @@ void s_cue_output_lowlevel(TOPLEVEL * toplevel, OBJECT * object, int whichone,
         } else if (count >= 2) {
           if (output_type == POSTSCRIPT)
             s_cue_postscript_junction (toplevel, fp, x, y, bus_involved);
-        }
-      }
-      else if (object->type == OBJ_PIN
-               && count == 0
-               && whichone == object->whichend) {
-        if (output_type == POSTSCRIPT) {
-          s_cue_postscript_fillbox(toplevel, fp, x, y);
         }
       }
       break;
