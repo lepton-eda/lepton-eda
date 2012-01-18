@@ -240,32 +240,47 @@ void o_cue_draw_lowlevel_midpoints(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Draw cues for a single object
  *
+ *  \par Function Description
+ *  Cues are drawn on pins, nets and buses.
+ *  Two types of cues are drawn:
+ *   - endpoint cues (identifying unconnected ends of objects)
+ *   - junction cues (identifying net/pin/bus junctions)
+ *
+ *  \param [in] w_current   The GSCHEM_TOPLEVEL object
+ *  \param [in] object      The OBJECT to draw cues for
  */
 void o_cue_draw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
-  if (!object) {
-    return;
-  }
+  g_return_if_fail (object != NULL);
 
-  if (object->type != OBJ_NET && object->type != OBJ_PIN &&
-      object->type != OBJ_BUS) {
-        return;
+  switch (object->type) {
+    case(OBJ_NET):
+      /*
+       * o_cue_draw_lowlevel handles both endpoints and junctions.
+       * The intention of the check is to skip drawing endpoint cues on nets
+       * that are not "fully connected".
+       * Junctions will be drawn correctly, as:
+       *  - net-net junctions are handled by o_cue_draw_lowlevel_midpoints
+       *  - net-pin and pin-pin junctions are handled by case OBJ_PIN below
+       */
+      if (!o_net_is_fully_connected (w_current->toplevel, object)) {
+        o_cue_draw_lowlevel (w_current, object, 0);
+        o_cue_draw_lowlevel (w_current, object, 1);
       }
-
-  if (object->type != OBJ_PIN) {
-    if (object->type != OBJ_NET
-        || ((object->type == OBJ_NET)
-            && !o_net_is_fully_connected (w_current->toplevel, object))) {
-      o_cue_draw_lowlevel(w_current, object, 0);
-      o_cue_draw_lowlevel(w_current, object, 1);
-    }
-    o_cue_draw_lowlevel_midpoints(w_current, object);
-  } else {
-    o_cue_draw_lowlevel(w_current, object, object->whichend);
+      o_cue_draw_lowlevel_midpoints (w_current, object);
+      break;
+    case(OBJ_BUS):
+      o_cue_draw_lowlevel (w_current, object, 0);
+      o_cue_draw_lowlevel (w_current, object, 1);
+      o_cue_draw_lowlevel_midpoints (w_current, object);
+      break;
+    case(OBJ_PIN):
+      o_cue_draw_lowlevel (w_current, object, object->whichend);
+      break;
+    default:
+      return;
   }
 }
 
