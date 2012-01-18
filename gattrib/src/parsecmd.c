@@ -65,6 +65,7 @@ extern int optind;
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
+#include "../include/gettext.h"
 
 /*!
  * \brief Print usage message
@@ -76,30 +77,31 @@ extern int optind;
 
 void usage(char *cmd)
 {
-    printf("\n");
-    printf("Gattrib:  The gEDA project\'s attribute editor.\n");
-    printf("Presents schematic attributes in easy-to-edit spreadsheet format.\n");
-    printf("\n");
-    printf("Usage: %s [OPTIONS] filename1 ... filenameN\n", cmd);
-    printf("  -q, --quiet            Quiet mode\n");
-    printf("  -v, --verbose          Verbose mode on\n");
-    printf("  -h, --help             This help menu\n");
-    printf("\n");
-    printf("  FAQ:\n");
-    printf("  *  What do the colors of the cell text mean?\n");
-    printf("     The cell colors indicate the visibility of the attribute.\n");
-    printf("     Black = Visible attribute, value displayed only.\n");
-    printf("     Grey  = Invisible attribute.\n");
-    printf("     Red   = Visible attribute, name displayed only.\n");
-    printf("     Blue  = Visible attribute, both name and value displayed.\n");
-    printf("\n");
-    printf("  *  What does the period (\".\") at the end of some component refdeses mean?\n");
-    printf("     The period is placed after the refdeses of slotted components.\n");
-    printf("     If slots are present on the component, then the different slots appear\n");
-    printf("     in different rows with the slot number after the period.  Example:  C101.2.\n");
-    printf("\n");
-    printf("Copyright (C) 2003 -- 2006 Stuart D. Brorson.  E-mail: sdb (AT) cloud9 (DOT) net.\n");
-    printf("\n");
+    printf(_(
+"\n"
+"Gattrib:  The gEDA project\'s attribute editor.\n"
+"Presents schematic attributes in easy-to-edit spreadsheet format.\n"
+"\n"
+"Usage: %s [OPTIONS] filename1 ... filenameN\n"
+"  -q, --quiet            Quiet mode\n"
+"  -v, --verbose          Verbose mode on\n"
+"  -h, --help             This help menu\n"
+"\n"
+"  FAQ:\n"
+"  *  What do the colors of the cell text mean?\n"
+"     The cell colors indicate the visibility of the attribute.\n"
+"     Black = Visible attribute, value displayed only.\n"
+"     Grey  = Invisible attribute.\n"
+"     Red   = Visible attribute, name displayed only.\n"
+"     Blue  = Visible attribute, both name and value displayed.\n"
+"\n"
+"  *  What does the period (\".\") at the end of some component refdeses mean?\n"
+"     The period is placed after the refdeses of slotted components.\n"
+"     If slots are present on the component, then the different slots appear\n"
+"     in different rows with the slot number after the period.  Example:  C101.2.\n"
+"\n"
+"Copyright (C) 2003 -- 2006 Stuart D. Brorson.  E-mail: sdb (AT) cloud9 (DOT) net.\n"
+"\n"), cmd);
     exit(0);
 }
 

@@ -44,6 +44,7 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -117,7 +118,7 @@ void s_rename_next_set(void)
 {
     if (cur_set == MAX_SETS) {
 	fprintf(stderr,
-		"Increase number of rename_pair sets in s_net.c\n");
+		_("Increase number of rename_pair sets in s_net.c\n"));
 	exit(-1);
     }
     cur_set++;
@@ -135,11 +136,11 @@ void s_rename_print(void)
     for (i = 0; i < MAX_SETS; i++) {
 	for (j = 0; j < MAX_RENAME; j++) {
 	    if (rename_pairs[i][j].src) {
-		printf("%d) Source: _%s_", i, rename_pairs[i][j].src);
+		printf(_("%d) Source: _%s_"), i, rename_pairs[i][j].src);
 	    }
 
 	    if (rename_pairs[i][j].dest) {
-		printf(" -> Dest: _%s_\n", rename_pairs[i][j].dest);
+		printf(_(" -> Dest: _%s_\n"), rename_pairs[i][j].dest);
 	    } 
 	}
     }
@@ -170,10 +171,9 @@ int s_rename_search(char *src, char *dest, int quiet_flag)
 	    if (strcmp(dest, rename_pairs[cur_set][i].src) == 0) {
 		if (!quiet_flag) {
 		    fprintf(stderr,
-			    "WARNING: Trying to rename something twice:\n\t%s and %s\nare both a src and dest name\n",
-			    dest, rename_pairs[cur_set][i].src);
-		    fprintf(stderr,
-			    "This warning is okay if you have multiple levels of hierarchy!\n");
+			    _("WARNING: Trying to rename something twice:\n\t%s and %s\nare both a src and dest name\n"
+                             "This warning is okay if you have multiple levels of hierarchy!\n"),
+                            dest, rename_pairs[cur_set][i].src);
 		}
 		return (TRUE);
 	    }
@@ -237,7 +237,7 @@ void s_rename_add(char *src, char *dest)
     }
     if (rename_counter == MAX_RENAME) {
 	fprintf(stderr,
-		"Increase number of rename_pairs (MAX_RENAME) in s_rename.c\n");
+		_("Increase number of rename_pairs (MAX_RENAME) in s_rename.c\n"));
 	exit(-1);
     }
 

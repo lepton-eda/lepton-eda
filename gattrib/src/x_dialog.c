@@ -55,6 +55,7 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -74,7 +75,7 @@ void x_dialog_newattrib()
   gchar *entry_text;
 
   /* Create the dialog */
-  dialog = gtk_dialog_new_with_buttons("Add new attribute", NULL, 
+  dialog = gtk_dialog_new_with_buttons(_("Add new attribute"), NULL, 
 				       GTK_DIALOG_MODAL,
 				       GTK_STOCK_OK, GTK_RESPONSE_OK,
 				       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -83,7 +84,7 @@ void x_dialog_newattrib()
   gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_OK);
   
   /*  Create a text label for the dialog window */
-  label = gtk_label_new ("Enter new attribute name");
+  label = gtk_label_new (_("Enter new attribute name"));
   gtk_box_pack_start (GTK_BOX(GTK_DIALOG(dialog)->vbox), label, 
 		      FALSE, FALSE, 0);
 
@@ -146,9 +147,9 @@ void x_dialog_delattrib()
   dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
                                   GTK_MESSAGE_QUESTION,
                                   GTK_BUTTONS_YES_NO,
-                                  "Are you sure you want to delete this attribute?");
+                                  _("Are you sure you want to delete this attribute?"));
   
-  gtk_window_set_title(GTK_WINDOW(dialog), "Delete attribute");
+  gtk_window_set_title(GTK_WINDOW(dialog), _("Delete attribute"));
   switch(gtk_dialog_run(GTK_DIALOG(dialog))) {
     case GTK_RESPONSE_YES:
       /* call the fcn to actually delete the attrib column.  */
@@ -173,11 +174,7 @@ void x_dialog_delattrib()
 void x_dialog_missing_sym()
 {
   GtkWidget *dialog;
-  const char *string = "One or more components have been found with missing symbol files!\n\n"
-    "This probably happened because gattrib couldn't find your component libraries, "
-    "perhaps because your gafrc or gattribrc files are misconfigured.\n\n"
-    "Chose \"Quit\" to leave gattrib and fix the problem, or\n"
-    "\"Forward\" to continue working with gattrib.\n";
+  const char *string = _("One or more components have been found with missing symbol files!\n\nThis probably happened because gattrib couldn't find your component libraries, perhaps because your gafrc or gattribrc files are misconfigured.\n\nChose \"Quit\" to leave gattrib and fix the problem, or\n\"Forward\" to continue working with gattrib.\n");
 
   /* Create the dialog */
   dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
@@ -190,7 +187,7 @@ void x_dialog_missing_sym()
                   GTK_STOCK_GO_FORWARD, GTK_RESPONSE_ACCEPT,
                   NULL);
 
-  gtk_window_set_title(GTK_WINDOW(dialog), "Missing symbol file found for component!");
+  gtk_window_set_title(GTK_WINDOW(dialog), _("Missing symbol file found for component!"));
   gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_REJECT);
 
   switch(gtk_dialog_run(GTK_DIALOG(dialog))) {
@@ -218,10 +215,10 @@ void x_dialog_unsaved_data()
   gchar *tmp;
   gchar *str;
 
-  tmp = "Save the changes before closing?";
-  str = g_strconcat ("<big><b>", tmp, "</b></big>", NULL);
+  tmp = _("Save the changes before closing?");
+  str = g_strconcat (_("<big><b>"), tmp, _("</b></big>"), NULL);
 
-  tmp = "If you don't save, all your changes will be permanently lost.";
+  tmp = _("If you don't save, all your changes will be permanently lost.");
   str = g_strconcat (str, "\n\n", tmp, NULL);
 
   dialog = gtk_message_dialog_new (GTK_WINDOW (window),
@@ -231,7 +228,7 @@ void x_dialog_unsaved_data()
                                    GTK_BUTTONS_NONE, NULL);
   gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG (dialog), str);
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          "Close without saving",    GTK_RESPONSE_NO,
+                          _("Close without saving"), GTK_RESPONSE_NO,
                           GTK_STOCK_CANCEL,          GTK_RESPONSE_CANCEL,
                           GTK_STOCK_SAVE,            GTK_RESPONSE_YES,
                           NULL);
@@ -278,13 +275,7 @@ void x_dialog_unsaved_data()
 void x_dialog_unimplemented_feature()
 {
   GtkWidget *dialog;
-  const char *string = "Sorry -- you have chosen a feature which has net been\n"
-                       "implemented yet.\n\nGattrib is an open-source program which\n"
-                       "I work on as a hobby.  It is still a work in progress.\n"
-                       "If you wish to contribute (perhaps by implementing this\n"
-                       "feature), please do so!  Please send patches to gattrib\n"
-                       "to Stuart Brorson: sdb@cloud9.net.\n\n"
-                       "Otherwise, just hang tight -- I'll implement this feature soon!\n";
+  const char *string = _("Sorry -- you have chosen a feature which has net been\nimplemented yet.\n\nGattrib is an open-source program which\nI work on as a hobby.  It is still a work in progress.\nIf you wish to contribute (perhaps by implementing this\nfeature), please do so!  Please send patches to gattrib\nto Stuart Brorson: sdb@cloud9.net.\n\nOtherwise, just hang tight -- I'll implement this feature soon!\n");
 
   /* Create the dialog */
   dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
@@ -292,7 +283,7 @@ void x_dialog_unimplemented_feature()
                                   GTK_BUTTONS_OK,
                                   "%s", string);
 
-  gtk_window_set_title(GTK_WINDOW(dialog), "Unimplemented feature!");
+  gtk_window_set_title(GTK_WINDOW(dialog), _("Unimplemented feature!"));
 
   gtk_dialog_run(GTK_DIALOG(dialog));
   gtk_widget_destroy(dialog);
@@ -319,7 +310,7 @@ void x_dialog_fatal_error(gchar *string, gint return_code)
                                   GTK_BUTTONS_OK,
                                   "%s", string);
 
-  gtk_window_set_title(GTK_WINDOW(dialog), "Fatal error");
+  gtk_window_set_title(GTK_WINDOW(dialog), _("Fatal error"));
 
   gtk_dialog_run(GTK_DIALOG(dialog));
   gtk_widget_destroy(dialog);
@@ -334,12 +325,7 @@ void x_dialog_fatal_error(gchar *string, gint return_code)
 void x_dialog_about_dialog()
 {
   GtkWidget *dialog;
-  const char *string = "gEDA : GPL Electronic Design Automation\n\n"
-                       "This is gattrib -- gEDA's attribute editor\n\n"
-                       "Gattrib version: %s%s.%s\n\n"
-                       "Gattrib is written by: Stuart Brorson (sdb@cloud9.net)\n"
-                       "with generous helpings of code from gschem, gnetlist, \n"
-                       "and gtkextra, as well as support from the gEDA community.";
+  const char *string = _("gEDA : GPL Electronic Design Automation\n\nThis is gattrib -- gEDA's attribute editor\n\nGattrib version: %s%s.%s\n\nGattrib is written by: Stuart Brorson (sdb@cloud9.net)\nwith generous helpings of code from gschem, gnetlist, \nand gtkextra, as well as support from the gEDA community.");
 
 
   /* Create the dialog */
@@ -350,7 +336,7 @@ void x_dialog_about_dialog()
                                    PACKAGE_DOTTED_VERSION,
                                    PACKAGE_DATE_VERSION);
   
-  gtk_window_set_title(GTK_WINDOW(dialog), "About...");
+  gtk_window_set_title(GTK_WINDOW(dialog), _("About..."));
 
   gtk_dialog_run(GTK_DIALOG(dialog));
   gtk_widget_destroy(dialog);
@@ -366,7 +352,7 @@ void x_dialog_export_file()
   gchar *filename;
   GtkWidget *dialog;
 
-  dialog = gtk_file_chooser_dialog_new("Export CSV", NULL,
+  dialog = gtk_file_chooser_dialog_new(_("Export CSV"), NULL,
       GTK_FILE_CHOOSER_ACTION_SAVE,
       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
       GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,

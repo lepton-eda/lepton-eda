@@ -45,6 +45,7 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -218,7 +219,7 @@ void s_object_replace_attrib_in_object(TOPLEVEL *toplevel,
   /* if we get here, it's because we have failed to find the attrib on the component.
    * This is an error condition. */
   fprintf(stderr, 
-	 "In s_object_replace_attrib_in_object, we have failed to find the attrib %s on the component.  Exiting . . .\n", 
+	 _("In s_object_replace_attrib_in_object, we have failed to find the attrib %s on the component.  Exiting . . .\n"),
 	 new_attrib_name);
   exit(-1);
 }
@@ -277,7 +278,7 @@ s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
   /* if we get here, it's because we have failed to find the attrib on the component.
    * This is an error condition. */
   fprintf(stderr, 
-	 "In s_object_remove_attrib_in_object, we have failed to find the attrib %s on the component.  Exiting . . .\n", 
+	 _("In s_object_remove_attrib_in_object, we have failed to find the attrib %s on the component.  Exiting . . .\n"),
 	 new_attrib_name);
   exit(-1);
 }
@@ -332,7 +333,7 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
       break;
 
     default:
-      fprintf(stderr, "In s_object_attrib_add_attrib_in_object, trying to add attrib to non-complex or non-net!\n");
+      fprintf(stderr, _("In s_object_attrib_add_attrib_in_object, trying to add attrib to non-complex or non-net!\n"));
       exit(-1);
     }
   } else {    /* This must be a floating attrib, but what is that !?!?!?!?!  */

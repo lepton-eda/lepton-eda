@@ -39,6 +39,7 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -82,7 +83,7 @@ void f_export_components(gchar *filename)
 #endif
   fp = fopen(filename, "wb");
   if (fp == NULL) {
-    s_log_message("o_save: Could not open [%s]\n", filename);
+    s_log_message(_("o_save: Could not open [%s]\n"), filename);
     /* XXXXX Throw up error message  in window */
     return;
   }

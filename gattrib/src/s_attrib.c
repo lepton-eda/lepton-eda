@@ -40,6 +40,7 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -101,7 +102,7 @@ char *s_attrib_get_refdes(OBJECT *object)
   if (!temp_uref) {
     temp_uref = o_attrib_search_object_attribs_by_name (object, "uref", 0); // deprecated
     if (temp_uref) {
-      printf("WARNING: Found uref=%s, uref= is deprecated, please use refdes=\n", temp_uref);
+      printf(_("WARNING: Found uref=%s, uref= is deprecated, please use refdes=\n"), temp_uref);
     } else {        /* didn't find refdes.  Report error to log. */
 #ifdef DEBUG
       printf("In s_attrib_get_refdes, found non-graphical component with no refdes.\n");

@@ -46,6 +46,7 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -116,7 +117,7 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
 #endif
 
   if (verbose_mode) {
-    printf("- Starting master comp list creation.\n");
+    printf(_("- Starting master comp list creation.\n"));
   }
 
   /* -----  Iterate through all objects found on page looking for components  ----- */
@@ -184,7 +185,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
 #endif
 
   if (verbose_mode) {
-    printf("- Starting master comp attrib list creation.\n");
+    printf(_("- Starting master comp attrib list creation.\n"));
   }
 
   /* -----  Iterate through all objects found on page looking for components (OBJ_COMPLEX) ----- */
@@ -297,7 +298,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
 #endif
 
   if (verbose_mode) {
-    printf("- Starting master pin list creation.\n");
+    printf(_("- Starting master pin list creation.\n"));
   }
 
   /* -----  Iterate through all objects found on page looking for components  ----- */
@@ -331,7 +332,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
               s_string_list_add_item (sheet_head->master_pin_list_head, &(sheet_head->pin_count), row_label);
 
             } else {      /* didn't find pinnumber.  Report error to log. */
-              fprintf (stderr, "In s_sheet_data_add_master_pin_list_items, found component pin with no pinnumber.\n");
+              fprintf (stderr, _("In s_sheet_data_add_master_pin_list_items, found component pin with no pinnumber.\n"));
 #ifdef DEBUG
               fprintf (stderr, ". . . . refdes = %s.\n", temp_uref);
 #endif
@@ -389,7 +390,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
 #endif
 
   if (verbose_mode) {
-    printf("- Starting master pin attrib list creation.\n");
+    printf(_("- Starting master pin attrib list creation.\n"));
   }
 
   /* -----  Iterate through all objects found on page looking for components  ----- */
