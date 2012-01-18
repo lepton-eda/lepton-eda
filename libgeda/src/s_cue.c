@@ -232,28 +232,48 @@ void s_cue_output_lowlevel_midpoints(TOPLEVEL * toplevel, OBJECT * object,
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Output cues for a single object
  *
+ *  \par Function Description
+ *  Cues are drawn on pins, nets and buses.
+ *  Two types of cues are drawn:
+ *   - endpoint cues (identifying unconnected ends of objects)
+ *   - junction cues (identifying net/pin/bus junctions)
+ *
+ *  \param [in] toplevel   The TOPLEVEL object
+ *  \param [in] object     The OBJECT to output cues for
+ *  \param [in] fp         The file handle to output to
+ *  \param [in] type       The type of output being produced
  */
 void s_cue_output_single(TOPLEVEL * toplevel, OBJECT * object, FILE * fp,
 			 int type)
 {
-  if (!object) {
-    return;
-  }
+  g_return_if_fail (object != NULL);
 
-  if (object->type != OBJ_NET && object->type != OBJ_PIN &&
-      object->type != OBJ_BUS) {
-	return;
+  switch (object->type) {
+    case (OBJ_NET):
+      /*
+       * s_cue_output_lowlevel handles both endpoints and junctions.
+       * The intention of the check is to skip drawing endpoint cues on nets
+       * that are not "fully connected".
+       * Junctions will be drawn correctly, as:
+       *  - net-net junctions are handled by s_cue_output_lowlevel_midpoints
+       *  - net-pin and pin-pin junctions are handled by case OBJ_PIN below
+       */
+      if (!o_net_is_fully_connected (toplevel, object)) {
+        s_cue_output_lowlevel(toplevel, object, 0, fp, type);
+        s_cue_output_lowlevel(toplevel, object, 1, fp, type);
       }
-
-  if (object->type != OBJ_NET
-      || ((object->type == OBJ_NET)
-          && !o_net_is_fully_connected (toplevel, object))) {
-    s_cue_output_lowlevel(toplevel, object, 0, fp, type);
-    s_cue_output_lowlevel(toplevel, object, 1, fp, type);
+      break;
+    case (OBJ_BUS):
+      s_cue_output_lowlevel(toplevel, object, 0, fp, type);
+      s_cue_output_lowlevel(toplevel, object, 1, fp, type);
+      break;
+    case (OBJ_PIN):
+      s_cue_output_lowlevel(toplevel, object, object->whichend, fp, type);
+      break;
+    default:
+      return;
   }
   s_cue_output_lowlevel_midpoints(toplevel, object, fp, type);
 }
