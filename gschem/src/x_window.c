@@ -122,10 +122,14 @@ void x_window_create_drawing(GtkWidget *drawbox, GSCHEM_TOPLEVEL *w_current)
 
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Set up callbacks for window events that affect drawing.
  *  \par Function Description
  *
+ * Installs GTK+ callback handlers for signals that are emitted by
+ * the drawing area, and some for the main window that affect the drawing
+ * area.
+ *
+ * \param [in] w_current The toplevel environment.
  */
 void x_window_setup_draw_events(GSCHEM_TOPLEVEL *w_current)
 {
