@@ -561,15 +561,6 @@ int f_print_stream(TOPLEVEL *toplevel, PAGE *page, FILE *fp)
   }
 
 
-  /* Set line end style */
-  if (toplevel->print_output_capstyle == BUTT_CAP) {
-    fprintf(fp, "0 setlinecap\n");
-  } else if (toplevel->print_output_capstyle == SQUARE_CAP) {
-    fprintf(fp, "2 setlinecap\n");
-  } else if (toplevel->print_output_capstyle == ROUND_CAP) {
-    fprintf(fp, "1 setlinecap\n");
-  }
-
   /* Apply mils to postscript native units scaling to CTM */
   fprintf(fp,"%f %f scale\n",
 	  72.0 / 1000.0 , 72.0 / 1000.0);

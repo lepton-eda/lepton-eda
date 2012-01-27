@@ -532,9 +532,10 @@ void o_line_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 {
   int x1, y1, x2, y2;
   int color;
+  int capstyle;
   int line_width, length, space;
   void (*outl_func)() = NULL;
-	
+
   if (o_current == NULL) {
     printf("got null in o_line_print\n");
     return;
@@ -545,6 +546,7 @@ void o_line_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   x2    = o_current->line->x[1];
   y2    = o_current->line->y[1];
   color = o_current->color;
+  capstyle = o_get_capstyle (o_current->line_end);
 
   /*
    * Depending on the type of the line for this particular line, the
@@ -610,7 +612,7 @@ void o_line_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 	       x1 - origin_x, y1 - origin_y,
 	       x2 - origin_x, y2 - origin_y,
 	       color,
-	       line_width, length, space,
+	       line_width, capstyle, length, space,
 	       origin_x, origin_y);
 }
 
@@ -631,6 +633,7 @@ void o_line_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
  *  \param [in] y2            Lower y coordinate.
  *  \param [in] color         Line color.
  *  \param [in] line_width    Width of line.
+ *  \param [in] capstyle      Capstyle of line.
  *  \param [in] length        (unused).
  *  \param [in] space         (unused).
  *  \param [in] origin_x      Page x coordinate to place line OBJECT.
@@ -639,13 +642,13 @@ void o_line_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 void o_line_print_solid(TOPLEVEL *toplevel, FILE *fp,
 			int x1, int y1, int x2, int y2,
 			int color,
-			int line_width, int length, int space,
+			int line_width, int capstyle, int length, int space,
 			int origin_x, int origin_y)
 {
   f_print_set_color(toplevel, fp, color);
-  
-  fprintf(fp,"%d %d %d %d %d line\n",
-	  x1,y1,x2,y2, line_width);
+
+  fprintf(fp,"%d %d %d %d %d %d line\n",
+    x1,y1,x2,y2, line_width, capstyle);
 }
 
 /*! \brief Print a dotted line to Postscript document.
@@ -672,6 +675,7 @@ void o_line_print_solid(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] y2            Lower y coordinate.
  *  \param [in] color         Line color.
  *  \param [in] line_width    Width of line.
+ *  \param [in] capstyle      Capstyle of circle lines.
  *  \param [in] length        (unused).
  *  \param [in] space         Space between dots.
  *  \param [in] origin_x      Page x coordinate to place line OBJECT.
@@ -680,7 +684,7 @@ void o_line_print_solid(TOPLEVEL *toplevel, FILE *fp,
 void o_line_print_dotted(TOPLEVEL *toplevel, FILE *fp,
 			 int x1, int y1, int x2, int y2,
 			 int color,
-			 int line_width, int length, int space,
+			 int line_width, int capstyle, int length, int space,
 			 int origin_x, int origin_y)
 {
   double dx, dy, l, d;
@@ -724,9 +728,8 @@ void o_line_print_dotted(TOPLEVEL *toplevel, FILE *fp,
     xa = xa + dx1;
     ya = ya + dy1;
   }
-  
-  fprintf(fp,"] %d dashed\n",line_width);
-  
+
+  fprintf(fp,"] %d %d dashed\n", line_width, capstyle);
 }
 
 
@@ -753,6 +756,7 @@ void o_line_print_dotted(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] y2            Lower y coordinate.
  *  \param [in] color         Line color.
  *  \param [in] line_width    Width of line.
+ *  \param [in] capstyle      Capstyle of line.
  *  \param [in] length        Length of a dash.
  *  \param [in] space         Space between dashes.
  *  \param [in] origin_x      Page x coordinate to place line OBJECT.
@@ -761,7 +765,7 @@ void o_line_print_dotted(TOPLEVEL *toplevel, FILE *fp,
 void o_line_print_dashed(TOPLEVEL *toplevel, FILE *fp,
 			 int x1, int y1, int x2, int y2,
 			 int color,
-			 int line_width, int length, int space,
+			 int line_width, int capstyle, int length, int space,
 			 int origin_x, int origin_y)
 {
   double dx, dy, l, d;
@@ -828,7 +832,7 @@ void o_line_print_dashed(TOPLEVEL *toplevel, FILE *fp,
 	  (int) xa, (int) ya,
 	  (int) xb, (int) yb);
 
-  fprintf(fp,"] %d dashed\n", line_width);
+  fprintf(fp,"] %d %d dashed\n", line_width, capstyle);
 }
 
 
@@ -856,6 +860,7 @@ void o_line_print_dashed(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] y2            Lower y coordinate.
  *  \param [in] color         Line color.
  *  \param [in] line_width    Width of line.
+ *  \param [in] capstyle      Capstyle of line.
  *  \param [in] length        Length of a dash.
  *  \param [in] space         Space between dashes.
  *  \param [in] origin_x      Page x coordinate to place line OBJECT.
@@ -864,7 +869,7 @@ void o_line_print_dashed(TOPLEVEL *toplevel, FILE *fp,
 void o_line_print_center(TOPLEVEL *toplevel, FILE *fp,
 			 int x1, int y1, int x2, int y2,
 			 int color,
-			 int line_width, int length, int space,
+			 int line_width, int capstyle, int length, int space,
 			 int origin_x, int origin_y)
 {
   double dx, dy, l, d;
@@ -955,8 +960,8 @@ void o_line_print_center(TOPLEVEL *toplevel, FILE *fp,
 	    (int) xb, (int) yb);
     
   }
-  
-  fprintf(fp,"] %d dashed\n", line_width);
+
+  fprintf(fp,"] %d %d dashed\n", line_width, capstyle);
 
   /*
    * A dot is represented by a filled circle. Position of the circle is
@@ -988,6 +993,7 @@ void o_line_print_center(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] y2            Lower y coordinate.
  *  \param [in] color         Line color.
  *  \param [in] line_width    Width of line.
+ *  \param [in] capstyle      Capstyle of line.
  *  \param [in] length        Length of a dash.
  *  \param [in] space         Space between dashes.
  *  \param [in] origin_x      Page x coordinate to place line OBJECT.
@@ -996,7 +1002,7 @@ void o_line_print_center(TOPLEVEL *toplevel, FILE *fp,
 void o_line_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 			  int x1, int y1, int x2, int y2,
 			  int color,
-			  int line_width, int length, int space,
+			  int line_width, int capstyle, int length, int space,
 			  int origin_x, int origin_y)
 {
   double dx, dy, l, d;
@@ -1117,8 +1123,8 @@ void o_line_print_phantom(TOPLEVEL *toplevel, FILE *fp,
       
     }
   }
-  
-  fprintf(fp,"] %d dashed\n", line_width);
+
+  fprintf(fp,"] %d %d dashed\n", line_width, capstyle);
 }
 
 

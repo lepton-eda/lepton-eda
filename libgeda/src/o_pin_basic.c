@@ -303,8 +303,8 @@ void o_pin_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
     pin_width = o_current->line_width;
   }
 
-  fprintf(fp, "%d %d %d %d %d line\n",x1,y1,x2,y2,pin_width);
-  
+  fprintf(fp, "%d %d %d %d %d %d line\n",x1,y1,x2,y2,pin_width,toplevel->print_output_capstyle);
+
 }
 
 /*! \brief rotate a pin object around a centerpoint

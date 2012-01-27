@@ -672,7 +672,7 @@ void o_box_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 {
   int x, y, width, height;
   int color;
-  int line_width, length, space;
+  int line_width, capstyle, length, space;
   int fill_width, angle1, pitch1, angle2, pitch2;
   void (*outl_func)() = NULL;
   void (*fill_func)() = NULL;
@@ -687,6 +687,7 @@ void o_box_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   width  = abs(o_current->box->lower_x - o_current->box->upper_x);
   height = abs(o_current->box->lower_y - o_current->box->upper_y);
   color  = o_current->color;
+  capstyle = o_get_capstyle (o_current->line_end);
 
   /*! \note
    *  Depending on the type of the line for this particular box, the
@@ -753,6 +754,7 @@ void o_box_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 	       x, y, width, height,
 	       color,
 	       line_width,
+	       capstyle,
 	       length, space,
 	       origin_x, origin_y);
 
@@ -841,6 +843,7 @@ void o_box_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
  *  \param [in] height      Height of BOX.
  *  \param [in] color       BOX color.
  *  \param [in] line_width  BOX Line width.
+ *  \param [in] capstyle    BOX Line capstyle.
  *  \param [in] length      Dashed line length.
  *  \param [in] space       Amount of space between dashes.
  *  \param [in] origin_x    Page x coordinate to place BOX OBJECT.
@@ -851,7 +854,7 @@ o_box_print_solid(TOPLEVEL *toplevel, FILE *fp,
                   int x, int y,
                   int width, int height,
                   int color,
-                  int line_width, int length, int space, 
+                  int line_width, int capstyle, int length, int space,
                   int origin_x, int origin_y)
 {
   int x1, y1;
@@ -864,22 +867,22 @@ o_box_print_solid(TOPLEVEL *toplevel, FILE *fp,
   o_line_print_solid(toplevel, fp,
                      x1, y1, x1 + width, y1,
                      color,
-                     line_width, length, space,
+                     line_width, capstyle, length, space,
                      origin_x, origin_y);
   o_line_print_solid(toplevel, fp,
                      x1 + width, y1, x1 + width, y1 + height,
                      color,
-                     line_width, length, space,
+                     line_width, capstyle, length, space,
                      origin_x, origin_y);
   o_line_print_solid(toplevel, fp,
                      x1 + width, y1 + height, x1, y1 + height,
                      color,
-                     line_width, length, space,
+                     line_width, capstyle, length, space,
                      origin_x, origin_y);
   o_line_print_solid(toplevel, fp,
                      x1, y1 + height, x1, y1,
                      color,
-                     line_width, length, space,
+                     line_width, capstyle, length, space,
                      origin_x, origin_y);
 }
 
@@ -905,6 +908,7 @@ o_box_print_solid(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] height      Height of BOX.
  *  \param [in] color       BOX color.
  *  \param [in] line_width  BOX Line width.
+ *  \param [in] capstyle    BOX Line capstyle.
  *  \param [in] length      Dashed line length.
  *  \param [in] space       Amount of space between dashes.
  *  \param [in] origin_x    Page x coordinate to place BOX OBJECT.
@@ -914,7 +918,7 @@ void o_box_print_dotted(TOPLEVEL *toplevel, FILE *fp,
 			int x, int y,
 			int width, int height,
 			int color,
-			int line_width, int length, int space, 
+			int line_width, int capstyle, int length, int space,
 			int origin_x, int origin_y)
 {
   int x1, y1;
@@ -927,22 +931,22 @@ void o_box_print_dotted(TOPLEVEL *toplevel, FILE *fp,
   o_line_print_dotted(toplevel, fp,
                       x1, y1, x1 + width, y1,
                       color,
-                      line_width, length, space,
+                      line_width, capstyle, length, space,
                       origin_x, origin_y);
   o_line_print_dotted(toplevel, fp,
                       x1 + width, y1, x1 + width, y1 + height,
                       color,
-                      line_width, length, space,
+                      line_width, capstyle, length, space,
                       origin_x, origin_y);
   o_line_print_dotted(toplevel, fp,
                       x1 + width, y1 + height, x1, y1 + height,
                       color,
-                      line_width, length, space,
+                      line_width, capstyle, length, space,
                       origin_x, origin_y);
   o_line_print_dotted(toplevel, fp,
                       x1, y1 + height, x1, y1,
                       color,
-                      line_width, length, space,
+                      line_width, capstyle, length, space,
                       origin_x, origin_y);
 }
 
@@ -967,6 +971,7 @@ void o_box_print_dotted(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] height      Height of BOX.
  *  \param [in] color       BOX color.
  *  \param [in] line_width  BOX Line width.
+ *  \param [in] capstyle    BOX Line capstyle.
  *  \param [in] length      Dashed line length.
  *  \param [in] space       Amount of space between dashes.
  *  \param [in] origin_x    Page x coordinate to place BOX OBJECT.
@@ -976,7 +981,7 @@ void o_box_print_dashed(TOPLEVEL *toplevel, FILE *fp,
 			int x, int y,
 			int width, int height,
 			int color,
-			int line_width, int length, int space, 
+			int line_width, int capstyle, int length, int space,
 			int origin_x, int origin_y)
 {
   int x1, y1;
@@ -990,22 +995,22 @@ void o_box_print_dashed(TOPLEVEL *toplevel, FILE *fp,
   o_line_print_dashed(toplevel, fp,
                       x1, y1, x1 + width, y1,
                       color,
-                      line_width, length, space,
+                      line_width, capstyle, length, space,
                       origin_x, origin_y);
   o_line_print_dashed(toplevel, fp,
                       x1 + width, y1, x1 + width, y1 + height,
                       color,
-                      line_width, length, space,
+                      line_width, capstyle, length, space,
                       origin_x, origin_y);
   o_line_print_dashed(toplevel, fp,
                       x1 + width, y1 + height, x1, y1 + height,
                       color,
-                      line_width, length, space,
+                      line_width, capstyle, length, space,
                       origin_x, origin_y);
   o_line_print_dashed(toplevel, fp,
                       x1, y1 + height, x1, y1,
                       color,
-                      line_width, length, space,
+                      line_width, capstyle, length, space,
                       origin_x, origin_y);
 }
 
@@ -1030,6 +1035,7 @@ void o_box_print_dashed(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] height      Height of BOX.
  *  \param [in] color       BOX color.
  *  \param [in] line_width  BOX Line width.
+ *  \param [in] capstyle    BOX Line capstyle.
  *  \param [in] length      Dashed line length.
  *  \param [in] space       Amount of space between dashes.
  *  \param [in] origin_x    Page x coordinate to place BOX OBJECT.
@@ -1039,7 +1045,7 @@ void o_box_print_center(TOPLEVEL *toplevel, FILE *fp,
 			int x, int y,
 			int width, int height,
 			int color,
-			int line_width, int length, int space, 
+			int line_width, int capstyle, int length, int space,
 			int origin_x, int origin_y)
 {
   int x1, y1;
@@ -1052,22 +1058,22 @@ void o_box_print_center(TOPLEVEL *toplevel, FILE *fp,
   o_line_print_center(toplevel, fp,
                       x1, y1, x1 + width, y1,
                       color,
-                      line_width, length, space,
+                      line_width, capstyle, length, space,
                       origin_x, origin_y);
   o_line_print_center(toplevel, fp,
                       x1 + width, y1, x1 + width, y1 + height,
                       color,
-                      line_width, length, space,
+                      line_width, capstyle, length, space,
                       origin_x, origin_y);
   o_line_print_center(toplevel, fp,
                       x1 + width, y1 + height, x1, y1 + height,
                       color,
-                      line_width, length, space,
+                      line_width, capstyle, length, space,
                       origin_x, origin_y);
   o_line_print_center(toplevel, fp,
                       x1, y1 + height, x1, y1,
                       color,
-                      line_width, length, space,
+                      line_width, capstyle, length, space,
                       origin_x, origin_y);
 }
 
@@ -1092,6 +1098,7 @@ void o_box_print_center(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] height      Height of BOX.
  *  \param [in] color       BOX color.
  *  \param [in] line_width  BOX Line width.
+ *  \param [in] capstyle    BOX Line capstyle.
  *  \param [in] length      Dashed line length.
  *  \param [in] space       Amount of space between dashes.
  *  \param [in] origin_x    Page x coordinate to place BOX OBJECT.
@@ -1101,7 +1108,7 @@ void o_box_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 			 int x, int y,
 			 int width, int height,
 			 int color,
-			 int line_width, int length, int space, 
+			 int line_width, int capstyle, int length, int space,
 			 int origin_x, int origin_y)
 {
   int x1, y1;
@@ -1114,22 +1121,22 @@ void o_box_print_phantom(TOPLEVEL *toplevel, FILE *fp,
   o_line_print_phantom(toplevel, fp,
                        x1, y1, x1 + width, y1,
                        color,
-                       line_width, length, space,
+                       line_width, capstyle, length, space,
                        origin_x, origin_y);
   o_line_print_phantom(toplevel, fp,
                        x1 + width, y1, x1 + width, y1 + height,
                        color,
-                       line_width, length, space,
+                       line_width, capstyle, length, space,
                        origin_x, origin_y);
   o_line_print_phantom(toplevel, fp,
                        x1 + width, y1 + height, x1, y1 + height,
                        color,
-                       line_width, length, space,
+                       line_width, capstyle, length, space,
                        origin_x, origin_y);
   o_line_print_phantom(toplevel, fp,
                        x1, y1 + height, x1, y1,
                        color,
-                       line_width, length, space,
+                       line_width, capstyle, length, space,
                        origin_x, origin_y);
 }
 
@@ -1305,10 +1312,10 @@ void o_box_print_hatch(TOPLEVEL *toplevel, FILE *fp,
   for(index=0; index<lines->len; index++) {
     LINE *line = &g_array_index(lines, LINE, index);
 
-    fprintf(fp,"%d %d %d %d %d line\n",
+    fprintf(fp,"%d %d %d %d %d %d line\n",
             line->x[0], line->y[0],
             line->x[1], line->y[1],
-            fill_width);
+            fill_width, BUTT_CAP);
   }
 
   g_array_free(lines, TRUE);

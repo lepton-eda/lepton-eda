@@ -881,11 +881,11 @@ void o_picture_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   if (image == NULL) {
     int line_width = (toplevel->line_style == THICK) ? LINE_WIDTH : 2;
     o_box_print_solid (toplevel, fp, x1, y1, width, height,
-                       DEFAULT_COLOR, line_width, -1, -1, -1, -1);
+                       DEFAULT_COLOR, line_width, SQUARE_CAP, -1, -1, -1, -1);
     o_line_print_solid (toplevel, fp, x1, y1, x1+width, y1+height,
-                        DEFAULT_COLOR, line_width, -1, -1, -1, -1);
+                        DEFAULT_COLOR, line_width, ROUND_CAP, -1, -1, -1, -1);
     o_line_print_solid (toplevel, fp, x1+width, y1, x1, y1+height,
-                        DEFAULT_COLOR, line_width, -1, -1, -1, -1);
+                        DEFAULT_COLOR, line_width, ROUND_CAP, -1, -1, -1, -1);
     return;
   }
 

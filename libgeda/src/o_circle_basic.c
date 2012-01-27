@@ -580,7 +580,7 @@ void o_circle_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 {
   int x, y, radius;
   int color;
-  int circle_width, length, space;
+  int circle_width, capstyle, length, space;
   int fill_width, angle1, pitch1, angle2, pitch2;
   void (*outl_func)() = NULL;
   void (*fill_func)() = NULL;
@@ -595,6 +595,7 @@ void o_circle_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   radius = o_current->circle->radius;
 
   color  = o_current->color;
+  capstyle = o_get_capstyle (o_current->line_end);
 
   /*
    * Depending on the type of the line for this particular circle, the
@@ -660,7 +661,7 @@ void o_circle_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
                x - origin_x, y - origin_y,
                radius,
                color,
-               circle_width, length, space,
+               circle_width, capstyle, length, space,
                origin_x, origin_y);
 
   /*
@@ -747,6 +748,7 @@ void o_circle_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
  *  \param [in] radius        Circle radius.
  *  \param [in] color         Circle color.
  *  \param [in] circle_width  Width of circle.
+ *  \param [in] capstyle      Capstyle of circle lines.
  *  \param [in] length        (unused).
  *  \param [in] space         (unused).
  *  \param [in] origin_x      Page x coordinate to place circle OBJECT.
@@ -755,7 +757,7 @@ void o_circle_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 void o_circle_print_solid(TOPLEVEL *toplevel, FILE *fp,
 			  int x, int y, int radius,
 			  int color,
-			  int circle_width, int length, int space,
+			  int circle_width, int capstyle, int length, int space,
 			  int origin_x, int origin_y)
 {
 
@@ -763,7 +765,7 @@ void o_circle_print_solid(TOPLEVEL *toplevel, FILE *fp,
                     x, y, radius,
                     0, FULL_CIRCLE / 64,
                     color,
-                    circle_width, -1, -1,
+                    circle_width, BUTT_CAP, -1, -1,
                     origin_x, origin_y);
 
 }
@@ -790,6 +792,7 @@ void o_circle_print_solid(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] radius        Circle radius.
  *  \param [in] color         Circle color.
  *  \param [in] circle_width  Width of circle.
+ *  \param [in] capstyle      Capstyle of circle lines.
  *  \param [in] length        (unused).
  *  \param [in] space         Space between dots.
  *  \param [in] origin_x      Page x coordinate to place circle OBJECT.
@@ -798,7 +801,7 @@ void o_circle_print_solid(TOPLEVEL *toplevel, FILE *fp,
 void o_circle_print_dotted(TOPLEVEL *toplevel, FILE *fp,
 			   int x, int y, int radius,
 			   int color,
-			   int circle_width, int length, int space,
+			   int circle_width, int capstyle, int length, int space,
 			   int origin_x, int origin_y)
 {
 
@@ -806,7 +809,7 @@ void o_circle_print_dotted(TOPLEVEL *toplevel, FILE *fp,
                      x, y, radius,
                      0, FULL_CIRCLE / 64,
                      color,
-                     circle_width, -1, space,
+                     circle_width, capstyle, -1, space,
                      origin_x, origin_y);
 
 }
@@ -831,6 +834,7 @@ void o_circle_print_dotted(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] radius        Circle radius.
  *  \param [in] color         Circle color.
  *  \param [in] circle_width  Width of circle.
+ *  \param [in] capstyle      Capstyle of circle lines.
  *  \param [in] length        Length of dashed lines.
  *  \param [in] space         Space between dashes.
  *  \param [in] origin_x      Page x coordinate to place circle OBJECT.
@@ -840,7 +844,7 @@ void o_circle_print_dashed(TOPLEVEL *toplevel, FILE *fp,
 			   int x, int y,
 			   int radius,
 			   int color,
-			   int circle_width, int length, int space,
+			   int circle_width, int capstyle, int length, int space,
 			   int origin_x, int origin_y)
 {
 
@@ -848,7 +852,7 @@ void o_circle_print_dashed(TOPLEVEL *toplevel, FILE *fp,
                      x, y, radius,
                      0, FULL_CIRCLE / 64,
                      color,
-                     circle_width, length, space,
+                     circle_width, capstyle, length, space,
                      origin_x, origin_y);
 
 }
@@ -873,6 +877,7 @@ void o_circle_print_dashed(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] radius        Circle radius.
  *  \param [in] color         Circle color.
  *  \param [in] circle_width  Width of circle.
+ *  \param [in] capstyle      Capstyle of circle lines.
  *  \param [in] length        Length of dashed lines.
  *  \param [in] space         Space between dashes.
  *  \param [in] origin_x      Page x coordinate to place circle OBJECT.
@@ -882,7 +887,7 @@ void o_circle_print_center(TOPLEVEL *toplevel, FILE *fp,
 			   int x, int y,
 			   int radius,
 			   int color,
-			   int circle_width, int length, int space,
+			   int circle_width, int capstyle, int length, int space,
 			   int origin_x, int origin_y)
 {
 	
@@ -890,7 +895,7 @@ void o_circle_print_center(TOPLEVEL *toplevel, FILE *fp,
                      x, y, radius,
                      0, FULL_CIRCLE / 64,
                      color,
-                     circle_width, length, space,
+                     circle_width, capstyle, length, space,
                      origin_x, origin_y);
 
 }
@@ -915,6 +920,7 @@ void o_circle_print_center(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] radius        Circle radius.
  *  \param [in] color         Circle color.
  *  \param [in] circle_width  Width of circle.
+ *  \param [in] capstyle      Capstyle of circle lines.
  *  \param [in] length        Length of dashed lines.
  *  \param [in] space         Space between dashes.
  *  \param [in] origin_x      Page x coordinate to place circle OBJECT.
@@ -924,7 +930,7 @@ void o_circle_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 			    int x, int y,
 			    int radius,
 			    int color,
-			    int circle_width, int length, int space,
+			    int circle_width, int capstyle, int length, int space,
 			    int origin_x, int origin_y)
 {
 
@@ -932,7 +938,7 @@ void o_circle_print_phantom(TOPLEVEL *toplevel, FILE *fp,
                       x, y, radius,
                       0, FULL_CIRCLE / 64,
                       color,
-                      circle_width, length, space,
+                      circle_width, capstyle, length, space,
                       origin_x, origin_y);
 
 }
@@ -1096,10 +1102,10 @@ void o_circle_print_hatch(TOPLEVEL *toplevel, FILE *fp,
   for(index=0; index<lines->len; index++) {
     LINE *line = &g_array_index(lines, LINE, index);
 
-    fprintf(fp,"%d %d %d %d %d line\n",
+    fprintf(fp,"%d %d %d %d %d %d line\n",
             line->x[0], line->y[0],
             line->x[1], line->y[1],
-            fill_width);
+            fill_width, BUTT_CAP);
   }
 
   g_array_free(lines, TRUE);

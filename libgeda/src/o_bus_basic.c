@@ -304,8 +304,8 @@ void o_bus_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   x2 = o_current->line->x[1]-origin_x,
   y2 = o_current->line->y[1]-origin_y;
 
-  fprintf(fp, "%d %d %d %d %d line\n",
-	  x1,y1,x2,y2,bus_width);
+  fprintf(fp, "%d %d %d %d %d %d line\n",
+	  x1,y1,x2,y2,bus_width,SQUARE_CAP);
 
 }
 

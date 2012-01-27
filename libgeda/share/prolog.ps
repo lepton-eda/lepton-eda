@@ -3,8 +3,9 @@
 
 
 % Draw a line from the second coordinate to the first
-% x2 y2 x1 y1 width line -
+% x2 y2 x1 y1 width capstyle line -
 /line {
+    setlinecap
     setlinewidth
     % pop off first element and moveto
     moveto
@@ -23,9 +24,10 @@
 
 % Draw a dot-dashed line, a bunch of lined segments,
 % if the array element only has length two, draw a dot.
-% [ [x2 y2 x1 y1] [x4 y4 x3 y3] [x5 y5] ... ] width dashed -
+% [ [x2 y2 x1 y1] [x4 y4 x3 y3] [x5 y5] ... ] width capstyle dashed -
 /width 0 def
 /dashed {
+    setlinecap
     dup 2.0 div /width exch def
     setlinewidth
     % pop off each line segment and draw it as a dot or as a line
@@ -37,18 +39,20 @@
 } bind def
 
 % Draw an arc segment
-% x y r ang1 ang2 width darc -
+% x y r ang1 ang2 width capstyle darc -
 /darc {
+    setlinecap
     setlinewidth
     arc stroke
 } bind def
 
 % Draw a series of arc segment bits, if the array element only has a single
 % element in it, draw a dot.
-% [ [sa1 ea1] [sa2 ea2] ... ] x y r width dashedarc -
+% [ [sa1 ea1] [sa2 ea2] ... ] x y r width capstyle dashedarc -
 /x 0 def
 /y 0 def
 /dashedarc {
+    setlinecap
     dup /width exch def
     setlinewidth
     /r exch def  
@@ -84,8 +88,9 @@
 } bind def
 
 % Draw a box
-% width height x y linethickness box -
+% width height x y linethickness capstyle box -
 /box {
+    setlinecap
     setlinewidth
     moveto
     exch dup 0 rlineto	 % w h, h w w 0      -- Draw bottom line

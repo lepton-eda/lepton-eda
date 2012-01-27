@@ -103,7 +103,7 @@ OBJECT *o_arc_new(TOPLEVEL *toplevel,
                      o_get_line_end(toplevel->print_output_capstyle), TYPE_SOLID, 0, -1, -1);
   o_set_fill_options(toplevel, new_node,
                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
-	
+
   o_arc_recalc(toplevel, new_node);
 
   /* new_node->graphical = arc; eventually */
@@ -609,6 +609,7 @@ void o_arc_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
 {
   int x, y, radius, start_angle, end_angle;
   int color;
+  int capstyle;
   int arc_width, space, length;
   void (*outl_func)() = NULL;
 
@@ -616,13 +617,14 @@ void o_arc_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
     printf("got null in o_arc_print\n");
     return;
   }
-	
+
   x      = o_current->arc->x;
   y      = o_current->arc->y;
   radius = o_current->arc->width / 2;
   start_angle = o_current->arc->start_angle;
   end_angle   = o_current->arc->end_angle;
   color  = o_current->color;
+  capstyle = o_get_capstyle (o_current->line_end);
 
   /*! \note
    *  Depending on the type of the line for this particular arc, the
@@ -694,7 +696,7 @@ void o_arc_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   (*outl_func)(toplevel, fp,
                x - origin_x, y - origin_x, radius,
                start_angle, end_angle,
-               color, arc_width, length, space, origin_x, origin_y);
+               color, arc_width, capstyle, length, space, origin_x, origin_y);
 }
 
 
@@ -719,6 +721,7 @@ void o_arc_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
  *  \param [in] angle2
  *  \param [in] color
  *  \param [in] arc_width
+ *  \param [in] capstyle
  *  \param [in] length
  *  \param [in] space
  *  \param [in] origin_x
@@ -728,7 +731,7 @@ void o_arc_print_solid(TOPLEVEL *toplevel, FILE *fp,
 		       int x, int y, int radius,
 		       int angle1, int angle2,
 		       int color,
-		       int arc_width, int length, int space,
+		       int arc_width, int capstyle, int length, int space,
 		       int origin_x, int origin_y)
 {
   f_print_set_color(toplevel, fp, color);
@@ -739,9 +742,9 @@ void o_arc_print_solid(TOPLEVEL *toplevel, FILE *fp,
     angle2 = -angle2;
   }
 
-  fprintf(fp, "%d %d %d %d %d %d darc\n",
+  fprintf(fp, "%d %d %d %d %d %d %d darc\n",
 	  x,y, radius, angle1, angle1 + angle2,
-	  arc_width);
+	  arc_width, capstyle);
 
 }
 
@@ -770,6 +773,7 @@ void o_arc_print_solid(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] angle2
  *  \param [in] color
  *  \param [in] arc_width
+ *  \param [in] capstyle
  *  \param [in] length
  *  \param [in] space
  *  \param [in] origin_x
@@ -779,7 +783,7 @@ void o_arc_print_dotted(TOPLEVEL *toplevel, FILE *fp,
 			int x, int y, int radius,
 			int angle1, int angle2,
 			int color,				   
-			int arc_width, int length, int space,
+			int arc_width, int capstyle, int length, int space,
 			int origin_x, int origin_y)
 {
   int da, d;
@@ -813,7 +817,7 @@ void o_arc_print_dotted(TOPLEVEL *toplevel, FILE *fp,
                       x, y, radius,
                       angle1, angle2,
                       color,
-                      arc_width, length, space, origin_x, origin_y);
+                      arc_width, capstyle, length, space, origin_x, origin_y);
     return;
   }
 
@@ -827,8 +831,8 @@ void o_arc_print_dotted(TOPLEVEL *toplevel, FILE *fp,
 
     d = d + da;
   }
-  fprintf(fp,"] %d %d %d %d dashedarc %% dotted\n",
-	  x,y, radius, arc_width);
+  fprintf(fp,"] %d %d %d %d %d dashedarc %% dotted\n",
+    x,y, radius, arc_width, capstyle);
 }
 
 /*! \brief
@@ -854,6 +858,7 @@ void o_arc_print_dotted(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] angle2
  *  \param [in] color
  *  \param [in] arc_width
+ *  \param [in] capstyle
  *  \param [in] length
  *  \param [in] space
  *  \param [in] origin_x
@@ -863,13 +868,13 @@ void o_arc_print_dashed(TOPLEVEL *toplevel, FILE *fp,
 			int x, int y, int radius,
 			int angle1, int angle2,
 			int color,				   
-			int arc_width, int length, int space,
+			int arc_width, int capstyle, int length, int space,
 			int origin_x, int origin_y)
 {
   int da, db, a1, d;
 
   f_print_set_color(toplevel, fp, color);
-  
+
   /*! \note
    *  Depending on the radius of the arc, the <B>space</B> (resp. <B>length</B>)
    *  parameter is changed into a small angle <B>da</B> (resp. <B>db</B>).
@@ -900,10 +905,10 @@ void o_arc_print_dashed(TOPLEVEL *toplevel, FILE *fp,
                       x, y, radius, 
                       angle1, angle2,
                       color,
-                      arc_width, length, space, origin_x, origin_y);
+                      arc_width, capstyle, length, space, origin_x, origin_y);
     return;
   }
-  
+
   fprintf(fp,"[");
   d = angle1;
   while ((d + da + db) < (angle1 + angle2)) {
@@ -931,8 +936,8 @@ void o_arc_print_dashed(TOPLEVEL *toplevel, FILE *fp,
 	  a1, a1+da);
 
 
-  fprintf(fp,"] %d %d %d %d dashedarc %% dashed\n",
-	  x,y, radius, arc_width);
+  fprintf(fp,"] %d %d %d %d %d dashedarc %% dashed\n",
+    x,y, radius, arc_width, capstyle);
 
 }
 
@@ -959,6 +964,7 @@ void o_arc_print_dashed(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] angle2
  *  \param [in] color
  *  \param [in] arc_width
+ *  \param [in] capstyle
  *  \param [in] length
  *  \param [in] space
  *  \param [in] origin_x
@@ -968,7 +974,7 @@ void o_arc_print_center(TOPLEVEL *toplevel, FILE *fp,
 			int x, int y, int radius, 
 			int angle1, int angle2,
 			int color,				   
-			int arc_width, int length, int space,
+			int arc_width, int capstyle, int length, int space,
 			int origin_x, int origin_y)
 {
   int da, db, a1, d;
@@ -1005,10 +1011,10 @@ void o_arc_print_center(TOPLEVEL *toplevel, FILE *fp,
 		      x, y, radius,
 		      angle1, angle2,
 		      color,
-		      arc_width, length, space, origin_x, origin_y);
+		      arc_width, capstyle, length, space, origin_x, origin_y);
     return;
   }
-  
+
   fprintf(fp, "[");
   d = angle1;
   while ((d + da + 2 * db) < (angle1 + angle2)) {
@@ -1054,9 +1060,9 @@ void o_arc_print_center(TOPLEVEL *toplevel, FILE *fp,
     fprintf(fp,"[%d] ",d);
     
   }
-  
-  fprintf(fp,"] %d %d %d %d dashedarc %% center\n",
-	  x,y, radius, arc_width);
+
+  fprintf(fp,"] %d %d %d %d %d dashedarc %% center\n",
+    x,y, radius, arc_width, capstyle);
 }
 
 /*! \note
@@ -1087,6 +1093,7 @@ void o_arc_print_center(TOPLEVEL *toplevel, FILE *fp,
  *  \param [in] angle2
  *  \param [in] color
  *  \param [in] arc_width
+ *  \param [in] capstyle
  *  \param [in] length
  *  \param [in] space
  *  \param [in] origin_x
@@ -1096,7 +1103,7 @@ void o_arc_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 			 int x, int y, int radius,
 			 int angle1, int angle2,
 			 int color,
-			 int arc_width, int length, int space,
+			 int arc_width, int capstyle, int length, int space,
 			 int origin_x, int origin_y)
 {
   int da, db, a1, d;
@@ -1133,7 +1140,7 @@ void o_arc_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 		      x, y, radius,
 		      angle1, angle2,
 		      color,						  
-		      arc_width, length, space, origin_x, origin_y);
+		      arc_width, capstyle, length, space, origin_x, origin_y);
     return;
   }
   
@@ -1205,12 +1212,11 @@ void o_arc_print_phantom(TOPLEVEL *toplevel, FILE *fp,
     */
     
     fprintf(fp,"[%d] ",d);
-    
-    
+
   }
-  
-  fprintf(fp,"] %d %d %d %d dashedarc %% phantom\n",
-	  x,y, radius, arc_width);
+
+  fprintf(fp,"] %d %d %d %d %d dashedarc %% phantom\n",
+    x,y, radius, arc_width, capstyle);
 }
 
 /*! \brief Calculates the distance between the given point and the closest
