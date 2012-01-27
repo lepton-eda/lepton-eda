@@ -78,7 +78,7 @@ typedef enum { F_OPEN_RC           = 1,
 } FOpenFlags;
 
 /*! \brief line end style for an open line of an object */
-typedef enum {END_NONE, END_SQUARE, END_ROUND} OBJECT_END;
+typedef enum {END_NONE, END_SQUARE, END_ROUND, END_VOID} OBJECT_END;
 
 /*! \brief line style of lines, rect, circles, arcs */
 typedef enum {TYPE_SOLID, TYPE_DOTTED, TYPE_DASHED, TYPE_CENTER, TYPE_PHANTOM, TYPE_ERASE} OBJECT_TYPE;
