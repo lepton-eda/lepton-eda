@@ -342,7 +342,7 @@ void gschem_cairo_stroke (GSCHEM_TOPLEVEL *w_current, int line_type, int line_en
       num_dashes = 2;
 
       cairo_set_dash (w_current->cr, dashes, num_dashes, 0.);
-      cairo_set_line_cap (w_current->cr, CAIRO_LINE_CAP_BUTT);
+      cairo_set_line_cap (w_current->cr, cap);
       cairo_stroke (w_current->cr);
       break;
 
@@ -352,7 +352,7 @@ void gschem_cairo_stroke (GSCHEM_TOPLEVEL *w_current, int line_type, int line_en
       num_dashes = 2;
 
       cairo_set_dash (w_current->cr, dashes, num_dashes, 0.);
-      cairo_set_line_cap (w_current->cr, CAIRO_LINE_CAP_BUTT);
+      cairo_set_line_cap (w_current->cr, cap);
       cairo_stroke_preserve (w_current->cr);
 
       dashes[0] = 0;                    /* DOT */
@@ -370,7 +370,7 @@ void gschem_cairo_stroke (GSCHEM_TOPLEVEL *w_current, int line_type, int line_en
       num_dashes = 2;
 
       cairo_set_dash (w_current->cr, dashes, num_dashes, 0.);
-      cairo_set_line_cap (w_current->cr, CAIRO_LINE_CAP_BUTT);
+      cairo_set_line_cap (w_current->cr, cap);
       cairo_stroke_preserve (w_current->cr);
 
       dashes[0] = 0;                    /* DOT */

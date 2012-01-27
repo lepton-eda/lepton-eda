@@ -100,7 +100,7 @@ OBJECT *o_arc_new(TOPLEVEL *toplevel,
 
   /* Default init */
   o_set_line_options(toplevel, new_node,
-                     END_NONE, TYPE_SOLID, 0, -1, -1);
+                     o_get_line_end(toplevel->print_output_capstyle), TYPE_SOLID, 0, -1, -1);
   o_set_fill_options(toplevel, new_node,
                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
 	

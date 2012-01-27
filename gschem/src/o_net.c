@@ -75,6 +75,7 @@ void o_net_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
   int size = 0;
+  OBJECT_END end;
 
 #if NET_DEBUG /* debug */
   char *tempstring;
@@ -97,10 +98,12 @@ void o_net_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
   if (toplevel->net_style == THICK)
     size = NET_WIDTH;
 
-  gschem_cairo_line (w_current, END_SQUARE, size, x1, y1, x2, y2);
+  end = o_get_line_end (toplevel->print_output_capstyle);
+
+  gschem_cairo_line (w_current, end, size, x1, y1, x2, y2);
   gschem_cairo_set_source_color (w_current,
                                  o_drawing_color (w_current, o_current));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_SQUARE, size, -1, -1);
+  gschem_cairo_stroke (w_current, TYPE_SOLID, end, size, -1, -1);
 
   if (o_current->selected && w_current->draw_grips) {
     o_line_draw_grips (w_current, o_current);
