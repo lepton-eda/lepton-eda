@@ -181,11 +181,21 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
     o_attrib_deselect_invisible (w_current,
                                  toplevel->page_current->selection_list,
                                  o_current);
-  /* Don't select attributes if the type is MULTIPLE, as this causes
-   * issues with invert selection (CONTROLKEY pressed). */
-  } else if( type != MULTIPLE) {
-    o_attrib_add_selected (w_current, toplevel->page_current->selection_list,
-                           o_current);
+  } else {
+    /* If the type is MULTIPLE (meaning a select box was/is being used), only
+     * select invisible attributes on objects.  Otherwise attributes will be
+     * "double selected", causing them to remain unselected if using
+     * invert-selection (CONTROLKEY is pressed)
+     */
+    if( type == MULTIPLE) {
+      o_attrib_select_invisible (w_current,
+                                 toplevel->page_current->selection_list,
+                                 o_current);
+    } else {
+      /* Select all attributes of the object for a single click select */
+      o_attrib_add_selected (w_current, toplevel->page_current->selection_list,
+                             o_current);
+    }
   }
 }
 

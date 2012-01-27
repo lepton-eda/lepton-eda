@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-10 01:05+0000\n"
+"POT-Creation-Date: 2012-01-19 18:45+0000\n"
 "PO-Revision-Date: 2010-02-06 22:11+0000\n"
 "Last-Translator: Carlos Nieves Ónega <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -242,36 +242,36 @@ msgid ""
 "Backtrace:\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:226
+#: libgeda/src/g_rc.c:233
 #, fuzzy
 msgid "Config file already loaded"
 msgstr "El archivo RC [%s] ya ha sido leído.\n"
 
-#: libgeda/src/g_rc.c:261
+#: libgeda/src/g_rc.c:268
 #, fuzzy, c-format
 msgid "Parsed config from [%s]\n"
 msgstr "Leído el archivo de configuración de usuario [%%s]\n"
 
-#: libgeda/src/g_rc.c:274
+#: libgeda/src/g_rc.c:281
 #, fuzzy, c-format
 msgid "Unable to parse config from [%s]: %s"
 msgstr "Error al cargar imagen desde el archivo [%s]: %s\n"
 
-#: libgeda/src/g_rc.c:291
+#: libgeda/src/g_rc.c:298
 msgid "ERROR: An unknown error occurred while parsing configuration files."
 msgstr ""
 
-#: libgeda/src/g_rc.c:303 libgeda/src/g_rc.c:304
+#: libgeda/src/g_rc.c:310 libgeda/src/g_rc.c:311
 #, c-format
 msgid "ERROR: %s\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:310
+#: libgeda/src/g_rc.c:317
 #, c-format
 msgid "ERROR: The %s log may contain more information.\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:937
+#: libgeda/src/g_rc.c:978
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
 "list of strings instead\n"
@@ -848,6 +848,22 @@ msgstr "Encontrado [%s]\n"
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr "No se ha podido encontrar [%s] en ninguna librería fuente\n"
 
+#: libgeda/src/s_slot.c:162
+msgid "Did not find slotdef=#:#,#,#... attribute\n"
+msgstr "No se ha encontrado un atributo slotdef=#:#,#,#...\n"
+
+#: libgeda/src/s_slot.c:168
+msgid "Improper slotdef syntax: missing \":\".\n"
+msgstr "Sintaxis de slotdef incorrecta: falta el carácter \":\".\n"
+
+#: libgeda/src/s_slot.c:183
+msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
+msgstr "No se ha encontrado un atributo válido slotdef=#:#,#,#...\n"
+
+#: libgeda/src/s_slot.c:213
+msgid "component missing pinseq= attribute\n"
+msgstr "El componente no tiene el atributo pinseq\n"
+
 #: libgeda/src/scheme_attrib.c:67
 msgid "~A is not a valid attribute: invalid string '~A'."
 msgstr ""
@@ -1063,18 +1079,6 @@ msgstr ""
 
 #~ msgid "o_save: Could not open [%s]\n"
 #~ msgstr "o_save: No se puede abrir [%s]\n"
-
-#~ msgid "Did not find slotdef=#:#,#,#... attribute\n"
-#~ msgstr "No se ha encontrado un atributo slotdef=#:#,#,#...\n"
-
-#~ msgid "Improper slotdef syntax: missing \":\".\n"
-#~ msgstr "Sintaxis de slotdef incorrecta: falta el carácter \":\".\n"
-
-#~ msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
-#~ msgstr "No se ha encontrado un atributo válido slotdef=#:#,#,#...\n"
-
-#~ msgid "component missing pinseq= attribute\n"
-#~ msgstr "El componente no tiene el atributo pinseq\n"
 
 #~ msgid "Could not find character '%s' definition.\n"
 #~ msgstr "No se puede encontrar la definición del carácter '%s'.\n"

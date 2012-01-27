@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-10 01:05+0000\n"
+"POT-Creation-Date: 2012-01-19 18:45+0000\n"
 "PO-Revision-Date: 2010-02-11 03:31+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -30,77 +30,77 @@ msgstr ""
 msgid "Invalid text name/value visibility ~A."
 msgstr ""
 
-#: gschem/src/g_rc.c:295
+#: gschem/src/g_rc.c:311
 #, c-format
 msgid "Invalid zoomfactor [%d] passed to %s\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:441
+#: gschem/src/g_rc.c:457
 #, c-format
 msgid "Invalid size [%d] passed to text-size\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:484
+#: gschem/src/g_rc.c:500
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:941
+#: gschem/src/g_rc.c:957
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1203
+#: gschem/src/g_rc.c:1219
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1278
+#: gschem/src/g_rc.c:1294
 #, c-format
 msgid "Invalid dot size [%d] passed to dots-grid-dot-size\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1319
+#: gschem/src/g_rc.c:1335
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to dots-grid-fixed-threshold\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1345
+#: gschem/src/g_rc.c:1361
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to mesh-grid-display-threshold\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1370
+#: gschem/src/g_rc.c:1386
 #, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1394
+#: gschem/src/g_rc.c:1410
 #, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1418
+#: gschem/src/g_rc.c:1434
 #, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1441
+#: gschem/src/g_rc.c:1457
 #, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1488
+#: gschem/src/g_rc.c:1504
 #, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1514
+#: gschem/src/g_rc.c:1530
 #, c-format
 msgid "Invalid gain [%d] passed to zoom-gain\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1539
+#: gschem/src/g_rc.c:1555
 #, c-format
 msgid "Invalid number of steps [%d] scrollpan-steps\n"
 msgstr ""
@@ -181,6 +181,14 @@ msgstr ""
 #: gschem/src/gschem_cairo.c:318
 #, c-format
 msgid "Unknown type for stroke (%d) !\n"
+msgstr ""
+
+#: gschem/src/gschem_pango.c:289
+msgid "cairo context"
+msgstr ""
+
+#: gschem/src/gschem_pango.c:290
+msgid "the cairo context for the renderer"
 msgstr ""
 
 #: gschem/src/i_basic.c:77 gschem/src/x_window.c:524
@@ -1017,6 +1025,18 @@ msgstr ""
 msgid "Automatic slotting"
 msgstr ""
 
+#: gschem/src/x_clipboard.c:249
+#, c-format
+msgid ""
+"<b>Invalid schematic on clipboard.</b>\n"
+"\n"
+"An error occurred while inserting clipboard data: %s."
+msgstr ""
+
+#: gschem/src/x_clipboard.c:251
+msgid "Clipboard insertion failed"
+msgstr ""
+
 #: gschem/src/x_color.c:94 gschem/src/x_color.c:103
 #, c-format
 msgid "Could not allocate the color %s!\n"
@@ -1849,6 +1869,34 @@ msgstr ""
 #: gschem/src/x_print.c:768
 #, c-format
 msgid "Printed current schematic to [%s]\n"
+msgstr ""
+
+#: gschem/src/x_rc.c:40
+msgid "ERROR: An unknown error occurred while parsing configuration files.\n"
+msgstr ""
+
+#: gschem/src/x_rc.c:45
+msgid ""
+"An unknown error occurred while parsing configuration files.\n"
+"\n"
+"The gschem log may contain more information."
+msgstr ""
+
+#: gschem/src/x_rc.c:57
+#, c-format
+msgid "ERROR: %s\n"
+msgstr ""
+
+#: gschem/src/x_rc.c:60
+#, c-format
+msgid ""
+"%s\n"
+"\n"
+"The gschem log may contain more information."
+msgstr ""
+
+#: gschem/src/x_rc.c:68
+msgid "Cannot load gschem configuration."
 msgstr ""
 
 #: gschem/src/x_script.c:47 gschem/lib/system-gschemrc.scm:1381
