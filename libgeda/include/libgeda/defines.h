@@ -171,6 +171,7 @@
 /* for print dialog box */
 #define LANDSCAPE		0
 #define PORTRAIT 		1
+#define AUTOLAYOUT 		2
 
 /* for type to s_cue_output_all */
 #define POSTSCRIPT		0

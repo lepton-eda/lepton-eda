@@ -100,10 +100,11 @@ int f_print_set_color(TOPLEVEL *toplevel, FILE *fp, int color)
  *  \param [in] paper_size_x  The width of the document on paper in inches.
  *  \param [in] paper_size_y  The height of the document on paper in inches.
  *  \param [in] eps           whether to create a eps of a ps document
+ *  \param [in] landscape     whether to print a page in landscape format
  *  \return 0 on success, -1 on failure.
  */
 int f_print_header(TOPLEVEL *toplevel, PAGE *page, FILE *fp,
-		   int paper_size_x, int paper_size_y, int eps) 
+		   int paper_size_x, int paper_size_y, int eps, gboolean landscape)
 {
   char *buf = NULL;
   FILE *prolog;
@@ -147,8 +148,7 @@ int f_print_header(TOPLEVEL *toplevel, PAGE *page, FILE *fp,
 	  getlogin(),
 #endif
 	  llx, lly, urx, ury,
-	  ((toplevel->print_orientation == LANDSCAPE)
-	   ? "Landscape" : "Portrait")
+	  (landscape ? "Landscape" : "Portrait")
 	  );
 
   /* Fetch and insert the Postscript prolog from disk here */
@@ -424,13 +424,14 @@ int f_print_command (TOPLEVEL *toplevel, PAGE *page, const char *command)
 int f_print_stream(TOPLEVEL *toplevel, PAGE *page, FILE *fp)
 {
   int origin_x, origin_y, bottom, right;
-  int margin_x, margin_y;
-  int dx,dy;
+  int margin_x=0, margin_y=0;
+  int dx=0, dy=0;
   float scale;
   int unicode_count;
   gunichar unicode_table [128];  /* to contain the list of unicode
 				    characters that need mapping */
   int eps;
+  gboolean landscape;
 
   /* Unicode support */
   f_print_initialize_glyph_table();  /* Fill up unicode map */
@@ -449,8 +450,7 @@ int f_print_stream(TOPLEVEL *toplevel, PAGE *page, FILE *fp)
                                  &right, &bottom);
 
   /* Calculate scale factor that will make the image fit on the page */
-  dx = 0; dy = 0;
-  margin_x = 0; margin_y = 0;
+
   switch (toplevel->print_output_type) {
   case EXTENTS:
     dx = right  - origin_x;
@@ -482,9 +482,12 @@ int f_print_stream(TOPLEVEL *toplevel, PAGE *page, FILE *fp)
 
   }
 
+  landscape = ((toplevel->print_orientation == LANDSCAPE) ||
+      ((toplevel->print_orientation == AUTOLAYOUT) && ( dx >= dy )));
+
   if(toplevel->paper_width == 0) {
     eps = 1;
-    if(toplevel->print_orientation == LANDSCAPE) {
+    if (landscape) {
       toplevel->paper_width = dx;
       toplevel->paper_height = dy;
     } else { /* portrait */
@@ -495,7 +498,7 @@ int f_print_stream(TOPLEVEL *toplevel, PAGE *page, FILE *fp)
     eps = 0;
   
   scale = 0.0;
-  if(toplevel->print_orientation == LANDSCAPE) {
+  if (landscape) {
     /* First attempt to fit in x direction. */
     scale = toplevel->paper_width / (float)dx;
     if((toplevel->paper_height / (float)dy) < scale ) {
@@ -522,7 +525,7 @@ int f_print_stream(TOPLEVEL *toplevel, PAGE *page, FILE *fp)
   if (f_print_header(toplevel, page, fp,
 		     toplevel->paper_width,
 		     toplevel->paper_height,
-		     eps) != 0) {
+		     eps, landscape) != 0) {
 
     /* There was an error in f_print_header */
     return -1;
@@ -575,7 +578,7 @@ int f_print_stream(TOPLEVEL *toplevel, PAGE *page, FILE *fp)
 
   /* Now rotate and translate the graphics to fit onto the desired
    * page with the orientation we want. Center it too */
-  if(toplevel->print_orientation == LANDSCAPE) {
+  if (landscape) {
     fprintf(fp,
 	    "%d %d translate 90 rotate\n",
 	    (int)((toplevel->paper_height + ( dy-margin_y) * scale)/2.0),

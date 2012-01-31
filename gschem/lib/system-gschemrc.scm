@@ -619,10 +619,11 @@
 
 ; output-orientation string
 ;
-; Controls which way the output page is layed out (landscape or portrait)
-;
+; Controls which way the output page is layed out (landscape or portrait).
+; "auto" allows gschem to automatically choose a proper layout
+(output-orientation "auto")
 ;(output-orientation "portrait")
-(output-orientation "landscape")
+;(output-orientation "landscape")
 
 ; output-color string
 ;

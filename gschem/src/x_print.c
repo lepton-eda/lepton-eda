@@ -206,6 +206,12 @@ print_dialog_init_orient_combobox (PrintDialog * d)
   model = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
 
   gtk_list_store_append (model, &iter);
+  gtk_list_store_set (model, &iter,
+                      0, _("Automatic"),
+                      1, AUTOLAYOUT,
+                      -1);
+
+  gtk_list_store_append (model, &iter);
   gtk_list_store_set (model, &iter, 
 		      0, _("Landscape"),
 		      1, LANDSCAPE,

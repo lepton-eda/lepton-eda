@@ -656,11 +656,12 @@ SCM g_rc_output_orientation(SCM mode)
   static const vstbl_entry mode_table[] = {
     {PORTRAIT , "portrait" },
     {LANDSCAPE, "landscape"},
+    {AUTOLAYOUT, "auto"    },
   };
   
   RETURN_G_RC_MODE("output-orientation",
 		   default_print_orientation,
-		   2);
+		   3);
 }
 
 /*! \todo Finish function documentation!!!
