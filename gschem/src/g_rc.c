@@ -87,14 +87,14 @@ SCM g_rc_gschem_version(SCM scm_version)
     sourcefile = scm_to_utf8_string (rc_filename);
     scm_dynwind_free (sourcefile);
     fprintf(stderr,
-            "You are running gEDA/gaf version [%s%s.%s],\n",
+            _("You are running gEDA/gaf version [%s%s.%s],\n"),
             PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
             PACKAGE_DATE_VERSION);
     fprintf(stderr,
-            "but you have a version [%s] gschemrc file:\n[%s]\n",
+            _("but you have a version [%s] gschemrc file:\n[%s]\n"),
             version, sourcefile);
     fprintf(stderr,
-            "Please be sure that you have the latest rc file.\n");
+            _("Please be sure that you have the latest rc file.\n"));
     ret = SCM_BOOL_F;
   } else {
     ret = SCM_BOOL_T;

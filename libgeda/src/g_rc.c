@@ -96,7 +96,7 @@ SCM g_rc_mode_general(SCM scmmode,
   /* no match? */
   if(index == table_size) {
     fprintf(stderr,
-            "Invalid mode [%s] passed to %s\n",
+            _("Invalid mode [%s] passed to %s\n"),
             mode,
             rc_name);
     ret = SCM_BOOL_F;
@@ -465,7 +465,7 @@ SCM g_rc_component_library(SCM path, SCM name)
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
     fprintf(stderr,
-            "Invalid path [%s] passed to component-library\n",
+            _("Invalid path [%s] passed to component-library\n"),
             string);
     scm_dynwind_end();
     return SCM_BOOL_F;
@@ -604,7 +604,7 @@ SCM g_rc_source_library(SCM path)
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
     fprintf (stderr,
-             "Invalid path [%s] passed to source-library\n",
+             _("Invalid path [%s] passed to source-library\n"),
              string);
     g_free(string);
     return SCM_BOOL_F;
@@ -651,7 +651,7 @@ SCM g_rc_source_library_search(SCM path)
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
     fprintf (stderr,
-             "Invalid path [%s] passed to source-library-search\n",
+             _("Invalid path [%s] passed to source-library-search\n"),
              string);
     g_free(string);
     return SCM_BOOL_F;
@@ -660,7 +660,7 @@ SCM g_rc_source_library_search(SCM path)
   dir = g_dir_open (string, 0, NULL);
   if (dir == NULL) {
     fprintf (stderr,
-             "Invalid path [%s] passed to source-library-search\n",
+             _("Invalid path [%s] passed to source-library-search\n"),
              string);
     g_free(string);
     return SCM_BOOL_F;
@@ -860,7 +860,7 @@ SCM g_rc_bitmap_directory(SCM path)
   /* invalid path? */
   if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
     fprintf (stderr,
-             "Invalid path [%s] passed to bitmap-directory\n",
+             _("Invalid path [%s] passed to bitmap-directory\n"),
              string);
     g_free(string);
     return SCM_BOOL_F;
@@ -1015,7 +1015,7 @@ SCM g_rc_always_promote_attributes(SCM attrlist)
       char *temp;
       SCM_ASSERT(scm_is_string(scm_list_ref(attrlist, scm_from_int(i))), 
 		 scm_list_ref(attrlist, scm_from_int(i)), SCM_ARG1, 
-		 "always-promote-attribute: list element is not a string");
+		 _("always-promote-attribute: list element is not a string"));
       temp = scm_to_utf8_string (scm_list_ref (attrlist, scm_from_int (i)));
       attr = g_strdup(temp);
       free (temp);
