@@ -148,6 +148,10 @@ s_hierarchy_down_symbol (TOPLEVEL *toplevel, const CLibSymbol *symbol,
 
   page = s_page_search (toplevel, filename);
   if (page) {
+    /* change link to parent page since we
+     * can come here from any parent and must
+     * come back to the same page */
+    page->up = parent->pid;
     s_page_goto (toplevel, page);
     g_free (filename);
     return;
