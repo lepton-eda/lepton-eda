@@ -251,7 +251,7 @@ s_color_map_from_scm (COLOR *map, SCM lst, const char *scheme_proc_name)
     int i;
     char *rgba;
     SCM s;
-    COLOR c;
+    COLOR c = {0x00, 0x00, 0x00, FALSE};
     gboolean result;
     SCM entry = scm_car (curr);
 
