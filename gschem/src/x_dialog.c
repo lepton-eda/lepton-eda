@@ -3570,7 +3570,9 @@ close_confirmation_dialog_callback_renderer_toggled (GtkCellRendererToggle *cell
 
   model = GTK_TREE_MODEL (dialog->store_unsaved_pages);
 
-  gtk_tree_model_get_iter_from_string (model, &iter, path);
+  if (!gtk_tree_model_get_iter_from_string (model, &iter, path)) {
+    return;
+  }
   gtk_tree_model_get (model, &iter,
                       COLUMN_SAVE, &save,
                       -1);
