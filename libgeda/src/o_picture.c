@@ -692,8 +692,6 @@ void o_picture_mirror_world(TOPLEVEL *toplevel,
 void o_picture_translate_world(TOPLEVEL *toplevel,
 			       int dx, int dy, OBJECT *object)
 {
-  if (object == NULL) printf("btw NO!\n");
-
   /* Do world coords */
   object->picture->upper_x = object->picture->upper_x + dx;
   object->picture->upper_y = object->picture->upper_y + dy;
