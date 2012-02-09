@@ -50,7 +50,7 @@ selection_to_buffer(GSCHEM_TOPLEVEL *w_current, int buf_num)
  */
 void o_buffer_copy(GSCHEM_TOPLEVEL *w_current, int buf_num)
 {
-  if (buf_num < 0 || buf_num > MAX_BUFFERS) {
+  if (buf_num < 0 || buf_num >= MAX_BUFFERS) {
     g_warning (_("o_buffer_copy: Invalid buffer %i\n"), buf_num);
     return;
   }
@@ -65,7 +65,7 @@ void o_buffer_copy(GSCHEM_TOPLEVEL *w_current, int buf_num)
  */
 void o_buffer_cut(GSCHEM_TOPLEVEL *w_current, int buf_num)
 {
-  if (buf_num < 0 || buf_num > MAX_BUFFERS) {
+  if (buf_num < 0 || buf_num >= MAX_BUFFERS) {
     g_warning (_("o_buffer_cut: Invalid buffer %i\n"), buf_num);
     return;
   }
@@ -86,7 +86,7 @@ void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
   int rleft, rtop, rbottom, rright;
   int x, y;
 
-  if (buf_num < 0 || buf_num > MAX_BUFFERS) {
+  if (buf_num < 0 || buf_num >= MAX_BUFFERS) {
     fprintf(stderr, _("Got an invalid buffer_number [o_buffer_paste_start]\n"));
     return;
   }

@@ -116,6 +116,9 @@ s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename,
       f_open (toplevel, found, found->page_filename, NULL);
     }
     break;
+
+  default:
+    g_return_val_if_reached (NULL);
   }
 
   if (page_control == 0) {
@@ -148,6 +151,10 @@ s_hierarchy_down_symbol (TOPLEVEL *toplevel, const CLibSymbol *symbol,
 
   page = s_page_search (toplevel, filename);
   if (page) {
+    /* change link to parent page since we
+     * can come here from any parent and must
+     * come back to the same page */
+    page->up = parent->pid;
     s_page_goto (toplevel, page);
     g_free (filename);
     return;

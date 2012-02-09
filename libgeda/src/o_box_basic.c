@@ -441,8 +441,6 @@ char *o_box_save(TOPLEVEL *toplevel, OBJECT *object)
  */
 void o_box_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
 {
-  if (object == NULL) printf("btw NO!\n");
-
   /* Do world coords */
   object->box->upper_x = object->box->upper_x + dx;
   object->box->upper_y = object->box->upper_y + dy;

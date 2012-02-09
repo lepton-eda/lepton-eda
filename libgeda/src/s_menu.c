@@ -69,7 +69,7 @@ SCM s_menu_return_entry(int index, char **menu_name)
     return SCM_BOOL_F;
   }
 
-  if (index > MAX_MENUS || index < 0) {
+  if (index >= MAX_MENUS || index < 0) {
     *menu_name = NULL;
     return SCM_BOOL_F;
   }

@@ -690,6 +690,10 @@ void o_text_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
           output_string = g_strdup("invalid");
         }
         break;
+
+    default:
+      g_return_if_reached ();
+
     }
   } else {
     output_string = g_strdup(o_current->text->string);

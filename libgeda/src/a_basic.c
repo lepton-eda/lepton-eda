@@ -279,18 +279,14 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
   GList *new_attrs_list;
   GList *new_object_list = NULL;
   GList *iter;
-  unsigned int release_ver;
-  unsigned int fileformat_ver;
-  unsigned int current_fileformat_ver;
+  unsigned int release_ver = 0;
+  unsigned int fileformat_ver = 0;
+  unsigned int current_fileformat_ver = FILEFORMAT_VERSION;
   int found_pin = 0;
   OBJECT* last_complex = NULL;
   int itemsread = 0;
 
   int embedded_level = 0;
-
-
-  /* fill version with default file format version (the current one) */
-  current_fileformat_ver = FILEFORMAT_VERSION;
 
   g_return_val_if_fail ((buffer != NULL), NULL);
 

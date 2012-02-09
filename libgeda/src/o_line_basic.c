@@ -341,8 +341,6 @@ char *o_line_save(TOPLEVEL *toplevel, OBJECT *object)
 void o_line_translate_world(TOPLEVEL *toplevel,
 			    int dx, int dy, OBJECT *object)
 {
-  if (object == NULL) printf("ltw NO!\n");
-
   /* Update world coords */
   object->line->x[0] = object->line->x[0] + dx;
   object->line->y[0] = object->line->y[0] + dy;
@@ -1139,8 +1137,6 @@ void o_line_print_phantom(TOPLEVEL *toplevel, FILE *fp,
 void o_line_scale_world(TOPLEVEL *toplevel, int x_scale, int y_scale,
 			OBJECT *object)
 {
-  if (object == NULL) printf("lsw NO!\n");
-
   /* scale the line world coords */
   object->line->x[0] = object->line->x[0] * x_scale;
   object->line->y[0] = object->line->y[0] * y_scale;

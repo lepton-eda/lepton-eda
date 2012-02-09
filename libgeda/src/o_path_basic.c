@@ -481,7 +481,7 @@ void o_path_mirror_world (TOPLEVEL *toplevel, int world_centerx,
  */
 void o_path_recalc (TOPLEVEL *toplevel, OBJECT *o_current)
 {
-  int left, right, top, bottom;
+  int left = 0, right = 0, top = 0, bottom = 0;
 
   g_return_if_fail (o_current->path != NULL);
 

@@ -136,10 +136,10 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
     } while (finished == 0);
 
     /* Decode the picture */
-    file_content = s_encoding_base64_decode(encoded_picture->str,
-                                            encoded_picture->len,
-                                            &file_length);
     if (encoded_picture != NULL) {
+      file_content = s_encoding_base64_decode(encoded_picture->str,
+                                              encoded_picture->len,
+                                              &file_length);
       g_string_free (encoded_picture, TRUE);
     }
 
@@ -692,8 +692,6 @@ void o_picture_mirror_world(TOPLEVEL *toplevel,
 void o_picture_translate_world(TOPLEVEL *toplevel,
 			       int dx, int dy, OBJECT *object)
 {
-  if (object == NULL) printf("btw NO!\n");
-
   /* Do world coords */
   object->picture->upper_x = object->picture->upper_x + dx;
   object->picture->upper_y = object->picture->upper_y + dy;
@@ -881,11 +879,11 @@ void o_picture_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
   if (image == NULL) {
     int line_width = (toplevel->line_style == THICK) ? LINE_WIDTH : 2;
     o_box_print_solid (toplevel, fp, x1, y1, width, height,
-                       DEFAULT_COLOR, line_width, SQUARE_CAP, -1, -1, -1, -1);
-    o_line_print_solid (toplevel, fp, x1, y1, x1+width, y1+height,
-                        DEFAULT_COLOR, line_width, ROUND_CAP, -1, -1, -1, -1);
-    o_line_print_solid (toplevel, fp, x1+width, y1, x1, y1+height,
-                        DEFAULT_COLOR, line_width, ROUND_CAP, -1, -1, -1, -1);
+                       DEFAULT_COLOR, line_width, SQUARE_CAP, -1, -1, -1);
+    o_line_print_solid (toplevel, fp, x1, y1, x1+width, y1-height,
+                        DEFAULT_COLOR, line_width, ROUND_CAP, -1, -1, -1);
+    o_line_print_solid (toplevel, fp, x1+width, y1, x1, y1-height,
+                        DEFAULT_COLOR, line_width, ROUND_CAP, -1, -1, -1);
     return;
   }
 

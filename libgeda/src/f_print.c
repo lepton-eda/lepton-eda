@@ -107,7 +107,7 @@ int f_print_header(TOPLEVEL *toplevel, PAGE *page, FILE *fp,
 		   int paper_size_x, int paper_size_y, int eps, gboolean landscape)
 {
   char *buf = NULL;
-  FILE *prolog;
+  FILE *prolog = NULL;
   size_t bytes;
   int llx,lly,urx,ury;
   time_t current_time,time_rc;
@@ -195,10 +195,14 @@ int f_print_header(TOPLEVEL *toplevel, PAGE *page, FILE *fp,
 	  "%%%%Page: 1 1\n");     /* Just name it `page 1' for now */
   
 
+  fclose (prolog);
   return 0;
 
  f_print_header_fail:
   s_log_message (_("Giving up on printing\n"));
+  if (prolog != NULL) {
+    fclose (prolog);
+  }
   g_free (buf); /* g_free() succeeds if argument is NULL */
   return -1;
 }

@@ -375,8 +375,6 @@ char *o_circle_save(TOPLEVEL *toplevel, OBJECT *object)
 void o_circle_translate_world(TOPLEVEL *toplevel,
 			      int dx, int dy, OBJECT *object)
 {
-  if (object == NULL) printf("ctw NO!\n");
-
   /* Do world coords */
   object->circle->center_x = object->circle->center_x + dx;
   object->circle->center_y = object->circle->center_y + dy;

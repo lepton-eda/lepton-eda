@@ -234,9 +234,6 @@ char *o_pin_save(TOPLEVEL *toplevel, OBJECT *object)
  */
 void o_pin_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
 {
-  if (object == NULL) printf("ptw NO!\n");
-
-
   /* Update world coords */
   object->line->x[0] = object->line->x[0] + dx;
   object->line->y[0] = object->line->y[0] + dy;

@@ -214,9 +214,6 @@ char *o_net_save(TOPLEVEL *toplevel, OBJECT *object)
 void o_net_translate_world(TOPLEVEL *toplevel, int dx, int dy,
 			   OBJECT *object)
 {
-  if (object == NULL)
-    printf("ntw NO!\n");
-
   /* Update world coords */
   object->line->x[0] = object->line->x[0] + dx;
   object->line->y[0] = object->line->y[0] + dy;

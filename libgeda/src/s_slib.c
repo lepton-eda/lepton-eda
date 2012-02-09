@@ -148,11 +148,6 @@ char *s_slib_search_dirs(const char *basename)
 
   }
 
-  if (ptr) {
-    closedir(ptr);
-    ptr = NULL;
-  }
-
   return(NULL);
 }
 
@@ -496,15 +491,13 @@ char *s_slib_getfiles(char *directory, int flag)
           break;
         }	
 
-        if (dptr->d_name != NULL) {
-          /* hack */
-          if (count < 256) {
+        /* hack */
+        if (count < 256) {
 
-            whole_dir[count] = g_strdup (dptr->d_name);
-            count++;
-          } else {
-            g_error ("uggg. too many files in s_slib_getfiles!\n");
-          }
+          whole_dir[count] = g_strdup (dptr->d_name);
+          count++;
+        } else {
+          g_error ("uggg. too many files in s_slib_getfiles!\n");
         }
 
         dptr = readdir(ptr);
