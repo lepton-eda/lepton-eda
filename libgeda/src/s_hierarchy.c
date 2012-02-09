@@ -116,6 +116,9 @@ s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename,
       f_open (toplevel, found, found->page_filename, NULL);
     }
     break;
+
+  default:
+    g_return_val_if_reached (NULL);
   }
 
   if (page_control == 0) {
