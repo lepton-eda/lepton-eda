@@ -189,7 +189,12 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
 #endif
 
     u_current = toplevel->page_current->undo_bottom;
-    while(u_current && levels > 0) {
+
+    while (levels > 0) {
+      /* Because we use a pad you are always guaranteed to never */
+      /* exhaust the list */
+      g_assert (u_current != NULL);
+
       u_current_next = u_current->next;
 
       if (u_current->filename) {
@@ -213,8 +218,7 @@ void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
       levels--;
     }
 
-    /* Because we use a pad you are always garanteed to never */
-    /* exhaust the list */
+    g_assert (u_current != NULL);
     u_current->prev = NULL;
     toplevel->page_current->undo_bottom = u_current;
 
