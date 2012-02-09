@@ -148,11 +148,6 @@ char *s_slib_search_dirs(const char *basename)
 
   }
 
-  if (ptr) {
-    closedir(ptr);
-    ptr = NULL;
-  }
-
   return(NULL);
 }
 
