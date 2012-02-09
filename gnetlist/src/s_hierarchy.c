@@ -515,6 +515,7 @@ char *s_hierarchy_create_netattrib(TOPLEVEL * pr_current, char *basename,
 		case (APPEND):
 		    return_value =
 			g_strconcat (hierarchy_tag, basename, NULL);
+                    break;
 		case (PREPEND):
 		    return_value =
 			g_strconcat (basename, hierarchy_tag, NULL);
