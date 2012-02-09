@@ -136,10 +136,10 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
     } while (finished == 0);
 
     /* Decode the picture */
-    file_content = s_encoding_base64_decode(encoded_picture->str,
-                                            encoded_picture->len,
-                                            &file_length);
     if (encoded_picture != NULL) {
+      file_content = s_encoding_base64_decode(encoded_picture->str,
+                                              encoded_picture->len,
+                                              &file_length);
       g_string_free (encoded_picture, TRUE);
     }
 

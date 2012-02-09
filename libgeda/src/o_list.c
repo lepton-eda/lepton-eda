@@ -49,6 +49,9 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
 {
   OBJECT *new_obj;
 
+  g_return_val_if_fail (toplevel != NULL, NULL);
+  g_return_val_if_fail (selected != NULL, NULL);
+
   switch(selected->type) {
 
     case(OBJ_LINE):
