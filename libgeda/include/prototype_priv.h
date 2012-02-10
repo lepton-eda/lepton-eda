@@ -98,6 +98,7 @@ double o_shortest_distance_full(OBJECT *object, int x, int y, int force_solid);
 PAGE *o_get_page_compat (TOPLEVEL *toplevel, OBJECT *object) G_GNUC_DEPRECATED;
 void o_emit_pre_change_notify(TOPLEVEL *toplevel, OBJECT *object);
 void o_emit_change_notify(TOPLEVEL *toplevel, OBJECT *object);
+int o_get_capstyle (OBJECT_END end);
 
 /* o_box_basic.c */
 OBJECT *o_box_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);

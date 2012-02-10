@@ -115,6 +115,7 @@ void o_add_change_notify(TOPLEVEL *toplevel, ChangeNotifyFunc pre_change_func, C
 void o_remove_change_notify(TOPLEVEL *toplevel, ChangeNotifyFunc pre_change_func, ChangeNotifyFunc change_func, void *user_data);
 gboolean o_is_visible (TOPLEVEL *toplevel, OBJECT *object);
 void o_set_visibility (TOPLEVEL *toplevel, OBJECT *object, int visibility);
+OBJECT_END o_get_line_end (int capstyle);
 
 /* o_box_basic.c */
 OBJECT *o_box_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
