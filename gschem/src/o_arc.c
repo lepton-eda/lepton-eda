@@ -292,9 +292,9 @@ void o_arc_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
       if (w_current->second_wy == 0)
         w_current->second_wy = 360;
       break;
-	
-    default:
-      return;
+      
+      // No default required - one of above two branches
+      // *must* be taken - Coverity ID 201571
     }
 
   }
