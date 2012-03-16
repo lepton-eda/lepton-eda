@@ -90,7 +90,7 @@ s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename,
              forbear = s_page_search_by_page_id (toplevel->pages, forbear->up))
           ; /* void */
 
-        if (found->pid == forbear->pid) {
+        if (forbear != NULL && found->pid == forbear->pid) {
           s_log_message(_("hierarchy loop detected while visiting page:\n"
                           "  \"%s\"\n"), found->page_filename);
           return NULL;  /* error signal */
