@@ -219,35 +219,23 @@ gchar *s_encoding_base64_decode (gchar* src, guint srclen, guint* dstlenp)
       switch (state) 
 	{
 	case 0:
-	  if (dst != NULL) 
-	    {
-	      dst[dstidx] = (pos << 2);
-	    }
+	  dst[dstidx] = (pos << 2);
 	  state = 1;
 	  break;
 	case 1:
-	  if (dst != NULL) 
-	    {
-	      dst[dstidx] |= (pos >> 4);
-	      res = ((pos & 0x0f) << 4);
-	    }
+	  dst[dstidx] |= (pos >> 4);
+	  res = ((pos & 0x0f) << 4);
 	  dstidx++;
 	  state = 2;
 	  break;
 	case 2:
-	  if (dst != NULL) 
-	    {
-	      dst[dstidx] = res | (pos >> 2);
-	      res = (pos & 0x03) << 6;
-	    }
+	  dst[dstidx] = res | (pos >> 2);
+	  res = (pos & 0x03) << 6;
 	  dstidx++;
 	  state = 3;
 	  break;
 	case 3:
-	  if (dst != NULL) 
-	    {
-	      dst[dstidx] = res | pos;
-	    }
+	  dst[dstidx] = res | pos;
 	  dstidx++;
 	  state = 0;
 	  break;
@@ -305,7 +293,7 @@ gchar *s_encoding_base64_decode (gchar* src, guint srclen, guint* dstlenp)
                                  * zeros.  If we don't check them, they become a
                                  * subliminal channel.
                                  */
-	  if (dst != NULL && res != 0) 
+	  if (res != 0)
 	    {
 	      g_free(dst);
 	      *dstlenp = 0;
