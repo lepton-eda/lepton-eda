@@ -1037,7 +1037,7 @@
 	 ;; Make gnetlist return an error if there are DRC errors.
 	 ;; If there are only warnings and it's in quiet mode, then
 	 ;; do not return an error.
-	 (if (> errors_number 0)
+	 (if (and (not (string=? "-" output-filename)) (> errors_number 0))
 	     (begin (display "DRC errors found. See output file.")
                     (newline))
 	     (if (> warnings_number 0)
