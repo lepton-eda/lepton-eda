@@ -121,6 +121,7 @@
 
 (define error-count 0)
 
+
 ;; Printing a diagnostic, incrementing error-count, and returning
 ;; an empty string is a common operation in the code below.
 ;; (The empty string generally winds up in a required field, so
@@ -300,6 +301,36 @@
             ((equal? right "pinseq") (all-by-pinseq refdes))
             ((equal? right "io") (all-spice-io)))))
 
+;; get nets attached to io pins
+
+(define (all-spice-io)
+    (string-join
+        (map (lambda (p) (get-net p "1"))
+	    (sort-io (io-pins))) 
+	" "))
+
+;; string->number, ignoring non-numeric chars
+
+(define (numeric->number s) (string->number (string-filter s char-numeric?)))
+
+;; Make a list of (number . refdes) pairs
+
+(define (number-packages lp) 
+    (map (lambda (p) (cons (numeric->number p)  p)) lp))
+
+;; Sort a list of refdes by their numeric parts  
+
+(define (sort-io p)
+    (map cdr (sort (number-packages p) 
+       (lambda (p1 p2) (< (car p1) (car p2))))))
+
+;; find subcircuit IO pin symbols
+
+(define (io-pins)
+    (filter
+    	(lambda (p) 
+	    (equal? "spice-IO" 
+	        (gnetlist:get-package-attribute p "device"))) packages ))
 
 ;; get all net connections in pinseq order
 
@@ -366,6 +397,7 @@
 (spice-device "PNP_TRANSISTOR" "Q? %pinseq model-name@ spice-args@ ic= temp=")
 (spice-device "NPN_TRANSISTOR" "Q? %pinseq model-name@ spice-args@ ic= temp=")
 (spice-device "spice-subcircuit-LL" ".SUBCKT model-name@ %io")
+(spice-device "spice-IO" "*")
 (spice-device "SPICE-VC-switch" "S? %pinseq model-name@ value@")
 (spice-device "T-line" "T? %pinseq value@")
 (spice-device "vac" "V? %pinseq value@")
