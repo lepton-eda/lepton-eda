@@ -62,13 +62,56 @@ void o_delete_selected (GSCHEM_TOPLEVEL *w_current)
   SELECTION *selection = toplevel->page_current->selection_list;
   GList *to_remove;
   GList *iter;
+  OBJECT *obj;
+  unsigned int locked_num = 0;
 
   g_return_if_fail (o_select_selected (w_current));
 
   to_remove = g_list_copy (geda_list_get_glist (selection));
 
   for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *obj = (OBJECT *) iter->data;
+    obj = (OBJECT *) iter->data;
+    if (obj->selectable == FALSE)
+      locked_num++;
+  }
+
+  if (locked_num > 0) {
+    GList *non_locked = NULL;
+    gint resp;
+    GtkWidget *dialog = gtk_message_dialog_new (NULL,
+        GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+        GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE,
+        ngettext ("Delete locked object?", "Delete %u locked objects?",
+          locked_num), locked_num);
+    gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+        GTK_STOCK_YES, GTK_RESPONSE_YES,
+        GTK_STOCK_NO, GTK_RESPONSE_NO, NULL);
+    gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_NO);
+
+    resp = gtk_dialog_run (GTK_DIALOG (dialog));
+    gtk_widget_destroy (dialog);
+
+    switch (resp) {
+    case GTK_RESPONSE_YES:  /* Remove all */
+      break;
+    case GTK_RESPONSE_NO:   /* Remove non locked */
+      for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
+        obj = (OBJECT *) iter->data;
+        if (obj->selectable == TRUE)
+          non_locked = g_list_append (non_locked, iter->data);
+      }
+      g_list_free (to_remove);
+      to_remove = non_locked;
+      break;
+    default:                /* Cancel */
+      g_list_free (to_remove);
+      return;
+    }
+  }
+
+  for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
+    obj = (OBJECT *) iter->data;
     o_selection_remove (toplevel, selection, obj);
     s_page_remove (toplevel, toplevel->page_current, obj);
   }
@@ -76,7 +119,8 @@ void o_delete_selected (GSCHEM_TOPLEVEL *w_current)
   g_run_hook_object_list (w_current, "%remove-objects-hook", to_remove);
 
   for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
-    s_delete_object (toplevel, (OBJECT *) iter->data);
+    obj = (OBJECT *) iter->data;
+    s_delete_object (toplevel, obj);
   }
 
   g_list_free (to_remove);
