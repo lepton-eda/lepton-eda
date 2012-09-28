@@ -41,6 +41,12 @@ char*
 print_settings_get_font(const PrintSettings *settings);
 
 double
+print_settings_get_junction_size_bus(const PrintSettings *settings);
+
+double
+print_settings_get_junction_size_net(const PrintSettings *settings);
+
+double
 print_settings_get_page_align_horizontal(const PrintSettings *settings);
 
 double
@@ -84,6 +90,12 @@ print_settings_new();
 
 void
 print_settings_set_font(PrintSettings *settings, const char* string);
+
+void
+print_settings_set_junction_size_bus(PrintSettings *settings, double size);
+
+void
+print_settings_set_junction_size_net(PrintSettings *settings, double size);
 
 void
 print_settings_set_page_align_horizontal(PrintSettings *settings, double align);

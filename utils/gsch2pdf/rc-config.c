@@ -58,6 +58,21 @@ static SCM rc_config_font(SCM string)
 }
 
 
+static SCM rc_config_junction_size_bus(SCM size)
+{
+  print_settings_set_junction_size_bus(settings, scm_to_double(size));
+
+  return SCM_BOOL_T;
+}
+
+
+static SCM rc_config_junction_size_net(SCM size)
+{
+  print_settings_set_junction_size_net(settings, scm_to_double(size));
+
+  return SCM_BOOL_T;
+}
+
 
 static SCM rc_config_output_orientation(SCM orientation)
 {
@@ -115,6 +130,8 @@ static SCM rc_config_paper_size(SCM width, SCM height)
 void rc_config_init()
 {
   scm_c_define_gsubr("font", 1, 0, 0, rc_config_font);
+  scm_c_define_gsubr("junction-size-bus", 1, 0, 0, rc_config_junction_size_bus);
+  scm_c_define_gsubr("junction-size-net", 1, 0, 0, rc_config_junction_size_net);
   scm_c_define_gsubr("output-orientation", 1, 0, 0, rc_config_output_orientation);
   scm_c_define_gsubr("page-align", 2, 0, 0, rc_config_page_align);
   scm_c_define_gsubr("page-margins", 4, 0, 0, rc_config_page_margins);

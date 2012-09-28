@@ -57,6 +57,9 @@ struct PrintSettings
 
 	char             *font_string;
 
+        double           junction_size_bus;
+        double           junction_size_net;
+
 	PrintOrientation orientation;
 };
 
@@ -79,6 +82,42 @@ print_settings_get_font(const PrintSettings *settings)
   return string;
 }
 
+
+
+/*! \brief Get the diameter of a junction used for a bus
+ *
+ *  \param [in] settings The settings containing the junction size
+ *  \return The junction size for busses
+ */
+double
+print_settings_get_junction_size_bus(const PrintSettings *settings)
+{
+  double size = JUNCTION_CUE_SIZE_BUS;
+
+  if (settings != NULL) {
+    size = settings->junction_size_bus;
+  }
+
+  return size;
+}
+
+
+/*! \brief Get the diameter of a junction used for nets
+ *
+ *  \param [in] settings The settings containing the junction size
+ *  \return The junction size for nets
+ */
+double
+print_settings_get_junction_size_net(const PrintSettings *settings)
+{
+  double size = JUNCTION_CUE_SIZE_NET;
+
+  if (settings != NULL) {
+    size = settings->junction_size_net;
+  }
+
+  return size;
+}
 
 
 /*! \brief Get the horizontal alignment
@@ -406,6 +445,11 @@ print_settings_new()
   settings->align_horizontal = 0.5;
   settings->align_vertical = 0.5;
 
+  settings->orientation = PRINT_ORIENTATION_LANDSCAPE;
+
+  settings->junction_size_bus = JUNCTION_CUE_SIZE_BUS;
+  settings->junction_size_net = JUNCTION_CUE_SIZE_NET;
+
   return settings;
 }
 
@@ -424,6 +468,43 @@ print_settings_set_font(PrintSettings *settings, const char *string)
       g_free(settings->font_string);
     }
     settings->font_string = g_strdup(string);
+  }
+}
+
+
+
+/*! \brief Set the diameter of a junction used for a bus
+ *
+ *  \param [in,out] settings The settings containing the junction size
+ *  \param [in] size The junction size for busses
+ */
+void
+print_settings_set_junction_size_bus(PrintSettings *settings, double size)
+{
+  if (settings != NULL) {
+    if (size > 0.0) {
+      settings->junction_size_bus = size;
+    } else {
+      settings->junction_size_bus = 0.0;
+    }
+  }
+}
+
+
+/*! \brief Set the diameter of a junction used for nets
+ *
+ *  \param [in,out] settings The settings containing the junction size
+ *  \param [in] size The junction size for nets
+ */
+void
+print_settings_set_junction_size_net(PrintSettings *settings, double size)
+{
+  if (settings != NULL) {
+    if (size > 0.0) {
+      settings->junction_size_net = size;
+    } else {
+      settings->junction_size_net = 0.0;
+    }
   }
 }
 

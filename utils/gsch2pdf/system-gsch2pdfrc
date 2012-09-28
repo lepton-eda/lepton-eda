@@ -79,3 +79,16 @@
 ;(font "Arial")
 ;(font "Arial Narrow")
 ;(font "Helvetica")
+
+; junction-size-bus size
+;
+; Set the diameter of the dot used to indicate junctions on a bus
+;
+(junction-size-bus 50.0)
+
+
+; junction-size-net size
+;
+; Set the diameter of the dot used to indicate junctions on a net
+;
+(junction-size-net 30.0)
