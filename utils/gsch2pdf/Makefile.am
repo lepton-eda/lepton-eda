@@ -9,6 +9,7 @@ rcdata_DATA = system-gsch2pdfrc
 # don't forget all *.h files */
 gsch2pdf_SOURCES = \
 	main.c \
+	junction.c \
 	rc-config.c \
 	print-settings.c
 

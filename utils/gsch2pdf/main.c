@@ -45,6 +45,7 @@
 #include <pango/pangocairo.h>
 #include <cairo-pdf.h>
 
+#include "junction.h"
 #include "print-settings.h"
 #include "rc-config.h"
 
@@ -187,7 +188,6 @@ static void print_box(TOPLEVEL *current, cairo_t *cairo, OBJECT *object)
 
 static void print_bus(TOPLEVEL *current, cairo_t *cairo, OBJECT *object)
 {
-    printf("Bus\n");
 
     cairo_set_line_width(
         cairo,
@@ -295,6 +295,32 @@ static void print_complex(TOPLEVEL *current, cairo_t *cairo, OBJECT *object)
 }
 
 
+static void print_junctions(TOPLEVEL *current, cairo_t *cairo, const GArray *junctions)
+{
+    int index;
+
+    cairo_set_source_rgb(
+        cairo,
+        0.0,
+        0.0,
+        0.0
+        );
+
+  for (index=0; index<junctions->len; index++) {
+    sPOINT junction = g_array_index(junctions, sPOINT ,index);
+
+    cairo_arc(
+         cairo,
+         junction.x,
+         junction.y,
+         print_settings_get_junction_size_net(print_settings),
+         0,
+         2 * M_PI
+         );
+
+    cairo_fill(cairo);
+  }
+}
 
 static void print_line(TOPLEVEL *current, cairo_t *cairo, OBJECT *object)
 {
@@ -806,6 +832,14 @@ static void print_page(TOPLEVEL *current, cairo_t *cairo, PAGE *page)
         );
 
     print_object_list(current, cairo, list);
+
+    GArray *junctions = g_array_new(FALSE, FALSE, sizeof(sPOINT));
+    
+    junction_locate(current, list, junctions, NULL);
+
+    print_junctions(current, cairo, junctions);
+
+    g_array_free(junctions, TRUE);
 
     cairo_restore(cairo);
 }
