@@ -850,6 +850,9 @@ static void main2(void *closure, int argc, char *argv[])
 {
     TOPLEVEL *current;
     int i;
+    cairo_surface_t *surface = NULL;
+    cairo_t *cairo = NULL;
+    gboolean need_cairo_init = TRUE;
 
     print_settings = print_settings_new();
 
@@ -866,19 +869,26 @@ static void main2(void *closure, int argc, char *argv[])
 
     i_vars_libgeda_set(current);
 
-    cairo_surface_t *surface = cairo_pdf_surface_create(
-        "output.pdf",
-        72.0 * print_settings_get_page_width(print_settings),
-        72.0 * print_settings_get_page_height(print_settings)
-        );
-
-    cairo_t *cairo = cairo_create(surface);
-
     for (i=1; i<argc; i++)
     {
         PAGE *page = s_page_new(current, argv[i]);
 
         int success = f_open(current, page, argv[i], NULL);
+
+        if (success && need_cairo_init)
+        {
+            surface =
+              cairo_pdf_surface_create("output.pdf",
+                                       72.0 * print_settings_get_page_width(print_settings),
+                                       72.0 * print_settings_get_page_height(print_settings)
+                                      );
+
+            cairo = cairo_create(surface);
+
+            cairo_surface_destroy(surface);
+
+            need_cairo_init = FALSE;
+        }
 
         if (success)
         {
@@ -896,9 +906,6 @@ static void main2(void *closure, int argc, char *argv[])
     s_slib_free();
 
     cairo_destroy(cairo);
-
-    cairo_surface_flush(surface);
-    cairo_surface_destroy(surface);
 
     rc_config_set_print_settings(NULL);
 
