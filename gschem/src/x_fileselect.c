@@ -167,6 +167,7 @@ x_fileselect_open(GSCHEM_TOPLEVEL *w_current)
 {
   PAGE *page = NULL;
   GtkWidget *dialog;
+  gchar *cwd;
 
   dialog = gtk_file_chooser_dialog_new (_("Open..."),
                                         GTK_WINDOW(w_current->main_window),
@@ -188,6 +189,10 @@ x_fileselect_open(GSCHEM_TOPLEVEL *w_current)
                 NULL);
   /* add file filters to dialog */
   x_fileselect_setup_filechooser_filters (GTK_FILE_CHOOSER (dialog));
+  /* force start in current working directory, not in 'Recently Used' */
+  cwd = g_get_current_dir ();
+  gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), cwd);
+  g_free (cwd);
   gtk_widget_show (dialog);
   if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_ACCEPT) {
     GSList *tmp, *filenames =
@@ -261,6 +266,10 @@ x_fileselect_save (GSCHEM_TOPLEVEL *w_current)
     gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
                                    toplevel->page_current->page_filename);
   } else {
+    gchar *cwd = g_get_current_dir ();
+    /* force save in current working dir */
+    gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), cwd);
+    g_free (cwd);
     gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog),
                                        "untitled.sch");
   }

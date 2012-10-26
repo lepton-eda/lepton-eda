@@ -84,6 +84,9 @@ PKG_CHECK_MODULES(GDK_PIXBUF, [gdk-pixbuf-2.0 >= 2.16.0], ,
 PKG_CHECK_MODULES(CAIRO, [cairo >= 1.8.0], ,
   AC_MSG_ERROR([CAIRO 1.8.0 or later is required.]))
 
+PKG_CHECK_MODULES(PANGOCAIRO, [pangocairo >= 0.26], ,
+  AC_MSG_ERROR([PANGOCAIRO 0.26 or later is required.]))
+
 #####################################################################
 # Header files & particular functions
 #####################################################################
@@ -247,6 +250,7 @@ AC_CONFIG_FILES([Makefile
                  utils/examples/gmk_sym/Makefile
                  utils/examples/gsch2pcb/Makefile
                  utils/examples/tragesym/Makefile
+                 utils/gsch2pdf/Makefile
                  utils/gschlas/Makefile
                  utils/gxyrs/Makefile
                  utils/include/Makefile

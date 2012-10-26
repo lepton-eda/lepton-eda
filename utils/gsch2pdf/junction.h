@@ -1,5 +1,5 @@
 /* gEDA - GPL Electronic Design Automation
- * gsymcheck - gEDA Symbol Check
+ * libgeda - gEDA's library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
  *
@@ -15,45 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02111-1301 USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#include <config.h>
-
-#include <stdio.h>
-#include <sys/stat.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_ASSERT_H
-#include <assert.h>
-#endif
-#ifdef HAVE_UNISTD_H
-#include <unistd.h> 
-#endif
-
-#include <libgeda/libgeda.h>
-
-#include "../include/struct.h"
-#include "../include/prototype.h"
-
-void
-g_register_funcs(void)
-{
-  /* general functions */
-  scm_c_define_gsubr ("quit", 0, 0, 0, g_quit);
-  scm_c_define_gsubr ("exit", 0, 0, 0, g_quit);
-
-  /* gsymcheckrc functions */
-  scm_c_define_gsubr ("gsymcheck-version", 1, 0, 0, g_rc_gsymcheck_version);
-
-}
-
-SCM
-g_quit(void)
-{
-  gsymcheck_quit();
-  exit(0);
-}
-
+void junction_locate(TOPLEVEL *current, const GList *objects, GArray *junctions, GArray *unconnected);
