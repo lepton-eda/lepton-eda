@@ -33,26 +33,26 @@
 /*! \brief */
 static int page_control_counter=0;
 
-/*! \todo Finish function documentation!!!
+/*!
  *  \brief Search for schematic associated source files and load them.
  *  \par Function Description
  *  This function searches the associated source file refered by the
  *  <B>filename</B> and loads it.  If the <B>flag</B> is set to
- *  <B>HIERARCHY_NORMAL_LOAD</B> and the page is allready in the list of
+ *  <B>HIERARCHY_NORMAL_LOAD</B> and the page is already in the list of
  *  pages it will return the <B>pid</B> of that page.
  *  If the <B>flag</B> is set to <B>HIERARCHY_FORCE_LOAD</B> then this
  *  function will load the page again with a new page id. The second case
  *  is mainly used by gnetlist where pushed down schematics MUST be unique.
  *
- *  \param [in] toplevel     The TOPLEVEL object.
+ *  \param [in] toplevel      The TOPLEVEL object.
  *  \param [in] filename      Schematic file name.
  *  \param [in] parent        The parent page of the schematic.
  *  \param [in] page_control
- *  \param [in] flag
+ *  \param [in] flag          sets whether to force load
  *  \return The page loaded, or NULL if failed.
  *
  *  \note
- *  This function goes and finds the associated source files and
+ *  This function finds the associated source files and
  *  loads all up
  *  It only works for schematic files though
  *  this is basically push
@@ -90,7 +90,7 @@ s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename,
              forbear = s_page_search_by_page_id (toplevel->pages, forbear->up))
           ; /* void */
 
-        if (found->pid == forbear->pid) {
+        if (forbear != NULL && found->pid == forbear->pid) {
           s_log_message(_("hierarchy loop detected while visiting page:\n"
                           "  \"%s\"\n"), found->page_filename);
           return NULL;  /* error signal */
@@ -298,7 +298,7 @@ s_hierarchy_traversepages (TOPLEVEL *toplevel, PAGE *p_current, gint flags)
  *  \par Function Description
  *
  *  \note
- *  Test function which only prints the name of a page and it's number.
+ *  Test function which only prints the name of a page and its number.
  */
 gint
 s_hierarchy_print_page (PAGE *p_current, void * data)

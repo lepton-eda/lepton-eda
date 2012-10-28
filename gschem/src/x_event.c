@@ -1155,10 +1155,16 @@ static void get_snapped_pointer (GSCHEM_TOPLEVEL *w_current, int *wx, int *wy)
   *wy = snap_grid (w_current, unsnapped_wy);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Callback to handle key events in the drawing area.
  *  \par Function Description
  *
+ *  GTK+ callback function (registered in x_window_setup_draw_events() ) which
+ *  handles key press and release events from the GTK+ system.
+ *
+ * \param [in] widget     the widget that generated the event
+ * \param [in] event      the event itself
+ * \param      w_current  the toplevel environment
+ * \returns TRUE if the event has been handled.
  */
 gboolean x_event_key (GtkWidget *widget, GdkEventKey *event,
                       GSCHEM_TOPLEVEL *w_current)
