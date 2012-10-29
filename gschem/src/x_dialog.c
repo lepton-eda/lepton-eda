@@ -898,7 +898,7 @@ void line_type_dialog (GSCHEM_TOPLEVEL *w_current)
   GtkWidget *label;
   struct line_type_data *line_type_data;
   GList *selection;
-  OBJECT_END end;
+  OBJECT_END end=END_NONE;
   OBJECT_TYPE type=TYPE_SOLID;
   gint width=1, length=-1, space=-1;
 
