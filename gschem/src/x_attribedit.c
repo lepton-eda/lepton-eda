@@ -211,7 +211,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GSCHEM_TOPLEVEL *w_current)
               }
             }
             if (!replaced) {
-              new = o_attrib_add_attrib(w_current, newtext, vis, show, object);
+              (void) o_attrib_add_attrib(w_current, newtext, vis, show, object);
             }
           }
         }
