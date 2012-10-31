@@ -716,11 +716,11 @@ static void multiattrib_action_promote_attribute (GSCHEM_TOPLEVEL *w_current,
 
   if (o_is_visible (toplevel, o_attrib)) {
     /* If the attribute we're promoting is visible, don't clone its location */
-    o_new = o_attrib_add_attrib (w_current,
-                                 o_text_get_string (w_current->toplevel, o_attrib),
-                                 VISIBLE,
-                                 o_attrib->show_name_value,
-                                 object);
+    (void) o_attrib_add_attrib (w_current,
+				o_text_get_string (w_current->toplevel, o_attrib),
+				VISIBLE,
+				o_attrib->show_name_value,
+				object);
   } else {
       /* make a copy of the attribute object */
       o_new = o_object_copy (toplevel, o_attrib);
