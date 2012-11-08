@@ -806,12 +806,15 @@ static void line_type_dialog_ok(GtkWidget *w, gpointer data)
     type = -1;
   
   /* convert the options to integers (-1 means unchanged) */
-  width =  g_strcasecmp (width_str,
-                         _("*unchanged*")) ? atoi (width_str)  : -1;
-  length = g_strcasecmp (length_str,
-                         _("*unchanged*")) ? atoi (length_str) : -1;
-  space  = g_strcasecmp (space_str,
-                         _("*unchanged*")) ? atoi (space_str)  : -1;
+  width =  g_utf8_collate (g_utf8_casefold (width_str, -1),
+                           g_utf8_casefold (_("*unchanged*"), -1))
+    ? atoi (width_str)  : -1;
+  length = g_utf8_collate (g_utf8_casefold (length_str, -1),
+                           g_utf8_casefold (_("*unchanged*"), -1))
+    ? atoi (length_str) : -1;
+  space  = g_utf8_collate (g_utf8_casefold (space_str, -1),
+                           g_utf8_casefold (_("*unchanged*"), -1))
+    ? atoi (space_str)  : -1;
 
   for (iter = selection; iter != NULL; iter = g_list_next(iter)) {
     object = (OBJECT *) iter->data;
@@ -1288,16 +1291,21 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
     type = -1;
 
   /* convert the options to integers (-1 means unchanged) */
-  width  = g_strcasecmp (width_str,
-                         _("*unchanged*")) ? atoi (width_str)  : -1;
-  angle1 = g_strcasecmp (angle1_str,
-                         _("*unchanged*")) ? atoi (angle1_str) : -1;
-  pitch1 = g_strcasecmp (pitch1_str,
-                         _("*unchanged*")) ? atoi (pitch1_str) : -1;
-  angle2 = g_strcasecmp (angle2_str,
-                         _("*unchanged*")) ? atoi (angle2_str) : -1;
-  pitch2 = g_strcasecmp (pitch2_str,
-                         _("*unchanged*")) ? atoi (pitch2_str) : -1;
+  width  = g_utf8_collate (g_utf8_casefold (width_str, -1),
+                           g_utf8_casefold(_("*unchanged*"), -1))
+    ? atoi (width_str)  : -1;
+  angle1 = g_utf8_collate (g_utf8_casefold (angle1_str, -1),
+                           g_utf8_casefold (_("*unchanged*"), -1))
+    ? atoi (angle1_str) : -1;
+  pitch1 = g_utf8_collate (g_utf8_casefold (pitch1_str, -1),
+                           g_utf8_casefold (_("*unchanged*"), -1))
+    ? atoi (pitch1_str) : -1;
+  angle2 = g_utf8_collate (g_utf8_casefold (angle2_str, -1),
+                           g_utf8_casefold (_("*unchanged*"), -1))
+    ? atoi (angle2_str) : -1;
+  pitch2 = g_utf8_collate (g_utf8_casefold (pitch2_str, -1),
+                           g_utf8_casefold(_("*unchanged*"), -1))
+    ? atoi (pitch2_str) : -1;
 
   for (iter = selection; iter != NULL; iter = g_list_next(iter)) {
     object = (OBJECT *) iter->data;

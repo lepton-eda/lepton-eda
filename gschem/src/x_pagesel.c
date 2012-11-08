@@ -268,7 +268,7 @@ static void pagesel_popup_menu (Pagesel *pagesel,
   menu = gtk_menu_new();
   for (tmp = menuitems; tmp->label != NULL; tmp++) {
     GtkWidget *menuitem;
-    if (g_strcasecmp (tmp->label, "-") == 0) {
+    if (g_utf8_collate (tmp->label, "-") == 0) {
       menuitem = gtk_separator_menu_item_new ();
     } else {
       menuitem = gtk_menu_item_new_with_label (_(tmp->label));
