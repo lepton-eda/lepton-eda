@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-19 18:45+0000\n"
+"POT-Creation-Date: 2012-11-13 16:09+0000\n"
 "PO-Revision-Date: 2010-02-06 22:09+0000\n"
 "Last-Translator: Jarosław Ogrodnik <nobodythere@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -52,7 +52,7 @@ msgstr "o_save_objects: objekt %p jest nieznanego typu '%c'\n"
 msgid "File %s is read-only"
 msgstr ""
 
-#: libgeda/src/a_basic.c:427
+#: libgeda/src/a_basic.c:423
 #, fuzzy, c-format
 msgid ""
 "Read unexpected attach symbol start marker in [%s] :\n"
@@ -63,7 +63,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: libgeda/src/a_basic.c:446
+#: libgeda/src/a_basic.c:442
 #, c-format
 msgid ""
 "Read unexpected embedded symbol start marker in [%s] :\n"
@@ -74,7 +74,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: libgeda/src/a_basic.c:477
+#: libgeda/src/a_basic.c:473
 #, c-format
 msgid ""
 "Read unexpected embedded symbol end marker in [%s] :\n"
@@ -85,7 +85,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: libgeda/src/a_basic.c:512
+#: libgeda/src/a_basic.c:508
 #, c-format
 msgid ""
 "Read an old format sym/sch file!\n"
@@ -96,7 +96,7 @@ msgstr ""
 "Uruchom program gsymupdate/gschemupdate na pliku:\n"
 "[%s]\n"
 
-#: libgeda/src/a_basic.c:518
+#: libgeda/src/a_basic.c:514
 #, c-format
 msgid ""
 "Read garbage in [%s] :\n"
@@ -212,21 +212,21 @@ msgid ""
 msgstr ""
 "Błąd w trakcie zapisu pliku wyjściowego postscript w f_print_header()\n"
 
-#: libgeda/src/f_print.c:201
+#: libgeda/src/f_print.c:202
 msgid "Giving up on printing\n"
 msgstr "Drukowanie nie powiodło się\n"
 
-#: libgeda/src/f_print.c:371
+#: libgeda/src/f_print.c:375
 #, c-format
 msgid "Could not open [%s] for printing\n"
 msgstr "Nie można otworzyć [%s] do wydruku\n"
 
-#: libgeda/src/f_print.c:405
+#: libgeda/src/f_print.c:409
 #, c-format
 msgid "Could not execute command [%s] for printing\n"
 msgstr "Nie można wykonać komendy [%s] do wydruku\n"
 
-#: libgeda/src/f_print.c:678
+#: libgeda/src/f_print.c:682
 msgid "Too many UTF-8 characters, cannot print\n"
 msgstr "Błąd drukowania: zbyt wiele znaków w kodowaniu UTF-8\n"
 
@@ -587,37 +587,37 @@ msgstr "Błąd odczytu obrazka z pliku [%s]: %s\n"
 msgid "Picture %p has invalid angle %i\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:959
+#: libgeda/src/o_picture.c:957
 #, fuzzy, c-format
 msgid "Picture [%s] has no image data.\n"
 msgstr "Obrazek [%s] został osadzony\n"
 
-#: libgeda/src/o_picture.c:960
+#: libgeda/src/o_picture.c:958
 #, fuzzy
 msgid "Falling back to file loading. Picture is still unembedded.\n"
 msgstr "Spróbuję odczytać obrazek z pliku. Obrazek nie będzie osadzony.\n"
 
-#: libgeda/src/o_picture.c:968
+#: libgeda/src/o_picture.c:966
 #, c-format
 msgid "Picture [%s] has been embedded\n"
 msgstr "Obrazek [%s] został osadzony\n"
 
-#: libgeda/src/o_picture.c:992
+#: libgeda/src/o_picture.c:990
 #, c-format
 msgid "Failed to load image from file [%s]: %s\n"
 msgstr "Błąd odczytu obrazka z pliku [%s]: %s\n"
 
-#: libgeda/src/o_picture.c:994
+#: libgeda/src/o_picture.c:992
 #, fuzzy
 msgid "Picture is still embedded.\n"
 msgstr "Obrazek [%s] został osadzony\n"
 
-#: libgeda/src/o_picture.c:1002
+#: libgeda/src/o_picture.c:1000
 #, c-format
 msgid "Picture [%s] has been unembedded\n"
 msgstr "Obrazek [%s] nie jest już osadzony\n"
 
-#: libgeda/src/o_picture.c:1238
+#: libgeda/src/o_picture.c:1236
 #, fuzzy, c-format
 msgid "Failed to load fallback image %s: %s.\n"
 msgstr "Błąd odczytu obrazka z pliku [%s]: %s\n"
@@ -780,11 +780,11 @@ msgstr ""
 "wykryto cykl w hierarchii podczas odczytu strony:\n"
 "  \"%s\"\n"
 
-#: libgeda/src/s_hierarchy.c:187
+#: libgeda/src/s_hierarchy.c:194
 msgid "There are no schematics above the current one!\n"
 msgstr "Jesteś już na szczycie hierarchii schematów!\n"
 
-#: libgeda/src/s_hierarchy.c:267
+#: libgeda/src/s_hierarchy.c:274
 #, c-format
 msgid "ERROR in s_hierarchy_traverse: schematic not found: %s\n"
 msgstr "BŁĄD w s_hierarchy_traverse: nie odnaleziono schematu: %s\n"
@@ -809,12 +809,12 @@ msgstr "Zapisano [%s]\n"
 msgid "Could NOT save [%s]\n"
 msgstr "Nie można zapisać [%s]\n"
 
-#: libgeda/src/s_slib.c:176
+#: libgeda/src/s_slib.c:171
 #, c-format
 msgid "Found [%s]\n"
 msgstr "Odnaleziono [%s]\n"
 
-#: libgeda/src/s_slib.c:186
+#: libgeda/src/s_slib.c:181
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr "Nie odnaleziono [%s] in w żadnej bibliotece\n"

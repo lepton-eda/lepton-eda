@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-19 18:45+0000\n"
-"PO-Revision-Date: 2010-02-06 22:09+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-11-13 16:09+0000\n"
+"PO-Revision-Date: 2012-10-22 13:10+0000\n"
+"Last-Translator: Patrick Fiquet <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
+"X-Generator: Launchpad (build 16265)\n"
 
 #: libgeda/data/libgeda.xml.in:3
 msgid "gEDA circuit schematic"
@@ -50,20 +50,17 @@ msgstr "o_save_objects: l'objet %p a un type '%c' inconnu\n"
 #: libgeda/src/a_basic.c:238 libgeda/src/f_basic.c:384
 #, c-format
 msgid "File %s is read-only"
-msgstr ""
+msgstr "Le fichier %s est en lecture seule"
 
-#: libgeda/src/a_basic.c:427
-#, fuzzy, c-format
+#: libgeda/src/a_basic.c:423
+#, c-format
 msgid ""
 "Read unexpected attach symbol start marker in [%s] :\n"
 ">>\n"
 "%s<<\n"
 msgstr ""
-"Lecture d'un marqueur imprévu de début de symbole embarqué dans [%s] :\n"
-">>\n"
-"%s<<\n"
 
-#: libgeda/src/a_basic.c:446
+#: libgeda/src/a_basic.c:442
 #, c-format
 msgid ""
 "Read unexpected embedded symbol start marker in [%s] :\n"
@@ -74,7 +71,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: libgeda/src/a_basic.c:477
+#: libgeda/src/a_basic.c:473
 #, c-format
 msgid ""
 "Read unexpected embedded symbol end marker in [%s] :\n"
@@ -85,7 +82,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: libgeda/src/a_basic.c:512
+#: libgeda/src/a_basic.c:508
 #, c-format
 msgid ""
 "Read an old format sym/sch file!\n"
@@ -96,7 +93,7 @@ msgstr ""
 "Veuillez lancer g[sym|sch]update sur:\n"
 "[%s]\n"
 
-#: libgeda/src/a_basic.c:518
+#: libgeda/src/a_basic.c:514
 #, c-format
 msgid ""
 "Read garbage in [%s] :\n"
@@ -164,9 +161,9 @@ msgstr ""
 "\n"
 
 #: libgeda/src/f_basic.c:374
-#, fuzzy, c-format
+#, c-format
 msgid "Can't get the real filename of %s: %s"
-msgstr "Impossible d'avoir le nom de fichier réel de %s."
+msgstr "Impossible d'obtenir le nom réel de %s : %s"
 
 #: libgeda/src/f_basic.c:405
 #, c-format
@@ -187,9 +184,9 @@ msgstr ""
 "Impossible de passer le fichier copie de sauvegarde [%s] en lecture seule\n"
 
 #: libgeda/src/f_basic.c:480
-#, fuzzy, c-format
+#, c-format
 msgid "Could NOT save file: %s"
-msgstr "Impossible de sauvegarder [%s]\n"
+msgstr "Impossible de sauvegarder le fichier : %s"
 
 #: libgeda/src/f_basic.c:727
 #, c-format
@@ -219,21 +216,21 @@ msgstr ""
 "Erreur pendant l'écriture du fichier postscript de sortie dans f_print_header"
 "()\n"
 
-#: libgeda/src/f_print.c:201
+#: libgeda/src/f_print.c:202
 msgid "Giving up on printing\n"
 msgstr "Abandon de l'impression\n"
 
-#: libgeda/src/f_print.c:371
+#: libgeda/src/f_print.c:375
 #, c-format
 msgid "Could not open [%s] for printing\n"
 msgstr "Impossible d'ouvrir [%s] pour l'impression\n"
 
-#: libgeda/src/f_print.c:405
+#: libgeda/src/f_print.c:409
 #, c-format
 msgid "Could not execute command [%s] for printing\n"
 msgstr "Impossible d'éxecuter la commande [%s] pour l'impression\n"
 
-#: libgeda/src/f_print.c:678
+#: libgeda/src/f_print.c:682
 msgid "Too many UTF-8 characters, cannot print\n"
 msgstr "Trop de caractères UTF-8, impossible d'imprimer\n"
 
@@ -244,33 +241,34 @@ msgid ""
 msgstr ""
 
 #: libgeda/src/g_rc.c:233
-#, fuzzy
 msgid "Config file already loaded"
-msgstr "Le fichier RC [%s] est déjà lu.\n"
+msgstr "Fichier de configuration déjà chargé"
 
 #: libgeda/src/g_rc.c:268
-#, fuzzy, c-format
+#, c-format
 msgid "Parsed config from [%s]\n"
-msgstr "Lecture du fichier de configuration de l'utilisateur [%%s]\n"
+msgstr "Configuration interprétée à partir de [%s]\n"
 
 #: libgeda/src/g_rc.c:281
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to parse config from [%s]: %s"
-msgstr "Échec du chargement de l'image depuis le fichier [%s]: %s\n"
+msgstr "Impossible d'interpréter la configuration à partir de [%s] : %s"
 
 #: libgeda/src/g_rc.c:298
 msgid "ERROR: An unknown error occurred while parsing configuration files."
 msgstr ""
+"ERREUR : Une erreur inconnue s'est produite lors de l'interprétation des "
+"fichiers de configuration."
 
 #: libgeda/src/g_rc.c:310 libgeda/src/g_rc.c:311
 #, c-format
 msgid "ERROR: %s\n"
-msgstr ""
+msgstr "ERREUR : %s\n"
 
 #: libgeda/src/g_rc.c:317
 #, c-format
 msgid "ERROR: The %s log may contain more information.\n"
-msgstr ""
+msgstr "ERREUR : Le fichier journal %s contient plus d'information.\n"
 
 #: libgeda/src/g_rc.c:978
 msgid ""
@@ -304,7 +302,7 @@ msgstr "Trouvé une couleur invalide [ %s ]\n"
 #: libgeda/src/o_path_basic.c:190 libgeda/src/o_pin_basic.c:184
 #: libgeda/src/o_text_basic.c:426
 msgid "Setting color to default color\n"
-msgstr "Initialiser la couleur comme défaut\n"
+msgstr "Initialiser à la couleur par défaut\n"
 
 #: libgeda/src/o_attrib.c:123
 msgid "Attempt to attach non text item as an attribute!\n"
@@ -316,13 +314,12 @@ msgid "Attempt to attach attribute [%s] to more than one object\n"
 msgstr "Tentative d'attachement d'un attribut [%s] à plus d'un objet\n"
 
 #: libgeda/src/o_attrib.c:341
-#, fuzzy
 msgid "Tried to attach a non-text item as an attribute"
-msgstr "Tentative d'attachement d'un objet non textuel comme attribut!\n"
+msgstr ""
 
 #: libgeda/src/o_attrib.c:348
 msgid "Unexpected end-of-file in attribute list"
-msgstr ""
+msgstr "Fin de fichier inattendue dans la liste des attributs"
 
 #: libgeda/src/o_basic.c:196 libgeda/src/o_basic.c:208
 msgid "Invalid space specified, setting to 100\n"
@@ -334,7 +331,7 @@ msgstr "Longueur spécifiéé invalide, positionnée à 100\n"
 
 #: libgeda/src/o_box_basic.c:287 libgeda/src/o_box_basic.c:316
 msgid "Failed to parse box object"
-msgstr ""
+msgstr "Erreur lors de l'interprétation d'un objet boîte"
 
 #: libgeda/src/o_box_basic.c:322
 #, c-format
@@ -344,7 +341,7 @@ msgstr ""
 
 #: libgeda/src/o_bus_basic.c:160 libgeda/src/o_bus_basic.c:167
 msgid "Failed to parse bus object"
-msgstr ""
+msgstr "Erreur lors de l'interprétation d'un objet bus"
 
 #: libgeda/src/o_bus_basic.c:173
 #, c-format
@@ -366,17 +363,16 @@ msgstr "Les cercles de rayons nuls ne sont pas permis\n"
 
 #: libgeda/src/o_circle_basic.c:246 libgeda/src/o_circle_basic.c:275
 msgid "Failed to parse circle object"
-msgstr ""
+msgstr "Erreur lors de l'interprétation d'un objet cercle"
 
 #: libgeda/src/o_circle_basic.c:282
-#, fuzzy, c-format
+#, c-format
 msgid "Found a zero or negative radius circle [ %c %d %d %d %d ]\n"
-msgstr "Trouvé un cercle de rayon nul [ %c %d %d %d %d ]\n"
+msgstr "Trouvé  un cercle de rayon à zéro ou négatif [ %c %d %d %d %d ]\n"
 
 #: libgeda/src/o_circle_basic.c:284
-#, fuzzy
 msgid "Setting radius to 0\n"
-msgstr "Initialisé l'angle à 0\n"
+msgstr ""
 
 #: libgeda/src/o_complex_basic.c:422
 #, c-format
@@ -384,12 +380,12 @@ msgid ""
 "Component not found:\n"
 " %s"
 msgstr ""
-"Composant non trouvé\n"
+"Composant non trouvé :\n"
 " %s"
 
 #: libgeda/src/o_complex_basic.c:654
 msgid "Failed to parse complex object"
-msgstr ""
+msgstr "Erreur lors de l'interprétation d'un objet complexe"
 
 #: libgeda/src/o_complex_basic.c:667
 #, c-format
@@ -411,9 +407,8 @@ msgstr ""
 "%s ]\n"
 
 #: libgeda/src/o_complex_basic.c:681
-#, fuzzy
 msgid "Setting mirror to 0\n"
-msgstr "Initilisation du miroir à 0\n"
+msgstr ""
 
 #: libgeda/src/o_complex_basic.c:994
 #, c-format
@@ -528,18 +523,18 @@ msgid "Found a zero width/height picture [ %c %d %d %d %d ]\n"
 msgstr "Trouvé une image à largeur/hauteur nulle [ %c %d %d %d %d ]\n"
 
 #: libgeda/src/o_picture.c:82
-#, fuzzy, c-format
+#, c-format
 msgid "Found a picture with a wrong 'mirrored' parameter: %d.\n"
-msgstr "Trouvé une image avec un mauvais paramètre de 'miroir: '%c.\n"
+msgstr ""
 
 #: libgeda/src/o_picture.c:84
 msgid "Setting mirrored to 0\n"
 msgstr "Initilisation du miroir à 0\n"
 
 #: libgeda/src/o_picture.c:89
-#, fuzzy, c-format
+#, c-format
 msgid "Found a picture with a wrong 'embedded' parameter: %d.\n"
-msgstr "Trouvé une image avec un mauvais paramètre 'embarqué': %c.\n"
+msgstr ""
 
 #: libgeda/src/o_picture.c:91
 msgid "Setting embedded to 0\n"
@@ -573,54 +568,52 @@ msgid "ERROR: o_picture_save: unable to encode the picture.\n"
 msgstr "ERROR: o_picture_save: impossible d'encoder l'image.\n"
 
 #: libgeda/src/o_picture.c:308
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to load buffer image [%s]: %s\n"
-msgstr "Échec lors du chargement du symbole depuis le fichier [%s]: %s\n"
+msgstr ""
 
 #: libgeda/src/o_picture.c:321
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to load image from [%s]: %s\n"
-msgstr "Échec du chargement de l'image depuis le fichier [%s]: %s\n"
+msgstr ""
 
 #: libgeda/src/o_picture.c:427
 #, c-format
 msgid "Picture %p has invalid angle %i\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:959
-#, fuzzy, c-format
+#: libgeda/src/o_picture.c:957
+#, c-format
 msgid "Picture [%s] has no image data.\n"
-msgstr "L'image [%s] a été embarquée\n"
+msgstr ""
 
-#: libgeda/src/o_picture.c:960
-#, fuzzy
+#: libgeda/src/o_picture.c:958
 msgid "Falling back to file loading. Picture is still unembedded.\n"
-msgstr "Échec du chargement du fichier. Image enlevée.\n"
+msgstr ""
 
-#: libgeda/src/o_picture.c:968
+#: libgeda/src/o_picture.c:966
 #, c-format
 msgid "Picture [%s] has been embedded\n"
 msgstr "L'image [%s] a été embarquée\n"
 
-#: libgeda/src/o_picture.c:992
+#: libgeda/src/o_picture.c:990
 #, c-format
 msgid "Failed to load image from file [%s]: %s\n"
 msgstr "Échec du chargement de l'image depuis le fichier [%s]: %s\n"
 
-#: libgeda/src/o_picture.c:994
-#, fuzzy
+#: libgeda/src/o_picture.c:992
 msgid "Picture is still embedded.\n"
-msgstr "L'image [%s] a été embarquée\n"
+msgstr ""
 
-#: libgeda/src/o_picture.c:1002
+#: libgeda/src/o_picture.c:1000
 #, c-format
 msgid "Picture [%s] has been unembedded\n"
 msgstr "L'image [%s] a été débarquée\n"
 
-#: libgeda/src/o_picture.c:1238
-#, fuzzy, c-format
+#: libgeda/src/o_picture.c:1236
+#, c-format
 msgid "Failed to load fallback image %s: %s.\n"
-msgstr "Échec du chargement de l'image depuis le fichier [%s]: %s\n"
+msgstr ""
 
 #: libgeda/src/o_pin_basic.c:160 libgeda/src/o_pin_basic.c:168
 msgid "Failed to parse pin object"
@@ -755,7 +748,7 @@ msgstr "Trouvé plus d'un composant avec le nom [%s]\n"
 
 #: libgeda/src/s_color.c:207
 msgid "Color index out of range"
-msgstr ""
+msgstr "Index de couleur hors de la plage"
 
 #: libgeda/src/s_color.c:262
 msgid "Color map entry must be a two-element list"
@@ -780,11 +773,11 @@ msgstr ""
 "Boucle hiérarchique détectée lors de la visite de la page:\n"
 "  \"%s\"\n"
 
-#: libgeda/src/s_hierarchy.c:187
+#: libgeda/src/s_hierarchy.c:194
 msgid "There are no schematics above the current one!\n"
 msgstr "Il n'y a pas de schéma au-dessus de celui-ci!\n"
 
-#: libgeda/src/s_hierarchy.c:267
+#: libgeda/src/s_hierarchy.c:274
 #, c-format
 msgid "ERROR in s_hierarchy_traverse: schematic not found: %s\n"
 msgstr "ERREUR dans s_hierarchy_traverse: schéma non trouvé: %s\n"
@@ -809,12 +802,12 @@ msgstr "Sauvegarder [%s]\n"
 msgid "Could NOT save [%s]\n"
 msgstr "Impossible de sauvegarder [%s]\n"
 
-#: libgeda/src/s_slib.c:176
+#: libgeda/src/s_slib.c:171
 #, c-format
 msgid "Found [%s]\n"
 msgstr "Trouvé [%s]\n"
 
-#: libgeda/src/s_slib.c:186
+#: libgeda/src/s_slib.c:181
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr "Impossible de trouver [%s] dans aucune SourceLibrary\n"
@@ -868,9 +861,8 @@ msgid "Object ~A is attached to a page"
 msgstr ""
 
 #: libgeda/src/scheme_complex.c:339 libgeda/src/scheme_page.c:301
-#, fuzzy
 msgid "Object ~A is attached as an attribute"
-msgstr "Tentative d'attachement d'un objet non textuel comme attribut!\n"
+msgstr ""
 
 #: libgeda/src/scheme_complex.c:346 libgeda/src/scheme_page.c:308
 msgid "Object ~A has attributes"
@@ -992,80 +984,3 @@ msgstr ""
 #, scheme-format
 msgid "Object ~A is not part of a page"
 msgstr ""
-
-#~ msgid "Error reading picture definition line: %s.\n"
-#~ msgstr ""
-#~ "Erreur lors de la lecture de la ligne de définition de l'image: %s.\n"
-
-#~ msgid "Loading warning picture.\n"
-#~ msgstr "Chargement de l'image d'avertissement.\n"
-
-#~ msgid "Error loading picture from file: %s.\n"
-#~ msgstr "Échec de la lecture de l'image depuis le fichier: %s.\n"
-
-#~ msgid "Found a zero length pin: [ %s ]\n"
-#~ msgstr "Trouvé une broche à longueur nulle: [ %s ]\n"
-
-#~ msgid "%s:%i:%i: %s\n"
-#~ msgstr "%s:%i:%i: %s\n"
-
-#~ msgid "Unknown file: %s\n"
-#~ msgstr "Fichier inconnu: %s\n"
-
-#~ msgid "Evaluation failed: %s\n"
-#~ msgstr "Échec de l'évaluation: %s\n"
-
-#~ msgid "Enable debugging for more detailed information\n"
-#~ msgstr "Validez le débogage pour des informations plus détaillées\n"
-
-#~ msgid "Could not find [%s] for interpretation\n"
-#~ msgstr "Impossible de trouver [%s] pour l'interprétation\n"
-
-#~ msgid "Read system config file [%%s]\n"
-#~ msgstr "Lecture du fichier de configuration [%%s]\n"
-
-#~ msgid "Did not find required system config file [%%s]\n"
-#~ msgstr ""
-#~ "Impossible de trouver le fichier de configuration [%%s] nécessaire\n"
-
-#~ msgid "Did not find optional user config file [%%s]\n"
-#~ msgstr ""
-#~ "Impossible de trouver le fichier de configuration utiisateur [%%s]\n"
-
-#~ msgid "Read local config file [%%s]\n"
-#~ msgstr "Lecture du fichier de configuration local [%%s]\n"
-
-#~ msgid "Did not find optional local config file [%%s]\n"
-#~ msgstr "Fichier de configuration local optionnel non trouvé [%%s]\n"
-
-#~ msgid "Read specified %s file [%%s]\n"
-#~ msgstr "Lecture du fichier [%%s] spécifié %s\n"
-
-#~ msgid "Did not find specified %s file [%%s]\n"
-#~ msgstr "Impossible de trouver le fichier [%%s] spécifié %s\n"
-
-#~ msgid "Could not find any %s file!\n"
-#~ msgstr "Impossible de trouver un seul %s fichier!\n"
-
-#~ msgid "o_save: Could not open [%s]\n"
-#~ msgstr "o_save: Impossible d'ouvrir [%s]\n"
-
-#~ msgid "Could not read symbolic link information for %s"
-#~ msgstr "Impossible de lire l'information de lien symbolic pour %s"
-
-#~ msgid "The file has too many symbolic links."
-#~ msgstr "Le fichier a trop de liens symboliques."
-
-#~ msgid "Found an improper attribute: _%s_\n"
-#~ msgstr "Trouvé un attribut impropre: _%s_\n"
-
-#~ msgid "Could not find character '%s' definition.\n"
-#~ msgstr "Impossible de trouver la définition du caractère '%s'.\n"
-
-#~ msgid "Failed to validate utf-8 character in font definition: \"%s\".\n"
-#~ msgstr ""
-#~ "Échec lors de la validation du caractère utf-8 dans la définition de la "
-#~ "police: \"%s\".\n"
-
-#~ msgid "Cannot find any schematics above the current one!\n"
-#~ msgstr "Impossible de trouver des schémas au-dessus de celui-ci!\n"

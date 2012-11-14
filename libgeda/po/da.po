@@ -1,7 +1,7 @@
-# Traditional Chinese translation for geda
-# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# Danish translation for geda
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
 # This file is distributed under the same license as the geda package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
 msgid ""
 msgstr ""
@@ -10,8 +10,8 @@ msgstr ""
 "POT-Creation-Date: 2012-11-13 16:09+0000\n"
 "PO-Revision-Date: 2012-01-27 14:12+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: gEDA developers <geda-dev@seul.org>\n"
-"Language: zh_TW\n"
+"Language-Team: Danish <da@li.org>\n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,27 +20,27 @@ msgstr ""
 
 #: libgeda/data/libgeda.xml.in:3
 msgid "gEDA circuit schematic"
-msgstr ""
+msgstr "gEDA kredsløbs diagram"
 
 #: libgeda/data/libgeda.xml.in:4
 msgid "gEDA schematic symbol"
-msgstr ""
+msgstr "gEDA diagram symbol"
 
 #: libgeda/data/libgeda.xml.in:5
 msgid "gEDA gsch2pcb project"
-msgstr ""
+msgstr "gEDA gsch2pcb projekt"
 
 #: libgeda/data/x-geda-gsch2pcb-project.desktop.in:3
 msgid "gEDA Gsch2pcb Project"
-msgstr ""
+msgstr "gEDA Gsch2pcb Projekt"
 
 #: libgeda/data/x-geda-schematic.desktop.in:3
 msgid "gEDA Circuit Schematic"
-msgstr ""
+msgstr "gEDA Kredsløbs Diagram"
 
 #: libgeda/data/x-geda-symbol.desktop.in:3
 msgid "gEDA Schematic Symbol"
-msgstr ""
+msgstr "gEDA Diagram Symbol"
 
 #: libgeda/src/a_basic.c:182
 #, c-format
@@ -100,7 +100,7 @@ msgstr ""
 #: libgeda/src/f_basic.c:221
 #, c-format
 msgid "Cannot find file %s: %s"
-msgstr "無法找到檔案 %s: %s"
+msgstr ""
 
 #: libgeda/src/f_basic.c:269
 #, c-format
@@ -113,7 +113,7 @@ msgstr ""
 
 #: libgeda/src/f_basic.c:271
 msgid "I could not guess if it is newer, so you have to do it manually.\n"
-msgstr "我無法確定這個檔案是否比較新，你必須自己決定。\n"
+msgstr ""
 
 #: libgeda/src/f_basic.c:273
 msgid ""
@@ -133,9 +133,6 @@ msgid ""
 "Run gschem and correct the situation.\n"
 "\n"
 msgstr ""
-"\n"
-"啟動 gschem 來修正這個問題。\n"
-"\n"
 
 #: libgeda/src/f_basic.c:374
 #, c-format
@@ -150,12 +147,12 @@ msgstr ""
 #: libgeda/src/f_basic.c:411
 #, c-format
 msgid "Can't save backup file: %s."
-msgstr "無法儲存備份檔：%s."
+msgstr ""
 
 #: libgeda/src/f_basic.c:421
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
-msgstr "無法設定備份檔[%s]為唯讀\n"
+msgstr ""
 
 #: libgeda/src/f_basic.c:480
 #, c-format
@@ -165,7 +162,7 @@ msgstr ""
 #: libgeda/src/f_basic.c:727
 #, c-format
 msgid "%s: %s"
-msgstr "%s: %s"
+msgstr ""
 
 #: libgeda/src/f_print.c:123
 msgid "Unable to get time of day in f_print_header()\n"
@@ -260,7 +257,7 @@ msgstr ""
 #: libgeda/src/o_text_basic.c:425
 #, c-format
 msgid "Found an invalid color [ %s ]\n"
-msgstr "找尋到無效的顏色 [%s]\n"
+msgstr ""
 
 #: libgeda/src/o_arc_basic.c:283 libgeda/src/o_box_basic.c:328
 #: libgeda/src/o_bus_basic.c:183 libgeda/src/o_circle_basic.c:290
@@ -345,8 +342,6 @@ msgid ""
 "Component not found:\n"
 " %s"
 msgstr ""
-"找不到以下元件：\n"
-"        %s"
 
 #: libgeda/src/o_complex_basic.c:654
 msgid "Failed to parse complex object"
@@ -735,12 +730,12 @@ msgstr ""
 #: libgeda/src/s_page.c:499
 #, c-format
 msgid "Saved [%s]\n"
-msgstr "儲存 [%s]\n"
+msgstr ""
 
 #: libgeda/src/s_page.c:505
 #, c-format
 msgid "Could NOT save [%s]\n"
-msgstr "無法儲存[%s]\n"
+msgstr ""
 
 #: libgeda/src/s_slib.c:171
 #, c-format
