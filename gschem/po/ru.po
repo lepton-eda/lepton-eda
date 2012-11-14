@@ -10,16 +10,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda gschem\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-19 18:45+0000\n"
-"PO-Revision-Date: 2012-01-22 21:42+0400\n"
-"Last-Translator: Vladimir Zhbanov<vzhbanov@gmail.com>\n"
+"POT-Creation-Date: 2012-11-14 17:39+0000\n"
+"PO-Revision-Date: 2012-03-01 07:02+0000\n"
+"Last-Translator: Vladimir Zhbanov <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
+"X-Generator: Launchpad (build 16265)\n"
 
 #: gschem/src/a_zoom.c:212
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -51,7 +51,7 @@ msgstr "snap-size (размер сетки привязки): недопусти
 #: gschem/src/g_rc.c:957
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
-msgstr "undo-levels (количество шагов отмены): недопустимое значение [%d] \n"
+msgstr "undo-levels (количество шагов отмены): недопустимое значение [%d]\n"
 
 #: gschem/src/g_rc.c:1219
 #, c-format
@@ -131,7 +131,7 @@ msgstr ""
 #: gschem/src/g_select.c:79 gschem/src/g_select.c:116
 #: gschem/src/g_select.c:152
 msgid "Object ~A is not directly included in a page."
-msgstr "Объект ~A непосредственно в данных страницы не содержится. "
+msgstr "Объект ~A непосредственно в данных страницы не содержится."
 
 #: gschem/src/g_util.c:56
 msgid "Could not launch URI ~S: ~A"
@@ -359,7 +359,7 @@ msgstr "---"
 # За этой строкой следует название действия
 #: gschem/src/i_basic.c:271
 msgid "Repeat/"
-msgstr "Повтор: "
+msgstr "Повтор:"
 
 #: gschem/src/i_basic.c:566 gschem/src/i_basic.c:580
 msgid "OFF"
@@ -711,7 +711,7 @@ msgstr "Режим \"резиновых\" соединений отключен 
 
 #: gschem/src/i_callbacks.c:3404
 msgid "Rubber band ON\n"
-msgstr "Режим \"резиновых\" соединений включен \n"
+msgstr "Режим \"резиновых\" соединений включен\n"
 
 #: gschem/src/i_callbacks.c:3419
 msgid "magnetic net mode: ON\n"
@@ -900,7 +900,7 @@ msgstr "Нумерация секций для этого компонента �
 msgid "New slot number out of range\n"
 msgstr "Новый номер секции вне допустимого диапазона\n"
 
-#: gschem/src/o_undo.c:303
+#: gschem/src/o_undo.c:307
 msgid "Undo/Redo disabled in rc file\n"
 msgstr "Отмена/повтор отключены в файле настроек\n"
 
@@ -1233,7 +1233,7 @@ msgstr "Запрос недопустимого цвета: %d\n"
 msgid "Filter:"
 msgstr "Фильтр:"
 
-#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3639
+#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3641
 #: gschem/src/x_multiattrib.c:1839
 msgid "Name"
 msgstr "Имя"
@@ -1650,31 +1650,31 @@ msgstr "Показать"
 msgid "Show text starting with:"
 msgstr "Показать текст, начинающийся с:"
 
-#: gschem/src/x_dialog.c:3661
+#: gschem/src/x_dialog.c:3663
 msgid "S_elect the schematics you want to save:"
 msgstr "_Выберите сохраняемые схемы:"
 
-#: gschem/src/x_dialog.c:3756
+#: gschem/src/x_dialog.c:3758
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr "Сохранить изменения в схеме \"%s\" перед закрытием?"
 
-#: gschem/src/x_dialog.c:3762
+#: gschem/src/x_dialog.c:3764
 #, c-format
 msgid ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 "В %d схемах есть несохранённые изменения. Сохранить их перед закрытием?"
 
-#: gschem/src/x_dialog.c:3791
+#: gschem/src/x_dialog.c:3793
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr "Если их не сохранить, все изменения будут безвозвратно утрачены."
 
-#: gschem/src/x_dialog.c:3811
+#: gschem/src/x_dialog.c:3813
 msgid "_Close without saving"
 msgstr "_Не сохранять"
 
-#: gschem/src/x_dialog.c:4147
+#: gschem/src/x_dialog.c:4149
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -1692,20 +1692,20 @@ msgstr ""
 "Имя не должно заканчиваться пробелом.\n"
 "Значение не должно начинаться с пробела."
 
-#: gschem/src/x_dialog.c:4149
+#: gschem/src/x_dialog.c:4151
 msgid "Invalid Attribute"
 msgstr "Недопустимый атрибут"
 
 # Диалоговое окно правки типа вывода (вызывается из всплывающего меню)
-#: gschem/src/x_dialog.c:4185
+#: gschem/src/x_dialog.c:4187
 msgid "Pin type"
 msgstr "Тип вывода"
 
-#: gschem/src/x_dialog.c:4209
+#: gschem/src/x_dialog.c:4211
 msgid "Net pin"
 msgstr "Вывод соединения"
 
-#: gschem/src/x_dialog.c:4211
+#: gschem/src/x_dialog.c:4213
 msgid "Bus pin (graphical)"
 msgstr "Вывод шины (графический)"
 
@@ -2785,12 +2785,12 @@ msgstr "Недопустимое выравнивание текста ~A."
 msgid "No documentation found"
 msgstr "Документация не найдена"
 
-#: gschem/scheme/gschem/keymap.scm:39
+#: gschem/scheme/gschem/keymap.scm:38
 #, scheme-format
 msgid "~S is not a valid key combination."
 msgstr "Недопустимая комбинация клавиш ~S."
 
-#: gschem/scheme/gschem/keymap.scm:154
+#: gschem/scheme/gschem/keymap.scm:153
 #, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr "~S не является префиксом клавишной последовательности."

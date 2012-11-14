@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-19 18:45+0000\n"
+"POT-Creation-Date: 2012-11-14 17:39+0000\n"
 "PO-Revision-Date: 2010-02-14 01:03+0000\n"
 "Last-Translator: Bernd Jendrissek <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -823,7 +823,7 @@ msgstr "Gleuwe is nie toegelaat vir hierdie komponent nie\n"
 msgid "New slot number out of range\n"
 msgstr "Nuwe gleufnommer buite bereik\n"
 
-#: gschem/src/o_undo.c:303
+#: gschem/src/o_undo.c:307
 msgid "Undo/Redo disabled in rc file\n"
 msgstr ""
 
@@ -1082,7 +1082,7 @@ msgstr ""
 msgid "Filter:"
 msgstr "Deursyfer:"
 
-#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3639
+#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3641
 #: gschem/src/x_multiattrib.c:1839
 msgid "Name"
 msgstr "Naam"
@@ -1484,17 +1484,17 @@ msgstr "Toon Teks"
 msgid "Show text starting with:"
 msgstr "Toon Teks beginnende met:"
 
-#: gschem/src/x_dialog.c:3661
+#: gschem/src/x_dialog.c:3663
 msgid "S_elect the schematics you want to save:"
 msgstr "Kies die stroombaandiagramme wat jy wil bewaar:"
 
-#: gschem/src/x_dialog.c:3756
+#: gschem/src/x_dialog.c:3758
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr ""
 "Wil jy veranderinge aan stroombaandiagram \"%s\" bewaar voor jy afsluit?"
 
-#: gschem/src/x_dialog.c:3762
+#: gschem/src/x_dialog.c:3764
 #, c-format
 msgid ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
@@ -1502,15 +1502,15 @@ msgstr ""
 "Daar is %d stroombaandiagramme met onbewaarde veranderinge.  Wil jy die "
 "veranderinge bewaar voor jy afsluit?"
 
-#: gschem/src/x_dialog.c:3791
+#: gschem/src/x_dialog.c:3793
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr "As jy nie bewaar nie, sal al jou veranderinge permanent verloregaan."
 
-#: gschem/src/x_dialog.c:3811
+#: gschem/src/x_dialog.c:3813
 msgid "_Close without saving"
 msgstr "Sluit sonder om te bewaar"
 
-#: gschem/src/x_dialog.c:4147
+#: gschem/src/x_dialog.c:4149
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -1528,19 +1528,19 @@ msgstr ""
 "Die naam mag nie met 'n spasie eindig nie.\n"
 "Die waarde mag nie met 'n spasie begin nie."
 
-#: gschem/src/x_dialog.c:4149
+#: gschem/src/x_dialog.c:4151
 msgid "Invalid Attribute"
 msgstr "Ongeldige Eienskap"
 
-#: gschem/src/x_dialog.c:4185
+#: gschem/src/x_dialog.c:4187
 msgid "Pin type"
 msgstr ""
 
-#: gschem/src/x_dialog.c:4209
+#: gschem/src/x_dialog.c:4211
 msgid "Net pin"
 msgstr ""
 
-#: gschem/src/x_dialog.c:4211
+#: gschem/src/x_dialog.c:4213
 msgid "Bus pin (graphical)"
 msgstr ""
 
@@ -2577,12 +2577,12 @@ msgstr ""
 msgid "No documentation found"
 msgstr ""
 
-#: gschem/scheme/gschem/keymap.scm:39
+#: gschem/scheme/gschem/keymap.scm:38
 #, scheme-format
 msgid "~S is not a valid key combination."
 msgstr ""
 
-#: gschem/scheme/gschem/keymap.scm:154
+#: gschem/scheme/gschem/keymap.scm:153
 #, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr ""

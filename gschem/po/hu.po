@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-19 18:45+0000\n"
-"PO-Revision-Date: 2010-02-13 10:43+0000\n"
+"POT-Creation-Date: 2012-11-14 17:39+0000\n"
+"PO-Revision-Date: 2012-01-27 14:23+0000\n"
 "Last-Translator: kop <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
+"X-Generator: Launchpad (build 16265)\n"
 
 #: gschem/src/a_zoom.c:212
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -803,9 +803,9 @@ msgid "Picture"
 msgstr "Kép"
 
 #: gschem/src/o_picture.c:544
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to replace pictures: %s"
-msgstr "Sikertelen a(z) %s kép betöltése"
+msgstr ""
 
 #: gschem/src/o_slot.c:81
 msgid "Slot attribute malformed\n"
@@ -823,7 +823,7 @@ msgstr ""
 msgid "New slot number out of range\n"
 msgstr ""
 
-#: gschem/src/o_undo.c:303
+#: gschem/src/o_undo.c:307
 msgid "Undo/Redo disabled in rc file\n"
 msgstr "A visszavonás/újra művelet nem használható rc fájlban.\n"
 
@@ -1080,7 +1080,7 @@ msgstr ""
 msgid "Filter:"
 msgstr "Szűrő:"
 
-#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3639
+#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3641
 #: gschem/src/x_multiattrib.c:1839
 msgid "Name"
 msgstr "Név"
@@ -1485,31 +1485,31 @@ msgstr "Szöveg mutatása"
 msgid "Show text starting with:"
 msgstr "A következővel kezdődő szöveg mutatása:"
 
-#: gschem/src/x_dialog.c:3661
+#: gschem/src/x_dialog.c:3663
 msgid "S_elect the schematics you want to save:"
 msgstr "Válaszd ki a menteni kívánt rajzot:"
 
-#: gschem/src/x_dialog.c:3756
+#: gschem/src/x_dialog.c:3758
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr "Elmentsem a(z) \"%s\" rajz változásait bezárás előtt?"
 
-#: gschem/src/x_dialog.c:3762
+#: gschem/src/x_dialog.c:3764
 #, c-format
 msgid ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 "%d megváltoztatott rajz van még megnyitva. Elmentsem őket kilépés előtt?"
 
-#: gschem/src/x_dialog.c:3791
+#: gschem/src/x_dialog.c:3793
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr "Ha nem menti, akkor az összes változás véglegesen elveszik."
 
-#: gschem/src/x_dialog.c:3811
+#: gschem/src/x_dialog.c:3813
 msgid "_Close without saving"
 msgstr "_Bezárás mentés nélkül"
 
-#: gschem/src/x_dialog.c:4147
+#: gschem/src/x_dialog.c:4149
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -1520,19 +1520,19 @@ msgid ""
 "The value cannot start with a space."
 msgstr ""
 
-#: gschem/src/x_dialog.c:4149
+#: gschem/src/x_dialog.c:4151
 msgid "Invalid Attribute"
 msgstr "Hibás attribútum"
 
-#: gschem/src/x_dialog.c:4185
+#: gschem/src/x_dialog.c:4187
 msgid "Pin type"
 msgstr ""
 
-#: gschem/src/x_dialog.c:4209
+#: gschem/src/x_dialog.c:4211
 msgid "Net pin"
 msgstr ""
 
-#: gschem/src/x_dialog.c:4211
+#: gschem/src/x_dialog.c:4213
 msgid "Bus pin (graphical)"
 msgstr ""
 
@@ -2065,9 +2065,8 @@ msgid "Error while trying to save"
 msgstr "Hiba mentés közben"
 
 #: gschem/src/x_window.c:873
-#, fuzzy
 msgid "Failed to save file"
-msgstr "A fájl betöltése nem sikerült."
+msgstr ""
 
 #: gschem/src/x_window.c:884
 #, c-format
@@ -2144,9 +2143,8 @@ msgid "New Window"
 msgstr "Új ablak"
 
 #: gschem/lib/system-gschemrc.scm:1384
-#, fuzzy
 msgid "_Close Window"
-msgstr "Ablak bezárása"
+msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1385
 msgid "_Quit"
@@ -2177,14 +2175,12 @@ msgid "_Delete"
 msgstr "Törlés (_D)"
 
 #: gschem/lib/system-gschemrc.scm:1400
-#, fuzzy
 msgid "Select All"
-msgstr "Kiválasztás"
+msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1401
-#, fuzzy
 msgid "Deselect"
-msgstr "Kiválasztás"
+msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1405
 msgid "Rotate 90 Mode"
@@ -2335,13 +2331,12 @@ msgid "_Light color scheme"
 msgstr "Világos színséma"
 
 #: gschem/lib/system-gschemrc.scm:1458
-#, fuzzy
 msgid "B_W color scheme"
-msgstr "Sötét színséma"
+msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1465
 msgid "_Manager..."
-msgstr ""
+msgstr "_Kezelő..."
 
 #: gschem/lib/system-gschemrc.scm:1466
 msgid "_Previous"
@@ -2509,11 +2504,11 @@ msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1542
 msgid "gEDA Docu_mentation..."
-msgstr ""
+msgstr "gEDA Doku_mentáció..."
 
 #: gschem/lib/system-gschemrc.scm:1543
 msgid "gschem _FAQ..."
-msgstr ""
+msgstr "gschem _GYIK..."
 
 #: gschem/lib/system-gschemrc.scm:1544
 msgid "gEDA _Wiki..."
@@ -2525,7 +2520,7 @@ msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1547
 msgid "_Hotkeys..."
-msgstr ""
+msgstr "_Gyorsbillentyűk..."
 
 #: gschem/lib/system-gschemrc.scm:1548
 msgid "_About..."
@@ -2577,129 +2572,15 @@ msgid "Invalid text alignment ~A."
 msgstr ""
 
 #: gschem/scheme/gschem/gschemdoc.scm:225
-#, fuzzy
 msgid "No documentation found"
-msgstr "D_okumentáció"
+msgstr ""
 
-#: gschem/scheme/gschem/keymap.scm:39
+#: gschem/scheme/gschem/keymap.scm:38
 #, scheme-format
 msgid "~S is not a valid key combination."
 msgstr ""
 
-#: gschem/scheme/gschem/keymap.scm:154
+#: gschem/scheme/gschem/keymap.scm:153
 #, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr ""
-
-#~ msgid "Could not fork\n"
-#~ msgstr "Az elágazás sikertelen.\n"
-
-#~ msgid "Could not invoke %s\n"
-#~ msgstr "Nem tudom elindítani a(z) %s-t.\n"
-
-#~ msgid "Documentation commands not supported under MinGW.\n"
-#~ msgstr "Dokumentációs parancsok nem működnek MinGW alatt.\n"
-
-#~ msgid "Documentation for [%s,%s,%s,%s]\n"
-#~ msgstr "Dokumentáció [%s,%s,%s,%s]-hoz\n"
-
-#~ msgid ""
-#~ "This command retrieves the component documentation from the web, but "
-#~ "there is no component selected"
-#~ msgstr ""
-#~ "Ez a parancs letölti az alkatrész dokumentációját az internetről, de "
-#~ "nincs kiválasztott alkatrész."
-
-#~ msgid "Scheme directory NOT set!\n"
-#~ msgstr "A scheme könyvtár nincs beállítva!\n"
-
-#~ msgid "MakeVisible"
-#~ msgstr "Láthatóvá tétel"
-
-#~ msgid ""
-#~ "Usage: %s [OPTIONS] schematic_filename1 ... schematic_filenameN\n"
-#~ "  -q            Quiet mode\n"
-#~ "  -v            Verbose mode on\n"
-#~ "  -r filename   Rc filename\n"
-#~ "  -s filename   Script (guile) filename\n"
-#~ "  -o filename   Output filename (for printing)\n"
-#~ "  -p            Automatically place the window\n"
-#~ "  -t            Print stroke information\n"
-#~ "  -h            Help; this message\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Használat: %s [OPCIÓK] rajz_fájlnév1 ... rajz_fájlnévN\n"
-#~ "   -q csendes mód\n"
-#~ "   -v közlékeny mód\n"
-#~ "   -r fájlnév rc fájlnév\n"
-#~ "   -s fájlnév (guile) szkript végrehajtása\n"
-#~ "   -o fájlnév kimeneti fájl neve nyomtatáshoz\n"
-#~ "   -p ablak automatikus elhelyezése\n"
-#~ "   -t Print stroke information\n"
-#~ "   -h segítség, ez az üzenet\n"
-#~ "\n"
-
-#~ msgid "Couldn't open file %s\n"
-#~ msgstr "Nem tudom megnyitni a(z) %s fájlt.\n"
-
-#~ msgid "Clear"
-#~ msgstr "Törlés"
-
-#~ msgid "Make Inv Text Vis"
-#~ msgstr "Láthatatlan szöveg láthatóvá tétele"
-
-#~ msgid "About..."
-#~ msgstr "Névjegy…"
-
-#~ msgid "<b>gEDA: GPL Electronic Design Automation</b>"
-#~ msgstr "<b>gEDA: GPL Electronic Design Automation</b>"
-
-#~ msgid "<b>gschem version %s%s.%s</b>"
-#~ msgstr "<b>gschem verzió %s%s.%s</b>"
-
-#~ msgid ""
-#~ "Written by:\n"
-#~ "Ales Hvezda\n"
-#~ "ahvezda@geda.seul.org\n"
-#~ "And many others (See AUTHORS file)"
-#~ msgstr ""
-#~ "Írta:\n"
-#~ "Ales Hvezda\n"
-#~ "ahvezda@geda.seul.org\n"
-#~ "és sokan mások (lásd az AUTHORS fájlban)"
-
-#~ msgid "Save Page As..."
-#~ msgstr "Mentés másképp"
-
-#~ msgid "Revert Page"
-#~ msgstr "Újratöltés"
-
-#~ msgid "Recent files"
-#~ msgstr "Legutóbbi fájlok"
-
-#~ msgid "Manual"
-#~ msgstr "Kézikönyv"
-
-#~ msgid "File"
-#~ msgstr "Fájl"
-
-#~ msgid "Buffer"
-#~ msgstr "Buffer"
-
-#~ msgid "View"
-#~ msgstr "Nézet"
-
-#~ msgid "Page"
-#~ msgstr "Oldal"
-
-#~ msgid "Add"
-#~ msgstr "Hozzáadás"
-
-#~ msgid "Hierarchy"
-#~ msgstr "Hierarchia"
-
-#~ msgid "Options"
-#~ msgstr "Beállítások"
-
-#~ msgid "Help"
-#~ msgstr "Segítség"

@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-19 18:45+0000\n"
-"PO-Revision-Date: 2010-02-11 03:01+0000\n"
-"Last-Translator: Peter Clifton <pcjc2@cam.ac.uk>\n"
+"POT-Creation-Date: 2012-11-14 17:39+0000\n"
+"PO-Revision-Date: 2012-01-31 12:14+0000\n"
+"Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
+"X-Generator: Launchpad (build 16265)\n"
 
 #: gschem/src/a_zoom.c:212
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -24,11 +24,11 @@ msgstr "Zoom too small!  Cannot zoom further.\n"
 
 #: gschem/src/g_attrib.c:92
 msgid "Object ~A is not included in the current gschem page."
-msgstr ""
+msgstr "Object ~A is not included in the current gschem page."
 
 #: gschem/src/g_attrib.c:112
 msgid "Invalid text name/value visibility ~A."
-msgstr ""
+msgstr "Invalid text name/value visibility ~A."
 
 #: gschem/src/g_rc.c:311
 #, c-format
@@ -108,15 +108,15 @@ msgstr "Invalid number of steps [%d] scrollpan-steps\n"
 #: gschem/src/g_select.c:79 gschem/src/g_select.c:116
 #: gschem/src/g_select.c:152
 msgid "Object ~A is not directly included in a page."
-msgstr ""
+msgstr "Object ~A is not directly included in a page."
 
 #: gschem/src/g_util.c:56
 msgid "Could not launch URI ~S: ~A"
-msgstr ""
+msgstr "Could not launch URI ~S: ~A"
 
 #: gschem/src/g_window.c:136
 msgid "Found invalid gschem window smob ~S"
-msgstr ""
+msgstr "Found invalid gschem window smob ~S"
 
 #: gschem/src/gschem.c:186
 #, c-format
@@ -194,11 +194,11 @@ msgstr "Unknown type for stroke (%d) !\n"
 
 #: gschem/src/gschem_pango.c:289
 msgid "cairo context"
-msgstr ""
+msgstr "cairo context"
 
 #: gschem/src/gschem_pango.c:290
 msgid "the cairo context for the renderer"
-msgstr ""
+msgstr "the cairo context for the renderer"
 
 #: gschem/src/i_basic.c:77 gschem/src/x_window.c:524
 #: gschem/lib/system-gschemrc.scm:1399
@@ -808,9 +808,9 @@ msgid "Picture"
 msgstr "Picture"
 
 #: gschem/src/o_picture.c:544
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to replace pictures: %s"
-msgstr "Failed to load picture: %s"
+msgstr "Failed to replace pictures: %s"
 
 #: gschem/src/o_slot.c:81
 msgid "Slot attribute malformed\n"
@@ -828,7 +828,7 @@ msgstr "Slotting not allowed for this component\n"
 msgid "New slot number out of range\n"
 msgstr "New slot number out of range\n"
 
-#: gschem/src/o_undo.c:303
+#: gschem/src/o_undo.c:307
 msgid "Undo/Redo disabled in rc file\n"
 msgstr "Undo/Redo disabled in rc file\n"
 
@@ -857,6 +857,27 @@ msgid ""
 "Report bugs to <geda-bug@seul.org>\n"
 "gEDA/gaf homepage: <http://gpleda.org>\n"
 msgstr ""
+"Usage: %s [OPTION ...] [--] [FILE ...]\n"
+"\n"
+"Interactively edit gEDA schematics or symbols.  If one or more FILEs\n"
+"are specified, open them for editing; otherwise, create a new, empty\n"
+"schematic.\n"
+"\n"
+"Options:\n"
+"  -q, --quiet              Quiet mode.\n"
+"  -v, --verbose            Verbose mode.\n"
+"  -r, --config-file=FILE   Additional configuration file to load.\n"
+"  -L DIR                   Add DIR to Scheme search path.\n"
+"  -c EXPR                  Scheme expression to run at startup.\n"
+"  -s FILE                  Scheme script to run at startup.\n"
+"  -o, --output=FILE        Output filename (for printing).\n"
+"  -p                       Automatically place the window.\n"
+"  -V, --version            Show version information.\n"
+"  -h, --help               Help; this message.\n"
+"  --                       Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs to <geda-bug@seul.org>\n"
+"gEDA/gaf homepage: <http://gpleda.org>\n"
 
 #: gschem/src/parsecmd.c:116
 #, c-format
@@ -868,6 +889,12 @@ msgid ""
 "included in the gEDA distribution.\n"
 "There is NO WARRANTY, to the extent permitted by law.\n"
 msgstr ""
+"gEDA %s (g%.7s)\n"
+"Copyright (C) 1998-2011 gEDA developers\n"
+"This is free software, and you are welcome to redistribute it under\n"
+"certain conditions. For details, see the file `COPYING', which is\n"
+"included in the gEDA distribution.\n"
+"There is NO WARRANTY, to the extent permitted by law.\n"
 
 #: gschem/src/x_attribedit.c:127
 #, c-format
@@ -1046,10 +1073,13 @@ msgid ""
 "\n"
 "An error occurred while inserting clipboard data: %s."
 msgstr ""
+"<b>Invalid schematic on clipboard.</b>\n"
+"\n"
+"An error occurred while inserting clipboard data: %s."
 
 #: gschem/src/x_clipboard.c:251
 msgid "Clipboard insertion failed"
-msgstr ""
+msgstr "Clipboard insertion failed"
 
 #: gschem/src/x_color.c:94 gschem/src/x_color.c:103
 #, c-format
@@ -1088,7 +1118,7 @@ msgstr "Tried to get an invalid outline colour: %d\n"
 msgid "Filter:"
 msgstr "Filter:"
 
-#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3639
+#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3641
 #: gschem/src/x_multiattrib.c:1839
 msgid "Name"
 msgstr "Name"
@@ -1350,7 +1380,7 @@ msgstr "Edit slot number:"
 #: gschem/src/x_dialog.c:2122
 #, c-format
 msgid "%s (g%.7s)"
-msgstr ""
+msgstr "%s (g%.7s)"
 
 #: gschem/src/x_dialog.c:2143
 msgid "About gschem"
@@ -1366,6 +1396,8 @@ msgid ""
 "Copyright © 1998-2011 Ales Hvezda <ahvezda@geda.seul.org>\n"
 "Copyright © 1998-2011 gEDA Contributors (see ChangeLog for details)"
 msgstr ""
+"Copyright © 1998-2011 Ales Hvezda <ahvezda@geda.seul.org>\n"
+"Copyright © 1998-2011 gEDA Contributors (see ChangeLog for details)"
 
 #: gschem/src/x_dialog.c:2206
 msgid "Coords"
@@ -1492,31 +1524,31 @@ msgstr "Show Text"
 msgid "Show text starting with:"
 msgstr "Show text starting with:"
 
-#: gschem/src/x_dialog.c:3661
+#: gschem/src/x_dialog.c:3663
 msgid "S_elect the schematics you want to save:"
 msgstr "S_elect the schematics you want to save:"
 
-#: gschem/src/x_dialog.c:3756
+#: gschem/src/x_dialog.c:3758
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr "Save the changes to schematic \"%s\" before closing?"
 
-#: gschem/src/x_dialog.c:3762
+#: gschem/src/x_dialog.c:3764
 #, c-format
 msgid ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
 
-#: gschem/src/x_dialog.c:3791
+#: gschem/src/x_dialog.c:3793
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr "If you don't save, all your changes will be permanently lost."
 
-#: gschem/src/x_dialog.c:3811
+#: gschem/src/x_dialog.c:3813
 msgid "_Close without saving"
 msgstr "_Close without saving"
 
-#: gschem/src/x_dialog.c:4147
+#: gschem/src/x_dialog.c:4149
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -1533,19 +1565,19 @@ msgstr ""
 "The name cannot end with a space.\n"
 "The value cannot start with a space."
 
-#: gschem/src/x_dialog.c:4149
+#: gschem/src/x_dialog.c:4151
 msgid "Invalid Attribute"
 msgstr "Invalid Attribute"
 
-#: gschem/src/x_dialog.c:4185
+#: gschem/src/x_dialog.c:4187
 msgid "Pin type"
 msgstr "Pin type"
 
-#: gschem/src/x_dialog.c:4209
+#: gschem/src/x_dialog.c:4211
 msgid "Net pin"
 msgstr "Net pin"
 
-#: gschem/src/x_dialog.c:4211
+#: gschem/src/x_dialog.c:4213
 msgid "Bus pin (graphical)"
 msgstr "Bus pin (graphical)"
 
@@ -1740,12 +1772,12 @@ msgstr "Tried to set the sensitivity on a non-existent popup menu_item\n"
 
 #: gschem/src/x_misc.c:74
 msgid "The operating system is out of memory or resources."
-msgstr ""
+msgstr "The operating system is out of memory or resources."
 
 #: gschem/src/x_misc.c:155
 #, c-format
 msgid "%s failed to launch URI"
-msgstr ""
+msgstr "%s failed to launch URI"
 
 #: gschem/src/x_multiattrib.c:961
 msgid "Attributes with empty name are not allowed. Please set a name."
@@ -1908,7 +1940,7 @@ msgstr "Printed current schematic to [%s]\n"
 
 #: gschem/src/x_rc.c:40
 msgid "ERROR: An unknown error occurred while parsing configuration files.\n"
-msgstr ""
+msgstr "ERROR: An unknown error occurred while parsing configuration files.\n"
 
 #: gschem/src/x_rc.c:45
 msgid ""
@@ -1916,11 +1948,14 @@ msgid ""
 "\n"
 "The gschem log may contain more information."
 msgstr ""
+"An unknown error occurred while parsing configuration files.\n"
+"\n"
+"The gschem log may contain more information."
 
 #: gschem/src/x_rc.c:57
 #, c-format
 msgid "ERROR: %s\n"
-msgstr ""
+msgstr "ERROR: %s\n"
 
 #: gschem/src/x_rc.c:60
 #, c-format
@@ -1929,10 +1964,13 @@ msgid ""
 "\n"
 "The gschem log may contain more information."
 msgstr ""
+"%s\n"
+"\n"
+"The gschem log may contain more information."
 
 #: gschem/src/x_rc.c:68
 msgid "Cannot load gschem configuration."
-msgstr ""
+msgstr "Cannot load gschem configuration."
 
 #: gschem/src/x_script.c:47 gschem/lib/system-gschemrc.scm:1381
 msgid "Execute Script..."
@@ -2030,7 +2068,7 @@ msgstr "Select mode"
 
 #: gschem/src/x_window.c:465
 msgid "Evaluate:"
-msgstr ""
+msgstr "Evaluate:"
 
 #: gschem/src/x_window.c:484
 msgid "Pick"
@@ -2060,6 +2098,9 @@ msgid ""
 "\n"
 "Loading from '%s' failed: %s. The gschem log may contain more information."
 msgstr ""
+"<b>An error occurred while loading the requested file.</b>\n"
+"\n"
+"Loading from '%s' failed: %s. The gschem log may contain more information."
 
 #: gschem/src/x_window.c:750
 msgid "Failed to load file"
@@ -2080,9 +2121,8 @@ msgid "Error while trying to save"
 msgstr "Error while trying to save"
 
 #: gschem/src/x_window.c:873
-#, fuzzy
 msgid "Failed to save file"
-msgstr "Failed to load file"
+msgstr "Failed to save file"
 
 #: gschem/src/x_window.c:884
 #, c-format
@@ -2157,9 +2197,8 @@ msgid "New Window"
 msgstr "New Window"
 
 #: gschem/lib/system-gschemrc.scm:1384
-#, fuzzy
 msgid "_Close Window"
-msgstr "Closing Window\n"
+msgstr "_Close Window"
 
 #: gschem/lib/system-gschemrc.scm:1385
 msgid "_Quit"
@@ -2190,14 +2229,12 @@ msgid "_Delete"
 msgstr "_Delete"
 
 #: gschem/lib/system-gschemrc.scm:1400
-#, fuzzy
 msgid "Select All"
-msgstr "Select"
+msgstr "Select All"
 
 #: gschem/lib/system-gschemrc.scm:1401
-#, fuzzy
 msgid "Deselect"
-msgstr "Select"
+msgstr "Deselect"
 
 #: gschem/lib/system-gschemrc.scm:1405
 msgid "Rotate 90 Mode"
@@ -2348,9 +2385,8 @@ msgid "_Light color scheme"
 msgstr "_Light colour scheme"
 
 #: gschem/lib/system-gschemrc.scm:1458
-#, fuzzy
 msgid "B_W color scheme"
-msgstr "_Dark colour scheme"
+msgstr "B_W color scheme"
 
 #: gschem/lib/system-gschemrc.scm:1465
 msgid "_Manager..."
@@ -2587,94 +2623,18 @@ msgstr "_Help"
 #: gschem/scheme/gschem/deprecated.scm:102
 #, scheme-format
 msgid "Invalid text alignment ~A."
-msgstr ""
+msgstr "Invalid text alignment ~A."
 
 #: gschem/scheme/gschem/gschemdoc.scm:225
-#, fuzzy
 msgid "No documentation found"
-msgstr "D_ocumentation"
+msgstr "No documentation found"
 
-#: gschem/scheme/gschem/keymap.scm:39
+#: gschem/scheme/gschem/keymap.scm:38
 #, scheme-format
 msgid "~S is not a valid key combination."
-msgstr ""
+msgstr "~S is not a valid key combination."
 
-#: gschem/scheme/gschem/keymap.scm:154
+#: gschem/scheme/gschem/keymap.scm:153
 #, scheme-format
 msgid "~S is not a prefix key sequence."
-msgstr ""
-
-#~ msgid ""
-#~ "\n"
-#~ "The config option postscript-font-scale is deprecated and will be removed "
-#~ "in gEDA 1.8.0.\n"
-#~ "Printed text is fixed to match on-screen sizes. Please remove this option "
-#~ "from your config files.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "The config option postscript-font-scale is deprecated and will be removed "
-#~ "in gEDA 1.8.0.\n"
-#~ "Printed text is fixed to match on-screen sizes. Please remove this option "
-#~ "from your config files.\n"
-#~ "\n"
-
-#~ msgid "Could not fork\n"
-#~ msgstr "Could not fork\n"
-
-#~ msgid "Could not invoke %s\n"
-#~ msgstr "Could not invoke %s\n"
-
-#~ msgid "Documentation commands not supported under MinGW.\n"
-#~ msgstr "Documentation commands not supported under MinGW.\n"
-
-#~ msgid "Documentation for [%s,%s,%s,%s]\n"
-#~ msgstr "Documentation for [%s,%s,%s,%s]\n"
-
-#~ msgid ""
-#~ "This command retrieves the component documentation from the web, but "
-#~ "there is no component selected"
-#~ msgstr ""
-#~ "This command retrieves the component documentation from the web, but "
-#~ "there is no component selected"
-
-#~ msgid "Scheme directory NOT set!\n"
-#~ msgstr "Scheme directory NOT set!\n"
-
-#~ msgid "MakeVisible"
-#~ msgstr "MakeVisible"
-
-#~ msgid ""
-#~ "Usage: %s [OPTIONS] schematic_filename1 ... schematic_filenameN\n"
-#~ "  -q            Quiet mode\n"
-#~ "  -v            Verbose mode on\n"
-#~ "  -r filename   Rc filename\n"
-#~ "  -s filename   Script (guile) filename\n"
-#~ "  -o filename   Output filename (for printing)\n"
-#~ "  -p            Automatically place the window\n"
-#~ "  -t            Print stroke information\n"
-#~ "  -h            Help; this message\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Usage: %s [OPTIONS] schematic_filename1 ... schematic_filenameN\n"
-#~ "  -q            Quiet mode\n"
-#~ "  -v            Verbose mode on\n"
-#~ "  -r filename   Rc filename\n"
-#~ "  -s filename   Script (guile) filename\n"
-#~ "  -o filename   Output filename (for printing)\n"
-#~ "  -p            Automatically place the window\n"
-#~ "  -t            Print stroke information\n"
-#~ "  -h            Help; this message\n"
-#~ "\n"
-
-#~ msgid "Couldn't open file %s\n"
-#~ msgstr "Couldn't open file %s\n"
-
-#~ msgid "Clear"
-#~ msgstr "Clear"
-
-#~ msgid "Make Inv Text Vis"
-#~ msgstr "Make Inv Text Vis"
-
-#~ msgid "Update Cues"
-#~ msgstr "Update Cues"
+msgstr "~S is not a prefix key sequence."

@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-19 18:45+0000\n"
-"PO-Revision-Date: 2010-02-14 01:04+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-11-14 17:39+0000\n"
+"PO-Revision-Date: 2012-01-31 12:08+0000\n"
+"Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
+"X-Generator: Launchpad (build 16265)\n"
 
 #: gschem/src/a_zoom.c:212
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -807,9 +807,9 @@ msgid "Picture"
 msgstr "Imagem"
 
 #: gschem/src/o_picture.c:544
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to replace pictures: %s"
-msgstr "Falhou ao ler imagem: %s"
+msgstr ""
 
 #: gschem/src/o_slot.c:81
 msgid "Slot attribute malformed\n"
@@ -827,7 +827,7 @@ msgstr "Slots não disponível para este componente\n"
 msgid "New slot number out of range\n"
 msgstr "Número de slot fora dos limites\n"
 
-#: gschem/src/o_undo.c:303
+#: gschem/src/o_undo.c:307
 msgid "Undo/Redo disabled in rc file\n"
 msgstr "Desfaz e Refaz desabilitado no arquivo rc\n"
 
@@ -1084,7 +1084,7 @@ msgstr ""
 msgid "Filter:"
 msgstr "Filtrar:"
 
-#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3639
+#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3641
 #: gschem/src/x_multiattrib.c:1839
 msgid "Name"
 msgstr "Nome"
@@ -1488,32 +1488,32 @@ msgstr "Mostrar texto"
 msgid "Show text starting with:"
 msgstr "Mostrar texto iniciado com:"
 
-#: gschem/src/x_dialog.c:3661
+#: gschem/src/x_dialog.c:3663
 msgid "S_elect the schematics you want to save:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:3756
+#: gschem/src/x_dialog.c:3758
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr ""
 
-#: gschem/src/x_dialog.c:3762
+#: gschem/src/x_dialog.c:3764
 #, c-format
 msgid ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 
-#: gschem/src/x_dialog.c:3791
+#: gschem/src/x_dialog.c:3793
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr ""
 "Se você não salvar, todas as suas modificações serão permanentemente "
 "perdidas."
 
-#: gschem/src/x_dialog.c:3811
+#: gschem/src/x_dialog.c:3813
 msgid "_Close without saving"
 msgstr "_Fechar sem salvar"
 
-#: gschem/src/x_dialog.c:4147
+#: gschem/src/x_dialog.c:4149
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -1531,19 +1531,19 @@ msgstr ""
 "O nome não pode acabar com espaço.\n"
 "O valor não pode começar com espaço."
 
-#: gschem/src/x_dialog.c:4149
+#: gschem/src/x_dialog.c:4151
 msgid "Invalid Attribute"
 msgstr "Atributo Inválido"
 
-#: gschem/src/x_dialog.c:4185
+#: gschem/src/x_dialog.c:4187
 msgid "Pin type"
 msgstr ""
 
-#: gschem/src/x_dialog.c:4209
+#: gschem/src/x_dialog.c:4211
 msgid "Net pin"
 msgstr ""
 
-#: gschem/src/x_dialog.c:4211
+#: gschem/src/x_dialog.c:4213
 msgid "Bus pin (graphical)"
 msgstr ""
 
@@ -2069,9 +2069,8 @@ msgid "Error while trying to save"
 msgstr "Erro tentando salvar"
 
 #: gschem/src/x_window.c:873
-#, fuzzy
 msgid "Failed to save file"
-msgstr "Falha ao salvar tudo"
+msgstr ""
 
 #: gschem/src/x_window.c:884
 #, c-format
@@ -2146,9 +2145,8 @@ msgid "New Window"
 msgstr "Nova Janela"
 
 #: gschem/lib/system-gschemrc.scm:1384
-#, fuzzy
 msgid "_Close Window"
-msgstr "Fechando Janela"
+msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1385
 msgid "_Quit"
@@ -2179,14 +2177,12 @@ msgid "_Delete"
 msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1400
-#, fuzzy
 msgid "Select All"
-msgstr "Selecionar"
+msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1401
-#, fuzzy
 msgid "Deselect"
-msgstr "Selecionar"
+msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1405
 msgid "Rotate 90 Mode"
@@ -2581,443 +2577,12 @@ msgstr ""
 msgid "No documentation found"
 msgstr ""
 
-#: gschem/scheme/gschem/keymap.scm:39
+#: gschem/scheme/gschem/keymap.scm:38
 #, scheme-format
 msgid "~S is not a valid key combination."
 msgstr ""
 
-#: gschem/scheme/gschem/keymap.scm:154
+#: gschem/scheme/gschem/keymap.scm:153
 #, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr ""
-
-#~ msgid "Could not invoke %s\n"
-#~ msgstr "Impossível invocar %s!\n"
-
-#~ msgid "Documentation commands not supported under MinGW.\n"
-#~ msgstr "Documentação de comandos não é suportada no MinGW.\n"
-
-#~ msgid "Documentation for [%s,%s,%s,%s]\n"
-#~ msgstr "Documentação para [%s,%s,%s,%s]\n"
-
-#~ msgid ""
-#~ "This command retrieves the component documentation from the web, but "
-#~ "there is no component selected"
-#~ msgstr ""
-#~ "Este comando recupera a documentação do componente da web, mas não há "
-#~ "nenhum componente seleccionado"
-
-#~ msgid "Scheme directory NOT set!\n"
-#~ msgstr "Diretório Scheme NÃO ajustado!\n"
-
-#~ msgid "MakeVisible"
-#~ msgstr "Deixar Visível"
-
-#~ msgid ""
-#~ "Usage: %s [OPTIONS] schematic_filename1 ... schematic_filenameN\n"
-#~ "  -q            Quiet mode\n"
-#~ "  -v            Verbose mode on\n"
-#~ "  -r filename   Rc filename\n"
-#~ "  -s filename   Script (guile) filename\n"
-#~ "  -o filename   Output filename (for printing)\n"
-#~ "  -p            Automatically place the window\n"
-#~ "  -t            Print stroke information\n"
-#~ "  -h            Help; this message\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Uso: %s [OPTIONS] esquematico1 ... esquematicoN\n"
-#~ "  -q            modo Quieto\n"
-#~ "  -v            Modo Verbose\n"
-#~ "  -r filename   Arquivo Rc\n"
-#~ "  -s filename   Arquivo Script (guile)\n"
-#~ "  -o filename   Arquivo de saída (impressão)\n"
-#~ "  -p            Auto aloca janela\n"
-#~ "  -t            Imprime informação de strokes\n"
-#~ "  -h            Ajuda; esta mensagem\n"
-#~ "\n"
-
-#~ msgid "Clear"
-#~ msgstr "Limpar"
-
-#~ msgid "Make Inv Text Vis"
-#~ msgstr "Tornar todos textos visíveis"
-
-#~ msgid "Update Cues"
-#~ msgstr "Atualiza dicas"
-
-#~ msgid "About..."
-#~ msgstr "Sobre..."
-
-#~ msgid "<b>gEDA: GPL Electronic Design Automation</b>"
-#~ msgstr "<b>gEDA: GPL Electronic Design Automation</b>"
-
-#~ msgid "<b>gschem version %s%s.%s</b>"
-#~ msgstr "gschem versão %s%s.%s"
-
-#~ msgid ""
-#~ "Written by:\n"
-#~ "Ales Hvezda\n"
-#~ "ahvezda@geda.seul.org\n"
-#~ "And many others (See AUTHORS file)"
-#~ msgstr ""
-#~ "Escrito por:\n"
-#~ "Ales Hvezda\n"
-#~ "ahvezda@geda.seul.org\n"
-#~ "E muitos outros (Veja o arquivo AUTHORS)"
-
-#~ msgid "Revert Page"
-#~ msgstr "Reverter Página"
-
-#~ msgid "Save Page As..."
-#~ msgstr "Salvar Como..."
-
-#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
-#~ msgstr "Você tentou editar o slot de algo que não existe!\n"
-
-#~ msgid "Recent files"
-#~ msgstr "Arquivos recentes"
-
-#~ msgid "Manual"
-#~ msgstr "Manual"
-
-#~ msgid "Attribute failed ot find.\n"
-#~ msgstr "Atributo não encontrado\n"
-
-#~ msgid "Attribute Mode"
-#~ msgstr "Modo de Atributo"
-
-#~ msgid "ERROR! you can't get an attribute without an ='s\n"
-#~ msgstr "ERRO! Você não tem atributo sem um sinal = (igual)\n"
-
-#~ msgid "ERROR: NULL object in o_rotate_90!\n"
-#~ msgstr "ERRO: NENHUM objeto na rotação 90!\n"
-
-#~ msgid "ERROR: NULL object in o_mirror!\n"
-#~ msgstr "ERRO: NENHUM objeto ao espelhar!\n"
-
-#~ msgid "Invalid mode [%s] passed to %s\n"
-#~ msgstr "Modo [%s] inválido passado para %s\n"
-
-#~ msgid ""
-#~ "While gschem is in ALPHA, please be sure that you have the latest rc "
-#~ "file.\n"
-#~ msgstr ""
-#~ "Enquanto o gschem for versão ALPHA, assegure que você tem a última versão "
-#~ "de arquivo rc.\n"
-
-#~ msgid "Invalid mode [%s] passed to scrollbar-update\n"
-#~ msgstr "Modo [%s] inválido passado para scrollbar-update\n"
-
-#~ msgid "Duplicate stroke definition passed to stroke! [%s]\n"
-#~ msgstr "Definição stroke duplicada passada para stroke! [%s]\n"
-
-#~ msgid ""
-#~ "A stroke keyword has been found in an rc file, but gschem\n"
-#~ "is not compiled to support strokes, please recompile gschem\n"
-#~ "with LibStroke\n"
-#~ msgstr ""
-#~ "Uma palavra-chave stroke foi encontrada num arquivo rc,\n"
-#~ "mas o gschem não está com suporte a strokes, recompile\n"
-#~ "o gschem com a biblioteca LibStroke\n"
-
-#~ msgid "selected a nonexistant object!\n"
-#~ msgstr "Selecionado um objeto inexistente!\n"
-
-#~ msgid ""
-#~ "Could not unembedded component, could not find appropriate .sym file\n"
-#~ msgstr ""
-#~ "Impossivel desembutir componente, arquivo .sym apropriado não pode ser "
-#~ "encontrado\n"
-
-#~ msgid "Component still embedded and not updated\n"
-#~ msgstr "O componente ainda está embutido e não atualizado\n"
-
-#~ msgid "More than one component found with name [%s]\n"
-#~ msgstr "Mais de um componente encontrado com o nome [%s]\n"
-
-#~ msgid "Write PNG..."
-#~ msgstr "Salvar PNG..."
-
-#~ msgid "Tried to render text with an invalid angle: %d\n"
-#~ msgstr "Tentou rederizar texto com ângulo inválido: %d\n"
-
-#~ msgid "Enter new string."
-#~ msgstr "Insira nova string"
-
-#~ msgid "Add/Edit Attribute"
-#~ msgstr "Inserir/Editar Atributo"
-
-#~ msgid "Multiple Attach"
-#~ msgstr "Anexar Multiplos"
-
-#~ msgid "Replace"
-#~ msgstr "Substituir"
-
-#~ msgid "Component [%s] has been embedded\n"
-#~ msgstr "Componente [%s] foi embutido\n"
-
-#~ msgid "Picture [%s] has been embedded\n"
-#~ msgstr "A imagem [%s] foi embutida\n"
-
-#~ msgid ""
-#~ "Could not find component [%s], while trying to unembed. Component is "
-#~ "still embedded\n"
-#~ msgstr ""
-#~ "Componente [%s] não encontrado ao desembutir. Componente permaneceu "
-#~ "embutido\n"
-
-#~ msgid "Component [%s] has been successfully unembedded\n"
-#~ msgstr "Componente [%s] foi desembutido com sucesso\n"
-
-#~ msgid "Picture [%s] has been unembedded\n"
-#~ msgstr "Imagem [%s] foi desembutida com sucesso\n"
-
-#~ msgid "Please select a picture file."
-#~ msgstr "Selecione um arquivo de imagem."
-
-#~ msgid "Edit Text Color"
-#~ msgstr "Editar Cor de Texto"
-
-#~ msgid "String too long... hack!\n"
-#~ msgstr "String muito longa... abrevie!\n"
-
-#~ msgid "Ran out of space in the hotkey buffer...\n"
-#~ msgstr "Estouro de espaço no buffer de atalhos...\n"
-
-#~ msgid "Height"
-#~ msgstr "Altura"
-
-#~ msgid "Script Execute..."
-#~ msgstr "Executar Script..."
-
-#~ msgid "search text"
-#~ msgstr "Procurar texto"
-
-#~ msgid "hierarchical sheets"
-#~ msgstr "Folhas hierarquicas"
-
-#~ msgid "unnumbered"
-#~ msgstr "Não numerado"
-
-#~ msgid "all"
-#~ msgstr "tudo"
-
-#~ msgid "options"
-#~ msgstr "Opções"
-
-#~ msgid "top down"
-#~ msgstr "cima baixo"
-
-#~ msgid "New Page created [%s]\n"
-#~ msgstr "Criada Nova Página [%s]\n"
-
-#~ msgid ""
-#~ "There are unsaved schematics!\n"
-#~ "\n"
-#~ "Are you sure?\n"
-#~ "OK will discard ALL changes!"
-#~ msgstr ""
-#~ "Existem arquivos não salvos!\n"
-#~ "\n"
-#~ "Você tem certeza?\n"
-#~ "Um OK vai descartar TODAS as alterações!"
-
-#~ msgid "Agg, could not open directory: %s\n"
-#~ msgstr "Arg, Nâo pode abrir diretório %s\n"
-
-#~ msgid "Too many directories! Increase MAX_DIRS\n"
-#~ msgstr "Muitos diretórios! Aumentar MAX_DIRS\n"
-
-#~ msgid "Too many files! Increase MAX_FILES\n"
-#~ msgstr "Muitos arquivos! Aumentar MAX_FILES\n"
-
-#~ msgid "sch - Schematics"
-#~ msgstr "sch - Diagramas"
-
-#~ msgid "sym - Symbols "
-#~ msgstr "sym - Símbolos "
-
-#~ msgid "sym/sch - Schematics and Symbols"
-#~ msgstr "sym/sch - Símbolos e Diagramas"
-
-#~ msgid "* - All Files"
-#~ msgstr "Todos arquivos"
-
-#~ msgid "Search in Files"
-#~ msgstr "Localizar em arquivos"
-
-#~ msgid "Search in Files - End of list"
-#~ msgstr "Localizar em arquivos - Fim de lista"
-
-#~ msgid "Search in Components"
-#~ msgstr "Procurar nos componentes"
-
-#~ msgid "Search in Components - Found library only"
-#~ msgstr "Procurar nos componentes - Encontrado só biblioteca"
-
-#~ msgid "Search in Components - End of list"
-#~ msgstr "Procurar nos componentes - Fim de lista"
-
-#~ msgid "Directories"
-#~ msgstr "Diretórios"
-
-#~ msgid "Files"
-#~ msgstr "Arquivos"
-
-#~ msgid "Discard changes"
-#~ msgstr "Descartar Alterações"
-
-#~ msgid ""
-#~ "Gschem doesn't support pictures if it has been compiled using GTK 1.2"
-#~ msgstr "Gschem não suporta imagens se compilado para GTK 1.2"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Cancel"
-#~ msgstr "Cancelar"
-
-#~ msgid "Apply"
-#~ msgstr "Aplicar"
-
-#~ msgid "Find"
-#~ msgstr "Localizar"
-
-#~ msgid "Done"
-#~ msgstr "Concluído"
-
-#~ msgid "SaveAs"
-#~ msgstr "Salvar Como"
-
-#~ msgid "Write"
-#~ msgstr "Salvar"
-
-#~ msgid "Print"
-#~ msgstr "Imprimir"
-
-#~ msgid "Edit mode"
-#~ msgstr "Modo de Edição"
-
-#~ msgid "Move mode"
-#~ msgstr "Modo de Mover"
-
-#~ msgid "Copy mode"
-#~ msgstr "Modo de Copiar"
-
-#~ msgid "Delete mode"
-#~ msgstr "Modo de Apagar"
-
-#~ msgid "Rotate mode"
-#~ msgstr "Modo de Rotacionar"
-
-#~ msgid "Mirror mode"
-#~ msgstr "Modo de Espelhar"
-
-#, fuzzy
-#~ msgid "Accelerator String"
-#~ msgstr "String geral"
-
-#, fuzzy
-#~ msgid "Invalid size [%f] passed to postscript-font-scale\n"
-#~ msgstr "Tamanho [%d] inválido (text-size)\n"
-
-#, fuzzy
-#~ msgid "Cut Buffer"
-#~ msgstr "Buffer"
-
-#, fuzzy
-#~ msgid "Copy Buffer"
-#~ msgstr "Buffer"
-
-#~ msgid "Toggle Grid On/Off"
-#~ msgstr "Liga/Desliga Grade"
-
-#~ msgid "Invalid color [%s] passed to %s\n"
-#~ msgstr "Cor [%s] inválida passada para %s\n"
-
-#~ msgid "You must set the GEDADATA environment variable!\n"
-#~ msgstr "Você precisa acertar a variável de ambiente GEDADATA.\n"
-
-#~ msgid "Grid ON\n"
-#~ msgstr "Grade LIGADA\n"
-
-#~ msgid "Unknown end for arc (%d)\n"
-#~ msgstr "Fim de arco desconhecido:(%d)\n"
-
-#~ msgid "Unknown type for arc !\n"
-#~ msgstr "Tipo para arco desconhecido!\n"
-
-#~ msgid "Unknown end for box (%d)\n"
-#~ msgstr "Fim desconhecido para caixa (%d)\n"
-
-#~ msgid "Unknown type for box !\n"
-#~ msgstr "Tipo desconhecido para caixa!\n"
-
-#~ msgid "Unknown end for circle\n"
-#~ msgstr "Fim para arco desconhecido\n"
-
-#~ msgid "Unknown type for circle!\n"
-#~ msgstr "Tipo para arco desconhecido!\n"
-
-#, fuzzy
-#~ msgid "Unknown end for path (%d)\n"
-#~ msgstr "Fim de arco desconhecido:(%d)\n"
-
-#, fuzzy
-#~ msgid "Unknown type for path !\n"
-#~ msgstr "Tipo para arco desconhecido!\n"
-
-#~ msgid "Could not find the color %s!\n"
-#~ msgstr "Impossível encontrar a cor %s!\n"
-
-#~ msgid "Defaulting color to white\n"
-#~ msgstr "Cor padrão para branco\n"
-
-#~ msgid "Ack! Cannot allocate white!\n"
-#~ msgstr "Ih! Não consigo alocar o branco!\n"
-
-#~ msgid "Got NULL in o_attrib_toggle_visibility\n"
-#~ msgstr "tem NULO em o_attrib_toggle_visibility\n"
-
-#~ msgid "Got NULL in o_attrib_toggle_show_name_value\n"
-#~ msgstr "Tem NULO em o_attrib_toggle_show_name_value\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Found a version [%s%s] gschemrc file:\n"
-#~ "[%s]\n"
-#~ msgstr ""
-#~ "Encontrado um arquivo gschemrc versão [%s]:\n"
-#~ "[%s]\n"
-
-#, fuzzy
-#~ msgid "Select Image Filename..."
-#~ msgstr "Especifique um nome!\n"
-
-#, fuzzy
-#~ msgid "Filename:"
-#~ msgstr "Nome do arquivo"
-
-#~ msgid "File"
-#~ msgstr "Arquivo"
-
-#~ msgid "Buffer"
-#~ msgstr "Buffer"
-
-#~ msgid "View"
-#~ msgstr "Exibir"
-
-#~ msgid "Page"
-#~ msgstr "Página"
-
-#~ msgid "Add"
-#~ msgstr "Adicionar"
-
-#~ msgid "Hierarchy"
-#~ msgstr "Hierarquia"
-
-#~ msgid "Options"
-#~ msgstr "Opções"
-
-#~ msgid "Help"
-#~ msgstr "Ajuda"
