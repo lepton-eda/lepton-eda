@@ -422,7 +422,7 @@ Notable changes in gEDA/gaf 1.5.1
 * Support for arbitrary filled and unfilled paths, using a subset of
   the SVG path syntax.  For more information, please see the file
   format specification.
-  <http://geda.seul.org/wiki/geda:file_format_spec>
+  <http://wiki.geda-project.org/geda:file_format_spec>
 
   - `gschem' does not yet provide a GUI for creating or editing path
     elements.  However, it does support rendering them.  They can also

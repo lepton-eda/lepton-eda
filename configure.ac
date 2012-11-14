@@ -8,7 +8,7 @@ dnl directory.
 # Set up configuration system
 #####################################################################
 
-AC_INIT([gEDA/gaf], [1.7.2], [geda-bug@seul.org], [geda-gaf])
+AC_INIT([gEDA/gaf], [1.7.2], [https://bugs.launchpad.net/geda], [geda-gaf])
 AC_PREREQ([2.60])
 
 AC_CONFIG_SRCDIR([libgeda/src/libgeda.c])

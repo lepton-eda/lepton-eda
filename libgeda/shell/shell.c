@@ -57,7 +57,7 @@ usage (int exit_status)
 "  -h             display this message and exit\n"
 "  -V             display version information and exit\n"
 "\n"
-"Please report bugs to geda-bug@seul.org\n"
+"Please report bugs at <https://bugs.launchpad.net/geda>\n"
   );
   exit (exit_status);
 }
