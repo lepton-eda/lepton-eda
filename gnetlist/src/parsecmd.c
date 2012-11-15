@@ -87,8 +87,8 @@ void usage(char *cmd)
 "  -V, --version   Show version information.\n"
 "  --              Treat all remaining arguments as filenames.\n"
 "\n"
-"Report bugs to <geda-bug@seul.org>.\n"
-"gEDA/gaf homepage: <http://gpleda.org>\n",
+"Report bugs at <https://bugs.launchpad.net/geda>\n"
+"gEDA/gaf homepage: <http://www.geda-project.org/>\n",
           cmd);
   exit (0);
 }
