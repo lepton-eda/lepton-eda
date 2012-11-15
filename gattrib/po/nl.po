@@ -1,15 +1,15 @@
 # Dutch translation for the geda-gattrib package.
 # Copyright (C) 2003-2008 Stuart D. Brorson and the respective original authors (which are listed on the respective files).
 # This file is distributed under the same license as the geda-gattrib package.
-# Bert Timmerman <bert.timmerman@xs4all.nl>, 2007, 2008.
+# Bert Timmerman <bert.timmerman@xs4all.nl>, 2007, 2008, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2012-11-14 17:37+0000\n"
-"PO-Revision-Date: 2010-01-29 16:51+0000\n"
-"Last-Translator: lambert63 <bert.timmerman@xs4all.nl>\n"
+"PO-Revision-Date: 2012-01-18 14:31+0100\n"
+"Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: gattrib/data/geda-gattrib.desktop.in:3
 msgid "gEDA Attribute Editor"
-msgstr "gEDA Attribuut Bewerking"
+msgstr "gEDA Attribuut Editor"
 
 #: gattrib/data/geda-gattrib.desktop.in:4
 msgid "Manipulate component attributes with gattrib"

@@ -1,15 +1,15 @@
 # Dutch translation for the geda-libgeda package.
 # Copyright (C) 1998-2008 Ales Hvezda and the respective original authors (which are listed on the respective files).
 # This file is distributed under the same license as the geda-libgeda package.
-# Bert Timmerman <bert.timmerman@xs4all.nl>, 2007, 2008
+# Bert Timmerman <bert.timmerman@xs4all.nl>, 2007, 2008, 2012
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
 "POT-Creation-Date: 2012-11-13 16:09+0000\n"
-"PO-Revision-Date: 2012-02-05 10:18+0000\n"
-"Last-Translator: Bert Timmerman <Unknown>\n"
+"PO-Revision-Date: 2012-11-15 09:55+0100\n"
+"Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,6 @@ msgstr "gEDA Schakeling Schema"
 msgid "gEDA Schematic Symbol"
 msgstr "gEDA Schema Symbool"
 
-# ! \todo Misschien kunnen wij doorgaan in plaats van compleet falen? In elk geval, gracieus falen is beter dan het programma om zeep helpen, wat gewoonlijk gebeurt zou zijn...
 #: libgeda/src/a_basic.c:182
 #, c-format
 msgid "o_save_objects: object %p has unknown type '%c'\n"
@@ -62,7 +61,7 @@ msgid ""
 ">>\n"
 "%s<<\n"
 msgstr ""
-"Lees onverwacht bevestig symbool start merk in [%s] :\n"
+"Lees een onverwacht toegevoegd symbool start merkteken in [%s] :\n"
 ">>\n"
 "%s<<\n"
 
@@ -283,7 +282,7 @@ msgstr ""
 
 #: libgeda/src/o_arc_basic.c:256 libgeda/src/o_arc_basic.c:269
 msgid "Failed to parse arc object"
-msgstr "Faalde om boog object te ontleden"
+msgstr "Faalde bij het ontleden van een boog object"
 
 #: libgeda/src/o_arc_basic.c:276
 #, c-format
@@ -318,11 +317,11 @@ msgstr "Probeerde attribuut [%s] aan meer dan een object toe te voegen\n"
 
 #: libgeda/src/o_attrib.c:341
 msgid "Tried to attach a non-text item as an attribute"
-msgstr "Probeerde een niet-tekst item als een attribuut vast te maken"
+msgstr "Probeerde een niet tekst item toe te voegen als een attribuut"
 
 #: libgeda/src/o_attrib.c:348
 msgid "Unexpected end-of-file in attribute list"
-msgstr "Onverwacht einde van bestand in attribuutlijst"
+msgstr "Onverwacht einde-bestand in attribuutlijst"
 
 #: libgeda/src/o_basic.c:196 libgeda/src/o_basic.c:208
 msgid "Invalid space specified, setting to 100\n"
@@ -334,7 +333,7 @@ msgstr "Ongeldige lengte gespecificeerd, ingesteld op 100\n"
 
 #: libgeda/src/o_box_basic.c:287 libgeda/src/o_box_basic.c:316
 msgid "Failed to parse box object"
-msgstr "Faalde om rechthoek object te ontleden"
+msgstr "Faalde bij het ontleden van een rechthoek object"
 
 #: libgeda/src/o_box_basic.c:322
 #, c-format
@@ -344,7 +343,7 @@ msgstr ""
 
 #: libgeda/src/o_bus_basic.c:160 libgeda/src/o_bus_basic.c:167
 msgid "Failed to parse bus object"
-msgstr "Faalde om bus object te ontleden"
+msgstr "Faalde bij het ontleden van een bus object"
 
 #: libgeda/src/o_bus_basic.c:173
 #, c-format
@@ -366,16 +365,16 @@ msgstr "Cirkels met een radius van nul zijn niet toegestaan\n"
 
 #: libgeda/src/o_circle_basic.c:246 libgeda/src/o_circle_basic.c:275
 msgid "Failed to parse circle object"
-msgstr "Faalde om cirkel object te ontleden"
+msgstr "Faalde bij het ontleden van een cirkel object"
 
 #: libgeda/src/o_circle_basic.c:282
 #, c-format
 msgid "Found a zero or negative radius circle [ %c %d %d %d %d ]\n"
-msgstr "Nul of negatieve radius cirkel [ %c %d %d %d %d ] gevonden\n"
+msgstr "Een cirkel met een radius van nul gevonden [ %c %d %d %d %d ]\n"
 
 #: libgeda/src/o_circle_basic.c:284
 msgid "Setting radius to 0\n"
-msgstr "Zet radius op 0\n"
+msgstr "Radius op 0 ingesteld\n"
 
 #: libgeda/src/o_complex_basic.c:422
 #, c-format
@@ -388,7 +387,7 @@ msgstr ""
 
 #: libgeda/src/o_complex_basic.c:654
 msgid "Failed to parse complex object"
-msgstr "Faalde om complex object te ontleden"
+msgstr "Faalde bij het ontleden van een complex object"
 
 #: libgeda/src/o_complex_basic.c:667
 #, c-format
@@ -411,7 +410,7 @@ msgstr ""
 
 #: libgeda/src/o_complex_basic.c:681
 msgid "Setting mirror to 0\n"
-msgstr "Zet spiegel op 0\n"
+msgstr "Spiegelen op 0 ingesteld\n"
 
 #: libgeda/src/o_complex_basic.c:994
 #, c-format
@@ -484,7 +483,6 @@ msgstr ""
 msgid "Component [%s] has been embedded\n"
 msgstr "Komponent [%s] is ingevoegd\n"
 
-# symbool niet gevonden in de symbolenbibliotheek: signaleer een fout
 #: libgeda/src/o_embed.c:102
 #, c-format
 msgid ""
@@ -501,7 +499,7 @@ msgstr "Komponent [%s] is succesvol uitgevoegd\n"
 
 #: libgeda/src/o_line_basic.c:229 libgeda/src/o_line_basic.c:247
 msgid "Failed to parse line object"
-msgstr "Faalde om lijn object te ontleden"
+msgstr "Faalde bij het ontleden van een lijn object"
 
 #: libgeda/src/o_line_basic.c:259
 #, c-format
@@ -510,7 +508,7 @@ msgstr "Lijn met een lengte van nul gevonden [ %c %d %d %d %d %d ]\n"
 
 #: libgeda/src/o_net_basic.c:156
 msgid "Failed to parse net object"
-msgstr "Faalde om draad object te ontleden"
+msgstr "Faalde bij het ontleden van een net object"
 
 #: libgeda/src/o_net_basic.c:161
 #, c-format
@@ -519,15 +517,15 @@ msgstr "Net met een lengte van nul gevonden [ %c %d %d %d %d %d ]\n"
 
 #: libgeda/src/o_path_basic.c:181
 msgid "Failed to parse path object"
-msgstr "Faalde om pad object te ontleden"
+msgstr "Faalde bij het ontleden van een pad object"
 
 #: libgeda/src/o_path_basic.c:207
 msgid "Unexpected end-of-file when reading path"
-msgstr "Onverwacht einde van bestand tijdens het lezen van pad"
+msgstr "Onverwacht einde-bestand tijdens het lezen van een pad"
 
 #: libgeda/src/o_picture.c:72
 msgid "Failed to parse picture definition"
-msgstr "Faalde om afbeelding definitie te ontleden"
+msgstr "Faalde bij het ontleden van een afbeelding definitie"
 
 #: libgeda/src/o_picture.c:77
 #, c-format
@@ -630,7 +628,7 @@ msgstr "Laden van afbeelding uit bestand %s faalde: %s.\n"
 
 #: libgeda/src/o_pin_basic.c:160 libgeda/src/o_pin_basic.c:168
 msgid "Failed to parse pin object"
-msgstr "Faalde om pen object te ontleden"
+msgstr "Faalde bij het ontleden van een pin object"
 
 #: libgeda/src/o_pin_basic.c:174
 msgid ""
@@ -648,7 +646,7 @@ msgstr "Pen met een ongeldige whichend gevonden (instellen op nul): %d\n"
 #: libgeda/src/o_text_basic.c:356 libgeda/src/o_text_basic.c:366
 #: libgeda/src/o_text_basic.c:376
 msgid "Failed to parse text object"
-msgstr "Faalde om tekst object te ontleden"
+msgstr "Faalde bij het ontleden van een tekst object"
 
 #: libgeda/src/o_text_basic.c:383
 #, c-format
@@ -675,7 +673,7 @@ msgstr "Uitlijning op LINKS_ONDER ingesteld\n"
 #: libgeda/src/o_text_basic.c:440
 #, c-format
 msgid "Unexpected end-of-file after %d lines"
-msgstr "Onverwacht einde van bestand na %d regels"
+msgstr "Onverwacht einde-bestand na %d lijnen"
 
 #: libgeda/src/s_clib.c:465
 #, c-format
@@ -834,15 +832,15 @@ msgstr "Geen slotdef=#:#,#,#... attribuut gevonden\n"
 
 #: libgeda/src/s_slot.c:168
 msgid "Improper slotdef syntax: missing \":\".\n"
-msgstr "Verkeerde slotdef syntax: ontbrekende \":\".\n"
+msgstr "Goed slotdef syntax: ontbreekt \":\".\n"
 
 #: libgeda/src/s_slot.c:183
 msgid "Did not find proper slotdef=#:#,#,#... attribute\n"
-msgstr "Vondt geen goede slotdef=#:#,#,#... attribuut\n"
+msgstr "Geen goed slotdef=#:#,#,#... attribuut gevonden\n"
 
 #: libgeda/src/s_slot.c:213
 msgid "component missing pinseq= attribute\n"
-msgstr "component mist pinseq= attribuut\n"
+msgstr "component mist een pinseq- attribuut\n"
 
 #: libgeda/src/scheme_attrib.c:67
 msgid "~A is not a valid attribute: invalid string '~A'."
@@ -996,7 +994,7 @@ msgstr "Object ~A is bevestigd aan een complex of een andere pagina"
 
 #: libgeda/src/scheme_page.c:442
 msgid "Parse error: ~s"
-msgstr "Ontleedfout:~s"
+msgstr "Ontleedfout: ~s"
 
 #: libgeda/scheme/geda/attrib.scm:59
 #, scheme-format
