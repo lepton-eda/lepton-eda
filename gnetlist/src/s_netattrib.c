@@ -302,7 +302,7 @@ char *s_netattrib_return_netname(TOPLEVEL * pr_current, OBJECT * o_current,
 #endif
 
     /* skip over POWER tag */
-    current_pin = strtok(pinnumber, " ");
+    (void) strtok(pinnumber, " ");
 
     current_pin = strtok(NULL, " ");
     if (current_pin == NULL) {

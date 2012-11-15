@@ -84,7 +84,8 @@ SCM g_rc_gschem_version(SCM scm_version)
   version = scm_to_utf8_string (scm_version);
   scm_dynwind_free (version);
 
-  if (g_strcasecmp (version, PACKAGE_DATE_VERSION) != 0) {
+  if (g_utf8_collate (g_utf8_casefold (version,-1),
+		      g_utf8_casefold (PACKAGE_DATE_VERSION,-1)) != 0) {
     sourcefile = NULL;
     rc_filename = g_rc_rc_filename ();
     sourcefile = scm_to_utf8_string (rc_filename);

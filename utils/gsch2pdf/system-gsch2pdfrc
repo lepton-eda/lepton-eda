@@ -1,0 +1,94 @@
+;                                                         -*-Scheme-*-
+; 
+; Init file for gsch2pdf
+;
+
+;  ;'s are comments
+;  keywords are case sensitive (guile feature)
+;  mode strings are case sensitive
+;  colors are not case sensitive 
+;  
+
+; page-size width height 
+;
+; Specifies the size of the paper for PDF creation
+; Be sure all inputs are reals (floats/doubles) and don't try to reverse
+; the values: to get a portrait mode.
+; The code that implements this automatically transforms the dimensions into
+; the proper aspect ratio.  All units are in inches. (use output-orientation
+; to get portrait mode)
+;
+(paper-size 11.0 8.5) ; letter
+;(paper-size 14.0 8.5) ; legal 
+;(paper-size 8.5 5.5) ; statement
+;(paper-size 17.0 11.0) ; tabloid
+;(paper-size 11.0 17.0) ; ledger
+;(paper-size 13.0 8.5) ; folio
+;(paper-size 10.833 8.472) ; quarto 
+;(paper-size 14 10) ; 10x14
+;(paper-size 10.0 7.5) ; executive
+;(paper-size 11.0 8.5) ; A
+;(paper-size 17.0 11.0) ; B 
+;(paper-size 22.0 17.0) ; C 
+;(paper-size 34.0 22.0) ; D 
+;(paper-size 44.0 34.0) ; E 
+;(paper-size 46.81 33.11) ; A0 
+;(paper-size 33.11 23.39) ; A1
+;(paper-size 23.39 16.54) ; A2
+;(paper-size 16.54 11.69) ; A3
+;(paper-size 11.69 8.27) ; A4
+;(paper-size 8.27 5.83) ; A5
+;(paper-size 5.83 4.13) ; A6
+;(paper-size 4.13 2.91) ; A7 
+;(paper-size 2.91 2.05) ; A8
+;(paper-size 2.05 1.46) ; A9 
+;(paper-size 1.46 1.02) ; A10
+;(paper-size 1.02 0.71) ; A11
+;(paper-size 0.71 0.51) ; A12
+
+; output-orientation string
+;
+; Controls which way the output page is layed out (landscape or portrait)
+;
+(output-orientation "landscape")
+;(output-orientation "portrait")
+
+; page-margins left top right bottom
+;
+; Specifies the page margins in inches.
+;
+(page-margins 0.75 0.75 0.75 0.75)
+
+; page-align halign valign
+;
+; If the page does not extend from margin to margin, these settings indicate
+; how to position the printed material within the margins. For horizonal, a value
+; of 0.0 positions the scematic against the left margin. A value of 1.0 positions
+; the schematic agains the right margin. A value of 0.5 centers the schematic
+; horzontally. Vertically positionaing is similar, with 0.0 at the top and 1.0 at
+; the bottom.
+;
+(page-align 0.5 0.5)
+
+; font family-style
+;
+; Sets the font family and style to use for PDF creation. Size can be included,
+; but will be ignored. The program uses the size specified in the schematic file.
+;
+(font "Sans")
+;(font "Arial")
+;(font "Arial Narrow")
+;(font "Helvetica")
+
+; junction-size-bus size
+;
+; Set the diameter of the dot used to indicate junctions on a bus
+;
+(junction-size-bus 50.0)
+
+
+; junction-size-net size
+;
+; Set the diameter of the dot used to indicate junctions on a net
+;
+(junction-size-net 30.0)

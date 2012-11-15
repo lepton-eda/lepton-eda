@@ -716,11 +716,11 @@ static void multiattrib_action_promote_attribute (GSCHEM_TOPLEVEL *w_current,
 
   if (o_is_visible (toplevel, o_attrib)) {
     /* If the attribute we're promoting is visible, don't clone its location */
-    o_new = o_attrib_add_attrib (w_current,
-                                 o_text_get_string (w_current->toplevel, o_attrib),
-                                 VISIBLE,
-                                 o_attrib->show_name_value,
-                                 object);
+    (void) o_attrib_add_attrib (w_current,
+				o_text_get_string (w_current->toplevel, o_attrib),
+				VISIBLE,
+				o_attrib->show_name_value,
+				object);
   } else {
       /* make a copy of the attribute object */
       o_new = o_object_copy (toplevel, o_attrib);
@@ -1585,7 +1585,7 @@ static void multiattrib_popup_menu(Multiattrib *multiattrib,
   menu = gtk_menu_new();
   for (tmp = item_list; tmp->label != NULL; tmp++) {
     GtkWidget *menuitem;
-    if (g_strcasecmp (tmp->label, "-") == 0) {
+    if (g_utf8_collate (tmp->label, "-") == 0) {
       menuitem = gtk_separator_menu_item_new ();
     } else {
       menuitem = gtk_menu_item_new_with_label (_(tmp->label));

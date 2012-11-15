@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
- * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2012 Ales Hvezda
+ * Copyright (C) 1998-2012 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,8 +98,8 @@ usage(char *cmd)
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
-"Report bugs to <geda-bug@seul.org>\n"
-"gEDA/gaf homepage: <http://gpleda.org>\n"),
+"Report bugs at <https://bugs.launchpad.net/geda>\n"
+"gEDA/gaf homepage: <http://www.geda-project.org/>\n"),
          cmd);
   exit(0);
 }

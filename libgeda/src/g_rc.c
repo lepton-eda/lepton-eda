@@ -463,8 +463,9 @@ SCM g_rc_component_library(SCM path, SCM name)
  *  \param [in] name    Optional descriptive name for component source.
  *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
  */
-SCM g_rc_component_library_command (SCM listcmd, SCM getcmd, 
-                                    SCM name)
+SCM
+g_rc_component_library_command (SCM listcmd, SCM getcmd,
+                                SCM name)
 {
   const CLibSource *src;
   gchar *lcmdstr, *gcmdstr;
@@ -501,7 +502,9 @@ SCM g_rc_component_library_command (SCM listcmd, SCM getcmd,
 
   scm_dynwind_end();
 
-  if (src != NULL) return SCM_BOOL_T;
+  if (src != NULL) {
+    return SCM_BOOL_T;
+  }
 
   return SCM_BOOL_F;
 }

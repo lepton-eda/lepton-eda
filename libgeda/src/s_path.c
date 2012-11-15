@@ -37,9 +37,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib/gmem.h>
-#include <glib/gmessages.h>
-#include <glib/gtypes.h>
+#include <glib.h>
 
 #include "libgeda_priv.h"
 
