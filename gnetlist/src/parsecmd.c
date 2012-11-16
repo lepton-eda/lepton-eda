@@ -75,6 +75,7 @@ void usage(char *cmd)
 "General options:\n"
 "  -q              Quiet mode.\n"
 "  -v, --verbose   Verbose mode.\n"
+"  -o FILE         Filename for netlist data output.\n"
 "  -L DIR          Add DIR to Scheme search path.\n"
 "  -g BACKEND      Specify netlist backend to use.\n"
 "  -O STRING       Pass an option string to backend.\n"
