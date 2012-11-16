@@ -130,7 +130,7 @@ void picture_selection_dialog (GSCHEM_TOPLEVEL *w_current)
   GdkPixbuf *pixbuf;
   GError *error = NULL;
   
-  w_current->pfswindow = gtk_file_chooser_dialog_new ("Select a picture file...",
+  w_current->pfswindow = gtk_file_chooser_dialog_new (_("Select a picture file..."),
 						      GTK_WINDOW(w_current->main_window),
 						      GTK_FILE_CHOOSER_ACTION_OPEN,
 						      GTK_STOCK_CANCEL, 
@@ -506,7 +506,7 @@ void picture_change_filename_dialog (GSCHEM_TOPLEVEL *w_current)
   gboolean result;
   GError *error = NULL;
   
-  w_current->pfswindow = gtk_file_chooser_dialog_new ("Select a picture file...",
+  w_current->pfswindow = gtk_file_chooser_dialog_new (_("Select a picture file..."),
 						      GTK_WINDOW(w_current->main_window),
 						      GTK_FILE_CHOOSER_ACTION_OPEN,
 						      GTK_STOCK_CANCEL, 

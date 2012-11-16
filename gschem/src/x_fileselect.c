@@ -331,7 +331,12 @@ int x_fileselect_load_backup(void *user_data, GString *message)
   GtkWidget *dialog;
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) user_data;
 
-  g_string_append(message, "\nIf you load the original file, the backup file will be overwritten in the next autosave timeout and it will be lost.\n\nDo you want to load the backup file?\n");
+  g_string_append(message, _(
+"\n"
+"If you load the original file, the backup file "
+"will be overwritten in the next autosave timeout and it will be lost."
+"\n\n"
+"Do you want to load the backup file?\n"));
 
   dialog = gtk_message_dialog_new (GTK_WINDOW(w_current->main_window),
                                    GTK_DIALOG_MODAL,
