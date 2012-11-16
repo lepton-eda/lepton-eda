@@ -428,8 +428,6 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         break;
 
       case(START_EMBEDDED):
-        new_obj = new_object_list->data;
-
         if (new_obj != NULL &&
             (new_obj->type == OBJ_COMPLEX ||
              new_obj->type == OBJ_PLACEHOLDER)) {
