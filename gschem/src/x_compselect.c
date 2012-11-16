@@ -828,6 +828,7 @@ compselect_callback_refresh_library (GtkButton *button, gpointer user_data)
   s_clib_refresh ();
 
   /* Refresh the "Library" view */
+  g_object_unref (gtk_tree_view_get_model (compselect->libtreeview));
   model = (GtkTreeModel *)
     g_object_new (GTK_TYPE_TREE_MODEL_FILTER,
                   "child-model", create_lib_tree_model (compselect),
@@ -849,6 +850,7 @@ compselect_callback_refresh_library (GtkButton *button, gpointer user_data)
   gtk_tree_view_set_model (compselect->libtreeview, model);
 
   /* Refresh the "In Use" view */
+  g_object_unref (gtk_tree_view_get_model (compselect->inusetreeview));
   model = create_inuse_tree_model (compselect);
 
   /* Here we can update the model without blocking signals
