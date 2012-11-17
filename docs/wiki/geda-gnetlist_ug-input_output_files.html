@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit2177"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> « <a href="geda-gnetlist_ug-running_gnetlist.html" class="wikilink1" title="geda-gnetlist_ug-running_gnetlist.html">Running gnetlist</a>  </td><td class="col1 centeralign">  <strong><a href="geda-gnetlist_ug.html" class="wikilink1" title="geda-gnetlist_ug.html">gEDA gnetlist User Guide</a></strong>     </td><td class="col2 rightalign">  <a href="geda-gnetlist_ug-netlist_backends.html" class="wikilink1" title="geda-gnetlist_ug-netlist_backends.html">Netlist backends</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT2177 TABLE [1-181] -->
+
+
+<h2 class="sectionedit2178"><a name="input_and_output_files" id="input_and_output_files">Input and output files</a></h2>
+<div class="level2">
+
+<p>
+gnetlist takes one or more <em>schematic files</em> as input, and outputs the result of processing them to generate a <em>netlist</em>.
+</p>
+
+<p>
+<p><div class="notetip">Schematic files can be viewed and edited using the gEDA <em>schematic capture</em> application. For more information, see the  <a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">gEDA gschem User Guide</a>.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT2178 SECTION "Input and output files" [194-539] -->
+<h3 class="sectionedit2179"><a name="schematic_files" id="schematic_files">Schematic files</a></h3>
+<div class="level3">
+
+<p>
+Schematic files contain <em>components</em>, which may represent subcircuits to be included in the design, or or discrete parts or devices to be used.  Components have <em>pins</em> associated with them, which represent either a physical pin on an electronic component, or a logical connection to a subcircuit schematic.  Components are connected up by joining their pins with <em>nets</em> or <em>buses</em>.  All of these elements can have <em>attributes</em> associated with them, which control how they are interpreted by gnetlist.
+</p>
+
+<p>
+You can list any number of schematic files as input.  They will be merged together to form a single netlist.  This allows you to split your circuit into several schematic diagrams, which can be useful if you have a very large and complicated design.  List the schematic files on the command line, e.g.:
+</p>
+<pre class="code">gnetlist power-supply.sch motor-drive.sch</pre>
+
+<p>
+If you have a schematic which has a filename beginning with a hyphen (”-”), you should add the special option <code>--</code> after any options and before your list of input files.  This will make sure that none of your filenames get misinterpreted as options. For example:
+</p>
+<pre class="code">gnetlist -- -tricky-name.sch</pre>
+
+</div>
+<!-- EDIT2179 SECTION "Schematic files" [540-1755] -->
+<h3 class="sectionedit2180"><a name="output_filename" id="output_filename">Output filename</a></h3>
+<div class="level3">
+
+<p>
+By default, gnetlist writes the netlist it generates to a file called “output.net”.  You can use the <code>-o</code> option to specify a different filename. For example, to output to a file called “stepper.bom”:
+</p>
+<pre class="code">gnetlist -o stepper.bom</pre>
+
+</div>
+<!-- EDIT2180 SECTION "Output filename" [1756-] --></body>
+</html>

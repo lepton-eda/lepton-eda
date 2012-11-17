@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit814"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> « <a href="geda-gschem_ug-selecting.html" class="wikilink1" title="geda-gschem_ug-selecting.html">Selecting objects</a>  </td><td class="col1 centeralign">  <strong><a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">gEDA gschem User Guide</a></strong>  </td><td class="col2 rightalign">  <a href="geda-gschem_ug-moving_copying.html" class="wikilink1" title="geda-gschem_ug-moving_copying.html">Moving and copying</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT814 TABLE [1-149] -->
+
+
+<h2 class="sectionedit815"><a name="grids" id="grids">Grids</a></h2>
+<div class="level2">
+
+<p>
+Objects in a <em>gschem</em> schematic or symbol are placed using a <em>grid</em>.  There are two grids active at any time: the <em>snap grid</em>, and the <em>display grid</em>.  The current grid settings are shown in the gschem status bar as “Grid(100,100)”, where the first number describes the snap grid and the second the display grid.
+</p>
+
+</div>
+<!-- EDIT815 SECTION "Grids" [162-502] -->
+<h3 class="sectionedit816"><a name="snap_grid" id="snap_grid">Snap grid</a></h3>
+<div class="level3">
+
+<p>
+The snap grid is used by editing operations to help you position objects so that they connect up properly.  The size of grid can be increased with <strong>Options→Scale up grid spacing</strong>, and decreased with <strong>Options→Scale down grid spacing</strong>.  It can be set to a particular value with <strong>Options→Snap grid spacing…</strong>.
+</p>
+
+<p>
+The current snapping mode can be cycled with <strong>Options→Toggle Snap On/Off</strong>. There are three snapping modes available:
+</p>
+<ol>
+<li class="level1"><div class="li"> In normal mode, movements are by multiples of the snap grid size, but objects that are not aligned with the grid will not be forced back into line with it.</div>
+</li>
+<li class="level1"><div class="li"> In resnap mode, “Resnap Active” is shown in the status bar.  In this mode, objects that are not aligned with the grid will be forced back onto it.  This can be useful if you have an object that&#039;s aligned to a different size grid to the one you are using.</div>
+</li>
+<li class="level1"><div class="li"> In snap off mode, “Snap Off” is shown in the status bar.  In this mode, objects are not snapped to the grid at all.</div>
+</li>
+</ol>
+
+<p>
+<p><div class="noteimportant">You must be careful when editing with snap disabled: slightly off-grid pins, nets and components can be very difficult to connect up correctly.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT816 SECTION "Snap grid" [503-1674] -->
+<h3 class="sectionedit817"><a name="display_grid" id="display_grid">Display grid</a></h3>
+<div class="level3">
+
+<p>
+The display grid is shown at the smallest multiple of the snap grid size that makes sense to display at the current zoom level.  You can cycle the style of grid displayed using <strong>Options→Cycle grid styles</strong>.
+</p>
+
+</div>
+<!-- EDIT817 SECTION "Display grid" [1675-] --></body>
+</html>

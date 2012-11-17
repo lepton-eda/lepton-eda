@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit764"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> « <a href="geda-gschem_ug-moving_copying.html" class="wikilink1" title="geda-gschem_ug-moving_copying.html">Moving and copying</a>  </td><td class="col1 centeralign">  <strong><a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">gEDA gschem User Guide</a></strong>  </td><td class="col2 rightalign">  <a href="geda-gschem_ug-pins_nets_buses.html" class="wikilink1" title="geda-gschem_ug-pins_nets_buses.html">Pins, nets and buses</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT764 TABLE [1-143] -->
+<h2 class="sectionedit765"><a name="components" id="components">Components</a></h2>
+<div class="level2">
+
+<p>
+A <em>component</em> in a schematic is an instance of a symbol from a <em>symbol library</em>.  They can represent subcircuits to be included in the design, or discrete parts or devices to be used.
+</p>
+
+<p>
+To add a component to a schematic page, press <strong>&lt;I&gt;</strong> or select <strong>Add→Component…</strong> to bring up the “Select Component…” window.  The window has three main areas:
+</p>
+<ul>
+<li class="level1"><div class="li"> The <em>library area</em> is on the left side of the window, and allows you to choose a symbol to place on the schematic page.</div>
+</li>
+<li class="level1"><div class="li"> The <em>preview area</em> is on the right side of the window.  This shows a picture of the chosen symbol, and its <a href="geda-gschem_ug-attributes.html" class="wikilink1" title="geda-gschem_ug-attributes.html">attributes</a>.</div>
+</li>
+<li class="level1"><div class="li"> The <em>insertion mode menu</em> at the bottom of the window controls how components are inserted.</div>
+</li>
+</ul>
+
+<p>
+<p><div class="noteimportant">
+Components should only be added to schematics, and not to symbols.
+
+</div></p>
+</p>
+
+</div>
+<!-- EDIT765 SECTION "Components" [145-972] -->
+<h3 class="sectionedit766"><a name="selecting_a_component_you_have_already_used" id="selecting_a_component_you_have_already_used">Selecting a component you have already used</a></h3>
+<div class="level3">
+
+<p>
+By switching to the <strong>In Use</strong> tab of the component selector, you can view a list of the symbols that have already been used in the schematic.  To select a symbol from the list, left-click on it.
+</p>
+
+<p>
+If the list needs to be updated, click the <strong>Refresh</strong> button at the bottom of the “In Use” page.
+</p>
+
+</div>
+<!-- EDIT766 SECTION "Selecting a component you have already used" [973-1323] -->
+<h3 class="sectionedit767"><a name="selecting_a_component_from_a_symbol_library" id="selecting_a_component_from_a_symbol_library">Selecting a component from a symbol library</a></h3>
+<div class="level3">
+
+<p>
+<p><div class="notetip">See <a href="geda-gschem_ug-config.html" class="wikilink1" title="geda-gschem_ug-config.html">Configuring gschem</a> for information on controlling which symbol libraries appear in the component selector.
+</div></p>
+</p>
+
+<p>
+To select a symbol from a symbol library, switch to the <strong>Libraries</strong> tab of the component selector.  This shows a list of available libraries.  To view the symbols in a library, double-click on the library&#039;s name, or left-click the arrow next to it.  To select a symbol from the list, left-click on it.
+</p>
+
+<p>
+Alternatively, you can search all available symbols by typing into the <strong>Filter</strong> box at the bottom of the <strong>Libraries</strong> page.
+</p>
+
+<p>
+The list of libraries and symbols may need to be updated (for example, if you modified a symbol library while gschem was running).  To update it, click the <strong>Refresh</strong> button at the bottom of the <strong>Libraries</strong> page.
+</p>
+
+</div>
+<!-- EDIT767 SECTION "Selecting a component from a symbol library" [1324-2168] -->
+<h3 class="sectionedit768"><a name="placing_a_component" id="placing_a_component">Placing a component</a></h3>
+<div class="level3">
+
+<p>
+When you have selected a component, left-click in the schematic view area of the <a href="geda-gschem_ug-main_window.html" class="wikilink1" title="geda-gschem_ug-main_window.html">main window</a> to add it to the page.  You can continue to click to place copies of the same component, or right-click to finish placing.
+</p>
+
+<p>
+To hide the “Select Component…” window while you place components, click <strong>OK</strong>.  When you right-click to finish placing components, the window will re-appear.
+</p>
+
+</div>
+<!-- EDIT768 SECTION "Placing a component" [2169-2595] -->
+<h3 class="sectionedit769"><a name="symbol_insertion_modes_and_embedding" id="symbol_insertion_modes_and_embedding">Symbol insertion modes and embedding</a></h3>
+<div class="level3">
+
+<p>
+There are three ways that gschem can insert a symbol into a schematic:
+</p>
+<ol>
+<li class="level1"><div class="li"> As a component linked to a symbol in the symbol library (<strong>Default behavior - reference component</strong>).  This is the default method, which ensures that when you update a library symbol, all the places it was used are updated too.</div>
+</li>
+<li class="level1"><div class="li"> As a component with the symbol data copied into the schematic (<strong>Embed component in schematic</strong>).  If you <em>embed</em> the symbol, it is easier to share your schematic with other users without having to set up the same symbol libraries.</div>
+</li>
+<li class="level1"><div class="li"> As individual objects obtained by breaking the symbol apart (<strong>Include component as individual objects</strong>).</div>
+</li>
+</ol>
+
+<p>
+You can make a linked component embedded by selecting it and using <strong>Edit→Embed Component/Picture</strong>.  To make an embedded component linked, use <strong>Edit→Unembed Component/Picture</strong>.
+</p>
+
+<p>
+<p><div class="noteclassic">If an embedded component cannot be matched up with a symbol from the available symbol libraries, <strong>Edit→Unembed Component/Picture</strong> will not modify it.
+</div></p>
+</p>
+
+<p>
+If you wish to update an embedded component after making changes to the original symbol file in the library, use <strong>Edit→Update Component</strong>.
+</p>
+
+</div>
+<!-- EDIT769 SECTION "Symbol insertion modes and embedding" [2596-3793] -->
+<h3 class="sectionedit770"><a name="editing_symbols" id="editing_symbols">Editing symbols</a></h3>
+<div class="level3">
+
+<p>
+To edit a component&#039;s symbol file, select the component and use <strong>Hierarchy→Down Symbol</strong>.  gschem will open and display the symbol page for editing.  When you are finished editing, save the file and use <strong>Hierarchy→Up</strong> to return to the schematic.  You may need to use <strong>Edit→Update Component</strong> for your changes to be reflected in the schematic view.
+</p>
+
+</div>
+<!-- EDIT770 SECTION "Editing symbols" [3794-4179] -->
+<h3 class="sectionedit771"><a name="missing_symbols" id="missing_symbols">Missing symbols</a></h3>
+<div class="level3">
+
+<p>
+If, when <a href="geda-gschem_ug-schematic_pages.html" class="wikilink1" title="geda-gschem_ug-schematic_pages.html">loading a schematic</a>, one of the symbols it needs cannot be found in the available symbol libraries, a warning graphic will be displayed in its place.
+</p>
+
+</div>
+<!-- EDIT771 SECTION "Missing symbols" [4180-4386] -->
+<h3 class="sectionedit772"><a name="viewing_component_documentation" id="viewing_component_documentation">Viewing component documentation</a></h3>
+<div class="level3">
+
+<p>
+<p><div class="notetip">When designing symbols, specify the location of component documentation using a <a href="geda-master_attributes_list.html#documentation" class="wikilink1" title="geda-master_attributes_list.html">documentation attribute</a>.  See also <a href="geda-gschem_ug-attributes.html" class="wikilink1" title="geda-gschem_ug-attributes.html">Attributes</a>.
+</div></p>
+</p>
+
+<p>
+A component may have a datasheet or other documentation associated with it.  To view a component&#039;s documentation, <a href="geda-gschem_ug-selecting.html" class="wikilink1" title="geda-gschem_ug-selecting.html">select it</a> and use <strong>Help→Component Documentation</strong>.
+</p>
+
+</div>
+<!-- EDIT772 SECTION "Viewing component documentation" [4387-] --></body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit2142"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> « <a href="geda-gnetlist_ug-basic_netlisting.html" class="wikilink1" title="geda-gnetlist_ug-basic_netlisting.html">Basic netlisting</a>  </td><td class="col1 centeralign">  <strong><a href="geda-gnetlist_ug.html" class="wikilink1" title="geda-gnetlist_ug.html">gEDA gnetlist User Guide</a></strong>     </td><td class="col2 rightalign">  <a href="geda-gnetlist_ug-slotting.html" class="wikilink1" title="geda-gnetlist_ug-slotting.html">Slots and slotting</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT2142 TABLE [1-175] -->
+<h2 class="sectionedit2143"><a name="hierarchy" id="hierarchy">Hierarchy</a></h2>
+<div class="level2">
+
+<p>
+gnetlist has support for <em>hierarchical schematics</em>.  These are schematic diagrams that include other schematic diagrams as <em>subcircuits</em>.  This can be very useful for designs that use the same circuit multiple times, or for re-using a circuit in multiple designs.  Subcircuits can in turn contain other subcircuits!
+</p>
+
+<p>
+Each subcircuit schematic diagram needs to have a subcircuit symbol associated with it.  The ”<code>device=</code>” attribute on a subcircuit symbol is ignored.  The ”<code>source=</code>” attribute should be used to specify the name of the subcircuit&#039;s schematic file.
+</p>
+
+<p>
+Subcircuit symbols are loaded from the symbol library as normal.  Subcircuit schematics are loaded from the <em>source library</em>.
+</p>
+
+<p>
+<p><div class="notetip">See <a href="geda-gnetlist_ug-config.html" class="wikilink1" title="geda-gnetlist_ug-config.html">Configuring gnetlist</a> for details of how to control where gnetlist looks for subcircuit schematic files.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT2143 SECTION "Hierarchy" [177-1039] -->
+<h3 class="sectionedit2144"><a name="hierarchical_ports" id="hierarchical_ports">Hierarchical ports</a></h3>
+<div class="level3">
+
+<p>
+The pins on a subcircuit symbol define the <em>ports</em> where designs that include the circuit can connect to it.  Each port should be named using a ”<code>pinlabel=</code>” attribute.  To define the points where a port attaches to the subcircuit&#039;s nets, gnetlist will look for the first pin on a component which has a ”<code>refdes=</code>” attribute that matches the port&#039;s name.  You can normally use the “in-1.sym” and “out-1.sym” symbols from the generic “Input/Output” symbol library for this.
+</p>
+
+</div>
+<!-- EDIT2144 SECTION "Hierarchical ports" [1040-1549] -->
+<h3 class="sectionedit2145"><a name="renaming_components_and_nets" id="renaming_components_and_nets">Renaming components and nets</a></h3>
+<div class="level3">
+
+<p>
+Each subcircuit symbol placed into a schematic must have a ”<code>refdes=</code>” attribute attached to it.  This is the name of the <em>subcircuit instance</em>.  In order to uniquely identify components and nets in each instance of a hierarchical subcircuit, gnetlist will rename them using the subcircuit&#039;s name as a prefix.  
+</p>
+
+<p>
+For example, consider a subcircuit that contains a component with ”<code>refdes=U1</code>” and a net with ”<code>netname=FEEDBACK</code>”.  Now, suppose the subcircuit symbol is placed in a schematic and an attribute ”<code>refdes=A1</code>” is attached to it.  When the schematic is processed using gnetlist, gnetlist will rename the component to “A1/U1” and rename the net to “A1/FEEDBACK”.
+</p>
+
+</div>
+<!-- EDIT2145 SECTION "Renaming components and nets" [1550-] --></body>
+</html>

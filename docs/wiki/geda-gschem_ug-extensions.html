@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit629"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> « <a href="geda-gschem_ug-stroke.html" class="wikilink1" title="geda-gschem_ug-stroke.html">Mouse gesture support</a>  </td><td class="col1 centeralign">  <strong><a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">gEDA gschem User Guide</a></strong>  </td><td class="col2 rightalign">  <a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">Contents</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT629 TABLE [1-125] -->
+<h2 class="sectionedit630"><a name="extending_gschem" id="extending_gschem">Extending gschem</a></h2>
+<div class="level2">
+
+<p>
+Since the gschem <a href="geda-gschem_ug-config.html" class="wikilink1" title="geda-gschem_ug-config.html">configuration files</a> are Scheme scripts, they provide a way to load additional capabilities into gschem by defining new functions that manipulate objects and pages.
+</p>
+
+<p>
+gschem (and other gEDA/gaf tools such as <a href="geda-gnetlist_ug.html" class="wikilink1" title="geda-gnetlist_ug.html">gnetlist</a>) use <a href="http://www.gnu.org/s/guile/" class="urlextern" title="http://www.gnu.org/s/guile/"  rel="nofollow">Guile Scheme</a> to provide Scheme scripting capabilities, and all of the features of Guile are available to use.  The <em>Guile Reference Manual</em> is available as an Info manual (<code>info guile</code> on most systems), or <a href="http://www.gnu.org/software/guile/docs/docs.html" class="urlextern" title="http://www.gnu.org/software/guile/docs/docs.html"  rel="nofollow">on the Guile website</a>.
+</p>
+
+<p>
+A collection of modules is provided for accessing and modifying gEDA objects and pages, called the gEDA Scheme <acronym title="Application Programming Interface">API</acronym>.  The <em>gEDA Scheme Reference Manual</em> is also available as an Info manual (<code>info geda-scheme</code>).
+</p>
+
+</div>
+<!-- EDIT630 SECTION "Extending gschem" [127-998] -->
+<h3 class="sectionedit631"><a name="adding_an_action" id="adding_an_action">Adding an action</a></h3>
+<div class="level3">
+
+<p>
+Actions are thunks, i.e. Scheme procedures that take no arguments.  For gschem to be able to find them, they must be defined in the top-level <a href="http://www.gnu.org/software/guile/manual/html_node/Modules.html" class="urlextern" title="http://www.gnu.org/software/guile/manual/html_node/Modules.html"  rel="nofollow">module</a>, so you must do one of the following:
+</p>
+<ul>
+<li class="level1"><div class="li"> define the procedure directly in one of your configuration files;</div>
+</li>
+<li class="level1"><div class="li"> define the procedure in a Scheme file loaded (using <code>load</code>) from one of your configuration files;</div>
+</li>
+<li class="level1"><div class="li"> or export the procedure in a Guile module which you load (with <code>use-modules</code>) from your configuration files.</div>
+</li>
+</ul>
+
+<p>
+You can then bind the procedure to a keystroke as normal with <code>global-set-key</code>.
+</p>
+
+</div>
+<!-- EDIT631 SECTION "Adding an action" [999-1655] -->
+<h3 class="sectionedit632"><a name="hooking_into_built-in_actions" id="hooking_into_built-in_actions">Hooking into built-in actions</a></h3>
+<div class="level3">
+
+<p>
+gschem allows you to register functions, called <em>hooks</em>, to be executed when a user executes a built-in function.  These are provided by the <code>(gschem hook)</code> Guile module.  For more information, see the <em>Hooks</em> page in the <em>gEDA Scheme Reference Manual</em>.
+</p>
+
+</div>
+<!-- EDIT632 SECTION "Hooking into built-in actions" [1656-1958] -->
+<h3 class="sectionedit633"><a name="procedures_for_extension_writers" id="procedures_for_extension_writers">Procedures for extension writers</a></h3>
+<div class="level3">
+
+<p>
+In addition to the gEDA Scheme <acronym title="Application Programming Interface">API</acronym> functions, gschem provides some utility procedures for extension writers.
+</p>
+
+<p>
+<p><div class="noteimportant">The functions described in this section are not guaranteed to remain stable from one release of gEDA/gaf to another.  For longer-term stability, use only the gEDA Scheme <acronym title="Application Programming Interface">API</acronym>.
+</div></p>
+</p>
+<div class="table sectionedit634"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Function                        </th><th class="col1 leftalign"> Description  </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> <code>gschem-print</code> </td><td class="col1 leftalign"> Export PostScript (see <a href="geda-gschem_ug-printing.html" class="wikilink1" title="geda-gschem_ug-printing.html">Printing</a>) to the output filename specified with the <code>-o</code> <a href="geda-gschem_ug-command_line.html" class="wikilink1" title="geda-gschem_ug-command_line.html">command-line option</a>, or the default PostScript filename if no option was given.  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> <code>gschem-postscript FILENAME</code> </td><td class="col1 leftalign"> Export PostScript to <code>FILENAME</code>.  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> <code>gschem-image FILENAME</code> </td><td class="col1 leftalign"> Export an image (see <a href="geda-gschem_ug-exporting.html" class="wikilink1" title="geda-gschem_ug-exporting.html">Exporting images</a>) to the output filename specified with the <code>-o</code> command-line option, or to <code>FILENAME</code> if no option was given.  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <code>gschem-exit</code>  </td><td class="col1 leftalign"> Exit gschem immediately.  <strong>Warning:</strong> if the user has unsaved changes, he will not be given the opportunity to save them.  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> <code>gschem-log MSG</code>  </td><td class="col1 leftalign"> Write <code>MSG</code> to the gschem log.  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> <code>gschem-msg MSG</code>  </td><td class="col1 leftalign"> Display a message dialog to the user with the text <code>MSG</code>.  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> <code>gschem-confirm MSG</code>  </td><td class="col1 leftalign"> Display a confirmation dialog to the user, with “Yes” and “No” buttons and the text <code>MSG</code>.  Return <code>#t</code> if the user selects “Yes”, and <code>#f</code> otherwise.  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> <code>gschem-filesel MSG TEMPL FLAGS</code>  </td><td class="col1"> Display a file selector dialog, with <code>MSG</code> in the title and the default filename <code>TEMPL</code>.  The <code>FLAGS</code> control the file selector behavior, and should be a list of strings.  The following strings can be provided in the <code>FLAGS</code>: <code>“may_exist”</code> if the file selected is permitted to already exist; <code>“must_exist”</code> if the file selected must already exist; <code>“must_not_exist”</code> if the file selected must <em>not</em> already exist; <code>“save”</code> to show a “Save file…” dialog; <code>“open”</code> to show an “Open file…” dialog. </td>
+	</tr>
+</table></div>
+<!-- EDIT634 TABLE [2312-3885] -->
+</div>
+<!-- EDIT633 SECTION "Procedures for extension writers" [1959-] --></body>
+</html>

@@ -10,20 +10,18 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<a href=.>start</a></br>
 
-
-<h1 class="sectionedit1564"><a name="geda_library_v3_specification" id="geda_library_v3_specification">gEDA Library v3 Specification</a></h1>
+<h1 class="sectionedit12"><a name="geda_library_v3_specification" id="geda_library_v3_specification">gEDA Library v3 Specification</a></h1>
 <div class="level1">
 
 </div>
-<!-- EDIT1564 SECTION "gEDA Library v3 Specification" [1-45] -->
-<h2 class="sectionedit1565"><a name="rationale" id="rationale">Rationale</a></h2>
+<!-- EDIT12 SECTION "gEDA Library v3 Specification" [1-45] -->
+<h2 class="sectionedit13"><a name="rationale" id="rationale">Rationale</a></h2>
 <div class="level2">
 
 <p>
-
 The current version (2.x) of the libgeda shared library has a number of defects:
-
 </p>
 <ul>
 <li class="level1"><div class="li"> Poor separation between public interface and internals, which leads to…</div>
@@ -35,9 +33,7 @@ The current version (2.x) of the libgeda shared library has a number of defects:
 </ul>
 
 <p>
-
 This page is an attempt to itemise in detail what is required of libgeda, and what the interface to it should look like.  This will enable:
-
 </p>
 <ul>
 <li class="level1"><div class="li"> More rigorous testing of library functions</div>
@@ -49,13 +45,13 @@ This page is an attempt to itemise in detail what is required of libgeda, and wh
 </ul>
 
 </div>
-<!-- EDIT1565 SECTION "Rationale" [46-643] -->
-<h2 class="sectionedit1566"><a name="requirements" id="requirements">Requirements</a></h2>
+<!-- EDIT13 SECTION "Rationale" [46-643] -->
+<h2 class="sectionedit14"><a name="requirements" id="requirements">Requirements</a></h2>
 <div class="level2">
 
 </div>
-<!-- EDIT1566 SECTION "Requirements" [644-669] -->
-<h3 class="sectionedit1567"><a name="core" id="core">Core</a></h3>
+<!-- EDIT14 SECTION "Requirements" [644-669] -->
+<h3 class="sectionedit15"><a name="core" id="core">Core</a></h3>
 <div class="level3">
 <ol>
 <li class="level1"><div class="li"> Define data structures for representing schematics</div>
@@ -71,8 +67,8 @@ This page is an attempt to itemise in detail what is required of libgeda, and wh
 </ol>
 
 </div>
-<!-- EDIT1567 SECTION "Core" [670-1013] -->
-<h3 class="sectionedit1568"><a name="secondary" id="secondary">Secondary</a></h3>
+<!-- EDIT15 SECTION "Core" [670-1013] -->
+<h3 class="sectionedit16"><a name="secondary" id="secondary">Secondary</a></h3>
 <div class="level3">
 <ol>
 <li class="level1"><div class="li"> Make no assumptions about applications which will use the library</div>
@@ -88,28 +84,25 @@ This page is an attempt to itemise in detail what is required of libgeda, and wh
 </ol>
 
 </div>
-<!-- EDIT1568 SECTION "Secondary" [1014-1367] -->
-<h2 class="sectionedit1569"><a name="coordinate_system" id="coordinate_system">Coordinate System</a></h2>
+<!-- EDIT16 SECTION "Secondary" [1014-1367] -->
+<h2 class="sectionedit17"><a name="coordinate_system" id="coordinate_system">Coordinate System</a></h2>
 <div class="level2">
 
 <p>
-
 Because libgeda should “make no assumptions about applications which will use the library,” libgeda should use only “world” coordinates throughout (the same coordinate system as used in the files).  See the <a href="geda-file_format_spec.html" class="wikilink1" title="geda-file_format_spec.html">file format specification</a>.
 </p>
 
 </div>
-<!-- EDIT1569 SECTION "Coordinate System" [1368-1659] -->
-<h2 class="sectionedit1570"><a name="configuration" id="configuration">Configuration</a></h2>
+<!-- EDIT17 SECTION "Coordinate System" [1368-1659] -->
+<h2 class="sectionedit18"><a name="configuration" id="configuration">Configuration</a></h2>
 <div class="level2">
 
 <p>
-
 Currently, libgeda relies on an embedded Scheme interpreter (<a href="http://www.gnu.org/software/guile/" class="urlextern" title="http://www.gnu.org/software/guile/"  rel="nofollow">Guile</a>) for configuring settings such as library search paths.  This has a number of pros and cons:
 </p>
 
 <p>
 Pros:
-
 </p>
 <ul>
 <li class="level1"><div class="li"> All applications which access libgeda can automatically use the same settings</div>
@@ -119,9 +112,7 @@ Pros:
 </ul>
 
 <p>
-
 Cons:
-
 </p>
 <ul>
 <li class="level1"><div class="li"> Large &amp; complex dependency</div>
@@ -135,24 +126,21 @@ Cons:
 </ul>
 
 <p>
-
 It might, therefore, make more sense to provide a complete <acronym title="Application Programming Interface">API</acronym> for configuring libgeda, and rely on the application to handle the storage and loading of the configuration.
 </p>
 
 </div>
-<!-- EDIT1570 SECTION "Configuration" [1660-2523] -->
-<h2 class="sectionedit1571"><a name="dependencies" id="dependencies">Dependencies</a></h2>
+<!-- EDIT18 SECTION "Configuration" [1660-2523] -->
+<h2 class="sectionedit19"><a name="dependencies" id="dependencies">Dependencies</a></h2>
 <div class="level2">
 
 </div>
-<!-- EDIT1571 SECTION "Dependencies" [2524-2549] -->
-<h3 class="sectionedit1572"><a name="glib" id="glib">glib</a></h3>
+<!-- EDIT19 SECTION "Dependencies" [2524-2549] -->
+<h3 class="sectionedit20"><a name="glib" id="glib">glib</a></h3>
 <div class="level3">
 
 <p>
-
 <a href="http://developer.gnome.org/doc/API/glib/" class="urlextern" title="http://developer.gnome.org/doc/API/glib/"  rel="nofollow">glib</a> provides a very large number of useful features that would make writing and maintaining libgeda easier.  These include:
-
 </p>
 <ul>
 <li class="level1"><div class="li"> Portable definitions of basic types (although <code>intptr.h</code> does this too, and would probably be preferable)</div>
@@ -164,17 +152,15 @@ It might, therefore, make more sense to provide a complete <acronym title="Appli
 </ul>
 
 <p>
-
 Not having to reinvent the wheel – and letting a much larger project be responsible for optimising and maintaining these features – would make the libgeda code smaller and easier to understand and maintain.  libgeda already uses glib to a certain extent, but using it more extensively in future versions of libgeda does not immediately seem to be a bad idea.
 </p>
 
 </div>
-<!-- EDIT1572 SECTION "glib" [2550-3350] -->
-<h3 class="sectionedit1573"><a name="gobject" id="gobject">gobject</a></h3>
+<!-- EDIT20 SECTION "glib" [2550-3350] -->
+<h3 class="sectionedit21"><a name="gobject" id="gobject">gobject</a></h3>
 <div class="level3">
 
 <p>
-
 <a href="http://developer.gnome.org/doc/API/2.0/gobject/" class="urlextern" title="http://developer.gnome.org/doc/API/2.0/gobject/"  rel="nofollow">gobject</a> is an object-oriented programming system in C. It is used extensively in the GTK+ user interface toolkit.  In addition to class-like structures, it provides a signalling system that allows objects to emit, listen for and respond to events.  It is designed to be compatible with the object systems of other languages, and this is one of the chief reasons that so many bindings of GTK+ are available (Python, <acronym title="Practical Extraction and Report Language">Perl</acronym>, .NET, Java, C++, etc).
 </p>
 
@@ -187,8 +173,8 @@ GObject is currently used in libgeda for the GedaList class which wrapps a GList
 </p>
 
 </div>
-<!-- EDIT1573 SECTION "gobject" [3351-4335] -->
-<h2 class="sectionedit1574"><a name="references" id="references">References</a></h2>
+<!-- EDIT21 SECTION "gobject" [3351-4335] -->
+<h2 class="sectionedit22"><a name="references" id="references">References</a></h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> <a href="http://www.unet.univie.ac.at/aix/aixprggd/genprogc/writing_reentrant_thread_safe_code.htm" class="urlextern" title="http://www.unet.univie.ac.at/aix/aixprggd/genprogc/writing_reentrant_thread_safe_code.htm"  rel="nofollow">Writing Reentrant and Thread-Safe Code</a></div>
@@ -196,5 +182,5 @@ GObject is currently used in libgeda for the GedaList class which wrapps a GList
 </ul>
 
 </div>
-<!-- EDIT1574 SECTION "References" [4336-] --></body>
+<!-- EDIT22 SECTION "References" [4336-] --></body>
 </html>

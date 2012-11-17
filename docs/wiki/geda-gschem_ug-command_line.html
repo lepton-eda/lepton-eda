@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit723"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> « <a href="geda-gschem_ug-config.html" class="wikilink1" title="geda-gschem_ug-config.html">Configuring gschem</a> </td><td class="col1"> <strong><a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">gEDA gschem User Guide</a></strong> </td><td class="col2"> <a href="geda-gschem_ug-stroke.html" class="wikilink1" title="geda-gschem_ug-stroke.html">Mouse gesture support</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT723 TABLE [1-138] -->
+<h2 class="sectionedit724"><a name="command-line_arguments" id="command-line_arguments">Command-line arguments</a></h2>
+<div class="level2">
+
+<p>
+gschem accepts several optional arguments on the command-line.  You can get a list of them by running <code>gschem -h</code>. gschem also has a manpage (<code>man gschem</code>) which lists all of the command line options that it accepts.
+</p>
+
+</div>
+<!-- EDIT724 SECTION "Command-line arguments" [140-397] -->
+<h3 class="sectionedit725"><a name="message_output_and_diagnostics" id="message_output_and_diagnostics">Message output and diagnostics</a></h3>
+<div class="level3">
+<div class="table sectionedit726"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> <strong>-q</strong>, <strong>--quiet</strong>   </td><td class="col1"> Quiet mode. Turn off all warnings/notes/messages. </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> <strong>-v</strong>, <strong>--verbose</strong> </td><td class="col1"> Verbose mode.  Output extra diagnostic information. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> <strong>-h</strong>, <strong>--help</strong>    </td><td class="col1"> Print a help message. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> <strong>-V</strong>, <strong>--version</strong> </td><td class="col1"> Print gschem version information. </td>
+	</tr>
+</table></div>
+<!-- EDIT726 TABLE [440-725] -->
+</div>
+<!-- EDIT725 SECTION "Message output and diagnostics" [398-726] -->
+<h3 class="sectionedit727"><a name="scheme_extensibility" id="scheme_extensibility">Scheme extensibility</a></h3>
+<div class="level3">
+<div class="table sectionedit728"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> <strong>-L</strong> <em class="u">DIRECTORY</em>          </td><td class="col1"> Prepend <em class="u">DIRECTORY</em> to the list of directories to be searched for Scheme files. </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> <strong>-s</strong> <em class="u">FILE</em>               </td><td class="col1"> Specify a Scheme script to be executed at startup. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> <strong>-c</strong> <em class="u">EXPR</em>               </td><td class="col1"> Specify a Scheme expression to be evaluated at startup. </td>
+	</tr>
+</table></div>
+<!-- EDIT728 TABLE [759-1055] -->
+</div>
+<!-- EDIT727 SECTION "Scheme extensibility" [727-1056] -->
+<h3 class="sectionedit729"><a name="other" id="other">Other</a></h3>
+<div class="level3">
+<div class="table sectionedit730"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> <strong>-r</strong>, <strong>--config-file</strong>=<em class="u">FILE</em> </td><td class="col1"> Specify an additional configuration file to be read after all other configuration files have been processed. </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> <strong>-o</strong>, <strong>--output</strong>=<em class="u">FILE</em> </td><td class="col1"> Specify a filename for generating PostScript output.  This command line argument is useful when running gschem from a shell script and with a Scheme script.  The filename can be changed through the print dialog box. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> <strong>-p</strong> </td><td class="col1"> Automatically  place  the  window. This may be useful if running gschem from the command line and generating output. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> <strong>--</strong> </td><td class="col1"> Treat all remaining arguments as schematic or symbol filenames.  Use this if you have a schematic or symbol filename which begins with ”-”. </td>
+	</tr>
+</table></div>
+<!-- EDIT730 TABLE [1074-1770] -->
+</div>
+<!-- EDIT729 SECTION "Other" [1057-] --></body>
+</html>

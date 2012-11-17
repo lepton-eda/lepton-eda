@@ -1,0 +1,367 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+<h2 class="sectionedit1511"><a name="improvements_not_contained_in_the_new_concept" id="improvements_not_contained_in_the_new_concept">Improvements not contained in the new concept</a></h2>
+<div class="level2">
+
+<p>
+“New layout” templates and wizards. (instead of defaulting to 4&times;4 8-layer)
+</p>
+
+<p>
+Ability to hook into layer exporters (i.e. thindraw as a HID)
+</p>
+
+<p>
+Also, trim polygons against “outline” layer.  Fix polygons in general.
+</p>
+
+</div>
+<!-- EDIT1511 SECTION "Improvements not contained in the new concept" [1-270] -->
+<h1 class="sectionedit1512"><a name="new_concept_proposal" id="new_concept_proposal">New concept proposal</a></h1>
+<div class="level1">
+
+</div>
+<!-- EDIT1512 SECTION "New concept proposal" [271-305] -->
+<h2 class="sectionedit1513"><a name="old_concept" id="old_concept">Old concept</a></h2>
+<div class="level2">
+
+<p>
+There are “Layer groups” which contain “conductive layers”. One “Layer group” is actually one “physical layer”.
+There is max 10 layer groups. Number of layers is 16 + 2 silk screen layers. Layers have no “type”.
+</p>
+
+<p>
+<code>Layer group:<br/>
+
+Number<br/>
+
+Numbers of layers contained<br/>
+
+<br/>
+
+Layer:<br/>
+
+Name<br/>
+
+Contained lines, arcs, polygons,…<br/>
+
+Rtree of contained ^^^^<br/>
+
+Visibility flag<br/>
+
+Color<br/>
+
+Selected color<br/>
+
+Attributes<br/>
+
+</code>
+</p>
+
+</div>
+<!-- EDIT1513 SECTION "Old concept" [306-741] -->
+<h2 class="sectionedit1514"><a name="new_concept" id="new_concept">New concept</a></h2>
+<div class="level2">
+
+<p>
+In the next part terms “physical layer” and “layer” are used. It can be changed to better names. Having just “layer” for
+“physical layer” and something else for “layer” will be great. Would “surface” go? Layer for one layer on PCB and surface for
+one drawing surface.
+</p>
+
+<p>
+Layers are contained in a linked list, so there is no bounds on the number of them. “Physical layers” should probably be also
+in a linked list.
+</p>
+
+<p>
+The Z-order of “physical layers” and “layers” is determined by the order in linked list and in layout file.
+</p>
+
+<p>
+Active “layer” of each type is represented as pointer in “physical layer”. There is
+an array of size “number of layer types”, pointer on right place is the active layer.
+There is no need to have an active layer of each type.
+</p>
+
+<p>
+One “physical layer” can be marked as “top” and one as “bottom”, so new footprints have some default layers assignment.
+This marks are useful just for footprint importing, there is no other use for them.
+</p>
+
+<p>
+When adding anything (components, lines, polygons), all parts goes to the active layer of the right type for current “physical layer”.
+So line is added to active “conductive layer”, its mask to active “mask layer”,…. If there is no such layer, nothing happens.
+If the current layer is not conductive, something else can happen. Like adding polygon to “mask layer” will just mask/unmask that part….
+</p>
+
+<p>
+There are two types of colors. The ones defined in application preferences and the ones defined in layout file.
+User can select to see any of the sets.
+</p>
+
+<p>
+Colors in preferences are assigned to layer names, not layer numbers.
+</p>
+
+<p>
+There is no concept of “layer number” everything is referred by name or pointer.
+</p>
+
+<p>
+Each “physical layer” has Dimension property and can also have an Outline layer.
+The difference is, that NOTHING can be drawn out of dimension. The Outline is just
+hint how to manufactor the board. The Dimension is just one rectangle, Outline can have any
+shape. This Dimension property should replace the “Board dimension” currently defined in preferences.
+</p>
+
+<p>
+Gerber output names will contain “physical layer” name.
+</p>
+
+<p>
+The “Show Pin/Pads/Vias” flags in “Physical layer” is just inspecting and printing use.
+It doesn&#039;t hurt to have and can aid documentation generation.
+</p>
+
+<p>
+<code>Physical layer:<br/>
+
+Name ← this will be used in gerber export<br/>
+
+Dimentions ← layer doesn&#039;t have to be across whole board<br/>
+
+Attributes ← we can come up with a list of “expected attributes” like “permittivity, thickness,..”<br/>
+
+Flags ← some “physical layer” wide flags<br/>
+
+Layers ← linked list of layers in this “physical layer”<br/>
+
+Pointer to layers ← linked list of all layers in this physical layer<br/>
+
+Array of pointers to “active layers”<br/>
+
+<br/>
+
+Layer:<br/>
+
+Name<br/>
+
+Placement list ← Contained lines, arcs, polygons,…<br/>
+
+Rtree of contained ^^^^<br/>
+
+Flag ← flags described below<br/>
+
+Type ← type list below<br/>
+
+Color<br/>
+
+Attributes<br/>
+
+Pointer for linked list of “layers”<br/>
+
+Pointer for linked list contained in “physical layer”<br/>
+
+<br/>
+
+Layer types:<br/>
+
+Conductive ← the only conductive layer<br/>
+
+Mechanical ← some additional non-conductive stuff<br/>
+
+Outline ← outline of board<br/>
+
+Silk ← Texts, component oulines,…<br/>
+
+Mask ← mask on the board<br/>
+
+Paste ← solder paste definition<br/>
+
+Countryard ← component spacing definition<br/>
+
+Rat<br/>
+
+<br/>
+
+Physical layer flags:<br/>
+
+Show Pin/Via/Pads ← Show/Hide Pin/Via/Pads, 3 separate flags – NOT SAVED, the one in “Layer” is saved<br/>
+
+<br/>
+
+Layer flags:<br/>
+
+Visible ← Show/Hide this layer – just temporal use, NOT SAVED<br/>
+
+Show Pin/Via/Pads ← 3 separate flags, On some layers for special purpose it make sense to not include Via/Pin/Pads<br/>
+
+Negativness ← Layer is negative layer<br/>
+
+</code>
+</p>
+
+</div>
+<!-- EDIT1514 SECTION "New concept" [742-4385] -->
+<h2 class="sectionedit1515"><a name="object_placements" id="object_placements">Object &amp; Placements</a></h2>
+<div class="level2">
+
+<p>
+Each object is composed of 2 parts. One is &#039;description of the object&#039;. This is specific for the type of the object.
+</p>
+
+<p>
+The other is &#039;placement of the object&#039;. This is common to all object.
+</p>
+
+<p>
+It is possible to have more than one placement of single object.
+</p>
+
+<p>
+There are &#039;shared copy&#039; and &#039;copy on write&#039; possibilities.
+</p>
+
+<p>
+<code>
+Placement object:<br/>
+
+Coordinates<br/>
+
+Layer<br/>
+
+Flags<br/>
+
+ReferenceCounter<br/>
+
+Pointer to the object<br/>
+
+Pointer to composite ← when I am at some composite<br/>
+
+Pointer to next object ← next object in the composite<br/>
+
+<br/>
+
+Placement flags:<br/>
+
+Orientation<br/>
+
+CopyOnWrite<br/>
+
+</code>
+</p>
+
+</div>
+<!-- EDIT1515 SECTION "Object & Placements" [4386-4992] -->
+<h2 class="sectionedit1516"><a name="composite_objects" id="composite_objects">Composite objects</a></h2>
+<div class="level2">
+
+<p>
+Composite is an object composed of multiple other object. Composite can be an element of another composite.
+</p>
+
+<p>
+Footprints, sub-layouts and vias are just composite objects.
+</p>
+
+<p>
+All elements of composite object has placement relative to the origin of the composite.
+</p>
+
+<p>
+<code>
+Composite object:<br/>
+
+Type ← type list below<br/>
+
+Attributes<br/>
+
+Linked list of placement objects<br/>
+
+<br/>
+
+Composite types:<br/>
+
+Footprint<br/>
+
+Via<br/>
+
+SubCircut<br/>
+
+Other<br/>
+
+</code>
+</p>
+
+</div>
+<!-- EDIT1516 SECTION "Composite objects" [4993-5443] -->
+<h3 class="sectionedit1517"><a name="via" id="via">Via</a></h3>
+<div class="level3">
+
+<p>
+Via is a composite object of type &#039;via&#039;.
+</p>
+
+<p>
+There is a copper object around the hole on each &#039;physical layer&#039; it intersects.
+</p>
+
+<p>
+The hole is represented as an object on &#039;outline&#039; layer on each &#039;physical layer&#039; it intersects.
+</p>
+
+</div>
+<!-- EDIT1517 SECTION "Via" [5444-5678] -->
+<h3 class="sectionedit1518"><a name="footprint" id="footprint">Footprint</a></h3>
+<div class="level3">
+
+<p>
+Footprint is a composite object of type &#039;footprint&#039;.
+</p>
+
+<p>
+It has attributes Name and Sourcefile.
+</p>
+
+<p>
+Expected properties:
+</p>
+<ol>
+<li class="level1"><div class="li"> Footprint contains layers with predefined names: Conductive, Silkscreen, Paste, Mask, Countryard</div>
+</li>
+<li class="level1"><div class="li"> Footprint can contain more conductive layers, each grouped with Paste and Mask layers ← useful for 2 sides mounting connectors</div>
+</li>
+<li class="level1"><div class="li"> Any connected element on conductive layer can be marked as Pin/Pad</div>
+</li>
+<li class="level1"><div class="li"> Footprint can contain Outline layer</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT1518 SECTION "Footprint" [5679-6158] -->
+<h2 class="sectionedit1519"><a name="named_attributes" id="named_attributes">Named attributes</a></h2>
+<div class="level2">
+
+<p>
+This is just my personal “To look at” section. – Martin Kupec<br/>
+
+Refdefs should be distinguishable from the rest of Silk
+so they can be put on different Silk Layer.
+</p>
+
+</div>
+<!-- EDIT1519 SECTION "Named attributes" [6159-] --></body>
+</html>
