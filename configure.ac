@@ -271,15 +271,6 @@ AC_CONFIG_FILES([Makefile
                  docs/toplevel/Makefile
                  docs/toplevel/gedadocs.html
                  docs/wiki/Makefile
-                 docs/wiki/images/smileys/Makefile
-                 docs/wiki/images/Makefile
-                 docs/wiki/images/interwiki/Makefile
-                 docs/wiki/media/geda/Makefile
-                 docs/wiki/media/wiki/Makefile
-                 docs/wiki/media/tragesym/tragesym/Makefile
-                 docs/wiki/media/tragesym/Makefile
-                 docs/wiki/media/Makefile
-                 docs/wiki/media/devel_tips/Makefile
 
                  examples/Makefile
                  examples/RF_Amp/Makefile
