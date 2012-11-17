@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit655"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> « <a href="geda-gschem_ug-components.html" class="wikilink1" title="geda-gschem_ug-components.html">Components</a>  </td><td class="col1 centeralign">  <strong><a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">gEDA gschem User Guide</a></strong>  </td><td class="col2 rightalign">  <a href="geda-gschem_ug-graphics.html" class="wikilink1" title="geda-gschem_ug-graphics.html">Graphics</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT655 TABLE [1-92] -->
+<h2 class="sectionedit656"><a name="pins_nets_and_buses" id="pins_nets_and_buses">Pins, nets and buses</a></h2>
+<div class="level2">
+
+<p>
+Connectivity in gEDA schematics and symbols is shown using pins, nets and buses.
+</p>
+<ul>
+<li class="level1"><div class="li"> Pins are used in symbols, and represent either a physical pin on an electronic component, or a logical connection to a subcircuit schematic.</div>
+</li>
+<li class="level1"><div class="li"> Nets are used in schematics.  They represent individual wires, and are used to connect together the pins of <a href="geda-gschem_ug-components.html" class="wikilink1" title="geda-gschem_ug-components.html">components</a>.</div>
+</li>
+<li class="level1"><div class="li"> Buses are also used in schematics, and represent “bundles” of multiple nets.</div>
+</li>
+</ul>
+
+<p>
+Nets, pins and buses can have <a href="geda-gschem_ug-attributes.html" class="wikilink1" title="geda-gschem_ug-attributes.html">attributes</a> attached to them to control how they are interpreted by <a href="geda-gnetlist_ug.html" class="wikilink1" title="geda-gnetlist_ug.html">gnetlist</a>.
+</p>
+
+</div>
+<!-- EDIT656 SECTION "Pins, nets and buses" [94-696] -->
+<h3 class="sectionedit657"><a name="adding_and_editing_pins" id="adding_and_editing_pins">Adding and editing pins</a></h3>
+<div class="level3">
+
+<p>
+Pins have a <em>connectible end</em>, which is highlighted with a colored swatch, and a static end.  Nets can only be connected at the highlighted end.
+</p>
+
+<p>
+<p><div class="notetip">If you are designing a symbol, see also the <a href="geda-gschem_symbol_creation.html" class="wikilink1" title="geda-gschem_symbol_creation.html">Symbol Creation Guide</a>.
+</div></p>
+</p>
+
+<p>
+To begin adding pins, use <strong>Add→Pin</strong>.  Left-click once to position the connectible end of the new pin, and left-click again for the other end.  To finish placing pins, right-click.
+</p>
+
+<p>
+If you <a href="geda-gschem_ug-selecting.html" class="wikilink1" title="geda-gschem_ug-selecting.html">select</a> a pin, handles will appear for each of its endpoints.  You can left-click and drag these with the mouse to change the position of the pin&#039;s endpoints.
+</p>
+
+</div>
+<!-- EDIT657 SECTION "Adding and editing pins" [697-1361] -->
+<h3 class="sectionedit658"><a name="adding_and_editing_nets" id="adding_and_editing_nets">Adding and editing nets</a></h3>
+<div class="level3">
+
+<p>
+Nets are made up of straight <em>net segments</em>, and net connections are formed either where two net segment ends meet, or where a net segment end meets a net segment midpoint.  If two net segments cross, they do not form a connection.  A net connection is marked by a circular cue, and a disconnected (or “floating”) net end with a square cue.
+</p>
+
+<p>
+To add a net segment, use <strong>Add→Net</strong>.  There are two modes for adding nets: normal mode, and magnetic mode (the default).  To switch between them, use <strong>Options→Toggle Magnetic Net</strong>.
+</p>
+<ul>
+<li class="level1"><div class="li"> In <em>magnetic mode</em>, new nets snap onto nearby connectible points on pins and nets.  The target location that the next net point will snap to is highlighted with a circle.   </div>
+</li>
+<li class="level1"><div class="li"> In <em>normal mode</em>, new nets snap to the grid like other newly-created objects.</div>
+</li>
+</ul>
+
+<p>
+Nets will be added using only combinations of horizontal and vertical segments, unless you hold down the <strong>&lt;Ctrl&gt;</strong> key, in which case segments at any angle will be used.
+</p>
+
+<p>
+Selected nets can be modified by dragging the handles on their endpoints in the same way as pins.
+</p>
+
+</div>
+<!-- EDIT658 SECTION "Adding and editing nets" [1362-2466] -->
+<h3 class="sectionedit659"><a name="adding_and_editing_buses" id="adding_and_editing_buses">Adding and editing buses</a></h3>
+<div class="level3">
+
+<p>
+<p><div class="noteimportant">Since buses are not currently fully supported by <a href="geda-gnetlist_ug.html" class="wikilink1" title="geda-gnetlist_ug.html">gnetlist</a>, buses are commonly used only for documentation purposes.
+</div></p>
+</p>
+
+<p>
+Like nets, buses are made up of <em>bus segments</em>, follow similar connectivity rules, and can be edited in the same way.
+</p>
+
+<p>
+To add buses, use <strong>Add→Bus</strong>.  When adding buses, each new bus segment is constrained to be either horizontal or vertical, unless you hold down the <strong>&lt;Ctrl&gt;</strong> key.  Buses do not support magnetic mode.
+</p>
+
+<p>
+When you connect a net to a bus, a “bus ripper” symbol is automatically inserted. This allows two nets to be attached to the same point on a bus from opposite sides without shorting together.
+</p>
+
+</div>
+<!-- EDIT659 SECTION "Adding and editing buses" [2467-] --></body>
+</html>

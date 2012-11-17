@@ -10,25 +10,23 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<a href=.>start</a></br>
 
-
-<h1 class="sectionedit74"><a name="installing_geda_gaf_on_windows_-_the_cygwin_way" id="installing_geda_gaf_on_windows_-_the_cygwin_way">Installing gEDA/gaf on Windows - the Cygwin way</a></h1>
+<h1 class="sectionedit921"><a name="installing_geda_gaf_on_windows_-_the_cygwin_way" id="installing_geda_gaf_on_windows_-_the_cygwin_way">Installing gEDA/gaf on Windows - the Cygwin way</a></h1>
 <div class="level1">
 
 <p>
-
 This guide describes one way to build gEDA/gaf (gschem and friends) on
 the Windows operating system. It uses Cygwin as the layer between
 Windows and the *nix world (ie gcc, make, bash etc…).
 </p>
 
 </div>
-<!-- EDIT74 SECTION "Installing gEDA/gaf on Windows - the Cygwin way" [1-258] -->
-<h2 class="sectionedit75"><a name="instructions" id="instructions">Instructions</a></h2>
+<!-- EDIT921 SECTION "Installing gEDA/gaf on Windows - the Cygwin way" [1-258] -->
+<h2 class="sectionedit922"><a name="instructions" id="instructions">Instructions</a></h2>
 <div class="level2">
 
 <p>
-
 <strong>1. Download and run setup.exe from cygwin website:</strong>
 <a href="http://www.cygwin.com" class="urlextern" title="http://www.cygwin.com"  rel="nofollow">http://www.cygwin.com</a>.
 </p>
@@ -40,7 +38,6 @@ In the package selection dialog, select the following packages:
 <p>
 (Hint: press the “view” button once to arrange the list in
 alphabetical order)
-
 </p>
 <pre class="code">atk-devel
 crypt
@@ -61,22 +58,18 @@ xorg-x11-fscl
 xterm</pre>
 
 <p>
-
 <strong>2. Append these lines to your .bash_profile:</strong>
-
 </p>
 <pre class="code">export LD_LIBRARY_PATH=$HOME/geda/lib:$LD_LIBRARY_PATH
 export PATH=$HOME/geda/bin:$PATH
 export PKG_CONFIG_PATH=$HOME/geda/lib/pkgconfig:$PKG_CONFIG_PATH</pre>
 
 <p>
-
 Update your environment:
 </p>
 <pre class="code">$ source .bash_profile</pre>
 
 <p>
-
 <strong>3. Go to the <a href="http://www.geda.seul.org/sources.html" class="urlextern" title="http://www.geda.seul.org/sources.html"  rel="nofollow">gEDA sources download page</a>.</strong>
 </p>
 
@@ -84,14 +77,11 @@ Update your environment:
 From the gEDA/gaf group, download <strong>only</strong> the packages which have a date
 as its version. The necessary dependencies were already
 installed in step 1. However, if you haven&#039;t installed or built the libstroke package, be sure to add
-
 </p>
 <pre class="code">--disable-stroke</pre>
 
 <p>
-
 to the opts= line. Add the following options to the opts= line in the Makefile
-
 </p>
 <pre class="code">--disable-update-mime-database --disable-update-desktop-database --disable-nls</pre>
 
@@ -103,7 +93,6 @@ $ make install
 ( ...patience... )</pre>
 
 <p>
-
 <strong>5. Now, to properly view the documentation from the help menu of gschem:</strong>
 </p>
 
@@ -116,7 +105,6 @@ $ ln -s &quot;c:\Program Files\Firefox\firefox.exe&quot; /usr/bin/firefox
 $ ln -s &quot;c:\Program Files\Adobe\Acrobat 7.0\Reader\AcroRd32.exe&quot; /usr/bin/acroread</pre>
 
 <p>
-
 Try:
 </p>
 <pre class="code">$ iexplore
@@ -129,16 +117,14 @@ $ gschemdoc -m
 ( gEDA documentation appears )</pre>
 
 <p>
-
 <strong>6. Finally, start the X server:</strong>
 </p>
 <pre class="code">$ startx</pre>
 
 <p>
-
 Have fun!
 </p>
 
 </div>
-<!-- EDIT75 SECTION "Instructions" [259-] --></body>
+<!-- EDIT922 SECTION "Instructions" [259-] --></body>
 </html>

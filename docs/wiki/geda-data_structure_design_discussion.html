@@ -10,47 +10,44 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<a href=.>start</a></br>
 
-
-<h1 class="sectionedit105"><a name="data_structure_design_discussion" id="data_structure_design_discussion">Data structure design discussion</a></h1>
+<h1 class="sectionedit1947"><a name="data_structure_design_discussion" id="data_structure_design_discussion">Data structure design discussion</a></h1>
 <div class="level1">
 
 </div>
-<!-- EDIT105 SECTION "Data structure design discussion" [1-48] -->
-<h1 class="sectionedit106"><a name="concept_diagram" id="concept_diagram">Concept diagram</a></h1>
+<!-- EDIT1947 SECTION "Data structure design discussion" [1-48] -->
+<h1 class="sectionedit1948"><a name="concept_diagram" id="concept_diagram">Concept diagram</a></h1>
 <div class="level1">
 
 <p>
-
 (Inspired by gnetman, by Bill Cox)
 </p>
 
 <p>
-<a href="/./lib/exe/fetch.php?hash=d4505f&amp;media=http%3A%2F%2Fwww2.eng.cam.ac.uk%2F%7Epcjc2%2Fgeda%2Fdatastructures.png" class="media" title="http://www2.eng.cam.ac.uk/~pcjc2/geda/datastructures.png"><img src="media/http///www2.eng.cam.ac.uk/~pcjc2/geda/datastructures.png" class="media" alt="" /></a>
+<a href="/./lib/exe/fetch.php?hash=d4505f&amp;media=http%3A%2F%2Fwww2.eng.cam.ac.uk%2F~pcjc2%2Fgeda%2Fdatastructures.png" class="media" title="http://www2.eng.cam.ac.uk/~pcjc2/geda/datastructures.png"><img src="media/http///www2.eng.cam.ac.uk/~pcjc2/geda/datastructures.png" class="media" alt="" /></a>
 </p>
 
 </div>
-<!-- EDIT106 SECTION "Concept diagram" [49-178] -->
-<h2 class="sectionedit107"><a name="concepts_behind_the_structures" id="concepts_behind_the_structures">Concepts behind the structures</a></h2>
+<!-- EDIT1948 SECTION "Concept diagram" [49-178] -->
+<h2 class="sectionedit1949"><a name="concepts_behind_the_structures" id="concepts_behind_the_structures">Concepts behind the structures</a></h2>
 <div class="level2">
 
 </div>
-<!-- EDIT107 SECTION "Concepts behind the structures" [179-222] -->
-<h3 class="sectionedit108"><a name="design" id="design">Design</a></h3>
+<!-- EDIT1949 SECTION "Concepts behind the structures" [179-222] -->
+<h3 class="sectionedit1950"><a name="design" id="design">Design</a></h3>
 <div class="level3">
 
 <p>
-
 This is might not exist as a “file”, as such, but exists as a data structure entity to be the owner of the circuits required in a particular design. The “root circuit” is the uppermost level of hierarchy.
 </p>
 
 </div>
-<!-- EDIT108 SECTION "Design" [223-446] -->
-<h3 class="sectionedit109"><a name="circuit" id="circuit">Circuit</a></h3>
+<!-- EDIT1950 SECTION "Design" [223-446] -->
+<h3 class="sectionedit1951"><a name="circuit" id="circuit">Circuit</a></h3>
 <div class="level3">
 
 <p>
-
 A <strong>circuit</strong> entity is the key concept in this model. It defines an electrical block by a its external connections (<strong>MPort</strong>s). A schematic is one way of representing a circuit, hence a circuit object may own or more <strong>page</strong> of schematics.
 </p>
 
@@ -59,32 +56,29 @@ We may also define a <strong>symbolic</strong> (graphic) representation of a cir
 </p>
 
 </div>
-<!-- EDIT109 SECTION "Circuit" [447-1004] -->
-<h3 class="sectionedit110"><a name="mport" id="mport">MPort</a></h3>
+<!-- EDIT1951 SECTION "Circuit" [447-1004] -->
+<h3 class="sectionedit1952"><a name="mport" id="mport">MPort</a></h3>
 <div class="level3">
 
 <p>
-
 If it is to be useful as a re-usable block, a sub-<strong>circuit</strong> must expose electrical connectivity for a parent <strong>circuit</strong> to connect with. Each such connection is represented by an <strong>Mport</strong> (Master port). This term (re-used from gnetman) represents the fact that once a circuit is instantiated, we need to differentiate between the connections of each specific instance. This is done with instance specific <strong>Port</strong> structures. The <strong>port</strong>s point back at the <strong>Mport</strong>s (master ports) of the circuit representation.
 </p>
 
 </div>
-<!-- EDIT110 SECTION "MPort" [1005-1541] -->
-<h3 class="sectionedit111"><a name="instance" id="instance">Instance</a></h3>
+<!-- EDIT1952 SECTION "MPort" [1005-1541] -->
+<h3 class="sectionedit1953"><a name="instance" id="instance">Instance</a></h3>
 <div class="level3">
 
 <p>
-
 A <strong>circuit</strong> represents a re-usable electrical entity which we may replicate at various points in our design hierarchy. This is done by instantiating the sub-<strong>circuit </strong> in a higher level of hierarchy. Each instance is associated with an <strong>Instance</strong> structure, which is a placeholder for instance specific attributes such as the sub-circuit&#039;s hierarchical refdes.
 </p>
 
 </div>
-<!-- EDIT111 SECTION "Instance" [1542-1929] -->
-<h3 class="sectionedit112"><a name="attrib" id="attrib">Attrib</a></h3>
+<!-- EDIT1953 SECTION "Instance" [1542-1929] -->
+<h3 class="sectionedit1954"><a name="attrib" id="attrib">Attrib</a></h3>
 <div class="level3">
 
 <p>
-
 An <strong>Attrib</strong> defines meta-data attached which might be attached to a <strong>circuit</strong>, a <strong>circuit</strong>&#039;s <strong>Mport</strong>, a specific <strong>circuit</strong> <strong>instance</strong>, or a <strong>Net</strong>.
 </p>
 
@@ -93,12 +87,11 @@ In a break from gEDA&#039;s current <strong>attrib</strong> model, it makes sens
 </p>
 
 </div>
-<!-- EDIT112 SECTION "Attrib" [1930-2569] -->
-<h3 class="sectionedit113"><a name="netlist" id="netlist">Netlist</a></h3>
+<!-- EDIT1954 SECTION "Attrib" [1930-2569] -->
+<h3 class="sectionedit1955"><a name="netlist" id="netlist">Netlist</a></h3>
 <div class="level3">
 
 <p>
-
 A <strong>Netlist</strong> defines the electrical connectivity of a <strong>circuit</strong>. It owns a number of <strong>Net</strong>s, which individually represent a single connection between <strong>Mport</strong>s belonging to this <strong>circuit</strong>, and <strong>ports</strong> of instantiated sub-<strong>circuits</strong>. 
 </p>
 
@@ -115,12 +108,11 @@ This has real applications in back-annotation and in design verification.
 </p>
 
 </div>
-<!-- EDIT113 SECTION "Netlist" [2570-3435] -->
-<h3 class="sectionedit114"><a name="net" id="net">Net</a></h3>
+<!-- EDIT1955 SECTION "Netlist" [2570-3435] -->
+<h3 class="sectionedit1956"><a name="net" id="net">Net</a></h3>
 <div class="level3">
 
 <p>
-
 A <strong>net</strong> associates with structures forming a given electrical connection within this <strong>circuit</strong>.
 </p>
 
@@ -129,18 +121,16 @@ As we also have a graphical representation of the wires (<strong>ConnSegment</st
 </p>
 
 </div>
-<!-- EDIT114 SECTION "Net" [3436-3940] -->
-<h3 class="sectionedit115"><a name="page" id="page">Page</a></h3>
+<!-- EDIT1956 SECTION "Net" [3436-3940] -->
+<h3 class="sectionedit1957"><a name="page" id="page">Page</a></h3>
 <div class="level3">
 
 <p>
-
 A <strong>page</strong> is a canvas for placing graphical objects representing a circuit. A <strong>page</strong> can be used to draw an electrically meaningful schematic, or it can be used to draw a symbolic representation of the circuit entity.
 </p>
 
 <p>
 Whilst most objects on a <strong>page</strong> are graphic primitives, there are some which have a relation to the <strong>circuit</strong>&#039;s electrical specification.
-
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>ConnSegments</strong> (or <strong>net</strong>s) represent connected electrical signals within the circuit represented.</div>
@@ -176,14 +166,12 @@ Whilst most objects on a <strong>page</strong> are graphic primitives, there are
 </ul>
 
 </div>
-<!-- EDIT115 SECTION "Page" [3941-5460] -->
-<h1 class="sectionedit116"><a name="brainstorms" id="brainstorms">Brainstorms</a></h1>
+<!-- EDIT1957 SECTION "Page" [3941-5460] -->
+<h1 class="sectionedit1958"><a name="brainstorms" id="brainstorms">Brainstorms</a></h1>
 <div class="level1">
 
 <p>
-
 (from conversation on MSN/<acronym title="Internet Relay Chat">IRC</acronym> on 10th April 2007 – Peter Brett / Peter Clifton)
-
 </p>
 <ul>
 <li class="level1"><div class="li"> In order to do back annotation, need to be able to change the board part references for anywhere in the schematic.  It then makes sense to dissociate the concepts of <strong>InstanceID</strong> and <strong>Board Reference</strong>, and use an <strong>override table</strong> that can override an attribute at any given path within the current <strong>circuit</strong> based on a path composed of <strong>InstanceID</strong>s.  <strong>InstanceID</strong>s would be special-cased throughout libgeda as a means for uniquely identifying circuits and instances.  An entry in the override table might have the form ”/id1/id2/id3:refdes:U3”</div>
@@ -207,5 +195,5 @@ Whilst most objects on a <strong>page</strong> are graphic primitives, there are
 </ul>
 
 </div>
-<!-- EDIT116 SECTION "Brainstorms" [5461-] --></body>
+<!-- EDIT1958 SECTION "Brainstorms" [5461-] --></body>
 </html>

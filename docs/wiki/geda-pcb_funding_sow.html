@@ -10,17 +10,17 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
-
+<a href=.>start</a></br>
 
 <p>
 <strong>Statement of work:  Improving PCB&#039;s usability within the gEDA Suite framework</strong>
 </p>
 
-<h2 class="sectionedit485"><a name="background_and_motivation" id="background_and_motivation">Background and motivation</a></h2>
+<h2 class="sectionedit944"><a name="background_and_motivation" id="background_and_motivation">Background and motivation</a></h2>
 <div class="level2">
 
 <p>
-The open-source layout tool <a href="http://pcb.gpleda.org/" class="urlextern" title="http://pcb.gpleda.org/"  rel="nofollow">PCB</a> has been a member of the gEDA Project for many
+The open-source layout tool <a href="http://pcb.geda-project.org/" class="urlextern" title="http://pcb.geda-project.org/"  rel="nofollow">PCB</a> has been a member of the gEDA Project for many
 years.  It is an essential part of the end-to-end design flow offered by the
 gEDA tool set.  That is, although gschem/gnetlist can (in principle) support
 many back-end PCB layout tools, the most advanced forward annotation tools
@@ -36,7 +36,6 @@ command line (instead of menus or buttons), dropping to the unix shell, or
 even hand-editing design files using scripts or emacs.  Some specific
 shortcomings of PCB have been widely noted on the geda-* e-mail lists, along
 with reasonable solutions.   A list of the biggest issues includes: 
-
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Forward annotation:</strong>  Difficulty forward annotating designs from gschem/gnetlist.  A separate command-line tool is used to carry the design from gschem to PCB.  This tool can produce design files out of synch with PCB.  Also, many electronics designers are unfamiliar with using the unix command line.</div>
@@ -72,12 +71,10 @@ with reasonable solutions.   A list of the biggest issues includes:
 </ul>
 
 <p>
-
 We envision that addressing the above problems will provide a significant,
 powerful benefit to PCB&#039;s usability within the larger framework of the gEDA
 toolkit.  Addressing the usability issues will bring the following specific
 benefits to the gEDA Project: 
-
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Adoption:</strong> Making PCB easier to use will lead to greater uptake of the entire gEDA electronic design toolkit by practicing engineers, including those working in commercial organizations.</div>
@@ -93,7 +90,6 @@ benefits to the gEDA Project:
 </ul>
 
 <p>
-
 Therefore, the purpose of this document is to specify modifications to PCB
 which we hope will bring about a renaissance in the gEDA Project itself by
 making the critical tool PCB more accessible to the ordinary electronics
@@ -101,19 +97,18 @@ engineer.
 </p>
 
 </div>
-<!-- EDIT485 SECTION "Background and motivation" [86-4745] -->
-<h2 class="sectionedit486"><a name="statement_of_work" id="statement_of_work">Statement of work</a></h2>
+<!-- EDIT944 SECTION "Background and motivation" [86-4751] -->
+<h2 class="sectionedit945"><a name="statement_of_work" id="statement_of_work">Statement of work</a></h2>
 <div class="level2">
 
 <p>
 This section provides descriptions of what work is desired in each area of PCB&#039;s functionality.  This is not a full specification;  it is assumed that the person chosen to perform this work is familiar enough with the concepts associated with PCB design and the internals of PCB that this statement of work provides sufficient guidance about what to do.  
-
 </p>
 <hr />
 
 </div>
-<!-- EDIT486 SECTION "Statement of work" [4746-5135] -->
-<h3 class="sectionedit487"><a name="general_guidelines" id="general_guidelines">General guidelines</a></h3>
+<!-- EDIT945 SECTION "Statement of work" [4752-5141] -->
+<h3 class="sectionedit946"><a name="general_guidelines" id="general_guidelines">General guidelines</a></h3>
 <div class="level3">
 
 </div>
@@ -155,7 +150,7 @@ The upgrades to PCB must work on the usual platforms supported by the gEDA Proje
 <ul>
 <li class="level1"><div class="li"> Linux, BSD, Sun.</div>
 </li>
-<li class="level1"><div class="li"> GTK version 2.8 or later (consistent with gschem 1.5 head).</div>
+<li class="level1"><div class="li"> GTK version 2.18 or later</div>
 </li>
 </ul>
 
@@ -172,17 +167,15 @@ Hooks for support on Windows systems are outside the scope of this project.  How
 <strong>Any changes made to PCB should not break the ability of PCB to import existing
 .pcb files.</strong>  It <strong>is</strong> allowed to break import of .new.pcb files (i.e. the output
 of gsch2pcb).
-
 </p>
 <hr />
 
 </div>
-<!-- EDIT487 SECTION "General guidelines" [5136-7257] -->
-<h3 class="sectionedit488"><a name="forward_annotation_upgrade" id="forward_annotation_upgrade">Forward annotation upgrade</a></h3>
+<!-- EDIT946 SECTION "General guidelines" [5142-7229] -->
+<h3 class="sectionedit947"><a name="forward_annotation_upgrade" id="forward_annotation_upgrade">Forward annotation upgrade</a></h3>
 <div class="level3">
 
 <p>
-
 <a href="geda-pcb_funding_sow-fwdann_ideas.html" class="wikilink1" title="geda-pcb_funding_sow-fwdann_ideas.html">Ideas, commentary, and examples from users</a>
 </p>
 
@@ -196,7 +189,6 @@ The goal of forward annotation is to read the design information output from
 e.g. a netlister, and use it to import all information required into PCB,
 ready for use in creating or modifying a layout.  Reading the following
 information is a required part of creating a PCB layout:
-
 </p>
 <ul>
 <li class="level1"><div class="li"> Footprints with associated refdeses and their associated layers (if assigned).</div>
@@ -216,7 +208,6 @@ information is a required part of creating a PCB layout:
 </ul>
 
 <p>
-
 The scheme currently used by PCB is to read a file – already in PCB format –
 containing the actual footprints embedded within it.  The netlist is read in
 using a separate step.
@@ -291,7 +282,6 @@ Once the forward annotation changes are complete, the following use cases should
 </ol>
 
 <p>
-
 <strong>Existing PCB</strong>
 </p>
 <ol>
@@ -348,12 +338,11 @@ actions are already supported.  Therefore, this project involves:
 <hr />
 
 </div>
-<!-- EDIT488 SECTION "Forward annotation upgrade" [7258-12531] -->
-<h3 class="sectionedit489"><a name="gui_modernization" id="gui_modernization">GUI modernization</a></h3>
+<!-- EDIT947 SECTION "Forward annotation upgrade" [7230-12503] -->
+<h3 class="sectionedit948"><a name="gui_modernization" id="gui_modernization">GUI modernization</a></h3>
 <div class="level3">
 
 <p>
-
 <a href="geda-pcb_funding_sow-gui_ideas.html" class="wikilink1" title="geda-pcb_funding_sow-gui_ideas.html">Ideas, commentary, and examples from users</a>
 </p>
 
@@ -361,7 +350,6 @@ actions are already supported.  Therefore, this project involves:
 The basic goal is to make the upgraded PCB behave exactly as an inexperienced
 user might expect, based upon his familiarity with modern <acronym title="Graphical User Interface">GUI</acronym>-based tools like
 OpenOffice.  This means:
-
 </p>
 <ul>
 <li class="level1"><div class="li"> PCB should support all the “normal” keystrokes which have become defacto standards for <acronym title="Graphical User Interface">GUI</acronym> programs.  Examples include &lt;ctrl&gt;-c for copy, &lt;ctrl&gt;-x for delete, etc.  PCB may continue to support the old key strokes to maintain backward compatibility for those who are already experienced with the program, but in the event that one of PCB&#039;s current keystrokes conflicts with the “defacto standard”, the defacto standard shall be implemented.</div>
@@ -381,7 +369,6 @@ OpenOffice.  This means:
 </ul>
 
 <p>
-
 If the descriptions in this specification are ambiguous or unclear, use the behaviors implemented in gschem as the preferred example.
 </p>
 
@@ -397,7 +384,6 @@ if they do not support it already.  Where possible, support for the current
 users who have learned the old actions.  However, if there is a conflict
 between the new noun/verb and the old verb/noun actions, the new noun/verb
 actions take presidence.
-
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>select/delete</strong>  Using any of: menu item, &lt;ctrl&gt;-x.  Delete should move the deleted object(s) from the layout into the copy buffer, so the user may place them elsewhere with a subsequent action.  (NOTE:  The copy buffer should probably be implemented separately from the existing “element buffer”.)</div>
@@ -491,8 +477,8 @@ This project involves:
 <hr />
 
 </div>
-<!-- EDIT489 SECTION "GUI modernization" [12532-18467] -->
-<h3 class="sectionedit490"><a name="footprint_editor_implementation" id="footprint_editor_implementation">Footprint editor implementation</a></h3>
+<!-- EDIT948 SECTION "GUI modernization" [12504-18439] -->
+<h3 class="sectionedit949"><a name="footprint_editor_implementation" id="footprint_editor_implementation">Footprint editor implementation</a></h3>
 <div class="level3">
 
 <p>
@@ -528,7 +514,6 @@ There are two ways to invoke the footprint editor:
 </ol>
 
 <p>
-
 As a third possibility, the user should be able to do “tools → create new footprint”, go into the editor, and then do “file → open” and select a footprint from the library to edit.
 </p>
 
@@ -543,7 +528,6 @@ As a fourth possibility, allow a mode similar to gschem, where a library browser
 
 <p>
 The footprint editor should be a graphical drawing environment similar to that presented by PCB for layout editing.
-
 </p>
 <ul>
 <li class="level1"><div class="li"> Buttons and menus.  The footprint editor should have all the same menus and buttons as are available from the PCB editor.  Those menu items and buttons which are not useful for footprint editing should be greyed out.</div>
@@ -555,7 +539,6 @@ The footprint editor should be a graphical drawing environment similar to that p
 </ul>
 
 <p>
-
 The design choice of which environment is better is left to the developer to decide based upon factors including input from the community, ease of implementation, etc.
 </p>
 
@@ -639,8 +622,8 @@ This project involves:
 <hr />
 
 </div>
-<!-- EDIT490 SECTION "Footprint editor implementation" [18468-24056] -->
-<h3 class="sectionedit491"><a name="upgrade_of_layer_and_design_objects" id="upgrade_of_layer_and_design_objects">Upgrade of layer and design objects</a></h3>
+<!-- EDIT949 SECTION "Footprint editor implementation" [18440-24028] -->
+<h3 class="sectionedit950"><a name="upgrade_of_layer_and_design_objects" id="upgrade_of_layer_and_design_objects">Upgrade of layer and design objects</a></h3>
 <div class="level3">
 
 </div>
@@ -655,7 +638,6 @@ layer, outline layer), or are simply derived from the metal layer (solder
 mask).  This task involves implementing full support for layers of arbitrary
 type and layer count.  Also, support for other design objects is part of this
 upgrade.  Specific features required are:
-
 </p>
 <ul>
 <li class="level1"><div class="li"> Upgrade of existing datastructures to support layers of arbitrary type including: DRC, mechanical outline, annotation, solder mask, paste mask, plated through-hole, unplated through-hole, metal, silk.  The upgrade must also provide support for an arbitrary number of layers.  Also, allowing for per-layer clearance settings is an important feature for inclusion here.</div>
@@ -701,8 +683,8 @@ This project involves:
 <hr />
 
 </div>
-<!-- EDIT491 SECTION "Upgrade of layer and design objects" [24057-26082] -->
-<h3 class="sectionedit492"><a name="design_rule_checking_upgrade" id="design_rule_checking_upgrade">Design Rule Checking Upgrade</a></h3>
+<!-- EDIT950 SECTION "Upgrade of layer and design objects" [24029-26054] -->
+<h3 class="sectionedit951"><a name="design_rule_checking_upgrade" id="design_rule_checking_upgrade">Design Rule Checking Upgrade</a></h3>
 <div class="level3">
 
 </div>
@@ -768,7 +750,6 @@ running in a thread.
 </ol>
 
 <p>
-
 <strong>Automatic DRC</strong>
 </p>
 <ol>
@@ -807,8 +788,8 @@ This project involves:
 <hr />
 
 </div>
-<!-- EDIT492 SECTION "Design Rule Checking Upgrade" [26083-29268] -->
-<h3 class="sectionedit493"><a name="project_milestones_duration_and_budget_estimates" id="project_milestones_duration_and_budget_estimates">Project milestones, duration, and budget estimates</a></h3>
+<!-- EDIT951 SECTION "Design Rule Checking Upgrade" [26055-29240] -->
+<h3 class="sectionedit952"><a name="project_milestones_duration_and_budget_estimates" id="project_milestones_duration_and_budget_estimates">Project milestones, duration, and budget estimates</a></h3>
 <div class="level3">
 
 <p>
@@ -931,9 +912,8 @@ Cost: $8000
 <p>
 Total duration: 10 days = 80 hours.
 Cost: $4000
-
 </p>
 
 </div>
-<!-- EDIT493 SECTION "Project milestones, duration, and budget estimates" [29269-] --></body>
+<!-- EDIT952 SECTION "Project milestones, duration, and budget estimates" [29241-] --></body>
 </html>

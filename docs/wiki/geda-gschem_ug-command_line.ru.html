@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit676"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> « <a href="geda-gschem_ug-main_window.ru.html" class="wikilink1" title="geda-gschem_ug-main_window.ru.html">Основное окно</a> </td><td class="col1"> <strong><a href="geda-gschem_ug.ru.html" class="wikilink1" title="geda-gschem_ug.ru.html">Руководство пользователя gEDA gschem</a></strong> </td><td class="col2"> <a href="geda-gschem_ug-stroke.ru.html" class="wikilink1" title="geda-gschem_ug-stroke.ru.html">Поддержка жестов мышью</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT676 TABLE [1-232] -->
+<h2 class="sectionedit677"><a name="аргументы_командной_строки" id="аргументы_командной_строки">Аргументы командной строки</a></h2>
+<div class="level2">
+
+<p>
+<strong>gschem</strong> принимает несколько дополнительных аргументов командной строки. Их
+перечень можно узнать, запустив <code>gschem -h</code>. Перечень всех ключей командной
+строки, принимаемых gschem, можно посмотреть в man-странице программы (<code>man
+gschem</code>).
+</p>
+
+</div>
+<!-- EDIT677 SECTION "Аргументы командной строки" [234-705] -->
+<h3 class="sectionedit678"><a name="вывод_сообщений_и_диагностика" id="вывод_сообщений_и_диагностика">Вывод сообщений и диагностика</a></h3>
+<div class="level3">
+<div class="table sectionedit679"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> <strong>-q</strong>, <strong>--quiet</strong>   </td><td class="col1"> Без вывода информации. Отключение всех предупреждений/замечаний/сообщений. </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> <strong>-v</strong>, <strong>--verbose</strong> </td><td class="col1"> Подробный вывод. Вывод дополнительной диагностической информации. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> <strong>-h</strong>, <strong>--help</strong>    </td><td class="col1"> Вывод справки. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> <strong>-V</strong>, <strong>--version</strong> </td><td class="col1"> Вывод информации о версии. </td>
+	</tr>
+</table></div>
+<!-- EDIT679 TABLE [773-1240] -->
+</div>
+<!-- EDIT678 SECTION "Вывод сообщений и диагностика" [706-1241] -->
+<h3 class="sectionedit680"><a name="использование_расширений_на_scheme" id="использование_расширений_на_scheme">Использование расширений на Scheme</a></h3>
+<div class="level3">
+<div class="table sectionedit681"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> <strong>-L</strong> <em class="u">КАТАЛОГ</em>        </td><td class="col1"> Добавление <em class="u">КАТАЛОГ</em>а к началу списка каталогов, в которых производится поиск файлов Scheme. </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> <strong>-s</strong> <em class="u">ФАЙЛ</em>           </td><td class="col1"> Задание скрипта на Scheme, который должен быть выполнен при запуске. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> <strong>-c</strong> <em class="u">ВЫРАЖЕНИЕ</em>      </td><td class="col1"> Задание выражения на Scheme, которое должно быть выполнено при запуске. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <strong>--</strong>                </td><td class="col1"> Считать все остальные аргументы именами файлов схем и символов. Это может использоваться, когда нужно задать имя файла схемы или символа, начинающееся с «-». </td>
+	</tr>
+</table></div>
+<!-- EDIT681 TABLE [1313-2164] -->
+</div>
+<!-- EDIT680 SECTION "Использование расширений на Scheme" [1242-2165] -->
+<h3 class="sectionedit682"><a name="прочее" id="прочее">Прочее</a></h3>
+<div class="level3">
+<div class="table sectionedit683"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> <strong>-r</strong>, <strong>--config-file</strong>=<em class="u">ФАЙЛ</em>  </td><td class="col1"> Задание дополнительного файла настройки, который должен быть считан после обработки всех прочих файлов настроек. </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> <strong>-o</strong>, <strong>--output</strong>=<em class="u">ФАЙЛ</em>       </td><td class="col1"> Задание имени файла для вывода в формате PostScript. Этот аргумент полезен при запуске gschem из скрипта оболочки с заданием выполнения скрипта на Scheme. Имя файла может быть изменено в диалоговом окне печати. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> <strong>-p</strong>                                  </td><td class="col1"> Автоматическое размещение окна. Может быть полезно, если нужно запустить gschem из командной строки и вывести результаты в файл. </td>
+	</tr>
+</table></div>
+<!-- EDIT683 TABLE [2190-3141] -->
+</div>
+<!-- EDIT682 SECTION "Прочее" [2166-] --></body>
+</html>

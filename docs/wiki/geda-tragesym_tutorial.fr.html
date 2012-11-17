@@ -10,19 +10,18 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<a href=.>start</a></br>
 
-
-<h1 class="sectionedit1342"><a name="creer_des_symboles_gschem_rapidement_et_facilement_en_utilisant_tragesym_et_un_tableur" id="creer_des_symboles_gschem_rapidement_et_facilement_en_utilisant_tragesym_et_un_tableur">Créer des symboles gschem rapidement et facilement en utilisant tragesym et un tableur</a></h1>
+<h1 class="sectionedit1980"><a name="creer_des_symboles_gschem_rapidement_et_facilement_en_utilisant_tragesym_et_un_tableur" id="creer_des_symboles_gschem_rapidement_et_facilement_en_utilisant_tragesym_et_un_tableur">Créer des symboles gschem rapidement et facilement en utilisant tragesym et un tableur</a></h1>
 <div class="level1">
 
 <p>
-
 La création de symboles pour le dessin de schémas peut prendre beaucoup de temps, générer beaucoup d&#039;erreurs et de frustrations. Heureusement, gschem utilise un format de fichier texte ouvert qui est très facile à utiliser avec des scripts. Ce tutoriel succint décrit comment utiliser tragesym, un outil extérieur, pour créer des symboles très rapidement (probablement plus rapidement qu&#039;avec tout paquet commercial).
 </p>
 
 </div>
-<!-- EDIT1342 SECTION "Créer des symboles gschem rapidement et facilement en utilisant tragesym et un tableur" [1-532] -->
-<h2 class="sectionedit1343"><a name="etapes_necessaires" id="etapes_necessaires">Étapes nécessaires</a></h2>
+<!-- EDIT1980 SECTION "Créer des symboles gschem rapidement et facilement en utilisant tragesym et un tableur" [1-532] -->
+<h2 class="sectionedit1981"><a name="etapes_necessaires" id="etapes_necessaires">Étapes nécessaires</a></h2>
 <div class="level2">
 <ul>
 <li class="level1"><div class="li"> Étape 1: Ouvrir un fichier de formulaire tragesym</div>
@@ -42,26 +41,24 @@ La création de symboles pour le dessin de schémas peut prendre beaucoup de tem
 </ul>
 
 </div>
-<!-- EDIT1343 SECTION "Étapes nécessaires" [533-1094] -->
-<h2 class="sectionedit1344"><a name="etape_1ouvrir_un_fichier_de_formulaire_tragesym" id="etape_1ouvrir_un_fichier_de_formulaire_tragesym">Étape 1: Ouvrir un fichier de formulaire tragesym</a></h2>
+<!-- EDIT1981 SECTION "Étapes nécessaires" [533-1094] -->
+<h2 class="sectionedit1982"><a name="etape_1ouvrir_un_fichier_de_formulaire_tragesym" id="etape_1ouvrir_un_fichier_de_formulaire_tragesym">Étape 1: Ouvrir un fichier de formulaire tragesym</a></h2>
 <div class="level2">
 
 <p>
-
 tragesym est fourni avec deux fichiers de formulaires. L&#039;un est en <a href="media/tragesym/template.txt" class="media" target="_blank" title="tragesym:template.txt">texte ASCII</a>, le second est une <a href="media/tragesym/template.ods" class="media" target="_blank" title="tragesym:template.ods">feuille de calcul OpenOffice</a>. Vous pouvez aussi les obtenir depuis le paquet d&#039;utilitaires gEDA (utils/examples/tragesym/template.src et utils/examples/tragesym/template.ods).
  Si vous préférez un tableur différent, comme gnumeric ou kspread, créez simplement votre propre fichier formulaire texte à partir de celui qui est fourni. La seule différence entre les formulaires texte et calcul est la syntaxe des valeurs dans les sections [options] et [geda_attr]. Le fichier texte les sépare avec un signe (clé=valeur), la feuille de calcul obtient la valeur dans la seconde colonne (qui devient une tabulation après avoir été exportée).
 </p>
 
 </div>
-<!-- EDIT1344 SECTION "Étape 1: Ouvrir un fichier de formulaire tragesym" [1095-1958] -->
-<h2 class="sectionedit1345"><a name="etape_2telecharger_le_fichier_technique_du_composant_et_trouver_la_liste_des_broches" id="etape_2telecharger_le_fichier_technique_du_composant_et_trouver_la_liste_des_broches">Étape 2: Télécharger le fichier technique du composant et trouver la liste des broches</a></h2>
+<!-- EDIT1982 SECTION "Étape 1: Ouvrir un fichier de formulaire tragesym" [1095-1958] -->
+<h2 class="sectionedit1983"><a name="etape_2telecharger_le_fichier_technique_du_composant_et_trouver_la_liste_des_broches" id="etape_2telecharger_le_fichier_technique_du_composant_et_trouver_la_liste_des_broches">Étape 2: Télécharger le fichier technique du composant et trouver la liste des broches</a></h2>
 <div class="level2">
 
 <p>
-
 Pour cet exemple, nous allons créer un symbole avec les ports IO du PCA9555 16-bit IIC IO de Philips 
 Semiconductor. La description du produit et la fiche technique sont disponibles sur Philips :
-[<a href="http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html" class="urlextern" title="http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html"  rel="nofollow">http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html</a>]. Téléchargez la fiche technique et ouvrez-la avec un  visualiseur pdf qui permet la copie du texte à l&#039;extérieur du <acronym title="Portable Document Format">PDF</acronym>, tel que xpdf (téléchargeable sur [<a href="http://www.foolabs.com/xpdf/home.html" class="urlextern" title="http://www.foolabs.com/xpdf/home.html"  rel="nofollow">http://www.foolabs.com/xpdf/home.html</a>]). Passez les pages jusqu&#039;à ce que vous ayez trouvé le brochage ou le composant·:
+[<a href="http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html]" class="urlextern" title="http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html]"  rel="nofollow">http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html]</a>. Téléchargez la fiche technique et ouvrez-la avec un  visualiseur pdf qui permet la copie du texte à l&#039;extérieur du <acronym title="Portable Document Format">PDF</acronym>, tel que xpdf (téléchargeable sur [<a href="http://www.foolabs.com/xpdf/home.html]" class="urlextern" title="http://www.foolabs.com/xpdf/home.html]"  rel="nofollow">http://www.foolabs.com/xpdf/home.html]</a>). Passez les pages jusqu&#039;à ce que vous ayez trouvé le brochage ou le composant·:
 </p>
 
 <p>
@@ -73,12 +70,11 @@ Dans la feuille de calcul, la liste des broches peut être seulement présente d
 </p>
 
 </div>
-<!-- EDIT1345 SECTION "Étape 2: Télécharger le fichier technique du composant et trouver la liste des broches" [1959-2906] -->
-<h2 class="sectionedit1346"><a name="etape_3copier_la_liste_des_broches_dans_un_editeur_et_la_preparer" id="etape_3copier_la_liste_des_broches_dans_un_editeur_et_la_preparer">Étape 3: Copier la liste des broches dans un éditeur et la préparer</a></h2>
+<!-- EDIT1983 SECTION "Étape 2: Télécharger le fichier technique du composant et trouver la liste des broches" [1959-2906] -->
+<h2 class="sectionedit1984"><a name="etape_3copier_la_liste_des_broches_dans_un_editeur_et_la_preparer" id="etape_3copier_la_liste_des_broches_dans_un_editeur_et_la_preparer">Étape 3: Copier la liste des broches dans un éditeur et la préparer</a></h2>
 <div class="level2">
 
 <p>
-
 Sélectionnez la liste des broches et copiez-la dans un éditeur de texte. C&#039;est une étape intermédiaire nécessaire car votre tableur a besoin de champs séparateurs spéciaux, comme les virgules ou les tabulations. Vous pouvez avoir à enlever les séparateurs en double ou de les remplacer avec des tabulations.
 </p>
 
@@ -115,12 +111,11 @@ L&#039;image ci-dessus illustre les étapes·:
 </ul>
 
 </div>
-<!-- EDIT1346 SECTION "Étape 3: Copier la liste des broches dans un éditeur et la préparer" [2907-4587] -->
-<h2 class="sectionedit1347"><a name="etape_4inserer_toutes_les_donnees_manquantes_dans_la_feuille_de_calcul" id="etape_4inserer_toutes_les_donnees_manquantes_dans_la_feuille_de_calcul">Étape 4: Insérer toutes les données manquantes dans la feuille de calcul</a></h2>
+<!-- EDIT1984 SECTION "Étape 3: Copier la liste des broches dans un éditeur et la préparer" [2907-4587] -->
+<h2 class="sectionedit1985"><a name="etape_4inserer_toutes_les_donnees_manquantes_dans_la_feuille_de_calcul" id="etape_4inserer_toutes_les_donnees_manquantes_dans_la_feuille_de_calcul">Étape 4: Insérer toutes les données manquantes dans la feuille de calcul</a></h2>
 <div class="level2">
 
 <p>
-
 Déplacez maintenant les étiquettes et les numéros de broches dans leurs colonnes respectives. Vous pouvez aussi utiliser la fonctionnalité d&#039;autoremplissage de votre tableur pour créer les numéros de broche.
 </p>
 
@@ -152,7 +147,6 @@ Selon ce tableau, nous changeons les éléments suivants (voir le résultat ci-d
 </ul>
 
 <p>
-
 <strong>Note:</strong> Si une de vos étiquettes contient un backslash «·\·», vous devez le remplacer par sa séquence d&#039;échapement «·\\·».
 </p>
 
@@ -169,22 +163,20 @@ Avant de configurer les attributs et les options aux valeurs appropriées.
 </p>
 
 </div>
-<!-- EDIT1347 SECTION "Étape 4: Insérer toutes les données manquantes dans la feuille de calcul" [4588-6061] -->
-<h2 class="sectionedit1348"><a name="etape_5exporter_la_feuille_de_calcul_dans_un_fichier_texte_avec_separation_par_tabulation" id="etape_5exporter_la_feuille_de_calcul_dans_un_fichier_texte_avec_separation_par_tabulation">Étape 5: Exporter la feuille de calcul dans un fichier texte avec séparation par tabulation</a></h2>
+<!-- EDIT1985 SECTION "Étape 4: Insérer toutes les données manquantes dans la feuille de calcul" [4588-6061] -->
+<h2 class="sectionedit1986"><a name="etape_5exporter_la_feuille_de_calcul_dans_un_fichier_texte_avec_separation_par_tabulation" id="etape_5exporter_la_feuille_de_calcul_dans_un_fichier_texte_avec_separation_par_tabulation">Étape 5: Exporter la feuille de calcul dans un fichier texte avec séparation par tabulation</a></h2>
 <div class="level2">
 
 <p>
-
 Vous pouvez soit utiliser le fonction export de votre tableur pour créer un fichier texte délimité par des tabulations ou simplement sélectionner le tableau et copier son contenu dans votre éditeur de texte  et sauvegarder le fichier.
 </p>
 
 </div>
-<!-- EDIT1348 SECTION "Étape 5: Exporter la feuille de calcul dans un fichier texte avec séparation par tabulation" [6062-6409] -->
-<h2 class="sectionedit1349"><a name="etape_6lancer_tragesym_et_creer_le_symbole" id="etape_6lancer_tragesym_et_creer_le_symbole">Étape 6: Lancer tragesym et créer le symbole</a></h2>
+<!-- EDIT1986 SECTION "Étape 5: Exporter la feuille de calcul dans un fichier texte avec séparation par tabulation" [6062-6409] -->
+<h2 class="sectionedit1987"><a name="etape_6lancer_tragesym_et_creer_le_symbole" id="etape_6lancer_tragesym_et_creer_le_symbole">Étape 6: Lancer tragesym et créer le symbole</a></h2>
 <div class="level2">
 
 <p>
-
 Utilisez un shell et exécutez tragesym: 
 </p>
 
@@ -197,12 +189,11 @@ Si tragesym indique qu&#039;il y a une erreur, faites quelques changements dans 
 </p>
 
 </div>
-<!-- EDIT1349 SECTION "Étape 6: Lancer tragesym et créer le symbole" [6410-6771] -->
-<h2 class="sectionedit1350"><a name="etape_7controler_le_resultat_avec_gschem_et_peaufiner_le_symbole" id="etape_7controler_le_resultat_avec_gschem_et_peaufiner_le_symbole">Étape 7: Contrôler le résultat avec gschem et peaufiner le symbole</a></h2>
+<!-- EDIT1987 SECTION "Étape 6: Lancer tragesym et créer le symbole" [6410-6771] -->
+<h2 class="sectionedit1988"><a name="etape_7controler_le_resultat_avec_gschem_et_peaufiner_le_symbole" id="etape_7controler_le_resultat_avec_gschem_et_peaufiner_le_symbole">Étape 7: Contrôler le résultat avec gschem et peaufiner le symbole</a></h2>
 <div class="level2">
 
 <p>
-
 Ouvrez maintenant le symbole généré avec et contrôlez le résultat 
 </p>
 
@@ -223,31 +214,28 @@ Nous avons maintenant un symbole complet. Vous pouvez le copier dans votre bibli
 </p>
 
 </div>
-<!-- EDIT1350 SECTION "Étape 7: Contrôler le résultat avec gschem et peaufiner le symbole" [6772-7503] -->
-<h2 class="sectionedit1351"><a name="conclusion" id="conclusion">Conclusion</a></h2>
+<!-- EDIT1988 SECTION "Étape 7: Contrôler le résultat avec gschem et peaufiner le symbole" [6772-7503] -->
+<h2 class="sectionedit1989"><a name="conclusion" id="conclusion">Conclusion</a></h2>
 <div class="level2">
 
 <p>
-
 C&#039;était un exemple simple avec peu de broches mais cela est d&#039;autant plus rentable lorsque vous en avez beaucoup (ie, bga-272, tfqp-100, etc.).
 </p>
 
 </div>
-<!-- EDIT1351 SECTION "Conclusion" [7504-7673] -->
-<h2 class="sectionedit1352"><a name="credits" id="credits">Crédits</a></h2>
+<!-- EDIT1989 SECTION "Conclusion" [7504-7673] -->
+<h2 class="sectionedit1990"><a name="credits" id="credits">Crédits</a></h2>
 <div class="level2">
 
 <p>
-
 De grands remerciements à &lt;Russ.Dill(AT)asu.edu&gt;, qui a écrti la première version de ce tutoriel.
 Vous pouvez trouver ce tutoriel sur <a href="http://www.geda.seul.org/docs/current/tutorials/tragesym/tragesym.html" class="urlextern" title="http://www.geda.seul.org/docs/current/tutorials/tragesym/tragesym.html"  rel="nofollow">http://www.geda.seul.org/docs/current/tutorials/tragesym/tragesym.html</a> (version anglaise)
 </p>
 
 <p>
 NdT·: si vous voulez la version française: <a href="http://www.iznogood-factory.org/pub/gEDA/symboles.html" class="urlextern" title="http://www.iznogood-factory.org/pub/gEDA/symboles.html"  rel="nofollow">http://www.iznogood-factory.org/pub/gEDA/symboles.html</a>
-
 </p>
 
 </div>
-<!-- EDIT1352 SECTION "Crédits" [7674-] --></body>
+<!-- EDIT1990 SECTION "Crédits" [7674-] --></body>
 </html>

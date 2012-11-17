@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit701"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> « <a href="geda-gschem_ug-attributes.html" class="wikilink1" title="geda-gschem_ug-attributes.html">Attributes</a>  </td><td class="col1 centeralign">  <strong><a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">gEDA gschem User Guide</a></strong>  </td><td class="col2 rightalign">  <a href="geda-gschem_ug-autonumbering.html" class="wikilink1" title="geda-gschem_ug-autonumbering.html">Autonumbering</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT701 TABLE [1-97] -->
+<h2 class="sectionedit702"><a name="slots_and_slotting" id="slots_and_slotting">Slots and slotting</a></h2>
+<div class="level2">
+
+<p>
+<p><div class="notetip">The <a href="geda-gschem_symbol_creation.html" class="wikilink1" title="geda-gschem_symbol_creation.html">Symbol Creation Guide</a> explains how to create symbols for slotted components.
+</div></p>
+</p>
+
+<p>
+Some integrated circuits provide several identical and interchangeable devices in a single package.  gschem and <a href="geda-gnetlist_ug.html" class="wikilink1" title="geda-gnetlist_ug.html">gnetlist</a> provide support for working with these by using <a href="geda-gschem_ug-components.html" class="wikilink1" title="geda-gschem_ug-components.html">components</a> with <em>slots</em>.
+</p>
+
+<p>
+To use a slotted component in a schematic, create multiple copies of the component, and give them all the same <code>refdes</code> <a href="geda-gschem_ug-attributes.html" class="wikilink1" title="geda-gschem_ug-attributes.html">attribute</a>.  Next, select one of the components and use <strong>Edit→Edit</strong> to display the “Edit Attributes” window.  If you select “Show inherited attributes”, you should see a <code>numslots</code> attribute, which shows the number of slots in the package.
+</p>
+
+<p>
+Select each of the copies in turn, and use <strong>Edit→Slot…</strong> to display the “Edit Slot Number” window.  This can be used to set which component uses which slot in the package.  When the slot is changed, gschem will automatically update the pin numbers displayed by the component.
+</p>
+
+</div>
+<!-- EDIT702 SECTION "Slots and slotting" [99-] --></body>
+</html>

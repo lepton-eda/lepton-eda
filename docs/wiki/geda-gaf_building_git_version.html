@@ -10,14 +10,18 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<a href=.>start</a></br>
 
+<h1 class="sectionedit526"><a name="building_the_geda_gaf_git_repository_version" id="building_the_geda_gaf_git_repository_version">Building the gEDA/gaf git repository version</a></h1>
+<div class="level1">
 
-<h2 class="sectionedit1400"><a name="building_the_geda_gaf_git_repository_version" id="building_the_geda_gaf_git_repository_version">Building the gEDA/gaf git repository version</a></h2>
+</div>
+<!-- EDIT526 SECTION "Building the gEDA/gaf git repository version" [1-60] -->
+<h2 class="sectionedit527"><a name="general_instructions" id="general_instructions">General Instructions</a></h2>
 <div class="level2">
 
 <p>
 To build the git repository version of gEDA/gaf, follow these instructions:
-
 </p>
 <ul>
 <li class="level1"><div class="li"> Download and install all the following dependencies.  You will probably want to use your distributions package management system (such as apt-get or yum) to install the dependencies.</div>
@@ -33,6 +37,8 @@ To build the git repository version of gEDA/gaf, follow these instructions:
 <li class="level2"><div class="li"> <a href="http://www.gnu.org/software/autoconf/" class="urlextern" title="http://www.gnu.org/software/autoconf/"  rel="nofollow"> autoconf </a>  2.60 or later</div>
 </li>
 <li class="level2"><div class="li"> <a href="http://www.gnu.org/software/libtool/" class="urlextern" title="http://www.gnu.org/software/libtool/"  rel="nofollow"> libtool </a> current</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://www.gnu.org/software/texinfo/" class="urlextern" title="http://www.gnu.org/software/texinfo/"  rel="nofollow"> texinfo </a> current</div>
 </li>
 <li class="level2"><div class="li"> <a href="http://pkgconfig.freedesktop.org/wiki" class="urlextern" title="http://pkgconfig.freedesktop.org/wiki"  rel="nofollow"> pkg-config </a> current</div>
 </li>
@@ -50,7 +56,7 @@ To build the git repository version of gEDA/gaf, follow these instructions:
 </li>
 <li class="level2"><div class="li"> <a href="http://freedesktop.org/Software/shared-mime-info" class="urlextern" title="http://freedesktop.org/Software/shared-mime-info"  rel="nofollow"> freedesktop.org MIME info database </a> current</div>
 </li>
-<li class="level2"><div class="li"> <a href="http://www.freedesktop.org/software/desktop-file-utils/releases" class="urlextern" title="http://www.freedesktop.org/software/desktop-file-utils/releases"  rel="nofollow"> freedesktop.org utilities for manipulating .desktop files </a> current </div>
+<li class="level2"><div class="li"> <a href="http://www.freedesktop.org/software/desktop-file-utils/releases" class="urlextern" title="http://www.freedesktop.org/software/desktop-file-utils/releases"  rel="nofollow"> freedesktop.org utilities for manipulating .desktop files </a> current</div>
 </li>
 </ul>
 </li>
@@ -64,14 +70,12 @@ To build the git repository version of gEDA/gaf, follow these instructions:
 </li>
 </ul>
 <ul>
-<li class="level1"><div class="li"> Build the software by executing the following commands inside of the newly cloned git repository:</div>
+<li class="level1"><div class="li"> Build the software by executing the following commands inside of the newly cloned git repository:<pre class="code">$ ./autogen.sh
+$ ./configure --prefix=$HOME/geda
+$ make
+$ make install</pre>
+</div>
 </li>
-</ul>
-<pre class="code">    ./autogen.sh
-    ./configure --prefix=$HOME/geda
-    make 
-    make install</pre>
-<ul>
 <li class="level1"><div class="li"> If the above commands execute without <strong>any</strong> error messages, then you have successfully built and installed gEDA/gaf.  If you encounter any errors, be sure to read the README and INSTALL files contained within the tarball.</div>
 </li>
 </ul>
@@ -96,10 +100,74 @@ To build the git repository version of gEDA/gaf, follow these instructions:
 </li>
 </ul>
 <ul>
-<li class="level1"><div class="li"> For build problems, please be sure to read the <a href="geda-mailinglists.html" class="wikilink1" title="geda-mailinglists.html"> mailing list archives </a> or <a href="http://www.gpleda.org/search.html" class="urlextern" title="http://www.gpleda.org/search.html"  rel="nofollow"> search </a> this site.  Also look at the <a href="start.html" class="wikilink1" title="start.html"> gEDA wiki </a> for more hints.</div>
+<li class="level1"><div class="li"> For build problems, please be sure to read the <a href="geda-mailinglists.html" class="wikilink1" title="geda-mailinglists.html"> mailing list archives </a> or <a href="http://www.geda-project.org/search.html" class="urlextern" title="http://www.geda-project.org/search.html"  rel="nofollow"> search </a> this site.  Also look at the <a href="start.html" class="wikilink1" title="start.html"> gEDA wiki </a> for more hints.</div>
 </li>
 </ul>
 
 </div>
-</body>
+<!-- EDIT527 SECTION "General Instructions" [61-3592] -->
+<h2 class="sectionedit528"><a name="distro-specific_information" id="distro-specific_information">Distro-specific information</a></h2>
+<div class="level2">
+
+</div>
+<!-- EDIT528 SECTION "Distro-specific information" [3593-3633] -->
+<h3 class="sectionedit529"><a name="debian-based" id="debian-based">Debian-based</a></h3>
+<div class="level3">
+
+<p>
+This is tested on <a href="http://crunchbanglinux.org/" class="urlextern" title="http://crunchbanglinux.org/"  rel="nofollow">Crunchbang Linux</a> but should work on Debian and Ubuntu also.
+</p>
+<ol>
+<li class="level1"><div class="li"> Install the build dependencies for the packaged version of gEDA:<pre class="code">$ sudo apt-get build-dep geda</pre>
+</div>
+</li>
+<li class="level1"><div class="li"> Install the texinfo package:<pre class="code">$ sudo apt-get install texinfo</pre>
+</div>
+</li>
+<li class="level1"><div class="li"> If you want to generate doxygen output, install it:<pre class="code">$ sudo apt-get install doxygen</pre>
+</div>
+</li>
+<li class="level1"><div class="li"> Clone the source from the official git repository.  For information on how to do this, read the <a href="geda-scm.html" class="wikilink1" title="geda-scm.html"> gEDA SCM topic </a>.</div>
+</li>
+<li class="level1"><div class="li"> From inside the newly cloned repository, build gEDA/gaf:<pre class="code">$ ./autogen.sh
+$ ./configure --prefix=$HOME/geda [--enable-doxygen]
+$ make
+$ make install</pre>
+</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT529 SECTION "Debian-based" [3634-4360] -->
+<h3 class="sectionedit530"><a name="macports" id="macports">MacPorts</a></h3>
+<div class="level3">
+
+<p>
+<a href="http://www.macports.org/" class="urlextern" title="http://www.macports.org/"  rel="nofollow">MacPorts</a> is an open-source community initiative to design an easy-to-use system for compiling, installing, and upgrading open-source software on the Mac <acronym title="Operating System">OS</acronym> X operating system. MacPorts has a packaged installation of gEDA/gaf but occasionally one needs a more up-to-date version (such as that from git). The easiest way to build from git HEAD on MacPorts is to install the packaged version (at time of writing, 1.6.2) as a way of bringing most of the dependencies into the MacPorts tree.
+</p>
+<ol>
+<li class="level1"><div class="li"> <a href="http://www.macports.org/install.php" class="urlextern" title="http://www.macports.org/install.php"  rel="nofollow">Install MacPorts</a>.</div>
+</li>
+<li class="level1"><div class="li"> Install the MacPorts-packaged version of gEDA/gaf. As a happy side-effect, this brings in the build prerequisites:<pre class="code">$ sudo port install geda-gaf</pre>
+</div>
+</li>
+<li class="level1"><div class="li"> If you want to generate doxygen output, install doxygen:<pre class="code">$ sudo port install doxygen</pre>
+</div>
+</li>
+<li class="level1"><div class="li"> Clone the source from the official git repository.  For information on how to do this, read the <a href="geda-scm.html" class="wikilink1" title="geda-scm.html"> gEDA SCM topic </a>.</div>
+</li>
+<li class="level1"><div class="li"> From inside the newly cloned repository, build gEDA/gaf:<pre class="code">$ ./autogen.sh
+$ ./configure --prefix=$HOME/geda --disable-update-xdg-database [--enable-doxygen]
+$ make
+$ make install</pre>
+</div>
+</li>
+<li class="level1"><div class="li"> To run the software, you need to set an environment variable to allow Guile to load its shared libraries:<pre class="code">$ export LTDL_LIBRARY_PATH=/opt/local/lib
+$ gschem</pre>
+</div>
+</li>
+</ol>
+
+</div>
+<!-- EDIT530 SECTION "MacPorts" [4361-] --></body>
 </html>

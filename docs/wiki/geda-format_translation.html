@@ -10,23 +10,21 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<a href=.>start</a></br>
 
-
-<h1 class="sectionedit754"><a name="file_format_translation" id="file_format_translation">File format translation</a></h1>
+<h1 class="sectionedit1748"><a name="file_format_translation" id="file_format_translation">File format translation</a></h1>
 <div class="level1">
 
 <p>
-
 We need a universal translator system that can translate in all directions between gEDA tools, possible future gEDA tools, and outside tools that are likely to be used with gEDA tools.
 </p>
 
 </div>
-<!-- EDIT754 SECTION "File format translation" [1-225] -->
-<h2 class="sectionedit755"><a name="scope" id="scope">Scope</a></h2>
+<!-- EDIT1748 SECTION "File format translation" [1-225] -->
+<h2 class="sectionedit1749"><a name="scope" id="scope">Scope</a></h2>
 <div class="level2">
 
 <p>
-
 Of course, everything to everything is not reasonable.  So, set a limit of gEDA tools, possible future gEDA tools, and outside tools that are likely to be used with gEDA tools.  Of course, tool formats where translation doesn&#039;t make sense don&#039;t need to be supported.
 </p>
 
@@ -59,8 +57,8 @@ There needs to be a way to merge changes from any target/source without messing 
 </p>
 
 </div>
-<!-- EDIT755 SECTION "Scope" [226-1514] -->
-<h3 class="sectionedit756"><a name="tool_types_needing_support" id="tool_types_needing_support">Tool types needing support</a></h3>
+<!-- EDIT1749 SECTION "Scope" [226-1514] -->
+<h3 class="sectionedit1750"><a name="tool_types_needing_support" id="tool_types_needing_support">Tool types needing support</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> schematic</div>
@@ -72,8 +70,8 @@ There needs to be a way to merge changes from any target/source without messing 
 </ul>
 
 </div>
-<!-- EDIT756 SECTION "Tool types needing support" [1515-1592] -->
-<h3 class="sectionedit757"><a name="geda_tools" id="geda_tools">gEDA tools</a></h3>
+<!-- EDIT1750 SECTION "Tool types needing support" [1515-1592] -->
+<h3 class="sectionedit1751"><a name="geda_tools" id="geda_tools">gEDA tools</a></h3>
 <div class="level3">
 
 <p>
@@ -91,8 +89,8 @@ Lossless round trip is required, so archival storage can use the intermediate fo
 </ul>
 
 </div>
-<!-- EDIT757 SECTION "gEDA tools" [1593-1749] -->
-<h3 class="sectionedit758"><a name="other_free_tools_that_should_be_well_supported" id="other_free_tools_that_should_be_well_supported">Other free tools that should be well supported</a></h3>
+<!-- EDIT1751 SECTION "gEDA tools" [1593-1749] -->
+<h3 class="sectionedit1752"><a name="other_free_tools_that_should_be_well_supported" id="other_free_tools_that_should_be_well_supported">Other free tools that should be well supported</a></h3>
 <div class="level3">
 
 <p>
@@ -116,8 +114,8 @@ These tools are free, too.  The standard needs to support them on an equal basis
 </ul>
 
 </div>
-<!-- EDIT758 SECTION "Other free tools that should be well supported" [1750-1980] -->
-<h3 class="sectionedit759"><a name="non-free_import_and_export" id="non-free_import_and_export">Non-free import and export</a></h3>
+<!-- EDIT1752 SECTION "Other free tools that should be well supported" [1750-1980] -->
+<h3 class="sectionedit1753"><a name="non-free_import_and_export" id="non-free_import_and_export">Non-free import and export</a></h3>
 <div class="level3">
 
 <p>
@@ -135,8 +133,8 @@ Support for these will allow gEDA tools to play nice with the commercial world. 
 </ul>
 
 </div>
-<!-- EDIT759 SECTION "Non-free import and export" [1981-2293] -->
-<h3 class="sectionedit760"><a name="geda_missing_functionality" id="geda_missing_functionality">gEDA missing functionality</a></h3>
+<!-- EDIT1753 SECTION "Non-free import and export" [1981-2293] -->
+<h3 class="sectionedit1754"><a name="geda_missing_functionality" id="geda_missing_functionality">gEDA missing functionality</a></h3>
 <div class="level3">
 
 <p>
@@ -156,8 +154,8 @@ Hopefully having a translator system will provide a seed so these can be done.
 </ul>
 
 </div>
-<!-- EDIT760 SECTION "gEDA missing functionality" [2294-2628] -->
-<h3 class="sectionedit761"><a name="explicitly_not_supported" id="explicitly_not_supported">Explicitly not supported</a></h3>
+<!-- EDIT1754 SECTION "gEDA missing functionality" [2294-2628] -->
+<h3 class="sectionedit1755"><a name="explicitly_not_supported" id="explicitly_not_supported">Explicitly not supported</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Plotting</div>
@@ -169,12 +167,11 @@ Hopefully having a translator system will provide a seed so these can be done.
 </ul>
 
 </div>
-<!-- EDIT761 SECTION "Explicitly not supported" [2629-2714] -->
-<h2 class="sectionedit762"><a name="concepts" id="concepts">Concepts</a></h2>
+<!-- EDIT1755 SECTION "Explicitly not supported" [2629-2714] -->
+<h2 class="sectionedit1756"><a name="concepts" id="concepts">Concepts</a></h2>
 <div class="level2">
 
 <p>
-
 All of these consist of lists of objects, with connections and attributes.
 </p>
 
@@ -195,8 +192,8 @@ All contenders for possible formats must support a loss round-trip to any other.
 </p>
 
 </div>
-<!-- EDIT762 SECTION "Concepts" [2715-3299] -->
-<h3 class="sectionedit763"><a name="some_possible_formats" id="some_possible_formats">Some possible formats</a></h3>
+<!-- EDIT1756 SECTION "Concepts" [2715-3299] -->
+<h3 class="sectionedit1757"><a name="some_possible_formats" id="some_possible_formats">Some possible formats</a></h3>
 <div class="level3">
 
 </div>
@@ -205,7 +202,6 @@ All contenders for possible formats must support a loss round-trip to any other.
 <div class="level4">
 
 <p>
-
 A popular netlist format.  It has a history of use for interchange, but not yet for physical placement.  Problems: irregular syntax, not sufficiently expressive.  These problems have been a major hassle for years for developers.  It is well accepted, but not by people who know it well.
 </p>
 
@@ -215,7 +211,6 @@ A popular netlist format.  It has a history of use for interchange, but not yet 
 <div class="level4">
 
 <p>
-
 The structural subset is a good netlist format.  It is regular, sufficiently expressive, and has a published standard.  It has a history of use for interchange, but not yet for physical placement.
 </p>
 
@@ -225,7 +220,6 @@ The structural subset is a good netlist format.  It is regular, sufficiently exp
 <div class="level4">
 
 <p>
-
 The structural subset is a good netlist format.  It is regular, sufficiently expressive, and has a published standard.  It has a history of use for interchange, but not yet for physical placement.
 </p>
 
@@ -235,7 +229,6 @@ The structural subset is a good netlist format.  It is regular, sufficiently exp
 <div class="level4">
 
 <p>
-
 The structural subset is a good netlist format.  It is regular, sufficiently expressive, but belongs to one company (Cadence), so rule it out.  It has a history of use for simulation only.
 </p>
 
@@ -245,23 +238,20 @@ The structural subset is a good netlist format.  It is regular, sufficiently exp
 <div class="level4">
 
 <p>
-
 <acronym title="Extensible Markup Language">XML</acronym> is not really a format but a syntax.  A good format can easily be made based on <acronym title="Extensible Markup Language">XML</acronym>, but has no history of use in a similar context.  The syntax is well documented but there is no outside documentation of application in any related use.
 </p>
 
 </div>
-<!-- EDIT763 SECTION "Some possible formats" [3300-4524] -->
-<h3 class="sectionedit764"><a name="representation_of_physical_placement" id="representation_of_physical_placement">Representation of physical placement</a></h3>
+<!-- EDIT1757 SECTION "Some possible formats" [3300-4524] -->
+<h3 class="sectionedit1758"><a name="representation_of_physical_placement" id="representation_of_physical_placement">Representation of physical placement</a></h3>
 <div class="level3">
 
 <p>
-
 This part is the only part where there is not a strong history of use for VHDL and Verilog.
 </p>
 
 <p>
 Ideas:
-
 </p>
 <ul>
 <li class="level1"><div class="li"> Nets are also objects with connections and attributes.  Nets have meaning in all contexts.</div>
@@ -281,40 +271,33 @@ Ideas:
 </ul>
 
 </div>
-<!-- EDIT764 SECTION "Representation of physical placement" [4525-5482] -->
-<h2 class="sectionedit765"><a name="applications" id="applications">Applications</a></h2>
+<!-- EDIT1758 SECTION "Representation of physical placement" [4525-5482] -->
+<h2 class="sectionedit1759"><a name="applications" id="applications">Applications</a></h2>
 <div class="level2">
 
 <p>
-
 Choosing the Verilog format as one possibility.
 </p>
 
 <p>
 The unit of encapsulation is the “module”:
-
 </p>
 <pre class="code">module my-module(connections);
 // contents
 endmodule</pre>
 
 <p>
-
 Each object in the list has a consistent syntax:
-
 </p>
 <pre class="code">type #(attributes) name (connections);</pre>
 
 <p>
-
 Example:
-
 </p>
 <pre class="code">resistor #(.r(1k)) r123 (a, b);
 resistor #(.r(1k)) r234 (.p(b), .n(c));</pre>
 
 <p>
-
 “r” is the name of an attribute.  “1k” is the value (a string).
 </p>
 
@@ -328,20 +311,17 @@ A “net” is also an object.
 
 <p>
 In the above example, both connect to node b directly.  In a schematic representation the connection would not be direct, but through a “net”
-
 </p>
 <pre class="code">resistor #(.r(1k)) r123 (.p(a1), .n(b1));
 resistor #(.r(1k)) r125 (.p(b2), .n(c2));
 net b (.1(b1), .2(b2));</pre>
 
 <p>
-
 The name of the net is “b”.  It has no attributes.
 </p>
 
 <p>
 For schematic, you can now place the nodes:
-
 </p>
 <pre class="code">place #(.x(1222), .y(3438)) place11333 (b1);
 place #(.x(4334), .y(8433)) place34894 (b2);
@@ -349,9 +329,7 @@ place #(.x(9393), .y(4232)) place49334 (a1);
 place #(.x(2932), .y(2384)) place34983 (c2);</pre>
 
 <p>
-
 Portions that apply in only certain contexts can be selectively included with &#039;ifdef:
-
 </p>
 <pre class="code">module my_circuit;
   `ifdef SCHEMATIC
@@ -364,9 +342,7 @@ Portions that apply in only certain contexts can be selectively included with &#
 endmodule</pre>
 
 <p>
-
 Complex nets can be encapsulated:
-
 </p>
 <pre class="code">module net23842 (1,2,3);
   net n23482 (1,2);
@@ -382,5 +358,5 @@ endmodule</pre>
 endmodule</pre>
 
 </div>
-<!-- EDIT765 SECTION "Applications" [5483-] --></body>
+<!-- EDIT1759 SECTION "Applications" [5483-] --></body>
 </html>
