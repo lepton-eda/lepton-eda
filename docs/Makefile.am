@@ -1,5 +1,5 @@
 
-SUBDIRS = toplevel wiki scripts 
+SUBDIRS = toplevel wiki
 # scheme-api
 
 EXTRA_DIST = ChangeLog-1.0 ChangeLog
