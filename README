@@ -78,6 +78,17 @@ The following tools and libraries are optional:
    building the gEDA developer API documentation, not for the regular
    user documentation.  <http://www.stack.nl/~dimitri/doxygen/>
 
+ - `Inkscape' or `ImageMagic' for svg to png or pdf conversion
+   This is required for building the gEDA developer API documentation,
+   not for the regular user documentation.
+   <http://inkscape.org/>
+   <http://www.imagemagick.org/script/index.php>
+
+ - `Graphviz' for drawing directed graphs.
+   This is required for building the gEDA developer API documentation,
+   not for the regular user documentation.
+   <http://www.graphviz.org/>
+
 Troubleshooting dependencies
 ----------------------------
 
@@ -155,6 +166,29 @@ To generate the configure script, run:
 You can then procede to configure and build gEDA as described above.
 For more information on working with the gEDA `git' repository, see
 <http://geda.seul.org/wiki/geda:scm>.
+
+Building gEDA developer API documentation
+-----------------------------------------
+
+Add --enable-doxygen to your configure command line, as in:
+
+  ./configure --enable-doxygen
+
+Then run
+
+  make doxygen
+
+The documentation can then be found in:
+
+  */docs/html/index.html
+  */docs/latex/refman.pdf
+
+Some modules don't generate the pdf's, if you want them you have to
+
+  cd gattrib/docs
+  make refman.pdf
+
+and similar.
 
 Tools in the gEDA suite
 =======================
