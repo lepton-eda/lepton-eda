@@ -138,7 +138,7 @@ int f_print_header(TOPLEVEL *toplevel, PAGE *page, FILE *fp,
 	  "%%%%BoundingBox: %d %d %d %d\n"
 	  "%%%%Orientation: %s\n"
 	  "%%%%Pages: 1\n"
-	  "%%%%Endcomments\n"
+	  "%%%%EndComments\n"
 	  "%%%%BeginProlog\n",
 	  PACKAGE_GIT_VERSION,
 	  ctime(&current_time),
