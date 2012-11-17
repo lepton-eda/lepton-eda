@@ -132,7 +132,7 @@ s_object_add_net_attrib_to_object (TOPLEVEL *toplevel,
  * \param toplevel TOPLEVEL structure
  * \param o_current Pointer to pin object
  * \param new_attrib_name Name of attribute to add
- * \parma new_attrib_value Value of attribute to add
+ * \param new_attrib_value Value of attribute to add
  * \todo Do I really need separate fcns for comps, nets, and
  * pins???
  */
