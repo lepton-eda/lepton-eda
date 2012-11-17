@@ -52,6 +52,14 @@ neither Inkscape nor ImageMagick were found. Ensure one of these is
 installed and in your path, or configure without --enable-doxygen.])
     fi
 
+    # Check for graphviz
+    AC_CHECK_PROG([DOT], [dot], [dot], [no])
+    if test "X$DOT" = "Xno"; then
+      AC_MSG_ERROR([API documentation generation was requested,
+but the program dot (part of Graphviz, see http://www.graphviz.org/) was not found.
+Ensure it is installed and in your path, or configure without --enable-doxygen.])
+    fi
+
     # We need pdflatex to create PDF format API docs.
     AC_CHECK_PROG([PDFLATEX], [pdflatex], [pdflatex], [no])
     if test "X$PDFLATEX" = "Xno"; then
