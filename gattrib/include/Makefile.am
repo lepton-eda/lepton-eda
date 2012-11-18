@@ -7,7 +7,8 @@ noinst_HEADERS = \
 	gtksheet_2_2.h \
 	i_vars.h \
 	struct.h \
-	gtkextra-marshal.h
+	gtkextra-marshal.h \
+	gettext.h
 
 MOSTLYCLEANFILES = *.log core FILE *~ #*#
 CLEANFILES = *.log core FILE *~ #*#
