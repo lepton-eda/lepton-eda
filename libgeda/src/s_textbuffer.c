@@ -112,9 +112,9 @@ TextBuffer *s_textbuffer_free (TextBuffer *tb)
  *  thus no more characters remain) returns null.  If \a count is -1,
  *  obtains all characters up to and including the next newline.
  *
- *  A newline is detected as '\n', or '\r' together with its
- *  immediately following '\n', or '\r', in that order.  All newlines
- *  are collapsed into a single '\n'.
+ *  A newline is detected as '\\n', or '\\r' together with its
+ *  immediately following '\\n', or '\\r', in that order.  All newlines
+ *  are collapsed into a single '\\n'.
  *
  *  The returned character array should be considered highly volatile,
  *  and is only valid until the next call to s_textbuffer_next() or

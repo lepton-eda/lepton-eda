@@ -26,6 +26,33 @@ making sure the tools run on other platforms as well.
 The gEDA/gaf suite (this package) provides schematic capture,
 netlisting, bill of materials generation, and many other features.
 
+Tools in the gEDA suite
+=======================
+
+The major components of the gEDA suite are:
+
+`libgeda'
+  A library of functions for manipulating gEDA schematics and symbols.
+
+`gschem'
+  A schematic editor.
+
+`gattrib'
+  A spreadsheet-like program for bulk editing of component attributes.
+
+`gnetlist'
+  A highly-flexible, hierarchy-aware utility which parses schematics
+  to generate a number of outputs, including netlists for a wide
+  variety of PCB layout tools.  It can also generate bills of
+  materials and DRC reports for your schematics.
+
+`gsch2pcb'
+  A command-line utility for streamlining the workflow where `PCB'
+  <http://pcb.gpleda.org/> and `gschem' are used together.
+
+`gsymcheck'
+  A utility for checking for common errors in schematic symbol files.
+
 Installation
 ============
 
@@ -77,6 +104,17 @@ The following tools and libraries are optional:
  - The `doxygen' API documentation tool.  This is required for
    building the gEDA developer API documentation, not for the regular
    user documentation.  <http://www.stack.nl/~dimitri/doxygen/>
+
+ - `Inkscape' or `ImageMagic' for svg to png or pdf conversion
+   This is required for building the gEDA developer API documentation,
+   not for the regular user documentation.
+   <http://inkscape.org/>
+   <http://www.imagemagick.org/script/index.php>
+
+ - `Graphviz' for drawing directed graphs.
+   This is required for building the gEDA developer API documentation,
+   not for the regular user documentation.
+   <http://www.graphviz.org/>
 
 Troubleshooting dependencies
 ----------------------------
@@ -156,32 +194,30 @@ You can then procede to configure and build gEDA as described above.
 For more information on working with the gEDA `git' repository, see
 <http://geda.seul.org/wiki/geda:scm>.
 
-Tools in the gEDA suite
-=======================
+Building gEDA developer API documentation
+=========================================
 
-The major components of the gEDA suite are:
+Several of the gEDA libraries and applications have doxygen API
+documentation available.  To generate the API documentation from the
+source code, install doxygen (see `Dependencies' above).  Next, add
+`--enable-doxygen' to your configure command line, i.e.:
 
-`libgeda'
-  A library of functions for manipulating gEDA schematics and symbols.
+  ./configure --enable-doxygen
 
-`gschem'
-  A schematic editor.
+To compile the documentation (quite a slow process), run:
 
-`gattrib'
-  A spreadsheet-like program for bulk editing of component attributes.
+  make doxygen
 
-`gnetlist'
-  A highly-flexible, hierarchy-aware utility which parses schematics
-  to generate a number of outputs, including netlists for a wide
-  variety of PCB layout tools.  It can also generate bills of
-  materials and DRC reports for your schematics.
+The documentation can then be found in:
 
-`gsch2pcb'
-  A command-line utility for streamlining the workflow where `PCB'
-  <http://pcb.gpleda.org/> and `gschem' are used together.
+  */docs/html/index.html
+  */docs/latex/refman.pdf
 
-`gsymcheck'
-  A utility for checking for common errors in schematic symbol files.
+Some modules don't automatically generate the PDF version of the
+documentation.  If you want them you have to build them explicitly,
+e.g.:
+
+  cd gattrib/docs && make refman.pdf
 
 Getting help
 ============

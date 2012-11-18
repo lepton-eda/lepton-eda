@@ -17,85 +17,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-/**
- * \mainpage
- *
- * \section sdb_notes SDB's original comment in gattrib.c
- *
- * In the spirit of open source/free software, major sections of
- * gattrib's code were borrowed from other sources, and hacked
- * together by SDB in Dec. 2003.  Particularly rich sources for code were
- * gEDA/gnetlist, and the gtkextra program testgtksheet.c.  Thanks to their
- * authors for providing the foundation upon which this is built.
- *
- * Of course, I *did* write major portions of the code too . . . . .
- * Some documentation about the internal operation of this program can be
- * found in the "NOTES" file  in the gattrib top-level directory.
- * -- SDB  December 2003 -
- *
- * \section ml_notes Architecture
- *
- * (extracted from SDB's mailing list posting:
- *  http://osdir.com/ml/cad.geda.devel/2007-06/msg00282.html - believed to
- *  still be relevant)
- *
- * gattrib has three major components:
- *
- * -# It manipulates objects held in the TOPLEVEL data structure. It
- *    does this by importing structs and functions from libgeda.
- * -# Gattrib defines its own layer of structs, notably SHEET_DATA,
- *    which holds a table of attrib name=value pairs, and also holds a
- *    couple of linked lists corresponding to all component's refdeses, and
- *    to all attribute names found in the design. This stuff is native to
- *    gattrib.
- * -# Gattrib uses a spreadsheet widget called GtkSheet. This stuff
- *    came from the GtkExtra project, which at one time offered a bunch of
- *    interesting widgets for graphing and visualization. I think they're
- *    still around; you can do a Google search for them. I stole the two
- *    .h files defining the spreadsheet widgets, and also stole code from
- *    the program itself to implement the run-time functions which deal with
- *    the spreadsheet.
- *
- * When run, gattrib does this:
- *
- * -# It uses libgeda functions to read in your design, and fill up the
- *    TOPLEVEL struct.
- * -# It then loops over everything in TOPLEVEL and fills out the refdes
- *    list and the attribute name list. It sticks these into a STRING_LIST
- *    which is associated with the SHEET_DATA struct.
- * -# Then, knowing all the refdeses and all the attribute names, it
- *    creates a TABLE data struct (a member of SHEET_DATA), and loops over
- *    each cell in the TABLE. For each cell, it queries TOPLEVEL for the
- *    corresponding name=value pair, and sticks the value in the TABLE.
- * -# When done with that, it then creates a GtkSheet and populates it
- *    by looping over TABLE.
- * -# Then it turns over control to the user, who can manipulate the
- *    GtkSheet. As the user adds and deletes values from the GtkSheet, the
- *    values are stored locally there. The GtkSheet is the master
- *    repository of all attributes at that point; the other data structures
- *    are not updated.
- *
- *    Saving out a design is similar, except the process runs in reverse:
- *
- * -# The program loops over all cells in GtkSheet, and sticks the
- *    values found into SHEET_DATA. Handling issues like added/deleted
- *    columns happens first at the GtkSheet, and then to SHEET_DATA and
- *    TOPLEVEL. I've kind of forgotten how I implemented these feaures,
- *    however. :-S
- * -# Then, the program loops over the cells in SHEET_DATA, and updates
- *    the attributes in TOPLEVEL using functions from libgeda, as well as by
- *    reaching directly into the TOPLEVEL data structure (a software
- *    engineering no-no). If a previously existing attrib has been removed,
- *    then it is removed from TOPLEVEL. If a new attrib has been attached
- *    to a component, then it is added to TOPLEVEL.
- * -# Then the design is saved out using the save function from
- *    libgeda.
- *
- * Therefore, think of SHEET_DATA and the other gattrib data structures
- * as a thin layer between GtkSheet and TOPLEVEL. The gattrib data
- * structures are used basically for convenience while trying to build or
- * update either of the two other, more important data structures.
- *
+/*!
+ * \file gattrib.c
  */
 
 

@@ -247,7 +247,7 @@ char *o_picture_save(TOPLEVEL *toplevel, OBJECT *object)
  *  This function creates a new object representing a picture.
  *
  *  The picture is described by its upper left corner (\a x1, \a y1)
- *  and its lower right corner (\a x2, \ay2).  The \a type parameter
+ *  and its lower right corner (\a x2, \a y2).  The \a type parameter
  *  must be equal to #OBJ_PICTURE.
  *
  *  If \a file_content is non-NULL, it must be a pointer to a buffer

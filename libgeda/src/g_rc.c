@@ -120,7 +120,7 @@ SCM g_rc_mode_general(SCM scmmode,
  * rcname is NULL, the default value of "gafrc" is used.
  *
  * \param toplevel  The current #TOPLEVEL structure.
- * \param rcfile    The basename of the configuration file to load, or NULL.
+ * \param rcname    The basename of the configuration file to load, or NULL.
  * \param err       Return location for errors, or NULL.
  * \return TRUE on success, FALSE on failure.
  */
@@ -146,7 +146,7 @@ g_rc_parse_system (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
  * used.
  *
  * \param toplevel  The current #TOPLEVEL structure.
- * \param rcfile    The basename of the configuration file to load, or NULL.
+ * \param rcname    The basename of the configuration file to load, or NULL.
  * \param err       Return location for errors, or NULL.
  * \return TRUE on success, FALSE on failure.
  */

@@ -22,10 +22,10 @@ clean-local:
 	rm -rf $(png_images) $(pdf_images)
 
 .svg.png:
-	inkscape -e $@ $<  ||  convert $< $@
+	if [ -x "`which inkscape`" ]; then inkscape -e $@ $< ; else  convert $< $@; fi
 
 .svg.pdf:
-	inkscape -A $@ $<  ||  convert $< $@
+	if [ -x "`which inkscape`" ]; then inkscape -A $@ $< ; else  convert $< $@; fi
 
 SUFFIXES = .svg .pdf .png
 
