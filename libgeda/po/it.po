@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-11-13 16:09+0000\n"
+"POT-Creation-Date: 2012-11-17 18:51+0000\n"
 "PO-Revision-Date: 2012-03-16 10:58+0000\n"
 "Last-Translator: simone.sandri <lexluxsox@hotmail.it>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -60,7 +60,7 @@ msgid ""
 "%s<<\n"
 msgstr ""
 
-#: libgeda/src/a_basic.c:442
+#: libgeda/src/a_basic.c:440
 #, c-format
 msgid ""
 "Read unexpected embedded symbol start marker in [%s] :\n"
@@ -68,7 +68,7 @@ msgid ""
 "%s<<\n"
 msgstr ""
 
-#: libgeda/src/a_basic.c:473
+#: libgeda/src/a_basic.c:471
 #, c-format
 msgid ""
 "Read unexpected embedded symbol end marker in [%s] :\n"
@@ -76,7 +76,7 @@ msgid ""
 "%s<<\n"
 msgstr ""
 
-#: libgeda/src/a_basic.c:508
+#: libgeda/src/a_basic.c:506
 #, c-format
 msgid ""
 "Read an old format sym/sch file!\n"
@@ -87,7 +87,7 @@ msgstr ""
 "Esegui g[sym|sch]update su:\n"
 "[%s]\n"
 
-#: libgeda/src/a_basic.c:514
+#: libgeda/src/a_basic.c:512
 #, c-format
 msgid ""
 "Read garbage in [%s] :\n"

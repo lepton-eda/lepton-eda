@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-11-15 08:18+0000\n"
+"POT-Creation-Date: 2012-11-18 15:53+0000\n"
 "PO-Revision-Date: 2012-11-15 08:58+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -121,12 +121,12 @@ msgstr "Kan URI ~S: ~A niet starten"
 msgid "Found invalid gschem window smob ~S"
 msgstr "Ongeldige gschem venster smob ~S gevonden"
 
-#: gschem/src/gschem.c:186
+#: gschem/src/gschem.c:175
 #, c-format
 msgid "gEDA/gschem version %s%s.%s\n"
 msgstr "gEDA/gschem versie %s%s.%s\n"
 
-#: gschem/src/gschem.c:189
+#: gschem/src/gschem.c:178
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
@@ -134,14 +134,14 @@ msgstr ""
 "gEDA/gschem komt ABSOLUUT ZONDER GARANTIE; zie het COPYING bestand voor meer "
 "informatie.\n"
 
-#: gschem/src/gschem.c:191
+#: gschem/src/gschem.c:180
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "Dit is vrije software, en je wordt aangemoedigt dit te herdistribueren onder "
 "bepaalde\n"
 
-#: gschem/src/gschem.c:193
+#: gschem/src/gschem.c:182
 msgid ""
 "conditions; please see the COPYING file for more details.\n"
 "\n"
@@ -149,17 +149,17 @@ msgstr ""
 "condities; zie het COPYING bestand voor meer informatie.\n"
 "\n"
 
-#: gschem/src/gschem.c:196
+#: gschem/src/gschem.c:185
 #, c-format
 msgid "This is the MINGW32 port.\n"
 msgstr "Dit is de MINGW32 versie.\n"
 
-#: gschem/src/gschem.c:200
+#: gschem/src/gschem.c:189
 #, c-format
 msgid "Current locale settings: %s\n"
 msgstr "Huidige locale instellingen: %s\n"
 
-#: gschem/src/gschem.c:222
+#: gschem/src/gschem.c:211
 msgid ""
 "You must set the GEDADATA environment variable!\n"
 "\n"
@@ -171,17 +171,17 @@ msgstr ""
 "gschem kan geen lokatie vinden van de data bestanden. Je moet de GEDADATA\n"
 "omgevingsvariablele naar de juiste lokatie laten wijzen.\n"
 
-#: gschem/src/gschem.c:263
+#: gschem/src/gschem.c:248
 #, c-format
 msgid "Couldn't find init scm file [%s]\n"
 msgstr "Kan init scm bestand [%s]niet vinden\n"
 
-#: gschem/src/gschem.c:267
+#: gschem/src/gschem.c:252
 #, c-format
 msgid "Read init scm file [%s]\n"
 msgstr "Lees init scm bestand [%s]\n"
 
-#: gschem/src/gschem.c:271
+#: gschem/src/gschem.c:256
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr "Fout bij het lezen van het init scm bestand [%s]\n"
@@ -960,8 +960,8 @@ msgstr "<b>Opties Vastmaken</b>"
 msgid "All"
 msgstr "Alle"
 
-#: gschem/src/x_attribedit.c:464 gschem/src/x_compselect.c:920
-#: gschem/src/x_compselect.c:1034
+#: gschem/src/x_attribedit.c:464 gschem/src/x_compselect.c:922
+#: gschem/src/x_compselect.c:1036
 msgid "Components"
 msgstr "Componenten"
 
@@ -1125,48 +1125,48 @@ msgstr "Probeerde een ongeldige kleur te verkrijgen: %d\n"
 msgid "Tried to get an invalid outline color: %d\n"
 msgstr "Probeerde een ongeldige omlijning kleur te verkrijgen: %d\n"
 
-#: gschem/src/x_compselect.c:1064
+#: gschem/src/x_compselect.c:1066
 msgid "Filter:"
 msgstr "Filter:"
 
-#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3653
+#: gschem/src/x_compselect.c:1169 gschem/src/x_dialog.c:3653
 #: gschem/src/x_multiattrib.c:1839
 msgid "Name"
 msgstr "Naam"
 
-#: gschem/src/x_compselect.c:1176 gschem/src/x_multiattrib.c:1863
+#: gschem/src/x_compselect.c:1178 gschem/src/x_multiattrib.c:1863
 msgid "Value"
 msgstr "Waarde"
 
-#: gschem/src/x_compselect.c:1215
+#: gschem/src/x_compselect.c:1217
 msgid "Default behavior - reference component"
 msgstr "Normaal gedrag - referentie component"
 
-#: gschem/src/x_compselect.c:1218
+#: gschem/src/x_compselect.c:1220
 msgid "Embed component in schematic"
 msgstr "Component insluiten in schema"
 
-#: gschem/src/x_compselect.c:1221
+#: gschem/src/x_compselect.c:1223
 msgid "Include component as individual objects"
 msgstr "Invoegen component als individuele objecten"
 
-#: gschem/src/x_compselect.c:1378
+#: gschem/src/x_compselect.c:1380
 msgid "Select Component..."
 msgstr "Selecteer Component..."
 
-#: gschem/src/x_compselect.c:1401
+#: gschem/src/x_compselect.c:1403
 msgid "In Use"
 msgstr "In gebruik"
 
-#: gschem/src/x_compselect.c:1405
+#: gschem/src/x_compselect.c:1407
 msgid "Libraries"
 msgstr "Bibliotheken"
 
-#: gschem/src/x_compselect.c:1414 gschem/src/x_fileselect.c:122
+#: gschem/src/x_compselect.c:1416 gschem/src/x_fileselect.c:122
 msgid "Preview"
 msgstr "Vooraf zien"
 
-#: gschem/src/x_compselect.c:1442
+#: gschem/src/x_compselect.c:1444
 msgid "Attributes"
 msgstr "Attributen"
 
