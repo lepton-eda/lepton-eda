@@ -65,3 +65,27 @@
     ))
 
 (close-page! P)
+
+(define Q (make-page "/test/page/B"))
+
+;; Test what happens when you connect to a net (incorrectly) placed in
+;; a component.
+;;
+;; The "right thing" is probably to be as permissive as possible.
+(begin-test 'net-in-component-connections
+  (let ((C (make-component "test component" '(1 . 2) 0 #t #f))
+        (np (make-net-pin '(100 . 0) '(0 . 0)))
+        (n1 (make-net '(100 . 0) '(100 . 100)))
+        (n2 (make-net '(100 . 100) '(200 . 200))))
+
+    (page-append! Q C)
+    (component-append! C n1)
+    (assert-equal '() (object-connections n1))
+
+    (component-append! C np)
+    (assert-equal (list n1) (object-connections np))
+
+    (page-append! Q n2)
+    (assert-equal (list n1) (object-connections n2))))
+
+(close-page! Q)
