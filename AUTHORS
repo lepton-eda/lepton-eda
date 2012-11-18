@@ -46,12 +46,15 @@ Kai-Martin Knaak
 Krzysztof Kosciuszkiewicz
 Reinhard Kotucha
 Egil Kvaleberg
+Eivind Kvedalen
 Dave Lawrence
 Martin Lehmann
 Michael Linnemann
 Arnim Littek
 Roland Lutz 
 Ye Ma
+Joe Mac
+Jeff Mallatt
 Dan McMahill
 Jeff McNeal
 Piotr Miarecki
@@ -72,6 +75,7 @@ Mark Rages
 Christian Riggenbach
 Manu Rouat
 JM Routoure
+Nathan Schulte
 Bruno Schwander
 Andy Shevchenko
 Anatole Sokolov
@@ -88,9 +92,12 @@ Bert Timmerman
 Ron Van Dam
 Marius Vollmer
 Rich Walker
+Dan White
 John White
 Roger Williams
 Bill Wilson
+Vladimir Zhbanov
+
 
 For specific contributions, please check out the appropriate ChangeLog
 for more details.
