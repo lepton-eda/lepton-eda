@@ -2827,14 +2827,14 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 
     /* loop over all filenames */
     while(current_filename != NULL) {
-
+      GError *err = NULL;
       s_log_message(_("Searching for source [%s]\n"), current_filename);
       child = s_hierarchy_down_schematic_single(w_current->toplevel,
                                                 current_filename,
                                                 parent,
                                                 page_control,
                                                 HIERARCHY_NORMAL_LOAD,
-                                                NULL);
+                                                &err);
 
       /* s_hierarchy_down_schematic_single() will not zoom the loaded page */
       if (child != NULL) {
@@ -2853,7 +2853,26 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
 
       /* now do some error fixing */
       if (child == NULL) {
-        s_log_message(_("Cannot find source [%s]\n"), current_filename);
+        const char *msg = (err != NULL) ? err->message : "Unknown error.";
+        char *secondary =
+          g_strdup_printf (_("Failed to descend hierarchy into '%s': %s\n\n"
+                             "The gschem log may contain more information."),
+                           current_filename, msg);
+
+        s_log_message(_("Failed to descend into '%s': %s\n"),
+                      current_filename, msg);
+
+        GtkWidget *dialog =
+          gtk_message_dialog_new (GTK_WINDOW (w_current->main_window),
+                                  GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
+                                  GTK_BUTTONS_OK,
+                                  _("Failed to descend hierarchy."));
+        g_object_set (G_OBJECT (dialog), "secondary-text", secondary, NULL);
+        gtk_dialog_run (GTK_DIALOG (dialog));
+        gtk_widget_destroy (dialog);
+        g_free (secondary);
+        g_error_free (err);
+
       } else {
         /* this only signifies that we tried */
         loaded_flag = TRUE;
