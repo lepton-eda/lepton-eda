@@ -94,16 +94,23 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 #if DEBUG
 	    printf("Going down %s\n", current_filename);
 #endif
+            GError *err = NULL;
 	    child_page =
 		s_hierarchy_down_schematic_single(pr_current,
 						  current_filename,
 						  pr_current->page_current,
 						  page_control,
                                                   HIERARCHY_FORCE_LOAD,
-                                                  NULL);
+                                                  &err);
 
 	    if (child_page == NULL) {
-		fprintf(stderr, "Could not open [%s]\n", current_filename);
+              g_warning ("Failed to load subcircuit '%s': %s\n",
+                         current_filename, err->message);
+              fprintf(stderr, "ERROR: Failed to load subcircuit '%s': %s\n",
+                      current_filename, err->message);
+              g_error_free (err);
+              exit (2);
+
 	    } else {
               page_control = child_page->page_control;
               s_page_goto (pr_current, child_page);
