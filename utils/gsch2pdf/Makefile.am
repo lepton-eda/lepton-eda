@@ -4,13 +4,16 @@ rcdatadir = $(GEDARCDIR)
 
 bin_PROGRAMS = gsch2pdf
 
-rcdata_DATA = system-gsch2pdfrc
+dist_rcdata_DATA = system-gsch2pdfrc
 
 # don't forget all *.h files */
 gsch2pdf_SOURCES = \
 	main.c \
+	junction.h \
 	junction.c \
+	rc-config.h \
 	rc-config.c \
+	print-settings.h \
 	print-settings.c
 
 gsch2pdf_CPPFLAGS = \
