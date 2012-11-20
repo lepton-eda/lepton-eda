@@ -12,43 +12,38 @@
 <body>
 
 
-<h1 class="sectionedit1364"><a name="gschem_symbol_and_pcb_element_transistor_guide" id="gschem_symbol_and_pcb_element_transistor_guide">gschem Symbol and PCB Element Transistor Guide</a></h1>
+<h1 class="sectionedit2015"><a name="gschem_symbol_and_pcb_element_transistor_guide" id="gschem_symbol_and_pcb_element_transistor_guide">gschem Symbol and PCB Element Transistor Guide</a></h1>
 <div class="level1">
 
 <p>
-
 The issue is how to manage a library of <em><strong>gschem</strong></em> transistor symbols and a library of PCB transistor elements such that we can be confident of correct pin number correspondence between the libraries. We need to understand how to handle the many permutations of emitter, base, and collector (e,b,c) pinouts and the variations of package number of pins and pin numbering. This doc shows the approach I&#039;ve taken in my custom <em><strong>gschem</strong></em> symbols and PCB elements.
 </p>
 
 </div>
-<!-- EDIT1364 SECTION "gschem Symbol and PCB Element Transistor Guide" [1-531] -->
-<h2 class="sectionedit1365"><a name="gschem_symbols" id="gschem_symbols">gschem symbols</a></h2>
+<!-- EDIT2015 SECTION "gschem Symbol and PCB Element Transistor Guide" [1-531] -->
+<h2 class="sectionedit2016"><a name="gschem_symbols" id="gschem_symbols">gschem symbols</a></h2>
 <div class="level2">
 
 <p>
-
 There are a couple of ways to consider:
-
 </p>
 <ol>
-<li class="level1"><div class="li"> Have a base set of <em><strong>gschem</strong></em> transistor symbols such as npn.sym, pnp.sym, fet.sym, etc. which have a fixed and arbitrarily assigned pin number for the emitter, base, and, collector. To accommodate the different permutations of (e,b,c) to pin numbers that exist for transistor packages, you would have to have a set of PCB elements for each transistor package like <a href="http://en.wikipedia.org/wiki/TO92" class="urlextern" title="http://en.wikipedia.org/wiki/TO92"  rel="nofollow">TO-92</a>-123, TO-92-132, TO-92-213, TO-92-231, TO-92-312, TO-92-321, and similarly for <a href="http://en.wikipedia.org/wiki/TO220" class="urlextern" title="http://en.wikipedia.org/wiki/TO220"  rel="nofollow">TO-220</a>, TO-5, etc. The problem with this is that manufacturers do specify pin numbers for their packages and we would be making many elements with pin numbers not corresponding to real packages. Remember, a PCB element on a PCB layout is supposed to correspond to a physical electronic component.</div>
+<li class="level1"><div class="li"> Have a base set of <em><strong>gschem</strong></em> transistor symbols such as npn.sym, pnp.sym, fet.sym, etc. which have a fixed and arbitrarily assigned pin number for the emitter, base, and, collector. To accommodate the different permutations of (e,b,c) to pin numbers that exist for transistor packages, you would have to have a set of PCB elements for each transistor package like <a href="http://en.wikipedia.org/wiki/TO-92" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/TO-92">TO-92</a>-123, TO-92-132, TO-92-213, TO-92-231, TO-92-312, TO-92-321, and similarly for <a href="http://en.wikipedia.org/wiki/TO-220" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/TO-220">TO-220</a>, TO-5, etc. The problem with this is that manufacturers do specify pin numbers for their packages and we would be making many elements with pin numbers not corresponding to real packages. Remember, a PCB element on a PCB layout is supposed to correspond to a physical electronic component.</div>
 </li>
 <li class="level1"><div class="li"> Have a base set of <em><strong>gschem</strong></em> transistor symbols which spans the possible (e,b,c) permutations which can exist for any given transistor package. The set of <em><strong>gschem</strong></em> symbols for npn transistors would be npn-ebc.sym, npn-ecb.sym, npn-bec.sym, npn-bce.sym, npn-ceb.sym, and npn-cbe.sym. There would be similar sets for pnp transistors and FETs (fet-sdg.sym, fet-sgd.sym, …). Then there would be PCB elements only for actual physical transistor packages.</div>
 </li>
 </ol>
 
 <p>
-
 It makes sense to me to say the second approach is obviously better. Setting up the <em><strong>gschem</strong></em> symbols is simple enough, just create the six symbols for each transistor type with the pin numbers of the emitter, base, and collector corresponding to the sequence indicated in the name. For example, the symbol npn-ebc.sym would have an emitter <strong>pinnumber</strong> attribute of <strong>1</strong>, a base <strong>pinnumber</strong> attribute of <strong>2</strong> and a collector <strong>pinnumber</strong> attribute of <strong>3</strong>. Now you only need to make PCB elements with correctly numbered pins for transistor packages as you need them and you need to have a systematic approach for naming these elements. 
 </p>
 
 </div>
-<!-- EDIT1365 SECTION "gschem symbols" [532-2551] -->
-<h2 class="sectionedit1366"><a name="pcb_elements" id="pcb_elements">PCB Elements</a></h2>
+<!-- EDIT2016 SECTION "gschem symbols" [532-2488] -->
+<h2 class="sectionedit2017"><a name="pcb_elements" id="pcb_elements">PCB Elements</a></h2>
 <div class="level2">
 
 <p>
-
 A point to keep in mind when looking at transistor package pin configurations and numbers is that a TO (Transistor Outline) designation is really only just that - a designation of a particular shaped and sized outline. It actually is not a specification of the pins coming out of that package. Manufacturers may have have a TO package designation qualified by their internal “case style” or “package number” code. This qualification determines the definition of the number of pins, the arrangement of the pins, and the pin numbering.
 </p>
 
@@ -58,7 +53,6 @@ However, most TO packages do conform to a standard pin numbering convention and 
 
 <p>
 Here&#039;s a description of what seems to be the most common transistor outline configurations: 
-
 </p>
 <ul>
 <li class="level1"><div class="li"> <em>Power Transistors - Plastic</em>: Look at the package front (where the lettering is) with the pins pointing down. The pins are numbered left to right (1,2,3). This is very common, so it makes sense to create initial sets of three pin PCB elements with this number order using base names such as TO-126, TO-220, TO-264, etc. For variations such as a five pin TO-220 package for a LM383, you could make a PCB element with its name qualified such as TO-220-5, or maybe TO-220-T05B if you wanted to qualify it with the National Semiconductor T05B package designation for their 5 pin TO-220 package.</div>
@@ -74,14 +68,12 @@ Here&#039;s a description of what seems to be the most common transistor outline
 </ul>
 
 </div>
-<!-- EDIT1366 SECTION "PCB Elements" [2552-6414] -->
-<h2 class="sectionedit1367"><a name="general_procedure" id="general_procedure">General Procedure</a></h2>
+<!-- EDIT2017 SECTION "PCB Elements" [2489-6351] -->
+<h2 class="sectionedit2018"><a name="general_procedure" id="general_procedure">General Procedure</a></h2>
 <div class="level2">
 
 <p>
-
 The process of using a transistor for the first time in a <em><strong>gschem</strong></em> to PCB design takes these steps (2N3904 used as an example):
-
 </p>
 <ol>
 <li class="level1"><div class="li"> Most transistor <acronym title="specification">spec</acronym> sheets can be found in pdf format on the web, so get one and determine the case style and pin name and number ordering. For the 2N3904 the case style is TO-92, the pin number order left to right is (1,2,3), and the pin name order left to right is (e,b,c).</div>
@@ -95,8 +87,8 @@ The process of using a transistor for the first time in a <em><strong>gschem</st
 </ol>
 
 </div>
-<!-- EDIT1367 SECTION "General Procedure" [6415-7541] -->
-<h2 class="sectionedit1368"><a name="special_cases" id="special_cases">Special Cases</a></h2>
+<!-- EDIT2018 SECTION "General Procedure" [6352-7478] -->
+<h2 class="sectionedit2019"><a name="special_cases" id="special_cases">Special Cases</a></h2>
 <div class="level2">
 <ol>
 <li class="level1"><div class="li"> I have in my library a TO-92o PCB element which has the middle pin offset so the pins are in a triangular arrangement. This element has the left to right pin number order of (1,2,3) and can be used in place of the TO-92 for layout considerations. You only have to slightly bend the middle pin of the transistor when installing it.</div>
@@ -112,9 +104,8 @@ The process of using a transistor for the first time in a <em><strong>gschem</st
 
 <p>
 tutorial by Bill Wilson (bill–at–gkrellm.net)
-
 </p>
 
 </div>
-<!-- EDIT1368 SECTION "Special Cases" [7542-] --></body>
+<!-- EDIT2019 SECTION "Special Cases" [7479-] --></body>
 </html>

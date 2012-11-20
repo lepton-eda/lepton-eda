@@ -10,11 +10,21 @@ more information, please consult the `ChangeLog' file.
 Notable changes in gEDA/gaf 1.8.0
 =================================
 
+* `gschem' and `gnetlist' have updated and rewritten user guides.
+
 * All tools now give more informative error messages if they are
   unable to load schematic or symbol files due to syntax errors.
 
+* All tools now correctly handle schematic and symbol files with `\r',
+  `\n', or `\r\n` line endings, or a mixture.
+
 * Unconnected pin ends and net ends are now all drawn with the same
   box marker in `gschem' and printed output.
+
+* Net segments with at least two connections (including indirect
+  connections via `netname=' attributes) are now drawn with arrowheads
+  rather than box markers on dangling ends in `gschem' and printed
+  output.
 
 Notable changes in gEDA/gaf 1.7.2
 =================================
@@ -422,7 +432,7 @@ Notable changes in gEDA/gaf 1.5.1
 * Support for arbitrary filled and unfilled paths, using a subset of
   the SVG path syntax.  For more information, please see the file
   format specification.
-  <http://geda.seul.org/wiki/geda:file_format_spec>
+  <http://wiki.geda-project.org/geda:file_format_spec>
 
   - `gschem' does not yet provide a GUI for creating or editing path
     elements.  However, it does support rendering them.  They can also

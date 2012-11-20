@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-19 18:45+0000\n"
+"POT-Creation-Date: 2012-11-17 18:51+0000\n"
 "PO-Revision-Date: 2012-01-24 14:53+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -66,7 +66,7 @@ msgstr "o_save_objects: объект %p неизвестного типа '%c'\n
 msgid "File %s is read-only"
 msgstr "Файл %s только для чтения"
 
-#: libgeda/src/a_basic.c:427
+#: libgeda/src/a_basic.c:423
 #, c-format
 msgid ""
 "Read unexpected attach symbol start marker in [%s] :\n"
@@ -77,7 +77,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: libgeda/src/a_basic.c:446
+#: libgeda/src/a_basic.c:440
 #, c-format
 msgid ""
 "Read unexpected embedded symbol start marker in [%s] :\n"
@@ -88,7 +88,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: libgeda/src/a_basic.c:477
+#: libgeda/src/a_basic.c:471
 #, c-format
 msgid ""
 "Read unexpected embedded symbol end marker in [%s] :\n"
@@ -99,7 +99,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: libgeda/src/a_basic.c:512
+#: libgeda/src/a_basic.c:506
 #, c-format
 msgid ""
 "Read an old format sym/sch file!\n"
@@ -110,7 +110,7 @@ msgstr ""
 "Выполните g[sym|sch]update для:\n"
 "[%s]\n"
 
-#: libgeda/src/a_basic.c:518
+#: libgeda/src/a_basic.c:512
 #, c-format
 msgid ""
 "Read garbage in [%s] :\n"
@@ -229,23 +229,23 @@ msgid ""
 "Error during writing of the output postscript file in f_print_header()\n"
 msgstr "f_print_header: ошибка записи postscript-файла\n"
 
-#: libgeda/src/f_print.c:201
+#: libgeda/src/f_print.c:202
 msgid "Giving up on printing\n"
 msgstr "Прекращение печати\n"
 
-#: libgeda/src/f_print.c:371
+#: libgeda/src/f_print.c:375
 #, c-format
 msgid "Could not open [%s] for printing\n"
 msgstr "Не удалось открыть [%s] для печати\n"
 
-#: libgeda/src/f_print.c:405
+#: libgeda/src/f_print.c:409
 #, c-format
 msgid "Could not execute command [%s] for printing\n"
 msgstr "Не удалось выполнить команду печати [%s]\n"
 
 # В данном случае ошибка означает, что количество UTF-символов более 128, и
 # она выводится всякий раз, когда найден новый лишний символ
-#: libgeda/src/f_print.c:678
+#: libgeda/src/f_print.c:682
 msgid "Too many UTF-8 characters, cannot print\n"
 msgstr "Слишком много символов UTF-8, некоторые напечатаны не будут\n"
 
@@ -615,35 +615,35 @@ msgid "Picture %p has invalid angle %i\n"
 msgstr "Недопустимое значение угла поворота изображения [%p]: %i\n"
 
 # Указатель на данные возвращает NULL
-#: libgeda/src/o_picture.c:959
+#: libgeda/src/o_picture.c:957
 #, c-format
 msgid "Picture [%s] has no image data.\n"
 msgstr "Файл [%s] не содержит данных изображения.\n"
 
-#: libgeda/src/o_picture.c:960
+#: libgeda/src/o_picture.c:958
 msgid "Falling back to file loading. Picture is still unembedded.\n"
 msgstr "Возврат к загрузке из файла. Изображение всё ещё исключено.\n"
 
-#: libgeda/src/o_picture.c:968
+#: libgeda/src/o_picture.c:966
 #, c-format
 msgid "Picture [%s] has been embedded\n"
 msgstr "Изображение [%s] внедрено\n"
 
-#: libgeda/src/o_picture.c:992
+#: libgeda/src/o_picture.c:990
 #, c-format
 msgid "Failed to load image from file [%s]: %s\n"
 msgstr "Не удалось загрузить изображение из файла [%s]: %s\n"
 
-#: libgeda/src/o_picture.c:994
+#: libgeda/src/o_picture.c:992
 msgid "Picture is still embedded.\n"
 msgstr "Изображение всё ещё внедрено.\n"
 
-#: libgeda/src/o_picture.c:1002
+#: libgeda/src/o_picture.c:1000
 #, c-format
 msgid "Picture [%s] has been unembedded\n"
 msgstr "Изображение [%s] исключено\n"
 
-#: libgeda/src/o_picture.c:1238
+#: libgeda/src/o_picture.c:1236
 #, c-format
 msgid "Failed to load fallback image %s: %s.\n"
 msgstr "Не удалось загрузить копию изображения для отката [%s]: %s\n"
@@ -811,11 +811,11 @@ msgstr ""
 "Обнаружено зацикливание иерархии при переходе к странице:\n"
 "  \"%s\"\n"
 
-#: libgeda/src/s_hierarchy.c:187
+#: libgeda/src/s_hierarchy.c:194
 msgid "There are no schematics above the current one!\n"
 msgstr "Для текущей схемы нет схемы, вышестоящей по иерархии!\n"
 
-#: libgeda/src/s_hierarchy.c:267
+#: libgeda/src/s_hierarchy.c:274
 #, c-format
 msgid "ERROR in s_hierarchy_traverse: schematic not found: %s\n"
 msgstr "ОШИБКА в s_hierarchy_traverse: не найдена схема %s\n"
@@ -843,12 +843,12 @@ msgid "Could NOT save [%s]\n"
 msgstr "Не удалось сохранить [%s]\n"
 
 # В этой функции ищется имя файла подсхемы в библиотеках источников данных
-#: libgeda/src/s_slib.c:176
+#: libgeda/src/s_slib.c:171
 #, c-format
 msgid "Found [%s]\n"
 msgstr "Найдена подсхема [%s]\n"
 
-#: libgeda/src/s_slib.c:186
+#: libgeda/src/s_slib.c:181
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr "Не удалось найти [%s] в библиотеках источников данных\n"

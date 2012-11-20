@@ -12,16 +12,16 @@
 <body>
 
 
-<h1 class="sectionedit191"><a name="geda_developer_tips_tricks_and_hints" id="geda_developer_tips_tricks_and_hints">gEDA Developer Tips, tricks and hints</a></h1>
+<h1 class="sectionedit355"><a name="geda_developer_tips_tricks_and_hints" id="geda_developer_tips_tricks_and_hints">gEDA Developer Tips, tricks and hints</a></h1>
 <div class="level1">
 
 </div>
-<!-- EDIT191 SECTION "gEDA Developer Tips, tricks and hints" [1-54] -->
-<h2 class="sectionedit192"><a name="data_structure_of_a_schematic" id="data_structure_of_a_schematic">Data Structure of a Schematic</a></h2>
+<!-- EDIT355 SECTION "gEDA Developer Tips, tricks and hints" [1-54] -->
+<h2 class="sectionedit356"><a name="data_structure_of_a_schematic" id="data_structure_of_a_schematic">Data Structure of a Schematic</a></h2>
 <div class="level2">
 
 <p>
-Internally, a schematic in gaf is implemented by number of doubly linked lists. The central type linked in the lists is OBJECT. It can represent a symbol, a line of text, a drawing primitive, a net, or an attribute.   
+Internally, a schematic in gaf is implemented by number of doubly linked lists. The central type linked in the lists is OBJECT. It can represent a symbol, a line of text, a drawing primitive, a net, or an attribute.
 </p>
 
 <p>
@@ -29,17 +29,16 @@ An overview of the data structure of a schematic can be retrieved <a href="http:
 </p>
 
 </div>
-<!-- EDIT192 SECTION "Data Structure of a Schematic" [55-503] -->
-<h2 class="sectionedit193"><a name="doxygen_comments_and_styles" id="doxygen_comments_and_styles">Doxygen Comments and Styles</a></h2>
+<!-- EDIT356 SECTION "Data Structure of a Schematic" [55-500] -->
+<h2 class="sectionedit357"><a name="doxygen_comments_and_styles" id="doxygen_comments_and_styles">Doxygen Comments and Styles</a></h2>
 <div class="level2">
 
 <p>
-
 <strong>Doxygen</strong> is a tool which extracts <acronym title="Application Programming Interface">API</acronym> documentation from comments in the source code. Markup can be placed in the comments, which is then extracted and rendered to <acronym title="HyperText Markup Language">HTML</acronym> or LaTeX by Doxygen. This allows e.g. one function to link to another related function, and permits arguments and return values to have documentation associated with them.
 </p>
 
 <p>
-Some sections of the gaf source have already been doxyfied. Currently, this includes libgeda, gschem, gnetlist, gsymcheck and gattrib. The Makefile in the doc dir of these tools contains a target “doxygen”. Alternatively, you can browse the output of doxygen online <a href="http://www.xs4all.nl/~ljh4timm/gaf/dox.html" class="urlextern" title="http://www.xs4all.nl/~ljh4timm/gaf/dox.html"  rel="nofollow">on this site</a>, made available by Bert Timmerman. 
+Some sections of the gaf source have already been doxyfied. Currently, this includes libgeda, gschem, gnetlist, gsymcheck and gattrib. The Makefile in the <em>docs</em> dir of these tools contains a target “doxygen”. Alternatively, you can browse the output of doxygen online <a href="http://www.xs4all.nl/~ljh4timm/gaf/dox.html" class="urlextern" title="http://www.xs4all.nl/~ljh4timm/gaf/dox.html"  rel="nofollow">on this site</a>, made available by Bert Timmerman.
 </p>
 
 <p>
@@ -51,41 +50,36 @@ The following sections provide an introduction on how gschem and libgeda are cus
 </p>
 
 </div>
-<!-- EDIT193 SECTION "Doxygen Comments and Styles" [504-1838] -->
-<h3 class="sectionedit194"><a name="documenting_files" id="documenting_files">Documenting Files</a></h3>
+<!-- EDIT357 SECTION "Doxygen Comments and Styles" [501-1843] -->
+<h3 class="sectionedit358"><a name="documenting_files" id="documenting_files">Documenting Files</a></h3>
 <div class="level3">
 
 <p>
-
 When starting a new file, you obviously need to have the normal GNU license text.  After the GNU License you should include a file comment describing what the file is for and any other descriptions that apply to the whole file.
-
 </p>
-<pre class="code">/*! \file &lt;filename.ext&gt;
-    \brief Put a brief summary of what this file is for...
-    \par Description
-    A lengthier description of what the file is for (this is optional).
- */</pre>
+<pre class="code c">  <span class="coMULTI">/*! \file &lt;filename.ext&gt;
+      \brief Put a brief summary of what this file is for...
+      \par Description
+      A lengthier description of what the file is for (this is optional).
+   */</span></pre>
 
 </div>
-<!-- EDIT194 SECTION "Documenting Files" [1839-2288] -->
-<h3 class="sectionedit195"><a name="documenting_variables_defines_typedefs" id="documenting_variables_defines_typedefs">Documenting Variables/Defines/Typedefs</a></h3>
+<!-- EDIT358 SECTION "Documenting Files" [1844-2309] -->
+<h3 class="sectionedit359"><a name="documenting_variables_defines_typedefs" id="documenting_variables_defines_typedefs">Documenting Variables/Defines/Typedefs</a></h3>
 <div class="level3">
 
 <p>
-
 Global variables in a file can be documented using the <strong>\var</strong> command or by just writing a comment with a <strong>\brief</strong> command right before the definition.
-
 </p>
-<pre class="code">/*! \brief fill style of objects like cirle, rect, path */
-typedef enum {FILLING_HOLLOW, FILLING_FILL, FILLING_MESH, FILLING_HATCH, FILLING_VOID} OBJECT_FILLING;</pre>
+<pre class="code c">  <span class="coMULTI">/*! \brief fill style of objects like cirle, rect, path */</span>
+  <span class="kw4">typedef</span> <span class="kw2">enum</span> <span class="br0">&#123;</span>FILLING_HOLLOW<span class="sy0">,</span> FILLING_FILL<span class="sy0">,</span> FILLING_MESH<span class="sy0">,</span> FILLING_HATCH<span class="sy0">,</span> FILLING_VOID<span class="br0">&#125;</span> OBJECT_FILLING<span class="sy0">;</span></pre>
 
 </div>
-<!-- EDIT195 SECTION "Documenting Variables/Defines/Typedefs" [2289-2662] -->
-<h3 class="sectionedit196"><a name="documenting_functions" id="documenting_functions">Documenting Functions</a></h3>
+<!-- EDIT359 SECTION "Documenting Variables/Defines/Typedefs" [2310-2700] -->
+<h3 class="sectionedit360"><a name="documenting_functions" id="documenting_functions">Documenting Functions</a></h3>
 <div class="level3">
 
 <p>
-
 Functions can be documented in the same way as Variables, etc… Just use a comment block above the function it is documenting and use a <strong>\brief</strong> command to
 start it.
 </p>
@@ -93,63 +87,59 @@ start it.
 <p>
 Usually an additional <strong>Function Description</strong> paragraph is used for the lengthy description of the function&#039;s purpose.
 Also <strong>\param</strong> commands are used with the [in] or [out] attributes to document if the parameter will be modified by the function.
-
 </p>
-<pre class="code">/*! \brief &quot;Save&quot; a file into a string buffer
- *  \par Function Description
- *  This function saves a whole schematic into a buffer in libgeda
- *  format. The buffer should be freed when no longer needed.
- *
- *  \param [in] toplevel    The current TOPLEVEL.
- *  \param [in] object_list The head of a GList of OBJECTs to save.
- *  \return a buffer containing schematic data or NULL on failure.
- */</pre>
+<pre class="code c">  <span class="coMULTI">/*! \brief &quot;Save&quot; a file into a string buffer
+   *  \par Function Description
+   *  This function saves a whole schematic into a buffer in libgeda
+   *  format. The buffer should be freed when no longer needed.
+   *
+   *  \param [in] toplevel    The current TOPLEVEL.
+   *  \param [in] object_list The head of a GList of OBJECTs to save.
+   *  \return a buffer containing schematic data or NULL on failure.
+   */</span></pre>
 
 </div>
-<!-- EDIT196 SECTION "Documenting Functions" [2663-3533] -->
-<h3 class="sectionedit197"><a name="structure_documentation" id="structure_documentation">Structure Documentation</a></h3>
+<!-- EDIT360 SECTION "Documenting Functions" [2701-3588] -->
+<h3 class="sectionedit361"><a name="structure_documentation" id="structure_documentation">Structure Documentation</a></h3>
 <div class="level3">
 
 <p>
-
 Structures are documented the same as in the previous sections.  Note that comments on the structure members can be documented inline or using the same <strong>\brief</strong> syntax as variables.  Inline documentation requires the special comment starting with <strong>/*!&lt;</strong> at the end of the line it applies to.
-
 </p>
-<pre class="code">/*! \brief Structure for connections between OBJECTs
- *
- * The st_conn structure contains a single connection
- * to another object.
- * The connection system in s_conn.c uses this struct
- */
-struct st_conn {
-  OBJECT *other_object; /*!&lt; The &quot;other&quot; object connected to this one */
-  /*! \brief type of connection. Always in reference to how the &quot;other&quot;
-      object is connected to the current one */
-  int type;
-  int x; /*!&lt; x coord of the connection position */
-  int y; /*!&lt; y coord of the connection position */
-  int whichone; /*!&lt; which endpoint of the current object caused this connection */
-  int other_whichone; /*!&lt; which endpoint of the &quot;other&quot; object caused this connection */
-};</pre>
+<pre class="code c">  <span class="coMULTI">/*! \brief Structure for connections between OBJECTs
+   *
+   * The st_conn structure contains a single connection
+   * to another object.
+   * The connection system in s_conn.c uses this struct
+   */</span>
+  <span class="kw4">struct</span> st_conn <span class="br0">&#123;</span>
+    OBJECT <span class="sy0">*</span>other_object<span class="sy0">;</span> <span class="coMULTI">/*!&lt; The &quot;other&quot; object connected to this one */</span>
+    <span class="coMULTI">/*! \brief type of connection. Always in reference to how the &quot;other&quot;
+        object is connected to the current one */</span>
+    <span class="kw4">int</span> type<span class="sy0">;</span>
+    <span class="kw4">int</span> x<span class="sy0">;</span> <span class="coMULTI">/*!&lt; x coord of the connection position */</span>
+    <span class="kw4">int</span> y<span class="sy0">;</span> <span class="coMULTI">/*!&lt; y coord of the connection position */</span>
+    <span class="kw4">int</span> whichone<span class="sy0">;</span> <span class="coMULTI">/*!&lt; which endpoint of the current object caused this connection */</span>
+    <span class="kw4">int</span> other_whichone<span class="sy0">;</span> <span class="coMULTI">/*!&lt; which endpoint of the &quot;other&quot; object caused this connection */</span>
+  <span class="br0">&#125;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- EDIT197 SECTION "Structure Documentation" [3534-4594] -->
-<h3 class="sectionedit198"><a name="bug_todo_commands" id="bug_todo_commands">Bug/Todo Commands</a></h3>
+<!-- EDIT361 SECTION "Structure Documentation" [3589-4670] -->
+<h3 class="sectionedit362"><a name="bug_todo_commands" id="bug_todo_commands">Bug/Todo Commands</a></h3>
 <div class="level3">
 
 <p>
-
 <strong>\bug</strong> and <strong>\todo</strong> are useful for notating where there are defects or missing features in the code. These commands can be used anywhere within the Doxygen comments, and generate entries on special pages in the documentation so that they can easily be referred to.
 </p>
 
 </div>
-<!-- EDIT198 SECTION "Bug/Todo Commands" [4595-4892] -->
-<h2 class="sectionedit199"><a name="dialogsdesign_and_behaviour" id="dialogsdesign_and_behaviour">Dialogs: Design and Behaviour</a></h2>
+<!-- EDIT362 SECTION "Bug/Todo Commands" [4671-4968] -->
+<h2 class="sectionedit363"><a name="dialogsdesign_and_behaviour" id="dialogsdesign_and_behaviour">Dialogs: Design and Behaviour</a></h2>
 <div class="level2">
 
 </div>
-<!-- EDIT199 SECTION "Dialogs: Design and Behaviour" [4893-4937] -->
-<h3 class="sectionedit200"><a name="dialog_design" id="dialog_design">Dialog Design</a></h3>
+<!-- EDIT363 SECTION "Dialogs: Design and Behaviour" [4969-5013] -->
+<h3 class="sectionedit364"><a name="dialog_design" id="dialog_design">Dialog Design</a></h3>
 <div class="level3">
 
 <p>
@@ -176,20 +166,18 @@ There are several suggestions on how to design dialogs and how they should behav
 </ul>
 
 </div>
-<!-- EDIT200 SECTION "Dialog Design" [4938-5557] -->
-<h3 class="sectionedit201"><a name="modal_or_nonmodal_dialogs" id="modal_or_nonmodal_dialogs">Modal or Nonmodal dialogs</a></h3>
+<!-- EDIT364 SECTION "Dialog Design" [5014-5633] -->
+<h3 class="sectionedit365"><a name="modal_or_nonmodal_dialogs" id="modal_or_nonmodal_dialogs">Modal or Nonmodal dialogs</a></h3>
 <div class="level3">
 
 <p>
 A modal dialog is required whenever the main application provides data for the dialog.
-
 </p>
-<pre class="code">Example: 
+<pre class="code">Example:
   The dialog is called with a selection list and the dialog only should operate on this selection.</pre>
 
 <p>
-
-A modal dialog is OK too, if the dialog is only called very seldom. The file open dialog could be nonmodal because it does not require any input from the application. 
+A modal dialog is OK too, if the dialog is only called very seldom. The file open dialog could be nonmodal because it does not require any input from the application.
 </p>
 
 <p>
@@ -197,8 +185,8 @@ A modal dialog is not OK if there is a lot of user interaction with the dialog. 
 </p>
 
 </div>
-<!-- EDIT201 SECTION "Modal or Nonmodal dialogs" [5558-6089] -->
-<h3 class="sectionedit202"><a name="where_to_place_the_dialog" id="where_to_place_the_dialog">Where to place the dialog</a></h3>
+<!-- EDIT365 SECTION "Modal or Nonmodal dialogs" [5634-6163] -->
+<h3 class="sectionedit366"><a name="where_to_place_the_dialog" id="where_to_place_the_dialog">Where to place the dialog</a></h3>
 <div class="level3">
 
 <p>
@@ -217,12 +205,12 @@ The default for GtkDialog is GTK_WIN_POS_CENTER_ON_PARENT (<a href="http://git.g
 </p>
 
 </div>
-<!-- EDIT202 SECTION "Where to place the dialog" [6090-6838] -->
-<h3 class="sectionedit203"><a name="placing_dialogs_in_front_of_their_parent_window" id="placing_dialogs_in_front_of_their_parent_window">Placing dialogs in front of their parent window</a></h3>
+<!-- EDIT366 SECTION "Where to place the dialog" [6164-6912] -->
+<h3 class="sectionedit367"><a name="placing_dialogs_in_front_of_their_parent_window" id="placing_dialogs_in_front_of_their_parent_window">Placing dialogs in front of their parent window</a></h3>
 <div class="level3">
 
 <p>
-Most of the dialogs are placed in front of their parent window using the transient_for property (see. <a href="http://developer.gnome.org/doc/API/2.0/gtk/GtkWindow.html#gtk-window-set-transient-for" class="urlextern" title="http://developer.gnome.org/doc/API/2.0/gtk/GtkWindow.html#gtk-window-set-transient-for"  rel="nofollow"> GtkReference</a>). This property should be set for all modal dialogs. 
+Most of the dialogs are placed in front of their parent window using the transient_for property (see. <a href="http://developer.gnome.org/doc/API/2.0/gtk/GtkWindow.html#gtk-window-set-transient-for" class="urlextern" title="http://developer.gnome.org/doc/API/2.0/gtk/GtkWindow.html#gtk-window-set-transient-for"  rel="nofollow"> GtkReference</a>). This property should be set for all modal dialogs.
 </p>
 
 <p>
@@ -232,30 +220,27 @@ For nonmodal dialogs the setting of transient_for property is not obvious. While
 <p>
 <strong>Note:</strong> There is an older mechanism that keeps the the dialogs in front of gschem. If the <em>raise-dialog-boxes-on-expose</em> variable is set to <em>enable</em> in one of gschem&#039;s configuration files, it may cause problems with some window managers.
 If dialogs are flickering at 100% CPU load, then disable that setting.
-
 </p>
-<pre class="code lisp"><pre class="code lisp"><span class="co1">; raise-dialog-boxes-on-expose string</span>
+<pre class="code lisp"><span class="co1">; raise-dialog-boxes-on-expose string</span>
 <span class="co1">;</span>
 <span class="co1">; Controls if dialog boxes are raised whenever an expose event happens</span>
 <span class="co1">; Default is enabled</span>
 <span class="co1">;</span>
 <span class="co1">;(raise-dialog-boxes-on-expose &quot;enabled&quot;)</span>
-<span class="br0">&#40;</span>raise-dialog-boxes-on-expose <span class="st0">&quot;disabled&quot;</span><span class="br0">&#41;</span></pre></pre>
+<span class="br0">&#40;</span>raise-dialog-boxes-on-expose <span class="st0">&quot;disabled&quot;</span><span class="br0">&#41;</span></pre>
 
 </div>
-<!-- EDIT203 SECTION "Placing dialogs in front of their parent window" [6839-7924] -->
-<h3 class="sectionedit204"><a name="button_order_in_dialogs" id="button_order_in_dialogs">Button order in dialogs</a></h3>
+<!-- EDIT367 SECTION "Placing dialogs in front of their parent window" [6913-7997] -->
+<h3 class="sectionedit368"><a name="button_order_in_dialogs" id="button_order_in_dialogs">Button order in dialogs</a></h3>
 <div class="level3">
 
 <p>
-
 Button order at the bottom of the dialog depends on which operating system the user is using.
 GTK handles this automatically, but requires the developers set the alternative button order. For more information, check the GTK documentation <a href="http://library.gnome.org/devel/gtk/unstable/GtkDialog.html#gtk-dialog-set-alternative-button-order" class="urlextern" title="http://library.gnome.org/devel/gtk/unstable/GtkDialog.html#gtk-dialog-set-alternative-button-order"  rel="nofollow">here</a>.
 </p>
 
 <p>
 The alternative button order is set with just one call to a GTK function:
-
 </p>
 <pre class="code C"><span class="coMULTI">/* Set the alternative button order (ok, no, cancel, help) for other systems */</span>
 gtk_dialog_set_alternative_button_order<span class="br0">&#40;</span>GTK_DIALOG<span class="br0">&#40;</span>dialog<span class="br0">&#41;</span><span class="sy0">,</span>
@@ -270,16 +255,15 @@ This should be done for every new dialog created, before running it.
 </p>
 
 </div>
-<!-- EDIT204 SECTION "Button order in dialogs" [7925-8727] -->
-<h3 class="sectionedit205"><a name="dialog_design_of_the_current_dialogs" id="dialog_design_of_the_current_dialogs">Dialog design of the current dialogs</a></h3>
+<!-- EDIT368 SECTION "Button order in dialogs" [7998-8800] -->
+<h3 class="sectionedit369"><a name="dialog_design_of_the_current_dialogs" id="dialog_design_of_the_current_dialogs">Dialog design of the current dialogs</a></h3>
 <div class="level3">
 
 <p>
 <a href="media/devel_tips/dialog_picture.png" class="media" target="_blank" title="devel_tips:dialog_picture.png"><img src="media/devel_tips/dialog_picture.png" class="media" alt="" /></a>
-
 </p>
 <ul>
-<li class="level1"><div class="li"> There is some space around the whole dialog (<em>DIALOG_BORDER_SPACING</em>). </div>
+<li class="level1"><div class="li"> There is some space around the whole dialog (<em>DIALOG_BORDER_SPACING</em>).</div>
 </li>
 <li class="level1"><div class="li"> Some indentation to show the topic group (<em>DIALOG_INDENTATION</em>) below it&#039;s bold headline.</div>
 </li>
@@ -288,8 +272,8 @@ This should be done for every new dialog created, before running it.
 </ul>
 
 </div>
-<!-- EDIT205 SECTION "Dialog design of the current dialogs" [8728-9092] -->
-<h3 class="sectionedit206"><a name="source_template_for_simple_dialogs" id="source_template_for_simple_dialogs">Source template for simple dialogs</a></h3>
+<!-- EDIT369 SECTION "Dialog design of the current dialogs" [8801-9164] -->
+<h3 class="sectionedit370"><a name="source_template_for_simple_dialogs" id="source_template_for_simple_dialogs">Source template for simple dialogs</a></h3>
 <div class="level3">
 
 <p>
@@ -301,12 +285,12 @@ This template is not intented to compile, but you can easily copy the code block
   GtkWidget <span class="sy0">*</span>dialog<span class="sy0">;</span>
 &nbsp;
   <span class="coMULTI">/* only create the dialog if it is not there yet. This usually is a
-     widget pointer in the w_current structure: 
+     widget pointer in the w_current structure:
      dialog = w_current-&gt;tewindow */</span>
   <span class="kw1">if</span> <span class="br0">&#40;</span><span class="sy0">!</span>dialog<span class="br0">&#41;</span> <span class="br0">&#123;</span>
     dialog <span class="sy0">=</span> gtk_dialog_new_with_buttons<span class="br0">&#40;</span>_<span class="br0">&#40;</span><span class="st0">&quot;Dialog title&quot;</span><span class="br0">&#41;</span><span class="sy0">,</span>
 					 <span class="coMULTI">/* the parent window or NULL */</span>
-					 GTK_WINDOW<span class="br0">&#40;</span>w_current<span class="sy0">-&gt;</span>main_window<span class="br0">&#41;</span><span class="sy0">,</span> 
+					 GTK_WINDOW<span class="br0">&#40;</span>w_current<span class="sy0">-&gt;</span>main_window<span class="br0">&#41;</span><span class="sy0">,</span>
 					 <span class="coMULTI">/* dialog properties */</span>
 					 GTK_DIALOG_MODAL<span class="sy0">,</span> <span class="coMULTI">/* 0 for nonmodal dialogs */</span>
 					 <span class="coMULTI">/* dialog buttons and response signals */</span>
@@ -324,12 +308,12 @@ This template is not intented to compile, but you can easily copy the code block
 					    GTK_RESPONSE_HELP<span class="sy0">,</span>
 					    <span class="sy0">-</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">;</span>
 &nbsp;
-    <span class="coMULTI">/* set default response signal. This is usually triggered by the 
+    <span class="coMULTI">/* set default response signal. This is usually triggered by the
        &quot;Return&quot; key */</span>
     gtk_dialog_set_default_response<span class="br0">&#40;</span>GTK_DIALOG<span class="br0">&#40;</span>dialog<span class="br0">&#41;</span><span class="sy0">,</span>
 				    GTK_RESPONSE_ACCEPT<span class="br0">&#41;</span><span class="sy0">;</span>
 &nbsp;
-    <span class="coMULTI">/* set the function for handling the button responses and dialog close 
+    <span class="coMULTI">/* set the function for handling the button responses and dialog close
        for nonmodal dialogs you can use dialog_run() too.*/</span>
     gtk_signal_connect<span class="br0">&#40;</span>GTK_OBJECT<span class="br0">&#40;</span>dialog<span class="br0">&#41;</span><span class="sy0">,</span> <span class="st0">&quot;response&quot;</span><span class="sy0">,</span>
 		       GTK_SIGNAL_FUNC<span class="br0">&#40;</span>dialog_response<span class="br0">&#41;</span><span class="sy0">,</span> w_current<span class="br0">&#41;</span><span class="sy0">;</span>
@@ -350,7 +334,7 @@ This template is not intented to compile, but you can easily copy the code block
 &nbsp;
     <span class="coMULTI">/* create a alignment container with the DIALOG_INDENTATION on the left */</span>
     alignment <span class="sy0">=</span> gtk_alignment_new<span class="br0">&#40;</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">1</span><span class="sy0">,</span><span class="nu0">1</span><span class="br0">&#41;</span><span class="sy0">;</span>
-    gtk_alignment_set_padding<span class="br0">&#40;</span>GTK_ALIGNMENT<span class="br0">&#40;</span>alignment<span class="br0">&#41;</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> 
+    gtk_alignment_set_padding<span class="br0">&#40;</span>GTK_ALIGNMENT<span class="br0">&#40;</span>alignment<span class="br0">&#41;</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span>
 			      DIALOG_INDENTATION<span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#41;</span><span class="sy0">;</span>
     gtk_box_pack_start<span class="br0">&#40;</span>GTK_BOX<span class="br0">&#40;</span>vbox<span class="br0">&#41;</span><span class="sy0">,</span> alignment<span class="sy0">,</span> FALSE<span class="sy0">,</span> FALSE<span class="sy0">,</span> <span class="nu0">0</span><span class="br0">&#41;</span><span class="sy0">;</span>
 &nbsp;
@@ -361,7 +345,7 @@ This template is not intented to compile, but you can easily copy the code block
     gtk_table_set_col_spacings<span class="br0">&#40;</span>GTK_TABLE<span class="br0">&#40;</span>table<span class="br0">&#41;</span><span class="sy0">,</span> DIALOG_H_SPACING<span class="br0">&#41;</span><span class="sy0">;</span>
     gtk_container_add<span class="br0">&#40;</span>GTK_CONTAINER<span class="br0">&#40;</span>alignment<span class="br0">&#41;</span><span class="sy0">,</span> table<span class="br0">&#41;</span><span class="sy0">;</span>
 &nbsp;
-    <span class="coMULTI">/* a simple text label in one table cell with left alignment. 
+    <span class="coMULTI">/* a simple text label in one table cell with left alignment.
        Note: the GTK_FILL in the third line is required */</span>
     label <span class="sy0">=</span> gtk_label_new<span class="br0">&#40;</span>_<span class="br0">&#40;</span><span class="st0">&quot;Text:&quot;</span><span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
     gtk_misc_set_alignment<span class="br0">&#40;</span>GTK_MISC<span class="br0">&#40;</span>label<span class="br0">&#41;</span><span class="sy0">,</span><span class="nu0">0</span><span class="sy0">,</span><span class="nu0">0</span><span class="br0">&#41;</span><span class="sy0">;</span>
@@ -381,14 +365,14 @@ This template is not intented to compile, but you can easily copy the code block
     gtk_widget_show_all<span class="br0">&#40;</span>dialog<span class="br0">&#41;</span><span class="sy0">;</span>
   <span class="br0">&#125;</span>
 &nbsp;
-  <span class="kw1">else</span> <span class="br0">&#123;</span> 
-    <span class="coMULTI">/* Dialog is already there. Present it to the user. 
+  <span class="kw1">else</span> <span class="br0">&#123;</span>
+    <span class="coMULTI">/* Dialog is already there. Present it to the user.
        This is only required if you have a nonmodal dialog */</span>
     gtk_window_present<span class="br0">&#40;</span>GTK_WINDOW<span class="br0">&#40;</span>dialog<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
   <span class="br0">&#125;</span>
 &nbsp;
-  <span class="coMULTI">/* always set the current values to the dialog 
-     If you're placing that part at the end of the dialog function you can 
+  <span class="coMULTI">/* always set the current values to the dialog
+     If you're placing that part at the end of the dialog function you can
      easily create dialogs that can be called, even if they are already open */</span>
   textentry <span class="sy0">=</span> g_object_get_data<span class="br0">&#40;</span>G_OBJECT<span class="br0">&#40;</span>dialog<span class="br0">&#41;</span><span class="sy0">,</span> <span class="st0">&quot;textentry&quot;</span><span class="br0">&#41;</span><span class="sy0">;</span>
   gtk_entry_set_text<span class="br0">&#40;</span>GTK_ENTRY<span class="br0">&#40;</span>textentry<span class="br0">&#41;</span><span class="sy0">,</span> string<span class="br0">&#41;</span><span class="sy0">;</span>
@@ -398,33 +382,32 @@ This template is not intented to compile, but you can easily copy the code block
 
 <p>
 The response function for such a dialog may look like this:
-
 </p>
-<pre class="code c"><pre class="code c"><span class="kw4">void</span> dialog_response<span class="br0">&#40;</span>GtkWidget *widget, gint response, TOPLEVEL *w_current<span class="br0">&#41;</span>
+<pre class="code c"><span class="kw4">void</span> dialog_response<span class="br0">&#40;</span>GtkWidget <span class="sy0">*</span>widget<span class="sy0">,</span> gint response<span class="sy0">,</span> TOPLEVEL <span class="sy0">*</span>w_current<span class="br0">&#41;</span>
 <span class="br0">&#123;</span>
   <span class="kw1">switch</span> <span class="br0">&#40;</span>response<span class="br0">&#41;</span> <span class="br0">&#123;</span>
-  <span class="kw1">case</span> GTK_RESPONSE_ACCEPT:
+  <span class="kw1">case</span> GTK_RESPONSE_ACCEPT<span class="sy0">:</span>
     <span class="coMULTI">/* apply the dialog settings:
        just insert your code here if it is short
        call an extra apply function if the required code is long */</span>
-    <span class="kw2">break</span>;
-  <span class="kw1">case</span> GTK_RESPONSE_REJECT:
-  <span class="kw1">case</span> GTK_RESPONSE_DELETE_EVENT:
+    <span class="kw2">break</span><span class="sy0">;</span>
+  <span class="kw1">case</span> GTK_RESPONSE_REJECT<span class="sy0">:</span>
+  <span class="kw1">case</span> GTK_RESPONSE_DELETE_EVENT<span class="sy0">:</span>
     <span class="coMULTI">/* for modal dialogs just do nothing,
        for nonmodal dialogs, destroy the dialog and clean up */</span>
-    <span class="kw2">break</span>;
-  <span class="kw1">default</span>:
+    <span class="kw2">break</span><span class="sy0">;</span>
+  <span class="kw1">default</span><span class="sy0">:</span>
     <span class="coMULTI">/* catch wrong signals signals (paranoid error checking ;-)) */</span>
-    <a href="http://www.opengroup.org/onlinepubs/009695399/functions/printf.html"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st0">&quot;dialog_response(): strange signal %d<span class="es0">\n</span>&quot;</span>, response<span class="br0">&#41;</span>;
+    <a href="http://www.opengroup.org/onlinepubs/009695399/functions/printf.html"><span class="kw3">printf</span></a><span class="br0">&#40;</span><span class="st0">&quot;dialog_response(): strange signal %d<span class="es1">\n</span>&quot;</span><span class="sy0">,</span> response<span class="br0">&#41;</span><span class="sy0">;</span>
   <span class="br0">&#125;</span>
 &nbsp;
   <span class="coMULTI">/* for nonmodal dialogs just do nothing,
      for modal dialogs, always destroy the dialog and clean up */</span>
-<span class="br0">&#125;</span></pre></pre>
+<span class="br0">&#125;</span></pre>
 
 </div>
-<!-- EDIT206 SECTION "Source template for simple dialogs" [9093-14195] -->
-<h3 class="sectionedit207"><a name="current_dialog_issues_in_gschem" id="current_dialog_issues_in_gschem">Current Dialog Issues in Gschem</a></h3>
+<!-- EDIT370 SECTION "Source template for simple dialogs" [9165-14253] -->
+<h3 class="sectionedit371"><a name="current_dialog_issues_in_gschem" id="current_dialog_issues_in_gschem">Current Dialog Issues in Gschem</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> every dialog has it&#039;s own design</div>
@@ -438,7 +421,6 @@ The response function for such a dialog may look like this:
 </ul>
 
 <p>
-
 <strong>Here&#039;s a list of things that could be improved:</strong>
 </p>
 
@@ -467,7 +449,7 @@ The response function for such a dialog may look like this:
 <h5><a name="execute_script" id="execute_script">Execute Script</a></h5>
 <div class="level5">
 <ul>
-<li class="level1"><div class="li"> </div>
+<li class="level1"><div class="li"></div>
 </li>
 </ul>
 
@@ -522,7 +504,7 @@ The response function for such a dialog may look like this:
 <h5><a name="translate_symbol" id="translate_symbol">Translate Symbol</a></h5>
 <div class="level5">
 <ul>
-<li class="level1"><div class="li"> </div>
+<li class="level1"><div class="li"></div>
 </li>
 </ul>
 
@@ -566,7 +548,7 @@ The response function for such a dialog may look like this:
 <h5><a name="multi_attribute_editor" id="multi_attribute_editor">Multi Attribute Editor</a></h5>
 <div class="level5">
 <ul>
-<li class="level1"><div class="li"> </div>
+<li class="level1"><div class="li"></div>
 </li>
 </ul>
 
@@ -575,7 +557,7 @@ The response function for such a dialog may look like this:
 <h5><a name="add_text" id="add_text">Add Text</a></h5>
 <div class="level5">
 <ul>
-<li class="level1"><div class="li"> </div>
+<li class="level1"><div class="li"></div>
 </li>
 </ul>
 
@@ -597,7 +579,7 @@ The response function for such a dialog may look like this:
 <h5><a name="insert_picture" id="insert_picture">Insert Picture</a></h5>
 <div class="level5">
 <ul>
-<li class="level1"><div class="li"> </div>
+<li class="level1"><div class="li"></div>
 </li>
 </ul>
 
@@ -665,7 +647,7 @@ The response function for such a dialog may look like this:
 <h5><a name="text_size" id="text_size">Text Size</a></h5>
 <div class="level5">
 <ul>
-<li class="level1"><div class="li"> </div>
+<li class="level1"><div class="li"></div>
 </li>
 </ul>
 
@@ -674,7 +656,7 @@ The response function for such a dialog may look like this:
 <h5><a name="snap_grid_spacing" id="snap_grid_spacing">Snap Grid Spacing</a></h5>
 <div class="level5">
 <ul>
-<li class="level1"><div class="li"> </div>
+<li class="level1"><div class="li"></div>
 </li>
 </ul>
 
@@ -692,7 +674,7 @@ The response function for such a dialog may look like this:
 <h5><a name="about_dialog" id="about_dialog">About Dialog</a></h5>
 <div class="level5">
 <ul>
-<li class="level1"><div class="li"> </div>
+<li class="level1"><div class="li"></div>
 </li>
 </ul>
 
@@ -701,10 +683,10 @@ The response function for such a dialog may look like this:
 <h5><a name="hotkeys" id="hotkeys">Hotkeys</a></h5>
 <div class="level5">
 <ul>
-<li class="level1"><div class="li"> </div>
+<li class="level1"><div class="li"></div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT207 SECTION "Current Dialog Issues in Gschem" [14196-] --></body>
+<!-- EDIT371 SECTION "Current Dialog Issues in Gschem" [14254-] --></body>
 </html>

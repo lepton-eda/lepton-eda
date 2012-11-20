@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit2152"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> « <a href="geda-gnetlist_ug-implicit_pins.html" class="wikilink1" title="geda-gnetlist_ug-implicit_pins.html">Implicit pins</a>  </td><td class="col1 centeralign">  <strong><a href="geda-gnetlist_ug.html" class="wikilink1" title="geda-gnetlist_ug.html">gEDA gnetlist User Guide</a></strong>     </td><td class="col2 rightalign">  <a href="geda-gnetlist_ug-command_line.html" class="wikilink1" title="geda-gnetlist_ug-command_line.html">Command-line arguments</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT2152 TABLE [1-129] -->
+<h2 class="sectionedit2153"><a name="configuring_gnetlist" id="configuring_gnetlist">Configuring gnetlist</a></h2>
+<div class="level2">
+
+<p>
+gnetlist loads a series of configuration files at start-up, if they exist:
+</p>
+<ol>
+<li class="level1"><div class="li"> The suite&#039;s system configuration file, called <code>$PREFIX/share/gEDA/system-gafrc</code></div>
+</li>
+<li class="level1"><div class="li"> The suite&#039;s user configuration file, called <code>$HOME/.gEDA/gafrc</code></div>
+</li>
+<li class="level1"><div class="li"> A <code>gafrc</code> file in the current working directory.</div>
+</li>
+<li class="level1"><div class="li"> gnetlist&#039;s system configuration file, called <code>$PREFIX/share/gEDA/system-gnetlistrc</code></div>
+</li>
+<li class="level1"><div class="li"> gnetlist&#039;s user configuration file, called <code>$HOME/.gEDA/gnetlistrc</code></div>
+</li>
+<li class="level1"><div class="li"> A <code>gnetlistrc</code> file in the current working directory.</div>
+</li>
+</ol>
+
+<p>
+$PREFIX denotes the base installation directory for gnetlist (<code>/usr</code> on most systems), and $HOME denotes your home directory.
+</p>
+
+<p>
+These files are scripts written in Scheme, and they are executed using a Scheme interpreter. This means that you can use the configuration files as a way of customising and extending gnetlist.
+</p>
+
+<p>
+There are a very large number of options that affect the way gnetlist works, and only the most commonly-used are listed here. For a full list, see the <code>system-gnetlistrc</code> file installed with gEDA.
+</p>
+
+</div>
+<!-- EDIT2153 SECTION "Configuring gnetlist" [131-1199] -->
+<h3 class="sectionedit2154"><a name="symbol_and_source_libraries" id="symbol_and_source_libraries">Symbol and source libraries</a></h3>
+<div class="level3">
+
+<p>
+When using gnetlist, it is very important that your symbol and source libraries are set up correctly.  You will almost always want to put these settings in a suite configuration file (one of the ”<code>gafrc</code>” files) so that the same libraries are used by gschem and gnetlist.  For an explanation of how to set up symbol and source libraries, see the <a href="geda-gschem_ug-config.html" class="wikilink1" title="geda-gschem_ug-config.html">gEDA gschem User Guide</a>.
+</p>
+
+</div>
+<!-- EDIT2154 SECTION "Symbol and source libraries" [1200-1637] -->
+<h3 class="sectionedit2155"><a name="hierarchy_processing_options" id="hierarchy_processing_options">Hierarchy processing options</a></h3>
+<div class="level3">
+
+<p>
+When working with <a href="geda-gnetlist_ug-hierarchy.html" class="wikilink1" title="geda-gnetlist_ug-hierarchy.html">hierarchy</a>, gnetlist renames nets and components based on where in the hierarchy they occur.  You can configure how this “mangling” is carried out, and disable it if necessary.
+</p>
+
+<p>
+By default, gnetlist appends names at each level of hierarchy together, using ”/” as the separator (so the component “U1” in the subcircuit “A3” becomes “A3/U1”).  For component names (“refdes”), the <code>hierarchy-uref-order</code> and <code>hierarchy-uref-separator</code> functions can be used to change this.  For example, to change the “refdes” mangling to prepend names at each level with the separator ”:”, you could use:
+</p>
+<pre class="code">(hierarchy-uref-order &quot;prepend&quot;)
+(hierarchy-uref-separator &quot;:&quot;)</pre>
+
+<p>
+Now “U1” in the subcircuit “A3” would be renamed to “U1:A3” by gnetlist.
+</p>
+
+<p>
+The <code>hierarchy-uref-mangle</code> function can be used to turn off “refdes” mangling entirely:
+</p>
+<pre class="code">(hierarchy-uref-mangle &quot;disabled&quot;)</pre>
+
+<p>
+This is very rarely a useful thing to do.
+</p>
+
+<p>
+Similar settings exist for net names set using the ”<code>netname=</code>” attribute, and net names set using <a href="geda-gnetlist_ug-implicit_pins.html" class="wikilink1" title="geda-gnetlist_ug-implicit_pins.html">implicit pins</a> and the ”<code>net=</code>” attribute.  
+</p>
+<ul>
+<li class="level1"><div class="li"> The <code>hierarchy-netname-order</code>, <code>hierarchy-netname-separator</code> and <code>hierarchy-netname-mangle</code> functions control ”<code>netname=</code>” mangling.</div>
+</li>
+<li class="level1"><div class="li"> The <code>hierarchy-netattrib-order</code>, <code>hierarchy-netattrib-separator</code> and <code>hierarchy-netattrib-mangle</code> functions control ”<code>net=</code>” mangling.</div>
+</li>
+</ul>
+
+<p>
+It is sometimes useful to turn off hierarchy processing entirely.  You can do this with the <code>hierarchy-traversal</code> option:
+</p>
+<pre class="code">(hierarchy-traversal &quot;disabled&quot;)</pre>
+
+</div>
+<!-- EDIT2155 SECTION "Hierarchy processing options" [1638-3241] -->
+<h3 class="sectionedit2156"><a name="automatic_net_naming" id="automatic_net_naming">Automatic net naming</a></h3>
+<div class="level3">
+
+<p>
+You can control how gnetlist automatically names nets that are not named in the schematic files using the <code>unnamed-netname</code> function.  gnetlist will add a unique number to the end of the string you provide.  For example:
+</p>
+<pre class="code">(unnamed-netname &quot;unnamed_net&quot;)</pre>
+
+<p>
+This would make gnetlist automatically give unnamed nets names of the form “unnamed_net12345”.
+</p>
+
+</div>
+<!-- EDIT2156 SECTION "Automatic net naming" [3242-] --></body>
+</html>

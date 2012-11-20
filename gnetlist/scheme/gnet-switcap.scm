@@ -397,9 +397,9 @@
 ;;
 (define switcap:write-top-header
   (lambda (port)
-    (display "/* Switcap netlist produced by gnetlist (part of gEDA) */\n" port)  
-    (display "/* See http://www.geda.seul.org for more information.  */\n" port)  
-    (display "/* Switcap backend written by Dan McMahill             */\n" port)
+    (display "/* Switcap netlist produced by gnetlist (part of gEDA)     */\n" port)
+    (display "/* See http://www.geda-project.org/ for more information.  */\n" port)
+    (display "/* Switcap backend written by Dan McMahill                 */\n" port)
     (display "\n\n" port)
     )
   )

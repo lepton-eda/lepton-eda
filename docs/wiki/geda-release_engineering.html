@@ -12,18 +12,16 @@
 <body>
 
 
-<h1 class="sectionedit1295"><a name="geda_s_release_engineering" id="geda_s_release_engineering">gEDA&#039;s Release Engineering</a></h1>
+<h1 class="sectionedit567"><a name="geda_s_release_engineering" id="geda_s_release_engineering">gEDA&#039;s Release Engineering</a></h1>
 <div class="level1">
 
 </div>
-<!-- EDIT1295 SECTION "gEDA's Release Engineering" [1-49] -->
-<h2 class="sectionedit1296"><a name="geda_gaf_release_creation_checklist" id="geda_gaf_release_creation_checklist">gEDA/gaf Release Creation Checklist</a></h2>
+<!-- EDIT567 SECTION "gEDA's Release Engineering" [1-49] -->
+<h2 class="sectionedit568"><a name="geda_gaf_release_creation_checklist" id="geda_gaf_release_creation_checklist">gEDA/gaf Release Creation Checklist</a></h2>
 <div class="level2">
 
 <p>
-
 Here is a list of steps that are taken every time when creating a new gEDA/gaf release:
-
 </p>
 <ul>
 <li class="level1"><div class="li"> In the toplevel configure.ac file update the package version in the AC_INIT macro, the date in the AX_GIT_VERSION macro, and update libgeda&#039;s shared library version (libgeda&#039;s so version should follow what is described in <a href="http://sourceware.org/autobook/autobook/autobook_91.html" class="urlextern" title="http://sourceware.org/autobook/autobook/autobook_91.html"  rel="nofollow"> Autobook&#039;s library versioning</a> chapter).</div>
@@ -64,18 +62,10 @@ Here is a list of steps that are taken every time when creating a new gEDA/gaf r
 <li class="level2"><div class="li"> Run: <pre class="code"> cp -f wikiold/design.css wiki </pre>
 </div>
 </li>
-<li class="level2"><div class="li"> Run: <pre class="code"> scripts/copygitignores.sh </pre>
-
-<p>
-  You will need to verify that the .gitignore files were copied correctly.
-</p>
+<li class="level2"><div class="li"> Run: <pre class="code"> cp -f wikiold/.gitignore wiki </pre>
 </div>
 </li>
-<li class="level2"><div class="li"> Run: <pre class="code"> cd wiki; scripts/populatemkfiles.sh </pre>
-
-<p>
-  You will have to tweak the hardcoded paths in this script.  You need to verify all of the generated Makefile.am files (easiest to compare them with the files in wikiold) to make sure they got generated correctly.  This script is known to break in the media and images directories (by outputing incorrect paths).
-</p>
+<li class="level2"><div class="li"> Run: <pre class="code"> cp -f wikiold/Makefile.am </pre>
 </div>
 </li>
 <li class="level2"><div class="li"> Check to see what has changed using git status and git diff.  Go through and add any new files to git using git add.</div>
@@ -90,7 +80,7 @@ Here is a list of steps that are taken every time when creating a new gEDA/gaf r
 <li class="level2"><div class="li"> Go through all the html files and remove the contents of the line (but don&#039;t delete the empty line): <pre class="code"> &lt;a href=.&gt;start&lt;/a&gt;&lt;/br&gt;</pre>
 
 <p>
-.  Eventually this should be automated or somehow fixed.  Removing this start link will make the html pages look better and reduce the number of unnecessary file changes (in git).
+  Eventually this should be automated or somehow fixed.  Removing this start link will make the html pages look better and reduce the number of unnecessary file changes (in git).
 </p>
 </div>
 </li>
@@ -152,5 +142,5 @@ and make sure it completes without any errors.  After this is complete you will 
 </ul>
 
 </div>
-<!-- EDIT1296 SECTION "gEDA/gaf Release Creation Checklist" [50-] --></body>
+<!-- EDIT568 SECTION "gEDA/gaf Release Creation Checklist" [50-] --></body>
 </html>

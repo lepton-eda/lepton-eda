@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-11-14 23:59+0100\n"
+"POT-Creation-Date: 2012-11-17 18:51+0000\n"
 "PO-Revision-Date: 2012-11-15 09:55+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
+"X-Generator: Launchpad (build 16265)\n"
 "X-Poedit-Country: NETHERLANDS\n"
 "X-Poedit-Language: Dutch\n"
 
@@ -65,7 +65,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: libgeda/src/a_basic.c:442
+#: libgeda/src/a_basic.c:440
 #, c-format
 msgid ""
 "Read unexpected embedded symbol start marker in [%s] :\n"
@@ -76,7 +76,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: libgeda/src/a_basic.c:473
+#: libgeda/src/a_basic.c:471
 #, c-format
 msgid ""
 "Read unexpected embedded symbol end marker in [%s] :\n"
@@ -87,7 +87,7 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#: libgeda/src/a_basic.c:508
+#: libgeda/src/a_basic.c:506
 #, c-format
 msgid ""
 "Read an old format sym/sch file!\n"
@@ -98,7 +98,7 @@ msgstr ""
 "Voer g[sym|sch]update uit op:\n"
 "[%s]\n"
 
-#: libgeda/src/a_basic.c:514
+#: libgeda/src/a_basic.c:512
 #, c-format
 msgid ""
 "Read garbage in [%s] :\n"
@@ -229,7 +229,7 @@ msgstr "Kan [%s] niet openen voor afdrukken\n"
 msgid "Could not execute command [%s] for printing\n"
 msgstr "Kan opdracht [%s] niet uitvoeren voor afdrukken\n"
 
-#: libgeda/src/f_print.c:676
+#: libgeda/src/f_print.c:682
 msgid "Too many UTF-8 characters, cannot print\n"
 msgstr "Te veel UTF-8 karakters, kan niet afdrukken\n"
 
@@ -343,8 +343,7 @@ msgstr ""
 
 #: libgeda/src/o_bus_basic.c:160 libgeda/src/o_bus_basic.c:167
 msgid "Failed to parse bus object"
-msgstr ""
-"Faalde bij het ontleden van een bus object"
+msgstr "Faalde bij het ontleden van een bus object"
 
 #: libgeda/src/o_bus_basic.c:173
 #, c-format
@@ -1001,21 +1000,3 @@ msgstr "Ontleedfout: ~s"
 #, scheme-format
 msgid "Object ~A is not part of a page"
 msgstr "Object ~A is geen deel van een pagina"
-
-#~ msgid "Error reading picture definition line: %s.\n"
-#~ msgstr "Fout bij het lezen van afbeelding definitie regel: %s.\n"
-
-#~ msgid "Loading warning picture.\n"
-#~ msgstr "Laad de waarschuwing afbeelding.\n"
-
-#~ msgid "Error loading picture from file: %s.\n"
-#~ msgstr "Fout bij het laden van een afbeelding uit een bestand: %s.\n"
-
-#~ msgid "Found a zero length pin: [ %s ]\n"
-#~ msgstr "Pen met een lengte van nul gevonden: [ %s ]\n"
-
-#~ msgid "%s:%i:%i: %s\n"
-#~ msgstr "%s:%i:%i: %s\n"
-
-#~ msgid "Unknown file: %s\n"
-#~ msgstr "Onbekend bestand: %s\n"

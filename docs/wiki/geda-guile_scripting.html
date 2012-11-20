@@ -12,218 +12,30 @@
 <body>
 
 
-<h2 class="sectionedit295"><a name="guile_scripting" id="guile_scripting">Guile scripting</a></h2>
+<h2 class="sectionedit328"><a name="guile_scripting" id="guile_scripting">Guile scripting</a></h2>
 <div class="level2">
 
+<p>
+gEDA/gaf uses <a href="http://www.gnu.org/s/guile/" class="urlextern" title="http://www.gnu.org/s/guile/"  rel="nofollow">Guile Scheme</a> to provide Scheme scripting capabilities, and all of the features of Guile are available to use.  The <em>Guile Reference Manual</em> is available as an Info manual (<code>info guile</code> on most systems), or <a href="http://www.gnu.org/software/guile/docs/docs.html" class="urlextern" title="http://www.gnu.org/software/guile/docs/docs.html"  rel="nofollow">on the Guile website</a>.
+</p>
+
+<p>
+A collection of modules is provided for accessing and modifying gEDA objects and pages, called the gEDA Scheme <acronym title="Application Programming Interface">API</acronym>.  The <em>gEDA Scheme Reference Manual</em> is also available as an Info manual (<code>info geda-scheme</code>).
+</p>
+
 </div>
-<!-- EDIT295 SECTION "Guile scripting" [1-31] -->
-<h3 class="sectionedit296"><a name="tutorials" id="tutorials">Tutorials</a></h3>
+<!-- EDIT328 SECTION "Guile scripting" [1-616] -->
+<h3 class="sectionedit329"><a name="tutorials" id="tutorials">Tutorials</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> <a href="geda-gnetlist_scheme_tutorial.html" class="wikilink1" title="geda-gnetlist_scheme_tutorial.html">Scripting a gnetlist backend in scheme</a> (John Doty)</div>
 </li>
-<li class="level1"><div class="li"> See also the <a href="geda-gnetlist_ug.html#scheme_backend_api" class="wikilink1" title="geda-gnetlist_ug.html">Scheme Backend API</a> section of the gnetlist User Guide</div>
-</li>
 </ul>
 
-</div>
-<!-- EDIT296 SECTION "Tutorials" [32-249] -->
-<h3 class="sectionedit297"><a name="libgeda_c_library_reference" id="libgeda_c_library_reference">libgeda C library reference</a></h3>
-<div class="level3">
-
 <p>
-
-libgeda defines a number of low-level functions in C for configuring its behaviour and manipulating features such as the component and subcircuit libraries.
+See also the <a href="geda-gschem_ug-extensions.html" class="wikilink1" title="geda-gschem_ug-extensions.html">Extending gschem</a> section of the <em><a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">gEDA gschem User Guide</a></em>, and <a href="geda-gnetlist_ug.html#scheme_backend_api" class="wikilink1" title="geda-gnetlist_ug.html">Scheme Backend API</a> section of the <em><a href="geda-gnetlist_ug.html" class="wikilink1" title="geda-gnetlist_ug.html">gEDA gnetlist User Guide</a></em>.
 </p>
 
 </div>
-
-<h4><a name="types" id="types">Types</a></h4>
-<div class="level4">
-<ul>
-<li class="level1"><div class="li"> attribute</div>
-</li>
-<li class="level1"><div class="li"> object</div>
-</li>
-<li class="level1"><div class="li"> page</div>
-</li>
-</ul>
-
-</div>
-
-<h4><a name="variables" id="variables">Variables</a></h4>
-<div class="level4">
-
-<p>
-
-Basic configuration (defined by libgeda, read-only)
-
-</p>
-<ul>
-<li class="level1"><div class="li"> path-sep</div>
-</li>
-<li class="level1"><div class="li"> geda-rc-path</div>
-</li>
-<li class="level1"><div class="li"> geda-data-path</div>
-</li>
-</ul>
-
-<p>
-
-Object type identifiers (defined by libgeda, read-only)
-
-</p>
-<ul>
-<li class="level1"><div class="li"> OBJ_LINE</div>
-</li>
-<li class="level1"><div class="li"> OBJ_BOX</div>
-</li>
-<li class="level1"><div class="li"> OBJ_PICTURE</div>
-</li>
-<li class="level1"><div class="li"> OBJ_CIRCLE</div>
-</li>
-<li class="level1"><div class="li"> OBJ_NET</div>
-</li>
-<li class="level1"><div class="li"> OBJ_BUS</div>
-</li>
-<li class="level1"><div class="li"> OBJ_COMPLEX</div>
-</li>
-<li class="level1"><div class="li"> OBJ_TEXT</div>
-</li>
-<li class="level1"><div class="li"> OBJ_<acronym title="Personal Identification Number">PIN</acronym></div>
-</li>
-<li class="level1"><div class="li"> OBJ_ARC</div>
-</li>
-<li class="level1"><div class="li"> OBJ_ROUTE</div>
-</li>
-<li class="level1"><div class="li"> OBJ_THRU_HOLE</div>
-</li>
-<li class="level1"><div class="li"> OBJ_PLACEHOLDER</div>
-</li>
-</ul>
-
-</div>
-
-<h4><a name="functions" id="functions">Functions</a></h4>
-<div class="level4">
-
-<p>
-
-Component library:
-
-</p>
-<ul>
-<li class="level1"><div class="li"> component-library</div>
-</li>
-<li class="level1"><div class="li"> component-library-command</div>
-</li>
-<li class="level1"><div class="li"> component-library-funcs</div>
-</li>
-<li class="level1"><div class="li"> component-library-search</div>
-</li>
-<li class="level1"><div class="li"> reset-component-library</div>
-</li>
-</ul>
-
-<p>
-
-Subcircuit library:
-
-</p>
-<ul>
-<li class="level1"><div class="li"> source-library</div>
-</li>
-<li class="level1"><div class="li"> source-library-search</div>
-</li>
-<li class="level1"><div class="li"> reset-source-library</div>
-</li>
-</ul>
-
-<p>
-
-Libgeda behaviour configuration (write-only):
-
-</p>
-<ul>
-<li class="level1"><div class="li"> always-promote-attributes</div>
-</li>
-<li class="level1"><div class="li"> attribute-promotion</div>
-</li>
-<li class="level1"><div class="li"> bitmap-directory</div>
-</li>
-<li class="level1"><div class="li"> bus-ripper-symname</div>
-</li>
-<li class="level1"><div class="li"> font-directory</div>
-</li>
-<li class="level1"><div class="li"> keep-invisible</div>
-</li>
-<li class="level1"><div class="li"> map-font-character-to-file</div>
-</li>
-<li class="level1"><div class="li"> postscript-prolog</div>
-</li>
-<li class="level1"><div class="li"> promote-invisible</div>
-</li>
-<li class="level1"><div class="li"> scheme-directory</div>
-</li>
-<li class="level1"><div class="li"> untitled-name</div>
-</li>
-<li class="level1"><div class="li"> world-size</div>
-</li>
-</ul>
-
-<p>
-
-Smob type manipulators:
-
-</p>
-<ul>
-<li class="level1"><div class="li"> get-attribute-name-value</div>
-</li>
-<li class="level1"><div class="li"> get-attribute-bounds</div>
-</li>
-<li class="level1"><div class="li"> get-attribute-angle</div>
-</li>
-<li class="level1"><div class="li"> calcule-new-attrib-bounds</div>
-</li>
-<li class="level1"><div class="li"> get-object-attributes</div>
-</li>
-<li class="level1"><div class="li"> get-attrib-value-by-attrib-name</div>
-</li>
-<li class="level1"><div class="li"> get-object-type</div>
-</li>
-<li class="level1"><div class="li"> get-line-width</div>
-</li>
-<li class="level1"><div class="li"> get-page-filename</div>
-</li>
-</ul>
-
-</div>
-<!-- EDIT297 SECTION "libgeda C library reference" [250-1700] -->
-<h3 class="sectionedit298"><a name="libgeda_gedascm" id="libgeda_gedascm">libgeda geda.scm</a></h3>
-<div class="level3">
-
-<p>
-
-geda.scm, installed with libgeda, provides several useful functions for doing simple manipulation of paths and files, as well as loading rc files from gafrc.d directories.
-</p>
-
-</div>
-
-<h4><a name="functions1" id="functions1">Functions</a></h4>
-<div class="level4">
-<ul>
-<li class="level1"><div class="li"> build-path</div>
-</li>
-<li class="level1"><div class="li"> regular-file?</div>
-</li>
-<li class="level1"><div class="li"> directory?</div>
-</li>
-<li class="level1"><div class="li"> has-suffix?</div>
-</li>
-<li class="level1"><div class="li"> load-scheme-dir</div>
-</li>
-</ul>
-
-</div>
-<!-- EDIT298 SECTION "libgeda geda.scm" [1701-] --></body>
+<!-- EDIT329 SECTION "Tutorials" [617-] --></body>
 </html>

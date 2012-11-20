@@ -8,7 +8,7 @@ dnl directory.
 # Set up configuration system
 #####################################################################
 
-AC_INIT([gEDA/gaf], [1.7.2], [geda-bug@seul.org], [geda-gaf])
+AC_INIT([gEDA/gaf], [1.8.0], [https://bugs.launchpad.net/geda], [geda-gaf])
 AC_PREREQ([2.60])
 
 AC_CONFIG_SRCDIR([libgeda/src/libgeda.c])
@@ -24,7 +24,7 @@ AC_GNU_SOURCE # FIXME for some reason this is needed?
 # Do version number magic
 #####################################################################
 
-AX_GIT_VERSION([20111231])
+AX_GIT_VERSION([20121118])
 
 # This is used for keeping the ChangeLog files up-to-date
 AC_SUBST([CHANGELOG_BASE], [1.0-20070526])
@@ -272,19 +272,9 @@ AC_CONFIG_FILES([Makefile
 
                  docs/Makefile
                  docs/scheme-api/Makefile
-                 docs/scripts/Makefile
                  docs/toplevel/Makefile
                  docs/toplevel/gedadocs.html
                  docs/wiki/Makefile
-                 docs/wiki/images/smileys/Makefile
-                 docs/wiki/images/Makefile
-                 docs/wiki/images/interwiki/Makefile
-                 docs/wiki/media/geda/Makefile
-                 docs/wiki/media/wiki/Makefile
-                 docs/wiki/media/tragesym/tragesym/Makefile
-                 docs/wiki/media/tragesym/Makefile
-                 docs/wiki/media/Makefile
-                 docs/wiki/media/devel_tips/Makefile
 
                  examples/Makefile
                  examples/RF_Amp/Makefile

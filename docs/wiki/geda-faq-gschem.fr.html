@@ -12,12 +12,12 @@
 <body>
 
 
-<h1 class="sectionedit334"><a name="usage_de_gschem" id="usage_de_gschem">Usage de Gschem</a></h1>
+<h1 class="sectionedit374"><a name="usage_de_gschem" id="usage_de_gschem">Usage de Gschem</a></h1>
 <div class="level1">
 
 </div>
-<!-- EDIT334 SECTION "Usage de Gschem" [1-33] -->
-<h2 class="sectionedit335"><a name="comment_je_deplace_un_composant" id="comment_je_deplace_un_composant">Comment je déplace un composant?</a></h2>
+<!-- EDIT374 SECTION "Usage de Gschem" [1-33] -->
+<h2 class="sectionedit375"><a name="comment_je_deplace_un_composant" id="comment_je_deplace_un_composant">Comment je déplace un composant?</a></h2>
 <div class="level2">
 
 <p>
@@ -31,7 +31,6 @@ Ce n&#039;est plus un problème·; déplacer un composant peut être réalisé e
 </ol>
 
 <p>
-
 C&#039;est probablement ce que vous avez l&#039;habitude de faire.
 </p>
 
@@ -70,8 +69,8 @@ Trois:
 </ol>
 
 </div>
-<!-- EDIT335 SECTION "Comment je déplace un composant?" [34-1443] -->
-<h2 class="sectionedit336"><a name="comment_je_change_la_taille_du_texte_sur_un_symbole" id="comment_je_change_la_taille_du_texte_sur_un_symbole">Comment je change la taille du texte sur un symbole?</a></h2>
+<!-- EDIT375 SECTION "Comment je déplace un composant?" [34-1443] -->
+<h2 class="sectionedit376"><a name="comment_je_change_la_taille_du_texte_sur_un_symbole" id="comment_je_change_la_taille_du_texte_sur_un_symbole">Comment je change la taille du texte sur un symbole?</a></h2>
 <div class="level2">
 <ol>
 <li class="level1"><div class="li"> Sélectionnez le symbole.</div>
@@ -95,13 +94,12 @@ Trois:
 </ol>
 
 <p>
-
 Plus généralement, vous pouvez utiliser cette procédure pour éditer n&#039;importe quoi sur un symbole. (Substituez « Edit Text » pour votre édition souhaitée, bien sûr.)
 </p>
 
 </div>
-<!-- EDIT336 SECTION "Comment je change la taille du texte sur un symbole?" [1444-2401] -->
-<h2 class="sectionedit337"><a name="comment_deverouiller_un_composant" id="comment_deverouiller_un_composant">Comment dévérouiller un composant</a></h2>
+<!-- EDIT376 SECTION "Comment je change la taille du texte sur un symbole?" [1444-2401] -->
+<h2 class="sectionedit377"><a name="comment_deverouiller_un_composant" id="comment_deverouiller_un_composant">Comment dévérouiller un composant</a></h2>
 <div class="level2">
 
 <p>
@@ -109,13 +107,12 @@ Lorsqu&#039;un composant est véroullé, il est insélectionnable en utilisant l
 </p>
 
 </div>
-<!-- EDIT337 SECTION "Comment dévérouiller un composant" [2402-2929] -->
-<h2 class="sectionedit338"><a name="comment_refdes_peut-il_etre_automatiquement_numerote_lorsque_je_dessine_un_schema" id="comment_refdes_peut-il_etre_automatiquement_numerote_lorsque_je_dessine_un_schema">Comment refdes peut-il être automatiquement numéroté lorsque je dessine un schéma?</a></h2>
+<!-- EDIT377 SECTION "Comment dévérouiller un composant" [2402-2929] -->
+<h2 class="sectionedit378"><a name="comment_refdes_peut-il_etre_automatiquement_numerote_lorsque_je_dessine_un_schema" id="comment_refdes_peut-il_etre_automatiquement_numerote_lorsque_je_dessine_un_schema">Comment refdes peut-il être automatiquement numéroté lorsque je dessine un schéma?</a></h2>
 <div class="level2">
 
 <p>
 Éditez le fichier system-gschemrc ou placez ce qui suit dans le fichier gschemrc (soit <strong><code>~/.gEDA/gschemrc</code></strong> ou un fichier <strong><code>gschemrc</code></strong> dans le répertoire local d&#039;où vous invoquez gschem):
-
 </p>
 <pre class="code">;(load (string-append gedadata &quot;/scheme/auto-uref.scm&quot;)) ; load the autonumbering script ; ancienne syntaxe
 (load-from-path &quot;auto-uref.scm&quot;)               ; nouvelle syntaxe
@@ -127,12 +124,11 @@ Veuillez substituer $YOUR_INSTALL_PATH par le chemin d&#039;installation de geda
 </p>
 
 </div>
-<!-- EDIT338 SECTION "Comment refdes peut-il être automatiquement numéroté lorsque je dessine un schéma?" [2930-3664] -->
-<h2 class="sectionedit339"><a name="qu_est-ce_qu_un_bus_et_comment_l_utiliser" id="qu_est-ce_qu_un_bus_et_comment_l_utiliser">Qu&#039;est-ce qu&#039;un bus et comment l&#039;utiliser?</a></h2>
+<!-- EDIT378 SECTION "Comment refdes peut-il être automatiquement numéroté lorsque je dessine un schéma?" [2930-3664] -->
+<h2 class="sectionedit379"><a name="qu_est-ce_qu_un_bus_et_comment_l_utiliser" id="qu_est-ce_qu_un_bus_et_comment_l_utiliser">Qu&#039;est-ce qu&#039;un bus et comment l&#039;utiliser?</a></h2>
 <div class="level2">
 
 <p>
-
 Un bus est purement décoratif. Le netlister l&#039;ignore. L&#039;attribut netname= ne fonctionne pas pour connecter les points ensemble – c&#039;est ce que gnetlist lit et transforme dans votre netlist. Il n&#039;est pas possible de connecter une ligne discrète ou « accrochée à un bus » car, encore une fois, le bus est plus une entité graphique.
 </p>
 
@@ -141,13 +137,13 @@ Quelques utilisateurs ont trouvé utile d&#039;organiser leurs réseaux en incor
 </p>
 
 </div>
-<!-- EDIT339 SECTION "Qu'est-ce qu'un bus et comment l'utiliser?" [3665-4273] -->
-<h2 class="sectionedit340"><a name="que_sont_les_liaisons_de_touches_dans_gschem" id="que_sont_les_liaisons_de_touches_dans_gschem">Que sont les Liaisons de Touches dans gschem?</a></h2>
+<!-- EDIT379 SECTION "Qu'est-ce qu'un bus et comment l'utiliser?" [3665-4273] -->
+<h2 class="sectionedit380"><a name="que_sont_les_liaisons_de_touches_dans_gschem" id="que_sont_les_liaisons_de_touches_dans_gschem">Que sont les Liaisons de Touches dans gschem?</a></h2>
 <div class="level2">
 
 </div>
-<!-- EDIT340 SECTION "Que sont les Liaisons de Touches dans gschem?" [4274-4332] -->
-<h2 class="sectionedit341"><a name="quelles_sont_les_liaisons_avec_la_souris_dans_gschem" id="quelles_sont_les_liaisons_avec_la_souris_dans_gschem">Quelles sont les liaisons avec la souris dans gschem?</a></h2>
+<!-- EDIT380 SECTION "Que sont les Liaisons de Touches dans gschem?" [4274-4332] -->
+<h2 class="sectionedit381"><a name="quelles_sont_les_liaisons_avec_la_souris_dans_gschem" id="quelles_sont_les_liaisons_avec_la_souris_dans_gschem">Quelles sont les liaisons avec la souris dans gschem?</a></h2>
 <div class="level2">
 
 <p>
@@ -163,33 +159,27 @@ Par défaut, vous avez:
 </ul>
 
 <p>
-
 Vous pouvez changer le bouton milieu en ajoutant ce qui suit à un fichier gschemrc:
-
 </p>
 <pre class="code">(middle-button &quot;action&quot;)   ;default binding, move or copy an object</pre>
 
 <p>
 ou:
-
 </p>
 <pre class="code">(middle-button &quot;stroke&quot;)   ;draw mouse gestures/strokes (must install libstroke to enable</pre>
 
 <p>
 ou:
-
 </p>
 <pre class="code">(middle-button &quot;repeat&quot;)   ;repeat the last command executed</pre>
 
 <p>
 Vous pouvez changer le bouton droit en ajoutant ce qui suit dans un fichier gschemrc:
-
 </p>
 <pre class="code">(third-button &quot;popup&quot;)     ;default binding, show a popup menu</pre>
 
 <p>
 ou:
-
 </p>
 <pre class="code">(third-button &quot;mousepan&quot;)  ;use the mouse to pan around the schematic</pre>
 
@@ -198,13 +188,13 @@ Pour plus informations sur ces options, veuillez aller voir le fichier <strong><
 </p>
 
 </div>
-<!-- EDIT341 SECTION "Quelles sont les liaisons avec la souris dans gschem?" [4333-5537] -->
-<h1 class="sectionedit342"><a name="symboles_gschem" id="symboles_gschem">Symboles gschem</a></h1>
+<!-- EDIT381 SECTION "Quelles sont les liaisons avec la souris dans gschem?" [4333-5537] -->
+<h1 class="sectionedit382"><a name="symboles_gschem" id="symboles_gschem">Symboles gschem</a></h1>
 <div class="level1">
 
 </div>
-<!-- EDIT342 SECTION "Symboles gschem" [5538-5568] -->
-<h2 class="sectionedit343"><a name="quel_est_l_objet_de_cette_polemique_entre_les_symboles_lourds_et_legers" id="quel_est_l_objet_de_cette_polemique_entre_les_symboles_lourds_et_legers">Quel est l&#039;objet de cette polémique entre les symboles lourds et légers?</a></h2>
+<!-- EDIT382 SECTION "Symboles gschem" [5538-5568] -->
+<h2 class="sectionedit383"><a name="quel_est_l_objet_de_cette_polemique_entre_les_symboles_lourds_et_legers" id="quel_est_l_objet_de_cette_polemique_entre_les_symboles_lourds_et_legers">Quel est l&#039;objet de cette polémique entre les symboles lourds et légers?</a></h2>
 <div class="level2">
 
 <p>
@@ -225,8 +215,8 @@ GEDA/gaf, configuré par défaut, utilise des symboles légers, bien qu&#039;il 
 </p>
 
 </div>
-<!-- EDIT343 SECTION "Quel est l'objet de cette polémique entre les symboles lourds et légers?" [5569-7909] -->
-<h2 class="sectionedit344"><a name="j_utilise_un_symbole_exterieur_a_la_bibliotheque_comment_se_fait-il_qu_il_ne_soit_pas_aligne_sur_la_grille" id="j_utilise_un_symbole_exterieur_a_la_bibliotheque_comment_se_fait-il_qu_il_ne_soit_pas_aligne_sur_la_grille">J&#039;utilise un symbole extérieur à la bibliothèque. Comment se fait-il qu&#039;il ne soit pas aligné sur la grille?</a></h2>
+<!-- EDIT383 SECTION "Quel est l'objet de cette polémique entre les symboles lourds et légers?" [5569-7909] -->
+<h2 class="sectionedit384"><a name="j_utilise_un_symbole_exterieur_a_la_bibliotheque_comment_se_fait-il_qu_il_ne_soit_pas_aligne_sur_la_grille" id="j_utilise_un_symbole_exterieur_a_la_bibliotheque_comment_se_fait-il_qu_il_ne_soit_pas_aligne_sur_la_grille">J&#039;utilise un symbole extérieur à la bibliothèque. Comment se fait-il qu&#039;il ne soit pas aligné sur la grille?</a></h2>
 <div class="level2">
 
 <p>
@@ -239,8 +229,8 @@ Oui, les docs gEDA suggèrent que vous utilisiez un espacement de grille de 100m
 </p>
 
 </div>
-<!-- EDIT344 SECTION "J'utilise un symbole extérieur à la bibliothèque. Comment se fait-il qu'il ne soit pas aligné sur la grille?" [7910-8848] -->
-<h2 class="sectionedit345"><a name="existe-t-il_un_symbole_explicitement_non_connecte_que_je_pourrais_devrais_placer_dans_le_schema_pour_empecher_gnetlist_de_penser_que_j_ai_oublie_une_connexion" id="existe-t-il_un_symbole_explicitement_non_connecte_que_je_pourrais_devrais_placer_dans_le_schema_pour_empecher_gnetlist_de_penser_que_j_ai_oublie_une_connexion">Existe-t-il un symbole explicitement « non connecté » que je pourrais/devrais placer dans le schéma pour empêcher gnetlist de penser que j&#039;ai oublié une connexion?</a></h2>
+<!-- EDIT384 SECTION "J'utilise un symbole extérieur à la bibliothèque. Comment se fait-il qu'il ne soit pas aligné sur la grille?" [7910-8848] -->
+<h2 class="sectionedit385"><a name="existe-t-il_un_symbole_explicitement_non_connecte_que_je_pourrais_devrais_placer_dans_le_schema_pour_empecher_gnetlist_de_penser_que_j_ai_oublie_une_connexion" id="existe-t-il_un_symbole_explicitement_non_connecte_que_je_pourrais_devrais_placer_dans_le_schema_pour_empecher_gnetlist_de_penser_que_j_ai_oublie_une_connexion">Existe-t-il un symbole explicitement « non connecté » que je pourrais/devrais placer dans le schéma pour empêcher gnetlist de penser que j&#039;ai oublié une connexion?</a></h2>
 <div class="level2">
 
 <p>
@@ -256,13 +246,12 @@ Si vous voulez un symbole graphiquement complet (sans connexions électriques), 
 </p>
 
 </div>
-<!-- EDIT345 SECTION "Existe-t-il un symbole explicitement « non connecté » que je pourrais/devrais placer dans le schéma pour empêcher gnetlist de penser que j'ai oublié une connexion?" [8849-9471] -->
-<h2 class="sectionedit346"><a name="comment_placer_un_un_attribut_de_symbole_invisible_dans_un_schema" id="comment_placer_un_un_attribut_de_symbole_invisible_dans_un_schema">Comment placer un un attribut de symbole invisible dans un schéma?</a></h2>
+<!-- EDIT385 SECTION "Existe-t-il un symbole explicitement « non connecté » que je pourrais/devrais placer dans le schéma pour empêcher gnetlist de penser que j'ai oublié une connexion?" [8849-9471] -->
+<h2 class="sectionedit386"><a name="comment_placer_un_un_attribut_de_symbole_invisible_dans_un_schema" id="comment_placer_un_un_attribut_de_symbole_invisible_dans_un_schema">Comment placer un un attribut de symbole invisible dans un schéma?</a></h2>
 <div class="level2">
 
 <p>
 La plupart des symboles d&#039;un symbole ne sont pas placés sur le schéma à moins qu&#039;ils ne soient visibles. Pour afficher les attributs de symboles invisibles, cherchez les mots clés suivants dans le fichier system-gschemrc:
-
 </p>
 <pre class="code">(attribute-promotion “enabled”);
 (promote-invisible “disabled”) ; ⇐ This one
@@ -270,7 +259,6 @@ La plupart des symboles d&#039;un symbole ne sont pas placés sur le schéma à 
 
 <p>
 Ajoutez à votre fichier gschemrc:
-
 </p>
 <pre class="code">(promote-invisible “enabled”)</pre>
 
@@ -279,8 +267,8 @@ et vous verrez tous les attributs. Le mot « keep-invisible » gardera caché ce
 </p>
 
 </div>
-<!-- EDIT346 SECTION "Comment placer un un attribut de symbole invisible dans un schéma?" [9472-10132] -->
-<h2 class="sectionedit347"><a name="que_dois-je_faire_a_propos_des_broches_d_alimentation_sur_mon_symboleles_rendre_visible_explicites_ou_invisibles_implicites" id="que_dois-je_faire_a_propos_des_broches_d_alimentation_sur_mon_symboleles_rendre_visible_explicites_ou_invisibles_implicites">Que dois-je faire à propos des broches d&#039;alimentation sur mon symbole: Les rendre visible (explicites) ou invisibles (implicites)?</a></h2>
+<!-- EDIT386 SECTION "Comment placer un un attribut de symbole invisible dans un schéma?" [9472-10132] -->
+<h2 class="sectionedit387"><a name="que_dois-je_faire_a_propos_des_broches_d_alimentation_sur_mon_symboleles_rendre_visible_explicites_ou_invisibles_implicites" id="que_dois-je_faire_a_propos_des_broches_d_alimentation_sur_mon_symboleles_rendre_visible_explicites_ou_invisibles_implicites">Que dois-je faire à propos des broches d&#039;alimentation sur mon symbole: Les rendre visible (explicites) ou invisibles (implicites)?</a></h2>
 <div class="level2">
 
 <p>
@@ -308,17 +296,17 @@ Ceci étant dit, il peut encore être utile de détacher les broches d&#039;alim
 </p>
 
 </div>
-<!-- EDIT347 SECTION "Que dois-je faire à propos des broches d'alimentation sur mon symbole: Les rendre visible (explicites) ou invisibles (implicites)?" [10133-13027] -->
-<h2 class="sectionedit348"><a name="existe-t-il_une_specification_ou_un_manuel_pour_creer_les_symboles_gschem_ou_est-il" id="existe-t-il_une_specification_ou_un_manuel_pour_creer_les_symboles_gschem_ou_est-il">Existe-t-il une spécification ou un manuel pour créer les symboles gschem? Où est-il?</a></h2>
+<!-- EDIT387 SECTION "Que dois-je faire à propos des broches d'alimentation sur mon symbole: Les rendre visible (explicites) ou invisibles (implicites)?" [10133-13027] -->
+<h2 class="sectionedit388"><a name="existe-t-il_une_specification_ou_un_manuel_pour_creer_les_symboles_gschem_ou_est-il" id="existe-t-il_une_specification_ou_un_manuel_pour_creer_les_symboles_gschem_ou_est-il">Existe-t-il une spécification ou un manuel pour créer les symboles gschem? Où est-il?</a></h2>
 <div class="level2">
 
 <p>
-Oui. C&#039;est le <a href="geda-scg.fr.html" class="wikilink1" title="geda-scg.fr.html">Guide de Création de Symbole</a>.
+Oui. C&#039;est le <a href="geda-scg.fr.html" class="wikilink2" title="geda-scg.fr.html">Guide de Création de Symbole</a>.
 </p>
 
 </div>
-<!-- EDIT348 SECTION "Existe-t-il une spécification ou un manuel pour créer les symboles gschem? Où est-il?" [13028-13190] -->
-<h1 class="sectionedit349"><a name="configuration_personnalisation_de_gschem" id="configuration_personnalisation_de_gschem">Configuration/personnalisation de gschem</a></h1>
+<!-- EDIT388 SECTION "Existe-t-il une spécification ou un manuel pour créer les symboles gschem? Où est-il?" [13028-13190] -->
+<h1 class="sectionedit389"><a name="configuration_personnalisation_de_gschem" id="configuration_personnalisation_de_gschem">Configuration/personnalisation de gschem</a></h1>
 <div class="level1">
 
 <p>
@@ -326,30 +314,26 @@ gschem est configurable de plusieurs manières qui peuvent être décrites ici. 
 </p>
 
 </div>
-<!-- EDIT349 SECTION "Configuration/personnalisation de gschem" [13191-13425] -->
-<h2 class="sectionedit350"><a name="comment_changer_la_taille_par_defaut_d_un_texte_flottant" id="comment_changer_la_taille_par_defaut_d_un_texte_flottant">Comment changer la taille par défaut d&#039;un texte flottant?</a></h2>
+<!-- EDIT389 SECTION "Configuration/personnalisation de gschem" [13191-13425] -->
+<h2 class="sectionedit390"><a name="comment_changer_la_taille_par_defaut_d_un_texte_flottant" id="comment_changer_la_taille_par_defaut_d_un_texte_flottant">Comment changer la taille par défaut d&#039;un texte flottant?</a></h2>
 <div class="level2">
 
 <p>
 Placez 
-
 </p>
 <pre class="code">(text-size 10)</pre>
 
 <p>
-
 dans votre gschemrc et replacez «·10·» avec votre taille favorite.
 </p>
 
 </div>
-<!-- EDIT350 SECTION "Comment changer la taille par défaut d'un texte flottant?" [13426-13605] -->
-<h2 class="sectionedit351"><a name="comment_je_peux_avoir_une_couleur_fond_differente" id="comment_je_peux_avoir_une_couleur_fond_differente">Comment je peux avoir une couleur fond différente?</a></h2>
+<!-- EDIT390 SECTION "Comment changer la taille par défaut d'un texte flottant?" [13426-13605] -->
+<h2 class="sectionedit391"><a name="comment_je_peux_avoir_une_couleur_fond_differente" id="comment_je_peux_avoir_une_couleur_fond_differente">Comment je peux avoir une couleur fond différente?</a></h2>
 <div class="level2">
 
 <p>
-
 Éditez le fichier system-gschemrc et au début du fichier, vous trouvezrez des lignes comme:
-
 </p>
 <pre class="code">; 
 ; Start of color section
@@ -379,31 +363,28 @@ Avec les versions récentes de gscgem, vous pouvez aussi placer ceci dans gschem
 <pre class="code">(load-from-path &quot;../gschem-lightbg&quot;)</pre>
 
 </div>
-<!-- EDIT351 SECTION "Comment je peux avoir une couleur fond différente?" [13606-14819] -->
-<h1 class="sectionedit352"><a name="impression_sortie" id="impression_sortie">Impression/Sortie</a></h1>
+<!-- EDIT391 SECTION "Comment je peux avoir une couleur fond différente?" [13606-14819] -->
+<h1 class="sectionedit392"><a name="impression_sortie" id="impression_sortie">Impression/Sortie</a></h1>
 <div class="level1">
 
 </div>
-<!-- EDIT352 SECTION "Impression/Sortie" [14820-14853] -->
-<h2 class="sectionedit353"><a name="comment_imprimer_les_schemas_depuis_le_ligne_de_commande" id="comment_imprimer_les_schemas_depuis_le_ligne_de_commande">Comment imprimer les schémas depuis le ligne de commande?</a></h2>
+<!-- EDIT392 SECTION "Impression/Sortie" [14820-14853] -->
+<h2 class="sectionedit393"><a name="comment_imprimer_les_schemas_depuis_le_ligne_de_commande" id="comment_imprimer_les_schemas_depuis_le_ligne_de_commande">Comment imprimer les schémas depuis le ligne de commande?</a></h2>
 <div class="level2">
 <pre class="code">Notez que le script gschem-print.scm s&#039;appelle désormais print.scm .
 Dans Gentoo en particulier, il est placé en /usr/share/gEDA/scheme/print.scm .</pre>
 
 <p>
-
 Lancez le script <strong><code>gschem-print.scm</code></strong> créera le fichier Postscript qui est spécifié par la ligne de commande.
 </p>
 
 <p>
 La ligne de commande ci-dessous crée un fichier Postscript depuis le fichier schéma (replacez MY_SCH avec le nom de votre schéma et GEDA_SCHEME_DIR avec le nom de votre répertoire où les fichiers schémas gEDA sont installés):
-
 </p>
 <pre class="code">gschem -p -oMY_SCH.ps -sGEDA_SCHEME_DIR/gschem-print.scm MY_SCH.sch</pre>
 
 <p>
 Le script BASH ci-dessous, que j&#039;ai nommé <strong><code>gschem-print</code></strong>, crée un fichier Postscript pour chaque fichier schéma spécifié sur la ligne de commande et place chaque fichier généré sur l&#039;imprimante par défaut:
-
 </p>
 <pre class="code">#!/bin/bash
 
@@ -420,20 +401,18 @@ lpr -P$PRINTER $base.ps
 done</pre>
 
 </div>
-<!-- EDIT353 SECTION "Comment imprimer les schémas depuis le ligne de commande?" [14854-16038] -->
-<h2 class="sectionedit354"><a name="comment_je_peux_sortie_le_postscript_png_en_couleurs" id="comment_je_peux_sortie_le_postscript_png_en_couleurs">Comment je peux sortie le postscript/PNG en couleurs?</a></h2>
+<!-- EDIT393 SECTION "Comment imprimer les schémas depuis le ligne de commande?" [14854-16038] -->
+<h2 class="sectionedit394"><a name="comment_je_peux_sortie_le_postscript_png_en_couleurs" id="comment_je_peux_sortie_le_postscript_png_en_couleurs">Comment je peux sortie le postscript/PNG en couleurs?</a></h2>
 <div class="level2">
 
 <p>
 Éditez le fichier <strong><code>system-gschemrc</code></strong> ou placez ce qui suit dans un fichier <strong><code>gschemrc</code></strong> (soit <strong><code>~/.gEDA/gschemrc</code></strong> ou un fichier <strong><code>gschemrc</code></strong> dans le répertoire local depuis où vous invoquez gschem):
-
 </p>
 <pre class="code">(output-color &quot;enabled&quot;)      ; for color postscript output
 (image-color &quot;enabled&quot;)       ; for color PNG output (enabled by default)</pre>
 
 <p>
 Pour contrôler la couleur de fond du fichier PS, changez la ligne suivante soit avec gschem-darkbg (pour la couleur de fond par défaut en noir) ou gschem-lightbg (pour une couleur de fond alternative):
-
 </p>
 <pre class="code">(output-color-background 16 &quot;black&quot; &quot;null&quot; &quot;0 0 0&quot; 0 0 0)</pre>
 
@@ -443,7 +422,6 @@ Les “0 0 0” sont les composantes RGB (entre 0..1) pour la couleur de fond de
 
 <p>
 Pour contrôler le fond de la sortie <acronym title="Portable Network Graphics">PNG</acronym>, changez la ligne suivante soit en gschem-darkbg (pour la couleur de fond par défaut en noir) ou gschem-lightbg (pour une couleur de fond alternative):
-
 </p>
 <pre class="code">(background-color 0 &quot;grey94&quot; &quot;null&quot; &quot;1 1 1&quot; 255 255 255)</pre>
 
@@ -452,25 +430,23 @@ Les 255 255 255 sont les composantes RGB pour la couleur de fond de l&#039;image
 </p>
 
 </div>
-<!-- EDIT354 SECTION "Comment je peux sortie le postscript/PNG en couleurs?" [16039-17194] -->
-<h2 class="sectionedit355"><a name="comment_je_peux_avoir_une_sortie_postscript_png_en_noir_et_blanc" id="comment_je_peux_avoir_une_sortie_postscript_png_en_noir_et_blanc">Comment je peux avoir une sortie postscript/PNG en noir et blanc?</a></h2>
+<!-- EDIT394 SECTION "Comment je peux sortie le postscript/PNG en couleurs?" [16039-17194] -->
+<h2 class="sectionedit395"><a name="comment_je_peux_avoir_une_sortie_postscript_png_en_noir_et_blanc" id="comment_je_peux_avoir_une_sortie_postscript_png_en_noir_et_blanc">Comment je peux avoir une sortie postscript/PNG en noir et blanc?</a></h2>
 <div class="level2">
 
 <p>
 Pour les sorties PS en noir et blanc, placez ce qui suit dans un fichier gschemrc:
-
 </p>
 <pre class="code">(output-color &quot;disabled&quot;)      ; for monochrome postscript output</pre>
 
 <p>
 Pour les images <acronym title="Portable Network Graphics">PNG</acronym> en noir et blanc, placez ce qui suit dans un fichier gschemrc:
-
 </p>
 <pre class="code">(image-color &quot;disabled&quot;)       ; for monochromoe PNG output</pre>
 
 </div>
-<!-- EDIT355 SECTION "Comment je peux avoir une sortie postscript/PNG en noir et blanc?" [17195-17592] -->
-<h2 class="sectionedit356"><a name="comment_j_insere_des_schemas_dans_mon_document_latex" id="comment_j_insere_des_schemas_dans_mon_document_latex">Comment j&#039;insère des schémas dans mon document LaTex?</a></h2>
+<!-- EDIT395 SECTION "Comment je peux avoir une sortie postscript/PNG en noir et blanc?" [17195-17592] -->
+<h2 class="sectionedit396"><a name="comment_j_insere_des_schemas_dans_mon_document_latex" id="comment_j_insere_des_schemas_dans_mon_document_latex">Comment j&#039;insère des schémas dans mon document LaTex?</a></h2>
 <div class="level2">
 <ol>
 <li class="level1"><div class="li"> Sortez le schéma dans un fichier. Cela sera un postscript générique (*.ps).</div>
@@ -482,9 +458,7 @@ Pour les images <acronym title="Portable Network Graphics">PNG</acronym> en noir
 </ol>
 
 <p>
-
 Un exemple simple:
-
 </p>
 <pre class="code">\documentclass{article}
 \usepackage{graphicx}
@@ -495,8 +469,8 @@ Un exemple simple:
 \end{document}</pre>
 
 </div>
-<!-- EDIT356 SECTION "Comment j'insère des schémas dans mon document LaTex?" [17593-18183] -->
-<h2 class="sectionedit357"><a name="comment_je_scinde_un_fichier_postscript_en_plusieurs_pages" id="comment_je_scinde_un_fichier_postscript_en_plusieurs_pages">Comment je scinde un fichier postscript en plusieurs pages?</a></h2>
+<!-- EDIT396 SECTION "Comment j'insère des schémas dans mon document LaTex?" [17593-18183] -->
+<h2 class="sectionedit397"><a name="comment_je_scinde_un_fichier_postscript_en_plusieurs_pages" id="comment_je_scinde_un_fichier_postscript_en_plusieurs_pages">Comment je scinde un fichier postscript en plusieurs pages?</a></h2>
 <div class="level2">
 
 <p>
@@ -504,13 +478,13 @@ gschem ne fournit pas cette fonctionnalité en interne; il existe néanmoins un 
 </p>
 
 </div>
-<!-- EDIT357 SECTION "Comment je scinde un fichier postscript en plusieurs pages?" [18184-18554] -->
-<h1 class="sectionedit358"><a name="problemes_d_installation_d_execution_de_gschem" id="problemes_d_installation_d_execution_de_gschem">Problèmes d&#039;installation/d&#039;exécution de gschem</a></h1>
+<!-- EDIT397 SECTION "Comment je scinde un fichier postscript en plusieurs pages?" [18184-18554] -->
+<h1 class="sectionedit398"><a name="problemes_d_installation_d_execution_de_gschem" id="problemes_d_installation_d_execution_de_gschem">Problèmes d&#039;installation/d&#039;exécution de gschem</a></h1>
 <div class="level1">
 
 </div>
-<!-- EDIT358 SECTION "Problèmes d'installation/d'exécution de gschem" [18555-18618] -->
-<h2 class="sectionedit359"><a name="gschem_segfaults_lorsque_j_efface_des_composants_sur_fc5_et_sur_d_autres_distributions_linux_existe-t-il_une_amelioration" id="gschem_segfaults_lorsque_j_efface_des_composants_sur_fc5_et_sur_d_autres_distributions_linux_existe-t-il_une_amelioration">gschem segfaults lorsque j&#039;efface des composants sur FC5 (et sur d&#039;autres distributions Linux)! Existe-t-il une amélioration?</a></h2>
+<!-- EDIT398 SECTION "Problèmes d'installation/d'exécution de gschem" [18555-18618] -->
+<h2 class="sectionedit399"><a name="gschem_segfaults_lorsque_j_efface_des_composants_sur_fc5_et_sur_d_autres_distributions_linux_existe-t-il_une_amelioration" id="gschem_segfaults_lorsque_j_efface_des_composants_sur_fc5_et_sur_d_autres_distributions_linux_existe-t-il_une_amelioration">gschem segfaults lorsque j&#039;efface des composants sur FC5 (et sur d&#039;autres distributions Linux)! Existe-t-il une amélioration?</a></h2>
 <div class="level2">
 
 <p>
@@ -524,31 +498,26 @@ Spécifiquement, avant de lancer gschem, faites ceci:
 
 <p>
 bash:
-
 </p>
 <pre class="code">export G_SLICE=always-malloc</pre>
 
 <p>
 csh:
-
 </p>
 <pre class="code">setenv G_SLICE always-malloc</pre>
 
 </div>
-<!-- EDIT359 SECTION "gschem segfaults lorsque j'efface des composants sur FC5 (et sur d'autres distributions Linux)! Existe-t-il une amélioration?" [18619-19269] -->
-<h2 class="sectionedit360"><a name="apres_l_installation_gschem_ne_fonctionne_pas_que_ce_qui_a_pu_aller_mal" id="apres_l_installation_gschem_ne_fonctionne_pas_que_ce_qui_a_pu_aller_mal">Après l&#039;installation, gschem ne fonctionne pas!? Que ce qui a pu aller mal?</a></h2>
+<!-- EDIT399 SECTION "gschem segfaults lorsque j'efface des composants sur FC5 (et sur d'autres distributions Linux)! Existe-t-il une amélioration?" [18619-19269] -->
+<h2 class="sectionedit400"><a name="apres_l_installation_gschem_ne_fonctionne_pas_que_ce_qui_a_pu_aller_mal" id="apres_l_installation_gschem_ne_fonctionne_pas_que_ce_qui_a_pu_aller_mal">Après l&#039;installation, gschem ne fonctionne pas!? Que ce qui a pu aller mal?</a></h2>
 <div class="level2">
 
 <p>
-
 Si vous lancez gschem et que vous avez une fenêtre sans barre de menu, sans couleurs et le programme s&#039;arrête lorsque vous appuyez sur une touche avec le message suivant:
-
 </p>
 <pre class="code">ERROR: Unbound variable: current-keymap</pre>
 
 <p>
 Ou vous avez une erreur tel que ceci:
-
 </p>
 <pre class="code">Gtk-CRITICAL : file gtkpixmap.c: line 97 (gtk_pixmap_new): assertion `val != NULL’ failed.
 Gtk-CRITICAL : file gtkpixmap.c: line 97 (gtk_pixmap_new): assertion `val != NULL’ failed.
@@ -568,7 +537,6 @@ alors gschem ne trouve pas de fichier rc. Il y a deux ficheirs rc nécessaires. 
 </ul>
 
 <p>
-
 Assurez-vous que ces fichiers soient installés. Le fichier gschem.log (qui est créé à chaque fois que vous lancez gschem) contient des informations de déboguage intéressantes qui doivent aider dans la recherche de ce qui ne va pas. Contrôlez ce fichier pour voir où gschem cherche les fichiers rc.
 </p>
 
@@ -577,12 +545,11 @@ Aussi, quelques anciennes versions de gEDA/gaf ont quelques bogues lorsque les f
 </p>
 
 </div>
-<!-- EDIT360 SECTION "Après l'installation, gschem ne fonctionne pas!? Que ce qui a pu aller mal?" [19270-21459] -->
-<h2 class="sectionedit361"><a name="ajouter_des_composants_ne_proposent_aucun_symboles_que_puis-je_y_faire" id="ajouter_des_composants_ne_proposent_aucun_symboles_que_puis-je_y_faire">&quot;Ajouter des Composants&quot; ne proposent aucun symboles! Que puis-je y faire?</a></h2>
+<!-- EDIT400 SECTION "Après l'installation, gschem ne fonctionne pas!? Que ce qui a pu aller mal?" [19270-21459] -->
+<h2 class="sectionedit401"><a name="ajouter_des_composants_ne_proposent_aucun_symboles_que_puis-je_y_faire" id="ajouter_des_composants_ne_proposent_aucun_symboles_que_puis-je_y_faire">&quot;Ajouter des Composants&quot; ne proposent aucun symboles! Que puis-je y faire?</a></h2>
 <div class="level2">
 
 <p>
-
 Assurez-vous qu&#039;au moins un de vos fichiers de config contient un chemin valide vers une bibliothèque de symbole. Au démarrage, gschem contrôle les fichiers de de config suivants (sur un système Debian):
 </p>
 <ol>
@@ -602,16 +569,13 @@ Assurez-vous qu&#039;au moins un de vos fichiers de config contient un chemin va
 
 <p>
 Tous ces fichies de config peuvent ou non ajouter des chemins à la liste de recherche des bibliothèques. Si un fichier de config contient la commande
-
 </p>
 <pre class="code">(reset-component-library)</pre>
 
 <p>
-
 Le chemin de recherche des bibliothèques sera vidé. L&#039;ordre est évidemment important, comme cette commande effacera tout chemin précédemment ajoûté.  
-
 </p>
 
 </div>
-<!-- EDIT361 SECTION "Ajouter des Composants ne proposent aucun symboles! Que puis-je y faire?" [21460-] --></body>
+<!-- EDIT401 SECTION "Ajouter des Composants ne proposent aucun symboles! Que puis-je y faire?" [21460-] --></body>
 </html>

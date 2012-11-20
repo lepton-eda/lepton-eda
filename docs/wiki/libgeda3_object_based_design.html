@@ -12,7 +12,7 @@
 <body>
 
 
-<h1 class="sectionedit1575"><a name="overview" id="overview">Overview</a></h1>
+<h1 class="sectionedit2416"><a name="overview" id="overview">Overview</a></h1>
 <div class="level1">
 
 <p>
@@ -20,12 +20,11 @@ As stated in <a href="libgeda3.html" class="wikilink1" title="libgeda3.html">lib
 </p>
 
 </div>
-<!-- EDIT1575 SECTION "Overview" [1-296] -->
-<h1 class="sectionedit1576"><a name="description_of_the_needs_in_an_electrical_cad_system" id="description_of_the_needs_in_an_electrical_cad_system">Description of the needs in an Electrical CAD system</a></h1>
+<!-- EDIT2416 SECTION "Overview" [1-296] -->
+<h1 class="sectionedit2417"><a name="description_of_the_needs_in_an_electrical_cad_system" id="description_of_the_needs_in_an_electrical_cad_system">Description of the needs in an Electrical CAD system</a></h1>
 <div class="level1">
 
 <p>
-
 Schematics and PCB (or IC) designs are, by nature, a graphical representation of objects, with interconnections between them. 
 </p>
 
@@ -48,7 +47,6 @@ The basic primitives used in the graphical artwork are:
 </ul>
 
 <p>
-
 These basic shapes can have attributes modifying how they are drawn in the screen: dashed or dotted lines, filled or unfilled shapes,… , and can be grouped into a composed object (this object is drawn as a combination of one or more basic primitives). The graphical representation of a composed object is a symbol.
 </p>
 
@@ -69,7 +67,6 @@ An electrical or electronic CAD must be able to draw components (composed object
 </ul>
 
 <p>
-
 An electric circuit can be drawn in a page, but, as designs grow in complexity, it is usually divided into several interconnected pages, or is drawn as a hierarchy. 
 One common way is to draw a circuit defining some ports (where it is going to connect to other circuits), make a symbol for it, and include the symbol in other pages as it was a common composed object. So a design is composed of one or several pages, which can also include other page&#039;s symbols, and so on. Therefore, a design can be drawn as a hiearchy tree.
 </p>
@@ -79,8 +76,8 @@ Finally, but not less important, every object described can have properties atta
 </p>
 
 </div>
-<!-- EDIT1576 SECTION "Description of the needs in an Electrical CAD system" [297-2701] -->
-<h1 class="sectionedit1577"><a name="object_based_design" id="object_based_design">Object based design</a></h1>
+<!-- EDIT2417 SECTION "Description of the needs in an Electrical CAD system" [297-2701] -->
+<h1 class="sectionedit2418"><a name="object_based_design" id="object_based_design">Object based design</a></h1>
 <div class="level1">
 
 <p>
@@ -131,24 +128,20 @@ Basically what it provides is:
 </ul>
 
 <p>
-
 The advantage is clear: all the basic drawing primitives and operations are already done.
 </p>
 
 <p>
-
 So the proposal is to base all the geda objects on the objects supplied by the canvas (note that every canvas you find is going to provide its own object classes, so this is a canvas based generic design.
 </p>
 
 </div>
-<!-- EDIT1577 SECTION "Object based design" [2702-5463] -->
-<h1 class="sectionedit1578"><a name="geda_objects" id="geda_objects">geda objects</a></h1>
+<!-- EDIT2418 SECTION "Object based design" [2702-5463] -->
+<h1 class="sectionedit2419"><a name="geda_objects" id="geda_objects">geda objects</a></h1>
 <div class="level1">
 
 <p>
-
 The geda object definition could be something as simple as:
-
 </p>
 <pre class="code C"><span class="kw4">struct</span> GedaObject <span class="br0">&#123;</span>
   <span class="kw4">int</span> GedaType<span class="sy0">;</span>
@@ -167,7 +160,6 @@ The geda object definition could be something as simple as:
 <p>
 There is no need to store graphic attributes in GedaObject. If the position is needed, since the canvas item can be queried.
 Some special definition for properties is needed (they shouldn&#039;t be handled as just text):
-
 </p>
 <pre class="code C"><span class="kw4">struct</span> GedaObjectProperty <span class="br0">&#123;</span>
   GedaType<span class="sy0">;</span>
@@ -177,7 +169,6 @@ Some special definition for properties is needed (they shouldn&#039;t be handled
 
 <p>
 and another one for connectivity items:
-
 </p>
 <pre class="code C"><span class="kw4">struct</span> GedaObjectPort <span class="br0">&#123;</span>
   <span class="kw4">int</span> GedaType<span class="sy0">;</span>
@@ -208,7 +199,6 @@ No object naming is required, although it is already supported by default: you c
 
 <p>
 Example: a 7400 symbol, with a footprint attribute “DIP-16”, and reference designator “U1” would look as:
-
 </p>
 <pre class="code">GedaObject
  |- views
@@ -219,12 +209,11 @@ Example: a 7400 symbol, with a footprint attribute “DIP-16”, and reference d
  v    v     </pre>
 
 </div>
-<!-- EDIT1578 SECTION "geda objects" [5464-7610] -->
-<h1 class="sectionedit1579"><a name="integration_with_current_code" id="integration_with_current_code">Integration with current code</a></h1>
+<!-- EDIT2419 SECTION "geda objects" [5464-7610] -->
+<h1 class="sectionedit2420"><a name="integration_with_current_code" id="integration_with_current_code">Integration with current code</a></h1>
 <div class="level1">
 
 <p>
-
 There is no easy and direct way to get this structure into the current codebase. However, the current codebase can be adapted progressively to use this structure.
 </p>
 
@@ -233,12 +222,11 @@ All canvas specific code can be hidden by a common interface or a runtime plugin
 </p>
 
 </div>
-<!-- EDIT1579 SECTION "Integration with current code" [7611-7959] -->
-<h1 class="sectionedit1580"><a name="comments" id="comments">Comments?</a></h1>
+<!-- EDIT2420 SECTION "Integration with current code" [7611-7959] -->
+<h1 class="sectionedit2421"><a name="comments" id="comments">Comments?</a></h1>
 <div class="level1">
 
 <p>
-
 Leave your comment here!
 </p>
 
@@ -263,5 +251,5 @@ I think some of the important design decisions to make now involve defining the 
 </p>
 
 </div>
-<!-- EDIT1580 SECTION "Comments?" [7960-] --></body>
+<!-- EDIT2421 SECTION "Comments?" [7960-] --></body>
 </html>

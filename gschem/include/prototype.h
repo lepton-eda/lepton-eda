@@ -2,6 +2,7 @@
 
 /* gschem_toplevel.c */
 GSCHEM_TOPLEVEL *gschem_toplevel_new();
+void gschem_toplevel_alloc_libgeda_toplevel(GSCHEM_TOPLEVEL *w_current);
 
 /* a_pan.c */
 void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,

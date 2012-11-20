@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit2172"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> « <a href="geda-gnetlist_ug-input_output_files.html" class="wikilink1" title="geda-gnetlist_ug-input_output_files.html">Input &amp; output files</a>  </td><td class="col1 centeralign">  <strong><a href="geda-gnetlist_ug.html" class="wikilink1" title="geda-gnetlist_ug.html">gEDA gnetlist User Guide</a></strong>     </td><td class="col2 rightalign">  <a href="geda-gnetlist_ug-basic_netlisting.html" class="wikilink1" title="geda-gnetlist_ug-basic_netlisting.html">Basic netlisting</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT2172 TABLE [1-187] -->
+<h2 class="sectionedit2173"><a name="netlist_backends" id="netlist_backends">Netlist backends</a></h2>
+<div class="level2">
+
+<p>
+Normally, gnetlist generates a netlist in two steps.
+</p>
+<ol>
+<li class="level1"><div class="li"> The gnetlist frontend uses the human-readable schematic files to construct an intermediate form of the design.</div>
+</li>
+<li class="level1"><div class="li"> A <em>netlist backend</em> is used to extract information from the intermediate form and write it out to disk.</div>
+</li>
+</ol>
+
+<p>
+Most backends are used to write out electrical connectivity information in a machine-readable format for use by other tools.  For example, the “liquidpcb” backend is used to generate a netlist to use when designing a circuit board with <a href="http://www.liquidpcb.org/" class="urlextern" title="http://www.liquidpcb.org/"  rel="nofollow">LiquidPCB</a>, and the “spice-sdb” backend is often used to create netlists for use with the SPICE simulator.
+</p>
+
+<p>
+Backends may have other uses, however.  For example, the “bom2” backend is used for generating a list of components used (a “Bill of Materials”), and the “drc2” backend carries out “design rule checking” (i.e. checking a design for commonly-made errors and potential problems).
+</p>
+
+<p>
+A summary of all the netlist backends distributed with gnetlist is provided in the gnetlist manpage (which you can view by running <code>man gnetlist</code>).
+</p>
+
+<p>
+<p><div class="notetip">If none of the distributed backends do what you need, you can write and install your own! For more information, see the <a href="geda-gnetlist_scheme_tutorial.html" class="wikilink1" title="geda-gnetlist_scheme_tutorial.html">Scripting a gnetlist backend in Scheme</a> tutorial.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT2173 SECTION "Netlist backends" [189-1522] -->
+<h3 class="sectionedit2174"><a name="specifying_a_backend" id="specifying_a_backend">Specifying a backend</a></h3>
+<div class="level3">
+
+<p>
+Use the <code>-g</code> option to indicate which backend you would like gnetlist to run.  For example, to run the “bom2” backend:
+</p>
+<pre class="code">gnetlist -g bom2</pre>
+
+</div>
+<!-- EDIT2174 SECTION "Specifying a backend" [1523-1709] -->
+<h3 class="sectionedit2175"><a name="listing_backends" id="listing_backends">Listing backends</a></h3>
+<div class="level3">
+
+<p>
+To view a list of installed backends, use the <code>--list-backends</code> command-line option:
+</p>
+<pre class="code">gnetlist --list-backends</pre>
+
+<p>
+This will print a list of all the backends that gnetlist can find.
+</p>
+
+</div>
+<!-- EDIT2175 SECTION "Listing backends" [1710-1938] -->
+<h3 class="sectionedit2176"><a name="interactive_mode" id="interactive_mode">Interactive mode</a></h3>
+<div class="level3">
+
+<p>
+An alternative to running a backend is to use <em>interactive mode</em>.  When the <code>-i</code> option is used, gnetlist creates the intermediate form from the schematic files, and then enters a Scheme REPL (Read-Eval-Print Loop).  This allows you to run Scheme commands and inspect the output, which can be useful for troubleshooting and to enable some advanced netlist processing techniques.
+</p>
+
+</div>
+<!-- EDIT2176 SECTION "Interactive mode" [1939-] --></body>
+</html>

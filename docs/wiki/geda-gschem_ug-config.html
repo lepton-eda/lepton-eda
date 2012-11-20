@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit684"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> « <a href="geda-gschem_ug-exporting.html" class="wikilink1" title="geda-gschem_ug-exporting.html">Exporting images</a>  </td><td class="col1 centeralign">  <strong><a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">gEDA gschem User Guide</a></strong>  </td><td class="col2 rightalign">  <a href="geda-gschem_ug-command_line.html" class="wikilink1" title="geda-gschem_ug-command_line.html">Command-line arguments</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT684 TABLE [1-135] -->
+<h2 class="sectionedit685"><a name="configuring_gschem" id="configuring_gschem">Configuring gschem</a></h2>
+<div class="level2">
+
+<p>
+gschem loads a series of <em>configuration files</em> at start-up, if they exist:
+</p>
+<ol>
+<li class="level1"><div class="li"> The suite&#039;s system configuration file, called <code>$PREFIX/share/gEDA/system-gafrc</code></div>
+</li>
+<li class="level1"><div class="li"> The suite&#039;s user configuration file, called <code>$HOME/.gEDA/gafrc</code></div>
+</li>
+<li class="level1"><div class="li"> A <code>gafrc</code> in the current working directory.</div>
+</li>
+<li class="level1"><div class="li"> gschem&#039;s system configuration file, called <code>$PREFIX/share/gEDA/system-gschemrc</code></div>
+</li>
+<li class="level1"><div class="li"> gschem&#039;s user configuration file, called <code>$HOME/.gEDA/gschemrc</code></div>
+</li>
+<li class="level1"><div class="li"> A <code>gschemrc</code> in the current working directory.</div>
+</li>
+</ol>
+
+<p>
+<code>$PREFIX</code> denotes the base installation directory for gschem (<code>/usr</code> on most systems), and <code>$HOME</code> denotes your home directory.
+</p>
+
+<p>
+These files are scripts written in Scheme, and they are executed using a Scheme interpreter.  This means that you can use the configuration files as a way of customising and extending gschem (see also <a href="geda-gschem_ug-extensions.html" class="wikilink1" title="geda-gschem_ug-extensions.html">Extending gschem</a>).
+</p>
+
+<p>
+<p><div class="noteclassic">There are a very large number of options that affect the way gschem works, and only the most commonly-used are listed here. For a full list, see the <code>system-gschemrc</code> installed with gEDA.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT685 SECTION "Configuring gschem" [137-1237] -->
+<h3 class="sectionedit686"><a name="setting_colors" id="setting_colors">Setting colors</a></h3>
+<div class="level3">
+
+<p>
+gschem uses three different color maps.  These are:
+</p>
+<ol>
+<li class="level1"><div class="li"> <em>Display color map</em> — this is the normal color map used for displaying schematics in gschem.</div>
+</li>
+<li class="level1"><div class="li"> <em>Display outline color map</em> — this color map is used for objects that are being modified (e.g. during movement or during placement of objects pasted from the clipboard).</div>
+</li>
+<li class="level1"><div class="li"> <em>Print color map</em> — used during export to PostScript.</div>
+</li>
+</ol>
+
+<p>
+gschem is distributed with some full <a href="geda-gschem_ug-viewing_schematics.html#color_maps" class="wikilink1" title="geda-gschem_ug-viewing_schematics.html">color maps</a>, which are supplied as Scheme scripts.  They can be loaded with <code>load</code>; for example, to load the default dark background color map, add the following to a configuration file:
+</p>
+<pre class="code">(load (build-path geda-rc-path &quot;gschem-colormap-darkbg&quot;))</pre>
+
+<p>
+You can also set individual colors using the <code>display-color-map</code>, <code>display-outline-color-map</code> and <code>print-color-map</code> functions.  For example, to set the display color for nets to a light blue, you could add the following to a configuration file:
+</p>
+<pre class="code">(display-color-map &#039;((net &quot;#00ffff&quot;)))</pre>
+
+<p>
+Color settings should be placed in a gschem configuration file.
+</p>
+
+</div>
+<!-- EDIT686 SECTION "Setting colors" [1238-2359] -->
+<h3 class="sectionedit687"><a name="key_bindings" id="key_bindings">Key bindings</a></h3>
+<div class="level3">
+
+<p>
+A gschem <a href="geda-gschem_ug-editing_actions.html" class="wikilink1" title="geda-gschem_ug-editing_actions.html">editing action</a> can be bound to a keystroke or a sequence of keystrokes (a <em>key sequence</em>).  The <code>global-set-key</code> function is used to modify keybindings.
+</p>
+
+<p>
+Each keystroke is defined using a string consisting of a non-modifier key name, prefixed by zero or more modifiers surrounded by angle brackets (”<code>&lt;</code>” and ”<code>&gt;</code>”). The supported modifiers are <code>&lt;Control&gt;</code>, <code>&lt;Shift&gt;</code>, <code>&lt;Alt&gt;</code>, <code>&lt;Super&gt;</code>, <code>&lt;Hyper&gt;</code> and <code>&lt;Meta&gt;</code> (these are not available on all keyboards).
+</p>
+
+<p>
+<p><div class="noteimportant">Although key bindings will be displayed in gschem using internationalised key names, you must use the English names in the configuration files.
+</div></p>
+</p>
+
+<p>
+A key sequence is a string containing two or more keystrokes separated by spaces.
+</p>
+
+<p>
+Some examples:
+</p>
+<ul>
+<li class="level1"><div class="li"> To bind the “New Window” command to a typed <strong>&lt;F&gt;</strong> followed by an <strong>&lt;N&gt;</strong>: <pre class="code">(global-set-key &quot;F N&quot; &#039;file-new-window)</pre>
+</div>
+</li>
+<li class="level1"><div class="li"> To run the “Deselect All” command when the <strong>&lt;Ctrl&gt;</strong> and <strong>&lt;Shift&gt;</strong> keys are held down and an <strong>&lt;A&gt;</strong> is typed: <pre class="code">(global-set-key &quot;&lt;Control&gt;&lt;Shift&gt;A&quot; &#039;edit-deselect)</pre>
+</div>
+</li>
+<li class="level1"><div class="li"> To display the “Snap Size” dialog box when <strong>&lt;O&gt;</strong> is typed, followed by <strong>&lt;S&gt;</strong> typed with the <strong>&lt;Shift&gt;</strong> key held down: <pre class="code">(global-set-key &quot;O &lt;Shift&gt;S&quot; &#039;options-snapsize)</pre>
+</div>
+</li>
+</ul>
+
+<p>
+Key settings should be placed in a gschem configuration file.
+</p>
+
+</div>
+<!-- EDIT687 SECTION "Key bindings" [2360-3724] -->
+<h3 class="sectionedit688"><a name="symbol_and_source_libraries" id="symbol_and_source_libraries">Symbol and source libraries</a></h3>
+<div class="level3">
+
+<p>
+The <code>component-library</code> function is used to add symbol libraries to the <a href="geda-gschem_ug-components.html" class="wikilink1" title="geda-gschem_ug-components.html">&quot;Select Component...&quot; window</a>.  A symbol library is a directory that contains symbol (”<code>.sym</code>”) files.  To add a directory as a symbol library, add the following to your configuration file:
+</p>
+<pre class="code">(component-library &quot;/path/to/mysymbols&quot;)</pre>
+
+<p>
+You can optionally set a different name for the library as an additional argument to <code>component-library</code>:
+</p>
+<pre class="code">(component-library &quot;/path/to/mysymbols&quot; &quot;My Symbols&quot;)</pre>
+
+<p>
+To add all subdirectories of a particular directory as symbol libraries, use <code>component-library-search</code>:
+</p>
+<pre class="code">(component-library-search &quot;/path/to/mysymbollibs/&quot;)</pre>
+
+<p>
+This will (recursively) look for directories that contain symbols below the specified path, and add them to the “Select Component…” window.
+</p>
+
+<p>
+To add a directory to be searched for <a href="geda-gschem_ug-hierarchy.html" class="wikilink1" title="geda-gschem_ug-hierarchy.html">subcircuit schematics</a>, use the <code>source-library</code> function.  This is similar to the <code>component-library</code> function, except that it does <em>not</em> accept an optional name argument.
+</p>
+
+<p>
+Library settings should be placed in a gEDA/gaf suite configuration file, so that the symbol libraries are available to other gEDA tools (especially <a href="geda-gnetlist_ug.html" class="wikilink1" title="geda-gnetlist_ug.html">gnetlist</a>).
+</p>
+
+</div>
+<!-- EDIT688 SECTION "Symbol and source libraries" [3725-] --></body>
+</html>

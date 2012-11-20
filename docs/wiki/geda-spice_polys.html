@@ -12,11 +12,10 @@
 <body>
 
 
-<h1 class="sectionedit1442"><a name="spice_poly_constructs" id="spice_poly_constructs">Spice POLY Constructs</a></h1>
+<h1 class="sectionedit1438"><a name="spice_poly_constructs" id="spice_poly_constructs">Spice POLY Constructs</a></h1>
 <div class="level1">
 
 <p>
-
 This is a draft of what I&#039;ve learned about POLYs. I&#039;m not sure 
 it&#039;s completely accurate, so anyone should feel free to make corrections.
 </p>
@@ -32,7 +31,6 @@ Some like NGspice use arbitrary expressions with conditionals, others like GNUca
 
 <p>
 Some common problems with polynomial approximations are:
-
 </p>
 <ol>
 <li class="level1"><div class="li"> They rapidly become useless outside a limited domain. BSIM models are indeed prone to unphysical behavior at operating points outside the domain of their approximations because they use polynomial adjustments for some computations.</div>
@@ -42,7 +40,6 @@ Some common problems with polynomial approximations are:
 </ol>
 
 <p>
-
 The other method is to use an arbitrary expression with something like if-then-else functionality or the piece wise linear functions. They are simpler to formulate but incur the risk of discontinuities which can cause serious convergence problems. However they are much more convenient for hacking something together.
 </p>
 
@@ -69,9 +66,7 @@ Note that for Ngspice to support POLYs you need to set that compile time option 
 </p>
 
 <p>
-
- — <em><a href="mailto:&#x63;&#x6c;&#x69;&#x66;&#x40;&#x65;&#x75;&#x67;&#x65;&#x6e;&#x65;&#x77;&#x65;&#x62;&#x2e;&#x63;&#x6f;&#x6d;" class="mail JSnocheck" title="&#x63;&#x6c;&#x69;&#x66;&#x40;&#x65;&#x75;&#x67;&#x65;&#x6e;&#x65;&#x77;&#x65;&#x62;&#x2e;&#x63;&#x6f;&#x6d;">Clif Eugene</a> 2010/11/23 01:31</em>
-
+ — <em><a href="mailto:&#x63;&#x6c;&#x69;&#x66;&#x40;&#x65;&#x75;&#x67;&#x65;&#x6e;&#x65;&#x77;&#x65;&#x62;&#x2e;&#x63;&#x6f;&#x6d;" class="mail" title="&#x63;&#x6c;&#x69;&#x66;&#x40;&#x65;&#x75;&#x67;&#x65;&#x6e;&#x65;&#x77;&#x65;&#x62;&#x2e;&#x63;&#x6f;&#x6d;">Clif Eugene</a> 2010/11/23 01:31</em>
 </p>
 
 </div>

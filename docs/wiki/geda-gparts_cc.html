@@ -1,0 +1,439 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+<h1 class="sectionedit84"><a name="component_classification" id="component_classification">Component Classification</a></h1>
+<div class="level1">
+
+</div>
+<!-- EDIT84 SECTION "Component Classification" [1-39] -->
+<h2 class="sectionedit85"><a name="part_categories" id="part_categories">Part Categories</a></h2>
+<div class="level2">
+
+<p>
+Part categories break down classes of parts hierarchically. The category hierarchy exists separately than the part hierarchy. The category hierarchy only provides the user with a system to locate parts quickly. A child in the category hierarchy does not need to inherit the attributes of a parent.
+</p>
+
+<p>
+The parts manager uses categories to keep the lists of parts manageable. If the list of parts in a particular category grows large, the category can be subdivided into sub-categories.
+</p>
+
+<p>
+It may be difficult to change the categories, using a <acronym title="Graphical User Interface">GUI</acronym>, because of the part table abstraction through database views and stored procedures.  It may be better to distribute the parts manager with a default configuration that works for most.
+</p>
+
+<p>
+<p><div class="noteclassic">Help is needed with the taxonomy of parts.  Please send feedback to the geda-dev or geda-user mailing lists.
+</div></p>
+</p>
+
+<p>
+The default hierarchy of parts follow:
+</p>
+<ul>
+<li class="level1"><div class="li"> Discretes</div>
+<ul>
+<li class="level2"><div class="li"> Diodes</div>
+<ul>
+<li class="level3"><div class="li"> Small-signal</div>
+</li>
+<li class="level3"><div class="li"> TVS</div>
+</li>
+<li class="level3"><div class="li"> Zeners</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Passives</div>
+<ul>
+<li class="level2"><div class="li"> Capacitors</div>
+</li>
+<li class="level2"><div class="li"> Inductors</div>
+</li>
+<li class="level2"><div class="li"> Resistors</div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+<!-- EDIT85 SECTION "Part Categories" [40-1105] -->
+<h2 class="sectionedit86"><a name="part_hierarchy" id="part_hierarchy">Part Hierarchy</a></h2>
+<div class="level2">
+
+<p>
+The part hierarchy allows the database to attach additional attributes to a class of parts.  These attributes provide a faster means to locate and select parts, especially commodity parts. The database only provides these additional attributes when configured to use hierarchical part tables.
+</p>
+
+<p>
+These additional attributes, stored in numeric format, allow <acronym title="Structured Query Language">SQL</acronym> to select parts. For example, to locate diodes with reverse voltage greater than 60 volts, use the following <acronym title="Structured Query Language">SQL</acronym> statement.
+</p>
+<pre class="code sql"><span class="kw1">SELECT</span> <span class="sy0">*</span> <span class="kw1">FROM</span> DiodeV
+    <span class="kw1">WHERE</span> VR <span class="sy0">&gt;</span> <span class="nu0">60</span>;</pre>
+
+<p>
+The intent of the part hierarchy does not include exhaustively classifying all electronic parts or fully parameterizing any class of electronic part.  The part hierarchy simply intends to allow the user to quickly locate a part, such as a 4.75 kΩ 1% 0603.
+</p>
+
+<p>
+<em class="u">TODO: Develop guidelines for subclassing part.</em>
+</p>
+
+<p>
+Proposed guidelines for including attributes:
+</p>
+<ul>
+<li class="level1"><div class="li"> Include attributes that are encoded in the manufacturer part number.</div>
+</li>
+<li class="level1"><div class="li"> Exclude attributes that are inconsistently characterized between manufacturers.</div>
+</li>
+<li class="level1"><div class="li"> Exclude attributes that must be either read from graphs, or calculated.  </div>
+</li>
+</ul>
+
+<p>
+These attributes may not work for everyone, so the database allows the user to customize these part tables.
+</p>
+
+</div>
+<!-- EDIT86 SECTION "Part Hierarchy" [1106-2379] -->
+<h3 class="sectionedit87"><a name="bjts" id="bjts">BJTs</a></h3>
+<div class="level3">
+
+<p>
+Bipolar Junction Transistors (BJTs) extend part with one additional table of attributes.
+</p>
+
+<p>
+Table name: BJT
+</p>
+
+<p>
+View name: BJTV
+</p>
+<div class="table sectionedit88"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field                         </th><th class="col1 leftalign"> Type     </th><th class="col2 leftalign"> Units   </th><th class="col3 leftalign"> Description                                                 </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID                        </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Foreign key to Part                                         </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PackageID                     </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Foreign key to Package                                      </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> Polarity                      </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Either NPN or PNP                                           </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> MaxCollectorCurrent           </td><td class="col1"> Physical </td><td class="col2 leftalign"> AMPS    </td><td class="col3 leftalign"> Maximum collector current (Absolute maximum rating)         </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> MaxCollectorEmitterVoltage    </td><td class="col1"> Physical </td><td class="col2 leftalign"> VOLTS   </td><td class="col3"> Maximum collector-emitter voltage (Absolute maximum rating) </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> TransitionFrequency           </td><td class="col1"> Physical </td><td class="col2 leftalign"> HERTZ   </td><td class="col3 leftalign">                                                             </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> PowerDissipation              </td><td class="col1"> Physical </td><td class="col2 leftalign"> WATTS   </td><td class="col3 leftalign"> Power dissipation (Pd) not including any derating           </td>
+	</tr>
+</table></div>
+<!-- EDIT88 TABLE [2520-3455] -->
+<p>
+The same table contains small-signal and power BJTs. These transistors can be
+placed into separate views using the following criteria.
+</p>
+<div class="table sectionedit89"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Category         </th><th class="col1 leftalign"> Criteria                </th><th class="col2"> View Name </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> Small-signal BJT </td><td class="col1"> PowerDissipation &lt;  1.0 </td><td class="col2 leftalign"> TBD       </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> Power BJT        </td><td class="col1"> PowerDissipation &gt;= 1.0 </td><td class="col2 leftalign"> TBD       </td>
+	</tr>
+</table></div>
+<!-- EDIT89 TABLE [3593-3769] -->
+</div>
+<!-- EDIT87 SECTION "BJTs" [2380-3770] -->
+<h3 class="sectionedit90"><a name="capacitors" id="capacitors">Capacitors</a></h3>
+<div class="level3">
+
+<p>
+Capacitors extend part with one additional table of attributes.
+</p>
+<div class="table sectionedit91"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field       </th><th class="col1 leftalign"> Type     </th><th class="col2 leftalign"> Units   </th><th class="col3 leftalign"> Description            </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID      </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Foreign key to Part    </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PackageID   </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3"> Foreign key to Package </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> Capacitance </td><td class="col1"> Physical </td><td class="col2 leftalign"> FARADS  </td><td class="col3 leftalign"> Capacitance            </td>
+	</tr>
+</table></div>
+<!-- EDIT91 TABLE [3858-4105] -->
+<p>
+When instantiating a component or creating a heavy symbol, the following database columns map to the following attributes.
+</p>
+<div class="table sectionedit92"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Column                </th><th class="col1"> Attribute </th><th class="col2 leftalign"> Notes                  </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> Device.DeviceName     </td><td class="col1 leftalign"> DEVICE    </td><td class="col2 leftalign">                        </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> Capacitor.Capacitance </td><td class="col1 leftalign"> VALUE     </td><td class="col2 leftalign">                        </td>
+	</tr>
+</table></div>
+<!-- EDIT92 TABLE [4231-4419] -->
+</div>
+<!-- EDIT90 SECTION "Capacitors" [3771-4420] -->
+<h3 class="sectionedit93"><a name="inductors" id="inductors">Inductors</a></h3>
+<div class="level3">
+
+<p>
+Inductors extend part with one additional table of attributes.
+</p>
+<div class="table sectionedit94"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field      </th><th class="col1 leftalign"> Type     </th><th class="col2 leftalign"> Units   </th><th class="col3 leftalign"> Description            </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID     </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Foreign key to Part    </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PackageID  </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3"> Foreign key to Package </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> Inductance </td><td class="col1"> Physical </td><td class="col2 leftalign"> HENRYS  </td><td class="col3 leftalign"> Inductance             </td>
+	</tr>
+</table></div>
+<!-- EDIT94 TABLE [4506-4749] -->
+<p>
+When instantiating a component or creating a heavy symbol, the following database columns map to the following attributes.
+</p>
+<div class="table sectionedit95"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Column              </th><th class="col1"> Attribute </th><th class="col2 leftalign"> Notes                  </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> Device.DeviceName   </td><td class="col1 leftalign"> DEVICE    </td><td class="col2 leftalign">                        </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> Inductor.Inductance </td><td class="col1 leftalign"> VALUE     </td><td class="col2 leftalign">                        </td>
+	</tr>
+</table></div>
+<!-- EDIT95 TABLE [4875-5057] -->
+</div>
+<!-- EDIT93 SECTION "Inductors" [4421-5058] -->
+<h3 class="sectionedit96"><a name="mosfets" id="mosfets">MOSFETs</a></h3>
+<div class="level3">
+
+<p>
+MOSFETs extend part with one additional table of attributes.
+</p>
+<div class="table sectionedit97"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field                   </th><th class="col1 leftalign"> Type     </th><th class="col2 leftalign"> Units   </th><th class="col3 leftalign"> Description                                                </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID                  </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Foreign key to Part                                        </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PackageID               </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Foreign key to Package                                     </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> Polarity                </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Either N or P                                              </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> MaxDrainSourceVoltage   </td><td class="col1"> Physical </td><td class="col2 leftalign"> VOLTS   </td><td class="col3 leftalign"> Maximum drain-source voltage (Absolute maximum rating)     </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> MaxDrainCurrent         </td><td class="col1"> Physical </td><td class="col2 leftalign"> AMPS    </td><td class="col3"> Maximum continuous drain current (Absolute maximum rating) </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0"> TypGateThresholdVoltage </td><td class="col1"> Physical </td><td class="col2 leftalign"> VOLTS   </td><td class="col3 leftalign"> Typical gate threshold voltage                             </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> PowerDissipation        </td><td class="col1"> Physical </td><td class="col2 leftalign"> WATTS   </td><td class="col3 leftalign"> Power dissipation (Pd) not including any derating          </td>
+	</tr>
+</table></div>
+<!-- EDIT97 TABLE [5140-6019] -->
+</div>
+<!-- EDIT96 SECTION "MOSFETs" [5059-6020] -->
+<h3 class="sectionedit98"><a name="rectifier_small-signal_and_switching_diodes" id="rectifier_small-signal_and_switching_diodes">Rectifier, Small-signal and Switching Diodes</a></h3>
+<div class="level3">
+
+<p>
+Rectifier, small-signal and switching diodes extend part with one additional table of
+attributes. Most diodes can be placed into this table.
+</p>
+
+<p>
+Table name: Diode
+</p>
+
+<p>
+View name: DiodeV
+</p>
+<div class="table sectionedit99"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field             </th><th class="col1 leftalign"> Type     </th><th class="col2"> Units </th><th class="col3 leftalign"> Description                                       </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID            </td><td class="col1 leftalign">          </td><td class="col2 leftalign">       </td><td class="col3 leftalign"> Foreign key to Part                               </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PackageID         </td><td class="col1 leftalign">          </td><td class="col2 leftalign">       </td><td class="col3 leftalign"> Foreign key to Package                            </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> MaxReverseVoltage </td><td class="col1"> Physical </td><td class="col2"> VOLTS </td><td class="col3"> Maximum reverse voltage (Absolute maximum rating) </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"> MaxForwardCurrent </td><td class="col1"> Physical </td><td class="col2 leftalign"> AMPS  </td><td class="col3"> Maximum forward current (Absolute maximum rating) </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0"> TypForwardVoltage </td><td class="col1"> Physical </td><td class="col2"> VOLTS </td><td class="col3 leftalign"> Typical forward voltage                           </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0"> AveForwardCurrent </td><td class="col1"> Physical </td><td class="col2 leftalign"> AMPS  </td><td class="col3 leftalign"> Average forward current                           </td>
+	</tr>
+</table></div>
+<!-- EDIT99 TABLE [6257-6907] -->
+<p>
+The same table contains rectifier, small-signal and switching diodes. These diodes can be
+placed into separate views using the following criteria.
+</p>
+<div class="table sectionedit100"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Category                          </th><th class="col1 leftalign"> Criteria                 </th><th class="col2"> View Name </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> Small-signal and switching diodes </td><td class="col1"> AveForwardCurrent &lt;  0.5 </td><td class="col2 leftalign"> TBD       </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> Rectifier diodes                  </td><td class="col1"> AveForwardCurrent &gt;= 0.5 </td><td class="col2 leftalign"> TBD       </td>
+	</tr>
+</table></div>
+<!-- EDIT100 TABLE [7057-7287] -->
+</div>
+<!-- EDIT98 SECTION "Rectifier, Small-signal and Switching Diodes" [6021-7288] -->
+<h3 class="sectionedit101"><a name="resistors" id="resistors">Resistors</a></h3>
+<div class="level3">
+
+<p>
+Resistors extend part with one additional table of attributes.
+</p>
+<div class="table sectionedit102"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field      </th><th class="col1 leftalign"> Type     </th><th class="col2 leftalign"> Units   </th><th class="col3 leftalign"> Description            </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID     </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3 leftalign"> Foreign key to Part    </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PackageID  </td><td class="col1 leftalign">          </td><td class="col2 leftalign">         </td><td class="col3"> Foreign key to Package </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> Resistance </td><td class="col1"> Physical </td><td class="col2 leftalign"> OHMS    </td><td class="col3 leftalign"> Resistance             </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> Tolerance  </td><td class="col1"> Physical </td><td class="col2"> PERCENT </td><td class="col3 leftalign"> Tolerance              </td>
+	</tr>
+</table></div>
+<!-- EDIT102 TABLE [7374-7678] -->
+<p>
+When instantiating a component or creating a heavy symbol, the following database columns map to the following attributes.
+</p>
+<div class="table sectionedit103"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Column              </th><th class="col1"> Attribute </th><th class="col2 leftalign"> Notes                  </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> Device.DeviceName   </td><td class="col1 leftalign"> DEVICE    </td><td class="col2 leftalign">                        </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> Resistor.Resistance </td><td class="col1 leftalign"> VALUE     </td><td class="col2 leftalign">                        </td>
+	</tr>
+</table></div>
+<!-- EDIT103 TABLE [7804-7986] -->
+</div>
+<!-- EDIT101 SECTION "Resistors" [7289-7987] -->
+<h3 class="sectionedit104"><a name="tvs_diodes" id="tvs_diodes">TVS Diodes</a></h3>
+<div class="level3">
+
+<p>
+TVS diodes extend part with one additional table of attributes.
+</p>
+<div class="table sectionedit105"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field            </th><th class="col1 leftalign"> Type     </th><th class="col2"> Units </th><th class="col3 leftalign"> Description            </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID           </td><td class="col1 leftalign">          </td><td class="col2 leftalign">       </td><td class="col3 leftalign"> Foreign key to Part    </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PackageID        </td><td class="col1 leftalign">          </td><td class="col2 leftalign">       </td><td class="col3"> Foreign key to Package </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> WorkingVoltage   </td><td class="col1"> Physical </td><td class="col2"> VOLTS </td><td class="col3 leftalign"> Working voltage        </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"> BreakdownVoltage </td><td class="col1"> Physical </td><td class="col2"> VOLTS </td><td class="col3 leftalign"> Breakdown voltage      </td>
+	</tr>
+</table></div>
+<!-- EDIT105 TABLE [8075-8399] -->
+</div>
+<!-- EDIT104 SECTION "TVS Diodes" [7988-8400] -->
+<h3 class="sectionedit106"><a name="zener_diodes" id="zener_diodes">Zener Diodes</a></h3>
+<div class="level3">
+
+<p>
+Zener diodes extend part with one additional table of attributes.
+</p>
+
+<p>
+Table name: ZenerDiode
+</p>
+
+<p>
+View name: ZenerDiodeV
+</p>
+<div class="table sectionedit107"><table class="inline">
+	<tr class="row0">
+		<th class="col0 leftalign"> Field            </th><th class="col1 leftalign"> Type     </th><th class="col2"> Units </th><th class="col3 leftalign"> Description                                       </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> PartID           </td><td class="col1 leftalign">          </td><td class="col2 leftalign">       </td><td class="col3 leftalign"> Foreign key to Part                               </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> PackageID        </td><td class="col1 leftalign">          </td><td class="col2 leftalign">       </td><td class="col3 leftalign"> Foreign key to Package                            </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> TypZenerVoltage  </td><td class="col1"> Physical </td><td class="col2"> VOLTS </td><td class="col3 leftalign"> Zener voltage                                     </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0"> PowerDissipation </td><td class="col1"> Physical </td><td class="col2"> WATTS </td><td class="col3"> Power dissipation (Pd) not including any derating </td>
+	</tr>
+</table></div>
+<!-- EDIT107 TABLE [8540-8999] -->
+</div>
+<!-- EDIT106 SECTION "Zener Diodes" [8401-] --></body>
+</html>

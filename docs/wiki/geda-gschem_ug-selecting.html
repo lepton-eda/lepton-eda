@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit804"><table class="inline">
+	<tr class="row0">
+		<td class="col0"> « <a href="geda-gschem_ug-editing_actions.html" class="wikilink1" title="geda-gschem_ug-editing_actions.html">Editing actions</a> </td><td class="col1"> <strong><a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">gEDA gschem User Guide</a></strong> </td><td class="col2"> <a href="geda-gschem_ug-grids.html" class="wikilink1" title="geda-gschem_ug-grids.html">Grids</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT804 TABLE [1-142] -->
+
+
+<h2 class="sectionedit805"><a name="selecting_objects" id="selecting_objects">Selecting objects</a></h2>
+<div class="level2">
+
+<p>
+Many editing actions in <em>gschem</em> operate on whichever objects are currently <em>selected</em>.  Selected objects are shown in a highlighted colour.
+</p>
+
+<p>
+In “Select Mode”, the default gschem editing mode, the left mouse button is used to select things.  If you click on something with the left mouse button, it will be selected, and everything else will be deselected.  If you click on the background, the selection will be cleared.  If you click and drag with the left mouse button, a box will appear, and when you release the button, everything that is completely inside the box will be selected (“box selection”).  These actions can be altered by holding down <strong>&lt;Shift&gt;</strong>, in which case the objects will be <em>added to</em> the current selection, instead of replacing it.
+</p>
+
+<p>
+You can also hold <strong>&lt;Ctrl&gt;</strong> while clicking on an object that is already selected, in which case it will be deselected but the selection will not be cleared.
+</p>
+
+<p>
+You can select all of the objects in the schematic or symbol using <strong>Edit→Select All</strong>, and completely clear the current selection using <strong>Edit→Deselect</strong>.
+</p>
+
+<p>
+You can always get back to “Select Mode” from any other editing mode by pressing <strong>&lt;S&gt;</strong> or using <strong>Edit→Select Mode</strong>.
+</p>
+
+</div>
+<!-- EDIT805 SECTION "Selecting objects" [155-1392] -->
+<h3 class="sectionedit806"><a name="selecting_nets" id="selecting_nets">Selecting nets</a></h3>
+<div class="level3">
+
+<p>
+To select the whole of a net, left-click on a net segment to select it, and then left-click on it again to select all connected net segments.
+</p>
+
+</div>
+<!-- EDIT806 SECTION "Selecting nets" [1393-1561] -->
+<h3 class="sectionedit807"><a name="selecting_component_attributes" id="selecting_component_attributes">Selecting component attributes</a></h3>
+<div class="level3">
+
+<p>
+If you left-click on a component, it will be selected along with all of its attached attributes.
+</p>
+
+</div>
+<!-- EDIT807 SECTION "Selecting component attributes" [1562-1701] -->
+<h3 class="sectionedit808"><a name="locked_objects" id="locked_objects">Locked objects</a></h3>
+<div class="level3">
+
+<p>
+Some objects can be “locked”. Locked objects are displayed in a subdued colour, and cannot be selected other than by using a box selection. For example, the titleblock added by default to new pages is locked.
+</p>
+
+<p>
+To lock an object, select it and use <strong>Edit→Lock</strong>. To unlock it, select it (by dragging a box around it with the left mouse button), and use <strong>Edit→Unlock</strong>.
+</p>
+
+</div>
+<!-- EDIT808 SECTION "Locked objects" [1702-] --></body>
+</html>

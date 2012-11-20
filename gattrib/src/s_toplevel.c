@@ -184,6 +184,7 @@ s_toplevel_gtksheet_to_toplevel(TOPLEVEL *toplevel)
 void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
   gint cur_page;  /* current page in notbook  */
   gint old_comp_attrib_count;
+  gint new_index;
 
   if (strcmp(new_attrib_name, _("_cancel")) == 0) {
     return;  /* user pressed cancel or closed window with no value in entry */
@@ -218,6 +219,12 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
 			   new_attrib_name);
     s_string_list_sort_master_comp_attrib_list();
 
+    /* Now, determine what index the new attrib ended up at
+     * This is necessary to tell gtk_sheet_insert_columns
+     * where the data should be shifted                    */
+    new_index = s_string_list_find_in_list(sheet_head->master_comp_attrib_list_head, 
+                                           (char*)new_attrib_name);
+
 #ifdef DEBUG
     printf("In s_toplevel_add_new_attrib, just updated comp_attrib string list.\n");
     printf("                             new comp_attrib_count = %d\n", sheet_head->comp_attrib_count);
@@ -239,7 +246,7 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
 #endif
 
     /* Fill out new sheet with new stuff from gtksheet */
-    gtk_sheet_insert_columns(GTK_SHEET(sheets[0]), sheet_head->comp_attrib_count, 1);
+    gtk_sheet_insert_columns(GTK_SHEET(sheets[0]), new_index, 1);
     x_gtksheet_add_col_labels(GTK_SHEET(sheets[0]), 
 			      sheet_head->comp_attrib_count, 
 			      sheet_head->master_comp_attrib_list_head);

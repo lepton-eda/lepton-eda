@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+<h1 class="sectionedit152"><a name="руководство_по_посадочным_местам_для_pcb" id="руководство_по_посадочным_местам_для_pcb">Руководство по посадочным местам для pcb</a></h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.brorson.com/gEDA/land_patterns_20070805.pdf" class="urlextern" title="http://www.brorson.com/gEDA/land_patterns_20070805.pdf"  rel="nofollow">Руководство по посадочным местам</a> от <em>Stuart Brorson</em></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://pcb.geda-project.org/pcb-cvs/pcb.html" class="urlextern" title="http://pcb.geda-project.org/pcb-cvs/pcb.html"  rel="nofollow">Руководство пользователя pcb</a></div>
+</li>
+<li class="level1"><div class="li"> Часто задаваемые вопросы по <strong>pcb</strong>: <a href="geda-pcb_tips.ru.html" class="wikilink1" title="geda-pcb_tips.ru.html">Советы по pcb</a>.</div>
+</li>
+<li class="level1"><div class="li"> В краткой справке по <strong>pcb</strong> есть информация по <a href="geda-pcb-quick_reference.ru.html#справка_по_посадочным_местам" class="wikilink1" title="geda-pcb-quick_reference.ru.html">посадочным местам</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="geda-pcb_footprint_naming_conventions.ru.html" class="wikilink1" title="geda-pcb_footprint_naming_conventions.ru.html">Соглашения по именованию посадочных мест</a>: прочтите эту страницу, чтобы узнать, как <em>называть</em> файлы своих посадочных мест.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT152 SECTION "Руководство по посадочным местам для pcb" [1-933] -->
+<h3 class="sectionedit153"><a name="основы" id="основы">Основы</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> Есть два типа файлов посадочных мест: <strong>M4</strong> и <strong>newlib</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Наилучшими средствами для создания посадочных мест являются <strong>pcb</strong> (<acronym title="What You See Is What You Get">WYSIWYG</acronym>), текстовый редактор (быстрое, точное), скрипты (мощное).</div>
+</li>
+<li class="level1"><div class="li"> Насчёт создания посадочных мест в <strong>pcb</strong> обратитесь к: …</div>
+</li>
+<li class="level1"><div class="li"> Насчёт создания посадочных мест в текстовом виде обратитесь к руководству <em>Footprint Creation for the Open-Source Layout Program “PCB”</em>, которое написал и поддерживает <em>Stuart Brorson</em>.</div>
+</li>
+<li class="level1"><div class="li"> Насчёт создания посадочных мест с помощью скриптов: …</div>
+</li>
+<li class="level1"><div class="li"> Другие вещи, которые могут оказаться для вас полезными: калькулятор, бумага+карандаш, спецификации, штангенциркуль, электронная таблица.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT153 SECTION "Основы" [934-2043] -->
+<h3 class="sectionedit154"><a name="часто_задаваемые_вопросы_по_посадочным_местам_для_pcb" id="часто_задаваемые_вопросы_по_посадочным_местам_для_pcb">Часто задаваемые вопросы по посадочным местам для pcb</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="можно_ли_задать_двум_контактным_площадкам_или_двум_выводам_одинаковые_номера" id="можно_ли_задать_двум_контактным_площадкам_или_двум_выводам_одинаковые_номера">Можно ли задать двум контактным площадкам или двум выводам одинаковые номера?</a></h4>
+<div class="level4">
+
+<p>
+“Да, без вопросов. Как раз так — перекрытием двух и более штук — и
+создаются овальные обрамления вокруг выводов или чудные контактные площадки
+(например, квадратная с одной стороны и круглая с другой).”
+</p>
+
+</div>
+
+<h4><a name="как_сделать_овальную_контактную_площадку_вокруг_вывода_посадочного_места" id="как_сделать_овальную_контактную_площадку_вокруг_вывода_посадочного_места">Как сделать овальную контактную площадку вокруг вывода посадочного места?</a></h4>
+<div class="level4">
+
+<p>
+Просто добавить контактную площадку сверху вывода и задать им обоим одинаковый
+номер вывода. 
+Если <a href="geda-glossary.ru.html#паяльная_маска" class="wikilink1" title="geda-glossary.ru.html">паяльная маска</a> не касается ни одного из этих выводов и они перекрываются,
+они должны выглядеть как один вывод на плате.
+</p>
+
+</div>
+
+<h4><a name="как_сделать_двухстороннюю_контактную_площадку" id="как_сделать_двухстороннюю_контактную_площадку">Как сделать двухстороннюю контактную площадку?</a></h4>
+<div class="level4">
+
+<p>
+“Звучит странно, но это может быть необходимо для некоторых
+<a href="geda-glossary.ru.html#соединитель_непосредственного_сочленения" class="wikilink1" title="geda-glossary.ru.html">соединителей
+непосредственного сочленения</a>. … Но как это сделать???”
+</p>
+
+</div>
+
+<h4><a name="есть_ли_справочные_материалы_о_том_как_делать_контактные_площадки_и_посадочные_места_для_поверхностного_монтажа" id="есть_ли_справочные_материалы_о_том_как_делать_контактные_площадки_и_посадочные_места_для_поверхностного_монтажа">Есть ли справочные материалы о том, как делать контактные площадки и посадочные места для поверхностного монтажа?</a></h4>
+<div class="level4">
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.nxp.com/package" class="urlextern" title="http://www.nxp.com/package"  rel="nofollow">http://www.nxp.com/package</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://focus.ti.com/general/docs/packaging.jsp" class="urlextern" title="http://focus.ti.com/general/docs/packaging.jsp"  rel="nofollow">http://focus.ti.com/general/docs/packaging.jsp</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.maxim-ic.com/design/packaging/" class="urlextern" title="http://www.maxim-ic.com/design/packaging/"  rel="nofollow">http://www.maxim-ic.com/design/packaging/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.national.com/packaging/folders/pkg_index.html" class="urlextern" title="http://www.national.com/packaging/folders/pkg_index.html"  rel="nofollow">http://www.national.com/packaging/folders/pkg_index.html</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.irf.com/package/" class="urlextern" title="http://www.irf.com/package/"  rel="nofollow">http://www.irf.com/package/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.onsemi.com/PowerSolutions/supportTechDoc.do?id=1165" class="urlextern" title="http://www.onsemi.com/PowerSolutions/supportTechDoc.do?id=1165"  rel="nofollow">http://www.onsemi.com/PowerSolutions/supportTechDoc.do?id=1165</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.analog.com/Analog_Root/Packages/Packages_Home/" class="urlextern" title="http://www.analog.com/Analog_Root/Packages/Packages_Home/"  rel="nofollow">http://www.analog.com/Analog_Root/Packages/Packages_Home/</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.linear.com/designtools/PkgInfo.jsp" class="urlextern" title="http://www.linear.com/designtools/PkgInfo.jsp"  rel="nofollow">http://www.linear.com/designtools/PkgInfo.jsp</a></div>
+</li>
+</ul>
+
+<p>
+В <a href="geda-pcb_tips.ru.html" class="wikilink1" title="geda-pcb_tips.ru.html">советах по pcb</a> много материала по посадочным местам.
+Настоящая страница и страница советов должны быть согласованы!
+</p>
+
+</div>
+<!-- EDIT154 SECTION "Часто задаваемые вопросы по посадочным местам для pcb" [2044-4528] -->
+<h2 class="sectionedit155"><a name="совместное_пользование_посадочными_местами_для_pcb" id="совместное_пользование_посадочными_местами_для_pcb">Совместное пользование посадочными местами для pcb</a></h2>
+<div class="level2">
+
+</div>
+
+<h5><a name="популярные_источники_файлов_посадочных_мест" id="популярные_источники_файлов_посадочных_мест">Популярные источники файлов посадочных мест</a></h5>
+<div class="level5">
+<ul>
+<li class="level1"><div class="li"> Место для общих символов и файлов посадочных мест: <a href="http://www.gedasymbols.org" class="urlextern" title="http://www.gedasymbols.org"  rel="nofollow"> gedasymbols.org</a></div>
+</li>
+<li class="level1"><div class="li"> Много файлов посадочных мест для <strong>pcb</strong> можно найти на <a href="http://www.luciani.org/geda/pcb/pcb-footprint-list.html" class="urlextern" title="http://www.luciani.org/geda/pcb/pcb-footprint-list.html"  rel="nofollow">странице по посадочным местам от John Luciani</a> </div>
+</li>
+<li class="level1"><div class="li"> На сайте <a href="http://opencircuits.com/PCB_Footprints" class="urlextern" title="http://opencircuits.com/PCB_Footprints"  rel="nofollow"> Посадочные места для gEDA на Open Circuits</a> можно брать и выкладывать файлы посадочных мест.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT155 SECTION "Совместное пользование посадочными местами для pcb" [4529-] --></body>
+</html>

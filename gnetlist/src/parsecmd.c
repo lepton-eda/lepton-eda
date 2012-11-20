@@ -75,6 +75,7 @@ void usage(char *cmd)
 "General options:\n"
 "  -q              Quiet mode.\n"
 "  -v, --verbose   Verbose mode.\n"
+"  -o FILE         Filename for netlist data output.\n"
 "  -L DIR          Add DIR to Scheme search path.\n"
 "  -g BACKEND      Specify netlist backend to use.\n"
 "  -O STRING       Pass an option string to backend.\n"
@@ -87,8 +88,8 @@ void usage(char *cmd)
 "  -V, --version   Show version information.\n"
 "  --              Treat all remaining arguments as filenames.\n"
 "\n"
-"Report bugs to <geda-bug@seul.org>.\n"
-"gEDA/gaf homepage: <http://gpleda.org>\n",
+"Report bugs at <https://bugs.launchpad.net/geda>\n"
+"gEDA/gaf homepage: <http://www.geda-project.org/>\n",
           cmd);
   exit (0);
 }
@@ -103,7 +104,7 @@ version ()
 {
   printf(
 "gEDA %s (g%.7s)\n"
-"Copyright (C) 1998-2011 gEDA developers\n"
+"Copyright (C) 1998-2012 gEDA developers\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"
 "included in the gEDA distribution.\n"

@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+<h1 class="sectionedit166"><a name="быстрое_и_лёгкое_создание_символов_gschem_с_помощью_tragesym_и_программы_работы_с_электронными_таблицами" id="быстрое_и_лёгкое_создание_символов_gschem_с_помощью_tragesym_и_программы_работы_с_электронными_таблицами">Быстрое и лёгкое создание символов gschem с помощью tragesym и программы работы с электронными таблицами</a></h1>
+<div class="level1">
+
+<p>
+Создание <a href="geda-glossary.ru.html#символ" class="wikilink1" title="geda-glossary.ru.html">символов</a> для
+<a href="geda-glossary.ru.html#принципиальная_схема" class="wikilink1" title="geda-glossary.ru.html">принципиальных схем</a> отнимает очень
+много времени, чревато
+ошибками и вообще неимоверно мучительно. К счастью, <strong>gschem</strong> использует
+открытый текстовый формат файлов, легко поддающийся скриптовой обработке. В этом
+кратком руководстве приводится описание того, как с
+помощью скрипта <strong>tragesym</strong> очень быстро
+создать символ (может быть гораздо быстрее, чем в любом из коммерческих
+пакетов).
+</p>
+
+</div>
+<!-- EDIT166 SECTION "Быстрое и лёгкое создание символов gschem с помощью tragesym и программы работы с электронными таблицами" [1-1030] -->
+<h2 class="sectionedit167"><a name="необходимые_шаги" id="необходимые_шаги">Необходимые шаги</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Шаг 1: Открывание файла шаблона <strong>tragesym</strong></div>
+</li>
+<li class="level1"><div class="li"> Шаг 2: Загрузка спецификации устройства и поиск цоколёвки с перечнем выводов</div>
+</li>
+<li class="level1"><div class="li"> Шаг 3: Копирование перечня выводов в редактор и его обработка</div>
+</li>
+<li class="level1"><div class="li"> Шаг 4: Добавление недостающих данных в электронную таблицу</div>
+</li>
+<li class="level1"><div class="li"> Шаг 5: Экспорт электронной таблицы в отдельный текстовый файл</div>
+</li>
+<li class="level1"><div class="li"> Шаг 6: Запуск <strong>tragesym</strong> для создания символа</div>
+</li>
+<li class="level1"><div class="li"> Шаг 7: Проверка результата в <strong>gschem</strong> и небольшая доводка</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT167 SECTION "Необходимые шаги" [1031-1822] -->
+<h2 class="sectionedit168"><a name="шаг_1открывание_файла_шаблона_tragesym" id="шаг_1открывание_файла_шаблона_tragesym">Шаг 1: Открывание файла шаблона tragesym</a></h2>
+<div class="level2">
+
+<p>
+В <strong>tragesym</strong> входят два файла-шаблона. Один — в
+<a href="media/tragesym/template2.txt.src" class="media" target="_blank" title="tragesym:template2.txt.src">текстовом варианте</a>, второй — в виде
+<a href="media/tragesym/template2.ods" class="media" target="_blank" title="tragesym:template2.ods">электронной таблицы OpenOffice</a>. Также их можно
+найти в пакете gEDA-утилит (<em><code>utils/examples/tragesym/template.src</code></em> и
+<em><code>utils/examples/tragesym/template.ods</code></em>).
+Если вы предпочитаете другую
+программу работы с электронными таблицами, например <strong>gnumerik</strong> или
+<strong>kspread</strong>, то просто создайте свой собственный шаблон из текстового шаблона.
+Единственное различие между текстовым шаблоном
+и шаблоном в виде электронной таблицы — синтаксис пар “ключ-значение” в
+разделах <code>[options]</code> и <code>[geda_attr]</code>. В текстовом файле они разделены
+знаком равенства (<code>ключ=значение</code>), в электронной таблице значение находится
+во втором столбце (что даёт разделитель в виде знака табуляции при экспорте).
+</p>
+
+</div>
+<!-- EDIT168 SECTION "Шаг 1: Открывание файла шаблона tragesym" [1823-3244] -->
+<h2 class="sectionedit169"><a name="шаг_2загрузка_спецификации_устройства_и_поиск_цоколёвки_с_перечнем_выводов" id="шаг_2загрузка_спецификации_устройства_и_поиск_цоколёвки_с_перечнем_выводов">Шаг 2: Загрузка спецификации устройства и поиск цоколёвки с перечнем выводов</a></h2>
+<div class="level2">
+
+<p>
+В данном примере мы создадим символ для <em>Philips Semiconductor PCA9555 16-bit
+IIC IO port</em>. Описание продукта и спецификация доступны на сайте Philips:
+<a href="http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html" class="urlextern" title="http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html"  rel="nofollow">http://www-us.semiconductors.philips.com/cgi-bin/pldb/pip/pca9555.html</a>.
+Загрузите спецификацию и откройте её в программе просмотра <acronym title="Portable Document Format">PDF</acronym>, которая
+позволяет копировать текст из pdf-файла, такой как <strong>kpdf</strong> или <strong>acroread</strong>.
+Пролистайте страницы, пока не найдёте <a href="geda-glossary.ru.html#цоколёвка" class="wikilink1" title="geda-glossary.ru.html">цоколёвку</a>
+устройства:
+</p>
+
+<p>
+<a href="media/tragesym/kpdf_pinconfiguration.png" class="media" target="_blank" title="tragesym:kpdf_pinconfiguration.png"><img src="media/tragesym/kpdf_pinconfiguration.png" class="media" title="kpdf_pinconfiguration.png" alt="kpdf_pinconfiguration.png" /></a>
+<a href="media/tragesym/acroread_selectiontable.png" class="media" target="_blank" title="tragesym:acroread_selectiontable.png"><img src="media/tragesym/acroread_selectiontable.png" class="media" title="acroread_selectiontable.png" alt="acroread_selectiontable.png" /></a>
+</p>
+
+<p>
+Перечень выводов в спецификации может находиться только на изображении
+конфигурации выводов (“Pin configuration” на первом рисунке). Если же имеется
+подробная таблица (второй рисунок из другой спецификации), используйте её.
+</p>
+
+</div>
+<!-- EDIT169 SECTION "Шаг 2: Загрузка спецификации устройства и поиск цоколёвки с перечнем выводов" [3245-4640] -->
+<h2 class="sectionedit170"><a name="шаг_3копирование_перечня_выводов_в_редактор_и_его_обработка" id="шаг_3копирование_перечня_выводов_в_редактор_и_его_обработка">Шаг 3: Копирование перечня выводов в редактор и его обработка</a></h2>
+<div class="level2">
+
+<p>
+Выделите перечень выводов и скопируйте его в текстовый редактор. Этот
+промежуточный шаг необходим, поскольку вашей программе работы с электронными
+таблицами может понадобиться специальный разделитель полей, такой как,
+например, запятая или знак табуляции.
+</p>
+
+<p>
+<strong>Примечание:</strong> поведение программ <strong>kpdf</strong> и <strong>acroread</strong> при выделении
+различается. Программа <strong>kpdf</strong>, кажется, создаёт копию, более похожую на
+графическое представление, в то время как <strong>acroread</strong> производит вывод, более
+ориентированный на “последовательность внутри файла”. Если вам нужно создать
+много символов, попробуйте обе программы и сравните результаты.
+</p>
+
+<p>
+<a href="media/tragesym/xemacs_rawselection.png" class="media" target="_blank" title="tragesym:xemacs_rawselection.png"><img src="media/tragesym/xemacs_rawselection.png" class="media" title="xemacs_rawselection.png" alt="xemacs_rawselection.png" /></a>
+<a href="media/tragesym/xemacs_modifiedselection.png" class="media" target="_blank" title="tragesym:xemacs_modifiedselection.png"><img src="media/tragesym/xemacs_modifiedselection.png" class="media" title="xemacs_modifiedselection.png" alt="xemacs_modifiedselection.png" /></a>
+<a href="media/tragesym/ooo_selection.png" class="media" target="_blank" title="tragesym:ooo_selection.png"><img src="media/tragesym/ooo_selection.png" class="media" title="ooo_selection.png" alt="ooo_selection.png" /></a>
+</p>
+
+<p>
+Представленные выше рисунки иллюстрируют шаги:
+</p>
+<ul>
+<li class="level1"><div class="li"> вставка выделения из программы просмотра <acronym title="Portable Document Format">PDF</acronym> в текстовый редактор;</div>
+</li>
+<li class="level1"><div class="li"> изменение перечня выводов на радость программе работы с электронными таблицами:</div>
+<ul>
+<li class="level2"><div class="li"> вырезание списка выводов с 24 по 13 с помощью прямоугольного выделения;</div>
+</li>
+<li class="level2"><div class="li"> вставка прямоугольного выделения после вывода 12;</div>
+</li>
+<li class="level2"><div class="li"> сортировка строк (<strong>xemacs</strong> это умеет <img src="images/smileys/icon_wink.gif" align="middle" alt=";-)" /> )</div>
+</li>
+<li class="level2"><div class="li"> удаление или исправление строк с номерами 2,3,… Их части оказались в разных строках. Номера выводов можно легко воссоздать позже;</div>
+</li>
+<li class="level2"><div class="li"> замещение пробелов символами табуляции (нет особой нужды, если используется <strong>OpenOffice</strong>);</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> копирование отредактированных данных куда-то в конец шаблона электронной таблицы.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT170 SECTION "Шаг 3: Копирование перечня выводов в редактор и его обработка" [4641-7296] -->
+<h2 class="sectionedit171"><a name="шаг_4добавление_недостающих_данных_в_электронную_таблицу" id="шаг_4добавление_недостающих_данных_в_электронную_таблицу">Шаг 4: Добавление недостающих данных в электронную таблицу</a></h2>
+<div class="level2">
+
+<p>
+Теперь переместите метки выводов в столбец меток (label) и номера выводов в
+столбец номеров выводов (pinnr). Для создания номеров выводов можно также
+использовать возможность автозаполнения своей программы работы с электронными
+таблицами.
+</p>
+
+<p>
+<a href="media/tragesym/ooo_rearanged.png" class="media" target="_blank" title="tragesym:ooo_rearanged.png"><img src="media/tragesym/ooo_rearanged.png" class="media" title="ooo_rearanged.png" alt="ooo_rearanged.png" /></a>
+</p>
+
+<p>
+Установите в столбцах тип (type), стиль (style) и позиция (posit.) наиболее
+общие значения. Снова можно использовать возможность автозаполнения.
+</p>
+
+<p>
+Теперь вам нужно изменить некоторые значения. Взгляните на таблицу описания
+выводов в спецификации:
+</p>
+
+<p>
+<a href="media/tragesym/kpdf_pindescription.png" class="media" target="_blank" title="tragesym:kpdf_pindescription.png"><img src="media/tragesym/kpdf_pindescription.png" class="media" title="kpdf_pindescription.png" alt="kpdf_pindescription.png" /></a>
+</p>
+
+<p>
+В соответствии с этой таблицей изменяем следующее (см. результат ниже):
+</p>
+<ul>
+<li class="level1"><div class="li"> вывод 1 — выход, мы хотим иметь признаки отрицания — кружок у вывода и черту над его меткой;</div>
+</li>
+<li class="level1"><div class="li"> A1 – A3 — входы, изменяем тип и перемещаем их на левую сторону;</div>
+</li>
+<li class="level1"><div class="li"> устанавливаем выводу SCL тип “in” (вход) и перемещаем SCL и SDA также влево;</div>
+</li>
+<li class="level1"><div class="li"> изменяем тип выводов питания VSS и VDD и добавляем имена соединений. Мы используем более привычные GND и Vcc.</div>
+</li>
+</ul>
+
+<p>
+<strong>Примечание:</strong> если одна из меток ваших выводов имеет внутри обратную косую
+черту “\”, её необходимо заменить управляющей последовательностью “\\”.
+</p>
+
+<p>
+<a href="media/tragesym/ooo_changedpins.png" class="media" target="_blank" title="tragesym:ooo_changedpins.png"><img src="media/tragesym/ooo_changedpins.png" class="media" title="ooo_changedpins.png" alt="ooo_changedpins.png" /></a>
+</p>
+
+<p>
+Прежде чем продолжить, задайте надлежащие значения атрибутам (geda_attr) и ключам (options).
+</p>
+
+<p>
+<a href="media/tragesym/ooo_attributes.png" class="media" target="_blank" title="tragesym:ooo_attributes.png"><img src="media/tragesym/ooo_attributes.png" class="media" title="ooo_attributes.png" alt="ooo_attributes.png" /></a>
+</p>
+
+</div>
+<!-- EDIT171 SECTION "Шаг 4: Добавление недостающих данных в электронную таблицу" [7297-9664] -->
+<h2 class="sectionedit172"><a name="шаг_5экспорт_электронной_таблицы_в_отдельный_текстовый_файл" id="шаг_5экспорт_электронной_таблицы_в_отдельный_текстовый_файл">Шаг 5: Экспорт электронной таблицы в отдельный текстовый файл</a></h2>
+<div class="level2">
+
+<p>
+Можно либо использовать функцию экспорта своей программы работы с электронными
+таблицами, либо просто выделить таблицу и скопировать содержимое в свой любимый
+текстовый редактор и сохранить файл.
+</p>
+
+</div>
+<!-- EDIT172 SECTION "Шаг 5: Экспорт электронной таблицы в отдельный текстовый файл" [9665-10155] -->
+<h2 class="sectionedit173"><a name="шаг_6запуск_tragesym_для_создания_символа" id="шаг_6запуск_tragesym_для_создания_символа">Шаг 6: Запуск tragesym для создания символа</a></h2>
+<div class="level2">
+
+<p>
+Запустите <strong>tragesym</strong> в оболочке<sup><a href="#fn__1" name="fnt__1" id="fnt__1" class="fn_top">1)</a></sup>:
+</p>
+<pre class="code">werner@werner-amd64:~/Desktop/tragesym_tutorial&gt; tragesym pca555.src pca555.sch</pre>
+
+<p>
+Если <strong>tragesym</strong> выдаёт сообщения об ошибках, поправьте электронную таблицу и
+снова выполните экспорт, либо просто отредактируйте файл, полученный в
+результате экспорта ранее.
+</p>
+
+</div>
+<!-- EDIT173 SECTION "Шаг 6: Запуск tragesym для создания символа" [10156-10894] -->
+<h2 class="sectionedit174"><a name="шаг_7проверка_результата_в_gschem_и_небольшая_доводка" id="шаг_7проверка_результата_в_gschem_и_небольшая_доводка">Шаг 7: Проверка результата в gschem и небольшая доводка</a></h2>
+<div class="level2">
+
+<p>
+Теперь откройте созданный символ в <strong>gschem</strong> и проверьте результат
+</p>
+<pre class="code">werner@werner-amd64:~/Desktop/tragesym_tutorial&gt; gschem pca555.sch</pre>
+
+<p>
+Разрешив скрытый текст (нажав “en” или выбрав из меню <strong><em>Правка→Показать/скрыть невидимый текст</em></strong>), можно
+увидеть сгенерированный символ полностью. Вовсе не обязательно что-либо
+менять, но небольшая перестановка выводов может немного улучшить вид символа.
+</p>
+
+<p>
+<a href="media/tragesym/gschem_showhidden.png" class="media" target="_blank" title="tragesym:gschem_showhidden.png"><img src="media/tragesym/gschem_showhidden.png" class="media" title="gschem_showhidden.png" alt="gschem_showhidden.png" /></a>
+<a href="media/tragesym/gschem_finished.png" class="media" target="_blank" title="tragesym:gschem_finished.png"><img src="media/tragesym/gschem_finished.png" class="media" title="gschem_finished.png" alt="gschem_finished.png" /></a>
+</p>
+
+<p>
+Теперь символ готов. Его можно скопировать в свою локальную библиотеку
+символов, например <em><code>/usr/local/share/gEDA/sym/local/</code></em>, и использовать в
+проектах.
+</p>
+
+</div>
+<!-- EDIT174 SECTION "Шаг 7: Проверка результата в gschem и небольшая доводка" [10895-12029] -->
+<h2 class="sectionedit175"><a name="заключение" id="заключение">Заключение</a></h2>
+<div class="level2">
+
+<p>
+В простом примере, приведённом выше, используется не очень много выводов,
+данный же метод окупается с лихвой, когда выводов очень много (как, например,
+в bga-272, tfqp-100, и т. д.).
+</p>
+
+</div>
+<!-- EDIT175 SECTION "Заключение" [12030-12374] -->
+<h2 class="sectionedit176"><a name="благодарности" id="благодарности">Благодарности</a></h2>
+<div class="level2">
+
+<p>
+Большое спасибо &lt;Russ.Dill(AT)asu.edu&gt;, который написал первую версию
+настоящего руководства. Эту версию можно найти на странице
+<a href="http://www-mdp.eng.cam.ac.uk/web/CD/engapps/geda/geda-doc/tutorials/tragesym/tragesym.html" class="urlextern" title="http://www-mdp.eng.cam.ac.uk/web/CD/engapps/geda/geda-doc/tutorials/tragesym/tragesym.html"  rel="nofollow">http://www-mdp.eng.cam.ac.uk/web/CD/engapps/geda/geda-doc/tutorials/tragesym/tragesym.html</a>.
+</p>
+
+<p>
+Перевод: Владимир Жбанов, 2010-2011 гг.
+</p>
+
+</div>
+<!-- EDIT176 SECTION "Благодарности" [12375-] --><div class="footnotes">
+<div class="fn"><sup><a href="#fnt__1" id="fn__1" name="fn__1" class="fn_bot">1)</a></sup> 
+Автор использует для символа расширение
+<em><code>.sch</code></em>, на самом деле принято использовать <em><code>.sym</code></em>. — <em>Прим.
+перев.</em></div>
+</div>
+</body>
+</html>

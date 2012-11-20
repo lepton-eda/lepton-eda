@@ -152,7 +152,7 @@ void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach);
 
 /* o_line_basic.c */
-OBJECT *o_line_read(TOPLEVEL *toplevel, const const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
+OBJECT *o_line_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_line_save(TOPLEVEL *toplevel, OBJECT *object);
 void o_line_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current, int origin_x, int origin_y);
 void o_line_print_solid(TOPLEVEL *toplevel, FILE *fp, int x1, int y1, int x2, int y2, int color, int line_width, int capstyle, int length, int space, int origin_x, int origin_y);

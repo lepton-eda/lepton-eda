@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit641"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> « <a href="geda-gschem_ug-colors_styles.html" class="wikilink1" title="geda-gschem_ug-colors_styles.html">Colors and styles</a>  </td><td class="col1 centeralign">  <strong><a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">gEDA gschem User Guide</a></strong>  </td><td class="col2 rightalign">  <a href="geda-gschem_ug-slots.html" class="wikilink1" title="geda-gschem_ug-slots.html">Slots and slotting</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT641 TABLE [1-129] -->
+<h2 class="sectionedit642"><a name="attributes" id="attributes">Attributes</a></h2>
+<div class="level2">
+
+<p>
+Both <a href="geda-gschem_ug-components.html" class="wikilink1" title="geda-gschem_ug-components.html">components</a> and <a href="geda-gschem_ug-pins_nets_buses.html" class="wikilink1" title="geda-gschem_ug-pins_nets_buses.html">pins, nets and buses</a> can have <em>attributes</em> attached to them.  Attributes are <a href="geda-gschem_ug-graphics.html#text" class="wikilink1" title="geda-gschem_ug-graphics.html">text</a> in the format ”<code>name=value</code>”.  For example, nets can be named using a ”<code>netname=</code>” attribute, and components can be named using a ”<code>refdes=</code>” attribute.
+</p>
+
+<p>
+Attributes can also be added to a page without being attached to another object.  These are called <em>floating attributes</em>, and are most commonly used in symbols.  When a symbol is placed into a schematic page as a component, any floating attributes in the symbol become <em>inherited attributes</em> in the schematic.
+</p>
+
+<p>
+<p><div class="notetip">Much of the power and flexibility of the gEDA suite is accessed through the use of attributes. For a full list of standard attributes and their meanings, see the <a href="geda-master_attributes_list.html" class="wikilink1" title="geda-master_attributes_list.html">Master Attributes List</a>.
+</div></p>
+</p>
+
+<p>
+In addition to the name and value, attributes have two visibility settings.  The first controls whether the attribute <em>as a whole</em> is visible, and the second controls which parts of the attribute are shown (just the name, just the value, or both).
+</p>
+
+<p>
+There are two ways to add/edit attributes: editing them individually, or using the “Edit Attributes” window.
+</p>
+
+</div>
+<!-- EDIT642 SECTION "Attributes" [131-1372] -->
+<h3 class="sectionedit643"><a name="editing_individual_attributes" id="editing_individual_attributes">Editing individual attributes</a></h3>
+<div class="level3">
+
+<p>
+To add a single attribute to a component, pin, net or bus, <a href="geda-gschem_ug-selecting.html" class="wikilink1" title="geda-gschem_ug-selecting.html">select</a> the target object and use <strong>Add→Attribute…</strong>.  This will display the “Single Attribute Editor” window.  Enter a name and value, and set the desired visibility settings, then click <strong>OK</strong> to add the attribute.  If you use <strong>Add→Attribute…</strong> without selecting any object, the created attribute will be floating.
+</p>
+
+<p>
+To edit an individual attribute, select the attribute (not the object it&#039;s attached to) and use <strong>Edit→Edit…</strong> to display the “Single Attribute Editor” window again.  To update the attribute after making your changes, click <strong>OK</strong>.
+</p>
+
+</div>
+<!-- EDIT643 SECTION "Editing individual attributes" [1373-2049] -->
+<h3 class="sectionedit644"><a name="editing_multiple_attributes" id="editing_multiple_attributes">Editing multiple attributes</a></h3>
+<div class="level3">
+
+<p>
+A more powerful alternative is to use the “Edit Attributes” window.  To display the window, select a component, net, pin or bus, and use <strong>Edit→Edit…</strong>.
+</p>
+
+<p>
+The “Edit Attributes” window is divided into two parts.  The upper part shows all of the attributes that are currently attached to the object, and the lower part allows you to add attributes in a similar fashion to the “Single Attribute Editor”.  The window automatically updates when the selected object changes.
+</p>
+
+<p>
+In the top part of the window, each row in the attribute list shows the name and value of an attribute, and its visibility settings (“Vis?” for overall visibility, and “N” and “V” for name and value visibility respectively).  Left-click the name or value of an attribute to edit it, and press <strong>&lt;Enter&gt;</strong> or move the focus to another field to save your changes.  To cancel your changes while editing the name or value of an attribute, press <strong>&lt;Escape&gt;</strong>.
+</p>
+
+<p>
+To delete an attribute, right click on it and select <strong>Delete</strong> from the context menu.
+</p>
+
+<p>
+If the <strong>Show inherited attributes</strong> checkbox is enabled, and a component is selected, any attributes inherited by the component from the symbol it was created from are also displayed, but cannot be edited.  To add an editable copy of the inherited attribute to the component, right click on the attribute and select <strong>Promote</strong> from the context menu.
+</p>
+
+</div>
+<!-- EDIT644 SECTION "Editing multiple attributes" [2050-3458] -->
+<h3 class="sectionedit645"><a name="bulk_attribute_visibility_changes" id="bulk_attribute_visibility_changes">Bulk attribute visibility changes</a></h3>
+<div class="level3">
+
+<p>
+To change the visibility settings for several selected attributes at a time, use <strong>Attributes→Toggle Visibility</strong>, <strong>Attributes→Show Name</strong>, <strong>Attributes→Show Value</strong>, and <strong>Attributes→Show Both</strong> (which sets selected attributes to show both name and value).
+</p>
+
+<p>
+You can also change the visibility of all attributes that begin with a particular prefix using <strong>Attributes→Hide Specific Text…</strong> and <strong>Attributes→Show Specific Text…</strong>.  For example, you could enter “refdes=R” to hide all <code>refdes</code> attributes with values beginning with <code>R</code>.
+</p>
+
+</div>
+<!-- EDIT645 SECTION "Bulk attribute visibility changes" [3459-] --></body>
+</html>

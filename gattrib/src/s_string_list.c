@@ -298,6 +298,46 @@ int s_string_list_in_list(STRING_LIST *list, char *item) {
 
 
 /*------------------------------------------------------------------*/
+/*! \brief Detect item in list
+ *
+ * Look for item in the list, and return the index (-1 if absent).
+ * Intended to be a more useful variant of s_string_list_in_list.
+ *
+ * \param list pointer to the STRING_LIST struct
+ * \param item string to search for 
+ * \returns -1 if absent, index number if present
+ */
+gint s_string_list_find_in_list(STRING_LIST *list, char *item) {
+
+  gint index = 0;
+  gchar *trial_item = NULL; 
+  
+  /* First check to see if list is empty.  If empty, return -1. */
+  if (list->data == NULL) {
+    return -1;
+  }
+
+  /* Otherwise, loop through list looking for the item */
+  while (list != NULL) {
+    trial_item = (gchar *) g_strdup(list->data);        
+    if (strcmp(trial_item, item) == 0) {
+      /* Found item in list; return index. */
+      g_free(trial_item);
+      return index;
+    }
+    g_free(trial_item);
+    list = list->next;
+    index++;
+  }
+
+  /* If we are here, it's 'cause we didn't find the item 
+   * pre-existing in the list.  In this case, return -1 */
+  return -1;
+
+}
+
+
+/*------------------------------------------------------------------*/
 /*! \brief Get an item from a STRING_LIST by index
  *
  * Returns the index'th item in the string list.

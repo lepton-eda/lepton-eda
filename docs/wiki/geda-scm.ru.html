@@ -1,0 +1,567 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+<h1 class="sectionedit1959"><a name="geda_gaf_и_git" id="geda_gaf_и_git">gEDA/gaf и git</a></h1>
+<div class="level1">
+
+<p>
+В gEDA для управления исходными текстами программ используется <strong>git</strong>.
+<strong>git</strong> — это распределённая система контроля версий, которая позволяет
+каждому пользователю иметь свою собственную полную копию истории изменений.
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://git.or.cz/" class="urlextern" title="http://git.or.cz/"  rel="nofollow">Официальная веб-страница git</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.kernel.org/pub/software/scm/git/docs/" class="urlextern" title="http://www.kernel.org/pub/software/scm/git/docs/"  rel="nofollow">Интерактивная документация по git</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://en.wikipedia.org/wiki/Git_(software)" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Git_(software)">Страница википедии по git</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT1959 SECTION "gEDA/gaf и git" [1-693] -->
+<h2 class="sectionedit1960"><a name="установка_git_и_относящихся_к_нему_инструментов" id="установка_git_и_относящихся_к_нему_инструментов">Установка git и относящихся к нему инструментов</a></h2>
+<div class="level2">
+
+<p>
+Конечно, для использования репозитория необходимы основные инструменты
+<strong>git</strong>, и всегда полезна документация. Но часто для работы с <strong>git</strong> удобно
+пользоваться и другими средствами:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.kernel.org/pub/software/scm/git/docs/gitk.html" class="urlextern" title="http://www.kernel.org/pub/software/scm/git/docs/gitk.html"  rel="nofollow">gitk</a>, браузер истории репозитория</div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.procode.org/stgit/" class="urlextern" title="http://www.procode.org/stgit/"  rel="nofollow">Stacked Git</a>, для работы с наборами заплат</div>
+</li>
+</ul>
+
+<p>
+Для дистрибутивов, созданных на основе Debian:
+</p>
+<pre class="code">apt-get install git-core git-doc gitk stgit</pre>
+
+<p>
+Может быть также вам будет нужно сделать:
+</p>
+<pre class="code">apt-get install git-email git-completion</pre>
+
+<p>
+Fedora Linux:
+</p>
+<pre class="code">yum install git stgit</pre>
+
+</div>
+<!-- EDIT1960 SECTION "Установка git и относящихся к нему инструментов" [694-1633] -->
+<h2 class="sectionedit1961"><a name="изучение_git" id="изучение_git">Изучение git</a></h2>
+<div class="level2">
+
+<p>
+Главная страница документации <strong>git</strong>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.kernel.org/pub/software/scm/git/docs/" class="urlextern" title="http://www.kernel.org/pub/software/scm/git/docs/"  rel="nofollow">Официальная документация git</a></div>
+</li>
+</ul>
+
+<p>
+Руководство пользователя <strong>git</strong>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.kernel.org/pub/software/scm/git/docs/user-manual.html" class="urlextern" title="http://www.kernel.org/pub/software/scm/git/docs/user-manual.html"  rel="nofollow">Руководство пользователя git</a></div>
+</li>
+</ul>
+
+<p>
+Текущее руководство можно найти по ссылке:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://www.kernel.org/pub/software/scm/git/docs/core-tutorial.html" class="urlextern" title="http://www.kernel.org/pub/software/scm/git/docs/core-tutorial.html"  rel="nofollow">Введение в основы git</a></div>
+</li>
+</ul>
+
+<p>
+Другие замечательные руководства/веб-страницы:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://wiki.sourcemage.org/Git_Guide" class="urlextern" title="http://wiki.sourcemage.org/Git_Guide"  rel="nofollow">Руководство по git</a><br/>
+</div>
+</li>
+<li class="level1"><div class="li"> <a href="http://git.or.cz/course/index.html" class="urlextern" title="http://git.or.cz/course/index.html"  rel="nofollow">Аварийные курсы по git</a></div>
+</li>
+</ul>
+
+<p>
+Имейте в виду, что некоторые из этих руководств немного устарели и могут не
+совсем полно отражать текущий синтаксис <strong>git</strong>.
+</p>
+
+</div>
+<!-- EDIT1961 SECTION "Изучение git" [1634-2692] -->
+<h2 class="sectionedit1962"><a name="анонимный_доступ_к_репозиторию" id="анонимный_доступ_к_репозиторию">Анонимный доступ к репозиторию</a></h2>
+<div class="level2">
+
+<p>
+Точная копия репозитория <strong>geda-gaf.git</strong> (или любого репозитория, поддерживаемого на
+<a href="http://git.geda-project.org" class="urlextern" title="http://git.geda-project.org"  rel="nofollow">git.geda-project.org</a>) с использованием анонимного доступа
+<strong>git</strong>:
+</p>
+<pre class="code">git clone git://git.geda-project.org/geda-gaf.git</pre>
+
+<p>
+или
+</p>
+<pre class="code">git clone git://git.geda-project.org/pcb.git</pre>
+
+<p>
+Для других репозиториев, поддерживаемых на <code>git.geda-project.org</code>, просто измените
+последнюю часть вышеуказанной ссылки.
+</p>
+
+<p>
+Для репозиториев различных проектов существует
+<a href="http://hjemli.net/git/cgit/about/" class="urlextern" title="http://hjemli.net/git/cgit/about/"  rel="nofollow">cgit</a>-интерфейс. Обратиться
+к нему из браузера можно, набрав в строке адреса <a href="http://git.geda-project.org/" class="urlextern" title="http://git.geda-project.org/"  rel="nofollow">http://git.geda-project.org/</a> .
+</p>
+
+</div>
+<!-- EDIT1962 SECTION "Анонимный доступ к репозиторию" [2693-3651] -->
+<h2 class="sectionedit1963"><a name="доступ_к_репозиторию_с_правами_на_запись" id="доступ_к_репозиторию_с_правами_на_запись">Доступ к репозиторию с правами на запись</a></h2>
+<div class="level2">
+
+<p>
+Для доступа в <strong>git</strong> с правами разработчика вам нужно связаться с <em>DJ Delorie</em>
+для установки вашего публичного ключа <acronym title="Secure Shell">SSH</acronym>, после этого
+для отправки своих изменений можно использовать следующие адреса:
+</p>
+<pre class="code">ssh://git@git.geda-project.org/geda-gaf.git</pre>
+
+<p>
+или
+</p>
+<pre class="code">ssh://git@git.geda-project.org/pcb.git</pre>
+
+<p>
+Вам также будет необходимо отредактировать свой
+файл <em><code>~/.ssh/config</code></em> (создать его, если он не существует) и вставить
+туда следующий текст:
+</p>
+<pre class="code">Host git.geda-project.org
+Port 65</pre>
+
+<p>
+Примечание: Если у вас проблемы с отправкой изменений в основной репозиторий
+проекта, убедитесь, что у вас используется <strong>git</strong> версии 1.5 или выше.
+</p>
+
+</div>
+<!-- EDIT1963 SECTION "Доступ к репозиторию с правами на запись" [3652-4734] -->
+<h2 class="sectionedit1964"><a name="создание_и_внесение_изменений" id="создание_и_внесение_изменений">Создание и внесение изменений</a></h2>
+<div class="level2">
+
+</div>
+<!-- EDIT1964 SECTION "Создание и внесение изменений" [4735-4802] -->
+<h3 class="sectionedit1965"><a name="настройка_информации_о_пользователе" id="настройка_информации_о_пользователе">Настройка информации о пользователе</a></h3>
+<div class="level3">
+
+<p>
+Вам нужно обеспечить наличие в вашем конфигурационном файле для <strong>git</strong>
+своего имени пользователя и адреса электронной почты.
+</p>
+<pre class="code">$ git config --global user.name &quot;Здесь должно быть ваше имя&quot;
+$ git config --global user.email вы@ваш_домен.example.com</pre>
+
+</div>
+<!-- EDIT1965 SECTION "Настройка информации о пользователе" [4803-5264] -->
+<h3 class="sectionedit1966"><a name="внесение_заплат_других_участников_проекта" id="внесение_заплат_других_участников_проекта">Внесение заплат других участников проекта</a></h3>
+<div class="level3">
+
+<p>
+Если вы накладываете чью-нибудь заплату (например, из записи о заплате в
+<code>launchpad</code>), следует кое-что учесть. <strong>git</strong> сохраняет два имени и два
+адреса электронной почты для вносимого изменения: “автора” заплаты (“author”)
+и “вносящего” заплату (“committer”), так что при внесении изменений эти данные
+должны быть установлены правильно.
+</p>
+
+<p>
+Прежде всего, проверьте, что:
+</p>
+<ul>
+<li class="level1"><div class="li"> Ваша версия заплаты — последняя.</div>
+</li>
+<li class="level1"><div class="li"> Автор заплаты будет рад, что его заплату внесут (и всё ещё не работает над ней).</div>
+</li>
+<li class="level1"><div class="li"> Что вы довольны заплатой и возьмёте на себя ответственность за внесение данных изменений.</div>
+</li>
+</ul>
+
+<p>
+Для простоты начните с немодифицированного неустаревшего дерева
+(<strong><code>git status</code></strong> не должен показывать никаких изменений).
+</p>
+
+<p>
+Наложите заплату как обычно (как в примере):
+</p>
+<pre class="code">$ patch -p1 &lt; example_changes.patch</pre>
+
+<p>
+Можно также использовать команду <strong><code>git apply</code></strong>:
+</p>
+<pre class="code">$ git apply example_changes.patch</pre>
+
+<p>
+Если заплата нуждается в небольшой правке перед внесением (например, в
+изменении пробелов), проинформируйте об этом автора. Может быть он делает
+что-то другое на основе этой заплаты и пожелает знать, есть ли изменения в
+наложенной версии.
+</p>
+
+<p>
+Примечание: <em>Допустить случайную ошибку очень легко, если ваш редактор
+заменяет пробелы знаками табуляции. Не разрешайте ему этого!</em>
+</p>
+
+<p>
+Прежде чем вносить изменения, <strong>git</strong> нужно
+проинформировать о каждом изменённом, добавленном или удалённом файле. Чтобы посмотреть, какие
+файлы изменены, запустите:
+</p>
+<pre class="code">$ git status</pre>
+
+<p>
+Для скорости, командой:
+</p>
+<pre class="code">$ git add -u</pre>
+
+<p>
+можно обновить все файлы, отслеживаемые <strong>git</strong>, включая удалённые.
+</p>
+
+<p>
+Для добавления новых файлов, вносимых заплатой, используйте команду
+</p>
+<pre class="code">$ git add new_file.c</pre>
+
+<p>
+Примечание: параметры <strong><code>git add</code></strong> могут также задаваться и с помощью
+метасимволов.
+</p>
+
+<p>
+Внесите заплату, убедившись, что указаны имя и адрес электронной почты автора:
+</p>
+<pre class="code">$ git commit --author &quot;Здесь должно быть имя автора &lt;author@example.com&gt;&quot;</pre>
+
+<p>
+Альтернативно можно установить переменные окружения <code>GIT_AUTHOR_NAME</code> и
+<code>GIT_AUTHOR_EMAIL</code> перед обычным запуском команды <strong><code>git commit</code></strong>.
+</p>
+
+</div>
+<!-- EDIT1966 SECTION "Внесение заплат других участников проекта" [5265-8759] -->
+<h3 class="sectionedit1967"><a name="написание_хороших_сообщений_о_внесении_изменений" id="написание_хороших_сообщений_о_внесении_изменений">Написание хороших сообщений о внесении изменений</a></h3>
+<div class="level3">
+
+<p>
+Формат сообщения о внесении изменений следующий: <strong>строго</strong> однострочное
+изложение сути заплаты, за которым следует пустая строка, а затем длинное
+описание. Если можно уместить полное описание заплаты в одной строке, —
+прекрасно, — и не забивайте голову насчёт длинного описания.
+</p>
+
+<p>
+Однострочное описание используется для создания темы электронного письма и для
+отображения в журналах <strong>gitk</strong> и <strong>gitweb</strong>. Однострочное описание в самом
+деле полезно, потому что с его помощью можно быстро находить интересные
+изменения в этих программах.
+</p>
+
+<p>
+<strong>Не добавляйте</strong> перечень изменённых файлов в сообщения о внесении изменений.
+Эта информация очень просто добывается с помощью инструментария <strong>git</strong>.
+</p>
+
+<p>
+Пример:
+</p>
+<pre class="code">Added new GedaList class derived from GObject
+
+This abstracts a GList with API for write access. Its main use is in list
+change notification, as it emits a &quot;changed&quot; g_signal when modified.
+Read only access to the underlying GList is provided by an accessor,
+currenly implemented as a macro.</pre>
+
+</div>
+<!-- EDIT1967 SECTION "Написание хороших сообщений о внесении изменений" [8760-10427] -->
+<h3 class="sectionedit1968"><a name="операция_push_-_разрушительна" id="операция_push_-_разрушительна">Операция push - разрушительна</a></h3>
+<div class="level3">
+
+<p>
+<strong>Предупреждение: добавление изменений с помощью <em>push</em> в удалённый репозиторий
+разрушительно</strong>
+</p>
+
+<p>
+В отличие от <acronym title="Concurrent Versions System">CVS</acronym>, командой <strong><code>git-push</code></strong> изменения не просто добавляются в
+основной репозиторий, но “продвигается” локальная версия. Всегда нужно
+дважды (или даже трижды) проверить, что “продвигаемые” вами изменения в самом деле
+предназначены для основного репозитория.
+</p>
+
+</div>
+<!-- EDIT1968 SECTION "Операция push - разрушительна" [10428-11146] -->
+<h2 class="sectionedit1969"><a name="как_мне" id="как_мне">Как мне ... ?</a></h2>
+<div class="level2">
+
+<p>
+Более подробную информацию можно найти в
+<a href="http://wiki.sourcemage.org/Git_Guide" class="urlextern" title="http://wiki.sourcemage.org/Git_Guide"  rel="nofollow">Руководстве по Git</a>.
+</p>
+
+</div>
+<!-- EDIT1969 SECTION "Как мне ... ?" [11147-11330] -->
+<h3 class="sectionedit1970"><a name="получить_копию_репозитория_geda_gaf_git" id="получить_копию_репозитория_geda_gaf_git">... получить копию репозитория gEDA/gaf git?</a></h3>
+<div class="level3">
+
+<p>
+При анонимном доступе только на чтение:
+</p>
+<pre class="code">$ git clone git://git.geda-project.org/geda-gaf</pre>
+
+<p>
+Для разработчиков с доступом на чтение и запись:
+</p>
+<pre class="code">$ git clone ssh://git@git.geda-project.org/geda-gaf</pre>
+
+</div>
+<!-- EDIT1970 SECTION "... получить копию репозитория gEDA/gaf git?" [11331-11678] -->
+<h3 class="sectionedit1971"><a name="поддерживать_соответствие_своей_локальной_копии_текущей_версии" id="поддерживать_соответствие_своей_локальной_копии_текущей_версии">... поддерживать соответствие своей локальной копии текущей версии?</a></h3>
+<div class="level3">
+
+<p>
+Те, кто не собирается отправлять свои изменения в центральный репозиторий
+<strong>git</strong>, могут запустить:
+</p>
+<pre class="code">$ git pull</pre>
+
+<p>
+Однако тем из вас, кто собирается “продвигать” свои изменения в центральный
+репозиторий <strong>git</strong>, использование <strong><code>git pull</code></strong> испортит историю
+сообщениями об объединении (“Merge branch &#039;master&#039;”). Чтобы избежать этого,
+нужно запустить:
+</p>
+<pre class="code">$ git fetch
+$ git rebase origin</pre>
+
+</div>
+<!-- EDIT1971 SECTION "... поддерживать соответствие своей локальной копии текущей версии?" [11679-12436] -->
+<h3 class="sectionedit1972"><a name="внести_свои_изменения_в_локальный_репозиторий_git" id="внести_свои_изменения_в_локальный_репозиторий_git">... внести свои изменения в локальный репозиторий git?</a></h3>
+<div class="level3">
+<pre class="code">$ git commit -a</pre>
+
+<p>
+Эта команда найдёт все изменённые файлы, о которых знает <strong>git</strong> (добавленные
+с помощью <strong><code>git-add</code></strong>) и запросит у вас сообщение о внесении изменений.
+Непременно следуйте указанному выше соглашению по написанию таких сообщений,
+если планируете отправлять свои изменения в центральный репозиторий.
+</p>
+
+<p>
+Если вы хотите внести файлы из текущего каталога, или хотите внести только
+явно определённые файлы, не указывайте флаг <code>-a</code> и (или) укажите имена
+выбранных файлов в командной строке, например:
+</p>
+<pre class="code">$ git commit filename1 filename2</pre>
+
+</div>
+<!-- EDIT1972 SECTION "... внести свои изменения в локальный репозиторий git?" [12437-13480] -->
+<h3 class="sectionedit1973"><a name="отменить_все_невнесённые_локальные_изменения" id="отменить_все_невнесённые_локальные_изменения">... отменить все невнесённые локальные изменения?</a></h3>
+<div class="level3">
+<pre class="code">$ git checkout -f</pre>
+
+<p>
+Учтите, что при этом все изменения в любых файлах, отслеживаемых в
+<strong>git</strong>-репозитории, будут отвергнуты.
+</p>
+
+</div>
+<!-- EDIT1973 SECTION "... отменить все невнесённые локальные изменения?" [13481-13789] -->
+<h3 class="sectionedit1974"><a name="исправить_изменить_моё_последнее_внесение_изменений" id="исправить_изменить_моё_последнее_внесение_изменений">... исправить/изменить моё последнее внесение изменений?</a></h3>
+<div class="level3">
+<pre class="code">$ Редактирование каких-то файлов
+$ git commit --amend filename1..filenameN</pre>
+
+<p>
+Этой командой все сделанные вами изменения собираются и повторно вносятся в
+репозиторий со старым сообщением.
+</p>
+
+</div>
+<!-- EDIT1974 SECTION "... исправить/изменить моё последнее внесение изменений?" [13790-14215] -->
+<h3 class="sectionedit1975"><a name="отслеживать_ветку" id="отслеживать_ветку">... отслеживать ветку?</a></h3>
+<div class="level3">
+<pre class="code">$ git checkout --track -b &lt;локальное имя&gt; origin/&lt;удалённое имя&gt;</pre>
+
+<p>
+Этой командой создаётся ветка <em>&lt;локальное имя&gt;</em>, которая отслеживает
+удалённую ветку <em>&lt;удалённое имя&gt;</em>.
+</p>
+
+</div>
+<!-- EDIT1975 SECTION "... отслеживать ветку?" [14216-14548] -->
+<h3 class="sectionedit1976"><a name="создать_ветку_начиная_с_определённого_тега" id="создать_ветку_начиная_с_определённого_тега">... создать ветку (начиная с определённого тега)?</a></h3>
+<div class="level3">
+
+<p>
+Запустите следующие команды (для примера используется ветка <em>stable-1.4</em>):
+</p>
+<pre class="code"> $ git branch stable-1.4 1.4.0-20080127
+ $ git checkout stable-1.4
+ &lt;сделать изменения&gt;
+ $ git commit -a</pre>
+
+<p>
+Чтобы опубликовать эту ветку в центральном репозитории (требуется доступ в
+него на запись):
+</p>
+<pre class="code"> $ git push origin stable-1.4</pre>
+
+</div>
+<!-- EDIT1976 SECTION "... создать ветку (начиная с определённого тега)?" [14549-15106] -->
+<h3 class="sectionedit1977"><a name="получить_ветку_разработки_другого_разработчика" id="получить_ветку_разработки_другого_разработчика">... получить ветку разработки другого разработчика?</a></h3>
+<div class="level3">
+
+<p>
+Кроме репозитория <a href="http://git.geda-project.org/" class="urlextern" title="http://git.geda-project.org/"  rel="nofollow">http://git.geda-project.org/</a>, у нас есть его зеркало на
+<a href="http://repo.or.cz/w/geda-gaf.git" class="urlextern" title="http://repo.or.cz/w/geda-gaf.git"  rel="nofollow">http://repo.or.cz/w/geda-gaf.git</a>. Некоторые разработчики имеют свои
+ответвления (fork) данного репозитория с ветками разработки новых
+возможностей.
+</p>
+
+<p>
+Если вы хотите попробовать одну из веток с новыми возможностями, нужно
+получить её из их репозитория. Самый лёгкий способ получения ветки —
+использовать команду <strong><code>git fetch</code></strong>.
+</p>
+<pre class="code">  $ git fetch ссылка_на_репозиторий название_удалённой_ветки:название_локальной_ветки</pre>
+
+<p>
+<strong>Примеры:</strong>
+Получение ветки <em>cairo_experiment</em> от Peter C. выглядело бы так:
+</p>
+<pre class="code">  $ git fetch git://repo.or.cz/geda-gaf/pcjc2.git cairo_experiment:peters_cairo_experiment</pre>
+
+<p>
+Теперь вы можете переключиться на локальную копию ветки
+<em>peters_cairo_experiment</em> и поиграться с ней.
+</p>
+
+<p>
+Возможно также добавить несколько удалённых ответвлений в локальный
+репозиторий:
+</p>
+<pre class="code">  $ git remote add &lt;название&gt; &lt;url&gt;
+  $ git fetch &lt;название&gt;</pre>
+
+<p>
+При условии, что &lt;название&gt; уникально, у вас есть возможность следить за
+их работой, не нуждаясь в создании локальных веток. С помощью таких
+программ, как gitk, можно следить за разработкой в ветках разработки
+различных возможностей в ответвлениях разных разработчиков:
+</p>
+<pre class="code">  $ gitk --all</pre>
+
+<p>
+<strong>Примеры:</strong>
+</p>
+<pre class="code">  $ git remote add peter-b https://github.com/peter-b/geda-gaf.git
+  $ git fetch peter-b
+  $ git remote add gareth8118 https://github.com/gareth8118/geda-gaf.git
+  $ git fetch gareth8118
+  $ git remote add bert https://github.com/bert/geda-gaf.git
+  $ git fetch bert
+  $ gitk --all</pre>
+
+<p>
+Теперь gitk будет забит до отказа, но с помощью <strong><em>Файл</em></strong> →
+<strong><em>Список ссылок</em></strong> [<strong><em>File</em></strong> → <strong><em>List references</em></strong>]
+(<kbd>F2</kbd>) можно открыть диалоговое окно для более лёгкой
+навигации.
+</p>
+
+<p>
+Обновление любимых веток сократится тогда до:
+</p>
+<pre class="code">  $ git fetch --all</pre>
+
+</div>
+<!-- EDIT1977 SECTION "... получить ветку разработки другого разработчика?" [15107-17885] -->
+<h3 class="sectionedit1978"><a name="сделать_заплату_чтобы_отправить_её_разработчикам" id="сделать_заплату_чтобы_отправить_её_разработчикам">... сделать заплату, чтобы отправить её разработчикам?</a></h3>
+<div class="level3">
+
+<p>
+Самый простой способ, в котором в заплату включаются все изменения с тех пор,
+как локальный репозиторий синхронизировался с репозиторием на geda-project.org:
+</p>
+<pre class="code">$ git diff &gt; имя_файла_заплаты</pre>
+
+<p>
+Более сложный способ с большим контролем над содержимым заплаты:
+</p>
+<pre class="code">$ git add -i           # выбрать файлы для внесения изменений
+$ git status           # проверить, что будут внесены именно те изменения,
+                       # которые вы намеревались внести
+$ git commit           # внести изменения
+$ git format-patch -1  # сделать файл заплаты, основанный на данных изменениях</pre>
+
+<p>
+Последняя команда выведет имя файла, содержащего заплату. Обязательно
+посмотрите документацию по <strong>git-format-patch</strong>, чтобы получить больше
+информации по этой команде. Полученный файл может быть отправлен по
+электронной почте разработчикам, имеющим доступ на запись, и наложен ими с
+помощью <strong><code>git apply</code></strong>.
+</p>
+
+</div>
+<!-- EDIT1978 SECTION "... сделать заплату, чтобы отправить её разработчикам?" [17886-19464] -->
+<h3 class="sectionedit1979"><a name="восстановить_на_самом_деле_испорченный_локальный_репозиторий" id="восстановить_на_самом_деле_испорченный_локальный_репозиторий">... восстановить на самом деле испорченный локальный репозиторий?</a></h3>
+<div class="level3">
+
+<p>
+Прежде всего не “продвигайте” с помощью <strong><code>push</code></strong> никакой репозиторий, если вы
+думаете, что он как-то испорчен. Спросите сначала кого-нибудь более опытного в
+<strong>git</strong>.
+</p>
+
+<p>
+Во-вторых, команда, которая в самом деле спасёт вашу шкуру — это
+<strong>git-reflog</strong>. Она используется примерно так:
+</p>
+<pre class="code"> $ git reflog
+ 086908e... HEAD@{0}: cherry-pick: Last minute updates to the READMEs for all pro
+ 2a79a23... HEAD@{1}: checkout: moving to master
+ 2a79a23... HEAD@{2}: checkout: moving to master
+ ...
+ $ git reset --hard HEAD@{1}</pre>
+
+<p>
+Последняя команда (<strong><code>git reset --hard ...</code></strong>) откатит все ваши изменения к
+шагу “checkout: moving to master”.  Помните: не паникуйте! С помощью <strong>git</strong>
+многое можно починить.
+</p>
+
+</div>
+<!-- EDIT1979 SECTION "... восстановить на самом деле испорченный локальный репозиторий?" [19465-] --></body>
+</html>

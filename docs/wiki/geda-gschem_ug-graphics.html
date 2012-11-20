@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit754"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> « <a href="geda-gschem_ug-pins_nets_buses.html" class="wikilink1" title="geda-gschem_ug-pins_nets_buses.html">Pins, nets and buses</a>  </td><td class="col1 centeralign">  <strong><a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">gEDA gschem User Guide</a></strong>  </td><td class="col2 rightalign">  <a href="geda-gschem_ug-colors_styles.html" class="wikilink1" title="geda-gschem_ug-colors_styles.html">Colors and styles</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT754 TABLE [1-141] -->
+<h2 class="sectionedit755"><a name="graphics" id="graphics">Graphics</a></h2>
+<div class="level2">
+
+<p>
+There are a variety of purely <em>graphical elements</em> that can be used in gschem.  For example, these are useful for drawing symbol graphics, marginal notes or diagrams in schematics, or for highlighting particular functional sections within a larger design.  They are ignored by <a href="geda-gnetlist_ug.html" class="wikilink1" title="geda-gnetlist_ug.html">gnetlist</a>.
+</p>
+
+<p>
+When <a href="geda-gschem_ug-selecting.html" class="wikilink1" title="geda-gschem_ug-selecting.html">selected</a>, a graphical element displays one or more <em>control point</em> handles.  These can be used to edit the element by clicking on them with the left mouse button and dragging them to a new position.
+</p>
+
+<p>
+If you use the <a href="geda-gschem_ug-editing_actions.html#keybindings" class="wikilink1" title="geda-gschem_ug-editing_actions.html">keybinding</a> for creating a graphical element, the first control point to place is determined by the current position of the mouse pointer.
+</p>
+
+</div>
+<!-- EDIT755 SECTION "Graphics" [143-882] -->
+<h3 class="sectionedit756"><a name="lines" id="lines">Lines</a></h3>
+<div class="level3">
+
+<p>
+Basic <em>straight lines</em> can be added to a page using <strong>Add→Line</strong>.
+</p>
+
+</div>
+<!-- EDIT756 SECTION "Lines" [883-970] -->
+<h3 class="sectionedit757"><a name="boxes" id="boxes">Boxes</a></h3>
+<div class="level3">
+
+<p>
+A rectangular <em>box</em> can be added to a page using <strong>Add→Box</strong>.  A box is created by choosing two points at opposite corners.
+</p>
+
+</div>
+<!-- EDIT757 SECTION "Boxes" [971-1116] -->
+<h3 class="sectionedit758"><a name="arcs" id="arcs">Arcs</a></h3>
+<div class="level3">
+
+<p>
+<em>Circular arcs</em> can be added using <strong>Add→Arc</strong>.  Left-click to select a midpoint for the circular arc; this will cause the “Arc Params” window to appear.  You can then specify the radius, start angle and sweep angle for the new arc.  Click <strong>OK</strong> to create the arc.
+</p>
+
+<p>
+Arcs have three control points for editing.  To alter the radius of the arc, use the central control handle, and use the outer two handles to adjust the start and sweep angles of the arc.  You can also display the “Arc Params” window again by selecting an arc and using <strong>Edit→Edit</strong>.
+</p>
+
+</div>
+<!-- EDIT758 SECTION "Arcs" [1117-1691] -->
+<h3 class="sectionedit759"><a name="circles" id="circles">Circles</a></h3>
+<div class="level3">
+
+<p>
+<em>Circles</em> can be added to a page with <strong>Add→Circle</strong>.  Left-click once to select the location to centre the circle, and again to set the radius.  A circle has only one control point, which controls its radius.
+</p>
+
+</div>
+<!-- EDIT759 SECTION "Circles" [1692-1925] -->
+<h3 class="sectionedit760"><a name="text" id="text">Text</a></h3>
+<div class="level3">
+
+<p>
+<em>Text</em> can be added to a page using <strong>Add→Text</strong>.  This displays the “Text Entry…” dialog box, where you can enter multiline text.  Click <strong>Apply</strong> to begin placing the text, and left-click on the schematic view area to add it to the page.
+</p>
+
+<p>
+You can add an overbar to text by using the control sequence ”<code>\_</code>”, which will not appear on the page.  For example, the “B” in ”<code>CS/\_B\_</code>” will be displayed with an overbar.  If a text object is in the form ”<code>&lt;name&gt;=&lt;value&gt;</code>”, then it is an <a href="geda-gschem_ug-attributes.html" class="wikilink1" title="geda-gschem_ug-attributes.html">attribute</a>.
+</p>
+
+<p>
+To edit text, select it and use <strong>Edit→Edit Text…</strong> to display the <strong>Edit Text Properties</strong> window.  You can use this to edit the text itself, and also the <a href="geda-gschem_ug-colors_styles.html" class="wikilink1" title="geda-gschem_ug-colors_styles.html">color index</a>, font size and alignment of the text.
+</p>
+
+<p>
+The alignment setting affects the location of the text object&#039;s anchor point relative to the text itself.  To see where the anchor point of a text object is, select it and <a href="geda-gschem_ug-viewing_schematics.html" class="wikilink1" title="geda-gschem_ug-viewing_schematics.html">zoom in</a>. You will then be able to see a small “X” which shows the anchor point.
+</p>
+
+</div>
+<!-- EDIT760 SECTION "Text" [1926-2970] -->
+<h3 class="sectionedit761"><a name="pictures" id="pictures">Pictures</a></h3>
+<div class="level3">
+
+<p>
+<em>Pictures</em> display an external image on a schematic or symbol page.  To add a picture, use <strong>Add→Picture</strong>.  This will display a file selection window, where you can select an image file to insert.  If gschem cannot load the chosen file, an error message will be displayed.
+</p>
+
+<p>
+When you have chosen an image file, left click to start placing the image, and again to choose what size to draw it.
+</p>
+
+<p>
+To resize an image, select it and drag its control handles.  It will automatically be kept at the correct aspect ratio.  You can change the image to be displayed using <strong>Edit→Edit</strong>, which will display a file selection window to select a replacement image file.
+</p>
+
+<p>
+Like <a href="geda-gschem_ug-components.html" class="wikilink1" title="geda-gschem_ug-components.html">components</a>, a picture can either link to the image file it displays, or the image file can be copied (“embedded”) into the schematic or symbol file.  By default, a picture links to an image file.  You can embed an image using <strong>Edit→Embed Component/Picture</strong>, and reverse the process with <strong>Edit→Unembed Component/Picture</strong>.
+</p>
+
+<p>
+<p><div class="noteclassic">If an embedded picture cannot be matched up with an available image file, <strong>Edit→Unembed Component/Picture</strong> will not modify it.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT761 SECTION "Pictures" [2971-] --></body>
+</html>

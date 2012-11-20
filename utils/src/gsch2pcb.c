@@ -45,7 +45,7 @@ typedef struct
 {
   gchar *refdes, *value, *description, *changed_description, *changed_value;
   gchar *flags, *tail;
-  gint x, y;
+  gchar *x, *y;
   gchar *pkg_name_fix;
   gchar res_char;
 
@@ -418,13 +418,8 @@ pcb_element_line_parse (gchar * line)
   el->refdes = token (NULL, NULL, NULL);
   el->value = token (NULL, NULL, NULL);
 
-  s = token (NULL, NULL, NULL);
-  el->x = atoi (s);
-  g_free (s);
-
-  s = token (NULL, &t, NULL);
-  el->y = atoi (s);
-  g_free (s);
+  el->x = token (NULL, NULL, NULL);
+  el->y = token (NULL, &t, NULL);
 
   el->tail = g_strdup (t ? t : "");
   if ((s = strrchr (el->tail, (gint) '\n')) != NULL)
@@ -470,6 +465,8 @@ pcb_element_free (PcbElement * el)
   g_free (el->changed_value);
   g_free (el->refdes);
   g_free (el->value);
+  g_free (el->x);
+  g_free (el->y);
   g_free (el->tail);
   g_free (el->pkg_name_fix);
   g_free (el);
@@ -540,15 +537,9 @@ pcb_element_exists (PcbElement * el_test, gboolean record)
 static void
 simple_translate (PcbElement * el)
 {
-  gint factor;
 
-  if (el->new_format) {
-    factor = el->hi_res_format ? 100 : 1;
-    if (el->x > 1000 * factor)
-      el->x = 500 * factor;
-    if (el->y > 1000 * factor)
-      el->y = 500 * factor;
-  }
+  el->x=strdup("0");
+  el->y=strdup("0");
 }
 
 static gboolean
@@ -588,13 +579,13 @@ insert_element (FILE * f_out, gchar * element_file,
     if ((el = pcb_element_line_parse (s)) != NULL) {
       simple_translate (el);
       fmt = el->quoted_flags ?
-        "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %d %d%s\n" :
-        "Element%c%s \"%s\" \"%s\" \"%s\" %d %d%s\n";
+        "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
+        "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n";
 
       fprintf (f_out, fmt,
                el->res_char, el->flags, footprint, refdes, value,
                el->x, el->y, el->tail);
-      retval = TRUE;;
+      retval = TRUE;
     } else if (*s != '#')
       fputs (buf, f_out);
     pcb_element_free (el);
@@ -959,8 +950,8 @@ update_element_descriptions (gchar * pcb_file, gchar * bak)
         && (el_exists = pcb_element_exists (el, FALSE)) != NULL
         && el_exists->changed_description) {
       fmt = el->quoted_flags ?
-        "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %d %d%s\n" :
-        "Element%c%s \"%s\" \"%s\" \"%s\" %d %d%s\n";
+        "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
+        "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n";
       fprintf (f_out, fmt,
                el->res_char,
                el->flags, el_exists->changed_description,
@@ -1040,8 +1031,8 @@ prune_elements (gchar * pcb_file, gchar * bak)
     }
     if (el_exists && el_exists->changed_value) {
       fmt = el->quoted_flags ?
-        "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %d %d%s\n" :
-        "Element%c%s \"%s\" \"%s\" \"%s\" %d %d%s\n";
+        "Element%c\"%s\" \"%s\" \"%s\" \"%s\" %s %s%s\n" :
+        "Element%c%s \"%s\" \"%s\" \"%s\" %s %s%s\n";
       fprintf (f_out, fmt,
                el->res_char, el->flags, el->description, el->refdes,
                el_exists->changed_value, el->x, el->y, el->tail);

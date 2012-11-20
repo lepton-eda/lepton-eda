@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-19 18:45+0000\n"
-"PO-Revision-Date: 2010-02-06 22:10+0000\n"
+"POT-Creation-Date: 2012-11-17 18:51+0000\n"
+"PO-Revision-Date: 2012-01-27 14:12+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
+"X-Generator: Launchpad (build 16265)\n"
 
 #: libgeda/data/libgeda.xml.in:3
 msgid "gEDA circuit schematic"
@@ -52,7 +52,7 @@ msgstr ""
 msgid "File %s is read-only"
 msgstr ""
 
-#: libgeda/src/a_basic.c:427
+#: libgeda/src/a_basic.c:423
 #, c-format
 msgid ""
 "Read unexpected attach symbol start marker in [%s] :\n"
@@ -60,7 +60,7 @@ msgid ""
 "%s<<\n"
 msgstr ""
 
-#: libgeda/src/a_basic.c:446
+#: libgeda/src/a_basic.c:440
 #, c-format
 msgid ""
 "Read unexpected embedded symbol start marker in [%s] :\n"
@@ -68,7 +68,7 @@ msgid ""
 "%s<<\n"
 msgstr ""
 
-#: libgeda/src/a_basic.c:477
+#: libgeda/src/a_basic.c:471
 #, c-format
 msgid ""
 "Read unexpected embedded symbol end marker in [%s] :\n"
@@ -76,7 +76,7 @@ msgid ""
 "%s<<\n"
 msgstr ""
 
-#: libgeda/src/a_basic.c:512
+#: libgeda/src/a_basic.c:506
 #, c-format
 msgid ""
 "Read an old format sym/sch file!\n"
@@ -84,7 +84,7 @@ msgid ""
 "[%s]\n"
 msgstr ""
 
-#: libgeda/src/a_basic.c:518
+#: libgeda/src/a_basic.c:512
 #, c-format
 msgid ""
 "Read garbage in [%s] :\n"
@@ -113,7 +113,7 @@ msgstr ""
 
 #: libgeda/src/f_basic.c:271
 msgid "I could not guess if it is newer, so you have to do it manually.\n"
-msgstr ""
+msgstr "我無法確定這個檔案是否比較新，你必須自己決定。\n"
 
 #: libgeda/src/f_basic.c:273
 msgid ""
@@ -133,6 +133,9 @@ msgid ""
 "Run gschem and correct the situation.\n"
 "\n"
 msgstr ""
+"\n"
+"啟動 gschem 來修正這個問題。\n"
+"\n"
 
 #: libgeda/src/f_basic.c:374
 #, c-format
@@ -147,12 +150,12 @@ msgstr ""
 #: libgeda/src/f_basic.c:411
 #, c-format
 msgid "Can't save backup file: %s."
-msgstr ""
+msgstr "無法儲存備份檔：%s."
 
 #: libgeda/src/f_basic.c:421
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
-msgstr ""
+msgstr "無法設定備份檔[%s]為唯讀\n"
 
 #: libgeda/src/f_basic.c:480
 #, c-format
@@ -183,21 +186,21 @@ msgid ""
 "Error during writing of the output postscript file in f_print_header()\n"
 msgstr ""
 
-#: libgeda/src/f_print.c:201
+#: libgeda/src/f_print.c:202
 msgid "Giving up on printing\n"
 msgstr ""
 
-#: libgeda/src/f_print.c:371
+#: libgeda/src/f_print.c:375
 #, c-format
 msgid "Could not open [%s] for printing\n"
 msgstr ""
 
-#: libgeda/src/f_print.c:405
+#: libgeda/src/f_print.c:409
 #, c-format
 msgid "Could not execute command [%s] for printing\n"
 msgstr ""
 
-#: libgeda/src/f_print.c:678
+#: libgeda/src/f_print.c:682
 msgid "Too many UTF-8 characters, cannot print\n"
 msgstr ""
 
@@ -257,7 +260,7 @@ msgstr ""
 #: libgeda/src/o_text_basic.c:425
 #, c-format
 msgid "Found an invalid color [ %s ]\n"
-msgstr ""
+msgstr "找尋到無效的顏色 [%s]\n"
 
 #: libgeda/src/o_arc_basic.c:283 libgeda/src/o_box_basic.c:328
 #: libgeda/src/o_bus_basic.c:183 libgeda/src/o_circle_basic.c:290
@@ -342,6 +345,8 @@ msgid ""
 "Component not found:\n"
 " %s"
 msgstr ""
+"找不到以下元件：\n"
+"        %s"
 
 #: libgeda/src/o_complex_basic.c:654
 msgid "Failed to parse complex object"
@@ -531,35 +536,35 @@ msgstr ""
 msgid "Picture %p has invalid angle %i\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:959
+#: libgeda/src/o_picture.c:957
 #, c-format
 msgid "Picture [%s] has no image data.\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:960
+#: libgeda/src/o_picture.c:958
 msgid "Falling back to file loading. Picture is still unembedded.\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:968
+#: libgeda/src/o_picture.c:966
 #, c-format
 msgid "Picture [%s] has been embedded\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:992
+#: libgeda/src/o_picture.c:990
 #, c-format
 msgid "Failed to load image from file [%s]: %s\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:994
+#: libgeda/src/o_picture.c:992
 msgid "Picture is still embedded.\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:1002
+#: libgeda/src/o_picture.c:1000
 #, c-format
 msgid "Picture [%s] has been unembedded\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:1238
+#: libgeda/src/o_picture.c:1236
 #, c-format
 msgid "Failed to load fallback image %s: %s.\n"
 msgstr ""
@@ -708,11 +713,11 @@ msgid ""
 "  \"%s\"\n"
 msgstr ""
 
-#: libgeda/src/s_hierarchy.c:187
+#: libgeda/src/s_hierarchy.c:194
 msgid "There are no schematics above the current one!\n"
 msgstr ""
 
-#: libgeda/src/s_hierarchy.c:267
+#: libgeda/src/s_hierarchy.c:274
 #, c-format
 msgid "ERROR in s_hierarchy_traverse: schematic not found: %s\n"
 msgstr ""
@@ -730,19 +735,19 @@ msgstr ""
 #: libgeda/src/s_page.c:499
 #, c-format
 msgid "Saved [%s]\n"
-msgstr ""
+msgstr "儲存 [%s]\n"
 
 #: libgeda/src/s_page.c:505
 #, c-format
 msgid "Could NOT save [%s]\n"
-msgstr ""
+msgstr "無法儲存[%s]\n"
 
-#: libgeda/src/s_slib.c:176
+#: libgeda/src/s_slib.c:171
 #, c-format
 msgid "Found [%s]\n"
 msgstr ""
 
-#: libgeda/src/s_slib.c:186
+#: libgeda/src/s_slib.c:181
 #, c-format
 msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr ""

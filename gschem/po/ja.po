@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-01-19 18:45+0000\n"
-"PO-Revision-Date: 2010-02-14 01:03+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-11-18 15:53+0000\n"
+"PO-Revision-Date: 2012-01-31 12:07+0000\n"
+"Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2012-11-14 16:52+0000\n"
+"X-Generator: Launchpad (build 16265)\n"
 
 #: gschem/src/a_zoom.c:212
 msgid "Zoom too small!  Cannot zoom further.\n"
@@ -30,77 +30,77 @@ msgstr ""
 msgid "Invalid text name/value visibility ~A."
 msgstr ""
 
-#: gschem/src/g_rc.c:311
+#: gschem/src/g_rc.c:312
 #, c-format
 msgid "Invalid zoomfactor [%d] passed to %s\n"
 msgstr "無効な拡大率[%d]が%sに指定されました。\n"
 
-#: gschem/src/g_rc.c:457
+#: gschem/src/g_rc.c:458
 #, c-format
 msgid "Invalid size [%d] passed to text-size\n"
 msgstr "無効なサイズ[%d]がtext-sizeに指定されました。\n"
 
-#: gschem/src/g_rc.c:500
+#: gschem/src/g_rc.c:501
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
 msgstr "無効なサイズ[%d]がsnap-sizeに指定されました。\n"
 
-#: gschem/src/g_rc.c:957
+#: gschem/src/g_rc.c:958
 #, c-format
 msgid "Invalid num levels [%d] passed to undo-levels\n"
 msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
 
-#: gschem/src/g_rc.c:1219
+#: gschem/src/g_rc.c:1220
 #, c-format
 msgid "Invalid size [%d] passed to bus-ripper-size\n"
 msgstr "無効なサイズ[%d]がbus-ripperに指定されました。\n"
 
-#: gschem/src/g_rc.c:1294
+#: gschem/src/g_rc.c:1295
 #, c-format
 msgid "Invalid dot size [%d] passed to dots-grid-dot-size\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1335
+#: gschem/src/g_rc.c:1336
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to dots-grid-fixed-threshold\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1361
+#: gschem/src/g_rc.c:1362
 #, c-format
 msgid "Invalid pixel spacing [%d] passed to mesh-grid-display-threshold\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1386
+#: gschem/src/g_rc.c:1387
 #, c-format
 msgid "Invalid offset [%d] passed to add-attribute-offset\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1410
+#: gschem/src/g_rc.c:1411
 #, c-format
 msgid "Invalid number of seconds [%d] passed to auto-save-interval\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1434
+#: gschem/src/g_rc.c:1435
 #, c-format
 msgid "Invalid gain [%d] passed to mousepan-gain\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1457
+#: gschem/src/g_rc.c:1458
 #, c-format
 msgid "Invalid gain [%d] passed to keyboardpan-gain\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1504
+#: gschem/src/g_rc.c:1505
 #, c-format
 msgid "Invalid number of pixels [%d] passed to select-slack-pixels\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1530
+#: gschem/src/g_rc.c:1531
 #, c-format
 msgid "Invalid gain [%d] passed to zoom-gain\n"
 msgstr ""
 
-#: gschem/src/g_rc.c:1555
+#: gschem/src/g_rc.c:1556
 #, c-format
 msgid "Invalid number of steps [%d] scrollpan-steps\n"
 msgstr ""
@@ -118,12 +118,12 @@ msgstr ""
 msgid "Found invalid gschem window smob ~S"
 msgstr ""
 
-#: gschem/src/gschem.c:186
+#: gschem/src/gschem.c:175
 #, c-format
 msgid "gEDA/gschem version %s%s.%s\n"
 msgstr ""
 
-#: gschem/src/gschem.c:189
+#: gschem/src/gschem.c:178
 msgid ""
 "gEDA/gschem comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
 "details.\n"
@@ -131,14 +131,14 @@ msgstr ""
 "gEDA/gschemは完全に無保証で提供されます。詳しくはCOPYINGファイルをご覧くださ"
 "い。\n"
 
-#: gschem/src/gschem.c:191
+#: gschem/src/gschem.c:180
 msgid ""
 "This is free software, and you are welcome to redistribute it under certain\n"
 msgstr ""
 "これはフリーソフトウェアであり、ある条件の下で再頒布することが奨励されていま"
 "す。\n"
 
-#: gschem/src/gschem.c:193
+#: gschem/src/gschem.c:182
 msgid ""
 "conditions; please see the COPYING file for more details.\n"
 "\n"
@@ -146,17 +146,17 @@ msgstr ""
 "詳しくはCOPYINGファイルをご覧ください。\n"
 "\n"
 
-#: gschem/src/gschem.c:196
+#: gschem/src/gschem.c:185
 #, c-format
 msgid "This is the MINGW32 port.\n"
 msgstr "MIGW32版です。\n"
 
-#: gschem/src/gschem.c:200
+#: gschem/src/gschem.c:189
 #, c-format
 msgid "Current locale settings: %s\n"
 msgstr ""
 
-#: gschem/src/gschem.c:222
+#: gschem/src/gschem.c:211
 msgid ""
 "You must set the GEDADATA environment variable!\n"
 "\n"
@@ -164,17 +164,17 @@ msgid ""
 "environment variable to point to the correct location.\n"
 msgstr ""
 
-#: gschem/src/gschem.c:263
+#: gschem/src/gschem.c:248
 #, c-format
 msgid "Couldn't find init scm file [%s]\n"
 msgstr ""
 
-#: gschem/src/gschem.c:267
+#: gschem/src/gschem.c:252
 #, c-format
 msgid "Read init scm file [%s]\n"
 msgstr "初期化scmファイルを読み込んでいます。[%s]\n"
 
-#: gschem/src/gschem.c:271
+#: gschem/src/gschem.c:256
 #, c-format
 msgid "Failed to read init scm file [%s]\n"
 msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
@@ -292,7 +292,7 @@ msgstr ""
 
 #: gschem/src/i_basic.c:142 gschem/lib/system-gschemrc.scm:1403
 msgid "Multiple Copy Mode"
-msgstr ""
+msgstr "複数コピーモード"
 
 #: gschem/src/i_basic.c:168
 msgid "Show Hidden"
@@ -310,7 +310,7 @@ msgstr ""
 msgid "Action"
 msgstr "アクション"
 
-#: gschem/src/i_basic.c:260 gschem/src/x_dialog.c:2317
+#: gschem/src/i_basic.c:260 gschem/src/x_dialog.c:2325
 #: gschem/src/x_window.c:493
 msgid "Stroke"
 msgstr "ストローク"
@@ -395,7 +395,7 @@ msgstr "回転"
 msgid "Mirror"
 msgstr "反転"
 
-#: gschem/src/i_callbacks.c:912 gschem/src/x_dialog.c:2320
+#: gschem/src/i_callbacks.c:912 gschem/src/x_dialog.c:2328
 #: gschem/lib/system-gschemrc.scm:1415
 msgid "Lock"
 msgstr "ロック"
@@ -404,7 +404,7 @@ msgstr "ロック"
 msgid "Unlock"
 msgstr "ロック解除"
 
-#: gschem/src/i_callbacks.c:948 gschem/src/x_dialog.c:1738
+#: gschem/src/i_callbacks.c:948 gschem/src/x_dialog.c:1746
 msgid "Translate"
 msgstr "転送"
 
@@ -535,17 +535,17 @@ msgid "Component"
 msgstr "部品"
 
 #: gschem/src/i_callbacks.c:2314 gschem/src/i_callbacks.c:2333
-#: gschem/src/x_dialog.c:2290
+#: gschem/src/x_dialog.c:2298
 msgid "Attribute"
 msgstr "アトリビュート"
 
 #: gschem/src/i_callbacks.c:2355 gschem/src/i_callbacks.c:2382
-#: gschem/src/x_dialog.c:2287
+#: gschem/src/x_dialog.c:2295
 msgid "Net"
 msgstr "ネット"
 
 #: gschem/src/i_callbacks.c:2426 gschem/src/i_callbacks.c:2453
-#: gschem/src/x_dialog.c:2305 gschem/src/x_window.c:379
+#: gschem/src/x_dialog.c:2313 gschem/src/x_window.c:379
 msgid "Bus"
 msgstr "バス"
 
@@ -566,7 +566,7 @@ msgid "Arc"
 msgstr "円弧"
 
 #: gschem/src/i_callbacks.c:2749 gschem/src/i_callbacks.c:2772
-#: gschem/src/x_dialog.c:2278
+#: gschem/src/x_dialog.c:2286
 msgid "Pin"
 msgstr "ピン"
 
@@ -805,9 +805,9 @@ msgid "Picture"
 msgstr ""
 
 #: gschem/src/o_picture.c:544
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to replace pictures: %s"
-msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
+msgstr ""
 
 #: gschem/src/o_slot.c:81
 msgid "Slot attribute malformed\n"
@@ -825,7 +825,7 @@ msgstr "この部品にスロットは許可されていません。\n"
 msgid "New slot number out of range\n"
 msgstr "スロット番号が範囲を越えています。\n"
 
-#: gschem/src/o_undo.c:303
+#: gschem/src/o_undo.c:307
 msgid "Undo/Redo disabled in rc file\n"
 msgstr "アンドゥ/リドゥはrcファイルで無効に設定されています。\n"
 
@@ -851,15 +851,15 @@ msgid ""
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
-"Report bugs to <geda-bug@seul.org>\n"
-"gEDA/gaf homepage: <http://gpleda.org>\n"
+"Report bugs at <https://bugs.launchpad.net/geda>\n"
+"gEDA/gaf homepage: <http://www.geda-project.org/>\n"
 msgstr ""
 
 #: gschem/src/parsecmd.c:116
 #, c-format
 msgid ""
 "gEDA %s (g%.7s)\n"
-"Copyright (C) 1998-2011 gEDA developers\n"
+"Copyright (C) 1998-2012 gEDA developers\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"
 "included in the gEDA distribution.\n"
@@ -920,8 +920,8 @@ msgstr ""
 msgid "All"
 msgstr "すべて"
 
-#: gschem/src/x_attribedit.c:464 gschem/src/x_compselect.c:920
-#: gschem/src/x_compselect.c:1034
+#: gschem/src/x_attribedit.c:464 gschem/src/x_compselect.c:922
+#: gschem/src/x_compselect.c:1036
 msgid "Components"
 msgstr "部品"
 
@@ -1078,48 +1078,48 @@ msgstr "無効な色の指定です。 : %d\n"
 msgid "Tried to get an invalid outline color: %d\n"
 msgstr ""
 
-#: gschem/src/x_compselect.c:1064
+#: gschem/src/x_compselect.c:1066
 msgid "Filter:"
 msgstr ""
 
-#: gschem/src/x_compselect.c:1167 gschem/src/x_dialog.c:3639
+#: gschem/src/x_compselect.c:1169 gschem/src/x_dialog.c:3653
 #: gschem/src/x_multiattrib.c:1839
 msgid "Name"
 msgstr "名前"
 
-#: gschem/src/x_compselect.c:1176 gschem/src/x_multiattrib.c:1863
+#: gschem/src/x_compselect.c:1178 gschem/src/x_multiattrib.c:1863
 msgid "Value"
 msgstr "値"
 
-#: gschem/src/x_compselect.c:1215
+#: gschem/src/x_compselect.c:1217
 msgid "Default behavior - reference component"
 msgstr ""
 
-#: gschem/src/x_compselect.c:1218
+#: gschem/src/x_compselect.c:1220
 msgid "Embed component in schematic"
 msgstr ""
 
-#: gschem/src/x_compselect.c:1221
+#: gschem/src/x_compselect.c:1223
 msgid "Include component as individual objects"
 msgstr ""
 
-#: gschem/src/x_compselect.c:1378
+#: gschem/src/x_compselect.c:1380
 msgid "Select Component..."
 msgstr "部品選択..."
 
-#: gschem/src/x_compselect.c:1401
+#: gschem/src/x_compselect.c:1403
 msgid "In Use"
 msgstr ""
 
-#: gschem/src/x_compselect.c:1405
+#: gschem/src/x_compselect.c:1407
 msgid "Libraries"
 msgstr "ライブラリ"
 
-#: gschem/src/x_compselect.c:1414 gschem/src/x_fileselect.c:122
+#: gschem/src/x_compselect.c:1416 gschem/src/x_fileselect.c:122
 msgid "Preview"
 msgstr "プレビュー"
 
-#: gschem/src/x_compselect.c:1442
+#: gschem/src/x_compselect.c:1444
 msgid "Attributes"
 msgstr "アトリビュート"
 
@@ -1219,97 +1219,97 @@ msgstr "ファントム"
 
 #: gschem/src/x_dialog.c:594 gschem/src/x_dialog.c:691
 #: gschem/src/x_dialog.c:700 gschem/src/x_dialog.c:709
-#: gschem/src/x_dialog.c:810 gschem/src/x_dialog.c:812
-#: gschem/src/x_dialog.c:814 gschem/src/x_dialog.c:1040
-#: gschem/src/x_dialog.c:1143 gschem/src/x_dialog.c:1152
-#: gschem/src/x_dialog.c:1161 gschem/src/x_dialog.c:1170
-#: gschem/src/x_dialog.c:1179 gschem/src/x_dialog.c:1292
-#: gschem/src/x_dialog.c:1294 gschem/src/x_dialog.c:1296
-#: gschem/src/x_dialog.c:1298 gschem/src/x_dialog.c:1300
+#: gschem/src/x_dialog.c:810 gschem/src/x_dialog.c:813
+#: gschem/src/x_dialog.c:816 gschem/src/x_dialog.c:1043
+#: gschem/src/x_dialog.c:1146 gschem/src/x_dialog.c:1155
+#: gschem/src/x_dialog.c:1164 gschem/src/x_dialog.c:1173
+#: gschem/src/x_dialog.c:1182 gschem/src/x_dialog.c:1295
+#: gschem/src/x_dialog.c:1298 gschem/src/x_dialog.c:1301
+#: gschem/src/x_dialog.c:1304 gschem/src/x_dialog.c:1307
 msgid "*unchanged*"
 msgstr ""
 
-#: gschem/src/x_dialog.c:918
+#: gschem/src/x_dialog.c:921
 msgid "Edit Line Width & Type"
 msgstr "線種と幅編集"
 
-#: gschem/src/x_dialog.c:957 gschem/src/x_print.c:307
+#: gschem/src/x_dialog.c:960 gschem/src/x_print.c:307
 msgid "Type:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:961
+#: gschem/src/x_dialog.c:964
 msgid "Width:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:965
+#: gschem/src/x_dialog.c:968
 msgid "Dash Length:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:969
+#: gschem/src/x_dialog.c:972
 msgid "Dash Space:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:1036
+#: gschem/src/x_dialog.c:1039
 msgid "Hollow"
 msgstr "空洞"
 
-#: gschem/src/x_dialog.c:1037
+#: gschem/src/x_dialog.c:1040
 msgid "Filled"
 msgstr "塗りつぶし"
 
-#: gschem/src/x_dialog.c:1038
+#: gschem/src/x_dialog.c:1041
 msgid "Mesh"
 msgstr "メッシュ"
 
-#: gschem/src/x_dialog.c:1039
+#: gschem/src/x_dialog.c:1042
 msgid "Hatch"
 msgstr "ハッチ"
 
-#: gschem/src/x_dialog.c:1408
+#: gschem/src/x_dialog.c:1416
 msgid "Edit Fill Type"
 msgstr "塗りつぶしを編集"
 
-#: gschem/src/x_dialog.c:1447
+#: gschem/src/x_dialog.c:1455
 msgid "Fill Type:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:1451
+#: gschem/src/x_dialog.c:1459
 msgid "Line Width:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:1455
+#: gschem/src/x_dialog.c:1463
 msgid "Angle 1:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:1459
+#: gschem/src/x_dialog.c:1467
 msgid "Pitch 1:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:1463
+#: gschem/src/x_dialog.c:1471
 msgid "Angle 2:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:1467
+#: gschem/src/x_dialog.c:1475
 msgid "Pitch 2:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:1594
+#: gschem/src/x_dialog.c:1602
 msgid "Arc Params"
 msgstr "円弧パラメータ"
 
-#: gschem/src/x_dialog.c:1635
+#: gschem/src/x_dialog.c:1643
 msgid "Arc Radius:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:1643
+#: gschem/src/x_dialog.c:1651
 msgid "Start Angle:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:1651
+#: gschem/src/x_dialog.c:1659
 msgid "Degrees of Sweep:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:1769
+#: gschem/src/x_dialog.c:1777
 msgid ""
 "Offset to translate?\n"
 "(0 for origin)"
@@ -1317,199 +1317,199 @@ msgstr ""
 "転送しますか?\n"
 "(0で原点)"
 
-#: gschem/src/x_dialog.c:1837
+#: gschem/src/x_dialog.c:1845
 msgid "Text Size"
 msgstr "テキストサイズ"
 
-#: gschem/src/x_dialog.c:1867
+#: gschem/src/x_dialog.c:1875
 msgid "Enter new text size:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:1943
+#: gschem/src/x_dialog.c:1951
 msgid "Snap Size"
 msgstr ""
 
-#: gschem/src/x_dialog.c:1973
+#: gschem/src/x_dialog.c:1981
 msgid "Enter new snap grid spacing:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2050
+#: gschem/src/x_dialog.c:2058
 msgid "Edit slot number"
 msgstr "スロット番号編集"
 
-#: gschem/src/x_dialog.c:2081
+#: gschem/src/x_dialog.c:2089
 msgid "Edit slot number:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2122
+#: gschem/src/x_dialog.c:2130
 #, c-format
 msgid "%s (g%.7s)"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2143
+#: gschem/src/x_dialog.c:2151
 msgid "About gschem"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2144
+#: gschem/src/x_dialog.c:2152
 msgid "gEDA: GPL Electronic Design Automation"
 msgstr ""
 
 #. TRANSLATORS: "ChangeLog" is a literal filename; please don't translate it.
-#: gschem/src/x_dialog.c:2147
+#: gschem/src/x_dialog.c:2155
 msgid ""
-"Copyright © 1998-2011 Ales Hvezda <ahvezda@geda.seul.org>\n"
-"Copyright © 1998-2011 gEDA Contributors (see ChangeLog for details)"
+"Copyright © 1998-2012 Ales Hvezda <ahvezda@geda.seul.org>\n"
+"Copyright © 1998-2012 gEDA Contributors (see ChangeLog for details)"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2206
+#: gschem/src/x_dialog.c:2214
 msgid "Coords"
 msgstr "座標"
 
-#: gschem/src/x_dialog.c:2227
+#: gschem/src/x_dialog.c:2235
 msgid "Screen"
 msgstr "スクリーン"
 
-#: gschem/src/x_dialog.c:2236
+#: gschem/src/x_dialog.c:2244
 msgid "World"
 msgstr "ワールド"
 
-#: gschem/src/x_dialog.c:2275
+#: gschem/src/x_dialog.c:2283
 msgid "Background"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2281
+#: gschem/src/x_dialog.c:2289
 msgid "Net endpoint"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2284
+#: gschem/src/x_dialog.c:2292
 msgid "Graphic"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2293
+#: gschem/src/x_dialog.c:2301
 msgid "Logic bubble"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2296
+#: gschem/src/x_dialog.c:2304
 msgid "Grid point"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2299
+#: gschem/src/x_dialog.c:2307
 msgid "Detached attribute"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2302 gschem/src/x_window.c:387
+#: gschem/src/x_dialog.c:2310 gschem/src/x_window.c:387
 msgid "Text"
 msgstr "テキスト"
 
-#: gschem/src/x_dialog.c:2308
+#: gschem/src/x_dialog.c:2316
 msgid "Selection"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2311
+#: gschem/src/x_dialog.c:2319
 msgid "Bounding box"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2314
+#: gschem/src/x_dialog.c:2322
 msgid "Zoom box"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2323
+#: gschem/src/x_dialog.c:2331
 msgid "Output background"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2326
+#: gschem/src/x_dialog.c:2334
 msgid "Net junction"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2329
+#: gschem/src/x_dialog.c:2337
 msgid "Mesh grid major"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2332
+#: gschem/src/x_dialog.c:2340
 msgid "Mesh grid minor"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2335
+#: gschem/src/x_dialog.c:2343
 msgid "Unknown"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2486
+#: gschem/src/x_dialog.c:2494
 #, c-format
 msgid "ERROR: NULL object in color_edit_dialog_apply!\n"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2530
+#: gschem/src/x_dialog.c:2538
 msgid "Color Edit"
 msgstr "色編集"
 
-#: gschem/src/x_dialog.c:2561
+#: gschem/src/x_dialog.c:2569
 msgid "Object color:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2614
+#: gschem/src/x_dialog.c:2622
 msgid "Hotkeys"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2654
+#: gschem/src/x_dialog.c:2662
 msgid "Function"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2661
+#: gschem/src/x_dialog.c:2669
 msgid "Keystroke(s)"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2967
+#: gschem/src/x_dialog.c:2977
 msgid "Find Text"
 msgstr ""
 
-#: gschem/src/x_dialog.c:2998
+#: gschem/src/x_dialog.c:3008
 msgid "Text to find:"
 msgstr "検索テキスト"
 
-#: gschem/src/x_dialog.c:3008
+#: gschem/src/x_dialog.c:3018
 msgid "descend into hierarchy"
 msgstr "下の階層も検索"
 
-#: gschem/src/x_dialog.c:3073
+#: gschem/src/x_dialog.c:3084
 msgid "Hide Text"
 msgstr ""
 
-#: gschem/src/x_dialog.c:3104
+#: gschem/src/x_dialog.c:3115
 msgid "Hide text starting with:"
 msgstr "隠しテキスト"
 
-#: gschem/src/x_dialog.c:3173
+#: gschem/src/x_dialog.c:3185
 msgid "Show Text"
 msgstr ""
 
-#: gschem/src/x_dialog.c:3204
+#: gschem/src/x_dialog.c:3216
 msgid "Show text starting with:"
 msgstr "テキスト"
 
-#: gschem/src/x_dialog.c:3661
+#: gschem/src/x_dialog.c:3675
 msgid "S_elect the schematics you want to save:"
 msgstr ""
 
-#: gschem/src/x_dialog.c:3756
+#: gschem/src/x_dialog.c:3770
 #, c-format
 msgid "Save the changes to schematic \"%s\" before closing?"
 msgstr ""
 
-#: gschem/src/x_dialog.c:3762
+#: gschem/src/x_dialog.c:3776
 #, c-format
 msgid ""
 "There are %d schematics with unsaved changes. Save changes before closing?"
 msgstr ""
 
-#: gschem/src/x_dialog.c:3791
+#: gschem/src/x_dialog.c:3805
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr ""
 
-#: gschem/src/x_dialog.c:3811
+#: gschem/src/x_dialog.c:3825
 msgid "_Close without saving"
 msgstr ""
 
-#: gschem/src/x_dialog.c:4147
+#: gschem/src/x_dialog.c:4161
 #, c-format
 msgid ""
 "<span weight=\"bold\" size=\"larger\">The input attribute \"%s\" is invalid\n"
@@ -1520,19 +1520,19 @@ msgid ""
 "The value cannot start with a space."
 msgstr ""
 
-#: gschem/src/x_dialog.c:4149
+#: gschem/src/x_dialog.c:4163
 msgid "Invalid Attribute"
 msgstr ""
 
-#: gschem/src/x_dialog.c:4185
+#: gschem/src/x_dialog.c:4199
 msgid "Pin type"
 msgstr ""
 
-#: gschem/src/x_dialog.c:4209
+#: gschem/src/x_dialog.c:4223
 msgid "Net pin"
 msgstr ""
 
-#: gschem/src/x_dialog.c:4211
+#: gschem/src/x_dialog.c:4225
 msgid "Bus pin (graphical)"
 msgstr ""
 
@@ -2058,9 +2058,8 @@ msgid "Error while trying to save"
 msgstr "保存中にエラー発生"
 
 #: gschem/src/x_window.c:873
-#, fuzzy
 msgid "Failed to save file"
-msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
+msgstr ""
 
 #: gschem/src/x_window.c:884
 #, c-format
@@ -2096,23 +2095,23 @@ msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1368
 msgid "_New"
-msgstr ""
+msgstr "新規(_N)"
 
 #: gschem/lib/system-gschemrc.scm:1369
 msgid "_Open..."
-msgstr ""
+msgstr "開く(_O)..."
 
 #: gschem/lib/system-gschemrc.scm:1371
 msgid "Open Recen_t"
-msgstr ""
+msgstr "最近使用したファイル(_T)"
 
 #: gschem/lib/system-gschemrc.scm:1373
 msgid "_Save"
-msgstr ""
+msgstr "保存(_S)"
 
 #: gschem/lib/system-gschemrc.scm:1374
 msgid "Save _As..."
-msgstr ""
+msgstr "別名で保存(_A)..."
 
 #: gschem/lib/system-gschemrc.scm:1375
 msgid "Save All"
@@ -2120,62 +2119,59 @@ msgstr "すべて保存"
 
 #: gschem/lib/system-gschemrc.scm:1376 gschem/lib/system-gschemrc.scm:1469
 msgid "_Revert"
-msgstr ""
+msgstr "再読み込み(_R)"
 
 #: gschem/lib/system-gschemrc.scm:1378
 msgid "_Print..."
-msgstr ""
+msgstr "印刷(_P)..."
 
 #: gschem/lib/system-gschemrc.scm:1379
 msgid "Write _image..."
-msgstr ""
+msgstr "画像として保存(_I)..."
 
 #: gschem/lib/system-gschemrc.scm:1383
 msgid "New Window"
 msgstr "新規ウィンドウ"
 
 #: gschem/lib/system-gschemrc.scm:1384
-#, fuzzy
 msgid "_Close Window"
-msgstr "ウィンドウを閉じる"
+msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1385
 msgid "_Quit"
-msgstr ""
+msgstr "終了(_Q)"
 
 #: gschem/lib/system-gschemrc.scm:1391
 msgid "_Undo"
-msgstr ""
+msgstr "元に戻す(_U)"
 
 #: gschem/lib/system-gschemrc.scm:1392
 msgid "_Redo"
-msgstr ""
+msgstr "やり直す(_R)"
 
 #: gschem/lib/system-gschemrc.scm:1394
 msgid "Cu_t"
-msgstr ""
+msgstr "切り取り(_T)"
 
 #: gschem/lib/system-gschemrc.scm:1395
 msgid "_Copy"
-msgstr ""
+msgstr "コピー(_C)"
 
 #: gschem/lib/system-gschemrc.scm:1396
 msgid "_Paste"
-msgstr ""
+msgstr "貼り付け(_P)"
 
 #: gschem/lib/system-gschemrc.scm:1397
 msgid "_Delete"
-msgstr ""
+msgstr "削除(_D)"
 
 #: gschem/lib/system-gschemrc.scm:1400
-#, fuzzy
 msgid "Select All"
-msgstr "選択"
+msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1401
-#, fuzzy
 msgid "Deselect"
-msgstr "選択"
+msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1405
 msgid "Rotate 90 Mode"
@@ -2211,15 +2207,15 @@ msgstr "シンボル転送..."
 
 #: gschem/lib/system-gschemrc.scm:1418
 msgid "Invoke Macro"
-msgstr ""
+msgstr "マクロの実行"
 
 #: gschem/lib/system-gschemrc.scm:1419
 msgid "Embed Component/Picture"
-msgstr ""
+msgstr "画像・コンポーネントの埋め込み"
 
 #: gschem/lib/system-gschemrc.scm:1420
 msgid "Unembed Component/Picture"
-msgstr ""
+msgstr "画像・コンポーネントの埋め込み解除"
 
 #: gschem/lib/system-gschemrc.scm:1421
 msgid "Update Component"
@@ -2291,39 +2287,39 @@ msgstr "ペースト5"
 
 #: gschem/lib/system-gschemrc.scm:1448
 msgid "_Redraw"
-msgstr ""
+msgstr "再描画"
 
 #: gschem/lib/system-gschemrc.scm:1449
 msgid "_Pan"
-msgstr ""
+msgstr "パン"
 
 #: gschem/lib/system-gschemrc.scm:1450
 msgid "Zoom _Box"
-msgstr ""
+msgstr "ズームボックス"
 
 #: gschem/lib/system-gschemrc.scm:1451
 msgid "Zoom _Extents"
-msgstr ""
+msgstr "回路全体の表示(_E)"
 
 #: gschem/lib/system-gschemrc.scm:1452
 msgid "Zoom _In"
-msgstr ""
+msgstr "拡大(_I)"
 
 #: gschem/lib/system-gschemrc.scm:1453
 msgid "Zoom _Out"
-msgstr ""
+msgstr "縮小(_O)"
 
 #: gschem/lib/system-gschemrc.scm:1454
 msgid "Zoom _Full"
-msgstr ""
+msgstr "最縮小して表示(_F)"
 
 #: gschem/lib/system-gschemrc.scm:1456
 msgid "_Dark color scheme"
-msgstr ""
+msgstr "暗い配色(_D)"
 
 #: gschem/lib/system-gschemrc.scm:1457
 msgid "_Light color scheme"
-msgstr ""
+msgstr "明るい配色(_L)"
 
 #: gschem/lib/system-gschemrc.scm:1458
 msgid "B_W color scheme"
@@ -2331,71 +2327,71 @@ msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1465
 msgid "_Manager..."
-msgstr ""
+msgstr "管理(_M)"
 
 #: gschem/lib/system-gschemrc.scm:1466
 msgid "_Previous"
-msgstr ""
+msgstr "前のページ(_P)"
 
 #: gschem/lib/system-gschemrc.scm:1467
 msgid "_Next"
-msgstr ""
+msgstr "次のページ(_N)"
 
 #: gschem/lib/system-gschemrc.scm:1468
 msgid "Ne_w"
-msgstr ""
+msgstr "新規(_W)"
 
 #: gschem/lib/system-gschemrc.scm:1470
 msgid "_Close"
-msgstr ""
+msgstr "閉じる(_C)"
 
 #: gschem/lib/system-gschemrc.scm:1472
 msgid "_Discard"
-msgstr ""
+msgstr "破棄(_D)"
 
 #: gschem/lib/system-gschemrc.scm:1478
 msgid "_Component..."
-msgstr ""
+msgstr "部品(_C)"
 
 #: gschem/lib/system-gschemrc.scm:1479
 msgid "_Net"
-msgstr ""
+msgstr "ネット(_N)"
 
 #: gschem/lib/system-gschemrc.scm:1480
 msgid "B_us"
-msgstr ""
+msgstr "バス(_U)"
 
 #: gschem/lib/system-gschemrc.scm:1481
 msgid "_Attribute..."
-msgstr ""
+msgstr "アトリビュート(_A)"
 
 #: gschem/lib/system-gschemrc.scm:1482
 msgid "_Text..."
-msgstr ""
+msgstr "テキスト(_T)..."
 
 #: gschem/lib/system-gschemrc.scm:1484
 msgid "_Line"
-msgstr ""
+msgstr "直線(_L)"
 
 #: gschem/lib/system-gschemrc.scm:1485
 msgid "_Box"
-msgstr ""
+msgstr "ボックス(_B)"
 
 #: gschem/lib/system-gschemrc.scm:1486
 msgid "C_ircle"
-msgstr ""
+msgstr "円(_I)"
 
 #: gschem/lib/system-gschemrc.scm:1487
 msgid "A_rc"
-msgstr ""
+msgstr "円弧(_R)"
 
 #: gschem/lib/system-gschemrc.scm:1488
 msgid "_Pin"
-msgstr ""
+msgstr "ピン(_P)"
 
 #: gschem/lib/system-gschemrc.scm:1489
 msgid "Pictu_re..."
-msgstr ""
+msgstr "画像(_R)"
 
 #: gschem/lib/system-gschemrc.scm:1495
 msgid "_Down Schematic"
@@ -2523,23 +2519,23 @@ msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1554
 msgid "_File"
-msgstr "ファイル"
+msgstr "ファイル(_F)"
 
 #: gschem/lib/system-gschemrc.scm:1555
 msgid "_Edit"
-msgstr "編集"
+msgstr "編集(_E)"
 
 #: gschem/lib/system-gschemrc.scm:1556
 msgid "_Buffer"
-msgstr "バッファ"
+msgstr "バッファ(_B)"
 
 #: gschem/lib/system-gschemrc.scm:1557
 msgid "_View"
-msgstr "表示"
+msgstr "表示(_V)"
 
 #: gschem/lib/system-gschemrc.scm:1558
 msgid "_Page"
-msgstr "ページ"
+msgstr "ページ(_P)"
 
 #: gschem/lib/system-gschemrc.scm:1559
 msgid "_Add"
@@ -2570,492 +2566,12 @@ msgstr ""
 msgid "No documentation found"
 msgstr ""
 
-#: gschem/scheme/gschem/keymap.scm:39
+#: gschem/scheme/gschem/keymap.scm:38
 #, scheme-format
 msgid "~S is not a valid key combination."
 msgstr ""
 
-#: gschem/scheme/gschem/keymap.scm:154
+#: gschem/scheme/gschem/keymap.scm:153
 #, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr ""
-
-#~ msgid "Scheme directory NOT set!\n"
-#~ msgstr "schemeディレクトリが設定されていません!\n"
-
-#~ msgid "MakeVisible"
-#~ msgstr "表示する"
-
-#~ msgid "Clear"
-#~ msgstr "クリア"
-
-#~ msgid "Make Inv Text Vis"
-#~ msgstr "隠しテキスト表示"
-
-#~ msgid "Update Cues"
-#~ msgstr "キュー更新"
-
-#~ msgid "About..."
-#~ msgstr "gschemについて..."
-
-#~ msgid "Revert Page"
-#~ msgstr "戻す"
-
-#~ msgid "uggg! you tried to slot edit something that doesn't exist!\n"
-#~ msgstr "おっと! 存在しないスロットを編集しようとしました!\n"
-
-#~ msgid "Attribute failed ot find.\n"
-#~ msgstr "アトリビュートが見付かりません。\n"
-
-#~ msgid "Attribute Mode"
-#~ msgstr "アトリビュートモード"
-
-#~ msgid "ERROR! you can't get an attribute without an ='s\n"
-#~ msgstr "エラー!アトリビュートには'='が必要です。\n"
-
-#~ msgid "Invalid mode [%s] passed to %s\n"
-#~ msgstr "無効なモード[%s]が%sに指定されました。\n"
-
-#~ msgid ""
-#~ "While gschem is in ALPHA, please be sure that you have the latest rc "
-#~ "file.\n"
-#~ msgstr ""
-#~ "gschemはアルファバージョンです。最新のrcファイルを使ってください。\n"
-
-#~ msgid "Invalid mode [%s] passed to scrollbar-update\n"
-#~ msgstr "無効なモード[%s]がscrollbar-updateに指定されました。\n"
-
-#~ msgid "Duplicate stroke definition passed to stroke! [%s]\n"
-#~ msgstr "ストロークの定義が重複しています![%s]\n"
-
-#~ msgid ""
-#~ "A stroke keyword has been found in an rc file, but gschem\n"
-#~ "is not compiled to support strokes, please recompile gschem\n"
-#~ "with LibStroke\n"
-#~ msgstr ""
-#~ "rcファイル内にストロークの定義がありますが、gschemは\n"
-#~ "ストロークのサポートなしでコンパイルされています。LibStrokeと\n"
-#~ "共にgschemを再コンパイルしてください。\n"
-
-#~ msgid "selected a nonexistant object!\n"
-#~ msgstr "存在しないオブジェクトが選択されました!\n"
-
-#~ msgid "Write PNG..."
-#~ msgstr "PNG出力"
-
-#~ msgid "Ack! something got fouled up with the keymappings!\n"
-#~ msgstr "おっと!! キーマップの設定に間違いがあります!\n"
-
-#~ msgid "Enter new string."
-#~ msgstr "文字列を入力してください"
-
-#~ msgid "Add/Edit Attribute"
-#~ msgstr "アトリビュート追加/編集"
-
-#~ msgid "Multiple Attach"
-#~ msgstr "多重アタッチ"
-
-#~ msgid "Replace"
-#~ msgstr "置換"
-
-#~ msgid "Ran out of space in the hotkey buffer...\n"
-#~ msgstr "ホットキーバッファが溢れました...\n"
-
-#~ msgid "Height"
-#~ msgstr "高さ"
-
-#~ msgid "Script Execute..."
-#~ msgstr "スクリプト実行..."
-
-#~ msgid "New Page created [%s]\n"
-#~ msgstr "新規ページを作成しました。[%s]\n"
-
-#~ msgid "Too many directories! Increase MAX_DIRS\n"
-#~ msgstr "ディレクトリが多すぎます! MAX_DIRSを増やしてください。\n"
-
-#~ msgid "Too many files! Increase MAX_FILES\n"
-#~ msgstr "ファイルが多すぎます! MAX_FILESを増やしてください。\n"
-
-#~ msgid "sch - Schematics"
-#~ msgstr "sch - スケマチック"
-
-#~ msgid "sym - Symbols "
-#~ msgstr "sym - シンボル "
-
-#~ msgid "sym/sch - Schematics and Symbols"
-#~ msgstr "sym/sch - スケマチックとシンボル"
-
-#~ msgid "* - All Files"
-#~ msgstr "* - すべてのファイル"
-
-#~ msgid "Search in Files"
-#~ msgstr "ファイルを検索"
-
-#~ msgid "Search in Files - End of list"
-#~ msgstr "ファイルを検索 - 終了"
-
-#~ msgid "Search in Components"
-#~ msgstr "部品を検索"
-
-#~ msgid "Search in Components - Found library only"
-#~ msgstr "部品を検索 - 見付かったライブラリのみ"
-
-#~ msgid "Search in Components - End of list"
-#~ msgstr "部品を検索 - 終了"
-
-#~ msgid "Directories"
-#~ msgstr "ディレクトリ"
-
-#~ msgid "Files"
-#~ msgstr "ファイル"
-
-#~ msgid "OK"
-#~ msgstr "了解"
-
-#~ msgid "Cancel"
-#~ msgstr "キャンセル"
-
-#~ msgid "Apply"
-#~ msgstr "適用"
-
-#~ msgid "Find"
-#~ msgstr "検索"
-
-#~ msgid "Done"
-#~ msgstr "終了"
-
-#~ msgid "SaveAs"
-#~ msgstr "保存"
-
-#~ msgid "Write"
-#~ msgstr "出力"
-
-#~ msgid "Print"
-#~ msgstr "印刷"
-
-#~ msgid "Edit mode"
-#~ msgstr "編集モード"
-
-#~ msgid "Move mode"
-#~ msgstr "移動モード"
-
-#~ msgid "Copy mode"
-#~ msgstr "コピーモード"
-
-#~ msgid "Delete mode"
-#~ msgstr "削除モード"
-
-#~ msgid "Rotate mode"
-#~ msgstr "回転モード"
-
-#~ msgid "Mirror mode"
-#~ msgstr "反転モード"
-
-#~ msgid "Comps"
-#~ msgstr "部品"
-
-#~ msgid "Both"
-#~ msgstr "両方"
-
-#~ msgid "Deattach"
-#~ msgstr "アタッチ解除"
-
-#~ msgid "%s requires a string as a parameter\n"
-#~ msgstr "%sは文字列のパラメータでなくてはなりません。\n"
-
-#~ msgid "Invalid parameters to paper-sizes\n"
-#~ msgstr "無効なパラメータがpaper-sizeに指定されました。\n"
-
-#~ msgid "Cannot obtain the current directory!\n"
-#~ msgstr "カレントディレクトリが得られません!\n"
-
-#~ msgid "Cannot get cwd!\n"
-#~ msgstr "カレントディレクトリが得られません!\n"
-
-#~ msgid "Warning: two components with same refdes: %d\n"
-#~ msgstr "警告:2つの部品に同じrefdes: %d\n"
-
-#~ msgid "Invalid space specified, setting to 100\n"
-#~ msgstr "無効な間隔が指定されました。100に設定します。\n"
-
-#~ msgid "Invalid length specified, setting to 100\n"
-#~ msgstr "無効な長さが指定されました。100に設定します。\n"
-
-#~ msgid "Autonumber text starting with:"
-#~ msgstr "オートナンバー"
-
-#~ msgid "NV"
-#~ msgstr "名前/値"
-
-#~ msgid "SN"
-#~ msgstr "名前/値"
-
-#~ msgid "Add/Edit"
-#~ msgstr "追加/編集"
-
-#~ msgid "Open Page"
-#~ msgstr "開く"
-
-#~ msgid "Update Manager"
-#~ msgstr "マネージャを更新"
-
-#~ msgid "Close Manager"
-#~ msgstr "マネージャを閉じる"
-
-#~ msgid "Read system-gschemrc file [%s]\n"
-#~ msgstr "システムのgshemrcファイルを読み込んでいます。 [%s]\n"
-
-#~ msgid "Read ~/.gEDA/gschemrc file [%s]\n"
-#~ msgstr "~/.gEDA/gschemrcファイルを読み込んでいます。 [%s]\n"
-
-#~ msgid "Read local gschemrc file [%s]\n"
-#~ msgstr "ローカルのgschemrcファイルを読み込んでいます。 [%s]\n"
-
-#~ msgid "Read specified rc file [%s]\n"
-#~ msgstr "指定されたrcファイルを読み込んでいます。 [%s]\n"
-
-#~ msgid "Did not find specified gschemrc file [%s]\n"
-#~ msgstr "指定されたrcファイルが見付かりません。 [%s]\n"
-
-#~ msgid "Could not find any gschemrc file!\n"
-#~ msgstr "すべてのgschemrcファイルが見付かりません!\n"
-
-#~ msgid "Could not find a gschemrc file\n"
-#~ msgstr "gschemrcファイルが見付かりません!\n"
-
-#~ msgid "Invalid path [%s] passed to component-library\n"
-#~ msgstr "無効なパス[%s]がcomponent-libraryに指定されました。\n"
-
-#~ msgid "Invalid path [%s] passed to component-library-search\n"
-#~ msgstr "無効なパス[%s]がcompnent-library-searchに指定されました。\n"
-
-#~ msgid "Invalid path [%s] passed to %s\n"
-#~ msgstr "無効なパス[%s]が%sに指定されました。\n"
-
-#~ msgid "Invalid path [%s] passed to source-library-search\n"
-#~ msgstr "無効なパス[%s]がsource-library-searchに指定されました。\n"
-
-#~ msgid "Invalid path [%s] passed to scheme-directory\n"
-#~ msgstr "無効なパス[%s]がscheme-directoryに指定されました。\n"
-
-#~ msgid "Invalid path [%s] passed to bitmap-directory\n"
-#~ msgstr "無効なパス[%s]が bitmap-directoryに指定されました。\n"
-
-#~ msgid "Invalid path [%s] passed to font-directory\n"
-#~ msgstr "無効なパス[%s]がfont-directoryに指定されました。\n"
-
-#~ msgid "Ok"
-#~ msgstr "了解"
-
-#~ msgid "Edit Component"
-#~ msgstr "部品編集"
-
-#~ msgid "Limits"
-#~ msgstr "制限"
-
-#~ msgid "Saved - Select Mode"
-#~ msgstr "保存しました - 選択モード"
-
-#~ msgid "Saved All - Select"
-#~ msgstr "すべて保存 - 選択"
-
-#~ msgid "Paste 1 Mode "
-#~ msgstr "ペースト1モード "
-
-#~ msgid "Paste 2 Mode "
-#~ msgstr "ペースト2モード "
-
-#~ msgid "Paste 3 Mode "
-#~ msgstr "ペースト3モード "
-
-#~ msgid "Paste 4 Mode "
-#~ msgstr "ペースト4モード "
-
-#, fuzzy
-#~ msgid "Recent files"
-#~ msgstr "新規ファイル"
-
-#, fuzzy
-#~ msgid "Manual"
-#~ msgstr "マニュアル..."
-
-#~ msgid "Toggle Grid On/Off"
-#~ msgstr "グリッド オン/オフ"
-
-#~ msgid "Invalid color [%s] passed to %s\n"
-#~ msgstr "無効な色[%s]が%sに指定されました。\n"
-
-#~ msgid "You must set the GEDADATA environment variable!\n"
-#~ msgstr "環境変数GEDADATAを設定してください!\n"
-
-#~ msgid "Grid ON\n"
-#~ msgstr "グリッド・オン\n"
-
-#~ msgid "Unknown end for arc (%d)\n"
-#~ msgstr "不明な円弧の先端(%d)\n"
-
-#~ msgid "Unknown type for arc !\n"
-#~ msgstr "不明な円弧の種類!\n"
-
-#~ msgid "Unknown end for box (%d)\n"
-#~ msgstr "不明なボックスの先端(%d)\n"
-
-#~ msgid "Unknown type for box !\n"
-#~ msgstr "不明なボックスの種類!\n"
-
-#~ msgid "Unknown end for circle\n"
-#~ msgstr "不明な円の先端\n"
-
-#~ msgid "Unknown type for circle!\n"
-#~ msgstr "不明な円の種類!\n"
-
-#~ msgid "Could not find the color %s!\n"
-#~ msgstr "色%sが見付かりません!\n"
-
-#~ msgid "Defaulting color to white\n"
-#~ msgstr "デフォルトの色を白にします。\n"
-
-#~ msgid "Ack! Cannot allocate white!\n"
-#~ msgstr "あっ! 白を指定できません!\n"
-
-#~ msgid "File"
-#~ msgstr "ファイル"
-
-#~ msgid "Buffer"
-#~ msgstr "バッファ"
-
-#~ msgid "View"
-#~ msgstr "表示"
-
-#~ msgid "Page"
-#~ msgstr "ページ"
-
-#~ msgid "Add"
-#~ msgstr "追加"
-
-#~ msgid "Hierarchy"
-#~ msgstr "階層"
-
-#~ msgid "Options"
-#~ msgstr "オプション"
-
-#~ msgid "Help"
-#~ msgstr "ヘルプ"
-
-#, fuzzy
-#~ msgid "Invalid size [%f] passed to postscript-font-scale\n"
-#~ msgstr "無効なサイズ[%d]がtext-sizeに指定されました。\n"
-
-#, fuzzy
-#~ msgid "Cut Buffer"
-#~ msgstr "バッファ"
-
-#, fuzzy
-#~ msgid "Copy Buffer"
-#~ msgstr "バッファ"
-
-#, fuzzy
-#~ msgid "Unknown end for path (%d)\n"
-#~ msgstr "不明な円弧の先端(%d)\n"
-
-#, fuzzy
-#~ msgid "Unknown type for path !\n"
-#~ msgstr "不明な円弧の種類!\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Found a version [%s%s] gschemrc file:\n"
-#~ "[%s]\n"
-#~ msgstr ""
-#~ "バージョン [%s] のgschemrcファイルが見付かりました。: \n"
-#~ "[%s]\n"
-
-#, fuzzy
-#~ msgid "Component still embedded and not updated\n"
-#~ msgstr "この部品はすでに組み込まれています。\n"
-
-#, fuzzy
-#~ msgid "Tried to render text with an invalid angle: %d\n"
-#~ msgstr "無効な色の指定です。 : %d\n"
-
-#, fuzzy
-#~ msgid "Select Image Filename..."
-#~ msgstr "ファイル名を指定してくだい！\n"
-
-#, fuzzy
-#~ msgid "Filename:"
-#~ msgstr "ファイル名"
-
-#, fuzzy
-#~ msgid "Component [%s] has been embedded\n"
-#~ msgstr "この部品はすでに組み込まれています。\n"
-
-#, fuzzy
-#~ msgid "Picture [%s] has been embedded\n"
-#~ msgstr "この部品はすでに組み込まれています。\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Could not find component [%s], while trying to unembed. Component is "
-#~ "still embedded\n"
-#~ msgstr "部品[%s]が見付からないため、組み込みを解除できません。\n"
-
-#, fuzzy
-#~ msgid "Component [%s] has been successfully unembedded\n"
-#~ msgstr "この部品はすでに組み込まれています。\n"
-
-#, fuzzy
-#~ msgid "Picture [%s] has been unembedded\n"
-#~ msgstr "この部品はすでに組み込まれています。\n"
-
-#, fuzzy
-#~ msgid "Edit Text Color"
-#~ msgstr "テキスト編集"
-
-#, fuzzy
-#~ msgid "search text"
-#~ msgstr "テキスト表示"
-
-#, fuzzy
-#~ msgid "unnumbered"
-#~ msgstr "オートナンバーテキスト"
-
-#, fuzzy
-#~ msgid "all"
-#~ msgstr "すべて"
-
-#, fuzzy
-#~ msgid "options"
-#~ msgstr "オプション"
-
-#, fuzzy
-#~ msgid ""
-#~ "There are unsaved schematics!\n"
-#~ "\n"
-#~ "Are you sure?\n"
-#~ "OK will discard ALL changes!"
-#~ msgstr ""
-#~ "保存されていないスケマチックがあります!\n"
-#~ "\n"
-#~ "よろしいですか?\n"
-#~ "'了解'ですべての変更を破棄します!"
-
-#, fuzzy
-#~ msgid "Discard changes"
-#~ msgstr "変更を破棄しますか?"
-
-#, fuzzy
-#~ msgid "Invalid number of lines [%d] passed to output-vector-threshold\n"
-#~ msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
-
-#, fuzzy
-#~ msgid "Did not find required system-gschemrc file [%s]\n"
-#~ msgstr "システムのgschemrcファイルが見付かりません。 [%s]\n"
-
-#, fuzzy
-#~ msgid "Did not find optional ~/.gEDA/gschemrc file [%s]\n"
-#~ msgstr "~/.gEDA/gschemrcファイルが見付かりません。 [%s]\n"
-
-#, fuzzy
-#~ msgid "Did not find optional local gschemrc file [%s]\n"
-#~ msgstr "ローカルのgschemrcファイルが見付かりません。 [%s]\n"

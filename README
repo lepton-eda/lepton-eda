@@ -2,7 +2,7 @@
  'gschem and Friends' Electronic Design Suite
 ==============================================
 
-Copyright (C) 1998-2011 gEDA Developers
+Copyright (C) 1998-2012 gEDA Developers
 
 Introduction
 ============
@@ -192,7 +192,7 @@ To generate the configure script, run:
 
 You can then procede to configure and build gEDA as described above.
 For more information on working with the gEDA `git' repository, see
-<http://geda.seul.org/wiki/geda:scm>.
+<http://wiki.geda-project.org/geda:scm>.
 
 Building gEDA developer API documentation
 =========================================
@@ -231,13 +231,13 @@ There are several ways to get help with installing and using gEDA:
  - The gEDA documentation wiki contains a large amount of helpful
    information.  A static copy is included with this distribution; see
    the `docs/wiki/index.html' file.  The wiki is accessible online at
-   <http://geda.seul.org/wiki/>.
+   <http://wiki.geda-project.org/>.
 
  - If the resources above didn't help you resolve your problem, or you
    are having a *design* problem that you want to get help with,
    consider subscribing to and posting your question to the
    `geda-user' mailing list.
-   <http://www.gpleda.org/mailinglists.html>
+   <http://wiki.geda-project.org/geda:mailinglists>
 
  - Alternatively, you can add your question to the gEDA Answers page
    on Launchpad. <https://answers.launchpad.net/geda>
@@ -255,7 +255,7 @@ the `COPYING' file for the full text of the license.
 
 The programs and associated files are:
 
-  Copyright (C) 1998-2011 by Ales Hvezda and the respective original
+  Copyright (C) 1998-2012 by Ales Hvezda and the respective original
   authors.
 
 See the `AUTHORS' file for a more extensive list of contributors to

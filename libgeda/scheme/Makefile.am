@@ -33,6 +33,7 @@ TESTS = unit-tests/t0001-geda-conf-lib.scm \
 	unit-tests/t0205-page-parse-unterminated-attribute-list.scm \
 	unit-tests/t0206-page-parse-garbage-attribute.scm \
 	unit-tests/t0207-page-parse-line-endings.scm \
+	unit-tests/t0208-page-parse-embed-no-complex.scm \
 	unit-tests/t0300-attribute.scm \
 	unit-tests/t0301-promotable-attributes.scm \
 	unit-tests/t0400-os.scm \

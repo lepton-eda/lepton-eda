@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+<h2 class="sectionedit923"><a name="часто_задаваемые_вопросы_по_pcb" id="часто_задаваемые_вопросы_по_pcb">Часто задаваемые вопросы по pcb</a></h2>
+<div class="level2">
+
+</div>
+<!-- EDIT923 SECTION "Часто задаваемые вопросы по pcb" [1-70] -->
+<h3 class="sectionedit924"><a name="что_такое_pcb" id="что_такое_pcb">Что такое pcb?</a></h3>
+<div class="level3">
+
+<p>
+<strong>pcb</strong> — это программа, позволяющая вам чертить (“разводить”) дорожки
+(проводники) для своих печатных плат (“Printed Circuit Board” — “PCB”).
+</p>
+
+</div>
+<!-- EDIT924 SECTION "Что такое pcb?" [71-331] -->
+<h3 class="sectionedit925"><a name="как_установить_pcb" id="как_установить_pcb">Как установить pcb?</a></h3>
+<div class="level3">
+
+<p>
+Рекомендуемым способом для <strong>pcb</strong> является установка пакета <strong>gaf</strong> целиком.
+Смотрите <a href="geda-installation.ru.html" class="wikilink1" title="geda-installation.ru.html">справку по установке</a>.
+</p>
+
+</div>
+<!-- EDIT925 SECTION "Как установить pcb?" [332-590] -->
+<h3 class="sectionedit926"><a name="правда_ли_что_количество_слоёв_в_pcb_ограничено_только_восемью_для_проводников_и_двумя_для_шелкографии" id="правда_ли_что_количество_слоёв_в_pcb_ограничено_только_восемью_для_проводников_и_двумя_для_шелкографии">Правда ли, что количество слоёв в pcb ограничено только восемью для проводников и двумя для шелкографии?</a></h3>
+<div class="level3">
+
+<p>
+Нет. “Из коробки”, <strong>pcb</strong> поддерживает 16 проводящих слоёв и …
+</p>
+
+</div>
+<!-- EDIT926 SECTION "Правда ли, что количество слоёв в pcb ограничено только восемью для проводников и двумя для шелкографии?" [591-897] -->
+<h3 class="sectionedit927"><a name="правда_ли_что_в_pcb_нет_возможности_сделать_механический_слой_для_отображения_физических_контуров_платы_и_её_размеров" id="правда_ли_что_в_pcb_нет_возможности_сделать_механический_слой_для_отображения_физических_контуров_платы_и_её_размеров">Правда ли, что в pcb нет возможности сделать &quot;механический слой&quot; для отображения физических контуров платы и её размеров?</a></h3>
+<div class="level3">
+
+<p>
+Нет. Линии на слое с названием <code>outline</code> интерпретируются как физические
+границы платы. Также смотрите
+<a href="geda-pcb_tips.ru.html#как_настроить_контуры_платы_чтобы_пойти_с_моими_gerber-файлами_к_производителю_плат" class="wikilink1" title="geda-pcb_tips.ru.html">вот это замечание</a>
+в более обстоятельных <a href="geda-pcb_tips.ru.html" class="wikilink1" title="geda-pcb_tips.ru.html">советах по pcb</a>.
+</p>
+
+</div>
+<!-- EDIT927 SECTION "Правда ли, что в pcb нет возможности сделать механический слой для отображения физических контуров платы и её размеров?" [898-1601] -->
+<h3 class="sectionedit928"><a name="как_спроектировать_печатную_плату" id="как_спроектировать_печатную_плату">Как спроектировать печатную плату?</a></h3>
+<div class="level3">
+
+<p>
+Это выходит далеко за рамки настоящего документа.
+Несколько советов можно найти здесь:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://en.wikipedia.org/wiki/Printed circuit board" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Printed circuit board">Printed circuit board</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://en.wikibooks.org/wiki/Practical_Electronics/PCB_Layout" class="urlextern" title="http://en.wikibooks.org/wiki/Practical_Electronics/PCB_Layout"  rel="nofollow">http://en.wikibooks.org/wiki/Practical_Electronics/PCB_Layout</a></div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT928 SECTION "Как спроектировать печатную плату?" [1602-1937] -->
+<h3 class="sectionedit929"><a name="да_но_как_спроектировать_печатную_плату_с_помощью_pcb" id="да_но_как_спроектировать_печатную_плату_с_помощью_pcb">Да, но как спроектировать печатную плату с помощью pcb?</a></h3>
+<div class="level3">
+
+<p>
+В общем, начинаете со схемы, запускаете <strong>gsch2pcb</strong>, чтобы создать список
+соединений.
+Смотрите <a href="geda-faq-gsch2pcb.ru.html" class="wikilink1" title="geda-faq-gsch2pcb.ru.html">FAQ по gsch2pcb</a>. Затем можете пробежаться по
+учебнику <a href="geda-gsch2pcb_tutorial.ru.html" class="wikilink1" title="geda-gsch2pcb_tutorial.ru.html">От gschem - к pcb</a>.
+</p>
+
+<p>
+Затем… Эй, вы слышали о
+<a href="http://pcb.geda-project.org/pcb-cvs/pcb.html" class="urlextern" title="http://pcb.geda-project.org/pcb-cvs/pcb.html"  rel="nofollow">Руководстве пользователя pcb</a>,
+<a href="geda-pcb_tips.ru.html" class="wikilink1" title="geda-pcb_tips.ru.html">Советах по pcb</a> и о
+<a href="geda-pcb-quick_reference.ru.html" class="wikilink1" title="geda-pcb-quick_reference.ru.html">Краткой справке по pcb</a>?
+</p>
+
+</div>
+<!-- EDIT929 SECTION "Да, но как спроектировать печатную плату с помощью pcb?" [1938-2635] -->
+<h3 class="sectionedit930"><a name="как_насчёт_посадочных_мест_компонентов" id="как_насчёт_посадочных_мест_компонентов">Как насчёт посадочных мест компонентов?</a></h3>
+<div class="level3">
+
+<p>
+Смотрите <a href="geda-pcb_footprints.ru.html" class="wikilink1" title="geda-pcb_footprints.ru.html">Посадочные места в pcb</a>.
+</p>
+
+<p>
+Кроме того, много неофициальных файлов посадочных мест для gEDA имеется на сайте Open Circuits <a href="http://opencircuits.com/PCB_Footprints" class="urlextern" title="http://opencircuits.com/PCB_Footprints"  rel="nofollow">http://opencircuits.com/PCB_Footprints</a>.
+</p>
+
+</div>
+<!-- EDIT930 SECTION "Как насчёт посадочных мест компонентов?" [2636-3000] -->
+<h3 class="sectionedit931"><a name="я_затратил_кучу_времени_чтобы_найти_информацию_по_программе_pcb_из-за_её_двусмысленного_имени_почему_бы_вам_её_не_переименовать" id="я_затратил_кучу_времени_чтобы_найти_информацию_по_программе_pcb_из-за_её_двусмысленного_имени_почему_бы_вам_её_не_переименовать">Я затратил кучу времени, чтобы найти информацию по программе pcb из-за её двусмысленного имени. Почему бы вам её не переименовать?</a></h3>
+<div class="level3">
+
+<p>
+Эта программа — довольно старый проект, корни которого уходят в эру
+<a href="http://en.wikipedia.org/wiki/Atari" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Atari">домашних компьютеров Atari</a>. Она всегда
+называлась “<strong>pcb</strong>”. Современные разработчики нисколько не намерены прерывать
+эту традицию.
+</p>
+
+</div>
+<!-- EDIT931 SECTION "Я затратил кучу времени, чтобы найти информацию по программе pcb из-за её двусмысленного имени. Почему бы вам её не переименовать?" [3001-3617] -->
+<h3 class="sectionedit932"><a name="есть_ли_связь_между_geda_pcb_и_opencircuitdesign_pcb" id="есть_ли_связь_между_geda_pcb_и_opencircuitdesign_pcb">Есть ли связь между gEDA pcb и opencircuitdesign PCB?</a></h3>
+<div class="level3">
+
+<p>
+<a href="geda-faq-pcb.ru.html" class="wikilink1" title="geda-faq-pcb.ru.html"> gEDA pcb</a> и <a href="http://opencircuitdesign.com/pcb/" class="urlextern" title="http://opencircuitdesign.com/pcb/"  rel="nofollow"> opencircuitdesign pcb</a>?
+</p>
+
+</div>
+<!-- EDIT932 SECTION "Есть ли связь между gEDA pcb и opencircuitdesign PCB?" [3618-] --></body>
+</html>

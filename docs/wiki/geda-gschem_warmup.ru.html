@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+
+<h1 class="sectionedit525"><a name="разминка_в_gschem_для_начинающих" id="разминка_в_gschem_для_начинающих">Разминка в gschem для начинающих</a></h1>
+<div class="level1">
+
+<p>
+Вам нужно узнать, что и как делается в <strong>gschem</strong>, поэтому для начала просто
+запустите эту программу и поиграйтесь в ней немного.
+</p>
+
+<p>
+Сначала откроется пустая страница с меню и панелью инструментов наверху.
+При выборе действий в меню обратите внимание, что обычно для пунктов меню
+есть ещё и “горячие клавиши” — привязки, которые позволяют быстро вызывать
+соответствующие функции.
+</p>
+
+<p>
+При вводе схемы хорошо бы сначала определить её внешние границы.
+Поэтому мы так и сделаем — добавим рамку основной надписи. Мне кажется, что
+при печати на бумаге формата <em>letter</em> схема выглядит довольно неплохо с
+рамкой размера <em>B</em>:
+</p>
+<ul>
+<li class="level1"><div class="li"> Откройте окно <strong><em>Выбор компонента</em></strong> [<strong><em>Select Component</em></strong>], выбрав в меню <strong><em>Добавить</em></strong> → <strong><em>Компонент…</em></strong> [<strong><em>Add</em></strong> → <strong><em>Component…</em></strong>] или нажав клавишу [<strong>i</strong>]. Или можно щёлкнуть иконку добавления компонента на панели инструментов (<a href="media/geda/warmup_add_component.png" class="media" target="_blank" title="geda:warmup_add_component.png"><img src="media/geda/warmup_add_component.png" class="media" alt="" /></a>).</div>
+</li>
+<li class="level1"><div class="li"> В списке вкладки <strong><em>Библиотечные</em></strong> [<strong><em>Libraries</em></strong>] выберите пункт <strong>Titleblocks (generic)</strong>.</div>
+</li>
+<li class="level1"><div class="li"> Среди компонентов этого пункта выберите <em><code>title-B.sym</code></em>.</div>
+</li>
+<li class="level1"><div class="li"> Перейдите в область чертежа <strong>gschem</strong> и щелчком левой кнопки мыши добавьте символ рамки. Затем щёлкните правой кнопкой, чтобы больше рамок не вставлять.</div>
+</li>
+</ul>
+
+<p>
+<a href="media/geda/warmup_gschem01.png" class="media" target="_blank" title="geda:warmup_gschem01.png"><img src="media/geda/warmup_gschem01.png" class="media" alt="" /></a>
+</p>
+<ul>
+<li class="level1"><div class="li"> Для того чтобы масштаб соответствовал размеру символа рамки основной надписи, нажмите клавиши [<strong>v</strong>][<strong>e</strong>] (или выберите в меню <strong><em>Вид</em></strong> → <strong><em>Уместить в окне</em></strong> [<strong><em>View</em></strong> → <strong><em>Zoom Extents</em></strong>]), мышь при этом должна находиться в области чертежа.</div>
+</li>
+<li class="level1"><div class="li"> Вернёмся в окно выбора компонентов (откройте его снова, если уже закрыли), выберите библиотеку <strong>analog</strong> и затем компонент <em><code>resistor-1.sym</code></em> и поместите пару резисторов в схему левой кнопкой мыши. Заметьте, что при вставке каждый из них подсвечивается оранжевым цветом. Это показывает, что он выделен.</div>
+</li>
+<li class="level1"><div class="li"> Попробуйте увеличить (клавиша [<strong>z</strong>]) и уменьшить ([<strong>Shift</strong>]+[<strong>z</strong>]) масштаб в месте расположения резисторов. Если вы потерялись, верните масштаб на всю схему с помощью [<strong>v</strong>][<strong>e</strong>]. Обратите внимание, что при масштабировании центр области просмотра находится под курсором мыши.</div>
+</li>
+<li class="level1"><div class="li"> Попробуйте повыделять резисторы, пощёлкав по ним по очереди левой кнопкой мыши, и заметьте, что если вы не попадаете точно по резистору, вместо него выделяется рамка основной надписи. На самом деле рамку мы больше выделять не хотим, так что давайте её заблокируем, чтобы её постоянное выделение нас больше не раздражало: щёлкните, чтобы ВЫДЕЛИТЬ рамку, затем выберите <strong><em>Правка</em></strong> → <strong><em>Блокировка</em></strong> [<strong><em>Edit</em></strong> → <strong><em>Lock</em></strong>]. Теперь выбирать резисторы станет легче.</div>
+</li>
+<li class="level1"><div class="li"> Поперемещайте резисторы средней кнопкой мыши.</div>
+</li>
+<li class="level1"><div class="li"> Выделите резистор и затем поверните его клавишами [<strong>e</strong>][<strong>r</strong>] или с помощью <strong><em>Правка</em></strong> → <strong><em>Поворот на 90°</em></strong> [<strong><em>Edit</em></strong> → <strong><em>Rotate 90 mode</em></strong>].</div>
+</li>
+<li class="level1"><div class="li"> Подвиньте резисторы поближе друг к другу и, подведя к ним курсор мыши, увеличьте масштаб.</div>
+</li>
+<li class="level1"><div class="li"> Наведите курсор мыши на один из выводов резистора и нажмите клавишу [<strong>n</strong>], чтобы добавить соединение. Переместите мышь к выводу другого резистора и щёлкните левой кнопкой, чтобы подключить это соединение к нему. Щёлкните правой кнопкой мыши для отмены добавления соединений, но учтите, что если вы снова щёлкнете левой кнопкой, будет добавлено ещё одно соединение.</div>
+</li>
+</ul>
+
+<p>
+<a href="media/geda/warmup_gschem02.png" class="media" target="_blank" title="geda:warmup_gschem02.png"><img src="media/geda/warmup_gschem02.png" class="media" alt="" /></a>
+</p>
+<ul>
+<li class="level1"><div class="li"> Взгляните на панель инструментов и вы увидите, что режим работы переключился на добавление соединений. Прежде чем снова переходить к выделению резисторов, нужно опять войти в режим выделения — или нажать клавишу [<strong>s</strong>], или щёлкнуть по иконке выделения на панели инструментов, или с помощью меню <strong><em>Правка</em></strong> → <strong><em>Выделение</em></strong> [<strong><em>Edit</em></strong> → <strong><em>Select Mode</em></strong>]. Если же попробовать переместить резистор средней кнопкой мыши, всё будет работать, но по окончании перемещения режим выделения будет включен автоматически. Чтобы привыкнуть к режимам работы <strong>gschem</strong>, нужно немного поиграться.</div>
+</li>
+<li class="level1"><div class="li"> Если после добавления соединения между резисторами получилось нечто вроде этого:</div>
+</li>
+</ul>
+
+<p>
+<a href="media/geda/warmup_gschem03.png" class="media" target="_blank" title="geda:warmup_gschem03.png"><img src="media/geda/warmup_gschem03.png" class="media" alt="" /></a>
+</p>
+
+<p>
+значит вы промахнулись и не попали на вывод правого резистора. Посмотрите
+поближе и вы увидите, что кончик вывода — красный, а для подключения
+соединений к выводам их нужно начинать и заканчивать именно на этих красных метках.
+</p>
+<ul>
+<li class="level1"><div class="li"> Выделите соединение между резисторами и удалите его с помощью клавиши [<strong>Delete</strong>].</div>
+</li>
+<li class="level1"><div class="li"> Выделите резистор и нажмите клавиши [<strong>e</strong>][<strong>e</strong>]. Это вызовет окно редактирования его атрибутов. Здесь можно изменять значения существующих атрибутов или добавлять новые с нужными для данного резистора значениями. Хорошенько потренируйтесь с добавлением атрибутов и изменением их значений, так как для работы в <strong>gschem</strong> вам будет нужно очень хорошо с ними познакомиться.</div>
+</li>
+</ul>
+
+<p>
+Теперь вернитесь к <a href="geda-gsch2pcb_tutorial.ru.html" class="wikilink1" title="geda-gsch2pcb_tutorial.ru.html">руководству</a> и попробуйте
+поработать с простыми представленными там примерами. Если вы наткнётесь на не
+очень понятные шаги, просмотрите документацию пользователя <strong>gschem</strong> и
+документацию по атрибутам на странице <a href="geda-gschem_ug.ru.html" class="wikilink1" title="geda-gschem_ug.ru.html">документации gschem</a>.
+</p>
+<hr />
+
+<p>
+Автор руководства: <em>Bill Wilson</em> (bill–at–gkrellm.net)
+</p>
+
+<p>
+Перевод: <em>Владимир Жбанов</em> (vzhbanov at gmail dot com)
+</p>
+
+</div>
+</body>
+</html>

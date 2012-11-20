@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit791"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> « <a href="geda-gschem_ug-main_window.html" class="wikilink1" title="geda-gschem_ug-main_window.html">The main window</a>  </td><td class="col1 centeralign">  <strong><a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">gEDA gschem User Guide</a></strong>  </td><td class="col2 rightalign">  <a href="geda-gschem_ug-viewing_schematics.html" class="wikilink1" title="geda-gschem_ug-viewing_schematics.html">Viewing schematics</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT791 TABLE [1-168] -->
+
+
+<h2 class="sectionedit792"><a name="schematic_and_symbol_pages" id="schematic_and_symbol_pages">Schematic and symbol pages</a></h2>
+<div class="level2">
+
+<p>
+You can have one or more schematic or symbol <em>pages</em> open at a time in gschem.  Each page is associated with a file on disk.  Schematic pages are stored in <code>.sch</code> files, and symbol pages in <code>.sym</code> files.
+</p>
+
+</div>
+<!-- EDIT792 SECTION "Schematic and symbol pages" [181-431] -->
+<h3 class="sectionedit793"><a name="opening_pages_and_creating_new_pages" id="opening_pages_and_creating_new_pages">Opening pages and creating new pages</a></h3>
+<div class="level3">
+
+<p>
+If you ran gschem without selecting a schematic or symbol to open (see <a href="geda-gschem_ug-running_gschem.html" class="wikilink1" title="geda-gschem_ug-running_gschem.html">Running gschem</a>), gschem will open displaying a new schematic page, containing a “B” paper title block.  Further new pages can be created with <strong>File→New</strong> or <strong>Page→New</strong>.
+</p>
+
+<p>
+To open a page from disk, select <strong>File→Open</strong>.  This will display a file selection window, where you can choose which file to open.  You can change whether you want to show schematic files, symbol files, or both using the menu at the bottom-right of the file selector.
+</p>
+
+</div>
+<!-- EDIT793 SECTION "Opening pages and creating new pages" [432-1034] -->
+<h3 class="sectionedit794"><a name="navigating_between_pages" id="navigating_between_pages">Navigating between pages</a></h3>
+<div class="level3">
+
+<p>
+To go to the next open page, select <strong>Page→Next</strong> or press <strong>&lt;Page Down&gt;</strong>.  To go to the previous open page, select <strong>Page→Previous</strong> or press <strong>&lt;Page Up&gt;</strong>.
+</p>
+
+</div>
+<!-- EDIT794 SECTION "Navigating between pages" [1035-1234] -->
+<h3 class="sectionedit795"><a name="saving_pages" id="saving_pages">Saving pages</a></h3>
+<div class="level3">
+
+<p>
+To save your changes to a schematic or symbol to disk, select <strong>File→Save</strong>. If you have been working on a new page and you haven&#039;t saved it before, gschem will display a file selection window and prompt you to choose where to save it.
+</p>
+
+<p>
+If you have been working on an existing schematic or page, but you want to save it to a different file, select <strong>File→Save As</strong>.
+</p>
+
+</div>
+<!-- EDIT795 SECTION "Saving pages" [1235-1628] -->
+<h3 class="sectionedit796"><a name="closing_and_reverting_pages" id="closing_and_reverting_pages">Closing and reverting pages</a></h3>
+<div class="level3">
+
+<p>
+To close the current page, select <strong>Page→Close</strong>.  If you have made changes to the page since you last saved it, gschem will ask you if you wish to save them before closing the page.  If you close all the schematics or symbols that you have open, gschem will automatically create a new schematic page in the same way as <strong>File→New</strong> does.
+</p>
+
+<p>
+If you have made changes to the page, but you wish to go back to the version that is saved on disk, select <strong>File→Revert</strong> or <strong>Page→Revert</strong>.  gschem will prompt you to confirm that you wish to discard your changes.
+</p>
+
+<p>
+If you exit gschem with some unsaved pages open, a window will be shown with a list of unsaved pages. You can then select which pages you want to save, or return to editing.
+</p>
+
+</div>
+<!-- EDIT796 SECTION "Closing and reverting pages" [1629-] --></body>
+</html>

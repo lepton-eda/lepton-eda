@@ -12,79 +12,112 @@
 <body>
 
 
-<h1 class="sectionedit71"><a name="installed_plugins" id="installed_plugins">Installed plugins</a></h1>
+<h1 class="sectionedit957"><a name="installed_plugins" id="installed_plugins">Installed plugins</a></h1>
 <div class="level1">
 
 <p>
 The following plugins have been installed, to give the gEDA Project Wiki additional functionality.
 </p>
 
-</div>
-<!-- EDIT71 SECTION "Installed plugins" [1-132] -->
-<h2 class="sectionedit72"><a name="hilited" id="hilited">hilited</a></h2>
-<div class="level2">
-
 <p>
-The “hilited” plugin acts as a yellow highlighter. Surround the text you want to highlight with double-exclamation marks.
-</p>
-
-<p>
-Example:<br/>
-
-
-</p>
-<pre class="code">Sample text !!highlighted!! in a paragraph.</pre>
-
-<p>
-becomes:<br/>
-
-Sample text <span class="hilited">highlighted</span> in a paragraph.
+Built-in dokuwiki syntax facilities are described
+<a href="https://www.dokuwiki.org/syntax" class="urlextern" title="https://www.dokuwiki.org/syntax"  rel="nofollow">here</a>.
 </p>
 
 </div>
-<!-- EDIT72 SECTION "hilited" [133-400] -->
-<h2 class="sectionedit73"><a name="xterm" id="xterm">xterm</a></h2>
-<div class="level2">
+<!-- EDIT957 SECTION "Installed plugins" [1-225] -->
+<h3 class="sectionedit958"><a name="keyboard" id="keyboard">keyboard</a></h3>
+<div class="level3">
 
 <p>
-The “xterm” plugin allows you to embed preformatted text.<br/>
-
-The <code>&lt;</code>xterm<code>&gt;&lt;</code>/xterm<code>&gt;</code> tags surround the text you wish to embed.<br/>
-
-The <code>&lt;</code>xterm<code>&gt;&lt;</code>/xterm<code>&gt;</code> tags differ from the built-in <code>&lt;</code>code<code>&gt;&lt;</code>/code<code>&gt;</code> tags as follows:
+Examples:
 </p>
-<ul>
-<li class="level1"><div class="li"> The text is indented.</div>
-</li>
-<li class="level1"><div class="li"> You can emphasize parts of the text.</div>
-</li>
-<li class="level1"><div class="li"> The text will have a lightgreen background, so it will stand out on the wiki-page.</div>
-</li>
-</ul>
-
+<div class="table sectionedit959"><table class="inline">
+	<tr class="row0">
+		<th class="col0 centeralign">         Syntax           </th><th class="col1 leftalign">      </th><th class="col2 centeralign">        View          </th>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;key&gt;C-A-Del&lt;/key&gt;   </td><td class="col1 centeralign">  ⇒  </td><td class="col2 leftalign"> <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Del</kbd>   </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> &lt;key&gt;Ctrl&lt;/key&gt;      </td><td class="col1 centeralign">  ⇒  </td><td class="col2 leftalign"> <kbd>Ctrl</kbd>      </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> &lt;key&gt;C-S-Right&lt;/key&gt; </td><td class="col1 centeralign">  ⇒  </td><td class="col2"> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>&rarr;</kbd> </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> &lt;key&gt;Enter&lt;/key&gt;     </td><td class="col1 centeralign">  ⇒  </td><td class="col2 leftalign"> <kbd>Enter</kbd>     </td>
+	</tr>
+</table></div>
+<!-- EDIT959 TABLE [255-549] -->
 <p>
-
-Example:<br/>
-
-The following is indented from the current section&#039;s left margin:
-<pre STYLE="background : LightGreen;
-margin-left : 2em"><font size="+0">embedded <strong>preformatted</strong> words</font></pre>
+See the
+<a href="http://www.foosel.org/snippets/dokuwiki/keyboard" class="urlextern" title="http://www.foosel.org/snippets/dokuwiki/keyboard"  rel="nofollow">plugin keyboard page</a>
+for more information.
 </p>
-
-<p>
-The following shows how the preformatted text will follow the <acronym title="Extensible HyperText Markup Language">XHTML</acronym> indent levels:
-</p>
-<ul>
-<li class="level1"><div class="li"> Test line 1.</div>
-</li>
-<li class="level1"><div class="li"> Test line 2.<br/>
-<pre STYLE="background : LightGreen;
-margin-left : 2em"><font size="+0">Indented test line 3.</font></pre></div>
-</li>
-<li class="level1"><div class="li"> Test line 4.</div>
-</li>
-</ul>
 
 </div>
-<!-- EDIT73 SECTION "xterm" [401-] --></body>
+<!-- EDIT958 SECTION "keyboard" [226-655] -->
+<h3 class="sectionedit960"><a name="note" id="note">note</a></h3>
+<div class="level3">
+
+<p>
+The following code
+</p>
+<pre class="code">&lt;note&gt;
+This is a simple note.
+&lt;/note&gt;
+
+&lt;note tip&gt;
+This is a tip.
+&lt;/note&gt;
+
+&lt;note important&gt;
+This is an important note!
+&lt;/note&gt;
+
+&lt;note warning&gt;
+This is a warning!!!
+&lt;/note&gt;</pre>
+
+<p>
+translates to these nice notes:
+</p>
+
+<p>
+<p><div class="noteclassic">
+This is a simple note.
+
+</div></p>
+</p>
+
+<p>
+<p><div class="notetip">
+This is a tip.
+
+</div></p>
+</p>
+
+<p>
+<p><div class="noteimportant">
+This is an important note!
+
+</div></p>
+</p>
+
+<p>
+<p><div class="notewarning">
+This is a warning!!!
+
+</div></p>
+</p>
+
+<p>
+See the
+<a href="https://www.dokuwiki.org/plugin:note" class="urlextern" title="https://www.dokuwiki.org/plugin:note"  rel="nofollow">plugin note page</a>
+for more information.
+</p>
+
+</div>
+<!-- EDIT960 SECTION "note" [656-] --></body>
 </html>

@@ -12,7 +12,7 @@
 <body>
 
 
-<h1 class="sectionedit739"><a name="gschem_-_gsch2pcb_-_pcb" id="gschem_-_gsch2pcb_-_pcb">gschem -&gt; gsch2pcb -&gt; PCB</a></h1>
+<h1 class="sectionedit137"><a name="gschem_-_gsch2pcb_-_pcb" id="gschem_-_gsch2pcb_-_pcb">gschem -&gt; gsch2pcb -&gt; PCB</a></h1>
 <div class="level1">
 
 <p>
@@ -40,8 +40,8 @@ See the <a href="geda-gsch2pcb_tutorial_releasenotes.html" class="wikilink1" tit
 </p>
 
 </div>
-<!-- EDIT739 SECTION "gschem -> gsch2pcb -> PCB" [1-947] -->
-<h2 class="sectionedit740"><a name="terminology" id="terminology">Terminology</a></h2>
+<!-- EDIT137 SECTION "gschem -> gsch2pcb -> PCB" [1-947] -->
+<h2 class="sectionedit138"><a name="terminology" id="terminology">Terminology</a></h2>
 <div class="level2">
 
 <p>
@@ -96,8 +96,8 @@ such as BC546, 7400, 1K, etc.  When you run PCB, this
 </p>
 
 </div>
-<!-- EDIT740 SECTION "Terminology" [948-3253] -->
-<h2 class="sectionedit741"><a name="setup" id="setup">Setup</a></h2>
+<!-- EDIT138 SECTION "Terminology" [948-3253] -->
+<h2 class="sectionedit139"><a name="setup" id="setup">Setup</a></h2>
 <div class="level2">
 
 <p>
@@ -106,7 +106,6 @@ design projects. The install of gEDA
 and PCB gives you a set of default gschem symbols and
 default PCB elements, but you can also provide for creating your own custom
 libraries of gschem symbols and PCB elements.
-
 </p>
 <ul>
 <li class="level1"><div class="li">  Somewhere, probably under your home directory, create a directory structure for your projects. Use directory names you like, but this tutorial will reference the directory name structure I use:</div>
@@ -122,9 +121,7 @@ gaf/myproject2/                        design project.
 ...</pre>
 
 <p>
-
 With this organization, any custom gschem symbols and PCB elements you make can be common to all of your projects and this is good enough to get you started. However, I&#039;ll mention other possibilities which will be revealed below:  There can be project specific PCB <strong>file element</strong> subdirectories  or <strong>m4 element</strong> files.  Or, CAD administrators can set up site wide custom PCB <strong>file element</strong> directories and <strong>m4 element</strong> files.  
-
 </p>
 <ul>
 <li class="level1"><div class="li">  <strong>gEDA setup (for new versions released &gt;= 2005): </strong> the gschem, gnetlist, and other programs you may use such as gattrib, etc, all need to be able to find any custom symbols you will make, so you need to make your custom gschem symbol directories known to these programs in a gEDA gafrc file by adding <strong>component-library</strong> lines to either a user <strong>${HOME}/gafrc</strong> file or a project specific <strong>gafrc</strong> file in the project directory.  There is also a system wide <strong>${GEDADATA}/system-gafrc</strong> file administrators can set up. The <strong>HOME</strong> and <strong>GEDADATA</strong> environment variables must be respectively set for those <strong>gafrc</strong> files to be found. For our directory structure setup above, we could add these lines to <strong>${HOME}/gafrc</strong> (plus lines for each additional <strong>gschem-sym </strong> subdirectory you want):</div>
@@ -168,13 +165,12 @@ or, in each project directory (like myproject1 and myproject2) there could be a 
 </ul>
 
 <p>
-
 This is all the setup you need beyond the initial install of the gschem, gsch2pcb, and PCB packages.
 </p>
 
 </div>
-<!-- EDIT741 SECTION "Setup" [3254-7853] -->
-<h2 class="sectionedit742"><a name="simple_example" id="simple_example">Simple Example</a></h2>
+<!-- EDIT139 SECTION "Setup" [3254-7853] -->
+<h2 class="sectionedit140"><a name="simple_example" id="simple_example">Simple Example</a></h2>
 <div class="level2">
 
 <p>
@@ -185,22 +181,19 @@ making it a two schematic design.
 </p>
 
 <p>
-
 Assuming you setup the directory structure described
 above, go to the <strong>gaf/myproject1</strong> directory and create
 a file named <strong>project</strong> with this content:
-
 </p>
 <pre class="code">schematics one.sch two.sch
 output-name board</pre>
 
 </div>
-<!-- EDIT742 SECTION "Simple Example" [7854-8329] -->
-<h3 class="sectionedit743"><a name="create_schematiconesch" id="create_schematiconesch">Create schematic: one.sch</a></h3>
+<!-- EDIT140 SECTION "Simple Example" [7854-8329] -->
+<h3 class="sectionedit141"><a name="create_schematiconesch" id="create_schematiconesch">Create schematic: one.sch</a></h3>
 <div class="level3">
 
 <p>
-
 If you are using gschem for the first time, try stepping through
 this simple <a href="geda-gschem_warmup.html" class="wikilink1" title="geda-gschem_warmup.html">gschem warmup</a>.
 </p>
@@ -230,13 +223,12 @@ this simple <a href="geda-gschem_warmup.html" class="wikilink1" title="geda-gsch
 </ul>
 
 <p>
-
-The large frame of the titleblock is a component too. It has been locked for convienience to prevent the mouse from catching it all the time. To unlock it, select it by dragging with left mouse button held down and press [e - shift-L]. You can find title blocks with different sizes in the <strong>Titleblocks</strong> library. Remember, to lock the new title block with [el] while the title block is selected.
+The large frame of the titleblock is a component too. It has been locked for convenience to prevent the mouse from catching it all the time. To unlock it, select it by dragging with left mouse button held down and press [e - shift-L]. You can find title blocks with different sizes in the <strong>Titleblocks</strong> library. Remember, to lock the new title block with [el] while the title block is selected.
 </p>
 
 </div>
-<!-- EDIT743 SECTION "Create schematic: one.sch" [8330-9731] -->
-<h3 class="sectionedit744"><a name="edit_the_attributes_of_the_components_on_the_schematic" id="edit_the_attributes_of_the_components_on_the_schematic">Edit the attributes of the components on the schematic.</a></h3>
+<!-- EDIT141 SECTION "Create schematic: one.sch" [8330-9730] -->
+<h3 class="sectionedit142"><a name="edit_the_attributes_of_the_components_on_the_schematic" id="edit_the_attributes_of_the_components_on_the_schematic">Edit the attributes of the components on the schematic.</a></h3>
 <div class="level3">
 
 <p>
@@ -254,7 +246,6 @@ The large frame of the titleblock is a component too. It has been locked for con
 </ul>
 
 <p>
-
 It may have occurred to you that this editing will be painful for a
 schematic with a large number of components that don&#039;t have reasonable
 initial attribute values.  At least for the footprints,
@@ -273,8 +264,8 @@ the menu <strong>File→Save Page</strong> and quit gschem.
 </p>
 
 </div>
-<!-- EDIT744 SECTION "Edit the attributes of the components on the schematic." [9732-11682] -->
-<h3 class="sectionedit745"><a name="create_schematictwosch" id="create_schematictwosch">Create schematic: two.sch</a></h3>
+<!-- EDIT142 SECTION "Edit the attributes of the components on the schematic." [9731-11681] -->
+<h3 class="sectionedit143"><a name="create_schematictwosch" id="create_schematictwosch">Create schematic: two.sch</a></h3>
 <div class="level3">
 
 <p>
@@ -316,7 +307,6 @@ demonstrate multiple schematic capability.
 </ul>
 
 <p>
-
 Unfortunately, the 2N3904 symbol we added has the text “2N3904” as an
 integral part of its symbol.  So when we add the <strong>value</strong> attribute
 (which we want so the PCB layout will show appropriate values), there are
@@ -336,12 +326,10 @@ proper <strong>device</strong> attributes.
 Now we are done with the schematics except for assigning <strong>refdes</strong>
 attributes and we can use the command <strong>refdes_renum</strong> to do this
 for both schematics at once.  So, save <strong>two.sch</strong>, quit gschem and run:
-
 </p>
 <pre class="code">$ refdes_renum --pgskip one.sch two.sch</pre>
 
 <p>
-
 Run gschem on the schematics again to see how the components
 have been given a <strong>refdes</strong> attribute.  The <em>–pgksip</em> option
 makes numbering begin at 101 for one.sch and at 201 for two.sch.
@@ -364,8 +352,8 @@ images below.
 </p>
 
 </div>
-<!-- EDIT745 SECTION "Create schematic: two.sch" [11683-15311] -->
-<h3 class="sectionedit746"><a name="generate_pcb_files_from_schematics" id="generate_pcb_files_from_schematics">Generate PCB Files from Schematics</a></h3>
+<!-- EDIT143 SECTION "Create schematic: two.sch" [11682-15310] -->
+<h3 class="sectionedit144"><a name="generate_pcb_files_from_schematics" id="generate_pcb_files_from_schematics">Generate PCB Files from Schematics</a></h3>
 <div class="level3">
 
 <p>
@@ -381,23 +369,20 @@ and there will be only one TL072 package on our pc board.
 </p>
 
 <p>
-
 Now, since we have already set up a gsch2pcb <strong>project</strong> file,
 all we need to do to create an initial set of PCB files is to run
 gsch2pcb:
-
 </p>
 <pre class="code">~/gaf/myproject1$ gsch2pcb project
 0 file elements and 7 m4 elements added to board.pcb.</pre>
 
 <p>
-
-Since the project file specifed <strong>board</strong> as the output-name,
+Since the project file specified <strong>board</strong> as the output-name,
 the PCB files created are named <strong>board.pcb</strong> and <strong>board.net</strong>.
 </p>
 
 <p>
-NB: more recent advice is to create an empty board using pcb first; then every use of gsch2pcb will generate changes to that layout as described below (Modifying Schematics).
+NB: more recent advice is to create an empty board using pcb first; then every use of gsch2pcb will generate changes to that layout as described below (<a href="#modifying_schematics" title=":geda:gsch2pcb_tutorial.txt &crarr;" class="wikilink1">Modifying Schematics</a>).
 The reason for this is that gsch2pcb&#039;s default settings are quite different than pcb&#039;s these days,
 and the consensus is that pcb&#039;s defaults are better for most uses.
 One caveat with this is that if you use pcb2panel to combine multiple layouts into a single panelized layout,
@@ -420,8 +405,8 @@ look at the first part of the
 </p>
 
 </div>
-<!-- EDIT746 SECTION "Generate PCB Files from Schematics" [15312-17550] -->
-<h3 class="sectionedit747"><a name="layout_pcb_files" id="layout_pcb_files">Layout PCB Files</a></h3>
+<!-- EDIT144 SECTION "Generate PCB Files from Schematics" [15311-17555] -->
+<h3 class="sectionedit145"><a name="layout_pcb_files" id="layout_pcb_files">Layout PCB Files</a></h3>
 <div class="level3">
 
 </div>
@@ -492,8 +477,7 @@ the positions with the middle mouse button.
 </ul>
 
 <p>
-
-To minimize confusion, PCB tries to draw the rats of complex connections such that the sum of all rats is as short as possible. Try to drag an element to the other side of the working area. The rats will follow like a rubber band, but the end of the rats will not jump to a different node, although the resulting length might be shorter. The action <strong>optimize rats-nest</strong> rats will make the rats jump to this “better” geometry. This action can be applied conviniently anytime with a troke of the the key <strong>o</strong>.
+To minimize confusion, PCB tries to draw the rats of complex connections such that the sum of all rats is as short as possible. Try to drag an element to the other side of the working area. The rats will follow like a rubber band, but the end of the rats will not jump to a different node, although the resulting length might be shorter. The action <strong>optimize rats-nest</strong> rats will make the rats jump to this “better” geometry. This action can be applied conveniently anytime with a stroke of the key <strong>o</strong>.
 </p>
 
 </div>
@@ -502,11 +486,10 @@ To minimize confusion, PCB tries to draw the rats of complex connections such th
 <div class="level4">
 
 <p>
-<a href="media/geda/board-4.png" class="media" target="_blank" title="geda:board-4.png"><img src="media/geda/board-4.png" class="mediaright" title="Step 4" alt="Step 4" /></a>You will have to replace the rats with traces that can be etched in copper. After “Disperse all elements” the rats are usually in a random mess with lots of crossings. You should move and rotate the components around and try to disentangle the rats as much as possible. The key to a well routed pcb is proper placement of the components. Although PCB tries to clean up the rats lines while you move the components around, it is good practice to  occasionly initiate rats optimization with the <strong>o</strong>-key.
+<a href="media/geda/board-4.png" class="media" target="_blank" title="geda:board-4.png"><img src="media/geda/board-4.png" class="mediaright" title="Step 4" alt="Step 4" /></a>You will have to replace the rats with traces that can be etched in copper. After “Disperse all elements” the rats are usually in a random mess with lots of crossings. You should move and rotate the components around and try to disentangle the rats as much as possible. The key to a well routed pcb is proper placement of the components. Although PCB tries to clean up the rats lines while you move the components around, it is good practice to occasionally initiate rats optimization with the <strong>o</strong>-key.
 </p>
 
 <p>
-
 Select the <strong>ROT</strong> tool (<strong>F-9</strong>) to move elements with the
 middle mouse button and rotate them with the left mouse button. 
 The right mouse button will move the viewport to the canvas when zoomed in.
@@ -563,7 +546,7 @@ selections to the currently selected set.
 
 <p>
 When you&#039;ve finished routing the traces (PCB will congratulate you if all
-traces are routed when you optimze the rats nest) the board can look
+traces are routed when you optimize the rats nest) the board can look
 something like this.  For this view I&#039;ve selected
 <strong>Screen→Displayed element name→Value</strong>.
 </p>
@@ -591,7 +574,6 @@ from the menus or a keyboard shortcut.
 </p>
 
 <p>
-
 For example, say you
 have in the <strong>Preferences→Increments</strong> page configured a size
 increment of 5 mils.  With this you can select some lines and
@@ -601,12 +583,10 @@ However, suppose you want to be changing widths by random values and it&#039;s
 inconvenient to be changing the Preferences each time.  For this,
 you can select some lines,
 bring up the command window (hit &#039;<strong>:</strong>&#039;) and type in the command:
-
 </p>
 <pre class="code">	changesize(selectedlines, +3, mils)</pre>
 
 <p>
-
 and the selected lines
 will increase by 3 mils.  This command is now in a history list
 which you can recall and quickly edit in the command window to change
@@ -620,7 +600,7 @@ sizes by other values.
 
 <p>
 In some layouts it is important to put components on either side of 
-the board, although not for the preceeding example. In such a case
+the board, although not for the preceding example. In such a case
 the &#039;tab&#039; key can be used to flip the board over and view it from the
 back while the &#039;b&#039; key can be used to put a selected component on the
 other side of the board. 
@@ -634,12 +614,12 @@ together.
 </p>
 
 </div>
-<!-- EDIT747 SECTION "Layout PCB Files" [17551-25982] -->
-<h2 class="sectionedit748"><a name="modifying_schematics" id="modifying_schematics">Modifying Schematics</a></h2>
+<!-- EDIT145 SECTION "Layout PCB Files" [17556-25985] -->
+<h2 class="sectionedit146"><a name="modifying_schematics" id="modifying_schematics">Modifying Schematics</a></h2>
 <div class="level2">
 
 <p>
-The process of transfering schematic modifications to your PCB layout is
+The process of transferring schematic modifications to your PCB layout is
 made very simple by using gsch2pcb.  After the first <strong>board.pcb</strong>
 was created when you initially ran gsch2pcb,
 each time you run gschem on
@@ -648,30 +628,15 @@ your schematics and make changes, run <strong>gsch2pcb project</strong>.  Then r
 gsch2pcb has done.  Each time gsch2pcb is run, this will happen:
 </p>
 <ul>
-<li class="level1"><div class="li">  gsch2pcb always generates a new <strong>board.net</strong>.  If the net was changed, load the new netlist file when you run pcb.  *</div>
+<li class="level1"><div class="li"> gsch2pcb always generates a new <strong>board.net</strong>.  If the net was changed, load the new netlist file when you run pcb.</div>
 </li>
-</ul>
-
-<p>
- If you added components (with a footprint attribute) to a schematic
-gsch2pcb will generate a <strong>board.new.pcb</strong> containing all the
-new PCB elements corresponding to the footprints.
-You then run <strong>pcb board.pcb</strong> and load the <strong>board.new.pcb</strong>
-with new elements into
-the existing layout with <strong>File→load layout data to paste-buffer</strong>.
-Place the new elements, load the new netlist, and route new traces.<br/>
-
-</p>
-<ul>
-<li class="level1"><div class="li">  If you deleted components from a schematic, gsch2pcb will delete the corresponding PCB elements from <strong>board.pcb</strong>.  You only need to run <strong>pcb board.pcb</strong> and clean up dangling traces from around the deleted elements.</div>
+<li class="level1"><div class="li"> If you added components (with a footprint attribute) to a schematic gsch2pcb will generate a <strong>board.new.pcb</strong> containing all the new PCB elements corresponding to the footprints. You then run <strong>pcb board.pcb</strong> and load the <strong>board.new.pcb</strong> with new elements into the existing layout with <strong>File→load layout data to paste-buffer</strong>. Place the new elements, load the new netlist, and route new traces.</div>
 </li>
-</ul>
-<ul>
-<li class="level1"><div class="li">  If you change an existing component&#039;s <strong>footprint</strong>, gsch2pcb will delete the corresponding old element from <strong>board.pcb</strong> and add the new element to <strong>board.new.pcb</strong>.</div>
+<li class="level1"><div class="li"> If you deleted components from a schematic, gsch2pcb will delete the corresponding PCB elements from <strong>board.pcb</strong>.  You only need to run <strong>pcb board.pcb</strong> and clean up dangling traces from around the deleted elements.</div>
 </li>
-</ul>
-<ul>
-<li class="level1"><div class="li">  If you changed schematic component <strong>value</strong> attributes, the value changes will be forward annotated to <strong>board.pcb</strong> in place.</div>
+<li class="level1"><div class="li"> If you change an existing component&#039;s <strong>footprint</strong>, gsch2pcb will delete the corresponding old element from <strong>board.pcb</strong> and add the new element to <strong>board.new.pcb</strong>.</div>
+</li>
+<li class="level1"><div class="li"> If you changed schematic component <strong>value</strong> attributes, the value changes will be forward annotated to <strong>board.pcb</strong> in place.</div>
 </li>
 </ul>
 
@@ -682,7 +647,6 @@ for schematic components.
 </p>
 
 <p>
-
 However, you will need to manually add PCB
 elements that are not part of the schematics such as pc board mounting
 holes.  For these manually added PCB elements, make sure you never give
@@ -693,7 +657,6 @@ any schematic component <strong>refdes</strong>.
 </p>
 
 <p>
-
 Now, so far we&#039;ve only used <strong>m4 elements</strong> in our layout so let&#039;s
 modify a schematic to use a <strong>file element</strong>.  But first, it would
 help to know about the default elements PCB provides.  Depending
@@ -715,14 +678,11 @@ use <strong>0.125W_Carbon_Resistor</strong> in <strong>one.sch</strong> and
 then run <strong>gsch2pcb project</strong>.  If gsch2pcb does not find
 this element, then you need to add your <strong>newlib</strong>
 directory to your <strong>project</strong> file with a line like:
-
 </p>
 <pre class="code">elements-dir /usr/lib/newlib</pre>
 
 <p>
-
 If gsch2pcb does find it, you will get:
-
 </p>
 <pre class="code">~/gaf/myproject1$ gsch2pcb project
 board.pcb is backed up as board.pcb.bak1.
@@ -730,7 +690,6 @@ board.pcb is backed up as board.pcb.bak1.
 1 file elements and 0 m4 elements added to board.new.pcb.</pre>
 
 <p>
-
 Now you need to run <strong>pcb board.pcb</strong>.  You will see that the
 element for resistor R101 is gone and that you will get the
 new element by loading <strong>board.new.pcb</strong> with
@@ -738,8 +697,8 @@ new element by loading <strong>board.new.pcb</strong> with
 </p>
 
 </div>
-<!-- EDIT748 SECTION "Modifying Schematics" [25983-29788] -->
-<h2 class="sectionedit749"><a name="custom_gschem_symbols" id="custom_gschem_symbols">Custom gschem Symbols</a></h2>
+<!-- EDIT146 SECTION "Modifying Schematics" [25986-29781] -->
+<h2 class="sectionedit147"><a name="custom_gschem_symbols" id="custom_gschem_symbols">Custom gschem Symbols</a></h2>
 <div class="level2">
 
 <p>
@@ -787,9 +746,11 @@ gschem opamp-dual.sym</pre>
 <div class="level5">
 
 <p>
-<a href="media/geda/gschem-sym-2.png" class="media" target="_blank" title="geda:gschem-sym-2.png"><img src="media/geda/gschem-sym-2.png" class="medialeft" title="Step 2" alt="Step 2" /></a> * Hit <strong>Delete</strong> key to delete pin 8.
+<a href="media/geda/gschem-sym-2.png" class="media" target="_blank" title="geda:gschem-sym-2.png"><img src="media/geda/gschem-sym-2.png" class="medialeft" title="Step 2" alt="Step 2" /></a>
 </p>
 <ul>
+<li class="level1"><div class="li"> Hit <strong>Delete</strong> key to delete pin 8.</div>
+</li>
 <li class="level1"><div class="li"> Similarly select and delete pin 4.</div>
 </li>
 <li class="level1"><div class="li"> Double click to select and edit the <strong>slotdef</strong> lines.  Edit them by removing the pins 4 and 8.</div>
@@ -814,7 +775,6 @@ gschem opamp-dual.sym</pre>
 </ul>
 
 <p>
-
 Clean up by moving these new attributes as shown.
 </p>
 
@@ -848,7 +808,6 @@ be <strong>2</strong>.  If you don&#039;t make the attributes the same as they w
 before, gsch2pcb will think it is a different component and delete the
 existing <strong>DIL</strong> package from the layout.  If you did everything
 right, running gsch2pcb should give:
-
 </p>
 <pre class="code">~/gaf/myproject1$ gsch2pcb project   
 Found a cpinlist head with a netname! [Vcc]
@@ -862,7 +821,6 @@ Found a cpinlist head with a netname! [Vee]
 No elements to add so not creating board.new.pcb</pre>
 
 <p>
-
 Where the gEDA gnetlist program
 seems a bit “excited” about finding the new
 Vcc and Vee <strong>net</strong> attributes we just added, and a new netlist
@@ -875,13 +833,13 @@ attribute has worked.
 
 <p>
 For complete details on making symbols, read through the
-<a href="geda-scg.html" class="wikilink1" title="geda-scg.html">Symbol Creation Document</a> on the
+<a href="geda-gschem_symbol_creation.html" class="wikilink1" title="geda-gschem_symbol_creation.html">Symbol Creation Document</a> on the
 <a href="geda-documentation.html" class="wikilink1" title="geda-documentation.html">gEDA Documentation</a> page.
 </p>
 
 </div>
-<!-- EDIT749 SECTION "Custom gschem Symbols" [29789-34042] -->
-<h2 class="sectionedit750"><a name="custom_file_elements" id="custom_file_elements">Custom file elements</a></h2>
+<!-- EDIT147 SECTION "Custom gschem Symbols" [29782-34057] -->
+<h2 class="sectionedit148"><a name="custom_file_elements" id="custom_file_elements">Custom file elements</a></h2>
 <div class="level2">
 
 <p>
@@ -895,7 +853,6 @@ diode with slightly fatter leads.  It needs about a 42 mil (#58) drill.
 </p>
 
 <p>
-
 Run <strong>pcb</strong> and the first thing to do is select the <strong>Signal</strong>
 routing style and edit its sizes (press the <strong>Route Style</strong> button)
 Set the <strong>Via hole</strong> size
@@ -907,7 +864,7 @@ Zoom in a couple of steps, then make the element:
 <a href="media/geda/pcb-el-1.png" class="media" target="_blank" title="geda:pcb-el-1.png"><img src="media/geda/pcb-el-1.png" class="medialeft" title="Step 1" alt="Step 1" /></a>
 </p>
 <ul>
-<li class="level1"><div class="li"> Select the <strong>VIA</strong> tool and place two vias 400 milsapart.</div>
+<li class="level1"><div class="li"> Select the <strong>VIA</strong> tool and place two vias 400 mils apart.</div>
 </li>
 <li class="level1"><div class="li"> With the mouse on the left via, hit the <strong>n</strong> key and give the via the name <strong>1</strong>.  Give the right via the name <strong>2</strong></div>
 </li>
@@ -916,7 +873,6 @@ Zoom in a couple of steps, then make the element:
 </ul>
 
 <p>
-
 <a href="media/geda/pcb-el-2.png" class="media" target="_blank" title="geda:pcb-el-2.png"><img src="media/geda/pcb-el-2.png" class="mediaright" title="Step 2" alt="Step 2" /></a>
 </p>
 <ul>
@@ -933,7 +889,6 @@ Zoom in a couple of steps, then make the element:
 <p>
 Select the vias and the outline just drawn using the <strong>SEL</strong> tool
 and finish making the element:
-
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Buffer→Cut selection to buffer</strong> and move the cursor to the center of the left via and click.</div>
@@ -945,7 +900,6 @@ and finish making the element:
 </ul>
 
 <p>
-
 <strong>Note:</strong> if you save the element with a name which is the same
 as a <strong>m4 element</strong>, gsch2pcb will preferentially use the m4
 element unless you give gsch2pcb the –use-files (or -f) option.
@@ -956,25 +910,24 @@ lower case in your file element names.  Also, the only way I know to make
 the pin 1 of the symbol square is to edit the D400-1A file manually and
 change the square flag in the Pin “1” line.  For example, change the
 line:
-
 </p>
-<pre class="code">    Pin(0 0 70 20 70 42 &quot;&quot; &quot;1&quot; 0x00000001)
-to:
-Pin(0 0 70 20 70 42 &quot;&quot; &quot;1&quot; 0x00000101)</pre>
+<pre class="code">Pin(0 0 70 20 70 42 &quot;&quot; &quot;1&quot; 0x00000001)</pre>
 
 <p>
+to:
+</p>
+<pre class="code">Pin(0 0 70 20 70 42 &quot;&quot; &quot;1&quot; 0x00000101)</pre>
 
+<p>
 You can now use <strong>D400-1A</strong> in a gschem schematic symbol
 <strong>footprint</strong> attribute and gsch2pcb will find it provided
 you have made the <strong>packages</strong> link described in the <strong>Setup</strong>
 section.  If you have not made that link, you can still tell gsch2pcb
 about the elements directory with a line in a project file:
-
 </p>
 <pre class="code">elements-dir ~/gaf/pcb-elements</pre>
 
 <p>
-
 Possibly you&#039;ve noticed, but there are some things not right about the
 <strong>myproject1</strong> example.  For one thing, silk layer lines are
 overlapping solder pads on some of the elements, and for another,
@@ -989,7 +942,6 @@ coordinated with PCB element pin numbers:
 </p>
 
 <p>
-
 From the transistor guide, you can see that the problem here is that
 the <strong>TO92</strong> element has its pins numbered
 in the less common (3,2,1) configuration while the <strong>2N3904-1.sym</strong>
@@ -1003,7 +955,6 @@ names, select <strong>Screen→pinout shows number</strong>.
 </p>
 
 <p>
-
 I have libraries with transistor symbols and elements that you might
 find useful, so as a convenience you can get your custom
 libraries initially populated by installing my
@@ -1011,8 +962,8 @@ libraries initially populated by installing my
 Untar them under ~/gaf to mirror the setup of our example
 and there will also be a
 <strong>~/gaf/pcb-elements.Readme</strong> which documents the PCB elements.
-&lt;i&gt;Note: as of 1/10/2004 I&#039;ve corrected the tarball pcb elements
-to not overlap solder pads with silk layer lines.&lt;/i&gt;
+<em>Note: as of 1/10/2004 I&#039;ve corrected the tarball pcb elements
+to not overlap solder pads with silk layer lines.</em>
 If you untar them somewhere else,
 you will need to make sure that gschem knows about them with
 gschemrc/gnetlistrc <strong>component-library</strong> lines and that
@@ -1021,7 +972,6 @@ project file.
 </p>
 
 <p>
-
 If you install them, you can fix Q201 in <strong>two.sch</strong>
 by changing its footprint to <strong>TO-92</strong> which is my custom
 element with (1,2,3) pin numbering.
@@ -1055,14 +1005,14 @@ than in <strong>R025</strong> to improve component density.
 </p>
 
 </div>
-<!-- EDIT750 SECTION "Custom file elements" [34043-40504] -->
-<h2 class="sectionedit751"><a name="custom_m4_elements_requires_gsch2pcb_10" id="custom_m4_elements_requires_gsch2pcb_10">Custom m4 elements (Requires gsch2pcb &gt;= 1.0)</a></h2>
+<!-- EDIT148 SECTION "Custom file elements" [34058-40530] -->
+<h2 class="sectionedit149"><a name="custom_m4_elements_requires_gsch2pcb_10" id="custom_m4_elements_requires_gsch2pcb_10">Custom m4 elements (Requires gsch2pcb &gt;= 1.0)</a></h2>
 <div class="level2">
 
 <p>
 First, some words about how to find out about
 the  default <strong>m4 elements</strong>
-available in PCB.  I think there is some documention forthcoming
+available in PCB.  I think there is some documentation forthcoming
 in the PCB project, but at this point I don&#039;t know of anything
 to refer you to
 and you can&#039;t just look at filenames as you can for
@@ -1081,16 +1031,13 @@ have to track it down.  By the way, if the m4 directory <em>is</em> somewhere
 different from the above three, then gsch2pcb won&#039;t be finding your
 <strong>m4 elements</strong> in the above examples and you will need to add
 the correct m4 directory to your <strong>project</strong> file with a line like:
-
 </p>
 <pre class="code">m4-pcbdir /path/to/pcb/m4</pre>
 
 <p>
-
 Just read the <strong>.inc</strong> files in the m4 install directory.  For
 example, in the <strong>misc.inc</strong> file you will find the <strong>R025</strong> element
 we&#039;ve used and it starts out with:
-
 </p>
 <pre class="code"># -------------------------------------------------------------------
 # the definition of a resistor (0.25W) package
@@ -1103,7 +1050,6 @@ define(`PKG_R025&#039;,
 ...</pre>
 
 <p>
-
 The information you can extract from this is that a m4 <strong>PKG_</strong> macro
 named <strong>R025</strong> is being defined and it takes 3 arguments.  Now, all PCB
 <strong>m4 element</strong> macros take at least three
@@ -1117,7 +1063,6 @@ Since these args are automatically filled in, you don&#039;t need to specify
 any additional args to <strong>R025</strong> when you use it as a gschem
 <strong>footprint</strong>.  But now look at the very next m4 element define
 in <strong>misc.inc</strong>:
-
 </p>
 <pre class="code"># -------------------------------------------------------------------
 # the definition of a SIL package without a common pin
@@ -1132,7 +1077,6 @@ Element(0x00 &quot;$1&quot; &quot;$2&quot; &quot;$3&quot; 160 10 3 100 0x00)
 ...</pre>
 
 <p>
-
 From this you can determine there is a <strong>SIL</strong> package you can use
 as a <strong>footprint</strong>.  It has 4 arguments, but only the first three are
 handled automatically so there is one argument you must give when using it.
@@ -1145,7 +1089,6 @@ In fact, it will only work for arguments &gt;= 4.  If you ever run gsch2pcb
 and it appears stuck in an infinite loop, a m4 macro argument problem
 is likely the cause.  As you look through <strong>misc.inc</strong> here&#039;s a summary
 of what you will find as possible elements you can use:
-
 </p>
 <pre class="code">Package      Args you need to supply
 SD           1      number of pins of a ZIP package
@@ -1166,12 +1109,10 @@ SMD_BASE     2      length and width of surface mount device
 SMD_CHIP     1      package length</pre>
 
 <p>
-
 And so on for the other <strong>.inc</strong> files…
 </p>
 
 <p>
-
 The reality is that the m4 setup is less user friendly (you can&#039;t create
 the elements graphically) and more complicated (you need to understand
 m4 macros) than the simple
@@ -1214,14 +1155,12 @@ will search.  The destination m4 file can be any of these:
 <p>
 For this tutorial, I&#039;ll use the first <strong>pcb.inc</strong> way, so copy over
 the existing macro file:
-
 </p>
 <pre class="code">cd /usr/local/share/pcb/m4  (or /usr/share/pcb/m4 or /usr/X11R6/lib/X11/pcb/m4)
 cp dil.inc ~/gaf/myproject1/pcb.inc
 cd ~/gaf/myproject1</pre>
 
 <p>
-
 Now, edit the <strong>pcb.inc</strong> file you just copied and cut everything
 out except for the PKG_DIL macro.  Change the name of
 the package to something like PKG_DILFAT because the change we&#039;ll make
@@ -1231,7 +1170,6 @@ let&#039;s go with the new name.  Change the pin diameter from <strong>60</stron
 to <strong>70</strong> on the <strong><acronym title="Personal Identification Number">PIN</acronym></strong> lines.
 When done, this should
 be the entire contents of the new <strong>pcb.inc</strong> file:
-
 </p>
 <pre class="code"># -------------------------------------------------------------------
 # the definition of a dual-inline package N and similar types
@@ -1263,7 +1201,6 @@ Mark(50 50)
 )&#039;)</pre>
 
 <p>
-
 Run <strong>gschem one.sch</strong> and edit the <strong>footprint</strong> attribute of 
 the opamps to be <strong>DILFAT 8 300</strong>.
 Then run <strong>gsch2pcb project</strong>
@@ -1276,8 +1213,8 @@ left vacant by the removal of the old element.
 </p>
 
 </div>
-<!-- EDIT751 SECTION "Custom m4 elements (Requires gsch2pcb >= 1.0)" [40505-48192] -->
-<h2 class="sectionedit752"><a name="multi-user_setup_requires_gsch2pcb_10" id="multi-user_setup_requires_gsch2pcb_10">Multi-user Setup (requires gsch2pcb &gt;= 1.0)</a></h2>
+<!-- EDIT149 SECTION "Custom m4 elements (Requires gsch2pcb >= 1.0)" [40531-48220] -->
+<h2 class="sectionedit150"><a name="multi-user_setup_requires_gsch2pcb_10" id="multi-user_setup_requires_gsch2pcb_10">Multi-user Setup (requires gsch2pcb &gt;= 1.0)</a></h2>
 <div class="level2">
 
 <p>
@@ -1323,8 +1260,8 @@ specific symbol and element libraries.
 </p>
 
 </div>
-<!-- EDIT752 SECTION "Multi-user Setup (requires gsch2pcb >= 1.0)" [48193-49830] -->
-<h2 class="sectionedit753"><a name="pc_board_fabrication" id="pc_board_fabrication">PC Board Fabrication</a></h2>
+<!-- EDIT150 SECTION "Multi-user Setup (requires gsch2pcb >= 1.0)" [48221-49858] -->
+<h2 class="sectionedit151"><a name="pc_board_fabrication" id="pc_board_fabrication">PC Board Fabrication</a></h2>
 <div class="level2">
 
 <p>
@@ -1337,7 +1274,6 @@ The tutorial should cover pcb fabrication too.
 <div class="level5">
 
 <p>
-
 Use File→Export layout→ps to make a postscript file suitable for printing
 on a transparency. Note the presence of the &#039;mirror&#039; and &#039;ps-invert&#039; options
 which you may need depending on your process.
@@ -1361,14 +1297,12 @@ to group the layers appropriately and place them on the correct side.
 <div class="level5">
 
 <p>
-
 <a href="http://www.lpkf.com" class="urlextern" title="http://www.lpkf.com"  rel="nofollow">LPKF</a> (and probably other companies) have a pcb plotting machines that accept gerber files.
 These files can be produced by choosing File→Export Layout→gerber which produces a large number of files. The files
 can be viewed using <a href="http://geda.seul.org/tools/gerbv/index.html" class="urlextern" title="http://geda.seul.org/tools/gerbv/index.html"  rel="nofollow">gerbv</a> and the visualization saved. Once you are satisfied with the output gerber files just
 hand them off to whomever controls the pcb plotting machine and wait for the boards to be completed!
-
 </p>
 
 </div>
-<!-- EDIT753 SECTION "PC Board Fabrication" [49831-] --></body>
+<!-- EDIT151 SECTION "PC Board Fabrication" [49859-] --></body>
 </html>

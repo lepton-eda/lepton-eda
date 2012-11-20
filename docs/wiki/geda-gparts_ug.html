@@ -12,12 +12,12 @@
 <body>
 
 
-<h1 class="sectionedit1439"><a name="part_manager_user_guide" id="part_manager_user_guide">Part Manager User Guide</a></h1>
+<h1 class="sectionedit962"><a name="part_manager_user_guide" id="part_manager_user_guide">Part Manager User Guide</a></h1>
 <div class="level1">
 
 </div>
-<!-- EDIT1439 SECTION "Part Manager User Guide" [1-39] -->
-<h2 class="sectionedit1440"><a name="bulk_import" id="bulk_import">Bulk Import</a></h2>
+<!-- EDIT962 SECTION "Part Manager User Guide" [1-39] -->
+<h2 class="sectionedit963"><a name="bulk_import" id="bulk_import">Bulk Import</a></h2>
 <div class="level2">
 
 <p>
@@ -31,11 +31,7 @@ Currently, the part manager only provides a command line interface for bulk impo
 <p>
 The import can be accomplished with the following command line when in the gparts/sql/sqlite directory:
 </p>
-
-<p>
-<pre STYLE="background : LightGreen;
-margin-left : 2em"><font size="+0">$ xsltproc convert.xml ../../data/companies.xml | sqlite3 sample.db</font></pre>
-</p>
+<pre class="code">$ xsltproc convert.xml ../../data/companies.xml | sqlite3 sample.db</pre>
 
 <p>
 See the <acronym title="Extensible Markup Language">XML</acronym> files in the gparts/data directory for examples. Any combination of company, package, and part elements can be used within the data element.
@@ -51,7 +47,6 @@ Use the following as an example for specifying a company.
 
 <p>
 Use the following as an example for specifying a package.
-
 </p>
 <pre class="file">    &lt;package&gt;
         &lt;package-name&gt;0201(0603)&lt;/package-name&gt;
@@ -72,13 +67,12 @@ Use the following as an example for specifying a resistor. The resistor, as any 
     &lt;/resistor&gt;</pre>
 
 </div>
-<!-- EDIT1440 SECTION "Bulk Import" [40-1774] -->
-<h2 class="sectionedit1441"><a name="part_attributes" id="part_attributes">Part Attributes</a></h2>
+<!-- EDIT963 SECTION "Bulk Import" [40-1761] -->
+<h2 class="sectionedit964"><a name="part_attributes" id="part_attributes">Part Attributes</a></h2>
 <div class="level2">
 
 <p>
 The part manager places database fields into component attributes using macros. The macros use the form $(column_name). Unfortunately, this mechanism requires modification of symbols in the library for use with the part manager. The part manager performs the operation in the following steps:
-
 </p>
 <ol>
 <li class="level1"><div class="li"> loads the symbol drawing</div>
@@ -92,7 +86,6 @@ The part manager places database fields into component attributes using macros. 
 </ol>
 
 <p>
-
 Currently, macros can only be used in attributes that get promoted. The logic for attribute promotion must match between gschem and the part manager.
 </p>
 
@@ -103,5 +96,5 @@ The following gschem file snippet shows the macro used place the field from the 
 VALUE=$(Resistance)</pre>
 
 </div>
-<!-- EDIT1441 SECTION "Part Attributes" [1775-] --></body>
+<!-- EDIT964 SECTION "Part Attributes" [1762-] --></body>
 </html>

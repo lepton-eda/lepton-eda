@@ -20,7 +20,7 @@ How?
 ----
 These schematics are made with gschem and netlists are then generated
 with gnetlist. Both gschem and gnetlist are part of gEDA 
-(http://www.geda.seul.org/).
+(http://www.geda-project.org/).
 
 Files
 -----

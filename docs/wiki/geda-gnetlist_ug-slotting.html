@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit2150"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> « <a href="geda-gnetlist_ug-hierarchy.html" class="wikilink1" title="geda-gnetlist_ug-hierarchy.html">Hierarchy</a>  </td><td class="col1 centeralign">  <strong><a href="geda-gnetlist_ug.html" class="wikilink1" title="geda-gnetlist_ug.html">gEDA gnetlist User Guide</a></strong>     </td><td class="col2 rightalign">  <a href="geda-gnetlist_ug-implicit_pins.html" class="wikilink1" title="geda-gnetlist_ug-implicit_pins.html">Implicit pins</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT2150 TABLE [1-103] -->
+<h2 class="sectionedit2151"><a name="slots_and_slotting" id="slots_and_slotting">Slots and slotting</a></h2>
+<div class="level2">
+
+<p>
+Some integrated circuits provide several identical and interchangeable devices in a single package.  The classic “4000” series of logic devices is a good example of this; for example, each 4001 package contains four 2-input NOR gates.  <a href="geda-gschem_ug.html" class="wikilink1" title="geda-gschem_ug.html">gschem</a> and gnetlist provide support for working with these by using <em>slots</em>.
+</p>
+
+<p>
+<p><div class="notetip">Check the “4001-1.sym” symbol in the “4000-series logic” symbol library for an example of how to use slotting and <a href="geda-gnetlist_ug-implicit_pins.html" class="wikilink1" title="geda-gnetlist_ug-implicit_pins.html">implicit pins</a>.
+</p>
+
+<p>
+Detailed information on slotting attributes can be found in the <a href="geda-master_attributes_list.html" class="wikilink1" title="geda-master_attributes_list.html">Master Attributes List</a>.
+</div></p>
+</p>
+
+<p>
+gnetlist uses several symbol attributes to enable slotting.  All must be present for gnetlist to process a slotted component correctly.
+</p>
+<ol>
+<li class="level1"><div class="li"> Every pin must have a ”<code>pinseq=</code>” attribute and a ”<code>pinnumber=</code>” attribute.</div>
+</li>
+<li class="level1"><div class="li"> The ”<code>numslots=</code>” attribute indicates how many slots a component has.</div>
+</li>
+<li class="level1"><div class="li"> There must be one ”<code>slotdef=</code>” attribute for each slot.  This contains information about the pin numbers of the pins associated with each slot.</div>
+</li>
+<li class="level1"><div class="li"> A ”<code>slot=</code>” attribute attached to each component in the schematic indicates which particular slot to use.</div>
+</li>
+</ol>
+
+<p>
+When processing a slotted component, gnetlist first looks for a ”<code>slotdef=</code>” attribute matching the value of the ”<code>slot=</code>” attribute.  It uses the value of the ”<code>slotdef=</code>” attribute to renumber the pins for the correct slot.  It then merges the component with other components with the same “refdes”.
+</p>
+
+<p>
+<p><div class="noteimportant">gnetlist does not currently support slotting across hierarchy.  The slots in a package cannot be split between different subcircuits.
+</div></p>
+</p>
+
+</div>
+<!-- EDIT2151 SECTION "Slots and slotting" [105-] --></body>
+</html>
