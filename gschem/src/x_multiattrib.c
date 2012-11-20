@@ -645,6 +645,8 @@ static void multiattrib_get_property (GObject *object,
 
 static void multiattrib_popup_menu (Multiattrib *multiattrib,
                                     GdkEventButton *event);
+static void multiattrib_edit_moused_cell(Multiattrib *multiattrib,
+				          GdkEventButton *event);
 
 
 /*! \todo Finish function documentation
@@ -1242,8 +1244,20 @@ static gboolean multiattrib_callback_button_pressed(GtkWidget *widget,
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   gboolean ret = FALSE;
 
+  /* popup menu on right click */
   if (event->type == GDK_BUTTON_PRESS  &&  event->button == 3) {
     multiattrib_popup_menu (multiattrib, event);
+    ret = TRUE;
+  }
+
+  /* edit cell on double (left) click */
+  /* (Normally, edit focus by click is handled for us, but this function is useful 
+   * for overriding the default behavior of treating a double-click the same as a
+   * single-click, with edit focus needing two consecutive double or single clicks
+   * with a pause in between.  This can be unintuitive and time-wasting) */
+  else 
+  if (event->type == GDK_2BUTTON_PRESS  &&  event->button == 1) {
+    multiattrib_edit_moused_cell (multiattrib, event);
     ret = TRUE;
   }
 
@@ -1604,6 +1618,31 @@ static void multiattrib_popup_menu(Multiattrib *multiattrib,
   
 }
 
+
+/*! \brief Move edit focus to the cell pointed to by a mouse event.
+ *  \par Function Description
+ *  Uses a <B>event</B>, a mouse event with x and y coords, to move edit focus 
+ *  to the cell at those coords.  
+ *
+ *  \param [in] multiattrib  The Multiattrib object.
+ *  \param [in] event        Mouse event.
+ */
+static void multiattrib_edit_moused_cell(Multiattrib *multiattrib,
+				         GdkEventButton *event)
+{
+  GtkTreePath *path;
+  GtkTreeViewColumn *column;
+
+  if (event != NULL &&
+      gtk_tree_view_get_path_at_pos (multiattrib->treeview,
+                                     (gint)event->x, 
+                                     (gint)event->y,
+                                     &path, &column, NULL, NULL)) { 
+
+    gtk_tree_view_set_cursor_on_cell(multiattrib->treeview,
+                                     path, column, NULL, TRUE);    
+  }
+}
 
 /*! \brief GschemDialog "geometry_save" class method handler
  *
