@@ -870,14 +870,14 @@ msgstr ""
 #, c-format
 msgid ""
 "gEDA %s (g%.7s)\n"
-"Copyright (C) 1998-2011 gEDA developers\n"
+"Copyright (C) 1998-2012 gEDA developers\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"
 "included in the gEDA distribution.\n"
 "There is NO WARRANTY, to the extent permitted by law.\n"
 msgstr ""
 "gEDA %s (g%.7s)\n"
-"Πνευματικά δικαιώματα (C) 1998-2011 προγραμματιστές του gEDA\n"
+"Πνευματικά δικαιώματα (C) 1998-2012 προγραμματιστές του gEDA\n"
 "Αυτό είναι δωρεάν λογισμικό, και μπορείτε να το αναδιανείμετε ελεύθερα υπό\n"
 "συγκεκριμένους όρους. Για λεπτομέρειες, δείτε το αρχείο `COPYING', το οποίο\n"
 "συμπεριλαμβάνεται στη διανομή του gEDA.\n"
@@ -1378,11 +1378,11 @@ msgstr "gEDA: Ηλεκτρονικός Αυτοματισμός Σχεδίαση
 #. TRANSLATORS: "ChangeLog" is a literal filename; please don't translate it.
 #: gschem/src/x_dialog.c:2155
 msgid ""
-"Copyright © 1998-2011 Ales Hvezda <ahvezda@geda.seul.org>\n"
-"Copyright © 1998-2011 gEDA Contributors (see ChangeLog for details)"
+"Copyright © 1998-2012 Ales Hvezda <ahvezda@geda.seul.org>\n"
+"Copyright © 1998-2012 gEDA Contributors (see ChangeLog for details)"
 msgstr ""
-"Πνευματικά δικαιώματα © 1998-2011 Ales Hvezda <ahvezda@geda.seul.org>\n"
-"Πνευματικά δικαιώματα © 1998-2011 προγραμματιστές του gEDA (δείτε το "
+"Πνευματικά δικαιώματα © 1998-2012 Ales Hvezda <ahvezda@geda.seul.org>\n"
+"Πνευματικά δικαιώματα © 1998-2012 προγραμματιστές του gEDA (δείτε το "
 "ChangeLog για λεπτομέρειες)"
 
 #: gschem/src/x_dialog.c:2214

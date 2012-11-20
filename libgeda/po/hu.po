@@ -50,7 +50,7 @@ msgstr ""
 #: libgeda/src/a_basic.c:238 libgeda/src/f_basic.c:384
 #, c-format
 msgid "File %s is read-only"
-msgstr ""
+msgstr "Csak olvasható file"
 
 #: libgeda/src/a_basic.c:423
 #, fuzzy, c-format
@@ -104,12 +104,12 @@ msgstr ""
 #: libgeda/src/f_basic.c:123 libgeda/src/f_basic.c:136
 #, c-format
 msgid "Failed to stat [%s]: %s"
-msgstr ""
+msgstr "Nem látom [%s]: %s"
 
 #: libgeda/src/f_basic.c:221
 #, c-format
 msgid "Cannot find file %s: %s"
-msgstr ""
+msgstr "Nem találom a file-t %s: %s"
 
 #: libgeda/src/f_basic.c:269
 #, c-format
@@ -122,7 +122,7 @@ msgstr ""
 
 #: libgeda/src/f_basic.c:271
 msgid "I could not guess if it is newer, so you have to do it manually.\n"
-msgstr ""
+msgstr "Nem tudtam eldönteni, hogy ez újabb, ezért neked kell megcsinálnod"
 
 #: libgeda/src/f_basic.c:273
 msgid ""
@@ -166,7 +166,7 @@ msgstr ""
 #: libgeda/src/f_basic.c:480
 #, c-format
 msgid "Could NOT save file: %s"
-msgstr ""
+msgstr "Nem tudtam elmenteni a file-t: %s"
 
 #: libgeda/src/f_basic.c:727
 #, c-format
@@ -237,7 +237,7 @@ msgstr ""
 #: libgeda/src/g_rc.c:310 libgeda/src/g_rc.c:311
 #, c-format
 msgid "ERROR: %s\n"
-msgstr ""
+msgstr "HIBA: %s\n"
 
 #: libgeda/src/g_rc.c:317
 #, c-format

@@ -24,26 +24,26 @@ msgstr "Túl nagy nagyítás! Nem tudok tovább nagyítani.\n"
 
 #: gschem/src/g_attrib.c:92
 msgid "Object ~A is not included in the current gschem page."
-msgstr ""
+msgstr "A ~A objektum nem tálható a jelen gschem lapon."
 
 #: gschem/src/g_attrib.c:112
 msgid "Invalid text name/value visibility ~A."
-msgstr ""
+msgstr "Érvénytelen szöveg név/érték megjelenés ~A."
 
 #: gschem/src/g_rc.c:312
 #, c-format
 msgid "Invalid zoomfactor [%d] passed to %s\n"
-msgstr ""
+msgstr "Érvénytelen nagyítás arány [%d] %s-nek adva\n"
 
 #: gschem/src/g_rc.c:458
 #, c-format
 msgid "Invalid size [%d] passed to text-size\n"
-msgstr ""
+msgstr "Érvénytelen méret [%d] szöveg méretként\n"
 
 #: gschem/src/g_rc.c:501
 #, c-format
 msgid "Invalid size [%d] passed to snap-size\n"
-msgstr ""
+msgstr "Érvénytelen méret [%d] snap méretként\n"
 
 #: gschem/src/g_rc.c:958
 #, c-format
@@ -857,7 +857,7 @@ msgstr ""
 #, c-format
 msgid ""
 "gEDA %s (g%.7s)\n"
-"Copyright (C) 1998-2011 gEDA developers\n"
+"Copyright (C) 1998-2012 gEDA developers\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"
 "included in the gEDA distribution.\n"
@@ -1356,8 +1356,8 @@ msgstr ""
 #. TRANSLATORS: "ChangeLog" is a literal filename; please don't translate it.
 #: gschem/src/x_dialog.c:2155
 msgid ""
-"Copyright © 1998-2011 Ales Hvezda <ahvezda@geda.seul.org>\n"
-"Copyright © 1998-2011 gEDA Contributors (see ChangeLog for details)"
+"Copyright © 1998-2012 Ales Hvezda <ahvezda@geda.seul.org>\n"
+"Copyright © 1998-2012 gEDA Contributors (see ChangeLog for details)"
 msgstr ""
 
 #: gschem/src/x_dialog.c:2214
@@ -2468,7 +2468,7 @@ msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1522
 msgid "Toggle _Snap On/Off"
-msgstr ""
+msgstr "_Snap váltása"
 
 #: gschem/lib/system-gschemrc.scm:1523
 msgid "Snap Grid S_pacing..."
@@ -2516,7 +2516,7 @@ msgstr ""
 
 #: gschem/lib/system-gschemrc.scm:1545
 msgid "Component D_ocumentation..."
-msgstr ""
+msgstr "Alkatrész dokumentáció"
 
 #: gschem/lib/system-gschemrc.scm:1547
 msgid "_Hotkeys..."
@@ -2524,7 +2524,7 @@ msgstr "_Gyorsbillentyűk..."
 
 #: gschem/lib/system-gschemrc.scm:1548
 msgid "_About..."
-msgstr ""
+msgstr "Névjegy"
 
 #: gschem/lib/system-gschemrc.scm:1554
 msgid "_File"
@@ -2573,7 +2573,7 @@ msgstr ""
 
 #: gschem/scheme/gschem/gschemdoc.scm:225
 msgid "No documentation found"
-msgstr ""
+msgstr "Nem találtam dokumentumot"
 
 #: gschem/scheme/gschem/keymap.scm:38
 #, scheme-format
