@@ -97,11 +97,6 @@
 #define CLOSE_DIR	2
 #define SET_COUNT	3
 
-/* for s_slib_search() */
-#define SLIB_SEARCH_START	0
-#define SLIB_SEARCH_NEXT	1
-#define SLIB_SEARCH_DONE	2
-
 /* for text alignment */
 /*   2 -- 5 -- 8  */
 /*   |    |    |  */
