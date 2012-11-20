@@ -49,6 +49,7 @@ static int page_control_counter=0;
  *  \param [in] parent        The parent page of the schematic.
  *  \param [in] page_control
  *  \param [in] flag          sets whether to force load
+ *  \param [out] err         Location to return a GError on failure.
  *  \return The page loaded, or NULL if failed.
  *
  *  \note
@@ -61,7 +62,8 @@ static int page_control_counter=0;
  */
 PAGE *
 s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename,
-                                  PAGE *parent, int page_control, int flag)
+                                  PAGE *parent, int page_control, int flag,
+                                  GError **err)
 {
   gchar *string;
   PAGE *found = NULL;
@@ -73,6 +75,8 @@ s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename,
 
   string = s_slib_search_single(filename);
   if (string == NULL) {
+    g_set_error (err, EDA_ERROR, EDA_ERROR_NOLIB,
+                 _("Schematic not found in source library."));
     return NULL;
   }
 
@@ -91,8 +95,8 @@ s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename,
           ; /* void */
 
         if (forbear != NULL && found->pid == forbear->pid) {
-          s_log_message(_("hierarchy loop detected while visiting page:\n"
-                          "  \"%s\"\n"), found->page_filename);
+          g_set_error (err, EDA_ERROR, EDA_ERROR_LOOP,
+                       _("Hierarchy contains a circular dependency."));
           return NULL;  /* error signal */
         }
         s_page_goto (toplevel, found);
@@ -264,16 +268,17 @@ s_hierarchy_traversepages (TOPLEVEL *toplevel, PAGE *p_current, gint flags)
 
     /* we got a schematic source attribute
        lets load the page and dive into it */
+    GError *err = NULL;
     child_page =
       s_hierarchy_down_schematic_single (toplevel, filename, p_current, 0,
-                                         HIERARCHY_NORMAL_LOAD);
+                                         HIERARCHY_NORMAL_LOAD, &err);
     if (child_page != NULL) {
       /* call the recursive function */
       s_hierarchy_traversepages (toplevel, child_page, flags | HIERARCHY_INNERLOOP);
     } else {
-      s_log_message (_("ERROR in s_hierarchy_traverse: "
-                       "schematic not found: %s\n"),
-                     filename);
+      s_log_message (_("Failed to descend hierarchy into '%s': %s\n"),
+                     filename, err->message);
+      g_error_free (err);
     }
 
     g_free (filename);

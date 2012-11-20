@@ -2833,7 +2833,8 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
                                                 current_filename,
                                                 parent,
                                                 page_control,
-                                                HIERARCHY_NORMAL_LOAD);
+                                                HIERARCHY_NORMAL_LOAD,
+                                                NULL);
 
       /* s_hierarchy_down_schematic_single() will not zoom the loaded page */
       if (child != NULL) {

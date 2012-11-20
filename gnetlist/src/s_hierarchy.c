@@ -99,7 +99,8 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 						  current_filename,
 						  pr_current->page_current,
 						  page_control,
-                                                  HIERARCHY_FORCE_LOAD);
+                                                  HIERARCHY_FORCE_LOAD,
+                                                  NULL);
 
 	    if (child_page == NULL) {
 		fprintf(stderr, "Could not open [%s]\n", current_filename);

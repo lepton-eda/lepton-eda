@@ -27,6 +27,8 @@ typedef enum {
   EDA_ERROR_SCHEME,   /* A Scheme error occurred */
   EDA_ERROR_RC_TWICE, /* Attempted to read a configuration file twice */
   EDA_ERROR_PARSE,    /* A schematic file could not be parsed. */
+  EDA_ERROR_NOLIB,    /* A requested library resource was missing. */
+  EDA_ERROR_LOOP,     /* The data model contains a circular dependency. */
   EDA_ERROR_NUM_ERRORS,
 } EdaError;
 

@@ -166,20 +166,12 @@ char *s_slib_search_lowlevel(const char *basename)
   slib_path = s_slib_search_dirs(basename);
 
   if (slib_path) {
-    /* return type */
-
-    s_log_message(_("Found [%s]\n"), basename);
-    /* s_log_message("Found [%s] in [%s]\n", basename, slib_path);*/
-
     full_path = g_build_filename (slib_path, basename, NULL);
 		
     g_free(slib_path);
 
     return(full_path);
   } else {
-
-    s_log_message(_("Could not find [%s] in any SourceLibrary\n"), basename);
-
     return(NULL);
   }
 }

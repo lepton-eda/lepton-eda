@@ -398,7 +398,8 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
                                                 current_filename,
                                                 parent,
                                                 page_control,
-                                                HIERARCHY_NORMAL_LOAD);
+                                                HIERARCHY_NORMAL_LOAD,
+                                                NULL);
 
             if (child_page != NULL) {
               page_control = child_page->page_control;
