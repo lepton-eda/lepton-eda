@@ -794,13 +794,7 @@ s_check_slotdef (const GList *obj_list, SYMCHECK *s_current)
   value = o_attrib_search_floating_attribs_by_name (obj_list, "numslots", 0);
 
   if (!value) {
-    message = g_strdup ("Did not find numslots= attribute, not checking slotting\n");
-    s_current->warning_messages = g_list_append(s_current->warning_messages,
-                                                message);
-    s_current->warning_count++;
-    message = g_strdup ("If this symbol does not need slotting, set numslots to zero (numslots=0)\n");
-    s_current->info_messages = g_list_append(s_current->info_messages,
-                                             message);
+    /* Since there's no numslots= attribute, don't check slotting at all. */
     return;
   }
 
