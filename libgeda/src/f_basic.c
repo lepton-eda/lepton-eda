@@ -463,12 +463,17 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **err)
     page->ops_since_last_backup = 0;
     page->do_autosave_backup = 0;
 
-    /* Restore permissions. */
-    chmod (real_filename, st.st_mode);
+    /* Restore permissions/ownership.  We restore both on a
+       best-effort basis; rather than treating failure as an error, we
+       just log a warning. */
+    if (chmod (real_filename, st.st_mode)) {
+      g_warning (_("Failed to restore permissions on '%s': %s\n"),
+                 real_filename, g_strerror (errno));
+    }
 #ifdef HAVE_CHOWN
     if (chown (real_filename, st.st_uid, st.st_gid)) {
-      /* Error occured with chown */
-#warning FIXME: What do we do?
+      g_warning (_("Failed to restore ownership on '%s': %s\n"),
+                 real_filename, g_strerror (errno));
     }
 #endif
 
