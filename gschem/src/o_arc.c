@@ -283,7 +283,7 @@ void o_arc_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
     case ARC_START_ANGLE:
       w_current->second_wx = (angle_deg + 360) % 360;
       break;
-	
+
     case ARC_END_ANGLE:
       w_current->second_wy = (((angle_deg + 360) % 360) -
                               w_current->second_wx + 360) % 360;
@@ -292,13 +292,15 @@ void o_arc_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
       if (w_current->second_wy == 0)
         w_current->second_wy = 360;
       break;
-      
-      // No default required - one of above two branches
-      // *must* be taken - Coverity ID 201571
+
+      /*
+       * No default required - one of above two branches
+       * *must* be taken - Coverity ID 201571
+       */
     }
 
   }
-	
+
   /* draw the new temporary arc */
   o_arc_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
