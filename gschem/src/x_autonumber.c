@@ -605,10 +605,12 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
 {
   char *str;
 
-  /* update the slot on the owning object */
-  str = g_strdup_printf ("slot=%d", slot);
-  o_slot_end (autotext->w_current, o_current->attached_to, str);
-  g_free (str);
+  if (slot != 0) {
+    /* update the slot on the owning object */
+    str = g_strdup_printf ("slot=%d", slot);
+    o_slot_end (autotext->w_current, o_current->attached_to, str);
+    g_free (str);
+  }
 
   /* replace old text */
   str = g_strdup_printf("%s%d", autotext->current_searchtext, number);
