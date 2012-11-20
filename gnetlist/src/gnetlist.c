@@ -305,15 +305,15 @@ void main_prog(void *closure, int argc, char *argv[])
     /* Run post-traverse code. */
     scm_primitive_load_path (scm_from_utf8_string ("gnetlist-post.scm"));
 
-    if (guile_proc) {
+    if (interactive_mode) {
+        scm_c_eval_string ("(set-repl-prompt! \"gnetlist> \")");
+        scm_shell (0, NULL);
+    } else if (guile_proc) {
         /* check size here hack */
         str = g_strdup_printf ("(%s \"%s\")", guile_proc, output_filename);
         scm_c_eval_string (str);
         g_free (str);
         /* gh_eval_str_with_stack_saving_handler (input_str); */
-    } else if (interactive_mode) {
-        scm_c_eval_string ("(set-repl-prompt! \"gnetlist> \")");
-        scm_shell (0, NULL);
     } else {
         fprintf(stderr,
                 "You gave neither backend to execute nor interactive mode!\n");
