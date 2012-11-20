@@ -34,8 +34,8 @@
 ;;--------------------------------------------------------------
 (define debug-spew
   (lambda (debug-string)
-    (if (calling-flag? "verbose_mode" (gnetlist:get-calling-flags))
-        (display debug-string) 
+    (if (= 1 (gnetlist:get-verbosity))
+        (display debug-string)
 )))
 
 

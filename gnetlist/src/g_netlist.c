@@ -749,6 +749,23 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib)
   return (scm_return_value);
 }
 
+/*! \brief Indicate the verbosity level for messages.
+ * \par Function Description
+ * If the "-q" gnetlist command-line option was specified, returns -1.
+ * If the "-v" gnetlist command-line option was specified, returns 1.
+ * Otherwise, returns 0.
+ */
+SCM
+g_get_verbosity ()
+{
+  if (verbose_mode) {
+    return scm_from_int (1);
+  } else if (quiet_mode) {
+    return scm_from_int (-1);
+  } else {
+    return scm_from_int (0);
+  }
+}
 
 /*! \brief Obtain a list of `-O' backend arguments.
  * \par Function Description
