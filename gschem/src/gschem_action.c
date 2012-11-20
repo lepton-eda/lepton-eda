@@ -123,14 +123,14 @@ gschem_action_connect_proxy (GtkAction *action,
 
     if (label == NULL) {
       g_object_get (action, "label", &label_string, NULL);
-      (void) g_object_new (GSCHEM_TYPE_ACCEL_LABEL,
-			   "use-underline", TRUE,
-			   "xalign", 0.0,
-			   "visible", TRUE,
-			   "parent", proxy,
-			   "label", label_string,
-			   "accel-string", gs_action->multikey_accel,
-			   NULL);
+      g_object_new (GSCHEM_TYPE_ACCEL_LABEL,
+		    "use-underline", TRUE,
+		    "xalign", 0.0,
+		    "visible", TRUE,
+		    "parent", proxy,
+		    "label", label_string,
+		    "accel-string", gs_action->multikey_accel,
+		    NULL);
     }
   }
 

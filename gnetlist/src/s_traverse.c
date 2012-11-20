@@ -300,8 +300,8 @@ CPINLIST *s_traverse_component(TOPLEVEL * pr_current, OBJECT * component,
 
     /* This avoids us adding an unnamed net for an unconnected pin */
     if (o_current->conn_list != NULL) {
-      (void) s_traverse_net (pr_current, nets, TRUE,
-                             o_current, hierarchy_tag, cpins->type);
+      s_traverse_net (pr_current, nets, TRUE,
+		      o_current, hierarchy_tag, cpins->type);
       s_traverse_clear_all_visited (s_page_objects (pr_current->page_current));
     }
 
