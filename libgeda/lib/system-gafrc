@@ -107,12 +107,12 @@
 ;; Make the printing color map more user-friendly
 (color-map-make-friendly print-color-map)
 
-;; Load up a color scheme for printing optimised for a dark background.
-; Comment out the first line and comment in the second line for a
-; white background. The dark background is the original look.
+;; Load up a color scheme for printing optimised for a white background.
+; Comment out the second line and comment in the first line for a
+; dark background. The dark background is the original look.
 ;
-(load (build-path geda-rc-path "print-colormap-darkbg")) ; dark background
-;(load (build-path geda-rc-path "print-colormap-lightbg")) ; light background
+;(load (build-path geda-rc-path "print-colormap-darkbg")) ; dark background
+(load (build-path geda-rc-path "print-colormap-lightbg")) ; light background
 
 
 ;;;; Process configuration script directory
