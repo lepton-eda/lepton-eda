@@ -149,17 +149,14 @@ parse_commandline (int argc, char *argv[])
       break;
 
     case 'v':
-      backend_params = g_slist_append(backend_params, "verbose_mode");
       verbose_mode = TRUE;
       break;
 
     case 'i':
-      backend_params = g_slist_append(backend_params, "interactive_mode");
       interactive_mode = TRUE;
       break;
 
     case 'q':
-      backend_params = g_slist_append(backend_params, "quiet_mode");
       quiet_mode = TRUE;
       break;
 
