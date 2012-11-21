@@ -3361,52 +3361,132 @@ int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size)
  *  \par Function Description
  *
  */
-void major_changed_dialog(GSCHEM_TOPLEVEL* w_current)
+void
+major_changed_dialog (GSCHEM_TOPLEVEL* w_current)
 {
-  GtkWidget* dialog;
-  char* refdes_string = NULL;
+  GtkListStore *list_store = NULL;
+  GtkWidget *dialog = NULL;
+  GtkWidget *content_area, *hbox, *vbox, *tree_view, *scroll;
+  GtkWidget *image, *label;
+  GtkCellRenderer *renderer;
+  GtkTreeViewColumn *column;
   char* tmp;
+  GList *curr;
 
-  if (w_current->toplevel->major_changed_refdes) {
+  if (w_current->toplevel->major_changed_refdes == NULL) return;
 
-    GList* current = w_current->toplevel->major_changed_refdes;
-    while (current)
-    {
-      char *value = (char*) current->data;
+  list_store = gtk_list_store_new (1, G_TYPE_STRING);
 
-      if (!refdes_string)
-      {
-        refdes_string = g_strdup (value);
-      } else {
-        tmp = g_strconcat (refdes_string, "\n", value, NULL);
-        g_free(refdes_string);
-        refdes_string = tmp;
-      }
+  for (curr = w_current->toplevel->major_changed_refdes;
+       curr != NULL;
+       curr = g_list_next (curr)) {
+    char *value = (char *) curr->data;
+    GtkTreeIter iter;
 
-      current = g_list_next(current);
-    }
-
-    tmp = g_strconcat (refdes_string,
-                       "\n\nBe sure to verify each of these symbols!",
-                       NULL);
-    g_free(refdes_string);
-    refdes_string = tmp;
-
-    dialog = gtk_message_dialog_new ((GtkWindow*) w_current->main_window,
-                                     GTK_DIALOG_DESTROY_WITH_PARENT,
-                                     GTK_MESSAGE_ERROR,
-                                     GTK_BUTTONS_CLOSE,
-                        "Major symbol changes detected in refdes:\n\n%s\n",
-                                     refdes_string);
-
-    gtk_widget_show(dialog);
-
-    g_signal_connect_swapped (dialog, "response",
-                              G_CALLBACK (gtk_widget_destroy),
-                              dialog);
-
-    g_free(refdes_string);
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter,
+                        0, value,
+                        -1);
   }
+
+  /*! \todo this would be much easier using
+   * gtk_message_dialog_get_message_area(). */
+  dialog = g_object_new (GTK_TYPE_DIALOG,
+                         /* GtkContainer */
+                         "border-width", 5,
+                         NULL);
+  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+                          GTK_STOCK_OK, GTK_RESPONSE_OK,
+                          NULL);
+  content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+  g_object_set (content_area,
+                /* GtkBox */
+                "spacing", 14,
+                NULL);
+  /* This box contains the warning image and the vbox */
+  hbox = g_object_new (GTK_TYPE_HBOX,
+                       /* GtkContainer */
+                       "border-width", 5,
+                       /* GtkBox */
+                       "homogeneous", FALSE,
+                       "spacing", 12,
+                       NULL);
+  gtk_box_pack_start (GTK_BOX (content_area), hbox, FALSE, FALSE, 0);
+  /* Warning image */
+  image = g_object_new (GTK_TYPE_IMAGE,
+                        /* GtkMisc */
+                        "xalign", 0.5,
+                        "yalign", 0.0,
+                        /* GtkImage */
+                        "stock", GTK_STOCK_DIALOG_WARNING,
+                        "icon-size", GTK_ICON_SIZE_DIALOG,
+                        NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  /* This box contains the labels and list of changed symbols */
+  vbox = g_object_new (GTK_TYPE_VBOX,
+                       /* GtkBox */
+                       "homogeneous", FALSE,
+                       "spacing", 12,
+                       NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  /* Primary label */
+  tmp = g_strconcat ("<big><b>",
+                     _("Major symbol changes detected."),
+                     "</b></big>", NULL);
+  label = g_object_new (GTK_TYPE_LABEL,
+                        /* GtkMisc */
+                        "xalign", 0.0,
+                        "yalign", 0.0,
+                        "selectable", TRUE,
+                        /* GtkLabel */
+                        "wrap", TRUE,
+                        "use-markup", TRUE,
+                        "label", tmp,
+                        NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  g_free (tmp);
+  /* Secondary label */
+  label = g_object_new (GTK_TYPE_LABEL,
+                        /* GtkMisc */
+                        "xalign", 0.0,
+                        "yalign", 0.0,
+                        "selectable", TRUE,
+                        /* GtkLabel */
+                        "wrap", TRUE,
+                        "use-markup", TRUE,
+                        "label",
+                        _("Changes have occurred to the symbols shown below.\n\n"
+                          "Be sure to verify each of these symbols."),
+                        NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  /* List of changed symbols */
+  scroll = g_object_new (GTK_TYPE_SCROLLED_WINDOW,
+                         /* GtkScrolledWindow */
+                         "hscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                         "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
+                         "shadow-type",       GTK_SHADOW_IN,
+                         NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), scroll, FALSE, FALSE, 0);
+  tree_view = g_object_new (GTK_TYPE_TREE_VIEW,
+                            /* GtkTreeView */
+                            "enable-search", FALSE,
+                            "headers-visible", FALSE,
+                            "model", list_store,
+                            NULL);
+  gtk_container_add (GTK_CONTAINER (scroll), tree_view);
+  renderer = gtk_cell_renderer_text_new ();
+  column = gtk_tree_view_column_new_with_attributes (_("Symbol"),
+                                                     renderer,
+                                                     "text", 0,
+                                                     NULL);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
+  gtk_widget_show_all (dialog);
+
+  gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                GTK_WINDOW (w_current->main_window));
+
+  gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_destroy (dialog);
 }
 
 /*********** End of major symbol changed dialog box *******/
