@@ -2195,6 +2195,23 @@ void multiattrib_update (Multiattrib *multiattrib)
 
   g_assert (GSCHEM_DIALOG (multiattrib)->w_current != NULL);
 
+  /* Update window title. If one object is selected and it's a
+   * component, put its basename in the window title. */
+  if (multiattrib->object != NULL &&
+      (multiattrib->object->type == OBJ_COMPLEX ||
+       multiattrib->object->type == OBJ_PLACEHOLDER)) {
+    char *title = g_strdup_printf (_("Edit Attributes - %s"),
+                                   multiattrib->object->complex_basename);
+    g_object_set (G_OBJECT (multiattrib),
+                  "title",           title,
+                  NULL);
+    g_free (title);
+  } else {
+    g_object_set (G_OBJECT (multiattrib),
+                  "title", _("Edit Attributes"),
+                  NULL);
+  }
+
   /* clear the list of attributes */
   liststore = (GtkListStore*)gtk_tree_view_get_model (multiattrib->treeview);
   gtk_list_store_clear (liststore);
