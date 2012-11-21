@@ -256,12 +256,8 @@ void s_cue_output_single(TOPLEVEL * toplevel, OBJECT * object, FILE * fp,
 	return;
       }
 
-  if (object->type != OBJ_NET
-      || ((object->type == OBJ_NET)
-          && !o_net_is_fully_connected (toplevel, object))) {
-    s_cue_output_lowlevel(toplevel, object, 0, fp, type);
-    s_cue_output_lowlevel(toplevel, object, 1, fp, type);
-  }
+  s_cue_output_lowlevel(toplevel, object, 0, fp, type);
+  s_cue_output_lowlevel(toplevel, object, 1, fp, type);
   s_cue_output_lowlevel_midpoints(toplevel, object, fp, type);
 }
 
