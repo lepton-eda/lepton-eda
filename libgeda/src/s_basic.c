@@ -121,9 +121,6 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
   new_node->pin_type = PIN_TYPE_NET;
   new_node->whichend = -1;
 
-  new_node->net_num_connected = 0;
-  new_node->valid_num_connected = FALSE;
-
   new_node->weak_refs = NULL;
 
   return(new_node);
