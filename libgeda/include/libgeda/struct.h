@@ -432,9 +432,6 @@ typedef int(*RenderedBoundsFunc)(void *, OBJECT *, int *, int *, int *, int *);
 /*! \brief Type of callback function for object damage notification */
 typedef int(*ChangeNotifyFunc)(void *, OBJECT *);
 
-/*! \brief Type of callback function for notification when a new TOPLEVEL is created */
-typedef void(*NewToplevelFunc)(TOPLEVEL *, void *);
-
 /*! \brief Type of callback function for notification when an object's attributes change */
 typedef void(*AttribsChangedFunc)(void *, OBJECT *);
 
