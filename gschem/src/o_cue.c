@@ -131,9 +131,10 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
   int type, count = 0;
   int done = FALSE;
   int size;
-  int bus_involved = FALSE;
+  int otherone;
+  int bus_involved=FALSE;
 
-  g_return_if_fail (whichone == 0 || whichone == 1);
+  if (whichone < 0 || whichone > 1) return;
   
   x = object->line->x[whichone];
   y = object->line->y[whichone];
@@ -145,7 +146,7 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
     bus_involved = TRUE;
 
   cl_current = object->conn_list;
-  while (cl_current != NULL && !done) {
+  while(cl_current != NULL && !done) {
     conn = (CONN *) cl_current->data;
    
     if (conn->x == x && conn->y == y) {
