@@ -50,7 +50,7 @@ msgstr ""
 #: libgeda/src/a_basic.c:238 libgeda/src/f_basic.c:384
 #, c-format
 msgid "File %s is read-only"
-msgstr "Csak olvasható file"
+msgstr "Csak olvasható file %s"
 
 #: libgeda/src/a_basic.c:423
 #, fuzzy, c-format
@@ -122,7 +122,7 @@ msgstr ""
 
 #: libgeda/src/f_basic.c:271
 msgid "I could not guess if it is newer, so you have to do it manually.\n"
-msgstr "Nem tudtam eldönteni, hogy ez újabb, ezért neked kell megcsinálnod"
+msgstr "Nem tudtam eldönteni, hogy ez újabb, ezért neked kell megcsinálnod \n"
 
 #: libgeda/src/f_basic.c:273
 msgid ""
