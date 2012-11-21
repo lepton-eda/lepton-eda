@@ -125,12 +125,13 @@ static void draw_junction_cue (GSCHEM_TOPLEVEL *w_current,
  */
 void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichone)
 {
+  TOPLEVEL *toplevel = w_current->toplevel;
   int x, y;
   GList *cl_current;
   CONN *conn;
   int type, count = 0;
   int done = FALSE;
-  int size;
+  int size, pinsize;
   int otherone;
   int bus_involved=FALSE;
 
