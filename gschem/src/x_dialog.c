@@ -2874,10 +2874,8 @@ int generic_confirm_dialog (const char *msg)
 char *generic_filesel_dialog (const char *msg, const char *templ, gint flags)
 {
   GtkWidget *dialog;
-  gchar *result = NULL, *folder, *seed;
+  gchar *result = NULL;
   char *title;
-  static gchar *path = NULL;
-  static gchar *shortcuts = NULL;
 
   /* Default to load if not specified.  Maybe this should cause an error. */
   if (! (flags & (FSB_LOAD | FSB_SAVE))) {
@@ -2913,12 +2911,6 @@ char *generic_filesel_dialog (const char *msg, const char *templ, gint flags)
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
-  /* Pick the current default folder to look for files in */
-  if (path && *path) {
-    gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), path);
-  }
-
-
   /* Pick the current template (*.rc) or default file name */
   if (templ && *templ) {
     if (flags & FSB_SAVE)  {
@@ -2928,29 +2920,8 @@ char *generic_filesel_dialog (const char *msg, const char *templ, gint flags)
     }
   }
 
-
-  if (shortcuts && *shortcuts) {
-    printf ("shortcuts = \"%s\"\n", shortcuts);
-    folder = g_strdup (shortcuts);
-    seed = folder;
-    while ((folder = strtok (seed, ":")) != NULL) {
-      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
-                                            folder, NULL);
-      seed = NULL;
-    }
-
-    g_free (folder);
-  }
-
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK) {
     result = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-    folder = gtk_file_chooser_get_current_folder (GTK_FILE_CHOOSER (dialog));
-    /*! \bug FIXME
-    if (folder && path) {
-      dup_string (path, folder);
-      g_free (folder);
-    }
-    */
   }
   gtk_widget_destroy (dialog);
 
