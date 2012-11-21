@@ -714,33 +714,3 @@ void s_conn_thaw_hooks (TOPLEVEL *toplevel, OBJECT *object)
       object->conn_notify_pending)
     s_conn_emit_conns_changed (toplevel, object);
 }
-
-static void refresh_connectivity_cache (TOPLEVEL *toplevel, OBJECT *object)
-{
-    if (object->type == OBJ_NET) {
-        /* FIXME: suboptimal to refresh cache every time */
-        /* better approach would invalidate cache without refresh */
-        /* refresh would be done on redraw of pin cues */
-        o_net_refresh_conn_cache (toplevel, object);
-    }
-}
-
-static void s_conn_init_toplevel (TOPLEVEL *toplevel)
-{
-    /* Connect the hooks for tracking net connectivity here */
-    s_conn_append_conns_changed_hook (toplevel,
-                                      (ConnsChangedFunc)
-                                          refresh_connectivity_cache,
-                                      toplevel);
-
-    o_attrib_append_attribs_changed_hook (toplevel,
-                                          (AttribsChangedFunc)
-                                              refresh_connectivity_cache,
-                                          toplevel);
-}
-
-void s_conn_init (void)
-{
-    s_toplevel_append_new_hook ((NewToplevelFunc) s_conn_init_toplevel,
-                                NULL);
-}
