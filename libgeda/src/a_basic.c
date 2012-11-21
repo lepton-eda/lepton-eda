@@ -394,12 +394,10 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         /* first is the fp */
         /* 2nd is the object to get the attributes */
         if (new_obj != NULL) {
-          o_attrib_freeze_hooks (toplevel, new_obj);
           new_attrs_list = o_read_attribs (toplevel, new_obj, tb, release_ver, fileformat_ver, err);
           if (new_attrs_list == NULL)
             goto error;
           new_object_list = g_list_concat (new_attrs_list, new_object_list);
-          o_attrib_thaw_hooks (toplevel, new_obj);
 
           /* by now we have finished reading all the attributes */
           /* did we just finish attaching to a complex object? */
