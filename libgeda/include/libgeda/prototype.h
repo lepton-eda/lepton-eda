@@ -326,10 +326,6 @@ void s_conn_remove_object(TOPLEVEL *toplevel, OBJECT *to_remove);
 void s_conn_update_object(TOPLEVEL *toplevel, OBJECT *object);
 int s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list);
 GList *s_conn_return_others(GList *input_list, OBJECT *object);
-void s_conn_append_conns_changed_hook(TOPLEVEL *toplevel, ConnsChangedFunc func, void *data);
-void s_conn_emit_conns_changed(TOPLEVEL *toplevel, OBJECT *object);
-void s_conn_freeze_hooks(TOPLEVEL *toplevel, OBJECT *object);
-void s_conn_thaw_hooks(TOPLEVEL *toplevel, OBJECT *object);
 
 /* s_cue.c */
 void s_cue_postscript_fillbox(TOPLEVEL *toplevel, FILE *fp, int x, int y);

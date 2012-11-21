@@ -292,10 +292,6 @@ struct st_object {
   /* Attribute notification handling */
   int attrib_notify_freeze_count;
   int attrib_notify_pending;
-
-  /* Connection notification handling */
-  int conn_notify_freeze_count;
-  int conn_notify_pending;
 }; 
 
 
@@ -435,9 +431,6 @@ typedef int(*ChangeNotifyFunc)(void *, OBJECT *);
 /*! \brief Type of callback function for notification when an object's attributes change */
 typedef void(*AttribsChangedFunc)(void *, OBJECT *);
 
-/*! \brief Type of callback function for notification when an object's connections change */
-typedef void(*ConnsChangedFunc)(void *, OBJECT *);
-
 /*! \brief Type of callback function for querying loading of backups */
 typedef gboolean(*LoadBackupQueryFunc)(void *, GString *);
 
@@ -567,9 +560,6 @@ struct st_toplevel {
 
   /* Callback functions for object attribute change notification */
   GList *attribs_changed_hooks;
-
-  /* Callback functions for object connections change notification */
-  GList *conns_changed_hooks;
 
   /* Callback function for deciding whether to load a backup file. */
   LoadBackupQueryFunc load_newer_backup_func;
