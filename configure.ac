@@ -162,7 +162,7 @@ AX_DATA_DIRS
 # Where should PCB footprints be searched for?
 AX_PCB_DIRS
 # Set up libgeda with the correct ld version number
-AX_LIBGEDA([41:0:0])
+AX_LIBGEDA([42:0:0])
 
 #####################################################################
 # Generate output
