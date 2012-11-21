@@ -256,22 +256,12 @@ void o_cue_draw_single(GSCHEM_TOPLEVEL *w_current, OBJECT *object)
 {
   g_return_if_fail (object != NULL);
 
-  switch (object->type) {
-    case(OBJ_NET):
-      o_cue_draw_lowlevel (w_current, object, 0);
-      o_cue_draw_lowlevel (w_current, object, 1);
-      o_cue_draw_lowlevel_midpoints (w_current, object);
-      break;
-    case(OBJ_BUS):
-      o_cue_draw_lowlevel (w_current, object, 0);
-      o_cue_draw_lowlevel (w_current, object, 1);
-      o_cue_draw_lowlevel_midpoints (w_current, object);
-      break;
-    case(OBJ_PIN):
-      o_cue_draw_lowlevel (w_current, object, object->whichend);
-      break;
-    default:
-      return;
+  if (object->type != OBJ_PIN) {
+    o_cue_draw_lowlevel(w_current, object, 0);
+    o_cue_draw_lowlevel(w_current, object, 1);
+    o_cue_draw_lowlevel_midpoints(w_current, object);
+  } else {
+    o_cue_draw_lowlevel(w_current, object, object->whichend);
   }
 }
 
