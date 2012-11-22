@@ -208,13 +208,3 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   return w_current;
 }
 
-void gschem_toplevel_alloc_libgeda_toplevel (GSCHEM_TOPLEVEL *w_current)
-{
-    w_current->toplevel = s_toplevel_new ();
-    o_attrib_append_attribs_changed_hook (w_current->toplevel,
-                                          (AttribsChangedFunc) o_invalidate,
-                                          w_current);
-    s_conn_append_conns_changed_hook (w_current->toplevel,
-                                      (ConnsChangedFunc) o_invalidate,
-                                      w_current);
-}
