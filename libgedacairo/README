@@ -1,0 +1,180 @@
+==============================================
+ 'gschem and Friends' Electronic Design Suite
+==============================================
+
+Copyright (C) 1998-2012 gEDA Developers
+
+Cairo-based schematic and symbol renderer
+=========================================
+
+The libgedacairo library provides a renderer for schematics and
+symbols based on the Cairo vector graphics library and the Pango font
+library.  Data for rendering is loaded using libgeda.
+
+The library does *not* provide a rendering widget for programs
+(although it could be used to implement one).  It is intended for more
+general rendering usage, e.g. to screen, to printers, or to various
+image formats.
+
+The library is based on Peter Clifton's preexisting gschem rendering
+code.
+
+Please submit bug reports and patches to
+<http://bugs.launchpad.net/geda>, using the `libgedacairo' tag.
+
+Using libgedacairo in your programs
+-----------------------------------
+
+To use the library in your GNU Autotools-based program, add:
+
+  PKG_PROG_PKG_CONFIG
+  PKG_CHECK_MODULES([GEDACAIRO], [libgedacairo], [], [])
+
+to your `configure.ac', and then add:
+
+  AM_CFLAGS = $(GEDACAIRO_CFLAGS
+  AM_LDFLAGS = $(GEDACAIRO_LDFLAGS)
+
+to your `Makefile.am'.
+
+To compile a very simple program without using a GNU Autotools, you
+could use a command like:
+
+  cc `pkg-config --cflags --libs libgedacairo` -o myprog myprog.c
+
+Header files
+------------
+
+The main header file for the library is `libgedacairo/libgedacairo.h'.
+
+It makes two main groups of API functions and and types available: the
+main EdaRenderer class (based on GObject), and a set of hinted
+rendering functions.
+
+Coordinate systems
+------------------
+
+An important concept to understand when using an EdaRenderer is the
+distinction between Cairo's "device coordinates" and "user
+coordinates".  (Yes, go and look it up now).
+
+Before calling any libgedacairo drawing functions, you must set up the
+Cairo context's transformation matrix so that user coordinates match
+coordinates on the schematic or symbol page.
+
+The EdaRenderer class
+---------------------
+
+The EdaRenderer class is the main interface to the library.  It uses
+information from libgeda OBJECT structures to draw various schematic
+elements, control grips, and cues.
+
+EdaRenderer is a GObject class, with several properties that control
+its behaviour:
+
+  "cairo-context"  [pointer]
+      The `cairo_t' drawing context which the renderer draws to.
+  "pango-context"  [pointer]
+      The state of the Pango string-to-glyph itemiser.  If you don't set
+      one explicitly, the renderer will automatically create one from
+      the drawing context.
+  "font-name"  [string]
+      The font to use when drawing text.  By default, this is "Arial".
+  "color-map"  [pointer]
+      A GArray of libgeda `COLOR' structures which is used as the
+      color map for drawing.  Note that the EdaRenderer does not make
+      a copy of this array, and doesn't free it when the EdaRenderer
+      is destroyed.
+  "override-color"  [int] Index of a colour to force all drawing to
+      take place with.  This can be used e.g. when highlighting a set
+      of objects in a particular colour.  If "override-color" is set
+      to -1, color override is disabled.
+  "grip-size"  [double]
+      Size to draw grips, in *user* coordinates.
+  "render-flags"  [EdaRendererFlags]
+      Flags that control various rendering options.
+
+A EdaRendererFlags value can include any of these flags:
+
+  EDA_RENDERER_FLAG_HINTING
+      Enable line hinting.  Set this flag if you are rendering to
+      screen or to a raster image file, because it makes things look
+      prettier.
+  EDA_RENDERER_FLAG_PICTURE_OUTLINE
+      Draw only the outlines of pictures, and not their contents.
+  EDA_RENDERER_FLAG_TEXT_HIDDEN
+      Draw text even if it is set to be invisible.
+  EDA_RENDERER_FLAG_TEXT_OUTLINE
+      Draw only the outlines of text objects.
+  EDA_RENDERER_FLAG_TEXT_ORIGIN
+      Draw small "X" markers indicating where text objects are
+      anchored.
+
+To actually draw things, EdaRenderer has three methods:
+
+  eda_renderer_draw()
+      This does basic drawing of an OBJECT.
+
+  eda_renderer_draw_grips()
+      Draw grips at all of the control points of an OBJECT.
+
+  eda_renderer_draw_cues()
+      Draw cues for an object (e.g. at the unconnected ends of pins and
+      nets, and at junctions in nets and buses).
+
+Sometimes, it is useful to obtain the rendered bounding box of an
+OBJECT (for example, a text OBJECT's bounding box is determined by the
+font).
+
+  eda_renderer_get_user_bounds()
+      Obtain the user bounds (which should be the same as world
+      bounds) for an OBJECT.
+
+These four methods all can be overridden from subclasses.
+
+Lower-level drawing
+-------------------
+
+Sometimes EdaRenderer is not enough!  libgedacairo provides a bunch of
+functions for doing lower-level drawing.
+
+Several of these drawing functions take a `flags' argument.  At the
+moment, the only flag that may be applied is `EDA_CAIRO_ENABLE_HINTS'.
+If you have an EdaRenderer and you wish to obtain the same
+EdaCairoFlags value as used internally by the renderer, you can call
+eda_renderer_get_cairo_flags().
+
+The `center' variants of the drawing functions should be used to draw
+shapes that need to be symmetrically centred on a particular point.
+The `center_width' arguments that these functions accept specify the
+width of the line that they are to be centred on, if applicable.  The
+distinction is required in order to make sure line hinting takes place
+correctly.
+
+The available shape drawing functions are:
+
+  eda_cairo_line()
+      Draw a straight line segment.
+
+  eda_cairo_box(),  eda_cairo_center_box()
+      Draw a rectangular box.
+
+  eda_cairo_arc(), eda_cairo_center_arc()
+      Draw a circular arc segment.
+
+  eda_cairo_path()
+      Draw a path made up of straight line and Bézier curve segments.
+
+To actually do the drawing, there are two additional functions:
+
+  eda_cairo_set_source_color()
+      Use a colour map index and a GArray of COLOR structures to set
+      the current Cairo drawing colour.
+  eda_cairo_stroke()
+      Stroke the current Cairo path, with libgeda-compatible stroke
+      parameters.
+
+..
+   Local Variables:
+   mode: text
+   End:

@@ -1,0 +1,13 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libgedacairo
+Description: gEDA/gaf schematic renderer library
+Requires: libgeda glib-2.0 gobject-2.0 gdk-2.0 gdk-pixbuf-2.0 cairo pangocairo
+Requires.private:
+Version: @DATE_VERSION@
+Libs: -L${libdir} -lgedacairo -lm
+Libs.private:
+Cflags: -I${includedir}
