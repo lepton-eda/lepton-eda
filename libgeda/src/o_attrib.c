@@ -70,8 +70,6 @@ void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item)
   /* Add link from item to attrib listing */
   item->attached_to = object;
   object->attribs = g_list_append (object->attribs, item);
-
-  o_attrib_emit_attribs_changed (toplevel, object);
 }
 
 
@@ -168,21 +166,16 @@ void o_attrib_detach_all(TOPLEVEL *toplevel, OBJECT *object)
   OBJECT *a_current;
   GList *a_iter;
 
-  o_attrib_freeze_hooks (toplevel, object);
-
   for (a_iter = object->attribs; a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
     a_current = a_iter->data;
 
     a_current->attached_to = NULL;
     o_set_color (toplevel, a_current, DETACHED_ATTRIBUTE_COLOR);
-    o_attrib_emit_attribs_changed (toplevel, object);
   }
 
   g_list_free (object->attribs);
   object->attribs = NULL;
-
-  o_attrib_thaw_hooks (toplevel, object);
 }
 
 /*! \brief Print all attributes to a Postscript document.
@@ -221,16 +214,11 @@ void o_attrib_print(GList *attributes)
  */
 void o_attrib_remove(TOPLEVEL *toplevel, GList **list, OBJECT *remove)
 {
-  OBJECT *attached_to;
-
   g_return_if_fail (remove != NULL);
 
-  attached_to = remove->attached_to;
   remove->attached_to = NULL;
 
   *list = g_list_remove (*list, remove);
-
-  o_attrib_emit_attribs_changed (toplevel, attached_to);
 }
 
 /*! \brief Read attributes from a buffer.
@@ -699,66 +687,4 @@ int o_attrib_is_inherited (OBJECT *attrib)
 {
   return (attrib->attached_to == NULL &&
           attrib->parent != NULL);
-}
-
-
-typedef struct {
-  AttribsChangedFunc func;
-  void *data;
-} AttribsChangedHook;
-
-
-void o_attrib_append_attribs_changed_hook (TOPLEVEL *toplevel,
-                                           AttribsChangedFunc func,
-                                           void *data)
-{
-  AttribsChangedHook *new_hook;
-
-  new_hook = g_new0 (AttribsChangedHook, 1);
-  new_hook->func = func;
-  new_hook->data = data;
-
-  toplevel->attribs_changed_hooks =
-    g_list_append (toplevel->attribs_changed_hooks, new_hook);
-}
-
-
-static void call_attribs_changed_hook (gpointer data, gpointer user_data)
-{
-  AttribsChangedHook *hook = data;
-  OBJECT *object = user_data;
-
-  hook->func (hook->data, object);
-}
-
-
-void o_attrib_emit_attribs_changed (TOPLEVEL *toplevel, OBJECT *object)
-{
-  if (object->attrib_notify_freeze_count > 0) {
-    object->attrib_notify_pending = 1;
-    return;
-  }
-
-//  printf ("The attributes of object %p have changed\n", object);
-
-  object->attrib_notify_pending = 0;
-
-  g_list_foreach (toplevel->attribs_changed_hooks,
-                  call_attribs_changed_hook, object);
-}
-
-void o_attrib_freeze_hooks (TOPLEVEL *toplevel, OBJECT *object)
-{
-  object->attrib_notify_freeze_count ++;
-}
-
-void o_attrib_thaw_hooks (TOPLEVEL *toplevel, OBJECT *object)
-{
-  g_return_if_fail (object->attrib_notify_freeze_count > 0);
-
-  object->attrib_notify_freeze_count --;
-
-  if (object->attrib_notify_freeze_count == 0 &&
-      object->attrib_notify_pending)
-    o_attrib_emit_attribs_changed (toplevel, object);
 }

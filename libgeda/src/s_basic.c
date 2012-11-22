@@ -121,16 +121,7 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
   new_node->pin_type = PIN_TYPE_NET;
   new_node->whichend = -1;
 
-  new_node->net_num_connected = 0;
-  new_node->valid_num_connected = FALSE;
-
   new_node->weak_refs = NULL;
-
-  new_node->attrib_notify_freeze_count = 0;
-  new_node->attrib_notify_pending = 0;
-
-  new_node->conn_notify_freeze_count = 0;
-  new_node->conn_notify_pending = 0;
 
   return(new_node);
 }
@@ -229,12 +220,6 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
       o_attrib_remove(toplevel, &o_current->attached_to->attribs, o_current);
     }
 
-    /* Don't bother with hooks for this dying object,
-     * leak the freeze count, so the object dies frozen.
-     */
-    o_attrib_freeze_hooks (toplevel, o_current);
-    o_attrib_detach_all (toplevel, o_current);
-
     if (o_current->line) {
       /*	printf("sdeleting line\n");*/
       g_free(o_current->line);
@@ -300,6 +285,8 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
       g_free(o_current->complex);
       o_current->complex = NULL;
     }
+
+    o_attrib_detach_all (toplevel, o_current);
 
     s_weakref_notify (o_current, o_current->weak_refs);
 

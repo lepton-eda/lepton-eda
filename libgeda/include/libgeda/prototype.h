@@ -90,10 +90,6 @@ char *o_attrib_search_inherited_attribs_by_name (OBJECT *object, char *name, int
 char *o_attrib_search_object_attribs_by_name (OBJECT *object, char *name, int counter);
 GList *o_attrib_return_attribs(OBJECT *object);
 int o_attrib_is_inherited(OBJECT *attrib);
-void o_attrib_append_attribs_changed_hook(TOPLEVEL *toplevel, AttribsChangedFunc func, void *data);
-void o_attrib_emit_attribs_changed(TOPLEVEL *toplevel, OBJECT *object);
-void o_attrib_freeze_hooks(TOPLEVEL *toplevel, OBJECT *object);
-void o_attrib_thaw_hooks(TOPLEVEL *toplevel, OBJECT *object);
 
 /* o_basic.c */
 int inside_region(int xmin, int ymin, int xmax, int ymax, int x, int y);
@@ -195,8 +191,6 @@ void o_net_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery
 int o_net_orientation(OBJECT *object);
 void o_net_consolidate(TOPLEVEL *toplevel, PAGE *page);
 void o_net_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
-void o_net_refresh_conn_cache(TOPLEVEL *toplevel, OBJECT *object);
-gboolean o_net_is_fully_connected(TOPLEVEL *toplevel, OBJECT *object);
 
 /* o_path_basic.c */
 OBJECT *o_path_new(TOPLEVEL *toplevel, char type, int color, const char *path_string);
@@ -326,10 +320,6 @@ void s_conn_remove_object(TOPLEVEL *toplevel, OBJECT *to_remove);
 void s_conn_update_object(TOPLEVEL *toplevel, OBJECT *object);
 int s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list);
 GList *s_conn_return_others(GList *input_list, OBJECT *object);
-void s_conn_append_conns_changed_hook(TOPLEVEL *toplevel, ConnsChangedFunc func, void *data);
-void s_conn_emit_conns_changed(TOPLEVEL *toplevel, OBJECT *object);
-void s_conn_freeze_hooks(TOPLEVEL *toplevel, OBJECT *object);
-void s_conn_thaw_hooks(TOPLEVEL *toplevel, OBJECT *object);
 
 /* s_cue.c */
 void s_cue_postscript_fillbox(TOPLEVEL *toplevel, FILE *fp, int x, int y);
@@ -400,8 +390,7 @@ void s_papersizes_get_size(char *string, int *width, int *height);
 PATH *s_path_parse (const char *path_str);
 char *s_path_string_from_path (const PATH *path);
 
-/* s_toplevel.c */
-void s_toplevel_append_new_hook (NewToplevelFunc func, void *user_data);
+/* s_project.c */
 TOPLEVEL *s_toplevel_new (void);
 void s_toplevel_delete (TOPLEVEL *toplevel);
 void s_toplevel_weak_ref (TOPLEVEL *toplevel, void (*notify_func)(void *, void *), void *user_data);

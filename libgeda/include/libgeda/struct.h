@@ -277,10 +277,6 @@ struct st_object {
   int whichend;    /* for pins only, either 0 or 1 */
   int pin_type;    /* for pins only, either NET or BUS */
 
-  /* Tracking total number of entities connected by this net */
-  int net_num_connected;          /* for nets only */
-  gboolean valid_num_connected;   /* for nets only */
-
   GList *attribs;       /* attribute stuff */
   int show_name_value;
   int visibility;
@@ -288,14 +284,6 @@ struct st_object {
   OBJECT *copied_to;    /* used when copying attributes */
 
   GList *weak_refs; /* Weak references */
-
-  /* Attribute notification handling */
-  int attrib_notify_freeze_count;
-  int attrib_notify_pending;
-
-  /* Connection notification handling */
-  int conn_notify_freeze_count;
-  int conn_notify_pending;
 }; 
 
 
@@ -432,15 +420,6 @@ typedef int(*RenderedBoundsFunc)(void *, OBJECT *, int *, int *, int *, int *);
 /*! \brief Type of callback function for object damage notification */
 typedef int(*ChangeNotifyFunc)(void *, OBJECT *);
 
-/*! \brief Type of callback function for notification when a new TOPLEVEL is created */
-typedef void(*NewToplevelFunc)(TOPLEVEL *, void *);
-
-/*! \brief Type of callback function for notification when an object's attributes change */
-typedef void(*AttribsChangedFunc)(void *, OBJECT *);
-
-/*! \brief Type of callback function for notification when an object's connections change */
-typedef void(*ConnsChangedFunc)(void *, OBJECT *);
-
 /*! \brief Type of callback function for querying loading of backups */
 typedef gboolean(*LoadBackupQueryFunc)(void *, GString *);
 
@@ -567,12 +546,6 @@ struct st_toplevel {
 
   /* Callback functions for object change notification */
   GList *change_notify_funcs;
-
-  /* Callback functions for object attribute change notification */
-  GList *attribs_changed_hooks;
-
-  /* Callback functions for object connections change notification */
-  GList *conns_changed_hooks;
 
   /* Callback function for deciding whether to load a backup file. */
   LoadBackupQueryFunc load_newer_backup_func;

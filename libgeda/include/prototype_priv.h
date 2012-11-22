@@ -226,7 +226,6 @@ int s_conn_uniq(GList *conn_list, CONN *input_conn);
 int s_conn_remove_other(TOPLEVEL *toplevel, OBJECT *other_object, OBJECT *to_remove);
 OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y);
 void s_conn_print(GList *conn_list);
-void s_conn_init(void);
 
 /* s_encoding.c */
 gchar* s_encoding_base64_encode (gchar* src, guint srclen, guint* dstlenp, gboolean strict);
