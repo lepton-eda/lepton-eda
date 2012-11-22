@@ -31,4 +31,7 @@ extern int logging_dest;
 /* Size of a tab in characters */
 extern int tab_in_chars;
 
+/* Color map for printing */
+extern COLOR print_colors[MAX_COLORS];
+
 #endif
