@@ -104,7 +104,7 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
       case MOVE:
       case ENDMOVE:
         if (w_current->last_drawb_mode != -1) {
-          o_move_draw_rubber (w_current, TRUE);
+          o_move_draw_rubber (w_current);
         }
         break;
 
@@ -114,7 +114,7 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
       case ENDTEXT:
       case ENDPASTE:
         if (w_current->rubber_visible)
-          o_place_draw_rubber (w_current, TRUE);
+          o_place_draw_rubber (w_current);
         break;
 
       case STARTDRAWNET:

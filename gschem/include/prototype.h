@@ -601,7 +601,7 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current);
 void o_move_cancel(GSCHEM_TOPLEVEL *w_current);
 void o_move_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_move_invalidate_rubber(GSCHEM_TOPLEVEL *w_current, int drawing);
-void o_move_draw_rubber(GSCHEM_TOPLEVEL *w_current, int drawing);
+void o_move_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 int o_move_return_whichone(OBJECT *object, int x, int y);
 void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_move_prep_rubberband(GSCHEM_TOPLEVEL *w_current);
@@ -659,7 +659,7 @@ void o_place_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_place_end(GSCHEM_TOPLEVEL *w_current, int x, int y, int continue_placing, GList **ret_new_objects, const char *hook_name);
 void o_place_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_place_invalidate_rubber(GSCHEM_TOPLEVEL *w_current, int drawing);
-void o_place_draw_rubber(GSCHEM_TOPLEVEL *w_current, int drawing);
+void o_place_draw_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_place_rotate(GSCHEM_TOPLEVEL *w_current);
 /* o_select.c */
 void o_select_run_hooks(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int flag);

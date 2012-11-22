@@ -380,12 +380,12 @@ void o_move_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
  *  \par Function Description
  *
  */
-void o_move_draw_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
+void o_move_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   GList *s_iter;
   int diff_x, diff_y;
 
-  o_place_draw_rubber (w_current, drawing);
+  o_place_draw_rubber (w_current);
 
   if (!w_current->netconn_rubberband)
     return;

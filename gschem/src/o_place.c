@@ -216,7 +216,6 @@ void o_place_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
 
 
 /*! \brief Draw a bounding box or outline for OBJECT placement
- *
  *  \par Function Description
  *  This function draws either the OBJECTS in the place list
  *  or a rectangle around their bounding box, depending upon the
@@ -227,29 +226,10 @@ void o_place_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
  * before drawing if the CONTROL key is recording as being pressed in
  * the w_current structure.
  *
- * The "drawing" parameter is used to indicate if this drawing should
- * immediately use the selected feedback mode and positioning constraints.
- *
- * With drawing=TRUE, the selected conditions are used immediately,
- * otherwise the conditions from the last drawing operation are used,
- * saving the new state for next time.
- *
- * This function should be called with drawing=TRUE when starting a
- * rubberbanding operation and when otherwise refreshing the rubberbanded
- * outline (e.g. after a screen redraw). For any undraw operation, should
- * be called with drawing=FALSE, ensuring that the undraw XOR matches the
- * mode and constraints of the corresponding "draw" operation.
- *
- * If any mode / constraint changes are made between a undraw, redraw XOR
- * pair, the latter (draw) operation must be called with drawing=TRUE. If
- * no mode / constraint changes were made between the pair, it is not
- * harmful to call the draw operation with "drawing=FALSE".
- *
  *  \param [in] w_current   GSCHEM_TOPLEVEL which we're drawing for.
- *  \param [in] drawing     Set to FALSE for undraw operations to ensure
- *                            matching conditions to a previous draw operation.
  */
-void o_place_draw_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
+void
+o_place_draw_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
@@ -257,13 +237,11 @@ void o_place_draw_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
 
   g_return_if_fail (toplevel->page_current->place_list != NULL);
 
-  /* If drawing is true, then don't worry about the previous drawing
-   * method and movement constraints, use with the current settings */
-  if (drawing) {
-    w_current->last_drawb_mode = w_current->actionfeedback_mode;
-    w_current->drawbounding_action_mode = (w_current->CONTROLKEY)
-                                            ? CONSTRAINED : FREE;
-  }
+  /* Don't worry about the previous drawing method and movement
+   * constraints, use with the current settings */
+  w_current->last_drawb_mode = w_current->actionfeedback_mode;
+  w_current->drawbounding_action_mode =
+    (w_current->CONTROLKEY) ? CONSTRAINED : FREE;
 
   /* Calculate delta of X-Y positions from buffer's origin */
   diff_x = w_current->second_wx - w_current->first_wx;
@@ -298,12 +276,6 @@ void o_place_draw_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
     o_glist_draw_place (w_current, diff_x, diff_y,
                         toplevel->page_current->place_list);
   }
-
-  /* Save movement constraints and drawing method for any
-   * corresponding undraw operation. */
-  w_current->last_drawb_mode = w_current->actionfeedback_mode;
-  w_current->drawbounding_action_mode = (w_current->CONTROLKEY)
-                                          ? CONSTRAINED : FREE;
 }
 
 
