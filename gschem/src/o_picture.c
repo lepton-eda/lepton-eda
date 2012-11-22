@@ -269,9 +269,13 @@ void o_picture_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
-void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current)
+void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
 {
   int left, top, width, height;
+  double wwidth = 0;
+  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
+  GArray *color_map = eda_renderer_get_color_map (renderer);
+  int flags = eda_renderer_get_cairo_flags (renderer);
 
   /* get the width/height and the upper left corner of the picture */
   left =   GET_PICTURE_LEFT (w_current);
@@ -279,178 +283,9 @@ void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current)
   width =  GET_PICTURE_WIDTH (w_current);
   height = GET_PICTURE_HEIGHT (w_current);
 
-  gschem_cairo_box (w_current, 0, left, top - height, left + width, top);
-
-  gschem_cairo_set_source_color (w_current,
-                                 x_color_lookup_dark (SELECT_COLOR));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
-}
-
-/*! \brief Draw a picture on the screen.
- *  \par Function Description
- *  This function is used to draw a picture on screen. The picture is
- *  described in the OBJECT which is referred by <B>o_current</B>. The picture
- *  is displayed according to the current state, described in the
- *  GSCHEM_TOPLEVEL object pointed by <B>w_current</B>.
- *
- *  It first checks if the OBJECT pointed is valid or not. If not it
- *  returns and do not output anything. That should never happen though.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Picture OBJECT to draw.
- */
-void o_picture_draw (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  int s_upper_x, s_upper_y, s_lower_x, s_lower_y;
-  GdkPixbuf *pixbuf;
-
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->toplevel != NULL);
-  g_return_if_fail (o_current != NULL);
-  g_return_if_fail (o_current->picture != NULL);
-
-  pixbuf = o_picture_get_pixbuf (w_current->toplevel, o_current);
-
-  /* If the image failed to load, get the fallback image. */
-  if (pixbuf == NULL) pixbuf = o_picture_get_fallback_pixbuf (w_current->toplevel);
-  /* If the fallback image failed to load, draw a box with a cross in it. */
-  if (pixbuf == NULL) {
-    int line_width = (w_current->toplevel->line_style == THICK) ? LINE_WIDTH : 2;
-    gschem_cairo_set_source_color (w_current,
-                                   o_drawing_color (w_current, o_current));
-    gschem_cairo_box (w_current, line_width,
-                      o_current->picture->lower_x, o_current->picture->lower_y,
-                      o_current->picture->upper_x, o_current->picture->upper_y);
-    gschem_cairo_line (w_current, END_ROUND, line_width,
-                      o_current->picture->lower_x, o_current->picture->lower_y,
-                      o_current->picture->upper_x, o_current->picture->upper_y);
-    gschem_cairo_line (w_current, END_ROUND, line_width,
-                      o_current->picture->lower_x, o_current->picture->upper_y,
-                      o_current->picture->upper_x, o_current->picture->lower_y);
-    gschem_cairo_stroke (w_current, TYPE_SOLID, END_ROUND, line_width, -1, -1);
-    return;
-  }
-
-  g_assert (GDK_IS_PIXBUF (pixbuf));
-
-  WORLDtoSCREEN (w_current, o_current->picture->upper_x,
-                            o_current->picture->upper_y, &s_upper_x, &s_upper_y);
-  WORLDtoSCREEN (w_current, o_current->picture->lower_x,
-                            o_current->picture->lower_y, &s_lower_x, &s_lower_y);
-
-  cairo_save (w_current->cr);
-
-  int swap_wh = (o_current->picture->angle == 90 || o_current->picture->angle == 270);
-  float orig_width  = swap_wh ? gdk_pixbuf_get_height (pixbuf) :
-                                gdk_pixbuf_get_width  (pixbuf);
-  float orig_height = swap_wh ? gdk_pixbuf_get_width  (pixbuf) :
-                                gdk_pixbuf_get_height (pixbuf);
-
-  cairo_translate (w_current->cr, s_upper_x, s_upper_y);
-  cairo_scale (w_current->cr,
-    (float)SCREENabs (w_current, abs (o_current->picture->upper_x -
-                                      o_current->picture->lower_x)) / orig_width,
-    (float)SCREENabs (w_current, abs (o_current->picture->upper_y -
-                                      o_current->picture->lower_y)) / orig_height);
-
-  /* Evil magic translates picture origin to the right position for a given rotation */
-  switch (o_current->picture->angle) {
-    case 0:                                                               break;
-    case 90:   cairo_translate (w_current->cr, 0,          orig_height);  break;
-    case 180:  cairo_translate (w_current->cr, orig_width, orig_height);  break;
-    case 270:  cairo_translate (w_current->cr, orig_width, 0          );  break;
-  }
-  cairo_rotate (w_current->cr, -o_current->picture->angle * M_PI / 180.);
-  if (o_current->picture->mirrored) {
-    cairo_translate (w_current->cr, gdk_pixbuf_get_width (pixbuf), 0);
-    cairo_scale (w_current->cr, -1, 1);
-  }
-
-  gdk_cairo_set_source_pixbuf (w_current->cr,
-                               pixbuf, 0,0);
-  cairo_rectangle (w_current->cr, 0, 0,
-                   gdk_pixbuf_get_width (pixbuf),
-                   gdk_pixbuf_get_height (pixbuf));
-
-  cairo_clip (w_current->cr);
-  cairo_paint (w_current->cr);
-  cairo_restore (w_current->cr);
-
-  /* Grip specific stuff */
-  if (o_current->selected && w_current->draw_grips) {
-    o_picture_draw_grips (w_current, o_current);
-  }
-
-  g_object_unref (pixbuf);
-}
-
-/*! \brief Draw grip marks on picture.
- *  \par Function Description
- *  This function draws four grips on the corners of the picture described
- *  by <B>*o_current</B>.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Picture OBJECT to draw grip points on.
- */
-void o_picture_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  if (w_current->draw_grips == FALSE)
-    return;
-
-  /* grip on upper left corner (whichone = PICTURE_UPPER_LEFT) */
-  o_grips_draw (w_current, o_current->picture->upper_x,
-                           o_current->picture->upper_y);
-
-  /* grip on upper right corner (whichone = PICTURE_UPPER_RIGHT) */
-  o_grips_draw (w_current, o_current->picture->lower_x,
-                           o_current->picture->upper_y);
-
-  /* grip on lower left corner (whichone = PICTURE_LOWER_LEFT) */
-  o_grips_draw (w_current, o_current->picture->upper_x,
-                           o_current->picture->lower_y);
-
-  /* grip on lower right corner (whichone = PICTURE_LOWER_RIGHT) */
-  o_grips_draw (w_current, o_current->picture->lower_x,
-                           o_current->picture->lower_y);
-
-  /* Box surrounding the picture */
-  gschem_cairo_box (w_current, 0,
-                    o_current->picture->upper_x, o_current->picture->upper_y,
-                    o_current->picture->lower_x, o_current->picture->lower_y);
-
-  gschem_cairo_set_source_color (w_current,
-                                 x_color_lookup_dark (SELECT_COLOR));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
-}
-
-
-/*! \brief Draw a picture described by OBJECT with translation
- *  \par Function Description
- *  This function daws the picture object described by <B>*o_current</B>
- *  translated by the vector (<B>dx</B>,<B>dy</B>).
- *  The translation vector is in world unit.
- *
- *  The picture is displayed with the color of the object.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] dx         Delta x coordinate for picture.
- *  \param [in] dy         Delta y coordinate for picture.
- *  \param [in] o_current  Picture OBJECT to draw.
- */
-void o_picture_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
-{
-  if (o_current->picture == NULL) {
-    return;
-  }
-
-  gschem_cairo_box (w_current, 0, o_current->picture->upper_x + dx,
-                                  o_current->picture->upper_y + dy,
-                                  o_current->picture->lower_x + dx,
-                                  o_current->picture->lower_y + dy);
-
-  gschem_cairo_set_source_color (w_current,
-                                 x_color_lookup_dark (o_current->color));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
+  eda_cairo_box (cr, flags, wwidth, left, top - height, left + width, top);
+  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
+  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
 }
 
 /*! \brief Replace all selected pictures with a new picture

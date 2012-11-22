@@ -90,6 +90,7 @@ struct st_gschem_toplevel {
   /* ------------- */
   /* Drawing state */
   /* ------------- */
+  EdaRenderer *renderer;
   int first_wx;
   int first_wy;
   int second_wx;

@@ -27,104 +27,6 @@
 #include <dmalloc.h>
 #endif
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_bus_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int x1, y1, x2, y2;
-  int size = 0;
-
-  if (o_current == NULL) {
-    return;
-  }
-
-  if (o_current->line == NULL) {
-    return;
-  }
-
-  /* reuse line's routine */
-  if (!o_line_visible (w_current, o_current->line, &x1, &y1, &x2, &y2)) {
-    return;
-  }
-
-  if (toplevel->bus_style == THICK)
-    size = BUS_WIDTH;
-
-  gschem_cairo_line (w_current, END_SQUARE, size, x1, y1, x2, y2);
-
-  gschem_cairo_set_source_color (w_current,
-                                 o_drawing_color (w_current, o_current));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_SQUARE, size, -1, -1);
-
-  if (o_current->selected && w_current->draw_grips) {
-    o_line_draw_grips (w_current, o_current);
-  }
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_bus_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
-{
-  int size = 0;
-
-  if (o_current->line == NULL) {
-    return;
-  }
-
-  if (w_current->toplevel->bus_style == THICK)
-    size = BUS_WIDTH;
-
-  gschem_cairo_line (w_current, END_NONE, size,
-                     o_current->line->x[0] + dx, o_current->line->y[0] + dy,
-                     o_current->line->x[1] + dx, o_current->line->y[1] + dy);
-
-  gschem_cairo_set_source_color (w_current,
-                                 x_color_lookup_dark (o_current->color));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, size, -1, -1);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_bus_draw_stretch (GSCHEM_TOPLEVEL *w_current,
-                         int dx, int dy, int whichone, OBJECT *o_current)
-{
-  int dx1= - 1, dy1 = - 1, dx2 = -1, dy2 = -1;
-
-  if (o_current->line == NULL) {
-    return;
-  }
-
-  if (whichone == 0) {
-    dx1 = dx;
-    dy1 = dy;
-    dx2 = dy2 = 0;
-  } else if (whichone == 1) {
-    dx1 = dy1 = 0;
-    dx2 = dx;
-    dy2 = dy;
-  } else {
-    fprintf(stderr, _("Got an invalid which one in o_bus_draw_stretch\n"));
-  }
-
-  gschem_cairo_line (w_current, END_NONE, 0,
-                     o_current->line->x[0] + dx1, o_current->line->y[0] + dy1,
-                     o_current->line->x[1] + dx2, o_current->line->y[1] + dy2);
-
-  gschem_cairo_set_source_color (w_current,
-                                 x_color_lookup_dark (o_current->color));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
-}
 
 /*! \brief set the start point of a new bus
  *  \par Function Description
@@ -285,18 +187,17 @@ void o_bus_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object
  */
-void o_bus_draw_rubber (GSCHEM_TOPLEVEL *w_current)
+void
+o_bus_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
 {
-  int size = 0;
+  int size = BUS_WIDTH;
+  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
+  GArray *color_map = eda_renderer_get_color_map (renderer);
+  int flags = eda_renderer_get_cairo_flags (renderer);
 
-  if (w_current->toplevel->bus_style == THICK)
-    size = BUS_WIDTH;
-
-  gschem_cairo_line (w_current, END_NONE, size,
-                     w_current->first_wx,  w_current->first_wy,
-                     w_current->second_wx, w_current->second_wy);
-
-  gschem_cairo_set_source_color (w_current,
-                                 x_color_lookup_dark (SELECT_COLOR));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, size, -1, -1);
+  eda_cairo_line (cr, flags, END_NONE, size,
+                  w_current->first_wx,  w_current->first_wy,
+                  w_current->second_wx, w_current->second_wy);
+  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
+  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, size, -1, -1);
 }

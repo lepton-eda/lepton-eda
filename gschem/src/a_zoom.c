@@ -301,14 +301,17 @@ void a_zoom_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  * 
  */
-void a_zoom_box_draw_rubber (GSCHEM_TOPLEVEL *w_current)
+void a_zoom_box_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
 {
-  gschem_cairo_box (w_current, 1, w_current->first_wx, w_current->first_wy,
-                                  w_current->second_wx, w_current->second_wy);
+  double wwidth = 0;
+  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
+  GArray *color_map = eda_renderer_get_color_map (renderer);
+  int flags = eda_renderer_get_cairo_flags (renderer);
 
-  gschem_cairo_set_source_color (w_current,
-                                 x_color_lookup_dark (ZOOM_BOX_COLOR));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
+  eda_cairo_box (cr, flags, wwidth, w_current->first_wx, w_current->first_wy,
+                 w_current->second_wx, w_current->second_wy);
+  eda_cairo_set_source_color (cr, ZOOM_BOX_COLOR, color_map);
+  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
 }
 
 /*! \todo Finish function documentation!!!

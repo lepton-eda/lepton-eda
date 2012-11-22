@@ -12,8 +12,6 @@ gschem/src/g_window.c
 gschem/src/globals.c
 gschem/src/gschem.c
 gschem/src/gschem_accel_label.c
-gschem/src/gschem_cairo.c
-gschem/src/gschem_pango.c
 gschem/src/i_basic.c
 gschem/src/i_callbacks.c
 gschem/src/i_vars.c
@@ -26,7 +24,6 @@ gschem/src/o_bus.c
 gschem/src/o_circle.c
 gschem/src/o_complex.c
 gschem/src/o_copy.c
-gschem/src/o_cue.c
 gschem/src/o_delete.c
 gschem/src/o_find.c
 gschem/src/o_grips.c

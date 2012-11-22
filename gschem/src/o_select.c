@@ -274,15 +274,9 @@ void o_select_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_select_box_draw_rubber (GSCHEM_TOPLEVEL *w_current)
+void o_select_box_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
 {
-  gschem_cairo_box (w_current, 0,
-                    w_current->first_wx, w_current->first_wy,
-                    w_current->second_wx, w_current->second_wy);
-
-  gschem_cairo_set_source_color (w_current,
-                                 x_color_lookup_dark (SELECT_COLOR));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
+  o_box_draw_rubber (w_current, renderer);
 }
 
 /*! \todo Finish function documentation!!!

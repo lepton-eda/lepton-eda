@@ -1458,60 +1458,6 @@ int o_grips_size(GSCHEM_TOPLEVEL *w_current)
   return min(size, MAXIMUM_GRIP_PIXELS/2);
 }
 
-/*! \brief Draw grip centered at <B>x</B>, <B>y</B>
- *  \par Function Description
- *  This function draws a grip centered at (<B>x</B>,<B>y</B>). Its color is
- *  either the selection color or the overriding color from
- *  <B>toplevel->override_color</B>.
- *
- *  The size of the grip depends on the current zoom factor.
- *
- *  <B>x</B> and <B>y</B> are in screen unit.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] wx         Center x world coordinate for drawing grip.
- *  \param [in] wy         Center y world coordinate for drawing grip.
- */
-void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int wx, int wy)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int color;
-  int size, w_size;
-
-  /*
-   * Depending on the current zoom level, the size of the grip is
-   * determined. <B>size</B> is half the width and height of the grip.
-   */
-  /* size is half the width of grip */
-  size = o_grips_size (w_current);
-  w_size = WORLDabs (w_current, size);
-
-  /*
-   * The grip can be displayed or erased : if <B>toplevel->override_color</B>
-   * is not set the grip is drawn with the selection color ; if
-   * <B>toplevel->override_color</B> is set then the color it refers it
-   * is used. This way the grip can be erased if this color is the
-   * background color.
-   */
-  if (toplevel->override_color != -1 ) {
-    /* override : use the override_color instead */
-    color = toplevel->override_color;
-  } else {
-    /* use the normal selection color */
-    color = SELECT_COLOR;
-  }
-
-  /* You can only tell an offset of the grip when it is very small,
-   * at which point, the object it's on is probably drawn 1px wide.
-   * Pass 0 as a hint that we're centering on a "hardware" line.
-   */
-  gschem_cairo_center_box (w_current, 0, 0, wx, wy, w_size, w_size);
-
-  gschem_cairo_set_source_color (w_current, x_color_lookup (color));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
-}
-
-
 /*! \brief Draw objects being grip maniuplated from GSCHEM_TOPLEVEL object.
  *
  *  \par Function Description
@@ -1519,39 +1465,40 @@ void o_grips_draw(GSCHEM_TOPLEVEL *w_current, int wx, int wy)
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
-void o_grips_draw_rubber (GSCHEM_TOPLEVEL *w_current)
+void o_grips_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
 {
   g_return_if_fail (w_current->which_object != NULL);
 
   switch(w_current->which_object->type) {
     case OBJ_ARC:
-      o_arc_draw_rubber (w_current);
+      o_arc_draw_rubber (w_current, renderer);
       break;
 
     case OBJ_BOX:
-      o_box_draw_rubber (w_current);
+      o_box_draw_rubber (w_current, renderer);
       break;
 
     case OBJ_PATH:
-      o_path_draw_rubber (w_current);
+      o_path_draw_rubber (w_current, renderer);
       break;
 
     case OBJ_PICTURE:
-      o_picture_draw_rubber (w_current);
+      o_picture_draw_rubber (w_current, renderer);
       break;
 
     case OBJ_CIRCLE:
-      o_circle_draw_rubber (w_current);
+      o_circle_draw_rubber (w_current, renderer);
       break;
 
     case OBJ_LINE:
     case OBJ_NET:
     case OBJ_PIN:
     case OBJ_BUS:
-      o_line_draw_rubber (w_current);
+      o_line_draw_rubber (w_current, renderer);
     break;
 
     default:
-    return; /* error condition */
+      g_return_if_reached ();
   }
+  eda_renderer_draw_grips (renderer, w_current->which_object);
 }

@@ -27,46 +27,6 @@
 #include <dmalloc.h>
 #endif
 
-
-/*! \brief Draw an arc on the screen.
- *  \par Function Description
- *  This function is used to draw an arc on screen. The arc is described
- *  in the object which is referred by <B>o_current</B>. The arc is displayed
- *  according to the current state, described in the GSCHEM_TOPLEVEL object
- *  pointed by <B>w_current</B>.
- *
- *  It first checkes if the object is valid or not. If not it returns
- *  and do not output anything. That should never happen though.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  The arc OBJECT to draw.
- */
-void o_arc_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  if (o_current->arc == NULL) {
-    return;
-  }
-
-  gschem_cairo_arc (w_current, o_current->line_width,
-                               o_current->arc->x,
-                               o_current->arc->y,
-                               o_current->arc->width / 2,
-                               o_current->arc->start_angle,
-                               o_current->arc->end_angle);
-
-  gschem_cairo_set_source_color (w_current,
-                                 o_drawing_color (w_current, o_current));
-  gschem_cairo_stroke (w_current, o_current->line_type,
-                                  o_current->line_end,
-                                  o_current->line_width,
-                                  o_current->line_length,
-                                  o_current->line_space);
-
-  if (o_current->selected && w_current->draw_grips == TRUE) {
-    o_arc_draw_grips (w_current, o_current);
-  }
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -82,34 +42,6 @@ void o_arc_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
   /* FIXME: This isn't a tight bounding box */
   o_invalidate_rect (w_current, cx - radius, cy - radius,
                                 cx + radius, cy + radius);
-}
-
-/*! \brief Draw an arc described by OBJECT with translation
- *  \par Function Description
- *  This function draws the arc object described by <B>*o_current</B>
- *  translated by the vector (<B>dx</B>,<B>dy</B>).
- *  The translation vector is in screen unit.
- *
- *  The arc is displayed with the color of the object.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] dx         Delta x coordinate for arc.
- *  \param [in] dy         Delta y coordinate for arc.
- *  \param [in] o_current  Arc OBJECT to draw.
- */
-void o_arc_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
-{
-  g_return_if_fail (o_current->arc != NULL);
-
-  gschem_cairo_arc (w_current, 0, o_current->arc->x + dx,
-                                  o_current->arc->y + dy,
-                                  o_current->arc->width / 2,
-                                  o_current->arc->start_angle,
-                                  o_current->arc->end_angle);
-
-  gschem_cairo_set_source_color (w_current,
-                                 x_color_lookup_dark (o_current->color));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 
 /*! \brief Start process to input a new arc.
@@ -317,77 +249,30 @@ void o_arc_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y, int whichone)
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
-void o_arc_draw_rubber (GSCHEM_TOPLEVEL *w_current)
+void o_arc_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
 {
   double rad_angle;
   int rdx, rdy;
+  double wwidth = 0;
+  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
+  GArray *color_map = eda_renderer_get_color_map (renderer);
+  int flags = eda_renderer_get_cairo_flags (renderer);
 
-  gschem_cairo_arc (w_current, 0, w_current->first_wx,
-                                  w_current->first_wy,
-                                  w_current->distance,
-                                  w_current->second_wx,
-                                  w_current->second_wy);
+  eda_cairo_arc (cr, flags, wwidth,
+                 w_current->first_wx, w_current->first_wy,
+                 w_current->distance,
+                 w_current->second_wx, w_current->second_wy);
 
-  gschem_cairo_set_source_color (w_current,
-                                 x_color_lookup_dark (SELECT_COLOR));
+  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
 
   /* draw the radius line */
   rad_angle = ((double) w_current->second_wx) * M_PI / 180;
   rdx = (double) w_current->distance * cos (rad_angle);
   rdy = (double) w_current->distance * sin (rad_angle);
 
-  gschem_cairo_line (w_current, END_NONE, 0, w_current->first_wx,
-                                             w_current->first_wy,
-                                             w_current->first_wx + rdx,
-                                             w_current->first_wy + rdy);
+  eda_cairo_line (cr, flags, END_NONE, wwidth,
+                  w_current->first_wx, w_current->first_wy,
+                  w_current->first_wx + rdx, w_current->first_wy + rdy);
 
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
-}
-
-/*! \brief Draw grip marks on arc.
- *  \par Function Description
- *  This function draws three grips on the center and on the ends of
- *  the arc object described by <B>*o_current</B>.
- *
- *  \param [in] w_current  The GSCHE_TOPLEVEL object.
- *  \param [in] o_current  Arc OBJECT to draw grip points on.
- */
-void o_arc_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  double radius, start_angle, end_angle;
-  int x1, y1, x2, y2, x3, y3;
-
-  if (w_current->draw_grips == FALSE)
-    return;
-
-  /*
-   * An arc has three grips:
-   * <DL>
-   *   <DT>*</DT><DD>one at the center that allows changes on the
-   *                 radius - at (<B>x</B>,<B>y</B>).
-   *   <DT>*</DT><DD>one at the start of the arc - at (<B>x1</B>,<B>y1</B>).
-   *   <DT>*</DT><DD>one at the end of the arc - at (<B>x2</B>,<B>y2</B>).
-   */
-
-  x1 = o_current->arc->x;
-  y1 = o_current->arc->y;
-
-  radius      = o_current->arc->width / 2.;
-  start_angle = o_current->arc->start_angle;
-  end_angle   = o_current->arc->end_angle;
-
-  x2 = x1 + radius * cos ( start_angle              * M_PI / 180);
-  y2 = y1 + radius * sin ( start_angle              * M_PI / 180);
-  x3 = x1 + radius * cos ((start_angle + end_angle) * M_PI / 180);
-  y3 = y1 + radius * sin ((start_angle + end_angle) * M_PI / 180);
-
-  /* draw the grip at the center */
-  o_grips_draw (w_current, x1, y1);
-
-  /* draw the grip at the start_angle end of the arc */
-  o_grips_draw (w_current, x2, y2);
-
-  /* draw the grip at the end_angle end of the arc */
-  o_grips_draw (w_current, x3, y3);
-
+  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
 }

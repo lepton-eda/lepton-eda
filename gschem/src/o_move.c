@@ -380,12 +380,14 @@ void o_move_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
  *  \par Function Description
  *
  */
-void o_move_draw_rubber (GSCHEM_TOPLEVEL *w_current)
+void
+o_move_draw_rubber (GSCHEM_TOPLEVEL *w_current,
+                    EdaRenderer *renderer)
 {
   GList *s_iter;
   int diff_x, diff_y;
 
-  o_place_draw_rubber (w_current);
+  o_place_draw_rubber (w_current, renderer);
 
   if (!w_current->netconn_rubberband)
     return;
@@ -399,15 +401,27 @@ void o_move_draw_rubber (GSCHEM_TOPLEVEL *w_current)
     OBJECT *object = s_current->object;
     int whichone = s_current->whichone;
 
+    /* We can only stretch nets and buses */
     switch (object->type) {
-      case (OBJ_NET):
-        o_net_draw_stretch (w_current, diff_x, diff_y, whichone, object);
+      case OBJ_NET:
+      case OBJ_BUS:
         break;
-
-      case (OBJ_BUS):
-        o_bus_draw_stretch (w_current, diff_x, diff_y, whichone, object);
-        break;
+    default:
+      continue;
     }
+
+    g_return_if_fail ((whichone >= 0) && (whichone < 2));
+
+    /* Apply stretch */
+    object->line->x[whichone] += diff_x;
+    object->line->y[whichone] += diff_y;
+
+    /* Draw stretched object */
+    eda_renderer_draw (renderer, object);
+
+    /* Restore original geometry */
+    object->line->x[whichone] -= diff_x;
+    object->line->y[whichone] -= diff_y;
   }
 }
 

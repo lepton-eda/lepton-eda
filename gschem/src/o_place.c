@@ -226,14 +226,15 @@ void o_place_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
  * before drawing if the CONTROL key is recording as being pressed in
  * the w_current structure.
  *
- *  \param [in] w_current   GSCHEM_TOPLEVEL which we're drawing for.
+ *  \param w_current   GSCHEM_TOPLEVEL which we're drawing for.
+ *  \param renderer    Renderer to use for drawing.
  */
 void
-o_place_draw_rubber (GSCHEM_TOPLEVEL *w_current)
+o_place_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
+  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
   int diff_x, diff_y;
-  int left, top, bottom, right;
 
   g_return_if_fail (toplevel->page_current->place_list != NULL);
 
@@ -258,24 +259,33 @@ o_place_draw_rubber (GSCHEM_TOPLEVEL *w_current)
     }
   }
 
+  /* Translate the cairo context to the required offset before drawing. */
+  cairo_save (cr);
+  cairo_translate (cr, diff_x, diff_y);
+
   /* Draw with the appropriate mode */
   if (w_current->last_drawb_mode == BOUNDINGBOX) {
+    GArray *map = eda_renderer_get_color_map (renderer);
+    int flags = eda_renderer_get_cairo_flags (renderer);
+    int left, top, bottom, right;
 
     /* Find the bounds of the drawing to be done */
     world_get_object_glist_bounds (toplevel,
                                    toplevel->page_current->place_list,
                                    &left, &top, &right, &bottom);
 
-    gschem_cairo_box (w_current, 0, left  + diff_x, top    + diff_y,
-                                    right + diff_x, bottom + diff_y);
-
-    gschem_cairo_set_source_color (w_current,
-                                   x_color_lookup_dark (BOUNDINGBOX_COLOR));
-    gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
+    /* Draw box outline */
+    eda_cairo_box (cr, flags, 0, left, top, right, bottom);
+    eda_cairo_set_source_color (cr, BOUNDINGBOX_COLOR, map);
+    eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, 0, -1, -1);
   } else {
-    o_glist_draw_place (w_current, diff_x, diff_y,
-                        toplevel->page_current->place_list);
+    GList *iter;
+    for (iter = toplevel->page_current->place_list; iter != NULL;
+         iter = g_list_next (iter)) {
+      eda_renderer_draw (renderer, (OBJECT *) iter->data);
+    }
   }
+  cairo_restore (cr);
 }
 
 

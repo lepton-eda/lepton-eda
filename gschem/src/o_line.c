@@ -28,49 +28,6 @@
 #include <dmalloc.h>
 #endif
 
-/*! \brief Draw a line on screen.
- *  \par Function Description
- *  This function is used to draw a line on screen. The line is described
- *  in the object which is referred by <B>o_current</B>. The line is displayed
- *  according to the current state, described in the GSCHEM_TOPLEVEL object pointed
- *  by <B>w_current</B>.
- *
- *  It first checks if the object is valid or not. If not it returns and do
- *  not output anything. That should never happen though.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  The line OBJECT to draw.
- */
-void o_line_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  int x1, y1, x2, y2;
-
-  if (o_current->line == NULL) {
-    return;
-  }
-
-  if (!o_line_visible (w_current, o_current->line, &x1, &y1, &x2, &y2)) {
-    return;
-  }
-
-  gschem_cairo_line (w_current, o_current->line_end,
-                                o_current->line_width,
-                                x1, y1, x2, y2);
-
-  gschem_cairo_set_source_color (w_current,
-                                 o_drawing_color (w_current, o_current));
-  gschem_cairo_stroke (w_current, o_current->line_type,
-                                  o_current->line_end,
-                                  o_current->line_width,
-                                  o_current->line_length,
-                                  o_current->line_space);
-
-  if (o_current->selected && w_current->draw_grips) {
-    o_line_draw_grips (w_current, o_current);
-  }
-}
-
-
 /*! \todo Finish function documentation
  *  \brief
  *  \par Function Description
@@ -83,31 +40,6 @@ void o_line_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
   WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
   o_invalidate_rect (w_current, x1, y1, x2, y2);
-}
-
-/*! \brief Draw a line object after applying translation.
- *  \par Function Description
- *  This function is used to draw the line object described by
- *  <B>*o_current</B> after applying a translation on the two directions of
- *  <B>dx</B> and <B>dy</B> in world units.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] dx         Delta x coordinate for line.
- *  \param [in] dy         Delta y coordinate for line.
- *  \param [in] o_current  Line OBJECT to draw.
- */
-void o_line_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
-{
-  if (o_current->line == NULL) {
-    return;
-  }
-
-  gschem_cairo_line (w_current, END_NONE, 0,
-                     o_current->line->x[0] + dx, o_current->line->y[0] + dy,
-                     o_current->line->x[1] + dx, o_current->line->y[1] + dy);
-  gschem_cairo_set_source_color (w_current,
-                                 x_color_lookup_dark (o_current->color));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
 }
 
 /*! \brief Start process to input a new line.
@@ -235,38 +167,20 @@ void o_line_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *
  *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
  */
-void o_line_draw_rubber (GSCHEM_TOPLEVEL *w_current)
+void o_line_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
 {
-  gschem_cairo_line (w_current, END_NONE, 0,
-                     w_current->first_wx, w_current->first_wy,
-                     w_current->second_wx, w_current->second_wy);
+  double wwidth = 0;
+  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
+  GArray *color_map = eda_renderer_get_color_map (renderer);
+  int flags = eda_renderer_get_cairo_flags (renderer);
 
-  gschem_cairo_set_source_color (w_current,
-                                 x_color_lookup_dark (SELECT_COLOR));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
+  eda_cairo_line (cr, flags, END_NONE, wwidth,
+                  w_current->first_wx, w_current->first_wy,
+                  w_current->second_wx, w_current->second_wy);
+
+  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
+  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
 }
-
-/*! \brief Draw grip marks on line.
- *  \par Function Description
- *  This function draws the grips on the line object <B>o_current</B>.
- *
- *  A line has a grip at each end.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \param [in] o_current  Line OBJECT to draw grip points on.
- */
-void o_line_draw_grips(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  if (w_current->draw_grips == FALSE)
-    return;
-
-  /* draw the grip on line end 1 */
-  o_grips_draw(w_current, o_current->line->x[0], o_current->line->y[0]);
-
-  /* draw the grip on line end 2 */
-  o_grips_draw(w_current, o_current->line->x[1], o_current->line->y[1]);
-}
-
 
 /*! \brief
  *  \par Function Description

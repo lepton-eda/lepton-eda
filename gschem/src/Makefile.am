@@ -24,9 +24,7 @@ gschem_SOURCES = \
 	gschem.c \
 	gschem_accel_label.c \
 	gschem_action.c \
-	gschem_cairo.c \
 	gschem_dialog.c \
-	gschem_pango.c \
 	gschem_toplevel.c \
 	i_basic.c \
 	i_callbacks.c \
@@ -41,7 +39,6 @@ gschem_SOURCES = \
 	o_circle.c \
 	o_complex.c \
 	o_copy.c \
-	o_cue.c \
 	o_delete.c \
 	o_find.c \
 	o_grips.c \
@@ -89,7 +86,10 @@ gschem_CFLAGS = $(GCC_CFLAGS) $(LIBSTROKE_CFLAGS) \
 	$(GLIB_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(GUILE_CFLAGS)
 gschem_LDFLAGS = $(LIBSTROKE_LDFLAGS) $(GLIB_LIBS) $(GTK_LIBS) \
 	$(GTHREAD_LIBS) $(GUILE_LIBS) $(MINGW_GUI_LDFLAGS)
-gschem_LDADD = $(top_builddir)/libgeda/src/libgeda.la @LIBINTL@
+gschem_LDADD = \
+	$(top_builddir)/libgedacairo/libgedacairo.la \
+	$(top_builddir)/libgeda/src/libgeda.la \
+	@LIBINTL@
 
 
 # This is used to generate boilerplate for defining Scheme functions

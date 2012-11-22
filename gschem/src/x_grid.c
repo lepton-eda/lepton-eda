@@ -159,6 +159,7 @@ static void draw_mesh (GSCHEM_TOPLEVEL *w_current, int color,
   int x1, y1, x2, y2;
   int next_coarse_x, next_coarse_y;
   int coarse_incr = incr * coarse_mult;
+  COLOR *c;
 
   /* figure starting grid coordinates, work by taking the start
    * and end coordinates and rounding down to the nearest increment */
@@ -175,7 +176,12 @@ static void draw_mesh (GSCHEM_TOPLEVEL *w_current, int color,
     if (next_coarse_y < y_start) next_coarse_y += coarse_incr;
   }
 
-  gschem_cairo_set_source_color (w_current, x_color_lookup (color));
+  c = x_color_lookup (color);
+  cairo_set_source_rgba (w_current->cr, (double)c->r / 255.0,
+                                        (double)c->g / 255.0,
+                                        (double)c->b / 255.0,
+                                        (double)c->a / 255.0);
+
   cairo_set_line_width (w_current->cr, 1.);
   cairo_set_line_cap (w_current->cr, CAIRO_LINE_CAP_SQUARE);
 

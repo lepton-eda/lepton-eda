@@ -104,6 +104,7 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   /* ------------- */
   /* Drawing state */
   /* ------------- */
+  w_current->renderer = EDA_RENDERER (g_object_new (EDA_TYPE_RENDERER, NULL));
   w_current->first_wx = -1;
   w_current->first_wy = -1;
   w_current->second_wx = -1;

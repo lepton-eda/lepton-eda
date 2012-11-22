@@ -65,112 +65,6 @@ void o_net_reset(GSCHEM_TOPLEVEL *w_current)
   w_current->rubber_visible = 0;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_net_draw(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int x1, y1, x2, y2;
-  int size = 0;
-  OBJECT_END end;
-
-#if NET_DEBUG /* debug */
-  char *tempstring;
-  GdkFont *font;
-#endif
-
-  if (o_current == NULL) {
-    return;
-  }
-
-  if (o_current->line == NULL) {
-    return;
-  }
-
-  /* reuse line's routine */
-  if (!o_line_visible (w_current, o_current->line, &x1, &y1, &x2, &y2)) {
-    return;
-  }
-
-  if (toplevel->net_style == THICK)
-    size = NET_WIDTH;
-
-  end = o_get_line_end (toplevel->print_output_capstyle);
-
-  gschem_cairo_line (w_current, end, size, x1, y1, x2, y2);
-  gschem_cairo_set_source_color (w_current,
-                                 o_drawing_color (w_current, o_current));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, end, size, -1, -1);
-
-  if (o_current->selected && w_current->draw_grips) {
-    o_line_draw_grips (w_current, o_current);
-  }
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_net_draw_place (GSCHEM_TOPLEVEL *w_current, int dx, int dy, OBJECT *o_current)
-{
-  int size = 0;
-
-  if (o_current->line == NULL) {
-    return;
-  }
-
-  if (w_current->toplevel->net_style == THICK)
-    size = NET_WIDTH;
-
-  gschem_cairo_line (w_current, END_NONE, size,
-                     o_current->line->x[0] + dx, o_current->line->y[0] + dy,
-                     o_current->line->x[1] + dx, o_current->line->y[1] + dy);
-  gschem_cairo_set_source_color (w_current,
-                                 x_color_lookup_dark (o_current->color));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, size, -1, -1);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_net_draw_stretch (GSCHEM_TOPLEVEL *w_current,
-                         int dx, int dy, int whichone, OBJECT *o_current)
-{
-  int dx1 = -1, dx2 = -1, dy1 = -1,dy2 = -1;
-
-  if (o_current->line == NULL) {
-    return;
-  }
-
-  if (whichone == 0) {
-    dx1 = dx;
-    dy1 = dy;
-    dx2 = dy2 = 0;
-  } else if (whichone == 1) {
-    dx1 = dy1 = 0;
-    dx2 = dx;
-    dy2 = dy;
-  } else {
-    fprintf(stderr, _("Got an invalid which one in o_net_draw_stretch\n"));
-  }
-
-  gschem_cairo_line (w_current, END_NONE, 0,
-                     o_current->line->x[0] + dx1, o_current->line->y[0] + dy1,
-                     o_current->line->x[1] + dx2, o_current->line->y[1] + dy2);
-
-  gschem_cairo_set_source_color (w_current,
-                                 x_color_lookup_dark (o_current->color));
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, 0, -1, -1);
-}
-
-
 /*! \brief guess the best direction for the next net drawing action
  *  \par Function Description
  *  This function checks all connectable objects at a starting point.
@@ -743,37 +637,37 @@ void o_net_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *  This function draws the rubbernets to the graphic context
  */
-void o_net_draw_rubber(GSCHEM_TOPLEVEL *w_current)
+void
+o_net_draw_rubber(GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
 {
-  int size = 0, w_magnetic_halfsize;
+  int size = NET_WIDTH, w_magnetic_halfsize;
+  cairo_t *cr = eda_renderer_get_cairo_context (renderer);
+  GArray *color_map = eda_renderer_get_color_map (renderer);
+  int flags = eda_renderer_get_cairo_flags (renderer);
 
-  if (w_current->toplevel->net_style == THICK)
-    size = NET_WIDTH;
-
-  gschem_cairo_set_source_color (w_current,
-                                 x_color_lookup_dark (SELECT_COLOR));
+  eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
 
   if (w_current->magneticnet_mode) {
     if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
       w_magnetic_halfsize = max (4 * size,
                                  WORLDabs (w_current, MAGNETIC_HALFSIZE));
-      gschem_cairo_arc (w_current, size, w_current->magnetic_wx,
-                                         w_current->magnetic_wy,
-                                         w_magnetic_halfsize, 0, 360);
+      eda_cairo_arc (cr, flags, size,
+                     w_current->magnetic_wx, w_current->magnetic_wy,
+                     w_magnetic_halfsize, 0, 360);
     }
   }
 
   /* Primary line */
-  gschem_cairo_line (w_current, END_NONE, size,
-                     w_current->first_wx,  w_current->first_wy,
-                     w_current->second_wx, w_current->second_wy);
+  eda_cairo_line (cr, flags, END_NONE, size,
+                  w_current->first_wx,  w_current->first_wy,
+                  w_current->second_wx, w_current->second_wy);
 
   /* Secondary line */
-  gschem_cairo_line (w_current, END_NONE, size,
+  eda_cairo_line (cr, flags, END_NONE, size,
                      w_current->second_wx, w_current->second_wy,
                      w_current->third_wx,  w_current->third_wy);
 
-  gschem_cairo_stroke (w_current, TYPE_SOLID, END_NONE, size, -1, -1);
+  eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, size, -1, -1);
 }
 
 
