@@ -181,49 +181,11 @@ void o_cue_draw_lowlevel(GSCHEM_TOPLEVEL *w_current, OBJECT *object, int whichon
 
     case(CONN_ENDPOINT):
       if (object->type == OBJ_NET || object->type == OBJ_PIN) {
-        if (count < 1) { /* Didn't find anything connected directly there */
-          if ((object->type == OBJ_NET)
-              && o_net_is_fully_connected (w_current->toplevel, object)) {
-            /* Probably connected, so draw friendly arrow */
-            /* Here we compute a transformation so that the arrow is
-               aligned with the net segment.
-
-               FIXME This probably isn't efficient, unfortunately. */
-            cairo_save (w_current->cr);
-
-            int s_x, s_y;
-            WORLDtoSCREEN (w_current, x, y, &s_x, &s_y);
-            double s_size = SCREENabs (w_current, CUE_BOX_SIZE);
-
-            cairo_matrix_t mtx;
-            double dx = object->line->x[whichone] - object->line->x[!whichone];
-            double dy = object->line->y[whichone] - object->line->y[!whichone];
-            double len = hypot (dx, dy);
-            if (len != 0) {
-              dx /= len;
-              dy /= len;
-
-              cairo_matrix_init (&mtx, dx, -dy, dy, dx, s_x, s_y);
-            } else {
-              cairo_matrix_init_translate (&mtx, s_x, s_y);
-            }
-            cairo_transform (w_current->cr, &mtx);
-
-            cairo_move_to (w_current->cr, -s_size, -s_size);
-            cairo_line_to (w_current->cr, -s_size, s_size);
-            cairo_line_to (w_current->cr, s_size, 0);
-            cairo_close_path (w_current->cr);
-            o_cue_set_color (w_current, JUNCTION_COLOR);
-            cairo_fill (w_current->cr);
-
-            cairo_restore (w_current->cr);
-          } else {
-            /* Not properly connected, so draw warning box */
-            size = CUE_BOX_SIZE;
-            gschem_cairo_center_box (w_current, -1, -1, x, y, size, size);
-            o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
-            cairo_fill (w_current->cr);
-          }
+        if (count < 1) { /* Didn't find anything connected there */
+          size = CUE_BOX_SIZE;
+          gschem_cairo_center_box (w_current, -1, -1, x, y, size, size);
+          o_cue_set_color (w_current, NET_ENDPOINT_COLOR);
+          cairo_fill (w_current->cr);
         } else if (count >= 2) {
           draw_junction_cue (w_current, x, y, bus_involved);
         }
