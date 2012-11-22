@@ -25,8 +25,6 @@
 #include <stdlib.h>
 #endif
 
-#include <math.h>
-
 #include "libgeda_priv.h"
 
 #ifdef HAVE_LIBDMALLOC
@@ -79,38 +77,6 @@ void s_cue_postscript_junction (TOPLEVEL * toplevel, FILE * fp,
   fprintf(fp, "fill\n");
 }
 
-/*! \brief Draw an arrow at the end of a net.
- */
-void
-s_cue_postscript_arrow (TOPLEVEL *toplevel, FILE *fp,
-                        int x, int y, int dx, int dy)
-{
-  int offset = CUE_BOX_SIZE;
-
-  f_print_set_color (toplevel, fp, JUNCTION_COLOR);
-
-  fprintf (fp, "gsave\n");
-
-  /* We compute a transformation so that the arrowhead is aligned with
-   * the net segment. */
-  double len = hypot (dx, dy);
-  if (len != 0) {
-    double c = dx / len;
-    double s = dy / len;
-    fprintf (fp, "[ %.2f %.2f %.2f %.2f %d %d ] concat\n", c, -s, s, c, x, y);
-  } else {
-    fprintf (fp, "%d %d translate\n", x, y); /* Translate to centre point of the arrow */
-  }
-
-  /* Now draw a simple arrowhead */
-  fprintf (fp, "newpath\n");
-  fprintf (fp, "%d %d moveto\n", -offset, -offset);
-  fprintf (fp, "%d %d lineto\n", -offset, offset);
-  fprintf (fp, "%d %d lineto\n", offset, 0);
-  fprintf (fp, "closepath\n"
-               "fill\n"
-               "grestore\n");
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -206,19 +172,11 @@ void s_cue_output_lowlevel(TOPLEVEL * toplevel, OBJECT * object, int whichone,
     case (CONN_ENDPOINT):
       if (object->type == OBJ_NET || object->type == OBJ_PIN) {
         if (count < 1) {	/* Didn't find anything connected there */
-          if ((object->type == OBJ_NET)
-              && o_net_is_fully_connected (toplevel, object)) {
-            /* Probably connected, so draw friendly arrowhead. The
-             * additional parameters are needed to allow the arrowhead
-             * to be pointed in the direction of the net. */
-            if (output_type == POSTSCRIPT) {
-              s_cue_postscript_arrow (toplevel, fp, x, y,
-                                      object->line->x[whichone] - object->line->x[!whichone],
-                                      object->line->y[whichone] - object->line->y[!whichone]);
-            }
-          } else {
-            s_cue_postscript_fillbox (toplevel, fp, x, y);
+          if (output_type == POSTSCRIPT) {
+            s_cue_postscript_fillbox(toplevel, fp, x, y);
           }
+
+
         } else if (count >= 2) {
           if (output_type == POSTSCRIPT)
             s_cue_postscript_junction (toplevel, fp, x, y, bus_involved);
@@ -294,8 +252,18 @@ void s_cue_output_single(TOPLEVEL * toplevel, OBJECT * object, FILE * fp,
 
   switch (object->type) {
     case (OBJ_NET):
-      s_cue_output_lowlevel(toplevel, object, 0, fp, type);
-      s_cue_output_lowlevel(toplevel, object, 1, fp, type);
+      /*
+       * s_cue_output_lowlevel handles both endpoints and junctions.
+       * The intention of the check is to skip drawing endpoint cues on nets
+       * that are not "fully connected".
+       * Junctions will be drawn correctly, as:
+       *  - net-net junctions are handled by s_cue_output_lowlevel_midpoints
+       *  - net-pin and pin-pin junctions are handled by case OBJ_PIN below
+       */
+      if (!o_net_is_fully_connected (toplevel, object)) {
+        s_cue_output_lowlevel(toplevel, object, 0, fp, type);
+        s_cue_output_lowlevel(toplevel, object, 1, fp, type);
+      }
       break;
     case (OBJ_BUS):
       s_cue_output_lowlevel(toplevel, object, 0, fp, type);
