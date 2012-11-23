@@ -680,6 +680,7 @@ eda_config_save (EdaConfig *cfg, GError **error)
                  g_file_error_from_errno (errno),
                  _("Could not create directory '%s': %s"),
                  dirname, g_strerror (errno));
+    g_free (dirname);
     return FALSE;
   }
 
@@ -688,6 +689,7 @@ eda_config_save (EdaConfig *cfg, GError **error)
   gboolean result = g_file_set_contents (cfg->priv->filename,
                                          buf, len, error);
   g_free (buf);
+  g_free (dirname);
   if (result) cfg->priv->changed = FALSE;
   return result;
 }
