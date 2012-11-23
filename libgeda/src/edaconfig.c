@@ -287,6 +287,7 @@ eda_config_get_default_context ()
     config = g_object_new (EDA_TYPE_CONFIG,
                            "trusted", TRUE,
                            NULL);
+    config->priv->loaded = TRUE;
   }
   return config;
 }
