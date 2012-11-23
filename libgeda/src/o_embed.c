@@ -44,7 +44,7 @@
  */
 void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
 {
-  PAGE *page = o_get_page_compat (toplevel, o_current);
+  PAGE *page = o_get_page (toplevel, o_current);
   int page_modified = 0;
 
   /* check o_current is a complex and is not already embedded */
@@ -86,7 +86,7 @@ void o_embed(TOPLEVEL *toplevel, OBJECT *o_current)
 void o_unembed(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   const CLibSymbol *sym;
-  PAGE *page = o_get_page_compat (toplevel, o_current);
+  PAGE *page = o_get_page (toplevel, o_current);
   int page_modified = 0;
   
   /* check o_current is an embedded complex */
