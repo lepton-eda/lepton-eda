@@ -7,6 +7,56 @@ Copyright (C) 1998-2012 gEDA Developers
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
 
+Notable changes in gEDA/gaf 1.9.0
+=================================
+
+* A new schematic renderer library, `libgedacairo' has been added, and
+  all tools have been updated to use it.  Related changes:
+
+  - The following configuration functions have been removed:
+
+         output-capstyle         paper-sizes
+         output-color            postscript-prolog
+         output-orientation      print-command
+         output-type             setpagedevice-orientation
+         paper-size              setpagedevice-pagesize
+
+  - The following `gschem' configuration items have been added:
+
+         print-paper             print-color
+         print-orientation
+
+  - `gschem' now generates PDF files rather than PostScript or EPS
+    files.
+
+  - `gschem' now uses a standard GTK print dialog (with printer
+    selection, print preview, etc.)
+
+* The changes to highlighting of dangling net ends in gEDA/gaf 1.8.0
+  have been reverted.  All dangling ends are once again flagged with a
+  brightly-coloured square.
+
+* When editing a component with the `gschem' multi-attribute editor,
+  the dialog will now show the symbol name in its title.
+
+* When using "Down Schematic" command in `gschem', an error message
+  will now be displayed if the subcircuit schematic cannot be loaded.
+
+* Printing in `gschem' now uses a light background color map by
+  default.
+
+* Objects can now have the line end "cap style" adjusted in `gschem'.
+
+* `gnetlist' now accepts the `-i' and `-g' command-line arguments
+  together.  If you specify both `-i' and `-g', `gnetlist' will enter
+  the Scheme REPL after loading the requested backend but before
+  executing it.
+
+* `gattrib' now has translations for the user interface and various
+  messages.
+
+* `gsch2pdf' is a new utility for creating PDFs from schematic files.
+
 Notable changes in gEDA/gaf 1.8.0
 =================================
 
@@ -219,7 +269,7 @@ Notable changes in gEDA/gaf 1.6.1
 * Added accelerator mnemonics for root menus in gschem
 
 * Lots of updated and new language translations in libgeda, gschem, and
-  gattrib.  (Courtesy of language translators and Launchpad) 
+  gattrib.  (Courtesy of language translators and Launchpad)
 
 * Updated the shipped documentation from the official gEDA wiki
 
@@ -228,7 +278,7 @@ Notable changes in gEDA/gaf 1.6.1
   - 2876373: Fix rendering with zoomed out dashed lines
   - 2901183: Fix for some manpage issues
   - 2904715: Don't update page connectivity from o_place_rotate()
-  - 2949232: Fix slot editing routines to not edit inherited attributes 
+  - 2949232: Fix slot editing routines to not edit inherited attributes
   - Cherry picked some other bug fixes from master that should be in
     this release
 
@@ -390,7 +440,7 @@ Notable changes in gEDA/gaf 1.5.1
 
 * GTK+ version 2.8.x or later is now required.
 
-* The selection behaviour in `gschem' was changed. 
+* The selection behaviour in `gschem' was changed.
 
   - Lines, unfilled boxes, unfilled circles, arcs, pins, nets, and
     buses must be selected by clicking on the drawn path itself.
