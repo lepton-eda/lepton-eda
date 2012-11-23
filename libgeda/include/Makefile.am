@@ -17,6 +17,7 @@ libgedainclude_HEADERS = \
 
 
 noinst_HEADERS = \
+	defines_priv.h \
 	gettext_priv.h \
 	i_vars_priv.h \
 	libgeda_priv.h \

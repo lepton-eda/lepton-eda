@@ -859,31 +859,6 @@ SCM g_rc_bus_ripper_symname(SCM scmsymname)
  *  \brief
  *  \par Function Description
  *
- *  \param [in] scmsymname  
- *  \return SCM_BOOL_T always.
- */
-SCM g_rc_postscript_prolog(SCM scmsymname)
-{
-  char *temp;
-
-  SCM_ASSERT (scm_is_string (scmsymname), scmsymname,
-              SCM_ARG1, "postsript-prolog");
-
-  g_free(default_postscript_prolog);
-
-  /* take care of any shell variables */
-  temp = scm_to_utf8_string (scmsymname);
-  default_postscript_prolog =
-    s_expand_env_variables (temp);
-  free (temp);
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- *
  *  \return SCM_BOOL_T always.
  */
 SCM g_rc_reset_component_library(void)

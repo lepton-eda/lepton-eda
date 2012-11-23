@@ -194,32 +194,6 @@ s_color_rgba_encode (guint8 r, guint8 g, guint8 b, guint8 a)
                            (gint) r, (gint) g, (gint) b);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gchar *s_color_ps_string(gint color)
-{
-  COLOR c;
-
-  if (color >= MAX_COLORS) {
-    g_warning (_("Color index out of range"));
-    return NULL;
-  }
-
-  c = print_colors[color];
-
-  if ((c.a == 0) || !c.enabled) {
-    return NULL;
-  } else {
-    return g_strdup_printf ("%.3f %.3f %.3f",
-                            (gdouble) c.r/255.0,
-                            (gdouble) c.g/255.0,
-                            (gdouble) c.b/255.0);
-  }
-}
-
 SCM
 s_color_map_to_scm (const COLOR *map)
 {

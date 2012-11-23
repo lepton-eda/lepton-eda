@@ -26,8 +26,6 @@
 extern int   default_text_size;
 extern int   default_text_caps;
 
-extern int   default_paper_width;
-extern int   default_paper_height;
 extern int   default_init_right;
 extern int   default_init_bottom;
 

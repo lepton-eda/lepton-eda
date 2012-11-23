@@ -19,12 +19,6 @@ int f_save(TOPLEVEL *toplevel, PAGE *page, const char *filename, GError **error)
 gchar *f_normalize_filename (const gchar *filename, GError **error);
 char *follow_symlinks (const gchar *filename, GError **error);
 
-/* f_print.c */
-int f_print_file (TOPLEVEL *toplevel, PAGE *page, const char *filename);
-int f_print_command (TOPLEVEL *toplevel, PAGE *page, const char *command);
-int f_print_stream(TOPLEVEL *toplevel, PAGE *page, FILE *fp);
-void f_print_set_type(TOPLEVEL *toplevel, int type);
-
 /* g_basic.c */
 SCM g_scm_eval_protected (SCM exp, SCM module_or_state);
 SCM g_scm_eval_string_protected (SCM str);
@@ -111,7 +105,6 @@ void o_add_change_notify(TOPLEVEL *toplevel, ChangeNotifyFunc pre_change_func, C
 void o_remove_change_notify(TOPLEVEL *toplevel, ChangeNotifyFunc pre_change_func, ChangeNotifyFunc change_func, void *user_data);
 gboolean o_is_visible (TOPLEVEL *toplevel, OBJECT *object);
 void o_set_visibility (TOPLEVEL *toplevel, OBJECT *object, int visibility);
-OBJECT_END o_get_line_end (int capstyle);
 
 /* o_box_basic.c */
 OBJECT *o_box_new(TOPLEVEL *toplevel, char type, int color, int x1, int y1, int x2, int y2);
@@ -321,14 +314,6 @@ void s_conn_update_object(TOPLEVEL *toplevel, OBJECT *object);
 int s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list);
 GList *s_conn_return_others(GList *input_list, OBJECT *object);
 
-/* s_cue.c */
-void s_cue_postscript_fillbox(TOPLEVEL *toplevel, FILE *fp, int x, int y);
-void s_cue_postscript_junction (TOPLEVEL *toplevel, FILE *fp, int x, int y, int bus_involved);
-void s_cue_output_all(TOPLEVEL *toplevel, const GList *obj_list, FILE *fp, int type);
-void s_cue_output_lowlevel(TOPLEVEL *toplevel, OBJECT *object, int whichone, FILE *fp, int output_type);
-void s_cue_output_lowlevel_midpoints(TOPLEVEL *toplevel, OBJECT *object, FILE *fp, int output_type);
-void s_cue_output_single(TOPLEVEL *toplevel, OBJECT *object, FILE *fp, int type);
-
 /* s_hierarchy.c */
 PAGE *s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename, PAGE *parent, int page_control, int flag, GError **err);
 void s_hierarchy_down_symbol (TOPLEVEL *toplevel, const CLibSymbol *symbol, PAGE *parent);
@@ -376,15 +361,6 @@ void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page);
 const GList *s_page_objects (PAGE *page);
 GList *s_page_objects_in_region (TOPLEVEL *toplevel, PAGE *page, int min_x, int min_y, int max_x, int max_y);
 GList *s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page, BOX *rects, int n_rects);
-
-/* s_papersizes.c */
-int s_papersizes_add_entry(char *new_papersize, int width, int height);
-void s_papersizes_print(void);
-int s_papersizes_uniq(char *name);
-void s_papersizes_free(void);
-void s_papersizes_init(void);
-char *s_papersizes_get(int counter);
-void s_papersizes_get_size(char *string, int *width, int *height);
 
 /* s_path.c */
 PATH *s_path_parse (const char *path_str);

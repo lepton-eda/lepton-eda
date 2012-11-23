@@ -29,7 +29,6 @@ libgeda_la_SOURCES = \
 	a_basic.c \
 	edaerrors.c \
 	f_basic.c \
-	f_print.c \
 	g_basic.c \
 	geda_list.c \
 	g_rc.c \
@@ -65,13 +64,11 @@ libgeda_la_SOURCES = \
 	s_clib.c \
 	s_color.c \
 	s_conn.c \
-	s_cue.c \
 	s_encoding.c \
 	s_hierarchy.c \
 	s_log.c \
 	s_menu.c \
 	s_page.c \
-	s_papersizes.c \
 	s_path.c \
 	s_slib.c \
 	s_slot.c \

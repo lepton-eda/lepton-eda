@@ -65,7 +65,6 @@ static struct gsubr_t libgeda_funcs[] = {
   { "scheme-directory",         1, 0, 0, g_rc_scheme_directory },
   { "bitmap-directory",         1, 0, 0, g_rc_bitmap_directory },
   { "bus-ripper-symname",       1, 0, 0, g_rc_bus_ripper_symname },
-  { "postscript-prolog",        1, 0, 0, g_rc_postscript_prolog },
   { "attribute-promotion",       1, 0, 0, g_rc_attribute_promotion },
   { "promote-invisible",         1, 0, 0, g_rc_promote_invisible },
   { "keep-invisible",            1, 0, 0, g_rc_keep_invisible },

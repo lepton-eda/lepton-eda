@@ -266,47 +266,6 @@ OBJECT *o_bus_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   return new_obj;
 }
 
-/*! \brief postscript print command for a bus object
- *  \par Function Description
- *  This function writes the postscript command of the bus object \a o_current
- *  into the FILE \a fp points to.
- *  
- *  \param [in] toplevel     The TOPLEVEL object
- *  \param [in] fp           pointer to a FILE structure
- *  \param [in] o_current    The OBJECT to print
- *  \param [in] origin_x     x-coord of the postscript origin
- *  \param [in] origin_y     y-coord of the postscript origin
- */
-void o_bus_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
-		 int origin_x, int origin_y)
-{
-  int bus_width;
-  int x1, y1;
-  int x2, y2;
-
-  if (o_current == NULL) {
-    printf("got null in o_bus_print\n");
-    return;
-  }
-
-  f_print_set_color(toplevel, fp, o_current->color);
-
-  bus_width = 2;
-  if (toplevel->bus_style == THICK) {
-    bus_width = BUS_WIDTH;	
-  }
-
-  x1 = o_current->line->x[0]-origin_x,
-  y1 = o_current->line->y[0]-origin_y;
-  x2 = o_current->line->x[1]-origin_x,
-  y2 = o_current->line->y[1]-origin_y;
-
-  fprintf(fp, "%d %d %d %d %d %d line\n",
-	  x1,y1,x2,y2,bus_width,SQUARE_CAP);
-
-}
-
-
 /*! \brief rotate a bus object around a centerpoint
  *  \par Function Description
  *  This function rotates a bus \a object around the point

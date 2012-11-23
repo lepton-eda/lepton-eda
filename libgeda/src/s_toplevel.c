@@ -84,19 +84,7 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->object_clipping = 0;
 
-  toplevel->print_orientation = 0;
-
   toplevel->image_color = FALSE;
-
-  toplevel->print_color = FALSE;
-
-  toplevel->print_color_background = 0;
-
-  toplevel->setpagedevice_orientation = FALSE;
-
-  toplevel->setpagedevice_pagesize = FALSE;
-
-  toplevel->postscript_prolog = NULL;
 
   toplevel->net_consolidate = FALSE;
 
@@ -107,13 +95,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->keep_invisible      = FALSE;
 
   toplevel->make_backup_files = TRUE;
-
-  toplevel->print_output_type = 0;
-
-  toplevel->print_output_capstyle = BUTT_CAP;
-
-  toplevel->paper_width  = 0;
-  toplevel->paper_height = 0;
 
   toplevel->bus_ripper_symname = NULL;
 

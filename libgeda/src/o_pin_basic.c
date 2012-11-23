@@ -266,44 +266,6 @@ OBJECT *o_pin_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   return new_obj;
 }
 
-/*! \brief postscript print command for a pin object
- *  \par Function Description
- *  This function writes the postscript command of the pin object \a o_current
- *  into the FILE \a fp points to.
- *  
- *  \param [in] toplevel     The TOPLEVEL object
- *  \param [in] fp           pointer to a FILE structure
- *  \param [in] o_current    The OBJECT to print
- *  \param [in] origin_x     x-coord of the postscript origin
- *  \param [in] origin_y     y-coord of the postscript origin
- */
-void o_pin_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
-		 int origin_x, int origin_y)
-{
-  int pin_width;
-  int x1, y1;
-  int x2, y2;
-  
-  if (o_current == NULL) {
-    printf("got null in o_pin_print\n");
-    return;
-  }
-
-  f_print_set_color(toplevel, fp, o_current->color);
-
-  x1 = o_current->line->x[0] - origin_x;
-  y1 = o_current->line->y[0] - origin_y;
-  x2 = o_current->line->x[1] - origin_x;
-  y2 = o_current->line->y[1] - origin_y;
-  pin_width = 2;
-  if(toplevel->pin_style == THICK) {
-    pin_width = o_current->line_width;
-  }
-
-  fprintf(fp, "%d %d %d %d %d %d line\n",x1,y1,x2,y2,pin_width,toplevel->print_output_capstyle);
-
-}
-
 /*! \brief rotate a pin object around a centerpoint
  *  \par Function Description
  *  This function rotates a pin \a object around the point

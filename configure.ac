@@ -193,7 +193,6 @@ AC_CONFIG_FILES([Makefile
                  libgeda/include/Makefile
                  libgeda/lib/Makefile
                  libgeda/scheme/Makefile
-                 libgeda/share/Makefile
                  libgeda/src/Makefile
 
                  libgedacairo/Makefile

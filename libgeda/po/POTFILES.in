@@ -5,7 +5,6 @@ libgeda/data/x-geda-symbol.desktop.in
 
 libgeda/src/a_basic.c
 libgeda/src/f_basic.c
-libgeda/src/f_print.c
 libgeda/src/g_basic.c
 libgeda/src/g_rc.c
 libgeda/src/o_arc_basic.c

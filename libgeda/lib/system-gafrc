@@ -26,11 +26,6 @@
 ;; The directory containing various bitmaps (e.g. icons)
 (bitmap-directory (build-path geda-data-path "bitmap"))
 
-; Set the name of the postscript prolog file that will be 
-; pasted into the postscript output after the DSC comments, but
-; before the main script.
-(postscript-prolog (build-path geda-data-path "prolog.ps"))
-
 ; scheme-directory dir
 ;
 ; This keyword allows additional directories to be added to the list

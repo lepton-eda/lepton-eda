@@ -441,8 +441,6 @@ struct st_toplevel {
 
   int override_color;			/* used in doing selections */
 
-  int last_ps_color;                    /* used in print code */
-
   /* page system */
   PAGE *page_current;
   GedaPageList *pages;
@@ -471,26 +469,8 @@ struct st_toplevel {
   /* controls whether objects are clipped */
   int object_clipping; 
 
-  /* either landscape or portrait */
-  int print_orientation; 
-
   /* either TRUE or FALSE (color or no color) */
   int image_color; 
-
-  /* either TRUE or FALSE (color or no color) */
-  int print_color; 
-
-  /* color used color ouput for background */ 
-  int print_color_background;
-
-  /* setpagedevice orientation option enable (TRUE or FALSE) */
-  int setpagedevice_orientation;
-
-  /* setpagedevice pagesize option enable (TRUE or FALSE) */
-  int setpagedevice_pagesize;
-
-  /* The name of the prolog file to paste into the Postscript output */
-  char *postscript_prolog;
 
   /* controls if the net consolidation code is used */ 
   int net_consolidate; 
@@ -506,15 +486,6 @@ struct st_toplevel {
 
   /* controls the generation of backup (~) files */
   int make_backup_files;
-
-  /* either window or limits */
-  int print_output_type;
-
-  /* BUTT, ROUND, SQUARE caps */
-  int print_output_capstyle;		
-
-  /* landscape printing only */
-  int paper_width, paper_height;
 
   /* filename of the bus ripper component if set above */
   char *bus_ripper_symname;

@@ -249,45 +249,6 @@ OBJECT *o_net_copy(TOPLEVEL *toplevel,  OBJECT *o_current)
   return new_obj;
 }
 
-/*! \brief postscript print command for a net object
- *  \par Function Description
- *  This function writes the postscript command of the net object \a o_current
- *  into the FILE \a fp points to.
- *  
- *  \param [in] toplevel     The TOPLEVEL object
- *  \param [in] fp           pointer to a FILE structure
- *  \param [in] o_current    The OBJECT to print
- *  \param [in] origin_x     x-coord of the postscript origin
- *  \param [in] origin_y     y-coord of the postscript origin
- */
-void o_net_print(TOPLEVEL *toplevel, FILE *fp, OBJECT *o_current,
-		 int origin_x, int origin_y)
-{
-  int net_width;
-  int x1, y1;
-  int x2, y2;
-
-  if (o_current == NULL) {
-    printf("got null in o_net_print\n");
-    return;
-  }
-
-  f_print_set_color(toplevel, fp, o_current->color);
-
-  net_width = 2;
-  if (toplevel->net_style == THICK) {
-    net_width = NET_WIDTH;
-  }
-
-  x1 = o_current->line->x[0] - origin_x,
-  y1 = o_current->line->y[0] - origin_y;
-  x2 = o_current->line->x[1] - origin_x,
-  y2 = o_current->line->y[1] - origin_y;
-
-  fprintf(fp, "%d %d %d %d %d %d line\n", x1,y1,x2,y2,net_width,toplevel->print_output_capstyle);
-}
-
-
 /*! \brief rotate a net object around a centerpoint
  *  \par Function Description
  *  This function rotates a net \a object around the point
