@@ -673,6 +673,17 @@ eda_config_save (EdaConfig *cfg, GError **error)
     return FALSE;
   }
 
+  /* First try and make the directory, if necessary. */
+  gchar *dirname = g_path_get_dirname (cfg->priv->filename);
+  if (g_mkdir_with_parents (dirname, 0755) != 0) {
+    g_set_error (error,
+                 G_FILE_ERROR,
+                 g_file_error_from_errno (errno),
+                 _("Could not create directory '%s': %s"),
+                 dirname, g_strerror (errno));
+    return FALSE;
+  }
+
   gsize len;
   gchar *buf = g_key_file_to_data (cfg->priv->keyfile, &len, NULL);
   gboolean result = g_file_set_contents (cfg->priv->filename,
