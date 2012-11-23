@@ -2,7 +2,8 @@
 
 (use-modules (unit-test)
              (geda os)
-             (geda config))
+             (geda config)
+             (srfi srfi-1))
 
 (or (defined? 'define-syntax)
     (use-modules (ice-9 syncase)))
@@ -171,7 +172,7 @@
 
          (set-config! b "fizz" "bam" #t)
          (assert-equal '("foo") (config-groups a))
-         (assert-equal '("fizz" "foo") (config-groups b))
+         (assert-true (lset= string= '("fizz" "foo") (config-groups b)))
          (assert-equal #f (config-has-group? a "fizz"))
          (assert-true (config-has-group? b "fizz")) )
        (lambda () (set-config-parent! b (user-config-context))))))
