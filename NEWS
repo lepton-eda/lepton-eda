@@ -7,6 +7,11 @@ Copyright (C) 1998-2012 gEDA Developers
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
 
+Notable changes in gEDA/gaf 1.8.1
+=================================
+
+Bugfix release with correct dynamic version information for libgeda.
+
 Notable changes in gEDA/gaf 1.8.0
 =================================
 
