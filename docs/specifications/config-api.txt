@@ -15,7 +15,7 @@
     1  Introduction
     2  Error Handling
       2.1  Errors in C functions
-      2.2  Errors in Scheme function
+      2.2  Errors in Scheme functions
     3  Configuration Contexts
       3.1  Obtaining a Context
         3.1.1  Default context
@@ -83,8 +83,8 @@ caller using the "GError" mechanism [GLIB]_.
     A configuration value could not be parsed into the requested
     format.
 
-Errors in Scheme function
--------------------------
+Errors in Scheme functions
+--------------------------
 
 All errors in Scheme functions are reported by raising Guile errors
 [GUILE]_.  There are two possible error keys that may arise:
@@ -124,8 +124,13 @@ looking up a parameter, it has no value set in the selected context,
 the parent context is checked, and so on.
 
 Configuration contexts are reference counted.  You can increment and
-decrement their reference counters using `g_object_ref()` and
-`g_object_unref()` [GOBJECT]_.
+decrement their reference counters using ``g_object_ref()`` and
+``g_object_unref()`` [GOBJECT]_.
+
+Three special contexts are always automatically defined: the `default
+context`_, the `system context`_, and the `user context`_.  The user
+context is the default parent context for newly-created configuration
+contexts.
 
 Obtaining a Context
 -------------------
@@ -155,10 +160,10 @@ with a ``geda.conf`` in the same directory as ``path``.
              the context returned by ``path-config-context`` is
              located in the directory specified by ``path``.
 
-Three special contexts are always automatically defined: the `default
-context`_, the `system context`_, and the `user context`_.  The user
-context is the default parent context for newly-created configuration
-contexts.
+The configuration context returned by
+``eda_config_get_context_for_path()`` is owned by the library, and
+should not be disposed of with ``g_object_unref()``.
+
 
 Default context
 ~~~~~~~~~~~~~~~
@@ -177,6 +182,10 @@ the default configuration used when no configuration file can be
 loaded.  Applications should normally populate the default context
 with their built-in default configuration settings on start-up, before
 loading any further configuration files.
+
+The configuration context returned by
+``eda_config_get_default_context()`` is owned by the library, and
+should not be disposed of with ``g_object_unref()``.
 
 System context
 ~~~~~~~~~~~~~~
@@ -198,6 +207,10 @@ The system context is used for system-wide configuration.  It is located:
 
 Its parent context is the `default context`_.
 
+The configuration context returned by
+``eda_config_get_system_context()`` is owned by the library, and
+should not be disposed of with ``g_object_unref()``.
+
 User context
 ~~~~~~~~~~~~
 
@@ -212,6 +225,10 @@ Scheme function::
 The user context is used for user-specific configuration, and is
 loaded from ``${XDG_CONFIG_HOME}/gEDA/geda-user.conf`` [XDGDIRS]_.
 Its parent context is the `system context`_.
+
+The configuration context returned by
+``eda_config_get_user_context()`` is owned by the library, and should
+not be disposed of with ``g_object_unref()``.
 
 Loading configuration files
 ---------------------------
@@ -271,7 +288,7 @@ C) or a ``system-error`` (in Scheme).
 
 C function::
 
-  gboolean eda_config_is_changed (EdaConfig **cfg)
+  gboolean eda_config_is_changed (EdaConfig *cfg)
 
 Scheme function::
 
@@ -389,7 +406,7 @@ Groups
 
 C function::
 
-  gchar **eda_config_get_groups (EdaConfig *cfg, gint *length)
+  gchar **eda_config_get_groups (EdaConfig *cfg, gsize *length)
 
 Scheme function::
 
@@ -417,8 +434,8 @@ Keys
 
 C function::
 
-  gchar **eda_config_get_keys (EdaConfig *cfg, const gchar *group, gint *length,
-                               GError **error)
+  gchar **eda_config_get_keys (EdaConfig *cfg, const gchar *group,
+                               gsize *length, GError **error)
 
 Scheme function::
 
@@ -493,9 +510,11 @@ Getting configuration values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In general, errors in obtaining a value using the C functions should
-be checked for using a GError.  The list functions take an optional
-return location for the ``length`` of list.  Returned strings should
-be freed using ``g_free()``, and returned lists should be freed using
+be checked for using a GError.  The list functions take a return
+location for the ``length`` of list (for
+``eda_config_get_string_list()`` this argument may be NULL, since the
+returned array is NULL-terminated).  Returned strings should be freed
+using ``g_free()``, and returned lists should be freed using
 ``g_free()`` or ``g_strfreev()`` as appropriate [GLIB]_.
 
 C functions::
@@ -695,7 +714,7 @@ C functions::
 
 When ``eda_config_event_freeze()`` is called on it, the context
 ``cfg`` stops dispatching event notifications.  Whenever an event
-notification would normally be dispatched, it instead is added
+notification would normally be dispatched, it instead is added to an
 internal queue.  When ``eda_config_event_thaw()`` is called, any
 queued events are dispatched.  Multiple pairs of
 ``eda_config_event_freeze()`` and ``eda_config_event_thaw()`` calls

@@ -148,6 +148,7 @@ eda_config_init (EdaConfig *config)
   config->priv->keyfile = g_key_file_new ();
   config->priv->loaded = FALSE;
   config->priv->changed = FALSE;
+  config->priv->parent_handler_id = 0;
 
   g_signal_connect (config, "config-changed",
                     G_CALLBACK (default_config_changed_handler),
@@ -215,7 +216,8 @@ eda_config_set_property (GObject *object, guint property_id,
         g_signal_handler_disconnect (priv->parent,
                                      priv->parent_handler_id);
       }
-      g_object_unref (config->priv->parent);
+      g_object_unref (priv->parent);
+      priv->parent_handler_id = 0;
     }
     if (parent != NULL) {
       config->priv->parent = g_object_ref (parent);
@@ -373,7 +375,6 @@ eda_config_get_user_context ()
 {
   static EdaConfig *config = NULL;
   if (config == NULL) {
-    gchar *xdg_filename = NULL;
     gchar *filename = NULL;
 
     /* Search for a user configuration file in XDG_CONFIG_HOME */
@@ -386,7 +387,6 @@ eda_config_get_user_context ()
                            "trusted", TRUE,
                            NULL);
 
-    g_free (xdg_filename);
     g_free (filename);
   }
   return config;
@@ -410,10 +410,10 @@ chdir_get_current_dir (const gchar *filename, GError **error)
 
 /*! Recursively searches upwards from \a path, looking for a
  * "geda.conf" file.  If the root directory is reached without finding
- * a configuration file, creates a configuration context in the same
- * directory as \a path (if \a path points to a regular file) or in
- * path (if \a path is a directory).  If an unrecoverable error
- * occurs, returns NULL and sets \a error.
+ * a configuration file, returns the directory part of \a path (if \a
+ * path points to a regular file) or \a path itself (if \a path is a
+ * directory).  If an unrecoverable error occurs, returns NULL and
+ * sets \a error.
  *
  * \todo find_project_root() is probably generally useful. */
 static gchar *
@@ -561,7 +561,8 @@ eda_config_get_context_for_path (const gchar *path, GError **error)
  * \brief Return underlying filename for configuration context.
  *
  * Return the filename of the configuration file associated with the
- * context \a cfg.  May return NULL.
+ * context \a cfg.  May return NULL.  The return value is owned by the
+ * API and should not be modified or freed.
  *
  * \param cfg  Configuration context.
  * \return Filename of configuration file for \a cfg.
@@ -828,10 +829,10 @@ eda_config_get_trusted_context (EdaConfig *cfg)
  * eda_config_get_keys().
  */
 static gchar **
-hash_table_keys_array (GHashTable *table, gint *length)
+hash_table_keys_array (GHashTable *table, gsize *length)
 {
-  *length = g_hash_table_size (table);
-  gchar **result = g_new0 (gchar *, 1 + *length);
+  gsize len = g_hash_table_size (table);
+  gchar **result = g_new0 (gchar *, 1 + len);
   GHashTableIter iter;
   gpointer key;
   int i = 0;
@@ -843,6 +844,7 @@ hash_table_keys_array (GHashTable *table, gint *length)
   result[i] = NULL;
 
   g_hash_table_destroy (table);
+  if (length != NULL) *length = len;
   return result;
 }
 
@@ -865,7 +867,7 @@ hash_table_keys_array (GHashTable *table, gint *length)
  * \return a newly-allocated NULL-terminated array of strings.
  */
 gchar **
-eda_config_get_groups (EdaConfig *cfg, gint *length)
+eda_config_get_groups (EdaConfig *cfg, gsize *length)
 {
   g_return_val_if_fail (EDA_IS_CONFIG (cfg), NULL);
 
@@ -936,7 +938,7 @@ eda_config_has_group (EdaConfig *cfg, const gchar *group)
  * \param error   Return location for error information.
  */
 gchar **
-eda_config_get_keys (EdaConfig *cfg, const gchar *group, gint *length,
+eda_config_get_keys (EdaConfig *cfg, const gchar *group, gsize *length,
                      GError **error)
 {
   g_return_val_if_fail (EDA_IS_CONFIG (cfg), NULL);
@@ -1083,6 +1085,9 @@ eda_config_is_inherited (EdaConfig *cfg, const gchar *group,
  * Get the value of the configuration parameter specified by \a group
  * and \a key in the configuration context \a cfg, as a string.  If an
  * error occurs, NULL is returned and \a error is set.
+ *
+ * The returned string is owned by the caller, and should be freed
+ * with g_free() when no longer needed.
  *
  * \see eda_config_set_string().
  *
@@ -1627,7 +1632,11 @@ static void
 propagate_key_file_error (GError *src, GError **dest)
 {
   if (src == NULL) return;
-
+  if (dest == NULL) {
+    g_error_free (src);
+    return;
+  }
+  g_return_if_fail (*dest != NULL);
   g_propagate_error (dest, src);
 
   if ((*dest)->domain != G_KEY_FILE_ERROR) {

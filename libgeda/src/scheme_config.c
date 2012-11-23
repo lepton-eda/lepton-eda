@@ -454,7 +454,7 @@ SCM_DEFINE (config_groups, "%config-groups", 1, 0, 0,
               s_config_groups);
 
   EdaConfig *cfg = edascm_to_config (cfg_s);
-  gint i, len;
+  gsize i, len;
   gchar **groups = eda_config_get_groups (cfg, &len);
   SCM lst_s = SCM_EOL;
 
@@ -528,7 +528,7 @@ SCM_DEFINE (config_keys, "%config-keys", 2, 0, 0,
 
   EdaConfig *cfg = edascm_to_config (cfg_s);
   char *group = scm_to_utf8_string (group_s);
-  gint i, len;
+  gsize i, len;
   GError *error = NULL;
   gchar **keys = eda_config_get_keys (cfg, group, &len, &error);
   SCM lst_s = SCM_EOL;

@@ -112,9 +112,9 @@ gboolean eda_config_is_trusted (EdaConfig *cfg);
 void eda_config_set_trusted (EdaConfig *cfg, gboolean trusted);
 EdaConfig *eda_config_get_trusted_context (EdaConfig *cfg);
 
-gchar **eda_config_get_groups (EdaConfig *cfg, gint *length) G_GNUC_WARN_UNUSED_RESULT;
+gchar **eda_config_get_groups (EdaConfig *cfg, gsize *length) G_GNUC_WARN_UNUSED_RESULT;
 gboolean eda_config_has_group (EdaConfig *cfg, const gchar *group);
-gchar **eda_config_get_keys (EdaConfig *cfg, const gchar *group, gint *length, GError **error) G_GNUC_WARN_UNUSED_RESULT;
+gchar **eda_config_get_keys (EdaConfig *cfg, const gchar *group, gsize *length, GError **error) G_GNUC_WARN_UNUSED_RESULT;
 gboolean eda_config_has_key (EdaConfig *cfg, const gchar *group, const gchar *key, GError **err);
 
 gboolean eda_config_is_inherited (EdaConfig *cfg, const gchar *group, const gchar *key, GError **err);
