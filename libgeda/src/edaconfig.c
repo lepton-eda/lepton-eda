@@ -1636,7 +1636,7 @@ propagate_key_file_error (GError *src, GError **dest)
     g_error_free (src);
     return;
   }
-  g_return_if_fail (*dest != NULL);
+  g_return_if_fail (*dest == NULL);
   g_propagate_error (dest, src);
 
   if ((*dest)->domain != G_KEY_FILE_ERROR) {
