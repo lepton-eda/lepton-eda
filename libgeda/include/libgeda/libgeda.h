@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's Library
- * Copyright (C) 1998-2010 Ales Hvezda
+ * Copyright (C) 1998-2012 Ales Hvezda
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -35,6 +35,7 @@
 #include <libgeda/colors.h>
 #include <libgeda/papersizes.h>
 #include <libgeda/prototype.h>
+#include <libgeda/edaconfig.h>
 #include <libgeda/edaerrors.h>
 #include <libgeda/geda_list.h>
 

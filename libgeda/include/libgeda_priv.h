@@ -14,6 +14,7 @@
 #include "papersizes.h"
 #include "prototype.h"
 #include "funcs.h"
+#include "edaconfig.h"
 #include "edaerrors.h"
 
 #include "geda_list.h"
