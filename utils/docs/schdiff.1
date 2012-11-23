@@ -57,15 +57,15 @@ option.
 
 .TP
 Use git to view the changes to a file between two revisions
-git difftool -x schdiff 182110f690c51eb53ea1799fd022e87322d742e3 039e012397f2638d1577dd7c80fb862a5503dbfd cpu.sch
+git difftool \-x schdiff 182110f690c51eb53ea1799fd022e87322d742e3 039e012397f2638d1577dd7c80fb862a5503dbfd cpu.sch
 
 .TP
 Use mercurial to see all the changes since a specific revision
-hg schdiff -r 8442880f9835 cpld.sch
+hg schdiff \-r 8442880f9835 cpld.sch
 
 .TP
 Use subversion to review a specific revision
-svn diff --diff-cmd schdiff -c 49 power.sch
+svn diff \-\-diff-cmd schdiff \-c 49 power.sch
 
 .SH BUGS
 

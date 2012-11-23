@@ -24,20 +24,20 @@ Archive mode is the default.
 
 .SH OPTIONS
 .TP
--f filename
+\-f filename
 Optional.  Used in archive mode.  Read files to archive from <filename>
 instead of garchiverc.
 .TP
--v
+\-v
 Verbose mode.
 .TP
--e
+\-e
 Extract the archive specified on the command line.
 .TP
--a
+\-a
 Create an archive. This is the default.
 .TP
--o outfile
+\-o outfile
 Optional.  Used in archive mode.  Specifies the name of the
 output archive file.  The output file extension should be ".tar.gz".
 If this flag is not specified, the output file name is
@@ -46,16 +46,16 @@ If this flag is not specified, the output file name is
 To create an archive named MyArchive.tar.gz (the files to store listed in
 garchiverc):
 .IP
-garchive -o MyArchive.tar.gz
+garchive \-o MyArchive.tar.gz
 .PP
 Verbosely create an archive (archives files listed on cmd line
 as well as those listed in garchiverc):
 .IP
-garchive -v -o MyArchive.tar.gz README Schematic1.sch Schematic2.sch Schematic3.sch
+garchive \-v \-o MyArchive.tar.gz README Schematic1.sch Schematic2.sch Schematic3.sch
 .PP
 Extract an archive:
 .IP
-garchive -e ProjectArchive.tar.gz
+garchive \-e ProjectArchive.tar.gz
 
 .SH AUTHOR
 Stuart Brorson <sdb@cloud9.net>

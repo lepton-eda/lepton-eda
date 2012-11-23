@@ -84,7 +84,7 @@ Since elements with an empty element name (schematic "refdes") are
 never deleted, this option is rarely useful.
 .TP 8
 \fB--gnetlist\fR \fIBACKEND\fR
-In addition to the default backends, run \fBgnetlist\fR(1) with `-g
+In addition to the default backends, run \fBgnetlist\fR(1) with `\-g
 \fIBACKEND\fR', with output to `<name>.\fIBACKEND\fR'.
 .TP 8
 \fB--gnetlist-arg\fR \fIARG\fR
@@ -106,7 +106,7 @@ Don't output information on steps to take after running \fBgsch2pcb\fR.
 .TP 8
 \fB-v\fR, \fB--verbose\fR
 Output extra debugging information.  This option can be specified
-twice (`-v -v') to obtain additional debugging for file elements.
+twice (`\-v \-v') to obtain additional debugging for file elements.
 .TP 8
 \fB-h\fR, \fB--help\fR
 Print a help message.
@@ -119,8 +119,8 @@ Print \fBgsch2pcb\fR version information.
 A \fBgsch2pcb\fR project file is a file (not ending in `.sch')
 containing a list of schematics to process and some options.  Any
 long-form command line option can appear in the project file with the
-leading `--' removed, with the exception of `--gnetlist-arg',
-`--fix-elements', `--verbose', and `--version'.  Schematics should be
+leading `\-\-' removed, with the exception of `\-\-gnetlist-arg',
+`\-\-fix-elements', `\-\-verbose', and `\-\-version'.  Schematics should be
 listed on a line beginning with `schematics'.
 .PP
 An example project file might look like:

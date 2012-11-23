@@ -115,19 +115,19 @@ The commands will only be executed on those lines that match all the \fIcheckite
 .B \fBdel_line\fP \fIchecklist\fP;
 Delete the line (global variable \fBLINE\fP) if \fIchecklist\fP is matched.
 
-Returns -1 if error, 0 if not match, 1 if match and changed.
+Returns \-1 if error, 0 if not match, 1 if match and changed.
 .TP
 .B rotate_comp \fIangle_col\fP, \fIangle\fP, \fIchecklist\fP;
 rotate the component the degrees given in \fIangle\fP parameter, if \fIchecklist\fP is matched. 
 
 The angle column number is \fIangle_col\fP.
 
-Returns 1 if match and changed, 0 if not match, -1 if error.
+Returns 1 if match and changed, 0 if not match, \-1 if error.
 .TP
 .B subst_col_val \fIcol\fP, \fIvalue\fP, \fIchecklist\fP;
 Replace a column value by the new value \fIvalue\fP, if \fIchecklist\fP is matched.
 
-Returns 1 if match and changed, 0 if not match, -1 if error.
+Returns 1 if match and changed, 0 if not match, \-1 if error.
 
 .TP
 .B change_col_units \fIunits\fP, \fIcolumn_numbers\fP;
@@ -142,7 +142,7 @@ It is required that numbers to be converted are followed their units (see suppor
 Adds a number to the value in a given column number.
 Note: offset and the value to be changed can be in different units.
 
-Returns -1 if error, -2 if warning, and 1 if success.
+Returns \-1 if error, \-2 if warning, and 1 if success.
 
 .TP
 .B translate_col_val \fIcol_number\fP, \fIstring\fP, \fIsubstitution\fP, \fIchecklist\fP;
@@ -150,7 +150,7 @@ Translate a \fIstring\fP in the column \fIcol_number\fP if \fIchecklist\fP is ma
 
 \fISubstitution\fP is an expression with the new string. Old column value can be used here.
 
-Returns -1 if error, 0 if not match, 1 if match and changed.
+Returns \-1 if error, 0 if not match, 1 if match and changed.
 
 Example:
   translate 2, '^([0-9]+)n$','sprintf("%dnF",$1)', 3, 'C[0-9]+';
@@ -165,30 +165,30 @@ Multiply the number in the specified column number \fIcol_number\fP by the given
 
 The number in the specified column number may have units at the end.
 
-Returns -1 if error, 0 if not match, 1 if match and changed.
+Returns \-1 if error, 0 if not match, 1 if match and changed.
 
 .TP
 .B swap_columns \fIcol_number1\fP, \fIcol_number2\fP, \fIchecklist\fP;
 Swap columns \fIcol_number1\fP and \fIcol_number2\fP if \fIchecklist\fP is matched.
 
-Returns -1 if error, 0 if not match, 1 if match and changed.
+Returns \-1 if error, 0 if not match, 1 if match and changed.
 
 .TP
 .B insert_column \fIcol_number\fP, \fInew_column_value\fP;
 Insert a new column in the given \fIcol_number\fP position (0 if it's going to be the first column), with the value \fInew_column_value\fP.
 
-Returns -1 if error, 1 if the new column was inserted.
+Returns \-1 if error, 1 if the new column was inserted.
 
 .SH "RETURN VALUE"
 The return value of \fBgxyrs\fP is an integer with the following possible values:
 .TP
-	1 if the command found a match and the execution was succesful
+	1 if the command found a match and the execution was successful
 .PP
 	0 if there was no match
 .PP
-	-1 if there was an error
+	\-1 if there was an error
 .PP
-	-2 if there was a warning
+	\-2 if there was a warning
 .PP
 
 .SH FILES
@@ -245,50 +245,50 @@ Each action file should end with the following line (with a carrier return at th
 .B Run an action file:
 Run the action file \fIyour_comands.txt\fP with the XYRS file \fIyour_xyrs_file.txt\fP and write the output result to the file \fIoutput_file.txt\fP:
 
-	gxyrs  your_xyrs_file.txt --adjust your_commands.txt --output output_file.txt
+	gxyrs  your_xyrs_file.txt \-\-adjust your_commands.txt \-\-output output_file.txt
 .PP
 .TP
 .B Run a command specified in the command line:
 Run the commands \fIyour_commands\fP wiith the XYRS file \fIyour_xyrs_file.txt\fP and write the output result to the file \fIoutput_file.txt\fP:
 
-	gxyrs  your_xyrs_file.txt --eval "your_commands" --output output_file.txt
+	gxyrs  your_xyrs_file.txt \-\-eval "your_commands" \-\-output output_file.txt
 .PP
 
 .TP
 .B Delete some lines matching a pattern. 
 Parse the XYRS file \fIyour_xyrs_file.txt\fP, delete all lines having a R followed by a number in column number 2, and write the output result to the file \fIoutput_file.txt\fP:
 
-	gxyrs your_xyrs_file.txt --eval "del 2, 'R[0-9]+';" --output output_file.txt
+	gxyrs your_xyrs_file.txt \-\-eval "del 2, 'R[0\-9]+';" \-\-output output_file.txt
 .PP
 .TP
 .B Delete some lines matching a pattern, using the column number guessed by \fBgxyrs\fP. 
 Parse the XYRS file \fIyour_xyrs_file.txt\fP, delete all lines having a R followed by a number in reference designator column, and write the output result to the file \fIoutput_file.txt\fP:
 
-	gxyrs your_xyrs_file.txt --eval "del \\$REF_COL, 'R[0-9]+';" --output output_file.txt
+	gxyrs your_xyrs_file.txt \-\-eval "del \\$REF_COL, 'R[0\-9]+';" \-\-output output_file.txt
 .PP
 .TP
 .B Rotate some lines matching a pattern.
 Parse the XYRS file \fIyour_xyrs_file.txt\fP, rotate by 90º all lines having a R followed by a number in reference designator column, and write the output result to the file \fIoutput_file.txt\fP. Use the rotation  and reference column number guessed by \fIgxyrs\fP:
 
-	gxyrs your_xyrs_file.txt --eval "rotate \\$ANGLE_COL, 90, \\$REF_COL, 'R[0-9]+';" --output output_file.txt
+	gxyrs your_xyrs_file.txt \-\-eval "rotate \\$ANGLE_COL, 90, \\$REF_COL, 'R[0\-9]+';" \-\-output output_file.txt
 .PP
 .TP
 .B Change all numbers to 'mm' units.
 Parse the XYRS file \fIyour_xyrs_file.txt\fP, convert all numbers in column 3 and 5 to its equivalent in mm, and write the output result to the file \fIoutput_file.txt\fP:
 
-	gxyrs your_xyrs_file.txt --eval "change_units 'mm', 3, 5;" --output output_file.txt
+	gxyrs your_xyrs_file.txt \-\-eval "change_units 'mm', 3, 5;" \-\-output output_file.txt
 .PP
 .TP
 .B Replace a value matching a pattern with another value.
 Parse the XYRS file \fIyour_xyrs_file.txt\fP, if the value in column 3 is "0.1u", then replace it with "100nF", and write the output result to the file \fIoutput_file.txt\fP:
 
-	gxyrs your_xyrs_file.txt --eval "subst 3 , '100nF', 3, '0.1u'" --output output_file.txt
+	gxyrs your_xyrs_file.txt \-\-eval "subst 3 , '100nF', 3, '0.1u'" \-\-output output_file.txt
 .PP
 .TP
 .B Change the reference of a component with a value matching a pattern.
 Parse the XYRS file \fIyour_xyrs_file.txt\fP, if the value in value column is "1n4148", then replace reference column with "D1", and write the output result to the file \fIoutput_file.txt\fP:
 
-	gxyrs your_xyrs_file.txt --eval "subst \\$REF_COL , 'D1', \\$VALUE_COL, '1n4148';" --output output_file.txt
+	gxyrs your_xyrs_file.txt \-\-eval "subst \\$REF_COL , 'D1', \\$VALUE_COL, '1n4148';" \-\-output output_file.txt
 .PP
 
 .TP
@@ -297,7 +297,7 @@ Parse the XYRS file \fIyour_xyrs_file.txt\fP, if the text in reference column is
 
 Value in column 3 can be in other units (for example: '640mil'):
 
-	gxyrs your_xyrs_file.txt --eval "offset \\$X_COL, '102.5mm', \\$REF_COL, 'R[0-9]+' ;" --output output_file.txt
+	gxyrs your_xyrs_file.txt \-\-eval "offset \\$X_COL, '102.5mm', \\$REF_COL, 'R[0\-9]+' ;" \-\-output output_file.txt
 .PP
 
 .TP
@@ -306,21 +306,21 @@ Parse the XYRS file \fIyour_xyrs_file.txt\fP, if the text in reference column is
 
 Value in column 3 can be in other units (for example: '640mil'):
 
-	gxyrs your_xyrs_file.txt --eval "mul_col_val \\$X_COL, 2.5, \\$REF_COL, 'R[0-9]+' ;" --output output_file.txt
+	gxyrs your_xyrs_file.txt \-\-eval "mul_col_val \\$X_COL, 2.5, \\$REF_COL, 'R[0\-9]+' ;" \-\-output output_file.txt
 .PP
 
 .TP
 .B Swap two columns.
 Parse the XYRS file \fIyour_xyrs_file.txt\fP, swap columns 3 and 4 if the text in column number 4 is R followed by a number, and write the output result to the file \fIoutput_file.txt\fP:
 
-	gxyrs your_xyrs_file.txt --eval "swap_columns 3, 4, 4, 'R[0-9]+' ;" --output output_file.txt
+	gxyrs your_xyrs_file.txt \-\-eval "swap_columns 3, 4, 4, 'R[0\-9]+' ;" \-\-output output_file.txt
 .PP
 
 .TP
 .B Insert a column.
 Insert a column in the first position, displacing all existing columns to the right. Column value is 'new_column_value':
 
-	gxyrs your_xyrs_file.txt --eval "insert_column 0, 'new_column_value';" --output output_file.txt
+	gxyrs your_xyrs_file.txt \-\-eval "insert_column 0, 'new_column_value';" \-\-output output_file.txt
 .PP
 
 .SH "SEE ALSO"
