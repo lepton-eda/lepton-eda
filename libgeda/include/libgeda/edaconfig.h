@@ -76,6 +76,9 @@ typedef struct _EdaConfigPrivate EdaConfigPrivate;
 struct _EdaConfigClass
 {
   GObjectClass parent_class;
+
+  /* signals */
+  void (*config_changed)(EdaConfig *cfg, const gchar *group, const gchar *key);
 };
 
 struct _EdaConfig

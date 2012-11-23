@@ -73,7 +73,7 @@ static void cclosure_marshal_VOID__STRING_STRING (GClosure *closure,
                                                   const GValue *param_values,
                                                   gpointer invocation_hint,
                                                   gpointer marshal_data);
-static void default_config_changed_handler (EdaConfig *cfg, const gchar *group, const gchar *key, void *unused);
+static void default_config_changed_handler (EdaConfig *cfg, const gchar *group, const gchar *key);
 static void parent_config_changed_handler (EdaConfig *parent, const gchar *group, const gchar* key, EdaConfig *cfg);
 static void propagate_key_file_error (GError *src, GError **dest);
 
@@ -94,6 +94,8 @@ eda_config_class_init (EdaConfigClass *klass)
   gobject_class->finalize = eda_config_finalize;
   gobject_class->set_property = eda_config_set_property;
   gobject_class->get_property = eda_config_get_property;
+
+  klass->config_changed = default_config_changed_handler;
 
   /* Register properties */
   pspec = g_param_spec_string ("filename",
@@ -126,8 +128,8 @@ eda_config_class_init (EdaConfigClass *klass)
   /* Create signals */
   g_signal_new ("config-changed", /* signal name */
                 G_TYPE_FROM_CLASS (gobject_class), /* type */
-                G_SIGNAL_NO_RECURSE | G_SIGNAL_NO_HOOKS, /* flags */
-                0, /* class offset */
+                G_SIGNAL_RUN_FIRST | G_SIGNAL_NO_RECURSE | G_SIGNAL_NO_HOOKS, /* flags */
+                G_STRUCT_OFFSET(EdaConfigClass, config_changed), /* class offset */
                 NULL, /* accumulator */
                 NULL, /* accumulator data */
                 cclosure_marshal_VOID__STRING_STRING, /* c_marshaller */
@@ -149,10 +151,6 @@ eda_config_init (EdaConfig *config)
   config->priv->loaded = FALSE;
   config->priv->changed = FALSE;
   config->priv->parent_handler_id = 0;
-
-  g_signal_connect (config, "config-changed",
-                    G_CALLBACK (default_config_changed_handler),
-                    NULL);
 }
 
 /*! Dispose of an EdaConfig instance. Drop all references to other
@@ -1580,14 +1578,14 @@ cclosure_marshal_VOID__STRING_STRING (GClosure *closure,
  *
  * Sets the changed flag for \a cfg.
  *
- * \param parent  Parent configuration context.
+ * \param cfg     Configuration context.
  * \param group   Configuration group name.
  * \param key     Configuration key name.
  * \param cfg     Child configuration context.
  */
 static void
 default_config_changed_handler (EdaConfig *cfg, const gchar *group,
-                              const gchar* key, void *unused)
+                                const gchar* key)
 {
   cfg->priv->changed = TRUE;
 }
