@@ -113,10 +113,10 @@ wiki."
            (lambda ()
              (do ((entry (readdir dir) (readdir dir)))
                  ((eof-object? entry))
-               (case entry
-                 ((".." ".") #f)
-                 (else (let ((result (proc entry)))
-                         (if result (return result) #f))))))
+               (if (member entry '(".." "."))
+                 #f
+                 (let ((result (proc entry)))
+                   (if result (return result) #f)))))
            (lambda () (closedir dir))))
      #f)))
 
