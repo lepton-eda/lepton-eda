@@ -53,6 +53,9 @@
  *    yet re-added to a #PAGE.
  *
  * \sa weakref.c
+ *
+ * This file also provides support for a variety of GObject-based gEDA
+ * types, including EdaConfig instances.
  */
 
 #include <config.h>
@@ -116,6 +119,9 @@ smob_free (SCM smob)
     s_toplevel_weak_unref ((TOPLEVEL *) SCM_SMOB_DATA_2 (smob),
                            smob_weakref2_notify, smob);
     break;
+  case GEDA_SMOB_CONFIG:
+    g_object_unref (G_OBJECT (data));
+    break;
   default:
     /* This should REALLY definitely never be run */
     g_critical ("%s: received bad smob flags.", __FUNCTION__);
@@ -141,6 +147,10 @@ smob_free (SCM smob)
       /* See edascm_from_object() for an explanation of why OBJECT
        * smobs store a TOPLEVEL in the second data word */
       s_delete_object ((TOPLEVEL *) SCM_SMOB_DATA_2 (smob), (OBJECT *) data);
+      break;
+    case GEDA_SMOB_CONFIG:
+      /* These are reference counted, so the structure will have
+       * already been destroyed above if appropriate. */
       break;
     default:
       /* This should REALLY definitely never be run */
@@ -174,6 +184,9 @@ smob_print (SCM smob, SCM port, scm_print_state *pstate)
     break;
   case GEDA_SMOB_OBJECT:
     scm_puts ("object", port);
+    break;
+  case GEDA_SMOB_CONFIG:
+    scm_puts ("config", port);
     break;
   default:
     g_critical ("%s: received bad smob flags.", __FUNCTION__);
@@ -339,6 +352,43 @@ edascm_to_object (SCM smob)
   return (OBJECT *) SCM_SMOB_DATA (smob);
 }
 
+/*! \brief Get a smob for a configuration context.
+ * \ingroup guile_c_iface
+ * \par Function Description
+ * Create a new smob representing \a cfg.
+ *
+ * \param cfg Configuration context to create a smob for.
+ * \return a smob representing \a cfg.
+ */
+SCM
+edascm_from_config (EdaConfig *cfg)
+{
+  SCM smob;
+  SCM_NEWSMOB (smob, geda_smob_tag, g_object_ref (cfg));
+  SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_CONFIG);
+  return smob;
+}
+
+/*! \brief Get a configuration context from a smob.
+ * \ingroup guile_c_iface
+ * \par Function Description
+ * Return the #EdaConfig represented by \a smob.
+ *
+ * \param [in] smob Guile value to retrieve #EdaConfig from.
+ * \return the #EdaConfig represented by \a smob.
+ */
+EdaConfig *
+edascm_to_config (SCM smob)
+{
+#ifndef NDEBUG
+  SCM_ASSERT (EDASCM_CONFIGP (smob), smob,
+              SCM_ARG1, "edascm_to_object");
+#endif
+  EDASCM_ASSERT_SMOB_VALID (smob);
+
+  return EDA_CONFIG (SCM_SMOB_DATA (smob));
+}
+
 /*! \brief Set whether a gEDA object may be garbage collected.
  * \ingroup guile_c_iface
  * \par Function Description
@@ -388,6 +438,21 @@ edascm_is_page (SCM smob)
   return EDASCM_PAGEP (smob);
 }
 
+/*! \brief Test whether a smob is an #EdaConfig instance.
+ * \ingroup guile_c_iface
+ * \par Function Description
+ * If \a smob is a configuration context, returns non-zero. Otherwise,
+ * returns zero.
+ *
+ * \param [in] smob Guile value to test.
+ * \return non-zero iff \a smob is an #EdaConfig instance.
+ */
+int
+edascm_is_config (SCM smob)
+{
+  return EDASCM_CONFIGP (smob);
+}
+
 /*! \brief Test whether a smob is a #PAGE instance.
  * \par Function Description
  * If \a page_smob is a #PAGE instance, returns \b SCM_BOOL_T;
@@ -426,6 +491,25 @@ SCM_DEFINE (object_p, "%object?", 1, 0, 0,
   return (EDASCM_OBJECTP (object_smob) ? SCM_BOOL_T : SCM_BOOL_F);
 }
 
+/*! \brief Test whether a smob is an #EdaConfig instance.
+ * \par Function Description
+ * If \a config_smob is a configuration context, returns \b
+ * SCM_BOOL_T; otherwise returns \b SCM_BOOL_F.
+ *
+ * \note Scheme API: Implements the %config? procedure in the (geda
+ * core smob) module.
+ *
+ * \param [in] config_smob Guile value to test.
+ *
+ * \return SCM_BOOL_T iff \a config_smob is an #EdaConfig instance.
+ */
+SCM_DEFINE (config_p, "%config?", 1, 0, 0,
+            (SCM config_smob),
+            "Test whether the value is a gEDA configuration context.")
+{
+  return (EDASCM_CONFIGP (config_smob) ? SCM_BOOL_T : SCM_BOOL_F);
+}
+
 /*!
  * \brief Create the (geda core smob) Scheme module.
  * \par Function Description
@@ -439,7 +523,7 @@ init_module_geda_core_smob ()
   #include "scheme_smob.x"
 
   /* Add them to the module's public definitions. */ 
-  scm_c_export (s_page_p, s_object_p, NULL);
+  scm_c_export (s_page_p, s_object_p, s_config_p, NULL);
 }
 
 /*!

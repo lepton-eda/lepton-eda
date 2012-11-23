@@ -11,6 +11,7 @@ BUILT_SOURCES = \
 	scheme_page.x \
 	scheme_attrib.x \
 	scheme_os.x \
+	scheme_config.x \
 	scheme_deprecated.x
 
 scheme_api_sources = \
@@ -22,6 +23,7 @@ scheme_api_sources = \
 	scheme_os.c \
 	scheme_page.c \
 	scheme_attrib.c \
+	scheme_config.c \
 	scheme_deprecated.c
 
 libgeda_la_SOURCES = \

@@ -2,7 +2,7 @@
 scmdatadir = $(GEDADATADIR)/scheme
 nobase_dist_scmdata_DATA = geda.scm color-map.scm \
 	geda/object.scm geda/page.scm geda/attrib.scm geda/deprecated.scm \
-	geda/os.scm
+	geda/os.scm geda/config.scm
 nobase_scmdata_DATA = geda/core/gettext.scm
 
 # Unit test support.  The unit tests are run using the geda-batch
@@ -38,6 +38,7 @@ TESTS = unit-tests/t0001-geda-conf-lib.scm \
 	unit-tests/t0301-promotable-attributes.scm \
 	unit-tests/t0400-os.scm \
 	unit-tests/t0401-os-expand-env-variables.scm \
+	unit-tests/t0402-config.scm \
 	unit-tests/t1000-deprecated.scm
 
 XFAIL_TESTS = \

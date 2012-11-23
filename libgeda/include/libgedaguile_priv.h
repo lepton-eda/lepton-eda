@@ -93,6 +93,7 @@ void edascm_init_complex ();
 void edascm_init_page ();
 void edascm_init_attrib ();
 void edascm_init_os ();
+void edascm_init_config ();
 void edascm_init_deprecated ();
 
 /* ---------------------------------------- */
@@ -109,6 +110,7 @@ enum geda_smob_flags {
   GEDA_SMOB_TOPLEVEL = 0,
   GEDA_SMOB_PAGE = 1,
   GEDA_SMOB_OBJECT = 2,
+  GEDA_SMOB_CONFIG = 3,
   GEDA_SMOB_TYPE_MASK = 0xf,
   GEDA_SMOB_GC_FLAG = 0x100,
 };
@@ -156,6 +158,9 @@ SCM edascm_from_toplevel (TOPLEVEL *toplevel);
 
 /*! Tests whether a Scheme value is an OBJECT smob. */
 #define EDASCM_OBJECTP(x) EDASCM_SMOB_TYPEP(x, GEDA_SMOB_OBJECT)
+
+/*! Tests whether a Scheme value is an OBJECT smob. */
+#define EDASCM_CONFIGP(x) EDASCM_SMOB_TYPEP(x, GEDA_SMOB_CONFIG)
 
 /*!
  * \brief Test whether a structure may be garbage-collected
