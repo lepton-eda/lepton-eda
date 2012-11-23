@@ -25,16 +25,12 @@ extern int default_embed_complex;
 extern int default_include_complex;
 extern int default_snap_size;
 
-extern int default_paper_width;
-extern int default_paper_height;
 extern int default_init_right;
 extern int default_init_bottom;
 extern int default_scrollbars_flag;
-extern int default_print_output_type;
+extern gchar *default_print_paper;
 extern int default_print_orientation;
 extern int default_print_color;
-extern int default_print_color_background;
-extern int default_print_output_capstyle;
 extern int default_image_color;
 extern int default_image_width;
 extern int default_image_height;

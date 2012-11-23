@@ -575,17 +575,17 @@ SCM g_rc_scrollbars(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_paper_size(SCM width, SCM height)
-#define FUNC_NAME "paper-size"
+SCM
+g_rc_print_paper (SCM name_s)
+#define FUNC_NAME "print-paper"
 {
-  SCM_ASSERT (SCM_NIMP (width) && SCM_REALP (width), width,
-              SCM_ARG1, FUNC_NAME);
-  SCM_ASSERT (SCM_NIMP (height) && SCM_REALP (height), height,
-              SCM_ARG2, FUNC_NAME);
-  
-  /* yes this is legit, we are casting the resulting double to an int */
-  default_paper_width  = (int) (scm_to_double (width)  * MILS_PER_INCH);
-  default_paper_height = (int) (scm_to_double (height) * MILS_PER_INCH);
+  char *paper;
+  SCM_ASSERT (scm_is_string (name_s), name_s, SCM_ARG1, FUNC_NAME);
+
+  paper = scm_to_utf8_string (name_s);
+  g_free (default_print_paper);
+  default_print_paper = g_strdup (paper);
+  free (paper);
 
   return SCM_BOOL_T;
 }
@@ -596,63 +596,7 @@ SCM g_rc_paper_size(SCM width, SCM height)
  *  \par Function Description
  *
  */
-SCM g_rc_paper_sizes(SCM scm_papername, SCM scm_width, SCM scm_height)
-#define FUNC_NAME "paper-sizes"
-{
-  int width;
-  int height;
-  char *papername;
-  SCM ret;
-
-  SCM_ASSERT (scm_is_string (scm_papername), scm_papername,
-              SCM_ARG1, FUNC_NAME);
-  SCM_ASSERT (SCM_NIMP (scm_width) && SCM_REALP (scm_width), scm_width,
-              SCM_ARG2, FUNC_NAME);
-  SCM_ASSERT (SCM_NIMP (scm_height) && SCM_REALP (scm_height), scm_height,
-              SCM_ARG3, FUNC_NAME);
-
-  width  = (int) (scm_to_double (scm_width)  * MILS_PER_INCH);
-  height = (int) (scm_to_double (scm_height) * MILS_PER_INCH);
-  papername = scm_to_utf8_string (scm_papername);
-
-  if (!s_papersizes_uniq(papername)) {
-    ret = SCM_BOOL_F;
-  } else {
-    s_papersizes_add_entry(papername, width, height);
-    ret = SCM_BOOL_T;
-  }
-
-  free(papername);
-  return ret;
-}
-#undef FUNC_NAME
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \todo this keyword needs a better name ...
- */
-SCM g_rc_output_type(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {WINDOW, "current window" },
-    {EXTENTS, "limits" },  /* deprecated */
-    {EXTENTS, "extents" },
-    {EXTENTS_NOMARGINS, "extents no margins" },
-  };
-
-  RETURN_G_RC_MODE("output-type",
-		   default_print_output_type,
-		   4);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_output_orientation(SCM mode)
+SCM g_rc_print_orientation(SCM mode)
 {
   static const vstbl_entry mode_table[] = {
     {PORTRAIT , "portrait" },
@@ -660,7 +604,7 @@ SCM g_rc_output_orientation(SCM mode)
     {AUTOLAYOUT, "auto"    },
   };
   
-  RETURN_G_RC_MODE("output-orientation",
+  RETURN_G_RC_MODE("print-orientation",
 		   default_print_orientation,
 		   3);
 }
@@ -704,7 +648,7 @@ SCM g_rc_image_size(SCM width, SCM height)
  *  \par Function Description
  *
  */
-SCM g_rc_output_color(SCM mode)
+SCM g_rc_print_color(SCM mode)
 {
   static const vstbl_entry mode_table[] = {
     {TRUE , "enabled" },
@@ -712,27 +656,9 @@ SCM g_rc_output_color(SCM mode)
   };
 
   /* this variable is inconsistantly named with the rest */
-  RETURN_G_RC_MODE("output-color",
+  RETURN_G_RC_MODE("print-color",
 		   default_print_color,
 		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_output_capstyle(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {BUTT_CAP , "butt" },
-    {ROUND_CAP , "round" },
-    {SQUARE_CAP, "square"},
-  };
-
-  RETURN_G_RC_MODE("output-capstyle",
-		   default_print_output_capstyle,
-		   3);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1175,40 +1101,6 @@ SCM g_rc_handleboxes(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_setpagedevice_orientation(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("setpagedevice-orientation",
-                   default_setpagedevice_orientation,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_setpagedevice_pagesize(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("setpagedevice-pagesize",
-                   default_setpagedevice_pagesize,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_bus_ripper_size(SCM size)
 {
   int val;
@@ -1465,29 +1357,6 @@ SCM g_rc_keyboardpan_gain(SCM gain)
 
   return SCM_BOOL_T;
 }
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_print_command(SCM scm_command)
-#define FUNC_NAME "print-command"
-{
-  char *command;
-
-  SCM_ASSERT (scm_is_string (scm_command), scm_command,
-              SCM_ARG1, FUNC_NAME);
-  
-  command = scm_to_utf8_string (scm_command);
-
-  g_free (default_print_command);
-  default_print_command = g_strdup (command);
-  free (command);
-
-  return SCM_BOOL_T;
-}
-#undef FUNC_NAME
 
 /*! \todo Finish function documentation!!!
  *  \brief

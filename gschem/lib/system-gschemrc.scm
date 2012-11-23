@@ -520,145 +520,31 @@
 (world-size 120.0 90.0 1.0)
 ;(world-size 60.0 45.0 1.0)
 
-; page-size width height 
+; print-paper name
 ;
-; Specifies the size of the default paper size
-; Be sure all inputs are reals (floats/doubles) and don't try to reverse
-; the values: to get a portrait mode.  Code to support that needs to be added
-; The code that implements this automatically transforms the dimensions into
-; the proper aspect ratio.  All units are in inches. (use output-orientation
-; to get portrait mode)
+; Specifies the size of the default paper, using PWG 5101.1-2002
+; "Standard for Media Standardized Names".  If not specified, gschem
+; will use the system default paper size.
 ;
-(paper-size 11.0 8.5) ; letter
-;(paper-size 14.0 8.5) ; legal 
-;(paper-size 8.5 5.5) ; statement
-;(paper-size 17.0 11.0) ; tabloid
-;(paper-size 11.0 17.0) ; ledger
-;(paper-size 13.0 8.5) ; folio
-;(paper-size 10.833 8.472) ; quarto 
-;(paper-size 14 10) ; 10x14
-;(paper-size 10.0 7.5) ; executive
-;(paper-size 11.0 8.5) ; A
-;(paper-size 17.0 11.0) ; B 
-;(paper-size 22.0 17.0) ; C 
-;(paper-size 34.0 22.0) ; D 
-;(paper-size 44.0 34.0) ; E 
-;(paper-size 46.81 33.11) ; A0 
-;(paper-size 33.11 23.39) ; A1
-;(paper-size 23.39 16.54) ; A2
-;(paper-size 16.54 11.69) ; A3
-;(paper-size 11.69 8.27) ; A4
-;(paper-size 8.27 5.83) ; A5
-;(paper-size 5.83 4.13) ; A6
-;(paper-size 4.13 2.91) ; A7 
-;(paper-size 2.91 2.05) ; A8
-;(paper-size 2.05 1.46) ; A9 
-;(paper-size 1.46 1.02) ; A10
-;(paper-size 1.02 0.71) ; A11
-;(paper-size 0.71 0.51) ; A12
+(print-paper "na_letter") ; letter
+;(print-paper "iso_a4") ; A4
 
-; paper-sizes string width height
-;
-; Specifies which paper sizes are available for printing.
-; The width and height parameters are in the order for landscape printing,
-; so reversing them for portrait won't work just yet. (and that will be 
-; implemented differently. 
-; The default paper size is set above.  All units are in inches (forgiveness
-; please).
-;
-; You MUST change this list in this file (gschem-systemrc) if you want
-; any reordering changes to take effect.
-;
-(paper-sizes "Letter : 8.5 in x 11 in" 11.0 8.5)
-(paper-sizes "Legal : 8.5 in x 14 in" 14.0 8.5)
-(paper-sizes "Statement : 5.5 in x 8.5 in" 8.5 5.5)
-(paper-sizes "Tabloid : 11 in x 17 in" 17.0 11.0) 
-(paper-sizes "Ledger : 17 in x 11 in" 11.0 17.0) 
-(paper-sizes "Folio : 8.5 in x 13 in" 13.0 8.5) 
-(paper-sizes "Quarto : 8.472 in x 10.833 in" 10.833 8.472) 
-(paper-sizes "10x14 : 10 in x 14 in " 14.0 10.0) 
-(paper-sizes "Executive : 7.5 x 10" 10.0 7.5) 
-(paper-sizes "A : 8.5 in x 11 in" 11.0 8.5)
-(paper-sizes "B : 11 in x 17 in" 17.0 11.0)
-(paper-sizes "C : 17 in x 22 in" 22.0 17.0)
-(paper-sizes "D : 22 in x 34 in" 34.0 22.0)
-(paper-sizes "E : 34 in x 44 in" 44.0 34.0)
-(paper-sizes "A0  84.10 cm x 118.90 cm" 46.81 33.11)
-(paper-sizes "A1  59.40 cm x 84.10 cm" 33.11 23.39)
-(paper-sizes "A2  42.00 cm x 59.40 cm" 23.39 16.54)
-(paper-sizes "A3  29.70 cm x 42.00 cm" 16.54 11.69)
-(paper-sizes "A4  21.00 cm x 29.70 cm" 11.69 8.27)
-(paper-sizes "A5  14.80 cm x 21.00 cm" 8.27 5.83)
-(paper-sizes "A6  10.50 cm x 14.80 cm" 5.83 4.13)
-(paper-sizes "A7  7.40 cm x 10.50 cm" 4.13 2.91)
-(paper-sizes "A8  5.20 cm x 7.40 cm" 2.91 2.05)
-(paper-sizes "A9  3.70 cm x 5.20 cm" 2.05 1.46)
-(paper-sizes "A10 2.60 cm x 3.70 cm" 1.46 1.02)
-(paper-sizes "A11 1.80 cm x 2.60 cm" 1.02 0.71)
-(paper-sizes "A12 1.30 cm x 1.80 cm" 0.71 0.51)
-
-; print-command string 
-;
-; The command to send data to in order to print to a printer.  On most
-; systems, this will be "lpr".
-;
-(print-command "lpr")
-
-
-; output-type string
-;
-; Controls what is actually printed
-;	string is either "extents" or "extents no margins" or 
-;       "current window"
-;
-(output-type "extents")
-;(output-type "extents no margins")
-;(output-type "current window")
-;;; (output-type "limits")  "limits" is considered deprecated and should 
-;;;                         not be used.
-
-; output-orientation string
+; print-orientation string
 ;
 ; Controls which way the output page is layed out (landscape or portrait).
-; "auto" allows gschem to automatically choose a proper layout
-(output-orientation "auto")
-;(output-orientation "portrait")
-;(output-orientation "landscape")
-
-; output-color string
+; "auto" (default) allows gschem to automatically choose a proper layout.
 ;
-; Controls if output (postscript) is color (enabled) or black/white (disabled)
-;
-(output-color "disabled")
-;(output-color "enabled")
+;(print-orientation "auto")
+(print-orientation "portrait")
+;(print-orientation "landscape")
 
-
-; output-capstyle string
+; print-color string
 ;
-; Controls the capstyle at the end of lines in the postscript output
+; Controls whether printing is in color (enabled) or black/white
+; (disabled).  By default, gschem will print in color.
 ;
-(output-capstyle "square")
-;(output-capstyle "round")
-;(output-capstyle "butt")
-
-
-; setpagedevice-orientation string
-;
-; If enabled, puts a << /Orientation x >> setpagedevice into the postscript
-; output.  x is either 1 for landscape or 0 for portrait.
-;
-(setpagedevice-orientation "disabled")
-;(setpagedevice-orientation "enabled")
-
-
-; setpagedevice-pagesize string
-;
-; If enabled, puts a << /PageSize XxY >> setpagedevice into the postscript
-; output.  XxY is the size of the paper in points.
-;
-(setpagedevice-pagesize "disabled")
-;(setpagedevice-pagesize "enabled")
-
+(print-color "disabled")
+;(print-color "enabled")
 
 ; image-color string
 ;

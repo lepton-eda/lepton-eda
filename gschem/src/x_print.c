@@ -41,33 +41,52 @@
 /*! \brief Create a default page setup for a schematic page.
  * \par Function Description
  * Creates and returns a new #GtkPageSetup for \a page, taking into
- * account the requested \a paper_size_name.
+ * account the requested \a paper_size_name.  If \a paper_size_name is
+ * NULL, the system default paper size is used. The \a orientation may
+ * be LANDSCAPE, PORTRAIT or AUTOLAYOUT.  If \a AUTOLAYOUT is chosen,
+ * the page orientation that best fits the page contents is chosen.
  *
  * \param toplevel A #TOPLEVEL structure.
  * \param page     The #PAGE to generate a page setup for.
  * \param paper_size_name   The name of the paper size to use.
+ * \param orientation       The paper orientation to use.
  *
  * \returns A newly-created page setup.
  */
 static GtkPageSetup *
 x_print_default_page_setup (TOPLEVEL *toplevel, PAGE *page,
-                              const gchar *paper_size_name)
+                            const gchar *paper_size_name,
+                            gint orientation)
 {
   GtkPageSetup *setup = gtk_page_setup_new ();
   GtkPaperSize *paper = gtk_paper_size_new (paper_size_name);
   int status, wx_min, wy_min, wx_max, wy_max;
 
   /* If the paper size was valid, set it up with default margins. */
-  gtk_page_setup_set_paper_size_and_default_margins (setup, paper);
+  if (paper != NULL) {
+    gtk_page_setup_set_paper_size_and_default_margins (setup, paper);
+  }
 
-  /* Automatically choose the orientation that fits best */
-  status = world_get_object_glist_bounds (toplevel, s_page_objects (page),
-                                            &wx_min, &wy_min, &wx_max, &wy_max);
-  if (!status || (wx_max - wx_min) > (wy_max - wy_min)) {
-    /* Default to landscape */
+  switch (orientation) {
+  case LANDSCAPE:
     gtk_page_setup_set_orientation (setup, GTK_PAGE_ORIENTATION_LANDSCAPE);
-  } else {
+    break;
+
+  case PORTRAIT:
     gtk_page_setup_set_orientation (setup, GTK_PAGE_ORIENTATION_PORTRAIT);
+    break;
+
+  case AUTOLAYOUT:
+  default:
+    /* Automatically choose the orientation that fits best */
+    status = world_get_object_glist_bounds (toplevel, s_page_objects (page),
+                                            &wx_min, &wy_min, &wx_max, &wy_max);
+    if (!status || (wx_max - wx_min) > (wy_max - wy_min)) {
+      /* Default to landscape */
+      gtk_page_setup_set_orientation (setup, GTK_PAGE_ORIENTATION_LANDSCAPE);
+    } else {
+      gtk_page_setup_set_orientation (setup, GTK_PAGE_ORIENTATION_PORTRAIT);
+    }
   }
 
   return setup;
@@ -188,12 +207,10 @@ draw_page__print_operation (GtkPrintOperation *print,
                             gint page_nr,
                             gpointer user_data)
 {
-  GtkPrintSettings *settings = gtk_print_operation_get_print_settings (print);
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) user_data;
   PAGE *page;
   cairo_t *cr;
   PangoContext *pc;
-  gboolean is_color;
   double width, height;
 
   /* Find the page data */
@@ -205,12 +222,11 @@ draw_page__print_operation (GtkPrintOperation *print,
   cr = gtk_print_context_get_cairo_context (context);
   pc = gtk_print_context_create_pango_context (context);
 
-  is_color = gtk_print_settings_get_use_color (settings);
   width = gtk_print_context_get_width (context);
   height = gtk_print_context_get_height (context);
 
   x_print_draw_page (w_current->toplevel, page, cr, pc,
-                     width, height, is_color, FALSE);
+                     width, height, w_current->print_color, FALSE);
 
   /* Clean up */
   g_object_unref (pc);
@@ -239,7 +255,8 @@ x_print_export_postscript (GSCHEM_TOPLEVEL *w_current,
 
   setup = x_print_default_page_setup (w_current->toplevel,
                                       w_current->toplevel->page_current,
-                                      "na_letter"); /* FIXME */
+                                      w_current->print_paper,
+                                      w_current->print_orientation);
   width = gtk_page_setup_get_paper_width (setup, GTK_UNIT_POINTS);
   height = gtk_page_setup_get_paper_height (setup, GTK_UNIT_POINTS);
 
@@ -253,7 +270,7 @@ x_print_export_postscript (GSCHEM_TOPLEVEL *w_current,
 
   x_print_draw_page (w_current->toplevel, w_current->toplevel->page_current,
                      cr, NULL, width, height,
-                     TRUE /* is_color; FIXME */, FALSE);
+                     w_current->print_color, FALSE);
 
   cairo_destroy (cr);
   cairo_surface_finish (surface);
@@ -312,7 +329,7 @@ x_print_export_eps (GSCHEM_TOPLEVEL *w_current,
 
   x_print_draw_page (w_current->toplevel, w_current->toplevel->page_current,
                      cr, NULL, width, height,
-                     TRUE /* is_color; FIXME */, FALSE);
+                     w_current->toplevel->image_color, FALSE);
 
   cairo_destroy (cr);
   cairo_surface_finish (surface);
@@ -358,7 +375,8 @@ x_print (GSCHEM_TOPLEVEL *w_current)
   }
   setup = x_print_default_page_setup (w_current->toplevel,
                                       w_current->toplevel->page_current,
-                                      "na_letter"); /* FIXME */
+                                      w_current->print_paper,
+                                      w_current->print_orientation);
   gtk_print_operation_set_default_page_setup (print, setup);
 
   g_signal_connect (print, "draw_page", G_CALLBACK (draw_page__print_operation),

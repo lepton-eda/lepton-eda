@@ -209,7 +209,9 @@ struct st_gschem_toplevel {
   int zoom_gain;          /* Percentage increase in size for a zoom-in operation */
   int scrollpan_steps;    /* Number of scroll pan events required to traverse the viewed area */
 
-  char *print_command;    /* The command to send postscript to when printing */
+  gchar *print_paper;    /* Name of the default paper size */
+  int print_orientation; /* Default paper orientation */
+  int print_color;       /* TRUE if color printing enabled */
 
   SCM smob;               /* The Scheme representation of this window */
 };
