@@ -151,7 +151,7 @@ static void create_type_menu(GtkComboBox *combo)
     ptr = ptr->next;
   }
   g_slist_free (formats);
-  gtk_combo_box_append_text(GTK_COMBO_BOX(combo), "Encapsulated Postscript");
+  gtk_combo_box_append_text(GTK_COMBO_BOX(combo), "Portable Document Format");
 
   /* Set the default menu */
   gtk_combo_box_set_active(GTK_COMBO_BOX(combo), default_index);
@@ -172,9 +172,8 @@ static char *x_image_get_type_from_description(char *description) {
   GSList *ptr;
   gchar *ptr_descr;
 
-  /*WK - catch EPS export case*/
-  if (strcmp(descr, _("Encapsulated Postscript")) == 0) { 
-    return(g_strdup("eps"));
+  if (strcmp(descr, "Portable Document Format") == 0) { 
+    return(g_strdup("pdf"));
   }
 
   ptr = formats;
@@ -331,8 +330,8 @@ void x_image_lowlevel(GSCHEM_TOPLEVEL *w_current, const char* filename,
   /* de select everything first */
   o_select_unselect_all( w_current );
 
-  if (strcmp(filetype, "eps") == 0) /*WK - catch EPS export case*/
-    x_print_export_eps (w_current, filename);
+  if (strcmp(filetype, "pdf") == 0)
+    x_print_export_pdf (w_current, filename);
   else {
     pixbuf = x_image_get_pixbuf(w_current);
     if (pixbuf != NULL) {

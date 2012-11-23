@@ -131,7 +131,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "auto-save-interval",        1, 0, 0, g_rc_auto_save_interval },
 
   /* general guile functions */
-  { "gschem-postscript",         1, 0, 0, g_funcs_postscript },
+  { "gschem-pdf",                1, 0, 0, g_funcs_pdf },
   { "gschem-image",              1, 0, 0, g_funcs_image },
   { "gschem-use-rc-values",      0, 0, 0, g_funcs_use_rc_values },
   { "gschem-exit",               0, 0, 0, g_funcs_exit },

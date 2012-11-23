@@ -30,13 +30,13 @@
 #include <math.h>
 
 #include "gschem.h"
-#include <cairo-ps.h>
+#include <cairo-pdf.h>
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
 #endif
 
-#define DEFAULT_EPS_SIZE 256
+#define DEFAULT_PDF_SIZE 256
 
 /*! \brief Create a default page setup for a schematic page.
  * \par Function Description
@@ -232,20 +232,20 @@ draw_page__print_operation (GtkPrintOperation *print,
   g_object_unref (pc);
 }
 
-/*! \brief Export a PostScript file of the current page.
+/*! \brief Export a print-style PDF file of the current page.
  * \par Function Description
- * Exports the current page as a PostScript file to \a filename. The
+ * Exports the current page as a PDF file to \a filename. The
  * export is carried out using a normal paper size and margins, as if
  * printing.
  *
  * \param w_current A #GSCHEM_TOPLEVEL structure.
- * \param filename  The filename for generated PostScript.
+ * \param filename  The filename for generated PDF.
  *
  * \returns TRUE if the operation was successful.
  */
 gboolean
-x_print_export_postscript (GSCHEM_TOPLEVEL *w_current,
-                           const gchar *filename)
+x_print_export_pdf_page (GSCHEM_TOPLEVEL *w_current,
+                         const gchar *filename)
 {
   cairo_surface_t *surface;
   cairo_status_t status;
@@ -260,7 +260,7 @@ x_print_export_postscript (GSCHEM_TOPLEVEL *w_current,
   width = gtk_page_setup_get_paper_width (setup, GTK_UNIT_POINTS);
   height = gtk_page_setup_get_paper_height (setup, GTK_UNIT_POINTS);
 
-  surface = cairo_ps_surface_create (filename, width, height);
+  surface = cairo_pdf_surface_create (filename, width, height);
   cr = cairo_create (surface);
   cairo_translate (cr, gtk_page_setup_get_left_margin (setup, GTK_UNIT_POINTS),
                    gtk_page_setup_get_top_margin (setup, GTK_UNIT_POINTS));
@@ -277,7 +277,7 @@ x_print_export_postscript (GSCHEM_TOPLEVEL *w_current,
 
   status = cairo_surface_status (surface);
   if (status != CAIRO_STATUS_SUCCESS) {
-    g_warning (_("Failed to write postscript to '%s': %s\n"),
+    g_warning (_("Failed to write PDF to '%s': %s\n"),
                filename,
                cairo_status_to_string (status));
     return FALSE;
@@ -288,19 +288,19 @@ x_print_export_postscript (GSCHEM_TOPLEVEL *w_current,
   return TRUE;
 }
 
-/*! \brief Export an Encapsulated PostScript file of the current page.
+/*! \brief Export a figure-style PDF file of the current page.
  * \par Function Description
- * Exports the current page as an Encapsulated PostScript (EPS) file
- * to \a filename.  The export is carried out using a page size
- * matching the size of the visible extents of the schematic page.
+ * Exports the current page as a PDF file to \a filename.  The export
+ * is carried out using a page size matching the size of the visible
+ * extents of the schematic page.
  *
  * \param w_current A #GSCHEM_TOPLEVEL structure.
- * \param filename  The filename for generated PostScript.
+ * \param filename  The filename for generated PDF.
  *
  * \returns TRUE if the operation was successful.
  */
 gboolean
-x_print_export_eps (GSCHEM_TOPLEVEL *w_current,
+x_print_export_pdf (GSCHEM_TOPLEVEL *w_current,
                     const gchar *filename)
 {
   cairo_surface_t *surface;
@@ -320,11 +320,10 @@ x_print_export_eps (GSCHEM_TOPLEVEL *w_current,
     height = wy_max - wy_min;
   } else {
     /* Fallback size if there are no drawable objects */
-    width = height = DEFAULT_EPS_SIZE;
+    width = height = DEFAULT_PDF_SIZE;
   }
 
-  surface = cairo_ps_surface_create (filename, width, height);
-  cairo_ps_surface_set_eps (surface, TRUE);
+  surface = cairo_pdf_surface_create (filename, width, height);
   cr = cairo_create (surface);
 
   x_print_draw_page (w_current->toplevel, w_current->toplevel->page_current,
@@ -336,7 +335,7 @@ x_print_export_eps (GSCHEM_TOPLEVEL *w_current,
 
   cr_status = cairo_surface_status (surface);
   if (cr_status != CAIRO_STATUS_SUCCESS) {
-    g_warning (_("Failed to write encapsulated postscript to '%s': %s\n"),
+    g_warning (_("Failed to write PDF to '%s': %s\n"),
                filename,
                cairo_status_to_string (cr_status));
     return FALSE;

@@ -44,20 +44,20 @@
  *  \par Function Description
  *
  */
-SCM g_funcs_postscript(SCM scm_filename)
+SCM g_funcs_pdf (SCM scm_filename)
 {
   char *filename;
   gboolean status;
   GSCHEM_TOPLEVEL *w_current = g_current_window ();
 
   SCM_ASSERT (scm_is_string (scm_filename), scm_filename,
-              SCM_ARG1, "gschem-postscript");
+              SCM_ARG1, "gschem-pdf");
 
   if (output_filename) {
-    status = x_print_export_postscript (w_current, output_filename);
+    status = x_print_export_pdf (w_current, output_filename);
   } else  {
     filename = scm_to_utf8_string(scm_filename);
-    status = x_print_export_postscript (w_current, filename);
+    status = x_print_export_pdf (w_current, filename);
     free(filename);
   }
   

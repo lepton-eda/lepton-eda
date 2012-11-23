@@ -8,15 +8,14 @@
 ;; The schematic in "mysch.sch" will be printed to the file "mysch.ps"
 
 ;; Uncomment these to override defaults when printing from the command line
-;(output-orientation "portrait")
-;(output-type "limits")
-;(output-color "enabled")
-;(output-text "ps")
+;(print-orientation "portrait")
+;(print-color "enabled")
+;(print-paper "na-letter")
 
 ; You need call this after you call any rc file function
 (gschem-use-rc-values)
 
 ; filename is specified on the command line
-(gschem-postscript "dummyfilename")
+(gschem-pdf "dummyfilename")
 
 (gschem-exit)

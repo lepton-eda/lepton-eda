@@ -22,7 +22,7 @@ void correct_aspect(GSCHEM_TOPLEVEL *w_current);
 void g_init_attrib ();
 /* g_funcs.c */
 SCM g_funcs_print(SCM filename);
-SCM g_funcs_postscript(SCM filename);
+SCM g_funcs_pdf(SCM filename);
 SCM g_funcs_image(SCM filename);
 SCM g_funcs_exit(void);
 SCM g_funcs_log(SCM msg);
@@ -775,8 +775,8 @@ void x_pagesel_close (GSCHEM_TOPLEVEL *w_current);
 void x_pagesel_update (GSCHEM_TOPLEVEL *w_current);
 /* x_preview.c */
 /* x_print.c */
-gboolean x_print_export_postscript (GSCHEM_TOPLEVEL *w_current, const gchar *filename);
-gboolean x_print_export_eps (GSCHEM_TOPLEVEL *w_current, const gchar *filename);
+gboolean x_print_export_pdf_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename);
+gboolean x_print_export_pdf (GSCHEM_TOPLEVEL *w_current, const gchar *filename);
 void x_print (GSCHEM_TOPLEVEL *w_current);
 /* x_rc.c */
 void x_rc_parse_gschem (GSCHEM_TOPLEVEL *w_current, const gchar *rcfile);
