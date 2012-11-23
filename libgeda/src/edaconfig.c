@@ -599,7 +599,7 @@ eda_config_load (EdaConfig *cfg, GError **error)
     g_set_error (error,
                  G_FILE_ERROR,
                  G_FILE_ERROR_FAILED,
-                 "Undefined configuration filename.");
+                 _("Undefined configuration filename"));
     return FALSE;
   }
 
@@ -669,7 +669,7 @@ eda_config_save (EdaConfig *cfg, GError **error)
     g_set_error (error,
                  G_FILE_ERROR,
                  G_FILE_ERROR_FAILED,
-                 "Undefined configuration filename.");
+                 _("Undefined configuration filename"));
     return FALSE;
   }
 
