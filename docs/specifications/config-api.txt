@@ -1,0 +1,732 @@
+===============================
+ gEDA Configuration System API
+===============================
+
+:Author: Peter Brett
+:Status: Proposed Specification
+
+..
+  This document can be processed with docutils <http://docutils.sf.net>
+  to generate HTML or LaTeX.  However, the markup is designed to be
+  fully human-readable as-is.
+
+.. contents::
+..
+    1  Introduction
+    2  Error Handling
+      2.1  Errors in C functions
+      2.2  Errors in Scheme function
+    3  Configuration Contexts
+      3.1  Obtaining a Context
+        3.1.1  Default context
+        3.1.2  System context
+        3.1.3  User context
+      3.2  Loading configuration files
+      3.3  Saving configuration files
+      3.4  Context parents
+      3.5  Context trust
+    4  Configuration Parameters
+      4.1  Groups
+      4.2  Keys
+      4.3  Configuration inheritance
+      4.4  Values
+        4.4.1  Getting configuration values
+        4.4.2  Setting configuration values
+    5  Configuration Events
+      5.1  Event propagation
+      5.2  Handlers
+      5.3  Delaying events
+    6  References
+
+Introduction
+============
+
+This document outlines the API provided by libgeda for configuration
+of both libgeda and applications based on it.  The API is designed for
+not only saving and loading static configuration data to and from
+permanent storage, but also to allow on-line event-driven updates to
+the configuration state.  The API is designed to be equally usable
+from C code and from Scheme extensions.  It is heavily inspired by the
+``GKeyFile`` API from GLib, with a few changes and enhancements
+[GLIB]_.
+
+Error Handling
+==============
+
+Errors in C functions
+---------------------
+
+Recoverable errors that occur in C functions are signalled to the
+caller using the "GError" mechanism [GLIB]_.
+
+- File errors (e.g. "Access denied" or "File not found") are indicated
+  using the ``G_FILE_ERROR`` error domain.  See the GLib manual for
+  information on error codes.  Functions that may cause a
+  ``G_FILE_ERROR`` are clearly noted as such.
+
+- All other errors are indicated using the ``EDA_CONFIG_ERROR`` error
+  domain.  The possible error codes are:
+
+  ``EDA_CONFIG_ERROR_UNKNOWN_ENCODING``
+    The text being parsed was in an unknown encoding.
+
+  ``EDA_CONFIG_ERROR_PARSE``
+    The configuration data was ill-formed.
+
+  ``EDA_CONFIG_ERROR_KEY_NOT_FOUND``
+    A requested configuration key was not found.
+
+  ``EDA_CONFIG_ERROR_GROUP_NOT_FOUND``
+    A requested configuration group was not found.
+
+  ``EDA_CONFIG_ERROR_INVALID_VALUE``
+    A configuration value could not be parsed into the requested
+    format.
+
+Errors in Scheme function
+-------------------------
+
+All errors in Scheme functions are reported by raising Guile errors
+[GUILE]_.  There are two possible error keys that may arise:
+
+- File errors (e.g. "Access denied" or "File not found") are indicated
+  with the ``system-error`` key.
+
+- All other errors are indicated using the ``config-error`` key.  The
+  ``data`` part of the error arguments is a list containing one of the
+  following symbols:
+
+  ``unknown-encoding``
+    The text being parsed was in an unknown encoding.
+
+  ``parse``
+    The configuration data was ill-formed.
+
+  ``key-not-found``
+    A requested configuration key was not found.
+
+  ``group-not-found``
+    A requested configuration group was not found.
+
+  ``invalid-value``
+    A configuration value could not be parsed into the requested
+    format.
+
+Configuration Contexts
+======================
+
+A configuration parameter is always evaluated within a *configuration
+context*.  Each context is associated with a configuration file
+(although the file does not necessarily need to exist).
+
+Each configuration context may have a *parent context*.  If, when
+looking up a parameter, it has no value set in the selected context,
+the parent context is checked, and so on.
+
+Configuration contexts are reference counted.  You can increment and
+decrement their reference counters using `g_object_ref()` and
+`g_object_unref()` [GOBJECT]_.
+
+Obtaining a Context
+-------------------
+
+C function::
+
+  EdaConfig *eda_config_get_context_for_path (const gchar *path,
+                                              GError *error)
+
+Scheme function::
+
+  path-config-context path
+
+Normally, you shouldn't create a configuration context directly; you
+should obtain the configuration context associated with a ``path``.
+If a context matching the path does not yet exist, it is created.
+
+``path-config-context`` looks for a configuration file named
+``geda.conf``.  If ``path`` is not a directory, it is truncated, and
+then a file named ``geda.conf`` is looked for in that directory.  If
+none is found, the parent directory is checked, and so on until a
+configuration file is found or the filesystem root is reached.  If no
+configuration file was found, the returned context will be associated
+with a ``geda.conf`` in the same directory as ``path``.
+
+.. warning:: Do not assume that the configuration file associated with
+             the context returned by ``path-config-context`` is
+             located in the directory specified by ``path``.
+
+Three special contexts are always automatically defined: the `default
+context`_, the `system context`_, and the `user context`_.  The user
+context is the default parent context for newly-created configuration
+contexts.
+
+Default context
+~~~~~~~~~~~~~~~
+
+C function::
+
+  EdaConfig *eda_config_get_default_context ()
+
+Scheme function::
+
+  default-config-context
+
+The default context is not associated with any physical path or
+on-disk configuration file, and has no parent context.  It contains
+the default configuration used when no configuration file can be
+loaded.  Applications should normally populate the default context
+with their built-in default configuration settings on start-up, before
+loading any further configuration files.
+
+System context
+~~~~~~~~~~~~~~
+
+C function::
+
+  EdaConfig *eda_config_get_system_context ()
+
+Scheme function::
+
+  system-config-context
+
+The system context is used for system-wide configuration.  It is located:
+
+1. By searching ``${XDG_CONFIG_DIRS}`` for a ``gEDA/geda-system.conf``
+   configuration file.
+
+2. By checking ``${sysconfdir}/gEDA`` for a configuration file.
+
+Its parent context is the `default context`_.
+
+User context
+~~~~~~~~~~~~
+
+C function::
+
+  EdaConfig *eda_config_get_user_context ()
+
+Scheme function::
+
+  user-config-context
+
+The user context is used for user-specific configuration, and is
+loaded from ``${XDG_CONFIG_HOME}/gEDA/geda-user.conf`` [XDGDIRS]_.
+Its parent context is the `system context`_.
+
+Loading configuration files
+---------------------------
+
+Other than the `default context`_, all configuration contexts are
+associated with an on-disk configuration file.
+
+C function::
+
+  const gchar *eda_config_get_filename (EdaConfig *cfg)
+
+Scheme function::
+
+  config-filename cfg
+
+Return the filename of the configuration file associated with the
+context ``cfg``.  For some contexts (including the `default
+context`_), this will return ``NULL`` (in C) or ``#f`` (in Scheme).
+
+C function::
+
+  gboolean eda_config_load (EdaConfig *cfg, GError **err)
+
+Scheme function::
+
+  load-config! cfg
+
+Attempt to load configuration parameters for the context ``cfg`` from
+its associated file.  This function may generate a ``GFileError`` (in
+C) or a ``system-error`` (in Scheme).
+
+C function::
+
+  gboolean eda_config_is_loaded (EdaConfig *cfg)
+
+Scheme function::
+
+  config-loaded? cfg
+
+Determine whether the context ``cfg`` has been successfully loaded
+from disk.
+
+Saving configuration files
+--------------------------
+
+C function::
+
+  gboolean eda_config_save (EdaConfig *cfg, GError *error)
+
+Scheme function::
+
+  save-config! cfg
+
+Attempt to save configuration parameters for the context ``cfg`` to
+its associated file.  This function may generate a ``GFileError`` (in
+C) or a ``system-error`` (in Scheme).
+
+C function::
+
+  gboolean eda_config_is_changed (EdaConfig **cfg)
+
+Scheme function::
+
+  config-changed? cfg
+
+Determine whether the context ``cfg`` has been altered since it was
+last synchronised with the on-disk version by loading or saving it.
+
+Context parents
+---------------
+
+C function::
+
+  EdaConfig *eda_config_get_parent (EdaConfig *cfg)
+
+Scheme function::
+
+  config-parent cfg
+
+Return the parent context of the context ``cfg``, if it has one.
+
+C function::
+
+  void eda_config_set_parent (EdaConfig *cfg, EdaConfig *parent)
+
+Scheme function::
+
+  set-config-parent! cfg parent
+
+Sets ``parent`` as the parent context of ``cfg``.  If ``parent`` is
+NULL or ``#f``, sets ``cfg`` as having no parent context.
+
+.. note:: Normally, application code should avoid using this function;
+          keeping to the default configuration inheritance structure
+          is recommended in order to ensure consistent behaviour of
+          all libgeda applications.
+
+Context trust
+-------------
+
+Some configuration parameters are dangerous; in particular, parameters
+that may lead to arbitrary code execution need to be handled
+carefully.  Such settings might include:
+
+- Preferred PDF reader
+- Preferred web browser
+- Search path for Scheme plugins
+
+Configuration contexts can be flagged as being 'trusted'.  This allows
+code that needs to access such dangerous parameters to determine
+whether the value has been obtained from a safe source.
+
+By default, the `default context`_, `system context`_ and `user
+context`_ are trusted, and all other contexts untrusted.
+
+C function::
+
+  gboolean eda_config_is_trusted (EdaConfig *cfg)
+
+Scheme function::
+
+  config-trusted? cfg
+
+Test whether ``cfg`` is a trusted configuration context.
+
+C function::
+
+  void eda_config_set_trusted (EdaConfig *cfg, gboolean trusted)
+
+Scheme function::
+
+  set-config-trusted! cfg trusted
+
+Set whether the configuration context ``cfg`` should be trusted as a
+source for dangerous configuration parameters.
+
+.. warning:: You should not set a configuration context as trusted
+             unless you are certain that it originated from a safe
+             source (e.g. by interacting with the user to verify it).
+
+C function::
+
+  EdaConfig *eda_config_get_trusted_context (EdaConfig *cfg)
+
+Scheme function::
+
+  config-trusted-context cfg
+
+If ``cfg`` is trusted, returns ``cfg``; otherwise, returns the first
+parent context of the configuration context ``cfg`` that is a trusted
+context.  If no trusted context could be found, returns NULL or
+``#f``.
+
+Configuration Parameters
+========================
+
+A gEDA/gaf *configuration parameter* consists of three components:
+
+Group
+  A UTF-8 string which identifies the general category in which the
+  parameter lies (e.g. which application).
+
+Name
+  A UTF-8 string which specifically identifies the parameter within
+  the group.
+
+Value
+  The value of the parameter.  This is stored as a UTF-8 string, but
+  can be converted to a number of possible scalar and list types.
+
+Groups, names and values are all case-sensitive.
+
+Groups
+------
+
+C function::
+
+  gchar **eda_config_get_groups (EdaConfig *cfg, gint *length)
+
+Scheme function::
+
+  config-groups cfg
+
+Returns a list of all groups available in ``cfg`` and its parent
+contexts.  The value returned by ``eda_config_get_groups()`` is a
+newly-allocated NULL-terminated array of strings.  Use
+``g_strfreev()`` to free it [GLIB_].  The ``length`` argument is an
+optional return location for the number of groups returned.
+
+C function::
+
+  gboolean eda_config_has_group (EdaConfig *cfg, const gchar *group)
+
+Scheme function::
+
+  config-has-group? cfg group
+
+Test whether ``cfg`` or its parent contexts contain the specified
+``group``.
+
+Keys
+----
+
+C function::
+
+  gchar **eda_config_get_keys (EdaConfig *cfg, const gchar *group, gint *length,
+                               GError **error)
+
+Scheme function::
+
+  config-keys cfg group
+
+Returns a list of all keys available in the specified ``group`` in
+``cfg`` and its parent contexts.  The value returned by
+``eda_config_get_keys()`` is a newly-allocated NULL-terminated array
+of strings.  Use ``g_strfreev()`` to free it [GLIB_].  The ``length``
+argument is an optional return location for the number of keys
+returned.  If neither ``cfg`` nor any of its parent contexts contain
+``group``, raises an ``EdaConfigError`` (in C) or a ``config-error``
+(in Scheme).
+
+C function::
+
+  gboolean eda_config_has_key (EdaConfig *cfg, const gchar *group,
+                               const gchar *key, GError **err)
+
+Scheme function::
+
+  config-has-key? cfg group key
+
+Test whether ``cfg`` or its parent contexts contains ``key`` in the
+specified ``group``.
+
+Configuration inheritance
+-------------------------
+
+C function::
+
+  gboolean eda_config_is_inherited (EdaConfig *cfg, const gchar *group,
+                                    const gchar *key, GError **err)
+
+Scheme function::
+
+  config-inherited? cfg group key
+
+Tests whether the value of the configuration parameter with the given
+``group`` and ``key`` is specified in the context ``cfg``, or whether
+it is inherited from a parent context of ``cfg``.
+
+C function::
+
+  EdaConfig *eda_config_get_source (EdaConfig *cfg, const gchar *group,
+                                    const gchar *key, GError **err)
+
+Scheme function::
+
+  config-source group key
+
+Returns the configuration context (either ``cfg`` or one of its parent
+contexts) in which the configuration parameter with the given
+``group`` and ``key`` has a value specified.
+
+
+Values
+------
+
+Each value is stored as a UTF-8 string in the configuration file.
+However, this string can be parsed as several different types.  All of
+the following types are supported:
+
+- UTF-8 strings
+- Booleans
+- Integers
+- Double-precision floating point numbers
+
+In addition, lists of all of the above are supported.
+
+Getting configuration values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In general, errors in obtaining a value using the C functions should
+be checked for using a GError.  The list functions take an optional
+return location for the ``length`` of list.  Returned strings should
+be freed using ``g_free()``, and returned lists should be freed using
+``g_free()`` or ``g_strfreev()`` as appropriate [GLIB]_.
+
+C functions::
+
+  gchar *eda_config_get_string (EdaConfig *cfg, const gchar *group, const gchar *key,
+                                GError **err)
+
+  gboolean eda_config_get_boolean (EdaConfig *cfg, const gchar *group, const gchar *key,
+                                   GError **err)
+
+  gint eda_config_get_int (EdaConfig *cfg, const gchar *group, const gchar *key,
+                           GError **err)
+
+  gdouble eda_config_get_double (EdaConfig *cfg, const gchar *group, const gchar *key,
+                                 GError **err)
+
+  gchar **eda_config_get_string_list (EdaConfig *cfg, const gchar *group, const gchar *key,
+                                      gsize *length, GError **err)
+
+  gboolean *eda_config_get_boolean_list (EdaConfig *cfg, const gchar *group, const gchar *key,
+                                         gsize *length, GError **err)
+
+  gint *eda_config_get_int_list (EdaConfig *cfg, const gchar *group, const gchar *key,
+                                 gsize *length, GError **err)
+
+  gdouble *eda_config_get_double_list (EdaConfig *cfg, const gchar *group, const gchar *key,
+                                       gsize *length, GError **err)
+
+Scheme functions::
+
+  config-string cfg group key [default]
+  config-boolean cfg group key [default]
+  config-int cfg group key [default]
+  config-real cfg group key [default]
+  config-string-list cfg group key [default]
+  config-boolean-list cfg group key [default]
+  config-int-list cfg group key [default]
+  config-real-list cfg group key [default]
+
+If a ``default`` argument is specified, it is returned in lieu of
+raising a ``config-error`` exception if an error occurs.
+
+All values returned by ``config-real`` and ``config-real-list`` are
+real and inexact [GUILE]_, even if the on-disk representation would
+permit an exact representation.
+
+Setting configuration values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+C functions::
+
+  void eda_config_set_string (EdaConfig *cfg, const gchar *group, const gchar *key,
+                              const gchar *value)
+
+  void eda_config_set_boolean (EdaConfig *cfg, const gchar *group, const gchar *key,
+                               gboolean value)
+
+  void eda_config_set_int (EdaConfig *cfg, const gchar *group, const gchar *key,
+                           gint value)
+
+  void eda_config_set_double (EdaConfig *cfg, const gchar *group, const gchar *key,
+                              gdouble value)
+
+  void eda_config_set_string_list (EdaConfig *cfg, const char *group, const gchar *key,
+                                   const gchar * const list[], gsize length)
+
+  void eda_config_set_boolean_list (EdaConfig *cfg, const gchar *group, const gchar *key,
+                                    gboolean list[], gsize length)
+
+  void eda_config_set_int_list (EdaConfig *cfg, const gchar *group, const gchar *key,
+                                gint list[], gsize length)
+
+  void eda_config_set_double_list (EdaConfig *cfg, const gchar *group, const gchar *key,
+                                   gdouble list[], gsize length)
+
+Scheme functions::
+
+  set-config! cfg group key value
+
+The ``config-set!`` function infers the necessary type from the type
+of its ``value`` argument.
+
+Configuration Events
+====================
+
+When the value of a configuration parameter is altered, either by
+loading a file or directly via the API, a *configuration event* is
+generated.  Handlers can be registered to be notified when a
+configuration event occurs.  Handlers can match on:
+
+- A particular group and key;
+
+- A particular group;
+
+- or on all parameters.
+
+The events are also emitted as a GObject "config-changed" signal.
+
+Event propagation
+-----------------
+
+Recall that configuration value look-ups "flow" from configuration
+contexts to their parent contexts, i.e. up the configuration tree.  In
+a similar manner, configuration events flow *down* the configuration
+tree, from the context where the parameter was altered to any child
+contexts which inherit that parameter's value.
+
+For example, consider a context ``parent`` which has child contexts
+``child1`` and ``child2``.  In ``parent``, the parameter ``foo`` has
+value ``bar``; in ``child1``, its value is ``baz``; and in ``child2``,
+it is not set.
+
+::
+
+                   parent  [foo=bar]
+                     |
+                    / \
+   [foo=baz]  child1   child2  [foo not set]
+
+If the ``foo`` parameter is altered in ``parent``, then the resulting
+event will be dispatched in ``parent`` and ``child2``.
+
+Handlers
+--------
+
+In C, configuration event handlers must have the
+``EdaConfigEventHandlerFunc`` prototype::
+
+  void handler (EdaConfig *cfg, const gchar *group, const gchar *key, gpointer user_data)
+
+In Scheme, a configuration event handler must be a closure that
+accepts three arguments::
+
+  handler cfg group key
+
+``cfg`` is always the configuration context that received the event,
+and the ``group`` and ``key`` identify the configuration parameter
+that was changed.  The ``user_data`` argument to the C handler is a
+data structure provided by the API user at the time when the handler
+was registered.
+
+Adding and removing handlers is quite straightforward:
+
+C function::
+
+  void eda_config_event_add (EdaConfig *cfg, const gchar *group, const gchar *key, EdaConfigEventHandlerFunc func, gpointer user_data)
+
+Scheme function::
+
+  add-config-event! cfg func [group [key]]
+
+Registers ``func`` to be called when the configuration parameter
+identified by ``group`` and ``key`` is modified in the context
+``cfg``.  If ``key`` is not specified (or NULL), matches on any
+parameter in ``group``.  If group is not specified (or NULL), matches
+on any parameter.  If an identical event handler was already
+registered, does nothing.
+
+C function::
+
+  void eda_config_event_remove (EdaConfig *cfg, const gchar *group, const gchar *key, EdaConfigEventHandlerFunc func, gpointer user_data)
+
+Scheme function::
+
+  remove-config-event! cfg func [group [key]]
+
+Unregisters the event handler ``func`` from the context ``cfg``.  The
+``group``, ``key``, and (in C) ``user_data`` parameters must match
+those specified when the event handler was registered.  If no matching
+event handler was registered, does nothing.
+
+C function::
+
+  void eda_config_event_remove_all (EdaConfig *cfg, EdaConfigEventHandlerFunc func, gpointer user_data)
+
+Scheme function::
+
+  remove-config-event! cfg func #t
+
+Unregisters all occurrences of the event handler ``func`` from the
+context ``cfg``, no matter what events ``func`` was set to trigger on.
+In C, the ``user_data`` parameter must match that specified when the
+event handler was registered.
+
+
+Delaying events
+---------------
+
+It is sometimes desirable to delay configuration event notifications.
+For example, this might be necessary if you are planning to change a
+large number of configuration values at the same time.
+
+C functions::
+
+  void eda_config_event_freeze (EdaConfig *cfg)
+  void eda_config_event_thaw (EdaConfig *cfg)
+
+When ``eda_config_event_freeze()`` is called on it, the context
+``cfg`` stops dispatching event notifications.  Whenever an event
+notification would normally be dispatched, it instead is added
+internal queue.  When ``eda_config_event_thaw()`` is called, any
+queued events are dispatched.  Multiple pairs of
+``eda_config_event_freeze()`` and ``eda_config_event_thaw()`` calls
+can be nested.
+
+Scheme function::
+
+  delay-config-events cfg thunk
+
+Call ``thunk``, delaying configuration event notifications until
+``thunk`` exits, either normally or non-locally.
+
+
+References
+==========
+
+.. [GLIB]    The GNOME Project, "GLib Reference Manual".
+             <http://library.gnome.org/devel/glib/stable/>
+
+.. [GOBJECT] The GNOME Project, "GObject Reference Manual".
+             <http://library.gnome.org/devel/glib/stable/>
+
+.. [GUILE]   Free Software Foundation, "GNU Guile Reference Manual", Version
+             1.8.
+             <http://www.gnu.org/software/guile/manual/>
+
+.. [XDGDIRS] W. Bastian, R. Lortie and L. Poettering, "XDG Base
+             Directory Specification", Version 0.7.
+             <http://www.freedesktop.org/wiki/Standards/basedir-spec>
+
+..
+   Local Variables:
+   mode: rst
+   End:
