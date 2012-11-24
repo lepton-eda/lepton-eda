@@ -2,8 +2,7 @@
 .SH NAME
 gsch2pdf - gEDA/gaf Schematic to PDF converter
 .SH SYNOPSIS
-.B gsch2pdf
-\fIINPUT_FILE\fR ...
+.B gsch2pdf [\fIOPTION\fR ...] [\fIINPUT_FILE\fR ...]
 
 .SH DESCRIPTION
 .PP
@@ -16,18 +15,18 @@ in the PDF file, in the order they appear on the command line.
 Different options can be specified in the `system-gsch2pdfrc' file.
 Additionally, a local `gsch2pdfrc' file can be used.
 
+.SH OPTIONS
+
+.IP "\fB-o\fR \fIOUTPUT_FILE\fR"
+Places output in the file \fIOUTPUT_FILE\fR.
+
 .SH EXAMPLES
-.PP
-These examples assume that you have all schematic files in the current
-directory.
 
-.HP
-\fBgsch2pdf\fR requires that at least one schematic to be specified on the
-command line:
+.IP "\fBgsch2pdf\fR \fIcontroller-1.sch\fR"
+Generates a PDF file from the schematic \fIcontroller-1.sch\fR and places output in the file \fIoutput.pdf\fR.
 
-.nf
-/gsch2pdf controller-1.sch
-.ad b
+.IP "\fBgsch2pdf\fR \fIcontroller-1.sch\fR \fIcontroller-2.sch\fR \fIcontroller-3.sch\fR \fB-o\fR \fIcontroller.pdf\fR"
+Generates a PDF file from the three input schematics and places output in the file \fIcontroller.pdf\fR.
 
 .SH ENVIRONMENT
 .TP 8

@@ -53,9 +53,139 @@
 
 
 
+static void print_page(TOPLEVEL *current, EdaRenderer *renderer, PAGE *page);
+
+TOPLEVEL *current;
 static GArray* print_color_map = NULL;
 static PrintSettings *print_settings = NULL;
 
+typedef struct GSCH2PDF GSCH2PDF;
+
+struct GSCH2PDF
+{
+    GPtrArray* input_filenames;
+    gchar*     output_filename;
+};
+
+
+
+GSCH2PDF* gsch2pdf_new()
+{
+    GSCH2PDF* gsch2pdf = g_new0(GSCH2PDF, 1);
+
+    gsch2pdf->input_filenames = g_ptr_array_new_with_free_func(g_free);
+    gsch2pdf->output_filename = g_strdup("output.pdf");
+
+    return gsch2pdf;
+}
+
+
+
+GSCH2PDF* gsch2pdf_new_with_args(int argc, gchar *argv[])
+{
+    GSCH2PDF* gsch2pdf = gsch2pdf_new();
+
+    int index;
+    int option;
+
+    while ((option = getopt(argc, argv, "o:")) != -1)
+    {
+        switch (option)
+        {
+            case 'o':
+                gsch2pdf->output_filename = g_strdup(optarg);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    for (index=optind; index<argc; index++)
+    {
+        g_ptr_array_add(gsch2pdf->input_filenames, g_strdup(argv[index]));
+    }
+
+    return gsch2pdf;
+}
+
+
+
+void gsch2pdf_free(GSCH2PDF* gsch2pdf)
+{
+    if (gsch2pdf != NULL)
+    {
+        g_ptr_array_free(gsch2pdf->input_filenames, TRUE);
+        g_free(gsch2pdf->output_filename);
+
+        g_free(gsch2pdf);
+    }
+}
+
+
+
+void gsch2pdf_run(GSCH2PDF* gsch2pdf)
+{
+    int page_count = gsch2pdf->input_filenames->len;
+
+    if (page_count > 0)
+    {
+        cairo_t* cairo = NULL;
+        EdaRenderer *renderer = NULL;
+        cairo_surface_t* surface;
+
+        surface = cairo_pdf_surface_create(
+            gsch2pdf->output_filename,
+            72.0 * print_settings_get_page_width(print_settings),
+            72.0 * print_settings_get_page_height(print_settings)
+            );
+
+        if (surface != NULL)
+        {
+            cairo = cairo_create(surface);
+            cairo_surface_destroy(surface);
+        }
+
+        if (cairo != NULL)
+        {
+            renderer = g_object_new(
+                EDA_TYPE_RENDERER,
+                "cairo-context", cairo,
+                "color-map",     print_color_map,
+                NULL
+                );
+        }
+
+        if (renderer != NULL)
+        {
+            int index;
+
+            for (index=0; index<page_count; index++)
+            {
+                gchar* input_filename = g_ptr_array_index(gsch2pdf->input_filenames, index);
+
+                PAGE *page = s_page_new(current, input_filename);
+
+                int success = f_open(current, page, input_filename, NULL);
+
+                if (success)
+                {
+                    print_page(current, renderer, page);
+                    cairo_show_page(cairo);
+                }
+
+                s_page_delete(current, page);
+            }
+
+            g_object_unref(renderer);
+         }
+
+         if (cairo != NULL)
+         {
+             cairo_destroy(cairo);
+         }
+    }
+}
 
 
 GArray* create_color_map(void)
@@ -232,19 +362,15 @@ static void print_page(TOPLEVEL *current, EdaRenderer *renderer, PAGE *page)
 
 static void main2(void *closure, int argc, char *argv[])
 {
-    TOPLEVEL *current;
-    int i;
-    cairo_surface_t *surface = NULL;
-    cairo_t *cairo = NULL;
-    gboolean need_cairo_init = TRUE;
-    EdaRenderer *renderer = NULL;
-
+    GSCH2PDF *gsch2pdf;
 
     libgeda_init();
 
     s_log_init ("gsch2pdf");
 
     current = s_toplevel_new();
+
+    print_settings = print_settings_new();
 
     rc_config_init();
     rc_config_set_print_settings(print_settings);
@@ -254,62 +380,16 @@ static void main2(void *closure, int argc, char *argv[])
     i_vars_libgeda_set(current);
 
     print_color_map = create_color_map();
-    print_settings = print_settings_new();
 
-    for (i=1; i<argc; i++)
-    {
-        PAGE *page = s_page_new(current, argv[i]);
+    gsch2pdf = gsch2pdf_new_with_args(argc, argv);
 
-        int success = f_open(current, page, argv[i], NULL);
-
-        if (success && need_cairo_init)
-        {
-            surface =
-              cairo_pdf_surface_create("output.pdf",
-                                       72.0 * print_settings_get_page_width(print_settings),
-                                       72.0 * print_settings_get_page_height(print_settings)
-                                      );
-
-            cairo = cairo_create(surface);
-
-            renderer = g_object_new(
-                EDA_TYPE_RENDERER,
-                "cairo-context", cairo,
-                "color-map",     print_color_map,
-                NULL
-                );
-
-            /* Tell libgeda how to work out how big text objects will be once
-             * fonts are taken into account. */
-            o_text_set_rendered_bounds_func (current, text_rendered_bounds,
-                                             (void *) renderer);
-
-
-            need_cairo_init = FALSE;
-        }
-
-        if (success)
-        {
-            print_page(current, renderer, page);
-
-            cairo_show_page(cairo);
-        }
-
-        s_page_delete(current, page);
-    }
+    gsch2pdf_run(gsch2pdf);
+    gsch2pdf_free(gsch2pdf);
 
     s_page_delete_list(current);
 
     s_clib_free();
     s_slib_free();
-
-    cairo_destroy(cairo);
-    cairo_surface_destroy (surface);
-
-    if (renderer != NULL)
-    {
-        g_object_unref(renderer);
-    }
 
     rc_config_set_print_settings(NULL);
 
