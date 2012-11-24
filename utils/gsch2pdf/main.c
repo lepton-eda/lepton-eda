@@ -145,38 +145,43 @@ static void print_object_list(EdaRenderer *renderer, const GList *objects)
 
 
 
+static int
+text_rendered_bounds (void *user_data, OBJECT *object,
+                      int *left, int *top, int *right, int *bottom)
+{
+  int result;
+  double t, l, r, b;
+  EdaRenderer *renderer = EDA_RENDERER (user_data);
+  result = eda_renderer_get_user_bounds (renderer, object, &l, &t, &r, &b);
+  *left = lrint (fmin (l,r));
+  *top = lrint (fmin (t, b));
+  *right = lrint (fmax (l, r));
+  *bottom = lrint (fmax (t, b));
+  return result;
+}
+
 static void print_page(TOPLEVEL *current, EdaRenderer *renderer, PAGE *page)
 {
+    cairo_matrix_t mtx;
     cairo_t *cairo = eda_renderer_get_cairo_context(renderer);
-
-    cairo_save(cairo);
 
     const GList *list = s_page_objects(page);
 
-    cairo_surface_t *surface = cairo_recording_surface_create(CAIRO_CONTENT_COLOR_ALPHA, NULL);
+    int wx_min = 0, wy_min = 0, wx_max = 0, wy_max = 0;
+    cairo_save (cairo);
+    cairo_matrix_init (&mtx, 1, 0, 0, -1, -1, -1); /* Very vague approximation */
+    cairo_set_matrix (cairo, &mtx);
 
-    cairo_t *cairo2 = cairo_create(surface);
-
-    EdaRenderer *renderer2 = g_object_new(
-        EDA_TYPE_RENDERER,
-        "cairo-context", cairo2,
-        "color-map",     print_color_map,
-        NULL
-        );
+    world_get_object_glist_bounds (current, list, &wx_min, &wy_min, &wx_max, &wy_max);
+    cairo_restore (cairo);
 
     cairo_rectangle_t rectangle;
+    rectangle.x = wx_min;
+    rectangle.y = wy_min;
+    rectangle.width = wx_max - wx_min;
+    rectangle.height = wy_max - wy_min;
 
-    print_object_list(renderer2, list);
-
-    g_object_unref(renderer2);
-
-    cairo_recording_surface_ink_extents(
-        surface,
-        &rectangle.x,
-        &rectangle.y,
-        &rectangle.width,
-        &rectangle.height
-        );
+    cairo_save (cairo);
 
     double sx = 72.0 * print_settings_get_print_width(print_settings) / rectangle.width;
     double sy = 72.0 * print_settings_get_print_height(print_settings) / rectangle.height;
@@ -274,7 +279,13 @@ static void main2(void *closure, int argc, char *argv[])
                 NULL
                 );
 
-            cairo_surface_destroy(surface);
+            cairo_surface_destroy (surface);
+
+            /* Tell libgeda how to work out how big text objects will be once
+             * fonts are taken into account. */
+            o_text_set_rendered_bounds_func (current, text_rendered_bounds,
+                                             (void *) renderer);
+
 
             need_cairo_init = FALSE;
         }
