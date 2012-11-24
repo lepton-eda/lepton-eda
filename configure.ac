@@ -260,6 +260,7 @@ AC_CONFIG_FILES([Makefile
                  utils/examples/gmk_sym/Makefile
                  utils/examples/gsch2pcb/Makefile
                  utils/examples/tragesym/Makefile
+                 utils/gsch2pdf/gsch2pdf.1
                  utils/gsch2pdf/Makefile
                  utils/gschlas/Makefile
                  utils/gxyrs/Makefile

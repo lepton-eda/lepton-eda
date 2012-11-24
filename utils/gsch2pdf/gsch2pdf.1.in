@@ -1,4 +1,4 @@
-.TH gsch2pdf 1 "October 6th, 2012" "gEDA Project" 1.7.2.20111231
+.TH gsch2pdf 1 "October 6th, 2012" "gEDA Project" @DOTTED_VERSION@.@DATE_VERSION@
 .SH NAME
 gsch2pdf - gEDA/gaf Schematic to PDF converter
 .SH SYNOPSIS
