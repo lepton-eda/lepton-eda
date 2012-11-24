@@ -194,7 +194,6 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
 {
   int opened=FALSE;
   char *full_filename = NULL;
-  char *full_rcfilename = NULL;
   char *file_directory = NULL;
   char *saved_cwd = NULL;
   char *backup_filename = NULL;
@@ -241,8 +240,7 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
 
   /* Now open RC and process file */
   if (flags & F_OPEN_RC) {
-    full_rcfilename = g_build_filename (file_directory, "gafrc", NULL);
-    g_rc_parse_file (toplevel, full_rcfilename, &tmp_err);
+    g_rc_parse_local (toplevel, "gafrc", file_directory, &tmp_err);
     if (tmp_err != NULL) {
       /* Config files are allowed to be missing or skipped; check for
        * this. */
@@ -316,7 +314,6 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
   }
 
   g_free(full_filename);
-  g_free(full_rcfilename);
   g_free (backup_filename);
 
   /* Reset the directory to the value it had when f_open was

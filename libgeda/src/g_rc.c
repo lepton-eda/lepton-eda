@@ -113,6 +113,89 @@ SCM g_rc_mode_general(SCM scmmode,
   return ret;
 }
 
+/*! \brief Mark a configuration file as read.
+ * \par Function Description
+ * If the config file \a filename has not already been loaded, mark it
+ * as loaded and return TRUE, storing \a filename in \a toplevel (\a
+ * filename should not subsequently be freed).  Otherwise, return
+ * FALSE, and set \a err appropriately.
+ *
+ * \note Should only be called by g_rc_parse_file().
+ *
+ * \param toplevel  The current #TOPLEVEL structure.
+ * \param filename  The config file name to test.
+ * \param err       Return location for errors, or NULL.
+ * \return TRUE if \a filename not already loaded, FALSE otherwise.
+ */
+static gboolean
+g_rc_try_mark_read (TOPLEVEL *toplevel, gchar *filename, GError **err)
+{
+  GList *found = NULL;
+  g_return_val_if_fail ((toplevel != NULL), FALSE);
+  g_return_val_if_fail ((filename != NULL), FALSE);
+
+  /* Test if marked read already */
+  found = g_list_find_custom (toplevel->RC_list, filename,
+                              (GCompareFunc) strcmp);
+  if (found != NULL) {
+    g_set_error (err, EDA_ERROR, EDA_ERROR_RC_TWICE,
+                 _("Config file already loaded"));
+    return FALSE;
+  }
+
+  toplevel->RC_list = g_list_append (toplevel->RC_list, filename);
+  /* N.b. don't free name_norm here; it's stored in the TOPLEVEL. */
+  return TRUE;
+}
+
+/*! \brief Load a configuration file.
+ * \par Function Description
+ * Load the configuration file \a rcfile, reporting errors via \a err.
+ *
+ * \param toplevel  The current #TOPLEVEL structure.
+ * \param rcfile    The filename of the configuration file to load.
+ * \param err       Return location for errors, or NULL;
+ * \return TRUE on success, FALSE on failure.
+ */
+static gboolean
+g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile, GError **err)
+{
+  gchar *name_norm = NULL;
+  GError *tmp_err = NULL;
+  g_return_val_if_fail ((toplevel != NULL), FALSE);
+  g_return_val_if_fail ((rcfile != NULL), FALSE);
+
+  /* Normalise filename */
+  name_norm = f_normalize_filename (rcfile, &tmp_err);
+  if (name_norm == NULL) goto parse_file_error;
+
+  /* Attempt to load the rc file, if it hasn't been loaded already.
+   * If g_rc_try_mark_read() succeeds, it stores name_norm in
+   * toplevel, so we *don't* free it. */
+  if (g_rc_try_mark_read (toplevel, name_norm, &tmp_err)
+      && g_read_file (toplevel, name_norm, &tmp_err)) {
+    s_log_message (_("Parsed config from [%s]\n"), name_norm);
+    return TRUE;
+  }
+
+ parse_file_error:
+  /* Copy tmp_err into err, with a prefixed message. */
+  /*! \todo We should upgrade to GLib >= 2.16 and use
+   * g_propagate_prefixed_error(). */
+  if (err == NULL) {
+    g_error_free (tmp_err);
+  } else {
+    gchar *orig_msg = tmp_err->message;
+    tmp_err->message =
+      g_strdup_printf (_("Unable to parse config from [%s]: %s"),
+                       (name_norm != NULL) ? name_norm : rcfile, orig_msg);
+    g_free (orig_msg);
+    *err = tmp_err;
+  }
+  g_free (name_norm);
+  return FALSE;
+}
+
 /*! \brief Load a system configuration file.
  * \par Function Description
  * Attempts to load the system configuration file with basename \a
@@ -202,89 +285,6 @@ g_rc_parse_local (TOPLEVEL *toplevel, const gchar *rcname, const gchar *path,
   g_free (dir);
   g_free (rcfile);
   return status;
-}
-
-/*! \brief Mark a configuration file as read.
- * \par Function Description
- * If the config file \a filename has not already been loaded, mark it
- * as loaded and return TRUE, storing \a filename in \a toplevel (\a
- * filename should not subsequently be freed).  Otherwise, return
- * FALSE, and set \a err appropriately.
- *
- * \note Should only be called by g_rc_parse_file().
- *
- * \param toplevel  The current #TOPLEVEL structure.
- * \param filename  The config file name to test.
- * \param err       Return location for errors, or NULL.
- * \return TRUE if \a filename not already loaded, FALSE otherwise.
- */
-static gboolean
-g_rc_try_mark_read (TOPLEVEL *toplevel, gchar *filename, GError **err)
-{
-  GList *found = NULL;
-  g_return_val_if_fail ((toplevel != NULL), FALSE);
-  g_return_val_if_fail ((filename != NULL), FALSE);
-
-  /* Test if marked read already */
-  found = g_list_find_custom (toplevel->RC_list, filename,
-                              (GCompareFunc) strcmp);
-  if (found != NULL) {
-    g_set_error (err, EDA_ERROR, EDA_ERROR_RC_TWICE,
-                 _("Config file already loaded"));
-    return FALSE;
-  }
-
-  toplevel->RC_list = g_list_append (toplevel->RC_list, filename);
-  /* N.b. don't free name_norm here; it's stored in the TOPLEVEL. */
-  return TRUE;
-}
-
-/*! \brief Load a configuration file.
- * \par Function Description
- * Load the configuration file \a rcfile, reporting errors via \a err.
- *
- * \param toplevel  The current #TOPLEVEL structure.
- * \param rcfile    The filename of the configuration file to load.
- * \param err       Return location for errors, or NULL;
- * \return TRUE on success, FALSE on failure.
- */
-gboolean
-g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile, GError **err)
-{
-  gchar *name_norm = NULL;
-  GError *tmp_err = NULL;
-  g_return_val_if_fail ((toplevel != NULL), FALSE);
-  g_return_val_if_fail ((rcfile != NULL), FALSE);
-
-  /* Normalise filename */
-  name_norm = f_normalize_filename (rcfile, &tmp_err);
-  if (name_norm == NULL) goto parse_file_error;
-
-  /* Attempt to load the rc file, if it hasn't been loaded already.
-   * If g_rc_try_mark_read() succeeds, it stores name_norm in
-   * toplevel, so we *don't* free it. */
-  if (g_rc_try_mark_read (toplevel, name_norm, &tmp_err)
-      && g_read_file (toplevel, name_norm, &tmp_err)) {
-    s_log_message (_("Parsed config from [%s]\n"), name_norm);
-    return TRUE;
-  }
-
- parse_file_error:
-  /* Copy tmp_err into err, with a prefixed message. */
-  /*! \todo We should upgrade to GLib >= 2.16 and use
-   * g_propagate_prefixed_error(). */
-  if (err == NULL) {
-    g_error_free (tmp_err);
-  } else {
-    gchar *orig_msg = tmp_err->message;
-    tmp_err->message =
-      g_strdup_printf (_("Unable to parse config from [%s]: %s"),
-                       (name_norm != NULL) ? name_norm : rcfile, orig_msg);
-    g_free (orig_msg);
-    *err = tmp_err;
-  }
-  g_free (name_norm);
-  return FALSE;
 }
 
 static void

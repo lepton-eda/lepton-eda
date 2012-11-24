@@ -31,7 +31,6 @@ SCM g_rc_mode_general(SCM scmmode, const char *rc_name, int *mode_var,
 gboolean g_rc_parse_system (TOPLEVEL *toplevel, const gchar *rcname, GError **err);
 gboolean g_rc_parse_user (TOPLEVEL *toplevel, const gchar *rcname, GError **err);
 gboolean g_rc_parse_local (TOPLEVEL *toplevel, const gchar *rcname, const gchar *path, GError **err);
-gboolean g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile, GError **err);
 void g_rc_parse(TOPLEVEL *toplevel, const gchar* pname, const gchar* rcname, const gchar* rcfile);
 void g_rc_parse_handler (TOPLEVEL *toplevel, const gchar *rcname, const gchar *rcfile, ConfigParseErrorFunc handler, void *user_data);
 SCM g_rc_rc_filename();
