@@ -279,8 +279,6 @@ static void main2(void *closure, int argc, char *argv[])
                 NULL
                 );
 
-            cairo_surface_destroy (surface);
-
             /* Tell libgeda how to work out how big text objects will be once
              * fonts are taken into account. */
             o_text_set_rendered_bounds_func (current, text_rendered_bounds,
@@ -306,6 +304,7 @@ static void main2(void *closure, int argc, char *argv[])
     s_slib_free();
 
     cairo_destroy(cairo);
+    cairo_surface_destroy (surface);
 
     if (renderer != NULL)
     {
