@@ -30,6 +30,7 @@
 #endif
 
 #include <libgeda/libgeda.h>
+#include <libgedacairo/libgedacairo.h>
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
@@ -42,6 +43,7 @@
 #include <stdlib.h>
 #include <math.h>
 
+
 #include <pango/pangocairo.h>
 #include <cairo-pdf.h>
 
@@ -51,717 +53,83 @@
 
 
 
+static GArray* print_color_map = NULL;
 static PrintSettings *print_settings = NULL;
 
-static void print_object_list(TOPLEVEL *current, cairo_t *cairo, const GList *objects);
 
 
-
-static void print_arc(TOPLEVEL *current, cairo_t *cairo, OBJECT *object)
+GArray* create_color_map(void)
 {
-    cairo_set_line_width(
-        cairo,
-        object->line_width > 10.0 ? object->line_width : 10.0
-        );
+    GArray *color_map;
+    int index;
+
+    color_map = g_array_sized_new (FALSE, FALSE, sizeof(COLOR), MAX_COLORS);
+    color_map = g_array_append_vals (color_map, print_colors, MAX_COLORS);
+
+    for (index=0; index<MAX_COLORS; index++)
+    {
+        COLOR *color = &g_array_index(color_map, COLOR, index);
+
+        if (!color->enabled)
+        {
+            continue;
+        }
+
+        if (color->a == 0 || index == BACKGROUND_COLOR)
+        {
+            color->enabled = FALSE;
+            continue;
+        }
+
+        if (FALSE)  /* TODO: needs to be the print setting to enable B&W */
+        {
+            color->r = 0;
+            color->g = 0;
+            color->b = 0;
+            color->a = ~0;
+        }
+    }
+
+    return color_map;
+}
+
+
+
+static void print_junctions(EdaRenderer *renderer, const GArray *junctions)
+{
+    cairo_t *cairo = eda_renderer_get_cairo_context(renderer);
+    GArray *colors = eda_renderer_get_color_map(renderer);
+    int index;
+
+    COLOR *color = &g_array_index(colors, COLOR, JUNCTION_COLOR);
 
     cairo_set_source_rgb(
         cairo,
-        0.0,
-        0.0,
-        0.0
+        color->r / 255.0,
+        color->g / 255.0,
+        color->b / 255.0
         );
 
-    cairo_new_sub_path(cairo);
-
-    if (object->arc->end_angle > 0)
+    for (index=0; index<junctions->len; index++)
     {
+        sPOINT junction = g_array_index(junctions, sPOINT ,index);
+
         cairo_arc(
             cairo,
-            object->arc->x,
-            object->arc->y,
-            object->arc->width / 2.0,
-            M_PI * object->arc->start_angle / 180.0,
-            M_PI * (object->arc->start_angle + object->arc->end_angle) / 180.0
-            );
-    }
-    else
-    {
-         cairo_arc_negative(
-            cairo,
-            object->arc->x,
-            object->arc->y,
-            object->arc->width / 2.0,
-            M_PI * object->arc->start_angle / 180.0,
-            M_PI * (object->arc->start_angle + object->arc->end_angle) / 180.0
-            );
-    }
-
-    cairo_stroke(cairo);
-}
-
-
-
-static void print_box(TOPLEVEL *current, cairo_t *cairo, OBJECT *object)
-{
-    cairo_set_source_rgb(
-        cairo,
-        0.0,
-        0.0,
-        0.0
-        );
-
-    if ((object->fill_type == FILLING_HATCH) || (object->fill_type == FILLING_MESH))
-    {
-        int index;
-        GArray *lines = g_array_new (FALSE, FALSE, sizeof (LINE));
-
-        m_hatch_box(object->box, object->fill_angle1, object->fill_pitch1, lines);
-
-        if (object->fill_type == FILLING_MESH)
-        {
-            m_hatch_box(object->box, object->fill_angle2, object->fill_pitch2, lines);
-        }
-
-        cairo_set_line_width(
-            cairo,
-            object->fill_width > 5.0 ? object->fill_width : 5.0
+            junction.x,
+            junction.y,
+            print_settings_get_junction_size_net(print_settings),
+            0,
+            2 * M_PI
             );
 
-        for (index=0; index<lines->len; index++)
-        {
-            LINE *line = &g_array_index(lines, LINE, index);
-
-            cairo_move_to(
-                cairo,
-                line->x[0],
-                line->y[0]
-                );
-
-            cairo_line_to(
-                cairo,
-                line->x[1],
-                line->y[1]
-                );
-        }
-    }
-
-    cairo_set_line_width(
-        cairo,
-        object->line_width > 10.0 ? object->line_width : 10.0
-        );
-
-    cairo_move_to(
-        cairo,
-        object->box->upper_x,
-        object->box->upper_y
-        );
-
-    cairo_line_to(
-        cairo,
-        object->box->lower_x,
-        object->box->upper_y
-        );
-
-    cairo_line_to(
-        cairo,
-        object->box->lower_x,
-        object->box->lower_y
-        );
-
-    cairo_line_to(
-        cairo,
-        object->box->upper_x,
-        object->box->lower_y
-        );
-
-    cairo_close_path(cairo);
-
-    if (object->fill_type == FILLING_FILL)
-    {
-        cairo_fill_preserve(cairo);
-    }
-
-    cairo_stroke(cairo);
-}
-
-
-
-static void print_bus(TOPLEVEL *current, cairo_t *cairo, OBJECT *object)
-{
-
-    cairo_set_line_width(
-        cairo,
-        30.0
-        );
-
-    cairo_set_source_rgb(
-        cairo,
-        0.0,
-        0.0,
-        0.0
-        );
-
-    cairo_move_to(
-        cairo,
-        object->line->x[0],
-        object->line->y[0]
-        );
-
-    cairo_line_to(
-        cairo,
-        object->line->x[1],
-        object->line->y[1]
-        );
-
-    cairo_stroke(cairo);
-}
-
-
-
-static void print_circle(TOPLEVEL *current, cairo_t *cairo, OBJECT *object)
-{
-    cairo_set_source_rgb(
-        cairo,
-        0.0,
-        0.0,
-        0.0
-        );
-
-    if ((object->fill_type == FILLING_HATCH) || (object->fill_type == FILLING_MESH))
-    {
-        int index;
-        GArray *lines = g_array_new (FALSE, FALSE, sizeof (LINE));
-
-        m_hatch_circle(object->circle, object->fill_angle1, object->fill_pitch1, lines);
-
-        if (object->fill_type == FILLING_MESH)
-        {
-            m_hatch_circle(object->circle, object->fill_angle2, object->fill_pitch2, lines);
-        }
-
-        cairo_set_line_width(
-            cairo,
-            object->fill_width > 5.0 ? object->fill_width : 5.0
-            );
-
-
-        for (index=0; index<lines->len; index++)
-        {
-            LINE *line = &g_array_index(lines, LINE, index);
-
-            cairo_move_to(
-                cairo,
-                line->x[0],
-                line->y[0]
-                );
-
-            cairo_line_to(
-                cairo,
-                line->x[1],
-                line->y[1]
-                );
-        }
-    }
-
-    cairo_set_line_width(
-        cairo,
-        object->line_width > 10.0 ? object->line_width : 10.0
-        );
-
-    cairo_new_sub_path(cairo);
-
-    cairo_arc(
-        cairo,
-        object->circle->center_x,
-        object->circle->center_y,
-        object->circle->radius,
-        0.0,
-        2.0 * M_PI
-        );
-
-    if (object->fill_type == FILLING_FILL)
-    {
         cairo_fill(cairo);
     }
-
-    cairo_stroke(cairo);
 }
 
 
 
-static void print_complex(TOPLEVEL *current, cairo_t *cairo, OBJECT *object)
-{
-    print_object_list(current, cairo, object->complex->prim_objs);
-}
-
-
-static void print_junctions(TOPLEVEL *current, cairo_t *cairo, const GArray *junctions)
-{
-    int index;
-
-    cairo_set_source_rgb(
-        cairo,
-        0.0,
-        0.0,
-        0.0
-        );
-
-  for (index=0; index<junctions->len; index++) {
-    sPOINT junction = g_array_index(junctions, sPOINT ,index);
-
-    cairo_arc(
-         cairo,
-         junction.x,
-         junction.y,
-         print_settings_get_junction_size_net(print_settings),
-         0,
-         2 * M_PI
-         );
-
-    cairo_fill(cairo);
-  }
-}
-
-static void print_line(TOPLEVEL *current, cairo_t *cairo, OBJECT *object)
-{
-    cairo_set_line_width(
-        cairo,
-        object->line_width > 10.0 ? object->line_width : 10.0
-        );
-
-    cairo_set_source_rgb(
-        cairo,
-        0.0,
-        0.0,
-        0.0
-        );
-
-    cairo_move_to(
-        cairo,
-        object->line->x[0],
-        object->line->y[0]
-        );
-
-    cairo_line_to(
-        cairo,
-        object->line->x[1],
-        object->line->y[1]
-        );
-
-    cairo_stroke(cairo);
-}
-
-
-
-static void print_net(TOPLEVEL *current, cairo_t *cairo, OBJECT *object)
-{
-    cairo_set_line_width(
-        cairo,
-        10.0
-        );
-
-    cairo_set_source_rgb(
-        cairo,
-        0.0,
-        0.0,
-        0.0
-        );
-
-    cairo_move_to(
-        cairo,
-        object->line->x[0],
-        object->line->y[0]
-        );
-
-    cairo_line_to(
-        cairo,
-        object->line->x[1],
-        object->line->y[1]
-        );
-
-    cairo_stroke(cairo);
-}
-
-
-
-static void print_path(TOPLEVEL *current, cairo_t *cairo, OBJECT *object)
-{
-    int index;
-
-    cairo_set_source_rgb(
-        cairo,
-        0.0,
-        0.0,
-        0.0
-        );
-
-    if ((object->fill_type == FILLING_HATCH) || (object->fill_type == FILLING_MESH))
-    {
-        int index;
-        GArray *lines = g_array_new (FALSE, FALSE, sizeof (LINE));
-
-        m_hatch_path(object->path, object->fill_angle1, object->fill_pitch1, lines);
-
-        if (object->fill_type == FILLING_MESH)
-        {
-            m_hatch_path(object->path, object->fill_angle2, object->fill_pitch2, lines);
-        }
-
-        cairo_set_line_width(
-            cairo,
-            object->fill_width > 5.0 ? object->fill_width : 5.0
-            );
-
-        for (index=0; index<lines->len; index++)
-        {
-            LINE *line = &g_array_index(lines, LINE, index);
-
-            cairo_move_to(
-                cairo,
-                line->x[0],
-                line->y[0]
-                );
-
-            cairo_line_to(
-                cairo,
-                line->x[1],
-                line->y[1]
-                );
-        }
-    }
-
-    for (index=0; index<object->path->num_sections; index++)
-    {
-        PATH_SECTION *section = object->path->sections + index;
-
-        switch (section->code)
-        {
-            case PATH_MOVETO:
-                cairo_close_path(cairo);
-
-            case PATH_MOVETO_OPEN:
-                cairo_move_to(
-                    cairo,
-                    section->x3,
-                    section->y3
-                    );
-                break;
-
-            case PATH_CURVETO:
-                cairo_curve_to(
-                    cairo,
-                    section->x1,
-                    section->y1,
-                    section->x2,
-                    section->y2,
-                    section->x3,
-                    section->y3
-                    );
-                break;
-
-            case PATH_LINETO:
-                cairo_line_to(
-                    cairo,
-                    section->x3,
-                    section->y3
-                    );
-                break;
-
-            case PATH_END:
-                cairo_close_path(cairo);
-                break;
-        }
-    }
-
-    cairo_set_line_width(
-        cairo,
-        object->line_width > 10.0 ? object->line_width : 10.0
-        );
-
-    if (object->fill_type == FILLING_FILL)
-    {
-        cairo_fill_preserve(cairo);
-    }
-
-    cairo_stroke(cairo);
-}
-
-
-
-static void print_pin(TOPLEVEL *current, cairo_t *cairo, OBJECT *object)
-{
-    cairo_set_line_width(
-        cairo,
-        object->line_width > 10.0 ? object->line_width : 10.0
-        );
-
-    cairo_set_source_rgb(
-        cairo,
-        0.0,
-        0.0,
-        0.0
-        );
-
-    cairo_move_to(
-        cairo,
-        object->line->x[0],
-        object->line->y[0]
-        );
-
-    cairo_line_to(
-        cairo,
-        object->line->x[1],
-        object->line->y[1]
-        );
-
-    cairo_stroke(cairo);
-}
-
-
-
-static void print_text(TOPLEVEL *current, cairo_t *cairo, OBJECT *object)
-{
-    if (object->text->disp_string != NULL)
-    {
-        cairo_save(cairo);
-
-        cairo_move_to(
-            cairo,
-            object->text->x,
-            object->text->y
-            );
-
-        cairo_scale(
-            cairo,
-            1.0,
-            -1.0
-            );
-
-        int flip = (object->text->angle == 180);
-
-        if (!flip)
-        {
-            cairo_rotate(
-                cairo,
-                M_PI * object->text->angle / -180.0
-                );
-        }
-
-        PangoContext *context = pango_cairo_create_context(cairo);
-
-        pango_cairo_context_set_resolution(
-            context,
-            1600.0
-            );
-
-        PangoLayout *layout = pango_layout_new(context);
-
-        PangoAlignment halign = PANGO_ALIGN_LEFT;
-
-        switch (object->text->alignment)
-        {
-            case LOWER_LEFT:
-            case MIDDLE_LEFT:
-            case UPPER_LEFT:
-                halign = flip ? PANGO_ALIGN_RIGHT : PANGO_ALIGN_LEFT;
-               break;
-
-            case LOWER_MIDDLE:
-            case MIDDLE_MIDDLE:
-            case UPPER_MIDDLE:
-                halign = PANGO_ALIGN_CENTER;
-                break;
-
-            case LOWER_RIGHT:
-            case MIDDLE_RIGHT:
-            case UPPER_RIGHT:
-                halign = flip ? PANGO_ALIGN_LEFT : PANGO_ALIGN_RIGHT;
-                break;
-        }
-
-        pango_layout_set_alignment(layout, halign);
-
-        PangoFontDescription *desc;
-        desc = pango_font_description_from_string(print_settings_get_font(print_settings));
-
-        pango_font_description_set_size(desc, PANGO_SCALE * object->text->size);
-
-        pango_layout_set_font_description(layout, desc);
-        pango_font_description_free(desc);
-
-        /* Begin cap height computation */
-
-        pango_layout_set_text(layout, "I", -1);
-        pango_cairo_update_layout(cairo, layout);
-
-        PangoRectangle extents_ink;
-        PangoRectangle extents_logical;
-
-        pango_layout_get_extents(
-            layout,
-            &extents_ink,
-            &extents_logical
-            );
-
-        int coffset = extents_ink.y;
-
-        /* End cap height computation */
-
-        pango_layout_set_text(layout, object->text->disp_string, -1);
-        pango_cairo_update_layout(cairo, layout);
-
-        int baseline = pango_layout_get_baseline(layout);
-
-        PangoLayoutIter *iter = pango_layout_get_iter(layout);
-
-        while (pango_layout_iter_next_line(iter))
-        {
-            baseline = pango_layout_iter_get_baseline(iter);
-        }
-
-        pango_layout_iter_free(iter);
-
-
-        pango_layout_get_extents(
-            layout,
-            &extents_ink,
-            &extents_logical
-            );
-
-        double xalign = 0.0;
-        double xoffset;
-        double yalign = 0.0;
-        double yoffset;
-
-        switch (object->text->alignment)
-        {
-            case LOWER_LEFT:
-            case MIDDLE_LEFT:
-            case UPPER_LEFT:
-                xalign = 0.0;
-                break;
-
-            case LOWER_MIDDLE:
-            case MIDDLE_MIDDLE:
-            case UPPER_MIDDLE:
-                xalign = 0.5;
-                break;
-
-            case LOWER_RIGHT:
-            case MIDDLE_RIGHT:
-            case UPPER_RIGHT:
-                xalign = 1.0;
-                break;
-        }
-
-        if (flip)
-        {
-            xalign = 1.0 - xalign;
-        }
-
-        xoffset = extents_ink.x + xalign * extents_ink.width;
-
-        switch (object->text->alignment)
-        {
-            case LOWER_LEFT:
-            case LOWER_MIDDLE:
-            case LOWER_RIGHT:
-                yalign = 0.0;
-                break;
-
-            case MIDDLE_LEFT:
-            case MIDDLE_MIDDLE:
-            case MIDDLE_RIGHT:
-                yalign = 0.5;
-                break;
-
-            case UPPER_LEFT:
-            case UPPER_MIDDLE:
-            case UPPER_RIGHT:
-                yalign = 1.0;
-                break;
-        }
-
-        if (flip)
-        {
-            yalign = 1.0 - yalign;
-        }
-
-        yoffset = baseline + yalign * (coffset - baseline);
-
-        cairo_rel_move_to(
-            cairo,
-            xoffset / -1024.0,
-            yoffset / -1024.0
-            );
-
-        pango_cairo_show_layout(cairo, layout);
-
-        g_object_unref(layout);
-        g_object_unref(context);
-
-        cairo_restore(cairo);
-    }
-}
-
-
-
-static void print_object(TOPLEVEL *current, cairo_t *cairo, OBJECT *object)
-{
-    if (o_is_visible(current, object))
-    {
-        switch (object->type)
-        {
-            case OBJ_ARC:
-                print_arc(current, cairo, object);
-                break;
-
-            case OBJ_BOX:
-                print_box(current, cairo, object);
-                break;
-
-            case OBJ_BUS:
-                print_bus(current, cairo, object);
-                break;
-
-            case OBJ_CIRCLE:
-                print_circle(current, cairo, object);
-                break;
-
-            case OBJ_COMPLEX:
-            case OBJ_PLACEHOLDER:
-                print_complex(current, cairo, object);
-                break;
-
-            case OBJ_LINE:
-                print_line(current, cairo, object);
-                break;
-
-            case OBJ_NET:
-                print_net(current, cairo, object);
-                break;
-
-            case OBJ_PATH:
-                print_path(current, cairo, object);
-                break;
-
-            case OBJ_PIN:
-                print_pin(current, cairo, object);
-                break;
-
-            case OBJ_TEXT:
-                print_text(current, cairo, object);
-                break;
-
-            default:
-                printf("default\n");
-        }
-    }
-}
-
-
-
-static void print_object_list(TOPLEVEL *current, cairo_t *cairo, const GList *objects)
+static void print_object_list(EdaRenderer *renderer, const GList *objects)
 {
     const GList *node = objects;
 
@@ -769,7 +137,7 @@ static void print_object_list(TOPLEVEL *current, cairo_t *cairo, const GList *ob
     {
         OBJECT *object = (OBJECT*) node->data;
 
-        print_object(current, cairo, object);
+        eda_renderer_draw(renderer, object);
 
         node = g_list_next(node);
     }
@@ -777,8 +145,10 @@ static void print_object_list(TOPLEVEL *current, cairo_t *cairo, const GList *ob
 
 
 
-static void print_page(TOPLEVEL *current, cairo_t *cairo, PAGE *page)
+static void print_page(TOPLEVEL *current, EdaRenderer *renderer, PAGE *page)
 {
+    cairo_t *cairo = eda_renderer_get_cairo_context(renderer);
+
     cairo_save(cairo);
 
     const GList *list = s_page_objects(page);
@@ -787,9 +157,18 @@ static void print_page(TOPLEVEL *current, cairo_t *cairo, PAGE *page)
 
     cairo_t *cairo2 = cairo_create(surface);
 
+    EdaRenderer *renderer2 = g_object_new(
+        EDA_TYPE_RENDERER,
+        "cairo-context", cairo2,
+        "color-map",     print_color_map,
+        NULL
+        );
+
     cairo_rectangle_t rectangle;
 
-    print_object_list(current, cairo2, list);
+    print_object_list(renderer2, list);
+
+    g_object_unref(renderer2);
 
     cairo_recording_surface_ink_extents(
         surface,
@@ -831,13 +210,13 @@ static void print_page(TOPLEVEL *current, cairo_t *cairo, PAGE *page)
         -rectangle.y
         );
 
-    print_object_list(current, cairo, list);
+    print_object_list(renderer, list);
 
     GArray *junctions = g_array_new(FALSE, FALSE, sizeof(sPOINT));
-    
+
     junction_locate(current, list, junctions, NULL);
 
-    print_junctions(current, cairo, junctions);
+    print_junctions(renderer, junctions);
 
     g_array_free(junctions, TRUE);
 
@@ -853,8 +232,8 @@ static void main2(void *closure, int argc, char *argv[])
     cairo_surface_t *surface = NULL;
     cairo_t *cairo = NULL;
     gboolean need_cairo_init = TRUE;
+    EdaRenderer *renderer = NULL;
 
-    print_settings = print_settings_new();
 
     libgeda_init();
 
@@ -868,6 +247,9 @@ static void main2(void *closure, int argc, char *argv[])
     g_rc_parse(current, argv[0], "gsch2pdfrc", NULL);
 
     i_vars_libgeda_set(current);
+
+    print_color_map = create_color_map();
+    print_settings = print_settings_new();
 
     for (i=1; i<argc; i++)
     {
@@ -885,6 +267,13 @@ static void main2(void *closure, int argc, char *argv[])
 
             cairo = cairo_create(surface);
 
+            renderer = g_object_new(
+                EDA_TYPE_RENDERER,
+                "cairo-context", cairo,
+                "color-map",     print_color_map,
+                NULL
+                );
+
             cairo_surface_destroy(surface);
 
             need_cairo_init = FALSE;
@@ -892,7 +281,7 @@ static void main2(void *closure, int argc, char *argv[])
 
         if (success)
         {
-            print_page(current, cairo, page);
+            print_page(current, renderer, page);
 
             cairo_show_page(cairo);
         }
@@ -907,7 +296,14 @@ static void main2(void *closure, int argc, char *argv[])
 
     cairo_destroy(cairo);
 
+    if (renderer != NULL)
+    {
+        g_object_unref(renderer);
+    }
+
     rc_config_set_print_settings(NULL);
+
+    g_array_free(print_color_map, TRUE);
 
     exit(EXIT_SUCCESS);
 }

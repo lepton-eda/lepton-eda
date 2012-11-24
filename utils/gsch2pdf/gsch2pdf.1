@@ -1,0 +1,54 @@
+.TH gsch2pdf 1 "October 6th, 2012" "gEDA Project" 1.7.2.20111231
+.SH NAME
+gsch2pdf - gEDA/gaf Schematic to PDF converter
+.SH SYNOPSIS
+.B gsch2pdf
+\fIINPUT_FILE\fR ...
+
+.SH DESCRIPTION
+.PP
+\fBgsch2pdf\fR is a schematic to PDF document converter and part of the
+gEDA (GPL Electronic Design Automation) toolset. It takes one or
+more electronic schematics as input, and outputs a single PDF document.
+Each schematic input file will be included in the output as single page
+in the PDF file, in the order they appear on the command line.
+
+Different options can be specified in the `system-gsch2pdfrc' file.
+Additionally, a local `gsch2pdfrc' file can be used.
+
+.SH EXAMPLES
+.PP
+These examples assume that you have all schematic files in the current
+directory.
+
+.HP
+\fBgsch2pdf\fR requires that at least one schematic to be specified on the
+command line:
+
+.nf
+/gsch2pdf controller-1.sch
+.ad b
+
+.SH ENVIRONMENT
+.TP 8
+.B GEDADATA
+specifies the search directory for Scheme and rc files.  The default
+is `${prefix}/share/gEDA'.
+.TP 8
+.B GEDADATARC
+specifies the search directory for rc files.  The default is `$GEDADATA'.
+
+.SH AUTHORS
+See the `AUTHORS' file included with this program.
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 2012 gEDA Contributors.  License GPLv2+: GNU GPL
+version 2 or later.  Please see the `COPYING' file included with this
+program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+.SH SEE ALSO
+\fBgschem\fR(1)
