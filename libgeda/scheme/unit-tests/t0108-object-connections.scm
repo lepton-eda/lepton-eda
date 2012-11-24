@@ -73,19 +73,30 @@
 ;;
 ;; The "right thing" is probably to be as permissive as possible.
 (begin-test 'net-in-component-connections
-  (let ((C (make-component "test component" '(1 . 2) 0 #t #f))
-        (np (make-net-pin '(100 . 0) '(0 . 0)))
-        (n1 (make-net '(100 . 0) '(100 . 100)))
-        (n2 (make-net '(100 . 100) '(200 . 200))))
+  (let ((C1 (make-component "test component" '(0 . 0) 0 #t #f))
+        (C2 (make-component "test component" '(0 . 0) 0 #t #f))
+        (p1 (make-net-pin '(100 . 0) '(0 . 0)))
+        (p2 (make-net-pin '(100 . 0) '(200 . 0)))
+        (n1 (make-net '(100 . 100) '(100 . 0)))
+        (n2 (make-net '(100 . 100) '(0 . 100)))
+        (n3 (make-net '(100 . 100) '(200 . 100)))
+        (n4 (make-net '(100 . 100) '(100 . 200))))
 
-    (page-append! Q C)
-    (component-append! C n1)
-    (assert-equal '() (object-connections n1))
+    (page-append! Q C1 C2)
 
-    (component-append! C np)
-    (assert-equal (list n1) (object-connections np))
+    ;; Connections within the same component are fine
+    (component-append! C1 n1 n2 p1)
+    (assert-equal (list n1) (object-connections p1))
 
-    (page-append! Q n2)
-    (assert-equal (list n1) (object-connections n2))))
+    ;; Connections between objects in different components are only
+    ;; permitted if both objects are pins.
+    (component-append! C2 n3 p2)
+    (assert-equal (list p1) (object-connections p2))
+    (assert-equal '() (object-connections n3))
+
+    ;; Connections between nets in the page and nets in components are
+    ;; forbidden.
+    (page-append! Q n4)
+    (assert-equal '() (object-connections n4))))
 
 (close-page! Q)

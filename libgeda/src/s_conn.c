@@ -368,6 +368,9 @@ static void s_conn_update_line_object (TOPLEVEL *toplevel, OBJECT *object)
   OBJECT *other_object;
   OBJECT *found;
   int j, k;
+  OBJECT *complex, *other_complex;
+
+  complex = o_get_parent (toplevel, object);
 
   s_conn_freeze_hooks (toplevel, object);
 
@@ -384,6 +387,28 @@ static void s_conn_update_line_object (TOPLEVEL *toplevel, OBJECT *object)
 
       if (object == other_object)
         continue;
+
+      other_complex = o_get_parent (toplevel, other_object);
+
+      /* An object inside a symbol can only be connected up to another
+       * object if they are (a) both inside the same object, or (b)
+       * the object inside a symbol is a pin. */
+
+      /* 1. Both objects are inside a symbol */
+      if (complex && other_complex) {
+        /* If inside different symbols, both must be pins to connect. */
+        if (complex != other_complex
+            && (object->type != OBJ_PIN || other_object->type != OBJ_PIN)) {
+          continue;
+        }
+
+      /* 2. Updating object is inside a symbol, but other object is not. */
+      } else if (complex && !other_complex) {
+        if (object->type != OBJ_PIN) continue;
+      /* 3. Updating object not inside symbol, but other object is. */
+      } else if (!complex && other_complex) {
+        if (other_object->type != OBJ_PIN) continue;
+      }
 
       s_conn_freeze_hooks (toplevel, other_object);
 
