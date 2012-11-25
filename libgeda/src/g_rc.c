@@ -633,10 +633,19 @@ SCM g_rc_source_library_search(SCM path)
   }
 
   while ((entry = g_dir_read_name (dir))) {
+    /* entry is in the on-disk-encoding; convert to utf8 for testing */
+    gchar *entry_utf8 = g_filename_to_utf8 (entry, -1, NULL, NULL, NULL);
+    if (entry_utf8 == NULL) {
+      fprintf (stderr,
+	       "Failed to convert filename \"%s\" to UTF-8\n",
+	       entry);
+      return SCM_BOOL_F;
+    }
     /* don't do . and .. and special case font */
-    if ((g_strcasecmp (entry, ".")    != 0) && 
-        (g_strcasecmp (entry, "..")   != 0) &&
-        (g_strcasecmp (entry, "font") != 0))
+    if ((g_utf8_collate (entry_utf8, ".") != 0) &&
+        (g_utf8_collate (entry_utf8, "..")   != 0) &&
+        (g_utf8_collate (g_utf8_casefold (entry_utf8, -1),
+			 g_utf8_casefold ("font", -1)) != 0))
     {
       gchar *fullpath = g_build_filename (string, entry, NULL);
 
@@ -656,6 +665,7 @@ SCM g_rc_source_library_search(SCM path)
       }
       g_free(fullpath);
     }
+    g_free (entry_utf8);
   }
 
   g_free(string);
