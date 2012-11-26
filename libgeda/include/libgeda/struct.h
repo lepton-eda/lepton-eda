@@ -610,22 +610,6 @@ struct st_color {
   gboolean enabled;
 };
 
-
-struct st_attrib_smob {
-  TOPLEVEL *world;   /* We need this when updating schematic */
-  OBJECT   *attribute;
-};
-
-struct st_object_smob {
-  TOPLEVEL *world;   /* We need this when updating schematic */
-  OBJECT   *object;
-};
-
-struct st_page_smob {
-  TOPLEVEL *world;   /* We need this when updating schematic */
-  PAGE   *page;
-};
-
 /* used by the rc loading mechanisms */
 typedef struct {
   int   m_val;
