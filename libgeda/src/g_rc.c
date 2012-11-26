@@ -642,8 +642,8 @@ SCM g_rc_source_library_search(SCM path)
       return SCM_BOOL_F;
     }
     /* don't do . and .. and special case font */
-    if ((g_utf8_collate (entry_utf8, ".") != 0) &&
-        (g_utf8_collate (entry_utf8, "..")   != 0) &&
+    if ((strcmp (entry_utf8, ".")  != 0) &&
+        (strcmp (entry_utf8, "..") != 0) &&
         (g_utf8_collate (g_utf8_casefold (entry_utf8, -1),
 			 g_utf8_casefold ("font", -1)) != 0))
     {
