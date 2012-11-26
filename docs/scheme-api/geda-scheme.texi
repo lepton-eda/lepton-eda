@@ -343,6 +343,7 @@ available to be used in all gEDA applications.
 * Core page functions::
 * Core object functions::
 * Core attribute functions::
+* Configuration functions::
 * System information::
 @end menu
 
@@ -1567,6 +1568,381 @@ are added to the @code{page}, and attached as attributes of @var{component}.
 The promoted attributes are returned.  If @var{component} is not in
 fact a component @code{object}, does nothing and returns the empty list.
 @end defun
+
+@node Configuration functions
+@section Configuration functions
+@cindex Configuration
+
+To use the functions described in this section, you will need to load
+the @code{(geda config)} module.
+
+This section describes some functions for accessing, monitoring and
+modifying the configuration of gEDA libraries and applications.
+
+@menu
+* Configuration contexts::
+* Configuration parameters::
+* Configuration events::
+* Configuration errors::
+@end menu
+
+@node Configuration contexts
+@subsection Configuration contexts
+@cindex Configuration context
+
+A configuration parameter is always evaluated within a
+@dfn{configuration context}.  Each context is associated with a
+configuration file (although the file does not necessarily need to
+exist).
+
+Each configuration context may have a @dfn{parent context}.  If, when
+looking up a parameter, it has no value set in the selected context,
+the parent context is checked, and so on.
+
+Three special contexts are always automatically defined: the
+@dfn{default context}, the @dfn{system context} and the @dfn{user
+context}.  The user context is the default parent context for all
+other configuration contexts, including newly-created ones.
+
+@subsubsection Obtaining a context
+@cindex System configuration context
+@cindex User configuration context
+@cindex Default configuration contex
+
+@defun path-config-context path
+Normally, you shouldn't create a configuration context directly; you
+should obtain the configuration context associated with a @var{path}.
+
+@code{path-config-context} looks for a configuration file named
+@file{geda.conf}.  If @var{path} is not a directory, it is truncated,
+and then a file named @file{geda.conf} is looked for in that
+directory.  If none is found, the parent directory is checked, and so
+on until a configuration file is found or the filesystem root is
+reached.  If no configuration file was found, the returned context
+will be associated with a @file{geda.conf} in the same directory as
+@var{path}.
+
+@strong{Warning}: Do not assume that the configuration file associated
+with the context returned by @code{path-config-context} is located in
+the directory specified by @var{path}.
+@end defun
+
+@defun default_config_context
+The default context is not associated with any physical path or
+on-disk configuration file, and has no parent context.  It contains
+the default configuration used when no configuration file can be
+loaded.
+
+@strong{Note}: Normally, the default context should be populated with
+built-in default configuration settings on start-up, before loading
+any further configuration files.  This approach is strongly
+recommended, because it means that configuration parameters can then
+be safely read without having to use @code{config-has-group?} and
+@code{config-has-key?} to check if they are set (@pxref{Configuration
+parameters, , Configuration groups and keys}).
+@end defun
+
+@defun system-config-context
+The system context is used for system-wide configuration.  Its parent
+context is the default context.  It is located:
+
+@enumerate
+@item
+By searching @env{XDG_CONFIG_DIRS} for a @file{gEDA/geda-system.conf}
+file.
+@item
+By checking the system configuration directory specified at
+compile-time for a @file{gEDA/geda-system.conf} file.
+@end enumerate
+@end defun
+
+@defun user-config-context
+The user context is used for user-specific configuration, and is
+loaded from @file{gEDA/geda-user.conf} in @env{XDG_CONFIG_HOME}.
+Its parent context is the system context.
+@end defun
+
+@subsubsection Loading and saving configuration files
+@cindex Loading configuration
+@cindex Saving configuration
+Other than the default context, all configuration contexts are
+associated with an on-disk configuration file.
+
+@defun config-filename cfg
+Return the filename of the configuration file associated with the
+context @var{cfg}.  For some contexts (including the default context),
+this will return @samp{#f}.
+@end defun
+
+@defun config-load! cfg
+Attempt to load configuration parameters for the context @var{cfg}
+from its associated file.
+@end defun
+
+@defun config-loaded? cfg
+Determine whether the context @var{cfg} has been successfully loaded
+from file.
+@end defun
+
+@defun config-save! cfg
+Attempt to save configuration parameters for the context @var{cfg} to
+its associated file.
+@end defun
+
+@defun config-changed? cfg
+Determine whether the context @var{cfg} has been altered since it was
+last synchronised with the on-disk version by loading or saving it.
+@end defun
+
+@subsubsection Context parents
+@cindex Context parent
+@cindex Parent configuration context
+A configuration context may have a @dfn{parent context}, from which it
+inherits configuration values.  Configuration inheritance loops are
+not permitted.
+
+@xref{Configuration parameters, , Configuration inheritance}.
+
+@defun context-parent cfg
+Return the parent context of the context @var{cfg}, if it has one.
+@end defun
+
+@defun set-config-parent! cfg parent
+Sets @var{parent} as the parent context of @var{cfg}.  If @var{parent}
+is @samp{#f}, sets @var{cfg} as having no parent context.
+
+@strong{Note}: Normally, application code should avoid using this
+function; keeping to the default configuration inheritance structure
+is recommended in order to ensure consistent behaviour of all libgeda
+applications.
+@end defun
+
+@subsubsection Context trust
+@cindex Context trust
+@cindex Trusted configuration context
+@cindex Configuration trust
+
+Some configuration parameters are dangerous; in particular, parameters
+that may lead to arbitrary code execution need to be handled
+carefully.  Such settings might include:
+
+@itemize
+@item
+Preferred PDF reader
+@item
+Preferred web browser
+@item
+Search path for Scheme plugins
+@end itemize
+
+Configuration contexts can be flagged as being @dfn{trusted}.  This
+allows code that needs to access such dangerous parameters to
+determine whether the value has been obtained from a safe source.
+
+By default, the default context, system context and user context are
+trusted, and all other contexts untrusted.
+
+@defun config-trusted? cfg
+Test whether @var{cfg} is a trusted configuration context.
+@end defun
+
+@defun set-config-trusted! cfg trusted?
+Set whether the configuration context @var{cfg} should be trusted as a
+source for dangerous configuration parameters.
+
+@strong{Warning}: You should not set a configuration context as
+trusted unless you are certain that it originated from a safe source
+(e.g. by interacting with the user to verify it).
+@end defun
+
+@defun config-trusted-context cfg
+If @var{cfg} is trusted, returns @var{cfg}; otherwise, returns the
+first parent context of @var{cfg} that is a trusted context.  If no
+trusted context can be found, returns @samp{#f}.
+@end defun
+
+@node Configuration parameters
+@subsection Configuration parameters
+@cindex Configuration parameter
+@cindex Configuration key
+@cindex Configuration group
+@cindex Configuration value
+
+A gEDA @dfn{configuration parameter} consists of three components:
+
+@table @dfn
+@item Group
+A string which identifies the general category in which the
+parameter lies (e.g. which application and/or plugin).
+@item Name
+A string which specifically identifies the parameter within the group.
+@item Value
+The value of the parameter. This is stored as a string, but can be
+converted to a number of possible scalar and list types.
+@end table
+
+Groups, names and values are all case-sensitive.
+
+@subsubsection Configuration groups and keys
+
+@defun config-groups cfg
+Returns a list of all groups available in @var{cfg} and its parent
+contexts.
+@end defun
+
+@defun config-has-group? cfg group
+Determines whether @var{cfg} or its parent contexts contain the
+specified @var{group}
+@end defun
+
+@defun config-keys cfg group
+Returns a list of all keys available in the specified @var{group} in
+@var{cfg} and its parent contexts.
+@end defun
+
+@defun config-has-key? cfg group key
+Determines whether @var{cfg} or its parent contexts contains @var{key}
+in the specified @var{group}.
+@end defun
+
+@subsubsection Configuration inheritance
+
+If a configuration context does not directly specify a value for a
+configuration parameter, it inherits the value from its parent
+context.
+
+@xref{Configuration contexts, , Context parents}.
+
+@defun config-inherited? cfg group key
+Returns @samp{#f} if value of the configuration parameter with the
+given @var{group} and @var{key} is specified in the context @var{cfg},
+and @samp{#t} if it is inherited from a parent context of @var{cfg}.
+@end defun
+
+@defun config-source cfg group key
+Returns the configuration context (either @var{cfg} or one of its
+parent contexts) in which the configuration parameter with the given
+@var{group} and @var{key} has its value defined.
+@end defun
+
+@subsubsection Configuration values
+@cindex Getting configuration parameters
+@cindex Setting configuration parameters
+
+Each value is stored as a UTF-8 string in the configuration file.
+However, this string can be parsed a several different types.  All of
+the following types are supported:
+
+@itemize
+@item
+Strings
+@item
+Booleans
+@item
+Exact integers
+@item
+Inexact real numbers
+@end itemize
+
+In addition, lists of all the above are supported.
+
+@defun config-string cfg group key
+Retrieve configuration value as a string.
+@end defun
+@defun config-boolean cfg group key
+Retrieve configuration value as a boolean.
+@end defun
+@defun config-int cfg group key
+Retrieve configuration value as an exact integer.
+@end defun
+@defun config-real cfg group key
+Retrieve configuration value as an inexact real number.
+@end defun
+@defun config-string-list cfg group key
+Retrieve configuration value as a list of strings.
+@end defun
+@defun config-boolean-list cfg group key
+Retrieve configuration value as a list of booleans.
+@end defun
+@defun config-int-list cfg group key
+Retrieve configuration value as a list of exact integers.
+@end defun
+@defun config-real-list cfg group key
+Retrieve configuration value as a list of inexact real numbers.
+@end defun
+
+@defun config-set! cfg group key value
+Set the configuration parameter identified by the given @var{group}
+and @var{key} in the configuration context @var{cfg}.  The type of
+value to set is inferred from @var{value}.
+@end defun
+
+@node Configuration events
+@subsection Configuration events
+@cindex Configuration events
+@cindex Configuration notifications
+
+When the value of a configuration parameter is altered, either
+directly or by loading a configuration file, a @dfn{configuration
+event} is generated.  Handlers can be registered to be notified when a
+configuration event occurs.  A configuration event is associated with
+the group and key that had its value modified.
+
+If a configuration event is emitted by a configuration context, it
+propagates to all configuration contexts which inherit that group and
+key from it.
+
+A configuration event handler must be a closure that accepts three
+arguments:
+
+@example
+handler cfg group key
+@end example
+
+@var{cfg} is always the configuration context that received the event,
+and the @var{group} and @var{key} identify the configuration parameter
+that changed.
+
+@defun add-config-event! cfg handler
+Registers @var{handler} to be called when configuration changes in the
+context @var{cfg}.
+@end defun
+
+@defun remove-config-event! cfg handler
+Stops @var{handler} from being called when configuration changes in
+the context @var{cfg}.
+@end defun
+
+@node Configuration errors
+@subsection Configuration errors
+@cindex Configuration errors
+
+All errors in functions in the @code{(geda config)} are reported using
+one of two keys:
+
+@enumerate
+@item
+File errors (e.g. ``Access denied'' or ``File not found'' are
+indicated with the @code{system-error} key.
+@item
+All other errors are indicated using the @code{config-error} key.
+@end enumerate
+
+When a @code{config-error} is signalled, @code{data} part of the error
+arguments is a list containing one of the following symbols:
+
+@table @code
+@item unknown-encoding
+The text being parsed was in an unknown encoding.
+@item parse
+The configuration data wass ill-formed.
+@item key-not-found
+A requested configuration key was not found.
+@item group-not-found
+A requested configuration group was not found.
+@item invalid-value
+A configuration value could not be parsed into the requested format.
+@end table
 
 @node System information
 @section System information
