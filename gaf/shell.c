@@ -26,6 +26,9 @@
 #include <string.h>
 #include <getopt.h>
 
+/* Gettext translation */
+#include "gettext.h"
+
 #include <libgeda/libgeda.h>
 #include <libgeda/libgedaguile.h>
 
@@ -40,8 +43,7 @@ static struct option shell_long_options[] =
 static void
 shell_usage (void)
 {
-  printf (
-"Usage: gaf shell [OPTION ...]\n"
+  printf (_("Usage: gaf shell [OPTION ...]\n"
 "\n"
 "Shell for interactive processing of gEDA data using Scheme.\n"
 "\n"
@@ -56,7 +58,7 @@ shell_usage (void)
 "  -l FILE        load Scheme source code from FILE\n"
 "  -h, --help     display usage information and exit\n"
 "\n"
-"Please report bugs to %s.\n",
+"Please report bugs to %s.\n"),
 PACKAGE_BUGREPORT);
   exit (0);
 }
@@ -97,7 +99,7 @@ cmd_shell_impl (void *data, int argc, char **argv)
       break;
     case '?':
       /* getopt_long already printed an error message */
-      fprintf (stderr, "\nRun `%s --help' for more information.\n", argv[0]);
+      fprintf (stderr, _("\nRun `gaf shell --help' for more information.\n"));
       exit (1);
       break;
     default:

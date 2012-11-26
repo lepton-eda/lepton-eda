@@ -28,6 +28,9 @@
 #include <string.h>
 #include <getopt.h>
 
+/* Gettext translation */
+#include "gettext.h"
+
 #include <glib.h>
 
 #include "builtins.h"
@@ -57,8 +60,7 @@ static struct internal_command commands[] =
 static void
 usage (void)
 {
-  printf (
-"Usage: gaf [OPTION...] COMMAND [ARGS ...]\n"
+  printf (_("Usage: gaf [OPTION...] COMMAND [ARGS ...]\n"
 "\n"
 "gEDA/gaf command-line utility.\n"
 "\n"
@@ -70,7 +72,7 @@ usage (void)
 "Commonly-used commands (type `gaf <cmd> --help' for usage):\n"
 "  shell          Scheme REPL for interactive gEDA data processing\n"
 "\n"
-"Please report bugs to %s.\n",
+"Please report bugs to %s.\n"),
 PACKAGE_BUGREPORT);
   exit (0);
 }
@@ -79,13 +81,12 @@ PACKAGE_BUGREPORT);
 static void
 version (void)
 {
-  printf(
-"gEDA/gaf %s (g%.7s)\n"
+  printf(_("gEDA/gaf %s (g%.7s)\n"
 "Copyright (C) 1998-2012 gEDA developers\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"
 "included in the gEDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n",
+"There is NO WARRANTY, to the extent permitted by law.\n"),
          PACKAGE_DOTTED_VERSION, PACKAGE_GIT_COMMIT);
   exit (0);
 }
@@ -98,6 +99,14 @@ main (int argc, char **argv)
   int cmd_argc = 0;
   char **cmd_argv = NULL;
   int (*cmd_func)(int, char **) = NULL;
+
+  /* Set up gettext */
+#if ENABLE_NLS
+  setlocale (LC_ALL, "");
+  bindtextdomain ("geda-gaf", LOCALEDIR);
+  textdomain ("geda-gaf");
+  bind_textdomain_codeset ("geda-gschem", "UTF-8");
+#endif
 
   while (-1 != (c = getopt_long (argc, argv, short_options,
                                  long_options, NULL))) {
@@ -120,7 +129,7 @@ main (int argc, char **argv)
 
     case '?':
       /* getopt_long already printed an error message */
-      fprintf (stderr, "\nRun `gaf --help' for more information.\n");
+      fprintf (stderr, _("\nRun `gaf --help' for more information.\n"));
       exit (1);
       break;
 
@@ -132,9 +141,9 @@ main (int argc, char **argv)
   /* The next argument should be a command */
   if (optind == argc) {
     fprintf (stderr,
-             "ERROR: You must specify a command to run.\n"
-             "\n"
-             "Run `gaf --help' for more information.\n");
+             _("ERROR: You must specify a command to run.\n"
+               "\n"
+               "Run `gaf --help' for more information.\n"));
     exit (1);
   }
 
@@ -150,9 +159,10 @@ main (int argc, char **argv)
   }
   if (cmd_func == NULL) {
     fprintf (stderr,
-             "ERROR: Unrecognised command `%s'.\n"
-             "\n"
-             "Run `gaf --help' for more information.\n", cmd);
+             _("ERROR: Unrecognised command `%s'.\n"
+               "\n"
+               "Run `gaf --help' for more information.\n"),
+             cmd);
     exit (1);
   }
 

@@ -1,9 +1,12 @@
+SUBDIRS = po
+
 bin_PROGRAMS = gaf
 
 BUILT_SOURCES = shell.x
 
 gaf_SOURCES = \
 	builtins.h \
+	gettext.h \
 	gaf.c \
 	shell.c
 
