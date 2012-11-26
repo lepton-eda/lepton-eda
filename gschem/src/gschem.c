@@ -257,6 +257,9 @@ void main_prog(void *closure, int argc, char *argv[])
   free (input_str); /* M'allocated by scm_to_utf8_string() */
   scm_remember_upto_here_1 (scm_tmp);
 
+  /* Set up default configuration */
+  i_vars_init_gschem_defaults ();
+
   /* Now read in RC files. */
   g_rc_parse_gtkrc();
   x_rc_parse_gschem (w_current, rc_filename);

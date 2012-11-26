@@ -208,3 +208,15 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
 void i_vars_freenames()
 {
 }
+
+
+/*! \brief Setup gschem default configuration.
+ * \par Function Description
+ * Populate the default configuration context with compiled-in
+ * defaults.
+ */
+void
+i_vars_init_gschem_defaults()
+{
+  EdaConfig *cfg = eda_config_get_default_context ();
+}
