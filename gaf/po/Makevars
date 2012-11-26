@@ -4,7 +4,7 @@
 DOMAIN = geda-gaf
 
 # These two variables depend on the location of this directory.
-subdir = po
+subdir = gaf/po
 top_builddir = ../..
 
 # These options get passed to xgettext.
