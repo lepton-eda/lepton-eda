@@ -290,6 +290,13 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
 
   g_return_val_if_fail ((buffer != NULL), NULL);
 
+  /* Check the buffer is valid UTF-8 */
+  if (!g_utf8_validate (buffer, (size < 0) ? -1 : size, NULL)) {
+    g_set_error (err, EDA_ERROR, EDA_ERROR_UNKNOWN_ENCODING,
+                 _("Schematic data was not valid UTF-8"));
+    return NULL;
+  }
+
   tb = s_textbuffer_new (buffer, size);
 
   while (1) {
