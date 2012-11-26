@@ -168,6 +168,7 @@ main (int argc, char **argv)
 
   cmd_argc = argc - optind;
   cmd_argv = argv + optind;
+  optind = 1;
 
   return cmd_func (cmd_argc, cmd_argv);
 }
