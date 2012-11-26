@@ -198,6 +198,8 @@ AC_CONFIG_FILES([Makefile
                  libgedacairo/Makefile
                  libgedacairo/libgedacairo.pc
 
+                 gaf/Makefile
+
                  gschem/Makefile
                  gschem/po/Makefile.in
                  gschem/docs/Makefile
