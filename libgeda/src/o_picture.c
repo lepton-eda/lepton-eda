@@ -127,7 +127,7 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
       line = s_textbuffer_next_line(tb);
       if (line == NULL) break;
 
-      if (g_utf8_collate (line, ".\n") != 0) {
+      if (strcmp (line, ".\n") != 0) {
         encoded_picture = g_string_append (encoded_picture, line);
       } else {
         finished = 1;

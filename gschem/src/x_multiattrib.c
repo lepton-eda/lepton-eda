@@ -1599,7 +1599,7 @@ static void multiattrib_popup_menu(Multiattrib *multiattrib,
   menu = gtk_menu_new();
   for (tmp = item_list; tmp->label != NULL; tmp++) {
     GtkWidget *menuitem;
-    if (g_utf8_collate (tmp->label, "-") == 0) {
+    if (strcmp (tmp->label, "-") == 0) {
       menuitem = gtk_separator_menu_item_new ();
     } else {
       menuitem = gtk_menu_item_new_with_label (_(tmp->label));
