@@ -11,7 +11,7 @@
 @copying
 This manual is for gEDA/gaf, version @value{VERSION}.
 
-Copyright @copyright{} 2011 Peter TB Brett
+Copyright @copyright{} 2011-2012 Peter TB Brett
 
 The text of and illustrations in this document are licensed under a
 Creative Commons Attribution–Share Alike 3.0 Unported license
