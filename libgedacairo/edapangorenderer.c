@@ -311,9 +311,9 @@ void
 eda_pango_renderer_show_layout (EdaPangoRenderer *renderer, PangoLayout *pl,
                                 double x, double y)
 {
-  g_return_if_fail (renderer != NULL);
+  g_return_if_fail (EDA_IS_PANGO_RENDERER (renderer));
   g_return_if_fail (renderer->priv->cr != NULL);
-  g_return_if_fail (pl != NULL);
+  g_return_if_fail (PANGO_IS_LAYOUT (pl));
 
   pango_renderer_draw_layout (PANGO_RENDERER (renderer),
                               pl, x * PANGO_SCALE, y * PANGO_SCALE);

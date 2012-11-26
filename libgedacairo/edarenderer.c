@@ -464,7 +464,7 @@ eda_renderer_draw_list (EdaRenderer *renderer, GList *objects)
 void
 eda_renderer_draw (EdaRenderer *renderer, OBJECT *object)
 {
-  g_return_if_fail (renderer != NULL);
+  g_return_if_fail (EDA_IS_RENDERER(renderer));
 
   EDA_RENDERER_GET_CLASS (renderer)->draw (renderer, object);
 }
@@ -1076,7 +1076,7 @@ eda_renderer_draw_grips_list (EdaRenderer *renderer, GList *objects)
 void
 eda_renderer_draw_grips (EdaRenderer *renderer, OBJECT *object)
 {
-  g_return_if_fail (renderer != NULL);
+  g_return_if_fail (EDA_IS_RENDERER (renderer));
 
   EDA_RENDERER_GET_CLASS (renderer)->draw_grips (renderer, object);
 }
@@ -1085,7 +1085,7 @@ static void
 eda_renderer_default_draw_grips (EdaRenderer *renderer, OBJECT *object)
 {
   g_return_if_fail (object != NULL);
-  g_return_if_fail (renderer != NULL);
+  g_return_if_fail (EDA_IS_RENDERER (renderer));
   g_return_if_fail (renderer->priv->cr != NULL);
 
   if (!eda_renderer_is_drawable (renderer, object))
@@ -1297,7 +1297,7 @@ eda_renderer_draw_cues_list (EdaRenderer *renderer, GList *objects)
 void
 eda_renderer_draw_cues (EdaRenderer *renderer, OBJECT *object)
 {
-  g_return_if_fail (renderer != NULL);
+  g_return_if_fail (EDA_IS_RENDERER (renderer));
   EDA_RENDERER_GET_CLASS (renderer)->draw_cues (renderer, object);
 }
 
@@ -1445,7 +1445,7 @@ eda_renderer_get_user_bounds (EdaRenderer *renderer, OBJECT *object,
                                       double *left, double *top,
                                       double *right, double *bottom)
 {
-  g_return_val_if_fail ((renderer != NULL), FALSE);
+  g_return_val_if_fail (EDA_IS_RENDERER (renderer), FALSE);
 
   return EDA_RENDERER_GET_CLASS (renderer)->user_bounds (renderer, object,
                                                          left, top,
@@ -1548,7 +1548,7 @@ cairo_t *
 eda_renderer_get_cairo_context (EdaRenderer *renderer)
 {
   cairo_t *cr;
-  g_return_val_if_fail ((renderer != NULL), NULL);
+  g_return_val_if_fail (EDA_IS_RENDERER (renderer), NULL);
   g_object_get (G_OBJECT (renderer), "cairo-context", &cr, NULL);
   return cr;
 }
@@ -1556,7 +1556,7 @@ eda_renderer_get_cairo_context (EdaRenderer *renderer)
 gboolean
 eda_renderer_get_hinting_enabled (EdaRenderer *renderer)
 {
-  g_return_val_if_fail ((renderer != NULL), FALSE);
+  g_return_val_if_fail (EDA_IS_RENDERER (renderer), FALSE);
   return EDA_RENDERER_CHECK_FLAG (renderer, FLAG_HINTING);
 }
 
@@ -1564,7 +1564,7 @@ GArray *
 eda_renderer_get_color_map (EdaRenderer *renderer)
 {
   GArray *map = NULL;
-  g_return_val_if_fail ((renderer != NULL), NULL);
+  g_return_val_if_fail (EDA_IS_RENDERER (renderer), NULL);
   g_object_get (G_OBJECT (renderer), "color-map", &map, NULL);
   return map;
 }
@@ -1572,13 +1572,13 @@ eda_renderer_get_color_map (EdaRenderer *renderer)
 void
 eda_renderer_set_color_map (EdaRenderer *renderer, GArray *map)
 {
-  g_return_if_fail (renderer != NULL);
+  g_return_if_fail (EDA_IS_RENDERER (renderer));
   g_object_set (G_OBJECT (renderer), "color-map", map, NULL);
 }
 
 int
 eda_renderer_get_cairo_flags (EdaRenderer *renderer)
 {
-  g_return_val_if_fail ((renderer != NULL), 0);
+  g_return_val_if_fail (EDA_IS_RENDERER (renderer), 0);
   return EDA_RENDERER_CAIRO_FLAGS (renderer);
 }
