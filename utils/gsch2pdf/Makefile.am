@@ -11,8 +11,6 @@ dist_rcdata_DATA = system-gsch2pdfrc
 # don't forget all *.h files */
 gsch2pdf_SOURCES = \
 	main.c \
-	junction.h \
-	junction.c \
 	rc-config.h \
 	rc-config.c \
 	print-settings.h \

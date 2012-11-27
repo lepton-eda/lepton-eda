@@ -47,7 +47,6 @@
 #include <pango/pangocairo.h>
 #include <cairo-pdf.h>
 
-#include "junction.h"
 #include "print-settings.h"
 #include "rc-config.h"
 
@@ -232,37 +231,6 @@ GArray* create_color_map(void)
 
 
 
-static void print_junctions(EdaRenderer *renderer, const GArray *junctions)
-{
-    cairo_t *cairo = eda_renderer_get_cairo_context(renderer);
-    GArray *colors = eda_renderer_get_color_map(renderer);
-    int index;
-
-    COLOR *color = &g_array_index(colors, COLOR, JUNCTION_COLOR);
-
-    cairo_set_source_rgb(
-        cairo,
-        color->r / 255.0,
-        color->g / 255.0,
-        color->b / 255.0
-        );
-
-    for (index=0; index<junctions->len; index++)
-    {
-        sPOINT junction = g_array_index(junctions, sPOINT ,index);
-
-        cairo_arc(
-            cairo,
-            junction.x,
-            junction.y,
-            print_settings_get_junction_size_net(print_settings),
-            0,
-            2 * M_PI
-            );
-
-        cairo_fill(cairo);
-    }
-}
 
 
 
@@ -278,6 +246,9 @@ static void print_object_list(EdaRenderer *renderer, const GList *objects)
 
         node = g_list_next(node);
     }
+
+    for (node = objects; node != 0; node = g_list_next (node))
+      eda_renderer_draw_cues (renderer, (OBJECT *) node->data);
 }
 
 
@@ -353,14 +324,6 @@ static void print_page(TOPLEVEL *current, EdaRenderer *renderer, PAGE *page)
         );
 
     print_object_list(renderer, list);
-
-    GArray *junctions = g_array_new(FALSE, FALSE, sizeof(sPOINT));
-
-    junction_locate(current, list, junctions, NULL);
-
-    print_junctions(renderer, junctions);
-
-    g_array_free(junctions, TRUE);
 
     cairo_restore(cairo);
 }
