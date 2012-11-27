@@ -54,6 +54,8 @@
 
 
 static void print_page(TOPLEVEL *current, EdaRenderer *renderer, PAGE *page);
+static int text_rendered_bounds (void *user_data, OBJECT *object,
+                                 int *left, int *top, int *right, int *bottom);
 
 TOPLEVEL *current;
 static GArray* print_color_map = NULL;
@@ -155,6 +157,11 @@ void gsch2pdf_run(GSCH2PDF* gsch2pdf)
                 NULL
                 );
         }
+
+        /* Make sure libgeda knows how to calculate the bounds of text
+         * taking into account font etc. */
+        o_text_set_rendered_bounds_func (current, text_rendered_bounds,
+                                         renderer);
 
         if (renderer != NULL)
         {
