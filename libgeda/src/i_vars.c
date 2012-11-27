@@ -41,8 +41,12 @@
 #define DEFAULT_BITMAP_DIRECTORY "../lib/bitmaps"
 #define DEFAULT_BUS_RIPPER_SYMNAME "busripper-1.sym"
 
-int   default_init_right = WIDTH_C;
-int   default_init_bottom = HEIGHT_C;
+/* These values are the default extents of the schematic drawing
+ * area. If they do not cover the actual schematic, weird things
+ * happen because the tile mechanism breaks. */
+int   default_init_right = 121000;
+int   default_init_bottom = 90750;
+
 char *default_untitled_name = NULL;
 char *default_bitmap_directory = NULL;
 char *default_bus_ripper_symname = NULL;
