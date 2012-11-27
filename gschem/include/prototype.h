@@ -715,7 +715,7 @@ void find_text_dialog(GSCHEM_TOPLEVEL *w_current);
 void hide_text_dialog(GSCHEM_TOPLEVEL *w_current);
 void show_text_dialog(GSCHEM_TOPLEVEL *w_current);
 void major_changed_dialog(GSCHEM_TOPLEVEL* w_current);
-void x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page);
+gboolean x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page);
 gboolean x_dialog_close_window (GSCHEM_TOPLEVEL *w_current);
 int x_dialog_validate_attribute(GtkWindow* parent, char *attribute);
 void x_dialog_edit_pin_type(GSCHEM_TOPLEVEL *w_current, const GList *obj_list);

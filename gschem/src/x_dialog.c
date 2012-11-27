@@ -4102,14 +4102,18 @@ close_confirmation_dialog_get_selected_pages (CloseConfirmationDialog *dialog)
  *
  *  \param [in] w_current The toplevel environment.
  *  \param [in] page      The page to close.
+ *
+ *  \return TRUE if okay to continue with closing page, FALSE
+ *  otherwise.
  */
-void
+gboolean
 x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
 {
   GtkWidget *dialog;
   PAGE *keep_page;
+  gboolean result = FALSE;
 
-  g_return_if_fail (page != NULL && page->CHANGED);
+  g_return_val_if_fail (page != NULL && page->CHANGED, TRUE);
 
   keep_page = w_current->toplevel->page_current;
 
@@ -4125,7 +4129,7 @@ x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
       case GTK_RESPONSE_NO:
         /* action selected: close without saving */
         /* close the page, discard changes */
-        x_window_close_page (w_current, page);
+        result = TRUE;
         break;
 
 
@@ -4135,7 +4139,7 @@ x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
         i_callback_file_save(w_current, 0, NULL);
         /* has the page been really saved? */
         if (!page->CHANGED) {
-          x_window_close_page (w_current, page);
+          result = TRUE;
         }
         /* no, user has cancelled the save and page has changes */
         /* do not close page */
@@ -4153,9 +4157,10 @@ x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
   gtk_widget_destroy (dialog);
 
   /* Switch back to the page we were on if it wasn't the one being closed */
-  g_return_if_fail (keep_page != NULL);
+  g_return_val_if_fail (keep_page != NULL, result);
   if (keep_page != page)
     s_page_goto (w_current->toplevel, keep_page);
+  return result;
 }
 
 /*! \brief Asks for confirmation before closing a window.

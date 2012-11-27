@@ -1642,12 +1642,11 @@ DEFINE_I_CALLBACK(page_close)
 
   g_return_if_fail (w_current != NULL);
 
-  if (w_current->toplevel->page_current->CHANGED) {
-    x_dialog_close_changed_page (w_current, w_current->toplevel->page_current);
-  } else {
-    x_window_close_page (w_current, w_current->toplevel->page_current);
-  }
+  if (w_current->toplevel->page_current->CHANGED
+      && !x_dialog_close_changed_page (w_current, w_current->toplevel->page_current))
+    return;
 
+  x_window_close_page (w_current, w_current->toplevel->page_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2937,16 +2936,21 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
 DEFINE_I_CALLBACK(hierarchy_up)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  PAGE *page;
   PAGE *up_page;
 
   g_return_if_fail (w_current != NULL);
 
-  up_page = s_hierarchy_find_up_page (w_current->toplevel->pages,
-                                      w_current->toplevel->page_current);
+  page = w_current->toplevel->page_current;
+
+  up_page = s_hierarchy_find_up_page (w_current->toplevel->pages, page);
   if (up_page == NULL) {
     s_log_message(_("Cannot find any schematics above the current one!\n"));
   } else {
+    if (page->CHANGED && !x_dialog_close_changed_page (w_current, page))
+      return;
     x_window_set_current_page(w_current, up_page);
+    x_window_close_page (w_current, page);
   }
 }
 
