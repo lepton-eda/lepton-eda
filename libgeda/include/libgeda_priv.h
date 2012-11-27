@@ -11,7 +11,6 @@
 #include "globals.h"
 #include "o_types.h"
 #include "colors.h"
-#include "papersizes.h"
 #include "prototype.h"
 #include "funcs.h"
 #include "edaconfig.h"

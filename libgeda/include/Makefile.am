@@ -11,7 +11,6 @@ libgedainclude_HEADERS = \
 	libgeda/globals.h \
 	libgeda/libgeda.h \
 	libgeda/o_types.h \
-	libgeda/papersizes.h \
 	libgeda/prototype.h \
 	libgeda/libgedaguile.h \
 	libgeda/struct.h
