@@ -311,7 +311,11 @@ void main_prog(void *closure, int argc, char *argv[])
 #endif
 
   /* Run post-load expressions */
-  g_scm_eval_protected (s_post_load_expr, scm_current_module ());
+  if (scm_is_false (g_scm_eval_protected (s_post_load_expr, scm_current_module ()))) {
+    fprintf (stderr, _("ERROR: Failed to load or evaluate startup script.\n\n"
+                       "The gschem log may contain more information.\n"));
+    exit (1);
+  }
 
   /* open up log window on startup */
   if (w_current->log_window == MAP_ON_STARTUP) {
