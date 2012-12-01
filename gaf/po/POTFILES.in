@@ -1,3 +1,4 @@
 # List of translatable files
 gaf/gaf.c
+gaf/config.c
 gaf/shell.c

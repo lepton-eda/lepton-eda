@@ -8,6 +8,7 @@ gaf_SOURCES = \
 	builtins.h \
 	gettext.h \
 	gaf.c \
+	config.c \
 	shell.c
 
 gaf_CPPFLAGS = \

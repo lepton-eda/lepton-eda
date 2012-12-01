@@ -53,6 +53,7 @@ struct internal_command {
 static struct internal_command commands[] =
   {
     {"shell", cmd_shell},
+    {"config", cmd_config},
     {NULL, NULL},
   };
 
@@ -71,6 +72,7 @@ usage (void)
 "\n"
 "Commonly-used commands (type `gaf <cmd> --help' for usage):\n"
 "  shell          Scheme REPL for interactive gEDA data processing\n"
+"  config         Edit gEDA configuration\n"
 "\n"
 "Please report bugs to %s.\n"),
 PACKAGE_BUGREPORT);
