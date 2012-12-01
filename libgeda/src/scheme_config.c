@@ -193,11 +193,7 @@ SCM_DEFINE (path_config_context, "%path-config-context", 1, 0, 0,
   char *path = scm_to_utf8_string (path_s);
   scm_dynwind_free (path);
 
-  GError *err = NULL;
-  EdaConfig *cfg = eda_config_get_context_for_path (path, &err);
-  if (cfg == NULL) {
-    error_from_gerror (s_path_config_context, &err);
-  }
+  EdaConfig *cfg = eda_config_get_context_for_path (path);
   SCM result = edascm_from_config (cfg);
 
   scm_dynwind_end ();

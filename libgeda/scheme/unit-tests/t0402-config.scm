@@ -61,7 +61,8 @@
   ;; Unfortunately, there's no reliable way of testing the "recurse
   ;; all the way to root and then give up" functionality, because we
   ;; can't control the contents of the superdirectories of the CWD.
-  (assert-thrown 'system-error (path-config-context "/__missing/file/"))
+  (assert-equal "/geda.conf"
+                (config-filename (path-config-context "/__missing/file/")))
   (let ((c (path-config-context *testdir*))
         (a (path-config-context *testdirA*))
         (b (path-config-context *testdirB*)))

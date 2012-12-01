@@ -179,8 +179,7 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile,
   /* If no configuration file was specified, get the default
    * configuration file for the rc file. */
   if (cfg == NULL) {
-    cfg = eda_config_get_context_for_path (name_norm, err);
-    if (*err != NULL) return FALSE;
+    cfg = eda_config_get_context_for_path (name_norm);
   }
   /* If the configuration wasn't loaded yet, attempt to load
    * it. Config loading is on a best-effort basis; if we fail, just
@@ -429,10 +428,8 @@ g_rc_parse_handler (TOPLEVEL *toplevel,
    * current working directory's configuration context here, no matter
    * where the rc file is located on disk. */
   if (rcfile != NULL) {
-    EdaConfig *cwd_cfg = eda_config_get_context_for_path (".", &err);
-    if (cwd_cfg != NULL)
-      g_rc_parse_file (toplevel, rcfile, cwd_cfg, &err);
-    HANDLER_DISPATCH;
+    EdaConfig *cwd_cfg = eda_config_get_context_for_path (".");
+    g_rc_parse_file (toplevel, rcfile, cwd_cfg, &err); HANDLER_DISPATCH;
   }
 
 #undef HANDLER_DISPATCH
@@ -762,13 +759,7 @@ g_rc_rc_config()
   SCM cfg_s = scm_fluid_ref (scheme_rc_config_fluid);
   if (!scm_is_false (cfg_s)) return cfg_s;
 
-  GError *err = NULL;
-  EdaConfig *cfg = eda_config_get_context_for_path (".", &err);
-  if (cfg == NULL) {
-    g_warning (_("Failed to obtain configuration for '.': %s"),
-               err == NULL ? _("An unknown error occurred") : err->message);
-    return SCM_BOOL_F;
-  }
+  EdaConfig *cfg = eda_config_get_context_for_path (".");
   return edascm_from_config (cfg);
 }
 

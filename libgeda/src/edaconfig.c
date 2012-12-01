@@ -411,12 +411,12 @@ chdir_get_current_dir (const gchar *filename, GError **error)
  * "geda.conf" file.  If the root directory is reached without finding
  * a configuration file, returns the directory part of \a path (if \a
  * path points to a regular file) or \a path itself (if \a path is a
- * directory).  If an unrecoverable error occurs, returns NULL and
- * sets \a error.
+ * directory).  If an unrecoverable error occurs, returns \a path and
+ * logs a critical error.
  *
  * \todo find_project_root() is probably generally useful. */
 static gchar *
-find_project_root (const gchar *path, GError **error)
+find_project_root (const gchar *path)
 {
   gchar *dir = NULL;
   gchar *next_dir = NULL;
@@ -430,16 +430,16 @@ find_project_root (const gchar *path, GError **error)
 
   /* First, try to change directory to the requested path.  This
    * allows us to check that it exists and is a directory, and to
-   * normalise the filename all at once. If it's not a directory, we
-   * recurse for its containing directory.  Any other errors cause
-   * failure.*/
+   * normalise the filename all at once. If it's not a directory or
+   * doesn't exist, we recurse for its containing directory.  Any
+   * other errors cause failure. */
   dir = chdir_get_current_dir (path, &tmp_err);
   if (dir == NULL) {
-    if (tmp_err->code == G_FILE_ERROR_NOTDIR) {
-      g_error_free (tmp_err);
-      tmp_err = NULL;
+    if (g_error_matches (tmp_err, G_FILE_ERROR, G_FILE_ERROR_NOTDIR)
+        || g_error_matches (tmp_err, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
+      g_clear_error (&tmp_err);
       next_dir = g_path_get_dirname (path);
-      result = find_project_root (next_dir, error);
+      result = find_project_root (next_dir);
     }
     goto project_root_done;
   }
@@ -475,16 +475,15 @@ find_project_root (const gchar *path, GError **error)
                 save_cwd, g_strerror (errno));
   }
 
-  /* Propagate error, if there was one */
+  /* Log error message, if there was one */
   if (tmp_err != NULL) {
-    g_propagate_prefixed_error (error, tmp_err,
-                                _("Could not find project root for '%s': "),
-                                path);
+    g_critical (_("Could not find project root for '%s': "), path);
+    g_clear_error (&tmp_err);
   }
   g_free (dir);
   g_free (next_dir);
   g_free (save_cwd);
-  return result;
+  return (result != NULL) ? result : g_strdup (path);
 }
 
 /*! \public \memberof EdaConfig
@@ -509,11 +508,10 @@ find_project_root (const gchar *path, GError **error)
  * \a path will return the same configuration context.
  *
  * \param [in] path    Path to search for configuration from.
- * \param [out] error  Location to return error information.
  * \return a local #EdaConfig configuration context for \a path.
  */
 EdaConfig *
-eda_config_get_context_for_path (const gchar *path, GError **error)
+eda_config_get_context_for_path (const gchar *path)
 {
   static GHashTable *local_contexts = NULL;
   gchar *root;
@@ -532,8 +530,7 @@ eda_config_get_context_for_path (const gchar *path, GError **error)
 
   /* Find the project root, and the corresponding configuration
    * filename. */
-  root = find_project_root (path, error);
-  if (root == NULL) return NULL;
+  root = find_project_root (path);
 
   filename = g_build_filename (root, LOCAL_CONFIG_NAME, NULL);
   g_free (root);

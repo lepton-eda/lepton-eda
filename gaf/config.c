@@ -134,15 +134,10 @@ cmd_config (int argc, char **argv)
   /* If no configuration is available yet, grab the project
    * configuration. */
   if (cfg == NULL) {
-    GError *err = NULL;
     if (project_store_path == NULL)
       project_store_path = ".";
 
-    cfg = eda_config_get_context_for_path (project_store_path, &err);
-    if (cfg == NULL) {
-      fprintf (stderr, _("ERROR: %s.\n"), err->message);
-      exit (1);
-    }
+    cfg = eda_config_get_context_for_path (project_store_path);
   }
 
   /* If no further arguments were specified, output the configuration
