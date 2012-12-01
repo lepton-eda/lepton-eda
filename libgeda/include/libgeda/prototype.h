@@ -34,6 +34,7 @@ gboolean g_rc_parse_local (TOPLEVEL *toplevel, const gchar *rcname, const gchar 
 void g_rc_parse(TOPLEVEL *toplevel, const gchar* pname, const gchar* rcname, const gchar* rcfile);
 void g_rc_parse_handler (TOPLEVEL *toplevel, const gchar *rcname, const gchar *rcfile, ConfigParseErrorFunc handler, void *user_data);
 SCM g_rc_rc_filename();
+SCM g_rc_rc_config ();
 
 /* i_vars.c */
 void i_vars_libgeda_set(TOPLEVEL *toplevel);

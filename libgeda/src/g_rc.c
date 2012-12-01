@@ -42,6 +42,7 @@
 #endif
 
 #include "libgeda_priv.h"
+#include "libgedaguile.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -148,6 +149,8 @@ g_rc_try_mark_read (TOPLEVEL *toplevel, gchar *filename, GError **err)
   return TRUE;
 }
 
+SCM scheme_rc_config_fluid = SCM_UNDEFINED;
+
 /*! \brief Load an RC file.
  * \par Function Description
  * Load and run the Scheme initialisation file \a rcfile, reporting
@@ -155,46 +158,65 @@ g_rc_try_mark_read (TOPLEVEL *toplevel, gchar *filename, GError **err)
  *
  * \param toplevel  The current #TOPLEVEL structure.
  * \param rcfile    The filename of the RC file to load.
+ * \param cfg       The configuration context to use while loading.
  * \param err       Return location for errors, or NULL;
  * \return TRUE on success, FALSE on failure.
  */
 static gboolean
-g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile, GError **err)
+g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile,
+                 EdaConfig *cfg, GError **err)
 {
   gchar *name_norm = NULL;
   GError *tmp_err = NULL;
+  gboolean status = FALSE;
   g_return_val_if_fail ((toplevel != NULL), FALSE);
   g_return_val_if_fail ((rcfile != NULL), FALSE);
 
   /* Normalise filename */
-  name_norm = f_normalize_filename (rcfile, &tmp_err);
-  if (name_norm == NULL) goto parse_file_error;
+  name_norm = f_normalize_filename (rcfile, err);
+  if (name_norm == NULL) return FALSE;
+
+  /* If no configuration file was specified, get the default
+   * configuration file for the rc file. */
+  if (cfg == NULL) {
+    cfg = eda_config_get_context_for_path (name_norm, err);
+    if (*err != NULL) return FALSE;
+  }
+  /* If the configuration wasn't loaded yet, attempt to load
+   * it. Config loading is on a best-effort basis; if we fail, just
+   * print a warning. */
+  if (!eda_config_is_loaded (cfg)) {
+    eda_config_load (cfg, &tmp_err);
+    if (tmp_err != NULL && !g_error_matches (tmp_err, G_FILE_ERROR, G_FILE_ERROR_NOENT))
+      g_warning (_("Failed to load config from '%s': %s\n"),
+                 eda_config_get_filename (cfg), tmp_err->message);
+    g_clear_error (&tmp_err);
+  }
+
+  /* If the fluid for storing the relevant configuration context for
+   * RC file reading hasn't been created yet, create it. */
+  if (scheme_rc_config_fluid == SCM_UNDEFINED)
+    scheme_rc_config_fluid = scm_permanent_object (scm_make_fluid ());
 
   /* Attempt to load the RC file, if it hasn't been loaded already.
    * If g_rc_try_mark_read() succeeds, it stores name_norm in
    * toplevel, so we *don't* free it. */
-  if (g_rc_try_mark_read (toplevel, name_norm, &tmp_err)
-      && g_read_file (toplevel, name_norm, &tmp_err)) {
-    s_log_message (_("Loaded RC file [%s]\n"), name_norm);
-    return TRUE;
-  }
+  scm_dynwind_begin (0);
+  scm_dynwind_fluid (scheme_rc_config_fluid, edascm_from_config (cfg));
+  status = (g_rc_try_mark_read (toplevel, name_norm, &tmp_err)
+            && g_read_file (toplevel, name_norm, &tmp_err));
+  scm_dynwind_end ();
 
- parse_file_error:
-  /* Copy tmp_err into err, with a prefixed message. */
-  /*! \todo We should upgrade to GLib >= 2.16 and use
-   * g_propagate_prefixed_error(). */
-  if (err == NULL) {
-    g_error_free (tmp_err);
+  if (status) {
+    s_log_message (_("Loaded RC file [%s]\n"), name_norm);
   } else {
-    gchar *orig_msg = tmp_err->message;
-    tmp_err->message =
-      g_strdup_printf (_("Failed to load RC file [%s]: %s"),
-                       (name_norm != NULL) ? name_norm : rcfile, orig_msg);
-    g_free (orig_msg);
-    *err = tmp_err;
+    /* Copy tmp_err into err, with a prefixed message. */
+    g_propagate_prefixed_error (err, tmp_err,
+                                _("Failed to load RC file [%s]: "),
+                                name_norm);
   }
   g_free (name_norm);
-  return FALSE;
+  return status;
 }
 
 /*! \brief Load a system RC file.
@@ -212,13 +234,17 @@ gboolean
 g_rc_parse_system (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
 {
   gchar *sysname = NULL;
+  gchar *rcfile = NULL;
   gboolean status;
 
   /* Default to gafrc */
   rcname = (rcname != NULL) ? rcname : "gafrc";
 
   sysname = g_strdup_printf ("system-%s", rcname);
-  status = g_rc_parse_local (toplevel, sysname, s_path_sys_config (), err);
+  rcfile = g_build_filename (s_path_sys_config (), sysname, NULL);
+  status = g_rc_parse_file (toplevel, rcfile,
+                            eda_config_get_system_context (), err);
+  g_free (rcfile);
   g_free (sysname);
   return status;
 }
@@ -237,10 +263,17 @@ g_rc_parse_system (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
 gboolean
 g_rc_parse_user (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
 {
+  gchar *rcfile = NULL;
+  gboolean status;
+
   /* Default to gafrc */
   rcname = (rcname != NULL) ? rcname : "gafrc";
 
-  return g_rc_parse_local (toplevel, rcname, s_path_user_config (), err);
+  rcfile = g_build_filename (s_path_user_config (), rcname, NULL);
+  status = g_rc_parse_file (toplevel, rcfile,
+                            eda_config_get_user_context (), err);
+  g_free (rcfile);
+  return status;
 }
 
 /*! \brief Load a local RC file.
@@ -281,7 +314,7 @@ g_rc_parse_local (TOPLEVEL *toplevel, const gchar *rcname, const gchar *path,
   }
 
   rcfile = g_build_filename (dir, rcname, NULL);
-  status = g_rc_parse_file (toplevel, rcfile, err);
+  status = g_rc_parse_file (toplevel, rcfile, NULL, err);
 
   g_free (dir);
   g_free (rcfile);
@@ -379,7 +412,7 @@ g_rc_parse_handler (TOPLEVEL *toplevel,
 #endif
 #define HANDLER_DISPATCH \
   do { if (err == NULL) break;  handler (&err, user_data);        \
-       g_error_free (err); err = NULL; } while (0)
+       g_clear_error (&err); } while (0)
 
   /* Load RC files in order. */
   /* First gafrc files. */
@@ -392,9 +425,14 @@ g_rc_parse_handler (TOPLEVEL *toplevel,
     g_rc_parse_user (toplevel, rcname, &err); HANDLER_DISPATCH;
     g_rc_parse_local (toplevel, rcname, NULL, &err); HANDLER_DISPATCH;
   }
-  /* Finally, optional additional RC file. */
+  /* Finally, optional additional RC file.  Specifically use the
+   * current working directory's configuration context here, no matter
+   * where the rc file is located on disk. */
   if (rcfile != NULL) {
-    g_rc_parse_file (toplevel, rcfile, &err); HANDLER_DISPATCH;
+    EdaConfig *cwd_cfg = eda_config_get_context_for_path (".", &err);
+    if (cwd_cfg != NULL)
+      g_rc_parse_file (toplevel, rcfile, cwd_cfg, &err);
+    HANDLER_DISPATCH;
   }
 
 #undef HANDLER_DISPATCH
@@ -707,6 +745,31 @@ g_rc_rc_filename()
   }
 
   return scm_source_property (source, scm_sym_filename);
+}
+
+/*!
+ * \brief Get a configuration context for the current RC file.
+ * \par Function Description
+ * Returns the configuration context applicable to the RC file being
+ * evaluated.  This function is intended to support gEDA transition
+ * from functions in RC files to static configuration files.
+ *
+ * \returns An EdaConfig smob.
+ */
+SCM
+g_rc_rc_config()
+{
+  SCM cfg_s = scm_fluid_ref (scheme_rc_config_fluid);
+  if (!scm_is_false (cfg_s)) return cfg_s;
+
+  GError *err = NULL;
+  EdaConfig *cfg = eda_config_get_context_for_path (".", &err);
+  if (cfg == NULL) {
+    g_warning (_("Failed to obtain configuration for '.': %s"),
+               err == NULL ? _("An unknown error occurred") : err->message);
+    return SCM_BOOL_F;
+  }
+  return edascm_from_config (cfg);
 }
 
 /*! \todo Finish function description!!!
