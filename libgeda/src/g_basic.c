@@ -77,7 +77,7 @@ static SCM protected_body_eval (void *data)
  *  \par Function Description
  *
  *  Often a libgeda program (or libgeda itself) will need to call out
- *  to Scheme code, for example to load a Scheme configuration file.
+ *  to Scheme code, for example to load a Scheme initialisation (RC) file.
  *  If an error or exception caused by such code goes uncaught, it
  *  locks up the Scheme interpreter, stopping any further Scheme code
  *  from being run until the program is restarted.

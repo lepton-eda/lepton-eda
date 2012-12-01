@@ -172,12 +172,12 @@ int f_open(TOPLEVEL *toplevel, PAGE *page,
 /*! \brief Opens the schematic file with fine-grained control over behaviour.
  *  \par Function Description
  *  Opens the schematic file and carries out a number of actions
- *  depending on the \a flags set.  If #F_OPEN_RC is set, executes
- *  configuration files found in the target directory.  If
- *  #F_OPEN_CHECK_BACKUP is set, warns user if a backup is found for
- *  the file being loaded, and possibly prompts user for whether to
- *  load the backup instead.  If #F_OPEN_RESTORE_CWD is set, does not
- *  change the working directory to that of the file being loaded.
+ *  depending on the \a flags set.  If #F_OPEN_RC is set, executes RC
+ *  files found in the target directory.  If #F_OPEN_CHECK_BACKUP is
+ *  set, warns user if a backup is found for the file being loaded,
+ *  and possibly prompts user for whether to load the backup instead.
+ *  If #F_OPEN_RESTORE_CWD is set, does not change the working
+ *  directory to that of the file being loaded.
  *
  *  \param [in,out] toplevel  The TOPLEVEL object to load the schematic into.
  *  \param [in]     filename   A character string containing the file name
@@ -242,7 +242,7 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
   if (flags & F_OPEN_RC) {
     g_rc_parse_local (toplevel, "gafrc", file_directory, &tmp_err);
     if (tmp_err != NULL) {
-      /* Config files are allowed to be missing or skipped; check for
+      /* RC files are allowed to be missing or skipped; check for
        * this. */
       if (!g_error_matches (tmp_err, G_FILE_ERROR, G_FILE_ERROR_NOENT) &&
           !g_error_matches (tmp_err, EDA_ERROR, EDA_ERROR_RC_TWICE)) {

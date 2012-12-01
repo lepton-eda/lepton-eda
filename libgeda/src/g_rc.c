@@ -18,9 +18,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*! \file g_rc.c
- *  \brief Parse configuration files.
+ *  \brief Execute Scheme initialisation files.
  *
- * Contains functions to open, parse and manage gEDA configuration
+ * Contains functions to open, parse and manage Scheme initialisation
  * (RC) files.
  */
 
@@ -113,17 +113,17 @@ SCM g_rc_mode_general(SCM scmmode,
   return ret;
 }
 
-/*! \brief Mark a configuration file as read.
+/*! \brief Mark an RC file as loaded.
  * \par Function Description
- * If the config file \a filename has not already been loaded, mark it
- * as loaded and return TRUE, storing \a filename in \a toplevel (\a
- * filename should not subsequently be freed).  Otherwise, return
- * FALSE, and set \a err appropriately.
+ * If the Scheme initialisation file \a filename has not already been
+ * loaded, mark it as loaded and return TRUE, storing \a filename in
+ * \a toplevel (\a filename should not subsequently be freed).
+ * Otherwise, return FALSE, and set \a err appropriately.
  *
  * \note Should only be called by g_rc_parse_file().
  *
  * \param toplevel  The current #TOPLEVEL structure.
- * \param filename  The config file name to test.
+ * \param filename  The RC file name to test.
  * \param err       Return location for errors, or NULL.
  * \return TRUE if \a filename not already loaded, FALSE otherwise.
  */
@@ -139,7 +139,7 @@ g_rc_try_mark_read (TOPLEVEL *toplevel, gchar *filename, GError **err)
                               (GCompareFunc) strcmp);
   if (found != NULL) {
     g_set_error (err, EDA_ERROR, EDA_ERROR_RC_TWICE,
-                 _("Config file already loaded"));
+                 _("RC file already loaded"));
     return FALSE;
   }
 
@@ -148,12 +148,13 @@ g_rc_try_mark_read (TOPLEVEL *toplevel, gchar *filename, GError **err)
   return TRUE;
 }
 
-/*! \brief Load a configuration file.
+/*! \brief Load an RC file.
  * \par Function Description
- * Load the configuration file \a rcfile, reporting errors via \a err.
+ * Load and run the Scheme initialisation file \a rcfile, reporting
+ * errors via \a err.
  *
  * \param toplevel  The current #TOPLEVEL structure.
- * \param rcfile    The filename of the configuration file to load.
+ * \param rcfile    The filename of the RC file to load.
  * \param err       Return location for errors, or NULL;
  * \return TRUE on success, FALSE on failure.
  */
@@ -169,12 +170,12 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile, GError **err)
   name_norm = f_normalize_filename (rcfile, &tmp_err);
   if (name_norm == NULL) goto parse_file_error;
 
-  /* Attempt to load the rc file, if it hasn't been loaded already.
+  /* Attempt to load the RC file, if it hasn't been loaded already.
    * If g_rc_try_mark_read() succeeds, it stores name_norm in
    * toplevel, so we *don't* free it. */
   if (g_rc_try_mark_read (toplevel, name_norm, &tmp_err)
       && g_read_file (toplevel, name_norm, &tmp_err)) {
-    s_log_message (_("Parsed config from [%s]\n"), name_norm);
+    s_log_message (_("Loaded RC file [%s]\n"), name_norm);
     return TRUE;
   }
 
@@ -187,7 +188,7 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile, GError **err)
   } else {
     gchar *orig_msg = tmp_err->message;
     tmp_err->message =
-      g_strdup_printf (_("Unable to parse config from [%s]: %s"),
+      g_strdup_printf (_("Failed to load RC file [%s]: %s"),
                        (name_norm != NULL) ? name_norm : rcfile, orig_msg);
     g_free (orig_msg);
     *err = tmp_err;
@@ -196,14 +197,14 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile, GError **err)
   return FALSE;
 }
 
-/*! \brief Load a system configuration file.
+/*! \brief Load a system RC file.
  * \par Function Description
- * Attempts to load the system configuration file with basename \a
- * rcname.  The string "system-" is prefixed to \a rcname.  If \a
- * rcname is NULL, the default value of "gafrc" is used.
+ * Attempts to load and run the system Scheme initialisation file with
+ * basename \a rcname.  The string "system-" is prefixed to \a rcname.
+ * If \a rcname is NULL, the default value of "gafrc" is used.
  *
  * \param toplevel  The current #TOPLEVEL structure.
- * \param rcname    The basename of the configuration file to load, or NULL.
+ * \param rcname    The basename of the RC file to load, or NULL.
  * \param err       Return location for errors, or NULL.
  * \return TRUE on success, FALSE on failure.
  */
@@ -222,14 +223,14 @@ g_rc_parse_system (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
   return status;
 }
 
-/*! \brief Load a user configuration file.
+/*! \brief Load a user RC file.
  * \par Function Description
- * Attempts to load the user configuration file with basename \a
- * rcname.  If \a rcname is NULL, the default value of "gafrc" is
+ * Attempts to load the user Scheme initialisation file with basename
+ * \a rcname.  If \a rcname is NULL, the default value of "gafrc" is
  * used.
  *
  * \param toplevel  The current #TOPLEVEL structure.
- * \param rcname    The basename of the configuration file to load, or NULL.
+ * \param rcname    The basename of the RC file to load, or NULL.
  * \param err       Return location for errors, or NULL.
  * \return TRUE on success, FALSE on failure.
  */
@@ -242,19 +243,19 @@ g_rc_parse_user (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
   return g_rc_parse_local (toplevel, rcname, s_path_user_config (), err);
 }
 
-/*! \brief Load a local configuration file.
+/*! \brief Load a local RC file.
  * \par Function Description
- * Attempts to load the configuration file with basename \a rcname
- * corresponding to \a path, reporting errors via \a err.  If \a path
- * is a directory, looks for a file named \a rcname in that
+ * Attempts to load the Scheme initialisation file with basename \a
+ * rcname corresponding to \a path, reporting errors via \a err.  If
+ * \a path is a directory, looks for a file named \a rcname in that
  * directory. Otherwise, looks for a file named \a rcname in the same
  * directory as \a path. If \a path is NULL, looks in the current
  * directory. If \a rcname is NULL, the default value of "gafrc" is
  * used.
  *
  * \param toplevel  The current #TOPLEVEL structure.
- * \param rcname    The basename of the configuration file to load, or NULL.
- * \param path      The path to load a configuration file for, or NULL.
+ * \param rcname    The basename of the RC file to load, or NULL.
+ * \param path      The path to load a RC file for, or NULL.
  * \param err       Return location for errors, or NULL.
  * \return TRUE on success, FALSE on failure.
  */
@@ -300,7 +301,7 @@ g_rc_parse__process_error (GError **err, const gchar *pname)
     fprintf(stderr, "%s\n", msgl);
 
   } else {
-    /* Config files are allowed to be missing or skipped; check for
+    /* RC files are allowed to be missing or skipped; check for
      * this. */
     if (g_error_matches (*err, G_FILE_ERROR, G_FILE_ERROR_NOENT) ||
         g_error_matches (*err, EDA_ERROR, EDA_ERROR_RC_TWICE)) {
@@ -322,8 +323,9 @@ g_rc_parse__process_error (GError **err, const gchar *pname)
 /*! \brief General RC file parsing function.
  * \par Function Description
  * Calls g_rc_parse_handler() with the default error handler. If any
- * error other than ENOENT occurs while parsing a configuration file,
- * prints an informative message and calls exit(1).
+ * error other than ENOENT occurs while loading or running a Scheme
+ * initialisation file, prints an informative message and calls
+ * exit(1).
  *
  * \bug libgeda shouldn't call exit() - this function calls
  *      g_rc_parse__process_error(), which does.
@@ -334,8 +336,8 @@ g_rc_parse__process_error (GError **err, const gchar *pname)
  *
  * \param [in] toplevel  The current #TOPLEVEL structure.
  * \param [in] pname     The name of the application (usually argv[0]).
- * \param [in] rcname    Config file basename, or NULL.
- * \param [in] rcfile    Specific config file path, or NULL.
+ * \param [in] rcname    RC file basename, or NULL.
+ * \param [in] rcfile    Specific RC file path, or NULL.
  */
 void
 g_rc_parse (TOPLEVEL *toplevel, const gchar *pname,
@@ -348,11 +350,11 @@ g_rc_parse (TOPLEVEL *toplevel, const gchar *pname,
 
 /*! \brief General RC file parsing function.
  * \par Function Description
- * Attempt to load system, user and local (current working directory)
- * configuration files, first with the default "gafrc" basename and
- * then with the basename \a rcname, if \a rcname is not NULL.
- * Additionally, attempt to load configuration from \a rcfile if \a
- * rcfile is not NULL.
+ * Attempt to load and run system, user and local (current working directory)
+ * Scheme initialisation files, first with the default "gafrc"
+ * basename and then with the basename \a rcname, if \a rcname is not
+ * NULL.  Additionally, attempt to load and run \a rcfile
+ * if \a rcfile is not NULL.
  *
  * If an error occurs, calls \a handler with the provided \a user_data
  * and a GError.
@@ -360,9 +362,9 @@ g_rc_parse (TOPLEVEL *toplevel, const gchar *pname,
  * \see g_rc_parse().
  *
  * \param toplevel  The current #TOPLEVEL structure.
- * \param rcname    Config file basename, or NULL.
- * \param rcfile    Specific config file path, or NULL.
- * \param handler   Handler function for config parse errors.
+ * \param rcname    RC file basename, or NULL.
+ * \param rcfile    Specific RC file path, or NULL.
+ * \param handler   Handler function for RC errors.
  * \param user_data Data to be passed to \a handler.
  */
 void
@@ -379,7 +381,7 @@ g_rc_parse_handler (TOPLEVEL *toplevel,
   do { if (err == NULL) break;  handler (&err, user_data);        \
        g_error_free (err); err = NULL; } while (0)
 
-  /* Load configuration files in order. */
+  /* Load RC files in order. */
   /* First gafrc files. */
   g_rc_parse_system (toplevel, NULL, &err); HANDLER_DISPATCH;
   g_rc_parse_user (toplevel, NULL, &err); HANDLER_DISPATCH;
@@ -390,7 +392,7 @@ g_rc_parse_handler (TOPLEVEL *toplevel,
     g_rc_parse_user (toplevel, rcname, &err); HANDLER_DISPATCH;
     g_rc_parse_local (toplevel, rcname, NULL, &err); HANDLER_DISPATCH;
   }
-  /* Finally, optional additional config file. */
+  /* Finally, optional additional RC file. */
   if (rcfile != NULL) {
     g_rc_parse_file (toplevel, rcfile, &err); HANDLER_DISPATCH;
   }
