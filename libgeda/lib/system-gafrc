@@ -20,6 +20,7 @@
 (load-from-path "geda.scm")
 
 ;; Import deprecated Scheme functions
+(load-from-path "geda-deprecated-config.scm")
 (use-modules (geda deprecated))
 
 
