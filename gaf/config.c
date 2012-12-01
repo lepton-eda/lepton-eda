@@ -154,10 +154,12 @@ cmd_config (int argc, char **argv)
         eda_config_get_filename (parent) == NULL) continue;
 
     if (!eda_config_load (parent, &err)) {
-      fprintf (stderr, _("WARNING: Could not load '%s': %s.\n"),
-               eda_config_get_filename (parent),
-               err->message);
-      g_error_free (err);
+      if (!g_error_matches (err, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
+        fprintf (stderr, _("WARNING: Could not load '%s': %s.\n"),
+                 eda_config_get_filename (parent),
+                 err->message);
+      }
+      g_clear_error (&err);
     }
   }
 
