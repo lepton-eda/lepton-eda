@@ -1500,5 +1500,4 @@ void o_grips_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
     default:
       g_return_if_reached ();
   }
-  eda_renderer_draw_grips (renderer, w_current->which_object);
 }

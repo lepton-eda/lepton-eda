@@ -242,7 +242,6 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
         break;
 
       case GRIPS:
-        break;
         if (w_current->rubber_visible)
           o_grips_draw_rubber (w_current, renderer);
         break;
