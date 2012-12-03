@@ -36,7 +36,7 @@
 ;; function OLD-ID.  The returned closure takes an arbitrary number of
 ;; arguments, and does nothing other than print a deprecation message
 ;; the first time it is called.
-(define (%rc-dead-config old-id)
+(define (rc-dead-config old-id)
   ;; FIXME more helpful error message with link to documentation.
   (define (deprecation-warning)
     (format (current-error-port)
@@ -47,15 +47,15 @@
     (lambda args
       (or warned? (begin (deprecation-warning) (set! warned? #t))))))
 
-;; Convenience macro for using %rc-dead-config.
+;; Convenience macro for using rc-dead-config.
 ;;
-;;   %define-rc-dead-config OLD-ID
+;;   define-rc-dead-config OLD-ID
 ;;
 ;; Creates a dead rc configuration function called OLD-ID.
-(define-syntax %define-rc-dead-config
+(define-syntax define-rc-dead-config
   (syntax-rules ()
     ((_ old-id)
-     (define old-id (%rc-dead-config (quote old-id))))))
+     (define old-id (rc-dead-config (quote old-id))))))
 
 ;; Returns an RC function closure to replace the legacy configuration
 ;; function OLD-ID. The returned closure takes an arbitrary number of
@@ -63,7 +63,7 @@
 ;; and KEY to the result of passing its arguments to
 ;; VALUE-TRANSFORMER.  The first time the closure is called, it prints
 ;; a deprecation message.
-(define (%rc-deprecated-config old-id group key value-transformer)
+(define (rc-deprecated-config old-id group key value-transformer)
   ;; FIXME more helpful error message with link to documentation.
   (define (deprecation-warning)
     (format (current-error-port)
@@ -80,18 +80,18 @@ release.  Please use configuration files instead.
       ((@ (geda config) config-set!)
        (rc-config) group key (apply value-transformer args)))))
 
-;; Convenience macro for using %rc-deprecated-config.
+;; Convenience macro for using rc-deprecated-config.
 ;;
-;;   %define-rc-deprecated-config OLD-ID GROUP KEY VALUE-TRANSFORMER
+;;   define-rc-deprecated-config OLD-ID GROUP KEY VALUE-TRANSFORMER
 ;;
 ;; Creates a deprecated rc configuration function called OLD-ID that
 ;; uses VALUE-TRANSFORMER to set the configuration parameter by GROUP
 ;; and KEY.
-(define-syntax %define-rc-deprecated-config
+(define-syntax define-rc-deprecated-config
   (syntax-rules ()
     ((_ old-id group key value-transformer)
-     (define old-id (%rc-deprecated-config (quote old-id) group key
+     (define old-id (rc-deprecated-config (quote old-id) group key
                                            value-transformer)))))
 
-;; Identity value transformer for %define-rc-deprecated-config
-(define (%rc-deprecated-string-transformer str) str)
+;; Identity value transformer for define-rc-deprecated-config
+(define (rc-deprecated-string-transformer str) str)
