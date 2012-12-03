@@ -40,10 +40,7 @@
   ;; FIXME more helpful error message with link to documentation.
   (define (deprecation-warning)
     (format (current-error-port)
-"The RC file function '~A' is deprecated and does nothing.
-
-RC configuration functions will be removed in an upcoming gEDA
-release.  Please use configuration files instead.
+"WARNING: The RC file function '~A' is deprecated and does nothing.
 
 " old-id))
   (let ((warned? #f))
@@ -70,7 +67,7 @@ release.  Please use configuration files instead.
   ;; FIXME more helpful error message with link to documentation.
   (define (deprecation-warning)
     (format (current-error-port)
-"The RC file function '~A' is deprecated.
+"WARNING: The RC file function '~A' is deprecated.
 
 RC configuration functions will be removed in an upcoming gEDA
 release.  Please use configuration files instead.
