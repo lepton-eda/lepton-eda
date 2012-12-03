@@ -18,4 +18,11 @@
 ; filename is specified on the command line
 (gschem-image "dummyfilename")
 
+(format (current-error-port)
+"WARNING: Exporting images with 'image.scm' is deprecated.
+
+Please use `gaf export' instead.  See `man gaf' for details.
+
+")
+
 (gschem-exit)

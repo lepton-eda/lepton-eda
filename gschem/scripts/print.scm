@@ -18,4 +18,13 @@
 ; filename is specified on the command line
 (gschem-pdf "dummyfilename")
 
+(format (current-error-port)
+"WARNING: Exporting with 'print.scm' is deprecated.  Also, it now
+outputs PDF rather than PostScript, which is probably not what you
+want.
+
+Please use `gaf export' instead.  See `man gaf' for details.
+
+")
+
 (gschem-exit)
