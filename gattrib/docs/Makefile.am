@@ -1,5 +1,5 @@
 EXTRA_DIST = gattrib.dox what-is-gattrib.html what-is-geda.html \
-	     gattrib-main.txt logo.png
+	     gattrib-main.txt logo.png gattrib.1.in
 
 all: 
 	@echo 'Type: make doxygen  to create doxygen documentation for gattrib'
@@ -15,10 +15,14 @@ endif
 
 dist_man_MANS = gattrib.1
 
+.1.in.1:
+	d=`LANG=C date -d $(DATE_VERSION) "+%B %-d, %Y"` ; \
+	v="$(DOTTED_VERSION).$(DATE_VERSION)" ; \
+	sed -e"s:[@]DATE@:$$d:" -e"s:[@]VERSION@:$$v:" < $< > $@
 
 # Rules for converting man->html
 html_man_files = gattrib.html
-SUFFIXES = .1 .html
+SUFFIXES = .1.in .1 .html
 
 docsmandir=$(docdir)/man
 dist_docsman_DATA=$(html_man_files)

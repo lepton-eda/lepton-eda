@@ -1,6 +1,6 @@
 .\"Created with GNOME Manpages Editor Wizard
 .\"http://sourceforge.net/projects/gmanedit2
-.TH \fBgxyrs\fP 1 "Agosto 22, 2010" "" "\fBgxyrs\fP"
+.TH \fBgxyrs\fP 1 "@DATE@" "gEDA Project" "@VERSION@"
 
 .SH NAME
 \fBgxyrs\fP \- is a program to batch process XYRS files.

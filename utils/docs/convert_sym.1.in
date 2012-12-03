@@ -1,4 +1,4 @@
-.TH convert_sym 1 "December 3rd, 2012" "gEDA Project" 1.9.0.20121203
+.TH convert_sym 1 "@DATE@" "gEDA Project" @VERSION@
 
 .SH NAME
 convert_sym \- convert a Viewlogic symbol/schematic to gEDA gschem format

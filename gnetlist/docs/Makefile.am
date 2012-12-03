@@ -3,7 +3,7 @@ SUBDIRS = vams
 
 EXTRA_DIST = $(html_man_files) logo.png \
 	     gnetlist-main.txt what-is-geda.html what-is-gnetlist.html \
-	     gnetlist.dox
+	     gnetlist.dox gnetlist.1.in mk_verilog_syms.1.in
 
 docsreadmedir = $(docdir)/readmes
 dist_docsreadme_DATA = \
@@ -13,9 +13,14 @@ dist_docsreadme_DATA = \
 dist_man_MANS = gnetlist.1
 noinst_MANS = mk_verilog_syms.1
 
+.1.in.1:
+	d=`LANG=C date -d $(DATE_VERSION) "+%B %-d, %Y"` ; \
+	v="$(DOTTED_VERSION).$(DATE_VERSION)" ; \
+	sed -e"s:[@]DATE@:$$d:" -e"s:[@]VERSION@:$$v:" < $< > $@
+
 # Rules for converting man->html
 html_man_files = $(dist_man_MANS:%.1=%.html)
-SUFFIXES = .1 .html
+SUFFIXES = .1.in .1 .html
 
 docsmandir=$(docdir)/man
 docsman_DATA=$(html_man_files)

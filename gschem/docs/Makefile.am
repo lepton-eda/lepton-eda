@@ -1,5 +1,5 @@
 EXTRA_DIST = $(html_man_files) gschem-main.txt what-is-geda.html \
-	what-is-gschem.html logo.png gschem.dox
+	what-is-gschem.html logo.png gschem.dox gschem.1.in
 
 all:
 	@echo 'Type: make doxygen to create doxygen documentation for gschem'
@@ -17,10 +17,14 @@ endif
 
 dist_man_MANS = gschem.1
 
+.1.in.1:
+	d=`LANG=C date -d $(DATE_VERSION) "+%B %-d, %Y"` ; \
+	v="$(DOTTED_VERSION).$(DATE_VERSION)" ; \
+	sed -e"s:[@]DATE@:$$d:" -e"s:[@]VERSION@:$$v:" < $< > $@
 
 # Rules for converting man->html
 html_man_files = gschem.html
-SUFFIXES = .1 .html
+SUFFIXES = .1.in .1 .html
 
 docsmandir=$(docdir)/man
 docsman_DATA=$(html_man_files)

@@ -2,7 +2,7 @@ SUBDIRS = po
 
 bin_PROGRAMS = gaf
 
-EXTRA_DIST = $(html_man_files)
+EXTRA_DIST = $(html_man_files) gaf.1.in
 
 BUILT_SOURCES = shell.x
 
@@ -38,6 +38,11 @@ snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 .c.x:
 	CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
 
+.1.in.1:
+	d=`LANG=C date -d $(DATE_VERSION) "+%B %-d, %Y"` ; \
+	v="$(DOTTED_VERSION).$(DATE_VERSION)" ; \
+	sed -e"s:[@]DATE@:$$d:" -e"s:[@]VERSION@:$$v:" < $< > $@
+
 # Rules for converting man->html
 dist_man_MANS = gaf.1
 html_man_files = gaf.html
@@ -55,6 +60,6 @@ else
 	@! :
 endif
 
-SUFFIXES = .x .1 .html
+SUFFIXES = .x .1.in .1 .html
 
 CLEANFILES = $(BUILT_SOURCES)

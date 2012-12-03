@@ -1,38 +1,37 @@
-.TH sarlacc_sym 1 "December 3rd, 2012" "gEDA Project" 1.9.0.20121203
+.TH sarlacc_schem 1 "@DATE@" "gEDA Project" @VERSION@
 
 .SH NAME
-sarlacc_sym \- convert OrCAD text libraries to gEDA components
+sarlacc_schem \- convert OrCAD SDT IV files to gEDA format.
 
 .SH SYNOPSIS
-.B sarlacc_sym [
+.B sarlacc_schem [
 .I options
 .B ]
-.I library_file
+.I infile
+.B >
+.I outfile
 
 .SH DESCRIPTION
-.B sarlacc_sym
-converts OrCAD text format libraries into gEDA components
-for use in the
-.BR gschem (1)
-program.
+.B sarlacc_schem
+converts OrCAD schematic files (in 16-bit format) to gEDA format.
 
 .SH OPTIONS
 .TP
-\-s <n>
+\-s<n>
 Scale by n%. The default is 200%.
 .TP
 \-h
-Print out the usage information.
+Print the help message.
 .TP
 \-v
-Print out the version.
+Print the version.
 
 .SH AUTHOR
 Matthew Ettus <matt@ettus.com>
 
 .SH SEE ALSO
 .BR gschem (1),
-.BR sarlacc_schem (1)
+.BR sarlacc_sym (1)
 
 .SH COPYRIGHT
 .nf

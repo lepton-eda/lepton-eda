@@ -1,4 +1,4 @@
-.TH sw2asc 1 "December 3rd, 2012" "gEDA Project" 1.9.0.20121203
+.TH sw2asc 1 "@DATE@" "gEDA Project" @VERSION@
 
 .SH NAME
 .B sw2asc

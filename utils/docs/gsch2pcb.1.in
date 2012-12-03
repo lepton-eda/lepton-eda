@@ -1,4 +1,4 @@
-.TH gsch2pcb 1 "December 3rd, 2012" "gEDA Project" 1.9.0.20121203
+.TH gsch2pcb 1 "@DATE@" "gEDA Project" @VERSION@
 .SH NAME
 gsch2pcb - Update PCB layouts from gEDA/gaf schematics
 .SH SYNOPSIS
