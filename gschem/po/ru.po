@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda gschem ru\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2012-12-03 17:56+0000\n"
-"PO-Revision-Date: 2012-12-02 15:40+0400\n"
+"POT-Creation-Date: 2012-12-04 01:25+0400\n"
+"PO-Revision-Date: 2012-12-04 01:02+0400\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: geda-user@delorie.com\n"
 "Language: ru\n"
@@ -208,15 +208,15 @@ msgid "Failed to read init scm file [%s]\n"
 msgstr "Не удалось прочесть scm-файл инициализации [%s]\n"
 
 #: gschem/src/gschem.c:315
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "ERROR: Failed to load or evaluate startup script.\n"
 "\n"
 "The gschem log may contain more information.\n"
 msgstr ""
-"Не удалось перейти к подсхеме «%s»: %s\n"
+"ОШИБКА: не удалось загрузить или выполнить скрипт при запуске.\n"
 "\n"
-"В журнале gschem может быть больше информации."
+"В журнале gschem может быть больше информации.\n"
 
 #: gschem/src/i_basic.c:77 gschem/src/x_window.c:528
 #: gschem/lib/system-gschemrc.scm:1288
@@ -444,22 +444,22 @@ msgstr "Смещение"
 
 #: gschem/src/i_callbacks.c:923
 msgid "WARNING: Do not translate with snap off!\n"
-msgstr "ВНИМАНИЕ! Не производите смещение с отключенной привязкой!\n"
+msgstr "ВНИМАНИЕ: Не производите смещение с отключенной привязкой!\n"
 
 #: gschem/src/i_callbacks.c:924
 msgid "WARNING: Turning snap on and continuing with translate.\n"
-msgstr "ВНИМАНИЕ! Включите привязку и повторите смещение.\n"
+msgstr "ВНИМАНИЕ: Включите привязку и повторите смещение.\n"
 
 #: gschem/src/i_callbacks.c:931
 msgid "WARNING: Snap grid size is not equal to 100!\n"
-msgstr "ВНИМАНИЕ! Размер сетки привязки не равен 100!\n"
+msgstr "ВНИМАНИЕ: Размер сетки привязки не равен 100!\n"
 
 #: gschem/src/i_callbacks.c:933
 msgid ""
 "WARNING: If you are translating a symbol to the origin, the snap grid size "
 "should be set to 100\n"
 msgstr ""
-"ВНИМАНИЕ! Если символ смещается в начало координат, размер сетки привязки "
+"ВНИМАНИЕ: Если символ смещается в начало координат, размер сетки привязки "
 "должен быть установлен в 100\n"
 
 #: gschem/src/i_callbacks.c:964
@@ -2689,9 +2689,8 @@ msgid "Show _Coord Window..."
 msgstr "Окно _координат..."
 
 #: gschem/lib/system-gschemrc.scm:1431
-#, fuzzy
 msgid "gschem User _Guide..."
-msgstr "gschem _FAQ..."
+msgstr "_Руководство пользователя gschem..."
 
 #: gschem/lib/system-gschemrc.scm:1432
 msgid "gschem _FAQ..."
@@ -2775,108 +2774,3 @@ msgstr "Недопустимая комбинация клавиш ~S."
 #, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr "~S не является префиксом клавишной последовательности."
-
-#~ msgid "Unknown end for line (%d)\n"
-#~ msgstr "Неизвестный тип конца линии (%d)\n"
-
-#~ msgid "Unknown type for stroke (%d) !\n"
-#~ msgstr "Неизвестный тип линии (%d) !\n"
-
-#~ msgid "cairo context"
-#~ msgstr "cairo-контекст"
-
-#~ msgid "the cairo context for the renderer"
-#~ msgstr "cairo-контекст для рендерера"
-
-#~ msgid "Cannot find source [%s]\n"
-#~ msgstr "Невозможно найти источник [%s]\n"
-
-# Сообщение при недопустимом значении поля filltype
-#~ msgid "Unknown type for box (fill)!\n"
-#~ msgstr "Неизвестный тип заполнения прямоугольника!\n"
-
-#~ msgid "Got an invalid which one in o_bus_draw_stretch\n"
-#~ msgstr ""
-#~ "o_bus_draw_stretch: недопустимое значение ‘whichone’ (флаг подключаемого "
-#~ "конца соединения)\n"
-
-# Сообщение при недопустимом значении поля filltype
-#~ msgid "Unknown type for circle (fill)!\n"
-#~ msgstr "Неизвестный тип заполнения окружности!\n"
-
-#~ msgid "Got an invalid which one in o_net_draw_stretch\n"
-#~ msgstr ""
-#~ "o_net_draw_stretch: недопустимое значение ‘whichone’ (флаг подключаемого "
-#~ "конца соединения)\n"
-
-#~ msgid "Unknown type for path (fill)!\n"
-#~ msgstr "Неизвестный тип заполнения контура!\n"
-
-#~ msgid "Encapsulated Postscript"
-#~ msgstr "Encapsulated Postscript"
-
-#~ msgid "x_image_lowlevel: Unable to write eps file %s.\n"
-#~ msgstr "x_image_lowlevel: не удалось записать eps-файл %s.\n"
-
-# Заголовок окна выбора файла назначения печати
-#~ msgid "Select PostScript Filename..."
-#~ msgstr "Выберите имя PostScript-файла"
-
-#~ msgid "Extents with margins"
-#~ msgstr "Содержимое с полями"
-
-#~ msgid "Extents no margins"
-#~ msgstr "Содержимое без полей"
-
-#~ msgid "Current Window"
-#~ msgstr "Текущее окно"
-
-#~ msgid "Automatic"
-#~ msgstr "Автоматически"
-
-# Есть варианты: "Книжная/Альбомная", "Портрет/Пейзаж". Второе более подходит,
-# по-моему, для растровой графики. Но у нас схемы, поэтому первый ближе.
-#~ msgid "Landscape"
-#~ msgstr "Альбомная"
-
-#~ msgid "Portrait"
-#~ msgstr "Книжная"
-
-# Заголовок окна печати
-#~ msgid "Print..."
-#~ msgstr "Печать"
-
-#~ msgid "Settings"
-#~ msgstr "Параметры"
-
-#~ msgid "Output paper size:"
-#~ msgstr "Размер бумаги:"
-
-#~ msgid "Orientation:"
-#~ msgstr "Ориентация:"
-
-#~ msgid "Destination"
-#~ msgstr "Назначение печати"
-
-#~ msgid "File:"
-#~ msgstr "Файл:"
-
-#~ msgid "Command:"
-#~ msgstr "Команда:"
-
-#~ msgid "No print destination specified\n"
-#~ msgstr "Не указано назначение для печати\n"
-
-#~ msgid "Cannot print current schematic to [%s]\n"
-#~ msgstr ""
-#~ "Не удалось распечатать текущую схему, используя [%s] как назначение\n"
-
-#~ msgid ""
-#~ "Error printing to file '%s'\n"
-#~ "Check the log window for more information"
-#~ msgstr ""
-#~ "Ошибка печати в файл [%s]\n"
-#~ "Подробности см. в окне журнала"
-
-#~ msgid "Printed current schematic to [%s]\n"
-#~ msgstr "Текущая схема распечатана с использованием [%s] как назначения\n"

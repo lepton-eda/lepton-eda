@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2012-12-03 17:47+0000\n"
-"PO-Revision-Date: 2012-12-02 21:59+0400\n"
+"POT-Creation-Date: 2012-12-04 01:24+0400\n"
+"PO-Revision-Date: 2012-12-04 00:51+0400\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: geda-user@delorie.com\n"
 "Language: ru\n"
@@ -232,24 +232,23 @@ msgstr ""
 "Последовательность вызовов подпрограмм:\n"
 
 #: libgeda/src/g_rc.c:143
-#, fuzzy
 msgid "RC file already loaded"
 msgstr "Файл настроек уже загружен"
 
 #: libgeda/src/g_rc.c:186
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to load config from '%s': %s\n"
-msgstr "Не удалось загрузить изображение из файла [%s]: %s\n"
+msgstr "Не удалось загрузить настройки из файла [%s]: %s\n"
 
 #: libgeda/src/g_rc.c:210
-#, fuzzy, c-format
+#, c-format
 msgid "Loaded RC file [%s]\n"
-msgstr "Сбой команды создания библиотеки [%s]\n"
+msgstr "Загружен файл настроек [%s]\n"
 
 #: libgeda/src/g_rc.c:214
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to load RC file [%s]: "
-msgstr "Не удалось загрузить изображение из файла [%s]: %s\n"
+msgstr "Не удалось загрузить файл настроек [%s]: "
 
 #: libgeda/src/g_rc.c:331
 msgid "ERROR: An unknown error occurred while parsing configuration files."
@@ -999,57 +998,3 @@ msgstr "Ошибка обработки: ~s"
 #, scheme-format
 msgid "Object ~A is not part of a page"
 msgstr "Объект ~A не является частью схемы"
-
-#~ msgid "Parsed config from [%s]\n"
-#~ msgstr "Анализ файла настроек [%s]\n"
-
-#~ msgid "Unable to parse config from [%s]: %s"
-#~ msgstr "Ошибка при анализе файла настроек [%s]: %s"
-
-#~ msgid "Unable to get time of day in f_print_header()\n"
-#~ msgstr "f_print_header: не удалось определить текущее время\n"
-
-#~ msgid ""
-#~ "Unable to open the prolog file `%s' for reading in f_print_header()\n"
-#~ msgstr "f_print_header: не удалось открыть для чтения файл пролога [%s]\n"
-
-#~ msgid "Error during reading of the prolog file `%s' in f_print_header()\n"
-#~ msgstr "f_print_header: ошибка чтения файла пролога [%s]\n"
-
-#~ msgid ""
-#~ "Error during writing of the output postscript file in f_print_header()\n"
-#~ msgstr "f_print_header: ошибка записи postscript-файла\n"
-
-#~ msgid "Giving up on printing\n"
-#~ msgstr "Прекращение печати\n"
-
-#~ msgid "Could not open [%s] for printing\n"
-#~ msgstr "Не удалось открыть [%s] для печати\n"
-
-#~ msgid "Could not execute command [%s] for printing\n"
-#~ msgstr "Не удалось выполнить команду печати [%s]\n"
-
-# В данном случае ошибка означает, что количество UTF-символов более 128, и
-# она выводится всякий раз, когда найден новый лишний символ
-#~ msgid "Too many UTF-8 characters, cannot print\n"
-#~ msgstr "Слишком много символов UTF-8, некоторые напечатаны не будут\n"
-
-#~ msgid "Color index out of range"
-#~ msgstr "Цветовой индекс вне диапазона"
-
-#~ msgid ""
-#~ "hierarchy loop detected while visiting page:\n"
-#~ "  \"%s\"\n"
-#~ msgstr ""
-#~ "Обнаружено зацикливание иерархии при переходе к странице:\n"
-#~ "  \"%s\"\n"
-
-#~ msgid "ERROR in s_hierarchy_traverse: schematic not found: %s\n"
-#~ msgstr "ОШИБКА в s_hierarchy_traverse: не найдена схема %s\n"
-
-# В этой функции ищется имя файла подсхемы в библиотеках источников данных
-#~ msgid "Found [%s]\n"
-#~ msgstr "Найдена подсхема [%s]\n"
-
-#~ msgid "Could not find [%s] in any SourceLibrary\n"
-#~ msgstr "Не удалось найти [%s] в библиотеках источников данных\n"
