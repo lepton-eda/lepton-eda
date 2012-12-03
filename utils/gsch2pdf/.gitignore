@@ -1,9 +1,0 @@
-Makefile
-Makefile.in
-.deps
-.libs
-gsch2pdf
-gsch2pdf.1
-gsch2pdf.exe
-*.o
-*~

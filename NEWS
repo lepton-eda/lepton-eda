@@ -72,8 +72,6 @@ Notable changes in gEDA/gaf 1.9.0
 * `gattrib' now has translations for the user interface and various
   messages.
 
-* `gsch2pdf' is a new utility for creating PDFs from schematic files.
-
 Notable changes in gEDA/gaf 1.8.0
 =================================
 
