@@ -25,6 +25,9 @@
 ;; are intended for use in legacy RC files during the transition
 ;; process.
 
+(or (defined? 'define-syntax)
+    (use-modules (ice-9 syncase)))
+
 ;; ===================================================================
 ;; Utility functions and macros
 ;; ===================================================================
