@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+
+<div class="table sectionedit2138"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> « <a href="geda-gnetlist_ug-config.ru.html" class="wikilink1" title="geda-gnetlist_ug-config.ru.html">Настройка gnetlist</a>  </td><td class="col1 centeralign">  <strong><a href="geda-gnetlist_ug.ru.html" class="wikilink1" title="geda-gnetlist_ug.ru.html">Руководство пользователя gEDA gnetlist</a></strong>     </td><td class="col2 rightalign">  <a href="geda-gnetlist_ug.ru.html" class="wikilink1" title="geda-gnetlist_ug.ru.html">Содержание</a> » </td>
+	</tr>
+</table></div>
+<!-- EDIT2138 TABLE [1-198] -->
+<h2 class="sectionedit2139"><a name="аргументы_командной_строки" id="аргументы_командной_строки">Аргументы командной строки</a></h2>
+<div class="level2">
+
+<p>
+При запуске <strong>gnetlist</strong> может использоваться несколько необязательных
+аргументов командной строки. Их перечень можно узнать, запустив
+<code>gnetlist -h</code>. Перечень всех ключей командной строки программы можно
+посмотреть в её справочной странице (<code>man gnetlist</code>).
+</p>
+
+</div>
+<!-- EDIT2139 SECTION "Аргументы командной строки" [200-710] -->
+<h3 class="sectionedit2140"><a name="вывод_сообщений_и_диагностика" id="вывод_сообщений_и_диагностика">Вывод сообщений и диагностика</a></h3>
+<div class="level3">
+<div class="table sectionedit2141"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> <strong>-q</strong>                    </td><td class="col1"> Без вывода информации. Отключение всех предупреждений/замечаний/сообщений. </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> <strong>-v</strong>, <strong>--verbose</strong> </td><td class="col1"> Подробный вывод. Вывод дополнительной диагностической информации. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> <strong>-h</strong>, <strong>--help</strong>    </td><td class="col1"> Вывод справки. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> <strong>-V</strong>, <strong>--version</strong> </td><td class="col1"> Вывод информации о версии gnetlist. </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <strong>--list-backends</strong>   </td><td class="col1"> Вывод информации об установленных драйверах создания списков соединений. </td>
+	</tr>
+</table></div>
+<!-- EDIT2141 TABLE [778-1423] -->
+</div>
+<!-- EDIT2140 SECTION "Вывод сообщений и диагностика" [711-1424] -->
+<h3 class="sectionedit2142"><a name="обработка_списка_соединений" id="обработка_списка_соединений">Обработка списка соединений</a></h3>
+<div class="level3">
+<div class="table sectionedit2143"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> <strong>-o</strong> <em class="u">FILE</em>    </td><td class="col1"> Записать сгенерированный список соединений в <em class="u">FILE</em>. </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> <strong>-g</strong> <em class="u">BACKEND</em> </td><td class="col1"> Указать, какой драйвер использовать для генерации данных списка соединений. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> <strong>-O</strong> <em class="u">STRING</em>  </td><td class="col1"> Передать опцию <em class="u">STRING</em> драйверу списка соединений. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <strong>-i</strong>             </td><td class="col1"> Войти в интерактивный режим Scheme REPL вместо запуска драйвера. </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <strong>--</strong>         </td><td class="col1"> Рассматривать все оставшиеся аргументы как имена файлов схем или символов. Используйте это, если у вас есть имена файлов схем, начинающиеся с ”-”. </td>
+	</tr>
+</table></div>
+<!-- EDIT2143 TABLE [1489-2315] -->
+</div>
+<!-- EDIT2142 SECTION "Обработка списка соединений" [1425-2316] -->
+<h3 class="sectionedit2144"><a name="использование_расширений_на_scheme" id="использование_расширений_на_scheme">Использование расширений на Scheme</a></h3>
+<div class="level3">
+<div class="table sectionedit2145"><table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> <strong>-L</strong> <em class="u">КАТАЛОГ</em>        </td><td class="col1"> Добавление <em class="u">КАТАЛОГ</em>а к началу списка каталогов, в которых производится поиск файлов Scheme. </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> <strong>-c</strong> <em class="u">ВЫРАЖЕНИЕ</em>      </td><td class="col1"> Задание выражения на Scheme, которое должно быть выполнено при запуске. </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> <strong>-l</strong> <em class="u">ФАЙЛ</em>           </td><td class="col1"> Задание скрипта на Scheme, который должен быть выполнен перед загрузкой драйвера. </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <strong>-m</strong> <em class="u">ФАЙЛ</em>           </td><td class="col1"> Задание скрипта на Scheme, который должен быть выполнен после загрузки драйвера. </td>
+	</tr>
+</table></div>
+<!-- EDIT2145 TABLE [2388-3119] -->
+</div>
+<!-- EDIT2144 SECTION "Использование расширений на Scheme" [2317-] --></body>
+</html>
