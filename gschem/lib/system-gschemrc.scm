@@ -4,6 +4,7 @@
 ;
 
 (use-modules (gschem deprecated))
+(load-from-path "gschem-deprecated-config.scm")
 
 ;  ;'s are comments
 ;  keywords are case sensitive (guile feature)

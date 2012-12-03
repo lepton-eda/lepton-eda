@@ -95,3 +95,5 @@ release.  Please use configuration files instead.
 
 ;; Identity value transformer for define-rc-deprecated-config
 (define (rc-deprecated-string-transformer str) str)
+
+(define-rc-dead-config postscript-prolog)
