@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: geda-gaf\n"
-"Report-Msgid-Bugs-To: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
-"POT-Creation-Date: 2012-11-30 21:11+0100\n"
+"Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
+"POT-Creation-Date: 2012-12-03 17:31+0000\n"
 "PO-Revision-Date: 2012-12-01 17:01+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers\n"
@@ -17,8 +17,8 @@ msgstr ""
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Country: NETHERLANDS\n"
 
-#: gaf/gaf.c:63
-#, c-format
+#: gaf/gaf.c:65
+#, fuzzy, c-format
 msgid ""
 "Usage: gaf [OPTION...] COMMAND [ARGS ...]\n"
 "\n"
@@ -31,6 +31,8 @@ msgid ""
 "\n"
 "Commonly-used commands (type `gaf <cmd> --help' for usage):\n"
 "  shell          Scheme REPL for interactive gEDA data processing\n"
+"  config         Edit gEDA configuration\n"
+"  export         Export gEDA files in various image formats.\n"
 "\n"
 "Please report bugs to %s.\n"
 msgstr ""
@@ -48,7 +50,7 @@ msgstr ""
 "\n"
 "Rapporteer onvolkomenheden aan %s.\n"
 
-#: gaf/gaf.c:84
+#: gaf/gaf.c:88
 #, c-format
 msgid ""
 "gEDA/gaf %s (g%.7s)\n"
@@ -65,7 +67,7 @@ msgstr ""
 "de gEDA distributie is bijgevoegd.\n"
 "Er is GEEN GARANTIE, voor zover toegelaten door de wet.\n"
 
-#: gaf/gaf.c:132
+#: gaf/gaf.c:136
 #, c-format
 msgid ""
 "\n"
@@ -74,7 +76,7 @@ msgstr ""
 "\n"
 "Voer `gaf --help' uit voor meer informatie.\n"
 
-#: gaf/gaf.c:144
+#: gaf/gaf.c:148
 #, c-format
 msgid ""
 "ERROR: You must specify a command to run.\n"
@@ -85,7 +87,7 @@ msgstr ""
 "\n"
 "Voer `gaf --help' uit voor meer informatie.\n"
 
-#: gaf/gaf.c:162
+#: gaf/gaf.c:166
 #, c-format
 msgid ""
 "ERROR: Unrecognised command `%s'.\n"
@@ -95,6 +97,56 @@ msgstr ""
 "FOUT: Onherkenbare opdracht `%s'.\n"
 "\n"
 "Voer `gaf --help' uit voor meer informatie.\n"
+
+#: gaf/config.c:47
+#, c-format
+msgid ""
+"Usage: gaf config [OPTION] [GROUP KEY [VALUE]]\n"
+"\n"
+"View and modify gEDA configuration.\n"
+"\n"
+"  -p, --project[=PATH]  select project configuration [PATH=.]\n"
+"  -u, --user     select user configuration\n"
+"  -s, --system   select system configuration\n"
+"  -h, --help     display usage information and exit\n"
+"\n"
+"If GROUP and KEY are specified, retrieves the value of that\n"
+"configuration parameter.  If a VALUE was specified, sets the value of\n"
+"the parameter.  The -p, -u and -s options can be used to select the\n"
+"configuration store affected (by default, the project configuration\n"
+"store for the current directory). If no GROUP and KEY were provided,\n"
+"outputs the filename of the selected configuration store.\n"
+"\n"
+"Please report bugs to %s.\n"
+msgstr ""
+
+#: gaf/config.c:68
+#, fuzzy
+msgid ""
+"\n"
+"Run `gaf config --help' for more information.\n"
+msgstr ""
+"\n"
+"Voer `gaf --help' uit voor meer informatie.\n"
+
+#: gaf/config.c:69
+msgid "ERROR: You may only specify a single configuration store.\n"
+msgstr ""
+
+#: gaf/config.c:158
+#, c-format
+msgid "WARNING: Could not load '%s': %s.\n"
+msgstr ""
+
+#: gaf/config.c:170
+#, c-format
+msgid "ERROR: You must specify both configuration group and key.\n"
+msgstr ""
+
+#: gaf/config.c:182 gaf/config.c:196
+#, c-format
+msgid "ERROR: %s.\n"
+msgstr ""
 
 #: gaf/shell.c:46
 #, c-format
@@ -118,7 +170,8 @@ msgid ""
 msgstr ""
 "Gebruik: gaf shell [OPTION ...]\n"
 "\n"
-"Shell voor interactieve verwerking van gEDA gegevens gebruikmakend van Scheme.\n"
+"Shell voor interactieve verwerking van gEDA gegevens gebruikmakend van "
+"Scheme.\n"
 "\n"
 "  -s FILE        laad Scheme broncode uit FILE, en eindig\n"
 "  -c EXPR        evalueer Scheme expressie EXPR, en eindig\n"
@@ -141,4 +194,3 @@ msgid ""
 msgstr ""
 "\n"
 "Voer `gaf shell --help' uit voor meer informatie.\n"
-

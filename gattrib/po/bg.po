@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
-"Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-11-14 17:37+0000\n"
+"Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
+"POT-Creation-Date: 2012-12-03 17:31+0000\n"
 "PO-Revision-Date: 2010-02-06 22:09+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -31,12 +31,12 @@ msgstr "Манипулирай атрибутите на компонента с
 msgid "o_save: Could not open [%s]\n"
 msgstr ""
 
-#: gattrib/src/gattrib.c:178
+#: gattrib/src/gattrib.c:101
 #, c-format
 msgid "In gattrib_quit, calling gtk_main_quit()\n"
 msgstr ""
 
-#: gattrib/src/gattrib.c:235
+#: gattrib/src/gattrib.c:158
 #, c-format
 msgid ""
 "gEDA/gattrib version %s%s.%s\n"
@@ -47,7 +47,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: gattrib/src/gattrib.c:271
+#: gattrib/src/gattrib.c:194
 #, c-format
 msgid "Couldn't find file [%s]\n"
 msgstr ""
@@ -60,11 +60,11 @@ msgid ""
 "Please be sure that you have the latest rc file.\n"
 msgstr ""
 
-#: gattrib/src/gtksheet_2_2.c:6289
+#: gattrib/src/gtksheet_2_2.c:6203
 msgid "Entry type must be GtkEntry subclass, using default"
 msgstr ""
 
-#: gattrib/src/gtksheet_2_2.c:8507
+#: gattrib/src/gtksheet_2_2.c:8383
 msgid "Widget must be a GtkSheet child"
 msgstr ""
 
@@ -239,43 +239,43 @@ msgid ""
 "col in the lists!\n"
 msgstr ""
 
-#: gattrib/src/s_toplevel.c:188
+#: gattrib/src/s_toplevel.c:189
 msgid "_cancel"
 msgstr ""
 
-#: gattrib/src/s_toplevel.c:315
+#: gattrib/src/s_toplevel.c:322
 #, c-format
 msgid "In s_toplevel_delete_attrib_col, can't get attrib name\n"
 msgstr ""
 
-#: gattrib/src/s_toplevel.c:551
+#: gattrib/src/s_toplevel.c:558
 #, c-format
 msgid ""
 "In s_toplevel_get_component_attribs_in_sheet, we didn't find the refdes in "
 "the master list!\n"
 msgstr ""
 
-#: gattrib/src/s_toplevel.c:579
+#: gattrib/src/s_toplevel.c:586
 #, c-format
 msgid ""
 "In s_toplevel_get_component_attribs_in_sheet, count != i!  Exiting . . . .\n"
 msgstr ""
 
-#: gattrib/src/s_toplevel.c:888
+#: gattrib/src/s_toplevel.c:895
 #, c-format
 msgid ""
 "In s_toplevel_get_pin_attribs_in_sheet, either refdes or pinnumber of object "
 "missing!\n"
 msgstr ""
 
-#: gattrib/src/s_toplevel.c:897
+#: gattrib/src/s_toplevel.c:904
 #, c-format
 msgid ""
 "In s_toplevel_get_pin_attribs_in_sheet, we didn't find the refdes:pin in the "
 "master list!\n"
 msgstr ""
 
-#: gattrib/src/s_toplevel.c:925
+#: gattrib/src/s_toplevel.c:932
 #, c-format
 msgid "In s_toplevel_get_pin_attribs_in_sheet, count != i!  Exiting . . . .\n"
 msgstr ""

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
-"Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-11-17 18:51+0000\n"
+"Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
+"POT-Creation-Date: 2012-12-03 17:47+0000\n"
 "PO-Revision-Date: 2012-01-27 14:12+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -47,12 +47,16 @@ msgstr "gEDA Diagram Symbol"
 msgid "o_save_objects: object %p has unknown type '%c'\n"
 msgstr ""
 
-#: libgeda/src/a_basic.c:238 libgeda/src/f_basic.c:384
+#: libgeda/src/a_basic.c:238 libgeda/src/f_basic.c:381
 #, c-format
 msgid "File %s is read-only"
 msgstr ""
 
-#: libgeda/src/a_basic.c:423
+#: libgeda/src/a_basic.c:296
+msgid "Schematic data was not valid UTF-8"
+msgstr ""
+
+#: libgeda/src/a_basic.c:428
 #, c-format
 msgid ""
 "Read unexpected attach symbol start marker in [%s] :\n"
@@ -60,7 +64,7 @@ msgid ""
 "%s<<\n"
 msgstr ""
 
-#: libgeda/src/a_basic.c:440
+#: libgeda/src/a_basic.c:445
 #, c-format
 msgid ""
 "Read unexpected embedded symbol start marker in [%s] :\n"
@@ -68,7 +72,7 @@ msgid ""
 "%s<<\n"
 msgstr ""
 
-#: libgeda/src/a_basic.c:471
+#: libgeda/src/a_basic.c:476
 #, c-format
 msgid ""
 "Read unexpected embedded symbol end marker in [%s] :\n"
@@ -76,7 +80,7 @@ msgid ""
 "%s<<\n"
 msgstr ""
 
-#: libgeda/src/a_basic.c:506
+#: libgeda/src/a_basic.c:511
 #, c-format
 msgid ""
 "Read an old format sym/sch file!\n"
@@ -84,7 +88,7 @@ msgid ""
 "[%s]\n"
 msgstr ""
 
-#: libgeda/src/a_basic.c:512
+#: libgeda/src/a_basic.c:517
 #, c-format
 msgid ""
 "Read garbage in [%s] :\n"
@@ -97,12 +101,12 @@ msgstr ""
 msgid "Failed to stat [%s]: %s"
 msgstr ""
 
-#: libgeda/src/f_basic.c:221
+#: libgeda/src/f_basic.c:220
 #, c-format
 msgid "Cannot find file %s: %s"
 msgstr ""
 
-#: libgeda/src/f_basic.c:269
+#: libgeda/src/f_basic.c:267
 #, c-format
 msgid ""
 "\n"
@@ -111,94 +115,67 @@ msgid ""
 "\n"
 msgstr ""
 
-#: libgeda/src/f_basic.c:271
+#: libgeda/src/f_basic.c:269
 msgid "I could not guess if it is newer, so you have to do it manually.\n"
 msgstr ""
 
-#: libgeda/src/f_basic.c:273
+#: libgeda/src/f_basic.c:271
 msgid ""
 "The backup copy is newer than the schematic, so it seems you should load it "
 "instead of the original file.\n"
 msgstr ""
 
-#: libgeda/src/f_basic.c:275
+#: libgeda/src/f_basic.c:273
 msgid ""
 "Gschem usually makes backup copies automatically, and this situation happens "
 "when it crashed or it was forced to exit abruptly.\n"
 msgstr ""
 
-#: libgeda/src/f_basic.c:278
+#: libgeda/src/f_basic.c:276
 msgid ""
 "\n"
 "Run gschem and correct the situation.\n"
 "\n"
 msgstr ""
 
-#: libgeda/src/f_basic.c:374
+#: libgeda/src/f_basic.c:371
 #, c-format
 msgid "Can't get the real filename of %s: %s"
 msgstr ""
 
-#: libgeda/src/f_basic.c:405
+#: libgeda/src/f_basic.c:402
 #, c-format
 msgid "Could NOT set previous backup file [%s] read-write\n"
 msgstr ""
 
-#: libgeda/src/f_basic.c:411
+#: libgeda/src/f_basic.c:408
 #, c-format
 msgid "Can't save backup file: %s."
 msgstr ""
 
-#: libgeda/src/f_basic.c:421
+#: libgeda/src/f_basic.c:418
 #, c-format
 msgid "Could NOT set backup file [%s] readonly\n"
 msgstr ""
 
-#: libgeda/src/f_basic.c:480
+#: libgeda/src/f_basic.c:467
+#, c-format
+msgid "Failed to restore permissions on '%s': %s\n"
+msgstr ""
+
+#: libgeda/src/f_basic.c:472
+#, c-format
+msgid "Failed to restore ownership on '%s': %s\n"
+msgstr ""
+
+#: libgeda/src/f_basic.c:482
 #, c-format
 msgid "Could NOT save file: %s"
 msgstr ""
 
-#: libgeda/src/f_basic.c:727
+#: libgeda/src/f_basic.c:729
 #, c-format
 msgid "%s: %s"
-msgstr ""
-
-#: libgeda/src/f_print.c:123
-msgid "Unable to get time of day in f_print_header()\n"
-msgstr ""
-
-#: libgeda/src/f_print.c:165
-#, c-format
-msgid "Unable to open the prolog file `%s' for reading in f_print_header()\n"
-msgstr ""
-
-#: libgeda/src/f_print.c:182
-#, c-format
-msgid "Error during reading of the prolog file `%s' in f_print_header()\n"
-msgstr ""
-
-#: libgeda/src/f_print.c:188
-msgid ""
-"Error during writing of the output postscript file in f_print_header()\n"
-msgstr ""
-
-#: libgeda/src/f_print.c:202
-msgid "Giving up on printing\n"
-msgstr ""
-
-#: libgeda/src/f_print.c:375
-#, c-format
-msgid "Could not open [%s] for printing\n"
-msgstr ""
-
-#: libgeda/src/f_print.c:409
-#, c-format
-msgid "Could not execute command [%s] for printing\n"
-msgstr ""
-
-#: libgeda/src/f_print.c:682
-msgid "Too many UTF-8 characters, cannot print\n"
 msgstr ""
 
 #: libgeda/src/g_basic.c:264
@@ -207,35 +184,40 @@ msgid ""
 "Backtrace:\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:233
-msgid "Config file already loaded"
+#: libgeda/src/g_rc.c:143
+msgid "RC file already loaded"
 msgstr ""
 
-#: libgeda/src/g_rc.c:268
+#: libgeda/src/g_rc.c:186
 #, c-format
-msgid "Parsed config from [%s]\n"
+msgid "Failed to load config from '%s': %s\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:281
+#: libgeda/src/g_rc.c:210
 #, c-format
-msgid "Unable to parse config from [%s]: %s"
+msgid "Loaded RC file [%s]\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:298
+#: libgeda/src/g_rc.c:214
+#, c-format
+msgid "Failed to load RC file [%s]: "
+msgstr ""
+
+#: libgeda/src/g_rc.c:331
 msgid "ERROR: An unknown error occurred while parsing configuration files."
 msgstr ""
 
-#: libgeda/src/g_rc.c:310 libgeda/src/g_rc.c:311
+#: libgeda/src/g_rc.c:343 libgeda/src/g_rc.c:344
 #, c-format
 msgid "ERROR: %s\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:317
+#: libgeda/src/g_rc.c:350
 #, c-format
 msgid "ERROR: The %s log may contain more information.\n"
 msgstr ""
 
-#: libgeda/src/g_rc.c:978
+#: libgeda/src/g_rc.c:1022
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
 "list of strings instead\n"
@@ -254,7 +236,7 @@ msgstr ""
 #: libgeda/src/o_bus_basic.c:182 libgeda/src/o_circle_basic.c:289
 #: libgeda/src/o_line_basic.c:264 libgeda/src/o_net_basic.c:171
 #: libgeda/src/o_path_basic.c:189 libgeda/src/o_pin_basic.c:183
-#: libgeda/src/o_text_basic.c:425
+#: libgeda/src/o_text_basic.c:417
 #, c-format
 msgid "Found an invalid color [ %s ]\n"
 msgstr ""
@@ -263,24 +245,24 @@ msgstr ""
 #: libgeda/src/o_bus_basic.c:183 libgeda/src/o_circle_basic.c:290
 #: libgeda/src/o_line_basic.c:265 libgeda/src/o_net_basic.c:172
 #: libgeda/src/o_path_basic.c:190 libgeda/src/o_pin_basic.c:184
-#: libgeda/src/o_text_basic.c:426
+#: libgeda/src/o_text_basic.c:418
 msgid "Setting color to default color\n"
 msgstr ""
 
-#: libgeda/src/o_attrib.c:123
+#: libgeda/src/o_attrib.c:121
 msgid "Attempt to attach non text item as an attribute!\n"
 msgstr ""
 
-#: libgeda/src/o_attrib.c:128
+#: libgeda/src/o_attrib.c:126
 #, c-format
 msgid "Attempt to attach attribute [%s] to more than one object\n"
 msgstr ""
 
-#: libgeda/src/o_attrib.c:341
+#: libgeda/src/o_attrib.c:329
 msgid "Tried to attach a non-text item as an attribute"
 msgstr ""
 
-#: libgeda/src/o_attrib.c:348
+#: libgeda/src/o_attrib.c:336
 msgid "Unexpected end-of-file in attribute list"
 msgstr ""
 
@@ -352,8 +334,8 @@ msgstr ""
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
 
-#: libgeda/src/o_complex_basic.c:668 libgeda/src/o_picture.c:105
-#: libgeda/src/o_text_basic.c:397
+#: libgeda/src/o_complex_basic.c:668 libgeda/src/o_picture.c:104
+#: libgeda/src/o_text_basic.c:389
 msgid "Setting angle to 0\n"
 msgstr ""
 
@@ -463,103 +445,103 @@ msgstr ""
 msgid "Unexpected end-of-file when reading path"
 msgstr ""
 
-#: libgeda/src/o_picture.c:72
+#: libgeda/src/o_picture.c:71
 msgid "Failed to parse picture definition"
 msgstr ""
 
-#: libgeda/src/o_picture.c:77
+#: libgeda/src/o_picture.c:76
 #, c-format
 msgid "Found a zero width/height picture [ %c %d %d %d %d ]\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:82
+#: libgeda/src/o_picture.c:81
 #, c-format
 msgid "Found a picture with a wrong 'mirrored' parameter: %d.\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:84
+#: libgeda/src/o_picture.c:83
 msgid "Setting mirrored to 0\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:89
+#: libgeda/src/o_picture.c:88
 #, c-format
 msgid "Found a picture with a wrong 'embedded' parameter: %d.\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:91
+#: libgeda/src/o_picture.c:90
 msgid "Setting embedded to 0\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:104
+#: libgeda/src/o_picture.c:103
 #, c-format
 msgid "Found an unsupported picture angle [ %d ]\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:116
+#: libgeda/src/o_picture.c:115
 msgid "Found an image with no filename."
 msgstr ""
 
-#: libgeda/src/o_picture.c:147
+#: libgeda/src/o_picture.c:146
 #, c-format
 msgid "Failed to load image from embedded data [%s]: %s\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:148
+#: libgeda/src/o_picture.c:147
 msgid "Base64 decoding failed."
 msgstr ""
 
-#: libgeda/src/o_picture.c:149
+#: libgeda/src/o_picture.c:148
 msgid "Falling back to file loading. Picture unembedded.\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:208
+#: libgeda/src/o_picture.c:207
 msgid "ERROR: o_picture_save: unable to encode the picture.\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:308
+#: libgeda/src/o_picture.c:307
 #, c-format
 msgid "Failed to load buffer image [%s]: %s\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:321
+#: libgeda/src/o_picture.c:320
 #, c-format
 msgid "Failed to load image from [%s]: %s\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:427
+#: libgeda/src/o_picture.c:426
 #, c-format
 msgid "Picture %p has invalid angle %i\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:957
+#: libgeda/src/o_picture.c:772
 #, c-format
 msgid "Picture [%s] has no image data.\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:958
+#: libgeda/src/o_picture.c:773
 msgid "Falling back to file loading. Picture is still unembedded.\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:966
+#: libgeda/src/o_picture.c:781
 #, c-format
 msgid "Picture [%s] has been embedded\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:990
+#: libgeda/src/o_picture.c:805
 #, c-format
 msgid "Failed to load image from file [%s]: %s\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:992
+#: libgeda/src/o_picture.c:807
 msgid "Picture is still embedded.\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:1000
+#: libgeda/src/o_picture.c:815
 #, c-format
 msgid "Picture [%s] has been unembedded\n"
 msgstr ""
 
-#: libgeda/src/o_picture.c:1236
+#: libgeda/src/o_picture.c:1051
 #, c-format
 msgid "Failed to load fallback image %s: %s.\n"
 msgstr ""
@@ -579,31 +561,31 @@ msgstr ""
 msgid "Found an invalid whichend on a pin (reseting to zero): %d\n"
 msgstr ""
 
-#: libgeda/src/o_text_basic.c:356 libgeda/src/o_text_basic.c:366
-#: libgeda/src/o_text_basic.c:376
+#: libgeda/src/o_text_basic.c:348 libgeda/src/o_text_basic.c:358
+#: libgeda/src/o_text_basic.c:368
 msgid "Failed to parse text object"
 msgstr ""
 
-#: libgeda/src/o_text_basic.c:383
+#: libgeda/src/o_text_basic.c:375
 #, c-format
 msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
 
-#: libgeda/src/o_text_basic.c:395
+#: libgeda/src/o_text_basic.c:387
 #, c-format
 msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
 
-#: libgeda/src/o_text_basic.c:417
+#: libgeda/src/o_text_basic.c:409
 #, c-format
 msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
 
-#: libgeda/src/o_text_basic.c:419
+#: libgeda/src/o_text_basic.c:411
 msgid "Setting alignment to LOWER_LEFT\n"
 msgstr ""
 
-#: libgeda/src/o_text_basic.c:440
+#: libgeda/src/o_text_basic.c:432
 #, c-format
 msgid "Unexpected end-of-file after %d lines"
 msgstr ""
@@ -685,36 +667,33 @@ msgstr ""
 msgid "More than one component found with name [%s]\n"
 msgstr ""
 
-#: libgeda/src/s_color.c:207
-msgid "Color index out of range"
-msgstr ""
-
-#: libgeda/src/s_color.c:262
+#: libgeda/src/s_color.c:236
 msgid "Color map entry must be a two-element list"
 msgstr ""
 
-#: libgeda/src/s_color.c:270
+#: libgeda/src/s_color.c:244
 msgid "Index in color map entry must be an integer"
 msgstr ""
 
-#: libgeda/src/s_color.c:296
+#: libgeda/src/s_color.c:270
 msgid "Value in color map entry must be #f or a string"
 msgstr ""
 
-#: libgeda/src/s_hierarchy.c:94
-#, c-format
-msgid ""
-"hierarchy loop detected while visiting page:\n"
-"  \"%s\"\n"
+#: libgeda/src/s_hierarchy.c:79
+msgid "Schematic not found in source library."
 msgstr ""
 
-#: libgeda/src/s_hierarchy.c:194
+#: libgeda/src/s_hierarchy.c:99
+msgid "Hierarchy contains a circular dependency."
+msgstr ""
+
+#: libgeda/src/s_hierarchy.c:198
 msgid "There are no schematics above the current one!\n"
 msgstr ""
 
-#: libgeda/src/s_hierarchy.c:274
+#: libgeda/src/s_hierarchy.c:279
 #, c-format
-msgid "ERROR in s_hierarchy_traverse: schematic not found: %s\n"
+msgid "Failed to descend hierarchy into '%s': %s\n"
 msgstr ""
 
 #: libgeda/src/s_page.c:213
@@ -735,16 +714,6 @@ msgstr ""
 #: libgeda/src/s_page.c:505
 #, c-format
 msgid "Could NOT save [%s]\n"
-msgstr ""
-
-#: libgeda/src/s_slib.c:171
-#, c-format
-msgid "Found [%s]\n"
-msgstr ""
-
-#: libgeda/src/s_slib.c:181
-#, c-format
-msgid "Could not find [%s] in any SourceLibrary\n"
 msgstr ""
 
 #: libgeda/src/s_slot.c:162

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
-"Report-Msgid-Bugs-To: geda-bug@seul.org\n"
-"POT-Creation-Date: 2012-11-14 17:37+0000\n"
+"Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
+"POT-Creation-Date: 2012-12-03 17:31+0000\n"
 "PO-Revision-Date: 2012-01-18 14:31+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -33,12 +33,12 @@ msgstr "Manipuleer componenten attributen met gattrib"
 msgid "o_save: Could not open [%s]\n"
 msgstr "o_save: Kan [%s] niet openen\n"
 
-#: gattrib/src/gattrib.c:178
+#: gattrib/src/gattrib.c:101
 #, c-format
 msgid "In gattrib_quit, calling gtk_main_quit()\n"
 msgstr "In gattrib_quit, ga gtk_main_quit() aanroepen\n"
 
-#: gattrib/src/gattrib.c:235
+#: gattrib/src/gattrib.c:158
 #, c-format
 msgid ""
 "gEDA/gattrib version %s%s.%s\n"
@@ -56,7 +56,7 @@ msgstr ""
 "condities; zie alstublieft het COPYING bestand voor meer details.\n"
 "\n"
 
-#: gattrib/src/gattrib.c:271
+#: gattrib/src/gattrib.c:194
 #, c-format
 msgid "Couldn't find file [%s]\n"
 msgstr "Kan bestand [%s] niet vinden\n"
@@ -304,16 +304,16 @@ msgstr ""
 "In s_table_add_toplevel_pin_items_to_pin_table, is noch regel noch kolom "
 "gevonden in de lijsten!\n"
 
-#: gattrib/src/s_toplevel.c:188
+#: gattrib/src/s_toplevel.c:189
 msgid "_cancel"
 msgstr "_afbreken"
 
-#: gattrib/src/s_toplevel.c:315
+#: gattrib/src/s_toplevel.c:322
 #, c-format
 msgid "In s_toplevel_delete_attrib_col, can't get attrib name\n"
 msgstr "In s_toplevel_delete_attrib_col, kan geen attrib naam krijgen\n"
 
-#: gattrib/src/s_toplevel.c:551
+#: gattrib/src/s_toplevel.c:558
 #, c-format
 msgid ""
 "In s_toplevel_get_component_attribs_in_sheet, we didn't find the refdes in "
@@ -322,7 +322,7 @@ msgstr ""
 "In s_toplevel_get_component_attribs_in_sheet, geen refdes gevonden in de "
 "hoofdlijst!\n"
 
-#: gattrib/src/s_toplevel.c:579
+#: gattrib/src/s_toplevel.c:586
 #, c-format
 msgid ""
 "In s_toplevel_get_component_attribs_in_sheet, count != i!  Exiting . . . .\n"
@@ -330,7 +330,7 @@ msgstr ""
 "In s_toplevel_get_component_attribs_in_sheet, count != i!  "
 "Afsluiten . . . .\n"
 
-#: gattrib/src/s_toplevel.c:888
+#: gattrib/src/s_toplevel.c:895
 #, c-format
 msgid ""
 "In s_toplevel_get_pin_attribs_in_sheet, either refdes or pinnumber of object "
@@ -339,7 +339,7 @@ msgstr ""
 "In s_toplevel_get_pin_attribs_in_sheet, ofwel een refdes of een pennummer "
 "van het object ontbreken!\n"
 
-#: gattrib/src/s_toplevel.c:897
+#: gattrib/src/s_toplevel.c:904
 #, c-format
 msgid ""
 "In s_toplevel_get_pin_attribs_in_sheet, we didn't find the refdes:pin in the "
@@ -348,7 +348,7 @@ msgstr ""
 "In s_toplevel_get_pin_attribs_in_sheet, is geen refdes:pin gevonden in de "
 "hoofdlijst!\n"
 
-#: gattrib/src/s_toplevel.c:925
+#: gattrib/src/s_toplevel.c:932
 #, c-format
 msgid "In s_toplevel_get_pin_attribs_in_sheet, count != i!  Exiting . . . .\n"
 msgstr ""

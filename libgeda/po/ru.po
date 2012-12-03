@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2012-12-02 15:40+0400\n"
+"POT-Creation-Date: 2012-12-03 17:47+0000\n"
 "PO-Revision-Date: 2012-12-02 21:59+0400\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: geda-user@delorie.com\n"
@@ -231,35 +231,41 @@ msgstr ""
 "\n"
 "Последовательность вызовов подпрограмм:\n"
 
-#: libgeda/src/g_rc.c:142
-msgid "Config file already loaded"
+#: libgeda/src/g_rc.c:143
+#, fuzzy
+msgid "RC file already loaded"
 msgstr "Файл настроек уже загружен"
 
-#: libgeda/src/g_rc.c:177
-#, c-format
-msgid "Parsed config from [%s]\n"
-msgstr "Анализ файла настроек [%s]\n"
+#: libgeda/src/g_rc.c:186
+#, fuzzy, c-format
+msgid "Failed to load config from '%s': %s\n"
+msgstr "Не удалось загрузить изображение из файла [%s]: %s\n"
 
-#: libgeda/src/g_rc.c:190
-#, c-format
-msgid "Unable to parse config from [%s]: %s"
-msgstr "Ошибка при анализе файла настроек [%s]: %s"
+#: libgeda/src/g_rc.c:210
+#, fuzzy, c-format
+msgid "Loaded RC file [%s]\n"
+msgstr "Сбой команды создания библиотеки [%s]\n"
 
-#: libgeda/src/g_rc.c:298
+#: libgeda/src/g_rc.c:214
+#, fuzzy, c-format
+msgid "Failed to load RC file [%s]: "
+msgstr "Не удалось загрузить изображение из файла [%s]: %s\n"
+
+#: libgeda/src/g_rc.c:331
 msgid "ERROR: An unknown error occurred while parsing configuration files."
 msgstr "ОШИБКА: неизвестная ошибка при анализе файлов настроек"
 
-#: libgeda/src/g_rc.c:310 libgeda/src/g_rc.c:311
+#: libgeda/src/g_rc.c:343 libgeda/src/g_rc.c:344
 #, c-format
 msgid "ERROR: %s\n"
 msgstr "ОШИБКА: %s\n"
 
-#: libgeda/src/g_rc.c:317
+#: libgeda/src/g_rc.c:350
 #, c-format
 msgid "ERROR: The %s log may contain more information.\n"
 msgstr "ОШИБКА: в файле журнала %s может быть больше информации\n"
 
-#: libgeda/src/g_rc.c:966
+#: libgeda/src/g_rc.c:1022
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
 "list of strings instead\n"
@@ -993,6 +999,12 @@ msgstr "Ошибка обработки: ~s"
 #, scheme-format
 msgid "Object ~A is not part of a page"
 msgstr "Объект ~A не является частью схемы"
+
+#~ msgid "Parsed config from [%s]\n"
+#~ msgstr "Анализ файла настроек [%s]\n"
+
+#~ msgid "Unable to parse config from [%s]: %s"
+#~ msgstr "Ошибка при анализе файла настроек [%s]: %s"
 
 #~ msgid "Unable to get time of day in f_print_header()\n"
 #~ msgstr "f_print_header: не удалось определить текущее время\n"
