@@ -102,6 +102,7 @@ struct ExportSettings {
   GtkPaperSize *paper;
   gdouble size[2]; /* Points */
   gdouble margins[4]; /* Points. Top, right, bottom, left. */
+  gdouble align[2]; /* 0.0 < align < 1.0 for halign and valign */
   gdouble dpi;
 
   gboolean color;
@@ -132,6 +133,7 @@ static struct ExportSettings settings = {
   NULL,
   {-1, -1},
   {-1, -1, -1, -1},
+  {0.5,0.5},
   DEFAULT_DPI,
 
   FALSE,
@@ -334,6 +336,7 @@ export_layout_page (PAGE *page, cairo_rectangle_t *extents, cairo_matrix_t *mtx)
   gboolean size_from_drawing = FALSE;
   gdouble m[4]; /* Calculated margins */
   gdouble s; /* Calculated scale */
+  gdouble slack[2]; /* Calculated alignment slack */
 
   cr = eda_renderer_get_cairo_context (renderer);
 
@@ -428,12 +431,18 @@ export_layout_page (PAGE *page, cairo_rectangle_t *extents, cairo_matrix_t *mtx)
   drawable.width = extents->width - m[1] - m[3];
   drawable.height = extents->height - m[0] - m[2];
 
+  /* Calculate optimum scale */
+  s = fmin (drawable.width / w_width, drawable.height / w_height);
+
+  /* Calculate alignment slack */
+  slack[0] = fmin (1, fmax (0, settings.align[0])) * (drawable.width - w_width * s);
+  slack[1] = fmin (1, fmax (0, settings.align[1])) * (drawable.height - w_height * s);
+
   /* Finally, create and set a cairo transformation matrix that
    * centres the drawing into the drawable area. */
-  s = fmin (drawable.width / w_width, drawable.height / w_height);
   cairo_matrix_init (mtx, s, 0, 0, -s,
-                     - (wx_min + w_width/2) * s + drawable.width/2 + drawable.x,
-                     (wy_min + w_height/2) * s + drawable.height/2 + drawable.y);
+                     - wx_min * s + drawable.x + slack[0],
+                     (wy_min + w_height) * s + drawable.y + slack[1]);
 }
 
 /* Actually draws a page.  If page is NULL, uses the first open page. */
@@ -649,6 +658,31 @@ export_parse_dist (const gchar *dist)
   return mult * base;
 }
 
+/* Parse the --align command line option. */
+static gboolean
+export_parse_align (const gchar *align)
+{
+  int n;
+  gchar **args;
+
+  /* Automatic alignment case */
+  if (g_strcmp0 (align, "auto") == 0 || align[0] == 0) {
+    settings.align[0] = settings.align[1] = 0.5;
+    return TRUE;
+  }
+
+  args = g_strsplit_set (align, "; ", 2);
+  for (n = 0; args[n] != NULL; n++) {
+    gdouble d = strtod (args[n], NULL);
+    if (d < 0 || d > 1) return FALSE;
+    settings.align[n] = d;
+  }
+  g_strfreev (args);
+
+  if (n != 2) return FALSE;
+  return TRUE;
+}
+
 /* Parse the --layout command line option and the export.layout config
  * file setting. */
 static gboolean
@@ -804,6 +838,15 @@ export_config (void)
     g_free (lst);
   }
 
+  /* Parse alignment */
+  lst = eda_config_get_double_list (cfg, "export", "align", &n, NULL);
+  if (lst != NULL) {
+    if (n >= 2) { /* Both halign and valign must be specified */
+      memcpy (settings.align, lst, 2*sizeof(gdouble));
+    }
+    g_free (lst);
+  }
+
   /* Parse dpi */
   dval = eda_config_get_double (cfg, "export", "dpi", &err);
   if (err == NULL) {
@@ -826,10 +869,11 @@ export_config (void)
   }
 }
 
-#define export_short_options "cd:f:F:hl:m:o:p:s:"
+#define export_short_options "a:cd:f:F:hl:m:o:p:s:"
 
 static struct option export_long_options[] = {
   {"no-color", 0, NULL, 2},
+  {"align", 1, NULL, 'a'},
   {"color", 0, NULL, 'c'},
   {"dpi", 1, NULL, 'd'},
   {"format", 1, NULL, 'f'},
@@ -853,10 +897,12 @@ export_usage (void)
 "  -f, --format=TYPE      output format (normally autodetected)\n"
 "  -o, --output=OUTPUT    output filename\n"
 "  -p, --paper=NAME       select paper size by name\n"
-"  -s, --size=WIDTH;HEIGHT   specify exact paper size\n"
-"  -m, --margins=TOP;LEFT;BOTTOM;RIGHT\n"
-"                            set page margins\n"
+"  -s, --size=WIDTH;HEIGHT  specify exact paper size\n"
 "  -l, --layout=ORIENT    page orientation\n"
+"  -m, --margins=TOP;LEFT;BOTTOM;RIGHT\n"
+"                           set page margins\n"
+"  -a, --align=HALIGN;VALIGN\n"
+"                           set alignment of drawing within page\n"
 "  -d, --dpi=DPI          pixels-per-inch for raster outputs\n"
 "  -c, --color            enable color output\n"
 "  --no-color             disable color output\n"
@@ -905,6 +951,16 @@ export_command_line (int argc, char * const *argv)
 
     case 2: /* --no-color */
       settings.color = FALSE;
+      break;
+
+    case 'a':
+      str = export_command_line__utf8_check (optarg, "-a,--align");
+      if (!export_parse_align (str)) {
+        fprintf (stderr, bad_arg_msg, optarg, "-a,--align");
+        fprintf (stderr, see_help_msg);
+        exit (1);
+      }
+      g_free (str);
       break;
 
     case 'c':
