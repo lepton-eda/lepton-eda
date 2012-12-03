@@ -172,14 +172,10 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile,
   g_return_val_if_fail ((toplevel != NULL), FALSE);
   g_return_val_if_fail ((rcfile != NULL), FALSE);
 
-  /* Normalise filename */
-  name_norm = f_normalize_filename (rcfile, err);
-  if (name_norm == NULL) return FALSE;
-
   /* If no configuration file was specified, get the default
    * configuration file for the rc file. */
   if (cfg == NULL) {
-    cfg = eda_config_get_context_for_path (name_norm);
+    cfg = eda_config_get_context_for_path (rcfile);
   }
   /* If the configuration wasn't loaded yet, attempt to load
    * it. Config loading is on a best-effort basis; if we fail, just
@@ -196,6 +192,10 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile,
    * RC file reading hasn't been created yet, create it. */
   if (scheme_rc_config_fluid == SCM_UNDEFINED)
     scheme_rc_config_fluid = scm_permanent_object (scm_make_fluid ());
+
+  /* Normalise filename */
+  name_norm = f_normalize_filename (rcfile, err);
+  if (name_norm == NULL) return FALSE;
 
   /* Attempt to load the RC file, if it hasn't been loaded already.
    * If g_rc_try_mark_read() succeeds, it stores name_norm in
