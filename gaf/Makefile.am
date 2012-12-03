@@ -2,6 +2,8 @@ SUBDIRS = po
 
 bin_PROGRAMS = gaf
 
+EXTRA_DIST = $(html_man_files)
+
 BUILT_SOURCES = shell.x
 
 gaf_SOURCES = \
@@ -31,10 +33,28 @@ DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 # This is used to generate boilerplate for defining Scheme functions
 # in C.
-SUFFIXES = .x
 snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(gaf_CPPFLAGS) $(AM_CFLAGS) $(gaf_CFLAGS)
 .c.x:
 	CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
+
+# Rules for converting man->html
+dist_man_MANS = gaf.1
+html_man_files = gaf.html
+
+docsmandir=$(docdir)/man
+docsman_DATA=$(html_man_files)
+if ENABLE_GROFF_HTML
+.1.html:
+	rm -rf $@.tmp && \
+	LC_NUMERIC=C $(GROFF) -man -T html  $< >$@.tmp && \
+	mv -f $@.tmp $@
+else
+.1.html:
+	@echo "No working groff available: cannot create $@"
+	@! :
+endif
+
+SUFFIXES = .x .1 .html
 
 CLEANFILES = $(BUILT_SOURCES)
