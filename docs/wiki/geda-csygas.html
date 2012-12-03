@@ -591,14 +591,59 @@ There are two independent sources: voltage sources and current sources. For inco
 <p>
 There are four dependent sources:
 </p>
+<ul>
+<li class="level1"><div class="li"> current controlled voltage source</div>
+</li>
+<li class="level1"><div class="li"> current controlled current source</div>
+</li>
+<li class="level1"><div class="li"> voltage controlled voltage source</div>
+</li>
+<li class="level1"><div class="li"> voltage controlled current source</div>
+</li>
+</ul>
 
 <p>
-This section remains TBD.
+For incorporation into a SPICE netlist, they all work the same way. To incorporate a dependent source into your SPICE netlist, do the following:
 </p>
+<ol>
+<li class="level1"><div class="li"> Place the dependent source on your schematic. (Do <strong><em>Add</em></strong> → <strong><em>Component</em></strong> → <strong><em>spice</em></strong> → <strong>&lt;dependent source name&gt;.sym</strong>). Appropriate symbol names are abbreviations of the source type (i.e. <strong>ccvs-1.sym</strong>, <strong>cccs-1.sym</strong>, <strong>vcvs-1.sym</strong>, and <strong>vccs-1.sym</strong>)</div>
+</li>
+<li class="level1"><div class="li"> Double click on the block and add/edit the following attributes:</div>
+<ul>
+<li class="level2"><div class="li"> <strong><code>refdes</code></strong>: H?, F?, E?, or G?. Correct <strong><code>refdes</code></strong> prefixes for each source are listed in <a href="#appendix_a_--_native_components_and_their_attributes" title=":geda:csygas.txt &crarr;" class="wikilink1">Appendix A -- Native components and their attributes</a></div>
+</li>
+<li class="level2"><div class="li"> <strong><code>value</code></strong>: A one line string in SPICE format describing the source. Typically the <strong><code>value</code></strong> attribute represents the gain of the source given in appropriate measuring units.</div>
+</li>
+</ul>
+</li>
+</ol>
 
 </div>
-<!-- EDIT1116 SECTION "Dependent sources" [26351-26440] -->
-<h3 class="sectionedit1117"><a name="spice_components" id="spice_components">SPICE components</a></h3>
+<!-- EDIT1116 SECTION "Dependent sources" [26351-27406] -->
+<h3 class="sectionedit1117"><a name="nullor" id="nullor">Nullor</a></h3>
+<div class="level3">
+
+<p>
+A <a href="http://en.wikipedia.org/wiki/nullor" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/nullor">nullor</a> is a theoretical representation of an ideal op amp, having
+infinite current, voltage, transconductance and transimpedance gain and
+transmission parameters equal to zero. Actually under the hood
+<strong>gnet-spice-sdb</strong> uses the voltage controlled voltage source for it.
+Therefore you have to set the voltage gain of the source.
+</p>
+
+<p>
+To incorporate nullor into your SPICE netlist, do the following:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong><code>refdes</code></strong>: Correct component <strong><code>refdes</code></strong>.</div>
+</li>
+<li class="level2"><div class="li"> <strong><code>value</code></strong>: A one line string in SPICE format describing the nullor. Typically the <strong><code>value</code></strong> attribute represents the voltage gain of the nullor.</div>
+</li>
+</ul>
+
+</div>
+<!-- EDIT1117 SECTION "Nullor" [27407-28044] -->
+<h3 class="sectionedit1118"><a name="spice_components" id="spice_components">SPICE components</a></h3>
 <div class="level3">
 
 </div>
@@ -621,11 +666,11 @@ In certain situations, you may wish to embed a spice model block directly into y
 <ul>
 <li class="level2"><div class="li"> <strong><code>refdes</code></strong>: A?</div>
 </li>
-<li class="level2"><div class="li"> <strong><code>model</code></strong>: model name (i.e. the model name used in the components being modeled)</div>
+<li class="level2"><div class="li"> <strong><code>model-name</code></strong>: model name (i.e. the model name used in the components being modeled)</div>
 </li>
 <li class="level2"><div class="li"> <strong><code>type</code></strong>: One of the valid spice component types defined in the spice <acronym title="specification">spec</acronym>.</div>
 </li>
-<li class="level2"><div class="li"> <strong><code>value</code></strong>: The corresponding one-line spice model</div>
+<li class="level2"><div class="li"> <strong><code>model</code></strong>: The corresponding one-line spice model</div>
 </li>
 </ul>
 </li>
@@ -642,7 +687,7 @@ In certain situations, you may wish to embed a spice model block directly into y
 <ul>
 <li class="level2"><div class="li"> <strong><code>refdes</code></strong>: A?</div>
 </li>
-<li class="level2"><div class="li"> <strong><code>model</code></strong>: model name</div>
+<li class="level2"><div class="li"> <strong><code>model-name</code></strong>: model name</div>
 </li>
 <li class="level2"><div class="li"> <strong><code>file</code></strong>: Name of file holding SPICE model code (i.e. .MODEL or .SUBCKT).</div>
 </li>
@@ -705,8 +750,8 @@ To place a SPICE directive on your schematic, do:
 </ol>
 
 </div>
-<!-- EDIT1117 SECTION "SPICE components" [26441-28852] -->
-<h3 class="sectionedit1118"><a name="handling_hierarchical_models" id="handling_hierarchical_models">Handling hierarchical models</a></h3>
+<!-- EDIT1118 SECTION "SPICE components" [28045-30466] -->
+<h3 class="sectionedit1119"><a name="handling_hierarchical_models" id="handling_hierarchical_models">Handling hierarchical models</a></h3>
 <div class="level3">
 
 <p>
@@ -773,13 +818,13 @@ Once the netlist is created, you may simulate your design using any SPICE simula
 </p>
 
 </div>
-<!-- EDIT1118 SECTION "Handling hierarchical models" [28853-33457] -->
-<h2 class="sectionedit1119"><a name="spice_netlist_generation" id="spice_netlist_generation">SPICE netlist generation</a></h2>
+<!-- EDIT1119 SECTION "Handling hierarchical models" [30467-35071] -->
+<h2 class="sectionedit1120"><a name="spice_netlist_generation" id="spice_netlist_generation">SPICE netlist generation</a></h2>
 <div class="level2">
 
 </div>
-<!-- EDIT1119 SECTION "SPICE netlist generation" [33458-33494] -->
-<h3 class="sectionedit1120"><a name="using_gnetlist" id="using_gnetlist">Using gnetlist</a></h3>
+<!-- EDIT1120 SECTION "SPICE netlist generation" [35072-35108] -->
+<h3 class="sectionedit1121"><a name="using_gnetlist" id="using_gnetlist">Using gnetlist</a></h3>
 <div class="level3">
 
 <p>
@@ -801,8 +846,8 @@ Once the schematic is captured, a SPICE netlist can be generated running gEDA&#0
 -s          Sort output netlist (for Gnucap)</pre>
 
 </div>
-<!-- EDIT1120 SECTION "Using gnetlist" [33495-35055] -->
-<h3 class="sectionedit1121"><a name="creating_the_netlist_using_gnetlist_and_spice-sdb" id="creating_the_netlist_using_gnetlist_and_spice-sdb">Creating the netlist using gnetlist and spice-sdb</a></h3>
+<!-- EDIT1121 SECTION "Using gnetlist" [35109-36669] -->
+<h3 class="sectionedit1122"><a name="creating_the_netlist_using_gnetlist_and_spice-sdb" id="creating_the_netlist_using_gnetlist_and_spice-sdb">Creating the netlist using gnetlist and spice-sdb</a></h3>
 <div class="level3">
 
 <p>
@@ -823,8 +868,8 @@ Creating a netlist from a schematic is easy. To generate a SPICE netlist, just d
 </ul>
 
 </div>
-<!-- EDIT1121 SECTION "Creating the netlist using gnetlist and spice-sdb" [35056-35844] -->
-<h3 class="sectionedit1122"><a name="common_netlisting_problems" id="common_netlisting_problems">Common netlisting problems</a></h3>
+<!-- EDIT1122 SECTION "Creating the netlist using gnetlist and spice-sdb" [36670-37458] -->
+<h3 class="sectionedit1123"><a name="common_netlisting_problems" id="common_netlisting_problems">Common netlisting problems</a></h3>
 <div class="level3">
 
 <p>
@@ -844,8 +889,8 @@ Finally, remember that it is important to manually inspect your SPICE netlist pr
 </p>
 
 </div>
-<!-- EDIT1122 SECTION "Common netlisting problems" [35845-36852] -->
-<h2 class="sectionedit1123"><a name="spice_simulation" id="spice_simulation">SPICE simulation</a></h2>
+<!-- EDIT1123 SECTION "Common netlisting problems" [37459-38466] -->
+<h2 class="sectionedit1124"><a name="spice_simulation" id="spice_simulation">SPICE simulation</a></h2>
 <div class="level2">
 
 <p>
@@ -865,8 +910,8 @@ There is also a <acronym title="GNU General Public License">GPL</acronym>&#039;e
 </p>
 
 </div>
-<!-- EDIT1123 SECTION "SPICE simulation" [36853-38505] -->
-<h3 class="sectionedit1124"><a name="ltspice" id="ltspice">LTSpice</a></h3>
+<!-- EDIT1124 SECTION "SPICE simulation" [38467-40119] -->
+<h3 class="sectionedit1125"><a name="ltspice" id="ltspice">LTSpice</a></h3>
 <div class="level3">
 
 <p>
@@ -930,8 +975,8 @@ Naturally, it is very important to play around with LTSpice to understand how to
 </p>
 
 </div>
-<!-- EDIT1124 SECTION "LTSpice" [38506-41451] -->
-<h3 class="sectionedit1125"><a name="ngspice" id="ngspice">Ngspice</a></h3>
+<!-- EDIT1125 SECTION "LTSpice" [40120-43065] -->
+<h3 class="sectionedit1126"><a name="ngspice" id="ngspice">Ngspice</a></h3>
 <div class="level3">
 
 <p>
@@ -1042,8 +1087,8 @@ A better way to read in the <strong><code>spice2poly</code></strong> codemodel i
 </p>
 
 </div>
-<!-- EDIT1125 SECTION "Ngspice" [41452-48238] -->
-<h3 class="sectionedit1126"><a name="tclspice" id="tclspice">Tclspice</a></h3>
+<!-- EDIT1126 SECTION "Ngspice" [43066-49852] -->
+<h3 class="sectionedit1127"><a name="tclspice" id="tclspice">Tclspice</a></h3>
 <div class="level3">
 
 <p>
@@ -1080,7 +1125,7 @@ If you don&#039;t have these packages already on your Linux box, you need to get
 <p>
 Assuming you have downloaded and installed the additional packages mentioned above, the following steps will build both ngspice and the TCL <acronym title="Application Programming Interface">API</acronym> on your machine:
 </p>
-<pre class="code">user@host:~sources/&lt;tld&gt;$ ./configure --enable-xspice --with-readline  --prefix=/usr/local/geda 
+<pre class="code">user@host:~sources/&lt;tld&gt;$ ./configure --enable-xspice --with-readline  --prefix=/usr/local/geda
 user@host:~sources/&lt;tld&gt;$ make &amp;&amp; make install (this makes and installs regular old ngspice)
 user@host:~sources/&lt;tld&gt;$ ./configure --enable-xspice --prefix=/usr/local/geda --enable-tcl --enable-experimental --disable-shared
 user@host:~sources/&lt;tld&gt;$ make tcl &amp;&amp; make install-tcl</pre>
@@ -1131,7 +1176,7 @@ Meanwhile, there are some workarounds which can be used on moderate-sized design
 <pre class="code">#! tclsh
 package require Tclx
 while {1} {
-  set PID [fork] 
+  set PID [fork]
   if {$PID} {
     # Parent
     after 300000
@@ -1155,8 +1200,8 @@ This method of waiting a specific amount of time for the child process is prefer
 </p>
 
 </div>
-<!-- EDIT1126 SECTION "Tclspice" [48239-55770] -->
-<h2 class="sectionedit1127"><a name="appendix_a_--_native_components_and_their_attributes" id="appendix_a_--_native_components_and_their_attributes">Appendix A -- Native components and their attributes</a></h2>
+<!-- EDIT1127 SECTION "Tclspice" [49853-57382] -->
+<h2 class="sectionedit1128"><a name="appendix_a_--_native_components_and_their_attributes" id="appendix_a_--_native_components_and_their_attributes">Appendix A -- Native components and their attributes</a></h2>
 <div class="level2">
 
 <p>
@@ -1170,7 +1215,7 @@ When dealing with simple actives (diodes, transistors) having SPICE models held 
 <p>
 <strong>Table 1:</strong> Attributes required for SPICE netlisting
 </p>
-<div class="table sectionedit1128"><table class="inline">
+<div class="table sectionedit1129"><table class="inline">
 	<tr class="row0">
 		<th class="col0 centeralign">  <code>device</code>  </th><th class="col1 centeralign">  <code>refdes</code>  </th><th class="col2 centeralign">  <code>value</code>  </th><th class="col3 centeralign">  <code>model</code>  </th><th class="col4 centeralign">  <code>file</code>  </th><th class="col5 centeralign">  <code>model-name</code>  </th><th class="col6 centeralign">  <code>type</code>  </th><th class="col7 centeralign">  Comment  </th>
 	</tr>
@@ -1250,7 +1295,7 @@ When dealing with simple actives (diodes, transistors) having SPICE models held 
 		<td class="col0"><strong>CURRENT_SOURCE</strong></td><td class="col1 centeralign">  <strong>I?</strong>  </td><td class="col2 centeralign">  <strong>(7)</strong>  </td><td class="col3 centeralign">  -  </td><td class="col4 centeralign">  -  </td><td class="col5 centeralign">  -  </td><td class="col6 centeralign">  -  </td><td class="col7 centeralign">  Independent current source  </td>
 	</tr>
 </table></div>
-<!-- EDIT1128 TABLE [56702-59463] -->
+<!-- EDIT1129 TABLE [58314-61075] -->
 <p>
 (1) One line string holding SPICE statements for inclusion in netlist<br/>
 
@@ -1286,8 +1331,8 @@ When dealing with simple actives (diodes, transistors) having SPICE models held 
 </p>
 
 </div>
-<!-- EDIT1127 SECTION "Appendix A -- Native components and their attributes" [55771-61046] -->
-<h2 class="sectionedit1129"><a name="appendix_b_--_valid_type_values" id="appendix_b_--_valid_type_values">Appendix B -- Valid &quot;type&quot; values</a></h2>
+<!-- EDIT1128 SECTION "Appendix A -- Native components and their attributes" [57383-62658] -->
+<h2 class="sectionedit1130"><a name="appendix_b_--_valid_type_values" id="appendix_b_--_valid_type_values">Appendix B -- Valid &quot;type&quot; values</a></h2>
 <div class="level2">
 
 <p>
@@ -1297,7 +1342,7 @@ The “type” attribute is a flag signaling the spice engine the component type
 <p>
 <strong>Table 2:</strong> Valid “type” attributes for components
 </p>
-<div class="table sectionedit1130"><table class="inline">
+<div class="table sectionedit1131"><table class="inline">
 	<tr class="row0">
 		<th class="col0 centeralign">  Component  </th><th class="col1 centeralign">  “type”  </th><th class="col2 centeralign">  Comment  </th>
 	</tr>
@@ -1338,9 +1383,9 @@ The “type” attribute is a flag signaling the spice engine the component type
 		<td class="col0 leftalign">MESFET_TRANSISTOR  </td><td class="col1 centeralign">  -  </td><td class="col2"> </td>
 	</tr>
 </table></div>
-<!-- EDIT1130 TABLE [61346-61716] -->
+<!-- EDIT1131 TABLE [62958-63328] -->
 </div>
-<!-- EDIT1129 SECTION "Appendix B -- Valid type values" [61047-] --><div class="footnotes">
+<!-- EDIT1130 SECTION "Appendix B -- Valid type values" [62659-] --><div class="footnotes">
 <div class="fn"><sup><a href="#fnt__1" id="fn__1" name="fn__1" class="fn_bot">1)</a></sup> 
 This HOWTO is released under the GNU Free Documentation License thanks to the generosity of Electroniscript, inc. The most recent copy can always be found at <a href="http://www.brorson.com/gEDA/HOWTO/" class="urlextern" title="http://www.brorson.com/gEDA/HOWTO/"  rel="nofollow">http://www.brorson.com/gEDA/HOWTO/</a></div>
 </div>

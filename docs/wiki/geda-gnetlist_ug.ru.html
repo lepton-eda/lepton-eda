@@ -12,516 +12,54 @@
 <body>
 
 
-<h1 class="sectionedit1452"><a name="руководство_пользователя_geda_gnetlist" id="руководство_пользователя_geda_gnetlist">Руководство пользователя gEDA gnetlist</a></h1>
+<p>
+<em>Это руководство доступно также на следующих языках:</em> <a href="geda-gnetlist_ug.html" class="wikilink1" title="geda-gnetlist_ug.html">English</a>
+</p>
+
+<h1 class="sectionedit1450"><a name="руководство_пользователя_geda_gnetlist" id="руководство_пользователя_geda_gnetlist">Руководство пользователя gEDA gnetlist</a></h1>
 <div class="level1">
 
 <p>
-Автор: Ales Hvezda
+<p><div class="noteclassic">The text of and illustrations in this document are licensed under a <em>Creative Commons Attribution–Share Alike 3.0 Unported</em> license (“CC-BY-SA”). An explanation of CC-BY-SA is available at <a href="http://creativecommons.org/licenses/by-sa/3.0/" class="urlextern" title="http://creativecommons.org/licenses/by-sa/3.0/"  rel="nofollow">http://creativecommons.org/licenses/by-sa/3.0/</a> . The original authors of this document designate the gEDA Project as the “Attribution Party” for purposes of CC-BY-SA. In accordance with CC-BY-SA, if you distribute this document or an adaptation of it, you must provide the <acronym title="Uniform Resource Locator">URL</acronym> for the original version.
+</div></p>
 </p>
 
-<p>
-Настоящий документ выпущен под лицензией
-<a href="http://www.gnu.org/copyleft/fdl.html" class="urlextern" title="http://www.gnu.org/copyleft/fdl.html"  rel="nofollow">GFDL</a>
-</p>
 
-<p>
-21 сентября, 2003 г.
-</p>
 
 </div>
-<!-- EDIT1452 SECTION "Руководство пользователя gEDA gnetlist" [1-256] -->
-<h2 class="sectionedit1453"><a name="введение" id="введение">Введение</a></h2>
+<!-- EDIT1450 SECTION "Руководство пользователя gEDA gnetlist" [125-721] -->
+<h2 class="sectionedit1451"><a name="содержание" id="содержание">Содержание</a></h2>
 <div class="level2">
-
-<p>
-В настоящем документе описывается использование <strong>gnetlist</strong>. И настоящий
-документ, и вообще <strong>gnetlist</strong> находятся в состоянии альфа-версии, так что
-имейте это в виду при создании списков соединений с его помощью. Каждому
-инженеру известно, что ни в коем случае нельзя слепо
-доверять программным средствам и считать, что они всегда дают верный результат.
-<strong>gnetlist</strong> определённо не является исключением из этого правила. Очень важно
-проверять <strong>каждый</strong> из создаваемых вами списков соединений. Как и большинство
-программ (в том числе все программы gEDA), <strong>gnetlist</strong> поставляется БЕЗ
-КАКИХ БЫ ТО НИ БЫЛО ГАРАНТИЙ. Я ненавижу, что приходится это говорить, но,
-надеюсь, данное предупреждение удержит пользователя от мнения, что
-<strong>gnetlist</strong> создаёт идеальные списки соединений. Тем не менее, если вы
-найдёте ошибку, дайте мне знать по адресу <strong>ahvezda@geda.seul.org</strong>.<br/>
-
-Настоящий документ очень сырой, так что посылайте все исправления на
-<strong>ahvezda@geda.seul.org</strong> или заполните отчёт об ошибке на домашней странице
-gEDA <a href="http://www.geda-project.org" class="urlextern" title="http://www.geda-project.org"  rel="nofollow">http://www.geda-project.org</a>. Спасибо!
-</p>
-
-</div>
-<!-- EDIT1453 SECTION "Введение" [257-2090] -->
-<h2 class="sectionedit1454"><a name="обзор" id="обзор">Обзор</a></h2>
-<div class="level2">
-
-<p>
-<strong>gnetlist</strong> — это генератор списка соединений gEDA. Он принимает на
-входе файлы схем и производит списки соединений. Список соединений является
-текстовым представлением схемы. Это текстовое представление полностью
-описывает все соединения между устройствами. Это означает, что все
-подключения, относящиеся к одному соединению группируются вместе. Генератор
-списка соединений обрабатывает также иерархически связанные схемы.<br/>
-
-<strong>gnetlist</strong> имеет очень гибкую архитектуру. Основная программа, написанная на
-<strong>C</strong>, читает схему (используя подпрограммы из <strong>libgeda</strong>) и создаёт
-внутреннее представление данных схемы. Это внутреннее представление дальше
-обрабатывается низкоуровневыми модулями (драйверами), ответственными за
-вывод списков соединений в различных форматах. Драйверы для
-каждого формата написаны на языке <strong>Scheme</strong> (а конкретнее, на его
-разновидности <strong>Guile</strong>). Данная архитектура не только допускает бесчисленное
-количество форматов списков соединений, но и позволяет генератору списка
-соединений создавать другие документы (например,
-<a href="geda-glossary.ru.html#перечень_элементов" class="wikilink1" title="geda-glossary.ru.html">перечни элементов</a>).<br/>
-
-С версии 20001006 <strong>gnetlist</strong> имеет драйверы на <strong>Scheme</strong> для поддержки
-следующих форматов:
-</p>
 <ol>
-<li class="level1"><div class="li"> <strong>PCB</strong> &amp; <strong>PCBboard</strong> - формат списка соединений UNIX <strong>PCB</strong>.</div>
+<li class="level1"><div class="li"> <a href="geda-gnetlist_ug-introduction.ru.html" class="wikilink1" title="geda-gnetlist_ug-introduction.ru.html">Введение</a></div>
 </li>
-<li class="level1"><div class="li"> Формат списка соединений  <strong>Allegro</strong></div>
+<li class="level1"><div class="li"> <a href="geda-gnetlist_ug-running_gnetlist.ru.html" class="wikilink1" title="geda-gnetlist_ug-running_gnetlist.ru.html">Запуск gnetlist</a></div>
 </li>
-<li class="level1"><div class="li"> Формат списка соединений  <strong>BAE</strong></div>
+<li class="level1"><div class="li"> <a href="geda-gnetlist_ug-input_output_files.ru.html" class="wikilink1" title="geda-gnetlist_ug-input_output_files.ru.html">Входные и выходные файлы</a></div>
 </li>
-<li class="level1"><div class="li"> <strong>BOM</strong> &amp; <strong>BOM2</strong> - генератор перечня элементов (BOM)</div>
+<li class="level1"><div class="li"> <a href="geda-gnetlist_ug-netlist_backends.ru.html" class="wikilink1" title="geda-gnetlist_ug-netlist_backends.ru.html">Драйверы списков соединений</a></div>
 </li>
-<li class="level1"><div class="li"> <strong>DRC</strong> - Запуск <a href="geda-glossary.ru.html#проверка_соответствия_проектным_нормам" class="wikilink1" title="geda-glossary.ru.html">проверки на соответствие проектным нормам</a></div>
+<li class="level1"><div class="li"> <a href="geda-gnetlist_ug-basic_netlisting.ru.html" class="wikilink1" title="geda-gnetlist_ug-basic_netlisting.ru.html">Создание простых списков соединений</a></div>
 </li>
-<li class="level1"><div class="li"> <strong>gEDA</strong> - родной формат gEDA, используемый главным образом для тестирования</div>
+<li class="level1"><div class="li"> <a href="geda-gnetlist_ug-hierarchy.ru.html" class="wikilink1" title="geda-gnetlist_ug-hierarchy.ru.html">Иерархические схемы</a></div>
 </li>
-<li class="level1"><div class="li"> Формат списка соединений  <strong>Gossip</strong></div>
+<li class="level1"><div class="li"> <a href="geda-gnetlist_ug-slotting.ru.html" class="wikilink1" title="geda-gnetlist_ug-slotting.ru.html">Секции и их назначение</a></div>
 </li>
-<li class="level1"><div class="li"> Формат списка соединений  <strong>PADS</strong></div>
+<li class="level1"><div class="li"> <a href="geda-gnetlist_ug-implicit_pins.ru.html" class="wikilink1" title="geda-gnetlist_ug-implicit_pins.ru.html">Неявные выводы</a></div>
 </li>
-<li class="level1"><div class="li"> Формат списка соединений  <strong>ProtelII</strong></div>
-</li>
-<li class="level1"><div class="li"> <a href="geda-glossary.ru.html#spice" class="wikilink1" title="geda-glossary.ru.html">SPICE</a>-совместимый формат списка соединений</div>
-</li>
-<li class="level1"><div class="li"> Формат списка соединений  <strong>Tango</strong></div>
-</li>
-<li class="level1"><div class="li"> Код <strong>Verilog</strong></div>
-</li>
-<li class="level1"><div class="li"> Код <strong>VHDL</strong></div>
-</li>
-<li class="level1"><div class="li"> Формат списка соединений  <strong>VIPEC</strong></div>
-</li>
-<li class="level1"><div class="li"> Формат списка соединений  <strong>VAMS</strong> - <strong>VHDL-AMS</strong></div>
+<li class="level1"><div class="li"> <a href="geda-gnetlist_ug-config.ru.html" class="wikilink1" title="geda-gnetlist_ug-config.ru.html">Настройка gnetlist</a></div>
 </li>
 </ol>
 
-<p>
-Этот список постоянно растёт. Несколько отсутствующих возможностей (на момент
-версии 20001006): отсутствует поддержка шин, определение ошибок и сообщения о
-них весьма ограничены,… и многое другое.
-</p>
-
 </div>
-<!-- EDIT1454 SECTION "Обзор" [2091-5764] -->
-<h2 class="sectionedit1455"><a name="установка" id="установка">Установка</a></h2>
-<div class="level2">
-
-<p>
-Надеюсь, что программа <strong>gnetlist</strong> уже установлена на вашей машине. В данном документе
-установка не описывается. Свою установку можно проверить запуском:
-</p>
-<pre class="code">libgeda-config --version
-gesym-config --version
-which gnetlist
-ldd `which gnetlist`</pre>
-
-<p>
-Первые две команды должны показать версии установленных программ (<strong>libgeda</strong>
-и библиотеки символов), следующая команда должна выдать путь к двоичному файлу
-<strong>gnetlist</strong>. Последняя команда покажет, какие библиотеки подключаются к
-<strong>gnetlist</strong> (только на Unix-подобных операционных системах, в которых есть
-утилита <strong>ldd</strong>, предназначенная для вывода динамических зависимостей
-исполняемых файлов или совместно используемых объектов); чтобы программа
-<strong>gnetlist</strong> смогла запуститься, все
-запрашиваемые библиотеки должны быть найдены. Если эти команды не дают
-ожидаемых результатов, скорее всего, программы gEDA не установлены должным
-образом. Более подробную информацию по установке программ gEDA
-можно найти в соответствующих документах INSTALL (входящих в дистрибутив).
-</p>
-
-</div>
-<!-- EDIT1455 SECTION "Установка" [5765-7525] -->
-<h2 class="sectionedit1456"><a name="запуск_gnetlist" id="запуск_gnetlist">Запуск gnetlist</a></h2>
-<div class="level2">
-
-<p>
-Запуск <strong>gnetlist</strong> очень прост. У программы <strong>gnetlist</strong> простой интерфейс
-командной строки, так что нет никакого докучного <acronym title="Graphical User Interface">GUI</acronym> для работы с ней <img src="images/smileys/icon_smile.gif" align="middle" alt=":-)" />. Для
-получения списка аргументов командной строки запустите <strong><code>gnetlist -h</code></strong>.<br/>
-
-Для запуска <strong>gnetlist</strong> нужно указать два параметра:
-</p>
-<ul>
-<li class="level1"><div class="li"> <code>-g guile_procedure</code> (определяет драйвер, который надо запустить для схем)</div>
-</li>
-<li class="level1"><div class="li"> <code>filename.sch</code> (определяет файлы схем)</div>
-</li>
-</ul>
-
-<p>
-В командной строке можно указать несколько схем. По умолчанию для вывода
-созданного списка соединений используется имя файла <em><code>output.net</code></em>. Можно
-изменить это умолчание указанием ключа <code>-o filename</code>.<br/>
-
-Примеры запуска <strong>gnetlist</strong>:
-</p>
-<pre class="code">gnetlist -g geda -o stack.net stack_1.sch</pre>
-
-<p>
-(выводит список соединений для схемы <em><code>stack_1.sch</code></em> в <em><code>stack.net</code></em>,
-используя родной формат gEDA)
-</p>
-
-<p>
-Есть также несколько ключей для отладки. Первый из них — это ключ <code>-v</code>,
-включающий режим вывода подробной информации. В этом режиме выводится большой
-объём информации о том, что делает <strong>gnetlist</strong>, а также дамп внутреннего
-представления данных. Ключ <code>-i</code>, переводящий <strong>gnetlist</strong> в интерактивный
-режим, очень полезен для отладки драйверов на <strong>Scheme</strong>, он
-обычно не используется конечными пользователями.<br/>
-
-Аргументы командной строки подробно описаны в man-странице <strong>gnetlist</strong>.
-</p>
-
-</div>
-<!-- EDIT1456 SECTION "Запуск gnetlist" [7526-9672] -->
-<h2 class="sectionedit1457"><a name="требования_к_схемам_символам" id="требования_к_схемам_символам">Требования к схемам/символам</a></h2>
-<div class="level2">
-
-<p>
-В данном разделе рассматривается вопрос о том, что должно быть в схемах/символах, чтобы
-программа <strong>gnetlist</strong> могла с ними работать. Чтобы программа <strong>gnetlist</strong> работала корректно, и
-схема, и поддерживаемые символы должны быть правильны. В основном это
-требование относится к определению атрибутов. В системе gEDA атрибуты
-повсюду используются для представления информации. Атрибуты — это
-единственный способ добавления информации для компонентов, соединений, выводов
-и т. д. Для получения более подробной информации об атрибутах, упомянутых в
-данном документе, обратитесь к странице документации
-<a href="geda-master_attributes_list.ru.html" class="wikilink1" title="geda-master_attributes_list.ru.html">Перечень основных атрибутов</a>.
-</p>
-
-</div>
-<!-- EDIT1457 SECTION "Требования к схемам/символам" [9673-10907] -->
-<h3 class="sectionedit1458"><a name="требования_к_символам" id="требования_к_символам">Требования к символам</a></h3>
+<!-- EDIT1451 SECTION "Содержание" [722-1472] -->
+<h3 class="sectionedit1452"><a name="приложения" id="приложения">Приложения</a></h3>
 <div class="level3">
-<ul>
-<li class="level1"><div class="li"> Каждый символ должен иметь атрибут <code>device=</code>.</div>
+<ol>
+<li class="level1"><div class="li"> <a href="geda-gnetlist_ug-command_line.ru.html" class="wikilink1" title="geda-gnetlist_ug-command_line.ru.html">Аргументы командной строки</a></div>
 </li>
-<li class="level1"><div class="li"> Каждый вывод должен иметь атрибут <code>pin#=#</code>. Этот атрибут со временем изменит форму, но сейчас он должен быть в виде <code>pin#=#</code>.</div>
-</li>
-<li class="level1"><div class="li"> Также каждый вывод должен иметь атрибут <code>pinlabel=</code>.</div>
-</li>
-<li class="level1"><div class="li"> Для символов, определяющих <a href="geda-glossary.ru.html#многосекционный_компонент" class="wikilink1" title="geda-glossary.ru.html">многосекционные компоненты</a>, состоящие из нескольких <a href="geda-glossary.ru.html#секция_компонента" class="wikilink1" title="geda-glossary.ru.html">секций</a>, необходим атрибут <code>slot=</code>, атрибут <code>slot#=#</code> для каждого элемента и атрибут <code>numslots=#</code>. <a href="geda-glossary.ru.html#назначение_логических_секций" class="wikilink1" title="geda-glossary.ru.html">Назначение секций компонентов</a> также изменится в ближайшем будущем, но сейчас оно должно описываться указанным способом.</div>
-</li>
-<li class="level1"><div class="li"> Для любых соединений питания и специальных соединений необходимо указать атрибуты <code>net=</code> внутри символа. Более подробную информацию об этом см. в <a href="geda-na_howto.ru.html" class="wikilink1" title="geda-na_howto.ru.html">Мини-HOWTO по атрибуту net=</a>.</div>
-</li>
-<li class="level1"><div class="li"> Для различных параметров (в зависимости от того, какой драйвер вы используете) можно задать значения по умолчанию, воспользовавшись механизмом “выноса” атрибутов. Более подробная информация находится ниже, а также в документации по <strong>gschem</strong>.</div>
-</li>
-<li class="level1"><div class="li"> Если нужно, чтобы какие-то символы полностью игнорировались генератором списка соединений, задайте для них атрибут <code>graphical=1</code>.</div>
-</li>
-<li class="level1"><div class="li"> Больше советов по символам можно найти в <a href="geda-gschem_symbol_creation.ru.html" class="wikilink1" title="geda-gschem_symbol_creation.ru.html">Руководстве по созданию символов</a>.</div>
-</li>
-</ul>
+</ol>
 
 </div>
-<!-- EDIT1458 SECTION "Требования к символам" [10908-13278] -->
-<h3 class="sectionedit1459"><a name="требования_к_схемам" id="требования_к_схемам">Требования к схемам</a></h3>
-<div class="level3">
-<ul>
-<li class="level1"><div class="li"> Самое важное, что каждый компонент, который должен отображаться в списке соединений, должен иметь атрибут <code>refdes=</code>. Это <strong>ОЧЕНЬ</strong> важно. Программа <strong>gnetlist</strong> должна предупредить вас, если вы используете компонент, в котором нет <code>refdes=</code>, но ранее уже бывали программные ошибки, из-за которых такое предупреждение могло не появиться.</div>
-</li>
-<li class="level1"><div class="li"> Для любого из соединений можно создать метку с помощью атрибута <code>label=</code>. Эту метку нужно прикрепить только к одному сегменту соединения, чтобы все сегменты данного соединения (электрически связанные с ним) унаследовали эту метку.</div>
-</li>
-<li class="level1"><div class="li">  В одном проекте может быть несколько принципиальных схем (на самом деле термин “проект” сбивает людей с толку, так как каждый понимает его по-своему). Чтобы использовать несколько схем для создания одного списка соединений, надо просто задать их в командной строке <strong>gnetlist</strong>.</div>
-</li>
-<li class="level1"><div class="li"> Если назвать соединения одинаково, они будут считаться электрически связанными. Одинаковые имена соединений распространяются на все заданные схемы.</div>
-</li>
-<li class="level1"><div class="li"> Есть кое-какие проблемы, относящиеся к иерархии. Обратитесь к приведённому ниже разделу по иерархии.</div>
-</li>
-</ul>
-
-</div>
-<!-- EDIT1459 SECTION "Требования к схемам" [13279-15314] -->
-<h3 class="sectionedit1460"><a name="прочие_примечания" id="прочие_примечания">Прочие примечания</a></h3>
-<div class="level3">
-<ul>
-<li class="level1"><div class="li"> Атрибуты, находящиеся внутри символа, но ни к чему там не прикрепленные, “выносятся” вовне символа, когда он помещается в схему (в <strong>gschem</strong>). Эти “вынесенные” атрибуты всегда проверяются/ищутся до того, как перейти внутрь символа. То есть, иными словами, если к экземпляру компонента снаружи прикреплён атрибут, одноимённый с атрибутом внутри его символа, то приоритет отдаётся внешнему атрибуту.</div>
-</li>
-</ul>
-
-</div>
-<!-- EDIT1460 SECTION "Прочие примечания" [15315-16079] -->
-<h2 class="sectionedit1461"><a name="поддержка_иерархии" id="поддержка_иерархии">Поддержка иерархии</a></h2>
-<div class="level2">
-
-<p>
-TBA
-</p>
-
-</div>
-<!-- EDIT1461 SECTION "Поддержка иерархии" [16080-16132] -->
-<h2 class="sectionedit1462"><a name="информация_специфичная_для_драйверов" id="информация_специфичная_для_драйверов">Информация, специфичная для драйверов</a></h2>
-<div class="level2">
-
-<p>
-TBA
-</p>
-
-</div>
-<!-- EDIT1462 SECTION "Информация, специфичная для драйверов" [16133-16220] -->
-<h2 class="sectionedit1463"><a name="api_драйвера_в_scheme" id="api_драйвера_в_scheme">API драйвера в Scheme</a></h2>
-<div class="level2">
-
-<p>
-Обратите внимание, что данный раздел всё ещё находится в стадии развития.
-Приведённая здесь информация должна быть верной, но не является полной.
-</p>
-
-</div>
-<!-- EDIT1463 SECTION "API драйвера в Scheme" [16221-16531] -->
-<h3 class="sectionedit1464"><a name="обзор1" id="обзор1">Обзор</a></h3>
-<div class="level3">
-
-<p>
-<strong>gnetlist</strong> выполняет загрузку базы данных схемы из файлов <em><code>.sch</code></em>,
-строит внутреннее представление, а затем вызывает функцию, специфичную для
-указанного типа выходного списка соединений, которая и создаёт фактический
-список соединений. Каждый драйвер <strong>gnetlist</strong> содержится в файле,
-называемом <em><code>gnet-&lt;backend&gt;.scm</code></em>. Где <strong>&lt;backend&gt;</strong> – это имя отдельного
-драйвера. Например, <em><code>gnet-switcap.scm</code></em> содержит код, используемый
-командой <strong><code>gnetlist -g switcap</code></strong>, а <em><code>gnet-drc.scm</code></em> содержит код,
-используемый командой <strong><code>gnetlist -g drc</code></strong>. Драйверы
-написаны на языке программирования <strong>Scheme</strong>. Частная реализация <strong>Scheme</strong>
-— это <strong>Guile</strong>, что означает “GNU&#039;s Ubiquitous Intelligent Language for
-Extensions” (“вездесущий интеллектуальный язык GNU для расширений”). Больше
-информации по <strong>Guile</strong> можно найти на
-<a href="http://www.gnu.org/software/guile/guile.html" class="urlextern" title="http://www.gnu.org/software/guile/guile.html"  rel="nofollow">http://www.gnu.org/software/guile/guile.html</a>.
-</p>
-
-</div>
-<!-- EDIT1464 SECTION "Обзор" [16532-17908] -->
-<h3 class="sectionedit1465"><a name="входная_функция" id="входная_функция">Входная функция</a></h3>
-<div class="level3">
-
-<p>
-Каждый из драйверов списков соединений обязан предоставлять
-функцию, имя которой соответствует типу его списка соединений. Например, драйвер
-<strong>switcap</strong>, содержащийся в <strong>gnet-switcap.scm</strong> должен иметь функцию,
-называемую <code>switcap</code>. Это та функция, которую вызовет <strong>gnetlist</strong>, чтобы
-инициировать создание списка соединений. Входной функции задаётся один
-аргумент, представляющий собой имя файла выходного списка соединений. Обычно первое, что
-генератор списка соединений делает, это открывает данный файл на запись.<br/>
-
-В следующем отрывке из драйвера <strong>switcap</strong> показано начало входной функции,
-где открывается выходной файл, и её конец, где этот файл закрывается.
-</p>
-<pre class="code">;; ---------------------------------------
-;; Switcap netlist generation -- top level
-;; ---------------------------------------
-(define switcap
-  (lambda (output-filename)
-    (let ((port (open-output-file output-filename)))
-
-;; rest of netlisting goes here
-
-;; close the output file and return
-      (close-output-port port))))</pre>
-
-</div>
-<!-- EDIT1465 SECTION "Входная функция" [17909-19464] -->
-<h3 class="sectionedit1466"><a name="инициализация_драйвера" id="инициализация_драйвера">Инициализация драйвера</a></h3>
-<div class="level3">
-
-<p>
-После открытия выходного списка соединений производятся все необходимые
-действия по специфической инициализации, которые должны выполняться для
-списков соединений данного конкретного типа. В примере со <strong>switcap</strong> мы должны инициализировать имя
-соединения и базу данных псевдонимов позиционных обозначений (<code>refdes</code>). Это
-нужно потому, что <strong>switcap</strong> предъявляет более строгие требования
-к именам соединений, чем <strong>gschem</strong>. Кроме того, <strong>switcap</strong> предъявляет особые
-требования к позиционным обозначениям списка соединений. Для
-таких ситуаций <strong>gnetlist</strong> предоставляет некоторые функции общего назначения,
-переименовывающие соединения и позиционные обозначения так, чтобы они
-соответствовали требованиям целевого списка соединений. Подробнее об этом
-позже. А пока просто отметьте, что в драйвере <strong>switcap</strong> используется следующий
-код:
-</p>
-<pre class="code">;; initialize the net-name aliasing
-(gnetlist:build-net-aliases switcap:map-net-names
-    all-unique-nets)
-
-;; initialize the refdes aliasing
-(gnetlist:build-refdes-aliases switcap:map-refdes
-    packages)</pre>
-
-<p>
-Другая инициализация, которая хотя и не требуется для всех типов списков
-соединений, но обычно производится, состоит в выводе некоторого рода
-заголовка. Этот заголовок может либо явно содержаться во входной функции, либо, для
-ясности кода, может быть вынесен в свою собственную функцию. В драйвере
-<strong>switcap</strong> вызов такой:
-</p>
-<pre class="code">(switcap:write-top-header port)</pre>
-
-<p>
-Учтите, что существует соглашение о том, что имена любых специфических функций
-драйвера  должны содержать префикс в виде имени этого драйвера. Например, все
-специфические для <strong>switcap</strong> функции начинаются со <code>switcap:</code>. Функции,
-пригодные для всех драйверов и предоставляемые программой
-<strong>gnetlist</strong>, имеют префикс <code>gnetlist:</code>.<br/>
-
-<code>switcap:write-top-header</code> определяется следующим образом:
-</p>
-<pre class="code">;;
-;; Switcap netlist header
-;;
-(define switcap:write-top-header
-  (lambda (port)
-    (display
-      &quot;/* Switcap netlist produced by gnetlist (part of gEDA) */\n&quot;
-      port)
-    (display
-      &quot;/* See http://www.geda.seul.org for more information. */\n&quot;
-      port)
-    (display
-      &quot;/* Switcap backend written by Dan McMahill            */\n&quot;
-      port)
-    (display &quot;\n\n&quot; port)
-    )
-  )</pre>
-
-<p>
-Далее входная функция вызывает функции для каждого раздела выходного списка
-соединений. В <strong>gnetlist</strong> зарезервированы некоторые имена переменных: переменная <code>packages</code>
-представляет собой список всех компонентов, а <code>all-unique-nets</code> —
-список всех соединений в проекте. Эти переменные будут использоваться в
-различных функциях, используемых драйвером для каждого раздела списка
-соединений.
-Например, основная часть списка соединений <strong>switcap</strong>, содержащая компоненты
-и их соединения, записывается в выходной файл так:
-</p>
-<pre class="code">(switcap:write-netlist port packages)</pre>
-
-</div>
-<!-- EDIT1466 SECTION "Инициализация драйвера" [19465-23896] -->
-<h3 class="sectionedit1467"><a name="псевдонимы_имён_соединений_и_позиционных_обозначений" id="псевдонимы_имён_соединений_и_позиционных_обозначений">Псевдонимы имён соединений и позиционных обозначений</a></h3>
-<div class="level3">
-
-<p>
-Обычно в драйверах для целевых типов списков соединений к именам соединений предъявляются
-более строгие требования, чем в <strong>gschem</strong>. Могут быть, например, ограничения на
-длину, разрешённые символы или их регистр. Для решения данной проблемы
-<strong>gnetlist</strong> предоставляет возможность использования псевдонимов имён
-соединений. Для использования этой возможности в разделе инициализации
-входной функции вызывается функция <code>gnetlist:build-netaliases</code>.<br/>
-
-Например, в драйвере <strong>switcap</strong>:
-</p>
-<pre class="code">;; initialize the net-name aliasing
-(gnetlist:build-net-aliases switcap:map-net-names
-    all-unique-nets)</pre>
-
-<p>
-Функция <code>switcap:map-net-names</code> является функцией, специфической для
-драйвера (в данном случае <code>switcap</code>), которая принимает в качестве аргумента
-имя соединения <strong>gschem</strong> и возвращает изменённое имя,
-удовлетворяющее требованиям формата выходного списка соединений. В случае <strong>switcap</strong>
-требования следующие: “земля” называется “0”, имена соединений имеют не больше 7
-знаков и код списка соединений регистронезависим.
-</p>
-<pre class="code">;; This procedure takes a net name as determined by
-;; gnetlist and modifies it to be a valid SWITCAP net name.
-;;
-(define switcap:map-net-names
-  (lambda (net-name)
-    (let ((rx (make-regexp &quot;^unnamed_net&quot;))
-          (net-alias net-name)
-          )
-      ;; XXX we should use a dynamic regexp based on the
-      ;; current value for the unnamed net base string.
-
-      (cond
-       ;; Change &quot;GND&quot; to &quot;0&quot;
-       ((string=? net-name &quot;GND&quot;) (set! net-alias &quot;0&quot;))
-       ;; remove the &#039;unnamed_net&#039; part
-       ((regexp-exec rx net-name)
-           (set! net-alias (substring net-name 11)))
-       (else net-name)
-       )
-
-      ;; Truncate to 7 characters
-      (if (&gt; (string-length net-alias) 7)
-          (set! net-alias (substring net-alias 0 7))
-          )
-
-  ;; Convert to all upper case
-  (string-upcase net-alias)
-
-  )
- )
-)</pre>
-
-<p>
-Функцией <code>gnetlist:build-net-aliases</code> создаётся база данных, в которой позже
-можно будет производить поиск имени выходного соединения по имени соединения в
-<strong>gschem</strong> или имени соединения в <strong>gschem</strong> по имени выходного
-соединения. Кроме того, эта функция выполняет очень важную задачу обеспечения
-отсутствия коротких замыканий при изменении имён соединений. В качестве
-примера предположим, что у вас в схеме есть соединение с именем “MyNet”, и
-ещё одно — с именем “mynet”. Они уникальны, но после преобразования обоих
-в верхний регистр, они станут одним соединением.
-<code>gnetlist:build-net-aliases</code> определит это условие, выдаст ошибку и
-остановит создание списка соединений.<br/>
-
-Теперь, когда база данных инициализирована, для нахождения имени
-в списке соединений по имени соединения в <strong>gschem</strong>, генератор списка соединений
-просто использует:
-</p>
-<pre class="code">(gnetlist:alias-net somenet)</pre>
-
-<p>
-Подобный набор функций предоставляется и для псевдонимов позиционных
-обозначений.
-</p>
-
-</div>
-<!-- EDIT1467 SECTION "Псевдонимы имён соединений и позиционных обозначений" [23897-28198] -->
-<h3 class="sectionedit1468"><a name="советы_по_отладке" id="советы_по_отладке">Советы по отладке</a></h3>
-<div class="level3">
-
-<p>
-Полезным средством для отладки является запуск <strong>gnetlist</strong> в интерактивном
-режиме. Для <strong>gnetlist</strong> этот режим запускается с помощью ключа <code>-i</code>. При
-этом появится оболочка, где можно будет вводить команды <strong>Scheme</strong>. Это
-простой способ проверки различных переменных и тестирования разных функций.<br/>
-
-Пример запуска <strong>gnetlist</strong> в интерактивном режиме приведён ниже.
-</p>
-<pre class="code">% gnetlist -i ../../gnetlist/examples/switcap/*.sch
-gEDA/gnetlist version 20041228
-gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.
-This is free software, and you are welcome to redistribute it under certain
-conditions; please see the COPYING file for more details.
-
-Loading schematic [../../gnetlist/examples/switcap/analysis.sch]
-Loading schematic [../../gnetlist/examples/switcap/ckt.sch]
-Loading schematic [../../gnetlist/examples/switcap/clocks.sch]
-gnetlist&gt; all-unique-nets
-  (&quot;unnamed_net6&quot; &quot;unnamed_net5&quot; &quot;unnamed_net4&quot; &quot;OUT&quot; &quot;unnamed_net3&quot;
-   &quot;unnamed_net2&quot; &quot;unnamed_net1&quot; &quot;GND&quot;)
-  gnetlist&gt; packages
-  (&quot;TIMING&quot; &quot;CLK1&quot; &quot;S7&quot; &quot;S8&quot; &quot;S6&quot; &quot;S5&quot; &quot;C3&quot; &quot;S4&quot; &quot;C2&quot; &quot;C1&quot; &quot;E1&quot; &quot;S3&quot;
-   &quot;S1&quot; &quot;V1&quot; &quot;S2&quot; &quot;OPTIONS&quot; &quot;TITLE&quot; &quot;ANA1&quot;)
-  gnetlist&gt; (quit)
-  %</pre>
-
-</div>
-<!-- EDIT1468 SECTION "Советы по отладке" [28199-] --></body>
+<!-- EDIT1452 SECTION "Приложения" [1473-] --></body>
 </html>

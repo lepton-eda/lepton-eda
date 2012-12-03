@@ -12,7 +12,7 @@
 <body>
 
 
-<h1 class="sectionedit1426"><a name="написание_скриптов_драйверов_gnetlist_на_scheme" id="написание_скриптов_драйверов_gnetlist_на_scheme">Написание скриптов драйверов gnetlist на Scheme</a></h1>
+<h1 class="sectionedit1424"><a name="написание_скриптов_драйверов_gnetlist_на_scheme" id="написание_скриптов_драйверов_gnetlist_на_scheme">Написание скриптов драйверов gnetlist на Scheme</a></h1>
 <div class="level1">
 
 <p>
@@ -72,8 +72,14 @@
 <p>
 Итак, начнём. Вот очень простой драйвер:
 </p>
-<pre class="code scheme"><span class="co1">;; gnetlist development playground</span>
-&nbsp;</pre>
+<pre class="code lisp"><span class="co1">;; gnetlist development playground</span>
+&nbsp;
+<span class="br0">&#40;</span>use-modules <span class="br0">&#40;</span>ice-<span class="nu0">9</span> readline<span class="br0">&#41;</span><span class="br0">&#41;</span>
+<span class="br0">&#40;</span>activate-readline<span class="br0">&#41;</span>
+&nbsp;
+<span class="br0">&#40;</span>define <span class="br0">&#40;</span>devel output-filename<span class="br0">&#41;</span>
+	<span class="br0">&#40;</span>scm-style-repl<span class="br0">&#41;</span>
+<span class="br0">&#41;</span></pre>
 
 <p>
 Чтобы это применить, сохрани всё в файле <em><code>gnet-devel.scm</code></em>. Скопируй этот
@@ -108,7 +114,7 @@
 <p>
 Ты должен увидеть:
 </p>
-<pre class="code scheme"><span class="st0">&quot;Q3&quot;</span><span class="st0">&quot;R5&quot;</span><span class="st0">&quot;Q2&quot;</span><span class="st0">&quot;R4&quot;</span><span class="st0">&quot;Q1&quot;</span><span class="st0">&quot;C6&quot;</span><span class="st0">&quot;R3&quot;</span><span class="st0">&quot;L2&quot;</span><span class="st0">&quot;A1&quot;</span><span class="st0">&quot;bat(+3v)&quot;</span><span class="st0">&quot;lamp(1)&quot;</span><span class="st0">&quot;R2&quot;</span><span class="st0">&quot;C5&quot;</span><span class="st0">&quot;L1&quot;</span><span class="st0">&quot;R1&quot;</span><span class="st0">&quot;C4&quot;</span><span class="st0">&quot;lamp(2)&quot;</span><span class="st0">&quot;C3&quot;</span><span class="st0">&quot;C2&quot;</span><span class="st0">&quot;C1&quot;</span><span class="st0">&quot;D1&quot;</span><span class="st0">&quot;bat(0v)&quot;</span><span class="st0">&quot;R7&quot;</span><span class="st0">&quot;Q4&quot;</span><span class="st0">&quot;R6&quot;</span></pre>
+<pre class="code lisp"><span class="br0">&#40;</span><span class="st0">&quot;Q3&quot;</span> <span class="st0">&quot;R5&quot;</span> <span class="st0">&quot;Q2&quot;</span> <span class="st0">&quot;R4&quot;</span> <span class="st0">&quot;Q1&quot;</span> <span class="st0">&quot;C6&quot;</span> <span class="st0">&quot;R3&quot;</span> <span class="st0">&quot;L2&quot;</span> <span class="st0">&quot;A1&quot;</span> <span class="st0">&quot;bat(+3v)&quot;</span> <span class="st0">&quot;lamp(1)&quot;</span> <span class="st0">&quot;R2&quot;</span> <span class="st0">&quot;C5&quot;</span> <span class="st0">&quot;L1&quot;</span> <span class="st0">&quot;R1&quot;</span> <span class="st0">&quot;C4&quot;</span> <span class="st0">&quot;lamp(2)&quot;</span> <span class="st0">&quot;C3&quot;</span> <span class="st0">&quot;C2&quot;</span> <span class="st0">&quot;C1&quot;</span> <span class="st0">&quot;D1&quot;</span> <span class="st0">&quot;bat(0v)&quot;</span> <span class="st0">&quot;R7&quot;</span> <span class="st0">&quot;Q4&quot;</span> <span class="st0">&quot;R6&quot;</span><span class="br0">&#41;</span></pre>
 
 <p>
 <code>packages</code> — удобная переменная, содержащая список всех уникальных
@@ -126,7 +132,7 @@ REPL считал её, оценил (создав список) и вывел.
 <p>
 Что здесь произошло? Здесь REPL оценил список.
 </p>
-<pre class="code scheme">&nbsp;</pre>
+<pre class="code lisp"><span class="br0">&#40;</span><span class="kw1">length</span> packages<span class="br0">&#41;</span></pre>
 
 <p>
 В большинстве языков программирования ты бы написал это выражение в более
@@ -205,7 +211,7 @@ guile&gt; (+ 1 2 3)
 элементов из <code>x</code>. Поэтому вышеуказанное выражение в конце концов посчитает
 следующее:
 </p>
-<pre class="code scheme">&nbsp;</pre>
+<pre class="code lisp"><span class="br0">&#40;</span>+ <span class="nu0">3</span> <span class="nu0">3</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">2</span> <span class="nu0">1</span> <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">3</span> <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">3</span> <span class="nu0">2</span> <span class="nu0">1</span> <span class="nu0">1</span><span class="br0">&#41;</span></pre>
 
 <p>
 До сих пор мы использовали предопределённые переменные и процедуры. Но мы бы
@@ -239,14 +245,25 @@ guile&gt; (add1 100)
 Теперь мы можем объединить наш сбор статистики в драйвер.
 Сначала определим процедуру для записи выходной строки:
 </p>
-<pre class="code scheme">&nbsp;</pre>
+<pre class="code lisp"><span class="br0">&#40;</span>define format-line
+     <span class="br0">&#40;</span><span class="kw1">lambda</span> <span class="br0">&#40;</span><span class="kw1">name</span> <span class="kw1">value</span><span class="br0">&#41;</span>
+         <span class="br0">&#40;</span>display <span class="kw1">name</span><span class="br0">&#41;</span>
+         <span class="br0">&#40;</span>display <span class="kw1">value</span><span class="br0">&#41;</span>
+         <span class="br0">&#40;</span>newline<span class="br0">&#41;</span>
+     <span class="br0">&#41;</span>
+<span class="br0">&#41;</span></pre>
 
 <p>
 Здесь мы используем две новых встроенных процедуры, <code>display</code> и <code>newline</code>,
 названия которых говорят сами за себя. Теперь:
 </p>
-<pre class="code scheme"><span class="co1">; без аргументов</span>
-<span class="st0">&quot;pins:     &quot;</span><span class="st0">&quot;packages: &quot;</span><span class="st0">&quot;nets:     &quot;</span></pre>
+<pre class="code lisp"><span class="br0">&#40;</span>define display-stats
+     <span class="br0">&#40;</span><span class="kw1">lambda</span> <span class="br0">&#40;</span><span class="br0">&#41;</span>                  <span class="co1">; без аргументов</span>
+         <span class="br0">&#40;</span>format-line <span class="st0">&quot;pins:     &quot;</span> <span class="br0">&#40;</span><span class="kw1">apply</span><span class="sy0"> + </span><span class="br0">&#40;</span>map <span class="kw1">length</span> all-pins<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+         <span class="br0">&#40;</span>format-line <span class="st0">&quot;packages: &quot;</span> <span class="br0">&#40;</span><span class="kw1">length</span> packages<span class="br0">&#41;</span><span class="br0">&#41;</span>
+         <span class="br0">&#40;</span>format-line <span class="st0">&quot;nets:     &quot;</span> <span class="br0">&#40;</span><span class="kw1">length</span> all-unique-nets<span class="br0">&#41;</span><span class="br0">&#41;</span>
+     <span class="br0">&#41;</span>
+<span class="br0">&#41;</span></pre>
 <pre class="code">guile&gt; (display-stats)
 pins:     50
 packages: 25
@@ -258,13 +275,36 @@ nets:     13</pre>
 Итак, целиком файл драйвера сбора статистики “stats” будет выглядеть
 примерно так:
 </p>
-<pre class="code scheme"><span class="co1">;; драйвер gnetlist для получения статистики по проекту</span>
+<pre class="code lisp"><span class="co1">;; драйвер gnetlist для получения статистики по проекту</span>
 <span class="co1">;;</span>
 <span class="co1">;; Стандартный текст лицензии, как положено</span>
+&nbsp;
+<span class="br0">&#40;</span>define stats
+     <span class="br0">&#40;</span><span class="kw1">lambda</span> <span class="br0">&#40;</span>filename<span class="br0">&#41;</span>
+         <span class="br0">&#40;</span>set-current-output-port <span class="br0">&#40;</span>open-output-file filename<span class="br0">&#41;</span><span class="br0">&#41;</span>
+	<span class="br0">&#40;</span>display-stats<span class="br0">&#41;</span>
+     <span class="br0">&#41;</span>
+<span class="br0">&#41;</span>
+&nbsp;
 <span class="co1">;; Сбор и вывод статистики</span>
-<span class="co1">; без аргументов</span>
-<span class="st0">&quot;pins:     &quot;</span><span class="st0">&quot;packages: &quot;</span><span class="st0">&quot;nets:     &quot;</span><span class="co1">;; Простой формат вывода</span>
-&nbsp;</pre>
+&nbsp;
+<span class="br0">&#40;</span>define display-stats
+     <span class="br0">&#40;</span><span class="kw1">lambda</span> <span class="br0">&#40;</span><span class="br0">&#41;</span>                  <span class="co1">; без аргументов</span>
+         <span class="br0">&#40;</span>format-line <span class="st0">&quot;pins:     &quot;</span> <span class="br0">&#40;</span><span class="kw1">apply</span><span class="sy0"> + </span><span class="br0">&#40;</span>map <span class="kw1">length</span> all-pins<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="br0">&#41;</span>
+         <span class="br0">&#40;</span>format-line <span class="st0">&quot;packages: &quot;</span> <span class="br0">&#40;</span><span class="kw1">length</span> packages<span class="br0">&#41;</span><span class="br0">&#41;</span>
+         <span class="br0">&#40;</span>format-line <span class="st0">&quot;nets:     &quot;</span> <span class="br0">&#40;</span><span class="kw1">length</span> all-unique-nets<span class="br0">&#41;</span><span class="br0">&#41;</span>
+     <span class="br0">&#41;</span>
+<span class="br0">&#41;</span>
+&nbsp;
+<span class="co1">;; Простой формат вывода</span>
+&nbsp;
+<span class="br0">&#40;</span>define format-line
+     <span class="br0">&#40;</span><span class="kw1">lambda</span> <span class="br0">&#40;</span><span class="kw1">name</span> <span class="kw1">value</span><span class="br0">&#41;</span>
+         <span class="br0">&#40;</span>display <span class="kw1">name</span><span class="br0">&#41;</span>
+         <span class="br0">&#40;</span>display <span class="kw1">value</span><span class="br0">&#41;</span>
+         <span class="br0">&#40;</span>newline<span class="br0">&#41;</span>
+     <span class="br0">&#41;</span>
+<span class="br0">&#41;</span></pre>
 
 <p>
 Сохрани это в файле с именем <code>gnet-stats.scm</code>, скопируй его в надлежащее

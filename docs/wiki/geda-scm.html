@@ -150,13 +150,24 @@ Note: If you&#039;re having trouble pushing commits upstream, make sure you&#039
 git 1.5 or newer.
 </p>
 
+<p>
+If you supplied a geda-unique key for your git access, you may also need to add a line to your config to specify this alternate key:
+</p>
+<pre class="code">Host git.geda-project.org
+Port 65
+IdentityFile ~/.ssh/gedaproject_dsa</pre>
+
+<p>
+Note that the file you refer to here is the private key, where the file you send for the server side is the corresponding public key.
+</p>
+
 </div>
-<!-- EDIT112 SECTION "Accessing the repository with write permission" [2198-2746] -->
+<!-- EDIT112 SECTION "Accessing the repository with write permission" [2198-3093] -->
 <h2 class="sectionedit113"><a name="making_and_committing_changes" id="making_and_committing_changes">Making and committing changes</a></h2>
 <div class="level2">
 
 </div>
-<!-- EDIT113 SECTION "Making and committing changes" [2747-2790] -->
+<!-- EDIT113 SECTION "Making and committing changes" [3094-3137] -->
 <h3 class="sectionedit114"><a name="setting_up_user_information" id="setting_up_user_information">Setting up user information</a></h3>
 <div class="level3">
 
@@ -167,7 +178,7 @@ You should make sure that your username &amp; e-mail address are set in your git
 $ git config --global user.email you@yourdomain.example.com</pre>
 
 </div>
-<!-- EDIT114 SECTION "Setting up user information" [2791-3049] -->
+<!-- EDIT114 SECTION "Setting up user information" [3138-3396] -->
 <h3 class="sectionedit115"><a name="committing_patches_from_other_contributors" id="committing_patches_from_other_contributors">Committing patches from other contributors</a></h3>
 <div class="level3">
 
@@ -244,7 +255,7 @@ As an alternative, you can set the GIT_AUTHOR_NAME and GIT_AUTHOR_EMAIL environm
 </p>
 
 </div>
-<!-- EDIT115 SECTION "Committing patches from other contributors" [3050-4978] -->
+<!-- EDIT115 SECTION "Committing patches from other contributors" [3397-5325] -->
 <h3 class="sectionedit116"><a name="writing_good_commit_message" id="writing_good_commit_message">Writing good commit message</a></h3>
 <div class="level3">
 
@@ -271,7 +282,7 @@ Read only access to the underlying GList is provided by an accessor,
 currenly implemented as a macro.</pre>
 
 </div>
-<!-- EDIT116 SECTION "Writing good commit message" [4979-5960] -->
+<!-- EDIT116 SECTION "Writing good commit message" [5326-6307] -->
 <h3 class="sectionedit117"><a name="push_is_destructive" id="push_is_destructive">Push is Destructive</a></h3>
 <div class="level3">
 
@@ -284,7 +295,7 @@ Unlike <acronym title="Concurrent Versions System">CVS</acronym>, it is not the 
 </p>
 
 </div>
-<!-- EDIT117 SECTION "Push is Destructive" [5961-6314] -->
+<!-- EDIT117 SECTION "Push is Destructive" [6308-6661] -->
 <h2 class="sectionedit118"><a name="how_do_i" id="how_do_i">How Do I ... ?</a></h2>
 <div class="level2">
 
@@ -293,7 +304,7 @@ For a more information please checkout the <a href="http://wiki.sourcemage.org/G
 </p>
 
 </div>
-<!-- EDIT118 SECTION "How Do I ... ?" [6315-6438] -->
+<!-- EDIT118 SECTION "How Do I ... ?" [6662-6785] -->
 <h3 class="sectionedit119"><a name="get_a_copy_of_geda_gaf_git_repository" id="get_a_copy_of_geda_gaf_git_repository">... get a copy of gEDA/gaf git repository?</a></h3>
 <div class="level3">
 
@@ -308,7 +319,7 @@ For developers with read/write access:
 <pre class="code">$ git clone ssh://git@git.geda-project.org/geda-gaf</pre>
 
 </div>
-<!-- EDIT119 SECTION "... get a copy of gEDA/gaf git repository?" [6439-6671] -->
+<!-- EDIT119 SECTION "... get a copy of gEDA/gaf git repository?" [6786-7018] -->
 <h3 class="sectionedit120"><a name="keep_my_local_copy_current" id="keep_my_local_copy_current">... keep my local copy current?</a></h3>
 <div class="level3">
 
@@ -324,7 +335,7 @@ However, for those of you who are going to be pushing your changes back into the
 $ git rebase origin</pre>
 
 </div>
-<!-- EDIT120 SECTION "... keep my local copy current?" [6672-7086] -->
+<!-- EDIT120 SECTION "... keep my local copy current?" [7019-7433] -->
 <h3 class="sectionedit121"><a name="commit_my_changes_to_the_local_git_repository" id="commit_my_changes_to_the_local_git_repository">... commit my changes to the local git repository?</a></h3>
 <div class="level3">
 <pre class="code">$ git commit -a</pre>
@@ -339,7 +350,7 @@ If you want to commit files in the current directory or want to explicitly commi
 <pre class="code">$ git commit filename1 filename2</pre>
 
 </div>
-<!-- EDIT121 SECTION "... commit my changes to the local git repository?" [7087-7640] -->
+<!-- EDIT121 SECTION "... commit my changes to the local git repository?" [7434-7987] -->
 <h3 class="sectionedit122"><a name="undo_any_uncommitted_local_changes" id="undo_any_uncommitted_local_changes">... undo any uncommitted local changes?</a></h3>
 <div class="level3">
 <pre class="code">$ git checkout -f</pre>
@@ -359,7 +370,7 @@ If you want to discard all edits from the current directory and downward recursi
 <pre class="code">$ git checkout .</pre>
 
 </div>
-<!-- EDIT122 SECTION "... undo any uncommitted local changes?" [7641-8016] -->
+<!-- EDIT122 SECTION "... undo any uncommitted local changes?" [7988-8363] -->
 <h3 class="sectionedit123"><a name="fix_change_my_last_commit" id="fix_change_my_last_commit">... fix/change my last commit?</a></h3>
 <div class="level3">
 <pre class="code">$ Edit whatever files
@@ -370,7 +381,7 @@ This will pickup any changes you made and recommit them again with the previous 
 </p>
 
 </div>
-<!-- EDIT123 SECTION "... fix/change my last commit?" [8017-8224] -->
+<!-- EDIT123 SECTION "... fix/change my last commit?" [8364-8571] -->
 <h3 class="sectionedit124"><a name="track_a_branch" id="track_a_branch">... track a branch?</a></h3>
 <div class="level3">
 <pre class="code">$ git checkout --track -b &lt;local name&gt; origin/&lt;remote name&gt;</pre>
@@ -380,7 +391,7 @@ This will create a branch with the &lt;local name&gt; which tracks the &lt;remot
 </p>
 
 </div>
-<!-- EDIT124 SECTION "... track a branch?" [8225-8408] -->
+<!-- EDIT124 SECTION "... track a branch?" [8572-8755] -->
 <h3 class="sectionedit125"><a name="create_a_branch_starting_at_a_tag" id="create_a_branch_starting_at_a_tag">... create a branch (starting at a tag)?</a></h3>
 <div class="level3">
 
@@ -398,7 +409,7 @@ To publish this branch in the central repository (requires write access to the c
 <pre class="code"> $ git push origin stable-1.4</pre>
 
 </div>
-<!-- EDIT125 SECTION "... create a branch (starting at a tag)?" [8409-8776] -->
+<!-- EDIT125 SECTION "... create a branch (starting at a tag)?" [8756-9123] -->
 <h3 class="sectionedit126"><a name="fetch_a_development_branch_from_other_people" id="fetch_a_development_branch_from_other_people">... fetch a development branch from other people?</a></h3>
 <div class="level3">
 
@@ -457,7 +468,7 @@ Updating favourite remotes will then boil down to:
 <pre class="code">  $ git fetch --all</pre>
 
 </div>
-<!-- EDIT126 SECTION "... fetch a development branch from other people?" [8777-10444] -->
+<!-- EDIT126 SECTION "... fetch a development branch from other people?" [9124-10791] -->
 <h3 class="sectionedit127"><a name="format_a_patch_to_send_to_the_developers" id="format_a_patch_to_send_to_the_developers">... format a patch to send to the developers?</a></h3>
 <div class="level3">
 
@@ -479,7 +490,7 @@ This will output a filename which contains the patch.  Be sure to look at the do
 </p>
 
 </div>
-<!-- EDIT127 SECTION "... format a patch to send to the developers?" [10445-11216] -->
+<!-- EDIT127 SECTION "... format a patch to send to the developers?" [10792-11563] -->
 <h3 class="sectionedit128"><a name="recover_from_a_really_messed_up_local_repository" id="recover_from_a_really_messed_up_local_repository">... recover from a really messed up local repository?</a></h3>
 <div class="level3">
 
@@ -502,5 +513,5 @@ The last command (git reset --hard ...) will rollback all your changes to the â€
 </p>
 
 </div>
-<!-- EDIT128 SECTION "... recover from a really messed up local repository?" [11217-] --></body>
+<!-- EDIT128 SECTION "... recover from a really messed up local repository?" [11564-] --></body>
 </html>
