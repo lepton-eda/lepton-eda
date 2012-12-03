@@ -1129,6 +1129,7 @@
 (global-set-key "H A" 'help-about)
 (global-set-key "H M" 'help-manual)
 (global-set-key "H F" 'help-faq)
+(global-set-key "H G" 'help-guide)
 (global-set-key "H W" 'help-wiki)
 (global-set-key "H H" 'help-hotkeys)
 (global-set-key "H C" 'hierarchy-documentation)
@@ -1427,8 +1428,9 @@
 ;;          menu item name                menu action               menu hotkey action        menu stock icon
 ;;
         `(
-           (,(N_ "gEDA Docu_mentation...") help-manual               help-manual               "gtk-help")
+           (,(N_ "gschem User _Guide...")  help-guide                help-guide                #f)
            (,(N_ "gschem _FAQ...")         help-faq                  help-faq                  #f)
+           (,(N_ "gEDA Docu_mentation...") help-manual               help-manual               "gtk-help")
            (,(N_ "gEDA _Wiki...")          help-wiki                 help-wiki                 #f)
            (,(N_ "Component D_ocumentation...") hierarchy-documentation   hierarchy-documentation   #f)
            ("SEPARATOR"                   #f                        #f                        #f)

@@ -175,6 +175,12 @@ found, shows a dialog with an error message."
 Display the front page of the gEDA manuals in a browser."
   (show-wiki "geda:documentation"))
 
+(define (help-guide)
+  "help-guide
+
+Display the gschem User Guide in a browser."
+  (show-wiki "geda:gschem_ug"))
+
 (define (help-faq)
   "help-faq
 
