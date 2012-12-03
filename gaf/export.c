@@ -625,17 +625,17 @@ export_parse_dist (const gchar *dist)
 
   if (errno != 0) return -1;
 
-  if (g_strcmp0 (unit, "in")) {
+  if (g_strcmp0 (unit, "in") == 0) {
     mult = 72.0;
-  } else if (g_strcmp0 (unit, "cm")) {
+  } else if (g_strcmp0 (unit, "cm") == 0) {
     mult = 72.0 / 2.54;
-  } else if (g_strcmp0 (unit, "mm")) {
+  } else if (g_strcmp0 (unit, "mm") == 0) {
     mult = 72.0 / 25.4;
-  } else if (g_strcmp0 (unit, "pc")) { /* Picas */
+  } else if (g_strcmp0 (unit, "pc") == 0) { /* Picas */
     mult = 12.0;
-  } else if (g_strcmp0 (unit, "px")) {
+  } else if (g_strcmp0 (unit, "px") == 0) {
     mult = 72.0 / settings.dpi;
-  } else if (g_strcmp0 (unit, "pt")
+  } else if (g_strcmp0 (unit, "pt") == 0
              || unit[0] == 0) {
     mult = 1.0;
   } else {
