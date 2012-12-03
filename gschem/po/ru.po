@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: geda gschem ru\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
 "POT-Creation-Date: 2012-12-04 01:25+0400\n"
-"PO-Revision-Date: 2012-12-04 01:02+0400\n"
+"PO-Revision-Date: 2012-12-04 01:55+0400\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: geda-user@delorie.com\n"
 "Language: ru\n"
@@ -1380,15 +1380,15 @@ msgstr "*без изменения*"
 
 #: gschem/src/x_dialog.c:627
 msgid "Butt"
-msgstr "стык"
+msgstr "усечённые"
 
 #: gschem/src/x_dialog.c:628
 msgid "Square"
-msgstr "квадрат"
+msgstr "квадратные"
 
 #: gschem/src/x_dialog.c:629
 msgid "Round"
-msgstr "круг"
+msgstr "круглые"
 
 # В соответствии с текстом пункта меню
 #: gschem/src/x_dialog.c:977
@@ -1414,7 +1414,7 @@ msgstr "Интервал:"
 
 #: gschem/src/x_dialog.c:1032
 msgid "Cap style:"
-msgstr "Стиль конца:"
+msgstr "Концы:"
 
 #: gschem/src/x_dialog.c:1106
 msgid "Hollow"

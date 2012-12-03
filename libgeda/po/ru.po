@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
 "POT-Creation-Date: 2012-12-04 01:24+0400\n"
-"PO-Revision-Date: 2012-12-04 00:51+0400\n"
+"PO-Revision-Date: 2012-12-04 01:56+0400\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: geda-user@delorie.com\n"
 "Language: ru\n"
@@ -779,11 +779,11 @@ msgstr "Значение записи в таблице цветов должн�
 
 #: libgeda/src/s_hierarchy.c:79
 msgid "Schematic not found in source library."
-msgstr "Схема не найдена в исходной библиотеке."
+msgstr "Схема не найдена в библиотеке исходных данных."
 
 #: libgeda/src/s_hierarchy.c:99
 msgid "Hierarchy contains a circular dependency."
-msgstr "Иерархия имеет циклическую зависимость."
+msgstr "Циклическая зависимость в иерархической структуре."
 
 #: libgeda/src/s_hierarchy.c:198
 msgid "There are no schematics above the current one!\n"
