@@ -499,8 +499,8 @@ export_png (void)
 
   /* Create a cairo context and set the transformation matrix. */
   cr = cairo_create (surface);
-  cairo_matrix_scale (&mtx, scale, scale);
-  cairo_set_matrix (cr, &mtx);
+  cairo_scale (cr, scale, scale);
+  cairo_transform (cr, &mtx);
 
   /* Set up renderer. We need to enable subpixel hinting. */
   g_object_set (renderer, "cairo-context", cr, NULL);
