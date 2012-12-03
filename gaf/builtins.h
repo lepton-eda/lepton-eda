@@ -19,3 +19,4 @@
 
 int cmd_shell (int argc, char **argv);
 int cmd_config (int argc, char **argv);
+int cmd_export (int argc, char **argv);

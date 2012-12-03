@@ -1,0 +1,995 @@
+/*
+ * gEDA/gaf command-line utility
+ * Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif
+#include <version.h>
+
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
+#include <getopt.h>
+#include <math.h>
+#include <errno.h>
+
+/* Gettext translation */
+#include "gettext.h"
+
+#include <libgeda/libgeda.h>
+#include <libgeda/libgedaguile.h>
+#include <libgedacairo/libgedacairo.h>
+
+#include <gtk/gtk.h>
+#include <glib/gstdio.h>
+#include <cairo.h>
+#include <cairo-svg.h>
+#include <cairo-pdf.h>
+#include <cairo-ps.h>
+
+static int export_text_rendered_bounds (void *user_data,
+                                        OBJECT *object,
+                                        int *left, int *top,
+                                        int *right, int *bottom);
+static void export_layout_page (PAGE *page, cairo_rectangle_t *extents,
+                                cairo_matrix_t *mtx);
+static void export_draw_page (PAGE *page);
+
+static void export_png (void);
+static void export_postscript (gboolean is_eps);
+static void export_ps  (void);
+static void export_eps (void);
+static void export_pdf (void);
+static void export_svg (void);
+
+static gdouble export_parse_dist (const gchar *dist);
+static gboolean export_parse_layout (const gchar *layout);
+static gboolean export_parse_margins (const gchar *margins);
+static gboolean export_parse_paper (const gchar *paper);
+static gboolean export_parse_size (const gchar *size);
+static void export_config (void);
+static void export_usage (void);
+static void export_command_line (int argc, char * const *argv);
+
+/* Default pixels-per-inch for raster outputs */
+#define DEFAULT_DPI 96
+/* Default margin width in points */
+#define DEFAULT_MARGIN 18
+
+enum ExportFormatFlags {
+  OUTPUT_MULTIPAGE = 1,
+  OUTPUT_POINTS = 2,
+  OUTPUT_PIXELS = 4,
+};
+
+struct ExportFormat {
+  gchar *name; /* UTF-8 */
+  gchar *alias; /* UTF-8 */
+  gint flags;
+  void (*func)(void);
+};
+
+enum ExportOrientation {
+  ORIENTATION_AUTO,
+  ORIENTATION_LANDSCAPE,
+  ORIENTATION_PORTRAIT,
+};
+
+struct ExportSettings {
+  /* Input & output */
+  int infilec;
+  char * const *infilev; /* Filename encoding */
+  const char *outfile; /* Filename encoding */
+  gchar *format; /* UTF-8 */
+
+  enum ExportOrientation layout;
+
+  GtkPaperSize *paper;
+  gdouble size[2]; /* Points */
+  gdouble margins[4]; /* Points. Top, right, bottom, left. */
+  gdouble dpi;
+
+  gboolean color;
+};
+
+static struct ExportFormat formats[] =
+  {
+    {"Portable Network Graphics (PNG)", "png", OUTPUT_PIXELS, export_png},
+    {"Postscript (PS)", "ps", OUTPUT_POINTS | OUTPUT_MULTIPAGE, export_ps},
+    {"Encapsulated Postscript (EPS)", "eps", OUTPUT_POINTS, export_eps},
+    {"Portable Document Format (PDF)", "pdf", OUTPUT_POINTS | OUTPUT_MULTIPAGE, export_pdf},
+    {"Scalable Vector Graphics (SVG)", "svg", OUTPUT_POINTS, export_svg},
+    {NULL, NULL, 0, NULL},
+  };
+
+static EdaRenderer *renderer = NULL;
+static TOPLEVEL *toplevel = NULL;
+
+static struct ExportSettings settings = {
+  0,
+  NULL,
+  NULL,
+  NULL,
+
+  ORIENTATION_AUTO,
+
+  NULL,
+  {-1, -1},
+  {-1, -1, -1, -1},
+  DEFAULT_DPI,
+
+  FALSE,
+};
+
+#define bad_arg_msg _("ERROR: Bad argument '%s' to %s option.\n")
+#define bad_arg_prefix_msg _("ERROR: Bad argument '%s' to %s option: %s\n")
+#define see_help_msg _("\nRun `gaf export --help' for more information.\n")
+
+/* Main function for `gaf export' */
+void
+cmd_export (int argc, char **argv)
+{
+  int i;
+  GError *err = NULL;
+  gchar *tmp;
+  const gchar *out_suffix;
+  struct ExportFormat *exporter = NULL;
+  GArray *render_color_map = NULL;
+  gchar *original_cwd = g_get_current_dir ();
+
+  gtk_init_check (&argc, &argv);
+  scm_init_guile ();
+  libgeda_init ();
+  scm_dynwind_begin (0);
+  toplevel = s_toplevel_new ();
+  edascm_dynwind_toplevel (toplevel);
+
+  /* Now load rc files, if necessary */
+  if (getenv ("GAF_INHIBIT_RCFILES") == NULL) {
+    g_rc_parse (toplevel, "gaf export", NULL, NULL);
+  }
+  i_vars_libgeda_set (toplevel); /* Ugh */
+
+  /* Parse configuration files */
+  export_config ();
+
+  /* Parse command-line arguments */
+  export_command_line (argc, argv);
+
+  /* If no format was specified, try and guess from output
+   * filename. */
+  if (settings.format == NULL) {
+    out_suffix = strrchr (settings.outfile, '.');
+    if (out_suffix != NULL) {
+      out_suffix++; /* Skip '.' */
+    } else {
+      fprintf (stderr,
+               _("ERROR: Cannot infer output format from filename '%s'.\n"),
+               settings.outfile);
+      exit (1);
+    }
+  }
+
+  /* Try and find an exporter function */
+  tmp = g_utf8_strdown ((settings.format == NULL) ? out_suffix : settings.format, -1);
+  for (i = 0; formats[i].name != NULL; i++) {
+    if (strcmp (tmp, formats[i].alias) == 0) {
+      exporter = &formats[i];
+      break;
+    }
+  }
+  if (exporter == NULL) {
+    if (settings.format == NULL) {
+      fprintf (stderr,
+               _("ERROR: Cannot find supported format for filename '%s'.\n"),
+               settings.outfile);
+      exit (1);
+    } else {
+      fprintf (stderr,
+               _("ERROR: Unsupported output format '%s'.\n"),
+               settings.format);
+      fprintf (stderr, see_help_msg);
+      exit (1);
+    }
+  }
+  g_free (tmp);
+
+  /* If more than one schematic/symbol file was specified, check that
+   * exporter supports multipage output. */
+  if ((settings.infilec > 1) && !(exporter->flags & OUTPUT_MULTIPAGE)) {
+    fprintf (stderr,
+             _("ERROR: Selected output format does not support multipage output\n"));
+    exit (1);
+  }
+
+  /* Load schematic files */
+  while (optind < argc) {
+    PAGE *page;
+    tmp = argv[optind++];
+
+    page = s_page_new (toplevel, tmp);
+    if (!f_open (toplevel, page, tmp, &err)) {
+      fprintf (stderr,
+               _("ERROR: Failed to load '%s': %s\n"), tmp,
+               err->message);
+      exit (1);
+    }
+    if (g_chdir (original_cwd) != 0) {
+      fprintf (stderr,
+               _("ERROR: Failed to change directory to '%s': %s\n"),
+               original_cwd, g_strerror (errno));
+      exit (1);
+    }
+  }
+
+  /* Create renderer */
+  renderer = eda_renderer_new (NULL, NULL);
+
+  /* Make sure libgeda knows how to calculate the bounds of text
+   * taking into account font etc. */
+  o_text_set_rendered_bounds_func (toplevel,
+                                   export_text_rendered_bounds,
+                                   renderer);
+
+
+  /* Create color map */
+  render_color_map =
+    g_array_sized_new (FALSE, FALSE, sizeof(COLOR), MAX_COLORS);
+  render_color_map =
+    g_array_append_vals (render_color_map, print_colors, MAX_COLORS);
+  if (!settings.color) {
+    /* Create a black and white color map.  All non-background colors
+     * are black. */
+    COLOR white = {~0, ~0, ~0, ~0, TRUE};
+    COLOR black = {0, 0, 0, ~0, TRUE};
+    for (i = 0; i < MAX_COLORS; i++) {
+      COLOR *c = &g_array_index (render_color_map, COLOR, i);
+      if (!c->enabled) continue;
+
+      if (c->a == 0) {
+        c->enabled = FALSE;
+        continue;
+      }
+
+      if (i == OUTPUT_BACKGROUND_COLOR) {
+        *c = white;
+      } else {
+        *c = black;
+      }
+    }
+  }
+  eda_renderer_set_color_map (renderer, render_color_map);
+
+  /* Render */
+  exporter->func ();
+
+  scm_dynwind_end ();
+  exit (0);
+}
+
+/* Callback function registered with libgeda to allow the libgeda
+ * "bounds" functions to get text bounds using the renderer.  If a
+ * "rendered bounds" function isn't provided, text objects don't get
+ * used when calculating the extents of the drawing. */
+static int
+export_text_rendered_bounds (void *user_data, OBJECT *object,
+                             int *left, int *top, int *right, int *bottom)
+{
+  int result;
+  double t, l, r, b;
+  EdaRenderer *renderer = EDA_RENDERER (user_data);
+  result = eda_renderer_get_user_bounds (renderer, object, &l, &t, &r, &b);
+  *left = lrint (fmin (l,r));
+  *top = lrint (fmin (t, b));
+  *right = lrint (fmax (l, r));
+  *bottom = lrint (fmax (t, b));
+  return result;
+}
+
+/* Prints a message and quits with error status if a cairo status
+ * value is not "success". */
+static inline void
+export_cairo_check_error (cairo_status_t status)
+{
+  if (status != CAIRO_STATUS_SUCCESS) {
+    fprintf (stderr, _("ERROR: %s.\n"), cairo_status_to_string (status));
+    exit (1);
+  }
+}
+
+/* Calculates a page layout.  If page is NULL, uses the first page
+ * (this is convenient for single-page rendering).  The required size
+ * of the page is returned in extents, and the cairo transformation
+ * matrix needed to fit the drawing into the page is returned in mtx.
+ * Takes into account all of the margin/orientation/paper settings,
+ * and the size of the drawing itself. */
+static void
+export_layout_page (PAGE *page, cairo_rectangle_t *extents, cairo_matrix_t *mtx)
+{
+  cairo_matrix_t tmp_mtx;
+  cairo_rectangle_t drawable;
+  cairo_t *cr;
+  int wx_min, wy_min, wx_max, wy_max, w_width, w_height;
+  gboolean landscape = FALSE;
+  gboolean size_from_paper = FALSE;
+  gboolean size_from_drawing = FALSE;
+  gdouble m[4]; /* Calculated margins */
+  gdouble s; /* Calculated scale */
+
+  cr = eda_renderer_get_cairo_context (renderer);
+
+  if (page == NULL) {
+    const GList *pages = geda_list_get_glist (toplevel->pages);
+    g_assert (pages != NULL && pages->data != NULL);
+    page = (PAGE *) pages->data;
+  }
+
+  /* Calculate extents of objects within page */
+  cairo_matrix_init (&tmp_mtx, 1, 0, 0, -1, -1, -1); /* Very vague approximation */
+  cairo_set_matrix (cr, &tmp_mtx);
+  world_get_object_glist_bounds (toplevel, s_page_objects (page),
+                                 &wx_min, &wy_min, &wx_max, &wy_max);
+  w_width = wx_max - wx_min;
+  w_height = wy_max - wy_min;
+
+  /* If a size was specified, use it.  Otherwise, use paper size, if
+   * provided.  Fall back to just using the size of the drawing. */
+  extents->x = extents->y = 0;
+  if (settings.size[0] >= 0) {
+
+    extents->width = settings.size[0];
+    extents->height = settings.size[1];
+
+  } else if (settings.paper != NULL) {
+    gdouble p_width, p_height;
+
+    /* Select orientation */
+    switch (settings.layout) {
+    case ORIENTATION_LANDSCAPE:
+      landscape = TRUE;
+      break;
+    case ORIENTATION_PORTRAIT:
+      landscape = FALSE;
+      break;
+    case ORIENTATION_AUTO:
+    default:
+      landscape = (w_width > w_height);
+      break;
+    }
+
+    p_width = gtk_paper_size_get_width (settings.paper, GTK_UNIT_POINTS);
+    p_height = gtk_paper_size_get_height (settings.paper, GTK_UNIT_POINTS);
+
+    if (landscape) {
+      extents->width = p_height;
+      extents->height = p_width;
+    } else {
+      extents->width = p_width;
+      extents->height = p_height;
+    }
+
+    size_from_paper = TRUE;
+
+  } else {
+
+    extents->width = w_width * 0.072; /* in points */
+    extents->height = w_height * 0.072; /* in points */
+
+    size_from_drawing = TRUE;
+  }
+
+  /* Now set the margins. If none were provided by the user, get them
+   * from the paper size (if a paper size is being used) or just use a
+   * sensible default. */
+  if (settings.margins[0] >= 0) {
+    memcpy (m, settings.margins, 4*sizeof(gdouble));
+  } else if (size_from_paper) {
+    m[0] = gtk_paper_size_get_default_top_margin (settings.paper, GTK_UNIT_POINTS);
+    m[1] = gtk_paper_size_get_default_left_margin (settings.paper, GTK_UNIT_POINTS);
+    m[2] = gtk_paper_size_get_default_bottom_margin (settings.paper, GTK_UNIT_POINTS);
+    m[3] = gtk_paper_size_get_default_right_margin (settings.paper, GTK_UNIT_POINTS);
+  } else {
+    m[0] = DEFAULT_MARGIN;
+    m[1] = DEFAULT_MARGIN;
+    m[2] = DEFAULT_MARGIN;
+    m[3] = DEFAULT_MARGIN;
+  }
+
+  drawable.x = m[1];
+  drawable.y = m[0];
+
+  /* If the extents were obtained from the drawing, grow the extents
+   * rather than shrinking the drawable area.  This ensures that the
+   * overall aspect ratio of the image remains correct. */
+  if (size_from_drawing) {
+    extents->width += m[1] + m[3];
+    extents->height += m[0] + m[2];
+  }
+
+  drawable.width = extents->width - m[1] - m[3];
+  drawable.height = extents->height - m[0] - m[2];
+
+  /* Finally, create and set a cairo transformation matrix that
+   * centres the drawing into the drawable area. */
+  s = fmin (drawable.width / w_width, drawable.height / w_height);
+  cairo_matrix_init (mtx, s, 0, 0, -s,
+                     - (wx_min + w_width/2) * s + drawable.width/2 + drawable.x,
+                     (wy_min + w_height/2) * s + drawable.height/2 + drawable.y);
+}
+
+/* Actually draws a page.  If page is NULL, uses the first open page. */
+static void
+export_draw_page (PAGE *page)
+{
+  const GList *contents;
+  GList *iter;
+  cairo_t *cr;
+
+  cr = eda_renderer_get_cairo_context (renderer);
+
+  if (page == NULL) {
+    const GList *pages = geda_list_get_glist (toplevel->pages);
+    g_assert (pages != NULL && pages->data != NULL);
+    page = (PAGE *) pages->data;
+  }
+
+  /* Get objects to draw */
+  contents = s_page_objects (page);
+
+  /* Draw background */
+  eda_cairo_set_source_color (cr, OUTPUT_BACKGROUND_COLOR,
+                              eda_renderer_get_color_map (renderer));
+  cairo_paint (cr);
+
+  /* Draw objects & cues */
+  contents = s_page_objects (page);
+  for (iter = (GList *) contents; iter != NULL; iter = g_list_next (iter))
+    eda_renderer_draw (renderer, (OBJECT *) iter->data);
+  for (iter = (GList *) contents; iter != NULL; iter = g_list_next (iter))
+    eda_renderer_draw_cues (renderer, (OBJECT *) iter->data);
+}
+
+static void
+export_png (void)
+{
+  cairo_surface_t *surface;
+  cairo_t *cr;
+  cairo_matrix_t mtx;
+  cairo_rectangle_t extents;
+  cairo_status_t status;
+  double scale;
+
+  /* Create a dummy context to permit calculating extents taking text
+   * into account. */
+  surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 0, 0);
+  cr = cairo_create (surface);
+  cairo_surface_destroy (surface);
+
+  g_object_set (renderer,
+                "cairo-context", cr,
+                "render-flags", EDA_RENDERER_FLAG_HINTING,
+                NULL);
+
+  /* Calculate page layout */
+  export_layout_page (NULL, &extents, &mtx);
+  cairo_destroy (cr);
+
+  /* Create a rendering surface of the correct size.  'extents' is
+   * measured in points, so we need to use the DPI setting to
+   * transform to pixels. */
+  scale = settings.dpi / 72.0;
+  surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
+                                        (int) ceil (extents.width * scale),
+                                        (int) ceil (extents.height * scale));
+
+  /* Create a cairo context and set the transformation matrix. */
+  cr = cairo_create (surface);
+  cairo_matrix_scale (&mtx, scale, scale);
+  cairo_set_matrix (cr, &mtx);
+
+  /* Set up renderer. We need to enable subpixel hinting. */
+  g_object_set (renderer, "cairo-context", cr, NULL);
+
+  /* Draw */
+  export_draw_page (NULL);
+  export_cairo_check_error (cairo_surface_status (surface));
+
+  /* Save to file */
+  status = cairo_surface_write_to_png (surface, settings.outfile);
+  export_cairo_check_error (status);
+}
+
+/* Worker function used by both export_ps and export_eps */
+static void
+export_postscript (gboolean is_eps)
+{
+  cairo_surface_t *surface;
+  cairo_rectangle_t extents;
+  cairo_matrix_t mtx;
+  cairo_t *cr;
+  GList *iter;
+
+  /* Create a surface. To begin with, we don't know the size. */
+  surface = cairo_ps_surface_create (settings.outfile, 1, 1);
+  cairo_ps_surface_set_eps (surface, is_eps);
+  cr = cairo_create (surface);
+  g_object_set (renderer, "cairo-context", cr, NULL);
+
+  for (iter = geda_list_get_glist (toplevel->pages);
+       iter != NULL;
+       iter = g_list_next (iter)) {
+    PAGE *page = (PAGE *) iter->data;
+
+    export_layout_page (page, &extents, &mtx);
+    cairo_ps_surface_set_size (surface, extents.width, extents.height);
+    cairo_set_matrix (cr, &mtx);
+    export_draw_page (page);
+    cairo_show_page (cr);
+  }
+
+  cairo_surface_finish (surface);
+  export_cairo_check_error (cairo_surface_status (surface));
+}
+
+static void
+export_ps (void)
+{
+  export_postscript (FALSE);
+}
+
+static void
+export_eps (void)
+{
+  export_postscript (TRUE);
+}
+
+static void
+export_pdf (void)
+{
+  cairo_surface_t *surface;
+  cairo_rectangle_t extents;
+  cairo_matrix_t mtx;
+  cairo_t *cr;
+  GList *iter;
+
+  /* Create a surface. To begin with, we don't know the size. */
+  surface = cairo_pdf_surface_create (settings.outfile, 1, 1);
+  cr = cairo_create (surface);
+  g_object_set (renderer, "cairo-context", cr, NULL);
+
+  for (iter = geda_list_get_glist (toplevel->pages);
+       iter != NULL;
+       iter = g_list_next (iter)) {
+    PAGE *page = (PAGE *) iter->data;
+
+    export_layout_page (page, &extents, &mtx);
+    cairo_pdf_surface_set_size (surface, extents.width, extents.height);
+    cairo_set_matrix (cr, &mtx);
+    export_draw_page (page);
+    cairo_show_page (cr);
+  }
+
+  cairo_surface_finish (surface);
+  export_cairo_check_error (cairo_surface_status (surface));
+}
+
+static void
+export_svg ()
+{
+  cairo_surface_t *surface;
+  cairo_rectangle_t extents;
+  cairo_matrix_t mtx;
+  cairo_t *cr;
+
+  /* Create a surface. To begin with, we don't know the size. */
+  surface = cairo_svg_surface_create (settings.outfile, 1, 1);
+  cr = cairo_create (surface);
+  g_object_set (renderer, "cairo-context", cr, NULL);
+
+  export_layout_page (NULL, &extents, &mtx);
+  cairo_pdf_surface_set_size (surface, extents.width, extents.height);
+  cairo_set_matrix (cr, &mtx);
+  export_draw_page (NULL);
+
+  cairo_surface_finish (surface);
+  export_cairo_check_error (cairo_surface_status (surface));
+}
+
+/* Parse a distance specification. A distance specification consists
+ * of a floating point value followed by an optional two-character
+ * unit name (in, cm, mm, pc, px, or pt, same as CSS).  If no unit is
+ * specified, assumes that the unit is pt.  This is used for the
+ * --margins and --size command-line options. */
+static gdouble
+export_parse_dist (const gchar *dist)
+{
+  gdouble base, mult;
+  gchar *unit;
+  errno = 0;
+  base = strtod(dist, &unit);
+
+  if (errno != 0) return -1;
+
+  if (g_strcmp0 (unit, "in")) {
+    mult = 72.0;
+  } else if (g_strcmp0 (unit, "cm")) {
+    mult = 72.0 / 2.54;
+  } else if (g_strcmp0 (unit, "mm")) {
+    mult = 72.0 / 25.4;
+  } else if (g_strcmp0 (unit, "pc")) { /* Picas */
+    mult = 12.0;
+  } else if (g_strcmp0 (unit, "px")) {
+    mult = 72.0 / settings.dpi;
+  } else if (g_strcmp0 (unit, "pt")
+             || unit[0] == 0) {
+    mult = 1.0;
+  } else {
+    return -1; /* Indicate that parsing unit failed */
+  }
+
+  return mult * base;
+}
+
+/* Parse the --layout command line option and the export.layout config
+ * file setting. */
+static gboolean
+export_parse_layout (const gchar *layout)
+{
+  if (g_strcmp0 (layout, "landscape") == 0) {
+    settings.layout = ORIENTATION_LANDSCAPE;
+  } else if (g_strcmp0 (layout, "portrait") == 0) {
+    settings.layout = ORIENTATION_PORTRAIT;
+  } else if (g_strcmp0 (layout, "auto") == 0
+             || layout == NULL
+             || layout[0] == 0) {
+    settings.layout = ORIENTATION_AUTO;
+  } else {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+/* Parse the --margins command-line option.  If the value is "auto" or
+ * empty, sets margins to be determined automatically from paper size
+ * or compiled-in defaults. Otherwise, expects a list of 1-4 distance
+ * specs; see export_parse_dist().  Rules if <4 distances are
+ * specified are as for 'margin' property in CSS. */
+static gboolean
+export_parse_margins (const gchar *margins)
+{
+  gint n;
+  gchar **dists;
+
+  g_assert (margins != NULL);
+
+  /* Automatic margins case */
+  if (g_strcmp0 (margins, "auto") == 0 || margins[0] == 0) {
+    for (n = 0; n < 4; n++) settings.margins[n] = -1;
+    return TRUE;
+  }
+
+  dists = g_strsplit_set (margins, "; ", 4);
+  for (n = 0; dists[n] != NULL; n++) {
+    gdouble d = export_parse_dist (dists[n]);
+    if (d < 0) return FALSE;
+    settings.margins[n] = d;
+  }
+  g_strfreev (dists);
+
+  if (n == 1) {
+    /* If only one value is specified, it applies to all four sides. */
+    settings.margins[3] = settings.margins[2]
+      = settings.margins[1] = settings.margins[0];
+  } else if (n == 2) {
+    /* If two values are specified, the first applies to the
+       top/bottom, and the second to left/right. */
+    settings.margins[2] = settings.margins[0];
+    settings.margins[3] = settings.margins[1];
+  } else if (n == 3) {
+    /* If three values are specified, the first applies to the top,
+       the second to left/right, and the third to the bottom. */
+    settings.margins[3] = settings.margins[1];
+  } else if (n != 4) {
+    return FALSE; /* Must correctly specify 1-4 distances + units */
+  }
+
+  return TRUE;
+}
+
+/* Parse the --paper option.  Clears any size setting. */
+static gboolean
+export_parse_paper (const gchar *paper)
+{
+  GtkPaperSize *paper_size = gtk_paper_size_new (paper);
+  if (paper_size == NULL) return FALSE;
+
+  if (settings.paper != NULL) gtk_paper_size_free (settings.paper);
+  settings.paper = paper_size;
+  /* Must reset size setting to invalid or it will override paper
+   * setting */
+  settings.size[0] = settings.size[1] = -1;
+  return TRUE;
+}
+
+/* Parse the --size option, which must either be "auto" (i.e. obtain
+ * size from drawing) or a list of two distances (width/height). */
+static gboolean
+export_parse_size (const gchar *size)
+{
+  gint n;
+  gchar **dists;
+
+  /* Automatic size case */
+  if (g_strcmp0 (size, "auto") == 0 || size[0] == 0) {
+    settings.size[0] = settings.size[1] = -1;
+    return TRUE;
+  }
+
+  dists = g_strsplit_set (size, "; ", 2);
+  for (n = 0; dists[n] != NULL; n++) {
+    gdouble d = export_parse_dist (dists[n]);
+    if (d < 0) return FALSE;
+    settings.size[n] = d;
+  }
+  g_strfreev (dists);
+  if (n != 2) return FALSE;
+
+  return TRUE;
+}
+
+/* Initialise settings from config store. */
+static void
+export_config (void)
+{
+  EdaConfig *cfg = eda_config_get_context_for_path (".");
+  gchar *str;
+  gdouble *lst;
+  gdouble dval;
+  gdouble bval;
+  gsize n;
+  GError *err = NULL;
+
+  /* Parse orientation */
+  str = eda_config_get_string (cfg, "export", "layout", NULL);
+  export_parse_layout (str); /* Don't care if it works */
+  g_free (str);
+
+  /* Parse paper size */
+  str = eda_config_get_string (cfg, "export", "paper", NULL);
+  export_parse_paper (str);
+  g_free (str);
+
+  /* Parse specific size setting -- always in points */
+  if (eda_config_has_key (cfg, "export", "size", NULL)) {
+    lst = eda_config_get_double_list (cfg, "export", "size", &n, NULL);
+    if (lst != NULL) {
+      if (n >= 2) {
+        memcpy (settings.size, lst, 2*sizeof(gdouble));
+      }
+      g_free (lst);
+    }
+    /* Since a specific size was provided, ditch the paper size
+     * setting */
+    if (settings.paper != NULL) {
+      gtk_paper_size_free (settings.paper);
+      settings.paper = NULL;
+    }
+  }
+
+  /* Parse margins -- always in points */
+  lst = eda_config_get_double_list (cfg, "export", "margins", &n, NULL);
+  if (lst != NULL) {
+    if (n >= 4) { /* In the config file all four sides must be specified */
+      memcpy (settings.size, lst, 4*sizeof(gdouble));
+    }
+    g_free (lst);
+  }
+
+  /* Parse dpi */
+  dval = eda_config_get_double (cfg, "export", "dpi", &err);
+  if (err == NULL) {
+    settings.dpi = dval;
+  } else {
+    g_clear_error (&err);
+  }
+
+  bval = eda_config_get_boolean (cfg, "export", "monochrome", &err);
+  if (err == NULL) {
+    settings.color = !bval;
+  } else {
+    g_clear_error (&err);
+  }
+}
+
+#define export_short_options "cd:f:hl:m:o:p:s:"
+
+static struct option export_long_options[] = {
+  {"no-color", 0, NULL, 2},
+  {"color", 0, NULL, 'c'},
+  {"dpi", 1, NULL, 'd'},
+  {"format", 1, NULL, 'f'},
+  {"help", 0, NULL, 'h'},
+  {"layout", 0, NULL, 'l'},
+  {"margins", 1, NULL, 'm'},
+  {"output", 1, NULL, 'o'},
+  {"paper", 1, NULL, 'p'},
+  {"size", 1, NULL, 's'},
+  {NULL, 0, NULL, 0},
+};
+
+static void
+export_usage (void)
+{
+  printf (_("Usage: gaf export [OPTION ...] -o OUTPUT [--] FILE ...\n"
+"\n"
+"Export gEDA files in various image formats.\n"
+"\n"
+"  -f, --format=TYPE      output format (normally autodetected)\n"
+"  -o, --output=OUTPUT    output filename\n"
+"  -p, --paper=NAME       select paper size by name\n"
+"  -s, --size=WIDTH;HEIGHT   specify exact paper size\n"
+"  -m, --margins=TOP;LEFT;BOTTOM;RIGHT\n"
+"                            set page margins\n"
+"  -l, --layout=ORIENT    page orientation\n"
+"  -d, --dpi=DPI          pixels-per-inch for raster outputs\n"
+"  -c, --color            enable color output\n"
+"  --no-color             disable color output\n"
+"  -h, --help     display usage information and exit\n"
+"\n"
+"Please report bugs to %s.\n"),
+          PACKAGE_BUGREPORT);
+  exit (0);
+}
+
+/* Helper function for checking that a command-line option value can
+ * be successfully converted to UTF-8. */
+static inline gchar *
+export_command_line__utf8_check (gchar *str, gchar *arg)
+{
+  GError *err = NULL;
+  gchar *result;
+
+  g_assert (str != NULL);
+  g_assert (arg != NULL);
+  result = g_locale_to_utf8 (str, -1, NULL, NULL, &err);
+  if (result == NULL) {
+    fprintf (stderr, bad_arg_msg, optarg, arg);
+    fprintf (stderr, see_help_msg);
+    exit (1);
+  }
+  return result;
+}
+
+static void
+export_command_line (int argc, char * const *argv)
+{
+  int c;
+  gchar *str;
+  GError *err = NULL;
+
+  /* Parse command-line arguments */
+  while ((c = getopt_long (argc, argv, export_short_options,
+                           export_long_options, NULL)) != -1) {
+    switch (c) {
+    case 0:
+      /* This is a long-form-only flag option, and has already been
+       * dealt with by getopt_long(). */
+      break;
+
+    case 2: /* --no-color */
+      settings.color = FALSE;
+      break;
+
+    case 'c':
+      settings.color = TRUE;
+      break;
+
+    case 'd':
+      settings.dpi = strtod (optarg, NULL);
+      if (settings.dpi <= 0) {
+        fprintf (stderr, bad_arg_msg, optarg, "-d,--dpi");
+        fprintf (stderr, see_help_msg);
+        exit (1);
+      }
+      break;
+
+    case 'f':
+      g_free (settings.format);
+      settings.format = export_command_line__utf8_check (optarg, "-f,--format");
+      break;
+
+    case 'h':
+      export_usage ();
+      break;
+
+    case 'l':
+      if (!export_parse_layout (optarg)) {
+        fprintf (stderr, bad_arg_prefix_msg,
+                 optarg, "-l,--layout", err->message);
+        fprintf (stderr, see_help_msg);
+        exit (1);
+      }
+      break;
+
+    case 'm':
+      str = export_command_line__utf8_check (optarg, "-m,--margins");
+      if (!export_parse_margins (str)) {
+        fprintf (stderr, bad_arg_msg, optarg, "-m,--margins");
+        fprintf (stderr, see_help_msg);
+        exit (1);
+      }
+      g_free (str);
+      break;
+
+    case 'o':
+      settings.outfile = optarg;
+      break;
+
+    case 'p':
+      str = export_command_line__utf8_check (optarg, "-p,--paper");
+      if (!export_parse_paper (str)) {
+        fprintf (stderr, bad_arg_msg, optarg, "-p,--paper");
+        fprintf (stderr, see_help_msg);
+        exit (1);
+      }
+      g_free (str);
+      break;
+
+    case 's':
+      str = export_command_line__utf8_check (optarg, "-s,--size");
+      if (!export_parse_size (str)) {
+        fprintf (stderr, bad_arg_msg, optarg, "-s,--size");
+        fprintf (stderr, see_help_msg);
+        exit (1);
+      }
+      g_free (str);
+      /* Since a specific size was provided, ditch the paper size
+       * setting */
+      if (settings.paper != NULL) {
+        gtk_paper_size_free (settings.paper);
+        settings.paper = NULL;
+      }
+      break;
+
+    case '?':
+      /* getopt_long already printed an error message */
+      fprintf (stderr, see_help_msg);
+      exit (1);
+      break;
+    default:
+      g_assert_not_reached ();
+    }
+  }
+
+  /* Check that some schematic files to print were provided */
+  if (argc <= optind) {
+    fprintf (stderr,
+             _("ERROR: You must specify at least one input filename.\n"));
+    fprintf (stderr, see_help_msg);
+    exit (1);
+  }
+  settings.infilec = argc - optind;
+  settings.infilev = &argv[optind];
+
+  if (settings.outfile == NULL) {
+    fprintf (stderr,
+             _("ERROR: You must specify an output filename.\n"));
+    fprintf (stderr, see_help_msg);
+    exit (1);
+  }
+}
