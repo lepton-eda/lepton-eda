@@ -1,0 +1,194 @@
+.TH gaf 1 "November 18th, 2012" "gEDA Project" 1.8.0.20121118
+.SH NAME
+gaf - gEDA/gaf Command-Line Utility
+.SH "SYNOPSIS"
+.B gaf
+[\fIOPTION\fR ...] \fICOMMAND\fR [\fIARGS\fR ...]
+.SH "DESCRIPTION"
+.PP
+.B gaf
+is part of the gEDA (GPL Electronic Design Automation) toolset.  It
+provides a number of small command-line utilities for working with
+schematic and symbol files, and is designed to be used for batch
+processing of designs created using the schematic editor
+\fBgschem\fR(1).  It currently has three built-in \fICOMMAND\fRs:
+
+.B gaf export
+is used to create SVG, PDF, PNG, PS and EPS files from schematic and
+symbol files, for printing or embedding in other documents.
+
+.B gaf config
+allows reading and writing settings in gEDA project, user and system
+configuration stores.
+
+.B gaf shell
+provides a Scheme REPL for command-line batch processing of schematic
+data.
+
+.SH "GENERAL OPTIONS"
+.TP 8
+\fB--no-rcfiles\fR
+Prevent `gafrc' Scheme initialisation files from being loaded.
+.TP 8
+\fB-h\fR, \fB--help\fR
+Print a help message.
+.TP 8
+\fB-V\fR, \fB--version\fR
+Print \fBgaf\fR version information.
+
+.SH "EXPORTING IMAGE FILES"
+.B gaf export
+[\fIOPTION\fR ...] \fB-o\fR \fIOUTPUT\fR [\fI--\fR] \fIFILE\fR ...
+
+.B gaf export
+can export schematic and symbol files in a variety of image formats
+for printing or further processing.  It currently supports single-page
+PNG, SVG and EPS output, and multi-page PS and PDF output.  It accepts
+a variety of options for controlling how the output is formatted.
+
+.TP 8
+\fB-o\fR, \fB--output\fR=\fIFILE\fR
+Output generated image data to \fIFILE\fR.
+.TP 8
+\fB-f\fR, \fB--format\fR=(\fBpng\fR | \fBpdf\fR | \fBsvg\fR | \fBps\fR | \fBeps\fR)
+Specify an output format.  Usually, this option is not required,
+because \fBgaf export\fR will infer the correct format from the file
+extension of the output file.
+.TP 8
+\fB-p\fR, \fB--paper\fR=\fINAME\fR
+Size the output for a particular paper size.  The \fINAME\fR should be
+a PWG 5101.1-2002 paper name.  For example, valid values include
+`iso_a4', `na_letter', or `na_d'.
+.TP 8
+\fB-l\fR, \fB--layout\fR=(\fBauto\fR | \fBlandscape\fR | \fBportrait\fR)
+When using a paper size, set the orientation of the output.  If `auto'
+layout is used, the orientation that best fits the drawing will be
+used.
+.TP 8
+\fB-s\fR, \fB--size\fR=(\fBauto\fR | \fIWIDTH\fR;\fIHEIGHT\fR)
+Size the output with specific dimensions.  If the size is `auto',
+select the size that best fits the drawing.
+.TP 8
+\fB-m\fR, \fB--margins\fR=(\fBauto\fR | \fITOP\fR[;\fILEFT\fR[;\fIBOTTOM\fR[;\fIRIGHT\fR]]])
+Set the widths of the margins to be used.  If `auto' margins are
+specified, a sensible default value will be chosen.  Up to four margin
+widths can be provided.  If one is provided, it will be used on all
+four sides.  If two are provided, the first will be used for the
+top/bottom and the second for the left/right.  If three are provided,
+the first will be used for the top, the second for left/right, and the
+third for the bottom.
+.TP 8
+\fB-d\fR, \fB--dpi\fR=\fIDPI\fR
+Set the number of pixels per inch used when generating PNG output.
+.TP 8
+\fB-c\fR, \fB--color\fR
+Enable colour output.
+.TP 8
+\fB--no-color\fR
+Disable color output.
+.TP 8
+\fB--\fR
+Treat all remaining arguments as schematic or symbol filenames.  Use
+this if you have a schematic or symbol filename which begins with `-'.
+
+.PP
+The \fB--size\fR or \fB--margins\fR options described above accept
+values using units of `mm', `cm', `in', `pc', `px', or `pt'.  If you
+do not provide a unit, points are assumed.  N.b. that `px' are
+evaluated relative to the current \fB--dpi\fR setting.
+
+.SH "ACCESSING CONFIGURATION"
+.B gaf config
+[\fIOPTION\fR] [\fIGROUP\fR \fIKEY\fR [\fIVALUE\fR]]
+
+.B gaf config
+is a basic utility for inspecting and modifying gEDA/gaf configuration
+stores.
+
+.PP
+If a \fIGROUP\fR and \fRKEY\fR are specified, retrieves the value of
+that configuration parameter.  If a \fIVALUE\fR is specified, sets
+the value of that parameter.  The \fB-p\fR, \fB-u\fR and \fB-s\fR
+options can be used to select the configuration store affected (by
+default, the project configuration store for the current working
+directory).  If no \fIGROUP\fR and \fIKEY\fR are provided, outputs
+the filename of the selected configuration store.
+
+.PP
+.TP 8
+\fB-p\fR, \fB--project\fR[=\fIPATH\fR]
+Select the project configuration store of the project located in
+\fIPATH\fR.  If no \fIPATH\fR is provided, selects the project in the
+current working directory.
+.TP 8
+\fB-u\fR, \fB--user\fR
+Select the user configuration store.
+.TP 8
+\fB-s\fR, \fB--system\fR
+Select the system configuration store.  Depending on user permissions,
+the system configuration store may be read-only.
+
+.SH "SCHEME PROCESSING"
+.B gaf shell
+[\fIOPTION ...\fR]
+
+.B gaf shell
+provides a Scheme Read-Eval-Print Loop (REPL) for automating
+processing of schematic and symbol files.  It is designed to be used
+with the gEDA Scheme API.
+
+.TP 8
+\fB-s\fR \fIFILE\fR
+Evaluate Scheme source code from \fIFILE\fR, and exit.
+.TP 8
+\fB-c\fR \fIEXPR\fR
+Evaluate the Scheme expression \fIEXPR\fR, and exit.
+.TP 8
+\fB--\fR
+Stop scanning arguments; run interactively.
+.TP 8
+\fB-L\fR \fIDIRECTORY\fR
+Prepend \fIDIRECTORY\fR to the list of directories to be searched for
+Scheme files.
+.TP 8
+\fB-l\fR \fIFILE\fR
+Evaluate Scheme source code from \fIFILE\fR.
+
+.PP
+The \fB-s\fR, \fB-c\fR and \fB--\fR switches stop argument processing
+and pass all the remaining arguments as the value of `(command-line)'.
+
+.SH ENVIRONMENT
+.TP 8
+.B GEDADATA
+specifies the search directory for Scheme and rc files.  The default
+is `${prefix}/share/gEDA'.
+.TP 8
+.B GEDADATARC
+specifies the search directory for rc files.  The default is `$GEDADATA'.
+
+.SH AUTHORS
+See the `AUTHORS' file included with this program.
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 2012 gEDA Contributors.  License GPLv2+: GNU GPL
+version 2 or later.  Please see the `COPYING' file included with this
+program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+.SH SEE ALSO
+\fBgschem\fR(1).
+
+For more information on the Scheme API, see the \fBgeda-scheme\fR
+Texinfo manual.  If the \fBinfo\fR program is properly installed at
+your site, the command
+
+.IP
+.B
+info geda-scheme
+
+.PP
+should give you access to the complete manual.
