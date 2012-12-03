@@ -32,6 +32,24 @@ Notable changes in gEDA/gaf 1.9.0
   - `gschem' now uses a standard GTK print dialog (with printer
     selection, print preview, etc.)
 
+* A new `gaf' command-line utility has been added.  It provides a
+  number of subcommands:
+
+  - `gaf export' can be used to convert schematic files to PNG, SVG,
+    PDF, PS and EPS, with detailed control of paper size and margins.
+    It supports multi-page PDF and PS output.
+
+  - `gaf config' can be used to manipulate the project, user, and
+    system configuration stores (see below).
+
+  - `gaf shell' provides a Scheme REPL for batch manipulation of
+    schematic and symbol files.
+
+* New project, user and system configuration stores have been added,
+  using a format similar to .desktop files.  They can be manipulated
+  using the `gaf config' tool.  Configuration parameters for most
+  tools will be converted to use this mechanism in future releases.
+
 * The changes to highlighting of dangling net ends in gEDA/gaf 1.8.0
   have been reverted.  All dangling ends are once again flagged with a
   brightly-coloured square.
@@ -42,8 +60,7 @@ Notable changes in gEDA/gaf 1.9.0
 * When using "Down Schematic" command in `gschem', an error message
   will now be displayed if the subcircuit schematic cannot be loaded.
 
-* Printing in `gschem' now uses a light background color map by
-  default.
+* Printing now uses a light background color map by default.
 
 * Objects can now have the line end "cap style" adjusted in `gschem'.
 
