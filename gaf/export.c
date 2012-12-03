@@ -105,6 +105,7 @@ struct ExportSettings {
   gdouble dpi;
 
   gboolean color;
+  gchar *font; /* UTF-8 */
 };
 
 static struct ExportFormat formats[] =
@@ -134,6 +135,7 @@ static struct ExportSettings settings = {
   DEFAULT_DPI,
 
   FALSE,
+  NULL,
 };
 
 #define bad_arg_msg _("ERROR: Bad argument '%s' to %s option.\n")
@@ -239,13 +241,15 @@ cmd_export (int argc, char **argv)
 
   /* Create renderer */
   renderer = eda_renderer_new (NULL, NULL);
+  if (settings.font != NULL) {
+    g_object_set (renderer, "font-name", settings.font, NULL);
+  }
 
   /* Make sure libgeda knows how to calculate the bounds of text
    * taking into account font etc. */
   o_text_set_rendered_bounds_func (toplevel,
                                    export_text_rendered_bounds,
                                    renderer);
-
 
   /* Create color map */
   render_color_map =
@@ -814,15 +818,22 @@ export_config (void)
   } else {
     g_clear_error (&err);
   }
+
+  str = eda_config_get_string (cfg, "export", "font", NULL);
+  if (str != NULL) {
+    g_free (settings.font);
+    settings.font = str;
+  }
 }
 
-#define export_short_options "cd:f:hl:m:o:p:s:"
+#define export_short_options "cd:f:F:hl:m:o:p:s:"
 
 static struct option export_long_options[] = {
   {"no-color", 0, NULL, 2},
   {"color", 0, NULL, 'c'},
   {"dpi", 1, NULL, 'd'},
   {"format", 1, NULL, 'f'},
+  {"font", 1, NULL, 'F'},
   {"help", 0, NULL, 'h'},
   {"layout", 0, NULL, 'l'},
   {"margins", 1, NULL, 'm'},
@@ -849,6 +860,7 @@ export_usage (void)
 "  -d, --dpi=DPI          pixels-per-inch for raster outputs\n"
 "  -c, --color            enable color output\n"
 "  --no-color             disable color output\n"
+"  -F, --font=NAME        set font family for printing text\n"
 "  -h, --help     display usage information and exit\n"
 "\n"
 "Please report bugs to %s.\n"),
@@ -911,6 +923,12 @@ export_command_line (int argc, char * const *argv)
     case 'f':
       g_free (settings.format);
       settings.format = export_command_line__utf8_check (optarg, "-f,--format");
+      break;
+
+    case 'F':
+      str = export_command_line__utf8_check (optarg, "-F,--font");
+      g_free (settings.font);
+      settings.font = str;
       break;
 
     case 'h':
