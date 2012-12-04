@@ -1276,22 +1276,22 @@ compselect_get_type ()
  *  \param [in] group_name The group name in the key file to store the data under.
  */
 static void
-compselect_geometry_save (GschemDialog *dialog, GKeyFile *key_file, gchar *group_name)
+compselect_geometry_save (GschemDialog *dialog, EdaConfig *cfg, gchar *group_name)
 {
   int position;
 
   /* Call the parent's geometry_save method */
   GSCHEM_DIALOG_CLASS (compselect_parent_class)->
-    geometry_save (dialog, key_file, group_name);
+    geometry_save (dialog, cfg, group_name);
 
   position = gtk_paned_get_position (GTK_PANED (COMPSELECT (dialog)->hpaned));
-  g_key_file_set_integer (key_file, group_name, "hpaned", position);
+  eda_config_set_int (cfg, group_name, "hpaned", position);
 
   position = gtk_paned_get_position (GTK_PANED (COMPSELECT (dialog)->vpaned));
-  g_key_file_set_integer (key_file, group_name, "vpaned", position);
+  eda_config_set_int (cfg, group_name, "vpaned", position);
 
   position = gtk_notebook_get_current_page (COMPSELECT (dialog)->viewtabs);
-  g_key_file_set_integer (key_file, group_name, "source-tab", position);
+  eda_config_set_int (cfg, group_name, "source-tab", position);
 }
 
 
@@ -1306,23 +1306,23 @@ compselect_geometry_save (GschemDialog *dialog, GKeyFile *key_file, gchar *group
  *  \param [in] group_name The group name in the key file to store the data under.
  */
 static void
-compselect_geometry_restore (GschemDialog *dialog, GKeyFile *key_file, gchar *group_name)
+compselect_geometry_restore (GschemDialog *dialog, EdaConfig *cfg, gchar *group_name)
 {
   int position;
 
   /* Call the parent's geometry_restore method */
   GSCHEM_DIALOG_CLASS (compselect_parent_class)->
-    geometry_restore (dialog, key_file, group_name);
+    geometry_restore (dialog, cfg, group_name);
 
-  position = g_key_file_get_integer (key_file, group_name, "hpaned", NULL);
+  position = eda_config_get_int (cfg, group_name, "hpaned", NULL);
   if (position != 0)
     gtk_paned_set_position (GTK_PANED (COMPSELECT (dialog)->hpaned), position);
 
-  position = g_key_file_get_integer (key_file, group_name, "vpaned", NULL);
+  position = eda_config_get_int (cfg, group_name, "vpaned", NULL);
   if (position != 0)
     gtk_paned_set_position (GTK_PANED (COMPSELECT (dialog)->vpaned), position);
 
-  position = g_key_file_get_integer (key_file, group_name, "source-tab", NULL);
+  position = eda_config_get_int (cfg, group_name, "source-tab", NULL);
   gtk_notebook_set_current_page (COMPSELECT (dialog)->viewtabs, position);
 }
 
