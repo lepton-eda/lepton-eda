@@ -78,8 +78,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->override_pin_color = -1;
   /* END BLOCK - ALTHOUGH THERE ARE MORE CASES! */
 
-  toplevel->object_clipping = 0;
-
   toplevel->image_color = FALSE;
 
   toplevel->net_consolidate = FALSE;

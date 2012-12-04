@@ -49,7 +49,6 @@ int   default_net_selection_mode = 0;
 int   default_background_color = BACKGROUND_COLOR;
 int   default_actionfeedback_mode = OUTLINE;
 int   default_zoom_with_pan = TRUE;
-int   default_object_clipping = TRUE;
 int   default_do_logging = TRUE;
 int   default_logging_dest = LOG_WINDOW;
 int   default_embed_complex = FALSE;
@@ -152,7 +151,6 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
   w_current->text_feedback           = default_text_feedback;
   w_current->scrollbars_flag         = default_scrollbars_flag;
 
-  toplevel->object_clipping = default_object_clipping;
   w_current->embed_complex   = default_embed_complex;
   w_current->include_complex = default_include_complex;
   w_current->snap_size       = default_snap_size;

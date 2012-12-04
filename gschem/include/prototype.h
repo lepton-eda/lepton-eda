@@ -194,7 +194,6 @@ SCM g_rc_zoom_with_pan(SCM mode);
 SCM g_rc_text_feedback(SCM mode);
 SCM g_rc_text_display_zoomfactor(SCM zoomfactor);
 SCM g_rc_scrollbar_update(SCM mode);
-SCM g_rc_object_clipping(SCM mode);
 SCM g_rc_logging(SCM mode);
 SCM g_rc_embed_components(SCM mode);
 SCM g_rc_component_dialog_attributes(SCM stringlist);

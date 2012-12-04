@@ -138,3 +138,4 @@ release.  Please use configuration files instead.
 (define-rc-dead-config line-style)
 (define-rc-dead-config net-endpoint-mode)
 (define-rc-dead-config net-midpoint-mode)
+(define-rc-dead-config object-clipping)

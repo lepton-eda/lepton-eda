@@ -305,17 +305,6 @@
 ;(raise-dialog-boxes-on-expose "enabled")
 (raise-dialog-boxes-on-expose "disabled")
 
-; object-clipping string
-;
-; Determines if the object clipping code is executed or not
-; This code does speed up redraws a bit.
-;   Possible options: enabled or disabled
-; Default is enabled, I do not recommend turning this off, since some X
-; servers don't handle clipping correctly.
-;
-(object-clipping "enabled")
-;(object-clipping "disabled")
-
 ; embed-components string
 ;
 ; Determines if the newly placed components are embedded in the schematic 

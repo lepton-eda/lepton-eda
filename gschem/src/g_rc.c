@@ -239,23 +239,6 @@ SCM g_rc_scrollbar_update(SCM scmmode)
  *  \par Function Description
  *
  */
-SCM g_rc_object_clipping(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"}
-  };
-
-  RETURN_G_RC_MODE("object-clipping",
-		   default_object_clipping,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_logging(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

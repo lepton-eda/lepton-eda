@@ -462,9 +462,6 @@ struct st_toplevel {
   int override_pin_color;
   /* END BLOCK - ALTHOUGH THERE ARE MORE CASES! */
 
-  /* controls whether objects are clipped */
-  int object_clipping; 
-
   /* either TRUE or FALSE (color or no color) */
   int image_color; 
 
