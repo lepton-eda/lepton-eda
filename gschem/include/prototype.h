@@ -193,7 +193,6 @@ SCM g_rc_action_feedback_mode(SCM mode);
 SCM g_rc_zoom_with_pan(SCM mode);
 SCM g_rc_logging(SCM mode);
 SCM g_rc_embed_components(SCM mode);
-SCM g_rc_component_dialog_attributes(SCM stringlist);
 SCM g_rc_text_size(SCM size);
 SCM g_rc_text_caps_style(SCM mode);
 SCM g_rc_snap_size(SCM size);

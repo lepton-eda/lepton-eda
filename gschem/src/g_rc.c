@@ -210,61 +210,6 @@ SCM g_rc_embed_components(SCM mode)
 		   2);
 }
 
-static void
-free_string_glist(void *data)
-{
-  GList *iter, *glst = *((GList **) data);
-
-  for (iter = glst; iter != NULL; iter = g_list_next (iter)) {
-    g_free (iter->data);
-  }
-  g_list_free (glst);
-}
-
-/*! \brief read the configuration string list for the component dialog
- *  \par Function Description
- *  This function reads the string list from the component-dialog-attributes
- *  configuration parameter and converts the list into a GList.
- *  The GList is stored in the global default_component_select_attrlist variable.
- */
-SCM g_rc_component_dialog_attributes(SCM stringlist)
-{
-  int length, i;
-  GList *list=NULL;
-  gchar *attr;
-
-  SCM_ASSERT(scm_list_p(stringlist), stringlist, SCM_ARG1, "scm_is_list failed");
-  length = scm_ilength(stringlist);
-
-  /* If the command is called multiple times, remove the old list before
-     recreating it */
-  g_list_foreach(default_component_select_attrlist, (GFunc)g_free, NULL);
-  g_list_free(default_component_select_attrlist);
-
-  scm_dynwind_begin(0);
-  scm_dynwind_unwind_handler(free_string_glist, (void *) &list, 0);
-
-  /* convert the scm list into a GList */
-  for (i=0; i < length; i++) {
-    char *str;
-    SCM elem = scm_list_ref(stringlist, scm_from_int(i));
-
-    SCM_ASSERT(scm_is_string(elem), elem, SCM_ARG1, "list element is not a string");
-
-    str = scm_to_utf8_string(elem);
-    attr = g_strdup(str);
-    free(str);
-    list = g_list_prepend(list, attr);
-  }
-
-  scm_dynwind_end();
-
-  default_component_select_attrlist = g_list_reverse(list);
-
-  return SCM_BOOL_T;
-}
-
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

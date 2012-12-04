@@ -487,9 +487,13 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
   GtkListStore *model;
   GtkTreeIter iter;
   GtkTreeViewColumn *column;
-  GList *listiter, *o_iter, *o_attrlist, *filter_list;
+  GList *o_iter, *o_attrlist;
   gchar *name, *value;
   OBJECT *o_current;
+  EdaConfig *cfg;
+  gchar **filter_list;
+  gint i;
+  gsize n;
 
   model = (GtkListStore*) gtk_tree_view_get_model (compselect->attrtreeview);
   gtk_list_store_clear (model);
@@ -515,10 +519,11 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
   o_attrlist = o_attrib_find_floating_attribs (
                               s_page_objects (preview_toplevel->page_current));
 
-  filter_list = GSCHEM_DIALOG (compselect)->w_current->component_select_attrlist;
+  cfg = eda_config_get_context_for_path (preview_toplevel->page_current->page_filename);
+  filter_list = eda_config_get_string_list (cfg, "gschem.library",
+                                            "component-attributes", &n, NULL);
 
-  if (filter_list != NULL
-      && strcmp (filter_list->data, "*") == 0) {
+  if (filter_list == NULL || (n > 0 && strcmp (filter_list[0], "*") == 0)) {
     /* display all attributes in alphabetical order */
     o_attrlist = g_list_sort (o_attrlist, (GCompareFunc) sort_object_text);
     for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next (o_iter)) {
@@ -531,13 +536,11 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
     }
   } else {
     /* display only attribute that are in the filter list */
-    for (listiter = filter_list;
-         listiter != NULL;
-         listiter = g_list_next (listiter)) {
+    for (i = 0; i < n; i++) {
       for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next (o_iter)) {
         o_current = o_iter->data;
         if (o_attrib_get_name_value (o_current, &name, &value)) {
-          if (strcmp (name, listiter->data) == 0) {
+          if (strcmp (name, filter_list[i]) == 0) {
             gtk_list_store_append (model, &iter);
             gtk_list_store_set (model, &iter, 0, name, 1, value, -1);
           }
@@ -547,6 +550,12 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
       }
     }
   }
+
+  /* Hide the attributes list if the list of attributes to show is
+   * empty. */
+  gtk_widget_set_visible (compselect->attrframe, n != 0);
+
+  g_strfreev (filter_list);
   g_list_free (o_attrlist);
 }
 
@@ -597,9 +606,8 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
                 NULL);
 
   /* update the attributes with the toplevel of the preview widget*/
-  if (compselect->attrtreeview != NULL)
-    update_attributes_model (compselect,
-                             compselect->preview->preview_w_current->toplevel);
+  update_attributes_model (compselect,
+                           compselect->preview->preview_w_current->toplevel);
 
   /* signal a component has been selected to parent of dialog */
   g_signal_emit_by_name (compselect,
@@ -1437,19 +1445,13 @@ compselect_constructor (GType type,
 
   gtk_paned_pack1 (GTK_PANED (vpaned), frame, FALSE, FALSE);
 
-  /* only create the attribute treeview if there are elements in the
-     component_select_attrlist */
-  if (GSCHEM_DIALOG (compselect)->w_current->component_select_attrlist == NULL) {
-    compselect->attrtreeview = NULL;
-  } else {
-    frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
-                                      /* GtkFrame */
-                                      "label", _("Attributes"),
-                                      NULL));
-    attributes = create_attributes_treeview (compselect);
-    gtk_paned_pack2 (GTK_PANED (vpaned), frame, FALSE, FALSE);
-    gtk_container_add (GTK_CONTAINER (frame), attributes);
-  }
+  compselect->attrframe = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
+                                                    /* GtkFrame */
+                                                    "label", _("Attributes"),
+                                                    NULL));
+  attributes = create_attributes_treeview (compselect);
+  gtk_paned_pack2 (GTK_PANED (vpaned), compselect->attrframe, FALSE, FALSE);
+  gtk_container_add (GTK_CONTAINER (compselect->attrframe), attributes);
 
   gtk_paned_pack2 (GTK_PANED (hpaned), vpaned, FALSE, FALSE);
 

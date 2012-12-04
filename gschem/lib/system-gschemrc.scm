@@ -272,22 +272,6 @@
 ;(embed-components "enabled")
 (embed-components "disabled")
 
-; component-dialog-attributes stringlist
-;
-; Sets a list of attributs that are visible in the component select dialog.
-; The attributes are sorted in the same order as they appear in the list.
-; If the first list element is an asterisk "*", all attributes will be 
-; displayed in alphabetical order.
-; An empty list will disable the attribute view in the dialog.
-;
-;(component-dialog-attributes '("device" "description" "footprint" "comment"
-;			       "net" "model" "model-name" "file" "value"
-;			       "numslots" "slotdef" "slot"
-;			       "documentation" "symversion" "author"
-;			       "use-license=" "dist-license="))
-(component-dialog-attributes '("*"))
-;(component-dialog-attributes '())
-
 ; logging string
 ;
 ; Determines if the logging mechanism is enabled or disabled
