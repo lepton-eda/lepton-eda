@@ -261,16 +261,6 @@
 (scrollbars "enabled")
 ;(scrollbars "disabled")
 
-; scrollbar-update string
-;
-; Specifies the behavior of the scrollbars in the main window.
-;    continuous - display is redrawn as you move the scrollbar
-;    delayed - display is redrawn once you stop moving the scrollbar
-; Default is continuous
-;
-(scrollbar-update "continuous")
-;(scrollbar-update "delayed")
-
 ; raise-dialog-boxes-on-expose string
 ;
 ; Controls if dialog boxes are raised whenever an expose event happens

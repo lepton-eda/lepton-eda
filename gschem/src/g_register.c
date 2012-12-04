@@ -59,7 +59,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "zoom-with-pan",             1, 0, 0, g_rc_zoom_with_pan },
   { "action-feedback-mode",      1, 0, 0, g_rc_action_feedback_mode },
   { "scrollbars",                1, 0, 0, g_rc_scrollbars },
-  { "scrollbar-update",          1, 0, 0, g_rc_scrollbar_update },
   { "embed-components",          1, 0, 0, g_rc_embed_components },
   { "component-dialog-attributes",1, 0, 0, g_rc_component_dialog_attributes },
   { "logging",                   1, 0, 0, g_rc_logging },

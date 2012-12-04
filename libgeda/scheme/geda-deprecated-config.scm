@@ -146,3 +146,5 @@ release.  Please use configuration files instead.
 (define-rc-deprecated-config
  untitled-name "gschem" "default-filename"
  rc-deprecated-string-transformer)
+
+(define-rc-dead-config scrollbar-update)

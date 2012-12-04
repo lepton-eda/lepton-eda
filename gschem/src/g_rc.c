@@ -181,21 +181,6 @@ SCM g_rc_zoom_with_pan(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_scrollbar_update(SCM scmmode)
-{
-  SCM ret = SCM_BOOL_T;
-
-  SCM_ASSERT (scm_is_string (scmmode), scmmode,
-              SCM_ARG1, "scrollbar-update");
-  
-  return ret;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_logging(SCM mode)
 {
   static const vstbl_entry mode_table[] = {
