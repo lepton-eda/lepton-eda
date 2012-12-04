@@ -259,6 +259,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
   /* Set up default configuration */
   i_vars_init_gschem_defaults ();
+  gschem_atexit (i_vars_atexit_save_user_config, NULL);
 
   /* Now read in RC files. */
   g_rc_parse_gtkrc();
