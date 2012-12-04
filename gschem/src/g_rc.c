@@ -198,32 +198,6 @@ SCM g_rc_text_feedback(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_text_display_zoomfactor(SCM zoomfactor)
-{
-  int val;
-  
-  SCM_ASSERT (scm_is_integer (zoomfactor), zoomfactor,
-              SCM_ARG1, "test-display-zoom-factor");
-
-  val = scm_to_int (zoomfactor);
-  if (val == 0) {
-    fprintf(stderr,
-            _("Invalid zoomfactor [%d] passed to %s\n"),
-            val,
-            "text-display-zoom-factor");
-    val = 10; /* absolute default */
-  }
-
-  default_text_display_zoomfactor = val;
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_scrollbar_update(SCM scmmode)
 {
   SCM ret = SCM_BOOL_T;

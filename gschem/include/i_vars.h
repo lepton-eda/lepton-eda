@@ -11,7 +11,6 @@ extern int default_background_color;
 extern int default_zoom_with_pan;
 extern int default_actionfeedback_mode;
 extern int default_text_feedback;
-extern int default_text_display_zoomfactor;
 extern int default_do_logging;
 extern int default_logging_dest;
 extern int default_embed_complex;

@@ -260,15 +260,6 @@
 (text-feedback "only-when-readable")
 ;(text-feedback "always")
 
-; text-display-zoomfactor number
-;
-; Sets the zoomfactor number (~150 being the most zoomed out factor) 
-; (zoom factors get smaller as you zoom in) at which text is displayed
-; completely (not a line).  This is only valid if above is set to
-; "only-when-readable" 
-;
-(text-display-zoomfactor 30)
-
 ; scrollbars string
 ;
 ; Controls if the scrollbars are displayed (enabled) or not (disabled)

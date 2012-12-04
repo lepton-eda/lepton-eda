@@ -192,7 +192,6 @@ SCM g_rc_net_selection_mode(SCM mode);
 SCM g_rc_action_feedback_mode(SCM mode);
 SCM g_rc_zoom_with_pan(SCM mode);
 SCM g_rc_text_feedback(SCM mode);
-SCM g_rc_text_display_zoomfactor(SCM zoomfactor);
 SCM g_rc_scrollbar_update(SCM mode);
 SCM g_rc_logging(SCM mode);
 SCM g_rc_embed_components(SCM mode);

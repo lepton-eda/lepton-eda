@@ -103,9 +103,6 @@ int   default_auto_save_interval = 120;
 int   default_width = 800;  /* these variables are used in x_window.c */
 int   default_height = 600;
 
-/* default zoom_factor at which text is displayed completely */
-int   default_text_display_zoomfactor = 30;
-
 int default_text_feedback = ONLY_WHEN_READABLE;
 int default_mousepan_gain = 5;
 int default_keyboardpan_gain = 20;
@@ -146,7 +143,6 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
 
   w_current->zoom_with_pan           = default_zoom_with_pan;
   w_current->actionfeedback_mode     = default_actionfeedback_mode;
-  w_current->text_display_zoomfactor = default_text_display_zoomfactor;
   w_current->text_feedback           = default_text_feedback;
   w_current->scrollbars_flag         = default_scrollbars_flag;
 
