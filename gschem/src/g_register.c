@@ -58,7 +58,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "net-selection-mode",        1, 0, 0, g_rc_net_selection_mode },
   { "zoom-with-pan",             1, 0, 0, g_rc_zoom_with_pan },
   { "action-feedback-mode",      1, 0, 0, g_rc_action_feedback_mode },
-  { "text-feedback",             1, 0, 0, g_rc_text_feedback },
   { "scrollbars",                1, 0, 0, g_rc_scrollbars },
   { "scrollbar-update",          1, 0, 0, g_rc_scrollbar_update },
   { "embed-components",          1, 0, 0, g_rc_embed_components },

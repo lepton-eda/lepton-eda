@@ -65,10 +65,6 @@
  * constants, so be sure not to clash with those */
 #define LAST_DRAWB_MODE_NONE -1
 
-/* there are modes for text-feedback */
-#define ONLY_WHEN_READABLE	0
-#define ALWAYS			1
-
 /* used in o_undo_callback */
 #define UNDO_ACTION		0
 #define REDO_ACTION		1

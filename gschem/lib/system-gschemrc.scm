@@ -251,15 +251,6 @@
 (sort-component-library "disabled")
 ;(sort-component-library "enabled")
 
-; text-feedback string
-;
-; Controls if text is drawn when doing an xor action (like copy/move)
-; Comment out if you want the default mode.
-; Not in production yet.
-;
-(text-feedback "only-when-readable")
-;(text-feedback "always")
-
 ; scrollbars string
 ;
 ; Controls if the scrollbars are displayed (enabled) or not (disabled)

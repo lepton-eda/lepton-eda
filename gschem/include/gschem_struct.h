@@ -143,7 +143,6 @@ struct st_gschem_toplevel {
   int zoom_with_pan;
 
   int actionfeedback_mode;      /* can be either OUTLINE or BOUNDINGBOX */
-  int text_feedback;      /* is text is drawn or not in copy/move/place ops */
   int net_direction_mode; /* controls if the net direction mode is used */
   int net_selection_mode;  /* controls the behaviour when selecting a net */
   int net_selection_state;  /* current status of the net selecting mode */

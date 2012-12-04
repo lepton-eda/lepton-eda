@@ -181,23 +181,6 @@ SCM g_rc_zoom_with_pan(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_text_feedback(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {ALWAYS            , "always"            },
-    {ONLY_WHEN_READABLE, "only-when-readable"}
-  };
-
-  RETURN_G_RC_MODE("text-feedback",
-		   default_text_feedback,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_scrollbar_update(SCM scmmode)
 {
   SCM ret = SCM_BOOL_T;
