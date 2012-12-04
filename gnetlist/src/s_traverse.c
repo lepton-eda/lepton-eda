@@ -31,6 +31,7 @@
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -168,7 +169,7 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
     netlist = s_netlist_return_tail(netlist_head);
 
     if (o_current->type == OBJ_PLACEHOLDER) {
-      printf("WARNING: Found a placeholder/missing component, are you missing a symbol file? [%s]\n", o_current->complex_basename);
+      printf(_("WARNING: Found a placeholder/missing component, are you missing a symbol file? [%s]\n"), o_current->complex_basename);
     }
 
     if (o_current->type == OBJ_COMPLEX) {
@@ -226,7 +227,7 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
 	if ( (!temp) && (!is_graphical) ) {
 	  
 	  fprintf(stderr,
-		  "Could not find refdes on component and could not find any special attributes!\n");
+		  _("Could not find refdes on component and could not find any special attributes!\n"));
 	  
 	  netlist->component_uref = g_strdup("U?");
 	} else {
@@ -321,7 +322,7 @@ static int connection_type (OBJECT *object)
     case OBJ_NET:  return PIN_TYPE_NET;
     case OBJ_BUS:  return PIN_TYPE_BUS;
     default:
-      g_critical ("Non-connectable object being queried for connection type\n");
+      g_critical (_("Non-connectable object being queried for connection type\n"));
       return PIN_TYPE_NET;
   }
 }
@@ -358,7 +359,7 @@ NET *s_traverse_net (TOPLEVEL *pr_current, NET *nets, int starting,
       /* search for the old label= attribute on nets */
       temp = o_attrib_search_object_attribs_by_name (object, "label", 0);
       if (temp) {
-        printf("WARNING: Found label=%s. label= is deprecated, please use netname=\n", temp);
+        printf(_("WARNING: Found label=%s. label= is deprecated, please use netname=\n"), temp);
         new_net->net_name =
           s_hierarchy_create_netname(pr_current, temp,
                                      hierarchy_tag);
@@ -412,7 +413,7 @@ NET *s_traverse_net (TOPLEVEL *pr_current, NET *nets, int starting,
 
   /* this is not perfect yet and won't detect a loop... */
   if (is_visited(object) > 100) {
-    fprintf(stderr, "Found a possible net/pin infinite connection\n");
+    fprintf(stderr, _("Found a possible net/pin infinite connection\n"));
     exit(-1);
   }
 

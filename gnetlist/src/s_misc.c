@@ -30,6 +30,7 @@
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -54,9 +55,9 @@ void verbose_done(void)
 {
     if (verbose_mode) {
 	if (char_index >= 70) {
-	    printf("\nDONE\n");
+	    printf(_("\nDONE\n"));
 	} else {
-	    printf(" DONE\n");
+	    printf(_(" DONE\n"));
 	}
 
 	char_index = 0;
