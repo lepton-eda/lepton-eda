@@ -61,7 +61,6 @@ static struct gsubr_t libgeda_funcs[] = {
   { "reset-component-library",  0, 0, 0, g_rc_reset_component_library },
   { "reset-source-library",     0, 0, 0, g_rc_reset_source_library },
   
-  { "untitled-name",            1, 0, 0, g_rc_untitled_name },
   { "scheme-directory",         1, 0, 0, g_rc_scheme_directory },
   { "bitmap-directory",         1, 0, 0, g_rc_bitmap_directory },
   { "bus-ripper-symname",       1, 0, 0, g_rc_bus_ripper_symname },

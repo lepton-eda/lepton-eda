@@ -142,3 +142,7 @@ release.  Please use configuration files instead.
 (define-rc-dead-config text-origin-marker)
 (define-rc-dead-config text-display-zoomfactor)
 (define-rc-dead-config text-feedback)
+
+(define-rc-deprecated-config
+ untitled-name "gschem" "default-filename"
+ rc-deprecated-string-transformer)

@@ -37,7 +37,6 @@
  * Kazu Hirata <kazu@seul.org> on July 16, 1999 - Added these absolute
  * defaults used when default_... is NULL.
  */
-#define DEFAULT_UNTITLED_NAME    "untitled"
 #define DEFAULT_BITMAP_DIRECTORY "../lib/bitmaps"
 #define DEFAULT_BUS_RIPPER_SYMNAME "busripper-1.sym"
 
@@ -47,7 +46,6 @@
 int   default_init_right = 121000;
 int   default_init_bottom = 90750;
 
-char *default_untitled_name = NULL;
 char *default_bitmap_directory = NULL;
 char *default_bus_ripper_symname = NULL;
 GList *default_always_promote_attributes = NULL;
@@ -88,7 +86,6 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
 
   /* you cannot free the default* strings here since new windows */
   /* need them */
-  INIT_STR(toplevel, untitled_name   , DEFAULT_UNTITLED_NAME   );
   INIT_STR(toplevel, bitmap_directory, DEFAULT_BITMAP_DIRECTORY);
   INIT_STR(toplevel, bus_ripper_symname, DEFAULT_BUS_RIPPER_SYMNAME);
 }
@@ -101,7 +98,6 @@ void i_vars_libgeda_set(TOPLEVEL *toplevel)
  */
 void i_vars_libgeda_freenames()
 {
-  g_free(default_untitled_name);
   g_free(default_bitmap_directory);
   g_free(default_bus_ripper_symname);
 

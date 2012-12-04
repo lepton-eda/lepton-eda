@@ -405,13 +405,6 @@
 (enforce-hierarchy "enabled")
 ;(enforce-hierarchy "disabled")
 
-; untitled-name string
-;
-; Specify the default untitled basename (usually only used a startup time)
-; And typically not changed at runtime
-;
-(untitled-name "untitled")
-
 ; window-size width height 
 ;
 ; Specifies the size of the drawing area window.  The width and height

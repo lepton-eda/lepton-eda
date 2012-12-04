@@ -52,7 +52,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->RC_list = NULL;
 
-  toplevel->untitled_name      = NULL;
   toplevel->bitmap_directory   = NULL;
 
   toplevel->init_left = 0;
@@ -140,7 +139,6 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
     g_source_remove (toplevel->auto_save_timeout);
   }
 
-  g_free (toplevel->untitled_name);
   g_free (toplevel->bitmap_directory);
   g_free (toplevel->bus_ripper_symname);
   

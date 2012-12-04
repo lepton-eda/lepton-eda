@@ -219,4 +219,13 @@ void
 i_vars_init_gschem_defaults()
 {
   EdaConfig *cfg = eda_config_get_default_context ();
+
+  /* This is the prefix of the default filename used for newly created
+   * schematics and symbols. */
+  /// TRANSLATORS: this string is used to generate a filename for
+  /// newly-created files.  It will be used to create a filename of
+  /// the form "untitled_N.sch", where N is a number.  Please make
+  /// sure that the translation contains characters suitable for use
+  /// in a filename.
+  eda_config_set_string (cfg, "gschem", "default-filename", _("untitled"));
 }
