@@ -746,23 +746,6 @@ SCM g_rc_magnetic_net_mode(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_sort_component_library(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("sort_component_library",
-                   default_sort_component_library, 
-                   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_add_menu(SCM scm_menu_name, SCM scm_menu_items)
 {
   char *menu_name;

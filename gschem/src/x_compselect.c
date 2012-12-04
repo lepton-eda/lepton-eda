@@ -778,11 +778,14 @@ create_lib_tree_model (Compselect *compselect)
   GtkTreeStore *store;
   GList *srchead, *srclist;
   GList *symhead, *symlist;
+  PAGE *page = GSCHEM_DIALOG(compselect)->w_current->toplevel->page_current;
+  EdaConfig *cfg = eda_config_get_context_for_path (page->page_filename);
+  gboolean sort = eda_config_get_boolean (cfg, "gschem.library", "sort", NULL);
 
   store = (GtkTreeStore*)gtk_tree_store_new (1, G_TYPE_POINTER);
 
   /* populate component store */
-  srchead = s_clib_get_sources (GSCHEM_DIALOG (compselect)->w_current->sort_component_library != 0);
+  srchead = s_clib_get_sources (sort);
   for (srclist = srchead;
        srclist != NULL;
        srclist = g_list_next (srclist)) {

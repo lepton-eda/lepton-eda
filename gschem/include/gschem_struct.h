@@ -173,7 +173,6 @@ struct st_gschem_toplevel {
   /* sets whether nets rubberband as you move them (or connecting comps) */
   int netconn_rubberband;
 
-  int sort_component_library; /* sort the component library */
   int warp_cursor;        /* warp the cursor when zooming */
   int toolbars;           /* sets if the toolbar(s) are enabled or disabled */
   int handleboxes;        /* sets if the handleboxes are enabled or disabled */

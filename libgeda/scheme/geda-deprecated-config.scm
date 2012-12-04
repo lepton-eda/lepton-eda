@@ -148,3 +148,7 @@ release.  Please use configuration files instead.
  rc-deprecated-string-transformer)
 
 (define-rc-dead-config scrollbar-update)
+
+(define-rc-deprecated-config
+ sort-component-library "gschem.library" "sort"
+ rc-deprecated-string-boolean-transformer)

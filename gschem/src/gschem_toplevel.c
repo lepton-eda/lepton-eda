@@ -176,7 +176,6 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->undo_panzoom = 0;
   w_current->draw_grips = 0;
   w_current->netconn_rubberband = 0;
-  w_current->sort_component_library = 0;
   w_current->warp_cursor = 0;
   w_current->toolbars = 0;
   w_current->handleboxes = 0;

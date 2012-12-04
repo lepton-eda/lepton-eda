@@ -241,16 +241,6 @@
 (continue-component-place "enabled")
 ;(continue-component-place "disabled")
 
-; sort-components-library string
-;
-; If this is enabled, then the component library will be sorted in
-; alphanumeric order.  Bear in mind that this option is totally
-; cosmetic, and will not alter the component search order (latest
-; added gets scanned first).
-;
-(sort-component-library "disabled")
-;(sort-component-library "enabled")
-
 ; scrollbars string
 ;
 ; Controls if the scrollbars are displayed (enabled) or not (disabled)
