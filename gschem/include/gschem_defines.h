@@ -54,17 +54,6 @@
 #define UPPER 1
 #define BOTH  2
 
-/* These modes are for net_endpoint_mode */
-#define NONE		0
-#define FILLEDBOX	1
-#define EMPTYBOX	2
-#define X		3
-
-/* These modes are for net_midpoint_mode */
-/* NONE also applies here */
-#define FILLED	3
-#define EMPTY 	4
-
 /* These modes are for actionfeedback_mode */
 /* there's a hack in i_keypress.c dealing with the 0 and 1 (has to be these */
 /* values */

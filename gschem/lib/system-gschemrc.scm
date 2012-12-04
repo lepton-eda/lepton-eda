@@ -112,16 +112,6 @@
 (draw-grips "enabled")
 ;(draw-grips "disabled")
 
-; net-endpoint-mode string
-;
-; Not user changable.
-(net-endpoint-mode "filledbox")
-
-;  net-midpoint-mode string
-;
-; Not user changable.
-(net-midpoint-mode "filled")
-
 ;  net-direction-mode string
 ;
 ;  Controlls if the net direction mode is used. This mode tries to guess

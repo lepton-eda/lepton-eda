@@ -107,39 +107,6 @@ SCM g_rc_gschem_version(SCM scm_version)
   return ret;
 }
 
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_net_endpoint_mode(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {FILLEDBOX, "filledbox"}
-  };
-
-  RETURN_G_RC_MODE("net-endpoint-mode",
-		   default_net_endpoint_mode,
-		   1);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_net_midpoint_mode(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {FILLED, "filled"}
-  };
-
-  RETURN_G_RC_MODE("net-midpoint-mode",
-		   default_net_midpoint_mode,
-		   1);
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

@@ -136,3 +136,5 @@ release.  Please use configuration files instead.
 (define-rc-dead-config bus-style)
 (define-rc-dead-config pin-style)
 (define-rc-dead-config line-style)
+(define-rc-dead-config net-endpoint-mode)
+(define-rc-dead-config net-midpoint-mode)

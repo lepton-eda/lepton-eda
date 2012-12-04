@@ -156,8 +156,6 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->actionfeedback_mode = OUTLINE;
   w_current->text_feedback = 0;
   w_current->text_display_zoomfactor = 0;
-  w_current->net_endpoint_mode = NONE;
-  w_current->net_midpoint_mode = NONE;
   w_current->net_direction_mode = TRUE;
   w_current->net_selection_mode = 0;
   w_current->net_selection_state = 0;
