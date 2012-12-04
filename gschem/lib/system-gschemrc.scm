@@ -269,13 +269,6 @@
 ;
 (text-display-zoomfactor 30)
 
-; text-origin-marker string
-;
-; Controls if the text origin markers are displayed (or not)
-;
-(text-origin-marker "enabled")
-;(text-origin-marker "disabled")
-
 ; scrollbars string
 ;
 ; Controls if the scrollbars are displayed (enabled) or not (disabled)

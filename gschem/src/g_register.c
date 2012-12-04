@@ -83,7 +83,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "net-consolidate",           1, 0, 0, g_rc_net_consolidate },
   { "file-preview",              1, 0, 0, g_rc_file_preview },
   { "enforce-hierarchy",         1, 0, 0, g_rc_enforce_hierarchy },
-  { "text-origin-marker",        1, 0, 0, g_rc_text_origin_marker },
   { "fast-mousepan",             1, 0, 0, g_rc_fast_mousepan },
   { "raise-dialog-boxes-on-expose", 1, 0, 0, g_rc_raise_dialog_boxes_on_expose },
   { "continue-component-place",  1, 0, 0, g_rc_continue_component_place },

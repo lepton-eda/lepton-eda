@@ -168,7 +168,6 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->middle_button = 0;
   w_current->file_preview = 0;
   w_current->enforce_hierarchy = 0;
-  w_current->text_origin_marker = 0;
   w_current->fast_mousepan = 0;
   w_current->raise_dialog_boxes = 0;
   w_current->continue_component_place = 0;

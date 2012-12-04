@@ -213,7 +213,6 @@ SCM g_rc_scroll_wheel(SCM mode);
 SCM g_rc_net_consolidate(SCM mode);
 SCM g_rc_file_preview(SCM mode);
 SCM g_rc_enforce_hierarchy(SCM mode);
-SCM g_rc_text_origin_marker(SCM mode);
 SCM g_rc_fast_mousepan(SCM mode);
 SCM g_rc_raise_dialog_boxes_on_expose(SCM mode);
 SCM g_rc_continue_component_place(SCM mode);

@@ -37,7 +37,6 @@ extern int default_scroll_wheel;
 extern int default_net_consolidate;
 extern int default_file_preview;
 extern int default_enforce_hierarchy;
-extern int default_text_origin_marker;
 extern int default_fast_mousepan;
 extern int default_raise_dialog_boxes;
 extern int default_continue_component_place;

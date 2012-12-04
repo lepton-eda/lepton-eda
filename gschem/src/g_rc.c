@@ -630,23 +630,6 @@ SCM g_rc_enforce_hierarchy(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_text_origin_marker(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("text-origin-marker",
-		   default_text_origin_marker,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_fast_mousepan(SCM mode)
 {
   static const vstbl_entry mode_table[] = {

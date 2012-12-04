@@ -71,7 +71,6 @@ int   default_scroll_wheel = SCROLL_WHEEL_CLASSIC;
 int   default_net_consolidate = TRUE;
 int   default_file_preview = FALSE;
 int   default_enforce_hierarchy = TRUE;
-int   default_text_origin_marker = TRUE;
 int   default_fast_mousepan = TRUE;
 int   default_raise_dialog_boxes = FALSE;
 int   default_continue_component_place = TRUE;
@@ -166,7 +165,6 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
   toplevel->net_consolidate    = default_net_consolidate;
   w_current->file_preview       = default_file_preview;
   w_current->enforce_hierarchy  = default_enforce_hierarchy;
-  w_current->text_origin_marker = default_text_origin_marker;
   w_current->fast_mousepan      = default_fast_mousepan;
   w_current->raise_dialog_boxes = default_raise_dialog_boxes;
   w_current->continue_component_place = default_continue_component_place;
