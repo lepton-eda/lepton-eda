@@ -438,8 +438,6 @@ struct st_toplevel {
 
   int width, height;			/* height, width of window */
 
-  int override_color;			/* used in doing selections */
-
   /* page system */
   PAGE *page_current;
   GedaPageList *pages;
