@@ -96,4 +96,22 @@ release.  Please use configuration files instead.
 ;; Identity value transformer for define-rc-deprecated-config
 (define (rc-deprecated-string-transformer str) str)
 
+;; ===================================================================
+;; Deprecated libgeda configuration functions
+;; ===================================================================
+
 (define-rc-dead-config postscript-prolog)
+
+;; ===================================================================
+;; Deprecated gschem configuration functions
+;; ===================================================================
+
+(define-rc-dead-config output-capstyle)
+(define-rc-dead-config output-color)
+(define-rc-dead-config output-orientation)
+(define-rc-dead-config output-type)
+(define-rc-dead-config paper-size)
+(define-rc-dead-config paper-sizes)
+(define-rc-dead-config print-command)
+(define-rc-dead-config setpagedevice-orientation)
+(define-rc-dead-config setpagedevice-pagesize)
