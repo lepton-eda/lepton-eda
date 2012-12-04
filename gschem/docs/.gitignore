@@ -3,4 +3,5 @@ Makefile.in
 latex
 html
 *~
+gschem.1
 gschem.html
