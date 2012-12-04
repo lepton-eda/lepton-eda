@@ -164,9 +164,7 @@ void o_bus_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
   WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &x1, &y1);
   WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
 
-  if (toplevel->bus_style == THICK ) {
-    bloat = SCREENabs (w_current, BUS_WIDTH) / 2;
-  }
+  bloat = SCREENabs (w_current, BUS_WIDTH) / 2;
 
   min_x = min (x1, x2) - bloat;
   max_x = max (x1, x2) + bloat;

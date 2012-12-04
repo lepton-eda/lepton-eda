@@ -34,7 +34,6 @@
 }
 
 /* Absolute default used when default_... strings are NULL */
-#define DEFAULT_PRINT_PAPER NULL /* i.e. use system default */
 
 int   default_text_size = 10;
 int   default_text_caps = LOWER;
@@ -45,18 +44,11 @@ int   default_junction_color = JUNCTION_COLOR;
 int   default_override_net_color = -1;
 int   default_override_bus_color = -1;
 int   default_override_pin_color = -1;
-int   default_net_endpoint_mode = FILLEDBOX;
-int   default_net_midpoint_mode = FILLED;
 int   default_net_direction_mode = TRUE;
 int   default_net_selection_mode = 0;
-int   default_pin_style = THICK;
-int   default_net_style = THICK;
-int   default_bus_style = THICK;
-int   default_line_style = THICK;
 int   default_background_color = BACKGROUND_COLOR;
 int   default_actionfeedback_mode = OUTLINE;
 int   default_zoom_with_pan = TRUE;
-int   default_object_clipping = TRUE;
 int   default_do_logging = TRUE;
 int   default_logging_dest = LOG_WINDOW;
 int   default_embed_complex = FALSE;
@@ -64,9 +56,6 @@ int   default_include_complex = FALSE;
 int   default_snap_size = 100;
 
 int   default_scrollbars_flag = TRUE;
-gchar *default_print_paper = NULL;
-int   default_print_orientation = AUTOLAYOUT;
-int   default_print_color = TRUE;
 int   default_image_color = FALSE;
 int   default_image_width = 800;
 int   default_image_height = 600;
@@ -82,11 +71,9 @@ int   default_scroll_wheel = SCROLL_WHEEL_CLASSIC;
 int   default_net_consolidate = TRUE;
 int   default_file_preview = FALSE;
 int   default_enforce_hierarchy = TRUE;
-int   default_text_origin_marker = TRUE;
 int   default_fast_mousepan = TRUE;
 int   default_raise_dialog_boxes = FALSE;
 int   default_continue_component_place = TRUE;
-GList *default_component_select_attrlist = NULL;
 int   default_undo_levels = 20;
 int   default_undo_control = TRUE;
 int   default_undo_type = UNDO_DISK;
@@ -94,7 +81,6 @@ int   default_undo_panzoom = FALSE;
 int   default_draw_grips = TRUE;
 int   default_netconn_rubberband = FALSE;
 int   default_magnetic_net_mode = TRUE;
-int   default_sort_component_library = FALSE;
 int   default_warp_cursor = TRUE;
 int   default_toolbars = TRUE;
 int   default_handleboxes = TRUE;
@@ -115,10 +101,6 @@ int   default_auto_save_interval = 120;
 int   default_width = 800;  /* these variables are used in x_window.c */
 int   default_height = 600;
 
-/* default zoom_factor at which text is displayed completely */
-int   default_text_display_zoomfactor = 30;
-
-int default_text_feedback = ONLY_WHEN_READABLE;
 int default_mousepan_gain = 5;
 int default_keyboardpan_gain = 20;
 int default_select_slack_pixels = 4;
@@ -147,39 +129,24 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
 
   toplevel->background_color = default_background_color;
 
-  toplevel->net_style          = default_net_style;
-  w_current->net_endpoint_mode  = default_net_endpoint_mode;
-  w_current->net_midpoint_mode  = default_net_midpoint_mode;
   w_current->net_direction_mode = default_net_direction_mode;
   w_current->net_selection_mode = default_net_selection_mode;
 
   toplevel->override_net_color = default_override_net_color;
 
-  toplevel->bus_style          = default_bus_style;
   toplevel->override_bus_color = default_override_bus_color;
 
-  toplevel->pin_style          = default_pin_style;
   toplevel->override_pin_color = default_override_pin_color;
-
-  toplevel->line_style         = default_line_style;
 
   w_current->zoom_with_pan           = default_zoom_with_pan;
   w_current->actionfeedback_mode     = default_actionfeedback_mode;
-  w_current->text_display_zoomfactor = default_text_display_zoomfactor;
-  w_current->text_feedback           = default_text_feedback;
   w_current->scrollbars_flag         = default_scrollbars_flag;
 
-  toplevel->object_clipping = default_object_clipping;
   w_current->embed_complex   = default_embed_complex;
   w_current->include_complex = default_include_complex;
   w_current->snap_size       = default_snap_size;
   w_current->log_window      = default_log_window;
   w_current->log_window_type = default_log_window_type;
-
-  INIT_STR(w_current, print_paper, DEFAULT_PRINT_PAPER);
-
-  w_current->print_orientation      = default_print_orientation;
-  w_current->print_color            = default_print_color;
 
   toplevel->image_color        = default_image_color;
   w_current->image_width        = default_image_width;
@@ -190,11 +157,9 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
   toplevel->net_consolidate    = default_net_consolidate;
   w_current->file_preview       = default_file_preview;
   w_current->enforce_hierarchy  = default_enforce_hierarchy;
-  w_current->text_origin_marker = default_text_origin_marker;
   w_current->fast_mousepan      = default_fast_mousepan;
   w_current->raise_dialog_boxes = default_raise_dialog_boxes;
   w_current->continue_component_place = default_continue_component_place;
-  w_current->component_select_attrlist = default_component_select_attrlist;
   w_current->undo_levels = default_undo_levels;
   w_current->undo_control = default_undo_control;
   w_current->undo_type = default_undo_type;
@@ -203,7 +168,6 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
   w_current->draw_grips = default_draw_grips;
   w_current->netconn_rubberband = default_netconn_rubberband;
   w_current->magneticnet_mode = default_magnetic_net_mode;
-  w_current->sort_component_library = default_sort_component_library;
   w_current->warp_cursor = default_warp_cursor;
   w_current->toolbars = default_toolbars;
   w_current->handleboxes = default_handleboxes;
@@ -239,5 +203,44 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
  */
 void i_vars_freenames()
 {
-  g_free(default_print_paper);
+}
+
+
+/*! \brief Setup gschem default configuration.
+ * \par Function Description
+ * Populate the default configuration context with compiled-in
+ * defaults.
+ */
+void
+i_vars_init_gschem_defaults()
+{
+  EdaConfig *cfg = eda_config_get_default_context ();
+
+  /* This is the prefix of the default filename used for newly created
+   * schematics and symbols. */
+  /// TRANSLATORS: this string is used to generate a filename for
+  /// newly-created files.  It will be used to create a filename of
+  /// the form "untitled_N.sch", where N is a number.  Please make
+  /// sure that the translation contains characters suitable for use
+  /// in a filename.
+  eda_config_set_string (cfg, "gschem", "default-filename", _("untitled"));
+}
+
+/*! \brief Save user config on exit.
+ * \par Function Description
+ * When gschem exits, try to save the user configuration to disk.
+ */
+void
+i_vars_atexit_save_user_config (gpointer user_data)
+{
+  EdaConfig *cfg = eda_config_get_user_context ();
+  GError *err = NULL;
+
+  eda_config_save (cfg, &err);
+  if (err != NULL) {
+    g_warning ("Failed to save user configuration to '%s': %s.",
+               eda_config_get_filename (cfg),
+               err->message);
+    g_clear_error (&err);
+  }
 }

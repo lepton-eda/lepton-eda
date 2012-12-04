@@ -154,10 +154,6 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
 
   w_current->zoom_with_pan = 0;
   w_current->actionfeedback_mode = OUTLINE;
-  w_current->text_feedback = 0;
-  w_current->text_display_zoomfactor = 0;
-  w_current->net_endpoint_mode = NONE;
-  w_current->net_midpoint_mode = NONE;
   w_current->net_direction_mode = TRUE;
   w_current->net_selection_mode = 0;
   w_current->net_selection_state = 0;
@@ -170,18 +166,15 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->middle_button = 0;
   w_current->file_preview = 0;
   w_current->enforce_hierarchy = 0;
-  w_current->text_origin_marker = 0;
   w_current->fast_mousepan = 0;
   w_current->raise_dialog_boxes = 0;
   w_current->continue_component_place = 0;
-  w_current->component_select_attrlist = NULL;
   w_current->undo_levels = 0;
   w_current->undo_control = 0;
   w_current->undo_type = 0;
   w_current->undo_panzoom = 0;
   w_current->draw_grips = 0;
   w_current->netconn_rubberband = 0;
-  w_current->sort_component_library = 0;
   w_current->warp_cursor = 0;
   w_current->toolbars = 0;
   w_current->handleboxes = 0;
@@ -201,8 +194,6 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->scrollpan_steps = 8;
   w_current->snap = SNAP_GRID;
   w_current->snap_size = 100;
-
-  w_current->print_paper = NULL;
 
   w_current->smob = SCM_UNDEFINED;
 

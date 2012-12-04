@@ -107,39 +107,6 @@ SCM g_rc_gschem_version(SCM scm_version)
   return ret;
 }
 
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_net_endpoint_mode(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {FILLEDBOX, "filledbox"}
-  };
-
-  RETURN_G_RC_MODE("net-endpoint-mode",
-		   default_net_endpoint_mode,
-		   1);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_net_midpoint_mode(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {FILLED, "filled"}
-  };
-
-  RETURN_G_RC_MODE("net-midpoint-mode",
-		   default_net_midpoint_mode,
-		   1);
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -173,74 +140,6 @@ SCM g_rc_net_selection_mode(SCM mode)
   RETURN_G_RC_MODE("net-selection-mode",
 		   default_net_selection_mode,
 		   3);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_net_style(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {THIN , "thin" },
-    {THICK, "thick"}
-  };
-
-  RETURN_G_RC_MODE("net-style",
-		   default_net_style,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_bus_style(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {THIN , "thin" },
-    {THICK, "thick"}
-  };
-
-  RETURN_G_RC_MODE("bus-style",
-		   default_bus_style,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_pin_style(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {THIN , "thin" },
-    {THICK, "thick"}
-  };
-
-  RETURN_G_RC_MODE("pin-style",
-		   default_pin_style,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_line_style(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {THIN , "thin" },
-    {THICK, "thick"}
-  };
-
-  RETURN_G_RC_MODE("line-style",
-		   default_line_style,
-		   2);
 }
 
 /*! \todo Finish function documentation!!!
@@ -282,81 +181,6 @@ SCM g_rc_zoom_with_pan(SCM mode)
  *  \par Function Description
  *
  */
-SCM g_rc_text_feedback(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {ALWAYS            , "always"            },
-    {ONLY_WHEN_READABLE, "only-when-readable"}
-  };
-
-  RETURN_G_RC_MODE("text-feedback",
-		   default_text_feedback,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_text_display_zoomfactor(SCM zoomfactor)
-{
-  int val;
-  
-  SCM_ASSERT (scm_is_integer (zoomfactor), zoomfactor,
-              SCM_ARG1, "test-display-zoom-factor");
-
-  val = scm_to_int (zoomfactor);
-  if (val == 0) {
-    fprintf(stderr,
-            _("Invalid zoomfactor [%d] passed to %s\n"),
-            val,
-            "text-display-zoom-factor");
-    val = 10; /* absolute default */
-  }
-
-  default_text_display_zoomfactor = val;
-
-  return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_scrollbar_update(SCM scmmode)
-{
-  SCM ret = SCM_BOOL_T;
-
-  SCM_ASSERT (scm_is_string (scmmode), scmmode,
-              SCM_ARG1, "scrollbar-update");
-  
-  return ret;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_object_clipping(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"}
-  };
-
-  RETURN_G_RC_MODE("object-clipping",
-		   default_object_clipping,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_logging(SCM mode)
 {
   static const vstbl_entry mode_table[] = {
@@ -385,61 +209,6 @@ SCM g_rc_embed_components(SCM mode)
 		   default_embed_complex,
 		   2);
 }
-
-static void
-free_string_glist(void *data)
-{
-  GList *iter, *glst = *((GList **) data);
-
-  for (iter = glst; iter != NULL; iter = g_list_next (iter)) {
-    g_free (iter->data);
-  }
-  g_list_free (glst);
-}
-
-/*! \brief read the configuration string list for the component dialog
- *  \par Function Description
- *  This function reads the string list from the component-dialog-attributes
- *  configuration parameter and converts the list into a GList.
- *  The GList is stored in the global default_component_select_attrlist variable.
- */
-SCM g_rc_component_dialog_attributes(SCM stringlist)
-{
-  int length, i;
-  GList *list=NULL;
-  gchar *attr;
-
-  SCM_ASSERT(scm_list_p(stringlist), stringlist, SCM_ARG1, "scm_is_list failed");
-  length = scm_ilength(stringlist);
-
-  /* If the command is called multiple times, remove the old list before
-     recreating it */
-  g_list_foreach(default_component_select_attrlist, (GFunc)g_free, NULL);
-  g_list_free(default_component_select_attrlist);
-
-  scm_dynwind_begin(0);
-  scm_dynwind_unwind_handler(free_string_glist, (void *) &list, 0);
-
-  /* convert the scm list into a GList */
-  for (i=0; i < length; i++) {
-    char *str;
-    SCM elem = scm_list_ref(stringlist, scm_from_int(i));
-
-    SCM_ASSERT(scm_is_string(elem), elem, SCM_ARG1, "list element is not a string");
-
-    str = scm_to_utf8_string(elem);
-    attr = g_strdup(str);
-    free(str);
-    list = g_list_prepend(list, attr);
-  }
-
-  scm_dynwind_end();
-
-  default_component_select_attrlist = g_list_reverse(list);
-
-  return SCM_BOOL_T;
-}
-
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -575,45 +344,6 @@ SCM g_rc_scrollbars(SCM mode)
  *  \par Function Description
  *
  */
-SCM
-g_rc_print_paper (SCM name_s)
-#define FUNC_NAME "print-paper"
-{
-  char *paper;
-  SCM_ASSERT (scm_is_string (name_s), name_s, SCM_ARG1, FUNC_NAME);
-
-  paper = scm_to_utf8_string (name_s);
-  g_free (default_print_paper);
-  default_print_paper = g_strdup (paper);
-  free (paper);
-
-  return SCM_BOOL_T;
-}
-#undef FUNC_NAME
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_print_orientation(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {PORTRAIT , "portrait" },
-    {LANDSCAPE, "landscape"},
-    {AUTOLAYOUT, "auto"    },
-  };
-  
-  RETURN_G_RC_MODE("print-orientation",
-		   default_print_orientation,
-		   3);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_image_color(SCM mode)
 {
   static const vstbl_entry mode_table[] = {
@@ -641,24 +371,6 @@ SCM g_rc_image_size(SCM width, SCM height)
   default_image_height = scm_to_int (height);
 
   return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_print_color(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  /* this variable is inconsistantly named with the rest */
-  RETURN_G_RC_MODE("print-color",
-		   default_print_color,
-		   2);
 }
 
 /*! \todo Finish function documentation!!!
@@ -797,23 +509,6 @@ SCM g_rc_enforce_hierarchy(SCM mode)
 
   RETURN_G_RC_MODE("enforce-hierarchy",
 		   default_enforce_hierarchy,
-		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_text_origin_marker(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("text-origin-marker",
-		   default_text_origin_marker,
 		   2);
 }
 
@@ -989,23 +684,6 @@ SCM g_rc_magnetic_net_mode(SCM mode)
   RETURN_G_RC_MODE("magnetic-net-mode",
 		   default_magnetic_net_mode,
 		   2);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_sort_component_library(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  RETURN_G_RC_MODE("sort_component_library",
-                   default_sort_component_library, 
-                   2);
 }
 
 /*! \todo Finish function documentation!!!

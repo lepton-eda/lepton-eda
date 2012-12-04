@@ -620,7 +620,6 @@ GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
   new_w_current.pl = pango_cairo_create_layout (new_w_current.cr);
 
   new_w_current.grid = 0;
-  new_w_current.text_origin_marker = FALSE;
 
   new_w_current.win_width = new_w_current.image_width;
   new_w_current.win_height = new_w_current.image_height;

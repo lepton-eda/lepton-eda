@@ -54,17 +54,6 @@
 #define UPPER 1
 #define BOTH  2
 
-/* These modes are for net_endpoint_mode */
-#define NONE		0
-#define FILLEDBOX	1
-#define EMPTYBOX	2
-#define X		3
-
-/* These modes are for net_midpoint_mode */
-/* NONE also applies here */
-#define FILLED	3
-#define EMPTY 	4
-
 /* These modes are for actionfeedback_mode */
 /* there's a hack in i_keypress.c dealing with the 0 and 1 (has to be these */
 /* values */
@@ -75,10 +64,6 @@
  * last bounding box drawn. last_drawb_mode also takes actionfeedback_mode
  * constants, so be sure not to clash with those */
 #define LAST_DRAWB_MODE_NONE -1
-
-/* there are modes for text-feedback */
-#define ONLY_WHEN_READABLE	0
-#define ALWAYS			1
 
 /* used in o_undo_callback */
 #define UNDO_ACTION		0

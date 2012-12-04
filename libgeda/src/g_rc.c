@@ -805,29 +805,6 @@ SCM g_rc_world_size(SCM width, SCM height, SCM border)
 }
 #undef FUNC_NAME
 
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- *
- *  \param [in] name  
- *  \return SCM_BOOL_T always.
- */
-SCM g_rc_untitled_name(SCM name)
-{
-  char *temp;
-  SCM_ASSERT (scm_is_string (name), name,
-              SCM_ARG1, "untitled-name");
-
-  g_free(default_untitled_name);
-
-  temp = scm_to_utf8_string (name);
-  default_untitled_name = g_strdup (temp);
-  free (temp);
-
-  return SCM_BOOL_T;
-}
-
-
 /*! \brief Add a directory to the Guile load path.
  * \par Function Description
  * Prepends \a s_path to the Guile system '%load-path', after

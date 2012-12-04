@@ -608,11 +608,6 @@ int visible (GSCHEM_TOPLEVEL *w_current,
 {
   int visible=FALSE;
 
-  /* don't do object clipping if this is false */
-  if (!w_current->toplevel->object_clipping) {
-    return(TRUE);
-  }
-
   visible = clip_nochange (w_current, wleft, wtop, wright, wtop);
 
 #if DEBUG

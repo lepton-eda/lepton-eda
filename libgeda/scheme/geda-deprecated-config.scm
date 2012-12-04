@@ -96,4 +96,63 @@ release.  Please use configuration files instead.
 ;; Identity value transformer for define-rc-deprecated-config
 (define (rc-deprecated-string-transformer str) str)
 
+;; Transformer for "enabled"/"disabled" to boolean
+(define (rc-deprecated-string-boolean-transformer str)
+  (string=? "enabled" str))
+
+;; ===================================================================
+;; Deprecated libgeda configuration functions
+;; ===================================================================
+
 (define-rc-dead-config postscript-prolog)
+
+;; ===================================================================
+;; Deprecated gschem configuration functions
+;; ===================================================================
+
+(define-rc-dead-config output-capstyle)
+(define-rc-dead-config output-color)
+(define-rc-dead-config output-orientation)
+(define-rc-dead-config output-type)
+(define-rc-dead-config paper-size)
+(define-rc-dead-config paper-sizes)
+(define-rc-dead-config print-command)
+(define-rc-dead-config setpagedevice-orientation)
+(define-rc-dead-config setpagedevice-pagesize)
+
+(define-rc-deprecated-config
+ print-paper "gschem.printing" "paper"
+ rc-deprecated-string-transformer)
+
+(define-rc-deprecated-config
+ print-orientation "gschem.printing" "layout"
+ rc-deprecated-string-transformer)
+
+(define-rc-deprecated-config
+ print-color "gschem.printing" "monochrome"
+ (lambda (x) (not (rc-deprecated-string-boolean-transformer x))))
+
+(define-rc-dead-config net-style)
+(define-rc-dead-config bus-style)
+(define-rc-dead-config pin-style)
+(define-rc-dead-config line-style)
+(define-rc-dead-config net-endpoint-mode)
+(define-rc-dead-config net-midpoint-mode)
+(define-rc-dead-config object-clipping)
+(define-rc-dead-config text-origin-marker)
+(define-rc-dead-config text-display-zoomfactor)
+(define-rc-dead-config text-feedback)
+
+(define-rc-deprecated-config
+ untitled-name "gschem" "default-filename"
+ rc-deprecated-string-transformer)
+
+(define-rc-dead-config scrollbar-update)
+
+(define-rc-deprecated-config
+ sort-component-library "gschem.library" "sort"
+ rc-deprecated-string-boolean-transformer)
+
+(define-rc-deprecated-config
+ component-dialog-attributes "gschem.library" "component-attributes"
+ (lambda (x) x))

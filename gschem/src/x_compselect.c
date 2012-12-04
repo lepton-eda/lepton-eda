@@ -487,9 +487,13 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
   GtkListStore *model;
   GtkTreeIter iter;
   GtkTreeViewColumn *column;
-  GList *listiter, *o_iter, *o_attrlist, *filter_list;
+  GList *o_iter, *o_attrlist;
   gchar *name, *value;
   OBJECT *o_current;
+  EdaConfig *cfg;
+  gchar **filter_list;
+  gint i;
+  gsize n;
 
   model = (GtkListStore*) gtk_tree_view_get_model (compselect->attrtreeview);
   gtk_list_store_clear (model);
@@ -515,10 +519,11 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
   o_attrlist = o_attrib_find_floating_attribs (
                               s_page_objects (preview_toplevel->page_current));
 
-  filter_list = GSCHEM_DIALOG (compselect)->w_current->component_select_attrlist;
+  cfg = eda_config_get_context_for_path (preview_toplevel->page_current->page_filename);
+  filter_list = eda_config_get_string_list (cfg, "gschem.library",
+                                            "component-attributes", &n, NULL);
 
-  if (filter_list != NULL
-      && strcmp (filter_list->data, "*") == 0) {
+  if (filter_list == NULL || (n > 0 && strcmp (filter_list[0], "*") == 0)) {
     /* display all attributes in alphabetical order */
     o_attrlist = g_list_sort (o_attrlist, (GCompareFunc) sort_object_text);
     for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next (o_iter)) {
@@ -531,13 +536,11 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
     }
   } else {
     /* display only attribute that are in the filter list */
-    for (listiter = filter_list;
-         listiter != NULL;
-         listiter = g_list_next (listiter)) {
+    for (i = 0; i < n; i++) {
       for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next (o_iter)) {
         o_current = o_iter->data;
         if (o_attrib_get_name_value (o_current, &name, &value)) {
-          if (strcmp (name, listiter->data) == 0) {
+          if (strcmp (name, filter_list[i]) == 0) {
             gtk_list_store_append (model, &iter);
             gtk_list_store_set (model, &iter, 0, name, 1, value, -1);
           }
@@ -547,6 +550,12 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
       }
     }
   }
+
+  /* Hide the attributes list if the list of attributes to show is
+   * empty. */
+  gtk_widget_set_visible (compselect->attrframe, n != 0);
+
+  g_strfreev (filter_list);
   g_list_free (o_attrlist);
 }
 
@@ -597,9 +606,8 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
                 NULL);
 
   /* update the attributes with the toplevel of the preview widget*/
-  if (compselect->attrtreeview != NULL)
-    update_attributes_model (compselect,
-                             compselect->preview->preview_w_current->toplevel);
+  update_attributes_model (compselect,
+                           compselect->preview->preview_w_current->toplevel);
 
   /* signal a component has been selected to parent of dialog */
   g_signal_emit_by_name (compselect,
@@ -778,11 +786,14 @@ create_lib_tree_model (Compselect *compselect)
   GtkTreeStore *store;
   GList *srchead, *srclist;
   GList *symhead, *symlist;
+  PAGE *page = GSCHEM_DIALOG(compselect)->w_current->toplevel->page_current;
+  EdaConfig *cfg = eda_config_get_context_for_path (page->page_filename);
+  gboolean sort = eda_config_get_boolean (cfg, "gschem.library", "sort", NULL);
 
   store = (GtkTreeStore*)gtk_tree_store_new (1, G_TYPE_POINTER);
 
   /* populate component store */
-  srchead = s_clib_get_sources (GSCHEM_DIALOG (compselect)->w_current->sort_component_library != 0);
+  srchead = s_clib_get_sources (sort);
   for (srclist = srchead;
        srclist != NULL;
        srclist = g_list_next (srclist)) {
@@ -1265,22 +1276,22 @@ compselect_get_type ()
  *  \param [in] group_name The group name in the key file to store the data under.
  */
 static void
-compselect_geometry_save (GschemDialog *dialog, GKeyFile *key_file, gchar *group_name)
+compselect_geometry_save (GschemDialog *dialog, EdaConfig *cfg, gchar *group_name)
 {
   int position;
 
   /* Call the parent's geometry_save method */
   GSCHEM_DIALOG_CLASS (compselect_parent_class)->
-    geometry_save (dialog, key_file, group_name);
+    geometry_save (dialog, cfg, group_name);
 
   position = gtk_paned_get_position (GTK_PANED (COMPSELECT (dialog)->hpaned));
-  g_key_file_set_integer (key_file, group_name, "hpaned", position);
+  eda_config_set_int (cfg, group_name, "hpaned", position);
 
   position = gtk_paned_get_position (GTK_PANED (COMPSELECT (dialog)->vpaned));
-  g_key_file_set_integer (key_file, group_name, "vpaned", position);
+  eda_config_set_int (cfg, group_name, "vpaned", position);
 
   position = gtk_notebook_get_current_page (COMPSELECT (dialog)->viewtabs);
-  g_key_file_set_integer (key_file, group_name, "source-tab", position);
+  eda_config_set_int (cfg, group_name, "source-tab", position);
 }
 
 
@@ -1295,23 +1306,23 @@ compselect_geometry_save (GschemDialog *dialog, GKeyFile *key_file, gchar *group
  *  \param [in] group_name The group name in the key file to store the data under.
  */
 static void
-compselect_geometry_restore (GschemDialog *dialog, GKeyFile *key_file, gchar *group_name)
+compselect_geometry_restore (GschemDialog *dialog, EdaConfig *cfg, gchar *group_name)
 {
   int position;
 
   /* Call the parent's geometry_restore method */
   GSCHEM_DIALOG_CLASS (compselect_parent_class)->
-    geometry_restore (dialog, key_file, group_name);
+    geometry_restore (dialog, cfg, group_name);
 
-  position = g_key_file_get_integer (key_file, group_name, "hpaned", NULL);
+  position = eda_config_get_int (cfg, group_name, "hpaned", NULL);
   if (position != 0)
     gtk_paned_set_position (GTK_PANED (COMPSELECT (dialog)->hpaned), position);
 
-  position = g_key_file_get_integer (key_file, group_name, "vpaned", NULL);
+  position = eda_config_get_int (cfg, group_name, "vpaned", NULL);
   if (position != 0)
     gtk_paned_set_position (GTK_PANED (COMPSELECT (dialog)->vpaned), position);
 
-  position = g_key_file_get_integer (key_file, group_name, "source-tab", NULL);
+  position = eda_config_get_int (cfg, group_name, "source-tab", NULL);
   gtk_notebook_set_current_page (COMPSELECT (dialog)->viewtabs, position);
 }
 
@@ -1434,19 +1445,13 @@ compselect_constructor (GType type,
 
   gtk_paned_pack1 (GTK_PANED (vpaned), frame, FALSE, FALSE);
 
-  /* only create the attribute treeview if there are elements in the
-     component_select_attrlist */
-  if (GSCHEM_DIALOG (compselect)->w_current->component_select_attrlist == NULL) {
-    compselect->attrtreeview = NULL;
-  } else {
-    frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
-                                      /* GtkFrame */
-                                      "label", _("Attributes"),
-                                      NULL));
-    attributes = create_attributes_treeview (compselect);
-    gtk_paned_pack2 (GTK_PANED (vpaned), frame, FALSE, FALSE);
-    gtk_container_add (GTK_CONTAINER (frame), attributes);
-  }
+  compselect->attrframe = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
+                                                    /* GtkFrame */
+                                                    "label", _("Attributes"),
+                                                    NULL));
+  attributes = create_attributes_treeview (compselect);
+  gtk_paned_pack2 (GTK_PANED (vpaned), compselect->attrframe, FALSE, FALSE);
+  gtk_container_add (GTK_CONTAINER (compselect->attrframe), attributes);
 
   gtk_paned_pack2 (GTK_PANED (hpaned), vpaned, FALSE, FALSE);
 

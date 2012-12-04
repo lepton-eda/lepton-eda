@@ -4,7 +4,6 @@
 ;
 
 (use-modules (gschem deprecated))
-(load-from-path "gschem-deprecated-config.scm")
 
 ;  ;'s are comments
 ;  keywords are case sensitive (guile feature)
@@ -113,16 +112,6 @@
 (draw-grips "enabled")
 ;(draw-grips "disabled")
 
-; net-endpoint-mode string
-;
-; Not user changable.
-(net-endpoint-mode "filledbox")
-
-;  net-midpoint-mode string
-;
-; Not user changable.
-(net-midpoint-mode "filled")
-
 ;  net-direction-mode string
 ;
 ;  Controlls if the net direction mode is used. This mode tries to guess
@@ -153,15 +142,6 @@
 (net-consolidate "enabled")
 ;(net-consolidate "disabled")
 
-;  net-style string
-;
-;  Set to thin if you want thin nets.
-;  Set to thick if you want thick nets.
-;  This mode also determines what net style gets printed
-;
-;(net-style "thin")
-(net-style "thick")
-
 ; netconn-rubberband string
 ;
 ; Controls if net connections are maintained when you move a connecting 
@@ -177,33 +157,6 @@
 ; cursor position
 (magnetic-net-mode "enabled")
 ;(magnetic-net-mode "disabled")
-
-;  bus-style string
-;
-;  Set to thin if you want thin buses.
-;  Set to thick if you want thick buses.
-;  This mode also determines what bus style gets printed
-;
-;(bus-style "thin")
-(bus-style "thick")
-
-; pin-style string
-;
-; Set to thin if you want thin pins
-; Set to thick if you want thick pins.
-; This mode also determines what pin style gets printed
-;
-;(pin-style "thin")
-(pin-style "thick")
-
-; line-style string
-;
-; Set to thin if you want thin lines
-; Set to thick if you want thick lines.
-; This mode also determines what line style gets printed
-;
-;(line-style "thin")
-(line-style "thick")
 
 ; zoom-with-pan string
 ;
@@ -288,41 +241,6 @@
 (continue-component-place "enabled")
 ;(continue-component-place "disabled")
 
-; sort-components-library string
-;
-; If this is enabled, then the component library will be sorted in
-; alphanumeric order.  Bear in mind that this option is totally
-; cosmetic, and will not alter the component search order (latest
-; added gets scanned first).
-;
-(sort-component-library "disabled")
-;(sort-component-library "enabled")
-
-; text-feedback string
-;
-; Controls if text is drawn when doing an xor action (like copy/move)
-; Comment out if you want the default mode.
-; Not in production yet.
-;
-(text-feedback "only-when-readable")
-;(text-feedback "always")
-
-; text-display-zoomfactor number
-;
-; Sets the zoomfactor number (~150 being the most zoomed out factor) 
-; (zoom factors get smaller as you zoom in) at which text is displayed
-; completely (not a line).  This is only valid if above is set to
-; "only-when-readable" 
-;
-(text-display-zoomfactor 30)
-
-; text-origin-marker string
-;
-; Controls if the text origin markers are displayed (or not)
-;
-(text-origin-marker "enabled")
-;(text-origin-marker "disabled")
-
 ; scrollbars string
 ;
 ; Controls if the scrollbars are displayed (enabled) or not (disabled)
@@ -333,16 +251,6 @@
 (scrollbars "enabled")
 ;(scrollbars "disabled")
 
-; scrollbar-update string
-;
-; Specifies the behavior of the scrollbars in the main window.
-;    continuous - display is redrawn as you move the scrollbar
-;    delayed - display is redrawn once you stop moving the scrollbar
-; Default is continuous
-;
-(scrollbar-update "continuous")
-;(scrollbar-update "delayed")
-
 ; raise-dialog-boxes-on-expose string
 ;
 ; Controls if dialog boxes are raised whenever an expose event happens
@@ -351,17 +259,6 @@
 ;
 ;(raise-dialog-boxes-on-expose "enabled")
 (raise-dialog-boxes-on-expose "disabled")
-
-; object-clipping string
-;
-; Determines if the object clipping code is executed or not
-; This code does speed up redraws a bit.
-;   Possible options: enabled or disabled
-; Default is enabled, I do not recommend turning this off, since some X
-; servers don't handle clipping correctly.
-;
-(object-clipping "enabled")
-;(object-clipping "disabled")
 
 ; embed-components string
 ;
@@ -374,22 +271,6 @@
 ;
 ;(embed-components "enabled")
 (embed-components "disabled")
-
-; component-dialog-attributes stringlist
-;
-; Sets a list of attributs that are visible in the component select dialog.
-; The attributes are sorted in the same order as they appear in the list.
-; If the first list element is an asterisk "*", all attributes will be 
-; displayed in alphabetical order.
-; An empty list will disable the attribute view in the dialog.
-;
-;(component-dialog-attributes '("device" "description" "footprint" "comment"
-;			       "net" "model" "model-name" "file" "value"
-;			       "numslots" "slotdef" "slot"
-;			       "documentation" "symversion" "author"
-;			       "use-license=" "dist-license="))
-(component-dialog-attributes '("*"))
-;(component-dialog-attributes '())
 
 ; logging string
 ;
@@ -488,13 +369,6 @@
 (enforce-hierarchy "enabled")
 ;(enforce-hierarchy "disabled")
 
-; untitled-name string
-;
-; Specify the default untitled basename (usually only used a startup time)
-; And typically not changed at runtime
-;
-(untitled-name "untitled")
-
 ; window-size width height 
 ;
 ; Specifies the size of the drawing area window.  The width and height
@@ -520,32 +394,6 @@
 ;
 (world-size 120.0 90.0 1.0)
 ;(world-size 60.0 45.0 1.0)
-
-; print-paper name
-;
-; Specifies the size of the default paper, using PWG 5101.1-2002
-; "Standard for Media Standardized Names".  If not specified, gschem
-; will use the system default paper size.
-;
-;(print-paper "na_letter") ; letter
-;(print-paper "iso_a4") ; A4
-
-; print-orientation string
-;
-; Controls which way the output page is layed out (landscape or portrait).
-; "auto" (default) allows gschem to automatically choose a proper layout.
-;
-;(print-orientation "auto")
-;(print-orientation "portrait")
-;(print-orientation "landscape")
-
-; print-color string
-;
-; Controls whether printing is in color (enabled) or black/white
-; (disabled).  By default, gschem will print in color.
-;
-;(print-color "disabled")
-;(print-color "enabled")
 
 ; image-color string
 ;

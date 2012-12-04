@@ -5,7 +5,6 @@ nobase_dist_scmdata_DATA = \
 	auto-uref.scm \
 	generate_netlist.scm \
 	gschem.scm \
-	gschem-deprecated-config.scm \
 	list-keys.scm \
 	print-NB-attribs.scm \
 	auto-place-attribs.scm \

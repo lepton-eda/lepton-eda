@@ -431,7 +431,6 @@ struct st_toplevel {
 
   GList *RC_list;                       /* List of RC files which have been read in. */
 
-  char *untitled_name;			/* untitled sch basename */
   char *bitmap_directory; 		/* path of the bitmaps */
 
   int init_left, init_right; 		/* Starting values for above */
@@ -460,14 +459,7 @@ struct st_toplevel {
   int override_net_color;
   int override_bus_color;
   int override_pin_color;
-  int pin_style;
-  int net_style;
-  int bus_style;
-  int line_style;
   /* END BLOCK - ALTHOUGH THERE ARE MORE CASES! */
-
-  /* controls whether objects are clipped */
-  int object_clipping; 
 
   /* either TRUE or FALSE (color or no color) */
   int image_color; 

@@ -187,22 +187,25 @@ DEFINE_I_CALLBACK(file_script)
 DEFINE_I_CALLBACK(file_save)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  TOPLEVEL *toplevel;
+  PAGE *page;
+  EdaConfig *cfg;
+  gchar *untitled_name;
 
   g_return_if_fail (w_current != NULL);
 
-  /*! \todo probably there should be a flag that says whether
-   *   page_filename is derived from untitled_name or specified by
-   *   a user. Some twisted people might name their files like
-   *   untitled_name. :-)
-   */
-  if (strstr(w_current->toplevel->page_current->page_filename,
-             w_current->toplevel->untitled_name)) {
+  page = w_current->toplevel->page_current;
+
+  /*! \bug This is a dreadful way of figuring out whether a page is
+   *  newly-created or not. */
+  cfg = eda_config_get_context_for_path (page->page_filename);
+  untitled_name = eda_config_get_string (cfg, "gschem", "default-filename", NULL);
+  if (strstr(page->page_filename, untitled_name)) {
     x_fileselect_save (w_current);
   } else {
-    x_window_save_page (w_current,
-                        w_current->toplevel->page_current,
-                        w_current->toplevel->page_current->page_filename);
+    x_window_save_page (w_current, page, page->page_filename);
   }
+  g_free (untitled_name);
 }
 
 /*! \todo Finish function documentation!!!

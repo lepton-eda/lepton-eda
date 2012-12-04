@@ -143,10 +143,6 @@ struct st_gschem_toplevel {
   int zoom_with_pan;
 
   int actionfeedback_mode;      /* can be either OUTLINE or BOUNDINGBOX */
-  int text_feedback;      /* is text is drawn or not in copy/move/place ops */
-  int text_display_zoomfactor;  /* zoom factor at which text is displayed completely */
-  int net_endpoint_mode;  /* can be either NONE, FILLEDBOX, EMPTYBOX, X */
-  int net_midpoint_mode;  /* can be either NONE or FILLED or EMPTY */
   int net_direction_mode; /* controls if the net direction mode is used */
   int net_selection_mode;  /* controls the behaviour when selecting a net */
   int net_selection_state;  /* current status of the net selecting mode */
@@ -160,14 +156,11 @@ struct st_gschem_toplevel {
   int scroll_wheel;       /* controls what the mouse scroll wheel does */
   int file_preview;       /* controls if the preview area is enabled or not */
   int enforce_hierarchy;  /* controls how much freedom user has when traversing the hierarchy */
-  int text_origin_marker; /* controls if text origin marker is displayed or not */
   int fast_mousepan;      /* controls if text is completely drawn during mouse pan */
   int raise_dialog_boxes; /*controls if expose events raise dialog boxes*/
 
   /* controls if after doing a place the same component can be placed again */
   int continue_component_place;
-  GList *component_select_attrlist; /* holds a list of attribute names that are displayed in the 
-				       component select dialog */
 
   int undo_levels;        /* number of undo levels stored on disk */
   int undo_control;       /* sets if undo is enabled or not */
@@ -178,7 +171,6 @@ struct st_gschem_toplevel {
   /* sets whether nets rubberband as you move them (or connecting comps) */
   int netconn_rubberband;
 
-  int sort_component_library; /* sort the component library */
   int warp_cursor;        /* warp the cursor when zooming */
   int toolbars;           /* sets if the toolbar(s) are enabled or disabled */
   int handleboxes;        /* sets if the handleboxes are enabled or disabled */
@@ -208,10 +200,6 @@ struct st_gschem_toplevel {
   int select_slack_pixels; /* Number of pixels around an object we can still select it with */
   int zoom_gain;          /* Percentage increase in size for a zoom-in operation */
   int scrollpan_steps;    /* Number of scroll pan events required to traverse the viewed area */
-
-  gchar *print_paper;    /* Name of the default paper size */
-  int print_orientation; /* Default paper orientation */
-  int print_color;       /* TRUE if color printing enabled */
 
   SCM smob;               /* The Scheme representation of this window */
 };

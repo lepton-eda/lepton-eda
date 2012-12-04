@@ -199,9 +199,5 @@ int o_line_visible (GSCHEM_TOPLEVEL *w_current, LINE *line,
   *x1 = line->x[0];  *y1 = line->y[0];
   *x2 = line->x[1];  *y2 = line->y[1];
 
-  /* Do we want to skip clipping? */
-  if (!w_current->toplevel->object_clipping)
-    return TRUE;
-
   return WORLDclip_change (w_current, x1, y1, x2, y2);
 }

@@ -1655,17 +1655,17 @@ static void multiattrib_edit_moused_cell(Multiattrib *multiattrib,
  *  \param [in] group_name The group name in the key file to store the data under.
  */
 static void
-multiattrib_geometry_save (GschemDialog *dialog, GKeyFile *key_file, gchar *group_name)
+multiattrib_geometry_save (GschemDialog *dialog, EdaConfig *cfg, gchar *group_name)
 {
   gboolean show_inherited;
 
   /* Call the parent's geometry_save method */
   GSCHEM_DIALOG_CLASS (multiattrib_parent_class)->
-    geometry_save (dialog, key_file, group_name);
+    geometry_save (dialog, cfg, group_name);
 
   show_inherited =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (MULTIATTRIB (dialog)->show_inherited));
-  g_key_file_set_boolean (key_file, group_name, "show_inherited", show_inherited);
+  eda_config_set_boolean (cfg, group_name, "show_inherited", show_inherited);
 }
 
 
@@ -1680,16 +1680,16 @@ multiattrib_geometry_save (GschemDialog *dialog, GKeyFile *key_file, gchar *grou
  *  \param [in] group_name The group name in the key file to store the data under.
  */
 static void
-multiattrib_geometry_restore (GschemDialog *dialog, GKeyFile *key_file, gchar *group_name)
+multiattrib_geometry_restore (GschemDialog *dialog, EdaConfig *cfg, gchar *group_name)
 {
   gboolean show_inherited;
   GError *error = NULL;
 
   /* Call the parent's geometry_restore method */
   GSCHEM_DIALOG_CLASS (multiattrib_parent_class)->
-    geometry_restore (dialog, key_file, group_name);
+    geometry_restore (dialog, cfg, group_name);
 
-  show_inherited = g_key_file_get_boolean (key_file, group_name, "show_inherited", &error);
+  show_inherited = eda_config_get_boolean (cfg, group_name, "show_inherited", &error);
   if (error != NULL) {
     show_inherited = TRUE;
     g_error_free (error);
