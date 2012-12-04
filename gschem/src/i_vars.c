@@ -48,10 +48,6 @@ int   default_net_endpoint_mode = FILLEDBOX;
 int   default_net_midpoint_mode = FILLED;
 int   default_net_direction_mode = TRUE;
 int   default_net_selection_mode = 0;
-int   default_pin_style = THICK;
-int   default_net_style = THICK;
-int   default_bus_style = THICK;
-int   default_line_style = THICK;
 int   default_background_color = BACKGROUND_COLOR;
 int   default_actionfeedback_mode = OUTLINE;
 int   default_zoom_with_pan = TRUE;
@@ -143,7 +139,6 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
 
   toplevel->background_color = default_background_color;
 
-  toplevel->net_style          = default_net_style;
   w_current->net_endpoint_mode  = default_net_endpoint_mode;
   w_current->net_midpoint_mode  = default_net_midpoint_mode;
   w_current->net_direction_mode = default_net_direction_mode;
@@ -151,13 +146,9 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
 
   toplevel->override_net_color = default_override_net_color;
 
-  toplevel->bus_style          = default_bus_style;
   toplevel->override_bus_color = default_override_bus_color;
 
-  toplevel->pin_style          = default_pin_style;
   toplevel->override_pin_color = default_override_pin_color;
-
-  toplevel->line_style         = default_line_style;
 
   w_current->zoom_with_pan           = default_zoom_with_pan;
   w_current->actionfeedback_mode     = default_actionfeedback_mode;

@@ -460,10 +460,6 @@ struct st_toplevel {
   int override_net_color;
   int override_bus_color;
   int override_pin_color;
-  int pin_style;
-  int net_style;
-  int bus_style;
-  int line_style;
   /* END BLOCK - ALTHOUGH THERE ARE MORE CASES! */
 
   /* controls whether objects are clipped */

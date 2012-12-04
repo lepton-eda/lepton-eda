@@ -131,3 +131,8 @@ release.  Please use configuration files instead.
 (define-rc-deprecated-config
  print-color "gschem.printing" "monochrome"
  (lambda (x) (not (rc-deprecated-string-boolean-transformer x))))
+
+(define-rc-dead-config net-style)
+(define-rc-dead-config bus-style)
+(define-rc-dead-config pin-style)
+(define-rc-dead-config line-style)

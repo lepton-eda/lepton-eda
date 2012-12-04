@@ -76,10 +76,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->override_net_color = -1;
   toplevel->override_bus_color = -1;
   toplevel->override_pin_color = -1;
-  toplevel->pin_style = 0;
-  toplevel->net_style = 0;
-  toplevel->bus_style = 0;
-  toplevel->line_style = 0;
   /* END BLOCK - ALTHOUGH THERE ARE MORE CASES! */
 
   toplevel->object_clipping = 0;

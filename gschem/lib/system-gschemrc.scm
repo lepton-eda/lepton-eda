@@ -152,15 +152,6 @@
 (net-consolidate "enabled")
 ;(net-consolidate "disabled")
 
-;  net-style string
-;
-;  Set to thin if you want thin nets.
-;  Set to thick if you want thick nets.
-;  This mode also determines what net style gets printed
-;
-;(net-style "thin")
-(net-style "thick")
-
 ; netconn-rubberband string
 ;
 ; Controls if net connections are maintained when you move a connecting 
@@ -176,33 +167,6 @@
 ; cursor position
 (magnetic-net-mode "enabled")
 ;(magnetic-net-mode "disabled")
-
-;  bus-style string
-;
-;  Set to thin if you want thin buses.
-;  Set to thick if you want thick buses.
-;  This mode also determines what bus style gets printed
-;
-;(bus-style "thin")
-(bus-style "thick")
-
-; pin-style string
-;
-; Set to thin if you want thin pins
-; Set to thick if you want thick pins.
-; This mode also determines what pin style gets printed
-;
-;(pin-style "thin")
-(pin-style "thick")
-
-; line-style string
-;
-; Set to thin if you want thin lines
-; Set to thick if you want thick lines.
-; This mode also determines what line style gets printed
-;
-;(line-style "thin")
-(line-style "thick")
 
 ; zoom-with-pan string
 ;
