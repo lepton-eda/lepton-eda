@@ -231,6 +231,7 @@ AC_CONFIG_FILES([Makefile
                  gsymcheck/Makefile
 
                  gnetlist/Makefile
+                 gnetlist/po/Makefile.in
                  gnetlist/src/Makefile
                  gnetlist/include/Makefile
                  gnetlist/scheme/Makefile

@@ -42,6 +42,7 @@
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -93,7 +94,7 @@ gnetlist_backends (TOPLEVEL *pr_current)
     /* Open directory */
     dptr = opendir (dir_name);
     if (dptr == NULL) {
-      g_warning ("Can't open directory %s: %s\n",
+      g_warning (_("Can't open directory %s: %s\n"),
                  dir_name, strerror (errno));
       continue;
     }
@@ -125,7 +126,7 @@ gnetlist_backends (TOPLEVEL *pr_current)
   /* Sort the list of backends */
   backend_names = g_list_sort (backend_names, (GCompareFunc) strcmp);
 
-  printf ("List of available backends: \n\n");
+  printf (_("List of available backends: \n\n"));
 
   for (iter = backend_names; iter != NULL; iter = g_list_next (iter)) {
     printf ("%s\n", (char *) iter->data);
@@ -171,17 +172,17 @@ void main_prog(void *closure, int argc, char *argv[])
     /* even if logging is enabled */
     s_log_init ("gnetlist");
 
-    s_log_message("gEDA/gnetlist version %s%s.%s\n", PREPEND_VERSION_STRING,
+    s_log_message(_("gEDA/gnetlist version %s%s.%s\n"), PREPEND_VERSION_STRING,
                   PACKAGE_DOTTED_VERSION, PACKAGE_DATE_VERSION);
     s_log_message
-        ("gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n");
+        (_("gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n"));
     s_log_message
-        ("This is free software, and you are welcome to redistribute it under certain\n");
+        (_("This is free software, and you are welcome to redistribute it under certain\n"));
     s_log_message
-        ("conditions; please see the COPYING file for more details.\n\n");
+        (_("conditions; please see the COPYING file for more details.\n\n"));
 
 #if defined(__MINGW32__) && defined(DEBUG)
-    fprintf(stderr, "This is the MINGW32 port.\n\n");
+    fprintf(stderr, _("This is the MINGW32 port.\n\n"));
 #endif
 
     /* register guile (scheme) functions */
@@ -222,15 +223,15 @@ void main_prog(void *closure, int argc, char *argv[])
       }
 
       if (!quiet_mode) {
-        s_log_message ("Loading schematic [%s]\n", filename);
-        printf ("Loading schematic [%s]\n", filename);
+        s_log_message (_("Loading schematic [%s]\n"), filename);
+        printf (_("Loading schematic [%s]\n"), filename);
       }
 
       s_page_goto (pr_current, s_page_new (pr_current, filename));
 
       if (!f_open (pr_current, pr_current->page_current, filename, &err)) {
         g_warning ("%s\n", err->message);
-        fprintf (stderr, "ERROR: Failed to load '%s': %s\n",
+        fprintf (stderr, _("ERROR: Failed to load '%s': %s\n"),
                  filename, err->message);
         g_error_free (err);
 	exit(2);
@@ -254,8 +255,8 @@ void main_prog(void *closure, int argc, char *argv[])
     /* free(cwd); - Defered; see below */
 
     if (argv[argv_index] == NULL) {
-        fprintf (stderr, "ERROR: No schematics files specified for processing.\n");
-        fprintf (stderr, "\nRun `%s --help' for more information.\n", argv[0]);
+        fprintf (stderr, _("ERROR: No schematics files specified for processing.\n"));
+        fprintf (stderr, _("\nRun `%s --help' for more information.\n"), argv[0]);
         exit (1);
     }
 
@@ -276,10 +277,10 @@ void main_prog(void *closure, int argc, char *argv[])
 
       /* If it couldn't be found, fail. */
       if (scm_is_false (s_backend_path)) {
-        fprintf (stderr, "ERROR: Could not find backend `%s' in load path.\n",
+        fprintf (stderr, _("ERROR: Could not find backend `%s' in load path.\n"),
                  guile_proc);
         fprintf (stderr,
-                 "\nRun `%s --list-backends' for a full list of available backends.\n",
+                 _("\nRun `%s --list-backends' for a full list of available backends.\n"),
                  argv[0]);
         exit (1);
       }
@@ -316,7 +317,7 @@ void main_prog(void *closure, int argc, char *argv[])
         /* gh_eval_str_with_stack_saving_handler (input_str); */
     } else {
         fprintf(stderr,
-                "You gave neither backend to execute nor interactive mode!\n");
+                _("You gave neither backend to execute nor interactive mode!\n"));
     }
 
     gnetlist_quit();
