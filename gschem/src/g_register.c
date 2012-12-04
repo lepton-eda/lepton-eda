@@ -80,10 +80,6 @@ static struct gsubr_t gschem_funcs[] = {
 
   { "attribute-name",            1, 0, 0, g_rc_attribute_name },
 
-  { "print-paper",                1, 0, 0, g_rc_print_paper },
-  { "print-orientation",          1, 0, 0, g_rc_print_orientation },
-  { "print-color",                1, 0, 0, g_rc_print_color },
-
   { "image-color",               1, 0, 0, g_rc_image_color },
   { "image-size",                2, 0, 0, g_rc_image_size },
   { "log-window",                1, 0, 0, g_rc_log_window },

@@ -34,7 +34,6 @@
 }
 
 /* Absolute default used when default_... strings are NULL */
-#define DEFAULT_PRINT_PAPER NULL /* i.e. use system default */
 
 int   default_text_size = 10;
 int   default_text_caps = LOWER;
@@ -64,9 +63,6 @@ int   default_include_complex = FALSE;
 int   default_snap_size = 100;
 
 int   default_scrollbars_flag = TRUE;
-gchar *default_print_paper = NULL;
-int   default_print_orientation = AUTOLAYOUT;
-int   default_print_color = TRUE;
 int   default_image_color = FALSE;
 int   default_image_width = 800;
 int   default_image_height = 600;
@@ -176,11 +172,6 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
   w_current->log_window      = default_log_window;
   w_current->log_window_type = default_log_window_type;
 
-  INIT_STR(w_current, print_paper, DEFAULT_PRINT_PAPER);
-
-  w_current->print_orientation      = default_print_orientation;
-  w_current->print_color            = default_print_color;
-
   toplevel->image_color        = default_image_color;
   w_current->image_width        = default_image_width;
   w_current->image_height       = default_image_height;
@@ -239,5 +230,4 @@ void i_vars_set(GSCHEM_TOPLEVEL *w_current)
  */
 void i_vars_freenames()
 {
-  g_free(default_print_paper);
 }

@@ -520,32 +520,6 @@
 (world-size 120.0 90.0 1.0)
 ;(world-size 60.0 45.0 1.0)
 
-; print-paper name
-;
-; Specifies the size of the default paper, using PWG 5101.1-2002
-; "Standard for Media Standardized Names".  If not specified, gschem
-; will use the system default paper size.
-;
-;(print-paper "na_letter") ; letter
-;(print-paper "iso_a4") ; A4
-
-; print-orientation string
-;
-; Controls which way the output page is layed out (landscape or portrait).
-; "auto" (default) allows gschem to automatically choose a proper layout.
-;
-;(print-orientation "auto")
-;(print-orientation "portrait")
-;(print-orientation "landscape")
-
-; print-color string
-;
-; Controls whether printing is in color (enabled) or black/white
-; (disabled).  By default, gschem will print in color.
-;
-;(print-color "disabled")
-;(print-color "enabled")
-
 ; image-color string
 ;
 ; Controls if image (png) is color (enabled) or black/white (disabled)

@@ -96,6 +96,10 @@ release.  Please use configuration files instead.
 ;; Identity value transformer for define-rc-deprecated-config
 (define (rc-deprecated-string-transformer str) str)
 
+;; Transformer for "enabled"/"disabled" to boolean
+(define (rc-deprecated-string-boolean-transformer str)
+  (string=? "enabled" str))
+
 ;; ===================================================================
 ;; Deprecated libgeda configuration functions
 ;; ===================================================================
@@ -115,3 +119,15 @@ release.  Please use configuration files instead.
 (define-rc-dead-config print-command)
 (define-rc-dead-config setpagedevice-orientation)
 (define-rc-dead-config setpagedevice-pagesize)
+
+(define-rc-deprecated-config
+ print-paper "gschem.printing" "paper"
+ rc-deprecated-string-transformer)
+
+(define-rc-deprecated-config
+ print-orientation "gschem.printing" "layout"
+ rc-deprecated-string-transformer)
+
+(define-rc-deprecated-config
+ print-color "gschem.printing" "monochrome"
+ (lambda (x) (not (rc-deprecated-string-boolean-transformer x))))

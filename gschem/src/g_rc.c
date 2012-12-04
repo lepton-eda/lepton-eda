@@ -575,45 +575,6 @@ SCM g_rc_scrollbars(SCM mode)
  *  \par Function Description
  *
  */
-SCM
-g_rc_print_paper (SCM name_s)
-#define FUNC_NAME "print-paper"
-{
-  char *paper;
-  SCM_ASSERT (scm_is_string (name_s), name_s, SCM_ARG1, FUNC_NAME);
-
-  paper = scm_to_utf8_string (name_s);
-  g_free (default_print_paper);
-  default_print_paper = g_strdup (paper);
-  free (paper);
-
-  return SCM_BOOL_T;
-}
-#undef FUNC_NAME
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_print_orientation(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {PORTRAIT , "portrait" },
-    {LANDSCAPE, "landscape"},
-    {AUTOLAYOUT, "auto"    },
-  };
-  
-  RETURN_G_RC_MODE("print-orientation",
-		   default_print_orientation,
-		   3);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_image_color(SCM mode)
 {
   static const vstbl_entry mode_table[] = {
@@ -641,24 +602,6 @@ SCM g_rc_image_size(SCM width, SCM height)
   default_image_height = scm_to_int (height);
 
   return SCM_BOOL_T;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-SCM g_rc_print_color(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE , "enabled" },
-    {FALSE, "disabled"},
-  };
-
-  /* this variable is inconsistantly named with the rest */
-  RETURN_G_RC_MODE("print-color",
-		   default_print_color,
-		   2);
 }
 
 /*! \todo Finish function documentation!!!
