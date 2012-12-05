@@ -37,6 +37,7 @@
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -183,7 +184,7 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
 		string = g_strdup("U? ?");
 	    }
 
-	    fprintf(stderr, "Missing Attributes (refdes and pin number)\n");
+	    fprintf(stderr, _("Missing Attributes (refdes and pin number)\n"));
 	}
     }
 
@@ -272,7 +273,7 @@ char *s_net_name_search(TOPLEVEL * pr_current, NET * net_head)
 			if (!s_rename_search
 			    (name, n_current->net_name, TRUE)) {
 			    fprintf(stderr,
-				    "Found duplicate net name, renaming [%s] to [%s]\n",
+				    _("Found duplicate net name, renaming [%s] to [%s]\n"),
 				    name, n_current->net_name);
 			    s_rename_add(name, n_current->net_name);
 			    name = n_current->net_name;
@@ -309,7 +310,7 @@ char *s_net_name_search(TOPLEVEL * pr_current, NET * net_head)
 			if (!s_rename_search
 			    (name, n_current->net_name, TRUE)) {
 			    fprintf(stderr,
-				    "Found duplicate net name, renaming [%s] to [%s]\n",
+				    _("Found duplicate net name, renaming [%s] to [%s]\n"),
 				    name, n_current->net_name);
 
 			    s_rename_add(name, n_current->net_name);
@@ -418,7 +419,7 @@ char *s_net_name (TOPLEVEL * pr_current, NETLIST * netlist_head,
         unnamed_string = pr_current->unnamed_busname;
         break;
       default:
-        g_critical ("Incorrect connectivity type %i in s_name_nets()\n", type);
+        g_critical (_("Incorrect connectivity type %i in s_name_nets()\n"), type);
         return NULL;
     }
 
@@ -438,7 +439,7 @@ char *s_net_name (TOPLEVEL * pr_current, NETLIST * netlist_head,
         }
 
     } else {
-      fprintf(stderr, "Increase number of unnamed nets (s_net.c)\n");
+      fprintf(stderr, _("Increase number of unnamed nets (s_net.c)\n"));
       exit(-1);
     }
 
