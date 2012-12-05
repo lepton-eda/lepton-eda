@@ -33,6 +33,7 @@
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -85,7 +86,7 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 	/* loop over all filenames */
 	while (current_filename != NULL) {
 
-	    s_log_message("Going to traverse source [%s]\n",
+	    s_log_message(_("Going to traverse source [%s]\n"),
 			  current_filename);
 
 	    /* guts here */
@@ -104,9 +105,9 @@ s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
                                                   &err);
 
 	    if (child_page == NULL) {
-              g_warning ("Failed to load subcircuit '%s': %s\n",
+              g_warning (_("Failed to load subcircuit '%s': %s\n"),
                          current_filename, err->message);
-              fprintf(stderr, "ERROR: Failed to load subcircuit '%s': %s\n",
+              fprintf(stderr, _("ERROR: Failed to load subcircuit '%s': %s\n"),
                       current_filename, err->message);
               g_error_free (err);
               exit (2);
@@ -210,7 +211,7 @@ void s_hierarchy_post_process(TOPLEVEL * pr_current, NETLIST * head)
 		    if (pl_current->pin_label == NULL
 			&& pl_current->plid != -1) {
 			fprintf(stderr,
-				"Found a pin [%s] on component [%s] which does not have a label!\n",
+				_("Found a pin [%s] on component [%s] which does not have a label!\n"),
 				nl_current->component_uref,
 				pl_current->pin_number);
 		    } else if (pl_current->plid != -1) {
@@ -237,7 +238,7 @@ void s_hierarchy_post_process(TOPLEVEL * pr_current, NETLIST * head)
 						     source_net_name);
 			if (!did_work) {
 			    fprintf(stderr,
-				    "Missing I/O symbol with refdes [%s] inside schematic for symbol [%s]\n",
+				    _("Missing I/O symbol with refdes [%s] inside schematic for symbol [%s]\n"),
 				    pl_current->pin_label,
 				    nl_current->component_uref);
 

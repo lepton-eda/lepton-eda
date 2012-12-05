@@ -36,6 +36,7 @@
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -62,7 +63,7 @@ char *s_netattrib_extract_netname(char *value)
     }
 
     if (value[i] != ':') {
-	fprintf(stderr, "Found malformed net attribute\n");
+	fprintf(stderr, _("Found malformed net attribute\n"));
 	return (g_strdup ("unknown"));
     }
 
@@ -117,7 +118,7 @@ s_netattrib_create_pins(TOPLEVEL * pr_current, OBJECT * o_current,
 
 		if (old_cpin->nets->net_name) {
 		    fprintf(stderr,
-			    "Found a cpinlist head with a netname! [%s]\n",
+			    _("Found a cpinlist head with a netname! [%s]\n"),
 			    old_cpin->nets->net_name);
 		    g_free(old_cpin->nets->net_name);
 		}
@@ -235,8 +236,8 @@ char *s_netattrib_net_search (OBJECT * o_current, char *wanted_pin)
 
     char_ptr = strchr (value, ':');
     if (char_ptr == NULL) {
-      fprintf (stderr, "Got an invalid net= attrib [net=%s]\n"
-                       "Missing : in net= attrib\n", value);
+      fprintf (stderr, _("Got an invalid net= attrib [net=%s]\n"
+                       "Missing : in net= attrib\n"), value);
       g_free (value);
       return NULL;
     }
@@ -266,8 +267,8 @@ char *s_netattrib_net_search (OBJECT * o_current, char *wanted_pin)
 
     char_ptr = strchr (value, ':');
     if (char_ptr == NULL) {
-      fprintf (stderr, "Got an invalid net= attrib [net=%s]\n"
-                       "Missing : in net= attrib\n", value);
+      fprintf (stderr, _("Got an invalid net= attrib [net=%s]\n"
+                       "Missing : in net= attrib\n"), value);
       g_free (value);
       return NULL;
     }
