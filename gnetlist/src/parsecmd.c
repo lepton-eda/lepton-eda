@@ -38,6 +38,7 @@
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -67,7 +68,7 @@ struct option long_options[] =
 
 void usage(char *cmd)
 {
-  printf (
+  printf (_(
 "Usage: %s [OPTION ...] [-g BACKEND] [--] FILE ...\n"
 "\n"
 "Generate a netlist from one or more gEDA schematic FILEs.\n"
@@ -89,7 +90,7 @@ void usage(char *cmd)
 "  --              Treat all remaining arguments as filenames.\n"
 "\n"
 "Report bugs at <https://bugs.launchpad.net/geda>\n"
-"gEDA/gaf homepage: <http://www.geda-project.org/>\n",
+"gEDA/gaf homepage: <http://www.geda-project.org/>\n"),
           cmd);
   exit (0);
 }
@@ -102,13 +103,13 @@ void usage(char *cmd)
 static void
 version ()
 {
-  printf(
+  printf(_(
 "gEDA %s (g%.7s)\n"
 "Copyright (C) 1998-2012 gEDA developers\n"
 "This is free software, and you are welcome to redistribute it under\n"
 "certain conditions. For details, see the file `COPYING', which is\n"
 "included in the gEDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n",
+"There is NO WARRANTY, to the extent permitted by law.\n"),
          PACKAGE_DOTTED_VERSION, PACKAGE_GIT_COMMIT);
   exit (0);
 }
@@ -117,7 +118,7 @@ version ()
 static SCM
 catch_handler (void *data, SCM tag, SCM throw_args)
 {
-  fprintf (stderr, "\nJust got an error; tag is\n        ");
+  fprintf (stderr, _("\nJust got an error; tag is\n        "));
   scm_display (tag, scm_current_output_port ());
   scm_newline (scm_current_output_port ());
   scm_newline (scm_current_output_port ());
@@ -223,16 +224,16 @@ parse_commandline (int argc, char *argv[])
 #ifndef HAVE_GETOPT_LONG
         if ((optopt != ':') && (strchr (GETOPT_OPTIONS, optopt) != NULL)) {
           fprintf (stderr,
-                   "ERROR: -%c option requires an argument.\n\n",
+                   _("ERROR: -%c option requires an argument.\n\n"),
                    optopt);
         } else if (isprint (optopt)) {
-          fprintf (stderr, "ERROR: Unknown option -%c.\n\n", optopt);
+          fprintf (stderr, _("ERROR: Unknown option -%c.\n\n"), optopt);
         } else {
-          fprintf (stderr, "ERROR: Unknown option character `\\x%x'.\n\n",
+          fprintf (stderr, _("ERROR: Unknown option character `\\x%x'.\n\n"),
                    optopt);
         }
 #endif
-        fprintf (stderr, "\nRun `%s --help' for more information.\n", argv[0]);
+        fprintf (stderr, _("\nRun `%s --help' for more information.\n"), argv[0]);
         exit (1);
         break;
 

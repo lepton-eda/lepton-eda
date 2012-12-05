@@ -43,6 +43,7 @@
 
 #include "../include/globals.h"
 #include "../include/prototype.h"
+#include "../include/gettext.h"
 
 #ifdef HAVE_LIBDMALLOC
 #include <dmalloc.h>
@@ -67,7 +68,7 @@ void s_rename_init(void)
 {
     if (first_set)
     {
-        fprintf(stderr,"ERROR: Overwriting a valid rename list.\n");
+        fprintf(stderr, _("ERROR: Overwriting a valid rename list.\n"));
         exit(-1);
     }
 }
@@ -147,8 +148,8 @@ int s_rename_search(char *src, char *dest, int quiet_flag)
 	    {
                 if (!quiet_flag) 
 	        {
-                    fprintf(stderr,"WARNING: Trying to rename something twice:\n\t%s and %s\nare both a src and dest name\n", dest, temp->src);
-                    fprintf(stderr,"This warning is okay if you have multiple levels of hierarchy!\n");
+                    fprintf(stderr, _("WARNING: Trying to rename something twice:\n\t%s and %s\nare both a src and dest name\n"), dest, temp->src);
+                    fprintf(stderr, _("This warning is okay if you have multiple levels of hierarchy!\n"));
                 }
                 return (TRUE);
             }
