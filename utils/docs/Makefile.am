@@ -5,10 +5,15 @@ dist_man_MANS = gsch2pcb.1 grenum.1 gxyrs.1 olib.1 pads_backannotate.1 \
 
 dist_noinst_MANS = gnet_hier_verilog.1
 
-EXTRA_DIST = $(addsuffix .in,$(man_MANS) $(noinst_MANS)) \
-	README.gsch2pcb README.olib README.tragesym README.grenum \
+EXTRA_DIST = README.gsch2pcb README.olib README.tragesym README.grenum \
 	TODO.grenum why.grenum logo.png utils-main.txt \
-	what-is-geda.html what-is-utils.html utils.dox
+	what-is-geda.html what-is-utils.html utils.dox \
+	gsch2pcb.1.in grenum.1.in gxyrs.1.in olib.1.in \
+	pads_backannotate.1.in pcb_backannotate.1.in refdes_renum.1.in \
+	schdiff.1.in sw2asc.1.in tragesym.1.in smash_megafile.1.in \
+	convert_sym.1.in garchive.1.in gmk_sym.1.in gschlas.1.in \
+	gsymfix.1.in sarlacc_sym.1.in sarlacc_schem.1.in \
+	gnet_hier_verilog.1.in
 
 docsreadmedir = $(docdir)/readmes
 docsreadme_DATA = README.gsch2pcb README.olib README.tragesym README.grenum
