@@ -21,6 +21,7 @@
 
 #include <errno.h>
 #include <glib.h>
+#include <gio/gio.h>
 
 #include <glib-object.h>
 #include <libgeda_priv.h>
@@ -391,22 +392,6 @@ eda_config_get_user_context ()
   return config;
 }
 
-/*! Change directory to \a filename, and return the current working
- * directory as a newly-allocated string.  If an error occurs, returns
- * NULL and sets \a error. */
-static gchar *
-chdir_get_current_dir (const gchar *filename, GError **error)
-{
-  if (g_chdir (filename) != 0) {
-      g_set_error (error, G_FILE_ERROR,
-                   g_file_error_from_errno (errno),
-                   _("Could not change directory to '%s': %s"),
-                   filename, g_strerror (errno));
-      return NULL;
-  }
-  return g_get_current_dir ();
-}
-
 /*! Recursively searches upwards from \a path, looking for a
  * "geda.conf" file.  If the root directory is reached without finding
  * a configuration file, returns the directory part of \a path (if \a
@@ -415,75 +400,145 @@ chdir_get_current_dir (const gchar *filename, GError **error)
  * logs a critical error.
  *
  * \todo find_project_root() is probably generally useful. */
-static gchar *
-find_project_root (const gchar *path)
+static GFile *
+find_project_root (GFile *path)
 {
-  gchar *dir = NULL;
-  gchar *next_dir = NULL;
-  gchar *save_cwd = NULL;
+  GFile *dir = NULL;
+  GFile *next_dir = NULL;
+  GFile *config_file = NULL;
   gchar *result = NULL;
+
+  gboolean recurse = FALSE;
+  GFileInfo *info;
   GError *tmp_err = NULL;
 
-  /* Save the current directory. We'll try and get back here when
-   * we're done. */
-  save_cwd = g_get_current_dir ();
-
-  /* First, try to change directory to the requested path.  This
-   * allows us to check that it exists and is a directory, and to
-   * normalise the filename all at once. If it's not a directory or
-   * doesn't exist, we recurse for its containing directory.  Any
-   * other errors cause failure. */
-  dir = chdir_get_current_dir (path, &tmp_err);
-  if (dir == NULL) {
-    if (g_error_matches (tmp_err, G_FILE_ERROR, G_FILE_ERROR_NOTDIR)
-        || g_error_matches (tmp_err, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
+  /* If the requested path is not a directory or doesn't exist, we
+   * recurse for its containing directory.  Any other errors cause
+   * failure. */
+  info = g_file_query_info (path, G_FILE_ATTRIBUTE_STANDARD_TYPE,
+                            G_FILE_QUERY_INFO_NONE, NULL, &tmp_err);
+  if (info == NULL) {
+    if (g_error_matches (tmp_err, G_IO_ERROR, G_IO_ERROR_NOT_FOUND)) {
       g_clear_error (&tmp_err);
-      next_dir = g_path_get_dirname (path);
-      result = find_project_root (next_dir);
+      recurse = TRUE;
+    } else {
+      goto project_root_done;
     }
+  } else {
+    if (g_file_info_get_file_type (info) != G_FILE_TYPE_DIRECTORY) {
+      recurse = TRUE;
+    }
+    g_object_unref (info);
+  }
+  if (recurse) {
+    next_dir = g_file_get_parent (path);
+    /* Since path is not a directory and doesn't exist, it shouldn't
+     * be the filesystem root. Therefore it should always have a
+     * parent. */
+    g_return_val_if_fail (next_dir != NULL, g_object_ref (path));
+
+    result = find_project_root (next_dir); /* Recurse */
+
+    g_object_unref (next_dir);
     goto project_root_done;
   }
 
+  /* At this point, we know that path exists and is a directory. */
+  dir = g_object_ref (path);
   while (1) {
 
-    /* Check if the current working directory contains a project
-     * config file. If so, hurrah! We've found the project root. */
-    if (g_file_test (LOCAL_CONFIG_NAME, G_FILE_TEST_EXISTS)) {
-      result = dir;
-      dir = NULL;
-      break;
+    /* Check if path contains a project config file. If so, hurrah!
+     * We've found the project root. */
+    config_file = g_file_get_child (path, LOCAL_CONFIG_NAME);
+    if (g_file_query_exists (config_file, NULL)) {
+      result = g_object_ref (dir);
     }
+    g_object_unref (config_file);
+    if (result != NULL) break;
 
-    /* Try to go to the parent directory */
-    next_dir = chdir_get_current_dir ("..", &tmp_err);
-    if (next_dir == NULL) goto project_root_done;
+    /* If we're at the root directory, give up */
+    next_dir = g_file_get_parent (dir);
+    if (next_dir == NULL) break;
 
-    /* We were already at the root directory, give up */
-    if (strcmp (next_dir, dir) == 0) {
-      result = g_strdup (path);
-      break;
-    }
-    g_free (dir);
+    g_object_unref (dir);
     dir = next_dir;
     next_dir = NULL;
   }
 
  project_root_done:
-  /* Restore original working directory */
-  if (g_chdir (save_cwd) != 0) {
-    g_critical (_("Could not restore working directory to '%s': %s"),
-                save_cwd, g_strerror (errno));
-  }
-
   /* Log error message, if there was one */
   if (tmp_err != NULL) {
+    gchar *filename = g_file_get_parse_name (
     g_critical (_("Could not find project root for '%s': "), path);
     g_clear_error (&tmp_err);
   }
-  g_free (dir);
-  g_free (next_dir);
-  g_free (save_cwd);
-  return (result != NULL) ? result : g_strdup (path);
+  return (result != NULL) ? result : g_object_ref (path);
+}
+
+/*! \public \memberof EdaConfig
+ * \brief Return a local configuration context.
+ *
+ * Looks for a configuration file named "geda.conf".  If \a file is
+ * not a directory, it is truncated and then a file named "geda.conf"
+ * is looked for in that directory.  If none is found, the parent
+ * directory is checked, and so on until a configuration file is found
+ * or the root directory is reached.  If no configuration file was
+ * found, the returned context will be associated with a "geda.conf"
+ * in the same directory as \a file.
+ *
+ * \warning Do not assume that the configuration file associated with
+ * the context returned by eda_config_get_context_for_path() is
+ * located in the directory specified by \a file.
+ *
+ * By default, the parent context of the returned #EdaConfig will be
+ * the user context.
+ *
+ * Multiple calls to eda_config_get_context_for_path() with equivalent
+ * values of \a file will return the same configuration context.
+ *
+ * \param [in] GFile File to search for configuration from.
+ * \return a local #EdaConfig configuration context for \a file.
+ */
+EdaConfig *
+eda_config_get_context_for_file (GFile *file)
+{
+  static GHashTable *local_contexts = NULL;
+  GFile *root;
+  GFile *config_file;
+  EdaConfig *config = NULL;
+
+  /* Initialise global state */
+  if (local_contexts == NULL) {
+    local_contexts = g_hash_table_new_full (g_file_hash,
+                                            g_file_equal,
+                                            g_object_unref,
+                                            g_object_unref);
+  }
+
+  g_return_val_if_fail (file != NULL, NULL);
+
+  /* Find the project root, and the corresponding configuration
+   * filename. */
+  root = find_project_root (file);
+
+  config_file = g_file_get_child (root, LOCAL_CONFIG_NAME);
+  g_object_unref (root);
+
+  /* If there's already a context available for this file, return
+   * that. Otherwise, create a new context and record it in the global
+   * state. */
+  config = g_hash_table_lookup (local_contexts, config_file);
+  if (config == NULL) {
+    config = g_object_new (EDA_TYPE_CONFIG,
+                           "file", config_file,
+                           "parent", eda_config_get_user_context (),
+                           "trusted", FALSE,
+                           NULL);
+    g_hash_table_insert (local_contexts, g_object_ref (config_file), config);
+  }
+
+  g_object_unref (config_file);
+  return config;
 }
 
 /*! \public \memberof EdaConfig
@@ -497,6 +552,9 @@ find_project_root (const gchar *path)
  * found, the returned context will be associated with a "geda.conf"
  * in the same directory as \a path.
  *
+ * \note You should usually consider using
+ * eda_config_get_context_for_file() instead.
+ *
  * \warning Do not assume that the configuration file associated with
  * the context returned by eda_config_get_context_for_path() is
  * located in the directory specified by \a path.
@@ -507,49 +565,16 @@ find_project_root (const gchar *path)
  * Multiple calls to eda_config_get_context_for_path() with the same
  * \a path will return the same configuration context.
  *
- * \param [in] path    Path to search for configuration from.
+ * \param [in] path Path to search for configuration from, in the GLib
+ *                  filename encoding.
  * \return a local #EdaConfig configuration context for \a path.
  */
 EdaConfig *
 eda_config_get_context_for_path (const gchar *path)
 {
-  static GHashTable *local_contexts = NULL;
-  gchar *root;
-  gchar *filename;
-  EdaConfig *config = NULL;
-
-  /* Initialise global state */
-  if (local_contexts == NULL) {
-    local_contexts = g_hash_table_new_full (g_str_hash,
-                                            g_str_equal,
-                                            g_free,
-                                            g_object_unref);
-  }
-
-  g_return_val_if_fail (path != NULL, NULL);
-
-  /* Find the project root, and the corresponding configuration
-   * filename. */
-  root = find_project_root (path);
-
-  filename = g_build_filename (root, LOCAL_CONFIG_NAME, NULL);
-  g_free (root);
-
-  /* If there's already a context available for this file, return
-   * that. Otherwise, create a new context and record it in the global
-   * state. */
-  config = g_hash_table_lookup (local_contexts, filename);
-  if (config == NULL) {
-    config = g_object_new (EDA_TYPE_CONFIG,
-                           "filename", filename,
-                           "parent", eda_config_get_user_context (),
-                           "trusted", FALSE,
-                           NULL);
-    g_hash_table_insert (local_contexts, filename, config);
-    filename = NULL; /* Now owned by hashtable */
-  }
-
-  g_free (filename);
+  GFile *file = g_file_new_for_path (path);
+  EdaConfig *config = eda_config_get_context_for_file (file);
+  g_object_unref (file);
   return config;
 }
 
