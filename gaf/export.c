@@ -674,7 +674,7 @@ export_parse_align (const gchar *align)
     return TRUE;
   }
 
-  args = g_strsplit_set (align, "; ", 2);
+  args = g_strsplit_set (align, ":; ", 2);
   for (n = 0; args[n] != NULL; n++) {
     gdouble d = strtod (args[n], NULL);
     if (d < 0 || d > 1) return FALSE;
@@ -724,7 +724,7 @@ export_parse_margins (const gchar *margins)
     return TRUE;
   }
 
-  dists = g_strsplit_set (margins, "; ", 4);
+  dists = g_strsplit_set (margins, ":; ", 4);
   for (n = 0; dists[n] != NULL; n++) {
     gdouble d = export_parse_dist (dists[n]);
     if (d < 0) return FALSE;
@@ -781,7 +781,7 @@ export_parse_size (const gchar *size)
     return TRUE;
   }
 
-  dists = g_strsplit_set (size, "; ", 2);
+  dists = g_strsplit_set (size, ":; ", 2);
   for (n = 0; dists[n] != NULL; n++) {
     gdouble d = export_parse_dist (dists[n]);
     if (d < 0) return FALSE;

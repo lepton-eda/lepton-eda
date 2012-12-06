@@ -65,7 +65,7 @@ When using a paper size, set the orientation of the output.  If `auto'
 layout is used, the orientation that best fits the drawing will be
 used.
 .TP 8
-\fB-s\fR, \fB--size\fR=(\fBauto\fR | \fIWIDTH\fR;\fIHEIGHT\fR)
+\fB-s\fR, \fB--size\fR=(\fBauto\fR | \fIWIDTH\fR:\fIHEIGHT\fR)
 Size the output with specific dimensions.  If the size is `auto',
 select the size that best fits the drawing.
 .TP 8
@@ -75,7 +75,7 @@ points (1 default grid spacing) in \fBgschem\fR(1) coordinate space. It is used
 to size the output when neither \fB--paper\fR nor \fB--size\fR are
 given, and defaults to 100 mil.
 .TP 8
-\fB-m\fR, \fB--margins\fR=(\fBauto\fR | \fITOP\fR[;\fILEFT\fR[;\fIBOTTOM\fR[;\fIRIGHT\fR]]])
+\fB-m\fR, \fB--margins\fR=(\fBauto\fR | \fITOP\fR[:\fILEFT\fR[:\fIBOTTOM\fR[:\fIRIGHT\fR]]])
 Set the widths of the margins to be used.  If `auto' margins are
 specified, a sensible default value will be chosen.  Up to four margin
 widths can be provided.  If one is provided, it will be used on all
@@ -84,11 +84,11 @@ top/bottom and the second for the left/right.  If three are provided,
 the first will be used for the top, the second for left/right, and the
 third for the bottom.
 .TP 8
-\fB-a\fR, \fB--align\fR=(\fBauto\fR | \fIHALIGN\fR;\fIVALIGN\fR)
+\fB-a\fR, \fB--align\fR=(\fBauto\fR | \fIHALIGN\fR:\fIVALIGN\fR)
 Set how the drawing is aligned within the page.  \fIHALIGN\fR controls
 the horizontal alignment, and \fIVALIGN\fR the vertical.  Each
 alignment value should be in the range 0.0 to 1.0.  The `auto'
-alignment is equivalent to a value of `0.5;0.5', i.e. centered.
+alignment is equivalent to a value of `0.5:0.5', i.e. centered.
 .TP 8
 \fB-d\fR, \fB--dpi\fR=\fIDPI\fR
 Set the number of pixels per inch used when generating PNG output.
@@ -111,6 +111,13 @@ The \fB--size\fR, \fB--margins\fR, or \fB--scale\fR options described above acce
 values using units of `mm', `cm', `in', `pc', `px', or `pt'.  If you
 do not provide a unit, points are assumed.  N.b. that `px' are
 evaluated relative to the current \fB--dpi\fR setting.
+
+.PP
+When using the \fB--size\fR, \fB--margins\fR, or \fB--align\fR options
+with multiple values, you may use `;', or ` ' as a separator between
+them instead of `:'. In such a case, remember to properly quote your
+arguments to avoid them to be interpreted by your shell.
+
 
 .SH "ACCESSING CONFIGURATION"
 .B gaf config
