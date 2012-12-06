@@ -1,5 +1,5 @@
 
-SUBDIRS = src include lib docs tests
+SUBDIRS = po src include lib docs tests
 
 EXTRA_DIST = BUGS ChangeLog ChangeLog-1.0
 
