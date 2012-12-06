@@ -58,6 +58,7 @@ static void export_pdf (void);
 static void export_svg (void);
 
 static gdouble export_parse_dist (const gchar *dist);
+static gboolean export_parse_scale (const gchar *scale);
 static gboolean export_parse_layout (const gchar *layout);
 static gboolean export_parse_margins (const gchar *margins);
 static gboolean export_parse_paper (const gchar *paper);
@@ -100,6 +101,7 @@ struct ExportSettings {
   enum ExportOrientation layout;
 
   GtkPaperSize *paper;
+  gdouble scale; /* Output scale; defaults to 1 mil per 1 gschem point*/
   gdouble size[2]; /* Points */
   gdouble margins[4]; /* Points. Top, right, bottom, left. */
   gdouble align[2]; /* 0.0 < align < 1.0 for halign and valign */
@@ -131,6 +133,7 @@ static struct ExportSettings settings = {
   ORIENTATION_AUTO,
 
   NULL,
+  72.0/1000,
   {-1, -1},
   {-1, -1, -1, -1},
   {0.5,0.5},
@@ -394,8 +397,8 @@ export_layout_page (PAGE *page, cairo_rectangle_t *extents, cairo_matrix_t *mtx)
 
   } else {
 
-    extents->width = w_width * 0.072; /* in points */
-    extents->height = w_height * 0.072; /* in points */
+    extents->width = w_width * settings.scale; /* in points */
+    extents->height = w_height * settings.scale; /* in points */
 
     size_from_drawing = TRUE;
   }
@@ -627,7 +630,7 @@ export_svg ()
  * of a floating point value followed by an optional two-character
  * unit name (in, cm, mm, pc, px, or pt, same as CSS).  If no unit is
  * specified, assumes that the unit is pt.  This is used for the
- * --margins and --size command-line options. */
+ * --margins, --size and --scale command-line options. */
 static gdouble
 export_parse_dist (const gchar *dist)
 {
@@ -790,6 +793,17 @@ export_parse_size (const gchar *size)
   return TRUE;
 }
 
+/* Parse the --scale option. The value should be a distance
+ * corresponding to 100 points in gschem (1 default grid spacing). */
+static gboolean
+export_parse_scale (const gchar *scale)
+{
+  gdouble d = export_parse_dist (scale);
+  if (d <= 0) return FALSE;
+  settings.scale = d/100;
+  return TRUE;
+}
+
 /* Initialise settings from config store. */
 static void
 export_config (void)
@@ -869,7 +883,7 @@ export_config (void)
   }
 }
 
-#define export_short_options "a:cd:f:F:hl:m:o:p:s:"
+#define export_short_options "a:cd:f:F:hl:m:o:p:s:k:"
 
 static struct option export_long_options[] = {
   {"no-color", 0, NULL, 2},
@@ -884,6 +898,7 @@ static struct option export_long_options[] = {
   {"output", 1, NULL, 'o'},
   {"paper", 1, NULL, 'p'},
   {"size", 1, NULL, 's'},
+  {"scale", 1, NULL, 'k'},
   {NULL, 0, NULL, 0},
 };
 
@@ -898,6 +913,7 @@ export_usage (void)
 "  -o, --output=OUTPUT    output filename\n"
 "  -p, --paper=NAME       select paper size by name\n"
 "  -s, --size=WIDTH;HEIGHT  specify exact paper size\n"
+"  -k, --scale=FACTOR     specify output scale factor\n"
 "  -l, --layout=ORIENT    page orientation\n"
 "  -m, --margins=TOP;LEFT;BOTTOM;RIGHT\n"
 "                           set page margins\n"
@@ -989,6 +1005,22 @@ export_command_line (int argc, char * const *argv)
 
     case 'h':
       export_usage ();
+      break;
+
+    case 'k':
+      str = export_command_line__utf8_check (optarg, "-k,--scale");
+      if (!export_parse_scale (str)) {
+        fprintf (stderr, bad_arg_msg, optarg, "-k,--scale");
+        fprintf (stderr, see_help_msg);
+        exit (1);
+      }
+      g_free (str);
+      /* Since a specific scale was provided, ditch the paper size
+       * setting */
+      if (settings.paper != NULL) {
+        gtk_paper_size_free (settings.paper);
+        settings.paper = NULL;
+      }
       break;
 
     case 'l':

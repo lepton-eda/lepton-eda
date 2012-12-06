@@ -69,6 +69,12 @@ used.
 Size the output with specific dimensions.  If the size is `auto',
 select the size that best fits the drawing.
 .TP 8
+\fB-k\fR, \fB--scale\fR=(\fBFACTOR\fR)
+Set the output scale \fIFACTOR\fR. This is a distance identical with 100
+points (1 default grid spacing) in \fBgschem\fR(1) coordinate space. It is used
+to size the output when neither \fB--paper\fR nor \fB--size\fR are
+given, and defaults to 100 mil.
+.TP 8
 \fB-m\fR, \fB--margins\fR=(\fBauto\fR | \fITOP\fR[;\fILEFT\fR[;\fIBOTTOM\fR[;\fIRIGHT\fR]]])
 Set the widths of the margins to be used.  If `auto' margins are
 specified, a sensible default value will be chosen.  Up to four margin
@@ -101,7 +107,7 @@ Treat all remaining arguments as schematic or symbol filenames.  Use
 this if you have a schematic or symbol filename which begins with `-'.
 
 .PP
-The \fB--size\fR or \fB--margins\fR options described above accept
+The \fB--size\fR, \fB--margins\fR, or \fB--scale\fR options described above accept
 values using units of `mm', `cm', `in', `pc', `px', or `pt'.  If you
 do not provide a unit, points are assumed.  N.b. that `px' are
 evaluated relative to the current \fB--dpi\fR setting.
