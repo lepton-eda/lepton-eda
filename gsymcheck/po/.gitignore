@@ -1,0 +1,17 @@
+Makefile
+Makefile.in
+Makefile.in.in
+POTFILES
+*.gmo
+*.gmo
+*.sed
+*.header
+*.sin
+geda-gsymcheck.pot
+Rules-quot
+Makevars.template
+stamp-po
+stamp-it
+stamp-i18n
+domain.mak
+*~
