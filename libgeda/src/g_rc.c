@@ -182,7 +182,8 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile,
    * print a warning. */
   if (!eda_config_is_loaded (cfg)) {
     eda_config_load (cfg, &tmp_err);
-    if (tmp_err != NULL && !g_error_matches (tmp_err, G_FILE_ERROR, G_FILE_ERROR_NOENT))
+    if (tmp_err != NULL &&
+        !g_error_matches (tmp_err, G_IO_ERROR, G_IO_ERROR_NOT_FOUND))
       g_warning (_("Failed to load config from '%s': %s\n"),
                  eda_config_get_filename (cfg), tmp_err->message);
     g_clear_error (&tmp_err);
