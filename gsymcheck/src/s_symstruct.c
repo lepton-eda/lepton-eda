@@ -31,6 +31,7 @@
 #include "../include/struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
+#include "../include/gettext.h"
 
 /* call this for every symbol that needs to be checked */
 SYMCHECK *
@@ -94,7 +95,7 @@ s_symstruct_print(SYMCHECK *s_current)
       msg = (char *) list->data;     
       /* printf("found info: %s\n", msg); */
       if (msg) { 
-        s_log_message("Info: %s", msg);
+        s_log_message(_("Info: %s"), msg);
         g_free(msg);
       }
 
@@ -109,7 +110,7 @@ s_symstruct_print(SYMCHECK *s_current)
      
       /* printf("found warning: %s\n", msg); */
       if (msg) { 
-        s_log_message("Warning: %s", msg);
+        s_log_message(_("Warning: %s"), msg);
         g_free(msg);
       }
 
@@ -124,7 +125,7 @@ s_symstruct_print(SYMCHECK *s_current)
      
       /* printf("found error: %s\n", msg); */
       if (msg && verbose_mode) { 
-        s_log_message("ERROR: %s", msg);
+        s_log_message(_("ERROR: %s"), msg);
         g_free(msg);
       }
 

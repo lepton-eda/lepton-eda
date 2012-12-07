@@ -31,6 +31,7 @@
 #include "../include/struct.h"
 #include "../include/globals.h"
 #include "../include/prototype.h"
+#include "../include/gettext.h"
 
 #define OPTIONS "qvh"
 
@@ -42,13 +43,14 @@ extern int optind;
 void
 usage(char *cmd)
 {
-	printf("Usage: %s [OPTIONS] filename1 ... filenameN\n", cmd);
-	printf("  -h            Print usage\n");
-	printf("  -q            Quiet mode\n");
-	printf("  -v            Verbose mode (cumulative: errors, warnings, info)\n");
-	printf("                Use this to get the actual symbol error messages\n");
-	printf("\nfilename1 ... filenameN are the symbols to check\n");
-	printf("\n");
+	printf(_(
+            "Usage: %s [OPTIONS] filename1 ... filenameN\n"
+	    "  -h            Print usage\n"
+	    "  -q            Quiet mode\n"
+	    "  -v            Verbose mode (cumulative: errors, warnings, info)\n"
+	    "                Use this to get the actual symbol error messages\n"
+	    "\nfilename1 ... filenameN are the symbols to check\n"
+	    "\n"), cmd);
 	exit(0);
 }
 

@@ -42,6 +42,7 @@
 #include "../include/globals.h"
 #include "../include/i_vars.h"
 #include "../include/prototype.h"
+#include "../include/gettext.h"
 
 SCM g_rc_gsymcheck_version(SCM scm_version)
 {
@@ -53,14 +54,12 @@ SCM g_rc_gsymcheck_version(SCM scm_version)
 
   version = scm_to_utf8_string (scm_version);
   if (g_strcasecmp (version, PACKAGE_DATE_VERSION) != 0) {
-    fprintf(stderr,
-            "You are running gEDA/gaf version [%s%s.%s],\n",
-            PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION, PACKAGE_DATE_VERSION);
-    fprintf(stderr,
-            "but you have a version [%s] gsymcheckrc file:\n[%s]\n",
+    fprintf(stderr, _(
+            "You are running gEDA/gaf version [%s%s.%s],\n"
+            "but you have a version [%s] gsymcheckrc file:\n[%s]\n"
+            "Please be sure that you have the latest rc file.\n"),
+            PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION, PACKAGE_DATE_VERSION,
             version, rc_filename);
-    fprintf(stderr,
-            "Please be sure that you have the latest rc file.\n");
     ret = SCM_BOOL_F;
   }
 
