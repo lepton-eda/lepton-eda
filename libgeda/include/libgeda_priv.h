@@ -8,6 +8,8 @@
 /* Public libgeda headers */
 #include "edaconfig.h"
 #include "edaerrors.h"
+#include "edarectangle.h"
+#include "edartree.h"
 #include "defines.h"
 #include "struct.h"
 #include "globals.h"

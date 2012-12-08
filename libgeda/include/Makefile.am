@@ -5,6 +5,8 @@ libgedainclude_HEADERS = \
 	libgeda/colors.h \
 	libgeda/defines.h \
 	libgeda/edaconfig.h \
+	libgeda/edarectangle.h \
+	libgeda/edartree.h \
 	libgeda/edaerrors.h \
 	libgeda/funcs.h \
 	libgeda/geda_list.h \

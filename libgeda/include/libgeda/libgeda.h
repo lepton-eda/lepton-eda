@@ -29,6 +29,8 @@
 
 #include <libgeda/edaconfig.h>
 #include <libgeda/edaerrors.h>
+#include <libgeda/edarectangle.h>
+#include <libgeda/edartree.h>
 #include <libgeda/defines.h>
 #include <libgeda/struct.h>
 #include <libgeda/globals.h>
