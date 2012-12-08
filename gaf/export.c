@@ -144,7 +144,6 @@ static struct ExportSettings settings = {
 };
 
 #define bad_arg_msg _("ERROR: Bad argument '%s' to %s option.\n")
-#define bad_arg_prefix_msg _("ERROR: Bad argument '%s' to %s option: %s\n")
 #define see_help_msg _("\nRun `gaf export --help' for more information.\n")
 
 /* Main function for `gaf export' */
@@ -951,7 +950,6 @@ export_command_line (int argc, char * const *argv)
 {
   int c;
   gchar *str;
-  GError *err = NULL;
 
   /* Parse command-line arguments */
   while ((c = getopt_long (argc, argv, export_short_options,
@@ -1022,8 +1020,8 @@ export_command_line (int argc, char * const *argv)
 
     case 'l':
       if (!export_parse_layout (optarg)) {
-        fprintf (stderr, bad_arg_prefix_msg,
-                 optarg, "-l,--layout", err->message);
+        fprintf (stderr, bad_arg_msg,
+                 optarg, "-l,--layout");
         fprintf (stderr, see_help_msg);
         exit (1);
       }
