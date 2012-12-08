@@ -572,10 +572,10 @@ eda_config_get_filename (EdaConfig *cfg)
  * \brief Load configuration parameters from file.
  *
  * Attempt to load configuration parameters for the context \a cfg
- * from its associated file.  Returns FALSE and generates a
- * #GFileError on error.  If \a cfg does not have an associated file,
- * does nothing, returns FALSE, and generates a G_FILE_ERROR_FAILED
- * error.
+ * from its associated file.  Returns FALSE and generates a #GIOError
+ * or #EdaConfigError on error.  If \a cfg does not have an associated
+ * file, does nothing, returns FALSE, and generates a
+ * G_IO_ERROR_FAILED error.
  *
  * \see eda_config_is_loaded(), eda_config_get_filename(),
  * eda_config_save().
@@ -587,25 +587,38 @@ eda_config_get_filename (EdaConfig *cfg)
 gboolean
 eda_config_load (EdaConfig *cfg, GError **error)
 {
+  gboolean status;
+
   g_return_val_if_fail (EDA_IS_CONFIG (cfg), TRUE);
 
-  if (cfg->priv->filename == NULL) {
+  if (eda_config_get_filename (cfg) == NULL) {
     g_set_error (error,
-                 G_FILE_ERROR,
-                 G_FILE_ERROR_FAILED,
+                 G_IO_ERROR,
+                 G_IO_ERROR_FAILED,
                  _("Undefined configuration filename"));
     return FALSE;
   }
 
+  GFile *file = g_file_new_for_path (eda_config_get_filename (cfg));
+  gchar *buf;
+  gsize len;
+  status = g_file_load_contents (file,
+                                 NULL, /* cancellable */
+                                 &buf,
+                                 &len,
+                                 NULL, /* etag_out */
+                                 error);
+  g_object_unref (file);
+  if (!status) return FALSE;
+
   /* This will be the new key file object. */
   GKeyFile *newkeyfile = g_key_file_new ();
   GError *tmp_err = NULL;
-  gint status =
-    g_key_file_load_from_file (newkeyfile,
-                               cfg->priv->filename,
-                               (G_KEY_FILE_KEEP_COMMENTS
-                                | G_KEY_FILE_KEEP_TRANSLATIONS),
-                               &tmp_err);
+  status = g_key_file_load_from_data (newkeyfile, buf, len,
+                                      (G_KEY_FILE_KEEP_COMMENTS
+                                       | G_KEY_FILE_KEEP_TRANSLATIONS),
+                                      &tmp_err);
+  g_free (buf);
   if (!status) {
     g_key_file_free (newkeyfile);
     propagate_key_file_error (tmp_err, error);
@@ -644,9 +657,9 @@ eda_config_is_loaded (EdaConfig *cfg)
  * \brief Save changes to a configuration context.
  *
  * Attempt to save configuration parameters for the context \a cfg to
- * its associated file.  Returns FALSE and generates a #GFileError on
+ * its associated file.  Returns FALSE and generates a #GIOError on
  * error.  If \a cfg does not have an associated file, does nothing,
- * returns FALSE, and generates a G_FILE_ERROR_FAILED error.
+ * returns FALSE, and generates a G_IO_ERROR_FAILED error.
  *
  * \see eda_config_load(), eda_config_get_filename().
  *
@@ -657,36 +670,51 @@ eda_config_is_loaded (EdaConfig *cfg)
 gboolean
 eda_config_save (EdaConfig *cfg, GError **error)
 {
+  gboolean status;
+
   g_return_val_if_fail (EDA_IS_CONFIG (cfg), TRUE);
 
-  if (cfg->priv->filename == NULL) {
+  if (eda_config_get_filename (cfg) == NULL) {
     g_set_error (error,
-                 G_FILE_ERROR,
-                 G_FILE_ERROR_FAILED,
+                 G_IO_ERROR,
+                 G_IO_ERROR_FAILED,
                  _("Undefined configuration filename"));
     return FALSE;
   }
 
+  GFile *file = g_file_new_for_path (eda_config_get_filename (cfg));
+
   /* First try and make the directory, if necessary. */
-  gchar *dirname = g_path_get_dirname (cfg->priv->filename);
-  if (g_mkdir_with_parents (dirname, 0755) != 0) {
-    g_set_error (error,
-                 G_FILE_ERROR,
-                 g_file_error_from_errno (errno),
-                 _("Could not create directory '%s': %s"),
-                 dirname, g_strerror (errno));
-    g_free (dirname);
-    return FALSE;
+  GFile *dir = g_file_get_parent (file);
+  if (dir != NULL) {
+    GError *tmp_err = NULL;
+    status = g_file_make_directory_with_parents (dir, NULL, &tmp_err);
+    g_object_unref (dir);
+
+    if (!status) {
+      if (g_error_matches (tmp_err, G_IO_ERROR, G_IO_ERROR_EXISTS)) {
+        g_clear_error (&tmp_err);
+      } else {
+        g_object_unref (file);
+        g_propagate_error (error, tmp_err);
+        return FALSE;
+      }
+    }
   }
 
   gsize len;
   gchar *buf = g_key_file_to_data (cfg->priv->keyfile, &len, NULL);
-  gboolean result = g_file_set_contents (cfg->priv->filename,
-                                         buf, len, error);
+  status = g_file_replace_contents (file, buf, len,
+                                    NULL, /* etag */
+                                    FALSE, /* make_backup */
+                                    G_FILE_CREATE_NONE,
+                                    NULL, /* new_etag */
+                                    NULL, /* cancellable */
+                                    error);
   g_free (buf);
-  g_free (dirname);
-  if (result) cfg->priv->changed = FALSE;
-  return result;
+  g_object_unref (file);
+  if (status) cfg->priv->changed = FALSE;
+  return status;
 }
 
 /*! \public \memberof EdaConfig

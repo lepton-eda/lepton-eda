@@ -60,9 +60,9 @@ Recoverable errors that occur in C functions are signalled to the
 caller using the "GError" mechanism [GLIB]_.
 
 - File errors (e.g. "Access denied" or "File not found") are indicated
-  using the ``G_FILE_ERROR`` error domain.  See the GLib manual for
+  using the ``G_IO_ERROR`` error domain.  See the GIO manual for
   information on error codes.  Functions that may cause a
-  ``G_FILE_ERROR`` are clearly noted as such.
+  ``G_IO_ERROR`` are clearly noted as such.
 
 - All other errors are indicated using the ``EDA_CONFIG_ERROR`` error
   domain.  The possible error codes are:
@@ -257,7 +257,7 @@ Scheme function::
   load-config! cfg
 
 Attempt to load configuration parameters for the context ``cfg`` from
-its associated file.  This function may generate a ``GFileError`` (in
+its associated file.  This function may generate a ``GIOError`` (in
 C) or a ``system-error`` (in Scheme).
 
 C function::
@@ -283,7 +283,7 @@ Scheme function::
   save-config! cfg
 
 Attempt to save configuration parameters for the context ``cfg`` to
-its associated file.  This function may generate a ``GFileError`` (in
+its associated file.  This function may generate a ``GIOError`` (in
 C) or a ``system-error`` (in Scheme).
 
 C function::
