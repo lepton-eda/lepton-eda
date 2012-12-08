@@ -464,9 +464,6 @@ export_draw_page (PAGE *page)
     page = (PAGE *) pages->data;
   }
 
-  /* Get objects to draw */
-  contents = s_page_objects (page);
-
   /* Draw background */
   eda_cairo_set_source_color (cr, OUTPUT_BACKGROUND_COLOR,
                               eda_renderer_get_color_map (renderer));
