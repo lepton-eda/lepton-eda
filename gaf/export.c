@@ -844,7 +844,7 @@ export_config (void)
   lst = eda_config_get_double_list (cfg, "export", "margins", &n, NULL);
   if (lst != NULL) {
     if (n >= 4) { /* In the config file all four sides must be specified */
-      memcpy (settings.size, lst, 4*sizeof(gdouble));
+      memcpy (settings.margins, lst, 4*sizeof(gdouble));
     }
     g_free (lst);
   }
