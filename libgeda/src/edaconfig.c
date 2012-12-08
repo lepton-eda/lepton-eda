@@ -20,9 +20,7 @@
 #include <config.h>
 
 #include <errno.h>
-#include <glib.h>
 
-#include <glib-object.h>
 #include <libgeda_priv.h>
 
 enum _EdaConfigPropertyId {
