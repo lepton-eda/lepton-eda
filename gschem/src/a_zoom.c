@@ -169,14 +169,14 @@ void a_zoom_extents (GSCHEM_TOPLEVEL *w_current, const GList *list, int pan_flag
 #endif
 
   /* Calc the necessary zoomfactor to show everything
-   * Start with the windows width and height, then scale back to world
-   * coordinates with the to_screen_y_constant as the initial page data
-   * may not have the correct aspect ratio. */
-  zx = (double)toplevel->width / (lright-lleft);
-  zy = (double)toplevel->height / (lbottom-ltop);
-  /* choose the smaller one, 0.9 for paddings on all side*/
-  relativ_zoom_factor = (zx < zy ? zx : zy) * 0.9
-    / toplevel->page_current->to_screen_y_constant;
+   * Start with the windows width and height (minus a small padding in pixels),
+   * then scale back to world coordinates with the to_screen_y_constant as the
+   * initial page data may not have the correct aspect ratio. */
+  zx = (double)(toplevel->width - 2 * ZOOM_EXTENTS_PADDING_PX) / (lright-lleft);
+  zy = (double)(toplevel->height - 2 * ZOOM_EXTENTS_PADDING_PX) / (lbottom-ltop);
+  /* choose the smaller one */
+  relativ_zoom_factor = (zx < zy ? zx : zy) /
+    toplevel->page_current->to_screen_y_constant;
 	
   /*get the center of the objects*/
   world_pan_center_x = (double) (lright + lleft) /2.0;

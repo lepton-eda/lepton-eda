@@ -26,6 +26,8 @@
 #define ZOOM_IN 1
 #define ZOOM_FULL 2
 
+#define ZOOM_EXTENTS_PADDING_PX 5
+
 /* For grip size */
 #define GRIP_SIZE1		25
 #define GRIP_SIZE2		50

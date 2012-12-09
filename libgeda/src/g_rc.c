@@ -214,8 +214,8 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile,
     g_propagate_prefixed_error (err, tmp_err,
                                 _("Failed to load RC file [%s]: "),
                                 name_norm);
+    g_free (name_norm);
   }
-  g_free (name_norm);
   return status;
 }
 

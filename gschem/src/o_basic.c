@@ -142,12 +142,20 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
                     ((w_current->event_state == MOVE) ||
                      (w_current->event_state == ENDMOVE)));
 
-  /* First pass -- render non-selected objects and cues */
+  /* First pass -- render non-selected objects */
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
     OBJECT *o_current = iter->data;
 
     if (!(o_current->dont_redraw || o_current->selected)) {
       eda_renderer_draw (renderer, o_current);
+    }
+  }
+
+  /* Second pass -- render cues */
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *o_current = iter->data;
+
+    if (!(o_current->dont_redraw || o_current->selected)) {
       eda_renderer_draw_cues (renderer, o_current);
     }
   }
