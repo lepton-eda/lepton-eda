@@ -144,7 +144,6 @@ static struct ExportSettings settings = {
 };
 
 #define bad_arg_msg _("ERROR: Bad argument '%s' to %s option.\n")
-#define bad_arg_prefix_msg _("ERROR: Bad argument '%s' to %s option: %s\n")
 #define see_help_msg _("\nRun `gaf export --help' for more information.\n")
 
 /* Main function for `gaf export' */
@@ -463,9 +462,6 @@ export_draw_page (PAGE *page)
     g_assert (pages != NULL && pages->data != NULL);
     page = (PAGE *) pages->data;
   }
-
-  /* Get objects to draw */
-  contents = s_page_objects (page);
 
   /* Draw background */
   eda_cairo_set_source_color (cr, OUTPUT_BACKGROUND_COLOR,
@@ -847,7 +843,7 @@ export_config (void)
   lst = eda_config_get_double_list (cfg, "export", "margins", &n, NULL);
   if (lst != NULL) {
     if (n >= 4) { /* In the config file all four sides must be specified */
-      memcpy (settings.size, lst, 4*sizeof(gdouble));
+      memcpy (settings.margins, lst, 4*sizeof(gdouble));
     }
     g_free (lst);
   }
@@ -954,7 +950,6 @@ export_command_line (int argc, char * const *argv)
 {
   int c;
   gchar *str;
-  GError *err = NULL;
 
   /* Parse command-line arguments */
   while ((c = getopt_long (argc, argv, export_short_options,
@@ -1025,8 +1020,8 @@ export_command_line (int argc, char * const *argv)
 
     case 'l':
       if (!export_parse_layout (optarg)) {
-        fprintf (stderr, bad_arg_prefix_msg,
-                 optarg, "-l,--layout", err->message);
+        fprintf (stderr, bad_arg_msg,
+                 optarg, "-l,--layout");
         fprintf (stderr, see_help_msg);
         exit (1);
       }
