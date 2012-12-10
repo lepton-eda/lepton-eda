@@ -187,7 +187,6 @@ DEFINE_I_CALLBACK(file_script)
 DEFINE_I_CALLBACK(file_save)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  TOPLEVEL *toplevel;
   PAGE *page;
   EdaConfig *cfg;
   gchar *untitled_name;

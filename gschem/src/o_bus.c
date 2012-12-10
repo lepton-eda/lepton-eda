@@ -156,7 +156,6 @@ void o_bus_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  */
 void o_bus_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
   int x1, y1, x2, y2;
   int min_x, min_y, max_x, max_y;
   int bloat = 0;

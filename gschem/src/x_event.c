@@ -906,7 +906,6 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
 
   }
 
- end_motion:
   scm_dynwind_end ();
 
   return(0);
