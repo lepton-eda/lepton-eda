@@ -353,11 +353,6 @@ int main (int argc, char *argv[])
   bind_textdomain_codeset("geda-gschem", "UTF-8");
 #endif
 
-  /* disable the deprecated warnings in guile 1.6.3 */
-  /* Eventually the warnings will need to be fixed */
-  if(getenv("GUILE_WARN_DEPRECATED") == NULL)
-    putenv("GUILE_WARN_DEPRECATED=no");
-
   scm_boot_guile (argc, argv, main_prog, 0);
   
   return 0;

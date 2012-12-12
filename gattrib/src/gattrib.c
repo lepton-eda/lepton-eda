@@ -224,11 +224,6 @@ void gattrib_main(void *closure, int argc, char *argv[])
  */
 int main(int argc, char *argv[])
 {
-  /* disable the deprecated warnings in guile 1.6.3 */
-  /* Eventually the warnings will need to be fixed */
-  if(getenv("GUILE_WARN_DEPRECATED")==NULL)
-    putenv("GUILE_WARN_DEPRECATED=no");
-  
   /* Initialize the Guile Scheme interpreter. This function does not
    * return but calls exit(0) on completion.
    */
