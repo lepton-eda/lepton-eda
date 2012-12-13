@@ -77,7 +77,7 @@ release.  Please use configuration files instead.
     (lambda args
       (or warned?
           (begin (deprecation-warning) (set! warned? #t)))
-      ((@ (geda config) config-set!)
+      ((@ (geda config) set-config!)
        (rc-config) group key (apply value-transformer args)))))
 
 ;; Convenience macro for using rc-deprecated-config.
