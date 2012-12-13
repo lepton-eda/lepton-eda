@@ -389,22 +389,6 @@ eda_config_get_user_context ()
   return config;
 }
 
-/*! Change directory to \a filename, and return the current working
- * directory as a newly-allocated string.  If an error occurs, returns
- * NULL and sets \a error. */
-static gchar *
-chdir_get_current_dir (const gchar *filename, GError **error)
-{
-  if (g_chdir (filename) != 0) {
-      g_set_error (error, G_FILE_ERROR,
-                   g_file_error_from_errno (errno),
-                   _("Could not change directory to '%s': %s"),
-                   filename, g_strerror (errno));
-      return NULL;
-  }
-  return g_get_current_dir ();
-}
-
 /*! Recursively searches upwards from \a path, looking for a
  * "geda.conf" file.  If the root directory is reached without finding
  * a configuration file, returns the directory part of \a path (if \a
@@ -416,72 +400,57 @@ chdir_get_current_dir (const gchar *filename, GError **error)
 static gchar *
 find_project_root (const gchar *path)
 {
-  gchar *dir = NULL;
-  gchar *next_dir = NULL;
-  gchar *save_cwd = NULL;
+  GFile *dir = g_file_new_for_path (path);
+  GFile *base_dir;
   gchar *result = NULL;
-  GError *tmp_err = NULL;
 
-  /* Save the current directory. We'll try and get back here when
-   * we're done. */
-  save_cwd = g_get_current_dir ();
+  /* Ensure that dir is a directory that exists */
+  while (TRUE) {
+    GFile *next_dir;
 
-  /* First, try to change directory to the requested path.  This
-   * allows us to check that it exists and is a directory, and to
-   * normalise the filename all at once. If it's not a directory or
-   * doesn't exist, we recurse for its containing directory.  Any
-   * other errors cause failure. */
-  dir = chdir_get_current_dir (path, &tmp_err);
-  if (dir == NULL) {
-    if (g_error_matches (tmp_err, G_FILE_ERROR, G_FILE_ERROR_NOTDIR)
-        || g_error_matches (tmp_err, G_FILE_ERROR, G_FILE_ERROR_NOENT)) {
-      g_clear_error (&tmp_err);
-      next_dir = g_path_get_dirname (path);
-      result = find_project_root (next_dir);
-    }
-    goto project_root_done;
-  }
-
-  while (1) {
-
-    /* Check if the current working directory contains a project
-     * config file. If so, hurrah! We've found the project root. */
-    if (g_file_test (LOCAL_CONFIG_NAME, G_FILE_TEST_EXISTS)) {
-      result = dir;
-      dir = NULL;
-      break;
+    if (g_file_query_exists (dir, NULL)) {
+      GFileType type = g_file_query_file_type (dir,
+                                               G_FILE_QUERY_INFO_NONE,
+                                               NULL);
+      if (type == G_FILE_TYPE_DIRECTORY) break;
     }
 
-    /* Try to go to the parent directory */
-    next_dir = chdir_get_current_dir ("..", &tmp_err);
-    if (next_dir == NULL) goto project_root_done;
+    next_dir = g_file_get_parent (dir);
+    g_object_unref (dir);
 
-    /* We were already at the root directory, give up */
-    if (strcmp (next_dir, dir) == 0) {
-      result = g_strdup (path);
-      break;
+    /* Something odd is going on -- even the root directory is
+     * apparently missing! So just give up. */
+    if (next_dir == NULL) {
+      return g_strdup (path);
     }
-    g_free (dir);
     dir = next_dir;
-    next_dir = NULL;
   }
 
- project_root_done:
-  /* Restore original working directory */
-  if (g_chdir (save_cwd) != 0) {
-    g_critical (_("Could not restore working directory to '%s': %s"),
-                save_cwd, g_strerror (errno));
+  /* Iterate upward from dir, looking for a geda.conf file. */
+  base_dir = g_object_ref (dir);
+  while (result == NULL && dir != NULL) {
+    GFile *cfg_file = g_file_get_child (dir, LOCAL_CONFIG_NAME);
+    GFile *next_dir;
+    if (g_file_query_exists (cfg_file, NULL)) {
+      result = g_file_get_path (dir);
+    }
+    g_object_unref (cfg_file);
+    next_dir = g_file_get_parent (dir);
+    g_object_unref (dir);
+    dir = next_dir;
   }
 
-  /* Log error message, if there was one */
-  if (tmp_err != NULL) {
-    g_critical (_("Could not find project root for '%s': "), path);
-    g_clear_error (&tmp_err);
+  /* If a config file wasn't found, just return the directory part of
+   * the original path passed in. */
+  if (result == NULL) {
+    result = g_file_get_path (base_dir);
   }
-  g_free (dir);
-  g_free (next_dir);
-  g_free (save_cwd);
-  return (result != NULL) ? result : g_strdup (path);
+
+  if (dir != NULL) {
+    g_object_unref (dir);
+  }
+  g_object_unref (base_dir);
+  return result;
 }
 
 /*! \public \memberof EdaConfig
