@@ -15,8 +15,7 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
-; The /'s may not work on win32
-(load (string-append gedadata "/scheme/partslist-common.scm"))
+(load-from-path "partslist-common.scm")
 
 (define partslist1:write-top-header
   (lambda (port)

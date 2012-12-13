@@ -17,12 +17,6 @@
 ;
 (gnetlist-version "@DATE_VERSION@")
 
-; Setup data path variables.  
-;
-; Contains all paths needed for gnetlist
-(define gedadata (getenv "GEDADATA"))
-(define gedadatarc (getenv "GEDADATARC"))
-
 ; net-naming-priority string
 ;
 ; Specifies which netname has priority if a net is found with two names.

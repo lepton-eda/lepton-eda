@@ -17,12 +17,6 @@
 ;
 (gschlas-version "@DATE_VERSION@")
 
-; Setup data path variables.
-;
-; Contains all paths needed for gsymcheck
-(define gedadata (getenv "GEDADATA"))
-(define gedadatarc (getenv "GEDADATARC"))
-
 ; force-boundingbox string
 ;
 ; Controls if the entire bounding box of a symbol is used when figuring out

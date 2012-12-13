@@ -16,10 +16,3 @@
 ; being run. The end user should *not* change this value.
 ;
 (gattrib-version "@DATE_VERSION@")
-
-; Setup data path variables.
-;
-; Contains all paths needed for gattrib
-(define gedadata (getenv "GEDADATA"))
-(define gedadatarc (getenv "GEDADATARC"))
-

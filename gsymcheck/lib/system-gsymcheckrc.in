@@ -17,12 +17,6 @@
 ;
 (gsymcheck-version "@DATE_VERSION@")
 
-; Setup data path variables.
-;
-; Contains all paths needed for gsymcheck
-(define gedadata (getenv "GEDADATA"))
-(define gedadatarc (getenv "GEDADATARC"))
-
 ;
 ; End of mode related keywords
 ;
