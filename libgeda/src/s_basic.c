@@ -610,7 +610,6 @@ const char *s_path_sys_data () {
     /* On other platforms, use the compiled-in path */
     p = GEDADATADIR;
 # endif
-    g_setenv ("GEDADATA", p, FALSE);
   }
   return p;
 }
@@ -647,7 +646,6 @@ const char *s_path_sys_config () {
     p = s_path_sys_data ();
 #endif
   }
-  if (p != NULL) g_setenv("GEDADATARC", p, FALSE);
   return p;
 }
 
