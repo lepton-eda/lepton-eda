@@ -47,11 +47,8 @@
         (lambda (x) (char-set-contains? cls x)))
       (lambda (x) (eq? separator-char x))))
 
-(define-public (sys-data-dirs)
-  (list (getenv "GEDADATA")))
-
-(define-public (sys-config-dirs)
-  (list (getenv "GEDADATARC")))
+(define-public sys-data-dirs %sys-data-dirs)
+(define-public sys-config-dirs %sys-config-dirs)
 
 (define-public (user-data-dir)
   (string-join (list (getenv "HOME") ".gEDA") separator))

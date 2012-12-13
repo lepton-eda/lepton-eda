@@ -70,6 +70,43 @@ SCM_DEFINE (platform, "%platform", 0, 0, 0, (),
   return result;
 }
 
+/*! \brief Get system data directory directories.
+ * \par Function Description
+ * Returns a list of directories to be searched for system data.
+ *
+ * \node Scheme API: Implements the %sys-data-dirs procedure in the
+ * (geda core os) module.
+ *
+ * \return a Scheme list of strings.
+ */
+SCM_DEFINE (sys_data_dirs, "%sys-data-dirs", 0, 0, 0, (),
+            "Return a list of search directories for system data.")
+{
+  /* s_path_sys_data() returns a raw environment string, so assume
+   * it's in the current locale's encoding. */
+  SCM dir = scm_from_locale_string (s_path_sys_data ());
+  return scm_list_1 (dir);
+}
+
+/*! \brief Get system config directory directories.
+ * \par Function Description
+ * Returns a list of directories to be searched for system
+ * configuration information.
+ *
+ * \node Scheme API: Implements the %sys-config-dirs procedure in the
+ * (geda core os) module.
+ *
+ * \return a Scheme list of strings.
+ */
+SCM_DEFINE (sys_config_dirs, "%sys-config-dirs", 0, 0, 0, (),
+            "Return a list of search directories for system configuration.")
+{
+  /* s_path_sys_data() returns a raw environment string, so assume
+   * it's in the current locale's encoding. */
+  SCM dir = scm_from_locale_string (s_path_sys_config ());
+  return scm_list_1 (dir);
+}
+
 /*!
  * \brief Create the (geda core os) Scheme module.
  * \par Function Description
@@ -83,7 +120,7 @@ init_module_geda_core_os ()
   #include "scheme_os.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_platform,
+  scm_c_export (s_platform, s_sys_data_dirs, s_sys_config_dirs,
                 NULL);
 }
 
