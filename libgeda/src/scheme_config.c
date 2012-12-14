@@ -192,8 +192,11 @@ SCM_DEFINE (path_config_context, "%path-config-context", 1, 0, 0,
   scm_dynwind_begin (0);
   char *path = scm_to_utf8_string (path_s);
   scm_dynwind_free (path);
+  GFile *file = g_file_parse_name (path);
+  scm_dynwind_unwind_handler (g_object_unref, file,
+                              SCM_F_WIND_EXPLICITLY);
 
-  EdaConfig *cfg = eda_config_get_context_for_path (path);
+  EdaConfig *cfg = eda_config_get_context_for_file (file);
   SCM result = edascm_from_config (cfg);
 
   scm_dynwind_end ();
@@ -206,7 +209,7 @@ SCM_DEFINE (path_config_context, "%path-config-context", 1, 0, 0,
  * Returns the underlying filename for the configuration context \a
  * cfg, or #f if it has no filename associated with it.
  *
- * \see eda_config_get_filename().
+ * \see eda_config_get_file().
  *
  * \note Scheme API: Implements the \%config-filename procedure in the
  * (geda core config) module.
@@ -220,9 +223,18 @@ SCM_DEFINE (config_filename, "%config-filename", 1, 0, 0,
   SCM_ASSERT (EDASCM_CONFIGP (cfg_s), cfg_s, SCM_ARG1,
               s_config_filename);
 
+  scm_dynwind_begin (0);
   EdaConfig *cfg = edascm_to_config (cfg_s);
-  const gchar *path = eda_config_get_filename (cfg);
-  return (path == NULL) ? SCM_BOOL_F : scm_from_utf8_string (path);
+  GFile *file = eda_config_get_file (cfg);
+  gchar *path = NULL;
+  if (file != NULL) {
+    path = g_file_get_parse_name (file);
+    scm_dynwind_free (path);
+  }
+
+  SCM result = (path == NULL) ? SCM_BOOL_F : scm_from_utf8_string (path);
+  scm_dynwind_end ();
+  return result;
 }
 
 /*! \brief Load configuration parameters from file.

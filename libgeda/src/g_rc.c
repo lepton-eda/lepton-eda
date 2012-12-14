@@ -429,7 +429,7 @@ g_rc_parse_handler (TOPLEVEL *toplevel,
    * current working directory's configuration context here, no matter
    * where the rc file is located on disk. */
   if (rcfile != NULL) {
-    EdaConfig *cwd_cfg = eda_config_get_context_for_path (".");
+    EdaConfig *cwd_cfg = eda_config_get_context_for_file (NULL);
     g_rc_parse_file (toplevel, rcfile, cwd_cfg, &err); HANDLER_DISPATCH;
   }
 
@@ -760,7 +760,7 @@ g_rc_rc_config()
   SCM cfg_s = scm_fluid_ref (scheme_rc_config_fluid);
   if (!scm_is_false (cfg_s)) return cfg_s;
 
-  EdaConfig *cfg = eda_config_get_context_for_path (".");
+  EdaConfig *cfg = eda_config_get_context_for_file (NULL);
   return edascm_from_config (cfg);
 }
 
