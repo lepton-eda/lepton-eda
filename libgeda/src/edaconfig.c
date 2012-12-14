@@ -614,10 +614,14 @@ eda_config_load (EdaConfig *cfg, GError **error)
   /* This will be the new key file object. */
   GKeyFile *newkeyfile = g_key_file_new ();
   GError *tmp_err = NULL;
-  status = g_key_file_load_from_data (newkeyfile, buf, len,
-                                      (G_KEY_FILE_KEEP_COMMENTS
-                                       | G_KEY_FILE_KEEP_TRANSLATIONS),
-                                      &tmp_err);
+  if (len != 0) { /* Don't load zero-length keyfiles */
+    status = g_key_file_load_from_data (newkeyfile, buf, len,
+                                        (G_KEY_FILE_KEEP_COMMENTS
+                                         | G_KEY_FILE_KEEP_TRANSLATIONS),
+                                        &tmp_err);
+  } else {
+    status = TRUE;
+  }
   g_free (buf);
   if (!status) {
     g_key_file_free (newkeyfile);
