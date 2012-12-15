@@ -67,7 +67,7 @@ x_print_default_page_setup (TOPLEVEL *toplevel, PAGE *page)
   gchar *paper, *orientation;
 
   /* Get configuration values */
-  cfg =         eda_config_get_context_for_path (page->page_filename);
+  cfg =         s_page_get_config (toplevel, page);
   paper =       eda_config_get_string (cfg, CFG_GROUP_PRINTING,
                                        CFG_KEY_PRINTING_PAPER, NULL);
   orientation = eda_config_get_string (cfg, CFG_GROUP_PRINTING,
@@ -237,7 +237,7 @@ draw_page__print_operation (GtkPrintOperation *print,
   height = gtk_print_context_get_height (context);
 
   /* Find out if colour printing is enabled */
-  cfg = eda_config_get_context_for_path (page->page_filename);
+  cfg = s_page_get_config (w_current->toplevel, page);
   is_color = !eda_config_get_boolean (cfg, CFG_GROUP_PRINTING,
                                       CFG_KEY_PRINTING_MONOCHROME, NULL);
 
@@ -287,7 +287,7 @@ x_print_export_pdf_page (GSCHEM_TOPLEVEL *w_current,
   height = gtk_page_setup_get_page_height (setup, GTK_UNIT_POINTS);
 
   /* Find out if colour printing is enabled */
-  cfg = eda_config_get_context_for_path (page->page_filename);
+  cfg = s_page_get_config (w_current->toplevel, page);
   is_color = !eda_config_get_boolean (cfg, CFG_GROUP_PRINTING,
                                       CFG_KEY_PRINTING_MONOCHROME, NULL);
 
