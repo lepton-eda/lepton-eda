@@ -1490,27 +1490,63 @@ static void multiattrib_callback_button_add(GtkButton *button,
   multiattrib_update (multiattrib);
 }
 
+static void
+multiattrib_name_entry_focus_in (GtkWidget *entry,
+                                 GdkEvent *event,
+                                 gpointer user_data)
+{
+  gboolean text_entered = g_object_get_data (entry, "multiattrib-text-entered");
+  if (text_entered) return;
+  gtk_entry_set_text (GTK_ENTRY (entry), "");
+}
+
+static void
+multiattrib_name_entry_focus_out (GtkWidget *entry,
+                                  GdkEvent *event,
+                                  gpointer user_data)
+{
+  const gchar *text = gtk_entry_get_text (GTK_ENTRY (entry));
+  if (strlen (text) > 0) {
+    g_object_set_data (entry, "multiattrib-text-entered", TRUE);
+  } else {
+    gtk_entry_set_text (GTK_ENTRY (entry), "Name");
+    g_object_set_data (entry, "multiattrib-text-entered", FALSE);
+  }
+}
+
 /*! \todo Finish function documentation
  *  \brief
  *  \par Function Description
  *
  */
-static void multiattrib_init_attrib_names(GtkCombo *combo)
+static GtkWidget *
+multiattrib_init_name_entry (void)
 {
-  GList *items = NULL;
-  const gchar *string;
+  GtkWidget *entry;
+  GtkEntryCompletion *completion;
+  GtkListStore *list_store;
+  GtkTreeIter iter;
   gint i;
-  
-  for (i = 0, string = s_attrib_get (i);
-       string != NULL;
-       i++, string = s_attrib_get (i)) {
-    items = g_list_append (items, (gpointer)string);
+  const gchar *str;
+
+  list_store = gtk_list_store_new (1, G_TYPE_STRING);
+  for (i = 0, str = s_attrib_get (i);
+       str != NULL;
+       str = s_attrib_get (++i)) {
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, str);
   }
 
-  gtk_combo_set_popdown_strings (GTK_COMBO (combo), items);
+  completion = g_object_new (GTK_TYPE_ENTRY_COMPLETION,
+                             "model", list_store,
+                             "text-column", 0,
+                             NULL);
 
-  g_list_free (items);
-  
+  entry = g_object_new (GTK_TYPE_ENTRY,
+                        "truncate-multiline", TRUE,
+                        NULL);
+
+  gtk_entry_set_completion (GTK_ENTRY (entry), completion);
 }
 
 /*! \todo Finish function documentation
@@ -1788,7 +1824,7 @@ static void multiattrib_show_inherited_toggled (GtkToggleButton *button,
 static void multiattrib_init(Multiattrib *multiattrib)
 {
   GtkWidget *frame, *label, *scrolled_win, *treeview;
-  GtkWidget *table, *textview, *combo, *optionm, *button;
+  GtkWidget *table, *textview, *combo, *optionm, *button, *entry;
   GtkWidget *attrib_vbox, *show_inherited;
   GtkTreeModel *store;
   GtkCellRenderer *renderer;
@@ -2003,7 +2039,7 @@ static void multiattrib_init(Multiattrib *multiattrib)
 				    "homogeneous", FALSE,
 				    NULL));
   
-  /*   - the name entry: a GtkComboBoxEntry */
+  /*   - the name entry: a GtkEntry */
   label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
 				    /* GtkMisc */
 				    "xalign", 0.0,
@@ -2011,18 +2047,14 @@ static void multiattrib_init(Multiattrib *multiattrib)
 				    /* GtkLabel */
 				    "label",  _("Name:"),
 				    NULL));
-  combo = GTK_WIDGET (g_object_new (GTK_TYPE_COMBO,
-				    /* GtkCombo */
-				    "value-in-list", FALSE,
-				    NULL));
-  multiattrib_init_attrib_names (GTK_COMBO (combo));
-  multiattrib->combo_name = GTK_COMBO (combo);
+  entry = multiattrib_init_name_entry ();
+  multiattrib->entry_name = entry;
   gtk_table_attach (GTK_TABLE (table), label,
 		    0, 1, 0, 1, 0, 0, 0, 0);
-  gtk_table_attach (GTK_TABLE (table), combo,
+  gtk_table_attach (GTK_TABLE (table), entry,
 		    1, 2, 0, 1, GTK_EXPAND | GTK_FILL, 0, 6, 3);
   
-  /*   - the value entry: a GtkEntry */
+  /*   - the value entry: a GtkTextView */
   label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
 				    /* GtkMisc */
 				    "xalign", 0.0,
