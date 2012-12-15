@@ -804,7 +804,7 @@ export_parse_scale (const gchar *scale)
 static void
 export_config (void)
 {
-  EdaConfig *cfg = eda_config_get_context_for_path (".");
+  EdaConfig *cfg = eda_config_get_context_for_file (NULL);
   gchar *str;
   gdouble *lst;
   gdouble dval;

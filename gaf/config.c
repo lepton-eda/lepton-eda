@@ -73,7 +73,7 @@ cmd_config (int argc, char **argv)
 {
   int c;
   EdaConfig *cfg = NULL, *parent;
-  const char *project_store_path = NULL;
+  const gchar *project_store_path = NULL;
   const char *group, *key;
 
   scm_init_guile ();
@@ -136,8 +136,8 @@ cmd_config (int argc, char **argv)
   if (cfg == NULL) {
     if (project_store_path == NULL)
       project_store_path = ".";
-
-    cfg = eda_config_get_context_for_path (project_store_path);
+    GFile *project_store = g_file_new_for_commandline_arg (project_store_path);
+    cfg = eda_config_get_context_for_file (project_store);
   }
 
   /* If no further arguments were specified, output the configuration
@@ -151,7 +151,7 @@ cmd_config (int argc, char **argv)
   for (parent = cfg; parent != NULL; parent = eda_config_get_parent (parent)) {
     GError *err = NULL;
     if (eda_config_is_loaded (parent) ||
-        eda_config_get_filename (parent) == NULL) continue;
+        eda_config_get_file (parent) == NULL) continue;
 
     if (!eda_config_load (parent, &err)) {
       if (!g_error_matches (err, G_IO_ERROR, G_IO_ERROR_NOT_FOUND)) {
