@@ -361,6 +361,7 @@ void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page);
 const GList *s_page_objects (PAGE *page);
 GList *s_page_objects_in_region (TOPLEVEL *toplevel, PAGE *page, int min_x, int min_y, int max_x, int max_y);
 GList *s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page, BOX *rects, int n_rects);
+EdaConfig *s_page_get_config (TOPLEVEL *toplevel, PAGE *page);
 
 /* s_path.c */
 PATH *s_path_parse (const char *path_str);

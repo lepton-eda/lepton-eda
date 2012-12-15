@@ -806,3 +806,20 @@ GList *s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page,
   list = g_list_reverse (list);
   return list;
 }
+
+/*! \brief Obtain a page's configuration context.
+ * \par Function Description
+ * Returns the configuration context for the current filename of \a
+ * page.
+ *
+ * \param toplevel a #TOPLEVEL instance.
+ * \param page     a page for which to acquire a config context.
+ *
+ * \return an #EdaConfig instance.
+ */
+EdaConfig *
+s_page_get_config (TOPLEVEL *toplevel, PAGE *page)
+{
+  g_return_val_if_fail (page != NULL, NULL);
+  return eda_config_get_context_for_path (page->page_filename);
+}

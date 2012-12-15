@@ -27,6 +27,8 @@
 #include <libguile.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include <libgeda/edaconfig.h>
+#include <libgeda/edaerrors.h>
 #include <libgeda/defines.h>
 #include <libgeda/struct.h>
 #include <libgeda/globals.h>
@@ -34,8 +36,6 @@
 #include <libgeda/funcs.h>
 #include <libgeda/colors.h>
 #include <libgeda/prototype.h>
-#include <libgeda/edaconfig.h>
-#include <libgeda/edaerrors.h>
 #include <libgeda/geda_list.h>
 
 #endif

@@ -6,6 +6,8 @@
 #include <glib/gstdio.h>
 
 /* Public libgeda headers */
+#include "edaconfig.h"
+#include "edaerrors.h"
 #include "defines.h"
 #include "struct.h"
 #include "globals.h"
@@ -13,8 +15,6 @@
 #include "colors.h"
 #include "prototype.h"
 #include "funcs.h"
-#include "edaconfig.h"
-#include "edaerrors.h"
 
 #include "geda_list.h"
 
