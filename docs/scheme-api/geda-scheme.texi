@@ -634,7 +634,7 @@ map.  This allows users to specify the color map that suits them when
 viewing schematics and symbols.
 
 @defun object-color object
-Returns the integer color map index of the the color used to draw
+Returns the integer color map index of the color used to draw
 @var{object}.
 @end defun
 
