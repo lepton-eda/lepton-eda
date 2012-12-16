@@ -196,6 +196,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
     g_rc_parse (pr_current, argv[0], "gnetlistrc", rc_filename);
     /* immediately setup user params */
+    i_vars_init_gnetlist_defaults ();
     i_vars_set (pr_current);
 
     s_rename_init();

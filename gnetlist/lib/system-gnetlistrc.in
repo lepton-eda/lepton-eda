@@ -17,24 +17,6 @@
 ;
 (gnetlist-version "@DATE_VERSION@")
 
-; net-naming-priority string
-;
-; Specifies which netname has priority if a net is found with two names.
-; If this variable is set to "netattrib" then any netname specified with the 
-; net= attribute is used as the netname.  Likewise if this variable is set to
-; "netname" then any netname conflict is resolved using the netname= value.
-;
-(net-naming-priority "netattrib")
-;(net-naming-priority "netname")
-
-; hierarchy-traversal string
-;
-; Decides if the hierarchy is traversed or not.  If this is disabled then
-; gnetlist will not go down searching for any underlying sources
-;
-(hierarchy-traversal "enabled")
-;(hierarchy-traversal "disabled")
-
 ; hierarchy-uref-mangle string
 ;
 ; Controls if uref names are mangled to make them uniq when traversing 
@@ -132,22 +114,6 @@
 ;
 (hierarchy-netattrib-order "append")
 ;(hierarchy-netattrib-order "prepend")
-
-; unnamed-netname string
-;
-; Specifies the default string which is placed in front of all nets that 
-; have not been explicitly named by the user (using the netname= attribute 
-; in the schematic).
-;
-(unnamed-netname "unnamed_net")
-
-; unnamed-busname string
-;
-; Specifies the default string which is placed in front of all buses that
-; have not been explicitly named by the user.
-; (This is not currently useful, since gnetlist does not netlist buses).
-;
-(unnamed-busname "unnamed_bus")
 
 ;
 ; End of mode related keywords

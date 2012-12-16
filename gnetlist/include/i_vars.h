@@ -17,8 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-extern int default_net_naming_priority;
-extern int default_hierarchy_traversal;
 extern int default_hierarchy_uref_mangle;
 extern int default_hierarchy_netname_mangle;
 extern int default_hierarchy_netattrib_mangle;
@@ -29,5 +27,3 @@ extern int default_hierarchy_uref_order;
 extern char *default_hierarchy_netname_separator;
 extern char *default_hierarchy_netattrib_separator;
 extern char *default_hierarchy_uref_separator;
-extern char *default_unnamed_netname;
-extern char *default_unnamed_busname;

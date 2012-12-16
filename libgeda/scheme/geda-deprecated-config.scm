@@ -156,3 +156,20 @@ release.  Please use configuration files instead.
 (define-rc-deprecated-config
  component-dialog-attributes "gschem.library" "component-attributes"
  (lambda (x) x))
+
+;; ===================================================================
+;; Deprecated gnetlist configuration functions
+;; ===================================================================
+
+(define-rc-deprecated-config
+  unnamed-netname "gnetlist" "default-net-name"
+  rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+  unnamed-busname "gnetlist" "default-bus-name"
+  rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+  hierarchy-traversal "gnetlist" "traverse-hierarchy"
+  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+  net-naming-priority "gnetlist" "net-naming-priority"
+  (lambda (x) (if (string=? x "netname") "netname-attribute" "net-attribute")))

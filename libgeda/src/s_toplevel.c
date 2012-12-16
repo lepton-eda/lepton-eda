@@ -93,8 +93,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->always_promote_attributes = NULL;
 
-  toplevel->net_naming_priority = 0;
-  toplevel->hierarchy_traversal = 0;
   toplevel->hierarchy_uref_mangle = 0;
   toplevel->hierarchy_netname_mangle = 0;
   toplevel->hierarchy_netattrib_mangle = 0;
@@ -104,8 +102,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->hierarchy_netattrib_order = 0;
   toplevel->hierarchy_netname_order = 0;
   toplevel->hierarchy_uref_order = 0;
-  toplevel->unnamed_netname = NULL;
-  toplevel->unnamed_busname = NULL;
 
   toplevel->rendered_text_bounds_func = NULL;
   toplevel->rendered_text_bounds_data = NULL;

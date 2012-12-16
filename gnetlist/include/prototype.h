@@ -19,8 +19,6 @@ SCM g_get_toplevel_attribute(SCM scm_wanted_attrib);
 SCM g_graphical_objs_in_net_with_attrib_get_attrib(SCM scm_netname, SCM scm_has_attribute, SCM scm_wanted_attribute);
 /* g_rc.c */
 SCM g_rc_gnetlist_version(SCM version);
-SCM g_rc_net_naming_priority(SCM mode);
-SCM g_rc_hierarchy_traversal(SCM mode);
 SCM g_rc_hierarchy_uref_mangle(SCM mode);
 SCM g_rc_hierarchy_netname_mangle(SCM mode);
 SCM g_rc_hierarchy_netattrib_mangle(SCM mode);
@@ -30,8 +28,6 @@ SCM g_rc_hierarchy_uref_separator(SCM name);
 SCM g_rc_hierarchy_netattrib_order(SCM mode);
 SCM g_rc_hierarchy_netname_order(SCM mode);
 SCM g_rc_hierarchy_uref_order(SCM mode);
-SCM g_rc_unnamed_netname(SCM name);
-SCM g_rc_unnamed_busname(SCM name);
 /* g_register.c */
 void g_register_funcs(void);
 SCM g_quit(void);
@@ -42,6 +38,7 @@ void main_prog(void *closure, int argc, char *argv[]);
 int main(int argc, char *argv[]);
 /* i_vars.c */
 void i_vars_set(TOPLEVEL *pr_current);
+void i_vars_init_gnetlist_defaults (void);
 /* parsecmd.c */
 void usage(char *cmd);
 GSList *create_input_files_list(int argi, int argc, char *argv[]);

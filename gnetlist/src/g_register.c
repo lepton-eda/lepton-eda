@@ -57,8 +57,6 @@ static struct gsubr_t gnetlist_funcs[] = {
   /* gnetlistrc functions */
   { "gnetlist-version",             1, 0, 0, g_rc_gnetlist_version },
     
-  { "net-naming-priority",          1, 0, 0, g_rc_net_naming_priority },
-  { "hierarchy-traversal",          1, 0, 0, g_rc_hierarchy_traversal },
   { "hierarchy-uref-mangle",        1, 0, 0, g_rc_hierarchy_uref_mangle },
   { "hierarchy-netname-mangle",     1, 0, 0, g_rc_hierarchy_netname_mangle },
   { "hierarchy-netattrib-mangle",   1, 0, 0, g_rc_hierarchy_netattrib_mangle },
@@ -68,8 +66,6 @@ static struct gsubr_t gnetlist_funcs[] = {
   { "hierarchy-netattrib-order",    1, 0, 0, g_rc_hierarchy_netattrib_order },
   { "hierarchy-netname-order",      1, 0, 0, g_rc_hierarchy_netname_order },
   { "hierarchy-uref-order",         1, 0, 0, g_rc_hierarchy_uref_order },
-  { "unnamed-netname",              1, 0, 0, g_rc_unnamed_netname },
-  { "unnamed-busname",              1, 0, 0, g_rc_unnamed_busname },
 
   /* netlist functions */
   { "gnetlist:get-packages",        1, 0, 0, g_get_packages },

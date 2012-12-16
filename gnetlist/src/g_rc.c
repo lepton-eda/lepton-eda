@@ -70,28 +70,6 @@ SCM g_rc_gnetlist_version(SCM scm_version)
 }
 
 
-SCM g_rc_net_naming_priority(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {NETATTRIB_ATTRIBUTE, "netattrib"},
-    {NETNAME_ATTRIBUTE, "netname"}
-  };
-
-  RETURN_G_RC_MODE("net-naming-priority", default_net_naming_priority,
-                   2);
-}
-
-SCM g_rc_hierarchy_traversal(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE, "enabled"},
-    {FALSE, "disabled"}
-  };
-
-  RETURN_G_RC_MODE("hierarchy-traversal", default_hierarchy_traversal,
-                   2);
-}
-
 SCM g_rc_hierarchy_uref_mangle(SCM mode)
 {
   static const vstbl_entry mode_table[] = {
@@ -204,31 +182,6 @@ SCM g_rc_hierarchy_uref_order(SCM mode)
     RETURN_G_RC_MODE("hierarchy-uref-order",
 		     default_hierarchy_uref_order, 2);
 }
-
-SCM g_rc_unnamed_netname(SCM name)
-{
-  SCM_ASSERT (scm_is_string (name), name,
-              SCM_ARG1, "unamed-netname");
-
-  g_free(default_unnamed_netname);
-
-  default_unnamed_netname = g_strdup_scm_string (name);
-
-  return SCM_BOOL_T;
-}
-
-SCM g_rc_unnamed_busname(SCM name)
-{
-  SCM_ASSERT (scm_is_string (name), name,
-              SCM_ARG1, "unamed-busname");
-
-  g_free(default_unnamed_busname);
-
-  default_unnamed_busname = g_strdup_scm_string (name);
-
-  return SCM_BOOL_T;
-}
-
 
 /*************************** GUILE end done *********************************/
 
