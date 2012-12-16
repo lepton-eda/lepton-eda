@@ -293,12 +293,14 @@ eda_config_get_property (GObject *object, guint property_id,
 EdaConfig *
 eda_config_get_default_context ()
 {
+  static gsize initialized = 0;
   static EdaConfig *config = NULL;
-  if (config == NULL) {
+  if (g_once_init_enter (&initialized)) {
     config = g_object_new (EDA_TYPE_CONFIG,
                            "trusted", TRUE,
                            NULL);
     config->priv->loaded = TRUE;
+    g_once_init_leave (&initialized, 1);
   }
   return config;
 }
@@ -320,8 +322,9 @@ eda_config_get_default_context ()
 EdaConfig *
 eda_config_get_system_context ()
 {
+  static gsize initialized = 0;
   static EdaConfig *config = NULL;
-  if (config == NULL) {
+  if (g_once_init_enter (&initialized)) {
     gchar *filename = NULL;
     GFile *file;
     const gchar * const *xdg_dirs;
@@ -372,6 +375,7 @@ eda_config_get_system_context ()
                            NULL);
     g_free (filename);
     g_object_unref (file);
+    g_once_init_leave (&initialized, 1);
   }
   return config;
 }
@@ -388,8 +392,9 @@ eda_config_get_system_context ()
 EdaConfig *
 eda_config_get_user_context ()
 {
+  static gsize initialized = 0;
   static EdaConfig *config = NULL;
-  if (config == NULL) {
+  if (g_once_init_enter (&initialized)) {
     gchar *filename = NULL;
     GFile *file;
 
@@ -406,6 +411,7 @@ eda_config_get_user_context ()
 
     g_free (filename);
     g_object_unref (file);
+    g_once_init_leave (&initialized, 1);
   }
   return config;
 }
@@ -504,17 +510,19 @@ find_project_root (GFile *path)
 EdaConfig *
 eda_config_get_context_for_file (GFile *path)
 {
+  static gsize initialized = 0;
   static GHashTable *local_contexts = NULL;
   GFile *root;
   GFile *file;
   EdaConfig *config = NULL;
 
   /* Initialise global state */
-  if (local_contexts == NULL) {
+  if (g_once_init_enter (&initialized)) {
     local_contexts = g_hash_table_new_full (g_file_hash,
                                             (GEqualFunc) g_file_equal,
                                             g_object_unref,
                                             g_object_unref);
+    g_once_init_leave (&initialized, 1);
   }
 
   if (path == NULL) {
