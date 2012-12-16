@@ -209,14 +209,8 @@ void s_netlist_post_process(TOPLEVEL * pr_current, NETLIST * head)
     s_hierarchy_post_process(pr_current, head);
 
     verbose_done();
-    if (pr_current->hierarchy_uref_mangle == FALSE) {
-	if (verbose_mode) {
-	    printf("- Removing refdes mangling:\n");
-	}
-	s_hierarchy_remove_uref_mangling(pr_current, head);
-    }
 
-    verbose_done();
+    s_hierarchy_remove_uref_mangling (pr_current, head);
 }
 
 void s_netlist_name_named_nets (TOPLEVEL *pr_current,

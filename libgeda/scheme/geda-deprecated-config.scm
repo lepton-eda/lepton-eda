@@ -173,3 +173,33 @@ release.  Please use configuration files instead.
 (define-rc-deprecated-config
   net-naming-priority "gnetlist" "net-naming-priority"
   (lambda (x) (if (string=? x "netname") "netname-attribute" "net-attribute")))
+
+(define-rc-deprecated-config
+  hierarchy-uref-mangle "gnetlist.hierarchy" "rewrite-refdes-attribute"
+  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+  hierarchy-netname-mangle "gnetlist.hierarchy" "rewrite-netname-attribute"
+  rc-deprecated-string-boolean-transformer)
+(define-rc-deprecated-config
+  hierarchy-netattrib-mangle "gnetlist.hierarchy" "rewrite-net-attribute"
+  rc-deprecated-string-boolean-transformer)
+
+(define-rc-deprecated-config
+  hierarchy-uref-separator "gnetlist.hierarchy" "refdes-attribute-separator"
+  rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+  hierarchy-netname-separator "gnetlist.hierarchy" "netname-attribute-separator"
+  rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+  hierarchy-netattrib-separator "gnetlist.hierarchy" "net-attribute-separator"
+  rc-deprecated-string-transformer)
+
+(define-rc-deprecated-config
+  hierarchy-uref-order "gnetlist.hierarchy" "refdes-attribute-order"
+  rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+  hierarchy-netname-order "gnetlist.hierarchy" "netname-attribute-order"
+  rc-deprecated-string-transformer)
+(define-rc-deprecated-config
+  hierarchy-netattrib-order "gnetlist.hierarchy" "net-attribute-order"
+  rc-deprecated-string-transformer)

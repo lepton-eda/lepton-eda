@@ -35,9 +35,6 @@
 #endif
 
 #define DEFAULT_BITMAP_DIRECTORY   "non-existant"
-#define DEFAULT_HIERARCHY_NETNAME_SEPARATOR "/"
-#define DEFAULT_HIERARCHY_NETATTRIB_SEPARATOR "/"
-#define DEFAULT_HIERARCHY_UREF_SEPARATOR "/"
 
 #define INIT_STR(w, name, str) {                            \
     g_free((w)->name);                                      \
@@ -45,57 +42,9 @@
                           (default_ ## name) : (str));      \
 }
 
-int default_hierarchy_uref_mangle = TRUE;
-int default_hierarchy_netname_mangle = TRUE;
-int default_hierarchy_netattrib_mangle = TRUE;
-int default_hierarchy_netattrib_order = APPEND;
-int default_hierarchy_netname_order = APPEND;
-int default_hierarchy_uref_order = APPEND;
-char *default_hierarchy_netname_separator = NULL;
-char *default_hierarchy_netattrib_separator = NULL;
-char *default_hierarchy_uref_separator = NULL;
-
 void i_vars_set(TOPLEVEL * pr_current)
 {
     i_vars_libgeda_set(pr_current);
-
-    pr_current->hierarchy_uref_mangle = default_hierarchy_uref_mangle;
-    pr_current->hierarchy_netname_mangle =
-	default_hierarchy_netname_mangle;
-    pr_current->hierarchy_netattrib_mangle =
-	default_hierarchy_netattrib_mangle;
-    pr_current->hierarchy_netattrib_order =
-	default_hierarchy_netattrib_order;
-    pr_current->hierarchy_netname_order = default_hierarchy_netname_order;
-    pr_current->hierarchy_uref_order = default_hierarchy_uref_order;
-
-    if (pr_current->hierarchy_uref_mangle == FALSE) {
-	if (pr_current->hierarchy_uref_separator) {
-	    strcpy(pr_current->hierarchy_uref_separator, "/");
-	} else {
-	    pr_current->hierarchy_uref_separator = g_strdup("/");
-	}
-    }
-
-    if (!default_hierarchy_netname_separator) {
-      default_hierarchy_netname_separator =
-        g_strdup (DEFAULT_HIERARCHY_NETNAME_SEPARATOR);
-    }
-    if (!default_hierarchy_netattrib_separator) {
-      default_hierarchy_netattrib_separator =
-        g_strdup (DEFAULT_HIERARCHY_NETATTRIB_SEPARATOR);
-    }
-    if (!default_hierarchy_uref_separator) {
-      default_hierarchy_uref_separator =
-        g_strdup (DEFAULT_HIERARCHY_UREF_SEPARATOR);
-    }
-
-    INIT_STR(pr_current, hierarchy_netname_separator,
-             default_hierarchy_netname_separator);
-    INIT_STR(pr_current, hierarchy_netattrib_separator,
-             default_hierarchy_netattrib_separator);
-    INIT_STR(pr_current, hierarchy_uref_separator,
-             default_hierarchy_uref_separator);
 }
 
 

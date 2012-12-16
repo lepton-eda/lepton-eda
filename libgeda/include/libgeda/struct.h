@@ -486,17 +486,6 @@ struct st_toplevel {
   /* List of attributes to always promote */
   GList *always_promote_attributes;
 
-  /* gnetlist specific */
-  int hierarchy_uref_mangle;
-  int hierarchy_netname_mangle;
-  int hierarchy_netattrib_mangle;
-  char *hierarchy_uref_separator;
-  char *hierarchy_netname_separator;
-  char *hierarchy_netattrib_separator;
-  int hierarchy_netattrib_order;
-  int hierarchy_netname_order;
-  int hierarchy_uref_order;
-
   /* Callback function for calculating text bounds */
   RenderedBoundsFunc rendered_text_bounds_func;
   void *rendered_text_bounds_data;

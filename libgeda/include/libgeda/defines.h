@@ -182,10 +182,6 @@
 #define PIN_TYPE_NET		0
 #define PIN_TYPE_BUS		1
 
-/* gnetlist: hierarchy_*_order */
-#define APPEND			0
-#define PREPEND			1
-
 /* gnetlist: netlist_mode */
 #define gEDA			0
 #define SPICE			1

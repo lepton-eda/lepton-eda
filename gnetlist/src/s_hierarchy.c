@@ -39,6 +39,10 @@
 #include <dmalloc.h>
 #endif
 
+enum HierarchyRewriteOrder { APPEND, PREPEND };
+
+#define CONFIG_GROUP "gnetlist.hierarchy"
+
 void
 s_hierarchy_traverse(TOPLEVEL * pr_current, OBJECT * o_current,
 		     NETLIST * netlist)
@@ -376,6 +380,21 @@ char *s_hierarchy_create_uref(TOPLEVEL * pr_current, char *basename,
 			      char *hierarchy_tag)
 {
     char *return_value = NULL;
+    gchar *separator;
+    gchar *str;
+    gint order;
+    gboolean enabled;
+    EdaConfig *cfg = eda_config_get_context_for_file (NULL);
+    GError *err;
+
+    enabled = eda_config_get_boolean (cfg, CONFIG_GROUP,
+                                      "rewrite-refdes-attribute", &err);
+    if (err != NULL) {
+      enabled = TRUE;
+      g_clear_error (&err);
+    }
+
+    if 
 
     if (hierarchy_tag) {
 	if (basename) {
@@ -555,6 +574,23 @@ s_hierarchy_remove_uref_mangling(TOPLEVEL * pr_current, NETLIST * head)
     char *new_uref = NULL;
     char *new_connected_to = NULL;
 
+    EdaConfig *cfg = eda_config_get_context_for_file (NULL);
+    gboolean rewrite_refdes;
+    GError *err = NULL;
+
+    rewrite_refdes = eda_config_get_boolean (cfg, CONFIG_GROUP,
+                                             "rewrite-refdes-attribute", &err);
+    if (err != NULL) {
+      rewrite_refdes = TRUE;
+      g_clear_error (&err);
+    }
+
+    if (rewrite_refdes) return;
+
+    if (verbose_mode) {
+      printf("- Removing refdes mangling:\n");
+    }
+
     nl_current = head;
     while (nl_current != NULL) {
 
@@ -589,6 +625,8 @@ s_hierarchy_remove_uref_mangling(TOPLEVEL * pr_current, NETLIST * head)
 	}
 	nl_current = nl_current->next;
     }
+
+    verbose_done ();
 }
 
 

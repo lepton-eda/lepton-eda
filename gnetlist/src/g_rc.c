@@ -38,7 +38,6 @@
 #include <libgeda/libgeda.h>
 
 #include "../include/globals.h"
-#include "../include/i_vars.h"
 #include "../include/prototype.h"
 #include "../include/gettext.h"
 
@@ -67,120 +66,6 @@ SCM g_rc_gnetlist_version(SCM scm_version)
 
   free (version);
   return ret;
-}
-
-
-SCM g_rc_hierarchy_uref_mangle(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE, "enabled"},
-    {FALSE, "disabled"}
-  };
-
-  RETURN_G_RC_MODE("hierarchy-uref-mangle",
-                   default_hierarchy_uref_mangle, 2);
-}
-
-SCM g_rc_hierarchy_netname_mangle(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE, "enabled"},
-    {FALSE, "disabled"}
-  };
-
-  RETURN_G_RC_MODE("hierarchy-netname-mangle",
-                   default_hierarchy_netname_mangle, 2);
-}
-
-SCM g_rc_hierarchy_netattrib_mangle(SCM mode)
-{
-  static const vstbl_entry mode_table[] = {
-    {TRUE, "enabled"},
-    {FALSE, "disabled"}
-  };
-
-  RETURN_G_RC_MODE("hierarchy-netattrib-mangle",
-                   default_hierarchy_netattrib_mangle, 2);
-}
-
-static char *
-g_strdup_scm_string(SCM scm_s)
-{
-  char *s, *ret;
-
-  s = scm_to_utf8_string (scm_s);
-  ret = g_strdup (s);
-  free (s);
-  return ret;
-}
-
-SCM g_rc_hierarchy_netname_separator(SCM name)
-{
-  SCM_ASSERT (scm_is_string (name), name,
-              SCM_ARG1, "hierarchy-netname-separator");
-
-  g_free(default_hierarchy_netname_separator);
-
-  default_hierarchy_netname_separator = g_strdup_scm_string (name);
-
-  return SCM_BOOL_T;
-}
-
-SCM g_rc_hierarchy_netattrib_separator(SCM name)
-{
-  SCM_ASSERT (scm_is_string (name), name,
-              SCM_ARG1, "hierarchy-netattrib-separator");
-
-  g_free(default_hierarchy_netattrib_separator);
-
-  default_hierarchy_netattrib_separator = g_strdup_scm_string (name);
-
-  return SCM_BOOL_T;
-}
-
-SCM g_rc_hierarchy_uref_separator(SCM name)
-{
-  SCM_ASSERT (scm_is_string (name), name,
-              SCM_ARG1, "hierarchy-uref-separator");
-
-  g_free(default_hierarchy_uref_separator);
-
-  default_hierarchy_uref_separator = g_strdup_scm_string (name);
-
-  return SCM_BOOL_T;
-}
-
-SCM g_rc_hierarchy_netattrib_order(SCM mode)
-{
-    static const vstbl_entry mode_table[] = {
-	{PREPEND, "prepend"},
-	{APPEND, "append"}
-    };
-
-    RETURN_G_RC_MODE("hierarchy-netattrib-order",
-		     default_hierarchy_netattrib_order, 2);
-}
-
-SCM g_rc_hierarchy_netname_order(SCM mode)
-{
-    static const vstbl_entry mode_table[] = {
-	{PREPEND, "prepend"},
-	{APPEND, "append"}
-    };
-
-    RETURN_G_RC_MODE("hierarchy-netname-order",
-		     default_hierarchy_netname_order, 2);
-}
-
-SCM g_rc_hierarchy_uref_order(SCM mode)
-{
-    static const vstbl_entry mode_table[] = {
-	{PREPEND, "prepend"},
-	{APPEND, "append"}
-    };
-
-    RETURN_G_RC_MODE("hierarchy-uref-order",
-		     default_hierarchy_uref_order, 2);
 }
 
 /*************************** GUILE end done *********************************/
