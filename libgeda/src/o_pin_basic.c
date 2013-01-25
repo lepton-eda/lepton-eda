@@ -425,83 +425,61 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
       if (o_current->line->y[0] == o_current->line->y[1]) {
         /* horizontal */
         
-        if (o_current->line->x[0] == left) {
-          o_current->whichend = 0;
-        } else if (o_current->line->x[1] == left) {
-          o_current->whichend = 1;        
-        } else if (o_current->line->x[0] == right) {
-          o_current->whichend = 0;        
-        } else if (o_current->line->x[1] == right) {
-          o_current->whichend = 1;
+        d1 = abs(o_current->line->x[0] - left);
+        d2 = abs(o_current->line->x[1] - left);
+        d3 = abs(o_current->line->x[0] - right);
+        d4 = abs(o_current->line->x[1] - right);
+
+        if (d1 <= d2) {
+          min0 = d1;
+          min0_whichend = 0;
         } else {
-            
-          d1 = abs(o_current->line->x[0] - left);
-          d2 = abs(o_current->line->x[1] - left);
-          d3 = abs(o_current->line->x[0] - right);
-          d4 = abs(o_current->line->x[1] - right);
+          min0 = d2;
+          min0_whichend = 1;
+        }
 
-          if (d1 <= d2) {
-            min0 = d1;
-            min0_whichend = 0;
-          } else {
-            min0 = d2;
-            min0_whichend = 1;
-          }
+        if (d3 <= d4) {
+          min1 = d3;
+          min1_whichend = 0;
+        } else {
+          min1 = d4;
+          min1_whichend = 1;
+        }
 
-          if (d3 <= d4) {
-            min1 = d3;
-            min1_whichend = 0;
-          } else {
-            min1 = d4;
-            min1_whichend = 1;
-          }
-
-          if (min0 <= min1) {
-            o_current->whichend = min0_whichend;
-          } else {
-            o_current->whichend = min1_whichend;
-          }
+        if (min0 <= min1) {
+          o_current->whichend = min0_whichend;
+        } else {
+          o_current->whichend = min1_whichend;
         }
            
       } else if (o_current->line->x[0] == o_current->line->x[1]) {
         /* vertical */
         
-        if (o_current->line->y[0] == top) {
-          o_current->whichend = 0;
-        } else if (o_current->line->y[1] == top) {
-          o_current->whichend = 1;        
-        } else if (o_current->line->y[0] == bottom) {
-          o_current->whichend = 0;        
-        } else if (o_current->line->y[1] == bottom) {
-          o_current->whichend = 1;
+        d1 = abs(o_current->line->y[0] - top);
+        d2 = abs(o_current->line->y[1] - top);
+        d3 = abs(o_current->line->y[0] - bottom);
+        d4 = abs(o_current->line->y[1] - bottom);
+
+        if (d1 <= d2) {
+          min0 = d1;
+          min0_whichend = 0;
         } else {
-            
-          d1 = abs(o_current->line->y[0] - top);
-          d2 = abs(o_current->line->y[1] - top);
-          d3 = abs(o_current->line->y[0] - bottom);
-          d4 = abs(o_current->line->y[1] - bottom);
+          min0 = d2;
+          min0_whichend = 1;
+        }
 
-          if (d1 <= d2) {
-            min0 = d1;
-            min0_whichend = 0;
-          } else {
-            min0 = d2;
-            min0_whichend = 1;
-          }
+        if (d3 <= d4) {
+          min1 = d3;
+          min1_whichend = 0;
+        } else {
+          min1 = d4;
+          min1_whichend = 1;
+        }
 
-          if (d3 <= d4) {
-            min1 = d3;
-            min1_whichend = 0;
-          } else {
-            min1 = d4;
-            min1_whichend = 1;
-          }
-
-          if (min0 <= min1) {
-            o_current->whichend = min0_whichend;
-          } else {
-            o_current->whichend = min1_whichend;
-          }
+        if (min0 <= min1) {
+          o_current->whichend = min0_whichend;
+        } else {
+          o_current->whichend = min1_whichend;
         }
       }
     }
