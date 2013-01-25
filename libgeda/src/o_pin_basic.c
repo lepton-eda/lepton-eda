@@ -470,9 +470,9 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
           o_current->whichend = 0;
         } else if (o_current->line->y[1] == top) {
           o_current->whichend = 1;        
-        } else if (o_current->line->x[0] == bottom) {
+        } else if (o_current->line->y[0] == bottom) {
           o_current->whichend = 0;        
-        } else if (o_current->line->x[1] == bottom) {
+        } else if (o_current->line->y[1] == bottom) {
           o_current->whichend = 1;
         } else {
             
