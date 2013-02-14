@@ -1171,7 +1171,6 @@ gboolean x_event_key (GtkWidget *widget, GdkEventKey *event,
 {
   gboolean retval = FALSE;
   int wx, wy;
-  int alt_key = 0;
   int shift_key = 0;
   int control_key = 0;
   int pressed;
@@ -1190,7 +1189,6 @@ gboolean x_event_key (GtkWidget *widget, GdkEventKey *event,
   switch (event->keyval) {
     case GDK_Alt_L:
     case GDK_Alt_R:
-      alt_key = 1;
       w_current->ALTKEY = pressed;
       break;
 
