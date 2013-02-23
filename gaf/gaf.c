@@ -1,6 +1,6 @@
 /*
  * gEDA/gaf command-line utility
- * Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2012-2013 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -122,7 +122,7 @@ main (int argc, char **argv)
       break;
 
     case 2: /* --no-rcfiles */
-      setenv ("GAF_INHIBIT_RCFILES", "1", 1);
+      g_setenv ("GAF_INHIBIT_RCFILES", "1", 1);
       break;
 
     case 'V':
