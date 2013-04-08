@@ -914,6 +914,11 @@ create_inuse_treeview (Compselect *compselect)
                                        "headers-visible", FALSE,
                                        NULL));
 
+  g_signal_connect (treeview,
+                    "row-activated",
+                    G_CALLBACK (tree_row_activated),
+                    compselect);
+
   /* Connect callback to selection */
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
