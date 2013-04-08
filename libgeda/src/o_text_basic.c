@@ -692,6 +692,7 @@ void o_text_mirror_world(TOPLEVEL *toplevel,
  *  This function will calculate the distance to the text regardless
  *  if the text is visible or not.
  *
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] object       The text OBJECT.
  *  \param [in] x            The x coordinate of the given point.
  *  \param [in] y            The y coordinate of the given point.
@@ -701,7 +702,8 @@ void o_text_mirror_world(TOPLEVEL *toplevel,
  *  number (G_MAXDOUBLE).  With an invalid parameter, this funciton
  *  returns G_MAXDOUBLE.
  */
-double o_text_shortest_distance (OBJECT *object, int x, int y, int force_solid)
+double o_text_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
+                                 int x, int y, int force_solid)
 {
   double dx, dy;
 

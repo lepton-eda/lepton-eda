@@ -97,7 +97,7 @@ gboolean o_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
 void o_translate_world (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object);
 void o_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-double o_shortest_distance(OBJECT *object, int x, int y);
+double o_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y);
 void o_set_color(TOPLEVEL *toplevel, OBJECT *object, int color);
 PAGE *o_get_page (TOPLEVEL *toplevel, OBJECT *object);
 OBJECT *o_get_parent (TOPLEVEL *toplevel, OBJECT *object);

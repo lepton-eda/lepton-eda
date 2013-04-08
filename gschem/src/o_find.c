@@ -65,7 +65,7 @@ is_object_hit (GSCHEM_TOPLEVEL *w_current, OBJECT *object,
                       w_x, w_y))
     return FALSE;
 
-  return (o_shortest_distance (object, w_x, w_y) < w_slack);
+  return (o_shortest_distance (w_current->toplevel, object, w_x, w_y) < w_slack);
 }
 
 

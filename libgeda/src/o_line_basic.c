@@ -566,6 +566,7 @@ double o_line_length(OBJECT *object)
  *  If the line represents a single point (the endpoints are the same), this
  *  function calcualtes the distance to that point.
  *
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] object       The line OBJECT.
  *  \param [in] x            The x coordinate of the given point.
  *  \param [in] y            The y coordinate of the given point.
@@ -573,7 +574,8 @@ double o_line_length(OBJECT *object)
  *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double o_line_shortest_distance (OBJECT *object, int x, int y, int force_solid)
+double o_line_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
+                                 int x, int y, int force_solid)
 {
   return m_line_shortest_distance (object->line, x, y);
 }

@@ -1129,6 +1129,7 @@ done:
  *        force treating them as solid filled.
  *        We ignore the force_solid argument to this function.
  *
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] object       The complex  OBJECT.
  *  \param [in] x            The x coordinate of the given point.
  *  \param [in] y            The y coordinate of the given point.
@@ -1138,8 +1139,8 @@ done:
  *  number (G_MAXDOUBLE).  With an invalid parameter, this function returns
  *  G_MAXDOUBLE.
  */
-double o_complex_shortest_distance (OBJECT *object, int x, int y,
-                                    int force_solid)
+double o_complex_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
+                                    int x, int y, int force_solid)
 {
   double shortest_distance = G_MAXDOUBLE;
   double distance;
@@ -1170,7 +1171,7 @@ double o_complex_shortest_distance (OBJECT *object, int x, int y,
         found_line_bounds = 1;
       }
     } else {
-      distance = o_shortest_distance_full (obj, x, y, TRUE);
+      distance = o_shortest_distance_full (toplevel, obj, x, y, TRUE);
       shortest_distance = min (shortest_distance, distance);
     }
 

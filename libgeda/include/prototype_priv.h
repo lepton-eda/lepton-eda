@@ -62,7 +62,7 @@ void m_transform_translate(TRANSFORM *transform, gdouble dx, gdouble dy);
 /* o_arc_basic.c */
 OBJECT *o_arc_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_arc_save(TOPLEVEL *toplevel, OBJECT *object);
-double o_arc_shortest_distance(OBJECT *object, int x, int y, int force_soild);
+double o_arc_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 gboolean o_arc_within_sweep(ARC *arc, gint x, gint y);
 void world_get_arc_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 gboolean o_arc_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
@@ -78,14 +78,14 @@ OBJECT *o_attrib_find_attrib_by_name(const GList *list, char *name, int count);
 
 /* o_basic.c */
 void o_bounds_invalidate(TOPLEVEL *toplevel, OBJECT *object);
-double o_shortest_distance_full(OBJECT *object, int x, int y, int force_solid);
+double o_shortest_distance_full(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_solid);
 void o_emit_pre_change_notify(TOPLEVEL *toplevel, OBJECT *object);
 void o_emit_change_notify(TOPLEVEL *toplevel, OBJECT *object);
 
 /* o_box_basic.c */
 OBJECT *o_box_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_box_save(TOPLEVEL *toplevel, OBJECT *object);
-double o_box_shortest_distance(OBJECT *object, int x, int y, int force_soild);
+double o_box_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 void world_get_box_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 gboolean o_box_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
 void o_box_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
@@ -100,7 +100,7 @@ void o_bus_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 /* o_circle_basic.c */
 OBJECT *o_circle_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_circle_save(TOPLEVEL *toplevel, OBJECT *object);
-double o_circle_shortest_distance(OBJECT *object, int x, int y, int force_soild);
+double o_circle_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 void world_get_circle_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 gboolean o_circle_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
 void o_circle_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
@@ -108,7 +108,7 @@ void o_circle_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 /* o_complex_basic.c */
 OBJECT *o_complex_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_complex_save(TOPLEVEL *toplevel, OBJECT *object);
-double o_complex_shortest_distance(OBJECT *object, int x, int y, int force_soild);
+double o_complex_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 void world_get_complex_bounds(TOPLEVEL *toplevel, OBJECT *complex, int *left, int *top, int *right, int *bottom);
 gboolean o_complex_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
 void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
@@ -117,7 +117,7 @@ GList *o_complex_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
 /* o_line_basic.c */
 OBJECT *o_line_read(TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_line_save(TOPLEVEL *toplevel, OBJECT *object);
-double o_line_shortest_distance(OBJECT *object, int x, int y, int force_soild);
+double o_line_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 void world_get_line_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 gboolean o_line_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
 void o_line_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
@@ -132,7 +132,7 @@ void o_net_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 /* o_path_basic.c */
 OBJECT *o_path_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_path_save(TOPLEVEL *toplevel, OBJECT *object);
-double o_path_shortest_distance(OBJECT *object, int x, int y, int force_soild);
+double o_path_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 void world_get_path_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 gboolean o_path_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
 void o_path_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
@@ -141,7 +141,7 @@ void o_path_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 /* o_picture.c */
 OBJECT *o_picture_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_picture_save(TOPLEVEL *toplevel, OBJECT *object);
-double o_picture_shortest_distance(OBJECT *object, int x, int y, int force_soild);
+double o_picture_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 void world_get_picture_bounds(TOPLEVEL *toplevel, OBJECT *object, int *left, int *top, int *right, int *bottom);
 gboolean o_picture_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
 void o_picture_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
@@ -158,7 +158,7 @@ void o_pin_recalc(TOPLEVEL *toplevel, OBJECT *o_current);
 /* o_text_basic.c */
 OBJECT *o_text_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);
 char *o_text_save(TOPLEVEL *toplevel, OBJECT *object);
-double o_text_shortest_distance(OBJECT *object, int x, int y, int force_soild);
+double o_text_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int force_soild);
 int world_get_text_bounds(TOPLEVEL *toplevel, OBJECT *o_current, int *left, int *top, int *right, int *bottom);
 gboolean o_text_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
 void o_text_recalc(TOPLEVEL *toplevel, OBJECT *o_current);

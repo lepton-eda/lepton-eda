@@ -592,6 +592,7 @@ gboolean o_arc_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter of the arc.
  *
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] object       The arc OBJECT.
  *  \param [in] x            The x coordinate of the given point.
  *  \param [in] y            The y coordinate of the given point.
@@ -599,7 +600,8 @@ gboolean o_arc_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
  *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double o_arc_shortest_distance (OBJECT *object, int x, int y, int force_solid)
+double o_arc_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
+                                int x, int y, int force_solid)
 {
   double shortest_distance;
   double radius;
