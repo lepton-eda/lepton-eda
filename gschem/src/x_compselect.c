@@ -428,7 +428,7 @@ lib_model_filter_visible_func (GtkTreeModel *model,
 /*! \brief Handles activation (e.g. double-clicking) of a component row
  *  \par Function Description
  *  Component row activated handler:
- *  As a convenince to the user, expand / contract any node with children.
+ *  As a convenience to the user, expand / contract any node with children.
  *
  *  \param [in] tree_view The component treeview.
  *  \param [in] path      The GtkTreePath to the activated row.
