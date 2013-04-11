@@ -1153,21 +1153,22 @@ double o_complex_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
   for (iter = object->complex->prim_objs;
        iter != NULL; iter= g_list_next (iter)) {
     OBJECT *obj = iter->data;
+    int left, top, right, bottom;
 
     /* Collect the bounds of any lines and arcs in the symbol */
     if ((obj->type == OBJ_LINE || obj->type == OBJ_ARC) &&
-        obj->w_bounds_valid) {
-
+        world_get_single_object_bounds(toplevel, obj,
+                                       &left, &top, &right, &bottom)) {
       if (found_line_bounds) {
-        line_bounds.lower_x = min (line_bounds.lower_x, obj->w_left);
-        line_bounds.lower_y = min (line_bounds.lower_y, obj->w_top);
-        line_bounds.upper_x = max (line_bounds.upper_x, obj->w_right);
-        line_bounds.upper_y = max (line_bounds.upper_y, obj->w_bottom);
+        line_bounds.lower_x = min (line_bounds.lower_x, left);
+        line_bounds.lower_y = min (line_bounds.lower_y, top);
+        line_bounds.upper_x = max (line_bounds.upper_x, right);
+        line_bounds.upper_y = max (line_bounds.upper_y, bottom);
       } else {
-        line_bounds.lower_x = obj->w_left;
-        line_bounds.lower_y = obj->w_top;
-        line_bounds.upper_x = obj->w_right;
-        line_bounds.upper_y = obj->w_bottom;
+        line_bounds.lower_x = left;
+        line_bounds.lower_y = top;
+        line_bounds.upper_x = right;
+        line_bounds.upper_y = bottom;
         found_line_bounds = 1;
       }
     } else {

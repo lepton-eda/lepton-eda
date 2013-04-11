@@ -705,12 +705,17 @@ void o_text_mirror_world(TOPLEVEL *toplevel,
 double o_text_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
                                  int x, int y, int force_solid)
 {
+  int left, top, right, bottom;
   double dx, dy;
 
   g_return_val_if_fail (object->text != NULL, G_MAXDOUBLE);
 
-  dx = min (x - object->w_left, object->w_right - x);
-  dy = min (y - object->w_top, object->w_bottom - y);
+  if (!world_get_single_object_bounds(toplevel, object,
+                                      &left, &top, &right, &bottom))
+    return G_MAXDOUBLE;
+
+  dx = min (x - left, right - x);
+  dy = min (y - top, bottom - y);
 
   dx = min (dx, 0);
   dy = min (dy, 0);
