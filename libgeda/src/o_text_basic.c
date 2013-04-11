@@ -274,7 +274,7 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
   update_disp_string (new_node);
 
   /* Update bounding box */
-  new_node->w_bounds_valid = FALSE;
+  new_node->w_bounds_valid_for = NULL;
 
   return new_node;
 }
@@ -302,7 +302,7 @@ void o_text_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
   o_current->w_top = top;
   o_current->w_right = right;
   o_current->w_bottom = bottom;
-  o_current->w_bounds_valid = TRUE;
+  o_current->w_bounds_valid_for = toplevel;
 }
 
 /*! \brief read a text object from a char buffer
@@ -512,7 +512,7 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   o_emit_pre_change_notify (toplevel, o_current);
   update_disp_string (o_current);
-  o_current->w_bounds_valid = FALSE;
+  o_current->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, o_current);
 }
 
@@ -532,7 +532,7 @@ void o_text_translate_world(TOPLEVEL *toplevel,
   o_current->text->y = o_current->text->y + dy;
 
   /* Update bounding box */
-  o_current->w_bounds_valid = FALSE;
+  o_current->w_bounds_valid_for = NULL;
 }
 
 /*! \brief create a copy of a text object

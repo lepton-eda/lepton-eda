@@ -127,7 +127,7 @@ void o_net_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
   o_current->w_top = top;
   o_current->w_right = right;
   o_current->w_bottom = bottom;
-  o_current->w_bounds_valid = TRUE;
+  o_current->w_bounds_valid_for = toplevel;
 }
 
 /*! \brief read a net object from a char buffer

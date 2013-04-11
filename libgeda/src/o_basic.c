@@ -567,7 +567,7 @@ double o_shortest_distance_full (TOPLEVEL *toplevel, OBJECT *object,
 void o_bounds_invalidate(TOPLEVEL *toplevel, OBJECT *obj)
 {
   do {
-      obj->w_bounds_valid = FALSE;
+      obj->w_bounds_valid_for = NULL;
   } while ((obj = obj->parent) != NULL);
 }
 

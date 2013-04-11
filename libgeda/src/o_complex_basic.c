@@ -78,9 +78,9 @@ int world_get_single_object_bounds(TOPLEVEL *toplevel, OBJECT *o_current,
       case(OBJ_ARC):
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-        if (!o_current->w_bounds_valid) {
+        if (o_current->w_bounds_valid_for != toplevel) {
           o_recalc_single_object (toplevel, o_current);
-          if (!o_current->w_bounds_valid) {
+          if (o_current->w_bounds_valid_for != toplevel) {
             return 0;
           }
         }
@@ -620,7 +620,7 @@ void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
   o_current->w_top = top;
   o_current->w_right = right;
   o_current->w_bottom = bottom;
-  o_current->w_bounds_valid = TRUE;
+  o_current->w_bounds_valid_for = toplevel;
 }
 
 /*! \brief read a complex object from a char buffer

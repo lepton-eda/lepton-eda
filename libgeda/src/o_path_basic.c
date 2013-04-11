@@ -492,9 +492,9 @@ void o_path_recalc (TOPLEVEL *toplevel, OBJECT *o_current)
     o_current->w_top    = top;
     o_current->w_right  = right;
     o_current->w_bottom = bottom;
-    o_current->w_bounds_valid = TRUE;
+    o_current->w_bounds_valid_for = toplevel;
   } else {
-    o_current->w_bounds_valid = FALSE;
+    o_current->w_bounds_valid_for = NULL;
   }
 }
 

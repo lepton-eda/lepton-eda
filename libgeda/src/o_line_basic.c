@@ -456,7 +456,7 @@ void o_line_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
   o_current->w_top    = top;
   o_current->w_right  = right;
   o_current->w_bottom = bottom;
-  o_current->w_bounds_valid = TRUE;
+  o_current->w_bounds_valid_for = toplevel;
 }
 
 /*! \brief Get line bounding rectangle in WORLD coordinates.

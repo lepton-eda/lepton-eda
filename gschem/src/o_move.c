@@ -189,7 +189,7 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
 
         o_move_end_lowlevel_glist (w_current, object->complex->prim_objs,
                                    diff_x, diff_y);
-        object->w_bounds_valid = FALSE;
+        object->w_bounds_valid_for = NULL;
         break;
 
       default:

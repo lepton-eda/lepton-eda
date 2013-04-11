@@ -73,7 +73,7 @@ OBJECT *s_basic_init_object(OBJECT *new_node, int type, char const *name)
   new_node->w_left = 0;
   new_node->w_right = 0;
   new_node->w_bottom = 0;
-  new_node->w_bounds_valid = FALSE;
+  new_node->w_bounds_valid_for = NULL;
 
   /* Setup line/circle structs */
   new_node->line = NULL;
