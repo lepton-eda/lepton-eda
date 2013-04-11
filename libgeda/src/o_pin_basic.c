@@ -391,10 +391,8 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
       while (iter != NULL) {
         o_current = (OBJECT *)iter->data;
         if (o_current->type == OBJ_PIN) {
-          rleft = o_current->w_left;
-          rtop = o_current->w_top;
-          rright = o_current->w_right;
-          rbottom = o_current->w_bottom;
+          (void) world_get_single_object_bounds(
+            toplevel, o_current, &rleft, &rtop, &rright, &rbottom);
 
           if ( found ) {
             left = min( left, rleft );
