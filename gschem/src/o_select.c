@@ -304,11 +304,14 @@ void o_select_box_search(GSCHEM_TOPLEVEL *w_current)
     o_current = iter->data;
     /* only select visible objects */
     if (o_is_visible (toplevel, o_current) || toplevel->show_hidden_text) {
+      int cleft, ctop, cright, cbottom;
 
-      if ( o_current->w_left   >= left &&
-           o_current->w_right  <= right  &&
-           o_current->w_top    >= top  &&
-           o_current->w_bottom <= bottom ) {
+      if ( world_get_single_object_bounds(toplevel, o_current,
+                                          &cleft, &ctop, &cright, &cbottom) &&
+           cleft   >= left &&
+           cright  <= right  &&
+           ctop    >= top  &&
+           cbottom <= bottom ) {
 
         o_select_object(w_current, o_current, MULTIPLE, count);
         count++;
