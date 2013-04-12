@@ -472,33 +472,6 @@ void o_path_mirror_world (TOPLEVEL *toplevel, int world_centerx,
 }
 
 
-/*! \brief Recalculate path coordinates in SCREEN units.
- *  \par Function Description
- *  This function recalculate the bounding box of the <B>o_current</B>
- *
- *  \param [in] toplevel      The TOPLEVEL object.
- *  \param [in,out] o_current  Line OBJECT to be recalculated.
- */
-void o_path_recalc (TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  int left = 0, right = 0, top = 0, bottom = 0;
-
-  g_return_if_fail (o_current->path != NULL);
-
-  /* Update the bounding box */
-  if (o_current->path->num_sections > 0) {
-    world_get_path_bounds (toplevel, o_current, &left, &top, &right, &bottom);
-    o_current->w_left   = left;
-    o_current->w_top    = top;
-    o_current->w_right  = right;
-    o_current->w_bottom = bottom;
-    o_current->w_bounds_valid_for = toplevel;
-  } else {
-    o_current->w_bounds_valid_for = NULL;
-  }
-}
-
-
 /*! \brief Get path bounding rectangle in WORLD coordinates.
  *  \par Function Description
  *  This function sets the <B>left</B>, <B>top</B>, <B>right</B> and

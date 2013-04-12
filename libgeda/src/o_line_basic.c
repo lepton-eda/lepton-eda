@@ -431,31 +431,6 @@ void o_line_mirror_world(TOPLEVEL *toplevel, int world_centerx,
   
 }
 
-/*! \brief Recalculate line coordinates in SCREEN units.
- *  \par Function Description
- *  This function recalculate the bounding box of the <B>o_current</B>
- *
- *  \param [in] toplevel      The TOPLEVEL object.
- *  \param [in,out] o_current  Line OBJECT to be recalculated.
- */
-void o_line_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  int left, right, top, bottom;
-
-  if (o_current->line == NULL) {
-    return;
-  }
-  
-  /* update the bounding box - screen unit */
-  world_get_line_bounds(toplevel, o_current,
-		  &left, &top, &right, &bottom);
-  o_current->w_left   = left;
-  o_current->w_top    = top;
-  o_current->w_right  = right;
-  o_current->w_bottom = bottom;
-  o_current->w_bounds_valid_for = toplevel;
-}
-
 /*! \brief Get line bounding rectangle in WORLD coordinates.
  *  \par Function Description
  *  This function sets the <B>left</B>, <B>top</B>, <B>right</B> and

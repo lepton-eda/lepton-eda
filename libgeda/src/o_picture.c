@@ -329,32 +329,6 @@ OBJECT *o_picture_new (TOPLEVEL *toplevel,
   return new_node;
 }
 
-/*! \brief Recalculate picture bounding box.
- *  \par Function Description
- *  This function recalculates the bounding box of the <B>o_current</B>
- *  parameter picture object.
- *
- *  \param [in] toplevel      The TOPLEVEL object.
- *  \param [in,out] o_current  Picture OBJECT to be recalculated.
- */
-void o_picture_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  int left, top, right, bottom;
-
-  if (o_current->picture == NULL) {
-    return;
-  }
-
-  /* update the bounding picture - world units */
-  world_get_picture_bounds(toplevel, o_current,
-		     &left, &top, &right, &bottom);
-  o_current->w_left   = left;
-  o_current->w_top    = top;
-  o_current->w_right  = right;
-  o_current->w_bottom = bottom;
-  o_current->w_bounds_valid_for = toplevel;
-}
-
 /*! \brief Get picture bounding rectangle in WORLD coordinates.
  *  \par Function Description
  *  This function sets the <B>left</B>, <B>top</B>, <B>right</B> and

@@ -279,32 +279,6 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
   return new_node;
 }
 
-/*! \brief update the visual boundaries of the text object
- *  \par Function Description
- *  This function updates the boundaries of the object \a o_current.
- *
- *  \param [in]  toplevel  The TOPLEVEL object
- *  \param [in]  o_current The OBJECT to update
- */
-void o_text_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  int left, right, top, bottom;
-
-  if ((!o_is_visible (toplevel, o_current)) &&
-      (!toplevel->show_hidden_text)) {
-    return;
-  }
-
-  if ( !world_get_text_bounds(toplevel, o_current, &left, &top, &right, &bottom) )
-    return;
-
-  o_current->w_left = left;
-  o_current->w_top = top;
-  o_current->w_right = right;
-  o_current->w_bottom = bottom;
-  o_current->w_bounds_valid_for = toplevel;
-}
-
 /*! \brief read a text object from a char buffer
  *  \par Function Description
  *  This function reads a text object from the textbuffer \a tb and 

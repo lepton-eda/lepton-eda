@@ -563,31 +563,6 @@ void o_box_mirror_world(TOPLEVEL *toplevel,
   
 }
 
-/*! \brief Recalculate BOX coordinates in WORLD units.
- *  \par Function Description
- *  This function recalculates the box coordinates and its 
- *  bounding are recalculated as well.
- *
- *  \param [in] toplevel      The TOPLEVEL object.
- *  \param [in,out] o_current  BOX OBJECT to be recalculated.
- */
-void o_box_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  int left, top, right, bottom;
-
-  if (o_current->box == NULL) {
-    return;
-  }
-
-  /* update the bounding box - world unit */
-  world_get_box_bounds(toplevel, o_current, &left, &top, &right, &bottom);
-  o_current->w_left   = left;
-  o_current->w_top    = top;
-  o_current->w_right  = right;
-  o_current->w_bottom = bottom;
-  o_current->w_bounds_valid_for = toplevel;
-}
-
 /*! \brief Get BOX bounding rectangle in WORLD coordinates.
  *  \par Function Description
  *  This function sets the <B>left</B>, <B>top</B>, <B>right</B> and <B>bottom</B>

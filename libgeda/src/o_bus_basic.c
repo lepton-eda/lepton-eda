@@ -105,34 +105,6 @@ OBJECT *o_bus_new(TOPLEVEL *toplevel,
   return new_node;
 }
 
-/*! \brief recalc the visual properties of a bus object
- *  \par Function Description
- *  This function updates the visual coords of the \a o_current object.
- *  
- *  \param [in]     toplevel    The TOPLEVEL object.
- *  \param [in]     o_current   a bus object.
- */
-void o_bus_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  int left, right, top, bottom;
-
-  if (o_current == NULL) {
-    return;
-  }
-
-  if (o_current->line == NULL) {
-    return;
-  }
-
-  world_get_bus_bounds(toplevel, o_current, &left, &top, &right, &bottom);
-
-  o_current->w_left = left;
-  o_current->w_top = top;
-  o_current->w_right = right;
-  o_current->w_bottom = bottom;
-  o_current->w_bounds_valid_for = toplevel;
-}
-
 /*! \brief read a bus object from a char buffer
  *  \par Function Description
  *  This function reads a bus object from the buffer \a buf.

@@ -462,36 +462,6 @@ void o_arc_mirror_world(TOPLEVEL *toplevel,
 	
 }
 
-/*! \brief
- *  \par Function Description
- *  This function recalculates internal parameters in screen units
- *  of an object containing an arc. The object is given as parameters <B>o_current</B>.
- *  The calculation is done according to the zoom factor detailed in the <B>toplevel</B>
- *  pointed structure.
- *  It also recalculates the <B>OBJECT</B> specific fields and the bounding box of the arc.
- *  
- *  The bounding box - in world units - is recalculated with the <B>world_get_arc_bounds()</B> function.
- *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] o_current
- */
-void o_arc_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  int left, right, top, bottom;
-	
-  if (o_current->arc == NULL) {
-    return;
-  }
-
-  /* recalculates the bounding box */
-  world_get_arc_bounds(toplevel, o_current, &left, &top, &right, &bottom);
-  o_current->w_left   = left;
-  o_current->w_top    = top;
-  o_current->w_right  = right;
-  o_current->w_bottom = bottom;
-  o_current->w_bounds_valid_for = toplevel;
-}
-
 
 /*! \brief
  *  \par Function Description
