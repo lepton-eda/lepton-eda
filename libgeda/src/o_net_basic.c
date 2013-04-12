@@ -95,7 +95,7 @@ OBJECT *o_net_new(TOPLEVEL *toplevel, char type,
   new_node->line->y[1] = y2;
   new_node->line_width = NET_WIDTH;
 
-  o_net_recalc (toplevel, new_node);
+  new_node->w_bounds_valid_for = NULL;
 
   return new_node;
 }
@@ -221,7 +221,7 @@ void o_net_translate_world(TOPLEVEL *toplevel, int dx, int dy,
   object->line->y[1] = object->line->y[1] + dy;
 
   /* Update bounding box */
-  o_net_recalc (toplevel, object);
+  object->w_bounds_valid_for = NULL;
 
   s_tile_update_object(toplevel, object);
 }
@@ -525,7 +525,7 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
           }
 
           s_delete_object (toplevel, other_object);
-          o_net_recalc(toplevel, object);
+          object->w_bounds_valid_for = NULL;
           s_tile_update_object(toplevel, object);
           s_conn_update_object (toplevel, object);
           return(-1);
@@ -594,7 +594,7 @@ void o_net_modify(TOPLEVEL *toplevel, OBJECT *object,
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
 
-  o_net_recalc (toplevel, object);
+  object->w_bounds_valid_for = NULL;
 
   s_tile_update_object(toplevel, object);
 }

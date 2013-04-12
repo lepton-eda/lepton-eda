@@ -626,7 +626,7 @@ void o_move_end_rubberband (GSCHEM_TOPLEVEL *w_current,
         continue;
       }
 
-      o_recalc_single_object (toplevel, object);
+      object->w_bounds_valid_for = NULL;
       s_tile_update_object (toplevel, object);
       s_conn_update_object (toplevel, object);
       *objects = g_list_append (*objects, object);

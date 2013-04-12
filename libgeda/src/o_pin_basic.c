@@ -100,7 +100,7 @@ OBJECT *o_pin_new(TOPLEVEL *toplevel,
 
   o_pin_set_type (toplevel, new_node, pin_type);
 
-  o_pin_recalc (toplevel, new_node);
+  new_node->w_bounds_valid_for = NULL;
 
   new_node->whichend = whichend;
 
@@ -241,7 +241,7 @@ void o_pin_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
   object->line->y[1] = object->line->y[1] + dy;
 
   /* Update bounding box */
-  o_pin_recalc (toplevel, object);
+  object->w_bounds_valid_for = NULL;
 
   s_tile_update_object(toplevel, object);
 }
@@ -347,7 +347,7 @@ void o_pin_modify(TOPLEVEL *toplevel, OBJECT *object,
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
 
-  o_pin_recalc (toplevel, object);
+  object->w_bounds_valid_for = NULL;
 
   s_tile_update_object(toplevel, object);
 }

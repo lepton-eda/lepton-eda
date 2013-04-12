@@ -324,7 +324,7 @@ OBJECT *o_picture_new (TOPLEVEL *toplevel,
   }
 
   /* compute the bounding picture */
-  o_picture_recalc(toplevel, new_node);
+  new_node->w_bounds_valid_for = NULL;
 
   return new_node;
 }
@@ -516,7 +516,7 @@ void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object,
   }
 	
   /* recalculate the screen coords and the boundings */
-  o_picture_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, object);
 }
 
@@ -547,7 +547,7 @@ o_picture_modify_all (TOPLEVEL *toplevel, OBJECT *object,
   object->picture->upper_y = (y1 > y2) ? y1 : y2;
 
   /* recalculate the world coords and bounds */
-  o_box_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, object);
 }
 
@@ -613,7 +613,7 @@ void o_picture_rotate_world(TOPLEVEL *toplevel,
   object->picture->lower_y += world_centery;
   
   /* recalc boundings and screen coords */
-  o_picture_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
 	
 }
 
@@ -674,7 +674,7 @@ void o_picture_mirror_world(TOPLEVEL *toplevel,
   object->picture->lower_y += world_centery;
 
   /* recalc boundings and screen coords */
-  o_picture_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   
 }
 
@@ -698,7 +698,7 @@ void o_picture_translate_world(TOPLEVEL *toplevel,
   object->picture->lower_y = object->picture->lower_y + dy;
   
   /* recalc the screen coords and the bounding picture */
-  o_picture_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief Create a copy of a picture.
@@ -748,7 +748,7 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
   picture->pixbuf = o_picture_get_pixbuf (toplevel, object);
 
   /* compute the bounding picture */
-  o_picture_recalc(toplevel, new_node);
+  new_node->w_bounds_valid_for = NULL;
 
   return new_node;
 }

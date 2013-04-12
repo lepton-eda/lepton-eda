@@ -309,7 +309,7 @@ void o_edit_show_hidden_lowlevel (GSCHEM_TOPLEVEL *w_current,
 
     if (o_current->type == OBJ_COMPLEX || o_current->type == OBJ_PLACEHOLDER) {
       o_edit_show_hidden_lowlevel(w_current, o_current->complex->prim_objs);
-      o_recalc_single_object(toplevel, o_current);
+      o_current->w_bounds_valid_for = NULL;
     }
 
     iter = g_list_next (iter);

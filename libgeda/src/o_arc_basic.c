@@ -104,7 +104,7 @@ OBJECT *o_arc_new(TOPLEVEL *toplevel,
   o_set_fill_options(toplevel, new_node,
                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
-  o_arc_recalc(toplevel, new_node);
+  new_node->w_bounds_valid_for = NULL;
 
   /* new_node->graphical = arc; eventually */
 
@@ -202,7 +202,7 @@ void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object,
 	}
 
 	/* update the screen coords and the bounding box */
-	o_arc_recalc(toplevel, object);
+	object->w_bounds_valid_for = NULL;
 	o_emit_change_notify (toplevel, object);
 }
 
@@ -361,7 +361,7 @@ void o_arc_translate_world(TOPLEVEL *toplevel, int dx, int dy,
 
 
   /* Recalculate screen coords from new world coords */
-  o_arc_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief
@@ -415,7 +415,7 @@ void o_arc_rotate_world(TOPLEVEL *toplevel,
   object->arc->y += world_centery;
 
   /* update the screen coords and the bounding box */
-  o_arc_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   
 }                                   
 
@@ -458,7 +458,7 @@ void o_arc_mirror_world(TOPLEVEL *toplevel,
   object->arc->y += world_centery;
 
   /* update the screen coords and bounding box */
-  o_arc_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
 	
 }
 

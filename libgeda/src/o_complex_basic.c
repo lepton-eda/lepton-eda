@@ -545,7 +545,7 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
     tmp->parent = new_node;
   }
 
-  o_complex_recalc(toplevel, new_node);
+  new_node->w_bounds_valid_for = NULL;
 
   return new_node;
 }
@@ -762,7 +762,7 @@ void o_complex_translate_world(TOPLEVEL *toplevel, int dx, int dy,
 
   o_glist_translate_world (toplevel, dx, dy, object->complex->prim_objs);
 
-  o_complex_recalc (toplevel, object);
+  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief Create a copy of a COMPLEX object
@@ -804,7 +804,7 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   }
 
   /* Recalculate bounds */
-  o_complex_recalc(toplevel, o_new);
+  o_new->w_bounds_valid_for = NULL;
 
   /* Delete or hide attributes eligible for promotion inside the complex */
   o_complex_remove_promotable_attribs (toplevel, o_new);

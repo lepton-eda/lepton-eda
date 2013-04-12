@@ -98,7 +98,7 @@ OBJECT *o_circle_new(TOPLEVEL *toplevel,
 		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
   /* compute the bounding box coords */
-  o_circle_recalc(toplevel, new_node);
+  new_node->w_bounds_valid_for = NULL;
 
   return new_node;
 }
@@ -124,9 +124,6 @@ OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *o_current)
    * The parameters of the new circle are set with the ones of the original
    * circle. The two circle have the same line type and the same filling
    * options.
-   *
-   * The bounding box coordinates are computed with
-   * #o_circle_recalc().
    */
   /* modify */
   new_obj->circle->center_x = o_current->circle->center_x;
@@ -141,7 +138,7 @@ OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 		     o_current->fill_pitch1, o_current->fill_angle1,
 		     o_current->fill_pitch2, o_current->fill_angle2);
   
-  o_circle_recalc(toplevel, new_obj);
+  new_obj->w_bounds_valid_for = NULL;
 
   /*	new_obj->attribute = 0;*/
 
@@ -200,7 +197,7 @@ void o_circle_modify(TOPLEVEL *toplevel, OBJECT *object,
   }
 
   /* recalculate the boundings */
-  o_circle_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, object);
 }
 
@@ -380,7 +377,7 @@ void o_circle_translate_world(TOPLEVEL *toplevel,
   object->circle->center_y = object->circle->center_y + dy;
   
   /* recalc the screen coords and the bounding box */
-  o_circle_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   
 }
 
@@ -432,7 +429,7 @@ void o_circle_rotate_world(TOPLEVEL *toplevel,
   object->circle->center_x += world_centerx;
   object->circle->center_y += world_centery;
 
-  o_circle_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   
 }
 
@@ -466,7 +463,7 @@ void o_circle_mirror_world(TOPLEVEL *toplevel,
   object->circle->center_y += world_centery;
 
   /* recalc boundings and screen coords */
-  o_circle_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   
 }
 

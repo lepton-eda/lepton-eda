@@ -161,7 +161,7 @@ SCM_DEFINE (set_complex_x, "%set-complex!", 6, 0, 0,
   obj->complex->mirror = scm_is_true (mirror_s);
   obj->selectable = scm_is_false (locked_s);
 
-  o_complex_recalc (toplevel, obj); /* We need to do this explicitly... */
+  obj->w_bounds_valid_for = NULL; /* We need to do this explicitly... */
 
   o_emit_change_notify (toplevel, obj);
 
@@ -279,7 +279,7 @@ SCM_DEFINE (complex_append_x, "%complex-append!", 2, 0, 0,
     g_list_append (parent->complex->prim_objs, child);
   child->parent = parent;
 
-  o_complex_recalc (toplevel, parent);
+  parent->w_bounds_valid_for = NULL;
 
   /* We may need to update connections */
   s_tile_update_object (toplevel, child);

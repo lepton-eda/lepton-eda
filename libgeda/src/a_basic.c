@@ -469,7 +469,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
             tmp->parent = new_obj;
           }
 
-          o_recalc_single_object (toplevel, new_obj);
+          new_obj->w_bounds_valid_for = NULL;
 
           embedded_level--;
         } else {

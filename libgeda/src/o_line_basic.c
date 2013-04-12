@@ -86,7 +86,7 @@ OBJECT *o_line_new(TOPLEVEL *toplevel,
 		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
   /* compute bounding box */
-  o_line_recalc(toplevel, new_node);
+  new_node->w_bounds_valid_for = NULL;
 
   return new_node;
 }
@@ -114,9 +114,6 @@ OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *o_current)
    * The coordinates of the ends of the new line are set with the ones
    * of the original line. The two lines have the sale line type and
    * filling options.
-   *
-   * The bounding box are computed with
-   * #o_line_recalc().
    */
 
   /* copy the line type and filling options */
@@ -129,7 +126,7 @@ OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 		     o_current->fill_pitch2, o_current->fill_angle2);
   
   /* calc the bounding box */
-  o_line_recalc(toplevel, o_current);
+  o_current->w_bounds_valid_for = NULL;
   
   /* new_obj->attribute = 0;*/
 
@@ -181,7 +178,7 @@ void o_line_modify(TOPLEVEL *toplevel, OBJECT *object,
   }
 
   /* recalculate the bounding box */
-  o_line_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, object);
 }
 
@@ -348,7 +345,7 @@ void o_line_translate_world(TOPLEVEL *toplevel,
   object->line->y[1] = object->line->y[1] + dy;
   
   /* Update bounding box */
-  o_line_recalc (toplevel, object);
+  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief Rotate Line OBJECT using WORLD coordinates. 
@@ -527,7 +524,7 @@ void o_line_scale_world(TOPLEVEL *toplevel, int x_scale, int y_scale,
   object->line->y[1] = object->line->y[1] * y_scale;
 
   /* update boundingbox */
-  o_line_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   
 }
 

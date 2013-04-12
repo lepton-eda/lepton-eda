@@ -223,7 +223,7 @@ void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current,
   o_current->line_space  = space;
 
   /* Recalculate the object's bounding box */
-  o_recalc_single_object( toplevel, o_current );
+  o_current->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, o_current);
 
 }

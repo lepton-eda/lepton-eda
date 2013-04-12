@@ -89,7 +89,7 @@ OBJECT *o_path_new (TOPLEVEL *toplevel,
                       FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
   /* compute bounding box */
-  o_path_recalc (toplevel, new_node);
+  new_node->w_bounds_valid_for = NULL;
 
   return new_node;
 }
@@ -125,7 +125,7 @@ OBJECT *o_path_copy (TOPLEVEL *toplevel, OBJECT *o_current)
                       o_current->fill_pitch2, o_current->fill_angle2);
 
   /* calc the bounding box */
-  o_path_recalc (toplevel, o_current);
+  o_current->w_bounds_valid_for = NULL;
 
   /* return the new tail of the object list */
   return new_obj;
@@ -336,7 +336,7 @@ void o_path_modify (TOPLEVEL *toplevel, OBJECT *object,
   }
 
   /* Update bounding box */
-  o_path_recalc (toplevel, object);
+  object->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, object);
 }
 
@@ -379,7 +379,7 @@ void o_path_translate_world (TOPLEVEL *toplevel,
   }
 
   /* Update bounding box */
-  o_path_recalc (toplevel, object);
+  object->w_bounds_valid_for = NULL;
 }
 
 
@@ -428,7 +428,7 @@ void o_path_rotate_world (TOPLEVEL *toplevel,
       break;
     }
   }
-  o_path_recalc (toplevel, object);
+  object->w_bounds_valid_for = NULL;
 }
 
 
@@ -468,7 +468,7 @@ void o_path_mirror_world (TOPLEVEL *toplevel, int world_centerx,
     }
   }
 
-  o_path_recalc (toplevel, object);
+  object->w_bounds_valid_for = NULL;
 }
 
 
