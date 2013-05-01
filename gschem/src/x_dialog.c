@@ -2223,7 +2223,7 @@ void about_dialog (GSCHEM_TOPLEVEL *w_current)
         " <ahvezda@geda.seul.org>\n"
         "Copyright © 1998-2011 gEDA Contributors"
         " (see ChangeLog for details)"),
-      "website",        "http://www.gpleda.org/",
+      "website",        "http://geda-project.org/",
       NULL);
 
   g_free (version_string);
