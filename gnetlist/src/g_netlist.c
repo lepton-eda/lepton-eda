@@ -57,7 +57,7 @@ SCM g_get_packages(SCM level)
 
     NETLIST *nl_current = NULL;
 
-    SCM_ASSERT(scm_is_string (level), level, SCM_ARG1, "gnetlist:get-pins");
+    SCM_ASSERT(scm_is_string (level), level, SCM_ARG1, "gnetlist:get-packages");
 
     /* build a hash table */
     ht = g_hash_table_new (g_str_hash, g_str_equal);
@@ -87,7 +87,7 @@ SCM g_get_non_unique_packages(SCM level)
 
     NETLIST *nl_current = NULL;
 
-    SCM_ASSERT(scm_is_string (level), level, SCM_ARG1, "gnetlist:get-pins");
+    SCM_ASSERT(scm_is_string (level), level, SCM_ARG1, "gnetlist:get-non-unique-packages");
 
     for (nl_current = netlist_head; nl_current != NULL;
          nl_current = nl_current->next) {
@@ -546,14 +546,14 @@ SCM g_get_attribute_by_pinseq(SCM scm_uref, SCM scm_pinseq,
   OBJECT *o_pin_object;
 
   SCM_ASSERT(scm_is_string (scm_uref),
-	     scm_uref, SCM_ARG1, "gnetlist:get-pin-number-seq");
+	     scm_uref, SCM_ARG1, "gnetlist:get-attribute-by-pinseq");
 
   SCM_ASSERT(scm_is_string (scm_pinseq),
-             scm_pinseq, SCM_ARG2, "gnetlist:get-pin-number-seq");
+             scm_pinseq, SCM_ARG2, "gnetlist:get-attribute-by-pinseq");
 
 
   SCM_ASSERT(scm_is_string (scm_wanted_attrib),
-             scm_wanted_attrib, SCM_ARG3, "gnetlist:get-pin-attribute-seq");
+             scm_wanted_attrib, SCM_ARG3, "gnetlist:get-attribute-by-pinseq");
 
   scm_dynwind_begin (0);
 
@@ -633,13 +633,13 @@ SCM g_get_attribute_by_pinnumber(SCM scm_uref, SCM scm_pin, SCM
     int done = FALSE;
 
     SCM_ASSERT(scm_is_string (scm_uref),
-	       scm_uref, SCM_ARG1, "gnetlist:get-pin-attribute");
+	       scm_uref, SCM_ARG1, "gnetlist:get-attribute-by-pinnumber");
 
     SCM_ASSERT(scm_is_string (scm_pin),
-	       scm_pin, SCM_ARG2, "gnetlist:get-pin-attribute");
+	       scm_pin, SCM_ARG2, "gnetlist:get-attribute-by-pinnumber");
 
     SCM_ASSERT(scm_is_string (scm_wanted_attrib),
-	       scm_wanted_attrib, SCM_ARG3, "gnetlist:get-pin-attribute");
+	       scm_wanted_attrib, SCM_ARG3, "gnetlist:get-attribute-by-pinnumber");
 
     scm_dynwind_begin (0);
 
@@ -826,15 +826,15 @@ SCM g_graphical_objs_in_net_with_attrib_get_attrib (SCM scm_netname, SCM scm_has
     char *has_attrib_name = NULL;
 
     SCM_ASSERT(scm_is_string (scm_netname), scm_netname, SCM_ARG1, 
-	       "gnetlist:get-attr-of-conn-graph-objs-with-attr");
+	       "gnetlist:graphical-objs-in-net-with-attrib-get-attrib");
 
     SCM_ASSERT(scm_is_string (scm_wanted_attribute),
 	       scm_wanted_attribute, SCM_ARG3, 
-	       "gnetlist:get-attr-of-conn-graph-objs-with-attr");
+	       "gnetlist:graphical-objs-in-net-with-attrib-get-attrib");
 
     SCM_ASSERT(scm_is_string (scm_has_attribute),
 	       scm_has_attribute, SCM_ARG2, 
-	       "gnetlist:get-attr-of-conn-graph-objs-with-attr");
+	       "gnetlist:graphical-objs-in-net-with-attrib-get-attrib");
 
     scm_dynwind_begin (0);
 
