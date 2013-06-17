@@ -17,6 +17,7 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADER([config.h])
 
 AM_INIT_AUTOMAKE
+AM_SILENT_RULES
 
 AC_GNU_SOURCE # FIXME for some reason this is needed?
 
