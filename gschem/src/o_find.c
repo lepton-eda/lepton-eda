@@ -48,6 +48,8 @@ static gboolean
 is_object_hit (GSCHEM_TOPLEVEL *w_current, OBJECT *object,
                int w_x, int w_y, int w_slack)
 {
+  int left, top, right, bottom;
+
   if (!object->selectable)
     return FALSE;
 
@@ -60,12 +62,14 @@ is_object_hit (GSCHEM_TOPLEVEL *w_current, OBJECT *object,
   /* Do a coarse test first to avoid computing distances for objects ouside
    * of the hit range.
    */
-  if (!inside_region (object->w_left  - w_slack, object->w_top    - w_slack,
-                      object->w_right + w_slack, object->w_bottom + w_slack,
+  if (!world_get_single_object_bounds(w_current->toplevel, object,
+                                      &left, &top, &right, &bottom) ||
+      !inside_region (left  - w_slack, top    - w_slack,
+                      right + w_slack, bottom + w_slack,
                       w_x, w_y))
     return FALSE;
 
-  return (o_shortest_distance (object, w_x, w_y) < w_slack);
+  return (o_shortest_distance (w_current->toplevel, object, w_x, w_y) < w_slack);
 }
 
 

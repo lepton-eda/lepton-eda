@@ -133,7 +133,6 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
   GList *s_current = NULL;
   OBJECT *object;
   int diff_x, diff_y;
-  int left, top, right, bottom;
   GList *s_iter;
   GList *rubbernet_objects = NULL; 
 
@@ -190,16 +189,7 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
 
         o_move_end_lowlevel_glist (w_current, object->complex->prim_objs,
                                    diff_x, diff_y);
-
-
-        world_get_object_glist_bounds (toplevel, object->complex->prim_objs,
-                                       &left, &top, &right, &bottom);
-
-        object->w_left = left;
-        object->w_top = top;
-        object->w_right = right;
-        object->w_bottom = bottom;
-
+        object->w_bounds_valid_for = NULL;
         break;
 
       default:
@@ -636,7 +626,7 @@ void o_move_end_rubberband (GSCHEM_TOPLEVEL *w_current,
         continue;
       }
 
-      o_recalc_single_object (toplevel, object);
+      object->w_bounds_valid_for = NULL;
       s_tile_update_object (toplevel, object);
       s_conn_update_object (toplevel, object);
       *objects = g_list_append (*objects, object);

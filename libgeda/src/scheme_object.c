@@ -273,14 +273,23 @@ SCM_DEFINE (object_bounds, "%object-bounds", 0, 0, 1,
     success = world_get_object_glist_bounds (toplevel, obj_list,
                                              &left, &top, &right, &bottom);
   } else {
+    GList *list;
     toplevel->show_hidden_text = TRUE;
-    o_recalc_object_glist (toplevel, obj_list);
+
+    for (list = obj_list; list != NULL; list = g_list_next(list)) {
+      OBJECT *o_current = (OBJECT *) list->data;
+      o_current->w_bounds_valid_for = NULL;
+    }
 
     success = world_get_object_glist_bounds (toplevel, obj_list,
                                              &left, &top, &right, &bottom);
 
     toplevel->show_hidden_text = FALSE;
-    o_recalc_object_glist (toplevel, obj_list);
+
+    for (list = obj_list; list != NULL; list = g_list_next(list)) {
+      OBJECT *o_current = (OBJECT *) list->data;
+      o_current->w_bounds_valid_for = NULL;
+    }
   }
 
   SCM result = SCM_BOOL_F;

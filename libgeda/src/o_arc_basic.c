@@ -104,7 +104,7 @@ OBJECT *o_arc_new(TOPLEVEL *toplevel,
   o_set_fill_options(toplevel, new_node,
                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
-  o_arc_recalc(toplevel, new_node);
+  new_node->w_bounds_valid_for = NULL;
 
   /* new_node->graphical = arc; eventually */
 
@@ -202,7 +202,7 @@ void o_arc_modify(TOPLEVEL *toplevel, OBJECT *object,
 	}
 
 	/* update the screen coords and the bounding box */
-	o_arc_recalc(toplevel, object);
+	object->w_bounds_valid_for = NULL;
 	o_emit_change_notify (toplevel, object);
 }
 
@@ -361,7 +361,7 @@ void o_arc_translate_world(TOPLEVEL *toplevel, int dx, int dy,
 
 
   /* Recalculate screen coords from new world coords */
-  o_arc_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief
@@ -415,7 +415,7 @@ void o_arc_rotate_world(TOPLEVEL *toplevel,
   object->arc->y += world_centery;
 
   /* update the screen coords and the bounding box */
-  o_arc_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   
 }                                   
 
@@ -458,38 +458,8 @@ void o_arc_mirror_world(TOPLEVEL *toplevel,
   object->arc->y += world_centery;
 
   /* update the screen coords and bounding box */
-  o_arc_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
 	
-}
-
-/*! \brief
- *  \par Function Description
- *  This function recalculates internal parameters in screen units
- *  of an object containing an arc. The object is given as parameters <B>o_current</B>.
- *  The calculation is done according to the zoom factor detailed in the <B>toplevel</B>
- *  pointed structure.
- *  It also recalculates the <B>OBJECT</B> specific fields and the bounding box of the arc.
- *  
- *  The bounding box - in world units - is recalculated with the <B>world_get_arc_bounds()</B> function.
- *
- *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] o_current
- */
-void o_arc_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  int left, right, top, bottom;
-	
-  if (o_current->arc == NULL) {
-    return;
-  }
-
-  /* recalculates the bounding box */
-  world_get_arc_bounds(toplevel, o_current, &left, &top, &right, &bottom);
-  o_current->w_left   = left;
-  o_current->w_top    = top;
-  o_current->w_right  = right;
-  o_current->w_bottom = bottom;
-  o_current->w_bounds_valid = TRUE;
 }
 
 
@@ -592,6 +562,7 @@ gboolean o_arc_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter of the arc.
  *
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] object       The arc OBJECT.
  *  \param [in] x            The x coordinate of the given point.
  *  \param [in] y            The y coordinate of the given point.
@@ -599,7 +570,8 @@ gboolean o_arc_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
  *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double o_arc_shortest_distance (OBJECT *object, int x, int y, int force_solid)
+double o_arc_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
+                                int x, int y, int force_solid)
 {
   double shortest_distance;
   double radius;

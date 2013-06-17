@@ -87,8 +87,6 @@ int o_attrib_is_inherited(OBJECT *attrib);
 
 /* o_basic.c */
 int inside_region(int xmin, int ymin, int xmax, int ymax, int x, int y);
-void o_recalc_single_object(TOPLEVEL *toplevel, OBJECT *o_current);
-void o_recalc_object_glist(TOPLEVEL *toplevel, GList *object_glist);
 void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current, OBJECT_END end, OBJECT_TYPE type, int width, int length, int space);
 gboolean o_get_line_options(OBJECT *object, OBJECT_END *end, OBJECT_TYPE *type, int *width, int *length, int *space);
 void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current, OBJECT_FILLING type, int width, int pitch1, int angle1, int pitch2, int angle2);
@@ -97,7 +95,7 @@ gboolean o_get_position(TOPLEVEL *toplevel, gint *x, gint *y, OBJECT *object);
 void o_translate_world (TOPLEVEL *toplevel, gint dx, gint dy, OBJECT *object);
 void o_rotate_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, int angle, OBJECT *object);
 void o_mirror_world(TOPLEVEL *toplevel, int world_centerx, int world_centery, OBJECT *object);
-double o_shortest_distance(OBJECT *object, int x, int y);
+double o_shortest_distance(TOPLEVEL *toplevel, OBJECT *object, int x, int y);
 void o_set_color(TOPLEVEL *toplevel, OBJECT *object, int color);
 PAGE *o_get_page (TOPLEVEL *toplevel, OBJECT *object);
 OBJECT *o_get_parent (TOPLEVEL *toplevel, OBJECT *object);

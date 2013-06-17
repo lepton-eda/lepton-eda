@@ -227,10 +227,12 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
 
   for (iter1 = objectlists; iter1 != NULL; iter1 = g_list_next(iter1)) {
     for (iter2 = (GList*) iter1->data; iter2 != NULL; iter2 = g_list_next(iter2)) {
+      int left, top, right, bottom;
       o_current = (OBJECT*) iter2->data;
 
-      if (!visible (w_current,  o_current->w_left, o_current->w_top,
-		   o_current->w_right, o_current->w_bottom))
+      if (!world_get_single_object_bounds(w_current->toplevel, o_current,
+                                          &left, &top, &right, &bottom) ||
+          !visible (w_current, left, top, right, bottom))
 	continue; /* skip invisible objects */
 
       if (o_current->type == OBJ_PIN) {
@@ -852,7 +854,7 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
           }
 
           net_obj->line->y[found_conn->whichone] -= ripper_size;
-          o_recalc_single_object(toplevel, net_obj);
+          net_obj->w_bounds_valid_for = NULL;
           rippers[ripper_count].x[0] = 
             net_obj->line->x[found_conn->whichone];
           rippers[ripper_count].y[0] =
@@ -889,7 +891,7 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
           }
           
           net_obj->line->y[found_conn->whichone] += ripper_size;
-          o_recalc_single_object(toplevel, net_obj);
+          net_obj->w_bounds_valid_for = NULL;
           rippers[ripper_count].x[0] = 
             net_obj->line->x[found_conn->whichone];
           rippers[ripper_count].y[0] =
@@ -960,7 +962,7 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
           }
 
           net_obj->line->x[found_conn->whichone] -= ripper_size;
-          o_recalc_single_object(toplevel, net_obj);
+          net_obj->w_bounds_valid_for = NULL;
           rippers[ripper_count].x[0] = 
             net_obj->line->x[found_conn->whichone];
           rippers[ripper_count].y[0] =
@@ -996,7 +998,7 @@ int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
           }
 
           net_obj->line->x[found_conn->whichone] += ripper_size;
-          o_recalc_single_object(toplevel, net_obj);
+          net_obj->w_bounds_valid_for = NULL;
           rippers[ripper_count].x[0] = 
             net_obj->line->x[found_conn->whichone];
           rippers[ripper_count].y[0] =

@@ -324,35 +324,9 @@ OBJECT *o_picture_new (TOPLEVEL *toplevel,
   }
 
   /* compute the bounding picture */
-  o_picture_recalc(toplevel, new_node);
+  new_node->w_bounds_valid_for = NULL;
 
   return new_node;
-}
-
-/*! \brief Recalculate picture bounding box.
- *  \par Function Description
- *  This function recalculates the bounding box of the <B>o_current</B>
- *  parameter picture object.
- *
- *  \param [in] toplevel      The TOPLEVEL object.
- *  \param [in,out] o_current  Picture OBJECT to be recalculated.
- */
-void o_picture_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  int left, top, right, bottom;
-
-  if (o_current->picture == NULL) {
-    return;
-  }
-
-  /* update the bounding picture - world units */
-  world_get_picture_bounds(toplevel, o_current,
-		     &left, &top, &right, &bottom);
-  o_current->w_left   = left;
-  o_current->w_top    = top;
-  o_current->w_right  = right;
-  o_current->w_bottom = bottom;
-  o_current->w_bounds_valid = TRUE;
 }
 
 /*! \brief Get picture bounding rectangle in WORLD coordinates.
@@ -516,7 +490,7 @@ void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object,
   }
 	
   /* recalculate the screen coords and the boundings */
-  o_picture_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, object);
 }
 
@@ -547,7 +521,7 @@ o_picture_modify_all (TOPLEVEL *toplevel, OBJECT *object,
   object->picture->upper_y = (y1 > y2) ? y1 : y2;
 
   /* recalculate the world coords and bounds */
-  o_box_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, object);
 }
 
@@ -613,7 +587,7 @@ void o_picture_rotate_world(TOPLEVEL *toplevel,
   object->picture->lower_y += world_centery;
   
   /* recalc boundings and screen coords */
-  o_picture_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
 	
 }
 
@@ -674,7 +648,7 @@ void o_picture_mirror_world(TOPLEVEL *toplevel,
   object->picture->lower_y += world_centery;
 
   /* recalc boundings and screen coords */
-  o_picture_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   
 }
 
@@ -698,7 +672,7 @@ void o_picture_translate_world(TOPLEVEL *toplevel,
   object->picture->lower_y = object->picture->lower_y + dy;
   
   /* recalc the screen coords and the bounding picture */
-  o_picture_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief Create a copy of a picture.
@@ -748,7 +722,7 @@ OBJECT *o_picture_copy(TOPLEVEL *toplevel, OBJECT *object)
   picture->pixbuf = o_picture_get_pixbuf (toplevel, object);
 
   /* compute the bounding picture */
-  o_picture_recalc(toplevel, new_node);
+  new_node->w_bounds_valid_for = NULL;
 
   return new_node;
 }
@@ -821,6 +795,7 @@ void o_picture_unembed (TOPLEVEL *toplevel, OBJECT *object)
  *
  *  Interrior points within the picture return a distance of zero.
  *
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] object       The picture OBJECT.
  *  \param [in] x            The x coordinate of the given point.
  *  \param [in] y            The y coordinate of the given point.
@@ -828,8 +803,8 @@ void o_picture_unembed (TOPLEVEL *toplevel, OBJECT *object)
  *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double o_picture_shortest_distance (OBJECT *object, int x, int y,
-                                    int force_solid)
+double o_picture_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
+                                    int x, int y, int force_solid)
 {
   double dx, dy;
   double x1, y1, x2, y2;

@@ -98,7 +98,7 @@ OBJECT *o_circle_new(TOPLEVEL *toplevel,
 		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
   /* compute the bounding box coords */
-  o_circle_recalc(toplevel, new_node);
+  new_node->w_bounds_valid_for = NULL;
 
   return new_node;
 }
@@ -124,9 +124,6 @@ OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *o_current)
    * The parameters of the new circle are set with the ones of the original
    * circle. The two circle have the same line type and the same filling
    * options.
-   *
-   * The bounding box coordinates are computed with
-   * #o_circle_recalc().
    */
   /* modify */
   new_obj->circle->center_x = o_current->circle->center_x;
@@ -141,7 +138,7 @@ OBJECT *o_circle_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 		     o_current->fill_pitch1, o_current->fill_angle1,
 		     o_current->fill_pitch2, o_current->fill_angle2);
   
-  o_circle_recalc(toplevel, new_obj);
+  new_obj->w_bounds_valid_for = NULL;
 
   /*	new_obj->attribute = 0;*/
 
@@ -200,7 +197,7 @@ void o_circle_modify(TOPLEVEL *toplevel, OBJECT *object,
   }
 
   /* recalculate the boundings */
-  o_circle_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, object);
 }
 
@@ -380,7 +377,7 @@ void o_circle_translate_world(TOPLEVEL *toplevel,
   object->circle->center_y = object->circle->center_y + dy;
   
   /* recalc the screen coords and the bounding box */
-  o_circle_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   
 }
 
@@ -432,7 +429,7 @@ void o_circle_rotate_world(TOPLEVEL *toplevel,
   object->circle->center_x += world_centerx;
   object->circle->center_y += world_centery;
 
-  o_circle_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   
 }
 
@@ -466,37 +463,8 @@ void o_circle_mirror_world(TOPLEVEL *toplevel,
   object->circle->center_y += world_centery;
 
   /* recalc boundings and screen coords */
-  o_circle_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   
-}
-
-/*! \brief Recalculate circle coordinates in SCREEN units.
- *  \par Function Description
- *  This function recalculates the screen coords of the <B>o_current</B> pointed
- *  circle object from its world coords.
- *
- *  The circle coordinates and its bounding are recalculated as well as the
- *  OBJECT specific (line width, filling ...).
- *
- *  \param [in] toplevel      The TOPLEVEL object.
- *  \param [in,out] o_current  Circle OBJECT to be recalculated.
- */
-void o_circle_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  int left, right, top, bottom;
-
-  if (o_current->circle == NULL) {
-    return;
-  }
-  
-  /* update the bounding box - world unit */
-  world_get_circle_bounds(toplevel, o_current,
-		    &left, &top, &right, &bottom);
-  o_current->w_left   = left;
-  o_current->w_top    = top;
-  o_current->w_right  = right;
-  o_current->w_bottom = bottom;
-  o_current->w_bounds_valid = TRUE;
 }
 
 /*! \brief Get circle bounding rectangle in WORLD coordinates.
@@ -553,6 +521,7 @@ gboolean o_circle_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter of the circle.
  *
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] object       The circle OBJECT.
  *  \param [in] x            The x coordinate of the given point.
  *  \param [in] y            The y coordinate of the given point.
@@ -560,8 +529,8 @@ gboolean o_circle_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
  *  \return The shortest distance from the object to the point.  With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double o_circle_shortest_distance (OBJECT *object, int x, int y,
-                                   int force_solid)
+double o_circle_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
+                                   int x, int y, int force_solid)
 {
   int solid;
 

@@ -86,7 +86,7 @@ OBJECT *o_line_new(TOPLEVEL *toplevel,
 		     FILLING_HOLLOW, -1, -1, -1, -1, -1);
 
   /* compute bounding box */
-  o_line_recalc(toplevel, new_node);
+  new_node->w_bounds_valid_for = NULL;
 
   return new_node;
 }
@@ -114,9 +114,6 @@ OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *o_current)
    * The coordinates of the ends of the new line are set with the ones
    * of the original line. The two lines have the sale line type and
    * filling options.
-   *
-   * The bounding box are computed with
-   * #o_line_recalc().
    */
 
   /* copy the line type and filling options */
@@ -129,7 +126,7 @@ OBJECT *o_line_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 		     o_current->fill_pitch2, o_current->fill_angle2);
   
   /* calc the bounding box */
-  o_line_recalc(toplevel, o_current);
+  o_current->w_bounds_valid_for = NULL;
   
   /* new_obj->attribute = 0;*/
 
@@ -181,7 +178,7 @@ void o_line_modify(TOPLEVEL *toplevel, OBJECT *object,
   }
 
   /* recalculate the bounding box */
-  o_line_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, object);
 }
 
@@ -348,7 +345,7 @@ void o_line_translate_world(TOPLEVEL *toplevel,
   object->line->y[1] = object->line->y[1] + dy;
   
   /* Update bounding box */
-  o_line_recalc (toplevel, object);
+  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief Rotate Line OBJECT using WORLD coordinates. 
@@ -434,31 +431,6 @@ void o_line_mirror_world(TOPLEVEL *toplevel, int world_centerx,
   
 }
 
-/*! \brief Recalculate line coordinates in SCREEN units.
- *  \par Function Description
- *  This function recalculate the bounding box of the <B>o_current</B>
- *
- *  \param [in] toplevel      The TOPLEVEL object.
- *  \param [in,out] o_current  Line OBJECT to be recalculated.
- */
-void o_line_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  int left, right, top, bottom;
-
-  if (o_current->line == NULL) {
-    return;
-  }
-  
-  /* update the bounding box - screen unit */
-  world_get_line_bounds(toplevel, o_current,
-		  &left, &top, &right, &bottom);
-  o_current->w_left   = left;
-  o_current->w_top    = top;
-  o_current->w_right  = right;
-  o_current->w_bottom = bottom;
-  o_current->w_bounds_valid = TRUE;
-}
-
 /*! \brief Get line bounding rectangle in WORLD coordinates.
  *  \par Function Description
  *  This function sets the <B>left</B>, <B>top</B>, <B>right</B> and
@@ -527,7 +499,7 @@ void o_line_scale_world(TOPLEVEL *toplevel, int x_scale, int y_scale,
   object->line->y[1] = object->line->y[1] * y_scale;
 
   /* update boundingbox */
-  o_line_recalc(toplevel, object);
+  object->w_bounds_valid_for = NULL;
   
 }
 
@@ -566,6 +538,7 @@ double o_line_length(OBJECT *object)
  *  If the line represents a single point (the endpoints are the same), this
  *  function calcualtes the distance to that point.
  *
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] object       The line OBJECT.
  *  \param [in] x            The x coordinate of the given point.
  *  \param [in] y            The y coordinate of the given point.
@@ -573,7 +546,8 @@ double o_line_length(OBJECT *object)
  *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
-double o_line_shortest_distance (OBJECT *object, int x, int y, int force_solid)
+double o_line_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
+                                 int x, int y, int force_solid)
 {
   return m_line_shortest_distance (object->line, x, y);
 }

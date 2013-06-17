@@ -100,36 +100,11 @@ OBJECT *o_pin_new(TOPLEVEL *toplevel,
 
   o_pin_set_type (toplevel, new_node, pin_type);
 
-  o_pin_recalc (toplevel, new_node);
+  new_node->w_bounds_valid_for = NULL;
 
   new_node->whichend = whichend;
 
   return new_node;
-}
-
-/*! \brief recalc the visual properties of a pin object
- *  \par Function Description
- *  This function updates the visual coords of the \a o_current object.
- *  
- *  \param [in]     toplevel    The TOPLEVEL object.
- *  \param [in]     o_current   a pin object.
- *
- */
-void o_pin_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  int left, right, top, bottom;
-
-  if (o_current->line == NULL) {
-    return;
-  }
-
-  world_get_pin_bounds(toplevel, o_current, &left, &top, &right, &bottom);
-
-  o_current->w_left = left;
-  o_current->w_top = top;
-  o_current->w_right = right;
-  o_current->w_bottom = bottom;
-  o_current->w_bounds_valid = TRUE;
 }
 
 /*! \brief read a pin object from a char buffer
@@ -241,7 +216,7 @@ void o_pin_translate_world(TOPLEVEL *toplevel, int dx, int dy, OBJECT *object)
   object->line->y[1] = object->line->y[1] + dy;
 
   /* Update bounding box */
-  o_pin_recalc (toplevel, object);
+  object->w_bounds_valid_for = NULL;
 
   s_tile_update_object(toplevel, object);
 }
@@ -347,7 +322,7 @@ void o_pin_modify(TOPLEVEL *toplevel, OBJECT *object,
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
 
-  o_pin_recalc (toplevel, object);
+  object->w_bounds_valid_for = NULL;
 
   s_tile_update_object(toplevel, object);
 }
@@ -391,10 +366,8 @@ void o_pin_update_whichend(TOPLEVEL *toplevel,
       while (iter != NULL) {
         o_current = (OBJECT *)iter->data;
         if (o_current->type == OBJ_PIN) {
-          rleft = o_current->w_left;
-          rtop = o_current->w_top;
-          rright = o_current->w_right;
-          rbottom = o_current->w_bottom;
+          (void) world_get_single_object_bounds(
+            toplevel, o_current, &rleft, &rtop, &rright, &rbottom);
 
           if ( found ) {
             left = min( left, rleft );

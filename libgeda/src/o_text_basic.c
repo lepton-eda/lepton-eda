@@ -274,35 +274,9 @@ OBJECT *o_text_new(TOPLEVEL *toplevel,
   update_disp_string (new_node);
 
   /* Update bounding box */
-  new_node->w_bounds_valid = FALSE;
+  new_node->w_bounds_valid_for = NULL;
 
   return new_node;
-}
-
-/*! \brief update the visual boundaries of the text object
- *  \par Function Description
- *  This function updates the boundaries of the object \a o_current.
- *
- *  \param [in]  toplevel  The TOPLEVEL object
- *  \param [in]  o_current The OBJECT to update
- */
-void o_text_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  int left, right, top, bottom;
-
-  if ((!o_is_visible (toplevel, o_current)) &&
-      (!toplevel->show_hidden_text)) {
-    return;
-  }
-
-  if ( !world_get_text_bounds(toplevel, o_current, &left, &top, &right, &bottom) )
-    return;
-
-  o_current->w_left = left;
-  o_current->w_top = top;
-  o_current->w_right = right;
-  o_current->w_bottom = bottom;
-  o_current->w_bounds_valid = TRUE;
 }
 
 /*! \brief read a text object from a char buffer
@@ -512,7 +486,7 @@ void o_text_recreate(TOPLEVEL *toplevel, OBJECT *o_current)
 {
   o_emit_pre_change_notify (toplevel, o_current);
   update_disp_string (o_current);
-  o_current->w_bounds_valid = FALSE;
+  o_current->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, o_current);
 }
 
@@ -532,7 +506,7 @@ void o_text_translate_world(TOPLEVEL *toplevel,
   o_current->text->y = o_current->text->y + dy;
 
   /* Update bounding box */
-  o_current->w_bounds_valid = FALSE;
+  o_current->w_bounds_valid_for = NULL;
 }
 
 /*! \brief create a copy of a text object
@@ -692,6 +666,7 @@ void o_text_mirror_world(TOPLEVEL *toplevel,
  *  This function will calculate the distance to the text regardless
  *  if the text is visible or not.
  *
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] object       The text OBJECT.
  *  \param [in] x            The x coordinate of the given point.
  *  \param [in] y            The y coordinate of the given point.
@@ -701,14 +676,20 @@ void o_text_mirror_world(TOPLEVEL *toplevel,
  *  number (G_MAXDOUBLE).  With an invalid parameter, this funciton
  *  returns G_MAXDOUBLE.
  */
-double o_text_shortest_distance (OBJECT *object, int x, int y, int force_solid)
+double o_text_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
+                                 int x, int y, int force_solid)
 {
+  int left, top, right, bottom;
   double dx, dy;
 
   g_return_val_if_fail (object->text != NULL, G_MAXDOUBLE);
 
-  dx = min (x - object->w_left, object->w_right - x);
-  dy = min (y - object->w_top, object->w_bottom - y);
+  if (!world_get_single_object_bounds(toplevel, object,
+                                      &left, &top, &right, &bottom))
+    return G_MAXDOUBLE;
+
+  dx = min (x - left, right - x);
+  dy = min (y - top, bottom - y);
 
   dx = min (dx, 0);
   dy = min (dy, 0);

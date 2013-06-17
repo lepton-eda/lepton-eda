@@ -57,44 +57,132 @@
 int world_get_single_object_bounds(TOPLEVEL *toplevel, OBJECT *o_current,
                                    int *rleft, int *rtop, int *rright, int *rbottom)
 {
-  if (o_current != NULL) {
+  if (o_current == NULL) {
+    return 0;
+  }
+
+  /* only do bounding boxes for visible or doing show_hidden_text*/
+  /* you might lose some attrs though */
+  if (o_current->type == OBJ_TEXT &&
+      ! (o_is_visible (toplevel, o_current) || toplevel->show_hidden_text)) {
+    return 0;
+  }
+
+  if (o_current->w_bounds_valid_for != toplevel) {
+    int left, right, top, bottom;
     switch(o_current->type) {
-      case(OBJ_TEXT):
-        /* only do bounding boxes for visible or doing show_hidden_text*/
-        /* you might lose some attrs though */
-        if (! (o_is_visible (toplevel, o_current) ||
-                toplevel->show_hidden_text)) {
+
+      case(OBJ_LINE):
+        if (o_current->line == NULL) {
           return 0;
         }
-        /* This case falls through intentionally */
-      case(OBJ_LINE):
+        world_get_line_bounds(toplevel, o_current,
+                              &left, &top, &right, &bottom);
+        break;
+
       case(OBJ_NET):
+        if (o_current->line == NULL) {
+          return 0;
+        }
+        world_get_net_bounds(toplevel, o_current,
+                             &left, &top, &right, &bottom);
+        break;
+
       case(OBJ_BUS):
+        if (o_current->line == NULL) {
+          return 0;
+        }
+        world_get_bus_bounds(toplevel, o_current,
+                             &left, &top, &right, &bottom);
+        break;
+
       case(OBJ_BOX):
-      case(OBJ_PICTURE):
-      case(OBJ_CIRCLE):
+        if (o_current->box == NULL) {
+          return 0;
+        }
+        world_get_box_bounds(toplevel, o_current,
+                             &left, &top, &right, &bottom);
+        break;
+
       case(OBJ_PATH):
-      case(OBJ_PIN):
-      case(OBJ_ARC):
+        g_return_val_if_fail (o_current->path != NULL, 0);
+        if (o_current->path->num_sections <= 0) {
+          return 0;
+        }
+        world_get_path_bounds (toplevel, o_current,
+                               &left, &top, &right, &bottom);
+        break;
+
+      case(OBJ_PICTURE):
+        if (o_current->picture == NULL) {
+          return 0;
+        }
+        world_get_picture_bounds(toplevel, o_current,
+                                 &left, &top, &right, &bottom);
+        break;
+
+      case(OBJ_CIRCLE):
+        if (o_current->circle == NULL) {
+          return 0;
+        }
+        world_get_circle_bounds(toplevel, o_current,
+                                &left, &top, &right, &bottom);
+        break;
+
       case(OBJ_COMPLEX):
       case(OBJ_PLACEHOLDER):
-        if (!o_current->w_bounds_valid) {
-          o_recalc_single_object (toplevel, o_current);
-          if (!o_current->w_bounds_valid) {
-            return 0;
-          }
+        /* realc routine Add this somewhere */
+        /* libhack */
+        /* o_recalc(toplevel, o_current->complex);*/
+
+        if ((!o_current) || (o_current->type != OBJ_COMPLEX &&
+                             o_current->type != OBJ_PLACEHOLDER))
+          return 0;
+
+        if (o_current->complex->prim_objs == NULL)
+          return 0;
+
+        world_get_complex_bounds(toplevel, o_current,
+                                 &left, &top, &right, &bottom);
+        break;
+
+      case(OBJ_PIN):
+        if (o_current->line == NULL) {
+          return 0;
         }
-        *rleft = o_current->w_left;
-        *rtop = o_current->w_top;
-        *rright = o_current->w_right;
-        *rbottom = o_current->w_bottom;
-        return 1;
+        world_get_pin_bounds(toplevel, o_current,
+                             &left, &top, &right, &bottom);
+        break;
+
+      case(OBJ_ARC):
+        if (o_current->arc == NULL) {
+          return 0;
+        }
+        world_get_arc_bounds(toplevel, o_current,
+                             &left, &top, &right, &bottom);
+        break;
+
+      case(OBJ_TEXT):
+        if ( !world_get_text_bounds(toplevel, o_current,
+                                    &left, &top, &right, &bottom) ) {
+          return 0;
+        }
+        break;
 
       default:
-        break;
+        return 0;
     }
+    o_current->w_left   = left;
+    o_current->w_top    = top;
+    o_current->w_right  = right;
+    o_current->w_bottom = bottom;
+    o_current->w_bounds_valid_for = toplevel;
   }
-  return 0;
+  *rleft = o_current->w_left;
+  *rtop = o_current->w_top;
+  *rright = o_current->w_right;
+  *rbottom = o_current->w_bottom;
+  return 1;
 }
 
 
@@ -545,7 +633,7 @@ OBJECT *o_complex_new(TOPLEVEL *toplevel,
     tmp->parent = new_node;
   }
 
-  o_complex_recalc(toplevel, new_node);
+  new_node->w_bounds_valid_for = NULL;
 
   return new_node;
 }
@@ -592,35 +680,6 @@ OBJECT *o_complex_new_embedded(TOPLEVEL *toplevel,
   /* don't have to translate/rotate/mirror here at all since the */
   /* object is in place */
   return new_node;
-}
-
-/*! \brief update the visual boundaries of the complex object
- *  \par Function Description
- *  This function updates the boundaries of the object \a o_current.
- *
- *  \param [in]  toplevel  The TOPLEVEL object
- *  \param [in]  o_current The OBJECT to update
- */
-void o_complex_recalc(TOPLEVEL *toplevel, OBJECT *o_current)
-{
-  int left, right, top, bottom;
-
-  /* realc routine Add this somewhere */
-  /* libhack */
-  /* o_recalc(toplevel, o_current->complex);*/
-
-  if ((!o_current) || (o_current->type != OBJ_COMPLEX && o_current->type != OBJ_PLACEHOLDER))
-    return;
-
-  if (o_current->complex->prim_objs == NULL)
-    return;
-
-  world_get_complex_bounds(toplevel, o_current, &left, &top, &right, &bottom);
-  o_current->w_left = left;
-  o_current->w_top = top;
-  o_current->w_right = right;
-  o_current->w_bottom = bottom;
-  o_current->w_bounds_valid = TRUE;
 }
 
 /*! \brief read a complex object from a char buffer
@@ -762,7 +821,7 @@ void o_complex_translate_world(TOPLEVEL *toplevel, int dx, int dy,
 
   o_glist_translate_world (toplevel, dx, dy, object->complex->prim_objs);
 
-  o_complex_recalc (toplevel, object);
+  object->w_bounds_valid_for = NULL;
 }
 
 /*! \brief Create a copy of a COMPLEX object
@@ -804,7 +863,7 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   }
 
   /* Recalculate bounds */
-  o_complex_recalc(toplevel, o_new);
+  o_new->w_bounds_valid_for = NULL;
 
   /* Delete or hide attributes eligible for promotion inside the complex */
   o_complex_remove_promotable_attribs (toplevel, o_new);
@@ -1129,6 +1188,7 @@ done:
  *        force treating them as solid filled.
  *        We ignore the force_solid argument to this function.
  *
+ *  \param [in] toplevel     The TOPLEVEL object.
  *  \param [in] object       The complex  OBJECT.
  *  \param [in] x            The x coordinate of the given point.
  *  \param [in] y            The y coordinate of the given point.
@@ -1138,8 +1198,8 @@ done:
  *  number (G_MAXDOUBLE).  With an invalid parameter, this function returns
  *  G_MAXDOUBLE.
  */
-double o_complex_shortest_distance (OBJECT *object, int x, int y,
-                                    int force_solid)
+double o_complex_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
+                                    int x, int y, int force_solid)
 {
   double shortest_distance = G_MAXDOUBLE;
   double distance;
@@ -1152,25 +1212,26 @@ double o_complex_shortest_distance (OBJECT *object, int x, int y,
   for (iter = object->complex->prim_objs;
        iter != NULL; iter= g_list_next (iter)) {
     OBJECT *obj = iter->data;
+    int left, top, right, bottom;
 
     /* Collect the bounds of any lines and arcs in the symbol */
     if ((obj->type == OBJ_LINE || obj->type == OBJ_ARC) &&
-        obj->w_bounds_valid) {
-
+        world_get_single_object_bounds(toplevel, obj,
+                                       &left, &top, &right, &bottom)) {
       if (found_line_bounds) {
-        line_bounds.lower_x = min (line_bounds.lower_x, obj->w_left);
-        line_bounds.lower_y = min (line_bounds.lower_y, obj->w_top);
-        line_bounds.upper_x = max (line_bounds.upper_x, obj->w_right);
-        line_bounds.upper_y = max (line_bounds.upper_y, obj->w_bottom);
+        line_bounds.lower_x = min (line_bounds.lower_x, left);
+        line_bounds.lower_y = min (line_bounds.lower_y, top);
+        line_bounds.upper_x = max (line_bounds.upper_x, right);
+        line_bounds.upper_y = max (line_bounds.upper_y, bottom);
       } else {
-        line_bounds.lower_x = obj->w_left;
-        line_bounds.lower_y = obj->w_top;
-        line_bounds.upper_x = obj->w_right;
-        line_bounds.upper_y = obj->w_bottom;
+        line_bounds.lower_x = left;
+        line_bounds.lower_y = top;
+        line_bounds.upper_x = right;
+        line_bounds.upper_y = bottom;
         found_line_bounds = 1;
       }
     } else {
-      distance = o_shortest_distance_full (obj, x, y, TRUE);
+      distance = o_shortest_distance_full (toplevel, obj, x, y, TRUE);
       shortest_distance = min (shortest_distance, distance);
     }
 
