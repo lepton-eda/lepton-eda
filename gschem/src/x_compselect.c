@@ -428,7 +428,8 @@ lib_model_filter_visible_func (GtkTreeModel *model,
 /*! \brief Handles activation (e.g. double-clicking) of a component row
  *  \par Function Description
  *  Component row activated handler:
- *  As a convenince to the user, expand / contract any node with children.
+ *  As a convenience to the user, expand / contract any node with children.
+ *  Hide the component selector if a node without children is activated.
  *
  *  \param [in] tree_view The component treeview.
  *  \param [in] path      The GtkTreePath to the activated row.
@@ -912,6 +913,11 @@ create_inuse_treeview (Compselect *compselect)
                                        "rules-hint", TRUE,
                                        "headers-visible", FALSE,
                                        NULL));
+
+  g_signal_connect (treeview,
+                    "row-activated",
+                    G_CALLBACK (tree_row_activated),
+                    compselect);
 
   /* Connect callback to selection */
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (treeview));
