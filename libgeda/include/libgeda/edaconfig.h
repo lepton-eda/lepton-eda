@@ -66,7 +66,7 @@ GQuark eda_config_error_quark (void);
 #define EDA_CONFIG(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), EDA_TYPE_CONFIG, EdaConfig))
 #define EDA_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), EDA_TYPE_CONFIG, EdaConfigClass))
 #define EDA_IS_CONFIG(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), EDA_TYPE_CONFIG))
-#define EDA_IS_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((obj), EDA_TYPE_CONFIG))
+#define EDA_IS_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), EDA_TYPE_CONFIG))
 #define EDA_CONFIG_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), EDA_TYPE_CONFIG, EdaConfigClass))
 
 typedef struct _EdaConfigClass EdaConfigClass;
