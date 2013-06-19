@@ -27,6 +27,9 @@ A=D	attribute name=value, defaulting to value D
 A@	attribute value if it exists, blank if not
 A@D	attribute value with default
 %pinseq	all nets attached to current object in pinseq order
+%io	all nets attached to spice-IO symbols in numerical refdes order
+%up	all nets attached to hierarchical IO symbols in lexical refdes order
+%down	all nets attached to current object in lexical pinlabel order
 
 The prototype, for when no spice-prototype= attribute is given, and the device= attribute is unrecognised, is:
 
@@ -44,3 +47,5 @@ This maps the defacto industry standard pinout for a dual opamp onto the defacto
 See the end of gnet-spice-noqsi.scm for more prototype examples.
 
 If one of the translations creates a ".subckt" card, it will be the first non-comment card in the output, and the last card will be ".ends".
+
+The toplevel attribute "spice-prolog", if present, will be expanded as if if was a spice-prototype attached to an attribute-free symbol. This occurs before regular symbol processing. Similarly, a toplevel "spice-epilog" attribute will be expanded after all symbol processing.
