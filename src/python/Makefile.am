@@ -20,6 +20,9 @@ pkgpython_PYTHON = \
 	fileutils.py \
 	proxy.py
 noinst_PYTHON = storage.py
+nodist_pkgpython_PYTHON = config.py
+EXTRA_DIST = config.py.in
+CLEANFILES = config.py
 
 gedadir = $(pkgpythondir)/geda
 geda_PYTHON = \
@@ -28,3 +31,14 @@ geda_PYTHON = \
 	geda/fileformat.py \
 	geda/read.py \
 	geda/write.py
+
+config.py: $(srcdir)/config.py.in Makefile
+	sed -e 's,[@]PACKAGE[@],$(PACKAGE),g' \
+	    -e 's,[@]PACKAGE_BUGREPORT[@],$(PACKAGE_BUGREPORT),g' \
+	    -e 's,[@]PACKAGE_NAME[@],$(PACKAGE_NAME),g' \
+	    -e 's,[@]PACKAGE_STRING[@],$(PACKAGE_STRING),g' \
+	    -e 's,[@]PACKAGE_TARNAME[@],$(PACKAGE_TARNAME),g' \
+	    -e 's,[@]PACKAGE_URL[@],$(PACKAGE_URL),g' \
+	    -e 's,[@]PACKAGE_VERSION[@],$(PACKAGE_VERSION),g' \
+	    -e 's,[@]VERSION[@],$(VERSION),g' \
+		$(srcdir)/$@.in > $@
