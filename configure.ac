@@ -56,6 +56,8 @@ AC_ARG_WITH(
 	gedadatadir="$datarootdir/gEDA"
 	AC_MSG_RESULT([$gedadatadir])
 ])
+AS_IF([test "x$gedadatadir" = "x"],
+      [AC_MSG_ERROR([No gEDA shared data location given])])
 AC_SUBST([gedadatadir])
 
 # gEDA is planning to move this to $sysconfdir/geda-gaf
