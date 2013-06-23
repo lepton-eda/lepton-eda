@@ -16,4 +16,5 @@
 
 lib_LTLIBRARIES = libxornstorage.la
 libxornstorage_la_SOURCES = xornstorage.c
+libxornstorage_la_CPPFLAGS = -I$(top_srcdir)/include
 libxornstorage_la_CFLAGS = -Wall -W

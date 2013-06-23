@@ -28,5 +28,5 @@ AM_INIT_AUTOMAKE([-Wall -Werror foreign silent-rules])
 LT_INIT([])
 
 AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_FILES([Makefile lib/Makefile])
+AC_CONFIG_FILES([Makefile lib/Makefile include/Makefile])
 AC_OUTPUT
