@@ -20,7 +20,7 @@ LT_PREREQ([2.4.2])
 
 AC_INIT([xorn], [0.0], [bug-xorn@hedmen.org])
 
-AC_CONFIG_SRCDIR([lib/xornstorage.c])
+AC_CONFIG_SRCDIR([include/xornstorage.h])
 AC_CONFIG_MACRO_DIR([m4])
 
 AM_INIT_AUTOMAKE([-Wall -Werror foreign silent-rules])
