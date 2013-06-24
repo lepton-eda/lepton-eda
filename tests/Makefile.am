@@ -1,4 +1,3 @@
-# Process this file with autoconf to produce a configure script.
 # Copyright (C) 2013 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
@@ -15,20 +14,10 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-AC_PREREQ([2.61])
-LT_PREREQ([2.4.2])
+AM_CPPFLAGS = -I$(top_srcdir)/include
+AM_CFLAGS = -Wall -W
+LDADD = ../lib/libxornstorage.la
 
-AC_INIT([xorn], [0.0], [bug-xorn@hedmen.org])
+TESTS = tc_empty
 
-AC_CONFIG_SRCDIR([include/xornstorage.h])
-AC_CONFIG_MACRO_DIR([m4])
-
-AM_INIT_AUTOMAKE([-Wall -Werror foreign silent-rules])
-
-LT_INIT([])
-
-AC_PROG_CXX
-
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_FILES([Makefile lib/Makefile include/Makefile tests/Makefile])
-AC_OUTPUT
+check_PROGRAMS = $(TESTS)
