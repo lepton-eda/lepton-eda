@@ -113,7 +113,18 @@ xorn_changeset::xorn_changeset(xorn_revision_t rev) : r(new xorn_revision(rev))
 
 static size_t sizeof_obtype(xorn_obtype_t type)
 {
-	return 0;
+	switch (type) {
+	case xornsch_obtype_arc:	return sizeof(xornsch_arc);
+	case xornsch_obtype_box:	return sizeof(xornsch_box);
+	case xornsch_obtype_circle:	return sizeof(xornsch_circle);
+	case xornsch_obtype_component:	return sizeof(xornsch_component);
+	case xornsch_obtype_line:	return sizeof(xornsch_line);
+	case xornsch_obtype_net:	return sizeof(xornsch_net);
+	case xornsch_obtype_path:	return sizeof(xornsch_path);
+	case xornsch_obtype_picture:	return sizeof(xornsch_picture);
+	case xornsch_obtype_text:	return sizeof(xornsch_text);
+	default:			return 0;
+	}
 }
 
 obstate::obstate(xorn_obtype_t type, void const *data)

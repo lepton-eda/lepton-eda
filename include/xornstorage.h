@@ -26,6 +26,15 @@ extern "C" {
 
 typedef enum {
 	xorn_obtype_none,
+	xornsch_obtype_arc,
+	xornsch_obtype_box,
+	xornsch_obtype_circle,
+	xornsch_obtype_component,
+	xornsch_obtype_line,
+	xornsch_obtype_net,
+	xornsch_obtype_path,
+	xornsch_obtype_picture,
+	xornsch_obtype_text,
 } xorn_obtype_t;
 
 /* opaque types */
@@ -98,6 +107,104 @@ int xorn_set_object_data(xorn_changeset_t chset, xorn_object_t ob,
 void xorn_delete_object(xorn_changeset_t chset, xorn_object_t ob);
 void xorn_delete_selected_objects(xorn_changeset_t chset,
 				  xorn_selection_t sel);
+
+/* object data definition */
+
+struct xorn_double2d {
+	double x, y;
+};
+
+struct xornsch_line_attr {
+	double width;
+	int cap_style;
+	int dash_style;
+	double dash_length;
+	double dash_space;
+};
+
+struct xornsch_fill_attr {
+	int type;
+	double width;
+	int angle0;
+	double pitch0;
+	int angle1;
+	double pitch1;
+};
+
+struct xornsch_arc {
+	struct xorn_double2d pos;
+	double radius;
+	int startangle;
+	int sweepangle;
+	int color;
+	struct xornsch_line_attr line;
+};
+
+struct xornsch_box {
+	struct xorn_double2d pos;
+	struct xorn_double2d size;
+	int color;
+	struct xornsch_line_attr line;
+	struct xornsch_fill_attr fill;
+};
+
+struct xornsch_circle {
+	struct xorn_double2d pos;
+	double radius;
+	int color;
+	struct xornsch_line_attr line;
+	struct xornsch_fill_attr fill;
+};
+
+struct xornsch_component {
+	struct xorn_double2d pos;
+	bool selectable;
+	int angle;
+	bool mirror;
+	/* drawing contents; */
+};
+
+struct xornsch_line {
+	struct xorn_double2d pos;
+	struct xorn_double2d size;
+	int color;
+	struct xornsch_line_attr line;
+};
+
+struct xornsch_net {
+	struct xorn_double2d pos;
+	struct xorn_double2d size;
+	int color;
+	bool is_bus;
+	bool is_pin;
+	bool is_inverted;
+};
+
+struct xornsch_path {
+	/* string pathdata; */
+	int color;
+	struct xornsch_line_attr line;
+	struct xornsch_fill_attr fill;
+};
+
+struct xornsch_picture {
+	struct xorn_double2d pos;
+	struct xorn_double2d size;
+	int angle;
+	bool mirror;
+	/* pixmap pixmap; */
+};
+
+struct xornsch_text {
+	struct xorn_double2d pos;
+	int color;
+	int text_size;
+	bool visibility;
+	int show_name_value;
+	int angle;
+	int alignment;
+	/* string text; */
+};
 
 #ifdef __cplusplus
 }

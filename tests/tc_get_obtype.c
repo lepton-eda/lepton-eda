@@ -29,17 +29,17 @@ int main()
 	assert(xorn_get_object_type(rev0, ob1a) == xorn_obtype_none);
 	assert(xorn_get_object_type(rev0, ob1b) == xorn_obtype_none);
 
-	assert(xorn_get_object_type(rev1, ob0) == 111);
+	assert(xorn_get_object_type(rev1, ob0) == xornsch_obtype_line);
 	assert(xorn_get_object_type(rev1, ob1a) == xorn_obtype_none);
 	assert(xorn_get_object_type(rev1, ob1b) == xorn_obtype_none);
 
-	assert(xorn_get_object_type(rev2, ob0) == 111);
-	assert(xorn_get_object_type(rev2, ob1a) == 123);
-	assert(xorn_get_object_type(rev2, ob1b) == 321);
+	assert(xorn_get_object_type(rev2, ob0) == xornsch_obtype_line);
+	assert(xorn_get_object_type(rev2, ob1a) == xornsch_obtype_box);
+	assert(xorn_get_object_type(rev2, ob1b) == xornsch_obtype_circle);
 
-	assert(xorn_get_object_type(rev3, ob0) == 333);
+	assert(xorn_get_object_type(rev3, ob0) == xornsch_obtype_net);
 	assert(xorn_get_object_type(rev3, ob1a) == xorn_obtype_none);
-	assert(xorn_get_object_type(rev3, ob1b) == 321);
+	assert(xorn_get_object_type(rev3, ob1b) == xornsch_obtype_circle);
 
 	xorn_close_file(file);
 	return 0;
