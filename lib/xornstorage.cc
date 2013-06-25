@@ -61,8 +61,8 @@ public:
 	obstate(xorn_obtype_t type, void const *data);
 	void inc_refcnt();
 	void dec_refcnt();
-	xorn_obtype_t type;
-	void *data;
+	xorn_obtype_t const type;
+	void *const data;
 };
 
 
