@@ -15,7 +15,7 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 AM_CPPFLAGS = -I$(top_srcdir)/include
-AM_CFLAGS = -Wall -W
+AM_CFLAGS = -Wall -W -Werror
 LDADD = ../lib/libxornstorage.la
 
 TESTS = tc_exist \
