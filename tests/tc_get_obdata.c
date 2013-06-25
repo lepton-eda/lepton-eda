@@ -20,28 +20,15 @@
 int main()
 {
 	xorn_file_t file;
-	xorn_revision_t empty_rev, rev0, rev1, rev2;
+	xorn_revision_t rev0, rev1, rev2, rev3;
 	xorn_object_t ob0, ob1a, ob1b;
 
 	const void *data;
 
-	setup(&file, &empty_rev, &rev0, &rev1, &rev2, &ob0, &ob1a, &ob1b);
-
-	data = xorn_get_object_data(empty_rev, ob0, 111);
-	assert(data == NULL);
-	data = xorn_get_object_data(empty_rev, ob0, 333);
-	assert(data == NULL);
-	data = xorn_get_object_data(empty_rev, ob1a, 123);
-	assert(data == NULL);
-	data = xorn_get_object_data(empty_rev, ob1a, 321);
-	assert(data == NULL);
-	data = xorn_get_object_data(empty_rev, ob1b, 123);
-	assert(data == NULL);
-	data = xorn_get_object_data(empty_rev, ob1b, 321);
-	assert(data == NULL);
+	setup(&file, &rev0, &rev1, &rev2, &rev3, &ob0, &ob1a, &ob1b);
 
 	data = xorn_get_object_data(rev0, ob0, 111);
-	assert(data != NULL);
+	assert(data == NULL);
 	data = xorn_get_object_data(rev0, ob0, 333);
 	assert(data == NULL);
 	data = xorn_get_object_data(rev0, ob1a, 123);
@@ -58,25 +45,38 @@ int main()
 	data = xorn_get_object_data(rev1, ob0, 333);
 	assert(data == NULL);
 	data = xorn_get_object_data(rev1, ob1a, 123);
-	assert(data != NULL);
+	assert(data == NULL);
 	data = xorn_get_object_data(rev1, ob1a, 321);
 	assert(data == NULL);
 	data = xorn_get_object_data(rev1, ob1b, 123);
 	assert(data == NULL);
 	data = xorn_get_object_data(rev1, ob1b, 321);
-	assert(data != NULL);
+	assert(data == NULL);
 
 	data = xorn_get_object_data(rev2, ob0, 111);
-	assert(data == NULL);
-	data = xorn_get_object_data(rev2, ob0, 333);
 	assert(data != NULL);
-	data = xorn_get_object_data(rev2, ob1a, 123);
+	data = xorn_get_object_data(rev2, ob0, 333);
 	assert(data == NULL);
+	data = xorn_get_object_data(rev2, ob1a, 123);
+	assert(data != NULL);
 	data = xorn_get_object_data(rev2, ob1a, 321);
 	assert(data == NULL);
 	data = xorn_get_object_data(rev2, ob1b, 123);
 	assert(data == NULL);
 	data = xorn_get_object_data(rev2, ob1b, 321);
+	assert(data != NULL);
+
+	data = xorn_get_object_data(rev3, ob0, 111);
+	assert(data == NULL);
+	data = xorn_get_object_data(rev3, ob0, 333);
+	assert(data != NULL);
+	data = xorn_get_object_data(rev3, ob1a, 123);
+	assert(data == NULL);
+	data = xorn_get_object_data(rev3, ob1a, 321);
+	assert(data == NULL);
+	data = xorn_get_object_data(rev3, ob1b, 123);
+	assert(data == NULL);
+	data = xorn_get_object_data(rev3, ob1b, 321);
 	assert(data != NULL);
 
 	xorn_close_file(file);

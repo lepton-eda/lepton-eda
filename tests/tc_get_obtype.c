@@ -20,26 +20,26 @@
 int main()
 {
 	xorn_file_t file;
-	xorn_revision_t empty_rev, rev0, rev1, rev2;
+	xorn_revision_t rev0, rev1, rev2, rev3;
 	xorn_object_t ob0, ob1a, ob1b;
 
-	setup(&file, &empty_rev, &rev0, &rev1, &rev2, &ob0, &ob1a, &ob1b);
+	setup(&file, &rev0, &rev1, &rev2, &rev3, &ob0, &ob1a, &ob1b);
 
-	assert(xorn_get_object_type(empty_rev, ob0) == xorn_obtype_none);
-	assert(xorn_get_object_type(empty_rev, ob1a) == xorn_obtype_none);
-	assert(xorn_get_object_type(empty_rev, ob1b) == xorn_obtype_none);
-
-	assert(xorn_get_object_type(rev0, ob0) == 111);
+	assert(xorn_get_object_type(rev0, ob0) == xorn_obtype_none);
 	assert(xorn_get_object_type(rev0, ob1a) == xorn_obtype_none);
 	assert(xorn_get_object_type(rev0, ob1b) == xorn_obtype_none);
 
 	assert(xorn_get_object_type(rev1, ob0) == 111);
-	assert(xorn_get_object_type(rev1, ob1a) == 123);
-	assert(xorn_get_object_type(rev1, ob1b) == 321);
+	assert(xorn_get_object_type(rev1, ob1a) == xorn_obtype_none);
+	assert(xorn_get_object_type(rev1, ob1b) == xorn_obtype_none);
 
-	assert(xorn_get_object_type(rev2, ob0) == 333);
-	assert(xorn_get_object_type(rev2, ob1a) == xorn_obtype_none);
+	assert(xorn_get_object_type(rev2, ob0) == 111);
+	assert(xorn_get_object_type(rev2, ob1a) == 123);
 	assert(xorn_get_object_type(rev2, ob1b) == 321);
+
+	assert(xorn_get_object_type(rev3, ob0) == 333);
+	assert(xorn_get_object_type(rev3, ob1a) == xorn_obtype_none);
+	assert(xorn_get_object_type(rev3, ob1b) == 321);
 
 	xorn_close_file(file);
 	return 0;

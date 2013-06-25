@@ -21,33 +21,18 @@
 int main()
 {
 	xorn_file_t file;
-	xorn_revision_t empty_rev, rev0, rev1, rev2;
+	xorn_revision_t rev0, rev1, rev2, rev3;
 	xorn_object_t ob0, ob1a, ob1b;
 
 	xorn_object_t *objects;
 	size_t count;
 
-	setup(&file, &empty_rev, &rev0, &rev1, &rev2, &ob0, &ob1a, &ob1b);
-
-	xorn_get_added_objects(empty_rev, rev0, &objects, &count);
-	assert(objects != NULL);
-	assert(count == 1);
-	assert(objects[0] == ob0);
-	free(objects);
-	xorn_get_removed_objects(empty_rev, rev0, &objects, &count);
-	assert(objects != NULL);
-	assert(count == 0);
-	free(objects);
-	xorn_get_modified_objects(empty_rev, rev0, &objects, &count);
-	assert(objects != NULL);
-	assert(count == 0);
-	free(objects);
+	setup(&file, &rev0, &rev1, &rev2, &rev3, &ob0, &ob1a, &ob1b);
 
 	xorn_get_added_objects(rev0, rev1, &objects, &count);
 	assert(objects != NULL);
-	assert(count == 2);
-	assert((objects[0] == ob1a && objects[1] == ob1b) ||
-	       (objects[0] == ob1b && objects[1] == ob1a));
+	assert(count == 1);
+	assert(objects[0] == ob0);
 	free(objects);
 	xorn_get_removed_objects(rev0, rev1, &objects, &count);
 	assert(objects != NULL);
@@ -60,14 +45,29 @@ int main()
 
 	xorn_get_added_objects(rev1, rev2, &objects, &count);
 	assert(objects != NULL);
-	assert(count == 0);
+	assert(count == 2);
+	assert((objects[0] == ob1a && objects[1] == ob1b) ||
+	       (objects[0] == ob1b && objects[1] == ob1a));
 	free(objects);
 	xorn_get_removed_objects(rev1, rev2, &objects, &count);
+	assert(objects != NULL);
+	assert(count == 0);
+	free(objects);
+	xorn_get_modified_objects(rev1, rev2, &objects, &count);
+	assert(objects != NULL);
+	assert(count == 0);
+	free(objects);
+
+	xorn_get_added_objects(rev2, rev3, &objects, &count);
+	assert(objects != NULL);
+	assert(count == 0);
+	free(objects);
+	xorn_get_removed_objects(rev2, rev3, &objects, &count);
 	assert(objects != NULL);
 	assert(count == 1);
 	assert(objects[0] == ob1a);
 	free(objects);
-	xorn_get_modified_objects(rev1, rev2, &objects, &count);
+	xorn_get_modified_objects(rev2, rev3, &objects, &count);
 	assert(objects != NULL);
 	assert(count == 1);
 	assert(objects[0] == ob0);

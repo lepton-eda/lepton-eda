@@ -19,8 +19,8 @@
 
 
 static void setup(
-	xorn_file_t *file, xorn_revision_t *empty_rev,
-	xorn_revision_t *rev0, xorn_revision_t *rev1, xorn_revision_t *rev2,
+	xorn_file_t *file, xorn_revision_t *rev0,
+	xorn_revision_t *rev1, xorn_revision_t *rev2, xorn_revision_t *rev3,
 	xorn_object_t *ob0, xorn_object_t *ob1a, xorn_object_t *ob1b)
 {
 	xorn_changeset_t chset;
@@ -28,23 +28,23 @@ static void setup(
 	*file = xorn_new_file();
 	assert(*file != NULL);
 
-	*empty_rev = xorn_get_empty_revision(*file);
-	assert(*empty_rev != NULL);
+	*rev0 = xorn_get_empty_revision(*file);
+	assert(*rev0 != NULL);
 
 	/* first change */
 
-	chset = xorn_alloc_changeset(*empty_rev);
+	chset = xorn_alloc_changeset(*rev0);
 	assert(chset != NULL);
 
 	*ob0 = xorn_add_object(chset, 111, NULL);
 	assert(*ob0 != NULL);
 
-	*rev0 = xorn_apply_changeset(chset, "first change");
-	assert(*rev0 != NULL);
+	*rev1 = xorn_apply_changeset(chset, "first change");
+	assert(*rev1 != NULL);
 
 	/* second change */
 
-	chset = xorn_alloc_changeset(*rev0);
+	chset = xorn_alloc_changeset(*rev1);
 	assert(chset != NULL);
 
 	*ob1a = xorn_add_object(chset, 123, NULL);
@@ -53,18 +53,18 @@ static void setup(
 	*ob1b = xorn_add_object(chset, 321, NULL);
 	assert(*ob1b != NULL);
 
-	*rev1 = xorn_apply_changeset(chset, "second change");
-	assert(*rev1 != NULL);
+	*rev2 = xorn_apply_changeset(chset, "second change");
+	assert(*rev2 != NULL);
 
 	/* third change */
 
-	chset = xorn_alloc_changeset(*rev1);
+	chset = xorn_alloc_changeset(*rev2);
 	assert(chset != NULL);
 
 	assert(xorn_set_object_data(chset, *ob0, 333, NULL) == 0);
 
 	xorn_delete_object(chset, *ob1a);
 
-	*rev2 = xorn_apply_changeset(chset, "third change");
-	assert(*rev2 != NULL);
+	*rev3 = xorn_apply_changeset(chset, "third change");
+	assert(*rev3 != NULL);
 }

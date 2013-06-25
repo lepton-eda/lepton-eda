@@ -20,26 +20,26 @@
 int main()
 {
 	xorn_file_t file;
-	xorn_revision_t empty_rev, rev0, rev1, rev2;
+	xorn_revision_t rev0, rev1, rev2, rev3;
 	xorn_object_t ob0, ob1a, ob1b;
 
-	setup(&file, &empty_rev, &rev0, &rev1, &rev2, &ob0, &ob1a, &ob1b);
+	setup(&file, &rev0, &rev1, &rev2, &rev3, &ob0, &ob1a, &ob1b);
 
-	assert(xorn_object_exists_in_revision(empty_rev, ob0) == false);
-	assert(xorn_object_exists_in_revision(empty_rev, ob1a) == false);
-	assert(xorn_object_exists_in_revision(empty_rev, ob1b) == false);
-
-	assert(xorn_object_exists_in_revision(rev0, ob0) == true);
+	assert(xorn_object_exists_in_revision(rev0, ob0) == false);
 	assert(xorn_object_exists_in_revision(rev0, ob1a) == false);
 	assert(xorn_object_exists_in_revision(rev0, ob1b) == false);
 
 	assert(xorn_object_exists_in_revision(rev1, ob0) == true);
-	assert(xorn_object_exists_in_revision(rev1, ob1a) == true);
-	assert(xorn_object_exists_in_revision(rev1, ob1b) == true);
+	assert(xorn_object_exists_in_revision(rev1, ob1a) == false);
+	assert(xorn_object_exists_in_revision(rev1, ob1b) == false);
 
 	assert(xorn_object_exists_in_revision(rev2, ob0) == true);
-	assert(xorn_object_exists_in_revision(rev2, ob1a) == false);
+	assert(xorn_object_exists_in_revision(rev2, ob1a) == true);
 	assert(xorn_object_exists_in_revision(rev2, ob1b) == true);
+
+	assert(xorn_object_exists_in_revision(rev3, ob0) == true);
+	assert(xorn_object_exists_in_revision(rev3, ob1a) == false);
+	assert(xorn_object_exists_in_revision(rev3, ob1b) == true);
 
 	xorn_close_file(file);
 	return 0;
