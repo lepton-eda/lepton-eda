@@ -15,10 +15,12 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #include <xornstorage.h>
+#include <err.h>
 #include <stdlib.h>
 #include <string.h>
 #include <algorithm>
 #include <map>
+#include <set>
 #include <vector>
 #include "key_iterator.h"
 
@@ -42,6 +44,9 @@ struct xorn_revision {
 
 struct xorn_object {
 	xorn_object(xorn_file_t file);
+};
+
+struct xorn_selection : public std::set<xorn_object_t> {
 };
 
 struct xorn_changeset {
@@ -203,6 +208,28 @@ void xorn_get_objects(
 		(*objects_return)[(*count_return)++] = (*i).first;
 }
 
+void xorn_get_selected_objects(
+	xorn_revision_t rev, xorn_selection_t sel,
+	xorn_object_t **objects_return, size_t *count_return)
+{
+	*objects_return = (xorn_object_t *) malloc(
+		std::min(rev->obstates.size(),
+			 sel->size()) * sizeof(xorn_object_t));
+	*count_return = 0;
+	if (*objects_return == NULL)
+		return;
+
+	xorn_object_t *ptr = set_intersection(
+		iterate_keys(rev->obstates.begin()),
+		iterate_keys(rev->obstates.end()),
+		sel->begin(), sel->end(), *objects_return);
+
+	*count_return = ptr - *objects_return;
+	*objects_return = (xorn_object_t *) realloc(
+		*objects_return,
+		std::max(*count_return, (size_t) 1) * sizeof(xorn_object_t));
+}
+
 void xorn_get_added_objects(
 	xorn_revision_t from_rev, xorn_revision_t to_rev,
 	xorn_object_t **objects_return, size_t *count_return)
@@ -283,6 +310,136 @@ void xorn_get_modified_objects(
 
 /****************************************************************************/
 
+xorn_selection_t xorn_select_none()
+{
+	try {
+		return new xorn_selection();
+	} catch (std::bad_alloc const &) {
+		return NULL;
+	}
+}
+
+xorn_selection_t xorn_select_object(xorn_object_t ob)
+{
+	xorn_selection_t rsel;
+	try {
+		rsel = new xorn_selection();
+	} catch (std::bad_alloc const &) {
+		return NULL;
+	}
+	try {
+		rsel->insert(ob);
+	} catch (std::bad_alloc const &) {
+		delete rsel;
+		return NULL;
+	}
+	return rsel;
+}
+
+xorn_selection_t xorn_select_all(xorn_revision_t rev)
+{
+	xorn_selection_t rsel;
+	try {
+		rsel = new xorn_selection();
+	} catch (std::bad_alloc const &) {
+		return NULL;
+	}
+	try {
+		copy(iterate_keys(rev->obstates.begin()),
+		     iterate_keys(rev->obstates.end()),
+		     inserter(*rsel, rsel->begin()));
+	} catch (std::bad_alloc const &) {
+		delete rsel;
+		return NULL;
+	}
+	return rsel;
+}
+
+xorn_selection_t xorn_select_all_except(
+	xorn_revision_t rev, xorn_selection_t sel)
+{
+	xorn_selection_t rsel;
+	try {
+		rsel = new xorn_selection();
+	} catch (std::bad_alloc const &) {
+		return NULL;
+	}
+	try {
+		set_difference(iterate_keys(rev->obstates.begin()),
+			       iterate_keys(rev->obstates.end()),
+			       sel->begin(), sel->end(),
+			       inserter(*rsel, rsel->begin()));
+	} catch (std::bad_alloc const &) {
+		delete rsel;
+		return NULL;
+	}
+	return rsel;
+}
+
+xorn_selection_t xorn_select_union(
+	xorn_selection_t sel0, xorn_selection_t sel1)
+{
+	xorn_selection_t rsel;
+	try {
+		rsel = new xorn_selection();
+	} catch (std::bad_alloc const &) {
+		return NULL;
+	}
+	try {
+		set_union(sel0->begin(), sel0->end(),
+			  sel1->begin(), sel1->end(),
+			  inserter(*rsel, rsel->begin()));
+	} catch (std::bad_alloc const &) {
+		delete rsel;
+		return NULL;
+	}
+	return rsel;
+}
+
+xorn_selection_t xorn_select_intersection(
+	xorn_selection_t sel0, xorn_selection_t sel1)
+{
+	xorn_selection_t rsel;
+	try {
+		rsel = new xorn_selection();
+	} catch (std::bad_alloc const &) {
+		return NULL;
+	}
+	try {
+		set_intersection(sel0->begin(), sel0->end(),
+				 sel1->begin(), sel1->end(),
+				 inserter(*rsel, rsel->begin()));
+	} catch (std::bad_alloc const &) {
+		delete rsel;
+		return NULL;
+	}
+	return rsel;
+}
+
+bool xorn_selection_is_empty(xorn_revision_t rev, xorn_selection_t sel)
+{
+	std::map<xorn_object_t, obstate *>::const_iterator i
+		= rev->obstates.begin();
+	std::set<xorn_object_t>::const_iterator j = sel->begin();
+
+	while (i != rev->obstates.end() && j != sel->end())
+		if ((*i).first < *j)
+			++i;
+		else if ((*i).first > *j)
+			++j;
+		else
+			return false;
+
+	return true;
+}
+
+void xorn_deselect(xorn_selection_t sel)
+{
+	delete sel;
+}
+
+/****************************************************************************/
+
 xorn_changeset_t xorn_alloc_changeset(xorn_revision_t rev)
 {
 	try {
@@ -354,5 +511,18 @@ void xorn_delete_object(xorn_changeset_t chset, xorn_object_t ob)
 	if (i != chset->r->obstates.end()) {
 		(*i).second->dec_refcnt();
 		chset->r->obstates.erase(i);
+	}
+}
+
+void xorn_delete_selected_objects(xorn_changeset_t chset, xorn_selection_t sel)
+{
+	for (std::set<xorn_object_t>::const_iterator i = sel->begin();
+	     i != sel->end(); ++i) {
+		std::map<xorn_object_t, obstate *>::iterator j
+			= chset->r->obstates.find(*i);
+		if (j != chset->r->obstates.end()) {
+			(*j).second->dec_refcnt();
+			chset->r->obstates.erase(j);
+		}
 	}
 }

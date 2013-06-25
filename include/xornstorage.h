@@ -32,6 +32,7 @@ typedef enum {
 typedef struct xorn_file *xorn_file_t;
 typedef struct xorn_revision *xorn_revision_t;
 typedef struct xorn_object *xorn_object_t;
+typedef struct xorn_selection *xorn_selection_t;
 typedef struct xorn_changeset *xorn_changeset_t;
 
 /* file functions */
@@ -52,6 +53,9 @@ const void *xorn_get_object_data(
 void xorn_get_objects(
 	xorn_revision_t rev,
 	xorn_object_t **objects_return, size_t *count_return);
+void xorn_get_selected_objects(
+	xorn_revision_t rev, xorn_selection_t sel,
+	xorn_object_t **objects_return, size_t *count_return);
 void xorn_get_added_objects(
 	xorn_revision_t from_rev, xorn_revision_t to_rev,
 	xorn_object_t **objects_return, size_t *count_return);
@@ -61,6 +65,25 @@ void xorn_get_removed_objects(
 void xorn_get_modified_objects(
 	xorn_revision_t from_rev, xorn_revision_t to_rev,
 	xorn_object_t **objects_return, size_t *count_return);
+
+/* selection functions */
+
+xorn_selection_t xorn_select_none();
+xorn_selection_t xorn_select_object(
+	xorn_object_t ob);
+xorn_selection_t xorn_select_all(
+	xorn_revision_t rev);
+xorn_selection_t xorn_select_all_except(
+	xorn_revision_t rev, xorn_selection_t sel);
+xorn_selection_t xorn_select_union(
+	xorn_selection_t sel0, xorn_selection_t sel1);
+xorn_selection_t xorn_select_intersection(
+	xorn_selection_t sel0, xorn_selection_t sel1);
+
+bool xorn_selection_is_empty(
+	xorn_revision_t rev, xorn_selection_t sel);
+void xorn_deselect(
+	xorn_selection_t sel);
 
 /* manipulation functions */
 
@@ -73,6 +96,8 @@ xorn_object_t xorn_add_object(xorn_changeset_t chset,
 int xorn_set_object_data(xorn_changeset_t chset, xorn_object_t ob,
 			 xorn_obtype_t type, const void *data);
 void xorn_delete_object(xorn_changeset_t chset, xorn_object_t ob);
+void xorn_delete_selected_objects(xorn_changeset_t chset,
+				  xorn_selection_t sel);
 
 #ifdef __cplusplus
 }

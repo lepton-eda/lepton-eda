@@ -18,10 +18,12 @@ AM_CPPFLAGS = -I$(top_srcdir)/include
 AM_CFLAGS = -Wall -W -Werror
 LDADD = ../lib/libxornstorage.la
 
-TESTS = tc_exist \
+TESTS = tc_delete_sel \
+	tc_exist \
 	tc_get_obdata \
 	tc_get_objects \
 	tc_get_obtype \
+	tc_selection \
 	tc_stat
 
 check_PROGRAMS = $(TESTS)
