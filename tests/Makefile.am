@@ -24,7 +24,8 @@ TESTS = tc_delete_sel \
 	tc_get_objects \
 	tc_get_obtype \
 	tc_selection \
-	tc_stat
+	tc_stat \
+	tc_string
 
 check_PROGRAMS = $(TESTS)
 EXTRA_DIST = setup.h

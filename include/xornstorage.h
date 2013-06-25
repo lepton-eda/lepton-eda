@@ -110,6 +110,11 @@ void xorn_delete_selected_objects(xorn_changeset_t chset,
 
 /* object data definition */
 
+struct xorn_string {
+	const char *s;
+	size_t len;
+};
+
 struct xorn_double2d {
 	double x, y;
 };
@@ -181,7 +186,7 @@ struct xornsch_net {
 };
 
 struct xornsch_path {
-	/* string pathdata; */
+	struct xorn_string pathdata;
 	int color;
 	struct xornsch_line_attr line;
 	struct xornsch_fill_attr fill;
@@ -203,7 +208,7 @@ struct xornsch_text {
 	int show_name_value;
 	int angle;
 	int alignment;
-	/* string text; */
+	struct xorn_string text;
 };
 
 #ifdef __cplusplus

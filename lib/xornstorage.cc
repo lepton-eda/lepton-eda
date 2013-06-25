@@ -127,16 +127,52 @@ static size_t sizeof_obtype(xorn_obtype_t type)
 	}
 }
 
+static void duplicate_string(xorn_string &str)
+{
+	char *buf = (char *)malloc(str.len);
+	if (buf == NULL)
+		throw std::bad_alloc();
+	memcpy(buf, str.s, str.len);
+	str.s = buf;
+}
+
 obstate::obstate(xorn_obtype_t type, void const *data)
 	: refcnt(1), type(type), data(malloc(sizeof_obtype(type)))
 {
 	if (this->data == NULL)
 		throw std::bad_alloc();
 	memcpy(this->data, data, sizeof_obtype(type));
+
+	try {
+		switch(type) {
+		case xornsch_obtype_path:
+			duplicate_string(
+				((xornsch_path *)this->data)->pathdata);
+			break;
+		case xornsch_obtype_text:
+			duplicate_string(((xornsch_text *)this->data)->text);
+			break;
+		default:
+			/* do nothing */;
+		}
+	} catch (std::bad_alloc const &) {
+		free(this->data);
+		throw;
+	}
 }
 
 obstate::~obstate()
 {
+	switch(type) {
+	case xornsch_obtype_path:
+		free(const_cast<char *>(((xornsch_path *)data)->pathdata.s));
+		break;
+	case xornsch_obtype_text:
+		free(const_cast<char *>(((xornsch_text *)data)->text.s));
+		break;
+	default:
+		/* do nothing */;
+	}
 	free(this->data);
 }
 
