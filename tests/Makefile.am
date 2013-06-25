@@ -18,6 +18,11 @@ AM_CPPFLAGS = -I$(top_srcdir)/include
 AM_CFLAGS = -Wall -W
 LDADD = ../lib/libxornstorage.la
 
-TESTS = tc_empty
+TESTS = tc_exist \
+	tc_get_obdata \
+	tc_get_objects \
+	tc_get_obtype \
+	tc_stat
 
 check_PROGRAMS = $(TESTS)
+EXTRA_DIST = setup.h
