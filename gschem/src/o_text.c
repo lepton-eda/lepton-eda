@@ -31,16 +31,6 @@
 
 #include "gschem.h"
 
-#define MINIMUM_MARK_SMALL_DIST 1
-
-#if 1
-# define FONT_NAME "Arial"
-#else
-# define FONT_NAME "Helvetica"
-#endif
-
-#undef DEBUG_TEXT
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
