@@ -879,6 +879,28 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   return o_new;
 }
 
+/*! \brief Reset the refdes number back to a question mark
+ *
+ *  \par This function finds the refdes attribute inside this
+ *  object and resets the refdes number back to a question mark.
+ *
+ *  \param [in] toplevel    The TOPLEVEL object
+ *  \param [in] object      The complex containing text objects
+ */
+void o_complex_reset_refdes(TOPLEVEL *toplevel, OBJECT *object)
+{
+  GList *iter = object->attribs;
+
+  while (iter != NULL) {
+    OBJECT *attrib = (OBJECT*) iter->data;
+
+    if (attrib->type == OBJ_TEXT) {
+      o_text_reset_refdes(toplevel, attrib);
+    }
+
+    iter = g_list_next (iter);
+  }
+}
 
 /*! \todo Finish function documentation!!!
  *  \brief

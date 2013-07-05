@@ -533,6 +533,48 @@ OBJECT *o_text_copy(TOPLEVEL *toplevel, OBJECT *o_current)
   return new_obj;
 }
 
+/*! \brief Reset the refdes number back to a question mark
+ *
+ *  \par If this text object represents a refdes attribute,
+ *  then this function resets the refdes number back to the
+ *  question mark. In other cases, this function does
+ *  nothing.
+ *
+ *  \param [in] toplevel    The TOPLEVEL object
+ *  \param [in] object      The text object
+ */
+void o_text_reset_refdes(TOPLEVEL *toplevel, OBJECT *object)
+{
+  static GRegex *regex = NULL;
+
+  if (regex == NULL) {
+    regex = g_regex_new("(refdes=\\D+)\\d+",
+                        G_REGEX_ANCHORED | G_REGEX_CASELESS | G_REGEX_OPTIMIZE,
+                        0,
+                        NULL);
+  }
+
+  g_return_if_fail(object != NULL);
+  g_return_if_fail(object->type == OBJ_TEXT);
+  g_return_if_fail(regex != NULL);
+  g_return_if_fail(toplevel != NULL);
+
+  gchar *result = g_regex_replace(regex,                   /* regex          */
+                                  object->text->string,    /* string         */
+                                  -1,                      /* string_len     */
+                                  0,                       /* start_position */
+                                  "\\1?",                  /* replacement    */
+                                  0,                       /* match_options  */
+                                  NULL);                   /* error          */
+
+  if (result != NULL) {
+    g_free (object->text->string);
+    object->text->string = result;
+
+    o_text_recreate (toplevel, object);
+  }
+}
+
 /*! \brief rotate a text object around a centerpoint
  *  \par Function Description
  *  This function rotates a text \a object around the point
