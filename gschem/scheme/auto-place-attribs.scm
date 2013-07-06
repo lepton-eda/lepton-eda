@@ -678,6 +678,8 @@
 					       def-alignment-pos)) 
 		      (new-angle (list-ref default-def 
 					   def-angle-pos))
+		      (new-color (list-ref default-def 
+					   def-color-pos))
 		      (new-x (+ (list-ref default-def
 					  def-x-offset-pos)
 				(car ref))) 
@@ -711,12 +713,15 @@
 			      (get-point-of-bound "min-y" new-attrib-bounds))))
 		      )
 		(set-attribute-text-properties! attribute
-						-1 ; keep previous color
+						new-color
 						-1 ; keep previous size
 						new-alignment
 						new-angle
 						(+ new-x x_offset)
 						(+ new-y y_offset))
+		(if (not (= new-color -1)) 
+		    (set-object-color! attribute
+			               new-color))
 		)
 	      )
 	    

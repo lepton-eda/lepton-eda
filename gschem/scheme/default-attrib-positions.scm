@@ -75,156 +75,159 @@
    ;         - spacing: minimum spacing between the attributes and the pins.
    ;           It sould be a positive integer number.
    ;
+   ;         - color: the color to assign to the attribute. A -1 will leave 
+   ;           the color unchanged.
+   ;
    ;Attrib_name Direct. Attribute_match  <--- first line of each entry.
-   ;X_offset Y_offset Reference       Alignment    Angle Mov_dir  Spacing (>0)
+   ;X_offset Y_offset Reference       Alignment    Angle Mov_dir  Spacing (>0) Color
    ;
   (list 
    (list 
     "pinlabel"  ">"  (list "OBJ_TYPE" (char2str OBJ_PIN))
-      50      0       "Lower Right"   "Lower Left"     0      ""   0)
+      50      0       "Lower Right"   "Lower Left"     0      ""   0   9)
    (list
     "pinlabel"  "<"  (list "OBJ_TYPE" (char2str OBJ_PIN))
-     -50      0       "Lower Left"    "Lower Right"    0      ""   0)
+     -50      0       "Lower Left"    "Lower Right"    0      ""   0   9)
    (list
     "pinlabel"  "^"  (list "OBJ_TYPE" (char2str OBJ_PIN))
-       0     50       "Upper Middle"  "Lower Left"    90      ""   0)
+       0     50       "Upper Middle"  "Lower Left"    90      ""   0   9)
    (list
     "pinlabel"  "v"  (list "OBJ_TYPE" (char2str OBJ_PIN))
-       0    -50       "Lower Middle"  "Lower Right"   90      ""   0)
+       0    -50       "Lower Middle"  "Lower Right"   90      ""   0   9)
    (list
     "pinnumber" ">"  (list "OBJ_TYPE" (char2str OBJ_PIN))
-    -100     50       "Lower Right"   "Lower Right"    0      ""   0)
+    -100     50       "Lower Right"   "Lower Right"    0      ""   0  -1)
    (list
     "pinnumber" "<"  (list "OBJ_TYPE" (char2str OBJ_PIN))
-     100     50       "Lower Left"    "Lower Left"     0      ""   0)
+     100     50       "Lower Left"    "Lower Left"     0      ""   0  -1)
    (list
     "pinnumber" "^"  (list "OBJ_TYPE" (char2str OBJ_PIN))
-     -50   -100       "Upper Middle"  "Lower Right"   90      ""   0)
+     -50   -100       "Upper Middle"  "Lower Right"   90      ""   0  -1)
    (list 
     "pinnumber" "v"  (list "OBJ_TYPE" (char2str OBJ_PIN))
-     -50    100       "Lower Middle"  "Lower Left"    90      ""   0)
+     -50    100       "Lower Middle"  "Lower Left"    90      ""   0  -1)
    
      ; Component attributes
      ;   One direction
    (list 
     "refdes"    "<"  (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-       0     50       "Upper Middle"  "Lower Middle"   0      ""   0)
+       0     50       "Upper Middle"  "Lower Middle"   0      ""   0  -1)
    (list 
     "value"     "<"  (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-       0    -50       "Lower Middle"  "Upper Middle"   0      ""   0)
+       0    -50       "Lower Middle"  "Upper Middle"   0      ""   0  -1)
    (list 
     "device"    "<"  (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-       0    -50       "Lower Middle"  "Upper Middle"   0      ""   0)
+       0    -50       "Lower Middle"  "Upper Middle"   0      ""   0  -1)
    (list 
     "refdes"    ">" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-       0     50       "Upper Middle"  "Lower Middle"   0      ""   0)
+       0     50       "Upper Middle"  "Lower Middle"   0      ""   0  -1)
    (list 
     "value"     ">" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-       0    -50       "Lower Middle"  "Upper Middle"   0      ""   0)
+       0    -50       "Lower Middle"  "Upper Middle"   0      ""   0  -1)
    (list 
     "device"    ">" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-       0    -50       "Lower Middle"  "Upper Middle"   0      ""   0)
+       0    -50       "Lower Middle"  "Upper Middle"   0      ""   0  -1)
    (list 
     "refdes"    "^" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-       0    100       "Middle Left"   "Lower Right"    0      ""   0)
+       0    100       "Middle Left"   "Lower Right"    0      ""   0  -1)
    (list 
     "value"     "^" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-       0   -100       "Middle Left"   "Lower Right"    0      ""   0)
+       0   -100       "Middle Left"   "Lower Right"    0      ""   0  -1)
    (list 
     "device"    "^" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-       0   -100       "Middle Left"   "Lower Right"    0      ""   0)
+       0   -100       "Middle Left"   "Lower Right"    0      ""   0  -1)
    (list 
     "refdes"    "v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-       0    100       "Middle Left"   "Lower Right"    0      ""   0)
+       0    100       "Middle Left"   "Lower Right"    0      ""   0  -1)
    (list 
     "value"     "v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-       0   -100       "Middle Left"   "Lower Right"    0      ""   0)
+       0   -100       "Middle Left"   "Lower Right"    0      ""   0  -1)
    (list 
     "device"    "v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-       0   -100       "Middle Left"   "Lower Right"    0      ""   0)
+       0   -100       "Middle Left"   "Lower Right"    0      ""   0  -1)
 	;   Two directions
    (list 
     "refdes"   "<>" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-       0     50       "Upper Middle"  "Lower Middle"   0      ""   0)
+       0     50       "Upper Middle"  "Lower Middle"   0      ""   0  -1)
    (list 
     "value"    "<>" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-       0    -50       "Lower Middle"  "Upper Middle"   0      ""   0)
+       0    -50       "Lower Middle"  "Upper Middle"   0      ""   0  -1)
    (list 
     "device"   "<>" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-       0    -50       "Lower Middle"  "Upper Middle"   0      ""   0)
+       0    -50       "Lower Middle"  "Upper Middle"   0      ""   0  -1)
    (list 
     "refdes"   "^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-      50    100       "Middle Right"  "Lower Left"     0      ""   0)
+      50    100       "Middle Right"  "Lower Left"     0      ""   0  -1)
    (list 
     "value"    "^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-      50   -100       "Middle Right"  "Lower Left"     0      ""   0)
+      50   -100       "Middle Right"  "Lower Left"     0      ""   0  -1)
    (list 
     "device"   "^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-      50   -100       "Middle Right"  "Lower Left"     0      ""   0)
+      50   -100       "Middle Right"  "Lower Left"     0      ""   0  -1)
 	;   Three directions
    (list 
     "refdes"  "<^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-     -50    100       "Middle Left"   "Lower Right"    0      ""   0)
+     -50    100       "Middle Left"   "Lower Right"    0      ""   0  -1)
    (list 
     "value"   "<^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-     -50   -100       "Middle Left"   "Lower Right"    0      ""   0)
+     -50   -100       "Middle Left"   "Lower Right"    0      ""   0  -1)
    (list 
     "device"  "<^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-     -50   -100       "Middle Left"   "Lower Right"    0      ""   0)
+     -50   -100       "Middle Left"   "Lower Right"    0      ""   0  -1)
    (list 
     "refdes"  ">^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-      50    100       "Middle Right"  "Lower Left"     0      ""   0)
+      50    100       "Middle Right"  "Lower Left"     0      ""   0  -1)
    (list 
     "value"   ">^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-      50   -100       "Middle Right"  "Lower Left"     0      ""   0)
+      50   -100       "Middle Right"  "Lower Left"     0      ""   0  -1)
    (list 
     "device"  ">^v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-      50   -100       "Middle Right"  "Lower Left"     0      ""   0)
+      50   -100       "Middle Right"  "Lower Left"     0      ""   0  -1)
    (list 
     "refdes"  "<>v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-     -50    -50       "Lower Middle"  "Upper Right"    0      ""   0)
+     -50    -50       "Lower Middle"  "Upper Right"    0      ""   0  -1)
    (list 
     "value"   "<>v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-      50    -50       "Lower Middle"  "Upper Left"     0      ""   0)
+      50    -50       "Lower Middle"  "Upper Left"     0      ""   0  -1)
    (list 
     "device"  "<>v" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-      50    -50       "Lower Middle"  "Upper Left"     0      ""   0)
+      50    -50       "Lower Middle"  "Upper Left"     0      ""   0  -1)
    (list 
     "refdes"  "<>^" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-     -50     50       "Upper Middle"  "Lower Right"    0      ""   0)
+     -50     50       "Upper Middle"  "Lower Right"    0      ""   0  -1)
    (list 
     "value"   "<>^" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-      50     50       "Upper Middle"  "Lower Left"     0      ""   0)
+      50     50       "Upper Middle"  "Lower Left"     0      ""   0  -1)
    (list 
     "device"  "<>^" (list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-      50     50       "Upper Middle"  "Lower Left"     0      ""   0)
+      50     50       "Upper Middle"  "Lower Left"     0      ""   0  -1)
 	;   Four directions
    (list 
     "refdes" "<>^v"(list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-      50     50      "Upper Left"    "Lower Left"     0      "^<" 50)
+      50     50      "Upper Left"    "Lower Left"     0      "^<" 50  -1)
    (list 
     "value"  "<>^v"(list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-      50    -50      "Lower Right"   "Upper Right"    0      "v>" 50)
+      50    -50      "Lower Right"   "Upper Right"    0      "v>" 50  -1)
    (list 
     "device" "<>^v"(list "OBJ_TYPE" (char2str OBJ_COMPLEX))
-      50    -50      "Lower Right"   "Upper Right"    0      "v>" 50)
+      50    -50      "Lower Right"   "Upper Right"    0      "v>" 50  -1)
    
      ; Net attributes
      ;   Two directions
    (list 
     "netname" "<>" (list "OBJ_TYPE" (char2str OBJ_NET))
-       0     50       "Upper Middle"  "Lower Middle"   0      ""   0)
+       0     50       "Upper Middle"  "Lower Middle"   0      ""   0  -1)
    (list 
     "netname" "^v" (list "OBJ_TYPE" (char2str OBJ_NET))
-     -50      0       "Middle Middle" "Lower Middle"  90      ""   0)
+     -50      0       "Middle Middle" "Lower Middle"  90      ""   0  -1)
      ; Bus attributes
      ;   Two directions
    (list 
     "netname" "<>" (list "OBJ_TYPE" (char2str OBJ_BUS))
-       0     50       "Upper Middle"  "Lower Middle"   0      ""   0)
+       0     50       "Upper Middle"  "Lower Middle"   0      ""   0  -1)
    (list 
     "netname" "^v" (list "OBJ_TYPE" (char2str OBJ_BUS))
-     -50      0       "Middle Middle" "Lower Middle"  90      ""   0)
+     -50      0       "Middle Middle" "Lower Middle"  90      ""   0  -1)
    ))
 
 ; Position of parameters inside default-position-of-text-attributes
@@ -238,4 +241,5 @@
 (define def-angle-pos         7)
 (define def-move-pos 	      8)
 (define def-spacing-pos       9)
+(define def-color-pos        10)
 
