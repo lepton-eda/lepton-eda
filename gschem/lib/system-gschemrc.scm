@@ -639,10 +639,10 @@
 ; The #t at the end means that function is appended to the end of the hook.
 (add-hook! add-pin-hook (lambda (pin)
 	(autoplace-pin-attributes pin )) #t)
-(add-hook! rotate-pin-hook (lambda (pin)
-	(autoplace-pin-attributes pin )) #t)
-(add-hook! mirror-pin-hook (lambda (pin)
-	(autoplace-pin-attributes pin )) #t)
+;(add-hook! rotate-pin-hook (lambda (pin)
+;	(autoplace-pin-attributes pin )) #t)
+;(add-hook! mirror-pin-hook (lambda (pin)
+;	(autoplace-pin-attributes pin )) #t)
 
 ; Autoplace component/net/buses text attributes hook. 
 ; Comment in these if you want the component attributes to be 
