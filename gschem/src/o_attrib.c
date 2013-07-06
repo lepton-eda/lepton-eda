@@ -31,6 +31,12 @@
 #include <dmalloc.h>
 #endif
 
+
+
+#define SPACING_FROM_END       100
+#define SPACING_PERPENDICULAR   50
+
+
 /* No special type for attributes */
 /* You can only edit text attributes */
 
@@ -226,7 +232,9 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *new_obj;
   int world_x = - 1, world_y = -1;
-  int color; 
+  int align;
+  int angle;
+  int color;
   int left, right, top, bottom;
   OBJECT *o_current;
 
@@ -242,24 +250,32 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
       case(OBJ_PLACEHOLDER):
         world_x = o_current->complex->x;
         world_y = o_current->complex->y;
+        align = LOWER_LEFT;
+        angle = 0;
         color = ATTRIBUTE_COLOR;
         break;
 
       case(OBJ_ARC):
         world_x = o_current->arc->x;
         world_y = o_current->arc->y;
+        align = LOWER_LEFT;
+        angle = 0;
         color = ATTRIBUTE_COLOR;
         break;
 
       case(OBJ_CIRCLE):
         world_x = o_current->circle->center_x;
         world_y = o_current->circle->center_y;
+        align = LOWER_LEFT;
+        angle = 0;
         color = ATTRIBUTE_COLOR;
         break;
 
       case(OBJ_BOX):
         world_x = o_current->box->upper_x;
         world_y = o_current->box->upper_y;
+        align = LOWER_LEFT;
+        angle = 0;
         color = ATTRIBUTE_COLOR;
         break;
 
@@ -267,15 +283,60 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
       case(OBJ_NET):
       case(OBJ_PIN):
       case(OBJ_BUS):
-        world_x = o_current->line->x[0];
-        world_y = o_current->line->y[0];
-        color = ATTRIBUTE_COLOR;
+        {
+          int dx = o_current->line->x[1] - o_current->line->x[0];
+          int dy = o_current->line->y[1] - o_current->line->y[0];
+
+          if (dy == 0) {
+              if (dx > 0) {
+                  world_x = o_current->line->x[0] + SPACING_FROM_END;
+                  world_y = o_current->line->y[0] + SPACING_PERPENDICULAR;
+
+                  align = LOWER_LEFT;
+                  angle = 0;
+              }
+              else {
+                  world_x = o_current->line->x[0] - SPACING_FROM_END;
+                  world_y = o_current->line->y[0] + SPACING_PERPENDICULAR;
+
+                  align = LOWER_RIGHT;
+                  angle = 0;
+              }
+          }
+          else if (dx == 0) {
+              if (dy > 0) {
+                  world_x = o_current->line->x[0] - SPACING_PERPENDICULAR;
+                  world_y = o_current->line->y[0] + SPACING_FROM_END;
+
+                  align = LOWER_LEFT;
+                  angle = 90;
+              }
+              else {
+                  world_x = o_current->line->x[0] - SPACING_PERPENDICULAR;
+                  world_y = o_current->line->y[0] - SPACING_FROM_END;
+
+                  align = LOWER_RIGHT;
+                  angle = 90;
+              }
+          }
+          else {
+              world_x = o_current->line->x[0];
+              world_y = o_current->line->y[0];
+
+              align = LOWER_LEFT;
+              angle = 0;
+          }
+
+          color = ATTRIBUTE_COLOR;
+        }
         break;
 
       case(OBJ_TEXT):
         world_x = o_current->text->x;
         world_y = o_current->text->y;
         color = DETACHED_ATTRIBUTE_COLOR;
+        align = LOWER_LEFT;
+        angle = 0;
         o_current = NULL;
         break;
     }
@@ -289,12 +350,14 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
     world_y = top;  
 
     /* printf("%d %d\n", world_x, world_y); */
+    align = LOWER_LEFT;
+    angle = 0;
     color = DETACHED_ATTRIBUTE_COLOR;
   }
 
   /* first create text item */
   new_obj = o_text_new(toplevel, OBJ_TEXT, color, world_x, world_y,
-                       LOWER_LEFT, 0, text_string, /* zero is angle */
+                       align, angle, text_string,
                        w_current->text_size, /* current text size */
                        visibility, show_name_value);
   s_page_append (toplevel, toplevel->page_current, new_obj);
