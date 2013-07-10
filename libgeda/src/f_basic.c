@@ -112,7 +112,7 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err)
   }
 
   /* A valid use of goto! (checks for raptors) */
-  if (auto_err & ENOENT) {
+  if (auto_err == ENOENT) {
     /* The autosave file does not exist. */
     result = FALSE;
     goto check_autosave_finish;
@@ -125,7 +125,7 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err)
     result = TRUE;
     goto check_autosave_finish;
   }
-  if (file_err & ENOENT) {
+  if (file_err == ENOENT) {
     /* The autosave file exists, but the actual file does not. */
     result = TRUE;
     goto check_autosave_finish;
