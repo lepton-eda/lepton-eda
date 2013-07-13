@@ -617,7 +617,7 @@ void o_slot_start(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_slot_end(GSCHEM_TOPLEVEL *w_current, OBJECT *object, const char *string);
 /* o_text.c */
 int o_text_get_rendered_bounds(void *user_data, OBJECT *object, int *min_x, int *min_y, int *max_x, int *max_y);
-void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text);
+void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text, int color, int align, int size);
 void o_text_edit(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int len, int text_size, int text_alignment);
 void o_text_change(GSCHEM_TOPLEVEL *w_current, OBJECT *object, char *string, int visibility, int show);
@@ -636,6 +636,10 @@ GList *s_stretch_add(GList *list, OBJECT *object, int whichone);
 GList *s_stretch_remove(GList *list, OBJECT *object);
 void s_stretch_print_all(GList *list);
 void s_stretch_destroy_all(GList *list);
+/* x_aligncb.c */
+GtkWidget* x_aligncb_new ();
+int x_aligncb_get_align (GtkWidget *widget);
+void x_aligncb_set_align (GtkWidget *widget, int align);
 /* x_attribedit.c */
 gint option_menu_get_history(GtkOptionMenu *option_menu);
 void attrib_edit_dialog_ok(GtkWidget *w, GSCHEM_TOPLEVEL *w_current);
@@ -666,6 +670,10 @@ COLOR *x_color_lookup(int color);
 COLOR *x_color_lookup_dark(int color);
 gchar *x_color_get_name(int index);
 gboolean x_color_display_enabled (int index);
+/* x_colorcb.c */
+GtkWidget* x_colorcb_new ();
+int x_colorcb_get_index (GtkWidget *widget);
+void x_colorcb_set_index (GtkWidget *widget, int color_index);
 /* x_dialog.c */
 int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size);
 void select_all_text_in_textview(GtkTextView *textview);
@@ -772,6 +780,10 @@ void x_stroke_init (void);
 void x_stroke_free (void);
 void x_stroke_record (GSCHEM_TOPLEVEL *w_current, gint x, gint y);
 gint x_stroke_translate_and_execute (GSCHEM_TOPLEVEL *w_current);
+/* x_textsizecb.c */
+GtkWidget* x_textsizecb_new();
+int x_textsizecb_get_size (GtkWidget *widget);
+void x_textsizecb_set_size (GtkWidget *widget, int size);
 /* x_window.c */
 void x_window_setup (GSCHEM_TOPLEVEL *w_current);
 void x_window_setup_gc(GSCHEM_TOPLEVEL *w_current);

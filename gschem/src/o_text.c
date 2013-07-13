@@ -104,7 +104,7 @@ int o_text_get_rendered_bounds (void *user_data, OBJECT *o_current,
  *  \par Function Description
  *
  */
-void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text)
+void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text, int color, int align, int size)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
 
@@ -123,10 +123,10 @@ void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text)
   /* here you need to add OBJ_TEXT when it's done */
   toplevel->page_current->place_list =
     g_list_append(toplevel->page_current->place_list,
-                  o_text_new (toplevel, OBJ_TEXT, TEXT_COLOR,
-                              0, 0, LOWER_LEFT, 0, /* zero is angle */
+                  o_text_new (toplevel, OBJ_TEXT, color,
+                              0, 0, align, 0, /* zero is angle */
                               text,
-                              w_current->text_size,
+                              size,
                               /* has to be visible so you can place it */
                               /* visibility is set when you create the object */
                               VISIBLE, SHOW_NAME_VALUE));

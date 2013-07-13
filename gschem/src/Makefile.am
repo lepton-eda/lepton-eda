@@ -56,11 +56,13 @@ gschem_SOURCES = \
 	o_undo.c \
 	parsecmd.c \
 	s_stretch.c \
+	x_aligncb.c \
 	x_attribedit.c \
 	x_autonumber.c \
 	x_basic.c \
 	x_clipboard.c \
 	x_color.c \
+	x_colorcb.c \
 	x_compselect.c \
 	x_dialog.c \
 	x_event.c \
@@ -71,12 +73,14 @@ gschem_SOURCES = \
 	x_menus.c \
 	x_misc.c \
 	x_multiattrib.c \
+	x_newtext.c \
 	x_pagesel.c \
 	x_preview.c \
 	x_print.c \
 	x_rc.c \
 	x_script.c \
 	x_stroke.c \
+	x_textsizecb.c \
 	x_window.c
 
 gschem_CPPFLAGS = -I$(top_srcdir)/libgeda/include  -I$(srcdir)/../include \
