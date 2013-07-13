@@ -617,7 +617,7 @@ void o_slot_start(GSCHEM_TOPLEVEL *w_current, OBJECT *object);
 void o_slot_end(GSCHEM_TOPLEVEL *w_current, OBJECT *object, const char *string);
 /* o_text.c */
 int o_text_get_rendered_bounds(void *user_data, OBJECT *object, int *min_x, int *min_y, int *max_x, int *max_y);
-void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text, int color, int align, int size);
+void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text, int color, int align, int rotate, int size);
 void o_text_edit(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
 void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int len, int text_size, int text_alignment);
 void o_text_change(GSCHEM_TOPLEVEL *w_current, OBJECT *object, char *string, int visibility, int show);
@@ -773,6 +773,10 @@ gboolean x_print_export_pdf (GSCHEM_TOPLEVEL *w_current, const gchar *filename);
 void x_print (GSCHEM_TOPLEVEL *w_current);
 /* x_rc.c */
 void x_rc_parse_gschem (GSCHEM_TOPLEVEL *w_current, const gchar *rcfile);
+/* x_rotatecb.c */
+GtkWidget* x_rotatecb_new ();
+int x_rotatecb_get_angle (GtkWidget *widget);
+void x_rotatecb_set_angle (GtkWidget *widget, int angle);
 /* x_script.c */
 void setup_script_selector(GSCHEM_TOPLEVEL *w_current);
 /* x_stroke.c */

@@ -59,6 +59,7 @@ struct _NewText {
 
     GtkWidget *aligncb;
     GtkWidget *colorcb;
+    GtkWidget *rotatecb;
     GtkWidget *textsizecb;
     GtkWidget *text_view;
 };
@@ -77,6 +78,7 @@ dialog_response_apply (NewText *dialog)
 {
   int align = LOWER_LEFT;
   int color = TEXT_COLOR;
+  int rotate = 0;
   int size = 12;
   gchar *string = NULL;
   gchar *tmp = NULL;
@@ -121,6 +123,11 @@ dialog_response_apply (NewText *dialog)
     size = value;
   }
 
+  value = x_rotatecb_get_angle (dialog->rotatecb);
+  if (value >= 0) {
+    rotate = value;
+  }
+
   /* select the text, so you can continue immediatly writing the next text */
   select_all_text_in_textview(GTK_TEXT_VIEW(dialog->text_view));
   gtk_widget_grab_focus(dialog->text_view);
@@ -131,6 +138,7 @@ dialog_response_apply (NewText *dialog)
                         tmp == NULL ? string : tmp,
                         color,
                         align,
+                        rotate,
                         size);
 
   g_free (string);
@@ -255,7 +263,7 @@ static void newtext_init(NewText *dialog)
   vbox = GTK_DIALOG(dialog)->vbox;
   gtk_box_set_spacing(GTK_BOX(vbox),DIALOG_V_SPACING);
 
-  table = gtk_table_new(3, 2, FALSE);
+  table = gtk_table_new(4, 2, FALSE);
   gtk_table_set_row_spacings(GTK_TABLE(table), DIALOG_V_SPACING);
   gtk_table_set_col_spacings(GTK_TABLE(table), DIALOG_H_SPACING);
 
@@ -306,6 +314,13 @@ static void newtext_init(NewText *dialog)
   x_aligncb_set_align(dialog->aligncb, LOWER_LEFT);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->aligncb, 1,2,2,3);
 
+  label = gtk_label_new (_("Rotation:"));
+  gtk_misc_set_alignment(GTK_MISC(label),0,0);
+  gtk_table_attach(GTK_TABLE(table), label, 0,1,3,4, GTK_FILL,0,0,0);
+
+  dialog->rotatecb = x_rotatecb_new ();
+  x_rotatecb_set_angle(dialog->rotatecb, 0);
+  gtk_table_attach_defaults(GTK_TABLE(table), dialog->rotatecb, 1,2,3,4);
 
 
   viewport1 = gtk_viewport_new (NULL, NULL);

@@ -78,6 +78,7 @@ gschem_SOURCES = \
 	x_preview.c \
 	x_print.c \
 	x_rc.c \
+	x_rotatecb.c \
 	x_script.c \
 	x_stroke.c \
 	x_textsizecb.c \
