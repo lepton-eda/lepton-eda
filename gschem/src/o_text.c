@@ -150,22 +150,43 @@ void o_text_edit(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
                    o_current->text->size, o_current->text->alignment);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Complete the text edit
  *
+ *  \par Function Description
+ *  This function completes the text edit by setting all the selected text
+ *  objects to the desired values.
+ *
+ *  \param [in] w_current The topleval gschem struct.
+ *  \param [in] string    The text to set the selected text objects to. If this
+ *                        string is NULL or has zero length, then this function
+ *                        leaves the text unchanged.
+ *  \param [in] color     The color to set the selected text to. If the color
+ *                        is less than zero, then this function leaves the color
+ *                        unchanged.
+ *  \param [in] align     The text alignment to set the selected text to. If
+ *                        the alignment is less than zero, this function leaves
+ *                        the alignment unchanged.
+ *  \param [in] rotate    The rotation angle to set the selected text to. If
+ *                        the rotation angle is less than zero, this function
+ *                        leaves the rotation angle unchanged.
+ *  \param [in] size      The size to set all the selected text to. If the
+ *                        size is less than or equal to zero, this function
+ *                        leaves the size unchanged.
  */
 void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int color, int align, int rotate, int size)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *object;
   GList *s_current;
-  int numselect;
+  char *textstr = string;
+
+  if ((textstr != NULL) && (g_utf8_strlen(textstr, -1) == 0)) {
+    textstr = NULL;
+  }
 
   /* skip over head */
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );
-  numselect = g_list_length( geda_list_get_glist( toplevel->page_current->selection_list ));
-  
+
   while(s_current != NULL) {
     object = (OBJECT *) s_current->data;
 
@@ -188,15 +209,15 @@ void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int color, int al
           object->text->angle = rotate;
         }
 
-        /* only change text string if there is only ONE text object selected */
-        if (numselect == 1 && string) {
-          o_text_set_string (w_current->toplevel, object, string);
-	  /* handle slot= attribute, it's a special case */
-	  if (object->attached_to != NULL &&
-	      g_ascii_strncasecmp (string, "slot=", 5) == 0) {
-	    o_slot_end (w_current, object->attached_to, string);
-	  }
+        if (textstr != NULL) {
+          o_text_set_string (w_current->toplevel, object, textstr);
+          /* handle slot= attribute, it's a special case */
+          if (object->attached_to != NULL &&
+              g_ascii_strncasecmp (textstr, "slot=", 5) == 0) {
+            o_slot_end (w_current, object->attached_to, textstr);
+          }
         }
+
         o_text_recreate(toplevel, object);
       } 
     }
