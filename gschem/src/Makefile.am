@@ -65,6 +65,7 @@ gschem_SOURCES = \
 	x_colorcb.c \
 	x_compselect.c \
 	x_dialog.c \
+	x_edittext.c \
 	x_event.c \
 	x_fileselect.c \
 	x_grid.c \

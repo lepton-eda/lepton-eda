@@ -619,7 +619,7 @@ void o_slot_end(GSCHEM_TOPLEVEL *w_current, OBJECT *object, const char *string);
 int o_text_get_rendered_bounds(void *user_data, OBJECT *object, int *min_x, int *min_y, int *max_x, int *max_y);
 void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text, int color, int align, int rotate, int size);
 void o_text_edit(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current);
-void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int len, int text_size, int text_alignment);
+void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int color, int align, int rotate, int size);
 void o_text_change(GSCHEM_TOPLEVEL *w_current, OBJECT *object, char *string, int visibility, int show);
 /* o_undo.c */
 void o_undo_init(void);

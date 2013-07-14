@@ -122,7 +122,6 @@ struct st_gschem_toplevel {
   int grid;                             /* what type of grid to show */
   int min_zoom;                         /* minimum zoom factor */
   int max_zoom;                         /* maximum zoom factor */
-  int text_alignment;                   /* current alignment of text */
   int inside_redraw;                    /* complex vs list redrawing */
   int drawbounding_action_mode;         /* outline vs bounding box */
   int last_drawb_mode;                  /* last above mode */

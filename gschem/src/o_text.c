@@ -155,8 +155,7 @@ void o_text_edit(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *  \par Function Description
  *
  */
-void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int len, int text_size,
-		     int text_alignment)
+void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int color, int align, int rotate, int size)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *object;
@@ -173,12 +172,21 @@ void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int len, int text
     if (object) {
       if (object->type == OBJ_TEXT) {
 
-        object->text->size = text_size;
-        object->text->alignment = text_alignment;
+        if (size > 0) {
+          object->text->size = size;
+        }
 
-        /* probably the text object should be extended to carry a color */
-        /* and we should pass it here with a function parameter (?) */
-        object->color = w_current->edit_color;
+        if (align >= 0) {
+          object->text->alignment = align;
+        }
+
+        if (color >= 0) {
+          object->color = color;
+        }
+
+        if (rotate >= 0) {
+          object->text->angle = rotate;
+        }
 
         /* only change text string if there is only ONE text object selected */
         if (numselect == 1 && string) {

@@ -109,7 +109,6 @@ x_aligncb_new ()
 {
   GtkCellRenderer *cell;
   GtkComboBox *combo;
-  GtkCellLayout *layout;
 
   if (align_list_store == NULL) {
     align_list_store = create_align_list_store ();
