@@ -85,7 +85,7 @@
  *  difference in how the specified font size corresponds to the metrics of
  *  the font when compared to typical typographic usage.
  *
- *  The following factor was impirically determined to approximately match the
+ *  The following factor was empirically determined to approximately match the
  *  cap-height between the legacy gschem font, and fonts rendered using pango.
  */
 #define GEDA_FONT_FACTOR 1.3
