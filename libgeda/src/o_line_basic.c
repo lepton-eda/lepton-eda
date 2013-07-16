@@ -504,7 +504,7 @@ void o_line_scale_world(TOPLEVEL *toplevel, int x_scale, int y_scale,
 }
 
 
-/*! \brief calculate the lenght of a line object
+/*! \brief calculate the length of a line object
  *  \par Function Description
  *  This function calculates the length of a line object
  *

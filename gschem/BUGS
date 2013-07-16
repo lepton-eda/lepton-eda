@@ -547,7 +547,7 @@ GONE	Still occasionally see interface die or lock up... ????
 FIXED	when you draw some text and then you resize the window, the text
 	isn't the same length as it was. (Fixed by drawing each char 
 	individually and varring this space depending on size of window)
-	Height is still off though, and the lenght is still not *exactly* 
+	Height is still off though, and the length is still not *exactly*
 	accurate, but this might be good enough (for now).
 
 

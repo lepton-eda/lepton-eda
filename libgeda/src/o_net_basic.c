@@ -307,7 +307,7 @@ int o_net_orientation(OBJECT *object)
 /*! \brief merge two net object
  *  \par Function Description
  *  This function does the actual work of making one net segment out of two
- *  connected segments. The first net segment is extended to the lenght of 
+ *  connected segments. The first net segment is extended to the length of
  *  both objects.
  *  The second object (\a del_object) is the object that should be deleted.
  *  
