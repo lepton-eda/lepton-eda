@@ -148,10 +148,10 @@ x_colorcb_new ()
 
   /* Renders the color swatch. Since this won't contain text, set a
    * minimum width. */
-  color_cell = GTK_CELL_RENDERER (gtk_cell_renderer_text_new());
+  color_cell = GTK_CELL_RENDERER (x_swatchcr_new ());
   g_object_set (color_cell, "width", 25, NULL);
   gtk_cell_layout_pack_start (layout, color_cell, FALSE);
-  gtk_cell_layout_add_attribute (layout, color_cell, "background-gdk", COLUMN_COLOR);
+  gtk_cell_layout_add_attribute (layout, color_cell, "color", COLUMN_COLOR);
 
   /* Renders the name of the color */
   text_cell = GTK_CELL_RENDERER (gtk_cell_renderer_text_new());

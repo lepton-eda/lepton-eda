@@ -82,6 +82,7 @@ gschem_SOURCES = \
 	x_rotatecb.c \
 	x_script.c \
 	x_stroke.c \
+	x_swatchcr.c \
 	x_textsizecb.c \
 	x_window.c
 
