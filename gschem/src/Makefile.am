@@ -69,6 +69,7 @@ gschem_SOURCES = \
 	x_edittext.c \
 	x_event.c \
 	x_fileselect.c \
+	x_fstylecb.c \
 	x_grid.c \
 	x_image.c \
 	x_log.c \

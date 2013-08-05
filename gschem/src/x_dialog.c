@@ -45,7 +45,6 @@ static gint line_type_dialog_linetype_change (GtkWidget *w, gpointer data);
 static void line_type_dialog_ok (GtkWidget *w, gpointer data);
 static GtkWidget* create_menu_lineend (GSCHEM_TOPLEVEL *w_current);
 
-static GtkWidget* create_menu_filltype (GSCHEM_TOPLEVEL *w_current);
 static gint fill_type_dialog_filltype_change(GtkWidget *w, gpointer data);
 static void fill_type_dialog_ok(GtkWidget *w, gpointer data);
 
@@ -605,41 +604,6 @@ void line_type_dialog (GSCHEM_TOPLEVEL *w_current)
 
 /***************** Start of Fill Type dialog box **********************/
 
-/*! \brief Create a menu with fill types for the line type dialog
- *  \par Function Description
- *  This function creates a GtkMenu with the different fill types.
- */
-static GtkWidget *create_menu_filltype (GSCHEM_TOPLEVEL *w_current)
-{
-  GtkWidget *menu;
-  GSList *group;
-  struct fill_type {
-    gchar *str;
-    OBJECT_FILLING type;
-  } types[] = { { N_("Hollow"), FILLING_HOLLOW },
-                { N_("Filled"), FILLING_FILL },
-                { N_("Mesh"),   FILLING_MESH },
-                { N_("Hatch"),  FILLING_HATCH },
-                { N_("*unchanged*"), FILLING_VOID } };
-  gint i;
-
-  menu  = gtk_menu_new ();
-  group = NULL;
-
-  for (i = 0; i < sizeof (types) / sizeof (struct fill_type); i++) {
-    GtkWidget *menuitem;
-
-    menuitem = gtk_radio_menu_item_new_with_label (group, _(types[i].str));
-    group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (menuitem));
-    gtk_menu_append (GTK_MENU (menu), menuitem);
-    gtk_object_set_data (GTK_OBJECT(menuitem), "filltype",
-                         GINT_TO_POINTER (types[i].type));
-    gtk_widget_show (menuitem);
-  }
-
-  return menu;
-}
-
 /*! \brief get the filltype data from selected objects
  *  \par Function Description
  *  Get filltype information over all selected objects.
@@ -713,14 +677,8 @@ static void fill_type_dialog_set_values(struct fill_type_data *fill_type_data,
                                         gint pitch2, gint angle2)
 {
   gchar *text;
-  GtkWidget *menu, *menuitem;
 
-  if (type == -2)
-    type = FILLING_VOID;
-  gtk_option_menu_set_history(GTK_OPTION_MENU(fill_type_data->fill_type), type);
-  menu = gtk_option_menu_get_menu(GTK_OPTION_MENU(fill_type_data->fill_type));
-  menuitem = gtk_menu_get_active(GTK_MENU(menu));
-  gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuitem), TRUE);
+  x_fstylecb_set_index (fill_type_data->fill_type, type);
 
   if (width == -2)
     text = g_strdup(_("*unchanged*"));
@@ -777,39 +735,13 @@ static void fill_type_dialog_set_values(struct fill_type_data *fill_type_data,
 static gint fill_type_dialog_filltype_change(GtkWidget *w, gpointer data)
 {
   struct fill_type_data *fill_type_data = (struct fill_type_data*) data;
-  GtkWidget *menuitem;
   gboolean activate_width_entry;
   gboolean activate_anglepitch1_entries;
   gboolean activate_anglepitch2_entries;
-  gint type;
 
-  menuitem = gtk_menu_get_active (
-    GTK_MENU (gtk_option_menu_get_menu (
-                GTK_OPTION_MENU (fill_type_data->fill_type))));
-
-  type = GPOINTER_TO_INT(
-    gtk_object_get_data (GTK_OBJECT (menuitem), "filltype"));
-  switch(type) {
-  case(FILLING_HOLLOW):
-  case(FILLING_FILL):
-    activate_width_entry = FALSE;
-    activate_anglepitch1_entries = FALSE;
-    activate_anglepitch2_entries = FALSE;
-    break;
-  case(FILLING_HATCH):
-    activate_width_entry = TRUE;
-    activate_anglepitch1_entries = TRUE;
-    activate_anglepitch2_entries = FALSE;
-    break;
-  case(FILLING_MESH):
-  case(FILLING_VOID):
-    activate_width_entry = TRUE;
-    activate_anglepitch1_entries = TRUE;
-    activate_anglepitch2_entries = TRUE;
-    break;
-  default:
-    g_assert_not_reached ();
-  }
+  activate_width_entry = x_fstylecb_get_use_width (w);
+  activate_anglepitch1_entries = x_fstylecb_get_use1 (w);
+  activate_anglepitch2_entries = x_fstylecb_get_use2 (w);
 
   gtk_widget_set_sensitive (fill_type_data->width_entry,
                             activate_width_entry);
@@ -860,13 +792,9 @@ static void fill_type_dialog_ok(GtkWidget *w, gpointer data)
                                      fill_type_data->angle2_entry));
   pitch2_str = gtk_entry_get_text (GTK_ENTRY (
                                      fill_type_data->pitch2_entry));
-  type = GPOINTER_TO_INT(
-    gtk_object_get_data (
-      GTK_OBJECT (
-        gtk_menu_get_active (
-          GTK_MENU (gtk_option_menu_get_menu (
-                      GTK_OPTION_MENU (
-                        fill_type_data->fill_type))))), "filltype"));
+
+  type = x_fstylecb_get_index (fill_type_data->fill_type);
+
   if (type == FILLING_VOID)
     type = -1;
 
@@ -967,7 +895,7 @@ void fill_type_dialog(GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
-  GtkWidget *optionmenu = NULL;
+  GtkWidget *fstylecb = NULL;
   GtkWidget *width_entry = NULL;
   GtkWidget *angle1_entry = NULL;
   GtkWidget *pitch1_entry = NULL;
@@ -1057,13 +985,11 @@ void fill_type_dialog(GSCHEM_TOPLEVEL *w_current)
   gtk_table_attach(GTK_TABLE(table), label, 0,1,5,6, GTK_FILL,0,0,0);
 
 
-  optionmenu = gtk_option_menu_new ();
-  gtk_option_menu_set_menu(GTK_OPTION_MENU(optionmenu),
-                           create_menu_filltype (w_current));
-  gtk_table_attach_defaults(GTK_TABLE(table), optionmenu,
+  fstylecb = x_fstylecb_new ();
+  gtk_table_attach_defaults(GTK_TABLE(table), fstylecb,
                             1,2,0,1);
 
-  g_signal_connect (G_OBJECT (optionmenu), "changed",
+  g_signal_connect (G_OBJECT (fstylecb), "changed",
                     G_CALLBACK (fill_type_dialog_filltype_change),
                     fill_type_data);
 
@@ -1094,7 +1020,7 @@ void fill_type_dialog(GSCHEM_TOPLEVEL *w_current)
 
   /* populate the data structure */
   fill_type_data->dialog = dialog;
-  fill_type_data->fill_type    = optionmenu;
+  fill_type_data->fill_type    = fstylecb;
   fill_type_data->width_entry  = width_entry;
   fill_type_data->angle1_entry = angle1_entry;
   fill_type_data->pitch1_entry = pitch1_entry;
@@ -1108,7 +1034,7 @@ void fill_type_dialog(GSCHEM_TOPLEVEL *w_current)
                               pitch1, angle1, pitch2, angle2);
 
   /* Set the widget activity according to the current filltype */
-  fill_type_dialog_filltype_change(optionmenu, fill_type_data);
+  fill_type_dialog_filltype_change(fstylecb, fill_type_data);
 
   gtk_widget_grab_focus(width_entry);
   gtk_widget_show_all (dialog);
