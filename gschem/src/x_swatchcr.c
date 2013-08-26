@@ -43,7 +43,7 @@
 
 /* The width of the border around the swatch, in pixels.
  */
-#define LINE_WIDTH (1.0)
+#define SWATCH_BORDER_WIDTH (1.0)
 
 
 enum
@@ -188,7 +188,7 @@ render (GtkCellRenderer      *cell,
 
   if (swatch->enabled) {
     cairo_t *cr = gdk_cairo_create (window);
-    double offset = LINE_WIDTH / 2.0;
+    double offset = SWATCH_BORDER_WIDTH / 2.0;
 
     if (expose_area) {
       gdk_cairo_rectangle (cr, expose_area);
@@ -213,7 +213,7 @@ render (GtkCellRenderer      *cell,
 
     cairo_close_path (cr);
 
-    cairo_set_line_width (cr, LINE_WIDTH);
+    cairo_set_line_width (cr, SWATCH_BORDER_WIDTH);
 
     cairo_set_source_rgb (cr,
                           swatch->color.red   / 65535.0,
