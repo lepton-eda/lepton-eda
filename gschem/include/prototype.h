@@ -578,11 +578,14 @@ void picture_change_filename_dialog (GSCHEM_TOPLEVEL *w_current);
 void o_picture_set_pixbuf(GSCHEM_TOPLEVEL *w_current, GdkPixbuf *pixbuf, char *filename);
 
 /* o_path.c */
-void o_path_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);
 void o_path_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_path_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_path_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
-void o_path_draw_rubber(GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer);
+void o_path_continue (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y);
+void o_path_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y);
+gboolean o_path_end(GSCHEM_TOPLEVEL *w_current, int x, int y);
+void o_path_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer);
+void o_path_invalidate_rubber_grips (GSCHEM_TOPLEVEL *w_current);
+void o_path_motion_grips (GSCHEM_TOPLEVEL *w_current, int x, int y);
+void o_path_draw_rubber_grips (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer);
 
 /* o_pin.c */
 void o_pin_start(GSCHEM_TOPLEVEL *w_current, int x, int y);

@@ -116,6 +116,10 @@ static const char *i_status_string(GSCHEM_TOPLEVEL *w_current)
     case DRAWLINE:
     case ENDLINE:
       return _("Line Mode");
+    case DRAWPATH:
+    case PATHCONT:
+    case ENDPATH:
+      return _("Path Mode");
     case DRAWBOX:
     case ENDBOX:
       return _("Box Mode");

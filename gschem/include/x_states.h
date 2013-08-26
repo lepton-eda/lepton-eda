@@ -72,7 +72,10 @@ enum x_states {
   ENDPICTURE, 		/* 44 */
   MCOPY, 		/* 45 */
   STARTMCOPY,		/* 46 */
-  ENDMCOPY		/* 47 */
+  ENDMCOPY,		/* 47 */
+  DRAWPATH,             /* 48 */
+  PATHCONT,             /* 49 */
+  ENDPATH,              /* 50 */
 };
 
 

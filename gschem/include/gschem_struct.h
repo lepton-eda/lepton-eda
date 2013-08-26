@@ -107,6 +107,7 @@ struct st_gschem_toplevel {
                                            Its range of values depends on the
                                            type of object being manipulated. */
   OBJECT *which_object;                 /* Object being manipulated */
+  PATH *temp_path;                      /* Path being created */
 
   /* ------------------ */
   /* Rubberbanding nets */

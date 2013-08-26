@@ -195,6 +195,18 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
         w_current->event_state = DRAWLINE;
         break;
 
+    case DRAWPATH:
+      o_path_start (w_current, w_x, w_y);
+      w_current->event_state = ENDPATH;
+      w_current->inside_action = TRUE;
+      break;
+
+    case PATHCONT:
+      o_path_continue (w_current, w_x, w_y);
+      w_current->event_state = ENDPATH;
+      w_current->inside_action = TRUE;
+      break;
+
       case(DRAWBOX):
         o_box_start(w_current, w_x, w_y);
         w_current->event_state = ENDBOX;
@@ -526,6 +538,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
                              GSCHEM_TOPLEVEL *w_current)
 {
   int unsnapped_wx, unsnapped_wy;
+  int w_x, w_y;
 
   g_return_val_if_fail ((w_current != NULL), 0);
 
@@ -539,6 +552,8 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
 
   SCREENtoWORLD (w_current, (int) event->x, (int) event->y,
                  &unsnapped_wx, &unsnapped_wy);
+  w_x = snap_grid (w_current, unsnapped_wx);
+  w_y = snap_grid (w_current, unsnapped_wy);
 
   /* Huge switch statement to evaluate state transitions. Jump to
    * end_button_released label to escape the state evaluation rather
@@ -622,6 +637,15 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         }
         break;
 
+    case ENDPATH:
+      if (o_path_end (w_current, w_x, w_y)) {
+        w_current->event_state = PATHCONT;
+        w_current->inside_action = TRUE;
+      } else {
+        w_current->event_state = DRAWPATH;
+        w_current->inside_action = FALSE;
+      }
+      break;
     }
   } else if (event->button == 2) {
 
@@ -838,6 +862,12 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
     case(ENDLINE):
     if (w_current->inside_action)
       o_line_motion (w_current, w_x, w_y);
+    break;
+
+  case PATHCONT:
+  case ENDPATH:
+    if (w_current->inside_action)
+      o_path_motion (w_current, w_x, w_y);
     break;
 
     case(ENDBOX):

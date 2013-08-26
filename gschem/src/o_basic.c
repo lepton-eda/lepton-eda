@@ -269,6 +269,12 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
           o_line_draw_rubber (w_current, renderer);
         break;
 
+    case PATHCONT:
+    case ENDPATH:
+      if (w_current->rubber_visible)
+        o_path_draw_rubber (w_current, renderer);
+      break;
+
       case ENDBOX:
         if (w_current->rubber_visible)
           o_box_draw_rubber (w_current, renderer);
