@@ -226,6 +226,7 @@ void o_path_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
   OBJECT object;
 
   /* Setup a fake object to pass the drawing routine */
+  memset (&object, 0, sizeof (OBJECT));
   object.type = OBJ_PATH;
   object.color = SELECT_COLOR;
   object.line_width = 0; /* clamped to 1 pixel in circle_path */
