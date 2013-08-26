@@ -186,6 +186,7 @@ void o_net_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone
 
 /* o_path_basic.c */
 OBJECT *o_path_new(TOPLEVEL *toplevel, char type, int color, const char *path_string);
+OBJECT *o_path_new_take_path (TOPLEVEL *toplevel, char type, int color, PATH *path_data);
 OBJECT *o_path_copy(TOPLEVEL *toplevel, OBJECT *o_current);
 void o_path_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whichone);
 void o_path_translate_world(TOPLEVEL *toplevel, int x, int y, OBJECT *object);

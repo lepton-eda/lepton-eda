@@ -41,16 +41,15 @@ typedef void (*FILL_FUNC) (TOPLEVEL *toplevel, FILE *fp, PATH *path,
                            int origin_x, int origin_y);
 
 
-/*! \brief Create and add path OBJECT to list.
+/*! \brief Create a new path object.
  *  \par Function Description
  *  This function creates a new object representing a path.
  *  This object is added to the end of the list <B>object_list</B>
  *  pointed object belongs to.
- *  The path is described by its two ends - <B>x1</B>,<B>y1</B> and
- *  <B>x2</B>,<B>y2</B>.
  *  The <B>type</B> parameter must be equal to #OBJ_PATH.
  *  The <B>color</B> parameter corresponds to the color the path
  *  will be drawn with.
+ *  The path shape is created by parsing \a path_string.
  *
  *  The #OBJECT structure is allocated with the
  *  #s_basic_init_object() function. The structure describing
@@ -74,13 +73,35 @@ typedef void (*FILL_FUNC) (TOPLEVEL *toplevel, FILE *fp, PATH *path,
 OBJECT *o_path_new (TOPLEVEL *toplevel,
                     char type, int color, const char *path_string)
 {
+  return o_path_new_take_path (toplevel, type, color,
+                               s_path_parse (path_string));
+}
+
+
+/*! \brief Create a new path object.
+ *  \par Function Description
+ *  This function creates and returns a new OBJECT representing a path
+ *  using the path shape data stored in \a path_data.  The \a
+ *  path_data is subsequently owned by the returned OBJECT.
+ *
+ *  \see o_path_new().
+ *
+ *  \param [in]     toplevel     The TOPLEVEL object.
+ *  \param [in]     type         Must be OBJ_PATH.
+ *  \param [in]     color        The path color.
+ *  \param [in]     path_data    The #PATH data structure to use.
+ *  \return A pointer to the new end of the object list.
+ */
+OBJECT *o_path_new_take_path (TOPLEVEL *toplevel,
+                              char type, int color, PATH *path_data)
+{
   OBJECT *new_node;
 
   /* create the object */
   new_node        = s_basic_new_object (type, "path");
   new_node->color = color;
 
-  new_node->path  = s_path_parse (path_string);
+  new_node->path  = path_data;
 
   /* path type and filling initialized to default */
   o_set_line_options (toplevel, new_node,
