@@ -232,8 +232,8 @@ OBJECT *o_attrib_add_attrib(GSCHEM_TOPLEVEL *w_current,
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *new_obj;
   int world_x = - 1, world_y = -1;
-  int align;
-  int angle;
+  int align = LOWER_LEFT;
+  int angle = 0;
   int color;
   int left, right, top, bottom;
   OBJECT *o_current;
