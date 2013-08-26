@@ -45,10 +45,6 @@ static gint line_type_dialog_linetype_change (GtkWidget *w, gpointer data);
 static void line_type_dialog_ok (GtkWidget *w, gpointer data);
 static GtkWidget* create_menu_lineend (GSCHEM_TOPLEVEL *w_current);
 
-static gint fill_type_dialog_filltype_change(GtkWidget *w, gpointer data);
-static void fill_type_dialog_ok(GtkWidget *w, gpointer data);
-
-
 struct line_type_data {
   GtkWidget *dialog;
   GtkWidget *width_entry;
