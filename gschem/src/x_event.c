@@ -487,6 +487,14 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
           o_line_invalidate_rubber (w_current);
           break;
 
+      case DRAWPATH:
+      case PATHCONT:
+      case ENDPATH:
+        w_current->inside_action = 0;
+        i_set_state (w_current, DRAWPATH);
+        o_path_invalidate_rubber (w_current);
+        break;
+
         case(DRAWBOX):
         case(ENDBOX):
           w_current->inside_action = 0;

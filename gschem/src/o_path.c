@@ -303,7 +303,7 @@ path_next_sections (GSCHEM_TOPLEVEL *w_current)
  * Invalidates the screen region occupied by the current path creation
  * preview and control handle helpers.
  */
-static void
+void
 o_path_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
 {
   int added_sections;

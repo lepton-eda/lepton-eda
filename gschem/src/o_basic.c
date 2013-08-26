@@ -345,6 +345,12 @@ int o_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
       o_line_invalidate_rubber (w_current);
     break;
 
+  case DRAWPATH:
+  case PATHCONT:
+  case ENDPATH:
+    o_path_invalidate_rubber (w_current);
+    break;
+
     case(DRAWBOX):
     case(ENDBOX):
       o_box_invalidate_rubber (w_current);
@@ -409,6 +415,8 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
     case(ENDCOPY):
     case(ENDMCOPY):
     case(ENDLINE):
+    case PATHCONT:
+    case ENDPATH:
     case(ENDMOVE):
     case(ENDPASTE):
     case(ENDPIN):
