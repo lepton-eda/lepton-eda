@@ -146,6 +146,7 @@ SCM g_keys_add_bus_hotkey(SCM rest);
 SCM g_keys_add_text(SCM rest);
 SCM g_keys_add_line(SCM rest);
 SCM g_keys_add_line_hotkey(SCM rest);
+SCM g_keys_add_path (SCM rest);
 SCM g_keys_add_box(SCM rest);
 SCM g_keys_add_box_hotkey(SCM rest);
 SCM g_keys_add_picture(SCM rest);
@@ -385,6 +386,7 @@ void i_callback_add_text(gpointer data, guint callback_action, GtkWidget *widget
 void i_callback_toolbar_add_text(GtkWidget *widget, gpointer data);
 void i_callback_add_line(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_line_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_add_path (gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_box(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_box_hotkey(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_picture(gpointer data, guint callback_action, GtkWidget *widget);

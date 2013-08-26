@@ -2535,6 +2535,20 @@ DEFINE_I_CALLBACK(add_line_hotkey)
   i_set_state(w_current, ENDLINE);
 }
 
+DEFINE_I_CALLBACK(add_path)
+{
+  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) data;
+
+  g_assert (w_current != NULL);
+
+  o_redraw_cleanstates (w_current);
+  o_invalidate_rubber (w_current);
+
+  i_update_middle_button (w_current, i_callback_add_path, _("Path"));
+  i_set_state (w_current, DRAWPATH);
+  w_current->inside_action = FALSE;
+}
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

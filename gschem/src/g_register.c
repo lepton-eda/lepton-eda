@@ -230,6 +230,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "add-bus",                   0, 0, 0, g_keys_add_bus },
   { "add-bus-hotkey",            0, 0, 0, g_keys_add_bus_hotkey },
   { "add-text",                  0, 0, 0, g_keys_add_text },
+  { "add-path",                  0, 0, 0, g_keys_add_path },
   { "add-line",                  0, 0, 0, g_keys_add_line },
   { "add-line-hotkey",           0, 0, 0, g_keys_add_line_hotkey },
   { "add-box",                   0, 0, 0, g_keys_add_box },
