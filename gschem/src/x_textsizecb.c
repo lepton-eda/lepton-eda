@@ -47,72 +47,6 @@
 
 
 
-
-/*! \brief The columns in the GtkListStore
- */
-enum
-{
-    COLUMN_SIZE,
-    COLUMN_COUNT
-};
-
-
-
-/* A list of common sizes for the drop down menu
- */
-static const char *routine_text_size[] =
-{
-   "8",
-   "9",
-   "10",
-   "11",
-   "12",
-   "14",
-   "16",
-   "18",
-   "20",
-   "22",
-   "24",
-   "26"
-};
-
-#define ROUTINE_TEXT_SIZE_COUNT (sizeof(routine_text_size)/sizeof(char*))
-
-
-
-/*! \brief Stores the list of text sizes for use in GtkComboBox
- *
- *  This list store is shared by all combo boxes.
- */
-static GtkListStore* text_size_list_store = NULL;
-
-
-
-/*! \brief Create the GtkListStore of routine text sizes.
- */
-static GtkListStore*
-create_text_size_list_store ()
-{
-  int index;
-  GtkTreeIter iter;
-  GtkListStore *store;
-
-  store = gtk_list_store_new (COLUMN_COUNT, G_TYPE_STRING);
-
-  for (index = 0; index < ROUTINE_TEXT_SIZE_COUNT; index++) {
-    gtk_list_store_append (store, &iter);
-
-    gtk_list_store_set (store, &iter,
-        COLUMN_SIZE, routine_text_size[index],
-        -1
-        );
-  }
-
-  return store;
-}
-
-
-
 /*! \brief Create a ComboBox with an entry for selecting gschem text sizes.
  *
  *  \return A GtkWidget for selecting a gschem text size
@@ -120,16 +54,7 @@ create_text_size_list_store ()
 GtkWidget*
 x_textsizecb_new ()
 {
-  GtkComboBox *combo;
-
-  if (text_size_list_store == NULL) {
-    text_size_list_store = create_text_size_list_store();
-  }
-
-  combo = GTK_COMBO_BOX (gtk_combo_box_new_with_model_and_entry (GTK_TREE_MODEL (text_size_list_store)));
-  gtk_combo_box_set_entry_text_column (combo, COLUMN_SIZE);
-
-  return GTK_WIDGET (combo);
+  return gtk_combo_box_new_with_entry ();
 }
 
 
@@ -161,6 +86,25 @@ x_textsizecb_get_size (GtkWidget *widget)
   }
 
   return size;
+}
+
+
+
+/*! \brief Set the list store containing the text sizes
+ *
+ *  \param [in,out] widget  The text size combo box
+ *  \param [in]     store   The list containing the text sizes
+ */
+void
+x_textsizecb_set_model (GtkWidget *widget, GtkListStore *store)
+{
+  g_return_if_fail (widget != NULL);
+
+  gtk_combo_box_set_model (GTK_COMBO_BOX (widget), GTK_TREE_MODEL (store));
+
+  if (store != NULL) {
+    gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (widget), x_textsizels_get_size_column ());
+  }
 }
 
 

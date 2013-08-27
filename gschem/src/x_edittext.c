@@ -423,6 +423,9 @@ text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_size,
     gtk_window_set_transient_for (GTK_WINDOW (w_current->main_window),
                                   GTK_WINDOW (w_current->tewindow));
 
+    x_textsizecb_set_model (EDITTEXT (w_current->tewindow)->textsizecb,
+                            gschem_toplevel_get_text_size_list_store (w_current));
+
     setup_initial_values (EDITTEXT (w_current->tewindow));
 
     gtk_widget_show_all (w_current->tewindow);

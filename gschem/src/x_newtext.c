@@ -406,6 +406,9 @@ text_input_dialog (GSCHEM_TOPLEVEL *w_current)
     gtk_window_set_transient_for (GTK_WINDOW (w_current->main_window),
                                   GTK_WINDOW (w_current->tiwindow));
 
+    x_textsizecb_set_model (NEWTEXT (w_current->tiwindow)->textsizecb,
+                            gschem_toplevel_get_text_size_list_store (w_current));
+
     gtk_widget_show_all (w_current->tiwindow);
   }
   else {

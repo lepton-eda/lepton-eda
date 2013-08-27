@@ -78,6 +78,11 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->coord_world  = NULL;
   w_current->coord_screen = NULL;
 
+  /* -------------------------------------- */
+  /* Models for widgets inside dialog boxes */
+  /* -------------------------------------- */
+  w_current->text_size_list_store = NULL;
+
   /* ----------------- */
   /* Picture placement */
   /* ----------------- */
@@ -199,3 +204,21 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   return w_current;
 }
 
+
+
+/*! \brief Get a list of the commonly used text sizes
+ *
+ *  \param [in] w_current The current gschem toplevel
+ *  \return A list of the commonly used text sizes
+ */
+GtkListStore*
+gschem_toplevel_get_text_size_list_store (GSCHEM_TOPLEVEL *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  if (w_current->text_size_list_store == NULL) {
+    w_current->text_size_list_store = x_textsizels_new ();
+  }
+
+  return w_current->text_size_list_store;
+}

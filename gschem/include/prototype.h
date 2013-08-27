@@ -2,6 +2,7 @@
 
 /* gschem_toplevel.c */
 GSCHEM_TOPLEVEL *gschem_toplevel_new();
+GtkListStore* gschem_toplevel_get_text_size_list_store (GSCHEM_TOPLEVEL *w_current);
 
 /* a_pan.c */
 void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
@@ -800,7 +801,11 @@ gint x_stroke_translate_and_execute (GSCHEM_TOPLEVEL *w_current);
 /* x_textsizecb.c */
 GtkWidget* x_textsizecb_new();
 int x_textsizecb_get_size (GtkWidget *widget);
+void x_textsizecb_set_model (GtkWidget *widget, GtkListStore *store);
 void x_textsizecb_set_size (GtkWidget *widget, int size);
+/* x_textsizels.c */
+GtkListStore* x_textsizels_new();
+int x_textsizels_get_size_column ();
 /* x_window.c */
 void x_window_setup (GSCHEM_TOPLEVEL *w_current);
 void x_window_setup_gc(GSCHEM_TOPLEVEL *w_current);
