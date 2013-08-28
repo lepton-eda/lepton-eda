@@ -756,6 +756,11 @@ void x_image_lowlevel(GSCHEM_TOPLEVEL *w_current, const char* filename,
 		      int desired_width, int desired_height, char *filetype);
 void x_image_setup(GSCHEM_TOPLEVEL *w_current);
 GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current);
+/* x_integercb.c */
+GtkWidget* x_integercb_new();
+int x_integercb_get_value (GtkWidget *widget);
+void x_integercb_set_model (GtkWidget *widget, GtkListStore *store);
+void x_integercb_set_value (GtkWidget *widget, int value);
 /* x_log.c */
 void x_log_open ();
 void x_log_close ();
@@ -798,11 +803,6 @@ void x_stroke_init (void);
 void x_stroke_free (void);
 void x_stroke_record (GSCHEM_TOPLEVEL *w_current, gint x, gint y);
 gint x_stroke_translate_and_execute (GSCHEM_TOPLEVEL *w_current);
-/* x_textsizecb.c */
-GtkWidget* x_textsizecb_new();
-int x_textsizecb_get_size (GtkWidget *widget);
-void x_textsizecb_set_model (GtkWidget *widget, GtkListStore *store);
-void x_textsizecb_set_size (GtkWidget *widget, int size);
 /* x_textsizels.c */
 GtkListStore* x_textsizels_new();
 int x_textsizels_get_size_column ();

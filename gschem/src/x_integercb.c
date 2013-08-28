@@ -17,12 +17,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file x_textsizecb.c
+/*! \file x_integercb.c
  *
- *  \brief A GtkComboBox with and entry for gschem text sizes.
+ *  \brief A GtkComboBox with and entry for integer values.
  *
- *  This widget allows the user to type in a text size or select a common
- *  size from a drop down menu.
+ *  This widget allows the user to type in an integer values or select a common
+ *  integer value from a drop down menu.
  */
 #include <config.h>
 #include <version.h>
@@ -47,25 +47,25 @@
 
 
 
-/*! \brief Create a ComboBox with an entry for selecting gschem text sizes.
+/*! \brief Create a ComboBox with an entry for integer values.
  *
- *  \return A GtkWidget for selecting a gschem text size
+ *  \return A GtkWidget for entering integer values
  */
 GtkWidget*
-x_textsizecb_new ()
+x_integercb_new ()
 {
   return gtk_combo_box_new_with_entry ();
 }
 
 
 
-/*! \brief Get the text size
+/*! \brief Get the integer value
  *
- *  \param [in,out] widget  The text size combo box
- *  \return The text size. If the text size is invalid, this function returns -1.
+ *  \param [in,out] widget  The integer combo box
+ *  \return The integer. If the value is invalid, this function returns -1.
  */
 int
-x_textsizecb_get_size (GtkWidget *widget)
+x_integercb_get_value (GtkWidget *widget)
 {
   GtkWidget *entry = gtk_bin_get_child (GTK_BIN (widget));
   int size = -1;
@@ -90,13 +90,13 @@ x_textsizecb_get_size (GtkWidget *widget)
 
 
 
-/*! \brief Set the list store containing the text sizes
+/*! \brief Set the list store containing the common values
  *
- *  \param [in,out] widget  The text size combo box
- *  \param [in]     store   The list containing the text sizes
+ *  \param [in,out] widget  The integer combo box
+ *  \param [in]     store   The list containing the common values
  */
 void
-x_textsizecb_set_model (GtkWidget *widget, GtkListStore *store)
+x_integercb_set_model (GtkWidget *widget, GtkListStore *store)
 {
   g_return_if_fail (widget != NULL);
 
@@ -109,24 +109,24 @@ x_textsizecb_set_model (GtkWidget *widget, GtkListStore *store)
 
 
 
-/*! \brief Set the text size
+/*! \brief Set the integer value
  *
- *  \param [in,out] widget  The text size combo box
- *  \param [in]     size    The text size
+ *  \param [in,out] widget  The integer combo box
+ *  \param [in]     size    The value
  */
 void
-x_textsizecb_set_size (GtkWidget *widget, int size)
+x_integercb_set_value (GtkWidget *widget, int value)
 {
   g_return_if_fail (widget != NULL);
 
-  if (size > 0) {
+  if (value > 0) {
     GtkWidget *entry = gtk_bin_get_child (GTK_BIN (widget));
     GString *string;
 
     g_return_if_fail (entry != NULL);
 
     string = g_string_new (NULL);
-    g_string_printf (string, "%d", size);
+    g_string_printf (string, "%d", value);
     gtk_entry_set_text (GTK_ENTRY (entry), string->str);
 
     g_string_free (string, TRUE);

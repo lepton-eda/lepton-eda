@@ -93,7 +93,7 @@ dialog_response_ok (EditText *dialog)
 
   color = x_colorcb_get_index (dialog->colorcb);
 
-  size = x_textsizecb_get_size (dialog->textsizecb);
+  size = x_integercb_get_value (dialog->textsizecb);
 
   align = x_aligncb_get_align (dialog->aligncb);
 
@@ -266,7 +266,7 @@ static void edittext_init(EditText *dialog)
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
   gtk_table_attach(GTK_TABLE(table), label, 0,1,1,2, GTK_FILL,0,0,0);
 
-  dialog->textsizecb = x_textsizecb_new ();
+  dialog->textsizecb = x_integercb_new ();
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->textsizecb, 1,2,1,2);
   //gtk_entry_set_activates_default(GTK_ENTRY(dialog->textsizecb), TRUE);
 
@@ -387,7 +387,7 @@ setup_initial_values (EditText *dialog)
   }
 
   if (size > 0) {
-    x_textsizecb_set_size(dialog->textsizecb, size);
+    x_integercb_set_value(dialog->textsizecb, size);
   }
 
   if (align >= 0) {
@@ -423,8 +423,8 @@ text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_size,
     gtk_window_set_transient_for (GTK_WINDOW (w_current->main_window),
                                   GTK_WINDOW (w_current->tewindow));
 
-    x_textsizecb_set_model (EDITTEXT (w_current->tewindow)->textsizecb,
-                            gschem_toplevel_get_text_size_list_store (w_current));
+    x_integercb_set_model (EDITTEXT (w_current->tewindow)->textsizecb,
+                           gschem_toplevel_get_text_size_list_store (w_current));
 
     setup_initial_values (EDITTEXT (w_current->tewindow));
 

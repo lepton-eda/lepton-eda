@@ -140,52 +140,39 @@ static void fill_type_dialog_set_values(EditFProp *dialog,
                                         gint pitch1, gint angle1,
                                         gint pitch2, gint angle2)
 {
-  gchar *text;
+  //if (width == -2)
+    //text = g_strdup(_("*unchanged*"));
+  //else
+    x_integercb_set_value (dialog->widthe, width);
+  //gtk_entry_select_region (GTK_ENTRY (dialog->widthe),
+  //                         0, strlen (text));
 
-  if (width == -2)
-    text = g_strdup(_("*unchanged*"));
-  else
-    text = g_strdup_printf ("%d", width);
-  gtk_entry_set_text (GTK_ENTRY (dialog->widthe), text);
-  gtk_entry_select_region (GTK_ENTRY (dialog->widthe),
-                           0, strlen (text));
-  g_free(text);
+  //if (pitch1 == -2)
+  //  text = g_strdup(_("*unchanged*"));
+  //else
+    x_integercb_set_value (dialog->pitch1e, pitch1);
+  //gtk_entry_select_region (GTK_ENTRY (dialog->pitch1e),
+  //                         0, strlen (text));
 
-  if (pitch1 == -2)
-    text = g_strdup(_("*unchanged*"));
-  else
-    text = g_strdup_printf ("%d", pitch1);
-  gtk_entry_set_text (GTK_ENTRY (dialog->pitch1e), text);
-  gtk_entry_select_region (GTK_ENTRY (dialog->pitch1e),
-                           0, strlen (text));
-  g_free(text);
+  //if (angle1 == -2)
+  //  text = g_strdup(_("*unchanged*"));
+  //else
+    x_integercb_set_value (dialog->angle1e, angle1);
+  //gtk_entry_select_region (GTK_ENTRY (dialog->angle1e),
+  //                         0, strlen (text));
 
-  if (angle1 == -2)
-    text = g_strdup(_("*unchanged*"));
-  else
-    text = g_strdup_printf ("%d", angle1);
-  gtk_entry_set_text (GTK_ENTRY (dialog->angle1e), text);
-  gtk_entry_select_region (GTK_ENTRY (dialog->angle1e),
-                           0, strlen (text));
-  g_free(text);
-
-  if (pitch2 == -2)
-    text = g_strdup(_("*unchanged*"));
-  else
-    text = g_strdup_printf ("%d", pitch2);
-  gtk_entry_set_text (GTK_ENTRY (dialog->pitch2e), text);
-  gtk_entry_select_region (GTK_ENTRY (dialog->pitch2e),
-                           0, strlen (text));
-  g_free(text);
-
-  if (angle2 == -2)
-    text = g_strdup(_("*unchanged*"));
-  else
-    text = g_strdup_printf ("%d", angle2);
-  gtk_entry_set_text (GTK_ENTRY (dialog->angle2e), text);
-  gtk_entry_select_region (GTK_ENTRY (dialog->angle2e),
-                           0, strlen (text));
-  g_free(text);
+  //if (pitch2 == -2)
+  //  text = g_strdup(_("*unchanged*"));
+  //else
+    x_integercb_set_value (dialog->pitch2e, pitch2);
+  //gtk_entry_select_region (GTK_ENTRY (dialog->pitch2e),
+  //                         0, strlen (text));
+  //if (angle2 == -2)
+  //  text = g_strdup(_("*unchanged*"));
+  //else
+    x_integercb_set_value (dialog->angle2e, angle2);
+  //gtk_entry_select_region (GTK_ENTRY (dialog->angle2e),
+  //                         0, strlen (text));
 
   /* Change the value of the combo box last, so the signal handler can
    * set the sensitivity of the other widgets after their values have
@@ -241,7 +228,6 @@ dialog_response_ok (EditFProp *dialog)
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *selection, *iter;
   OBJECT *object;
-  const gchar *width_str, *angle1_str, *pitch1_str, *angle2_str, *pitch2_str;
   OBJECT_FILLING type;
   gint width, angle1, pitch1, angle2, pitch2;
   OBJECT_FILLING otype;
@@ -254,33 +240,17 @@ dialog_response_ok (EditFProp *dialog)
     geda_list_get_glist(w_current->toplevel->page_current->selection_list);
 
   /* get the new values from the text entries of the dialog */
-  width_str  = gtk_entry_get_text (GTK_ENTRY (dialog->widthe));
-  angle1_str = gtk_entry_get_text (GTK_ENTRY (dialog->angle1e));
-  pitch1_str = gtk_entry_get_text (GTK_ENTRY (dialog->pitch1e));
-  angle2_str = gtk_entry_get_text (GTK_ENTRY (dialog->angle2e));
-  pitch2_str = gtk_entry_get_text (GTK_ENTRY (dialog->pitch2e));
+  /* (-1 means unchanged) */
+  width  = x_integercb_get_value (dialog->widthe);
+  angle1 = x_integercb_get_value (dialog->angle1e);
+  pitch1 = x_integercb_get_value (dialog->pitch1e);
+  angle2 = x_integercb_get_value (dialog->angle2e);
+  pitch2 = x_integercb_get_value (dialog->pitch2e);
 
   type = x_fstylecb_get_index (dialog->fstylecb);
 
   if (type == FILLING_VOID)
     type = -1;
-
-  /* convert the options to integers (-1 means unchanged) */
-  width  = g_utf8_collate (g_utf8_casefold (width_str, -1),
-                           g_utf8_casefold(_("*unchanged*"), -1))
-    ? atoi (width_str)  : -1;
-  angle1 = g_utf8_collate (g_utf8_casefold (angle1_str, -1),
-                           g_utf8_casefold (_("*unchanged*"), -1))
-    ? atoi (angle1_str) : -1;
-  pitch1 = g_utf8_collate (g_utf8_casefold (pitch1_str, -1),
-                           g_utf8_casefold (_("*unchanged*"), -1))
-    ? atoi (pitch1_str) : -1;
-  angle2 = g_utf8_collate (g_utf8_casefold (angle2_str, -1),
-                           g_utf8_casefold (_("*unchanged*"), -1))
-    ? atoi (angle2_str) : -1;
-  pitch2 = g_utf8_collate (g_utf8_casefold (pitch2_str, -1),
-                           g_utf8_casefold(_("*unchanged*"), -1))
-    ? atoi (pitch2_str) : -1;
 
   for (iter = selection; iter != NULL; iter = g_list_next(iter)) {
     object = (OBJECT *) iter->data;
@@ -473,31 +443,30 @@ static void editfprop_init(EditFProp *dialog)
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->fstylecb,
                             1,2,0,1);
 
-  dialog->widthe = gtk_entry_new();
-  gtk_entry_set_activates_default (GTK_ENTRY(dialog->widthe), TRUE);
+  dialog->widthe = x_integercb_new ();
+  //gtk_entry_set_activates_default (GTK_ENTRY(dialog->widthe), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->widthe,
                             1,2,1,2);
 
-  dialog->angle1e = gtk_entry_new ();
-  gtk_entry_set_activates_default (GTK_ENTRY(dialog->angle1e), TRUE);
+  dialog->angle1e = x_integercb_new ();
+  //gtk_entry_set_activates_default (GTK_ENTRY(dialog->angle1e), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->angle1e,
                             1,2,2,3);
 
-  dialog->pitch1e = gtk_entry_new ();
-  gtk_entry_set_activates_default (GTK_ENTRY(dialog->pitch1e), TRUE);
+  dialog->pitch1e = x_integercb_new ();
+  //gtk_entry_set_activates_default (GTK_ENTRY(dialog->pitch1e), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->pitch1e,
                             1,2,3,4);
 
-  dialog->angle2e = gtk_entry_new ();
-  gtk_entry_set_activates_default (GTK_ENTRY(dialog->angle2e), TRUE);
+  dialog->angle2e = x_integercb_new ();
+  //gtk_entry_set_activates_default (GTK_ENTRY(dialog->angle2e), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->angle2e,
                             1,2,4,5);
 
-  dialog->pitch2e = gtk_entry_new ();
-  gtk_entry_set_activates_default (GTK_ENTRY(dialog->pitch2e), TRUE);
+  dialog->pitch2e = x_integercb_new ();
+  //gtk_entry_set_activates_default (GTK_ENTRY(dialog->pitch2e), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->pitch2e,
                             1,2,5,6);
-
 
   g_signal_connect (G_OBJECT (dialog->fstylecb), "changed",
                     G_CALLBACK (fill_type_dialog_filltype_change),
