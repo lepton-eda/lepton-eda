@@ -140,37 +140,23 @@ static void fill_type_dialog_set_values(EditFProp *dialog,
                                         gint pitch1, gint angle1,
                                         gint pitch2, gint angle2)
 {
-  //if (width == -2)
-    //text = g_strdup(_("*unchanged*"));
-  //else
-    x_integercb_set_value (dialog->widthe, width);
+  x_integercb_set_value (dialog->widthe, width);
   //gtk_entry_select_region (GTK_ENTRY (dialog->widthe),
   //                         0, strlen (text));
 
-  //if (pitch1 == -2)
-  //  text = g_strdup(_("*unchanged*"));
-  //else
-    x_integercb_set_value (dialog->pitch1e, pitch1);
+  x_integercb_set_value (dialog->pitch1e, pitch1);
   //gtk_entry_select_region (GTK_ENTRY (dialog->pitch1e),
   //                         0, strlen (text));
 
-  //if (angle1 == -2)
-  //  text = g_strdup(_("*unchanged*"));
-  //else
-    x_integercb_set_value (dialog->angle1e, angle1);
+  x_integercb_set_value (dialog->angle1e, angle1);
   //gtk_entry_select_region (GTK_ENTRY (dialog->angle1e),
   //                         0, strlen (text));
 
-  //if (pitch2 == -2)
-  //  text = g_strdup(_("*unchanged*"));
-  //else
-    x_integercb_set_value (dialog->pitch2e, pitch2);
+  x_integercb_set_value (dialog->pitch2e, pitch2);
   //gtk_entry_select_region (GTK_ENTRY (dialog->pitch2e),
   //                         0, strlen (text));
-  //if (angle2 == -2)
-  //  text = g_strdup(_("*unchanged*"));
-  //else
-    x_integercb_set_value (dialog->angle2e, angle2);
+
+  x_integercb_set_value (dialog->angle2e, angle2);
   //gtk_entry_select_region (GTK_ENTRY (dialog->angle2e),
   //                         0, strlen (text));
 
