@@ -59,6 +59,18 @@ x_integercb_new ()
 
 
 
+/*! \brief Get the entry associated with this combo box
+ *
+ *  \param [in] widget The integer combo box
+ *  \return The entry
+ */
+GtkEntry*
+x_integercb_get_entry (GtkWidget *widget)
+{
+  return GTK_ENTRY (gtk_bin_get_child (GTK_BIN (widget)));
+}
+
+
 /*! \brief Get the integer value
  *
  *  \param [in,out] widget  The integer combo box

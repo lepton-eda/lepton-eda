@@ -758,6 +758,7 @@ void x_image_setup(GSCHEM_TOPLEVEL *w_current);
 GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current);
 /* x_integercb.c */
 GtkWidget* x_integercb_new();
+GtkEntry* x_integercb_get_entry (GtkWidget *widget);
 int x_integercb_get_value (GtkWidget *widget);
 void x_integercb_set_model (GtkWidget *widget, GtkListStore *store);
 void x_integercb_set_value (GtkWidget *widget, int value);

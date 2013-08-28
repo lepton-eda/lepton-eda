@@ -141,31 +141,16 @@ static void fill_type_dialog_set_values(EditFProp *dialog,
                                         gint pitch2, gint angle2)
 {
   x_integercb_set_value (dialog->widthe, width);
-  //gtk_entry_select_region (GTK_ENTRY (dialog->widthe),
-  //                         0, strlen (text));
-
   x_integercb_set_value (dialog->pitch1e, pitch1);
-  //gtk_entry_select_region (GTK_ENTRY (dialog->pitch1e),
-  //                         0, strlen (text));
-
   x_integercb_set_value (dialog->angle1e, angle1);
-  //gtk_entry_select_region (GTK_ENTRY (dialog->angle1e),
-  //                         0, strlen (text));
-
   x_integercb_set_value (dialog->pitch2e, pitch2);
-  //gtk_entry_select_region (GTK_ENTRY (dialog->pitch2e),
-  //                         0, strlen (text));
-
   x_integercb_set_value (dialog->angle2e, angle2);
-  //gtk_entry_select_region (GTK_ENTRY (dialog->angle2e),
-  //                         0, strlen (text));
 
   /* Change the value of the combo box last, so the signal handler can
    * set the sensitivity of the other widgets after their values have
    * been set. Setting the value beforehand resulted in a widget with the
    * appearance of focus, but without sentitivity.
    */
-
   x_fstylecb_set_index (dialog->fstylecb, type);
 }
 
@@ -364,8 +349,8 @@ static void editfprop_init(EditFProp *dialog)
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-                                          GTK_RESPONSE_ACCEPT,
-                                          GTK_RESPONSE_REJECT,
+                                          GTK_RESPONSE_OK,
+                                          GTK_RESPONSE_CLOSE,
                                           -1);
 
   gtk_window_position(GTK_WINDOW (dialog),
@@ -377,7 +362,7 @@ static void editfprop_init(EditFProp *dialog)
                     NULL);
 
   gtk_dialog_set_default_response(GTK_DIALOG(dialog),
-                                  GTK_RESPONSE_ACCEPT);
+                                  GTK_RESPONSE_OK);
 
   gtk_container_border_width(GTK_CONTAINER (dialog),
                              DIALOG_BORDER_SPACING);
@@ -430,27 +415,27 @@ static void editfprop_init(EditFProp *dialog)
                             1,2,0,1);
 
   dialog->widthe = x_integercb_new ();
-  //gtk_entry_set_activates_default (GTK_ENTRY(dialog->widthe), TRUE);
+  gtk_entry_set_activates_default (x_integercb_get_entry (dialog->widthe), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->widthe,
                             1,2,1,2);
 
   dialog->angle1e = x_integercb_new ();
-  //gtk_entry_set_activates_default (GTK_ENTRY(dialog->angle1e), TRUE);
+  gtk_entry_set_activates_default (x_integercb_get_entry (dialog->angle1e), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->angle1e,
                             1,2,2,3);
 
   dialog->pitch1e = x_integercb_new ();
-  //gtk_entry_set_activates_default (GTK_ENTRY(dialog->pitch1e), TRUE);
+  gtk_entry_set_activates_default (x_integercb_get_entry (dialog->pitch1e), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->pitch1e,
                             1,2,3,4);
 
   dialog->angle2e = x_integercb_new ();
-  //gtk_entry_set_activates_default (GTK_ENTRY(dialog->angle2e), TRUE);
+  gtk_entry_set_activates_default (x_integercb_get_entry (dialog->angle2e), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->angle2e,
                             1,2,4,5);
 
   dialog->pitch2e = x_integercb_new ();
-  //gtk_entry_set_activates_default (GTK_ENTRY(dialog->pitch2e), TRUE);
+  gtk_entry_set_activates_default (x_integercb_get_entry (dialog->pitch2e), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->pitch2e,
                             1,2,5,6);
 
