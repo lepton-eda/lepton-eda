@@ -61,7 +61,9 @@ geda/core/gettext.scm: $(srcdir)/geda/core/gettext.scm.in Makefile
 	fi
 
 update-gaf-tool:
-	cd $(top_builddir)/gaf && $(MAKE) $(AM_MAKEFLAGS) all
+	for d in libgeda/src libgedacairo gaf; do \
+	  (cd $(top_builddir)/$$d && $(MAKE) $(AM_MAKEFLAGS) all-am); \
+	done
 
 .PHONY: update-gaf-tool
 
