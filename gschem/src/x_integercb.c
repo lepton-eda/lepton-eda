@@ -92,7 +92,7 @@ x_integercb_get_value (GtkWidget *widget)
 
     temp = strtol (text0, &text1, 0);
 
-    if ((errno == 0) && (text1 != NULL) && (*text1 == '\0') && (temp > 0)) {
+    if ((errno == 0) && (text1 != NULL) && (*text1 == '\0') && (temp >= 0)) {
       size = temp;
     }
   }
@@ -131,7 +131,7 @@ x_integercb_set_value (GtkWidget *widget, int value)
 {
   g_return_if_fail (widget != NULL);
 
-  if (value > 0) {
+  if (value >= 0) {
     GtkWidget *entry = gtk_bin_get_child (GTK_BIN (widget));
     GString *string;
 
