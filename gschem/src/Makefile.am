@@ -74,6 +74,7 @@ gschem_SOURCES = \
 	x_grid.c \
 	x_image.c \
 	x_integercb.c \
+	x_integerls.c \
 	x_log.c \
 	x_menus.c \
 	x_misc.c \
@@ -87,7 +88,6 @@ gschem_SOURCES = \
 	x_script.c \
 	x_stroke.c \
 	x_swatchcr.c \
-	x_textsizels.c \
 	x_window.c
 
 gschem_CPPFLAGS = -I$(top_srcdir)/libgeda/include  -I$(srcdir)/../include \

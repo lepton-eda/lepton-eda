@@ -2,6 +2,9 @@
 
 /* gschem_toplevel.c */
 GSCHEM_TOPLEVEL *gschem_toplevel_new();
+GtkListStore* gschem_toplevel_get_fill_angle_list_store (GSCHEM_TOPLEVEL *w_current);
+GtkListStore* gschem_toplevel_get_fill_pitch_list_store (GSCHEM_TOPLEVEL *w_current);
+GtkListStore* gschem_toplevel_get_fill_width_list_store (GSCHEM_TOPLEVEL *w_current);
 GtkListStore* gschem_toplevel_get_text_size_list_store (GSCHEM_TOPLEVEL *w_current);
 
 /* a_pan.c */
@@ -762,6 +765,11 @@ GtkEntry* x_integercb_get_entry (GtkWidget *widget);
 int x_integercb_get_value (GtkWidget *widget);
 void x_integercb_set_model (GtkWidget *widget, GtkListStore *store);
 void x_integercb_set_value (GtkWidget *widget, int value);
+/* x_integerls.c */
+GtkListStore* x_integerls_new ();
+GtkListStore* x_integerls_new_with_values (const char *value[], int count);
+void x_integerls_add_value (GtkListStore *store, const char *value);
+int x_integerls_get_value_column ();
 /* x_log.c */
 void x_log_open ();
 void x_log_close ();
@@ -804,9 +812,6 @@ void x_stroke_init (void);
 void x_stroke_free (void);
 void x_stroke_record (GSCHEM_TOPLEVEL *w_current, gint x, gint y);
 gint x_stroke_translate_and_execute (GSCHEM_TOPLEVEL *w_current);
-/* x_textsizels.c */
-GtkListStore* x_textsizels_new();
-int x_textsizels_get_size_column ();
 /* x_window.c */
 void x_window_setup (GSCHEM_TOPLEVEL *w_current);
 void x_window_setup_gc(GSCHEM_TOPLEVEL *w_current);

@@ -21,6 +21,77 @@
 
 #include "gschem.h"
 
+
+
+/* A list of common values for the fill angle drop down menu
+ */
+static const char *routine_fill_angle[] =
+{
+   "0",
+   "30",
+   "45",
+   "60",
+   "90",
+   "120",
+   "135",
+   "150"
+};
+
+#define ROUTINE_FILL_ANGLE_COUNT (sizeof(routine_fill_angle)/sizeof(char*))
+
+
+
+/* A list of common values for the fill pitch drop down menu
+ */
+static const char *routine_fill_pitch[] =
+{
+   "50",
+   "100",
+   "150",
+   "200"
+};
+
+#define ROUTINE_FILL_PITCH_COUNT (sizeof(routine_fill_pitch)/sizeof(char*))
+
+
+
+/* A list of common values for the fill line width drop down menu
+ */
+static const char *routine_fill_width[] =
+{
+   "0",
+   "5",
+   "10",
+   "15",
+   "20"
+};
+
+#define ROUTINE_FILL_WIDTH_COUNT (sizeof(routine_fill_width)/sizeof(char*))
+
+
+
+/* A list of common sizes for the drop down menu
+ */
+static const char *routine_text_size[] =
+{
+   "8",
+   "9",
+   "10",
+   "11",
+   "12",
+   "14",
+   "16",
+   "18",
+   "20",
+   "22",
+   "24",
+   "26"
+};
+
+#define ROUTINE_TEXT_SIZE_COUNT (sizeof(routine_text_size)/sizeof(char*))
+
+
+
 GSCHEM_TOPLEVEL *gschem_toplevel_new ()
 {
   GSCHEM_TOPLEVEL *w_current;
@@ -81,6 +152,9 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   /* -------------------------------------- */
   /* Models for widgets inside dialog boxes */
   /* -------------------------------------- */
+  w_current->fill_angle_list_store = NULL;
+  w_current->fill_pitch_list_store = NULL;
+  w_current->fill_width_list_store = NULL;
   w_current->text_size_list_store = NULL;
 
   /* ----------------- */
@@ -206,6 +280,63 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
 
 
 
+/*! \brief Get a list of the commonly used fill angles
+ *
+ *  \param [in] w_current The current gschem toplevel
+ *  \return A list of the commonly used fill angles
+ */
+GtkListStore*
+gschem_toplevel_get_fill_angle_list_store (GSCHEM_TOPLEVEL *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  if (w_current->fill_angle_list_store == NULL) {
+    w_current->fill_angle_list_store = x_integerls_new_with_values (routine_fill_angle, ROUTINE_FILL_ANGLE_COUNT);
+  }
+
+  return w_current->fill_angle_list_store;
+}
+
+
+
+/*! \brief Get a list of the commonly used fill pitches
+ *
+ *  \param [in] w_current The current gschem toplevel
+ *  \return A list of the commonly used fill pitches
+ */
+GtkListStore*
+gschem_toplevel_get_fill_pitch_list_store (GSCHEM_TOPLEVEL *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  if (w_current->fill_pitch_list_store == NULL) {
+    w_current->fill_pitch_list_store = x_integerls_new_with_values (routine_fill_pitch, ROUTINE_FILL_PITCH_COUNT);
+  }
+
+  return w_current->fill_pitch_list_store;
+}
+
+
+
+/*! \brief Get a list of the commonly used fill line widths
+ *
+ *  \param [in] w_current The current gschem toplevel
+ *  \return A list of the commonly used fill line widths
+ */
+GtkListStore*
+gschem_toplevel_get_fill_width_list_store (GSCHEM_TOPLEVEL *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  if (w_current->fill_width_list_store == NULL) {
+    w_current->fill_width_list_store = x_integerls_new_with_values (routine_fill_width, ROUTINE_FILL_WIDTH_COUNT);
+  }
+
+  return w_current->fill_width_list_store;
+}
+
+
+
 /*! \brief Get a list of the commonly used text sizes
  *
  *  \param [in] w_current The current gschem toplevel
@@ -217,7 +348,7 @@ gschem_toplevel_get_text_size_list_store (GSCHEM_TOPLEVEL *w_current)
   g_return_val_if_fail (w_current != NULL, NULL);
 
   if (w_current->text_size_list_store == NULL) {
-    w_current->text_size_list_store = x_textsizels_new ();
+    w_current->text_size_list_store = x_integerls_new_with_values (routine_text_size, ROUTINE_TEXT_SIZE_COUNT);
   }
 
   return w_current->text_size_list_store;

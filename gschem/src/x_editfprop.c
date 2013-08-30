@@ -521,6 +521,21 @@ fill_type_dialog (GSCHEM_TOPLEVEL *w_current)
     gtk_window_set_transient_for (GTK_WINDOW (w_current->main_window),
                                   GTK_WINDOW (w_current->fpwindow));
 
+    x_integercb_set_model (EDITFPROP (w_current->fpwindow)->widthe,
+                           gschem_toplevel_get_fill_width_list_store (w_current));
+
+    x_integercb_set_model (EDITFPROP (w_current->fpwindow)->angle1e,
+                           gschem_toplevel_get_fill_angle_list_store (w_current));
+
+    x_integercb_set_model (EDITFPROP (w_current->fpwindow)->pitch1e,
+                           gschem_toplevel_get_fill_pitch_list_store (w_current));
+
+    x_integercb_set_model (EDITFPROP (w_current->fpwindow)->angle2e,
+                           gschem_toplevel_get_fill_angle_list_store (w_current));
+
+    x_integercb_set_model (EDITFPROP (w_current->fpwindow)->pitch2e,
+                           gschem_toplevel_get_fill_pitch_list_store (w_current));
+
     fill_type_dialog_set_values(EDITFPROP (w_current->fpwindow),
                                 type,
                                 width,

@@ -17,9 +17,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file x_textsizels.c
+/*! \file x_integerls.c
  *
- *  \brief A GtkListStore with gschem text sizes.
+ *  \brief A GtkListStore for the integer combo box (x_integercb.c).
  */
 #include <config.h>
 #include <version.h>
@@ -49,54 +49,39 @@
  */
 enum
 {
-    COLUMN_SIZE,
+    COLUMN_VALUE,
     COLUMN_COUNT
 };
 
 
 
-/* A list of common sizes for the drop down menu
- */
-static const char *routine_text_size[] =
-{
-   "8",
-   "9",
-   "10",
-   "11",
-   "12",
-   "14",
-   "16",
-   "18",
-   "20",
-   "22",
-   "24",
-   "26"
-};
-
-#define ROUTINE_TEXT_SIZE_COUNT (sizeof(routine_text_size)/sizeof(char*))
-
-
-
-/*! \brief Create a list of routine text sizes
+/*! \brief Create a list for routine values
  *
- *  \return A list of routine text sizes
+ *  \return An empty list of routine values
  */
 GtkListStore*
-x_textsizels_new ()
+x_integerls_new ()
+{
+  return gtk_list_store_new (COLUMN_COUNT, G_TYPE_STRING);
+}
+
+
+
+/*! \brief Create a list for routine values
+ *
+ *  \param
+ *  \return A list of routine values
+ */
+GtkListStore*
+x_integerls_new_with_values (const char *value[], int count)
 {
   int index;
-  GtkTreeIter iter;
-  GtkListStore *store;
+  GtkListStore *store = x_integerls_new ();
 
-  store = gtk_list_store_new (COLUMN_COUNT, G_TYPE_STRING);
-
-  for (index = 0; index < ROUTINE_TEXT_SIZE_COUNT; index++) {
-    gtk_list_store_append (store, &iter);
-
-    gtk_list_store_set (store, &iter,
-        COLUMN_SIZE, routine_text_size[index],
-        -1
-        );
+  if (value != NULL) {
+    for (index=0; index < count; index++) {
+      x_integerls_add_value (store, value[index]);
+    }
   }
 
   return store;
@@ -104,12 +89,35 @@ x_textsizels_new ()
 
 
 
-/*! \brief Get the column index of the text size
+/*! \brief Add a value to the list
  *
- *  \return The column index of the text size
+ *  \param [in,out] store The GtkListStore
+ *  \param [in]     value The value to add to the list
+ */
+void
+x_integerls_add_value (GtkListStore *store, const char *value)
+{
+  GtkTreeIter iter;
+
+  g_return_if_fail (store != NULL);
+  g_return_if_fail (value != NULL);
+
+  gtk_list_store_append (store, &iter);
+
+  gtk_list_store_set (store, &iter,
+      COLUMN_VALUE, value,
+      -1
+      );
+}
+
+
+
+/*! \brief Get the column index of the value
+ *
+ *  \return The column index of the value
  */
 int
-x_textsizels_get_size_column ()
+x_integerls_get_value_column ()
 {
-  return COLUMN_SIZE;
+  return COLUMN_VALUE;
 }

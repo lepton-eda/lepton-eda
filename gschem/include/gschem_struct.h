@@ -67,6 +67,9 @@ struct st_gschem_toplevel {
   /* -------------------------------------- */
   /* Models for widgets inside dialog boxes */
   /* -------------------------------------- */
+  GtkListStore *fill_angle_list_store;
+  GtkListStore *fill_pitch_list_store;
+  GtkListStore *fill_width_list_store;
   GtkListStore *text_size_list_store;
 
   /* ----------------- */

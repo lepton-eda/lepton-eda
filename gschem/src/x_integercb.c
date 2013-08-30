@@ -115,7 +115,7 @@ x_integercb_set_model (GtkWidget *widget, GtkListStore *store)
   gtk_combo_box_set_model (GTK_COMBO_BOX (widget), GTK_TREE_MODEL (store));
 
   if (store != NULL) {
-    gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (widget), x_textsizels_get_size_column ());
+    gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (widget), x_integerls_get_value_column ());
   }
 }
 
