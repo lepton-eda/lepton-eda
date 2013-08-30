@@ -16,7 +16,9 @@ AC_CONFIG_AUX_DIR([build-tools])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_HEADER([config.h])
 
-AM_INIT_AUTOMAKE
+# 'serial-tests' option disables support for parallel testsuites
+# present in recent versions of Automake.
+AM_INIT_AUTOMAKE([serial-tests])
 AM_SILENT_RULES
 
 AC_GNU_SOURCE # FIXME for some reason this is needed?
