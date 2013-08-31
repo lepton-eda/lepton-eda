@@ -17,7 +17,7 @@
 #ifndef _XORN_STORAGE_H
 #define _XORN_STORAGE_H
 
-#include <unistd.h>
+#include <stddef.h>
 #include <stdbool.h>
 
 #ifdef __cplusplus
