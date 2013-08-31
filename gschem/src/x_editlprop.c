@@ -464,14 +464,14 @@ line_type_dialog (GSCHEM_TOPLEVEL *w_current)
     gtk_window_set_transient_for (GTK_WINDOW (w_current->main_window),
                                   GTK_WINDOW (w_current->lpwindow));
 
-    //x_integercb_set_model (EDITLPROP (w_current->lpwindow)->width_entry,
-    //                       gschem_toplevel_get_line_width_list_store (w_current));
+    x_integercb_set_model (EDITLPROP (w_current->lpwindow)->width_entry,
+                           gschem_toplevel_get_line_width_list_store (w_current));
 
-    //x_integercb_set_model (EDITLPROP (w_current->lpwindow)->line_entry,
-    //                       gschem_toplevel_get_line_length_list_store (w_current));
+    x_integercb_set_model (EDITLPROP (w_current->lpwindow)->length_entry,
+                           gschem_toplevel_get_dash_length_list_store (w_current));
 
-    //x_integercb_set_model (EDITLPROP (w_current->lpwindow)->space_entry,
-    //                       gschem_toplevel_get_line_space_list_store (w_current));
+    x_integercb_set_model (EDITLPROP (w_current->lpwindow)->space_entry,
+                           gschem_toplevel_get_dash_space_list_store (w_current));
 
     line_type_dialog_set_values(EDITLPROP (w_current->lpwindow),
                                 end,

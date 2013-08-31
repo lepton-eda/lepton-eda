@@ -23,6 +23,36 @@
 
 
 
+/* A list of common values for the dash length drop down menu
+ */
+static const char *routine_dash_length[] =
+{
+   "50",
+   "75",
+   "100",
+   "125",
+   "150"
+};
+
+#define ROUTINE_DASH_LENGTH_COUNT (sizeof(routine_dash_length)/sizeof(char*))
+
+
+
+/* A list of common values for the dash space drop down menu
+ */
+static const char *routine_dash_space[] =
+{
+   "50",
+   "75",
+   "100",
+   "125",
+   "150"
+};
+
+#define ROUTINE_DASH_SPACE_COUNT (sizeof(routine_dash_space)/sizeof(char*))
+
+
+
 /* A list of common values for the fill angle drop down menu
  */
 static const char *routine_fill_angle[] =
@@ -67,6 +97,21 @@ static const char *routine_fill_width[] =
 };
 
 #define ROUTINE_FILL_WIDTH_COUNT (sizeof(routine_fill_width)/sizeof(char*))
+
+
+
+/* A list of common values for the line width drop down menu
+ */
+static const char *routine_line_width[] =
+{
+   "0",
+   "5",
+   "10",
+   "15",
+   "20"
+};
+
+#define ROUTINE_LINE_WIDTH_COUNT (sizeof(routine_line_width)/sizeof(char*))
 
 
 
@@ -153,9 +198,12 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   /* -------------------------------------- */
   /* Models for widgets inside dialog boxes */
   /* -------------------------------------- */
+  w_current->dash_length_list_store = NULL;
+  w_current->dash_space_list_store = NULL;
   w_current->fill_angle_list_store = NULL;
   w_current->fill_pitch_list_store = NULL;
   w_current->fill_width_list_store = NULL;
+  w_current->line_width_list_store = NULL;
   w_current->text_size_list_store = NULL;
 
   /* ----------------- */
@@ -281,6 +329,44 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
 
 
 
+/*! \brief Get a list of the commonly used dash lengths
+ *
+ *  \param [in] w_current The current gschem toplevel
+ *  \return A list of the commonly used dash_lengths
+ */
+GtkListStore*
+gschem_toplevel_get_dash_length_list_store (GSCHEM_TOPLEVEL *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  if (w_current->dash_length_list_store == NULL) {
+    w_current->dash_length_list_store = x_integerls_new_with_values (routine_dash_length, ROUTINE_DASH_LENGTH_COUNT);
+  }
+
+  return w_current->dash_length_list_store;
+}
+
+
+
+/*! \brief Get a list of the commonly used dash spacing
+ *
+ *  \param [in] w_current The current gschem toplevel
+ *  \return A list of the commonly used dash spacing
+ */
+GtkListStore*
+gschem_toplevel_get_dash_space_list_store (GSCHEM_TOPLEVEL *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  if (w_current->dash_space_list_store == NULL) {
+    w_current->dash_space_list_store = x_integerls_new_with_values (routine_dash_space, ROUTINE_DASH_SPACE_COUNT);
+  }
+
+  return w_current->dash_space_list_store;
+}
+
+
+
 /*! \brief Get a list of the commonly used fill angles
  *
  *  \param [in] w_current The current gschem toplevel
@@ -334,6 +420,25 @@ gschem_toplevel_get_fill_width_list_store (GSCHEM_TOPLEVEL *w_current)
   }
 
   return w_current->fill_width_list_store;
+}
+
+
+
+/*! \brief Get a list of the commonly used line widths
+ *
+ *  \param [in] w_current The current gschem toplevel
+ *  \return A list of the commonly used line widths
+ */
+GtkListStore*
+gschem_toplevel_get_line_width_list_store (GSCHEM_TOPLEVEL *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  if (w_current->line_width_list_store == NULL) {
+    w_current->line_width_list_store = x_integerls_new_with_values (routine_line_width, ROUTINE_LINE_WIDTH_COUNT);
+  }
+
+  return w_current->line_width_list_store;
 }
 
 
