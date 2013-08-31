@@ -323,22 +323,6 @@ static void editfprop_init(EditFProp *dialog)
   GtkWidget *label = NULL;
   GtkWidget *table;
 
-  /* dialog initialization */
-  g_object_set (G_OBJECT (dialog),
-                /* GtkContainer */
-                "border-width",    0,
-                /* GtkWindow */
-                "title",           _("Edit Fill Type"),
-                "default-width",   320,
-                "default-height",  350,
-                "window-position", GTK_WIN_POS_MOUSE,
-                "allow-grow",      TRUE,
-                "allow-shrink",    FALSE,
-                "modal",           TRUE,
-                /* GtkDialog */
-                "has-separator",   TRUE,
-                NULL);
-
   gtk_dialog_add_button (GTK_DIALOG (dialog),
                          GTK_STOCK_CLOSE,
                          GTK_RESPONSE_CLOSE);
@@ -368,7 +352,6 @@ static void editfprop_init(EditFProp *dialog)
                              DIALOG_BORDER_SPACING);
 
   vbox = GTK_DIALOG(dialog)->vbox;
-  gtk_container_set_border_width(GTK_CONTAINER(dialog),DIALOG_BORDER_SPACING);
   gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
   label = gtk_label_new (_("<b>Fill Properties</b>"));
@@ -513,6 +496,18 @@ fill_type_dialog (GSCHEM_TOPLEVEL *w_current)
   if (w_current->fpwindow == NULL) {
     /* dialog not created yet */
     w_current->fpwindow = g_object_new (TYPE_EDITFPROP,
+                                        /* GtkContainer */
+                                        "border-width",     DIALOG_BORDER_SPACING,
+                                        /* GtkWindow */
+                                        "title",            _("Edit Fill Type"),
+                                        "default-width",    320,
+                                        "default-height",   350,
+                                        "window-position",  GTK_WIN_POS_MOUSE,
+                                        "allow-grow",       TRUE,
+                                        "allow-shrink",     FALSE,
+                                        "modal",            TRUE,
+                                        /* GtkDialog */
+                                        "has-separator",    TRUE,
                                         /* GschemDialog */
                                         "settings-name",    "fill-type",
                                         "gschem-toplevel",  w_current,

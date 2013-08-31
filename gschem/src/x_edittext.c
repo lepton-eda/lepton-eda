@@ -161,22 +161,6 @@ static void edittext_init(EditText *dialog)
   GtkWidget *scrolled_window = NULL;
   GtkWidget *table;
 
-  /* dialog initialization */
-  g_object_set (G_OBJECT (dialog),
-                /* GtkContainer */
-                "border-width",    0,
-                /* GtkWindow */
-                "title",           _("Edit Text Properties"),
-                "default-width",   320,
-                "default-height",  350,
-                "window-position", GTK_WIN_POS_MOUSE,
-                "allow-grow",      TRUE,
-                "allow-shrink",    FALSE,
-                "modal",           TRUE,
-                /* GtkDialog */
-                "has-separator",   TRUE,
-                NULL);
-
   gtk_dialog_add_button (GTK_DIALOG (dialog),
                          GTK_STOCK_CLOSE,
                          GTK_RESPONSE_CLOSE);
@@ -206,7 +190,6 @@ static void edittext_init(EditText *dialog)
                              DIALOG_BORDER_SPACING);
 
   vbox = GTK_DIALOG(dialog)->vbox;
-  gtk_container_set_border_width(GTK_CONTAINER(dialog),DIALOG_BORDER_SPACING);
   gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
   dialog->contentvb = gtk_vbox_new (FALSE, DIALOG_V_SPACING);
@@ -415,6 +398,18 @@ text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_size,
   if (w_current->tewindow == NULL) {
     /* dialog not created yet */
     w_current->tewindow = g_object_new (TYPE_EDITTEXT,
+                                        /* GtkContainer */
+                                        "border-width",     DIALOG_BORDER_SPACING,
+                                        /* GtkWindow */
+                                        "title",            _("Edit Text Properties"),
+                                        "default-width",    320,
+                                        "default-height",   350,
+                                        "window-position",  GTK_WIN_POS_MOUSE,
+                                        "allow-grow",       TRUE,
+                                        "allow-shrink",     FALSE,
+                                        "modal",            TRUE,
+                                        /* GtkDialog */
+                                        "has-separator",    TRUE,
                                         /* GschemDialog */
                                         "settings-name",    "text-edit",
                                         "gschem-toplevel",  w_current,

@@ -217,22 +217,6 @@ static void newtext_init(NewText *dialog)
   int real_tab_width;
   GtkWidget *table;
 
-  /* dialog initialization */
-  g_object_set (G_OBJECT (dialog),
-                /* GtkContainer */
-                "border-width",    0,
-                /* GtkWindow */
-                "title",           _("Text Entry..."),
-                "default-width",   320,
-                "default-height",  350,
-                "window-position", GTK_WIN_POS_MOUSE,
-                "allow-grow",      TRUE,
-                "allow-shrink",    FALSE,
-                "modal",           FALSE,
-                /* GtkDialog */
-                "has-separator",   TRUE,
-                NULL);
-
   gtk_dialog_add_button (GTK_DIALOG (dialog),
                          GTK_STOCK_CLOSE,
                          GTK_RESPONSE_CLOSE);
@@ -256,9 +240,6 @@ static void newtext_init(NewText *dialog)
 
   gtk_dialog_set_default_response(GTK_DIALOG(dialog),
                                   GTK_RESPONSE_ACCEPT);
-
-  gtk_container_border_width(GTK_CONTAINER (dialog),
-                             DIALOG_BORDER_SPACING);
 
   vbox = GTK_DIALOG(dialog)->vbox;
   gtk_box_set_spacing(GTK_BOX(vbox),DIALOG_V_SPACING);
@@ -398,6 +379,18 @@ text_input_dialog (GSCHEM_TOPLEVEL *w_current)
   if (w_current->tiwindow == NULL) {
     /* dialog not created yet */
     w_current->tiwindow = g_object_new (TYPE_NEWTEXT,
+                                        /* GtkContainer */
+                                        "border-width",     DIALOG_BORDER_SPACING,
+                                        /* GtkWindow */
+                                        "title",            _("Text Entry..."),
+                                        "default-width",    320,
+                                        "default-height",   350,
+                                        "window-position",  GTK_WIN_POS_MOUSE,
+                                        "allow-grow",       TRUE,
+                                        "allow-shrink",     FALSE,
+                                        "modal",            FALSE,
+                                        /* GtkDialog */
+                                        "has-separator",    TRUE,
                                         /* GschemDialog */
                                         "settings-name",    "text-entry",
                                         "gschem-toplevel",  w_current,
