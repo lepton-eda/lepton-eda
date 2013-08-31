@@ -22,7 +22,7 @@
 #####################################################################
 
 ac_script=configure.ac
-am_version=1.6.0
+am_version=1.11.0
 aclocal_flags="$ACLOCAL_FLAGS -I m4"
 tooldir=build-tools
 podirs="libgeda/po gaf/po gschem/po gattrib/po gaf/po gnetlist/po gsymcheck/po"
