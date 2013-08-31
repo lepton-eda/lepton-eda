@@ -25,7 +25,7 @@ extern "C" {
 #endif
 
 typedef enum {
-	xorn_obtype_none,
+	xorn_obtype_none,	/* object does not exist */
 	xornsch_obtype_arc,
 	xornsch_obtype_box,
 	xornsch_obtype_circle,

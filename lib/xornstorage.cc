@@ -123,7 +123,7 @@ static size_t sizeof_obtype(xorn_obtype_t type)
 	case xornsch_obtype_path:	return sizeof(xornsch_path);
 	case xornsch_obtype_picture:	return sizeof(xornsch_picture);
 	case xornsch_obtype_text:	return sizeof(xornsch_text);
-	default:			return 0;
+	default:			throw std::bad_alloc();
 	}
 }
 

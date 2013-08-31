@@ -23,6 +23,7 @@ TESTS = tc_delete_sel \
 	tc_get_obdata \
 	tc_get_objects \
 	tc_get_obtype \
+	tc_invalid_obtype \
 	tc_selection \
 	tc_stat \
 	tc_string
