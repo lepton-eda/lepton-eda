@@ -75,28 +75,28 @@ configure.])
   # ------------------------------------------
   if test "X$GUILE" != "Xno"; then
 
-    AC_MSG_CHECKING([whether scm_display_error expects a stack argument])
+    AC_MSG_CHECKING([whether scm_display_error accepts a stack])
     if $GUILE -c \
 "(exit
    (false-if-exception
      (begin
        (display-error (make-stack #t) (current-output-port) \"a\" \"b\" '() '())
-       #t)))" > /dev/null; then
+       #t)))" > /dev/null 2>&1; then
       AC_MSG_RESULT([yes])
       AC_DEFINE([HAVE_SCM_DISPLAY_ERROR_STACK], 1,
-                [Define to 1 if scm_display_error expects a stack as first argument.])
+                [Define to 1 if scm_display_error accepts a stack as first argument.])
     else
       AC_MSG_RESULT([no])
     fi
 
-    AC_MSG_CHECKING([whether scm_display_error expects a frame argument])
+    AC_MSG_CHECKING([whether scm_display_error accepts a frame])
     if $GUILE -c \
 "(exit
    (false-if-exception
      (begin
        (display-error (stack-ref (make-stack #t) 0)
                       (current-output-port) \"a\" \"b\" '() '())
-       #t)))" > /dev/null; then
+       #t)))" > /dev/null 2>&1; then
       AC_MSG_RESULT([yes])
       AC_DEFINE([HAVE_SCM_DISPLAY_ERROR_FRAME], 1,
                 [Define to 1 if scm_display_error expects a frame as first argument.])
