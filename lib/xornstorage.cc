@@ -29,9 +29,10 @@ class obstate;
 struct xorn_file {
 	xorn_file();
 	~xorn_file();
-	xorn_revision_t const empty_revision;
 	std::vector<xorn_revision_t> revisions;
 	std::vector<xorn_object_t> objects;
+	/* empty_revision will add itself to the revision list */
+	xorn_revision_t const empty_revision;
 };
 
 struct xorn_revision {
