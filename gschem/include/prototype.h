@@ -776,6 +776,16 @@ void x_log_close ();
 void x_log_message (const gchar *log_domain,
                     GLogLevelFlags log_level,
                     const gchar *message);
+/* x_linetypecb.c */
+GtkWidget* x_linecapcb_new ();
+int x_linecapcb_get_index (GtkWidget *widget);
+void x_linecapcb_set_index (GtkWidget *widget, int index);
+/* x_linetypecb.c */
+GtkWidget* x_linetypecb_new ();
+int x_linetypecb_get_index (GtkWidget *widget);
+gboolean x_linetypecb_get_use_length (GtkWidget *widget);
+gboolean x_linetypecb_get_use_space (GtkWidget *widget);
+void x_linetypecb_set_index (GtkWidget *widget, int index);
 /* x_misc.c */
 gboolean x_show_uri (GSCHEM_TOPLEVEL *w_current, const gchar *buf, GError **err);
 /* x_menus.c */

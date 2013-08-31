@@ -51,6 +51,7 @@ struct st_gschem_toplevel {
   GtkWidget *sewindow;                  /* slot edit */
   GtkWidget *aawindow;                  /* arc attribs */
   GtkWidget *fpwindow;                  /* fill properties */
+  GtkWidget *lpwindow;                  /* line properties */
   GtkWidget *mawindow;                  /* multi attribute */
   GtkWidget *aewindow;                  /* attribute edit */
   GtkWidget *trwindow;                  /* translate */

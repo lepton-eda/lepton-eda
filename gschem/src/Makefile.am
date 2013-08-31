@@ -67,6 +67,7 @@ gschem_SOURCES = \
 	x_dialog.c \
 	x_editcolor.c \
 	x_editfprop.c \
+	x_editlprop.c \
 	x_edittext.c \
 	x_event.c \
 	x_fileselect.c \
@@ -75,6 +76,8 @@ gschem_SOURCES = \
 	x_image.c \
 	x_integercb.c \
 	x_integerls.c \
+	x_linecapcb.c \
+	x_linetypecb.c \
 	x_log.c \
 	x_menus.c \
 	x_misc.c \
