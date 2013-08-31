@@ -36,12 +36,12 @@ AC_DEFUN([AX_CHECK_GUILE],
 
   _found_pkg_config_guile=yes
   PKG_CHECK_MODULES(GUILE, [guile-2.0 >= $GUILE_MIN_VER],
-                           [GUILE_PKG=guile-2.0], [_found_pkg_config_guile=no])
+                           [GUILE_PKG_NAME=guile-2.0], [_found_pkg_config_guile=no])
 
   if test "${_found_pkg_config_guile}" = "no" ; then
    PKG_CHECK_MODULES(GUILE, [guile-1.8 >= $GUILE_MIN_VER],
                             [_found_pkg_config_guile=yes
-                             GUILE_PKG=guile-1.8],
+                             GUILE_PKG_NAME=guile-1.8],
                             [_found_pkg_config_guile=no])
   fi
 
@@ -49,7 +49,7 @@ AC_DEFUN([AX_CHECK_GUILE],
     AC_MSG_ERROR([you need at least version ${GUILE_MIN_VER} of guile])
   fi
 
-  AC_SUBST([GUILE_PKG])
+  AC_SUBST([GUILE_PKG_NAME])
 
   # Check for the `guile' executable
   # --------------------------------
