@@ -477,40 +477,26 @@ DEFINE_I_CALLBACK (edit_deselect)
 DEFINE_I_CALLBACK(edit_copy)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_edit_copy, _("Copy"));
+
   if (o_select_return_first_object(w_current)) {
-    o_redraw_cleanstates(w_current);
-    i_set_state(w_current, STARTCOPY);
+    if (g_action_get_position (TRUE, &wx, &wy)) {
+      o_redraw_cleanstates(w_current);
+      o_copy_start(w_current, wx, wy);
+      w_current->event_state = ENDCOPY;
+      w_current->inside_action = 1;
+
+    } else {
+      o_redraw_cleanstates(w_current);
+      i_set_state(w_current, STARTCOPY);
+
+    }
   } else {
     i_set_state_msg(w_current, SELECT, _("Select objs first"));
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(edit_copy_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  gint wx, wy; 
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
-    return;
-
-  i_update_middle_button(w_current, i_callback_edit_copy_hotkey, _("Copy"));
-  if (o_select_return_first_object(w_current)) {
-    o_redraw_cleanstates(w_current);
-    w_current->event_state = COPY;
-    o_copy_start(w_current, wx, wy);
-    w_current->event_state = ENDCOPY;
-    w_current->inside_action = 1;
   }
 }
 
@@ -522,40 +508,27 @@ DEFINE_I_CALLBACK(edit_copy_hotkey)
 DEFINE_I_CALLBACK(edit_mcopy)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
 
-  i_update_middle_button(w_current, i_callback_edit_copy, _("Multiple Copy"));
+  i_update_middle_button(w_current, i_callback_edit_mcopy, _("Multiple Copy"));
+
   if (o_select_return_first_object(w_current)) {
-    o_redraw_cleanstates(w_current);
-    i_set_state(w_current, STARTMCOPY);
+    if (g_action_get_position (TRUE, &wx, &wy)) {
+      o_redraw_cleanstates(w_current);
+      w_current->event_state = MCOPY; 
+      o_copy_start(w_current, wx, wy);
+      w_current->event_state = ENDMCOPY;
+      w_current->inside_action = 1;
+
+    } else {
+      o_redraw_cleanstates(w_current);
+      i_set_state(w_current, STARTMCOPY);
+
+    }
   } else {
     i_set_state_msg(w_current, SELECT, _("Select objs first"));
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(edit_mcopy_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  gint wx, wy; 
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
-    return;
-
-  i_update_middle_button(w_current, i_callback_edit_mcopy_hotkey, _("Multiple Copy"));
-  if (o_select_return_first_object(w_current)) {
-    o_redraw_cleanstates(w_current);	
-    w_current->event_state = MCOPY; 
-    o_copy_start(w_current, wx, wy);
-    w_current->event_state = ENDMCOPY;
-    w_current->inside_action = 1;
   }
 }
 
@@ -567,39 +540,26 @@ DEFINE_I_CALLBACK(edit_mcopy_hotkey)
 DEFINE_I_CALLBACK(edit_move)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_edit_move, _("Move"));
+
   if (o_select_return_first_object(w_current)) {
-    o_redraw_cleanstates(w_current);
-    i_set_state(w_current, STARTMOVE);
+    if (g_action_get_position (TRUE, &wx, &wy)) {
+      o_redraw_cleanstates(w_current);
+      o_move_start(w_current, wx, wy);
+      w_current->event_state = ENDMOVE;
+      w_current->inside_action = 1;
+
+    } else {
+      o_redraw_cleanstates(w_current);
+      i_set_state(w_current, STARTMOVE);
+
+    }
   } else {
     i_set_state_msg(w_current, SELECT, _("Select objs first"));
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(edit_move_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  gint wx, wy; 
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
-    return;
-
-  i_update_middle_button(w_current, i_callback_edit_move_hotkey, _("Move"));
-  if (o_select_return_first_object(w_current)) {
-    o_redraw_cleanstates(w_current);
-    o_move_start(w_current, wx, wy);
-    w_current->event_state = ENDMOVE;
-    w_current->inside_action = 1;
   }
 }
 
@@ -727,48 +687,10 @@ DEFINE_I_CALLBACK(edit_color)
 DEFINE_I_CALLBACK(edit_rotate_90)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  /* If inside an appropriate action, send a button 2 released,
-   * so rotating will be handled by x_event.c */
-  if ( w_current->inside_action &&
-       (w_current->event_state == ENDCOMP ||
-        w_current->event_state == ENDTEXT ||
-        w_current->event_state == ENDMOVE ||
-        w_current->event_state == ENDCOPY ||
-        w_current->event_state == ENDMCOPY ||
-        w_current->event_state == ENDPASTE )) {
-      GdkEvent* event;
-
-      event = gdk_event_new(GDK_BUTTON_RELEASE);
-      ((GdkEventButton*) event)->button = 2;
-      x_event_button_released (NULL, (GdkEventButton *) event, w_current);
-      gdk_event_free(event);
-
-      return;
-    }
-
-  i_set_state(w_current, ENDROTATEP);
-  i_update_middle_button(w_current, i_callback_edit_rotate_90, _("Rotate"));
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *  This function rotate all objects in the selection list by 90 degrees.
- *
- */
-DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy;
   GList *object_list;
-  gint wx, wy; 
 
   g_return_if_fail (w_current != NULL);
-
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
-    return;
 
   /* If inside an appropriate action, send a button 2 released,
    * so rotating will be handled by x_event.c */
@@ -788,6 +710,12 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
 
       return;
     }
+
+  if (!g_action_get_position (TRUE, &wx, &wy)) {
+    i_set_state(w_current, ENDROTATEP);
+    i_update_middle_button(w_current, i_callback_edit_rotate_90, _("Rotate"));
+    return;
+  }
 
   o_redraw_cleanstates(w_current);
 
@@ -795,7 +723,7 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
 
   if (object_list) {
     i_update_middle_button(w_current,
-                           i_callback_edit_rotate_90_hotkey, _("Rotate"));
+                           i_callback_edit_rotate_90, _("Rotate"));
     /* Allow o_rotate_world_update to redraw the objects */
     o_rotate_world_update(w_current, wx, wy, 90, object_list);
   }
@@ -813,36 +741,24 @@ DEFINE_I_CALLBACK(edit_rotate_90_hotkey)
 DEFINE_I_CALLBACK(edit_mirror)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  i_set_state(w_current, ENDMIRROR);
-  i_update_middle_button(w_current, i_callback_edit_mirror, _("Mirror"));
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(edit_mirror_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy;
   GList *object_list;
-  gint wx, wy; 
 
   g_return_if_fail (w_current != NULL);
 
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+  if (!g_action_get_position (TRUE, &wx, &wy)) {
+    i_set_state(w_current, ENDMIRROR);
+    i_update_middle_button(w_current, i_callback_edit_mirror, _("Mirror"));
     return;
+  }
 
-  o_redraw_cleanstates(w_current);	
+  o_redraw_cleanstates(w_current);
 
   object_list = geda_list_get_glist( w_current->toplevel->page_current->selection_list );
 
   if (object_list) {
     i_update_middle_button(w_current,
-                           i_callback_edit_mirror_hotkey, _("Mirror"));
+                           i_callback_edit_mirror, _("Mirror"));
     o_mirror_world_update(w_current, wx, wy, object_list);
   }
 
@@ -1250,34 +1166,21 @@ DEFINE_I_CALLBACK(view_zoom_extents)
 DEFINE_I_CALLBACK(view_zoom_box)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
-
-  o_redraw_cleanstates(w_current);	
-  w_current->inside_action = 0;
-  i_set_state(w_current, ZOOMBOXSTART);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(view_zoom_box_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  gint wx, wy; 
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!x_event_get_pointer_position(w_current, FALSE, &wx, &wy))
-    return;
 
   o_redraw_cleanstates(w_current);
-  a_zoom_box_start(w_current, wx, wy);
 
-  w_current->inside_action = 1;
-  i_set_state(w_current, ZOOMBOXEND);
+  if (!g_action_get_position (FALSE, &wx, &wy)) {
+    w_current->inside_action = 0;
+    i_set_state(w_current, ZOOMBOXSTART);
+  } else {
+    a_zoom_box_start(w_current, wx, wy);
+
+    w_current->inside_action = 1;
+    i_set_state(w_current, ZOOMBOXEND);
+  }
 }
 
 /*! \todo Finish function documentation!!!
@@ -1293,7 +1196,9 @@ DEFINE_I_CALLBACK(view_zoom_in)
 
   g_return_if_fail (w_current != NULL);
 
-  a_zoom(w_current, ZOOM_IN, MENU, 0);
+  a_zoom (w_current, ZOOM_IN,
+          g_action_get_position (FALSE, NULL, NULL) ? HOTKEY : MENU,
+          0);
 
   if (w_current->undo_panzoom) {
     o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
@@ -1313,49 +1218,10 @@ DEFINE_I_CALLBACK(view_zoom_out)
 
   g_return_if_fail (w_current != NULL);
 
-  a_zoom(w_current, ZOOM_OUT, MENU, 0);
+  a_zoom(w_current, ZOOM_OUT,
+         g_action_get_position (FALSE, NULL, NULL) ? HOTKEY : MENU,
+         0);
  
-  if (w_current->undo_panzoom) {
-    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  repeat middle shortcut would get into the way of what user is try
- *  to do
- */
-DEFINE_I_CALLBACK(view_zoom_in_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  a_zoom(w_current, ZOOM_IN, HOTKEY, 0);
-
-  if (w_current->undo_panzoom) {
-    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  repeat middle shortcut would get into the way of what user is try to do
- */
-DEFINE_I_CALLBACK(view_zoom_out_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  a_zoom(w_current, ZOOM_OUT, HOTKEY, 0);
-
   if (w_current->undo_panzoom) {
     o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
   }
@@ -1369,15 +1235,22 @@ DEFINE_I_CALLBACK(view_zoom_out_hotkey)
 DEFINE_I_CALLBACK(view_pan)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
 
-  o_redraw_cleanstates(w_current);	
-  w_current->inside_action = 0;
-  i_set_state(w_current, STARTPAN);
-
-  /* I don't know if this would get in the way */
   i_update_middle_button(w_current, i_callback_view_pan, _("Pan"));
+
+  if (!g_action_get_position (FALSE, &wx, &wy)) {
+    o_redraw_cleanstates (w_current);
+    w_current->inside_action = 0;
+    i_set_state (w_current, STARTPAN);
+  } else {
+    a_pan (w_current, wx, wy);
+    if (w_current->undo_panzoom) {
+      o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+    }
+  }
 }
 
 /*! \brief Scheme callback function that moves the viewport to the left.
@@ -1432,30 +1305,6 @@ DEFINE_I_CALLBACK(view_pan_down)
 
   /* yes, that's a negative sign there */
   a_pan_mouse(w_current, 0, -w_current->keyboardpan_gain);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(view_pan_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  gint wx, wy; 
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!x_event_get_pointer_position(w_current, FALSE, &wx, &wy))
-    return;
-
-  i_update_middle_button(w_current, i_callback_view_pan_hotkey, _("Pan"));
-
-  a_pan(w_current, wx, wy);
-
-  if (w_current->undo_panzoom) {
-    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
-  }
 }
 
 /*! \todo Finish function documentation!!!
@@ -1747,9 +1596,9 @@ DEFINE_I_CALLBACK(clipboard_cut)
   x_clipboard_set (w_current, object_buffer[0]);
 }
 
-/*! \brief Start pasting clipboard contents.
+/*! \brief Start pasting clipboard contents
  *  \par Function Description
- * Cut the current selection to the clipboard, via buffer 0.
+ * Start pasting the current clipboard contents, via buffer 0.
  */
 DEFINE_I_CALLBACK(clipboard_paste)
 {
@@ -1757,44 +1606,23 @@ DEFINE_I_CALLBACK(clipboard_paste)
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *object_list = NULL;
 
+  /* Choose a default position to start pasting. This is required to
+   * make pasting when the cursor is outside the screen or pasting via
+   * menu work as expected. */
+  gint wx = 0, wy = 0;
+
   g_return_if_fail (w_current != NULL);
 
-  i_update_middle_button (w_current, i_callback_buffer_paste1, _("Paste from clipboard"));
+  i_update_middle_button (w_current, i_callback_clipboard_paste, _("Paste from clipboard"));
+
+  g_action_get_position (TRUE, &wx, &wy);
 
   object_list = x_clipboard_get (w_current);
 
-  if (object_list != NULL) {
-    s_delete_object_glist (toplevel, object_buffer[0]);
-    object_buffer[0] = object_list;
-    o_redraw_cleanstates (w_current);
-    w_current->buffer_number = 0;
-    w_current->inside_action = 1;
-    i_set_state (w_current, STARTPASTE);
-  } else {
-    i_set_state_msg (w_current, SELECT, _("Empty buffer"));
-  }
-}
-
-/*! \brief Start pasting clipboard contents (hotkey version)
- *  \par Function Description
- *  It's not entirely clear what the difference is between this and
- *  i_callback_clipboard_paste()...
- */
-DEFINE_I_CALLBACK(clipboard_paste_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) data;
-  TOPLEVEL *toplevel = w_current->toplevel;
-  GList *object_list = NULL;
-  gint wx, wy;
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!x_event_get_pointer_position (w_current, TRUE, &wx, &wy))
+  if (object_list == NULL) {
+    i_set_state_msg (w_current, SELECT, _("Empty clipboard"));
     return;
-
-  object_list = x_clipboard_get (w_current);
-
-  if (object_list == NULL) return;
+  }
   s_delete_object_glist (toplevel, object_buffer[0]);
   object_buffer[0] = object_list;
 
@@ -1869,6 +1697,10 @@ i_callback_buffer_paste (gpointer data, guint callback_action,
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gchar *msg;
 
+  /* Choose a default position to start pasting. This is required to
+   * make pasting when the cursor is outside the screen or pasting via
+   * menu work as expected. */
+  gint wx = 0, wy = 0;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1878,51 +1710,20 @@ i_callback_buffer_paste (gpointer data, guint callback_action,
   i_update_middle_button(w_current, f, msg);
   g_free (msg);
 
-  if (object_buffer[n-1] != NULL) {
-    o_redraw_cleanstates(w_current);
-    w_current->buffer_number = n-1;
-    w_current->inside_action = 1;
-    i_set_state(w_current, STARTPASTE);
-  } else {
-    i_set_state_msg(w_current, SELECT, _("Empty buffer"));
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-static void
-i_callback_buffer_paste_hotkey (gpointer data, guint callback_action,
-                                GtkWidget *widget, int n,
-                                void (*f)(gpointer, guint, GtkWidget *))
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  gint wx, wy; 
-
-  g_return_if_fail (w_current != NULL);
+  g_action_get_position (TRUE, &wx, &wy);
 
   if (object_buffer[n-1] == NULL) {
+    i_set_state_msg(w_current, SELECT, _("Empty buffer"));
     return;
   }
 
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
-    return;
-
-  o_buffer_paste_start(w_current, wx, wy, n-1);
+  o_buffer_paste_start (w_current, wx, wy, n-1);
 }
 
 #define DEFINE_I_CALLBACK_BUF(op, n) \
   DEFINE_I_CALLBACK(buffer_ ## op ## n) { \
     i_callback_buffer_ ## op (data, callback_action, widget, n, \
                               i_callback_buffer_ ## op ## n); \
-  }
-
-#define DEFINE_I_CALLBACK_BUF_HK(op, n) \
-  DEFINE_I_CALLBACK(buffer_ ## op ## n ## _hotkey) { \
-    i_callback_buffer_ ## op ## _hotkey (data, callback_action, widget, n, \
-                                         i_callback_buffer_ ## op ## n ## _hotkey); \
   }
 
 DEFINE_I_CALLBACK_BUF(copy,1)
@@ -1943,14 +1744,7 @@ DEFINE_I_CALLBACK_BUF(paste,3)
 DEFINE_I_CALLBACK_BUF(paste,4)
 DEFINE_I_CALLBACK_BUF(paste,5)
 
-DEFINE_I_CALLBACK_BUF_HK(paste,1)
-DEFINE_I_CALLBACK_BUF_HK(paste,2)
-DEFINE_I_CALLBACK_BUF_HK(paste,3)
-DEFINE_I_CALLBACK_BUF_HK(paste,4)
-DEFINE_I_CALLBACK_BUF_HK(paste,5)
-
 #undef DEFINE_I_CALLBACK_BUF
-#undef DEFINE_I_CALLBACK_BUF_HK
 
 /*! \section add-menu Add Menu Callback Functions */
 /*! \todo Finish function documentation!!!
@@ -1998,27 +1792,9 @@ DEFINE_I_CALLBACK(add_attribute)
 
   g_return_if_fail (w_current != NULL);
 
-  attrib_edit_dialog(w_current, NULL, FROM_MENU);
+  attrib_edit_dialog(w_current, NULL,
+                     g_action_get_position (TRUE, NULL, NULL) ? FROM_HOTKEY : FROM_MENU);
   i_update_middle_button(w_current, i_callback_add_attribute,
-                         _("Attribute"));
-
-  i_set_state(w_current, SELECT);
-  i_update_toolbar(w_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(add_attribute_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  attrib_edit_dialog(w_current, NULL, FROM_HOTKEY);
-  i_update_middle_button(w_current, i_callback_add_attribute_hotkey,
                          _("Attribute"));
 
   i_set_state(w_current, SELECT);
@@ -2033,10 +1809,11 @@ DEFINE_I_CALLBACK(add_attribute_hotkey)
 DEFINE_I_CALLBACK(add_net)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
 
-  o_redraw_cleanstates(w_current);	
+  o_redraw_cleanstates(w_current);
   o_invalidate_rubber (w_current);
   o_net_reset(w_current);
 
@@ -2044,33 +1821,11 @@ DEFINE_I_CALLBACK(add_net)
   i_update_middle_button(w_current, i_callback_add_net, _("Net"));
   i_set_state(w_current, STARTDRAWNET);
   i_update_toolbar(w_current);
-  /* somewhere you need to nearest point locking... */
-  w_current->inside_action = 0;
-}
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(add_net_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  gint wx, wy;
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+  if (!g_action_get_position (TRUE, &wx, &wy)) {
+    w_current->inside_action = 0;
     return;
-
-  o_redraw_cleanstates(w_current);	
-  o_invalidate_rubber (w_current);
-  o_net_reset(w_current);
-
-  /* need to click */
-  i_update_middle_button(w_current, i_callback_add_net_hotkey, _("Net"));
-  i_set_state(w_current, STARTDRAWNET);
-  i_update_toolbar(w_current);
+  }
 
   o_net_start(w_current, wx, wy);
 
@@ -2101,10 +1856,11 @@ void i_callback_toolbar_add_net(GtkWidget* widget, gpointer data)
 DEFINE_I_CALLBACK(add_bus)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
 
-  o_redraw_cleanstates(w_current);	
+  o_redraw_cleanstates(w_current);
   o_invalidate_rubber (w_current);
 
   /* need to click */
@@ -2112,32 +1868,10 @@ DEFINE_I_CALLBACK(add_bus)
   i_set_state(w_current, STARTDRAWBUS);
   i_update_toolbar(w_current);
 
-  /* somewhere you need to nearest point locking... */
-  w_current->inside_action = 0;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(add_bus_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  gint wx, wy;
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+  if (!g_action_get_position (TRUE, &wx, &wy)) {
+    w_current->inside_action = 0;
     return;
-
-  o_redraw_cleanstates(w_current);	
-  o_invalidate_rubber (w_current);
-
-  /* need to click */
-  i_update_middle_button(w_current, i_callback_add_bus_hotkey, _("Bus"));
-  i_set_state(w_current, STARTDRAWBUS);
-  i_update_toolbar(w_current);
+  }
 
   o_bus_start(w_current, wx, wy);
 
@@ -2202,36 +1936,20 @@ void i_callback_toolbar_add_text(GtkWidget* widget, gpointer data)
 DEFINE_I_CALLBACK(add_line)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  o_redraw_cleanstates(w_current);	
-  o_invalidate_rubber (w_current);
-
-  i_update_middle_button(w_current, i_callback_add_line, _("Line"));
-  i_set_state(w_current, DRAWLINE);
-  w_current->inside_action = 0;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(add_line_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy;
   
   g_return_if_fail (w_current != NULL);
 
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
-    return;
-
-  o_redraw_cleanstates(w_current);	
+  o_redraw_cleanstates(w_current);
   o_invalidate_rubber (w_current);
 
-  i_update_middle_button(w_current, i_callback_add_line_hotkey, _("Line"));
+  i_update_middle_button(w_current, i_callback_add_line, _("Line"));
+
+  if (!g_action_get_position (TRUE, &wx, &wy)) {
+    i_set_state(w_current, DRAWLINE);
+    w_current->inside_action = 0;
+    return;
+  }
 
   o_line_start(w_current, wx, wy);
 
@@ -2261,6 +1979,7 @@ DEFINE_I_CALLBACK(add_path)
 DEFINE_I_CALLBACK(add_box)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gint wx, wy; 
 
   g_return_if_fail (w_current != NULL);
 
@@ -2268,29 +1987,12 @@ DEFINE_I_CALLBACK(add_box)
   o_invalidate_rubber (w_current);
 
   i_update_middle_button(w_current, i_callback_add_box, _("Box"));
-  w_current->inside_action = 0;
-  i_set_state(w_current, DRAWBOX);
-}
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(add_box_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  gint wx, wy; 
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
+  if (!g_action_get_position (TRUE, &wx, &wy)) {
+    w_current->inside_action = 0;
+    i_set_state(w_current, DRAWBOX);
     return;
-
-  o_redraw_cleanstates(w_current);	
-  o_invalidate_rubber (w_current);
-
-  i_update_middle_button(w_current, i_callback_add_box_hotkey, _("Box"));
+  }
 
   o_box_start(w_current, wx, wy);
 
@@ -2324,53 +2026,23 @@ DEFINE_I_CALLBACK(add_picture)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(add_picture_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  /* If this function necessary? Yes, if you want the hotkey to work. */
-  i_callback_add_picture(w_current, 0, NULL);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 DEFINE_I_CALLBACK(add_circle)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  o_redraw_cleanstates(w_current);	
-  o_invalidate_rubber (w_current);
-
-  i_update_middle_button(w_current, i_callback_add_circle, _("Circle"));
-  w_current->inside_action = 0;
-  i_set_state(w_current, DRAWCIRCLE);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(add_circle_hotkey)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
   g_return_if_fail (w_current != NULL);
 
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
-    return;
-
-  o_redraw_cleanstates(w_current);	
+  o_redraw_cleanstates(w_current);
   o_invalidate_rubber (w_current);
 
-  i_update_middle_button(w_current, i_callback_add_circle_hotkey,
-                         _("Circle"));
+  i_update_middle_button(w_current, i_callback_add_circle, _("Circle"));
+
+  if (!g_action_get_position (TRUE, &wx, &wy)) {
+    w_current->inside_action = 0;
+    i_set_state(w_current, DRAWCIRCLE);
+    return;
+  }
 
   o_circle_start(w_current, wx, wy);
 
@@ -2386,36 +2058,20 @@ DEFINE_I_CALLBACK(add_circle_hotkey)
 DEFINE_I_CALLBACK(add_arc)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-  
-  o_redraw_cleanstates(w_current);	
-  o_invalidate_rubber (w_current);
-
-  i_update_middle_button(w_current, i_callback_add_arc, _("Arc"));
-  w_current->inside_action = 0;
-  i_set_state(w_current, DRAWARC);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(add_arc_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
   g_return_if_fail (w_current != NULL);
 
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
-    return;
-
-  o_redraw_cleanstates(w_current);	
+  o_redraw_cleanstates(w_current);
   o_invalidate_rubber (w_current);
 
-  i_update_middle_button(w_current, i_callback_add_arc_hotkey, _("Arc"));
+  i_update_middle_button(w_current, i_callback_add_arc, _("Arc"));
+
+  if (!g_action_get_position (TRUE, &wx, &wy)) {
+    w_current->inside_action = 0;
+    i_set_state(w_current, DRAWARC);
+    return;
+  }
 
   o_arc_start(w_current, wx, wy);
 
@@ -2431,36 +2087,20 @@ DEFINE_I_CALLBACK(add_arc_hotkey)
 DEFINE_I_CALLBACK(add_pin)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  o_redraw_cleanstates(w_current);	
-  o_invalidate_rubber (w_current);
-
-  i_update_middle_button(w_current, i_callback_add_pin, _("Pin"));
-  w_current->inside_action = 0;
-  i_set_state(w_current, DRAWPIN);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(add_pin_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
   g_return_if_fail (w_current != NULL);
 
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
-    return;
-
-  o_redraw_cleanstates(w_current);	
+  o_redraw_cleanstates(w_current);
   o_invalidate_rubber (w_current);
 
-  i_update_middle_button(w_current, i_callback_add_pin_hotkey, _("Pin"));
+  i_update_middle_button(w_current, i_callback_add_pin, _("Pin"));
+
+  if (!g_action_get_position (TRUE, &wx, &wy)) {
+    w_current->inside_action = 0;
+    i_set_state(w_current, DRAWPIN);
+    return;
+  }
 
   o_pin_start(w_current, wx, wy);
 
