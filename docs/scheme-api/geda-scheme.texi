@@ -11,7 +11,7 @@
 @copying
 This manual is for gEDA/gaf, version @value{VERSION}.
 
-Copyright @copyright{} 2011-2012 Peter TB Brett
+Copyright @copyright{} 2011-2013 Peter TB Brett
 
 The text of and illustrations in this document are licensed under a
 Creative Commons Attribution–Share Alike 3.0 Unported license
@@ -2337,6 +2337,26 @@ Called when a new page is created. The argument is the new page.
 
 @node Miscellanous gschem functions
 @section Miscellaneous gschem functions
+
+@subsection gschem actions
+
+To use the functions described in this section, you will need to load
+the @code{(gschem action)} module.
+
+@defun eval-action! action
+Evaluate the gschem action @var{action}, returning @samp{#t} on
+success and raising an error on failure.  @var{action} should be a
+symbol naming a thunk procedure defined in the current module.  The
+special symbol @samp{repeat-last-command} is interpreted as a request
+to repeat the last action evaluated via @code{eval-action!}.
+
+All actions initiated via the gschem GUI (via menus, toolbar or
+keybindings) are executed via @code{eval-action!}.  You should
+normally use @code{eval-action!} only when it is particularly
+important that the action is executed in exactly the same way as the
+GUI would do it.  Since actions are just procedures, you can usually
+just call them directly.
+@end defun
 
 @subsection gschem Attribute Helpers
 

@@ -22,13 +22,10 @@
              (gschem selection)
              (gschem window)
              (gschem gschemdoc)
+             (gschem action)
              (geda object)
              (srfi srfi-1))
 
-;; Define an eval-in-currentmodule procedure
-(define (eval-cm expr) (eval expr (current-module)))
-
-(define last-action #f)
 (define current-keys '())
 
 (define %global-keymap (make-keymap))
@@ -66,38 +63,12 @@
            ;; sequence, then try to run the action
            (bound (begin
                     (reset-keys)
-                    (eval-keymap-action bound)))
+                    (eval-action! bound)))
            ;; No binding
            (else (reset-keys)))))
 
       (reset-keys)))
 
-;; Evaluates a keymap action.  A keymap action is expected to be a
-;; symbol naming a thunk variable in the current module.
-;;
-;; The special-case symbol repeat-last-command causes the last action
-;; executed via keypress to be repeated.
-(define (eval-keymap-action action)
-  (define (invalid-action-error)
-    (error "~S is not a valid action for keybinding." action))
-
-  (cond
-   ;; Handle repeat-last-command
-   ((equal? 'repeat-last-command action)
-    (eval-keymap-action last-action))
-
-   ;; Normal actions
-   ((symbol? action)
-    (let ((proc (false-if-exception (eval-cm action))))
-      (if (thunk? proc)
-          (begin
-            (set! last-action action)
-            (proc)
-            #t)
-          (invalid-action-error))))
-
-   ;; Otherwise, fail
-   (else (invalid-action-error))))
 
 (define (eval-stroke stroke)
   (let ((action (assoc stroke strokes)))
@@ -109,7 +80,7 @@
 ;           (display "Scheme found action ")
 ;           (display action)
 ;           (display "\n")
-           ((eval-cm (cdr action)))
+           (eval-action! (cdr action))
            #t))))
 
 ;; Search the global keymap for a particular symbol and return the

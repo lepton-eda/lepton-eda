@@ -67,19 +67,9 @@ int npopup_items = sizeof(popup_items) / sizeof(popup_items[0]);
  */
 static void g_menu_execute(GtkAction *action, gpointer user_data)
 {
-  gchar *guile_string = NULL;
-  const gchar *func = gtk_action_get_name (action);
+  const gchar *action_name = gtk_action_get_name (action);
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) user_data;
-
-  guile_string = g_strdup_printf("(%s)", func);
-#if DEBUG
-  printf("%s\n", guile_string);
-#endif
-  scm_dynwind_begin (0);
-  scm_dynwind_unwind_handler (g_free, guile_string, SCM_F_WIND_EXPLICITLY);
-  g_dynwind_window (w_current);
-  g_scm_c_eval_string_protected (guile_string);
-  scm_dynwind_end ();
+  g_action_eval_by_name (w_current, action_name);
 }
 
 /*! \todo Finish function documentation!!!

@@ -18,7 +18,8 @@ nobase_dist_scmdata_DATA = \
 	gschem/hook.scm \
 	gschem/attrib.scm \
 	gschem/keymap.scm \
-	gschem/util.scm
+	gschem/util.scm \
+	gschem/action.scm
 
 MOSTLYCLEANFILES = *.log *~
 CLEANFILES = *.log *~
