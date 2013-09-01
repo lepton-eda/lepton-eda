@@ -1137,8 +1137,8 @@
            (,(N_ "Copy Mode")          edit-copy              #f)
            (,(N_ "Multiple Copy Mode") edit-mcopy             #f)
            (,(N_ "Move Mode")          edit-move              #f)
-           (,(N_ "Rotate 90 Mode")     edit-rotate-90         #f)
-           (,(N_ "Mirror Mode")        edit-mirror            #f)
+           (,(N_ "Rotate 90 Mode")     edit-rotate-90         "object-rotate-left")
+           (,(N_ "Mirror Mode")        edit-mirror            "object-flip-horizontal")
            ("SEPARATOR"               #f                     #f)
            (,(N_ "Edit...")            edit-edit              #f)
            (,(N_ "Edit Text...")       edit-text              "gtk-edit")
@@ -1160,21 +1160,21 @@
 ;;
 ;;          menu item name      menu action             menu stock icon
 ;;
-	`( (,(N_ "Copy into 1")	buffer-copy1    #f)
-	   (,(N_ "Copy into 2")	buffer-copy2    #f)
-	   (,(N_ "Copy into 3")	buffer-copy3    #f)
-	   (,(N_ "Copy into 4")	buffer-copy4    #f)
-	   (,(N_ "Copy into 5")	buffer-copy5    #f)
-	   (,(N_ "Cut into 1")	buffer-cut1       	#f)
-	   (,(N_ "Cut into 2")	buffer-cut2       	#f)
-	   (,(N_ "Cut into 3")	buffer-cut3       	#f)
-	   (,(N_ "Cut into 4")	buffer-cut4       	#f)
-	   (,(N_ "Cut into 5")	buffer-cut5       	#f)
-	   (,(N_ "Paste from 1")	buffer-paste1   #f)
-	   (,(N_ "Paste from 2")	buffer-paste2   #f)
-	   (,(N_ "Paste from 3")	buffer-paste3   #f)
-	   (,(N_ "Paste from 4")	buffer-paste4   #f)
-	   (,(N_ "Paste from 5")	buffer-paste5   #f)))
+	`( (,(N_ "Copy into 1")	buffer-copy1    "gtk-copy")
+	   (,(N_ "Copy into 2")	buffer-copy2    "gtk-copy")
+	   (,(N_ "Copy into 3")	buffer-copy3    "gtk-copy")
+	   (,(N_ "Copy into 4")	buffer-copy4    "gtk-copy")
+	   (,(N_ "Copy into 5")	buffer-copy5    "gtk-copy")
+	   (,(N_ "Cut into 1")	buffer-cut1       	"gtk-cut")
+	   (,(N_ "Cut into 2")	buffer-cut2       	"gtk-cut")
+	   (,(N_ "Cut into 3")	buffer-cut3       	"gtk-cut")
+	   (,(N_ "Cut into 4")	buffer-cut4       	"gtk-cut")
+	   (,(N_ "Cut into 5")	buffer-cut5       	"gtk-cut")
+	   (,(N_ "Paste from 1")	buffer-paste1   "gtk-paste")
+	   (,(N_ "Paste from 2")	buffer-paste2   "gtk-paste")
+	   (,(N_ "Paste from 3")	buffer-paste3   "gtk-paste")
+	   (,(N_ "Paste from 4")	buffer-paste4   "gtk-paste")
+	   (,(N_ "Paste from 5")	buffer-paste5   "gtk-paste")))
 
 (define view-menu-items
 ;;
@@ -1269,13 +1269,13 @@
 ;;          menu item name                menu action               menu stock icon
 ;;
         `(
-           (,(N_ "gschem User _Guide...")  help-guide                #f)
-           (,(N_ "gschem _FAQ...")         help-faq                  #f)
-           (,(N_ "gEDA Docu_mentation...") help-manual               "gtk-help")
-           (,(N_ "gEDA _Wiki...")          help-wiki                 #f)
+           (,(N_ "gschem User _Guide...")  help-guide                "gtk-help")
+           (,(N_ "gschem _FAQ...")         help-faq                  "help-faq")
+           (,(N_ "gEDA Docu_mentation...") help-manual               "help-browser")
+           (,(N_ "gEDA _Wiki...")          help-wiki                 "web-browser")
            (,(N_ "Component D_ocumentation...") hierarchy-documentation   #f)
            ("SEPARATOR"                   #f                        #f)
-           (,(N_ "_Hotkeys...")            help-hotkeys              #f)
+           (,(N_ "_Hotkeys...")            help-hotkeys              "preferences-desktop-keyboard-shortcuts")
            (,(N_ "_About...")              help-about                "gtk-about")))
 
 ;
