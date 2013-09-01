@@ -265,8 +265,9 @@ void main_prog(void *closure, int argc, char *argv[])
   g_rc_parse_gtkrc();
   x_rc_parse_gschem (w_current, rc_filename);
 
-  /* Set default icon */
+  /* Set default icon and make sure we can find our own icons */
   x_window_set_default_icon();
+  x_window_init_icons ();
 
   /* At end, complete set up of window. */
   x_color_allocate();

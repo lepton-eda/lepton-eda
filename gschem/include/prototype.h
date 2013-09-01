@@ -794,3 +794,4 @@ void x_window_set_current_page (GSCHEM_TOPLEVEL *w_current, PAGE *page);
 gint x_window_save_page (GSCHEM_TOPLEVEL *w_current, PAGE *page, const gchar *filename);
 void x_window_close_page (GSCHEM_TOPLEVEL *w_current, PAGE *page);
 void x_window_set_default_icon (void);
+void x_window_init_icons (void);

@@ -190,37 +190,20 @@ void x_window_setup_draw_events(GSCHEM_TOPLEVEL *w_current)
 static GtkWidget *x_window_stock_pixmap(const char *stock, GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *wpixmap = NULL;
-  GdkPixmap *pixmap;
-  GdkBitmap *mask;
   GtkStockItem item;
-
-  GdkWindow *window=w_current->main_window->window;
-  GdkColor *background=&w_current->main_window->style->bg[GTK_STATE_NORMAL];
-
-  gchar *filename=g_strconcat(w_current->toplevel->bitmap_directory,
-                              G_DIR_SEPARATOR_S, 
-                              "gschem-", stock, ".xpm", NULL);
 
   gchar *stockid=g_strconcat("gtk-", stock, NULL);
 
-  /* First check if GTK knows this stock icon */
+  /* First check if GTK knows this icon */
   if(gtk_stock_lookup(stockid, &item)) {
     wpixmap = gtk_image_new_from_stock(stockid, 
-                                       GTK_ICON_SIZE_SMALL_TOOLBAR);
+                                       GTK_ICON_SIZE_LARGE_TOOLBAR);
   } else {
-    /* Fallback to the original custom icon */
-    pixmap = gdk_pixmap_create_from_xpm (window, &mask, 
-                                         background, filename);
-    if (pixmap != NULL) {
-      wpixmap = gtk_image_new_from_pixmap (pixmap, mask);
-    } else {
-     s_log_message("Could not find image at file: %s.\n", filename);
-     wpixmap = gtk_image_new_from_stock(GTK_STOCK_MISSING_IMAGE , 
-					GTK_ICON_SIZE_SMALL_TOOLBAR);
-    }
+    /* Look up the icon in the icon theme */
+    wpixmap = gtk_image_new_from_icon_name (stock,
+                                            GTK_ICON_SIZE_LARGE_TOOLBAR);
   }
 
-  g_free(filename);
   g_free(stockid);
 
   return wpixmap;
@@ -363,7 +346,7 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
                              _("Component"), 
                              _("Add component...\nSelect library and component from list, move the mouse into main window, click to place\nRight mouse button to cancel"), 
                              "toolbar/component", 
-                             x_window_stock_pixmap("comp", w_current),
+                             x_window_stock_pixmap("insert-symbol", w_current),
                              (GtkSignalFunc) i_callback_toolbar_add_component, 
                              w_current);
     w_current->toolbar_net = 
@@ -373,7 +356,7 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
                                  _("Nets"),
                                  _("Add nets mode\nRight mouse button to cancel"),
                                  "toolbar/nets",
-                                 x_window_stock_pixmap("net", w_current),
+                                 x_window_stock_pixmap("insert-net", w_current),
                                  (GtkSignalFunc) i_callback_toolbar_add_net,
                                  w_current);
     w_current->toolbar_bus = 
@@ -383,7 +366,7 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
                                  _("Bus"),
                                  _("Add buses mode\nRight mouse button to cancel"),
                                  "toolbar/bus",
-                                 x_window_stock_pixmap("bus", w_current),
+                                 x_window_stock_pixmap("insert-bus", w_current),
                                  (GtkSignalFunc) i_callback_toolbar_add_bus,
                                  w_current);
     /* not part of any radio button group */
@@ -391,7 +374,7 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
                              _("Text"), 
                              _("Add Text..."), 
                              "toolbar/text", 
-                             x_window_stock_pixmap("text", w_current),
+                             x_window_stock_pixmap("insert-text", w_current),
                              (GtkSignalFunc) i_callback_toolbar_add_text, 
                              w_current);
     gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
@@ -995,4 +978,22 @@ x_window_close_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
 void x_window_set_default_icon( void )
 {
   gtk_window_set_default_icon_name( GSCHEM_THEME_ICON_NAME );
+}
+
+/*! \brief Setup icon search paths.
+ * \par Function Description
+ * Add the icons installed by gschem to the search path for the
+ * default icon theme, so that they can be automatically found by GTK.
+ */
+void
+x_window_init_icons (void)
+{
+  gchar *icon_path;
+
+  g_return_if_fail (s_path_sys_data () != NULL);
+
+  icon_path = g_build_filename (s_path_sys_data (), "icons", NULL);
+  gtk_icon_theme_append_search_path (gtk_icon_theme_get_default (),
+                                     icon_path);
+  g_free (icon_path);
 }

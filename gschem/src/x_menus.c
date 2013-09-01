@@ -158,6 +158,8 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
           menu_item_keys = "";
         } else {
 
+          GtkStockItem stock_info;
+
           /* Look up key binding in global keymap */
           SCM s_expr =
             scm_list_2 (scm_from_utf8_symbol ("find-key"),
@@ -179,11 +181,23 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
             menu_item_stock = scm_to_utf8_string (scm_item_stock);
 
           action_name = scm_to_utf8_string (scm_symbol_to_string (scm_item_func));
-          action = gschem_action_new (action_name,  /* Action name */
-                                      menu_item_name,  /* Text */
-                                      menu_item_name,  /* Tooltip */
-                                      menu_item_stock, /* Icon stock ID */
-                                      menu_item_keys); /* Accelerator string */
+          action = g_object_new (GSCHEM_TYPE_ACTION,
+                                 "name", action_name,
+                                 "label", menu_item_name,
+                                 "tooltip", menu_item_name,
+                                 "multikey-accel", menu_item_keys,
+                                 NULL);
+
+          /* If stock name corresponds to a GTK stock item, then use
+           * it.  Otherwise, look it up in the icon theme. */
+          if (menu_item_stock != NULL &&
+              gtk_stock_lookup (menu_item_stock, &stock_info)) {
+            gtk_action_set_stock_id (GTK_ACTION(action), menu_item_stock);
+          } else {
+            gtk_action_set_icon_name (GTK_ACTION(action), menu_item_stock);
+          }
+
+
           free(action_name);
           free(menu_item_stock);
 
