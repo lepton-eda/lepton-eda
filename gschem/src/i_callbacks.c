@@ -86,11 +86,7 @@ DEFINE_I_CALLBACK(file_new)
  */
 void i_callback_toolbar_file_new(GtkWidget* widget, gpointer data)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  g_return_if_fail (w_current != NULL);
-  if (!w_current->window) return;
-    
-  i_callback_file_new(data, 0, NULL);
+  g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "file-new");
 }
 
 /*! \todo Finish function documentation!!!
@@ -155,11 +151,7 @@ DEFINE_I_CALLBACK(file_open)
  */
 void i_callback_toolbar_file_open(GtkWidget* widget, gpointer data)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  g_return_if_fail (w_current != NULL);
-  if (!w_current->window) return;
-
-  i_callback_file_open(data, 0, NULL);
+  g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "file-open");
 }
 
 /*! \todo Finish function documentation!!!
@@ -219,11 +211,7 @@ DEFINE_I_CALLBACK(file_save)
  */
 void i_callback_toolbar_file_save(GtkWidget* widget, gpointer data)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  g_return_if_fail (w_current != NULL);
-  if (!w_current->window) return;
-
-  i_callback_file_save(data, 0, NULL);
+  g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "file-save");
 }
 
 /*! \todo Finish function documentation!!!
@@ -379,11 +367,7 @@ DEFINE_I_CALLBACK(edit_undo)
  */
 void i_callback_toolbar_edit_undo(GtkWidget* widget, gpointer data)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  g_return_if_fail (w_current != NULL);
-  if (!w_current->window) return;
-
-  i_callback_edit_undo(data, 0, NULL);
+  g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "edit-undo");
 }
 
 /*! \todo Finish function documentation!!!
@@ -408,11 +392,7 @@ DEFINE_I_CALLBACK(edit_redo)
  */
 void i_callback_toolbar_edit_redo(GtkWidget* widget, gpointer data)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  g_return_if_fail (w_current != NULL);
-  if (!w_current->window) return;
-
-  i_callback_edit_redo(data, 0, NULL);
+  g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "edit-redo");
 }
 
 /*! \todo Finish function documentation!!!
@@ -2004,11 +1984,7 @@ DEFINE_I_CALLBACK(add_component)
  */
 void i_callback_toolbar_add_component(GtkWidget* widget, gpointer data)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  g_return_if_fail (w_current != NULL);
-  if (!w_current->window) return;
-
-  i_callback_add_component(data, 0, NULL);
+  g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "add-component");
 }
 
 /*! \todo Finish function documentation!!!
@@ -2112,12 +2088,8 @@ DEFINE_I_CALLBACK(add_net_hotkey)
  */
 void i_callback_toolbar_add_net(GtkWidget* widget, gpointer data)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  g_return_if_fail (w_current != NULL);
-  if (!w_current->window) return;
-
   if (GTK_TOGGLE_BUTTON (widget)->active) {
-    i_callback_add_net(data, 0, NULL);
+    g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "add-net");
   }
 }
 
@@ -2183,12 +2155,8 @@ DEFINE_I_CALLBACK(add_bus_hotkey)
  */
 void i_callback_toolbar_add_bus(GtkWidget* widget, gpointer data)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  g_return_if_fail (w_current != NULL);
-  if (!w_current->window) return;
-
   if (GTK_TOGGLE_BUTTON (widget)->active) {
-     i_callback_add_bus(data, 0, NULL);
+    g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "add-bus");
   }
 }
 
@@ -2223,11 +2191,7 @@ DEFINE_I_CALLBACK(add_text)
  */
 void i_callback_toolbar_add_text(GtkWidget* widget, gpointer data)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  g_return_if_fail (w_current != NULL);
-  if (!w_current->window) return;
-
-  i_callback_add_text(data, 0, NULL);
+  g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "add-text");
 }
 
 /*! \todo Finish function documentation!!!
