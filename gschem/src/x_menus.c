@@ -91,7 +91,6 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
   SCM scm_item;
   SCM scm_item_name;
   SCM scm_item_func;
-  SCM scm_item_hotkey_func;
   SCM scm_item_stock;
   SCM scm_index;
   SCM scm_keys;
@@ -100,7 +99,6 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
   char **raw_menu_name = g_malloc (sizeof(char *));
   char *menu_item_name;
   char *raw_menu_item_name;
-  char *menu_item_hotkey_func;
   char *menu_item_stock;
   char *menu_item_keys;
   int i, j;
@@ -134,16 +132,12 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
       scm_item = scm_list_ref (scm_items, scm_index);
       scm_item_name = SCM_CAR (scm_item);
       scm_item_func = SCM_CADR (scm_item);
-      scm_item_hotkey_func = SCM_CADDR (scm_item);
-      scm_item_stock = scm_is_pair (SCM_CDDDR (scm_item)) ?
-                         SCM_CADDDR (scm_item) : SCM_BOOL_F;
+      scm_item_stock = scm_is_pair (SCM_CDDR (scm_item)) ?
+                         SCM_CADDR (scm_item) : SCM_BOOL_F;
       SCM_ASSERT(scm_is_string(scm_item_name), scm_item_name, SCM_ARGn, "get_main_menu item_name");
       SCM_ASSERT(scm_is_symbol (scm_item_func) ||
                     scm_is_false (scm_item_func),
                  scm_item_func, SCM_ARGn, "get_main_menu item_func");
-      SCM_ASSERT (scm_is_symbol (scm_item_hotkey_func) ||
-                    scm_is_false (scm_item_hotkey_func),
-                  scm_item_hotkey_func, SCM_ARGn, "get_main_menu hotkey_func");
       SCM_ASSERT (scm_is_string (scm_item_stock) ||
                     scm_is_false (scm_item_stock),
                   scm_item_stock, SCM_ARGn, "get_main_menu stock");
@@ -159,18 +153,16 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
         gtk_menu_append(GTK_MENU(menu), menu_item);
       } else {
 
-        if (scm_is_false (scm_item_hotkey_func)) {
-          menu_item_hotkey_func = NULL;
+        if(scm_is_false (scm_item_func)) {
+          menu_item = gtk_menu_item_new_with_mnemonic(menu_item_name);
+          menu_item_keys = "";
         } else {
-          menu_item_hotkey_func = scm_to_utf8_string (scm_symbol_to_string (scm_item_hotkey_func));
-          scm_dynwind_free (menu_item_hotkey_func);
-        }
 
-        if (menu_item_hotkey_func != NULL) {
+          /* Look up key binding in global keymap */
           SCM s_expr =
             scm_list_2 (scm_from_utf8_symbol ("find-key"),
                         scm_list_2 (scm_from_utf8_symbol ("quote"),
-                                    scm_from_utf8_symbol (menu_item_hotkey_func)));
+                                    scm_item_func));
 
           scm_keys = g_scm_eval_protected (s_expr, scm_interaction_environment ());
 
@@ -181,13 +173,6 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
             scm_dynwind_free(menu_item_keys);
           }
 
-        } else {
-          menu_item_keys = "";
-        }
-
-        if(scm_is_false (scm_item_func)) {
-          menu_item = gtk_menu_item_new_with_mnemonic(menu_item_name);
-        } else {
           if (scm_is_false (scm_item_stock))
             menu_item_stock = NULL;
           else

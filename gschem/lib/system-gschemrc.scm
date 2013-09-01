@@ -1079,12 +1079,9 @@
 ;
 ; The "menu item name" is the name of the item as it will appear in the menu
 ; The "menu action" is the scheme function which is executed when the item
-; is selected off of the menu.  And "menu hotkey function" is the scheme
-; function which is executed when the hotkey is pressed.  
-; "menu hotkey function" has no real functionality in the menuing scheme other
-; than providing the information as to what hotkey to display in the menu.
-; "menu hotkey function" is not executed when you select an item off of the
-; list.  The hotkeys which are displayed are defined by the global-keymap.
+; is selected off of the menu.
+;
+; The hotkeys which are displayed are defined by the global-keymap.
 ; Actions can have several hotkeys, but the displayed keys are the last
 ; ones found.
 ;
@@ -1101,191 +1098,185 @@
 
 (define file-menu-items
 ;;
-;;          menu item name      menu action             menu hotkey function    menu stock icon
+;;          menu item name      menu action             menu stock icon
 ;;
-        `( (,(N_ "_New")              file-new                file-new                "gtk-new")
-           (,(N_ "_Open...")          file-open               file-open               "gtk-open")
+        `( (,(N_ "_New")              file-new                "gtk-new")
+           (,(N_ "_Open...")          file-open               "gtk-open")
 ;; The entry below will be removed from the menu if glib < 2.6 is detected
-           (,(N_ "Open Recen_t")      #f                      #f                      #f)
+           (,(N_ "Open Recen_t")      #f                      #f)
+           ("SEPARATOR"              #f                      #f)
+           (,(N_ "_Save")             file-save               "gtk-save")
+           (,(N_ "Save _As...")       file-save-as            "gtk-save-as")
+           (,(N_ "Save All")          file-save-all           "gtk-save")
+           (,(N_ "_Revert")           page-revert             "gtk-revert-to-saved")
            ("SEPARATOR"              #f                      #f                      #f)
-           (,(N_ "_Save")             file-save               file-save               "gtk-save")
-           (,(N_ "Save _As...")       file-save-as            file-save-as            "gtk-save-as")
-           (,(N_ "Save All")          file-save-all           file-save-all           "gtk-save")
-           (,(N_ "_Revert")           page-revert             page-revert             "gtk-revert-to-saved")
+           (,(N_ "_Print...")         file-print              "gtk-print")
+           (,(N_ "Write _image...")   file-image              #f)
            ("SEPARATOR"              #f                      #f                      #f)
-           (,(N_ "_Print...")         file-print              file-print              "gtk-print")
-           (,(N_ "Write _image...")   file-image              file-image              #f)
+           (,(N_ "Execute Script...") file-script             "gtk-execute")
            ("SEPARATOR"              #f                      #f                      #f)
-           (,(N_ "Execute Script...") file-script             file-script             "gtk-execute")
-           ("SEPARATOR"              #f                      #f                      #f)
-           (,(N_ "New Window")        file-new-window         file-new-window         #f)
-           (,(N_ "_Close Window")     file-close-window       file-close-window       "gtk-close")
-           (,(N_ "_Quit")             file-quit               file-quit               "gtk-quit")))
+           (,(N_ "New Window")        file-new-window         #f)
+           (,(N_ "_Close Window")     file-close-window       "gtk-close")
+           (,(N_ "_Quit")             file-quit               "gtk-quit")))
 
-(define edit-menu-items 
+(define edit-menu-items
 ;;
-;;          menu item name      menu action             menu hotkey action      menu stock icon
+;;          menu item name      menu action             menu stock icon
 ;;
-        `( (,(N_ "_Undo")              edit-undo              edit-undo               "gtk-undo")
-           (,(N_ "_Redo")              edit-redo              edit-redo               "gtk-redo")
-           ("SEPARATOR"               #f                     #f                      #f)
-           (,(N_ "Cu_t")               clipboard-cut          clipboard-cut           "gtk-cut")
-           (,(N_ "_Copy")              clipboard-copy         clipboard-copy          "gtk-copy")
-           (,(N_ "_Paste")             clipboard-paste clipboard-paste  "gtk-paste")
-           (,(N_ "_Delete")            edit-delete            edit-delete             "gtk-delete"  )
-           ("SEPARATOR"               #f                     #f                      #f)
-           (,(N_ "Select Mode")        edit-select            edit-select             #f)
-           (,(N_ "Select All")         edit-select-all        edit-select-all         "gtk-select-all")
-           (,(N_ "Deselect")           edit-deselect          edit-deselect           #f)
-           (,(N_ "Copy Mode")          edit-copy              edit-copy        #f)
-           (,(N_ "Multiple Copy Mode") edit-mcopy             edit-mcopy       #f)
-           (,(N_ "Move Mode")          edit-move              edit-move        #f)
-           (,(N_ "Rotate 90 Mode")     edit-rotate-90         edit-rotate-90   #f)
-           (,(N_ "Mirror Mode")        edit-mirror            edit-mirror      #f)
-           ("SEPARATOR"               #f                     #f                      #f)
-           (,(N_ "Edit...")            edit-edit              edit-edit               #f)
-           (,(N_ "Edit Text...")       edit-text              edit-text               "gtk-edit")
-           (,(N_ "Slot...")            edit-slot              edit-slot               #f)
-           (,(N_ "Color...")           edit-color             edit-color              "gtk-select-color")
-           (,(N_ "Line Width & Type...") edit-linetype        edit-linetype           #f)
-           (,(N_ "Fill Type...")         edit-filltype        edit-filltype           #f)
-           (,(N_ "Symbol Translate...")  edit-translate       edit-translate          #f)
-           (,(N_ "Lock")               edit-lock              edit-lock               #f)
-           (,(N_ "Unlock")             edit-unlock            edit-unlock             #f)
-           ("SEPARATOR"               #f                     #f                      #f)
-           (,(N_ "Invoke Macro")         edit-invoke-macro    edit-invoke-macro       #f)
-           (,(N_ "Embed Component/Picture")    edit-embed     edit-embed              #f)
-           (,(N_ "Unembed Component/Picture")  edit-unembed   edit-unembed            #f)
-           (,(N_ "Update Component")   edit-update            edit-update             "gtk-refresh")
-           (,(N_ "Show/Hide Inv Text") edit-show-hidden       edit-show-hidden        #f)))
+        `( (,(N_ "_Undo")              edit-undo              "gtk-undo")
+           (,(N_ "_Redo")              edit-redo              "gtk-redo")
+           ("SEPARATOR"               #f                     #f)
+           (,(N_ "Cu_t")               clipboard-cut          "gtk-cut")
+           (,(N_ "_Copy")              clipboard-copy         "gtk-copy")
+           (,(N_ "_Paste")             clipboard-paste "gtk-paste")
+           (,(N_ "_Delete")            edit-delete            "gtk-delete"  )
+           ("SEPARATOR"               #f                     #f)
+           (,(N_ "Select Mode")        edit-select            #f)
+           (,(N_ "Select All")         edit-select-all        "gtk-select-all")
+           (,(N_ "Deselect")           edit-deselect          #f)
+           (,(N_ "Copy Mode")          edit-copy              #f)
+           (,(N_ "Multiple Copy Mode") edit-mcopy             #f)
+           (,(N_ "Move Mode")          edit-move              #f)
+           (,(N_ "Rotate 90 Mode")     edit-rotate-90         #f)
+           (,(N_ "Mirror Mode")        edit-mirror            #f)
+           ("SEPARATOR"               #f                     #f)
+           (,(N_ "Edit...")            edit-edit              #f)
+           (,(N_ "Edit Text...")       edit-text              "gtk-edit")
+           (,(N_ "Slot...")            edit-slot              #f)
+           (,(N_ "Color...")           edit-color             "gtk-select-color")
+           (,(N_ "Line Width & Type...") edit-linetype        #f)
+           (,(N_ "Fill Type...")         edit-filltype        #f)
+           (,(N_ "Symbol Translate...")  edit-translate       #f)
+           (,(N_ "Lock")               edit-lock              #f)
+           (,(N_ "Unlock")             edit-unlock            #f)
+           ("SEPARATOR"               #f                     #f)
+           (,(N_ "Invoke Macro")         edit-invoke-macro    #f)
+           (,(N_ "Embed Component/Picture")    edit-embed     #f)
+           (,(N_ "Unembed Component/Picture")  edit-unembed   #f)
+           (,(N_ "Update Component")   edit-update            "gtk-refresh")
+           (,(N_ "Show/Hide Inv Text") edit-show-hidden       #f)))
 
-(define buffer-menu-items 
+(define buffer-menu-items
 ;;
-;;          menu item name      menu action             menu hotkey action      menu stock icon
+;;          menu item name      menu action             menu stock icon
 ;;
-	`( (,(N_ "Copy into 1")	buffer-copy1       	buffer-copy1)
-	   (,(N_ "Copy into 2")	buffer-copy2       	buffer-copy2)
-	   (,(N_ "Copy into 3")	buffer-copy3       	buffer-copy3)
-	   (,(N_ "Copy into 4")	buffer-copy4       	buffer-copy4)
-	   (,(N_ "Copy into 5")	buffer-copy5       	buffer-copy5)
-	   (,(N_ "Cut into 1")	buffer-cut1       	buffer-cut1)
-	   (,(N_ "Cut into 2")	buffer-cut2       	buffer-cut2)
-	   (,(N_ "Cut into 3")	buffer-cut3       	buffer-cut3)
-	   (,(N_ "Cut into 4")	buffer-cut4       	buffer-cut4)
-	   (,(N_ "Cut into 5")	buffer-cut5       	buffer-cut5)
-	   (,(N_ "Paste from 1")	buffer-paste1    buffer-paste1)
-	   (,(N_ "Paste from 2")	buffer-paste2    buffer-paste2)
-	   (,(N_ "Paste from 3")	buffer-paste3    buffer-paste3)
-	   (,(N_ "Paste from 4")	buffer-paste4    buffer-paste4)
-	   (,(N_ "Paste from 5")	buffer-paste5    buffer-paste5)))
+	`( (,(N_ "Copy into 1")	buffer-copy1    #f)
+	   (,(N_ "Copy into 2")	buffer-copy2    #f)
+	   (,(N_ "Copy into 3")	buffer-copy3    #f)
+	   (,(N_ "Copy into 4")	buffer-copy4    #f)
+	   (,(N_ "Copy into 5")	buffer-copy5    #f)
+	   (,(N_ "Cut into 1")	buffer-cut1       	#f)
+	   (,(N_ "Cut into 2")	buffer-cut2       	#f)
+	   (,(N_ "Cut into 3")	buffer-cut3       	#f)
+	   (,(N_ "Cut into 4")	buffer-cut4       	#f)
+	   (,(N_ "Cut into 5")	buffer-cut5       	#f)
+	   (,(N_ "Paste from 1")	buffer-paste1   #f)
+	   (,(N_ "Paste from 2")	buffer-paste2   #f)
+	   (,(N_ "Paste from 3")	buffer-paste3   #f)
+	   (,(N_ "Paste from 4")	buffer-paste4   #f)
+	   (,(N_ "Paste from 5")	buffer-paste5   #f)))
 
-(define view-menu-items 
+(define view-menu-items
 ;;
-;;          menu item name        menu action             menu hotkey action      menu stock icon
+;;          menu item name        menu action             menu stock icon
 ;;
-        `( (,(N_ "_Redraw")             view-redraw             view-redraw             "gtk-refresh")
-           (,(N_ "_Pan")                view-pan                view-pan         #f)
-           (,(N_ "Zoom _Box")           view-zoom-box           view-zoom-box    #f)
-           (,(N_ "Zoom _Extents")       view-zoom-extents       view-zoom-extents       "gtk-zoom-fit")
-           (,(N_ "Zoom _In")            view-zoom-in            view-zoom-in     "gtk-zoom-in")
-           (,(N_ "Zoom _Out")           view-zoom-out           view-zoom-out    "gtk-zoom-out")
-           (,(N_ "Zoom _Full")          view-zoom-full          view-zoom-full          #f)
-           ("SEPARATOR"                #f                      #f                      #f)
-           (,(N_ "_Dark color scheme")  view-dark-colors        view-dark-colors        #f)
-           (,(N_ "_Light color scheme") view-light-colors       view-light-colors       #f)
-           (,(N_ "B_W color scheme")    view-bw-colors          view-bw-colors          #f)
+        `( (,(N_ "_Redraw")             view-redraw             "gtk-refresh")
+           (,(N_ "_Pan")                view-pan                #f)
+           (,(N_ "Zoom _Box")           view-zoom-box           #f)
+           (,(N_ "Zoom _Extents")       view-zoom-extents       "gtk-zoom-fit")
+           (,(N_ "Zoom _In")            view-zoom-in            "gtk-zoom-in")
+           (,(N_ "Zoom _Out")           view-zoom-out           "gtk-zoom-out")
+           (,(N_ "Zoom _Full")          view-zoom-full          #f)
+           ("SEPARATOR"                #f                      #f)
+           (,(N_ "_Dark color scheme")  view-dark-colors        #f)
+           (,(N_ "_Light color scheme") view-light-colors       #f)
+           (,(N_ "B_W color scheme")    view-bw-colors          #f)
          ))
 
-(define page-menu-items 
+(define page-menu-items
 ;;
-;;          menu item name      menu action             menu hotkey action      menu stock icon
+;;          menu item name      menu action             menu stock icon
 ;;
-        `( (,(N_ "_Manager...")       page-manager            page-manager            #f)
-           (,(N_ "_Previous")         page-prev               page-prev               "gtk-go-back")
-           (,(N_ "_Next")             page-next               page-next               "gtk-go-forward")
-           (,(N_ "Ne_w")              page-new                page-new                "gtk-new")
-           (,(N_ "_Revert")           page-revert             page-revert             "gtk-revert-to-saved")
-           (,(N_ "_Close")            page-close              page-close              "gtk-close")
-           ("SEPARATOR"              #f                      #f                      #f)
-           (,(N_ "_Discard")          page-discard            page-discard            "gtk-discard")))
+        `( (,(N_ "_Manager...")       page-manager            #f)
+           (,(N_ "_Previous")         page-prev               "gtk-go-back")
+           (,(N_ "_Next")             page-next               "gtk-go-forward")
+           (,(N_ "Ne_w")              page-new                "gtk-new")
+           (,(N_ "_Revert")           page-revert             "gtk-revert-to-saved")
+           (,(N_ "_Close")            page-close              "gtk-close")
+           ("SEPARATOR"              #f                      #f)
+           (,(N_ "_Discard")          page-discard            "gtk-discard")))
 
-(define add-menu-items 
+(define add-menu-items
 ;;
-;;          menu item name      menu action             menu hotkey action      menu stock icon
+;;          menu item name      menu action             menu stock icon
 ;;
-	`( (,(N_ "_Component...")     add-component       	add-component)
-	   (,(N_ "_Net")              add-net	  	     	add-net)
-	   (,(N_ "B_us")              add-bus	  	     	add-bus)
-	   (,(N_ "_Attribute...")     add-attribute  	     	add-attribute)
-	   (,(N_ "_Text...")          add-text  	     	add-text)
-	   ("SEPARATOR"              #f                      #f)
-	   (,(N_ "_Line")             add-line  	     	add-line)
-           (,(N_ "Pat_h")             add-path                  add-path)
-	   (,(N_ "_Box")              add-box  	     	add-box)
-	   (,(N_ "C_ircle")           add-circle  	     	add-circle)
-	   (,(N_ "A_rc")              add-arc  	     	add-arc)
-	   (,(N_ "_Pin")              add-pin  	     	add-pin)
-	   (,(N_ "Pictu_re...")       add-picture  	     	add-picture)))
+	`( (,(N_ "_Component...")     add-component)
+	   (,(N_ "_Net")              add-net)
+	   (,(N_ "B_us")              add-bus)
+	   (,(N_ "_Attribute...")     add-attribute)
+	   (,(N_ "_Text...")          add-text)
+	   ("SEPARATOR"              #f)
+	   (,(N_ "_Line")             add-line)
+           (,(N_ "Pat_h")             add-path)
+	   (,(N_ "_Box")              add-box)
+	   (,(N_ "C_ircle")           add-circle)
+	   (,(N_ "A_rc")              add-arc)
+	   (,(N_ "_Pin")              add-pin)
+	   (,(N_ "Pictu_re...")       add-picture)))
 
-(define hierarchy-menu-items 
+(define hierarchy-menu-items
 ;;
-;;          menu item name      menu action               menu hotkey action        menu stock icon
+;;          menu item name      menu action               menu stock icon
 ;;
-        `( (,(N_ "_Down Schematic")   hierarchy-down-schematic  hierarchy-down-schematic  "gtk-go-down")
-           (,(N_ "Down _Symbol")      hierarchy-down-symbol     hierarchy-down-symbol     "gtk-goto-bottom")
-           (,(N_ "_Up")               hierarchy-up              hierarchy-up              "gtk-go-up")
-           (,(N_ "D_ocumentation...") hierarchy-documentation   hierarchy-documentation   #f)))
+        `( (,(N_ "_Down Schematic")   hierarchy-down-schematic  "gtk-go-down")
+           (,(N_ "Down _Symbol")      hierarchy-down-symbol     "gtk-goto-bottom")
+           (,(N_ "_Up")               hierarchy-up              "gtk-go-up")
+           (,(N_ "D_ocumentation...") hierarchy-documentation   #f)))
 
-(define attributes-menu-items 
+(define attributes-menu-items
 ;;
-;;          menu item name      menu action             menu hotkey action      menu stock icon
+;;          menu item name      menu action             menu stock icon
 ;;
-        `( (,(N_ "_Attach")           attributes-attach       attributes-attach       #f)
-           (,(N_ "_Detach")           attributes-detach       attributes-detach       #f)
-           (,(N_ "Show _Value")       attributes-show-value   attributes-show-value   #f)
-           (,(N_ "Show _Name")        attributes-show-name    attributes-show-name    #f)
-           (,(N_ "Show _Both")        attributes-show-both    attributes-show-both    #f)
-           (,(N_ "_Toggle Visibility")  attributes-visibility-toggle
-                                  attributes-visibility-toggle                  #f)
-           (,(N_ "_Find Specific Text...")  edit-find-text    edit-find-text          "gtk-find")
-           (,(N_ "_Hide Specific Text...")  edit-hide-text    edit-hide-text          #f)
-           (,(N_ "_Show Specific Text...")  edit-show-text    edit-show-text          #f)
-           (,(N_ "A_utonumber Text...")     edit-autonumber   edit-autonumber         #f)))
+        `( (,(N_ "_Attach")           attributes-attach       #f)
+           (,(N_ "_Detach")           attributes-detach       #f)
+           (,(N_ "Show _Value")       attributes-show-value   #f)
+           (,(N_ "Show _Name")        attributes-show-name    #f)
+           (,(N_ "Show _Both")        attributes-show-both    #f)
+           (,(N_ "_Toggle Visibility")  attributes-visibility-toggle   #f)
+           (,(N_ "_Find Specific Text...")  edit-find-text    "gtk-find")
+           (,(N_ "_Hide Specific Text...")  edit-hide-text    #f)
+           (,(N_ "_Show Specific Text...")  edit-show-text    #f)
+           (,(N_ "A_utonumber Text...")     edit-autonumber   #f)))
 
-(define options-menu-items 
+(define options-menu-items
 ;;
-;;          menu item name      menu action             menu hotkey action      menu stock icon
+;;          menu item name      menu action             menu stock icon
 ;;
-	`( (,(N_ "_Text Size...")	options-text-size       options-text-size)
-	   (,(N_ "Cycle _grid styles")  options-grid           options-grid)
-	   (,(N_ "Toggle _Snap On/Off") options-snap       	options-snap)
-	   (,(N_ "Snap Grid S_pacing...") options-snap-size   	options-snap-size)
-    	   (,(N_ "Scale _up Grid Spacing") options-scale-up-snap-size 
-						    options-scale-up-snap-size)
-    	   (,(N_ "Scale _down Grid Spacing") options-scale-down-snap-size
-						  options-scale-down-snap-size)
-	   (,(N_ "Toggle _Outline/Box")   options-action-feedback   	
-				   options-action-feedback)
-	   (,(N_ "Toggle Net _Rubberband") options-rubberband   options-rubberband)
-	   (,(N_ "Toggle _Magnetic Net") options-magneticnet options-magneticnet)
-	   (,(N_ "Show _Log Window...")    options-show-log-window   
-	 			    options-show-log-window)
-	   (,(N_ "Show _Coord Window...")   options-show-coord-window   
-				     options-show-coord-window)))
+	`( (,(N_ "_Text Size...")	options-text-size)
+	   (,(N_ "Cycle _grid styles")  options-grid)
+	   (,(N_ "Toggle _Snap On/Off") options-snap)
+	   (,(N_ "Snap Grid S_pacing...") options-snap-size)
+    	   (,(N_ "Scale _up Grid Spacing") options-scale-up-snap-size)
+    	   (,(N_ "Scale _down Grid Spacing") options-scale-down-snap-size)
+	   (,(N_ "Toggle _Outline/Box")   options-action-feedback)
+	   (,(N_ "Toggle Net _Rubberband") options-rubberband)
+	   (,(N_ "Toggle _Magnetic Net") options-magneticnet)
+	   (,(N_ "Show _Log Window...")    options-show-log-window)
+	   (,(N_ "Show _Coord Window...")   options-show-coord-window)))
 
-(define help-menu-items 
+(define help-menu-items
 ;;
-;;          menu item name                menu action               menu hotkey action        menu stock icon
+;;          menu item name                menu action               menu stock icon
 ;;
         `(
-           (,(N_ "gschem User _Guide...")  help-guide                help-guide                #f)
-           (,(N_ "gschem _FAQ...")         help-faq                  help-faq                  #f)
-           (,(N_ "gEDA Docu_mentation...") help-manual               help-manual               "gtk-help")
-           (,(N_ "gEDA _Wiki...")          help-wiki                 help-wiki                 #f)
-           (,(N_ "Component D_ocumentation...") hierarchy-documentation   hierarchy-documentation   #f)
-           ("SEPARATOR"                   #f                        #f                        #f)
-           (,(N_ "_Hotkeys...")            help-hotkeys              help-hotkeys              #f)
-           (,(N_ "_About...")              help-about                help-about                "gtk-about")))
+           (,(N_ "gschem User _Guide...")  help-guide                #f)
+           (,(N_ "gschem _FAQ...")         help-faq                  #f)
+           (,(N_ "gEDA Docu_mentation...") help-manual               "gtk-help")
+           (,(N_ "gEDA _Wiki...")          help-wiki                 #f)
+           (,(N_ "Component D_ocumentation...") hierarchy-documentation   #f)
+           ("SEPARATOR"                   #f                        #f)
+           (,(N_ "_Hotkeys...")            help-hotkeys              #f)
+           (,(N_ "_About...")              help-about                "gtk-about")))
 
 ;
 ; Now actually add the menus.  The order here defines the order in which
@@ -1318,4 +1309,3 @@
 ;; The short answer is neither program likes a pipe to break.
 ;;
 ; (load-from-path "pcb.scm")
-
