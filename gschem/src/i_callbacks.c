@@ -72,7 +72,7 @@ DEFINE_I_CALLBACK(file_new)
 
   /* create a new page */
   page = x_window_open_page (w_current, NULL);
-  x_window_set_current_page (w_current, page);
+  x_window_set_current_page (w_current, page); 
   s_log_message (_("New page created [%s]\n"), page->page_filename);
 }
 
@@ -1827,17 +1827,25 @@ DEFINE_I_CALLBACK(clipboard_paste_hotkey)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(buffer_copy1)
+void
+i_callback_buffer_copy (gpointer data, guint callback_action,
+                        GtkWidget *widget, int n,
+                        void (*f)(gpointer, guint, GtkWidget *))
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gchar *msg;
 
   g_return_if_fail (w_current != NULL);
 
   if (!o_select_selected (w_current))
     return;
 
-  i_update_middle_button(w_current, i_callback_buffer_copy1, _("Copy 1"));
-  o_buffer_copy(w_current, 0);
+  /* TRANSLATORS: The number is the number of the buffer that the
+   * selection is being copied to. */
+  msg = g_strdup_printf(_("Copy %i"), n);
+  i_update_middle_button(w_current, f, msg);
+  g_free (msg);
+  o_buffer_copy(w_current, n-1);
   i_update_menus(w_current);
 }
 
@@ -1846,17 +1854,25 @@ DEFINE_I_CALLBACK(buffer_copy1)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(buffer_copy2)
+void
+i_callback_buffer_cut (gpointer data, guint callback_action,
+                       GtkWidget *widget, int n,
+                       void (*f)(gpointer, guint, GtkWidget *))
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gchar *msg;
 
   g_return_if_fail (w_current != NULL);
 
   if (!o_select_selected (w_current))
     return;
 
-  i_update_middle_button(w_current, i_callback_buffer_copy2, _("Copy 2"));
-  o_buffer_copy(w_current, 1);
+  /* TRANSLATORS: The number is the number of the buffer that the
+   * selection is being cut to. */
+  msg = g_strdup_printf(_("Cut %i"), n);
+  i_update_middle_button(w_current, f, msg);
+  g_free (msg);
+  o_buffer_cut(w_current, n-1);
   i_update_menus(w_current);
 }
 
@@ -1865,168 +1881,26 @@ DEFINE_I_CALLBACK(buffer_copy2)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(buffer_copy3)
+static void
+i_callback_buffer_paste (gpointer data, guint callback_action,
+                         GtkWidget *widget, int n,
+                         void (*f)(gpointer, guint, GtkWidget *))
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  gchar *msg;
+
 
   g_return_if_fail (w_current != NULL);
 
-  if (!o_select_selected (w_current))
-    return;
+  /* TRANSLATORS: The number is the number of the buffer that is being
+   * pasted to the schematic. */
+  msg = g_strdup_printf(_("Paste %i"), n);
+  i_update_middle_button(w_current, f, msg);
+  g_free (msg);
 
-  i_update_middle_button(w_current, i_callback_buffer_copy3, _("Copy 3"));
-  o_buffer_copy(w_current, 2);
-  i_update_menus(w_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(buffer_copy4)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!o_select_selected (w_current))
-    return;
-
-  i_update_middle_button(w_current, i_callback_buffer_copy4, _("Copy 4"));
-  o_buffer_copy(w_current, 3);
-  i_update_menus(w_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(buffer_copy5)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!o_select_selected (w_current))
-    return;
-
-  i_update_middle_button(w_current, i_callback_buffer_copy5, _("Copy 5"));
-  o_buffer_copy(w_current, 4);
-  i_update_menus(w_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(buffer_cut1)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!o_select_selected (w_current))
-    return;
-
-  i_update_middle_button(w_current, i_callback_buffer_cut1, _("Cut 1"));
-  o_buffer_cut(w_current, 0);
-  i_update_menus(w_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(buffer_cut2)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!o_select_selected (w_current))
-    return;
-
-  i_update_middle_button(w_current, i_callback_buffer_cut2, _("Cut 2"));
-  o_buffer_cut(w_current, 1);
-  i_update_menus(w_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(buffer_cut3)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!o_select_selected (w_current))
-    return;
-
-  i_update_middle_button(w_current, i_callback_buffer_cut3, _("Cut 3"));
-  o_buffer_cut(w_current, 2);
-  i_update_menus(w_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(buffer_cut4)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!o_select_selected (w_current))
-    return;
-
-  i_update_middle_button(w_current, i_callback_buffer_cut4, _("Cut 4"));
-  o_buffer_cut(w_current, 3);
-  i_update_menus(w_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(buffer_cut5)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!o_select_selected (w_current))
-    return;
-
-  i_update_middle_button(w_current, i_callback_buffer_cut5, _("Cut 5"));
-  o_buffer_cut(w_current, 4);
-  i_update_menus(w_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(buffer_paste1)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  i_update_middle_button(w_current, i_callback_buffer_paste1, _("Paste 1"));
-  if (object_buffer[0] != NULL) {
+  if (object_buffer[n-1] != NULL) {
     o_redraw_cleanstates(w_current);
-    w_current->buffer_number = 0;
+    w_current->buffer_number = n-1;
     w_current->inside_action = 1;
     i_set_state(w_current, STARTPASTE);
   } else {
@@ -2039,198 +1913,64 @@ DEFINE_I_CALLBACK(buffer_paste1)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(buffer_paste2)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  i_update_middle_button(w_current, i_callback_buffer_paste2, _("Paste 2"));
-  if (object_buffer[1] != NULL) {
-    o_redraw_cleanstates(w_current);
-    w_current->buffer_number = 1;
-    w_current->inside_action = 1;
-    i_set_state(w_current, STARTPASTE);
-  } else {
-    i_set_state_msg(w_current, SELECT, _("Empty buffer"));
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(buffer_paste3)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  i_update_middle_button(w_current, i_callback_buffer_paste3, _("Paste 3"));
-  if (object_buffer[2] != NULL) {
-    o_redraw_cleanstates(w_current);
-    w_current->buffer_number = 2;
-    w_current->inside_action = 1;
-    i_set_state(w_current, STARTPASTE);
-  } else {
-    i_set_state_msg(w_current, SELECT, _("Empty buffer"));
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(buffer_paste4)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  i_update_middle_button(w_current, i_callback_buffer_paste4, _("Paste 4"));
-  if (object_buffer[3] != NULL) {
-    o_redraw_cleanstates(w_current);
-    w_current->buffer_number = 3;
-    w_current->inside_action = 1;
-    i_set_state(w_current, STARTPASTE);
-  } else {
-    i_set_state_msg(w_current, SELECT, _("Empty buffer"));
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(buffer_paste5)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-
-  g_return_if_fail (w_current != NULL);
-
-  i_update_middle_button(w_current, i_callback_buffer_paste5, _("Paste 5"));
-  if (object_buffer[4] != NULL) {
-    o_redraw_cleanstates(w_current);
-    w_current->buffer_number = 4;
-    w_current->inside_action = 1;
-    i_set_state(w_current, STARTPASTE);
-  } else {
-    i_set_state_msg(w_current, SELECT, _("Empty buffer"));
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(buffer_paste1_hotkey)
+static void
+i_callback_buffer_paste_hotkey (gpointer data, guint callback_action,
+                                GtkWidget *widget, int n,
+                                void (*f)(gpointer, guint, GtkWidget *))
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
   gint wx, wy; 
 
   g_return_if_fail (w_current != NULL);
 
-  if (object_buffer[0] == NULL) {
+  if (object_buffer[n-1] == NULL) {
     return;
   }
 
   if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
     return;
 
-  o_buffer_paste_start(w_current, wx, wy, 0);
+  o_buffer_paste_start(w_current, wx, wy, n-1);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(buffer_paste2_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  gint wx, wy; 
-
-  g_return_if_fail (w_current != NULL);
-
-  if (object_buffer[1] == NULL) {
-    return;
+#define DEFINE_I_CALLBACK_BUF(op, n) \
+  DEFINE_I_CALLBACK(buffer_ ## op ## n) { \
+    i_callback_buffer_ ## op (data, callback_action, widget, n, \
+                              i_callback_buffer_ ## op ## n); \
   }
 
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
-    return;
-
-  o_buffer_paste_start(w_current, wx, wy, 1);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(buffer_paste3_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  gint wx, wy; 
-
-  g_return_if_fail (w_current != NULL);
-
-  if (object_buffer[2] == NULL) {
-    return;
+#define DEFINE_I_CALLBACK_BUF_HK(op, n) \
+  DEFINE_I_CALLBACK(buffer_ ## op ## n ## _hotkey) { \
+    i_callback_buffer_ ## op ## _hotkey (data, callback_action, widget, n, \
+                                         i_callback_buffer_ ## op ## n ## _hotkey); \
   }
 
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
-    return;
+DEFINE_I_CALLBACK_BUF(copy,1)
+DEFINE_I_CALLBACK_BUF(copy,2)
+DEFINE_I_CALLBACK_BUF(copy,3)
+DEFINE_I_CALLBACK_BUF(copy,4)
+DEFINE_I_CALLBACK_BUF(copy,5)
 
-  o_buffer_paste_start(w_current, wx, wy, 2);
-}
+DEFINE_I_CALLBACK_BUF(cut,1)
+DEFINE_I_CALLBACK_BUF(cut,2)
+DEFINE_I_CALLBACK_BUF(cut,3)
+DEFINE_I_CALLBACK_BUF(cut,4)
+DEFINE_I_CALLBACK_BUF(cut,5)
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(buffer_paste4_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  gint wx, wy; 
+DEFINE_I_CALLBACK_BUF(paste,1)
+DEFINE_I_CALLBACK_BUF(paste,2)
+DEFINE_I_CALLBACK_BUF(paste,3)
+DEFINE_I_CALLBACK_BUF(paste,4)
+DEFINE_I_CALLBACK_BUF(paste,5)
 
-  g_return_if_fail (w_current != NULL);
+DEFINE_I_CALLBACK_BUF_HK(paste,1)
+DEFINE_I_CALLBACK_BUF_HK(paste,2)
+DEFINE_I_CALLBACK_BUF_HK(paste,3)
+DEFINE_I_CALLBACK_BUF_HK(paste,4)
+DEFINE_I_CALLBACK_BUF_HK(paste,5)
 
-  if (object_buffer[3] == NULL) {
-    return;
-  }
-
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
-    return;
-
-  o_buffer_paste_start(w_current, wx, wy, 3);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-DEFINE_I_CALLBACK(buffer_paste5_hotkey)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
-  gint wx, wy; 
-
-  g_return_if_fail (w_current != NULL);
-
-  if (object_buffer[4] == NULL) {
-    return;
-  }
-
-  if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy))
-    return;
-
-  o_buffer_paste_start(w_current, wx, wy, 4);
-}
+#undef DEFINE_I_CALLBACK_BUF
+#undef DEFINE_I_CALLBACK_BUF_HK
 
 /*! \section add-menu Add Menu Callback Functions */
 /*! \todo Finish function documentation!!!
