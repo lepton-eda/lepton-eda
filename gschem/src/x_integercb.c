@@ -129,18 +129,20 @@ x_integercb_set_model (GtkWidget *widget, GtkListStore *store)
 void
 x_integercb_set_value (GtkWidget *widget, int value)
 {
+  GtkWidget *entry;
   g_return_if_fail (widget != NULL);
+  entry = gtk_bin_get_child (GTK_BIN (widget));
+  g_return_if_fail (entry != NULL);
 
   if (value >= 0) {
-    GtkWidget *entry = gtk_bin_get_child (GTK_BIN (widget));
     GString *string;
-
-    g_return_if_fail (entry != NULL);
 
     string = g_string_new (NULL);
     g_string_printf (string, "%d", value);
     gtk_entry_set_text (GTK_ENTRY (entry), string->str);
 
     g_string_free (string, TRUE);
+  } else {
+    gtk_entry_set_text (GTK_ENTRY (entry), "");
   }
 }

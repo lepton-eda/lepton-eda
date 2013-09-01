@@ -46,6 +46,7 @@
 #define EDITLPROP(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_EDITLPROP, EditLProp))
 #define EDITLPROP_CLASS(klasse)  (G_TYPE_CHECK_CLASS_CAST ((klasse), TYPE_EDITLPROP, EditLPropClass))
 #define IS_EDITLPROP(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_EDITLPROP))
+#define EDITLPROP_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), TYPE_EDITLPROP, EditLPropClass))
 
 typedef struct _EditLPropClass EditLPropClass;
 typedef struct _EditLProp EditLProp;
@@ -59,6 +60,8 @@ struct _EditLProp
 {
   GschemDialog parent;
 
+  GedaList  *selection;
+
   GtkWidget *width_entry;
   GtkWidget *line_type;
   GtkWidget *length_entry;
@@ -70,6 +73,15 @@ struct _EditLProp
 
 static gint line_type_dialog_linetype_change (GtkWidget *widget, EditLProp *dialog);
 
+
+static void
+dispose (GObject *object);
+
+static void
+selection_changed (GedaList *selection, EditLProp *dialog);
+
+static void
+update_values (EditLProp *dialog);
 
 
 /*! \brief get the linetype data from selected objects
@@ -175,8 +187,8 @@ static gint line_type_dialog_linetype_change (GtkWidget *widget, EditLProp *dial
 static void
 dialog_response_ok (EditLProp *dialog)
 {
-  GSCHEM_TOPLEVEL *w_current = dialog->parent.w_current;
-  TOPLEVEL *toplevel = w_current->toplevel;
+  GSCHEM_TOPLEVEL *w_current;
+  TOPLEVEL *toplevel;
   GList *selection, *iter;
   OBJECT *object;
   OBJECT_TYPE type;
@@ -186,11 +198,24 @@ dialog_response_ok (EditLProp *dialog)
   OBJECT_END oend;
   gint owidth, olength, ospace;
 
+  g_return_if_fail (dialog != NULL);
+
+  if (dialog->selection == NULL) {
+    return;
+  }
+
+  w_current = dialog->parent.w_current;
+  g_return_if_fail (w_current != NULL);
+  toplevel = w_current->toplevel;
+  g_return_if_fail (toplevel != NULL);
+
+  g_return_if_fail (dialog->selection == toplevel->page_current->selection_list);
+
   /* get the selection */
   if (! o_select_selected(w_current))
     return;
-  selection =
-    geda_list_get_glist(w_current->toplevel->page_current->selection_list);
+
+  selection = geda_list_get_glist(dialog->selection);
 
   /* get the new values from the text entries of the dialog */
   type = x_linetypecb_get_index (dialog->line_type);
@@ -252,6 +277,8 @@ dialog_response_ok (EditLProp *dialog)
 static void
 dialog_response (EditLProp *dialog, gint response, gpointer unused)
 {
+  g_return_if_fail (dialog != NULL);
+
   switch(response) {
     case GTK_RESPONSE_OK:
       dialog_response_ok(dialog);
@@ -280,8 +307,18 @@ dialog_response (EditLProp *dialog, gint response, gpointer unused)
  *
  *  \param [in] klasse
  */
-static void editlprop_class_init(EditLPropClass *klasse)
+static void
+editlprop_class_init (EditLPropClass *klasse)
 {
+  GObjectClass *object_klasse;
+
+  g_return_if_fail (klasse != NULL);
+
+  object_klasse = G_OBJECT_CLASS (klasse);
+
+  g_return_if_fail (object_klasse != NULL);
+
+  object_klasse->dispose = dispose;
 }
 
 
@@ -413,6 +450,141 @@ GType editlprop_get_type()
 
 
 
+/*! \brief Set the selection this dialog manipulates
+ *
+ *  \param [in,out] dialog
+ *  \param [in]     selection
+ */
+void
+x_editlprop_set_selection(EditLProp *dialog, GedaList *selection)
+{
+  g_return_if_fail (dialog != NULL);
+
+  if (dialog->selection != NULL) {
+    g_signal_handlers_disconnect_by_func (dialog->selection,
+                                          G_CALLBACK (selection_changed),
+                                          dialog);
+
+    g_object_unref (dialog->selection);
+  }
+
+  dialog->selection = selection;
+
+  if (dialog->selection != NULL) {
+    g_object_ref (dialog->selection);
+
+    g_signal_connect (G_OBJECT (dialog->selection),
+                      "changed",
+                      G_CALLBACK (selection_changed),
+                      dialog);
+  }
+
+  update_values (dialog);
+}
+
+
+
+/*! \brief Dispose
+ *
+ *  \param [in,out] object This object
+ */
+static void
+dispose (GObject *object)
+{
+  EditLProp *dialog;
+  EditLPropClass *klasse;
+  GObjectClass *parent_klasse;
+
+  g_return_if_fail (object != NULL);
+
+  dialog = EDITLPROP (object);
+
+  x_editlprop_set_selection (dialog, NULL);
+
+  /* lastly, chain up to the parent dispose */
+
+  klasse = EDITLPROP_GET_CLASS (object);
+  g_return_if_fail (klasse != NULL);
+  parent_klasse = g_type_class_peek_parent (klasse);
+  g_return_if_fail (parent_klasse != NULL);
+  parent_klasse->dispose (object);
+}
+
+
+
+/*! \brief Signal handler for when the selection changes
+ *
+ *  \par Function Description
+ *  This function gets called when items are added or removed from the
+ *  selection.
+ *
+ *  \param [in]     selection The selection that changed
+ *  \param [in,out] dialog    This dialog
+ */
+static void
+selection_changed (GedaList *selection, EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (selection != NULL);
+
+  if (dialog->selection != NULL) {
+    g_return_if_fail (selection == dialog->selection);
+
+    update_values (dialog);
+  }
+}
+
+
+
+/*! \brief Update the values in the dialog box widgets.
+ *
+ *  \param [in,out] dialog    This dialog
+ */
+static void
+update_values (EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+
+  if (dialog->selection != NULL) {
+    GList *selection;
+    gboolean success;
+    OBJECT_END end=END_NONE;
+    OBJECT_TYPE type=TYPE_SOLID;
+    gint width=1, length=-1, space=-1;
+
+    selection = geda_list_get_glist (dialog->selection);
+
+    success = selection_get_line_type (selection, &end, &type, &width, &length, &space);
+
+    if (success) {
+      line_type_dialog_set_values(dialog,
+                                  end,
+                                  type,
+                                  width,
+                                  length,
+                                  space);
+    }
+    else {
+      line_type_dialog_set_values(dialog,
+                                  -1,
+                                  -1,
+                                  -1,
+                                  -1,
+                                  -1);
+    }
+
+    gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_type), success);
+    gtk_widget_set_sensitive (GTK_WIDGET (dialog->width_entry), success);
+    gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_end), success);
+
+    /* dash length and dash space are enabled/disabled by the value in line type */
+
+    gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_OK, success);
+  }
+}
+
+
+
 /*! \brief Open the dialog box to edit fill properties
  *
  *  \par Function Description
@@ -423,23 +595,7 @@ GType editlprop_get_type()
 void
 line_type_dialog (GSCHEM_TOPLEVEL *w_current)
 {
-  gboolean success;
-  GList *selection;
-  OBJECT_END end=END_NONE;
-  OBJECT_TYPE type=TYPE_SOLID;
-  gint width=1, length=-1, space=-1;
-
-  if (!o_select_selected (w_current)) {
-    return;
-  }
-
-  selection = geda_list_get_glist (w_current->toplevel->page_current->selection_list);
-
-  success = selection_get_line_type (selection, &end, &type, &width, &length, &space);
-
-  if (!success) {
-    return;
-  }
+  g_return_if_fail (w_current != NULL);
 
   if (w_current->lpwindow == NULL) {
     /* dialog not created yet */
@@ -461,6 +617,9 @@ line_type_dialog (GSCHEM_TOPLEVEL *w_current)
                                         "gschem-toplevel",  w_current,
                                         NULL);
 
+    x_editlprop_set_selection (EDITLPROP (w_current->lpwindow),
+                               w_current->toplevel->page_current->selection_list);
+
     gtk_window_set_transient_for (GTK_WINDOW (w_current->main_window),
                                   GTK_WINDOW (w_current->lpwindow));
 
@@ -473,24 +632,13 @@ line_type_dialog (GSCHEM_TOPLEVEL *w_current)
     x_integercb_set_model (EDITLPROP (w_current->lpwindow)->space_entry,
                            gschem_toplevel_get_dash_space_list_store (w_current));
 
-    line_type_dialog_set_values(EDITLPROP (w_current->lpwindow),
-                                end,
-                                type,
-                                width,
-                                length,
-                                space);
-
     gtk_widget_show_all (w_current->lpwindow);
   }
   else {
     /* dialog already created */
-    line_type_dialog_set_values(EDITLPROP (w_current->lpwindow),
-                                end,
-                                type,
-                                width,
-                                length,
-                                space);
+    x_editlprop_set_selection (EDITLPROP (w_current->lpwindow),
+                               w_current->toplevel->page_current->selection_list);
 
-    gtk_window_present (GTK_WINDOW(w_current->lpwindow));
+    gtk_window_present (GTK_WINDOW (w_current->lpwindow));
   }
 }
