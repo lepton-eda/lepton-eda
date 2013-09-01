@@ -18,7 +18,13 @@ action_icons = \
 	insert-pin \
 	insert-attribute \
 	insert-text \
-	select
+	select \
+	symbol-datasheet \
+	attribute-attach \
+	attribute-detach \
+	attribute-show-value \
+	attribute-show-name \
+	attribute-show-both
 
 action_icon_files = \
 	$(action_icons:%=%-16.png) \
@@ -108,7 +114,8 @@ uninstall-hook:
 if ENABLE_UPDATE_XDG_DATABASE
 	$(UPDATE_DESKTOP_DATABASE) "$(DESTDIR)$(desktopdir)"
 endif
-	$(install_icon_exec) -u $(theme_icons)
+	$(install_icons_exec) -u $(icons)
+	$(install_theme_icons_exec) -u $(theme_icons)
 
 MAINTAINERCLEANFILES = *.log core FILE *~ Makefile.in
 DISTCLEANFILES = $(desktop_DATA)

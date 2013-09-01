@@ -1231,17 +1231,17 @@
         `( (,(N_ "_Down Schematic")   hierarchy-down-schematic  "gtk-go-down")
            (,(N_ "Down _Symbol")      hierarchy-down-symbol     "gtk-goto-bottom")
            (,(N_ "_Up")               hierarchy-up              "gtk-go-up")
-           (,(N_ "D_ocumentation...") hierarchy-documentation   #f)))
+           (,(N_ "D_ocumentation...") hierarchy-documentation   "symbol-datasheet")))
 
 (define attributes-menu-items
 ;;
 ;;          menu item name      menu action             menu stock icon
 ;;
-        `( (,(N_ "_Attach")           attributes-attach       #f)
-           (,(N_ "_Detach")           attributes-detach       #f)
-           (,(N_ "Show _Value")       attributes-show-value   #f)
-           (,(N_ "Show _Name")        attributes-show-name    #f)
-           (,(N_ "Show _Both")        attributes-show-both    #f)
+        `( (,(N_ "_Attach")           attributes-attach       "attribute-attach")
+           (,(N_ "_Detach")           attributes-detach       "attribute-detach")
+           (,(N_ "Show _Value")       attributes-show-value   "attribute-show-value")
+           (,(N_ "Show _Name")        attributes-show-name    "attribute-show-name")
+           (,(N_ "Show _Both")        attributes-show-both    "attribute-show-both")
            (,(N_ "_Toggle Visibility")  attributes-visibility-toggle   #f)
            (,(N_ "_Find Specific Text...")  edit-find-text    "gtk-find")
            (,(N_ "_Hide Specific Text...")  edit-hide-text    #f)
@@ -1273,7 +1273,7 @@
            (,(N_ "gschem _FAQ...")         help-faq                  "help-faq")
            (,(N_ "gEDA Docu_mentation...") help-manual               "help-browser")
            (,(N_ "gEDA _Wiki...")          help-wiki                 "web-browser")
-           (,(N_ "Component D_ocumentation...") hierarchy-documentation   #f)
+           (,(N_ "Component D_ocumentation...") hierarchy-documentation   "symbol-datasheet")
            ("SEPARATOR"                   #f                        #f)
            (,(N_ "_Hotkeys...")            help-hotkeys              "preferences-desktop-keyboard-shortcuts")
            (,(N_ "_About...")              help-about                "gtk-about")))
