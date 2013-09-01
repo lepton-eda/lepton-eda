@@ -1115,7 +1115,7 @@
            ("SEPARATOR"              #f                      #f                      #f)
            (,(N_ "Execute Script...") file-script             "gtk-execute")
            ("SEPARATOR"              #f                      #f                      #f)
-           (,(N_ "New Window")        file-new-window         #f)
+           (,(N_ "New Window")        file-new-window         "window-new")
            (,(N_ "_Close Window")     file-close-window       "gtk-close")
            (,(N_ "_Quit")             file-quit               "gtk-quit")))
 
@@ -1131,7 +1131,7 @@
            (,(N_ "_Paste")             clipboard-paste "gtk-paste")
            (,(N_ "_Delete")            edit-delete            "gtk-delete"  )
            ("SEPARATOR"               #f                     #f)
-           (,(N_ "Select Mode")        edit-select            #f)
+           (,(N_ "Select Mode")        edit-select            "select")
            (,(N_ "Select All")         edit-select-all        "gtk-select-all")
            (,(N_ "Deselect")           edit-deselect          #f)
            (,(N_ "Copy Mode")          edit-copy              #f)
@@ -1210,19 +1210,19 @@
 ;;
 ;;          menu item name      menu action             menu stock icon
 ;;
-	`( (,(N_ "_Component...")     add-component)
-	   (,(N_ "_Net")              add-net)
-	   (,(N_ "B_us")              add-bus)
-	   (,(N_ "_Attribute...")     add-attribute)
-	   (,(N_ "_Text...")          add-text)
+	`( (,(N_ "_Component...")     add-component     "insert-symbol")
+	   (,(N_ "_Net")              add-net           "insert-net")
+	   (,(N_ "B_us")              add-bus           "insert-bus")
+	   (,(N_ "_Attribute...")     add-attribute     "insert-attribute")
+	   (,(N_ "_Text...")          add-text          "insert-text")
 	   ("SEPARATOR"              #f)
-	   (,(N_ "_Line")             add-line)
-           (,(N_ "Pat_h")             add-path)
-	   (,(N_ "_Box")              add-box)
-	   (,(N_ "C_ircle")           add-circle)
-	   (,(N_ "A_rc")              add-arc)
-	   (,(N_ "_Pin")              add-pin)
-	   (,(N_ "Pictu_re...")       add-picture)))
+	   (,(N_ "_Line")             add-line          "insert-line")
+           (,(N_ "Pat_h")             add-path          "insert-path")
+	   (,(N_ "_Box")              add-box           "insert-box")
+	   (,(N_ "C_ircle")           add-circle        "insert-circle")
+	   (,(N_ "A_rc")              add-arc           "insert-arc")
+	   (,(N_ "_Pin")              add-pin           "insert-pin")
+	   (,(N_ "Pictu_re...")       add-picture       "insert-image")))
 
 (define hierarchy-menu-items
 ;;
