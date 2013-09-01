@@ -17,9 +17,12 @@
 ;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 ;;
 
-(define-module (gschem action))
+(define-module (gschem action)
+  #:use-module (gschem window)
+  #:use-module (ice-9 optargs))
 
 (define last-action (make-fluid))
+(define current-action-position (make-fluid))
 
 ;; Define an eval-in-currentmodule procedure
 (define (eval-cm expr) (eval expr (current-module)))
@@ -50,3 +53,19 @@
 
    ;; Otherwise, fail
    (else (invalid-action-error))))
+
+;; Evaluate an action at a particular point on the schematic plane.
+;; If the point is omitted, the action is evaluated at the current
+;; mouse pointer position.
+(define*-public (eval-action-at-point!
+                 action
+                 #:optional (point (pointer-position)))
+
+  (with-fluids ((current-action-position point))
+               (eval-action! action)))
+
+;; Return the current action pointer position.  This should be the
+;; location at which the action was invoked (set via
+;; eval-action-at-point!).
+(define-public (action-position)
+  (fluid-ref current-action-position))

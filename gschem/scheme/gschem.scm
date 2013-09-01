@@ -63,7 +63,7 @@
            ;; sequence, then try to run the action
            (bound (begin
                     (reset-keys)
-                    (eval-action! bound)))
+                    (eval-action-at-point! bound)))
            ;; No binding
            (else (reset-keys)))))
 
