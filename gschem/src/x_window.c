@@ -720,6 +720,7 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
   old_current = toplevel->page_current;
   page = s_page_new (toplevel, fn);
   s_page_goto (toplevel, page);
+  gschem_toplevel_page_changed (w_current);
 
   /* Load from file if necessary, otherwise just print a message */
   if (filename != NULL) {
@@ -759,9 +760,10 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
 
   o_undo_savestate (w_current, UNDO_ALL);
 
-  if ( old_current != NULL )
+  if ( old_current != NULL ) {
     s_page_goto (toplevel, old_current);
-
+    gschem_toplevel_page_changed (w_current);
+  }
   /* This line is generally un-needed, however if some code
    * wants to open a page, yet not bring it to the front, it is
    * needed needed to add it into the page manager. Otherwise,
@@ -798,6 +800,7 @@ x_window_set_current_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
   o_redraw_cleanstates (w_current);
 
   s_page_goto (toplevel, page);
+  gschem_toplevel_page_changed (w_current);
 
   i_update_menus (w_current);
   i_set_filename (w_current, page->page_filename);
@@ -847,6 +850,8 @@ x_window_save_page (GSCHEM_TOPLEVEL *w_current, PAGE *page, const gchar *filenam
 
   /* change to page */
   s_page_goto (toplevel, page);
+  gschem_toplevel_page_changed (w_current);
+
   /* and try saving current page to filename */
   ret = (gint)f_save (toplevel, toplevel->page_current, filename, &err);
   if (ret != 1) {
@@ -954,6 +959,7 @@ x_window_close_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
                  page->page_filename);
   /* remove page from toplevel list of page and free */
   s_page_delete (toplevel, page);
+  gschem_toplevel_page_changed (w_current);
 
   /* Switch to a different page if we just removed the current */
   if (toplevel->page_current == NULL) {

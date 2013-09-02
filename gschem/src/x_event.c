@@ -1036,11 +1036,13 @@ x_event_configure (GtkWidget         *widget,
     cx = ((gdouble)(p_current->left + p_current->right))  / 2;
     cy = ((gdouble)(p_current->top  + p_current->bottom)) / 2;
     s_page_goto (toplevel, p_current);
+    gschem_toplevel_page_changed (w_current);
     a_pan_general (w_current, cx, cy, relativ_zoom_factor, A_PAN_DONT_REDRAW);
 
   }
   /* restore current page to saved value */
   s_page_goto (toplevel, old_page_current);
+  gschem_toplevel_page_changed (w_current);
 
   /* redraw the current page and update UI */
   o_invalidate_all (w_current);

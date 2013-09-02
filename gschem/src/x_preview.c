@@ -93,6 +93,7 @@ preview_callback_realize (GtkWidget *widget,
 
   preview_page = s_page_new (preview_toplevel, "unknown");
   s_page_goto (preview_toplevel, preview_page);
+  gschem_toplevel_page_changed (preview_w_current);
 
   a_zoom_extents(preview_w_current,
                  s_page_objects (preview_page),
@@ -212,8 +213,10 @@ preview_update (Preview *preview)
   /* delete old preview, create new page */
   /* it would be better to just resets current page - Fix me */
   s_page_delete (preview_toplevel, preview_toplevel->page_current);
+  gschem_toplevel_page_changed (preview_w_current);
   s_page_goto (preview_toplevel, s_page_new (preview_toplevel, "preview"));
-  
+  gschem_toplevel_page_changed (preview_w_current);
+
   if (preview->active) {
     g_assert ((preview->filename == NULL) || (preview->buffer == NULL));
     if (preview->filename != NULL) {

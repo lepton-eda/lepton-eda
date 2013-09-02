@@ -459,3 +459,23 @@ gschem_toplevel_get_text_size_list_store (GSCHEM_TOPLEVEL *w_current)
 
   return w_current->text_size_list_store;
 }
+
+
+
+/*! \brief Temporary function to notify dialogs of a page change
+ *
+ *  This function is temporary until the toplevel can emit a
+ *  "notify::page_current" signal.
+ *
+ *  \param [in] w_current The current gschem toplevel
+ */
+void
+gschem_toplevel_page_changed (GSCHEM_TOPLEVEL *w_current)
+{
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->toplevel != NULL);
+
+  if ((w_current->lpwindow != NULL) && (w_current->toplevel->page_current != NULL)) {
+    x_editlprop_set_selection (w_current->lpwindow, w_current->toplevel->page_current->selection_list);
+  }
+}

@@ -9,6 +9,7 @@ GtkListStore* gschem_toplevel_get_fill_pitch_list_store (GSCHEM_TOPLEVEL *w_curr
 GtkListStore* gschem_toplevel_get_fill_width_list_store (GSCHEM_TOPLEVEL *w_current);
 GtkListStore* gschem_toplevel_get_line_width_list_store (GSCHEM_TOPLEVEL *w_current);
 GtkListStore* gschem_toplevel_get_text_size_list_store (GSCHEM_TOPLEVEL *w_current);
+void gschem_toplevel_page_changed (GSCHEM_TOPLEVEL *w_current);
 
 /* a_pan.c */
 void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,

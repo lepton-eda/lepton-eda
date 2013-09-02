@@ -1523,6 +1523,7 @@ DEFINE_I_CALLBACK(page_revert)
 
   /* delete the page, then re-open the file as a new page */
   s_page_delete (w_current->toplevel, w_current->toplevel->page_current);
+  gschem_toplevel_page_changed (w_current);
 
   page = x_window_open_page (w_current, filename);
 
@@ -2166,15 +2167,18 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
                                                 page_control,
                                                 HIERARCHY_NORMAL_LOAD,
                                                 &err);
+      gschem_toplevel_page_changed (w_current);
 
       /* s_hierarchy_down_schematic_single() will not zoom the loaded page */
       if (child != NULL) {
         s_page_goto (w_current->toplevel, child);
+        gschem_toplevel_page_changed (w_current);
         a_zoom_extents(w_current,
                        s_page_objects (w_current->toplevel->page_current),
                        A_PAN_DONT_REDRAW);
         o_undo_savestate(w_current, UNDO_ALL);
         s_page_goto (w_current->toplevel, parent);
+        gschem_toplevel_page_changed (w_current);
       }
 
       /* save the first page */
@@ -2278,6 +2282,8 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
       }
       s_hierarchy_down_symbol(w_current->toplevel, sym,
 			      w_current->toplevel->page_current);
+      gschem_toplevel_page_changed (w_current);
+
       /* s_hierarchy_down_symbol() will not zoom the loaded page */
       a_zoom_extents(w_current,
                      s_page_objects (w_current->toplevel->page_current),

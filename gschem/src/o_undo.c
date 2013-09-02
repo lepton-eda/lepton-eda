@@ -352,14 +352,19 @@ void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
   if (w_current->undo_type == UNDO_DISK && u_current->filename) {
     PAGE *p_new;
     s_page_delete (toplevel, toplevel->page_current);
+    gschem_toplevel_page_changed (w_current);
     p_new = s_page_new(toplevel, u_current->filename);
     s_page_goto (toplevel, p_new);
+    gschem_toplevel_page_changed (w_current);
   } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_list) {
     PAGE *p_new;
     s_page_delete (toplevel, toplevel->page_current);
+    gschem_toplevel_page_changed (w_current);
     p_new = s_page_new (toplevel, save_filename);
     s_page_goto (toplevel, p_new);
+    gschem_toplevel_page_changed (w_current);
   }
+
 
   /* temporarily disable logging */
   save_logging = do_logging;

@@ -1098,6 +1098,7 @@ void find_text_dialog_response(GtkWidget *w, gint response,
 
     if (remember_page != toplevel->page_current) {
       s_page_goto(toplevel, remember_page);
+      gschem_toplevel_page_changed (w_current);
     }
     done =
       o_edit_find_text (w_current, s_page_objects (remember_page), string,
@@ -2271,6 +2272,7 @@ x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
       case GTK_RESPONSE_YES:
         /* action selected: save */
         s_page_goto (w_current->toplevel, page);
+        gschem_toplevel_page_changed (w_current);
         i_callback_file_save(w_current, 0, NULL);
         /* has the page been really saved? */
         if (!page->CHANGED) {
@@ -2293,8 +2295,10 @@ x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
 
   /* Switch back to the page we were on if it wasn't the one being closed */
   g_return_val_if_fail (keep_page != NULL, result);
-  if (keep_page != page)
+  if (keep_page != page) {
     s_page_goto (w_current->toplevel, keep_page);
+    gschem_toplevel_page_changed (w_current);
+  }
   return result;
 }
 
@@ -2368,6 +2372,8 @@ x_dialog_close_window (GSCHEM_TOPLEVEL *w_current)
           p_current = (PAGE*)p_unsaved->data;
 
           s_page_goto (toplevel, p_current);
+          gschem_toplevel_page_changed (w_current);
+
           i_callback_file_save(w_current, 0, NULL);
           /* if user cancelled previous, do not close window */
           ret &= !p_current->CHANGED;
@@ -2389,6 +2395,7 @@ x_dialog_close_window (GSCHEM_TOPLEVEL *w_current)
   /* Switch back to the page we were on */
   g_return_val_if_fail (keep_page != NULL, ret);
   s_page_goto (toplevel, keep_page);
+  gschem_toplevel_page_changed (w_current);
 
   return ret;
 }

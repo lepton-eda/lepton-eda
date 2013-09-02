@@ -400,6 +400,7 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
                                                 page_control,
                                                 HIERARCHY_NORMAL_LOAD,
                                                 NULL);
+            gschem_toplevel_page_changed (w_current);
 
             if (child_page != NULL) {
               page_control = child_page->page_control;
@@ -408,6 +409,7 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
                                      stext, descend, skiplast);
               if (!rv) {
                 s_page_goto( toplevel, child_page );
+                gschem_toplevel_page_changed (w_current);
                 return 0;
               }
             }
@@ -676,6 +678,7 @@ void o_autosave_backups(GSCHEM_TOPLEVEL *w_current)
     if (p_current->ops_since_last_backup != 0) {
       /* make p_current the current page of toplevel */
       s_page_goto (toplevel, p_current);
+      gschem_toplevel_page_changed (w_current);
 
       /* Get the real filename and file permissions */
       real_filename = follow_symlinks (p_current->page_filename, NULL);
@@ -759,4 +762,5 @@ void o_autosave_backups(GSCHEM_TOPLEVEL *w_current)
   }
   /* restore current page */
   s_page_goto (toplevel, p_save);
+  gschem_toplevel_page_changed (w_current);
 }
