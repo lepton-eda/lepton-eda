@@ -1,6 +1,0 @@
-; For syms and schematics, we can search:
-;
-(component-library "symbols")
-(source-library ".")
-(define default-titleblock "Noqsi-title-B.sym")
-(always-promote-attributes '("refdes"))

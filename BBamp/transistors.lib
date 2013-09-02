@@ -1,0 +1,54 @@
+* Fast transistor models for SPICE
+*
+* Copyright (C) 2013 John P. Doty
+*
+* This file is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+*
+* The transistor models in this file do not represent any specific
+* transistor type, although I believe they are physically reasonable
+* and representative of fast transistors on the market. These models
+* are intended for education and demonstration purposes.
+*
+* The NPN model is a subcircuit to take account of package reactances.
+* The slower PNP is just a SPICE primitive transistor.
+*
+.SUBCKT fastnpn c b e
+Q1 cc bb ee npndie
+Lc c cc 1nH
+Lb b bb 1nH
+Le e ee 1nH
+Ccb c b 100fF
+Cbe b e 10fF
+Cce c e 100fF
+.MODEL npndie npn LEVEL=1
++ BF=100
++ CJC=50fF
++ CJE=100fF
++ IS=1fA
++ RB=10
++ RE=1
++ RC=3
++ TF=20ps
+.ENDS
+*
+.MODEL fastpnp pnp LEVEL=1
++ BF=50
++ CJC=100fF
++ CJE=200fF
++ IS=1fA
++ RB=10
++ RE=1
++ RC=3
++ TF=30ps

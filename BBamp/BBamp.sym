@@ -1,0 +1,58 @@
+v 20110115 2
+P 0 600 300 600 1 0 0
+{
+T 0 600 5 10 0 0 0 0 1
+pintype=pas
+T 355 595 5 10 1 1 0 1 1
+pinlabel=In
+T 205 645 5 10 0 1 0 6 1
+pinnumber=1
+T 0 600 5 10 0 0 0 0 1
+pinseq=1
+}
+P 1600 600 1300 600 1 0 0
+{
+T 1600 600 5 10 0 0 0 6 1
+pintype=pas
+T 1045 595 5 10 1 1 0 7 1
+pinlabel=Out
+T 1395 645 5 10 0 1 0 0 1
+pinnumber=2
+T 1600 600 5 10 0 0 0 6 1
+pinseq=2
+}
+L 300 1200 300 0 3 0 0 0 -1 -1
+L 300 0 1300 600 3 0 0 0 -1 -1
+L 1300 600 300 1200 3 0 0 0 -1 -1
+P 800 1200 800 900 1 0 0
+{
+T 800 1200 5 10 0 0 0 0 1
+pintype=pwr
+T 555 900 5 10 1 1 180 6 1
+pinlabel=V+
+T 750 995 5 10 0 1 90 0 1
+pinnumber=3
+T 800 1200 5 10 0 0 0 0 1
+pinseq=3
+}
+P 800 0 800 300 1 0 0
+{
+T 800 0 5 10 0 0 180 0 1
+pintype=pwr
+T 745 300 5 10 1 1 180 2 1
+pinlabel=V-
+T 750 205 5 10 0 1 90 6 1
+pinnumber=4
+T 800 0 5 10 0 0 180 0 1
+pinseq=4
+}
+T 400 1800 8 10 0 0 0 0 1
+source=BBamp.sch
+T 100 1300 8 10 1 1 0 0 1
+refdes=Amp?
+T 400 2000 8 10 0 0 0 0 1
+spice-prototype=X? %down BBamp
+T 400 1600 8 10 0 0 0 0 1
+file=BBamp.cir
+T 400 1400 8 10 0 0 0 0 1
+device=BBamp
