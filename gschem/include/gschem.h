@@ -16,6 +16,7 @@
 #include "x_preview.h"
 #include "x_compselect.h"
 #include "x_dialog.h"
+#include "x_editlprop.h"
 #include "x_log.h"
 #include "x_multiattrib.h"
 #include "x_pagesel.h"

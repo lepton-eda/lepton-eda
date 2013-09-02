@@ -42,35 +42,6 @@
 
 
 
-#define TYPE_EDITLPROP           (editlprop_get_type())
-#define EDITLPROP(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_EDITLPROP, EditLProp))
-#define EDITLPROP_CLASS(klasse)  (G_TYPE_CHECK_CLASS_CAST ((klasse), TYPE_EDITLPROP, EditLPropClass))
-#define IS_EDITLPROP(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_EDITLPROP))
-#define EDITLPROP_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), TYPE_EDITLPROP, EditLPropClass))
-
-typedef struct _EditLPropClass EditLPropClass;
-typedef struct _EditLProp EditLProp;
-
-struct _EditLPropClass
-{
-  GschemDialogClass parent_class;
-};
-
-struct _EditLProp
-{
-  GschemDialog parent;
-
-  GedaList  *selection;
-
-  GtkWidget *width_entry;
-  GtkWidget *line_type;
-  GtkWidget *length_entry;
-  GtkWidget *space_entry;
-  GtkWidget *line_end;
-};
-
-
-
 static gint line_type_dialog_linetype_change (GtkWidget *widget, EditLProp *dialog);
 
 
@@ -97,7 +68,7 @@ update_values (EditLProp *dialog);
  *  \param [out]  space     space between points and lines
  *  \returns TRUE if linetype found, FALSE otherwise
  */
-static gboolean selection_get_line_type(GList *selection,
+static gboolean selection_get_line_type(GedaList *selection,
                                         OBJECT_END *end, OBJECT_TYPE *type,
                                         gint *width, gint *length, gint *space)
 {
@@ -108,7 +79,15 @@ static gboolean selection_get_line_type(GList *selection,
   OBJECT_TYPE otype;
   gint owidth, olength, ospace;
 
-  for (iter = selection; iter != NULL; iter = g_list_next(iter)) {
+  *end = -1;
+  *type = -1;
+  *width = -1;
+  *length = -1;
+  *space = -1;
+
+  for (iter = geda_list_get_glist (selection);
+       iter != NULL;
+       iter = g_list_next(iter)) {
     object = (OBJECT *) iter->data;
     if (! o_get_line_options(object, &oend, &otype,
                              &owidth, &olength, &ospace))
@@ -133,32 +112,6 @@ static gboolean selection_get_line_type(GList *selection,
   }
 
   return found;
-}
-
-
-
-/*! \brief set the linetype in the linetype dialog
- *  \par Function Description
- *  Set all widgets in the linetype dialog. Variables marked with the
- *  invalid value -2 are set to *unchanged*.
- *  \param [in]   line_type_data dialog structure
- *  \param [in]   end       OBJECT_END type
- *  \param [in]   type      OBJECT_TYPE type
- *  \param [in]   width     fill width.
- *  \param [in]   length    length of each line
- *  \param [in]   space     space between points and lines
- */
-static void line_type_dialog_set_values(EditLProp *dialog,
-                                        OBJECT_END end, OBJECT_TYPE type,
-                                        gint width, gint length, gint space)
-{
-  x_integercb_set_value (dialog->width_entry, width);
-  x_integercb_set_value (dialog->length_entry, length);
-  x_integercb_set_value (dialog->space_entry, space);
-  x_linecapcb_set_index (dialog->line_end, end);
-
-
-  x_linetypecb_set_index (dialog->line_type, type);
 }
 
 
@@ -546,31 +499,25 @@ update_values (EditLProp *dialog)
   g_return_if_fail (dialog != NULL);
 
   if (dialog->selection != NULL) {
-    GList *selection;
     gboolean success;
     OBJECT_END end=END_NONE;
     OBJECT_TYPE type=TYPE_SOLID;
     gint width=1, length=-1, space=-1;
 
-    selection = geda_list_get_glist (dialog->selection);
-
-    success = selection_get_line_type (selection, &end, &type, &width, &length, &space);
+    success = selection_get_line_type (dialog->selection, &end, &type, &width, &length, &space);
 
     if (success) {
-      line_type_dialog_set_values(dialog,
-                                  end,
-                                  type,
-                                  width,
-                                  length,
-                                  space);
-    }
-    else {
-      line_type_dialog_set_values(dialog,
-                                  -1,
-                                  -1,
-                                  -1,
-                                  -1,
-                                  -1);
+      x_linecapcb_set_index (dialog->line_end, end);
+      x_integercb_set_value (dialog->width_entry, width);
+      x_integercb_set_value (dialog->length_entry, length);
+      x_integercb_set_value (dialog->space_entry, space);
+      x_linetypecb_set_index (dialog->line_type, type);
+    } else {
+      x_linecapcb_set_index (dialog->line_end, -1);
+      x_integercb_set_value (dialog->width_entry, -1);
+      x_integercb_set_value (dialog->length_entry, -1);
+      x_integercb_set_value (dialog->space_entry, -1);
+      x_linetypecb_set_index (dialog->line_type, -1);
     }
 
     gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_type), success);

@@ -476,6 +476,6 @@ gschem_toplevel_page_changed (GSCHEM_TOPLEVEL *w_current)
   g_return_if_fail (w_current->toplevel != NULL);
 
   if ((w_current->lpwindow != NULL) && (w_current->toplevel->page_current != NULL)) {
-    x_editlprop_set_selection (w_current->lpwindow, w_current->toplevel->page_current->selection_list);
+    x_editlprop_set_selection (EDITLPROP (w_current->lpwindow), w_current->toplevel->page_current->selection_list);
   }
 }
