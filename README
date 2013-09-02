@@ -2,7 +2,7 @@ The code here is a "back end" for the gnetlist program, which is part of gEDA. S
 
 This back end produces output in SPICE format. It is intended to allow the designer to produce schematics that can be used as input for both SPICE simulation and printed circuit layout. It supports this by providing flexible methods for mapping schematic symbol attributes into the parameters of SPICE declarations and commands.
 
-To manually install, copy the file gnet-spice-noqsi.scm to ${prefix}/share/gEDA/scheme/. Usage is "gnetlist -g spice-noqsi ...".
+See the INSTALL file for installation instructions. Usage is "gnetlist -g spice-noqsi ...". There is a simple sample project in the BBamp directory. "cd BBamp; make" should result in a plot of the frequency response of the amplifier circuit there (you must have ngspice installed). See BBamp/README for more details.
 
 The process of creating a SPICE file is driven by attributes attached to symbols. In the text below, CAPITAL LETTERS represent variable text you supply, lower case and symbols are literal. Quick reference for these attributes:
 

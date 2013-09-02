@@ -1,0 +1,7 @@
+To install gnet-spice-noqsi.scm from the gnet-spice-noqsi directory, simply
+type:
+
+./install.sh
+
+You may need to be super-user. This will locate the directory where your
+"gnetlist" command finds back-end scripts, and copy gnet-spice-noqsi.scm to it.
