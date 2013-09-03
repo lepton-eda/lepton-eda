@@ -26,6 +26,7 @@ TESTS = tc_copy_object \
 	tc_get_objects \
 	tc_get_obtype \
 	tc_invalid_obtype \
+	tc_null \
 	tc_selection \
 	tc_stat \
 	tc_string
