@@ -506,8 +506,8 @@ xorn_revision_t xorn_apply_changeset(xorn_changeset_t chset,
 	return rev;
 }
 
-void set_object_data(xorn_changeset_t chset, xorn_object_t ob,
-		     xorn_obtype_t type, void const *data)
+static void set_object_data(xorn_changeset_t chset, xorn_object_t ob,
+			    xorn_obtype_t type, void const *data)
 {
 	obstate *tmp = new obstate(type, data);
 	try {
