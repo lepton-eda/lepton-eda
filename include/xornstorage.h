@@ -108,6 +108,11 @@ void xorn_delete_object(xorn_changeset_t chset, xorn_object_t ob);
 void xorn_delete_selected_objects(xorn_changeset_t chset,
 				  xorn_selection_t sel);
 
+xorn_object_t xorn_copy_object(
+	xorn_changeset_t chset, xorn_revision_t rev, xorn_object_t ob);
+xorn_selection_t xorn_copy_objects(
+	xorn_changeset_t chset, xorn_revision_t rev, xorn_selection_t sel);
+
 /* object data definition */
 
 struct xorn_string {
