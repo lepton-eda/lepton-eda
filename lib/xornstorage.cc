@@ -112,20 +112,29 @@ xorn_changeset::xorn_changeset(xorn_revision_t rev) : r(new xorn_revision(rev))
 {
 }
 
-static size_t sizeof_obtype(xorn_obtype_t type)
+static void *copy_data(xorn_obtype_t type, void const *src)
 {
+	size_t size;
+
 	switch (type) {
-	case xornsch_obtype_arc:	return sizeof(xornsch_arc);
-	case xornsch_obtype_box:	return sizeof(xornsch_box);
-	case xornsch_obtype_circle:	return sizeof(xornsch_circle);
-	case xornsch_obtype_component:	return sizeof(xornsch_component);
-	case xornsch_obtype_line:	return sizeof(xornsch_line);
-	case xornsch_obtype_net:	return sizeof(xornsch_net);
-	case xornsch_obtype_path:	return sizeof(xornsch_path);
-	case xornsch_obtype_picture:	return sizeof(xornsch_picture);
-	case xornsch_obtype_text:	return sizeof(xornsch_text);
-	default:			throw std::bad_alloc();
+	case xornsch_obtype_arc:       size = sizeof(xornsch_arc); break;
+	case xornsch_obtype_box:       size = sizeof(xornsch_box); break;
+	case xornsch_obtype_circle:    size = sizeof(xornsch_circle); break;
+	case xornsch_obtype_component: size = sizeof(xornsch_component); break;
+	case xornsch_obtype_line:      size = sizeof(xornsch_line); break;
+	case xornsch_obtype_net:       size = sizeof(xornsch_net); break;
+	case xornsch_obtype_path:      size = sizeof(xornsch_path); break;
+	case xornsch_obtype_picture:   size = sizeof(xornsch_picture); break;
+	case xornsch_obtype_text:      size = sizeof(xornsch_text); break;
+	default:                       throw std::bad_alloc();
 	}
+
+	void *dest = malloc(size);
+	if (dest == NULL)
+		throw std::bad_alloc();
+
+	memcpy(dest, src, size);
+	return dest;
 }
 
 static void duplicate_string(xorn_string &str)
@@ -138,12 +147,8 @@ static void duplicate_string(xorn_string &str)
 }
 
 obstate::obstate(xorn_obtype_t type, void const *data)
-	: refcnt(1), type(type), data(malloc(sizeof_obtype(type)))
+	: refcnt(1), type(type), data(copy_data(type, data))
 {
-	if (this->data == NULL)
-		throw std::bad_alloc();
-	memcpy(this->data, data, sizeof_obtype(type));
-
 	try {
 		switch(type) {
 		case xornsch_obtype_path:
