@@ -24,7 +24,9 @@ action_icons = \
 	attribute-detach \
 	attribute-show-value \
 	attribute-show-name \
-	attribute-show-both
+	attribute-show-both \
+	clone \
+	multi-clone
 
 action_icon_files = \
 	$(action_icons:%=%-16.png) \
