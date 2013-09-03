@@ -220,7 +220,6 @@ DEFINE_POPUP_CALLBACK (new_page,     file_new)
 DEFINE_POPUP_CALLBACK (open_page,    file_open)
 DEFINE_POPUP_CALLBACK (save_page,    file_save)
 DEFINE_POPUP_CALLBACK (close_page,   page_close)
-DEFINE_POPUP_CALLBACK (discard_page, page_discard)
 
 
 /*! \brief Popup context-sensitive menu.
@@ -248,7 +247,6 @@ static void pagesel_popup_menu (Pagesel *pagesel,
     { "-",                NULL                                             },
     { N_("Save Page"),    G_CALLBACK (pagesel_callback_popup_save_page)    },
     { N_("Close Page"),   G_CALLBACK (pagesel_callback_popup_close_page)   },
-    { N_("Discard Page"), G_CALLBACK (pagesel_callback_popup_discard_page) },
     { NULL,               NULL                                             } };
   struct menuitem_t *tmp;
   

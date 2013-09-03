@@ -205,7 +205,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "page-new",                  0, 0, 0, g_keys_page_new },
   { "page-close",                0, 0, 0, g_keys_page_close },
   { "page-revert",               0, 0, 0, g_keys_page_revert },
-  { "page-discard",              0, 0, 0, g_keys_page_discard },
   { "page-print",                0, 0, 0, g_keys_page_print },
   { "add-component",             0, 0, 0, g_keys_add_component },
   { "add-attribute",             0, 0, 0, g_keys_add_attribute },

@@ -1539,20 +1539,6 @@ DEFINE_I_CALLBACK(page_revert)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(page_discard)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*)data;
-
-  g_return_if_fail (w_current != NULL);
-
-  x_window_close_page (w_current, w_current->toplevel->page_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 DEFINE_I_CALLBACK(page_print)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;

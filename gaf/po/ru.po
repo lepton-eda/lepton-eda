@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gaf_ru\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2012-12-04 00:19+0000\n"
+"POT-Creation-Date: 2013-08-31 10:34+0100\n"
 "PO-Revision-Date: 2012-12-04 01:57+0400\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: geda-user@delorie.com\n"
@@ -164,22 +164,17 @@ msgstr "ВНИМАНИЕ: не удалось загрузить «%s»: %s.\n"
 msgid "ERROR: You must specify both configuration group and key.\n"
 msgstr "ОШИБКА: необходимо указать и группу настроек, и ключевое слово.\n"
 
-#: gaf/config.c:182 gaf/config.c:196 gaf/export.c:316
+#: gaf/config.c:182 gaf/config.c:196 gaf/export.c:318
 #, c-format
 msgid "ERROR: %s.\n"
 msgstr "ОШИБКА: %s.\n"
 
-#: gaf/export.c:143
+#: gaf/export.c:146
 #, c-format
 msgid "ERROR: Bad argument '%s' to %s option.\n"
 msgstr ""
 
-#: gaf/export.c:144
-#, c-format
-msgid "ERROR: Bad argument '%s' to %s option: %s\n"
-msgstr ""
-
-#: gaf/export.c:145
+#: gaf/export.c:147
 #, fuzzy
 msgid ""
 "\n"
@@ -188,37 +183,37 @@ msgstr ""
 "\n"
 "Для более подробной информации выполните `gaf --help'.\n"
 
-#: gaf/export.c:186
+#: gaf/export.c:188
 #, c-format
 msgid "ERROR: Cannot infer output format from filename '%s'.\n"
 msgstr ""
 
-#: gaf/export.c:203
+#: gaf/export.c:205
 #, c-format
 msgid "ERROR: Cannot find supported format for filename '%s'.\n"
 msgstr ""
 
-#: gaf/export.c:208
+#: gaf/export.c:210
 #, c-format
 msgid "ERROR: Unsupported output format '%s'.\n"
 msgstr ""
 
-#: gaf/export.c:220
+#: gaf/export.c:222
 #, c-format
 msgid "ERROR: Selected output format does not support multipage output\n"
 msgstr ""
 
-#: gaf/export.c:232
+#: gaf/export.c:234
 #, fuzzy, c-format
 msgid "ERROR: Failed to load '%s': %s\n"
 msgstr "ВНИМАНИЕ: не удалось загрузить «%s»: %s.\n"
 
-#: gaf/export.c:238
+#: gaf/export.c:240
 #, c-format
 msgid "ERROR: Failed to change directory to '%s': %s\n"
 msgstr ""
 
-#: gaf/export.c:893
+#: gaf/export.c:904
 #, c-format
 msgid ""
 "Usage: gaf export [OPTION ...] -o OUTPUT [--] FILE ...\n"
@@ -229,6 +224,7 @@ msgid ""
 "  -o, --output=OUTPUT    output filename\n"
 "  -p, --paper=NAME       select paper size by name\n"
 "  -s, --size=WIDTH;HEIGHT  specify exact paper size\n"
+"  -k, --scale=FACTOR     specify output scale factor\n"
 "  -l, --layout=ORIENT    page orientation\n"
 "  -m, --margins=TOP;LEFT;BOTTOM;RIGHT\n"
 "                           set page margins\n"
@@ -243,12 +239,12 @@ msgid ""
 "Please report bugs to %s.\n"
 msgstr ""
 
-#: gaf/export.c:1056
+#: gaf/export.c:1083
 #, fuzzy, c-format
 msgid "ERROR: You must specify at least one input filename.\n"
 msgstr "ОШИБКА: необходимо указать и группу настроек, и ключевое слово.\n"
 
-#: gaf/export.c:1065
+#: gaf/export.c:1092
 #, fuzzy, c-format
 msgid "ERROR: You must specify an output filename.\n"
 msgstr "ОШИБКА: необходимо указать и группу настроек, и ключевое слово.\n"

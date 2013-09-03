@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gnetlist\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2012-12-05 10:06+0100\n"
+"POT-Creation-Date: 2013-08-31 10:34+0100\n"
 "PO-Revision-Date: 2012-12-08 09:38+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA Developers\n"
@@ -41,14 +41,17 @@ msgstr ""
 #, c-format
 msgid ""
 "gEDA/gnetlist version %s%s.%s\n"
-"gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more details.\n"
+"gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
+"details.\n"
 "This is free software, and you are welcome to redistribute it under certain\n"
 "conditions; please see the COPYING file for more details.\n"
 "\n"
 msgstr ""
 "gEDA/gnetlist versie %s%s.%s\n"
-"gEDA/gnetlist komt met ABSOLUUT GEEN GARANTIE; zie ook COPYING voor meer details.\n"
-"Dit is vrije software, en U bent welkom om dit te verspreiden onder bepaalde \n"
+"gEDA/gnetlist komt met ABSOLUUT GEEN GARANTIE; zie ook COPYING voor meer "
+"details.\n"
+"Dit is vrije software, en U bent welkom om dit te verspreiden onder "
+"bepaalde \n"
 "condities; zie alstublieft het COPYING bestand voor meer details.\n"
 "\n"
 
@@ -61,18 +64,17 @@ msgstr ""
 "Dit is de MINGW32 versie.\n"
 "\n"
 
-#: gnetlist/src/gnetlist.c:224
-#: gnetlist/src/gnetlist.c:225
+#: gnetlist/src/gnetlist.c:225 gnetlist/src/gnetlist.c:226
 #, c-format
 msgid "Loading schematic [%s]\n"
 msgstr "Laden van schema [%s]\n"
 
-#: gnetlist/src/gnetlist.c:232
+#: gnetlist/src/gnetlist.c:233
 #, c-format
 msgid "ERROR: Failed to load '%s': %s\n"
 msgstr "FOUT: Faalde bij het laden van '%s': %s\n"
 
-#: gnetlist/src/gnetlist.c:257
+#: gnetlist/src/gnetlist.c:258
 #, c-format
 msgid ""
 "ERROR: No schematics files specified for processing.\n"
@@ -83,7 +85,7 @@ msgstr ""
 "\n"
 "Doe `%s --help' voor meer informatie.\n"
 
-#: gnetlist/src/gnetlist.c:280
+#: gnetlist/src/gnetlist.c:281
 #, c-format
 msgid ""
 "ERROR: Could not find backend `%s' in load path.\n"
@@ -94,7 +96,7 @@ msgstr ""
 "\n"
 "Doe `%s --list-backends' voor een volledige lijst van beschikbare backends.\n"
 
-#: gnetlist/src/gnetlist.c:318
+#: gnetlist/src/gnetlist.c:319
 #, c-format
 msgid "You gave neither backend to execute nor interactive mode!\n"
 msgstr "U gaf geen backend om uit voeren noch interactieve modus!\n"
@@ -248,7 +250,8 @@ msgstr "Vond een pen [%s] op component [%s] welke geen label heeft!\n"
 #: gnetlist/src/s_hierarchy.c:241
 #, c-format
 msgid "Missing I/O symbol with refdes [%s] inside schematic for symbol [%s]\n"
-msgstr "Ontbrekend I/O symbool met refdes [%s] in een schema voor symbool [%s]\n"
+msgstr ""
+"Ontbrekend I/O symbool met refdes [%s] in een schema voor symbool [%s]\n"
 
 #: gnetlist/src/s_misc.c:58
 #, c-format
@@ -274,8 +277,7 @@ msgstr "Vond een misvormd net attribuut\n"
 msgid "Found a cpinlist head with a netname! [%s]\n"
 msgstr "Vond een cpinlist kop met een netnaam! [%s]\n"
 
-#: gnetlist/src/s_netattrib.c:239
-#: gnetlist/src/s_netattrib.c:270
+#: gnetlist/src/s_netattrib.c:239 gnetlist/src/s_netattrib.c:270
 #, c-format
 msgid ""
 "Got an invalid net= attrib [net=%s]\n"
@@ -289,18 +291,17 @@ msgstr ""
 msgid "Missing Attributes (refdes and pin number)\n"
 msgstr "Ontbrekende Attributen (refdes en pennummer)\n"
 
-#: gnetlist/src/s_net.c:276
-#: gnetlist/src/s_net.c:313
+#: gnetlist/src/s_net.c:293 gnetlist/src/s_net.c:330
 #, c-format
 msgid "Found duplicate net name, renaming [%s] to [%s]\n"
 msgstr "Vond een duplicaat net naam, hernoem [%s] naar [%s]\n"
 
-#: gnetlist/src/s_net.c:422
+#: gnetlist/src/s_net.c:442
 #, c-format
 msgid "Incorrect connectivity type %i in s_name_nets()\n"
 msgstr "Incorrect verbindingstype %i in s_name_nets()\n"
 
-#: gnetlist/src/s_net.c:442
+#: gnetlist/src/s_net.c:462
 #, c-format
 msgid "Increase number of unnamed nets (s_net.c)\n"
 msgstr "Verhoog aantal naamloze netten (s_net.c)\n"
@@ -324,29 +325,39 @@ msgstr ""
 #: gnetlist/src/s_rename.c:152
 #, c-format
 msgid "This warning is okay if you have multiple levels of hierarchy!\n"
-msgstr "Deze waarschuwing is in orde als je meervoudige niveaus van hiërarchie hebt!\n"
+msgstr ""
+"Deze waarschuwing is in orde als je meervoudige niveaus van hiërarchie "
+"hebt!\n"
 
-#: gnetlist/src/s_traverse.c:172
+#: gnetlist/src/s_traverse.c:182
 #, c-format
-msgid "WARNING: Found a placeholder/missing component, are you missing a symbol file? [%s]\n"
-msgstr "WAARSCHUWING: Vond een plaatshouder/ontbrekend component, mist U een symbool bestand? [%s]\n"
+msgid ""
+"WARNING: Found a placeholder/missing component, are you missing a symbol "
+"file? [%s]\n"
+msgstr ""
+"WAARSCHUWING: Vond een plaatshouder/ontbrekend component, mist U een symbool "
+"bestand? [%s]\n"
 
-#: gnetlist/src/s_traverse.c:230
+#: gnetlist/src/s_traverse.c:240
 #, c-format
-msgid "Could not find refdes on component and could not find any special attributes!\n"
-msgstr "Kon geen refdes vinden op component en kon geen speciaal attributen vinden!\n"
+msgid ""
+"Could not find refdes on component and could not find any special "
+"attributes!\n"
+msgstr ""
+"Kon geen refdes vinden op component en kon geen speciaal attributen vinden!\n"
 
-#: gnetlist/src/s_traverse.c:325
+#: gnetlist/src/s_traverse.c:335
 msgid "Non-connectable object being queried for connection type\n"
 msgstr "Niet-verbindbaar object naar verbindingtype gevraagd\n"
 
-#: gnetlist/src/s_traverse.c:362
+#: gnetlist/src/s_traverse.c:372
 #, c-format
 msgid "WARNING: Found label=%s. label= is deprecated, please use netname=\n"
-msgstr "WAARSCHUWING: vond label=%s. label= is vervallen, gebruik alstublieft netname=\n"
+msgstr ""
+"WAARSCHUWING: vond label=%s. label= is vervallen, gebruik alstublieft "
+"netname=\n"
 
-#: gnetlist/src/s_traverse.c:416
+#: gnetlist/src/s_traverse.c:426
 #, c-format
 msgid "Found a possible net/pin infinite connection\n"
 msgstr "Vond een mogelijk oneindige net/pen verbinding\n"
-

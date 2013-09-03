@@ -1009,7 +1009,6 @@
 (global-set-key "P E" 'page-new)
 (global-set-key "P R" 'page-revert)
 (global-set-key "P C" 'page-close)
-(global-set-key "P D" 'page-discard)
 (global-set-key "P <Shift>P" 'page-print)
 
 (global-set-key "<Alt>Q" 'file-quit)
@@ -1202,9 +1201,7 @@
            (,(N_ "_Next")             page-next               "gtk-go-forward")
            (,(N_ "Ne_w")              page-new                "gtk-new")
            (,(N_ "_Revert")           page-revert             "gtk-revert-to-saved")
-           (,(N_ "_Close")            page-close              "gtk-close")
-           ("SEPARATOR"              #f                      #f)
-           (,(N_ "_Discard")          page-discard            "gtk-discard")))
+           (,(N_ "_Close")            page-close              "gtk-close")))
 
 (define add-menu-items
 ;;

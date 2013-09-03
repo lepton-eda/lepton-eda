@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2012-12-03 17:47+0000\n"
+"POT-Creation-Date: 2013-08-31 10:34+0100\n"
 "PO-Revision-Date: 2012-12-01 09:48+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -221,38 +221,38 @@ msgstr ""
 msgid "RC file already loaded"
 msgstr "Configuratie bestand is reeds ingelezen"
 
-#: libgeda/src/g_rc.c:186
+#: libgeda/src/g_rc.c:187
 #, fuzzy, c-format
 msgid "Failed to load config from '%s': %s\n"
 msgstr "Laden van afbeelding uit [%s] faalde: %s\n"
 
-#: libgeda/src/g_rc.c:210
+#: libgeda/src/g_rc.c:211
 #, fuzzy, c-format
 msgid "Loaded RC file [%s]\n"
 msgstr "Bibliotheek opdracht faalde [%s]\n"
 
-#: libgeda/src/g_rc.c:214
+#: libgeda/src/g_rc.c:215
 #, fuzzy, c-format
 msgid "Failed to load RC file [%s]: "
 msgstr "Laden van afbeelding uit bestand faalde [%s]: %s\n"
 
-#: libgeda/src/g_rc.c:331
+#: libgeda/src/g_rc.c:332
 msgid "ERROR: An unknown error occurred while parsing configuration files."
 msgstr ""
 "FOUT: Een onbekende fout trad op tijdens het doorlopen van configuratie "
 "bestanden."
 
-#: libgeda/src/g_rc.c:343 libgeda/src/g_rc.c:344
+#: libgeda/src/g_rc.c:344 libgeda/src/g_rc.c:345
 #, c-format
 msgid "ERROR: %s\n"
 msgstr "FOUT: %s\n"
 
-#: libgeda/src/g_rc.c:350
+#: libgeda/src/g_rc.c:351
 #, c-format
 msgid "ERROR: The %s log may contain more information.\n"
 msgstr "FOUT: De %s log kan meer informatie bevatten.\n"
 
-#: libgeda/src/g_rc.c:1022
+#: libgeda/src/g_rc.c:1000
 msgid ""
 "WARNING: using a string for 'always-promote-attributes' is deprecated. Use a "
 "list of strings instead\n"
@@ -269,20 +269,20 @@ msgstr "Faalde bij het ontleden van een boog object"
 msgid "Found a zero radius arc [ %c %d, %d, %d, %d, %d, %d ]\n"
 msgstr "Boog met een straal van nul gevonden [ %c %d, %d, %d, %d, %d, %d ]\n"
 
-#: libgeda/src/o_arc_basic.c:282 libgeda/src/o_box_basic.c:327
-#: libgeda/src/o_bus_basic.c:182 libgeda/src/o_circle_basic.c:289
-#: libgeda/src/o_line_basic.c:264 libgeda/src/o_net_basic.c:171
-#: libgeda/src/o_path_basic.c:189 libgeda/src/o_pin_basic.c:183
-#: libgeda/src/o_text_basic.c:417
+#: libgeda/src/o_arc_basic.c:282 libgeda/src/o_box_basic.c:324
+#: libgeda/src/o_bus_basic.c:154 libgeda/src/o_circle_basic.c:286
+#: libgeda/src/o_line_basic.c:261 libgeda/src/o_net_basic.c:141
+#: libgeda/src/o_path_basic.c:210 libgeda/src/o_pin_basic.c:158
+#: libgeda/src/o_text_basic.c:391
 #, c-format
 msgid "Found an invalid color [ %s ]\n"
 msgstr "Ongeldige kleur [ %s ] gevonden\n"
 
-#: libgeda/src/o_arc_basic.c:283 libgeda/src/o_box_basic.c:328
-#: libgeda/src/o_bus_basic.c:183 libgeda/src/o_circle_basic.c:290
-#: libgeda/src/o_line_basic.c:265 libgeda/src/o_net_basic.c:172
-#: libgeda/src/o_path_basic.c:190 libgeda/src/o_pin_basic.c:184
-#: libgeda/src/o_text_basic.c:418
+#: libgeda/src/o_arc_basic.c:283 libgeda/src/o_box_basic.c:325
+#: libgeda/src/o_bus_basic.c:155 libgeda/src/o_circle_basic.c:287
+#: libgeda/src/o_line_basic.c:262 libgeda/src/o_net_basic.c:142
+#: libgeda/src/o_path_basic.c:211 libgeda/src/o_pin_basic.c:159
+#: libgeda/src/o_text_basic.c:392
 msgid "Setting color to default color\n"
 msgstr "Stel de kleur in op standaard kleur\n"
 
@@ -303,60 +303,60 @@ msgstr "Probeerde een niet tekst item toe te voegen als een attribuut"
 msgid "Unexpected end-of-file in attribute list"
 msgstr "Onverwacht einde-bestand in attribuutlijst"
 
-#: libgeda/src/o_basic.c:196 libgeda/src/o_basic.c:208
+#: libgeda/src/o_basic.c:111 libgeda/src/o_basic.c:123
 msgid "Invalid space specified, setting to 100\n"
 msgstr "Ongeldige ruimte gespecificeerd, ingesteld op 100\n"
 
-#: libgeda/src/o_basic.c:204
+#: libgeda/src/o_basic.c:119
 msgid "Invalid length specified, setting to 100\n"
 msgstr "Ongeldige lengte gespecificeerd, ingesteld op 100\n"
 
-#: libgeda/src/o_box_basic.c:287 libgeda/src/o_box_basic.c:316
+#: libgeda/src/o_box_basic.c:284 libgeda/src/o_box_basic.c:313
 msgid "Failed to parse box object"
 msgstr "Faalde bij het ontleden van een rechthoek object"
 
-#: libgeda/src/o_box_basic.c:322
+#: libgeda/src/o_box_basic.c:319
 #, c-format
 msgid "Found a zero width/height box [ %c %d %d %d %d %d ]\n"
 msgstr ""
 "Rechthoek met een breedte/hoogte van nul gevonden [ %c %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_bus_basic.c:160 libgeda/src/o_bus_basic.c:167
+#: libgeda/src/o_bus_basic.c:132 libgeda/src/o_bus_basic.c:139
 msgid "Failed to parse bus object"
 msgstr "Faalde bij het ontleden van een bus object"
 
-#: libgeda/src/o_bus_basic.c:173
+#: libgeda/src/o_bus_basic.c:145
 #, c-format
 msgid "Found a zero length bus [ %c %d %d %d %d %d ]\n"
 msgstr "Bus met een lengte van nul gevonden [ %c %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_bus_basic.c:188
+#: libgeda/src/o_bus_basic.c:160
 #, c-format
 msgid "Found an invalid bus ripper direction [ %s ]\n"
 msgstr "Ongeldige bus ripper richting gevonden [ %s ]\n"
 
-#: libgeda/src/o_bus_basic.c:189
+#: libgeda/src/o_bus_basic.c:161
 msgid "Resetting direction to neutral (no direction)\n"
 msgstr "Neutrale richting ingesteld (geen richting)\n"
 
-#: libgeda/src/o_circle_basic.c:193
+#: libgeda/src/o_circle_basic.c:190
 msgid "Null radius circles are not allowed\n"
 msgstr "Cirkels met een radius van nul zijn niet toegestaan\n"
 
-#: libgeda/src/o_circle_basic.c:246 libgeda/src/o_circle_basic.c:275
+#: libgeda/src/o_circle_basic.c:243 libgeda/src/o_circle_basic.c:272
 msgid "Failed to parse circle object"
 msgstr "Faalde bij het ontleden van een cirkel object"
 
-#: libgeda/src/o_circle_basic.c:282
+#: libgeda/src/o_circle_basic.c:279
 #, c-format
 msgid "Found a zero or negative radius circle [ %c %d %d %d %d ]\n"
 msgstr "Een cirkel met een radius van nul gevonden [ %c %d %d %d %d ]\n"
 
-#: libgeda/src/o_circle_basic.c:284
+#: libgeda/src/o_circle_basic.c:281
 msgid "Setting radius to 0\n"
 msgstr "Radius op 0 ingesteld\n"
 
-#: libgeda/src/o_complex_basic.c:422
+#: libgeda/src/o_complex_basic.c:510
 #, c-format
 msgid ""
 "Component not found:\n"
@@ -365,22 +365,22 @@ msgstr ""
 "Komponent niet gevonden:\n"
 " %s"
 
-#: libgeda/src/o_complex_basic.c:654
+#: libgeda/src/o_complex_basic.c:713
 msgid "Failed to parse complex object"
 msgstr "Faalde bij het ontleden van een complex object"
 
-#: libgeda/src/o_complex_basic.c:667
+#: libgeda/src/o_complex_basic.c:726
 #, c-format
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
 "Een komponent met een ongeldige rotatie gevonden [ %c %d %d %d %d %d %s ]\n"
 
-#: libgeda/src/o_complex_basic.c:668 libgeda/src/o_picture.c:104
-#: libgeda/src/o_text_basic.c:389
+#: libgeda/src/o_complex_basic.c:727 libgeda/src/o_picture.c:104
+#: libgeda/src/o_text_basic.c:363
 msgid "Setting angle to 0\n"
 msgstr "Hoek op 0 ingesteld\n"
 
-#: libgeda/src/o_complex_basic.c:680
+#: libgeda/src/o_complex_basic.c:739
 #, c-format
 msgid ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
@@ -388,11 +388,11 @@ msgstr ""
 "Een komponent met een ongeldige spiegel vlag gevonden [ %c %d %d %d %d %d "
 "%s ]\n"
 
-#: libgeda/src/o_complex_basic.c:681
+#: libgeda/src/o_complex_basic.c:740
 msgid "Setting mirror to 0\n"
 msgstr "Spiegelen op 0 ingesteld\n"
 
-#: libgeda/src/o_complex_basic.c:994
+#: libgeda/src/o_complex_basic.c:1075
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -401,7 +401,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan symboolbestand niet doorzoeken symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:998
+#: libgeda/src/o_complex_basic.c:1079
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -410,7 +410,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan symboolbestand niet doorzoeken symversion=\n"
 
-#: libgeda/src/o_complex_basic.c:1014
+#: libgeda/src/o_complex_basic.c:1095
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -419,7 +419,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan bijgevoegd symboolbestand niet doorzoeken symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:1039
+#: libgeda/src/o_complex_basic.c:1120
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -430,7 +430,7 @@ msgstr ""
 "\tsymversion=%s bijgevoegd aan bedoelde symbool, maar geen symversion= in "
 "het symbool bestand\n"
 
-#: libgeda/src/o_complex_basic.c:1053
+#: libgeda/src/o_complex_basic.c:1134
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -439,17 +439,17 @@ msgstr ""
 "WAARSCHUWING: Symbool versie fout bij refdes %s (%s):\n"
 "\tSymbool in bibliotheek is nieuwer dan bedoelde symbool\n"
 
-#: libgeda/src/o_complex_basic.c:1081
+#: libgeda/src/o_complex_basic.c:1162
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr "\tGROTE VERSIE VERANDERING (bestand %.3f, bedoeld %.3f, %s)!\n"
 
-#: libgeda/src/o_complex_basic.c:1099
+#: libgeda/src/o_complex_basic.c:1180
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\tKleine versie verandering (bestand %.3f, bedoeld %.3f)!\n"
 
-#: libgeda/src/o_complex_basic.c:1110
+#: libgeda/src/o_complex_basic.c:1191
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -477,29 +477,29 @@ msgstr ""
 msgid "Component [%s] has been successfully unembedded\n"
 msgstr "Komponent [%s] is succesvol uitgevoegd\n"
 
-#: libgeda/src/o_line_basic.c:229 libgeda/src/o_line_basic.c:247
+#: libgeda/src/o_line_basic.c:226 libgeda/src/o_line_basic.c:244
 msgid "Failed to parse line object"
 msgstr "Faalde bij het ontleden van een lijn object"
 
-#: libgeda/src/o_line_basic.c:259
+#: libgeda/src/o_line_basic.c:256
 #, c-format
 msgid "Found a zero length line [ %c %d %d %d %d %d ]\n"
 msgstr "Lijn met een lengte van nul gevonden [ %c %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_net_basic.c:156
+#: libgeda/src/o_net_basic.c:126
 msgid "Failed to parse net object"
 msgstr "Faalde bij het ontleden van een net object"
 
-#: libgeda/src/o_net_basic.c:161
+#: libgeda/src/o_net_basic.c:131
 #, c-format
 msgid "Found a zero length net [ %c %d %d %d %d %d ]\n"
 msgstr "Net met een lengte van nul gevonden [ %c %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_path_basic.c:181
+#: libgeda/src/o_path_basic.c:202
 msgid "Failed to parse path object"
 msgstr "Faalde bij het ontleden van een pad object"
 
-#: libgeda/src/o_path_basic.c:207
+#: libgeda/src/o_path_basic.c:228
 msgid "Unexpected end-of-file when reading path"
 msgstr "Onverwacht einde-bestand tijdens het lezen van een pad"
 
@@ -567,50 +567,50 @@ msgstr "Laden van afbeelding [%s] uit buffer faalde: %s\n"
 msgid "Failed to load image from [%s]: %s\n"
 msgstr "Laden van afbeelding uit [%s] faalde: %s\n"
 
-#: libgeda/src/o_picture.c:426
+#: libgeda/src/o_picture.c:400
 #, c-format
 msgid "Picture %p has invalid angle %i\n"
 msgstr "Afbeelding %p heeft een ongeldige hoek %i\n"
 
-#: libgeda/src/o_picture.c:772
+#: libgeda/src/o_picture.c:746
 #, c-format
 msgid "Picture [%s] has no image data.\n"
 msgstr "Afbeelding [%s] heeft geen beeldinformatie.\n"
 
-#: libgeda/src/o_picture.c:773
+#: libgeda/src/o_picture.c:747
 msgid "Falling back to file loading. Picture is still unembedded.\n"
 msgstr ""
 "Val terug op het laden van bestand. Afbeelding is nog steeds uitgevoegd.\n"
 
-#: libgeda/src/o_picture.c:781
+#: libgeda/src/o_picture.c:755
 #, c-format
 msgid "Picture [%s] has been embedded\n"
 msgstr "Afbeelding [%s] is ingevoegd\n"
 
-#: libgeda/src/o_picture.c:805
+#: libgeda/src/o_picture.c:779
 #, c-format
 msgid "Failed to load image from file [%s]: %s\n"
 msgstr "Laden van afbeelding uit bestand faalde [%s]: %s\n"
 
-#: libgeda/src/o_picture.c:807
+#: libgeda/src/o_picture.c:781
 msgid "Picture is still embedded.\n"
 msgstr "Afbeelding is nog steeds ingevoegd.\n"
 
-#: libgeda/src/o_picture.c:815
+#: libgeda/src/o_picture.c:789
 #, c-format
 msgid "Picture [%s] has been unembedded\n"
 msgstr "Afbeelding [%s] is uitgevoegd\n"
 
-#: libgeda/src/o_picture.c:1051
+#: libgeda/src/o_picture.c:1026
 #, c-format
 msgid "Failed to load fallback image %s: %s.\n"
 msgstr "Laden van afbeelding uit bestand %s faalde: %s.\n"
 
-#: libgeda/src/o_pin_basic.c:160 libgeda/src/o_pin_basic.c:168
+#: libgeda/src/o_pin_basic.c:135 libgeda/src/o_pin_basic.c:143
 msgid "Failed to parse pin object"
 msgstr "Faalde bij het ontleden van een pin object"
 
-#: libgeda/src/o_pin_basic.c:174
+#: libgeda/src/o_pin_basic.c:149
 msgid ""
 "Found a pin which did not have the whichone field set.\n"
 "Verify and correct manually.\n"
@@ -618,39 +618,39 @@ msgstr ""
 "Pen die geen whichone veld ingesteld heeft gevonden.\n"
 "Verifieer en corigeer handmatig.\n"
 
-#: libgeda/src/o_pin_basic.c:177
+#: libgeda/src/o_pin_basic.c:152
 #, c-format
 msgid "Found an invalid whichend on a pin (reseting to zero): %d\n"
 msgstr "Pen met een ongeldige whichend gevonden (instellen op nul): %d\n"
 
-#: libgeda/src/o_text_basic.c:348 libgeda/src/o_text_basic.c:358
-#: libgeda/src/o_text_basic.c:368
+#: libgeda/src/o_text_basic.c:322 libgeda/src/o_text_basic.c:332
+#: libgeda/src/o_text_basic.c:342
 msgid "Failed to parse text object"
 msgstr "Faalde bij het ontleden van een tekst object"
 
-#: libgeda/src/o_text_basic.c:375
+#: libgeda/src/o_text_basic.c:349
 #, c-format
 msgid "Found a zero size text string [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
 "Tekst string met een afmeting van nul gevonden [ %c %d %d %d %d %d %d %d "
 "%d ]\n"
 
-#: libgeda/src/o_text_basic.c:387
+#: libgeda/src/o_text_basic.c:361
 #, c-format
 msgid "Found an unsupported text angle [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr "Niet ondersteunde teksthoek gevonden [ %c %d %d %d %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_text_basic.c:409
+#: libgeda/src/o_text_basic.c:383
 #, c-format
 msgid "Found an unsupported text alignment [ %c %d %d %d %d %d %d %d %d ]\n"
 msgstr ""
 "Niet ondersteunde tekst uitlijning gevonden [ %c %d %d %d %d %d %d %d %d ]\n"
 
-#: libgeda/src/o_text_basic.c:411
+#: libgeda/src/o_text_basic.c:385
 msgid "Setting alignment to LOWER_LEFT\n"
 msgstr "Uitlijning op LINKS_ONDER ingesteld\n"
 
-#: libgeda/src/o_text_basic.c:432
+#: libgeda/src/o_text_basic.c:406
 #, c-format
 msgid "Unexpected end-of-file after %d lines"
 msgstr "Onverwacht einde-bestand na %d lijnen"
@@ -853,103 +853,103 @@ msgstr "Object ~A heeft attributen"
 msgid "Object ~A has bad type '~A'"
 msgstr "Object ~A heeft een slecht type '~A'"
 
-#: libgeda/src/scheme_object.c:346
+#: libgeda/src/scheme_object.c:355
 msgid "Object ~A has invalid stroke cap style ~A"
 msgstr "Object ~A heeft een ongeldige slag cap stijl ~A"
 
-#: libgeda/src/scheme_object.c:359
+#: libgeda/src/scheme_object.c:368
 msgid "Object ~A has invalid stroke dash style ~A"
 msgstr "Object ~A heeft een ongeldige slag streep stijl ~A"
 
-#: libgeda/src/scheme_object.c:423
+#: libgeda/src/scheme_object.c:432
 msgid "Invalid stroke cap style ~A."
 msgstr "Ongeldige slag cap stijl ~A."
 
-#: libgeda/src/scheme_object.c:434
+#: libgeda/src/scheme_object.c:443
 msgid "Invalid stroke dash style ~A."
 msgstr "Ongeldige slag streep stijl ~A."
 
-#: libgeda/src/scheme_object.c:444
+#: libgeda/src/scheme_object.c:453
 msgid "Missing dash length parameter for dash style ~A."
 msgstr "Ontbrekende streeplengte parameter voor streep sijl ~A."
 
-#: libgeda/src/scheme_object.c:454
+#: libgeda/src/scheme_object.c:463
 msgid "Missing dot/dash space parameter for dash style ~A."
 msgstr "Ontbrekende punt/streep ruimte parameter voor streep stijl ~A."
 
-#: libgeda/src/scheme_object.c:516
+#: libgeda/src/scheme_object.c:525
 msgid "Object ~A has invalid fill style ~A"
 msgstr "Object ~A heeft een ongeldige opvul stijl ~A"
 
-#: libgeda/src/scheme_object.c:565
+#: libgeda/src/scheme_object.c:574
 msgid "Invalid fill style ~A."
 msgstr "Ongeldige opvul stijl ~A."
 
-#: libgeda/src/scheme_object.c:573
+#: libgeda/src/scheme_object.c:582
 msgid "Missing second space parameter for fill style ~A."
 msgstr "Ontbrekende tweede ruimte parameter voor opvul stijl ~A."
 
-#: libgeda/src/scheme_object.c:582
+#: libgeda/src/scheme_object.c:591
 msgid "Missing second angle parameter for fill style ~A."
 msgstr "Ontbrekende tweede hoek parameter voor opvul stijl ~A."
 
-#: libgeda/src/scheme_object.c:592
+#: libgeda/src/scheme_object.c:601
 msgid "Missing stroke width parameter for fill style ~A."
 msgstr "Ontbrekende slag breedte parameter voor opvul stijl ~A."
 
-#: libgeda/src/scheme_object.c:601
+#: libgeda/src/scheme_object.c:610
 msgid "Missing space parameter for fill style ~A."
 msgstr "Ontbrekende ruimte parameter voor opvul stijl ~A."
 
-#: libgeda/src/scheme_object.c:610
+#: libgeda/src/scheme_object.c:619
 msgid "Missing angle parameter for fill style ~A."
 msgstr "Ontbrekende hoek parameter voor opvul stijl ~A."
 
-#: libgeda/src/scheme_object.c:909
+#: libgeda/src/scheme_object.c:918
 msgid "Invalid pin type ~A, must be 'net or 'bus"
 msgstr "Ongeldig pen type ~A, moet een 'net of 'bus zijn"
 
-#: libgeda/src/scheme_object.c:952
+#: libgeda/src/scheme_object.c:961
 msgid "Object ~A has invalid pin type."
 msgstr "Object ~A heeft een ongeldig pen type."
 
-#: libgeda/src/scheme_object.c:1347
+#: libgeda/src/scheme_object.c:1356
 msgid "Invalid text alignment ~A."
 msgstr "Ongeldige tekst uitlijning ~A."
 
-#: libgeda/src/scheme_object.c:1363
+#: libgeda/src/scheme_object.c:1372
 msgid "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr "Ongeldige tekst hoek ~A. moet 0, 90, 180, of 270 graden zijn"
 
-#: libgeda/src/scheme_object.c:1382
+#: libgeda/src/scheme_object.c:1391
 msgid "Invalid text name/value visibility ~A."
 msgstr "Ongeldige tekst naam/waarde zichtbaarheid ~A."
 
-#: libgeda/src/scheme_object.c:1457
+#: libgeda/src/scheme_object.c:1466
 msgid "Text object ~A has invalid text alignment ~A"
 msgstr "Tekst object ~A heeft een ongeldige tekst uitlijning ~A"
 
-#: libgeda/src/scheme_object.c:1466
+#: libgeda/src/scheme_object.c:1475
 msgid "Text object ~A has invalid visibility ~A"
 msgstr "Tekst object ~A heeft een ongeldige zichtbaarheid ~A"
 
-#: libgeda/src/scheme_object.c:1476
+#: libgeda/src/scheme_object.c:1485
 msgid "Text object ~A has invalid text attribute visibility ~A"
 msgstr "Tekst object ~A heeft een ongeldige tekst attribuut zichtbaarheid ~A"
 
-#: libgeda/src/scheme_object.c:1517
+#: libgeda/src/scheme_object.c:1526
 msgid "Object ~A is not included in a page."
 msgstr "Object ~A is niet opgenomen in een pagina."
 
-#: libgeda/src/scheme_object.c:1670
+#: libgeda/src/scheme_object.c:1679
 msgid "Path object ~A has invalid element type ~A at index ~A"
 msgstr "Pad object ~A heeft een ongeldige element type ~A bij index ~A"
 
-#: libgeda/src/scheme_object.c:1784
+#: libgeda/src/scheme_object.c:1793
 msgid "Invalid path element type ~A."
 msgstr "Ongeldig pad element type ~A."
 
-#: libgeda/src/scheme_object.c:1957
+#: libgeda/src/scheme_object.c:1966
 msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr "Ongeldige afbeelding hoek ~A. Moet 0, 90, 180, of 270 graden zijn"
 
@@ -978,8 +978,8 @@ msgstr "Object ~A is geen deel van een pagina"
 #~ msgid ""
 #~ "Unable to open the prolog file `%s' for reading in f_print_header()\n"
 #~ msgstr ""
-#~ "Kan het prolog bestand `%s' niet openen tijdens lezen in f_print_header"
-#~ "()\n"
+#~ "Kan het prolog bestand `%s' niet openen tijdens lezen in "
+#~ "f_print_header()\n"
 
 #~ msgid "Error during reading of the prolog file `%s' in f_print_header()\n"
 #~ msgstr ""
