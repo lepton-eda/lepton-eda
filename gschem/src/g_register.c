@@ -154,6 +154,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "edit-unlock",               0, 0, 0, g_keys_edit_unlock },
   { "edit-linetype",             0, 0, 0, g_keys_edit_linetype },
   { "edit-filltype",             0, 0, 0, g_keys_edit_filltype },
+  { "edit-pin-type",             0, 0, 0, g_keys_edit_pin_type },
   { "edit-translate",            0, 0, 0, g_keys_edit_translate },
   { "edit-invoke-macro",         0, 0, 0, g_keys_edit_invoke_macro },
   { "edit-embed",                0, 0, 0, g_keys_edit_embed },
