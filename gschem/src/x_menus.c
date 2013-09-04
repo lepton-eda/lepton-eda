@@ -33,32 +33,36 @@
 #include <dmalloc.h>
 #endif
 
-static GtkItemFactoryEntry popup_items[] = {
-  { N_("/Add Net"), 	      NULL, i_callback_add_net,           0, NULL},
-  { N_("/Add Attribute..."),  NULL, i_callback_add_attribute,     0, NULL},
-  { N_("/Add Component..."),  NULL, i_callback_add_component,     0, NULL},
-  { N_("/Add Bus"), 	      NULL, i_callback_add_bus,           0, NULL},
-  { N_("/Add Text"), 	      NULL, i_callback_add_text,          0, NULL},
-  { "/sep1", NULL, NULL, 0, "<Separator>"},
-  { N_("/Zoom In"),       NULL, i_callback_view_zoom_in,      0, NULL},
-  { N_("/Zoom Out"),      NULL, i_callback_view_zoom_out,     0, NULL},
-  { N_("/Zoom Box"),      NULL, i_callback_view_zoom_box,     0, NULL},
-  { N_("/Zoom Extents"),  NULL, i_callback_view_zoom_extents, 0, NULL},
-  { "/sep1", NULL, NULL, 0, "<Separator>"},
-  { N_("/Select"), 	  NULL, i_callback_edit_select,       0, NULL},
-  { N_("/Edit..."), 	  NULL, i_callback_edit_edit,         0, NULL},
-  { N_("/Edit pin type..."), 	  NULL, i_callback_edit_pin_type,         0, NULL},
-  { N_("/Copy"),          NULL, i_callback_edit_copy,         0, NULL},
-  { N_("/Move"),          NULL, i_callback_edit_move,         0, NULL},
-  { N_("/Delete"),        NULL, i_callback_edit_delete,       0, NULL},
-  /* Menu items for hierarchy added by SDB 1.9.2005.  */
-  {"/sep1", NULL, NULL, 0, "<Separator>"},
-  {N_("/Down Schematic"), NULL, i_callback_hierarchy_down_schematic, 0, NULL},
-  {N_("/Down Symbol"),    NULL, i_callback_hierarchy_down_symbol,    0, NULL},
-  {N_("/Up"),             NULL, i_callback_hierarchy_up,             0, NULL},
-};  
+struct PopupEntry {
+  const gchar const *name, *action, *stock_id;
+};
 
-int npopup_items = sizeof(popup_items) / sizeof(popup_items[0]);
+static struct PopupEntry popup_items[] = {
+  { N_("Add Net"), "add-net", "insert-net" },
+  { N_("Add Attribute"), "add-attribute", "insert-attribute" },
+  { N_("Add Component"), "add-component", "insert-symbol" },
+  { N_("Add Bus"), "add-bus", "insert-bus" },
+  { N_("Add Text"), "add-text", "insert-text" },
+  { "SEPARATOR", NULL, NULL },
+  { N_("Zoom In"), "view-zoom-in", "gtk-zoom-in" },
+  { N_("Zoom Out"), "view-zoom-out", "gtk-zoom-out" },
+  { N_("Zoom Box"), "view-zoom-box", NULL },
+  { N_("Zoom Extents"), "view-zoom-extents", "gtk-zoom-fit" },
+  { "SEPARATOR", NULL, NULL },
+  { N_("Select"), "edit-select", "select" },
+  { N_("Edit..."), "edit-edit", NULL },
+  { N_("Edit Pin Type..."), "edit-pin-type", NULL },
+  { N_("Copy"), "edit-copy", "clone" },
+  { N_("Move"), "edit-move", NULL },
+  { N_("Delete"), "edit-delete", "gtk-delete" },
+  { "SEPARATOR", NULL, NULL },
+  { N_("Down Schematic"), "hierarchy-down-schematic", "gtk-go-down" },
+  { N_("Down Symbol"), "hierarchy-down-symbol", "gtk-go-bottom" },
+  { N_("Up"), "hierarchy-up", "gtk-go-up" },
+
+  { NULL, NULL, NULL }, /* Guard */
+};
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -237,53 +241,56 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
   return menu_bar;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-static gchar* gettext_fn(const gchar *path,
-			 gpointer func_data ATTRIBUTE_UNUSED)
+GtkWidget *
+get_main_popup (GSCHEM_TOPLEVEL *w_current)
 {
-  /*! \bug Note that we have to discard the 'const' qualifier here to
-   * avoid build warnings when gettext is disabled.  This is required
-   * due to the prototype of the function pointer argument to
-   * gtk_item_factory_set_translate_func() */
-  return (gchar *) gettext(path);
-}
-
-GtkWidget *get_main_popup(GSCHEM_TOPLEVEL *w_current)
-{
-  static GtkItemFactory *item_factory;
-  GtkAccelGroup *accel_group;
+  GschemAction *action;
+  GtkWidget *menu_item;
   GtkWidget *menu;
+  GtkStockItem stock_info;
+  int i;
 
-  accel_group = gtk_accel_group_new();
+  menu = gtk_menu_new ();
 
-  /* This function initializes the item factory.
-     Param 1: The type of menu - can be GTK_TYPE_MENU_BAR, GTK_TYPE_MENU, or GTK_TYPE_OPTION_MENU.
-     Param 2: The path of the menu.
-     Param 3: A pointer to a gtk_accel_group.  The item factory sets up
-     the accelerator table while generating menus.
-  */
-  item_factory = gtk_item_factory_new(GTK_TYPE_MENU, "<popup>",
-                                      accel_group);
-  gtk_item_factory_set_translate_func (item_factory,
-                                       gettext_fn,
-                                       NULL, NULL);
-  /* This function creates the pop-up menu itself & attaches it to the
-     GtkItemFactory. Pass the item factory,
-     the number of items in the array, the array itself, and any
-     callback data for the the menu items. Note that npopup_items is 
-     a static var declared in this file above; popup_items is also a
-     static var declared above.
-  */
-  gtk_item_factory_create_items(item_factory, npopup_items, popup_items, w_current);
+  for (i = 0; popup_items[i].name != NULL; i++) {
+    struct PopupEntry e = popup_items[i];
 
-  /* Finally, return the actual menu created by the item factory. */
-  menu = (GtkWidget *) gtk_item_factory_get_widget(item_factory, "<popup>");
-  return (menu);
+    /* No action --> add a separator */
+    if (e.action == NULL) {
+      menu_item = gtk_menu_item_new();
+      gtk_widget_show (menu_item);
+      gtk_menu_append (GTK_MENU (menu), menu_item);
+      continue;
+    }
 
+    /* Don't bother showing keybindings in the popup menu */
+    action = g_object_new (GSCHEM_TYPE_ACTION,
+                           "name", e.action,
+                           "label", gettext (e.name),
+                           "tooltip", gettext (e.name),
+                           NULL);
+    /* If there's a matching stock item, use it. Otherwise lookup the
+       name in the icon theme. */
+    if (e.stock_id != NULL && gtk_stock_lookup (e.stock_id, &stock_info)) {
+      gtk_action_set_stock_id (GTK_ACTION (action), e.stock_id);
+    } else {
+      gtk_action_set_icon_name (GTK_ACTION (action), e.stock_id);
+    }
+
+    /* Connect things up so that the actions get run */
+    g_signal_connect (G_OBJECT (action), "activate",
+                      G_CALLBACK (g_menu_execute), w_current);
+
+    menu_item = gtk_action_create_menu_item (GTK_ACTION (action));
+    gtk_menu_append (GTK_MENU (menu), menu_item);
+
+    /* Add a handle to the menu object to get access to widget
+       objects. Horrible horrible hack, but it's the same approach as
+       taken for the main menu bar. :-( */
+    g_object_set_data (G_OBJECT (menu), e.name, menu_item);
+  }
+
+  return menu;
 }
 
 /*! \todo Finish function documentation!!!
@@ -295,15 +302,8 @@ GtkWidget *get_main_popup(GSCHEM_TOPLEVEL *w_current)
  */
 gint do_popup (GSCHEM_TOPLEVEL *w_current, GdkEventButton *event)
 {
-  GtkWidget *menu;   /* =NULL; */ /* was static */
-
-  menu = NULL;  /* Why do I need to do this? */
-  if (!menu)
-    menu = (GtkWidget *) w_current->popup_menu;
-
-  if (menu == NULL) {
-    printf("null menu\n");
-  }
+  GtkWidget *menu = (GtkWidget *) w_current->popup_menu;
+  g_return_val_if_fail (menu != NULL, NULL);
 
   gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
                   event->button, event->time);
@@ -344,34 +344,22 @@ void x_menus_sensitivity (GSCHEM_TOPLEVEL *w_current, const char *buf, int flag)
  *  \par Function Description
  *  This function sets the sensitivity of the items in the right button
  *  popup.
- *
- *  \note
- *  1.9.2005 -- SDB.
  */
 void x_menus_popup_sensitivity (GSCHEM_TOPLEVEL *w_current, const char *buf, int flag)
 {
-  GtkWidget *menu_item;
-  GtkItemFactory *menu_item_factory;
-  
-  if (!buf) {
-    return;
-  }
+  GtkWidget *item;
 
-  if (!w_current->popup_menu) {
-    s_log_message(_("Popup_menu_item_factory doesn't exist!\n")); 
-    return;
-  }
+  g_assert (w_current);
+  g_assert (buf);
+  g_assert (w_current->popup_menu);
 
-  /* 
-   * first get entire item factory from popup, then get the individual 
-   * menu item indexed by buf.
-   */
-  menu_item_factory = (GtkItemFactory *)gtk_item_factory_from_widget(w_current->popup_menu);  
-  menu_item = (GtkWidget *) gtk_item_factory_get_widget(menu_item_factory, buf);
-  if (menu_item) {
-    gtk_widget_set_sensitive(GTK_WIDGET(menu_item), flag);
+  item = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->popup_menu), buf));
+
+  if (item) {
+    gtk_widget_set_sensitive (item, flag);
   } else {
-    s_log_message(_("Tried to set the sensitivity on a non-existent popup menu_item\n")); 
+    g_critical (_("Tried to set the sensitivity on non-existent menu item '%s'\n"),
+                buf);
   }
 }
 

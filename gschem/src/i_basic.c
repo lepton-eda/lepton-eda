@@ -456,8 +456,8 @@ void i_update_menus(GSCHEM_TOPLEVEL *w_current)
     x_menus_sensitivity(w_current, "A_ttributes/_Toggle Visibility", have_text_selected);
 
     /*  Menu items for hierarchy added by SDB 1.9.2005.  */
-    x_menus_popup_sensitivity(w_current, "/Down Schematic", TRUE);
-    x_menus_popup_sensitivity(w_current, "/Down Symbol", TRUE);
+    x_menus_popup_sensitivity(w_current, "Down Schematic", TRUE);
+    x_menus_popup_sensitivity(w_current, "Down Symbol", TRUE);
     /* x_menus_popup_sensitivity(w_current, "/Up", TRUE); */
 
   } else {
@@ -503,8 +503,8 @@ void i_update_menus(GSCHEM_TOPLEVEL *w_current)
     x_menus_sensitivity(w_current, "A_ttributes/_Toggle Visibility", FALSE);
 
     /*  Menu items for hierarchy added by SDB 1.9.2005.  */
-    x_menus_popup_sensitivity(w_current, "/Down Schematic", FALSE);
-    x_menus_popup_sensitivity(w_current, "/Down Symbol", FALSE);
+    x_menus_popup_sensitivity(w_current, "Down Schematic", FALSE);
+    x_menus_popup_sensitivity(w_current, "Down Symbol", FALSE);
     /* x_menus_popup_sensitivity(w_current, "/Up", FALSE);	*/
   }
 
