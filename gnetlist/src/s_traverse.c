@@ -164,7 +164,7 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
 
   cfg = eda_config_get_context_for_file (NULL);
   is_hierarchy = eda_config_get_boolean (cfg, "gnetlist", "traverse-hierarchy", &err);
-  if (err == NULL) {
+  if (err != NULL) {
     is_hierarchy = TRUE;
     g_clear_error (&err);
   }
