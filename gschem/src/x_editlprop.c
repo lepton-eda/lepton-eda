@@ -567,8 +567,8 @@ line_type_dialog (GSCHEM_TOPLEVEL *w_current)
     x_editlprop_set_selection (EDITLPROP (w_current->lpwindow),
                                w_current->toplevel->page_current->selection_list);
 
-    gtk_window_set_transient_for (GTK_WINDOW (w_current->main_window),
-                                  GTK_WINDOW (w_current->lpwindow));
+    gtk_window_set_transient_for (GTK_WINDOW (w_current->lpwindow),
+                                  GTK_WINDOW (w_current->main_window));
 
     x_integercb_set_model (EDITLPROP (w_current->lpwindow)->width_entry,
                            gschem_toplevel_get_line_width_list_store (w_current));

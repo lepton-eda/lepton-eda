@@ -513,8 +513,8 @@ fill_type_dialog (GSCHEM_TOPLEVEL *w_current)
                                         "gschem-toplevel",  w_current,
                                         NULL);
 
-    gtk_window_set_transient_for (GTK_WINDOW (w_current->main_window),
-                                  GTK_WINDOW (w_current->fpwindow));
+    gtk_window_set_transient_for (GTK_WINDOW (w_current->fpwindow),
+                                  GTK_WINDOW (w_current->main_window));
 
     x_integercb_set_model (EDITFPROP (w_current->fpwindow)->widthe,
                            gschem_toplevel_get_fill_width_list_store (w_current));

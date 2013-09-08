@@ -326,8 +326,8 @@ color_edit_dialog (GSCHEM_TOPLEVEL *w_current)
                                         "gschem-toplevel",  w_current,
                                         NULL);
 
-    gtk_window_set_transient_for (GTK_WINDOW (w_current->main_window),
-                                  GTK_WINDOW (w_current->clwindow));
+    gtk_window_set_transient_for (GTK_WINDOW (w_current->clwindow),
+                                  GTK_WINDOW (w_current->main_window));
 
     setup_initial_values (EDITCOLOR (w_current->clwindow));
 
