@@ -50,29 +50,12 @@ selection_to_buffer(GSCHEM_TOPLEVEL *w_current, int buf_num)
  */
 void o_buffer_copy(GSCHEM_TOPLEVEL *w_current, int buf_num)
 {
-  GList *iter;
-
   if (buf_num < 0 || buf_num >= MAX_BUFFERS) {
     g_warning (_("o_buffer_copy: Invalid buffer %i\n"), buf_num);
     return;
   }
 
   selection_to_buffer (w_current, buf_num);
-
-  /* reset all the refdes in the copied buffer */
-
-  iter = object_buffer[buf_num];
-
-  while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
-
-    if (object->type == OBJ_COMPLEX || object->type == OBJ_PLACEHOLDER) {
-      o_complex_reset_refdes(w_current->toplevel ,object);
-    }
-
-    iter = g_list_next(iter);
-  }
-
 }
 
 /*! \todo Finish function documentation!!!
