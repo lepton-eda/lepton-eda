@@ -1047,9 +1047,9 @@
 (global-set-key "X" 'view-pan)
 (global-set-key "<Control>X" 'clipboard-cut)
 
-(global-set-key "Y C" 'buffer-copy1)
-(global-set-key "Y U" 'buffer-cut1)
-(global-set-key "Y P" 'buffer-paste1)
+;(global-set-key "Y C" 'buffer-copy1)
+;(global-set-key "Y U" 'buffer-cut1)
+;(global-set-key "Y P" 'buffer-paste1)
 
 (global-set-key "<Control>Y" 'edit-redo)
 (global-set-key "Z" 'view-zoom-in)
@@ -1283,7 +1283,7 @@
 ;
 (add-menu (N_ "_File") file-menu-items)
 (add-menu (N_ "_Edit") edit-menu-items)
-(add-menu (N_ "_Buffer") buffer-menu-items)
+;(add-menu (N_ "_Buffer") buffer-menu-items)
 (add-menu (N_ "_View") view-menu-items)
 (add-menu (N_ "_Page") page-menu-items)
 (add-menu (N_ "_Add") add-menu-items)
