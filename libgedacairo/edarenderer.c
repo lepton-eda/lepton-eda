@@ -91,7 +91,8 @@ EDA_RENDERER_STROKE_WIDTH (EdaRenderer *r, double width) {
 }
 
 #define DEFAULT_FONT_NAME "Arial"
-#define GRIP_COLOR SELECT_COLOR
+#define GRIP_STROKE_COLOR SELECT_COLOR
+#define GRIP_FILL_COLOR BACKGROUND_COLOR
 #define TEXT_MARKER_SIZE 10
 #define TEXT_MARKER_COLOR LOCK_COLOR
 
@@ -1090,11 +1091,8 @@ eda_renderer_default_draw_grips (EdaRenderer *renderer, OBJECT *object)
 
   if (!eda_renderer_is_drawable (renderer, object))
     return;
-  if (!eda_renderer_is_drawable_color (renderer, GRIP_COLOR, FALSE))
+  if (!eda_renderer_is_drawable_color (renderer, GRIP_STROKE_COLOR, FALSE))
     return;
-
-  eda_cairo_set_source_color (renderer->priv->cr, GRIP_COLOR,
-                              renderer->priv->color_map);
 
   switch (object->type) {
   case OBJ_LINE:
@@ -1158,6 +1156,14 @@ eda_renderer_draw_grips_impl (EdaRenderer *renderer, int n_grips, ...)
                           0, 0, x, y,
                           renderer->priv->grip_size,
                           renderer->priv->grip_size);
+
+    eda_cairo_set_source_color (renderer->priv->cr, GRIP_FILL_COLOR,
+                                renderer->priv->color_map);
+    cairo_fill_preserve (renderer->priv->cr);
+
+    eda_cairo_set_source_color (renderer->priv->cr, GRIP_STROKE_COLOR,
+                                renderer->priv->color_map);
+
     eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                       TYPE_SOLID, END_NONE,
                       EDA_RENDERER_STROKE_WIDTH (renderer, 0), -1, -1);
