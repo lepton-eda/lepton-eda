@@ -482,7 +482,6 @@ int o_grips_start(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_grips_motion(GSCHEM_TOPLEVEL *w_current, int x, int y);
 void o_grips_end(GSCHEM_TOPLEVEL *w_current);
 void o_grips_cancel(GSCHEM_TOPLEVEL *w_current);
-int o_grips_size(GSCHEM_TOPLEVEL *w_current);
 void o_grips_draw_rubber(GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer);
 /* o_line.c */
 void o_line_invalidate_rubber(GSCHEM_TOPLEVEL *w_current);

@@ -78,7 +78,7 @@ OBJECT *o_grips_search_world(GSCHEM_TOPLEVEL *w_current, int x, int y, int *whic
   }
 
   /* get the size of the grip according to zoom level */
-  size = o_grips_size(w_current);
+  size = GRIP_SIZE / 2;
   w_size = WORLDabs (w_current, size );
 
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );
@@ -1425,38 +1425,6 @@ void o_grips_end(GSCHEM_TOPLEVEL *w_current)
   o_undo_savestate(w_current, UNDO_ALL);
 }
 
-
-/*! \brief Get half the width and height of grip in screen units.
- *  \par Function Description
- *  According to the current zoom level, the function returns half the width
- *  and height of a grip in screen units.
- *
- *  <B>GRIP_SIZE1</B> and <B>GRIP_SIZE2</B> and <B>GRIP_SIZE3</B> are macros defined
- *  in gschem_defines.h. They are the half width/height of a grip in
- *  world unit for a determined range of zoom factors.
- *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
- *  \return Half grip size in screen units.
- */
-int o_grips_size(GSCHEM_TOPLEVEL *w_current)
-{
-  TOPLEVEL *toplevel = w_current->toplevel;
-  int factor, size;
-  
-  factor = (int) toplevel->page_current->to_world_x_constant;
-  if (factor > SMALL_ZOOMFACTOR1) {
-    /* big zoom factor : small size converted to screen unit */
-    size = SCREENabs (w_current, GRIP_SIZE1);
-  } else if (factor > SMALL_ZOOMFACTOR2) {
-    /* medium zoom factor : medium size converted to screen unit */
-    size = SCREENabs (w_current, GRIP_SIZE2);
-  } else {
-    /* small zoom factor : big size converted to screen unit */
-    size = SCREENabs (w_current, GRIP_SIZE3);
-  }
-  
-  return min(size, MAXIMUM_GRIP_PIXELS/2);
-}
 
 /*! \brief Draw objects being grip maniuplated from GSCHEM_TOPLEVEL object.
  *

@@ -66,7 +66,7 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (toplevel->page_current != NULL);
 
-  grip_half_size = o_grips_size (w_current);
+  grip_half_size = GRIP_SIZE / 2;
   cue_half_size = SCREENabs (w_current, CUE_BOX_SIZE);
   bloat = MAX (grip_half_size, cue_half_size);
 
@@ -531,7 +531,7 @@ void o_invalidate_rect (GSCHEM_TOPLEVEL *w_current,
   if (!GDK_IS_WINDOW( w_current->window ))
     return;
 
-  grip_half_size = o_grips_size (w_current);
+  grip_half_size = GRIP_SIZE / 2;
   cue_half_size = SCREENabs (w_current, CUE_BOX_SIZE);
   bloat = MAX (grip_half_size, cue_half_size) + INVALIDATE_MARGIN;
 

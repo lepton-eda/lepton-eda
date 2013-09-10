@@ -28,13 +28,8 @@
 
 #define ZOOM_EXTENTS_PADDING_PX 5
 
-/* For grip size */
-#define GRIP_SIZE1		25
-#define GRIP_SIZE2		50
-#define GRIP_SIZE3		80
-#define SMALL_ZOOMFACTOR1	150
-#define SMALL_ZOOMFACTOR2	30
-#define MAXIMUM_GRIP_PIXELS     30
+/* For grip size in pixels (i.e. device units) */
+#define GRIP_SIZE		10.0
 
 /* for bus_ripper_type */
 #define COMP_BUS_RIPPER         0
