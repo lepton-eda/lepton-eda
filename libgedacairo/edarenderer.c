@@ -1166,7 +1166,7 @@ eda_renderer_draw_grips_impl (EdaRenderer *renderer, int n_grips, ...)
 
     eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                       TYPE_SOLID, END_NONE,
-                      EDA_RENDERER_STROKE_WIDTH (renderer, 0), -1, -1);
+                      0, -1, -1);
   }
   va_end (coordinates);
 }
