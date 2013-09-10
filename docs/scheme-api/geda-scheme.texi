@@ -2280,7 +2280,7 @@ normally modify their arguments.
 For more information on hooks in Guile, @pxref{Hooks, , Hooks, guile,
 Guile Reference Manual}.
 
-@defvar add-object-hook
+@defvar add-objects-hook
 Called after objects are added to the page, at their initial creation.
 The argument is a list of the objects being added.
 @end defvar
