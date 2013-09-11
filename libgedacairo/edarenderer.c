@@ -51,6 +51,9 @@ enum {
   FLAG_TEXT_HIDDEN = EDA_RENDERER_FLAG_TEXT_HIDDEN,
   FLAG_TEXT_OUTLINE = EDA_RENDERER_FLAG_TEXT_OUTLINE,
   FLAG_TEXT_ORIGIN = EDA_RENDERER_FLAG_TEXT_ORIGIN,
+
+  GRIP_SQUARE,
+  GRIP_CIRCLE,
 };
 
 struct _EdaRendererPrivate
@@ -133,7 +136,7 @@ static void eda_renderer_draw_complex (EdaRenderer *renderer, OBJECT *object);
 
 static void eda_renderer_default_draw_grips (EdaRenderer *renderer, OBJECT *object);
 static void eda_renderer_draw_grips_list (EdaRenderer *renderer, GList *objects);
-static void eda_renderer_draw_grips_impl (EdaRenderer *renderer, int n_grips, ...);
+static void eda_renderer_draw_grips_impl (EdaRenderer *renderer, int type, int n_grips, ...);
 static void eda_renderer_draw_arc_grips (EdaRenderer *renderer, OBJECT *object);
 static void eda_renderer_draw_path_grips (EdaRenderer *renderer, OBJECT *object);
 static void eda_renderer_draw_text_grips (EdaRenderer *renderer, OBJECT *object);
@@ -1099,12 +1102,12 @@ eda_renderer_default_draw_grips (EdaRenderer *renderer, OBJECT *object)
   case OBJ_NET:
   case OBJ_BUS:
   case OBJ_PIN:
-    eda_renderer_draw_grips_impl (renderer, 2,
+    eda_renderer_draw_grips_impl (renderer, GRIP_SQUARE, 2,
         object->line->x[0], object->line->y[0],
         object->line->x[1], object->line->y[1]);
     break;
   case OBJ_BOX:
-    eda_renderer_draw_grips_impl (renderer, 4,
+    eda_renderer_draw_grips_impl (renderer, GRIP_SQUARE, 4,
         object->box->upper_x, object->box->upper_y,
         object->box->lower_x, object->box->upper_y,
         object->box->upper_x, object->box->lower_y,
@@ -1115,7 +1118,7 @@ eda_renderer_default_draw_grips (EdaRenderer *renderer, OBJECT *object)
     break;
   case OBJ_CIRCLE:
     /* Grip at bottom right of containing square */
-    eda_renderer_draw_grips_impl (renderer, 1,
+    eda_renderer_draw_grips_impl (renderer, GRIP_SQUARE, 1,
         object->circle->center_x + object->circle->radius,
         object->circle->center_y - object->circle->radius);
     break;
@@ -1126,7 +1129,7 @@ eda_renderer_default_draw_grips (EdaRenderer *renderer, OBJECT *object)
     eda_renderer_draw_text_grips (renderer, object);
     break;
   case OBJ_PICTURE:
-    eda_renderer_draw_grips_impl (renderer, 4,
+    eda_renderer_draw_grips_impl (renderer, GRIP_SQUARE, 4,
         object->picture->upper_x, object->picture->upper_y,
         object->picture->lower_x, object->picture->upper_y,
         object->picture->upper_x, object->picture->lower_y,
@@ -1142,7 +1145,7 @@ eda_renderer_default_draw_grips (EdaRenderer *renderer, OBJECT *object)
 }
 
 static void
-eda_renderer_draw_grips_impl (EdaRenderer *renderer, int n_grips, ...)
+eda_renderer_draw_grips_impl (EdaRenderer *renderer, int type, int n_grips, ...)
 {
   va_list coordinates;
   int i;
@@ -1152,10 +1155,22 @@ eda_renderer_draw_grips_impl (EdaRenderer *renderer, int n_grips, ...)
     int x = va_arg (coordinates, int);
     int y = va_arg (coordinates, int);
 
-    eda_cairo_center_box (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
-                          0, 0, x, y,
-                          renderer->priv->grip_size,
-                          renderer->priv->grip_size);
+    switch (type) {
+    case GRIP_SQUARE:
+      eda_cairo_center_box (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
+                            0, 0, x, y,
+                            renderer->priv->grip_size,
+                            renderer->priv->grip_size);
+      break;
+    case GRIP_CIRCLE:
+      eda_cairo_center_arc (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
+                            0, 0, x, y,
+                            renderer->priv->grip_size,
+                            0, 360);
+      break;
+    default:
+      g_return_if_reached ();
+    }
 
     eda_cairo_set_source_color (renderer->priv->cr, GRIP_FILL_COLOR,
                                 renderer->priv->color_map);
@@ -1198,7 +1213,7 @@ eda_renderer_draw_arc_grips (EdaRenderer *renderer, OBJECT *object)
   x3 = x1 + radius * cos ((start_angle + end_angle) * M_PI / 180);
   y3 = y1 + radius * sin ((start_angle + end_angle) * M_PI / 180);
 
-  eda_renderer_draw_grips_impl (renderer, 3,
+  eda_renderer_draw_grips_impl (renderer, GRIP_SQUARE, 3,
                                 x1, y1, /* center */
                                 x2, y2, /* start_angle */
                                 x3, y3); /* end_angle */
@@ -1229,7 +1244,7 @@ eda_renderer_draw_path_grips (EdaRenderer *renderer, OBJECT *object)
                         TYPE_SOLID, END_NONE,
                         EDA_RENDERER_STROKE_WIDTH (renderer, 0), -1, -1);
       /* Two control point grips */
-      eda_renderer_draw_grips_impl (renderer, 2,
+      eda_renderer_draw_grips_impl (renderer, GRIP_CIRCLE, 2,
                                     section->x1, section->y1,
                                     section->x2, section->y2);
       /* Deliberately fall through */
@@ -1239,7 +1254,7 @@ eda_renderer_draw_path_grips (EdaRenderer *renderer, OBJECT *object)
       last_x = next_x;
       last_y = next_y;
       /* One control point grip */
-      eda_renderer_draw_grips_impl (renderer, 1,
+      eda_renderer_draw_grips_impl (renderer, GRIP_SQUARE, 1,
                                     section->x3, section->y3);
       break;
     case PATH_END:
