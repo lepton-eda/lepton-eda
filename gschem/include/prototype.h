@@ -29,6 +29,8 @@ void correct_aspect(GSCHEM_TOPLEVEL *w_current);
 /* g_action.c */
 gboolean g_action_eval_by_name (GSCHEM_TOPLEVEL *w_current, const gchar *action_name);
 gboolean g_action_get_position (gboolean snap, int *x, int *y);
+/* g_builtins.c */
+void g_init_builtins (void);
 /* g_attrib.c */
 void g_init_attrib ();
 /* g_funcs.c */
