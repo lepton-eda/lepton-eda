@@ -127,8 +127,8 @@ char *s_slib_search_dirs(const char *basename)
 
     while(dptr != NULL) {
 
-      /* Do a substring comp for a match */
-      if (strstr(dptr->d_name, basename) != NULL)  {
+      /* Search for an exact match */
+      if (strcmp(dptr->d_name, basename) == NULL)  {
         slib_path = g_strdup (slib[i].dir_name);
 	
         if (ptr) {
