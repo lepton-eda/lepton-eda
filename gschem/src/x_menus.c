@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -303,7 +303,7 @@ get_main_popup (GSCHEM_TOPLEVEL *w_current)
 gint do_popup (GSCHEM_TOPLEVEL *w_current, GdkEventButton *event)
 {
   GtkWidget *menu = (GtkWidget *) w_current->popup_menu;
-  g_return_val_if_fail (menu != NULL, NULL);
+  g_return_val_if_fail (menu != NULL, FALSE);
 
   gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
                   event->button, event->time);
