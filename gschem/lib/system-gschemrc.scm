@@ -1007,7 +1007,6 @@
 (global-set-key "P M" 'page-manager)
 (global-set-key "P N" 'page-next)
 (global-set-key "P P" 'page-prev)
-(global-set-key "P E" 'page-new)
 (global-set-key "P R" 'page-revert)
 (global-set-key "P C" 'page-close)
 (global-set-key "P <Shift>P" 'page-print)
@@ -1198,7 +1197,6 @@
         `( (,(N_ "_Manager...")       page-manager            #f)
            (,(N_ "_Previous")         page-prev               "gtk-go-back")
            (,(N_ "_Next")             page-next               "gtk-go-forward")
-           (,(N_ "Ne_w")              page-new                "gtk-new")
            (,(N_ "_Revert")           page-revert             "gtk-revert-to-saved")
            (,(N_ "_Close")            page-close              "gtk-close")))
 

@@ -203,7 +203,6 @@ static struct gsubr_t gschem_funcs[] = {
   { "page-manager",              0, 0, 0, g_keys_page_manager },
   { "page-next",                 0, 0, 0, g_keys_page_next },
   { "page-prev",                 0, 0, 0, g_keys_page_prev },
-  { "page-new",                  0, 0, 0, g_keys_page_new },
   { "page-close",                0, 0, 0, g_keys_page_close },
   { "page-revert",               0, 0, 0, g_keys_page_revert },
   { "page-print",                0, 0, 0, g_keys_page_print },

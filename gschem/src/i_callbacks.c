@@ -1449,24 +1449,6 @@ DEFINE_I_CALLBACK(page_prev)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(page_new)
-{
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*)data;
-  PAGE *page;
-
-  g_return_if_fail (w_current != NULL);
-
-  /* create a new page */
-  page = x_window_open_page (w_current, NULL);
-  x_window_set_current_page (w_current, page);
-  s_log_message (_("New page created [%s]\n"), page->page_filename);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 DEFINE_I_CALLBACK(page_close)
 {
   GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
