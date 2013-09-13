@@ -2786,38 +2786,6 @@ DEFINE_I_CALLBACK(options_show_log_window)
   x_log_open ();
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  this is Ales' catch all misc callback
- */
-DEFINE_I_CALLBACK(misc)
-{
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  this is Ales' second catch all misc callback
- */
-DEFINE_I_CALLBACK(misc2)
-{
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  this is Ales' third catch all misc callback
- */
-DEFINE_I_CALLBACK(misc3)
-{
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
