@@ -20,6 +20,7 @@
 (define-module (gschem keymap)
   #:use-module (gschem core keymap)
   #:use-module (gschem core gettext)
+  #:use-module (gschem hook)
   #:use-module (ice-9 optargs)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9))
@@ -73,9 +74,11 @@
 (define-public keymap? (record-predicate <keymap>))
 
 (define*-public (make-keymap)
-  (%make-keymap
-   ;; This is actually an association list.
-   '()))
+  (let ((k (%make-keymap
+            '() ;; key-table: This is an empty alist.
+            )))
+    (add-bind-keys-hook! k)
+    k))
 
 (define-public (keymap-lookup-key keymap key)
   (assoc-ref (keymap-key-table keymap) key))
@@ -85,7 +88,8 @@
     (set-keymap-key-table! keymap
                            (if bindable
                                (assoc-set! alist key bindable)
-                               (assoc-remove! alist key)))))
+                               (assoc-remove! alist key))))
+    (run-hook bind-keys-hook keymap (make-vector 1 key) bindable))
 
 (define-public (keymap-lookup-binding keymap bindable)
   (let ((entry (find (lambda (x) (eq? bindable (cdr x)))
@@ -193,3 +197,53 @@
    (lambda (return)
      (lookup-binding-recursive keymap '() return)
      #f)))  ;; Return #f if no binding found.
+
+;; -------------------- Bind keys hook --------------------
+
+;; bind-keys-hook is called whenever a keymap changes.  That means
+;; that it needs to be called recursively by any keymap that binds an
+;; inferior keymap to implement prefix keys.  For example, the key
+;; sequence "F N" is implemented by binding "N" to an action in a
+;; keymap, and then binding "F" to that keymap in the %global-keymap.
+;; If "N" is rebound in the inferior keymap, then a bind-key-hook call
+;; must occur for the %global-keymap.
+;;
+;; Although each keymap could add a closure directly to
+;; bind-keys-hook, that approach would prevent keymaps from ever being
+;; garbage-collected (because bind-keys-hook would forever hold a
+;; reference to them).  Instead, we use a weak hash table to hold the
+;; list of keymaps so that when the keymaps are garbage-collected they
+;; are automatically disconnected from bind-keys-hook.
+
+(define %bind-keys-hook-keymaps (make-weak-key-hash-table 32))
+
+(define (add-bind-keys-hook! keymap)
+  (hash-set! %bind-keys-hook-keymaps keymap #t))
+
+(define (bind-keys-default-handler keymap keys binding)
+
+  (define (left-extend-keys key keys)
+    ;; Adds KEY onto the front of the key sequence KEYS.
+    (let* ((len (vector-length keys))
+           (vec (make-vector (1+ len))))
+      (vector-set! vec 0 key)
+      (vector-move-right! keys 0 len vec 1)
+      vec))
+
+  (define (bind-keys-recurse keymap inferior-keymap keys binding)
+    ;; Check whether INFERIOR-KEYMAP is bound in KEYMAP, and if so,
+    ;; run bind-keys-hook again with the key sequence left-extended
+    ;; with the associated prefix key.
+    (let ((prefix-key (keymap-lookup-binding keymap inferior-keymap)))
+      (and prefix-key
+           (run-hook bind-keys-hook keymap
+                     (left-extend-keys prefix-key keys)
+                     binding))))
+
+  (hash-for-each
+   (lambda (k v) (or (eq? k keymap)
+                     (bind-keys-recurse k keymap keys binding)))
+   %bind-keys-hook-keymaps))
+
+;; Add the default handler to be run *last* in the bind-keys-hook
+(add-hook! bind-keys-hook bind-keys-default-handler #t)

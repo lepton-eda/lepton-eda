@@ -2342,6 +2342,15 @@ Called when an action property is set.  The arguments are the action,
 the property key and the property value. @xref{Actions}.
 @end defvar
 
+@defvar bind-keys-hook
+Called when a key binding is set or modified.  The arguments are the
+keymap, the key sequence and the binding's target.
+
+@strong{Note}: @code{bind-keys-hook} may be run multiple times for a
+single key binding event if the target keymap is bound within a
+superior keymap.
+@end defvar
+
 @node Actions
 @section Actions
 @cindex Actions

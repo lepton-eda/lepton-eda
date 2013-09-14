@@ -168,6 +168,7 @@ init_module_gschem_core_hook ()
   DEFINE_HOOK ("%deselect-objects-hook",1);
   DEFINE_HOOK ("%new-page-hook",1);
   DEFINE_HOOK ("%action-property-hook",3);
+  DEFINE_HOOK ("%bind-keys-hook",3);
 }
 
 /*!
