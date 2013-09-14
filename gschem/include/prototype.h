@@ -49,6 +49,7 @@ void g_init_hook ();
 void g_run_hook_object (GSCHEM_TOPLEVEL *w_current, const char *name, OBJECT *obj);
 void g_run_hook_object_list (GSCHEM_TOPLEVEL *w_current, const char *name, GList *obj_lst);
 void g_run_hook_page (GSCHEM_TOPLEVEL *w_current, const char *name, PAGE *page);
+EdascmHookProxy *g_hook_new_proxy_by_name (const char *name);
 /* g_keys.c */
 void g_keys_reset (GSCHEM_TOPLEVEL *w_current);
 int g_keys_execute(GSCHEM_TOPLEVEL *w_current, GdkEventKey *event);

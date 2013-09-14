@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -135,6 +135,20 @@ g_run_hook_page (GSCHEM_TOPLEVEL *w_current, const char *name, PAGE *page)
   g_scm_eval_protected (expr, scm_interaction_environment ());
   scm_dynwind_end ();
   scm_remember_upto_here_1 (expr);
+}
+
+/*! \brief Creates an EdascmHookProxy for a named hook.
+ * Return a newly-created hook proxy object for the hook called \a
+ * name.
+ *
+ * \param name  name of the hook for which to create a proxy.
+ * \return      newly-created EdascmHookProxy instance.
+ */
+EdascmHookProxy *
+g_hook_new_proxy_by_name (const char *name)
+{
+  SCM hook = g_get_hook_by_name (name);
+  return edascm_hook_proxy_new_with_hook (hook);
 }
 
 /*! \brief Create the (gschem core hook) Scheme module.
