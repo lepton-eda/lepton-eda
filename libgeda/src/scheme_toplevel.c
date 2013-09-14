@@ -127,7 +127,7 @@ init_module_geda_core_toplevel ()
  * \par Function Description
  * Registers some Scheme procedures for working with #TOPLEVEL smobs
  * and creates the #TOPLEVEL fluid. Should only be called by
- * scheme_api_init().
+ * edascm_init().
  */
 void
 edascm_init_toplevel ()

@@ -1168,7 +1168,7 @@ init_module_geda_core_config ()
  * \brief Initialise the basic gEDA configuration manipulation procedures.
  * \par Function Description
  * Registers some Scheme procedures for working with #EdaConfig
- * smobs. Should only be called by scheme_api_init().
+ * smobs. Should only be called by edascm_init().
  */
 void
 edascm_init_config ()

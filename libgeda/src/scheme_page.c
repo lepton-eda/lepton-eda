@@ -471,7 +471,7 @@ init_module_geda_core_page ()
  * \brief Initialise the basic gEDA page manipulation procedures.
  * \par Function Description
  * Registers some Scheme procedures for working with #PAGE
- * smobs. Should only be called by scheme_api_init().
+ * smobs. Should only be called by edascm_init().
  */
 void
 edascm_init_page ()

@@ -293,7 +293,7 @@ init_module_geda_core_attrib ()
  * \brief Initialise the basic gEDA attribute manipulation procedures.
  * \par Function Description
  * Registers some Scheme procedures for working with
- * attributes. Should only be called by scheme_api_init().
+ * attributes. Should only be called by edascm_init().
  */
 void
 edascm_init_attrib ()

@@ -74,7 +74,7 @@ SCM_DEFINE (platform, "%platform", 0, 0, 0, (),
  * \par Function Description
  * Returns a list of directories to be searched for system data.
  *
- * \node Scheme API: Implements the %sys-data-dirs procedure in the
+ * \note Scheme API: Implements the %sys-data-dirs procedure in the
  * (geda core os) module.
  *
  * \return a Scheme list of strings.
@@ -93,7 +93,7 @@ SCM_DEFINE (sys_data_dirs, "%sys-data-dirs", 0, 0, 0, (),
  * Returns a list of directories to be searched for system
  * configuration information.
  *
- * \node Scheme API: Implements the %sys-config-dirs procedure in the
+ * \note Scheme API: Implements the %sys-config-dirs procedure in the
  * (geda core os) module.
  *
  * \return a Scheme list of strings.
@@ -129,7 +129,7 @@ init_module_geda_core_os ()
  * \par Function Description
 
  * Registers some Scheme procedures that provide cross-platform
- * support. Should only be called by scheme_api_init().
+ * support. Should only be called by edascm_init().
  */
 void
 edascm_init_os ()
