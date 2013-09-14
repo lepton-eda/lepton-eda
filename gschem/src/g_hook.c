@@ -150,23 +150,24 @@ init_module_gschem_core_hook ()
 
 #include "g_hook.x"
 
-#define DEFINE_HOOK(name) \
+#define DEFINE_HOOK(name,arity)                      \
   do { \
-    scm_c_define (name, scm_make_hook (scm_from_int (1)));      \
+    scm_c_define (name, scm_make_hook (scm_from_int (arity)));      \
     scm_c_export (name, NULL); \
   } while (0)
 
-  DEFINE_HOOK ("%add-objects-hook");
-  DEFINE_HOOK ("%remove-objects-hook");
-  DEFINE_HOOK ("%move-objects-hook");
-  DEFINE_HOOK ("%mirror-objects-hook");
-  DEFINE_HOOK ("%rotate-objects-hook");
-  DEFINE_HOOK ("%paste-objects-hook");
-  DEFINE_HOOK ("%attach-attribs-hook");
-  DEFINE_HOOK ("%detach-attribs-hook");
-  DEFINE_HOOK ("%select-objects-hook");
-  DEFINE_HOOK ("%deselect-objects-hook");
-  DEFINE_HOOK ("%new-page-hook");
+  DEFINE_HOOK ("%add-objects-hook",1);
+  DEFINE_HOOK ("%remove-objects-hook",1);
+  DEFINE_HOOK ("%move-objects-hook",1);
+  DEFINE_HOOK ("%mirror-objects-hook",1);
+  DEFINE_HOOK ("%rotate-objects-hook",1);
+  DEFINE_HOOK ("%paste-objects-hook",1);
+  DEFINE_HOOK ("%attach-attribs-hook",1);
+  DEFINE_HOOK ("%detach-attribs-hook",1);
+  DEFINE_HOOK ("%select-objects-hook",1);
+  DEFINE_HOOK ("%deselect-objects-hook",1);
+  DEFINE_HOOK ("%new-page-hook",1);
+  DEFINE_HOOK ("%action-property-hook",3);
 }
 
 /*!

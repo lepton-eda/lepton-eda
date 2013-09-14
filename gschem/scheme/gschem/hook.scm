@@ -43,3 +43,5 @@
 (define-public deselect-objects-hook %deselect-objects-hook)
 
 (define-public new-page-hook %new-page-hook)
+
+(define-public action-property-hook %action-property-hook)

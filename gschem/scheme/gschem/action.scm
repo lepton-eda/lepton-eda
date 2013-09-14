@@ -20,6 +20,7 @@
 (define-module (gschem action)
   #:use-module (gschem core gettext)
   #:use-module (gschem window)
+  #:use-module (gschem hook)
   #:use-module (ice-9 optargs)
   #:export-syntax (define-action))
 
@@ -137,6 +138,7 @@
 
 (define-public (set-action-property! action key value)
   (set-action-properties! action
-   (assq-set! (action-properties action) key value)))
+   (assq-set! (action-properties action) key value))
+  (run-hook action-property-hook action key value))
 (define-public (action-property action key)
   (assq-ref (action-properties action) key))
