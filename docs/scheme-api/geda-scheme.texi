@@ -2038,6 +2038,7 @@ focused on enabling and responding to user editing operations.
 * Key mapping::
 * Selections::
 * Hooks::
+* Actions::
 * Miscellanous gschem functions::
 @end menu
 
@@ -2149,7 +2150,8 @@ suitable for display.
 
 @subsection Keymaps
 
-A @dfn{keymap} maps key combinations to actions or other keymaps.
+A @dfn{keymap} maps key combinations to values (usually actions) or to
+other keymaps.  @xref{Actions}.
 
 @defun keymap? obj
 Returns @samp{#t} if and only if @var{obj} is a keymap.
@@ -2335,28 +2337,127 @@ a list of objects that were deselected.
 Called when a new page is created. The argument is the new page.
 @end defvar
 
-@node Miscellanous gschem functions
-@section Miscellaneous gschem functions
-
-@subsection gschem actions
+@node Actions
+@section Actions
+@cindex Actions
 
 To use the functions described in this section, you will need to load
 the @code{(gschem action)} module.
 
-@defun eval-action! action
-Evaluate the gschem action @var{action}, returning @samp{#t} on
-success and raising an error on failure.  @var{action} should be a
-symbol naming a thunk procedure defined in the current module.  The
-special symbol @samp{repeat-last-command} is interpreted as a request
-to repeat the last action evaluated via @code{eval-action!}.
+@subsection Action objects
+@cindex Action objects
+@cindex Action properties
 
-All actions initiated via the gschem GUI (via menus, toolbar or
-keybindings) are executed via @code{eval-action!}.  You should
-normally use @code{eval-action!} only when it is particularly
-important that the action is executed in exactly the same way as the
-GUI would do it.  Since actions are just procedures, you can usually
-just call them directly.
+Usually, it is sufficient to use normal Scheme functions when
+extending gschem.  However, when integrating an extension function
+with the gschem GUI (e.g. via keybindings), it is often useful to
+couple a Scheme function with metadata such as the label and icon to
+show in menus, etc.
+
+You can do this by creating a gschem action.  Actions can be called
+just like a normal Scheme function, but get executed via the gschem
+action dispatcher @code{eval-action!} rather than being invoked
+directly.  Normally, actions have names begining with an @samp{&}
+symbol.
+
+@defmac define-action (name [keyword value ...]) body
+Create a new action, bound to the given @var{name} in the current
+module.  The @var{body} is a sequence of Scheme expressions which are
+evaluated in order when the action is invoked.  Any number of initial
+properties can be specified for the action by providing pairs of
+@var{keyword}s and @var{value}s.
+
+@example
+(define-action (&report-bug #:label ``Report Bug'' #:icon ``web-browser'')
+  (show-uri ``http://bugs.launchpad.net/geda/+reportbug''))
+@end example
+@end defmac
+
+@defun make-action thunk [keyword value ...]
+Create and return a new action wrapping @var{thunk}.  Optionally,
+specify @var{keyword}-@var{value} pairs to set initial properties for the
+action.
 @end defun
+
+@defun action? obj
+Returns @samp{#t} iff @var{obj} is a gschem action, and @samp{#f}
+otherwise.
+@end defun
+
+Action properties are name-value pairs that are attached to an action.
+
+@defun action-property action key
+Return the value of one of @var{action}'s properties.  @var{key} is a
+symbol naming the property to retrieve.
+@end defun
+
+@defun set-action-property! action key value
+Set the value of one of @var{action}'s properties.  @var{key} is a
+symbol naming the property to set, and @var{value} is the new value.
+@end defun
+
+@subsection Evaluating actions
+@cindex Evaluating actions
+@cindex Action evaluation
+
+All of gschem's built-in actions are callable just like normal Scheme
+functions.  However, it's sometimes useful to explicitly evaluate an
+action in the same way that the gschem GUI (menus, toolbars or
+keybindings) would do so.
+
+@defun eval-action! action
+Invoke @var{action}, returning @samp{#t} on success and raising an
+error on failure.  There are a number of possible types for
+@var{action} that @code{eval-action!} will accept:
+
+@itemize
+@item
+A thunk.
+@item
+A gschem action.
+@item
+A symbol naming an action or a thunk in the current module.
+@end itemize
+
+The special symbol @samp{repeat-last-command} is interpreted as a
+request to repeat the last action evaluated via @code{eval-action!}.
+
+@strong{Note}: If you have an action object @code{&action}, then the
+following to calls are equivalent and interchangeable:
+
+@example
+(eval-action! &action)
+(&action)
+@end example
+@end defun
+
+@subsection Action positions
+@cindex Action positions
+
+Often in gschem actions it may be useful not to use the actual current
+mouse pointer position but to use the mouse pointer position that was
+current when the action was invoked.
+
+@defun eval-action-at-point! action [point]
+Evaluate @var{action} at a particular point on the schematic plane.
+If @var{point} is omitted, the action is evaluated at the current
+mouse pointer position.
+@end defun
+
+@defun action-position
+Return the current action pointer position, as set when the action was
+invoked (via @code{eval-action-at-point!}).  This only makes sense to
+call from inside an action.
+@end defun
+
+@strong{Note}: The pointer position can only be considered reliable
+when the user was actually clicking on or pointing at the schematic
+view area to invoke the action, rather than on a menu or toolbar
+button.  At the moment this means that an action position is only set
+when a command is invoked by hotkey.
+
+@node Miscellanous gschem functions
+@section Miscellaneous gschem functions
 
 @subsection gschem Attribute Helpers
 

@@ -66,6 +66,7 @@ gschem/data/geda-gschem.desktop.in
 
 gschem/lib/system-gschemrc.scm
 
+gschem/scheme/gschem/action.scm
 gschem/scheme/gschem/deprecated.scm
 gschem/scheme/gschem/gschemdoc.scm
 gschem/scheme/gschem/keymap.scm
