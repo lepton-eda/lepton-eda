@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library - Scheme API
- * Copyright (C) 2010-2012 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2010-2013 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -122,6 +122,8 @@ smob_free (SCM smob)
   case GEDA_SMOB_CONFIG:
     g_object_unref (G_OBJECT (data));
     break;
+  case GEDA_SMOB_CLOSURE:
+    break;
   default:
     /* This should REALLY definitely never be run */
     g_critical ("%s: received bad smob flags.", __FUNCTION__);
@@ -151,6 +153,8 @@ smob_free (SCM smob)
     case GEDA_SMOB_CONFIG:
       /* These are reference counted, so the structure will have
        * already been destroyed above if appropriate. */
+      break;
+    case GEDA_SMOB_CLOSURE:
       break;
     default:
       /* This should REALLY definitely never be run */
@@ -187,6 +191,9 @@ smob_print (SCM smob, SCM port, scm_print_state *pstate)
     break;
   case GEDA_SMOB_CONFIG:
     scm_puts ("config", port);
+    break;
+  case GEDA_SMOB_CLOSURE:
+    scm_puts ("closure", port);
     break;
   default:
     g_critical ("%s: received bad smob flags.", __FUNCTION__);
@@ -387,6 +394,26 @@ edascm_to_config (SCM smob)
   EDASCM_ASSERT_SMOB_VALID (smob);
 
   return EDA_CONFIG (SCM_SMOB_DATA (smob));
+}
+
+/*! \brief Get a smob for a C closure.
+ * \par Function Description
+ * Create a new smob representing a C closure.
+ *
+ * \warning Do not call this function from user code; use
+ * edascm_c_make_closure() instead.
+ *
+ * \param func C function to make closure around.
+ * \param user_data User data for function.
+ * \return a C closure smob.
+ */
+SCM
+edascm_from_closure (SCM (*func)(SCM, gpointer), gpointer user_data)
+{
+  SCM smob;
+  SCM_NEWSMOB2 (smob, geda_smob_tag, func, user_data);
+  SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_CLOSURE);
+  return smob;
 }
 
 /*! \brief Set whether a gEDA object may be garbage collected.
