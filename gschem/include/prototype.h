@@ -53,7 +53,6 @@ EdascmHookProxy *g_hook_new_proxy_by_name (const char *name);
 /* g_keys.c */
 void g_keys_reset (GSCHEM_TOPLEVEL *w_current);
 int g_keys_execute(GSCHEM_TOPLEVEL *w_current, GdkEventKey *event);
-GtkListStore *g_keys_to_list_store (void);
 SCM g_keys_file_new(SCM rest);
 SCM g_keys_file_new_window(SCM rest);
 SCM g_keys_file_open(SCM rest);

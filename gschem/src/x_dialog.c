@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -815,7 +815,7 @@ void x_dialog_hotkeys_response(GtkWidget *w, gint response,
 void x_dialog_hotkeys (GSCHEM_TOPLEVEL *w_current)
 {
   GtkWidget *vbox, *scrolled_win;
-  GtkListStore *store;
+  GtkTreeModel *store;
   GtkWidget *treeview;
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
@@ -853,25 +853,34 @@ void x_dialog_hotkeys (GSCHEM_TOPLEVEL *w_current)
                                     GTK_POLICY_AUTOMATIC);
 
     /* the model */
-    store = g_keys_to_list_store ();
+    store = GTK_TREE_MODEL (gschem_hotkey_store_new ());
 
     /* the tree view */
-    treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
+    treeview = gtk_tree_view_new_with_model (store);
     gtk_container_add(GTK_CONTAINER(scrolled_win), treeview);
 
     /* the columns */
-    renderer = gtk_cell_renderer_text_new ();
-    column = gtk_tree_view_column_new_with_attributes (_("Function"),
+    /* The first column contains the action's icon (if one was set)
+     * and its label. */
+    renderer = gtk_cell_renderer_pixbuf_new ();
+    column = gtk_tree_view_column_new_with_attributes (_("Action"),
                                                        renderer,
-                                                       "text",
-                                                       0,
+                                                       "icon-name",
+                                                       GSCHEM_HOTKEY_STORE_COLUMN_ICON,
                                                        NULL);
-    gtk_tree_view_append_column (GTK_TREE_VIEW(treeview), column);
+
     renderer = gtk_cell_renderer_text_new ();
+    gtk_tree_view_column_pack_start (column, renderer, FALSE);
+    gtk_tree_view_column_set_attributes (column, renderer,
+                                         "text", GSCHEM_HOTKEY_STORE_COLUMN_LABEL,
+                                         NULL);
+
+    /* The second column contains the action's keybinding */
+    gtk_tree_view_append_column (GTK_TREE_VIEW(treeview), column);
     column = gtk_tree_view_column_new_with_attributes (_("Keystroke(s)"),
                                                        renderer,
                                                        "text",
-                                                       1,
+                                                       GSCHEM_HOTKEY_STORE_COLUMN_KEYS,
                                                        NULL);
     gtk_tree_view_append_column (GTK_TREE_VIEW(treeview), column);
 

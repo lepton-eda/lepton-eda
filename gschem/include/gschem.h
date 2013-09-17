@@ -12,6 +12,7 @@
 #include "gschem_accel_label.h"
 #include "gschem_action.h"
 #include "gschem_dialog.h"
+#include "gschemhotkeystore.h"
 #include "i_vars.h"
 #include "x_preview.h"
 #include "x_compselect.h"

@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -584,64 +584,6 @@ g_keys_execute(GSCHEM_TOPLEVEL *w_current, GdkEventKey *event)
   }
 
   return !scm_is_false (s_retval);
-}
-
-/*! \brief Exports the keymap in Scheme to a GtkListStore
- *  \par Function Description
- *  This function converts the list of key sequence/action pairs
- *  returned by the Scheme function \c dump-global-keymap into a
- *  GtkListStore with two columns.  The first column contains the name
- *  of the action executed by the keybinding as a string, and the
- *  second contains the keybinding itself as a string suitable for
- *  display.
- *
- *  The returned value must be freed by caller.
- *
- *  \return A GtkListStore containing keymap data.
-  */
-GtkListStore *
-g_keys_to_list_store (void)
-{
-  SCM s_expr;
-  SCM s_lst;
-  SCM s_iter;
-  GtkListStore *list_store;
-
-  /* Call Scheme procedure to dump global keymap into list */
-  s_expr = scm_list_1 (scm_from_utf8_symbol ("dump-global-keymap"));
-  s_lst = g_scm_eval_protected (s_expr, scm_interaction_environment ());
-
-  g_return_val_if_fail (scm_is_true (scm_list_p (s_lst)), NULL);
-
-  /* Convert to  */
-  scm_dynwind_begin (0);
-  list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
-  scm_dynwind_unwind_handler (g_object_unref, list_store, 0);
-
-  for (s_iter = s_lst; !scm_is_null (s_iter); s_iter = scm_cdr (s_iter)) {
-    SCM s_binding = scm_caar (s_iter);
-    SCM s_keys = scm_cdar (s_iter);
-    char *binding, *keys;
-    GtkTreeIter iter;
-
-    scm_dynwind_begin (0);
-
-    binding = scm_to_utf8_string (s_binding);
-    scm_dynwind_free (binding);
-
-    keys = scm_to_utf8_string (s_keys);
-    scm_dynwind_free (keys);
-
-    gtk_list_store_insert_with_values (list_store, &iter, -1,
-                                       0, binding,
-                                       1, keys,
-                                       -1);
-
-    scm_dynwind_end ();
-  }
-
-  scm_dynwind_end ();
-  return list_store;
 }
 
 /*! \brief Create the (gschem core keymap) Scheme module

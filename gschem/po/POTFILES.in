@@ -11,6 +11,7 @@ gschem/src/g_util.c
 gschem/src/g_window.c
 gschem/src/globals.c
 gschem/src/gschem.c
+gschem/src/gschemhotkeystore.c
 gschem/src/gschem_accel_label.c
 gschem/src/i_basic.c
 gschem/src/i_callbacks.c

@@ -1,7 +1,7 @@
 ;;; gEDA - GPL Electronic Design Automation
 ;;; gschem - gEDA Schematic Capture
 ;;; Copyright (C) 1998-2010 Ales Hvezda
-;;; Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
+;;; Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -92,25 +92,39 @@
     (and keys (keys->display-string keys))))
 
 ;; Printing out current key bindings for gEDA (gschem)
-(define (dump-global-keymap)
+(define (%gschem-hotkey-store/dump-global-keymap)
   (dump-keymap %global-keymap))
 
 (define (dump-keymap keymap)
 
+  ;; Use this to change "Page_Up" to "Page Up" (etc.)
+  (define (munge-keystring str)
+    (string-map (lambda (c) (case c ((#\_) #\ ) (else c))) str))
+
   (define lst '())
 
   (define (binding->entry prefix key binding)
-    (let ((keys (list->vector (reverse (cons key prefix)))))
-      (set! lst (cons (cons (symbol->string binding)
-                            (keys->display-string keys))
-                      lst))))
+    (let ((keys (list->vector (reverse (cons key prefix))))
+          (action (false-if-exception (eval binding (current-module)))))
+
+      ;; If the binding points to an action, then use its label.
+      ;; Otherwise, just use the string value of the binding.
+      (let ((keystr (munge-keystring (keys->display-string keys)))
+            (cmdstr (or (and (action? action)
+                             (action-property action 'label))
+                        (symbol->string binding)))
+            (iconstr (and (action? action)
+                          (action-property action 'icon))))
+      (set! lst (cons (list cmdstr keystr iconstr) lst)))))
 
   (define (build-dump! km prefix)
     (keymap-for-each
      (lambda (key binding)
        (cond
-        ((symbol? binding)
+
+        ((or (symbol? binding) (action? binding))
          (binding->entry prefix key binding))
+
         ((keymap? binding)
          (build-dump! binding (cons key prefix)))
         (else (error "Invalid action ~S bound to ~S"
