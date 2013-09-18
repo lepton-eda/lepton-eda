@@ -862,10 +862,10 @@ void x_dialog_hotkeys (GSCHEM_TOPLEVEL *w_current)
     /* the columns */
     /* The first column contains the action's icon (if one was set)
      * and its label. */
-    renderer = gtk_cell_renderer_pixbuf_new ();
+    renderer = gschem_cell_renderer_icon_new ();
     column = gtk_tree_view_column_new_with_attributes (_("Action"),
                                                        renderer,
-                                                       "icon-name",
+                                                       "icon-id",
                                                        GSCHEM_HOTKEY_STORE_COLUMN_ICON,
                                                        NULL);
 
