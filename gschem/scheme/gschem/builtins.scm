@@ -38,6 +38,12 @@
        (export name)))))
 
 ;; -------------------------------------------------------------------
+;;;; Special actions
+
+(define-action-public (&cancel #:label (_ "Cancel"))
+  (%cancel))
+
+;; -------------------------------------------------------------------
 ;;;; File menu actions
 
 (define-action-public (&file-new #:label (_ "New File") #:icon "gtk-new")
@@ -202,6 +208,15 @@
 (define-action-public (&view-zoom-full #:label (_ "Zoom Full"))
   (%view-zoom-full))
 
+(define-action-public (&view-dark-colors #:label (_ "Dark Color Scheme"))
+  (%view-dark-colors))
+
+(define-action-public (&view-light-colors #:label (_ "Light Color Scheme"))
+  (%view-light-colors))
+
+(define-action-public (&view-bw-colors #:label (_ "Monochrome Color Scheme"))
+  (%view-bw-colors))
+
 ;; -------------------------------------------------------------------
 ;;;; Page-related actions
 
@@ -219,6 +234,9 @@
 
 (define-action-public (&page-close #:label (_ "Close Page") #:icon "gtk-close")
   (%page-close))
+
+(define-action-public (&page-print #:label (_ "Print Page") #:icon "gtk-print")
+  (%page-print))
 
 ;; -------------------------------------------------------------------
 ;;;; Actions related to adding things
@@ -260,10 +278,88 @@
   (%add-picture))
 
 ;; -------------------------------------------------------------------
+;;;; Hierarchy actions
+
+(define-action-public (&hierarchy-down-schematic #:label (_ "Down Schematic") #:icon "gtk-go-down")
+  (%hierarchy-down-schematic))
+
+(define-action-public (&hierarchy-down-symbol #:label (_ "Down Symbol") #:icon "gtk-goto-bottom")
+  (%hierarchy-down-symbol))
+
+(define-action-public (&hierarchy-up #:label (_ "Up Hierarchy") #:icon "gtk-go-up")
+  (%hierarchy-up))
+
+;; -------------------------------------------------------------------
+;;;; Attribute actions
+
+(define-action-public (&attributes-attach #:label (_ "Attach Attributes") #:icon "attribute-attach")
+  (%attributes-attach))
+
+(define-action-public (&attributes-detach #:label (_ "Detach Attributes") #:icon "attribute-detach")
+  (%attributes-detach))
+
+(define-action-public (&attributes-show-value #:label (_ "Show Attribute Value") #:icon "attribute-show-value")
+  (%attributes-show-value))
+
+(define-action-public (&attributes-show-name #:label (_ "Show Attribute Name") #:icon "attribute-show-name")
+  (%attributes-show-name))
+
+(define-action-public (&attributes-show-both #:label (_ "Show Name & Value") #:icon "attribute-show-both")
+  (%attributes-show-both))
+
+(define-action-public (&attributes-visibility-toggle #:label (_ "Toggle Text Visibility"))
+  (%attributes-visibility-toggle))
+
+(define-action-public (&edit-find-text #:label (_ "Find Specific Text") #:icon "gtk-find")
+  (%edit-find-text))
+
+(define-action-public (&edit-hide-text #:label (_ "Hide Specific Text"))
+  (%edit-hide-text))
+
+(define-action-public (&edit-show-text #:label (_ "Show Specific Text"))
+  (%edit-show-text))
+
+(define-action-public (&edit-autonumber #:label (_ "Autonumber Text"))
+  (%edit-autonumber))
+
+;; -------------------------------------------------------------------
 ;;;; Configuration actions
 
 (define-action-public (&help-hotkeys #:label (_ "Show Hotkeys") #:icon "preferences-desktop-keyboard-shortcuts")
   (%help-hotkeys))
+
+(define-action-public (&options-text-size #:label (_ "Set Default Text Size"))
+  (%options-text-size))
+
+(define-action-public (&options-grid #:label (_ "Switch Grid Style"))
+  (%options-grid))
+
+(define-action-public (&options-snap #:label (_ "Switch Snap Mode"))
+  (%options-snap))
+
+(define-action-public (&options-snap-size #:label (_ "Set Grid Spacing"))
+  (%options-snap-size))
+
+(define-action-public (&options-scale-up-snap-size #:label (_ "Increase Grid Spacing"))
+  (%options-scale-up-snap-size))
+
+(define-action-public (&options-scale-down-snap-size #:label (_ "Decrease Grid Spacing"))
+  (%options-scale-down-snap-size))
+
+(define-action-public (&options-action-feedback #:label (_ "Toggle Outline Drawing"))
+  (%options-action-feedback))
+
+(define-action-public (&options-rubberband #:label (_ "Toggle Net Rubber Band"))
+  (%options-rubberband))
+
+(define-action-public (&options-magneticnet #:label (_ "Toggle Magnetic Nets"))
+  (%options-magneticnet))
+
+(define-action-public (&options-show-log-window #:label (_ "Show Log Window"))
+  (%options-show-log-window))
+
+(define-action-public (&options-show-coord-window #:label (_ "Show Coordinate Window"))
+  (%options-show-coord-window))
 
 ;; -------------------------------------------------------------------
 ;;;; Documentation-related actions
