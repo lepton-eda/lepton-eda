@@ -26,7 +26,8 @@ action_icons = \
 	attribute-show-name \
 	attribute-show-both \
 	clone \
-	multi-clone
+	multi-clone \
+	deselect
 
 action_icon_files = \
 	$(action_icons:%=%-16.png) \

@@ -1133,7 +1133,7 @@
            ("SEPARATOR"               #f                     #f)
            (,(N_ "Select Mode")        edit-select            "select")
            (,(N_ "Select All")         edit-select-all        "gtk-select-all")
-           (,(N_ "Deselect")           edit-deselect          #f)
+           (,(N_ "Deselect")           edit-deselect          "deselect")
            (,(N_ "Copy Mode")          edit-copy              "clone")
            (,(N_ "Multiple Copy Mode") edit-mcopy             "multi-clone")
            (,(N_ "Move Mode")          edit-move              #f)
