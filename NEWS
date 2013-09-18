@@ -62,11 +62,16 @@ Notable changes in gEDA/gaf 1.9.1
 * `gnetlist', `gsymcheck' and `gaf' now output internationalised
   messages.
 
-* New Scheme procedures were added:
+* New Scheme procedures were added. Please see the "geda-scheme" info
+  manual for more details.
 
   - The (gschem action) module contains procedures for working with
     user editing actions (i.e. commands accessed via the menus or
     keybindings).
+
+  - Two new hooks were added: `bind-keys-hook' is called whenever
+    keymap bindings are changed; `action-property-hook' is called when
+    action properties are changed.
 
 Notable changes in gEDA/gaf 1.9.0
 =================================
