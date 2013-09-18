@@ -2,7 +2,7 @@
  'gschem and Friends' Electronic Design Suite
 ==============================================
 
-Copyright (C) 1998-2012 gEDA Developers
+Copyright (C) 1998-2013 gEDA Developers
 
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
@@ -10,9 +10,63 @@ more information, please consult the `ChangeLog' file.
 Notable changes in gEDA/gaf 1.9.1
 =================================
 
+* Unbalanced overbar markers are now rendered correctly.
+
+* Most tools now no longer set the GEDADATA or GEDADATARC environment
+  variables (they still obey them though).
+
+* `gschem' now provides a path drawing tool, accessed using <A H> or
+  the "Add Path" menu item.
+
+  - Add a cusp node by left-clicking.
+
+  - Add a Bezier curve node by left-dragging from the node point to
+    the control point.
+
+  - End the path by clicking on the same node point twice, or clicking
+    on the start node to close the path.
+
+* On desktops that reparent menu bars (e.g. Ubuntu Unity) it is once
+  again possible to paste the clipboard using the menus.
+
+* A number of `gschem' editing behaviour changes were made:
+
+  - Double-clicking on an entry in the "In Use" tab of the component
+    selector now behaves the same way as double-clicking in the
+    "Libraries" tab.
+
+  - When new attributes are attached to a net, they are placed at a 50
+    unit offset.
+
+  - The text color is now used as the default color for `pinlabel='
+    attributes.
+
+  - Pin attributes are no longer automatically replaced when rotating
+    or mirroring pins.
+
+  - It is possible to edit a text object even when other non-text
+    objects are selected.
+
+  - Control grips are now always drawn at the same on-screen size.
+
+* `gschem' has new icons for many editing commands.
+
 * `gaf export' now accepts a `--scale' option.
 
-* `gnetlist' now outputs internationalised messages.
+* The `--size', `--margins' and `--align' options to `gaf export' can
+  now accept their multiple arguments separated with a space ` ', a
+  colon `:' or a semicolon `;'.
+
+* `gaf config' now handles the -p option properly.
+
+* `gnetlist', `gsymcheck' and `gaf' now output internationalised
+  messages.
+
+* New Scheme procedures were added:
+
+  - The (gschem action) module contains procedures for working with
+    user editing actions (i.e. commands accessed via the menus or
+    keybindings).
 
 Notable changes in gEDA/gaf 1.9.0
 =================================
