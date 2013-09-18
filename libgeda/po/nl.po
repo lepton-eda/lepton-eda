@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2013-08-31 10:34+0100\n"
+"POT-Creation-Date: 2013-09-18 21:53+0100\n"
 "PO-Revision-Date: 2012-12-01 09:48+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -356,7 +356,7 @@ msgstr "Een cirkel met een radius van nul gevonden [ %c %d %d %d %d ]\n"
 msgid "Setting radius to 0\n"
 msgstr "Radius op 0 ingesteld\n"
 
-#: libgeda/src/o_complex_basic.c:510
+#: libgeda/src/o_complex_basic.c:506
 #, c-format
 msgid ""
 "Component not found:\n"
@@ -365,22 +365,22 @@ msgstr ""
 "Komponent niet gevonden:\n"
 " %s"
 
-#: libgeda/src/o_complex_basic.c:713
+#: libgeda/src/o_complex_basic.c:709
 msgid "Failed to parse complex object"
 msgstr "Faalde bij het ontleden van een complex object"
 
-#: libgeda/src/o_complex_basic.c:726
+#: libgeda/src/o_complex_basic.c:722
 #, c-format
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
 "Een komponent met een ongeldige rotatie gevonden [ %c %d %d %d %d %d %s ]\n"
 
-#: libgeda/src/o_complex_basic.c:727 libgeda/src/o_picture.c:104
+#: libgeda/src/o_complex_basic.c:723 libgeda/src/o_picture.c:104
 #: libgeda/src/o_text_basic.c:363
 msgid "Setting angle to 0\n"
 msgstr "Hoek op 0 ingesteld\n"
 
-#: libgeda/src/o_complex_basic.c:739
+#: libgeda/src/o_complex_basic.c:735
 #, c-format
 msgid ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
@@ -388,11 +388,11 @@ msgstr ""
 "Een komponent met een ongeldige spiegel vlag gevonden [ %c %d %d %d %d %d "
 "%s ]\n"
 
-#: libgeda/src/o_complex_basic.c:740
+#: libgeda/src/o_complex_basic.c:736
 msgid "Setting mirror to 0\n"
 msgstr "Spiegelen op 0 ingesteld\n"
 
-#: libgeda/src/o_complex_basic.c:1075
+#: libgeda/src/o_complex_basic.c:1049
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -401,7 +401,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan symboolbestand niet doorzoeken symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:1079
+#: libgeda/src/o_complex_basic.c:1053
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -410,7 +410,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan symboolbestand niet doorzoeken symversion=\n"
 
-#: libgeda/src/o_complex_basic.c:1095
+#: libgeda/src/o_complex_basic.c:1069
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -419,7 +419,7 @@ msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan bijgevoegd symboolbestand niet doorzoeken symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:1120
+#: libgeda/src/o_complex_basic.c:1094
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -430,7 +430,7 @@ msgstr ""
 "\tsymversion=%s bijgevoegd aan bedoelde symbool, maar geen symversion= in "
 "het symbool bestand\n"
 
-#: libgeda/src/o_complex_basic.c:1134
+#: libgeda/src/o_complex_basic.c:1108
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -439,17 +439,17 @@ msgstr ""
 "WAARSCHUWING: Symbool versie fout bij refdes %s (%s):\n"
 "\tSymbool in bibliotheek is nieuwer dan bedoelde symbool\n"
 
-#: libgeda/src/o_complex_basic.c:1162
+#: libgeda/src/o_complex_basic.c:1136
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr "\tGROTE VERSIE VERANDERING (bestand %.3f, bedoeld %.3f, %s)!\n"
 
-#: libgeda/src/o_complex_basic.c:1180
+#: libgeda/src/o_complex_basic.c:1154
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\tKleine versie verandering (bestand %.3f, bedoeld %.3f)!\n"
 
-#: libgeda/src/o_complex_basic.c:1191
+#: libgeda/src/o_complex_basic.c:1165
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -807,6 +807,20 @@ msgstr "Geen goed slotdef=#:#,#,#... attribuut gevonden\n"
 msgid "component missing pinseq= attribute\n"
 msgstr "component mist een pinseq- attribuut\n"
 
+#: libgeda/src/edaconfig.c:659 libgeda/src/edaconfig.c:745
+msgid "Undefined configuration filename"
+msgstr ""
+
+#: libgeda/src/edaconfig.c:1070 libgeda/src/edaconfig.c:1134
+#, c-format
+msgid "Configuration does not have group '%s'"
+msgstr ""
+
+#: libgeda/src/edaconfig.c:1148
+#, c-format
+msgid "Configuration does not have key '%s'"
+msgstr ""
+
 #: libgeda/src/scheme_attrib.c:67
 msgid "~A is not a valid attribute: invalid string '~A'."
 msgstr "~A is een ongeldige attribuut: ongeldige rij '~A'."
@@ -960,6 +974,14 @@ msgstr "Object ~A is bevestigd aan een complex of een andere pagina"
 #: libgeda/src/scheme_page.c:442
 msgid "Parse error: ~s"
 msgstr "Ontleedfout: ~s"
+
+#: libgeda/src/edascmhookproxy.c:75
+msgid "Scheme hook"
+msgstr ""
+
+#: libgeda/src/edascmhookproxy.c:76
+msgid "The Scheme-level hook to proxy"
+msgstr ""
 
 #: libgeda/scheme/geda/attrib.scm:59
 #, scheme-format

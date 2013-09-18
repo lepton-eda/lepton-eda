@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2013-08-31 10:34+0100\n"
+"POT-Creation-Date: 2013-09-18 21:53+0100\n"
 "PO-Revision-Date: 2012-01-31 12:15+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -350,7 +350,7 @@ msgstr "Found a zero or negative radius circle [ %c %d %d %d %d ]\n"
 msgid "Setting radius to 0\n"
 msgstr "Setting radius to 0\n"
 
-#: libgeda/src/o_complex_basic.c:510
+#: libgeda/src/o_complex_basic.c:506
 #, c-format
 msgid ""
 "Component not found:\n"
@@ -359,32 +359,32 @@ msgstr ""
 "Component not found:\n"
 " %s"
 
-#: libgeda/src/o_complex_basic.c:713
+#: libgeda/src/o_complex_basic.c:709
 msgid "Failed to parse complex object"
 msgstr "Failed to parse complex object"
 
-#: libgeda/src/o_complex_basic.c:726
+#: libgeda/src/o_complex_basic.c:722
 #, c-format
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 msgstr "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 
-#: libgeda/src/o_complex_basic.c:727 libgeda/src/o_picture.c:104
+#: libgeda/src/o_complex_basic.c:723 libgeda/src/o_picture.c:104
 #: libgeda/src/o_text_basic.c:363
 msgid "Setting angle to 0\n"
 msgstr "Setting angle to 0\n"
 
-#: libgeda/src/o_complex_basic.c:739
+#: libgeda/src/o_complex_basic.c:735
 #, c-format
 msgid ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
 
-#: libgeda/src/o_complex_basic.c:740
+#: libgeda/src/o_complex_basic.c:736
 msgid "Setting mirror to 0\n"
 msgstr "Setting mirror to 0\n"
 
-#: libgeda/src/o_complex_basic.c:1075
+#: libgeda/src/o_complex_basic.c:1049
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -393,7 +393,7 @@ msgstr ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse symbol file symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:1079
+#: libgeda/src/o_complex_basic.c:1053
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -402,7 +402,7 @@ msgstr ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse symbol file symversion=\n"
 
-#: libgeda/src/o_complex_basic.c:1095
+#: libgeda/src/o_complex_basic.c:1069
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -411,7 +411,7 @@ msgstr ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse attached symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:1120
+#: libgeda/src/o_complex_basic.c:1094
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -422,7 +422,7 @@ msgstr ""
 "\tsymversion=%s attached to instantiated symbol, but no symversion= inside "
 "symbol file\n"
 
-#: libgeda/src/o_complex_basic.c:1134
+#: libgeda/src/o_complex_basic.c:1108
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -431,17 +431,17 @@ msgstr ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
 "\tSymbol in library is newer than instantiated symbol\n"
 
-#: libgeda/src/o_complex_basic.c:1162
+#: libgeda/src/o_complex_basic.c:1136
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 
-#: libgeda/src/o_complex_basic.c:1180
+#: libgeda/src/o_complex_basic.c:1154
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr "\tMinor version change (file %.3f, instantiated %.3f)\n"
 
-#: libgeda/src/o_complex_basic.c:1191
+#: libgeda/src/o_complex_basic.c:1165
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -787,6 +787,20 @@ msgstr "Did not find proper slotdef=#:#,#,#... attribute\n"
 msgid "component missing pinseq= attribute\n"
 msgstr "component missing pinseq= attribute\n"
 
+#: libgeda/src/edaconfig.c:659 libgeda/src/edaconfig.c:745
+msgid "Undefined configuration filename"
+msgstr ""
+
+#: libgeda/src/edaconfig.c:1070 libgeda/src/edaconfig.c:1134
+#, c-format
+msgid "Configuration does not have group '%s'"
+msgstr ""
+
+#: libgeda/src/edaconfig.c:1148
+#, c-format
+msgid "Configuration does not have key '%s'"
+msgstr ""
+
 #: libgeda/src/scheme_attrib.c:67
 msgid "~A is not a valid attribute: invalid string '~A'."
 msgstr "~A is not a valid attribute: invalid string '~A'."
@@ -938,6 +952,14 @@ msgstr "Object ~A is attached to a complex or different page"
 #: libgeda/src/scheme_page.c:442
 msgid "Parse error: ~s"
 msgstr "Parse error: ~s"
+
+#: libgeda/src/edascmhookproxy.c:75
+msgid "Scheme hook"
+msgstr ""
+
+#: libgeda/src/edascmhookproxy.c:76
+msgid "The Scheme-level hook to proxy"
+msgstr ""
 
 #: libgeda/scheme/geda/attrib.scm:59
 #, scheme-format

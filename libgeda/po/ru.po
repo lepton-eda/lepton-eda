@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2013-08-31 10:34+0100\n"
+"POT-Creation-Date: 2013-09-18 21:53+0100\n"
 "PO-Revision-Date: 2012-12-04 01:56+0400\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: geda-user@delorie.com\n"
@@ -370,7 +370,7 @@ msgstr "Окружность с нулевым или отрицательным
 msgid "Setting radius to 0\n"
 msgstr "Установка радиуса в 0\n"
 
-#: libgeda/src/o_complex_basic.c:510
+#: libgeda/src/o_complex_basic.c:506
 #, c-format
 msgid ""
 "Component not found:\n"
@@ -379,23 +379,23 @@ msgstr ""
 "Не найден компонент:\n"
 " %s"
 
-#: libgeda/src/o_complex_basic.c:713
+#: libgeda/src/o_complex_basic.c:709
 msgid "Failed to parse complex object"
 msgstr "Ошибка в определении составного объекта"
 
-#: libgeda/src/o_complex_basic.c:726
+#: libgeda/src/o_complex_basic.c:722
 #, c-format
 msgid "Found a component with an invalid rotation [ %c %d %d %d %d %d %s ]\n"
 msgstr ""
 "Недопустимое значение угла поворота в определении компонента [%c %d %d %d %d "
 "%d %s]\n"
 
-#: libgeda/src/o_complex_basic.c:727 libgeda/src/o_picture.c:104
+#: libgeda/src/o_complex_basic.c:723 libgeda/src/o_picture.c:104
 #: libgeda/src/o_text_basic.c:363
 msgid "Setting angle to 0\n"
 msgstr "Установка угла поворота в 0\n"
 
-#: libgeda/src/o_complex_basic.c:739
+#: libgeda/src/o_complex_basic.c:735
 #, c-format
 msgid ""
 "Found a component with an invalid mirror flag [ %c %d %d %d %d %d %s ]\n"
@@ -403,11 +403,11 @@ msgstr ""
 "Недопустимое значение поля 'mirror' в определении компонента [%c %d %d %d %d "
 "%d %s]\n"
 
-#: libgeda/src/o_complex_basic.c:740
+#: libgeda/src/o_complex_basic.c:736
 msgid "Setting mirror to 0\n"
 msgstr "Установка 'mirror' в 0\n"
 
-#: libgeda/src/o_complex_basic.c:1075
+#: libgeda/src/o_complex_basic.c:1049
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -416,7 +416,7 @@ msgstr ""
 "ВНИМАНИЕ: ошибка при анализе версии символа с поз. обозначением %s:\n"
 "\tНекорректный атрибут symversion=%s в файле символа\n"
 
-#: libgeda/src/o_complex_basic.c:1079
+#: libgeda/src/o_complex_basic.c:1053
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -425,7 +425,7 @@ msgstr ""
 "ВНИМАНИЕ: ошибка при анализе версии символа с поз. обозначением %s:\n"
 "\tНекорректный атрибут symversion= в файле символа\n"
 
-#: libgeda/src/o_complex_basic.c:1095
+#: libgeda/src/o_complex_basic.c:1069
 #, c-format
 msgid ""
 "WARNING: Symbol version parse error on refdes %s:\n"
@@ -434,7 +434,7 @@ msgstr ""
 "ВНИМАНИЕ: ошибка при анализе версии символа с поз. обозначением %s:\n"
 "\tПрикреплён некорректный атрибут symversion=%s\n"
 
-#: libgeda/src/o_complex_basic.c:1120
+#: libgeda/src/o_complex_basic.c:1094
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -445,7 +445,7 @@ msgstr ""
 "\tК экземпляру символа прикреплён атрибут symversion=%s, но в файле символа "
 "symversion= отсутствует\n"
 
-#: libgeda/src/o_complex_basic.c:1134
+#: libgeda/src/o_complex_basic.c:1108
 #, c-format
 msgid ""
 "WARNING: Symbol version mismatch on refdes %s (%s):\n"
@@ -456,21 +456,21 @@ msgstr ""
 
 # Под file здесь имеется в виду символ. Последняя переменная -- позиционное
 # обозначение. Думаю, не стоит это специально отмечать.
-#: libgeda/src/o_complex_basic.c:1162
+#: libgeda/src/o_complex_basic.c:1136
 #, c-format
 msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
 msgstr ""
 "\tИЗМЕНЕНИЕ СТАРШЕГО НОМЕРА ВЕРСИИ\t(версия символа %.3f, версия экземпляра "
 "%.3f, %s)!\n"
 
-#: libgeda/src/o_complex_basic.c:1180
+#: libgeda/src/o_complex_basic.c:1154
 #, c-format
 msgid "\tMinor version change (file %.3f, instantiated %.3f)\n"
 msgstr ""
 "\tИзменение младшего номера версии\t(версия символа %.3f, версия экземпляра "
 "%.3f)\n"
 
-#: libgeda/src/o_complex_basic.c:1191
+#: libgeda/src/o_complex_basic.c:1165
 #, c-format
 msgid ""
 "WARNING: Symbol version oddity on refdes %s:\n"
@@ -832,6 +832,20 @@ msgstr "Не удалось найти атрибут slotdef=#:#,#,#... в до
 msgid "component missing pinseq= attribute\n"
 msgstr "Отсутствует атрибут pinseq= для вывода компонента\n"
 
+#: libgeda/src/edaconfig.c:659 libgeda/src/edaconfig.c:745
+msgid "Undefined configuration filename"
+msgstr ""
+
+#: libgeda/src/edaconfig.c:1070 libgeda/src/edaconfig.c:1134
+#, c-format
+msgid "Configuration does not have group '%s'"
+msgstr ""
+
+#: libgeda/src/edaconfig.c:1148
+#, c-format
+msgid "Configuration does not have key '%s'"
+msgstr ""
+
 #: libgeda/src/scheme_attrib.c:67
 msgid "~A is not a valid attribute: invalid string '~A'."
 msgstr "~A не является допустимым атрибутом: недопустимая строка '~A'."
@@ -993,6 +1007,14 @@ msgstr ""
 #: libgeda/src/scheme_page.c:442
 msgid "Parse error: ~s"
 msgstr "Ошибка обработки: ~s"
+
+#: libgeda/src/edascmhookproxy.c:75
+msgid "Scheme hook"
+msgstr ""
+
+#: libgeda/src/edascmhookproxy.c:76
+msgid "The Scheme-level hook to proxy"
+msgstr ""
 
 #: libgeda/scheme/geda/attrib.scm:59
 #, scheme-format
