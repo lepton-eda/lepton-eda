@@ -49,10 +49,43 @@ static void
 dispose (GObject *object);
 
 static void
+line_type_changed (GtkWidget *widget, EditLProp *dialog);
+
+static void
+line_width_changed (GtkWidget *widget, EditLProp *dialog);
+
+static gboolean
+line_width_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialog);
+
+static void
+dash_length_changed (GtkWidget *widget, EditLProp *dialog);
+
+static void
+dash_space_changed (GtkWidget *widget, EditLProp *dialog);
+
+static void
+cap_style_changed (GtkWidget *widget, EditLProp *dialog);
+
+static void
 selection_changed (GedaList *selection, EditLProp *dialog);
 
 static void
 update_values (EditLProp *dialog);
+
+static void
+change_selection_line_type (EditLProp *dialog);
+
+static void
+change_selection_line_width (EditLProp *dialog);
+
+static void
+change_selection_dash_length (EditLProp *dialog);
+
+static void
+change_selection_dash_space (EditLProp *dialog);
+
+static void
+change_selection_cap_style (EditLProp *dialog);
 
 
 /*! \brief get the linetype data from selected objects
@@ -138,7 +171,7 @@ static gint line_type_dialog_linetype_change (GtkWidget *widget, EditLProp *dial
  *  \param [in] dialog The edit line properties dialog
  */
 static void
-dialog_response_ok (EditLProp *dialog)
+dialog_response_apply (EditLProp *dialog)
 {
   GSCHEM_TOPLEVEL *w_current;
   TOPLEVEL *toplevel;
@@ -233,20 +266,22 @@ dialog_response (EditLProp *dialog, gint response, gpointer unused)
   g_return_if_fail (dialog != NULL);
 
   switch(response) {
-    case GTK_RESPONSE_OK:
-      dialog_response_ok(dialog);
+    case GTK_RESPONSE_APPLY:
+      dialog_response_apply (dialog);
+      i_set_state (dialog->parent.w_current, SELECT);
+      i_update_toolbar (dialog->parent.w_current);
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, FALSE);
       break;
     case GTK_RESPONSE_CLOSE:
     case GTK_RESPONSE_DELETE_EVENT:
-       break;
+      i_set_state (dialog->parent.w_current, SELECT);
+      i_update_toolbar (dialog->parent.w_current);
+      gtk_widget_destroy (dialog->parent.w_current->lpwindow);
+      dialog->parent.w_current->lpwindow = NULL;
+      break;
     default:
-      printf("%s: dialog_response(): strange signal %d\n", __FILE__, response);
+      printf ("%s: dialog_response(): strange signal %d\n", __FILE__, response);
   }
-
-  i_set_state(dialog->parent.w_current, SELECT);
-  i_update_toolbar(dialog->parent.w_current);
-  gtk_widget_destroy(dialog->parent.w_current->lpwindow);
-  dialog->parent.w_current->lpwindow=NULL;
 }
 
 
@@ -294,12 +329,12 @@ static void editlprop_init(EditLProp *dialog)
                          GTK_RESPONSE_CLOSE);
 
   gtk_dialog_add_button (GTK_DIALOG (dialog),
-                         GTK_STOCK_OK,
-                         GTK_RESPONSE_OK);
+                         GTK_STOCK_APPLY,
+                         GTK_RESPONSE_APPLY);
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-                                          GTK_RESPONSE_OK,
+                                          GTK_RESPONSE_APPLY,
                                           GTK_RESPONSE_CLOSE,
                                           -1);
 
@@ -312,7 +347,7 @@ static void editlprop_init(EditLProp *dialog)
                     NULL);
 
   gtk_dialog_set_default_response(GTK_DIALOG(dialog),
-                                  GTK_RESPONSE_OK);
+                                  GTK_RESPONSE_APPLY);
 
   gtk_container_border_width(GTK_CONTAINER (dialog),
                              DIALOG_BORDER_SPACING);
@@ -328,7 +363,7 @@ static void editlprop_init(EditLProp *dialog)
   alignment = gtk_alignment_new(0,0,1,1);
   gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
                             DIALOG_INDENTATION, 0);
-  gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(vbox), alignment, FALSE, FALSE, 0);
 
   table = gtk_table_new (5, 2, FALSE);
   gtk_table_set_row_spacings(GTK_TABLE(table), DIALOG_V_SPACING);
@@ -371,6 +406,30 @@ static void editlprop_init(EditLProp *dialog)
 
   g_signal_connect(G_OBJECT (dialog->line_type), "changed",
                    G_CALLBACK (line_type_dialog_linetype_change),
+                   dialog);
+
+  g_signal_connect(G_OBJECT (dialog->line_type), "changed",
+                   G_CALLBACK (line_type_changed),
+                   dialog);
+
+  g_signal_connect(G_OBJECT (dialog->width_entry), "changed",
+                   G_CALLBACK (line_width_changed),
+                   dialog);
+
+  g_signal_connect(G_OBJECT (x_integercb_get_entry (dialog->width_entry)), "focus-out-event",
+                   G_CALLBACK (line_width_focus_out_event),
+                   dialog);
+
+  g_signal_connect(G_OBJECT (dialog->length_entry), "changed",
+                   G_CALLBACK (dash_length_changed),
+                   dialog);
+
+  g_signal_connect(G_OBJECT (dialog->space_entry), "changed",
+                   G_CALLBACK (dash_space_changed),
+                   dialog);
+
+  g_signal_connect(G_OBJECT (dialog->line_end), "changed",
+                   G_CALLBACK (cap_style_changed),
                    dialog);
 }
 
@@ -465,6 +524,251 @@ dispose (GObject *object)
 
 
 
+/*! \brief Respond to change in the dialog box value of the line type
+ *
+ *  \param [in] widget The widget emitting the event
+ *  \param [in] dialog The line properties dialog box
+ */
+static void
+line_type_changed (GtkWidget *widget, EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (widget != NULL);
+
+  if (dialog->line_type != NULL) {
+    g_return_if_fail (widget == dialog->line_type);
+
+    change_selection_line_type (dialog);
+
+    gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
+  }
+}
+
+
+
+/*! \brief Respond to change in the dialog box value of the line width
+ *
+ *  The function checks the focus to determine the source of the event.
+ *  If the entry has focus, the user changed the value, possibly by one
+ *  keystroke, and the dialog box should not update the selection. If the
+ *  entry does not have focus, the user changed the value in the dropdown
+ *  menu, and the dialog box must update the selection.
+ *
+ *  \param [in] widget The widget emitting the event
+ *  \param [in] dialog The line properties dialog box
+ */
+static void
+line_width_changed (GtkWidget *widget, EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (widget != NULL);
+
+  if (dialog->width_entry != NULL) {
+    g_return_if_fail (widget == dialog->width_entry);
+
+    if (gtk_widget_is_focus (GTK_WIDGET (x_integercb_get_entry (dialog->width_entry)))) {
+      // likely just a character changed in the entry widget
+
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
+    }
+    else {
+      change_selection_line_width (dialog);
+
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
+    }
+  }
+}
+
+
+
+/*! \brief Respond to focus out event on the line width entry
+ *
+ *  \param [in] widget The widget emitting the event
+ *  \param [in] event  The focus out event
+ *  \param [in] dialog The line properties dialog box
+ *  \return FALSE
+ */
+static gboolean
+line_width_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialog)
+{
+  g_return_val_if_fail (dialog != NULL, FALSE);
+  g_return_val_if_fail (widget != NULL, FALSE);
+
+  if (dialog->width_entry != NULL) {
+    g_return_val_if_fail (widget == GTK_WIDGET (x_integercb_get_entry (dialog->width_entry)), FALSE);
+
+    change_selection_line_width (dialog);
+
+    gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
+  }
+
+  return FALSE;
+}
+
+
+
+/*! \brief Respond to change in the dialog box value of the dash length
+ *
+ *  The function checks the focus to determine the source of the event.
+ *  If the entry has focus, the user changed the value, possibly by one
+ *  keystroke, and the dialog box should not update the selection. If the
+ *  entry does not have focus, the user changed the value in the dropdown
+ *  menu, and the dialog box must update the selection.
+ *
+ *  \param [in] widget The widget emitting the event
+ *  \param [in] dialog The line properties dialog box
+ */
+static void
+dash_length_changed (GtkWidget *widget, EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (widget != NULL);
+
+  if (dialog->length_entry != NULL) {
+    g_return_if_fail (widget == dialog->length_entry);
+
+    if (gtk_widget_is_focus (GTK_WIDGET (x_integercb_get_entry (dialog->length_entry)))) {
+      // likely just a character changed in the entry widget
+
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
+    }
+    else {
+      change_selection_dash_length (dialog);
+
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
+    }
+  }
+}
+
+
+
+/*! \brief Respond to change in the dialog box value of the dash space
+ *
+ *  The function checks the focus to determine the source of the event.
+ *  If the entry has focus, the user changed the value, possibly by one
+ *  keystroke, and the dialog box should not update the selection. If the
+ *  entry does not have focus, the user changed the value in the dropdown
+ *  menu, and the dialog box must update the selection.
+ *
+ *  \param [in] widget The widget emitting the event
+ *  \param [in] dialog The line properties dialog box
+ */
+static void
+dash_space_changed (GtkWidget *widget, EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (widget != NULL);
+
+  if (dialog->space_entry != NULL) {
+    g_return_if_fail (widget == dialog->space_entry);
+
+    if (gtk_widget_is_focus (GTK_WIDGET (x_integercb_get_entry (dialog->space_entry)))) {
+      // likely just a character changed in the entry widget
+
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
+    }
+    else {
+      change_selection_dash_space (dialog);
+
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
+    }
+  }
+}
+
+
+
+/*! \brief Respond to change in the dialog box value of the cap style
+ *
+ *  \param [in] widget The widget emitting the event
+ *  \param [in] dialog The line properties dialog box
+ */
+static void
+cap_style_changed (GtkWidget *widget, EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (widget != NULL);
+
+  if (dialog->line_end != NULL) {
+    g_return_if_fail (widget == dialog->line_end);
+
+    change_selection_cap_style (dialog);
+
+    gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
+  }
+}
+
+
+
+/*! \brief Update the line type in the selection
+ *
+ *  \param [in] dialog The line properties dialog box
+ */
+static void
+change_selection_line_type (EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+
+  // future use for instant apply
+}
+
+
+
+/*! \brief Update the line width in the selection
+ *
+ *  \param [in] dialog The line properties dialog box
+ */
+static void
+change_selection_line_width (EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+
+  // future use for instant apply
+}
+
+
+
+/*! \brief Update the dash length in the selection
+ *
+ *  \param [in] dialog The line properties dialog box
+ */
+static void
+change_selection_dash_length (EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+
+  // future use for instant apply
+}
+
+
+
+/*! \brief Update the dash spacing in the selection
+ *
+ *  \param [in] dialog The line properties dialog box
+ */
+static void
+change_selection_dash_space (EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+
+  // future use for instant apply
+}
+
+
+
+/*! \brief Update the cap styles in the selection
+ *
+ *  \param [in] dialog The line properties dialog box
+ */
+static void
+change_selection_cap_style (EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+
+  // future use for instant apply
+}
+
+
+
 /*! \brief Signal handler for when the selection changes
  *
  *  \par Function Description
@@ -526,7 +830,7 @@ update_values (EditLProp *dialog)
 
     /* dash length and dash space are enabled/disabled by the value in line type */
 
-    gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_OK, success);
+    gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, success);
   }
 }
 
@@ -556,7 +860,7 @@ line_type_dialog (GSCHEM_TOPLEVEL *w_current)
                                         "window-position", GTK_WIN_POS_MOUSE,
                                         "allow-grow",      TRUE,
                                         "allow-shrink",    FALSE,
-                                        "modal",           TRUE,
+                                        "modal",           FALSE,
                                         /* GtkDialog */
                                         "has-separator",   TRUE,
                                         /* GschemDialog */
