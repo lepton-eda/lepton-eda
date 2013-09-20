@@ -1067,6 +1067,38 @@ update_values (EditLProp *dialog)
 
     success = selection_get_line_type (dialog->selection, &end, &type, &width, &length, &space);
 
+    g_signal_handlers_block_by_func(G_OBJECT (dialog->line_type),
+                                    G_CALLBACK (line_type_changed),
+                                    dialog);
+
+    g_signal_handlers_block_by_func(G_OBJECT (dialog->width_entry),
+                                    G_CALLBACK (line_width_changed),
+                                    dialog);
+
+    g_signal_handlers_block_by_func(G_OBJECT (x_integercb_get_entry (dialog->width_entry)),
+                                    G_CALLBACK (line_width_focus_out_event),
+                                    dialog);
+
+    g_signal_handlers_block_by_func(G_OBJECT (dialog->length_entry),
+                                    G_CALLBACK (dash_length_changed),
+                                    dialog);
+
+    g_signal_handlers_block_by_func(G_OBJECT (x_integercb_get_entry (dialog->length_entry)),
+                                    G_CALLBACK (dash_length_focus_out_event),
+                                    dialog);
+
+    g_signal_handlers_block_by_func(G_OBJECT (dialog->space_entry),
+                                    G_CALLBACK (dash_space_changed),
+                                    dialog);
+
+    g_signal_handlers_block_by_func(G_OBJECT (x_integercb_get_entry (dialog->space_entry)),
+                                    G_CALLBACK (dash_space_focus_out_event),
+                                    dialog);
+
+    g_signal_handlers_block_by_func(G_OBJECT (dialog->line_end),
+                                    G_CALLBACK (cap_style_changed),
+                                    dialog);
+
     if (success) {
       x_linecapcb_set_index (dialog->line_end, end);
       x_integercb_set_value (dialog->width_entry, width);
@@ -1080,6 +1112,38 @@ update_values (EditLProp *dialog)
       x_integercb_set_value (dialog->space_entry, -1);
       x_linetypecb_set_index (dialog->line_type, -1);
     }
+
+    g_signal_handlers_unblock_by_func(G_OBJECT (dialog->line_type),
+                                      G_CALLBACK (line_type_changed),
+                                      dialog);
+
+    g_signal_handlers_unblock_by_func(G_OBJECT (dialog->width_entry),
+                                      G_CALLBACK (line_width_changed),
+                                      dialog);
+
+    g_signal_handlers_unblock_by_func(G_OBJECT (x_integercb_get_entry (dialog->width_entry)),
+                                      G_CALLBACK (line_width_focus_out_event),
+                                      dialog);
+
+    g_signal_handlers_unblock_by_func(G_OBJECT (dialog->length_entry),
+                                      G_CALLBACK (dash_length_changed),
+                                      dialog);
+
+    g_signal_handlers_unblock_by_func(G_OBJECT (x_integercb_get_entry (dialog->length_entry)),
+                                      G_CALLBACK (dash_length_focus_out_event),
+                                      dialog);
+
+    g_signal_handlers_unblock_by_func(G_OBJECT (dialog->space_entry),
+                                      G_CALLBACK (dash_space_changed),
+                                      dialog);
+
+    g_signal_handlers_unblock_by_func(G_OBJECT (x_integercb_get_entry (dialog->space_entry)),
+                                      G_CALLBACK (dash_space_focus_out_event),
+                                      dialog);
+
+    g_signal_handlers_unblock_by_func(G_OBJECT (dialog->line_end),
+                                      G_CALLBACK (cap_style_changed),
+                                      dialog);
 
     gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_type), success);
     gtk_widget_set_sensitive (GTK_WIDGET (dialog->width_entry), success);
