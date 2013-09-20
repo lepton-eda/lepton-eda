@@ -99,29 +99,29 @@ void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current,
 			OBJECT_END end, OBJECT_TYPE type,
 			int width, int length, int space) 
 {
-  if(o_current == NULL) {
-    return;
-  }
+  g_return_if_fail (o_current != NULL);
 
   /* do some error checking / correcting */
   switch(type) {
+    case(TYPE_SOLID):
+      length = -1;
+      space = -1;
+      break;
     case(TYPE_DOTTED):
-    if (space < 1) {
-      space = 100;
-      s_log_message (_("Invalid space specified, setting to 100\n"));
-    }
+      length = -1;
+      if (space < 1) {
+        space = 100;
+      }
     break;
     case(TYPE_DASHED):
     case(TYPE_CENTER):
     case(TYPE_PHANTOM):
-    if (length < 1) {
-      length = 100;
-      s_log_message (_("Invalid length specified, setting to 100\n"));
-    }
-    if (space < 1) {
-      space = 100;
-      s_log_message (_("Invalid space specified, setting to 100\n"));
-    }
+      if (length < 1) {
+        length = 100;
+      }
+      if (space < 1) {
+        space = 100;
+      }
     break;
     default:
     

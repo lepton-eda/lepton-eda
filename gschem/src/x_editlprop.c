@@ -60,8 +60,14 @@ line_width_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialo
 static void
 dash_length_changed (GtkWidget *widget, EditLProp *dialog);
 
+static gboolean
+dash_length_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialog);
+
 static void
 dash_space_changed (GtkWidget *widget, EditLProp *dialog);
+
+static gboolean
+dash_space_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialog);
 
 static void
 cap_style_changed (GtkWidget *widget, EditLProp *dialog);
@@ -73,19 +79,19 @@ static void
 update_values (EditLProp *dialog);
 
 static void
-change_selection_line_type (EditLProp *dialog);
+selection_set_line_type (TOPLEVEL *toplevel, SELECTION *selection, int line_type);
 
 static void
-change_selection_line_width (EditLProp *dialog);
+selection_set_line_width (TOPLEVEL *toplevel, SELECTION *selection, int line_width);
 
 static void
-change_selection_dash_length (EditLProp *dialog);
+selection_set_dash_length (TOPLEVEL *toplevel, SELECTION *selection, int dash_length);
 
 static void
-change_selection_dash_space (EditLProp *dialog);
+selection_set_dash_space (TOPLEVEL *toplevel, SELECTION *selection, int dash_space);
 
 static void
-change_selection_cap_style (EditLProp *dialog);
+selection_set_cap_style (TOPLEVEL *toplevel, SELECTION *selection, int cap_style);
 
 
 /*! \brief get the linetype data from selected objects
@@ -166,92 +172,6 @@ static gint line_type_dialog_linetype_change (GtkWidget *widget, EditLProp *dial
 
 
 
-/*! \brief Handles the user response when apply is selected
- *
- *  \param [in] dialog The edit line properties dialog
- */
-static void
-dialog_response_apply (EditLProp *dialog)
-{
-  GSCHEM_TOPLEVEL *w_current;
-  TOPLEVEL *toplevel;
-  GList *selection, *iter;
-  OBJECT *object;
-  OBJECT_TYPE type;
-  OBJECT_END end;
-  gint width, length, space;
-  OBJECT_TYPE otype;
-  OBJECT_END oend;
-  gint owidth, olength, ospace;
-
-  g_return_if_fail (dialog != NULL);
-
-  if (dialog->selection == NULL) {
-    return;
-  }
-
-  w_current = dialog->parent.w_current;
-  g_return_if_fail (w_current != NULL);
-  toplevel = w_current->toplevel;
-  g_return_if_fail (toplevel != NULL);
-
-  g_return_if_fail (dialog->selection == toplevel->page_current->selection_list);
-
-  /* get the selection */
-  if (! o_select_selected(w_current))
-    return;
-
-  selection = geda_list_get_glist(dialog->selection);
-
-  /* get the new values from the text entries of the dialog */
-  type = x_linetypecb_get_index (dialog->line_type);
-  width  = x_integercb_get_value (dialog->width_entry);
-  length = x_integercb_get_value (dialog->length_entry);
-  space  = x_integercb_get_value (dialog->space_entry);
-  end = x_linecapcb_get_index (dialog->line_end);
-
-  for (iter = selection; iter != NULL; iter = g_list_next(iter)) {
-    object = (OBJECT *) iter->data;
-    if (! o_get_line_options(object, &oend, &otype,
-                             &owidth, &olength, &ospace))
-      continue;
-
-    otype = type == -1 ? otype : type;
-    owidth = width  == -1 ? owidth : width;
-    olength = length == -1 ? olength : length;
-    ospace = space  == -1 ? ospace : space;
-    oend = end == -1 ? oend : end;
-
-    /* set all not required options to -1 and
-       set nice parameters if not provided by the user */
-    switch (otype) {
-    case (TYPE_SOLID):
-      olength = ospace = -1;
-      break;
-    case (TYPE_DOTTED):
-      olength = -1;
-      if (ospace < 1) ospace = 100;
-      break;
-    case (TYPE_DASHED):
-    case (TYPE_CENTER):
-    case (TYPE_PHANTOM):
-      if (ospace < 1) ospace = 100;
-      if (olength < 1) olength = 100;
-      break;
-    default:
-      g_assert_not_reached();
-    }
-
-    o_set_line_options (toplevel, object,
-                        oend, otype, owidth, olength, ospace);
-  }
-
-  toplevel->page_current->CHANGED = 1;
-  o_undo_savestate(w_current, UNDO_ALL);
-}
-
-
-
 /*! \brief Handles user responses from the edit text dialog box
 
  *  \par Function Description
@@ -266,12 +186,6 @@ dialog_response (EditLProp *dialog, gint response, gpointer unused)
   g_return_if_fail (dialog != NULL);
 
   switch(response) {
-    case GTK_RESPONSE_APPLY:
-      dialog_response_apply (dialog);
-      i_set_state (dialog->parent.w_current, SELECT);
-      i_update_toolbar (dialog->parent.w_current);
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, FALSE);
-      break;
     case GTK_RESPONSE_CLOSE:
     case GTK_RESPONSE_DELETE_EVENT:
       i_set_state (dialog->parent.w_current, SELECT);
@@ -279,8 +193,9 @@ dialog_response (EditLProp *dialog, gint response, gpointer unused)
       gtk_widget_destroy (dialog->parent.w_current->lpwindow);
       dialog->parent.w_current->lpwindow = NULL;
       break;
+
     default:
-      printf ("%s: dialog_response(): strange signal %d\n", __FILE__, response);
+      printf ("%s: dialog_response(): strange signal: %d\n", __FILE__, response);
   }
 }
 
@@ -328,16 +243,6 @@ static void editlprop_init(EditLProp *dialog)
                          GTK_STOCK_CLOSE,
                          GTK_RESPONSE_CLOSE);
 
-  gtk_dialog_add_button (GTK_DIALOG (dialog),
-                         GTK_STOCK_APPLY,
-                         GTK_RESPONSE_APPLY);
-
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-                                          GTK_RESPONSE_APPLY,
-                                          GTK_RESPONSE_CLOSE,
-                                          -1);
-
   gtk_window_position(GTK_WINDOW (dialog),
                       GTK_WIN_POS_NONE);
 
@@ -345,9 +250,6 @@ static void editlprop_init(EditLProp *dialog)
                     "response",
                     G_CALLBACK (dialog_response),
                     NULL);
-
-  gtk_dialog_set_default_response(GTK_DIALOG(dialog),
-                                  GTK_RESPONSE_APPLY);
 
   gtk_container_border_width(GTK_CONTAINER (dialog),
                              DIALOG_BORDER_SPACING);
@@ -424,8 +326,16 @@ static void editlprop_init(EditLProp *dialog)
                    G_CALLBACK (dash_length_changed),
                    dialog);
 
+  g_signal_connect(G_OBJECT (x_integercb_get_entry (dialog->length_entry)), "focus-out-event",
+                   G_CALLBACK (dash_length_focus_out_event),
+                   dialog);
+
   g_signal_connect(G_OBJECT (dialog->space_entry), "changed",
                    G_CALLBACK (dash_space_changed),
+                   dialog);
+
+  g_signal_connect(G_OBJECT (x_integercb_get_entry (dialog->space_entry)), "focus-out-event",
+                   G_CALLBACK (dash_space_focus_out_event),
                    dialog);
 
   g_signal_connect(G_OBJECT (dialog->line_end), "changed",
@@ -532,15 +442,31 @@ dispose (GObject *object)
 static void
 line_type_changed (GtkWidget *widget, EditLProp *dialog)
 {
+  TOPLEVEL *toplevel;
+  GSCHEM_TOPLEVEL *w_current;
+
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
 
-  if (dialog->line_type != NULL) {
+  w_current = dialog->parent.w_current;
+  g_return_if_fail (w_current != NULL);
+
+  toplevel = w_current->toplevel;
+  g_return_if_fail (toplevel != NULL);
+
+  if ((dialog->selection != NULL) && (dialog->line_type != NULL)) {
+    int line_type;
+
     g_return_if_fail (widget == dialog->line_type);
 
-    change_selection_line_type (dialog);
+    line_type = x_linetypecb_get_index (dialog->line_type);
 
-    gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
+    if (line_type >= 0) {
+      selection_set_line_type (toplevel, dialog->selection, line_type);
+
+      toplevel->page_current->CHANGED = 1;
+      o_undo_savestate(w_current, UNDO_ALL);
+    }
   }
 }
 
@@ -560,21 +486,33 @@ line_type_changed (GtkWidget *widget, EditLProp *dialog)
 static void
 line_width_changed (GtkWidget *widget, EditLProp *dialog)
 {
+  TOPLEVEL *toplevel;
+  GSCHEM_TOPLEVEL *w_current;
+
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
 
-  if (dialog->width_entry != NULL) {
+  w_current = dialog->parent.w_current;
+  g_return_if_fail (w_current != NULL);
+
+  toplevel = w_current->toplevel;
+  g_return_if_fail (toplevel != NULL);
+
+  if ((dialog->selection != NULL) && (dialog->width_entry != NULL)) {
     g_return_if_fail (widget == dialog->width_entry);
 
     if (gtk_widget_is_focus (GTK_WIDGET (x_integercb_get_entry (dialog->width_entry)))) {
       // likely just a character changed in the entry widget
-
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
     }
     else {
-      change_selection_line_width (dialog);
+      int line_width = x_integercb_get_value (dialog->width_entry);
 
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
+      if (line_width >= 0) {
+        selection_set_line_width (toplevel, dialog->selection, line_width);
+
+        toplevel->page_current->CHANGED = 1;
+        o_undo_savestate(w_current, UNDO_ALL);
+      }
     }
   }
 }
@@ -591,15 +529,31 @@ line_width_changed (GtkWidget *widget, EditLProp *dialog)
 static gboolean
 line_width_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialog)
 {
+  TOPLEVEL *toplevel;
+  GSCHEM_TOPLEVEL *w_current;
+
   g_return_val_if_fail (dialog != NULL, FALSE);
   g_return_val_if_fail (widget != NULL, FALSE);
 
-  if (dialog->width_entry != NULL) {
+  w_current = dialog->parent.w_current;
+  g_return_val_if_fail (w_current != NULL, FALSE);
+
+  toplevel = w_current->toplevel;
+  g_return_val_if_fail (toplevel != NULL, FALSE);
+
+  if ((dialog->selection != NULL) && (dialog->width_entry != NULL)) {
+    int line_width;
+
     g_return_val_if_fail (widget == GTK_WIDGET (x_integercb_get_entry (dialog->width_entry)), FALSE);
 
-    change_selection_line_width (dialog);
+    line_width = x_integercb_get_value (dialog->width_entry);
 
-    gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
+    if (line_width >= 0) {
+      selection_set_line_width (toplevel, dialog->selection, line_width);
+
+      toplevel->page_current->CHANGED = 1;
+      o_undo_savestate(w_current, UNDO_ALL);
+    }
   }
 
   return FALSE;
@@ -621,23 +575,81 @@ line_width_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialo
 static void
 dash_length_changed (GtkWidget *widget, EditLProp *dialog)
 {
+  TOPLEVEL *toplevel;
+  GSCHEM_TOPLEVEL *w_current;
+
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
 
-  if (dialog->length_entry != NULL) {
+  w_current = dialog->parent.w_current;
+  g_return_if_fail (w_current != NULL);
+
+  toplevel = w_current->toplevel;
+  g_return_if_fail (toplevel != NULL);
+
+  if ((dialog->selection != NULL) && (dialog->length_entry != NULL)) {
     g_return_if_fail (widget == dialog->length_entry);
 
     if (gtk_widget_is_focus (GTK_WIDGET (x_integercb_get_entry (dialog->length_entry)))) {
       // likely just a character changed in the entry widget
-
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
     }
     else {
-      change_selection_dash_length (dialog);
+      int dash_length;
 
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
+      g_return_if_fail (widget == GTK_WIDGET (dialog->length_entry));
+
+      dash_length = x_integercb_get_value (dialog->length_entry);
+
+      if (dash_length >= 0) {
+        selection_set_dash_length (toplevel, dialog->selection, dash_length);
+
+        toplevel->page_current->CHANGED = 1;
+        o_undo_savestate(w_current, UNDO_ALL);
+      }
     }
   }
+}
+
+
+
+/*! \brief Respond to focus out event on the dash_length entry
+ *
+ *  \param [in] widget The widget emitting the event
+ *  \param [in] event  The focus out event
+ *  \param [in] dialog The line properties dialog box
+ *  \return FALSE
+ */
+static gboolean
+dash_length_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialog)
+{
+  TOPLEVEL *toplevel;
+  GSCHEM_TOPLEVEL *w_current;
+
+  g_return_val_if_fail (dialog != NULL, FALSE);
+  g_return_val_if_fail (widget != NULL, FALSE);
+
+  w_current = dialog->parent.w_current;
+  g_return_val_if_fail (w_current != NULL, FALSE);
+
+  toplevel = w_current->toplevel;
+  g_return_val_if_fail (toplevel != NULL, FALSE);
+
+  if ((dialog->selection != NULL) && (dialog->length_entry != NULL)) {
+    int dash_length;
+
+    g_return_val_if_fail (widget == GTK_WIDGET (x_integercb_get_entry (dialog->length_entry)), FALSE);
+
+    dash_length = x_integercb_get_value (dialog->length_entry);
+
+    if (dash_length >= 0) {
+      selection_set_dash_length (toplevel, dialog->selection, dash_length);
+
+      toplevel->page_current->CHANGED = 1;
+      o_undo_savestate(w_current, UNDO_ALL);
+    }
+  }
+
+  return FALSE;
 }
 
 
@@ -656,23 +668,81 @@ dash_length_changed (GtkWidget *widget, EditLProp *dialog)
 static void
 dash_space_changed (GtkWidget *widget, EditLProp *dialog)
 {
+  TOPLEVEL *toplevel;
+  GSCHEM_TOPLEVEL *w_current;
+
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
 
-  if (dialog->space_entry != NULL) {
+  w_current = dialog->parent.w_current;
+  g_return_if_fail (w_current != NULL);
+
+  toplevel = w_current->toplevel;
+  g_return_if_fail (toplevel != NULL);
+
+  if ((dialog->selection != NULL) && (dialog->space_entry != NULL)) {
     g_return_if_fail (widget == dialog->space_entry);
 
     if (gtk_widget_is_focus (GTK_WIDGET (x_integercb_get_entry (dialog->space_entry)))) {
       // likely just a character changed in the entry widget
-
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
     }
     else {
-      change_selection_dash_space (dialog);
+      int dash_space;
 
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
+      g_return_if_fail (widget == GTK_WIDGET (dialog->space_entry));
+
+      dash_space = x_integercb_get_value (dialog->space_entry);
+
+      if (dash_space >= 0) {
+        selection_set_dash_space (toplevel, dialog->selection, dash_space);
+
+        toplevel->page_current->CHANGED = 1;
+        o_undo_savestate(w_current, UNDO_ALL);
+      }
     }
   }
+}
+
+
+
+/*! \brief Respond to focus out event on the dash_length entry
+ *
+ *  \param [in] widget The widget emitting the event
+ *  \param [in] event  The focus out event
+ *  \param [in] dialog The line properties dialog box
+ *  \return FALSE
+ */
+static gboolean
+dash_space_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialog)
+{
+  TOPLEVEL *toplevel;
+  GSCHEM_TOPLEVEL *w_current;
+
+  g_return_val_if_fail (dialog != NULL, FALSE);
+  g_return_val_if_fail (widget != NULL, FALSE);
+
+  w_current = dialog->parent.w_current;
+  g_return_val_if_fail (w_current != NULL, FALSE);
+
+  toplevel = w_current->toplevel;
+  g_return_val_if_fail (toplevel != NULL, FALSE);
+
+  if ((dialog->selection != NULL) && (dialog->space_entry != NULL)) {
+    int dash_space;
+
+    g_return_val_if_fail (widget == GTK_WIDGET (x_integercb_get_entry (dialog->space_entry)), FALSE);
+
+    dash_space = x_integercb_get_value (dialog->space_entry);
+
+    if (dash_space >= 0) {
+      selection_set_dash_space (toplevel, dialog->selection, dash_space);
+
+      toplevel->page_current->CHANGED = 1;
+      o_undo_savestate(w_current, UNDO_ALL);
+    }
+  }
+
+  return FALSE;
 }
 
 
@@ -685,86 +755,273 @@ dash_space_changed (GtkWidget *widget, EditLProp *dialog)
 static void
 cap_style_changed (GtkWidget *widget, EditLProp *dialog)
 {
+  TOPLEVEL *toplevel;
+  GSCHEM_TOPLEVEL *w_current;
+
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
 
-  if (dialog->line_end != NULL) {
+  w_current = dialog->parent.w_current;
+  g_return_if_fail (w_current != NULL);
+
+  toplevel = w_current->toplevel;
+  g_return_if_fail (toplevel != NULL);
+
+  if ((dialog->selection != NULL) && (dialog->line_end != NULL)) {
+    int cap_style;
+
     g_return_if_fail (widget == dialog->line_end);
 
-    change_selection_cap_style (dialog);
+    cap_style = x_linecapcb_get_index (dialog->line_end);
 
-    gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, TRUE);
+    if (cap_style >= 0) {
+      selection_set_cap_style (toplevel, dialog->selection, cap_style);
+
+      toplevel->page_current->CHANGED = 1;
+      o_undo_savestate(w_current, UNDO_ALL);
+    }
   }
 }
 
 
 
-/*! \brief Update the line type in the selection
+/*! \brief Set the line type in the selection
  *
- *  \param [in] dialog The line properties dialog box
+ *  \param [in] selection
+ *  \param [in] line_type
  */
 static void
-change_selection_line_type (EditLProp *dialog)
+selection_set_line_type (TOPLEVEL *toplevel, SELECTION *selection, int line_type)
 {
-  g_return_if_fail (dialog != NULL);
+  GList *iter;
 
-  // future use for instant apply
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (selection != NULL);
+  g_return_if_fail (line_type >= 0);
+
+  iter = geda_list_get_glist (selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    OBJECT_END temp_cap_style;
+    int temp_dash_length;
+    int temp_dash_space;
+    OBJECT_TYPE temp_line_type;
+    int temp_line_width;
+
+    success = o_get_line_options (object,
+                                  &temp_cap_style,
+                                  &temp_line_type,
+                                  &temp_line_width,
+                                  &temp_dash_length,
+                                  &temp_dash_space);
+
+    if (success) {
+      o_set_line_options (toplevel,
+                          object,
+                          temp_cap_style,
+                          line_type,
+                          temp_line_width,
+                          temp_dash_length,
+                          temp_dash_space);
+    }
+
+    iter = g_list_next (iter);
+  }
 }
 
 
 
-/*! \brief Update the line width in the selection
+/*! \brief Set the line width in the selection
  *
- *  \param [in] dialog The line properties dialog box
+ *  \param [in] selection
+ *  \param [in] line_width
  */
 static void
-change_selection_line_width (EditLProp *dialog)
+selection_set_line_width (TOPLEVEL *toplevel, SELECTION *selection, int line_width)
 {
-  g_return_if_fail (dialog != NULL);
+  GList *iter;
 
-  // future use for instant apply
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (selection != NULL);
+  g_return_if_fail (line_width >= 0);
+
+  iter = geda_list_get_glist (selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    OBJECT_END temp_cap_style;
+    int temp_dash_length;
+    int temp_dash_space;
+    OBJECT_TYPE temp_line_type;
+    int temp_line_width;
+
+    success = o_get_line_options (object,
+                                  &temp_cap_style,
+                                  &temp_line_type,
+                                  &temp_line_width,
+                                  &temp_dash_length,
+                                  &temp_dash_space);
+
+    if (success) {
+      o_set_line_options (toplevel,
+                          object,
+                          temp_cap_style,
+                          temp_line_type,
+                          line_width,
+                          temp_dash_length,
+                          temp_dash_space);
+    }
+
+    iter = g_list_next (iter);
+  }
 }
 
 
 
-/*! \brief Update the dash length in the selection
+/*! \brief Set the dash length in the selection
  *
- *  \param [in] dialog The line properties dialog box
+ *  \param [in] selection
+ *  \param [in] dash_length
  */
 static void
-change_selection_dash_length (EditLProp *dialog)
+selection_set_dash_length (TOPLEVEL *toplevel, SELECTION *selection, int dash_length)
 {
-  g_return_if_fail (dialog != NULL);
+  GList *iter;
 
-  // future use for instant apply
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (selection != NULL);
+  g_return_if_fail (dash_length >= 0);
+
+  iter = geda_list_get_glist (selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    OBJECT_END temp_cap_style;
+    int temp_dash_length;
+    int temp_dash_space;
+    OBJECT_TYPE temp_line_type;
+    int temp_line_width;
+
+    success = o_get_line_options (object,
+                                  &temp_cap_style,
+                                  &temp_line_type,
+                                  &temp_line_width,
+                                  &temp_dash_length,
+                                  &temp_dash_space);
+
+    if (success) {
+      o_set_line_options (toplevel,
+                          object,
+                          temp_cap_style,
+                          temp_line_type,
+                          temp_line_width,
+                          dash_length,
+                          temp_dash_space);
+    }
+
+    iter = g_list_next (iter);
+  }
 }
 
 
 
-/*! \brief Update the dash spacing in the selection
+/*! \brief Set the dash spacing in the selection
  *
- *  \param [in] dialog The line properties dialog box
+ *  \param [in] selection
+ *  \param [in] dash_space
  */
 static void
-change_selection_dash_space (EditLProp *dialog)
+selection_set_dash_space (TOPLEVEL *toplevel, SELECTION *selection, int dash_space)
 {
-  g_return_if_fail (dialog != NULL);
+  GList *iter;
 
-  // future use for instant apply
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (selection != NULL);
+  g_return_if_fail (dash_space >= 0);
+
+  iter = geda_list_get_glist (selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    OBJECT_END temp_cap_style;
+    int temp_dash_length;
+    int temp_dash_space;
+    OBJECT_TYPE temp_line_type;
+    int temp_line_width;
+
+    success = o_get_line_options (object,
+                                  &temp_cap_style,
+                                  &temp_line_type,
+                                  &temp_line_width,
+                                  &temp_dash_length,
+                                  &temp_dash_space);
+
+    if (success) {
+      o_set_line_options (toplevel,
+                          object,
+                          temp_cap_style,
+                          temp_line_type,
+                          temp_line_width,
+                          temp_dash_length,
+                          dash_space);
+    }
+
+    iter = g_list_next (iter);
+  }
 }
 
 
 
-/*! \brief Update the cap styles in the selection
+/*! \brief Set the cap styles in the selection
  *
- *  \param [in] dialog The line properties dialog box
+ *  \param [in] toplevel
+ *  \param [in] selection
+ *  \param [in] cap_style
  */
 static void
-change_selection_cap_style (EditLProp *dialog)
+selection_set_cap_style (TOPLEVEL *toplevel, SELECTION *selection, int cap_style)
 {
-  g_return_if_fail (dialog != NULL);
+  GList *iter;
 
-  // future use for instant apply
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (selection != NULL);
+  g_return_if_fail (cap_style >= 0);
+
+  iter = geda_list_get_glist (selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    OBJECT_END temp_cap_style;
+    int temp_dash_length;
+    int temp_dash_space;
+    OBJECT_TYPE temp_line_type;
+    int temp_line_width;
+
+    success = o_get_line_options (object,
+                                  &temp_cap_style,
+                                  &temp_line_type,
+                                  &temp_line_width,
+                                  &temp_dash_length,
+                                  &temp_dash_space);
+
+    if (success) {
+      o_set_line_options (toplevel,
+                          object,
+                          cap_style,
+                          temp_line_type,
+                          temp_line_width,
+                          temp_dash_length,
+                          temp_dash_space);
+    }
+
+    iter = g_list_next (iter);
+  }
 }
 
 
@@ -829,8 +1086,6 @@ update_values (EditLProp *dialog)
     gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_end), success);
 
     /* dash length and dash space are enabled/disabled by the value in line type */
-
-    gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_APPLY, success);
   }
 }
 
