@@ -264,6 +264,11 @@ static void editlprop_init(EditLProp *dialog)
   GtkWidget *table;
   int index;
 
+
+  dialog->line_width_changed = FALSE;
+  dialog->dash_length_changed = FALSE;
+  dialog->dash_space_changed = FALSE;
+
   gtk_dialog_add_button (GTK_DIALOG (dialog),
                          GTK_STOCK_CLOSE,
                          GTK_RESPONSE_CLOSE);
@@ -537,6 +542,8 @@ line_width_changed (GtkWidget *widget, EditLProp *dialog)
 
     if (gtk_widget_is_focus (GTK_WIDGET (x_integercb_get_entry (dialog->width_entry)))) {
       // likely just a character changed in the entry widget
+
+      dialog->line_width_changed = TRUE;
     }
     else {
       int line_width = x_integercb_get_value (dialog->width_entry);
@@ -563,31 +570,35 @@ line_width_changed (GtkWidget *widget, EditLProp *dialog)
 static gboolean
 line_width_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialog)
 {
-  TOPLEVEL *toplevel;
-  GSCHEM_TOPLEVEL *w_current;
-
   g_return_val_if_fail (dialog != NULL, FALSE);
   g_return_val_if_fail (widget != NULL, FALSE);
 
-  w_current = dialog->parent.w_current;
-  g_return_val_if_fail (w_current != NULL, FALSE);
+  if (dialog->line_width_changed) {
+    TOPLEVEL *toplevel;
+    GSCHEM_TOPLEVEL *w_current;
 
-  toplevel = w_current->toplevel;
-  g_return_val_if_fail (toplevel != NULL, FALSE);
+    w_current = dialog->parent.w_current;
+    g_return_val_if_fail (w_current != NULL, FALSE);
 
-  if ((dialog->selection != NULL) && (dialog->width_entry != NULL)) {
-    int line_width;
+    toplevel = w_current->toplevel;
+    g_return_val_if_fail (toplevel != NULL, FALSE);
 
-    g_return_val_if_fail (widget == GTK_WIDGET (x_integercb_get_entry (dialog->width_entry)), FALSE);
+    if ((dialog->selection != NULL) && (dialog->width_entry != NULL)) {
+      int line_width;
 
-    line_width = x_integercb_get_value (dialog->width_entry);
+      g_return_val_if_fail (widget == GTK_WIDGET (x_integercb_get_entry (dialog->width_entry)), FALSE);
 
-    if (line_width >= 0) {
-      selection_set_line_width (toplevel, dialog->selection, line_width);
+      line_width = x_integercb_get_value (dialog->width_entry);
 
-      toplevel->page_current->CHANGED = 1;
-      o_undo_savestate(w_current, UNDO_ALL);
+      if (line_width >= 0) {
+        selection_set_line_width (toplevel, dialog->selection, line_width);
+
+        toplevel->page_current->CHANGED = 1;
+        o_undo_savestate(w_current, UNDO_ALL);
+      }
     }
+
+    dialog->line_width_changed = FALSE;
   }
 
   return FALSE;
@@ -626,6 +637,8 @@ dash_length_changed (GtkWidget *widget, EditLProp *dialog)
 
     if (gtk_widget_is_focus (GTK_WIDGET (x_integercb_get_entry (dialog->length_entry)))) {
       // likely just a character changed in the entry widget
+
+      dialog->dash_length_changed = TRUE;
     }
     else {
       int dash_length;
@@ -656,31 +669,35 @@ dash_length_changed (GtkWidget *widget, EditLProp *dialog)
 static gboolean
 dash_length_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialog)
 {
-  TOPLEVEL *toplevel;
-  GSCHEM_TOPLEVEL *w_current;
-
   g_return_val_if_fail (dialog != NULL, FALSE);
   g_return_val_if_fail (widget != NULL, FALSE);
 
-  w_current = dialog->parent.w_current;
-  g_return_val_if_fail (w_current != NULL, FALSE);
+  if (dialog->dash_length_changed) {
+    TOPLEVEL *toplevel;
+    GSCHEM_TOPLEVEL *w_current;
 
-  toplevel = w_current->toplevel;
-  g_return_val_if_fail (toplevel != NULL, FALSE);
+    w_current = dialog->parent.w_current;
+    g_return_val_if_fail (w_current != NULL, FALSE);
 
-  if ((dialog->selection != NULL) && (dialog->length_entry != NULL)) {
-    int dash_length;
+    toplevel = w_current->toplevel;
+    g_return_val_if_fail (toplevel != NULL, FALSE);
 
-    g_return_val_if_fail (widget == GTK_WIDGET (x_integercb_get_entry (dialog->length_entry)), FALSE);
+    if ((dialog->selection != NULL) && (dialog->length_entry != NULL)) {
+      int dash_length;
 
-    dash_length = x_integercb_get_value (dialog->length_entry);
+      g_return_val_if_fail (widget == GTK_WIDGET (x_integercb_get_entry (dialog->length_entry)), FALSE);
 
-    if (dash_length >= 0) {
-      selection_set_dash_length (toplevel, dialog->selection, dash_length);
+      dash_length = x_integercb_get_value (dialog->length_entry);
 
-      toplevel->page_current->CHANGED = 1;
-      o_undo_savestate(w_current, UNDO_ALL);
+      if (dash_length >= 0) {
+        selection_set_dash_length (toplevel, dialog->selection, dash_length);
+
+        toplevel->page_current->CHANGED = 1;
+        o_undo_savestate(w_current, UNDO_ALL);
+      }
     }
+
+    dialog->dash_length_changed = FALSE;
   }
 
   return FALSE;
@@ -719,6 +736,8 @@ dash_space_changed (GtkWidget *widget, EditLProp *dialog)
 
     if (gtk_widget_is_focus (GTK_WIDGET (x_integercb_get_entry (dialog->space_entry)))) {
       // likely just a character changed in the entry widget
+
+      dialog->dash_space_changed = TRUE;
     }
     else {
       int dash_space;
@@ -749,31 +768,35 @@ dash_space_changed (GtkWidget *widget, EditLProp *dialog)
 static gboolean
 dash_space_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialog)
 {
-  TOPLEVEL *toplevel;
-  GSCHEM_TOPLEVEL *w_current;
-
   g_return_val_if_fail (dialog != NULL, FALSE);
   g_return_val_if_fail (widget != NULL, FALSE);
 
-  w_current = dialog->parent.w_current;
-  g_return_val_if_fail (w_current != NULL, FALSE);
+  if (dialog->dash_space_changed) {
+    TOPLEVEL *toplevel;
+    GSCHEM_TOPLEVEL *w_current;
 
-  toplevel = w_current->toplevel;
-  g_return_val_if_fail (toplevel != NULL, FALSE);
+    w_current = dialog->parent.w_current;
+    g_return_val_if_fail (w_current != NULL, FALSE);
 
-  if ((dialog->selection != NULL) && (dialog->space_entry != NULL)) {
-    int dash_space;
+    toplevel = w_current->toplevel;
+    g_return_val_if_fail (toplevel != NULL, FALSE);
 
-    g_return_val_if_fail (widget == GTK_WIDGET (x_integercb_get_entry (dialog->space_entry)), FALSE);
+    if ((dialog->selection != NULL) && (dialog->space_entry != NULL)) {
+      int dash_space;
 
-    dash_space = x_integercb_get_value (dialog->space_entry);
+      g_return_val_if_fail (widget == GTK_WIDGET (x_integercb_get_entry (dialog->space_entry)), FALSE);
 
-    if (dash_space >= 0) {
-      selection_set_dash_space (toplevel, dialog->selection, dash_space);
+      dash_space = x_integercb_get_value (dialog->space_entry);
 
-      toplevel->page_current->CHANGED = 1;
-      o_undo_savestate(w_current, UNDO_ALL);
+      if (dash_space >= 0) {
+        selection_set_dash_space (toplevel, dialog->selection, dash_space);
+
+        toplevel->page_current->CHANGED = 1;
+        o_undo_savestate(w_current, UNDO_ALL);
+      }
     }
+
+    dialog->dash_space_changed = FALSE;
   }
 
   return FALSE;
