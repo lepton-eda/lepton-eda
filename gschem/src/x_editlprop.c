@@ -49,6 +49,9 @@ static void
 dispose (GObject *object);
 
 static void
+entry_activate (GtkWidget *widget, EditLProp *dialog);
+
+static void
 line_type_changed (GtkWidget *widget, EditLProp *dialog);
 
 static void
@@ -201,6 +204,28 @@ dialog_response (EditLProp *dialog, gint response, gpointer unused)
 
 
 
+/*! \brief A signal handler for when the user presses enter in an entry
+ *
+ *  Pressing the enter key in an entry moves the focus to the next control
+ *  in the column of values and applies the current value. This function
+ *  moves the focus to the next control, and the focus-out-event applies the
+ *  value.
+ *
+ *  This signal hander operates for multiple entry widgets.
+ *
+ *  \param [in] widget The widget emitting the event
+ *  \param [in] dialog This dialog
+ */
+static void
+entry_activate (GtkWidget *widget, EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+
+  gtk_widget_child_focus (GTK_WIDGET (dialog), GTK_DIR_DOWN);
+}
+
+
+
 /*! \brief Initialize EditLProp class
  *
  *  \par Function Description
@@ -288,17 +313,14 @@ static void editlprop_init(EditLProp *dialog)
                             1,2,0,1);
 
   dialog->width_entry = x_integercb_new ();
-  gtk_entry_set_activates_default (x_integercb_get_entry (dialog->width_entry), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->width_entry,
                             1,2,1,2);
 
   dialog->length_entry = x_integercb_new ();
-  gtk_entry_set_activates_default (x_integercb_get_entry (dialog->length_entry), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->length_entry,
                             1,2,2,3);
 
   dialog->space_entry = x_integercb_new ();
-  gtk_entry_set_activates_default (x_integercb_get_entry (dialog->space_entry), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->space_entry,
                             1,2,3,4);
 
@@ -318,6 +340,10 @@ static void editlprop_init(EditLProp *dialog)
                    G_CALLBACK (line_width_changed),
                    dialog);
 
+  g_signal_connect(G_OBJECT (x_integercb_get_entry (dialog->width_entry)), "activate",
+                   G_CALLBACK (entry_activate),
+                   dialog);
+
   g_signal_connect(G_OBJECT (x_integercb_get_entry (dialog->width_entry)), "focus-out-event",
                    G_CALLBACK (line_width_focus_out_event),
                    dialog);
@@ -326,12 +352,20 @@ static void editlprop_init(EditLProp *dialog)
                    G_CALLBACK (dash_length_changed),
                    dialog);
 
+  g_signal_connect(G_OBJECT (x_integercb_get_entry (dialog->length_entry)), "activate",
+                   G_CALLBACK (entry_activate),
+                   dialog);
+
   g_signal_connect(G_OBJECT (x_integercb_get_entry (dialog->length_entry)), "focus-out-event",
                    G_CALLBACK (dash_length_focus_out_event),
                    dialog);
 
   g_signal_connect(G_OBJECT (dialog->space_entry), "changed",
                    G_CALLBACK (dash_space_changed),
+                   dialog);
+
+  g_signal_connect(G_OBJECT (x_integercb_get_entry (dialog->space_entry)), "activate",
+                   G_CALLBACK (entry_activate),
                    dialog);
 
   g_signal_connect(G_OBJECT (x_integercb_get_entry (dialog->space_entry)), "focus-out-event",
