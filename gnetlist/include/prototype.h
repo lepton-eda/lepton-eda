@@ -77,10 +77,12 @@ int s_net_find(NET *net_head, NET *node);
 char *s_net_name_search(TOPLEVEL *pr_current, NET *net_head);
 char *s_net_name(TOPLEVEL *pr_current, NETLIST *netlist_head, NET *net_head, char *hierarchy_tag, int type);
 /* s_netattrib.c */
+gchar *s_netattrib_pinnum_get_connected_string (const gchar *pinnum) G_GNUC_WARN_UNUSED_RESULT;
+const gchar *s_netattrib_connected_string_get_pinnum (const gchar *str);
 char *s_netattrib_extract_netname(char *value);
 void s_netattrib_create_pins(TOPLEVEL *pr_current, OBJECT *o_current, NETLIST *netlist, char *value, char *hierarchy_tag);
 void s_netattrib_handle(TOPLEVEL *pr_current, OBJECT *o_current, NETLIST *netlist, char *hierarchy_tag);
-char *s_netattrib_net_search(OBJECT *o_current, char *wanted_pin);
+char *s_netattrib_net_search(OBJECT *o_current, const gchar *wanted_pin);
 char *s_netattrib_return_netname(TOPLEVEL *pr_current, OBJECT *o_current, char *pinnumber, char *hierarchy_tag);
 /* s_netlist.c */
 NETLIST *s_netlist_return_tail(NETLIST *head);
