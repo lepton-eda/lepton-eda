@@ -77,6 +77,7 @@ char *s_net_name(TOPLEVEL *pr_current, NETLIST *netlist_head, NET *net_head, cha
 /* s_netattrib.c */
 gchar *s_netattrib_pinnum_get_connected_string (const gchar *pinnum) G_GNUC_WARN_UNUSED_RESULT;
 const gchar *s_netattrib_connected_string_get_pinnum (const gchar *str);
+void s_netattrib_check_connected_string (const gchar *str);
 char *s_netattrib_extract_netname(char *value);
 void s_netattrib_create_pins(TOPLEVEL *pr_current, OBJECT *o_current, NETLIST *netlist, char *value, char *hierarchy_tag);
 void s_netattrib_handle(TOPLEVEL *pr_current, OBJECT *o_current, NETLIST *netlist, char *hierarchy_tag);

@@ -170,6 +170,8 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
 
     if (uref && pinnum) {
 	string = g_strdup_printf("%s %s", uref, pinnum);
+        s_netattrib_check_connected_string (string);
+
     } else {
 	if (pinnum) {
           string = s_netattrib_pinnum_get_connected_string (pinnum);
