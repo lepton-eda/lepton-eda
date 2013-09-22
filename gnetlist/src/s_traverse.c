@@ -345,6 +345,7 @@ NET *s_traverse_net (TOPLEVEL *pr_current, NET *nets, int starting,
   CONN *c_current;
   GList *cl_current;
   char *temp = NULL;
+  const gchar *netattrib_pinnum = NULL;
 
   visit (object);
 
@@ -395,8 +396,8 @@ NET *s_traverse_net (TOPLEVEL *pr_current, NET *nets, int starting,
     }
 
     /* net= new */
-    if (strstr(nets->connected_to, "POWER") &&
-        type == PIN_TYPE_NET) {
+    netattrib_pinnum = s_netattrib_connected_string_get_pinnum (nets->connected_to);
+    if (netattrib_pinnum != NULL && type == PIN_TYPE_NET) {
 
 #if DEBUG
       printf("going to find netname %s \n", nets->connected_to);

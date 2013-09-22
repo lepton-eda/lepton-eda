@@ -42,8 +42,30 @@
 #include <dmalloc.h>
 #endif
 
+/* Used by the connected string functions */
+#define PIN_NET_PREFIX "__netattrib_power_pin "
+
 /* used by the extract functions below */
 #define DELIMITERS ",; "
+
+gchar *
+s_netattrib_pinnum_get_connected_string (const gchar *pinnum)
+{
+  gchar *str = g_strdup_printf (PIN_NET_PREFIX "%s", pinnum);
+  return str;
+}
+
+const gchar *
+s_netattrib_connected_string_get_pinnum (const gchar *str)
+{
+  int prefix_len = (sizeof PIN_NET_PREFIX) - 1;
+
+  if (strncmp (str, PIN_NET_PREFIX, prefix_len) != 0) {
+    return NULL;
+  }
+
+  return str + prefix_len;
+}
 
 /* things to do here : */
 /* write the net alias function */
@@ -211,7 +233,7 @@ s_netattrib_handle (TOPLEVEL * pr_current, OBJECT * o_current,
   }
 }
 
-char *s_netattrib_net_search (OBJECT * o_current, char *wanted_pin)
+char *s_netattrib_net_search (OBJECT * o_current, const gchar *wanted_pin)
 {
   char *value = NULL;
   char *char_ptr = NULL;
@@ -294,24 +316,12 @@ char *s_netattrib_net_search (OBJECT * o_current, char *wanted_pin)
 char *s_netattrib_return_netname(TOPLEVEL * pr_current, OBJECT * o_current,
 				 char *pinnumber, char *hierarchy_tag)
 {
-    char *current_pin;
+    const gchar *current_pin;
     char *netname;
     char *temp_netname;
 
-#if DEBUG
-    printf("extract return netname here\n");
-#endif
-
-    /* skip over POWER tag */
-    strtok(pinnumber, " ");
-
-    current_pin = strtok(NULL, " ");
-    if (current_pin == NULL) {
-	return (NULL);
-    }
-#if DEBUG
-    printf("inside return_netname: %s\n", current_pin);
-#endif
+    current_pin = s_netattrib_connected_string_get_pinnum (pinnumber);
+    if (current_pin == NULL) return NULL;
 
     /* use hierarchy tag here to make this net uniq */
     temp_netname = s_netattrib_net_search(o_current->parent,

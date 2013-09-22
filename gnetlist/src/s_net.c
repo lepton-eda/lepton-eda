@@ -172,7 +172,7 @@ char *s_net_return_connected_string(TOPLEVEL * pr_current, OBJECT * object,
 	string = g_strdup_printf("%s %s", uref, pinnum);
     } else {
 	if (pinnum) {
-	    string = g_strdup_printf("POWER %s", pinnum);
+          string = s_netattrib_pinnum_get_connected_string (pinnum);
 	} else {
 	    if (hierarchy_tag) {
 		misc =
