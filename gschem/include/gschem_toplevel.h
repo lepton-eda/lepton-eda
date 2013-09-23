@@ -238,6 +238,8 @@ struct st_gschem_toplevel {
 };
 
 
+void
+gschem_toplevel_free (GSCHEM_TOPLEVEL *w_current);
 
 GtkListStore*
 gschem_toplevel_get_dash_length_list_store (GSCHEM_TOPLEVEL *w_current);

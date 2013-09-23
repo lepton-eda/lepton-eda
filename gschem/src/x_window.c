@@ -633,7 +633,7 @@ void x_window_close(GSCHEM_TOPLEVEL *w_current)
 
   s_toplevel_delete (toplevel);
   global_window_list = g_list_remove (global_window_list, w_current);
-  g_free (w_current);
+  gschem_toplevel_free (w_current);
 
   /* just closed last window, so quit */
   if (last_window) {

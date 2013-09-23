@@ -334,6 +334,18 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
 
 
 
+/*! \brief Free the gschem toplevel
+ *
+ *  \param [in] w_current The gschem toplevel
+ */
+void
+gschem_toplevel_free (GSCHEM_TOPLEVEL *w_current)
+{
+  g_free (w_current);
+}
+
+
+
 /*! \brief Get the selection adapter
  *
  *  \param [in] w_current The current gschem toplevel
