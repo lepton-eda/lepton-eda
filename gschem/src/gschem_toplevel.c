@@ -206,6 +206,11 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->line_width_list_store = NULL;
   w_current->text_size_list_store = NULL;
 
+  /* ----------------------------------------- */
+  /* An adapter for manipulating the selection */
+  /* ----------------------------------------- */
+  w_current->selection_adapter = NULL;
+
   /* ----------------- */
   /* Picture placement */
   /* ----------------- */
@@ -325,6 +330,28 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
   w_current->smob = SCM_UNDEFINED;
 
   return w_current;
+}
+
+
+
+/*! \brief Get the selection adapter
+ *
+ *  \param [in] w_current The current gschem toplevel
+ *  \return The selection adapter
+ */
+GschemSelectionAdapter*
+gschem_toplevel_get_selection_adapter (GSCHEM_TOPLEVEL *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  if (w_current->selection_adapter == NULL) {
+    w_current->selection_adapter = gschem_selection_adapter_new ();
+
+    gschem_selection_adapter_set_toplevel (w_current->selection_adapter, w_current->toplevel);
+    gschem_selection_adapter_set_selection (w_current->selection_adapter, w_current->toplevel->page_current->selection_list);
+  }
+
+  return w_current->selection_adapter;
 }
 
 
@@ -475,7 +502,7 @@ gschem_toplevel_page_changed (GSCHEM_TOPLEVEL *w_current)
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (w_current->toplevel != NULL);
 
-  if ((w_current->lpwindow != NULL) && (w_current->toplevel->page_current != NULL)) {
-    x_editlprop_set_selection (EDITLPROP (w_current->lpwindow), w_current->toplevel->page_current->selection_list);
+  if ((w_current->selection_adapter != NULL) && (w_current->toplevel->page_current != NULL)) {
+    gschem_selection_adapter_set_selection (w_current->selection_adapter, w_current->toplevel->page_current->selection_list);
   }
 }

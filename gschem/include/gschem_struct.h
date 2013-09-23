@@ -76,6 +76,11 @@ struct st_gschem_toplevel {
   GtkListStore *line_width_list_store;
   GtkListStore *text_size_list_store;
 
+  /* ----------------------------------------- */
+  /* An adapter for manipulating the selection */
+  /* ----------------------------------------- */
+  GschemSelectionAdapter *selection_adapter;
+
   /* ----------------- */
   /* Picture placement */
   /* ----------------- */

@@ -41,7 +41,7 @@ struct _EditLProp
 {
   GschemDialog parent;
 
-  GedaList  *selection;
+  GschemSelectionAdapter *adapter;
 
   GtkWidget *width_entry;
   GtkWidget *line_type;

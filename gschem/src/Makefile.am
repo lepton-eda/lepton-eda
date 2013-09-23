@@ -28,6 +28,7 @@ gschem_SOURCES = \
 	gschem_accel_label.c \
 	gschem_action.c \
 	gschem_dialog.c \
+	gschem_selection_adapter.c \
 	gschem_toplevel.c \
 	i_basic.c \
 	i_callbacks.c \

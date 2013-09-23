@@ -76,85 +76,10 @@ static void
 cap_style_changed (GtkWidget *widget, EditLProp *dialog);
 
 static void
-selection_changed (GedaList *selection, EditLProp *dialog);
+selection_changed (GschemSelectionAdapter *adapter, EditLProp *dialog);
 
 static void
 update_values (EditLProp *dialog);
-
-static void
-selection_set_line_type (TOPLEVEL *toplevel, SELECTION *selection, int line_type);
-
-static void
-selection_set_line_width (TOPLEVEL *toplevel, SELECTION *selection, int line_width);
-
-static void
-selection_set_dash_length (TOPLEVEL *toplevel, SELECTION *selection, int dash_length);
-
-static void
-selection_set_dash_space (TOPLEVEL *toplevel, SELECTION *selection, int dash_space);
-
-static void
-selection_set_cap_style (TOPLEVEL *toplevel, SELECTION *selection, int cap_style);
-
-
-/*! \brief get the linetype data from selected objects
- *  \par Function Description
- *  Get linetype information over all selected objects.
- *  If a object property is different to the other objects, then
- *  return -2 in that variable.
- *  \param [in]   selection the selection list
- *  \param [out]  end       OBJECT_END type
- *  \param [out]  type      OBJECT_TYPE type
- *  \param [out]  width     line width
- *  \param [out]  length    length of each line
- *  \param [out]  space     space between points and lines
- *  \returns TRUE if linetype found, FALSE otherwise
- */
-static gboolean selection_get_line_type(GedaList *selection,
-                                        OBJECT_END *end, OBJECT_TYPE *type,
-                                        gint *width, gint *length, gint *space)
-{
-  GList *iter;
-  OBJECT *object;
-  gboolean found = FALSE;
-  OBJECT_END oend;
-  OBJECT_TYPE otype;
-  gint owidth, olength, ospace;
-
-  *end = -1;
-  *type = -1;
-  *width = -1;
-  *length = -1;
-  *space = -1;
-
-  for (iter = geda_list_get_glist (selection);
-       iter != NULL;
-       iter = g_list_next(iter)) {
-    object = (OBJECT *) iter->data;
-    if (! o_get_line_options(object, &oend, &otype,
-                             &owidth, &olength, &ospace))
-      continue;
-
-    if (found == FALSE) {  /* first object with linetype */
-      found = TRUE;
-      *end = oend;
-      *type = otype;
-      *width = owidth;
-      *length = olength;
-      *space = ospace;
-    } else {
-      /* indicate different values with the value -2 */
-      if (*end != oend) *end = -2;
-      if (*type != otype) *type = -2;
-      if (*width != owidth) *width = -2;
-      if (*length != olength) *length = -2;
-      if (*space != ospace) *space = -2;
-      if (*end != oend) *end = -2;
-    }
-  }
-
-  return found;
-}
 
 
 
@@ -417,24 +342,24 @@ GType editlprop_get_type()
  *  \param [in]     selection
  */
 void
-x_editlprop_set_selection(EditLProp *dialog, GedaList *selection)
+x_editlprop_set_selection_adapter (EditLProp *dialog, GschemSelectionAdapter *adapter)
 {
   g_return_if_fail (dialog != NULL);
 
-  if (dialog->selection != NULL) {
-    g_signal_handlers_disconnect_by_func (dialog->selection,
+  if (dialog->adapter != NULL) {
+    g_signal_handlers_disconnect_by_func (dialog->adapter,
                                           G_CALLBACK (selection_changed),
                                           dialog);
 
-    g_object_unref (dialog->selection);
+    g_object_unref (dialog->adapter);
   }
 
-  dialog->selection = selection;
+  dialog->adapter = adapter;
 
-  if (dialog->selection != NULL) {
-    g_object_ref (dialog->selection);
+  if (dialog->adapter != NULL) {
+    g_object_ref (dialog->adapter);
 
-    g_signal_connect (G_OBJECT (dialog->selection),
+    g_signal_connect (dialog->adapter,
                       "changed",
                       G_CALLBACK (selection_changed),
                       dialog);
@@ -460,7 +385,7 @@ dispose (GObject *object)
 
   dialog = EDITLPROP (object);
 
-  x_editlprop_set_selection (dialog, NULL);
+  x_editlprop_set_selection_adapter (dialog, NULL);
 
   /* lastly, chain up to the parent dispose */
 
@@ -493,7 +418,7 @@ line_type_changed (GtkWidget *widget, EditLProp *dialog)
   toplevel = w_current->toplevel;
   g_return_if_fail (toplevel != NULL);
 
-  if ((dialog->selection != NULL) && (dialog->line_type != NULL)) {
+  if ((dialog->adapter != NULL) && (dialog->line_type != NULL)) {
     int line_type;
 
     g_return_if_fail (widget == dialog->line_type);
@@ -501,7 +426,7 @@ line_type_changed (GtkWidget *widget, EditLProp *dialog)
     line_type = x_linetypecb_get_index (dialog->line_type);
 
     if (line_type >= 0) {
-      selection_set_line_type (toplevel, dialog->selection, line_type);
+      gschem_selection_adapter_set_line_type (dialog->adapter, line_type);
 
       toplevel->page_current->CHANGED = 1;
       o_undo_savestate(w_current, UNDO_ALL);
@@ -537,7 +462,7 @@ line_width_changed (GtkWidget *widget, EditLProp *dialog)
   toplevel = w_current->toplevel;
   g_return_if_fail (toplevel != NULL);
 
-  if ((dialog->selection != NULL) && (dialog->width_entry != NULL)) {
+  if ((dialog->adapter != NULL) && (dialog->width_entry != NULL)) {
     g_return_if_fail (widget == dialog->width_entry);
 
     if (gtk_widget_is_focus (GTK_WIDGET (x_integercb_get_entry (dialog->width_entry)))) {
@@ -549,7 +474,7 @@ line_width_changed (GtkWidget *widget, EditLProp *dialog)
       int line_width = x_integercb_get_value (dialog->width_entry);
 
       if (line_width >= 0) {
-        selection_set_line_width (toplevel, dialog->selection, line_width);
+        gschem_selection_adapter_set_line_width (dialog->adapter, line_width);
 
         toplevel->page_current->CHANGED = 1;
         o_undo_savestate(w_current, UNDO_ALL);
@@ -583,7 +508,7 @@ line_width_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialo
     toplevel = w_current->toplevel;
     g_return_val_if_fail (toplevel != NULL, FALSE);
 
-    if ((dialog->selection != NULL) && (dialog->width_entry != NULL)) {
+    if ((dialog->adapter != NULL) && (dialog->width_entry != NULL)) {
       int line_width;
 
       g_return_val_if_fail (widget == GTK_WIDGET (x_integercb_get_entry (dialog->width_entry)), FALSE);
@@ -591,7 +516,7 @@ line_width_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialo
       line_width = x_integercb_get_value (dialog->width_entry);
 
       if (line_width >= 0) {
-        selection_set_line_width (toplevel, dialog->selection, line_width);
+        gschem_selection_adapter_set_line_width (dialog->adapter, line_width);
 
         toplevel->page_current->CHANGED = 1;
         o_undo_savestate(w_current, UNDO_ALL);
@@ -632,7 +557,7 @@ dash_length_changed (GtkWidget *widget, EditLProp *dialog)
   toplevel = w_current->toplevel;
   g_return_if_fail (toplevel != NULL);
 
-  if ((dialog->selection != NULL) && (dialog->length_entry != NULL)) {
+  if ((dialog->adapter != NULL) && (dialog->length_entry != NULL)) {
     g_return_if_fail (widget == dialog->length_entry);
 
     if (gtk_widget_is_focus (GTK_WIDGET (x_integercb_get_entry (dialog->length_entry)))) {
@@ -648,7 +573,7 @@ dash_length_changed (GtkWidget *widget, EditLProp *dialog)
       dash_length = x_integercb_get_value (dialog->length_entry);
 
       if (dash_length >= 0) {
-        selection_set_dash_length (toplevel, dialog->selection, dash_length);
+        gschem_selection_adapter_set_dash_length (dialog->adapter, dash_length);
 
         toplevel->page_current->CHANGED = 1;
         o_undo_savestate(w_current, UNDO_ALL);
@@ -682,7 +607,7 @@ dash_length_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dial
     toplevel = w_current->toplevel;
     g_return_val_if_fail (toplevel != NULL, FALSE);
 
-    if ((dialog->selection != NULL) && (dialog->length_entry != NULL)) {
+    if ((dialog->adapter != NULL) && (dialog->length_entry != NULL)) {
       int dash_length;
 
       g_return_val_if_fail (widget == GTK_WIDGET (x_integercb_get_entry (dialog->length_entry)), FALSE);
@@ -690,7 +615,7 @@ dash_length_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dial
       dash_length = x_integercb_get_value (dialog->length_entry);
 
       if (dash_length >= 0) {
-        selection_set_dash_length (toplevel, dialog->selection, dash_length);
+        gschem_selection_adapter_set_dash_length (dialog->adapter, dash_length);
 
         toplevel->page_current->CHANGED = 1;
         o_undo_savestate(w_current, UNDO_ALL);
@@ -731,7 +656,7 @@ dash_space_changed (GtkWidget *widget, EditLProp *dialog)
   toplevel = w_current->toplevel;
   g_return_if_fail (toplevel != NULL);
 
-  if ((dialog->selection != NULL) && (dialog->space_entry != NULL)) {
+  if ((dialog->adapter != NULL) && (dialog->space_entry != NULL)) {
     g_return_if_fail (widget == dialog->space_entry);
 
     if (gtk_widget_is_focus (GTK_WIDGET (x_integercb_get_entry (dialog->space_entry)))) {
@@ -747,7 +672,7 @@ dash_space_changed (GtkWidget *widget, EditLProp *dialog)
       dash_space = x_integercb_get_value (dialog->space_entry);
 
       if (dash_space >= 0) {
-        selection_set_dash_space (toplevel, dialog->selection, dash_space);
+        gschem_selection_adapter_set_dash_space (dialog->adapter, dash_space);
 
         toplevel->page_current->CHANGED = 1;
         o_undo_savestate(w_current, UNDO_ALL);
@@ -781,7 +706,7 @@ dash_space_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialo
     toplevel = w_current->toplevel;
     g_return_val_if_fail (toplevel != NULL, FALSE);
 
-    if ((dialog->selection != NULL) && (dialog->space_entry != NULL)) {
+    if ((dialog->adapter != NULL) && (dialog->space_entry != NULL)) {
       int dash_space;
 
       g_return_val_if_fail (widget == GTK_WIDGET (x_integercb_get_entry (dialog->space_entry)), FALSE);
@@ -789,7 +714,7 @@ dash_space_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialo
       dash_space = x_integercb_get_value (dialog->space_entry);
 
       if (dash_space >= 0) {
-        selection_set_dash_space (toplevel, dialog->selection, dash_space);
+        gschem_selection_adapter_set_dash_space (dialog->adapter, dash_space);
 
         toplevel->page_current->CHANGED = 1;
         o_undo_savestate(w_current, UNDO_ALL);
@@ -824,7 +749,7 @@ cap_style_changed (GtkWidget *widget, EditLProp *dialog)
   toplevel = w_current->toplevel;
   g_return_if_fail (toplevel != NULL);
 
-  if ((dialog->selection != NULL) && (dialog->line_end != NULL)) {
+  if ((dialog->adapter != NULL) && (dialog->line_end != NULL)) {
     int cap_style;
 
     g_return_if_fail (widget == dialog->line_end);
@@ -832,252 +757,11 @@ cap_style_changed (GtkWidget *widget, EditLProp *dialog)
     cap_style = x_linecapcb_get_index (dialog->line_end);
 
     if (cap_style >= 0) {
-      selection_set_cap_style (toplevel, dialog->selection, cap_style);
+      gschem_selection_adapter_set_cap_style (dialog->adapter, cap_style);
 
       toplevel->page_current->CHANGED = 1;
       o_undo_savestate(w_current, UNDO_ALL);
     }
-  }
-}
-
-
-
-/*! \brief Set the line type in the selection
- *
- *  \param [in] selection
- *  \param [in] line_type
- */
-static void
-selection_set_line_type (TOPLEVEL *toplevel, SELECTION *selection, int line_type)
-{
-  GList *iter;
-
-  g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (selection != NULL);
-  g_return_if_fail (line_type >= 0);
-
-  iter = geda_list_get_glist (selection);
-
-  while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
-    gboolean success;
-    OBJECT_END temp_cap_style;
-    int temp_dash_length;
-    int temp_dash_space;
-    OBJECT_TYPE temp_line_type;
-    int temp_line_width;
-
-    success = o_get_line_options (object,
-                                  &temp_cap_style,
-                                  &temp_line_type,
-                                  &temp_line_width,
-                                  &temp_dash_length,
-                                  &temp_dash_space);
-
-    if (success) {
-      o_set_line_options (toplevel,
-                          object,
-                          temp_cap_style,
-                          line_type,
-                          temp_line_width,
-                          temp_dash_length,
-                          temp_dash_space);
-    }
-
-    iter = g_list_next (iter);
-  }
-}
-
-
-
-/*! \brief Set the line width in the selection
- *
- *  \param [in] selection
- *  \param [in] line_width
- */
-static void
-selection_set_line_width (TOPLEVEL *toplevel, SELECTION *selection, int line_width)
-{
-  GList *iter;
-
-  g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (selection != NULL);
-  g_return_if_fail (line_width >= 0);
-
-  iter = geda_list_get_glist (selection);
-
-  while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
-    gboolean success;
-    OBJECT_END temp_cap_style;
-    int temp_dash_length;
-    int temp_dash_space;
-    OBJECT_TYPE temp_line_type;
-    int temp_line_width;
-
-    success = o_get_line_options (object,
-                                  &temp_cap_style,
-                                  &temp_line_type,
-                                  &temp_line_width,
-                                  &temp_dash_length,
-                                  &temp_dash_space);
-
-    if (success) {
-      o_set_line_options (toplevel,
-                          object,
-                          temp_cap_style,
-                          temp_line_type,
-                          line_width,
-                          temp_dash_length,
-                          temp_dash_space);
-    }
-
-    iter = g_list_next (iter);
-  }
-}
-
-
-
-/*! \brief Set the dash length in the selection
- *
- *  \param [in] selection
- *  \param [in] dash_length
- */
-static void
-selection_set_dash_length (TOPLEVEL *toplevel, SELECTION *selection, int dash_length)
-{
-  GList *iter;
-
-  g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (selection != NULL);
-  g_return_if_fail (dash_length >= 0);
-
-  iter = geda_list_get_glist (selection);
-
-  while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
-    gboolean success;
-    OBJECT_END temp_cap_style;
-    int temp_dash_length;
-    int temp_dash_space;
-    OBJECT_TYPE temp_line_type;
-    int temp_line_width;
-
-    success = o_get_line_options (object,
-                                  &temp_cap_style,
-                                  &temp_line_type,
-                                  &temp_line_width,
-                                  &temp_dash_length,
-                                  &temp_dash_space);
-
-    if (success) {
-      o_set_line_options (toplevel,
-                          object,
-                          temp_cap_style,
-                          temp_line_type,
-                          temp_line_width,
-                          dash_length,
-                          temp_dash_space);
-    }
-
-    iter = g_list_next (iter);
-  }
-}
-
-
-
-/*! \brief Set the dash spacing in the selection
- *
- *  \param [in] selection
- *  \param [in] dash_space
- */
-static void
-selection_set_dash_space (TOPLEVEL *toplevel, SELECTION *selection, int dash_space)
-{
-  GList *iter;
-
-  g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (selection != NULL);
-  g_return_if_fail (dash_space >= 0);
-
-  iter = geda_list_get_glist (selection);
-
-  while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
-    gboolean success;
-    OBJECT_END temp_cap_style;
-    int temp_dash_length;
-    int temp_dash_space;
-    OBJECT_TYPE temp_line_type;
-    int temp_line_width;
-
-    success = o_get_line_options (object,
-                                  &temp_cap_style,
-                                  &temp_line_type,
-                                  &temp_line_width,
-                                  &temp_dash_length,
-                                  &temp_dash_space);
-
-    if (success) {
-      o_set_line_options (toplevel,
-                          object,
-                          temp_cap_style,
-                          temp_line_type,
-                          temp_line_width,
-                          temp_dash_length,
-                          dash_space);
-    }
-
-    iter = g_list_next (iter);
-  }
-}
-
-
-
-/*! \brief Set the cap styles in the selection
- *
- *  \param [in] toplevel
- *  \param [in] selection
- *  \param [in] cap_style
- */
-static void
-selection_set_cap_style (TOPLEVEL *toplevel, SELECTION *selection, int cap_style)
-{
-  GList *iter;
-
-  g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (selection != NULL);
-  g_return_if_fail (cap_style >= 0);
-
-  iter = geda_list_get_glist (selection);
-
-  while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
-    gboolean success;
-    OBJECT_END temp_cap_style;
-    int temp_dash_length;
-    int temp_dash_space;
-    OBJECT_TYPE temp_line_type;
-    int temp_line_width;
-
-    success = o_get_line_options (object,
-                                  &temp_cap_style,
-                                  &temp_line_type,
-                                  &temp_line_width,
-                                  &temp_dash_length,
-                                  &temp_dash_space);
-
-    if (success) {
-      o_set_line_options (toplevel,
-                          object,
-                          cap_style,
-                          temp_line_type,
-                          temp_line_width,
-                          temp_dash_length,
-                          temp_dash_space);
-    }
-
-    iter = g_list_next (iter);
   }
 }
 
@@ -1093,13 +777,13 @@ selection_set_cap_style (TOPLEVEL *toplevel, SELECTION *selection, int cap_style
  *  \param [in,out] dialog    This dialog
  */
 static void
-selection_changed (GedaList *selection, EditLProp *dialog)
+selection_changed (GschemSelectionAdapter *adapter, EditLProp *dialog)
 {
   g_return_if_fail (dialog != NULL);
-  g_return_if_fail (selection != NULL);
+  g_return_if_fail (adapter != NULL);
 
-  if (dialog->selection != NULL) {
-    g_return_if_fail (selection == dialog->selection);
+  if (dialog->adapter != NULL) {
+    g_return_if_fail (adapter == dialog->adapter);
 
     update_values (dialog);
   }
@@ -1116,13 +800,19 @@ update_values (EditLProp *dialog)
 {
   g_return_if_fail (dialog != NULL);
 
-  if (dialog->selection != NULL) {
-    gboolean success;
-    OBJECT_END end=END_NONE;
-    OBJECT_TYPE type=TYPE_SOLID;
-    gint width=1, length=-1, space=-1;
+  if (dialog->adapter != NULL) {
+    OBJECT_END end;
+    OBJECT_TYPE type;
+    gint width=1;
+    gint length=-1;
+    gint space=-1;
 
-    success = selection_get_line_type (dialog->selection, &end, &type, &width, &length, &space);
+    end = gschem_selection_adapter_get_cap_style (dialog->adapter);
+    length = gschem_selection_adapter_get_dash_length (dialog->adapter);
+    space = gschem_selection_adapter_get_dash_space (dialog->adapter);
+    type = gschem_selection_adapter_get_line_type (dialog->adapter);
+    width = gschem_selection_adapter_get_line_width (dialog->adapter);
+
 
     g_signal_handlers_block_by_func(G_OBJECT (dialog->line_type),
                                     G_CALLBACK (line_type_changed),
@@ -1156,19 +846,11 @@ update_values (EditLProp *dialog)
                                     G_CALLBACK (cap_style_changed),
                                     dialog);
 
-    if (success) {
-      x_linecapcb_set_index (dialog->line_end, end);
-      x_integercb_set_value (dialog->width_entry, width);
-      x_integercb_set_value (dialog->length_entry, length);
-      x_integercb_set_value (dialog->space_entry, space);
-      x_linetypecb_set_index (dialog->line_type, type);
-    } else {
-      x_linecapcb_set_index (dialog->line_end, -1);
-      x_integercb_set_value (dialog->width_entry, -1);
-      x_integercb_set_value (dialog->length_entry, -1);
-      x_integercb_set_value (dialog->space_entry, -1);
-      x_linetypecb_set_index (dialog->line_type, -1);
-    }
+    x_linecapcb_set_index (dialog->line_end, end);
+    x_integercb_set_value (dialog->width_entry, width);
+    x_integercb_set_value (dialog->length_entry, length);
+    x_integercb_set_value (dialog->space_entry, space);
+    x_linetypecb_set_index (dialog->line_type, type);
 
     g_signal_handlers_unblock_by_func(G_OBJECT (dialog->line_type),
                                       G_CALLBACK (line_type_changed),
@@ -1202,9 +884,9 @@ update_values (EditLProp *dialog)
                                       G_CALLBACK (cap_style_changed),
                                       dialog);
 
-    gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_type), success);
-    gtk_widget_set_sensitive (GTK_WIDGET (dialog->width_entry), success);
-    gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_end), success);
+    gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_type), (type != -1));
+    gtk_widget_set_sensitive (GTK_WIDGET (dialog->width_entry), (width != -1));
+    gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_end), (end != -1));
 
     /* dash length and dash space are enabled/disabled by the value in line type */
   }
@@ -1244,8 +926,8 @@ line_type_dialog (GSCHEM_TOPLEVEL *w_current)
                                         "gschem-toplevel",  w_current,
                                         NULL);
 
-    x_editlprop_set_selection (EDITLPROP (w_current->lpwindow),
-                               w_current->toplevel->page_current->selection_list);
+    x_editlprop_set_selection_adapter (EDITLPROP (w_current->lpwindow),
+                                       gschem_toplevel_get_selection_adapter (w_current));
 
     gtk_window_set_transient_for (GTK_WINDOW (w_current->lpwindow),
                                   GTK_WINDOW (w_current->main_window));
@@ -1263,8 +945,8 @@ line_type_dialog (GSCHEM_TOPLEVEL *w_current)
   }
   else {
     /* dialog already created */
-    x_editlprop_set_selection (EDITLPROP (w_current->lpwindow),
-                               w_current->toplevel->page_current->selection_list);
+    x_editlprop_set_selection_adapter (EDITLPROP (w_current->lpwindow),
+                                       gschem_toplevel_get_selection_adapter (w_current));
 
     gtk_window_present (GTK_WINDOW (w_current->lpwindow));
   }

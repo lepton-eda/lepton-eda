@@ -8,6 +8,7 @@ GtkListStore* gschem_toplevel_get_fill_angle_list_store (GSCHEM_TOPLEVEL *w_curr
 GtkListStore* gschem_toplevel_get_fill_pitch_list_store (GSCHEM_TOPLEVEL *w_current);
 GtkListStore* gschem_toplevel_get_fill_width_list_store (GSCHEM_TOPLEVEL *w_current);
 GtkListStore* gschem_toplevel_get_line_width_list_store (GSCHEM_TOPLEVEL *w_current);
+GschemSelectionAdapter* gschem_toplevel_get_selection_adapter (GSCHEM_TOPLEVEL *w_current);
 GtkListStore* gschem_toplevel_get_text_size_list_store (GSCHEM_TOPLEVEL *w_current);
 void gschem_toplevel_page_changed (GSCHEM_TOPLEVEL *w_current);
 
