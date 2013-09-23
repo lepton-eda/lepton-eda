@@ -54,7 +54,11 @@
 GtkWidget*
 x_integercb_new ()
 {
+#if GTK_CHECK_VERSION (2, 24, 0)
   return gtk_combo_box_new_with_entry ();
+#else
+  return gtk_combo_box_entry_new ();
+#endif
 }
 
 
@@ -113,9 +117,12 @@ x_integercb_set_model (GtkWidget *widget, GtkListStore *store)
   g_return_if_fail (widget != NULL);
 
   gtk_combo_box_set_model (GTK_COMBO_BOX (widget), GTK_TREE_MODEL (store));
-
   if (store != NULL) {
+#if GTK_CHECK_VERSION (2, 24, 0)
     gtk_combo_box_set_entry_text_column (GTK_COMBO_BOX (widget), x_integerls_get_value_column ());
+#else
+    gtk_combo_box_entry_set_text_column (GTK_COMBO_BOX_ENTRY (widget), x_integerls_get_value_column ());
+#endif
   }
 }
 
