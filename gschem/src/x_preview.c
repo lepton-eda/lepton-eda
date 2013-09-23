@@ -373,7 +373,7 @@ preview_init (Preview *preview)
   }, *tmp;
   GSCHEM_TOPLEVEL *preview_w_current;
   preview_w_current = gschem_toplevel_new ();
-  preview_w_current->toplevel = s_toplevel_new ();
+  gschem_toplevel_set_toplevel (preview_w_current, s_toplevel_new ());
 
   preview_w_current->toplevel->load_newer_backup_func =
     x_fileselect_load_backup;

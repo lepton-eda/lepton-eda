@@ -1,17 +1,5 @@
 /* $Id$ */
 
-/* gschem_toplevel.c */
-GSCHEM_TOPLEVEL *gschem_toplevel_new();
-GtkListStore* gschem_toplevel_get_dash_length_list_store (GSCHEM_TOPLEVEL *w_current);
-GtkListStore* gschem_toplevel_get_dash_space_list_store (GSCHEM_TOPLEVEL *w_current);
-GtkListStore* gschem_toplevel_get_fill_angle_list_store (GSCHEM_TOPLEVEL *w_current);
-GtkListStore* gschem_toplevel_get_fill_pitch_list_store (GSCHEM_TOPLEVEL *w_current);
-GtkListStore* gschem_toplevel_get_fill_width_list_store (GSCHEM_TOPLEVEL *w_current);
-GtkListStore* gschem_toplevel_get_line_width_list_store (GSCHEM_TOPLEVEL *w_current);
-GschemSelectionAdapter* gschem_toplevel_get_selection_adapter (GSCHEM_TOPLEVEL *w_current);
-GtkListStore* gschem_toplevel_get_text_size_list_store (GSCHEM_TOPLEVEL *w_current);
-void gschem_toplevel_page_changed (GSCHEM_TOPLEVEL *w_current);
-
 /* a_pan.c */
 void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
 		   double relativ_zoom_factor, int flags);

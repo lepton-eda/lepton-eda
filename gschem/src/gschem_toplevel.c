@@ -506,3 +506,18 @@ gschem_toplevel_page_changed (GSCHEM_TOPLEVEL *w_current)
     gschem_selection_adapter_set_selection (w_current->selection_adapter, w_current->toplevel->page_current->selection_list);
   }
 }
+
+
+
+/*! \brief Set the libgeda toplevel for this gschem toplevel
+ *
+ *  \param [in] w_current This gschem toplevel
+ *  \param [in] toplevel The libgeda toplevel
+ */
+void
+gschem_toplevel_set_toplevel (GSCHEM_TOPLEVEL *w_current, TOPLEVEL *toplevel)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->toplevel = toplevel;
+}
