@@ -201,8 +201,8 @@ xorn_obtype_t xorn_get_object_type(xorn_revision_t rev, xorn_object_t ob)
 	return (*i).second->type;
 }
 
-void const *xorn_get_object_data(xorn_revision_t rev, xorn_object_t ob,
-				 xorn_obtype_t type)
+void const *xorn__get_object_data(xorn_revision_t rev, xorn_object_t ob,
+				  xorn_obtype_t type)
 {
 	std::map<xorn_object_t, obstate *>::const_iterator i
 		= rev->obstates.find(ob);
@@ -477,8 +477,8 @@ static void set_object_data(xorn_revision_t rev, xorn_object_t ob,
 	}
 }
 
-xorn_object_t xorn_add_object(xorn_revision_t rev,
-			      xorn_obtype_t type, void const *data)
+xorn_object_t xorn__add_object(xorn_revision_t rev,
+			       xorn_obtype_t type, void const *data)
 {
 	if (!rev->is_transient)
 		return NULL;
@@ -497,8 +497,8 @@ xorn_object_t xorn_add_object(xorn_revision_t rev,
 	return ob;
 }
 
-int xorn_set_object_data(xorn_revision_t rev, xorn_object_t ob,
-			 xorn_obtype_t type, void const *data)
+int xorn__set_object_data(xorn_revision_t rev, xorn_object_t ob,
+			  xorn_obtype_t type, void const *data)
 {
 	if (!rev->is_transient)
 		return -1;
@@ -616,3 +616,29 @@ xorn_selection_t xorn_copy_objects(xorn_revision_t dest,
 
 	return rsel;
 }
+
+#define OBJMETHODS(type) \
+	const struct xornsch_##type *xornsch_get_##type##_data( \
+		xorn_revision_t rev, xorn_object_t ob) { \
+		return static_cast<const struct xornsch_##type *>( \
+		    xorn__get_object_data(rev, ob, xornsch_obtype_##type)); \
+	} \
+	xorn_object_t xornsch_add_##type(xorn_revision_t rev, \
+					 const struct xornsch_##type *data) { \
+		return xorn__add_object(rev, xornsch_obtype_##type, data); \
+	} \
+	int xornsch_set_##type##_data(xorn_revision_t rev, xorn_object_t ob, \
+				      const struct xornsch_##type *data) { \
+		return xorn__set_object_data( \
+			rev, ob, xornsch_obtype_##type, data); \
+	}
+
+OBJMETHODS(arc)
+OBJMETHODS(box)
+OBJMETHODS(circle)
+OBJMETHODS(component)
+OBJMETHODS(line)
+OBJMETHODS(net)
+OBJMETHODS(path)
+OBJMETHODS(picture)
+OBJMETHODS(text)

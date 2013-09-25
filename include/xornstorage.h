@@ -55,7 +55,7 @@ bool xorn_object_exists_in_revision(
 	xorn_revision_t rev, xorn_object_t ob);
 xorn_obtype_t xorn_get_object_type(
 	xorn_revision_t rev, xorn_object_t ob);
-const void *xorn_get_object_data(
+const void *xorn__get_object_data(
 	xorn_revision_t rev, xorn_object_t ob, xorn_obtype_t type);
 
 void xorn_get_objects(
@@ -95,10 +95,10 @@ void xorn_deselect(
 
 /* manipulation functions */
 
-xorn_object_t xorn_add_object(xorn_revision_t rev,
-			      xorn_obtype_t type, const void *data);
-int xorn_set_object_data(xorn_revision_t rev, xorn_object_t ob,
-			 xorn_obtype_t type, const void *data);
+xorn_object_t xorn__add_object(xorn_revision_t rev,
+			       xorn_obtype_t type, const void *data);
+int xorn__set_object_data(xorn_revision_t rev, xorn_object_t ob,
+			  xorn_obtype_t type, const void *data);
 void xorn_delete_object(xorn_revision_t rev, xorn_object_t ob);
 void xorn_delete_selected_objects(xorn_revision_t rev,
 				  xorn_selection_t sel);
@@ -210,6 +210,26 @@ struct xornsch_text {
 	int alignment;
 	struct xorn_string text;
 };
+
+/* object type-specific functions */
+
+#define DECLARE_OBJECT_FUNCTIONS(type) \
+	const struct xornsch_##type *xornsch_get_##type##_data( \
+		xorn_revision_t rev, xorn_object_t ob); \
+	xorn_object_t xornsch_add_##type(xorn_revision_t rev, \
+					 const struct xornsch_##type *data); \
+	int xornsch_set_##type##_data(xorn_revision_t rev, xorn_object_t ob, \
+				      const struct xornsch_##type *data);
+
+DECLARE_OBJECT_FUNCTIONS(arc)
+DECLARE_OBJECT_FUNCTIONS(box)
+DECLARE_OBJECT_FUNCTIONS(circle)
+DECLARE_OBJECT_FUNCTIONS(component)
+DECLARE_OBJECT_FUNCTIONS(line)
+DECLARE_OBJECT_FUNCTIONS(net)
+DECLARE_OBJECT_FUNCTIONS(path)
+DECLARE_OBJECT_FUNCTIONS(picture)
+DECLARE_OBJECT_FUNCTIONS(text)
 
 #ifdef __cplusplus
 }

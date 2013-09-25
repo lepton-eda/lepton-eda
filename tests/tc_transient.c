@@ -28,11 +28,11 @@ void try_modify(xorn_revision_t rev, xorn_object_t existing_ob,
 	xorn_object_t ob0, ob1;
 	xorn_selection_t sel0, sel1;
 
-	ob0 = xorn_add_object(rev, xornsch_obtype_line, &line_data);
+	ob0 = xornsch_add_line(rev, &line_data);
 	assert((ob0 != NULL) == expected_result);
 
-	assert((xorn_set_object_data(rev, existing_ob, xornsch_obtype_box,
-				     &box_data) == 0) == expected_result);
+	assert((xornsch_set_box_data(rev, existing_ob, &box_data) == 0)
+		   == expected_result);
 
 	ob1 = xorn_copy_object(rev, rev, existing_ob);
 	assert((ob1 != NULL) == expected_result);
@@ -86,7 +86,7 @@ int main()
 	assert(rev1 != NULL);
 	assert(xorn_revision_is_transient(rev1) == true);
 
-	ob = xorn_add_object(rev1, xornsch_obtype_line, &line_data);
+	ob = xornsch_add_line(rev1, &line_data);
 	assert(ob != NULL);
 
 	xorn_mtswach_revision(rev1);

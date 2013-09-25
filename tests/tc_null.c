@@ -29,9 +29,8 @@ int main()
 	rev4 = xorn_new_revision(rev3);
 	assert(rev4 != NULL);
 
-	assert(xorn_add_object(rev4, xornsch_obtype_line, NULL) == NULL);
-	assert(xorn_set_object_data(
-		       rev4, ob0, xornsch_obtype_line, NULL) == -1);
+	assert(xornsch_add_line(rev4, NULL) == NULL);
+	assert(xornsch_set_line_data(rev4, ob0, NULL) == -1);
 
 	xorn_mtswach_revision(rev4);
 

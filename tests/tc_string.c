@@ -37,12 +37,12 @@ int main()
 
 	rev1 = xorn_new_revision(rev0);
 	assert(rev1 != NULL);
-	ob = xorn_add_object(rev1, xornsch_obtype_text, &text_data);
+	ob = xornsch_add_text(rev1, &text_data);
 	assert(ob != NULL);
 	xorn_mtswach_revision(rev1);
 
 	const struct xornsch_text *text_return =
-	    xorn_get_object_data(rev1, ob, xornsch_obtype_text);
+		xornsch_get_text_data(rev1, ob);
 	assert(text_return != NULL);
 	assert(text_return->text.s != NULL);
 	assert(text_return->text.s != caption);
