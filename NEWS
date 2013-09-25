@@ -2,10 +2,23 @@
  'gschem and Friends' Electronic Design Suite
 ==============================================
 
-Copyright (C) 1998-2012 gEDA Developers
+Copyright (C) 1998-2013 gEDA Developers
 
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
+
+Notable changes in gEDA/gaf 1.8.2
+=================================
+
+Bugfix release.
+
+* [994361] Fixed a libgeda crash bug involving nets inside symbols.
+
+* [1226246] Fixed a gnetlist data corruption bug when using refdes
+  containing the string "POWER".
+
+* Updates to build system to allow compilation from git on systems
+  with Automake >= 1.13.0.
 
 Notable changes in gEDA/gaf 1.8.1
 =================================
