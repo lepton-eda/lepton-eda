@@ -72,7 +72,7 @@ s_netattrib_check_connected_string (const gchar *str)
   if (s_netattrib_connected_string_get_pinnum (str) == NULL) return;
 
   fprintf (stderr,
-           _("ERROR: `%s' is reserved for internal use."), PIN_NET_PREFIX);
+           "ERROR: `%s' is reserved for internal use.", PIN_NET_PREFIX);
   exit (1); /*! \bug Use appropriate exit code */
 }
 
