@@ -41,6 +41,9 @@ int main()
 	assert(xorn_object_exists_in_revision(rev3, ob1a) == false);
 	assert(xorn_object_exists_in_revision(rev3, ob1b) == true);
 
+	xorn_free_revision(rev3);
+	xorn_free_revision(rev2);
+	xorn_free_revision(rev1);
 	xorn_close_file(file);
 	return 0;
 }

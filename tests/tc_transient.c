@@ -105,6 +105,8 @@ int main()
 	xorn_mtswach_revision(rev2);
 	assert(xorn_revision_is_transient(rev2) == false);
 
+	xorn_free_revision(rev2);
+	xorn_free_revision(rev1);
 	xorn_close_file(file);
 	return 0;
 }

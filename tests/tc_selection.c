@@ -417,6 +417,9 @@ int main()
 	    xorn_deselect(sel2);
 	xorn_deselect(sel1);
 
+	xorn_free_revision(rev3);
+	xorn_free_revision(rev2);
+	xorn_free_revision(rev1);
 	xorn_close_file(file);
 	return 0;
 }

@@ -41,6 +41,9 @@ int main()
 	assert(xorn_get_object_type(rev3, ob1a) == xorn_obtype_none);
 	assert(xorn_get_object_type(rev3, ob1b) == xornsch_obtype_circle);
 
+	xorn_free_revision(rev3);
+	xorn_free_revision(rev2);
+	xorn_free_revision(rev1);
 	xorn_close_file(file);
 	return 0;
 }

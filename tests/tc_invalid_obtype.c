@@ -61,6 +61,8 @@ int main()
 
 	xorn_mtswach_revision(rev2);
 
+	xorn_free_revision(rev2);
+	xorn_free_revision(rev1);
 	xorn_close_file(file);
 	return 0;
 }

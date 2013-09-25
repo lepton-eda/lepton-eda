@@ -91,6 +91,9 @@ int main()
 	assert(data != &circle_data);
 	assert(memcmp(data, &circle_data, sizeof circle_data) == 0);
 
+	xorn_free_revision(rev3);
+	xorn_free_revision(rev2);
+	xorn_free_revision(rev1);
 	xorn_close_file(file);
 	return 0;
 }

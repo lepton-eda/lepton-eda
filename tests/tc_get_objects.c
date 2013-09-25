@@ -59,6 +59,9 @@ int main()
 	       (objects[0] == ob1b && objects[1] == ob0));
 	free(objects);
 
+	xorn_free_revision(rev3);
+	xorn_free_revision(rev2);
+	xorn_free_revision(rev1);
 	xorn_close_file(file);
 	return 0;
 }

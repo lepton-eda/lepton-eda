@@ -29,9 +29,7 @@ class obstate;
 struct xorn_file {
 	xorn_file();
 	~xorn_file();
-	std::vector<xorn_revision_t> revisions;
 	std::vector<xorn_object_t> objects;
-	/* empty_revision will add itself to the revision list */
 	xorn_revision_t const empty_revision;
 };
 
@@ -70,9 +68,8 @@ xorn_file::xorn_file() : empty_revision(new xorn_revision(this))
 
 xorn_file::~xorn_file()
 {
-	for (std::vector<xorn_revision_t>::const_iterator i
-		     = revisions.begin(); i != revisions.end(); ++i)
-		delete *i;
+	delete empty_revision;
+
 	for (std::vector<xorn_object_t>::const_iterator i
 		     = objects.begin(); i != objects.end(); ++i)
 		delete *i;
@@ -80,14 +77,11 @@ xorn_file::~xorn_file()
 
 xorn_revision::xorn_revision(xorn_file_t file) : file(file), is_transient(true)
 {
-	file->revisions.push_back(this);
 }
 
 xorn_revision::xorn_revision(xorn_revision_t rev)
 	: file(rev->file), is_transient(true), obstates(rev->obstates)
 {
-	file->revisions.push_back(this);
-
 	for (std::map<xorn_object_t, obstate *>::const_iterator i
 		     = obstates.begin(); i != obstates.end(); ++i)
 		(*i).second->inc_refcnt();
@@ -229,6 +223,11 @@ bool xorn_revision_is_transient(xorn_revision_t rev)
 void xorn_mtswach_revision(xorn_revision_t rev)
 {
 	rev->is_transient = false;
+}
+
+void xorn_free_revision(xorn_revision_t rev)
+{
+	delete rev;
 }
 
 /****************************************************************************/

@@ -51,6 +51,7 @@ int main()
 	assert(memcmp(text_return->text.s, caption,
 		      text_return->text.len) == 0);
 
+	xorn_free_revision(rev1);
 	xorn_close_file(file);
 	return 0;
 }
