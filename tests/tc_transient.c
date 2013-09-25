@@ -57,7 +57,6 @@ void try_modify(xorn_revision_t rev, xorn_object_t existing_ob,
 
 int main()
 {
-	xorn_file_t file;
 	xorn_revision_t rev0, rev1, rev2;
 	xorn_object_t ob;
 
@@ -77,11 +76,10 @@ int main()
 	box_data.color = 3;
 	box_data.line.width = 1;
 
-	file = xorn_new_file();
-	assert(file != NULL);
-
-	rev0 = xorn_get_empty_revision(file);
+	rev0 = xorn_new_revision(NULL);
 	assert(rev0 != NULL);
+	assert(xorn_revision_is_transient(rev0) == true);
+	xorn_mtswach_revision(rev0);
 	assert(xorn_revision_is_transient(rev0) == false);
 
 	rev1 = xorn_new_revision(rev0);
@@ -107,6 +105,6 @@ int main()
 
 	xorn_free_revision(rev2);
 	xorn_free_revision(rev1);
-	xorn_close_file(file);
+	xorn_free_revision(rev0);
 	return 0;
 }

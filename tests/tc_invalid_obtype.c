@@ -21,16 +21,13 @@
 
 int main()
 {
-	xorn_file_t file;
 	xorn_revision_t rev0, rev1, rev2;
 	struct xornsch_line line_data;
 	xorn_object_t ob;
 
-	file = xorn_new_file();
-	assert(file != NULL);
-
-	rev0 = xorn_get_empty_revision(file);
+	rev0 = xorn_new_revision(NULL);
 	assert(rev0 != NULL);
+	xorn_mtswach_revision(rev0);
 
 	rev1 = xorn_new_revision(rev0);
 	assert(rev1 != NULL);
@@ -63,6 +60,6 @@ int main()
 
 	xorn_free_revision(rev2);
 	xorn_free_revision(rev1);
-	xorn_close_file(file);
+	xorn_free_revision(rev0);
 	return 0;
 }

@@ -38,16 +38,9 @@ typedef enum {
 } xorn_obtype_t;
 
 /* opaque types */
-typedef struct xorn_file *xorn_file_t;
 typedef struct xorn_revision *xorn_revision_t;
 typedef struct xorn_object *xorn_object_t;
 typedef struct xorn_selection *xorn_selection_t;
-
-/* file functions */
-
-xorn_file_t xorn_new_file();
-void xorn_close_file(xorn_file_t file);
-xorn_revision_t xorn_get_empty_revision(xorn_file_t file);
 
 /* revision functions */
 

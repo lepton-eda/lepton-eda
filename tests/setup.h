@@ -25,15 +25,13 @@ static struct xornsch_net net_data;
 
 
 static void setup(
-	xorn_file_t *file, xorn_revision_t *rev0,
-	xorn_revision_t *rev1, xorn_revision_t *rev2, xorn_revision_t *rev3,
+	xorn_revision_t *rev0, xorn_revision_t *rev1,
+	xorn_revision_t *rev2, xorn_revision_t *rev3,
 	xorn_object_t *ob0, xorn_object_t *ob1a, xorn_object_t *ob1b)
 {
-	*file = xorn_new_file();
-	assert(*file != NULL);
-
-	*rev0 = xorn_get_empty_revision(*file);
+	*rev0 = xorn_new_revision(NULL);
 	assert(*rev0 != NULL);
+	xorn_mtswach_revision(*rev0);
 
 	/* first change */
 

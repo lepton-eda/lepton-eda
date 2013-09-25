@@ -24,7 +24,6 @@ static const char *caption = "Hello world";
 
 int main()
 {
-	xorn_file_t file;
 	xorn_revision_t rev0, rev1;
 	xorn_object_t ob;
 
@@ -32,10 +31,10 @@ int main()
 	text_data.text.s = caption;
 	text_data.text.len = strlen(caption) + 1;
 
-	file = xorn_new_file();
-	assert(file != NULL);
-	rev0 = xorn_get_empty_revision(file);
+	rev0 = xorn_new_revision(NULL);
 	assert(rev0 != NULL);
+	xorn_mtswach_revision(rev0);
+
 	rev1 = xorn_new_revision(rev0);
 	assert(rev1 != NULL);
 	ob = xorn_add_object(rev1, xornsch_obtype_text, &text_data);
@@ -52,6 +51,6 @@ int main()
 		      text_return->text.len) == 0);
 
 	xorn_free_revision(rev1);
-	xorn_close_file(file);
+	xorn_free_revision(rev0);
 	return 0;
 }

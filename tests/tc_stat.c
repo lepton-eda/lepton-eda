@@ -20,14 +20,13 @@
 
 int main()
 {
-	xorn_file_t file;
 	xorn_revision_t rev0, rev1, rev2, rev3;
 	xorn_object_t ob0, ob1a, ob1b;
 
 	xorn_object_t *objects;
 	size_t count;
 
-	setup(&file, &rev0, &rev1, &rev2, &rev3, &ob0, &ob1a, &ob1b);
+	setup(&rev0, &rev1, &rev2, &rev3, &ob0, &ob1a, &ob1b);
 
 	xorn_get_added_objects(rev0, rev1, &objects, &count);
 	assert(objects != NULL);
@@ -76,6 +75,6 @@ int main()
 	xorn_free_revision(rev3);
 	xorn_free_revision(rev2);
 	xorn_free_revision(rev1);
-	xorn_close_file(file);
+	xorn_free_revision(rev0);
 	return 0;
 }

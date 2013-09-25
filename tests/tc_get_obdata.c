@@ -19,13 +19,12 @@
 
 int main()
 {
-	xorn_file_t file;
 	xorn_revision_t rev0, rev1, rev2, rev3;
 	xorn_object_t ob0, ob1a, ob1b;
 
 	const void *data;
 
-	setup(&file, &rev0, &rev1, &rev2, &rev3, &ob0, &ob1a, &ob1b);
+	setup(&rev0, &rev1, &rev2, &rev3, &ob0, &ob1a, &ob1b);
 
 	data = xorn_get_object_data(rev0, ob0, xornsch_obtype_line);
 	assert(data == NULL);
@@ -94,6 +93,6 @@ int main()
 	xorn_free_revision(rev3);
 	xorn_free_revision(rev2);
 	xorn_free_revision(rev1);
-	xorn_close_file(file);
+	xorn_free_revision(rev0);
 	return 0;
 }

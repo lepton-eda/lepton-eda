@@ -28,17 +28,10 @@ static const char *next_object_id = NULL;
 
 class obstate;
 
-struct xorn_file {
-	xorn_file();
-	~xorn_file();
-	xorn_revision_t const empty_revision;
-};
-
 struct xorn_revision {
-	xorn_revision(xorn_file_t file);
+	xorn_revision();
 	xorn_revision(xorn_revision_t rev);
 	~xorn_revision();
-	xorn_file_t const file;
 	bool is_transient;
 	std::map<xorn_object_t, obstate *> obstates;
 };
@@ -58,22 +51,12 @@ public:
 };
 
 
-xorn_file::xorn_file() : empty_revision(new xorn_revision(this))
-{
-	empty_revision->is_transient = false;
-}
-
-xorn_file::~xorn_file()
-{
-	delete empty_revision;
-}
-
-xorn_revision::xorn_revision(xorn_file_t file) : file(file), is_transient(true)
+xorn_revision::xorn_revision() : is_transient(true)
 {
 }
 
 xorn_revision::xorn_revision(xorn_revision_t rev)
-	: file(rev->file), is_transient(true), obstates(rev->obstates)
+	: is_transient(true), obstates(rev->obstates)
 {
 	for (std::map<xorn_object_t, obstate *>::const_iterator i
 		     = obstates.begin(); i != obstates.end(); ++i)
@@ -173,31 +156,13 @@ void obstate::dec_refcnt()
 
 /****************************************************************************/
 
-xorn_file_t xorn_new_file()
-{
-	try {
-		return new xorn_file();
-	} catch (std::bad_alloc const &) {
-		return NULL;
-	}
-}
-
-void xorn_close_file(xorn_file_t file)
-{
-	delete file;
-}
-
-xorn_revision_t xorn_get_empty_revision(xorn_file_t file)
-{
-	return file->empty_revision;
-}
-
-/****************************************************************************/
-
 xorn_revision_t xorn_new_revision(xorn_revision_t rev)
 {
 	try {
-		return new xorn_revision(rev);
+		if (rev == NULL)
+			return new xorn_revision();
+		else
+			return new xorn_revision(rev);
 	} catch (std::bad_alloc const &) {
 		return NULL;
 	}
