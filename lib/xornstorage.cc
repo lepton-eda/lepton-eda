@@ -24,12 +24,13 @@
 #include <vector>
 #include "key_iterator.h"
 
+static const char *next_object_id = NULL;
+
 class obstate;
 
 struct xorn_file {
 	xorn_file();
 	~xorn_file();
-	std::vector<xorn_object_t> objects;
 	xorn_revision_t const empty_revision;
 };
 
@@ -40,10 +41,6 @@ struct xorn_revision {
 	xorn_file_t const file;
 	bool is_transient;
 	std::map<xorn_object_t, obstate *> obstates;
-};
-
-struct xorn_object {
-	xorn_object(xorn_file_t file);
 };
 
 struct xorn_selection : public std::set<xorn_object_t> {
@@ -69,10 +66,6 @@ xorn_file::xorn_file() : empty_revision(new xorn_revision(this))
 xorn_file::~xorn_file()
 {
 	delete empty_revision;
-
-	for (std::vector<xorn_object_t>::const_iterator i
-		     = objects.begin(); i != objects.end(); ++i)
-		delete *i;
 }
 
 xorn_revision::xorn_revision(xorn_file_t file) : file(file), is_transient(true)
@@ -92,11 +85,6 @@ xorn_revision::~xorn_revision()
 	for (std::map<xorn_object_t, obstate *>::const_iterator i
 		     = obstates.begin(); i != obstates.end(); ++i)
 		(*i).second->dec_refcnt();
-}
-
-xorn_object::xorn_object(xorn_file_t file)
-{
-	file->objects.push_back(this);
 }
 
 static void *copy_data(xorn_obtype_t type, void const *src)
@@ -532,15 +520,13 @@ xorn_object_t xorn_add_object(xorn_revision_t rev,
 
 	xorn_object_t ob;
 	try {
-		ob = new xorn_object(rev->file);
+		ob = (xorn_object_t)++next_object_id;
 	} catch (std::bad_alloc const &) {
 		return NULL;
 	}
 	try {
 		set_object_data(rev, ob, type, data);
 	} catch (std::bad_alloc const &) {
-		rev->file->objects.pop_back();
-		delete ob;
 		return NULL;
 	}
 	return ob;
@@ -592,13 +578,11 @@ void xorn_delete_selected_objects(xorn_revision_t rev, xorn_selection_t sel)
 
 static xorn_object_t copy_object(xorn_revision_t dest, obstate *obstate)
 {
-	xorn_object_t ob = new xorn_object(dest->file);
+	xorn_object_t ob = (xorn_object_t)++next_object_id;
 	try {
 		dest->obstates[ob] = obstate;
 		obstate->inc_refcnt();
 	} catch (std::bad_alloc const &) {
-		dest->file->objects.pop_back();
-		delete ob;
 		throw;
 	}
 	return ob;
@@ -652,19 +636,12 @@ xorn_selection_t xorn_copy_objects(xorn_revision_t dest,
 				rsel->insert(ob);
 			} catch (std::bad_alloc const &) {
 				xorn_delete_object(dest, ob);
-				dest->file->objects.pop_back();
-				delete ob;
 				throw;
 			}
 		} catch (std::bad_alloc const &) {
 			for (xorn_selection::const_iterator i = rsel->begin();
-			     i != rsel->end(); i++) {
+			     i != rsel->end(); i++)
 				xorn_delete_object(dest, *i);
-				delete *i;
-			}
-			dest->file->objects.erase(
-				dest->file->objects.end() - rsel->size(),
-				dest->file->objects.end());
 			delete rsel;
 			return NULL;
 		}
