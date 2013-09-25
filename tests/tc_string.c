@@ -41,7 +41,7 @@ int main()
 	assert(chset != NULL);
 	ob = xorn_add_object(chset, xornsch_obtype_text, &text_data);
 	assert(ob != NULL);
-	rev1 = xorn_apply_changeset(chset, "add text");
+	rev1 = xorn_apply_changeset(chset);
 	assert(rev1 != NULL);
 
 	const struct xornsch_text *text_return =

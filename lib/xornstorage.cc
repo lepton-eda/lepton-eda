@@ -505,8 +505,7 @@ xorn_changeset_t xorn_alloc_changeset(xorn_revision_t rev)
 	}
 }
 
-xorn_revision_t xorn_apply_changeset(xorn_changeset_t chset,
-				     const char *message)
+xorn_revision_t xorn_apply_changeset(xorn_changeset_t chset)
 {
 	xorn_revision_t rev = chset->r;
 	chset->r = 0;

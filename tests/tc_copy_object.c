@@ -39,7 +39,7 @@ int main()
 	ob0copy = xorn_copy_object(chset, rev1, ob0);
 	assert(ob0copy != NULL);
 
-	rev4 = xorn_apply_changeset(chset, "copy object");
+	rev4 = xorn_apply_changeset(chset);
 	assert(rev4 != NULL);
 
 	assert(xorn_get_object_type(rev4, ob0copy) !=

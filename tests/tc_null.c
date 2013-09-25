@@ -36,7 +36,7 @@ int main()
 	assert(xorn_set_object_data(
 		       chset, ob0, xornsch_obtype_line, NULL) == -1);
 
-	rev4 = xorn_apply_changeset(chset, "no change");
+	rev4 = xorn_apply_changeset(chset);
 	assert(rev4 != NULL);
 
 	xorn_close_file(file);

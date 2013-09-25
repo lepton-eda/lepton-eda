@@ -97,8 +97,7 @@ void xorn_deselect(
 /* manipulation functions */
 
 xorn_changeset_t xorn_alloc_changeset(xorn_revision_t rev);
-xorn_revision_t xorn_apply_changeset(xorn_changeset_t chset,
-				     const char *message);
+xorn_revision_t xorn_apply_changeset(xorn_changeset_t chset);
 
 xorn_object_t xorn_add_object(xorn_changeset_t chset,
 			      xorn_obtype_t type, const void *data);

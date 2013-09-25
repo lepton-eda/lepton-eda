@@ -55,7 +55,7 @@ int main()
 	sel1 = xorn_copy_objects(chset, rev2, sel0);
 	assert(sel1 != NULL);
 
-	rev4 = xorn_apply_changeset(chset, "copy objects");
+	rev4 = xorn_apply_changeset(chset);
 	assert(rev4 != NULL);
 
 	assert(object_is_selected(rev4, sel0, ob0));

@@ -50,7 +50,7 @@ int main()
 	ob = xorn_add_object(chset, xornsch_obtype_line, &line_data);
 	assert(ob != NULL);
 
-	rev1 = xorn_apply_changeset(chset, "add object");
+	rev1 = xorn_apply_changeset(chset);
 	assert(rev1 != NULL);
 
 	chset = xorn_alloc_changeset(rev1);
@@ -61,7 +61,7 @@ int main()
 	assert(xorn_set_object_data(chset, ob,
 				    xornsch_obtype_line, &line_data) == 0);
 
-	rev2 = xorn_apply_changeset(chset, "no operation");
+	rev2 = xorn_apply_changeset(chset);
 	assert(rev2 != NULL);
 
 	xorn_close_file(file);

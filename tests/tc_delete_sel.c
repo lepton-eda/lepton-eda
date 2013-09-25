@@ -91,7 +91,7 @@ int main()
 	chset = xorn_alloc_changeset(rev2);
 	assert(chset != NULL);
 	xorn_delete_selected_objects(chset, sel);
-	rev2a = xorn_apply_changeset(chset, "first test");
+	rev2a = xorn_apply_changeset(chset);
 	assert(rev2a != NULL);
 	xorn_deselect(sel);
 
@@ -102,7 +102,7 @@ int main()
 	chset = xorn_alloc_changeset(rev2);
 	assert(chset != NULL);
 	xorn_delete_selected_objects(chset, sel);
-	rev2b = xorn_apply_changeset(chset, "second test");
+	rev2b = xorn_apply_changeset(chset);
 	assert(rev2b != NULL);
 	xorn_deselect(sel);
 
@@ -113,7 +113,7 @@ int main()
 	chset = xorn_alloc_changeset(rev2);
 	assert(chset != NULL);
 	xorn_delete_selected_objects(chset, sel);
-	rev2c = xorn_apply_changeset(chset, "third test");
+	rev2c = xorn_apply_changeset(chset);
 	assert(rev2c != NULL);
 	xorn_deselect(sel);
 
@@ -124,7 +124,7 @@ int main()
 	chset = xorn_alloc_changeset(rev2);
 	assert(chset != NULL);
 	xorn_delete_selected_objects(chset, sel);
-	rev2d = xorn_apply_changeset(chset, "fourth test");
+	rev2d = xorn_apply_changeset(chset);
 	assert(rev2d != NULL);
 	xorn_deselect(sel);
 

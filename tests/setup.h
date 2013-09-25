@@ -53,7 +53,7 @@ static void setup(
 	*ob0 = xorn_add_object(chset, xornsch_obtype_line, &line_data);
 	assert(*ob0 != NULL);
 
-	*rev1 = xorn_apply_changeset(chset, "first change");
+	*rev1 = xorn_apply_changeset(chset);
 	assert(*rev1 != NULL);
 
 	/* second change */
@@ -83,7 +83,7 @@ static void setup(
 	*ob1b = xorn_add_object(chset, xornsch_obtype_circle, &circle_data);
 	assert(*ob1b != NULL);
 
-	*rev2 = xorn_apply_changeset(chset, "second change");
+	*rev2 = xorn_apply_changeset(chset);
 	assert(*rev2 != NULL);
 
 	/* third change */
@@ -103,6 +103,6 @@ static void setup(
 
 	xorn_delete_object(chset, *ob1a);
 
-	*rev3 = xorn_apply_changeset(chset, "third change");
+	*rev3 = xorn_apply_changeset(chset);
 	assert(*rev3 != NULL);
 }
