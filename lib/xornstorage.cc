@@ -50,11 +50,6 @@ struct xorn_object {
 struct xorn_selection : public std::set<xorn_object_t> {
 };
 
-struct xorn_changeset {
-	xorn_changeset(xorn_revision_t rev);
-	xorn_revision_t r;
-};
-
 class obstate {
 	~obstate();
 	unsigned int refcnt;
@@ -106,10 +101,6 @@ xorn_revision::~xorn_revision()
 xorn_object::xorn_object(xorn_file_t file)
 {
 	file->objects.push_back(this);
-}
-
-xorn_changeset::xorn_changeset(xorn_revision_t rev) : r(new xorn_revision(rev))
-{
 }
 
 static void *copy_data(xorn_obtype_t type, void const *src)
@@ -215,6 +206,17 @@ void xorn_close_file(xorn_file_t file)
 xorn_revision_t xorn_get_empty_revision(xorn_file_t file)
 {
 	return file->empty_revision;
+}
+
+/****************************************************************************/
+
+xorn_revision_t xorn_new_revision(xorn_revision_t rev)
+{
+	try {
+		return new xorn_revision(rev);
+	} catch (std::bad_alloc const &) {
+		return NULL;
+	}
 }
 
 /****************************************************************************/
@@ -496,29 +498,12 @@ void xorn_deselect(xorn_selection_t sel)
 
 /****************************************************************************/
 
-xorn_changeset_t xorn_alloc_changeset(xorn_revision_t rev)
-{
-	try {
-		return new xorn_changeset(rev);
-	} catch (std::bad_alloc const &) {
-		return NULL;
-	}
-}
-
-xorn_revision_t xorn_apply_changeset(xorn_changeset_t chset)
-{
-	xorn_revision_t rev = chset->r;
-	chset->r = 0;
-	delete chset;
-	return rev;
-}
-
-static void set_object_data(xorn_changeset_t chset, xorn_object_t ob,
+static void set_object_data(xorn_revision_t rev, xorn_object_t ob,
 			    xorn_obtype_t type, void const *data)
 {
 	obstate *tmp = new obstate(type, data);
 	try {
-		obstate *&p = chset->r->obstates[ob];
+		obstate *&p = rev->obstates[ob];
 		if (p != NULL)
 			p->dec_refcnt();
 		p = tmp;
@@ -528,92 +513,92 @@ static void set_object_data(xorn_changeset_t chset, xorn_object_t ob,
 	}
 }
 
-xorn_object_t xorn_add_object(xorn_changeset_t chset,
+xorn_object_t xorn_add_object(xorn_revision_t rev,
 			      xorn_obtype_t type, void const *data)
 {
 	xorn_object_t ob;
 	try {
-		ob = new xorn_object(chset->r->file);
+		ob = new xorn_object(rev->file);
 	} catch (std::bad_alloc const &) {
 		return NULL;
 	}
 	try {
-		set_object_data(chset, ob, type, data);
+		set_object_data(rev, ob, type, data);
 	} catch (std::bad_alloc const &) {
-		chset->r->file->objects.pop_back();
+		rev->file->objects.pop_back();
 		delete ob;
 		return NULL;
 	}
 	return ob;
 }
 
-int xorn_set_object_data(xorn_changeset_t chset, xorn_object_t ob,
+int xorn_set_object_data(xorn_revision_t rev, xorn_object_t ob,
 			 xorn_obtype_t type, void const *data)
 {
 	try {
-		set_object_data(chset, ob, type, data);
+		set_object_data(rev, ob, type, data);
 	} catch (std::bad_alloc const &) {
 		return -1;
 	}
 	return 0;
 }
 
-void xorn_delete_object(xorn_changeset_t chset, xorn_object_t ob)
+void xorn_delete_object(xorn_revision_t rev, xorn_object_t ob)
 {
 	std::map<xorn_object_t, obstate *>::iterator i
-		= chset->r->obstates.find(ob);
+		= rev->obstates.find(ob);
 
-	if (i != chset->r->obstates.end()) {
+	if (i != rev->obstates.end()) {
 		(*i).second->dec_refcnt();
-		chset->r->obstates.erase(i);
+		rev->obstates.erase(i);
 	}
 }
 
-void xorn_delete_selected_objects(xorn_changeset_t chset, xorn_selection_t sel)
+void xorn_delete_selected_objects(xorn_revision_t rev, xorn_selection_t sel)
 {
 	for (std::set<xorn_object_t>::const_iterator i = sel->begin();
 	     i != sel->end(); ++i) {
 		std::map<xorn_object_t, obstate *>::iterator j
-			= chset->r->obstates.find(*i);
-		if (j != chset->r->obstates.end()) {
+			= rev->obstates.find(*i);
+		if (j != rev->obstates.end()) {
 			(*j).second->dec_refcnt();
-			chset->r->obstates.erase(j);
+			rev->obstates.erase(j);
 		}
 	}
 }
 
-static xorn_object_t copy_object(xorn_changeset_t chset, obstate *obstate)
+static xorn_object_t copy_object(xorn_revision_t dest, obstate *obstate)
 {
-	xorn_object_t ob = new xorn_object(chset->r->file);
+	xorn_object_t ob = new xorn_object(dest->file);
 	try {
-		chset->r->obstates[ob] = obstate;
+		dest->obstates[ob] = obstate;
 		obstate->inc_refcnt();
 	} catch (std::bad_alloc const &) {
-		chset->r->file->objects.pop_back();
+		dest->file->objects.pop_back();
 		delete ob;
 		throw;
 	}
 	return ob;
 }
 
-xorn_object_t xorn_copy_object(
-	xorn_changeset_t chset, xorn_revision_t rev, xorn_object_t ob)
+xorn_object_t xorn_copy_object(xorn_revision_t dest,
+			       xorn_revision_t src, xorn_object_t ob)
 {
 	std::map<xorn_object_t, obstate *>::const_iterator i
-		= rev->obstates.find(ob);
+		= src->obstates.find(ob);
 
-	if (i == rev->obstates.end())
+	if (i == src->obstates.end())
 		return NULL;
 
 	try {
-		return copy_object(chset, (*i).second);
+		return copy_object(dest, (*i).second);
 	} catch (std::bad_alloc const &) {
 		return NULL;
 	}
 }
 
-xorn_selection_t xorn_copy_objects(
-	xorn_changeset_t chset, xorn_revision_t rev, xorn_selection_t sel)
+xorn_selection_t xorn_copy_objects(xorn_revision_t dest,
+				   xorn_revision_t src, xorn_selection_t sel)
 {
 	xorn_selection_t rsel;
 	try {
@@ -623,34 +608,34 @@ xorn_selection_t xorn_copy_objects(
 	}
 
 	std::map<xorn_object_t, obstate *>::const_iterator i
-		= rev->obstates.begin();
+		= src->obstates.begin();
 	std::set<xorn_object_t>::const_iterator j = sel->begin();
 
-	while (i != rev->obstates.end() && j != sel->end())
+	while (i != src->obstates.end() && j != sel->end())
 	    if ((*i).first < *j)
 		++i;
 	    else if ((*i).first > *j)
 		++j;
 	    else {
 		try {
-			xorn_object_t ob = copy_object(chset, (*i).second);
+			xorn_object_t ob = copy_object(dest, (*i).second);
 			try {
 				rsel->insert(ob);
 			} catch (std::bad_alloc const &) {
-				xorn_delete_object(chset, ob);
-				chset->r->file->objects.pop_back();
+				xorn_delete_object(dest, ob);
+				dest->file->objects.pop_back();
 				delete ob;
 				throw;
 			}
 		} catch (std::bad_alloc const &) {
 			for (xorn_selection::const_iterator i = rsel->begin();
 			     i != rsel->end(); i++) {
-				xorn_delete_object(chset, *i);
+				xorn_delete_object(dest, *i);
 				delete *i;
 			}
-			chset->r->file->objects.erase(
-				chset->r->file->objects.end() - rsel->size(),
-				chset->r->file->objects.end());
+			dest->file->objects.erase(
+				dest->file->objects.end() - rsel->size(),
+				dest->file->objects.end());
 			delete rsel;
 			return NULL;
 		}

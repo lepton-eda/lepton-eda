@@ -36,7 +36,6 @@ int main()
 	xorn_revision_t rev0, rev1, rev2, rev3;
 	xorn_object_t ob0, ob1a, ob1b;
 
-	xorn_changeset_t chset;
 	xorn_selection_t sel0, sel1;
 	xorn_revision_t rev4;
 
@@ -46,17 +45,16 @@ int main()
 
 	setup(&file, &rev0, &rev1, &rev2, &rev3, &ob0, &ob1a, &ob1b);
 
-	chset = xorn_alloc_changeset(rev2);
-	assert(chset != NULL);
+	rev4 = xorn_new_revision(rev2);
+	assert(rev4 != NULL);
 
 	sel0 = xorn_select_all(rev3);
 	assert(sel0 != NULL);
 
-	sel1 = xorn_copy_objects(chset, rev2, sel0);
+	sel1 = xorn_copy_objects(rev4, rev2, sel0);
 	assert(sel1 != NULL);
 
-	rev4 = xorn_apply_changeset(chset);
-	assert(rev4 != NULL);
+	// rev4 = xorn_apply_changeset(rev4);
 
 	assert(object_is_selected(rev4, sel0, ob0));
 	assert(!object_is_selected(rev4, sel0, ob1a));

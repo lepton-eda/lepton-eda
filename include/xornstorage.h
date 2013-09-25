@@ -42,13 +42,16 @@ typedef struct xorn_file *xorn_file_t;
 typedef struct xorn_revision *xorn_revision_t;
 typedef struct xorn_object *xorn_object_t;
 typedef struct xorn_selection *xorn_selection_t;
-typedef struct xorn_changeset *xorn_changeset_t;
 
 /* file functions */
 
 xorn_file_t xorn_new_file();
 void xorn_close_file(xorn_file_t file);
 xorn_revision_t xorn_get_empty_revision(xorn_file_t file);
+
+/* revision functions */
+
+xorn_revision_t xorn_new_revision(xorn_revision_t rev);
 
 /* object functions */
 
@@ -96,21 +99,18 @@ void xorn_deselect(
 
 /* manipulation functions */
 
-xorn_changeset_t xorn_alloc_changeset(xorn_revision_t rev);
-xorn_revision_t xorn_apply_changeset(xorn_changeset_t chset);
-
-xorn_object_t xorn_add_object(xorn_changeset_t chset,
+xorn_object_t xorn_add_object(xorn_revision_t rev,
 			      xorn_obtype_t type, const void *data);
-int xorn_set_object_data(xorn_changeset_t chset, xorn_object_t ob,
+int xorn_set_object_data(xorn_revision_t rev, xorn_object_t ob,
 			 xorn_obtype_t type, const void *data);
-void xorn_delete_object(xorn_changeset_t chset, xorn_object_t ob);
-void xorn_delete_selected_objects(xorn_changeset_t chset,
+void xorn_delete_object(xorn_revision_t rev, xorn_object_t ob);
+void xorn_delete_selected_objects(xorn_revision_t rev,
 				  xorn_selection_t sel);
 
-xorn_object_t xorn_copy_object(
-	xorn_changeset_t chset, xorn_revision_t rev, xorn_object_t ob);
-xorn_selection_t xorn_copy_objects(
-	xorn_changeset_t chset, xorn_revision_t rev, xorn_selection_t sel);
+xorn_object_t xorn_copy_object(xorn_revision_t dest,
+			       xorn_revision_t src, xorn_object_t ob);
+xorn_selection_t xorn_copy_objects(xorn_revision_t dest,
+				   xorn_revision_t src, xorn_selection_t sel);
 
 /* object data definition */
 

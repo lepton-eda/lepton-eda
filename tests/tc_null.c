@@ -24,20 +24,18 @@ int main()
 	xorn_revision_t rev0, rev1, rev2, rev3;
 	xorn_object_t ob0, ob1a, ob1b;
 
-	xorn_changeset_t chset;
 	xorn_revision_t rev4;
 
 	setup(&file, &rev0, &rev1, &rev2, &rev3, &ob0, &ob1a, &ob1b);
 
-	chset = xorn_alloc_changeset(rev3);
-	assert(chset != NULL);
-
-	assert(xorn_add_object(chset, xornsch_obtype_line, NULL) == NULL);
-	assert(xorn_set_object_data(
-		       chset, ob0, xornsch_obtype_line, NULL) == -1);
-
-	rev4 = xorn_apply_changeset(chset);
+	rev4 = xorn_new_revision(rev3);
 	assert(rev4 != NULL);
+
+	assert(xorn_add_object(rev4, xornsch_obtype_line, NULL) == NULL);
+	assert(xorn_set_object_data(
+		       rev4, ob0, xornsch_obtype_line, NULL) == -1);
+
+	// rev4 = xorn_apply_changeset(rev4);
 
 	xorn_close_file(file);
 	return 0;

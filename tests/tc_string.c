@@ -26,7 +26,6 @@ int main()
 {
 	xorn_file_t file;
 	xorn_revision_t rev0, rev1;
-	xorn_changeset_t chset;
 	xorn_object_t ob;
 
 	memset(&text_data, 0, sizeof text_data);
@@ -37,12 +36,11 @@ int main()
 	assert(file != NULL);
 	rev0 = xorn_get_empty_revision(file);
 	assert(rev0 != NULL);
-	chset = xorn_alloc_changeset(rev0);
-	assert(chset != NULL);
-	ob = xorn_add_object(chset, xornsch_obtype_text, &text_data);
-	assert(ob != NULL);
-	rev1 = xorn_apply_changeset(chset);
+	rev1 = xorn_new_revision(rev0);
 	assert(rev1 != NULL);
+	ob = xorn_add_object(rev1, xornsch_obtype_text, &text_data);
+	assert(ob != NULL);
+	// rev1 = xorn_apply_changeset(rev1);
 
 	const struct xornsch_text *text_return =
 	    xorn_get_object_data(rev1, ob, xornsch_obtype_text);

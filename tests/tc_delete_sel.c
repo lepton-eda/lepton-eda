@@ -81,51 +81,46 @@ int main()
 	xorn_object_t ob0, ob1a, ob1b;
 
 	xorn_selection_t sel;
-	xorn_changeset_t chset;
 	xorn_revision_t rev2a, rev2b, rev2c, rev2d;
 
 	setup(&file, &rev0, &rev1, &rev2, &rev3, &ob0, &ob1a, &ob1b);
 
 	sel = xorn_select_none();
 	assert(sel != NULL);
-	chset = xorn_alloc_changeset(rev2);
-	assert(chset != NULL);
-	xorn_delete_selected_objects(chset, sel);
-	rev2a = xorn_apply_changeset(chset);
+	rev2a = xorn_new_revision(rev2);
 	assert(rev2a != NULL);
+	xorn_delete_selected_objects(rev2a, sel);
+	// rev2a = xorn_apply_changeset(rev2a);
 	xorn_deselect(sel);
 
 	assert_objects_3(rev2a, ob0, ob1a, ob1b);
 
 	sel = xorn_select_object(ob1a);
 	assert(sel != NULL);
-	chset = xorn_alloc_changeset(rev2);
-	assert(chset != NULL);
-	xorn_delete_selected_objects(chset, sel);
-	rev2b = xorn_apply_changeset(chset);
+	rev2b = xorn_new_revision(rev2);
 	assert(rev2b != NULL);
+	xorn_delete_selected_objects(rev2b, sel);
+	// rev2b = xorn_apply_changeset(rev2b);
 	xorn_deselect(sel);
 
 	assert_objects_2(rev2b, ob0, ob1b);
 
 	sel = xorn_select_all(rev1);
 	assert(sel != NULL);
-	chset = xorn_alloc_changeset(rev2);
-	assert(chset != NULL);
-	xorn_delete_selected_objects(chset, sel);
-	rev2c = xorn_apply_changeset(chset);
+	rev2c = xorn_new_revision(rev2);
 	assert(rev2c != NULL);
+	xorn_delete_selected_objects(rev2c, sel);
+	// rev2c = xorn_apply_changeset(rev2c);
 	xorn_deselect(sel);
 
 	assert_objects_2(rev2c, ob1a, ob1b);
 
 	sel = xorn_select_all(rev2);
 	assert(sel != NULL);
-	chset = xorn_alloc_changeset(rev2);
-	assert(chset != NULL);
-	xorn_delete_selected_objects(chset, sel);
-	rev2d = xorn_apply_changeset(chset);
+	rev2d = xorn_new_revision(rev2);
 	assert(rev2d != NULL);
+	xorn_delete_selected_objects(rev2d, sel);
+	// rev2d = xorn_apply_changeset(rev2d);
 	xorn_deselect(sel);
 
 	assert_objects_0(rev2d);

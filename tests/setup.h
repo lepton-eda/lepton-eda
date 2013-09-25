@@ -29,8 +29,6 @@ static void setup(
 	xorn_revision_t *rev1, xorn_revision_t *rev2, xorn_revision_t *rev3,
 	xorn_object_t *ob0, xorn_object_t *ob1a, xorn_object_t *ob1b)
 {
-	xorn_changeset_t chset;
-
 	*file = xorn_new_file();
 	assert(*file != NULL);
 
@@ -39,8 +37,8 @@ static void setup(
 
 	/* first change */
 
-	chset = xorn_alloc_changeset(*rev0);
-	assert(chset != NULL);
+	*rev1 = xorn_new_revision(*rev0);
+	assert(*rev1 != NULL);
 
 	memset(&line_data, 0, sizeof line_data);
 	line_data.pos.x = 0;
@@ -50,16 +48,15 @@ static void setup(
 	line_data.color = 3;
 	line_data.line.width = 1;
 
-	*ob0 = xorn_add_object(chset, xornsch_obtype_line, &line_data);
+	*ob0 = xorn_add_object(*rev1, xornsch_obtype_line, &line_data);
 	assert(*ob0 != NULL);
 
-	*rev1 = xorn_apply_changeset(chset);
-	assert(*rev1 != NULL);
+	// *rev1 = xorn_apply_changeset(*rev1);
 
 	/* second change */
 
-	chset = xorn_alloc_changeset(*rev1);
-	assert(chset != NULL);
+	*rev2 = xorn_new_revision(*rev1);
+	assert(*rev2 != NULL);
 
 	memset(&box_data, 0, sizeof box_data);
 	box_data.pos.x = 1;
@@ -69,7 +66,7 @@ static void setup(
 	box_data.color = 3;
 	box_data.line.width = 1;
 
-	*ob1a = xorn_add_object(chset, xornsch_obtype_box, &box_data);
+	*ob1a = xorn_add_object(*rev2, xornsch_obtype_box, &box_data);
 	assert(*ob1a != NULL);
 
 	memset(&circle_data, 0, sizeof circle_data);
@@ -80,16 +77,15 @@ static void setup(
 	circle_data.line.width = 1;
 	circle_data.fill.type = 1;
 
-	*ob1b = xorn_add_object(chset, xornsch_obtype_circle, &circle_data);
+	*ob1b = xorn_add_object(*rev2, xornsch_obtype_circle, &circle_data);
 	assert(*ob1b != NULL);
 
-	*rev2 = xorn_apply_changeset(chset);
-	assert(*rev2 != NULL);
+	// *rev2 = xorn_apply_changeset(*rev2);
 
 	/* third change */
 
-	chset = xorn_alloc_changeset(*rev2);
-	assert(chset != NULL);
+	*rev3 = xorn_new_revision(*rev2);
+	assert(*rev3 != NULL);
 
 	memset(&net_data, 0, sizeof net_data);
 	net_data.pos.x = 0;
@@ -99,10 +95,9 @@ static void setup(
 	net_data.color = 4;
 
 	assert(xorn_set_object_data(
-		   chset, *ob0, xornsch_obtype_net, &net_data) == 0);
+		   *rev3, *ob0, xornsch_obtype_net, &net_data) == 0);
 
-	xorn_delete_object(chset, *ob1a);
+	xorn_delete_object(*rev3, *ob1a);
 
-	*rev3 = xorn_apply_changeset(chset);
-	assert(*rev3 != NULL);
+	// *rev3 = xorn_apply_changeset(*rev3);
 }

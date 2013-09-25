@@ -23,7 +23,6 @@ int main()
 {
 	xorn_file_t file;
 	xorn_revision_t rev0, rev1, rev2;
-	xorn_changeset_t chset;
 	struct xornsch_line line_data;
 	xorn_object_t ob;
 
@@ -33,8 +32,8 @@ int main()
 	rev0 = xorn_get_empty_revision(file);
 	assert(rev0 != NULL);
 
-	chset = xorn_alloc_changeset(rev0);
-	assert(chset != NULL);
+	rev1 = xorn_new_revision(rev0);
+	assert(rev1 != NULL);
 
 	memset(&line_data, 0, sizeof line_data);
 	line_data.pos.x = 0;
@@ -44,25 +43,23 @@ int main()
 	line_data.color = 3;
 	line_data.line.width = 1;
 
-	ob = xorn_add_object(chset, xorn_obtype_none, &line_data);
+	ob = xorn_add_object(rev1, xorn_obtype_none, &line_data);
 	assert(ob == NULL);
 
-	ob = xorn_add_object(chset, xornsch_obtype_line, &line_data);
+	ob = xorn_add_object(rev1, xornsch_obtype_line, &line_data);
 	assert(ob != NULL);
 
-	rev1 = xorn_apply_changeset(chset);
-	assert(rev1 != NULL);
+	// rev1 = xorn_apply_changeset(rev1);
 
-	chset = xorn_alloc_changeset(rev1);
-	assert(chset != NULL);
+	rev2 = xorn_new_revision(rev1);
+	assert(rev2 != NULL);
 
-	assert(xorn_set_object_data(chset, ob,
+	assert(xorn_set_object_data(rev2, ob,
 				    xorn_obtype_none, &line_data) == -1);
-	assert(xorn_set_object_data(chset, ob,
+	assert(xorn_set_object_data(rev2, ob,
 				    xornsch_obtype_line, &line_data) == 0);
 
-	rev2 = xorn_apply_changeset(chset);
-	assert(rev2 != NULL);
+	// rev2 = xorn_apply_changeset(rev2);
 
 	xorn_close_file(file);
 	return 0;
