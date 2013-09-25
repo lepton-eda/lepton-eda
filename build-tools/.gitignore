@@ -10,3 +10,5 @@ mdate-sh
 missing
 texinfo.tex
 ylwrap
+test-driver
+ar-lib
