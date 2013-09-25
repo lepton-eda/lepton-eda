@@ -38,7 +38,7 @@ int main()
 	ob0copy = xorn_copy_object(rev4, rev1, ob0);
 	assert(ob0copy != NULL);
 
-	// rev4 = xorn_apply_changeset(rev4);
+	xorn_mtswach_revision(rev4);
 
 	assert(xorn_get_object_type(rev4, ob0copy) !=
 	       xorn_get_object_type(rev4, ob0));

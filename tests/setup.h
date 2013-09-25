@@ -51,7 +51,7 @@ static void setup(
 	*ob0 = xorn_add_object(*rev1, xornsch_obtype_line, &line_data);
 	assert(*ob0 != NULL);
 
-	// *rev1 = xorn_apply_changeset(*rev1);
+	xorn_mtswach_revision(*rev1);
 
 	/* second change */
 
@@ -80,7 +80,7 @@ static void setup(
 	*ob1b = xorn_add_object(*rev2, xornsch_obtype_circle, &circle_data);
 	assert(*ob1b != NULL);
 
-	// *rev2 = xorn_apply_changeset(*rev2);
+	xorn_mtswach_revision(*rev2);
 
 	/* third change */
 
@@ -99,5 +99,5 @@ static void setup(
 
 	xorn_delete_object(*rev3, *ob1a);
 
-	// *rev3 = xorn_apply_changeset(*rev3);
+	xorn_mtswach_revision(*rev3);
 }

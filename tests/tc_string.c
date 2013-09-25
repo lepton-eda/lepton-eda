@@ -40,7 +40,7 @@ int main()
 	assert(rev1 != NULL);
 	ob = xorn_add_object(rev1, xornsch_obtype_text, &text_data);
 	assert(ob != NULL);
-	// rev1 = xorn_apply_changeset(rev1);
+	xorn_mtswach_revision(rev1);
 
 	const struct xornsch_text *text_return =
 	    xorn_get_object_data(rev1, ob, xornsch_obtype_text);

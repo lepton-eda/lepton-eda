@@ -29,7 +29,8 @@ TESTS = tc_copy_object \
 	tc_null \
 	tc_selection \
 	tc_stat \
-	tc_string
+	tc_string \
+	tc_transient
 
 check_PROGRAMS = $(TESTS)
 EXTRA_DIST = setup.h

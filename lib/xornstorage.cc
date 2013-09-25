@@ -40,6 +40,7 @@ struct xorn_revision {
 	xorn_revision(xorn_revision_t rev);
 	~xorn_revision();
 	xorn_file_t const file;
+	bool is_transient;
 	std::map<xorn_object_t, obstate *> obstates;
 };
 
@@ -64,6 +65,7 @@ public:
 
 xorn_file::xorn_file() : empty_revision(new xorn_revision(this))
 {
+	empty_revision->is_transient = false;
 }
 
 xorn_file::~xorn_file()
@@ -76,13 +78,13 @@ xorn_file::~xorn_file()
 		delete *i;
 }
 
-xorn_revision::xorn_revision(xorn_file_t file) : file(file)
+xorn_revision::xorn_revision(xorn_file_t file) : file(file), is_transient(true)
 {
 	file->revisions.push_back(this);
 }
 
 xorn_revision::xorn_revision(xorn_revision_t rev)
-	: file(rev->file), obstates(rev->obstates)
+	: file(rev->file), is_transient(true), obstates(rev->obstates)
 {
 	file->revisions.push_back(this);
 
@@ -217,6 +219,16 @@ xorn_revision_t xorn_new_revision(xorn_revision_t rev)
 	} catch (std::bad_alloc const &) {
 		return NULL;
 	}
+}
+
+bool xorn_revision_is_transient(xorn_revision_t rev)
+{
+	return rev->is_transient;
+}
+
+void xorn_mtswach_revision(xorn_revision_t rev)
+{
+	rev->is_transient = false;
 }
 
 /****************************************************************************/
@@ -516,6 +528,9 @@ static void set_object_data(xorn_revision_t rev, xorn_object_t ob,
 xorn_object_t xorn_add_object(xorn_revision_t rev,
 			      xorn_obtype_t type, void const *data)
 {
+	if (!rev->is_transient)
+		return NULL;
+
 	xorn_object_t ob;
 	try {
 		ob = new xorn_object(rev->file);
@@ -535,6 +550,9 @@ xorn_object_t xorn_add_object(xorn_revision_t rev,
 int xorn_set_object_data(xorn_revision_t rev, xorn_object_t ob,
 			 xorn_obtype_t type, void const *data)
 {
+	if (!rev->is_transient)
+		return -1;
+
 	try {
 		set_object_data(rev, ob, type, data);
 	} catch (std::bad_alloc const &) {
@@ -545,6 +563,9 @@ int xorn_set_object_data(xorn_revision_t rev, xorn_object_t ob,
 
 void xorn_delete_object(xorn_revision_t rev, xorn_object_t ob)
 {
+	if (!rev->is_transient)
+		return;
+
 	std::map<xorn_object_t, obstate *>::iterator i
 		= rev->obstates.find(ob);
 
@@ -556,6 +577,9 @@ void xorn_delete_object(xorn_revision_t rev, xorn_object_t ob)
 
 void xorn_delete_selected_objects(xorn_revision_t rev, xorn_selection_t sel)
 {
+	if (!rev->is_transient)
+		return;
+
 	for (std::set<xorn_object_t>::const_iterator i = sel->begin();
 	     i != sel->end(); ++i) {
 		std::map<xorn_object_t, obstate *>::iterator j
@@ -584,6 +608,9 @@ static xorn_object_t copy_object(xorn_revision_t dest, obstate *obstate)
 xorn_object_t xorn_copy_object(xorn_revision_t dest,
 			       xorn_revision_t src, xorn_object_t ob)
 {
+	if (!dest->is_transient)
+		return NULL;
+
 	std::map<xorn_object_t, obstate *>::const_iterator i
 		= src->obstates.find(ob);
 
@@ -600,6 +627,9 @@ xorn_object_t xorn_copy_object(xorn_revision_t dest,
 xorn_selection_t xorn_copy_objects(xorn_revision_t dest,
 				   xorn_revision_t src, xorn_selection_t sel)
 {
+	if (!dest->is_transient)
+		return NULL;
+
 	xorn_selection_t rsel;
 	try {
 		rsel = new xorn_selection();
