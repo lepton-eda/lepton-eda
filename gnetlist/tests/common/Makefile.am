@@ -19,15 +19,12 @@ input_files = \
 	inputs/sym/transistor.sym \
 	inputs/sym/LM324_slotted-1.sym
 
-TESTS_ENVIRONMENT= PERL=${PERL}
+AM_TESTS_ENVIRONMENT= PERL=${PERL}
 
-RUN_TESTS= run_tests.sh
+check-local:
+	$(AM_TESTS_ENVIRONMENT) srcdir=$(srcdir) $(SHELL) $(srcdir)/run_tests.sh
 
-check_SCRIPTS= ${RUN_TESTS}
-
-TESTS= ${RUN_TESTS}
-
-EXTRA_DIST= run_backend_tests.sh ${RUN_TESTS} tests.list backends.list \
+EXTRA_DIST= run_backend_tests.sh run_tests.sh tests.list backends.list \
 	always-copy.list $(input_files)
 
 dist-hook: tests.list backends.list
