@@ -8,7 +8,10 @@ nobase_scmdata_DATA = geda/core/gettext.scm
 # Unit test support.  The unit tests are run using the geda-batch
 # program, with config loading disabled (-q) so that user config
 # already on the system can't interfere with the test process.
-TESTS_ENVIRONMENT = $(builddir)/../shell/geda-shell -q -L $(srcdir) -L $(builddir) \
+GAF_SHELL = $(builddir)/../shell/geda-shell -q
+TEST_EXTENSIONS = .scm
+SCM_LOG_COMPILER = $(GAF_SHELL)
+AM_SCM_LOG_FLAGS = -L $(srcdir) -L $(builddir) \
 	-c '(use-modules (unit-test)) (load (list-ref (command-line) 1)) (exit (if (tests-passed?) 0 1))'
 
 TESTS = unit-tests/t0001-geda-conf-lib.scm \
