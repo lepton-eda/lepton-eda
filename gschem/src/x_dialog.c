@@ -673,9 +673,9 @@ void about_dialog (GSCHEM_TOPLEVEL *w_current)
       "comments",       _("gEDA: GPL Electronic Design Automation"),
       "copyright",
       /* TRANSLATORS: "ChangeLog" is a literal filename; please don't translate it. */
-      _("Copyright © 1998-2011 Ales Hvezda"
+      _("Copyright © 1998-2012 Ales Hvezda"
         " <ahvezda@geda.seul.org>\n"
-        "Copyright © 1998-2011 gEDA Contributors"
+        "Copyright © 1998-2012 gEDA Contributors"
         " (see ChangeLog for details)"),
       "website",        "http://geda-project.org/",
       NULL);

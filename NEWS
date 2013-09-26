@@ -138,6 +138,24 @@ Notable changes in gEDA/gaf 1.9.0
 * `gattrib' now has translations for the user interface and various
   messages.
 
+Notable changes in gEDA/gaf 1.8.2
+=================================
+
+Bugfix release.
+
+* [994361] Fixed a libgeda crash bug involving nets inside symbols.
+
+* [1226246] Fixed a gnetlist data corruption bug when using refdes
+  containing the string "POWER".
+
+* Updates to build system to allow compilation from git on systems
+  with Automake >= 1.13.0.
+
+Notable changes in gEDA/gaf 1.8.1
+=================================
+
+Bugfix release with correct dynamic version information for libgeda.
+
 Notable changes in gEDA/gaf 1.8.0
 =================================
 
