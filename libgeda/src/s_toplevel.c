@@ -163,6 +163,22 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
 
 }
 
+
+
+/*\ brief Set the current page
+ *
+ *  \param [in,out] toplevel This toplevel
+ *  \param [in]     page     The new current page
+ */
+void
+s_toplevel_set_page_current (TOPLEVEL *toplevel, PAGE *page)
+{
+  g_return_if_fail (toplevel != NULL);
+
+  toplevel->page_current = page;
+}
+
+
 /*! \brief Add a weak reference watcher to an TOPLEVEL.
  * \par Function Description
  * Adds the weak reference callback \a notify_func to \a toplevel.  When

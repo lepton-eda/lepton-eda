@@ -267,7 +267,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
     s_page_goto (toplevel, tmp);
   } else {
     /* page was page_current */
-    toplevel->page_current = NULL;
+    s_toplevel_set_page_current (toplevel, NULL);
     /* page_current must be updated by calling function */
   }
 
@@ -298,7 +298,7 @@ void s_page_delete_list(TOPLEVEL *toplevel)
   g_list_free (list_copy);
 
   /* reset toplevel fields */
-  toplevel->page_current = NULL;
+  s_toplevel_set_page_current (toplevel, NULL);
 }
 
 /*! \brief Add a weak reference watcher to an PAGE.
@@ -390,7 +390,7 @@ void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new)
 {
   gchar *dirname;
 
-  toplevel->page_current = p_new;
+  s_toplevel_set_page_current (toplevel, p_new);
 
   dirname = g_dirname (p_new->page_filename);
   if (chdir (dirname)) {

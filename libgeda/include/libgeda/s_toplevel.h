@@ -122,6 +122,9 @@ void
 s_toplevel_remove_weak_ptr (TOPLEVEL *toplevel, void *weak_pointer_loc);
 
 void
+s_toplevel_set_page_current (TOPLEVEL *toplevel, PAGE *page);
+
+void
 s_toplevel_weak_ref (TOPLEVEL *toplevel, void (*notify_func)(void *, void *), void *user_data);
 
 void
