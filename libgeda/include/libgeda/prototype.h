@@ -365,14 +365,6 @@ GList *s_page_objects_in_regions (TOPLEVEL *toplevel, PAGE *page, BOX *rects, in
 PATH *s_path_parse (const char *path_str);
 char *s_path_string_from_path (const PATH *path);
 
-/* s_project.c */
-TOPLEVEL *s_toplevel_new (void);
-void s_toplevel_delete (TOPLEVEL *toplevel);
-void s_toplevel_weak_ref (TOPLEVEL *toplevel, void (*notify_func)(void *, void *), void *user_data);
-void s_toplevel_weak_unref (TOPLEVEL *toplevel, void (*notify_func)(void *, void *), void *user_data);
-void s_toplevel_add_weak_ptr (TOPLEVEL *toplevel, void *weak_pointer_loc);
-void s_toplevel_remove_weak_ptr (TOPLEVEL *toplevel, void *weak_pointer_loc);
-
 /* s_slib.c */
 int s_slib_add_entry(char *new_path);
 int s_slib_search_for_dirname(char *dir_name);

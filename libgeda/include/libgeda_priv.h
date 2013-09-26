@@ -8,6 +8,7 @@
 /* Public libgeda headers */
 #include "defines.h"
 #include "struct.h"
+#include "s_toplevel.h"
 #include "globals.h"
 #include "o_types.h"
 #include "colors.h"
