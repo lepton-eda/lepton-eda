@@ -103,7 +103,7 @@ int main()
 	assert_selected_objects_0(rev1, sel);
 	assert_selected_objects_0(rev2, sel);
 	assert_selected_objects_0(rev3, sel);
-	xorn_deselect(sel);
+	xorn_free_selection(sel);
 
 	/* select object */
 
@@ -113,7 +113,7 @@ int main()
 	assert_selected_objects_1(rev1, sel, ob0);
 	assert_selected_objects_1(rev2, sel, ob0);
 	assert_selected_objects_1(rev3, sel, ob0);
-	xorn_deselect(sel);
+	xorn_free_selection(sel);
 
 	sel = xorn_select_object(ob1a);
 	assert(sel != NULL);
@@ -121,7 +121,7 @@ int main()
 	assert_selected_objects_0(rev1, sel);
 	assert_selected_objects_1(rev2, sel, ob1a);
 	assert_selected_objects_0(rev3, sel);
-	xorn_deselect(sel);
+	xorn_free_selection(sel);
 
 	sel = xorn_select_object(ob1b);
 	assert(sel != NULL);
@@ -129,7 +129,7 @@ int main()
 	assert_selected_objects_0(rev1, sel);
 	assert_selected_objects_1(rev2, sel, ob1b);
 	assert_selected_objects_1(rev3, sel, ob1b);
-	xorn_deselect(sel);
+	xorn_free_selection(sel);
 
 	/* select all */
 
@@ -139,7 +139,7 @@ int main()
 	assert_selected_objects_0(rev1, sel);
 	assert_selected_objects_0(rev2, sel);
 	assert_selected_objects_0(rev3, sel);
-	xorn_deselect(sel);
+	xorn_free_selection(sel);
 
 	sel = xorn_select_all(rev1);
 	assert(sel != NULL);
@@ -147,7 +147,7 @@ int main()
 	assert_selected_objects_1(rev1, sel, ob0);
 	assert_selected_objects_1(rev2, sel, ob0);
 	assert_selected_objects_1(rev3, sel, ob0);
-	xorn_deselect(sel);
+	xorn_free_selection(sel);
 
 	sel = xorn_select_all(rev2);
 	assert(sel != NULL);
@@ -155,7 +155,7 @@ int main()
 	assert_selected_objects_1(rev1, sel, ob0);
 	assert_selected_objects_3(rev2, sel, ob0, ob1a, ob1b);
 	assert_selected_objects_2(rev3, sel, ob0, ob1b);
-	xorn_deselect(sel);
+	xorn_free_selection(sel);
 
 	sel = xorn_select_all(rev3);
 	assert(sel != NULL);
@@ -163,7 +163,7 @@ int main()
 	assert_selected_objects_1(rev1, sel, ob0);
 	assert_selected_objects_2(rev2, sel, ob0, ob1b);
 	assert_selected_objects_2(rev3, sel, ob0, ob1b);
-	xorn_deselect(sel);
+	xorn_free_selection(sel);
 
 	/* select all except */
 
@@ -175,7 +175,7 @@ int main()
 	    assert_selected_objects_0(rev1, sel);
 	    assert_selected_objects_0(rev2, sel);
 	    assert_selected_objects_0(rev3, sel);
-	    xorn_deselect(sel);
+	    xorn_free_selection(sel);
 
 	    sel = xorn_select_all_except(rev1, sel1);
 	    assert(sel != NULL);
@@ -183,7 +183,7 @@ int main()
 	    assert_selected_objects_1(rev1, sel, ob0);
 	    assert_selected_objects_1(rev2, sel, ob0);
 	    assert_selected_objects_1(rev3, sel, ob0);
-	    xorn_deselect(sel);
+	    xorn_free_selection(sel);
 
 	    sel = xorn_select_all_except(rev2, sel1);
 	    assert(sel != NULL);
@@ -191,7 +191,7 @@ int main()
 	    assert_selected_objects_1(rev1, sel, ob0);
 	    assert_selected_objects_3(rev2, sel, ob0, ob1a, ob1b);
 	    assert_selected_objects_2(rev3, sel, ob0, ob1b);
-	    xorn_deselect(sel);
+	    xorn_free_selection(sel);
 
 	    sel = xorn_select_all_except(rev3, sel1);
 	    assert(sel != NULL);
@@ -199,8 +199,8 @@ int main()
 	    assert_selected_objects_1(rev1, sel, ob0);
 	    assert_selected_objects_2(rev2, sel, ob0, ob1b);
 	    assert_selected_objects_2(rev3, sel, ob0, ob1b);
-	    xorn_deselect(sel);
-	xorn_deselect(sel1);
+	    xorn_free_selection(sel);
+	xorn_free_selection(sel1);
 
 	sel1 = xorn_select_object(ob0);
 	assert(sel1 != NULL);
@@ -210,7 +210,7 @@ int main()
 	    assert_selected_objects_0(rev1, sel);
 	    assert_selected_objects_0(rev2, sel);
 	    assert_selected_objects_0(rev3, sel);
-	    xorn_deselect(sel);
+	    xorn_free_selection(sel);
 
 	    sel = xorn_select_all_except(rev1, sel1);
 	    assert(sel != NULL);
@@ -218,7 +218,7 @@ int main()
 	    assert_selected_objects_0(rev1, sel);
 	    assert_selected_objects_0(rev2, sel);
 	    assert_selected_objects_0(rev3, sel);
-	    xorn_deselect(sel);
+	    xorn_free_selection(sel);
 
 	    sel = xorn_select_all_except(rev2, sel1);
 	    assert(sel != NULL);
@@ -226,7 +226,7 @@ int main()
 	    assert_selected_objects_0(rev1, sel);
 	    assert_selected_objects_2(rev2, sel, ob1a, ob1b);
 	    assert_selected_objects_1(rev3, sel, ob1b);
-	    xorn_deselect(sel);
+	    xorn_free_selection(sel);
 
 	    sel = xorn_select_all_except(rev3, sel1);
 	    assert(sel != NULL);
@@ -234,8 +234,8 @@ int main()
 	    assert_selected_objects_0(rev1, sel);
 	    assert_selected_objects_1(rev2, sel, ob1b);
 	    assert_selected_objects_1(rev3, sel, ob1b);
-	    xorn_deselect(sel);
-	xorn_deselect(sel1);
+	    xorn_free_selection(sel);
+	xorn_free_selection(sel1);
 
 	sel1 = xorn_select_all(rev3);
 	assert(sel1 != NULL);
@@ -245,7 +245,7 @@ int main()
 	    assert_selected_objects_0(rev1, sel);
 	    assert_selected_objects_0(rev2, sel);
 	    assert_selected_objects_0(rev3, sel);
-	    xorn_deselect(sel);
+	    xorn_free_selection(sel);
 
 	    sel = xorn_select_all_except(rev1, sel1);
 	    assert(sel != NULL);
@@ -253,7 +253,7 @@ int main()
 	    assert_selected_objects_0(rev1, sel);
 	    assert_selected_objects_0(rev2, sel);
 	    assert_selected_objects_0(rev3, sel);
-	    xorn_deselect(sel);
+	    xorn_free_selection(sel);
 
 	    sel = xorn_select_all_except(rev2, sel1);
 	    assert(sel != NULL);
@@ -261,7 +261,7 @@ int main()
 	    assert_selected_objects_0(rev1, sel);
 	    assert_selected_objects_1(rev2, sel, ob1a);
 	    assert_selected_objects_0(rev3, sel);
-	    xorn_deselect(sel);
+	    xorn_free_selection(sel);
 
 	    sel = xorn_select_all_except(rev3, sel1);
 	    assert(sel != NULL);
@@ -269,8 +269,8 @@ int main()
 	    assert_selected_objects_0(rev1, sel);
 	    assert_selected_objects_0(rev2, sel);
 	    assert_selected_objects_0(rev3, sel);
-	    xorn_deselect(sel);
-	xorn_deselect(sel1);
+	    xorn_free_selection(sel);
+	xorn_free_selection(sel1);
 
 	/* select union */
 
@@ -281,68 +281,68 @@ int main()
 	    sel = xorn_select_union(sel1, sel2);
 	    assert(sel != NULL);
 	    assert_selected_objects_1(rev2, sel, ob0);
-	    xorn_deselect(sel);
-	    xorn_deselect(sel2);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
 
 	    sel2 = xorn_select_object(ob1a);
 	    assert(sel2 != NULL);
 	    sel = xorn_select_union(sel1, sel2);
 	    assert(sel != NULL);
 	    assert_selected_objects_2(rev2, sel, ob0, ob1a);
-	    xorn_deselect(sel);
-	    xorn_deselect(sel2);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
 
 	    sel2 = xorn_select_all(rev2);
 	    assert(sel2 != NULL);
 	    sel = xorn_select_union(sel1, sel2);
 	    assert(sel != NULL);
 	    assert_selected_objects_3(rev2, sel, ob0, ob1a, ob1b);
-	    xorn_deselect(sel);
-	    xorn_deselect(sel2);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
 
 	    sel2 = xorn_select_all(rev3);
 	    assert(sel2 != NULL);
 	    sel = xorn_select_union(sel1, sel2);
 	    assert(sel != NULL);
 	    assert_selected_objects_2(rev2, sel, ob0, ob1b);
-	    xorn_deselect(sel);
-	    xorn_deselect(sel2);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
 	sel2 = xorn_select_all_except(rev2, sel1);
 	assert(sel2 != NULL);
-	xorn_deselect(sel1);
+	xorn_free_selection(sel1);
 	sel1 = sel2;
 	    sel2 = xorn_select_none();
 	    assert(sel2 != NULL);
 	    sel = xorn_select_union(sel1, sel2);
 	    assert(sel != NULL);
 	    assert_selected_objects_2(rev2, sel, ob1a, ob1b);
-	    xorn_deselect(sel);
-	    xorn_deselect(sel2);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
 
 	    sel2 = xorn_select_object(ob1a);
 	    assert(sel2 != NULL);
 	    sel = xorn_select_union(sel1, sel2);
 	    assert(sel != NULL);
 	    assert_selected_objects_2(rev2, sel, ob1a, ob1b);
-	    xorn_deselect(sel);
-	    xorn_deselect(sel2);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
 
 	    sel2 = xorn_select_all(rev2);
 	    assert(sel2 != NULL);
 	    sel = xorn_select_union(sel1, sel2);
 	    assert(sel != NULL);
 	    assert_selected_objects_3(rev2, sel, ob0, ob1a, ob1b);
-	    xorn_deselect(sel);
-	    xorn_deselect(sel2);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
 
 	    sel2 = xorn_select_all(rev3);
 	    assert(sel2 != NULL);
 	    sel = xorn_select_union(sel1, sel2);
 	    assert(sel != NULL);
 	    assert_selected_objects_3(rev2, sel, ob0, ob1a, ob1b);
-	    xorn_deselect(sel);
-	    xorn_deselect(sel2);
-	xorn_deselect(sel1);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
+	xorn_free_selection(sel1);
 
 	/* select intersection */
 
@@ -353,68 +353,68 @@ int main()
 	    sel = xorn_select_intersection(sel1, sel2);
 	    assert(sel != NULL);
 	    assert_selected_objects_0(rev2, sel);
-	    xorn_deselect(sel);
-	    xorn_deselect(sel2);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
 
 	    sel2 = xorn_select_object(ob1a);
 	    assert(sel2 != NULL);
 	    sel = xorn_select_intersection(sel1, sel2);
 	    assert(sel != NULL);
 	    assert_selected_objects_0(rev2, sel);
-	    xorn_deselect(sel);
-	    xorn_deselect(sel2);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
 
 	    sel2 = xorn_select_all(rev2);
 	    assert(sel2 != NULL);
 	    sel = xorn_select_intersection(sel1, sel2);
 	    assert(sel != NULL);
 	    assert_selected_objects_1(rev2, sel, ob0);
-	    xorn_deselect(sel);
-	    xorn_deselect(sel2);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
 
 	    sel2 = xorn_select_all(rev3);
 	    assert(sel2 != NULL);
 	    sel = xorn_select_intersection(sel1, sel2);
 	    assert(sel != NULL);
 	    assert_selected_objects_1(rev2, sel, ob0);
-	    xorn_deselect(sel);
-	    xorn_deselect(sel2);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
 	sel2 = xorn_select_all_except(rev2, sel1);
 	assert(sel2 != NULL);
-	xorn_deselect(sel1);
+	xorn_free_selection(sel1);
 	sel1 = sel2;
 	    sel2 = xorn_select_none();
 	    assert(sel2 != NULL);
 	    sel = xorn_select_intersection(sel1, sel2);
 	    assert(sel != NULL);
 	    assert_selected_objects_0(rev2, sel);
-	    xorn_deselect(sel);
-	    xorn_deselect(sel2);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
 
 	    sel2 = xorn_select_object(ob1a);
 	    assert(sel2 != NULL);
 	    sel = xorn_select_intersection(sel1, sel2);
 	    assert(sel != NULL);
 	    assert_selected_objects_1(rev2, sel, ob1a);
-	    xorn_deselect(sel);
-	    xorn_deselect(sel2);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
 
 	    sel2 = xorn_select_all(rev2);
 	    assert(sel2 != NULL);
 	    sel = xorn_select_intersection(sel1, sel2);
 	    assert(sel != NULL);
 	    assert_selected_objects_2(rev2, sel, ob1a, ob1b);
-	    xorn_deselect(sel);
-	    xorn_deselect(sel2);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
 
 	    sel2 = xorn_select_all(rev3);
 	    assert(sel2 != NULL);
 	    sel = xorn_select_intersection(sel1, sel2);
 	    assert(sel != NULL);
 	    assert_selected_objects_1(rev2, sel, ob1b);
-	    xorn_deselect(sel);
-	    xorn_deselect(sel2);
-	xorn_deselect(sel1);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
+	xorn_free_selection(sel1);
 
 	xorn_free_revision(rev3);
 	xorn_free_revision(rev2);

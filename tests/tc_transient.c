@@ -47,12 +47,12 @@ void try_modify(xorn_revision_t rev, xorn_object_t existing_ob,
 
 	sel1 = xorn_copy_objects(rev, rev, sel0);
 	assert((sel1 != NULL) == expected_result);
-	xorn_deselect(sel1);
+	xorn_free_selection(sel1);
 
 	xorn_delete_selected_objects(rev, sel0);
 	assert(xorn_object_exists_in_revision(rev, existing_ob)
 		   == !expected_result);
-	xorn_deselect(sel0);
+	xorn_free_selection(sel0);
 }
 
 int main()

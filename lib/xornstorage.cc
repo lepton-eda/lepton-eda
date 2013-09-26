@@ -455,7 +455,7 @@ bool xorn_selection_is_empty(xorn_revision_t rev, xorn_selection_t sel)
 	return true;
 }
 
-void xorn_deselect(xorn_selection_t sel)
+void xorn_free_selection(xorn_selection_t sel)
 {
 	delete sel;
 }

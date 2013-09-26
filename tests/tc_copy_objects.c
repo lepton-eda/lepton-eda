@@ -25,8 +25,8 @@ bool object_is_selected(
 			 sel1 = xorn_select_intersection(sel, sel0);
 	bool result = !xorn_selection_is_empty(rev, sel1);
 
-	xorn_deselect(sel1);
-	xorn_deselect(sel0);
+	xorn_free_selection(sel1);
+	xorn_free_selection(sel0);
 	return result;
 }
 
@@ -79,8 +79,8 @@ int main()
 
 	free(objects);
 
-	xorn_deselect(sel1);
-	xorn_deselect(sel0);
+	xorn_free_selection(sel1);
+	xorn_free_selection(sel0);
 
 	xorn_free_revision(rev4);
 	xorn_free_revision(rev3);

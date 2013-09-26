@@ -90,7 +90,7 @@ xorn_selection_t xorn_select_intersection(
 
 bool xorn_selection_is_empty(
 	xorn_revision_t rev, xorn_selection_t sel);
-void xorn_deselect(
+void xorn_free_selection(
 	xorn_selection_t sel);
 
 /* manipulation functions */
