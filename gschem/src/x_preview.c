@@ -510,7 +510,6 @@ preview_dispose (GObject *self)
 
     x_window_free_gc (preview_w_current);
     
-    s_toplevel_delete (preview_w_current->toplevel);
     gschem_toplevel_free (preview_w_current);
 
     preview->preview_w_current = NULL;

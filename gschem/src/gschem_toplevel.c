@@ -341,6 +341,51 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
 void
 gschem_toplevel_free (GSCHEM_TOPLEVEL *w_current)
 {
+  if (w_current->toplevel != NULL) {
+    s_toplevel_delete (w_current->toplevel);
+    w_current->toplevel = NULL;
+  }
+
+  if (w_current->dash_length_list_store != NULL) {
+    g_object_unref (w_current->dash_length_list_store);
+    w_current->dash_length_list_store = NULL;
+  }
+
+  if (w_current->dash_space_list_store != NULL) {
+    g_object_unref (w_current->dash_space_list_store);
+    w_current->dash_space_list_store = NULL;
+  }
+
+  if (w_current->fill_angle_list_store != NULL) {
+    g_object_unref (w_current->fill_angle_list_store);
+    w_current->fill_angle_list_store = NULL;
+  }
+
+  if (w_current->fill_pitch_list_store != NULL) {
+    g_object_unref (w_current->fill_pitch_list_store);
+    w_current->fill_pitch_list_store = NULL;
+  }
+
+  if (w_current->fill_width_list_store != NULL) {
+    g_object_unref (w_current->fill_width_list_store);
+    w_current->fill_width_list_store = NULL;
+  }
+
+  if (w_current->line_width_list_store != NULL) {
+    g_object_unref (w_current->line_width_list_store);
+    w_current->line_width_list_store = NULL;
+  }
+
+  if (w_current->text_size_list_store != NULL) {
+    g_object_unref (w_current->text_size_list_store);
+    w_current->text_size_list_store = NULL;
+  }
+
+  if (w_current->renderer != NULL) {
+    g_object_unref (w_current->renderer);
+    w_current->renderer = NULL;
+  }
+
   g_free (w_current);
 }
 
