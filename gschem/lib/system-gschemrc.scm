@@ -1263,11 +1263,11 @@
 ;;          menu item name                menu action               menu stock icon
 ;;
         `(
-           (,(N_ "gschem User _Guide...")  help-guide                "gtk-help")
-           (,(N_ "gschem _FAQ...")         help-faq                  "help-faq")
-           (,(N_ "gEDA Docu_mentation...") help-manual               "help-browser")
-           (,(N_ "gEDA _Wiki...")          help-wiki                 "web-browser")
-           (,(N_ "Component D_ocumentation...") hierarchy-documentation   "symbol-datasheet")
+           (,(N_ "gschem User _Guide...")  &help-guide                "gtk-help")
+           (,(N_ "gschem _FAQ...")         &help-faq                  "help-faq")
+           (,(N_ "gEDA Docu_mentation...") &help-manual               "help-browser")
+           (,(N_ "gEDA _Wiki...")          &help-wiki                 "web-browser")
+           (,(N_ "Component D_ocumentation...") &hierarchy-documentation   "symbol-datasheet")
            ("SEPARATOR"                   #f                        #f)
            (,(N_ "_Hotkeys...")            help-hotkeys              "preferences-desktop-keyboard-shortcuts")
            (,(N_ "_About...")              help-about                "gtk-about")))
