@@ -24,6 +24,7 @@ gschem_SOURCES = \
 	g_window.c \
 	globals.c \
 	gschem.c \
+	gschemcellrenderericon.c \
 	gschemhotkeystore.c \
 	gschem_accel_label.c \
 	gschem_action.c \
