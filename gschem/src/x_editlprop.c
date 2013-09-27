@@ -76,10 +76,34 @@ static void
 cap_style_changed (GtkWidget *widget, EditLProp *dialog);
 
 static void
-selection_changed (GschemSelectionAdapter *adapter, EditLProp *dialog);
+notify_cap_style (GschemSelectionAdapter *adapter, GParamSpec *pspec, EditLProp *dialog);
 
 static void
-update_values (EditLProp *dialog);
+notify_dash_length (GschemSelectionAdapter *adapter, GParamSpec *pspec, EditLProp *dialog);
+
+static void
+notify_dash_space (GschemSelectionAdapter *adapter, GParamSpec *pspec, EditLProp *dialog);
+
+static void
+notify_line_type (GschemSelectionAdapter *adapter, GParamSpec *pspec, EditLProp *dialog);
+
+static void
+notify_line_width (GschemSelectionAdapter *adapter, GParamSpec *pspec, EditLProp *dialog);
+
+static void
+update_cap_style (EditLProp *dialog);
+
+static void
+update_dash_length (EditLProp *dialog);
+
+static void
+update_dash_space (EditLProp *dialog);
+
+static void
+update_line_type (EditLProp *dialog);
+
+static void
+update_line_width (EditLProp *dialog);
 
 
 
@@ -348,7 +372,23 @@ x_editlprop_set_selection_adapter (EditLProp *dialog, GschemSelectionAdapter *ad
 
   if (dialog->adapter != NULL) {
     g_signal_handlers_disconnect_by_func (dialog->adapter,
-                                          G_CALLBACK (selection_changed),
+                                          G_CALLBACK (notify_line_width),
+                                          dialog);
+
+    g_signal_handlers_disconnect_by_func (dialog->adapter,
+                                          G_CALLBACK (notify_line_type),
+                                          dialog);
+
+    g_signal_handlers_disconnect_by_func (dialog->adapter,
+                                          G_CALLBACK (notify_dash_space),
+                                          dialog);
+
+    g_signal_handlers_disconnect_by_func (dialog->adapter,
+                                          G_CALLBACK (notify_dash_length),
+                                          dialog);
+
+    g_signal_handlers_disconnect_by_func (dialog->adapter,
+                                          G_CALLBACK (notify_cap_style),
                                           dialog);
 
     g_object_unref (dialog->adapter);
@@ -360,12 +400,35 @@ x_editlprop_set_selection_adapter (EditLProp *dialog, GschemSelectionAdapter *ad
     g_object_ref (dialog->adapter);
 
     g_signal_connect (dialog->adapter,
-                      "changed",
-                      G_CALLBACK (selection_changed),
+                      "notify::cap-style",
+                      G_CALLBACK (notify_cap_style),
+                      dialog);
+    g_signal_connect (dialog->adapter,
+                      "notify::dash-length",
+                      G_CALLBACK (notify_dash_length),
+                      dialog);
+
+    g_signal_connect (dialog->adapter,
+                      "notify::dash-space",
+                      G_CALLBACK (notify_dash_space),
+                      dialog);
+
+    g_signal_connect (dialog->adapter,
+                      "notify::line-type",
+                      G_CALLBACK (notify_line_type),
+                      dialog);
+
+    g_signal_connect (dialog->adapter,
+                      "notify::line-width",
+                      G_CALLBACK (notify_line_width),
                       dialog);
   }
 
-  update_values (dialog);
+  update_cap_style (dialog);
+  update_dash_length (dialog);
+  update_dash_space (dialog);
+  update_line_type (dialog);
+  update_line_width (dialog);
 }
 
 
@@ -767,17 +830,14 @@ cap_style_changed (GtkWidget *widget, EditLProp *dialog)
 
 
 
-/*! \brief Signal handler for when the selection changes
+/*! \brief Signal handler for when the selection cap style changes
  *
- *  \par Function Description
- *  This function gets called when items are added or removed from the
- *  selection.
- *
- *  \param [in]     selection The selection that changed
- *  \param [in,out] dialog    This dialog
+ *  \param [in]     adapter
+ *  \param [in]     pspec
+ *  \param [in,out] dialog
  */
 static void
-selection_changed (GschemSelectionAdapter *adapter, EditLProp *dialog)
+notify_cap_style (GschemSelectionAdapter *adapter, GParamSpec *pspec, EditLProp *dialog)
 {
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (adapter != NULL);
@@ -785,46 +845,135 @@ selection_changed (GschemSelectionAdapter *adapter, EditLProp *dialog)
   if (dialog->adapter != NULL) {
     g_return_if_fail (adapter == dialog->adapter);
 
-    update_values (dialog);
+    update_cap_style (dialog);
   }
 }
 
 
 
-/*! \brief Update the values in the dialog box widgets.
+/*! \brief Signal handler for when the selection dash length changes
  *
- *  \param [in,out] dialog    This dialog
+ *  \param [in]     adapter
+ *  \param [in]     pspec
+ *  \param [in,out] dialog
  */
 static void
-update_values (EditLProp *dialog)
+notify_dash_length (GschemSelectionAdapter *adapter, GParamSpec *pspec, EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (adapter != NULL);
+
+  if (dialog->adapter != NULL) {
+    g_return_if_fail (adapter == dialog->adapter);
+
+    update_dash_length (dialog);
+  }
+}
+
+
+
+/*! \brief Signal handler for when the selection dash space changes
+ *
+ *  \param [in]     adapter
+ *  \param [in]     pspec
+ *  \param [in,out] dialog
+ */
+static void
+notify_dash_space (GschemSelectionAdapter *adapter, GParamSpec *pspec, EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (adapter != NULL);
+
+  if (dialog->adapter != NULL) {
+    g_return_if_fail (adapter == dialog->adapter);
+
+    update_dash_space (dialog);
+  }
+}
+
+
+
+/*! \brief Signal handler for when the selection line type changes
+ *
+ *  \param [in]     adapter
+ *  \param [in]     pspec
+ *  \param [in,out] dialog
+ */
+static void
+notify_line_type (GschemSelectionAdapter *adapter, GParamSpec *pspec, EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (adapter != NULL);
+
+  if (dialog->adapter != NULL) {
+    g_return_if_fail (adapter == dialog->adapter);
+
+    update_line_type (dialog);
+  }
+}
+
+
+
+/*! \brief Signal handler for when the selection line width changes
+ *
+ *  \param [in]     adapter
+ *  \param [in]     pspec
+ *  \param [in,out] dialog
+ */
+static void
+notify_line_width (GschemSelectionAdapter *adapter, GParamSpec *pspec, EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (adapter != NULL);
+
+  if (dialog->adapter != NULL) {
+    g_return_if_fail (adapter == dialog->adapter);
+
+    update_line_width (dialog);
+  }
+}
+
+
+
+/*! \brief Update the cap style in the dialog box
+ *
+ *  \param [in,out] dialog This dialog
+ */
+static void
+update_cap_style (EditLProp *dialog)
 {
   g_return_if_fail (dialog != NULL);
 
   if (dialog->adapter != NULL) {
-    OBJECT_END end;
-    OBJECT_TYPE type;
-    gint width=1;
-    gint length=-1;
-    gint space=-1;
+    OBJECT_END end = gschem_selection_adapter_get_cap_style (dialog->adapter);
 
-    end = gschem_selection_adapter_get_cap_style (dialog->adapter);
-    length = gschem_selection_adapter_get_dash_length (dialog->adapter);
-    space = gschem_selection_adapter_get_dash_space (dialog->adapter);
-    type = gschem_selection_adapter_get_line_type (dialog->adapter);
-    width = gschem_selection_adapter_get_line_width (dialog->adapter);
-
-
-    g_signal_handlers_block_by_func(G_OBJECT (dialog->line_type),
-                                    G_CALLBACK (line_type_changed),
+    g_signal_handlers_block_by_func(G_OBJECT (dialog->line_end),
+                                    G_CALLBACK (cap_style_changed),
                                     dialog);
 
-    g_signal_handlers_block_by_func(G_OBJECT (dialog->width_entry),
-                                    G_CALLBACK (line_width_changed),
-                                    dialog);
+    x_linecapcb_set_index (dialog->line_end, end);
 
-    g_signal_handlers_block_by_func(G_OBJECT (x_integercb_get_entry (dialog->width_entry)),
-                                    G_CALLBACK (line_width_focus_out_event),
-                                    dialog);
+    g_signal_handlers_unblock_by_func(G_OBJECT (dialog->line_end),
+                                      G_CALLBACK (cap_style_changed),
+                                      dialog);
+
+    gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_end), (end != -1));
+  }
+}
+
+
+
+/*! \brief Update the dash length in the dialog box widgets.
+ *
+ *  \param [in,out] dialog    This dialog
+ */
+static void
+update_dash_length (EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+
+  if (dialog->adapter != NULL) {
+    gint length = gschem_selection_adapter_get_dash_length (dialog->adapter);
 
     g_signal_handlers_block_by_func(G_OBJECT (dialog->length_entry),
                                     G_CALLBACK (dash_length_changed),
@@ -834,35 +983,7 @@ update_values (EditLProp *dialog)
                                     G_CALLBACK (dash_length_focus_out_event),
                                     dialog);
 
-    g_signal_handlers_block_by_func(G_OBJECT (dialog->space_entry),
-                                    G_CALLBACK (dash_space_changed),
-                                    dialog);
-
-    g_signal_handlers_block_by_func(G_OBJECT (x_integercb_get_entry (dialog->space_entry)),
-                                    G_CALLBACK (dash_space_focus_out_event),
-                                    dialog);
-
-    g_signal_handlers_block_by_func(G_OBJECT (dialog->line_end),
-                                    G_CALLBACK (cap_style_changed),
-                                    dialog);
-
-    x_linecapcb_set_index (dialog->line_end, end);
-    x_integercb_set_value (dialog->width_entry, width);
     x_integercb_set_value (dialog->length_entry, length);
-    x_integercb_set_value (dialog->space_entry, space);
-    x_linetypecb_set_index (dialog->line_type, type);
-
-    g_signal_handlers_unblock_by_func(G_OBJECT (dialog->line_type),
-                                      G_CALLBACK (line_type_changed),
-                                      dialog);
-
-    g_signal_handlers_unblock_by_func(G_OBJECT (dialog->width_entry),
-                                      G_CALLBACK (line_width_changed),
-                                      dialog);
-
-    g_signal_handlers_unblock_by_func(G_OBJECT (x_integercb_get_entry (dialog->width_entry)),
-                                      G_CALLBACK (line_width_focus_out_event),
-                                      dialog);
 
     g_signal_handlers_unblock_by_func(G_OBJECT (dialog->length_entry),
                                       G_CALLBACK (dash_length_changed),
@@ -872,6 +993,34 @@ update_values (EditLProp *dialog)
                                       G_CALLBACK (dash_length_focus_out_event),
                                       dialog);
 
+    /* dash length and dash space are enabled/disabled by the value in line type */
+  }
+}
+
+
+
+/*! \brief Update the dash space in the dialog box widgets.
+ *
+ *  \param [in,out] dialog    This dialog
+ */
+static void
+update_dash_space (EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+
+  if (dialog->adapter != NULL) {
+    gint space = gschem_selection_adapter_get_dash_space (dialog->adapter);
+
+    g_signal_handlers_block_by_func(G_OBJECT (dialog->space_entry),
+                                    G_CALLBACK (dash_space_changed),
+                                    dialog);
+
+    g_signal_handlers_block_by_func(G_OBJECT (x_integercb_get_entry (dialog->space_entry)),
+                                    G_CALLBACK (dash_space_focus_out_event),
+                                    dialog);
+
+    x_integercb_set_value (dialog->space_entry, space);
+
     g_signal_handlers_unblock_by_func(G_OBJECT (dialog->space_entry),
                                       G_CALLBACK (dash_space_changed),
                                       dialog);
@@ -880,15 +1029,72 @@ update_values (EditLProp *dialog)
                                       G_CALLBACK (dash_space_focus_out_event),
                                       dialog);
 
-    g_signal_handlers_unblock_by_func(G_OBJECT (dialog->line_end),
-                                      G_CALLBACK (cap_style_changed),
+    /* dash length and dash space are enabled/disabled by the value in line type */
+  }
+}
+
+
+
+/*! \brief Update the line type in the dialog box.
+ *
+ *  \param [in,out] dialog This dialog
+ */
+static void
+update_line_type (EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+
+  if (dialog->adapter != NULL) {
+    OBJECT_TYPE type = gschem_selection_adapter_get_line_type (dialog->adapter);
+
+    g_signal_handlers_block_by_func(G_OBJECT (dialog->line_type),
+                                    G_CALLBACK (line_type_changed),
+                                    dialog);
+
+    x_linetypecb_set_index (dialog->line_type, type);
+
+    g_signal_handlers_unblock_by_func(G_OBJECT (dialog->line_type),
+                                      G_CALLBACK (line_type_changed),
                                       dialog);
 
     gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_type), (type != -1));
-    gtk_widget_set_sensitive (GTK_WIDGET (dialog->width_entry), (width != -1));
-    gtk_widget_set_sensitive (GTK_WIDGET (dialog->line_end), (end != -1));
+  }
+}
 
-    /* dash length and dash space are enabled/disabled by the value in line type */
+
+
+/*! \brief Update the line width in the dialog box.
+ *
+ *  \param [in,out] dialog    This dialog
+ */
+static void
+update_line_width (EditLProp *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+
+  if (dialog->adapter != NULL) {
+    gint width = gschem_selection_adapter_get_line_width (dialog->adapter);
+
+
+    g_signal_handlers_block_by_func(G_OBJECT (dialog->width_entry),
+                                    G_CALLBACK (line_width_changed),
+                                    dialog);
+
+    g_signal_handlers_block_by_func(G_OBJECT (x_integercb_get_entry (dialog->width_entry)),
+                                    G_CALLBACK (line_width_focus_out_event),
+                                    dialog);
+
+    x_integercb_set_value (dialog->width_entry, width);
+
+    g_signal_handlers_unblock_by_func(G_OBJECT (dialog->width_entry),
+                                      G_CALLBACK (line_width_changed),
+                                      dialog);
+
+    g_signal_handlers_unblock_by_func(G_OBJECT (x_integercb_get_entry (dialog->width_entry)),
+                                      G_CALLBACK (line_width_focus_out_event),
+                                      dialog);
+
+    gtk_widget_set_sensitive (GTK_WIDGET (dialog->width_entry), (width != -1));
   }
 }
 

@@ -40,7 +40,19 @@
 #include <dmalloc.h>
 #endif
 
+enum
+{
+  PROP_CAP_STYLE = 1,
+  PROP_DASH_LENGTH,
+  PROP_DASH_SPACE,
+  PROP_LINE_TYPE,
+  PROP_LINE_WIDTH
+};
 
+
+
+static void
+get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
 gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klasse);
@@ -51,7 +63,15 @@ gschem_selection_adapter_init (GschemSelectionAdapter *adapter);
 static void
 selection_changed (GedaList *selection, GschemSelectionAdapter *adapter);
 
+static void
+set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
+
+
+static void
+get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
+{
+}
 
 /*! \brief Initialize GschemSelectionAdapter class
  *
@@ -60,17 +80,60 @@ selection_changed (GedaList *selection, GschemSelectionAdapter *adapter);
 static void
 gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klasse)
 {
-  g_signal_new ("changed",                        /* signal_name  */
-                G_OBJECT_CLASS_TYPE (klasse),     /* itype        */
-                0,                                /* signal_flags */
-                0,                                /* class_offset */
-                NULL,                             /* accumulator  */
-                NULL,                             /* accu_data    */
-                g_cclosure_marshal_VOID__VOID,    /* c_marshaller */
-                G_TYPE_NONE,                      /* return_type  */
-                0                                 /* n_params     */
-                );
+  G_OBJECT_CLASS (klasse)->get_property = get_property;
+  G_OBJECT_CLASS (klasse)->set_property = set_property;
 
+
+  g_object_class_install_property (G_OBJECT_CLASS (klasse),
+                                   PROP_CAP_STYLE,
+                                   g_param_spec_int ("cap-style",
+                                                     "Cap Style",
+                                                     "Cap Style",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     -1,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klasse),
+                                   PROP_DASH_LENGTH,
+                                   g_param_spec_int ("dash-length",
+                                                     "Dash Length",
+                                                     "Dash Length",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     -1,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klasse),
+                                   PROP_DASH_SPACE,
+                                   g_param_spec_int ("dash-space",
+                                                     "Dash Space",
+                                                     "Dash Space",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     -1,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klasse),
+                                   PROP_LINE_TYPE,
+                                   g_param_spec_int ("line-type",
+                                                     "Line Type",
+                                                     "Line Type",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     -1,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+
+  g_object_class_install_property (G_OBJECT_CLASS (klasse),
+                                   PROP_LINE_WIDTH,
+                                   g_param_spec_int ("line-width",
+                                                     "Line Width",
+                                                     "Line Width",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     -1,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 }
 
 
@@ -447,7 +510,9 @@ gschem_selection_adapter_set_line_type (GschemSelectionAdapter *adapter, int lin
     iter = g_list_next (iter);
   }
 
-  g_signal_emit_by_name (adapter, "changed");
+  g_object_notify (G_OBJECT (adapter), "line-type");
+  g_object_notify (G_OBJECT (adapter), "dash-length");
+  g_object_notify (G_OBJECT (adapter), "dash-space");
 }
 
 
@@ -503,7 +568,7 @@ gschem_selection_adapter_set_line_width (GschemSelectionAdapter *adapter, int li
     iter = g_list_next (iter);
   }
 
-  g_signal_emit_by_name (adapter, "changed");
+  g_object_notify (G_OBJECT (adapter), "line-width");
 }
 
 
@@ -559,7 +624,7 @@ gschem_selection_adapter_set_dash_length (GschemSelectionAdapter *adapter, int d
     iter = g_list_next (iter);
   }
 
-  g_signal_emit_by_name (adapter, "changed");
+  g_object_notify (G_OBJECT (adapter), "dash-length");
 }
 
 
@@ -615,7 +680,7 @@ gschem_selection_adapter_set_dash_space (GschemSelectionAdapter *adapter, int da
     iter = g_list_next (iter);
   }
 
-  g_signal_emit_by_name (adapter, "changed");
+  g_object_notify (G_OBJECT (adapter), "dash-space");
 }
 
 
@@ -671,7 +736,7 @@ gschem_selection_adapter_set_cap_style (GschemSelectionAdapter *adapter, int cap
     iter = g_list_next (iter);
   }
 
-  g_signal_emit_by_name (adapter, "changed");
+  g_object_notify (G_OBJECT (adapter), "cap-style");
 }
 
 
@@ -686,7 +751,7 @@ gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter, SELECTI
 {
   g_return_if_fail (adapter != NULL);
 
-  if (adapter->selection != NULL) {
+   if (adapter->selection != NULL) {
     g_signal_handlers_disconnect_by_func (adapter->selection,
                                           G_CALLBACK (selection_changed),
                                           adapter);
@@ -705,7 +770,11 @@ gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter, SELECTI
                       adapter);
   }
 
-  g_signal_emit_by_name (adapter, "changed");
+  g_object_notify (G_OBJECT (adapter), "cap-style");
+  g_object_notify (G_OBJECT (adapter), "dash-length");
+  g_object_notify (G_OBJECT (adapter), "dash-space");
+  g_object_notify (G_OBJECT (adapter), "line-type");
+  g_object_notify (G_OBJECT (adapter), "line-width");
 }
 
 
@@ -741,5 +810,16 @@ selection_changed (GedaList *selection, GschemSelectionAdapter *adapter)
   g_return_if_fail (selection != NULL);
   g_return_if_fail (adapter->selection == selection);
 
-  g_signal_emit_by_name (adapter, "changed");
+  g_object_notify (G_OBJECT (adapter), "cap-style");
+  g_object_notify (G_OBJECT (adapter), "dash-length");
+  g_object_notify (G_OBJECT (adapter), "dash-space");
+  g_object_notify (G_OBJECT (adapter), "line-type");
+  g_object_notify (G_OBJECT (adapter), "line-width");
+}
+
+
+
+static void
+set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
+{
 }
