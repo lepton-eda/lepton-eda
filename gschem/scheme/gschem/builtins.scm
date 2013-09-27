@@ -24,7 +24,8 @@
   #:use-module (gschem action)
   #:use-module (gschem gschemdoc)
   #:use-module (gschem selection)
-  #:use-module (gschem window))
+  #:use-module (gschem window)
+  #:use-module (srfi srfi-1))
 
 (or (defined? 'define-syntax)
     (use-modules (ice-9 syncase)))
