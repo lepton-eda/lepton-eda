@@ -47,7 +47,10 @@
     (cond
      ;; Handle repeat-last-command
      ((equal? 'repeat-last-command a)
-      (eval-action!/recursive (fluid-ref last-action)))
+      ;; N.b. must call eval-action! rather than
+      ;; eval-action!/recursive here, so that the last-action doesn't
+      ;; get set to 'repeat-last-command.
+      (eval-action! (fluid-ref last-action)))
 
      ;; Sometimes you get a first-class action
      ((action? a)
