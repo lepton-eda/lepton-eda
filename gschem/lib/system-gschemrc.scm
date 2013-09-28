@@ -1062,7 +1062,7 @@
 (global-set-key "Right" '&view-pan-right)
 (global-set-key "Up" '&view-pan-up)
 (global-set-key "Down" '&view-pan-down)
-(global-set-key "period" 'repeat-last-command)
+(global-set-key "period" '&repeat-last-action)
 (global-set-key "colon" '&edit-invoke-macro)
 (global-set-key "Delete" '&edit-delete)
 (global-set-key "greater" '&page-next)

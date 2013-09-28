@@ -142,3 +142,14 @@
   (run-hook action-property-hook action key value))
 (define-public (action-property action key)
   (assq-ref (action-properties action) key))
+
+;; -------------------------------------------------------------------
+;; Special actions that operate on actions
+
+;; Note that here we pass "repeat-last-command" as a *symbol* rather
+;; than wrapping the action around an actual procedure.  This is to
+;; trigger the magical recursive behaviour of eval-action! in such
+;; away that the previous successfully-evaluated action gets invoked.
+(define-public &repeat-last-action
+  (make-action 'repeat-last-command
+               #:label (_ "Repeat Last Action") #:icon "gtk-redo"))
