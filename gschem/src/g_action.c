@@ -39,7 +39,7 @@
  * \return TRUE on success, FALSE on failure.
  */
 gboolean
-g_action_eval_by_name (GSCHEM_TOPLEVEL *w_current, const gchar *action_name)
+g_action_eval_by_name (GschemToplevel *w_current, const gchar *action_name)
 {
   SCM s_eval_action_proc;
   SCM s_expr;
@@ -94,7 +94,7 @@ g_action_get_position (gboolean snap, int *x, int *y)
 {
   SCM s_action_position_proc;
   SCM s_point;
-  GSCHEM_TOPLEVEL *w_current = g_current_window ();
+  GschemToplevel *w_current = g_current_window ();
 
   g_assert (w_current);
 

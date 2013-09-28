@@ -45,7 +45,7 @@ SCM_DEFINE (show_uri, "%show-uri", 1, 0, 0, (SCM uri_s),
   /* Check that we were passed a string. */
   SCM_ASSERT (scm_is_string (uri_s), uri_s, SCM_ARG1, s_show_uri);
 
-  GSCHEM_TOPLEVEL *w_current = g_current_window ();
+  GschemToplevel *w_current = g_current_window ();
   const gchar *uri = scm_to_utf8_string (uri_s);
   GError *err = NULL;
 

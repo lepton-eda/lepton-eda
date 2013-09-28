@@ -45,7 +45,7 @@ struct _PreviewClass {
 struct _Preview {
   GtkDrawingArea parent_instance;
 
-  GSCHEM_TOPLEVEL *preview_w_current;
+  GschemToplevel *preview_w_current;
 
   gchar *filename;
   gchar *buffer;

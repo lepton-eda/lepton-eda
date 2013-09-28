@@ -99,7 +99,7 @@ compselect_get_view (Compselect *compselect)
  *
  *  \param [in] dialog    The component selection dialog.
  *  \param [in] arg1      The response ID.
- *  \param [in] user_data A pointer on the GSCHEM_TOPLEVEL environment.
+ *  \param [in] user_data A pointer on the GschemToplevel environment.
  */
 static void
 x_compselect_callback_response (GtkDialog *dialog,
@@ -107,7 +107,7 @@ x_compselect_callback_response (GtkDialog *dialog,
                                 gpointer user_data)
 {
   Compselect *compselect = (Compselect*)dialog;
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *)user_data;
+  GschemToplevel *w_current = (GschemToplevel *)user_data;
   TOPLEVEL *toplevel = w_current->toplevel;
 
   switch (arg1) {
@@ -201,10 +201,10 @@ x_compselect_callback_response (GtkDialog *dialog,
  *  <B>toplevel</B> if it is not already. In this last case, it only
  *  raises the dialog.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL environment.
+ *  \param [in] w_current  The GschemToplevel environment.
  */
 void
-x_compselect_open (GSCHEM_TOPLEVEL *w_current)
+x_compselect_open (GschemToplevel *w_current)
 {
   GtkWidget *current_tab, *entry_filter;
   GtkNotebook *compselect_notebook;
@@ -248,10 +248,10 @@ x_compselect_open (GSCHEM_TOPLEVEL *w_current)
  *  This function closes the component chooser dialog associated with
  *  <B>toplevel</B>.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL environment.
+ *  \param [in] w_current  The GschemToplevel environment.
  */
 void
-x_compselect_close (GSCHEM_TOPLEVEL *w_current)
+x_compselect_close (GschemToplevel *w_current)
 {
   if (w_current->cswindow) {
     g_assert (IS_COMPSELECT (w_current->cswindow));
@@ -262,7 +262,7 @@ x_compselect_close (GSCHEM_TOPLEVEL *w_current)
 
 
 void
-x_compselect_deselect (GSCHEM_TOPLEVEL *w_current)
+x_compselect_deselect (GschemToplevel *w_current)
 {
   Compselect *compselect = COMPSELECT (w_current->cswindow);
 

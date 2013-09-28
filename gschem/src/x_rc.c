@@ -25,7 +25,7 @@
 
 /* Error handler function used by x_rc_parse_gschem(). */
 static void
-x_rc_parse_gschem_error (GError **err, GSCHEM_TOPLEVEL *w_current)
+x_rc_parse_gschem_error (GError **err, GschemToplevel *w_current)
 {
   char *msg2; /* Secondary text */
   GtkWidget *dialog;
@@ -78,11 +78,11 @@ x_rc_parse_gschem_error (GError **err, GSCHEM_TOPLEVEL *w_current)
  * Instead of exiting on error, display error dialogs with explanatory
  * messages.
  *
- * \param w_current  The current #GSCHEM_TOPLEVEL structure.
+ * \param w_current  The current #GschemToplevel structure.
  * \param rcfile     Specific config file path, or NULL.
  */
 void
-x_rc_parse_gschem (GSCHEM_TOPLEVEL *w_current, const gchar *rcfile) {
+x_rc_parse_gschem (GschemToplevel *w_current, const gchar *rcfile) {
   TOPLEVEL *toplevel = w_current->toplevel;
   g_rc_parse_handler (toplevel, "gschemrc", rcfile,
                       (ConfigParseErrorFunc) x_rc_parse_gschem_error,

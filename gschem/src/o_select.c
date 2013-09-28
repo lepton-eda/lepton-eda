@@ -47,7 +47,7 @@
  *  \par Function Description
  *
  */
-void o_select_run_hooks(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int flag)
+void o_select_run_hooks(GschemToplevel *w_current, OBJECT *o_current, int flag)
 {
   switch (flag) {
   /* If flag == 0, then we are deselecting something. */
@@ -71,7 +71,7 @@ void o_select_run_hooks(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current, int flag)
  *  type can be either SINGLE meaning selection is a single mouse click 
  *      or it can be MULTIPLE meaning selection is a selection box
  */
-void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
+void o_select_object(GschemToplevel *w_current, OBJECT *o_current,
 		     int type, int count)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -204,7 +204,7 @@ void o_select_object(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current,
  *  \par Function Description
  *
  */
-int o_select_box_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+int o_select_box_start(GschemToplevel *w_current, int w_x, int w_y)
 {
   int diff_x, diff_y;
 
@@ -227,7 +227,7 @@ int o_select_box_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-void o_select_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_select_box_end(GschemToplevel *w_current, int w_x, int w_y)
 {
   o_select_box_invalidate_rubber (w_current);
   w_current->rubber_visible = 0;
@@ -240,7 +240,7 @@ void o_select_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-void o_select_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_select_box_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
   if (w_current->rubber_visible)
     o_select_box_invalidate_rubber (w_current);
@@ -256,7 +256,7 @@ void o_select_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \brief
  *  \par Function Description
  */
-void o_select_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
+void o_select_box_invalidate_rubber (GschemToplevel *w_current)
 {
   int x1, y1, x2, y2;
 
@@ -274,7 +274,7 @@ void o_select_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_select_box_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
+void o_select_box_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
   o_box_draw_rubber (w_current, renderer);
 }
@@ -284,7 +284,7 @@ void o_select_box_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer
  *  \par Function Description
  *
  */
-void o_select_box_search(GSCHEM_TOPLEVEL *w_current)
+void o_select_box_search(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current=NULL;
@@ -334,10 +334,10 @@ void o_select_box_search(GSCHEM_TOPLEVEL *w_current)
  *   and the net_selection_state of the current net this function will either
  *   select the single net, all directly connected nets or all nets connected
  *   with netname labels.
- *  \param [in] w_current  GSCHEM_TOPLEVEL struct.
+ *  \param [in] w_current  GschemToplevel struct.
  *  \param [in] o_net      Pointer to a single net object
  */
-void o_select_connected_nets(GSCHEM_TOPLEVEL *w_current, OBJECT* o_net)
+void o_select_connected_nets(GschemToplevel *w_current, OBJECT* o_net)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   const GList *o_iter;
@@ -424,7 +424,7 @@ void o_select_connected_nets(GSCHEM_TOPLEVEL *w_current, OBJECT* o_net)
 
 /* This is a wrapper for o_selection_return_first_object */
 /* This function always looks at the current page selection list */ 
-OBJECT *o_select_return_first_object(GSCHEM_TOPLEVEL *w_current)
+OBJECT *o_select_return_first_object(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   if (! (w_current && toplevel->page_current && geda_list_get_glist( toplevel->page_current->selection_list )))
@@ -440,7 +440,7 @@ OBJECT *o_select_return_first_object(GSCHEM_TOPLEVEL *w_current)
  * \return TRUE if the selection list is not empty, otherwise false.
  * also make sure item is valid
  */
-int o_select_selected(GSCHEM_TOPLEVEL *w_current)
+int o_select_selected(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   if ( geda_list_get_glist( toplevel->page_current->selection_list )) {
@@ -455,7 +455,7 @@ int o_select_selected(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_select_unselect_all(GSCHEM_TOPLEVEL *w_current)
+void o_select_unselect_all(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   SELECTION *selection = toplevel->page_current->selection_list;
@@ -479,10 +479,10 @@ void o_select_unselect_all(GSCHEM_TOPLEVEL *w_current)
  * unlocked on the current page, and any attached attributes whether
  * visible or invisible..
  *
- * \param w_current  The current #GSCHEM_TOPLEVEL structure.
+ * \param w_current  The current #GschemToplevel structure.
  */
 void
-o_select_visible_unlocked (GSCHEM_TOPLEVEL *w_current)
+o_select_visible_unlocked (GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   SELECTION *selection = toplevel->page_current->selection_list;
@@ -527,7 +527,7 @@ o_select_visible_unlocked (GSCHEM_TOPLEVEL *w_current)
  *
  */
 void
-o_select_move_to_place_list(GSCHEM_TOPLEVEL *w_current)
+o_select_move_to_place_list(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *selection;

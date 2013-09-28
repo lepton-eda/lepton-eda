@@ -32,7 +32,7 @@
  *  \par Function Description
  *
  */
-void o_circle_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
+void o_circle_invalidate_rubber (GschemToplevel *w_current)
 {
   int cx, cy, radius;
 
@@ -54,11 +54,11 @@ void o_circle_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  The first step of the circle input is to set the center of the arc.
  *  This center is kept in (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>). 
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_circle_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_circle_start(GschemToplevel *w_current, int w_x, int w_y)
 {
   /* center of circle */
   w_current->first_wx = w_x;
@@ -87,11 +87,11 @@ void o_circle_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  A new object is allocated, initialized and linked in the object list.
  *  This new object is finally drawn.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] w_x        (unused)
  *  \param [in] w_y        (unused)
  */
-void o_circle_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_circle_end(GschemToplevel *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *new_obj;
@@ -139,11 +139,11 @@ void o_circle_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *    <DT>*</DT><DD><B>w_current->distance</B> as its radius.
  *  </DL>
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_circle_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_circle_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
   int diff_x, diff_y;
 
@@ -166,9 +166,9 @@ void o_circle_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->rubber_visible =1;
 }
 
-/*! \brief Draw circle from GSCHEM_TOPLEVEL object.
+/*! \brief Draw circle from GschemToplevel object.
  *  \par Function Description
- *  This function draws the circle from the variables in the GSCHEM_TOPLEVEL
+ *  This function draws the circle from the variables in the GschemToplevel
  *  structure <B>*w_current</B>.
  *  The center of the circle is at (<B>w_current->first_wx</B>,
  *  <B>w_current->first_wy</B>) and its radius is in <B>w_current->distance</B>.
@@ -176,9 +176,9 @@ void o_circle_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  It draws a horizontal radius segment on the right half of the circle and
  *  the circle with the selection color.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  */
-void o_circle_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
+void o_circle_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
   double wwidth = 0;
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);

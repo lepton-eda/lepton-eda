@@ -32,10 +32,10 @@
  *  This function erases the object \a object before deleting it. It
  *  deals with connection and object connected to it.
  *
- *  \param [in] w_current The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current The GschemToplevel object.
  *  \param [in] object    The object to delete.
  */
-void o_delete (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
+void o_delete (GschemToplevel *w_current, OBJECT *object)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
 
@@ -54,9 +54,9 @@ void o_delete (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
  *  This function deletes the objects selected on the current page of
  *  toplevel \a w_current.
  *
- *  \param [in] w_current The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current The GschemToplevel object.
  */
-void o_delete_selected (GSCHEM_TOPLEVEL *w_current)
+void o_delete_selected (GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   SELECTION *selection = toplevel->page_current->selection_list;

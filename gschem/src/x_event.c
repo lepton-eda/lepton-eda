@@ -48,7 +48,7 @@ static int DOING_STROKE = FALSE;
  *
  */
 gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
-                    GSCHEM_TOPLEVEL *w_current)
+                    GschemToplevel *w_current)
 {
   GdkRectangle *rectangles;
   int n_rectangles;
@@ -91,7 +91,7 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
  *
  */
 gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
-                            GSCHEM_TOPLEVEL *w_current)
+                            GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int w_x, w_y;
@@ -543,7 +543,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
  *
  */
 gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
-                             GSCHEM_TOPLEVEL *w_current)
+                             GschemToplevel *w_current)
 {
   int unsnapped_wx, unsnapped_wy;
   int w_x, w_y;
@@ -757,7 +757,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
  *
  */
 gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
-                    GSCHEM_TOPLEVEL *w_current)
+                    GschemToplevel *w_current)
 {
   int pdiff_x, pdiff_y;
   int w_x, w_y;
@@ -949,7 +949,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
   return(0);
 }
 
-/*! \brief Updates the GSCHEM_TOPLEVEL and display when drawing area is configured.
+/*! \brief Updates the GschemToplevel and display when drawing area is configured.
  *  \par Function Description
  *  This is the callback function connected to the configure event of
  *  the drawing area of the main window.
@@ -972,7 +972,7 @@ x_event_configure (GtkWidget         *widget,
                    GdkEventConfigure *event,
                    gpointer           user_data)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*)user_data;
+  GschemToplevel *w_current = (GschemToplevel*)user_data;
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *iter;
   PAGE *old_page_current, *p_current;
@@ -1000,7 +1000,7 @@ x_event_configure (GtkWidget         *widget,
 
   w_current->drawable = w_current->window;
 
-  /* update the GSCHEM_TOPLEVEL with new size of drawing area */
+  /* update the GschemToplevel with new size of drawing area */
   w_current->win_width   = toplevel->width  = new_win_width;
   w_current->win_height  = toplevel->height = new_win_height;
 
@@ -1059,7 +1059,7 @@ x_event_configure (GtkWidget         *widget,
  *  this is used during an open command
  *  to setup the correct sizes
  */
-void x_manual_resize(GSCHEM_TOPLEVEL *w_current)
+void x_manual_resize(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
 
@@ -1095,7 +1095,7 @@ void x_manual_resize(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_event_hschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
+void x_event_hschanged (GtkAdjustment *adj, GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int current_left;
@@ -1127,7 +1127,7 @@ void x_event_hschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_event_vschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
+void x_event_vschanged (GtkAdjustment *adj, GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int current_bottom;
@@ -1167,7 +1167,7 @@ void x_event_vschanged (GtkAdjustment *adj, GSCHEM_TOPLEVEL *w_current)
  *
  */
 gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
-                   GSCHEM_TOPLEVEL *w_current)
+                   GschemToplevel *w_current)
 {
   g_return_val_if_fail ((w_current != NULL), 0);
   /* do nothing or now */
@@ -1180,11 +1180,11 @@ gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
  *  Queries GTK for the mouse location in world coordinates,
  *  then snaps it to the grid.
  *
- * \param [in]  w_current  The GSCHEM_TOPLEVEL object.
+ * \param [in]  w_current  The GschemToplevel object.
  * \param [out] wx         Return location for the snapped X coordinate.
  * \param [out] wy         Return location for the snapped Y coordiante.
  */
-static void get_snapped_pointer (GSCHEM_TOPLEVEL *w_current, int *wx, int *wy)
+static void get_snapped_pointer (GschemToplevel *w_current, int *wx, int *wy)
 {
   int sx, sy;
   int unsnapped_wx, unsnapped_wy;
@@ -1207,7 +1207,7 @@ static void get_snapped_pointer (GSCHEM_TOPLEVEL *w_current, int *wx, int *wy)
  * \returns TRUE if the event has been handled.
  */
 gboolean x_event_key (GtkWidget *widget, GdkEventKey *event,
-                      GSCHEM_TOPLEVEL *w_current)
+                      GschemToplevel *w_current)
 {
   gboolean retval = FALSE;
   int wx, wy;
@@ -1312,7 +1312,7 @@ gboolean x_event_key (GtkWidget *widget, GdkEventKey *event,
  *
  */
 gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
-                     GSCHEM_TOPLEVEL *w_current)
+                     GschemToplevel *w_current)
 {
   GtkAdjustment *adj;
   gboolean pan_xaxis = FALSE;
@@ -1396,13 +1396,13 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
 }
 
 
-/*! \brief get the pointer position of a given GSCHEM_TOPLEVEL
+/*! \brief get the pointer position of a given GschemToplevel
  *  \par Function Description
  *  This function gets the pointer position of the drawing area of the 
- *  current workspace <b>GSCHEM_TOPLEVEL</b>. The flag <b>snapped</b> specifies
+ *  current workspace <b>GschemToplevel</b>. The flag <b>snapped</b> specifies
  *  whether the pointer position should be snapped to the current grid.
  *  
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] snapped    An option flag to specify the wished coords
  *  \param [out] wx        snapped/unsnapped world x coordinate
  *  \param [out] wy        snapped/unsnapped world y coordinate
@@ -1410,7 +1410,7 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
  *  \return Returns TRUE if the pointer position is inside the drawing area.
  *  
  */
-gboolean x_event_get_pointer_position (GSCHEM_TOPLEVEL *w_current,
+gboolean x_event_get_pointer_position (GschemToplevel *w_current,
 				       gboolean snapped,
 				       gint *wx, gint *wy)
 {

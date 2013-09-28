@@ -137,11 +137,11 @@ static const char *routine_text_size[] =
 
 
 
-GSCHEM_TOPLEVEL *gschem_toplevel_new ()
+GschemToplevel *gschem_toplevel_new ()
 {
-  GSCHEM_TOPLEVEL *w_current;
+  GschemToplevel *w_current;
 
-  w_current = g_new0 (GSCHEM_TOPLEVEL, 1);
+  w_current = g_new0 (GschemToplevel, 1);
 
   w_current->toplevel = NULL;
 
@@ -339,7 +339,7 @@ GSCHEM_TOPLEVEL *gschem_toplevel_new ()
  *  \param [in] w_current The gschem toplevel
  */
 void
-gschem_toplevel_free (GSCHEM_TOPLEVEL *w_current)
+gschem_toplevel_free (GschemToplevel *w_current)
 {
   if (w_current->toplevel != NULL) {
     s_toplevel_delete (w_current->toplevel);
@@ -397,7 +397,7 @@ gschem_toplevel_free (GSCHEM_TOPLEVEL *w_current)
  *  \return The selection adapter
  */
 GschemSelectionAdapter*
-gschem_toplevel_get_selection_adapter (GSCHEM_TOPLEVEL *w_current)
+gschem_toplevel_get_selection_adapter (GschemToplevel *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -419,7 +419,7 @@ gschem_toplevel_get_selection_adapter (GSCHEM_TOPLEVEL *w_current)
  *  \return A list of the commonly used dash_lengths
  */
 GtkListStore*
-gschem_toplevel_get_dash_length_list_store (GSCHEM_TOPLEVEL *w_current)
+gschem_toplevel_get_dash_length_list_store (GschemToplevel *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -438,7 +438,7 @@ gschem_toplevel_get_dash_length_list_store (GSCHEM_TOPLEVEL *w_current)
  *  \return A list of the commonly used dash spacing
  */
 GtkListStore*
-gschem_toplevel_get_dash_space_list_store (GSCHEM_TOPLEVEL *w_current)
+gschem_toplevel_get_dash_space_list_store (GschemToplevel *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -457,7 +457,7 @@ gschem_toplevel_get_dash_space_list_store (GSCHEM_TOPLEVEL *w_current)
  *  \return A list of the commonly used fill angles
  */
 GtkListStore*
-gschem_toplevel_get_fill_angle_list_store (GSCHEM_TOPLEVEL *w_current)
+gschem_toplevel_get_fill_angle_list_store (GschemToplevel *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -476,7 +476,7 @@ gschem_toplevel_get_fill_angle_list_store (GSCHEM_TOPLEVEL *w_current)
  *  \return A list of the commonly used fill pitches
  */
 GtkListStore*
-gschem_toplevel_get_fill_pitch_list_store (GSCHEM_TOPLEVEL *w_current)
+gschem_toplevel_get_fill_pitch_list_store (GschemToplevel *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -495,7 +495,7 @@ gschem_toplevel_get_fill_pitch_list_store (GSCHEM_TOPLEVEL *w_current)
  *  \return A list of the commonly used fill line widths
  */
 GtkListStore*
-gschem_toplevel_get_fill_width_list_store (GSCHEM_TOPLEVEL *w_current)
+gschem_toplevel_get_fill_width_list_store (GschemToplevel *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -514,7 +514,7 @@ gschem_toplevel_get_fill_width_list_store (GSCHEM_TOPLEVEL *w_current)
  *  \return A list of the commonly used line widths
  */
 GtkListStore*
-gschem_toplevel_get_line_width_list_store (GSCHEM_TOPLEVEL *w_current)
+gschem_toplevel_get_line_width_list_store (GschemToplevel *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -533,7 +533,7 @@ gschem_toplevel_get_line_width_list_store (GSCHEM_TOPLEVEL *w_current)
  *  \return A list of the commonly used text sizes
  */
 GtkListStore*
-gschem_toplevel_get_text_size_list_store (GSCHEM_TOPLEVEL *w_current)
+gschem_toplevel_get_text_size_list_store (GschemToplevel *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
@@ -554,7 +554,7 @@ gschem_toplevel_get_text_size_list_store (GSCHEM_TOPLEVEL *w_current)
  *  \param [in] w_current The current gschem toplevel
  */
 void
-gschem_toplevel_page_changed (GSCHEM_TOPLEVEL *w_current)
+gschem_toplevel_page_changed (GschemToplevel *w_current)
 {
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (w_current->toplevel != NULL);
@@ -572,7 +572,7 @@ gschem_toplevel_page_changed (GSCHEM_TOPLEVEL *w_current)
  *  \param [in] toplevel The libgeda toplevel
  */
 void
-gschem_toplevel_set_toplevel (GSCHEM_TOPLEVEL *w_current, TOPLEVEL *toplevel)
+gschem_toplevel_set_toplevel (GschemToplevel *w_current, TOPLEVEL *toplevel)
 {
   g_return_if_fail (w_current != NULL);
 

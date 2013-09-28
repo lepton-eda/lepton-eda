@@ -40,7 +40,7 @@ extern COLOR display_outline_colors[MAX_COLORS];
  *  \par Function Description
  *
  */
-void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
+void o_redraw_rects (GschemToplevel *w_current,
                      GdkRectangle *rectangles, int n_rectangles)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -314,7 +314,7 @@ void o_redraw_rects (GSCHEM_TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-int o_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
+int o_invalidate_rubber (GschemToplevel *w_current)
 {
   /* return FALSE if it did not erase anything */
 
@@ -390,7 +390,7 @@ int o_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  screen.
  *  Usually a intermediate select state would clean (redraw) the screen.
  */
-int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
+int o_redraw_cleanstates(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   /* returns FALSE if the function was'nt nessecary */
@@ -506,19 +506,19 @@ int o_redraw_cleanstates(GSCHEM_TOPLEVEL *w_current)
  *  A further, larger margin is added to account for invalidating the
  *  size occupied by an object's grips.
  *
- *  If the GSCHEM_TOPLEVEL in question is not rendering to a GDK_WINDOW,
+ *  If the GschemToplevel in question is not rendering to a GDK_WINDOW,
  *  (e.g. image export), this function call is a no-op. A test is used:
  *  GDK_IS_WINDOW(), which should be safe since in either case,
  *  w_current->window is a GObject. This is really a _HACK_,
  *  and should be fixed with a re-worked drawing model.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL who's drawing area is being invalidated.
+ *  \param [in] w_current  The GschemToplevel who's drawing area is being invalidated.
  *  \param [in] x1         X coord for corner 1 (SCREEN units)
  *  \param [in] y1         Y coord for corner 1 (SCREEN units)
  *  \param [in] x2         X coord for corner 2 (SCREEN units)
  *  \param [in] y2         Y coord for corner 2 (SCREEN units)
  */
-void o_invalidate_rect (GSCHEM_TOPLEVEL *w_current,
+void o_invalidate_rect (GschemToplevel *w_current,
                         int x1, int y1, int x2, int y2)
 {
   GdkRectangle rect;
@@ -549,9 +549,9 @@ void o_invalidate_rect (GSCHEM_TOPLEVEL *w_current,
  *  This function calls gdk_window_invalidate_rect() with a rect
  *  of NULL, causing the entire drawing area to be invalidated.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  */
-void o_invalidate_all (GSCHEM_TOPLEVEL *w_current)
+void o_invalidate_all (GschemToplevel *w_current)
 {
   gdk_window_invalidate_rect (w_current->window, NULL, FALSE);
 }
@@ -563,10 +563,10 @@ void o_invalidate_all (GSCHEM_TOPLEVEL *w_current)
  *  This function calls o_invalidate_rect() with the bounds of the
  *  passed OBJECT, converted to screen coordinates.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] object     The OBJECT invalidated on screen.
  */
-void o_invalidate (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
+void o_invalidate (GschemToplevel *w_current, OBJECT *object)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int left, top, bottom, right;
@@ -586,10 +586,10 @@ void o_invalidate (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
  *  This function calls o_invalidate_rect() with the bounds of the
  *  passed GList, converted to screen coordinates.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] list       The glist objects invalidated on screen.
  */
-void o_invalidate_glist (GSCHEM_TOPLEVEL *w_current, GList *list)
+void o_invalidate_glist (GschemToplevel *w_current, GList *list)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int left, top, bottom, right;

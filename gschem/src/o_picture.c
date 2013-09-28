@@ -49,11 +49,11 @@
  *  The other corner will be saved in (<B>w_current->second_wx</B>,
  *  <B>w_current->second_wy</B>).
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.    
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_picture_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_picture_start(GschemToplevel *w_current, int w_x, int w_y)
 {
   /* init first_w[x|y], second_w[x|y] to describe box */
   w_current->first_wx = w_current->second_wx = w_x;
@@ -74,11 +74,11 @@ void o_picture_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  initialized and linked to the object list ; The object is finally
  *  drawn on the current sheet.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] w_x        (unused)
  *  \param [in] w_y        (unused)
  */
-void o_picture_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_picture_end(GschemToplevel *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *new_obj;
@@ -123,7 +123,7 @@ void o_picture_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *  This function creates the add image dialog and loads the selected picture.
  */
-void picture_selection_dialog (GSCHEM_TOPLEVEL *w_current)
+void picture_selection_dialog (GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   gchar *filename;
@@ -202,7 +202,7 @@ void picture_selection_dialog (GSCHEM_TOPLEVEL *w_current)
  *  \note
  * used in button cancel code in x_events.c
  */
-void o_picture_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
+void o_picture_invalidate_rubber (GschemToplevel *w_current)
 {
   int left, top, width, height;
 
@@ -229,11 +229,11 @@ void o_picture_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  width, height and left and top values are recomputed by the corresponding
  *  macros.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_picture_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_picture_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
 #if DEBUG
   printf("o_picture_rubberbox called\n");
@@ -259,17 +259,17 @@ void o_picture_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->rubber_visible = 1;
 }
 
-/*! \brief Draw picture from GSCHEM_TOPLEVEL object.
+/*! \brief Draw picture from GschemToplevel object.
  *  \par Function Description
- *  This function draws the box from the variables in the GSCHEM_TOPLEVEL
+ *  This function draws the box from the variables in the GschemToplevel
  *  structure <B>*w_current</B>.
  *  One corner of the box is at (<B>w_current->first_wx</B>,
  *  <B>w_current->first_wy</B>) and the second corner is at
  *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  */
-void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
+void o_picture_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
   int left, top, width, height;
   double wwidth = 0;
@@ -292,13 +292,13 @@ void o_picture_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
  * \par Function Description
  * Replaces all pictures in the current selection with a new image.
  *
- * \param [in] w_current  The GSCHEM_TOPLEVEL object
+ * \param [in] w_current  The GschemToplevel object
  * \param [in] filename   The filename of the new picture
  * \param [out] error     The location to return error information.
  * \return TRUE on success, FALSE on failure.
  */
 gboolean
-o_picture_exchange (GSCHEM_TOPLEVEL *w_current,
+o_picture_exchange (GschemToplevel *w_current,
                     const gchar *filename, GError **error)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -334,7 +334,7 @@ o_picture_exchange (GSCHEM_TOPLEVEL *w_current,
  *
  *  \todo Maybe merge this dialog function with picture_selection_dialog()
  */
-void picture_change_filename_dialog (GSCHEM_TOPLEVEL *w_current)
+void picture_change_filename_dialog (GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   gchar *filename;
@@ -400,11 +400,11 @@ void picture_change_filename_dialog (GSCHEM_TOPLEVEL *w_current)
  *  \brief
  *  \par Function Description
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] pixbuf
  *  \param [in] filename
  */
-void o_picture_set_pixbuf(GSCHEM_TOPLEVEL *w_current,
+void o_picture_set_pixbuf(GschemToplevel *w_current,
                           GdkPixbuf *pixbuf, char *filename)
 {
 

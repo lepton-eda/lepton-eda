@@ -374,7 +374,7 @@ GType newtext_get_type()
  *  \param [in] w_current The gschem toplevel
  */
 void
-text_input_dialog (GSCHEM_TOPLEVEL *w_current)
+text_input_dialog (GschemToplevel *w_current)
 {
   if (w_current->tiwindow == NULL) {
     /* dialog not created yet */

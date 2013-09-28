@@ -316,7 +316,7 @@ setup_initial_values (EditColor *dialog)
  *  \param [in] w_current The gschem toplevel
  */
 void
-color_edit_dialog (GSCHEM_TOPLEVEL *w_current)
+color_edit_dialog (GschemToplevel *w_current)
 {
   if (w_current->clwindow == NULL) {
     /* dialog not created yet */

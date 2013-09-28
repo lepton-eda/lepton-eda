@@ -79,7 +79,7 @@ SCM_DEFINE (add_attrib_x, "%add-attrib!", 5, 0, 0,
   SCM_ASSERT (scm_is_string (value_s), value_s, SCM_ARG3, s_add_attrib_x);
   SCM_ASSERT (scm_is_symbol (show_s), show_s, SCM_ARG5, s_add_attrib_x);
 
-  GSCHEM_TOPLEVEL *w_current = g_current_window ();
+  GschemToplevel *w_current = g_current_window ();
   TOPLEVEL *toplevel = w_current->toplevel;
 
   /* Check target object, if present */

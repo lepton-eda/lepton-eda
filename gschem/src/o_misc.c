@@ -45,7 +45,7 @@
  *  \par Function Description
  *
  */
-void o_edit(GSCHEM_TOPLEVEL *w_current, GList *list)
+void o_edit(GschemToplevel *w_current, GList *list)
 {
   OBJECT *o_current;
   const gchar *str = NULL;
@@ -104,7 +104,7 @@ void o_edit(GSCHEM_TOPLEVEL *w_current, GList *list)
 /* This locks the entire selected list.  It does lock components, but does NOT
  * change the color (of primatives of the components) though
  * this cannot be called recursively */
-void o_lock(GSCHEM_TOPLEVEL *w_current)
+void o_lock(GschemToplevel *w_current)
 {
   OBJECT *object = NULL;
   GList *s_current = NULL;
@@ -143,7 +143,7 @@ void o_lock(GSCHEM_TOPLEVEL *w_current)
 /* this will probably change in the future, but for now it's a
    something.. :-) */
 /* this cannot be called recursively */
-void o_unlock(GSCHEM_TOPLEVEL *w_current)
+void o_unlock(GschemToplevel *w_current)
 {
   OBJECT *object = NULL;
   GList *s_current = NULL;
@@ -179,13 +179,13 @@ void o_unlock(GSCHEM_TOPLEVEL *w_current)
  *  There is a second pass to run the rotate hooks of non-simple objects,
  *  like pin or complex objects, for example.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] centerx    Center x coordinate of rotation.
  *  \param [in] centery    Center y coordinate of rotation.
  *  \param [in] angle      Angle to rotate the objects through.
  *  \param [in] list       The list of objects to rotate.
  */
-void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
+void o_rotate_world_update(GschemToplevel *w_current,
                            int centerx, int centery, int angle, GList *list)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -241,7 +241,7 @@ void o_rotate_world_update(GSCHEM_TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery, GList *list)
+void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, GList *list)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_current;
@@ -291,7 +291,7 @@ void o_mirror_world_update(GSCHEM_TOPLEVEL *w_current, int centerx, int centery,
  *  \par Function Description
  *
  */
-void o_edit_show_hidden_lowlevel (GSCHEM_TOPLEVEL *w_current,
+void o_edit_show_hidden_lowlevel (GschemToplevel *w_current,
                                   const GList *o_list)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -321,7 +321,7 @@ void o_edit_show_hidden_lowlevel (GSCHEM_TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-void o_edit_show_hidden (GSCHEM_TOPLEVEL *w_current, const GList *o_list)
+void o_edit_show_hidden (GschemToplevel *w_current, const GList *o_list)
 {
   /* this function just shows the hidden text, but doesn't toggle it */
   /* this function does not change the CHANGED bit, no real changes are */
@@ -354,7 +354,7 @@ int skiplast;
  *  \todo Only descends into the first source schematic
  *
  */
-int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
+int o_edit_find_text (GschemToplevel *w_current, const GList *o_list,
                       char *stext, int descend, int skip)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -469,7 +469,7 @@ int o_edit_find_text (GSCHEM_TOPLEVEL *w_current, const GList *o_list,
  *  \par Function Description
  *
  */
-void o_edit_hide_specific_text (GSCHEM_TOPLEVEL *w_current,
+void o_edit_hide_specific_text (GschemToplevel *w_current,
                                 const GList *o_list,
                                 char *stext)
 {
@@ -503,7 +503,7 @@ void o_edit_hide_specific_text (GSCHEM_TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-void o_edit_show_specific_text (GSCHEM_TOPLEVEL *w_current,
+void o_edit_show_specific_text (GschemToplevel *w_current,
                                 const GList *o_list,
                                 char *stext)
 {
@@ -541,13 +541,13 @@ void o_edit_show_specific_text (GSCHEM_TOPLEVEL *w_current,
  * replaces \a o_current on the page; \a o_current is deleted. On
  * failure, returns NULL, and \a o_current is left unchanged.
  *
- * \param [in]     w_current The GSCHEM_TOPLEVEL object.
+ * \param [in]     w_current The GschemToplevel object.
  * \param [in,out] o_current The OBJECT to be updated.
  *
  * \return the new OBJECT that replaces \a o_current.
  */
 OBJECT *
-o_update_component (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
+o_update_component (GschemToplevel *w_current, OBJECT *o_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *o_new;
@@ -648,9 +648,9 @@ o_update_component (GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *  Looks for pages with the do_autosave_backup flag activated and
  *  autosaves them.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object to search for autosave's.
+ *  \param [in] w_current  The GschemToplevel object to search for autosave's.
  */
-void o_autosave_backups(GSCHEM_TOPLEVEL *w_current)
+void o_autosave_backups(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *iter;

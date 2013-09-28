@@ -37,7 +37,7 @@
  *  \par Function Description
  *
  */
-void o_slot_start (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
+void o_slot_start (GschemToplevel *w_current, OBJECT *object)
 {
   char *slot_value;
 
@@ -62,7 +62,7 @@ void o_slot_start (GSCHEM_TOPLEVEL *w_current, OBJECT *object)
  *  \par Function Description
  *
  */
-void o_slot_end(GSCHEM_TOPLEVEL *w_current, OBJECT *object, const char *string)
+void o_slot_end(GschemToplevel *w_current, OBJECT *object, const char *string)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *new_obj;

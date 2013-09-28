@@ -33,11 +33,11 @@
  *  \par Function Description
  *  Convert a x coordinate to mils.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object
+ *  \param [in] w_current  The GschemToplevel object
  *  \param [in] val        The x coordinate to convert
  *  \return The coordinate value in mils.
  */
-int mil_x (GSCHEM_TOPLEVEL *w_current, int val)
+int mil_x (GschemToplevel *w_current, int val)
 {
   double i;
   double fval;
@@ -60,11 +60,11 @@ int mil_x (GSCHEM_TOPLEVEL *w_current, int val)
  *  \par Function Description
  *  Convert a y coordinate to mils
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] val        The y coordinate to convert.
  *  \return The coordinate value in mils.
  */
-int mil_y(GSCHEM_TOPLEVEL *w_current, int val)
+int mil_y(GschemToplevel *w_current, int val)
 {
   double i;
   double fval;
@@ -87,11 +87,11 @@ int mil_y(GSCHEM_TOPLEVEL *w_current, int val)
  *  \par Function Description
  *  Convert a x coordinate to pixels.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object
+ *  \param [in] w_current  The GschemToplevel object
  *  \param [in] val        The x coordinate to convert
  *  \return The coordinate value in pixels.
  */
-int pix_x (GSCHEM_TOPLEVEL *w_current, int val)
+int pix_x (GschemToplevel *w_current, int val)
 {
 
   double i;
@@ -122,11 +122,11 @@ int pix_x (GSCHEM_TOPLEVEL *w_current, int val)
  *  \par Function Description
  *  Convert a y coordinate to pixels.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object
+ *  \param [in] w_current  The GschemToplevel object
  *  \param [in] val        The y coordinate to convert
  *  \return The coordinate value in pixels.
  */
-int pix_y(GSCHEM_TOPLEVEL *w_current, int val)
+int pix_y(GschemToplevel *w_current, int val)
 {
   double i;
   int j;
@@ -158,13 +158,13 @@ int pix_y(GSCHEM_TOPLEVEL *w_current, int val)
  *  This function takes in WORLD x/y coordinates and
  *  transforms them to SCREEN x/y coordinates.
  *
- *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in]  w_current  The GschemToplevel object.
  *  \param [in]  x          The x coordinate in WORLD units.
  *  \param [in]  y          The y coordinate in WORLD units.
  *  \param [out] px         The x coordinate in SCREEN units.
  *  \param [out] py         The y coordinate in SCREEN units.
  */
-void WORLDtoSCREEN (GSCHEM_TOPLEVEL *w_current, int x, int y, int *px, int *py)
+void WORLDtoSCREEN (GschemToplevel *w_current, int x, int y, int *px, int *py)
 {
   *px = pix_x (w_current, x);
   *py = pix_y (w_current, y);
@@ -175,7 +175,7 @@ void WORLDtoSCREEN (GSCHEM_TOPLEVEL *w_current, int x, int y, int *px, int *py)
  *  This function takes in SCREEN x/y coordinates and
  *  transforms them to WORLD x/y coordinates.
  *
- *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in]  w_current  The GschemToplevel object.
  *  \param [in]  mx         The x coordinate in SCREEN units.
  *  \param [in]  my         The y coordinate in SCREEN units.
  *  \param [out] x          The x coordinate in WORLD units.
@@ -184,7 +184,7 @@ void WORLDtoSCREEN (GSCHEM_TOPLEVEL *w_current, int x, int y, int *px, int *py)
  *                  if this is SCREEN to WORLD shouldn't WORLD
  *                  coordinates be returned in mx and my?
  */
-void SCREENtoWORLD (GSCHEM_TOPLEVEL *w_current, int mx, int my, int *x, int *y)
+void SCREENtoWORLD (GschemToplevel *w_current, int mx, int my, int *x, int *y)
 {
   *x = mil_x (w_current, mx);
   *y = mil_y (w_current, my);
@@ -195,11 +195,11 @@ void SCREENtoWORLD (GSCHEM_TOPLEVEL *w_current, int mx, int my, int *x, int *y)
  *  This function snaps the current input coordinate to the
  *  closest grid coordinate.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] input      The coordinate to snap.
  *  \return The closest grid coordinate to the input.
  */
-int snap_grid(GSCHEM_TOPLEVEL *w_current, int input)
+int snap_grid(GschemToplevel *w_current, int input)
 {
   int p, m, n;
   int sign, value, snap_grid;
@@ -236,11 +236,11 @@ int snap_grid(GSCHEM_TOPLEVEL *w_current, int input)
  *  \par Function Description
  *  Get absolute SCREEN coordinate.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] val        The coordinate to convert.
  *  \return The converted SCREEN coordinate.
  */
-int SCREENabs(GSCHEM_TOPLEVEL *w_current, int val)
+int SCREENabs(GschemToplevel *w_current, int val)
 {
   double f0,f1,f;
 
@@ -266,11 +266,11 @@ int SCREENabs(GSCHEM_TOPLEVEL *w_current, int val)
  *  \par Function Description
  *  Get absolute WORLD coordinate.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] val        The coordinate to convert.
  *  \return The converted WORLD coordinate.
  */
-int WORLDabs(GSCHEM_TOPLEVEL *w_current, int val)
+int WORLDabs(GschemToplevel *w_current, int val)
 {
   double fw0,fw1,fw,fval;
 
@@ -314,13 +314,13 @@ struct st_halfspace {
  *  of the current TOPLEVEL object's page coordinates. It
  *  handles points with WORLD coordinates.
  *
- *  \param [in]  w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in]  w_current  The GschemToplevel object.
  *  \param [in]  point      The point in WORLD coordinates to be checked.
  *  \param [out] halfspace  The created HALFSPACE structure.
  *
  *  \warning halfspace must be allocated before this function is called
  */
-static void WORLDencode_halfspace (GSCHEM_TOPLEVEL *w_current,
+static void WORLDencode_halfspace (GschemToplevel *w_current,
                                    sPOINT *point, HALFSPACE *halfspace)
 {
   halfspace->left = point->x < w_current->toplevel->page_current->left;
@@ -336,14 +336,14 @@ static void WORLDencode_halfspace (GSCHEM_TOPLEVEL *w_current,
  *  be changed to reflect only the region no covered by the clipping window.
  *  All coordinates should be in WORLD units.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in,out] x1     x coordinate of the first screen point.
  *  \param [in,out] y1     y coordinate of the first screen point.
  *  \param [in,out] x2     x coordinate of the second screen point.
  *  \param [in,out] y2     y coordinate of the second screen point.
  *  \return TRUE if coordinates are now visible, FALSE otherwise.
  */
-int WORLDclip_change (GSCHEM_TOPLEVEL *w_current,
+int WORLDclip_change (GschemToplevel *w_current,
                       int *x1, int *y1, int *x2, int *y2)
 {
   HALFSPACE half1, half2;
@@ -467,14 +467,14 @@ int WORLDclip_change (GSCHEM_TOPLEVEL *w_current,
  *  are within a clipping region. No action will be taken to change
  *  the coordinates.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in,out] x1     x coordinate of the first screen point.
  *  \param [in,out] y1     y coordinate of the first screen point.
  *  \param [in,out] x2     x coordinate of the second screen point.
  *  \param [in,out] y2     y coordinate of the second screen point.
  *  \return TRUE if coordinates are now visible, FALSE otherwise.
  */
-int clip_nochange (GSCHEM_TOPLEVEL *w_current, int x1, int y1, int x2, int y2)
+int clip_nochange (GschemToplevel *w_current, int x1, int y1, int x2, int y2)
 {
   HALFSPACE half1, half2;
   HALFSPACE tmp_half;
@@ -596,14 +596,14 @@ int clip_nochange (GSCHEM_TOPLEVEL *w_current, int x1, int y1, int x2, int y2)
  *  top is the smallest "y" value, and bottom is the largest.
  *  Be careful! This doesn't correspond to what you'd expect.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] wleft      Left coordinate of the bounding box.
  *  \param [in] wtop       Top coordinate of the bounding box.
  *  \param [in] wright     Right coordinate of the bounding box.
  *  \param [in] wbottom    Bottom coordinate of the bounding box.
  *  \return TRUE if bounding box is visible, FALSE otherwise
  */
-int visible (GSCHEM_TOPLEVEL *w_current,
+int visible (GschemToplevel *w_current,
              int wleft, int wtop, int wright, int wbottom)
 {
   int visible=FALSE;

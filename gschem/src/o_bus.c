@@ -31,15 +31,15 @@
 /*! \brief set the start point of a new bus
  *  \par Function Description
  *  This function sets the start point (<B>w_x</B>,<B>w_y</B>) of a new bus
- *  in the <B>GSCHEM_TOPLEVEL</B> structure.
+ *  in the <B>GschemToplevel</B> structure.
  *  
  *  The start point is stored in <B>first_wx</B>, <B>first_wy</B>.
  *  
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] w_x        the x position in world coords
  *  \param [in] w_y        the y position in world coords
  */
-void o_bus_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_bus_start(GschemToplevel *w_current, int w_x, int w_y)
 {
   w_current->first_wx = w_current->second_wx = w_x;
   w_current->first_wy = w_current->second_wy = w_y;
@@ -50,16 +50,16 @@ void o_bus_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  This function finishes a net drawing action. The function draws
  *  a bus from the point (<B>first_wx</B>,<B>first_wy</B>) to 
  *  (<B>second_wx</B>,<B>second_wy</B>). Both points are taken from
- *  the <B>GSCHEM_TOPLEVEL</B> structure.
+ *  the <B>GschemToplevel</B> structure.
  *
  *  The function returns TRUE if a bus object has been created and 
  *  FALSE if no bus object has been created.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] w_x        (unused)
  *  \param [in] w_y        (unused)
  */
-int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+int o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *new_obj;
@@ -109,19 +109,19 @@ int o_bus_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *  This function draws
  *  a bus rubber from the point (<B>first_wx</B>,<B>first_wy</B>) from  
- *  the <B>GSCHEM_TOPLEVEL</B> structure to the input parameter
+ *  the <B>GschemToplevel</B> structure to the input parameter
  *  (<B>w_x</B>, <B>w_y</B>).
  *
  *  The function stores creates an non-orthogonal bus segment if the 
  *  CONTROLKEY is pressed. The coordinates of the second rubberbus point
  *  is stored as (<B>second_wx</B>,<B>second_wy</B>) in the 
- *  <B>GSCHEM_TOPLEVEL</B> structure.
+ *  <B>GschemToplevel</B> structure.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] w_x        current x position in world units
  *  \param [in] w_y        current y position in world units
  */
-void o_bus_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_bus_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
   int diff_x, diff_y;
 
@@ -154,7 +154,7 @@ void o_bus_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-void o_bus_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
+void o_bus_invalidate_rubber (GschemToplevel *w_current)
 {
   int x1, y1, x2, y2;
   int min_x, min_y, max_x, max_y;
@@ -177,15 +177,15 @@ void o_bus_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *  This function draws a bus segment from the point
  *  (<B>first_wx</B>,<B>first_wy</B>) to the point 
- *  (<B>second_wx</B>,<B>second_wy</B>) from the <B>GSCHEM_TOPLEVEL</B>
+ *  (<B>second_wx</B>,<B>second_wy</B>) from the <B>GschemToplevel</B>
  *   structure.
  *
  *  The function can be used to draw or erase the rubberbus on the screen.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object
+ *  \param [in] w_current  The GschemToplevel object
  */
 void
-o_bus_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
+o_bus_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
   int size = BUS_WIDTH;
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);

@@ -53,7 +53,7 @@
  * 
  */
 /* dir is either ZOOM_IN, ZOOM_OUT or ZOOM_FULL which are defined in globals.h */
-void a_zoom(GSCHEM_TOPLEVEL *w_current, int dir, int selected_from, int pan_flags)
+void a_zoom(GschemToplevel *w_current, int dir, int selected_from, int pan_flags)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   double world_pan_center_x,world_pan_center_y,relativ_zoom_factor = - 1;
@@ -146,7 +146,7 @@ void a_zoom(GSCHEM_TOPLEVEL *w_current, int dir, int selected_from, int pan_flag
  *  \par Function Description
  * 
  */
-void a_zoom_extents (GSCHEM_TOPLEVEL *w_current, const GList *list, int pan_flags)
+void a_zoom_extents (GschemToplevel *w_current, const GList *list, int pan_flags)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int lleft, lright, ltop, lbottom;
@@ -200,7 +200,7 @@ void a_zoom_extents (GSCHEM_TOPLEVEL *w_current, const GList *list, int pan_flag
  *  \par Function Description
  * 
  */
-void a_zoom_box(GSCHEM_TOPLEVEL *w_current, int pan_flags)
+void a_zoom_box(GschemToplevel *w_current, int pan_flags)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   double zx, zy, relativ_zoom_factor;
@@ -235,7 +235,7 @@ void a_zoom_box(GSCHEM_TOPLEVEL *w_current, int pan_flags)
  *  \par Function Description
  * 
  */
-void a_zoom_box_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void a_zoom_box_start(GschemToplevel *w_current, int w_x, int w_y)
 {
   w_current->first_wx = w_current->second_wx = w_x;
   w_current->first_wy = w_current->second_wy = w_y;
@@ -246,7 +246,7 @@ void a_zoom_box_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  * 
  */
-void a_zoom_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void a_zoom_box_end(GschemToplevel *w_current, int x, int y)
 {
   g_assert( w_current->inside_action != 0 );
 
@@ -265,7 +265,7 @@ void a_zoom_box_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  * 
  */
-void a_zoom_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void a_zoom_box_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
   g_assert( w_current->inside_action != 0 );
 
@@ -283,7 +283,7 @@ void a_zoom_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \brief
  *  \par Function Description
  */
-void a_zoom_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
+void a_zoom_box_invalidate_rubber (GschemToplevel *w_current)
 {
   int x1, y1, x2, y2;
 
@@ -301,7 +301,7 @@ void a_zoom_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  * 
  */
-void a_zoom_box_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
+void a_zoom_box_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
   double wwidth = 0;
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);
@@ -319,7 +319,7 @@ void a_zoom_box_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
  *  \par Function Description
  * 
  */
-void correct_aspect(GSCHEM_TOPLEVEL *w_current)
+void correct_aspect(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   double new_aspect;

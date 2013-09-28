@@ -41,7 +41,7 @@
  *  \par Function Description
  *
  */
-void o_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
+void o_box_invalidate_rubber (GschemToplevel *w_current)
 {
   int x1, y1, x2, y2;
 
@@ -68,11 +68,11 @@ void o_box_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  The other corner will be saved in (<B>w_current->second_wx</B>,
  *  <B>w_current->second_wy</B>).
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] w_x        Current x coordinate of pointer in world.
  *  \param [in] w_y        Current y coordinate of pointer in world.
  */
-void o_box_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_box_start(GschemToplevel *w_current, int w_x, int w_y)
 {
   /* init first_w[x|y], second_w[x|y] to describe box */
   w_current->first_wx = w_current->second_wx = w_x;
@@ -94,11 +94,11 @@ void o_box_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  and linked to the object list ; The object is finally drawn on the
  *  current sheet.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_box_end(GschemToplevel *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *new_obj;
@@ -163,11 +163,11 @@ void o_box_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  The old values are inside the <B>w_current</B> pointed structure. Old width,
  *  height and left and top values are recomputed by the corresponding macros.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
  */
-void o_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_box_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
 
   g_assert( w_current->inside_action != 0 );
@@ -191,17 +191,17 @@ void o_box_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
   w_current->rubber_visible = 1;
 }
 
-/*! \brief Draw box from GSCHEM_TOPLEVEL object.
+/*! \brief Draw box from GschemToplevel object.
  *  \par Function Description
- *  This function draws the box from the variables in the GSCHEM_TOPLEVEL
+ *  This function draws the box from the variables in the GschemToplevel
  *  structure <B>*w_current</B>.
  *  One corner of the box is at (<B>w_current->first_wx</B>,
  *  <B>w_current->first_wy</B>) and the second corner is at
  *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current  The GschemToplevel object.
  */
-void o_box_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
+void o_box_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
   double wwidth = 0;
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);

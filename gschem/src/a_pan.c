@@ -34,7 +34,7 @@
  *  \par Function Description
  *
  */
-void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
+void a_pan_general(GschemToplevel *w_current, double world_cx, double world_cy,
 		   double relativ_zoom_factor,int flags)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -172,7 +172,7 @@ void a_pan_general(GSCHEM_TOPLEVEL *w_current, double world_cx, double world_cy,
  *  \brief
  *  \par Function Description
  */
-void a_pan(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void a_pan(GschemToplevel *w_current, int w_x, int w_y)
 {
   /* make mouse to the new world-center;
      attention: there are information looses because of type cast in mil_x */
@@ -192,7 +192,7 @@ void a_pan(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-void a_pan_mouse(GSCHEM_TOPLEVEL *w_current, int diff_x, int diff_y)
+void a_pan_mouse(GschemToplevel *w_current, int diff_x, int diff_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   double world_cx, world_cy;

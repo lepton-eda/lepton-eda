@@ -33,7 +33,7 @@
  *  \par Function Description
  *
  */
-void x_repaint_background_region (GSCHEM_TOPLEVEL *w_current,
+void x_repaint_background_region (GschemToplevel *w_current,
                                   int x, int y, int width, int height)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -52,7 +52,7 @@ void x_repaint_background_region (GSCHEM_TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-void x_hscrollbar_set_ranges(GSCHEM_TOPLEVEL *w_current)
+void x_hscrollbar_set_ranges(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
         GtkAdjustment        *hadjustment;
@@ -74,7 +74,7 @@ void x_hscrollbar_set_ranges(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_hscrollbar_update(GSCHEM_TOPLEVEL *w_current)
+void x_hscrollbar_update(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GtkAdjustment *hadjustment;
@@ -111,7 +111,7 @@ void x_hscrollbar_update(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_vscrollbar_set_ranges(GSCHEM_TOPLEVEL *w_current)
+void x_vscrollbar_set_ranges(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GtkAdjustment *vadjustment;
@@ -132,7 +132,7 @@ void x_vscrollbar_set_ranges(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_vscrollbar_update(GSCHEM_TOPLEVEL *w_current)
+void x_vscrollbar_update(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GtkAdjustment *vadjustment;
@@ -170,7 +170,7 @@ void x_vscrollbar_update(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_scrollbars_update(GSCHEM_TOPLEVEL *w_current)
+void x_scrollbars_update(GschemToplevel *w_current)
 {
   if (w_current->scrollbars_flag == FALSE) {
     return;

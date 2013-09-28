@@ -39,7 +39,7 @@
  *  This function opens a file selection dialog. The selected script 
  *  is executed.
  */
-void setup_script_selector (GSCHEM_TOPLEVEL *w_current)
+void setup_script_selector (GschemToplevel *w_current)
 {
   char *filename;
 

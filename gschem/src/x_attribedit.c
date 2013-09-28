@@ -63,7 +63,7 @@ gint option_menu_get_history (GtkOptionMenu *option_menu)
  *  \par Function Documentation
  *
  */
-void attrib_edit_dialog_ok(GtkWidget * w, GSCHEM_TOPLEVEL *w_current)
+void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   const char *value, *label;
@@ -260,7 +260,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GSCHEM_TOPLEVEL *w_current)
  *  attribute dialog.
  */
 void attribute_edit_dialog_response(GtkWidget *w, gint response, 
-				 GSCHEM_TOPLEVEL *w_current)
+				 GschemToplevel *w_current)
 {
   switch(response) {
   case GTK_RESPONSE_APPLY:
@@ -285,7 +285,7 @@ void attribute_edit_dialog_response(GtkWidget *w, gint response,
  *  \par Function Description
  *  This function creates the single attribute edit dialog.
  */
-void attrib_edit_dialog (GSCHEM_TOPLEVEL *w_current, OBJECT *attr_obj, int flag)
+void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GtkWidget *aewindow;

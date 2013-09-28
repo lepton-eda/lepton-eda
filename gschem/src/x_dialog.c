@@ -66,7 +66,7 @@ char generic_textstring[256] = "refdes=R";
  *  If the dialog is closed or canceled the function destroys the dialog.
  */
 void arc_angle_dialog_response(GtkWidget *w, gint response,
-                               GSCHEM_TOPLEVEL *w_current)
+                               GschemToplevel *w_current)
 {
   GtkWidget *spinentry;
   gint radius, start_angle, sweep_angle;
@@ -108,11 +108,11 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
  *  \a arc_object the entries are filled with the arc OBJECT properties
  *  or with some standard values.
  *
- *  \param [in] w_current   The GSCHEM_TOPLEVEL object
+ *  \param [in] w_current   The GschemToplevel object
  *  \param [in] arc_object  an arc OBJECT if used to modify an arc
  *                          or NULL to create a new arc.
  */
-void arc_angle_dialog (GSCHEM_TOPLEVEL *w_current, OBJECT *arc_object)
+void arc_angle_dialog (GschemToplevel *w_current, OBJECT *arc_object)
 {
   GtkWidget *label = NULL;
   GtkWidget *vbox;
@@ -225,7 +225,7 @@ void arc_angle_dialog (GSCHEM_TOPLEVEL *w_current, OBJECT *arc_object)
  *  \todo improve error detection / use a spin button?
  */
 void translate_dialog_response(GtkWidget *widget, gint response,
-                               GSCHEM_TOPLEVEL *w_current)
+                               GschemToplevel *w_current)
 {
   GtkWidget *textentry;
   gchar *string;
@@ -257,7 +257,7 @@ void translate_dialog_response(GtkWidget *widget, gint response,
  *  \par Function Description
  *  Create the dialog to translate symbols.
  */
-void translate_dialog (GSCHEM_TOPLEVEL *w_current)
+void translate_dialog (GschemToplevel *w_current)
 {
   GtkWidget *label;
   GtkWidget *textentry;
@@ -323,7 +323,7 @@ void translate_dialog (GSCHEM_TOPLEVEL *w_current)
  *  This function takes the user input and applies it to gschem
  */
 void text_size_dialog_response(GtkWidget *w, gint response,
-                               GSCHEM_TOPLEVEL *w_current)
+                               GschemToplevel *w_current)
 {
   GtkWidget *spin_size;
   gint size;
@@ -356,7 +356,7 @@ void text_size_dialog_response(GtkWidget *w, gint response,
  *  \par Function Description
  *  This function creates the text size dialog.
  */
-void text_size_dialog (GSCHEM_TOPLEVEL *w_current)
+void text_size_dialog (GschemToplevel *w_current)
 {
   GtkWidget *label = NULL;
   GtkWidget *vbox;
@@ -427,7 +427,7 @@ void text_size_dialog (GSCHEM_TOPLEVEL *w_current)
  *  It sets the given snap size to gschem.
  */
 void snap_size_dialog_response(GtkWidget *w, gint response,
-                               GSCHEM_TOPLEVEL *w_current)
+                               GschemToplevel *w_current)
 {
   GtkWidget *spin_size;
   gint size;
@@ -462,7 +462,7 @@ void snap_size_dialog_response(GtkWidget *w, gint response,
  *  \par Function Description
  *  This function creates the snap size dialog.
  */
-void snap_size_dialog (GSCHEM_TOPLEVEL *w_current)
+void snap_size_dialog (GschemToplevel *w_current)
 {
   GtkWidget *label = NULL;
   GtkWidget *vbox;
@@ -532,7 +532,7 @@ void snap_size_dialog (GSCHEM_TOPLEVEL *w_current)
  *  The function takes the dialog entry and applies the new slot to the
  *  symbol.
  */
-void slot_edit_dialog_response(GtkWidget *widget, gint response, GSCHEM_TOPLEVEL *w_current)
+void slot_edit_dialog_response(GtkWidget *widget, gint response, GschemToplevel *w_current)
 {
   GtkWidget *textentry;
   char *slot_string;
@@ -569,7 +569,7 @@ void slot_edit_dialog_response(GtkWidget *widget, gint response, GSCHEM_TOPLEVEL
  *  \par Function Description
  *  This function creates the slot edit dialog.
  */
-void slot_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string)
+void slot_edit_dialog (GschemToplevel *w_current, const char *string)
 {
   GtkWidget *label = NULL;
   GtkWidget *textentry;
@@ -641,7 +641,7 @@ void slot_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string)
  *  \par Function Description
  *  This function creates the about dialog.
  */
-void about_dialog (GSCHEM_TOPLEVEL *w_current)
+void about_dialog (GschemToplevel *w_current)
 {
   char *version_string;
   char *logo_file;
@@ -691,7 +691,7 @@ void about_dialog (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *  This function destroys the coord dialog box and does some cleanup.
  */
-void coord_dialog_response(GtkWidget *w, gint response, GSCHEM_TOPLEVEL *w_current)
+void coord_dialog_response(GtkWidget *w, gint response, GschemToplevel *w_current)
 {
   gtk_widget_destroy(w_current->cowindow);
   w_current->cowindow = NULL;
@@ -704,7 +704,7 @@ void coord_dialog_response(GtkWidget *w, gint response, GSCHEM_TOPLEVEL *w_curre
  *  This function takes the screen coordinates and prints the
  *  screen and the world coordinates in the coord dialog.
  */
-void coord_display_update(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void coord_display_update(GschemToplevel *w_current, int x, int y)
 {
   char *string;
   int world_x, world_y;
@@ -726,7 +726,7 @@ void coord_display_update(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *  This function creates the coord dialog box.
  */
-void coord_dialog (GSCHEM_TOPLEVEL *w_current, int x, int y)
+void coord_dialog (GschemToplevel *w_current, int x, int y)
 {
   GtkWidget *frame;
   GtkWidget *vbox;
@@ -792,7 +792,7 @@ void coord_dialog (GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  This function destroys the hotkey dialog and does some cleanup.
  */
 void x_dialog_hotkeys_response(GtkWidget *w, gint response,
-                               GSCHEM_TOPLEVEL *w_current)
+                               GschemToplevel *w_current)
 {
   switch(response) {
   case GTK_RESPONSE_REJECT:
@@ -866,7 +866,7 @@ x_dialog_hotkeys_cell_stock_id_notify (GObject *gobject,
  *  This function creates the hotkey dialog and puts the list of hotkeys
  *  into it.
  */
-void x_dialog_hotkeys (GSCHEM_TOPLEVEL *w_current)
+void x_dialog_hotkeys (GschemToplevel *w_current)
 {
   GtkWidget *vbox, *scrolled_win;
   GtkTreeModel *store;
@@ -961,7 +961,7 @@ extern GtkWidget *stwindow;
  *  \par Function Description
  *
  */
-void x_dialog_raise_all(GSCHEM_TOPLEVEL *w_current)
+void x_dialog_raise_all(GschemToplevel *w_current)
 {
   if(w_current->sowindow) {
     gdk_window_raise(w_current->sowindow->window);
@@ -1146,7 +1146,7 @@ PAGE *remember_page;
  *  in the schematic.
  */
 void find_text_dialog_response(GtkWidget *w, gint response,
-                               GSCHEM_TOPLEVEL *w_current)
+                               GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GtkWidget *textentry;
@@ -1195,7 +1195,7 @@ void find_text_dialog_response(GtkWidget *w, gint response,
  *  \par Function Description
  *  This function creates the text find dialog.
  */
-void find_text_dialog(GSCHEM_TOPLEVEL *w_current)
+void find_text_dialog(GschemToplevel *w_current)
 {
   GtkWidget *label = NULL;
   GtkWidget *vbox;
@@ -1285,7 +1285,7 @@ void find_text_dialog(GSCHEM_TOPLEVEL *w_current)
  *  and hides all text elements that starts with the searchtext.
  */
 void hide_text_dialog_response(GtkWidget *w, gint response,
-                               GSCHEM_TOPLEVEL *w_current)
+                               GschemToplevel *w_current)
 {
   GtkWidget *textentry;
   gchar *string;
@@ -1315,7 +1315,7 @@ void hide_text_dialog_response(GtkWidget *w, gint response,
  *  \par Function Description
  *  This function creates the hide text dialog.
  */
-void hide_text_dialog(GSCHEM_TOPLEVEL * w_current)
+void hide_text_dialog(GschemToplevel * w_current)
 {
   GtkWidget *label = NULL;
   GtkWidget *textentry;
@@ -1386,7 +1386,7 @@ void hide_text_dialog(GSCHEM_TOPLEVEL * w_current)
  *  the given search text and hides those text objects.
  */
 void show_text_dialog_response(GtkWidget *widget, gint response,
-                               GSCHEM_TOPLEVEL *w_current)
+                               GschemToplevel *w_current)
 {
   GtkWidget *textentry;
   gchar *string;
@@ -1416,7 +1416,7 @@ void show_text_dialog_response(GtkWidget *widget, gint response,
  *  \par Function Description
  *  This function creates the show text dialog.
  */
-void show_text_dialog(GSCHEM_TOPLEVEL * w_current)
+void show_text_dialog(GschemToplevel * w_current)
 {
   GtkWidget *label = NULL;
   GtkWidget *textentry;
@@ -1536,7 +1536,7 @@ int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size)
  *
  */
 void
-major_changed_dialog (GSCHEM_TOPLEVEL* w_current)
+major_changed_dialog (GschemToplevel* w_current)
 {
   GtkListStore *list_store = NULL;
   GtkWidget *dialog = NULL;
@@ -2310,7 +2310,7 @@ close_confirmation_dialog_get_selected_pages (CloseConfirmationDialog *dialog)
  *  otherwise.
  */
 gboolean
-x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
+x_dialog_close_changed_page (GschemToplevel *w_current, PAGE *page)
 {
   GtkWidget *dialog;
   PAGE *keep_page;
@@ -2385,7 +2385,7 @@ x_dialog_close_changed_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
  *  \returns TRUE if the window can be closed, FALSE otherwise.
  */
 gboolean
-x_dialog_close_window (GSCHEM_TOPLEVEL *w_current)
+x_dialog_close_window (GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *iter;
@@ -2506,7 +2506,7 @@ int x_dialog_validate_attribute(GtkWindow* parent, char *attribute)
  *  This function presents an app modal dialog to edit the type of a pin
  */
 
-void x_dialog_edit_pin_type (GSCHEM_TOPLEVEL *w_current, const GList *obj_list)
+void x_dialog_edit_pin_type (GschemToplevel *w_current, const GList *obj_list)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;

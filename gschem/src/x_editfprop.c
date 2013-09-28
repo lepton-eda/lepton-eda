@@ -195,7 +195,7 @@ fill_type_dialog_filltype_change(GtkWidget *widget, EditFProp *dialog)
 static void
 dialog_response_ok (EditFProp *dialog)
 {
-  GSCHEM_TOPLEVEL *w_current = dialog->parent.w_current;
+  GschemToplevel *w_current = dialog->parent.w_current;
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *selection, *iter;
   OBJECT *object;
@@ -464,7 +464,7 @@ GType editfprop_get_type()
  *  \param [in] w_current The gschem toplevel
  */
 void
-fill_type_dialog (GSCHEM_TOPLEVEL *w_current)
+fill_type_dialog (GschemToplevel *w_current)
 {
   gboolean success;
   OBJECT_FILLING type;

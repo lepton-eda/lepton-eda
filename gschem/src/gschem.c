@@ -129,7 +129,7 @@ void main_prog(void *closure, int argc, char *argv[])
 {
   int i;
   char *cwd = NULL;
-  GSCHEM_TOPLEVEL *w_current = NULL;
+  GschemToplevel *w_current = NULL;
   char *input_str = NULL;
   int argv_index;
   int first_page = 1;

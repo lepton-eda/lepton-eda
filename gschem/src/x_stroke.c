@@ -86,12 +86,12 @@ x_stroke_free (void)
  *
  * The footprint is updated and the new point is drawn on the drawing area.
  *
- *  \param [in] w_current The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current The GschemToplevel object.
  *  \param [in] x        The X coord of the new point.
  *  \param [in] Y        The X coord of the new point.
  */
 void
-x_stroke_record (GSCHEM_TOPLEVEL *w_current, gint x, gint y)
+x_stroke_record (GschemToplevel *w_current, gint x, gint y)
 {
   g_assert (stroke_points != NULL);
 
@@ -120,11 +120,11 @@ x_stroke_record (GSCHEM_TOPLEVEL *w_current, gint x, gint y)
  *  action. It returns 0 if libstroke failed to transform the stroke
  *  or there is no action attached to the stroke.
  *
- *  \param [in] w_current The GSCHEM_TOPLEVEL object.
+ *  \param [in] w_current The GschemToplevel object.
  *  \returns 1 on success, 0 otherwise.
  */
 gint
-x_stroke_translate_and_execute (GSCHEM_TOPLEVEL *w_current)
+x_stroke_translate_and_execute (GschemToplevel *w_current)
 {
   gchar sequence[STROKE_MAX_SEQUENCE];
   StrokePoint *point;

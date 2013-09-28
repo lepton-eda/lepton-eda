@@ -48,7 +48,7 @@ SCM g_funcs_pdf (SCM scm_filename)
 {
   char *filename;
   gboolean status;
-  GSCHEM_TOPLEVEL *w_current = g_current_window ();
+  GschemToplevel *w_current = g_current_window ();
 
   SCM_ASSERT (scm_is_string (scm_filename), scm_filename,
               SCM_ARG1, "gschem-pdf");
@@ -76,7 +76,7 @@ SCM g_funcs_image(SCM scm_filename)
   SCM_ASSERT (scm_is_string (scm_filename), scm_filename,
               SCM_ARG1, "gschem-image");
 
-  GSCHEM_TOPLEVEL *w_current = g_current_window ();
+  GschemToplevel *w_current = g_current_window ();
 
   if (output_filename) {
     x_image_lowlevel (w_current, output_filename,

@@ -31,7 +31,7 @@
  *  \par Function Description
  *
  */
-void o_place_start (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_place_start (GschemToplevel *w_current, int w_x, int w_y)
 {
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
@@ -45,7 +45,7 @@ void o_place_start (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-void o_place_end (GSCHEM_TOPLEVEL *w_current,
+void o_place_end (GschemToplevel *w_current,
                   int w_x, int w_y,
                   int continue_placing,
                   GList **ret_new_objects,
@@ -122,7 +122,7 @@ void o_place_end (GSCHEM_TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-void o_place_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_place_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
   if (w_current->rubber_visible)
     o_place_invalidate_rubber (w_current, FALSE);
@@ -161,11 +161,11 @@ void o_place_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  * no mode / constraint changes were made between the pair, it is not
  * harmful to call the draw operation with "drawing=FALSE".
  *
- *  \param [in] w_current   GSCHEM_TOPLEVEL which we're drawing for.
+ *  \param [in] w_current   GschemToplevel which we're drawing for.
  *  \param [in] drawing     Set to FALSE for undraw operations to ensure
  *                            matching conditions to a previous draw operation.
  */
-void o_place_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
+void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int diff_x, diff_y;
@@ -226,11 +226,11 @@ void o_place_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
  * before drawing if the CONTROL key is recording as being pressed in
  * the w_current structure.
  *
- *  \param w_current   GSCHEM_TOPLEVEL which we're drawing for.
+ *  \param w_current   GschemToplevel which we're drawing for.
  *  \param renderer    Renderer to use for drawing.
  */
 void
-o_place_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
+o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);
@@ -294,7 +294,7 @@ o_place_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
  *  \par Function Description
  *
  */
-void o_place_rotate (GSCHEM_TOPLEVEL *w_current)
+void o_place_rotate (GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
 

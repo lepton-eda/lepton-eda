@@ -33,7 +33,7 @@
  *  \par Function Description
  *
  */
-void o_pin_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_pin_start(GschemToplevel *w_current, int w_x, int w_y)
 {
   w_current->first_wx = w_current->second_wx = w_x;
   w_current->first_wy = w_current->second_wy = w_y;
@@ -44,7 +44,7 @@ void o_pin_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
+void o_pin_end(GschemToplevel *w_current, int x, int y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *new_obj;
@@ -86,7 +86,7 @@ void o_pin_end(GSCHEM_TOPLEVEL *w_current, int x, int y)
  *  \par Function Description
  *
  */
-void o_pin_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_pin_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
   g_assert( w_current->inside_action != 0 );
 
@@ -113,7 +113,7 @@ void o_pin_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \brief
  *  \par Function Description
  */
-void o_pin_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
+void o_pin_invalidate_rubber (GschemToplevel *w_current)
 {
   int x1, y1, x2, y2;
   int min_x, min_y, max_x, max_y;
@@ -139,7 +139,7 @@ void o_pin_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_pin_draw_rubber (GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
+void o_pin_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
   double wwidth = PIN_WIDTH_NET;
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);

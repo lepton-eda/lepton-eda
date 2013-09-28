@@ -54,7 +54,7 @@ int o_text_get_rendered_bounds (void *user_data, OBJECT *o_current,
                                 int *min_x, int *min_y,
                                 int *max_x, int *max_y)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) user_data;
+  GschemToplevel *w_current = (GschemToplevel *) user_data;
   TOPLEVEL *toplevel;
   EdaRenderer *renderer;
   cairo_t *cr;
@@ -104,7 +104,7 @@ int o_text_get_rendered_bounds (void *user_data, OBJECT *o_current,
  *  \par Function Description
  *
  */
-void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text, int color, int align, int rotate, int size)
+void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int align, int rotate, int size)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
 
@@ -141,7 +141,7 @@ void o_text_prepare_place(GSCHEM_TOPLEVEL *w_current, char *text, int color, int
  *  \par Function Description
  *
  */
-void o_text_edit(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
+void o_text_edit(GschemToplevel *w_current, OBJECT *o_current)
 {
   /* you need to check to make sure only one object is selected */
   /* no actually this is okay... not here in o_edit */
@@ -173,7 +173,7 @@ void o_text_edit(GSCHEM_TOPLEVEL *w_current, OBJECT *o_current)
  *                        size is less than or equal to zero, this function
  *                        leaves the size unchanged.
  */
-void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int color, int align, int rotate, int size)
+void o_text_edit_end(GschemToplevel *w_current, char *string, int color, int align, int rotate, int size)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   OBJECT *object;
@@ -237,7 +237,7 @@ void o_text_edit_end(GSCHEM_TOPLEVEL *w_current, char *string, int color, int al
  *  The object passed in should be the REAL object, NOT any copy in any
  *  selection list
  */
-void o_text_change(GSCHEM_TOPLEVEL *w_current, OBJECT *object, char *string,
+void o_text_change(GschemToplevel *w_current, OBJECT *object, char *string,
 		   int visibility, int show)
 {
   TOPLEVEL *toplevel = w_current->toplevel;

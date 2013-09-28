@@ -160,10 +160,10 @@ x_fileselect_add_preview (GtkFileChooser *filechooser)
  *  At the end of the function, the w_current->toplevel's current page
  *  is set to the page of the last loaded page.
  *
- *  \param [in] w_current The GSCHEM_TOPLEVEL environment.
+ *  \param [in] w_current The GschemToplevel environment.
  */
 void
-x_fileselect_open(GSCHEM_TOPLEVEL *w_current)
+x_fileselect_open(GschemToplevel *w_current)
 {
   PAGE *page = NULL;
   GtkWidget *dialog;
@@ -225,10 +225,10 @@ x_fileselect_open(GSCHEM_TOPLEVEL *w_current)
  *
  *  The function updates the user interface.
  *
- *  \param [in] w_current The GSCHEM_TOPLEVEL environment.
+ *  \param [in] w_current The GschemToplevel environment.
  */
 void
-x_fileselect_save (GSCHEM_TOPLEVEL *w_current)
+x_fileselect_save (GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GtkWidget *dialog;
@@ -320,7 +320,7 @@ x_fileselect_save (GSCHEM_TOPLEVEL *w_current)
  *  if load the backup or the original file.
  *
  *  \todo Make this a registered callback function with user data,
- *        as we'd rather be passed a GSCHEM_TOPLEVEL than a TOPLEVEL.
+ *        as we'd rather be passed a GschemToplevel than a TOPLEVEL.
  *
  *  \param [in] user_data The TOPLEVEL object.
  *  \param [in] message   Message to display to user.
@@ -329,7 +329,7 @@ x_fileselect_save (GSCHEM_TOPLEVEL *w_current)
 int x_fileselect_load_backup(void *user_data, GString *message)
 {
   GtkWidget *dialog;
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) user_data;
+  GschemToplevel *w_current = (GschemToplevel *) user_data;
 
   g_string_append(message, _(
 "\n"

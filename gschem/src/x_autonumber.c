@@ -96,8 +96,8 @@ struct autonumber_text_t {
   /** @brief Pointer to the dialog */ 
   GtkWidget *dialog;
 
-  /** @brief Pointer to the GSCHEM_TOPLEVEL struct */
-  GSCHEM_TOPLEVEL *w_current;
+  /** @brief Pointer to the GschemToplevel struct */
+  GschemToplevel *w_current;
 
   /* variables used while autonumbering */
   gchar * current_searchtext;
@@ -385,7 +385,7 @@ gint autonumber_match(AUTONUMBER_TEXT *autotext, OBJECT *o_current, gint *number
  *  multislotted symbols, that were used only partially.
  *  The criterias are derivated from the autonumber dialog entries.
  */
-void autonumber_get_used(GSCHEM_TOPLEVEL *w_current, AUTONUMBER_TEXT *autotext)
+void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
 {
   gint number, numslots, slotnr, i;
   OBJECT *o_current, *o_parent;
@@ -636,7 +636,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   GList *searchtext_list=NULL;
   GList *text_item, *obj_item, *page_item;
   OBJECT *o_current;
-  GSCHEM_TOPLEVEL *w_current;
+  GschemToplevel *w_current;
   gchar *searchtext;
   gchar *scope_text;
   gchar *new_searchtext;
@@ -848,7 +848,7 @@ GtkWidget* lookup_widget(GtkWidget *widget, const gchar *widget_name)
  *  Load all bitmaps for the combobox and store them together with the label
  *  in a GtkListStore.
  */
-void autonumber_sortorder_create(GSCHEM_TOPLEVEL *w_current, GtkWidget *sort_order)
+void autonumber_sortorder_create(GschemToplevel *w_current, GtkWidget *sort_order)
 {
   GtkListStore *store;
   GtkTreeIter iter;
@@ -1173,7 +1173,7 @@ void autonumber_removenum_toggled(GtkWidget * opt_removenum,
  * @param w_current Pointer to the top level struct.
  * @return Pointer to the dialog window.
  */
-GtkWidget* autonumber_create_dialog(GSCHEM_TOPLEVEL *w_current)
+GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
 {
   GtkWidget *autonumber_text;
   GtkWidget *vbox1;
@@ -1376,7 +1376,7 @@ GtkWidget* autonumber_create_dialog(GSCHEM_TOPLEVEL *w_current)
  *
  *  @param w_current Pointer to the top level struct
  */
-void autonumber_text_dialog(GSCHEM_TOPLEVEL *w_current)
+void autonumber_text_dialog(GschemToplevel *w_current)
 {
   static AUTONUMBER_TEXT *autotext = NULL;
 
@@ -1388,7 +1388,7 @@ void autonumber_text_dialog(GSCHEM_TOPLEVEL *w_current)
     autotext=autonumber_init_state();
   }
 
-  /* set the GSCHEM_TOPLEVEL always. Can it be changed between the calls??? */
+  /* set the GschemToplevel always. Can it be changed between the calls??? */
   autotext->w_current = w_current;
 
   if(autotext->dialog == NULL) {

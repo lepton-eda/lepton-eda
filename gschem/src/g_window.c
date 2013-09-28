@@ -24,7 +24,7 @@ SCM scheme_window_fluid = SCM_UNDEFINED;
 
 scm_t_bits window_smob_tag;
 
-/*! \brief Free a #GSCHEM_TOPLEVEL smob.
+/*! \brief Free a #GschemToplevel smob.
  * \par Function Description
  * Finalizes a window smob for deletion.
  *
@@ -33,7 +33,7 @@ scm_t_bits window_smob_tag;
 static size_t
 smob_free (SCM smob)
 {
-  GSCHEM_TOPLEVEL *window = (GSCHEM_TOPLEVEL *) SCM_SMOB_DATA (smob);
+  GschemToplevel *window = (GschemToplevel *) SCM_SMOB_DATA (smob);
 
   /* If the weak ref has been cleared, do nothing */
   if (window == NULL) return 0;
@@ -44,7 +44,7 @@ smob_free (SCM smob)
   return 0;
 }
 
-/*! \brief Print a representation of a #GSCHEM_TOPLEVEL smob.
+/*! \brief Print a representation of a #GschemToplevel smob.
  * \par Function Description
  * Outputs a string representing the \a smob to a Scheme output
  * \a port. The format used is "#<gschem-window b7ef65d0>".
@@ -70,15 +70,15 @@ smob_print (SCM smob, SCM port, scm_print_state *pstate)
   return 1;
 }
 
-/*! \brief Get the smob for a #GSCHEM_TOPLEVEL.
+/*! \brief Get the smob for a #GschemToplevel.
  * \par Function Description
  * Return a smob representing \a window.
  *
- * \param window #GSCHEM_TOPLEVEL to obtain a smob for.
+ * \param window #GschemToplevel to obtain a smob for.
  * \param a smob representing \a window.
  */
 SCM
-g_scm_from_window (GSCHEM_TOPLEVEL *w_current)
+g_scm_from_window (GschemToplevel *w_current)
 {
   g_assert (w_current != NULL);
 
@@ -90,17 +90,17 @@ g_scm_from_window (GSCHEM_TOPLEVEL *w_current)
 }
 
 /*!
- * \brief Set the #GSCHEM_TOPLEVEL fluid in the current dynamic context.
+ * \brief Set the #GschemToplevel fluid in the current dynamic context.
  * \par Function Description
  *
  * This function must be used inside a pair of calls to
  * scm_dynwind_begin() and scm_dynwind_end().  During the dynwind
- * context, the #GSCHEM_TOPLEVEL fluid is set to \a w_current.
+ * context, the #GschemToplevel fluid is set to \a w_current.
  *
- * \param [in] w_current The new GSCHEM_TOPLEVEL pointer.
+ * \param [in] w_current The new GschemToplevel pointer.
  */
 void
-g_dynwind_window (GSCHEM_TOPLEVEL *w_current)
+g_dynwind_window (GschemToplevel *w_current)
 {
   SCM window_s = g_scm_from_window (w_current);
   scm_dynwind_fluid (scheme_window_fluid, window_s);
@@ -108,25 +108,25 @@ g_dynwind_window (GSCHEM_TOPLEVEL *w_current)
 }
 
 /*!
- * \brief Get the value of the #GSCHEM_TOPLEVEL fluid.
+ * \brief Get the value of the #GschemToplevel fluid.
  * \par Function Description
- * Return the value of the #GSCHEM_TOPLEVEL fluid in the current
+ * Return the value of the #GschemToplevel fluid in the current
  * dynamic context.
  */
 SCM_DEFINE (current_window, "%current-window", 0, 0, 0,
             (),
-            "Get the GSCHEM_TOPLEVEL for the current dynamic context.")
+            "Get the GschemToplevel for the current dynamic context.")
 {
   return scm_fluid_ref (scheme_window_fluid);
 }
 
 /*!
- * \brief Get the value of the #GSCHEM_TOPLEVEL fluid.
+ * \brief Get the value of the #GschemToplevel fluid.
  * \par Function Description
- * Return the value of the #GSCHEM_TOPLEVEL fluid in the current dynamic
+ * Return the value of the #GschemToplevel fluid in the current dynamic
  * context.
  */
-GSCHEM_TOPLEVEL *
+GschemToplevel *
 g_current_window ()
 {
   SCM window_s = current_window ();
@@ -137,7 +137,7 @@ g_current_window ()
                     scm_list_1 (window_s));
   }
 
-  return (GSCHEM_TOPLEVEL *) SCM_SMOB_DATA (window_s);
+  return (GschemToplevel *) SCM_SMOB_DATA (window_s);
 }
 
 /*!
@@ -204,7 +204,7 @@ SCM_DEFINE (override_close_page_x, "%close-page!", 1, 0, 0,
   SCM_ASSERT (edascm_is_page (page_s), page_s,
               SCM_ARG1, s_override_close_page_x);
 
-  GSCHEM_TOPLEVEL *w_current = g_current_window ();
+  GschemToplevel *w_current = g_current_window ();
   TOPLEVEL *toplevel = w_current->toplevel;
   PAGE *page = edascm_to_page (page_s);
 
@@ -243,7 +243,7 @@ SCM_DEFINE (pointer_position, "%pointer-position", 0, 0, 0,
             (), "Get the current pointer position.")
 {
   int x, y;
-  GSCHEM_TOPLEVEL *w_current = g_current_window ();
+  GschemToplevel *w_current = g_current_window ();
   if (x_event_get_pointer_position (w_current, FALSE, &x, &y)) {
     return scm_cons (scm_from_int (x), scm_from_int (y));
   }
@@ -276,7 +276,7 @@ SCM_DEFINE (snap_point, "%snap-point", 2, 0, 0,
 
   /* We save and restore the current snap setting, because we want to
    * *always* snap the requested cordinates. */
-  GSCHEM_TOPLEVEL *w_current = g_current_window ();
+  GschemToplevel *w_current = g_current_window ();
   int save_snap = w_current->snap;
   w_current->snap = SNAP_GRID;
   int x = snap_grid (w_current, scm_to_int (x_s));
@@ -313,11 +313,11 @@ init_module_gschem_core_window ()
 }
 
 /*!
- * \brief Initialise the GSCHEM_TOPLEVEL manipulation procedures.
+ * \brief Initialise the GschemToplevel manipulation procedures.
  * \par Function Description
 
- * Registers some Scheme procedures for working with #GSCHEM_TOPLEVEL
- * smobs and creates the #GSCHEM_TOPLEVEL fluid. Should only be called
+ * Registers some Scheme procedures for working with #GschemToplevel
+ * smobs and creates the #GschemToplevel fluid. Should only be called
  * by main_prog().
  */
 void

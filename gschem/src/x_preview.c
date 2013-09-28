@@ -62,7 +62,7 @@ static void preview_dispose (GObject *self);
 
 /*! \brief Completes initialitation of the widget after realization.
  *  \par Function Description
- *  This function terminates the initialization of preview's GSCHEM_TOPLEVEL
+ *  This function terminates the initialization of preview's GschemToplevel
  *  and TOPLEVEL environments after the widget has been realized.
  *
  *  It creates a preview page in the TOPLEVEL environment.
@@ -75,7 +75,7 @@ preview_callback_realize (GtkWidget *widget,
                           gpointer user_data)
 {
   Preview *preview = PREVIEW (widget);
-  GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
+  GschemToplevel *preview_w_current = preview->preview_w_current;
   TOPLEVEL *preview_toplevel = preview_w_current->toplevel;
   PAGE *preview_page;
 
@@ -118,7 +118,7 @@ preview_callback_expose (GtkWidget *widget,
                          gpointer user_data)
 {
   Preview *preview = PREVIEW (widget);
-  GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
+  GschemToplevel *preview_w_current = preview->preview_w_current;
   GdkRectangle *rectangles;
   int n_rectangles;
   cairo_t *save_cr;
@@ -160,7 +160,7 @@ preview_callback_button_press (GtkWidget *widget,
                                gpointer user_data)
 {
   Preview *preview = PREVIEW (widget);
-  GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
+  GschemToplevel *preview_w_current = preview->preview_w_current;
   gint wx, wy; 
 
   if (!preview->active) {
@@ -200,7 +200,7 @@ preview_callback_button_press (GtkWidget *widget,
 static void
 preview_update (Preview *preview)
 {
-  GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
+  GschemToplevel *preview_w_current = preview->preview_w_current;
   TOPLEVEL *preview_toplevel = preview_w_current->toplevel;
   int left, top, right, bottom;
   int width, height;
@@ -335,7 +335,7 @@ preview_event_configure (GtkWidget         *widget,
                          gpointer           user_data)
 {
   gboolean retval;
-  GSCHEM_TOPLEVEL *preview_w_current = PREVIEW (widget)->preview_w_current;
+  GschemToplevel *preview_w_current = PREVIEW (widget)->preview_w_current;
   PAGE     *preview_page = preview_w_current->toplevel->page_current;
 
   retval = x_event_configure (widget, event, preview_w_current);
@@ -349,7 +349,7 @@ preview_event_configure (GtkWidget         *widget,
 static gboolean
 preview_event_scroll (GtkWidget *widget,
                       GdkEventScroll *event,
-                      GSCHEM_TOPLEVEL *w_current)
+                      GschemToplevel *w_current)
 {
   if (!PREVIEW (widget)->active) {
     return TRUE;
@@ -371,7 +371,7 @@ preview_init (Preview *preview)
     { "scroll_event",         G_CALLBACK (preview_event_scroll)           },
     { NULL,                   NULL                                        }
   }, *tmp;
-  GSCHEM_TOPLEVEL *preview_w_current;
+  GschemToplevel *preview_w_current;
   preview_w_current = gschem_toplevel_new ();
   gschem_toplevel_set_toplevel (preview_w_current, s_toplevel_new ());
 
@@ -437,7 +437,7 @@ preview_set_property (GObject *object,
                       GParamSpec *pspec)
 {
   Preview *preview = PREVIEW (object);
-  GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
+  GschemToplevel *preview_w_current = preview->preview_w_current;
 
   g_assert (preview_w_current != NULL);
   
@@ -481,7 +481,7 @@ preview_get_property (GObject *object,
                       GParamSpec *pspec)
 {
   Preview *preview = PREVIEW (object);
-  GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
+  GschemToplevel *preview_w_current = preview->preview_w_current;
 
   switch(property_id) {
       case PROP_FILENAME:
@@ -503,7 +503,7 @@ static void
 preview_dispose (GObject *self)
 {
   Preview *preview = PREVIEW (self);
-  GSCHEM_TOPLEVEL *preview_w_current = preview->preview_w_current;
+  GschemToplevel *preview_w_current = preview->preview_w_current;
 
   if (preview_w_current != NULL) {
     preview_w_current->drawing_area = NULL;

@@ -32,7 +32,7 @@
  *  \par Function Description
  *
  */
-void o_move_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_iter;
@@ -79,7 +79,7 @@ void o_move_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-static void o_move_end_lowlevel_glist (GSCHEM_TOPLEVEL *w_current,
+static void o_move_end_lowlevel_glist (GschemToplevel *w_current,
                                        GList *list,
                                        int diff_x, int diff_y)
 {
@@ -100,7 +100,7 @@ static void o_move_end_lowlevel_glist (GSCHEM_TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-void o_move_end_lowlevel (GSCHEM_TOPLEVEL *w_current,
+void o_move_end_lowlevel (GschemToplevel *w_current,
                          OBJECT *object,
                          int diff_x, int diff_y)
 {
@@ -127,7 +127,7 @@ void o_move_end_lowlevel (GSCHEM_TOPLEVEL *w_current,
  *  \par Function Description
  *
  */
-void o_move_end(GSCHEM_TOPLEVEL *w_current)
+void o_move_end(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_current = NULL;
@@ -232,7 +232,7 @@ void o_move_end(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_move_cancel (GSCHEM_TOPLEVEL *w_current)
+void o_move_cancel (GschemToplevel *w_current)
 {
   GList *s_iter;
 
@@ -261,7 +261,7 @@ void o_move_cancel (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void o_move_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *selection, *s_current;
@@ -326,7 +326,7 @@ void o_move_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-void o_move_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
+void o_move_invalidate_rubber (GschemToplevel *w_current, int drawing)
 {
   GList *s_iter;
   int dx1, dx2, dy1, dy2;
@@ -371,7 +371,7 @@ void o_move_invalidate_rubber (GSCHEM_TOPLEVEL *w_current, int drawing)
  *
  */
 void
-o_move_draw_rubber (GSCHEM_TOPLEVEL *w_current,
+o_move_draw_rubber (GschemToplevel *w_current,
                     EdaRenderer *renderer)
 {
   GList *s_iter;
@@ -441,7 +441,7 @@ int o_move_return_whichone(OBJECT * object, int x, int y)
  *  \par Function Description
  *
  */
-void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
+void o_move_check_endpoint(GschemToplevel *w_current, OBJECT * object)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *cl_current;
@@ -531,7 +531,7 @@ void o_move_check_endpoint(GSCHEM_TOPLEVEL *w_current, OBJECT * object)
  *  \par Function Description
  *
  */
-void o_move_prep_rubberband(GSCHEM_TOPLEVEL *w_current)
+void o_move_prep_rubberband(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_current;
@@ -594,7 +594,7 @@ int o_move_zero_length(OBJECT * object)
  *  \par Function Description
  *
  */
-void o_move_end_rubberband (GSCHEM_TOPLEVEL *w_current,
+void o_move_end_rubberband (GschemToplevel *w_current,
                             int w_dx, int w_dy,
                             GList** objects)
 {

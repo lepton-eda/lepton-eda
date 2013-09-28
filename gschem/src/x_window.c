@@ -35,7 +35,7 @@
  *  \par Function Description
  *
  */
-void x_window_setup (GSCHEM_TOPLEVEL *w_current)
+void x_window_setup (GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
 
@@ -74,7 +74,7 @@ void x_window_setup (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_window_setup_gc(GSCHEM_TOPLEVEL *w_current)
+void x_window_setup_gc(GschemToplevel *w_current)
 {
   w_current->gc = gdk_gc_new(w_current->window);
 
@@ -89,7 +89,7 @@ void x_window_setup_gc(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_window_free_gc(GSCHEM_TOPLEVEL *w_current)
+void x_window_free_gc(GschemToplevel *w_current)
 {
   gdk_gc_unref(w_current->gc);
 }
@@ -99,7 +99,7 @@ void x_window_free_gc(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_window_create_drawing(GtkWidget *drawbox, GSCHEM_TOPLEVEL *w_current)
+void x_window_create_drawing(GtkWidget *drawbox, GschemToplevel *w_current)
 {
   /* drawing next */
   w_current->drawing_area = gtk_drawing_area_new ();
@@ -131,7 +131,7 @@ void x_window_create_drawing(GtkWidget *drawbox, GSCHEM_TOPLEVEL *w_current)
  *
  * \param [in] w_current The toplevel environment.
  */
-void x_window_setup_draw_events(GSCHEM_TOPLEVEL *w_current)
+void x_window_setup_draw_events(GschemToplevel *w_current)
 {
   struct event_reg_t {
     gchar *detailed_signal;
@@ -187,7 +187,7 @@ void x_window_setup_draw_events(GSCHEM_TOPLEVEL *w_current)
  * \param w_current Schematic top level
  * \return Pointer to the new GtkImage object.
  */
-static GtkWidget *x_window_stock_pixmap(const char *stock, GSCHEM_TOPLEVEL *w_current)
+static GtkWidget *x_window_stock_pixmap(const char *stock, GschemToplevel *w_current)
 {
   GtkWidget *wpixmap = NULL;
   GtkStockItem item;
@@ -211,7 +211,7 @@ static GtkWidget *x_window_stock_pixmap(const char *stock, GSCHEM_TOPLEVEL *w_cu
 
 static void x_window_invoke_macro(GtkEntry *entry, void *userdata)
 {
-  GSCHEM_TOPLEVEL *w_current = userdata;
+  GschemToplevel *w_current = userdata;
   SCM interpreter;
 
   interpreter = scm_list_2(scm_from_utf8_symbol("invoke-macro"),
@@ -231,7 +231,7 @@ static void x_window_invoke_macro(GtkEntry *entry, void *userdata)
  *  \par Function Description
  *
  */
-void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
+void x_window_create_main(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
 
@@ -527,7 +527,7 @@ void x_window_create_main(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_window_close(GSCHEM_TOPLEVEL *w_current)
+void x_window_close(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   gboolean last_window = FALSE;
@@ -645,14 +645,14 @@ void x_window_close(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_window_close_all(GSCHEM_TOPLEVEL *w_current)
+void x_window_close_all(GschemToplevel *w_current)
 {
-  GSCHEM_TOPLEVEL *current;
+  GschemToplevel *current;
   GList *list_copy, *iter;
 
   iter = list_copy = g_list_copy (global_window_list);
   while (iter != NULL ) {
-    current = (GSCHEM_TOPLEVEL *)iter->data;
+    current = (GschemToplevel *)iter->data;
     iter = g_list_next (iter);
     x_window_close (current);
   }
@@ -683,7 +683,7 @@ void x_window_close_all(GSCHEM_TOPLEVEL *w_current)
  *  does not conflict with a file on disk.
  */
 PAGE*
-x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
+x_window_open_page (GschemToplevel *w_current, const gchar *filename)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   PAGE *old_current, *page;
@@ -789,7 +789,7 @@ x_window_open_page (GSCHEM_TOPLEVEL *w_current, const gchar *filename)
  *  \param [in] page      The page to become current page.
  */
 void
-x_window_set_current_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
+x_window_set_current_page (GschemToplevel *w_current, PAGE *page)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
 
@@ -832,7 +832,7 @@ x_window_set_current_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
  *  \returns 1 on success, 0 otherwise.
  */
 gint
-x_window_save_page (GSCHEM_TOPLEVEL *w_current, PAGE *page, const gchar *filename)
+x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   PAGE *old_current;
@@ -913,7 +913,7 @@ x_window_save_page (GSCHEM_TOPLEVEL *w_current, PAGE *page, const gchar *filenam
  *  \param [in] page      The page to close.
  */
 void
-x_window_close_page (GSCHEM_TOPLEVEL *w_current, PAGE *page)
+x_window_close_page (GschemToplevel *w_current, PAGE *page)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   PAGE *new_current = NULL;

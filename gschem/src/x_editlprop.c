@@ -470,7 +470,7 @@ static void
 line_type_changed (GtkWidget *widget, EditLProp *dialog)
 {
   TOPLEVEL *toplevel;
-  GSCHEM_TOPLEVEL *w_current;
+  GschemToplevel *w_current;
 
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
@@ -514,7 +514,7 @@ static void
 line_width_changed (GtkWidget *widget, EditLProp *dialog)
 {
   TOPLEVEL *toplevel;
-  GSCHEM_TOPLEVEL *w_current;
+  GschemToplevel *w_current;
 
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
@@ -563,7 +563,7 @@ line_width_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialo
 
   if (dialog->line_width_changed) {
     TOPLEVEL *toplevel;
-    GSCHEM_TOPLEVEL *w_current;
+    GschemToplevel *w_current;
 
     w_current = dialog->parent.w_current;
     g_return_val_if_fail (w_current != NULL, FALSE);
@@ -609,7 +609,7 @@ static void
 dash_length_changed (GtkWidget *widget, EditLProp *dialog)
 {
   TOPLEVEL *toplevel;
-  GSCHEM_TOPLEVEL *w_current;
+  GschemToplevel *w_current;
 
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
@@ -662,7 +662,7 @@ dash_length_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dial
 
   if (dialog->dash_length_changed) {
     TOPLEVEL *toplevel;
-    GSCHEM_TOPLEVEL *w_current;
+    GschemToplevel *w_current;
 
     w_current = dialog->parent.w_current;
     g_return_val_if_fail (w_current != NULL, FALSE);
@@ -708,7 +708,7 @@ static void
 dash_space_changed (GtkWidget *widget, EditLProp *dialog)
 {
   TOPLEVEL *toplevel;
-  GSCHEM_TOPLEVEL *w_current;
+  GschemToplevel *w_current;
 
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
@@ -761,7 +761,7 @@ dash_space_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialo
 
   if (dialog->dash_space_changed) {
     TOPLEVEL *toplevel;
-    GSCHEM_TOPLEVEL *w_current;
+    GschemToplevel *w_current;
 
     w_current = dialog->parent.w_current;
     g_return_val_if_fail (w_current != NULL, FALSE);
@@ -801,7 +801,7 @@ static void
 cap_style_changed (GtkWidget *widget, EditLProp *dialog)
 {
   TOPLEVEL *toplevel;
-  GSCHEM_TOPLEVEL *w_current;
+  GschemToplevel *w_current;
 
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (widget != NULL);
@@ -1108,7 +1108,7 @@ update_line_width (EditLProp *dialog)
  *  \param [in] w_current The gschem toplevel
  */
 void
-line_type_dialog (GSCHEM_TOPLEVEL *w_current)
+line_type_dialog (GschemToplevel *w_current)
 {
   g_return_if_fail (w_current != NULL);
 

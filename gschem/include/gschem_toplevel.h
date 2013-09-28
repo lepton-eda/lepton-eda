@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-typedef struct st_gschem_toplevel GSCHEM_TOPLEVEL;
+typedef struct st_gschem_toplevel GschemToplevel;
 
 struct st_gschem_toplevel {
 
@@ -239,37 +239,37 @@ struct st_gschem_toplevel {
 
 
 void
-gschem_toplevel_free (GSCHEM_TOPLEVEL *w_current);
+gschem_toplevel_free (GschemToplevel *w_current);
 
 GtkListStore*
-gschem_toplevel_get_dash_length_list_store (GSCHEM_TOPLEVEL *w_current);
+gschem_toplevel_get_dash_length_list_store (GschemToplevel *w_current);
 
 GtkListStore*
-gschem_toplevel_get_dash_space_list_store (GSCHEM_TOPLEVEL *w_current);
+gschem_toplevel_get_dash_space_list_store (GschemToplevel *w_current);
 
 GtkListStore*
-gschem_toplevel_get_fill_angle_list_store (GSCHEM_TOPLEVEL *w_current);
+gschem_toplevel_get_fill_angle_list_store (GschemToplevel *w_current);
 
 GtkListStore*
-gschem_toplevel_get_fill_pitch_list_store (GSCHEM_TOPLEVEL *w_current);
+gschem_toplevel_get_fill_pitch_list_store (GschemToplevel *w_current);
 
 GtkListStore*
-gschem_toplevel_get_fill_width_list_store (GSCHEM_TOPLEVEL *w_current);
+gschem_toplevel_get_fill_width_list_store (GschemToplevel *w_current);
 
 GtkListStore*
-gschem_toplevel_get_line_width_list_store (GSCHEM_TOPLEVEL *w_current);
+gschem_toplevel_get_line_width_list_store (GschemToplevel *w_current);
 
 GschemSelectionAdapter*
-gschem_toplevel_get_selection_adapter (GSCHEM_TOPLEVEL *w_current);
+gschem_toplevel_get_selection_adapter (GschemToplevel *w_current);
 
 GtkListStore*
-gschem_toplevel_get_text_size_list_store (GSCHEM_TOPLEVEL *w_current);
+gschem_toplevel_get_text_size_list_store (GschemToplevel *w_current);
 
-GSCHEM_TOPLEVEL*
+GschemToplevel*
 gschem_toplevel_new ();
 
 void
-gschem_toplevel_page_changed (GSCHEM_TOPLEVEL *w_current);
+gschem_toplevel_page_changed (GschemToplevel *w_current);
 
 void
-gschem_toplevel_set_toplevel (GSCHEM_TOPLEVEL *w_current, TOPLEVEL *toplevel);
+gschem_toplevel_set_toplevel (GschemToplevel *w_current, TOPLEVEL *toplevel);

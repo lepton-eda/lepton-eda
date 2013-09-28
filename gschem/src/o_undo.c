@@ -73,7 +73,7 @@ void o_undo_init(void)
  *    <DT>*</DT><DD>UNDO_VIEWPORT_ONLY
  *  </DL>
  */
-void o_undo_savestate(GSCHEM_TOPLEVEL *w_current, int flag)
+void o_undo_savestate(GschemToplevel *w_current, int flag)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   char *filename = NULL;
@@ -290,7 +290,7 @@ GList *o_undo_find_prev_object_head (UNDO *start)
  *    <DT>*</DT><DD>REDO_ACTION
  *  </DL>
  */
-void o_undo_callback(GSCHEM_TOPLEVEL *w_current, int type)
+void o_undo_callback(GschemToplevel *w_current, int type)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   UNDO *u_current;
@@ -482,7 +482,7 @@ void o_undo_cleanup(void)
  *  \par Function Description
  *
  */
-void o_undo_remove_last_undo(GSCHEM_TOPLEVEL *w_current)
+void o_undo_remove_last_undo(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   if (toplevel->page_current->undo_current == NULL) {

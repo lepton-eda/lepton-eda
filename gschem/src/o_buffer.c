@@ -27,7 +27,7 @@
 #endif
 
 static void
-selection_to_buffer(GSCHEM_TOPLEVEL *w_current, int buf_num)
+selection_to_buffer(GschemToplevel *w_current, int buf_num)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *s_current = NULL;
@@ -48,7 +48,7 @@ selection_to_buffer(GSCHEM_TOPLEVEL *w_current, int buf_num)
  *  \par Function Description
  *
  */
-void o_buffer_copy(GSCHEM_TOPLEVEL *w_current, int buf_num)
+void o_buffer_copy(GschemToplevel *w_current, int buf_num)
 {
   if (buf_num < 0 || buf_num >= MAX_BUFFERS) {
     g_warning (_("o_buffer_copy: Invalid buffer %i\n"), buf_num);
@@ -63,7 +63,7 @@ void o_buffer_copy(GSCHEM_TOPLEVEL *w_current, int buf_num)
  *  \par Function Description
  *
  */
-void o_buffer_cut(GSCHEM_TOPLEVEL *w_current, int buf_num)
+void o_buffer_cut(GschemToplevel *w_current, int buf_num)
 {
   if (buf_num < 0 || buf_num >= MAX_BUFFERS) {
     g_warning (_("o_buffer_cut: Invalid buffer %i\n"), buf_num);
@@ -79,7 +79,7 @@ void o_buffer_cut(GSCHEM_TOPLEVEL *w_current, int buf_num)
  *  \par Function Description
  *
  */
-void o_buffer_paste_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y,
+void o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y,
                           int buf_num)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -147,7 +147,7 @@ void o_buffer_init(void)
  *  \par Function Description
  *
  */
-void o_buffer_free(GSCHEM_TOPLEVEL *w_current)
+void o_buffer_free(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int i;

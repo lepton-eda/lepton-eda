@@ -35,10 +35,10 @@
  *  This function actually updates the status bar 
  *  widget with the new string.
  *
- *  \param [in] w_current GSCHEM_TOPLEVEL structure
+ *  \param [in] w_current GschemToplevel structure
  *  \param [in] string The new string to be shown in the status bar
  */
-static void i_update_status(GSCHEM_TOPLEVEL *w_current, const char *string)
+static void i_update_status(GschemToplevel *w_current, const char *string)
 {
   if (!w_current->status_label)
     return;
@@ -56,12 +56,12 @@ static void i_update_status(GSCHEM_TOPLEVEL *w_current, const char *string)
  *  Returns a string describing the currently
  *  selected mode.
  *
- *  \param [in] w_current GSCHEM_TOPLEVEL structure
+ *  \param [in] w_current GschemToplevel structure
  *  \returns a string that will only last until the next time
  *   the function is called (which is probably just fine, really)
  *   *EK* Egil Kvaleberg
  */
-static const char *i_status_string(GSCHEM_TOPLEVEL *w_current)
+static const char *i_status_string(GschemToplevel *w_current)
 {
   static char *buf = 0;
 
@@ -155,10 +155,10 @@ static const char *i_status_string(GSCHEM_TOPLEVEL *w_current)
  *  Show state field on screen, possibly with the 
  *  addition of an extra message
  *
- *  \param [in] w_current GSCHEM_TOPLEVEL structure
+ *  \param [in] w_current GschemToplevel structure
  *  \param [in] message The string to be displayed 
  */
-void i_show_state(GSCHEM_TOPLEVEL *w_current, const char *message)
+void i_show_state(GschemToplevel *w_current, const char *message)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   gchar *what_to_say;
@@ -202,11 +202,11 @@ void i_show_state(GSCHEM_TOPLEVEL *w_current, const char *message)
  *  \par Function Description
  *  Set new state, then show state field.
  *
- *  \param [in] w_current GSCHEM_TOPLEVEL structure
+ *  \param [in] w_current GschemToplevel structure
  *  \param [in] newstate The new state
  *   *EK* Egil Kvaleberg
  */
-void i_set_state(GSCHEM_TOPLEVEL *w_current, enum x_states newstate)
+void i_set_state(GschemToplevel *w_current, enum x_states newstate)
 {
   i_set_state_msg(w_current, newstate, NULL);
 }
@@ -218,12 +218,12 @@ void i_set_state(GSCHEM_TOPLEVEL *w_current, enum x_states newstate)
  *  Set new state, then show state field including some
  *  message.
  *
- *  \param [in] w_current GSCHEM_TOPLEVEL structure
+ *  \param [in] w_current GschemToplevel structure
  *  \param [in] newstate The new state
  *  \param [in] message Message to be shown
  *   *EK* Egil Kvaleberg
  */
-void i_set_state_msg(GSCHEM_TOPLEVEL *w_current, enum x_states newstate,
+void i_set_state_msg(GschemToplevel *w_current, enum x_states newstate,
 		     const char *message)
 {
   w_current->event_state = newstate;
@@ -235,7 +235,7 @@ void i_set_state_msg(GSCHEM_TOPLEVEL *w_current, enum x_states newstate,
  *  \par Function Description
  *
  */
-void i_update_middle_button(GSCHEM_TOPLEVEL *w_current,
+void i_update_middle_button(GschemToplevel *w_current,
 			    void (*func_ptr)(),
 			    const char *string)
 {
@@ -285,10 +285,10 @@ void i_update_middle_button(GSCHEM_TOPLEVEL *w_current,
 
 /*! \todo Finish function documentation!!!
  *  \brief
- *  \param [in] w_current GSCHEM_TOPLEVEL structure
+ *  \param [in] w_current GschemToplevel structure
  *
  */
-void i_update_toolbar(GSCHEM_TOPLEVEL *w_current)
+void i_update_toolbar(GschemToplevel *w_current)
 {
   if (!w_current->toolbars) 
 	return;
@@ -367,12 +367,12 @@ void i_update_toolbar(GSCHEM_TOPLEVEL *w_current)
  */
 static void clipboard_usable_cb (int usable, void *userdata)
 {
-  GSCHEM_TOPLEVEL *w_current = userdata;
+  GschemToplevel *w_current = userdata;
   x_menus_sensitivity (w_current, "_Edit/_Paste", usable);
 }
 
 static gboolean
-selected_at_least_one_text_object(GSCHEM_TOPLEVEL *w_current)
+selected_at_least_one_text_object(GschemToplevel *w_current)
 {
   OBJECT *obj;
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -393,9 +393,9 @@ selected_at_least_one_text_object(GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *  Update sensitivity of relevant menu items.
  *
- *  \param [in] w_current GSCHEM_TOPLEVEL structure
+ *  \param [in] w_current GschemToplevel structure
  */
-void i_update_menus(GSCHEM_TOPLEVEL *w_current)
+void i_update_menus(GschemToplevel *w_current)
 {
   gboolean have_text_selected;
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -522,10 +522,10 @@ void i_update_menus(GSCHEM_TOPLEVEL *w_current)
  *  Set filename as gschem window title using
  *  the gnome HID format style.
  *
- *  \param [in] w_current GSCHEM_TOPLEVEL structure
+ *  \param [in] w_current GschemToplevel structure
  *  \param [in] string The filename
  */
-void i_set_filename(GSCHEM_TOPLEVEL *w_current, const gchar *string)
+void i_set_filename(GschemToplevel *w_current, const gchar *string)
 {
   gchar *print_string=NULL;
   gchar *filename=NULL;
@@ -554,9 +554,9 @@ void i_set_filename(GSCHEM_TOPLEVEL *w_current, const gchar *string)
  *  and prints it to the status bar.
  *  The format is "Grid([SnapGridSize],[CurrentGridSize])"
  *
- *  \param [in] w_current GSCHEM_TOPLEVEL structure
+ *  \param [in] w_current GschemToplevel structure
  */
-void i_update_grid_info (GSCHEM_TOPLEVEL *w_current)
+void i_update_grid_info (GschemToplevel *w_current)
 {
   gchar *print_string=NULL;
   gchar *snap=NULL;

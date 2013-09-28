@@ -65,7 +65,7 @@
  */
 DEFINE_I_CALLBACK(file_new)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*)data;
+  GschemToplevel *w_current = (GschemToplevel*)data;
   PAGE *page;
 
   g_return_if_fail (w_current != NULL);
@@ -86,7 +86,7 @@ DEFINE_I_CALLBACK(file_new)
  */
 void i_callback_toolbar_file_new(GtkWidget* widget, gpointer data)
 {
-  g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "file-new");
+  g_action_eval_by_name ((GschemToplevel *) data, "file-new");
 }
 
 /*! \todo Finish function documentation!!!
@@ -96,7 +96,7 @@ void i_callback_toolbar_file_new(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(file_new_window)
 {
-  GSCHEM_TOPLEVEL *w_current;
+  GschemToplevel *w_current;
   PAGE *page;
 
   w_current = gschem_toplevel_new ();
@@ -132,7 +132,7 @@ DEFINE_I_CALLBACK(file_new_window)
  */
 DEFINE_I_CALLBACK(file_open)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -151,7 +151,7 @@ DEFINE_I_CALLBACK(file_open)
  */
 void i_callback_toolbar_file_open(GtkWidget* widget, gpointer data)
 {
-  g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "file-open");
+  g_action_eval_by_name ((GschemToplevel *) data, "file-open");
 }
 
 /*! \todo Finish function documentation!!!
@@ -161,7 +161,7 @@ void i_callback_toolbar_file_open(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(file_script)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
   setup_script_selector(w_current);
@@ -178,7 +178,7 @@ DEFINE_I_CALLBACK(file_script)
  */
 DEFINE_I_CALLBACK(file_save)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   PAGE *page;
   EdaConfig *cfg;
   gchar *untitled_name;
@@ -211,7 +211,7 @@ DEFINE_I_CALLBACK(file_save)
  */
 void i_callback_toolbar_file_save(GtkWidget* widget, gpointer data)
 {
-  g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "file-save");
+  g_action_eval_by_name ((GschemToplevel *) data, "file-save");
 }
 
 /*! \todo Finish function documentation!!!
@@ -224,7 +224,7 @@ void i_callback_toolbar_file_save(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(file_save_all)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -246,7 +246,7 @@ DEFINE_I_CALLBACK(file_save_all)
  */
 DEFINE_I_CALLBACK(file_save_as)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
   x_fileselect_save (w_current);
@@ -259,7 +259,7 @@ DEFINE_I_CALLBACK(file_save_as)
  */
 DEFINE_I_CALLBACK(file_print)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   x_print (w_current);
 }
 
@@ -270,7 +270,7 @@ DEFINE_I_CALLBACK(file_print)
  */
 DEFINE_I_CALLBACK(file_write_png)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -289,7 +289,7 @@ DEFINE_I_CALLBACK(file_write_png)
  */
 DEFINE_I_CALLBACK(file_close)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -309,7 +309,7 @@ DEFINE_I_CALLBACK(file_close)
  */
 int i_callback_close(gpointer data, guint callback_action, GtkWidget *widget)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_val_if_fail ((w_current != NULL), FALSE);
   i_callback_file_close(w_current, 0, widget);
@@ -323,7 +323,7 @@ int i_callback_close(gpointer data, guint callback_action, GtkWidget *widget)
  */
 DEFINE_I_CALLBACK(file_quit)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
   x_window_close_all(w_current);
@@ -337,7 +337,7 @@ DEFINE_I_CALLBACK(file_quit)
  */
 DEFINE_I_CALLBACK(edit_undo)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   /* If we're cancelling from a move action, re-wind the
    * page contents back to their state before we started.
@@ -367,7 +367,7 @@ DEFINE_I_CALLBACK(edit_undo)
  */
 void i_callback_toolbar_edit_undo(GtkWidget* widget, gpointer data)
 {
-  g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "edit-undo");
+  g_action_eval_by_name ((GschemToplevel *) data, "edit-undo");
 }
 
 /*! \todo Finish function documentation!!!
@@ -377,7 +377,7 @@ void i_callback_toolbar_edit_undo(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(edit_redo)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   o_undo_callback(w_current, REDO_ACTION);
 }
@@ -392,7 +392,7 @@ DEFINE_I_CALLBACK(edit_redo)
  */
 void i_callback_toolbar_edit_redo(GtkWidget* widget, gpointer data)
 {
-  g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "edit-redo");
+  g_action_eval_by_name ((GschemToplevel *) data, "edit-redo");
 }
 
 /*! \todo Finish function documentation!!!
@@ -404,7 +404,7 @@ void i_callback_toolbar_edit_redo(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(edit_select)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   o_redraw_cleanstates(w_current);	
 
   /* this is probably the only place this should be */
@@ -423,7 +423,7 @@ DEFINE_I_CALLBACK(edit_select)
  */
 void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   g_return_if_fail (w_current != NULL);
   if (!w_current->window) return;
 
@@ -441,7 +441,7 @@ void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK (edit_select_all)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) data;
+  GschemToplevel *w_current = (GschemToplevel *) data;
   o_redraw_cleanstates (w_current);
 
   o_select_visible_unlocked (w_current);
@@ -458,7 +458,7 @@ DEFINE_I_CALLBACK (edit_select_all)
  */
 DEFINE_I_CALLBACK (edit_deselect)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) data;
+  GschemToplevel *w_current = (GschemToplevel *) data;
   o_redraw_cleanstates (w_current);
 
   o_select_unselect_all (w_current);
@@ -476,7 +476,7 @@ DEFINE_I_CALLBACK (edit_deselect)
  */
 DEFINE_I_CALLBACK(edit_copy)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
@@ -507,7 +507,7 @@ DEFINE_I_CALLBACK(edit_copy)
  */
 DEFINE_I_CALLBACK(edit_mcopy)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
@@ -539,7 +539,7 @@ DEFINE_I_CALLBACK(edit_mcopy)
  */
 DEFINE_I_CALLBACK(edit_move)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
@@ -570,7 +570,7 @@ DEFINE_I_CALLBACK(edit_move)
  */
 DEFINE_I_CALLBACK(edit_delete)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -595,7 +595,7 @@ DEFINE_I_CALLBACK(edit_delete)
  */
 DEFINE_I_CALLBACK(edit_edit)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -610,7 +610,7 @@ DEFINE_I_CALLBACK(edit_edit)
  */
 DEFINE_I_CALLBACK(edit_pin_type)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -628,7 +628,7 @@ DEFINE_I_CALLBACK(edit_pin_type)
  */
 DEFINE_I_CALLBACK(edit_text)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   OBJECT *object;
 
   g_return_if_fail (w_current != NULL);
@@ -649,7 +649,7 @@ DEFINE_I_CALLBACK(edit_text)
  */
 DEFINE_I_CALLBACK(edit_slot)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   OBJECT *object;
 
   g_return_if_fail (w_current != NULL);
@@ -669,7 +669,7 @@ DEFINE_I_CALLBACK(edit_slot)
  */
 DEFINE_I_CALLBACK(edit_color)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -686,7 +686,7 @@ DEFINE_I_CALLBACK(edit_color)
  */
 DEFINE_I_CALLBACK(edit_rotate_90)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gint wx, wy;
   GList *object_list;
 
@@ -740,7 +740,7 @@ DEFINE_I_CALLBACK(edit_rotate_90)
  */
 DEFINE_I_CALLBACK(edit_mirror)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gint wx, wy;
   GList *object_list;
 
@@ -775,7 +775,7 @@ DEFINE_I_CALLBACK(edit_mirror)
  */
 DEFINE_I_CALLBACK(edit_lock)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -793,7 +793,7 @@ DEFINE_I_CALLBACK(edit_lock)
  */
 DEFINE_I_CALLBACK(edit_unlock)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -810,7 +810,7 @@ DEFINE_I_CALLBACK(edit_unlock)
  */
 DEFINE_I_CALLBACK(edit_translate)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -838,7 +838,7 @@ DEFINE_I_CALLBACK(edit_translate)
 
 DEFINE_I_CALLBACK(edit_invoke_macro)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -854,7 +854,7 @@ DEFINE_I_CALLBACK(edit_invoke_macro)
  */
 DEFINE_I_CALLBACK(edit_embed)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   OBJECT *o_current;
 
   g_return_if_fail (w_current != NULL);
@@ -893,7 +893,7 @@ DEFINE_I_CALLBACK(edit_embed)
  */
 DEFINE_I_CALLBACK(edit_unembed)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   OBJECT *o_current;
 
   g_return_if_fail (w_current != NULL);
@@ -932,7 +932,7 @@ DEFINE_I_CALLBACK(edit_unembed)
  */
 DEFINE_I_CALLBACK(edit_update)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *selection;
   GList *selected_components = NULL;
@@ -976,7 +976,7 @@ DEFINE_I_CALLBACK(edit_update)
  */
 DEFINE_I_CALLBACK(edit_show_hidden)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1000,7 +1000,7 @@ DEFINE_I_CALLBACK(edit_show_hidden)
  */
 DEFINE_I_CALLBACK(edit_find)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1019,7 +1019,7 @@ DEFINE_I_CALLBACK(edit_find)
  */
 DEFINE_I_CALLBACK(edit_hide_text)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1038,7 +1038,7 @@ DEFINE_I_CALLBACK(edit_hide_text)
  */
 DEFINE_I_CALLBACK(edit_show_text)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1057,7 +1057,7 @@ DEFINE_I_CALLBACK(edit_show_text)
  */
 DEFINE_I_CALLBACK(edit_autonumber_text)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1076,7 +1076,7 @@ DEFINE_I_CALLBACK(edit_autonumber_text)
  */
 DEFINE_I_CALLBACK(edit_linetype)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1090,7 +1090,7 @@ DEFINE_I_CALLBACK(edit_linetype)
  */
 DEFINE_I_CALLBACK(edit_filltype)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1108,7 +1108,7 @@ DEFINE_I_CALLBACK(edit_filltype)
  */
 DEFINE_I_CALLBACK(view_redraw)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
   o_invalidate_all (w_current);
@@ -1123,7 +1123,7 @@ DEFINE_I_CALLBACK(view_redraw)
  */
 DEFINE_I_CALLBACK(view_zoom_full)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1144,7 +1144,7 @@ DEFINE_I_CALLBACK(view_zoom_full)
  */
 DEFINE_I_CALLBACK(view_zoom_extents)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1165,7 +1165,7 @@ DEFINE_I_CALLBACK(view_zoom_extents)
  */
 DEFINE_I_CALLBACK(view_zoom_box)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
@@ -1192,7 +1192,7 @@ DEFINE_I_CALLBACK(view_zoom_box)
  */
 DEFINE_I_CALLBACK(view_zoom_in)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1214,7 +1214,7 @@ DEFINE_I_CALLBACK(view_zoom_in)
  */
 DEFINE_I_CALLBACK(view_zoom_out)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1234,7 +1234,7 @@ DEFINE_I_CALLBACK(view_zoom_out)
  */
 DEFINE_I_CALLBACK(view_pan)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
@@ -1259,7 +1259,7 @@ DEFINE_I_CALLBACK(view_pan)
  */
 DEFINE_I_CALLBACK(view_pan_left)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1272,7 +1272,7 @@ DEFINE_I_CALLBACK(view_pan_left)
  */
 DEFINE_I_CALLBACK(view_pan_right)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1286,7 +1286,7 @@ DEFINE_I_CALLBACK(view_pan_right)
  */
 DEFINE_I_CALLBACK(view_pan_up)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1299,7 +1299,7 @@ DEFINE_I_CALLBACK(view_pan_up)
  */
 DEFINE_I_CALLBACK(view_pan_down)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1314,7 +1314,7 @@ DEFINE_I_CALLBACK(view_pan_down)
  */
 DEFINE_I_CALLBACK (view_dark_colors)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   x_color_free ();
   /* Change the scheme here */
@@ -1331,7 +1331,7 @@ DEFINE_I_CALLBACK (view_dark_colors)
  */
 DEFINE_I_CALLBACK (view_light_colors)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   x_color_free ();
   /* Change the scheme here */
@@ -1348,7 +1348,7 @@ DEFINE_I_CALLBACK (view_light_colors)
  */
 DEFINE_I_CALLBACK (view_bw_colors)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   x_color_free ();
   /* Change the scheme here */
@@ -1366,7 +1366,7 @@ DEFINE_I_CALLBACK (view_bw_colors)
  */
 DEFINE_I_CALLBACK(page_manager)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1380,7 +1380,7 @@ DEFINE_I_CALLBACK(page_manager)
  */
 DEFINE_I_CALLBACK(page_next)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*)data;
+  GschemToplevel *w_current = (GschemToplevel*)data;
   TOPLEVEL *toplevel = w_current->toplevel;
   PAGE *p_current = toplevel->page_current;
   PAGE *p_new;
@@ -1415,7 +1415,7 @@ DEFINE_I_CALLBACK(page_next)
  */
 DEFINE_I_CALLBACK(page_prev)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*)data;
+  GschemToplevel *w_current = (GschemToplevel*)data;
   TOPLEVEL *toplevel = w_current->toplevel;
   PAGE *p_current = toplevel->page_current;
   PAGE *p_new;
@@ -1451,7 +1451,7 @@ DEFINE_I_CALLBACK(page_prev)
  */
 DEFINE_I_CALLBACK(page_close)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1470,7 +1470,7 @@ DEFINE_I_CALLBACK(page_close)
  */
 DEFINE_I_CALLBACK(page_revert)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   PAGE *page;
   gchar *filename;
   int page_control;
@@ -1523,7 +1523,7 @@ DEFINE_I_CALLBACK(page_revert)
  */
 DEFINE_I_CALLBACK(page_print)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   s_page_print_all(w_current->toplevel);
 }
@@ -1535,7 +1535,7 @@ DEFINE_I_CALLBACK(page_print)
  */
 DEFINE_I_CALLBACK(clipboard_copy)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
   if (!o_select_selected (w_current)) return;
@@ -1553,7 +1553,7 @@ DEFINE_I_CALLBACK(clipboard_copy)
  */
 DEFINE_I_CALLBACK(clipboard_cut)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
   if (!o_select_selected (w_current)) return;
@@ -1571,7 +1571,7 @@ DEFINE_I_CALLBACK(clipboard_cut)
  */
 DEFINE_I_CALLBACK(clipboard_paste)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) data;
+  GschemToplevel *w_current = (GschemToplevel *) data;
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *object_list = NULL;
 
@@ -1609,7 +1609,7 @@ i_callback_buffer_copy (gpointer data, guint callback_action,
                         GtkWidget *widget, int n,
                         void (*f)(gpointer, guint, GtkWidget *))
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gchar *msg;
 
   g_return_if_fail (w_current != NULL);
@@ -1636,7 +1636,7 @@ i_callback_buffer_cut (gpointer data, guint callback_action,
                        GtkWidget *widget, int n,
                        void (*f)(gpointer, guint, GtkWidget *))
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gchar *msg;
 
   g_return_if_fail (w_current != NULL);
@@ -1663,7 +1663,7 @@ i_callback_buffer_paste (gpointer data, guint callback_action,
                          GtkWidget *widget, int n,
                          void (*f)(gpointer, guint, GtkWidget *))
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gchar *msg;
 
   /* Choose a default position to start pasting. This is required to
@@ -1723,7 +1723,7 @@ DEFINE_I_CALLBACK_BUF(paste,5)
  */
 DEFINE_I_CALLBACK(add_component)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1747,7 +1747,7 @@ DEFINE_I_CALLBACK(add_component)
  */
 void i_callback_toolbar_add_component(GtkWidget* widget, gpointer data)
 {
-  g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "add-component");
+  g_action_eval_by_name ((GschemToplevel *) data, "add-component");
 }
 
 /*! \todo Finish function documentation!!!
@@ -1757,7 +1757,7 @@ void i_callback_toolbar_add_component(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(add_attribute)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1777,7 +1777,7 @@ DEFINE_I_CALLBACK(add_attribute)
  */
 DEFINE_I_CALLBACK(add_net)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
@@ -1813,7 +1813,7 @@ DEFINE_I_CALLBACK(add_net)
 void i_callback_toolbar_add_net(GtkWidget* widget, gpointer data)
 {
   if (GTK_TOGGLE_BUTTON (widget)->active) {
-    g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "add-net");
+    g_action_eval_by_name ((GschemToplevel *) data, "add-net");
   }
 }
 
@@ -1824,7 +1824,7 @@ void i_callback_toolbar_add_net(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(add_bus)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
@@ -1859,7 +1859,7 @@ DEFINE_I_CALLBACK(add_bus)
 void i_callback_toolbar_add_bus(GtkWidget* widget, gpointer data)
 {
   if (GTK_TOGGLE_BUTTON (widget)->active) {
-    g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "add-bus");
+    g_action_eval_by_name ((GschemToplevel *) data, "add-bus");
   }
 }
 
@@ -1870,7 +1870,7 @@ void i_callback_toolbar_add_bus(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(add_text)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
   
@@ -1894,7 +1894,7 @@ DEFINE_I_CALLBACK(add_text)
  */
 void i_callback_toolbar_add_text(GtkWidget* widget, gpointer data)
 {
-  g_action_eval_by_name ((GSCHEM_TOPLEVEL *) data, "add-text");
+  g_action_eval_by_name ((GschemToplevel *) data, "add-text");
 }
 
 /*! \todo Finish function documentation!!!
@@ -1904,7 +1904,7 @@ void i_callback_toolbar_add_text(GtkWidget* widget, gpointer data)
  */
 DEFINE_I_CALLBACK(add_line)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gint wx, wy;
   
   g_return_if_fail (w_current != NULL);
@@ -1928,7 +1928,7 @@ DEFINE_I_CALLBACK(add_line)
 
 DEFINE_I_CALLBACK(add_path)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) data;
+  GschemToplevel *w_current = (GschemToplevel *) data;
 
   g_assert (w_current != NULL);
 
@@ -1947,7 +1947,7 @@ DEFINE_I_CALLBACK(add_path)
  */
 DEFINE_I_CALLBACK(add_box)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gint wx, wy; 
 
   g_return_if_fail (w_current != NULL);
@@ -1976,7 +1976,7 @@ DEFINE_I_CALLBACK(add_box)
  */
 DEFINE_I_CALLBACK(add_picture)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -1997,7 +1997,7 @@ DEFINE_I_CALLBACK(add_picture)
  */
 DEFINE_I_CALLBACK(add_circle)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gint wx, wy; 
 
   g_return_if_fail (w_current != NULL);
@@ -2026,7 +2026,7 @@ DEFINE_I_CALLBACK(add_circle)
  */
 DEFINE_I_CALLBACK(add_arc)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gint wx, wy; 
 
   g_return_if_fail (w_current != NULL);
@@ -2055,7 +2055,7 @@ DEFINE_I_CALLBACK(add_arc)
  */
 DEFINE_I_CALLBACK(add_pin)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   gint wx, wy; 
 
   g_return_if_fail (w_current != NULL);
@@ -2085,7 +2085,7 @@ DEFINE_I_CALLBACK(add_pin)
  */
 DEFINE_I_CALLBACK(hierarchy_down_schematic)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   char *attrib=NULL;
   char *current_filename=NULL;
   int count=0;
@@ -2228,7 +2228,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
  */
 DEFINE_I_CALLBACK(hierarchy_down_symbol)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   OBJECT *object;
   const CLibSymbol *sym;
 
@@ -2269,7 +2269,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
  */
 DEFINE_I_CALLBACK(hierarchy_up)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   PAGE *page;
   PAGE *up_page;
 
@@ -2296,7 +2296,7 @@ DEFINE_I_CALLBACK(hierarchy_up)
  */
 DEFINE_I_CALLBACK(attributes_attach)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   OBJECT *first_object;
   GList *s_current;
   GList *attached_objects = NULL;
@@ -2353,7 +2353,7 @@ DEFINE_I_CALLBACK(attributes_attach)
  */
 DEFINE_I_CALLBACK(attributes_detach)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   GList *s_current;
   OBJECT *o_current;
   GList *detached_attribs = NULL;
@@ -2400,7 +2400,7 @@ DEFINE_I_CALLBACK(attributes_detach)
  */
 DEFINE_I_CALLBACK(attributes_show_name)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   TOPLEVEL *toplevel = w_current->toplevel;
 
   g_return_if_fail (w_current != NULL);
@@ -2437,7 +2437,7 @@ DEFINE_I_CALLBACK(attributes_show_name)
  */
 DEFINE_I_CALLBACK(attributes_show_value)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   TOPLEVEL *toplevel = w_current->toplevel;
 
   g_return_if_fail (w_current != NULL);
@@ -2474,7 +2474,7 @@ DEFINE_I_CALLBACK(attributes_show_value)
  */
 DEFINE_I_CALLBACK(attributes_show_both)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   TOPLEVEL *toplevel = w_current->toplevel;
 
   g_return_if_fail (w_current != NULL);
@@ -2511,7 +2511,7 @@ DEFINE_I_CALLBACK(attributes_show_both)
  */
 DEFINE_I_CALLBACK(attributes_visibility_toggle)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   TOPLEVEL *toplevel = w_current->toplevel;
 
   g_return_if_fail (w_current != NULL);
@@ -2552,7 +2552,7 @@ DEFINE_I_CALLBACK(attributes_visibility_toggle)
  */
 DEFINE_I_CALLBACK(script_console)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
   printf(_("Sorry but this is a non-functioning menu option\n"));
@@ -2570,7 +2570,7 @@ DEFINE_I_CALLBACK(script_console)
  */
 DEFINE_I_CALLBACK(options_text_size)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
   text_size_dialog(w_current);
@@ -2583,7 +2583,7 @@ DEFINE_I_CALLBACK(options_text_size)
  */
 DEFINE_I_CALLBACK(options_snap_size)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
   snap_size_dialog(w_current);
@@ -2596,7 +2596,7 @@ DEFINE_I_CALLBACK(options_snap_size)
  */
 DEFINE_I_CALLBACK(options_scale_up_snap_size)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -2615,7 +2615,7 @@ DEFINE_I_CALLBACK(options_scale_up_snap_size)
  */
 DEFINE_I_CALLBACK(options_scale_down_snap_size)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -2639,7 +2639,7 @@ DEFINE_I_CALLBACK(options_scale_down_snap_size)
  */
 DEFINE_I_CALLBACK(options_afeedback)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -2662,7 +2662,7 @@ DEFINE_I_CALLBACK(options_afeedback)
  */
 DEFINE_I_CALLBACK(options_grid)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
 
@@ -2689,7 +2689,7 @@ DEFINE_I_CALLBACK(options_grid)
  */
 DEFINE_I_CALLBACK(options_snap)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   /* toggle to the next snap state */
   w_current->snap = (w_current->snap+1) % SNAP_STATE_COUNT;
@@ -2724,7 +2724,7 @@ DEFINE_I_CALLBACK(options_snap)
  */
 DEFINE_I_CALLBACK(options_rubberband)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   if (w_current->netconn_rubberband) {
     w_current->netconn_rubberband = 0;
@@ -2743,7 +2743,7 @@ DEFINE_I_CALLBACK(options_rubberband)
  */
 DEFINE_I_CALLBACK(options_magneticnet)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   if ((w_current->magneticnet_mode = !w_current->magneticnet_mode)) {
     s_log_message(_("magnetic net mode: ON\n"));
@@ -2762,7 +2762,7 @@ DEFINE_I_CALLBACK(options_magneticnet)
  */
 DEFINE_I_CALLBACK(options_show_log_window)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
   x_log_open ();
@@ -2780,7 +2780,7 @@ DEFINE_I_CALLBACK(options_show_log_window)
  */
 DEFINE_I_CALLBACK(cancel)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   TOPLEVEL *toplevel = w_current->toplevel;
   GValue value = { 0, };
 
@@ -2846,7 +2846,7 @@ DEFINE_I_CALLBACK(cancel)
  */
 DEFINE_I_CALLBACK(help_about)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
   about_dialog(w_current);
@@ -2859,7 +2859,7 @@ DEFINE_I_CALLBACK(help_about)
  */
 DEFINE_I_CALLBACK(help_hotkeys)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
   x_dialog_hotkeys(w_current);
@@ -2872,7 +2872,7 @@ DEFINE_I_CALLBACK(help_hotkeys)
  */
 DEFINE_I_CALLBACK(options_show_coord_window)
 {
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
 
   g_return_if_fail (w_current != NULL);
   coord_dialog (w_current, 0, 0);
@@ -2895,7 +2895,7 @@ gboolean i_callback_close_wm ( GtkWidget *widget, GdkEvent *event,
 	                   gpointer data ) 
 {
 
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL*) data;
+  GschemToplevel *w_current = (GschemToplevel*) data;
   g_return_val_if_fail ((w_current != NULL), TRUE);
 
   x_window_close(w_current);

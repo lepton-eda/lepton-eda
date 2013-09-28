@@ -392,7 +392,7 @@ setup_initial_values (EditText *dialog)
  *  \param [in] w_current The gschem toplevel
  */
 void
-text_edit_dialog (GSCHEM_TOPLEVEL *w_current, const char *string, int text_size,
+text_edit_dialog (GschemToplevel *w_current, const char *string, int text_size,
                   int text_alignment)
 {
   if (w_current->tewindow == NULL) {

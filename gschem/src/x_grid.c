@@ -43,11 +43,11 @@
  *  the grid drawing code may drop elelments which are too densly packed for a
  *  given zoom level.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL.
+ *  \param [in] w_current  The GschemToplevel.
  *  \returns The grid spacing in world units of the grid as rendered, or -1
  *           if there are no items drawn.
  */
-static int query_dots_grid_spacing (GSCHEM_TOPLEVEL *w_current)
+static int query_dots_grid_spacing (GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int incr, screen_incr;
@@ -81,13 +81,13 @@ static int query_dots_grid_spacing (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *  Draws the dotted grid pattern over a given region of the screen.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL.
+ *  \param [in] w_current  The GschemToplevel.
  *  \param [in] x          The left screen coordinate for the drawing.
  *  \param [in] y          The top screen coordinate for the drawing.
  *  \param [in] width      The width of the region to draw.
  *  \param [in] height     The height of the region to draw.
  */
-static void draw_dots_grid_region (GSCHEM_TOPLEVEL *w_current,
+static void draw_dots_grid_region (GschemToplevel *w_current,
                                    int x, int y, int width, int height)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -151,7 +151,7 @@ static void draw_dots_grid_region (GSCHEM_TOPLEVEL *w_current,
 
 /*! \brief Helper function for draw_mesh_grid_regin
  */
-static void draw_mesh (GSCHEM_TOPLEVEL *w_current, int color,
+static void draw_mesh (GschemToplevel *w_current, int color,
                        int x_start, int y_start, int x_end, int y_end,
                        int incr, int coarse_mult)
 {
@@ -226,11 +226,11 @@ static void draw_mesh (GSCHEM_TOPLEVEL *w_current, int color,
  *  the grid drawing code may drop elelments which are too densly packed for a
  *  given zoom level.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL.
+ *  \param [in] w_current  The GschemToplevel.
  *  \returns The grid spacing in world units of the grid as rendered, or -1
  *           if there are no items drawn.
  */
-static int query_mesh_grid_spacing (GSCHEM_TOPLEVEL *w_current)
+static int query_mesh_grid_spacing (GschemToplevel *w_current)
 {
   int incr, screen_incr;
 
@@ -257,13 +257,13 @@ static int query_mesh_grid_spacing (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *  Draws the mesh grid pattern over a given region of the screen.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL.
+ *  \param [in] w_current  The GschemToplevel.
  *  \param [in] x          The left screen coordinate for the drawing.
  *  \param [in] y          The top screen coordinate for the drawing.
  *  \param [in] width      The width of the region to draw.
  *  \param [in] height     The height of the region to draw.
  */
-static void draw_mesh_grid_region (GSCHEM_TOPLEVEL *w_current,
+static void draw_mesh_grid_region (GschemToplevel *w_current,
                                    int x, int y, int width, int height)
 {
   int x_start, y_start, x_end, y_end;
@@ -298,13 +298,13 @@ static void draw_mesh_grid_region (GSCHEM_TOPLEVEL *w_current,
  *  \par Function Description
  *  Draws the desired grid pattern over a given region of the screen.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL.
+ *  \param [in] w_current  The GschemToplevel.
  *  \param [in] x          The left screen coordinate for the drawing.
  *  \param [in] y          The top screen coordinate for the drawing.
  *  \param [in] width      The width of the region to draw.
  *  \param [in] height     The height of the region to draw.
  */
-void x_grid_draw_region (GSCHEM_TOPLEVEL *w_current,
+void x_grid_draw_region (GschemToplevel *w_current,
                          int x, int y, int width, int height)
 {
   switch (w_current->grid) {
@@ -334,11 +334,11 @@ void x_grid_draw_region (GSCHEM_TOPLEVEL *w_current,
  *  the grid drawing code may drop elelments which are too densly packed for a
  *  given zoom level.
  *
- *  \param [in] w_current  The GSCHEM_TOPLEVEL.
+ *  \param [in] w_current  The GschemToplevel.
  *  \returns The grid spacing in world units of the grid as rendered, or -1
  *           if there are no items drawn.
  */
-int x_grid_query_drawn_spacing (GSCHEM_TOPLEVEL *w_current)
+int x_grid_query_drawn_spacing (GschemToplevel *w_current)
 {
   switch (w_current->grid) {
     default:
@@ -354,7 +354,7 @@ int x_grid_query_drawn_spacing (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-void x_draw_tiles(GSCHEM_TOPLEVEL *w_current)
+void x_draw_tiles(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   TILE *t_current;

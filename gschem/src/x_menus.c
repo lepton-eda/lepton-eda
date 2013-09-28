@@ -72,7 +72,7 @@ static struct PopupEntry popup_items[] = {
 static void g_menu_execute(GtkAction *action, gpointer user_data)
 {
   const gchar *action_name = gtk_action_get_name (action);
-  GSCHEM_TOPLEVEL *w_current = (GSCHEM_TOPLEVEL *) user_data;
+  GschemToplevel *w_current = (GschemToplevel *) user_data;
   g_action_eval_by_name (w_current, action_name);
 }
 
@@ -82,7 +82,7 @@ static void g_menu_execute(GtkAction *action, gpointer user_data)
  *
  */
 GtkWidget *
-get_main_menu(GSCHEM_TOPLEVEL *w_current)
+get_main_menu(GschemToplevel *w_current)
 {
   char *buf;
   GschemAction *action;
@@ -242,7 +242,7 @@ get_main_menu(GSCHEM_TOPLEVEL *w_current)
 }
 
 GtkWidget *
-get_main_popup (GSCHEM_TOPLEVEL *w_current)
+get_main_popup (GschemToplevel *w_current)
 {
   GschemAction *action;
   GtkWidget *menu_item;
@@ -300,7 +300,7 @@ get_main_popup (GSCHEM_TOPLEVEL *w_current)
  *  \note
  *  need to look at this... here and the setup
  */
-gint do_popup (GSCHEM_TOPLEVEL *w_current, GdkEventButton *event)
+gint do_popup (GschemToplevel *w_current, GdkEventButton *event)
 {
   GtkWidget *menu = (GtkWidget *) w_current->popup_menu;
   g_return_val_if_fail (menu != NULL, FALSE);
@@ -316,7 +316,7 @@ gint do_popup (GSCHEM_TOPLEVEL *w_current, GdkEventButton *event)
  *  \par Function Description
  *
  */
-void x_menus_sensitivity (GSCHEM_TOPLEVEL *w_current, const char *buf, int flag)
+void x_menus_sensitivity (GschemToplevel *w_current, const char *buf, int flag)
 {
   GtkWidget* item=NULL;
   
@@ -345,7 +345,7 @@ void x_menus_sensitivity (GSCHEM_TOPLEVEL *w_current, const char *buf, int flag)
  *  This function sets the sensitivity of the items in the right button
  *  popup.
  */
-void x_menus_popup_sensitivity (GSCHEM_TOPLEVEL *w_current, const char *buf, int flag)
+void x_menus_popup_sensitivity (GschemToplevel *w_current, const char *buf, int flag)
 {
   GtkWidget *item;
 
@@ -369,7 +369,7 @@ void x_menus_popup_sensitivity (GSCHEM_TOPLEVEL *w_current, const char *buf, int
  * Will be called if element of recent-file-list is activated
  */
 void
-recent_chooser_item_activated (GtkRecentChooser *chooser, GSCHEM_TOPLEVEL *w_current)
+recent_chooser_item_activated (GtkRecentChooser *chooser, GschemToplevel *w_current)
 {
   PAGE *page;
   gchar *uri;
@@ -390,7 +390,7 @@ recent_chooser_item_activated (GtkRecentChooser *chooser, GSCHEM_TOPLEVEL *w_cur
  *
  *  Called from x_window_setup().
  */
-void x_menu_attach_recent_files_submenu(GSCHEM_TOPLEVEL *w_current)
+void x_menu_attach_recent_files_submenu(GschemToplevel *w_current)
 {
   GtkWidget* menuitem_to_append_to = NULL;
   GtkRecentFilter *recent_filter;

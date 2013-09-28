@@ -67,7 +67,7 @@ g_get_hook_by_name (const char *name)
  * \param obj_lst list of #OBJECT smobs as hook argument.
  */
 void
-g_run_hook_object_list (GSCHEM_TOPLEVEL *w_current, const char *name,
+g_run_hook_object_list (GschemToplevel *w_current, const char *name,
                         GList *obj_lst)
 {
   SCM lst = SCM_EOL;
@@ -100,7 +100,7 @@ g_run_hook_object_list (GSCHEM_TOPLEVEL *w_current, const char *name,
  * \param obj  #OBJECT argument for hook.
  */
 void
-g_run_hook_object (GSCHEM_TOPLEVEL *w_current, const char *name, OBJECT *obj)
+g_run_hook_object (GschemToplevel *w_current, const char *name, OBJECT *obj)
 {
   scm_dynwind_begin (0);
   g_dynwind_window (w_current);
@@ -123,7 +123,7 @@ g_run_hook_object (GSCHEM_TOPLEVEL *w_current, const char *name, OBJECT *obj)
  * \param page #PAGE argument for hook.
  */
 void
-g_run_hook_page (GSCHEM_TOPLEVEL *w_current, const char *name, PAGE *page)
+g_run_hook_page (GschemToplevel *w_current, const char *name, PAGE *page)
 {
   scm_dynwind_begin (0);
   g_dynwind_window (w_current);

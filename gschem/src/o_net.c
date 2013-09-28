@@ -52,11 +52,11 @@
 
 /*! \brief Reset all variables used for net drawing
  *  \par Function Description
- *  This function resets all variables from GSCHEM_TOPLEVEL that are used
+ *  This function resets all variables from GschemToplevel that are used
  *  for net drawing. This function should be called when escaping from
  *  a net drawing action or before entering it.
  */
-void o_net_reset(GSCHEM_TOPLEVEL *w_current) 
+void o_net_reset(GschemToplevel *w_current) 
 {
   w_current->first_wx = w_current->first_wy = -1;
   w_current->second_wx = w_current->second_wy = -1;
@@ -71,10 +71,10 @@ void o_net_reset(GSCHEM_TOPLEVEL *w_current)
  *  It determines the best drawing direction for each quadrant of the
  *  possible net endpoint.
  *  
- *  The directions are stored in the GSCHEM_TOPLEVEL->net_direction variable
+ *  The directions are stored in the GschemToplevel->net_direction variable
  *  as a bitfield.
  */
-void o_net_guess_direction(GSCHEM_TOPLEVEL *w_current,
+void o_net_guess_direction(GschemToplevel *w_current,
 			   int wx, int wy)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -193,11 +193,11 @@ void o_net_guess_direction(GSCHEM_TOPLEVEL *w_current,
  *  and searches the closest connection point.
  *  It searches for pins, nets and busses.
  *  
- *  The connection point is stored in GSCHEM_TOPLEVEL->magnetic_wx and
- *  GSCHEM_TOPLEVEL->magnetic_wy. If no connection is found. Both variables
+ *  The connection point is stored in GschemToplevel->magnetic_wx and
+ *  GschemToplevel->magnetic_wy. If no connection is found. Both variables
  *  are set to -1.
  */
-void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
+void o_net_find_magnetic(GschemToplevel *w_current,
 			 int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -334,7 +334,7 @@ void o_net_find_magnetic(GSCHEM_TOPLEVEL *w_current,
  *  last to second, the 3 coordinates are manipulated to find
  *  a way to the magnetic marker.
  */
-void o_net_finishmagnetic(GSCHEM_TOPLEVEL *w_current)
+void o_net_finishmagnetic(GschemToplevel *w_current)
 {
   int primary_zero_length, secondary_zero_length;
 
@@ -394,7 +394,7 @@ void o_net_finishmagnetic(GSCHEM_TOPLEVEL *w_current)
  *  position of the magnetic marker.
  *  If the controllkey is pressed the magnetic marker follows the mouse.
  */
-void o_net_start_magnetic(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_net_start_magnetic(GschemToplevel *w_current, int w_x, int w_y)
 {
   o_net_invalidate_rubber (w_current);
 
@@ -417,7 +417,7 @@ void o_net_start_magnetic(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  cursor. If we have a visible magnetic marker, we use that instead of 
  *  the cursor position
  */
-void o_net_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_net_start(GschemToplevel *w_current, int w_x, int w_y)
 {
   if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
     w_current->first_wx = w_current->magnetic_wx;
@@ -450,7 +450,7 @@ void o_net_start(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *
  * The function returns TRUE if it has drawn a net, FALSE otherwise.
  */
-int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+int o_net_end(GschemToplevel *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   int color;
@@ -572,7 +572,7 @@ int o_net_end(GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  \par Function Description
  *  This function draws the rubbernet lines when drawing a net.
  */
-void o_net_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
+void o_net_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
   int ortho, horizontal, quadrant;
 
@@ -640,7 +640,7 @@ void o_net_motion (GSCHEM_TOPLEVEL *w_current, int w_x, int w_y)
  *  This function draws the rubbernets to the graphic context
  */
 void
-o_net_draw_rubber(GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
+o_net_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer)
 {
   int size = NET_WIDTH, w_magnetic_halfsize;
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);
@@ -678,7 +678,7 @@ o_net_draw_rubber(GSCHEM_TOPLEVEL *w_current, EdaRenderer *renderer)
  *  \par Function Description
  *
  */
-void o_net_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
+void o_net_invalidate_rubber (GschemToplevel *w_current)
 {
   int size = 0, magnetic_halfsize;
   int bloat;
@@ -728,7 +728,7 @@ void o_net_invalidate_rubber (GSCHEM_TOPLEVEL *w_current)
  *  \par Function Description
  *
  */
-int o_net_add_busrippers(GSCHEM_TOPLEVEL *w_current, OBJECT *net_obj,
+int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
                          GList *prev_conn_objects)
 
 {

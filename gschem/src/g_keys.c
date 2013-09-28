@@ -45,7 +45,7 @@
 #define DEFINE_G_KEYS(name)				\
 SCM g_keys_ ## name(SCM rest)				\
 {							\
-   GSCHEM_TOPLEVEL *w_current = g_current_window ();	\
+   GschemToplevel *w_current = g_current_window ();	\
    i_callback_ ## name(w_current, 0, NULL);                   \
    return SCM_BOOL_T;				\
 }
@@ -441,12 +441,12 @@ SCM_SYMBOL (prefix_sym, "prefix");
  * keystroke is pressed.  If the current key sequence was a prefix,
  * let it persist.
  *
- * \param [in] data a pointer to the GSCHEM_TOPLEVEL to update.
+ * \param [in] data a pointer to the GschemToplevel to update.
  * \return FALSE (this is a one-shot timer).
  */
 static gboolean clear_keyaccel_string(gpointer data)
 {
-  GSCHEM_TOPLEVEL *w_current = data;
+  GschemToplevel *w_current = data;
 
   /* If the window context has disappeared, do nothing. */
   if (g_list_find(global_window_list, w_current) == NULL) {
@@ -465,10 +465,10 @@ static gboolean clear_keyaccel_string(gpointer data)
  * If any prefix keys are stored in the current key sequence, clears
  * them.
  *
- * \param w_current  The active #GSCHEM_TOPLEVEL context.
+ * \param w_current  The active #GschemToplevel context.
  */
 void
-g_keys_reset (GSCHEM_TOPLEVEL *w_current)
+g_keys_reset (GschemToplevel *w_current)
 {
   SCM s_expr = scm_list_1 (reset_keys_sym);
 
@@ -490,13 +490,13 @@ g_keys_reset (GSCHEM_TOPLEVEL *w_current)
  * current keymap.  Updates the gschem status bar with the current key
  * sequence.
  *
- * \param w_current  The active #GSCHEM_TOPLEVEL context.
+ * \param w_current  The active #GschemToplevel context.
  * \param event      A GdkEventKey structure.
  *
  * \return 1 if a binding was found for the keystroke, 0 otherwise.
  */
 int
-g_keys_execute(GSCHEM_TOPLEVEL *w_current, GdkEventKey *event)
+g_keys_execute(GschemToplevel *w_current, GdkEventKey *event)
 {
   SCM s_retval, s_key, s_expr;
   guint key, mods, upper, lower, caps;

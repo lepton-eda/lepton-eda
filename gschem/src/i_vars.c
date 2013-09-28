@@ -112,7 +112,7 @@ int default_scrollpan_steps = 8;
  *  \par Function Description
  *
  */
-void i_vars_set(GSCHEM_TOPLEVEL *w_current)
+void i_vars_set(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
   i_vars_libgeda_set(toplevel);

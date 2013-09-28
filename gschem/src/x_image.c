@@ -195,12 +195,12 @@ static char *x_image_get_type_from_description(char *description) {
  *  the filename displayed by the dialog, removing the current extension, and
  *  adding the extension of the image type selected.
  *  \param combo     [in] A combobox inside a file chooser dialog, with gdk-pixbuf image type descriptions.
- *  \param w_current [in] the GSCHEM_TOPLEVEL structure.
+ *  \param w_current [in] the GschemToplevel structure.
  *  \return nothing.
  * 
  */
 static void x_image_update_dialog_filename(GtkComboBox *combo, 
-    GSCHEM_TOPLEVEL *w_current) {
+    GschemToplevel *w_current) {
   TOPLEVEL *toplevel = w_current->toplevel;
   char* image_type_descr = NULL;
   char *image_type = NULL;
@@ -271,7 +271,7 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
 /*! \brief Write the image file, with the desired options.
  *  \par This function writes the image file, with the options set in the
  *  dialog by the user.
- *  \param w_current [in] the GSCHEM_TOPLEVEL structure.
+ *  \param w_current [in] the GschemToplevel structure.
  *  \param filename  [in] the image filename.
  *  \param desired_width  [in] the image width chosen by the user.
  *  \param desired_height [in] the image height chosen by the user.
@@ -279,7 +279,7 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
  *  \return nothing
  *
  */
-void x_image_lowlevel(GSCHEM_TOPLEVEL *w_current, const char* filename,
+void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
     int desired_width, int desired_height, char *filetype)
 {
   TOPLEVEL *toplevel = w_current->toplevel;
@@ -397,10 +397,10 @@ void x_image_lowlevel(GSCHEM_TOPLEVEL *w_current, const char* filename,
  *  \par Display the image file selection dialog, allowing the user to
  *  set several options, like image size and image type.
  *  When the user hits "ok", then it writes the image file.
- *  \param w_current [in] the GSCHEM_TOPLEVEL structure.
+ *  \param w_current [in] the GschemToplevel structure.
  *  \return nothing
  */
-void x_image_setup (GSCHEM_TOPLEVEL *w_current)
+void x_image_setup (GschemToplevel *w_current)
 {
   GtkWidget *dialog;
   GtkWidget *vbox1;
@@ -587,17 +587,17 @@ static void x_image_convert_to_greyscale(GdkPixbuf *pixbuf)
  *  \par Function Description
  *
  */
-GdkPixbuf *x_image_get_pixbuf (GSCHEM_TOPLEVEL *w_current)
+GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
 {
   GdkPixbuf *pixbuf;
   int origin_x, origin_y, bottom, right;
   int size_x, size_y, s_right, s_left, s_top,s_bottom;
-  GSCHEM_TOPLEVEL new_w_current;
+  GschemToplevel new_w_current;
   TOPLEVEL toplevel;
   GdkRectangle rect;
 
   /* Do a copy of the w_current struct and work with it */
-  memcpy(&new_w_current, w_current, sizeof(GSCHEM_TOPLEVEL));
+  memcpy(&new_w_current, w_current, sizeof(GschemToplevel));
   /* Do a copy of the toplevel struct and work with it */
   memcpy(&toplevel, w_current->toplevel, sizeof(TOPLEVEL));
 
