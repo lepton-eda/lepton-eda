@@ -196,7 +196,7 @@ static void
 dialog_response_ok (EditFProp *dialog)
 {
   GschemToplevel *w_current = dialog->parent.w_current;
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *selection, *iter;
   OBJECT *object;
   OBJECT_FILLING type;

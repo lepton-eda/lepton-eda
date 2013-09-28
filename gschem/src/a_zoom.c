@@ -55,7 +55,7 @@
 /* dir is either ZOOM_IN, ZOOM_OUT or ZOOM_FULL which are defined in globals.h */
 void a_zoom(GschemToplevel *w_current, int dir, int selected_from, int pan_flags)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   double world_pan_center_x,world_pan_center_y,relativ_zoom_factor = - 1;
   int start_x, start_y;
   double top, bottom, right, left;
@@ -148,7 +148,7 @@ void a_zoom(GschemToplevel *w_current, int dir, int selected_from, int pan_flags
  */
 void a_zoom_extents (GschemToplevel *w_current, const GList *list, int pan_flags)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int lleft, lright, ltop, lbottom;
   double zx, zy, relativ_zoom_factor;
   double world_pan_center_x,world_pan_center_y;
@@ -202,7 +202,7 @@ void a_zoom_extents (GschemToplevel *w_current, const GList *list, int pan_flags
  */
 void a_zoom_box(GschemToplevel *w_current, int pan_flags)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   double zx, zy, relativ_zoom_factor;
   double world_pan_center_x, world_pan_center_y;
 
@@ -321,7 +321,7 @@ void a_zoom_box_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
  */
 void correct_aspect(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   double new_aspect;
 
   new_aspect = GET_PAGE_ASPECT_RATIO(toplevel);

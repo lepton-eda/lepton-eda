@@ -230,7 +230,7 @@ x_fileselect_open(GschemToplevel *w_current)
 void
 x_fileselect_save (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GtkWidget *dialog;
 
   dialog = gtk_file_chooser_dialog_new (_("Save as..."),

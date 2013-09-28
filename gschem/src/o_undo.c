@@ -75,7 +75,7 @@ void o_undo_init(void)
  */
 void o_undo_savestate(GschemToplevel *w_current, int flag)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   char *filename = NULL;
   GList *object_list = NULL;
   int levels;
@@ -292,7 +292,7 @@ GList *o_undo_find_prev_object_head (UNDO *start)
  */
 void o_undo_callback(GschemToplevel *w_current, int type)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   UNDO *u_current;
   UNDO *u_next;
   UNDO *save_bottom;
@@ -484,7 +484,7 @@ void o_undo_cleanup(void)
  */
 void o_undo_remove_last_undo(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   if (toplevel->page_current->undo_current == NULL) {
     return;
   }

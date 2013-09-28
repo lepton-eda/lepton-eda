@@ -37,7 +37,7 @@
  */
 void x_window_setup (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   /* immediately setup user params */
   i_vars_set(w_current);
@@ -233,7 +233,7 @@ static void x_window_invoke_macro(GtkEntry *entry, void *userdata)
  */
 void x_window_create_main(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   GtkWidget *label=NULL;
   GtkWidget *main_box=NULL;
@@ -529,7 +529,7 @@ void x_window_create_main(GschemToplevel *w_current)
  */
 void x_window_close(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   gboolean last_window = FALSE;
 
   /* If we're closing whilst inside a move action, re-wind the
@@ -685,7 +685,7 @@ void x_window_close_all(GschemToplevel *w_current)
 PAGE*
 x_window_open_page (GschemToplevel *w_current, const gchar *filename)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   PAGE *old_current, *page;
   gchar *fn;
 
@@ -791,7 +791,7 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
 void
 x_window_set_current_page (GschemToplevel *w_current, PAGE *page)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (page != NULL);
@@ -834,7 +834,7 @@ x_window_set_current_page (GschemToplevel *w_current, PAGE *page)
 gint
 x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   PAGE *old_current;
   const gchar *log_msg, *state_msg;
   gint ret;
@@ -915,7 +915,7 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
 void
 x_window_close_page (GschemToplevel *w_current, PAGE *page)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   PAGE *new_current = NULL;
   GList *iter;
 

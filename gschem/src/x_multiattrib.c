@@ -713,7 +713,7 @@ static void multiattrib_action_promote_attribute (GschemToplevel *w_current,
                                                   OBJECT *object,
                                                   OBJECT *o_attrib)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *o_new;
 
   if (o_is_visible (toplevel, o_attrib)) {

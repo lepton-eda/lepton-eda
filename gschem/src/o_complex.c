@@ -39,7 +39,7 @@
  */
 void o_complex_prepare_place(GschemToplevel *w_current, const CLibSymbol *sym)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *temp_list;
   OBJECT *o_current;
   char *buffer;
@@ -130,7 +130,7 @@ void o_complex_prepare_place(GschemToplevel *w_current, const CLibSymbol *sym)
  *
  */
 void o_complex_place_changed_run_hook(GschemToplevel *w_current) {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *ptr = NULL;
 
   /* Run the complex place list changed hook */
@@ -161,7 +161,7 @@ void o_complex_place_changed_run_hook(GschemToplevel *w_current) {
  */
 void o_complex_translate_all(GschemToplevel *w_current, int offset)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int w_rleft, w_rtop, w_rright, w_rbottom;
   OBJECT *o_current;
   const GList *iter;

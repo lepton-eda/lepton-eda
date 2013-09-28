@@ -201,7 +201,7 @@ static char *x_image_get_type_from_description(char *description) {
  */
 static void x_image_update_dialog_filename(GtkComboBox *combo, 
     GschemToplevel *w_current) {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   char* image_type_descr = NULL;
   char *image_type = NULL;
   char *old_image_filename = NULL;
@@ -282,7 +282,7 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
 void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
     int desired_width, int desired_height, char *filetype)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int width, height;
   int save_height, save_width;
   int save_page_left, save_page_right, save_page_top, save_page_bottom;

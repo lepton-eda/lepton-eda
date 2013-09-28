@@ -575,7 +575,7 @@ void pagesel_update (Pagesel *pagesel)
 
   g_return_if_fail (GSCHEM_DIALOG (pagesel)->w_current);
 
-  toplevel = GSCHEM_DIALOG (pagesel)->w_current->toplevel;
+  toplevel = gschem_toplevel_get_toplevel (GSCHEM_DIALOG (pagesel)->w_current);
   model    = gtk_tree_view_get_model (pagesel->treeview);
 
   /* wipe out every thing in the store */

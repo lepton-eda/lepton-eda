@@ -93,7 +93,7 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
 gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
                             GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
@@ -973,7 +973,7 @@ x_event_configure (GtkWidget         *widget,
                    gpointer           user_data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (user_data);
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *iter;
   PAGE *old_page_current, *p_current;
   gint old_win_width, old_win_height, new_win_width, new_win_height;
@@ -1061,7 +1061,7 @@ x_event_configure (GtkWidget         *widget,
  */
 void x_manual_resize(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   /* of the actual win window (drawing_area) */
   w_current->win_width  = w_current->drawing_area->allocation.width;
@@ -1097,7 +1097,7 @@ void x_manual_resize(GschemToplevel *w_current)
  */
 void x_event_hschanged (GtkAdjustment *adj, GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int current_left;
   int new_left;
   GtkAdjustment        *hadjustment;
@@ -1129,7 +1129,7 @@ void x_event_hschanged (GtkAdjustment *adj, GschemToplevel *w_current)
  */
 void x_event_vschanged (GtkAdjustment *adj, GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int current_bottom;
   int new_bottom;
   GtkAdjustment        *vadjustment;

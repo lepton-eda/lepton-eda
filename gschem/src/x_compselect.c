@@ -108,7 +108,7 @@ x_compselect_callback_response (GtkDialog *dialog,
 {
   Compselect *compselect = (Compselect*)dialog;
   GschemToplevel *w_current = (GschemToplevel *)user_data;
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   switch (arg1) {
       case COMPSELECT_RESPONSE_PLACE: {

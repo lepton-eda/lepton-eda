@@ -37,7 +37,7 @@
  */
 void o_delete (GschemToplevel *w_current, OBJECT *object)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_if_fail (object != NULL);
 
@@ -58,7 +58,7 @@ void o_delete (GschemToplevel *w_current, OBJECT *object)
  */
 void o_delete_selected (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   SELECTION *selection = toplevel->page_current->selection_list;
   GList *to_remove;
   GList *iter;

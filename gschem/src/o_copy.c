@@ -36,7 +36,7 @@
  */
 void o_copy_start(GschemToplevel *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *s_current;
 
   /* Copy the objects into the buffer at their current position,

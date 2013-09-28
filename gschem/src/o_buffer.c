@@ -29,7 +29,7 @@
 static void
 selection_to_buffer(GschemToplevel *w_current, int buf_num)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *s_current = NULL;
 
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );
@@ -82,7 +82,7 @@ void o_buffer_cut(GschemToplevel *w_current, int buf_num)
 void o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y,
                           int buf_num)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int rleft, rtop, rbottom, rright;
   int x, y;
 
@@ -149,7 +149,7 @@ void o_buffer_init(void)
  */
 void o_buffer_free(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int i;
 
   for (i = 0 ; i < MAX_BUFFERS; i++) {

@@ -162,7 +162,7 @@ void o_attrib_select_invisible (GschemToplevel *w_current,
  */
 void o_attrib_toggle_visibility(GschemToplevel *w_current, OBJECT *object)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_if_fail (object != NULL && object->type == OBJ_TEXT);
 
@@ -206,7 +206,7 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, OBJECT *object)
 void o_attrib_toggle_show_name_value(GschemToplevel *w_current,
                                      OBJECT *object, int show_name_value)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_if_fail (object != NULL && object->type == OBJ_TEXT);
 
@@ -229,7 +229,7 @@ OBJECT *o_attrib_add_attrib(GschemToplevel *w_current,
 			    const char *text_string, int visibility, 
 			    int show_name_value, OBJECT *object)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *new_obj;
   int world_x = - 1, world_y = -1;
   int align = LOWER_LEFT;

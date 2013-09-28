@@ -77,7 +77,7 @@ void o_net_reset(GschemToplevel *w_current)
 void o_net_guess_direction(GschemToplevel *w_current,
 			   int wx, int wy)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int up=0, down=0, left=0, right=0;
   int x1, y1, x2, y2;
   int xmin, ymin, xmax, ymax;
@@ -200,7 +200,7 @@ void o_net_guess_direction(GschemToplevel *w_current,
 void o_net_find_magnetic(GschemToplevel *w_current,
 			 int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int x1, x2, y1, y2, min_x, min_y, w_magnetic_reach;
   double mindist, minbest, dist1, dist2;
   double weight, min_weight;
@@ -452,7 +452,7 @@ void o_net_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 int o_net_end(GschemToplevel *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int color;
   int primary_zero_length, secondary_zero_length;
   int found_primary_connection = FALSE;
@@ -732,7 +732,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
                          GList *prev_conn_objects)
 
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *new_obj;
   int color;
   GList *cl_current = NULL;

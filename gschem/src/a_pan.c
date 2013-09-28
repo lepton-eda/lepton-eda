@@ -37,7 +37,7 @@
 void a_pan_general(GschemToplevel *w_current, double world_cx, double world_cy,
 		   double relativ_zoom_factor,int flags)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   /* see libgeda/include/defines.h for flags */
   /*if the borders should be ignored always, remove, outcomment or changes
     the flags in the function-calls*/
@@ -194,7 +194,7 @@ void a_pan(GschemToplevel *w_current, int w_x, int w_y)
  */
 void a_pan_mouse(GschemToplevel *w_current, int diff_x, int diff_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   double world_cx, world_cy;
   double page_cx, page_cy;
 

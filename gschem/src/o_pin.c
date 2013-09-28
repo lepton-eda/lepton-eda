@@ -46,7 +46,7 @@ void o_pin_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_pin_end(GschemToplevel *w_current, int x, int y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *new_obj;
   int color;
 

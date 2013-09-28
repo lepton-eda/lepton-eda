@@ -53,7 +53,7 @@ clip_get (GtkClipboard *cb, GtkSelectionData *selection_data,
           guint info, gpointer user_data_or_owner)
 {
   GschemToplevel *w_current = (GschemToplevel *) user_data_or_owner;
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GdkAtom type = gdk_atom_intern (MIME_TYPE_SCHEMATIC, FALSE);
   gchar *buf;
   if (info != CLIP_TYPE_SCHEMATIC) return;
@@ -72,7 +72,7 @@ static void
 clip_clear (GtkClipboard *cb, gpointer user_data_or_owner)
 {
   GschemToplevel *w_current = user_data_or_owner;
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   /* Free the objects in the clipboard buffer */
   s_delete_object_glist (toplevel, w_current->clipboard_buffer);
@@ -184,7 +184,7 @@ x_clipboard_set (GschemToplevel *w_current, const GList *object_list)
   GtkClipboard *cb = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
   GtkTargetEntry target = { MIME_TYPE_SCHEMATIC, 0,
                             CLIP_TYPE_SCHEMATIC };
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   gboolean result;
 
   /* Clear the clipboard buffer */
@@ -219,7 +219,7 @@ GList *
 x_clipboard_get (GschemToplevel *w_current)
 {
   GtkClipboard *cb = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GdkAtom type = gdk_atom_intern (MIME_TYPE_SCHEMATIC, FALSE);
   GtkSelectionData *selection_data;
   GList *object_list = NULL;

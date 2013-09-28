@@ -451,7 +451,7 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
 
   o_path_invalidate_rubber (w_current);
 
-  toplevel = w_current->toplevel;
+  toplevel = gschem_toplevel_get_toplevel (w_current);
   x1 = w_current->first_wx;
   y1 = w_current->first_wy;
   x2 = w_current->second_wx;

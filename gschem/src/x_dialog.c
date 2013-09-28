@@ -1148,7 +1148,7 @@ PAGE *remember_page;
 void find_text_dialog_response(GtkWidget *w, gint response,
                                GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GtkWidget *textentry;
   GtkWidget *checkdescend;
   gchar *string;
@@ -2387,7 +2387,7 @@ x_dialog_close_changed_page (GschemToplevel *w_current, PAGE *page)
 gboolean
 x_dialog_close_window (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *iter;
   GtkWidget *dialog;
   PAGE *p_current;

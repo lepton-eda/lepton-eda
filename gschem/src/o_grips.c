@@ -66,7 +66,7 @@
  */
 OBJECT *o_grips_search_world(GschemToplevel *w_current, int x, int y, int *whichone)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *object=NULL;
   OBJECT *found=NULL;
   GList *s_current;
@@ -725,7 +725,7 @@ static void o_grips_start_path(GschemToplevel *w_current, OBJECT *o_current,
 static void o_grips_start_picture(GschemToplevel *w_current, OBJECT *o_current,
                                   int x, int y, int whichone)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   w_current->current_pixbuf = o_picture_get_pixbuf (toplevel, o_current);
@@ -1030,7 +1030,7 @@ void o_grips_cancel(GschemToplevel *w_current)
 static void o_grips_end_arc(GschemToplevel *w_current, OBJECT *o_current,
                             int whichone)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int arg1, arg2;
 
   /* erase the temporary arc */
@@ -1078,7 +1078,7 @@ static void o_grips_end_arc(GschemToplevel *w_current, OBJECT *o_current,
 static void o_grips_end_box(GschemToplevel *w_current, OBJECT *o_current,
                             int whichone)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int box_width, box_height;
 
   box_width  = GET_BOX_WIDTH (w_current);
@@ -1122,7 +1122,7 @@ static void o_grips_end_path(GschemToplevel *w_current, OBJECT *o_current,
 static void o_grips_end_picture(GschemToplevel *w_current, OBJECT *o_current,
                                 int whichone)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   /* don't allow zero width/height picturees
    * this ends the picture drawing behavior
@@ -1161,7 +1161,7 @@ static void o_grips_end_picture(GschemToplevel *w_current, OBJECT *o_current,
 static void o_grips_end_circle(GschemToplevel *w_current, OBJECT *o_current,
                                int whichone)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   /* don't allow zero radius circles
    * this ends the circle drawing behavior
@@ -1195,7 +1195,7 @@ static void o_grips_end_circle(GschemToplevel *w_current, OBJECT *o_current,
 static void o_grips_end_line(GschemToplevel *w_current, OBJECT *o_current,
                              int whichone)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   /* don't allow zero length nets / lines / pins
    * this ends the net drawing behavior
@@ -1232,7 +1232,7 @@ static void o_grips_end_line(GschemToplevel *w_current, OBJECT *o_current,
 static void o_grips_end_net(GschemToplevel *w_current, OBJECT *o_current,
                             int whichone)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *connected_objects;
 
   /* don't allow zero length net
@@ -1274,7 +1274,7 @@ static void o_grips_end_net(GschemToplevel *w_current, OBJECT *o_current,
 static void o_grips_end_pin(GschemToplevel *w_current, OBJECT *o_current,
                             int whichone)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   /* don't allow zero length pin
    * this ends the pin changing behavior
@@ -1310,7 +1310,7 @@ static void o_grips_end_pin(GschemToplevel *w_current, OBJECT *o_current,
 static void o_grips_end_bus(GschemToplevel *w_current, OBJECT *o_current,
                             int whichone)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   /* don't allow zero length bus
    * this ends the bus changing behavior
@@ -1346,7 +1346,7 @@ static void o_grips_end_bus(GschemToplevel *w_current, OBJECT *o_current,
  */
 void o_grips_end(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *object;
   int grip;
 

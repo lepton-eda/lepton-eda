@@ -131,7 +131,7 @@ find_single_object (GschemToplevel *w_current, OBJECT *object,
 gboolean o_find_object (GschemToplevel *w_current, int w_x, int w_y,
                         gboolean change_selection)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int w_slack;
   const GList *iter = NULL;
 
@@ -193,7 +193,7 @@ gboolean o_find_object (GschemToplevel *w_current, int w_x, int w_y,
 gboolean
 o_find_selected_object (GschemToplevel *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int w_slack = WORLDabs (w_current, w_current->select_slack_pixels);
   GList *s_current;
 

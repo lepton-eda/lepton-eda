@@ -61,7 +61,7 @@ void o_bus_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 int o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *new_obj;
   int color;
   GList *prev_conn_objects = NULL;

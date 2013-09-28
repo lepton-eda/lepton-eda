@@ -114,7 +114,7 @@ int default_scrollpan_steps = 8;
  */
 void i_vars_set(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   i_vars_libgeda_set(toplevel);
 
   /* this will be false if logging cannot be enabled */

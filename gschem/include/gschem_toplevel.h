@@ -270,6 +270,9 @@ gschem_toplevel_get_selection_adapter (GschemToplevel *w_current);
 GtkListStore*
 gschem_toplevel_get_text_size_list_store (GschemToplevel *w_current);
 
+TOPLEVEL*
+gschem_toplevel_get_toplevel (GschemToplevel *w_current);
+
 GschemToplevel*
 gschem_toplevel_new ();
 

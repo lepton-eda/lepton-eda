@@ -43,7 +43,7 @@ extern COLOR display_outline_colors[MAX_COLORS];
 void o_redraw_rects (GschemToplevel *w_current,
                      GdkRectangle *rectangles, int n_rectangles)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   gboolean draw_selected;
   int grip_half_size;
   int cue_half_size;
@@ -392,7 +392,7 @@ int o_invalidate_rubber (GschemToplevel *w_current)
  */
 int o_redraw_cleanstates(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   /* returns FALSE if the function was'nt nessecary */
   if (w_current->inside_action == 0) {
     return FALSE;
@@ -568,7 +568,7 @@ void o_invalidate_all (GschemToplevel *w_current)
  */
 void o_invalidate (GschemToplevel *w_current, OBJECT *object)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int left, top, bottom, right;
   int s_left, s_top, s_bottom, s_right;
   if (world_get_single_object_bounds(toplevel, object, &left,  &top,
@@ -591,7 +591,7 @@ void o_invalidate (GschemToplevel *w_current, OBJECT *object)
  */
 void o_invalidate_glist (GschemToplevel *w_current, GList *list)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int left, top, bottom, right;
   int s_left, s_top, s_bottom, s_right;
   if (world_get_object_glist_bounds (toplevel, list, &left,  &top,

@@ -65,7 +65,7 @@ gint option_menu_get_history (GtkOptionMenu *option_menu)
  */
 void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   const char *value, *label;
   char *newtext;
   GtkEntry *value_entry, *name_entry;
@@ -287,7 +287,7 @@ void attribute_edit_dialog_response(GtkWidget *w, gint response,
  */
 void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GtkWidget *aewindow;
   GtkWidget *vbox, *label, *table, *alignment;
   GtkWidget *show_options;

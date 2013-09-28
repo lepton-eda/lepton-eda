@@ -546,6 +546,21 @@ gschem_toplevel_get_text_size_list_store (GschemToplevel *w_current)
 
 
 
+/*! \brief Get the libgeda toplevel for this gschem toplevel
+ *
+ *  \param [in] w_current This gschem toplevel
+ *  \return The libgeda toplevel
+ */
+TOPLEVEL*
+gschem_toplevel_get_toplevel (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->toplevel;
+}
+
+
+
 /*! \brief Temporary function to notify dialogs of a page change
  *
  *  This function is temporary until the toplevel can emit a

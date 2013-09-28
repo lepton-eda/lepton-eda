@@ -93,7 +93,7 @@ void o_circle_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_circle_end(GschemToplevel *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *new_obj;
 
   g_assert( w_current->inside_action != 0 );

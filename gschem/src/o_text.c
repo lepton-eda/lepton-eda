@@ -63,7 +63,7 @@ int o_text_get_rendered_bounds (void *user_data, OBJECT *o_current,
   double t, l, r, b;
 
   g_return_val_if_fail ((w_current != NULL), FALSE);
-  toplevel = w_current->toplevel;
+  toplevel = gschem_toplevel_get_toplevel (w_current);
 
   cr = gdk_cairo_create (w_current->drawable);
 
@@ -106,7 +106,7 @@ int o_text_get_rendered_bounds (void *user_data, OBJECT *o_current,
  */
 void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int align, int rotate, int size)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   /* Insert the new object into the buffer at world coordinates (0,0).
    * It will be translated to the mouse coordinates during placement. */
@@ -175,7 +175,7 @@ void o_text_edit(GschemToplevel *w_current, OBJECT *o_current)
  */
 void o_text_edit_end(GschemToplevel *w_current, char *string, int color, int align, int rotate, int size)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *object;
   GList *s_current;
   char *textstr = string;
@@ -240,7 +240,7 @@ void o_text_edit_end(GschemToplevel *w_current, char *string, int color, int ali
 void o_text_change(GschemToplevel *w_current, OBJECT *object, char *string,
 		   int visibility, int show)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   if (object == NULL) {
     return;
   }

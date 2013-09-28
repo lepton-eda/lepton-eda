@@ -51,7 +51,7 @@ void o_place_end (GschemToplevel *w_current,
                   GList **ret_new_objects,
                   const char* hook_name)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int w_diff_x, w_diff_y;
   OBJECT *o_current;
   PAGE *p_current;
@@ -167,7 +167,7 @@ void o_place_motion (GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int diff_x, diff_y;
   int left, top, bottom, right;
   int s_left, s_top, s_bottom, s_right;
@@ -232,7 +232,7 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
 void
 o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);
   int diff_x, diff_y;
 
@@ -296,7 +296,7 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
  */
 void o_place_rotate (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   o_glist_rotate_world (toplevel,
                         w_current->first_wx, w_current->first_wy, 90,

@@ -49,7 +49,7 @@
  */
 static int query_dots_grid_spacing (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int incr, screen_incr;
 
   if (w_current->dots_grid_mode == DOTS_GRID_VARIABLE_MODE) {
@@ -90,7 +90,7 @@ static int query_dots_grid_spacing (GschemToplevel *w_current)
 static void draw_dots_grid_region (GschemToplevel *w_current,
                                    int x, int y, int width, int height)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int i, j;
   int dot_x, dot_y;
   int x_start, y_start, x_end, y_end;
@@ -356,7 +356,7 @@ int x_grid_query_drawn_spacing (GschemToplevel *w_current)
  */
 void x_draw_tiles(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   TILE *t_current;
   GdkFont *font;
   int i,j;

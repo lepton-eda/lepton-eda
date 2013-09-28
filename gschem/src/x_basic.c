@@ -36,7 +36,7 @@
 void x_repaint_background_region (GschemToplevel *w_current,
                                   int x, int y, int width, int height)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   gdk_gc_set_foreground (w_current->gc,
                          x_get_color (toplevel->background_color));
@@ -54,7 +54,7 @@ void x_repaint_background_region (GschemToplevel *w_current,
  */
 void x_hscrollbar_set_ranges(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
         GtkAdjustment        *hadjustment;
 
 	if (w_current->scrollbars_flag == FALSE) {
@@ -76,7 +76,7 @@ void x_hscrollbar_set_ranges(GschemToplevel *w_current)
  */
 void x_hscrollbar_update(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GtkAdjustment *hadjustment;
 
   if (w_current->scrollbars_flag == FALSE) {
@@ -113,7 +113,7 @@ void x_hscrollbar_update(GschemToplevel *w_current)
  */
 void x_vscrollbar_set_ranges(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GtkAdjustment *vadjustment;
 
   if (w_current->scrollbars_flag == FALSE) {
@@ -134,7 +134,7 @@ void x_vscrollbar_set_ranges(GschemToplevel *w_current)
  */
 void x_vscrollbar_update(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GtkAdjustment *vadjustment;
 
   if (w_current->scrollbars_flag == FALSE) {

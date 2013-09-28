@@ -160,7 +160,7 @@ static const char *i_status_string(GschemToplevel *w_current)
  */
 void i_show_state(GschemToplevel *w_current, const char *message)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   gchar *what_to_say;
   const gchar *array[5] = { NULL };
   int i = 3; /* array[4] must be NULL */
@@ -375,7 +375,7 @@ static gboolean
 selected_at_least_one_text_object(GschemToplevel *w_current)
 {
   OBJECT *obj;
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *list = geda_list_get_glist(toplevel->page_current->selection_list);
 
   while(list != NULL) {
@@ -398,7 +398,7 @@ selected_at_least_one_text_object(GschemToplevel *w_current)
 void i_update_menus(GschemToplevel *w_current)
 {
   gboolean have_text_selected;
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   /* 
    * This is very simplistic.  Right now it just disables all menu
    * items which get greyed out when a component is not selected.

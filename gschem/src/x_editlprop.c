@@ -478,7 +478,7 @@ line_type_changed (GtkWidget *widget, EditLProp *dialog)
   w_current = dialog->parent.w_current;
   g_return_if_fail (w_current != NULL);
 
-  toplevel = w_current->toplevel;
+  toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_if_fail (toplevel != NULL);
 
   if ((dialog->adapter != NULL) && (dialog->line_type != NULL)) {
@@ -522,7 +522,7 @@ line_width_changed (GtkWidget *widget, EditLProp *dialog)
   w_current = dialog->parent.w_current;
   g_return_if_fail (w_current != NULL);
 
-  toplevel = w_current->toplevel;
+  toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_if_fail (toplevel != NULL);
 
   if ((dialog->adapter != NULL) && (dialog->width_entry != NULL)) {
@@ -568,7 +568,7 @@ line_width_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialo
     w_current = dialog->parent.w_current;
     g_return_val_if_fail (w_current != NULL, FALSE);
 
-    toplevel = w_current->toplevel;
+    toplevel = gschem_toplevel_get_toplevel (w_current);
     g_return_val_if_fail (toplevel != NULL, FALSE);
 
     if ((dialog->adapter != NULL) && (dialog->width_entry != NULL)) {
@@ -617,7 +617,7 @@ dash_length_changed (GtkWidget *widget, EditLProp *dialog)
   w_current = dialog->parent.w_current;
   g_return_if_fail (w_current != NULL);
 
-  toplevel = w_current->toplevel;
+  toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_if_fail (toplevel != NULL);
 
   if ((dialog->adapter != NULL) && (dialog->length_entry != NULL)) {
@@ -667,7 +667,7 @@ dash_length_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dial
     w_current = dialog->parent.w_current;
     g_return_val_if_fail (w_current != NULL, FALSE);
 
-    toplevel = w_current->toplevel;
+    toplevel = gschem_toplevel_get_toplevel (w_current);
     g_return_val_if_fail (toplevel != NULL, FALSE);
 
     if ((dialog->adapter != NULL) && (dialog->length_entry != NULL)) {
@@ -716,7 +716,7 @@ dash_space_changed (GtkWidget *widget, EditLProp *dialog)
   w_current = dialog->parent.w_current;
   g_return_if_fail (w_current != NULL);
 
-  toplevel = w_current->toplevel;
+  toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_if_fail (toplevel != NULL);
 
   if ((dialog->adapter != NULL) && (dialog->space_entry != NULL)) {
@@ -766,7 +766,7 @@ dash_space_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialo
     w_current = dialog->parent.w_current;
     g_return_val_if_fail (w_current != NULL, FALSE);
 
-    toplevel = w_current->toplevel;
+    toplevel = gschem_toplevel_get_toplevel (w_current);
     g_return_val_if_fail (toplevel != NULL, FALSE);
 
     if ((dialog->adapter != NULL) && (dialog->space_entry != NULL)) {
@@ -809,7 +809,7 @@ cap_style_changed (GtkWidget *widget, EditLProp *dialog)
   w_current = dialog->parent.w_current;
   g_return_if_fail (w_current != NULL);
 
-  toplevel = w_current->toplevel;
+  toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_if_fail (toplevel != NULL);
 
   if ((dialog->adapter != NULL) && (dialog->line_end != NULL)) {

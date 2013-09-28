@@ -129,7 +129,7 @@ void o_arc_end1(GschemToplevel *w_current, int w_x, int w_y)
 void o_arc_end4(GschemToplevel *w_current, int radius, 
 		int start_angle, int end_angle)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *new_obj;
 
   /* create, initialize and link the new arc object */

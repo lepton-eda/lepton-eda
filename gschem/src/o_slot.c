@@ -64,7 +64,7 @@ void o_slot_start (GschemToplevel *w_current, OBJECT *object)
  */
 void o_slot_end(GschemToplevel *w_current, OBJECT *object, const char *string)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *new_obj;
   char *slot_value;
   char *numslots_value;

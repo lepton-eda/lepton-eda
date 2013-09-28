@@ -83,7 +83,7 @@ x_rc_parse_gschem_error (GError **err, GschemToplevel *w_current)
  */
 void
 x_rc_parse_gschem (GschemToplevel *w_current, const gchar *rcfile) {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   g_rc_parse_handler (toplevel, "gschemrc", rcfile,
                       (ConfigParseErrorFunc) x_rc_parse_gschem_error,
                       (void *) w_current);

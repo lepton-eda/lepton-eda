@@ -34,7 +34,7 @@
  */
 void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *s_iter;
 
   g_return_if_fail (w_current->stretch_list == NULL);
@@ -104,7 +104,7 @@ void o_move_end_lowlevel (GschemToplevel *w_current,
                          OBJECT *object,
                          int diff_x, int diff_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   switch (object->type) {
 
@@ -129,7 +129,7 @@ void o_move_end_lowlevel (GschemToplevel *w_current,
  */
 void o_move_end(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *s_current = NULL;
   OBJECT *object;
   int diff_x, diff_y;
@@ -263,7 +263,7 @@ void o_move_cancel (GschemToplevel *w_current)
  */
 void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *selection, *s_current;
   OBJECT *object;
   gint object_x, object_y;
@@ -443,7 +443,7 @@ int o_move_return_whichone(OBJECT * object, int x, int y)
  */
 void o_move_check_endpoint(GschemToplevel *w_current, OBJECT * object)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *cl_current;
   CONN *c_current;
   OBJECT *other;
@@ -533,7 +533,7 @@ void o_move_check_endpoint(GschemToplevel *w_current, OBJECT * object)
  */
 void o_move_prep_rubberband(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *s_current;
   OBJECT *object;
   OBJECT *o_current;
@@ -598,7 +598,7 @@ void o_move_end_rubberband (GschemToplevel *w_current,
                             int w_dx, int w_dy,
                             GList** objects)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *s_iter, *s_iter_next;
 
   for (s_iter = w_current->stretch_list;

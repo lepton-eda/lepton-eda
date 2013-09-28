@@ -205,7 +205,7 @@ SCM_DEFINE (override_close_page_x, "%close-page!", 1, 0, 0,
               SCM_ARG1, s_override_close_page_x);
 
   GschemToplevel *w_current = g_current_window ();
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   PAGE *page = edascm_to_page (page_s);
 
   /* If page is not the current page, switch pages, then switch back

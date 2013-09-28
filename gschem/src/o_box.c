@@ -100,7 +100,7 @@ void o_box_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_box_end(GschemToplevel *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = w_current->toplevel;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *new_obj;
   int box_width, box_height;
   int box_left, box_top;
