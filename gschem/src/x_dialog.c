@@ -1585,7 +1585,7 @@ major_changed_dialog (GSCHEM_TOPLEVEL* w_current)
                        "homogeneous", FALSE,
                        "spacing", 12,
                        NULL);
-  gtk_box_pack_start (GTK_BOX (content_area), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (content_area), hbox, TRUE, TRUE, 0);
   /* Warning image */
   image = g_object_new (GTK_TYPE_IMAGE,
                         /* GtkMisc */
@@ -1640,7 +1640,7 @@ major_changed_dialog (GSCHEM_TOPLEVEL* w_current)
                          "vscrollbar-policy", GTK_POLICY_AUTOMATIC,
                          "shadow-type",       GTK_SHADOW_IN,
                          NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), scroll, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), scroll, TRUE, TRUE, 0);
   tree_view = g_object_new (GTK_TYPE_TREE_VIEW,
                             /* GtkTreeView */
                             "enable-search", FALSE,
