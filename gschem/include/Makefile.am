@@ -10,7 +10,6 @@ noinst_HEADERS = \
 	x_log.h x_multiattrib.h x_pagesel.h x_preview.h \
 	x_swatchcr.h \
 	gschem.h \
-	gschemcellrenderericon.h \
 	gschemhotkeystore.h \
 	gschem_accel_label.h \
 	gschem_action.h \

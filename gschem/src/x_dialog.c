@@ -807,6 +807,60 @@ void x_dialog_hotkeys_response(GtkWidget *w, gint response,
   w_current->hkwindow = NULL;
 }
 
+/*! \brief Fix up displaying icons in list of hotkeys.
+ * In gschem, we use both GTK's stock icons and also our own icons
+ * that we add to the icon theme search path.  We identify each icon
+ * by a single icon name, which might either name a GTK stock icon or
+ * a theme icon.  To determine which icon to show, we first check if
+ * there's a matching stock icon, and if one doesn't exist, we fall
+ * back to looking in the theme.
+ *
+ * The GtkCellRendererPixbuf doesn't provide this capability.  If its
+ * "icon-name" property is set, it doesn't look at stock items, but if
+ * its "stock-id" property is set, it ignores the "icon-name" even if
+ * no matching stock item exists.
+ *
+ * This handler hooks into the "notify::stock-id" signal in order to
+ * implement the desired fallback behaviour.
+ */
+static void
+x_dialog_hotkeys_cell_stock_id_notify (GObject *gobject,
+                                       GParamSpec *pspec,
+                                       gpointer user_data)
+{
+  gchar *stock_id = NULL;
+  const gchar *new_icon_name = NULL;
+  const gchar *new_stock_id = NULL;
+  GtkStockItem stock_info;
+
+  /* Decide whether the requested stock ID actually matches a stock
+   * item */
+  g_object_get (gobject,
+                "stock-id", &stock_id,
+                NULL);
+  new_stock_id = stock_id;
+
+  if (stock_id != NULL && !gtk_stock_lookup (stock_id, &stock_info)) {
+    new_icon_name = stock_id;
+    new_stock_id = NULL;
+  }
+
+  /* Fix up the cell renderer, making sure that this function doesn't
+   * get called recursively. */
+  g_signal_handlers_block_by_func (gobject,
+                                   x_dialog_hotkeys_cell_stock_id_notify,
+                                   NULL);
+  g_object_set (gobject,
+                "icon-name", new_icon_name,
+                "stock-id", new_stock_id,
+                NULL);
+  g_signal_handlers_unblock_by_func (gobject,
+                                     x_dialog_hotkeys_cell_stock_id_notify,
+                                     NULL);
+
+  g_free (stock_id);
+}
+
 /*! \brief Creates the hotkeys dialog
  *  \par Function Description
  *  This function creates the hotkey dialog and puts the list of hotkeys
@@ -862,12 +916,16 @@ void x_dialog_hotkeys (GSCHEM_TOPLEVEL *w_current)
     /* the columns */
     /* The first column contains the action's icon (if one was set)
      * and its label. */
-    renderer = gschem_cell_renderer_icon_new ();
+    renderer = gtk_cell_renderer_pixbuf_new ();
     column = gtk_tree_view_column_new_with_attributes (_("Action"),
                                                        renderer,
-                                                       "icon-id",
+                                                       "stock-id",
                                                        GSCHEM_HOTKEY_STORE_COLUMN_ICON,
                                                        NULL);
+    /* Fix things up to show stock icons *and* theme icons. */
+    g_signal_connect (renderer, "notify::stock-id",
+                      G_CALLBACK (x_dialog_hotkeys_cell_stock_id_notify),
+                      NULL);
 
     renderer = gtk_cell_renderer_text_new ();
     gtk_tree_view_column_pack_start (column, renderer, FALSE);
