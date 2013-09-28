@@ -972,7 +972,7 @@ x_event_configure (GtkWidget         *widget,
                    GdkEventConfigure *event,
                    gpointer           user_data)
 {
-  GschemToplevel *w_current = (GschemToplevel*)user_data;
+  GschemToplevel *w_current = GSCHEM_TOPLEVEL (user_data);
   TOPLEVEL *toplevel = w_current->toplevel;
   GList *iter;
   PAGE *old_page_current, *p_current;

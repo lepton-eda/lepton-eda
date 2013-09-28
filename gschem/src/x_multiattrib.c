@@ -189,7 +189,7 @@ multiattrib_callback_response (GtkDialog *dialog,
                                gint arg1,
                                gpointer user_data)
 {
-  GschemToplevel *w_current = (GschemToplevel*)user_data;
+  GschemToplevel *w_current = GSCHEM_TOPLEVEL (user_data);
 
   switch (arg1) {
       case GTK_RESPONSE_CLOSE:

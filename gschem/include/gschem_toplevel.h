@@ -18,6 +18,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+
+/* Temporary cast until GschemToplevel becomes a class */
+#define GSCHEM_TOPLEVEL(ptr) ((GschemToplevel*)(ptr))
+
+
 typedef struct st_gschem_toplevel GschemToplevel;
 
 struct st_gschem_toplevel {

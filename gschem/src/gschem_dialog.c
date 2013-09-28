@@ -235,7 +235,7 @@ static void gschem_dialog_set_property (GObject *object, guint property_id, cons
       dialog->settings_name = g_strdup (g_value_get_string (value));
       break;
     case PROP_GschemToplevel:
-      dialog->w_current = (GschemToplevel*)g_value_get_pointer (value);
+      dialog->w_current = GSCHEM_TOPLEVEL (g_value_get_pointer (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
