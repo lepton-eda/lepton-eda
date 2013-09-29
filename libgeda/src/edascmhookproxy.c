@@ -242,6 +242,8 @@ edascm_hook_proxy_default_run_handler (EdascmHookProxy *proxy,
  *
  * \param hook_s  Hook to be proxied.
  * \return a new #EdascmHookProxy instance.
+ *
+ * \since 1.10.
  */
 EdascmHookProxy *
 edascm_hook_proxy_new_with_hook (SCM hook_s)

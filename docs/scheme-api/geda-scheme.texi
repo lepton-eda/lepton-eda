@@ -1640,6 +1640,8 @@ recommended, because it means that configuration parameters can then
 be safely read without having to use @code{config-has-group?} and
 @code{config-has-key?} to check if they are set (@pxref{Configuration
 parameters, , Configuration groups and keys}).
+
+Since 1.10.
 @end defun
 
 @defun system-config-context
@@ -1654,12 +1656,16 @@ file.
 By checking the system configuration directory specified at
 compile-time for a @file{gEDA/geda-system.conf} file.
 @end enumerate
+
+Since 1.10.
 @end defun
 
 @defun user-config-context
 The user context is used for user-specific configuration, and is
 loaded from @file{gEDA/geda-user.conf} in @env{XDG_CONFIG_HOME}.
 Its parent context is the system context.
+
+Since 1.10.
 @end defun
 
 @subsubsection Loading and saving configuration files
@@ -1672,6 +1678,8 @@ associated with an on-disk configuration file.
 Return the filename of the configuration file associated with the
 context @var{cfg}.  For some contexts (including the default context),
 this will return @samp{#f}.
+
+Since 1.10.
 @end defun
 
 @defun config-load! cfg
@@ -1682,16 +1690,22 @@ from its associated file.
 @defun config-loaded? cfg
 Determine whether the context @var{cfg} has been successfully loaded
 from file.
+
+Since 1.10.
 @end defun
 
 @defun config-save! cfg
 Attempt to save configuration parameters for the context @var{cfg} to
 its associated file.
+
+Since 1.10.
 @end defun
 
 @defun config-changed? cfg
 Determine whether the context @var{cfg} has been altered since it was
 last synchronised with the on-disk version by loading or saving it.
+
+Since 1.10.
 @end defun
 
 @subsubsection Context parents
@@ -1705,6 +1719,8 @@ not permitted.
 
 @defun context-parent cfg
 Return the parent context of the context @var{cfg}, if it has one.
+
+Since 1.10.
 @end defun
 
 @defun set-config-parent! cfg parent
@@ -1715,6 +1731,8 @@ is @samp{#f}, sets @var{cfg} as having no parent context.
 function; keeping to the default configuration inheritance structure
 is recommended in order to ensure consistent behaviour of all libgeda
 applications.
+
+Since 1.10.
 @end defun
 
 @subsubsection Context trust
@@ -1744,6 +1762,8 @@ trusted, and all other contexts untrusted.
 
 @defun config-trusted? cfg
 Test whether @var{cfg} is a trusted configuration context.
+
+Since 1.10.
 @end defun
 
 @defun set-config-trusted! cfg trusted?
@@ -1753,12 +1773,16 @@ source for dangerous configuration parameters.
 @strong{Warning}: You should not set a configuration context as
 trusted unless you are certain that it originated from a safe source
 (e.g. by interacting with the user to verify it).
+
+Since 1.10.
 @end defun
 
 @defun config-trusted-context cfg
 If @var{cfg} is trusted, returns @var{cfg}; otherwise, returns the
 first parent context of @var{cfg} that is a trusted context.  If no
 trusted context can be found, returns @samp{#f}.
+
+Since 1.10.
 @end defun
 
 @node Configuration parameters
@@ -1788,21 +1812,29 @@ Groups, names and values are all case-sensitive.
 @defun config-groups cfg
 Returns a list of all groups available in @var{cfg} and its parent
 contexts.
+
+Since 1.10.
 @end defun
 
 @defun config-has-group? cfg group
 Determines whether @var{cfg} or its parent contexts contain the
 specified @var{group}
+
+Since 1.10.
 @end defun
 
 @defun config-keys cfg group
 Returns a list of all keys available in the specified @var{group} in
 @var{cfg} and its parent contexts.
+
+Since 1.10.
 @end defun
 
 @defun config-has-key? cfg group key
 Determines whether @var{cfg} or its parent contexts contains @var{key}
 in the specified @var{group}.
+
+Since 1.10.
 @end defun
 
 @subsubsection Configuration inheritance
@@ -1817,12 +1849,16 @@ context.
 Returns @samp{#f} if value of the configuration parameter with the
 given @var{group} and @var{key} is specified in the context @var{cfg},
 and @samp{#t} if it is inherited from a parent context of @var{cfg}.
+
+Since 1.10.
 @end defun
 
 @defun config-source cfg group key
 Returns the configuration context (either @var{cfg} or one of its
 parent contexts) in which the configuration parameter with the given
 @var{group} and @var{key} has its value defined.
+
+Since 1.10.
 @end defun
 
 @subsubsection Configuration values
@@ -1848,33 +1884,57 @@ In addition, lists of all the above are supported.
 
 @defun config-string cfg group key
 Retrieve configuration value as a string.
+
+Since 1.10.
 @end defun
+
 @defun config-boolean cfg group key
 Retrieve configuration value as a boolean.
+
+Since 1.10.
 @end defun
+
 @defun config-int cfg group key
 Retrieve configuration value as an exact integer.
+
+Since 1.10.
 @end defun
+
 @defun config-real cfg group key
 Retrieve configuration value as an inexact real number.
+
+Since 1.10.
 @end defun
+
 @defun config-string-list cfg group key
 Retrieve configuration value as a list of strings.
+
+Since 1.10.
 @end defun
+
 @defun config-boolean-list cfg group key
 Retrieve configuration value as a list of booleans.
+
+Since 1.10.
 @end defun
 @defun config-int-list cfg group key
 Retrieve configuration value as a list of exact integers.
+
+Since 1.10.
 @end defun
+
 @defun config-real-list cfg group key
 Retrieve configuration value as a list of inexact real numbers.
+
+Since 1.10.
 @end defun
 
 @defun config-set! cfg group key value
 Set the configuration parameter identified by the given @var{group}
 and @var{key} in the configuration context @var{cfg}.  The type of
 value to set is inferred from @var{value}.
+
+Since 1.10.
 @end defun
 
 @node Configuration events
@@ -1906,11 +1966,15 @@ that changed.
 @defun add-config-event! cfg handler
 Registers @var{handler} to be called when configuration changes in the
 context @var{cfg}.
+
+Since 1.10.
 @end defun
 
 @defun remove-config-event! cfg handler
 Stops @var{handler} from being called when configuration changes in
 the context @var{cfg}.
+
+Since 1.10.
 @end defun
 
 @node Configuration errors
@@ -2340,6 +2404,8 @@ Called when a new page is created. The argument is the new page.
 @defvar action-property-hook
 Called when an action property is set.  The arguments are the action,
 the property key and the property value. @xref{Actions}.
+
+Since 1.10.
 @end defvar
 
 @defvar bind-keys-hook
@@ -2349,6 +2415,8 @@ keymap, the key sequence and the binding's target.
 @strong{Note}: @code{bind-keys-hook} may be run multiple times for a
 single key binding event if the target keymap is bound within a
 superior keymap.
+
+Since 1.10.
 @end defvar
 
 @node Actions
@@ -2385,17 +2453,23 @@ properties can be specified for the action by providing pairs of
 (define-action (&report-bug #:label ``Report Bug'' #:icon ``web-browser'')
   (show-uri ``http://bugs.launchpad.net/geda/+reportbug''))
 @end example
+
+Since 1.10.
 @end defmac
 
 @defun make-action thunk [keyword value ...]
 Create and return a new action wrapping @var{thunk}.  Optionally,
 specify @var{keyword}-@var{value} pairs to set initial properties for the
 action.
+
+Since 1.10.
 @end defun
 
 @defun action? obj
 Returns @samp{#t} iff @var{obj} is a gschem action, and @samp{#f}
 otherwise.
+
+Since 1.10.
 @end defun
 
 Action properties are name-value pairs that are attached to an action.
@@ -2403,11 +2477,15 @@ Action properties are name-value pairs that are attached to an action.
 @defun action-property action key
 Return the value of one of @var{action}'s properties.  @var{key} is a
 symbol naming the property to retrieve.
+
+Since 1.10.
 @end defun
 
 @defun set-action-property! action key value
 Set the value of one of @var{action}'s properties.  @var{key} is a
 symbol naming the property to set, and @var{value} is the new value.
+
+Since 1.10.
 @end defun
 
 @subsection Evaluating actions
@@ -2443,6 +2521,8 @@ following to calls are equivalent and interchangeable:
 (eval-action! &action)
 (&action)
 @end example
+
+Since 1.10.
 @end defun
 
 @subsection Action positions
@@ -2456,12 +2536,16 @@ current when the action was invoked.
 Evaluate @var{action} at a particular point on the schematic plane.
 If @var{point} is omitted, the action is evaluated at the current
 mouse pointer position.
+
+Since 1.10.
 @end defun
 
 @defun action-position
 Return the current action pointer position, as set when the action was
 invoked (via @code{eval-action-at-point!}).  This only makes sense to
 call from inside an action.
+
+Since 1.10.
 @end defun
 
 @strong{Note}: The pointer position can only be considered reliable

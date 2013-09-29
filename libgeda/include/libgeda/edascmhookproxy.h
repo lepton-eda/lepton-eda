@@ -59,11 +59,13 @@ G_BEGIN_DECLS
  *
  * \b Properties: One property, \b "hook", the hook to proxy as an
  * unpacked Scheme value.
+ *
+ * \since 1.10.
  */
 
 #define EDASCM_TYPE_HOOK_PROXY (edascm_hook_proxy_get_type ())
 #define EDASCM_HOOK_PROXY(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), EDASCM_TYPE_HOOK_PROXY, EdascmHookProxy))
-#define EDASCM_HOOK_PROXY_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), EDASCM_TYPE_HOOK_PROXY, EdascmHookProxy))
+#define EDASCM_HOOK_PROXY_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), EDASCM_TYPE_HOOK_PROXY, EdascmHookProxyClass))
 #define EDASCM_IS_HOOK_PROXY(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), EDASCM_TYPE_HOOK_PROXY))
 #define EDASCM_HOOK_PROXY_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), EDASCM_TYPE_HOOK_PROXY, EdascmHookProxy))
 
