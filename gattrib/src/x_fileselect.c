@@ -68,10 +68,6 @@
 #include "../include/globals.h"
 #include "../include/gettext.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 /* ----- x_fileselect stuff begins here ----- */
 

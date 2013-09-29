@@ -28,10 +28,6 @@
 #include "gschem.h"
 #include <gdk/gdkkeysyms.h>
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 /* used by mouse pan */
 int start_pan_x, start_pan_y;

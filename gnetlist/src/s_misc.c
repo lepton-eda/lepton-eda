@@ -32,10 +32,6 @@
 #include "../include/prototype.h"
 #include "../include/gettext.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 static int char_index = 0;
 

@@ -28,10 +28,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \brief get the position of the first bus point
  *  \par Function Description
  *  This function gets the position of the first point of a bus object.

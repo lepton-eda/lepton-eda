@@ -32,10 +32,6 @@
 #include "gschem.h"
 #include <cairo-pdf.h>
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #define DEFAULT_PDF_SIZE 256
 #define CFG_GROUP_PRINTING "gschem.printing"
 #define CFG_KEY_PRINTING_ORIENTATION "layout"

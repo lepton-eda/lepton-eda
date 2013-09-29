@@ -38,10 +38,6 @@
 #include "../include/globals.h"
 #include "../include/gettext.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 /*------------------------------------------------------------------
  * The below fcns identical to those defined in

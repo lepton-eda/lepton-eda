@@ -37,10 +37,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 /*! \brief Return the bounds of the given object.
  *  \par Given an object, calculate the bounds coordinates.

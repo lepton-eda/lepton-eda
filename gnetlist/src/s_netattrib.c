@@ -38,10 +38,6 @@
 #include "../include/prototype.h"
 #include "../include/gettext.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /* Used by the connected string functions */
 #define PIN_NET_PREFIX "__netattrib_power_pin "
 

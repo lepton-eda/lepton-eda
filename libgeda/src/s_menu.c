@@ -30,10 +30,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \brief */
 struct st_menu {
   char *menu_name;

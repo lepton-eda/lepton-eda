@@ -24,10 +24,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #define GSCHEM_THEME_ICON_NAME "geda-gschem"
 
 /*! \todo Finish function documentation!!!

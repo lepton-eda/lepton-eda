@@ -23,10 +23,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 /*! \brief set the start point of a new bus
  *  \par Function Description

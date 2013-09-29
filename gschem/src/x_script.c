@@ -30,10 +30,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \brief Select a script and execute it
  *  \par Function Description
  *  This function opens a file selection dialog. The selected script 

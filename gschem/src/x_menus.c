@@ -29,10 +29,6 @@
 
 #include <glib/gstdio.h>
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 struct PopupEntry {
   const gchar const *name, *action, *stock_id;
 };

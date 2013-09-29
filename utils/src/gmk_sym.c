@@ -102,10 +102,6 @@ PRE,1,dot,B,1
 #include <time.h>
 #include <errno.h>
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #define BLACK		0
 #define WHITE		1
 #define RED		2

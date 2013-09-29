@@ -24,10 +24,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #define GET_BOX_WIDTH(w)  abs((w)->second_wx - (w)->first_wx)
 #define GET_BOX_HEIGHT(w) abs((w)->second_wy - (w)->first_wy)
 

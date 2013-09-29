@@ -31,10 +31,6 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #define GSC2PCB_VERSION "1.6"
 
 #define DEFAULT_PCB_INC "pcb.inc"

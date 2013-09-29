@@ -51,10 +51,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \brief Get the autosave filename for a file
  *  \par Function description
  *  Returns the expected autosave filename for the \a filename passed.

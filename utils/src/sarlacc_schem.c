@@ -38,10 +38,6 @@
 
 #include <libgeda/colors.h>
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*
  *  command line options
  */

@@ -51,10 +51,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 /*! \brief Add an attribute to an existing attribute list.
  *  \par Function Description

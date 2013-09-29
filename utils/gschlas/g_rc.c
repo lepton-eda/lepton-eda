@@ -42,10 +42,6 @@
 #include "../include/i_vars.h"
 #include "../include/prototype.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 SCM g_rc_gschlas_version(SCM scm_version)
 {
     char *version;

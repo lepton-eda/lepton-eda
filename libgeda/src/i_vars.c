@@ -22,10 +22,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \def INIT_STR(w, name, str) */
 #define INIT_STR(w, name, str) {                                        \
         g_free((w)->name);                                              \

@@ -34,10 +34,6 @@
 #include "../include/prototype.h"
 #include "../include/gettext.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 SCM g_scm_c_get_uref (TOPLEVEL *toplevel, OBJECT *object)
 {

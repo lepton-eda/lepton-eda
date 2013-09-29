@@ -39,10 +39,6 @@
 #include "../include/prototype.h"
 #include "../include/gettext.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 static int unnamed_net_counter = 1;
 static int unnamed_bus_counter = 1;
 static int unnamed_pin_counter = 1;

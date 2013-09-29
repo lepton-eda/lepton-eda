@@ -28,10 +28,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 SCM_SYMBOL (at_sym, "@");
 SCM_SYMBOL (gschem_sym, "gschem");
 SCM_SYMBOL (core_sym, "core");

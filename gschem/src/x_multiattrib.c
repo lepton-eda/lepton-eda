@@ -30,10 +30,6 @@
 #include "gschem.h"
 #include <gdk/gdkkeysyms.h>
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 /*! \brief Update the multiattrib editor dialog when the page's
  *         selection changes.

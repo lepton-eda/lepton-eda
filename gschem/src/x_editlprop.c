@@ -36,10 +36,6 @@
 #include "gschem.h"
 #include <gdk/gdkkeysyms.h>
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 
 static gint line_type_dialog_linetype_change (GtkWidget *widget, EditLProp *dialog);

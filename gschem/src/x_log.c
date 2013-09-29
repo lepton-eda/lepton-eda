@@ -43,10 +43,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 static void x_log_callback_response (GtkDialog *dialog,
                                      gint arg1,
                                      gpointer user_data);

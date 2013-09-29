@@ -22,10 +22,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 static void
 selection_to_buffer(GschemToplevel *w_current, int buf_num)
 {

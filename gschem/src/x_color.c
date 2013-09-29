@@ -27,10 +27,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 COLOR display_colors[MAX_COLORS];
 COLOR display_outline_colors[MAX_COLORS];
 

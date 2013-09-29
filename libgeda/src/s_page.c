@@ -52,10 +52,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 static gint global_pid = 0;
 
 /* Called just before removing an OBJECT from a PAGE. */

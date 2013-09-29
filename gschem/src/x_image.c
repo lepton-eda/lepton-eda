@@ -32,10 +32,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #define X_IMAGE_DEFAULT_SIZE "800x600"
 
 #define X_IMAGE_SIZE_MENU_NAME "image_size_menu"

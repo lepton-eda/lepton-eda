@@ -29,10 +29,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \brief
  *  \par Function Description
  *  The function creates a new OBJECT of type arc.

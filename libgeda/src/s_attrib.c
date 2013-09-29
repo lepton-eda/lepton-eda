@@ -30,10 +30,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #define MAX_ATTRIBS	128
 
 /*! \brief */

@@ -26,10 +26,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #define MAX_SLOT_SIZE 10
 
 /*! \todo Finish function documentation!!!

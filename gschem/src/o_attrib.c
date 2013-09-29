@@ -27,10 +27,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 
 #define SPACING_FROM_END       100

@@ -23,10 +23,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

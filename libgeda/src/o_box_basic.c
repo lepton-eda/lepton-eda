@@ -28,10 +28,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \brief Create a BOX OBJECT
  *  \par Function Description
  *  This function creates a new object representing a box.

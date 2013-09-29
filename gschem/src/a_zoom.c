@@ -24,10 +24,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /* Kazu - discuss with Ales
  * 1) rint
  * 2) SWAP & SORT

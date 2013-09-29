@@ -24,10 +24,6 @@
 #ifdef HAVE_LIBSTROKE
 #include <stroke.h>
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*
  * <B>stroke_points</B> is an array of points for the stroke
  * footprints. The points of the stroke are displayed over the display

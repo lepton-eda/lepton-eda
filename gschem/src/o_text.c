@@ -31,10 +31,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #define MINIMUM_MARK_SMALL_DIST 1
 
 #if 1

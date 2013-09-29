@@ -24,10 +24,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 /* magnetic options */
 /* half size of the magnetic marker on the screen. */

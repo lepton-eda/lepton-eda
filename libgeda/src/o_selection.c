@@ -27,10 +27,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \brief Returns a pointer to a new SELECTION object.
  *  \par Returns a pointer to a new SELECTION object.
  *  \return pointer to the new SELECTION object.

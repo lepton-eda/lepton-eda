@@ -25,10 +25,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /* window list */
 GList *global_window_list = NULL;
 

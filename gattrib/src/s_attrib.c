@@ -42,10 +42,6 @@
 #include "../include/globals.h"
 #include "../include/gettext.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 /*------------------------------------------------------------------*/
 /*! \brief Detect "name" in STRING_LIST

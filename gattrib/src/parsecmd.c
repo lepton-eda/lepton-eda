@@ -53,11 +53,6 @@ extern int optind;
 #endif   /* Checking for getopt_long  */
 
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
-
 /*------------------------------------------------------------------
  * Gattrib specific includes
  *------------------------------------------------------------------*/

@@ -35,11 +35,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
-
 
 
 /*! \brief The columns in the GtkListStore

@@ -31,10 +31,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /***************** Start of Attrib Edit dialog box ********************/
 /*! \section attrib-edit-dialog-box Atrib Edit Dialog Box */
 

@@ -28,10 +28,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 COLOR print_colors[MAX_COLORS];
 
 #define NOCOLOR {0xff, 0xff, 0xff, 0xff, FALSE}

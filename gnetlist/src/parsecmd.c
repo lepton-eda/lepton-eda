@@ -40,10 +40,6 @@
 #include "../include/prototype.h"
 #include "../include/gettext.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #define OPTIONS "c:g:hil:L:m:o:O:qvV"
 
 #ifndef OPTARG_IN_UNISTD

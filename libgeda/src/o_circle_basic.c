@@ -28,10 +28,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \brief calculate the distance between two points
  *  \par Function Description
  *  This function calculates the distance between two points.

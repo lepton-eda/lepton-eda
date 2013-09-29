@@ -57,10 +57,6 @@
 #include "../include/globals.h"
 #include "../include/gettext.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 /*! \brief Add new attribute dialog.
  *

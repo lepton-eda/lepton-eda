@@ -23,10 +23,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \brief Delete an object.
  *  \par Function Description
  *  This function erases the object \a object before deleting it. It

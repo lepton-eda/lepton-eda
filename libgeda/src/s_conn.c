@@ -27,10 +27,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \file s_conn.c
  *  \brief The connection system
  *  

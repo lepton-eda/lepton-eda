@@ -41,10 +41,6 @@
 
 #include <time.h>
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! Default setting for log update callback function. */
 void (*x_log_update_func)() = NULL;
 

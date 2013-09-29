@@ -31,10 +31,6 @@
 #include <stdio.h>
 #include <math.h>
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /* local defines */
 
 /* gEDA colour, these should probably come from somewhere else */

@@ -29,10 +29,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #define GETOPT_OPTIONS "c:hL:o:pqr:s:vV"
 
 #ifndef OPTARG_IN_UNISTD

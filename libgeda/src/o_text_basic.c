@@ -74,10 +74,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \brief Scale factor between legacy gschem font units and postscript points.
  *
  *  \par Description

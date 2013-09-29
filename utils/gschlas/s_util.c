@@ -37,10 +37,6 @@
 
 #include "../include/prototype.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /* If embed_mode is true, then embed all components in all pages, */
 /* otherwise unembed all components in all pages */
 void

@@ -27,10 +27,6 @@
 #include <string.h>
 #endif
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #include "libgeda_priv.h"
 
 struct _TextBuffer

@@ -30,10 +30,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 static int undo_file_index=0;
 static int prog_pid=0;
 

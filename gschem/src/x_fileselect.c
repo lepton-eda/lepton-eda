@@ -21,10 +21,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 /*! \brief Creates filter for file chooser.
  *  \par Function Description

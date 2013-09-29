@@ -33,10 +33,6 @@
 #include <string.h>
 #endif
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #include "gschem.h"
 
 

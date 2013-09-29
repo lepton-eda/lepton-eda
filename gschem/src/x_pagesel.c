@@ -29,10 +29,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 static void x_pagesel_callback_response (GtkDialog *dialog,
                                          gint arg1,

@@ -56,11 +56,6 @@
 #include "../include/globals.h"
 #include "../include/gettext.h"
 
-
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 static void show_entry(GtkWidget *widget, gpointer data);
 
 /*! \brief Create the GtkSheet

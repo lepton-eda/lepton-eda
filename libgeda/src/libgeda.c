@@ -34,10 +34,6 @@
 #include "libgeda_priv.h"
 #include "libgeda/libgedaguile.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \brief Perform runtime initialization of libgeda library.
  *  \par Function Description
  *  This function is responsible for making sure that any runtime

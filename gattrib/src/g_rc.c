@@ -51,11 +51,6 @@
 #include "../include/i_vars.h"     /* This holds all the guile variable defs */
 #include "../include/gettext.h"
 
-
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*------------------------------------------------------------------*/
 /*! \brief Test the version of gattrib and gEDA/gaf
  * 

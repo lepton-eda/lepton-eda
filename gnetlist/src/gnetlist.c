@@ -44,10 +44,6 @@
 #include "../include/prototype.h"
 #include "../include/gettext.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 void gnetlist_quit(void)
 {
     s_clib_free();

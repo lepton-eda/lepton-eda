@@ -46,10 +46,6 @@
 #include <config.h>
 #include <libgeda/colors.h>
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*
  * make it so we can use __attribute__((unused)) on gcc without
  * breaking non-gcc

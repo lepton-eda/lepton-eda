@@ -36,10 +36,6 @@
 #include "gschem.h"
 #include <gdk/gdkkeysyms.h>
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 
 #define TYPE_NEWTEXT           (newtext_get_type())

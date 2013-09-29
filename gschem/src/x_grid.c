@@ -26,10 +26,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #define DOTS_POINTS_ARRAY_SIZE       5000
 #define DOTS_VARIABLE_MODE_SPACING   30
 

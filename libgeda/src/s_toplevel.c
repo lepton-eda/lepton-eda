@@ -32,10 +32,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*!
  *  \brief Create a TOPLEVEL object
  *  \par Function Description

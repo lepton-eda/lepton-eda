@@ -37,10 +37,6 @@
 #include "libgeda_priv.h"
 #include "libgedaguile.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 static void process_error_stack (SCM s_stack, SCM s_key, SCM s_args, GError **err);
 
 /* Pre-unwind handler called in the context in which the exception was

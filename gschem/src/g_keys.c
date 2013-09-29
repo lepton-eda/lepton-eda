@@ -35,10 +35,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #include <gdk/gdkkeysyms.h>
 
 

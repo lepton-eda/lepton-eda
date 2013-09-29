@@ -31,10 +31,6 @@
 
 #include "geda_list.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 enum {
   CHANGED,

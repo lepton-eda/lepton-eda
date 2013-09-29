@@ -32,10 +32,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /* break with the tradition here and input a list */
 /*! \todo probably should go back and do the same for o_copy o_move
  *  o_delete...

@@ -24,10 +24,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \file o_pin_basic.c
  *  \brief functions for the pin object
  */

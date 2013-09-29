@@ -29,10 +29,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \brief Create and add line OBJECT to list.
  *  \par Function Description
  *  This function creates a new object representing a line.

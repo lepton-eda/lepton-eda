@@ -120,10 +120,6 @@
 #include <string.h>
 #endif
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
 #else

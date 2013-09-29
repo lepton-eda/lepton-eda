@@ -30,10 +30,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #ifdef G_OS_WIN32
 #  define STRICT
 #  include <windows.h>

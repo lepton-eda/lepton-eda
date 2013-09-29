@@ -41,10 +41,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 
 
 /*! \brief Create a ComboBox with an entry for integer values.

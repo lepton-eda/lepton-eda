@@ -31,10 +31,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! \brief Get the file header string.
  *  \par Function Description
  *  This function simply returns the DATE_VERSION and

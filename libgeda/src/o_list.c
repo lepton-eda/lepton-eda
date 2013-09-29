@@ -26,10 +26,6 @@
 
 #include "libgeda_priv.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! global which is used in o_list_copy_all */
 extern int global_sid;
 

@@ -33,10 +33,6 @@
 #include "../include/prototype.h"
 #include "../include/gettext.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 /*! Tracks which OBJECTs have been visited so far, and how many times.
  *
  * The keys of the table are the OBJECT pointers, and the visit count

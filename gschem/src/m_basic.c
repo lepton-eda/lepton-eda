@@ -24,11 +24,6 @@
 
 #include <gschem.h>
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
-
 /*! \brief Convert a x coordinate to mils.
  *  \par Function Description
  *  Convert a x coordinate to mils.

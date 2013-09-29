@@ -28,10 +28,6 @@
 
 #include "gschem.h"
 
-#ifdef HAVE_LIBDMALLOC
-#include <dmalloc.h>
-#endif
-
 #define MIME_TYPE_SCHEMATIC "application/x-geda-schematic"
 #define CLIP_TYPE_SCHEMATIC 1
 
