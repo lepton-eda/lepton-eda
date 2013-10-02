@@ -26,7 +26,16 @@
 
 static const char *next_object_id = NULL;
 
-class obstate;
+class obstate {
+	~obstate();
+	unsigned int refcnt;
+public:
+	obstate(xorn_obtype_t type, void const *data);
+	void inc_refcnt();
+	void dec_refcnt();
+	xorn_obtype_t const type;
+	void *const data;
+};
 
 struct xorn_revision {
 	xorn_revision();
@@ -37,17 +46,6 @@ struct xorn_revision {
 };
 
 struct xorn_selection : public std::set<xorn_object_t> {
-};
-
-class obstate {
-	~obstate();
-	unsigned int refcnt;
-public:
-	obstate(xorn_obtype_t type, void const *data);
-	void inc_refcnt();
-	void dec_refcnt();
-	xorn_obtype_t const type;
-	void *const data;
 };
 
 
