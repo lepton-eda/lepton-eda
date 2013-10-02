@@ -45,6 +45,8 @@ struct xorn_revision {
 	std::map<xorn_object_t, obstate *> obstates;
 };
 
+/* There is no struct xorn_object. */
+
 struct xorn_selection : public std::set<xorn_object_t> {
 };
 
