@@ -9,6 +9,8 @@ more information, please consult the `ChangeLog' file.
 
 Notable changes in gEDA/gaf 1.9.2
 =================================
+* Visibility and attributes of several VHDL symbols have been fixed.
+
 * Two obsolete scripts verilog2vhdl.sh and script.sed have been
   removed.
 
