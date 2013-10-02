@@ -167,6 +167,16 @@ int main()
 	assert_position(rev4, ob1a, false, 0., 0.);
 	assert_position(rev4, ob1b, true, 9.30, 9.35);
 
+	assert(xornsch_set_pos_x(rev4, sel3, 9.40) == 0);
+	assert_position(rev4, ob0, true, 9.40, 9.35);
+	assert_position(rev4, ob1a, false, 0., 0.);
+	assert_position(rev4, ob1b, true, 9.40, 9.35);
+
+	assert(xornsch_set_pos_y(rev4, sel3, 9.45) == 0);
+	assert_position(rev4, ob0, true, 9.40, 9.45);
+	assert_position(rev4, ob1a, false, 0., 0.);
+	assert_position(rev4, ob1b, true, 9.40, 9.45);
+
 	memset(&text_data, 0, sizeof text_data);
 	text_data.text.s = "Hello world";
 	text_data.text.len = 11;

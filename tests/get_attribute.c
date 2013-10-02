@@ -57,11 +57,21 @@ static void assert_position(xorn_revision_t rev, xorn_selection_t sel,
 {
 	xorn_attst_t state;
 	struct xorn_double2d position;
+	double x, y;
 
 	xornsch_get_pos(rev, sel, &state, &position);
 	assert(state == expected_state);
 	assert(position.x == expected_x);
 	assert(position.y == expected_y);
+
+	/* this doesn't generally work */
+	xornsch_get_pos_x(rev, sel, &state, &x);
+	assert(state == expected_state);
+	assert(x == expected_x);
+
+	xornsch_get_pos_y(rev, sel, &state, &y);
+	assert(state == expected_state);
+	assert(y == expected_y);
 }
 
 static void assert_text(xorn_revision_t rev, xorn_selection_t sel,

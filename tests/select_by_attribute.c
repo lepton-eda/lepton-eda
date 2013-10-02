@@ -115,6 +115,30 @@ int main()
 	assert_selected(rev3, sel, ob1b, true);
 	xorn_free_selection(sel);
 
+	sel = xornsch_select_by_pos_x(rev3, 0.);
+	assert_selected(rev3, sel, ob0, true);
+	assert_selected(rev3, sel, ob1a, false);
+	assert_selected(rev3, sel, ob1b, false);
+	xorn_free_selection(sel);
+
+	sel = xornsch_select_by_pos_x(rev3, 1.);
+	assert_selected(rev3, sel, ob0, false);
+	assert_selected(rev3, sel, ob1a, false);
+	assert_selected(rev3, sel, ob1b, false);
+	xorn_free_selection(sel);
+
+	sel = xornsch_select_by_pos_y(rev3, 0.);
+	assert_selected(rev3, sel, ob0, false);
+	assert_selected(rev3, sel, ob1a, false);
+	assert_selected(rev3, sel, ob1b, false);
+	xorn_free_selection(sel);
+
+	sel = xornsch_select_by_pos_y(rev3, 1.);
+	assert_selected(rev3, sel, ob0, true);
+	assert_selected(rev3, sel, ob1a, false);
+	assert_selected(rev3, sel, ob1b, false);
+	xorn_free_selection(sel);
+
 	rev4 = xorn_new_revision(rev3);
 	assert(rev4 != NULL);
 	memset(&text_data, 0, sizeof text_data);
