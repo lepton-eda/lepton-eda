@@ -18,19 +18,19 @@ AM_CPPFLAGS = -I$(top_srcdir)/include
 AM_CFLAGS = -Wall -W -Werror
 LDADD = ../lib/libxornstorage.la
 
-TESTS = tc_copy_object \
-	tc_copy_objects \
-	tc_delete_sel \
-	tc_exist \
-	tc_get_obdata \
-	tc_get_objects \
-	tc_get_obtype \
-	tc_invalid_obtype \
-	tc_null \
-	tc_selection \
-	tc_stat \
-	tc_string \
-	tc_transient
+TESTS = copy_object \
+	copy_objects \
+	delete_sel \
+	exist \
+	get_obdata \
+	get_objects \
+	get_obtype \
+	invalid_obtype \
+	null \
+	selection \
+	stat \
+	string \
+	transient
 
 check_PROGRAMS = $(TESTS)
 EXTRA_DIST = Setup.h
