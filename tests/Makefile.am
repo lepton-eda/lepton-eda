@@ -22,12 +22,15 @@ TESTS = copy_object \
 	copy_objects \
 	delete_sel \
 	exist \
+	get_attribute \
 	get_obdata \
 	get_objects \
 	get_obtype \
 	invalid_obtype \
 	null \
+	select_by_attribute \
 	selection \
+	set_attribute \
 	stat \
 	string \
 	transient

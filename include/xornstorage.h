@@ -37,6 +37,19 @@ typedef enum {
 	xornsch_obtype_text,
 } xorn_obtype_t;
 
+typedef enum {
+	xorn_attst_na,
+	/* None of the selected objects has this attribute.
+	   Don't show this attribute in the property editor. */
+	xorn_attst_consistent,
+	/* All selected objects have the same value of this attribute.
+	   Show this value for this attribute in the property editor. */
+	xorn_attst_inconsistent,
+	/* There are different values of this attribute in the
+	   selected objects.  Show this attribute in the property
+	   editor, but don't show a value. */
+} xorn_attst_t;
+
 /* opaque types */
 typedef struct xorn_revision *xorn_revision_t;
 typedef struct xorn_object *xorn_object_t;
@@ -232,6 +245,69 @@ DECLARE_OBJECT_FUNCTIONS(picture)
 DECLARE_OBJECT_FUNCTIONS(text)
 
 #undef DECLARE_OBJECT_FUNCTIONS
+
+/* attribute functions */
+
+#define DECLARE_ATTRIBUTE_FUNCTIONS(ns, name, intype, outtype)		\
+	void ns##_get_##name(						\
+		xorn_revision_t rev, xorn_selection_t sel,		\
+		xorn_attst_t *state_return, outtype value_return);	\
+	int ns##_set_##name(						\
+		xorn_revision_t rev, xorn_selection_t sel,		\
+		intype value);						\
+	xorn_selection_t ns##_select_by_##name(				\
+		xorn_revision_t rev, intype value);
+
+#define INT_ATTRIBUTE(ns, name) \
+	DECLARE_ATTRIBUTE_FUNCTIONS(ns, name, int, int *)
+#define BOOL_ATTRIBUTE(ns, name) \
+	DECLARE_ATTRIBUTE_FUNCTIONS(ns, name, bool, bool *)
+#define DOUBLE_ATTRIBUTE(ns, name) \
+	DECLARE_ATTRIBUTE_FUNCTIONS(ns, name, double, double *)
+#define DOUBLE2D_ATTRIBUTE(ns, name) \
+	DECLARE_ATTRIBUTE_FUNCTIONS(ns, name, const struct xorn_double2d *, \
+						    struct xorn_double2d *)
+#define STRING_ATTRIBUTE(ns, name) \
+	DECLARE_ATTRIBUTE_FUNCTIONS(ns, name, const struct xorn_string *, \
+						    struct xorn_string *)
+
+     INT_ATTRIBUTE(xornsch, alignment)
+     INT_ATTRIBUTE(xornsch, angle)
+     INT_ATTRIBUTE(xornsch, color)
+     INT_ATTRIBUTE(xornsch, fill_angle0)
+     INT_ATTRIBUTE(xornsch, fill_angle1)
+  DOUBLE_ATTRIBUTE(xornsch, fill_pitch0)
+  DOUBLE_ATTRIBUTE(xornsch, fill_pitch1)
+     INT_ATTRIBUTE(xornsch, fill_type)
+  DOUBLE_ATTRIBUTE(xornsch, fill_width)
+    BOOL_ATTRIBUTE(xornsch, is_bus)
+    BOOL_ATTRIBUTE(xornsch, is_inverted)
+    BOOL_ATTRIBUTE(xornsch, is_pin)
+     INT_ATTRIBUTE(xornsch, line_cap_style)
+  DOUBLE_ATTRIBUTE(xornsch, line_dash_length)
+  DOUBLE_ATTRIBUTE(xornsch, line_dash_space)
+     INT_ATTRIBUTE(xornsch, line_dash_style)
+  DOUBLE_ATTRIBUTE(xornsch, line_width)
+    BOOL_ATTRIBUTE(xornsch, mirror)
+  STRING_ATTRIBUTE(xornsch, pathdata)
+DOUBLE2D_ATTRIBUTE(xornsch, pos)
+  DOUBLE_ATTRIBUTE(xornsch, radius)
+    BOOL_ATTRIBUTE(xornsch, selectable)
+     INT_ATTRIBUTE(xornsch, show_name_value)
+DOUBLE2D_ATTRIBUTE(xornsch, size)
+     INT_ATTRIBUTE(xornsch, startangle)
+     INT_ATTRIBUTE(xornsch, sweepangle)
+  STRING_ATTRIBUTE(xornsch, text)
+     INT_ATTRIBUTE(xornsch, text_size)
+    BOOL_ATTRIBUTE(xornsch, visibility)
+
+#undef INT_ATTRIBUTE
+#undef BOOL_ATTRIBUTE
+#undef DOUBLE_ATTRIBUTE
+#undef DOUBLE2D_ATTRIBUTE
+#undef STRING_ATTRIBUTE
+
+#undef DECLARE_ATTRIBUTE_FUNCTIONS
 
 #ifdef __cplusplus
 }

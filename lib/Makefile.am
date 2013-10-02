@@ -18,6 +18,7 @@ lib_LTLIBRARIES = libxornstorage.la
 libxornstorage_la_SOURCES = \
 	internal.h \
 	key_iterator.h \
+	attributes.cc \
 	convenience.cc \
 	manipulate.cc \
 	object.cc \
