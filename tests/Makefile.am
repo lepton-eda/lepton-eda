@@ -33,4 +33,4 @@ TESTS = tc_copy_object \
 	tc_transient
 
 check_PROGRAMS = $(TESTS)
-EXTRA_DIST = setup.h
+EXTRA_DIST = Setup.h
