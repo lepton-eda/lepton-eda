@@ -15,7 +15,16 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 lib_LTLIBRARIES = libxornstorage.la
-libxornstorage_la_SOURCES = xornstorage.cc key_iterator.h
+libxornstorage_la_SOURCES = \
+	internal.h \
+	key_iterator.h \
+	convenience.cc \
+	manipulate.cc \
+	object.cc \
+	obstate.cc \
+	revision.cc \
+	selection.cc
+
 libxornstorage_la_CPPFLAGS = -I$(top_srcdir)/include
 libxornstorage_la_CXXFLAGS = -Wall -W
 libxornstorage_la_LDFLAGS = -export-symbols-regex '^xorn_'
