@@ -21,6 +21,8 @@
 #include <map>
 #include <set>
 
+void *copy_data(xorn_obtype_t type, void const *src);
+
 class obstate {
 	~obstate();
 	unsigned int refcnt;

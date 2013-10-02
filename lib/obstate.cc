@@ -19,7 +19,7 @@
 #include <string.h>
 
 
-static void *copy_data(xorn_obtype_t type, void const *src)
+void *copy_data(xorn_obtype_t type, void const *src)
 {
 	if (src == NULL)
 		throw std::bad_alloc();
