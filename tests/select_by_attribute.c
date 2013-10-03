@@ -51,6 +51,9 @@ int main()
 	struct xornsch_text text_data;
 	xorn_object_t text_ob;
 
+	struct xornsch_line_attr line;
+	struct xornsch_fill_attr fill;
+
 	setup(&rev0, &rev1, &rev2, &rev3, &ob0, &ob1a, &ob1b);
 
 	sel = xornsch_select_by_color(rev2, 3);
@@ -164,6 +167,54 @@ int main()
 	assert_selected(rev4, sel, ob1a, false);
 	assert_selected(rev4, sel, ob1b, false);
 	assert_selected(rev4, sel, text_ob, true);
+	xorn_free_selection(sel);
+
+	memset(&line, 0, sizeof line);
+	sel = xornsch_select_by_line(rev2, &line);
+	assert_selected(rev2, sel, ob0, false);
+	assert_selected(rev2, sel, ob1a, false);
+	assert_selected(rev2, sel, ob1b, false);
+	xorn_free_selection(sel);
+	sel = xornsch_select_by_line(rev3, &line);
+	assert_selected(rev3, sel, ob0, false);
+	assert_selected(rev3, sel, ob1a, false);
+	assert_selected(rev3, sel, ob1b, false);
+	xorn_free_selection(sel);
+
+	line.width = 1.;
+	sel = xornsch_select_by_line(rev2, &line);
+	assert_selected(rev2, sel, ob0, true);
+	assert_selected(rev2, sel, ob1a, true);
+	assert_selected(rev2, sel, ob1b, true);
+	xorn_free_selection(sel);
+	sel = xornsch_select_by_line(rev3, &line);
+	assert_selected(rev3, sel, ob0, false);
+	assert_selected(rev3, sel, ob1a, false);
+	assert_selected(rev3, sel, ob1b, true);
+	xorn_free_selection(sel);
+
+	memset(&fill, 0, sizeof fill);
+	sel = xornsch_select_by_fill(rev2, &fill);
+	assert_selected(rev2, sel, ob0, false);
+	assert_selected(rev2, sel, ob1a, true);
+	assert_selected(rev2, sel, ob1b, false);
+	xorn_free_selection(sel);
+	sel = xornsch_select_by_fill(rev3, &fill);
+	assert_selected(rev3, sel, ob0, false);
+	assert_selected(rev3, sel, ob1a, false);
+	assert_selected(rev3, sel, ob1b, false);
+	xorn_free_selection(sel);
+
+	fill.type = 1;
+	sel = xornsch_select_by_fill(rev2, &fill);
+	assert_selected(rev2, sel, ob0, false);
+	assert_selected(rev2, sel, ob1a, false);
+	assert_selected(rev2, sel, ob1b, true);
+	xorn_free_selection(sel);
+	sel = xornsch_select_by_fill(rev3, &fill);
+	assert_selected(rev3, sel, ob0, false);
+	assert_selected(rev3, sel, ob1a, false);
+	assert_selected(rev3, sel, ob1b, true);
 	xorn_free_selection(sel);
 
 	xorn_free_revision(rev4);

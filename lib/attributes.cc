@@ -24,24 +24,32 @@
 #define BASIC_TYPE_double double
 #define BASIC_TYPE_double2d struct xorn_double2d
 #define BASIC_TYPE_string struct xorn_string
+#define BASIC_TYPE_line struct xornsch_line_attr
+#define BASIC_TYPE_fill struct xornsch_fill_attr
 
 #define PARAM_TYPE_int int
 #define PARAM_TYPE_bool bool
 #define PARAM_TYPE_double double
 #define PARAM_TYPE_double2d const struct xorn_double2d *
 #define PARAM_TYPE_string const struct xorn_string *
+#define PARAM_TYPE_line const struct xornsch_line_attr *
+#define PARAM_TYPE_fill const struct xornsch_fill_attr *
 
 #define ASSIGN_FROM_VAR_int(dst, src) (dst) = (src)
 #define ASSIGN_FROM_VAR_bool(dst, src) (dst) = (src)
 #define ASSIGN_FROM_VAR_double(dst, src) (dst) = (src)
 #define ASSIGN_FROM_VAR_double2d(dst, src) memcpy(&(dst), &(src), sizeof (dst))
 #define ASSIGN_FROM_VAR_string(dst, src) memcpy(&(dst), &(src), sizeof (dst))
+#define ASSIGN_FROM_VAR_line(dst, src) memcpy(&(dst), &(src), sizeof (dst))
+#define ASSIGN_FROM_VAR_fill(dst, src) memcpy(&(dst), &(src), sizeof (dst))
 
 #define ASSIGN_FROM_ARG_int(dst, src) (dst) = (src)
 #define ASSIGN_FROM_ARG_bool(dst, src) (dst) = (src)
 #define ASSIGN_FROM_ARG_double(dst, src) (dst) = (src)
 #define ASSIGN_FROM_ARG_double2d(dst, src) memcpy(&(dst), (src), sizeof (dst))
 #define ASSIGN_FROM_ARG_string(dst, src) memcpy(&(dst), (src), sizeof (dst))
+#define ASSIGN_FROM_ARG_line(dst, src) memcpy(&(dst), (src), sizeof (dst))
+#define ASSIGN_FROM_ARG_fill(dst, src) memcpy(&(dst), (src), sizeof (dst))
 
 #define EQ_VAR_int(a, b) ((a) == (b))
 #define EQ_VAR_bool(a, b) ((a) == (b))
@@ -49,6 +57,8 @@
 #define EQ_VAR_double2d(a, b) ((a).x == (b).x && (a).y == (b).y)
 #define EQ_VAR_string(a, b) ((a).len == (b).len && \
 			     memcmp((a).s, (b).s, (a).len) == 0)
+#define EQ_VAR_line(a, b) (memcmp(&a, &b, sizeof (a)) == 0)
+#define EQ_VAR_fill(a, b) (memcmp(&a, &b, sizeof (a)) == 0)
 
 #define EQ_ARG_int(a, b) ((a) == (b))
 #define EQ_ARG_bool(a, b) ((a) == (b))
@@ -56,12 +66,16 @@
 #define EQ_ARG_double2d(a, b) ((a).x == (b)->x && (a).y == (b)->y)
 #define EQ_ARG_string(a, b) ((a).len == (b)->len && \
 			     memcmp((a).s, (b)->s, (a).len) == 0)
+#define EQ_ARG_line(a, b) (memcmp(&a, b, sizeof (a)) == 0)
+#define EQ_ARG_fill(a, b) (memcmp(&a, b, sizeof (a)) == 0)
 
 #define CLEAR_int(dst) (dst) = 0
 #define CLEAR_bool(dst) (dst) = false
 #define CLEAR_double(dst) (dst) = 0.
 #define CLEAR_double2d(dst) do { (dst).x = 0.; (dst).y = 0.; } while (0)
 #define CLEAR_string(dst) do { (dst).s = NULL; (dst).len = 0; } while (0)
+#define CLEAR_line(dst) do { memset(&dst, 0, sizeof (dst)); } while (0)
+#define CLEAR_fill(dst) do { memset(&dst, 0, sizeof (dst)); } while (0)
 
 #define GET_yes(type, attname, atttype)					\
 	case xornsch_obtype_##type:					\
@@ -279,6 +293,7 @@
 DAM0(alignment,		int,	  no,  no,  no,  no,  no,  no,  no,  no,  yes)
 DAM0(angle,		int,	  no,  no,  no,  yes, no,  no,  no,  yes, yes)
 DAM0(color,		int,	  yes, yes, yes, no,  yes, yes, yes, no,  yes)
+DAM0(fill,		fill,	  no,  yes, yes, no,  no,  no,  yes, no,  no)
 DAM1(fill, angle0,	int,	  no,  yes, yes, no,  no,  no,  yes, no,  no)
 DAM1(fill, angle1,	int,	  no,  yes, yes, no,  no,  no,  yes, no,  no)
 DAM1(fill, pitch0,	double,	  no,  yes, yes, no,  no,  no,  yes, no,  no)
@@ -288,6 +303,7 @@ DAM1(fill, width,	double,	  no,  yes, yes, no,  no,  no,  yes, no,  no)
 DAM0(is_bus,		bool,	  no,  no,  no,  no,  no,  yes, no,  no,  no)
 DAM0(is_inverted,	bool,	  no,  no,  no,  no,  no,  yes, no,  no,  no)
 DAM0(is_pin,		bool,	  no,  no,  no,  no,  no,  yes, no,  no,  no)
+DAM0(line,		line,	  yes, yes, yes, no,  yes, no,  yes, no,  no)
 DAM1(line, cap_style,	int,	  yes, yes, yes, no,  yes, no,  yes, no,  no)
 DAM1(line, dash_length,	double,	  yes, yes, yes, no,  yes, no,  yes, no,  no)
 DAM1(line, dash_space,	double,	  yes, yes, yes, no,  yes, no,  yes, no,  no)

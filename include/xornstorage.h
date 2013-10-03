@@ -270,10 +270,17 @@ DECLARE_OBJECT_FUNCTIONS(text)
 #define STRING_ATTRIBUTE(ns, name) \
 	DECLARE_ATTRIBUTE_FUNCTIONS(ns, name, const struct xorn_string *, \
 						    struct xorn_string *)
+#define LINE_ATTRIBUTE(ns, name) \
+	DECLARE_ATTRIBUTE_FUNCTIONS(ns, name, const struct xornsch_line_attr *,\
+						    struct xornsch_line_attr *)
+#define FILL_ATTRIBUTE(ns, name) \
+	DECLARE_ATTRIBUTE_FUNCTIONS(ns, name, const struct xornsch_fill_attr *,\
+						    struct xornsch_fill_attr *)
 
      INT_ATTRIBUTE(xornsch, alignment)
      INT_ATTRIBUTE(xornsch, angle)
      INT_ATTRIBUTE(xornsch, color)
+    FILL_ATTRIBUTE(xornsch, fill)
      INT_ATTRIBUTE(xornsch, fill_angle0)
      INT_ATTRIBUTE(xornsch, fill_angle1)
   DOUBLE_ATTRIBUTE(xornsch, fill_pitch0)
@@ -283,6 +290,7 @@ DECLARE_OBJECT_FUNCTIONS(text)
     BOOL_ATTRIBUTE(xornsch, is_bus)
     BOOL_ATTRIBUTE(xornsch, is_inverted)
     BOOL_ATTRIBUTE(xornsch, is_pin)
+    LINE_ATTRIBUTE(xornsch, line)
      INT_ATTRIBUTE(xornsch, line_cap_style)
   DOUBLE_ATTRIBUTE(xornsch, line_dash_length)
   DOUBLE_ATTRIBUTE(xornsch, line_dash_space)

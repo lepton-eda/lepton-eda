@@ -86,6 +86,46 @@ static void assert_text(xorn_revision_t rev, xorn_selection_t sel,
 	assert(memcmp(text.s, expected_text, text.len) == 0);
 }
 
+static void assert_line(xorn_revision_t rev, xorn_selection_t sel,
+			xorn_attst_t expected_state,
+			double width, int cap_style, int dash_style,
+			double dash_length, double dash_space)
+{
+	xorn_attst_t state;
+	struct xornsch_line_attr expected_line, real_line;
+
+	memset(&expected_line, 0, sizeof expected_line);
+	expected_line.width = width;
+	expected_line.cap_style = cap_style;
+	expected_line.dash_style = dash_style;
+	expected_line.dash_length = dash_length;
+	expected_line.dash_space = dash_space;
+
+	xornsch_get_line(rev, sel, &state, &real_line);
+	assert(state == expected_state);
+	assert(memcmp(&expected_line, &real_line, sizeof expected_line) == 0);
+}
+
+static void assert_fill(xorn_revision_t rev, xorn_selection_t sel,
+			xorn_attst_t expected_state, int type, double width,
+			int angle0, double pitch0, int angle1, double pitch1)
+{
+	xorn_attst_t state;
+	struct xornsch_fill_attr expected_fill, real_fill;
+
+	memset(&expected_fill, 0, sizeof expected_fill);
+	expected_fill.type = type;
+	expected_fill.width = width;
+	expected_fill.angle0 = angle0;
+	expected_fill.pitch0 = pitch0;
+	expected_fill.angle1 = angle1;
+	expected_fill.pitch1 = pitch1;
+
+	xornsch_get_fill(rev, sel, &state, &real_fill);
+	assert(state == expected_state);
+	assert(memcmp(&expected_fill, &real_fill, sizeof expected_fill) == 0);
+}
+
 int main()
 {
 	xorn_revision_t rev0, rev1, rev2, rev3;
@@ -212,6 +252,46 @@ int main()
 	assert_text(rev4, tsel0, xorn_attst_consistent, "Hello world");
 	assert_text(rev4, tsel1, xorn_attst_consistent, "dlrow olleH");
 	assert_text(rev4, tselA, xorn_attst_inconsistent, "");
+
+	assert_line(rev0, sel0, xorn_attst_na, 0., 0, 0, 0., 0.);
+	assert_line(rev0, sel1, xorn_attst_na, 0., 0, 0, 0., 0.);
+	assert_line(rev0, sel2, xorn_attst_na, 0., 0, 0, 0., 0.);
+	assert_line(rev0, sel3, xorn_attst_na, 0., 0, 0, 0., 0.);
+
+	assert_line(rev1, sel0, xorn_attst_na, 0., 0, 0, 0., 0.);
+	assert_line(rev1, sel1, xorn_attst_consistent, 1., 0, 0, 0., 0.);
+	assert_line(rev1, sel2, xorn_attst_consistent, 1., 0, 0, 0., 0.);
+	assert_line(rev1, sel3, xorn_attst_consistent, 1., 0, 0, 0., 0.);
+
+	assert_line(rev2, sel0, xorn_attst_na, 0., 0, 0, 0., 0.);
+	assert_line(rev2, sel1, xorn_attst_consistent, 1., 0, 0, 0., 0.);
+	assert_line(rev2, sel2, xorn_attst_consistent, 1., 0, 0, 0., 0.);
+	assert_line(rev2, sel3, xorn_attst_consistent, 1., 0, 0, 0., 0.);
+
+	assert_line(rev3, sel0, xorn_attst_na, 0., 0, 0, 0., 0.);
+	assert_line(rev3, sel1, xorn_attst_na, 0., 0, 0, 0., 0.);
+	assert_line(rev3, sel2, xorn_attst_consistent, 1., 0, 0, 0., 0.);
+	assert_line(rev3, sel3, xorn_attst_consistent, 1., 0, 0, 0., 0.);
+
+	assert_fill(rev0, sel0, xorn_attst_na, 0, 0., 0, 0., 0, 0.);
+	assert_fill(rev0, sel1, xorn_attst_na, 0, 0., 0, 0., 0, 0.);
+	assert_fill(rev0, sel2, xorn_attst_na, 0, 0., 0, 0., 0, 0.);
+	assert_fill(rev0, sel3, xorn_attst_na, 0, 0., 0, 0., 0, 0.);
+
+	assert_fill(rev1, sel0, xorn_attst_na, 0, 0., 0, 0., 0, 0.);
+	assert_fill(rev1, sel1, xorn_attst_na, 0, 0., 0, 0., 0, 0.);
+	assert_fill(rev1, sel2, xorn_attst_na, 0, 0., 0, 0., 0, 0.);
+	assert_fill(rev1, sel3, xorn_attst_na, 0, 0., 0, 0., 0, 0.);
+
+	assert_fill(rev2, sel0, xorn_attst_na, 0, 0., 0, 0., 0, 0.);
+	assert_fill(rev2, sel1, xorn_attst_na, 0, 0., 0, 0., 0, 0.);
+	assert_fill(rev2, sel2, xorn_attst_inconsistent, 0, 0., 0, 0., 0, 0.);
+	assert_fill(rev2, sel3, xorn_attst_consistent, 1, 0., 0, 0., 0, 0.);
+
+	assert_fill(rev3, sel0, xorn_attst_na, 0, 0., 0, 0., 0, 0.);
+	assert_fill(rev3, sel1, xorn_attst_na, 0, 0., 0, 0., 0, 0.);
+	assert_fill(rev3, sel2, xorn_attst_consistent, 1, 0., 0, 0., 0, 0.);
+	assert_fill(rev3, sel3, xorn_attst_consistent, 1, 0., 0, 0., 0, 0.);
 
 	xorn_free_selection(tselA);
 	xorn_free_selection(tsel1);
