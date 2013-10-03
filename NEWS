@@ -9,6 +9,9 @@ more information, please consult the `ChangeLog' file.
 
 Notable changes in gEDA/gaf 1.9.2
 =================================
+* Two obsolete scripts verilog2vhdl.sh and script.sed have been
+  removed.
+
 * Undocumented and ambiguous feature of the `spice-sdb' backend for
   gnetlist consisting in the possibility of using the "value="
   attribute instead of "file=" only for include blocks and only in
