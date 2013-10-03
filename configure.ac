@@ -30,5 +30,5 @@ LT_INIT([])
 AC_PROG_CXX
 
 AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_FILES([Makefile lib/Makefile include/Makefile tests/Makefile])
+AC_CONFIG_FILES([Makefile lib/Makefile tests/Makefile])
 AC_OUTPUT

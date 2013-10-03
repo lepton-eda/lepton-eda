@@ -14,6 +14,8 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-SUBDIRS = lib include tests
+SUBDIRS = lib tests
+
+include_HEADERS = include/xornstorage.h
 
 ACLOCAL_AMFLAGS = -I m4
