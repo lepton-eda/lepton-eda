@@ -38,11 +38,13 @@
 
 enum
 {
-  PROP_CAP_STYLE = 1,
+  PROP_0,
+  PROP_CAP_STYLE,
   PROP_DASH_LENGTH,
   PROP_DASH_SPACE,
   PROP_LINE_TYPE,
-  PROP_LINE_WIDTH
+  PROP_LINE_WIDTH,
+  PROP_OBJECT_COLOR
 };
 
 
@@ -64,10 +66,49 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
 
 
+/*! \brief Get a property
+ *
+ *  \param [in]     object
+ *  \param [in]     param_id
+ *  \param [in,out] value
+ *  \param [in]     pspec
+ */
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 {
+  GschemSelectionAdapter *adapter = GSCHEM_SELECTION_ADAPTER (object);
+
+  switch (param_id) {
+    case PROP_CAP_STYLE:
+      g_value_set_int (value, gschem_selection_adapter_get_cap_style (adapter));
+      break;
+
+    case PROP_DASH_LENGTH:
+      g_value_set_int (value, gschem_selection_adapter_get_dash_length (adapter));
+      break;
+
+    case PROP_DASH_SPACE:
+      g_value_set_int (value, gschem_selection_adapter_get_dash_space (adapter));
+      break;
+
+    case PROP_LINE_TYPE:
+      g_value_set_int (value, gschem_selection_adapter_get_line_type (adapter));
+      break;
+
+    case PROP_LINE_WIDTH:
+      g_value_set_int (value, gschem_selection_adapter_get_line_width (adapter));
+      break;
+
+    case PROP_OBJECT_COLOR:
+      g_value_set_int (value, gschem_selection_adapter_get_object_color (adapter));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
+  }
 }
+
+
 
 /*! \brief Initialize GschemSelectionAdapter class
  *
@@ -126,6 +167,16 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klasse)
                                    g_param_spec_int ("line-width",
                                                      "Line Width",
                                                      "Line Width",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     -1,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klasse),
+                                   PROP_OBJECT_COLOR,
+                                   g_param_spec_int ("object-color",
+                                                     "Object Color",
+                                                     "Object Color",
                                                      G_MININT,
                                                      G_MAXINT,
                                                      -1,
@@ -370,6 +421,60 @@ gschem_selection_adapter_get_line_width (GschemSelectionAdapter *adapter)
   }
 
   return line_width;
+}
+
+
+
+/*! \brief Get the object color from the selection
+ *
+ *  \param [in] adapter This adapter
+ *  \return The object color. If there are no objects with an object color, or
+ *  multiple objects with a different colors, this function returns -1.
+ */
+int
+gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
+{
+  int color = -1;
+  GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, -1);
+
+  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+
+  while (iter != NULL) {
+    OBJECT* object = (OBJECT *) iter->data;
+    iter = g_list_next (iter);
+    if ((object != NULL) && (
+        (object->type == OBJ_ARC)    ||
+        (object->type == OBJ_BOX)    ||
+        (object->type == OBJ_CIRCLE) ||
+        (object->type == OBJ_LINE)   ||
+        (object->type == OBJ_PATH)   ||
+        (object->type == OBJ_TEXT))) {
+      color = object->color;
+      break;
+    }
+  }
+
+  /* Check if all other objects have the same properties */
+
+  while (iter != NULL) {
+    OBJECT* object = (OBJECT *) iter->data;
+    if ((object != NULL) && (
+        (object->type == OBJ_ARC)    ||
+        (object->type == OBJ_BOX)    ||
+        (object->type == OBJ_CIRCLE) ||
+        (object->type == OBJ_LINE)   ||
+        (object->type == OBJ_PATH)   ||
+        (object->type == OBJ_TEXT))) {
+      if (color != object->color) {
+        color = -1;
+      }
+    }
+    iter = g_list_next (iter);
+  }
+
+  return color;
 }
 
 
@@ -737,6 +842,35 @@ gschem_selection_adapter_set_cap_style (GschemSelectionAdapter *adapter, int cap
 
 
 
+/*! \brief Set the object color in the selection
+ *
+ *  \param [in] adapter
+ *  \param [in] color
+ */
+void
+gschem_selection_adapter_set_object_color (GschemSelectionAdapter *adapter, int color)
+{
+  GList *iter;
+
+  g_return_if_fail (adapter != NULL);
+  g_return_if_fail (color >= 0);
+  g_return_if_fail (color < MAX_COLORS);
+
+  iter = geda_list_get_glist (adapter->selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+
+    o_set_color (adapter->toplevel, object, color);
+
+    iter = g_list_next (iter);
+  }
+
+  g_object_notify (G_OBJECT (adapter), "object-color");
+}
+
+
+
 /*! \brief Set the selection associated with this adapter
  *
  *  \param [in] adapter
@@ -771,6 +905,7 @@ gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter, SELECTI
   g_object_notify (G_OBJECT (adapter), "dash-space");
   g_object_notify (G_OBJECT (adapter), "line-type");
   g_object_notify (G_OBJECT (adapter), "line-width");
+  g_object_notify (G_OBJECT (adapter), "object-color");
 }
 
 
@@ -811,11 +946,49 @@ selection_changed (GedaList *selection, GschemSelectionAdapter *adapter)
   g_object_notify (G_OBJECT (adapter), "dash-space");
   g_object_notify (G_OBJECT (adapter), "line-type");
   g_object_notify (G_OBJECT (adapter), "line-width");
+  g_object_notify (G_OBJECT (adapter), "object-color");
 }
 
 
 
+/*! \brief Set a property
+ *
+ *  \param [in,out] object
+ *  \param [in]     param_id
+ *  \param [in]     value
+ *  \param [in]     pspec
+ */
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
 {
+  GschemSelectionAdapter *adapter = GSCHEM_SELECTION_ADAPTER (object);
+
+  switch (param_id) {
+    case PROP_CAP_STYLE:
+      gschem_selection_adapter_set_cap_style (adapter, g_value_get_int (value));
+      break;
+
+    case PROP_DASH_LENGTH:
+      gschem_selection_adapter_set_dash_length (adapter, g_value_get_int (value));
+      break;
+
+    case PROP_DASH_SPACE:
+      gschem_selection_adapter_set_dash_space (adapter, g_value_get_int (value));
+      break;
+
+    case PROP_LINE_TYPE:
+      gschem_selection_adapter_set_line_type (adapter, g_value_get_int (value));
+      break;
+
+    case PROP_LINE_WIDTH:
+      gschem_selection_adapter_set_line_width (adapter, g_value_get_int (value));
+      break;
+
+    case PROP_OBJECT_COLOR:
+      gschem_selection_adapter_set_object_color (adapter, g_value_get_int (value));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
+  }
 }

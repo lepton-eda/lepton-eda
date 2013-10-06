@@ -53,46 +53,22 @@ struct _EditColorClass
 
 struct _EditColor
 {
-    GschemDialog parent;
+  GschemDialog parent;
 
-    GtkWidget *colorcb;
+  GschemSelectionAdapter *adapter;
+  GtkWidget *colorcb;
 };
 
 
 
-/*! \brief Handles the user response when apply is selected
- *
- *  \par Function Description
- *  This function applies the color from the color edit dialog.
- *
- *  \param [in] dialog The edit color dialog
- */
 static void
-dialog_response_apply (EditColor *dialog)
-{
-  int color;
-  GList *s_current = NULL;
+notify_object_color (GschemSelectionAdapter *adapter, GParamSpec *pspec, EditColor *dialog);
 
-  color = x_colorcb_get_index (dialog->colorcb);
+static void
+object_color_changed (GtkWidget *widget, EditColor *dialog);
 
-  s_current = geda_list_get_glist (dialog->parent.w_current->toplevel->page_current->selection_list);
-
-  while (s_current != NULL) {
-    OBJECT *object = (OBJECT *) s_current->data;
-
-    if (object == NULL) {
-      fprintf(stderr, _("ERROR: NULL object in color_edit_dialog_apply!\n"));
-      exit(-1);
-    }
-
-    o_set_color (dialog->parent.w_current->toplevel, object, color);
-    dialog->parent.w_current->toplevel->page_current->CHANGED = 1;
-
-    s_current = g_list_next(s_current);
-  }
-
-  o_undo_savestate(dialog->parent.w_current, UNDO_ALL);
-}
+static void
+update_object_color (EditColor *dialog);
 
 
 
@@ -108,9 +84,6 @@ static void
 dialog_response (EditColor *dialog, gint response, gpointer unused)
 {
   switch(response) {
-    case GTK_RESPONSE_APPLY:
-      dialog_response_apply(dialog);
-      break;
     case GTK_RESPONSE_CLOSE:
     case GTK_RESPONSE_DELETE_EVENT:
       //i_set_state(dialog->parent.w_current, SELECT);
@@ -171,16 +144,6 @@ static void editcolor_init(EditColor *dialog)
                          GTK_STOCK_CLOSE,
                          GTK_RESPONSE_CLOSE);
 
-  gtk_dialog_add_button (GTK_DIALOG (dialog),
-                         GTK_STOCK_APPLY,
-                         GTK_RESPONSE_APPLY);
-
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-                                          GTK_RESPONSE_ACCEPT,
-                                          GTK_RESPONSE_REJECT,
-                                          -1);
-
   gtk_window_position(GTK_WINDOW (dialog),
                       GTK_WIN_POS_NONE);
 
@@ -188,9 +151,6 @@ static void editcolor_init(EditColor *dialog)
                     "response",
                     G_CALLBACK (dialog_response),
                     NULL);
-
-  gtk_dialog_set_default_response(GTK_DIALOG(dialog),
-                                  GTK_RESPONSE_ACCEPT);
 
   gtk_container_border_width(GTK_CONTAINER (dialog),
                              DIALOG_BORDER_SPACING);
@@ -220,6 +180,11 @@ static void editcolor_init(EditColor *dialog)
 
   dialog->colorcb = x_colorcb_new ();
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->colorcb, 1,2,0,1);
+
+  g_signal_connect(G_OBJECT (dialog->colorcb),
+                   "changed",
+                   G_CALLBACK (object_color_changed),
+                   dialog);
 }
 
 
@@ -251,54 +216,112 @@ GType editcolor_get_type()
 
 
 
+/*! \brief Signal handler for when the selection cap style changes
+ *
+ *  \param [in]     adapter
+ *  \param [in]     pspec
+ *  \param [in,out] dialog
+ */
+static void
+notify_object_color (GschemSelectionAdapter *adapter, GParamSpec *pspec, EditColor *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (adapter != NULL);
+
+  if (dialog->adapter != NULL) {
+    g_return_if_fail (adapter == dialog->adapter);
+
+    update_object_color (dialog);
+  }
+}
+
+
 
 static void
-setup_initial_values (EditColor *dialog)
+object_color_changed (GtkWidget *widget, EditColor *dialog)
 {
-  int color = -1;
-  GList *s_current;
+  TOPLEVEL *toplevel;
+  GschemToplevel *w_current;
 
-  /* Find the first object in the selection */
+  g_return_if_fail (dialog != NULL);
+  g_return_if_fail (widget != NULL);
 
-  s_current = geda_list_get_glist( dialog->parent.w_current->toplevel->page_current->selection_list );
+  w_current = dialog->parent.w_current;
+  g_return_if_fail (w_current != NULL);
 
-  while (s_current != NULL) {
-    OBJECT* object = (OBJECT *) s_current->data;
-    s_current = g_list_next(s_current);
-    if ((object != NULL) && (
-        (object->type == OBJ_ARC)    ||
-        (object->type == OBJ_BOX)    ||
-        (object->type == OBJ_CIRCLE) ||
-        (object->type == OBJ_LINE)   ||
-        (object->type == OBJ_PATH)   ||
-        (object->type == OBJ_TEXT))) {
-      color = object->color;
-      break;
+  toplevel = gschem_toplevel_get_toplevel (w_current);
+  g_return_if_fail (toplevel != NULL);
+
+  if ((dialog->adapter != NULL) && (dialog->colorcb != NULL)) {
+    int color;
+
+    g_return_if_fail (widget == dialog->colorcb);
+
+    color = x_colorcb_get_index (dialog->colorcb);
+
+    if (color >= 0) {
+      gschem_selection_adapter_set_object_color (dialog->adapter, color);
+
+      toplevel->page_current->CHANGED = 1;
+      o_undo_savestate(w_current, UNDO_ALL);
     }
   }
+}
 
-  /* Check if all other objects have the same properties */
 
-  while (s_current != NULL) {
-    OBJECT* object = (OBJECT *) s_current->data;
-    if ((object != NULL) && (
-        (object->type == OBJ_ARC)    ||
-        (object->type == OBJ_BOX)    ||
-        (object->type == OBJ_CIRCLE) ||
-        (object->type == OBJ_LINE)   ||
-        (object->type == OBJ_PATH)   ||
-        (object->type == OBJ_TEXT))) {
-      if (color != object->color) {
-        color = -1;
-      }
-    }
-    s_current = g_list_next(s_current);
+
+/*! \brief Set the selection this dialog manipulates
+ *
+ *  \param [in,out] dialog
+ *  \param [in]     selection
+ */
+void
+x_editcolor_set_selection_adapter (EditColor *dialog, GschemSelectionAdapter *adapter)
+{
+  g_return_if_fail (dialog != NULL);
+
+  if (dialog->adapter != NULL) {
+    g_signal_handlers_disconnect_by_func (dialog->adapter,
+                                          G_CALLBACK (notify_object_color),
+                                          dialog);
+
+    g_object_unref (dialog->adapter);
   }
 
-  /* Setup the values in the dialog box */
+  dialog->adapter = adapter;
 
-  if (color >= 0) {
+  if (dialog->adapter != NULL) {
+    g_object_ref (dialog->adapter);
+
+    g_signal_connect (dialog->adapter,
+                      "notify::object-color",
+                      G_CALLBACK (notify_object_color),
+                      dialog);
+  }
+
+  update_object_color (dialog);
+}
+
+
+
+
+static void
+update_object_color (EditColor *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+
+  if ((dialog->adapter != NULL) && (dialog->colorcb != NULL)) {
+    int color = gschem_selection_adapter_get_object_color (dialog->adapter);
+
+    g_signal_handlers_block_by_func(G_OBJECT (dialog->colorcb),
+                                    G_CALLBACK (object_color_changed),
+                                    dialog);
+
     x_colorcb_set_index(dialog->colorcb, color);
+
+    g_signal_handlers_unblock_by_func(G_OBJECT (dialog->colorcb),
+                                      G_CALLBACK (object_color_changed),
+                                      dialog);
   }
 }
 
@@ -325,13 +348,15 @@ color_edit_dialog (GschemToplevel *w_current)
     gtk_window_set_transient_for (GTK_WINDOW (w_current->clwindow),
                                   GTK_WINDOW (w_current->main_window));
 
-    setup_initial_values (EDITCOLOR (w_current->clwindow));
+    x_editcolor_set_selection_adapter (EDITCOLOR (w_current->clwindow),
+                                       gschem_toplevel_get_selection_adapter (w_current));
 
     gtk_widget_show_all (w_current->clwindow);
   }
   else {
     /* dialog already created */
-    setup_initial_values (EDITCOLOR (w_current->clwindow));
+    x_editcolor_set_selection_adapter (EDITCOLOR (w_current->clwindow),
+                                       gschem_toplevel_get_selection_adapter (w_current));
 
     gtk_window_present (GTK_WINDOW(w_current->clwindow));
   }

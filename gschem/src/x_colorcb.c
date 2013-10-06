@@ -191,21 +191,24 @@ x_colorcb_get_index (GtkWidget *widget)
 void
 x_colorcb_set_index (GtkWidget *widget, int color_index)
 {
-  GtkTreeIter iter;
-  gboolean success;
-  GValue value = {0};
-
   g_return_if_fail (color_list_store != NULL);
 
-  success = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (color_list_store), &iter);
-  while (success) {
-    gtk_tree_model_get_value (GTK_TREE_MODEL (color_list_store), &iter, COLUMN_INDEX, &value);
-    if (g_value_get_int (&value) == color_index) {
+  if (color_index >= 0) {
+    GtkTreeIter iter;
+    gboolean success = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (color_list_store), &iter);
+    GValue value = {0};
+    while (success) {
+      gtk_tree_model_get_value (GTK_TREE_MODEL (color_list_store), &iter, COLUMN_INDEX, &value);
+      if (g_value_get_int (&value) == color_index) {
+        g_value_unset (&value);
+        gtk_combo_box_set_active_iter (GTK_COMBO_BOX(widget), &iter);
+        break;
+      }
       g_value_unset (&value);
-      gtk_combo_box_set_active_iter (GTK_COMBO_BOX(widget), &iter);
-      break;
+      success = gtk_tree_model_iter_next (GTK_TREE_MODEL(color_list_store), &iter);
     }
-    g_value_unset (&value);
-    success = gtk_tree_model_iter_next (GTK_TREE_MODEL(color_list_store), &iter);
+  }
+  else {
+    gtk_combo_box_set_active_iter (GTK_COMBO_BOX(widget), NULL);
   }
 }

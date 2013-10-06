@@ -46,7 +46,7 @@ struct _GschemSelectionAdapter
 };
 
 GType
-gschem_selection_get_type();
+gschem_selection_adapter_get_type();
 
 int
 gschem_selection_adapter_get_cap_style (GschemSelectionAdapter *adapter);
@@ -62,6 +62,9 @@ gschem_selection_adapter_get_line_type (GschemSelectionAdapter *adapter);
 
 int
 gschem_selection_adapter_get_line_width (GschemSelectionAdapter *adapter);
+
+int
+gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter);
 
 SELECTION *
 gschem_selection_adapter_get_selection (GschemSelectionAdapter *adapter);
@@ -86,6 +89,9 @@ gschem_selection_adapter_set_line_type (GschemSelectionAdapter *adapter, int lin
 
 void
 gschem_selection_adapter_set_line_width (GschemSelectionAdapter *adapter, int line_width);
+
+void
+gschem_selection_adapter_set_object_color (GschemSelectionAdapter *adapter, int color);
 
 void
 gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter, SELECTION *selection);
