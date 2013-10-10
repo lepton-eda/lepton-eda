@@ -28,6 +28,7 @@ gschem_SOURCES = \
 	gschem_accel_label.c \
 	gschem_action.c \
 	gschem_dialog.c \
+	gschem_integer_combo_box.c \
 	gschem_selection_adapter.c \
 	gschem_toplevel.c \
 	i_basic.c \
@@ -78,7 +79,6 @@ gschem_SOURCES = \
 	x_fstylecb.c \
 	x_grid.c \
 	x_image.c \
-	x_integercb.c \
 	x_integerls.c \
 	x_linecapcb.c \
 	x_linetypecb.c \

@@ -15,6 +15,7 @@ noinst_HEADERS = \
 	gschem_action.h \
 	gschem_defines.h \
 	gschem_dialog.h \
+	gschem_integer_combo_box.h \
 	gschem_selection_adapter.h \
 	gschem_struct.h \
 	gschem_toplevel.h

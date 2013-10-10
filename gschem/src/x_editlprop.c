@@ -262,15 +262,15 @@ static void editlprop_init(EditLProp *dialog)
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->line_type,
                             1,2,0,1);
 
-  dialog->width_entry = x_integercb_new ();
+  dialog->width_entry = gschem_integer_combo_box_new ();
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->width_entry,
                             1,2,1,2);
 
-  dialog->length_entry = x_integercb_new ();
+  dialog->length_entry = gschem_integer_combo_box_new ();
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->length_entry,
                             1,2,2,3);
 
-  dialog->space_entry = x_integercb_new ();
+  dialog->space_entry = gschem_integer_combo_box_new ();
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->space_entry,
                             1,2,3,4);
 
@@ -290,11 +290,11 @@ static void editlprop_init(EditLProp *dialog)
                    G_CALLBACK (line_width_changed),
                    dialog);
 
-  g_signal_connect(G_OBJECT (x_integercb_get_entry (dialog->width_entry)), "activate",
+  g_signal_connect(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->width_entry)), "activate",
                    G_CALLBACK (entry_activate),
                    dialog);
 
-  g_signal_connect(G_OBJECT (x_integercb_get_entry (dialog->width_entry)), "focus-out-event",
+  g_signal_connect(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->width_entry)), "focus-out-event",
                    G_CALLBACK (line_width_focus_out_event),
                    dialog);
 
@@ -302,11 +302,11 @@ static void editlprop_init(EditLProp *dialog)
                    G_CALLBACK (dash_length_changed),
                    dialog);
 
-  g_signal_connect(G_OBJECT (x_integercb_get_entry (dialog->length_entry)), "activate",
+  g_signal_connect(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->length_entry)), "activate",
                    G_CALLBACK (entry_activate),
                    dialog);
 
-  g_signal_connect(G_OBJECT (x_integercb_get_entry (dialog->length_entry)), "focus-out-event",
+  g_signal_connect(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->length_entry)), "focus-out-event",
                    G_CALLBACK (dash_length_focus_out_event),
                    dialog);
 
@@ -314,11 +314,11 @@ static void editlprop_init(EditLProp *dialog)
                    G_CALLBACK (dash_space_changed),
                    dialog);
 
-  g_signal_connect(G_OBJECT (x_integercb_get_entry (dialog->space_entry)), "activate",
+  g_signal_connect(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->space_entry)), "activate",
                    G_CALLBACK (entry_activate),
                    dialog);
 
-  g_signal_connect(G_OBJECT (x_integercb_get_entry (dialog->space_entry)), "focus-out-event",
+  g_signal_connect(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->space_entry)), "focus-out-event",
                    G_CALLBACK (dash_space_focus_out_event),
                    dialog);
 
@@ -524,13 +524,13 @@ line_width_changed (GtkWidget *widget, EditLProp *dialog)
   if ((dialog->adapter != NULL) && (dialog->width_entry != NULL)) {
     g_return_if_fail (widget == dialog->width_entry);
 
-    if (gtk_widget_is_focus (GTK_WIDGET (x_integercb_get_entry (dialog->width_entry)))) {
+    if (gtk_widget_is_focus (GTK_WIDGET (gschem_integer_combo_box_get_entry (dialog->width_entry)))) {
       // likely just a character changed in the entry widget
 
       dialog->line_width_changed = TRUE;
     }
     else {
-      int line_width = x_integercb_get_value (dialog->width_entry);
+      int line_width = gschem_integer_combo_box_get_value (dialog->width_entry);
 
       if (line_width >= 0) {
         gschem_selection_adapter_set_line_width (dialog->adapter, line_width);
@@ -570,9 +570,9 @@ line_width_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialo
     if ((dialog->adapter != NULL) && (dialog->width_entry != NULL)) {
       int line_width;
 
-      g_return_val_if_fail (widget == GTK_WIDGET (x_integercb_get_entry (dialog->width_entry)), FALSE);
+      g_return_val_if_fail (widget == GTK_WIDGET (gschem_integer_combo_box_get_entry (dialog->width_entry)), FALSE);
 
-      line_width = x_integercb_get_value (dialog->width_entry);
+      line_width = gschem_integer_combo_box_get_value (dialog->width_entry);
 
       if (line_width >= 0) {
         gschem_selection_adapter_set_line_width (dialog->adapter, line_width);
@@ -619,7 +619,7 @@ dash_length_changed (GtkWidget *widget, EditLProp *dialog)
   if ((dialog->adapter != NULL) && (dialog->length_entry != NULL)) {
     g_return_if_fail (widget == dialog->length_entry);
 
-    if (gtk_widget_is_focus (GTK_WIDGET (x_integercb_get_entry (dialog->length_entry)))) {
+    if (gtk_widget_is_focus (GTK_WIDGET (gschem_integer_combo_box_get_entry (dialog->length_entry)))) {
       // likely just a character changed in the entry widget
 
       dialog->dash_length_changed = TRUE;
@@ -629,7 +629,7 @@ dash_length_changed (GtkWidget *widget, EditLProp *dialog)
 
       g_return_if_fail (widget == GTK_WIDGET (dialog->length_entry));
 
-      dash_length = x_integercb_get_value (dialog->length_entry);
+      dash_length = gschem_integer_combo_box_get_value (dialog->length_entry);
 
       if (dash_length >= 0) {
         gschem_selection_adapter_set_dash_length (dialog->adapter, dash_length);
@@ -669,9 +669,9 @@ dash_length_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dial
     if ((dialog->adapter != NULL) && (dialog->length_entry != NULL)) {
       int dash_length;
 
-      g_return_val_if_fail (widget == GTK_WIDGET (x_integercb_get_entry (dialog->length_entry)), FALSE);
+      g_return_val_if_fail (widget == GTK_WIDGET (gschem_integer_combo_box_get_entry (dialog->length_entry)), FALSE);
 
-      dash_length = x_integercb_get_value (dialog->length_entry);
+      dash_length = gschem_integer_combo_box_get_value (dialog->length_entry);
 
       if (dash_length >= 0) {
         gschem_selection_adapter_set_dash_length (dialog->adapter, dash_length);
@@ -718,7 +718,7 @@ dash_space_changed (GtkWidget *widget, EditLProp *dialog)
   if ((dialog->adapter != NULL) && (dialog->space_entry != NULL)) {
     g_return_if_fail (widget == dialog->space_entry);
 
-    if (gtk_widget_is_focus (GTK_WIDGET (x_integercb_get_entry (dialog->space_entry)))) {
+    if (gtk_widget_is_focus (GTK_WIDGET (gschem_integer_combo_box_get_entry (dialog->space_entry)))) {
       // likely just a character changed in the entry widget
 
       dialog->dash_space_changed = TRUE;
@@ -728,7 +728,7 @@ dash_space_changed (GtkWidget *widget, EditLProp *dialog)
 
       g_return_if_fail (widget == GTK_WIDGET (dialog->space_entry));
 
-      dash_space = x_integercb_get_value (dialog->space_entry);
+      dash_space = gschem_integer_combo_box_get_value (dialog->space_entry);
 
       if (dash_space >= 0) {
         gschem_selection_adapter_set_dash_space (dialog->adapter, dash_space);
@@ -768,9 +768,9 @@ dash_space_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialo
     if ((dialog->adapter != NULL) && (dialog->space_entry != NULL)) {
       int dash_space;
 
-      g_return_val_if_fail (widget == GTK_WIDGET (x_integercb_get_entry (dialog->space_entry)), FALSE);
+      g_return_val_if_fail (widget == GTK_WIDGET (gschem_integer_combo_box_get_entry (dialog->space_entry)), FALSE);
 
-      dash_space = x_integercb_get_value (dialog->space_entry);
+      dash_space = gschem_integer_combo_box_get_value (dialog->space_entry);
 
       if (dash_space >= 0) {
         gschem_selection_adapter_set_dash_space (dialog->adapter, dash_space);
@@ -975,17 +975,17 @@ update_dash_length (EditLProp *dialog)
                                     G_CALLBACK (dash_length_changed),
                                     dialog);
 
-    g_signal_handlers_block_by_func(G_OBJECT (x_integercb_get_entry (dialog->length_entry)),
+    g_signal_handlers_block_by_func(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->length_entry)),
                                     G_CALLBACK (dash_length_focus_out_event),
                                     dialog);
 
-    x_integercb_set_value (dialog->length_entry, length);
+    gschem_integer_combo_box_set_value (dialog->length_entry, length);
 
     g_signal_handlers_unblock_by_func(G_OBJECT (dialog->length_entry),
                                       G_CALLBACK (dash_length_changed),
                                       dialog);
 
-    g_signal_handlers_unblock_by_func(G_OBJECT (x_integercb_get_entry (dialog->length_entry)),
+    g_signal_handlers_unblock_by_func(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->length_entry)),
                                       G_CALLBACK (dash_length_focus_out_event),
                                       dialog);
 
@@ -1011,17 +1011,17 @@ update_dash_space (EditLProp *dialog)
                                     G_CALLBACK (dash_space_changed),
                                     dialog);
 
-    g_signal_handlers_block_by_func(G_OBJECT (x_integercb_get_entry (dialog->space_entry)),
+    g_signal_handlers_block_by_func(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->space_entry)),
                                     G_CALLBACK (dash_space_focus_out_event),
                                     dialog);
 
-    x_integercb_set_value (dialog->space_entry, space);
+    gschem_integer_combo_box_set_value (dialog->space_entry, space);
 
     g_signal_handlers_unblock_by_func(G_OBJECT (dialog->space_entry),
                                       G_CALLBACK (dash_space_changed),
                                       dialog);
 
-    g_signal_handlers_unblock_by_func(G_OBJECT (x_integercb_get_entry (dialog->space_entry)),
+    g_signal_handlers_unblock_by_func(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->space_entry)),
                                       G_CALLBACK (dash_space_focus_out_event),
                                       dialog);
 
@@ -1076,17 +1076,17 @@ update_line_width (EditLProp *dialog)
                                     G_CALLBACK (line_width_changed),
                                     dialog);
 
-    g_signal_handlers_block_by_func(G_OBJECT (x_integercb_get_entry (dialog->width_entry)),
+    g_signal_handlers_block_by_func(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->width_entry)),
                                     G_CALLBACK (line_width_focus_out_event),
                                     dialog);
 
-    x_integercb_set_value (dialog->width_entry, width);
+    gschem_integer_combo_box_set_value (dialog->width_entry, width);
 
     g_signal_handlers_unblock_by_func(G_OBJECT (dialog->width_entry),
                                       G_CALLBACK (line_width_changed),
                                       dialog);
 
-    g_signal_handlers_unblock_by_func(G_OBJECT (x_integercb_get_entry (dialog->width_entry)),
+    g_signal_handlers_unblock_by_func(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->width_entry)),
                                       G_CALLBACK (line_width_focus_out_event),
                                       dialog);
 
@@ -1134,13 +1134,13 @@ line_type_dialog (GschemToplevel *w_current)
     gtk_window_set_transient_for (GTK_WINDOW (w_current->lpwindow),
                                   GTK_WINDOW (w_current->main_window));
 
-    x_integercb_set_model (EDITLPROP (w_current->lpwindow)->width_entry,
+    gschem_integer_combo_box_set_model (EDITLPROP (w_current->lpwindow)->width_entry,
                            gschem_toplevel_get_line_width_list_store (w_current));
 
-    x_integercb_set_model (EDITLPROP (w_current->lpwindow)->length_entry,
+    gschem_integer_combo_box_set_model (EDITLPROP (w_current->lpwindow)->length_entry,
                            gschem_toplevel_get_dash_length_list_store (w_current));
 
-    x_integercb_set_model (EDITLPROP (w_current->lpwindow)->space_entry,
+    gschem_integer_combo_box_set_model (EDITLPROP (w_current->lpwindow)->space_entry,
                            gschem_toplevel_get_dash_space_list_store (w_current));
 
     gtk_widget_show_all (w_current->lpwindow);

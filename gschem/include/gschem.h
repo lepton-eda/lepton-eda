@@ -27,6 +27,7 @@
 #include "x_swatchcr.h"
 #include "globals.h"
 #include "prototype.h"
+#include "gschem_integer_combo_box.h"
 
 /* Gettext translation */
 #include "gettext.h"

@@ -698,12 +698,6 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
 		      int desired_width, int desired_height, char *filetype);
 void x_image_setup(GschemToplevel *w_current);
 GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current);
-/* x_integercb.c */
-GtkWidget* x_integercb_new();
-GtkEntry* x_integercb_get_entry (GtkWidget *widget);
-int x_integercb_get_value (GtkWidget *widget);
-void x_integercb_set_model (GtkWidget *widget, GtkListStore *store);
-void x_integercb_set_value (GtkWidget *widget, int value);
 /* x_integerls.c */
 GtkListStore* x_integerls_new ();
 GtkListStore* x_integerls_new_with_values (const char *value[], int count);

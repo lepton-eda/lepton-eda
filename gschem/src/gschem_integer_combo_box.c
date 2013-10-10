@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file x_integercb.c
+/*! \file gschem_integer_combo_box.c
  *
  *  \brief A GtkComboBox with and entry for integer values.
  *
@@ -43,20 +43,56 @@
 
 
 
-/*! \brief Create a ComboBox with an entry for integer values.
+static void
+gschem_integer_combo_box_class_init (GschemIntegerComboBoxClass *klasse);
+
+static void
+gschem_integer_combo_box_init (GschemIntegerComboBox *combo);
+
+
+
+/*! \brief Initialize GschemIntegerComboBoxClass class
  *
- *  \return A GtkWidget for entering integer values
+ *  \param [in] klasse The class for the GschemIntegerComboBoxClass
  */
-GtkWidget*
-x_integercb_new ()
+static void
+gschem_integer_combo_box_class_init (GschemIntegerComboBoxClass *klasse)
 {
-#if GTK_CHECK_VERSION (2, 24, 0)
-  return gtk_combo_box_new_with_entry ();
-#else
-  return gtk_combo_box_entry_new ();
-#endif
 }
 
+
+
+/*! \brief Get the GschemIntegerComboBox type
+ *
+ *  \return The GschemIntegerComboBox type
+ */
+GType
+gschem_integer_combo_box_get_type()
+{
+  static GType type = 0;
+
+  if (type == 0) {
+    static const GTypeInfo info = {
+      sizeof(GschemIntegerComboBoxClass),
+      NULL,                                                    /* base_init */
+      NULL,                                                    /* base_finalize */
+      (GClassInitFunc) gschem_integer_combo_box_class_init,
+      NULL,                                                    /* class_finalize */
+      NULL,                                                    /* class_data */
+      sizeof(GschemIntegerComboBox),
+      0,                                                       /* n_preallocs */
+      (GInstanceInitFunc) gschem_integer_combo_box_init,
+    };
+
+#if GTK_CHECK_VERSION (2, 24, 0)
+    type = g_type_register_static (GTK_TYPE_COMBO_BOX, "GschemIntegerComboBox", &info, 0);
+#else
+    type = g_type_register_static (GTK_TYPE_COMBO_BOX_ENTRY, "GschemIntegerComboBox", &info, 0);
+#endif
+  }
+
+  return type;
+}
 
 
 /*! \brief Get the entry associated with this combo box
@@ -65,7 +101,7 @@ x_integercb_new ()
  *  \return The entry
  */
 GtkEntry*
-x_integercb_get_entry (GtkWidget *widget)
+gschem_integer_combo_box_get_entry (GtkWidget *widget)
 {
   return GTK_ENTRY (gtk_bin_get_child (GTK_BIN (widget)));
 }
@@ -77,7 +113,7 @@ x_integercb_get_entry (GtkWidget *widget)
  *  \return The integer. If the value is invalid, this function returns -1.
  */
 int
-x_integercb_get_value (GtkWidget *widget)
+gschem_integer_combo_box_get_value (GtkWidget *widget)
 {
   GtkWidget *entry = gtk_bin_get_child (GTK_BIN (widget));
   int size = -1;
@@ -102,13 +138,41 @@ x_integercb_get_value (GtkWidget *widget)
 
 
 
+/*! \brief Initialize a GschemIntegerComboBox
+ *
+ *  \param [in] klasse The instance of a GschemIntegerComboBox
+ */
+static void
+gschem_integer_combo_box_init (GschemIntegerComboBox *combo)
+{
+}
+
+
+
+/*! \brief Create a ComboBox with an entry for integer values.
+ *
+ *  \return A GtkWidget for entering integer values
+ */
+GtkWidget*
+gschem_integer_combo_box_new ()
+{
+#if GTK_CHECK_VERSION (2, 24, 0)
+  return GTK_WIDGET (g_object_new (GSCHEM_TYPE_INTEGER_COMBO_BOX, "has-entry", TRUE, NULL));
+#else
+  return GTK_WIDGET (g_object_new (GSCHEM_TYPE_INTEGER_COMBO_BOX, NULL));
+#endif
+
+}
+
+
+
 /*! \brief Set the list store containing the common values
  *
  *  \param [in,out] widget  The integer combo box
  *  \param [in]     store   The list containing the common values
  */
 void
-x_integercb_set_model (GtkWidget *widget, GtkListStore *store)
+gschem_integer_combo_box_set_model (GtkWidget *widget, GtkListStore *store)
 {
   g_return_if_fail (widget != NULL);
 
@@ -130,7 +194,7 @@ x_integercb_set_model (GtkWidget *widget, GtkListStore *store)
  *  \param [in]     size    The value
  */
 void
-x_integercb_set_value (GtkWidget *widget, int value)
+gschem_integer_combo_box_set_value (GtkWidget *widget, int value)
 {
   GtkWidget *entry;
   g_return_if_fail (widget != NULL);

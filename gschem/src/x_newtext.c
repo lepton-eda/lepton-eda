@@ -114,7 +114,7 @@ dialog_response_apply (NewText *dialog)
     align = value;
   }
 
-  value = x_integercb_get_value (dialog->textsizecb);
+  value = gschem_integer_combo_box_get_value (dialog->textsizecb);
   if (value > 0) {
     size = value;
   }
@@ -279,8 +279,8 @@ static void newtext_init(NewText *dialog)
   //gtk_entry_set_activates_default(GTK_ENTRY(sizeentry), TRUE);
   //gtk_table_attach_defaults(GTK_TABLE(table), sizeentry, 1,2,1,2);
 
-  dialog->textsizecb = x_integercb_new();
-  x_integercb_set_value(dialog->textsizecb, 12);
+  dialog->textsizecb = gschem_integer_combo_box_new();
+  gschem_integer_combo_box_set_value(dialog->textsizecb, 12);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->textsizecb, 1,2,1,2);
 
   label = gtk_label_new (_("Alignment:"));
@@ -395,7 +395,7 @@ text_input_dialog (GschemToplevel *w_current)
     gtk_window_set_transient_for (GTK_WINDOW (w_current->tiwindow),
                                   GTK_WINDOW (w_current->main_window));
 
-    x_integercb_set_model (NEWTEXT (w_current->tiwindow)->textsizecb,
+    gschem_integer_combo_box_set_model (NEWTEXT (w_current->tiwindow)->textsizecb,
                            gschem_toplevel_get_text_size_list_store (w_current));
 
     gtk_widget_show_all (w_current->tiwindow);

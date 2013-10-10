@@ -136,11 +136,11 @@ static void fill_type_dialog_set_values(EditFProp *dialog,
                                         gint pitch1, gint angle1,
                                         gint pitch2, gint angle2)
 {
-  x_integercb_set_value (dialog->widthe, width);
-  x_integercb_set_value (dialog->pitch1e, pitch1);
-  x_integercb_set_value (dialog->angle1e, angle1);
-  x_integercb_set_value (dialog->pitch2e, pitch2);
-  x_integercb_set_value (dialog->angle2e, angle2);
+  gschem_integer_combo_box_set_value (dialog->widthe, width);
+  gschem_integer_combo_box_set_value (dialog->pitch1e, pitch1);
+  gschem_integer_combo_box_set_value (dialog->angle1e, angle1);
+  gschem_integer_combo_box_set_value (dialog->pitch2e, pitch2);
+  gschem_integer_combo_box_set_value (dialog->angle2e, angle2);
 
   /* Change the value of the combo box last, so the signal handler can
    * set the sensitivity of the other widgets after their values have
@@ -208,11 +208,11 @@ dialog_response_ok (EditFProp *dialog)
 
   /* get the new values from the text entries of the dialog */
   /* (-1 means unchanged) */
-  width  = x_integercb_get_value (dialog->widthe);
-  angle1 = x_integercb_get_value (dialog->angle1e);
-  pitch1 = x_integercb_get_value (dialog->pitch1e);
-  angle2 = x_integercb_get_value (dialog->angle2e);
-  pitch2 = x_integercb_get_value (dialog->pitch2e);
+  width  = gschem_integer_combo_box_get_value (dialog->widthe);
+  angle1 = gschem_integer_combo_box_get_value (dialog->angle1e);
+  pitch1 = gschem_integer_combo_box_get_value (dialog->pitch1e);
+  angle2 = gschem_integer_combo_box_get_value (dialog->angle2e);
+  pitch2 = gschem_integer_combo_box_get_value (dialog->pitch2e);
 
   type = x_fstylecb_get_index (dialog->fstylecb);
 
@@ -393,28 +393,28 @@ static void editfprop_init(EditFProp *dialog)
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->fstylecb,
                             1,2,0,1);
 
-  dialog->widthe = x_integercb_new ();
-  gtk_entry_set_activates_default (x_integercb_get_entry (dialog->widthe), TRUE);
+  dialog->widthe = gschem_integer_combo_box_new ();
+  gtk_entry_set_activates_default (gschem_integer_combo_box_get_entry (dialog->widthe), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->widthe,
                             1,2,1,2);
 
-  dialog->angle1e = x_integercb_new ();
-  gtk_entry_set_activates_default (x_integercb_get_entry (dialog->angle1e), TRUE);
+  dialog->angle1e = gschem_integer_combo_box_new ();
+  gtk_entry_set_activates_default (gschem_integer_combo_box_get_entry (dialog->angle1e), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->angle1e,
                             1,2,2,3);
 
-  dialog->pitch1e = x_integercb_new ();
-  gtk_entry_set_activates_default (x_integercb_get_entry (dialog->pitch1e), TRUE);
+  dialog->pitch1e = gschem_integer_combo_box_new ();
+  gtk_entry_set_activates_default (gschem_integer_combo_box_get_entry (dialog->pitch1e), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->pitch1e,
                             1,2,3,4);
 
-  dialog->angle2e = x_integercb_new ();
-  gtk_entry_set_activates_default (x_integercb_get_entry (dialog->angle2e), TRUE);
+  dialog->angle2e = gschem_integer_combo_box_new ();
+  gtk_entry_set_activates_default (gschem_integer_combo_box_get_entry (dialog->angle2e), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->angle2e,
                             1,2,4,5);
 
-  dialog->pitch2e = x_integercb_new ();
-  gtk_entry_set_activates_default (x_integercb_get_entry (dialog->pitch2e), TRUE);
+  dialog->pitch2e = gschem_integer_combo_box_new ();
+  gtk_entry_set_activates_default (gschem_integer_combo_box_get_entry (dialog->pitch2e), TRUE);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->pitch2e,
                             1,2,5,6);
 
@@ -512,19 +512,19 @@ fill_type_dialog (GschemToplevel *w_current)
     gtk_window_set_transient_for (GTK_WINDOW (w_current->fpwindow),
                                   GTK_WINDOW (w_current->main_window));
 
-    x_integercb_set_model (EDITFPROP (w_current->fpwindow)->widthe,
+    gschem_integer_combo_box_set_model (EDITFPROP (w_current->fpwindow)->widthe,
                            gschem_toplevel_get_fill_width_list_store (w_current));
 
-    x_integercb_set_model (EDITFPROP (w_current->fpwindow)->angle1e,
+    gschem_integer_combo_box_set_model (EDITFPROP (w_current->fpwindow)->angle1e,
                            gschem_toplevel_get_fill_angle_list_store (w_current));
 
-    x_integercb_set_model (EDITFPROP (w_current->fpwindow)->pitch1e,
+    gschem_integer_combo_box_set_model (EDITFPROP (w_current->fpwindow)->pitch1e,
                            gschem_toplevel_get_fill_pitch_list_store (w_current));
 
-    x_integercb_set_model (EDITFPROP (w_current->fpwindow)->angle2e,
+    gschem_integer_combo_box_set_model (EDITFPROP (w_current->fpwindow)->angle2e,
                            gschem_toplevel_get_fill_angle_list_store (w_current));
 
-    x_integercb_set_model (EDITFPROP (w_current->fpwindow)->pitch2e,
+    gschem_integer_combo_box_set_model (EDITFPROP (w_current->fpwindow)->pitch2e,
                            gschem_toplevel_get_fill_pitch_list_store (w_current));
 
     fill_type_dialog_set_values(EDITFPROP (w_current->fpwindow),
