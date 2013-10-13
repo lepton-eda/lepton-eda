@@ -48,6 +48,8 @@ struct _GschemIntegerComboBox
 #else
   GtkComboBoxEntry parent;
 #endif
+
+  gboolean changed;
 };
 
 GtkEntry*

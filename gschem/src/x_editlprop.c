@@ -53,20 +53,11 @@ line_type_changed (GtkWidget *widget, EditLProp *dialog);
 static void
 line_width_changed (GtkWidget *widget, EditLProp *dialog);
 
-static gboolean
-line_width_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialog);
-
 static void
 dash_length_changed (GtkWidget *widget, EditLProp *dialog);
 
-static gboolean
-dash_length_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialog);
-
 static void
 dash_space_changed (GtkWidget *widget, EditLProp *dialog);
-
-static gboolean
-dash_space_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialog);
 
 static void
 cap_style_changed (GtkWidget *widget, EditLProp *dialog);
@@ -209,11 +200,6 @@ static void editlprop_init(EditLProp *dialog)
   GtkWidget *table;
   int index;
 
-
-  dialog->line_width_changed = FALSE;
-  dialog->dash_length_changed = FALSE;
-  dialog->dash_space_changed = FALSE;
-
   gtk_dialog_add_button (GTK_DIALOG (dialog),
                          GTK_STOCK_CLOSE,
                          GTK_RESPONSE_CLOSE);
@@ -286,7 +272,8 @@ static void editlprop_init(EditLProp *dialog)
                    G_CALLBACK (line_type_changed),
                    dialog);
 
-  g_signal_connect(G_OBJECT (dialog->width_entry), "changed",
+  g_signal_connect(G_OBJECT (dialog->width_entry),
+                   "apply",
                    G_CALLBACK (line_width_changed),
                    dialog);
 
@@ -294,11 +281,8 @@ static void editlprop_init(EditLProp *dialog)
                    G_CALLBACK (entry_activate),
                    dialog);
 
-  g_signal_connect(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->width_entry)), "focus-out-event",
-                   G_CALLBACK (line_width_focus_out_event),
-                   dialog);
-
-  g_signal_connect(G_OBJECT (dialog->length_entry), "changed",
+  g_signal_connect(G_OBJECT (dialog->length_entry),
+                   "apply",
                    G_CALLBACK (dash_length_changed),
                    dialog);
 
@@ -306,20 +290,13 @@ static void editlprop_init(EditLProp *dialog)
                    G_CALLBACK (entry_activate),
                    dialog);
 
-  g_signal_connect(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->length_entry)), "focus-out-event",
-                   G_CALLBACK (dash_length_focus_out_event),
-                   dialog);
-
-  g_signal_connect(G_OBJECT (dialog->space_entry), "changed",
+  g_signal_connect(G_OBJECT (dialog->space_entry),
+                   "apply",
                    G_CALLBACK (dash_space_changed),
                    dialog);
 
   g_signal_connect(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->space_entry)), "activate",
                    G_CALLBACK (entry_activate),
-                   dialog);
-
-  g_signal_connect(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->space_entry)), "focus-out-event",
-                   G_CALLBACK (dash_space_focus_out_event),
                    dialog);
 
   g_signal_connect(G_OBJECT (dialog->line_end), "changed",
@@ -497,12 +474,6 @@ line_type_changed (GtkWidget *widget, EditLProp *dialog)
 
 /*! \brief Respond to change in the dialog box value of the line width
  *
- *  The function checks the focus to determine the source of the event.
- *  If the entry has focus, the user changed the value, possibly by one
- *  keystroke, and the dialog box should not update the selection. If the
- *  entry does not have focus, the user changed the value in the dropdown
- *  menu, and the dialog box must update the selection.
- *
  *  \param [in] widget The widget emitting the event
  *  \param [in] dialog The line properties dialog box
  */
@@ -524,79 +495,20 @@ line_width_changed (GtkWidget *widget, EditLProp *dialog)
   if ((dialog->adapter != NULL) && (dialog->width_entry != NULL)) {
     g_return_if_fail (widget == dialog->width_entry);
 
-    if (gtk_widget_is_focus (GTK_WIDGET (gschem_integer_combo_box_get_entry (dialog->width_entry)))) {
-      // likely just a character changed in the entry widget
+    int line_width = gschem_integer_combo_box_get_value (dialog->width_entry);
 
-      dialog->line_width_changed = TRUE;
-    }
-    else {
-      int line_width = gschem_integer_combo_box_get_value (dialog->width_entry);
+    if (line_width >= 0) {
+      gschem_selection_adapter_set_line_width (dialog->adapter, line_width);
 
-      if (line_width >= 0) {
-        gschem_selection_adapter_set_line_width (dialog->adapter, line_width);
-
-        toplevel->page_current->CHANGED = 1;
-        o_undo_savestate(w_current, UNDO_ALL);
-      }
+      toplevel->page_current->CHANGED = 1;
+      o_undo_savestate(w_current, UNDO_ALL);
     }
   }
-}
-
-
-
-/*! \brief Respond to focus out event on the line width entry
- *
- *  \param [in] widget The widget emitting the event
- *  \param [in] event  The focus out event
- *  \param [in] dialog The line properties dialog box
- *  \return FALSE
- */
-static gboolean
-line_width_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialog)
-{
-  g_return_val_if_fail (dialog != NULL, FALSE);
-  g_return_val_if_fail (widget != NULL, FALSE);
-
-  if (dialog->line_width_changed) {
-    TOPLEVEL *toplevel;
-    GschemToplevel *w_current;
-
-    w_current = dialog->parent.w_current;
-    g_return_val_if_fail (w_current != NULL, FALSE);
-
-    toplevel = gschem_toplevel_get_toplevel (w_current);
-    g_return_val_if_fail (toplevel != NULL, FALSE);
-
-    if ((dialog->adapter != NULL) && (dialog->width_entry != NULL)) {
-      int line_width;
-
-      g_return_val_if_fail (widget == GTK_WIDGET (gschem_integer_combo_box_get_entry (dialog->width_entry)), FALSE);
-
-      line_width = gschem_integer_combo_box_get_value (dialog->width_entry);
-
-      if (line_width >= 0) {
-        gschem_selection_adapter_set_line_width (dialog->adapter, line_width);
-
-        toplevel->page_current->CHANGED = 1;
-        o_undo_savestate(w_current, UNDO_ALL);
-      }
-    }
-
-    dialog->line_width_changed = FALSE;
-  }
-
-  return FALSE;
 }
 
 
 
 /*! \brief Respond to change in the dialog box value of the dash length
- *
- *  The function checks the focus to determine the source of the event.
- *  If the entry has focus, the user changed the value, possibly by one
- *  keystroke, and the dialog box should not update the selection. If the
- *  entry does not have focus, the user changed the value in the dropdown
- *  menu, and the dialog box must update the selection.
  *
  *  \param [in] widget The widget emitting the event
  *  \param [in] dialog The line properties dialog box
@@ -619,84 +531,21 @@ dash_length_changed (GtkWidget *widget, EditLProp *dialog)
   if ((dialog->adapter != NULL) && (dialog->length_entry != NULL)) {
     g_return_if_fail (widget == dialog->length_entry);
 
-    if (gtk_widget_is_focus (GTK_WIDGET (gschem_integer_combo_box_get_entry (dialog->length_entry)))) {
-      // likely just a character changed in the entry widget
+    int dash_length = gschem_integer_combo_box_get_value (dialog->length_entry);
 
-      dialog->dash_length_changed = TRUE;
-    }
-    else {
-      int dash_length;
+    if (dash_length >= 0) {
+      gschem_selection_adapter_set_dash_length (dialog->adapter, dash_length);
 
-      g_return_if_fail (widget == GTK_WIDGET (dialog->length_entry));
-
-      dash_length = gschem_integer_combo_box_get_value (dialog->length_entry);
-
-      if (dash_length >= 0) {
-        gschem_selection_adapter_set_dash_length (dialog->adapter, dash_length);
-
-        toplevel->page_current->CHANGED = 1;
-        o_undo_savestate(w_current, UNDO_ALL);
-      }
+      toplevel->page_current->CHANGED = 1;
+      o_undo_savestate(w_current, UNDO_ALL);
     }
   }
-}
-
-
-
-/*! \brief Respond to focus out event on the dash_length entry
- *
- *  \param [in] widget The widget emitting the event
- *  \param [in] event  The focus out event
- *  \param [in] dialog The line properties dialog box
- *  \return FALSE
- */
-static gboolean
-dash_length_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialog)
-{
-  g_return_val_if_fail (dialog != NULL, FALSE);
-  g_return_val_if_fail (widget != NULL, FALSE);
-
-  if (dialog->dash_length_changed) {
-    TOPLEVEL *toplevel;
-    GschemToplevel *w_current;
-
-    w_current = dialog->parent.w_current;
-    g_return_val_if_fail (w_current != NULL, FALSE);
-
-    toplevel = gschem_toplevel_get_toplevel (w_current);
-    g_return_val_if_fail (toplevel != NULL, FALSE);
-
-    if ((dialog->adapter != NULL) && (dialog->length_entry != NULL)) {
-      int dash_length;
-
-      g_return_val_if_fail (widget == GTK_WIDGET (gschem_integer_combo_box_get_entry (dialog->length_entry)), FALSE);
-
-      dash_length = gschem_integer_combo_box_get_value (dialog->length_entry);
-
-      if (dash_length >= 0) {
-        gschem_selection_adapter_set_dash_length (dialog->adapter, dash_length);
-
-        toplevel->page_current->CHANGED = 1;
-        o_undo_savestate(w_current, UNDO_ALL);
-      }
-    }
-
-    dialog->dash_length_changed = FALSE;
-  }
-
-  return FALSE;
 }
 
 
 
 /*! \brief Respond to change in the dialog box value of the dash space
- *
- *  The function checks the focus to determine the source of the event.
- *  If the entry has focus, the user changed the value, possibly by one
- *  keystroke, and the dialog box should not update the selection. If the
- *  entry does not have focus, the user changed the value in the dropdown
- *  menu, and the dialog box must update the selection.
- *
+ * *
  *  \param [in] widget The widget emitting the event
  *  \param [in] dialog The line properties dialog box
  */
@@ -718,72 +567,15 @@ dash_space_changed (GtkWidget *widget, EditLProp *dialog)
   if ((dialog->adapter != NULL) && (dialog->space_entry != NULL)) {
     g_return_if_fail (widget == dialog->space_entry);
 
-    if (gtk_widget_is_focus (GTK_WIDGET (gschem_integer_combo_box_get_entry (dialog->space_entry)))) {
-      // likely just a character changed in the entry widget
+    int dash_space = gschem_integer_combo_box_get_value (dialog->space_entry);
 
-      dialog->dash_space_changed = TRUE;
-    }
-    else {
-      int dash_space;
+    if (dash_space >= 0) {
+      gschem_selection_adapter_set_dash_space (dialog->adapter, dash_space);
 
-      g_return_if_fail (widget == GTK_WIDGET (dialog->space_entry));
-
-      dash_space = gschem_integer_combo_box_get_value (dialog->space_entry);
-
-      if (dash_space >= 0) {
-        gschem_selection_adapter_set_dash_space (dialog->adapter, dash_space);
-
-        toplevel->page_current->CHANGED = 1;
-        o_undo_savestate(w_current, UNDO_ALL);
-      }
+      toplevel->page_current->CHANGED = 1;
+      o_undo_savestate(w_current, UNDO_ALL);
     }
   }
-}
-
-
-
-/*! \brief Respond to focus out event on the dash_length entry
- *
- *  \param [in] widget The widget emitting the event
- *  \param [in] event  The focus out event
- *  \param [in] dialog The line properties dialog box
- *  \return FALSE
- */
-static gboolean
-dash_space_focus_out_event (GtkWidget *widget, GdkEvent *event, EditLProp *dialog)
-{
-  g_return_val_if_fail (dialog != NULL, FALSE);
-  g_return_val_if_fail (widget != NULL, FALSE);
-
-  if (dialog->dash_space_changed) {
-    TOPLEVEL *toplevel;
-    GschemToplevel *w_current;
-
-    w_current = dialog->parent.w_current;
-    g_return_val_if_fail (w_current != NULL, FALSE);
-
-    toplevel = gschem_toplevel_get_toplevel (w_current);
-    g_return_val_if_fail (toplevel != NULL, FALSE);
-
-    if ((dialog->adapter != NULL) && (dialog->space_entry != NULL)) {
-      int dash_space;
-
-      g_return_val_if_fail (widget == GTK_WIDGET (gschem_integer_combo_box_get_entry (dialog->space_entry)), FALSE);
-
-      dash_space = gschem_integer_combo_box_get_value (dialog->space_entry);
-
-      if (dash_space >= 0) {
-        gschem_selection_adapter_set_dash_space (dialog->adapter, dash_space);
-
-        toplevel->page_current->CHANGED = 1;
-        o_undo_savestate(w_current, UNDO_ALL);
-      }
-    }
-
-    dialog->dash_space_changed = FALSE;
-  }
-
-  return FALSE;
 }
 
 
@@ -975,18 +767,10 @@ update_dash_length (EditLProp *dialog)
                                     G_CALLBACK (dash_length_changed),
                                     dialog);
 
-    g_signal_handlers_block_by_func(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->length_entry)),
-                                    G_CALLBACK (dash_length_focus_out_event),
-                                    dialog);
-
     gschem_integer_combo_box_set_value (dialog->length_entry, length);
 
     g_signal_handlers_unblock_by_func(G_OBJECT (dialog->length_entry),
                                       G_CALLBACK (dash_length_changed),
-                                      dialog);
-
-    g_signal_handlers_unblock_by_func(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->length_entry)),
-                                      G_CALLBACK (dash_length_focus_out_event),
                                       dialog);
 
     /* dash length and dash space are enabled/disabled by the value in line type */
@@ -1011,18 +795,10 @@ update_dash_space (EditLProp *dialog)
                                     G_CALLBACK (dash_space_changed),
                                     dialog);
 
-    g_signal_handlers_block_by_func(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->space_entry)),
-                                    G_CALLBACK (dash_space_focus_out_event),
-                                    dialog);
-
     gschem_integer_combo_box_set_value (dialog->space_entry, space);
 
     g_signal_handlers_unblock_by_func(G_OBJECT (dialog->space_entry),
                                       G_CALLBACK (dash_space_changed),
-                                      dialog);
-
-    g_signal_handlers_unblock_by_func(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->space_entry)),
-                                      G_CALLBACK (dash_space_focus_out_event),
                                       dialog);
 
     /* dash length and dash space are enabled/disabled by the value in line type */
@@ -1076,18 +852,10 @@ update_line_width (EditLProp *dialog)
                                     G_CALLBACK (line_width_changed),
                                     dialog);
 
-    g_signal_handlers_block_by_func(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->width_entry)),
-                                    G_CALLBACK (line_width_focus_out_event),
-                                    dialog);
-
     gschem_integer_combo_box_set_value (dialog->width_entry, width);
 
     g_signal_handlers_unblock_by_func(G_OBJECT (dialog->width_entry),
                                       G_CALLBACK (line_width_changed),
-                                      dialog);
-
-    g_signal_handlers_unblock_by_func(G_OBJECT (gschem_integer_combo_box_get_entry (dialog->width_entry)),
-                                      G_CALLBACK (line_width_focus_out_event),
                                       dialog);
 
     gtk_widget_set_sensitive (GTK_WIDGET (dialog->width_entry), (width != -1));

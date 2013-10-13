@@ -48,10 +48,6 @@ struct _EditLProp
   GtkWidget *length_entry;
   GtkWidget *space_entry;
   GtkWidget *line_end;
-
-  gboolean line_width_changed;
-  gboolean dash_length_changed;
-  gboolean dash_space_changed;
 };
 
 GType
