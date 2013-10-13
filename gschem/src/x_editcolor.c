@@ -42,6 +42,7 @@
 #define EDITCOLOR(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_EDITCOLOR, EditColor))
 #define EDITCOLOR_CLASS(klasse)  (G_TYPE_CHECK_CLASS_CAST ((klasse), TYPE_EDITCOLOR, EditColorClass))
 #define IS_EDITCOLOR(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_EDITCOLOR))
+#define EDITCOLOR_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), TYPE_EDITCOLOR, EditColorClass))
 
 typedef struct _EditColorClass EditColorClass;
 typedef struct _EditColor EditColor;
@@ -62,6 +63,12 @@ struct _EditColor
 
 
 static void
+dispose (GObject *object);
+
+GType
+editcolor_get_type ();
+
+static void
 notify_object_color (GschemSelectionAdapter *adapter, GParamSpec *pspec, EditColor *dialog);
 
 static void
@@ -70,6 +77,8 @@ object_color_changed (GtkWidget *widget, EditColor *dialog);
 static void
 update_object_color (EditColor *dialog);
 
+void
+x_editcolor_set_selection_adapter (EditColor *dialog, GschemSelectionAdapter *adapter);
 
 
 /*! \brief Handles user responses from the edit color dialog box
@@ -98,6 +107,31 @@ dialog_response (EditColor *dialog, gint response, gpointer unused)
 
 
 
+static void
+dispose (GObject *object)
+{
+  EditColor *dialog;
+  EditColorClass *klasse;
+  GObjectClass *parent_klasse;
+
+  g_return_if_fail (object != NULL);
+  dialog = EDITCOLOR (object);
+  g_return_if_fail (dialog != NULL);
+
+  x_editcolor_set_selection_adapter (dialog, NULL);
+
+  /* lastly, chain up to the parent dispose */
+
+  klasse = EDITCOLOR_GET_CLASS (object);
+  g_return_if_fail (klasse != NULL);
+  parent_klasse = g_type_class_peek_parent (klasse);
+  g_return_if_fail (parent_klasse != NULL);
+  parent_klasse->dispose (object);
+
+}
+
+
+
 /*! \brief Initialize EditColor class
  *
  *  \par Function Description
@@ -109,6 +143,15 @@ dialog_response (EditColor *dialog, gint response, gpointer unused)
  */
 static void editcolor_class_init(EditColorClass *klasse)
 {
+  GObjectClass *object_klasse;
+
+  g_return_if_fail (klasse != NULL);
+
+  object_klasse = G_OBJECT_CLASS (klasse);
+
+  g_return_if_fail (object_klasse != NULL);
+
+  object_klasse->dispose = dispose;
 }
 
 
