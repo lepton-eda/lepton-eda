@@ -121,20 +121,16 @@ preview_callback_expose (GtkWidget *widget,
   PangoLayout *save_pl;
 
   save_cr = preview_w_current->cr;
-  save_pl = preview_w_current->pl;
 
   preview_w_current->cr = gdk_cairo_create (widget->window);
-  preview_w_current->pl = pango_cairo_create_layout (preview_w_current->cr);
 
   gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
   o_redraw_rects (preview_w_current, rectangles, n_rectangles);
   g_free (rectangles);
 
-  g_object_unref (preview_w_current->pl);
   cairo_destroy (preview_w_current->cr);
 
   preview_w_current->cr = save_cr;
-  preview_w_current->pl = save_pl;
 
   return FALSE;
 }

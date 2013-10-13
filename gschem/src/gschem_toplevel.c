@@ -229,7 +229,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->window = NULL;
   w_current->drawable = NULL;
   w_current->cr = NULL;
-  w_current->pl = NULL;
   w_current->win_width = 0;
   w_current->win_height = 0;
 

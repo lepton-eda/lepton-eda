@@ -49,7 +49,6 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
   GdkRectangle *rectangles;
   int n_rectangles;
   cairo_t *save_cr;
-  PangoLayout *save_pl;
 
 #if DEBUG
   printf("EXPOSE\n");
@@ -58,10 +57,8 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
   g_return_val_if_fail ((w_current != NULL), 0);
 
   save_cr = w_current->cr;
-  save_pl = w_current->pl;
 
   w_current->cr = gdk_cairo_create( widget->window );
-  w_current->pl = pango_cairo_create_layout (w_current->cr);
 
   gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
   o_redraw_rects (w_current, rectangles, n_rectangles);
@@ -72,11 +69,9 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
     x_dialog_raise_all(w_current);
   }
 
-  g_object_unref (w_current->pl);
   cairo_destroy (w_current->cr);
 
   w_current->cr = save_cr;
-  w_current->pl = save_pl;
 
   return(0);
 }
