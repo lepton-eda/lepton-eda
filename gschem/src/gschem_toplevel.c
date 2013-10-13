@@ -231,7 +231,7 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->cr = NULL;
   w_current->win_width = 0;
   w_current->win_height = 0;
-
+  w_current->background_color = 0;
   /* ------------- */
   /* Drawing state */
   /* ------------- */

@@ -67,7 +67,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->major_changed_refdes = NULL;
 
   /* BLOCK SET IN GSCHEM, BUT USED IN LIBGEDA - NEEDS A RETHINK */
-  toplevel->background_color   = 0;
   toplevel->override_net_color = -1;
   toplevel->override_bus_color = -1;
   toplevel->override_pin_color = -1;

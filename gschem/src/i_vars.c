@@ -123,7 +123,7 @@ void i_vars_set(GschemToplevel *w_current)
   w_current->text_size     = default_text_size;
   w_current->text_caps     = default_text_caps;
 
-  toplevel->background_color = default_background_color;
+  w_current->background_color = default_background_color;
 
   w_current->net_direction_mode = default_net_direction_mode;
   w_current->net_selection_mode = default_net_selection_mode;

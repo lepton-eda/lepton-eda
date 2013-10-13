@@ -124,6 +124,8 @@ struct st_gschem_toplevel {
 
   int win_width, win_height;            /* Actual size of window (?) */
 
+  int background_color;
+
   /* ------------- */
   /* Drawing state */
   /* ------------- */
