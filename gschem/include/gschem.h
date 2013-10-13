@@ -24,7 +24,7 @@
 #include "x_multiattrib.h"
 #include "x_pagesel.h"
 #include "x_states.h"
-#include "x_swatchcr.h"
+#include "gschem_swatch_column_renderer.h"
 #include "globals.h"
 #include "prototype.h"
 #include "gschem_integer_combo_box.h"

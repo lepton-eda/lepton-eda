@@ -30,6 +30,7 @@ gschem_SOURCES = \
 	gschem_dialog.c \
 	gschem_integer_combo_box.c \
 	gschem_selection_adapter.c \
+	gschem_swatch_column_renderer.c \
 	gschem_toplevel.c \
 	i_basic.c \
 	i_callbacks.c \
@@ -94,7 +95,6 @@ gschem_SOURCES = \
 	x_rotatecb.c \
 	x_script.c \
 	x_stroke.c \
-	x_swatchcr.c \
 	x_window.c
 
 gschem_CPPFLAGS = -I$(top_srcdir)/libgeda/include  -I$(srcdir)/../include \

@@ -18,25 +18,25 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file x_swatchcr.h
+ * \file gschem_swatch_column_renderer.h
  *
  * \brief A cell renderer for color swatches.
  */
 
-#define TYPE_SWATCHCR           (swatchcr_get_type())
-#define SWATCHCR(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_SWATCHCR, Swatchcr))
-#define SWATCHCR_CLASS(klasse)  (G_TYPE_CHECK_CLASS_CAST ((klasse), TYPE_SWATCHCR, SwatchcrClass))
-#define IS_SWATCHCR(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_SWATCHCR))
+#define GSCHEM_TYPE_SWATCH_COLUMN_RENDERER           (gschem_swatch_column_renderer_get_type())
+#define GSCHEM_SWATCH_COLUMN_RENDERER(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_SWATCH_COLUMN_RENDERER, GschemSwatchColumnRenderer))
+#define GSCHEM_SWATCH_COLUMN_RENDERER_CLASS(klasse)  (G_TYPE_CHECK_CLASS_CAST ((klasse), GSCHEM_TYPE_SWATCH_COLUMN_RENDERER, GschemSwatchColumnRendererClass))
+#define IS_GSCHEM_SWATCH_COLUMN_RENDERER(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_SWATCH_COLUMN_RENDERER))
 
-typedef struct _SwatchcrClass SwatchcrClass;
-typedef struct _Swatchcr Swatchcr;
+typedef struct _GschemSwatchColumnRendererClass GschemSwatchColumnRendererClass;
+typedef struct _GschemSwatchColumnRenderer GschemSwatchColumnRenderer;
 
-struct _SwatchcrClass
+struct _GschemSwatchColumnRendererClass
 {
   GtkCellRendererTextClass parent_class;
 };
 
-struct _Swatchcr
+struct _GschemSwatchColumnRenderer
 {
   GtkCellRendererText parent;
 
@@ -45,7 +45,7 @@ struct _Swatchcr
 };
 
 GType
-swatchcr_get_type();
+gschem_swatch_column_renderer_get_type ();
 
-Swatchcr*
-x_swatchcr_new();
+GschemSwatchColumnRenderer*
+gschem_swatch_column_renderer_new ();

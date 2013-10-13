@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file x_swatchcr.c
+ * \file gschem_swatch_column_renderer.c
  *
  * \brief A cell renderer for color swatches.
  */
@@ -87,7 +87,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-  Swatchcr *swatch = SWATCHCR (object);
+  GschemSwatchColumnRenderer *swatch = GSCHEM_SWATCH_COLUMN_RENDERER (object);
 
   switch (param_id) {
     case PROP_COLOR: {
@@ -117,7 +117,7 @@ get_property (GObject    *object,
  *  \param [in,out] klasse The swatch cell renderer class
  */
 static void
-swatchcr_class_init (SwatchcrClass *klasse)
+swatchcr_class_init (GschemSwatchColumnRendererClass *klasse)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klasse);
 
@@ -149,7 +149,7 @@ swatchcr_class_init (SwatchcrClass *klasse)
  *  \param [in,out] swatch The swatch cell renderer
  */
 static void
-swatchcr_init (Swatchcr *swatch)
+swatchcr_init (GschemSwatchColumnRenderer *swatch)
 {
   swatch->color.red = 0;
   swatch->color.green = 0;
@@ -180,7 +180,7 @@ render (GtkCellRenderer      *cell,
         GdkRectangle         *expose_area,
         GtkCellRendererState flags)
 {
-  Swatchcr *swatch = SWATCHCR (cell);
+  GschemSwatchColumnRenderer *swatch = GSCHEM_SWATCH_COLUMN_RENDERER (cell);
 
   if (swatch->enabled) {
     cairo_t *cr = gdk_cairo_create (window);
@@ -235,8 +235,7 @@ render (GtkCellRenderer      *cell,
  *  \param [in]     color  The color of the swatch
  */
 static void
-set_color (Swatchcr       *swatch,
-           const GdkColor *color)
+set_color (GschemSwatchColumnRenderer *swatch, const GdkColor *color)
 {
   if (color) {
     swatch->color.red = color->red;
@@ -261,7 +260,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-  Swatchcr *swatch = SWATCHCR (object);
+  GschemSwatchColumnRenderer *swatch = GSCHEM_SWATCH_COLUMN_RENDERER (object);
 
   switch (param_id) {
     case PROP_COLOR:
@@ -283,24 +282,24 @@ set_property (GObject      *object,
 /*! \brief Get/register Swatchcr type.
  */
 GType
-swatchcr_get_type()
+gschem_swatch_column_renderer_get_type()
 {
   static GType type = 0;
 
   if (type == 0) {
     static const GTypeInfo info = {
-      sizeof(SwatchcrClass),
+      sizeof(GschemSwatchColumnRendererClass),
       NULL,                                   /* base_init */
       NULL,                                   /* base_finalize */
       (GClassInitFunc) swatchcr_class_init,
       NULL,                                   /* class_finalize */
       NULL,                                   /* class_data */
-      sizeof(Swatchcr),
+      sizeof(GschemSwatchColumnRenderer),
       0,                                      /* n_preallocs */
       (GInstanceInitFunc) swatchcr_init,
     };
 
-    type = g_type_register_static (GTK_TYPE_CELL_RENDERER_TEXT, "Swatchcr", &info, 0);
+    type = g_type_register_static (GTK_TYPE_CELL_RENDERER_TEXT, "GschemSwatchColumnRenderer", &info, 0);
   }
 
   return type;
@@ -310,10 +309,10 @@ swatchcr_get_type()
 
 /*! \brief Create a swatch cell renderer
  */
-Swatchcr*
-x_swatchcr_new()
+GschemSwatchColumnRenderer*
+gschem_swatch_column_renderer_new()
 {
-  Swatchcr *swatch = SWATCHCR (g_object_new (TYPE_SWATCHCR, NULL));
+  GschemSwatchColumnRenderer *swatch = GSCHEM_SWATCH_COLUMN_RENDERER (g_object_new (GSCHEM_TYPE_SWATCH_COLUMN_RENDERER, NULL));
 
   return swatch;
 }

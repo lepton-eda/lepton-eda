@@ -8,7 +8,6 @@ noinst_HEADERS = \
 	x_compselect.h \
 	x_editlprop.h \
 	x_log.h x_multiattrib.h x_pagesel.h x_preview.h \
-	x_swatchcr.h \
 	gschem.h \
 	gschemhotkeystore.h \
 	gschem_accel_label.h \
@@ -18,6 +17,7 @@ noinst_HEADERS = \
 	gschem_integer_combo_box.h \
 	gschem_selection_adapter.h \
 	gschem_struct.h \
+	gschem_swatch_column_renderer.h \
 	gschem_toplevel.h
 
 MOSTLYCLEANFILES = *.log core FILE *~
