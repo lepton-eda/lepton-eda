@@ -8,6 +8,7 @@
 
 /* gschem headers */
 #include "gschem_defines.h"
+#include "gschem_main_window.h"
 #include "gschem_selection_adapter.h"
 #include "gschem_struct.h"
 #include "gschem_toplevel.h"

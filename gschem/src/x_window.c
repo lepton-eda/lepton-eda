@@ -242,7 +242,7 @@ void x_window_create_main(GschemToplevel *w_current)
   /* used to signify that the window isn't mapped yet */
   w_current->window = NULL; 
 
-  w_current->main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  w_current->main_window = GTK_WIDGET (gschem_main_window_new ());
 
   gtk_widget_set_name (w_current->main_window, "gschem");
   gtk_window_set_policy (GTK_WINDOW (w_current->main_window), TRUE, TRUE, TRUE);
