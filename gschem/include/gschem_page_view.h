@@ -20,7 +20,7 @@
 /*!
  * \file gschem_page_view.h
  *
- * \brief
+ * \brief A widget for viewing a schematic page
  */
 
 #define GSCHEM_TYPE_PAGE_VIEW           (gschem_page_view_get_type())
@@ -40,10 +40,18 @@ struct _GschemPageViewClass
 struct _GschemPageView
 {
   GtkWindow parent;
+
+  PAGE *page;
 };
+
+PAGE*
+gschem_page_view_get_page (GschemPageView *view);
 
 GType
 gschem_page_view_get_type();
 
 GschemPageView*
 gschem_page_view_new ();
+
+void
+gschem_page_view_set_page (GschemPageView *view, PAGE *page);

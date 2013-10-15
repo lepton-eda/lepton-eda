@@ -20,7 +20,7 @@
 /*!
  * \file gschem_page_view.c
  *
- * \brief
+ * \brief A widget for viewing a schematic page
  */
 
 #include <config.h>
@@ -36,6 +36,16 @@
 #include "gschem.h"
 #include <gdk/gdkkeysyms.h>
 
+
+
+enum
+{
+  PROP_0,
+  PROP_PAGE
+};
+
+
+
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
@@ -43,7 +53,7 @@ static void
 gschem_page_view_class_init (GschemPageViewClass *klasse);
 
 static void
-gschem_page_view_init (GschemPageView *window);
+gschem_page_view_init (GschemPageView *view);
 
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
@@ -60,9 +70,13 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 {
-  //GschemPageView *window = GSCHEM_page_view (object);
+  GschemPageView *view = GSCHEM_PAGE_VIEW (object);
 
   switch (param_id) {
+    case PROP_PAGE:
+      g_value_set_pointer (value, gschem_page_view_get_page (view));
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
   }
@@ -79,11 +93,33 @@ gschem_page_view_class_init (GschemPageViewClass *klasse)
 {
   G_OBJECT_CLASS (klasse)->get_property = get_property;
   G_OBJECT_CLASS (klasse)->set_property = set_property;
+
+  g_object_class_install_property (G_OBJECT_CLASS (klasse),
+                                   PROP_PAGE,
+                                   g_param_spec_pointer ("page",
+                                                         "Page",
+                                                         "Page",
+                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 }
 
 
 
-/*! \brief Get/register GschemSelection type.
+/*! \brief Get page for this view
+ *
+ *  \param [in] view The view
+ *  \return The page for the view
+ */
+PAGE*
+gschem_page_view_get_page (GschemPageView *view)
+{
+  g_return_val_if_fail (view != NULL, NULL);
+
+  return view->page;
+}
+
+
+
+/*! \brief Get/register GschemPageView type.
  */
 GType
 gschem_page_view_get_type ()
@@ -111,13 +147,16 @@ gschem_page_view_get_type ()
 
 
 
-/*! \brief Initialize GschemSelection instance
+/*! \brief Initialize GschemPageView instance
  *
  *  \param [in,out] selection
  */
 static void
-gschem_page_view_init (GschemPageView *window)
+gschem_page_view_init (GschemPageView *view)
 {
+  g_return_if_fail (view != NULL);
+
+  view->page = NULL;
 }
 
 
@@ -129,9 +168,30 @@ gschem_page_view_init (GschemPageView *window)
 GschemPageView*
 gschem_page_view_new ()
 {
-  return GSCHEM_PAGE_VIEW (g_object_new (GSCHEM_TYPE_PAGE_VIEW,
-                                         "type", GTK_WINDOW_TOPLEVEL,
-                                         NULL));
+  return GSCHEM_PAGE_VIEW (g_object_new (GSCHEM_TYPE_PAGE_VIEW, NULL));
+}
+
+
+
+/*! \brief Set page for this view
+ *
+ *  \param [in,out] view The view
+ *  \param [in]     page The page
+ */
+void
+gschem_page_view_set_page (GschemPageView *view, PAGE *page)
+{
+  g_return_if_fail (view != NULL);
+
+  if (view->page != NULL) {
+  }
+
+  view->page = page;
+
+  if (view->page != NULL) {
+  }
+
+  g_object_notify (G_OBJECT (view), "page");
 }
 
 
@@ -146,9 +206,13 @@ gschem_page_view_new ()
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
 {
-  //GschemPageView *window = GSCHEM_page_view (object);
+  GschemPageView *view = GSCHEM_PAGE_VIEW (object);
 
   switch (param_id) {
+    case PROP_PAGE:
+      gschem_page_view_set_page (view, g_value_get_pointer (value));
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
   }
