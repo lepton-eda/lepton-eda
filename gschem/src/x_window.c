@@ -98,7 +98,7 @@ void x_window_free_gc(GschemToplevel *w_current)
 void x_window_create_drawing(GtkWidget *drawbox, GschemToplevel *w_current)
 {
   /* drawing next */
-  w_current->drawing_area = gtk_drawing_area_new ();
+  w_current->drawing_area = GTK_WIDGET (gschem_page_view_new ());
   /* Set the size here.  Be sure that it has an aspect ratio of 1.333
    * We could calculate this based on root window size, but for now
    * lets just set it to:
