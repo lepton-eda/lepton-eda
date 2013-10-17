@@ -41,17 +41,34 @@ struct _GschemPageView
 {
   GtkWindow parent;
 
+  GtkAdjustment *hadjustment;
+  GtkAdjustment *vadjustment;
+
   PAGE *page;
 };
+
+
+
+GtkAdjustment*
+gschem_page_view_get_hadjustment (GschemPageView *view);
 
 PAGE*
 gschem_page_view_get_page (GschemPageView *view);
 
 GType
-gschem_page_view_get_type();
+gschem_page_view_get_type ();
+
+GtkAdjustment*
+gschem_page_view_get_vadjustment (GschemPageView *view);
 
 GschemPageView*
 gschem_page_view_new ();
 
 void
+gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustment);
+
+void
 gschem_page_view_set_page (GschemPageView *view, PAGE *page);
+
+void
+gschem_page_view_set_vadjustment (GschemPageView *view, GtkAdjustment *vadjustment);

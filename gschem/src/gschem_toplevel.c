@@ -149,6 +149,7 @@ GschemToplevel *gschem_toplevel_new ()
   /* main window widgets */
   /* ------------------- */
   w_current->main_window  = NULL;
+  w_current->scrolled     = NULL;
   w_current->drawing_area = NULL;
   w_current->menubar      = NULL;
   w_current->popup_menu   = NULL;

@@ -1086,21 +1086,18 @@ void x_manual_resize(GschemToplevel *w_current)
  *  \par Function Description
  *
  */
-void x_event_hschanged (GtkAdjustment *adj, GschemToplevel *w_current)
+void x_event_hschanged (GtkAdjustment *hadjustment, GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int current_left;
   int new_left;
-  GtkAdjustment        *hadjustment;
 
+  g_return_if_fail (hadjustment != NULL);
   g_return_if_fail (w_current != NULL);
 
   if (w_current->scrollbars_flag == FALSE) {
     return;
   }
-
-  hadjustment =
-  gtk_range_get_adjustment(GTK_RANGE(w_current->h_scrollbar));
 
   current_left = toplevel->page_current->left;
   new_left = (int) hadjustment->value;
@@ -1118,21 +1115,18 @@ void x_event_hschanged (GtkAdjustment *adj, GschemToplevel *w_current)
  *  \par Function Description
  *
  */
-void x_event_vschanged (GtkAdjustment *adj, GschemToplevel *w_current)
+void x_event_vschanged (GtkAdjustment *vadjustment, GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int current_bottom;
   int new_bottom;
-  GtkAdjustment        *vadjustment;
 
   g_return_if_fail (w_current != NULL);
+  g_return_if_fail (vadjustment != NULL);
 
   if (w_current->scrollbars_flag == FALSE) {
     return;
   }
-
-  vadjustment = gtk_range_get_adjustment(
-                                         GTK_RANGE(w_current->v_scrollbar));
 
   current_bottom = toplevel->page_current->bottom;
   new_bottom = toplevel->init_bottom - (int) vadjustment->value;

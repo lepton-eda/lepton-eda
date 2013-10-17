@@ -95,7 +95,7 @@ void x_window_free_gc(GschemToplevel *w_current)
  *  \par Function Description
  *
  */
-void x_window_create_drawing(GtkWidget *drawbox, GschemToplevel *w_current)
+void x_window_create_drawing(GtkWidget *scrolled, GschemToplevel *w_current)
 {
   /* drawing next */
   w_current->drawing_area = GTK_WIDGET (gschem_page_view_new ());
@@ -106,16 +106,15 @@ void x_window_create_drawing(GtkWidget *drawbox, GschemToplevel *w_current)
    * 1.3333333 is the desired aspect ratio!
    */
 
-  gtk_drawing_area_size (GTK_DRAWING_AREA (w_current->drawing_area),
-                         w_current->win_width,
-                         w_current->win_height);
+  gtk_widget_set_size_request (w_current->drawing_area,
+                               w_current->win_width,
+                               w_current->win_height);
 
-  gtk_box_pack_start (GTK_BOX (drawbox), w_current->drawing_area,
-                      TRUE, TRUE, 0);
+  gtk_container_add(GTK_CONTAINER(scrolled), w_current->drawing_area);
+
   GTK_WIDGET_SET_FLAGS (w_current->drawing_area, GTK_CAN_FOCUS );
   gtk_widget_grab_focus (w_current->drawing_area);
   gtk_widget_show (w_current->drawing_area);
-
 }
 
 /*! \brief Set up callbacks for window events that affect drawing.
@@ -231,10 +230,10 @@ void x_window_create_main(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
+  GtkPolicyType policy;
   GtkWidget *label=NULL;
   GtkWidget *main_box=NULL;
   GtkWidget *menubar=NULL;
-  GtkWidget *drawbox=NULL;
   GtkWidget *bottom_box=NULL;
   GtkWidget *toolbar=NULL;
   GtkWidget *handlebox=NULL;
@@ -395,48 +394,46 @@ void x_window_create_main(GschemToplevel *w_current)
   /*  Try to create popup menu (appears in right mouse button  */
   w_current->popup_menu = (GtkWidget *) get_main_popup(w_current);
 
-  drawbox = gtk_hbox_new(FALSE, 0);
-  gtk_container_border_width(GTK_CONTAINER(drawbox), 0);
-  gtk_container_add(GTK_CONTAINER(main_box), drawbox);
 
-  x_window_create_drawing(drawbox, w_current);
+  /* Setup a GtkScrolledWindow for the drawig area */
+  w_current->h_adjustment = GTK_ADJUSTMENT (gtk_adjustment_new (0.0,
+                                                                0.0,
+                                                                toplevel->init_right,
+                                                                100.0,
+                                                                100.0,
+                                                                10.0));
+
+  w_current->v_adjustment = GTK_ADJUSTMENT (gtk_adjustment_new (toplevel->init_bottom,
+                                                                0.0,
+                                                                toplevel->init_bottom,
+                                                                100.0,
+                                                                100.0,
+                                                                10.0));
+
+  w_current->scrolled = gtk_scrolled_window_new (w_current->h_adjustment,
+                                                 w_current->v_adjustment);
+  gtk_container_add(GTK_CONTAINER(main_box), w_current->scrolled);
+  x_window_create_drawing(w_current->scrolled, w_current);
   x_window_setup_draw_events(w_current);
 
-  if (w_current->scrollbars_flag == TRUE) {
-    /* setup scroll bars */
-    w_current->v_adjustment = GTK_ADJUSTMENT (
-      gtk_adjustment_new (toplevel->init_bottom, 0.0, toplevel->init_bottom,
-                          100.0, 100.0, 10.0));
+  policy = (w_current->scrollbars_flag) ? GTK_POLICY_ALWAYS : GTK_POLICY_NEVER;
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (w_current->scrolled), policy, policy);
 
-    w_current->v_scrollbar = gtk_vscrollbar_new (w_current->v_adjustment);
+  w_current->h_scrollbar = gtk_scrolled_window_get_hscrollbar (GTK_SCROLLED_WINDOW (w_current->scrolled));
+  gtk_range_set_update_policy (GTK_RANGE (w_current->h_scrollbar), GTK_UPDATE_CONTINUOUS);
 
-    gtk_range_set_update_policy (GTK_RANGE (w_current->v_scrollbar),
-                                 GTK_UPDATE_CONTINUOUS);
+  w_current->v_scrollbar = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (w_current->scrolled));
+  gtk_range_set_update_policy (GTK_RANGE (w_current->v_scrollbar), GTK_UPDATE_CONTINUOUS);
 
-    gtk_box_pack_start (GTK_BOX (drawbox), w_current->v_scrollbar,
-                        FALSE, FALSE, 0);
+  g_signal_connect (w_current->h_adjustment,
+                    "value_changed",
+                    G_CALLBACK (x_event_hschanged),
+                    w_current);
 
-    g_signal_connect (w_current->v_adjustment,
-                      "value_changed",
-                      G_CALLBACK (x_event_vschanged),
-                      w_current);
-
-    w_current->h_adjustment = GTK_ADJUSTMENT (
-      gtk_adjustment_new (0.0, 0.0, toplevel->init_right, 100.0, 100.0, 10.0));
-
-    w_current->h_scrollbar = gtk_hscrollbar_new (w_current->h_adjustment);
-
-    gtk_range_set_update_policy (GTK_RANGE (w_current->h_scrollbar),
-                                 GTK_UPDATE_CONTINUOUS);
-
-    gtk_box_pack_start (GTK_BOX (main_box), w_current->h_scrollbar,
-                        FALSE, FALSE, 0);
-
-    g_signal_connect (w_current->h_adjustment,
-                      "value_changed",
-                      G_CALLBACK (x_event_hschanged),
-                      w_current);
-  }
+  g_signal_connect (w_current->v_adjustment,
+                    "value_changed",
+                    G_CALLBACK (x_event_vschanged),
+                    w_current);
 
   /* macro box */
   w_current->macro_entry = gtk_entry_new();
