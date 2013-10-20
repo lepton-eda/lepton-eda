@@ -1,7 +1,7 @@
 /* gEDA - GPL Electronic Design Automation
  * gschem - gEDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2011 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -500,16 +500,17 @@ static void multiattrib_popup_menu (Multiattrib *multiattrib,
  *  \par Function Description
  *
  */
-static void multiattrib_action_add_attribute(GschemToplevel *w_current,
-					     OBJECT *object,
-                                             Multiattrib *multiattrib,
-					     const gchar *name,
-					     const gchar *value,
-					     gint visible,
-					     gint show_name_value) 
+static void
+multiattrib_action_add_attribute (Multiattrib *multiattrib,
+                                  const gchar *name,
+                                  const gchar *value,
+                                  gint visible,
+                                  gint show_name_value)
 {
+  OBJECT *object = multiattrib->object;
   gchar *newtext;
-  
+  GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+
   newtext = g_strdup_printf ("%s=%s", name, value);
 
   if (!x_dialog_validate_attribute(GTK_WINDOW(multiattrib), newtext)) {
@@ -533,10 +534,13 @@ static void multiattrib_action_add_attribute(GschemToplevel *w_current,
  *  \par Function Description
  *
  */
-static void multiattrib_action_duplicate_attribute(GschemToplevel *w_current,
-						   OBJECT *object,
-						   OBJECT *o_attrib) 
+static void
+multiattrib_action_duplicate_attribute (Multiattrib *multiattrib,
+                                        OBJECT *o_attrib)
 {
+  GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  OBJECT *object = multiattrib->object;
+
   int visibility = o_is_visible (w_current->toplevel, o_attrib)
       ? VISIBLE : INVISIBLE;
 
@@ -555,11 +559,13 @@ static void multiattrib_action_duplicate_attribute(GschemToplevel *w_current,
  *  \par Function Description
  *
  */
-static void multiattrib_action_promote_attribute (GschemToplevel *w_current,
-                                                  OBJECT *object,
-                                                  OBJECT *o_attrib)
+static void
+multiattrib_action_promote_attribute (Multiattrib *multiattrib,
+                                      OBJECT *o_attrib)
 {
+  GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  OBJECT *object = multiattrib->object;
   OBJECT *o_new;
 
   if (o_is_visible (toplevel, o_attrib)) {
@@ -589,9 +595,12 @@ static void multiattrib_action_promote_attribute (GschemToplevel *w_current,
  *  \par Function Description
  *
  */
-static void multiattrib_action_delete_attribute(GschemToplevel *w_current,
-						OBJECT *o_attrib) 
+static void
+multiattrib_action_delete_attribute (Multiattrib *multiattrib,
+                                     OBJECT *o_attrib)
 {
+  GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+
   /* actually deletes the attribute */
   o_delete (w_current, o_attrib);
   o_undo_savestate (w_current, UNDO_ALL);
@@ -1068,8 +1077,7 @@ static gboolean multiattrib_callback_key_pressed(GtkWidget *widget,
     if (inherited)
       return FALSE;
 
-    multiattrib_action_delete_attribute (GSCHEM_DIALOG (multiattrib)->w_current,
-                                         o_attrib);
+    multiattrib_action_delete_attribute (multiattrib, o_attrib);
     
     /* update the treeview contents */
     multiattrib_update (multiattrib);
@@ -1164,9 +1172,8 @@ static void multiattrib_callback_popup_duplicate(GtkMenuItem *menuitem,
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  GschemToplevel *w_current;
-  OBJECT *object, *o_attrib;
-  
+  OBJECT *o_attrib;
+
   if (!gtk_tree_selection_get_selected (
         gtk_tree_view_get_selection (multiattrib->treeview),
         &model, &iter)) {
@@ -1174,15 +1181,12 @@ static void multiattrib_callback_popup_duplicate(GtkMenuItem *menuitem,
     return;
   }
 
-  w_current = GSCHEM_DIALOG (multiattrib)->w_current;
-  object   = multiattrib->object;
-  
   gtk_tree_model_get (model, &iter,
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
 
-  multiattrib_action_duplicate_attribute (w_current, object, o_attrib);
+  multiattrib_action_duplicate_attribute (multiattrib, o_attrib);
 
   /* update the treeview contents */
   multiattrib_update (multiattrib);
@@ -1201,8 +1205,7 @@ static void multiattrib_callback_popup_promote (GtkMenuItem *menuitem,
   Multiattrib *multiattrib = user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  GschemToplevel *w_current;
-  OBJECT *object, *o_attrib;
+  OBJECT *o_attrib;
 
   if (!gtk_tree_selection_get_selected (
          gtk_tree_view_get_selection (multiattrib->treeview),
@@ -1211,15 +1214,12 @@ static void multiattrib_callback_popup_promote (GtkMenuItem *menuitem,
     return;
   }
 
-  w_current = GSCHEM_DIALOG (multiattrib)->w_current;
-  object = multiattrib->object;
-
   gtk_tree_model_get (model, &iter,
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
 
-  multiattrib_action_promote_attribute (w_current, object, o_attrib);
+  multiattrib_action_promote_attribute (multiattrib, o_attrib);
 
   /* update the treeview contents */
   multiattrib_update (multiattrib);
@@ -1236,7 +1236,6 @@ static void multiattrib_callback_popup_delete(GtkMenuItem *menuitem,
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  GschemToplevel *w_current;
   OBJECT *o_attrib;
   
   if (!gtk_tree_selection_get_selected (
@@ -1246,14 +1245,12 @@ static void multiattrib_callback_popup_delete(GtkMenuItem *menuitem,
     return;
   }
 
-  w_current = GSCHEM_DIALOG (multiattrib)->w_current;
-
   gtk_tree_model_get (model, &iter,
                       COLUMN_ATTRIBUTE, &o_attrib,
                       -1);
   g_assert (o_attrib->type == OBJ_TEXT);
 
-  multiattrib_action_delete_attribute (w_current, o_attrib);
+  multiattrib_action_delete_attribute (multiattrib, o_attrib);
 
   /* update the treeview contents */
   multiattrib_update (multiattrib);
@@ -1328,15 +1325,11 @@ static void multiattrib_callback_button_add(GtkButton *button,
   GtkTextIter start, end;
   const gchar *name;
   gchar *value;
-  GschemToplevel *w_current;
-  OBJECT *object;
   gboolean visible;
   gint shownv;
 
-  w_current = GSCHEM_DIALOG (multiattrib)->w_current;
-  object   = multiattrib->object;
   buffer   = gtk_text_view_get_buffer (multiattrib->textview_value);
-  
+
   /* retrieve information from the Add/Edit frame */
   /*   - attribute's name */
   name = gtk_entry_get_text (
@@ -1356,7 +1349,7 @@ static void multiattrib_callback_button_add(GtkButton *button,
     return;
   }
 
-  multiattrib_action_add_attribute (w_current, object, multiattrib,
+  multiattrib_action_add_attribute (multiattrib,
                                     name, value,
                                     visible, shownv);
   g_free (value);
