@@ -25,7 +25,7 @@
 
 #define GSCHEM_TYPE_PAGE_VIEW           (gschem_page_view_get_type())
 #define GSCHEM_PAGE_VIEW(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_PAGE_VIEW, GschemPageView))
-#define GSCHEM_PAGE_VIEW_CLASS(klasse)  (G_TYPE_CHECK_CLASS_CAST ((klasse), GSCHEM_TYPE_PAGE_VIEW, GschemPageViewClass))
+#define GSCHEM_PAGE_VIEW_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_PAGE_VIEW, GschemPageViewClass))
 #define GSCHEM_IS_PAGE_VIEW(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_PAGE_VIEW))
 #define GSCHEM_PAGE_VIEW_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_PAGE_VIEW, GschemPageViewClass))
 

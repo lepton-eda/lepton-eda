@@ -25,7 +25,7 @@
 
 #define GSCHEM_TYPE_SWATCH_COLUMN_RENDERER           (gschem_swatch_column_renderer_get_type())
 #define GSCHEM_SWATCH_COLUMN_RENDERER(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_SWATCH_COLUMN_RENDERER, GschemSwatchColumnRenderer))
-#define GSCHEM_SWATCH_COLUMN_RENDERER_CLASS(klasse)  (G_TYPE_CHECK_CLASS_CAST ((klasse), GSCHEM_TYPE_SWATCH_COLUMN_RENDERER, GschemSwatchColumnRendererClass))
+#define GSCHEM_SWATCH_COLUMN_RENDERER_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_SWATCH_COLUMN_RENDERER, GschemSwatchColumnRendererClass))
 #define IS_GSCHEM_SWATCH_COLUMN_RENDERER(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_SWATCH_COLUMN_RENDERER))
 
 typedef struct _GschemSwatchColumnRendererClass GschemSwatchColumnRendererClass;

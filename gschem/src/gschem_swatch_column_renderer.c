@@ -114,14 +114,14 @@ get_property (GObject    *object,
 
 /*! \brief Initialize swatch cell renderer class
  *
- *  \param [in,out] klasse The swatch cell renderer class
+ *  \param [in,out] klass The swatch cell renderer class
  */
 static void
-swatchcr_class_init (GschemSwatchColumnRendererClass *klasse)
+swatchcr_class_init (GschemSwatchColumnRendererClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klasse);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  klasse->parent_class.parent_class.render = render;
+  klass->parent_class.parent_class.render = render;
 
   object_class->get_property = get_property;
   object_class->set_property = set_property;

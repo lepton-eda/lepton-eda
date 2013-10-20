@@ -40,7 +40,7 @@
 
 #define TYPE_EDITTEXT           (edittext_get_type())
 #define EDITTEXT(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_EDITTEXT, EditText))
-#define EDITTEXT_CLASS(klasse)  (G_TYPE_CHECK_CLASS_CAST ((klasse), TYPE_EDITTEXT, EditTextClass))
+#define EDITTEXT_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  TYPE_EDITTEXT, EditTextClass))
 #define IS_EDITTEXT(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_EDITTEXT))
 
 typedef struct _EditTextClass EditTextClass;
@@ -136,9 +136,9 @@ dialog_response (EditText *dialog, gint response, gpointer unused)
  *  GType class initialiser for Multiattrib. We override our parent
  *  virtual class methods as needed and register our GObject properties.
  *
- *  \param [in] klasse
+ *  \param [in] klass
  */
-static void edittext_class_init(EditTextClass *klasse)
+static void edittext_class_init(EditTextClass *klass)
 {
 }
 

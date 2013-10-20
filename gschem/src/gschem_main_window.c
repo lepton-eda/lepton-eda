@@ -40,7 +40,7 @@ static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-gschem_main_window_class_init (GschemMainWindowClass *klasse);
+gschem_main_window_class_init (GschemMainWindowClass *klass);
 
 static void
 gschem_main_window_init (GschemMainWindow *window);
@@ -72,13 +72,13 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
 /*! \brief Initialize GschemMainWindow class
  *
- *  \param [in] klasse The class for the GschemMainWindow
+ *  \param [in] klass The class for the GschemMainWindow
  */
 static void
-gschem_main_window_class_init (GschemMainWindowClass *klasse)
+gschem_main_window_class_init (GschemMainWindowClass *klass)
 {
-  G_OBJECT_CLASS (klasse)->get_property = get_property;
-  G_OBJECT_CLASS (klasse)->set_property = set_property;
+  G_OBJECT_CLASS (klass)->get_property = get_property;
+  G_OBJECT_CLASS (klass)->set_property = set_property;
 }
 
 

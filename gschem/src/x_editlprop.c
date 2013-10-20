@@ -169,20 +169,20 @@ entry_activate (GtkWidget *widget, EditLProp *dialog)
  *  GType class initialiser for Multiattrib. We override our parent
  *  virtual class methods as needed and register our GObject properties.
  *
- *  \param [in] klasse
+ *  \param [in] klass
  */
 static void
-editlprop_class_init (EditLPropClass *klasse)
+editlprop_class_init (EditLPropClass *klass)
 {
-  GObjectClass *object_klasse;
+  GObjectClass *object_class;
 
-  g_return_if_fail (klasse != NULL);
+  g_return_if_fail (klass != NULL);
 
-  object_klasse = G_OBJECT_CLASS (klasse);
+  object_class = G_OBJECT_CLASS (klass);
 
-  g_return_if_fail (object_klasse != NULL);
+  g_return_if_fail (object_class != NULL);
 
-  object_klasse->dispose = dispose;
+  object_class->dispose = dispose;
 }
 
 
@@ -414,8 +414,8 @@ static void
 dispose (GObject *object)
 {
   EditLProp *dialog;
-  EditLPropClass *klasse;
-  GObjectClass *parent_klasse;
+  EditLPropClass *klass;
+  GObjectClass *parent_class;
 
   g_return_if_fail (object != NULL);
 
@@ -425,11 +425,11 @@ dispose (GObject *object)
 
   /* lastly, chain up to the parent dispose */
 
-  klasse = EDITLPROP_GET_CLASS (object);
-  g_return_if_fail (klasse != NULL);
-  parent_klasse = g_type_class_peek_parent (klasse);
-  g_return_if_fail (parent_klasse != NULL);
-  parent_klasse->dispose (object);
+  klass = EDITLPROP_GET_CLASS (object);
+  g_return_if_fail (klass != NULL);
+  parent_class = g_type_class_peek_parent (klass);
+  g_return_if_fail (parent_class != NULL);
+  parent_class->dispose (object);
 }
 
 

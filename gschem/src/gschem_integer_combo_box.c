@@ -50,7 +50,7 @@ static gboolean
 focus_out_event (GtkEntry *entry, GdkEvent *event, GschemIntegerComboBox *combo);
 
 static void
-gschem_integer_combo_box_class_init (GschemIntegerComboBoxClass *klasse);
+gschem_integer_combo_box_class_init (GschemIntegerComboBoxClass *klass);
 
 static void
 gschem_integer_combo_box_init (GschemIntegerComboBox *combo);
@@ -110,15 +110,15 @@ focus_out_event (GtkEntry *entry, GdkEvent *event, GschemIntegerComboBox *combo)
 
 /*! \brief Initialize GschemIntegerComboBoxClass class
  *
- *  \param [in] klasse The class for the GschemIntegerComboBoxClass
+ *  \param [in] klass The class for the GschemIntegerComboBoxClass
  */
 static void
-gschem_integer_combo_box_class_init (GschemIntegerComboBoxClass *klasse)
+gschem_integer_combo_box_class_init (GschemIntegerComboBoxClass *klass)
 {
-  g_return_if_fail (klasse != NULL);
+  g_return_if_fail (klass != NULL);
 
   g_signal_new ("apply",                          /* signal_name  */
-                G_OBJECT_CLASS_TYPE (klasse),     /* itype        */
+                G_OBJECT_CLASS_TYPE (klass),      /* itype        */
                 0,                                /* signal_flags */
                 0,                                /* class_offset */
                 NULL,                             /* accumulator  */
@@ -211,7 +211,7 @@ gschem_integer_combo_box_get_value (GtkWidget *widget)
 
 /*! \brief Initialize a GschemIntegerComboBox
  *
- *  \param [in] klasse The instance of a GschemIntegerComboBox
+ *  \param [in] klass The instance of a GschemIntegerComboBox
  */
 static void
 gschem_integer_combo_box_init (GschemIntegerComboBox *combo)

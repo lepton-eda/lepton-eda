@@ -40,7 +40,7 @@
 
 #define TYPE_EDITCOLOR           (editcolor_get_type())
 #define EDITCOLOR(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_EDITCOLOR, EditColor))
-#define EDITCOLOR_CLASS(klasse)  (G_TYPE_CHECK_CLASS_CAST ((klasse), TYPE_EDITCOLOR, EditColorClass))
+#define EDITCOLOR_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  TYPE_EDITCOLOR, EditColorClass))
 #define IS_EDITCOLOR(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_EDITCOLOR))
 #define EDITCOLOR_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), TYPE_EDITCOLOR, EditColorClass))
 
@@ -111,8 +111,8 @@ static void
 dispose (GObject *object)
 {
   EditColor *dialog;
-  EditColorClass *klasse;
-  GObjectClass *parent_klasse;
+  EditColorClass *klass;
+  GObjectClass *parent_class;
 
   g_return_if_fail (object != NULL);
   dialog = EDITCOLOR (object);
@@ -122,11 +122,11 @@ dispose (GObject *object)
 
   /* lastly, chain up to the parent dispose */
 
-  klasse = EDITCOLOR_GET_CLASS (object);
-  g_return_if_fail (klasse != NULL);
-  parent_klasse = g_type_class_peek_parent (klasse);
-  g_return_if_fail (parent_klasse != NULL);
-  parent_klasse->dispose (object);
+  klass = EDITCOLOR_GET_CLASS (object);
+  g_return_if_fail (klass != NULL);
+  parent_class = g_type_class_peek_parent (klass);
+  g_return_if_fail (parent_class != NULL);
+  parent_class->dispose (object);
 
 }
 
@@ -139,19 +139,19 @@ dispose (GObject *object)
  *  GType class initialiser for Multiattrib. We override our parent
  *  virtual class methods as needed and register our GObject properties.
  *
- *  \param [in] klasse
+ *  \param [in] klass
  */
-static void editcolor_class_init(EditColorClass *klasse)
+static void editcolor_class_init(EditColorClass *klass)
 {
-  GObjectClass *object_klasse;
+  GObjectClass *object_class;
 
-  g_return_if_fail (klasse != NULL);
+  g_return_if_fail (klass != NULL);
 
-  object_klasse = G_OBJECT_CLASS (klasse);
+  object_class = G_OBJECT_CLASS (klass);
 
-  g_return_if_fail (object_klasse != NULL);
+  g_return_if_fail (object_class != NULL);
 
-  object_klasse->dispose = dispose;
+  object_class->dispose = dispose;
 }
 
 

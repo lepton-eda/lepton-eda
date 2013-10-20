@@ -40,7 +40,7 @@
 
 #define TYPE_NEWTEXT           (newtext_get_type())
 #define NEWTEXT(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_NEWTEXT, NewText))
-#define NEWTEXT_CLASS(klasse)  (G_TYPE_CHECK_CLASS_CAST ((klasse), TYPE_NEWTEXT, NewTextClass))
+#define NEWTEXT_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  TYPE_NEWTEXT, NewTextClass))
 #define IS_NEWTEXT(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_NEWTEXT))
 
 typedef struct _NewTextClass NewTextClass;
@@ -190,9 +190,9 @@ static void text_input_dialog_response(NewText *dialog, gint response, gpointer 
  *  GType class initialiser for Multiattrib. We override our parent
  *  virtual class methods as needed and register our GObject properties.
  *
- *  \param [in] klasse
+ *  \param [in] klass
  */
-static void newtext_class_init(NewTextClass *klasse)
+static void newtext_class_init(NewTextClass *klass)
 {
 }
 

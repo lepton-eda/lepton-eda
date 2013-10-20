@@ -53,7 +53,7 @@ static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klasse);
+gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass);
 
 static void
 gschem_selection_adapter_init (GschemSelectionAdapter *adapter);
@@ -112,16 +112,16 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
 /*! \brief Initialize GschemSelectionAdapter class
  *
- *  \param [in] klasse The class for the GschemSelectionAdapter
+ *  \param [in] klass The class for the GschemSelectionAdapter
  */
 static void
-gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klasse)
+gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
 {
-  G_OBJECT_CLASS (klasse)->get_property = get_property;
-  G_OBJECT_CLASS (klasse)->set_property = set_property;
+  G_OBJECT_CLASS (klass)->get_property = get_property;
+  G_OBJECT_CLASS (klass)->set_property = set_property;
 
 
-  g_object_class_install_property (G_OBJECT_CLASS (klasse),
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_CAP_STYLE,
                                    g_param_spec_int ("cap-style",
                                                      "Cap Style",
@@ -131,7 +131,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klasse)
                                                      -1,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-  g_object_class_install_property (G_OBJECT_CLASS (klasse),
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_DASH_LENGTH,
                                    g_param_spec_int ("dash-length",
                                                      "Dash Length",
@@ -141,7 +141,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klasse)
                                                      -1,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-  g_object_class_install_property (G_OBJECT_CLASS (klasse),
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_DASH_SPACE,
                                    g_param_spec_int ("dash-space",
                                                      "Dash Space",
@@ -151,7 +151,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klasse)
                                                      -1,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-  g_object_class_install_property (G_OBJECT_CLASS (klasse),
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_LINE_TYPE,
                                    g_param_spec_int ("line-type",
                                                      "Line Type",
@@ -162,7 +162,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klasse)
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
 
-  g_object_class_install_property (G_OBJECT_CLASS (klasse),
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_LINE_WIDTH,
                                    g_param_spec_int ("line-width",
                                                      "Line Width",
@@ -172,7 +172,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klasse)
                                                      -1,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-  g_object_class_install_property (G_OBJECT_CLASS (klasse),
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_OBJECT_COLOR,
                                    g_param_spec_int ("object-color",
                                                      "Object Color",

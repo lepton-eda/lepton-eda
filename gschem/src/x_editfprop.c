@@ -40,7 +40,7 @@
 
 #define TYPE_EDITFPROP           (editfprop_get_type())
 #define EDITFPROP(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_EDITFPROP, EditFProp))
-#define EDITFPROP_CLASS(klasse)  (G_TYPE_CHECK_CLASS_CAST ((klasse), TYPE_EDITFPROP, EditFPropClass))
+#define EDITFPROP_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  TYPE_EDITFPROP, EditFPropClass))
 #define IS_EDITFPROP(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_EDITFPROP))
 
 typedef struct _EditFPropClass EditFPropClass;
@@ -300,9 +300,9 @@ dialog_response (EditFProp *dialog, gint response, gpointer unused)
  *  GType class initialiser for Multiattrib. We override our parent
  *  virtual class methods as needed and register our GObject properties.
  *
- *  \param [in] klasse
+ *  \param [in] klass
  */
-static void editfprop_class_init(EditFPropClass *klasse)
+static void editfprop_class_init(EditFPropClass *klass)
 {
 }
 

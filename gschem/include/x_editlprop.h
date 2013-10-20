@@ -25,7 +25,7 @@
 
 #define TYPE_EDITLPROP           (editlprop_get_type())
 #define EDITLPROP(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_EDITLPROP, EditLProp))
-#define EDITLPROP_CLASS(klasse)  (G_TYPE_CHECK_CLASS_CAST ((klasse), TYPE_EDITLPROP, EditLPropClass))
+#define EDITLPROP_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  TYPE_EDITLPROP, EditLPropClass))
 #define IS_EDITLPROP(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_EDITLPROP))
 #define EDITLPROP_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), TYPE_EDITLPROP, EditLPropClass))
 

@@ -52,7 +52,7 @@ static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-gschem_page_view_class_init (GschemPageViewClass *klasse);
+gschem_page_view_class_init (GschemPageViewClass *klass);
 
 static void
 gschem_page_view_init (GschemPageView *view);
@@ -142,15 +142,15 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
 /*! \brief Initialize GschemPageView class
  *
- *  \param [in] klasse The class for the GschemPageView
+ *  \param [in] klass The class for the GschemPageView
  */
 static void
-gschem_page_view_class_init (GschemPageViewClass *klasse)
+gschem_page_view_class_init (GschemPageViewClass *klass)
 {
-  G_OBJECT_CLASS (klasse)->get_property = get_property;
-  G_OBJECT_CLASS (klasse)->set_property = set_property;
+  G_OBJECT_CLASS (klass)->get_property = get_property;
+  G_OBJECT_CLASS (klass)->set_property = set_property;
 
-  g_object_class_install_property (G_OBJECT_CLASS (klasse),
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_HADJUSTMENT,
                                    g_param_spec_object ("hadjustment",
                                                         "Horizontal adjustment",
@@ -158,14 +158,14 @@ gschem_page_view_class_init (GschemPageViewClass *klasse)
                                                         GTK_TYPE_ADJUSTMENT,
                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (G_OBJECT_CLASS (klasse),
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_PAGE,
                                    g_param_spec_pointer ("page",
                                                          "Page",
                                                          "Page",
                                                          G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
-  g_object_class_install_property (G_OBJECT_CLASS (klasse),
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_VADJUSTMENT,
                                    g_param_spec_object ("vadjustment",
                                                         "Vertical adjustment",
@@ -173,9 +173,9 @@ gschem_page_view_class_init (GschemPageViewClass *klasse)
                                                         GTK_TYPE_ADJUSTMENT,
                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
-  GTK_WIDGET_CLASS (klasse)->set_scroll_adjustments_signal = g_signal_new (
+  GTK_WIDGET_CLASS (klass)->set_scroll_adjustments_signal = g_signal_new (
     "set-scroll-adjustments",
-    G_OBJECT_CLASS_TYPE (klasse),
+    G_OBJECT_CLASS_TYPE (klass),
     G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
     0,
     NULL,
