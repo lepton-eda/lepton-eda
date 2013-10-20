@@ -569,8 +569,8 @@ static gboolean cellrenderermultilinetext_focus_out_event(GtkWidget *widget,
 							  GdkEvent *event,
 							  gpointer user_data)
 {
-  cellrenderermultilinetext_editing_done (GTK_CELL_EDITABLE (widget),
-                                          user_data);
+//  cellrenderermultilinetext_editing_done (GTK_CELL_EDITABLE (widget),
+//                                          user_data);
 
   return FALSE;
 }
