@@ -28,6 +28,7 @@
 #endif
 
 #include "gschem.h"
+#include "x_multiattrib.h"
 #include <gdk/gdkkeysyms.h>
 
 
