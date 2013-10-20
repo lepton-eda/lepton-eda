@@ -641,8 +641,6 @@ static void multiattrib_get_property (GObject *object,
 
 static void multiattrib_popup_menu (Multiattrib *multiattrib,
                                     GdkEventButton *event);
-static void multiattrib_edit_moused_cell(Multiattrib *multiattrib,
-				          GdkEventButton *event);
 
 
 /*! \todo Finish function documentation
@@ -1228,6 +1226,34 @@ static gboolean multiattrib_callback_key_pressed(GtkWidget *widget,
   return FALSE;
 }
 
+
+/*! \brief Move edit focus to the cell pointed to by a mouse event.
+ *  \par Function Description
+ *  Uses the X and Y coordinates of a mouse event, to move edit focus
+ *  to the cell at those coords.
+ *
+ * NB: The coordinates must be relative to the tree view's bin window, IE.. have
+ *     come from en event where event->window == gtk_tree_view_get_bin_window ().
+ *
+ *  \param [in] multiattrib  The Multiattrib object.
+ *  \param [in] x            The x coordinate of the mouse event.
+ *  \param [in] y            The y coordinate of the mouse event.
+ */
+static void
+multiattrib_edit_cell_at_pos (Multiattrib *multiattrib, gint x, gint y)
+{
+  GtkTreePath *path;
+  GtkTreeViewColumn *column;
+
+  if (gtk_tree_view_get_path_at_pos (multiattrib->treeview,
+                                     x, y, &path, &column, NULL, NULL)) {
+
+    gtk_tree_view_set_cursor_on_cell (multiattrib->treeview,
+                                      path, column, NULL, TRUE);
+  }
+}
+
+
 /*! \todo Finish function documentation
  *  \brief
  *  \par Function Description
@@ -1241,19 +1267,19 @@ static gboolean multiattrib_callback_button_pressed(GtkWidget *widget,
   gboolean ret = FALSE;
 
   /* popup menu on right click */
-  if (event->type == GDK_BUTTON_PRESS  &&  event->button == 3) {
+  if (event->type == GDK_BUTTON_PRESS && event->button == 3) {
     multiattrib_popup_menu (multiattrib, event);
     ret = TRUE;
   }
 
   /* edit cell on double (left) click */
-  /* (Normally, edit focus by click is handled for us, but this function is useful 
+  /* (Normally, edit focus by click is handled for us, but this function is useful
    * for overriding the default behavior of treating a double-click the same as a
    * single-click, with edit focus needing two consecutive double or single clicks
    * with a pause in between.  This can be unintuitive and time-wasting) */
   else 
-  if (event->type == GDK_2BUTTON_PRESS  &&  event->button == 1) {
-    multiattrib_edit_moused_cell (multiattrib, event);
+  if (event->type == GDK_2BUTTON_PRESS && event->button == 1) {
+    multiattrib_edit_cell_at_pos (multiattrib, event->x, event->y);
     ret = TRUE;
   }
 
@@ -1614,31 +1640,6 @@ static void multiattrib_popup_menu(Multiattrib *multiattrib,
   
 }
 
-
-/*! \brief Move edit focus to the cell pointed to by a mouse event.
- *  \par Function Description
- *  Uses a <B>event</B>, a mouse event with x and y coords, to move edit focus 
- *  to the cell at those coords.  
- *
- *  \param [in] multiattrib  The Multiattrib object.
- *  \param [in] event        Mouse event.
- */
-static void multiattrib_edit_moused_cell(Multiattrib *multiattrib,
-				         GdkEventButton *event)
-{
-  GtkTreePath *path;
-  GtkTreeViewColumn *column;
-
-  if (event != NULL &&
-      gtk_tree_view_get_path_at_pos (multiattrib->treeview,
-                                     (gint)event->x, 
-                                     (gint)event->y,
-                                     &path, &column, NULL, NULL)) { 
-
-    gtk_tree_view_set_cursor_on_cell(multiattrib->treeview,
-                                     path, column, NULL, TRUE);    
-  }
-}
 
 /*! \brief GschemDialog "geometry_save" class method handler
  *
