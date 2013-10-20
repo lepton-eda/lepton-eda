@@ -64,8 +64,6 @@ struct _Multiattrib {
 
 GType multiattrib_get_type (void);
 
-void multiattrib_update (Multiattrib *multiattrib);
-
 
 /*
  * CellTextView

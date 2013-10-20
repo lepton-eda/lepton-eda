@@ -32,6 +32,9 @@
 #include <gdk/gdkkeysyms.h>
 
 
+static void multiattrib_update (Multiattrib *multiattrib);
+
+
 /*! \brief Update the multiattrib editor dialog when the page's
  *         selection changes.
  *  \par Function Description
@@ -2180,7 +2183,8 @@ static void multiattrib_get_property (GObject *object,
  *
  *  \param [in] multiattrib  The multi-attribute editor dialog.
  */
-void multiattrib_update (Multiattrib *multiattrib)
+static void
+multiattrib_update (Multiattrib *multiattrib)
 {
   GtkListStore *liststore;
   GtkTreeIter iter;
