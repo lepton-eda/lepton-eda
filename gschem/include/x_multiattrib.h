@@ -39,7 +39,7 @@ typedef struct _Multiattrib      Multiattrib;
 
 struct _MultiattribClass {
   GschemDialogClass parent_class;
-  
+
 };
 
 struct _Multiattrib {
@@ -84,7 +84,7 @@ typedef struct _CellTextView      CellTextView;
 
 struct _CellTextViewClass {
   GtkTextViewClass parent_class;
-  
+
 };
 
 struct _CellTextView {
@@ -113,7 +113,7 @@ typedef struct _CellRendererMultiLineText      CellRendererMultiLineText;
 
 struct _CellRendererMultiLineTextClass {
   GtkCellRendererTextClass parent_class;
-  
+
 };
 
 struct _CellRendererMultiLineText {
