@@ -34,6 +34,17 @@
 
 static void multiattrib_update (Multiattrib *multiattrib);
 
+static gboolean
+snv_shows_name (int snv)
+{
+  return snv == SHOW_NAME_VALUE || snv == SHOW_NAME;
+}
+
+static gboolean
+snv_shows_value (int snv)
+{
+  return snv == SHOW_NAME_VALUE || snv == SHOW_VALUE;
+}
 
 /*! \brief Process the response returned by the multi-attribte dialog.
  *  \par Function Description
@@ -487,7 +498,17 @@ enum {
 };
 
 enum {
-  COLUMN_ATTRIBUTE,
+  COLUMN_INHERITED,
+  COLUMN_NAME,
+  COLUMN_VALUE,
+  COLUMN_VISIBILITY,
+  COLUMN_SHOW_NAME_VALUE,
+  COLUMN_PRESENT_IN_ALL,
+  COLUMN_IDENTICAL_VALUE,
+  COLUMN_IDENTICAL_VISIBILITY,
+  COLUMN_IDENTICAL_SHOW_NAME,
+  COLUMN_IDENTICAL_SHOW_VALUE,
+  COLUMN_ATTRIBUTE_GEDALIST,
   NUM_COLUMNS
 };
 
@@ -508,6 +529,28 @@ static void multiattrib_popup_menu (Multiattrib *multiattrib,
                                     GdkEventButton *event);
 
 
+/*! \brief Returns TRUE/FALSE if the given object may have attributes attached.
+ *
+ *  \par Function Description
+ *
+ *  Returns TRUE/FALSE if the given object may have attributes attached.
+ *
+ *  \param [in] object  The OBJECT to test.
+ *  \returns  TRUE/FALSE if the given object may have attributes attached.
+ */
+static gboolean is_multiattrib_object (OBJECT *object)
+{
+  if (object->type == OBJ_COMPLEX ||
+      object->type == OBJ_PLACEHOLDER ||
+      object->type == OBJ_NET ||
+      object->type == OBJ_BUS ||
+      object->type == OBJ_PIN) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
 /*! \todo Finish function documentation
  *  \brief
  *  \par Function Description
@@ -520,8 +563,9 @@ multiattrib_action_add_attribute (Multiattrib *multiattrib,
                                   gint visible,
                                   gint show_name_value)
 {
-  OBJECT *object = multiattrib->object;
+  OBJECT *object;
   gchar *newtext;
+  GList *iter;
   GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
 
   newtext = g_strdup_printf ("%s=%s", name, value);
@@ -531,9 +575,18 @@ multiattrib_action_add_attribute (Multiattrib *multiattrib,
     return;
   }
 
-  /* create a new attribute and link it */
-  o_attrib_add_attrib (w_current, newtext,
-                       visible, show_name_value, object);
+  for (iter = geda_list_get_glist (multiattrib->object_list);
+       iter != NULL;
+       iter = g_list_next (iter)) {
+    object = (OBJECT *)iter->data;
+
+    if (is_multiattrib_object (object)) {
+
+      /* create a new attribute and link it */
+      o_attrib_add_attrib (w_current, newtext,
+                           visible, show_name_value, object);
+    }
+  }
 
   w_current->toplevel->page_current->CHANGED = 1;
   o_undo_savestate (w_current, UNDO_ALL);
@@ -547,56 +600,25 @@ multiattrib_action_add_attribute (Multiattrib *multiattrib,
  *
  */
 static void
-multiattrib_action_duplicate_attribute (Multiattrib *multiattrib,
-                                        OBJECT *o_attrib)
+multiattrib_action_duplicate_attributes (Multiattrib *multiattrib,
+                                         GList *attr_list)
 {
   GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
-  OBJECT *object = multiattrib->object;
+  GList *iter;
 
-  int visibility = o_is_visible (w_current->toplevel, o_attrib)
-      ? VISIBLE : INVISIBLE;
+  for (iter = attr_list;
+       iter != NULL;
+       iter = g_list_next (iter)) {
+    OBJECT *o_attrib = (OBJECT *)iter->data;
 
-  o_attrib_add_attrib (w_current,
-                       o_text_get_string (w_current->toplevel, o_attrib),
-                       visibility,
-                       o_attrib->show_name_value,
-                       object);
-  w_current->toplevel->page_current->CHANGED = 1;
-  o_undo_savestate (w_current, UNDO_ALL);
-}
-
-/*! \todo Finish function documentation
- *  \brief
- *  \par Function Description
- *
- */
-static void
-multiattrib_action_promote_attribute (Multiattrib *multiattrib,
-                                      OBJECT *o_attrib)
-{
-  GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  OBJECT *object = multiattrib->object;
-  OBJECT *o_new;
-
-  if (o_is_visible (toplevel, o_attrib)) {
-    /* If the attribute we're promoting is visible, don't clone its location */
+    /* create a new attribute and link it */
     o_attrib_add_attrib (w_current,
                          o_text_get_string (w_current->toplevel, o_attrib),
-                         VISIBLE,
+                         o_is_visible (w_current->toplevel, o_attrib),
                          o_attrib->show_name_value,
-                         object);
-  } else {
-      /* make a copy of the attribute object */
-      o_new = o_object_copy (toplevel, o_attrib);
-      s_page_append (toplevel, toplevel->page_current, o_new);
-      /* add the attribute its parent */
-      o_attrib_attach (toplevel, o_new, object, TRUE);
-      /* note: this object is unselected (not added to selection). */
-
-      /* Call add-objects-hook */
-      g_run_hook_object (w_current, "%add-objects-hook", o_new);
+                         o_attrib->attached_to);
   }
+
   w_current->toplevel->page_current->CHANGED = 1;
   o_undo_savestate (w_current, UNDO_ALL);
 }
@@ -607,13 +629,111 @@ multiattrib_action_promote_attribute (Multiattrib *multiattrib,
  *
  */
 static void
-multiattrib_action_delete_attribute (Multiattrib *multiattrib,
-                                     OBJECT *o_attrib)
+multiattrib_action_promote_attributes (Multiattrib *multiattrib,
+                                       GList *attr_list)
 {
   GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  TOPLEVEL *toplevel = w_current->toplevel;
+  OBJECT *o_new;
+  GList *iter;
 
-  /* actually deletes the attribute */
-  o_delete (w_current, o_attrib);
+  for (iter = attr_list;
+       iter != NULL;
+       iter = g_list_next (iter)) {
+    OBJECT *o_attrib = (OBJECT *)iter->data;
+
+    if (o_is_visible (toplevel, o_attrib)) {
+      /* If the attribute we're promoting is visible, don't clone its location */
+      o_attrib_add_attrib (w_current,
+                           o_text_get_string (w_current->toplevel, o_attrib),
+                           VISIBLE,
+                           o_attrib->show_name_value,
+                           o_attrib->attached_to);
+    } else {
+        /* make a copy of the attribute object */
+        o_new = o_object_copy (toplevel, o_attrib);
+        s_page_append (toplevel, toplevel->page_current, o_new);
+        /* add the attribute its parent */
+        o_attrib_attach (toplevel, o_new, o_attrib->attached_to, TRUE);
+        /* note: this object is unselected (not added to selection). */
+
+        /* Call add-objects-hook */
+        g_run_hook_object (w_current, "%add-objects-hook", o_new);
+    }
+  }
+
+  w_current->toplevel->page_current->CHANGED = 1;
+  o_undo_savestate (w_current, UNDO_ALL);
+}
+
+/*! \todo Finish function documentation
+ *  \brief
+ *  \par Function Description
+ *
+ */
+static void
+multiattrib_action_delete_attributes (Multiattrib *multiattrib,
+                                      GList *attr_list)
+{
+  GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  GList *a_iter;
+  OBJECT *o_attrib;
+
+  for (a_iter = attr_list; a_iter != NULL; a_iter = g_list_next (a_iter)) {
+    o_attrib = a_iter->data;
+    /* actually deletes the attribute */
+    o_delete (w_current, o_attrib);
+  }
+
+  w_current->toplevel->page_current->CHANGED = 1;
+  o_undo_savestate (w_current, UNDO_ALL);
+}
+
+/*! \todo Finish function documentation
+ *  \brief
+ *  \par Function Description
+ *
+ */
+static void
+multiattrib_action_copy_attribute_to_all (Multiattrib *multiattrib,
+                                          GList *attr_list)
+{
+  GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  GList *iter;
+  GList *objects_needing_add;
+
+  objects_needing_add = g_list_copy (geda_list_get_glist (multiattrib->object_list));
+
+  /* Remove objects which already have this attribute from the list */
+  for (iter = attr_list;
+       iter != NULL;
+       iter = g_list_next (iter)) {
+    OBJECT *o_attrib = (OBJECT *)iter->data;
+
+    objects_needing_add = g_list_remove (objects_needing_add, o_attrib->attached_to);
+  }
+
+  for (iter = objects_needing_add; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *object = iter->data;
+
+    if (is_multiattrib_object (object)) {
+
+      /* Pick the first instance to copy from */
+      OBJECT *attrib_to_copy = attr_list->data;
+
+      int visibility = o_is_visible (w_current->toplevel, attrib_to_copy)
+          ? VISIBLE : INVISIBLE;
+
+      /* create a new attribute and link it */
+      o_attrib_add_attrib (w_current,
+                           o_text_get_string (w_current->toplevel, attrib_to_copy),
+                           visibility,
+                           attrib_to_copy->show_name_value,
+                           object);
+    }
+  }
+
+  w_current->toplevel->page_current->CHANGED = 1;
   o_undo_savestate (w_current, UNDO_ALL);
 }
 
@@ -629,22 +749,21 @@ multiattrib_column_set_data_name (GtkTreeViewColumn *tree_column,
                                   GtkTreeIter *iter,
                                   gpointer data)
 {
-  OBJECT *o_attrib;
-  gchar *name;
   Multiattrib *dialog = (Multiattrib *) data;
+  gchar *name;
+  gboolean present_in_all;
   int inherited;
 
   gtk_tree_model_get (tree_model, iter,
-                      COLUMN_ATTRIBUTE, &o_attrib,
+                      COLUMN_INHERITED, &inherited,
+                      COLUMN_NAME, &name,
+                      COLUMN_PRESENT_IN_ALL, &present_in_all,
                       -1);
-  g_assert (o_attrib->type == OBJ_TEXT);
 
-  inherited = o_attrib_is_inherited (o_attrib);
-
-  o_attrib_get_name_value (o_attrib, &name, NULL);
   g_object_set (cell,
                 "text", name,
-                "foreground-gdk", inherited ? &dialog->insensitive_text_color : NULL,
+                "foreground-gdk", inherited ? &dialog->insensitive_text_color :
+                                  (!present_in_all ? &dialog->not_present_in_all_text_color : NULL),
                 "editable", !inherited,
                 NULL);
   g_free (name);
@@ -662,22 +781,21 @@ multiattrib_column_set_data_value (GtkTreeViewColumn *tree_column,
                                    GtkTreeIter *iter,
                                    gpointer data)
 {
-  OBJECT *o_attrib;
-  gchar *value;
   Multiattrib *dialog = (Multiattrib *) data;
+  gchar *value;
+  gboolean identical_value;
   int inherited;
 
   gtk_tree_model_get (tree_model, iter,
-                      COLUMN_ATTRIBUTE, &o_attrib,
+                      COLUMN_INHERITED, &inherited,
+                      COLUMN_VALUE, &value,
+                      COLUMN_IDENTICAL_VALUE, &identical_value,
                       -1);
-  g_assert (o_attrib->type == OBJ_TEXT);
 
-  inherited = o_attrib_is_inherited (o_attrib);
-
-  o_attrib_get_name_value (o_attrib, NULL, &value);
   g_object_set (cell,
-                "text", value,
-                "foreground-gdk", inherited ? &dialog->insensitive_text_color : NULL,
+                "text", identical_value ? value : _("<various>"),
+                "foreground-gdk", inherited ? &dialog->insensitive_text_color :
+                                  (!identical_value ? &dialog->not_identical_value_text_color : NULL),
                 "editable", !inherited,
                 NULL);
   g_free (value);
@@ -695,21 +813,21 @@ multiattrib_column_set_data_visible (GtkTreeViewColumn *tree_column,
                                      GtkTreeIter *iter,
                                      gpointer data)
 {
-  OBJECT *o_attrib;
-  GschemDialog *dialog = GSCHEM_DIALOG (data);
+  gboolean visibility;
+  gboolean identical_visibility;
   int inherited;
 
   gtk_tree_model_get (tree_model, iter,
-                      COLUMN_ATTRIBUTE, &o_attrib,
+                      COLUMN_INHERITED, &inherited,
+                      COLUMN_VISIBILITY, &visibility,
+                      COLUMN_IDENTICAL_VISIBILITY, &identical_visibility,
                       -1);
-  g_assert (o_attrib->type == OBJ_TEXT);
-
-  inherited = o_attrib_is_inherited (o_attrib);
 
   g_object_set (cell,
-                "active", o_is_visible (dialog->w_current->toplevel, o_attrib),
-                "sensitive",   !inherited,
-                "activatable", !inherited,
+                "active",       visibility,
+                "sensitive",    !inherited,
+                "activatable",  !inherited,
+                "inconsistent", !identical_visibility,
                 NULL);
 }
 
@@ -725,21 +843,21 @@ multiattrib_column_set_data_show_name (GtkTreeViewColumn *tree_column,
                                        GtkTreeIter *iter,
                                        gpointer data)
 {
-  OBJECT *o_attrib;
+  int show_name_value;
+  gboolean identical_show_name;
   int inherited;
 
   gtk_tree_model_get (tree_model, iter,
-                      COLUMN_ATTRIBUTE, &o_attrib,
+                      COLUMN_INHERITED, &inherited,
+                      COLUMN_SHOW_NAME_VALUE, &show_name_value,
+                      COLUMN_IDENTICAL_SHOW_NAME, &identical_show_name,
                       -1);
-  g_assert (o_attrib->type == OBJ_TEXT);
-
-  inherited = o_attrib_is_inherited (o_attrib);
 
   g_object_set (cell,
-                "active", (o_attrib->show_name_value == SHOW_NAME_VALUE ||
-                           o_attrib->show_name_value == SHOW_NAME),
-                "sensitive",   !inherited,
-                "activatable", !inherited,
+                "active",       snv_shows_name (show_name_value),
+                "sensitive",    !inherited,
+                "activatable",  !inherited,
+                "inconsistent", !identical_show_name,
                 NULL);
 }
 
@@ -755,42 +873,22 @@ multiattrib_column_set_data_show_value (GtkTreeViewColumn *tree_column,
                                         GtkTreeIter *iter,
                                         gpointer data)
 {
-  OBJECT *o_attrib;
+  int show_name_value;
+  gboolean identical_show_value;
   int inherited;
 
   gtk_tree_model_get (tree_model, iter,
-                      COLUMN_ATTRIBUTE, &o_attrib,
+                      COLUMN_INHERITED, &inherited,
+                      COLUMN_SHOW_NAME_VALUE, &show_name_value,
+                      COLUMN_IDENTICAL_SHOW_VALUE, &identical_show_value,
                       -1);
-  g_assert (o_attrib->type == OBJ_TEXT);
-
-  inherited = o_attrib_is_inherited (o_attrib);
 
   g_object_set (cell,
-                "active", (o_attrib->show_name_value == SHOW_NAME_VALUE ||
-                           o_attrib->show_name_value == SHOW_VALUE),
-                "sensitive",   !inherited,
-                "activatable", !inherited,
+                "active",       snv_shows_value (show_name_value),
+                "sensitive",    !inherited,
+                "activatable",  !inherited,
+                "inconsistent", !identical_show_value,
                 NULL);
-}
-
-/*! \brief Requests an update of the display of a row.
- *  \par Function Description
- *  This is an helper function to update the display of a row when
- *  data for this row have been modified in the model.
- *
- *  It emits the 'row_changed' signal on the pointed row.
- *
- *  \param [in] model A GtkTreeModel.
- *  \param [in] iter  A valid GtkTreeIter pointing to the changed row.
- */
-static void
-update_row_display (GtkTreeModel *model, GtkTreeIter *iter)
-{
-  GtkTreePath *path;
-
-  path = gtk_tree_model_get_path (model, iter);
-  gtk_tree_model_row_changed (model, path, iter);
-  gtk_tree_path_free (path);
 }
 
 /*! \todo Finish function documentation
@@ -801,12 +899,14 @@ update_row_display (GtkTreeModel *model, GtkTreeIter *iter)
 static void
 multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
                                   gchar *arg1,
-                                  gchar *arg2,
+                                  gchar *new_name,
                                   gpointer user_data)
 {
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
+  GedaList *attr_list;
+  GList *a_iter;
   OBJECT *o_attrib;
   GschemToplevel *w_current;
   gchar *value, *newtext;
@@ -819,7 +919,7 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
     return;
   }
 
-  if (g_ascii_strcasecmp (arg2, "") == 0) {
+  if (g_ascii_strcasecmp (new_name, "") == 0) {
     GtkWidget *dialog = gtk_message_dialog_new (
       GTK_WINDOW (multiattrib),
       GTK_DIALOG_MODAL,
@@ -833,12 +933,11 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
   }
 
   gtk_tree_model_get (model, &iter,
-                      COLUMN_ATTRIBUTE, &o_attrib,
+                      COLUMN_VALUE, &value,
+                      COLUMN_ATTRIBUTE_GEDALIST, &attr_list,
                       -1);
-  g_assert (o_attrib->type == OBJ_TEXT);
 
-  o_attrib_get_name_value (o_attrib, NULL, &value);
-  newtext = g_strdup_printf ("%s=%s", arg2, value);
+  newtext = g_strdup_printf ("%s=%s", new_name, value);
 
   if (!x_dialog_validate_attribute(GTK_WINDOW(multiattrib), newtext)) {
     g_free (value);
@@ -846,15 +945,30 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
     return;
   }
 
-  visibility = o_is_visible (w_current->toplevel, o_attrib)
-      ? VISIBLE : INVISIBLE;
+  for (a_iter = geda_list_get_glist (attr_list);
+       a_iter != NULL;
+       a_iter = g_list_next (a_iter)) {
+    o_attrib = a_iter->data;
 
-  /* actually modifies the attribute */
-  o_text_change (w_current, o_attrib,
-                 newtext, visibility, o_attrib->show_name_value);
+    visibility = o_is_visible (w_current->toplevel, o_attrib)
+        ? VISIBLE : INVISIBLE;
 
+    /* actually modifies the attribute */
+    o_text_change (w_current, o_attrib,
+                   newtext, visibility, o_attrib->show_name_value);
+  }
+
+  g_object_unref (attr_list);
   g_free (value);
   g_free (newtext);
+
+  w_current->toplevel->page_current->CHANGED = 1;
+  o_undo_savestate (w_current, UNDO_ALL);
+
+  /* NB: We don't fix up the model to reflect the edit, we're about to nuke it below... */
+
+  /* Refresh the whole model.. some attribute names may consolidate into one row */
+  multiattrib_update (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -865,15 +979,19 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
 static void
 multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
                                    gchar *arg1,
-                                   gchar *arg2,
+                                   gchar *new_value,
                                    gpointer user_data)
 {
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
+  GedaList *attr_list;
+  GList *a_iter;
   OBJECT *o_attrib;
   GschemToplevel *w_current;
-  gchar *name, *newtext;
+  char *name;
+  char *old_value;
+  char *newtext;
   int visibility;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
@@ -884,12 +1002,16 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
   }
 
   gtk_tree_model_get (model, &iter,
-                      COLUMN_ATTRIBUTE, &o_attrib,
+                      COLUMN_NAME, &name,
+                      COLUMN_VALUE, &old_value,
+                      COLUMN_ATTRIBUTE_GEDALIST, &attr_list,
                       -1);
-  g_assert (o_attrib->type == OBJ_TEXT);
 
-  o_attrib_get_name_value (o_attrib, &name, NULL);
-  newtext = g_strdup_printf ("%s=%s", name, arg2);
+  /* If the edit didn't change anything, don't adjust any attributes */
+  if (strcmp (old_value, new_value) == 0)
+    return;
+
+  newtext = g_strdup_printf ("%s=%s", name, new_value);
 
   if (!x_dialog_validate_attribute(GTK_WINDOW(multiattrib), newtext)) {
     g_free (name);
@@ -897,18 +1019,32 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
     return;
   }
 
-  visibility = o_is_visible (w_current->toplevel, o_attrib)
-      ? VISIBLE : INVISIBLE;
+  for (a_iter = geda_list_get_glist (attr_list);
+       a_iter != NULL;
+       a_iter = g_list_next (a_iter)) {
+    o_attrib = (OBJECT *)a_iter->data;
 
-  /* actually modifies the attribute */
-  o_text_change (w_current, o_attrib,
-                 newtext, visibility, o_attrib->show_name_value);
+    visibility = o_is_visible (w_current->toplevel, o_attrib)
+        ? VISIBLE : INVISIBLE;
 
-  /* request an update of display for this row */
-  update_row_display (model, &iter);
+    /* actually modifies the attribute */
+    o_text_change (w_current, o_attrib,
+                   newtext, visibility, o_attrib->show_name_value);
+  }
+
+  g_object_unref (attr_list);
 
   g_free (name);
   g_free (newtext);
+
+  w_current->toplevel->page_current->CHANGED = 1;
+  o_undo_savestate (w_current, UNDO_ALL);
+
+  /* Fixup the model to reflect the edit */
+  gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+                      COLUMN_VALUE, new_value,
+                      COLUMN_IDENTICAL_VALUE, TRUE,
+                      -1);
 }
 
 /*! \todo Finish function documentation
@@ -926,7 +1062,9 @@ multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
   GtkTreeIter iter;
   OBJECT *o_attrib;
   GschemToplevel *w_current;
-  gint visibility;
+  gboolean new_visibility;
+  GedaList *attr_list;
+  GList *a_iter;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
   w_current = GSCHEM_DIALOG (multiattrib)->w_current;
@@ -936,22 +1074,32 @@ multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
   }
 
   gtk_tree_model_get (model, &iter,
-                      COLUMN_ATTRIBUTE, &o_attrib,
+                      COLUMN_ATTRIBUTE_GEDALIST, &attr_list,
                       -1);
-  g_assert (o_attrib->type == OBJ_TEXT);
-  o_invalidate (w_current, o_attrib);
 
-  /* toggle visibility */
-  visibility = o_is_visible (w_current->toplevel, o_attrib)
-      ? INVISIBLE : VISIBLE;
+  new_visibility = !gtk_cell_renderer_toggle_get_active (cell_renderer);
 
-  /* actually modifies the attribute */
-  o_set_visibility (w_current->toplevel, o_attrib, visibility);
-  o_text_recreate (w_current->toplevel, o_attrib);
+  for (a_iter = geda_list_get_glist (attr_list);
+       a_iter != NULL;
+       a_iter = g_list_next (a_iter)) {
+    o_attrib = (OBJECT *)a_iter->data;
+
+    /* actually modifies the attribute */
+    o_invalidate (w_current, o_attrib);
+    o_set_visibility (w_current->toplevel, o_attrib, new_visibility ? VISIBLE : INVISIBLE);
+    o_text_recreate (w_current->toplevel, o_attrib);
+  }
+
+  g_object_unref (attr_list);
+
+  w_current->toplevel->page_current->CHANGED = 1;
   o_undo_savestate (w_current, UNDO_ALL);
 
-  /* request an update of display for this row */
-  update_row_display (model, &iter);
+  /* Fixup the model to reflect the edit */
+  gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+                      COLUMN_VISIBILITY, new_visibility,
+                      COLUMN_IDENTICAL_VISIBILITY, TRUE,
+                      -1);
 }
 
 /*! \todo Finish function documentation
@@ -967,8 +1115,10 @@ multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  OBJECT *o_attrib;
   GschemToplevel *w_current;
+  gboolean new_name_visible;
+  GedaList *attr_list;
+  GList *a_iter;
   gint new_snv;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
@@ -979,27 +1129,41 @@ multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
   }
 
   gtk_tree_model_get (model, &iter,
-                      COLUMN_ATTRIBUTE, &o_attrib,
+                      COLUMN_ATTRIBUTE_GEDALIST, &attr_list,
                       -1);
-  g_assert (o_attrib->type == OBJ_TEXT);
-  o_invalidate (w_current, o_attrib);
 
-  switch (o_attrib->show_name_value) {
-      case SHOW_NAME_VALUE: new_snv = SHOW_VALUE;      break;
-      case SHOW_NAME:       new_snv = SHOW_VALUE;      break;
-      case SHOW_VALUE:      new_snv = SHOW_NAME_VALUE; break;
-      default:
-        g_assert_not_reached ();
-        new_snv = SHOW_NAME_VALUE;
+  new_name_visible = !gtk_cell_renderer_toggle_get_active (cell_renderer);
+
+  for (a_iter = geda_list_get_glist (attr_list);
+       a_iter != NULL;
+       a_iter = g_list_next (a_iter)) {
+    OBJECT *o_attrib = (OBJECT *)a_iter->data;
+
+    gboolean value_visible = snv_shows_value (o_attrib->show_name_value);
+
+    /* If we switch off the name visibility, but the value was not previously visible, make it so now */
+    if (new_name_visible)
+      new_snv = value_visible ? SHOW_NAME_VALUE : SHOW_NAME;
+    else
+      new_snv = SHOW_VALUE;
+
+    o_invalidate (w_current, o_attrib);
+
+    /* actually modifies the attribute */
+    o_attrib->show_name_value = new_snv;
+    o_text_recreate (w_current->toplevel, o_attrib);
   }
 
-  /* actually modifies the attribute */
-  o_attrib->show_name_value = new_snv;
-  o_text_recreate (w_current->toplevel, o_attrib);
+  g_object_unref (attr_list);
+
+  w_current->toplevel->page_current->CHANGED = 1;
   o_undo_savestate (w_current, UNDO_ALL);
 
+  /* NB: We don't fix up the model to reflect the edit, we're about to nuke it below... */
+
   /* request an update of display for this row */
-  update_row_display (model, &iter);
+  /* Recompute the whole model as the consistency for the show value column may be affected above */
+  multiattrib_update (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1015,8 +1179,10 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  OBJECT *o_attrib;
   GschemToplevel *w_current;
+  gboolean new_value_visible;
+  GedaList *attr_list;
+  GList *a_iter;
   gint new_snv;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
@@ -1027,27 +1193,41 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
   }
 
   gtk_tree_model_get (model, &iter,
-                      COLUMN_ATTRIBUTE, &o_attrib,
+                      COLUMN_ATTRIBUTE_GEDALIST, &attr_list,
                       -1);
-  g_assert (o_attrib->type == OBJ_TEXT);
-  o_invalidate (w_current, o_attrib);
 
-  switch (o_attrib->show_name_value) {
-      case SHOW_NAME_VALUE: new_snv = SHOW_NAME;       break;
-      case SHOW_NAME:       new_snv = SHOW_NAME_VALUE; break;
-      case SHOW_VALUE:      new_snv = SHOW_NAME;       break;
-      default:
-        g_assert_not_reached ();
-        new_snv = SHOW_NAME_VALUE;
+  new_value_visible = !gtk_cell_renderer_toggle_get_active (cell_renderer);
+
+  for (a_iter = geda_list_get_glist (attr_list);
+       a_iter != NULL;
+       a_iter = g_list_next (a_iter)) {
+    OBJECT *o_attrib = (OBJECT *)a_iter->data;
+
+    gboolean name_visible = snv_shows_name (o_attrib->show_name_value);
+
+    /* If we switch off the name visibility, but the value was not previously visible, make it so now */
+    if (new_value_visible)
+      new_snv = name_visible ? SHOW_NAME_VALUE : SHOW_VALUE;
+    else
+      new_snv = SHOW_NAME;
+
+    o_invalidate (w_current, o_attrib);
+
+    /* actually modifies the attribute */
+    o_attrib->show_name_value = new_snv;
+    o_text_recreate (w_current->toplevel, o_attrib);
   }
 
-  /* actually modifies the attribute */
-  o_attrib->show_name_value = new_snv;
-  o_text_recreate (w_current->toplevel, o_attrib);
+  g_object_unref (attr_list);
+
+  w_current->toplevel->page_current->CHANGED = 1;
   o_undo_savestate (w_current, UNDO_ALL);
 
+  /* NB: We don't fix up the model to reflect the edit, we're about to nuke it below... */
+
   /* request an update of display for this row */
-  update_row_display (model, &iter);
+  /* Recompute the whole model as the consistency for the show name column may be affected above */
+  multiattrib_update (multiattrib);
 }
 
 /*! \todo Finish function documentation
@@ -1066,7 +1246,7 @@ multiattrib_callback_key_pressed (GtkWidget *widget,
       (event->keyval == GDK_Delete || event->keyval == GDK_KP_Delete)) {
     GtkTreeModel *model;
     GtkTreeIter iter;
-    OBJECT *o_attrib;
+    GedaList *attr_list;
     int inherited;
     /* delete the currently selected attribute */
 
@@ -1078,16 +1258,18 @@ multiattrib_callback_key_pressed (GtkWidget *widget,
     }
 
     gtk_tree_model_get (model, &iter,
-                        COLUMN_ATTRIBUTE, &o_attrib,
+                        COLUMN_INHERITED, &inherited,
+                        COLUMN_ATTRIBUTE_GEDALIST, &attr_list,
                         -1);
-    g_assert (o_attrib->type == OBJ_TEXT);
 
-    inherited = o_attrib_is_inherited (o_attrib);
     /* We can't delete inherited attribtes */
     if (inherited)
       return FALSE;
 
-    multiattrib_action_delete_attribute (multiattrib, o_attrib);
+    multiattrib_action_delete_attributes (multiattrib,
+                                          geda_list_get_glist (attr_list));
+
+    g_object_unref (attr_list);
 
     /* update the treeview contents */
     multiattrib_update (multiattrib);
@@ -1185,7 +1367,7 @@ multiattrib_callback_popup_duplicate (GtkMenuItem *menuitem,
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  OBJECT *o_attrib;
+  GedaList *attr_list;
 
   if (!gtk_tree_selection_get_selected (
         gtk_tree_view_get_selection (multiattrib->treeview),
@@ -1195,16 +1377,14 @@ multiattrib_callback_popup_duplicate (GtkMenuItem *menuitem,
   }
 
   gtk_tree_model_get (model, &iter,
-                      COLUMN_ATTRIBUTE, &o_attrib,
+                      COLUMN_ATTRIBUTE_GEDALIST, &attr_list,
                       -1);
-  g_assert (o_attrib->type == OBJ_TEXT);
-
-  multiattrib_action_duplicate_attribute (multiattrib, o_attrib);
+  multiattrib_action_duplicate_attributes (multiattrib, geda_list_get_glist (attr_list));
+  g_object_unref (attr_list);
 
   /* update the treeview contents */
   multiattrib_update (multiattrib);
 }
-
 
 /*! \todo Finish function documentation
  *  \brief
@@ -1218,7 +1398,7 @@ multiattrib_callback_popup_promote (GtkMenuItem *menuitem,
   Multiattrib *multiattrib = user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  OBJECT *o_attrib;
+  GedaList *attr_list;
 
   if (!gtk_tree_selection_get_selected (
          gtk_tree_view_get_selection (multiattrib->treeview),
@@ -1228,11 +1408,10 @@ multiattrib_callback_popup_promote (GtkMenuItem *menuitem,
   }
 
   gtk_tree_model_get (model, &iter,
-                      COLUMN_ATTRIBUTE, &o_attrib,
+                      COLUMN_ATTRIBUTE_GEDALIST, &attr_list,
                       -1);
-  g_assert (o_attrib->type == OBJ_TEXT);
-
-  multiattrib_action_promote_attribute (multiattrib, o_attrib);
+  multiattrib_action_promote_attributes (multiattrib, geda_list_get_glist (attr_list));
+  g_object_unref (attr_list);
 
   /* update the treeview contents */
   multiattrib_update (multiattrib);
@@ -1250,7 +1429,7 @@ multiattrib_callback_popup_delete (GtkMenuItem *menuitem,
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  OBJECT *o_attrib;
+  GedaList *attr_list;
 
   if (!gtk_tree_selection_get_selected (
         gtk_tree_view_get_selection (multiattrib->treeview),
@@ -1260,11 +1439,41 @@ multiattrib_callback_popup_delete (GtkMenuItem *menuitem,
   }
 
   gtk_tree_model_get (model, &iter,
-                      COLUMN_ATTRIBUTE, &o_attrib,
+                      COLUMN_ATTRIBUTE_GEDALIST, &attr_list,
                       -1);
-  g_assert (o_attrib->type == OBJ_TEXT);
+  multiattrib_action_delete_attributes (multiattrib, geda_list_get_glist (attr_list));
+  g_object_unref (attr_list);
 
-  multiattrib_action_delete_attribute (multiattrib, o_attrib);
+  /* update the treeview contents */
+  multiattrib_update (multiattrib);
+}
+
+/*! \todo Finish function documentation
+ *  \brief
+ *  \par Function Description
+ *
+ */
+static void
+multiattrib_callback_popup_copy_to_all (GtkMenuItem *menuitem,
+                                        gpointer user_data)
+{
+  Multiattrib *multiattrib = user_data;
+  GtkTreeModel *model;
+  GtkTreeIter iter;
+  GedaList *attr_list;
+
+  if (!gtk_tree_selection_get_selected (
+         gtk_tree_view_get_selection (multiattrib->treeview),
+         &model, &iter)) {
+    /* nothing selected, nothing to do */
+    return;
+  }
+
+  gtk_tree_model_get (model, &iter,
+                      COLUMN_ATTRIBUTE_GEDALIST, &attr_list,
+                      -1);
+  multiattrib_action_copy_attribute_to_all (multiattrib, geda_list_get_glist (attr_list));
+  g_object_unref (attr_list);
 
   /* update the treeview contents */
   multiattrib_update (multiattrib);
@@ -1436,13 +1645,14 @@ multiattrib_popup_menu (Multiattrib *multiattrib, GdkEventButton *event)
   };
 
   struct menuitem_t menuitems_inherited[] = {
-    { N_("Promote"),   G_CALLBACK (multiattrib_callback_popup_promote)   },
-    { NULL,            NULL                                              } };
+    { N_("Promote"),     G_CALLBACK (multiattrib_callback_popup_promote)    },
+    { NULL,              NULL                                               } };
 
   struct menuitem_t menuitems_noninherited[] = {
-    { N_("Duplicate"), G_CALLBACK (multiattrib_callback_popup_duplicate) },
-    { N_("Delete"),    G_CALLBACK (multiattrib_callback_popup_delete)    },
-    { NULL,            NULL                                              } };
+    { N_("Duplicate"),   G_CALLBACK (multiattrib_callback_popup_duplicate)  },
+    { N_("Delete"),      G_CALLBACK (multiattrib_callback_popup_delete)     },
+    { N_("Copy to all"), G_CALLBACK (multiattrib_callback_popup_copy_to_all)},
+    { NULL,              NULL                                               } };
 
   struct menuitem_t *item_list;
   struct menuitem_t *tmp;
@@ -1450,7 +1660,6 @@ multiattrib_popup_menu (Multiattrib *multiattrib, GdkEventButton *event)
   GtkTreeModel *model;
   GtkTreeIter iter;
   GtkTreeSelection *selection;
-  OBJECT *o_attrib;
 
   selection = gtk_tree_view_get_selection (multiattrib->treeview);
 
@@ -1469,11 +1678,9 @@ multiattrib_popup_menu (Multiattrib *multiattrib, GdkEventButton *event)
     return;
 
   gtk_tree_model_get (model, &iter,
-                      COLUMN_ATTRIBUTE, &o_attrib,
+                      COLUMN_INHERITED, &inherited,
                       -1);
-  g_assert (o_attrib->type == OBJ_TEXT);
 
-  inherited = o_attrib_is_inherited (o_attrib);
   item_list = inherited ? menuitems_inherited : menuitems_noninherited;
 
   /* create the context menu */
@@ -1590,15 +1797,9 @@ multiattrib_get_type ()
 }
 
 
-/*! \brief Update the multiattrib editor dialog when the page's selection changes.
+/*! \brief Update the multiattrib editor dialog when its object list changes.
  *
  *  \par Function Description
- *
- *  When the page's selection changes this function identifies how many objects
- *  which can have attributes are currently selected. If this number is 1, the
- *  dialog is set to edit its attributes.
- *
- *  \todo The dialog doesn't currently support editing multiple objects at once
  *
  *  \param [in] selection    The GedaList object of we are watching/
  *  \param [in] multiattrib  The multi-attribute editor dialog.
@@ -1606,42 +1807,6 @@ multiattrib_get_type ()
 static void
 object_list_changed_cb (GedaList *object_list, Multiattrib *multiattrib)
 {
-  int object_count = 0;
-  GList *object_glist;
-  GList *iter;
-  OBJECT *object;
-
-  object_glist = geda_list_get_glist (object_list);
-
-  for (iter = object_glist;
-       iter != NULL;
-       iter = g_list_next (iter)) {
-    object = (OBJECT *)iter->data;
-    g_assert( object != NULL );
-
-    if (object->type == OBJ_COMPLEX ||
-        object->type == OBJ_PLACEHOLDER ||
-        object->type == OBJ_NET ||
-        object->type == OBJ_BUS ||
-        object->type == OBJ_PIN) {
-      object_count++;
-    }
-  }
-
-  if (object_count == 0) {
-    /* TODO: If the user selects a single attribute which is
-     *       not floating, should we find its parent object and
-     *       display the multi-attribute editor for that?
-     *       Bonus marks for making it jump to the correct attrib.
-     */
-    multiattrib->object = NULL;
-  } else if (object_count == 1) {
-    multiattrib->object = (OBJECT *)object_glist->data;
-  } else {
-    /* TODO: Something clever with multiple objects selected */
-    multiattrib->object = NULL;
-  }
-
   multiattrib_update (multiattrib);
 }
 
@@ -1800,7 +1965,7 @@ multiattrib_show_inherited_toggled (GtkToggleButton *button,
 static void
 multiattrib_init (Multiattrib *multiattrib)
 {
-  GtkWidget *frame, *label, *scrolled_win, *treeview;
+  GtkWidget *label, *scrolled_win, *treeview;
   GtkWidget *table, *textview, *combo, *optionm, *button;
   GtkWidget *attrib_vbox, *show_inherited;
   GtkTreeModel *store;
@@ -1824,19 +1989,27 @@ multiattrib_init (Multiattrib *multiattrib)
                 "has-separator",   TRUE,
                 NULL);
 
-  multiattrib->object   = NULL;
-
   gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (multiattrib)->vbox), 5);
 
   /* create the attribute list frame */
-  frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
-                                    /* GtkFrame */
-                                    "shadow", GTK_SHADOW_NONE,
-                                    NULL));
-  multiattrib->frame_add = frame;
+  multiattrib->list_frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
+                                                      /* GtkFrame */
+                                                      "shadow", GTK_SHADOW_NONE,
+                                                      NULL));
   /*   - create the model for the treeview */
   store = (GtkTreeModel*)gtk_list_store_new (NUM_COLUMNS,
-                                             G_TYPE_POINTER); /* attribute */
+                                             G_TYPE_BOOLEAN,  /* COLUMN_INHERITED */
+                                             G_TYPE_STRING,   /* COLUMN_NAME */
+                                             G_TYPE_STRING,   /* COLUMN_VALUE */
+                                             G_TYPE_BOOLEAN,  /* COLUMN_VISIBILITY */
+                                             G_TYPE_INT,      /* COLUMN_SHOW_NAME_VALUE */
+                                             G_TYPE_BOOLEAN,  /* COLUMN_PRESENT_IN_ALL */
+                                             G_TYPE_BOOLEAN,  /* COLUMN_IDENTICAL_VALUE */
+                                             G_TYPE_BOOLEAN,  /* COLUMN_IDENTICAL_VISIBILITY */
+                                             G_TYPE_BOOLEAN,  /* COLUMN_IDENTICAL_SHOW_NAME */
+                                             G_TYPE_BOOLEAN,  /* COLUMN_IDENTICAL_SHOW_VALUE */
+                                             G_TYPE_OBJECT);  /* COLUMN_ATTRIBUTE_GEDALIST */
+
   /*   - create a scrolled window for the treeview */
   scrolled_win = GTK_WIDGET (
                     g_object_new (GTK_TYPE_SCROLLED_WINDOW,
@@ -1984,7 +2157,7 @@ multiattrib_init (Multiattrib *multiattrib)
   attrib_vbox = gtk_vbox_new (FALSE, 0);
 
   /* Pack the vbox into the frame */
-  gtk_container_add (GTK_CONTAINER (frame), attrib_vbox);
+  gtk_container_add (GTK_CONTAINER (multiattrib->list_frame), attrib_vbox);
 
   /* add the scrolled window to box */
   gtk_box_pack_start (GTK_BOX (attrib_vbox), scrolled_win, TRUE, TRUE, 0);
@@ -2000,15 +2173,15 @@ multiattrib_init (Multiattrib *multiattrib)
                     multiattrib);
 
   /* pack the frame */
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (multiattrib)->vbox), frame,
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (multiattrib)->vbox),
+                      multiattrib->list_frame,
                       TRUE, TRUE, 1);
-  gtk_widget_show_all (frame);
+  gtk_widget_show_all (multiattrib->list_frame);
 
   /* create the add/edit frame */
-  frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
-                                    "label", _("Add Attribute"),
-                                    NULL));
-  multiattrib->frame_attributes = frame;
+  multiattrib->add_frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
+                                       "label", _("Add Attribute"),
+                                       NULL));
   table = GTK_WIDGET (g_object_new (GTK_TYPE_TABLE,
                                     /* GtkTable */
                                     "n-rows",      4,
@@ -2077,6 +2250,9 @@ multiattrib_init (Multiattrib *multiattrib)
   style = gtk_widget_get_style (treeview);
   multiattrib->insensitive_text_color = style->text[ GTK_STATE_INSENSITIVE ];
 
+  gdk_color_parse ("grey", &multiattrib->not_identical_value_text_color);
+  gdk_color_parse ("red",  &multiattrib->not_present_in_all_text_color);
+
   gtk_container_add (GTK_CONTAINER (scrolled_win), textview);
   multiattrib->textview_value = GTK_TEXT_VIEW (textview);
   gtk_table_attach (GTK_TABLE (table), label,
@@ -2113,16 +2289,19 @@ multiattrib_init (Multiattrib *multiattrib)
                     2, 3, 0, 3, 0, 0, 6, 3);
 
   /* add the table to the frame */
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_container_add (GTK_CONTAINER (multiattrib->add_frame), table);
   /* pack the frame in the dialog */
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (multiattrib)->vbox), frame,
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (multiattrib)->vbox),
+                      multiattrib->add_frame,
                       FALSE, TRUE, 1);
-  gtk_widget_show_all (frame);
+  gtk_widget_show_all (multiattrib->add_frame);
 
 
   /* now add the close button to the action area */
   gtk_dialog_add_button (GTK_DIALOG (multiattrib),
                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
+
+  multiattrib_update (multiattrib);
 }
 
 
@@ -2185,6 +2364,255 @@ multiattrib_get_property (GObject *object,
   }
 }
 
+typedef struct {
+  gboolean inherited;
+  char *name;
+  int nth_with_name;
+  char *value;
+  gboolean visibility;
+  int show_name_value;
+
+  gboolean present_in_all;
+  gboolean identical_value;
+  gboolean identical_visibility;
+  gboolean identical_show_name;
+  gboolean identical_show_value;
+
+  GedaList *attribute_gedalist;
+} MODEL_ROW;
+
+/*! \brief For a given OBJECT, produce a GList of MODEL_ROW records
+ *
+ *  \par Function Description
+ *
+ *  The main purpose of this function is to provide the "nth_with_name"
+ *  count which we need to merge the attribute lists of various objects
+ *  together.
+ *
+ *  \param [in] multiattrib  The multi-attribute editor dialog (For libgeda API which needs a TOPLEVEL)
+ *  \param [in] object       The OBJECT * whos attributes we are processing
+ *  \returns  A GList of MODEL_ROW records detailing object's attributes.
+ */
+static GList *
+object_attributes_to_model_rows (Multiattrib *multiattrib, OBJECT *object)
+{
+  GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  GList *model_rows = NULL;
+  GList *a_iter;
+  GList *object_attribs = o_attrib_return_attribs (object);
+
+  for (a_iter = object_attribs; a_iter != NULL;
+       a_iter = g_list_next (a_iter)) {
+
+    OBJECT *a_current = a_iter->data;
+    MODEL_ROW *m_row = g_new0 (MODEL_ROW, 1);
+    GList *m_iter;
+
+    m_row->inherited = o_attrib_is_inherited (a_current);
+    o_attrib_get_name_value (a_current, &m_row->name, &m_row->value);
+    m_row->visibility = o_is_visible (w_current->toplevel, a_current);
+    m_row->show_name_value = a_current->show_name_value;
+    m_row->nth_with_name = 0; /* Provisional value until we check below */
+
+    /* The following fields are always true for a single OBJECT */
+    m_row->present_in_all = TRUE;
+    m_row->identical_value = TRUE;
+    m_row->identical_visibility = TRUE;
+    m_row->identical_show_name = TRUE;
+    m_row->identical_show_value = TRUE;
+
+    m_row->attribute_gedalist = geda_list_new ();
+    geda_list_add (m_row->attribute_gedalist, a_current);
+
+    /* Search already processed attributes to see if we need to bump m_row->nth_with_name */
+    for (m_iter = model_rows;
+         m_iter != NULL;
+         m_iter = g_list_next (m_iter)) {
+      MODEL_ROW *m_compare = m_iter->data;
+      if (strcmp (m_compare->name, m_row->name) == 0 &&
+          m_compare->inherited == m_row->inherited) {
+        m_row->nth_with_name = m_row->nth_with_name + 1;
+      }
+    }
+
+    model_rows = g_list_append (model_rows, m_row);
+  }
+
+  g_list_free (object_attribs);
+
+  return model_rows;
+}
+
+/*! \brief Produce a GList of MODEL_ROW records for all attribute objects in our GedaList
+ *
+ *  \par Function Description
+ *
+ *  This function produces a GList of MODEL_ROWs to the user can edit unattached
+ *  attributes, or attributes which are selected separately from their owning
+ *  object.
+ *
+ *  It is not expected this will be called when the GedaList the dialog is watching
+ *  contains any higher level objects on which we could edit attributes.
+ *
+ *  \param [in] multiattrib  The multi-attribute editor dialog
+ *  \returns  A GList of MODEL_ROW records detailing all lone selected attributes.
+ */
+static GList *
+lone_attributes_to_model_rows (Multiattrib *multiattrib)
+{
+  GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
+  GList *o_iter;
+  GList *model_rows = NULL;
+
+  /* populate the store with attributes */
+  for (o_iter = multiattrib->object_list == NULL ? NULL : geda_list_get_glist (multiattrib->object_list);
+       o_iter != NULL;
+       o_iter = g_list_next (o_iter)) {
+    OBJECT *object = o_iter->data;
+    MODEL_ROW *m_row;
+
+    /* Consider a selected text object might be an attribute */
+    if (object->type != OBJ_TEXT ||
+        !o_attrib_get_name_value (object, NULL, NULL))
+      continue;
+
+    /* We have an OBJ_TEXT which libgeda can parse as an attribute */
+
+    multiattrib->num_lone_attribs_in_list ++;
+
+    m_row = g_new0 (MODEL_ROW, 1);
+    m_row->inherited = o_attrib_is_inherited (object);
+    o_attrib_get_name_value (object, &m_row->name, &m_row->value);
+    m_row->visibility = o_is_visible (w_current->toplevel, object);
+    m_row->show_name_value = object->show_name_value;
+    m_row->nth_with_name = 0; /* All selected attributes are treated individually */
+
+    /* The following fields are always true for a single attribute */
+    m_row->present_in_all = TRUE;
+    m_row->identical_value = TRUE;
+    m_row->identical_visibility = TRUE;
+    m_row->identical_show_name = TRUE;
+    m_row->identical_show_value = TRUE;
+
+    m_row->attribute_gedalist = geda_list_new ();
+    geda_list_add (m_row->attribute_gedalist, object);
+
+    model_rows = g_list_append (model_rows, m_row);
+  }
+
+  return model_rows;
+}
+
+/*! \brief Populate the multiattrib editor dialog's liststore
+ *
+ *  \par Function Description
+ *
+ *  Consumes the GList of MODEL_ROW data, populating the dialog's liststore.
+ *  The function frees / consumes the GList and MODEL_ROW data.
+ *
+ *  \param [in] multiattrib  The multi-attribute editor dialog.
+ *  \param [in] model_rows   A GList of MODEL_ROW data.
+ */
+static void
+multiattrib_populate_liststore (Multiattrib *multiattrib,
+                                GList *model_rows)
+{
+  GtkListStore *liststore;
+  GtkTreeIter tree_iter;
+  GList *m_iter;
+
+  /* Clear the existing list of attributes */
+  liststore = (GtkListStore*)gtk_tree_view_get_model (multiattrib->treeview);
+  gtk_list_store_clear (liststore);
+
+  for (m_iter = model_rows;
+       m_iter != NULL;
+       m_iter = g_list_next (m_iter)) {
+
+    MODEL_ROW *model_row = m_iter->data;
+
+    model_row->present_in_all =
+      (g_list_length (geda_list_get_glist (model_row->attribute_gedalist))
+       == multiattrib->total_num_in_list);
+
+    gtk_list_store_append (liststore, &tree_iter);
+    gtk_list_store_set (liststore,
+                        &tree_iter,
+                        COLUMN_INHERITED,            model_row->inherited,
+                        COLUMN_NAME,                 model_row->name,
+                        COLUMN_VALUE,                model_row->value,
+                        COLUMN_VISIBILITY,           model_row->visibility,
+                        COLUMN_SHOW_NAME_VALUE,      model_row->show_name_value,
+                        COLUMN_PRESENT_IN_ALL,       model_row->present_in_all,
+                        COLUMN_IDENTICAL_VALUE,      model_row->identical_value,
+                        COLUMN_IDENTICAL_VISIBILITY, model_row->identical_visibility,
+                        COLUMN_IDENTICAL_SHOW_NAME,  model_row->identical_show_name,
+                        COLUMN_IDENTICAL_SHOW_VALUE, model_row->identical_show_value,
+                        COLUMN_ATTRIBUTE_GEDALIST,   model_row->attribute_gedalist,
+                        -1);
+
+    /* Drop our ref on the GedaList so it is freed when the model has done with it */
+    g_object_unref (model_row->attribute_gedalist);
+  }
+
+  g_list_foreach (model_rows, (GFunc) g_free, NULL);
+  g_list_free (model_rows);
+}
+
+static void
+append_dialog_title_extra (GString *title_string,
+                           int *num_title_extras,
+                           char *text,
+                           ...)
+{
+  va_list args;
+
+  va_start (args, text);
+  g_string_append (title_string, ((*num_title_extras)++ == 0) ? " - " : ", ");
+  g_string_append_vprintf (title_string, text, args);
+  va_end (args);
+}
+
+static void
+update_dialog_title (Multiattrib *multiattrib, char *complex_title_name)
+{
+  GString *title_string = g_string_new (_("Edit Attributes"));
+  int num_title_extras = 0;
+
+  if (multiattrib->num_complex_in_list > 0) {
+    append_dialog_title_extra (title_string, &num_title_extras,
+                               ngettext ("%i symbol (%s)", "%i symbols (%s)", multiattrib->num_complex_in_list),
+                               multiattrib->num_complex_in_list, complex_title_name);
+  }
+
+  if (multiattrib->num_pins_in_list > 0) {
+    append_dialog_title_extra (title_string, &num_title_extras,
+                               ngettext ("%i pin", "%i pins", multiattrib->num_pins_in_list),
+                               multiattrib->num_pins_in_list);
+  }
+
+  if (multiattrib->num_nets_in_list > 0) {
+    append_dialog_title_extra (title_string, &num_title_extras,
+                               ngettext ("%i net", "%i nets", multiattrib->num_nets_in_list),
+                               multiattrib->num_nets_in_list);
+  }
+
+  if (multiattrib->num_buses_in_list > 0) {
+    append_dialog_title_extra (title_string, &num_title_extras,
+                               ngettext ("%i bus", "%i buses", multiattrib->num_buses_in_list),
+                               multiattrib->num_buses_in_list);
+  }
+
+  if (multiattrib->num_lone_attribs_in_list > 0) {
+    append_dialog_title_extra (title_string, &num_title_extras,
+                               ngettext ("%i attribute", "%i attributes", multiattrib->num_lone_attribs_in_list),
+                               multiattrib->num_lone_attribs_in_list);
+  }
+
+  char *title = g_string_free (title_string, FALSE);
+  g_object_set (G_OBJECT (multiattrib), "title", title, NULL);
+  g_free (title);
+}
 
 /*! \brief Update the multiattrib editor dialog's interface
  *
@@ -2194,81 +2622,156 @@ multiattrib_get_property (GObject *object,
  *  object. If no (or multiple) objects are selected, the dialog's controls
  *  are set insensitive.
  *
- *  \todo The dialog doesn't currently support editing multiple objects at once
- *
  *  \param [in] multiattrib  The multi-attribute editor dialog.
  */
 static void
 multiattrib_update (Multiattrib *multiattrib)
 {
-  GtkListStore *liststore;
-  GtkTreeIter iter;
-  GList *object_attribs;
-  GList *a_iter;
-  OBJECT *a_current;
-  gboolean sensitive;
+  GList *o_iter;
   GtkStyle *style;
   gboolean show_inherited;
+  gboolean list_sensitive;
+  gboolean add_sensitive;
+  GList *model_rows = NULL;
+  char *complex_title_name = NULL;
 
-  g_assert (GSCHEM_DIALOG (multiattrib)->w_current != NULL);
+  show_inherited =
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (multiattrib->show_inherited));
 
-  /* Update window title. If one object is selected and it's a
-   * component, put its basename in the window title. */
-  if (multiattrib->object != NULL &&
-      (multiattrib->object->type == OBJ_COMPLEX ||
-       multiattrib->object->type == OBJ_PLACEHOLDER)) {
-    char *title = g_strdup_printf (_("Edit Attributes - %s"),
-                                   multiattrib->object->complex_basename);
-    g_object_set (G_OBJECT (multiattrib),
-                  "title",           title,
-                  NULL);
-    g_free (title);
-  } else {
-    g_object_set (G_OBJECT (multiattrib),
-                  "title", _("Edit Attributes"),
-                  NULL);
+  multiattrib->total_num_in_list        = 0;
+  multiattrib->num_complex_in_list      = 0;
+  multiattrib->num_pins_in_list         = 0;
+  multiattrib->num_nets_in_list         = 0;
+  multiattrib->num_buses_in_list        = 0;
+  multiattrib->num_lone_attribs_in_list = 0;
+
+  /* populate the store with attributes */
+  for (o_iter = multiattrib->object_list == NULL ? NULL : geda_list_get_glist (multiattrib->object_list);
+       o_iter != NULL;
+       o_iter = g_list_next (o_iter)) {
+    OBJECT *object = o_iter->data;
+
+    GList *object_rows;
+    GList *or_iter;
+
+    if (!is_multiattrib_object (object))
+      continue;
+
+    /* Count the different objects we are editing */
+    multiattrib->total_num_in_list++;
+
+    if (object->type == OBJ_COMPLEX ||
+        object->type == OBJ_PLACEHOLDER) {
+      multiattrib->num_complex_in_list++;
+
+      if (complex_title_name == NULL)
+        complex_title_name = object->complex_basename;
+      else if (strcmp (complex_title_name, object->complex_basename) != 0)
+        complex_title_name = _("<various>");
+    }
+
+    if (object->type == OBJ_PIN)
+      multiattrib->num_pins_in_list++;
+
+    if (object->type == OBJ_NET)
+      multiattrib->num_nets_in_list++;
+
+    if (object->type == OBJ_BUS)
+      multiattrib->num_buses_in_list++;
+
+    /* populate the store with any attributes from this object */
+    object_rows = object_attributes_to_model_rows (multiattrib, object);
+
+    for (or_iter = object_rows;
+         or_iter != NULL;
+         or_iter = g_list_next (or_iter)) {
+
+      MODEL_ROW *object_row = or_iter->data;
+      MODEL_ROW *model_row;
+      GList *mr_iter;
+      gboolean found = FALSE;
+
+      /* Skip over inherited attributes if we don't want to show them */
+      if (!show_inherited && object_row->inherited)
+        continue;
+
+      /* Search our list of attributes to see if we already encountered */
+      for (mr_iter = model_rows;
+           mr_iter != NULL && found == FALSE;
+           mr_iter = g_list_next (mr_iter)) {
+        model_row = mr_iter->data;
+        if (strcmp (model_row->name, object_row->name) == 0 &&
+            model_row->nth_with_name == object_row->nth_with_name &&
+            model_row->inherited == object_row->inherited)
+          found = TRUE;
+      }
+
+      if (found) {
+        /* Name matches a previously found attribute */
+        /* Check if the rest of its properties match the one we have stored... */
+
+        if (strcmp (model_row->value, object_row->value) != 0)
+          model_row->identical_value = FALSE;
+
+        if (model_row->visibility != object_row->visibility)
+          model_row->identical_visibility = FALSE;
+
+        if (snv_shows_name (model_row->show_name_value) !=
+            snv_shows_name (object_row->show_name_value))
+          model_row->identical_show_name = FALSE;
+
+        if (snv_shows_value (model_row->show_name_value) !=
+            snv_shows_value (object_row->show_name_value))
+          model_row->identical_show_value = FALSE;
+
+        /* Add the underlying attribute to the row's GedaList of attributes */
+        geda_list_add_glist (model_row->attribute_gedalist,
+                             geda_list_get_glist (object_row->attribute_gedalist));
+
+        g_object_unref (object_row->attribute_gedalist);
+        g_free (object_row);
+
+      } else {
+        /*
+         * The attribute name doesn't match any previously found
+         * attribute, so add the model row entry describing it to the list.
+         */
+        model_rows = g_list_append (model_rows, object_row);
+      }
+    }
+
+    /* delete the list of attribute objects */
+    g_list_free (object_rows);
   }
 
-  /* clear the list of attributes */
-  liststore = (GtkListStore*)gtk_tree_view_get_model (multiattrib->treeview);
-  gtk_list_store_clear (liststore);
+  if (multiattrib->total_num_in_list == 0) {
+
+    /* If the selection contains no high level objects we can edit,
+     * take a look and see whether there are any lone attributes
+     * selected we can edit directly.
+     */
+    model_rows = lone_attributes_to_model_rows (multiattrib);
+    list_sensitive = (multiattrib->num_lone_attribs_in_list > 0);
+    add_sensitive = FALSE;
+  } else {
+    list_sensitive = TRUE;
+    add_sensitive = TRUE;
+  }
+
+  multiattrib_populate_liststore (multiattrib, model_rows);
+
+  /* Update window title to describe the objects we are editing. */
+  update_dialog_title (multiattrib, complex_title_name);
 
   /* Update sensitivities */
-  sensitive = (multiattrib->object_list != NULL && multiattrib->object != NULL);
-  gtk_widget_set_sensitive (GTK_WIDGET (multiattrib->frame_attributes), sensitive);
-  gtk_widget_set_sensitive (GTK_WIDGET (multiattrib->frame_add), sensitive);
+  gtk_widget_set_sensitive (GTK_WIDGET (multiattrib->list_frame), list_sensitive);
+  gtk_widget_set_sensitive (GTK_WIDGET (multiattrib->add_frame),  add_sensitive);
 
   /* Work around GtkTextView's stubborn indifference
    * to GTK_STATE_INSENSITIVE when rendering its text. */
   style = gtk_widget_get_style (GTK_WIDGET (multiattrib->textview_value));
   gtk_widget_modify_text (GTK_WIDGET (multiattrib->textview_value),
                           GTK_STATE_NORMAL,
-                          sensitive ? &multiattrib->value_normal_text_color
-                                    : &style->text[GTK_STATE_INSENSITIVE]);
-
-  /* If we aren't sensitive, there is nothing more to do */
-  if (!sensitive)
-    return;
-
-  show_inherited =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (multiattrib->show_inherited));
-
-  /* get list of attributes */
-  object_attribs = o_attrib_return_attribs (multiattrib->object);
-  /* populate the store with attributes */
-  for (a_iter = object_attribs; a_iter != NULL;
-       a_iter = g_list_next (a_iter)) {
-    a_current = a_iter->data;
-
-    /* Skip over inherited attributes if we don't want to show them */
-    if (!show_inherited && o_attrib_is_inherited (a_current))
-      continue;
-
-    gtk_list_store_append (liststore, &iter);
-    gtk_list_store_set (liststore, &iter,
-                        COLUMN_ATTRIBUTE, a_current,
-                        -1);
-  }
-  /* delete the list of attribute objects */
-  g_list_free (object_attribs);
+                          add_sensitive ? &multiattrib->value_normal_text_color
+                                        : &style->text[GTK_STATE_INSENSITIVE]);
 }

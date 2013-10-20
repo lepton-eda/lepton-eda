@@ -46,7 +46,12 @@ struct _Multiattrib {
   GschemDialog parent_instance;
 
   GedaList *object_list;
-  OBJECT *object;
+  int       total_num_in_list;
+  int       num_complex_in_list;
+  int       num_pins_in_list;
+  int       num_nets_in_list;
+  int       num_buses_in_list;
+  int       num_lone_attribs_in_list;
 
   GtkTreeView    *treeview;
 
@@ -55,11 +60,13 @@ struct _Multiattrib {
   GtkTextView    *textview_value;
   GtkCheckButton *button_visible;
   GtkOptionMenu  *optionmenu_shownv;
-  GtkWidget      *frame_attributes;
-  GtkWidget      *frame_add;
+  GtkWidget      *list_frame;
+  GtkWidget      *add_frame;
 
   GdkColor       value_normal_text_color;   /* Workaround for lameness in GtkTextView */
   GdkColor       insensitive_text_color;
+  GdkColor       not_identical_value_text_color;
+  GdkColor       not_present_in_all_text_color;
 
   gulong object_list_changed_id;
 };
