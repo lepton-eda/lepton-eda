@@ -141,10 +141,10 @@ void x_window_setup_draw_events(GschemToplevel *w_current)
     { "configure_event",      G_CALLBACK(x_event_configure)       },
     { "key_press_event",      G_CALLBACK(x_event_key)             },
     { "key_release_event",    G_CALLBACK(x_event_key)             },
+    { "scroll_event",         G_CALLBACK(x_event_scroll)          },
     { NULL,                   NULL                                } };
   struct event_reg_t main_window_events[] = {
     { "enter_notify_event",   G_CALLBACK(x_event_enter)           },
-    { "scroll_event",         G_CALLBACK(x_event_scroll)          },
     { NULL,                   NULL                                } };
   struct event_reg_t *tmp;
 

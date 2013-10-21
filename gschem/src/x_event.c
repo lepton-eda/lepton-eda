@@ -1377,7 +1377,8 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
     o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
   }
 
-  return 0;
+  /* Stop further processing of this signal */
+  return TRUE;
 }
 
 
