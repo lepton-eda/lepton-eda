@@ -43,10 +43,17 @@ enum
   PROP_0,
   PROP_HADJUSTMENT,
   PROP_PAGE,
+  PROP_TOPLEVEL,
   PROP_VADJUSTMENT
 };
 
 
+
+static void
+dispose (GObject *object);
+
+static void
+finalize (GObject *object);
 
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
@@ -58,11 +65,20 @@ static void
 gschem_page_view_init (GschemPageView *view);
 
 static void
+hadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view);
+
+static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
 static void
 set_scroll_adjustments (GschemPageView *view, GtkAdjustment *hadjustment, GtkAdjustment *vadjustment);
 
+static void
+vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view);
+
+
+
+static GObjectClass *gschem_page_view_parent_class = NULL;
 
 
 /*
@@ -108,6 +124,43 @@ cclosure_marshal_VOID__OBJECT_OBJECT (GClosure     *closure,
 
 
 
+/*! \brief Dispose of the object
+ */
+static void
+dispose (GObject *object)
+{
+  GschemPageView *view;
+
+  g_return_if_fail (object != NULL);
+  view = GSCHEM_PAGE_VIEW (object);
+  g_return_if_fail (view != NULL);
+
+  gschem_page_view_set_hadjustment (view, NULL);
+  gschem_page_view_set_vadjustment (view, NULL);
+
+  gschem_page_view_set_toplevel (view, NULL);
+
+  /* lastly, chain up to the parent dispose */
+
+  g_return_if_fail (gschem_page_view_parent_class != NULL);
+  gschem_page_view_parent_class->dispose (object);
+}
+
+
+
+/*! \brief Finalize object
+ */
+static void
+finalize (GObject *object)
+{
+  /* lastly, chain up to the parent finalize */
+
+  g_return_if_fail (gschem_page_view_parent_class != NULL);
+  gschem_page_view_parent_class->finalize (object);
+}
+
+
+
 /*! \brief Get a property
  *
  *  \param [in]     object
@@ -129,6 +182,10 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       g_value_set_pointer (value, gschem_page_view_get_page (view));
       break;
 
+    case PROP_TOPLEVEL:
+      g_value_set_pointer (value, gschem_page_view_get_toplevel (view));
+      break;
+
     case PROP_VADJUSTMENT:
       g_value_set_object (value, gschem_page_view_get_vadjustment (view));
       break;
@@ -147,6 +204,11 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 static void
 gschem_page_view_class_init (GschemPageViewClass *klass)
 {
+  gschem_page_view_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
+
+  G_OBJECT_CLASS (klass)->dispose  = dispose;
+  G_OBJECT_CLASS (klass)->finalize = finalize;
+
   G_OBJECT_CLASS (klass)->get_property = get_property;
   G_OBJECT_CLASS (klass)->set_property = set_property;
 
@@ -163,7 +225,14 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
                                    g_param_spec_pointer ("page",
                                                          "Page",
                                                          "Page",
-                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+                                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_TOPLEVEL,
+                                   g_param_spec_pointer ("toplevel",
+                                                         "Toplevel",
+                                                         "Toplevel",
+                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_VADJUSTMENT,
@@ -213,8 +282,24 @@ PAGE*
 gschem_page_view_get_page (GschemPageView *view)
 {
   g_return_val_if_fail (view != NULL, NULL);
+  g_return_val_if_fail (view->toplevel != NULL, NULL);
 
-  return view->page;
+  return view->toplevel->page_current;
+}
+
+
+
+/*! \brief Get the toplevel for this view
+ *
+ *  \param [in] view The view
+ *  \return The toplevel for the view
+ */
+TOPLEVEL*
+gschem_page_view_get_toplevel (GschemPageView *view)
+{
+  g_return_val_if_fail (view != NULL, NULL);
+
+  return view->toplevel;
 }
 
 
@@ -262,16 +347,39 @@ gschem_page_view_get_vadjustment (GschemPageView *view)
 
 
 
+/*! \brief Schedule redraw for the entire window
+ *
+ *  \param [in,out] view The Gschem page view to redraw
+ */
+void
+gschem_page_view_invalidate_all (GschemPageView *view)
+{
+  GdkWindow *window;
+
+  g_return_if_fail (view != NULL);
+
+  window = gtk_widget_get_window (GTK_WIDGET (view));
+
+  g_return_if_fail (window != NULL);
+
+  gdk_window_invalidate_rect (window, NULL, FALSE);
+}
+
+
+
 /*! \brief Initialize GschemPageView instance
  *
- *  \param [in,out] selection
+ *  \param [in,out] view the gschem page view
  */
 static void
 gschem_page_view_init (GschemPageView *view)
 {
   g_return_if_fail (view != NULL);
 
-  view->page = NULL;
+  view->hadjustment = NULL;
+  view->vadjustment = NULL;
+
+  view->toplevel = NULL;
 
   g_signal_connect (view,
                     "set-scroll-adjustments",
@@ -286,17 +394,17 @@ gschem_page_view_init (GschemPageView *view)
  *  \return A new instanceof the GschemPageView
  */
 GschemPageView*
-gschem_page_view_new ()
+gschem_page_view_new_with_toplevel (TOPLEVEL *toplevel)
 {
-  return GSCHEM_PAGE_VIEW (g_object_new (GSCHEM_TYPE_PAGE_VIEW, NULL));
+  return GSCHEM_PAGE_VIEW (g_object_new (GSCHEM_TYPE_PAGE_VIEW, "toplevel", toplevel, NULL));
 }
 
 
 
-/*! \brief Set horizontal adjustment for this view
+/*! \brief Set the horizontal scroll adjustment for this view
  *
  *  \param [in,out] view The view
- *  \param [in]     hadjustment The horizontal adjustment
+ *  \param [in]     hadjustment The horizontal scroll adjustment
  */
 void
 gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustment)
@@ -304,6 +412,10 @@ gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustme
   g_return_if_fail (view != NULL);
 
   if (view->hadjustment != NULL) {
+    g_signal_handlers_disconnect_by_func (G_OBJECT (view->hadjustment),
+                                          G_CALLBACK (hadjustment_value_changed),
+                                          view);
+
     g_object_unref (view->hadjustment);
   }
 
@@ -311,6 +423,11 @@ gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustme
 
   if (view->hadjustment != NULL) {
     g_object_ref (view->hadjustment);
+
+    g_signal_connect (G_OBJECT (view->hadjustment),
+                      "value-changed",
+                      G_CALLBACK (hadjustment_value_changed),
+                      view);
   }
 
   g_object_notify (G_OBJECT (view), "hadjustment");
@@ -318,35 +435,94 @@ gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustme
 
 
 
-/*! \brief Set page for this view
+/*! \brief Set the libgeda toplevel for this view
  *
  *  \param [in,out] view The view
- *  \param [in]     page The page
+ *  \param [in]     toplevel The libgeda toplevel
  */
 void
-gschem_page_view_set_page (GschemPageView *view, PAGE *page)
+gschem_page_view_set_toplevel (GschemPageView *view, TOPLEVEL *toplevel)
 {
   g_return_if_fail (view != NULL);
 
-  if (view->page != NULL) {
+  if (view->toplevel != NULL) {
   }
 
-  view->page = page;
+  view->toplevel = toplevel;
 
-  if (view->page != NULL) {
+  if (view->toplevel != NULL) {
   }
 
   g_object_notify (G_OBJECT (view), "page");
+  g_object_notify (G_OBJECT (view), "toplevel");
 }
 
 
 
-/*! \brief Set a property
+/*! \brief Set the vertical scroll adjustment for this view
  *
- *  \param [in,out] object
- *  \param [in]     param_id
- *  \param [in]     value
- *  \param [in]     pspec
+ *  \param [in,out] view The view
+ *  \param [in]     vadjustment The vertical scroll adjustment
+ */
+void
+gschem_page_view_set_vadjustment (GschemPageView *view, GtkAdjustment *vadjustment)
+{
+  g_return_if_fail (view != NULL);
+
+  if (view->vadjustment != NULL) {
+    g_signal_handlers_disconnect_by_func (G_OBJECT (view->vadjustment),
+                                          G_CALLBACK (vadjustment_value_changed),
+                                          view);
+
+    g_object_unref (view->vadjustment);
+  }
+
+  view->vadjustment = vadjustment;
+
+  if (view->vadjustment != NULL) {
+    g_object_ref (view->vadjustment);
+
+    g_signal_connect (G_OBJECT (view->vadjustment),
+                      "value-changed",
+                      G_CALLBACK (vadjustment_value_changed),
+                      view);
+  }
+
+  g_object_notify (G_OBJECT (view), "vadjustment");
+}
+
+
+
+/*! \brief Signal handler for a horizontal scroll adjustment change
+ */
+static void
+hadjustment_value_changed (GtkAdjustment *hadjustment, GschemPageView *view)
+{
+  g_return_if_fail (hadjustment != NULL);
+  g_return_if_fail (view != NULL);
+
+  if (view->hadjustment != NULL) {
+    int current_left;
+    int new_left;
+    PAGE *page;
+
+    g_return_if_fail (view->hadjustment == hadjustment);
+
+    page = gschem_page_view_get_page (view);
+
+    current_left = page->left;
+    new_left = (int) hadjustment->value;
+
+    page->left = new_left;
+    page->right = page->right - (current_left - new_left);
+
+    gschem_page_view_invalidate_all (view);
+  }
+}
+
+
+
+/*! \brief Set a gobject property
  */
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
@@ -358,8 +534,8 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       gschem_page_view_set_hadjustment (view, g_value_get_object (value));
       break;
 
-    case PROP_PAGE:
-      gschem_page_view_set_page (view, g_value_get_pointer (value));
+    case PROP_TOPLEVEL:
+      gschem_page_view_set_toplevel (view, g_value_get_pointer (value));
       break;
 
     case PROP_VADJUSTMENT:
@@ -369,31 +545,6 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
   }
-}
-
-
-
-/*! \brief Set vertical adjustment for this view
- *
- *  \param [in,out] view The view
- *  \param [in]     vadjustment The vertical adjustment
- */
-void
-gschem_page_view_set_vadjustment (GschemPageView *view, GtkAdjustment *vadjustment)
-{
-  g_return_if_fail (view != NULL);
-
-  if (view->vadjustment != NULL) {
-    g_object_unref (view->vadjustment);
-  }
-
-  view->vadjustment = vadjustment;
-
-  if (view->vadjustment != NULL) {
-    g_object_ref (view->vadjustment);
-  }
-
-  g_object_notify (G_OBJECT (view), "vadjustment");
 }
 
 
@@ -408,4 +559,33 @@ set_scroll_adjustments (GschemPageView *view, GtkAdjustment *hadjustment, GtkAdj
 {
   gschem_page_view_set_hadjustment (view, hadjustment);
   gschem_page_view_set_vadjustment (view, vadjustment);
+}
+
+
+
+/*! \brief Signal handler for a vertical scroll adjustment change
+ */
+static void
+vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view)
+{
+  g_return_if_fail (vadjustment != NULL);
+  g_return_if_fail (view != NULL);
+
+  if ((view->toplevel != NULL) && (view->vadjustment != NULL)) {
+    int current_bottom;
+    int new_bottom;
+    PAGE *page;
+
+    g_return_if_fail (view->vadjustment == vadjustment);
+
+    page = gschem_page_view_get_page (view);
+
+    current_bottom = page->bottom;
+    new_bottom = view->toplevel->init_bottom - (int) vadjustment->value;
+
+    page->bottom = new_bottom;
+    page->top = page->top - (current_bottom - new_bottom);
+
+    gschem_page_view_invalidate_all (view);
+  }
 }

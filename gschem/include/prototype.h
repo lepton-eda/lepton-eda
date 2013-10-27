@@ -662,14 +662,12 @@ gboolean x_dialog_close_window (GschemToplevel *w_current);
 int x_dialog_validate_attribute(GtkWindow* parent, char *attribute);
 void x_dialog_edit_pin_type(GschemToplevel *w_current, const GList *obj_list);
 /* x_event.c */
-gint x_event_expose(GtkWidget *widget, GdkEventExpose *event, GschemToplevel *w_current);
+gint x_event_expose(GschemPageView *widget, GdkEventExpose *event, GschemToplevel *w_current);
 gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event, GschemToplevel *w_current);
 gint x_event_button_released(GtkWidget *widget, GdkEventButton *event, GschemToplevel *w_current);
 gint x_event_motion(GtkWidget *widget, GdkEventMotion *event, GschemToplevel *w_current);
 gboolean x_event_configure (GtkWidget *widget, GdkEventConfigure *event, gpointer user_data);
 void x_manual_resize(GschemToplevel *w_current);
-void x_event_hschanged(GtkAdjustment *adj, GschemToplevel *w_current);
-void x_event_vschanged(GtkAdjustment *adj, GschemToplevel *w_current);
 gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event, GschemToplevel *w_current);
 gboolean x_event_key(GtkWidget *widget, GdkEventKey *event, GschemToplevel *w_current);
 gint x_event_scroll(GtkWidget *widget, GdkEventScroll *event, GschemToplevel *w_current);

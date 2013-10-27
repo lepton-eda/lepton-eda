@@ -44,7 +44,7 @@ struct _GschemPageView
   GtkAdjustment *hadjustment;
   GtkAdjustment *vadjustment;
 
-  PAGE *page;
+  TOPLEVEL *toplevel;
 };
 
 
@@ -55,20 +55,26 @@ gschem_page_view_get_hadjustment (GschemPageView *view);
 PAGE*
 gschem_page_view_get_page (GschemPageView *view);
 
+TOPLEVEL*
+gschem_page_view_get_toplevel (GschemPageView *view);
+
 GType
 gschem_page_view_get_type ();
 
 GtkAdjustment*
 gschem_page_view_get_vadjustment (GschemPageView *view);
 
+void
+gschem_page_view_invalidate_all (GschemPageView *view);
+
 GschemPageView*
-gschem_page_view_new ();
+gschem_page_view_new_with_toplevel (TOPLEVEL *toplevel);
 
 void
 gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustment);
 
 void
-gschem_page_view_set_page (GschemPageView *view, PAGE *page);
+gschem_page_view_set_toplevel (GschemPageView *view, TOPLEVEL *toplevel);
 
 void
 gschem_page_view_set_vadjustment (GschemPageView *view, GtkAdjustment *vadjustment);

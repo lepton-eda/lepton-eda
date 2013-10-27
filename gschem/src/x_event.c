@@ -43,7 +43,7 @@ static int DOING_STROKE = FALSE;
  *  \par Function Description
  *
  */
-gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
+gint x_event_expose(GschemPageView *view, GdkEventExpose *event,
                     GschemToplevel *w_current)
 {
   GdkRectangle *rectangles;
@@ -58,7 +58,7 @@ gint x_event_expose(GtkWidget *widget, GdkEventExpose *event,
 
   save_cr = w_current->cr;
 
-  w_current->cr = gdk_cairo_create( widget->window );
+  w_current->cr = gdk_cairo_create( GTK_WIDGET (view)->window );
 
   gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
   o_redraw_rects (w_current, rectangles, n_rectangles);
@@ -1079,71 +1079,6 @@ void x_manual_resize(GschemToplevel *w_current)
      printf("w: %d h: %d\n", width, height); */
   printf("aw: %d ah: %d\n", w_current->win_width, w_current->win_height);
 #endif
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void x_event_hschanged (GtkAdjustment *hadjustment, GschemToplevel *w_current)
-{
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  int current_left;
-  int new_left;
-
-  g_return_if_fail (hadjustment != NULL);
-  g_return_if_fail (w_current != NULL);
-
-  if (w_current->scrollbars_flag == FALSE) {
-    return;
-  }
-
-  current_left = toplevel->page_current->left;
-  new_left = (int) hadjustment->value;
-
-  toplevel->page_current->left = new_left;
-  toplevel->page_current->right =
-    toplevel->page_current->right -
-    (current_left - new_left);
-
-  o_invalidate_all (w_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void x_event_vschanged (GtkAdjustment *vadjustment, GschemToplevel *w_current)
-{
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  int current_bottom;
-  int new_bottom;
-
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (vadjustment != NULL);
-
-  if (w_current->scrollbars_flag == FALSE) {
-    return;
-  }
-
-  current_bottom = toplevel->page_current->bottom;
-  new_bottom = toplevel->init_bottom - (int) vadjustment->value;
-
-  toplevel->page_current->bottom = new_bottom;
-  toplevel->page_current->top =
-    toplevel->page_current->top -
-    (current_bottom - new_bottom);
-
-#if DEBUG
-  printf("vrange %f %f\n", vadjustment->lower, vadjustment->upper);
-  printf("vvalue %f\n", vadjustment->value);
-  printf("actual: %d %d\n", toplevel->page_current->top,
-         toplevel->page_current->bottom);
-#endif
-
-  o_invalidate_all (w_current);
 }
 
 /*! \todo Finish function documentation!!!

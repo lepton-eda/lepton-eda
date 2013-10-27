@@ -38,12 +38,12 @@ typedef struct _Preview      Preview;
 
 
 struct _PreviewClass {
-  GtkDrawingAreaClass parent_class;
+  GschemPageViewClass parent_class;
   
 };
 
 struct _Preview {
-  GtkDrawingArea parent_instance;
+  GschemPageView parent_instance;
 
   GschemToplevel *preview_w_current;
 

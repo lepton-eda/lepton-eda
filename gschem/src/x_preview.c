@@ -95,8 +95,7 @@ preview_callback_realize (GtkWidget *widget,
                  s_page_objects (preview_page),
                  A_PAN_DONT_REDRAW);
 
-  o_invalidate_all (preview_w_current);
-
+  gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
 }
 
 /*! \brief Redraws the view when widget is exposed.
@@ -118,7 +117,6 @@ preview_callback_expose (GtkWidget *widget,
   GdkRectangle *rectangles;
   int n_rectangles;
   cairo_t *save_cr;
-  PangoLayout *save_pl;
 
   save_cr = preview_w_current->cr;
 
@@ -163,7 +161,7 @@ preview_callback_button_press (GtkWidget *widget,
       case 1: /* left mouse button: zoom in */
         a_zoom (preview_w_current, ZOOM_IN, HOTKEY,
                 A_PAN_DONT_REDRAW);
-        o_invalidate_all (preview_w_current);
+        gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
         break;
       case 2: /* middle mouse button: pan */
 	if (!x_event_get_pointer_position(preview_w_current, FALSE, &wx, &wy))
@@ -173,7 +171,7 @@ preview_callback_button_press (GtkWidget *widget,
       case 3: /* right mouse button: zoom out */
         a_zoom (preview_w_current, ZOOM_OUT, HOTKEY,
                 A_PAN_DONT_REDRAW);
-        o_invalidate_all (preview_w_current);
+        gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
         break;
   }
   
@@ -255,8 +253,8 @@ preview_update (Preview *preview)
   a_zoom_extents (preview_w_current,
                   s_page_objects (preview_toplevel->page_current),
                   A_PAN_DONT_REDRAW);
-  o_invalidate_all (preview_w_current);
-  
+
+  gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (preview));
 }
 
 GType
@@ -277,7 +275,7 @@ preview_get_type ()
       (GInstanceInitFunc) preview_init,
     };
                 
-    preview_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
+    preview_type = g_type_register_static (GSCHEM_TYPE_PAGE_VIEW,
                                            "Preview",
                                            &preview_info, 0);
   }
@@ -366,6 +364,7 @@ preview_init (Preview *preview)
   GschemToplevel *preview_w_current;
   preview_w_current = gschem_toplevel_new ();
   gschem_toplevel_set_toplevel (preview_w_current, s_toplevel_new ());
+  gschem_page_view_set_toplevel (GSCHEM_PAGE_VIEW (preview), preview_w_current->toplevel);
 
   preview_w_current->toplevel->load_newer_backup_func =
     x_fileselect_load_backup;
@@ -508,7 +507,6 @@ preview_dispose (GObject *self)
   }
     
   G_OBJECT_CLASS (preview_parent_class)->dispose (self);
-  
 }
 
 

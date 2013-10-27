@@ -98,7 +98,7 @@ void x_window_free_gc(GschemToplevel *w_current)
 void x_window_create_drawing(GtkWidget *scrolled, GschemToplevel *w_current)
 {
   /* drawing next */
-  w_current->drawing_area = GTK_WIDGET (gschem_page_view_new ());
+  w_current->drawing_area = GTK_WIDGET (gschem_page_view_new_with_toplevel (w_current->toplevel));
   /* Set the size here.  Be sure that it has an aspect ratio of 1.333
    * We could calculate this based on root window size, but for now
    * lets just set it to:
@@ -424,16 +424,6 @@ void x_window_create_main(GschemToplevel *w_current)
 
   w_current->v_scrollbar = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (w_current->scrolled));
   gtk_range_set_update_policy (GTK_RANGE (w_current->v_scrollbar), GTK_UPDATE_CONTINUOUS);
-
-  g_signal_connect (w_current->h_adjustment,
-                    "value_changed",
-                    G_CALLBACK (x_event_hschanged),
-                    w_current);
-
-  g_signal_connect (w_current->v_adjustment,
-                    "value_changed",
-                    G_CALLBACK (x_event_vschanged),
-                    w_current);
 
   /* macro box */
   w_current->macro_entry = gtk_entry_new();
