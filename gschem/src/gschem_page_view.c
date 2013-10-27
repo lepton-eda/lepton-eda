@@ -38,6 +38,12 @@
 
 #include "gtk/gtkmarshal.h"
 
+
+
+#define INVALIDATE_MARGIN 1
+
+
+
 enum
 {
   PROP_0,
@@ -64,6 +70,15 @@ gschem_page_view_class_init (GschemPageViewClass *klass);
 static void
 gschem_page_view_init (GschemPageView *view);
 
+static int
+gschem_page_view_pix_x (GschemPageView *view, int val);
+
+static int
+gschem_page_view_pix_y (GschemPageView *view, int val);
+
+static int
+gschem_page_view_SCREENabs(GschemPageView *view, int val);
+
 static void
 hadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view);
 
@@ -75,6 +90,9 @@ set_scroll_adjustments (GschemPageView *view, GtkAdjustment *hadjustment, GtkAdj
 
 static void
 vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view);
+
+static void
+gschem_page_view_WORLDtoSCREEN (GschemPageView *view, int x, int y, int *px, int *py);
 
 
 
@@ -367,6 +385,87 @@ gschem_page_view_invalidate_all (GschemPageView *view)
 
 
 
+/*! \brief Schedule redraw of the given object
+ *
+ *  \param [in,out] view   The Gschem page view to redraw
+ *  \param [in]     object The object to redraw
+ */
+void
+gschem_page_view_invalidate_object (GschemPageView *view, OBJECT *object)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (view != NULL);
+
+  if (view->toplevel != NULL) {
+    int screen_bottom;
+    int screen_right;
+    int screen_left;
+    int screen_top;
+    gboolean success;
+    int world_bottom;
+    int world_right;
+    int world_left;
+    int world_top;
+
+    success = world_get_single_object_bounds(view->toplevel,
+                                             object,
+                                             &world_left,
+                                             &world_top,
+                                             &world_right,
+                                             &world_bottom);
+
+    if (success) {
+      gschem_page_view_WORLDtoSCREEN (view, world_left, world_top, &screen_left, &screen_top);
+      gschem_page_view_WORLDtoSCREEN (view, world_right, world_bottom, &screen_right, &screen_bottom);
+
+      gschem_page_view_invalidate_screen_rect (view,
+                                               screen_left,
+                                               screen_top,
+                                               screen_right,
+                                               screen_bottom);
+    }
+  }
+}
+
+
+
+/*! \brief Schedule redraw of the given rectange
+ *
+ *  \param [in,out] view   The Gschem page view to redraw
+ *  \param [in]     left
+ *  \param [in]     top
+ *  \param [in]     right
+ *  \param [in]     bottom
+ */
+void
+gschem_page_view_invalidate_screen_rect (GschemPageView *view, int left, int top, int right, int bottom)
+{
+  int bloat;
+  int cue_half_size;
+  int grip_half_size;
+  GdkRectangle rect;
+  GdkWindow *window;
+
+  g_return_if_fail (view != NULL);
+
+  window = gtk_widget_get_window (GTK_WIDGET (view));
+
+  g_return_if_fail (window != NULL);
+
+  grip_half_size = GRIP_SIZE / 2;
+  cue_half_size = gschem_page_view_SCREENabs (view, CUE_BOX_SIZE);
+  bloat = MAX (grip_half_size, cue_half_size) + INVALIDATE_MARGIN;
+
+  rect.x = MIN(left, right) - bloat;
+  rect.y = MIN(top, bottom) - bloat;
+  rect.width = 1 + abs( left - right ) + 2 * bloat;
+  rect.height = 1 + abs( top - bottom ) + 2 * bloat;
+
+  gdk_window_invalidate_rect (window, &rect, FALSE);
+}
+
+
+
 /*! \brief Initialize GschemPageView instance
  *
  *  \param [in,out] view the gschem page view
@@ -397,6 +496,86 @@ GschemPageView*
 gschem_page_view_new_with_toplevel (TOPLEVEL *toplevel)
 {
   return GSCHEM_PAGE_VIEW (g_object_new (GSCHEM_TYPE_PAGE_VIEW, "toplevel", toplevel, NULL));
+}
+
+
+
+/*! \brief Convert a x coordinate to pixels.
+ *
+ *  A temporary function until a GschemToplevel is not required for coordinate
+ *  conversions. See the function pix_x.
+ */
+static int
+gschem_page_view_pix_x (GschemPageView *view, int val)
+{
+  double i;
+  int j;
+  PAGE *page;
+
+  g_return_val_if_fail (view != NULL, 0);
+
+  page = gschem_page_view_get_page (view);
+
+  g_return_val_if_fail (page != NULL, 0);
+
+  i = page->to_screen_x_constant * (double)(val - page->left);
+
+#ifdef HAS_RINT
+  j = rint(i);
+#else
+  j = i;
+#endif
+
+  /* this is a temp solution to fix the wrapping associated with */
+  /* X coords being greated/less than than 2^15 */
+  if (j >= 32768) {
+    j = 32767;
+  }
+  if (j <= -32768) {
+    j = -32767;
+  }
+
+  return(j);
+}
+
+
+
+/*! \brief Convert a y coordinate to pixels.
+ *
+ *  A temporary function until a GschemToplevel is not required for coordinate
+ *  conversions. See the function pix_y.
+ */
+static int
+gschem_page_view_pix_y (GschemPageView *view, int val)
+{
+  double i;
+  int j;
+  PAGE *page;
+
+  g_return_val_if_fail (view != NULL, 0);
+
+  page = gschem_page_view_get_page (view);
+
+  g_return_val_if_fail (page != NULL, 0);
+
+  i = view->toplevel->height - (page->to_screen_y_constant * (double)(val - page->top));
+
+#ifdef HAS_RINT
+  j = rint(i);
+#else
+  j = i;
+#endif
+
+  /* this is a temp solution to fix the wrapping associated with */
+  /* X coords being greated/less than than 2^15 */
+  if (j >= 32768) {
+    j = 32767;
+  }
+  if (j <= -32768) {
+    j = -32767;
+  }
+
+  return(j);
 }
 
 
@@ -446,11 +625,19 @@ gschem_page_view_set_toplevel (GschemPageView *view, TOPLEVEL *toplevel)
   g_return_if_fail (view != NULL);
 
   if (view->toplevel != NULL) {
+    o_remove_change_notify (view->toplevel,
+                            (ChangeNotifyFunc) gschem_page_view_invalidate_object,
+                            (ChangeNotifyFunc) gschem_page_view_invalidate_object,
+                            view);
   }
 
   view->toplevel = toplevel;
 
   if (view->toplevel != NULL) {
+    o_add_change_notify (view->toplevel,
+                         (ChangeNotifyFunc) gschem_page_view_invalidate_object,
+                         (ChangeNotifyFunc) gschem_page_view_invalidate_object,
+                         view);
   }
 
   g_object_notify (G_OBJECT (view), "page");
@@ -549,6 +736,41 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
 
 
+/*! \brief Get absolute SCREEN coordinate.
+ *
+ *  A temporary function until a GschemToplevel is not required for coordinate
+ *  conversions. See the function SCREENabs.
+ */
+static int
+gschem_page_view_SCREENabs(GschemPageView *view, int val)
+{
+  double f0,f1,f;
+  double i;
+  int j;
+  PAGE *page;
+
+  g_return_val_if_fail (view != NULL, 0);
+
+  page = gschem_page_view_get_page (view);
+
+  g_return_val_if_fail (page != NULL, 0);
+
+  f0 = page->left;
+  f1 = page->right;
+  f = view->toplevel->width / (f1 - f0);
+  i = f * (double)(val);
+
+#ifdef HAS_RINT
+  j = rint(i);
+#else
+  j = i;
+#endif
+
+  return(j);
+}
+
+
+
 /*! \brief Signal handler for setting the scroll adjustments
  *
  *  Sent from the GtkScrolledWindow to set the adjustments for the
@@ -588,4 +810,18 @@ vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view)
 
     gschem_page_view_invalidate_all (view);
   }
+}
+
+
+
+/*! \brief Transform WORLD coordinates to SCREEN coordinates
+ *
+ *  A temporary function until a GschemToplevel is not required for coordinate
+ *  conversions. See the function WORLDtoSCREEN.
+ */
+static void
+gschem_page_view_WORLDtoSCREEN (GschemPageView *view, int x, int y, int *px, int *py)
+{
+  *px = gschem_page_view_pix_x (view, x);
+  *py = gschem_page_view_pix_y (view, y);
 }
