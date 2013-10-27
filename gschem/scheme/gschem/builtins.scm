@@ -148,7 +148,7 @@
 (define-action-public (&edit-invoke-macro #:label (_ "Invoke Macro"))
   (%edit-invoke-macro))
 
-(define-action-public (&edit-embed #:label (_ "Embed Component/Pictore"))
+(define-action-public (&edit-embed #:label (_ "Embed Component/Picture"))
   (%edit-embed))
 
 (define-action-public (&edit-unembed #:label (_ "Unembed Component/Picture"))
