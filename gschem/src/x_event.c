@@ -84,7 +84,7 @@ gint x_event_expose(GschemPageView *view, GdkEventExpose *event,
 gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
                             GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  PAGE *page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (w_current->drawing_area));
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
@@ -98,7 +98,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
   printf("event state: %d \n", event->state);
   printf("w_current state: %d \n", w_current->event_state);
   printf("Selection is:\n");
-  o_selection_print_all(&(toplevel->page_current->selection_list));
+  o_selection_print_all(&(page->selection_list));
   printf("\n");
 #endif
 
@@ -112,7 +112,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
        w_current->event_state == SELECT)) {
     o_find_object(w_current, w_x, w_y, TRUE);
     if (o_select_selected (w_current)) {
-       o_edit(w_current, geda_list_get_glist( toplevel->page_current->selection_list ));
+       o_edit(w_current, geda_list_get_glist( page->selection_list ));
        i_set_state(w_current, SELECT);
        scm_dynwind_end ();
        return(0);
@@ -316,7 +316,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
       case(ENDROTATEP):
         o_rotate_world_update(w_current, w_x, w_y, 90,
-          geda_list_get_glist(toplevel->page_current->selection_list ));
+          geda_list_get_glist(page->selection_list ));
 
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
@@ -326,7 +326,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
       case(ENDMIRROR):
         o_mirror_world_update(w_current, w_x, w_y,
                               geda_list_get_glist(
-                                toplevel->page_current->selection_list ));
+                                page->selection_list ));
 
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
@@ -972,7 +972,7 @@ x_event_configure (GtkWidget         *widget,
 
   g_assert (toplevel != NULL);
 
-  if (toplevel->page_current == NULL) {
+  if (gschem_page_view_get_page (GSCHEM_PAGE_VIEW (widget)) == NULL) {
     /* don't want to call this if the current page isn't setup yet */
     return FALSE;
   }
@@ -1013,7 +1013,7 @@ x_event_configure (GtkWidget         *widget,
   }
 
   /* save current page */
-  old_page_current = toplevel->page_current;
+  old_page_current = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (widget));
 
   /* re-pan each page of the TOPLEVEL */
   for ( iter = geda_list_get_glist( toplevel->pages );
@@ -1053,6 +1053,7 @@ x_event_configure (GtkWidget         *widget,
 void x_manual_resize(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  PAGE *page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (w_current->drawing_area));
 
   /* of the actual win window (drawing_area) */
   w_current->win_width  = w_current->drawing_area->allocation.width;
@@ -1066,11 +1067,12 @@ void x_manual_resize(GschemToplevel *w_current)
   toplevel->height = w_current->win_height;
 
   /* need to do this every time you change width / height */
-  set_window(toplevel, toplevel->page_current,
-             toplevel->page_current->left,
-             toplevel->page_current->right,
-             toplevel->page_current->top,
-             toplevel->page_current->bottom);
+  set_window(toplevel,
+             page,
+             page->left,
+             page->right,
+             page->top,
+             page->bottom);
 
 #if DEBUG
   printf("Window aspect: %f\n",
