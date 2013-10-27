@@ -56,6 +56,21 @@ static void preview_get_property (GObject *object,
                                   GParamSpec *pspec);
 static void preview_dispose (GObject *self);
 
+
+
+/*! \brief get the filename for the current page
+ */
+static char*
+preview_get_filename (Preview *preview)
+{
+  PAGE *page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview));
+
+  g_return_val_if_fail (page != NULL, "");
+
+  return page->page_filename;
+}
+
+
 /*! \brief Completes initialitation of the widget after realization.
  *  \par Function Description
  *  This function terminates the initialization of preview's GschemToplevel
@@ -196,13 +211,13 @@ preview_update (Preview *preview)
   int width, height;
   GError * err = NULL;
 
-  if (preview_toplevel->page_current == NULL) {
+  if (gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview)) == NULL) {
     return;
   }
   
   /* delete old preview, create new page */
   /* it would be better to just resets current page - Fix me */
-  s_page_delete (preview_toplevel, preview_toplevel->page_current);
+  s_page_delete (preview_toplevel, gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview)));
   gschem_toplevel_page_changed (preview_w_current);
   s_page_goto (preview_toplevel, s_page_new (preview_toplevel, "preview"));
   gschem_toplevel_page_changed (preview_w_current);
@@ -211,7 +226,7 @@ preview_update (Preview *preview)
     g_assert ((preview->filename == NULL) || (preview->buffer == NULL));
     if (preview->filename != NULL) {
       /* open up file in current page */
-      f_open_flags (preview_toplevel, preview_toplevel->page_current,
+      f_open_flags (preview_toplevel, gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview)),
                     preview->filename,
                     F_OPEN_RC | F_OPEN_RESTORE_CWD, NULL);
       /* test value returned by f_open... - Fix me */
@@ -224,11 +239,11 @@ preview_update (Preview *preview)
                                        _("Preview Buffer"), &err);
 
       if (err == NULL) {
-        s_page_append_list (preview_toplevel, preview_toplevel->page_current,
+        s_page_append_list (preview_toplevel, gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview)),
                             objects);
       }
       else {
-        s_page_append (preview_toplevel, preview_toplevel->page_current,
+        s_page_append (preview_toplevel, gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview)),
                        o_text_new(preview_toplevel, OBJ_TEXT, 2, 100, 100, LOWER_MIDDLE, 0,
                                   err->message, 10, VISIBLE, SHOW_NAME_VALUE));
         g_error_free(err);
@@ -237,7 +252,7 @@ preview_update (Preview *preview)
   }
 
   if (world_get_object_glist_bounds (preview_toplevel,
-                                     s_page_objects (preview_toplevel->page_current),
+                                     s_page_objects (gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview))),
                                      &left, &top,
                                      &right, &bottom)) {
     /* Clamp the canvas size to the extents of the page being previewed */
@@ -251,7 +266,7 @@ preview_update (Preview *preview)
 
   /* display current page (possibly empty) */
   a_zoom_extents (preview_w_current,
-                  s_page_objects (preview_toplevel->page_current),
+                  s_page_objects (gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview))),
                   A_PAN_DONT_REDRAW);
 
   gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (preview));
@@ -326,7 +341,7 @@ preview_event_configure (GtkWidget         *widget,
 {
   gboolean retval;
   GschemToplevel *preview_w_current = PREVIEW (widget)->preview_w_current;
-  PAGE     *preview_page = preview_w_current->toplevel->page_current;
+  PAGE *preview_page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (widget));
 
   retval = x_event_configure (widget, event, preview_w_current);
   if (preview_page != NULL) {
@@ -467,22 +482,19 @@ preview_get_property (GObject *object,
                       GParamSpec *pspec)
 {
   Preview *preview = PREVIEW (object);
-  GschemToplevel *preview_w_current = preview->preview_w_current;
 
   switch(property_id) {
       case PROP_FILENAME:
-        g_assert (preview_w_current != NULL);
-        /* return the filename of the current page in toplevel */
-        g_value_set_string (value,
-                            preview_w_current->toplevel->page_current->page_filename);
+        g_value_set_string (value, preview_get_filename (preview));
         break;
+
       case PROP_ACTIVE:
         g_value_set_boolean (value, preview->active);
         break;
+
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
   }
-
 }
 
 static void

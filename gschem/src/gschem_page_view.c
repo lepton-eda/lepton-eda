@@ -250,7 +250,7 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
                                    g_param_spec_pointer ("toplevel",
                                                          "Toplevel",
                                                          "Toplevel",
-                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
+                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_VADJUSTMENT,
@@ -378,7 +378,9 @@ gschem_page_view_invalidate_all (GschemPageView *view)
 
   window = gtk_widget_get_window (GTK_WIDGET (view));
 
-  g_return_if_fail (window != NULL);
+  if (window == NULL) {
+    return;
+  }
 
   gdk_window_invalidate_rect (window, NULL, FALSE);
 }
@@ -450,7 +452,9 @@ gschem_page_view_invalidate_screen_rect (GschemPageView *view, int left, int top
 
   window = gtk_widget_get_window (GTK_WIDGET (view));
 
-  g_return_if_fail (window != NULL);
+  if (window == NULL) {
+    return;
+  }
 
   grip_half_size = GRIP_SIZE / 2;
   cue_half_size = gschem_page_view_SCREENabs (view, CUE_BOX_SIZE);
