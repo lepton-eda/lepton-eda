@@ -243,7 +243,7 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
                                    g_param_spec_pointer ("page",
                                                          "Page",
                                                          "Page",
-                                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
+                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_TOPLEVEL,
@@ -618,6 +618,29 @@ gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustme
 
 
 
+/*! \brief Set the page for this view
+ *
+ *  The toplevel property must be set and the page must belong to that
+ *  toplevel. Currently, the codebase does not allow the page to be
+ *  NULL.
+ *
+ *  \param [in,out] view The view
+ *  \param [in]     page The page
+ */
+void
+gschem_page_view_set_page (GschemPageView *view, PAGE *page)
+{
+  g_return_if_fail (view != NULL);
+  g_return_if_fail (view->toplevel != NULL);
+  g_return_if_fail (page != NULL);
+
+  s_page_goto (view->toplevel, page);
+
+  g_object_notify (G_OBJECT (view), "page");
+}
+
+
+
 /*! \brief Set the libgeda toplevel for this view
  *
  *  \param [in,out] view The view
@@ -723,6 +746,10 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
   switch (param_id) {
     case PROP_HADJUSTMENT:
       gschem_page_view_set_hadjustment (view, g_value_get_object (value));
+      break;
+
+    case PROP_PAGE:
+      gschem_page_view_set_page (view, g_value_get_pointer (value));
       break;
 
     case PROP_TOPLEVEL:

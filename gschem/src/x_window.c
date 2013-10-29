@@ -781,7 +781,7 @@ x_window_set_current_page (GschemToplevel *w_current, PAGE *page)
 
   o_redraw_cleanstates (w_current);
 
-  s_page_goto (toplevel, page);
+  gschem_page_view_set_page (GSCHEM_PAGE_VIEW (w_current->drawing_area), page);
   gschem_toplevel_page_changed (w_current);
 
   i_update_menus (w_current);

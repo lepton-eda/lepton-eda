@@ -80,6 +80,9 @@ void
 gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustment);
 
 void
+gschem_page_view_set_page (GschemPageView *view, PAGE *page);
+
+void
 gschem_page_view_set_toplevel (GschemPageView *view, TOPLEVEL *toplevel);
 
 void
