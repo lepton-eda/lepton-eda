@@ -46,52 +46,6 @@ void x_repaint_background_region (GschemToplevel *w_current,
  *  \par Function Description
  *
  */
-void x_hscrollbar_set_ranges(GschemToplevel *w_current)
-{
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-        GtkAdjustment        *hadjustment;
-
-	if (w_current->scrollbars_flag == FALSE) {
-		return;
-	}
-
-	hadjustment =
-		gtk_range_get_adjustment(GTK_RANGE(w_current->h_scrollbar));
-
-	hadjustment->lower = toplevel->init_left;
-	hadjustment->upper = toplevel->init_right;
-
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void x_vscrollbar_set_ranges(GschemToplevel *w_current)
-{
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  GtkAdjustment *vadjustment;
-
-  if (w_current->scrollbars_flag == FALSE) {
-    return;
-  }
-
-  vadjustment =
-  gtk_range_get_adjustment(GTK_RANGE(w_current->v_scrollbar));
-
-  vadjustment->lower = toplevel->init_top;
-  vadjustment->upper = toplevel->init_bottom;
-}
-
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 void x_basic_warp_cursor (GtkWidget* widget, gint x, gint y)
 {
   GdkScreen *screen;

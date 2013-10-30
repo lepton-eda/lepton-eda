@@ -597,8 +597,6 @@ void attrib_edit_dialog(GschemToplevel *w_current, OBJECT *attr_obj, int flag);
 void autonumber_text_dialog(GschemToplevel *w_current);
 /* x_basic.c */
 void x_repaint_background_region(GschemToplevel *w_current, int x, int y, int width, int height);
-void x_hscrollbar_set_ranges(GschemToplevel *w_current);
-void x_vscrollbar_set_ranges(GschemToplevel *w_current);
 void x_basic_warp_cursor(GtkWidget *widget, gint x, gint y);
 /* x_clipboard.c */
 void x_clipboard_init (GschemToplevel *w_current);
