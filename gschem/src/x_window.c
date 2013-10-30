@@ -237,6 +237,11 @@ void x_window_create_main(GschemToplevel *w_current)
   GtkWidget *bottom_box=NULL;
   GtkWidget *toolbar=NULL;
   GtkWidget *handlebox=NULL;
+  GtkWidget *hscrollbar;
+  GtkWidget *vscrollbar;
+  GtkAdjustment *hadjustment;
+  GtkAdjustment *vadjustment;
+
 
   /* used to signify that the window isn't mapped yet */
   w_current->window = NULL; 
@@ -396,22 +401,21 @@ void x_window_create_main(GschemToplevel *w_current)
 
 
   /* Setup a GtkScrolledWindow for the drawig area */
-  w_current->h_adjustment = GTK_ADJUSTMENT (gtk_adjustment_new (0.0,
-                                                                0.0,
-                                                                toplevel->init_right,
-                                                                100.0,
-                                                                100.0,
-                                                                10.0));
+  hadjustment = GTK_ADJUSTMENT (gtk_adjustment_new (0.0,
+                                                    0.0,
+                                                    toplevel->init_right,
+                                                    100.0,
+                                                    100.0,
+                                                    10.0));
 
-  w_current->v_adjustment = GTK_ADJUSTMENT (gtk_adjustment_new (toplevel->init_bottom,
-                                                                0.0,
-                                                                toplevel->init_bottom,
-                                                                100.0,
-                                                                100.0,
-                                                                10.0));
+  vadjustment = GTK_ADJUSTMENT (gtk_adjustment_new (toplevel->init_bottom,
+                                                    0.0,
+                                                    toplevel->init_bottom,
+                                                    100.0,
+                                                    100.0,
+                                                    10.0));
 
-  w_current->scrolled = gtk_scrolled_window_new (w_current->h_adjustment,
-                                                 w_current->v_adjustment);
+  w_current->scrolled = gtk_scrolled_window_new (hadjustment, vadjustment);
   gtk_container_add(GTK_CONTAINER(main_box), w_current->scrolled);
   x_window_create_drawing(w_current->scrolled, w_current);
   x_window_setup_draw_events(w_current);
@@ -419,11 +423,11 @@ void x_window_create_main(GschemToplevel *w_current)
   policy = (w_current->scrollbars_flag) ? GTK_POLICY_ALWAYS : GTK_POLICY_NEVER;
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (w_current->scrolled), policy, policy);
 
-  w_current->h_scrollbar = gtk_scrolled_window_get_hscrollbar (GTK_SCROLLED_WINDOW (w_current->scrolled));
-  gtk_range_set_update_policy (GTK_RANGE (w_current->h_scrollbar), GTK_UPDATE_CONTINUOUS);
+  hscrollbar = gtk_scrolled_window_get_hscrollbar (GTK_SCROLLED_WINDOW (w_current->scrolled));
+  gtk_range_set_update_policy (GTK_RANGE (hscrollbar), GTK_UPDATE_CONTINUOUS);
 
-  w_current->v_scrollbar = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (w_current->scrolled));
-  gtk_range_set_update_policy (GTK_RANGE (w_current->v_scrollbar), GTK_UPDATE_CONTINUOUS);
+  vscrollbar = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (w_current->scrolled));
+  gtk_range_set_update_policy (GTK_RANGE (vscrollbar), GTK_UPDATE_CONTINUOUS);
 
   /* macro box */
   w_current->macro_entry = gtk_entry_new();

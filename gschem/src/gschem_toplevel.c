@@ -153,10 +153,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->drawing_area = NULL;
   w_current->menubar      = NULL;
   w_current->popup_menu   = NULL;
-  w_current->h_scrollbar  = NULL;
-  w_current->v_scrollbar  = NULL;
-  w_current->h_adjustment = NULL;
-  w_current->v_adjustment = NULL;
   w_current->left_label   = NULL;
   w_current->middle_label = NULL;
   w_current->right_label  = NULL;

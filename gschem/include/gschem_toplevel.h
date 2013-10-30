@@ -39,11 +39,6 @@ struct st_gschem_toplevel {
   GtkWidget *menubar;
   GtkWidget *popup_menu;
 
-  GtkWidget *h_scrollbar;
-  GtkWidget *v_scrollbar;
-  GtkAdjustment *h_adjustment;
-  GtkAdjustment *v_adjustment;
-
   GtkWidget *macro_box;
   GtkWidget *macro_entry;
   GtkWidget *left_label;

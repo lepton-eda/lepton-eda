@@ -1295,7 +1295,8 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
   }
 
   if (pan_xaxis) {
-    adj = gtk_range_get_adjustment(GTK_RANGE(w_current->h_scrollbar));
+    adj = gschem_page_view_get_hadjustment (GSCHEM_PAGE_VIEW (w_current->drawing_area));
+    g_return_val_if_fail (adj != NULL, TRUE);
     gtk_adjustment_set_value(adj, min(adj->value + pan_direction *
                                         (adj->page_increment /
                                          w_current->scrollpan_steps),
@@ -1303,7 +1304,8 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
   }
 
   if (pan_yaxis) {
-    adj = gtk_range_get_adjustment(GTK_RANGE(w_current->v_scrollbar));
+    adj = gschem_page_view_get_vadjustment (GSCHEM_PAGE_VIEW (w_current->drawing_area));
+    g_return_val_if_fail (adj != NULL, TRUE);
     gtk_adjustment_set_value(adj, min(adj->value + pan_direction *
                                         (adj->page_increment /
                                          w_current->scrollpan_steps),
