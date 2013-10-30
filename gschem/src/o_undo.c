@@ -393,8 +393,8 @@ void o_undo_callback(GschemToplevel *w_current, int type)
   set_window(toplevel, toplevel->page_current,
              u_current->left, u_current->right,
              u_current->top, u_current->bottom);
-  x_hscrollbar_update(w_current);
-  x_vscrollbar_update(w_current);
+
+  gschem_page_view_update_scroll_adjustments (GSCHEM_PAGE_VIEW (w_current->drawing_area));
 
   /* restore logging */
   do_logging = save_logging;

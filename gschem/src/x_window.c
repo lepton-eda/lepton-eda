@@ -791,8 +791,7 @@ x_window_set_current_page (GschemToplevel *w_current, PAGE *page)
   x_multiattrib_update (w_current);
 
   x_manual_resize (w_current);
-  x_hscrollbar_update (w_current);
-  x_vscrollbar_update (w_current);
+  gschem_page_view_update_scroll_adjustments (GSCHEM_PAGE_VIEW (w_current->drawing_area));
 
   o_invalidate_all (w_current);
 }

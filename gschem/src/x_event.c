@@ -1037,7 +1037,7 @@ x_event_configure (GtkWidget         *widget,
 
   /* redraw the current page and update UI */
   o_invalidate_all (w_current);
-  x_scrollbars_update (w_current);
+  gschem_page_view_update_scroll_adjustments (GSCHEM_PAGE_VIEW (w_current->drawing_area));
 
   return FALSE;
 }

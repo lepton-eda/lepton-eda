@@ -159,7 +159,7 @@ void a_pan_general(GschemToplevel *w_current, double world_cx, double world_cy,
 
   /* redraw */
   if (!(flags & A_PAN_DONT_REDRAW)) {
-    x_scrollbars_update(w_current);
+    gschem_page_view_update_scroll_adjustments (GSCHEM_PAGE_VIEW (w_current->drawing_area));
     o_invalidate_all (w_current);
   }
 }

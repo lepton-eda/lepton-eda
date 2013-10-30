@@ -33,6 +33,8 @@
 #include <string.h>
 #endif
 
+#include <math.h>
+
 #include "gschem.h"
 #include <gdk/gdkkeysyms.h>
 
@@ -78,6 +80,12 @@ gschem_page_view_pix_y (GschemPageView *view, int val);
 
 static int
 gschem_page_view_SCREENabs(GschemPageView *view, int val);
+
+static void
+gschem_page_view_update_hadjustment (GschemPageView *view);
+
+static void
+gschem_page_view_update_vadjustment (GschemPageView *view);
 
 static void
 hadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view);
@@ -798,6 +806,86 @@ gschem_page_view_SCREENabs(GschemPageView *view, int val)
 #endif
 
   return(j);
+}
+
+
+
+/*! \brief Update the horizontal scroll adjustment
+ */
+static void
+gschem_page_view_update_hadjustment (GschemPageView *view)
+{
+  g_return_if_fail (view != NULL);
+
+  if (view->hadjustment != NULL) {
+    PAGE *page = gschem_page_view_get_page (view);
+
+    g_return_if_fail (page != NULL);
+
+    gtk_adjustment_set_page_increment (view->hadjustment,
+                                       fabs (page->right -page->left) - 100.0);
+
+    gtk_adjustment_set_page_size (view->hadjustment,
+                                  fabs (page->right -page->left));
+
+    gtk_adjustment_set_value (view->hadjustment,
+                              page->left);
+
+#if DEBUG
+    printf("H %f %f\n", view->hadjustment->lower, view->hadjustment->upper);
+    printf("Hp %f\n", view->hadjustment->page_size);
+#endif
+
+    gtk_adjustment_changed(view->hadjustment);
+    gtk_adjustment_value_changed (view->hadjustment);
+  }
+}
+
+
+
+/*! \brief Update the scroll adjustments
+ */
+void
+gschem_page_view_update_scroll_adjustments (GschemPageView *view)
+{
+  g_return_if_fail (view != NULL);
+
+  gschem_page_view_update_hadjustment (view);
+  gschem_page_view_update_vadjustment (view);
+}
+
+
+
+/*! \brief Update the vertical scroll adjustment
+ */
+static void
+gschem_page_view_update_vadjustment (GschemPageView *view)
+{
+  g_return_if_fail (view != NULL);
+
+  if (view->vadjustment != NULL) {
+    PAGE *page = gschem_page_view_get_page (view);
+
+    g_return_if_fail (page != NULL);
+    g_return_if_fail (view->toplevel != NULL);
+
+    gtk_adjustment_set_page_increment(view->vadjustment,
+                                      fabs (page->bottom - page->top) - 100.0);
+
+    gtk_adjustment_set_page_size (view->vadjustment,
+                                  fabs (page->bottom - page->top));
+
+    gtk_adjustment_set_value(view->vadjustment,
+                             view->toplevel->init_bottom - page->bottom);
+
+#if DEBUG
+    printf("V %f %f\n", view->vadjustment->lower, view->vadjustment->upper);
+    printf("Vp %f\n", view->vadjustment->page_size);
+#endif
+
+    gtk_adjustment_changed(view->vadjustment);
+    gtk_adjustment_value_changed (view->vadjustment);
+  }
 }
 
 
