@@ -162,27 +162,27 @@ static void create_type_menu(GtkComboBox *combo)
  *  \return The gdk-pixbuf type, or extension, of the image.
  *  \note This function is only used in this file.
  */
-static char *x_image_get_type_from_description(char *description) {
-  gchar *descr = g_strdup (description);
-  GSList *formats = gdk_pixbuf_get_formats ();
+static char *
+x_image_get_type_from_description (const char *description)
+{
   GSList *ptr;
-  gchar *ptr_descr;
 
-  if (strcmp(descr, "Portable Document Format") == 0) { 
-    return(g_strdup("pdf"));
+  if (strcmp (description, "Portable Document Format") == 0) {
+    return "pdf";
   }
 
-  ptr = formats;
-  while (ptr) {
-    ptr_descr = gdk_pixbuf_format_get_description (ptr->data);
-    if (ptr_descr && (strcasecmp(ptr_descr, descr) == 0)) {
-      g_free(descr);
-      return(gdk_pixbuf_format_get_name(ptr->data));
+  ptr = gdk_pixbuf_get_formats ();
+
+  while (ptr != NULL) {
+    gchar *ptr_descr = gdk_pixbuf_format_get_description (ptr->data);
+
+    if (ptr_descr && (strcasecmp (ptr_descr, description) == 0)) {
+      return gdk_pixbuf_format_get_name (ptr->data);
     }
 
-    ptr = ptr->next;
+    ptr = g_slist_next (ptr);
   }
-  g_free (descr);
+
   return NULL;  
 }
 
