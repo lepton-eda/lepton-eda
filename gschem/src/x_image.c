@@ -587,7 +587,7 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
 {
   GdkPixbuf *pixbuf;
   int origin_x, origin_y, bottom, right;
-  int size_x, size_y, s_right, s_left, s_top,s_bottom;
+  int size_x, size_y;
   GschemToplevel new_w_current;
   TOPLEVEL toplevel;
   GdkRectangle rect;
@@ -598,14 +598,6 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
   memcpy(&toplevel, w_current->toplevel, sizeof(TOPLEVEL));
 
   new_w_current.toplevel = &toplevel;
-
-  WORLDtoSCREEN (&new_w_current, toplevel.page_current->right,
-                                 toplevel.page_current->left, &s_right, &s_left);
-  WORLDtoSCREEN (&new_w_current, toplevel.page_current->bottom,
-                                 toplevel.page_current->top,  &s_bottom, &s_top);
-
-  size_x = s_left - s_right;
-  size_y = s_bottom - s_top;
 
   size_x = new_w_current.image_width;
   size_y = new_w_current.image_height;
