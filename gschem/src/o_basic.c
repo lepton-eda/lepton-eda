@@ -54,11 +54,6 @@ void o_redraw_rects (GschemToplevel *w_current,
   GArray *render_outline_color_map = NULL;
   cairo_matrix_t render_mtx;
 
-  for (i = 0; i < n_rectangles; i++) {
-    x_repaint_background_region (w_current, rectangles[i].x, rectangles[i].y,
-                                 rectangles[i].width, rectangles[i].height);
-  }
-
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (toplevel->page_current != NULL);
 
@@ -77,6 +72,10 @@ void o_redraw_rects (GschemToplevel *w_current,
   cairo_save (w_current->cr);
   cairo_set_matrix (w_current->cr, &render_mtx);
 
+  for (i = 0; i < n_rectangles; i++) {
+    x_repaint_background_region (w_current, rectangles[i].x, rectangles[i].y,
+                                 rectangles[i].width, rectangles[i].height);
+  }
 
   grip_half_size = GRIP_SIZE / 2;
   cue_half_size = SCREENabs (w_current, CUE_BOX_SIZE);

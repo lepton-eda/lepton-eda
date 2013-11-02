@@ -81,7 +81,7 @@ static int query_dots_grid_spacing (GschemToplevel *w_current)
  *  \param [in] x          The left screen coordinate for the drawing.
  *  \param [in] y          The top screen coordinate for the drawing.
  *  \param [in] width      The width of the region to draw.
- *  \param [in] height     The height of the region to draw.
+zz *  \param [in] height     The height of the region to draw.
  */
 static void draw_dots_grid_region (GschemToplevel *w_current,
                                    int x, int y, int width, int height)
@@ -147,12 +147,13 @@ static void draw_dots_grid_region (GschemToplevel *w_current,
 
 /*! \brief Helper function for draw_mesh_grid_regin
  */
-static void draw_mesh (GschemToplevel *w_current, int color,
+static void draw_mesh (GschemToplevel *w_current, cairo_matrix_t *user_to_device_matrix,
+                       int color,
                        int x_start, int y_start, int x_end, int y_end,
                        int incr, int coarse_mult)
 {
   int i, j;
-  int x1, y1, x2, y2;
+  double x1, y1, x2, y2;
   int next_coarse_x, next_coarse_y;
   int coarse_incr = incr * coarse_mult;
   COLOR *c;
@@ -181,8 +182,6 @@ static void draw_mesh (GschemToplevel *w_current, int color,
   cairo_set_line_width (w_current->cr, 1.);
   cairo_set_line_cap (w_current->cr, CAIRO_LINE_CAP_SQUARE);
 
-  cairo_translate (w_current->cr, 0.5, 0.5);
-
   for (j = y_start; j < y_end; j = j + incr) {
 
     /* Skip lines which will be drawn in the coarser grid */
@@ -190,10 +189,17 @@ static void draw_mesh (GschemToplevel *w_current, int color,
       next_coarse_y += coarse_incr;
       continue;
     }
-    WORLDtoSCREEN (w_current, x_start, j, &x1, &y1);
-    WORLDtoSCREEN (w_current, x_end,   j, &x2, &y2);
-    cairo_move_to (w_current->cr, x1, y1);
-    cairo_line_to (w_current->cr, x2, y2);
+
+    x1 = x_start;
+    y1 = j;
+    x2 = x_end;
+    y2 = j;
+
+    cairo_matrix_transform_point (user_to_device_matrix, &x1, &y1);
+    cairo_matrix_transform_point (user_to_device_matrix, &x2, &y2);
+
+    cairo_move_to (w_current->cr, (int)(x1+0.5), (int)(y1+0.5));
+    cairo_line_to (w_current->cr, (int)(x2+0.5), (int)(y2+0.5));
   }
   cairo_stroke (w_current->cr);
 
@@ -204,14 +210,19 @@ static void draw_mesh (GschemToplevel *w_current, int color,
       next_coarse_y += coarse_incr;
       continue;
     }
-    WORLDtoSCREEN (w_current, i, y_start, &x1, &y1);
-    WORLDtoSCREEN (w_current, i, y_end,   &x2, &y2);
-    cairo_move_to (w_current->cr, x1, y1);
-    cairo_line_to (w_current->cr, x2, y2);
+
+    x1 = i;
+    y1 = y_start;
+    x2 = i;
+    y2 = y_end;
+
+    cairo_matrix_transform_point (user_to_device_matrix, &x1, &y1);
+    cairo_matrix_transform_point (user_to_device_matrix, &x2, &y2);
+
+    cairo_move_to (w_current->cr, (int)(x1+0.5), (int)(y1+0.5));
+    cairo_line_to (w_current->cr, (int)(x2+0.5), (int)(y2+0.5));
   }
   cairo_stroke (w_current->cr);
-
-  cairo_translate (w_current->cr, -0.5, -0.5);
 }
 
 
@@ -259,32 +270,54 @@ static int query_mesh_grid_spacing (GschemToplevel *w_current)
  *  \param [in] width      The width of the region to draw.
  *  \param [in] height     The height of the region to draw.
  */
-static void draw_mesh_grid_region (GschemToplevel *w_current,
-                                   int x, int y, int width, int height)
+static void
+draw_mesh_grid_region (GschemToplevel *w_current, int x, int y, int width, int height)
 {
-  int x_start, y_start, x_end, y_end;
-  int incr;
-  int screen_incr;
+  int coarse_increment = MESH_COARSE_GRID_MULTIPLIER * w_current->snap_size;
+  double dummy = 0.0;
+  double threshold = w_current->mesh_grid_display_threshold;
 
-  incr = w_current->snap_size;
-  screen_incr = SCREENabs (w_current, incr);
+  cairo_device_to_user_distance (w_current->cr, &threshold, &dummy);
 
-  SCREENtoWORLD (w_current, x - 1, y + height + 1, &x_start, &y_start);
-  SCREENtoWORLD (w_current, x + width + 1, y - 1, &x_end, &y_end);
+  if (coarse_increment >= threshold) {
+    cairo_matrix_t user_to_device_matrix;
+    double x_start = x - 1;
+    double y_start = y + height + 1;
+    double x_end = x + width + 1;
+    double y_end = y - 1;
 
-  /* Draw the fine grid if its on-screen spacing is large enough */
-  if (screen_incr >= w_current->mesh_grid_display_threshold) {
-    draw_mesh (w_current, MESH_GRID_MINOR_COLOR, x_start, y_start,
-               x_end, y_end, incr, MESH_COARSE_GRID_MULTIPLIER);
-  }
+    cairo_device_to_user (w_current->cr, &x_start, &y_start);
+    cairo_device_to_user (w_current->cr, &x_end, &y_end);
 
-  incr *= MESH_COARSE_GRID_MULTIPLIER;
-  screen_incr = SCREENabs (w_current, incr);
+    cairo_get_matrix (w_current->cr, &user_to_device_matrix);
+    cairo_save (w_current->cr);
+    cairo_identity_matrix (w_current->cr);
+    cairo_translate (w_current->cr, 0.5, 0.5);
 
-  /* Draw the coarse grid if its on-screen spacing is large enough */
-  if (screen_incr >= w_current->mesh_grid_display_threshold) {
-    draw_mesh (w_current, MESH_GRID_MAJOR_COLOR,
-               x_start, y_start, x_end, y_end, incr, 0);
+    /* Draw the fine grid if its on-screen spacing is large enough */
+    if (w_current->snap_size >= threshold) {
+      draw_mesh (w_current,
+                 &user_to_device_matrix,
+                 MESH_GRID_MINOR_COLOR,
+                 floor (x_start),
+                 floor (y_start),
+                 ceil (x_end),
+                 ceil (y_end),
+                 w_current->snap_size,
+                 MESH_COARSE_GRID_MULTIPLIER);
+    }
+
+    draw_mesh (w_current,
+               &user_to_device_matrix,
+               MESH_GRID_MAJOR_COLOR,
+               floor (x_start),
+               floor (y_start),
+               ceil (x_end),
+               ceil (y_end),
+               coarse_increment,
+               0);
+
+    cairo_restore (w_current->cr);
   }
 }
 
