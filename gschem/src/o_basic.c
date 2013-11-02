@@ -94,7 +94,7 @@ void o_redraw_rects (GschemToplevel *w_current,
     cairo_device_to_user (w_current->cr, &upper_x, &upper_y);
 
     world_rect[i].lower_x = floor (lower_x);
-    world_rect[i].lower_y = floor (lower_x);
+    world_rect[i].lower_y = floor (lower_y);
     world_rect[i].upper_x = ceil (upper_x);
     world_rect[i].upper_y = ceil (upper_y);
   }
