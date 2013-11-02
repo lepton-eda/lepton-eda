@@ -204,18 +204,13 @@ void picture_selection_dialog (GschemToplevel *w_current)
  */
 void o_picture_invalidate_rubber (GschemToplevel *w_current)
 {
-  int left, top, width, height;
+  g_return_if_fail (w_current != NULL);
 
-  WORLDtoSCREEN (w_current,
-                 GET_PICTURE_LEFT(w_current), GET_PICTURE_TOP(w_current),
-                 &left, &top);
-  width = SCREENabs (w_current, GET_PICTURE_WIDTH (w_current));
-  height = SCREENabs (w_current, GET_PICTURE_HEIGHT(w_current));
-
-  o_invalidate_rect (w_current, left, top, left + width, top);
-  o_invalidate_rect (w_current, left, top, left, top + height);
-  o_invalidate_rect (w_current, left + width, top, left + width, top + height);
-  o_invalidate_rect (w_current, left, top + height, left + width, top + height);
+  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+                                          GET_PICTURE_LEFT (w_current),
+                                          GET_PICTURE_TOP (w_current),
+                                          GET_PICTURE_LEFT (w_current) + GET_PICTURE_WIDTH (w_current),
+                                          GET_PICTURE_TOP (w_current) + GET_PICTURE_HEIGHT (w_current));
 }
 
 /*! \brief Draw temporary picture while dragging edge.

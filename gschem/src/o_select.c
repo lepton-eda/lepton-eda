@@ -254,15 +254,13 @@ void o_select_box_motion (GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_select_box_invalidate_rubber (GschemToplevel *w_current)
 {
-  int x1, y1, x2, y2;
+  g_return_if_fail (w_current != NULL);
 
-  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
-
-  o_invalidate_rect (w_current, x1, y1, x2, y1);
-  o_invalidate_rect (w_current, x1, y1, x1, y2);
-  o_invalidate_rect (w_current, x2, y1, x2, y2);
-  o_invalidate_rect (w_current, x1, y2, x2, y2);
+  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+                                          w_current->first_wx,
+                                          w_current->first_wy,
+                                          w_current->second_wx,
+                                          w_current->second_wy);
 }
 
 /*! \todo Finish function documentation!!!

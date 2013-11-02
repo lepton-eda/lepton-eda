@@ -326,7 +326,8 @@ void o_move_invalidate_rubber (GschemToplevel *w_current, int drawing)
 {
   GList *s_iter;
   int dx1, dx2, dy1, dy2;
-  int x1, y1, x2, y2;
+
+  g_return_if_fail (w_current != NULL);
 
   o_place_invalidate_rubber (w_current, drawing);
   if (w_current->netconn_rubberband) {
@@ -349,12 +350,11 @@ void o_move_invalidate_rubber (GschemToplevel *w_current, int drawing)
             dy2 = w_current->second_wy - w_current->first_wy;
           }
 
-          WORLDtoSCREEN (w_current, object->line->x[0] + dx1,
-                                    object->line->y[0] + dy1, &x1, &y1);
-          WORLDtoSCREEN (w_current, object->line->x[1] + dx2,
-                                    object->line->y[1] + dy2, &x2, &y2);
-
-          o_invalidate_rect (w_current, x1, y1, x2, y2);
+          gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+                                                  object->line->x[0] + dx1,
+                                                  object->line->y[0] + dy1,
+                                                  object->line->x[1] + dx2,
+                                                  object->line->y[1] + dy2);
       }
     }
   }

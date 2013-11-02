@@ -166,8 +166,8 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int diff_x, diff_y;
   int left, top, bottom, right;
-  int s_left, s_top, s_bottom, s_right;
 
+  g_return_if_fail (w_current != NULL);
   g_return_if_fail (toplevel->page_current->place_list != NULL);
 
   /* If drawing is true, then don't worry about the previous drawing
@@ -204,10 +204,12 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
   /* Find the bounds of the drawing to be done */
   world_get_object_glist_bounds (toplevel, toplevel->page_current->place_list,
                                  &left, &top, &right, &bottom);
-  WORLDtoSCREEN (w_current, left + diff_x, top + diff_y, &s_left, &s_top);
-  WORLDtoSCREEN (w_current, right + diff_x, bottom + diff_y, &s_right, &s_bottom);
 
-  o_invalidate_rect (w_current, s_left, s_top, s_right, s_bottom);
+  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+                                          left + diff_x,
+                                          top + diff_y,
+                                          right + diff_x,
+                                          bottom + diff_y);
 }
 
 

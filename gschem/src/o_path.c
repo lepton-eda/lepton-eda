@@ -304,7 +304,8 @@ o_path_invalidate_rubber (GschemToplevel *w_current)
 {
   int added_sections;
   int min_x, min_y, max_x, max_y;
-  int x1, y1, x2, y2;
+
+  g_return_if_fail (w_current != NULL);
 
   /* Calculate any new sections */
   added_sections = path_next_sections (w_current);
@@ -319,9 +320,11 @@ o_path_invalidate_rubber (GschemToplevel *w_current)
   min_y = MIN (min_y, w_current->second_wy);
   max_y = MAX (max_y, w_current->second_wy);
 
-  WORLDtoSCREEN (w_current, min_x, max_y, &x1, &y1);
-  WORLDtoSCREEN (w_current, max_x, min_y, &x2, &y2);
-  o_invalidate_rect (w_current, x1, y1, x2, y2);
+  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+                                          min_x,
+                                          min_y,
+                                          max_x,
+                                          max_y);
 
   w_current->temp_path->num_sections -= added_sections;
 }
@@ -559,14 +562,15 @@ void
 o_path_invalidate_rubber_grips (GschemToplevel *w_current)
 {
   int min_x, min_y, max_x, max_y;
-  int x1, y1, x2, y2;
 
   path_rubber_bbox (w_current, NULL,
                     &min_x, &max_y, &max_x, &min_y);
 
-  WORLDtoSCREEN (w_current, min_x, max_y, &x1, &y1);
-  WORLDtoSCREEN (w_current, max_x, min_y, &x2, &y2);
-  o_invalidate_rect (w_current, x1, y1, x2, y2);
+  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+                                          min_x,
+                                          min_y,
+                                          max_x,
+                                          max_y);
 }
 
 

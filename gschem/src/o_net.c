@@ -677,22 +677,14 @@ o_net_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer)
 void o_net_invalidate_rubber (GschemToplevel *w_current)
 {
   int size = 0, magnetic_halfsize;
-  int bloat;
   int magnetic_x, magnetic_y;
-  int first_x, first_y, third_x, third_y, second_x, second_y;
-  int x1, y1, x2, y2;
 
   WORLDtoSCREEN (w_current, w_current->magnetic_wx, w_current->magnetic_wy,
                  &magnetic_x, &magnetic_y);
-  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy,
-                 &first_x, &first_y);
-  WORLDtoSCREEN (w_current, w_current->third_wx, w_current->third_wy,
-                 &third_x, &third_y);
-  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy,
-                 &second_x, &second_y);
+
+  g_return_if_fail (w_current != NULL);
 
   size = SCREENabs (w_current, NET_WIDTH);
-  bloat = size / 2;
 
   if (w_current->magneticnet_mode) {
     if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
@@ -705,17 +697,17 @@ void o_net_invalidate_rubber (GschemToplevel *w_current)
     }
   }
 
-  x1 = min (first_x, second_x) - bloat;
-  x2 = max (first_x, second_x) + bloat;
-  y1 = min (first_y, second_y) - bloat;
-  y2 = max (first_y, second_y) + bloat;
-  o_invalidate_rect (w_current, x1, y1, x2, y2);
+  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+                                          w_current->first_wx,
+                                          w_current->first_wy,
+                                          w_current->second_wx,
+                                          w_current->second_wy);
 
-  x1 = min (second_x, third_x) - bloat;
-  x2 = max (second_x, third_x) + bloat;
-  y1 = min (second_y, third_y) - bloat;
-  y2 = max (second_y, third_y) + bloat;
-  o_invalidate_rect (w_current, x1, y1, x2, y2);
+  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+                                          w_current->second_wx,
+                                          w_current->second_wy,
+                                          w_current->third_wx,
+                                          w_current->third_wy);
 }
 
 

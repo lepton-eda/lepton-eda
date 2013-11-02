@@ -407,32 +407,25 @@ gschem_page_view_invalidate_object (GschemPageView *view, OBJECT *object)
   g_return_if_fail (view != NULL);
 
   if (view->toplevel != NULL) {
-    int screen_bottom;
-    int screen_right;
-    int screen_left;
-    int screen_top;
     gboolean success;
     int world_bottom;
     int world_right;
     int world_left;
     int world_top;
 
-    success = world_get_single_object_bounds(view->toplevel,
-                                             object,
-                                             &world_left,
-                                             &world_top,
-                                             &world_right,
-                                             &world_bottom);
+    success = world_get_single_object_bounds (view->toplevel,
+                                              object,
+                                              &world_left,
+                                              &world_top,
+                                              &world_right,
+                                              &world_bottom);
 
     if (success) {
-      gschem_page_view_WORLDtoSCREEN (view, world_left, world_top, &screen_left, &screen_top);
-      gschem_page_view_WORLDtoSCREEN (view, world_right, world_bottom, &screen_right, &screen_bottom);
-
-      gschem_page_view_invalidate_screen_rect (view,
-                                               screen_left,
-                                               screen_top,
-                                               screen_right,
-                                               screen_bottom);
+      gschem_page_view_invalidate_world_rect (view,
+                                              world_left,
+                                              world_top,
+                                              world_right,
+                                              world_bottom);
     }
   }
 }
@@ -474,6 +467,36 @@ gschem_page_view_invalidate_screen_rect (GschemPageView *view, int left, int top
   rect.height = 1 + abs( top - bottom ) + 2 * bloat;
 
   gdk_window_invalidate_rect (window, &rect, FALSE);
+}
+
+
+
+/*! \brief Schedule redraw of the given rectange
+ *
+ *  \param [in,out] view   The Gschem page view to redraw
+ *  \param [in]     left
+ *  \param [in]     top
+ *  \param [in]     right
+ *  \param [in]     bottom
+ */
+void
+gschem_page_view_invalidate_world_rect (GschemPageView *view, int left, int top, int right, int bottom)
+{
+  int screen_bottom;
+  int screen_right;
+  int screen_left;
+  int screen_top;
+
+  g_return_if_fail (view != NULL);
+
+  gschem_page_view_WORLDtoSCREEN (view, left, top, &screen_left, &screen_top);
+  gschem_page_view_WORLDtoSCREEN (view, right, bottom, &screen_right, &screen_bottom);
+
+  gschem_page_view_invalidate_screen_rect (view,
+                                           screen_left,
+                                           screen_top,
+                                           screen_right,
+                                           screen_bottom);
 }
 
 

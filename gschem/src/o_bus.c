@@ -152,21 +152,13 @@ void o_bus_motion (GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_bus_invalidate_rubber (GschemToplevel *w_current)
 {
-  int x1, y1, x2, y2;
-  int min_x, min_y, max_x, max_y;
-  int bloat = 0;
+  g_return_if_fail (w_current != NULL);
 
-  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &x1, &y1);
-  WORLDtoSCREEN (w_current, w_current->second_wx, w_current->second_wy, &x2, &y2);
-
-  bloat = SCREENabs (w_current, BUS_WIDTH) / 2;
-
-  min_x = min (x1, x2) - bloat;
-  max_x = max (x1, x2) + bloat;
-  min_y = min (y1, y2) - bloat;
-  max_y = max (y1, y2) + bloat;
-
-  o_invalidate_rect (w_current, min_x, min_y, max_x, max_y);
+  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+                                          w_current->first_wx,
+                                          w_current->first_wy,
+                                          w_current->second_wx,
+                                          w_current->second_wy);
 }
 
 /*! \brief draw a rubberbus segment

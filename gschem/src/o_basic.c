@@ -571,12 +571,14 @@ void o_invalidate (GschemToplevel *w_current, OBJECT *object)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int left, top, bottom, right;
-  int s_left, s_top, s_bottom, s_right;
+
   if (world_get_single_object_bounds(toplevel, object, &left,  &top,
                                                        &right, &bottom)) {
-    WORLDtoSCREEN (w_current, left, top, &s_left, &s_top);
-    WORLDtoSCREEN (w_current, right, bottom, &s_right, &s_bottom);
-    o_invalidate_rect (w_current, s_left, s_top, s_right, s_bottom);
+    gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+                                            left,
+                                            top,
+                                            right,
+                                            bottom);
   }
 }
 
@@ -594,12 +596,14 @@ void o_invalidate_glist (GschemToplevel *w_current, GList *list)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int left, top, bottom, right;
-  int s_left, s_top, s_bottom, s_right;
+
   if (world_get_object_glist_bounds (toplevel, list, &left,  &top,
                                                      &right, &bottom)) {
-    WORLDtoSCREEN (w_current, left, top, &s_left, &s_top);
-    WORLDtoSCREEN (w_current, right, bottom, &s_right, &s_bottom);
-    o_invalidate_rect (w_current, s_left, s_top, s_right, s_bottom);
+    gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+                                            left,
+                                            top,
+                                            right,
+                                            bottom);
   }
 }
 

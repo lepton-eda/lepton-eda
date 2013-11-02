@@ -30,14 +30,15 @@
  */
 void o_arc_invalidate_rubber (GschemToplevel *w_current)
 {
-  int cx, cy, radius;
-
-  WORLDtoSCREEN (w_current, w_current->first_wx, w_current->first_wy, &cx, &cy);
-  radius = SCREENabs (w_current, w_current->distance);
+  g_return_if_fail (w_current != NULL);
 
   /* FIXME: This isn't a tight bounding box */
-  o_invalidate_rect (w_current, cx - radius, cy - radius,
-                                cx + radius, cy + radius);
+
+  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+                                          w_current->first_wx - w_current->distance,
+                                          w_current->first_wy - w_current->distance,
+                                          w_current->first_wx + w_current->distance,
+                                          w_current->first_wy + w_current->distance);
 }
 
 /*! \brief Start process to input a new arc.
