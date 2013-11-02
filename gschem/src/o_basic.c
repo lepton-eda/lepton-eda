@@ -19,7 +19,7 @@
  */
 #include <config.h>
 #include <stdio.h>
-
+#include <math.h>
 #include "gschem.h"
 
 #define INVALIDATE_MARGIN 1
@@ -47,7 +47,7 @@ void o_redraw_rects (GschemToplevel *w_current,
   int i;
   GList *obj_list;
   GList *iter;
-  BOX *world_rects;
+  BOX *world_rect;
   EdaRenderer *renderer;
   int render_flags;
   GArray *render_color_map = NULL;
@@ -62,29 +62,50 @@ void o_redraw_rects (GschemToplevel *w_current,
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (toplevel->page_current != NULL);
 
+  /* We need to transform the cairo context to world coordinates while
+   * we're drawing using the renderer. */
+  cairo_matrix_init (&render_mtx,
+                     (double) toplevel->page_current->to_screen_x_constant,
+                     0,
+                     0,
+                     - (double) toplevel->page_current->to_screen_y_constant,
+                     (- (double) toplevel->page_current->left
+                      * toplevel->page_current->to_screen_x_constant),
+                     ((double) toplevel->page_current->to_screen_y_constant
+                      * toplevel->page_current->top
+                      + toplevel->height));
+  cairo_save (w_current->cr);
+  cairo_set_matrix (w_current->cr, &render_mtx);
+
+
   grip_half_size = GRIP_SIZE / 2;
   cue_half_size = SCREENabs (w_current, CUE_BOX_SIZE);
   bloat = MAX (grip_half_size, cue_half_size);
 
-  world_rects = g_new (BOX, n_rectangles);
+
+  world_rect = g_new (BOX, n_rectangles);
 
   for (i = 0; i < n_rectangles; i++) {
-    int x, y, width, height;
+    double lower_x = rectangles[i].x - bloat;
+    double lower_y = rectangles[i].y + rectangles[i].height + bloat;
+    double upper_x = rectangles[i].x + rectangles[i].width + bloat;
+    double upper_y = rectangles[i].y - bloat;
 
-    x = rectangles[i].x;
-    y = rectangles[i].y;
-    width = rectangles[i].width;
-    height = rectangles[i].height;
+    cairo_device_to_user (w_current->cr, &lower_x, &lower_y);
+    cairo_device_to_user (w_current->cr, &upper_x, &upper_y);
 
-    SCREENtoWORLD (w_current, x - bloat, y + height + bloat,
-                   &world_rects[i].lower_x, &world_rects[i].lower_y);
-    SCREENtoWORLD (w_current, x + width + bloat, y - bloat,
-                   &world_rects[i].upper_x, &world_rects[i].upper_y);
+    world_rect[i].lower_x = floor (lower_x);
+    world_rect[i].lower_y = floor (lower_x);
+    world_rect[i].upper_x = ceil (upper_x);
+    world_rect[i].upper_y = ceil (upper_y);
   }
 
-  obj_list = s_page_objects_in_regions (toplevel, toplevel->page_current,
-                                        world_rects, n_rectangles);
-  g_free (world_rects);
+  obj_list = s_page_objects_in_regions (toplevel,
+                                        toplevel->page_current,
+                                        world_rect,
+                                        n_rectangles);
+
+  g_free (world_rect);
 
   /* Set up renderer based on configuration in w_current */
   render_flags = EDA_RENDERER_FLAG_HINTING;
@@ -117,21 +138,6 @@ void o_redraw_rects (GschemToplevel *w_current,
                 "render-flags", render_flags,
                 "color-map", render_color_map,
                 NULL);
-
-  /* We need to transform the cairo context to world coordinates while
-   * we're drawing using the renderer. */
-  cairo_matrix_init (&render_mtx,
-                     (double) toplevel->page_current->to_screen_x_constant,
-                     0,
-                     0,
-                     - (double) toplevel->page_current->to_screen_y_constant,
-                     (- (double) toplevel->page_current->left
-                      * toplevel->page_current->to_screen_x_constant),
-                     ((double) toplevel->page_current->to_screen_y_constant
-                      * toplevel->page_current->top
-                      + toplevel->height));
-  cairo_save (w_current->cr);
-  cairo_set_matrix (w_current->cr, &render_mtx);
 
   /* Determine whether we should draw the selection at all */
   draw_selected = !(w_current->inside_action &&
