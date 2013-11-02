@@ -131,8 +131,9 @@ void a_zoom(GschemToplevel *w_current, int dir, int selected_from, int pan_flags
 	
   /* warp the cursor to the right position */ 
   if (w_current->warp_cursor) {
-     WORLDtoSCREEN (w_current, world_pan_center_x, world_pan_center_y,
-		   &start_x, &start_y);
+     gschem_page_view_WORLDtoSCREEN (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+                                     world_pan_center_x, world_pan_center_y,
+                                     &start_x, &start_y);
      x_basic_warp_cursor (w_current->drawing_area, start_x, start_y);
   }
 }

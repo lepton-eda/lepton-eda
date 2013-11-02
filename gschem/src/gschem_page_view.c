@@ -99,9 +99,6 @@ set_scroll_adjustments (GschemPageView *view, GtkAdjustment *hadjustment, GtkAdj
 static void
 vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view);
 
-static void
-gschem_page_view_WORLDtoSCREEN (GschemPageView *view, int x, int y, int *px, int *py);
-
 
 
 static GObjectClass *gschem_page_view_parent_class = NULL;
@@ -961,7 +958,7 @@ vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view)
  *  A temporary function until a GschemToplevel is not required for coordinate
  *  conversions. See the function WORLDtoSCREEN.
  */
-static void
+void
 gschem_page_view_WORLDtoSCREEN (GschemPageView *view, int x, int y, int *px, int *py)
 {
   *px = gschem_page_view_pix_x (view, x);

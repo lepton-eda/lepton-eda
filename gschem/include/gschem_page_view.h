@@ -93,3 +93,7 @@ gschem_page_view_set_vadjustment (GschemPageView *view, GtkAdjustment *vadjustme
 
 void
 gschem_page_view_update_scroll_adjustments (GschemPageView *view);
+
+void
+gschem_page_view_WORLDtoSCREEN (GschemPageView *view, int x, int y, int *px, int *py);
+

@@ -111,7 +111,7 @@ static void draw_dots_grid_region (GschemToplevel *w_current,
 
   for (i = x_start; i <= x_end; i = i + incr) {
     for(j = y_start; j <= y_end; j = j + incr) {
-      WORLDtoSCREEN (w_current, i,j, &dot_x, &dot_y);
+      gschem_page_view_WORLDtoSCREEN (GSCHEM_PAGE_VIEW (w_current->drawing_area), i,j, &dot_x, &dot_y);
       if (inside_region (toplevel->page_current->left,
                          toplevel->page_current->top,
                          toplevel->page_current->right,
@@ -400,8 +400,8 @@ void x_draw_tiles(GschemToplevel *w_current)
   for (j = 0; j < MAX_TILES_Y; j++) {
     for (i = 0; i < MAX_TILES_X; i++) {
       t_current = &toplevel->page_current->world_tiles[i][j];
-      WORLDtoSCREEN (w_current, t_current->left, t_current->top, &x1, &y1);
-      WORLDtoSCREEN (w_current, t_current->right, t_current->bottom, &x2, &y2);
+      gschem_page_view_WORLDtoSCREEN (GSCHEM_PAGE_VIEW (w_current->drawing_area), t_current->left, t_current->top, &x1, &y1);
+      gschem_page_view_WORLDtoSCREEN (GSCHEM_PAGE_VIEW (w_current->drawing_area), t_current->right, t_current->bottom, &x2, &y2);
 
       screen_x = min(x1, x2);
       screen_y = min(y1, y2);
