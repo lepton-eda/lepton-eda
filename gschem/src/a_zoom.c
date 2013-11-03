@@ -32,18 +32,6 @@ a_zoom_box(GschemToplevel *w_current, PAGE *page, int pan_flags);
  * 2) SWAP & SORT
  */
 
-/* Kazu on July 8, 1999 - added these macros to simplify the code */
-/* keep these macros local to this file! KISS! */
-/*! \brief */
-#define GET_PAGE_WIDTH(w)					\
-	((w)->page_current->right  - (w)->page_current->left)
-/*! \brief */
-#define GET_PAGE_HEIGHT(w)					\
-	((w)->page_current->bottom - (w)->page_current->top )
-/*! \brief */
-#define GET_PAGE_ASPECT_RATIO(w)		\
-	((float) fabs(GET_PAGE_WIDTH (w)) /	\
-	 (float) fabs(GET_PAGE_HEIGHT(w)))
 
 
 /*! \todo Finish function documentation!!!
