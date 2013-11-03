@@ -437,9 +437,11 @@ o_path_motion (GschemToplevel *w_current, int w_x, int w_y)
 gboolean
 o_path_end(GschemToplevel *w_current, int w_x, int w_y)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  TOPLEVEL *toplevel = gschem_page_view_get_toplevel (page_view);
+  PAGE *page = gschem_page_view_get_page (page_view);
   gboolean close_path, end_path, start_path;
   PATH *p;
-  TOPLEVEL *toplevel;
   PATH_SECTION *section, *prev_section;
   int x1, y1, x2, y2;
 
@@ -447,10 +449,11 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
   g_assert (w_current->toplevel);
   g_assert (w_current->temp_path != NULL);
   g_assert (w_current->temp_path->sections != NULL);
+  g_assert (toplevel != NULL);
+  g_assert (page != NULL);
 
   o_path_invalidate_rubber (w_current);
 
-  toplevel = gschem_toplevel_get_toplevel (w_current);
   x1 = w_current->first_wx;
   y1 = w_current->first_wy;
   x2 = w_current->second_wx;
@@ -494,9 +497,9 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
     w_current->third_wx = -1;
     w_current->third_wy = -1;
 
-    s_page_append (toplevel, toplevel->page_current, obj);
+    s_page_append (toplevel, page, obj);
     g_run_hook_object (w_current, "%add-objects-hook", obj);
-    gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+    gschem_toplevel_page_content_changed (w_current, page);
     o_undo_savestate (w_current, UNDO_ALL);
 
     w_current->rubber_visible = FALSE;

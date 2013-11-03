@@ -126,14 +126,19 @@ void o_arc_end1(GschemToplevel *w_current, int w_x, int w_y)
 void o_arc_end4(GschemToplevel *w_current, int radius, 
 		int start_angle, int end_angle)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  TOPLEVEL *toplevel = gschem_page_view_get_toplevel (page_view);
+  PAGE *page = gschem_page_view_get_page (page_view);
   OBJECT *new_obj;
+
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (page != NULL);
 
   /* create, initialize and link the new arc object */
   new_obj = o_arc_new (toplevel, OBJ_ARC, GRAPHIC_COLOR,
                        w_current->first_wx, w_current->first_wy,
                        radius, start_angle, end_angle);
-  s_page_append (toplevel, toplevel->page_current, new_obj);
+  s_page_append (toplevel, page, new_obj);
 
   w_current->first_wx  = -1;
   w_current->first_wy  = -1;
@@ -142,7 +147,7 @@ void o_arc_end4(GschemToplevel *w_current, int radius,
   /* Call add-objects-hook */
   g_run_hook_object (w_current, "%add-objects-hook", new_obj);
 
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current, page);
   o_undo_savestate(w_current, UNDO_ALL);
 }
 

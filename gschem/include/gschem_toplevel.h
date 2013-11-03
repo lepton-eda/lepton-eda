@@ -243,6 +243,9 @@ struct st_gschem_toplevel {
 void
 gschem_toplevel_free (GschemToplevel *w_current);
 
+GschemPageView*
+gschem_toplevel_get_current_page_view (GschemToplevel *w_current);
+
 GtkListStore*
 gschem_toplevel_get_dash_length_list_store (GschemToplevel *w_current);
 

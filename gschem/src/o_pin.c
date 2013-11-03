@@ -42,11 +42,15 @@ void o_pin_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_pin_end(GschemToplevel *w_current, int x, int y)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  TOPLEVEL *toplevel = gschem_page_view_get_toplevel (page_view);
+  PAGE *page = gschem_page_view_get_page (page_view);
   OBJECT *new_obj;
   int color;
 
   g_assert( w_current->inside_action != 0 );
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (page != NULL);
 
   if (toplevel->override_pin_color == -1) {
     color = PIN_COLOR;
@@ -68,12 +72,12 @@ void o_pin_end(GschemToplevel *w_current, int x, int y)
                       w_current->first_wx, w_current->first_wy,
                       w_current->second_wx, w_current->second_wy,
                       PIN_TYPE_NET, 0);
-  s_page_append (toplevel, toplevel->page_current, new_obj);
+  s_page_append (toplevel, page, new_obj);
 
   /* Call add-objects-hook */
   g_run_hook_object (w_current, "%add-objects-hook", new_obj);
 
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current, page);
   o_undo_savestate(w_current, UNDO_ALL);
 }
 

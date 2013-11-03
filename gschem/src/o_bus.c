@@ -57,12 +57,16 @@ void o_bus_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 int o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  TOPLEVEL *toplevel = gschem_page_view_get_toplevel (page_view);
+  PAGE *page = gschem_page_view_get_page (page_view);
   OBJECT *new_obj;
   int color;
   GList *prev_conn_objects = NULL;
 
   g_assert( w_current->inside_action != 0 );
+  g_return_val_if_fail (toplevel != NULL, FALSE);
+  g_return_val_if_fail (page != NULL, FALSE);
 
   if (toplevel->override_bus_color == -1) {
     color = BUS_COLOR;
@@ -84,7 +88,7 @@ int o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
   new_obj = o_bus_new(toplevel, OBJ_BUS, color,
                       w_current->first_wx, w_current->first_wy,
                       w_current->second_wx, w_current->second_wy, 0);
-  s_page_append (toplevel, toplevel->page_current, new_obj);
+  s_page_append (toplevel, page, new_obj);
 
   /* connect the new bus to the other busses */
   prev_conn_objects = s_conn_return_others (prev_conn_objects, new_obj);
@@ -97,7 +101,7 @@ int o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
   w_current->first_wx = w_current->second_wx;
   w_current->first_wy = w_current->second_wy;
 
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current, page);
   o_undo_savestate(w_current, UNDO_ALL);
   return TRUE;
 }

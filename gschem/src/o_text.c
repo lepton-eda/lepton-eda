@@ -102,7 +102,12 @@ int o_text_get_rendered_bounds (void *user_data, OBJECT *o_current,
  */
 void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int align, int rotate, int size)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  TOPLEVEL *toplevel = gschem_page_view_get_toplevel (page_view);
+  PAGE *page = gschem_page_view_get_page (page_view);
+
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (page != NULL);
 
   /* Insert the new object into the buffer at world coordinates (0,0).
    * It will be translated to the mouse coordinates during placement. */
@@ -113,12 +118,12 @@ void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int 
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* remove the old place list if it exists */
-  s_delete_object_glist(toplevel, toplevel->page_current->place_list);
-  toplevel->page_current->place_list = NULL;
+  s_delete_object_glist(toplevel, page->place_list);
+  page->place_list = NULL;
 
   /* here you need to add OBJ_TEXT when it's done */
-  toplevel->page_current->place_list =
-    g_list_append(toplevel->page_current->place_list,
+  page->place_list =
+    g_list_append(page->place_list,
                   o_text_new (toplevel, OBJ_TEXT, color,
                               0, 0, align, rotate, /* zero is angle */
                               text,
@@ -171,17 +176,22 @@ void o_text_edit(GschemToplevel *w_current, OBJECT *o_current)
  */
 void o_text_edit_end(GschemToplevel *w_current, char *string, int color, int align, int rotate, int size)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  TOPLEVEL *toplevel = gschem_page_view_get_toplevel (page_view);
+  PAGE *page = gschem_page_view_get_page (page_view);
   OBJECT *object;
   GList *s_current;
   char *textstr = string;
+
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (page != NULL);
 
   if ((textstr != NULL) && (g_utf8_strlen(textstr, -1) == 0)) {
     textstr = NULL;
   }
 
   /* skip over head */
-  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
+  s_current = geda_list_get_glist (page->selection_list);
 
   while(s_current != NULL) {
     object = (OBJECT *) s_current->data;
@@ -206,7 +216,7 @@ void o_text_edit_end(GschemToplevel *w_current, char *string, int color, int ali
         }
 
         if (textstr != NULL) {
-          o_text_set_string (w_current->toplevel, object, textstr);
+          o_text_set_string (toplevel, object, textstr);
           /* handle slot= attribute, it's a special case */
           if (object->attached_to != NULL &&
               g_ascii_strncasecmp (textstr, "slot=", 5) == 0) {
@@ -221,7 +231,7 @@ void o_text_edit_end(GschemToplevel *w_current, char *string, int color, int ali
     s_current = g_list_next(s_current);
   }
   
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current, page);
   o_undo_savestate(w_current, UNDO_ALL);
 }
 
@@ -236,7 +246,13 @@ void o_text_edit_end(GschemToplevel *w_current, char *string, int color, int ali
 void o_text_change(GschemToplevel *w_current, OBJECT *object, char *string,
 		   int visibility, int show)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  TOPLEVEL *toplevel = gschem_page_view_get_toplevel (page_view);
+  PAGE *page = gschem_page_view_get_page (page_view);
+
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (page != NULL);
+
   if (object == NULL) {
     return;
   }
@@ -257,5 +273,5 @@ void o_text_change(GschemToplevel *w_current, OBJECT *object, char *string,
     o_slot_end (w_current, object->attached_to, string);
   }
 
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current, page);
 }

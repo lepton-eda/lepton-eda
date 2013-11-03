@@ -392,6 +392,21 @@ gschem_toplevel_free (GschemToplevel *w_current)
  *  \param [in] w_current The current gschem toplevel
  *  \return The selection adapter
  */
+GschemPageView*
+gschem_toplevel_get_current_page_view (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return GSCHEM_PAGE_VIEW (w_current->drawing_area);
+}
+
+
+
+/*! \brief Get the selection adapter
+ *
+ *  \param [in] w_current The current gschem toplevel
+ *  \return The selection adapter
+ */
 GschemSelectionAdapter*
 gschem_toplevel_get_selection_adapter (GschemToplevel *w_current)
 {
