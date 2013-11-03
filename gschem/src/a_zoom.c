@@ -24,6 +24,9 @@
 
 #include "gschem.h"
 
+static void
+a_zoom_box(GschemToplevel *w_current, PAGE *page, int pan_flags);
+
 /* Kazu - discuss with Ales
  * 1) rint
  * 2) SWAP & SORT
@@ -197,9 +200,9 @@ void a_zoom_extents (GschemToplevel *w_current, const GList *list, int pan_flags
  *  \par Function Description
  * 
  */
-void a_zoom_box(GschemToplevel *w_current, int pan_flags)
+static void
+a_zoom_box(GschemToplevel *w_current, PAGE *page, int pan_flags)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   double zx, zy, relativ_zoom_factor;
   double world_pan_center_x, world_pan_center_y;
 
@@ -211,10 +214,8 @@ void a_zoom_box(GschemToplevel *w_current, int pan_flags)
   }
 	
   /*calc new zoomfactors and choose the smaller one*/
-  zx = (double) abs(toplevel->page_current->left - toplevel->page_current->right) /
-    abs(w_current->first_wx - w_current->second_wx);
-  zy = (double) abs(toplevel->page_current->top - toplevel->page_current->bottom) /
-    abs(w_current->first_wy - w_current->second_wy);
+  zx = (double) abs(page->left - page->right) / abs(w_current->first_wx - w_current->second_wx);
+  zy = (double) abs(page->top - page->bottom) / abs(w_current->first_wy - w_current->second_wy);
 
   relativ_zoom_factor = (zx < zy ? zx : zy);
 	
@@ -245,12 +246,16 @@ void a_zoom_box_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 void a_zoom_box_end(GschemToplevel *w_current, int x, int y)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
+
   g_assert( w_current->inside_action != 0 );
+  g_return_if_fail (page != NULL);
 
   a_zoom_box_invalidate_rubber (w_current);
   w_current->rubber_visible = 0;
 
-  a_zoom_box(w_current, 0);
+  a_zoom_box(w_current, page, 0);
 
   if (w_current->undo_panzoom) {
     o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 

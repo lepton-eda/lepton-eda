@@ -8,7 +8,6 @@ void a_pan_mouse(GschemToplevel *w_current, int diff_x, int diff_y);
 /* a_zoom.c */
 void a_zoom(GschemToplevel *w_current, int dir, int selected_from, int pan_flags);
 void a_zoom_extents(GschemToplevel *w_current, const GList *list, int pan_flags);
-void a_zoom_box(GschemToplevel *w_current, int pan_flags);
 void a_zoom_box_start(GschemToplevel *w_current, int x, int y);
 void a_zoom_box_end(GschemToplevel *w_current, int x, int y);
 void a_zoom_box_motion(GschemToplevel *w_current, int x, int y);
