@@ -821,7 +821,6 @@ gint
 x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  PAGE *old_current;
   const gchar *log_msg, *state_msg;
   gint ret;
   GError *err = NULL;
@@ -830,15 +829,9 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
   g_return_val_if_fail (page     != NULL, 0);
   g_return_val_if_fail (filename != NULL, 0);
 
-  /* save current page for restore after opening */
-  old_current = toplevel->page_current;
+  /* try saving page to filename */
+  ret = (gint)f_save (toplevel, page, filename, &err);
 
-  /* change to page */
-  s_page_goto (toplevel, page);
-  gschem_toplevel_page_changed (w_current);
-
-  /* and try saving current page to filename */
-  ret = (gint)f_save (toplevel, toplevel->page_current, filename, &err);
   if (ret != 1) {
     log_msg   = _("Could NOT save page [%s]\n");
     state_msg = _("Error while trying to save");
@@ -873,13 +866,12 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
 
     /* add to recent file list */
     gtk_recent_manager_add_item (recent_manager, g_filename_to_uri(filename, NULL, NULL));
+
+    i_set_filename (w_current, page->page_filename);
   }
 
   /* log status of operation */
   s_log_message (log_msg, filename);
-
-  /* update display and page manager */
-  x_window_set_current_page (w_current, old_current);
 
   i_set_state_msg  (w_current, SELECT, state_msg);
   i_update_toolbar (w_current);
