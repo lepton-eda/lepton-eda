@@ -13,7 +13,6 @@ void a_zoom_box_end(GschemToplevel *w_current, int x, int y);
 void a_zoom_box_motion(GschemToplevel *w_current, int x, int y);
 void a_zoom_box_invalidate_rubber(GschemToplevel *w_current);
 void a_zoom_box_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer);
-void correct_aspect(GschemToplevel *w_current);
 /* g_action.c */
 gboolean g_action_eval_by_name (GschemToplevel *w_current, const gchar *action_name);
 gboolean g_action_get_position (gboolean snap, int *x, int *y);
