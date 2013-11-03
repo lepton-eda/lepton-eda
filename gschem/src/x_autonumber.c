@@ -587,7 +587,9 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
       }
     }
   }
-  autotext->w_current->toplevel->page_current->CHANGED = 1;
+
+  gschem_toplevel_page_content_changed (autotext->w_current,
+                                        autotext->w_current->toplevel->page_current);
 }
 
 /*! \brief Changes the number <B>OBJECT</B> element. Changes the slot attribute.
@@ -613,7 +615,8 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
   o_text_set_string (autotext->w_current->toplevel, o_current, str);
   g_free (str);
 
-  autotext->w_current->toplevel->page_current->CHANGED = 1;
+  gschem_toplevel_page_content_changed (autotext->w_current,
+                                        autotext->w_current->toplevel->page_current);
 }
 
 

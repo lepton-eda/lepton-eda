@@ -868,6 +868,7 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
     gtk_recent_manager_add_item (recent_manager, g_filename_to_uri(filename, NULL, NULL));
 
     i_set_filename (w_current, page->page_filename);
+    x_pagesel_update (w_current);
   }
 
   /* log status of operation */

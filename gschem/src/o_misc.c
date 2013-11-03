@@ -116,7 +116,7 @@ void o_lock(GschemToplevel *w_current)
         object->selectable = FALSE;
         object->locked_color = object->color;
         object->color = LOCK_COLOR;
-        w_current->toplevel->page_current->CHANGED=1;
+        gschem_toplevel_page_content_changed (w_current, w_current->toplevel->page_current);
       } else {
         s_log_message(_("Object already locked\n"));
       }
@@ -154,7 +154,7 @@ void o_unlock(GschemToplevel *w_current)
         object->selectable = TRUE;
         object->color = object->locked_color;
         object->locked_color = -1;
-        w_current->toplevel->page_current->CHANGED = 1;
+        gschem_toplevel_page_content_changed (w_current, w_current->toplevel->page_current);
       } else {
         s_log_message(_("Object already unlocked\n"));
       }
@@ -226,7 +226,7 @@ void o_rotate_world_update(GschemToplevel *w_current,
 
   /* Don't save the undo state if we are inside an action */
   /* This is useful when rotating the selection while moving, for example */
-  toplevel->page_current->CHANGED = 1;
+  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
   if (!w_current->inside_action) {
     o_undo_savestate(w_current, UNDO_ALL);
   }
@@ -278,7 +278,7 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
   /* Run mirror-objects-hook */
   g_run_hook_object_list (w_current, "%mirror-objects-hook", list);
 
-  toplevel->page_current->CHANGED=1;
+  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
   o_undo_savestate(w_current, UNDO_ALL);
 }
 
@@ -484,7 +484,7 @@ void o_edit_hide_specific_text (GschemToplevel *w_current,
           o_set_visibility (toplevel, o_current, INVISIBLE);
           o_text_recreate(toplevel, o_current);
 
-          toplevel->page_current->CHANGED = 1;
+          gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
         }
       }
     }
@@ -518,7 +518,7 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
           o_set_visibility (toplevel, o_current, VISIBLE);
           o_text_recreate(toplevel, o_current);
 
-          toplevel->page_current->CHANGED = 1;
+          gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
         }
       }
     }
@@ -633,7 +633,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
   o_selection_add (toplevel, page->selection_list, o_new);
 
   /* mark the page as modified */
-  toplevel->page_current->CHANGED = 1;
+  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
   o_undo_savestate (w_current, UNDO_ALL);
 
   return o_new;

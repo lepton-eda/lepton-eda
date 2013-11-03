@@ -200,7 +200,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
                   if (!strncmp (str, newtext, strchr (newtext, '=') - newtext)) {
                     o_text_change(w_current, a_current, newtext, vis, show);
                     replaced = TRUE;
-                    toplevel->page_current->CHANGED = 1;
+                    gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
                   }
                 }
                 a_iter = g_list_next (a_iter);
@@ -235,13 +235,13 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
 	new->text->x = wx;
 	new->text->y = wy;
 	o_text_recreate(toplevel, new);
-	toplevel->page_current->CHANGED = 1;
+    gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
 	o_undo_savestate(w_current, UNDO_ALL);
       }
     }
   } else {
     o_text_change(w_current, attribptr, newtext, vis, show);
-    toplevel->page_current->CHANGED = 1;
+    gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
     o_undo_savestate(w_current, UNDO_ALL);
   }
   gtk_grab_remove(w_current->aewindow);

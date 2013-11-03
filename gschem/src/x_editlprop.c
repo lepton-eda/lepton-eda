@@ -464,7 +464,7 @@ line_type_changed (GtkWidget *widget, EditLProp *dialog)
     if (line_type >= 0) {
       gschem_selection_adapter_set_line_type (dialog->adapter, line_type);
 
-      toplevel->page_current->CHANGED = 1;
+      gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
       o_undo_savestate(w_current, UNDO_ALL);
     }
   }
@@ -500,7 +500,7 @@ line_width_changed (GtkWidget *widget, EditLProp *dialog)
     if (line_width >= 0) {
       gschem_selection_adapter_set_line_width (dialog->adapter, line_width);
 
-      toplevel->page_current->CHANGED = 1;
+      gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
       o_undo_savestate(w_current, UNDO_ALL);
     }
   }
@@ -536,7 +536,7 @@ dash_length_changed (GtkWidget *widget, EditLProp *dialog)
     if (dash_length >= 0) {
       gschem_selection_adapter_set_dash_length (dialog->adapter, dash_length);
 
-      toplevel->page_current->CHANGED = 1;
+      gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
       o_undo_savestate(w_current, UNDO_ALL);
     }
   }
@@ -572,7 +572,7 @@ dash_space_changed (GtkWidget *widget, EditLProp *dialog)
     if (dash_space >= 0) {
       gschem_selection_adapter_set_dash_space (dialog->adapter, dash_space);
 
-      toplevel->page_current->CHANGED = 1;
+      gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
       o_undo_savestate(w_current, UNDO_ALL);
     }
   }
@@ -610,7 +610,7 @@ cap_style_changed (GtkWidget *widget, EditLProp *dialog)
     if (cap_style >= 0) {
       gschem_selection_adapter_set_cap_style (dialog->adapter, cap_style);
 
-      toplevel->page_current->CHANGED = 1;
+      gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
       o_undo_savestate(w_current, UNDO_ALL);
     }
   }

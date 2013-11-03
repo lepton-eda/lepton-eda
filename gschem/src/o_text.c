@@ -221,7 +221,7 @@ void o_text_edit_end(GschemToplevel *w_current, char *string, int color, int ali
     s_current = g_list_next(s_current);
   }
   
-  toplevel->page_current->CHANGED = 1;
+  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
   o_undo_savestate(w_current, UNDO_ALL);
 }
 
@@ -257,5 +257,5 @@ void o_text_change(GschemToplevel *w_current, OBJECT *object, char *string,
     o_slot_end (w_current, object->attached_to, string);
   }
 
-  toplevel->page_current->CHANGED = 1;
+  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
 }

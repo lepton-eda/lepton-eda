@@ -128,6 +128,6 @@ void o_slot_end(GschemToplevel *w_current, OBJECT *object, const char *string)
 
   s_slot_update_object (toplevel, object);
 
-  toplevel->page_current->CHANGED = 1;
+  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
   g_free (value);
 }

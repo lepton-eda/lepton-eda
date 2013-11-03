@@ -577,6 +577,25 @@ gschem_toplevel_page_changed (GschemToplevel *w_current)
 
 
 
+/*! \brief Temporary function to notify of page content change
+ *
+ *  This function is temporary until library functions can emit signals.
+ *
+ *  \param [in] w_current The current gschem toplevel.
+ *  \param [in] page      The page that underwent changes.
+ */
+void
+gschem_toplevel_page_content_changed (GschemToplevel *w_current, PAGE *page)
+{
+  g_return_if_fail (page != NULL);
+  g_return_if_fail (w_current != NULL);
+
+  page->CHANGED = 1;
+
+  x_pagesel_update (w_current);
+}
+
+
 /*! \brief Set the libgeda toplevel for this gschem toplevel
  *
  *  \param [in] w_current This gschem toplevel

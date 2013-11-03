@@ -278,3 +278,6 @@ gschem_toplevel_page_changed (GschemToplevel *w_current);
 
 void
 gschem_toplevel_set_toplevel (GschemToplevel *w_current, TOPLEVEL *toplevel);
+
+void
+gschem_toplevel_page_content_changed (GschemToplevel *w_current, PAGE *page);

@@ -94,9 +94,10 @@ int o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
   /* Call add-objects-hook */
   g_run_hook_object (w_current, "%add-objects-hook", new_obj);
 
-  toplevel->page_current->CHANGED=1;
   w_current->first_wx = w_current->second_wx;
   w_current->first_wy = w_current->second_wy;
+
+  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
   o_undo_savestate(w_current, UNDO_ALL);
   return TRUE;
 }

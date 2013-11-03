@@ -373,7 +373,7 @@ void o_undo_callback(GschemToplevel *w_current, int type)
     x_manual_resize(w_current);
     toplevel->page_current->page_control = u_current->page_control;
     toplevel->page_current->up = u_current->up;
-    toplevel->page_current->CHANGED=1;
+    gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
 
   } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_list) {
 
@@ -386,7 +386,7 @@ void o_undo_callback(GschemToplevel *w_current, int type)
     x_manual_resize(w_current);
     toplevel->page_current->page_control = u_current->page_control;
     toplevel->page_current->up = u_current->up;
-    toplevel->page_current->CHANGED=1;
+    gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
   }
 
   /* do misc setups */

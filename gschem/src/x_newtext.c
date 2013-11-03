@@ -128,14 +128,15 @@ dialog_response_apply (NewText *dialog)
   select_all_text_in_textview(GTK_TEXT_VIEW(dialog->text_view));
   gtk_widget_grab_focus(dialog->text_view);
 
-  dialog->parent.w_current->toplevel->page_current->CHANGED=1;
-
   o_text_prepare_place (dialog->parent.w_current,
                         tmp == NULL ? string : tmp,
                         color,
                         align,
                         rotate,
                         size);
+
+  //gschem_toplevel_page_content_changed (dialog->parent.w_current,
+  //                                      dialog->parent.w_current->toplevel->page_current);
 
   g_free (string);
   g_free (tmp);

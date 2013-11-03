@@ -115,7 +115,7 @@ void o_picture_end(GschemToplevel *w_current, int w_x, int w_y)
   /* Run %add-objects-hook */
   g_run_hook_object (w_current, "%add-objects-hook", new_obj);
 
-  toplevel->page_current->CHANGED = 1;
+  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
   o_undo_savestate(w_current, UNDO_ALL);
 }
 
@@ -182,7 +182,7 @@ void picture_selection_dialog (GschemToplevel *w_current)
       
       o_picture_set_pixbuf(w_current, pixbuf, filename);
     
-      toplevel->page_current->CHANGED=1;
+      gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
       i_set_state(w_current, DRAWPICTURE);
     }
     g_free (filename);
@@ -379,7 +379,7 @@ void picture_change_filename_dialog (GschemToplevel *w_current)
       g_error_free (error);
       gtk_widget_destroy(dialog);
     } else {
-      toplevel->page_current->CHANGED=1;
+      gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
     }
     g_free (filename);
   }

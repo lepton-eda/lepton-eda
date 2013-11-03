@@ -210,7 +210,7 @@ void o_complex_translate_all(GschemToplevel *w_current, int offset)
                  A_PAN_DONT_REDRAW);
   if (!w_current->SHIFTKEY) o_select_unselect_all(w_current);
   o_invalidate_all (w_current);
-  toplevel->page_current->CHANGED=1;
+  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
   o_undo_savestate(w_current, UNDO_ALL);
   i_update_menus(w_current);
 }

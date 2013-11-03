@@ -257,7 +257,7 @@ dialog_response_ok (EditFProp *dialog)
                         opitch1, oangle1, opitch2, oangle2);
   }
 
-  toplevel->page_current->CHANGED = 1;
+  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
   o_undo_savestate(w_current, UNDO_ALL);
 }
 

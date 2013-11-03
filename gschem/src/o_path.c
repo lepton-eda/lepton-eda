@@ -496,7 +496,7 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
 
     s_page_append (toplevel, toplevel->page_current, obj);
     g_run_hook_object (w_current, "%add-objects-hook", obj);
-    toplevel->page_current->CHANGED = TRUE;
+    gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
     o_undo_savestate (w_current, UNDO_ALL);
 
     w_current->rubber_visible = FALSE;

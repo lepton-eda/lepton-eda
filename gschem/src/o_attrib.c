@@ -186,7 +186,7 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, OBJECT *object)
     o_text_recreate(toplevel, object);
   }
 
-  toplevel->page_current->CHANGED = 1;
+  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
 }
 
 /*! \brief Set what part of an attribute is shown.
@@ -210,7 +210,7 @@ void o_attrib_toggle_show_name_value(GschemToplevel *w_current,
   object->show_name_value = show_name_value;
   o_text_recreate(toplevel, object);
 
-  toplevel->page_current->CHANGED = 1;
+  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
 }
 
 
@@ -376,7 +376,7 @@ OBJECT *o_attrib_add_attrib(GschemToplevel *w_current,
   g_run_hook_object (w_current, "%add-objects-hook", new_obj);
   g_run_hook_object (w_current, "%select-objects-hook", new_obj);
 
-  toplevel->page_current->CHANGED = 1;
+  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
 
   return new_obj;
 }
