@@ -685,7 +685,7 @@ void o_net_invalidate_rubber (GschemToplevel *w_current)
 
   g_return_if_fail (w_current != NULL);
 
-  size = SCREENabs (w_current, NET_WIDTH);
+  size = gschem_page_view_SCREENabs (GSCHEM_PAGE_VIEW (w_current->drawing_area), NET_WIDTH);
 
   if (w_current->magneticnet_mode) {
     if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {

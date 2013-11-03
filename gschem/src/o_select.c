@@ -202,14 +202,16 @@ void o_select_object(GschemToplevel *w_current, OBJECT *o_current,
  */
 int o_select_box_start(GschemToplevel *w_current, int w_x, int w_y)
 {
-  int diff_x, diff_y;
+  int diff_x, diff_y, dist;
 
   diff_x = abs(w_current->first_wx - w_x);
   diff_y = abs(w_current->first_wy - w_y);
 
   /* if we are still close to the button press location,
      then don't enter the selection box mode */
-  if (SCREENabs (w_current, max(diff_x, diff_y)) < 10) {
+  dist = gschem_page_view_SCREENabs (GSCHEM_PAGE_VIEW (w_current->drawing_area), max(diff_x, diff_y));
+
+  if (dist < 10) {
     return FALSE;
   }
 

@@ -140,36 +140,6 @@ int snap_grid(GschemToplevel *w_current, int input)
   return(sign*n);
 }
 
-/*! \brief Get absolute SCREEN coordinate.
- *  \par Function Description
- *  Get absolute SCREEN coordinate.
- *
- *  \param [in] w_current  The GschemToplevel object.
- *  \param [in] val        The coordinate to convert.
- *  \return The converted SCREEN coordinate.
- */
-int SCREENabs(GschemToplevel *w_current, int val)
-{
-  double f0,f1,f;
-
-  double i;
-  int j;
-
-  f0 = w_current->toplevel->page_current->left;
-  f1 = w_current->toplevel->page_current->right;
-  f = w_current->toplevel->width / (f1 - f0);
-  i = f * (double)(val);
-
-#ifdef HAS_RINT
-  j = rint(i);
-#else
-  j = i;
-#endif
-
-  return(j);
-
-}
-
 /*! \brief Get absolute WORLD coordinate.
  *  \par Function Description
  *  Get absolute WORLD coordinate.

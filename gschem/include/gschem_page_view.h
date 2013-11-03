@@ -79,6 +79,9 @@ gschem_page_view_invalidate_world_rect (GschemPageView *view, int left, int top,
 GschemPageView*
 gschem_page_view_new_with_toplevel (TOPLEVEL *toplevel);
 
+int
+gschem_page_view_SCREENabs(GschemPageView *view, int val);
+
 void
 gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustment);
 

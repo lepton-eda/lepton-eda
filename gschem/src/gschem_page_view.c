@@ -78,9 +78,6 @@ gschem_page_view_pix_x (GschemPageView *view, int val);
 static int
 gschem_page_view_pix_y (GschemPageView *view, int val);
 
-static int
-gschem_page_view_SCREENabs(GschemPageView *view, int val);
-
 static void
 gschem_page_view_update_hadjustment (GschemPageView *view);
 
@@ -800,7 +797,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  A temporary function until a GschemToplevel is not required for coordinate
  *  conversions. See the function SCREENabs.
  */
-static int
+int
 gschem_page_view_SCREENabs(GschemPageView *view, int val)
 {
   double f0,f1,f;

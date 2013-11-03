@@ -42,8 +42,9 @@ void o_redraw_rects (GschemToplevel *w_current,
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   gboolean draw_selected;
   int grip_half_size;
-  int cue_half_size;
+  double cue_half_size;
   int bloat;
+  double dummy = 0.0;
   int i;
   GList *obj_list;
   GList *iter;
@@ -78,8 +79,9 @@ void o_redraw_rects (GschemToplevel *w_current,
   }
 
   grip_half_size = GRIP_SIZE / 2;
-  cue_half_size = SCREENabs (w_current, CUE_BOX_SIZE);
-  bloat = MAX (grip_half_size, cue_half_size);
+  cue_half_size = CUE_BOX_SIZE;
+  cairo_user_to_device (w_current->cr, &cue_half_size, &dummy);
+  bloat = MAX (grip_half_size, (int)cue_half_size);
 
 
   world_rect = g_new (BOX, n_rectangles);
@@ -522,25 +524,14 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
 void o_invalidate_rect (GschemToplevel *w_current,
                         int x1, int y1, int x2, int y2)
 {
-  GdkRectangle rect;
-  int grip_half_size;
-  int cue_half_size;
-  int bloat;
+  g_return_if_fail (w_current != NULL);
 
-  /* BUG: We get called when rendering an image, and w_current->window
-   *      is a GdkPixmap. Ensure we only invalidate GdkWindows. */
-  if (!GDK_IS_WINDOW( w_current->window ))
-    return;
+  gschem_page_view_invalidate_screen_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+                                           x1,
+                                           y1,
+                                           x2,
+                                           y2);
 
-  grip_half_size = GRIP_SIZE / 2;
-  cue_half_size = SCREENabs (w_current, CUE_BOX_SIZE);
-  bloat = MAX (grip_half_size, cue_half_size) + INVALIDATE_MARGIN;
-
-  rect.x = MIN(x1, x2) - bloat;
-  rect.y = MIN(y1, y2) - bloat;
-  rect.width = 1 + abs( x1 - x2 ) + 2 * bloat;
-  rect.height = 1 + abs( y1 - y2 ) + 2 * bloat;
-  gdk_window_invalidate_rect( w_current->window, &rect, FALSE );
 }
 
 
@@ -554,7 +545,9 @@ void o_invalidate_rect (GschemToplevel *w_current,
  */
 void o_invalidate_all (GschemToplevel *w_current)
 {
-  gdk_window_invalidate_rect (w_current->window, NULL, FALSE);
+  g_return_if_fail (w_current != NULL);
+
+  gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (w_current->drawing_area));
 }
 
 
