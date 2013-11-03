@@ -403,7 +403,7 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, OBJECT *object);
 void o_attrib_toggle_show_name_value(GschemToplevel *w_current, OBJECT *object, int new_show_name_value);
 OBJECT *o_attrib_add_attrib(GschemToplevel *w_current, const char *text_string, int visibility, int show_name_value, OBJECT *object);
 /* o_basic.c */
-void o_redraw_rects(GschemToplevel *w_current, GdkRectangle *rectangles, int n_rectangles);
+void o_redraw_rects(GschemToplevel *w_current, PAGE *page, GdkRectangle *rectangles, int n_rectangles);
 int o_invalidate_rubber(GschemToplevel *w_current);
 int o_redraw_cleanstates(GschemToplevel *w_current);
 void o_draw_place(GschemToplevel *w_current, int dx, int dy, OBJECT *object);

@@ -46,32 +46,39 @@ static int DOING_STROKE = FALSE;
 gint x_event_expose(GschemPageView *view, GdkEventExpose *event,
                     GschemToplevel *w_current)
 {
-  GdkRectangle *rectangles;
-  int n_rectangles;
-  cairo_t *save_cr;
+  PAGE *page;
 
 #if DEBUG
   printf("EXPOSE\n");
 #endif
 
-  g_return_val_if_fail ((w_current != NULL), 0);
+  g_return_val_if_fail (view != NULL, 0);
+  g_return_val_if_fail (w_current != NULL, 0);
 
-  save_cr = w_current->cr;
+  page = gschem_page_view_get_page (view);
 
-  w_current->cr = gdk_cairo_create( GTK_WIDGET (view)->window );
+  if (page != NULL) {
+    GdkRectangle *rectangles;
+    int n_rectangles;
+    cairo_t *save_cr;
 
-  gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
-  o_redraw_rects (w_current, rectangles, n_rectangles);
-  g_free (rectangles);
+    save_cr = w_current->cr;
 
-  /* raise the dialog boxes if this feature is enabled */
-  if (w_current->raise_dialog_boxes) {
-    x_dialog_raise_all(w_current);
+    w_current->cr = gdk_cairo_create( GTK_WIDGET (view)->window );
+
+    gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
+    o_redraw_rects (w_current, page, rectangles, n_rectangles);
+    g_free (rectangles);
+
+    /* raise the dialog boxes if this feature is enabled */
+    if (w_current->raise_dialog_boxes) {
+      x_dialog_raise_all(w_current);
+    }
+
+    cairo_destroy (w_current->cr);
+
+    w_current->cr = save_cr;
   }
-
-  cairo_destroy (w_current->cr);
-
-  w_current->cr = save_cr;
 
   return(0);
 }

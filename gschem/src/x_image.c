@@ -662,7 +662,7 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
   rect.width = right - origin_x;
   rect.height = bottom - origin_y;
 
-  o_redraw_rects (&new_w_current, &rect, 1);
+  o_redraw_rects (&new_w_current, toplevel.page_current, &rect, 1);
 
   /* Get the pixbuf */
   pixbuf = gdk_pixbuf_get_from_drawable (NULL,new_w_current.drawable, NULL,

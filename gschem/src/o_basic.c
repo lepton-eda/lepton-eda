@@ -37,7 +37,9 @@ extern COLOR display_outline_colors[MAX_COLORS];
  *
  */
 void o_redraw_rects (GschemToplevel *w_current,
-                     GdkRectangle *rectangles, int n_rectangles)
+                     PAGE *page,
+                     GdkRectangle *rectangles,
+                     int n_rectangles)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   gboolean draw_selected;
@@ -55,21 +57,21 @@ void o_redraw_rects (GschemToplevel *w_current,
   GArray *render_outline_color_map = NULL;
   cairo_matrix_t render_mtx;
 
+  g_return_if_fail (w_current != NULL);
   g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (toplevel->page_current != NULL);
+  g_return_if_fail (w_current->toplevel == toplevel);
+  g_return_if_fail (page != NULL);
 
   /* We need to transform the cairo context to world coordinates while
    * we're drawing using the renderer. */
   cairo_matrix_init (&render_mtx,
-                     (double) toplevel->page_current->to_screen_x_constant,
+                     (double) page->to_screen_x_constant,
                      0,
                      0,
-                     - (double) toplevel->page_current->to_screen_y_constant,
-                     (- (double) toplevel->page_current->left
-                      * toplevel->page_current->to_screen_x_constant),
-                     ((double) toplevel->page_current->to_screen_y_constant
-                      * toplevel->page_current->top
-                      + toplevel->height));
+                     - (double) page->to_screen_y_constant,
+                     (- (double) page->left * page->to_screen_x_constant),
+                     ((double) page->to_screen_y_constant * page->top + toplevel->height));
+
   cairo_save (w_current->cr);
   cairo_set_matrix (w_current->cr, &render_mtx);
 
@@ -102,7 +104,7 @@ void o_redraw_rects (GschemToplevel *w_current,
   }
 
   obj_list = s_page_objects_in_regions (toplevel,
-                                        toplevel->page_current,
+                                        page,
                                         world_rect,
                                         n_rectangles);
 
@@ -134,8 +136,7 @@ void o_redraw_rects (GschemToplevel *w_current,
   renderer = g_object_ref (w_current->renderer);
   g_object_set (G_OBJECT (renderer),
                 "cairo-context", w_current->cr,
-                "grip-size", ((double) grip_half_size
-                              * toplevel->page_current->to_world_x_constant),
+                "grip-size", ((double) grip_half_size * page->to_world_x_constant),
                 "render-flags", render_flags,
                 "color-map", render_color_map,
                 NULL);
@@ -170,7 +171,7 @@ void o_redraw_rects (GschemToplevel *w_current,
     g_object_set (G_OBJECT (renderer),
                   "override-color", SELECT_COLOR,
                   NULL);
-    for (iter = geda_list_get_glist (toplevel->page_current->selection_list);
+    for (iter = geda_list_get_glist (page->selection_list);
          iter != NULL; iter = g_list_next (iter)) {
       OBJECT *o_current = iter->data;
       if (!o_current->dont_redraw) {

@@ -127,24 +127,32 @@ preview_callback_expose (GtkWidget *widget,
                          GdkEventExpose *event,
                          gpointer user_data)
 {
+  PAGE *page;
   Preview *preview = PREVIEW (widget);
   GschemToplevel *preview_w_current = preview->preview_w_current;
-  GdkRectangle *rectangles;
-  int n_rectangles;
-  cairo_t *save_cr;
 
-  save_cr = preview_w_current->cr;
+  g_return_val_if_fail (preview != NULL, FALSE);
+  g_return_val_if_fail (preview_w_current != NULL, FALSE);
 
-  preview_w_current->cr = gdk_cairo_create (widget->window);
+  page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview));
 
-  gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
-  o_redraw_rects (preview_w_current, rectangles, n_rectangles);
-  g_free (rectangles);
+  if (page != NULL) {
+    GdkRectangle *rectangles;
+    int n_rectangles;
+    cairo_t *save_cr;
 
-  cairo_destroy (preview_w_current->cr);
+    save_cr = preview_w_current->cr;
 
-  preview_w_current->cr = save_cr;
+    preview_w_current->cr = gdk_cairo_create (widget->window);
 
+    gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
+    o_redraw_rects (preview_w_current, page, rectangles, n_rectangles);
+    g_free (rectangles);
+
+    cairo_destroy (preview_w_current->cr);
+
+    preview_w_current->cr = save_cr;
+  }
   return FALSE;
 }
 
