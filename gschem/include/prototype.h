@@ -4,7 +4,7 @@
 void a_pan_general(GschemToplevel *w_current, double world_cx, double world_cy,
 		   double relativ_zoom_factor, int flags);
 void a_pan(GschemToplevel *w_current, int x, int y);
-void a_pan_mouse(GschemToplevel *w_current, int diff_x, int diff_y);
+void a_pan_mouse(GschemToplevel *w_current, GschemPageView *page_view, int diff_x, int diff_y);
 /* a_zoom.c */
 void a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int selected_from, int pan_flags);
 void a_zoom_extents(GschemToplevel *w_current, const GList *list, int pan_flags);

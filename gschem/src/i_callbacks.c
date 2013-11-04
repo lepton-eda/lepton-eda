@@ -1266,10 +1266,12 @@ DEFINE_I_CALLBACK(view_pan)
 DEFINE_I_CALLBACK(view_pan_left)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
 
   g_return_if_fail (w_current != NULL);
+  g_return_if_fail (page_view != NULL);
 
-  a_pan_mouse(w_current, w_current->keyboardpan_gain, 0);
+  a_pan_mouse(w_current, page_view, w_current->keyboardpan_gain, 0);
 }
 
 /*! \brief Scheme callback function that moves the viewport to the right.
@@ -1279,11 +1281,13 @@ DEFINE_I_CALLBACK(view_pan_left)
 DEFINE_I_CALLBACK(view_pan_right)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
 
   g_return_if_fail (w_current != NULL);
+  g_return_if_fail (page_view != NULL);
 
   /* yes, that's a negative sign there */
-  a_pan_mouse(w_current, -w_current->keyboardpan_gain, 0);
+  a_pan_mouse(w_current, page_view, -w_current->keyboardpan_gain, 0);
 }
 
 /*! \brief Scheme callback function that moves the viewport up.
@@ -1293,10 +1297,12 @@ DEFINE_I_CALLBACK(view_pan_right)
 DEFINE_I_CALLBACK(view_pan_up)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
 
   g_return_if_fail (w_current != NULL);
+  g_return_if_fail (page_view != NULL);
 
-  a_pan_mouse(w_current, 0, w_current->keyboardpan_gain);
+  a_pan_mouse(w_current, page_view, 0, w_current->keyboardpan_gain);
 }
 
 /*! \brief Scheme callback function that moves the viewport down.
@@ -1306,11 +1312,13 @@ DEFINE_I_CALLBACK(view_pan_up)
 DEFINE_I_CALLBACK(view_pan_down)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
 
   g_return_if_fail (w_current != NULL);
+  g_return_if_fail (page_view != NULL);
 
   /* yes, that's a negative sign there */
-  a_pan_mouse(w_current, 0, -w_current->keyboardpan_gain);
+  a_pan_mouse(w_current, page_view, 0, -w_current->keyboardpan_gain);
 }
 
 /*! \todo Finish function documentation!!!

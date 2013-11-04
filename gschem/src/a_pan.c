@@ -188,18 +188,21 @@ void a_pan(GschemToplevel *w_current, int w_x, int w_y)
  *  \par Function Description
  *
  */
-void a_pan_mouse(GschemToplevel *w_current, int diff_x, int diff_y)
+void
+a_pan_mouse(GschemToplevel *w_current, GschemPageView *page_view, int diff_x, int diff_y)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   double world_cx, world_cy;
   double page_cx, page_cy;
+
+  g_return_if_fail (page != NULL);
 
 #if DEBUG
   printf("a_pan_mouse(): diff_x=%d, diff_y=%d\n", diff_x, diff_y);
 #endif	
 
-  page_cx = (toplevel->page_current->left + toplevel->page_current->right) / 2.0;
-  page_cy = (toplevel->page_current->top + toplevel->page_current->bottom) / 2.0;
+  page_cx = (page->left + page->right) / 2.0;
+  page_cy = (page->top + page->bottom) / 2.0;
 
   world_cx = page_cx - WORLDabs (w_current, diff_x);
   world_cy = page_cy + WORLDabs (w_current, diff_y);
