@@ -354,6 +354,7 @@ int o_edit_find_text (GschemToplevel *w_current, const GList *o_list,
                       char *stext, int descend, int skip)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   char *attrib = NULL;
   int count = 0;
   PAGE *parent = NULL;
@@ -365,6 +366,8 @@ int o_edit_find_text (GschemToplevel *w_current, const GList *o_list,
   const GList *iter;
 
   OBJECT *o_current;
+
+  g_assert (page_view != NULL);
 
   skiplast = skip;
 
@@ -423,14 +426,14 @@ int o_edit_find_text (GschemToplevel *w_current, const GList *o_list,
         if (!skiplast) {
           int x1, y1, x2, y2;
 
-          a_zoom(w_current, ZOOM_FULL, DONTCARE, A_PAN_DONT_REDRAW);
+          a_zoom(w_current, page_view, ZOOM_FULL, DONTCARE, A_PAN_DONT_REDRAW);
           g_assert( world_get_single_object_bounds (toplevel, o_current, &x1, &y1, &x2, &y2) );
           text_screen_height = gschem_page_view_SCREENabs (GSCHEM_PAGE_VIEW (w_current->drawing_area), y2 - y1);
           /* this code will zoom/pan till the text screen height is about */
           /* 50 pixels high, perhaps a future enhancement will be to make */
           /* this number configurable */
           while (text_screen_height < 50) {
-            a_zoom(w_current, ZOOM_IN, DONTCARE, A_PAN_DONT_REDRAW);
+            a_zoom(w_current, page_view, ZOOM_IN, DONTCARE, A_PAN_DONT_REDRAW);
             text_screen_height = gschem_page_view_SCREENabs (GSCHEM_PAGE_VIEW (w_current->drawing_area), y2 - y1);
           }
           a_pan_general(w_current,

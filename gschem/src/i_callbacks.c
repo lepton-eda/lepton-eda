@@ -1120,11 +1120,13 @@ DEFINE_I_CALLBACK(view_redraw)
 DEFINE_I_CALLBACK(view_zoom_full)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
 
   g_return_if_fail (w_current != NULL);
+  g_return_if_fail (page_view != NULL);
 
   /* scroll bar stuff */
-  a_zoom(w_current, ZOOM_FULL, DONTCARE, 0);
+  a_zoom(w_current, page_view, ZOOM_FULL, DONTCARE, 0);
 
   if (w_current->undo_panzoom) {
     o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
@@ -1189,10 +1191,14 @@ DEFINE_I_CALLBACK(view_zoom_box)
 DEFINE_I_CALLBACK(view_zoom_in)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
 
   g_return_if_fail (w_current != NULL);
+  g_return_if_fail (page_view != NULL);
 
-  a_zoom (w_current, ZOOM_IN,
+  a_zoom (w_current,
+          page_view,
+          ZOOM_IN,
           g_action_get_position (FALSE, NULL, NULL) ? HOTKEY : MENU,
           0);
 
@@ -1211,10 +1217,14 @@ DEFINE_I_CALLBACK(view_zoom_in)
 DEFINE_I_CALLBACK(view_zoom_out)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
 
   g_return_if_fail (w_current != NULL);
+  g_return_if_fail (page_view != NULL);
 
-  a_zoom(w_current, ZOOM_OUT,
+  a_zoom(w_current,
+         page_view,
+         ZOOM_OUT,
          g_action_get_position (FALSE, NULL, NULL) ? HOTKEY : MENU,
          0);
  

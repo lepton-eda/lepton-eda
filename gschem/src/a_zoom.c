@@ -40,12 +40,16 @@ a_zoom_box(GschemToplevel *w_current, PAGE *page, int pan_flags);
  * 
  */
 /* dir is either ZOOM_IN, ZOOM_OUT or ZOOM_FULL which are defined in globals.h */
-void a_zoom(GschemToplevel *w_current, int dir, int selected_from, int pan_flags)
+void
+a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int selected_from, int pan_flags)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   double world_pan_center_x,world_pan_center_y,relativ_zoom_factor = - 1;
   int start_x, start_y;
   double top, bottom, right, left;
+
+  g_return_if_fail (page != NULL);
+  g_return_if_fail (page_view != NULL);
 
   /* NB: w_current->zoom_gain is a percentage increase */
   switch(dir) {
@@ -73,22 +77,16 @@ void a_zoom(GschemToplevel *w_current, int dir, int selected_from, int pan_flags
       world_pan_center_x = start_x;
       world_pan_center_y = start_y;
     } else {
-      left = ((toplevel->page_current->left - start_x)
-              * (1/relativ_zoom_factor) + start_x);
-      right = ((toplevel->page_current->right - start_x)
-               * (1/relativ_zoom_factor) + start_x);
-      top = ((toplevel->page_current->top - start_y)
-             * (1/relativ_zoom_factor) + start_y);
-      bottom = ((toplevel->page_current->bottom - start_y)
-                * (1/relativ_zoom_factor) + start_y);
+      left = ((page->left - start_x) * (1/relativ_zoom_factor) + start_x);
+      right = ((page->right - start_x) * (1/relativ_zoom_factor) + start_x);
+      top = ((page->top - start_y) * (1/relativ_zoom_factor) + start_y);
+      bottom = ((page->bottom - start_y) * (1/relativ_zoom_factor) + start_y);
       world_pan_center_x = (right + left) / 2;
       world_pan_center_y = (top + bottom) / 2;
     }
   } else {
-    world_pan_center_x = (double) (toplevel->page_current->left +
-                                   toplevel->page_current->right ) / 2;
-    world_pan_center_y = (double) (toplevel->page_current->top +
-                                   toplevel->page_current->bottom ) / 2;
+    world_pan_center_x = (double) (page->left + page->right) / 2;
+    world_pan_center_y = (double) (page->top + page->bottom) / 2;
   }
 
 #if DEBUG
@@ -122,10 +120,10 @@ void a_zoom(GschemToplevel *w_current, int dir, int selected_from, int pan_flags
 	
   /* warp the cursor to the right position */ 
   if (w_current->warp_cursor) {
-     gschem_page_view_WORLDtoSCREEN (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+     gschem_page_view_WORLDtoSCREEN (page_view,
                                      world_pan_center_x, world_pan_center_y,
                                      &start_x, &start_y);
-     x_basic_warp_cursor (w_current->drawing_area, start_x, start_y);
+     x_basic_warp_cursor (GTK_WIDGET (page_view), start_x, start_y);
   }
 }
 

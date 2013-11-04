@@ -182,7 +182,10 @@ preview_callback_button_press (GtkWidget *widget,
 
   switch (event->button) {
       case 1: /* left mouse button: zoom in */
-        a_zoom (preview_w_current, ZOOM_IN, HOTKEY,
+        a_zoom (preview_w_current,
+                GSCHEM_PAGE_VIEW (preview),
+                ZOOM_IN,
+                HOTKEY,
                 A_PAN_DONT_REDRAW);
         gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
         break;
@@ -192,7 +195,10 @@ preview_callback_button_press (GtkWidget *widget,
         a_pan (preview_w_current, wx, wy);
         break;
       case 3: /* right mouse button: zoom out */
-        a_zoom (preview_w_current, ZOOM_OUT, HOTKEY,
+        a_zoom (preview_w_current,
+                GSCHEM_PAGE_VIEW (preview),
+                ZOOM_OUT,
+                HOTKEY,
                 A_PAN_DONT_REDRAW);
         gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
         break;
