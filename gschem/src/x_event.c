@@ -88,10 +88,10 @@ gint x_event_expose(GschemPageView *view, GdkEventExpose *event,
  *  \par Function Description
  *
  */
-gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
-                            GschemToplevel *w_current)
+gint
+x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current)
 {
-  PAGE *page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (w_current->drawing_area));
+  PAGE *page = gschem_page_view_get_page (page_view);
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
@@ -349,7 +349,7 @@ gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event,
 
 
       case(STARTPAN):
-        a_pan(w_current, w_x, w_y);
+        a_pan(w_current, page_view, w_x, w_y);
         i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
         break;

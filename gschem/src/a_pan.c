@@ -168,7 +168,7 @@ void a_pan_general(GschemToplevel *w_current, double world_cx, double world_cy,
  *  \brief
  *  \par Function Description
  */
-void a_pan(GschemToplevel *w_current, int w_x, int w_y)
+void a_pan(GschemToplevel *w_current, GschemPageView *page_view, int w_x, int w_y)
 {
   /* make mouse to the new world-center;
      attention: there are information looses because of type cast in mil_x */

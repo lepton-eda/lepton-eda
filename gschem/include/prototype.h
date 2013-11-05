@@ -3,7 +3,7 @@
 /* a_pan.c */
 void a_pan_general(GschemToplevel *w_current, double world_cx, double world_cy,
 		   double relativ_zoom_factor, int flags);
-void a_pan(GschemToplevel *w_current, int x, int y);
+void a_pan(GschemToplevel *w_current, GschemPageView *page_view, int x, int y);
 void a_pan_mouse(GschemToplevel *w_current, GschemPageView *page_view, int diff_x, int diff_y);
 /* a_zoom.c */
 void a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int selected_from, int pan_flags);
@@ -656,7 +656,7 @@ int x_dialog_validate_attribute(GtkWindow* parent, char *attribute);
 void x_dialog_edit_pin_type(GschemToplevel *w_current, const GList *obj_list);
 /* x_event.c */
 gint x_event_expose(GschemPageView *widget, GdkEventExpose *event, GschemToplevel *w_current);
-gint x_event_button_pressed(GtkWidget *widget, GdkEventButton *event, GschemToplevel *w_current);
+gint x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current);
 gint x_event_button_released(GtkWidget *widget, GdkEventButton *event, GschemToplevel *w_current);
 gint x_event_motion(GtkWidget *widget, GdkEventMotion *event, GschemToplevel *w_current);
 gboolean x_event_configure (GtkWidget *widget, GdkEventConfigure *event, gpointer user_data);

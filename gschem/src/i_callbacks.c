@@ -1241,9 +1241,11 @@ DEFINE_I_CALLBACK(view_zoom_out)
 DEFINE_I_CALLBACK(view_pan)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
+  g_return_if_fail (page_view != NULL);
 
   i_update_middle_button(w_current, i_callback_view_pan, _("Pan"));
 
@@ -1252,7 +1254,7 @@ DEFINE_I_CALLBACK(view_pan)
     w_current->inside_action = 0;
     i_set_state (w_current, STARTPAN);
   } else {
-    a_pan (w_current, wx, wy);
+    a_pan (w_current, page_view, wx, wy);
     if (w_current->undo_panzoom) {
       o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
     }
