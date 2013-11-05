@@ -192,7 +192,7 @@ preview_callback_button_press (GtkWidget *widget,
       case 2: /* middle mouse button: pan */
 	if (!x_event_get_pointer_position(preview_w_current, FALSE, &wx, &wy))
 	  return FALSE;
-        a_pan (preview_w_current, GSCHEM_PAGE_VIEW (preview), wx, wy);
+        gschem_page_view_pan (GSCHEM_PAGE_VIEW (preview), preview_w_current, wx, wy);
         break;
       case 3: /* right mouse button: zoom out */
         a_zoom (preview_w_current,

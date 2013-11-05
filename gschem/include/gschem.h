@@ -6,6 +6,9 @@
 #include <libgeda/libgedaguile.h>
 #include <libgedacairo/libgedacairo.h>
 
+/* forward declaration, until everyone stops referencing it */
+typedef struct st_gschem_toplevel GschemToplevel;
+
 /* gschem headers */
 #include "gschem_defines.h"
 #include "gschem_page_view.h"

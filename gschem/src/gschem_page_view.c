@@ -529,6 +529,72 @@ gschem_page_view_new_with_toplevel (TOPLEVEL *toplevel)
 
 
 
+/*! \brief Center the view on the given world coordinate
+ *
+ *  The w_current parameter will be replaced with signals. This way, any object
+ *  can listen for changes in the view.
+ *
+ *  \param [in,out] page_view This GschemPageView
+ *  \param [in]     w_current The GschemToplevel
+ *  \param [in]     w_x       The world x coordinate of the new center
+ *  \param [in]     w_y       The world y coordinate of the new center
+ */
+void
+gschem_page_view_pan (GschemPageView *page_view, GschemToplevel *w_current, int w_x, int w_y)
+{
+  /* make mouse to the new world-center;
+     attention: there are information looses because of type cast in mil_x */
+
+  a_pan_general (w_current, w_x, w_y, 1, 0);
+
+  /*! \bug FIXME? This call will trigger a motion event (x_event_motion()),
+   * even if the user doesn't move the mouse
+   * Not ready for prime time, maybe there is another way to trigger the
+   * motion event without changing the cursor position (Werner)
+   */
+  /* x_basic_warp_cursor(w_current->drawing_area, x, y); */
+}
+
+
+
+/*! \brief Pan the view by the given screen coordinate displacement
+ *
+ *  The w_current parameter will be replaced with signals. This way, any object
+ *  can listen for changes in the view.
+ *
+ *  \param [in,out] page_view This GschemPageView
+ *  \param [in]     w_current The GschemToplevel
+ *  \param [in]     diff_x    The screen x coordinate displacement
+ *  \param [in]     diff_y    The screen y coordinate displacement
+ */
+void
+gschem_page_view_pan_mouse (GschemPageView *page_view, GschemToplevel *w_current, int diff_x, int diff_y)
+{
+  PAGE *page = gschem_page_view_get_page (page_view);
+  double world_cx, world_cy;
+  double page_cx, page_cy;
+
+  g_return_if_fail (page != NULL);
+
+#if DEBUG
+  printf("gschem_page_view_pan_mouse(): diff_x=%d, diff_y=%d\n", diff_x, diff_y);
+#endif
+
+  page_cx = (page->left + page->right) / 2.0;
+  page_cy = (page->top + page->bottom) / 2.0;
+
+  world_cx = page_cx - WORLDabs (w_current, diff_x);
+  world_cy = page_cy + WORLDabs (w_current, diff_y);
+
+#if DEBUG
+  printf("  world_cx=%f, world_cy=%f\n", world_cx, world_cy);
+#endif
+
+  a_pan_general(w_current, world_cx, world_cy, 1, 0);
+}
+
+
+
 /*! \brief Convert a x coordinate to pixels.
  *
  *  A temporary function until a GschemToplevel is not required for coordinate

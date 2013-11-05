@@ -79,6 +79,12 @@ gschem_page_view_invalidate_world_rect (GschemPageView *view, int left, int top,
 GschemPageView*
 gschem_page_view_new_with_toplevel (TOPLEVEL *toplevel);
 
+void
+gschem_page_view_pan(GschemPageView *page_view, GschemToplevel *w_current, int x, int y);
+
+void
+gschem_page_view_pan_mouse(GschemPageView *page_view, GschemToplevel *w_current, int diff_x, int diff_y);
+
 int
 gschem_page_view_SCREENabs(GschemPageView *view, int val);
 

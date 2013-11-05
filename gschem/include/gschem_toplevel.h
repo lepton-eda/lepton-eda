@@ -23,8 +23,6 @@
 #define GSCHEM_TOPLEVEL(ptr) ((GschemToplevel*)(ptr))
 
 
-typedef struct st_gschem_toplevel GschemToplevel;
-
 struct st_gschem_toplevel {
 
   TOPLEVEL *toplevel;
