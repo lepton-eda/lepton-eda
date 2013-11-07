@@ -1,11 +1,11 @@
 /* $Id$ */
 
 /* a_pan.c */
-void a_pan_general(GschemToplevel *w_current, double world_cx, double world_cy,
+void a_pan_general(GschemToplevel *w_current, PAGE *page, double world_cx, double world_cy,
 		   double relativ_zoom_factor, int flags);
 /* a_zoom.c */
 void a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int selected_from, int pan_flags);
-void a_zoom_extents(GschemToplevel *w_current, const GList *list, int pan_flags);
+void a_zoom_extents(GschemToplevel *w_current, PAGE *page, const GList *list, int pan_flags);
 void a_zoom_box_start(GschemToplevel *w_current, int x, int y);
 void a_zoom_box_end(GschemToplevel *w_current, int x, int y);
 void a_zoom_box_motion(GschemToplevel *w_current, int x, int y);

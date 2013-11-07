@@ -540,12 +540,16 @@ gschem_page_view_new_with_toplevel (TOPLEVEL *toplevel)
  *  \param [in]     w_y       The world y coordinate of the new center
  */
 void
-gschem_page_view_pan (GschemPageView *page_view, GschemToplevel *w_current, int w_x, int w_y)
+gschem_page_view_pan (GschemPageView *view, GschemToplevel *w_current, int w_x, int w_y)
 {
+  PAGE *page = gschem_page_view_get_page (view);
+
+  g_return_if_fail (page != NULL);
+
   /* make mouse to the new world-center;
      attention: there are information looses because of type cast in mil_x */
 
-  a_pan_general (w_current, w_x, w_y, 1, 0);
+  a_pan_general (w_current, page, w_x, w_y, 1, 0);
 
   /*! \bug FIXME? This call will trigger a motion event (x_event_motion()),
    * even if the user doesn't move the mouse
@@ -590,7 +594,7 @@ gschem_page_view_pan_mouse (GschemPageView *page_view, GschemToplevel *w_current
   printf("  world_cx=%f, world_cy=%f\n", world_cx, world_cy);
 #endif
 
-  a_pan_general(w_current, world_cx, world_cy, 1, 0);
+  a_pan_general(w_current, page, world_cx, world_cy, 1, 0);
 }
 
 
@@ -1026,4 +1030,68 @@ gschem_page_view_WORLDtoSCREEN (GschemPageView *view, int x, int y, int *px, int
 {
   *px = gschem_page_view_pix_x (view, x);
   *py = gschem_page_view_pix_y (view, y);
+}
+
+
+
+/*! \brief Zoom the view to the extents of a set of objects
+ *
+ *  The w_current parameter will be replaced with signals. This way, any object
+ *  can listen for changes in the view.
+ *
+ *  By providing a NULL for the objects parameter, this function will zoom to
+ *  the extents of all objects in the drawing.
+ *
+ *  \param [in,out] view      This GschemPageView
+ *  \param [in]     w_current The GschemToplevel
+ *  \param [in]     objects   The list of objects to compute extents, or NULL
+ */
+void
+gschem_page_view_zoom_extents (GschemPageView *view, GschemToplevel *w_current, const GList *objects)
+{
+  PAGE *page = gschem_page_view_get_page (view);
+
+  g_return_if_fail (page != NULL);
+
+  gschem_page_view_zoom_extents_other (view, w_current, objects, page);
+}
+
+
+
+/*! \brief Zoom another page to the extents of a set of objects
+ *
+ *  This function zooms the given page to the extents of a set of objects as
+ *  if the page were in this view. The page must belong to the same toplevel as
+ *  this view. If the other page is actually the same as the page in this view,
+ *  this function does the right thing.
+ *
+ *  The w_current parameter will be replaced with signals. This way, any object
+ *  can listen for changes in the view.
+ *
+ *  By providing a NULL for the objects parameter, this function will zoom to
+ *  the extents of all objects in the drawing.
+ *
+ *  \param [in,out] view      This GschemPageView
+ *  \param [in]     w_current The GschemToplevel
+ *  \param [in]     objects   The list of objects to compute extents, or NULL
+ *  \param [in]     page      The other page to zoom to this view
+ */
+void
+gschem_page_view_zoom_extents_other (GschemPageView *view, GschemToplevel *w_current, const GList *objects, PAGE *page)
+{
+  const GList *temp = objects;
+
+  g_return_if_fail (page != NULL);
+  g_return_if_fail (view != NULL);
+
+  if (temp == NULL) {
+    temp = s_page_objects (page);
+  }
+
+  if (page == gschem_page_view_get_page (view)) {
+    a_zoom_extents (w_current, page, temp, 0);
+  }
+  else {
+    a_zoom_extents (w_current, page, temp, A_PAN_DONT_REDRAW);
+  }
 }

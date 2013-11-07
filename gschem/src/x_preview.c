@@ -106,11 +106,15 @@ preview_callback_realize (GtkWidget *widget,
   s_page_goto (preview_toplevel, preview_page);
   gschem_toplevel_page_changed (preview_w_current);
 
-  a_zoom_extents(preview_w_current,
-                 s_page_objects (preview_page),
-                 A_PAN_DONT_REDRAW);
+  gschem_page_view_zoom_extents (GSCHEM_PAGE_VIEW (widget),
+                                 preview_w_current,
+                                 NULL);
 
-  gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
+  //a_zoom_extents(preview_w_current,
+  //               s_page_objects (preview_page),
+  //               A_PAN_DONT_REDRAW);
+  //
+  //gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
 }
 
 /*! \brief Redraws the view when widget is exposed.
@@ -279,11 +283,15 @@ preview_update (Preview *preview)
   }
 
   /* display current page (possibly empty) */
-  a_zoom_extents (preview_w_current,
-                  s_page_objects (gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview))),
-                  A_PAN_DONT_REDRAW);
+  gschem_page_view_zoom_extents (GSCHEM_PAGE_VIEW (preview),
+                                 preview_w_current,
+                                 NULL);
 
-  gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (preview));
+  //a_zoom_extents(preview_w_current,
+  //               s_page_objects (preview_page),
+  //               A_PAN_DONT_REDRAW);
+  //
+  //gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
 }
 
 GType
@@ -358,8 +366,11 @@ preview_event_configure (GtkWidget         *widget,
   PAGE *preview_page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (widget));
 
   retval = x_event_configure (widget, event, preview_w_current);
+
   if (preview_page != NULL) {
-    a_zoom_extents(preview_w_current, s_page_objects (preview_page), 0);
+    gschem_page_view_zoom_extents (GSCHEM_PAGE_VIEW (widget),
+                                   preview_w_current,
+                                   NULL);
   }
   return retval;
 }

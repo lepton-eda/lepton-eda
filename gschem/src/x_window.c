@@ -741,6 +741,7 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
   }
 
   a_zoom_extents (w_current,
+                  toplevel->page_current,
                   s_page_objects (toplevel->page_current),
                   A_PAN_DONT_REDRAW);
 

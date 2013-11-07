@@ -1143,12 +1143,13 @@ DEFINE_I_CALLBACK(view_zoom_full)
 DEFINE_I_CALLBACK(view_zoom_extents)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
 
   g_return_if_fail (w_current != NULL);
+  g_return_if_fail (page_view != NULL);
 
-  /* scroll bar stuff */
-  a_zoom_extents (w_current,
-                  s_page_objects (gschem_toplevel_get_toplevel (w_current)->page_current), 0);
+  gschem_page_view_zoom_extents (page_view, w_current, NULL);
+
   if (w_current->undo_panzoom) {
     o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
   }
@@ -2158,6 +2159,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
         s_page_goto (gschem_toplevel_get_toplevel (w_current), child);
         gschem_toplevel_page_changed (w_current);
         a_zoom_extents(w_current,
+                       gschem_toplevel_get_toplevel (w_current)->page_current,
                        s_page_objects (gschem_toplevel_get_toplevel (w_current)->page_current),
                        A_PAN_DONT_REDRAW);
         o_undo_savestate(w_current, UNDO_ALL);
@@ -2270,6 +2272,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
 
       /* s_hierarchy_down_symbol() will not zoom the loaded page */
       a_zoom_extents(w_current,
+                     gschem_toplevel_get_toplevel (w_current)->page_current,
                      s_page_objects (gschem_toplevel_get_toplevel (w_current)->page_current),
                      A_PAN_DONT_REDRAW);
       o_undo_savestate(w_current, UNDO_ALL);

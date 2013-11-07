@@ -164,7 +164,9 @@ void o_complex_translate_all(GschemToplevel *w_current, int offset)
   int x, y;
 
   /* first zoom extents */
-  a_zoom_extents (w_current, s_page_objects (toplevel->page_current),
+  a_zoom_extents (w_current,
+                  toplevel->page_current,
+                  s_page_objects (toplevel->page_current),
                   A_PAN_DONT_REDRAW);
   o_invalidate_all (w_current);
 
@@ -206,8 +208,10 @@ void o_complex_translate_all(GschemToplevel *w_current, int offset)
 
   /* this is an experimental mod, to be able to translate to all
    * places */
-  a_zoom_extents (w_current, s_page_objects (toplevel->page_current),
-                 A_PAN_DONT_REDRAW);
+  a_zoom_extents (w_current,
+                  toplevel->page_current,
+                  s_page_objects (toplevel->page_current),
+                  A_PAN_DONT_REDRAW);
   if (!w_current->SHIFTKEY) o_select_unselect_all(w_current);
   o_invalidate_all (w_current);
   gschem_toplevel_page_content_changed (w_current, toplevel->page_current);

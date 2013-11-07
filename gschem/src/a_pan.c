@@ -30,8 +30,13 @@
  *  \par Function Description
  *
  */
-void a_pan_general(GschemToplevel *w_current, double world_cx, double world_cy,
-		   double relativ_zoom_factor,int flags)
+void
+a_pan_general(GschemToplevel *w_current,
+              PAGE *page,
+              double world_cx,
+              double world_cy,
+              double relativ_zoom_factor,
+              int flags)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   /* see libgeda/include/defines.h for flags */
@@ -63,7 +68,7 @@ void a_pan_general(GschemToplevel *w_current, double world_cx, double world_cy,
 
   /* to_screen_x_constant and to_screen_y_constant are almost the same.
      lets use to_screen_y_constant */
-  zoom_old = toplevel->page_current->to_screen_y_constant;
+  zoom_old = page->to_screen_y_constant;
 		
   /* calc new zooming factor */
   /* check if there's a zoom_full (relativ_zoom_factor == -1) */
@@ -79,59 +84,47 @@ void a_pan_general(GschemToplevel *w_current, double world_cx, double world_cy,
   }
 
   /* calculate the new visible area; adding 0.5 to round */
-  toplevel->page_current->left = world_cx - (double) toplevel->width
-    / 2 / zoom_new + 0.5;
-  toplevel->page_current->right = world_cx + (double) toplevel->width
-    / 2 / zoom_new + 0.5;
-  toplevel->page_current->top = world_cy - (double) toplevel->height
-    / 2 / zoom_new + 0.5;
-  toplevel->page_current->bottom = world_cy + (double) toplevel->height
-    / 2 / zoom_new + 0.5;
+  page->left = world_cx - (double) toplevel->width / 2 / zoom_new + 0.5;
+  page->right = world_cx + (double) toplevel->width / 2 / zoom_new + 0.5;
+  page->top = world_cy - (double) toplevel->height / 2 / zoom_new + 0.5;
+  page->bottom = world_cy + (double) toplevel->height / 2 / zoom_new + 0.5;
 	
   /* and put it back to the borders */
   if (!(flags & A_PAN_IGNORE_BORDERS)) {
     /* check right border */
-    if (toplevel->page_current->right > toplevel->init_right) {
-      toplevel->page_current->left += toplevel->init_right -
-                                       toplevel->page_current->right;
-      toplevel->page_current->right = toplevel->init_right;
+    if (page->right > toplevel->init_right) {
+      page->left += toplevel->init_right - page->right;
+      page->right = toplevel->init_right;
     }
     /* check left border */
-    if (toplevel->page_current->left < toplevel->init_left) {
-      toplevel->page_current->right += toplevel->init_left -
-                                        toplevel->page_current->left;
-      toplevel->page_current->left = toplevel->init_left;
+    if (page->left < toplevel->init_left) {
+      page->right += toplevel->init_left - page->left;
+      page->left = toplevel->init_left;
     }
 
     /* If there is any slack, center the view */
-    diff = (toplevel->page_current->right -
-            toplevel->page_current->left) -
-           (toplevel->init_right - toplevel->init_left);
+    diff = (page->right - page->left) - (toplevel->init_right - toplevel->init_left);
     if (diff > 0) {
-      toplevel->page_current->left -= diff / 2;
-      toplevel->page_current->right -= diff / 2;
+      page->left -= diff / 2;
+      page->right -= diff / 2;
     }
 
     /* check bottom border */
-    if (toplevel->page_current->bottom > toplevel->init_bottom) {
-      toplevel->page_current->top += toplevel->init_bottom -
-                                      toplevel->page_current->bottom;
-      toplevel->page_current->bottom = toplevel->init_bottom;
+    if (page->bottom > toplevel->init_bottom) {
+      page->top += toplevel->init_bottom - page->bottom;
+      page->bottom = toplevel->init_bottom;
     }
     /* check top border */
-    if (toplevel->page_current->top < toplevel->init_top) {
-      toplevel->page_current->bottom += toplevel->init_top -
-                                         toplevel->page_current->top;
-      toplevel->page_current->top = toplevel->init_top;
+    if (page->top < toplevel->init_top) {
+      page->bottom += toplevel->init_top - page->top;
+      page->top = toplevel->init_top;
     }
 
     /* If there is any slack, center the view */
-    diff = (toplevel->page_current->bottom -
-            toplevel->page_current->top) -
-           (toplevel->init_bottom - toplevel->init_top);
+    diff = (page->bottom - page->top) - (toplevel->init_bottom - toplevel->init_top);
     if (diff > 0) {
-      toplevel->page_current->top -= diff / 2;
-      toplevel->page_current->bottom -= diff / 2;
+      page->top -= diff / 2;
+      page->bottom -= diff / 2;
     }
 
   }
@@ -139,21 +132,19 @@ void a_pan_general(GschemToplevel *w_current, double world_cx, double world_cy,
 #if DEBUG
   printf("zoom_old: %f, zoom_new: %f \n ",zoom_old, zoom_new);
   printf("left: %d, right: %d, top: %d, bottom: %d\n",
-         toplevel->page_current->left, toplevel->page_current->right, 
-	 toplevel->page_current->top, toplevel->page_current->bottom);
+         page->left, page->right, page->top, page->bottom);
   printf("aspect: %f\n",
-         (float) fabs(toplevel->page_current->right  
-		      - toplevel->page_current->left) /
-         (float) fabs(toplevel->page_current->bottom 
-		      - toplevel->page_current->top ));
+         (float) fabs(page->right - page->left) /
+         (float) fabs(page->bottom - page->top ));
 #endif
 	
   /* set_window */
-  set_window(toplevel, toplevel->page_current,
-             toplevel->page_current->left  ,
-             toplevel->page_current->right ,
-             toplevel->page_current->top   ,
-             toplevel->page_current->bottom);
+  set_window(toplevel,
+             page,
+             page->left  ,
+             page->right ,
+             page->top   ,
+             page->bottom);
 
   i_update_grid_info (w_current);
 

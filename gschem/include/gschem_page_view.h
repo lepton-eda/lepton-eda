@@ -106,3 +106,8 @@ gschem_page_view_update_scroll_adjustments (GschemPageView *view);
 void
 gschem_page_view_WORLDtoSCREEN (GschemPageView *view, int x, int y, int *px, int *py);
 
+void
+gschem_page_view_zoom_extents (GschemPageView *view, GschemToplevel *w_current, const GList *list);
+
+void
+gschem_page_view_zoom_extents_other (GschemPageView *view, GschemToplevel *w_current, const GList *objects, PAGE *page);

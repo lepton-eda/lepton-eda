@@ -97,7 +97,7 @@ a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int select
 
 
   /* calculate new window and draw it */
-  a_pan_general(w_current, world_pan_center_x, world_pan_center_y,
+  a_pan_general(w_current, page, world_pan_center_x, world_pan_center_y,
                 relativ_zoom_factor, pan_flags);
 
   /* Before warping the cursor, filter out any consecutive scroll events 
@@ -132,7 +132,7 @@ a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int select
  *  \par Function Description
  * 
  */
-void a_zoom_extents (GschemToplevel *w_current, const GList *list, int pan_flags)
+void a_zoom_extents (GschemToplevel *w_current, PAGE *page, const GList *list, int pan_flags)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int lleft, lright, ltop, lbottom;
@@ -169,7 +169,7 @@ void a_zoom_extents (GschemToplevel *w_current, const GList *list, int pan_flags
   world_pan_center_y = (double) (lbottom + ltop) /2.0;
 	
   /* and create the new window*/
-  a_pan_general(w_current, world_pan_center_x, world_pan_center_y,
+  a_pan_general(w_current, page, world_pan_center_x, world_pan_center_y,
                 relativ_zoom_factor, pan_flags );	
 
   /*! \bug FIXME? trigger a x_event_motion() call without moving the cursor 
@@ -210,7 +210,7 @@ a_zoom_box(GschemToplevel *w_current, PAGE *page, int pan_flags)
   world_pan_center_y = (w_current->first_wy + w_current->second_wy) / 2.0;
 
   /* and create the new window*/
-  a_pan_general(w_current, world_pan_center_x, world_pan_center_y,
+  a_pan_general(w_current, page, world_pan_center_x, world_pan_center_y,
                 relativ_zoom_factor, pan_flags);	
 }
 
