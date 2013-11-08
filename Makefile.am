@@ -19,3 +19,11 @@ SUBDIRS = lib tests
 include_HEADERS = include/xornstorage.h
 
 ACLOCAL_AMFLAGS = -I m4
+
+EXTRA_DIST = pprint-chlog
+
+dist-hook:
+	if test -d $(srcdir)/.git; \
+	then	chmod u+w $(distdir)/ChangeLog; \
+		( cd $(srcdir); ./pprint-chlog ) > $(distdir)/ChangeLog; \
+	fi
