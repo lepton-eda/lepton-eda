@@ -161,8 +161,7 @@ void a_zoom_extents (GschemToplevel *w_current, PAGE *page, const GList *list, i
   zx = (double)(toplevel->width - 2 * ZOOM_EXTENTS_PADDING_PX) / (lright-lleft);
   zy = (double)(toplevel->height - 2 * ZOOM_EXTENTS_PADDING_PX) / (lbottom-ltop);
   /* choose the smaller one */
-  relativ_zoom_factor = (zx < zy ? zx : zy) /
-    toplevel->page_current->to_screen_y_constant;
+  relativ_zoom_factor = (zx < zy ? zx : zy) / page->to_screen_y_constant;
 	
   /*get the center of the objects*/
   world_pan_center_x = (double) (lright + lleft) /2.0;
