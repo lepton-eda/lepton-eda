@@ -331,7 +331,7 @@ void text_size_dialog_response(GtkWidget *w, gint response,
 
     w_current->text_size = size;
     gschem_toplevel_page_content_changed (w_current, w_current->toplevel->page_current);
-    o_undo_savestate(w_current, UNDO_ALL);
+    o_undo_savestate_old(w_current, UNDO_ALL);
     break;
   case GTK_RESPONSE_REJECT:
   case GTK_RESPONSE_DELETE_EVENT:
@@ -438,7 +438,7 @@ void snap_size_dialog_response(GtkWidget *w, gint response,
     o_invalidate_all (w_current);
     /* maybe remove those two lines */
     gschem_toplevel_page_content_changed (w_current, w_current->toplevel->page_current);
-    o_undo_savestate(w_current, UNDO_ALL);
+    o_undo_savestate_old(w_current, UNDO_ALL);
     break;
   case GTK_RESPONSE_REJECT:
   case GTK_RESPONSE_DELETE_EVENT:
@@ -2573,7 +2573,7 @@ void x_dialog_edit_pin_type (GschemToplevel *w_current, const GList *obj_list)
         }
       }
       if (changed_anything)
-        o_undo_savestate (w_current, UNDO_ALL);
+        o_undo_savestate_old (w_current, UNDO_ALL);
       break;
 
     case GTK_RESPONSE_CANCEL:

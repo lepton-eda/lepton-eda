@@ -822,7 +822,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   gschem_toplevel_page_changed (w_current);
   o_invalidate_all (w_current);
   g_list_free(pages);
-  o_undo_savestate(w_current, UNDO_ALL);
+  o_undo_savestate_old(w_current, UNDO_ALL);
 }
 
 /* ***** UTILITY GUI FUNCTIONS (move to a separate file in the future?) **** */

@@ -876,7 +876,7 @@ DEFINE_I_CALLBACK(edit_embed)
       }
       s_current = g_list_next(s_current);
     }
-    o_undo_savestate(w_current, UNDO_ALL);
+    o_undo_savestate_old(w_current, UNDO_ALL);
   } else {
     /* nothing selected, go back to select state */
     o_redraw_cleanstates(w_current);	
@@ -915,7 +915,7 @@ DEFINE_I_CALLBACK(edit_unembed)
       }
       s_current = g_list_next(s_current);
     }
-    o_undo_savestate(w_current, UNDO_ALL);
+    o_undo_savestate_old(w_current, UNDO_ALL);
   } else {
     /* nothing selected, go back to select state */
     o_redraw_cleanstates(w_current);	
@@ -1134,7 +1134,7 @@ DEFINE_I_CALLBACK(view_zoom_full)
   a_zoom(w_current, page_view, ZOOM_FULL, DONTCARE, 0);
 
   if (w_current->undo_panzoom) {
-    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY); 
   }
 }
 
@@ -1156,7 +1156,7 @@ DEFINE_I_CALLBACK(view_zoom_extents)
   gschem_page_view_zoom_extents (page_view, w_current, NULL);
 
   if (w_current->undo_panzoom) {
-    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
   }
 }
 
@@ -1209,7 +1209,7 @@ DEFINE_I_CALLBACK(view_zoom_in)
           0);
 
   if (w_current->undo_panzoom) {
-    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY); 
   }
 }
 
@@ -1235,7 +1235,7 @@ DEFINE_I_CALLBACK(view_zoom_out)
          0);
  
   if (w_current->undo_panzoom) {
-    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY); 
   }
 }
 
@@ -1262,7 +1262,7 @@ DEFINE_I_CALLBACK(view_pan)
   } else {
     gschem_page_view_pan (page_view, w_current, wx, wy);
     if (w_current->undo_panzoom) {
-      o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+      o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
     }
   }
 }
@@ -2167,7 +2167,7 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
                        gschem_toplevel_get_toplevel (w_current)->page_current,
                        s_page_objects (gschem_toplevel_get_toplevel (w_current)->page_current),
                        A_PAN_DONT_REDRAW);
-        o_undo_savestate(w_current, UNDO_ALL);
+        o_undo_savestate_old(w_current, UNDO_ALL);
         s_page_goto (gschem_toplevel_get_toplevel (w_current), parent);
         gschem_toplevel_page_changed (w_current);
       }
@@ -2280,7 +2280,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
                      gschem_toplevel_get_toplevel (w_current)->page_current,
                      s_page_objects (gschem_toplevel_get_toplevel (w_current)->page_current),
                      A_PAN_DONT_REDRAW);
-      o_undo_savestate(w_current, UNDO_ALL);
+      o_undo_savestate_old(w_current, UNDO_ALL);
       x_window_set_current_page(w_current, gschem_toplevel_get_toplevel (w_current)->page_current);
     }
   }
@@ -2367,7 +2367,7 @@ DEFINE_I_CALLBACK(attributes_attach)
     g_list_free (attached_objects);
   }
 
-  o_undo_savestate(w_current, UNDO_ALL);
+  o_undo_savestate_old(w_current, UNDO_ALL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2414,7 +2414,7 @@ DEFINE_I_CALLBACK(attributes_detach)
     g_list_free (detached_attribs);
   }
 
-  o_undo_savestate(w_current, UNDO_ALL);
+  o_undo_savestate_old(w_current, UNDO_ALL);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2450,7 +2450,7 @@ DEFINE_I_CALLBACK(attributes_show_name)
         o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME);
     }
 
-    o_undo_savestate (w_current, UNDO_ALL);
+    o_undo_savestate_old (w_current, UNDO_ALL);
   }
 }
 
@@ -2487,7 +2487,7 @@ DEFINE_I_CALLBACK(attributes_show_value)
         o_attrib_toggle_show_name_value (w_current, object, SHOW_VALUE);
     }
 
-    o_undo_savestate (w_current, UNDO_ALL);
+    o_undo_savestate_old (w_current, UNDO_ALL);
   }
 }
 
@@ -2524,7 +2524,7 @@ DEFINE_I_CALLBACK(attributes_show_both)
         o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME_VALUE);
     }
 
-    o_undo_savestate (w_current, UNDO_ALL);
+    o_undo_savestate_old (w_current, UNDO_ALL);
   }
 }
 
@@ -2562,7 +2562,7 @@ DEFINE_I_CALLBACK(attributes_visibility_toggle)
         o_attrib_toggle_visibility (w_current, object);
     }
 
-    o_undo_savestate (w_current, UNDO_ALL);
+    o_undo_savestate_old (w_current, UNDO_ALL);
   }
 }
 
@@ -2626,7 +2626,7 @@ DEFINE_I_CALLBACK(options_scale_up_snap_size)
 
   w_current->snap_size *= 2;
   gschem_toplevel_get_toplevel (w_current)->page_current->CHANGED=1;  /* maybe remove those two lines */
-  o_undo_savestate(w_current, UNDO_ALL);
+  o_undo_savestate_old(w_current, UNDO_ALL);
 
   i_update_grid_info (w_current);
   o_invalidate_all (w_current);
@@ -2646,7 +2646,7 @@ DEFINE_I_CALLBACK(options_scale_down_snap_size)
   if (w_current->snap_size % 2 == 0)
     w_current->snap_size /= 2;
   gschem_toplevel_get_toplevel (w_current)->page_current->CHANGED=1;  /* maybe remove those two lines */
-  o_undo_savestate(w_current, UNDO_ALL);
+  o_undo_savestate_old(w_current, UNDO_ALL);
 
   i_update_grid_info (w_current);
   o_invalidate_all (w_current);

@@ -633,7 +633,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
         /* Keep the state and the inside_action, as the copy has not finished. */
         i_set_state(w_current, ENDMCOPY);
         i_update_toolbar(w_current);
-        o_undo_savestate(w_current, UNDO_ALL);
+        o_undo_savestate_old(w_current, UNDO_ALL);
         break;
 
       case(SBOX):
@@ -737,7 +737,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
       w_current->doing_pan=FALSE;
       o_invalidate_all (w_current);
       if (w_current->undo_panzoom) {
-        o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+        o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
       }
       /* this needs to be REDONE */
       /* if you mouse pan, you will be thrown out of the current mode. */
@@ -754,7 +754,7 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
       o_invalidate_all (w_current);
 
       if (w_current->undo_panzoom) {
-        o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+        o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
       }
       /* this needs to be REDONE */
       /* if you mouse pan, you will be thrown out of the current mode. */
@@ -1343,7 +1343,7 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
   }
 
   if (w_current->undo_panzoom && (zoom || pan_xaxis || pan_yaxis)) {
-    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY);
+    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
   }
 
   /* Stop further processing of this signal */

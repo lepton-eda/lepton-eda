@@ -243,7 +243,7 @@ void a_zoom_box_end(GschemToplevel *w_current, int x, int y)
   a_zoom_box(w_current, page, 0);
 
   if (w_current->undo_panzoom) {
-    o_undo_savestate(w_current, UNDO_VIEWPORT_ONLY); 
+    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY); 
   }
 }
 

@@ -148,7 +148,7 @@ void o_arc_end4(GschemToplevel *w_current, int radius,
   g_run_hook_object (w_current, "%add-objects-hook", new_obj);
 
   gschem_toplevel_page_content_changed (w_current, page);
-  o_undo_savestate(w_current, UNDO_ALL);
+  o_undo_savestate_old(w_current, UNDO_ALL);
 }
 
 /*! \brief Draw an arc using one angle modification.

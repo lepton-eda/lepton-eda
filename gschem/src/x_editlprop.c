@@ -465,7 +465,7 @@ line_type_changed (GtkWidget *widget, EditLProp *dialog)
       gschem_selection_adapter_set_line_type (dialog->adapter, line_type);
 
       gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
-      o_undo_savestate(w_current, UNDO_ALL);
+      o_undo_savestate_old(w_current, UNDO_ALL);
     }
   }
 }
@@ -501,7 +501,7 @@ line_width_changed (GtkWidget *widget, EditLProp *dialog)
       gschem_selection_adapter_set_line_width (dialog->adapter, line_width);
 
       gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
-      o_undo_savestate(w_current, UNDO_ALL);
+      o_undo_savestate_old(w_current, UNDO_ALL);
     }
   }
 }
@@ -537,7 +537,7 @@ dash_length_changed (GtkWidget *widget, EditLProp *dialog)
       gschem_selection_adapter_set_dash_length (dialog->adapter, dash_length);
 
       gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
-      o_undo_savestate(w_current, UNDO_ALL);
+      o_undo_savestate_old(w_current, UNDO_ALL);
     }
   }
 }
@@ -573,7 +573,7 @@ dash_space_changed (GtkWidget *widget, EditLProp *dialog)
       gschem_selection_adapter_set_dash_space (dialog->adapter, dash_space);
 
       gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
-      o_undo_savestate(w_current, UNDO_ALL);
+      o_undo_savestate_old(w_current, UNDO_ALL);
     }
   }
 }
@@ -611,7 +611,7 @@ cap_style_changed (GtkWidget *widget, EditLProp *dialog)
       gschem_selection_adapter_set_cap_style (dialog->adapter, cap_style);
 
       gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
-      o_undo_savestate(w_current, UNDO_ALL);
+      o_undo_savestate_old(w_current, UNDO_ALL);
     }
   }
 }

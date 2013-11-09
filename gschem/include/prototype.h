@@ -568,7 +568,7 @@ void o_text_edit_end(GschemToplevel *w_current, char *string, int color, int ali
 void o_text_change(GschemToplevel *w_current, OBJECT *object, char *string, int visibility, int show);
 /* o_undo.c */
 void o_undo_init(void);
-void o_undo_savestate(GschemToplevel *w_current, int flag);
+void o_undo_savestate_old(GschemToplevel *w_current, int flag);
 char *o_undo_find_prev_filename(UNDO *start);
 GList *o_undo_find_prev_object_head(UNDO *start);
 void o_undo_callback(GschemToplevel *w_current, PAGE *page, int type);

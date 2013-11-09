@@ -746,7 +746,7 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
                   s_page_objects (toplevel->page_current),
                   A_PAN_DONT_REDRAW);
 
-  o_undo_savestate (w_current, UNDO_ALL);
+  o_undo_savestate_old (w_current, UNDO_ALL);
 
   if ( old_current != NULL ) {
     s_page_goto (toplevel, old_current);

@@ -69,7 +69,7 @@ void o_undo_init(void)
  *    <DT>*</DT><DD>UNDO_VIEWPORT_ONLY
  *  </DL>
  */
-void o_undo_savestate(GschemToplevel *w_current, int flag)
+void o_undo_savestate_old(GschemToplevel *w_current, int flag)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   char *filename = NULL;

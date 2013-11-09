@@ -258,7 +258,7 @@ dialog_response_ok (EditFProp *dialog)
   }
 
   gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
-  o_undo_savestate(w_current, UNDO_ALL);
+  o_undo_savestate_old(w_current, UNDO_ALL);
 }
 
 

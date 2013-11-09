@@ -39,7 +39,7 @@ void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
 
     /* Save the current state. When rotating the selection when moving,
        we have to come back to here */
-    o_undo_savestate(w_current, UNDO_ALL);
+    o_undo_savestate_old(w_current, UNDO_ALL);
     w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
     w_current->event_state = MOVE;
 
@@ -219,7 +219,7 @@ void o_move_end(GschemToplevel *w_current)
   g_list_free (moved_list);
 
   gschem_toplevel_page_content_changed (w_current, page);
-  o_undo_savestate(w_current, UNDO_ALL);
+  o_undo_savestate_old(w_current, UNDO_ALL);
 
   s_stretch_destroy_all (w_current->stretch_list);
   w_current->stretch_list = NULL;
