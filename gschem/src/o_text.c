@@ -232,7 +232,7 @@ void o_text_edit_end(GschemToplevel *w_current, char *string, int color, int ali
   }
   
   gschem_toplevel_page_content_changed (w_current, page);
-  o_undo_savestate_old(w_current, UNDO_ALL);
+  o_undo_savestate(w_current, page, UNDO_ALL);
 }
 
 /*! \todo Finish function documentation!!!
