@@ -38,13 +38,16 @@ int throttle = 0;
 static int DOING_STROKE = FALSE;
 #endif /* HAVE_LIBSTROKE */
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Redraws the view when widget is exposed.
  *
+ *  \param [in] view      The GschemPageView.
+ *  \param [in] event     The event structure.
+ *  \param [in] w_current The GschemToplevel.
+ *  \returns FALSE to propagate the event further.
  */
-gint x_event_expose(GschemPageView *view, GdkEventExpose *event,
-                    GschemToplevel *w_current)
+
+gint
+x_event_expose(GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_current)
 {
   PAGE *page;
 
@@ -70,11 +73,6 @@ gint x_event_expose(GschemPageView *view, GdkEventExpose *event,
     o_redraw_rects (w_current, page, rectangles, n_rectangles);
     g_free (rectangles);
 
-    /* raise the dialog boxes if this feature is enabled */
-    if (w_current->raise_dialog_boxes) {
-      x_dialog_raise_all(w_current);
-    }
-
     cairo_destroy (w_current->cr);
 
     w_current->cr = save_cr;
@@ -82,6 +80,29 @@ gint x_event_expose(GschemPageView *view, GdkEventExpose *event,
 
   return(0);
 }
+
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+gint
+x_event_raise_dialog_boxes (GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  /* raise the dialog boxes if this feature is enabled */
+  if (w_current->raise_dialog_boxes) {
+    x_dialog_raise_all(w_current);
+  }
+
+  return 0;
+}
+
+
+
 
 /*! \todo Finish function documentation!!!
  *  \brief

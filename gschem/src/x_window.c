@@ -134,18 +134,19 @@ void x_window_setup_draw_events(GschemToplevel *w_current)
   };
 
   struct event_reg_t drawing_area_events[] = {
-    { "expose_event",         G_CALLBACK(x_event_expose)          },
-    { "button_press_event",   G_CALLBACK(x_event_button_pressed)  },
-    { "button_release_event", G_CALLBACK(x_event_button_released) },
-    { "motion_notify_event",  G_CALLBACK(x_event_motion)          },
-    { "configure_event",      G_CALLBACK(x_event_configure)       },
-    { "key_press_event",      G_CALLBACK(x_event_key)             },
-    { "key_release_event",    G_CALLBACK(x_event_key)             },
-    { "scroll_event",         G_CALLBACK(x_event_scroll)          },
-    { NULL,                   NULL                                } };
+    { "expose_event",         G_CALLBACK(x_event_expose)             },
+    { "expose_event",         G_CALLBACK(x_event_raise_dialog_boxes) },
+    { "button_press_event",   G_CALLBACK(x_event_button_pressed)     },
+    { "button_release_event", G_CALLBACK(x_event_button_released)    },
+    { "motion_notify_event",  G_CALLBACK(x_event_motion)             },
+    { "configure_event",      G_CALLBACK(x_event_configure)          },
+    { "key_press_event",      G_CALLBACK(x_event_key)                },
+    { "key_release_event",    G_CALLBACK(x_event_key)                },
+    { "scroll_event",         G_CALLBACK(x_event_scroll)             },
+    { NULL,                   NULL                                   } };
   struct event_reg_t main_window_events[] = {
-    { "enter_notify_event",   G_CALLBACK(x_event_enter)           },
-    { NULL,                   NULL                                } };
+    { "enter_notify_event",   G_CALLBACK(x_event_enter)              },
+    { NULL,                   NULL                                   } };
   struct event_reg_t *tmp;
 
   /* is the configure event type missing here? hack */

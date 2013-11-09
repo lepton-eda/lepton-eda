@@ -117,49 +117,6 @@ preview_callback_realize (GtkWidget *widget,
   //gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
 }
 
-/*! \brief Redraws the view when widget is exposed.
- *  \par Function Description
- *  It redraws the preview pixmap every time the widget is exposed.
- *
- *  \param [in] widget    The preview widget.
- *  \param [in] event     The event structure.
- *  \param [in] user_data Unused user data.
- *  \returns FALSE to propagate the event further.
- */
-static gboolean
-preview_callback_expose (GtkWidget *widget,
-                         GdkEventExpose *event,
-                         gpointer user_data)
-{
-  PAGE *page;
-  Preview *preview = PREVIEW (widget);
-  GschemToplevel *preview_w_current = preview->preview_w_current;
-
-  g_return_val_if_fail (preview != NULL, FALSE);
-  g_return_val_if_fail (preview_w_current != NULL, FALSE);
-
-  page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview));
-
-  if (page != NULL) {
-    GdkRectangle *rectangles;
-    int n_rectangles;
-    cairo_t *save_cr;
-
-    save_cr = preview_w_current->cr;
-
-    preview_w_current->cr = gdk_cairo_create (widget->window);
-
-    gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
-    o_redraw_rects (preview_w_current, page, rectangles, n_rectangles);
-    g_free (rectangles);
-
-    cairo_destroy (preview_w_current->cr);
-
-    preview_w_current->cr = save_cr;
-  }
-  return FALSE;
-}
-
 /*! \brief Handles the press on a mouse button.
  *  \par Function Description
  *  It handles the user inputs.
@@ -395,7 +352,7 @@ preview_init (Preview *preview)
     GCallback c_handler;
   } drawing_area_events[] = {
     { "realize",              G_CALLBACK (preview_callback_realize)       },
-    { "expose_event",         G_CALLBACK (preview_callback_expose)        },
+    { "expose_event",         G_CALLBACK (x_event_expose)                 },
     { "button_press_event",   G_CALLBACK (preview_callback_button_press)  },
     { "configure_event",      G_CALLBACK (preview_event_configure)        },
     { "scroll_event",         G_CALLBACK (preview_event_scroll)           },
@@ -451,7 +408,7 @@ preview_init (Preview *preview)
     g_signal_connect (preview,
                       tmp->detailed_signal,
                       tmp->c_handler,
-                      NULL);
+                      preview_w_current);
   }
   
 }

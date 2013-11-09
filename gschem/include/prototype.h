@@ -654,6 +654,7 @@ int x_dialog_validate_attribute(GtkWindow* parent, char *attribute);
 void x_dialog_edit_pin_type(GschemToplevel *w_current, const GList *obj_list);
 /* x_event.c */
 gint x_event_expose(GschemPageView *widget, GdkEventExpose *event, GschemToplevel *w_current);
+gint x_event_raise_dialog_boxes (GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_current);
 gint x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current);
 gint x_event_button_released(GtkWidget *widget, GdkEventButton *event, GschemToplevel *w_current);
 gint x_event_motion(GtkWidget *widget, GdkEventMotion *event, GschemToplevel *w_current);
