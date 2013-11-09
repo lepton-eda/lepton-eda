@@ -125,12 +125,15 @@ void o_move_end_lowlevel (GschemToplevel *w_current,
  */
 void o_move_end(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   GList *s_current = NULL;
   OBJECT *object;
   int diff_x, diff_y;
   GList *s_iter;
   GList *rubbernet_objects = NULL; 
+
+  g_return_if_fail (page != NULL);
 
   object = o_select_return_first_object(w_current);
 
@@ -159,7 +162,7 @@ void o_move_end(GschemToplevel *w_current)
     stretch->object->dont_redraw = FALSE;
   }
 
-  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
+  s_current = geda_list_get_glist( page->selection_list );
 
   while (s_current != NULL) {
 
@@ -197,25 +200,25 @@ void o_move_end(GschemToplevel *w_current)
   }
 
   /* Remove the undo saved in o_move_start */
-  o_undo_remove_last_undo(w_current);
+  o_undo_remove_last_undo(w_current, page);
 
   /* Draw the objects that were moved */
   o_invalidate_glist (w_current,
-    geda_list_get_glist (toplevel->page_current->selection_list));
+    geda_list_get_glist (page->selection_list));
 
   /* Draw the connected nets/buses that were also changed */
   o_invalidate_glist (w_current, rubbernet_objects);
 
   /* Call move-objects-hook for moved objects and changed connected
    * nets/buses */
-  GList *moved_list = g_list_concat (toplevel->page_current->place_list,
+  GList *moved_list = g_list_concat (page->place_list,
                                      rubbernet_objects);
-  toplevel->page_current->place_list = NULL;
+  page->place_list = NULL;
   rubbernet_objects = NULL;
   g_run_hook_object_list (w_current, "%move-objects-hook", moved_list);
   g_list_free (moved_list);
 
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current, page);
   o_undo_savestate(w_current, UNDO_ALL);
 
   s_stretch_destroy_all (w_current->stretch_list);

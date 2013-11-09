@@ -473,22 +473,19 @@ void o_undo_cleanup(void)
  *  \par Function Description
  *
  */
-void o_undo_remove_last_undo(GschemToplevel *w_current)
+void
+o_undo_remove_last_undo (GschemToplevel *w_current, PAGE *page)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  if (toplevel->page_current->undo_current == NULL) {
+
+  if (page->undo_current == NULL) {
     return;
   }
 
-  if (toplevel->page_current->undo_current) {
-    toplevel->page_current->undo_current =
-        toplevel->page_current->undo_current->prev;
-    if (toplevel->page_current->undo_current == NULL) {
-      toplevel->page_current->undo_current =
-          toplevel->page_current->undo_bottom;
+  if (page->undo_current) {
+    page->undo_current = page->undo_current->prev;
+    if (page->undo_current == NULL) {
+      page->undo_current = page->undo_bottom;
     }
   }
-
-
-
 }
