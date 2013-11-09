@@ -69,7 +69,8 @@ void o_undo_init(void)
  *    <DT>*</DT><DD>UNDO_VIEWPORT_ONLY
  *  </DL>
  */
-void o_undo_savestate_old(GschemToplevel *w_current, int flag)
+void
+o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   char *filename = NULL;
@@ -77,6 +78,8 @@ void o_undo_savestate_old(GschemToplevel *w_current, int flag)
   int levels;
   UNDO *u_current;
   UNDO *u_current_next;
+
+  g_return_if_fail (page != NULL);
 
   /* save autosave backups if necessary */
   o_autosave_backups(w_current);
@@ -90,7 +93,7 @@ void o_undo_savestate_old(GschemToplevel *w_current, int flag)
     /* Increment the number of operations since last backup if 
        auto-save is enabled */
     if (toplevel->auto_save_interval != 0) {
-      toplevel->page_current->ops_since_last_backup++;
+      page->ops_since_last_backup++;
     }
 
     /* HACK */
@@ -100,7 +103,7 @@ void o_undo_savestate_old(GschemToplevel *w_current, int flag)
      * triggered before it was removed from o_save_buffer().
      */
     if (toplevel->net_consolidate == TRUE)
-      o_net_consolidate (toplevel, toplevel->page_current);
+      o_net_consolidate (toplevel, page);
   }
 
   if (w_current->undo_type == UNDO_DISK && flag == UNDO_ALL) {
@@ -113,51 +116,49 @@ void o_undo_savestate_old(GschemToplevel *w_current, int flag)
     /* f_save manages the creaton of backup copies. 
        This way, f_save is called only when saving a file, and not when
        saving an undo backup copy */
-    o_save (toplevel, s_page_objects (toplevel->page_current), filename, NULL);
+    o_save (toplevel, s_page_objects (page), filename, NULL);
 
   } else if (w_current->undo_type == UNDO_MEMORY && flag == UNDO_ALL) {
     object_list = o_glist_copy_all (toplevel,
-                                    s_page_objects (toplevel->page_current),
+                                    s_page_objects (page),
                                     object_list);
   }
 
   /* Clear Anything above current */
-  if (toplevel->page_current->undo_current) {
-    s_undo_remove_rest(toplevel,
-                       toplevel->page_current->undo_current->next);
-    toplevel->page_current->undo_current->next = NULL;
+  if (page->undo_current) {
+    s_undo_remove_rest(toplevel, page->undo_current->next);
+    page->undo_current->next = NULL;
   } else { /* undo current is NULL */
-    s_undo_remove_rest(toplevel,
-                       toplevel->page_current->undo_bottom);
-    toplevel->page_current->undo_bottom = NULL;
+    s_undo_remove_rest(toplevel, page->undo_bottom);
+    page->undo_bottom = NULL;
   }
 
-  toplevel->page_current->undo_tos = toplevel->page_current->undo_current;
+  page->undo_tos = page->undo_current;
 
-  toplevel->page_current->undo_tos =
-  s_undo_add(toplevel->page_current->undo_tos,
+  page->undo_tos =
+  s_undo_add(page->undo_tos,
              flag, filename, object_list,
-             toplevel->page_current->left,
-             toplevel->page_current->top,
-             toplevel->page_current->right,
-             toplevel->page_current->bottom,
-             toplevel->page_current->page_control,
-             toplevel->page_current->up);
+             page->left,
+             page->top,
+             page->right,
+             page->bottom,
+             page->page_control,
+             page->up);
 
-  toplevel->page_current->undo_current =
-      toplevel->page_current->undo_tos;
+  page->undo_current =
+      page->undo_tos;
 
-  if (toplevel->page_current->undo_bottom == NULL) {
-    toplevel->page_current->undo_bottom =
-        toplevel->page_current->undo_tos;
+  if (page->undo_bottom == NULL) {
+    page->undo_bottom =
+        page->undo_tos;
   }
 
 #if DEBUG
   printf("\n\n---Undo----\n");
-  s_undo_print_all(toplevel->page_current->undo_bottom);
-  printf("BOTTOM: %s\n", toplevel->page_current->undo_bottom->filename);
-  printf("TOS: %s\n", toplevel->page_current->undo_tos->filename);
-  printf("CURRENT: %s\n", toplevel->page_current->undo_current->filename);
+  s_undo_print_all(page->undo_bottom);
+  printf("BOTTOM: %s\n", page->undo_bottom->filename);
+  printf("TOS: %s\n", page->undo_tos->filename);
+  printf("CURRENT: %s\n", page->undo_current->filename);
   printf("----\n");
 #endif
 
@@ -171,7 +172,7 @@ void o_undo_savestate_old(GschemToplevel *w_current, int flag)
     return;
   }
 
-  levels = s_undo_levels(toplevel->page_current->undo_bottom);
+  levels = s_undo_levels(page->undo_bottom);
 
 #if DEBUG
   printf("levels: %d\n", levels);
@@ -184,7 +185,7 @@ void o_undo_savestate_old(GschemToplevel *w_current, int flag)
     printf("Trimming: %d levels\n", levels);
 #endif
 
-    u_current = toplevel->page_current->undo_bottom;
+    u_current = page->undo_bottom;
 
     while (levels > 0) {
       /* Because we use a pad you are always guaranteed to never */
@@ -216,7 +217,7 @@ void o_undo_savestate_old(GschemToplevel *w_current, int flag)
 
     g_assert (u_current != NULL);
     u_current->prev = NULL;
-    toplevel->page_current->undo_bottom = u_current;
+    page->undo_bottom = u_current;
 
 #if DEBUG
     printf("New current is: %s\n", u_current->filename);
@@ -225,13 +226,33 @@ void o_undo_savestate_old(GschemToplevel *w_current, int flag)
 
 #if DEBUG
   printf("\n\n---Undo----\n");
-  s_undo_print_all(toplevel->page_current->undo_bottom);
-  printf("BOTTOM: %s\n", toplevel->page_current->undo_bottom->filename);
-  printf("TOS: %s\n", toplevel->page_current->undo_tos->filename);
-  printf("CURRENT: %s\n", toplevel->page_current->undo_current->filename);
+  s_undo_print_all(page->undo_bottom);
+  printf("BOTTOM: %s\n", page->undo_bottom->filename);
+  printf("TOS: %s\n", page->undo_tos->filename);
+  printf("CURRENT: %s\n", page->undo_current->filename);
   printf("----\n");
 #endif
 
+}
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ *
+ *  <B>flag</B> can be one of the following values:
+ *  <DL>
+ *    <DT>*</DT><DD>UNDO_ALL
+ *    <DT>*</DT><DD>UNDO_VIEWPORT_ONLY
+ *  </DL>
+ */
+void
+o_undo_savestate_old (GschemToplevel *w_current, int flag)
+{
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
+
+  o_undo_savestate (w_current, page, flag);
 }
 
 /*! \todo Finish function documentation!!!
