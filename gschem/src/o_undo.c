@@ -286,7 +286,8 @@ GList *o_undo_find_prev_object_head (UNDO *start)
  *    <DT>*</DT><DD>REDO_ACTION
  *  </DL>
  */
-void o_undo_callback(GschemToplevel *w_current, int type)
+void
+o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   UNDO *u_current;
@@ -304,17 +305,17 @@ void o_undo_callback(GschemToplevel *w_current, int type)
     return;
   }
 
-  if (toplevel->page_current->undo_current == NULL) {
+  if (page->undo_current == NULL) {
     return;
   }
 
   if (type == UNDO_ACTION) {
-    u_current = toplevel->page_current->undo_current->prev;
+    u_current = page->undo_current->prev;
   } else {
-    u_current = toplevel->page_current->undo_current->next;
+    u_current = page->undo_current->next;
   }
 
-  u_next = toplevel->page_current->undo_current;
+  u_next = page->undo_current;
 
   if (u_current == NULL) {
     return;
@@ -335,29 +336,27 @@ void o_undo_callback(GschemToplevel *w_current, int type)
   }
 
   /* save filename */
-  save_filename = g_strdup (toplevel->page_current->page_filename);
+  save_filename = g_strdup (page->page_filename);
 
   /* save structure so it's not nuked */
-  save_bottom = toplevel->page_current->undo_bottom;
-  save_tos = toplevel->page_current->undo_tos;
-  save_current = toplevel->page_current->undo_current;
-  toplevel->page_current->undo_bottom = NULL;
-  toplevel->page_current->undo_tos = NULL;
-  toplevel->page_current->undo_current = NULL;
+  save_bottom = page->undo_bottom;
+  save_tos = page->undo_tos;
+  save_current = page->undo_current;
+  page->undo_bottom = NULL;
+  page->undo_tos = NULL;
+  page->undo_current = NULL;
 
   if (w_current->undo_type == UNDO_DISK && u_current->filename) {
-    PAGE *p_new;
-    s_page_delete (toplevel, toplevel->page_current);
+    s_page_delete (toplevel, page);
     gschem_toplevel_page_changed (w_current);
-    p_new = s_page_new(toplevel, u_current->filename);
-    s_page_goto (toplevel, p_new);
+    page = s_page_new(toplevel, u_current->filename);
+    s_page_goto (toplevel, page);
     gschem_toplevel_page_changed (w_current);
   } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_list) {
-    PAGE *p_new;
-    s_page_delete (toplevel, toplevel->page_current);
+    s_page_delete (toplevel, page);
     gschem_toplevel_page_changed (w_current);
-    p_new = s_page_new (toplevel, save_filename);
-    s_page_goto (toplevel, p_new);
+    page = s_page_new (toplevel, save_filename);
+    s_page_goto (toplevel, page);
     gschem_toplevel_page_changed (w_current);
   }
 
@@ -368,29 +367,29 @@ void o_undo_callback(GschemToplevel *w_current, int type)
 
   if (w_current->undo_type == UNDO_DISK && u_current->filename) {
 
-    f_open(toplevel, toplevel->page_current, u_current->filename, NULL);
+    f_open(toplevel, page, u_current->filename, NULL);
 
     x_manual_resize(w_current);
-    toplevel->page_current->page_control = u_current->page_control;
-    toplevel->page_current->up = u_current->up;
-    gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+    page->page_control = u_current->page_control;
+    page->up = u_current->up;
+    gschem_toplevel_page_content_changed (w_current, page);
 
   } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_list) {
 
-    s_page_delete_objects (toplevel, toplevel->page_current);
+    s_page_delete_objects (toplevel, page);
 
-    s_page_append_list (toplevel, toplevel->page_current,
+    s_page_append_list (toplevel, page,
                         o_glist_copy_all (toplevel, u_current->object_list,
                                           NULL));
 
     x_manual_resize(w_current);
-    toplevel->page_current->page_control = u_current->page_control;
-    toplevel->page_current->up = u_current->up;
-    gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+    page->page_control = u_current->page_control;
+    page->up = u_current->up;
+    gschem_toplevel_page_content_changed (w_current, page);
   }
 
   /* do misc setups */
-  set_window(toplevel, toplevel->page_current,
+  set_window(toplevel, page,
              u_current->left, u_current->right,
              u_current->top, u_current->bottom);
 
@@ -400,8 +399,8 @@ void o_undo_callback(GschemToplevel *w_current, int type)
   do_logging = save_logging;
 
   /* set filename right */
-  g_free(toplevel->page_current->page_filename);
-  toplevel->page_current->page_filename = save_filename;
+  g_free(page->page_filename);
+  page->page_filename = save_filename;
 
   /* final redraw */
   x_pagesel_update (w_current);
@@ -412,26 +411,22 @@ void o_undo_callback(GschemToplevel *w_current, int type)
   i_update_menus(w_current);
 
   /* restore saved undo structures */
-  toplevel->page_current->undo_bottom = save_bottom;
-  toplevel->page_current->undo_tos = save_tos;
-  toplevel->page_current->undo_current = save_current;
+  page->undo_bottom = save_bottom;
+  page->undo_tos = save_tos;
+  page->undo_current = save_current;
 
   if (type == UNDO_ACTION) {
-    if (toplevel->page_current->undo_current) {
-      toplevel->page_current->undo_current =
-          toplevel->page_current->undo_current->prev;
-      if (toplevel->page_current->undo_current == NULL) {
-        toplevel->page_current->undo_current =
-            toplevel->page_current->undo_bottom;
+    if (page->undo_current) {
+      page->undo_current = page->undo_current->prev;
+      if (page->undo_current == NULL) {
+        page->undo_current = page->undo_bottom;
       }
     }
   } else { /* type is REDO_ACTION */
-    if (toplevel->page_current->undo_current) {
-      toplevel->page_current->undo_current =
-          toplevel->page_current->undo_current->next;
-      if (toplevel->page_current->undo_current == NULL) {
-        toplevel->page_current->undo_current =
-            toplevel->page_current->undo_tos;
+    if (page->undo_current) {
+      page->undo_current = page->undo_current->next;
+      if (page->undo_current == NULL) {
+        page->undo_current = page->undo_tos;
       }
     }
   }
@@ -445,9 +440,9 @@ void o_undo_callback(GschemToplevel *w_current, int type)
 
 #if DEBUG
   printf("\n\n---Undo----\n");
-  s_undo_print_all(toplevel->page_current->undo_bottom);
-  printf("TOS: %s\n", toplevel->page_current->undo_tos->filename);
-  printf("CURRENT: %s\n", toplevel->page_current->undo_current->filename);
+  s_undo_print_all(page->undo_bottom);
+  printf("TOS: %s\n", page->undo_tos->filename);
+  printf("CURRENT: %s\n", page->undo_current->filename);
   printf("----\n");
 #endif
 }

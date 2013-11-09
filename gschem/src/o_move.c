@@ -230,7 +230,12 @@ void o_move_end(GschemToplevel *w_current)
  */
 void o_move_cancel (GschemToplevel *w_current)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   GList *s_iter;
+
+  g_return_if_fail (page != NULL);
+  g_return_if_fail (w_current != NULL);
 
   /* Unset the dont_redraw flag on rubberbanded objects.
    * We set this above, in o_move_start(). */
@@ -239,8 +244,8 @@ void o_move_cancel (GschemToplevel *w_current)
     STRETCH *stretch = s_iter->data;
     stretch->object->dont_redraw = FALSE;
   }
-  g_list_free(w_current->toplevel->page_current->place_list);
-  w_current->toplevel->page_current->place_list = NULL;
+  g_list_free(page->place_list);
+  page->place_list = NULL;
 
   s_stretch_destroy_all (w_current->stretch_list);
   w_current->stretch_list = NULL;
@@ -248,7 +253,7 @@ void o_move_cancel (GschemToplevel *w_current)
   w_current->inside_action = 0;
   i_set_state (w_current, SELECT);
 
-  o_undo_callback(w_current, UNDO_ACTION);
+  o_undo_callback (w_current, page, UNDO_ACTION);
 }
 
 

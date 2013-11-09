@@ -571,7 +571,7 @@ void o_undo_init(void);
 void o_undo_savestate(GschemToplevel *w_current, int flag);
 char *o_undo_find_prev_filename(UNDO *start);
 GList *o_undo_find_prev_object_head(UNDO *start);
-void o_undo_callback(GschemToplevel *w_current, int type);
+void o_undo_callback(GschemToplevel *w_current, PAGE *page, int type);
 void o_undo_cleanup(void);
 void o_undo_remove_last_undo(GschemToplevel *w_current);
 /* parsecmd.c */

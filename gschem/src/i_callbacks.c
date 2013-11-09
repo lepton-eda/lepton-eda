@@ -349,7 +349,10 @@ DEFINE_I_CALLBACK(edit_undo)
        w_current->event_state == ENDMOVE)) {
     i_callback_cancel (w_current, 0, NULL);
   } else {
-    o_undo_callback(w_current, UNDO_ACTION);
+    GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+    PAGE *page = gschem_page_view_get_page (page_view);
+
+    o_undo_callback (w_current, page, UNDO_ACTION);
   }
 }
 
@@ -374,8 +377,10 @@ void i_callback_toolbar_edit_undo(GtkWidget* widget, gpointer data)
 DEFINE_I_CALLBACK(edit_redo)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
 
-  o_undo_callback(w_current, REDO_ACTION);
+  o_undo_callback (w_current, page, REDO_ACTION);
 }
 
 /*! \todo Finish function documentation!!!
