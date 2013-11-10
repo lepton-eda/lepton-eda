@@ -989,12 +989,12 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
  *  \returns FALSE to propagate the event further.
  */
 gboolean
-x_event_configure (GtkWidget         *widget,
+x_event_configure (GschemPageView    *page_view,
                    GdkEventConfigure *event,
                    gpointer           user_data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (user_data);
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  TOPLEVEL *toplevel = gschem_page_view_get_toplevel (page_view);
   GList *iter;
   PAGE *old_page_current, *p_current;
   gint old_win_width, old_win_height, new_win_width, new_win_height;
@@ -1002,7 +1002,7 @@ x_event_configure (GtkWidget         *widget,
 
   g_assert (toplevel != NULL);
 
-  if (gschem_page_view_get_page (GSCHEM_PAGE_VIEW (widget)) == NULL) {
+  if (gschem_page_view_get_page (page_view) == NULL) {
     /* don't want to call this if the current page isn't setup yet */
     return FALSE;
   }
@@ -1030,7 +1030,7 @@ x_event_configure (GtkWidget         *widget,
   /* configure event) fit the view by playing with zoom level */
   if (gdk_window_get_state (
         (gtk_widget_get_toplevel (
-          widget))->window) & GDK_WINDOW_STATE_MAXIMIZED) {
+          GTK_WIDGET (page_view)))->window) & GDK_WINDOW_STATE_MAXIMIZED) {
     gdouble width_ratio, height_ratio;
 
     /* tweak relative_zoom to better fit page in maximized window */
@@ -1043,7 +1043,7 @@ x_event_configure (GtkWidget         *widget,
   }
 
   /* save current page */
-  old_page_current = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (widget));
+  //old_page_current = gschem_page_view_get_page (page_view);
 
   /* re-pan each page of the TOPLEVEL */
   for ( iter = geda_list_get_glist( toplevel->pages );
@@ -1056,18 +1056,18 @@ x_event_configure (GtkWidget         *widget,
     /* doing this the aspectratio is kept when changing (hw)*/
     cx = ((gdouble)(p_current->left + p_current->right))  / 2;
     cy = ((gdouble)(p_current->top  + p_current->bottom)) / 2;
-    s_page_goto (toplevel, p_current);
-    gschem_toplevel_page_changed (w_current);
-    a_pan_general (w_current, toplevel->page_current, cx, cy, relativ_zoom_factor, A_PAN_DONT_REDRAW);
+    //s_page_goto (toplevel, p_current);
+    //gschem_toplevel_page_changed (w_current);
+    a_pan_general (w_current, p_current, cx, cy, relativ_zoom_factor, A_PAN_DONT_REDRAW);
 
   }
   /* restore current page to saved value */
-  s_page_goto (toplevel, old_page_current);
-  gschem_toplevel_page_changed (w_current);
+  //s_page_goto (toplevel, old_page_current);
+  //gschem_toplevel_page_changed (w_current);
 
   /* redraw the current page and update UI */
-  o_invalidate_all (w_current);
-  gschem_page_view_update_scroll_adjustments (GSCHEM_PAGE_VIEW (w_current->drawing_area));
+  gschem_page_view_invalidate_all (page_view);
+  gschem_page_view_update_scroll_adjustments (page_view);
 
   return FALSE;
 }

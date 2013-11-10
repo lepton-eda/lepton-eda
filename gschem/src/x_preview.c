@@ -322,7 +322,7 @@ preview_event_configure (GtkWidget         *widget,
   GschemToplevel *preview_w_current = PREVIEW (widget)->preview_w_current;
   PAGE *preview_page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (widget));
 
-  retval = x_event_configure (widget, event, preview_w_current);
+  retval = x_event_configure (GSCHEM_PAGE_VIEW (widget), event, preview_w_current);
 
   if (preview_page != NULL) {
     gschem_page_view_zoom_extents (GSCHEM_PAGE_VIEW (widget),
