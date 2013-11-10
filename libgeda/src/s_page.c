@@ -130,8 +130,6 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
   }
 	
   g_assert (toplevel->init_bottom != 0);
-  page->coord_aspectratio = (
-    ((float) toplevel->init_right) / ((float) toplevel->init_bottom));
 
   page->up = -2;
   page->page_control = 0;

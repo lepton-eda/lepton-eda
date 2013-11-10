@@ -379,9 +379,8 @@ struct st_page {
 
   char *page_filename; 
   int CHANGED;			/* changed flag */
-  /*int zoom_factor; no longer used*/
+
   int left, right, top, bottom;		/* World coord limits */
-  double coord_aspectratio;		/* Real worldcoords ratio (?) */
 
   float to_screen_x_constant;
   float to_screen_y_constant;
