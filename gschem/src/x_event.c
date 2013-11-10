@@ -1365,24 +1365,37 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
  *  \return Returns TRUE if the pointer position is inside the drawing area.
  *  
  */
-gboolean x_event_get_pointer_position (GschemToplevel *w_current,
-				       gboolean snapped,
-				       gint *wx, gint *wy)
+gboolean
+x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapped, gint *wx, gint *wy)
 {
-  int sx, sy, x, y;
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  int width;
+  int height;
+  int sx;
+  int sy;
+  int x;
+  int y;
 
-  gtk_widget_get_pointer(w_current->drawing_area, &sx, &sy);
+  g_return_val_if_fail (page_view != NULL, FALSE);
+  g_return_val_if_fail (GTK_WIDGET (page_view)->window != NULL, FALSE);
+
+  /* \todo The following line is depricated in GDK 2.24 */
+  gdk_drawable_get_size (GTK_WIDGET (page_view)->window, &width, &height);
+
+  gtk_widget_get_pointer(GTK_WIDGET (page_view), &sx, &sy);
 
   /* check if we are inside the drawing area */
-  if (sx < 0 || sx >= w_current->win_width 
-      || sy <0 || sy >= w_current->win_height)
+  if ((sx < 0) || (sx >= width) || (sy < 0) || (sy >= height)) {
     return FALSE;
+  }
 
   SCREENtoWORLD (w_current, sx, sy, &x, &y);
+
   if (snapped) {
     x = snap_grid (w_current, x);
     y = snap_grid (w_current, y);
   }
+
   *wx = x;
   *wy = y;
 
