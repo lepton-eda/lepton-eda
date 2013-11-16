@@ -38,6 +38,7 @@ extern COLOR display_outline_colors[MAX_COLORS];
  */
 void o_redraw_rects (GschemToplevel *w_current,
                      PAGE *page,
+                     GschemPageGeometry *geometry,
                      GdkRectangle *rectangles,
                      int n_rectangles)
 {
@@ -61,16 +62,17 @@ void o_redraw_rects (GschemToplevel *w_current,
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (w_current->toplevel == toplevel);
   g_return_if_fail (page != NULL);
+  g_return_if_fail (geometry != NULL);
 
   /* We need to transform the cairo context to world coordinates while
    * we're drawing using the renderer. */
   cairo_matrix_init (&render_mtx,
-                     (double) page->to_screen_x_constant,
+                     (double) geometry->to_screen_x_constant,
                      0,
                      0,
-                     - (double) page->to_screen_y_constant,
-                     (- (double) page->left * page->to_screen_x_constant),
-                     ((double) page->to_screen_y_constant * page->top + toplevel->height));
+                     - (double) geometry->to_screen_y_constant,
+                     (- (double) geometry->world_left * geometry->to_screen_x_constant),
+                     ((double) geometry->to_screen_y_constant * geometry->world_top + geometry->screen_height));
 
   cairo_save (w_current->cr);
   cairo_set_matrix (w_current->cr, &render_mtx);

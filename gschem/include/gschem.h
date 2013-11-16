@@ -11,6 +11,7 @@ typedef struct st_gschem_toplevel GschemToplevel;
 
 /* gschem headers */
 #include "gschem_defines.h"
+#include "gschem_page_geometry.h"
 #include "gschem_page_view.h"
 #include "gschem_main_window.h"
 #include "gschem_selection_adapter.h"

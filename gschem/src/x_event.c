@@ -49,6 +49,7 @@ static int DOING_STROKE = FALSE;
 gint
 x_event_expose(GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_current)
 {
+  GschemPageGeometry *geometry;
   PAGE *page;
 
 #if DEBUG
@@ -59,6 +60,7 @@ x_event_expose(GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_cu
   g_return_val_if_fail (w_current != NULL, 0);
 
   page = gschem_page_view_get_page (view);
+  geometry = gschem_page_view_get_page_geometry (view);
 
   if (page != NULL) {
     GdkRectangle *rectangles;
@@ -70,7 +72,7 @@ x_event_expose(GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_cu
     w_current->cr = gdk_cairo_create( GTK_WIDGET (view)->window );
 
     gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
-    o_redraw_rects (w_current, page, rectangles, n_rectangles);
+    o_redraw_rects (w_current, page, geometry, rectangles, n_rectangles);
     g_free (rectangles);
 
     cairo_destroy (w_current->cr);

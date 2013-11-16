@@ -44,6 +44,8 @@ struct _GschemPageView
   GtkAdjustment *hadjustment;
   GtkAdjustment *vadjustment;
 
+  GHashTable *geometry_table;
+
   TOPLEVEL *toplevel;
 };
 
@@ -54,6 +56,9 @@ gschem_page_view_get_hadjustment (GschemPageView *view);
 
 PAGE*
 gschem_page_view_get_page (GschemPageView *view);
+
+GschemPageGeometry*
+gschem_page_view_get_page_geometry (GschemPageView *view);
 
 TOPLEVEL*
 gschem_page_view_get_toplevel (GschemPageView *view);

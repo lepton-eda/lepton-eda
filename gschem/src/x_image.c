@@ -591,6 +591,7 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
   GschemToplevel new_w_current;
   TOPLEVEL toplevel;
   GdkRectangle rect;
+  GschemPageGeometry *geometry;
 
   /* Do a copy of the w_current struct and work with it */
   memcpy(&new_w_current, w_current, sizeof(GschemToplevel));
@@ -662,7 +663,16 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
   rect.width = right - origin_x;
   rect.height = bottom - origin_y;
 
-  o_redraw_rects (&new_w_current, toplevel.page_current, &rect, 1);
+  geometry = gschem_page_geometry_new_with_values (size_x,
+                                                   size_y,
+                                                   toplevel.page_current->left,
+                                                   toplevel.page_current->top,
+                                                   toplevel.page_current->right,
+                                                   toplevel.page_current->bottom);
+
+  o_redraw_rects (&new_w_current, toplevel.page_current, geometry, &rect, 1);
+
+  gschem_page_geometry_free (geometry);
 
   /* Get the pixbuf */
   pixbuf = gdk_pixbuf_get_from_drawable (NULL,new_w_current.drawable, NULL,

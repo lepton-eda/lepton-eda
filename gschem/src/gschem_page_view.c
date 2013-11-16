@@ -51,6 +51,7 @@ enum
   PROP_0,
   PROP_HADJUSTMENT,
   PROP_PAGE,
+  PROP_PAGE_GEOMETRY,
   PROP_TOPLEVEL,
   PROP_VADJUSTMENT
 };
@@ -72,12 +73,6 @@ gschem_page_view_class_init (GschemPageViewClass *klass);
 static void
 gschem_page_view_init (GschemPageView *view);
 
-static int
-gschem_page_view_pix_x (GschemPageView *view, int val);
-
-static int
-gschem_page_view_pix_y (GschemPageView *view, int val);
-
 static void
 gschem_page_view_update_hadjustment (GschemPageView *view);
 
@@ -86,6 +81,12 @@ gschem_page_view_update_vadjustment (GschemPageView *view);
 
 static void
 hadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view);
+
+static void
+remove_page_weak_reference (PAGE *page, gpointer geometry, GschemPageView *view);
+
+static void
+page_deleted (PAGE *page, GschemPageView *view);
 
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
@@ -158,6 +159,9 @@ dispose (GObject *object)
   gschem_page_view_set_hadjustment (view, NULL);
   gschem_page_view_set_vadjustment (view, NULL);
 
+  g_hash_table_foreach (view->geometry_table, (GHFunc)remove_page_weak_reference, view);
+  g_hash_table_remove_all (view->geometry_table);
+
   gschem_page_view_set_toplevel (view, NULL);
 
   /* lastly, chain up to the parent dispose */
@@ -173,6 +177,13 @@ dispose (GObject *object)
 static void
 finalize (GObject *object)
 {
+  GschemPageView *view = GSCHEM_PAGE_VIEW (object);
+
+  g_return_if_fail (view != NULL);
+  g_return_if_fail (view->geometry_table != NULL);
+
+  g_hash_table_destroy (view->geometry_table);
+
   /* lastly, chain up to the parent finalize */
 
   g_return_if_fail (gschem_page_view_parent_class != NULL);
@@ -200,6 +211,10 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
     case PROP_PAGE:
       g_value_set_pointer (value, gschem_page_view_get_page (view));
+      break;
+
+    case PROP_PAGE_GEOMETRY:
+      g_value_set_boxed (value, gschem_page_view_get_page_geometry (view));
       break;
 
     case PROP_TOPLEVEL:
@@ -246,6 +261,14 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
                                                          "Page",
                                                          "Page",
                                                          G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_PAGE_GEOMETRY,
+                                   g_param_spec_boxed ("page-geometry",
+                                                       "Page Geometry",
+                                                       "Page Geometry",
+                                                       GSCHEM_TYPE_PAGE_GEOMETRY,
+                                                       G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_TOPLEVEL,
@@ -305,6 +328,56 @@ gschem_page_view_get_page (GschemPageView *view)
   g_return_val_if_fail (view->toplevel != NULL, NULL);
 
   return view->toplevel->page_current;
+}
+
+
+
+/*! \brief Get page geometry for this view
+ *
+ *  \param [in] view The view
+ *  \return The page geometry for the view
+ */
+GschemPageGeometry*
+gschem_page_view_get_page_geometry (GschemPageView *view)
+{
+  typedef void (*NotifyFunction) (void*,void*);
+
+  GschemPageGeometry *geometry;
+  PAGE *page = gschem_page_view_get_page (view);
+  int screen_width;
+  int screen_height;
+
+  g_return_val_if_fail (page != NULL, NULL);
+  g_return_val_if_fail (view != NULL, NULL);
+  g_return_val_if_fail (view->toplevel != NULL, NULL);
+
+  geometry = g_hash_table_lookup (view->geometry_table, page);
+
+  /* \todo The following line is depricated in GDK 2.24 */
+  gdk_drawable_get_size (GTK_WIDGET (view)->window, &screen_width, &screen_height);
+
+  if (geometry == NULL) {
+    geometry = gschem_page_geometry_new_with_values (screen_width,
+                                                     screen_height,
+                                                     page->left,
+                                                     page->top,
+                                                     page->right,
+                                                     page->bottom);
+
+    g_hash_table_insert (view->geometry_table, page, geometry);
+    s_page_weak_ref (page, (NotifyFunction) page_deleted, view);
+  }
+  else {
+    gschem_page_geometry_set_values (geometry,
+                                     screen_width,
+                                     screen_height,
+                                     page->left,
+                                     page->top,
+                                     page->right,
+                                     page->bottom);
+  }
+
+  return geometry;
 }
 
 
@@ -507,6 +580,11 @@ gschem_page_view_init (GschemPageView *view)
   view->hadjustment = NULL;
   view->vadjustment = NULL;
 
+  view->geometry_table = g_hash_table_new_full (g_direct_hash,
+                                                g_direct_equal,
+                                                NULL,
+                                                (GDestroyNotify) gschem_page_geometry_free);
+
   view->toplevel = NULL;
 
   g_signal_connect (view,
@@ -599,86 +677,6 @@ gschem_page_view_pan_mouse (GschemPageView *page_view, GschemToplevel *w_current
 
 
 
-/*! \brief Convert a x coordinate to pixels.
- *
- *  A temporary function until a GschemToplevel is not required for coordinate
- *  conversions. See the function pix_x.
- */
-static int
-gschem_page_view_pix_x (GschemPageView *view, int val)
-{
-  double i;
-  int j;
-  PAGE *page;
-
-  g_return_val_if_fail (view != NULL, 0);
-
-  page = gschem_page_view_get_page (view);
-
-  g_return_val_if_fail (page != NULL, 0);
-
-  i = page->to_screen_x_constant * (double)(val - page->left);
-
-#ifdef HAS_RINT
-  j = rint(i);
-#else
-  j = i;
-#endif
-
-  /* this is a temp solution to fix the wrapping associated with */
-  /* X coords being greated/less than than 2^15 */
-  if (j >= 32768) {
-    j = 32767;
-  }
-  if (j <= -32768) {
-    j = -32767;
-  }
-
-  return(j);
-}
-
-
-
-/*! \brief Convert a y coordinate to pixels.
- *
- *  A temporary function until a GschemToplevel is not required for coordinate
- *  conversions. See the function pix_y.
- */
-static int
-gschem_page_view_pix_y (GschemPageView *view, int val)
-{
-  double i;
-  int j;
-  PAGE *page;
-
-  g_return_val_if_fail (view != NULL, 0);
-
-  page = gschem_page_view_get_page (view);
-
-  g_return_val_if_fail (page != NULL, 0);
-
-  i = view->toplevel->height - (page->to_screen_y_constant * (double)(val - page->top));
-
-#ifdef HAS_RINT
-  j = rint(i);
-#else
-  j = i;
-#endif
-
-  /* this is a temp solution to fix the wrapping associated with */
-  /* X coords being greated/less than than 2^15 */
-  if (j >= 32768) {
-    j = 32767;
-  }
-  if (j <= -32768) {
-    j = -32767;
-  }
-
-  return(j);
-}
-
-
-
 /*! \brief Set the horizontal scroll adjustment for this view
  *
  *  \param [in,out] view The view
@@ -725,13 +723,15 @@ gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustme
 void
 gschem_page_view_set_page (GschemPageView *view, PAGE *page)
 {
-  g_return_if_fail (view != NULL);
-  g_return_if_fail (view->toplevel != NULL);
   g_return_if_fail (page != NULL);
+  g_return_if_fail (view != NULL);
+  g_return_if_fail (view->geometry_table != NULL);
+  g_return_if_fail (view->toplevel != NULL);
 
   s_page_goto (view->toplevel, page);
 
   g_object_notify (G_OBJECT (view), "page");
+  g_object_notify (G_OBJECT (view), "page-geometry");
 }
 
 
@@ -977,6 +977,37 @@ gschem_page_view_update_vadjustment (GschemPageView *view)
 
 
 
+/*! \brief
+ *
+ */
+static void
+remove_page_weak_reference (PAGE *page, gpointer geometry, GschemPageView *view)
+{
+  typedef void (*NotifyFunction) (void*,void*);
+
+  g_return_if_fail (page != NULL);
+  g_return_if_fail (view != NULL);
+
+  s_page_weak_unref (page, (NotifyFunction) page_deleted, view);
+}
+
+
+
+/*! \brief
+ *
+ */
+static void
+page_deleted (PAGE *page, GschemPageView *view)
+{
+  g_return_if_fail (page != NULL);
+  g_return_if_fail (view != NULL);
+  g_return_if_fail (view->geometry_table != NULL);
+
+  g_hash_table_remove (view->geometry_table, page);
+}
+
+
+
 /*! \brief Signal handler for setting the scroll adjustments
  *
  *  Sent from the GtkScrolledWindow to set the adjustments for the
@@ -1028,8 +1059,12 @@ vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view)
 void
 gschem_page_view_WORLDtoSCREEN (GschemPageView *view, int x, int y, int *px, int *py)
 {
-  *px = gschem_page_view_pix_x (view, x);
-  *py = gschem_page_view_pix_y (view, y);
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+
+  g_return_if_fail (geometry != NULL);
+
+  *px = gschem_page_geometry_pix_x (geometry, x);
+  *py = gschem_page_geometry_pix_y (geometry, y);
 }
 
 
