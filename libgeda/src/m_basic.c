@@ -40,7 +40,6 @@ void set_window(TOPLEVEL *toplevel, PAGE *page,
                 int xmin, int xmax, int ymin, int ymax)
 {
   double fs,f0,f1;
-  double fw0,fw1,fw;
 
   page->left   = xmin;
   page->right  = xmax;
@@ -49,29 +48,11 @@ void set_window(TOPLEVEL *toplevel, PAGE *page,
 
   /* now do the constant setups */
 
-  /* pix_x */
-  f0 = page->left;
-  f1 = page->right;
-  fs = toplevel->width;
-  page->to_screen_x_constant = fs / (f1 - f0);
-
   /* pix_y */
   f0 = page->top;
   f1 = page->bottom;
   fs = toplevel->height;
   page->to_screen_y_constant = fs / (f1 - f0); 
-
-  /* mil_x */
-  fw1 = page->right;
-  fw0 = page->left;
-  fw  = toplevel->width;
-  page->to_world_x_constant = (fw1 - fw0) / fw;
-
-  /* mil_y */
-  fw1 = page->bottom;
-  fw0 = page->top;
-  fw  = toplevel->height;
-  page->to_world_y_constant = (fw1 - fw0) / fw;
 }
 
 

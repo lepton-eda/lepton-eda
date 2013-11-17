@@ -382,11 +382,7 @@ struct st_page {
 
   int left, right, top, bottom;		/* World coord limits */
 
-  float to_screen_x_constant;
   float to_screen_y_constant;
-
-  float to_world_x_constant;
-  float to_world_y_constant;
 
   TILE world_tiles[MAX_TILES_X][MAX_TILES_Y];
 

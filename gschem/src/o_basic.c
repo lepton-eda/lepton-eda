@@ -138,7 +138,7 @@ void o_redraw_rects (GschemToplevel *w_current,
   renderer = g_object_ref (w_current->renderer);
   g_object_set (G_OBJECT (renderer),
                 "cairo-context", w_current->cr,
-                "grip-size", ((double) grip_half_size * page->to_world_x_constant),
+                "grip-size", ((double) grip_half_size * geometry->to_world_x_constant),
                 "render-flags", render_flags,
                 "color-map", render_color_map,
                 NULL);

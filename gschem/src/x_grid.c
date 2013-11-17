@@ -45,15 +45,18 @@
  */
 static int query_dots_grid_spacing (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (page_view);
   int incr, screen_incr;
+
+  g_return_val_if_fail (geometry != NULL, -1);
+  g_return_val_if_fail (page_view != NULL, -1);
 
   if (w_current->dots_grid_mode == DOTS_GRID_VARIABLE_MODE) {
     /* In the variable mode around every (DOTS_VARIABLE_MODE_SPACING)'th
      * screenpixel will be grid-point. */
     /* adding 0.1 for correct cast*/
-    incr = round_5_2_1 (toplevel->page_current->to_world_x_constant *
-                        DOTS_VARIABLE_MODE_SPACING) + 0.1;
+    incr = round_5_2_1 (geometry->to_world_x_constant * DOTS_VARIABLE_MODE_SPACING) + 0.1;
 
     /* limit minimum grid spacing to grid to snap_size */
     if (incr < w_current->snap_size) {
@@ -62,7 +65,7 @@ static int query_dots_grid_spacing (GschemToplevel *w_current)
   } else {
     /* Fixed size grid in world coorinates */
     incr = w_current->snap_size;
-    screen_incr = gschem_page_view_SCREENabs (GSCHEM_PAGE_VIEW (w_current->drawing_area), incr);
+    screen_incr = gschem_page_view_SCREENabs (page_view, incr);
     if (screen_incr < w_current->dots_grid_fixed_threshold) {
       /* No grid drawn if the on-screen spacing is less than the threshold */
       incr = -1;
