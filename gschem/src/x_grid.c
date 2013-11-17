@@ -100,8 +100,8 @@ static void draw_dots_grid_region (GschemToplevel *w_current,
 
   gdk_gc_set_foreground (w_current->gc, x_get_color (DOTS_GRID_COLOR));
 
-  SCREENtoWORLD (w_current, x - 1, y + height + 1, &x_start, &y_start);
-  SCREENtoWORLD (w_current, x + width + 1, y - 1, &x_end, &y_end);
+  gschem_page_view_SCREENtoWORLD (GSCHEM_PAGE_VIEW (w_current->drawing_area), x - 1, y + height + 1, &x_start, &y_start);
+  gschem_page_view_SCREENtoWORLD (GSCHEM_PAGE_VIEW (w_current->drawing_area), x + width + 1, y - 1, &x_end, &y_end);
 
   /* figure starting grid coordinates, work by taking the start
    * and end coordinates and rounding down to the nearest
