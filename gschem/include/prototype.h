@@ -371,14 +371,7 @@ void i_vars_freenames();
 void i_vars_init_gschem_defaults (void);
 void i_vars_atexit_save_user_config (gpointer user_data);
  /* m_basic.c */
-int mil_x(GschemToplevel *w_current, int val);
-int mil_y(GschemToplevel *w_current, int val);
-int pix_x(GschemToplevel *w_current, int val);
-int pix_y(GschemToplevel *w_current, int val);
-void WORLDtoSCREEN(GschemToplevel *w_current, int x, int y, int *px, int *py);
-void SCREENtoWORLD(GschemToplevel *w_current, int mx, int my, int *x, int *y);
 int snap_grid(GschemToplevel *w_current, int input);
-int SCREENabs(GschemToplevel *w_current, int val);
 int WORLDabs(GschemToplevel *w_current, int val);
 int WORLDclip_change(GschemToplevel *w_current, int *x1, int *y1, int *x2, int *y2);
 int clip_nochange(GschemToplevel *w_current, int x1, int y1, int x2, int y2);
