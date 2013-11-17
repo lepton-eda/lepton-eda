@@ -55,6 +55,12 @@ gschem_page_geometry_free (GschemPageGeometry *geometry);
 GType
 gschem_page_geometry_get_type ();
 
+int
+gschem_page_geometry_mil_x (GschemPageGeometry *geometry, int value);
+
+int
+gschem_page_geometry_mil_y (GschemPageGeometry *geometry, int value);
+
 GschemPageGeometry*
 gschem_page_geometry_new_with_values (int screen_width,
                                       int screen_height,

@@ -79,6 +79,66 @@ gschem_page_geometry_get_type ()
 
 
 
+/*! \brief Convert a x coordinate to mils.
+ *  \par Function Description
+ *  Convert a x coordinate to mils.
+ *
+ *  \param [in] w_current  The GschemToplevel object
+ *  \param [in] val        The x coordinate to convert
+ *  \return The coordinate value in mils.
+ */
+int
+gschem_page_geometry_mil_x (GschemPageGeometry *geometry, int value)
+{
+  double i;
+  double fval;
+  int j;
+
+  g_return_val_if_fail (geometry != NULL, 0);
+
+  fval = value;
+  i = fval * geometry->to_world_x_constant + geometry->world_left;
+
+#ifdef HAS_RINT
+  j = rint(i);
+#else
+  j = i;
+#endif
+
+  return(j);
+}
+
+/*! \brief Convert a y coordinate to mils
+ *  \par Function Description
+ *  Convert a y coordinate to mils
+ *
+ *  \param [in] w_current  The GschemToplevel object.
+ *  \param [in] val        The y coordinate to convert.
+ *  \return The coordinate value in mils.
+ */
+int
+gschem_page_geometry_mil_y(GschemPageGeometry *geometry, int value)
+{
+  double i;
+  double fval;
+  int j;
+
+  g_return_val_if_fail (geometry != NULL, 0);
+
+  fval = geometry->screen_height - value;
+  i = fval * geometry->to_world_y_constant + geometry->world_top;
+
+#ifdef HAS_RINT
+  j = rint(i);
+#else
+  j = i;
+#endif
+
+  return(j);
+}
+
+
+
 /*! \brief Get page geometry for this view
  *
  *  \param [in] view The view

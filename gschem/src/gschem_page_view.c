@@ -677,6 +677,33 @@ gschem_page_view_pan_mouse (GschemPageView *page_view, GschemToplevel *w_current
 
 
 
+/*! \brief Transform WORLD coordinates to WORLD coordinates
+ *  \par Function Description
+ *  This function takes in SCREEN x/y coordinates and
+ *  transforms them to WORLD x/y coordinates.
+ *
+ *  \param [in]  w_current  The GschemToplevel object.
+ *  \param [in]  mx         The x coordinate in SCREEN units.
+ *  \param [in]  my         The y coordinate in SCREEN units.
+ *  \param [out] x          The x coordinate in WORLD units.
+ *  \param [out] y          The y coordinate in WORLD units.
+ *  \note Question: why are we returning in x and y
+ *                  if this is SCREEN to WORLD shouldn't WORLD
+ *                  coordinates be returned in mx and my?
+ */
+void
+gschem_page_view_SCREENtoWORLD (GschemPageView *view, int mx, int my, int *x, int *y)
+{
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+
+  g_return_if_fail (geometry != NULL);
+
+  *x = gschem_page_geometry_mil_x (geometry, mx);
+  *y = gschem_page_geometry_mil_y (geometry, my);
+}
+
+
+
 /*! \brief Set the horizontal scroll adjustment for this view
  *
  *  \param [in,out] view The view

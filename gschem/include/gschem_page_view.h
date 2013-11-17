@@ -94,6 +94,9 @@ int
 gschem_page_view_SCREENabs(GschemPageView *view, int val);
 
 void
+gschem_page_view_SCREENtoWORLD (GschemPageView *view, int mx, int my, int *x, int *y);
+
+void
 gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustment);
 
 void

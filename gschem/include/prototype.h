@@ -657,12 +657,12 @@ void x_dialog_edit_pin_type(GschemToplevel *w_current, const GList *obj_list);
 gint x_event_expose(GschemPageView *widget, GdkEventExpose *event, GschemToplevel *w_current);
 gint x_event_raise_dialog_boxes (GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_current);
 gint x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current);
-gint x_event_button_released(GtkWidget *widget, GdkEventButton *event, GschemToplevel *w_current);
-gint x_event_motion(GtkWidget *widget, GdkEventMotion *event, GschemToplevel *w_current);
+gint x_event_button_released(GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current);
+gint x_event_motion(GschemPageView *page_view, GdkEventMotion *event, GschemToplevel *w_current);
 gboolean x_event_configure (GschemPageView *page_view, GdkEventConfigure *event, gpointer user_data);
 void x_manual_resize(GschemToplevel *w_current);
 gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event, GschemToplevel *w_current);
-gboolean x_event_key(GtkWidget *widget, GdkEventKey *event, GschemToplevel *w_current);
+gboolean x_event_key(GschemPageView *page_view, GdkEventKey *event, GschemToplevel *w_current);
 gint x_event_scroll(GtkWidget *widget, GdkEventScroll *event, GschemToplevel *w_current);
 gboolean x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapped, gint *wx, gint *wy);
 /* x_compselect.c */

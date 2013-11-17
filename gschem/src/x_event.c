@@ -132,8 +132,8 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
   printf("\n");
 #endif
 
-  SCREENtoWORLD (w_current, (int) event->x, (int) event->y,
-                 &unsnapped_wx, &unsnapped_wy);
+  gschem_page_view_SCREENtoWORLD (page_view, (int) event->x, (int) event->y,
+                                  &unsnapped_wx, &unsnapped_wy);
   w_x = snap_grid (w_current, unsnapped_wx);
   w_y = snap_grid (w_current, unsnapped_wy);
 
@@ -563,12 +563,13 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
  *  \par Function Description
  *
  */
-gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
-                             GschemToplevel *w_current)
+gint
+x_event_button_released (GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current)
 {
   int unsnapped_wx, unsnapped_wy;
   int w_x, w_y;
 
+  g_return_val_if_fail ((page_view != NULL), 0);
   g_return_val_if_fail ((w_current != NULL), 0);
 
 #if DEBUG
@@ -579,8 +580,8 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
   w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
   w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
 
-  SCREENtoWORLD (w_current, (int) event->x, (int) event->y,
-                 &unsnapped_wx, &unsnapped_wy);
+  gschem_page_view_SCREENtoWORLD (page_view, (int) event->x, (int) event->y,
+                                  &unsnapped_wx, &unsnapped_wy);
   w_x = snap_grid (w_current, unsnapped_wx);
   w_y = snap_grid (w_current, unsnapped_wy);
 
@@ -777,8 +778,8 @@ gint x_event_button_released(GtkWidget *widget, GdkEventButton *event,
  *  \par Function Description
  *
  */
-gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
-                    GschemToplevel *w_current)
+gint
+x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel *w_current)
 {
   int pdiff_x, pdiff_y;
   int w_x, w_y;
@@ -818,8 +819,8 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
       return 0;
   }
 
-  SCREENtoWORLD (w_current, (int) event->x, (int) event->y,
-                 &unsnapped_wx, &unsnapped_wy);
+  gschem_page_view_SCREENtoWORLD (page_view, (int) event->x, (int) event->y,
+                                  &unsnapped_wx, &unsnapped_wy);
   w_x = snap_grid (w_current, unsnapped_wx);
   w_y = snap_grid (w_current, unsnapped_wy);
 
@@ -833,7 +834,7 @@ gint x_event_motion(GtkWidget *widget, GdkEventMotion *event,
          pdiff_y = (int) event->y - start_pan_y;
 
          if (!(throttle % 5)) {
-           gschem_page_view_pan_mouse(GSCHEM_PAGE_VIEW (widget),
+           gschem_page_view_pan_mouse(page_view,
                                       w_current,
                                       pdiff_x*w_current->mousepan_gain,
                                       pdiff_y*w_current->mousepan_gain);
@@ -1135,16 +1136,18 @@ gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
  *  then snaps it to the grid.
  *
  * \param [in]  w_current  The GschemToplevel object.
+ * \param [in]  page_view  The GschemPageView object.
  * \param [out] wx         Return location for the snapped X coordinate.
  * \param [out] wy         Return location for the snapped Y coordiante.
  */
-static void get_snapped_pointer (GschemToplevel *w_current, int *wx, int *wy)
+static void
+get_snapped_pointer (GschemToplevel *w_current, GschemPageView *page_view, int *wx, int *wy)
 {
   int sx, sy;
   int unsnapped_wx, unsnapped_wy;
 
-  gtk_widget_get_pointer (w_current->drawing_area, &sx, &sy);
-  SCREENtoWORLD (w_current, sx, sy, &unsnapped_wx, &unsnapped_wy);
+  gtk_widget_get_pointer (GTK_WIDGET (page_view), &sx, &sy);
+  gschem_page_view_SCREENtoWORLD (page_view, sx, sy, &unsnapped_wx, &unsnapped_wy);
   *wx = snap_grid (w_current, unsnapped_wx);
   *wy = snap_grid (w_current, unsnapped_wy);
 }
@@ -1160,8 +1163,8 @@ static void get_snapped_pointer (GschemToplevel *w_current, int *wx, int *wy)
  * \param      w_current  the toplevel environment
  * \returns TRUE if the event has been handled.
  */
-gboolean x_event_key (GtkWidget *widget, GdkEventKey *event,
-                      GschemToplevel *w_current)
+gboolean
+x_event_key (GschemPageView *page_view, GdkEventKey *event, GschemToplevel *w_current)
 {
   gboolean retval = FALSE;
   int wx, wy;
@@ -1209,33 +1212,33 @@ gboolean x_event_key (GtkWidget *widget, GdkEventKey *event,
   switch (w_current->event_state) {
     case ENDLINE:
       if (control_key) {
-        get_snapped_pointer (w_current, &wx, &wy);
+        get_snapped_pointer (w_current, page_view, &wx, &wy);
         o_line_motion (w_current, wx, wy);
       }
       break;
     case STARTDRAWNET:
       if (control_key) {
-        get_snapped_pointer (w_current, &wx, &wy);
+        get_snapped_pointer (w_current, page_view, &wx, &wy);
         o_net_start_magnetic(w_current, wx, wy);
       }
       break;
     case DRAWNET:
     case NETCONT:
       if (shift_key || control_key) {
-        get_snapped_pointer (w_current, &wx, &wy);
+        get_snapped_pointer (w_current, page_view, &wx, &wy);
         o_net_motion (w_current, wx, wy);
       }
       break;
     case DRAWBUS:
     case BUSCONT:
       if (control_key) {
-        get_snapped_pointer (w_current, &wx, &wy);
+        get_snapped_pointer (w_current, page_view, &wx, &wy);
         o_bus_motion (w_current, wx, wy);
       }
       break;
     case ENDMOVE:
       if (control_key) {
-        get_snapped_pointer (w_current, &wx, &wy);
+        get_snapped_pointer (w_current, page_view, &wx, &wy);
         o_move_motion (w_current, wx, wy);
       }
       break;
@@ -1245,7 +1248,7 @@ gboolean x_event_key (GtkWidget *widget, GdkEventKey *event,
     case ENDCOPY:
     case ENDMCOPY:
       if (control_key) {
-        get_snapped_pointer (w_current, &wx, &wy);
+        get_snapped_pointer (w_current, page_view, &wx, &wy);
         o_place_motion (w_current, wx, wy);
       }
       break;
@@ -1391,7 +1394,7 @@ x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapped, gint 
     return FALSE;
   }
 
-  SCREENtoWORLD (w_current, sx, sy, &x, &y);
+  gschem_page_view_SCREENtoWORLD (page_view, sx, sy, &x, &y);
 
   if (snapped) {
     x = snap_grid (w_current, x);
