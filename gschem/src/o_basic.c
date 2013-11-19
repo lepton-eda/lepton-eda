@@ -64,18 +64,8 @@ void o_redraw_rects (GschemToplevel *w_current,
   g_return_if_fail (page != NULL);
   g_return_if_fail (geometry != NULL);
 
-  /* We need to transform the cairo context to world coordinates while
-   * we're drawing using the renderer. */
-  cairo_matrix_init (&render_mtx,
-                     (double) geometry->to_screen_x_constant,
-                     0,
-                     0,
-                     - (double) geometry->to_screen_y_constant,
-                     (- (double) geometry->world_left * geometry->to_screen_x_constant),
-                     ((double) geometry->to_screen_y_constant * geometry->world_top + geometry->screen_height));
-
   cairo_save (w_current->cr);
-  cairo_set_matrix (w_current->cr, &render_mtx);
+  cairo_set_matrix (w_current->cr, gschem_page_geometry_get_world_to_screen_matrix (geometry));
 
   for (i = 0; i < n_rectangles; i++) {
     x_repaint_background_region (w_current, rectangles[i].x, rectangles[i].y,

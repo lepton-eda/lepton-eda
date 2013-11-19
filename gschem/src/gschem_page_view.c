@@ -362,7 +362,11 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
                                                      page->left,
                                                      page->top,
                                                      page->right,
-                                                     page->bottom);
+                                                     page->bottom,
+                                                     view->toplevel->init_left,
+                                                     view->toplevel->init_top,
+                                                     view->toplevel->init_right,
+                                                     view->toplevel->init_bottom);
 
     g_hash_table_insert (view->geometry_table, page, geometry);
     s_page_weak_ref (page, (NotifyFunction) page_deleted, view);

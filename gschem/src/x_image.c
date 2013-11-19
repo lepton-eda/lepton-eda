@@ -668,7 +668,11 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
                                                    toplevel.page_current->left,
                                                    toplevel.page_current->top,
                                                    toplevel.page_current->right,
-                                                   toplevel.page_current->bottom);
+                                                   toplevel.page_current->bottom,
+                                                   toplevel.init_left,
+                                                   toplevel.init_top,
+                                                   toplevel.init_right,
+                                                   toplevel.init_bottom);
 
   o_redraw_rects (&new_w_current, toplevel.page_current, geometry, &rect, 1);
 

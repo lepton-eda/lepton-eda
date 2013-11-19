@@ -32,6 +32,11 @@ struct _GschemPageGeometry
   int screen_width;
   int screen_height;
 
+  int viewport_left;
+  int viewport_top;
+  int viewport_right;
+  int viewport_bottom;
+
   int world_left;
   int world_top;
   int world_right;
@@ -42,6 +47,10 @@ struct _GschemPageGeometry
 
   double to_world_x_constant;
   double to_world_y_constant;
+
+  gboolean world_to_screen_calculated;
+
+  cairo_matrix_t world_to_screen_matrix;
 };
 
 
@@ -52,8 +61,41 @@ gschem_page_geometry_copy (GschemPageGeometry *geometry);
 void
 gschem_page_geometry_free (GschemPageGeometry *geometry);
 
+int
+gschem_page_geometry_get_screen_height (GschemPageGeometry *geometry);
+
+int
+gschem_page_geometry_get_screen_width (GschemPageGeometry *geometry);
+
 GType
 gschem_page_geometry_get_type ();
+
+int
+gschem_page_geometry_get_viewport_bottom (GschemPageGeometry *geometry);
+
+int
+gschem_page_geometry_get_viewport_left (GschemPageGeometry *geometry);
+
+int
+gschem_page_geometry_get_viewport_right (GschemPageGeometry *geometry);
+
+int
+gschem_page_geometry_get_viewport_top (GschemPageGeometry *geometry);
+
+int
+gschem_page_geometry_get_world_bottom (GschemPageGeometry *geometry);
+
+int
+gschem_page_geometry_get_world_left (GschemPageGeometry *geometry);
+
+int
+gschem_page_geometry_get_world_right (GschemPageGeometry *geometry);
+
+cairo_matrix_t*
+gschem_page_geometry_get_world_to_screen_matrix (GschemPageGeometry *geometry);
+
+int
+gschem_page_geometry_get_world_top (GschemPageGeometry *geometry);
 
 int
 gschem_page_geometry_mil_x (GschemPageGeometry *geometry, int value);
@@ -64,6 +106,10 @@ gschem_page_geometry_mil_y (GschemPageGeometry *geometry, int value);
 GschemPageGeometry*
 gschem_page_geometry_new_with_values (int screen_width,
                                       int screen_height,
+                                      int viewport_left,
+                                      int viewport_top,
+                                      int viewport_right,
+                                      int viewport_bottom,
                                       int world_left,
                                       int world_top,
                                       int world_right,
@@ -79,7 +125,19 @@ void
 gschem_page_geometry_set_values (GschemPageGeometry *geometry,
                                  int screen_width,
                                  int screen_height,
-                                 int world_left,
-                                 int world_top,
-                                 int world_right,
-                                 int world_bottom);
+                                 int viewport_left,
+                                 int viewport_top,
+                                 int viewport_right,
+                                 int viewport_bottom);
+
+void
+gschem_page_geometry_set_viewport_bottom (GschemPageGeometry *geometry, int viewport_bottom);
+
+void
+gschem_page_geometry_set_viewport_left (GschemPageGeometry *geometry, int viewport_left);
+
+void
+gschem_page_geometry_set_viewport_right (GschemPageGeometry *geometry, int viewport_right);
+
+void
+gschem_page_geometry_set_viewport_top (GschemPageGeometry *geometry, int viewport_top);
