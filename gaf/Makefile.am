@@ -2,7 +2,12 @@ SUBDIRS = po
 
 bin_PROGRAMS = gaf
 
-EXTRA_DIST = $(html_man_files) gaf.1.in
+EXTRA_DIST = $(html_man_files) gaf.1.in ChangeLog
+
+if HAVE_GIT_REPO
+ChangeLog: $(top_builddir)/stamp-git
+	(cd $(srcdir) && $(GIT) log --pretty=medium $(CHANGELOG_BASE).. -- .) > $@
+endif HAVE_GIT_REPO
 
 BUILT_SOURCES = shell.x
 
@@ -63,3 +68,4 @@ endif
 SUFFIXES = .x .1.in .1 .html
 
 CLEANFILES = $(BUILT_SOURCES)
+MAINTAINERCLEANFILES = ChangeLog
