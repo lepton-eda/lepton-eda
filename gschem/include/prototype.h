@@ -237,6 +237,7 @@ void i_update_toolbar(GschemToplevel *w_current);
 void i_update_menus(GschemToplevel *w_current);
 void i_set_filename(GschemToplevel *w_current, const gchar *string);
 void i_update_grid_info(GschemToplevel *w_current);
+void i_update_grid_info_callback (GschemPageView *view, GschemToplevel *w_current);
 /* i_callbacks.c */
 void i_callback_file_new(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_toolbar_file_new(GtkWidget *widget, gpointer data);

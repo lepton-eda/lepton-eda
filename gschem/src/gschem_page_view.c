@@ -297,6 +297,17 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
     2,
     GTK_TYPE_ADJUSTMENT,
     GTK_TYPE_ADJUSTMENT);
+
+  g_signal_new (
+    "update-grid-info",
+    G_OBJECT_CLASS_TYPE (klass),
+    G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+    0,
+    NULL,
+    NULL,
+    g_cclosure_marshal_VOID__VOID,
+    G_TYPE_NONE,
+    0);
 }
 
 
@@ -613,25 +624,24 @@ gschem_page_view_new_with_toplevel (TOPLEVEL *toplevel)
 
 /*! \brief Center the view on the given world coordinate
  *
- *  The w_current parameter will be replaced with signals. This way, any object
- *  can listen for changes in the view.
- *
  *  \param [in,out] page_view This GschemPageView
- *  \param [in]     w_current The GschemToplevel
  *  \param [in]     w_x       The world x coordinate of the new center
  *  \param [in]     w_y       The world y coordinate of the new center
  */
 void
-gschem_page_view_pan (GschemPageView *view, GschemToplevel *w_current, int w_x, int w_y)
+gschem_page_view_pan (GschemPageView *view, int w_x, int w_y)
 {
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
   PAGE *page = gschem_page_view_get_page (view);
 
+  g_return_if_fail (geometry != NULL);
   g_return_if_fail (page != NULL);
+  g_return_if_fail (view != NULL);
 
   /* make mouse to the new world-center;
      attention: there are information looses because of type cast in mil_x */
 
-  a_pan_general (w_current, page, w_x, w_y, 1, 0);
+  gschem_page_geometry_pan_general (geometry, w_x, w_y, 1, A_PAN_DONT_REDRAW);
 
   /*! \bug FIXME? This call will trigger a motion event (x_event_motion()),
    * even if the user doesn't move the mouse
@@ -639,6 +649,18 @@ gschem_page_view_pan (GschemPageView *view, GschemToplevel *w_current, int w_x, 
    * motion event without changing the cursor position (Werner)
    */
   /* x_basic_warp_cursor(w_current->drawing_area, x, y); */
+
+  /* this code gets removed when the variables are factored out of PAGE */
+  set_window (view->toplevel,
+              page,
+              gschem_page_geometry_get_viewport_left (geometry),
+              gschem_page_geometry_get_viewport_right (geometry),
+              gschem_page_geometry_get_viewport_top (geometry),
+              gschem_page_geometry_get_viewport_bottom (geometry));
+
+  g_signal_emit_by_name (view, "update-grid-info");
+  gschem_page_view_update_scroll_adjustments (view);
+  gschem_page_view_invalidate_all (view);
 }
 
 
@@ -648,26 +670,29 @@ gschem_page_view_pan (GschemPageView *view, GschemToplevel *w_current, int w_x, 
  *  The w_current parameter will be replaced with signals. This way, any object
  *  can listen for changes in the view.
  *
- *  \param [in,out] page_view This GschemPageView
+ *  \param [in,out] page      This GschemPageView
  *  \param [in]     w_current The GschemToplevel
  *  \param [in]     diff_x    The screen x coordinate displacement
  *  \param [in]     diff_y    The screen y coordinate displacement
  */
 void
-gschem_page_view_pan_mouse (GschemPageView *page_view, GschemToplevel *w_current, int diff_x, int diff_y)
+gschem_page_view_pan_mouse (GschemPageView *view, GschemToplevel *w_current, int diff_x, int diff_y)
 {
-  PAGE *page = gschem_page_view_get_page (page_view);
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+  PAGE *page = gschem_page_view_get_page (view);
   double world_cx, world_cy;
   double page_cx, page_cy;
 
+  g_return_if_fail (geometry != NULL);
   g_return_if_fail (page != NULL);
+  g_return_if_fail (view != NULL);
 
 #if DEBUG
   printf("gschem_page_view_pan_mouse(): diff_x=%d, diff_y=%d\n", diff_x, diff_y);
 #endif
 
-  page_cx = (page->left + page->right) / 2.0;
-  page_cy = (page->top + page->bottom) / 2.0;
+  page_cx = (gschem_page_geometry_get_viewport_left (geometry) + gschem_page_geometry_get_viewport_right (geometry)) / 2.0;
+  page_cy = (gschem_page_geometry_get_viewport_top (geometry) + gschem_page_geometry_get_viewport_bottom (geometry)) / 2.0;
 
   world_cx = page_cx - WORLDabs (w_current, diff_x);
   world_cy = page_cy + WORLDabs (w_current, diff_y);
@@ -676,7 +701,19 @@ gschem_page_view_pan_mouse (GschemPageView *page_view, GschemToplevel *w_current
   printf("  world_cx=%f, world_cy=%f\n", world_cx, world_cy);
 #endif
 
-  a_pan_general(w_current, page, world_cx, world_cy, 1, 0);
+  gschem_page_geometry_pan_general (geometry, world_cx, world_cy, 1, A_PAN_DONT_REDRAW);
+
+  /* this code gets removed when the variables are factored out of PAGE */
+  set_window (view->toplevel,
+              page,
+              gschem_page_geometry_get_viewport_left (geometry),
+              gschem_page_geometry_get_viewport_right (geometry),
+              gschem_page_geometry_get_viewport_top (geometry),
+              gschem_page_geometry_get_viewport_bottom (geometry));
+
+  g_signal_emit_by_name (view, "update-grid-info");
+  gschem_page_view_update_scroll_adjustments (view);
+  gschem_page_view_invalidate_all (view);
 }
 
 
@@ -1102,51 +1139,20 @@ gschem_page_view_WORLDtoSCREEN (GschemPageView *view, int x, int y, int *px, int
 
 /*! \brief Zoom the view to the extents of a set of objects
  *
- *  The w_current parameter will be replaced with signals. This way, any object
- *  can listen for changes in the view.
- *
  *  By providing a NULL for the objects parameter, this function will zoom to
  *  the extents of all objects in the drawing.
  *
- *  \param [in,out] view      This GschemPageView
- *  \param [in]     w_current The GschemToplevel
- *  \param [in]     objects   The list of objects to compute extents, or NULL
+ *  \param [in,out] view    This GschemPageView
+ *  \param [in]     objects The list of objects to compute extents, or NULL
  */
 void
-gschem_page_view_zoom_extents (GschemPageView *view, GschemToplevel *w_current, const GList *objects)
+gschem_page_view_zoom_extents (GschemPageView *view, const GList *objects)
 {
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
   PAGE *page = gschem_page_view_get_page (view);
-
-  g_return_if_fail (page != NULL);
-
-  gschem_page_view_zoom_extents_other (view, w_current, objects, page);
-}
-
-
-
-/*! \brief Zoom another page to the extents of a set of objects
- *
- *  This function zooms the given page to the extents of a set of objects as
- *  if the page were in this view. The page must belong to the same toplevel as
- *  this view. If the other page is actually the same as the page in this view,
- *  this function does the right thing.
- *
- *  The w_current parameter will be replaced with signals. This way, any object
- *  can listen for changes in the view.
- *
- *  By providing a NULL for the objects parameter, this function will zoom to
- *  the extents of all objects in the drawing.
- *
- *  \param [in,out] view      This GschemPageView
- *  \param [in]     w_current The GschemToplevel
- *  \param [in]     objects   The list of objects to compute extents, or NULL
- *  \param [in]     page      The other page to zoom to this view
- */
-void
-gschem_page_view_zoom_extents_other (GschemPageView *view, GschemToplevel *w_current, const GList *objects, PAGE *page)
-{
   const GList *temp = objects;
 
+  g_return_if_fail (geometry != NULL);
   g_return_if_fail (page != NULL);
   g_return_if_fail (view != NULL);
 
@@ -1154,10 +1160,17 @@ gschem_page_view_zoom_extents_other (GschemPageView *view, GschemToplevel *w_cur
     temp = s_page_objects (page);
   }
 
-  if (page == gschem_page_view_get_page (view)) {
-    a_zoom_extents (w_current, page, temp, 0);
-  }
-  else {
-    a_zoom_extents (w_current, page, temp, A_PAN_DONT_REDRAW);
-  }
+  gschem_page_geometry_zoom_extents (geometry, view->toplevel, temp, A_PAN_DONT_REDRAW);
+
+  /* this code gets removed when the variables are factored out of PAGE */
+  set_window (view->toplevel,
+              page,
+              gschem_page_geometry_get_viewport_left (geometry),
+              gschem_page_geometry_get_viewport_right (geometry),
+              gschem_page_geometry_get_viewport_top (geometry),
+              gschem_page_geometry_get_viewport_bottom (geometry));
+
+  g_signal_emit_by_name (view, "update-grid-info");
+  gschem_page_view_update_scroll_adjustments (view);
+  gschem_page_view_invalidate_all (view);
 }

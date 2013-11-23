@@ -1153,7 +1153,7 @@ DEFINE_I_CALLBACK(view_zoom_extents)
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page_view != NULL);
 
-  gschem_page_view_zoom_extents (page_view, w_current, NULL);
+  gschem_page_view_zoom_extents (page_view, NULL);
 
   if (w_current->undo_panzoom) {
     o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
@@ -1260,7 +1260,7 @@ DEFINE_I_CALLBACK(view_pan)
     w_current->inside_action = 0;
     i_set_state (w_current, STARTPAN);
   } else {
-    gschem_page_view_pan (page_view, w_current, wx, wy);
+    gschem_page_view_pan (page_view, wx, wy);
     if (w_current->undo_panzoom) {
       o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
     }

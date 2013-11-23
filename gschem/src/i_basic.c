@@ -593,3 +593,16 @@ void i_update_grid_info (GschemToplevel *w_current)
   g_free(grid);
   g_free(snap);
 }
+
+
+
+/*! \brief Write the grid settings to the gschem status bar
+ *
+ *  \param [in] view The page view originating the signal
+ *  \param [in] w_current GschemToplevel structure
+ */
+void
+i_update_grid_info_callback (GschemPageView *view, GschemToplevel *w_current)
+{
+  i_update_grid_info (w_current);
+}

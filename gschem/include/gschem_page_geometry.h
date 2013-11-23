@@ -115,6 +115,13 @@ gschem_page_geometry_new_with_values (int screen_width,
                                       int world_right,
                                       int world_bottom);
 
+void
+gschem_page_geometry_pan_general(GschemPageGeometry *geometry,
+                                 double world_cx,
+                                 double world_cy,
+                                 double relativ_zoom_factor,
+                                 int flags);
+
 int
 gschem_page_geometry_pix_x (GschemPageGeometry *geometry, int value);
 
@@ -141,3 +148,6 @@ gschem_page_geometry_set_viewport_right (GschemPageGeometry *geometry, int viewp
 
 void
 gschem_page_geometry_set_viewport_top (GschemPageGeometry *geometry, int viewport_top);
+
+void
+gschem_page_geometry_zoom_extents (GschemPageGeometry *geometry, TOPLEVEL *toplevel, const GList *list, int pan_flags);

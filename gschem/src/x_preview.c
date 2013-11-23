@@ -106,15 +106,7 @@ preview_callback_realize (GtkWidget *widget,
   s_page_goto (preview_toplevel, preview_page);
   gschem_toplevel_page_changed (preview_w_current);
 
-  gschem_page_view_zoom_extents (GSCHEM_PAGE_VIEW (widget),
-                                 preview_w_current,
-                                 NULL);
-
-  //a_zoom_extents(preview_w_current,
-  //               s_page_objects (preview_page),
-  //               A_PAN_DONT_REDRAW);
-  //
-  //gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
+  gschem_page_view_zoom_extents (GSCHEM_PAGE_VIEW (widget), NULL);
 }
 
 /*! \brief Handles the press on a mouse button.
@@ -153,7 +145,7 @@ preview_callback_button_press (GtkWidget *widget,
       case 2: /* middle mouse button: pan */
 	if (!x_event_get_pointer_position(preview_w_current, FALSE, &wx, &wy))
 	  return FALSE;
-        gschem_page_view_pan (GSCHEM_PAGE_VIEW (preview), preview_w_current, wx, wy);
+        gschem_page_view_pan (GSCHEM_PAGE_VIEW (preview), wx, wy);
         break;
       case 3: /* right mouse button: zoom out */
         a_zoom (preview_w_current,
@@ -240,15 +232,7 @@ preview_update (Preview *preview)
   }
 
   /* display current page (possibly empty) */
-  gschem_page_view_zoom_extents (GSCHEM_PAGE_VIEW (preview),
-                                 preview_w_current,
-                                 NULL);
-
-  //a_zoom_extents(preview_w_current,
-  //               s_page_objects (preview_page),
-  //               A_PAN_DONT_REDRAW);
-  //
-  //gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
+  gschem_page_view_zoom_extents (GSCHEM_PAGE_VIEW (preview), NULL);
 }
 
 GType
@@ -325,9 +309,7 @@ preview_event_configure (GtkWidget         *widget,
   retval = x_event_configure (GSCHEM_PAGE_VIEW (widget), event, preview_w_current);
 
   if (preview_page != NULL) {
-    gschem_page_view_zoom_extents (GSCHEM_PAGE_VIEW (widget),
-                                   preview_w_current,
-                                   NULL);
+    gschem_page_view_zoom_extents (GSCHEM_PAGE_VIEW (widget), NULL);
   }
   return retval;
 }

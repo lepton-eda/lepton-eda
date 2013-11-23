@@ -363,6 +363,113 @@ gschem_page_geometry_new_with_values (int screen_width,
 
 
 
+/*! \brief Pan and zoom the viewport
+ *
+ *  \param [in,out] geometry
+ *  \param [in]     world_cx
+ *  \param [in]     world_cy
+ *  \param [in]     relativ_zoom_factor
+ *  \param [in]     flags
+ */
+void
+gschem_page_geometry_pan_general(GschemPageGeometry *geometry,
+                                 double world_cx,
+                                 double world_cy,
+                                 double relativ_zoom_factor,
+                                 int flags)
+{
+  /* see libgeda/include/defines.h for flags */
+  /*if the borders should be ignored always, remove, outcomment or changes
+    the flags in the function-calls*/
+  /*	flags |= A_PAN_IGNORE_BORDERS;
+   */
+  /* think it's better that the zoomfactor is defined as pix/mills
+     this will be the same as w_current->page_current->to_screen_x/y_constant*/
+  int zoom_max = 5;
+  int diff;
+  double zx, zy, zoom_old, zoom_new, zoom_min;
+
+  g_return_if_fail (geometry != NULL);
+
+#if DEBUG
+  printf("a_pan_general(): world_cx=%f, world_cy=%f\n",world_cx, world_cy);
+#endif
+
+  /* calc minimum zoomfactors and choose the smaller one. They are equal
+     if the aspectratio of the world is the same as the screen ratio */
+  zx = (double) geometry->screen_width  / (geometry->world_right - geometry->world_left);
+  zy = (double) geometry->screen_height / (geometry->world_bottom - geometry->world_top);
+  zoom_min = zx < zy ? zx : zy;
+
+#if DEBUG
+  printf("  zx_min=%f, zy_min=%f , flags=%d\n ",zx, zy, flags);
+#endif
+
+  /* to_screen_x_constant and to_screen_y_constant are almost the same.
+     lets use to_screen_y_constant */
+  zoom_old = geometry->to_screen_y_constant;
+
+  /* calc new zooming factor */
+  /* check if there's a zoom_full (relativ_zoom_factor == -1) */
+  if (relativ_zoom_factor <0)  {
+    zoom_new = zoom_min;
+  }
+  else {
+    zoom_new = zoom_old * relativ_zoom_factor;
+    zoom_new = zoom_new > zoom_max ? zoom_max : zoom_new;
+    if (!(flags & A_PAN_IGNORE_BORDERS)) {
+      zoom_new = zoom_new < zoom_min ? zoom_min : zoom_new;
+    }
+  }
+
+  /* calculate the new visible area; adding 0.5 to round */
+  geometry->viewport_left   = world_cx - (double) geometry->screen_width / 2 / zoom_new + 0.5;
+  geometry->viewport_right  = world_cx + (double) geometry->screen_width / 2 / zoom_new + 0.5;
+  geometry->viewport_top   = world_cy - (double) geometry->screen_height / 2 / zoom_new + 0.5;
+  geometry->viewport_bottom = world_cy + (double) geometry->screen_height / 2 / zoom_new + 0.5;
+
+  /* and put it back to the borders */
+  if (!(flags & A_PAN_IGNORE_BORDERS)) {
+    /* check right border */
+    if (geometry->viewport_right > geometry->world_right) {
+      geometry->viewport_left += geometry->world_right - geometry->viewport_right;
+      geometry->viewport_right = geometry->world_right;
+    }
+    /* check left border */
+    if (geometry->viewport_left < geometry->world_left) {
+      geometry->viewport_right += geometry->world_left - geometry->viewport_left;
+      geometry->viewport_left = geometry->world_left;
+    }
+
+    /* If there is any slack, center the view */
+    diff = (geometry->viewport_right - geometry->viewport_left) - (geometry->world_right - geometry->world_left);
+    if (diff > 0) {
+      geometry->viewport_left -= diff / 2;
+      geometry->viewport_right -= diff / 2;
+    }
+
+    /* check bottom border */
+    if (geometry->viewport_bottom > geometry->world_bottom) {
+      geometry->viewport_top += geometry->world_bottom - geometry->viewport_bottom;
+      geometry->viewport_bottom = geometry->world_bottom;
+    }
+    /* check top border */
+    if (geometry->viewport_top < geometry->world_top) {
+      geometry->viewport_bottom += geometry->world_top - geometry->viewport_top;
+      geometry->viewport_top = geometry->world_top;
+    }
+
+    /* If there is any slack, center the view */
+    diff = (geometry->viewport_bottom - geometry->viewport_top) - (geometry->world_bottom - geometry->world_top);
+    if (diff > 0) {
+      geometry->viewport_top -= diff / 2;
+      geometry->viewport_bottom -= diff / 2;
+    }
+  }
+}
+
+
+
 /*! \brief Convert a x coordinate to pixels.
  *
  *  \param [in] geometry The page geometry
@@ -573,6 +680,69 @@ gschem_page_geometry_set_viewport_top (GschemPageGeometry *geometry, int viewpor
 
   update_constants (geometry);
   geometry->world_to_screen_calculated = FALSE;
+}
+
+
+
+/*! \brief Zoom the viewport to the extents of the given objects
+ *
+ *  \param [in,out] geometry  This GschemPageGeometry
+ *  \param [in]     toplevel  The TOPLEVEL for the given objects
+ *  \param [in]     list      The list of object to zoom extents
+ *  \param [in]     pan_flags
+ */
+void
+gschem_page_geometry_zoom_extents (GschemPageGeometry *geometry, TOPLEVEL *toplevel, const GList *list, int pan_flags)
+{
+  int lleft, lright, ltop, lbottom;
+  double zx, zy, relativ_zoom_factor;
+  double world_pan_center_x,world_pan_center_y;
+
+  g_return_if_fail (geometry != NULL);
+  g_return_if_fail (toplevel != NULL);
+
+  if (list == NULL) {
+    return;
+  }
+
+  if (!world_get_object_glist_bounds (toplevel, list,
+                                      &lleft, &ltop,
+                                      &lright, &lbottom)) {
+    return;
+  }
+
+#if DEBUG
+  printf("in a_zoom_extents:  left: %d, right: %d, top: %d, bottom: %d\n",
+         lleft, lright, ltop, lbottom);
+#endif
+
+  /* Calc the necessary zoomfactor to show everything
+   * Start with the windows width and height (minus a small padding in pixels),
+   * then scale back to world coordinates with the to_screen_y_constant as the
+   * initial page data may not have the correct aspect ratio. */
+  zx = (double)(geometry->screen_width - 2 * ZOOM_EXTENTS_PADDING_PX) / (lright-lleft);
+  zy = (double)(geometry->screen_height - 2 * ZOOM_EXTENTS_PADDING_PX) / (lbottom-ltop);
+
+  /* choose the smaller one */
+  relativ_zoom_factor = (zx < zy ? zx : zy) / geometry->to_screen_y_constant;
+
+  /* get the center of the objects */
+  world_pan_center_x = (double) (lright + lleft) / 2.0;
+  world_pan_center_y = (double) (lbottom + ltop) / 2.0;
+
+  /* and create the new window */
+  gschem_page_geometry_pan_general (geometry,
+                                    world_pan_center_x,
+                                    world_pan_center_y,
+                                    relativ_zoom_factor,
+                                    pan_flags);
+
+  /*! \bug FIXME? trigger a x_event_motion() call without moving the cursor 
+   *  this will redraw rubberband lines after zooming
+   *  removed!, it has side effects in the preview of the part dialog 
+   *  need to find another way to trigger x_event_motion() (Werner)
+   */
+  /* x_basic_warp_cursor(w_current->drawing_area, mouse_x, mouse_y); */
 }
 
 

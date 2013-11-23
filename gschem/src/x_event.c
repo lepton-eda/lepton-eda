@@ -372,7 +372,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
 
       case(STARTPAN):
-        gschem_page_view_pan (page_view, w_current, w_x, w_y);
+        gschem_page_view_pan (page_view, w_x, w_y);
         i_set_state(w_current, SELECT);
         i_update_toolbar(w_current);
         break;
