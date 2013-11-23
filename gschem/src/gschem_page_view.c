@@ -488,6 +488,10 @@ gschem_page_view_invalidate_object (GschemPageView *view, OBJECT *object)
   g_return_if_fail (object != NULL);
   g_return_if_fail (view != NULL);
 
+  if (!GTK_WIDGET_REALIZED (GTK_WIDGET (view))) {
+    return;
+  }
+
   if (view->toplevel != NULL) {
     gboolean success;
     int world_bottom;
