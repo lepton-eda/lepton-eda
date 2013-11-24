@@ -804,6 +804,7 @@ gschem_page_view_set_page (GschemPageView *view, PAGE *page)
 
   g_object_notify (G_OBJECT (view), "page");
   g_object_notify (G_OBJECT (view), "page-geometry");
+  g_signal_emit_by_name (view, "update-grid-info");
 }
 
 
