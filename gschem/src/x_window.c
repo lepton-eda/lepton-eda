@@ -781,6 +781,7 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
 void
 x_window_set_current_page (GschemToplevel *w_current, PAGE *page)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_if_fail (toplevel != NULL);
@@ -788,7 +789,7 @@ x_window_set_current_page (GschemToplevel *w_current, PAGE *page)
 
   o_redraw_cleanstates (w_current);
 
-  gschem_page_view_set_page (GSCHEM_PAGE_VIEW (w_current->drawing_area), page);
+  gschem_page_view_set_page (page_view, page);
   gschem_toplevel_page_changed (w_current);
 
   i_update_menus (w_current);
@@ -798,9 +799,8 @@ x_window_set_current_page (GschemToplevel *w_current, PAGE *page)
   x_multiattrib_update (w_current);
 
   x_manual_resize (w_current);
-  gschem_page_view_update_scroll_adjustments (GSCHEM_PAGE_VIEW (w_current->drawing_area));
-
-  o_invalidate_all (w_current);
+  gschem_page_view_update_scroll_adjustments (page_view);
+  gschem_page_view_invalidate_all (page_view);
 }
 
 /*! \brief Saves a page to a file.

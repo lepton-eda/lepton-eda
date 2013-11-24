@@ -381,6 +381,19 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
 
     g_hash_table_insert (view->geometry_table, page, geometry);
     s_page_weak_ref (page, (NotifyFunction) page_deleted, view);
+
+    gschem_page_geometry_zoom_extents (geometry,
+                                       view->toplevel,
+                                       s_page_objects (page),
+                                       A_PAN_DONT_REDRAW);
+
+    /* this code gets removed when the variables are factored out of PAGE */
+    set_window (view->toplevel,
+                page,
+                gschem_page_geometry_get_viewport_left (geometry),
+                gschem_page_geometry_get_viewport_right (geometry),
+                gschem_page_geometry_get_viewport_top (geometry),
+                gschem_page_geometry_get_viewport_bottom (geometry));
   }
   else {
     gschem_page_geometry_set_values (geometry,
