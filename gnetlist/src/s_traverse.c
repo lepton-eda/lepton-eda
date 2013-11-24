@@ -188,16 +188,16 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
 
       /* look for special tag */
       temp = o_attrib_search_object_attribs_by_name (o_current, "graphical", 0);
-      if (temp) {
+      if (g_strcmp0 (temp, "1") == 0) {
         /* traverse graphical elements, but adding them to the
 	   graphical netlist */
-        g_free(temp);
 	
 	netlist = s_netlist_return_tail(graphical_netlist_head);
 	is_graphical = TRUE;
 	
     
       }
+      g_free (temp);
       netlist = s_netlist_add(netlist);
       netlist->nlid = o_current->sid;
 
