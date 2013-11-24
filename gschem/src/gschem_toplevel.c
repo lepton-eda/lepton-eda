@@ -572,6 +572,23 @@ gschem_toplevel_get_toplevel (GschemToplevel *w_current)
 
 
 
+/*! \brief Signal handler for a notify::page signal
+ *
+ *  \param [in] page_view The GschemPageView signal source
+ *  \param [in] w_current The current gschem toplevel
+ */
+void
+gschem_toplevel_notify_page_callback (GschemPageView *page_view, GschemToplevel *w_current)
+{
+  g_return_if_fail (w_current != NULL);
+
+  printf ("Hello\n");
+
+  gschem_toplevel_page_changed (w_current);
+}
+
+
+
 /*! \brief Temporary function to notify dialogs of a page change
  *
  *  This function is temporary until the toplevel can emit a
@@ -584,6 +601,8 @@ gschem_toplevel_page_changed (GschemToplevel *w_current)
 {
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (w_current->toplevel != NULL);
+
+  printf ("Good day\n");
 
   if ((w_current->selection_adapter != NULL) && (w_current->toplevel->page_current != NULL)) {
     gschem_selection_adapter_set_selection (w_current->selection_adapter, w_current->toplevel->page_current->selection_list);

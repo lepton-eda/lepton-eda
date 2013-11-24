@@ -275,6 +275,9 @@ GschemToplevel*
 gschem_toplevel_new ();
 
 void
+gschem_toplevel_notify_page_callback (GschemPageView *page_view, GschemToplevel *w_current);
+
+void
 gschem_toplevel_page_changed (GschemToplevel *w_current);
 
 void

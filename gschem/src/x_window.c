@@ -134,17 +134,18 @@ void x_window_setup_draw_events(GschemToplevel *w_current)
   };
 
   struct event_reg_t drawing_area_events[] = {
-    { "expose_event",         G_CALLBACK(x_event_expose)              },
-    { "expose_event",         G_CALLBACK(x_event_raise_dialog_boxes)  },
-    { "button_press_event",   G_CALLBACK(x_event_button_pressed)      },
-    { "button_release_event", G_CALLBACK(x_event_button_released)     },
-    { "motion_notify_event",  G_CALLBACK(x_event_motion)              },
-    { "configure_event",      G_CALLBACK(x_event_configure)           },
-    { "key_press_event",      G_CALLBACK(x_event_key)                 },
-    { "key_release_event",    G_CALLBACK(x_event_key)                 },
-    { "scroll_event",         G_CALLBACK(x_event_scroll)              },
-    { "update-grid-info",     G_CALLBACK(i_update_grid_info_callback) },
-    { NULL,                   NULL                                    } };
+    { "expose_event",         G_CALLBACK(x_event_expose)                       },
+    { "expose_event",         G_CALLBACK(x_event_raise_dialog_boxes)           },
+    { "button_press_event",   G_CALLBACK(x_event_button_pressed)               },
+    { "button_release_event", G_CALLBACK(x_event_button_released)              },
+    { "motion_notify_event",  G_CALLBACK(x_event_motion)                       },
+    { "configure_event",      G_CALLBACK(x_event_configure)                    },
+    { "key_press_event",      G_CALLBACK(x_event_key)                          },
+    { "key_release_event",    G_CALLBACK(x_event_key)                          },
+    { "scroll_event",         G_CALLBACK(x_event_scroll)                       },
+    { "update-grid-info",     G_CALLBACK(i_update_grid_info_callback)          },
+    { "notify::page",         G_CALLBACK(gschem_toplevel_notify_page_callback) },
+    { NULL,                   NULL                                             } };
   struct event_reg_t main_window_events[] = {
     { "enter_notify_event",   G_CALLBACK(x_event_enter)              },
     { NULL,                   NULL                                   } };
@@ -782,15 +783,13 @@ void
 x_window_set_current_page (GschemToplevel *w_current, PAGE *page)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
-  g_return_if_fail (toplevel != NULL);
   g_return_if_fail (page != NULL);
+  g_return_if_fail (page_view != NULL);
 
   o_redraw_cleanstates (w_current);
 
   gschem_page_view_set_page (page_view, page);
-  gschem_toplevel_page_changed (w_current);
 
   i_update_menus (w_current);
   i_set_filename (w_current, page->page_filename);
