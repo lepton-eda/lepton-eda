@@ -578,11 +578,9 @@ gschem_toplevel_get_toplevel (GschemToplevel *w_current)
  *  \param [in] w_current The current gschem toplevel
  */
 void
-gschem_toplevel_notify_page_callback (GschemPageView *page_view, GschemToplevel *w_current)
+gschem_toplevel_notify_page_callback (GschemPageView *page_view, GParamSpec *pspec, GschemToplevel *w_current)
 {
   g_return_if_fail (w_current != NULL);
-
-  printf ("Hello\n");
 
   gschem_toplevel_page_changed (w_current);
 }
@@ -601,8 +599,6 @@ gschem_toplevel_page_changed (GschemToplevel *w_current)
 {
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (w_current->toplevel != NULL);
-
-  printf ("Good day\n");
 
   if ((w_current->selection_adapter != NULL) && (w_current->toplevel->page_current != NULL)) {
     gschem_selection_adapter_set_selection (w_current->selection_adapter, w_current->toplevel->page_current->selection_list);
