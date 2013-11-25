@@ -36,13 +36,13 @@
  */
 static void i_update_status(GschemToplevel *w_current, const char *string)
 {
-  if (!w_current->status_label)
+  if (!w_current->bottom_widget) {
     return;
+  }
 
   if (string) {
     /* NOTE: consider optimizing this if same label */
-    gtk_label_set(GTK_LABEL(w_current->status_label),
-                  (char *) string);
+    gschem_bottom_widget_set_status_text (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget), string);
   }
 }
 
@@ -243,38 +243,39 @@ void i_update_middle_button(GschemToplevel *w_current,
   if (string == NULL)
     return;
 
-  if (!w_current->middle_label)
+  if (!w_current->bottom_widget) {
     return;
+  }
 
   switch(w_current->middle_button) {
 
     /* remove this case eventually and make it a null case */
     case(ACTION):
-    gtk_label_set(GTK_LABEL(w_current->middle_label),
-                  _("Action"));
-    break;
+      gschem_bottom_widget_set_middle_button_text (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+                                                   _("Action"));
+      break;
 
 #ifdef HAVE_LIBSTROKE
     case(STROKE):
-    gtk_label_set(GTK_LABEL(w_current->middle_label),
-                  _("Stroke"));
+      gschem_bottom_widget_set_middle_button_text (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+                                                   _("Stroke"));
     break;
 #else 
     /* remove this case eventually and make it a null case */
     case(STROKE):
-    gtk_label_set(GTK_LABEL(w_current->middle_label),
-                  _("none"));
-    break;
+      gschem_bottom_widget_set_middle_button_text (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+                                                   _("none"));
+      break;
 #endif
 		
     case(REPEAT):
-    temp_string = g_strconcat (_("Repeat/"), string, NULL);
+      temp_string = g_strconcat (_("Repeat/"), string, NULL);
 
-    gtk_label_set(GTK_LABEL(w_current->middle_label),
-                  temp_string);
-    w_current->last_callback = func_ptr;
-    g_free(temp_string);
-    break;
+      gschem_bottom_widget_set_middle_button_text (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+                                                   temp_string);
+      w_current->last_callback = func_ptr;
+      g_free(temp_string);
+      break;
 
   }
 }
@@ -552,46 +553,19 @@ void i_set_filename(GschemToplevel *w_current, const gchar *string)
  *
  *  \param [in] w_current GschemToplevel structure
  */
-void i_update_grid_info (GschemToplevel *w_current)
+void
+i_update_grid_info (GschemToplevel *w_current)
 {
-  gchar *print_string=NULL;
-  gchar *snap=NULL;
-  gchar *grid=NULL;
+  g_return_if_fail (w_current != NULL);
 
-  if (!w_current->grid_label)
-    return;
-
-  switch (w_current->snap) {
-  case SNAP_OFF:
-    snap = g_strdup(_("OFF"));
-    break;
-  case SNAP_GRID:
-    snap = g_strdup_printf("%d", w_current->snap_size);
-    break;
-  case SNAP_RESNAP:
-    snap = g_strdup_printf("%dR", w_current->snap_size);
-    break;
-  default:
-    g_critical("i_set_grid: w_current->snap out of range: %d\n",
-               w_current->snap);
+  if (w_current->bottom_widget != NULL) {
+    g_object_set (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+        "snap-mode", w_current->snap,
+        "snap-size", w_current->snap_size,
+        "grid-mode", w_current->grid,
+        "grid-size", x_grid_query_drawn_spacing (w_current),
+        NULL);
   }
-
-  if (w_current->grid == GRID_NONE) {
-    grid = g_strdup(_("OFF"));
-  } else {
-    int visible_grid = x_grid_query_drawn_spacing (w_current);
-    if (visible_grid == -1)
-      grid = g_strdup (_("NONE"));
-    else
-      grid = g_strdup_printf("%d", visible_grid);
-  }
-
-  print_string = g_strdup_printf(_("Grid(%s, %s)"), snap, grid);
-  gtk_label_set(GTK_LABEL(w_current->grid_label), print_string);
-  
-  g_free(print_string);
-  g_free(grid);
-  g_free(snap);
 }
 
 

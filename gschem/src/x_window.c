@@ -234,17 +234,16 @@ void x_window_create_main(GschemToplevel *w_current)
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   GtkPolicyType policy;
-  GtkWidget *label=NULL;
   GtkWidget *main_box=NULL;
   GtkWidget *menubar=NULL;
-  GtkWidget *bottom_box=NULL;
   GtkWidget *toolbar=NULL;
   GtkWidget *handlebox=NULL;
   GtkWidget *hscrollbar;
   GtkWidget *vscrollbar;
   GtkAdjustment *hadjustment;
   GtkAdjustment *vadjustment;
-
+  char *middle_button_text;
+  char *right_button_text;
 
   /* used to signify that the window isn't mapped yet */
   w_current->window = NULL; 
@@ -447,60 +446,42 @@ void x_window_create_main(GschemToplevel *w_current)
 		      FALSE, FALSE, 0);
 
   /* bottom box */
-  bottom_box = gtk_hbox_new(FALSE, 0);
-  gtk_container_border_width(GTK_CONTAINER(bottom_box), 1);
-  gtk_box_pack_start (GTK_BOX (main_box), bottom_box, FALSE, FALSE, 0);
-
-  /*	label = gtk_label_new ("Mouse buttons:");
-        gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 10);
-  */
-
-  label = gtk_label_new (" ");
-  gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 2);
-
-  w_current->left_label = gtk_label_new (_("Pick"));
-  gtk_box_pack_start (GTK_BOX (bottom_box), w_current->left_label,
-                      FALSE, FALSE, 0);
-
-  label = gtk_label_new ("|");
-  gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 5);
-
-  if (w_current->middle_button == STROKE) {
+  switch (w_current->middle_button) {
+    case STROKE:
 #ifdef HAVE_LIBSTROKE
-    w_current->middle_label = gtk_label_new (_("Stroke"));
+      middle_button_text = _("Stroke");
 #else
-    w_current->middle_label = gtk_label_new (_("none"));
+      middle_button_text = _("none");
 #endif
-  } else if (w_current->middle_button == ACTION) {
-    w_current->middle_label = gtk_label_new (_("Action"));
-  } else {
-    w_current->middle_label = gtk_label_new (_("Repeat/none"));
+      break;
+
+   case ACTION:
+     middle_button_text = _("Action");
+     break;
+
+   default:
+     middle_button_text = _("Repeat/none");
+     break;
   }
-
-  gtk_box_pack_start (GTK_BOX (bottom_box), w_current->middle_label,
-                      FALSE, FALSE, 0);
-
-  label = gtk_label_new ("|");
-  gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 5);
 
   if (default_third_button == POPUP_ENABLED) {
-    w_current->right_label = gtk_label_new (_("Menu/Cancel"));
+    right_button_text = _("Menu/Cancel");
   } else {
-    w_current->right_label = gtk_label_new (_("Pan/Cancel"));
+    right_button_text = _("Pan/Cancel");
   }
-  gtk_box_pack_start (GTK_BOX (bottom_box), w_current->right_label,
-                      FALSE, FALSE, 0);
 
-  label = gtk_label_new (" ");
-  gtk_box_pack_start (GTK_BOX (bottom_box), label, FALSE, FALSE, 5);
+  w_current->bottom_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_BOTTOM_WIDGET,
+      "grid-mode",          w_current->grid,
+      "grid-size",          100, /* x_grid_query_drawn_spacing (w_current), -- occurs before the page is set */
+      "left-button-text",   _("Pick"),
+      "middle-button-text", middle_button_text,
+      "right-button-text",  right_button_text,
+      "snap-mode",          w_current->snap,
+      "snap-size",          w_current->snap_size,
+      "status-text",        _("Select Mode"),
+      NULL));
 
-  w_current->grid_label = gtk_label_new (" ");
-  gtk_box_pack_start (GTK_BOX (bottom_box), w_current->grid_label,
-                      FALSE, FALSE, 10);
-
-  w_current->status_label = gtk_label_new (_("Select Mode"));
-  gtk_box_pack_end (GTK_BOX (bottom_box), w_current->status_label, FALSE,
-                    FALSE, 10);
+  gtk_box_pack_start (GTK_BOX (main_box), w_current->bottom_widget, FALSE, FALSE, 0);
 
   gtk_widget_show_all (w_current->main_window);
   gtk_widget_hide(w_current->macro_box);

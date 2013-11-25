@@ -39,11 +39,7 @@ struct st_gschem_toplevel {
 
   GtkWidget *macro_box;
   GtkWidget *macro_entry;
-  GtkWidget *left_label;
-  GtkWidget *middle_label;
-  GtkWidget *right_label;
-  GtkWidget *grid_label;
-  GtkWidget *status_label;
+  GtkWidget *bottom_widget;
 
   GtkWidget *toolbar_select;
   GtkWidget *toolbar_net;

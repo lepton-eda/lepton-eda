@@ -27,6 +27,7 @@ gschem_SOURCES = \
 	gschemhotkeystore.c \
 	gschem_accel_label.c \
 	gschem_action.c \
+	gschem_bottom_widget.c \
 	gschem_dialog.c \
 	gschem_integer_combo_box.c \
 	gschem_main_window.c \
