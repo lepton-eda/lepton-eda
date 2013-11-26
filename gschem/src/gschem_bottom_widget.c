@@ -39,6 +39,13 @@
 #include "gschem.h"
 
 
+/*  The padding used around labels in the "status bar"
+ */
+
+#define LABEL_XPAD 10
+#define LABEL_YPAD 5
+
+
 
 enum
 {
@@ -409,31 +416,36 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   g_return_if_fail (widget != NULL);
 
   widget->left_button_label = gtk_label_new (NULL);
-  gtk_box_pack_start (GTK_BOX (widget), widget->left_button_label, FALSE, FALSE, 10);
+  gtk_misc_set_padding (GTK_MISC (widget->left_button_label), LABEL_XPAD, LABEL_YPAD);
+  gtk_box_pack_start (GTK_BOX (widget), widget->left_button_label, FALSE, FALSE, 0);
 
   separator = gtk_vseparator_new ();
   gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
   widget->middle_button_label = gtk_label_new (NULL);
-  gtk_box_pack_start (GTK_BOX (widget), widget->middle_button_label, FALSE, FALSE, 10);
+  gtk_misc_set_padding (GTK_MISC (widget->middle_button_label), LABEL_XPAD, LABEL_YPAD);
+  gtk_box_pack_start (GTK_BOX (widget), widget->middle_button_label, FALSE, FALSE, 0);
 
   separator = gtk_vseparator_new ();
   gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
   widget->right_button_label = gtk_label_new (NULL);
-  gtk_box_pack_start (GTK_BOX (widget), widget->right_button_label, FALSE, FALSE, 10);
+  gtk_misc_set_padding (GTK_MISC (widget->right_button_label), LABEL_XPAD, LABEL_YPAD);
+  gtk_box_pack_start (GTK_BOX (widget), widget->right_button_label, FALSE, FALSE, 0);
 
   separator = gtk_vseparator_new ();
   gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
   widget->grid_label = gtk_label_new (NULL);
-  gtk_box_pack_start (GTK_BOX (widget), widget->grid_label, FALSE, FALSE, 10);
+  gtk_misc_set_padding (GTK_MISC (widget->grid_label), LABEL_XPAD, LABEL_YPAD);
+  gtk_box_pack_start (GTK_BOX (widget), widget->grid_label, FALSE, FALSE, 0);
 
   separator = gtk_vseparator_new ();
   gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
   widget->status_label = gtk_label_new (NULL);
-  gtk_box_pack_end (GTK_BOX (widget), widget->status_label, FALSE, FALSE, 10);
+  gtk_misc_set_padding (GTK_MISC (widget->status_label), LABEL_XPAD, LABEL_YPAD);
+  gtk_box_pack_end (GTK_BOX (widget), widget->status_label, FALSE, FALSE, 0);
 
   g_signal_connect (G_OBJECT (widget),
                     "notify::grid-mode",
