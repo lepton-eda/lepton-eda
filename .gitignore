@@ -18,7 +18,9 @@
 Makefile.in
 /INSTALL
 /aclocal.m4
+/ar-lib
 /autom4te.cache/
+/compile
 /config.guess
 /config.h.in
 /config.h.in~
@@ -29,3 +31,4 @@ Makefile.in
 /ltmain.sh
 /m4/
 /missing
+/test-driver
