@@ -56,7 +56,6 @@ void o_redraw_rects (GschemToplevel *w_current,
   int render_flags;
   GArray *render_color_map = NULL;
   GArray *render_outline_color_map = NULL;
-  cairo_matrix_t render_mtx;
 
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (toplevel != NULL);
@@ -183,9 +182,8 @@ void o_redraw_rects (GschemToplevel *w_current,
       case MOVE:
       case ENDMOVE:
         if (w_current->last_drawb_mode != -1) {
-          /* FIXME shouldn't need to save/restore matrix/colormap here */
+          /* FIXME shouldn't need to save/restore colormap here */
           cairo_save (w_current->cr);
-          cairo_set_matrix (w_current->cr, &render_mtx);
           eda_renderer_set_color_map (renderer, render_outline_color_map);
 
           o_move_draw_rubber (w_current, renderer);
@@ -201,9 +199,8 @@ void o_redraw_rects (GschemToplevel *w_current,
       case ENDTEXT:
       case ENDPASTE:
         if (w_current->rubber_visible) {
-          /* FIXME shouldn't need to save/restore matrix/colormap here */
+          /* FIXME shouldn't need to save/restore colormap here */
           cairo_save (w_current->cr);
-          cairo_set_matrix (w_current->cr, &render_mtx);
           eda_renderer_set_color_map (renderer, render_outline_color_map);
 
           o_place_draw_rubber (w_current, renderer);
@@ -217,9 +214,8 @@ void o_redraw_rects (GschemToplevel *w_current,
       case DRAWNET:
       case NETCONT:
         if (w_current->rubber_visible) {
-          /* FIXME shouldn't need to save/restore matrix/colormap here */
+          /* FIXME shouldn't need to save/restore colormap here */
           cairo_save (w_current->cr);
-          cairo_set_matrix (w_current->cr, &render_mtx);
           eda_renderer_set_color_map (renderer, render_outline_color_map);
 
           o_net_draw_rubber (w_current, renderer);
@@ -233,9 +229,8 @@ void o_redraw_rects (GschemToplevel *w_current,
       case DRAWBUS:
       case BUSCONT:
         if (w_current->rubber_visible) {
-          /* FIXME shouldn't need to save/restore matrix/colormap here */
+          /* FIXME shouldn't need to save/restore colormap here */
           cairo_save (w_current->cr);
-          cairo_set_matrix (w_current->cr, &render_mtx);
           eda_renderer_set_color_map (renderer, render_outline_color_map);
 
           o_bus_draw_rubber(w_current, renderer);
