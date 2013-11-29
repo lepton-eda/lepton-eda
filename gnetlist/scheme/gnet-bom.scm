@@ -45,7 +45,7 @@
                 (display "         - Create an 'attribs' file\n")
                 (display "         - Specify an attribute file using -Oattrib_file=<filename>\n")
                 (display "         - Specify which attributes to include using -Oattribs=attrib1,attrib2,... (no spaces)\n")
-                #f))))))
+                (primitive-exit 1)))))))
 
 (define bom
   (lambda (output-filename)
