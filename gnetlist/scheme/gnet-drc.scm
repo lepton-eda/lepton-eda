@@ -37,8 +37,13 @@
           '()))))
 
 (define drc:attriblist
-  (drc:parseconfig 
-    (open-input-file "attribs")))
+  ((lambda (filename)
+     (if (file-exists? filename)
+       (drc:parseconfig
+         (open-input-file filename))
+       ((display (string-append "ERROR: Attribute file '" filename "' not found.\n"))
+        (primitive-exit 1))))
+   "attribs"))
 
 (define drc
   (lambda (output-filename)
