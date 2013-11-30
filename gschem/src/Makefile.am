@@ -30,6 +30,7 @@ gschem_SOURCES = \
 	gschem_bottom_widget.c \
 	gschem_dialog.c \
 	gschem_integer_combo_box.c \
+	gschem_macro_widget.c \
 	gschem_main_window.c \
 	gschem_page_geometry.c \
 	gschem_page_view.c \

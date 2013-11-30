@@ -77,14 +77,14 @@ AX_CHECK_GUILE([1.8.0])
 PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.20.0], ,
   AC_MSG_ERROR([GLib 2.20.0 or later is required.]))
 
-PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.16.0], ,
-  AC_MSG_ERROR([GTK+ 2.16.0 or later is required.]))
+PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.18.0], ,
+  AC_MSG_ERROR([GTK+ 2.18.0 or later is required.]))
 
-PKG_CHECK_MODULES(GDK, [gdk-2.0 >= 2.16.0], ,
-  AC_MSG_ERROR([GDK 2.16.0 or later is required.]))
+PKG_CHECK_MODULES(GDK, [gdk-2.0 >= 2.18.0], ,
+  AC_MSG_ERROR([GDK 2.18.0 or later is required.]))
 
-PKG_CHECK_MODULES(GDK_PIXBUF, [gdk-pixbuf-2.0 >= 2.16.0], ,
-  AC_MSG_ERROR([GDK_PIXBUF 2.16.0 or later is required.]))
+PKG_CHECK_MODULES(GDK_PIXBUF, [gdk-pixbuf-2.0 >= 2.18.0], ,
+  AC_MSG_ERROR([GDK_PIXBUF 2.18.0 or later is required.]))
 
 AX_CHECK_CAIRO
 

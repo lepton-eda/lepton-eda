@@ -843,8 +843,8 @@ DEFINE_I_CALLBACK(edit_invoke_macro)
 
   g_return_if_fail (w_current != NULL);
 
-  gtk_widget_show(w_current->macro_box);
-  gtk_widget_grab_focus(w_current->macro_entry);
+  gtk_widget_show (w_current->macro_widget);
+  gtk_widget_grab_focus (gschem_macro_widget_get_entry (GSCHEM_MACRO_WIDGET (w_current->macro_widget)));
 }
 
 /*! \todo Finish function documentation!!!

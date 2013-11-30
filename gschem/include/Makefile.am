@@ -16,6 +16,7 @@ noinst_HEADERS = \
 	gschem_defines.h \
 	gschem_dialog.h \
 	gschem_integer_combo_box.h \
+	gschem_macro_widget.h \
 	gschem_main_window.h \
 	gschem_page_geometry.h \
 	gschem_page_view.h \

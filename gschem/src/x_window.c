@@ -172,7 +172,7 @@ void x_window_setup_draw_events(GschemToplevel *w_current)
                       tmp->detailed_signal,
                       tmp->c_handler,
                       w_current);
-  }			  
+  }
 }
 
 
@@ -207,21 +207,23 @@ static GtkWidget *x_window_stock_pixmap(const char *stock, GschemToplevel *w_cur
   return wpixmap;
 }
 
-static void x_window_invoke_macro(GtkEntry *entry, void *userdata)
+static void
+x_window_invoke_macro (GschemMacroWidget *widget, int response, GschemToplevel *w_current)
 {
-  GschemToplevel *w_current = userdata;
-  SCM interpreter;
+  if (response == GTK_RESPONSE_OK) {
+    const char *macro = gschem_macro_widget_get_macro_string (widget);
 
-  interpreter = scm_list_2(scm_from_utf8_symbol("invoke-macro"),
-			   scm_from_utf8_string(gtk_entry_get_text(entry)));
+    SCM interpreter = scm_list_2(scm_from_utf8_symbol("invoke-macro"),
+                                 scm_from_utf8_string(macro));
 
-  scm_dynwind_begin (0);
-  g_dynwind_window (w_current);
-  g_scm_eval_protected(interpreter, SCM_UNDEFINED);
-  scm_dynwind_end ();
+    scm_dynwind_begin (0);
+    g_dynwind_window (w_current);
+    g_scm_eval_protected(interpreter, SCM_UNDEFINED);
+    scm_dynwind_end ();
+  }
 
-  gtk_widget_hide(w_current->macro_box);
-  gtk_widget_grab_focus(w_current->drawing_area);
+  gtk_widget_grab_focus (w_current->drawing_area);
+  gtk_widget_hide (GTK_WIDGET (widget));
 }
 
 /*! \todo Finish function documentation!!!
@@ -432,18 +434,18 @@ void x_window_create_main(GschemToplevel *w_current)
   gtk_range_set_update_policy (GTK_RANGE (vscrollbar), GTK_UPDATE_CONTINUOUS);
 
   /* macro box */
-  w_current->macro_entry = gtk_entry_new();
-  g_signal_connect(w_current->macro_entry, "activate",
-		   G_CALLBACK(&x_window_invoke_macro), w_current);
+  w_current->macro_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_MACRO_WIDGET, NULL));
 
-  w_current->macro_box = gtk_hbox_new(FALSE, 0);
-  gtk_box_pack_start(GTK_BOX (w_current->macro_box),
-                     gtk_label_new (_("Evaluate:")), FALSE, FALSE, 2);
-  gtk_box_pack_start(GTK_BOX(w_current->macro_box), w_current->macro_entry,
-		     TRUE, TRUE, 2);
-  gtk_container_border_width(GTK_CONTAINER(w_current->macro_box), 1);
-  gtk_box_pack_start (GTK_BOX (main_box), w_current->macro_box,
-		      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_box),
+                      w_current->macro_widget,
+                      FALSE,
+                      FALSE,
+                      0);
+
+  g_signal_connect (w_current->macro_widget,
+                    "response",
+                    G_CALLBACK (&x_window_invoke_macro),
+                    w_current);
 
   /* bottom box */
   switch (w_current->middle_button) {
@@ -484,7 +486,6 @@ void x_window_create_main(GschemToplevel *w_current)
   gtk_box_pack_start (GTK_BOX (main_box), w_current->bottom_widget, FALSE, FALSE, 0);
 
   gtk_widget_show_all (w_current->main_window);
-  gtk_widget_hide(w_current->macro_box);
 
   w_current->window = w_current->drawing_area->window;
 
