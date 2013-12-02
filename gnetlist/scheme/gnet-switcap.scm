@@ -371,9 +371,12 @@
   (lambda (package port)            
     (display "/* reading analysis from \"" port)
     (let ((fname (switcap:write-attrib package "file" port)))
-      (display "\" */ \n" port)
-      (switcap:cat-file (open-input-file fname) port)
-      )))
+      (display "\" */\n" port)
+      (if (file-exists? fname)
+        (switcap:cat-file (open-input-file fname) port)
+        ((display (string-append "ERROR: Analysis file '" fname "' not found.\n"))
+         (primitive-exit 1))
+        ))))
 
 (define switcap:cat-file
   (lambda (ip op)
