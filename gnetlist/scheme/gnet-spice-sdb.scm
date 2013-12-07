@@ -1388,43 +1388,21 @@
 ;;----------------------------------------------------------
 (define spice-sdb:write-include
   (lambda (package port)
-    (let ((value (gnetlist:get-package-attribute package "value"))
-	  (file (gnetlist:get-package-attribute package "file"))
-	  )   ;; end of local assignments
+    (let ((file (gnetlist:get-package-attribute package "file")))
 
       (debug-spew (string-append "Found SPICE include box.  Refdes = " package "\n"))
-      ;; (debug-spew (string-append "   value = " value "\n"))
-      ;; (debug-spew (string-append "   file = " file "\n"))
       
-      (cond
-       ;; First look to see if value attribute is used
-       ((not (string=? value "unknown"))
-	(begin
-	  ;; (debug-spew "This include directive uses a value attribute.\n")
-	  (if (calling-flag? "embedd_mode" (gnetlist:get-calling-flags))
-	      (begin
-		(spice-sdb:insert-text-file value port)                 ;; -e found: invoke insert-text-file
-		(debug-spew (string-append "embedding contents of " value " into netlist.\n")))
-	      (begin
-		(display (string-append ".INCLUDE " value "\n") port)   ;; -e not found: just print out .INCLUDE card
-		(debug-spew "placing .include directive string into netlist.\n"))
-	 )))
-
-       ;; Now look to see if file is used
-       ((not (string=? file "unknown"))
-	(begin
-	  ;; (debug-spew "This include directive uses a file attribute.\n")
-	  (if (calling-flag? "embedd_mode" (gnetlist:get-calling-flags))
+	  (if (not (string=? file "unknown"))
+        (if  (calling-flag? "embedd_mode" (gnetlist:get-calling-flags))
 	      (begin
 		(spice-sdb:insert-text-file file port)                 ;; -e found: invoke insert-text-file
 		(debug-spew (string-append "embedding contents of file " file " into netlist.\n")))
 	      (begin
 		(display (string-append ".INCLUDE " file "\n") port)   ;; -e not found: just print out .INCLUDE card
 		(debug-spew "placing .include directive string into netlist.\n"))
-	  )  ;; end of if (calling-flag
+          )
+        (debug-spew "silently skip \"unknown\" file.\n")
         )
-       )
-     ) ;; end of cond
 )))
 
 

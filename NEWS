@@ -7,6 +7,13 @@ Copyright (C) 1998-2014 gEDA Developers
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
 
+Notable changes in gEDA/gaf 1.9.2
+=================================
+* Undocumented and ambiguous feature of the `spice-sdb' backend for
+  gnetlist consisting in the possibility of using the "value="
+  attribute instead of "file=" only for include blocks and only in
+  embedding mode has been removed.
+
 Notable changes in gEDA/gaf 1.9.1
 =================================
 
