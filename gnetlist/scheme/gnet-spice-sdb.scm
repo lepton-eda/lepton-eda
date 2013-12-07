@@ -190,6 +190,7 @@
 ;;---------------------------------------------------------------------------
 (define spice-sdb:insert-text-file
   (lambda (model-filename port)
+    (if (file-exists? model-filename)
     (let ((model-file (open-input-file model-filename)) )
       (display (string-append "*vvvvvvvv  Included SPICE model from " model-filename " vvvvvvvv\n") port)
       (let while ((model-line (read-line model-file)))
@@ -205,6 +206,10 @@
 	(display (string-append "*^^^^^^^^  End of included SPICE model from " model-filename " ^^^^^^^^\n") port)
 	(display (string-append "*\n") port)
      ) ;; end of outer let
+    (begin
+      (display (string-append "ERROR: File '" model-filename "' not found.\n"))
+      (primitive-exit 1))
+    )
   )
 )
 
@@ -397,6 +402,7 @@
 (define spice-sdb:get-file-type
   (lambda (model-filename)
     
+    (if (file-exists? model-filename)
     (let ((model-file (open-input-file model-filename)) )
       (let while ((file-line (read-line model-file)) )
 
@@ -438,6 +444,10 @@
 
        ) ;; end of inner lets
       ) ;; end of outer let
+    (begin
+      (display (string-append "ERROR: File '" model-filename "' not found.\n"))
+      (primitive-exit 1))
+    )
   )
 ) ;; end define
 
