@@ -361,3 +361,10 @@ REFDES. As a result, slots may be repeated in the returned list."
   (if (string=? output-filename "-")
     (current-output-port)
     (open-output-file output-filename)))
+
+;; Where to output messages for the user
+(define message-port (current-error-port))
+;; Procedure to output messages to message-port
+(define (message output-string)
+  (display output-string message-port)
+  )

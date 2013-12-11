@@ -1509,7 +1509,7 @@
        ((string=? first-char "I") (spice-sdb:write-independent-current-source package port))
        ((string=? first-char "X") (spice-sdb:write-ic package file-info-list port))
        (else
-        (display (string-append "Found unknown component.  Refdes = " package "\n"))
+        (message (string-append "Found unknown component.  Refdes = " package "\n"))
         (spice-sdb:write-component-no-value package port)
         ;; write component value, if components have a label "value=#"
         ;; what if a component has no value label, currently unknown is written
@@ -1785,13 +1785,13 @@
 ;; First find out if this is a .SUBCKT lower level,
 ;; or if it is a regular schematic.
 ;;
-    (let* ((port (open-output-file output-filename))
+    (let* ((port (gnetlist:output-port output-filename))
            (schematic-type (spice-sdb:get-schematic-type packages))
            (model-name (spice-sdb:get-subcircuit-modelname schematic-type))
            (file-info-list (list))
           )
-      (display "Using SPICE backend by SDB -- Version of 4.28.2007\n")
-      (display (string-append "schematic-type = " schematic-type "\n"))
+      (message "Using SPICE backend by SDB -- Version of 4.28.2007\n")
+      (message (string-append "schematic-type = " schematic-type "\n"))
       ;; (display (string-append "model-name = " model-name "\n"))
 
       (if (not (string=? schematic-type "normal schematic"))
