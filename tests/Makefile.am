@@ -16,7 +16,7 @@
 
 AM_CPPFLAGS = -I$(top_srcdir)/include
 AM_CFLAGS = -Wall -W -Werror
-LDADD = ../lib/libxornstorage.la
+LDADD = ../src/storage/libxornstorage.la
 
 TESTS = copy_object \
 	copy_objects \
