@@ -32,3 +32,4 @@ Makefile.in
 /m4/
 /missing
 /py-compile
+/test-driver

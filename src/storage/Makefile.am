@@ -1,4 +1,3 @@
-# Process this file with autoconf to produce a configure script.
 # Copyright (C) 2013 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
@@ -15,30 +14,18 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-AC_PREREQ([2.61])
-LT_PREREQ([2.4.2])
+lib_LTLIBRARIES = libxornstorage.la
+libxornstorage_la_SOURCES = \
+	internal.h \
+	key_iterator.h \
+	attributes.cc \
+	convenience.cc \
+	manipulate.cc \
+	object.cc \
+	obstate.cc \
+	revision.cc \
+	selection.cc
 
-AC_INIT([xorn], [0.0], [bug-xorn@hedmen.org])
-AC_CONFIG_SRCDIR([src/cpython/module.c])
-AC_CONFIG_MACRO_DIR([m4])
-
-AM_INIT_AUTOMAKE([-Wall -Werror silent-rules])
-m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
-LT_INIT([])
-
-AC_PROG_CXX
-
-AM_PATH_PYTHON([2.7])
-AC_CHECK_HEADERS(
-	[python${PYTHON_VERSION}/Python.h], [],
-	[AC_MSG_ERROR([python headers not found])])
-
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_FILES([
-	Makefile
-	src/storage/Makefile
-	src/cpython/Makefile
-	src/python/Makefile
-	tests/storage/Makefile
-])
-AC_OUTPUT
+libxornstorage_la_CPPFLAGS = -I$(top_srcdir)/include
+libxornstorage_la_CXXFLAGS = -Wall -W
+libxornstorage_la_LDFLAGS = -export-symbols-regex '^xorn_'

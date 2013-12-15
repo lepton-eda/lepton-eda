@@ -14,7 +14,9 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-SUBDIRS = src/cpython src/python
+SUBDIRS = src/storage src/cpython src/python tests/storage
+
+include_HEADERS = include/xornstorage.h
 
 ACLOCAL_AMFLAGS = -I m4
 

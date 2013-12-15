@@ -1,4 +1,3 @@
-# Process this file with autoconf to produce a configure script.
 # Copyright (C) 2013 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
@@ -15,30 +14,26 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-AC_PREREQ([2.61])
-LT_PREREQ([2.4.2])
+AM_CPPFLAGS = -I$(top_srcdir)/include
+AM_CFLAGS = -Wall -W -Werror
+LDADD = ../../src/storage/libxornstorage.la
 
-AC_INIT([xorn], [0.0], [bug-xorn@hedmen.org])
-AC_CONFIG_SRCDIR([src/cpython/module.c])
-AC_CONFIG_MACRO_DIR([m4])
+TESTS = copy_object \
+	copy_objects \
+	delete_sel \
+	exist \
+	get_attribute \
+	get_obdata \
+	get_objects \
+	get_obtype \
+	invalid_obtype \
+	null \
+	select_by_attribute \
+	selection \
+	set_attribute \
+	stat \
+	string \
+	transient
 
-AM_INIT_AUTOMAKE([-Wall -Werror silent-rules])
-m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
-LT_INIT([])
-
-AC_PROG_CXX
-
-AM_PATH_PYTHON([2.7])
-AC_CHECK_HEADERS(
-	[python${PYTHON_VERSION}/Python.h], [],
-	[AC_MSG_ERROR([python headers not found])])
-
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_FILES([
-	Makefile
-	src/storage/Makefile
-	src/cpython/Makefile
-	src/python/Makefile
-	tests/storage/Makefile
-])
-AC_OUTPUT
+check_PROGRAMS = $(TESTS)
+EXTRA_DIST = Setup.h
