@@ -14,8 +14,8 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef _XORN_STORAGE_H
-#define _XORN_STORAGE_H
+#ifndef XORN_STORAGE_H
+#define XORN_STORAGE_H
 
 #include <stddef.h>
 #include <stdbool.h>
