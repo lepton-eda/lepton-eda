@@ -1,0 +1,43 @@
+#!/bin/sh
+# Pretty-print `git log' output in ChangeLog format
+# Copyright (C) 2013 Roland Lutz
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+
+git log -z --format='format:%ai	%an	<%ae>	%B' |
+	sed -e '1s%^%\x00%' |
+	sed -e 's%\(.\)\x00%\1\n\x00%g' |
+	sed -e 's%^%\t%' |
+	sed -e 's%^\t\x00\(....-..-..\) ..:..:.. .....\t\([^\t]*\)\t\(<[^\t]*>\)\t%\n\1  \2  \3\n\n      * %' |
+	sed -e 's%^[\t ]*$%%' |
+	sed -e '1d' |
+	awk '
+/^[^\t ]/ {	if ($0 == last) consume = 1
+		else print $0
+		last = $0 }
+/^$/ {		if (consume == 1) consume = 0
+		else print $0 }
+/^[\t ]/ {	consume = 0
+		print $0 }'
+
+cat << EOF
+
+--------------------------------------------------------------------------------
+
+Copyright (C) $(seq 2013 $(date +%Y) | sed -e ':a;N;s/\n/, /;ta') Roland Lutz
+
+Copying and distribution of this file, with or without modification,
+are permitted provided the copyright notice and this notice are preserved.
+EOF
