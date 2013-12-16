@@ -72,6 +72,13 @@ EXTRA_DIST = include_h.m4 include_c.m4 $(m4output)
 BUILT_SOURCES = data.h
 
 pkgpyexec_LTLIBRARIES = storagemodule.la
-storagemodule_la_SOURCES = $(m4sources) module.c
+storagemodule_la_SOURCES = \
+	$(m4sources) \
+	module.c \
+	module.h \
+	object.c \
+	revision.c \
+	selection.c
+storagemodule_la_LIBADD = ../storage/libxornstorage.la
 storagemodule_la_LDFLAGS = -module -avoid-version \
 			   -export-symbols-regex '^initstorage$$'

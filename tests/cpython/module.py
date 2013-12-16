@@ -20,6 +20,10 @@ assert type(xorn) == types.ModuleType
 assert type(xorn.storage) == types.ModuleType
 
 mod_attrs = {
+    'Revision': type,
+    'Object': type,
+    'Selection': type,
+
     'Arc': type,
     'Box': type,
     'Circle': type,
@@ -31,6 +35,19 @@ mod_attrs = {
     'Text': type,
     'LineAttr': type,
     'FillAttr': type,
+
+    'get_selected_objects': types.BuiltinMethodType,
+    'get_added_objects': types.BuiltinMethodType,
+    'get_removed_objects': types.BuiltinMethodType,
+    'get_modified_objects': types.BuiltinMethodType,
+
+    'select_none': types.BuiltinMethodType,
+    'select_object': types.BuiltinMethodType,
+    'select_all': types.BuiltinMethodType,
+    'select_all_except': types.BuiltinMethodType,
+    'select_union': types.BuiltinMethodType,
+    'select_intersection': types.BuiltinMethodType,
+    'selection_is_empty': types.BuiltinMethodType,
 }
 
 a = mod_attrs.keys()

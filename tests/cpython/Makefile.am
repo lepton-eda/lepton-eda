@@ -14,9 +14,21 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-tests = module.py
+tests = \
+	copy_object.py \
+	copy_objects.py \
+	delete_sel.py \
+	exist.py \
+	get_obdata.py \
+	get_objects.py \
+	get_obtype.py \
+	module.py \
+	selection.py \
+	stat.py \
+	string.py \
+	transient.py
 
-EXTRA_DIST = $(tests)
+EXTRA_DIST = $(tests) Setup.py
 
 tty_colors = {								\
 	color_tests=no;							\
