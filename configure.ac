@@ -40,5 +40,6 @@ AC_CONFIG_FILES([
 	src/cpython/Makefile
 	src/python/Makefile
 	tests/storage/Makefile
+	tests/cpython/Makefile
 ])
 AC_OUTPUT
