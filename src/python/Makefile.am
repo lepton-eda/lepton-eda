@@ -20,3 +20,6 @@ pkgpython_PYTHON = \
 	fileutils.py \
 	proxy.py
 noinst_PYTHON = storage.py
+
+gedadir = $(pkgpythondir)/geda
+geda_PYTHON = geda/__init__.py
