@@ -18,7 +18,7 @@
 #include <stdlib.h>
 
 
-void assert_objects_0(xorn_revision_t rev)
+static void assert_objects_0(xorn_revision_t rev)
 {
 	xorn_object_t *objects;
 	size_t count;
@@ -28,20 +28,8 @@ void assert_objects_0(xorn_revision_t rev)
 	free(objects);
 }
 
-void assert_objects_1(xorn_revision_t rev, xorn_object_t ob0)
-{
-	xorn_object_t *objects;
-	size_t count;
-
-	assert(xorn_get_objects(rev, &objects, &count) == 0);
-	assert(objects != NULL);
-	assert(count == 1);
-	assert(objects[0] == ob0);
-	free(objects);
-}
-
-void assert_objects_2(xorn_revision_t rev,
-		      xorn_object_t ob0, xorn_object_t ob1)
+static void assert_objects_2(xorn_revision_t rev,
+			     xorn_object_t ob0, xorn_object_t ob1)
 {
 	xorn_object_t *objects;
 	size_t count;
@@ -54,8 +42,9 @@ void assert_objects_2(xorn_revision_t rev,
 	free(objects);
 }
 
-void assert_objects_3(xorn_revision_t rev,
-		      xorn_object_t ob0, xorn_object_t ob1, xorn_object_t ob2)
+static void assert_objects_3(
+	xorn_revision_t rev,
+	xorn_object_t ob0, xorn_object_t ob1, xorn_object_t ob2)
 {
 	xorn_object_t *objects;
 	size_t count;
