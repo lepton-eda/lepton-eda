@@ -17,13 +17,15 @@ m4_divert(`-1')
 
 m4_define(`stdout_diversion', `0')
 
-m4_define(`new0_diversion', `1')
-m4_define(`new1_diversion', `2')
-m4_define(`traverse_diversion', `3')
-m4_define(`clear_diversion', `4')
-m4_define(`members_diversion', `5')
-m4_define(`getset_bodies_diversion', `6')
-m4_define(`getset_diversion', `7')
+m4_define(`construct_diversion', `1')
+m4_define(`prepare_diversion', `2')
+m4_define(`new0_diversion', `3')
+m4_define(`new1_diversion', `4')
+m4_define(`traverse_diversion', `5')
+m4_define(`clear_diversion', `6')
+m4_define(`members_diversion', `7')
+m4_define(`getset_bodies_diversion', `8')
+m4_define(`getset_diversion', `9')
 
 m4_define(`begin_divert', `m4_divert($1_diversion)m4_dnl')
 m4_define(`end_divert', `m4_divert(`-1')')
@@ -86,6 +88,22 @@ end_divert
 
 m4_define(`cg_string', `
   m4_define(`is_complex')
+begin_divert(`construct')
+
+	if (data->`$1'.len != 0) {
+		Py_DECREF(self->`$1');
+		self->`$1' = PyString_FromStringAndSize(
+			data->`$1'.s, data->`$1'.len);
+		if (self->`$1' == NULL) {
+			Py_DECREF(self);
+			return NULL;
+		}
+	}
+end_divert
+begin_divert(`prepare')
+	self->data.`$1'.s = PyString_AS_STRING(self->`$1');
+	self->data.`$1'.len = PyString_GET_SIZE(self->`$1');
+end_divert
 begin_divert(`new0')
 	self->`$1' = PyString_FromString("");
 end_divert
@@ -142,6 +160,12 @@ end_divert
 
 m4_define(`cg_line', `
   m4_define(`is_complex')
+begin_divert(`construct')
+	((LineAttr *)self->line)->data = data->line;
+end_divert
+begin_divert(`prepare')
+	self->data.line = ((LineAttr *)self->line)->data;
+end_divert
 begin_divert(`new0')
 	self->line = PyObject_CallObject((PyObject *)&LineAttrType, no_args);
 end_divert
@@ -198,6 +222,12 @@ end_divert
 
 m4_define(`cg_fill', `
   m4_define(`is_complex')
+begin_divert(`construct')
+	((FillAttr *)self->fill)->data = data->fill;
+end_divert
+begin_divert(`prepare')
+	self->data.fill = ((FillAttr *)self->fill)->data;
+end_divert
 begin_divert(`new0')
 	self->fill = PyObject_CallObject((PyObject *)&FillAttrType, no_args);
 end_divert
@@ -276,6 +306,31 @@ begin_divert(`stdout')
 #include "data.h"
 #include <structmember.h>
 
+
+PyObject *construct_`'typename`'(const struct xornsch_`'typename *data)
+{
+	PyObject *no_args = PyTuple_New(0);
+	Class *self = (Class *)PyObject_CallObject(
+		(PyObject *)&Class`'Type, no_args);
+	Py_DECREF(no_args);
+
+	if (self == NULL)
+		return NULL;
+
+	self->data = *data;
+undivert(`construct')
+	return (PyObject *)self;
+}
+m4_ifelse(m4_index(typename, `_attr'), `4', `end_divert')`'m4_dnl
+
+void prepare_`'typename`'(Class *self,
+	xorn_obtype_t *type_return, const void **data_return)
+{
+undivert(`prepare')
+	*type_return = xornsch_obtype_`'typename;
+	*data_return = &self->data;
+}
+m4_ifelse(m4_index(typename, `_attr'), `4', `begin_divert(`stdout')')`'m4_dnl
 
 static PyObject *Class(`new')(
 	PyTypeObject *type, PyObject *args, PyObject *kwds)

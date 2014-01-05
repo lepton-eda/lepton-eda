@@ -20,6 +20,20 @@
 #include <structmember.h>
 
 
+PyObject *construct_fill_attr(const struct xornsch_fill_attr *data)
+{
+	PyObject *no_args = PyTuple_New(0);
+	FillAttr *self = (FillAttr *)PyObject_CallObject(
+		(PyObject *)&FillAttrType, no_args);
+	Py_DECREF(no_args);
+
+	if (self == NULL)
+		return NULL;
+
+	self->data = *data;
+	return (PyObject *)self;
+}
+
 static PyObject *FillAttr_new(
 	PyTypeObject *type, PyObject *args, PyObject *kwds)
 {

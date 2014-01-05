@@ -20,6 +20,43 @@
 #include <structmember.h>
 
 
+PyObject *construct_path(const struct xornsch_path *data)
+{
+	PyObject *no_args = PyTuple_New(0);
+	Path *self = (Path *)PyObject_CallObject(
+		(PyObject *)&PathType, no_args);
+	Py_DECREF(no_args);
+
+	if (self == NULL)
+		return NULL;
+
+	self->data = *data;
+
+	if (data->pathdata.len != 0) {
+		Py_DECREF(self->pathdata);
+		self->pathdata = PyString_FromStringAndSize(
+			data->pathdata.s, data->pathdata.len);
+		if (self->pathdata == NULL) {
+			Py_DECREF(self);
+			return NULL;
+		}
+	}
+	((LineAttr *)self->line)->data = data->line;
+	((FillAttr *)self->fill)->data = data->fill;
+	return (PyObject *)self;
+}
+
+void prepare_path(Path *self,
+	xorn_obtype_t *type_return, const void **data_return)
+{
+	self->data.pathdata.s = PyString_AS_STRING(self->pathdata);
+	self->data.pathdata.len = PyString_GET_SIZE(self->pathdata);
+	self->data.line = ((LineAttr *)self->line)->data;
+	self->data.fill = ((FillAttr *)self->fill)->data;
+	*type_return = xornsch_obtype_path;
+	*data_return = &self->data;
+}
+
 static PyObject *Path_new(
 	PyTypeObject *type, PyObject *args, PyObject *kwds)
 {

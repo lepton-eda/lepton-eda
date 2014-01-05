@@ -20,6 +20,29 @@
 #include <structmember.h>
 
 
+PyObject *construct_line(const struct xornsch_line *data)
+{
+	PyObject *no_args = PyTuple_New(0);
+	Line *self = (Line *)PyObject_CallObject(
+		(PyObject *)&LineType, no_args);
+	Py_DECREF(no_args);
+
+	if (self == NULL)
+		return NULL;
+
+	self->data = *data;
+	((LineAttr *)self->line)->data = data->line;
+	return (PyObject *)self;
+}
+
+void prepare_line(Line *self,
+	xorn_obtype_t *type_return, const void **data_return)
+{
+	self->data.line = ((LineAttr *)self->line)->data;
+	*type_return = xornsch_obtype_line;
+	*data_return = &self->data;
+}
+
 static PyObject *Line_new(
 	PyTypeObject *type, PyObject *args, PyObject *kwds)
 {

@@ -20,6 +20,20 @@
 #include <structmember.h>
 
 
+PyObject *construct_line_attr(const struct xornsch_line_attr *data)
+{
+	PyObject *no_args = PyTuple_New(0);
+	LineAttr *self = (LineAttr *)PyObject_CallObject(
+		(PyObject *)&LineAttrType, no_args);
+	Py_DECREF(no_args);
+
+	if (self == NULL)
+		return NULL;
+
+	self->data = *data;
+	return (PyObject *)self;
+}
+
 static PyObject *LineAttr_new(
 	PyTypeObject *type, PyObject *args, PyObject *kwds)
 {

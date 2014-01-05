@@ -20,6 +20,29 @@
 #include <structmember.h>
 
 
+PyObject *construct_arc(const struct xornsch_arc *data)
+{
+	PyObject *no_args = PyTuple_New(0);
+	Arc *self = (Arc *)PyObject_CallObject(
+		(PyObject *)&ArcType, no_args);
+	Py_DECREF(no_args);
+
+	if (self == NULL)
+		return NULL;
+
+	self->data = *data;
+	((LineAttr *)self->line)->data = data->line;
+	return (PyObject *)self;
+}
+
+void prepare_arc(Arc *self,
+	xorn_obtype_t *type_return, const void **data_return)
+{
+	self->data.line = ((LineAttr *)self->line)->data;
+	*type_return = xornsch_obtype_arc;
+	*data_return = &self->data;
+}
+
 static PyObject *Arc_new(
 	PyTypeObject *type, PyObject *args, PyObject *kwds)
 {

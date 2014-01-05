@@ -20,6 +20,27 @@
 #include <structmember.h>
 
 
+PyObject *construct_component(const struct xornsch_component *data)
+{
+	PyObject *no_args = PyTuple_New(0);
+	Component *self = (Component *)PyObject_CallObject(
+		(PyObject *)&ComponentType, no_args);
+	Py_DECREF(no_args);
+
+	if (self == NULL)
+		return NULL;
+
+	self->data = *data;
+	return (PyObject *)self;
+}
+
+void prepare_component(Component *self,
+	xorn_obtype_t *type_return, const void **data_return)
+{
+	*type_return = xornsch_obtype_component;
+	*data_return = &self->data;
+}
+
 static PyObject *Component_new(
 	PyTypeObject *type, PyObject *args, PyObject *kwds)
 {

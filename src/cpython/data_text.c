@@ -20,6 +20,39 @@
 #include <structmember.h>
 
 
+PyObject *construct_text(const struct xornsch_text *data)
+{
+	PyObject *no_args = PyTuple_New(0);
+	Text *self = (Text *)PyObject_CallObject(
+		(PyObject *)&TextType, no_args);
+	Py_DECREF(no_args);
+
+	if (self == NULL)
+		return NULL;
+
+	self->data = *data;
+
+	if (data->text.len != 0) {
+		Py_DECREF(self->text);
+		self->text = PyString_FromStringAndSize(
+			data->text.s, data->text.len);
+		if (self->text == NULL) {
+			Py_DECREF(self);
+			return NULL;
+		}
+	}
+	return (PyObject *)self;
+}
+
+void prepare_text(Text *self,
+	xorn_obtype_t *type_return, const void **data_return)
+{
+	self->data.text.s = PyString_AS_STRING(self->text);
+	self->data.text.len = PyString_GET_SIZE(self->text);
+	*type_return = xornsch_obtype_text;
+	*data_return = &self->data;
+}
+
 static PyObject *Text_new(
 	PyTypeObject *type, PyObject *args, PyObject *kwds)
 {

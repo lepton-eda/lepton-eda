@@ -20,6 +20,31 @@
 #include <structmember.h>
 
 
+PyObject *construct_circle(const struct xornsch_circle *data)
+{
+	PyObject *no_args = PyTuple_New(0);
+	Circle *self = (Circle *)PyObject_CallObject(
+		(PyObject *)&CircleType, no_args);
+	Py_DECREF(no_args);
+
+	if (self == NULL)
+		return NULL;
+
+	self->data = *data;
+	((LineAttr *)self->line)->data = data->line;
+	((FillAttr *)self->fill)->data = data->fill;
+	return (PyObject *)self;
+}
+
+void prepare_circle(Circle *self,
+	xorn_obtype_t *type_return, const void **data_return)
+{
+	self->data.line = ((LineAttr *)self->line)->data;
+	self->data.fill = ((FillAttr *)self->fill)->data;
+	*type_return = xornsch_obtype_circle;
+	*data_return = &self->data;
+}
+
 static PyObject *Circle_new(
 	PyTypeObject *type, PyObject *args, PyObject *kwds)
 {

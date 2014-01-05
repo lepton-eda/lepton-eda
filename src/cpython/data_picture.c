@@ -20,6 +20,27 @@
 #include <structmember.h>
 
 
+PyObject *construct_picture(const struct xornsch_picture *data)
+{
+	PyObject *no_args = PyTuple_New(0);
+	Picture *self = (Picture *)PyObject_CallObject(
+		(PyObject *)&PictureType, no_args);
+	Py_DECREF(no_args);
+
+	if (self == NULL)
+		return NULL;
+
+	self->data = *data;
+	return (PyObject *)self;
+}
+
+void prepare_picture(Picture *self,
+	xorn_obtype_t *type_return, const void **data_return)
+{
+	*type_return = xornsch_obtype_picture;
+	*data_return = &self->data;
+}
+
 static PyObject *Picture_new(
 	PyTypeObject *type, PyObject *args, PyObject *kwds)
 {

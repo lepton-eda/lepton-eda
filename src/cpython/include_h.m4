@@ -20,8 +20,10 @@ m4_define(`structdef_diversion', `1')
 
 # automatically undiverted
 m4_define(`typeobs_diversion', `2')
-m4_define(`structdefs_diversion', `3')
-m4_define(`endif_diversion', `4')
+m4_define(`construct_diversion', `3')
+m4_define(`structdefs_diversion', `4')
+m4_define(`prepare_diversion', `5')
+m4_define(`endif_diversion', `6')
 
 m4_define(`begin_divert', `m4_divert($1_diversion)m4_dnl')
 m4_define(`end_divert', `m4_divert(`-1')')
@@ -89,6 +91,12 @@ end_divert
 begin_divert(`typeobs')
 
 end_divert
+begin_divert(`construct')
+
+end_divert
+begin_divert(`prepare')
+
+end_divert
 begin_divert(`endif')
 
 #endif
@@ -100,6 +108,9 @@ m4_define(`cg_output', `
 begin_divert(`typeobs')
 extern PyTypeObject Class`'Type;
 end_divert
+begin_divert(`construct')
+PyObject *construct_`'typename`'(const struct xornsch_`'typename *data);
+end_divert
 begin_divert(`structdefs')
 
 typedef struct {
@@ -108,4 +119,11 @@ typedef struct {
 undivert(`structdef')
 } Class;
 end_divert
+
+m4_ifelse(m4_index(typename, `_attr'), `-1',
+	  `begin_divert(`prepare')')`'m4_dnl
+void prepare_`'typename`'(Class *self,
+	xorn_obtype_t *type_return, const void **data_return);
+m4_ifelse(m4_index(typename, `_attr'), `-1',
+	  `end_divert')`'m4_dnl
 ')

@@ -20,6 +20,27 @@
 #include <structmember.h>
 
 
+PyObject *construct_net(const struct xornsch_net *data)
+{
+	PyObject *no_args = PyTuple_New(0);
+	Net *self = (Net *)PyObject_CallObject(
+		(PyObject *)&NetType, no_args);
+	Py_DECREF(no_args);
+
+	if (self == NULL)
+		return NULL;
+
+	self->data = *data;
+	return (PyObject *)self;
+}
+
+void prepare_net(Net *self,
+	xorn_obtype_t *type_return, const void **data_return)
+{
+	*type_return = xornsch_obtype_net;
+	*data_return = &self->data;
+}
+
 static PyObject *Net_new(
 	PyTypeObject *type, PyObject *args, PyObject *kwds)
 {

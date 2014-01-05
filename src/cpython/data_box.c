@@ -20,6 +20,31 @@
 #include <structmember.h>
 
 
+PyObject *construct_box(const struct xornsch_box *data)
+{
+	PyObject *no_args = PyTuple_New(0);
+	Box *self = (Box *)PyObject_CallObject(
+		(PyObject *)&BoxType, no_args);
+	Py_DECREF(no_args);
+
+	if (self == NULL)
+		return NULL;
+
+	self->data = *data;
+	((LineAttr *)self->line)->data = data->line;
+	((FillAttr *)self->fill)->data = data->fill;
+	return (PyObject *)self;
+}
+
+void prepare_box(Box *self,
+	xorn_obtype_t *type_return, const void **data_return)
+{
+	self->data.line = ((LineAttr *)self->line)->data;
+	self->data.fill = ((FillAttr *)self->fill)->data;
+	*type_return = xornsch_obtype_box;
+	*data_return = &self->data;
+}
+
 static PyObject *Box_new(
 	PyTypeObject *type, PyObject *args, PyObject *kwds)
 {

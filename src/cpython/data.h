@@ -34,6 +34,18 @@ extern PyTypeObject TextType;
 extern PyTypeObject LineAttrType;
 extern PyTypeObject FillAttrType;
 
+PyObject *construct_arc(const struct xornsch_arc *data);
+PyObject *construct_box(const struct xornsch_box *data);
+PyObject *construct_circle(const struct xornsch_circle *data);
+PyObject *construct_component(const struct xornsch_component *data);
+PyObject *construct_line(const struct xornsch_line *data);
+PyObject *construct_net(const struct xornsch_net *data);
+PyObject *construct_path(const struct xornsch_path *data);
+PyObject *construct_picture(const struct xornsch_picture *data);
+PyObject *construct_text(const struct xornsch_text *data);
+PyObject *construct_line_attr(const struct xornsch_line_attr *data);
+PyObject *construct_fill_attr(const struct xornsch_fill_attr *data);
+
 typedef struct {
 	PyObject_HEAD
 	struct xornsch_arc data;
@@ -98,5 +110,24 @@ typedef struct {
 	PyObject_HEAD
 	struct xornsch_fill_attr data;
 } FillAttr;
+
+void prepare_arc(Arc *self,
+	xorn_obtype_t *type_return, const void **data_return);
+void prepare_box(Box *self,
+	xorn_obtype_t *type_return, const void **data_return);
+void prepare_circle(Circle *self,
+	xorn_obtype_t *type_return, const void **data_return);
+void prepare_component(Component *self,
+	xorn_obtype_t *type_return, const void **data_return);
+void prepare_line(Line *self,
+	xorn_obtype_t *type_return, const void **data_return);
+void prepare_net(Net *self,
+	xorn_obtype_t *type_return, const void **data_return);
+void prepare_path(Path *self,
+	xorn_obtype_t *type_return, const void **data_return);
+void prepare_picture(Picture *self,
+	xorn_obtype_t *type_return, const void **data_return);
+void prepare_text(Text *self,
+	xorn_obtype_t *type_return, const void **data_return);
 
 #endif
