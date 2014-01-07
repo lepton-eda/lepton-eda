@@ -1,4 +1,4 @@
-# Copyright (C) 2013 Roland Lutz
+# Copyright (C) 2013, 2014 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,6 +14,9 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
+AM_CPPFLAGS = -I$(top_srcdir)/include
+AM_CXXFLAGS = -Wall -W
+
 lib_LTLIBRARIES = libxornstorage.la
 libxornstorage_la_SOURCES = \
 	internal.h \
@@ -25,7 +28,4 @@ libxornstorage_la_SOURCES = \
 	obstate.cc \
 	revision.cc \
 	selection.cc
-
-libxornstorage_la_CPPFLAGS = -I$(top_srcdir)/include
-libxornstorage_la_CXXFLAGS = -Wall -W
 libxornstorage_la_LDFLAGS = -export-symbols-regex '^xorn_'

@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-# Copyright (C) 2013 Roland Lutz
+# Copyright (C) 2013, 2014 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
