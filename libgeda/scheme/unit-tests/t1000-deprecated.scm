@@ -47,7 +47,11 @@
     (for-each (lambda (o) (component-append! C o)) (list p x y z))
     (attach-attribs! p x y z)
 
-    (assert-equal (list "y" "x") (get-attrib-value-by-attrib-name p "name"))))
+    (assert-equal (list "y" "x") (get-attrib-value-by-attrib-name p "name"))
+
+    ; make an invalid atribute
+    (set-text! y '(0 . 0) 'lower-left 0 "name=" 10 #t 'both)
+    (assert-equal (list "x") (get-attrib-value-by-attrib-name p "name"))))
 
 (begin-test 'get-object-type
   (let ((C (make-component "testcomponent" '(0 . 0) 0 #f #f))
