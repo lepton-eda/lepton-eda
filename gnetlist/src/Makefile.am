@@ -28,6 +28,9 @@ gnetlist_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLAGS) $(GLIB_CFLAGS) \
 gnetlist_LDFLAGS = $(GLIB_LIBS) $(GUILE_LIBS) $(GDK_PIXBUF_LIBS)
 gnetlist_LDADD = $(top_builddir)/libgeda/src/libgeda.la
 
+localedir = @datadir@/locale
+DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
+
 MOSTLYCLEANFILES = *.log *.ps core FILE *~
 CLEANFILES = *.log *.ps core FILE *~
 DISTCLEANFILES = *.log core FILE *~

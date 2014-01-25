@@ -322,6 +322,13 @@ void main_prog(void *closure, int argc, char *argv[])
 
 int main(int argc, char *argv[])
 {
+#if ENABLE_NLS
+    setlocale (LC_ALL, "");
+    setlocale (LC_NUMERIC, "C");
+    bindtextdomain ("geda-gnetlist", LOCALEDIR);
+    textdomain ("geda-gnetlist");
+    bind_textdomain_codeset("geda-gnetlist", "UTF-8");
+#endif
     scm_boot_guile (argc, argv, main_prog, 0);
     return 0;
 }
