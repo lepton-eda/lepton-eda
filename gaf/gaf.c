@@ -109,7 +109,7 @@ main (int argc, char **argv)
   setlocale (LC_ALL, "");
   bindtextdomain ("geda-gaf", LOCALEDIR);
   textdomain ("geda-gaf");
-  bind_textdomain_codeset ("geda-gschem", "UTF-8");
+  bind_textdomain_codeset ("geda-gaf", "UTF-8");
 #endif
 
   while (-1 != (c = getopt_long (argc, argv, short_options,
