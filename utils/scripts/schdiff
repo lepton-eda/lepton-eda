@@ -24,7 +24,7 @@ Usage with Subversion:
   svn diff --diff-cmd schdiff
 
 Report bugs to <http://bugs.launchpad.net/geda>
-gEDA/gaf homepage <http://gpleda.org/>
+gEDA/gaf homepage <http://www.geda-project.org/>
 EOF
 
 }

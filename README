@@ -48,7 +48,7 @@ The major components of the gEDA suite are:
 
 `gsch2pcb'
   A command-line utility for streamlining the workflow where `PCB'
-  <http://pcb.gpleda.org/> and `gschem' are used together.
+  <http://pcb.geda-project.org/> and `gschem' are used together.
 
 `gsymcheck'
   A utility for checking for common errors in schematic symbol files.
@@ -184,7 +184,7 @@ tools *in addition to* the ones listed above:
 Once you have these installed, you need to clone the gEDA `git'
 repository:
 
-  git clone git://git.gpleda.org/gaf.git
+  git clone git://git.geda-project.org/geda-gaf.git
 
 To generate the configure script, run:
 
@@ -224,7 +224,7 @@ Getting help
 
 There are several ways to get help with installing and using gEDA:
 
- - The gEDA website <http://www.gpleda.org> has more extensive
+ - The gEDA website <http://www.geda-project.org> has more extensive
    information on the gEDA tools, and links to some successful
    projects which use gEDA.
 

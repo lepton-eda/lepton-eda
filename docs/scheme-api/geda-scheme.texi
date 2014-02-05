@@ -108,7 +108,7 @@ lists.  You may also find additional information in the gEDA
 wiki.
 
 Both the mailing lists and wiki can be accessed from the main gEDA
-website: @uref{http://gpleda.org/}.
+website: @uref{http://www.geda-project.org/}.
 
 @section We Need Feedback!
 
