@@ -340,7 +340,7 @@ static void add_connection (OBJECT *object, OBJECT *other_object,
 
 /*! \brief add a line OBJECT to the connection system
  *  \par Function Description
- *  This function searches for all geometrical conections of the OBJECT
+ *  This function searches for all geometrical connections of the OBJECT
  *  <b>object</b> to all other connectable objects. It adds connections
  *  to the object and from all other
  *  objects to this one.
@@ -410,7 +410,7 @@ static void s_conn_update_line_object (TOPLEVEL *toplevel, OBJECT *object)
           if (object->type == OBJ_PIN && object->whichend != j)
             continue;
 
-          /* Check for coincidence and compatability between
+          /* Check for coincidence and compatibility between
              the objects being tested. */
           if (object->line->x[j] == other_object->line->x[k] &&
               object->line->y[j] == other_object->line->y[k] &&
@@ -499,7 +499,7 @@ static void s_conn_update_line_object (TOPLEVEL *toplevel, OBJECT *object)
 /*! \brief add an OBJECT to the connection system
  *
  *  \par Function Description
- *  This function searches for all geometrical conections of the OBJECT
+ *  This function searches for all geometrical connections of the OBJECT
  *  <b>object</b> to all other connectable objects. It adds connections
  *  to the object and from all other objects to this one.
  *
