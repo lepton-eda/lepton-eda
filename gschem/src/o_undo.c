@@ -497,8 +497,6 @@ void o_undo_cleanup(void)
 void
 o_undo_remove_last_undo (GschemToplevel *w_current, PAGE *page)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-
   if (page->undo_current == NULL) {
     return;
   }

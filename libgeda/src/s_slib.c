@@ -124,7 +124,7 @@ char *s_slib_search_dirs(const char *basename)
     while(dptr != NULL) {
 
       /* Search for an exact match */
-      if (strcmp(dptr->d_name, basename) == NULL)  {
+      if (strcmp(dptr->d_name, basename) == 0)  {
         slib_path = g_strdup (slib[i].dir_name);
 	
         if (ptr) {

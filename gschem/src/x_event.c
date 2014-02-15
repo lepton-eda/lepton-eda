@@ -999,7 +999,7 @@ x_event_configure (GschemPageView    *page_view,
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (user_data);
   TOPLEVEL *toplevel = gschem_page_view_get_toplevel (page_view);
   GList *iter;
-  PAGE *old_page_current, *p_current;
+  PAGE *p_current;
   gint old_win_width, old_win_height, new_win_width, new_win_height;
   gdouble relativ_zoom_factor = 1.0;
 

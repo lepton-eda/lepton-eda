@@ -186,7 +186,7 @@ gschem_integer_combo_box_get_entry (GtkWidget *widget)
 int
 gschem_integer_combo_box_get_value (GtkWidget *widget)
 {
-  GtkWidget *entry = gschem_integer_combo_box_get_entry (widget);
+  GtkWidget *entry = GTK_WIDGET (gschem_integer_combo_box_get_entry (widget));
   int size = -1;
   const char *text0 = gtk_entry_get_text (GTK_ENTRY (entry));
 
