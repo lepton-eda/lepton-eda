@@ -47,11 +47,11 @@
  *  \return A pointer to the new picture object, or NULL on error.
  */
 OBJECT *o_picture_read (TOPLEVEL *toplevel,
-		       const char *first_line,
-		       TextBuffer *tb,
-		       unsigned int release_ver,
-               unsigned int fileformat_ver,
-               GError **err)
+                        const char *first_line,
+                        TextBuffer *tb,
+                        unsigned int release_ver,
+                        unsigned int fileformat_ver,
+                        GError **err)
 {
   OBJECT *new_obj;
   int x1, y1;
@@ -65,8 +65,8 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
   guint file_length = 0;
 
   num_conv = sscanf(first_line, "%c %d %d %d %d %d %d %d\n",
-	 &type, &x1, &y1, &width, &height, &angle, &mirrored, &embedded);
-  
+                    &type, &x1, &y1, &width, &height, &angle, &mirrored, &embedded);
+
   if (num_conv != 8) {
     g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse picture definition"));
     return NULL;
@@ -79,20 +79,20 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
 
   if ( (mirrored > 1) || (mirrored < 0)) {
     s_log_message(_("Found a picture with a wrong 'mirrored' parameter: %d.\n"),
-	    mirrored);
+                  mirrored);
     s_log_message(_("Setting mirrored to 0\n"));
     mirrored = 0;
   }
 
   if ( (embedded > 1) || (embedded < 0)) {
     s_log_message(_("Found a picture with a wrong 'embedded' parameter: %d.\n"),
-	    embedded);
+                  embedded);
     s_log_message(_("Setting embedded to 0\n"));
     embedded = 0;
   }
 
   switch(angle) {
-	
+
     case(0):
     case(90):
     case(180):
@@ -108,7 +108,7 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
   }
 
   filename = g_strdup(s_textbuffer_next_line(tb));
-  filename = remove_last_nl(filename);	
+  filename = remove_last_nl(filename);
 
   /* Handle empty filenames */
   if (strlen (filename) == 0) {
@@ -149,7 +149,7 @@ OBJECT *o_picture_read (TOPLEVEL *toplevel,
       embedded = 0;
     }
   }
-  
+
   /* create the picture */
   /* The picture is described by its upper left and lower right corner */
   new_obj = o_picture_new (toplevel, file_content, file_length, filename,
@@ -185,7 +185,7 @@ char *o_picture_save(TOPLEVEL *toplevel, OBJECT *object)
   const gchar *filename = NULL;
 
   /* calculate the width and height of the box */
-  width  = abs(object->picture->lower_x - object->picture->upper_x); 
+  width  = abs(object->picture->lower_x - object->picture->upper_x);
   height = abs(object->picture->upper_y - object->picture->lower_y);
 
   /* calculate the lower left corner of the box */
@@ -214,26 +214,26 @@ char *o_picture_save(TOPLEVEL *toplevel, OBJECT *object)
 
   if (o_picture_is_embedded (toplevel, object) &&
       encoded_picture != NULL) {
-    out = g_strdup_printf("%c %d %d %d %d %d %c %c\n%s\n%s\n%s", 
-			  object->type,
-			  x1, y1, width, height,
-			  object->picture->angle,
-			  /* Convert the (0,1) chars to ASCII */
-			  (object->picture->mirrored)+0x30, 
-			  '1', 
-			  filename,
-			  encoded_picture,
-			  ".");
+    out = g_strdup_printf("%c %d %d %d %d %d %c %c\n%s\n%s\n%s",
+                          object->type,
+                          x1, y1, width, height,
+                          object->picture->angle,
+                          /* Convert the (0,1) chars to ASCII */
+                          (object->picture->mirrored)+0x30,
+                          '1',
+                          filename,
+                          encoded_picture,
+                          ".");
   }
   else {
-    out = g_strdup_printf("%c %d %d %d %d %d %c %c\n%s", 
-			  object->type,
-			  x1, y1, width, height,
-			  object->picture->angle,
-			  /* Convert the (0,1) chars to ASCII */
-			  (object->picture->mirrored)+0x30, 
-			  '0', 
-			  filename);
+    out = g_strdup_printf("%c %d %d %d %d %d %c %c\n%s",
+                          object->type,
+                          x1, y1, width, height,
+                          object->picture->angle,
+                          /* Convert the (0,1) chars to ASCII */
+                          (object->picture->mirrored)+0x30,
+                          '0',
+                          filename);
   }
   g_free(encoded_picture);
 
@@ -369,7 +369,7 @@ gboolean o_picture_get_position (TOPLEVEL *toplevel, gint *x, gint *y,
   *y = min(object->picture->lower_y, object->picture->upper_y);
   return TRUE;
 }
-                 
+
 
 /*! \brief Get the width/height ratio of an image.
  * \par Function Description
@@ -427,7 +427,7 @@ o_picture_get_ratio (TOPLEVEL *toplevel, OBJECT *object)
  *  </DL>
  */
 void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object,
-		      int x, int y, int whichone)
+                      int x, int y, int whichone)
 {
   int tmp;
   double ratio = o_picture_get_ratio (toplevel, object);
@@ -440,55 +440,55 @@ void o_picture_modify(TOPLEVEL *toplevel, OBJECT *object,
       object->picture->upper_x = x;
       tmp = abs(object->picture->upper_x - object->picture->lower_x) / ratio;
       if (y < object->picture->lower_y) {
-	tmp = -tmp;
+        tmp = -tmp;
       }
       object->picture->upper_y = object->picture->lower_y + tmp;
       break;
-			
+
     case PICTURE_LOWER_LEFT:
       object->picture->upper_x = x;
       tmp = abs(object->picture->upper_x - object->picture->lower_x) / ratio;
       if (y > object->picture->upper_y) {
-	tmp = -tmp;
+        tmp = -tmp;
       }
       object->picture->lower_y = object->picture->upper_y - tmp;
       break;
-      
+
     case PICTURE_UPPER_RIGHT:
       object->picture->lower_x = x;
       tmp = abs(object->picture->upper_x - object->picture->lower_x) / ratio;
       if (y < object->picture->lower_y) {
-	tmp = -tmp;
+        tmp = -tmp;
       }
       object->picture->upper_y = object->picture->lower_y + tmp;
       break;
-      
+
     case PICTURE_LOWER_RIGHT:
       object->picture->lower_x = x;
       tmp = abs(object->picture->upper_x - object->picture->lower_x) / ratio;
       if (y > object->picture->upper_y) {
-	tmp = -tmp;
+        tmp = -tmp;
       }
       object->picture->lower_y = object->picture->upper_y - tmp;
       break;
-      
+
     default:
       return;
   }
-  
+
   /* need to update the upper left and lower right corners */
   if(object->picture->upper_x > object->picture->lower_x) {
     tmp                      = object->picture->upper_x;
     object->picture->upper_x = object->picture->lower_x;
     object->picture->lower_x = tmp;
   }
-  
+
   if(object->picture->upper_y < object->picture->lower_y) {
     tmp                      = object->picture->upper_y;
     object->picture->upper_y = object->picture->lower_y;
     object->picture->lower_y = tmp;
   }
-	
+
   /* recalculate the screen coords and the boundings */
   object->w_bounds_valid_for = NULL;
   o_emit_change_notify (toplevel, object);
@@ -526,7 +526,7 @@ o_picture_modify_all (TOPLEVEL *toplevel, OBJECT *object,
 }
 
 /*! \brief Rotate picture OBJECT using WORLD coordinates.
- *  \par Function Description 
+ *  \par Function Description
  *  This function rotates the picture described by <B>*object</B> around
  *  the (<B>world_centerx</B>, <B>world_centery</B>) point by <B>angle</B>
  *  degrees.
@@ -541,20 +541,20 @@ o_picture_modify_all (TOPLEVEL *toplevel, OBJECT *object,
  *  \param [in,out]  object         Picture OBJECT to rotate.
  */
 void o_picture_rotate_world(TOPLEVEL *toplevel,
-			    int world_centerx, int world_centery, int angle,
-			    OBJECT *object)
+                            int world_centerx, int world_centery, int angle,
+                            OBJECT *object)
 {
   int newx1, newy1;
   int newx2, newy2;
-  
+
   /* Only 90 degree multiple and positive angles are allowed. */
   /* angle must be positive */
   if(angle < 0) angle = -angle;
   /* angle must be a 90 multiple or no rotation performed */
   if((angle % 90) != 0) return;
-  
+
   object->picture->angle = ( object->picture->angle + angle ) % 360;
-	
+
   /* The center of rotation (<B>world_centerx</B>, <B>world_centery</B>) is
    * translated to the origin. The rotation of the upper left and lower
    * right corner are then performed. Finally, the rotated picture is
@@ -565,30 +565,30 @@ void o_picture_rotate_world(TOPLEVEL *toplevel,
   object->picture->upper_y -= world_centery;
   object->picture->lower_x -= world_centerx;
   object->picture->lower_y -= world_centery;
-  
+
   /* rotate the upper left corner of the picture */
   rotate_point_90(object->picture->upper_x, object->picture->upper_y, angle,
-		  &newx1, &newy1);
-  
+                  &newx1, &newy1);
+
   /* rotate the lower left corner of the picture */
   rotate_point_90(object->picture->lower_x, object->picture->lower_y, angle,
-		  &newx2, &newy2);
-  
+                  &newx2, &newy2);
+
   /* reorder the corners after rotation */
   object->picture->upper_x = min(newx1,newx2);
   object->picture->upper_y = max(newy1,newy2);
   object->picture->lower_x = max(newx1,newx2);
   object->picture->lower_y = min(newy1,newy2);
-  
+
   /* translate object back to normal position */
   object->picture->upper_x += world_centerx;
   object->picture->upper_y += world_centery;
   object->picture->lower_x += world_centerx;
   object->picture->lower_y += world_centery;
-  
+
   /* recalc boundings and screen coords */
   object->w_bounds_valid_for = NULL;
-	
+
 }
 
 /*! \brief Mirror a picture using WORLD coordinates.
@@ -605,8 +605,8 @@ void o_picture_rotate_world(TOPLEVEL *toplevel,
  *  \param [in,out] object         Picture OBJECT to mirror.
  */
 void o_picture_mirror_world(TOPLEVEL *toplevel,
-			    int world_centerx, int world_centery,
-			    OBJECT *object)
+                            int world_centerx, int world_centery,
+                            OBJECT *object)
 {
   int newx1, newy1;
   int newx2, newy2;
@@ -649,7 +649,7 @@ void o_picture_mirror_world(TOPLEVEL *toplevel,
 
   /* recalc boundings and screen coords */
   object->w_bounds_valid_for = NULL;
-  
+
 }
 
 /*! \brief Translate a picture position in WORLD coordinates by a delta.
@@ -663,14 +663,14 @@ void o_picture_mirror_world(TOPLEVEL *toplevel,
  *  \param [in,out] object     Picture OBJECT to translate.
  */
 void o_picture_translate_world(TOPLEVEL *toplevel,
-			       int dx, int dy, OBJECT *object)
+                               int dx, int dy, OBJECT *object)
 {
   /* Do world coords */
   object->picture->upper_x = object->picture->upper_x + dx;
   object->picture->upper_y = object->picture->upper_y + dy;
   object->picture->lower_x = object->picture->lower_x + dx;
   object->picture->lower_y = object->picture->lower_y + dy;
-  
+
   /* recalc the screen coords and the bounding picture */
   object->w_bounds_valid_for = NULL;
 }
