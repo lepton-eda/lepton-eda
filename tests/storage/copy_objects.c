@@ -67,7 +67,7 @@ int main()
 	assert(objects != NULL);
 	assert(count == 5);
 
-	for (i = 0; i < count; i++) {
+	for (i = 0; i < count; ++i) {
 		if (objects[i] == ob0 ||
 		    objects[i] == ob1a ||
 		    objects[i] == ob1b)

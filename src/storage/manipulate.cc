@@ -162,7 +162,7 @@ xorn_selection_t xorn_copy_objects(xorn_revision_t dest,
 			}
 		} catch (std::bad_alloc const &) {
 			for (xorn_selection::const_iterator i = rsel->begin();
-			     i != rsel->end(); i++)
+			     i != rsel->end(); ++i)
 				xorn_delete_object(dest, *i);
 			delete rsel;
 			return NULL;
