@@ -1003,9 +1003,9 @@ eda_renderer_draw_picture (EdaRenderer *renderer, OBJECT *object)
   double orig_width, orig_height;
   GdkPixbuf *pixbuf;
 
-  /* Get a pixbuf, or, failing that, a fallback image. */
+  /* Get a pixbuf. If image doesn't exist, libgeda should
+   * provide a fallback image. */
   pixbuf = g_object_ref (object->picture->pixbuf);
-  if (pixbuf == NULL) pixbuf = o_picture_get_fallback_pixbuf (NULL /* FIXME */);
 
   /* If no pixbuf was found, fall back to drawing an outline */
   if (pixbuf == NULL || EDA_RENDERER_CHECK_FLAG (renderer,

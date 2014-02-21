@@ -320,6 +320,8 @@ OBJECT *o_picture_new (TOPLEVEL *toplevel,
       s_log_message (_("Failed to load image from [%s]: %s\n"),
                      filename, error->message);
       g_error_free (error);
+      /* picture not found; try to open a fall back pixbuf */
+      picture->pixbuf = o_picture_get_fallback_pixbuf(toplevel);
     }
   }
 
