@@ -20,7 +20,7 @@ include_HEADERS = include/xornstorage.h
 
 ACLOCAL_AMFLAGS = -I m4
 
-EXTRA_DIST = pprint-chlog
+EXTRA_DIST = pprint-chlog doc/HACKING
 
 dist-hook:
 	if test -d $(srcdir)/.git; \
