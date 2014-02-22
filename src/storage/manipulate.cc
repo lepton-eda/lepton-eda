@@ -40,12 +40,7 @@ xorn_object_t xorn__add_object(xorn_revision_t rev,
 	if (!rev->is_transient)
 		return NULL;
 
-	xorn_object_t ob;
-	try {
-		ob = (xorn_object_t)++next_object_id;
-	} catch (std::bad_alloc const &) {
-		return NULL;
-	}
+	xorn_object_t ob = (xorn_object_t)++next_object_id;
 	try {
 		set_object_data(rev, ob, type, data);
 	} catch (std::bad_alloc const &) {
