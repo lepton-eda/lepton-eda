@@ -53,7 +53,6 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
-#include "../include/gettext.h"
 
 /*------------------------------------------------------------------*/
 /*! \brief GTK callback to quit the program.
@@ -220,6 +219,15 @@ void gattrib_main(void *closure, int argc, char *argv[])
  */
 int main(int argc, char *argv[])
 {
+
+#if ENABLE_NLS
+  setlocale(LC_ALL, "");
+  setlocale(LC_NUMERIC, "C");
+  bindtextdomain("geda-gattrib", LOCALEDIR);
+  textdomain("geda-gattrib");
+  bind_textdomain_codeset("geda-gattrib", "UTF-8");
+#endif
+
   /* Initialize the Guile Scheme interpreter. This function does not
    * return but calls exit(0) on completion.
    */

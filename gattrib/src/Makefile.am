@@ -40,6 +40,9 @@ gattrib_LDFLAGS = $(GLIB_LIBS) $(GTK_LIBS) $(GTHREAD_LIBS) \
 	$(GUILE_LIBS) $(MINGW_GUI_LDFLAGS)
 gattrib_LDADD = $(top_builddir)/libgeda/src/libgeda.la
 
+localedir = @datadir@/locale
+DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
+
 MOSTLYCLEANFILES = *.log *.ps core FILE *~ #*# 
 CLEANFILES = *.log *.ps core FILE *~ #*#
 DISTCLEANFILES = *.log core FILE *~ #*#
