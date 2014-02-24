@@ -212,7 +212,7 @@ void x_dialog_unsaved_data()
   gchar *str;
 
   tmp = _("Save the changes before closing?");
-  str = g_strconcat (_("<big><b>"), tmp, _("</b></big>"), NULL);
+  str = g_strconcat (N_("<big><b>"), tmp, N_("</b></big>"), NULL);
 
   tmp = _("If you don't save, all your changes will be permanently lost.");
   str = g_strconcat (str, "\n\n", tmp, NULL);
