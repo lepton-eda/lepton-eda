@@ -93,7 +93,7 @@ gint gattrib_quit(gint return_code)
 #ifdef DEBUG
   fflush(stderr);
   fflush(stdout);
-  printf(_("In gattrib_quit, calling gtk_main_quit()\n"));
+  printf("In gattrib_quit, calling gtk_main_quit()\n");
 #endif
   gtk_main_quit();
   exit(return_code);
