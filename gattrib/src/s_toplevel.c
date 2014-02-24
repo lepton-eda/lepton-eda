@@ -182,7 +182,7 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
   gint old_comp_attrib_count;
   gint new_index;
 
-  if (strcmp(new_attrib_name, _("_cancel")) == 0) {
+  if (strcmp(new_attrib_name, N_("_cancel")) == 0) {
     return;  /* user pressed cancel or closed window with no value in entry */
   }
 
