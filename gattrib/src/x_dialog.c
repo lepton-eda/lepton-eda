@@ -170,7 +170,7 @@ void x_dialog_delattrib()
 void x_dialog_missing_sym()
 {
   GtkWidget *dialog;
-  const char *string = _("One or more components have been found with missing symbol files!\n\nThis probably happened because gattrib couldn't find your component libraries, perhaps because your gafrc or gattribrc files are misconfigured.\n\nChose \"Quit\" to leave gattrib and fix the problem, or\n\"Forward\" to continue working with gattrib.\n");
+  const char *string = _("One or more components have been found with missing symbol files!\n\nThis probably happened because gattrib couldn't find your component libraries, perhaps because your gafrc or gattribrc files are misconfigured.\n\nChoose \"Quit\" to leave gattrib and fix the problem, or\n\"Forward\" to continue working with gattrib.\n");
 
   /* Create the dialog */
   dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
@@ -271,7 +271,7 @@ void x_dialog_unsaved_data()
 void x_dialog_unimplemented_feature()
 {
   GtkWidget *dialog;
-  const char *string = _("Sorry -- you have chosen a feature which has net been\nimplemented yet.\n\nGattrib is an open-source program which\nI work on as a hobby.  It is still a work in progress.\nIf you wish to contribute (perhaps by implementing this\nfeature), please do so!  Please send patches to gattrib\nto Stuart Brorson: sdb@cloud9.net.\n\nOtherwise, just hang tight -- I'll implement this feature soon!\n");
+  const char *string = _("Sorry -- you have chosen a feature which has nоt been\nimplemented yet.\n\nGattrib is an open-source program which\nI work on as a hobby.  It is still a work in progress.\nIf you wish to contribute (perhaps by implementing this\nfeature), please do so!  Please send patches to gattrib\nto Stuart Brorson: sdb@cloud9.net.\n\nOtherwise, just hang tight -- I'll implement this feature soon!\n");
 
   /* Create the dialog */
   dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
