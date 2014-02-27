@@ -68,7 +68,7 @@ bool xorn_object_exists_in_revision(
 	xorn_revision_t rev, xorn_object_t ob);
 xorn_obtype_t xorn_get_object_type(
 	xorn_revision_t rev, xorn_object_t ob);
-const void *xorn__get_object_data(
+const void *xorn_get_object_data(
 	xorn_revision_t rev, xorn_object_t ob, xorn_obtype_t type);
 
 void xorn_get_objects(
@@ -108,10 +108,10 @@ void xorn_free_selection(
 
 /* manipulation functions */
 
-xorn_object_t xorn__add_object(xorn_revision_t rev,
-			       xorn_obtype_t type, const void *data);
-int xorn__set_object_data(xorn_revision_t rev, xorn_object_t ob,
-			  xorn_obtype_t type, const void *data);
+xorn_object_t xorn_add_object(xorn_revision_t rev,
+			      xorn_obtype_t type, const void *data);
+int xorn_set_object_data(xorn_revision_t rev, xorn_object_t ob,
+			 xorn_obtype_t type, const void *data);
 void xorn_delete_object(xorn_revision_t rev, xorn_object_t ob);
 void xorn_delete_selected_objects(xorn_revision_t rev,
 				  xorn_selection_t sel);

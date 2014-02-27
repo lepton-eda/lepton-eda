@@ -34,8 +34,8 @@ static void set_object_data(xorn_revision_t rev, xorn_object_t ob,
 	}
 }
 
-xorn_object_t xorn__add_object(xorn_revision_t rev,
-			       xorn_obtype_t type, void const *data)
+xorn_object_t xorn_add_object(xorn_revision_t rev,
+			      xorn_obtype_t type, void const *data)
 {
 	if (!rev->is_transient)
 		return NULL;
@@ -49,8 +49,8 @@ xorn_object_t xorn__add_object(xorn_revision_t rev,
 	return ob;
 }
 
-int xorn__set_object_data(xorn_revision_t rev, xorn_object_t ob,
-			  xorn_obtype_t type, void const *data)
+int xorn_set_object_data(xorn_revision_t rev, xorn_object_t ob,
+			 xorn_obtype_t type, void const *data)
 {
 	if (!rev->is_transient)
 		return -1;

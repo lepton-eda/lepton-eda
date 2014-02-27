@@ -40,10 +40,10 @@ int main()
 	line_data.color = 3;
 	line_data.line.width = 1;
 
-	ob = xorn__add_object(rev1, xorn_obtype_none, &line_data);
+	ob = xorn_add_object(rev1, xorn_obtype_none, &line_data);
 	assert(ob == NULL);
 
-	ob = xorn__add_object(rev1, xornsch_obtype_line, &line_data);
+	ob = xorn_add_object(rev1, xornsch_obtype_line, &line_data);
 	assert(ob != NULL);
 
 	xorn_mtswach_revision(rev1);
@@ -51,10 +51,10 @@ int main()
 	rev2 = xorn_new_revision(rev1);
 	assert(rev2 != NULL);
 
-	assert(xorn__set_object_data(rev2, ob,
-				     xorn_obtype_none, &line_data) == -1);
-	assert(xorn__set_object_data(rev2, ob,
-				     xornsch_obtype_line, &line_data) == 0);
+	assert(xorn_set_object_data(rev2, ob,
+				    xorn_obtype_none, &line_data) == -1);
+	assert(xorn_set_object_data(rev2, ob,
+				    xornsch_obtype_line, &line_data) == 0);
 
 	xorn_mtswach_revision(rev2);
 

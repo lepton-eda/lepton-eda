@@ -21,15 +21,15 @@
 	const struct xornsch_##type *xornsch_get_##type##_data( \
 		xorn_revision_t rev, xorn_object_t ob) { \
 		return static_cast<const struct xornsch_##type *>( \
-		    xorn__get_object_data(rev, ob, xornsch_obtype_##type)); \
+		    xorn_get_object_data(rev, ob, xornsch_obtype_##type)); \
 	} \
 	xorn_object_t xornsch_add_##type(xorn_revision_t rev, \
 					 const struct xornsch_##type *data) { \
-		return xorn__add_object(rev, xornsch_obtype_##type, data); \
+		return xorn_add_object(rev, xornsch_obtype_##type, data); \
 	} \
 	int xornsch_set_##type##_data(xorn_revision_t rev, xorn_object_t ob, \
 				      const struct xornsch_##type *data) { \
-		return xorn__set_object_data( \
+		return xorn_set_object_data( \
 			rev, ob, xornsch_obtype_##type, data); \
 	}
 

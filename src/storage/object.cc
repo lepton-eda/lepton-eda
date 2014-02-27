@@ -36,8 +36,8 @@ xorn_obtype_t xorn_get_object_type(xorn_revision_t rev, xorn_object_t ob)
 	return (*i).second->type;
 }
 
-void const *xorn__get_object_data(xorn_revision_t rev, xorn_object_t ob,
-				  xorn_obtype_t type)
+void const *xorn_get_object_data(xorn_revision_t rev, xorn_object_t ob,
+				 xorn_obtype_t type)
 {
 	std::map<xorn_object_t, obstate *>::const_iterator i
 		= rev->obstates.find(ob);
