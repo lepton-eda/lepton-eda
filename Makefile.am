@@ -27,3 +27,8 @@ dist-hook:
 	then	chmod u+w $(distdir)/ChangeLog; \
 		( cd $(srcdir); ./pprint-chlog ) > $(distdir)/ChangeLog; \
 	fi
+
+doxygen:
+	cd $(srcdir)/doc/api && doxygen
+
+.PHONY: doxygen
