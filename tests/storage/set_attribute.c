@@ -249,7 +249,7 @@ int main()
 	assert_text(rev4, ob1b, false, "");
 	assert_text(rev4, text_ob, true, "dlrow olleH");
 
-	xorn_mtswach_revision(rev4);
+	xorn_finalize_revision(rev4);
 
 	rev5 = xorn_new_revision(rev2);
 	assert(rev5 != NULL);
@@ -313,7 +313,7 @@ int main()
 	assert_fill(rev5, ob1a, true, 20, 21., 22, 23., 24, 25.);
 	assert_fill(rev5, ob1b, true, 20, 21., 22, 23., 24, 25.1);
 
-	xorn_mtswach_revision(rev5);
+	xorn_finalize_revision(rev5);
 
 	xorn_free_selection(text_sel);
 	xorn_free_selection(sel3);

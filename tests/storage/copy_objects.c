@@ -53,7 +53,7 @@ int main()
 	sel1 = xorn_copy_objects(rev4, rev2, sel0);
 	assert(sel1 != NULL);
 
-	xorn_mtswach_revision(rev4);
+	xorn_finalize_revision(rev4);
 
 	assert(object_is_selected(rev4, sel0, ob0));
 	assert(!object_is_selected(rev4, sel0, ob1a));

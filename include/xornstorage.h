@@ -59,7 +59,7 @@ typedef struct xorn_selection *xorn_selection_t;
 
 xorn_revision_t xorn_new_revision(xorn_revision_t rev);
 bool xorn_revision_is_transient(xorn_revision_t rev);
-void xorn_mtswach_revision(xorn_revision_t rev);
+void xorn_finalize_revision(xorn_revision_t rev);
 void xorn_free_revision(xorn_revision_t rev);
 
 /* object functions */
