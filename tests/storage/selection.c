@@ -24,7 +24,7 @@ static void assert_selected_objects_0(
 	xorn_object_t *objects;
 	size_t count;
 
-	xorn_get_selected_objects(rev, sel, &objects, &count);
+	assert(xorn_get_selected_objects(rev, sel, &objects, &count) == 0);
 	assert(objects != NULL);
 	assert(count == 0);
 	free(objects);
@@ -38,7 +38,7 @@ static void assert_selected_objects_1(
 	xorn_object_t *objects;
 	size_t count;
 
-	xorn_get_selected_objects(rev, sel, &objects, &count);
+	assert(xorn_get_selected_objects(rev, sel, &objects, &count) == 0);
 	assert(objects != NULL);
 	assert(count == 1);
 	assert(objects[0] == ob);
@@ -54,7 +54,7 @@ static void assert_selected_objects_2(
 	xorn_object_t *objects;
 	size_t count;
 
-	xorn_get_selected_objects(rev, sel, &objects, &count);
+	assert(xorn_get_selected_objects(rev, sel, &objects, &count) == 0);
 	assert(objects != NULL);
 	assert(count == 2);
 	assert((objects[0] == ob0 && objects[1] == ob1) ||
@@ -71,7 +71,7 @@ static void assert_selected_objects_3(
 	xorn_object_t *objects;
 	size_t count;
 
-	xorn_get_selected_objects(rev, sel, &objects, &count);
+	assert(xorn_get_selected_objects(rev, sel, &objects, &count) == 0);
 	assert(objects != NULL);
 	assert(count == 3);
 	assert(

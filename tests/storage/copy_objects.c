@@ -63,7 +63,7 @@ int main()
 	assert(!object_is_selected(rev4, sel1, ob1a));
 	assert(!object_is_selected(rev4, sel1, ob1b));
 
-	xorn_get_objects(rev4, &objects, &count);
+	assert(xorn_get_objects(rev4, &objects, &count) == 0);
 	assert(objects != NULL);
 	assert(count == 5);
 

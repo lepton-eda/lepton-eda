@@ -28,18 +28,18 @@ int main()
 
 	setup(&rev0, &rev1, &rev2, &rev3, &ob0, &ob1a, &ob1b);
 
-	xorn_get_objects(rev0, &objects, &count);
+	assert(xorn_get_objects(rev0, &objects, &count) == 0);
 	assert(objects != NULL);
 	assert(count == 0);
 	free(objects);
 
-	xorn_get_objects(rev1, &objects, &count);
+	assert(xorn_get_objects(rev1, &objects, &count) == 0);
 	assert(objects != NULL);
 	assert(count == 1);
 	assert(objects[0] == ob0);
 	free(objects);
 
-	xorn_get_objects(rev2, &objects, &count);
+	assert(xorn_get_objects(rev2, &objects, &count) == 0);
 	assert(objects != NULL);
 	assert(count == 3);
 	assert(
@@ -51,7 +51,7 @@ int main()
 	    (objects[0] == ob1b && objects[1] == ob1a && objects[2] == ob0));
 	free(objects);
 
-	xorn_get_objects(rev3, &objects, &count);
+	assert(xorn_get_objects(rev3, &objects, &count) == 0);
 	assert(objects != NULL);
 	assert(count == 2);
 	assert((objects[0] == ob0 && objects[1] == ob1b) ||
