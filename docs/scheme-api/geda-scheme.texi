@@ -728,9 +728,9 @@ up to five fill parameters, depending on fill style:
 @item
 none for @code{hollow} or @code{solid} fills;
 @item
-line width, line angle (in degrees) and line spacing for @code{hatch} fills;
+line width, line spacing and line angle (in degrees) for @code{hatch} fills;
 @item
-line width, first angle and spacing, and second angle and spacing for
+line width, first spacing and angle, and second spacing and angle for
 @code{mesh} fills.
 @end enumerate
 @end enumerate
