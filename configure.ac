@@ -22,7 +22,7 @@ AC_INIT([xorn], [0.0], [bug-xorn@hedmen.org])
 AC_CONFIG_SRCDIR([include/xornstorage.h])
 AC_CONFIG_MACRO_DIR([m4])
 
-AM_INIT_AUTOMAKE([-Wall -Werror silent-rules])
+AM_INIT_AUTOMAKE([-Wall -Werror silent-rules subdir-objects])
 m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
 LT_INIT([])
 

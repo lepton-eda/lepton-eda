@@ -19,6 +19,8 @@
 #include <algorithm>
 
 
+/** \brief Create an empty selection.  */
+
 xorn_selection_t xorn_select_none()
 {
 	try {
@@ -27,6 +29,8 @@ xorn_selection_t xorn_select_none()
 		return NULL;
 	}
 }
+
+/** \brief Create a selection containing a single object.  */
 
 xorn_selection_t xorn_select_object(xorn_object_t ob)
 {
@@ -44,6 +48,8 @@ xorn_selection_t xorn_select_object(xorn_object_t ob)
 	}
 	return rsel;
 }
+
+/** \brief Create a selection containing all objects in a revision.  */
 
 xorn_selection_t xorn_select_all(xorn_revision_t rev)
 {
@@ -63,6 +69,9 @@ xorn_selection_t xorn_select_all(xorn_revision_t rev)
 	}
 	return rsel;
 }
+
+/** \brief Create a selection containing all objects in a revision
+ *         except those in a given selection.  */
 
 xorn_selection_t xorn_select_all_except(
 	xorn_revision_t rev, xorn_selection_t sel)
@@ -85,6 +94,9 @@ xorn_selection_t xorn_select_all_except(
 	return rsel;
 }
 
+/** \brief Create a selection containing the objects in either given
+ *         selection.  */
+
 xorn_selection_t xorn_select_union(
 	xorn_selection_t sel0, xorn_selection_t sel1)
 {
@@ -104,6 +116,9 @@ xorn_selection_t xorn_select_union(
 	}
 	return rsel;
 }
+
+/** \brief Create a selection containing the objects in both given
+ *         selections.  */
 
 xorn_selection_t xorn_select_intersection(
 	xorn_selection_t sel0, xorn_selection_t sel1)
@@ -125,6 +140,8 @@ xorn_selection_t xorn_select_intersection(
 	return rsel;
 }
 
+/** \brief Return whether a selection is empty in a given revision.  */
+
 bool xorn_selection_is_empty(xorn_revision_t rev, xorn_selection_t sel)
 {
 	std::map<xorn_object_t, obstate *>::const_iterator i
@@ -141,6 +158,10 @@ bool xorn_selection_is_empty(xorn_revision_t rev, xorn_selection_t sel)
 
 	return true;
 }
+
+/** \brief Free the memory used for storing a selection.
+ *
+ * \warning \a sel must not be passed to any Xorn function again.  */
 
 void xorn_free_selection(xorn_selection_t sel)
 {
