@@ -84,8 +84,7 @@ int xorn_get_selected_objects(
 
 	*count_return = ptr - *objects_return;
 	*objects_return = (xorn_object_t *) realloc(
-		*objects_return,
-		std::max(*count_return, (size_t) 1) * sizeof(xorn_object_t));
+		*objects_return, *count_return * sizeof(xorn_object_t));
 	return 0;
 }
 
@@ -107,8 +106,7 @@ int xorn_get_added_objects(
 
 	*count_return = ptr - *objects_return;
 	*objects_return = (xorn_object_t *) realloc(
-		*objects_return,
-		std::max(*count_return, (size_t) 1) * sizeof(xorn_object_t));
+		*objects_return, *count_return * sizeof(xorn_object_t));
 	return 0;
 }
 
@@ -130,8 +128,7 @@ int xorn_get_removed_objects(
 
 	*count_return = ptr - *objects_return;
 	*objects_return = (xorn_object_t *) realloc(
-		*objects_return,
-		std::max(*count_return, (size_t) 1) * sizeof(xorn_object_t));
+		*objects_return, *count_return * sizeof(xorn_object_t));
 	return 0;
 }
 
@@ -165,7 +162,6 @@ int xorn_get_modified_objects(
 		}
 
 	*objects_return = (xorn_object_t *) realloc(
-		*objects_return,
-		std::max(*count_return, (size_t) 1) * sizeof(xorn_object_t));
+		*objects_return, *count_return * sizeof(xorn_object_t));
 	return 0;
 }

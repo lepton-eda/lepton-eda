@@ -34,11 +34,9 @@ int main()
 	assert(objects[0] == ob0);
 	free(objects);
 	assert(xorn_get_removed_objects(rev0, rev1, &objects, &count) == 0);
-	assert(objects != NULL);
 	assert(count == 0);
 	free(objects);
 	assert(xorn_get_modified_objects(rev0, rev1, &objects, &count) == 0);
-	assert(objects != NULL);
 	assert(count == 0);
 	free(objects);
 
@@ -49,16 +47,13 @@ int main()
 	       (objects[0] == ob1b && objects[1] == ob1a));
 	free(objects);
 	assert(xorn_get_removed_objects(rev1, rev2, &objects, &count) == 0);
-	assert(objects != NULL);
 	assert(count == 0);
 	free(objects);
 	assert(xorn_get_modified_objects(rev1, rev2, &objects, &count) == 0);
-	assert(objects != NULL);
 	assert(count == 0);
 	free(objects);
 
 	assert(xorn_get_added_objects(rev2, rev3, &objects, &count) == 0);
-	assert(objects != NULL);
 	assert(count == 0);
 	free(objects);
 	assert(xorn_get_removed_objects(rev2, rev3, &objects, &count) == 0);
