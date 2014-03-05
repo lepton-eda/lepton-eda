@@ -57,7 +57,7 @@ int xorn_get_objects(
 	*objects_return = (xorn_object_t *) malloc(
 		rev->obstates.size() * sizeof(xorn_object_t));
 	*count_return = 0;
-	if (*objects_return == NULL)
+	if (*objects_return == NULL && !rev->obstates.empty())
 		return -1;
 
 	for (std::map<xorn_object_t, obstate *>::const_iterator i
@@ -74,7 +74,7 @@ int xorn_get_selected_objects(
 		std::min(rev->obstates.size(),
 			 sel->size()) * sizeof(xorn_object_t));
 	*count_return = 0;
-	if (*objects_return == NULL)
+	if (*objects_return == NULL && !rev->obstates.empty() && !sel->empty())
 		return -1;
 
 	xorn_object_t *ptr = set_intersection(
@@ -95,7 +95,7 @@ int xorn_get_added_objects(
 	*objects_return = (xorn_object_t *) malloc(
 		to_rev->obstates.size() * sizeof(xorn_object_t));
 	*count_return = 0;
-	if (*objects_return == NULL)
+	if (*objects_return == NULL && !to_rev->obstates.empty())
 		return -1;
 
 	xorn_object_t *ptr = set_difference(
@@ -117,7 +117,7 @@ int xorn_get_removed_objects(
 	*objects_return = (xorn_object_t *) malloc(
 		from_rev->obstates.size() * sizeof(xorn_object_t));
 	*count_return = 0;
-	if (*objects_return == NULL)
+	if (*objects_return == NULL && !from_rev->obstates.empty())
 		return -1;
 
 	xorn_object_t *ptr = set_difference(
@@ -140,7 +140,8 @@ int xorn_get_modified_objects(
 		std::min(from_rev->obstates.size(),
 			 to_rev->obstates.size()) * sizeof(xorn_object_t));
 	*count_return = 0;
-	if (*objects_return == NULL)
+	if (*objects_return == NULL && !from_rev->obstates.empty()
+				    && !to_rev->obstates.empty())
 		return -1;
 
 	std::map<xorn_object_t, obstate *>::const_iterator i
