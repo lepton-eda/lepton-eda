@@ -432,16 +432,6 @@ void i_update_menus(GschemToplevel *w_current)
     x_menus_sensitivity(w_current, "_Edit/Embed Component/Picture", TRUE);
     x_menus_sensitivity(w_current, "_Edit/Unembed Component/Picture", TRUE);
     x_menus_sensitivity(w_current, "_Edit/Update Component", TRUE);
-    x_menus_sensitivity(w_current, "_Buffer/Copy into 1", TRUE);
-    x_menus_sensitivity(w_current, "_Buffer/Copy into 2", TRUE);
-    x_menus_sensitivity(w_current, "_Buffer/Copy into 3", TRUE);
-    x_menus_sensitivity(w_current, "_Buffer/Copy into 4", TRUE);
-    x_menus_sensitivity(w_current, "_Buffer/Copy into 5", TRUE);
-    x_menus_sensitivity(w_current, "_Buffer/Cut into 1", TRUE);
-    x_menus_sensitivity(w_current, "_Buffer/Cut into 2", TRUE);
-    x_menus_sensitivity(w_current, "_Buffer/Cut into 3", TRUE);
-    x_menus_sensitivity(w_current, "_Buffer/Cut into 4", TRUE);
-    x_menus_sensitivity(w_current, "_Buffer/Cut into 5", TRUE);
     x_menus_sensitivity(w_current, "Hie_rarchy/_Down Schematic", TRUE);
     x_menus_sensitivity(w_current, "Hie_rarchy/Down _Symbol", TRUE);
     x_menus_sensitivity(w_current, "Hie_rarchy/D_ocumentation...", TRUE);
@@ -479,16 +469,6 @@ void i_update_menus(GschemToplevel *w_current)
     x_menus_sensitivity(w_current, "_Edit/Embed Component/Picture", FALSE);
     x_menus_sensitivity(w_current, "_Edit/Unembed Component/Picture", FALSE);
     x_menus_sensitivity(w_current, "_Edit/Update Component", FALSE);
-    x_menus_sensitivity(w_current, "_Buffer/Copy into 1", FALSE);
-    x_menus_sensitivity(w_current, "_Buffer/Copy into 2", FALSE);
-    x_menus_sensitivity(w_current, "_Buffer/Copy into 3", FALSE);
-    x_menus_sensitivity(w_current, "_Buffer/Copy into 4", FALSE);
-    x_menus_sensitivity(w_current, "_Buffer/Copy into 5", FALSE);
-    x_menus_sensitivity(w_current, "_Buffer/Cut into 1", FALSE);
-    x_menus_sensitivity(w_current, "_Buffer/Cut into 2", FALSE);
-    x_menus_sensitivity(w_current, "_Buffer/Cut into 3", FALSE);
-    x_menus_sensitivity(w_current, "_Buffer/Cut into 4", FALSE);
-    x_menus_sensitivity(w_current, "_Buffer/Cut into 5", FALSE);
     x_menus_sensitivity(w_current, "Hie_rarchy/_Down Schematic", FALSE);
     x_menus_sensitivity(w_current, "Hie_rarchy/Down _Symbol", FALSE);
     x_menus_sensitivity(w_current, "Hie_rarchy/D_ocumentation...", FALSE);
@@ -505,11 +485,6 @@ void i_update_menus(GschemToplevel *w_current)
     /* x_menus_popup_sensitivity(w_current, "/Up", FALSE);	*/
   }
 
-  x_menus_sensitivity(w_current, "_Buffer/Paste from 1", (object_buffer[0] != NULL));
-  x_menus_sensitivity(w_current, "_Buffer/Paste from 2", (object_buffer[1] != NULL));
-  x_menus_sensitivity(w_current, "_Buffer/Paste from 3", (object_buffer[2] != NULL));
-  x_menus_sensitivity(w_current, "_Buffer/Paste from 4", (object_buffer[3] != NULL));
-  x_menus_sensitivity(w_current, "_Buffer/Paste from 5", (object_buffer[4] != NULL));
 
 }
 
