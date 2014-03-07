@@ -96,6 +96,10 @@ xorn_selection_t xorn_select_all(
 	xorn_revision_t rev);
 xorn_selection_t xorn_select_all_except(
 	xorn_revision_t rev, xorn_selection_t sel);
+xorn_selection_t xorn_select_including(
+	xorn_selection_t sel, xorn_object_t ob);
+xorn_selection_t xorn_select_excluding(
+	xorn_selection_t sel, xorn_object_t ob);
 xorn_selection_t xorn_select_union(
 	xorn_selection_t sel0, xorn_selection_t sel1);
 xorn_selection_t xorn_select_intersection(

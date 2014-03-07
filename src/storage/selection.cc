@@ -94,6 +94,48 @@ xorn_selection_t xorn_select_all_except(
 	return rsel;
 }
 
+/** \brief Create a selection which contains all the objects in an
+ *         existing selection plus a given object.  */
+
+xorn_selection_t xorn_select_including(xorn_selection_t sel, xorn_object_t ob)
+{
+	xorn_selection_t rsel;
+	try {
+		rsel = new xorn_selection(*sel);
+	} catch (std::bad_alloc const &) {
+		return NULL;
+	}
+	try {
+		rsel->insert(ob);
+	} catch (std::bad_alloc const &) {
+		delete rsel;
+		return NULL;
+	}
+	return rsel;
+}
+
+/** \brief Create a selection which contains all the objects in an
+ *         existing selection minus a given object.  */
+
+xorn_selection_t xorn_select_excluding(xorn_selection_t sel, xorn_object_t ob)
+{
+	xorn_selection_t rsel;
+	try {
+		rsel = new xorn_selection(*sel);
+	} catch (std::bad_alloc const &) {
+		return NULL;
+	}
+	try {
+		xorn_selection::const_iterator i = rsel->find(ob);
+		if (i != rsel->end())
+			rsel->erase(i);
+	} catch (std::bad_alloc const &) {
+		delete rsel;
+		return NULL;
+	}
+	return rsel;
+}
+
 /** \brief Create a selection containing the objects in either given
  *         selection.  */
 
