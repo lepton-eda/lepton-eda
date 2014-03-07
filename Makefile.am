@@ -27,7 +27,11 @@ EXTRA_DIST = \
 	doc/storage.md \
 	doc/api/Doxyfile \
 	doc/api/storage.dox \
-	doc/api/using-storage.md
+	doc/api/using-storage.md \
+	doc/geda/coordinatespace.jpg \
+	doc/geda/file_format_spec \
+	doc/geda/fileformat_textgraphic.jpg \
+	doc/geda/path_example_and_gate-smaller.png
 
 dist-hook:
 	if test -d $(srcdir)/.git; \
