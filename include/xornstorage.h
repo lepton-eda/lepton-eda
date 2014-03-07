@@ -103,6 +103,8 @@ xorn_selection_t xorn_select_intersection(
 
 bool xorn_selection_is_empty(
 	xorn_revision_t rev, xorn_selection_t sel);
+bool xorn_object_is_selected(
+	xorn_revision_t rev, xorn_selection_t sel, xorn_object_t ob);
 void xorn_free_selection(
 	xorn_selection_t sel);
 

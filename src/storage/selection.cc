@@ -159,6 +159,16 @@ bool xorn_selection_is_empty(xorn_revision_t rev, xorn_selection_t sel)
 	return true;
 }
 
+/** \brief Return whether an object exists in a revision and is
+ *         selected in a selection.  */
+
+bool xorn_object_is_selected(
+	xorn_revision_t rev, xorn_selection_t sel, xorn_object_t ob)
+{
+	return rev->obstates.find(ob) != rev->obstates.end() &&
+	       sel->find(ob) != sel->end();
+}
+
 /** \brief Free the memory used for storing a selection.
  *
  * \warning \a sel must not be passed to any Xorn function again.  */

@@ -30,6 +30,7 @@ TESTS = snippets/example \
 	get_objects \
 	get_obtype \
 	invalid_obtype \
+	is_selected \
 	multiple_assignments \
 	null \
 	select_by_attribute \
