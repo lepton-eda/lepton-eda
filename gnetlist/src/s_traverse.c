@@ -152,7 +152,6 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
   char *temp;
   SCM scm_uref;
   char *temp_uref;
-  gboolean is_graphical=FALSE;
   gboolean is_hierarchy = TRUE;
   const GList *iter;
   GError *err = NULL;
@@ -179,6 +178,7 @@ s_traverse_sheet (TOPLEVEL * pr_current, const GList *obj_list, char *hierarchy_
     }
 
     if (o_current->type == OBJ_COMPLEX) {
+      gboolean is_graphical = FALSE;
 
 #if DEBUG
       printf("starting NEW component\n\n");
