@@ -100,6 +100,8 @@ xorn_selection_t xorn_select_union(
 	xorn_selection_t sel0, xorn_selection_t sel1);
 xorn_selection_t xorn_select_intersection(
 	xorn_selection_t sel0, xorn_selection_t sel1);
+xorn_selection_t xorn_select_difference(
+	xorn_selection_t sel0, xorn_selection_t sel1);
 
 bool xorn_selection_is_empty(
 	xorn_revision_t rev, xorn_selection_t sel);

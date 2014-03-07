@@ -140,6 +140,29 @@ xorn_selection_t xorn_select_intersection(
 	return rsel;
 }
 
+/** \brief Create a selection containing the objects contained in one
+ *         given selection, but not the other.  */
+
+xorn_selection_t xorn_select_difference(
+	xorn_selection_t sel0, xorn_selection_t sel1)
+{
+	xorn_selection_t rsel;
+	try {
+		rsel = new xorn_selection();
+	} catch (std::bad_alloc const &) {
+		return NULL;
+	}
+	try {
+		set_difference(sel0->begin(), sel0->end(),
+			       sel1->begin(), sel1->end(),
+			       inserter(*rsel, rsel->begin()));
+	} catch (std::bad_alloc const &) {
+		delete rsel;
+		return NULL;
+	}
+	return rsel;
+}
+
 /** \brief Return whether a selection is empty in a given revision.  */
 
 bool xorn_selection_is_empty(xorn_revision_t rev, xorn_selection_t sel)

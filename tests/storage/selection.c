@@ -415,6 +415,78 @@ int main()
 	    xorn_free_selection(sel2);
 	xorn_free_selection(sel1);
 
+	/* select difference */
+
+	sel1 = xorn_select_all(rev1);
+	assert(sel1 != NULL);
+	    sel2 = xorn_select_none();
+	    assert(sel2 != NULL);
+	    sel = xorn_select_difference(sel1, sel2);
+	    assert(sel != NULL);
+	    assert_selected_objects_1(rev2, sel, ob0);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
+
+	    sel2 = xorn_select_object(ob1a);
+	    assert(sel2 != NULL);
+	    sel = xorn_select_difference(sel1, sel2);
+	    assert(sel != NULL);
+	    assert_selected_objects_1(rev2, sel, ob0);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
+
+	    sel2 = xorn_select_all(rev2);
+	    assert(sel2 != NULL);
+	    sel = xorn_select_difference(sel1, sel2);
+	    assert(sel != NULL);
+	    assert_selected_objects_0(rev2, sel);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
+
+	    sel2 = xorn_select_all(rev3);
+	    assert(sel2 != NULL);
+	    sel = xorn_select_difference(sel1, sel2);
+	    assert(sel != NULL);
+	    assert_selected_objects_0(rev2, sel);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
+	sel2 = xorn_select_all_except(rev2, sel1);
+	assert(sel2 != NULL);
+	xorn_free_selection(sel1);
+	sel1 = sel2;
+	    sel2 = xorn_select_none();
+	    assert(sel2 != NULL);
+	    sel = xorn_select_difference(sel1, sel2);
+	    assert(sel != NULL);
+	    assert_selected_objects_2(rev2, sel, ob1a, ob1b);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
+
+	    sel2 = xorn_select_object(ob1a);
+	    assert(sel2 != NULL);
+	    sel = xorn_select_difference(sel1, sel2);
+	    assert(sel != NULL);
+	    assert_selected_objects_1(rev2, sel, ob1b);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
+
+	    sel2 = xorn_select_all(rev2);
+	    assert(sel2 != NULL);
+	    sel = xorn_select_difference(sel1, sel2);
+	    assert(sel != NULL);
+	    assert_selected_objects_0(rev2, sel);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
+
+	    sel2 = xorn_select_all(rev3);
+	    assert(sel2 != NULL);
+	    sel = xorn_select_difference(sel1, sel2);
+	    assert(sel != NULL);
+	    assert_selected_objects_1(rev2, sel, ob1a);
+	    xorn_free_selection(sel);
+	    xorn_free_selection(sel2);
+	xorn_free_selection(sel1);
+
 	xorn_free_revision(rev3);
 	xorn_free_revision(rev2);
 	xorn_free_revision(rev1);
