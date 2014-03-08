@@ -12,7 +12,11 @@
 <body>
 
 
-<h1 class="sectionedit546"><a name="geda_gaf_symbol_creation" id="geda_gaf_symbol_creation">gEDA/gaf Symbol Creation</a></h1>
+<p>
+<em>Translations of this guide are also available in the following languages:</em> <a href="geda-gschem_symbol_creation.ru.html" class="wikilink1" title="geda-gschem_symbol_creation.ru.html">Русский</a>
+</p>
+
+<h1 class="sectionedit547"><a name="geda_gaf_symbol_creation" id="geda_gaf_symbol_creation">gEDA/gaf Symbol Creation</a></h1>
 <div class="level1">
 
 <p>
@@ -23,8 +27,8 @@ This document is released under the <a href="geda-gfdl.html" class="wikilink1" t
 </p>
 
 </div>
-<!-- EDIT546 SECTION "gEDA/gaf Symbol Creation" [1-248] -->
-<h2 class="sectionedit547"><a name="overview" id="overview">Overview</a></h2>
+<!-- EDIT547 SECTION "gEDA/gaf Symbol Creation" [125-372] -->
+<h2 class="sectionedit548"><a name="overview" id="overview">Overview</a></h2>
 <div class="level2">
 
 <p>
@@ -32,8 +36,8 @@ This document describes the creation of component symbols, including style conve
 </p>
 
 </div>
-<!-- EDIT547 SECTION "Overview" [249-447] -->
-<h2 class="sectionedit548"><a name="component_symbol_creation" id="component_symbol_creation">Component Symbol Creation</a></h2>
+<!-- EDIT548 SECTION "Overview" [373-571] -->
+<h2 class="sectionedit549"><a name="component_symbol_creation" id="component_symbol_creation">Component Symbol Creation</a></h2>
 <div class="level2">
 
 <p>
@@ -41,8 +45,8 @@ Component symbols (from here on known as “symbols”) are drawn using gschem. 
 </p>
 
 </div>
-<!-- EDIT548 SECTION "Component Symbol Creation" [448-671] -->
-<h3 class="sectionedit549"><a name="preparing" id="preparing">Preparing</a></h3>
+<!-- EDIT549 SECTION "Component Symbol Creation" [572-795] -->
+<h3 class="sectionedit550"><a name="preparing" id="preparing">Preparing</a></h3>
 <div class="level3">
 
 <p>
@@ -80,8 +84,8 @@ To start building your symbol:
 </ol>
 
 </div>
-<!-- EDIT549 SECTION "Preparing" [672-1940] -->
-<h3 class="sectionedit550"><a name="drawing_your_symbol" id="drawing_your_symbol">Drawing your Symbol</a></h3>
+<!-- EDIT550 SECTION "Preparing" [796-2064] -->
+<h3 class="sectionedit551"><a name="drawing_your_symbol" id="drawing_your_symbol">Drawing your Symbol</a></h3>
 <div class="level3">
 
 <p>
@@ -93,8 +97,8 @@ To check what colour you are using to draw, go to <strong>Edit</strong>→<stron
 </p>
 
 </div>
-<!-- EDIT550 SECTION "Drawing your Symbol" [1941-2332] -->
-<h3 class="sectionedit551"><a name="placing_pins_on_your_symbol" id="placing_pins_on_your_symbol">Placing Pins on your Symbol</a></h3>
+<!-- EDIT551 SECTION "Drawing your Symbol" [2065-2456] -->
+<h3 class="sectionedit552"><a name="placing_pins_on_your_symbol" id="placing_pins_on_your_symbol">Placing Pins on your Symbol</a></h3>
 <div class="level3">
 
 <p>
@@ -139,8 +143,8 @@ Attribute Document</a> for more info.
 </p>
 
 </div>
-<!-- EDIT551 SECTION "Placing Pins on your Symbol" [2333-4892] -->
-<h3 class="sectionedit552"><a name="adding_attributes_to_your_symbol" id="adding_attributes_to_your_symbol">Adding Attributes to your Symbol</a></h3>
+<!-- EDIT552 SECTION "Placing Pins on your Symbol" [2457-5016] -->
+<h3 class="sectionedit553"><a name="adding_attributes_to_your_symbol" id="adding_attributes_to_your_symbol">Adding Attributes to your Symbol</a></h3>
 <div class="level3">
 
 <p>
@@ -170,8 +174,8 @@ Now that those have been added, make the <code>numslots</code>, <code>footprint<
 </p>
 
 </div>
-<!-- EDIT552 SECTION "Adding Attributes to your Symbol" [4893-7071] -->
-<h3 class="sectionedit553"><a name="finishing" id="finishing">Finishing</a></h3>
+<!-- EDIT553 SECTION "Adding Attributes to your Symbol" [5017-7195] -->
+<h3 class="sectionedit554"><a name="finishing" id="finishing">Finishing</a></h3>
 <div class="level3">
 <ol>
 <li class="level1"><div class="li"> Add a label to your symbol by selecting <strong>Add</strong>→<strong>Text…</strong> or pressing <kbd>A</kbd> <kbd>T</kbd>. Type out your label, and move it to the top of your symbol.</div>
@@ -182,7 +186,7 @@ Now that those have been added, make the <code>numslots</code>, <code>footprint<
 </li>
 <li class="level1"><div class="li"> Save the symbol using <strong>File</strong>→<strong>Save</strong> or <strong>File</strong>→<strong>Save As…</strong></div>
 </li>
-<li class="level1"><div class="li"> Place the symbol in one of the directories specified by the <code>component-library</code> keyword in the system-gafrc file. Once this is done, the symbol should be visible immediately and can be selected and placed with the <strong>Add</strong>→<strong>Select Component…</strong> menu item. On Debian, placing files in /usr/share/gEDA/sym/local/ works, but require permissions setup.</div>
+<li class="level1"><div class="li"> Place the symbol in one of the directories specified as a symbol library in a suite configuration file  (one of the “gafrc” files).  For an explanation of how to set up symbol libraries, see the <a href="geda-gschem_ug-config.html" class="wikilink1" title="geda-gschem_ug-config.html">gEDA gschem User Guide</a>. Once this is done, the symbol should be visible immediately and can be selected and placed with the <strong>Add</strong>→<strong>Select Component…</strong> menu item. On Debian, placing files in /usr/share/gEDA/sym/local/ works, but requires permissions setup.</div>
 </li>
 </ol>
 
@@ -196,8 +200,8 @@ Translating the symbol to the origin is a required step. To translate a symbol e
 </p>
 
 </div>
-<!-- EDIT553 SECTION "Finishing" [7072-8072] -->
-<h2 class="sectionedit554"><a name="common_symbol_naming_conventions" id="common_symbol_naming_conventions">Common Symbol Naming Conventions</a></h2>
+<!-- EDIT554 SECTION "Finishing" [7196-8328] -->
+<h2 class="sectionedit555"><a name="common_symbol_naming_conventions" id="common_symbol_naming_conventions">Common Symbol Naming Conventions</a></h2>
 <div class="level2">
 <ol>
 <li class="level1"><div class="li"> Symbols are named: <code>symbolname-#.sym</code></div>
@@ -213,8 +217,8 @@ Translating the symbol to the origin is a required step. To translate a symbol e
 </ol>
 
 </div>
-<!-- EDIT554 SECTION "Common Symbol Naming Conventions" [8073-8540] -->
-<h2 class="sectionedit555"><a name="symbol_requirements" id="symbol_requirements">Symbol Requirements</a></h2>
+<!-- EDIT555 SECTION "Common Symbol Naming Conventions" [8329-8796] -->
+<h2 class="sectionedit556"><a name="symbol_requirements" id="symbol_requirements">Symbol Requirements</a></h2>
 <div class="level2">
 
 <p>
@@ -222,8 +226,8 @@ This section describes the various requirements which must be met in order to cr
 </p>
 
 </div>
-<!-- EDIT555 SECTION "Symbol Requirements" [8541-8728] -->
-<h3 class="sectionedit556"><a name="pins" id="pins">Pins</a></h3>
+<!-- EDIT556 SECTION "Symbol Requirements" [8797-8984] -->
+<h3 class="sectionedit557"><a name="pins" id="pins">Pins</a></h3>
 <div class="level3">
 <ol>
 <li class="level1"><div class="li"> All pins should have a <code>pinseq</code> attribute. This number dictates the order pins are looked at on this symbol in spice, gnetlist, and other tools. This is just a sequence number, and should increment sequentially starting at 1.</div>
@@ -237,8 +241,8 @@ This section describes the various requirements which must be met in order to cr
 </ol>
 
 </div>
-<!-- EDIT556 SECTION "Pins" [8729-9711] -->
-<h3 class="sectionedit557"><a name="attributes" id="attributes">Attributes</a></h3>
+<!-- EDIT557 SECTION "Pins" [8985-9967] -->
+<h3 class="sectionedit558"><a name="attributes" id="attributes">Attributes</a></h3>
 <div class="level3">
 
 <p>
@@ -276,8 +280,8 @@ Attribute Document</a>.
 </ol>
 
 </div>
-<!-- EDIT557 SECTION "Attributes" [9712-12627] -->
-<h2 class="sectionedit558"><a name="checking_a_symbol" id="checking_a_symbol">Checking a Symbol</a></h2>
+<!-- EDIT558 SECTION "Attributes" [9968-12883] -->
+<h2 class="sectionedit559"><a name="checking_a_symbol" id="checking_a_symbol">Checking a Symbol</a></h2>
 <div class="level2">
 
 <p>
@@ -285,8 +289,8 @@ Running gsymcheck will check that all of these requirements are met. gsymcheck w
 </p>
 
 </div>
-<!-- EDIT558 SECTION "Checking a Symbol" [12628-12897] -->
-<h2 class="sectionedit559"><a name="style" id="style">Style</a></h2>
+<!-- EDIT559 SECTION "Checking a Symbol" [12884-13153] -->
+<h2 class="sectionedit560"><a name="style" id="style">Style</a></h2>
 <div class="level2">
 
 <p>
@@ -294,8 +298,8 @@ This section describes the style which is used in the standard gEDA/gaf symbol l
 </p>
 
 </div>
-<!-- EDIT559 SECTION "Style" [12898-13005] -->
-<h3 class="sectionedit560"><a name="text" id="text">Text</a></h3>
+<!-- EDIT560 SECTION "Style" [13154-13261] -->
+<h3 class="sectionedit561"><a name="text" id="text">Text</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> All text labels should all be 10 pt in size.</div>
@@ -307,8 +311,8 @@ This section describes the style which is used in the standard gEDA/gaf symbol l
 </ul>
 
 </div>
-<!-- EDIT560 SECTION "Text" [13006-13245] -->
-<h3 class="sectionedit561"><a name="attributes1" id="attributes1">Attributes</a></h3>
+<!-- EDIT561 SECTION "Text" [13262-13501] -->
+<h3 class="sectionedit562"><a name="attributes1" id="attributes1">Attributes</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> <code>pinnumber</code> attributes should be displayed as pin numbers for pins (not <code>pinseq</code>) and should be 8 pt in size.</div>
@@ -326,8 +330,8 @@ This section describes the style which is used in the standard gEDA/gaf symbol l
 </ul>
 
 </div>
-<!-- EDIT561 SECTION "Attributes" [13246-14494] -->
-<h3 class="sectionedit562"><a name="graphics" id="graphics">Graphics</a></h3>
+<!-- EDIT562 SECTION "Attributes" [13502-14750] -->
+<h3 class="sectionedit563"><a name="graphics" id="graphics">Graphics</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Lines, boxes, arcs, and any other graphics should be color number 3 (graphic | green).</div>
@@ -339,8 +343,8 @@ This section describes the style which is used in the standard gEDA/gaf symbol l
 </ul>
 
 </div>
-<!-- EDIT562 SECTION "Graphics" [14495-14846] -->
-<h3 class="sectionedit563"><a name="pins1" id="pins1">Pins</a></h3>
+<!-- EDIT563 SECTION "Graphics" [14751-15102] -->
+<h3 class="sectionedit564"><a name="pins1" id="pins1">Pins</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Pins should all be 300 mils (3 grid spaces) long.</div>
@@ -370,8 +374,8 @@ This section describes the style which is used in the standard gEDA/gaf symbol l
 </ul>
 
 </div>
-<!-- EDIT563 SECTION "Pins" [14847-16828] -->
-<h3 class="sectionedit564"><a name="electrical" id="electrical">Electrical</a></h3>
+<!-- EDIT564 SECTION "Pins" [15103-17084] -->
+<h3 class="sectionedit565"><a name="electrical" id="electrical">Electrical</a></h3>
 <div class="level3">
 <ul>
 <li class="level1"><div class="li"> Do not draw power and ground pins. That information will be conveyed using attributes (see the <a href="geda-na_howto.html" class="wikilink1" title="geda-na_howto.html">net= attribute mini-HOWTO</a>).</div>
@@ -385,8 +389,8 @@ This section describes the style which is used in the standard gEDA/gaf symbol l
 </ul>
 
 </div>
-<!-- EDIT564 SECTION "Electrical" [16829-17471] -->
-<h2 class="sectionedit565"><a name="hints_and_tips" id="hints_and_tips">Hints and Tips</a></h2>
+<!-- EDIT565 SECTION "Electrical" [17085-17727] -->
+<h2 class="sectionedit566"><a name="hints_and_tips" id="hints_and_tips">Hints and Tips</a></h2>
 <div class="level2">
 
 <p>
@@ -411,8 +415,8 @@ experience easier.
 </ul>
 
 </div>
-<!-- EDIT565 SECTION "Hints and Tips" [17472-18743] -->
-<h2 class="sectionedit566"><a name="example" id="example">Example</a></h2>
+<!-- EDIT566 SECTION "Hints and Tips" [17728-18999] -->
+<h2 class="sectionedit567"><a name="example" id="example">Example</a></h2>
 <div class="level2">
 
 <p>
@@ -506,5 +510,5 @@ This is the same symbol with all the hidden text visible (via <strong>Edit</stro
 </p>
 
 </div>
-<!-- EDIT566 SECTION "Example" [18744-] --></body>
+<!-- EDIT567 SECTION "Example" [19000-] --></body>
 </html>

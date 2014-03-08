@@ -12,12 +12,12 @@
 <body>
 
 
-<h1 class="sectionedit567"><a name="geda_s_release_engineering" id="geda_s_release_engineering">gEDA&#039;s Release Engineering</a></h1>
+<h1 class="sectionedit568"><a name="geda_s_release_engineering" id="geda_s_release_engineering">gEDA&#039;s Release Engineering</a></h1>
 <div class="level1">
 
 </div>
-<!-- EDIT567 SECTION "gEDA's Release Engineering" [1-49] -->
-<h2 class="sectionedit568"><a name="geda_gaf_release_creation_checklist" id="geda_gaf_release_creation_checklist">gEDA/gaf Release Creation Checklist</a></h2>
+<!-- EDIT568 SECTION "gEDA's Release Engineering" [1-49] -->
+<h2 class="sectionedit569"><a name="geda_gaf_release_creation_checklist" id="geda_gaf_release_creation_checklist">gEDA/gaf Release Creation Checklist</a></h2>
 <div class="level2">
 
 <p>
@@ -92,10 +92,10 @@ Here is a list of steps that are taken every time when creating a new gEDA/gaf r
 <ul>
 <li class="level1"><div class="li"> Commit all of the above changes (preferably in between each step)</div>
 </li>
-<li class="level1"><div class="li"> To build the distribution tarball (and verify all tests on the contained files) run:  </div>
+<li class="level1"><div class="li"> To build the distribution tarball (and verify all tests on the contained files) run:</div>
 </li>
 </ul>
-<pre class="code">        make distcheck   </pre>
+<pre class="code">        make distcheck</pre>
 
 <p>
 and make sure it completes without any errors.  After this is complete you will find the distribution tarball in the toplevel directory (named geda-gaf-VERSION.tar.gz).
@@ -103,7 +103,7 @@ and make sure it completes without any errors.  After this is complete you will 
 <ul>
 <li class="level1"><div class="li"> Copy the distribution tarball some place else along with the toplevel README (which should be renamed to gEDA-gaf-VERSION-README.txt).</div>
 </li>
-<li class="level1"><div class="li"> Create a file the md5sum for the toplevel tarball. </div>
+<li class="level1"><div class="li"> Create a file the md5sum for the toplevel tarball.</div>
 </li>
 </ul>
 <pre class="code">        md5sum -b geda-gaf-1.5.3.tar.gz &gt; geda-gaf-1.5.3.md5sum</pre>
@@ -117,7 +117,7 @@ and make sure it completes without any errors.  After this is complete you will 
 </ul>
 <pre class="code">        git tag -a 1.5.3-20090829</pre>
 <ul>
-<li class="level1"><div class="li"> Push all the commits to the main repository.  If you are on a branch the command should be: </div>
+<li class="level1"><div class="li"> Push all the commits to the main repository.  If you are on a branch the command should be:</div>
 </li>
 </ul>
 <pre class="code">        git push origin remote_branch_name</pre>
@@ -135,12 +135,12 @@ and make sure it completes without any errors.  After this is complete you will 
 </li>
 <li class="level1"><div class="li"> Update news update the sources download pages on the website with links to the new version</div>
 </li>
-<li class="level1"><div class="li"> Update the geda:todos page moving the release into the historical todos page.</div>
+<li class="level1"><div class="li"> Update the <a href="geda-todos.html" class="wikilink1" title="geda-todos.html">todos</a> removing the release information.</div>
 </li>
 <li class="level1"><div class="li"> Done!</div>
 </li>
 </ul>
 
 </div>
-<!-- EDIT568 SECTION "gEDA/gaf Release Creation Checklist" [50-] --></body>
+<!-- EDIT569 SECTION "gEDA/gaf Release Creation Checklist" [50-] --></body>
 </html>

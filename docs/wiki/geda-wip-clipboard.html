@@ -12,7 +12,7 @@
 <body>
 
 
-<h1 class="sectionedit1802"><a name="clipboard_support" id="clipboard_support">Clipboard Support</a></h1>
+<h1 class="sectionedit1831"><a name="clipboard_support" id="clipboard_support">Clipboard Support</a></h1>
 <div class="level1">
 
 <p>
@@ -20,8 +20,8 @@ Targetted for release in gEDA 1.8.0.
 </p>
 
 </div>
-<!-- EDIT1802 SECTION "Clipboard Support" [1-71] -->
-<h3 class="sectionedit1803"><a name="introduction" id="introduction">Introduction</a></h3>
+<!-- EDIT1831 SECTION "Clipboard Support" [1-71] -->
+<h3 class="sectionedit1832"><a name="introduction" id="introduction">Introduction</a></h3>
 <div class="level3">
 
 <p>
@@ -45,8 +45,8 @@ Consider the use case of “I want this circuit in my OpenOffice presentation, l
 </p>
 
 </div>
-<!-- EDIT1803 SECTION "Introduction" [72-930] -->
-<h3 class="sectionedit1804"><a name="the_x_clipboard" id="the_x_clipboard">The X clipboard</a></h3>
+<!-- EDIT1832 SECTION "Introduction" [72-930] -->
+<h3 class="sectionedit1833"><a name="the_x_clipboard" id="the_x_clipboard">The X clipboard</a></h3>
 <div class="level3">
 
 <p>
@@ -68,8 +68,8 @@ Due to the primarily non-textual nature of schematic or symbol data, gschem shou
 </p>
 
 </div>
-<!-- EDIT1804 SECTION "The X clipboard" [931-1845] -->
-<h3 class="sectionedit1805"><a name="the_windows_clipboard" id="the_windows_clipboard">The Windows clipboard</a></h3>
+<!-- EDIT1833 SECTION "The X clipboard" [931-1845] -->
+<h3 class="sectionedit1834"><a name="the_windows_clipboard" id="the_windows_clipboard">The Windows clipboard</a></h3>
 <div class="level3">
 
 <p>
@@ -77,17 +77,17 @@ Research needed.
 </p>
 
 </div>
-<!-- EDIT1805 SECTION "The Windows clipboard" [1846-1896] -->
-<h3 class="sectionedit1806"><a name="gtk_clipboard_api" id="gtk_clipboard_api">GTK clipboard API</a></h3>
+<!-- EDIT1834 SECTION "The Windows clipboard" [1846-1896] -->
+<h3 class="sectionedit1835"><a name="gtk_clipboard_api" id="gtk_clipboard_api">GTK clipboard API</a></h3>
 <div class="level3">
 
 <p>
-The Gimp Toolkit used by gschem&#039;s <acronym title="Graphical User Interface">GUI</acronym> provides APIs for manipulating the X selection (see <a href="http://library.gnome.org/devel/gtk/stable/gtk-Clipboards.html" class="urlextern" title="http://library.gnome.org/devel/gtk/stable/gtk-Clipboards.html"  rel="nofollow">the GTK manual</a>). Since gschem already links against GTK, and the GTK clipboard <acronym title="Application Programming Interface">API</acronym> is considerably simpler than using low-level X library calls (as well as being more portable), gschem should make use of it.
+The Gimp Toolkit used by gschem&#039;s <acronym title="Graphical User Interface">GUI</acronym> provides APIs for manipulating the X selection (see <a href="https://developer.gnome.org/gtk2/2.24/gtk2-Clipboards.html" class="urlextern" title="https://developer.gnome.org/gtk2/2.24/gtk2-Clipboards.html"  rel="nofollow">the GTK manual</a>). Since gschem already links against GTK, and the GTK clipboard <acronym title="Application Programming Interface">API</acronym> is considerably simpler than using low-level X library calls (as well as being more portable), gschem should make use of it.
 </p>
 
 </div>
-<!-- EDIT1806 SECTION "GTK clipboard API" [1897-2290] -->
-<h3 class="sectionedit1807"><a name="buffers_in_gschem" id="buffers_in_gschem">Buffers in gschem</a></h3>
+<!-- EDIT1835 SECTION "GTK clipboard API" [1897-2287] -->
+<h3 class="sectionedit1836"><a name="buffers_in_gschem" id="buffers_in_gschem">Buffers in gschem</a></h3>
 <div class="level3">
 
 <p>
@@ -123,8 +123,8 @@ When a set of selected items is “pasted”:
 </ol>
 
 </div>
-<!-- EDIT1807 SECTION "Buffers in gschem" [2291-2910] -->
-<h3 class="sectionedit1808"><a name="clipboard_data_types" id="clipboard_data_types">Clipboard data types</a></h3>
+<!-- EDIT1836 SECTION "Buffers in gschem" [2288-2907] -->
+<h3 class="sectionedit1837"><a name="clipboard_data_types" id="clipboard_data_types">Clipboard data types</a></h3>
 <div class="level3">
 
 </div>
@@ -133,7 +133,7 @@ When a set of selected items is “pasted”:
 <div class="level4">
 
 <p>
-<a href="http://git.gpleda.org/?p=gaf.git;a=commit;h=6a07d737a32a816f43e1f061409a10e616d7aa2a" class="urlextern" title="http://git.gpleda.org/?p=gaf.git;a=commit;h=6a07d737a32a816f43e1f061409a10e616d7aa2a"  rel="nofollow"> Implemented in 1.5.2+</a>.
+<a href="http://git.geda-project.org/geda-gaf/commit/?id=6a07d737a32a816f43e1f061409a10e616d7aa2a" class="urlextern" title="http://git.geda-project.org/geda-gaf/commit/?id=6a07d737a32a816f43e1f061409a10e616d7aa2a"  rel="nofollow"> Implemented in 1.5.2+</a>.
 </p>
 
 <p>
@@ -153,5 +153,5 @@ For the time being, it is assumed destination gschem instance has its library se
 </p>
 
 </div>
-<!-- EDIT1808 SECTION "Clipboard data types" [2911-] --></body>
+<!-- EDIT1837 SECTION "Clipboard data types" [2908-] --></body>
 </html>

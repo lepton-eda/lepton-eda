@@ -12,12 +12,12 @@
 <body>
 
 
-<h1 class="sectionedit526"><a name="building_the_geda_gaf_git_repository_version" id="building_the_geda_gaf_git_repository_version">Building the gEDA/gaf git repository version</a></h1>
+<h1 class="sectionedit527"><a name="building_the_geda_gaf_git_repository_version" id="building_the_geda_gaf_git_repository_version">Building the gEDA/gaf git repository version</a></h1>
 <div class="level1">
 
 </div>
-<!-- EDIT526 SECTION "Building the gEDA/gaf git repository version" [1-60] -->
-<h2 class="sectionedit527"><a name="general_instructions" id="general_instructions">General Instructions</a></h2>
+<!-- EDIT527 SECTION "Building the gEDA/gaf git repository version" [1-60] -->
+<h2 class="sectionedit528"><a name="general_instructions" id="general_instructions">General Instructions</a></h2>
 <div class="level2">
 
 <p>
@@ -105,26 +105,30 @@ $ make install</pre>
 </ul>
 
 </div>
-<!-- EDIT527 SECTION "General Instructions" [61-3592] -->
-<h2 class="sectionedit528"><a name="distro-specific_information" id="distro-specific_information">Distro-specific information</a></h2>
+<!-- EDIT528 SECTION "General Instructions" [61-3592] -->
+<h2 class="sectionedit529"><a name="distro-specific_information" id="distro-specific_information">Distro-specific information</a></h2>
 <div class="level2">
 
 </div>
-<!-- EDIT528 SECTION "Distro-specific information" [3593-3633] -->
-<h3 class="sectionedit529"><a name="debian-based" id="debian-based">Debian-based</a></h3>
+<!-- EDIT529 SECTION "Distro-specific information" [3593-3633] -->
+<h3 class="sectionedit530"><a name="debian-based" id="debian-based">Debian-based</a></h3>
 <div class="level3">
 
 <p>
-This is tested on <a href="http://crunchbanglinux.org/" class="urlextern" title="http://crunchbanglinux.org/"  rel="nofollow">Crunchbang Linux</a> but should work on Debian and Ubuntu also.
+This is tested on <a href="http://crunchbanglinux.org/" class="urlextern" title="http://crunchbanglinux.org/"  rel="nofollow">Crunchbang Linux</a> but should work on Debian Wheezy and possibly Ubuntu also.
 </p>
 <ol>
 <li class="level1"><div class="li"> Install the build dependencies for the packaged version of gEDA:<pre class="code">$ sudo apt-get build-dep geda</pre>
 </div>
 </li>
-<li class="level1"><div class="li"> Install the texinfo package:<pre class="code">$ sudo apt-get install texinfo</pre>
+<li class="level1"><div class="li"> Install the packages that don&#039;t get pulled in by the above command:<pre class="code">$ sudo apt-get install texinfo
+$ sudo apt-get install autopoint
+$ sudo apt-get install libtool</pre>
 </div>
 </li>
-<li class="level1"><div class="li"> If you want to generate doxygen output, install it:<pre class="code">$ sudo apt-get install doxygen</pre>
+<li class="level1"><div class="li"> If you want to generate doxygen output, install it and the other prerequisites:<pre class="code">$ sudo apt-get install doxygen
+$ sudo apt-get install imagemagick
+$ sudo apt-get install graphviz</pre>
 </div>
 </li>
 <li class="level1"><div class="li"> Clone the source from the official git repository.  For information on how to do this, read the <a href="geda-scm.html" class="wikilink1" title="geda-scm.html"> gEDA SCM topic </a>.</div>
@@ -138,8 +142,8 @@ $ make install</pre>
 </ol>
 
 </div>
-<!-- EDIT529 SECTION "Debian-based" [3634-4360] -->
-<h3 class="sectionedit530"><a name="macports" id="macports">MacPorts</a></h3>
+<!-- EDIT530 SECTION "Debian-based" [3634-4574] -->
+<h3 class="sectionedit531"><a name="macports" id="macports">MacPorts</a></h3>
 <div class="level3">
 
 <p>
@@ -148,7 +152,9 @@ $ make install</pre>
 <ol>
 <li class="level1"><div class="li"> <a href="http://www.macports.org/install.php" class="urlextern" title="http://www.macports.org/install.php"  rel="nofollow">Install MacPorts</a>.</div>
 </li>
-<li class="level1"><div class="li"> Install the MacPorts-packaged version of gEDA/gaf. As a happy side-effect, this brings in the build prerequisites:<pre class="code">$ sudo port install geda-gaf</pre>
+<li class="level1"><div class="li"> Install the MacPorts-packaged version of gEDA/gaf. As a happy side-effect, this brings in most of the build prerequisites. Also install autoconf and automake:<pre class="code">$ sudo port install geda-gaf
+$ sudo port install autoconf
+$ sudo port install automake</pre>
 </div>
 </li>
 <li class="level1"><div class="li"> If you want to generate doxygen output, install doxygen:<pre class="code">$ sudo port install doxygen</pre>
@@ -162,6 +168,8 @@ $ make
 $ make install</pre>
 </div>
 </li>
+<li class="level1"><div class="li"> If you are running a recent release of <acronym title="Operating System">OS</acronym> X, X server is not included by default so you might need to install <a href="http://xquartz.macosforge.org/landing/" class="urlextern" title="http://xquartz.macosforge.org/landing/"  rel="nofollow">XQuartz</a></div>
+</li>
 <li class="level1"><div class="li"> To run the software, you need to set an environment variable to allow Guile to load its shared libraries:<pre class="code">$ export LTDL_LIBRARY_PATH=/opt/local/lib
 $ gschem</pre>
 </div>
@@ -169,5 +177,5 @@ $ gschem</pre>
 </ol>
 
 </div>
-<!-- EDIT530 SECTION "MacPorts" [4361-] --></body>
+<!-- EDIT531 SECTION "MacPorts" [4575-] --></body>
 </html>
