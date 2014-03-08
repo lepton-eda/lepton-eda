@@ -661,6 +661,11 @@
 ;(add-hook! complex-place-list-changed-hook (lambda (object)
 ;         (autoplace-object-attributes object)) #t)
 
+; Autoplace netname= attribute hook.  This autoplaces netname
+; attribute at the time that it's added.
+(load-from-path "auto-place-netname.scm")
+(add-hook! add-objects-hook place-netname-attribute-handler)
+
 ; Automatically place a titleblock (or other components) when creating
 ; a new page.
 ; Comment in these lines if you want gschem to automatically place a titleblock

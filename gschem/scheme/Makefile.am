@@ -8,6 +8,7 @@ nobase_dist_scmdata_DATA = \
 	list-keys.scm \
 	print-NB-attribs.scm \
 	auto-place-attribs.scm \
+	auto-place-netname.scm \
 	pcb.scm \
 	default-attrib-positions.scm \
 	gschem/core/gettext.scm \
