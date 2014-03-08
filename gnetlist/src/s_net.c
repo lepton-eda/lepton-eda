@@ -437,7 +437,7 @@ char *s_net_name (TOPLEVEL * pr_current, NETLIST * netlist_head,
         unnamed_string = eda_config_get_string (cfg, "gnetlist", "default-bus-name", NULL);
         break;
       default:
-        g_critical (_("Incorrect connectivity type %i in s_name_nets()\n"), type);
+        g_critical (_("s_net_name: incorrect connectivity type %i\n"), type);
         return NULL;
     }
 
