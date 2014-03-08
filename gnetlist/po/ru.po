@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda gnetlist\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2014-03-08 20:29+0400\n"
+"POT-Creation-Date: 2014-03-08 21:51+0000\n"
 "PO-Revision-Date: 2014-03-08 20:49+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: gEDA Developers\n"
@@ -304,8 +304,8 @@ msgid "Found duplicate net name, renaming [%s] to [%s]\n"
 msgstr "Обнаружено дублирование имени соединения, переименование «%s» в «%s»\n"
 
 #: gnetlist/src/s_net.c:440
-#, c-format
-msgid "Incorrect connectivity type %i in s_name_nets()\n"
+#, fuzzy, c-format
+msgid "s_net_name: incorrect connectivity type %i\n"
 msgstr "s_name_nets: неверный тип соединения «%i»\n"
 
 #: gnetlist/src/s_net.c:460
