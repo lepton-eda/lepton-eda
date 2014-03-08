@@ -131,7 +131,7 @@ void xorn_delete_object(xorn_revision_t rev, xorn_object_t ob)
 		= rev->obstates.find(ob);
 
 	if (i != rev->obstates.end()) {
-		(*i).second->dec_refcnt();
+		i->second->dec_refcnt();
 		rev->obstates.erase(i);
 	}
 }
@@ -154,7 +154,7 @@ void xorn_delete_selected_objects(xorn_revision_t rev, xorn_selection_t sel)
 		std::map<xorn_object_t, obstate *>::iterator j
 			= rev->obstates.find(*i);
 		if (j != rev->obstates.end()) {
-			(*j).second->dec_refcnt();
+			j->second->dec_refcnt();
 			rev->obstates.erase(j);
 		}
 	}
@@ -195,7 +195,7 @@ xorn_object_t xorn_copy_object(xorn_revision_t dest,
 		return NULL;
 
 	try {
-		return copy_object(dest, (*i).second);
+		return copy_object(dest, i->second);
 	} catch (std::bad_alloc const &) {
 		return NULL;
 	}
@@ -232,13 +232,13 @@ xorn_selection_t xorn_copy_objects(xorn_revision_t dest,
 	std::set<xorn_object_t>::const_iterator j = sel->begin();
 
 	while (i != src->obstates.end() && j != sel->end())
-	    if ((*i).first < *j)
+	    if (i->first < *j)
 		++i;
-	    else if ((*i).first > *j)
+	    else if (i->first > *j)
 		++j;
 	    else {
 		try {
-			xorn_object_t ob = copy_object(dest, (*i).second);
+			xorn_object_t ob = copy_object(dest, i->second);
 			try {
 				rsel->insert(ob);
 			} catch (std::bad_alloc const &) {

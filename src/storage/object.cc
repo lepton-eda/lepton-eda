@@ -40,7 +40,7 @@ xorn_obtype_t xorn_get_object_type(xorn_revision_t rev, xorn_object_t ob)
 	if (i == rev->obstates.end())
 		return xorn_obtype_none;
 
-	return (*i).second->type;
+	return i->second->type;
 }
 
 /** \brief Get a pointer to an object's data in a given revision.
@@ -67,10 +67,10 @@ void const *xorn_get_object_data(xorn_revision_t rev, xorn_object_t ob,
 	std::map<xorn_object_t, obstate *>::const_iterator i
 		= rev->obstates.find(ob);
 
-	if (i == rev->obstates.end() || (*i).second->type != type)
+	if (i == rev->obstates.end() || i->second->type != type)
 		return NULL;
 
-	return (*i).second->data;
+	return i->second->data;
 }
 
 /** \brief Return a list of all objects in a revision.
@@ -101,7 +101,7 @@ int xorn_get_objects(
 
 	for (std::map<xorn_object_t, obstate *>::const_iterator i
 		     = rev->obstates.begin(); i != rev->obstates.end(); ++i)
-		(*objects_return)[(*count_return)++] = (*i).first;
+		(*objects_return)[(*count_return)++] = i->first;
 	return 0;
 }
 
@@ -219,14 +219,14 @@ int xorn_get_modified_objects(
 		= to_rev->obstates.begin();
 
 	while (i != from_rev->obstates.end() && j != to_rev->obstates.end())
-		if ((*i).first < (*j).first)
+		if (i->first < j->first)
 			++i;
-		else if ((*i).first > (*j).first)
+		else if (i->first > j->first)
 			++j;
 		else {
-			if ((*i).second != (*j).second)
+			if (i->second != j->second)
 				(*objects_return)[(*count_return)++] =
-					(*i).first;
+					i->first;
 			++i;
 			++j;
 		}

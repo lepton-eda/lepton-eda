@@ -214,9 +214,9 @@ bool xorn_selection_is_empty(xorn_revision_t rev, xorn_selection_t sel)
 	std::set<xorn_object_t>::const_iterator j = sel->begin();
 
 	while (i != rev->obstates.end() && j != sel->end())
-		if ((*i).first < *j)
+		if (i->first < *j)
 			++i;
-		else if ((*i).first > *j)
+		else if (i->first > *j)
 			++j;
 		else
 			return false;

@@ -26,14 +26,14 @@ xorn_revision::xorn_revision(xorn_revision_t rev)
 {
 	for (std::map<xorn_object_t, obstate *>::const_iterator i
 		     = obstates.begin(); i != obstates.end(); ++i)
-		(*i).second->inc_refcnt();
+		i->second->inc_refcnt();
 }
 
 xorn_revision::~xorn_revision()
 {
 	for (std::map<xorn_object_t, obstate *>::const_iterator i
 		     = obstates.begin(); i != obstates.end(); ++i)
-		(*i).second->dec_refcnt();
+		i->second->dec_refcnt();
 }
 
 
