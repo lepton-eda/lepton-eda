@@ -2,7 +2,7 @@
  'gschem and Friends' Electronic Design Suite
 ==============================================
 
-Copyright (C) 1998-2013 gEDA Developers
+Copyright (C) 1998-2014 gEDA Developers
 
 This file documents important user-visible changes in gEDA/gaf.  For
 more information, please consult the `ChangeLog' file.
@@ -49,7 +49,42 @@ Notable changes in gEDA/gaf 1.9.1
 
   - Control grips are now always drawn at the same on-screen size.
 
+* The multi-attribute editor dialog in `gschem' has been extended to
+  support more cases:
+
+  - It now supports editing attributes of multiple selected
+    objects. These are aggregated into the dialog's attribute list.
+
+    Multiple attributes with the same name attached to any given
+    object are still shown in separate rows, but identically named
+    attributes from multiple selected objects will share a row. If a
+    row has differing values between objects, its value shows the text
+    "<various>" in a muted colour.
+
+  - Where an attribute is present in some, but not all selected
+    objects its name in the list is shown in red. A new popup menu
+    option allows copying such attributes to all selected objects.
+
+  - If no complex, placeholder, pin, net or bus objects are selected,
+    the dialog now falls back to editing any selected attribute text.
+
+    This allows editing of unattached or floating attributes in
+    symbols, or any attributes seleccted independantly of their owning
+    object. In this fallback mode, all attributes with the same name
+    shown in separate rows, and the "add attribute" functionality is
+    disabled.
+
 * `gschem' has new icons for many editing commands.
+
+* Several bugs were fixed in `gnetlist':
+
+  - Invalid attributes are ignored.
+
+  - Correct detection of graphical symbols.
+
+  - Components with no `refdes=' attribute are reported.
+
+  - Crash fixes for `drc' and `switcap' backends.
 
 * `gaf export' now accepts a `--scale' option.
 
@@ -57,7 +92,7 @@ Notable changes in gEDA/gaf 1.9.1
   now accept their multiple arguments separated with a space ` ', a
   colon `:' or a semicolon `;'.
 
-* `gaf config' now handles the -p option properly.
+* `gaf config' now handles the `-p' option properly.
 
 * `gnetlist', `gsymcheck' and `gaf' now output internationalised
   messages.
@@ -72,28 +107,6 @@ Notable changes in gEDA/gaf 1.9.1
   - Two new hooks were added: `bind-keys-hook' is called whenever
     keymap bindings are changed; `action-property-hook' is called when
     action properties are changed.
-
-* The multi-attribute editor dialog has been extended to support more cases:
-
-  - It now supports editing attributes of multiple selected objects. These
-    are aggregated into the dialog's attribute list.
-
-    Multiple attributes with the same name attached to any given object are
-    still shown in separate rows, but identically named attributes from
-    multiple selected objects will share a row. If a row has differing values
-    between objects, its value shows the text "<various>" in grey.
-
-  - Where an attribute is present in some, but not all selected objects its
-    name in the list is shown in red. A new popup menu option allows copying
-    such attributes to all selected objects.
-
-  - If no complex / placeholder / pin / net / bus objects are selected, the
-    dialog now falls back to editing any selected attribute text.
-
-    This allows editing of unattached or floating attributes in symbols, or
-    any attributes seleccted independantly of their owning object. In this
-    fallback mode, all attributes with the same name shown in separate rows,
-    and the "add attribute" functionality is disabled.
 
 
 Notable changes in gEDA/gaf 1.9.0
