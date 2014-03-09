@@ -69,7 +69,7 @@ used.
 Size the output with specific dimensions.  If the size is `auto',
 select the size that best fits the drawing.
 .TP 8
-\fB-k\fR, \fB--scale\fR=(\fBFACTOR\fR)
+\fB-k\fR, \fB--scale\fR=\fIFACTOR\fR
 Set the output scale \fIFACTOR\fR. This is a distance identical with 100
 points (1 default grid spacing) in \fBgschem\fR(1) coordinate space. It is used
 to size the output when neither \fB--paper\fR nor \fB--size\fR are
