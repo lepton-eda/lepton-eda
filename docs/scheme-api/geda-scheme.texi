@@ -881,7 +881,7 @@ various stroke and fill settings.
 @xref{Object fill and stroke}.
 
 @defun box? object
-Returns @samp{#t} if and only of @var{object} is a box @code{object}.
+Returns @samp{#t} if and only if @var{object} is a box @code{object}.
 @end defun
 
 @defun make-box top-left bottom-right [color]
@@ -927,7 +927,7 @@ different colors, and with various stroke and fill settings.
 @xref{Object fill and stroke}.
 
 @defun circle? object
-Returns @samp{#t} if and only of @var{object} is a circle @code{object}.
+Returns @samp{#t} if and only if @var{object} is a circle @code{object}.
 @end defun
 
 @defun make-circle center radius [color]
@@ -1042,6 +1042,13 @@ They take no parameters.
 
 @defun path? object
 Returns @samp{#t} if and only if @var{object} is a path @code{object}.
+@end defun
+
+@defun make-path [color]
+Creates and returns a new path @code{object}.  If @var{color} is
+specified, it should be the integer color map index of the color with
+which to draw the path.  If @var{color} is not specified, the default
+path color is used.
 @end defun
 
 @defun path-length path
@@ -1210,7 +1217,7 @@ located at the top center of the rendered text block.
 the angle which the text should be displayed at.  @var{string} is the
 string contents for the @code{text} object, and must not contain any
 null characters (@samp{#\0} in Scheme, Unicode
-@samp{U+0000}. @var{size} is the font size to use.  If @var{visible}
+@samp{U+0000}). @var{size} is the font size to use.  If @var{visible}
 is @samp{#f}, the text will be invisible; otherwise, it will be
 visible.
 
@@ -1229,7 +1236,7 @@ will be displayed.  It must be one of the following symbols:
 
 If @var{color} is specified, it should be the integer color map index
 of the color with which to draw the text.  If @var{color} is not
-specified, the default arc color is used.
+specified, the default text color is used.
 @end defun
 
 @defun set-text! text anchor align angle string size visible show [color]
@@ -1247,7 +1254,7 @@ Returns the parameters of @var{text} as a list in the form:
 See @code{make-text} for a description of all of these parameters.
 @end defun
 
-@defun text-center text
+@defun text-anchor text
 Returns the position of the anchor of @var{text} in the form
 @code{(x . y)}.
 @end defun
