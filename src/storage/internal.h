@@ -19,6 +19,7 @@
 
 #include <xornstorage.h>
 #include <map>
+#include <vector>
 #include <set>
 
 void *copy_data(xorn_obtype_t type, void const *src);
@@ -40,6 +41,7 @@ struct xorn_revision {
 	~xorn_revision();
 	bool is_transient;
 	std::map<xorn_object_t, obstate *> obstates;
+	std::vector<xorn_object_t> sequence;
 };
 
 /* There is no struct xorn_object. */

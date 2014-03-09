@@ -81,6 +81,8 @@ void const *xorn_get_object_data(xorn_revision_t rev, xorn_object_t ob,
  * pointed to by \a count_return.  If the list is empty or there is
  * not enough memory, \a *objects_return may be set to \c NULL.
  *
+ * The objects are not necessarily returned in a meaningful order.
+ *
  * \return Returns \c 0 on success and \c -1 if there is not enough
  *         memory.
  *
@@ -107,6 +109,8 @@ int xorn_get_objects(
 
 /** \brief Return a list of objects which are in a revision as well as
  *         in a selection.
+ *
+ * The objects are not necessarily returned in a meaningful order.
  *
  * The same semantics apply as in \ref xorn_get_objects.  See there
  * for a more detailed description.  */
@@ -137,7 +141,7 @@ int xorn_get_selected_objects(
  *         another.
  *
  * The returned list contains all objects in \a to_rev which are not
- * in \a from_rev.
+ * in \a from_rev.  They are not necessarily returned in a meaningful order.
  *
  * The same semantics apply as in \ref xorn_get_objects.  See there
  * for a more detailed description.  */
@@ -168,7 +172,7 @@ int xorn_get_added_objects(
  *         another.
  *
  * The returned list contains all objects in \a from_rev which are not
- * in \a to_rev.
+ * in \a to_rev.  They are not necessarily returned in a meaningful order.
  *
  * The same semantics apply as in \ref xorn_get_objects.  See there
  * for a more detailed description.  */
@@ -197,6 +201,8 @@ int xorn_get_removed_objects(
 
 /** \brief Return a list of objects which exist in two revisions but
  *         have different type or data.
+ *
+ * The objects are not necessarily returned in a meaningful order.
  *
  * The same semantics apply as in \ref xorn_get_objects.  See there
  * for a more detailed description.  */

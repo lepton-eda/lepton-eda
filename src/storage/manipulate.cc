@@ -15,6 +15,7 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 #include "internal.h"
+#include <algorithm>
 
 static const char *next_object_id = NULL;
 
@@ -35,6 +36,8 @@ static void set_object_data(xorn_revision_t rev, xorn_object_t ob,
 }
 
 /** \brief Add a new object to a transient revision.
+ *
+ * The object is appended to the end of the object list.
  *
  * \a data must point to a data structure matching the object type
  * indicated by \a type (e.g., if \a type is \c xornsch_obtype_net,
@@ -61,8 +64,14 @@ xorn_object_t xorn_add_object(xorn_revision_t rev,
 
 	xorn_object_t ob = (xorn_object_t)++next_object_id;
 	try {
+		rev->sequence.push_back(ob);
+	} catch (std::bad_alloc const &) {
+		return NULL;
+	}
+	try {
 		set_object_data(rev, ob, type, data);
 	} catch (std::bad_alloc const &) {
+		rev->sequence.pop_back();
 		return NULL;
 	}
 	return ob;
@@ -71,7 +80,8 @@ xorn_object_t xorn_add_object(xorn_revision_t rev,
 /** \brief Set an object in a transient revision to the given object
  *         type and data.
  *
- * If the object does not exist in the revision, it is created instead.
+ * If the object does not exist in the revision, it is created and
+ * appended to the end of the object list.
  *
  * \param rev  Revision to be changed (must be transient)
  *
@@ -106,9 +116,19 @@ int xorn_set_object_data(xorn_revision_t rev, xorn_object_t ob,
 	if (!rev->is_transient)
 		return -1;
 
+	bool add = rev->obstates.find(ob) == rev->obstates.end();
+	if (add)
+		try {
+			rev->sequence.push_back(ob);
+		} catch (std::bad_alloc const &) {
+			return -1;
+		}
+
 	try {
 		set_object_data(rev, ob, type, data);
 	} catch (std::bad_alloc const &) {
+		if (add)
+			rev->sequence.pop_back();
 		return -1;
 	}
 	return 0;
@@ -133,6 +153,8 @@ void xorn_delete_object(xorn_revision_t rev, xorn_object_t ob)
 	if (i != rev->obstates.end()) {
 		i->second->dec_refcnt();
 		rev->obstates.erase(i);
+		rev->sequence.erase(find(rev->sequence.begin(),
+					 rev->sequence.end(), ob));
 	}
 }
 
@@ -156,6 +178,8 @@ void xorn_delete_selected_objects(xorn_revision_t rev, xorn_selection_t sel)
 		if (j != rev->obstates.end()) {
 			j->second->dec_refcnt();
 			rev->obstates.erase(j);
+			rev->sequence.erase(find(rev->sequence.begin(),
+						 rev->sequence.end(), *i));
 		}
 	}
 }
@@ -163,16 +187,20 @@ void xorn_delete_selected_objects(xorn_revision_t rev, xorn_selection_t sel)
 static xorn_object_t copy_object(xorn_revision_t dest, obstate *obstate)
 {
 	xorn_object_t ob = (xorn_object_t)++next_object_id;
+	dest->sequence.push_back(ob);
 	try {
 		dest->obstates[ob] = obstate;
 		obstate->inc_refcnt();
 	} catch (std::bad_alloc const &) {
+		dest->sequence.pop_back();
 		throw;
 	}
 	return ob;
 }
 
 /** \brief Copy an object to a transient revision.
+ *
+ * The object is appended to the end of the object list.
  *
  * \param dest Destination revision (must be transient)
  * \param src Source revision (does not need to be transient)
@@ -202,6 +230,9 @@ xorn_object_t xorn_copy_object(xorn_revision_t dest,
 }
 
 /** \brief Copy some objects to a transient revision.
+ *
+ * The objects are appended to the end of the object list in an
+ * unspecified order.
  *
  * \param dest Destination revision (must be transient)
  * \param src Source revision (does not need to be transient)
