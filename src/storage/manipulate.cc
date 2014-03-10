@@ -134,6 +134,61 @@ int xorn_set_object_data(xorn_revision_t rev, xorn_object_t ob,
 	return 0;
 }
 
+/** \brief Change the location of an object in the object structure of
+ *         a transient revision.
+ *
+ * Changes the order in which an object is drawn and written to files
+ * as compared to its sibling objects.
+ *
+ * If \a ob and \a insert_before are identical, the revision is left
+ * unchanged.
+ *
+ * \param rev            Revision to modify (must be transient)
+ * \param ob             The object which should be reordered
+ * \param insert_before  An object before which \a ob should be
+ *                       inserted, or \c NULL to append it at the end.
+ *
+ * \return Returns \c 0 on success.  Returns \c -1 if
+ * - the revision isn't transient,
+ * - \a ob or (if not \c NULL) \a insert_before doesn't exist in the
+ *   revision, or
+ * - there is not enough memory.  */
+
+int xorn_relocate_object(xorn_revision_t rev, xorn_object_t ob,
+			 xorn_object_t insert_before)
+{
+	if (!rev->is_transient)
+		return -1;
+
+	std::vector<xorn_object_t>::iterator i = find(rev->sequence.begin(),
+						      rev->sequence.end(), ob);
+	if (i == rev->sequence.end())
+		return -1;
+	std::vector<xorn_object_t>::size_type ip = i - rev->sequence.begin();
+
+	/* Try adding the new entry first, removing the old one won't fail. */
+
+	try {
+		if (insert_before == NULL)
+			rev->sequence.push_back(ob);
+		else {
+			std::vector<xorn_object_t>::iterator j =
+				find(rev->sequence.begin(),
+				     rev->sequence.end(), insert_before);
+			if (j == rev->sequence.end())
+				return -1;
+			if (j <= i)
+				++ip;
+			rev->sequence.insert(j, ob);
+		}
+	} catch (std::bad_alloc const &) {
+		return -1;
+	}
+
+	rev->sequence.erase(rev->sequence.begin() + ip);
+	return 0;
+}
+
 /** \brief Delete an object from a transient revision.
  *
  * If the revision isn't transient or the object doesn't exist in the
