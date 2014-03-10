@@ -81,7 +81,7 @@ void const *xorn_get_object_data(xorn_revision_t rev, xorn_object_t ob,
  * pointed to by \a count_return.  If the list is empty or there is
  * not enough memory, \a *objects_return may be set to \c NULL.
  *
- * The objects are not necessarily returned in a meaningful order.
+ * The objects are returned in their actual order.
  *
  * \return Returns \c 0 on success and \c -1 if there is not enough
  *         memory.
@@ -101,9 +101,9 @@ int xorn_get_objects(
 	if (*objects_return == NULL && !rev->obstates.empty())
 		return -1;
 
-	for (std::map<xorn_object_t, obstate *>::const_iterator i
-		     = rev->obstates.begin(); i != rev->obstates.end(); ++i)
-		(*objects_return)[(*count_return)++] = i->first;
+	for (std::vector<xorn_object_t>::const_iterator i
+		     = rev->sequence.begin(); i != rev->sequence.end(); ++i)
+		(*objects_return)[(*count_return)++] = *i;
 	return 0;
 }
 
