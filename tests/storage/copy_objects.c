@@ -28,7 +28,6 @@ int main()
 
 	xorn_object_t *objects;
 	size_t count;
-	unsigned int i;
 
 	setup(&rev0, &rev1, &rev2, &rev3, &ob0, &ob1a, &ob1b);
 
@@ -55,15 +54,15 @@ int main()
 	assert(objects != NULL);
 	assert(count == 5);
 
-	for (i = 0; i < count; ++i) {
-		if (objects[i] == ob0 ||
-		    objects[i] == ob1a ||
-		    objects[i] == ob1b)
-			continue;
+	assert(objects[0] == ob0);
+	assert(objects[1] == ob1a);
+	assert(objects[2] == ob1b);
 
-		assert(!xorn_object_is_selected(rev4, sel0, objects[i]));
-		assert(xorn_object_is_selected(rev4, sel1, objects[i]));
-	}
+	assert(!xorn_object_is_selected(rev4, sel0, objects[3]));
+	assert(!xorn_object_is_selected(rev4, sel0, objects[4]));
+
+	assert(xorn_object_is_selected(rev4, sel1, objects[3]));
+	assert(xorn_object_is_selected(rev4, sel1, objects[4]));
 
 	free(objects);
 

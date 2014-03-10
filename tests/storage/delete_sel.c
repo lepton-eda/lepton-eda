@@ -49,8 +49,8 @@ void assert_objects_2(xorn_revision_t rev,
 	assert(xorn_get_objects(rev, &objects, &count) == 0);
 	assert(objects != NULL);
 	assert(count == 2);
-	assert((objects[0] == ob0 && objects[1] == ob1) ||
-	       (objects[0] == ob1 && objects[1] == ob0));
+	assert(objects[0] == ob0);
+	assert(objects[1] == ob1);
 	free(objects);
 }
 
@@ -63,13 +63,9 @@ void assert_objects_3(xorn_revision_t rev,
 	assert(xorn_get_objects(rev, &objects, &count) == 0);
 	assert(objects != NULL);
 	assert(count == 3);
-	assert(
-	    (objects[0] == ob0 && objects[1] == ob1 && objects[2] == ob2) ||
-	    (objects[0] == ob0 && objects[1] == ob2 && objects[2] == ob1) ||
-	    (objects[0] == ob1 && objects[1] == ob0 && objects[2] == ob2) ||
-	    (objects[0] == ob1 && objects[1] == ob2 && objects[2] == ob0) ||
-	    (objects[0] == ob2 && objects[1] == ob0 && objects[2] == ob1) ||
-	    (objects[0] == ob2 && objects[1] == ob1 && objects[2] == ob0));
+	assert(objects[0] == ob0);
+	assert(objects[1] == ob1);
+	assert(objects[2] == ob2);
 	free(objects);
 }
 

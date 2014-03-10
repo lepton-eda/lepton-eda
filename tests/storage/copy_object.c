@@ -47,6 +47,9 @@ int main()
 	assert(xorn_get_objects(rev4, &objects, &count) == 0);
 	assert(objects != NULL);
 	assert(count == 3);
+	assert(objects[0] == ob0);
+	assert(objects[1] == ob1b);
+	assert(objects[2] == ob0copy);
 	free(objects);
 
 	xorn_free_revision(rev4);
