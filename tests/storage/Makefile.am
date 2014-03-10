@@ -26,6 +26,7 @@ TESTS = snippets/example \
 	delete_sel \
 	exist \
 	get_attribute \
+	get_location \
 	get_obdata \
 	get_objects \
 	get_obtype \

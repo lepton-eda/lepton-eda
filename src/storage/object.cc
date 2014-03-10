@@ -73,6 +73,32 @@ void const *xorn_get_object_data(xorn_revision_t rev, xorn_object_t ob,
 	return i->second->data;
 }
 
+/** \brief Get the index of an object in a revision's object list.
+ *
+ * \param rev                Revision to examine
+ * \param ob                 Object whose index to return
+ * \param position_return    Pointer to a variable where to write the
+ *                           index of \a ob in the object list
+ *
+ * The pointer argument may be \c NULL to indicate that the caller
+ * isn't interested in the return value.
+ *
+ * \return Returns \c 0 and writes the appropriate value to \a
+ * position_return if \a ob exists in \a rev.  Otherwise, doesn't
+ * touch the value and returns \c -1.  */
+
+int xorn_get_object_location(xorn_revision_t rev, xorn_object_t ob,
+			     unsigned int *position_return)
+{
+	std::vector<xorn_object_t>::const_iterator i =
+		find(rev->sequence.begin(), rev->sequence.end(), ob);
+	if (i == rev->sequence.end())
+		return -1;
+	if (position_return != NULL)
+		*position_return = i - rev->sequence.begin();
+	return 0;
+}
+
 /** \brief Return a list of all objects in a revision.
  *
  * A list of \ref xorn_object_t values is allocated and written to,

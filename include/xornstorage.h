@@ -70,6 +70,8 @@ xorn_obtype_t xorn_get_object_type(
 	xorn_revision_t rev, xorn_object_t ob);
 const void *xorn_get_object_data(
 	xorn_revision_t rev, xorn_object_t ob, xorn_obtype_t type);
+int xorn_get_object_location(
+	xorn_revision_t rev, xorn_object_t ob, unsigned int *position_return);
 
 int xorn_get_objects(
 	xorn_revision_t rev,
