@@ -2,7 +2,7 @@ if ENABLE_GATTRIB
 GATTRIB_DIR=gattrib
 endif
 SUBDIRS = intl libgeda libgedacairo gaf gschem ${GATTRIB_DIR} \
-	gsymcheck gnetlist utils symbols docs examples
+	gsymcheck gnetlist utils symbols docs examples contrib
 
 ACLOCAL_AMFLAGS = -I m4
 

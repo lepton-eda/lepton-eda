@@ -1,11 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 
-bin_PROGRAMS = gmk_sym smash_megafile convert_sym sarlacc_schem olib \
+bin_PROGRAMS = gmk_sym convert_sym sarlacc_schem olib \
 	       gsch2pcb grenum
 
 # don't forget all *.h files */
 gmk_sym_SOURCES = gmk_sym.c char_width.c
-smash_megafile_SOURCES = smash_megafile.c
 grenum_SOURCES = grenum.c grenum.h
 
 olib_SOURCES = olib.l geda_sym_format.h
