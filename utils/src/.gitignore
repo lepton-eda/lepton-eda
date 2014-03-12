@@ -4,7 +4,6 @@ Makefile
 convert_sym
 sarlacc_schem
 gmk_sym
-smash_megafile
 olib
 olib.c
 gsch2pcb
@@ -14,7 +13,6 @@ grenum
 convert_sym.exe
 sarlacc_schem.exe
 gmk_sym.exe
-smash_megafile.exe
 olib.exe
 grenum.exe
 gsch2pcb.exe

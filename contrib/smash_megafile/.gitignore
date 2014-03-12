@@ -5,3 +5,4 @@ Makefile
 .deps
 *.o
 smash_megafile.exe
+smash_megafile.1
