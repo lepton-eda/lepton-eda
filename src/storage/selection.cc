@@ -49,6 +49,42 @@ xorn_selection_t xorn_select_object(xorn_object_t ob)
 	return rsel;
 }
 
+/** \brief Create a selection containing all objects in a revision
+ *         attached to a given object.
+ *
+ * The object may be \c NULL, in which case the selection contains all
+ * objects which are *not* attached.
+ *
+ * \return Returns the new selection, or \c NULL if \a ob does not exist
+ *         in \a rev or there is not enough memory.  */
+
+xorn_selection_t xorn_select_attached_to(xorn_revision_t rev, xorn_object_t ob)
+{
+	if (ob != NULL && rev->obstates.find(ob) == rev->obstates.end())
+		return NULL;
+
+	xorn_selection_t rsel;
+	try {
+		rsel = new xorn_selection();
+	} catch (std::bad_alloc const &) {
+		return NULL;
+	}
+
+	std::map<xorn_object_t, std::vector<xorn_object_t> >::const_iterator i
+		= rev->children.find(ob);
+	if (i == rev->children.end())
+		return rsel;
+
+	try {
+		copy(i->second.begin(), i->second.end(),
+		     inserter(*rsel, rsel->begin()));
+	} catch (std::bad_alloc const &) {
+		delete rsel;
+		return NULL;
+	}
+	return rsel;
+}
+
 /** \brief Create a selection containing all objects in a revision.  */
 
 xorn_selection_t xorn_select_all(xorn_revision_t rev)

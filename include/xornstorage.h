@@ -97,6 +97,8 @@ int xorn_get_modified_objects(
 xorn_selection_t xorn_select_none();
 xorn_selection_t xorn_select_object(
 	xorn_object_t ob);
+xorn_selection_t xorn_select_attached_to(
+	xorn_revision_t rev, xorn_object_t ob);
 xorn_selection_t xorn_select_all(
 	xorn_revision_t rev);
 xorn_selection_t xorn_select_all_except(
