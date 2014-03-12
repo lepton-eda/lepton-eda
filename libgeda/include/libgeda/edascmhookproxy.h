@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library - Scheme API
- * Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2013-2014 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,21 +37,13 @@ G_BEGIN_DECLS
  * to simply connect to its \b "run" signal in order to receive a
  * callback whenever the target hook is run.
  *
- * When implementing a \b "run" signal handler, it is important to note
- * that the hook's argument list is passed to the handler as a #gulong
- * and must be packed (with <tt>SCM_PACK()</tt>) before being used with any
- * libguile functions.  For example:
- *
  * \code
  * void
- * my_handler (EdascmHookProxy *proxy, gulong unpacked_args, gpointer user_data)
+ * my_handler (EdascmHookProxy *proxy, SCM args, gpointer user_data)
  * {
- *   SCM args = SCM_PACK (unpacked_args);
  *   // ... //
  * }
  * \endcode
- *
- * The opposite operation to <tt>SCM_PACK()</tt> is <tt>SCM_UNPACK()</tt>.
  *
  * \b Signals: One signal, \b "run".  Called with one parameter, the
  * Scheme argument list passed to the handler as an unpacked Scheme
@@ -78,7 +70,7 @@ struct _EdascmHookProxyClass
   GObjectClass parent_class;
 
   /* signals */
-  void (*run)(EdascmHookProxy *proxy, gulong unpacked_args);
+  void (*run)(EdascmHookProxy *proxy, SCM args);
 };
 
 struct _EdascmHookProxy

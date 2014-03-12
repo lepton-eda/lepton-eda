@@ -1,6 +1,6 @@
 /* gEDA - GPL Electronic Design Automation
  * libgeda - gEDA's library - Scheme API
- * Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2013-2014 Peter Brett <peter@peter-b.co.uk>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,10 +43,16 @@ static void edascm_hook_proxy_set_property (GObject *object, guint property_id,
 static void edascm_hook_proxy_get_property (GObject *object, guint property_id,
                                              GValue *value, GParamSpec *pspec);
 static void edascm_hook_proxy_default_run_handler (EdascmHookProxy *proxy,
-                                                   gulong unpacked_args);
+                                                   SCM args);
 static SCM edascm_hook_proxy_closure (SCM args, gpointer user_data);
 static void edascm_hook_proxy_connect (EdascmHookProxy *proxy, SCM hook);
 static void edascm_hook_proxy_disconnect (EdascmHookProxy *proxy);
+static void cclosure_marshal_VOID__SCM (GClosure *closure,
+                                        GValue *return_value,
+                                        guint n_param_values,
+                                        const GValue *param_values,
+                                        gpointer invocation_hint,
+                                        gpointer marshal_data);
 
 G_DEFINE_TYPE (EdascmHookProxy, edascm_hook_proxy, G_TYPE_OBJECT);
 
@@ -71,27 +77,22 @@ edascm_hook_proxy_class_init (EdascmHookProxyClass *klass)
                  G_PARAM_STATIC_BLURB);
 
   g_object_class_install_property (gobject_class, PROP_HOOK,
-                                   g_param_spec_ulong ("hook",
-                                                       _("Scheme hook"),
-                                                       _("The Scheme-level hook to proxy"),
-                                                       0, /* minimum */
-                                                       G_MAXULONG, /* maximum */
-                                                       SCM_UNPACK (SCM_UNDEFINED), /* default */
-                                                       param_flags));
+                                   edascm_param_spec_scm ("hook",
+                                                          _("Scheme hook"),
+                                                          _("The Scheme-level hook to proxy"),
+                                                          param_flags));
 
   /* Create signals */
-  /* We treat the SCM value as a pointer.  On most (not all)
-   * architectures this shouldn't be a problem. */
   g_signal_new ("run", /* signal name */
                 G_TYPE_FROM_CLASS (gobject_class), /* type */
                 G_SIGNAL_RUN_FIRST, /* flags */
                 G_STRUCT_OFFSET(EdascmHookProxyClass, run), /* class offset */
                 NULL, /* accumulator */
                 NULL, /* accumulator data */
-                g_cclosure_marshal_VOID__ULONG, /* c_marshaller */
+                cclosure_marshal_VOID__SCM, /* c_marshaller */
                 G_TYPE_NONE, /* return type */
                 1, /* no. of params */
-                G_TYPE_ULONG);
+                EDASCM_TYPE_SCM);
 }
 
 /*! Initialise EdascmHookProxy instance. */
@@ -140,7 +141,7 @@ edascm_hook_proxy_set_property (GObject *object, guint property_id,
   switch (property_id) {
 
   case PROP_HOOK:
-    hook = SCM_PACK (g_value_get_ulong (value));
+    hook = edascm_value_get_scm (value);
     if (hook == SCM_UNDEFINED) {
       edascm_hook_proxy_disconnect (proxy);
     } else {
@@ -164,7 +165,7 @@ edascm_hook_proxy_get_property (GObject *object, guint property_id,
   switch (property_id) {
 
   case PROP_HOOK:
-    g_value_set_ulong (value, SCM_UNPACK (proxy->priv->hook));
+    edascm_value_set_scm (value, proxy->priv->hook);
     break;
 
   default:
@@ -224,13 +225,46 @@ edascm_hook_proxy_closure (SCM args, gpointer user_data) {
  */
 static void
 edascm_hook_proxy_default_run_handler (EdascmHookProxy *proxy,
-                                       gulong unpacked_args)
+                                       SCM args)
 {
-  SCM args = SCM_PACK (unpacked_args);
   g_return_if_fail (EDASCM_IS_HOOK_PROXY (proxy));
 
   /* Do the most basic of sanity checking on the argument list! */
   g_return_if_fail (scm_is_true (scm_list_p (args)));
+}
+
+/*! \brief Callback marshal function for run signals.
+ * \par Function Description
+ * Based heavily on g_cclosure_marshal_VOID__STRING() from GObject.
+ */
+static void
+cclosure_marshal_VOID__SCM (GClosure *closure,
+                            GValue *return_value,
+                            guint n_param_values,
+                            const GValue *param_values,
+                            gpointer invocation_hint,
+                            gpointer marshal_data)
+{
+  typedef void (*MarshalFunc_VOID__SCM) (gpointer data1,
+                                         SCM arg_1,
+                                         gpointer data2);
+  register MarshalFunc_VOID__SCM callback;
+  register GCClosure *cc = (GCClosure *) closure;
+  register gpointer data1, data2;
+
+  g_return_if_fail (n_param_values == 2);
+  if (G_CCLOSURE_SWAP_DATA (closure)) {
+    data1 = closure->data;
+    data2 = g_value_peek_pointer (param_values + 0);
+  } else {
+    data1 = g_value_peek_pointer (param_values + 0);
+    data2 = closure->data;
+  }
+  callback = (MarshalFunc_VOID__SCM) (marshal_data ? marshal_data : cc->callback);
+
+  callback (data1,
+            edascm_value_get_scm (param_values + 1),
+            data2);
 }
 
 /* ---------------------------------------------------------------- */
@@ -249,6 +283,6 @@ EdascmHookProxy *
 edascm_hook_proxy_new_with_hook (SCM hook_s)
 {
   return g_object_new (EDASCM_TYPE_HOOK_PROXY,
-                       "hook", SCM_UNPACK (hook_s),
+                       "hook", hook_s,
                        NULL);
 }
