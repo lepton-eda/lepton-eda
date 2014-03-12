@@ -186,7 +186,7 @@ int xorn_set_object_data(xorn_revision_t rev, xorn_object_t ob,
  *
  * 2. Attach a schematic text object to a schematic net or component
  *    object.  As far as this library is concerned, this will cause
- *    the text to be deleted along with the net or component.
+ *    the text to be copied and deleted along with the net or component.
  *
  * If \a attach_to is \c NULL, the object becomes un-attached.  If \a
  * ob and \a insert_before are identical, the revision is left unchanged.
@@ -334,38 +334,59 @@ void xorn_delete_selected_objects(xorn_revision_t rev, xorn_selection_t sel)
 		xorn_delete_object(rev, *i);
 }
 
-static xorn_object_t copy_object(xorn_revision_t dest, obstate *obstate)
+static xorn_object_t copy_object(
+	xorn_revision_t dest, xorn_revision_t src, xorn_object_t src_ob,
+	obstate *obstate, xorn_object_t attach_to,
+	std::vector<xorn_object_t> &copied)
 {
-	xorn_object_t ob = (xorn_object_t)++next_object_id;
-	dest->children[NULL].push_back(ob);
+	xorn_object_t dest_ob = (xorn_object_t)++next_object_id;
+	dest->children[attach_to].push_back(dest_ob);
 	try {
-		dest->parent[ob] = NULL;
+		dest->parent[dest_ob] = attach_to;
 	} catch (std::bad_alloc const &) {
-		dest->children[NULL].pop_back();
+		dest->children[attach_to].pop_back();
 		throw;
 	}
 	try {
-		dest->obstates[ob] = obstate;
+		dest->obstates[dest_ob] = obstate;
 		obstate->inc_refcnt();
 	} catch (std::bad_alloc const &) {
-		dest->parent.erase(dest->parent.find(ob));
-		dest->children[NULL].pop_back();
+		dest->parent.erase(dest->parent.find(dest_ob));
+		dest->children[attach_to].pop_back();
 		throw;
 	}
-	return ob;
+	try {
+		copied.push_back(dest_ob);
+	} catch (std::bad_alloc const &) {
+		xorn_delete_object(dest, dest_ob);
+		throw;
+	}
+
+	std::map<xorn_object_t, std::vector<xorn_object_t> >::const_iterator i
+		= src->children.find(src_ob);
+
+	if (i != src->children.end())
+		for (std::vector<xorn_object_t>::const_iterator j
+			     = i->second.begin(); j != i->second.end(); ++j)
+			copy_object(dest, src, *j, src->obstates[*j],
+				    dest_ob, copied);
+
+	return dest_ob;
 }
 
 /** \brief Copy an object to a transient revision.
  *
- * The object is appended to the end of the object list.
+ * Any objects attached to \a ob are copied as well, their copies
+ * being attached to the copy of \a ob, which is appended to the end
+ * of the object list.
  *
  * \param dest Destination revision (must be transient)
  * \param src Source revision (does not need to be transient)
  * \param ob Object in the source revision which should be copied
  *
- * \return Returns the newly created object.  If the destination
- * revision isn't transient, the object doesn't exist in the source
- * revision, or there is not enough memory, returns \c NULL.  */
+ * \return Returns the copy of \a ob.  If the destination revision
+ * isn't transient, \a ob doesn't exist in the source revision, or
+ * there is not enough memory, returns \c NULL.  */
 
 xorn_object_t xorn_copy_object(xorn_revision_t dest,
 			       xorn_revision_t src, xorn_object_t ob)
@@ -379,25 +400,31 @@ xorn_object_t xorn_copy_object(xorn_revision_t dest,
 	if (i == src->obstates.end())
 		return NULL;
 
+	std::vector<xorn_object_t> copied;
+
 	try {
-		return copy_object(dest, i->second);
+		return copy_object(dest, src, ob, i->second, NULL, copied);
 	} catch (std::bad_alloc const &) {
+		for (std::vector<xorn_object_t>::const_iterator i
+			     = copied.begin(); i != copied.end(); ++i)
+			xorn_delete_object(dest, *i);
 		return NULL;
 	}
 }
 
 /** \brief Copy some objects to a transient revision.
  *
- * The objects are appended to the end of the object list in an
- * unspecified order.
+ * Any objects attached to the objects are copied as well and attached
+ * to the corresponding new object.  The copied objects are appended
+ * to the end of the object list in an unspecified order.
  *
  * \param dest Destination revision (must be transient)
  * \param src Source revision (does not need to be transient)
  * \param sel Objects in the source revision which should be copied
  *
- * \return Returns a selection containing the newly created objects.
- * If the destination revision isn't transient or there is not enough
- * memory, returns \c NULL.
+ * \return Returns a selection containing the copied objects,
+ * excluding attached objects.  If the destination revision isn't
+ * transient or there is not enough memory, returns \c NULL.
  *
  * \note You should free the returned selection using \ref
  * xorn_free_selection once it isn't needed any more.  */
@@ -418,6 +445,7 @@ xorn_selection_t xorn_copy_objects(xorn_revision_t dest,
 	std::map<xorn_object_t, obstate *>::const_iterator i
 		= src->obstates.begin();
 	std::set<xorn_object_t>::const_iterator j = sel->begin();
+	std::vector<xorn_object_t> copied;
 
 	while (i != src->obstates.end() && j != sel->end())
 	    if (i->first < *j)
@@ -426,16 +454,12 @@ xorn_selection_t xorn_copy_objects(xorn_revision_t dest,
 		++j;
 	    else {
 		try {
-			xorn_object_t ob = copy_object(dest, i->second);
-			try {
-				rsel->insert(ob);
-			} catch (std::bad_alloc const &) {
-				xorn_delete_object(dest, ob);
-				throw;
-			}
+			xorn_object_t ob = copy_object(
+			    dest, src, i->first, i->second, NULL, copied);
+			rsel->insert(ob);
 		} catch (std::bad_alloc const &) {
-			for (xorn_selection::const_iterator i = rsel->begin();
-			     i != rsel->end(); ++i)
+			for (std::vector<xorn_object_t>::const_iterator i
+				     = copied.begin(); i != copied.end(); ++i)
 				xorn_delete_object(dest, *i);
 			delete rsel;
 			return NULL;

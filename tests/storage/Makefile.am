@@ -21,6 +21,7 @@ LDADD = ../../src/storage/libxornstorage.la
 TESTS = snippets/example \
 	snippets/functions \
 	snippets/motivation \
+	copy_attached \
 	copy_object \
 	copy_objects \
 	delete_sel \
