@@ -27,7 +27,8 @@ scheme_api_sources = \
 	scheme_config.c \
 	scheme_closure.c \
 	scheme_deprecated.c \
-	edascmhookproxy.c
+	edascmhookproxy.c \
+	edascmvaluetypes.c
 
 libgeda_la_SOURCES = \
 	$(scheme_api_sources) \
