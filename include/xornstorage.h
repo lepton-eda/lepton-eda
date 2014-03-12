@@ -76,6 +76,9 @@ int xorn_get_object_location(
 int xorn_get_objects(
 	xorn_revision_t rev,
 	xorn_object_t **objects_return, size_t *count_return);
+int xorn_get_objects_attached_to(
+	xorn_revision_t rev, xorn_object_t ob,
+	xorn_object_t **objects_return, size_t *count_return);
 int xorn_get_selected_objects(
 	xorn_revision_t rev, xorn_selection_t sel,
 	xorn_object_t **objects_return, size_t *count_return);

@@ -154,6 +154,42 @@ int xorn_get_objects(
 	return 0;
 }
 
+/** \brief Return a list of objects in a revision which are attached
+ *         to a certain object.
+ *
+ * If \a ob is \c NULL, return all objects in the revision which are
+ * *not* attached.  The objects are returned in their actual order.
+ * Objects attached to the returned objects are not returned.
+ *
+ * The same semantics apply as in \ref xorn_get_objects.  See there
+ * for a more detailed description.  */
+
+int xorn_get_objects_attached_to(
+	xorn_revision_t rev, xorn_object_t ob,
+	xorn_object_t **objects_return, size_t *count_return)
+{
+	if (ob != NULL && rev->obstates.find(ob) == rev->obstates.end())
+		return -1;
+	std::map<xorn_object_t, std::vector<xorn_object_t> >::const_iterator i
+		= rev->children.find(ob);
+	if (i == rev->children.end()) {
+		*objects_return = NULL;
+		*count_return = 0;
+		return 0;
+	}
+
+	*objects_return = (xorn_object_t *) malloc(
+		i->second.size() * sizeof(xorn_object_t));
+	*count_return = 0;
+	if (*objects_return == NULL && !i->second.empty())
+		return -1;
+
+	for (std::vector<xorn_object_t>::const_iterator j
+		     = i->second.begin(); j != i->second.end(); ++j)
+		(*objects_return)[(*count_return)++] = *j;
+	return 0;
+}
+
 /** \brief Return a list of objects which are in a revision as well as
  *         in a selection.
  *

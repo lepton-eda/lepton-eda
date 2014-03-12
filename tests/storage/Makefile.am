@@ -34,6 +34,7 @@ TESTS = snippets/example \
 	is_selected \
 	multiple_assignments \
 	null \
+	query_attached \
 	reloc_attach \
 	reloc_order \
 	select_by_attribute \
