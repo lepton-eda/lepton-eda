@@ -26,7 +26,7 @@ void relocate_and_assert_3(
 	xorn_object_t *objects;
 	size_t count;
 
-	assert(xorn_relocate_object(rev, ob, insert_before) == result);
+	assert(xorn_relocate_object(rev, ob, NULL, insert_before) == result);
 
 	assert(xorn_get_objects(rev, &objects, &count) == 0);
 	assert(objects != NULL);
@@ -45,7 +45,7 @@ void relocate_and_assert_2(
 	xorn_object_t *objects;
 	size_t count;
 
-	assert(xorn_relocate_object(rev, ob, insert_before) == result);
+	assert(xorn_relocate_object(rev, ob, NULL, insert_before) == result);
 
 	assert(xorn_get_objects(rev, &objects, &count) == 0);
 	assert(objects != NULL);

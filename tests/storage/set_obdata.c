@@ -20,10 +20,45 @@
 #include <string.h>
 
 
-static void check(xorn_revision_t rev, xorn_object_t ob0, xorn_object_t ob1)
+static void check_not_attached(xorn_revision_t rev,
+			       xorn_object_t ob0, xorn_object_t ob1)
 {
 	xorn_object_t *objects;
 	size_t count;
+
+	assert(xorn_get_objects(rev, &objects, &count) == 0);
+	assert(objects != NULL);
+	assert(count == 2);
+	assert(objects[0] == ob0);
+	assert(objects[1] == ob1);
+	free(objects);
+
+	assert(xorn_relocate_object(rev, ob0, NULL, NULL) == 0);
+
+	assert(xorn_get_objects(rev, &objects, &count) == 0);
+	assert(objects != NULL);
+	assert(count == 2);
+	assert(objects[0] == ob1);
+	assert(objects[1] == ob0);
+	free(objects);
+
+	assert(xorn_relocate_object(rev, ob0, NULL, ob1) == 0);
+}
+
+static void check_attached(xorn_revision_t rev,
+			   xorn_object_t ob0, xorn_object_t ob1)
+{
+	xorn_object_t *objects;
+	size_t count;
+
+	assert(xorn_get_objects(rev, &objects, &count) == 0);
+	assert(objects != NULL);
+	assert(count == 2);
+	assert(objects[0] == ob0);
+	assert(objects[1] == ob1);
+	free(objects);
+
+	assert(xorn_relocate_object(rev, ob0, NULL, NULL) == 0);
 
 	assert(xorn_get_objects(rev, &objects, &count) == 0);
 	assert(objects != NULL);
@@ -54,50 +89,100 @@ int main()
 	assert(xornsch_set_net_data(rev, ob0, &net_data) == 0);
 	assert(xornsch_set_text_data(rev, ob1, &text_data) == 0);
 
-	check(rev, ob0, ob1);
+	check_not_attached(rev, ob0, ob1);
 
 
 	/* data can be set without the object being reordered */
 
 	assert(xornsch_set_line_data(rev, ob0, &line_data) == 0);
-	check(rev, ob0, ob1);
+	check_not_attached(rev, ob0, ob1);
 	assert(xornsch_set_net_data(rev, ob0, &net_data) == 0);
-	check(rev, ob0, ob1);
+	check_not_attached(rev, ob0, ob1);
 
 	assert(xornsch_set_line_data(rev, ob1, &line_data) == 0);
-	check(rev, ob0, ob1);
+	check_not_attached(rev, ob0, ob1);
 	assert(xornsch_set_net_data(rev, ob1, &net_data) == 0);
-	check(rev, ob0, ob1);
+	check_not_attached(rev, ob0, ob1);
 
 	/* objects are re-added at the end */
 
 	xorn_delete_object(rev, ob0);
 	assert(xornsch_set_line_data(rev, ob0, &line_data) == 0);
-	check(rev, ob1, ob0);
+	check_not_attached(rev, ob1, ob0);
 	xorn_delete_object(rev, ob0);
 	assert(xornsch_set_line_data(rev, ob0, &line_data) == 0);
-	check(rev, ob1, ob0);
+	check_not_attached(rev, ob1, ob0);
 
 	xorn_delete_object(rev, ob1);
 	assert(xornsch_set_line_data(rev, ob1, &line_data) == 0);
-	check(rev, ob0, ob1);
+	check_not_attached(rev, ob0, ob1);
 	xorn_delete_object(rev, ob1);
 	assert(xornsch_set_line_data(rev, ob1, &line_data) == 0);
-	check(rev, ob0, ob1);
+	check_not_attached(rev, ob0, ob1);
 
 	xorn_delete_object(rev, ob0);
 	assert(xornsch_set_net_data(rev, ob0, &net_data) == 0);
-	check(rev, ob1, ob0);
+	check_not_attached(rev, ob1, ob0);
 	xorn_delete_object(rev, ob0);
 	assert(xornsch_set_net_data(rev, ob0, &net_data) == 0);
-	check(rev, ob1, ob0);
+	check_not_attached(rev, ob1, ob0);
 
 	xorn_delete_object(rev, ob1);
 	assert(xornsch_set_net_data(rev, ob1, &net_data) == 0);
-	check(rev, ob0, ob1);
+	check_not_attached(rev, ob0, ob1);
 	xorn_delete_object(rev, ob1);
 	assert(xornsch_set_net_data(rev, ob1, &net_data) == 0);
-	check(rev, ob0, ob1);
+	check_not_attached(rev, ob0, ob1);
+
+
+	/* can change ob0 to any type while no object is attached */
+
+	assert(xornsch_set_line_data(rev, ob0, &line_data) == 0);
+	check_not_attached(rev, ob0, ob1);
+	assert(xornsch_set_component_data(rev, ob0, &component_data) == 0);
+	check_not_attached(rev, ob0, ob1);
+	assert(xornsch_set_text_data(rev, ob0, &text_data) == 0);
+	check_not_attached(rev, ob0, ob1);
+	assert(xornsch_set_net_data(rev, ob0, &net_data) == 0);
+	check_not_attached(rev, ob0, ob1);
+
+	/* can change type of ob1 while not attached */
+
+	assert(xornsch_set_line_data(rev, ob1, &line_data) == 0);
+	check_not_attached(rev, ob0, ob1);
+	assert(xornsch_set_net_data(rev, ob1, &net_data) == 0);
+	check_not_attached(rev, ob0, ob1);
+	assert(xornsch_set_component_data(rev, ob1, &component_data) == 0);
+	check_not_attached(rev, ob0, ob1);
+	assert(xornsch_set_text_data(rev, ob1, &text_data) == 0);
+	check_not_attached(rev, ob0, ob1);
+
+
+	assert(xorn_relocate_object(rev, ob1, ob0, NULL) == 0);
+	check_attached(rev, ob0, ob1);
+
+
+	/* can't change ob0 to line or text while an object is attached */
+
+	assert(xornsch_set_line_data(rev, ob0, &line_data) == -1);
+	check_attached(rev, ob0, ob1);
+	assert(xornsch_set_net_data(rev, ob0, &net_data) == 0);
+	check_attached(rev, ob0, ob1);
+	assert(xornsch_set_component_data(rev, ob0, &component_data) == 0);
+	check_attached(rev, ob0, ob1);
+	assert(xornsch_set_text_data(rev, ob0, &text_data) == -1);
+	check_attached(rev, ob0, ob1);
+
+	/* can't change type of ob1 while attached */
+
+	assert(xornsch_set_line_data(rev, ob1, &line_data) == -1);
+	check_attached(rev, ob0, ob1);
+	assert(xornsch_set_net_data(rev, ob1, &net_data) == -1);
+	check_attached(rev, ob0, ob1);
+	assert(xornsch_set_component_data(rev, ob1, &component_data) == -1);
+	check_attached(rev, ob0, ob1);
+	assert(xornsch_set_text_data(rev, ob1, &text_data) == 0);
+	check_attached(rev, ob0, ob1);
 
 
 	xorn_free_revision(rev);

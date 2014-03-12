@@ -73,12 +73,13 @@ void const *xorn_get_object_data(xorn_revision_t rev, xorn_object_t ob,
 	return i->second->data;
 }
 
-/** \brief Get the index of an object in a revision's object list.
+/** \brief Get the index of an object relative to its sibling objects.
  *
  * \param rev                Revision to examine
  * \param ob                 Object whose index to return
  * \param position_return    Pointer to a variable where to write the
- *                           index of \a ob in the object list
+ *                           index of \a ob relative to its sibling
+ *                           objects
  *
  * The pointer argument may be \c NULL to indicate that the caller
  * isn't interested in the return value.
@@ -90,13 +91,34 @@ void const *xorn_get_object_data(xorn_revision_t rev, xorn_object_t ob,
 int xorn_get_object_location(xorn_revision_t rev, xorn_object_t ob,
 			     unsigned int *position_return)
 {
-	std::vector<xorn_object_t>::const_iterator i =
-		find(rev->sequence.begin(), rev->sequence.end(), ob);
-	if (i == rev->sequence.end())
+	std::map<xorn_object_t, xorn_object_t>::const_iterator i
+		= rev->parent.find(ob);
+	if (i == rev->parent.end())
 		return -1;
-	if (position_return != NULL)
-		*position_return = i - rev->sequence.begin();
+
+	if (position_return != NULL) {
+		std::vector<xorn_object_t> const &children
+			= rev->children[i->second];
+		*position_return = find(children.begin(),
+					children.end(), ob) - children.begin();
+	}
 	return 0;
+}
+
+static void dump_children(xorn_revision_t rev, xorn_object_t attached_to,
+			  xorn_object_t **objects_return, size_t *count_return)
+{
+	std::map<xorn_object_t, std::vector<xorn_object_t> >::const_iterator i
+		= rev->children.find(attached_to);
+
+	if (i == rev->children.end())
+		return;
+
+	for (std::vector<xorn_object_t>::const_iterator j
+		     = i->second.begin(); j != i->second.end(); ++j) {
+		(*objects_return)[(*count_return)++] = *j;
+		dump_children(rev, *j, objects_return, count_return);
+	}
 }
 
 /** \brief Return a list of all objects in a revision.
@@ -107,7 +129,8 @@ int xorn_get_object_location(xorn_revision_t rev, xorn_object_t ob,
  * pointed to by \a count_return.  If the list is empty or there is
  * not enough memory, \a *objects_return may be set to \c NULL.
  *
- * The objects are returned in their actual order.
+ * The objects are returned in their actual order.  Attached objects
+ * are listed after the object they are attached to.
  *
  * \return Returns \c 0 on success and \c -1 if there is not enough
  *         memory.
@@ -127,9 +150,7 @@ int xorn_get_objects(
 	if (*objects_return == NULL && !rev->obstates.empty())
 		return -1;
 
-	for (std::vector<xorn_object_t>::const_iterator i
-		     = rev->sequence.begin(); i != rev->sequence.end(); ++i)
-		(*objects_return)[(*count_return)++] = *i;
+	dump_children(rev, NULL, objects_return, count_return);
 	return 0;
 }
 
