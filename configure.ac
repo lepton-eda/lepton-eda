@@ -77,6 +77,9 @@ AX_CHECK_GUILE([1.8.0])
 PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.20.0], ,
   AC_MSG_ERROR([GLib 2.20.0 or later is required.]))
 
+PKG_CHECK_MODULES(GIO, [gio-2.0 >= 2.20.0], ,
+  AC_MSG_ERROR([GIO 2.20.0 or later is required.]))
+
 PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.18.0], ,
   AC_MSG_ERROR([GTK+ 2.18.0 or later is required.]))
 
