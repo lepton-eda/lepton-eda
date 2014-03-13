@@ -19,6 +19,12 @@ Notable changes in gEDA/gaf 1.9.2
   attribute instead of "file=" only for include blocks and only in
   embedding mode has been removed.
 
+* The following scripts and programs have been moved from the `utils'
+  directory to a new `contrib' directory and are no longer installed
+  by default:
+
+         smash_megafile          olib  
+
 Notable changes in gEDA/gaf 1.9.1
 =================================
 
