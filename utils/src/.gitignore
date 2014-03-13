@@ -1,15 +1,11 @@
 Makefile.in
 .deps
 Makefile
-convert_sym
 sarlacc_schem
-gmk_sym
 gsch2pcb
 grenum
 *.o
 *~
-convert_sym.exe
 sarlacc_schem.exe
-gmk_sym.exe
 grenum.exe
 gsch2pcb.exe

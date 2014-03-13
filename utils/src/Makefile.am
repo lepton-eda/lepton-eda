@@ -1,14 +1,9 @@
 ## Process this file with automake to produce Makefile.in
 
-bin_PROGRAMS = gmk_sym convert_sym sarlacc_schem \
-	       gsch2pcb grenum
+bin_PROGRAMS = sarlacc_schem gsch2pcb grenum
 
 # don't forget all *.h files */
-gmk_sym_SOURCES = gmk_sym.c char_width.c
 grenum_SOURCES = grenum.c grenum.h
-
-convert_sym_SOURCES = convert_sym.c char_width.c
-convert_sym_LDFLAGS = -lm
 
 gsch2pcb_SOURCES = gsch2pcb.c
 gsch2pcb_CPPFLAGS = \

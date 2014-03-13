@@ -23,7 +23,8 @@ Notable changes in gEDA/gaf 1.9.2
   directory to a new `contrib' directory and are no longer installed
   by default:
 
-         smash_megafile          olib  
+         smash_megafile          olib
+         gmk_sym                 convert_sym
 
 Notable changes in gEDA/gaf 1.9.1
 =================================

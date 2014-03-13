@@ -1,0 +1,6 @@
+.deps
+*.o
+convert_sym.1
+convert_sym
+gmk_sym
+gmk_sym.1
