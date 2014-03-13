@@ -129,12 +129,6 @@ end in mils.
 \brief Schematic picture.
 
 Valid in schematic and symbol files.
-The filename is not used if the picture is embedded.
-
-Unimplemented fields:
-- embedded: Embedded or link to the picture file.
-- filename: Path and filename of a not embedded picture.
-- picture_data: Serialized picture
 
 \var xornsch_picture::pos
 \brief Coordinates of the lower left corner in mils.
@@ -150,6 +144,11 @@ The angle of the picture can only take on one of the following values:
 
 \var xornsch_picture::mirror
 \brief Mirrored or normal picture.
+
+\var xornsch_picture::pixmap
+\brief Reference to the pixmap data.
+
+How this field is used is up to the user of the library.
 
 *//*-----------------------------------------------------------------------*//**
 
@@ -387,12 +386,6 @@ whichend is set to \c 1.
 
 Valid in schematic files only.
 
-Unimplemented fields:
-- basename: The filename of the component
-
-The just basename is the filename of the component. This filename is
-not the full path.
-
 \var xornsch_component::pos
 \brief Origin coordinates in mils.
 
@@ -406,6 +399,11 @@ Can only be 0, 90, 180, or 270.
 
 \var xornsch_component::mirror
 \brief Is the component mirrored around the Y axis?
+
+\var xornsch_component::symbol
+\brief Reference to the used symbol.
+
+How this field is used is up to the user of the library.
 
 *//*-----------------------------------------------------------------------*//**
 

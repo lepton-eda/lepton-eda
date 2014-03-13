@@ -35,6 +35,7 @@ TESTS = snippets/example \
 	is_selected \
 	multiple_assignments \
 	null \
+	pointer \
 	query_attached \
 	reloc_attach \
 	reloc_order \

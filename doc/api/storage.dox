@@ -119,3 +119,22 @@
  *
  * \var xorn_double2d::y
  * \brief Y coordinate or offset.  */
+
+/** \struct xorn_pointer
+ *  \brief Arbitrary reference-counted pointer.
+ *
+ * \ref xorn_add_object and \ref xorn_set_object_data do not “steal” a
+ * reference to the pointer.
+ *
+ * \var xorn_pointer::ptr
+ * \brief The actual pointer.
+ *
+ * \var xorn_pointer::incref
+ * \brief A function which is called when the pointer is copied.
+ *
+ * May be \c NULL.
+ *
+ * \var xorn_pointer::decref
+ * \brief A function which is called when a copy of the pointer is deleted.
+ *
+ * May be \c NULL.  */
