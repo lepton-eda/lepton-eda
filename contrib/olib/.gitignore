@@ -1,0 +1,5 @@
+olib
+olib.exe
+.deps
+*.o
+olib.c

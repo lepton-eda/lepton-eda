@@ -303,5 +303,6 @@ AC_CONFIG_FILES([Makefile
 
                  contrib/Makefile
                  contrib/smash_megafile/Makefile
+                 contrib/olib/Makefile
 ])
 AC_OUTPUT

@@ -1,2 +1,2 @@
-SUBDIRS = smash_megafile
+SUBDIRS = smash_megafile olib
 

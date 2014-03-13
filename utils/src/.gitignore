@@ -4,8 +4,6 @@ Makefile
 convert_sym
 sarlacc_schem
 gmk_sym
-olib
-olib.c
 gsch2pcb
 grenum
 *.o
@@ -13,6 +11,5 @@ grenum
 convert_sym.exe
 sarlacc_schem.exe
 gmk_sym.exe
-olib.exe
 grenum.exe
 gsch2pcb.exe
