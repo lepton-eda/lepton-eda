@@ -963,8 +963,8 @@
 (global-set-key "E T" '&edit-translate)
 (global-set-key "E <Shift>colon" '&edit-invoke-macro)
 (global-set-key "E B" '&edit-embed)
-(global-set-key "E U" '&edit-unembed)
-(global-set-key "E P" '&edit-update)
+(global-set-key "E <Shift>B" '&edit-unembed)
+(global-set-key "E U" '&edit-update)
 (global-set-key "E N" '&edit-show-hidden)
 
 (global-set-key "F W" '&file-new-window)
