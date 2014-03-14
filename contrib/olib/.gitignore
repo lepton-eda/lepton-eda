@@ -2,4 +2,5 @@ olib
 olib.exe
 .deps
 *.o
+*.1
 olib.c

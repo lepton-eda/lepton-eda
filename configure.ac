@@ -274,7 +274,6 @@ AC_CONFIG_FILES([Makefile
                  utils/lib/Makefile
                  utils/lib/system-gschlasrc
                  utils/scripts/Makefile
-                 utils/scripts/sw2asc
                  utils/src/Makefile
                  utils/tests/Makefile
                  utils/tests/gxyrs/Makefile
@@ -306,5 +305,7 @@ AC_CONFIG_FILES([Makefile
                  contrib/olib/Makefile
                  contrib/gmk_sym/Makefile
                  contrib/sarlacc_schem/Makefile
+                 contrib/scripts/Makefile
+                 contrib/scripts/sw2asc
 ])
 AC_OUTPUT

@@ -25,6 +25,9 @@ Notable changes in gEDA/gaf 1.9.2
 
          smash_megafile          olib
          gmk_sym                 convert_sym
+         sarlacc_schem           sarlacc_sym
+         pads_backannotate       sw2asc
+         gnet_hier_verilog.sh
 
 Notable changes in gEDA/gaf 1.9.1
 =================================
