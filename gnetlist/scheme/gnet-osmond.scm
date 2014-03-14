@@ -20,7 +20,7 @@
 ; Export a design to Osmond PCB
 
 (define (osmond output-filename)
-        (set-current-output-port (open-output-file output-filename))
+        (set-current-output-port (gnetlist:output-port output-filename))
         (for-each osmond:part packages)
         (for-each osmond:signal all-unique-nets))
 
