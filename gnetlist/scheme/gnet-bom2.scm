@@ -41,10 +41,12 @@
           (open-input-file filename)
           (if (backend-option-ref options 'attribs) #f
               (begin
-                (display (string-append "ERROR: Attribute file '" filename "' not found. You must do one of the following:\n"))
-                (display "         - Create an 'attribs' file\n")
-                (display "         - Specify an attribute file using -Oattrib_file=<filename>\n")
-                (display "         - Specify which attributes to include using -Oattribs=attrib1,attrib2,... (no spaces)\n")
+                (format (current-error-port)
+"ERROR: Attribute file '~A' not found. You must do one of the following:\n"
+"         - Create an 'attribs' file\n"
+"         - Specify an attribute file using -Oattrib_file=<filename>\n"
+"         - Specify which attributes to include using -Oattribs=attrib1,attrib2,... (no spaces)\n"
+filename)
                 (primitive-exit 1)))))))
 
 (define bom2
@@ -52,43 +54,44 @@
     (let* ((options (backend-getopt
                      (gnetlist:get-backend-arguments)
                      '((attrib_file (value #t)) (attribs (value #t)))))
-           (port (gnetlist:output-port output-filename))
            (attriblist (bom2:parseconfig (bom2:open-input-file options) options)))
+      (set-current-output-port (gnetlist:output-port output-filename))
       (and attriblist
            (begin
-             (bom2:printlist (append (cons 'refdes attriblist) (list "qty")) port #\:)
-             (newline port)
-             (bom2:printbom port (bom2:components packages attriblist) 0)
-             (close-output-port port))))))
+             (bom2:printlist (append (cons 'refdes attriblist) (list "qty")) #\:)
+             (newline)
+             (bom2:printbom (bom2:components packages attriblist) 0)
+             ))
+      (close-output-port (current-output-port)))))
 
 (define bom2:printbom
-  (lambda (port bomlist count)
+  (lambda (bomlist count)
     (if (not (null? bomlist))
       (if (not (null? (caar bomlist)))
         (begin
-          (display (caaar bomlist) port)
+          (display (caaar bomlist))
           (if (not (null? (cdaar bomlist)))
-            (write-char #\, port))
-          (bom2:printbom port (cons (cons (cdaar bomlist)(cdar bomlist))(cdr bomlist)) (+ count 1))
+            (write-char #\,))
+          (bom2:printbom (cons (cons (cdaar bomlist)(cdar bomlist))(cdr bomlist)) (+ count 1))
         )
         (begin
-          (display #\: port)
-          (bom2:printlist (cdar bomlist) port #\:)
-          (display #\: port)
-          (display count port)
-          (newline port)
-          (bom2:printbom port (cdr bomlist) 0)
+          (display #\:)
+          (bom2:printlist (cdar bomlist) #\:)
+          (display #\:)
+          (display count)
+          (newline)
+          (bom2:printbom (cdr bomlist) 0)
         )))))
 
 (define bom2:printlist
-  (lambda (ls port delimiter)
+  (lambda (ls delimiter)
     (if (null? ls)
         #f
         (begin
-          (display (car ls) port)
+          (display (car ls))
           (if (not (null? (cdr ls)))
-            (write-char delimiter port))
-          (bom2:printlist (cdr ls) port delimiter)))))
+            (write-char delimiter))
+          (bom2:printlist (cdr ls) delimiter)))))
 
 ; Parses attrib file. Returns a list of read attributes.
 (define bom2:parseconfig
