@@ -46,24 +46,6 @@
 ;; no header for components
 
 ;;
-;; footer for components section
-;;
-(define (bae:end-components)
-  (display ""))
-
-;;
-;; header for renamed section
-;;
-(define (bae:start-renamed-nets)
-  (display ""))
-
-;;
-;; footer for renamed section
-;;
-(define (bae:end-renamed-nets)
-  (display ""))
-
-;;
 ;; header for nets section
 ;;
 (define (bae:start-nets)
@@ -91,21 +73,6 @@
            (display ";")
            (newline)
            (bae:components (cdr ls))))))
-
-;;
-;; renamed nets writing
-;;
-(define (bae:renamed-nets ls)
-    (if (not (null? ls))
-       (let ((renamed-pair (car ls)))
-          (begin
-;;;          (display renamed-pair) (newline)
-;;;          (display (car renamed-pair))
-;;;          (display " -> ")
-;;;          (display (car (cdr renamed-pair)))
-;;;          (newline)
-             (display "")
-             (bae:renamed-nets (cdr ls))))))
 
 ;;
 ;; Display the individual net connections
@@ -161,10 +128,6 @@
       (bae:write-top-header)
       (bae:start-components)
       (bae:components packages)
-      (bae:end-components)
-      (bae:start-renamed-nets)
-      (bae:renamed-nets (gnetlist:get-renamed-nets "dummy"))
-      (bae:end-renamed-nets)
       (bae:start-nets)
       (bae:nets)
       (bae:end-nets))
