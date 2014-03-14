@@ -1,11 +1,9 @@
 Makefile.in
 .deps
 Makefile
-sarlacc_schem
 gsch2pcb
 grenum
 *.o
 *~
-sarlacc_schem.exe
 grenum.exe
 gsch2pcb.exe

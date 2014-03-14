@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-bin_PROGRAMS = sarlacc_schem gsch2pcb grenum
+bin_PROGRAMS = gsch2pcb grenum
 
 # don't forget all *.h files */
 grenum_SOURCES = grenum.c grenum.h
@@ -12,10 +12,6 @@ gsch2pcb_CPPFLAGS = \
 gsch2pcb_CFLAGS = $(GLIB_CFLAGS)
 gsch2pcb_LDFLAGS = $(GLIB_LIBS)
 
-sarlacc_schem_SOURCES = sarlacc_schem.c
-sarlacc_schem_CFLAGS = $(GLIB_CFLAGS) $(GUILE_CFLAGS) $(GDK_PIXBUF_CFLAGS)
-sarlacc_schem_LDFLAGS = $(GLIB_LIBS) $(GUILE_LIBS) $(GDK_PIXBUF_LIBS)
-sarlacc_schem_LDADD = $(top_builddir)/libgeda/src/libgeda.la
 
 AM_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLAGS)
 AM_CPPFLAGS = -I$(top_srcdir)/libgeda/include -I$(srcdir)/../include \

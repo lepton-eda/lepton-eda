@@ -1,2 +1,3 @@
-SUBDIRS = smash_megafile olib gmk_sym
+SUBDIRS = smash_megafile olib gmk_sym sarlacc_schem
+
 
