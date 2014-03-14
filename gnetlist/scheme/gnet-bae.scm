@@ -33,157 +33,142 @@
 ;;
 ;; Top level header
 ;;
-(define bae:write-top-header
-   (lambda (p)
-      (display "LAYOUT board;" p)
-      (newline p)))
+(define (bae:write-top-header)
+  (display "LAYOUT board;")
+  (newline))
 
 ;;
 ;; header for components section
 ;;
-(define bae:start-components
-   (lambda (p)
-      (display "PARTS" p)
-      (newline p)))
+(define (bae:start-components)
+  (display "PARTS")
+  (newline))
 ;; no header for components
 
 ;;
 ;; footer for components section
 ;;
-(define bae:end-components
-   (lambda (p)
-      (display "" p)))
+(define (bae:end-components)
+  (display ""))
 
 ;;
 ;; header for renamed section
 ;;
-(define bae:start-renamed-nets
-   (lambda (p)
-      (display "" p)))
+(define (bae:start-renamed-nets)
+  (display ""))
 
 ;;
 ;; footer for renamed section
 ;;
-(define bae:end-renamed-nets
-   (lambda (p)
-      (display "" p)))
+(define (bae:end-renamed-nets)
+  (display ""))
 
 ;;
 ;; header for nets section
 ;;
-(define bae:start-nets
-   (lambda (p)
-      (display "CONNECT" p)
-      (newline p)))
+(define (bae:start-nets)
+  (display "CONNECT")
+  (newline))
 
 ;;
 ;; footer for net section
 ;;
-(define bae:end-nets
-   (lambda (p)
-      (display "END." p)
-      (newline p)))
+(define (bae:end-nets)
+  (display "END.")
+  (newline))
 
 ;;
 ;; Top level component writing
 ;;
-(define bae:components
-   (lambda (port ls)
-      (if (not (null? ls))
-         (let ((package (car ls)))
-            (begin
-               (display "    " port)
-               (display package port)
-               (display " : " port)
-               (display (gnetlist:get-package-attribute package  "footprint") port)
-               (display ";" port)
-               (newline port)
-               (bae:components port (cdr ls)))))))
+(define (bae:components ls)
+  (if (not (null? ls))
+     (let ((package (car ls)))
+        (begin
+           (display "    ")
+           (display package)
+           (display " : ")
+           (display (gnetlist:get-package-attribute package  "footprint"))
+           (display ";")
+           (newline)
+           (bae:components (cdr ls))))))
 
 ;;
 ;; renamed nets writing
 ;;
-(define bae:renamed-nets
-   (lambda (port ls)
-      (if (not (null? ls))
-         (let ((renamed-pair (car ls)))
-            (begin
-;;;            (display renamed-pair) (newline)
-;;;            (display (car renamed-pair) port)
-;;;            (display " -> " port)
-;;;            (display (car (cdr renamed-pair)) port)
-;;;            (newline port)
-               (display "" port)
-               (bae:renamed-nets port (cdr ls)))))))
+(define (bae:renamed-nets ls)
+    (if (not (null? ls))
+       (let ((renamed-pair (car ls)))
+          (begin
+;;;          (display renamed-pair) (newline)
+;;;          (display (car renamed-pair))
+;;;          (display " -> ")
+;;;          (display (car (cdr renamed-pair)))
+;;;          (newline)
+             (display "")
+             (bae:renamed-nets (cdr ls))))))
 
 ;;
 ;; Display the individual net connections
 ;;
-(define bae:display-connections
-   (lambda (nets port)
-      (if (not (null? nets))
-         (begin
-            (let ((package (car (car nets))))
-               (display package port)
-               (write-char #\. port)
-               (display (car (cdr (car nets))) port))
-            (if (not (null? (cdr nets)))
-               (begin
-                  (display #\= port)))
-            (bae:display-connections (cdr nets) port)))))
+(define (bae:display-connections nets)
+  (if (not (null? nets))
+     (begin
+        (let ((package (car (car nets))))
+           (display package)
+           (write-char #\.)
+           (display (car (cdr (car nets)))))
+        (if (not (null? (cdr nets)))
+           (begin
+              (display #\=)))
+        (bae:display-connections (cdr nets)))))
 
 ;;
 ;; Display all nets
 ;;
-(define bae:display-name-nets
-   (lambda (port nets)
-      (begin
-         (bae:display-connections nets port)
-         (write-char #\; port))))
+(define (bae:display-name-nets nets)
+  (begin
+     (bae:display-connections nets)
+     (write-char #\;)))
 
 ;;
 ;; Write netname : uref pin, uref pin, ...
 ;;
-(define bae:write-net
-   (lambda (port netnames)
-      (if (not (null? netnames))
-         (let ((netname (car netnames)))
-            (begin
-               (display "    " port)
-               (display "/'" port)
-               (display netname port)
-               (display "'/ " port)
-               (bae:display-name-nets port (gnetlist:get-all-connections netname))
-               (newline port)
-               (bae:write-net port (cdr netnames)))))))
+(define (bae:write-net netnames)
+  (if (not (null? netnames))
+    (let ((netname (car netnames)))
+      (begin
+        (display "    ")
+        (display "/'")
+        (display netname)
+        (display "'/ ")
+        (bae:display-name-nets (gnetlist:get-all-connections netname))
+        (newline)
+        (bae:write-net (cdr netnames))))))
 
 ;;
 ;; Write the net part of the gEDA format
 ;;
-(define bae:nets
-   (lambda (port)
-      (let ((all-uniq-nets (gnetlist:get-all-unique-nets "dummy")))
-         (bae:write-net port all-uniq-nets))))
+(define (bae:nets)
+  (let ((all-uniq-nets (gnetlist:get-all-unique-nets "dummy")))
+     (bae:write-net all-uniq-nets)))
 
 ;;; Highest level function
 ;;; Write my special testing netlist format
 ;;;
-(define bae
-   (lambda (output-filename)
-      (let ((port (gnetlist:output-port output-filename)))
-         (begin
-;;;         (gnetlist:set-netlist-mode "gEDA") No longer needed
-            (bae:write-top-header port)
-            (bae:start-components port)
-            (bae:components port packages)
-            (bae:end-components port)
-            (bae:start-renamed-nets port)
-            (bae:renamed-nets port (gnetlist:get-renamed-nets "dummy"))
-            (bae:end-renamed-nets port)
-            (bae:start-nets port)
-            (bae:nets port)
-            (bae:end-nets port))
-         (close-output-port port))))
+(define (bae output-filename)
+  (set-current-output-port (gnetlist:output-port output-filename))
+    (begin
+      (bae:write-top-header)
+      (bae:start-components)
+      (bae:components packages)
+      (bae:end-components)
+      (bae:start-renamed-nets)
+      (bae:renamed-nets (gnetlist:get-renamed-nets "dummy"))
+      (bae:end-renamed-nets)
+      (bae:start-nets)
+      (bae:nets)
+      (bae:end-nets))
+    (close-output-port (current-output-port)))
 
 ;;
 ;; gEDA's native test netlist format specific functions ends
