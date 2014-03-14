@@ -8,8 +8,7 @@ bin_SCRIPTS = refdes_renum \
 
 noinst_SCRIPTS = gschupdate gsymupdate
 
-EXTRA_DIST = convert_sym.awk gpstoimage \
-	     gschupdate gsymupdate refdes_renum gsymfix \
+EXTRA_DIST = gschupdate gsymupdate refdes_renum gsymfix \
 	     tragesym pcb_backannotate garchive.py \
 	     schdiff
 

@@ -29,6 +29,12 @@ Notable changes in gEDA/gaf 1.9.2
          pads_backannotate       sw2asc
          gnet_hier_verilog.sh
 
+* `gpstoimage' has been removed from the distribution; equivalent 
+  functionality is provided by the `gaf' command.
+
+* `convert_sym.awk' has been removed from the distribution; equivalent
+  functionality is provided by the `convert_sym' command.
+
 Notable changes in gEDA/gaf 1.9.1
 =================================
 
