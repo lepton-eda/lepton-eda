@@ -73,28 +73,34 @@ void const *xorn_get_object_data(xorn_revision_t rev, xorn_object_t ob,
 	return i->second->data;
 }
 
-/** \brief Get the index of an object relative to its sibling objects.
+/** \brief Get the location of an object in the object structure.
  *
  * \param rev                Revision to examine
- * \param ob                 Object whose index to return
+ * \param ob                 Object whose location to return
+ * \param attached_to_return Pointer to a variable where to write the
+ *                           object to which \a ob is attached
  * \param position_return    Pointer to a variable where to write the
  *                           index of \a ob relative to its sibling
  *                           objects
  *
- * The pointer argument may be \c NULL to indicate that the caller
+ * Both pointer arguments may be \c NULL to indicate that the caller
  * isn't interested in the return value.
  *
- * \return Returns \c 0 and writes the appropriate value to \a
- * position_return if \a ob exists in \a rev.  Otherwise, doesn't
- * touch the value and returns \c -1.  */
+ * \return Returns \c 0 and writes the appropriate values to \a
+ * attached_to_return and \a position_return if \a ob exists in \a
+ * rev.  Otherwise, doesn't touch the values and returns \c -1.  */
 
 int xorn_get_object_location(xorn_revision_t rev, xorn_object_t ob,
+			     xorn_object_t *attached_to_return,
 			     unsigned int *position_return)
 {
 	std::map<xorn_object_t, xorn_object_t>::const_iterator i
 		= rev->parent.find(ob);
 	if (i == rev->parent.end())
 		return -1;
+
+	if (attached_to_return != NULL)
+		*attached_to_return = i->second;
 
 	if (position_return != NULL) {
 		std::vector<xorn_object_t> const &children
