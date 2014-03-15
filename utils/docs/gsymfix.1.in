@@ -38,16 +38,16 @@ warnings.
 .B gsymfix
 accepts the following options:
 .TP
-\-\-help
+.BR -h ", " \-\-help
 Displays this help message.
 .TP
-\-\-verbose
+.B \-\-verbose
 Enables verbose output.
 .TP
-\-\-vverbose
+.B \-\-vverbose
 Enables *very* verbose output.
 .TP
-\-\-version
+.B \-\-version
 Shows the version of this program.
 
 .SH AUTHOR

@@ -11,7 +11,7 @@ use Getopt::Long;
 # don't allow -he to be interpreted as --help
 $Getopt::Long::autoabbrev=0;
 
-&GetOptions(("help" => \&usage, 
+&GetOptions(("help|h" => \&usage, 
 	     "verbose" => \$verbose,
 	     "vverbose" => \$vverbose,
 	     "version" => \&version
@@ -203,7 +203,7 @@ sub usage {
   print "\n";
   print "    $pname accepts the following options:\n";
   print "\n";
-  print "    --help      Displays this help message.\n";
+  print "    --help, -h  Displays this help message.\n";
   print "\n";
   print "    --verbose   Enables verbose output.\n";
   print "\n";

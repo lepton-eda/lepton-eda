@@ -248,7 +248,7 @@ class CmdLineArgs:
 
         #  Get and process command line args
         try:
-            OptList, Args = getopt.getopt(sys.argv[1:], 'aef:ho:v')
+            OptList, Args = getopt.getopt(sys.argv[1:], 'aef:ho:v', ["help"])
         except getopt.error:
             print Usage                # print out usage string if
                                        # user uses invalid flag.
@@ -266,7 +266,7 @@ class CmdLineArgs:
             if Option == '-v':
                 self.VerboseMode = "verbose"
                             
-            if Option == '-h':
+            if Option in ('-h', '--help'):
                 print Usage
                 sys.exit(0)
                 

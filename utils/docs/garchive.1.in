@@ -4,13 +4,12 @@
 garchive \- create and extract gEDA design archives
 
 .SH SYNOPSIS
-.B garchive [
-.I options
-.B ] [-o
-.I output_file
-.B ]
+.B garchive 
+.RI [ options ] 
+.RB [ \-o
+.IR output_file ] 
 .I file
-.B ...
+\&...
 
 .SH DESCRIPTION
 .B garchive
@@ -24,24 +23,27 @@ Archive mode is the default.
 
 .SH OPTIONS
 .TP
-\-f filename
+.BI \-f\  filename
 Optional.  Used in archive mode.  Read files to archive from <filename>
 instead of garchiverc.
 .TP
-\-v
+.B \-v
 Verbose mode.
 .TP
-\-e
+.B \-e
 Extract the archive specified on the command line.
 .TP
-\-a
+.B \-a
 Create an archive. This is the default.
 .TP
-\-o outfile
+.BI \-o\  outfile
 Optional.  Used in archive mode.  Specifies the name of the
 output archive file.  The output file extension should be ".tar.gz".
 If this flag is not specified, the output file name is
 "ProjectArchive.tar.gz".
+.TP
+.BR \-h ", " \-\-help
+Print usage information.
 .SH EXAMPLES
 To create an archive named MyArchive.tar.gz (the files to store listed in
 garchiverc):
