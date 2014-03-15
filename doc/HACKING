@@ -1,0 +1,23 @@
+When running the tests under gdb or valgrind, use the `libtool'
+script, as in:
+
+$ ./libtool --mode=execute gdb tests/storage/some_test
+
+To run the test suite under valgrind, pass the libtool/valgrind
+invocation as the LOG_COMPILER variable:
+
+$ make check LOG_COMPILER="../../libtool --mode=execute \
+			   valgrind --leak-check=full --error-exitcode=1"
+
+You can select a subset of the tests by adding TESTS="test1 test2 ...".
+
+--------------------------------------------------------------------------------
+
+Copyright (C) 2013, 2014 Roland Lutz
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+Texts.  A copy of the license is included in the ``GNU Free
+Documentation License'' file as part of this distribution.

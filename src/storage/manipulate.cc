@@ -34,18 +34,13 @@ static void set_object_data(xorn_revision_t rev, xorn_object_t ob,
 	}
 }
 
-xorn_object_t xorn__add_object(xorn_revision_t rev,
-			       xorn_obtype_t type, void const *data)
+xorn_object_t xorn_add_object(xorn_revision_t rev,
+			      xorn_obtype_t type, void const *data)
 {
 	if (!rev->is_transient)
 		return NULL;
 
-	xorn_object_t ob;
-	try {
-		ob = (xorn_object_t)++next_object_id;
-	} catch (std::bad_alloc const &) {
-		return NULL;
-	}
+	xorn_object_t ob = (xorn_object_t)++next_object_id;
 	try {
 		set_object_data(rev, ob, type, data);
 	} catch (std::bad_alloc const &) {
@@ -54,8 +49,8 @@ xorn_object_t xorn__add_object(xorn_revision_t rev,
 	return ob;
 }
 
-int xorn__set_object_data(xorn_revision_t rev, xorn_object_t ob,
-			  xorn_obtype_t type, void const *data)
+int xorn_set_object_data(xorn_revision_t rev, xorn_object_t ob,
+			 xorn_obtype_t type, void const *data)
 {
 	if (!rev->is_transient)
 		return -1;
@@ -162,7 +157,7 @@ xorn_selection_t xorn_copy_objects(xorn_revision_t dest,
 			}
 		} catch (std::bad_alloc const &) {
 			for (xorn_selection::const_iterator i = rsel->begin();
-			     i != rsel->end(); i++)
+			     i != rsel->end(); ++i)
 				xorn_delete_object(dest, *i);
 			delete rsel;
 			return NULL;

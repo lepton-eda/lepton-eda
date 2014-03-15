@@ -241,7 +241,7 @@ static PyObject *Revision_add_object(
 		    "must be of xorn.storage object type, not %.50s") == -1)
 		return NULL;
 
-	xorn_object_t ob = xorn__add_object(self->rev, type, data);
+	xorn_object_t ob = xorn_add_object(self->rev, type, data);
 	if (ob == NULL)
 		return PyErr_NoMemory();
 
@@ -271,8 +271,8 @@ static PyObject *Revision_set_object_data(
 		    "must be of xorn.storage object type, not %.50s") == -1)
 		return NULL;
 
-	if (xorn__set_object_data(self->rev, ((Object *)ob_arg)->ob,
-				  type, data) == -1)
+	if (xorn_set_object_data(self->rev, ((Object *)ob_arg)->ob,
+				 type, data) == -1)
 		return PyErr_NoMemory();
 
 	Py_INCREF(Py_None);

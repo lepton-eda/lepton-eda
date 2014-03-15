@@ -27,6 +27,7 @@ TESTS = copy_object \
 	get_objects \
 	get_obtype \
 	invalid_obtype \
+	multiple_assignments \
 	null \
 	select_by_attribute \
 	selection \
