@@ -32,7 +32,7 @@ int main()
 	assert(xornsch_add_line(rev4, NULL) == NULL);
 	assert(xornsch_set_line_data(rev4, ob0, NULL) == -1);
 
-	xorn_mtswach_revision(rev4);
+	xorn_finalize_revision(rev4);
 
 	xorn_free_revision(rev4);
 	xorn_free_revision(rev3);

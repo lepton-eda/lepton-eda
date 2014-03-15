@@ -21,7 +21,7 @@ def setup():
 
     rev0 = xorn.storage.Revision(None)
     assert rev0 is not None
-    rev0.mtswach()
+    rev0.finalize()
 
     # first change
     rev1 = xorn.storage.Revision(rev0)
@@ -38,7 +38,7 @@ def setup():
     ob0 = rev1.add_object(line_data)
     assert ob0 is not None
 
-    rev1.mtswach()
+    rev1.finalize()
 
     # second change
     rev2 = xorn.storage.Revision(rev1)
@@ -66,7 +66,7 @@ def setup():
     ob1b = rev2.add_object(circle_data)
     assert ob1b is not None
 
-    rev2.mtswach()
+    rev2.finalize()
 
     # third change
     rev3 = xorn.storage.Revision(rev2)
@@ -83,6 +83,6 @@ def setup():
 
     rev3.delete_object(ob1a)
 
-    rev3.mtswach()
+    rev3.finalize()
 
     return (rev0, rev1, rev2, rev3, ob0, ob1a, ob1b)

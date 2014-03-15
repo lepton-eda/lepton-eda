@@ -27,7 +27,7 @@ int main()
 
 	rev0 = xorn_new_revision(NULL);
 	assert(rev0 != NULL);
-	xorn_mtswach_revision(rev0);
+	xorn_finalize_revision(rev0);
 
 	rev1 = xorn_new_revision(rev0);
 	assert(rev1 != NULL);
@@ -46,7 +46,7 @@ int main()
 	ob = xorn_add_object(rev1, xornsch_obtype_line, &line_data);
 	assert(ob != NULL);
 
-	xorn_mtswach_revision(rev1);
+	xorn_finalize_revision(rev1);
 
 	rev2 = xorn_new_revision(rev1);
 	assert(rev2 != NULL);
@@ -56,7 +56,7 @@ int main()
 	assert(xorn_set_object_data(rev2, ob,
 				    xornsch_obtype_line, &line_data) == 0);
 
-	xorn_mtswach_revision(rev2);
+	xorn_finalize_revision(rev2);
 
 	xorn_free_revision(rev2);
 	xorn_free_revision(rev1);

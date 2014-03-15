@@ -79,7 +79,7 @@ int main()
 	rev0 = xorn_new_revision(NULL);
 	assert(rev0 != NULL);
 	assert(xorn_revision_is_transient(rev0) == true);
-	xorn_mtswach_revision(rev0);
+	xorn_finalize_revision(rev0);
 	assert(xorn_revision_is_transient(rev0) == false);
 
 	rev1 = xorn_new_revision(rev0);
@@ -89,7 +89,7 @@ int main()
 	ob = xornsch_add_line(rev1, &line_data);
 	assert(ob != NULL);
 
-	xorn_mtswach_revision(rev1);
+	xorn_finalize_revision(rev1);
 	assert(xorn_revision_is_transient(rev1) == false);
 
 	try_modify(rev1, ob, false);
@@ -100,7 +100,7 @@ int main()
 
 	try_modify(rev2, ob, true);
 
-	xorn_mtswach_revision(rev2);
+	xorn_finalize_revision(rev2);
 	assert(xorn_revision_is_transient(rev2) == false);
 
 	xorn_free_revision(rev2);

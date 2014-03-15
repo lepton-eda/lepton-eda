@@ -33,13 +33,13 @@ int main()
 
 	rev0 = xorn_new_revision(NULL);
 	assert(rev0 != NULL);
-	xorn_mtswach_revision(rev0);
+	xorn_finalize_revision(rev0);
 
 	rev1 = xorn_new_revision(rev0);
 	assert(rev1 != NULL);
 	ob = xornsch_add_text(rev1, &text_data);
 	assert(ob != NULL);
-	xorn_mtswach_revision(rev1);
+	xorn_finalize_revision(rev1);
 
 	const struct xornsch_text *text_return =
 		xornsch_get_text_data(rev1, ob);

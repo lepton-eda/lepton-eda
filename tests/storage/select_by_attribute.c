@@ -149,7 +149,7 @@ int main()
 	text_data.text.len = 11;
 	text_ob = xornsch_add_text(rev4, &text_data);
 	assert(text_ob != NULL);
-	xorn_mtswach_revision(rev4);
+	xorn_finalize_revision(rev4);
 
 	text_data.text.s = "";
 	text_data.text.len = 0;

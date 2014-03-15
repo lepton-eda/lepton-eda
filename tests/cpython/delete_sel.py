@@ -37,7 +37,7 @@ assert sel is not None
 rev2a = xorn.storage.Revision(rev2)
 assert rev2a is not None
 rev2a.delete_objects(sel)
-rev2a.mtswach()
+rev2a.finalize()
 
 assert_objects_3(rev2a, ob0, ob1a, ob1b)
 
@@ -46,7 +46,7 @@ assert sel is not None
 rev2b = xorn.storage.Revision(rev2)
 assert rev2b is not None
 rev2b.delete_objects(sel)
-rev2b.mtswach()
+rev2b.finalize()
 
 assert_objects_2(rev2b, ob0, ob1b)
 
@@ -55,7 +55,7 @@ assert sel is not None
 rev2c = xorn.storage.Revision(rev2)
 assert rev2c is not None
 rev2c.delete_objects(sel)
-rev2c.mtswach()
+rev2c.finalize()
 
 assert_objects_2(rev2c, ob1a, ob1b)
 
@@ -64,6 +64,6 @@ assert sel is not None
 rev2d = xorn.storage.Revision(rev2)
 assert rev2d is not None
 rev2d.delete_objects(sel)
-rev2d.mtswach()
+rev2d.finalize()
 
 assert_objects_0(rev2d)

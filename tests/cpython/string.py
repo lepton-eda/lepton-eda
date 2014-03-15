@@ -21,13 +21,13 @@ text_data.text = "Hello world"
 
 rev0 = xorn.storage.Revision(None)
 assert rev0 is not None
-rev0.mtswach()
+rev0.finalize()
 
 rev1 = xorn.storage.Revision(rev0)
 assert rev1 is not None
 ob = rev1.add_object(text_data)
 assert ob is not None
-rev1.mtswach()
+rev1.finalize()
 
 text_return = rev1.get_object_data(ob)
 assert type(text_return) == xorn.storage.Text

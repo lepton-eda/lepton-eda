@@ -24,7 +24,7 @@ assert rev4 is not None
 ob0copy = rev4.copy_object(rev1, ob0)
 assert ob0copy is not None
 
-rev4.mtswach()
+rev4.finalize()
 
 assert type(rev4.get_object_data(ob0copy)) != type(rev4.get_object_data(ob0))
 assert type(rev4.get_object_data(ob0copy)) == type(rev1.get_object_data(ob0))

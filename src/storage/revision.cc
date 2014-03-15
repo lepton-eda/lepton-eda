@@ -54,7 +54,7 @@ bool xorn_revision_is_transient(xorn_revision_t rev)
 	return rev->is_transient;
 }
 
-void xorn_mtswach_revision(xorn_revision_t rev)
+void xorn_finalize_revision(xorn_revision_t rev)
 {
 	rev->is_transient = false;
 }

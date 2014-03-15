@@ -32,7 +32,7 @@ assert sel0 is not None
 sel1 = rev4.copy_objects(rev2, sel0)
 assert sel1 is not None
 
-rev4.mtswach()
+rev4.finalize()
 
 assert object_is_selected(rev4, sel0, ob0) == True
 assert object_is_selected(rev4, sel0, ob1a) == False

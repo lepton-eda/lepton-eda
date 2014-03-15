@@ -100,7 +100,7 @@ box_data.line.width = 1
 rev0 = xorn.storage.Revision(None)
 assert rev0 is not None
 assert rev0.is_transient() == True
-rev0.mtswach()
+rev0.finalize()
 assert rev0.is_transient() == False
 
 rev1 = xorn.storage.Revision(rev0)
@@ -110,7 +110,7 @@ assert rev1.is_transient() == True
 ob = rev1.add_object(line_data)
 assert ob is not None
 
-rev1.mtswach()
+rev1.finalize()
 assert rev1.is_transient() == False
 
 assert_cannot_modify(rev1, ob)
@@ -121,5 +121,5 @@ assert rev2.is_transient() == True
 
 assert_can_modify(rev2, ob)
 
-rev2.mtswach()
+rev2.finalize()
 assert rev2.is_transient() == False

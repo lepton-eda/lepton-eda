@@ -159,7 +159,7 @@ int main()
 	text1 = xornsch_add_text(rev4, &text_data);
 	assert(text0 != NULL);
 
-	xorn_mtswach_revision(rev4);
+	xorn_finalize_revision(rev4);
 
 	tsel0 = xorn_select_object(text0);
 	assert(tsel0 != NULL);

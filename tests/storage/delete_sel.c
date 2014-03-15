@@ -89,7 +89,7 @@ int main()
 	rev2a = xorn_new_revision(rev2);
 	assert(rev2a != NULL);
 	xorn_delete_selected_objects(rev2a, sel);
-	xorn_mtswach_revision(rev2a);
+	xorn_finalize_revision(rev2a);
 	xorn_free_selection(sel);
 
 	assert_objects_3(rev2a, ob0, ob1a, ob1b);
@@ -100,7 +100,7 @@ int main()
 	rev2b = xorn_new_revision(rev2);
 	assert(rev2b != NULL);
 	xorn_delete_selected_objects(rev2b, sel);
-	xorn_mtswach_revision(rev2b);
+	xorn_finalize_revision(rev2b);
 	xorn_free_selection(sel);
 
 	assert_objects_2(rev2b, ob0, ob1b);
@@ -111,7 +111,7 @@ int main()
 	rev2c = xorn_new_revision(rev2);
 	assert(rev2c != NULL);
 	xorn_delete_selected_objects(rev2c, sel);
-	xorn_mtswach_revision(rev2c);
+	xorn_finalize_revision(rev2c);
 	xorn_free_selection(sel);
 
 	assert_objects_2(rev2c, ob1a, ob1b);
@@ -122,7 +122,7 @@ int main()
 	rev2d = xorn_new_revision(rev2);
 	assert(rev2d != NULL);
 	xorn_delete_selected_objects(rev2d, sel);
-	xorn_mtswach_revision(rev2d);
+	xorn_finalize_revision(rev2d);
 	xorn_free_selection(sel);
 
 	assert_objects_0(rev2d);

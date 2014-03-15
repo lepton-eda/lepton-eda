@@ -76,9 +76,9 @@ static PyObject *Revision_is_transient(Revision *self)
 	return result;
 }
 
-static PyObject *Revision_mtswach(Revision *self)
+static PyObject *Revision_finalize(Revision *self)
 {
-	xorn_mtswach_revision(self->rev);
+	xorn_finalize_revision(self->rev);
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -376,9 +376,9 @@ static PyMethodDef Revision_methods[] = {
 	{ "is_transient", (PyCFunction)Revision_is_transient, METH_NOARGS,
 	  PyDoc_STR("rev.is_transient() -> bool\n\n"
 		    "Is transient?") },
-	{ "mtswach", (PyCFunction)Revision_mtswach, METH_NOARGS,
-	  PyDoc_STR("rev.mtswach()\n\n"
-		    "Mtswach.") },
+	{ "finalize", (PyCFunction)Revision_finalize, METH_NOARGS,
+	  PyDoc_STR("rev.finalize()\n\n"
+		    "Finalize.") },
 	{ "get_objects", (PyCFunction)Revision_get_objects, METH_NOARGS,
 	  PyDoc_STR("rev.get_objects() -> [ob]\n\n"
 		    "Get objects.") },
@@ -432,7 +432,7 @@ static int Revision_settransient(
 	}
 
 	if (value == Py_False) {
-		xorn_mtswach_revision(self->rev);
+		xorn_finalize_revision(self->rev);
 		return 0;
 	}
 
