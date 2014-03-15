@@ -20,10 +20,17 @@
 #include "key_iterator.h"
 
 
+/** \brief Return whether an object exists in a revision.  */
+
 bool xorn_object_exists_in_revision(xorn_revision_t rev, xorn_object_t ob)
 {
 	return rev->obstates.find(ob) != rev->obstates.end();
 }
+
+/** \brief Get the type of an object in a given revision.
+ *
+ * Returns \ref xorn_obtype_none if the object doesn't exist in the
+ * revision.  */
 
 xorn_obtype_t xorn_get_object_type(xorn_revision_t rev, xorn_object_t ob)
 {
@@ -35,6 +42,24 @@ xorn_obtype_t xorn_get_object_type(xorn_revision_t rev, xorn_object_t ob)
 
 	return (*i).second->type;
 }
+
+/** \brief Get a pointer to an object's data in a given revision.
+ *
+ * The returned data structure (including referenced strings) must not
+ * be changed by the caller; use xorn_set_object_data or its type-safe
+ * equivalents to change the object.
+ *
+ * \return Returns a pointer to a data structure matching \a type
+ * (e.g., if \a type is \c xornsch_obtype_net, returns a pointer to a
+ * \c xornsch_net structure).  If the object doesn't exist in \a rev,
+ * or \a type doesn't match its type, returns \c NULL.
+ *
+ * Example:
+ * \snippet functions.c get object data
+ *
+ * \note Try not to use this function.  There are type-specific
+ * functions available (\c xornsch_get_net_data etc.) which offer the
+ * same functionality but are type-safe.  */
 
 void const *xorn_get_object_data(xorn_revision_t rev, xorn_object_t ob,
 				 xorn_obtype_t type)
@@ -48,7 +73,21 @@ void const *xorn_get_object_data(xorn_revision_t rev, xorn_object_t ob,
 	return (*i).second->data;
 }
 
-/* It is the caller's responsibility to free the returned list. */
+/** \brief Return a list of all objects in a revision.
+ *
+ * A list of \ref xorn_object_t values is allocated and written to,
+ * and its location is written to the variable pointed to by \a
+ * objects_return.  The number of objects is written to the variable
+ * pointed to by \a count_return.  If the list is empty or there is
+ * not enough memory, \a *objects_return may be set to \c NULL.
+ *
+ * \return Returns \c 0 on success and \c -1 if there is not enough
+ *         memory.
+ *
+ * \note You should free the returned list using \c free(3).
+ *
+ * Example:
+ * \snippet functions.c get objects  */
 
 int xorn_get_objects(
 	xorn_revision_t rev,
@@ -57,7 +96,7 @@ int xorn_get_objects(
 	*objects_return = (xorn_object_t *) malloc(
 		rev->obstates.size() * sizeof(xorn_object_t));
 	*count_return = 0;
-	if (*objects_return == NULL)
+	if (*objects_return == NULL && !rev->obstates.empty())
 		return -1;
 
 	for (std::map<xorn_object_t, obstate *>::const_iterator i
@@ -65,6 +104,12 @@ int xorn_get_objects(
 		(*objects_return)[(*count_return)++] = (*i).first;
 	return 0;
 }
+
+/** \brief Return a list of objects which are in a revision as well as
+ *         in a selection.
+ *
+ * The same semantics apply as in \ref xorn_get_objects.  See there
+ * for a more detailed description.  */
 
 int xorn_get_selected_objects(
 	xorn_revision_t rev, xorn_selection_t sel,
@@ -74,7 +119,7 @@ int xorn_get_selected_objects(
 		std::min(rev->obstates.size(),
 			 sel->size()) * sizeof(xorn_object_t));
 	*count_return = 0;
-	if (*objects_return == NULL)
+	if (*objects_return == NULL && !rev->obstates.empty() && !sel->empty())
 		return -1;
 
 	xorn_object_t *ptr = set_intersection(
@@ -84,10 +129,18 @@ int xorn_get_selected_objects(
 
 	*count_return = ptr - *objects_return;
 	*objects_return = (xorn_object_t *) realloc(
-		*objects_return,
-		std::max(*count_return, (size_t) 1) * sizeof(xorn_object_t));
+		*objects_return, *count_return * sizeof(xorn_object_t));
 	return 0;
 }
+
+/** \brief Return a list of objects which are in a revision but not in
+ *         another.
+ *
+ * The returned list contains all objects in \a to_rev which are not
+ * in \a from_rev.
+ *
+ * The same semantics apply as in \ref xorn_get_objects.  See there
+ * for a more detailed description.  */
 
 int xorn_get_added_objects(
 	xorn_revision_t from_rev, xorn_revision_t to_rev,
@@ -96,7 +149,7 @@ int xorn_get_added_objects(
 	*objects_return = (xorn_object_t *) malloc(
 		to_rev->obstates.size() * sizeof(xorn_object_t));
 	*count_return = 0;
-	if (*objects_return == NULL)
+	if (*objects_return == NULL && !to_rev->obstates.empty())
 		return -1;
 
 	xorn_object_t *ptr = set_difference(
@@ -107,10 +160,18 @@ int xorn_get_added_objects(
 
 	*count_return = ptr - *objects_return;
 	*objects_return = (xorn_object_t *) realloc(
-		*objects_return,
-		std::max(*count_return, (size_t) 1) * sizeof(xorn_object_t));
+		*objects_return, *count_return * sizeof(xorn_object_t));
 	return 0;
 }
+
+/** \brief Return a list of objects which are in a revision but not in
+ *         another.
+ *
+ * The returned list contains all objects in \a from_rev which are not
+ * in \a to_rev.
+ *
+ * The same semantics apply as in \ref xorn_get_objects.  See there
+ * for a more detailed description.  */
 
 int xorn_get_removed_objects(
 	xorn_revision_t from_rev, xorn_revision_t to_rev,
@@ -119,7 +180,7 @@ int xorn_get_removed_objects(
 	*objects_return = (xorn_object_t *) malloc(
 		from_rev->obstates.size() * sizeof(xorn_object_t));
 	*count_return = 0;
-	if (*objects_return == NULL)
+	if (*objects_return == NULL && !from_rev->obstates.empty())
 		return -1;
 
 	xorn_object_t *ptr = set_difference(
@@ -130,10 +191,15 @@ int xorn_get_removed_objects(
 
 	*count_return = ptr - *objects_return;
 	*objects_return = (xorn_object_t *) realloc(
-		*objects_return,
-		std::max(*count_return, (size_t) 1) * sizeof(xorn_object_t));
+		*objects_return, *count_return * sizeof(xorn_object_t));
 	return 0;
 }
+
+/** \brief Return a list of objects which exist in two revisions but
+ *         have different type or data.
+ *
+ * The same semantics apply as in \ref xorn_get_objects.  See there
+ * for a more detailed description.  */
 
 int xorn_get_modified_objects(
 	xorn_revision_t from_rev, xorn_revision_t to_rev,
@@ -143,7 +209,8 @@ int xorn_get_modified_objects(
 		std::min(from_rev->obstates.size(),
 			 to_rev->obstates.size()) * sizeof(xorn_object_t));
 	*count_return = 0;
-	if (*objects_return == NULL)
+	if (*objects_return == NULL && !from_rev->obstates.empty()
+				    && !to_rev->obstates.empty())
 		return -1;
 
 	std::map<xorn_object_t, obstate *>::const_iterator i
@@ -165,7 +232,6 @@ int xorn_get_modified_objects(
 		}
 
 	*objects_return = (xorn_object_t *) realloc(
-		*objects_return,
-		std::max(*count_return, (size_t) 1) * sizeof(xorn_object_t));
+		*objects_return, *count_return * sizeof(xorn_object_t));
 	return 0;
 }

@@ -24,7 +24,6 @@ void assert_objects_0(xorn_revision_t rev)
 	size_t count;
 
 	assert(xorn_get_objects(rev, &objects, &count) == 0);
-	assert(objects != NULL);
 	assert(count == 0);
 	free(objects);
 }

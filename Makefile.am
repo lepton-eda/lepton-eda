@@ -20,10 +20,22 @@ include_HEADERS = include/xornstorage.h
 
 ACLOCAL_AMFLAGS = -I m4
 
-EXTRA_DIST = pprint-chlog doc/HACKING
+EXTRA_DIST = \
+	pprint-chlog \
+	doc/HACKING \
+	doc/mainpage.md \
+	doc/storage.md \
+	doc/api/Doxyfile \
+	doc/api/storage.dox \
+	doc/api/using-storage.md
 
 dist-hook:
 	if test -d $(srcdir)/.git; \
 	then	chmod u+w $(distdir)/ChangeLog; \
 		( cd $(srcdir); ./pprint-chlog ) > $(distdir)/ChangeLog; \
 	fi
+
+doxygen:
+	cd $(srcdir)/doc/api && doxygen
+
+.PHONY: doxygen

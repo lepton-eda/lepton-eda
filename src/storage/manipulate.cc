@@ -34,6 +34,25 @@ static void set_object_data(xorn_revision_t rev, xorn_object_t ob,
 	}
 }
 
+/** \brief Add a new object to a transient revision.
+ *
+ * \a data must point to a data structure matching the object type
+ * indicated by \a type (e.g., if \a type is \c xornsch_obtype_net,
+ * then \a data must point to a \c xornsch_net structure).  The data
+ * structure (including referenced strings) will not be accessed after
+ * this function has returned.
+ *
+ * \return Returns the newly created object.  If the revision isn't
+ * transient, \a type is not a valid Xorn object type, \a data is
+ * NULL, or there is not enough memory, returns \c NULL.
+ *
+ * Example:
+ * \snippet functions.c add object
+ *
+ * \note Try not to use this function.  There are type-specific
+ * functions available (\c xornsch_add_net etc.) which offer the same
+ * functionality but are type-safe.  */
+
 xorn_object_t xorn_add_object(xorn_revision_t rev,
 			      xorn_obtype_t type, void const *data)
 {
@@ -49,6 +68,38 @@ xorn_object_t xorn_add_object(xorn_revision_t rev,
 	return ob;
 }
 
+/** \brief Set an object in a transient revision to the given object
+ *         type and data.
+ *
+ * If the object does not exist in the revision, it is created instead.
+ *
+ * \param rev  Revision to be changed (must be transient)
+ *
+ * \param ob   An object which has previously been returned by a Xorn
+ *             function for either this revision, one of its
+ *             ancestors, or a revision which has a common ancestor
+ *             with it.
+ *
+ * \param type New object type (may be different from previous one)
+ *
+ * \param data Pointer to a data structure matching the object type
+ *             indicated by \a type (e.g., if \a type is \c
+ *             xornsch_obtype_net, a pointer to a \c xornsch_net
+ *             structure).  The data structure (including referenced
+ *             strings) will not be accessed after this function has
+ *             returned.
+ *
+ * \return Returns \c 0 if the object has been changed.  If the
+ * revision isn't transient, \a type is not a valid Xorn object type,
+ * \a data is NULL, or there is not enough memory, returns \c -1.
+ *
+ * Example:
+ * \snippet functions.c set object data
+ *
+ * \note Try not to use this function.  There are type-specific
+ * functions available (\c xornsch_set_net_data etc.) which offer the
+ * same functionality but are type-safe.  */
+
 int xorn_set_object_data(xorn_revision_t rev, xorn_object_t ob,
 			 xorn_obtype_t type, void const *data)
 {
@@ -63,6 +114,14 @@ int xorn_set_object_data(xorn_revision_t rev, xorn_object_t ob,
 	return 0;
 }
 
+/** \brief Delete an object from a transient revision.
+ *
+ * If the revision isn't transient or the object doesn't exist in the
+ * revision, nothing is changed.
+ *
+ * \a ob will stay a valid object and can later be re-added using \ref
+ * xorn_set_object_data or its type-safe equivalents.  */
+
 void xorn_delete_object(xorn_revision_t rev, xorn_object_t ob)
 {
 	if (!rev->is_transient)
@@ -76,6 +135,14 @@ void xorn_delete_object(xorn_revision_t rev, xorn_object_t ob)
 		rev->obstates.erase(i);
 	}
 }
+
+/** \brief Delete some objects from a transient revision.
+ *
+ * Objects that don't exist in the revision are ignored.  If the
+ * revision isn't transient, nothing is changed.
+ *
+ * The objects will stay valid and can later be re-added using \ref
+ * xorn_set_object_data or its type-safe equivalents.  */
 
 void xorn_delete_selected_objects(xorn_revision_t rev, xorn_selection_t sel)
 {
@@ -105,6 +172,16 @@ static xorn_object_t copy_object(xorn_revision_t dest, obstate *obstate)
 	return ob;
 }
 
+/** \brief Copy an object to a transient revision.
+ *
+ * \param dest Destination revision (must be transient)
+ * \param src Source revision (does not need to be transient)
+ * \param ob Object in the source revision which should be copied
+ *
+ * \return Returns the newly created object.  If the destination
+ * revision isn't transient, the object doesn't exist in the source
+ * revision, or there is not enough memory, returns \c NULL.  */
+
 xorn_object_t xorn_copy_object(xorn_revision_t dest,
 			       xorn_revision_t src, xorn_object_t ob)
 {
@@ -123,6 +200,19 @@ xorn_object_t xorn_copy_object(xorn_revision_t dest,
 		return NULL;
 	}
 }
+
+/** \brief Copy some objects to a transient revision.
+ *
+ * \param dest Destination revision (must be transient)
+ * \param src Source revision (does not need to be transient)
+ * \param sel Objects in the source revision which should be copied
+ *
+ * \return Returns a selection containing the newly created objects.
+ * If the destination revision isn't transient or there is not enough
+ * memory, returns \c NULL.
+ *
+ * \note You should free the returned selection using \ref
+ * xorn_free_selection once it isn't needed any more.  */
 
 xorn_selection_t xorn_copy_objects(xorn_revision_t dest,
 				   xorn_revision_t src, xorn_selection_t sel)

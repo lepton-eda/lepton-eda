@@ -45,7 +45,7 @@ typedef enum {
 	/* All selected objects have the same value of this attribute.
 	   Show this value for this attribute in the property editor. */
 	xorn_attst_inconsistent,
-	/* There are different values of this attribute in the
+	/* There are different values of this attribute between the
 	   selected objects.  Show this attribute in the property
 	   editor, but don't show a value. */
 } xorn_attst_t;

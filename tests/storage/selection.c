@@ -25,7 +25,6 @@ static void assert_selected_objects_0(
 	size_t count;
 
 	assert(xorn_get_selected_objects(rev, sel, &objects, &count) == 0);
-	assert(objects != NULL);
 	assert(count == 0);
 	free(objects);
 

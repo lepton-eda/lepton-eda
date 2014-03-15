@@ -15,10 +15,13 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 AM_CPPFLAGS = -I$(top_srcdir)/include
-AM_CFLAGS = -Wall -W -Werror
+AM_CFLAGS = -Wall -W -Werror -Wno-empty-body
 LDADD = ../../src/storage/libxornstorage.la
 
-TESTS = copy_object \
+TESTS = snippets/example \
+	snippets/functions \
+	snippets/motivation \
+	copy_object \
 	copy_objects \
 	delete_sel \
 	exist \
