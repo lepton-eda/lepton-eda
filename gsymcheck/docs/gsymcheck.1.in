@@ -1,13 +1,20 @@
 .TH gsymcheck 1 "@DATE@" "gEDA Project" @VERSION@
 .SH NAME
-gsymcheck - gEDA/gaf Symbol Checker
+gsymcheck \- gEDA/gaf Symbol Checker
 .SH SYNOPSIS
 .B gsymcheck
-[\-h] [\-v] [\-q] symbol1 [... symbolN]
+.RB [ \-h ]
+.RB [ \-v ] 
+.RB [ \-q ] 
+.I symbol1 
+.RI [... symbolN ]
 .SH DESCRIPTION
 .PP
-\fIgsymcheck\fP is a symbol checker for gEDA/gaf.  Here is a list of checks that 
-\fIgsymcheck\fP performs:
+.B gsymcheck
+is a symbol checker for gEDA/gaf.
+Here is a list of checks that 
+.B gsymcheck
+performs:
 
 .IP \[bu] 2 
 Checks for graphical= attribute (if present does varied tests)
@@ -32,12 +39,13 @@ Checks for any other connections within a symbol
 Checks to make sure the number of pins is the correct number
 
 .SH OPTIONS
-\fIgsymcheck\fP accepts the following options:
+.B gsymcheck
+accepts the following options:
 .TP 8
-.B -q
+.BR \-q ", " \-\-quiet
 Quiet mode on.  This mode turns off all warnings/notes/messages. (optional)
 .TP 8
-.B -v 
+.BR \-v ", " \-\-verbose 
 Verbose mode 1.  This mode will show all error messages (optional)
 .TP 8
 .B -vv 
@@ -46,16 +54,20 @@ Verbose mode 2.  This mode will show all error and warning messages (optional)
 .B -vvv 
 Verbose mode 2.  This mode will show all error, warning, and info messages (optional)
 .TP 8
-.B -h 
-Usage summary / gsymcheck help
+.BR -h ", " \-\-help
+Usage summary / 
+.B gsymcheck 
+help
 .TP 8
-symbol1 [... symbolN]
-At least one symbol file must be specified.  If multiple symbols are 
-specified then they are sequentially read in and checked.  It is important 
-that the schematic(s) follow all the options (ie last).
+.IR symbol1 " [..." symbolN ]
+At least one symbol file must be specified.
+If multiple symbols are 
+specified then they are sequentially read in and checked.
+It is important that the schematic(s) follow all the options (i.e. last).
 
 .SH EXAMPLES 
-Here are some examples on how to run \fIgsymcheck\fP:  
+Here are some examples on how to run 
+.BR gsymcheck :  
 
 To get usage information just run:
 
@@ -78,7 +90,8 @@ To see all the error messages, warnings, and parse info, run:
 	gsymcheck \-vvv symbolfilename.sym
 
 .SH "ENVIRONMENT"
-\fIgsymcheck\fP respects the following environment variable:
+.B gsymcheck
+respects the following environment variable:
 .PP
 .TP 8
 .B GEDADATA 
@@ -94,7 +107,7 @@ Ales Hvezda and many others
 .BR gschem (1),
 .BR gnetlist (1)
 .SH COPYRIGHT
-Copyright \(co  1999-2008 Ales Hvezda
+Copyright \(co 1999-2008 Ales Hvezda
 
 This document can be freely redistributed according to the terms of the 
 GNU General Public License version 2.0
