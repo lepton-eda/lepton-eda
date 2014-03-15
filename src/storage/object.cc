@@ -50,7 +50,7 @@ void const *xorn_get_object_data(xorn_revision_t rev, xorn_object_t ob,
 
 /* It is the caller's responsibility to free the returned list. */
 
-void xorn_get_objects(
+int xorn_get_objects(
 	xorn_revision_t rev,
 	xorn_object_t **objects_return, size_t *count_return)
 {
@@ -58,14 +58,15 @@ void xorn_get_objects(
 		rev->obstates.size() * sizeof(xorn_object_t));
 	*count_return = 0;
 	if (*objects_return == NULL)
-		return;
+		return -1;
 
 	for (std::map<xorn_object_t, obstate *>::const_iterator i
 		     = rev->obstates.begin(); i != rev->obstates.end(); ++i)
 		(*objects_return)[(*count_return)++] = (*i).first;
+	return 0;
 }
 
-void xorn_get_selected_objects(
+int xorn_get_selected_objects(
 	xorn_revision_t rev, xorn_selection_t sel,
 	xorn_object_t **objects_return, size_t *count_return)
 {
@@ -74,7 +75,7 @@ void xorn_get_selected_objects(
 			 sel->size()) * sizeof(xorn_object_t));
 	*count_return = 0;
 	if (*objects_return == NULL)
-		return;
+		return -1;
 
 	xorn_object_t *ptr = set_intersection(
 		iterate_keys(rev->obstates.begin()),
@@ -85,9 +86,10 @@ void xorn_get_selected_objects(
 	*objects_return = (xorn_object_t *) realloc(
 		*objects_return,
 		std::max(*count_return, (size_t) 1) * sizeof(xorn_object_t));
+	return 0;
 }
 
-void xorn_get_added_objects(
+int xorn_get_added_objects(
 	xorn_revision_t from_rev, xorn_revision_t to_rev,
 	xorn_object_t **objects_return, size_t *count_return)
 {
@@ -95,7 +97,7 @@ void xorn_get_added_objects(
 		to_rev->obstates.size() * sizeof(xorn_object_t));
 	*count_return = 0;
 	if (*objects_return == NULL)
-		return;
+		return -1;
 
 	xorn_object_t *ptr = set_difference(
 		iterate_keys(to_rev->obstates.begin()),
@@ -107,9 +109,10 @@ void xorn_get_added_objects(
 	*objects_return = (xorn_object_t *) realloc(
 		*objects_return,
 		std::max(*count_return, (size_t) 1) * sizeof(xorn_object_t));
+	return 0;
 }
 
-void xorn_get_removed_objects(
+int xorn_get_removed_objects(
 	xorn_revision_t from_rev, xorn_revision_t to_rev,
 	xorn_object_t **objects_return, size_t *count_return)
 {
@@ -117,7 +120,7 @@ void xorn_get_removed_objects(
 		from_rev->obstates.size() * sizeof(xorn_object_t));
 	*count_return = 0;
 	if (*objects_return == NULL)
-		return;
+		return -1;
 
 	xorn_object_t *ptr = set_difference(
 		iterate_keys(from_rev->obstates.begin()),
@@ -129,9 +132,10 @@ void xorn_get_removed_objects(
 	*objects_return = (xorn_object_t *) realloc(
 		*objects_return,
 		std::max(*count_return, (size_t) 1) * sizeof(xorn_object_t));
+	return 0;
 }
 
-void xorn_get_modified_objects(
+int xorn_get_modified_objects(
 	xorn_revision_t from_rev, xorn_revision_t to_rev,
 	xorn_object_t **objects_return, size_t *count_return)
 {
@@ -140,7 +144,7 @@ void xorn_get_modified_objects(
 			 to_rev->obstates.size()) * sizeof(xorn_object_t));
 	*count_return = 0;
 	if (*objects_return == NULL)
-		return;
+		return -1;
 
 	std::map<xorn_object_t, obstate *>::const_iterator i
 		= from_rev->obstates.begin();
@@ -163,4 +167,5 @@ void xorn_get_modified_objects(
 	*objects_return = (xorn_object_t *) realloc(
 		*objects_return,
 		std::max(*count_return, (size_t) 1) * sizeof(xorn_object_t));
+	return 0;
 }

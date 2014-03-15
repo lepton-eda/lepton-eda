@@ -25,7 +25,7 @@ static void assert_selected(xorn_revision_t rev, xorn_selection_t sel,
 	size_t count;
 	unsigned int i;
 
-	xorn_get_selected_objects(rev, sel, &objects, &count);
+	assert(xorn_get_selected_objects(rev, sel, &objects, &count) == 0);
 	assert(objects != NULL);
 
 	for (i = 0; i < count; ++i)

@@ -23,9 +23,6 @@ static PyObject *to_python_list(xorn_object_t *objects, size_t count)
 	PyObject *list;
 	size_t i;
 
-	if (objects == NULL)
-		return PyErr_NoMemory();
-
 	list = PyList_New(count);
 	if (list == NULL)
 		return NULL;
@@ -58,9 +55,11 @@ static PyObject *get_selected_objects(
 	xorn_object_t *objects;
 	size_t count;
 
-	xorn_get_selected_objects(((Revision *)rev_arg)->rev,
-				  ((Selection *)sel_arg)->sel,
-				  &objects, &count);
+	if (xorn_get_selected_objects(((Revision *)rev_arg)->rev,
+				      ((Selection *)sel_arg)->sel,
+				      &objects, &count) == -1)
+		return PyErr_NoMemory();
+
 	return to_python_list(objects, count);
 }
 
@@ -78,8 +77,11 @@ static PyObject *get_added_objects(
 	xorn_object_t *objects;
 	size_t count;
 
-	xorn_get_added_objects(((Revision *)from_arg)->rev,
-			       ((Revision *)to_arg)->rev, &objects, &count);
+	if (xorn_get_added_objects(((Revision *)from_arg)->rev,
+				   ((Revision *)to_arg)->rev,
+				   &objects, &count) == -1)
+		return PyErr_NoMemory();
+
 	return to_python_list(objects, count);
 }
 
@@ -97,8 +99,11 @@ static PyObject *get_removed_objects(
 	xorn_object_t *objects;
 	size_t count;
 
-	xorn_get_removed_objects(((Revision *)from_arg)->rev,
-				 ((Revision *)to_arg)->rev, &objects, &count);
+	if (xorn_get_removed_objects(((Revision *)from_arg)->rev,
+				     ((Revision *)to_arg)->rev,
+				     &objects, &count) == -1)
+		return PyErr_NoMemory();
+
 	return to_python_list(objects, count);
 }
 
@@ -116,8 +121,11 @@ static PyObject *get_modified_objects(
 	xorn_object_t *objects;
 	size_t count;
 
-	xorn_get_modified_objects(((Revision *)from_arg)->rev,
-				  ((Revision *)to_arg)->rev, &objects, &count);
+	if (xorn_get_modified_objects(((Revision *)from_arg)->rev,
+				      ((Revision *)to_arg)->rev,
+				      &objects, &count) == -1)
+		return PyErr_NoMemory();
+
 	return to_python_list(objects, count);
 }
 

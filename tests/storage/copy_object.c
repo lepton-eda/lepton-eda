@@ -44,7 +44,7 @@ int main()
 	assert(xorn_get_object_type(rev4, ob0copy) ==
 	       xorn_get_object_type(rev1, ob0));
 
-	xorn_get_objects(rev4, &objects, &count);
+	assert(xorn_get_objects(rev4, &objects, &count) == 0);
 	assert(objects != NULL);
 	assert(count == 3);
 	free(objects);

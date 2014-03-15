@@ -91,8 +91,7 @@ static PyObject *Revision_get_objects(
 	PyObject *list;
 	size_t i;
 
-	xorn_get_objects(self->rev, &objects, &count);
-	if (objects == NULL)
+	if (xorn_get_objects(self->rev, &objects, &count) == -1)
 		return PyErr_NoMemory();
 
 	list = PyList_New(count);

@@ -71,19 +71,19 @@ xorn_obtype_t xorn_get_object_type(
 const void *xorn_get_object_data(
 	xorn_revision_t rev, xorn_object_t ob, xorn_obtype_t type);
 
-void xorn_get_objects(
+int xorn_get_objects(
 	xorn_revision_t rev,
 	xorn_object_t **objects_return, size_t *count_return);
-void xorn_get_selected_objects(
+int xorn_get_selected_objects(
 	xorn_revision_t rev, xorn_selection_t sel,
 	xorn_object_t **objects_return, size_t *count_return);
-void xorn_get_added_objects(
+int xorn_get_added_objects(
 	xorn_revision_t from_rev, xorn_revision_t to_rev,
 	xorn_object_t **objects_return, size_t *count_return);
-void xorn_get_removed_objects(
+int xorn_get_removed_objects(
 	xorn_revision_t from_rev, xorn_revision_t to_rev,
 	xorn_object_t **objects_return, size_t *count_return);
-void xorn_get_modified_objects(
+int xorn_get_modified_objects(
 	xorn_revision_t from_rev, xorn_revision_t to_rev,
 	xorn_object_t **objects_return, size_t *count_return);
 
