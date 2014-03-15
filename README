@@ -15,6 +15,9 @@ Dependencies:
 - building: g++, gcc, binutils, make
 - building from git: autotools, libtool
 
+For a list of known bugs and issues, see:
+http://bugs.hedmen.org/index.php?project=2&cat=10
+
 
 This package is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
