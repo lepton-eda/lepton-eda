@@ -18,7 +18,7 @@
 #include <stdlib.h>
 
 
-void relocate_and_assert_3(
+static void relocate_and_assert_3(
 	xorn_revision_t rev,
 	xorn_object_t ob, xorn_object_t insert_before, int result,
 	xorn_object_t ob0, xorn_object_t ob1, xorn_object_t ob2)
@@ -37,7 +37,7 @@ void relocate_and_assert_3(
 	free(objects);
 }
 
-void relocate_and_assert_2(
+static void relocate_and_assert_2(
 	xorn_revision_t rev,
 	xorn_object_t ob, xorn_object_t insert_before, int result,
 	xorn_object_t ob0, xorn_object_t ob1)

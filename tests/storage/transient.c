@@ -22,8 +22,8 @@ static struct xornsch_line line_data;
 static struct xornsch_box box_data;
 
 
-void try_modify(xorn_revision_t rev, xorn_object_t existing_ob,
-		bool expected_result)
+static void try_modify(xorn_revision_t rev, xorn_object_t existing_ob,
+		       bool expected_result)
 {
 	xorn_object_t ob0, ob1;
 	xorn_selection_t sel0, sel1;
