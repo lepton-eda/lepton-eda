@@ -37,18 +37,6 @@
 ;;;   its evaluate things like output-file, generate-mode, top-attribs
 ;;;   and starts the major subroutines.
 
-;; guile didn't like this code:
-;;
-;; (if (string-index output-filename #\.)
-;;    (string-rindex output-filename #\.)
-;;   ofl)
-;;
-;; as a replacement for line below:
-;;
-;; (lpi (string-rindex output-filename #\. 0 ofl))
-;;
-;; why? (avh)
-
 (define vams
   (lambda (output-filename)
     (let* ((port '())                         ;; output-port for architecture
