@@ -1,6 +1,6 @@
 ;; gEDA - GPL Electronic Design Automation
 ;; libgeda - gEDA's library - Scheme API
-;; Copyright (C) 2011 Peter Brett <peter@peter-b.co.uk>
+;; Copyright (C) 2011-2014 Peter Brett <peter@peter-b.co.uk>
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -62,6 +62,15 @@ Get the directory where gEDA documentation is stored."
       (if (platform? 'win32-native)
           #f
           %configured-sys-doc-dir)))
+
+(define-public (user-doc-dir)
+  "user-doc-dir
+
+Get the directory where per-user gEDA documentation is stored."
+
+  (string-join (list (user-data-dir)
+                     "doc" "geda-gaf")
+               separator))
 
 ;; Munge a wiki page name so that it can be used in a filename
 (define (wiki-munge name)
@@ -154,10 +163,10 @@ wiki."
 
 Find the documentation for COMPONENT, by inspecting (in order) its
 \"documentation\", \"device\" and \"value\" attributes, and its
-component basename, and searching in the current directory, the system
-gEDA documentation directory, and Google.  In most cases, results are
-restricted to \".pdf\" files.  The documentation is displayed in the
-system associated viewer application."
+component basename, and searching in the current directory, the user
+and system gEDA documentation directories, and Google.  In most cases,
+results are restricted to \".pdf\" files.  The documentation is
+displayed in the system associated viewer application."
 
 
   (let ((documentation (attribute-value-by-name obj "documentation"))
@@ -176,7 +185,8 @@ system associated viewer application."
        ;; a) First check the obvious -- does the documentation
        ;;    attribute match a file in the current directory?
        (directory-doc-search (getcwd) documentation)
-       ;; b) What about in the documentation directory?
+       ;; b) What about in the documentation directories?
+       (directory-doc-search (user-doc-dir) documentation)
        (directory-doc-search (sys-doc-dir) documentation)
        ;; c) Does the documentation attribute look like a URL?
        (and (any (lambda (prefix) (string-prefix? prefix documentation))
@@ -190,17 +200,20 @@ system associated viewer application."
      ;; 2) Checks based on "device=" and "value=" attributes
      (and
       device value
-      (or
-       ;; a) Look for a DEVICE-VALUE*.PDF file in the current directory
-       (directory-doc-search (getcwd) (string-append device "-" value) ".pdf")
-       ;; b) Look for a DEVICE-VALUE*.PDF file in the documentation directory
-       (directory-doc-search (sys-doc-dir) (string-append device "-" value) ".pdf")))
+      (let ((device-value (string-append device "-" value)))
+        (or
+         ;; a) Look for a DEVICE-VALUE*.PDF file in the current directory
+         (directory-doc-search (getcwd)  ".pdf")
+         ;; b) Look for a DEVICE-VALUE*.PDF file in the documentation directories
+         (directory-doc-search (user-doc-dir) device-value ".pdf")
+         (directory-doc-search (sys-doc-dir) device-value ".pdf"))))
      (and
       device
       (or
        ;; c) Look for a DEVICE*.PDF file in the current directory
        (directory-doc-search (getcwd) device ".pdf")
-       ;; d) Look for a DEVICE*.PDF file in the documentation directory
+       ;; d) Look for a DEVICE*.PDF file in the documentation directories
+       (directory-doc-search (user-doc-dir) device ".pdf")
        (directory-doc-search (sys-doc-dir) device ".pdf")
        ;; d) If there's a device attribute, search for it with Google.
        (internet-doc-search device)))
@@ -218,7 +231,8 @@ system associated viewer application."
         (or
          ;; a) Look for BASENAME*.PDF file in current directory
          (directory-doc-search (getcwd) name ".pdf")
-         ;; b) Look for BASENAME*.PDF file in documentation directory
+         ;; b) Look for BASENAME*.PDF file in documentation directories
+         (directory-doc-search (user-doc-dir) name ".pdf")
          (directory-doc-search (sys-doc-dir) name ".pdf"))))
 
      ;; 4) Fail miserably
