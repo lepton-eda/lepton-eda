@@ -373,42 +373,48 @@ static PyObject *Revision_delete_objects(
 
 static PyMethodDef Revision_methods[] = {
 	{ "is_transient", (PyCFunction)Revision_is_transient, METH_NOARGS,
-	  PyDoc_STR("rev.is_transient() -> bool\n\n"
-		    "Is transient?") },
+	  PyDoc_STR("rev.is_transient() -> bool -- "
+		    "whether the revision can be changed") },
 	{ "finalize", (PyCFunction)Revision_finalize, METH_NOARGS,
-	  PyDoc_STR("rev.finalize()\n\n"
-		    "Finalize.") },
+	  PyDoc_STR("rev.finalize() -- "
+		    "prevent further changes to the revision") },
 	{ "get_objects", (PyCFunction)Revision_get_objects, METH_NOARGS,
-	  PyDoc_STR("rev.get_objects() -> [ob]\n\n"
-		    "Get objects.") },
+	  PyDoc_STR("rev.get_objects() -> [Object] -- "
+		    "a list of all objects in the revision") },
 	{ "object_exists", (PyCFunction)Revision_object_exists,
 	  METH_KEYWORDS,
-	  PyDoc_STR("rev.object_exists(ob) -> bool\n\n"
-		    "Object exists?") },
+	  PyDoc_STR("rev.object_exists(ob) -> bool -- "
+		    "whether an object exists in the revision") },
 	{ "get_object_data", (PyCFunction)Revision_get_object_data,
 	  METH_KEYWORDS,
-	  PyDoc_STR("rev.get_object_data(ob) -> data\n\n"
-		    "Get object data.") },
+	  PyDoc_STR("rev.get_object_data(ob) -> Arc/Box/... -- "
+		    "get the data of an object") },
+
 	{ "add_object", (PyCFunction)Revision_add_object, METH_KEYWORDS,
-	  PyDoc_STR("rev.add_object(data) -> ob\n\n"
-		    "Add object.") },
+	  PyDoc_STR("rev.add_object(data) -> Object -- "
+		    "add a new object to the revision\n\n"
+		    "Only callable on a transient revision.\n") },
 	{ "set_object_data", (PyCFunction)Revision_set_object_data,
 	  METH_KEYWORDS,
-	  PyDoc_STR("rev.set_object_data(ob, data)\n\n"
-		    "Set object data.") },
-
+	  PyDoc_STR("rev.set_object_data(ob, data) -- "
+		    "set the data of an object\n\n"
+		    "Only callable on a transient revision.\n") },
 	{ "copy_object", (PyCFunction)Revision_copy_object, METH_KEYWORDS,
-	  PyDoc_STR("copy_object(rev, ob) -> ob\n\n"
-		    "Copy object.") },
+	  PyDoc_STR("dest.copy_object(src, ob) -> Object -- "
+		    "copy an object to the revision\n\n"
+		    "Only callable on a transient revision.\n") },
 	{ "copy_objects", (PyCFunction)Revision_copy_objects, METH_KEYWORDS,
-	  PyDoc_STR("copy_objects(rev, sel) -> sel\n\n"
-		    "Copy objects.") },
+	  PyDoc_STR("dest.copy_objects(src, sel) -> Selection -- "
+		    "copy some objects to the revision\n\n"
+		    "Only callable on a transient revision.\n") },
 	{ "delete_object", (PyCFunction)Revision_delete_object, METH_KEYWORDS,
-	  PyDoc_STR("delete_object(ob)\n\n"
-		    "Delete object.") },
+	  PyDoc_STR("rev.delete_object(ob) -- "
+		    "delete an object from the revision\n\n"
+		    "Only callable on a transient revision.\n") },
 	{ "delete_objects", (PyCFunction)Revision_delete_objects, METH_KEYWORDS,
-	  PyDoc_STR("delete_objects(sel)\n\n"
-		    "Delete objects.") },
+	  PyDoc_STR("rev.delete_objects(sel) -- "
+		    "delete some objects from the revision\n\n"
+		    "Only callable on a transient revision.\n") },
 
 	{ NULL }  /* Sentinel */
 };
@@ -450,7 +456,7 @@ static int Revision_settransient(
 static PyGetSetDef Revision_getset[] = {
 	{ "transient", (getter)Revision_gettransient,
 		       (setter)Revision_settransient,
-	  PyDoc_STR(""), NULL },
+	  PyDoc_STR("Whether the revision can be changed."), NULL },
 	{ NULL }  /* Sentinel */
 };
 
@@ -492,7 +498,10 @@ PyTypeObject RevisionType = {
 	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
 					/* long tp_flags */
 	/* Documentation string */
-	PyDoc_STR(""),			/* const char *tp_doc */
+	PyDoc_STR("A particular state of the contents of a file.\n\n"
+		  "Revision() -> new revision\n"
+		  "Revision(rev) -> copy of an existing revision\n\n"),
+					/* const char *tp_doc */
 
 	/* Assigned meaning in release 2.0 */
 	/* call function for all accessible objects */

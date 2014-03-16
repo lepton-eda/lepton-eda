@@ -237,42 +237,49 @@ static PyObject *selection_is_empty(
 static PyMethodDef methods[] = {
 	{ "get_selected_objects",
 	  (PyCFunction)get_selected_objects, METH_KEYWORDS,
-	  PyDoc_STR("get_selected_objects(rev, sel)\n\n"
-		    "Get selected objects.") },
+	  PyDoc_STR("get_selected_objects(rev, sel) -> [Object] -- "
+		    "a list of objects which are in a revision as well as in "
+		    "a selection") },
 	{ "get_added_objects", (PyCFunction)get_added_objects, METH_KEYWORDS,
-	  PyDoc_STR("get_added_objects(from, to)\n\n"
-		    "Get added objects.") },
+	  PyDoc_STR("get_added_objects(from, to) -> [Object] -- "
+		    "a list of objects which are in one revision but not in "
+		    "another") },
 	{ "get_removed_objects",
 	  (PyCFunction)get_removed_objects, METH_KEYWORDS,
-	  PyDoc_STR("get_removed_objects(from, to)\n\n"
-		    "Get removed objects.") },
+	  PyDoc_STR("get_removed_objects(from, to) -> [Object] -- "
+		    "a list of objects which are in one revision but not in "
+		    "another") },
 	{ "get_modified_objects",
 	  (PyCFunction)get_modified_objects, METH_KEYWORDS,
-	  PyDoc_STR("get_modified_objects(from, to)\n\n"
-		    "Get modified objects.") },
+	  PyDoc_STR("get_modified_objects(from, to) -> [Object] -- "
+		    "a list of objects which exist in two revisions but have "
+		    "different type or data") },
 
 	{ "select_none", (PyCFunction)select_none, METH_NOARGS,
-	  PyDoc_STR("select_none() -> sel\n\n"
-		    "Select none.") },
+	  PyDoc_STR("select_none() -> Selection -- "
+		    "an empty selection") },
 	{ "select_object", (PyCFunction)select_object, METH_KEYWORDS,
-	  PyDoc_STR("select_object(ob) -> sel\n\n"
-		    "Select object.") },
+	  PyDoc_STR("select_object(ob) -> Selection -- "
+		    "a selection containing a single object") },
 	{ "select_all", (PyCFunction)select_all, METH_KEYWORDS,
-	  PyDoc_STR("select_all(rev) -> sel\n\n"
-		    "Select all.") },
+	  PyDoc_STR("select_all(rev) -> Selection -- "
+		    "a selection containing all objects in a revision") },
 	{ "select_all_except", (PyCFunction)select_all_except, METH_KEYWORDS,
-	  PyDoc_STR("select_all_except(rev, sel) -> sel\n\n"
-		    "Select all except ... .") },
+	  PyDoc_STR("select_all_except(rev, sel) -> Selection -- "
+		    "a selection containing all objects in a revision except "
+		    "those in a given selection") },
 	{ "select_union", (PyCFunction)select_union, METH_KEYWORDS,
-	  PyDoc_STR("select_union(sel0, sel1) -> sel\n\n"
-		    "Select union.") },
+	  PyDoc_STR("select_union(sel0, sel1) -> Selection -- "
+		    "a selection containing the objects in either given "
+		    "selection") },
 	{ "select_intersection",
 	  (PyCFunction)select_intersection, METH_KEYWORDS,
-	  PyDoc_STR("select_intersection(sel0, sel1) -> sel\n\n"
-		    "Select intersection.") },
+	  PyDoc_STR("select_intersection(sel0, sel1) -> Selection -- "
+		    "a selection containing the objects in both given "
+		    "selections") },
 	{ "selection_is_empty", (PyCFunction)selection_is_empty, METH_KEYWORDS,
-	  PyDoc_STR("selection_is_empty(rev, sel) -> bool\n\n"
-		    "Selection is empty?") },
+	  PyDoc_STR("selection_is_empty(rev, sel) -> Selection -- "
+		    "whether a selection is empty in a given revision") },
 
 	{ NULL }  /* Sentinel */
 };

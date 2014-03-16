@@ -72,7 +72,8 @@ PyTypeObject SelectionType = {
 	Py_TPFLAGS_DEFAULT,		/* long tp_flags */
 
 	/* Documentation string */
-	PyDoc_STR(""),			/* const char *tp_doc */
+	PyDoc_STR("The identity of a set of objects across revisions."),
+					/* const char *tp_doc */
 
 	/* Assigned meaning in release 2.0 */
 	/* call function for all accessible objects */
