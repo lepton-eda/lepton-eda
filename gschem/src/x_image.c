@@ -42,34 +42,6 @@
 static char *x_image_sizes[] = {"320x240", "640x480", "800x600", "1200x768",
   "1280x960", "1600x1200", "3200x2400", NULL};
 
-#if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
-/* gtk_combo_box_get_active_text was included in GTK 2.6, so we need to store
-   the different image type descriptions in a list. */
-GSList *image_type_descriptions = NULL;
-#endif
-
-
-#if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
-static void free_image_type_descriptions_list ()
-{
-  GSList *ptr;
-
-  /* Free the data stored in each node */
-  ptr = image_type_descriptions;
-  while (ptr) {
-    g_free(ptr->data);
-    ptr->data = NULL;
-    ptr = g_slist_next(ptr);
-  }
-
-  /* Free the list */
-  if (!ptr)
-    g_slist_free(image_type_descriptions);
-  image_type_descriptions = NULL;
-}
-
-#endif
-
 /*! \brief Create the options of the image size combobox
  *  \par This function adds the options of the image size to the given combobox.
  *  \param combo [in] the combobox to add the options to.
@@ -117,23 +89,12 @@ static void create_type_menu(GtkComboBox *combo)
   char *buf;
   int i=0, default_index=0;
 
-#if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
-  /* If GTK < 2.6, free the descriptions list */
-  free_image_type_descriptions_list();
-#endif
-
   ptr = formats;
   while (ptr) {
     if (gdk_pixbuf_format_is_writable (ptr->data)) {
       /* Get the format description and add it to the menu */
       buf = g_strdup (gdk_pixbuf_format_get_description(ptr->data));
       gtk_combo_box_append_text (GTK_COMBO_BOX (combo), buf);
-
-      /* If GTK < 2.6, then add it also to the descriptions list. */
-#if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
-      image_type_descriptions = g_slist_append(image_type_descriptions,
-          buf);
-#endif
 
       /* Compare the name with "png" and store the index */
       buf = g_strdup (gdk_pixbuf_format_get_name(ptr->data));
@@ -207,19 +168,7 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
   GtkWidget *file_chooser;
 
   /* Get the current image type */
-#if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
-  GSList *ptr;
-  /* If GTK < 2.6, get the description from the descriptions list */
-  ptr = g_slist_nth(image_type_descriptions,
-      gtk_combo_box_get_active(GTK_COMBO_BOX(combo)));
-  if (ptr != NULL) {
-    image_type_descr = (char *) (ptr->data);
-  } else {
-    image_type_descr = NULL;
-  }
-#else
   image_type_descr = gtk_combo_box_get_active_text(GTK_COMBO_BOX(combo));
-#endif
   image_type = x_image_get_type_from_description(image_type_descr);
 
   /* Get the parent dialog */
@@ -475,10 +424,8 @@ void x_image_setup (GschemToplevel *w_current)
   g_object_set (dialog,
       /* GtkFileChooser */
       "select-multiple", FALSE,
-#if ((GTK_MAJOR_VERSION > 2) || ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION >=8)))
       /* only in GTK 2.8 */
       "do-overwrite-confirmation", TRUE,
-#endif
       NULL);
 
   /* Update the filename */
@@ -497,23 +444,10 @@ void x_image_setup (GschemToplevel *w_current)
 
   gtk_widget_show (dialog);
 
-  if (gtk_dialog_run((GTK_DIALOG(dialog))) == GTK_RESPONSE_ACCEPT) {    
-#if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
-    image_size = 
-      x_image_sizes[gtk_combo_box_get_active(GTK_COMBO_BOX(size_combo))];
-#else
+  if (gtk_dialog_run((GTK_DIALOG(dialog))) == GTK_RESPONSE_ACCEPT) {
     image_size = gtk_combo_box_get_active_text(GTK_COMBO_BOX(size_combo));
-#endif
 
-#if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
-    GSList *ptr;
-    /* If GTK < 2.6, get the description from the descriptions list */
-    ptr = g_slist_nth(image_type_descriptions,
-        gtk_combo_box_get_active(GTK_COMBO_BOX(type_combo)));
-    image_type_descr = (char *) (ptr->data);
-#else
     image_type_descr = gtk_combo_box_get_active_text(GTK_COMBO_BOX(type_combo));
-#endif
 
     image_type = x_image_get_type_from_description(image_type_descr);
     sscanf(image_size, "%ix%i", &width, &height);
@@ -521,11 +455,6 @@ void x_image_setup (GschemToplevel *w_current)
 
     x_image_lowlevel(w_current, filename, width, height, image_type);
   }
-
-#if ((GTK_MAJOR_VERSION == 2) && (GTK_MINOR_VERSION < 6))
-  /* If GTK < 2.6, free the descriptions list */
-  free_image_type_descriptions_list();
-#endif
 
   gtk_widget_destroy (dialog);
 }
@@ -622,42 +551,6 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
   right = size_x;
   bottom = size_y;
 
-  /* ------------------  Begin optional code ------------------------ */
-  /* If the the code in this region is commented, the PNG returned will
-     be the same as the one returned using libgd.
-     I mean: there will be some border all around the schematic.
-     This code is used to adjust the schematic to the border of the image */
-#if 0
-
-  /* Do a zoom extents to get fit all the schematic in the window */
-  /* Commented so the image returned will be the same as with libgd */  
-  a_zoom_extents (&toplevel,
-		  toplevel.page_current->object_list,
-		  A_PAN_DONT_REDRAW);
-
-  
-  /* See if there are objects */
-  
-  aux = toplevel->page_current->object_list;
-  while (aux != NULL) {
-    if (aux->type != -1) {
-      object_found = 1;
-      break;
-    }
-    aux = aux->next;
-  }
-
-  
-  /* If there are no objects, can't use zoom_extents */
-  if (object_found) {
-    get_object_glist_bounds (&toplevel,
-                             toplevel.page_current->object_list,
-                             &origin_x, &origin_y,
-                             &right, &bottom);
-  }
-#endif
-  /* ------------------  End optional code ------------------------ */
-  
   rect.x = origin_x;
   rect.y = origin_y;
   rect.width = right - origin_x;
