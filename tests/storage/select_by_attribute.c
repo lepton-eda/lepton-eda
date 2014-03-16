@@ -18,28 +18,6 @@
 #include <stdlib.h>
 
 
-static void assert_selected(xorn_revision_t rev, xorn_selection_t sel,
-			    xorn_object_t ob, bool should_be_selected)
-{
-	xorn_object_t *objects;
-	size_t count;
-	unsigned int i;
-
-	assert(xorn_get_selected_objects(rev, sel, &objects, &count) == 0);
-	if (count != 0)
-		assert(objects != NULL);
-
-	for (i = 0; i < count; ++i)
-		if (objects[i] == ob) {
-			assert(should_be_selected);
-			free(objects);
-			return;
-		}
-
-	assert(!should_be_selected);
-	free(objects);
-}
-
 int main()
 {
 	xorn_revision_t rev0, rev1, rev2, rev3;
@@ -58,89 +36,89 @@ int main()
 	setup(&rev0, &rev1, &rev2, &rev3, &ob0, &ob1a, &ob1b);
 
 	sel = xornsch_select_by_color(rev2, 3);
-	assert_selected(rev2, sel, ob0, true);
-	assert_selected(rev2, sel, ob1a, true);
-	assert_selected(rev2, sel, ob1b, true);
+	assert(xorn_object_is_selected(rev2, sel, ob0) == true);
+	assert(xorn_object_is_selected(rev2, sel, ob1a) == true);
+	assert(xorn_object_is_selected(rev2, sel, ob1b) == true);
 	xorn_free_selection(sel);
 
 	sel = xornsch_select_by_color(rev2, 4);
-	assert_selected(rev2, sel, ob0, false);
-	assert_selected(rev2, sel, ob1a, false);
-	assert_selected(rev2, sel, ob1b, false);
+	assert(xorn_object_is_selected(rev2, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev2, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev2, sel, ob1b) == false);
 	xorn_free_selection(sel);
 
 	sel = xornsch_select_by_color(rev3, 3);
-	assert_selected(rev3, sel, ob0, false);
-	assert_selected(rev3, sel, ob1a, false);
-	assert_selected(rev3, sel, ob1b, true);
+	assert(xorn_object_is_selected(rev3, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1b) == true);
 	xorn_free_selection(sel);
 
 	sel = xornsch_select_by_color(rev3, 4);
-	assert_selected(rev3, sel, ob0, true);
-	assert_selected(rev3, sel, ob1a, false);
-	assert_selected(rev3, sel, ob1b, false);
+	assert(xorn_object_is_selected(rev3, sel, ob0) == true);
+	assert(xorn_object_is_selected(rev3, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1b) == false);
 	xorn_free_selection(sel);
 
 	sel = xornsch_select_by_line_width(rev2, 0.);
-	assert_selected(rev2, sel, ob0, false);
-	assert_selected(rev2, sel, ob1a, false);
-	assert_selected(rev2, sel, ob1b, false);
+	assert(xorn_object_is_selected(rev2, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev2, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev2, sel, ob1b) == false);
 	xorn_free_selection(sel);
 
 	sel = xornsch_select_by_line_width(rev2, 1.);
-	assert_selected(rev2, sel, ob0, true);
-	assert_selected(rev2, sel, ob1a, true);
-	assert_selected(rev2, sel, ob1b, true);
+	assert(xorn_object_is_selected(rev2, sel, ob0) == true);
+	assert(xorn_object_is_selected(rev2, sel, ob1a) == true);
+	assert(xorn_object_is_selected(rev2, sel, ob1b) == true);
 	xorn_free_selection(sel);
 
 	sel = xornsch_select_by_line_width(rev3, 0.);
-	assert_selected(rev3, sel, ob0, false);
-	assert_selected(rev3, sel, ob1a, false);
-	assert_selected(rev3, sel, ob1b, false);
+	assert(xorn_object_is_selected(rev3, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1b) == false);
 	xorn_free_selection(sel);
 
 	sel = xornsch_select_by_line_width(rev3, 1.);
-	assert_selected(rev3, sel, ob0, false);
-	assert_selected(rev3, sel, ob1a, false);
-	assert_selected(rev3, sel, ob1b, true);
+	assert(xorn_object_is_selected(rev3, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1b) == true);
 	xorn_free_selection(sel);
 
 	pos.x = 0.; pos.y = 1.;
 	sel = xornsch_select_by_pos(rev3, &pos);
-	assert_selected(rev3, sel, ob0, true);
-	assert_selected(rev3, sel, ob1a, false);
-	assert_selected(rev3, sel, ob1b, false);
+	assert(xorn_object_is_selected(rev3, sel, ob0) == true);
+	assert(xorn_object_is_selected(rev3, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1b) == false);
 	xorn_free_selection(sel);
 
 	pos.x = -1.; pos.y = -1.;
 	sel = xornsch_select_by_pos(rev3, &pos);
-	assert_selected(rev3, sel, ob0, false);
-	assert_selected(rev3, sel, ob1a, false);
-	assert_selected(rev3, sel, ob1b, true);
+	assert(xorn_object_is_selected(rev3, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1b) == true);
 	xorn_free_selection(sel);
 
 	sel = xornsch_select_by_pos_x(rev3, 0.);
-	assert_selected(rev3, sel, ob0, true);
-	assert_selected(rev3, sel, ob1a, false);
-	assert_selected(rev3, sel, ob1b, false);
+	assert(xorn_object_is_selected(rev3, sel, ob0) == true);
+	assert(xorn_object_is_selected(rev3, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1b) == false);
 	xorn_free_selection(sel);
 
 	sel = xornsch_select_by_pos_x(rev3, 1.);
-	assert_selected(rev3, sel, ob0, false);
-	assert_selected(rev3, sel, ob1a, false);
-	assert_selected(rev3, sel, ob1b, false);
+	assert(xorn_object_is_selected(rev3, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1b) == false);
 	xorn_free_selection(sel);
 
 	sel = xornsch_select_by_pos_y(rev3, 0.);
-	assert_selected(rev3, sel, ob0, false);
-	assert_selected(rev3, sel, ob1a, false);
-	assert_selected(rev3, sel, ob1b, false);
+	assert(xorn_object_is_selected(rev3, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1b) == false);
 	xorn_free_selection(sel);
 
 	sel = xornsch_select_by_pos_y(rev3, 1.);
-	assert_selected(rev3, sel, ob0, true);
-	assert_selected(rev3, sel, ob1a, false);
-	assert_selected(rev3, sel, ob1b, false);
+	assert(xorn_object_is_selected(rev3, sel, ob0) == true);
+	assert(xorn_object_is_selected(rev3, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1b) == false);
 	xorn_free_selection(sel);
 
 	rev4 = xorn_new_revision(rev3);
@@ -155,67 +133,67 @@ int main()
 	text_data.text.s = "";
 	text_data.text.len = 0;
 	sel = xornsch_select_by_text(rev4, &text_data.text);
-	assert_selected(rev4, sel, ob0, false);
-	assert_selected(rev4, sel, ob1a, false);
-	assert_selected(rev4, sel, ob1b, false);
-	assert_selected(rev4, sel, text_ob, false);
+	assert(xorn_object_is_selected(rev4, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev4, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev4, sel, ob1b) == false);
+	assert(xorn_object_is_selected(rev4, sel, text_ob) == false);
 	xorn_free_selection(sel);
 
 	text_data.text.s = "Hello world";
 	text_data.text.len = 11;
 	sel = xornsch_select_by_text(rev4, &text_data.text);
-	assert_selected(rev4, sel, ob0, false);
-	assert_selected(rev4, sel, ob1a, false);
-	assert_selected(rev4, sel, ob1b, false);
-	assert_selected(rev4, sel, text_ob, true);
+	assert(xorn_object_is_selected(rev4, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev4, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev4, sel, ob1b) == false);
+	assert(xorn_object_is_selected(rev4, sel, text_ob) == true);
 	xorn_free_selection(sel);
 
 	memset(&line, 0, sizeof line);
 	sel = xornsch_select_by_line(rev2, &line);
-	assert_selected(rev2, sel, ob0, false);
-	assert_selected(rev2, sel, ob1a, false);
-	assert_selected(rev2, sel, ob1b, false);
+	assert(xorn_object_is_selected(rev2, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev2, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev2, sel, ob1b) == false);
 	xorn_free_selection(sel);
 	sel = xornsch_select_by_line(rev3, &line);
-	assert_selected(rev3, sel, ob0, false);
-	assert_selected(rev3, sel, ob1a, false);
-	assert_selected(rev3, sel, ob1b, false);
+	assert(xorn_object_is_selected(rev3, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1b) == false);
 	xorn_free_selection(sel);
 
 	line.width = 1.;
 	sel = xornsch_select_by_line(rev2, &line);
-	assert_selected(rev2, sel, ob0, true);
-	assert_selected(rev2, sel, ob1a, true);
-	assert_selected(rev2, sel, ob1b, true);
+	assert(xorn_object_is_selected(rev2, sel, ob0) == true);
+	assert(xorn_object_is_selected(rev2, sel, ob1a) == true);
+	assert(xorn_object_is_selected(rev2, sel, ob1b) == true);
 	xorn_free_selection(sel);
 	sel = xornsch_select_by_line(rev3, &line);
-	assert_selected(rev3, sel, ob0, false);
-	assert_selected(rev3, sel, ob1a, false);
-	assert_selected(rev3, sel, ob1b, true);
+	assert(xorn_object_is_selected(rev3, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1b) == true);
 	xorn_free_selection(sel);
 
 	memset(&fill, 0, sizeof fill);
 	sel = xornsch_select_by_fill(rev2, &fill);
-	assert_selected(rev2, sel, ob0, false);
-	assert_selected(rev2, sel, ob1a, true);
-	assert_selected(rev2, sel, ob1b, false);
+	assert(xorn_object_is_selected(rev2, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev2, sel, ob1a) == true);
+	assert(xorn_object_is_selected(rev2, sel, ob1b) == false);
 	xorn_free_selection(sel);
 	sel = xornsch_select_by_fill(rev3, &fill);
-	assert_selected(rev3, sel, ob0, false);
-	assert_selected(rev3, sel, ob1a, false);
-	assert_selected(rev3, sel, ob1b, false);
+	assert(xorn_object_is_selected(rev3, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1b) == false);
 	xorn_free_selection(sel);
 
 	fill.type = 1;
 	sel = xornsch_select_by_fill(rev2, &fill);
-	assert_selected(rev2, sel, ob0, false);
-	assert_selected(rev2, sel, ob1a, false);
-	assert_selected(rev2, sel, ob1b, true);
+	assert(xorn_object_is_selected(rev2, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev2, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev2, sel, ob1b) == true);
 	xorn_free_selection(sel);
 	sel = xornsch_select_by_fill(rev3, &fill);
-	assert_selected(rev3, sel, ob0, false);
-	assert_selected(rev3, sel, ob1a, false);
-	assert_selected(rev3, sel, ob1b, true);
+	assert(xorn_object_is_selected(rev3, sel, ob0) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1a) == false);
+	assert(xorn_object_is_selected(rev3, sel, ob1b) == true);
 	xorn_free_selection(sel);
 
 	xorn_free_revision(rev4);

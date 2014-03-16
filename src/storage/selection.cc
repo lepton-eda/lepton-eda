@@ -94,6 +94,48 @@ xorn_selection_t xorn_select_all_except(
 	return rsel;
 }
 
+/** \brief Create a selection which contains all the objects in an
+ *         existing selection plus a given object.  */
+
+xorn_selection_t xorn_select_including(xorn_selection_t sel, xorn_object_t ob)
+{
+	xorn_selection_t rsel;
+	try {
+		rsel = new xorn_selection(*sel);
+	} catch (std::bad_alloc const &) {
+		return NULL;
+	}
+	try {
+		rsel->insert(ob);
+	} catch (std::bad_alloc const &) {
+		delete rsel;
+		return NULL;
+	}
+	return rsel;
+}
+
+/** \brief Create a selection which contains all the objects in an
+ *         existing selection minus a given object.  */
+
+xorn_selection_t xorn_select_excluding(xorn_selection_t sel, xorn_object_t ob)
+{
+	xorn_selection_t rsel;
+	try {
+		rsel = new xorn_selection(*sel);
+	} catch (std::bad_alloc const &) {
+		return NULL;
+	}
+	try {
+		xorn_selection::const_iterator i = rsel->find(ob);
+		if (i != rsel->end())
+			rsel->erase(i);
+	} catch (std::bad_alloc const &) {
+		delete rsel;
+		return NULL;
+	}
+	return rsel;
+}
+
 /** \brief Create a selection containing the objects in either given
  *         selection.  */
 
@@ -140,6 +182,29 @@ xorn_selection_t xorn_select_intersection(
 	return rsel;
 }
 
+/** \brief Create a selection containing the objects contained in one
+ *         given selection, but not the other.  */
+
+xorn_selection_t xorn_select_difference(
+	xorn_selection_t sel0, xorn_selection_t sel1)
+{
+	xorn_selection_t rsel;
+	try {
+		rsel = new xorn_selection();
+	} catch (std::bad_alloc const &) {
+		return NULL;
+	}
+	try {
+		set_difference(sel0->begin(), sel0->end(),
+			       sel1->begin(), sel1->end(),
+			       inserter(*rsel, rsel->begin()));
+	} catch (std::bad_alloc const &) {
+		delete rsel;
+		return NULL;
+	}
+	return rsel;
+}
+
 /** \brief Return whether a selection is empty in a given revision.  */
 
 bool xorn_selection_is_empty(xorn_revision_t rev, xorn_selection_t sel)
@@ -157,6 +222,16 @@ bool xorn_selection_is_empty(xorn_revision_t rev, xorn_selection_t sel)
 			return false;
 
 	return true;
+}
+
+/** \brief Return whether an object exists in a revision and is
+ *         selected in a selection.  */
+
+bool xorn_object_is_selected(
+	xorn_revision_t rev, xorn_selection_t sel, xorn_object_t ob)
+{
+	return rev->obstates.find(ob) != rev->obstates.end() &&
+	       sel->find(ob) != sel->end();
 }
 
 /** \brief Free the memory used for storing a selection.

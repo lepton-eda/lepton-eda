@@ -18,18 +18,6 @@
 #include <stdlib.h>
 
 
-bool object_is_selected(
-	xorn_revision_t rev, xorn_selection_t sel, xorn_object_t ob)
-{
-	xorn_selection_t sel0 = xorn_select_object(ob),
-			 sel1 = xorn_select_intersection(sel, sel0);
-	bool result = !xorn_selection_is_empty(rev, sel1);
-
-	xorn_free_selection(sel1);
-	xorn_free_selection(sel0);
-	return result;
-}
-
 int main()
 {
 	xorn_revision_t rev0, rev1, rev2, rev3;
@@ -55,13 +43,13 @@ int main()
 
 	xorn_finalize_revision(rev4);
 
-	assert(object_is_selected(rev4, sel0, ob0));
-	assert(!object_is_selected(rev4, sel0, ob1a));
-	assert(object_is_selected(rev4, sel0, ob1b));
+	assert(xorn_object_is_selected(rev4, sel0, ob0));
+	assert(!xorn_object_is_selected(rev4, sel0, ob1a));
+	assert(xorn_object_is_selected(rev4, sel0, ob1b));
 
-	assert(!object_is_selected(rev4, sel1, ob0));
-	assert(!object_is_selected(rev4, sel1, ob1a));
-	assert(!object_is_selected(rev4, sel1, ob1b));
+	assert(!xorn_object_is_selected(rev4, sel1, ob0));
+	assert(!xorn_object_is_selected(rev4, sel1, ob1a));
+	assert(!xorn_object_is_selected(rev4, sel1, ob1b));
 
 	assert(xorn_get_objects(rev4, &objects, &count) == 0);
 	assert(objects != NULL);
@@ -73,8 +61,8 @@ int main()
 		    objects[i] == ob1b)
 			continue;
 
-		assert(!object_is_selected(rev4, sel0, objects[i]));
-		assert(object_is_selected(rev4, sel1, objects[i]));
+		assert(!xorn_object_is_selected(rev4, sel0, objects[i]));
+		assert(xorn_object_is_selected(rev4, sel1, objects[i]));
 	}
 
 	free(objects);
