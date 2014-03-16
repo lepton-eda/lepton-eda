@@ -348,6 +348,15 @@ void o_select_connected_nets(GschemToplevel *w_current, OBJECT* o_net)
 
   g_assert(o_net->type == OBJ_NET);
 
+  /* If either SHIFT or CTRL are pressed, behave exactly the same as a
+   * single object selection.  This makes it possible to <mouse-1> on
+   * a net segment to select it and then Shift+<mouse-1> on it to
+   * deselect it. */
+  if (w_current->SHIFTKEY || w_current->CONTROLKEY) {
+    o_select_object (w_current, o_net, SINGLE, 0);
+    return;
+  }
+
   if (!o_net->selected) {
     w_current->net_selection_state = 1;
   }
