@@ -184,6 +184,38 @@ static PyObject *select_all_except(
 	return sel ? build_selection(sel) : PyErr_NoMemory();
 }
 
+static PyObject *select_including(
+	PyObject *self, PyObject *args, PyObject *kwds)
+{
+	PyObject *sel_arg = NULL, *ob_arg = NULL;
+	static char *kwlist[] = { "sel", "ob", NULL };
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "O!O!:select_including", kwlist,
+		    &SelectionType, &sel_arg, &ObjectType, &ob_arg))
+		return NULL;
+
+	xorn_selection_t sel = xorn_select_including(
+		((Selection *)sel_arg)->sel, ((Object *)ob_arg)->ob);
+	return sel ? build_selection(sel) : PyErr_NoMemory();
+}
+
+static PyObject *select_excluding(
+	PyObject *self, PyObject *args, PyObject *kwds)
+{
+	PyObject *sel_arg = NULL, *ob_arg = NULL;
+	static char *kwlist[] = { "sel", "ob", NULL };
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "O!O!:select_excluding", kwlist,
+		    &SelectionType, &sel_arg, &ObjectType, &ob_arg))
+		return NULL;
+
+	xorn_selection_t sel = xorn_select_excluding(
+		((Selection *)sel_arg)->sel, ((Object *)ob_arg)->ob);
+	return sel ? build_selection(sel) : PyErr_NoMemory();
+}
+
 static PyObject *select_union(
 	PyObject *self, PyObject *args, PyObject *kwds)
 {
@@ -216,6 +248,22 @@ static PyObject *select_intersection(
 	return sel ? build_selection(sel) : PyErr_NoMemory();
 }
 
+static PyObject *select_difference(
+	PyObject *self, PyObject *args, PyObject *kwds)
+{
+	PyObject *sel0_arg = NULL, *sel1_arg = NULL;
+	static char *kwlist[] = { "sel0", "sel1", NULL };
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "O!O!:select_difference", kwlist,
+		    &SelectionType, &sel0_arg, &SelectionType, &sel1_arg))
+		return NULL;
+
+	xorn_selection_t sel = xorn_select_difference(
+		((Selection *)sel0_arg)->sel, ((Selection *)sel1_arg)->sel);
+	return sel ? build_selection(sel) : PyErr_NoMemory();
+}
+
 static PyObject *selection_is_empty(
 	PyObject *self, PyObject *args, PyObject *kwds)
 {
@@ -230,6 +278,26 @@ static PyObject *selection_is_empty(
 	PyObject *result = xorn_selection_is_empty(
 		((Revision *)rev_arg)->rev,
 		((Selection *)sel_arg)->sel) ? Py_True : Py_False;
+	Py_INCREF(result);
+	return result;
+}
+
+static PyObject *object_is_selected(
+	PyObject *self, PyObject *args, PyObject *kwds)
+{
+	PyObject *rev_arg = NULL, *sel_arg = NULL, *ob_arg = NULL;
+	static char *kwlist[] = { "rev", "sel", "ob", NULL };
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "O!O!O!:object_is_selected", kwlist,
+		    &RevisionType, &rev_arg, &SelectionType, &sel_arg,
+		    &ObjectType, &ob_arg))
+		return NULL;
+
+	PyObject *result = xorn_object_is_selected(
+		((Revision *)rev_arg)->rev,
+		((Selection *)sel_arg)->sel,
+		((Object *)ob_arg)->ob) ? Py_True : Py_False;
 	Py_INCREF(result);
 	return result;
 }
@@ -268,6 +336,14 @@ static PyMethodDef methods[] = {
 	  PyDoc_STR("select_all_except(rev, sel) -> Selection -- "
 		    "a selection containing all objects in a revision except "
 		    "those in a given selection") },
+	{ "select_including", (PyCFunction)select_including, METH_KEYWORDS,
+	  PyDoc_STR("select_including(sel, ob) -> Selection -- "
+		    "a selection which contains all the objects in an "
+		    "existing selection plus a given object") },
+	{ "select_excluding", (PyCFunction)select_excluding, METH_KEYWORDS,
+	  PyDoc_STR("select_excluding(sel, ob) -> Selection -- "
+		    "a selection which contains all the objects in an "
+		    "existing selection minus a given object") },
 	{ "select_union", (PyCFunction)select_union, METH_KEYWORDS,
 	  PyDoc_STR("select_union(sel0, sel1) -> Selection -- "
 		    "a selection containing the objects in either given "
@@ -277,9 +353,17 @@ static PyMethodDef methods[] = {
 	  PyDoc_STR("select_intersection(sel0, sel1) -> Selection -- "
 		    "a selection containing the objects in both given "
 		    "selections") },
+	{ "select_difference", (PyCFunction)select_difference, METH_KEYWORDS,
+	  PyDoc_STR("select_difference(sel0, sel1) -> Selection -- "
+		    "a selection containing the objects contained in one "
+		    "given selection, but not the other") },
 	{ "selection_is_empty", (PyCFunction)selection_is_empty, METH_KEYWORDS,
 	  PyDoc_STR("selection_is_empty(rev, sel) -> Selection -- "
 		    "whether a selection is empty in a given revision") },
+	{ "object_is_selected", (PyCFunction)object_is_selected, METH_KEYWORDS,
+	  PyDoc_STR("object_is_selected(rev, sel, ob) -> bool -- "
+		    "whether an object exists in a revision and is selected "
+		    "in a selection") },
 
 	{ NULL }  /* Sentinel */
 };

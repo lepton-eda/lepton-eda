@@ -193,6 +193,58 @@ if True:
     assert_selected_objects_0(rev2, sel)
     assert_selected_objects_0(rev3, sel)
 
+# select including
+sel1 = xorn.storage.select_all(rev3)
+assert sel1 is not None
+
+if True:
+    sel = xorn.storage.select_including(sel1, ob0)
+    assert sel is not None
+    assert_selected_objects_0(rev0, sel)
+    assert_selected_objects_1(rev1, sel, ob0)
+    assert_selected_objects_2(rev2, sel, ob0, ob1b)
+    assert_selected_objects_2(rev3, sel, ob0, ob1b)
+
+    sel = xorn.storage.select_including(sel1, ob1a)
+    assert sel is not None
+    assert_selected_objects_0(rev0, sel)
+    assert_selected_objects_1(rev1, sel, ob0)
+    assert_selected_objects_3(rev2, sel, ob0, ob1a, ob1b)
+    assert_selected_objects_2(rev3, sel, ob0, ob1b)
+
+    sel = xorn.storage.select_including(sel1, ob1b)
+    assert sel is not None
+    assert_selected_objects_0(rev0, sel)
+    assert_selected_objects_1(rev1, sel, ob0)
+    assert_selected_objects_2(rev2, sel, ob0, ob1b)
+    assert_selected_objects_2(rev3, sel, ob0, ob1b)
+
+# select excluding
+sel1 = xorn.storage.select_all(rev3)
+assert sel1 is not None
+
+if True:
+    sel = xorn.storage.select_excluding(sel1, ob0)
+    assert sel is not None
+    assert_selected_objects_0(rev0, sel)
+    assert_selected_objects_0(rev1, sel)
+    assert_selected_objects_1(rev2, sel, ob1b)
+    assert_selected_objects_1(rev3, sel, ob1b)
+
+    sel = xorn.storage.select_excluding(sel1, ob1a)
+    assert sel is not None
+    assert_selected_objects_0(rev0, sel)
+    assert_selected_objects_1(rev1, sel, ob0)
+    assert_selected_objects_2(rev2, sel, ob0, ob1b)
+    assert_selected_objects_2(rev3, sel, ob0, ob1b)
+
+    sel = xorn.storage.select_excluding(sel1, ob1b)
+    assert sel is not None
+    assert_selected_objects_0(rev0, sel)
+    assert_selected_objects_1(rev1, sel, ob0)
+    assert_selected_objects_1(rev2, sel, ob0)
+    assert_selected_objects_1(rev3, sel, ob0)
+
 # select union
 sel1 = xorn.storage.select_all(rev1)
 assert sel1 is not None
@@ -306,3 +358,60 @@ if True:
     sel = xorn.storage.select_intersection(sel1, sel2)
     assert sel is not None
     assert_selected_objects_1(rev2, sel, ob1b)
+
+# select difference
+sel1 = xorn.storage.select_all(rev1)
+assert sel1 is not None
+
+if True:
+    sel2 = xorn.storage.select_none()
+    assert sel2 is not None
+    sel = xorn.storage.select_difference(sel1, sel2)
+    assert sel is not None
+    assert_selected_objects_1(rev2, sel, ob0)
+
+    sel2 = xorn.storage.select_object(ob1a)
+    assert sel2 is not None
+    sel = xorn.storage.select_difference(sel1, sel2)
+    assert sel is not None
+    assert_selected_objects_1(rev2, sel, ob0)
+
+    sel2 = xorn.storage.select_all(rev2)
+    assert sel2 is not None
+    sel = xorn.storage.select_difference(sel1, sel2)
+    assert sel is not None
+    assert_selected_objects_0(rev2, sel)
+
+    sel2 = xorn.storage.select_all(rev3)
+    assert sel2 is not None
+    sel = xorn.storage.select_difference(sel1, sel2)
+    assert sel is not None
+    assert_selected_objects_0(rev2, sel)
+
+sel1 = xorn.storage.select_all_except(rev2, sel1)
+assert sel1 is not None
+
+if True:
+    sel2 = xorn.storage.select_none()
+    assert sel2 is not None
+    sel = xorn.storage.select_difference(sel1, sel2)
+    assert sel is not None
+    assert_selected_objects_2(rev2, sel, ob1a, ob1b)
+
+    sel2 = xorn.storage.select_object(ob1a)
+    assert sel2 is not None
+    sel = xorn.storage.select_difference(sel1, sel2)
+    assert sel is not None
+    assert_selected_objects_1(rev2, sel, ob1b)
+
+    sel2 = xorn.storage.select_all(rev2)
+    assert sel2 is not None
+    sel = xorn.storage.select_difference(sel1, sel2)
+    assert sel is not None
+    assert_selected_objects_0(rev2, sel)
+
+    sel2 = xorn.storage.select_all(rev3)
+    assert sel2 is not None
+    sel = xorn.storage.select_difference(sel1, sel2)
+    assert sel is not None
+    assert_selected_objects_1(rev2, sel, ob1a)

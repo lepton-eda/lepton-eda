@@ -16,11 +16,6 @@
 
 import xorn.storage, Setup
 
-def object_is_selected(rev, sel, ob):
-    sel0 = xorn.storage.select_object(ob)
-    sel1 = xorn.storage.select_intersection(sel, sel0)
-    return not xorn.storage.selection_is_empty(rev, sel1)
-
 (rev0, rev1, rev2, rev3, ob0, ob1a, ob1b) = Setup.setup()
 
 rev4 = xorn.storage.Revision(rev2)
@@ -34,13 +29,13 @@ assert sel1 is not None
 
 rev4.finalize()
 
-assert object_is_selected(rev4, sel0, ob0) == True
-assert object_is_selected(rev4, sel0, ob1a) == False
-assert object_is_selected(rev4, sel0, ob1b) == True
+assert xorn.storage.object_is_selected(rev4, sel0, ob0) == True
+assert xorn.storage.object_is_selected(rev4, sel0, ob1a) == False
+assert xorn.storage.object_is_selected(rev4, sel0, ob1b) == True
 
-assert object_is_selected(rev4, sel1, ob0) == False
-assert object_is_selected(rev4, sel1, ob1a) == False
-assert object_is_selected(rev4, sel1, ob1b) == False
+assert xorn.storage.object_is_selected(rev4, sel1, ob0) == False
+assert xorn.storage.object_is_selected(rev4, sel1, ob1a) == False
+assert xorn.storage.object_is_selected(rev4, sel1, ob1b) == False
 
 objects = rev4.get_objects()
 assert type(objects) == list
@@ -50,5 +45,5 @@ for ob in objects:
     if ob in [ob0, ob1a, ob1b]:
         continue
 
-    assert object_is_selected(rev4, sel0, ob) == False
-    assert object_is_selected(rev4, sel1, ob) == True
+    assert xorn.storage.object_is_selected(rev4, sel0, ob) == False
+    assert xorn.storage.object_is_selected(rev4, sel1, ob) == True

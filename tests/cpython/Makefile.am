@@ -22,6 +22,7 @@ tests = snippets/functions.py \
 	get_obdata.py \
 	get_objects.py \
 	get_obtype.py \
+	is_selected.py \
 	module.py \
 	selection.py \
 	stat.py \

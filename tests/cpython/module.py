@@ -45,9 +45,13 @@ mod_attrs = {
     'select_object': types.BuiltinMethodType,
     'select_all': types.BuiltinMethodType,
     'select_all_except': types.BuiltinMethodType,
+    'select_including': types.BuiltinMethodType,
+    'select_excluding': types.BuiltinMethodType,
     'select_union': types.BuiltinMethodType,
     'select_intersection': types.BuiltinMethodType,
+    'select_difference': types.BuiltinMethodType,
     'selection_is_empty': types.BuiltinMethodType,
+    'object_is_selected': types.BuiltinMethodType,
 }
 
 a = mod_attrs.keys()

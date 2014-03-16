@@ -293,6 +293,18 @@ def select_all(rev):
 def select_all_except(rev, sel):
     pass
 
+## \brief Return a selection which contains all the objects in an
+#         existing selection plus a given object.
+
+def select_including(sel, ob):
+    pass
+
+## \brief Return a selection which contains all the objects in an
+#         existing selection minus a given object.
+
+def select_excluding(sel, ob):
+    pass
+
 ## \brief Return a selection containing the objects in either given
 #         selection.
 #
@@ -309,9 +321,21 @@ def select_union(sel0, sel1):
 def select_intersection(sel0, sel1):
     pass
 
+## \brief Return a selection containing the objects contained in one
+#         given selection, but not the other.
+
+def select_difference(sel0, sel1):
+    pass
+
 ## \brief Return whether a selection is empty in a given revision.
 
 def selection_is_empty(rev, sel):
+    pass
+
+## \brief Return whether an object exists in a revision and is
+#         selected in a selection.
+
+def object_is_selected(rev, sel, ob):
     pass
 
 class LineAttr:
