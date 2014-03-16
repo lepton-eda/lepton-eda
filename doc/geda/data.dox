@@ -1,0 +1,493 @@
+/* Copyright (C) 1998-2004 Ales V. Hvezda
+ * Copyright (C) 2014 Roland Lutz
+ *
+ * Permission is granted to copy, distribute and/or modify this document
+ * under the terms of the GNU Free Documentation License, Version 1.2 or
+ * any later version published by the Free Software Foundation; with no
+ * Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+ * Texts.  A copy of the license is included in the ``GNU Free
+ * Documentation License'' file as part of this distribution.  */  /**
+
+\struct xornsch_line_attr
+\brief Schematic line style.
+
+This data structure describes the line style of the following objects:
+
+- xornsch_arc
+- xornsch_box
+- xornsch_circle
+- xornsch_line
+- xornsch_path
+
+\var xornsch_line_attr::width
+\brief Line width in mils.
+
+\var xornsch_line_attr::cap_style
+\brief Type of cap style.
+
+The cap style is an enumerated type:
+
+    END NONE = 0
+    END SQUARE = 1
+    END ROUND = 2
+
+\var xornsch_line_attr::dash_style
+\brief Type of dash style.
+
+The dash style is an enumerated type:
+
+    TYPE SOLID = 0
+    TYPE DOTTED = 1
+    TYPE DASHED = 2
+    TYPE CENTER = 3
+    TYPE PHANTOM = 4
+
+\image html linetype.svg
+
+\var xornsch_line_attr::dash_length
+\brief Dash length in mils.
+
+The dash length parameter is not used for TYPE SOLID and TYPE DOTTED.
+This parameter should take on a value of \c -1 in these cases.
+
+\var xornsch_line_attr::dash_space
+\brief Space between dashes in mils.
+
+The dash space parameter is not used for TYPE SOLID.  This parameter
+should take on a value of \c -1 in these case.
+
+*//*-----------------------------------------------------------------------*//**
+
+\struct xornsch_fill_attr
+\brief Schematic fill style.
+
+This data structure describes the fill style of the following objects:
+
+- xornsch_box
+- xornsch_circle
+- xornsch_path
+
+If the filltype is 0 (FILLING HOLLOW), then all the fill parameters
+should take on a value of -1.  The fill type FILLING FILL is a solid
+color fill.  If the fill type is FILLING MESH, the two pairs of pitch
+and spacing control the fill or hatch.  If the fill type is FILLING
+HATCH, only the first pair of pitch and spacing are used.
+
+\var xornsch_fill_attr::type
+\brief Type of fill.
+
+The fill type parameter is an enumerated type:
+
+    FILLING HOLLOW = 0
+    FILLING FILL = 1
+    FILLING MESH = 2
+    FILLING HATCH = 3
+    FILLING VOID = 4 unused
+
+\image html filltype.svg
+
+\var xornsch_fill_attr::width
+\brief Width of fill lines in mils.
+
+\var xornsch_fill_attr::angle0
+\brief First angle of fill in degrees.
+
+\var xornsch_fill_attr::pitch0
+\brief First pitch/spacing of fill in mils.
+
+\var xornsch_fill_attr::angle1
+\brief Second angle of fill in degrees.
+
+\var xornsch_fill_attr::pitch1
+\brief Second pitch/spacing of fill in mils.
+
+*//*-----------------------------------------------------------------------*//**
+
+\struct xornsch_line
+\brief Schematic line.
+
+Valid in schematic and symbol files.
+
+\var xornsch_line::pos
+\brief Coordinates of the first end in mils.
+
+\var xornsch_line::size
+\brief Coordinates of the second end minus coordinates of the first
+end in mils.
+
+\var xornsch_line::color
+\brief Color index.
+
+\sa \ref geda-colors
+
+\var xornsch_line::line
+\brief Line style.
+
+*//*-----------------------------------------------------------------------*//**
+
+\struct xornsch_picture
+\brief Schematic picture.
+
+Valid in schematic and symbol files.
+The filename is not used if the picture is embedded.
+
+Unimplemented fields:
+- embedded: Embedded or link to the picture file.
+- filename: Path and filename of a not embedded picture.
+- picture_data: Serialized picture
+
+\var xornsch_picture::pos
+\brief Coordinates of the lower left corner in mils.
+
+\var xornsch_picture::size
+\brief Size in mils.
+
+\var xornsch_picture::angle
+\brief Rotation angle in degrees.
+
+The angle of the picture can only take on one of the following values:
+0, 90, 180, 270.
+
+\var xornsch_picture::mirror
+\brief Mirrored or normal picture.
+
+*//*-----------------------------------------------------------------------*//**
+
+\struct xornsch_box
+\brief Schematic box.
+
+Valid in schematic and symbol files.
+
+\var xornsch_box::pos
+\brief Lower left hand coordinates in mils.
+
+\var xornsch_box::size
+\brief Size in mils.
+
+\var xornsch_box::color
+\brief Color index.
+
+\sa \ref geda-colors
+
+\var xornsch_box::line
+\brief Line style.
+
+\var xornsch_box::fill
+\brief Fill style.
+
+*//*-----------------------------------------------------------------------*//**
+
+\struct xornsch_circle
+\brief Schematic circle.
+
+Valid in schematic and symbol files.
+
+\var xornsch_circle::pos
+\brief Center coordinates in mils.
+
+\var xornsch_circle::radius
+\brief Radius of the circle in mils.
+
+\var xornsch_circle::color
+\brief Color index.
+
+\sa \ref geda-colors
+
+\var xornsch_circle::line
+\brief Line style.
+
+\var xornsch_circle::fill
+\brief Fill style.
+
+*//*-----------------------------------------------------------------------*//**
+
+\struct xornsch_arc
+\brief Schematic arc.
+
+Valid in schematic and symbol files.
+
+\var xornsch_arc::pos
+\brief Center coordinates in mils.
+
+\var xornsch_arc::radius
+\brief Radius of the arc in mils.
+
+\var xornsch_arc::startangle
+\brief Starting angle of the arc in degrees.
+
+The startangle can be negative, but not recommended.
+
+\var xornsch_arc::sweepangle
+\brief Amount the arc sweeps in degrees.
+
+The sweepangle can be negative, but not recommended.
+
+\var xornsch_arc::color
+\brief Color index.
+
+\sa \ref geda-colors
+
+\var xornsch_arc::line
+\brief Line style.
+
+*//*-----------------------------------------------------------------------*//**
+
+\struct xornsch_text
+\brief Schematic text or attribute.
+
+Text objects can be attached to another object; attaching other object
+types is unsupported.
+
+If the string has the form \c name=value, the text object is
+considered an \a attribute; otherwise, it represents informative lines
+of text.  An attribute not attached to any object is a “toplevel”
+attribute.  These attributes are useful when you need to convey some
+info about a schematic page or symbol and need the netlister to have
+access to this info.
+
+Valid in schematic and symbol files.
+
+\var xornsch_text::pos
+\brief Coordinates of the origin of the text item in mils.
+
+\var xornsch_text::color
+\brief Color index.
+
+\sa \ref geda-colors
+
+\var xornsch_text::text_size
+\brief Size of the text in points.
+
+The minimum size is 2 points (1/72 of an inch).  There is no maximum size.
+
+\var xornsch_text::visibility
+\brief Visibility of the text.
+
+The visibility field is an enumerated type:
+
+    INVISIBLE = 0
+    VISIBLE = 1
+
+\var xornsch_text::show_name_value
+\brief Attribute visibility control.
+
+The show_name_value is an enumerated type:
+
+    SHOW NAME VALUE = 0 (show both name and value of an attribute)
+    SHOW VALUE = 1 (show only the value of an attribute)
+    SHOW NAME = 2 (show only the name of an attribute)
+
+The show_name_value field is only valid if the string is an attribute,
+i.e. has the form \c name=value.
+
+\var xornsch_text::angle
+\brief Angle of the text in degrees.
+
+The angle of the text can only take on one of the following values: 0,
+90, 180, 270.  A value of 270 will always generate upright text.
+
+\var xornsch_text::alignment
+\brief Alignment (i.e., relative location of the origin) of the text.
+
+The alignment field can take a value from 0 to 8.  The following
+diagram shows what the values for the alignment field mean:
+
+\image html fileformat_textgraphic.jpg
+
+\var xornsch_text::text
+\brief The text strings.
+
+The maximum length of any single text string is 1024, however there is
+no limit to the number of text string lines.
+
+The text strings can have overbars if the text is embedded in two
+overbar markers (“\\\_”).  A single backslash needs to be written as
+“\\\\”.
+
+Example:
+
+    pinlabel=R/\_W\_
+
+The string “R/W” has an overbar over the “W”.
+
+*//*-----------------------------------------------------------------------*//**
+
+\struct xornsch_net
+\brief Schematic net segment, bus segment, or pin.
+
+- Nets and buses can only appear in schematic files.
+  Pins can only appear in symbol files.
+- You cannot have a zero length net or bus (the gEDA tools will throw
+  them away).  Zero length pins are allowed.
+
+If \a is_pin is \c false, valid in schematic files only.
+if \a is_pin is \c true, valid in symbol files only.
+
+Unimplemented fields:
+- ripperdir: Direction of bus rippers
+  - The ripperdir field for an brand new bus is 0.
+  - The ripperdir field takes on a value of 1 or -1 when a net is
+    connected to the bus for the first time.  This value indicates the
+    direction of the ripper symbol.  The ripper direction is set to
+    the same value for the entire life of the bus object.
+  - Is 0 if no nets have been connected to the bus segment.
+
+\var xornsch_net::pos
+\brief Coordinate of first end in mils.
+
+\var xornsch_net::size
+\brief Coordinate of second end minus coordinate of first end in mils.
+
+\var xornsch_net::color
+\brief Color index.
+
+\sa \ref geda-colors
+
+\var xornsch_net::is_bus
+\brief Does the object describe a bus or bus pin?
+
+If \c false, this object is a net segment or normal pin.  If \c true,
+it is a bus segment or bus pin.
+
+Bus pins are not used by gEDA.
+
+\var xornsch_net::is_pin
+\brief Does the object describe a pin?
+
+If \c false, this object is a net segment or bus segment.  If \c true,
+it is a regular pin or bus pin.
+
+Bus pins are not used by gEDA.
+
+\var xornsch_net::is_inverted
+\brief Invert the pin when writing to a gEDA symbol file.
+
+In Xorn, the end point indicated by \a pos is the active connection
+port of a pin.  Only this end point can have other pins or nets
+connected to it.
+
+In a gEDA symbol files, however, there is a separate field called \a
+whichend that specifies which end point of the pin is the active
+connection port.  If \a whichend is \c 0, the first end point is
+active; if it is \c 1, the other end is active.
+
+When a pin with \a whichend = \c 1 is read from a symbol file, the end
+points are swapped, and \a is_inverted is set to \c true.  This field
+is then completely ignored unless the file is written to a gEDA symbol
+file again, in which case the points are written swapped and \a
+whichend is set to \c 1.
+
+\note Unless you are writing a gEDA import/export filter, you can
+      safely ignore this field.
+
+*//*-----------------------------------------------------------------------*//**
+
+\struct xornsch_component
+\brief Schematic component.
+
+Valid in schematic files only.
+
+Unimplemented fields:
+- basename: The filename of the component
+
+The just basename is the filename of the component. This filename is
+not the full path.
+
+\var xornsch_component::pos
+\brief Origin coordinates in mils.
+
+\var xornsch_component::selectable
+\brief Is the component selectable?
+
+\var xornsch_component::angle
+\brief Rotation angle of the component in degrees.
+
+Can only be 0, 90, 180, or 270.
+
+\var xornsch_component::mirror
+\brief Is the component mirrored around the Y axis?
+
+*//*-----------------------------------------------------------------------*//**
+
+\struct xornsch_path
+\brief Schematic path.
+
+Valid in schematic and symbol files.  Valid since fileformat version 2
+(release 1.5.1).
+
+\var xornsch_path::pathdata
+\brief Path data.
+
+The gEDA path data format has been deliberately specified to match
+a subset of [that in the W3C SVG standard](http://www.w3.org/TR/SVG/paths.html).
+
+As an implementation detail: libgeda takes code from librsvg, an SVG
+parsing library. As a result, the majority of SVG path syntax is read
+correctly, however this is always normalised to absolute move, line,
+Bézier curve and close-path commands internally (and is saved as
+such).
+
+Coordinates along the path are specified in the standard gschem
+coordinate space.
+
+Example:
+
+    M 410,240
+    L 501,200
+    L 455,295
+    L 435,265
+    z
+
+A path starting at (410,240) with lines drawn from there, and joining
+points (501,200), (455,295), (435,265), closing back to its origin.
+
+Those path commands which gEDA emits, and will guarantee to parse, are
+listed in the table below (text taken from the above SVG
+specification).  In the table below, the following notation is used:
+
+- “()”: grouping of parameters
+- “+”: one or more of the given parameter(s) is required
+
+Command|Name|Parameters|Description
+-|-|-|-
+M&nbsp;(absolute)|moveto| (x,y)+|Start a new sub-path at the given (x,y) coordinate. M (uppercase) indicates that absolute coordinates will follow; m (lowercase) indicates that relative coordinates will follow. If a relative moveto (m) appears as the first element of the path, then it is treated as a pair of absolute coordinates. If a moveto is followed by multiple pairs of coordinates, the subsequent pairs are treated as implicit lineto commands.
+L&nbsp;(absolute)|lineto| (x,y)+|Draw a line from the current point to the given (x,y) coordinate which becomes the new current point. L (uppercase) indicates that absolute coordinates will follow; l (lowercase) indicates that relative coordinates will follow. A number of coordinates pairs may be specified to draw a polyline. At the end of the command, the new current point is set to the final set of coordinates provided.
+C&nbsp;(absolute)|curveto| (x1,y1&nbsp;x2,y2&nbsp;x,y)+|Draws a cubic Bézier curve from the current point to (x,y) using (x1,y1) as the control point at the beginning of the curve and (x2,y2) as the control point at the end of the curve. C (uppercase) indicates that absolute coordinates will follow; c (lowercase) indicates that relative coordinates will follow. Multiple sets of coordinates may be specified to draw a polybézier. At the end of the command, the new current point becomes the final (x,y) coordinate pair used in the polybézier.
+Z or z|closepath|\a none|Close the current subpath by drawing a straight line from the current point to current subpath's initial point.
+
+gEDA currently
+
+- emits only the absolute coordinate versions of the above commands
+- emits the commands, M, L, C before every set of coordinates, even
+  where they could be omitted according to the SVG specification
+- places commas between x,y coordinates. These may be replaced with
+  whitespace according to the SVG specification
+- doesn't support more than one sub-path
+- emits one path data line per command + coordinate set
+
+As example, the path data of the outline of an AND gate is:
+
+    M 100,100
+    L 500,100
+    C 700,100 800,275 800,400
+    C 800,525 700,700 500,700
+    L 100,700
+    z
+
+The resulting path (with control points drawn on to illustrate their
+positions) is shown here:
+
+\image html path_example_and_gate-smaller.png
+
+\var xornsch_path::color
+\brief Color index.
+
+\sa \ref geda-colors
+
+\var xornsch_path::line
+\brief Line style.
+
+\var xornsch_path::fill
+\brief Fill style.
+
+*/
