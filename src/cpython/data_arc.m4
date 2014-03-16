@@ -15,6 +15,7 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 cg_this_is(`arc', `Arc')
+cg_docstring(`Schematic arc.')
 cg_pos
 cg_double(`radius', `radius')
 cg_int(`startangle', `startangle')

@@ -338,6 +338,8 @@ def selection_is_empty(rev, sel):
 def object_is_selected(rev, sel, ob):
     pass
 
+## \brief Schematic line style.
+
 class LineAttr:
     def __init__(self):
         self.width = 0.
@@ -345,6 +347,8 @@ class LineAttr:
         self.dash_style = 0
         self.dash_length = 0.
         self.dash_space = 0.
+
+## \brief Schematic fill style.
 
 class FillAttr:
     def __init__(self):
@@ -354,6 +358,8 @@ class FillAttr:
         self.pitch0 = 0.
         self.angle1 = 0
         self.pitch1 = 0.
+
+## \brief Schematic arc.
 
 class Arc:
     def __init__(self):
@@ -365,6 +371,8 @@ class Arc:
         self.color = 0
         self.line = LineAttr()
 
+## \brief Schematic box.
+
 class Box:
     def __init__(self):
         self.x = 0.
@@ -375,6 +383,8 @@ class Box:
         self.line = LineAttr()
         self.fill = FillAttr()
 
+## \brief Schematic circle.
+
 class Circle:
     def __init__(self):
         self.x = 0.
@@ -384,6 +394,8 @@ class Circle:
         self.line = LineAttr()
         self.fill = FillAttr()
 
+## \brief Schematic component.
+
 class Component:
     def __init__(self):
         self.x = 0.
@@ -391,6 +403,8 @@ class Component:
         self.selectable = False
         self.angle = 0
         self.mirror = False
+
+## \brief Schematic line.
 
 class Line:
     def __init__(self):
@@ -400,6 +414,8 @@ class Line:
         self.height = 0.
         self.color = 0
         self.line = LineAttr()
+
+## \brief Schematic net segment, bus segment, or pin.
 
 class Net:
     def __init__(self):
@@ -412,12 +428,16 @@ class Net:
         self.is_pin = False
         self.is_inverted = False
 
+## \brief Schematic path.
+
 class Path:
     def __init__(self):
         self.pathdata = ""
         self.color = 0
         self.line = LineAttr()
         self.fill = FillAttr()
+
+## \brief Schematic picture.
 
 class Picture:
     def __init__(self):
@@ -427,6 +447,8 @@ class Picture:
         self.height = 0.
         self.angle = 0
         self.mirror = False
+
+## \brief Schematic text or attribute.
 
 class Text:
     def __init__(self):

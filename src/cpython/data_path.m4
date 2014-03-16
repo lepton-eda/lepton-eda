@@ -15,6 +15,7 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 cg_this_is(`path', `Path')
+cg_docstring(`Schematic path.')
 cg_string(`pathdata', `pathdata')
 cg_int(`color', `color')
 cg_line

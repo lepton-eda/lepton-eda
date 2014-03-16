@@ -15,6 +15,7 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 cg_this_is(`fill_attr', `FillAttr')
+cg_docstring(`Schematic fill style.')
 cg_int(`type', `type')
 cg_double(`width', `width')
 cg_int(`angle0', `angle0')

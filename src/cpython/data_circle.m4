@@ -15,6 +15,7 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 cg_this_is(`circle', `Circle')
+cg_docstring(`Schematic circle.')
 cg_pos
 cg_double(`radius', `radius')
 cg_int(`color', `color')

@@ -15,6 +15,7 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 cg_this_is(`box', `Box')
+cg_docstring(`Schematic box.')
 cg_pos
 cg_size
 cg_int(`color', `color')

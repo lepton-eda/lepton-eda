@@ -15,6 +15,7 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 cg_this_is(`component', `Component')
+cg_docstring(`Schematic component.')
 cg_pos
 cg_bool(`selectable', `selectable')
 cg_int(`angle', `angle')

@@ -42,6 +42,7 @@ m4_define(`snap', `m4_divert(stored_divnum)m4_dnl')
 m4_define(`Class', `m4_ifelse(`$#', `0', `_Class', `_Class`'_$1')')
 m4_define(`cg_this_is',
   `m4_define(`typename', ``$1'')m4_define(`_Class', ``$2'')')
+m4_define(`cg_docstring', `m4_define(`docstring', ``$1'')')
 
 # ----------------------------------------------------------------------------
 
@@ -437,7 +438,8 @@ snap -----------------------------------
 					/* long tp_flags */
 
 	/* Documentation string */
-	PyDoc_STR(""),			/* const char *tp_doc */
+	PyDoc_STR("docstring"),
+					/* const char *tp_doc */
 
 	/* Assigned meaning in release 2.0 */
 	/* call function for all accessible objects */

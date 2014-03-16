@@ -179,7 +179,8 @@ PyTypeObject ArcType = {
 					/* long tp_flags */
 
 	/* Documentation string */
-	PyDoc_STR(""),			/* const char *tp_doc */
+	PyDoc_STR("Schematic arc."),
+					/* const char *tp_doc */
 
 	/* Assigned meaning in release 2.0 */
 	/* call function for all accessible objects */
