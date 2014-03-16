@@ -294,7 +294,7 @@ PyObject *Revision_copy_object(
 
 	if (!xorn_object_exists_in_revision(((Revision *)rev_arg)->rev,
 					    ((Object *)ob_arg)->ob)) {
-		PyErr_SetString(PyExc_ValueError,
+		PyErr_SetString(PyExc_KeyError,
 				"Object does not exist in source revision");
 		return NULL;
 	}
@@ -341,7 +341,7 @@ static PyObject *Revision_delete_object(
 
 	if (!xorn_object_exists_in_revision(self->rev,
 					    ((Object *)ob_arg)->ob)) {
-		PyErr_SetString(PyExc_ValueError, "Object does not exist");
+		PyErr_SetString(PyExc_KeyError, "Object does not exist");
 		return NULL;
 	}
 
