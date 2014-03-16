@@ -6,6 +6,8 @@ following components:
 - \ref storage "libxornstorage", a shared library encapsulating the
   details of object representation in memory
 
+- Python bindings for libxornstorage
+
 For more general information about these projects, see
 http://hedmen.org/xi/.
 
