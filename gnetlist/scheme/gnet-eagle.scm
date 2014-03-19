@@ -40,7 +40,7 @@
   )
 
 (define eagle:components
-   (lambda (port packages)
+   (lambda (packages)
       (if (not (null? packages))
          (begin
             (let ((pattern (gnetlist:get-package-attribute (car packages)
@@ -52,40 +52,40 @@
                   (device (gnetlist:get-package-attribute (car packages) "device"))
                   )
                (if (not (string=? pattern "unknown"))
-                  (display pattern port))
-               (display "ADD '" port)
-               (display package port)
-               (display "' " port)
-;;             (display "' TQFP144@atmel (0 0)" port)
-;;;            (write-char #\tab port)
-               (display (gnetlist:get-package-attribute package "footprint") port)
-               (display "@" port)
+                  (display pattern))
+               (display "ADD '")
+               (display package)
+               (display "' ")
+;;             (display "' TQFP144@atmel (0 0)")
+;;;            (write-char #\tab)
+               (display (gnetlist:get-package-attribute package "footprint"))
+               (display "@")
                (if (not (string=? lib "unknown"))
-                   (display lib port)
-                   (display "smd-ipc" port))
-               (display " (1 1);" port)
-               (newline port)
+                   (display lib)
+                   (display "smd-ipc"))
+               (display " (1 1);")
+               (newline)
                (if (not (string=? value "unknown"))
                    (begin
-                     (display "VALUE '" port)
-                     (display package port)
-                     (display "' '" port)
-                     (display value port)
-                     (display "';" port)
-                     (newline port)
+                     (display "VALUE '")
+                     (display package)
+                     (display "' '")
+                     (display value)
+                     (display "';")
+                     (newline)
                      )
                    (if (not (string=? device "unknown"))
                        (begin
-                         (display "VALUE '" port)
-                         (display package port)
-                         (display "' '" port)
-                         (display device port)
-                         (display "';" port)
-                         (newline port)
+                         (display "VALUE '")
+                         (display package)
+                         (display "' '")
+                         (display device)
+                         (display "';")
+                         (newline)
                          )
                    ))
                )
-            (eagle:components port (cdr packages))))))
+            (eagle:components (cdr packages))))))
 
 (define (eagle:display-connections nets)
   (let ((k ""))
@@ -109,43 +109,40 @@
 
 
 (define eagle:write-net
-   (lambda (port netnames)
+   (lambda (netnames)
       (if (not (null? netnames))
          (let ((netname (car netnames)))
-            (display "SIGNAL '" port)
-            (display (gnetlist:alias-net netname) port)
-            (display "'" port)
-            (newline port)
+            (display "SIGNAL '")
+            (display (gnetlist:alias-net netname))
+            (display "'")
+            (newline)
 ;            (display (gnetlist:wrap
 ;                     (eagle:display-connections
 ;                      (gnetlist:get-all-connections netname))
 ;                     78
-;                     "")
-;                    port)
+;                     ""))
             (display (eagle:display-connections
-                       (gnetlist:get-all-connections netname))
-                     port)
-            (eagle:write-net port (cdr netnames))))))
+                       (gnetlist:get-all-connections netname)))
+            (eagle:write-net (cdr netnames))))))
 
-(define eagle
-   (lambda (output-filename)
-      (let ((port (gnetlist:output-port output-filename)))
-        ;; initialize the net-name aliasing
-        (gnetlist:build-net-aliases eagle:map-net-names all-unique-nets)
+(define (eagle output-filename)
+  (set-current-output-port (gnetlist:output-port output-filename))
+  ;; initialize the net-name aliasing
+  (gnetlist:build-net-aliases eagle:map-net-names all-unique-nets)
 
-        ;; print out the header
-;;;     (display "!EAGLE-POWERPCB-V3.0-MILS!\n" port)
-;;;     (display "\n*PART*\n" port)
-;;;     (display "/* CADSoft Eagle Scripted Netlist Format */\n" port)
-        (display "   ;\n" port)
+  ;; print out the header
+;;(display "!EAGLE-POWERPCB-V3.0-MILS!\n")
+;;(display "\n*PART*\n")
+;;(display "/* CADSoft Eagle Scripted Netlist Format */\n")
+  (display "   ;\n")
 
-        ;; print out the parts
-        (eagle:components port packages)
+  ;; print out the parts
+  (eagle:components packages)
 
-        ;; print out the net information
-;;;     (display "\n*NET*\n" port)
-        (eagle:write-net port (gnetlist:get-all-unique-nets "dummy"))
+  ;; print out the net information
+;;(display "\n*NET*\n")
+  (eagle:write-net (gnetlist:get-all-unique-nets "dummy"))
 
-        ;; print out the footer
-;;;     (display "\n*END*\n" port)
-        (close-output-port port))))
+  ;; print out the footer
+;;(display "\n*END*\n")
+  (close-output-port (current-output-port)))
