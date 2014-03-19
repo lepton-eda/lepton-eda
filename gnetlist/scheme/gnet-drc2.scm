@@ -327,18 +327,18 @@
 ;;
 ;; example of packages: (U100 U101 U102)
 (define drc2:check-non-numbered-items
-   (lambda (port packages)
+   (lambda (packages)
       (if (not (null? packages))
          (let ((package (car packages)))
             (begin
                (if (not (eq? (string-index package #\?) #f))
-                   (begin (display "ERROR: Reference not numbered: " port)
-                          (display package port)
-                          (newline port)
+                   (begin (display "ERROR: Reference not numbered: ")
+                          (display package)
+                          (newline)
                           (set! errors_number (+ errors_number 1))
                           )
                    )
-               (drc2:check-non-numbered-items port (cdr packages)))))))
+               (drc2:check-non-numbered-items (cdr packages)))))))
 
 
 ;;
@@ -346,7 +346,7 @@
 ;;
 ;; Check if a slot of a package is used more than one time. Checks all packages in the design.
 (define drc2:check-duplicated-slots
-  (lambda (port)
+  (lambda ()
     (define check-duplicated-slots-of-package
       (lambda (uref)
         (define check-slots-loop
@@ -358,8 +358,8 @@
                         (display (string-append "ERROR: duplicated slot "
                                                 (number->string (car slots_list))
                                                 " of uref "
-                                                uref) port)
-                        (newline port)
+                                                uref))
+                        (newline)
                         (set! errors_number (+ errors_number 1))))
                   (check-slots-loop (cdr slots_list))
                   ))))
@@ -373,7 +373,7 @@
 ;; Checks for slots not used.
 ;;
 (define drc2:check-unused-slots
-  (lambda (port)
+  (lambda ()
     (define check-unused-slots-of-package
       (lambda (uref)
 
@@ -388,14 +388,14 @@
                               (begin
                                 (display (string-append "ERROR: Unused slot "
                                                         (number->string slot_number)
-                                                        " of uref " uref) port)
+                                                        " of uref " uref))
                                 (set! errors_number (+ errors_number 1)))
                               (begin
                                 (display (string-append "WARNING: Unused slot "
                                                         (number->string slot_number)
-                                                        " of uref " uref) port)
+                                                        " of uref " uref))
                                 (set! warnings_number (+ warnings_number 1))))
-                          (newline port)))))
+                          (newline)))))
               (if (< slot_number numslots)
                   (check-slots-loop (+ slot_number 1) slots_list)))))
 
@@ -411,7 +411,7 @@
 ;; Check slot number is greater or equal than numslots for all packages
 ;;
 (define drc2:check-slots
-  (lambda (port)
+  (lambda ()
     (define check-slots-of-package
       (lambda (uref)
 
@@ -434,8 +434,8 @@
                                 (display (string-append "ERROR: Reference " uref
                                                         ": Slot out of range ("
                                                         (number->string this_slot)
-                                                        ").") port)
-                                (newline port)
+                                                        ")."))
+                                (newline)
                                 (set! errors_number (+ errors_number 1)))))
 
                       (check-slots-loop (cdr slots_list))
@@ -461,15 +461,14 @@
                             (begin
                               ;; If numslots is a number, then slot should be defined.
                               (display (string-append "ERROR: Multislotted reference " uref
-                                                      " has no slot attribute defined.") port)
-                              (newline port)
+                                                      " has no slot attribute defined."))
+                              (newline)
                               (set! errors_number (+ errors_number 1)))
                             (begin
                               (display (string-append "ERROR: Reference " uref
                                                       ": Incorrect value of numslots attribute ("
-                                                      numslots_string ").")
-                                       port)
-                              (newline port)
+                                                      numslots_string ")."))
+                              (newline)
                                (set! errors_number (+ errors_number 1))
                               )
                             )
@@ -485,15 +484,15 @@
                             ;; Slot is defined and it's a number, but numslots it's not a number.
                             (display (string-append "ERROR: Reference " uref
                                                     ": Incorrect value of numslots attribute ("
-                                                    numslots_string ").") port)
-                            (newline port)
+                                                    numslots_string ")."))
+                            (newline)
                             (set! errors_number (+ errors_number 1))))
                       (begin
                         ;; Slot attribute is not a number.
                         (display (string-append "ERROR: Reference " uref
                                                 ": Incorrect value of slot attribute ("
-                                                slot_string ").") port)
-                        (newline port)
+                                                slot_string ")."))
+                        (newline)
                         (set! errors_number (+ errors_number 1))))
                   ))))))
 
@@ -513,17 +512,17 @@
 ;;   of unique slots used by that part, then that reference is used more than one time in
 ;;   the schematic.
 (define drc2:check-duplicated-references
-  (lambda (port list)
+  (lambda (list)
     (if (null? list)
         0
         (let ( (refdes (car list)))
                (if (> (drc2:count-reference-in-list refdes (gnetlist:get-non-unique-packages ""))
                       (length (gnetlist:get-unique-slots refdes)))
                    (begin
-                     (display (string-append "ERROR: Duplicated reference " refdes ".") port)
-                     (newline port)
+                     (display (string-append "ERROR: Duplicated reference " refdes "."))
+                     (newline)
                      (set! errors_number (+ errors_number 1))))
-               (drc2:check-duplicated-references port (cdr list))
+               (drc2:check-duplicated-references (cdr list))
                ))
 ))
 
@@ -541,7 +540,7 @@
 ;; Check for NoConnection nets with more than one pin connected.
 ;;
 ;; Example of all-nets: (net1 net2 net3 net4)
-(define (drc2:check-connected-noconnects port all-nets)
+(define (drc2:check-connected-noconnects all-nets)
   (for-each
     (lambda (netname)
       (let
@@ -556,10 +555,10 @@
           (begin
             (display (string-append "ERROR: Net '"
                             netname "' has connections, but "
-                            "has the NoConnection DRC directive: ") port)
-            (drc2:display-pins-of-type port "all" (gnetlist:get-all-connections netname))
-            (display "." port)
-            (newline port)
+                            "has the NoConnection DRC directive: "))
+            (drc2:display-pins-of-type "all" (gnetlist:get-all-connections netname))
+            (display ".")
+            (newline)
             (set! errors_number (1+ errors_number))))))
     all-nets))
 
@@ -568,7 +567,7 @@
 ;;
 ;; Example of all-nets: (net1 net2 net3 net4)
 (define drc2:check-single-nets
-  (lambda (port all-nets)
+  (lambda (all-nets)
       (if (not (null? all-nets))
           (let* ((netname (car all-nets))
                  (directives (gnetlist:graphical-objs-in-net-with-attrib-get-attrib
@@ -582,22 +581,22 @@
                   (begin
                     (if (eq? (length (gnetlist:get-all-connections netname)) '0)
                         (begin (display (string-append "ERROR: Net '"
-                                                       netname "' has no connections.") port)
-                               (newline port)
+                                                       netname "' has no connections."))
+                               (newline)
                                (set! errors_number (+ errors_number 1))
                                )
                         )
                     (if (eq? (length (gnetlist:get-all-connections netname)) '1)
                         (begin (display (string-append "ERROR: Net '"
-                                                       netname "' is connected to only one pin: ") port)
-                               (drc2:display-pins-of-type port "all" (gnetlist:get-all-connections netname))
-                               (display "." port)
-                               (newline port)
+                                                       netname "' is connected to only one pin: "))
+                               (drc2:display-pins-of-type "all" (gnetlist:get-all-connections netname))
+                               (display ".")
+                               (newline)
                                (set! errors_number (+ errors_number 1))
                                )
                         )
                     ))
-              (drc2:check-single-nets port (cdr all-nets)))))
+              (drc2:check-single-nets (cdr all-nets)))))
   ))
 
 ;;
@@ -627,15 +626,15 @@
 ;;
 ;; net: "in", "out", for example.
 (define drc2:count-pintypes-of-net
-  (lambda (net port)
+  (lambda (net)
     (define output-list (make-list (length pintype-names) 0))
     (define add-pintype
       (lambda (type)
            (if (not (member (string-downcase type) pintype-names))
                (begin
-                 (display "INTERNAL ERROR: unknown pin type : " port)
-                 (display type port)
-                 (newline port))
+                 (display "INTERNAL ERROR: unknown pin type : ")
+                 (display type)
+                 (newline))
                (begin
                  (list-set! output-list (drc2:position-of-pintype type)
                                        (+ 1 (list-ref output-list (drc2:position-of-pintype type))))))
@@ -652,7 +651,7 @@
 ;;       the string "all" to display all the pins.
 ;; connections: ((U100 1) (U101 1)), for example.
 (define drc2:display-pins-of-type
-  (lambda (port type connections)
+  (lambda (type connections)
     (if (not (null? connections))
         (begin
           (let ((device (car (car connections)))
@@ -662,11 +661,11 @@
                                  (gnetlist:get-attribute-by-pinnumber device pin "pintype"))
                     )
                 (begin
-                  (display device port)
-                  (display ":" port)
-                  (display pin port)
-                  (display " " port)))
-            (drc2:display-pins-of-type port type (cdr connections))
+                  (display device)
+                  (display ":")
+                  (display pin)
+                  (display " ")))
+            (drc2:display-pins-of-type type (cdr connections))
             ""
             )))))
 
@@ -676,40 +675,40 @@
 ;; type1,type2: number of the position of the type in the vector.
 ;; connections: ((U100 1) (U101 1)), for example.
 (define drc2:check-connection-of-two-pintypes
-  (lambda (port type1 type2 connections netname)
+  (lambda (type1 type2 connections netname)
     (let* (( drc-matrix-value (drc2:get-drc-matrix-element type1 type2)))
       (cond
        ((eqv? drc-matrix-value #\c) 1)
        (else (if (and (not (eqv? drc-matrix-value #\e)) (not (eqv? drc-matrix-value #\w)))
                  (begin
-                   (display "INTERNAL ERROR: DRC matrix has unknown value on position " port)
-                   (display type1 port)
-                   (display "," port)
-                   (display type2 port)
-                   (newline port)
+                   (display "INTERNAL ERROR: DRC matrix has unknown value on position ")
+                   (display type1)
+                   (display ",")
+                   (display type2)
+                   (newline)
                    (error "INTERNAL ERROR: DRC matrix has unknown value. See output for more information"))
 
                  (begin
                    (if (eqv? drc-matrix-value #\w)
                        (begin
-                         (display "WARNING: " port)
+                         (display "WARNING: ")
                          (set! warnings_number (+ warnings_number 1)))
                      (begin
-                       (display "ERROR: " port)
+                       (display "ERROR: ")
                        (set! errors_number (+ errors_number 1))
                        ))
-                   (display "Pin(s) with pintype '" port)
-                   (display (drc2:get-full-name-of-pintype-by-number type1) port)
-                   (display "': " port)
-                   (display (drc2:display-pins-of-type port type1
-                                                         connections) port)
-                   (display (string-append "\n\tare connected by net '" netname) port)
-                   (display "'\n\tto pin(s) with pintype '" port)
-                   (display (drc2:get-full-name-of-pintype-by-number type2) port)
-                   (display "': " port)
-                   (display (drc2:display-pins-of-type port type2
-                                                         connections) port)
-                   (newline port)
+                   (display "Pin(s) with pintype '")
+                   (display (drc2:get-full-name-of-pintype-by-number type1))
+                   (display "': ")
+                   (display (drc2:display-pins-of-type type1
+                                                         connections))
+                   (display (string-append "\n\tare connected by net '" netname))
+                   (display "'\n\tto pin(s) with pintype '")
+                   (display (drc2:get-full-name-of-pintype-by-number type2))
+                   (display "': ")
+                   (display (drc2:display-pins-of-type type2
+                                                         connections))
+                   (newline)
                    )
                  ))))))
 
@@ -721,49 +720,49 @@
 ;; pintype-count: vector with the number of pins connected to a single net, by pintype.
 ;;     (1 2 3 4 ... 10), for example.
 (define drc2:check-pintypes-of-single-net
-  (lambda (port connections pintypes pintype-count type1 type2 netname)
+  (lambda (connections pintypes pintype-count type1 type2 netname)
     (define type1-count (list-ref pintype-count type1))
     (define type2-count (list-ref pintype-count type2))
     (define next-type1
-      (lambda (port connections pintypes pintype-count type1 type2 netname)
+      (lambda (connections pintypes pintype-count type1 type2 netname)
         (if (< type1 (- (length pintype-names) 2))
-            (drc2:check-pintypes-of-single-net port connections pintypes pintype-count
+            (drc2:check-pintypes-of-single-net connections pintypes pintype-count
                                                  (+ type1 1) (+ type1 1) netname)
             )
         ))
     (define next-type2
-      (lambda (port connections pintypes pintype-count type1 type2 netname)
+      (lambda (connections pintypes pintype-count type1 type2 netname)
         (if (< type2 (- (length pintype-names) 2))
-            (drc2:check-pintypes-of-single-net port connections pintypes pintype-count
+            (drc2:check-pintypes-of-single-net connections pintypes pintype-count
                                                  type1 (+ type2 1) netname)
-            (next-type1 port connections pintypes pintype-count type1 type1 netname)
+            (next-type1 connections pintypes pintype-count type1 type1 netname)
             )))
 
                                         ; Check type1 with type1 first
     (if (= type1-count 0)
                                         ; if no pins of type1 connected, then continue with (+ type1 1)
         (begin
-          (next-type1 port connections pintypes pintype-count type1 type2 netname))
+          (next-type1 connections pintypes pintype-count type1 type2 netname))
 
     (if (= type1 type2)
         (if (> type1-count 1)
             (begin
-              (drc2:check-connection-of-two-pintypes port type1 type1 connections netname)
-              (next-type2 port connections pintypes pintype-count type1 type2 netname)
+              (drc2:check-connection-of-two-pintypes type1 type1 connections netname)
+              (next-type2 connections pintypes pintype-count type1 type2 netname)
 
               )
-              (next-type2 port connections pintypes pintype-count type1 type2 netname))
+              (next-type2 connections pintypes pintype-count type1 type2 netname))
         (begin
       (if (= type2-count 0)
                                         ; if no pins of type2 connected, then continue with (+ type2 1)
-          (next-type2 port connections pintypes pintype-count type1 type2 netname)
+          (next-type2 connections pintypes pintype-count type1 type2 netname)
           )
       (if (and (> type1-count 0) (> type2-count 0))
           (begin
                                         ; Check connections between type1 and type2.
-            (drc2:check-connection-of-two-pintypes port type1 type2 connections netname)
+            (drc2:check-connection-of-two-pintypes type1 type2 connections netname)
                                         ; and continue with the next type2 if within the limits
-            (next-type2 port connections pintypes pintype-count type1 type2 netname)
+            (next-type2 connections pintypes pintype-count type1 type2 netname)
             ))
     )
     ))))
@@ -788,7 +787,7 @@
 ;;
 ;; all-nets: (net1 net2 net3), for example
 (define drc2:check-pintypes-of-nets
-  (lambda (port all-nets)
+  (lambda (all-nets)
       (if (not (null? all-nets))
           (let ((netname (car all-nets)))
             (begin
@@ -796,7 +795,7 @@
                        (pintypes    (drc2:get-pintypes-of-net-connections
                                      connections
                                      '()))
-                       (pintype-count (drc2:count-pintypes-of-net pintypes port))
+                       (pintype-count (drc2:count-pintypes-of-net pintypes))
                        (directives (gnetlist:graphical-objs-in-net-with-attrib-get-attrib
                                     netname
                                     "device=DRC_Directive"
@@ -804,7 +803,7 @@
                        )
                 ; If some directives are defined, then it shouldn't be checked.
                 (if (not (member "DontCheckPintypes" directives))
-                    (drc2:check-pintypes-of-single-net port connections pintypes pintype-count 0 0 netname))
+                    (drc2:check-pintypes-of-single-net connections pintypes pintype-count 0 0 netname))
                 (if (not (defined? 'dont-check-not-driven-nets))
                     (begin
                       (if (and (not (member "DontCheckIfDriven" directives))
@@ -812,16 +811,16 @@
                           (if (eqv? (drc2:check-if-net-is-driven pintype-count 0) #f)
                               (begin
                                 (set! errors_number (+ errors_number 1))
-                                (display "ERROR: Net " port)
-                                (display netname port)
-                                (display " is not driven." port)
-                                (newline port)
+                                (display "ERROR: Net ")
+                                (display netname)
+                                (display " is not driven.")
+                                (newline)
                                 ))
                           )
                       ))
 
                 )
-              (drc2:check-pintypes-of-nets port (cdr all-nets))
+              (drc2:check-pintypes-of-nets (cdr all-nets))
   )))
 ))
 
@@ -831,7 +830,7 @@
 ;; ref-list: ("U1" "U2"), for example.
 ;; pin-net: ( (pin net) (pin net) ... )
 (define drc2:check-unconnected-pins
-  (lambda (port ref-list pin-net)
+  (lambda (ref-list pin-net)
     (define ref "")
     (if (not (null? ref-list))
         (begin
@@ -853,52 +852,52 @@
                                 (begin
                                   (if (eqv? drc-matrix-value #\w)
                                       (begin
-                                        (display "WARNING: " port)
+                                        (display "WARNING: ")
                                         (set! warnings_number (+ warnings_number 1)))
                                       (begin
-                                        (display "ERROR: " port)
+                                        (display "ERROR: ")
                                         (set! errors_number (+ errors_number 1))
                                         ))
-                                  (display "Unconnected pin " port)
-                                  (display ref port)
-                                  (display ":" port)
-                                  (display pin port)
-                                  (newline port)
-                                  (drc2:check-unconnected-pins port ref-list (cdr pin-net))
+                                  (display "Unconnected pin ")
+                                  (display ref)
+                                  (display ":")
+                                  (display pin)
+                                  (newline)
+                                  (drc2:check-unconnected-pins ref-list (cdr pin-net))
                                   ))
                           ))
                         )
-                      (drc2:check-unconnected-pins port ref-list (cdr pin-net))
+                      (drc2:check-unconnected-pins ref-list (cdr pin-net))
                   )
                 ))
               (if (> (length ref-list) 1)
-                  (drc2:check-unconnected-pins port (cdr ref-list)
+                  (drc2:check-unconnected-pins (cdr ref-list)
                                                (gnetlist:get-pins-nets (car (cdr ref-list)))))
             ))
         )
     ))
 
 ; Report pins without the 'pintype' attribute (pintype=unknown)
-(define (drc2:report-unknown-pintypes port nets)
+(define (drc2:report-unknown-pintypes nets)
   (define (count-unknown-pintypes nets)
     (fold
      (lambda (netname count)
        (let* ((connections (gnetlist:get-all-connections netname))
               (pintypes (drc2:get-pintypes-of-net-connections connections '()))
-              (pintype-count (drc2:count-pintypes-of-net pintypes port)))
+              (pintype-count (drc2:count-pintypes-of-net pintypes)))
          (+ count
             (list-ref pintype-count (drc2:position-of-pintype "unknown")))))
      0 nets))
   (define (display-unknown-pintypes nets)
     (for-each
      (lambda (netname)
-       (drc2:display-pins-of-type port
+       (drc2:display-pins-of-type
                                   (drc2:position-of-pintype "unknown")
                                   (gnetlist:get-all-connections netname)))
      nets))
   (and (> (count-unknown-pintypes nets) 0)
        (begin
-         (display "NOTE: Found pins without the 'pintype' attribute: " port)
+         (display "NOTE: Found pins without the 'pintype' attribute: ")
          (display-unknown-pintypes nets)
          (message "\n"))))
 
@@ -912,134 +911,133 @@
 ;;; Highest level function
 ;;; Write my special testing netlist format
 ;;;
-(define drc2
-   (lambda (output-filename)
-      (let ((port (gnetlist:output-port output-filename)))
-         (begin
+(define (drc2 output-filename)
+  (set-current-output-port (gnetlist:output-port output-filename))
+     (begin
 
-            ;; Perform DRC-matrix sanity checks.
-            ; See if all elements of the matrix are chars
-            (if (not (drc2:drc-matrix-elements-are-correct?))
-                (begin (display "INTERNAL ERROR: DRC matrix elements are NOT all chars." port)
-                       (newline port)
-                       (newline port)
-                       (error "INTERNAL ERROR. DRC matrix elements are NOT all chars.")))
+        ;; Perform DRC-matrix sanity checks.
+        ; See if all elements of the matrix are chars
+        (if (not (drc2:drc-matrix-elements-are-correct?))
+            (begin (display "INTERNAL ERROR: DRC matrix elements are NOT all chars.")
+                   (newline)
+                   (newline)
+                   (error "INTERNAL ERROR. DRC matrix elements are NOT all chars.")))
 
-            ;; Check non-numbered symbols
-            (if (not (defined? 'dont-check-non-numbered-parts))
-                (begin
-                  (display "Checking non-numbered parts..." port)
-                  (newline port)
-                  (drc2:check-non-numbered-items port packages)
-                  (newline port)))
+        ;; Check non-numbered symbols
+        (if (not (defined? 'dont-check-non-numbered-parts))
+            (begin
+              (display "Checking non-numbered parts...")
+              (newline)
+              (drc2:check-non-numbered-items packages)
+              (newline)))
 
-            ;; Check for duplicated references
-            (if (not (defined? 'dont-check-duplicated-references))
-                (begin
-                  (display "Checking duplicated references..." port)
-                  (newline port)
-                  (drc2:check-duplicated-references port packages)
-                  (newline port)))
+        ;; Check for duplicated references
+        (if (not (defined? 'dont-check-duplicated-references))
+            (begin
+              (display "Checking duplicated references...")
+              (newline)
+              (drc2:check-duplicated-references packages)
+              (newline)))
 
-            ;; Check for NoConnection nets with more than one pin connected.
-            (if (not (defined? 'dont-check-connected-noconnects))
-                (begin
-                  (display "Checking NoConnection nets for connections..." port)
-                  (newline port)
-                  (drc2:check-connected-noconnects port (gnetlist:get-all-unique-nets "dummy"))
-                  (newline port)))
+        ;; Check for NoConnection nets with more than one pin connected.
+        (if (not (defined? 'dont-check-connected-noconnects))
+            (begin
+              (display "Checking NoConnection nets for connections...")
+              (newline)
+              (drc2:check-connected-noconnects (gnetlist:get-all-unique-nets "dummy"))
+              (newline)))
 
-            ;; Check nets with only one connection
-            (if (not (defined? 'dont-check-one-connection-nets))
-                (begin
-                  (display "Checking nets with only one connection..." port)
-                  (newline port)
-                  (drc2:check-single-nets port (gnetlist:get-all-unique-nets "dummy"))
-                  (newline port)))
+        ;; Check nets with only one connection
+        (if (not (defined? 'dont-check-one-connection-nets))
+            (begin
+              (display "Checking nets with only one connection...")
+              (newline)
+              (drc2:check-single-nets (gnetlist:get-all-unique-nets "dummy"))
+              (newline)))
 
-            ;; Check "unknown" pintypes
-            (if (not (defined? 'dont-report-unknown-pintypes))
-                (begin
-                  (display "Checking pins without the 'pintype' attribute..." port)
-                  (newline port)
-                  (drc2:report-unknown-pintypes port (gnetlist:get-all-unique-nets "dummy"))
-                  (newline port)))
+        ;; Check "unknown" pintypes
+        (if (not (defined? 'dont-report-unknown-pintypes))
+            (begin
+              (display "Checking pins without the 'pintype' attribute...")
+              (newline)
+              (drc2:report-unknown-pintypes (gnetlist:get-all-unique-nets "dummy"))
+              (newline)))
 
-            ;; Check pintypes of the pins connected to every net
-            (if (not (defined? 'dont-check-pintypes-of-nets))
-                (begin
-                  (display "Checking type of pins connected to a net..." port)
-                  (newline port)
-                  (drc2:check-pintypes-of-nets port (gnetlist:get-all-unique-nets "dummy"))
-                  (newline port)))
+        ;; Check pintypes of the pins connected to every net
+        (if (not (defined? 'dont-check-pintypes-of-nets))
+            (begin
+              (display "Checking type of pins connected to a net...")
+              (newline)
+              (drc2:check-pintypes-of-nets (gnetlist:get-all-unique-nets "dummy"))
+              (newline)))
 
-            ;; Check unconnected pins
-            (if (not (defined? 'dont-check-unconnected-pins))
-                (begin
-                  (display "Checking unconnected pins..." port)
-                  (newline port)
-                  (if (not (null? packages))
-                      (drc2:check-unconnected-pins port packages (gnetlist:get-pins-nets (car packages))))
-                  (newline port)))
+        ;; Check unconnected pins
+        (if (not (defined? 'dont-check-unconnected-pins))
+            (begin
+              (display "Checking unconnected pins...")
+              (newline)
+              (if (not (null? packages))
+                  (drc2:check-unconnected-pins packages (gnetlist:get-pins-nets (car packages))))
+              (newline)))
 
-            ;; Check slots
-            (if (not (defined? 'dont-check-slots))
-                (begin
-                  (display "Checking slots..." port)
-                  (newline port)
-                  (drc2:check-slots port)
-                  (newline port)))
+        ;; Check slots
+        (if (not (defined? 'dont-check-slots))
+            (begin
+              (display "Checking slots...")
+              (newline)
+              (drc2:check-slots)
+              (newline)))
 
-            ;; Check for duplicated slots
-            (if (not (defined? 'dont-check-duplicated-slots))
-                (begin
-                  (display "Checking duplicated slots..." port)
-                  (newline port)
-                  (drc2:check-duplicated-slots port)
-                  (newline port)))
+        ;; Check for duplicated slots
+        (if (not (defined? 'dont-check-duplicated-slots))
+            (begin
+              (display "Checking duplicated slots...")
+              (newline)
+              (drc2:check-duplicated-slots)
+              (newline)))
 
-            ;; Check for unused slots
-            (if (not (defined? 'dont-check-unused-slots))
-                (begin
-                  (display "Checking unused slots..." port)
-                  (newline port)
-                  (drc2:check-unused-slots port)
-                  (newline port)))
+        ;; Check for unused slots
+        (if (not (defined? 'dont-check-unused-slots))
+            (begin
+              (display "Checking unused slots...")
+              (newline)
+              (drc2:check-unused-slots)
+              (newline)))
 
-            ;; Display total number of warnings
-            (if (> warnings_number 0)
-                (begin
-                  (display "Found " port)
-                  (display warnings_number port)
-                  (display " warnings." port)
-                  (newline port))
-                (begin
-                  (display "No warnings found. " port)
-                  (newline port)))
+        ;; Display total number of warnings
+        (if (> warnings_number 0)
+            (begin
+              (display "Found ")
+              (display warnings_number)
+              (display " warnings.")
+              (newline))
+            (begin
+              (display "No warnings found. ")
+              (newline)))
 
-            ;; Display total number of errors
-            (if (> errors_number 0)
-                (begin
-                  (display "Found " port)
-                  (display errors_number port)
-                  (display " errors." port)
-                  (newline port))
-                (begin
-                  (display "No errors found. " port)
-                  (newline port)))
+        ;; Display total number of errors
+        (if (> errors_number 0)
+            (begin
+              (display "Found ")
+              (display errors_number)
+              (display " errors.")
+              (newline))
+            (begin
+              (display "No errors found. ")
+              (newline)))
 
-         (close-output-port port)
+     (close-output-port (current-output-port))
 
-         ;; Make gnetlist return an error if there are DRC errors.
-         ;; If there are only warnings and it's in quiet mode, then
-         ;; do not return an error.
-         (if (and (not (string=? "-" output-filename)) (> errors_number 0))
-             (message "DRC errors found. See output file.\n")
-             (if (> warnings_number 0)
-                 (if (not (calling-flag? "ignore-warnings-in-return-value" (gnetlist:get-calling-flags)))
-                     (message "DRC warnings found. See output file.\n"))))
+     ;; Make gnetlist return an error if there are DRC errors.
+     ;; If there are only warnings and it's in quiet mode, then
+     ;; do not return an error.
+     (if (and (not (string=? "-" output-filename)) (> errors_number 0))
+         (message "DRC errors found. See output file.\n")
+         (if (> warnings_number 0)
+             (if (not (calling-flag? "ignore-warnings-in-return-value" (gnetlist:get-calling-flags)))
+                 (message "DRC warnings found. See output file.\n"))))
 
-         ))))
+     ))
 
 
 ;;
