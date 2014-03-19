@@ -27,12 +27,12 @@
 			(gnetlist:get-package-attribute package "footprint")) ;; sdb change
 		  (get-parts-table (cdr packages)))))))
 
-(define (write-one-row ls separator end-char port)
+(define (write-one-row ls separator end-char)
   (if (null? ls)
       '()
-      (begin (display (car ls) port)
-	     (for-each (lambda (st) (display separator port)(display st port)) (cdr ls))
-	     (display end-char port))))
+      (begin (display (car ls))
+	     (for-each (lambda (st) (display separator)(display st)) (cdr ls))
+	     (display end-char))))
 
 (define (get-sortkey-value ls key-column)
   (list-ref (car ls) key-column))

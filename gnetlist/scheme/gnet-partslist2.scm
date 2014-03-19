@@ -17,27 +17,24 @@
 
 (load-from-path "partslist-common.scm")
 
-(define partslist2:write-top-header
-  (lambda (port)
-    (display ".START\n" port)
-    (display "..refdes\tdevice\tvalue\tfootprint\tquantity\n" port)))
+(define (partslist2:write-top-header)
+  (display ".START\n")
+  (display "..refdes\tdevice\tvalue\tfootprint\tquantity\n"))
 
-(define (partslist2:write-partslist ls port)
+(define (partslist2:write-partslist ls)
   (if (null? ls)
       '()
-      (begin (write-one-row (append (car ls) (list 1)) "\t" "\n" port)
-             (partslist2:write-partslist (cdr ls) port))))
+      (begin (write-one-row (append (car ls) (list 1)) "\t" "\n")
+             (partslist2:write-partslist (cdr ls)))))
 
-(define partslist2:write-bottom-footer
-  (lambda (port)
-    (display ".END" port)
-    (newline port)))
+(define (partslist2:write-bottom-footer)
+  (display ".END")
+  (newline))
 
-(define partslist2
-  (lambda (output-filename)
-    (let ((port (gnetlist:output-port output-filename))
-          (parts-table (marge-sort-with-multikey (get-parts-table packages) '(1 2 3 0))))
-      (partslist2:write-top-header port)
-      (partslist2:write-partslist parts-table port)
-      (partslist2:write-bottom-footer port)
-      (close-output-port port))))
+(define (partslist2 output-filename)
+  (set-current-output-port (gnetlist:output-port output-filename))
+  (let ((parts-table (marge-sort-with-multikey (get-parts-table packages) '(1 2 3 0))))
+    (partslist2:write-top-header)
+    (partslist2:write-partslist parts-table)
+    (partslist2:write-bottom-footer))
+  (close-output-port (current-output-port)))
