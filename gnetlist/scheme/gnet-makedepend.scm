@@ -122,7 +122,7 @@
 
 
 
-(define (makedepend:output-make-command input-files sources files port)
+(define (makedepend:output-make-command input-files sources files)
   (let* (;lazy version, use first filename only for naming scheme
          (scheme-split (makedepend:split-filename makedepend-scheme (car input-files)))
          (base (first scheme-split))
@@ -131,12 +131,12 @@
         )
 
     ;schematic deps
-    (format port "~a: ~a\n"
+    (format "~a: ~a\n"
             (string-join input-files " ")
             (string-join sources " "))
 
     ;netlist deps
-    (format port "~a.cir: ~a ~a\n"
+    (format "~a.cir: ~a ~a\n"
             base
             (string-join input-files " ")
             (string-join files " "))
@@ -146,14 +146,15 @@
 
 
 (define (makedepend output-filename)
-  (let* ((port (gnetlist:output-port output-filename))
+  (set-current-output-port (gnetlist:output-port output-filename))
+  (let* (
          (source-attrs (makedepend:get-all-attr-values "source" packages))
          (file-attrs (makedepend:get-all-attr-values "file" packages))
          (input-files (gnetlist:get-input-files))
         )
-    (makedepend:output-make-command input-files source-attrs file-attrs port)
-    (close-output-port port)
+    (makedepend:output-make-command input-files source-attrs file-attrs)
   )
+  (close-output-port (current-output-port))
 )
 
 ;; vim:shiftwidth=2
