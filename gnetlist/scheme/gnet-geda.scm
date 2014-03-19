@@ -27,172 +27,170 @@
 ;; Top level header
 ;;
 (define geda:write-top-header
-   (lambda (p)
-      (display "START header" p)
-      (newline p)
-      (newline p)
-      (display "gEDA's netlist format" p)
-      (newline p)
-      (display "Created specifically for testing of gnetlist" p)
-      (newline p)
-      (newline p)
-      (display "END header" p)
-      (newline p)
-      (newline p)))
+   (lambda ()
+      (display "START header")
+      (newline)
+      (newline)
+      (display "gEDA's netlist format")
+      (newline)
+      (display "Created specifically for testing of gnetlist")
+      (newline)
+      (newline)
+      (display "END header")
+      (newline)
+      (newline)))
 
 ;;
 ;; header for components section
 ;;
 (define geda:start-components
-   (lambda (p)
-      (display "START components" p)
-      (newline p)
-      (newline p)))
+   (lambda ()
+      (display "START components")
+      (newline)
+      (newline)))
 
 ;;
 ;; footer for components section
 ;;
 (define geda:end-components
-   (lambda (p)
-      (newline p)
-      (display "END components" p)
-      (newline p)
-      (newline p)))
+   (lambda ()
+      (newline)
+      (display "END components")
+      (newline)
+      (newline)))
 
 ;;
 ;; header for renamed section
 ;;
 (define geda:start-renamed-nets
-   (lambda (p)
-      (display "START renamed-nets" p)
-      (newline p)
-      (newline p)))
+   (lambda ()
+      (display "START renamed-nets")
+      (newline)
+      (newline)))
 
 ;;
 ;; footer for renamed section
 ;;
 (define geda:end-renamed-nets
-   (lambda (p)
-      (newline p)
-      (display "END renamed-nets" p)
-      (newline p)
-      (newline p)))
+   (lambda ()
+      (newline)
+      (display "END renamed-nets")
+      (newline)
+      (newline)))
 
 ;;
 ;; header for nets section
 ;;
 (define geda:start-nets
-   (lambda (p)
-      (display "START nets" p)
-      (newline p)
-      (newline p)))
+   (lambda ()
+      (display "START nets")
+      (newline)
+      (newline)))
 
 ;;
 ;; footer for net section
 ;;
 (define geda:end-nets
-   (lambda (p)
-      (newline p)
-      (display "END nets" p)
-      (newline p)
-      (newline p)))
+   (lambda ()
+      (newline)
+      (display "END nets")
+      (newline)
+      (newline)))
 
 ;;
 ;; Top level component writing
 ;;
 (define geda:components
-   (lambda (port ls)
+   (lambda (ls)
       (if (not (null? ls))
          (let ((package (car ls)))
             (begin
-               (display package port)
-               (write-char #\space port)
-               (display "device=" port)
-               (display (get-device package) port)
-               (newline port)
-               (geda:components port (cdr ls)))))))
+               (display package)
+               (write-char #\space)
+               (display "device=")
+               (display (get-device package))
+               (newline)
+               (geda:components (cdr ls)))))))
 
 ;;
 ;; renamed nets writing
 ;;
 (define geda:renamed-nets
-   (lambda (port ls)
+   (lambda (ls)
       (if (not (null? ls))
          (let ((renamed-pair (car ls)))
             (begin
 ;;;            (display renamed-pair) (newline)
-               (display (car renamed-pair) port)
-               (display " -> " port)
-               (display (car (cdr renamed-pair)) port)
-               (newline port)
-               (geda:renamed-nets port (cdr ls)))))))
+               (display (car renamed-pair))
+               (display " -> ")
+               (display (car (cdr renamed-pair)))
+               (newline)
+               (geda:renamed-nets (cdr ls)))))))
 
 ;;
 ;; Display the individual net connections
 ;;
 (define geda:display-connections
-   (lambda (nets port)
+   (lambda (nets)
       (if (not (null? nets))
          (begin
-            (display (car (car nets)) port)
-            (write-char #\space port)
-            (display (car (cdr (car nets))) port)
+            (display (car (car nets)))
+            (write-char #\space)
+            (display (car (cdr (car nets))))
             (if (not (null? (cdr nets)))
                (begin
-                  (write-char #\, port)
-                  (write-char #\space port)))
-               (geda:display-connections (cdr nets) port)))))
+                  (write-char #\,)
+                  (write-char #\space)))
+               (geda:display-connections (cdr nets))))))
 
 ;;
 ;; Display all nets
 ;;
 (define geda:display-name-nets
-   (lambda (port nets)
+   (lambda (nets)
       (begin
-         (geda:display-connections nets port)
-         (write-char #\space port)
-         (newline port))))
+         (geda:display-connections nets)
+         (write-char #\space)
+         (newline))))
 
 ;;
 ;; Write netname : uref pin, uref pin, ...
 ;;
 (define geda:write-net
-   (lambda (port netnames)
+   (lambda (netnames)
       (if (not (null? netnames))
          (let ((netname (car netnames)))
             (begin
-               (display netname port)
-               (display " : " port)
-               (geda:display-name-nets port (gnetlist:get-all-connections netname))
-               (geda:write-net port (cdr netnames)))))))
+               (display netname)
+               (display " : ")
+               (geda:display-name-nets (gnetlist:get-all-connections netname))
+               (geda:write-net (cdr netnames)))))))
 
 ;;
 ;; Write the net part of the gEDA format
 ;;
 (define geda:nets
-   (lambda (port)
+   (lambda ()
       (let ((all-uniq-nets (gnetlist:get-all-unique-nets "dummy")))
-         (geda:write-net port all-uniq-nets))))
+         (geda:write-net all-uniq-nets))))
 
 ;;; Highest level function
 ;;; Write my special testing netlist format
 ;;;
-(define geda
-   (lambda (output-filename)
-      (let ((port (gnetlist:output-port output-filename)))
-         (begin
-;;;         (gnetlist:set-netlist-mode "gEDA") No longer needed
-            (geda:write-top-header port)
-            (geda:start-components port)
-            (geda:components port packages)
-            (geda:end-components port)
-            (geda:start-renamed-nets port)
-            (geda:renamed-nets port (gnetlist:get-renamed-nets "dummy"))
-            (geda:end-renamed-nets port)
-            (geda:start-nets port)
-            (geda:nets port)
-            (geda:end-nets port))
-         (close-output-port port))))
+(define (geda output-filename)
+  (set-current-output-port (gnetlist:output-port output-filename))
+  (begin
+    (geda:write-top-header)
+    (geda:start-components)
+    (geda:components packages)
+    (geda:end-components)
+    (geda:start-renamed-nets)
+    (geda:renamed-nets (gnetlist:get-renamed-nets "dummy"))
+    (geda:end-renamed-nets)
+    (geda:start-nets)
+    (geda:nets)
+    (geda:end-nets))
+  (close-output-port (current-output-port)))
 
 ;;
 ;; gEDA's native test netlist format specific functions ends
