@@ -39,7 +39,7 @@
 
 ;; write out the pins for a particular component
 (define pcbpins:component_pins
-  (lambda (port package pins)
+  (lambda (package pins)
     (if (and (not (null? package)) (not (null? pins)))
         (begin
           (let (
@@ -47,23 +47,23 @@
                 (label #f)
                 (pinnum #f)
                 )
-            (display "ChangePinName(" port)
-            (display (pcbpins:quote_string package) port)
-            (display ", " port)
+            (display "ChangePinName(")
+            (display (pcbpins:quote_string package))
+            (display ", ")
 
             (set! pinnum (gnetlist:get-attribute-by-pinnumber package pin "pinnumber"))
 
-            (display (pcbpins:quote_string pinnum) port)
-            (display ", " port)
+            (display (pcbpins:quote_string pinnum))
+            (display ", ")
 
             (set! label (gnetlist:get-attribute-by-pinnumber package pin "pinlabel"))
             (if (string=? label "unknown")
                 (set! label pinnum)
                 )
-            (display (pcbpins:quote_string label) port)
-            (display ")\n" port)
+            (display (pcbpins:quote_string label))
+            (display ")\n")
             )
-          (pcbpins:component_pins port package (cdr pins))
+          (pcbpins:component_pins package (cdr pins))
           )
         )
     )
@@ -72,38 +72,34 @@
 
 ;; write out the components
 (define pcbpins:components
-   (lambda (port packages symcnt)
+   (lambda (packages symcnt)
       (if (not (null? packages))
          (begin
            (let ((package (car packages)))
 
              ;;
-             (display "\n# Start of element " port)
-             (display package port)
-             (newline port)
+             (display "\n# Start of element ")
+             (display package)
+             (newline)
 
              ;; write the pins
-             (pcbpins:component_pins port package (gnetlist:get-pins package))
+             (pcbpins:component_pins package (gnetlist:get-pins package))
              )
-           (pcbpins:components port (cdr packages) (+ symcnt 1))
+           (pcbpins:components (cdr packages) (+ symcnt 1))
            )
          )
       )
    )
 
 ;; The top level netlister for pcbpins
-(define pcbpins
-  (lambda (output-filename)
-    (let ((port (gnetlist:output-port output-filename)))
+(define (pcbpins output-filename)
+  (set-current-output-port (gnetlist:output-port output-filename))
 
-      ;; write the header
-      (display "# Pin name action command file\n" port)
+  ;; write the header
+  (display "# Pin name action command file\n")
 
-      ;; write the components
-      (pcbpins:components port packages 1)
+  ;; write the components
+  (pcbpins:components packages 1)
 
-      ;; close netlist
-      (close-output-port port)
-      )
-    )
-  )
+  ;; close netlist
+  (close-output-port (current-output-port)))
