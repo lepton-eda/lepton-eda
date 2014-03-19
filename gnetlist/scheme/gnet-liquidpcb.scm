@@ -26,88 +26,87 @@
 ;; Top level header
 ;;
 (define liquidpcb:write-top-header
-   (lambda (p)
-      (display "<LiquidPCB>" p)
-      (newline p)))
+   (lambda ()
+      (display "<LiquidPCB>")
+      (newline)))
 
 ;;
 ;; Bottom footer
 ;;
 (define liquidpcb:write-bottom-footer
-   (lambda (p)
-      (display "</LiquidPCB>" p)
-      (newline p)))
+   (lambda ()
+      (display "</LiquidPCB>")
+      (newline)))
 
 ;;
 ;; Header for netlist section
 ;;
 (define liquidpcb:start-netlist
-   (lambda (p)
-      (display "\t<netlist name=\"Main netlist\">" p)
-      (newline p)))
+   (lambda ()
+      (display "\t<netlist name=\"Main netlist\">")
+      (newline)))
 
 ;;
 ;; footer for netlist section
 ;;
 (define liquidpcb:end-netlist
-   (lambda (p)
-      (display "\t</netlist>" p)
-      (newline p)))
+   (lambda ()
+      (display "\t</netlist>")
+      (newline)))
 
 ;;
 ;; Write the individual net connections
 ;;
 (define liquidpcb:write-connections
-   (lambda (nets port)
+   (lambda (nets)
       (if (not (null? nets))
          (begin
-            (display "\t\t\t<netnode component=\"" port)
-            (display (car (car nets)) port)
-            (display "\" pin=" port)
-            (display (car (cdr (car nets))) port)
-            (display " />" port)
-            (newline port)
-            (liquidpcb:write-connections (cdr nets) port)))))
+            (display "\t\t\t<netnode component=\"")
+            (display (car (car nets)))
+            (display "\" pin=")
+            (display (car (cdr (car nets))))
+            (display " />")
+            (newline)
+            (liquidpcb:write-connections (cdr nets))))))
 
 
 ;;
 ;; Write netname : uref pin, uref pin, ...
 ;;
 (define liquidpcb:write-net
-   (lambda (port netnames)
+   (lambda (netnames)
       (if (not (null? netnames))
          (let ((netname (car netnames)))
             (begin
-               (display "\t\t<net name=\"" port)
-               (display netname port)
-               (display "\">" port)
-               (newline port)
-               (liquidpcb:write-connections (gnetlist:get-all-connections netname) port)
-               (display "\t\t</net>" port)
-               (newline port)
-               (liquidpcb:write-net port (cdr netnames)))))))
+               (display "\t\t<net name=\"")
+               (display netname)
+               (display "\">")
+               (newline)
+               (liquidpcb:write-connections (gnetlist:get-all-connections netname))
+               (display "\t\t</net>")
+               (newline)
+               (liquidpcb:write-net (cdr netnames)))))))
 
 ;;
 ;; Write the netlist section of the liquidPCB format
 ;;
 (define liquidpcb:write-netlist
-   (lambda (port)
+   (lambda ()
       (let ((all-uniq-nets (gnetlist:get-all-unique-nets "dummy")))
-         (liquidpcb:write-net port all-uniq-nets))))
+         (liquidpcb:write-net all-uniq-nets))))
 
 ;;
 ;; Highest level function
 ;;
-(define liquidpcb
-   (lambda (output-filename)
-      (let ((port (gnetlist:output-port output-filename)))
-         (begin
-            (liquidpcb:write-top-header port)
-            (liquidpcb:start-netlist port)
-            (liquidpcb:write-netlist port)
-            (liquidpcb:end-netlist port))
-            (liquidpcb:write-bottom-footer port)
-         (close-output-port port))))
+(define (liquidpcb output-filename)
+  (set-current-output-port (gnetlist:output-port output-filename))
+  (begin
+     (liquidpcb:write-top-header)
+     (liquidpcb:start-netlist)
+     (liquidpcb:write-netlist)
+     (liquidpcb:end-netlist))
+     (liquidpcb:write-bottom-footer)
+  (close-output-port (current-output-port)))
 
 ;;
 ;; liquid PCB netlist backend ends
