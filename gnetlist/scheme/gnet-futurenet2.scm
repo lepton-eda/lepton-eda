@@ -106,29 +106,27 @@
 
 ;; write out the pins for a particular component
 (define futurenet2:component_pins
-  (lambda (port package pins)
+  (lambda (package pins)
     (if (and (not (null? package)) (not (null? pins)))
         (begin
           (let (
                 (pin (car pins)))
             ;;  PIN,,NetName,1-1,5,20/23,pinnum
-            (display "PIN,," port)
+            (display "PIN,,")
 
             (display
-             (gnetlist:alias-net (car (gnetlist:get-nets package pin)))
-             port)
+             (gnetlist:alias-net (car (gnetlist:get-nets package pin))))
 
             ;; XXX I've seen 20, 23, and 100 in the position where the
             ;; "23" is here.  Seems to be a property like signal vs
             ;; power net.  Not sure how to support that.
-            (display ",1-1,5,23," port)
+            (display ",1-1,5,23,")
 
             (display
-             (gnetlist:get-attribute-by-pinnumber package pin "pinnumber")
-             port)
-            (newline port)
+             (gnetlist:get-attribute-by-pinnumber package pin "pinnumber"))
+            (newline)
             )
-          (futurenet2:component_pins port package (cdr pins))
+          (futurenet2:component_pins package (cdr pins))
           )
         )
     )
@@ -137,49 +135,48 @@
 
 ;; write out the components
 (define futurenet2:components
-   (lambda (port packages symcnt)
+   (lambda (packages symcnt)
       (if (not (null? packages))
          (begin
             (let ((pattern (gnetlist:get-package-attribute (car packages)
                                                            "pattern"))
             ;; The above pattern should stay as "pattern" and not "footprint"
                   (package (car packages)))
-              (display "(SYM," port)
-              (display symcnt port)
+              (display "(SYM,")
+              (display symcnt)
 
               ;; write the reference designator
-              (display "\nDATA,2," port)
-              (display (gnetlist:alias-refdes package) port)
+              (display "\nDATA,2,")
+              (display (gnetlist:alias-refdes package))
 
               ;; If there is a "value" attribute, output that.
               ;; Otherwise output the "device" attribute (the symbol name).
-              (display "\nDATA,3," port)
+              (display "\nDATA,3,")
               (let
                   ((val (gnetlist:get-package-attribute package
                                                         "value")) )
                 (if (string=? val "unknown")
                     (set! val (gnetlist:get-package-attribute package "device") )
                     )
-                (display  val port)
+                (display  val)
                 )
-              (display "\n" port)
+              (display "\n")
 
               ;; write the footprint
-              (display "DATA,4," port)
+              (display "DATA,4,")
               (display (gnetlist:get-package-attribute package
-                                                       "footprint")
-                       port)
-              (display "\n" port)
+                                                       "footprint"))
+              (display "\n")
 
               ;; write the pins
-              (futurenet2:component_pins port package
+              (futurenet2:component_pins package
                                          (gnetlist:get-pins package))
 
               ;; close the part
-              (display ")\n" port)
+              (display ")\n")
 
               )
-            (futurenet2:components port (cdr packages) (+ symcnt 1))
+            (futurenet2:components (cdr packages) (+ symcnt 1))
             )
          )
       )
@@ -187,18 +184,18 @@
 
 ;; write out the nets
 (define futurenet2:write-net
-   (lambda (port netnames)
+   (lambda (netnames)
       (if (not (null? netnames))
          (let (
                (netname (car netnames))
                (alias (gnetlist:alias-net (car netnames)))
                )
-           (display "SIG," port)
-           (display alias port)
-           (display ",1-1,5," port)
-           (display alias port)
-           (newline port)
-           (futurenet2:write-net port (cdr netnames))
+           (display "SIG,")
+           (display alias)
+           (display ",1-1,5,")
+           (display alias)
+           (newline)
+           (futurenet2:write-net (cdr netnames))
            )
          )
       )
@@ -216,9 +213,8 @@
      (message "Ranger2 or other windows based layout tools\n")
      (message "---------------------------------\n\n")
 
-      (let ((port (gnetlist:output-port output-filename))
-            (all-nets (gnetlist:get-all-unique-nets "dummy"))
-            )
+      (set-current-output-port (gnetlist:output-port output-filename))
+      (let ((all-nets (gnetlist:get-all-unique-nets "dummy")))
 
         ;; initialize the net-name aliasing
         (gnetlist:build-net-aliases futurenet2:map-net-names all-unique-nets)
@@ -227,21 +223,21 @@
         (gnetlist:build-refdes-aliases futurenet2:map-refdes packages)
 
         ;; write the header
-        (display "PINLIST,2\n" port)
-        (display "(DRAWING,GEDA.PIN,1-1\n" port)
+        (display "PINLIST,2\n")
+        (display "(DRAWING,GEDA.PIN,1-1\n")
 
         ;; write the components
-        (futurenet2:components port packages 1)
-        (display ")\n" port)
+        (futurenet2:components packages 1)
+        (display ")\n")
 
         ;; write the nets
-        (futurenet2:write-net port all-nets)
+        (futurenet2:write-net all-nets)
 
         ;; terminating ")"
-        (display ")\n" port)
+        (display ")\n")
 
         ;; close netlist
-        (close-output-port port)
         )
+      (close-output-port (current-output-port))
       )
    )
