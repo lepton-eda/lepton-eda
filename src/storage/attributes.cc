@@ -457,15 +457,15 @@ template<typename Attr> static void get_attr(
     std::set<xorn_object_t>::const_iterator j = sel->begin();
 
     while (i != rev->obstates.end() && j != sel->end())
-	if ((*i).first < *j)
+	if (i->first < *j)
 	    ++i;
-	else if ((*i).first > *j)
+	else if (i->first > *j)
 	    ++j;
 	else {
 	    typename Attr::basic_type v;
 	    clear(v);
-	    xorn_obtype_t type = (*i).second->type;
-	    void *data = (*i).second->data;
+	    xorn_obtype_t type = i->second->type;
+	    void *data = i->second->data;
 	    ++i;
 	    ++j;
 
@@ -524,7 +524,7 @@ template<typename Attr> static int set_attr(
     }
     for (std::map<xorn_object_t, obstate *>::const_iterator i
 	     = new_obstates.begin(); i != new_obstates.end(); ++i)
-	(*i).second->inc_refcnt();
+	i->second->inc_refcnt();
 
     try {
 	std::map<xorn_object_t, obstate *>::const_iterator i
@@ -532,14 +532,14 @@ template<typename Attr> static int set_attr(
 	std::set<xorn_object_t>::const_iterator j = sel->begin();
 
 	while (i != rev->obstates.end() && j != sel->end())
-	    if ((*i).first < *j)
+	    if (i->first < *j)
 		++i;
-	    else if ((*i).first > *j)
+	    else if (i->first > *j)
 		++j;
 	    else {
-		xorn_object_t ob = (*i).first;
-		xorn_obtype_t type = (*i).second->type;
-		void *data = copy_data(type, (*i).second->data);
+		xorn_object_t ob = i->first;
+		xorn_obtype_t type = i->second->type;
+		void *data = copy_data(type, i->second->data);
 		++i;
 		++j;
 
@@ -586,14 +586,14 @@ template<typename Attr> static int set_attr(
 	for (std::map<xorn_object_t, obstate *>::const_iterator
 		 i = new_obstates.begin();
 	     i != new_obstates.end(); ++i)
-	    (*i).second->dec_refcnt();
+	    i->second->dec_refcnt();
 	return -1;
     }
 
     for (std::map<xorn_object_t, obstate *>::const_iterator
 	     i = rev->obstates.begin();
 	 i != rev->obstates.end(); ++i)
-	(*i).second->dec_refcnt();
+	i->second->dec_refcnt();
 
     rev->obstates = new_obstates;
     return 0;
@@ -615,9 +615,9 @@ template<typename Attr> static xorn_selection_t select_by_attr(
 	     i != rev->obstates.end(); ++i) {
 	    typename Attr::basic_type v;
 	    clear(v);
-	    xorn_object_t ob = (*i).first;
-	    xorn_obtype_t type = (*i).second->type;
-	    void *data = (*i).second->data;
+	    xorn_object_t ob = i->first;
+	    xorn_obtype_t type = i->second->type;
+	    void *data = i->second->data;
 
 	    if ((type != xornsch_obtype_arc ||
 		     !Attr::get(v, (struct xornsch_arc *)data)) &&

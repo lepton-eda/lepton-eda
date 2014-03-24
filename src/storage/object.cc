@@ -40,7 +40,7 @@ xorn_obtype_t xorn_get_object_type(xorn_revision_t rev, xorn_object_t ob)
 	if (i == rev->obstates.end())
 		return xorn_obtype_none;
 
-	return (*i).second->type;
+	return i->second->type;
 }
 
 /** \brief Get a pointer to an object's data in a given revision.
@@ -67,10 +67,10 @@ void const *xorn_get_object_data(xorn_revision_t rev, xorn_object_t ob,
 	std::map<xorn_object_t, obstate *>::const_iterator i
 		= rev->obstates.find(ob);
 
-	if (i == rev->obstates.end() || (*i).second->type != type)
+	if (i == rev->obstates.end() || i->second->type != type)
 		return NULL;
 
-	return (*i).second->data;
+	return i->second->data;
 }
 
 /** \brief Return a list of all objects in a revision.
@@ -80,6 +80,8 @@ void const *xorn_get_object_data(xorn_revision_t rev, xorn_object_t ob,
  * objects_return.  The number of objects is written to the variable
  * pointed to by \a count_return.  If the list is empty or there is
  * not enough memory, \a *objects_return may be set to \c NULL.
+ *
+ * The objects are returned in their actual order.
  *
  * \return Returns \c 0 on success and \c -1 if there is not enough
  *         memory.
@@ -99,14 +101,16 @@ int xorn_get_objects(
 	if (*objects_return == NULL && !rev->obstates.empty())
 		return -1;
 
-	for (std::map<xorn_object_t, obstate *>::const_iterator i
-		     = rev->obstates.begin(); i != rev->obstates.end(); ++i)
-		(*objects_return)[(*count_return)++] = (*i).first;
+	for (std::vector<xorn_object_t>::const_iterator i
+		     = rev->sequence.begin(); i != rev->sequence.end(); ++i)
+		(*objects_return)[(*count_return)++] = *i;
 	return 0;
 }
 
 /** \brief Return a list of objects which are in a revision as well as
  *         in a selection.
+ *
+ * The objects are not necessarily returned in a meaningful order.
  *
  * The same semantics apply as in \ref xorn_get_objects.  See there
  * for a more detailed description.  */
@@ -137,7 +141,7 @@ int xorn_get_selected_objects(
  *         another.
  *
  * The returned list contains all objects in \a to_rev which are not
- * in \a from_rev.
+ * in \a from_rev.  They are not necessarily returned in a meaningful order.
  *
  * The same semantics apply as in \ref xorn_get_objects.  See there
  * for a more detailed description.  */
@@ -168,7 +172,7 @@ int xorn_get_added_objects(
  *         another.
  *
  * The returned list contains all objects in \a from_rev which are not
- * in \a to_rev.
+ * in \a to_rev.  They are not necessarily returned in a meaningful order.
  *
  * The same semantics apply as in \ref xorn_get_objects.  See there
  * for a more detailed description.  */
@@ -198,6 +202,8 @@ int xorn_get_removed_objects(
 /** \brief Return a list of objects which exist in two revisions but
  *         have different type or data.
  *
+ * The objects are not necessarily returned in a meaningful order.
+ *
  * The same semantics apply as in \ref xorn_get_objects.  See there
  * for a more detailed description.  */
 
@@ -219,14 +225,14 @@ int xorn_get_modified_objects(
 		= to_rev->obstates.begin();
 
 	while (i != from_rev->obstates.end() && j != to_rev->obstates.end())
-		if ((*i).first < (*j).first)
+		if (i->first < j->first)
 			++i;
-		else if ((*i).first > (*j).first)
+		else if (i->first > j->first)
 			++j;
 		else {
-			if ((*i).second != (*j).second)
+			if (i->second != j->second)
 				(*objects_return)[(*count_return)++] =
-					(*i).first;
+					i->first;
 			++i;
 			++j;
 		}

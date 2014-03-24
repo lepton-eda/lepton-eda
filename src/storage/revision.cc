@@ -22,18 +22,18 @@ xorn_revision::xorn_revision() : is_transient(true)
 }
 
 xorn_revision::xorn_revision(xorn_revision_t rev)
-	: is_transient(true), obstates(rev->obstates)
+	: is_transient(true), obstates(rev->obstates), sequence(rev->sequence)
 {
 	for (std::map<xorn_object_t, obstate *>::const_iterator i
 		     = obstates.begin(); i != obstates.end(); ++i)
-		(*i).second->inc_refcnt();
+		i->second->inc_refcnt();
 }
 
 xorn_revision::~xorn_revision()
 {
 	for (std::map<xorn_object_t, obstate *>::const_iterator i
 		     = obstates.begin(); i != obstates.end(); ++i)
-		(*i).second->dec_refcnt();
+		i->second->dec_refcnt();
 }
 
 

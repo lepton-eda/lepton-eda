@@ -36,6 +36,7 @@ TESTS = snippets/example \
 	select_by_attribute \
 	selection \
 	set_attribute \
+	set_obdata \
 	stat \
 	string \
 	transient

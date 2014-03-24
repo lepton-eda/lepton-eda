@@ -41,20 +41,16 @@ int main()
 	assert(xorn_get_objects(rev2, &objects, &count) == 0);
 	assert(objects != NULL);
 	assert(count == 3);
-	assert(
-	    (objects[0] == ob0 && objects[1] == ob1a && objects[2] == ob1b) ||
-	    (objects[0] == ob0 && objects[1] == ob1b && objects[2] == ob1a) ||
-	    (objects[0] == ob1a && objects[1] == ob0 && objects[2] == ob1b) ||
-	    (objects[0] == ob1a && objects[1] == ob1b && objects[2] == ob0) ||
-	    (objects[0] == ob1b && objects[1] == ob0 && objects[2] == ob1a) ||
-	    (objects[0] == ob1b && objects[1] == ob1a && objects[2] == ob0));
+	assert(objects[0] == ob0);
+	assert(objects[1] == ob1a);
+	assert(objects[2] == ob1b);
 	free(objects);
 
 	assert(xorn_get_objects(rev3, &objects, &count) == 0);
 	assert(objects != NULL);
 	assert(count == 2);
-	assert((objects[0] == ob0 && objects[1] == ob1b) ||
-	       (objects[0] == ob1b && objects[1] == ob0));
+	assert(objects[0] == ob0);
+	assert(objects[1] == ob1b);
 	free(objects);
 
 	xorn_free_revision(rev3);
