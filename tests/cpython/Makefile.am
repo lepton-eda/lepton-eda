@@ -25,6 +25,7 @@ tests = snippets/functions.py \
 	is_selected.py \
 	module.py \
 	selection.py \
+	set_obdata.py \
 	stat.py \
 	string.py \
 	transient.py
