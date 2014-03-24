@@ -24,7 +24,7 @@ def assert_cannot_get(rev, ob):
     else:
         raise AssertionError
 
-(rev0, rev1, rev2, rev3, ob0, ob1a, ob1b) = Setup.setup()
+rev0, rev1, rev2, rev3, ob0, ob1a, ob1b = Setup.setup()
 
 assert_cannot_get(rev0, ob0)
 assert_cannot_get(rev0, ob1a)

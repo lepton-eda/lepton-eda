@@ -35,7 +35,7 @@ def assert_selected_objects_3(rev, sel, ob0, ob1, ob2):
         [ob1, ob2, ob0], [ob2, ob0, ob1], [ob2, ob1, ob0]]
     assert xorn.storage.selection_is_empty(rev, sel) == False
 
-(rev0, rev1, rev2, rev3, ob0, ob1a, ob1b) = Setup.setup()
+rev0, rev1, rev2, rev3, ob0, ob1a, ob1b = Setup.setup()
 
 # select none
 sel = xorn.storage.select_none()

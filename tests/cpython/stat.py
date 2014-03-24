@@ -16,7 +16,7 @@
 
 import xorn.storage, Setup
 
-(rev0, rev1, rev2, rev3, ob0, ob1a, ob1b) = Setup.setup()
+rev0, rev1, rev2, rev3, ob0, ob1a, ob1b = Setup.setup()
 
 assert xorn.storage.get_added_objects(rev0, rev1) == [ob0]
 assert xorn.storage.get_removed_objects(rev0, rev1) == []

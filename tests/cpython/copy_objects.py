@@ -16,7 +16,7 @@
 
 import xorn.storage, Setup
 
-(rev0, rev1, rev2, rev3, ob0, ob1a, ob1b) = Setup.setup()
+rev0, rev1, rev2, rev3, ob0, ob1a, ob1b = Setup.setup()
 
 rev4 = xorn.storage.Revision(rev2)
 assert rev4 is not None

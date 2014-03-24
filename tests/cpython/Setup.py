@@ -85,4 +85,4 @@ def setup():
 
     rev3.finalize()
 
-    return (rev0, rev1, rev2, rev3, ob0, ob1a, ob1b)
+    return rev0, rev1, rev2, rev3, ob0, ob1a, ob1b

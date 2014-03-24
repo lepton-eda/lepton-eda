@@ -16,7 +16,7 @@
 
 import xorn.storage, Setup
 
-(rev0, rev1, rev2, rev3, ob0, ob1a, ob1b) = Setup.setup()
+rev0, rev1, rev2, rev3, ob0, ob1a, ob1b = Setup.setup()
 
 assert rev0.object_exists(ob0) == False
 assert rev0.object_exists(ob1a) == False

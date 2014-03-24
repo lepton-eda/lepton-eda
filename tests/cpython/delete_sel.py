@@ -30,7 +30,7 @@ def assert_objects_3(rev, ob0, ob1, ob2):
                                  [ob1, ob0, ob2], [ob1, ob2, ob0],
                                  [ob2, ob0, ob1], [ob2, ob1, ob0]]
 
-(rev0, rev1, rev2, rev3, ob0, ob1a, ob1b) = Setup.setup()
+rev0, rev1, rev2, rev3, ob0, ob1a, ob1b = Setup.setup()
 
 sel = xorn.storage.select_none()
 assert sel is not None

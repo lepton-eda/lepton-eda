@@ -16,7 +16,7 @@
 
 import xorn.storage, Setup
 
-(rev0, rev1, rev2, rev3, ob0, ob1a, ob1b) = Setup.setup()
+rev0, rev1, rev2, rev3, ob0, ob1a, ob1b = Setup.setup()
 
 def assert_object_type(rev, ob, expected_type):
     if expected_type is not None:
