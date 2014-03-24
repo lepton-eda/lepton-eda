@@ -104,6 +104,15 @@ class Revision:
     def get_object_data(self, ob):
         pass
 
+    ## \brief Get the index of an object in a revision's object list.
+    #
+    # \return Returns the index of \a ob in the object list.
+    #
+    # \throw KeyError if \a ob doesn't exist in the revision
+
+    def get_object_location(self, ob):
+        pass
+
     ## \brief Add a new object to a transient revision.
     #
     # The object is appended to the end of the object list.

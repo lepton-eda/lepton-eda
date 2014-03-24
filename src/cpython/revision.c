@@ -177,6 +177,28 @@ static PyObject *Revision_get_object_data(
 	return NULL;
 }
 
+static PyObject *Revision_get_object_location(
+	Revision *self, PyObject *args, PyObject *kwds)
+{
+	PyObject *ob_arg = NULL;
+	static char *kwlist[] = { "ob", NULL };
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "O!:Revision.get_object_location", kwlist,
+		    &ObjectType, &ob_arg))
+		return NULL;
+
+	unsigned int position = -1;
+
+	if (xorn_get_object_location(self->rev, ((Object *)ob_arg)->ob,
+				     NULL, &position) == -1) {
+		PyErr_SetString(PyExc_KeyError, "Object does not exist");
+		return NULL;
+	}
+
+	return PyInt_FromLong(position);
+}
+
 /****************************************************************************/
 
 static int prepare_data(PyObject *obj, xorn_obtype_t *type_return,
@@ -389,6 +411,10 @@ static PyMethodDef Revision_methods[] = {
 	  METH_KEYWORDS,
 	  PyDoc_STR("rev.get_object_data(ob) -> Arc/Box/... -- "
 		    "get the data of an object") },
+	{ "get_object_location", (PyCFunction)Revision_get_object_location,
+	  METH_KEYWORDS,
+	  PyDoc_STR("rev.get_object_location(ob) -> int -- "
+		    "get the index of an object in the object list") },
 
 	{ "add_object", (PyCFunction)Revision_add_object, METH_KEYWORDS,
 	  PyDoc_STR("rev.add_object(data) -> Object -- "
