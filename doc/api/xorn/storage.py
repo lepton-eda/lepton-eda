@@ -71,6 +71,8 @@ class Revision:
 
     ## \brief Return a list of all objects in a revision.
     #
+    # The objects are returned in their actual order.
+    #
     # \throw MemoryError if there is not enough memory
     #
     # Example:
@@ -104,6 +106,8 @@ class Revision:
 
     ## \brief Add a new object to a transient revision.
     #
+    # The object is appended to the end of the object list.
+    #
     # \a data must be an instance of one of the object data types
     # (Arc, Box, Circle, Component, Line, Net, Path, Picture, or Text).
     #
@@ -121,7 +125,8 @@ class Revision:
 
     ## \brief Set the data of an object in a transient revision.
     #
-    # If the object does not exist in the revision, it is created instead.
+    # If the object does not exist in the revision, it is created and
+    # appended to the end of the object list.
     #
     # \param ob   An object which has previously been returned by a Xorn
     #             function for either this revision, one of its
@@ -147,6 +152,8 @@ class Revision:
 
     ## \brief Copy an object to a transient revision.
     #
+    # The object is appended to the end of the object list.
+    #
     # \param self Destination revision (must be transient)
     # \param rev  Source revision (does not need to be transient)
     # \param ob   %Object in the source revision which should be copied
@@ -161,6 +168,9 @@ class Revision:
         pass
 
     ## \brief Copy some objects to a transient revision.
+    #
+    # The objects are appended to the end of the object list in an
+    # unspecified order.
     #
     # \param self Destination revision (must be transient)
     # \param rev  Source revision (does not need to be transient)
@@ -231,6 +241,8 @@ class Selection:
 ## \brief Return a list of objects which are in a revision as well as
 #         in a selection.
 #
+# The objects are not necessarily returned in a meaningful order.
+#
 # \throw MemoryError if there is not enough memory
 
 def get_selected_objects(rev, sel):
@@ -239,7 +251,8 @@ def get_selected_objects(rev, sel):
 ## \brief Return a list of objects which are in one revision but not
 #         in another.
 #
-# Returns objects in \a to which are not in \a from.
+# Returns objects in \a to which are not in \a from.  They are not
+# necessarily returned in a meaningful order.
 #
 # \throw MemoryError if there is not enough memory
 
@@ -249,7 +262,8 @@ def get_added_objects(from, to):
 ## \brief Return a list of objects which are in one revision but not
 #         in another.
 #
-# Returns objects in \a from which are not in \a to.
+# Returns objects in \a from which are not in \a to.  They are not
+# necessarily returned in a meaningful order.
 #
 # \throw MemoryError if there is not enough memory
 
@@ -258,6 +272,8 @@ def get_removed_objects(from, to):
 
 ## \brief Return a list of objects which exist in two revisions but
 #         have different type or data.
+#
+# The objects are not necessarily returned in a meaningful order.
 #
 # \throw MemoryError if there is not enough memory
 
