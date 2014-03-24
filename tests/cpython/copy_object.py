@@ -32,3 +32,4 @@ assert type(rev4.get_object_data(ob0copy)) == type(rev1.get_object_data(ob0))
 objects = rev4.get_objects()
 assert type(objects) == list
 assert len(objects) == 3
+assert objects == [ob0, ob1b, ob0copy]

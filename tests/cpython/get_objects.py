@@ -19,11 +19,6 @@ import xorn.storage, Setup
 rev0, rev1, rev2, rev3, ob0, ob1a, ob1b = Setup.setup()
 
 assert rev0.get_objects() == []
-
 assert rev1.get_objects() == [ob0]
-
-assert rev2.get_objects() in [[ob0, ob1a, ob1b], [ob0, ob1b, ob1a],
-                              [ob1a, ob0, ob1b], [ob1a, ob1b, ob0],
-                              [ob1b, ob0, ob1a], [ob1b, ob1a, ob0]]
-
-assert rev3.get_objects() in [[ob0, ob1b], [ob1b, ob0]]
+assert rev2.get_objects() == [ob0, ob1a, ob1b]
+assert rev3.get_objects() == [ob0, ob1b]

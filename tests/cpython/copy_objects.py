@@ -41,9 +41,12 @@ objects = rev4.get_objects()
 assert type(objects) == list
 assert len(objects) == 5
 
-for ob in objects:
-    if ob in [ob0, ob1a, ob1b]:
-        continue
+assert objects[0] == ob0
+assert objects[1] == ob1a
+assert objects[2] == ob1b
 
-    assert xorn.storage.object_is_selected(rev4, sel0, ob) == False
-    assert xorn.storage.object_is_selected(rev4, sel1, ob) == True
+assert xorn.storage.object_is_selected(rev4, sel0, objects[3]) == False
+assert xorn.storage.object_is_selected(rev4, sel0, objects[4]) == False
+
+assert xorn.storage.object_is_selected(rev4, sel1, objects[3]) == True
+assert xorn.storage.object_is_selected(rev4, sel1, objects[4]) == True
