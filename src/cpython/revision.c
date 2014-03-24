@@ -300,6 +300,53 @@ static PyObject *Revision_set_object_data(
 	return Py_None;
 }
 
+static PyObject *Revision_relocate_object(
+	Revision *self, PyObject *args, PyObject *kwds)
+{
+	PyObject *ob_arg = NULL, *insert_before_arg = NULL;
+	static char *kwlist[] = { "ob", "insert_before", NULL };
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "O!O:Revision.relocate_object", kwlist,
+		    &ObjectType, &ob_arg, &insert_before_arg))
+		return NULL;
+
+	if (insert_before_arg != Py_None &&
+	    !PyObject_TypeCheck(insert_before_arg, &ObjectType)) {
+		char buf[BUFSIZ];
+		snprintf(buf, BUFSIZ, "Revision.relocate_object() argument 2 "
+				      "must be %.50s or None, not %.50s",
+			 ObjectType.tp_name,
+			 insert_before_arg->ob_type->tp_name);
+		PyErr_SetString(PyExc_TypeError, buf);
+		return NULL;
+	}
+
+	if (!xorn_revision_is_transient(self->rev))
+		return not_transient();
+
+	if (!xorn_object_exists_in_revision(self->rev,
+					    ((Object *)ob_arg)->ob)) {
+		PyErr_SetString(PyExc_KeyError, "Object does not exist");
+		return NULL;
+	}
+	if (insert_before_arg != Py_None &&
+	    !xorn_object_exists_in_revision(
+		    self->rev, ((Object *)insert_before_arg)->ob)) {
+		PyErr_SetString(PyExc_KeyError,
+				"Reference object does not exist");
+		return NULL;
+	}
+
+	if (xorn_relocate_object(self->rev, ((Object *)ob_arg)->ob, NULL,
+				 insert_before_arg == Py_None ? NULL :
+				     ((Object *)insert_before_arg)->ob) == -1)
+		return PyErr_NoMemory();
+
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
 PyObject *Revision_copy_object(
 	Revision *self, PyObject *args, PyObject *kwds)
 {
@@ -424,6 +471,12 @@ static PyMethodDef Revision_methods[] = {
 	  METH_KEYWORDS,
 	  PyDoc_STR("rev.set_object_data(ob, data) -- "
 		    "set the data of an object\n\n"
+		    "Only callable on a transient revision.\n") },
+	{ "relocate_object", (PyCFunction)Revision_relocate_object,
+	  METH_KEYWORDS,
+	  PyDoc_STR("rev.relocate_object(ob, insert_before) -- "
+		    "change the location of an object in the object "
+		    "structure\n\n"
 		    "Only callable on a transient revision.\n") },
 	{ "copy_object", (PyCFunction)Revision_copy_object, METH_KEYWORDS,
 	  PyDoc_STR("dest.copy_object(src, ob) -> Object -- "

@@ -25,6 +25,7 @@ tests = snippets/functions.py \
 	get_obtype.py \
 	is_selected.py \
 	module.py \
+	reloc_order.py \
 	selection.py \
 	set_obdata.py \
 	stat.py \

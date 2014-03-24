@@ -159,6 +159,29 @@ class Revision:
     def set_object_data(self, ob, data):
         pass
 
+    ## \brief Change the location of an object in the object structure
+    #         of a transient revision.
+    #
+    # Changes the order in which an object is drawn and written to
+    # files as compared to its sibling objects.
+    #
+    # If \a ob and \a insert_before are identical, the revision is
+    # left unchanged.
+    #
+    # \param ob             The object which should be reordered
+    # \param insert_before  An object before which \a ob should be
+    #                       inserted, or \c None to append it at the end
+    #
+    # \return \c None
+    #
+    # \throw ValueError  if the revision isn't transient
+    # \throw KeyError    if \a ob or (if not \c None) \a insert_before
+    #                    doesn't exist in the revision
+    # \throw MemoryError if there is not enough memory
+
+    def relocate_object(self, ob, insert_before):
+        pass
+
     ## \brief Copy an object to a transient revision.
     #
     # The object is appended to the end of the object list.
