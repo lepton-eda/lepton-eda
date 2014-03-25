@@ -387,12 +387,16 @@ def select_all_except(rev, sel):
 
 ## \brief Return a selection which contains all the objects in an
 #         existing selection plus a given object.
+#
+# \throw MemoryError if there is not enough memory
 
 def select_including(sel, ob):
     pass
 
 ## \brief Return a selection which contains all the objects in an
 #         existing selection minus a given object.
+#
+# \throw MemoryError if there is not enough memory
 
 def select_excluding(sel, ob):
     pass
@@ -415,6 +419,8 @@ def select_intersection(sel0, sel1):
 
 ## \brief Return a selection containing the objects contained in one
 #         given selection, but not the other.
+#
+# \throw MemoryError if there is not enough memory
 
 def select_difference(sel0, sel1):
     pass
