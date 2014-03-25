@@ -87,6 +87,29 @@ free(objects);
 /** [get objects] */
 	}
 
+	{
+	struct xornsch_component component_data;
+	xorn_object_t component;
+
+	memset(&component_data, 0, sizeof component_data);
+	component = xornsch_add_component(rev, &component_data);
+
+/** [add attribute] */
+struct xornsch_text text_data;
+memset(&text_data, 0, sizeof text_data);
+text_data.text.s = "refdes=R1";
+text_data.text.len = strlen(text_data.text.s);
+
+xorn_object_t ob;
+ob = xornsch_add_text(rev, &text_data);
+if (ob == NULL)
+    /* handle error */;
+
+if (xorn_relocate_object(rev, ob, component, NULL) == -1)
+    /* handle error */;
+/** [add attribute] */
+	}
+
 	xorn_free_revision(rev);
 	return 0;
 }

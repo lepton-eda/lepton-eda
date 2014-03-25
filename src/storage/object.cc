@@ -73,6 +73,60 @@ void const *xorn_get_object_data(xorn_revision_t rev, xorn_object_t ob,
 	return i->second->data;
 }
 
+/** \brief Get the location of an object in the object structure.
+ *
+ * \param rev                Revision to examine
+ * \param ob                 Object whose location to return
+ * \param attached_to_return Pointer to a variable where to write the
+ *                           object to which \a ob is attached
+ * \param position_return    Pointer to a variable where to write the
+ *                           index of \a ob relative to its sibling
+ *                           objects
+ *
+ * Both pointer arguments may be \c NULL to indicate that the caller
+ * isn't interested in the return value.
+ *
+ * \return Returns \c 0 and writes the appropriate values to \a
+ * attached_to_return and \a position_return if \a ob exists in \a
+ * rev.  Otherwise, doesn't touch the values and returns \c -1.  */
+
+int xorn_get_object_location(xorn_revision_t rev, xorn_object_t ob,
+			     xorn_object_t *attached_to_return,
+			     unsigned int *position_return)
+{
+	std::map<xorn_object_t, xorn_object_t>::const_iterator i
+		= rev->parent.find(ob);
+	if (i == rev->parent.end())
+		return -1;
+
+	if (attached_to_return != NULL)
+		*attached_to_return = i->second;
+
+	if (position_return != NULL) {
+		std::vector<xorn_object_t> const &children
+			= rev->children[i->second];
+		*position_return = find(children.begin(),
+					children.end(), ob) - children.begin();
+	}
+	return 0;
+}
+
+static void dump_children(xorn_revision_t rev, xorn_object_t attached_to,
+			  xorn_object_t **objects_return, size_t *count_return)
+{
+	std::map<xorn_object_t, std::vector<xorn_object_t> >::const_iterator i
+		= rev->children.find(attached_to);
+
+	if (i == rev->children.end())
+		return;
+
+	for (std::vector<xorn_object_t>::const_iterator j
+		     = i->second.begin(); j != i->second.end(); ++j) {
+		(*objects_return)[(*count_return)++] = *j;
+		dump_children(rev, *j, objects_return, count_return);
+	}
+}
+
 /** \brief Return a list of all objects in a revision.
  *
  * A list of \ref xorn_object_t values is allocated and written to,
@@ -81,7 +135,8 @@ void const *xorn_get_object_data(xorn_revision_t rev, xorn_object_t ob,
  * pointed to by \a count_return.  If the list is empty or there is
  * not enough memory, \a *objects_return may be set to \c NULL.
  *
- * The objects are returned in their actual order.
+ * The objects are returned in their actual order.  Attached objects
+ * are listed after the object they are attached to.
  *
  * \return Returns \c 0 on success and \c -1 if there is not enough
  *         memory.
@@ -101,9 +156,51 @@ int xorn_get_objects(
 	if (*objects_return == NULL && !rev->obstates.empty())
 		return -1;
 
-	for (std::vector<xorn_object_t>::const_iterator i
-		     = rev->sequence.begin(); i != rev->sequence.end(); ++i)
-		(*objects_return)[(*count_return)++] = *i;
+	dump_children(rev, NULL, objects_return, count_return);
+	return 0;
+}
+
+/** \brief Return a list of objects in a revision which are attached
+ *         to a certain object.
+ *
+ * If \a ob is \c NULL, return all objects in the revision which are
+ * *not* attached.  The objects are returned in their actual order.
+ * Objects attached to the returned objects are not returned.
+ *
+ * \a objects_return may be \c NULL to indicate that the caller is
+ * only interested in the object count.  In this case, the object list
+ * isn't created, and the function cannot run out of memory.
+ * Otherwise, the same semantics apply as in \ref xorn_get_objects.
+ * See there for a more detailed description.  */
+
+int xorn_get_objects_attached_to(
+	xorn_revision_t rev, xorn_object_t ob,
+	xorn_object_t **objects_return, size_t *count_return)
+{
+	if (ob != NULL && rev->obstates.find(ob) == rev->obstates.end())
+		return -1;
+	std::map<xorn_object_t, std::vector<xorn_object_t> >::const_iterator i
+		= rev->children.find(ob);
+	if (objects_return == NULL) {
+		*count_return =
+			i == rev->children.end() ? 0 : i->second.size();
+		return 0;
+	}
+	if (i == rev->children.end()) {
+		*objects_return = NULL;
+		*count_return = 0;
+		return 0;
+	}
+
+	*objects_return = (xorn_object_t *) malloc(
+		i->second.size() * sizeof(xorn_object_t));
+	*count_return = 0;
+	if (*objects_return == NULL && !i->second.empty())
+		return -1;
+
+	for (std::vector<xorn_object_t>::const_iterator j
+		     = i->second.begin(); j != i->second.end(); ++j)
+		(*objects_return)[(*count_return)++] = *j;
 	return 0;
 }
 

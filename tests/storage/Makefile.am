@@ -21,11 +21,13 @@ LDADD = ../../src/storage/libxornstorage.la
 TESTS = snippets/example \
 	snippets/functions \
 	snippets/motivation \
+	copy_attached \
 	copy_object \
 	copy_objects \
 	delete_sel \
 	exist \
 	get_attribute \
+	get_location \
 	get_obdata \
 	get_objects \
 	get_obtype \
@@ -33,6 +35,9 @@ TESTS = snippets/example \
 	is_selected \
 	multiple_assignments \
 	null \
+	query_attached \
+	reloc_attach \
+	reloc_order \
 	select_by_attribute \
 	selection \
 	set_attribute \

@@ -70,9 +70,16 @@ xorn_obtype_t xorn_get_object_type(
 	xorn_revision_t rev, xorn_object_t ob);
 const void *xorn_get_object_data(
 	xorn_revision_t rev, xorn_object_t ob, xorn_obtype_t type);
+int xorn_get_object_location(
+	xorn_revision_t rev, xorn_object_t ob,
+	xorn_object_t *attached_to_return,
+	unsigned int *position_return);
 
 int xorn_get_objects(
 	xorn_revision_t rev,
+	xorn_object_t **objects_return, size_t *count_return);
+int xorn_get_objects_attached_to(
+	xorn_revision_t rev, xorn_object_t ob,
 	xorn_object_t **objects_return, size_t *count_return);
 int xorn_get_selected_objects(
 	xorn_revision_t rev, xorn_selection_t sel,
@@ -92,6 +99,8 @@ int xorn_get_modified_objects(
 xorn_selection_t xorn_select_none();
 xorn_selection_t xorn_select_object(
 	xorn_object_t ob);
+xorn_selection_t xorn_select_attached_to(
+	xorn_revision_t rev, xorn_object_t ob);
 xorn_selection_t xorn_select_all(
 	xorn_revision_t rev);
 xorn_selection_t xorn_select_all_except(
@@ -120,6 +129,8 @@ xorn_object_t xorn_add_object(xorn_revision_t rev,
 			      xorn_obtype_t type, const void *data);
 int xorn_set_object_data(xorn_revision_t rev, xorn_object_t ob,
 			 xorn_obtype_t type, const void *data);
+int xorn_relocate_object(xorn_revision_t rev, xorn_object_t ob,
+			 xorn_object_t attach_to, xorn_object_t insert_before);
 void xorn_delete_object(xorn_revision_t rev, xorn_object_t ob);
 void xorn_delete_selected_objects(xorn_revision_t rev,
 				  xorn_selection_t sel);

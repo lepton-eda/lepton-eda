@@ -41,7 +41,8 @@ struct xorn_revision {
 	~xorn_revision();
 	bool is_transient;
 	std::map<xorn_object_t, obstate *> obstates;
-	std::vector<xorn_object_t> sequence;
+	std::map<xorn_object_t, std::vector<xorn_object_t> > children;
+	std::map<xorn_object_t, xorn_object_t> parent;
 };
 
 /* There is no struct xorn_object. */
