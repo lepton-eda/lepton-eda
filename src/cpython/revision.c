@@ -206,8 +206,7 @@ static PyObject *Revision_get_object_location(
 /****************************************************************************/
 
 static int prepare_data(PyObject *obj, xorn_obtype_t *type_return,
-				       const void **data_return,
-			const char *msg)
+				       const void **data_return)
 {
 	if (PyObject_TypeCheck(obj, &ArcType))
 		prepare_arc((Arc *)obj, type_return, data_return);
@@ -227,12 +226,8 @@ static int prepare_data(PyObject *obj, xorn_obtype_t *type_return,
 		prepare_picture((Picture *)obj, type_return, data_return);
 	else if (PyObject_TypeCheck(obj, &TextType))
 		prepare_text((Text *)obj, type_return, data_return);
-	else {
-		char buf[BUFSIZ];
-		snprintf(buf, BUFSIZ, msg, obj->ob_type->tp_name);
-		PyErr_SetString(PyExc_TypeError, buf);
+	else
 		return -1;
-	}
 
 	return 0;
 }
@@ -260,11 +255,15 @@ static PyObject *Revision_add_object(
 	xorn_obtype_t type = xorn_obtype_none;
 	const void *data = NULL;
 
-	if (prepare_data(
-		    data_arg, &type, &data,
-		    "Revision.add_object() argument 'data' (pos 1) "
-		    "must be of xorn.storage object type, not %.50s") == -1)
+	if (prepare_data(data_arg, &type, &data) == -1) {
+		char buf[BUFSIZ];
+		snprintf(buf, BUFSIZ,
+			 "Revision.add_object() argument 'data' (pos 1) "
+			 "must be of xorn.storage object type, not %.50s",
+			 data_arg->ob_type->tp_name);
+		PyErr_SetString(PyExc_TypeError, buf);
 		return NULL;
+	}
 
 	xorn_object_t ob = xorn_add_object(self->rev, type, data);
 	if (ob == NULL)
@@ -290,11 +289,15 @@ static PyObject *Revision_set_object_data(
 	xorn_obtype_t type = xorn_obtype_none;
 	const void *data = NULL;
 
-	if (prepare_data(
-		    data_arg, &type, &data,
-		    "Revision.set_object_data() argument 'data' (pos 2) "
-		    "must be of xorn.storage object type, not %.50s") == -1)
+	if (prepare_data(data_arg, &type, &data) == -1) {
+		char buf[BUFSIZ];
+		snprintf(buf, BUFSIZ,
+			 "Revision.set_object_data() argument 'data' (pos 2) "
+			 "must be of xorn.storage object type, not %.50s",
+			 data_arg->ob_type->tp_name);
+		PyErr_SetString(PyExc_TypeError, buf);
 		return NULL;
+	}
 
 	if (type != xornsch_obtype_text) {
 		xorn_object_t attached_to;
