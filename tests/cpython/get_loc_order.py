@@ -18,7 +18,7 @@ import xorn.storage, Setup
 
 def object_location_fails(rev, ob):
     try:
-        position = rev.get_object_location(ob)
+        attached_to, position = rev.get_object_location(ob)
     except KeyError:
         return True
     else:
@@ -30,36 +30,36 @@ assert object_location_fails(rev0, ob0)
 assert object_location_fails(rev0, ob1a)
 assert object_location_fails(rev0, ob1b)
 
-assert rev1.get_object_location(ob0) == 0
+assert rev1.get_object_location(ob0) == (None, 0)
 assert object_location_fails(rev1, ob1a)
 assert object_location_fails(rev1, ob1b)
 
-assert rev2.get_object_location(ob0) == 0
-assert rev2.get_object_location(ob1a) == 1
-assert rev2.get_object_location(ob1b) == 2
+assert rev2.get_object_location(ob0) == (None, 0)
+assert rev2.get_object_location(ob1a) == (None, 1)
+assert rev2.get_object_location(ob1b) == (None, 2)
 
-assert rev3.get_object_location(ob0) == 0
+assert rev3.get_object_location(ob0) == (None, 0)
 assert object_location_fails(rev3, ob1a)
-assert rev3.get_object_location(ob1b) == 1
+assert rev3.get_object_location(ob1b) == (None, 1)
 
 rev4 = xorn.storage.Revision(rev3)
 rev4.set_object_data(ob1a, xorn.storage.Arc())
 
-assert rev4.get_object_location(ob0) == 0
-assert rev4.get_object_location(ob1a) == 2
-assert rev4.get_object_location(ob1b) == 1
+assert rev4.get_object_location(ob0) == (None, 0)
+assert rev4.get_object_location(ob1a) == (None, 2)
+assert rev4.get_object_location(ob1b) == (None, 1)
 
 ob2 = rev4.copy_object(rev1, ob0)
 assert ob2 is not None
 
-assert rev4.get_object_location(ob0) == 0
-assert rev4.get_object_location(ob1a) == 2
-assert rev4.get_object_location(ob1b) == 1
-assert rev4.get_object_location(ob2) == 3
+assert rev4.get_object_location(ob0) == (None, 0)
+assert rev4.get_object_location(ob1a) == (None, 2)
+assert rev4.get_object_location(ob1b) == (None, 1)
+assert rev4.get_object_location(ob2) == (None, 3)
 
 rev4.delete_object(ob0)
 
 assert object_location_fails(rev4, ob0)
-assert rev4.get_object_location(ob1a) == 1
-assert rev4.get_object_location(ob1b) == 0
-assert rev4.get_object_location(ob2) == 2
+assert rev4.get_object_location(ob1a) == (None, 1)
+assert rev4.get_object_location(ob1b) == (None, 0)
+assert rev4.get_object_location(ob2) == (None, 2)

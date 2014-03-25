@@ -20,6 +20,7 @@ tests = snippets/functions.py \
 	copy_objects.py \
 	delete_sel.py \
 	exist.py \
+	get_loc_attach.py \
 	get_loc_order.py \
 	get_obdata.py \
 	get_objects.py \

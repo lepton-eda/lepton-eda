@@ -188,15 +188,19 @@ static PyObject *Revision_get_object_location(
 		    &ObjectType, &ob_arg))
 		return NULL;
 
+	xorn_object_t attached_to = NULL;
 	unsigned int position = -1;
 
 	if (xorn_get_object_location(self->rev, ((Object *)ob_arg)->ob,
-				     NULL, &position) == -1) {
+				     &attached_to, &position) == -1) {
 		PyErr_SetString(PyExc_KeyError, "Object does not exist");
 		return NULL;
 	}
 
-	return PyInt_FromLong(position);
+	if (attached_to == NULL)
+		return Py_BuildValue("OI", Py_None, position);
+
+	return Py_BuildValue("NI", build_object(attached_to), position);
 }
 
 /****************************************************************************/
@@ -537,8 +541,8 @@ static PyMethodDef Revision_methods[] = {
 		    "get the data of an object") },
 	{ "get_object_location", (PyCFunction)Revision_get_object_location,
 	  METH_KEYWORDS,
-	  PyDoc_STR("rev.get_object_location(ob) -> int -- "
-		    "get the index of an object in the object list") },
+	  PyDoc_STR("rev.get_object_location(ob) -> Object, int -- "
+		    "get the location of an object in the object structure") },
 
 	{ "add_object", (PyCFunction)Revision_add_object, METH_KEYWORDS,
 	  PyDoc_STR("rev.add_object(data) -> Object -- "

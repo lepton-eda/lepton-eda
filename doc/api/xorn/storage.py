@@ -105,9 +105,11 @@ class Revision:
     def get_object_data(self, ob):
         pass
 
-    ## \brief Get the index of an object relative to its sibling objects.
+    ## \brief Get the location of an object in the object structure.
     #
-    # \return Returns the index of \a ob relative to its sibling objects.
+    # \return Returns a tuple <tt>(attached_to, pos)</tt> where \c
+    # attached_to is the object to which \a ob is attached and \c pos
+    # is the index of \a ob relative to its sibling objects.
     #
     # \throw KeyError if \a ob doesn't exist in the revision
 
