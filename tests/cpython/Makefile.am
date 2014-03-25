@@ -15,6 +15,7 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 tests = snippets/functions.py \
+	copy_attached.py \
 	copy_object.py \
 	copy_objects.py \
 	delete_sel.py \

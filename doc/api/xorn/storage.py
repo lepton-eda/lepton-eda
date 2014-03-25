@@ -177,7 +177,7 @@ class Revision:
     #
     # 2. Attach a schematic text object to a schematic net or component
     #    object.  As far as this library is concerned, this will cause
-    #    the text to be deleted along with the net or component.
+    #    the text to be copied and deleted along with the net or component.
     #
     # If \a attach_to is \c None, the object becomes un-attached.  If \a
     # ob and \a insert_before are identical, the revision is left unchanged.
@@ -212,13 +212,15 @@ class Revision:
 
     ## \brief Copy an object to a transient revision.
     #
-    # The object is appended to the end of the object list.
+    # Any objects attached to \a ob are copied as well, their copies
+    # being attached to the copy of \a ob, which is appended to the
+    # end of the object list.
     #
     # \param self Destination revision (must be transient)
     # \param rev  Source revision (does not need to be transient)
     # \param ob   %Object in the source revision which should be copied
     #
-    # \return Returns the new object.
+    # \return Returns the copy of \a ob.
     #
     # \throw ValueError  if \a self isn't transient
     # \throw KeyError    if \a ob doesn't exist in \a rev
@@ -229,14 +231,17 @@ class Revision:
 
     ## \brief Copy some objects to a transient revision.
     #
-    # The objects are appended to the end of the object list in an
-    # unspecified order.
+    # Any objects attached to the objects are copied as well and
+    # attached to the corresponding new object.  The copied objects
+    # are appended to the end of the object list in an unspecified
+    # order.
     #
     # \param self Destination revision (must be transient)
     # \param rev  Source revision (does not need to be transient)
     # \param sel  Objects in the source revision which should be copied
     #
-    # \return Returns a selection containing the new objects.
+    # \return Returns a selection containing the copied objects,
+    #         excluding attached objects.
     #
     # \throw ValueError  if \a self isn't transient
     # \throw MemoryError if there is not enough memory
