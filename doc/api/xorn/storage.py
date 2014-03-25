@@ -302,6 +302,18 @@ class Object:
 class Selection:
     pass
 
+## \brief Return a list of objects in a revision which are attached
+#         to a certain object.
+#
+# If \a ob is \c None, return all objects in the revision which are
+# *not* attached.  The objects are returned in their actual order.
+# Objects attached to the returned objects are not returned.
+#
+# \throw MemoryError if there is not enough memory
+
+def get_objects_attached_to(rev, ob):
+    pass
+
 ## \brief Return a list of objects which are in a revision as well as
 #         in a selection.
 #

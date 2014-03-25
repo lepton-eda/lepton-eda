@@ -41,6 +41,40 @@ static PyObject *to_python_list(xorn_object_t *objects, size_t count)
 	return list;
 }
 
+static PyObject *get_objects_attached_to(
+	PyObject *self, PyObject *args, PyObject *kwds)
+{
+	PyObject *rev_arg = NULL, *ob_arg = NULL;
+	static char *kwlist[] = { "rev", "ob", NULL };
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "O!O:get_objects_attached_to", kwlist,
+		    &RevisionType, &rev_arg, &ob_arg))
+		return NULL;
+
+	if (ob_arg != Py_None &&
+	    !PyObject_TypeCheck(ob_arg, &ObjectType)) {
+		char buf[BUFSIZ];
+		snprintf(buf, BUFSIZ, "get_objects_attached_to() argument 2 "
+				      "must be %.50s or None, not %.50s",
+			 ObjectType.tp_name,
+			 ob_arg->ob_type->tp_name);
+		PyErr_SetString(PyExc_TypeError, buf);
+		return NULL;
+	}
+
+	xorn_object_t *objects;
+	size_t count;
+
+	if (xorn_get_objects_attached_to(((Revision *)rev_arg)->rev,
+					 ob_arg == Py_None ? NULL :
+					     ((Object *)ob_arg)->ob,
+					 &objects, &count) == -1)
+		return PyErr_NoMemory();
+
+	return to_python_list(objects, count);
+}
+
 static PyObject *get_selected_objects(
 	PyObject *self, PyObject *args, PyObject *kwds)
 {
@@ -303,6 +337,11 @@ static PyObject *object_is_selected(
 }
 
 static PyMethodDef methods[] = {
+	{ "get_objects_attached_to",
+	  (PyCFunction)get_objects_attached_to, METH_KEYWORDS,
+	  PyDoc_STR("get_objects_attached_to(rev, ob) -> [Object] -- "
+		    "a list of objects in a revision which are attached to a "
+		    "certain object") },
 	{ "get_selected_objects",
 	  (PyCFunction)get_selected_objects, METH_KEYWORDS,
 	  PyDoc_STR("get_selected_objects(rev, sel) -> [Object] -- "

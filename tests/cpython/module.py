@@ -36,6 +36,7 @@ mod_attrs = {
     'LineAttr': type,
     'FillAttr': type,
 
+    'get_objects_attached_to': types.BuiltinMethodType,
     'get_selected_objects': types.BuiltinMethodType,
     'get_added_objects': types.BuiltinMethodType,
     'get_removed_objects': types.BuiltinMethodType,
