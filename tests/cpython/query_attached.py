@@ -24,6 +24,17 @@ def assert_attached_objects(rev, attached_to, result):
     else:
         assert objects == result
 
+    try:
+        sel = xorn.storage.select_attached_to(rev, attached_to)
+    except Exception as e:
+        assert type(e) == result
+    else:
+        objects = xorn.storage.get_selected_objects(rev, sel)
+        objects.sort()
+        result = result[:]
+        result.sort()
+        assert objects == result
+
 rev = xorn.storage.Revision()
 assert rev is not None
 

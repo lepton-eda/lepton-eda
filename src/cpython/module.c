@@ -187,6 +187,34 @@ static PyObject *select_object(
 	return sel ? build_selection(sel) : PyErr_NoMemory();
 }
 
+static PyObject *select_attached_to(
+	PyObject *self, PyObject *args, PyObject *kwds)
+{
+	PyObject *rev_arg = NULL, *ob_arg = NULL;
+	static char *kwlist[] = { "rev", "ob", NULL };
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "O!O:select_attached_to", kwlist,
+		    &RevisionType, &rev_arg, &ob_arg))
+		return NULL;
+
+	if (ob_arg != Py_None &&
+	    !PyObject_TypeCheck(ob_arg, &ObjectType)) {
+		char buf[BUFSIZ];
+		snprintf(buf, BUFSIZ, "select_attached_to() argument 2 "
+				      "must be %.50s or None, not %.50s",
+			 ObjectType.tp_name,
+			 ob_arg->ob_type->tp_name);
+		PyErr_SetString(PyExc_TypeError, buf);
+		return NULL;
+	}
+
+	xorn_selection_t sel = xorn_select_attached_to(
+		((Revision *)rev_arg)->rev,
+		ob_arg == Py_None ? NULL : ((Object *)ob_arg)->ob);
+	return sel ? build_selection(sel) : PyErr_NoMemory();
+}
+
 static PyObject *select_all(
 	PyObject *self, PyObject *args, PyObject *kwds)
 {
@@ -368,6 +396,10 @@ static PyMethodDef methods[] = {
 	{ "select_object", (PyCFunction)select_object, METH_KEYWORDS,
 	  PyDoc_STR("select_object(ob) -> Selection -- "
 		    "a selection containing a single object") },
+	{ "select_attached_to", (PyCFunction)select_attached_to, METH_KEYWORDS,
+	  PyDoc_STR("select_attached_to(rev, ob) -> Selection -- "
+		    "a selection containing all objects in a revision "
+		    "attached to a given object") },
 	{ "select_all", (PyCFunction)select_all, METH_KEYWORDS,
 	  PyDoc_STR("select_all(rev) -> Selection -- "
 		    "a selection containing all objects in a revision") },

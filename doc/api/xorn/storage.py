@@ -370,6 +370,18 @@ def select_none():
 def select_object(ob):
     pass
 
+## \brief Return a selection containing all objects in a revision
+#         attached to a given object.
+#
+# The object may be \c None, in which case the selection contains all
+# objects which are *not* attached.
+#
+# \throw KeyError    if \a ob does not exist in \a rev
+# \throw MemoryError if there is not enough memory
+
+def select_attached_to(rev, ob):
+    pass
+
 ## \brief Return a selection containing all objects in a revision.
 #
 # \throw MemoryError if there is not enough memory

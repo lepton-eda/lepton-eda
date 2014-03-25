@@ -44,6 +44,7 @@ mod_attrs = {
 
     'select_none': types.BuiltinMethodType,
     'select_object': types.BuiltinMethodType,
+    'select_attached_to': types.BuiltinMethodType,
     'select_all': types.BuiltinMethodType,
     'select_all_except': types.BuiltinMethodType,
     'select_including': types.BuiltinMethodType,
