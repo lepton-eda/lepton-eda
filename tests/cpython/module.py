@@ -76,6 +76,25 @@ def assert_attributes(ob, attrs):
     for attr in attrs:
         assert type(ob.__getattribute__(attr)) == attrs[attr]
 
+assert_attributes(xorn.storage.Revision(), {
+        'is_transient': types.BuiltinMethodType,
+        'finalize': types.BuiltinMethodType,
+        'transient': bool,
+
+        'get_objects': types.BuiltinMethodType,
+        'object_exists': types.BuiltinMethodType,
+        'get_object_data': types.BuiltinMethodType,
+        'get_object_location': types.BuiltinMethodType,
+
+        'add_object': types.BuiltinMethodType,
+        'set_object_data': types.BuiltinMethodType,
+        'relocate_object': types.BuiltinMethodType,
+        'copy_object': types.BuiltinMethodType,
+        'copy_objects': types.BuiltinMethodType,
+        'delete_object': types.BuiltinMethodType,
+        'delete_objects': types.BuiltinMethodType,
+})
+
 assert_attributes(xorn.storage.Arc(), {
         'x': float,
         'y': float,
