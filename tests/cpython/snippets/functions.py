@@ -40,3 +40,14 @@ for ob in rev.get_objects():
     data = rev.get_object_data(ob)
     # do something with ob and data
 ## [get objects]
+
+component_data = xorn.storage.Component()
+component = rev.add_object(component_data)
+
+## [add attribute]
+text_data = xorn.storage.Text()
+text_data.text = "refdes=R1"
+
+ob = rev.add_object(text_data)
+rev.relocate_object(ob, component, None)
+## [add attribute]

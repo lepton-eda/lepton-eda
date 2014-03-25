@@ -16,6 +16,25 @@
 
 import xorn.storage
 
+def check_not_attached(rev, ob0, ob1):
+    assert rev.get_objects() == [ob0, ob1]
+    rev.relocate_object(ob0, None, None)
+    assert rev.get_objects() == [ob1, ob0]
+    rev.relocate_object(ob0, None, ob1)
+
+def check_attached(rev, ob0, ob1):
+    assert rev.get_objects() == [ob0, ob1]
+    rev.relocate_object(ob0, None, None)
+    assert rev.get_objects() == [ob0, ob1]
+
+def set_object_data_fails(rev, ob, data):
+    try:
+        rev.set_object_data(ob, data)
+    except ValueError:
+        return True
+    else:
+        return False
+
 line_data = xorn.storage.Line()
 net_data = xorn.storage.Net()
 component_data = xorn.storage.Component()
@@ -32,47 +51,97 @@ assert ob1 is not None
 rev.set_object_data(ob0, net_data)
 rev.set_object_data(ob1, text_data)
 
-assert rev.get_objects() == [ob0, ob1]
+check_not_attached(rev, ob0, ob1)
 
 
 # data can be set without the object being reordered
 
 rev.set_object_data(ob0, line_data)
-assert rev.get_objects() == [ob0, ob1]
+check_not_attached(rev, ob0, ob1)
 rev.set_object_data(ob0, net_data)
-assert rev.get_objects() == [ob0, ob1]
+check_not_attached(rev, ob0, ob1)
 
 rev.set_object_data(ob1, line_data)
-assert rev.get_objects() == [ob0, ob1]
+check_not_attached(rev, ob0, ob1)
 rev.set_object_data(ob1, net_data)
-assert rev.get_objects() == [ob0, ob1]
+check_not_attached(rev, ob0, ob1)
 
 # objects are re-added at the end
 
 rev.delete_object(ob0)
 rev.set_object_data(ob0, line_data)
-assert rev.get_objects() == [ob1, ob0]
+check_not_attached(rev, ob1, ob0)
 rev.delete_object(ob0)
 rev.set_object_data(ob0, line_data)
-assert rev.get_objects() == [ob1, ob0]
+check_not_attached(rev, ob1, ob0)
 
 rev.delete_object(ob1)
 rev.set_object_data(ob1, line_data)
-assert rev.get_objects() == [ob0, ob1]
+check_not_attached(rev, ob0, ob1)
 rev.delete_object(ob1)
 rev.set_object_data(ob1, line_data)
-assert rev.get_objects() == [ob0, ob1]
+check_not_attached(rev, ob0, ob1)
 
 rev.delete_object(ob0)
 rev.set_object_data(ob0, net_data)
-assert rev.get_objects() == [ob1, ob0]
+check_not_attached(rev, ob1, ob0)
 rev.delete_object(ob0)
 rev.set_object_data(ob0, net_data)
-assert rev.get_objects() == [ob1, ob0]
+check_not_attached(rev, ob1, ob0)
 
 rev.delete_object(ob1)
 rev.set_object_data(ob1, net_data)
-assert rev.get_objects() == [ob0, ob1]
+check_not_attached(rev, ob0, ob1)
 rev.delete_object(ob1)
 rev.set_object_data(ob1, net_data)
-assert rev.get_objects() == [ob0, ob1]
+check_not_attached(rev, ob0, ob1)
+
+
+# can change ob0 to any type while no object is attached
+
+rev.set_object_data(ob0, line_data)
+check_not_attached(rev, ob0, ob1)
+rev.set_object_data(ob0, component_data)
+check_not_attached(rev, ob0, ob1)
+rev.set_object_data(ob0, text_data)
+check_not_attached(rev, ob0, ob1)
+rev.set_object_data(ob0, net_data)
+check_not_attached(rev, ob0, ob1)
+
+# can change type of ob1 while not attached
+
+rev.set_object_data(ob1, line_data)
+check_not_attached(rev, ob0, ob1)
+rev.set_object_data(ob1, net_data)
+check_not_attached(rev, ob0, ob1)
+rev.set_object_data(ob1, component_data)
+check_not_attached(rev, ob0, ob1)
+rev.set_object_data(ob1, text_data)
+check_not_attached(rev, ob0, ob1)
+
+
+rev.relocate_object(ob1, ob0, None)
+check_attached(rev, ob0, ob1)
+
+
+# can't change ob0 to line or text while an object is attached
+
+assert set_object_data_fails(rev, ob0, line_data)
+check_attached(rev, ob0, ob1)
+rev.set_object_data(ob0, net_data)
+check_attached(rev, ob0, ob1)
+rev.set_object_data(ob0, component_data)
+check_attached(rev, ob0, ob1)
+assert set_object_data_fails(rev, ob0, text_data)
+check_attached(rev, ob0, ob1)
+
+# can't change type of ob1 while attached
+
+assert set_object_data_fails(rev, ob1, line_data)
+check_attached(rev, ob0, ob1)
+assert set_object_data_fails(rev, ob1, net_data)
+check_attached(rev, ob0, ob1)
+assert set_object_data_fails(rev, ob1, component_data)
+check_attached(rev, ob0, ob1)
+rev.set_object_data(ob1, text_data)
+check_attached(rev, ob0, ob1)

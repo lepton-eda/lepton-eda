@@ -292,6 +292,33 @@ static PyObject *Revision_set_object_data(
 		    "must be of xorn.storage object type, not %.50s") == -1)
 		return NULL;
 
+	if (type != xornsch_obtype_text) {
+		xorn_object_t attached_to;
+
+		if (xorn_get_object_location(self->rev, ((Object *)ob_arg)->ob,
+					     &attached_to, NULL) != -1 &&
+		    attached_to != NULL) {
+			PyErr_SetString(PyExc_ValueError,
+					"Cannot set attached object to "
+					"something other than text");
+			return NULL;
+		}
+	}
+
+	if (type != xornsch_obtype_net && type != xornsch_obtype_component) {
+		size_t count;
+
+		if (xorn_get_objects_attached_to(
+			    self->rev, ((Object *)ob_arg)->ob,
+			    NULL, &count) != -1 && count != 0) {
+			PyErr_SetString(
+				PyExc_ValueError,
+				"Cannot set object with attached objects to "
+				"something other than net or component");
+			return NULL;
+		}
+	}
+
 	if (xorn_set_object_data(self->rev, ((Object *)ob_arg)->ob,
 				 type, data) == -1)
 		return PyErr_NoMemory();
@@ -303,18 +330,29 @@ static PyObject *Revision_set_object_data(
 static PyObject *Revision_relocate_object(
 	Revision *self, PyObject *args, PyObject *kwds)
 {
-	PyObject *ob_arg = NULL, *insert_before_arg = NULL;
-	static char *kwlist[] = { "ob", "insert_before", NULL };
+	PyObject *ob_arg = NULL, *attach_to_arg = NULL,
+				 *insert_before_arg = NULL;
+	static char *kwlist[] = { "ob", "attach_to", "insert_before", NULL };
 
 	if (!PyArg_ParseTupleAndKeywords(
-		    args, kwds, "O!O:Revision.relocate_object", kwlist,
-		    &ObjectType, &ob_arg, &insert_before_arg))
+		    args, kwds, "O!OO:Revision.relocate_object", kwlist,
+		    &ObjectType, &ob_arg, &attach_to_arg, &insert_before_arg))
 		return NULL;
 
+	if (attach_to_arg != Py_None &&
+	    !PyObject_TypeCheck(attach_to_arg, &ObjectType)) {
+		char buf[BUFSIZ];
+		snprintf(buf, BUFSIZ, "Revision.relocate_object() argument 2 "
+				      "must be %.50s or None, not %.50s",
+			 ObjectType.tp_name,
+			 attach_to_arg->ob_type->tp_name);
+		PyErr_SetString(PyExc_TypeError, buf);
+		return NULL;
+	}
 	if (insert_before_arg != Py_None &&
 	    !PyObject_TypeCheck(insert_before_arg, &ObjectType)) {
 		char buf[BUFSIZ];
-		snprintf(buf, BUFSIZ, "Revision.relocate_object() argument 2 "
+		snprintf(buf, BUFSIZ, "Revision.relocate_object() argument 3 "
 				      "must be %.50s or None, not %.50s",
 			 ObjectType.tp_name,
 			 insert_before_arg->ob_type->tp_name);
@@ -325,20 +363,59 @@ static PyObject *Revision_relocate_object(
 	if (!xorn_revision_is_transient(self->rev))
 		return not_transient();
 
-	if (!xorn_object_exists_in_revision(self->rev,
-					    ((Object *)ob_arg)->ob)) {
+	xorn_obtype_t ob_type = xorn_get_object_type(
+		self->rev, ((Object *)ob_arg)->ob);
+	if (ob_type == xorn_obtype_none) {
 		PyErr_SetString(PyExc_KeyError, "Object does not exist");
 		return NULL;
 	}
-	if (insert_before_arg != Py_None &&
-	    !xorn_object_exists_in_revision(
-		    self->rev, ((Object *)insert_before_arg)->ob)) {
-		PyErr_SetString(PyExc_KeyError,
-				"Reference object does not exist");
-		return NULL;
+
+	if (attach_to_arg != Py_None) {
+		if (ob_type != xornsch_obtype_text) {
+			PyErr_SetString(PyExc_ValueError,
+					"Only text objects can be attached");
+			return NULL;
+		}
+
+		switch (xorn_get_object_type(self->rev,
+					     ((Object *)attach_to_arg)->ob)) {
+		case xorn_obtype_none:
+			PyErr_SetString(PyExc_KeyError,
+					"Parent object does not exist");
+			return NULL;
+		case xornsch_obtype_net:
+		case xornsch_obtype_component:
+			break;
+		default:
+			PyErr_SetString(PyExc_ValueError,
+					"Can only attach to net and "
+					"component objects");
+			return NULL;
+		}
 	}
 
-	if (xorn_relocate_object(self->rev, ((Object *)ob_arg)->ob, NULL,
+	if (insert_before_arg != Py_None) {
+		xorn_object_t attached_to;
+
+		if (xorn_get_object_location(
+			    self->rev, ((Object *)insert_before_arg)->ob,
+			    &attached_to, NULL) == -1) {
+			PyErr_SetString(PyExc_KeyError,
+					"Reference object does not exist");
+			return NULL;
+		}
+
+		if (attached_to != (attach_to_arg == Py_None ? NULL :
+					((Object *)attach_to_arg)->ob)) {
+			PyErr_SetString(PyExc_ValueError,
+					"Invalid reference object");
+			return NULL;
+		}
+	}
+
+	if (xorn_relocate_object(self->rev, ((Object *)ob_arg)->ob,
+				 attach_to_arg == Py_None ? NULL :
+				     ((Object *)attach_to_arg)->ob,
 				 insert_before_arg == Py_None ? NULL :
 				     ((Object *)insert_before_arg)->ob) == -1)
 		return PyErr_NoMemory();

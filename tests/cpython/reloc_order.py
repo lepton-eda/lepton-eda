@@ -18,7 +18,7 @@ import xorn.storage, Setup
 
 def relocate_and_assert(rev, ob, insert_before, result, objects):
     try:
-        rev.relocate_object(ob, insert_before)
+        rev.relocate_object(ob, None, insert_before)
     except Exception as e:
         assert result == type(e)
     else:

@@ -71,7 +71,8 @@ class Revision:
 
     ## \brief Return a list of all objects in a revision.
     #
-    # The objects are returned in their actual order.
+    # The objects are returned in their actual order.  Attached
+    # objects are listed after the object they are attached to.
     #
     # \throw MemoryError if there is not enough memory
     #
@@ -104,9 +105,9 @@ class Revision:
     def get_object_data(self, ob):
         pass
 
-    ## \brief Get the index of an object in a revision's object list.
+    ## \brief Get the index of an object relative to its sibling objects.
     #
-    # \return Returns the index of \a ob in the object list.
+    # \return Returns the index of \a ob relative to its sibling objects.
     #
     # \throw KeyError if \a ob doesn't exist in the revision
 
@@ -145,12 +146,19 @@ class Revision:
     # \param data An instance of one of the object data types (Arc,
     #             Box, Circle, Component, Line, Net, Path, Picture, or
     #             Text).  The type may be different from the previous
-    #             type of the object.
+    #             type of the object but must be Net or Component if
+    #             there are objects attached to \a ob, and must be
+    #             Text if \a ob itself is attached to an object.
     #
     # \return \c None
     #
     # \throw ValueError  if the revision isn't transient
     # \throw TypeError   if \a data doesn't have a valid type
+    # \throw ValueError  if \a ob is attached to an object but the new
+    #                    object type wouldn't permit attaching the object
+    # \throw ValueError  if there are objects attached to \a ob but
+    #                    the new object type wouldn't permit attaching
+    #                    objects
     # \throw MemoryError if there is not enough memory
     #
     # Example:
@@ -162,24 +170,44 @@ class Revision:
     ## \brief Change the location of an object in the object structure
     #         of a transient revision.
     #
-    # Changes the order in which an object is drawn and written to
-    # files as compared to its sibling objects.
+    # This function performs two distinct operations:
     #
-    # If \a ob and \a insert_before are identical, the revision is
-    # left unchanged.
+    # 1. Change the order in which an object is drawn and written to
+    #    files as compared to its sibling objects.
+    #
+    # 2. Attach a schematic text object to a schematic net or component
+    #    object.  As far as this library is concerned, this will cause
+    #    the text to be deleted along with the net or component.
+    #
+    # If \a attach_to is \c None, the object becomes un-attached.  If \a
+    # ob and \a insert_before are identical, the revision is left unchanged.
     #
     # \param ob             The object which should be reordered
-    # \param insert_before  An object before which \a ob should be
-    #                       inserted, or \c None to append it at the end
+    #                       and/or attached (must be Text if \a
+    #                       attach_to is not \c None)
+    # \param attach_to      The object to which \a ob should be attached
+    #                       (must be Net or Component, or \c None)
+    # \param insert_before  An object already attached to \a attach_to
+    #                       before which \a ob should be inserted, or
+    #                       \c None to append it at the end.
     #
     # \return \c None
     #
     # \throw ValueError  if the revision isn't transient
-    # \throw KeyError    if \a ob or (if not \c None) \a insert_before
-    #                    doesn't exist in the revision
+    # \throw KeyError    if \a ob or (if not \c None) \a attach_to or
+    #                    \a insert_before don't exist in the revision
+    # \throw ValueError  if \a attach_to is not \c None and
+    #                    - \a ob is not a schematic text or
+    #                    - \a attach_to is not a schematic net or
+    #                      schematic component
+    # \throw ValueError  if \a insert_before is not \c None and not
+    #                    attached to \a attach_to
     # \throw MemoryError if there is not enough memory
+    #
+    # Example:
+    # \snippet functions.py add attribute
 
-    def relocate_object(self, ob, insert_before):
+    def relocate_object(self, ob, attach_to, insert_before):
         pass
 
     ## \brief Copy an object to a transient revision.
@@ -218,8 +246,10 @@ class Revision:
 
     ## \brief Delete an object from a transient revision.
     #
-    # \a ob will stay valid and can later be re-added using \ref
-    # set_object_data.
+    # Any objects attached to \a ob are deleted as well.
+    #
+    # The deleted object(s) stay valid and can later be re-added using
+    # \ref set_object_data.
     #
     # \return \c None
     #
@@ -231,10 +261,12 @@ class Revision:
 
     ## \brief Delete some objects from a transient revision.
     #
-    # Objects that don't exist in the revision are ignored.
+    # Any objects attached to a deleted object are deleted as well.
     #
-    # The objects will stay valid and can later be re-added using \ref
-    # set_object_data.
+    # The deleted objects stay valid and can later be re-added using
+    # \ref set_object_data.
+    #
+    # Objects that don't exist in the revision are ignored.
     #
     # \return \c None
     #
