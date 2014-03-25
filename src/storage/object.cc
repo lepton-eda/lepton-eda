@@ -167,8 +167,11 @@ int xorn_get_objects(
  * *not* attached.  The objects are returned in their actual order.
  * Objects attached to the returned objects are not returned.
  *
- * The same semantics apply as in \ref xorn_get_objects.  See there
- * for a more detailed description.  */
+ * \a objects_return may be \c NULL to indicate that the caller is
+ * only interested in the object count.  In this case, the object list
+ * isn't created, and the function cannot run out of memory.
+ * Otherwise, the same semantics apply as in \ref xorn_get_objects.
+ * See there for a more detailed description.  */
 
 int xorn_get_objects_attached_to(
 	xorn_revision_t rev, xorn_object_t ob,
@@ -178,6 +181,11 @@ int xorn_get_objects_attached_to(
 		return -1;
 	std::map<xorn_object_t, std::vector<xorn_object_t> >::const_iterator i
 		= rev->children.find(ob);
+	if (objects_return == NULL) {
+		*count_return =
+			i == rev->children.end() ? 0 : i->second.size();
+		return 0;
+	}
 	if (i == rev->children.end()) {
 		*objects_return = NULL;
 		*count_return = 0;

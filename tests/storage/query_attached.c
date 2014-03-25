@@ -30,6 +30,11 @@ static void assert_attached_objects_0(
 	xorn_selection_t sel;
 
 	assert(xorn_get_objects_attached_to(
+		       rev, attached_to, NULL, &count) == 0);
+	assert(count == 0);
+
+	count = -1;
+	assert(xorn_get_objects_attached_to(
 		       rev, attached_to, &objects, &count) == 0);
 	assert(count == 0);
 	free(objects);
@@ -49,6 +54,11 @@ static void assert_attached_objects_1(
 	size_t count;
 	xorn_selection_t sel;
 
+	assert(xorn_get_objects_attached_to(
+		       rev, attached_to, NULL, &count) == 0);
+	assert(count == 1);
+
+	count = -1;
 	assert(xorn_get_objects_attached_to(
 		       rev, attached_to, &objects, &count) == 0);
 	assert(objects != NULL);
@@ -73,6 +83,11 @@ static void assert_attached_objects_2(
 	size_t count;
 	xorn_selection_t sel;
 
+	assert(xorn_get_objects_attached_to(
+		       rev, attached_to, NULL, &count) == 0);
+	assert(count == 2);
+
+	count = -1;
 	assert(xorn_get_objects_attached_to(
 		       rev, attached_to, &objects, &count) == 0);
 	assert(objects != NULL);
@@ -99,6 +114,11 @@ static void assert_attached_objects_3(
 	size_t count;
 	xorn_selection_t sel;
 
+	assert(xorn_get_objects_attached_to(
+		       rev, attached_to, NULL, &count) == 0);
+	assert(count == 3);
+
+	count = -1;
 	assert(xorn_get_objects_attached_to(
 		       rev, attached_to, &objects, &count) == 0);
 	assert(objects != NULL);
