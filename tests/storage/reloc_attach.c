@@ -288,7 +288,7 @@ static void check5(xorn_revision_t rev,
 	check(rev, a, _, a, -1, N, a, b);
 	check(rev, a, N, a,  0, N, a, b);
 	check(rev, b, _, b, -1, N, a, b);
-	check(rev, b, N, b, 0 , N, a, b);
+	check(rev, b, N, b,  0, N, a, b);
 
 	check_delete_0(rev, N);
 }
