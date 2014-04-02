@@ -219,7 +219,7 @@ void main_prog(void *closure, int argc, char *argv[])
 
       if (!quiet_mode) {
         s_log_message (_("Loading schematic [%s]\n"), filename);
-        printf (_("Loading schematic [%s]\n"), filename);
+        fprintf (stderr, _("Loading schematic [%s]\n"), filename);
       }
 
       s_page_goto (pr_current, s_page_new (pr_current, filename));

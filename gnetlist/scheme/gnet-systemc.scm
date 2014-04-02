@@ -689,7 +689,7 @@
 ;;;
 (define systemc
   (lambda (output-filename)
-    (let ((port (open-output-file output-filename)))
+    (let ((port (gnetlist:output-port output-filename)))
       (begin
         (systemc:get-nets-once!)
         (systemc:write-top-header port)

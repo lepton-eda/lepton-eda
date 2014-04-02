@@ -475,7 +475,7 @@
 ;; ----------------------------------------------------------------------------
 (define switcap
   (lambda (output-filename)
-    (let ((port (open-output-file output-filename)))
+    (let ((port (gnetlist:output-port output-filename)))
 
       ;; initialize the net-name aliasing
       (gnetlist:build-net-aliases switcap:map-net-names all-unique-nets)

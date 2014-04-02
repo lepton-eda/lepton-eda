@@ -143,7 +143,7 @@
 
      (display (string-append "Writing to output file \"" output-filename
                              "\"... ") )
-      (let ((port (open-output-file output-filename))
+      (let ((port (gnetlist:output-port output-filename))
             (first_block #f)
             )
 

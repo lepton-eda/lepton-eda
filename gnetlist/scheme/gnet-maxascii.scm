@@ -88,7 +88,7 @@
 
 (define maxascii
    (lambda (output-filename)
-      (let ((port (open-output-file output-filename)))
+      (let ((port (gnetlist:output-port output-filename)))
          (display "*OrCAD\n*START\n" port)
 
          (maxascii:components port packages)

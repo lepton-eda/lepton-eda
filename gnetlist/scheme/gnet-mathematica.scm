@@ -184,7 +184,7 @@
 
 
 (define (mathematica output-filename)
-  (let ((port (open-output-file output-filename))
+  (let ((port (gnetlist:output-port output-filename))
         (nets (gnetlist:get-all-unique-nets "dummy")))
      (mathematica:write-voltages nets port)
      (display "nodeEquations={" port)

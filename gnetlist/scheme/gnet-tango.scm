@@ -148,7 +148,7 @@
 ;;;
 (define tango
    (lambda (output-filename)
-      (let ((port (open-output-file output-filename)))
+      (let ((port (gnetlist:output-port output-filename)))
          (begin
 ;;;         (gnetlist:set-netlist-mode "TANGO") No longer needed
             (tango:components port packages)

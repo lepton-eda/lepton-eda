@@ -149,7 +149,7 @@
 
 (define vipec
    (lambda (output-filename)
-      (let ((port (open-output-file output-filename))
+      (let ((port (gnetlist:output-port output-filename))
             (netnumbers (number-nets all-unique-nets 1)))
          (vipec:header port)
          (display "CKT\n" port)

@@ -833,7 +833,7 @@
 ;;;
 (define vhdl
   (lambda (output-filename)
-    (let ((port (open-output-file output-filename))
+    (let ((port (gnetlist:output-port output-filename))
           (module-name (gnetlist:get-toplevel-attribute "module-name"))
           (port-list (vhdl:get-top-port-list)))
       (begin

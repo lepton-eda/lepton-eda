@@ -132,7 +132,7 @@
 
 (define gossip
    (lambda (output-filename)
-      (let ((port (open-output-file output-filename)))
+      (let ((port (gnetlist:output-port output-filename)))
          (begin
             (gossip:write-top-header port)
             (gossip:get-libraries port packages '())

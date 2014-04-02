@@ -47,7 +47,7 @@
 
 (define drc
   (lambda (output-filename)
-    (let ((port (open-output-file output-filename)))
+    (let ((port (gnetlist:output-port output-filename)))
       (drc:device-rules drc:attriblist packages port)
       (drc:net-rules (gnetlist:get-all-unique-nets "dummy") port)
       (drc:pin-rules packages port)

@@ -317,7 +317,7 @@
 ;;
 (define spice
   (lambda (output-filename)
-    (let ((port (open-output-file output-filename)))
+    (let ((port (gnetlist:output-port output-filename)))
 ;; No longer needed
 ;;      (gnetlist:set-netlist-mode "SPICE")
       (spice:write-top-header port)

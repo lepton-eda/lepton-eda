@@ -218,7 +218,7 @@
      (display "Ranger2 or other windows based layout tools\n")
      (display "---------------------------------\n\n")
 
-      (let ((port (open-output-file output-filename))
+      (let ((port (gnetlist:output-port output-filename))
             (all-nets (gnetlist:get-all-unique-nets "dummy"))
             )
 

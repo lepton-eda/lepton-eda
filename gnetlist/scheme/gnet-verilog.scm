@@ -652,7 +652,7 @@
 ;;;
 (define verilog
   (lambda (output-filename)
-    (let ((port (open-output-file output-filename)))
+    (let ((port (gnetlist:output-port output-filename)))
       (begin
         (verilog:get-nets-once!)
         (verilog:write-top-header port)

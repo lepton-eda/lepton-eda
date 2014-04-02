@@ -916,9 +916,7 @@
 ;;;
 (define drc2
    (lambda (output-filename)
-      (let ((port (if (string=? "-" output-filename)
-                      (current-output-port)
-                      (open-output-file output-filename))))
+      (let ((port (gnetlist:output-port output-filename)))
          (begin
 
             ;; Perform DRC-matrix sanity checks.

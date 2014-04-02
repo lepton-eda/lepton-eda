@@ -170,7 +170,7 @@
 ;;;
 (define bae
    (lambda (output-filename)
-      (let ((port (open-output-file output-filename)))
+      (let ((port (gnetlist:output-port output-filename)))
          (begin
 ;;;         (gnetlist:set-netlist-mode "gEDA") No longer needed
             (bae:write-top-header port)

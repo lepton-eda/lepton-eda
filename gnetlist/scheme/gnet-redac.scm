@@ -54,9 +54,7 @@
 
 (define redac
    (lambda (output-filename)
-      (let ((port (if (string=? "-" output-filename)
-                      (current-output-port)
-                      (open-output-file output-filename))))
+      (let ((port (gnetlist:output-port output-filename)))
          (display ".PCB\r\n" port)
          (display ".REM CREATED BY gEDA GNETLIST\r\n" port)
          (display ".CON\r\n" port)

@@ -100,7 +100,7 @@
 ;;
 (define liquidpcb
    (lambda (output-filename)
-      (let ((port (open-output-file output-filename)))
+      (let ((port (gnetlist:output-port output-filename)))
          (begin
             (liquidpcb:write-top-header port)
             (liquidpcb:start-netlist port)

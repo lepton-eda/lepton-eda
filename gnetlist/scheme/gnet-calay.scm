@@ -67,7 +67,7 @@
 
 
 (define (calay output-filename)
-  (let ((port (open-output-file output-filename)))
+  (let ((port (gnetlist:output-port output-filename)))
     (gnetlist:build-net-aliases calay:translate all-unique-nets)
     (calay:write-net (gnetlist:get-all-unique-nets "dummy") port)
     (close-output-port port)))

@@ -52,9 +52,7 @@
     (let* ((options (backend-getopt
                      (gnetlist:get-backend-arguments)
                      '((attrib_file (value #t)) (attribs (value #t)))))
-           (port (if (string=? "-" output-filename)
-                     (current-output-port)
-                     (open-output-file output-filename)))
+           (port (gnetlist:output-port output-filename))
            (attriblist (bom2:parseconfig (bom2:open-input-file options) options)))
       (and attriblist
            (begin

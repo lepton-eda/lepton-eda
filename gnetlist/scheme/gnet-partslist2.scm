@@ -35,7 +35,7 @@
 
 (define partslist2
   (lambda (output-filename)
-    (let ((port (open-output-file output-filename))
+    (let ((port (gnetlist:output-port output-filename))
           (parts-table (marge-sort-with-multikey (get-parts-table packages) '(1 2 3 0))))
       (partslist2:write-top-header port)
       (partslist2:write-partslist parts-table port)

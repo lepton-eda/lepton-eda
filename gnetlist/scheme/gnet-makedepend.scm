@@ -146,7 +146,7 @@
 
 
 (define (makedepend output-filename)
-  (let* ((port (open-output-file output-filename))
+  (let* ((port (gnetlist:output-port output-filename))
          (source-attrs (makedepend:get-all-attr-values "source" packages))
          (file-attrs (makedepend:get-all-attr-values "file" packages))
          (input-files (gnetlist:get-input-files))

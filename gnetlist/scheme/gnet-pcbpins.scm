@@ -94,7 +94,7 @@
 ;; The top level netlister for pcbpins
 (define pcbpins
   (lambda (output-filename)
-    (let ((port (open-output-file output-filename)))
+    (let ((port (gnetlist:output-port output-filename)))
 
       ;; write the header
       (display "# Pin name action command file\n" port)
