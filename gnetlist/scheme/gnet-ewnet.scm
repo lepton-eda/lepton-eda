@@ -19,9 +19,9 @@
 ;;; MA 02111-1301 USA.
 
 
-;;; Notes about Ultiboard (.ewnet) netlists.  "ew" 
+;;; Notes about Ultiboard (.ewnet) netlists.  "ew"
 ;;; stands for Electronic Workbench.
-;;;  
+;;;
 
 ;;; FIXME -- the biggest problem with this backend is that I
 ;;; had no documentation at all on the file format.  I just
@@ -34,7 +34,7 @@
 ;; This procedure takes a net name as determined by gnetlist and
 ;; modifies it to be a valid ewnet net name.
 ;;
-;; FIXME -- need to determine what restrictions there may be on 
+;; FIXME -- need to determine what restrictions there may be on
 ;; ewnet net names.  For example:
 ;;   - allowed characters
 ;;   - case sensitive or not?
@@ -58,21 +58,21 @@
 ;; This procedure takes a refdes as determined by gnetlist and
 ;; modifies it to be a valid ewnet refdes.
 ;;
-;; FIXME -- need to determine what restrictions there may be on 
+;; FIXME -- need to determine what restrictions there may be on
 ;; ewnet instance names (refdes).  For example:
 ;;   - allowed characters
 ;;   - case sensitive or not?
 ;;   - max length
 ;;
 ;; See the futurenet2 backend for examples of some of what may go
-;; into a instance name aliasing function.  For now this function 
+;; into a instance name aliasing function.  For now this function
 ;; just returns the input string and acts as a placeholder in
 ;; case we find that instance name mapping is required.
 (define ewnet:map-refdes
   (lambda (refdes)
     (let ((refdes-alias refdes)
           )
-      
+
       refdes-alias
       )
     )
@@ -82,116 +82,116 @@
 (define ewnet:component_pins
   (lambda (port package pins)
     (if (and (not (null? package)) (not (null? pins)))
-	(begin
-	  (let (
-		(pin (car pins)))
+        (begin
+          (let (
+                (pin (car pins)))
 
-	    ;; pin number
-	    (display "\t\t(pin \"" port)
-	    (display 
-	     (gnetlist:get-attribute-by-pinnumber package pin "pinnumber")
-	     port)
-	    (display "\"\n" port)
+            ;; pin number
+            (display "\t\t(pin \"" port)
+            (display
+             (gnetlist:get-attribute-by-pinnumber package pin "pinnumber")
+             port)
+            (display "\"\n" port)
 
-	    ;; net
-	    (display "\t\t\t(net \"" port)
-	    (display 
-	     (gnetlist:alias-net (car (gnetlist:get-nets package pin)))
-	     port)
-	    (display "\")\n" port)
+            ;; net
+            (display "\t\t\t(net \"" port)
+            (display
+             (gnetlist:alias-net (car (gnetlist:get-nets package pin)))
+             port)
+            (display "\")\n" port)
 
-	    ;; pin type.  I have seen "PWR", "GND", "IN", "OUT", "BIDIR"
-	    (display "\t\t\t(pintype \"" port)
-	    ;; FIXME -- need to translate between geda and the allowed
-	    ;; ewnet types here
-	    (display "BIDIR" port)
-	    (display "\")\n" port)
-	    
-	    (display "\t\t\t(gategroup \"\")\n" port)
-	    (display "\t\t\t(pingroup \"\")\n" port)
+            ;; pin type.  I have seen "PWR", "GND", "IN", "OUT", "BIDIR"
+            (display "\t\t\t(pintype \"" port)
+            ;; FIXME -- need to translate between geda and the allowed
+            ;; ewnet types here
+            (display "BIDIR" port)
+            (display "\")\n" port)
 
-	    ;; label (pin name)
-	    (display "\t\t\t(label \"" port)
-	    (display pin port)
-	    (display "\")\n" port)
+            (display "\t\t\t(gategroup \"\")\n" port)
+            (display "\t\t\t(pingroup \"\")\n" port)
 
-	    ;; gate
-	    (display "\t\t\t(gate \"\")\n" port)
-	    
+            ;; label (pin name)
+            (display "\t\t\t(label \"" port)
+            (display pin port)
+            (display "\")\n" port)
 
-	    (display "\t\t)\n" port)
-	    )
-	  (ewnet:component_pins port package (cdr pins))
-	  )
-	)
+            ;; gate
+            (display "\t\t\t(gate \"\")\n" port)
+
+
+            (display "\t\t)\n" port)
+            )
+          (ewnet:component_pins port package (cdr pins))
+          )
+        )
     )
   )
 
-	    
+
 ;; write out the components
 (define ewnet:components
    (lambda (port packages)
       (if (not (null? packages))
          (begin
             (let (
-		  (device (gnetlist:get-package-attribute (car packages) 
+                  (device (gnetlist:get-package-attribute (car packages)
                                                            "device"))
-		  (pattern (gnetlist:get-package-attribute (car packages) 
+                  (pattern (gnetlist:get-package-attribute (car packages)
                                                            "pattern"))
-		  (value (gnetlist:get-package-attribute (car packages) 
+                  (value (gnetlist:get-package-attribute (car packages)
                                                            "value"))
-	    ;; The above pattern should stay as "pattern" and not "footprint"
+            ;; The above pattern should stay as "pattern" and not "footprint"
                   (package (car packages)))
 
-	      ;; start the instance
-	      (display "\t(instance \"" port)
+              ;; start the instance
+              (display "\t(instance \"" port)
 
-	      ;; write the footprint
-	      (display (gnetlist:get-package-attribute package
-						       "footprint")
-		       port)
-	      (display "\" \"" port)
+              ;; write the footprint
+              (display (gnetlist:get-package-attribute package
+                                                       "footprint")
+                       port)
+              (display "\" \"" port)
 
-	      ;; write the reference designator
-	      (display (gnetlist:alias-refdes package) port)
-	      (display "\"\n" port)
-	      
+              ;; write the reference designator
+              (display (gnetlist:alias-refdes package) port)
+              (display "\"\n" port)
 
-	      ;; device 
-	      (display "\t\t(device \"" port)
-	      (display device port)
-	      (display "\")\n" port)
 
-	      ;; If there is a "value" attribute, output that.
-	      ;; Otherwise output the "device" attribute (the symbol name).
-	      (if (string=? value "unknown") 
-		  (set! value device )
-		  )
+              ;; device
+              (display "\t\t(device \"" port)
+              (display device port)
+              (display "\")\n" port)
 
-	      ;; value 
-	      (display "\t\t(value \"" port)
-	      (display value port)
-	      (display "\")\n" port)
-	      
-	      (display "\t\t(gateswap \"0\")\n" port)
-	      (display "\t\t(pinswap \"0\")\n" port)
-	      (display "\t\t(component_space \"0.00000000e+000\")\n" port)
-	      (display "\t\t(component_group \"\")\n" port)
-	      (display "\t\t(settings_locked \"0\")\n" port)
-	      (display "\t\t(comp_variants \"Default1;\")\n" port)
-	      (display "\t\t(comp_variant_independent \"0\")\n" port)
+              ;; If there is a "value" attribute, output that.
+              ;; Otherwise output the "device" attribute (the symbol name).
+              (if (string=? value "unknown")
+                  (set! value device )
+                  )
 
-	      ;; write the pins
-	      (ewnet:component_pins port package
-					 (gnetlist:get-pins package))
+              ;; value
+              (display "\t\t(value \"" port)
+              (display value port)
+              (display "\")\n" port)
 
-	      ;; close the part
-	      (display "\t)\n" port)
-	      
-	      )
+              (display "\t\t(gateswap \"0\")\n" port)
+              (display "\t\t(pinswap \"0\")\n" port)
+              (display "\t\t(component_space \"0.00000000e+000\")\n" port)
+              (display "\t\t(component_group \"\")\n" port)
+              (display "\t\t(settings_locked \"0\")\n" port)
+              (display "\t\t(comp_variants \"Default1;\")\n" port)
+              (display "\t\t(comp_variant_independent \"0\")\n" port)
+
+              ;; write the pins
+              (ewnet:component_pins port package
+                                         (gnetlist:get-pins package))
+
+              ;; close the part
+              (display "\t)\n" port)
+
+              )
             (ewnet:components port (cdr packages) )
-	    )
-	 )
+            )
+         )
       )
    )
 
@@ -200,30 +200,30 @@
    (lambda (port netnames)
       (if (not (null? netnames))
          (let (
-	       (netname (car netnames))
-	       (alias (gnetlist:alias-net (car netnames)))
-	       )
-	   (display "\t( net \"" port)
-	   (display alias port)
-	   (display "\"\n" port)
+               (netname (car netnames))
+               (alias (gnetlist:alias-net (car netnames)))
+               )
+           (display "\t( net \"" port)
+           (display alias port)
+           (display "\"\n" port)
 
-	   (display "\t\t(trackwidth \"-1.00000000e+000\")\n" port)
-	   (display "\t\t(trackwidth_max \"-1.00000000e+000\")\n" port)
-	   (display "\t\t(trackwidth_min \"-1.00000000e+000\")\n" port)
-	   (display "\t\t(tracklength_max \"-1.00000000e+000\")\n" port)
-	   (display "\t\t(tracklength_min \"-1.00000000e+000\")\n" port)
-	   (display "\t\t(clearance_to_trace \"-1.00000000e+000\")\n" port)
-	   (display "\t\t(clearance_to_pad \"-1.00000000e+000\")\n" port)
-	   (display "\t\t(clearance_to_via \"-1.00000000e+000\")\n" port)
-	   (display "\t\t(clearance_to_copper \"-1.00000000e+000\")\n" port)
-	   (display "\t\t(routing_layer \"\")\n" port)
-	   (display "\t\t(settings_locked \"0\")\n" port)
-	   (display "\t\t(net_group \"\")\n" port)
-	   (display "\t)\n" port)
+           (display "\t\t(trackwidth \"-1.00000000e+000\")\n" port)
+           (display "\t\t(trackwidth_max \"-1.00000000e+000\")\n" port)
+           (display "\t\t(trackwidth_min \"-1.00000000e+000\")\n" port)
+           (display "\t\t(tracklength_max \"-1.00000000e+000\")\n" port)
+           (display "\t\t(tracklength_min \"-1.00000000e+000\")\n" port)
+           (display "\t\t(clearance_to_trace \"-1.00000000e+000\")\n" port)
+           (display "\t\t(clearance_to_pad \"-1.00000000e+000\")\n" port)
+           (display "\t\t(clearance_to_via \"-1.00000000e+000\")\n" port)
+           (display "\t\t(clearance_to_copper \"-1.00000000e+000\")\n" port)
+           (display "\t\t(routing_layer \"\")\n" port)
+           (display "\t\t(settings_locked \"0\")\n" port)
+           (display "\t\t(net_group \"\")\n" port)
+           (display "\t)\n" port)
 
-	   (ewnet:write-net port (cdr netnames))
-	   )
-	 )
+           (ewnet:write-net port (cdr netnames))
+           )
+         )
       )
    )
 
@@ -250,7 +250,7 @@
 ;; stackup in a way where gnetlist can find it?
 (define ewnet:layers
   (lambda (port)
-    
+
     (display "\t(layer \"Copper Bottom\"\n" port)
     (display "\t\t(routable \"1\")\n" port)
     (display "\t\t(type \"Signal\")\n" port)
@@ -263,7 +263,7 @@
 )
 
 ;; The top level netlister for ewnet
-(define ewnet 
+(define ewnet
   (lambda (filename)
     (newline)
     (display "---------------------------------\n")
@@ -275,40 +275,37 @@
     (display "through unix2dos before importing to\n")
     (display "windows based layout tools\n")
     (display "---------------------------------\n\n")
-    
+
     (let ((port (open-output-file filename))
-	  (all-nets (gnetlist:get-all-unique-nets "dummy"))
-	  )
-      
+          (all-nets (gnetlist:get-all-unique-nets "dummy"))
+          )
+
       ;; initialize the net-name aliasing
       (gnetlist:build-net-aliases ewnet:map-net-names all-unique-nets)
-      
+
       ;; initialize the refdes aliasing
       (gnetlist:build-refdes-aliases ewnet:map-refdes packages)
-      
+
       ;; write the header
       (ewnet:write-header port)
-      
+
       ;; write the nets
       (display "(nets\n" port)
       (ewnet:write-net port all-nets)
       (display ")\n" port)
-      
+
       ;; write the components
       (display "(components\n" port)
       (ewnet:components port packages)
       (display ")\n" port)
-      
+
       ;; write the board layers
       (display "(layers\n" port)
       (ewnet:layers port)
       (display ")\n" port)
-      
+
       ;; close netlist
       (close-output-port port)
       )
     )
   )
-
-
-

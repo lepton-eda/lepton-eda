@@ -35,9 +35,9 @@
 ;;
 (define bae:write-top-header
    (lambda (p)
-      (display "LAYOUT board;" p) 
+      (display "LAYOUT board;" p)
       (newline p)))
-      
+
 ;;
 ;; header for components section
 ;;
@@ -45,7 +45,7 @@
    (lambda (p)
       (display "PARTS" p)
       (newline p)))
-;; no header for components   
+;; no header for components
 
 ;;
 ;; footer for components section
@@ -83,32 +83,32 @@
    (lambda (p)
       (display "END." p)
       (newline p)))
-	
+
 ;;
-;; Top level component writing 
+;; Top level component writing
 ;;
 (define bae:components
    (lambda (port ls)
       (if (not (null? ls))
          (let ((package (car ls)))
             (begin
-	       (display "    " port)
+               (display "    " port)
                (display package port)
-	       (display " : " port)
-	       (display (gnetlist:get-package-attribute package  "footprint") port)
-	       (display ";" port)
-	       (newline port)
+               (display " : " port)
+               (display (gnetlist:get-package-attribute package  "footprint") port)
+               (display ";" port)
+               (newline port)
                (bae:components port (cdr ls)))))))
 
 ;;
-;; renamed nets writing 
+;; renamed nets writing
 ;;
 (define bae:renamed-nets
    (lambda (port ls)
       (if (not (null? ls))
          (let ((renamed-pair (car ls)))
             (begin
-;;;	       (display renamed-pair) (newline)
+;;;            (display renamed-pair) (newline)
 ;;;            (display (car renamed-pair) port)
 ;;;            (display " -> " port)
 ;;;            (display (car (cdr renamed-pair)) port)
@@ -122,24 +122,24 @@
 (define bae:display-connections
    (lambda (nets port)
       (if (not (null? nets))
-  	 (begin
-	    (let ((package (car (car nets))))
-	       (display package port)
-	       (write-char #\. port) 
-	       (display (car (cdr (car nets))) port))
-	    (if (not (null? (cdr nets)))
-	       (begin
-	          (display #\= port)))
-	    (bae:display-connections (cdr nets) port)))))
+         (begin
+            (let ((package (car (car nets))))
+               (display package port)
+               (write-char #\. port)
+               (display (car (cdr (car nets))) port))
+            (if (not (null? (cdr nets)))
+               (begin
+                  (display #\= port)))
+            (bae:display-connections (cdr nets) port)))))
 
 ;;
-;; Display all nets 
+;; Display all nets
 ;;
 (define bae:display-name-nets
    (lambda (port nets)
       (begin
          (bae:display-connections nets port)
-         (write-char #\; port)))) 
+         (write-char #\; port))))
 
 ;;
 ;; Write netname : uref pin, uref pin, ...
@@ -148,14 +148,14 @@
    (lambda (port netnames)
       (if (not (null? netnames))
          (let ((netname (car netnames)))
-	    (begin
-	       (display "    " port)
-	       (display "/'" port)
-	       (display netname port)
-	       (display "'/ " port)
+            (begin
+               (display "    " port)
+               (display "/'" port)
+               (display netname port)
+               (display "'/ " port)
                (bae:display-name-nets port (gnetlist:get-all-connections netname))
-	       (newline port)
-	       (bae:write-net port (cdr netnames))))))) 
+               (newline port)
+               (bae:write-net port (cdr netnames)))))))
 
 ;;
 ;; Write the net part of the gEDA format
@@ -168,7 +168,7 @@
 ;;; Highest level function
 ;;; Write my special testing netlist format
 ;;;
-(define bae 
+(define bae
    (lambda (output-filename)
       (let ((port (open-output-file output-filename)))
          (begin
@@ -186,6 +186,6 @@
          (close-output-port port))))
 
 ;;
-;; gEDA's native test netlist format specific functions ends 
+;; gEDA's native test netlist format specific functions ends
 ;;
 ;; --------------------------------------------------------------------------

@@ -26,37 +26,37 @@
 (define redac:display-connections
    (lambda (nets port k)
       (if (not (null? nets))
-	 (let ((item (string-append (car (car nets)) " " (car (cdr (car nets))))))
-	    (display item port)
-	    (if (not (null? (cdr nets)))
-	       (begin
-	       (if (> k 0)
-	          (begin
-	    	    (display " " port)
-		    (redac:display-connections (cdr nets) port (- k 1)))
-	          (begin
-	            (display (string-append "\r\n"  item " ") port)
-		    (redac:display-connections (cdr nets) port (+ k 6))))))))))
+         (let ((item (string-append (car (car nets)) " " (car (cdr (car nets))))))
+            (display item port)
+            (if (not (null? (cdr nets)))
+               (begin
+               (if (> k 0)
+                  (begin
+                    (display " " port)
+                    (redac:display-connections (cdr nets) port (- k 1)))
+                  (begin
+                    (display (string-append "\r\n"  item " ") port)
+                    (redac:display-connections (cdr nets) port (+ k 6))))))))))
 
 
 (define redac:write-net
    (lambda (port netnames)
       (if (not (null? netnames))
          (let ((netname (car netnames)))
-	    (display ".REM " port)
-	    (display netname port)
-	    (display "\r\n" port)
-            (redac:display-connections 
-		       (gnetlist:get-all-connections netname) port 7)
-	    (display "\r\n" port)
-	    (redac:write-net port (cdr netnames))
-	    ))))
+            (display ".REM " port)
+            (display netname port)
+            (display "\r\n" port)
+            (redac:display-connections
+                       (gnetlist:get-all-connections netname) port 7)
+            (display "\r\n" port)
+            (redac:write-net port (cdr netnames))
+            ))))
 
-(define redac 
+(define redac
    (lambda (filename)
       (let ((port (if (string=? "-" filename)
-		      (current-output-port)
-		      (open-output-file filename))))
+                      (current-output-port)
+                      (open-output-file filename))))
          (display ".PCB\r\n" port)
          (display ".REM CREATED BY gEDA GNETLIST\r\n" port)
          (display ".CON\r\n" port)
@@ -64,5 +64,3 @@
          (redac:write-net port (gnetlist:get-all-unique-nets "dummy"))
          (display ".EOD\r\n" port)
          (close-output-port port))))
-
-

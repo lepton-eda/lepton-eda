@@ -57,17 +57,17 @@
    (lambda (port packages)
       (if (not (null? packages))
          (begin
-            (let ((pattern (gnetlist:get-package-attribute (car packages) 
+            (let ((pattern (gnetlist:get-package-attribute (car packages)
                                                            "pattern"))
-	    ;; The above pattern should stay as "pattern" and not "footprint"
+            ;; The above pattern should stay as "pattern" and not "footprint"
                   (package (car packages)))
                (if (not (string=? pattern "unknown"))
                   (display pattern port))
 
-	       ;; print out the refdes with aliasing
+               ;; print out the refdes with aliasing
                (display (gnetlist:alias-refdes package) port)
 
-	       (write-char #\tab port) 
+               (write-char #\tab port)
                (display (gnetlist:get-package-attribute package "footprint") port)
                (display "\r\n" port))
             (pads:components port (cdr packages))))))
@@ -97,38 +97,37 @@
    (lambda (port netnames)
       (if (not (null? netnames))
          (let ((netname (car netnames)))
-	    (display "*SIGNAL* " port)
-	    (display (gnetlist:alias-net netname) port)
-	    (display "\r\n" port)
-            (display (gnetlist:wrap 
-		      (pads:display-connections 
-		       (gnetlist:get-all-connections netname)) 
-		      78
-		      "") 
-		     port)
-	    (pads:write-net port (cdr netnames))))))
+            (display "*SIGNAL* " port)
+            (display (gnetlist:alias-net netname) port)
+            (display "\r\n" port)
+            (display (gnetlist:wrap
+                      (pads:display-connections
+                       (gnetlist:get-all-connections netname))
+                      78
+                      "")
+                     port)
+            (pads:write-net port (cdr netnames))))))
 
-(define pads 
+(define pads
    (lambda (filename)
       (let ((port (open-output-file filename)))
-	;; initialize the net-name aliasing
-	(gnetlist:build-net-aliases pads:map-net-names all-unique-nets)
-	
-	;; initialize the refdes aliasing
-	(gnetlist:build-refdes-aliases pads:map-refdes packages)
+        ;; initialize the net-name aliasing
+        (gnetlist:build-net-aliases pads:map-net-names all-unique-nets)
 
-	;; print out the header
-	(display "!PADS-POWERPCB-V3.0-MILS!\r\n" port)
-	(display "\r\n*PART*\r\n" port)
-	
-	;; print out the parts
-	(pads:components port packages)
-	
-	;; print out the net information
-	(display "\r\n*NET*\r\n" port)
-	(pads:write-net port (gnetlist:get-all-unique-nets "dummy"))
-	
-	;; print out the footer
-	(display "\r\n*END*\r\n" port)
-	(close-output-port port))))
+        ;; initialize the refdes aliasing
+        (gnetlist:build-refdes-aliases pads:map-refdes packages)
 
+        ;; print out the header
+        (display "!PADS-POWERPCB-V3.0-MILS!\r\n" port)
+        (display "\r\n*PART*\r\n" port)
+
+        ;; print out the parts
+        (pads:components port packages)
+
+        ;; print out the net information
+        (display "\r\n*NET*\r\n" port)
+        (pads:write-net port (gnetlist:get-all-unique-nets "dummy"))
+
+        ;; print out the footer
+        (display "\r\n*END*\r\n" port)
+        (close-output-port port))))

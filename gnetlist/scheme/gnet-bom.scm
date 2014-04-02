@@ -38,8 +38,8 @@
   (lambda (options)
     (let ((filename (backend-option-ref options 'attrib_file "attribs")))
       (if (file-exists? filename)
-	  (open-input-file filename)
-	  (if (backend-option-ref options 'attribs) #f
+          (open-input-file filename)
+          (if (backend-option-ref options 'attribs) #f
               (begin
                 (display (string-append "ERROR: Attribute file '" filename "' not found. You must do one of the following:\n"))
                 (display "         - Create an 'attribs' file\n")
@@ -64,11 +64,11 @@
 (define bom:printlist
   (lambda (ls port)
     (if (null? ls)
-	(newline port)
-	(begin
-	  (display (car ls) port)
-	  (write-char #\tab port)
-	  (bom:printlist (cdr ls) port)))))
+        (newline port)
+        (begin
+          (display (car ls) port)
+          (write-char #\tab port)
+          (bom:printlist (cdr ls) port)))))
 
 ; Parses attrib file or argument. Returns a list of read attributes.
 (define bom:parseconfig
@@ -87,23 +87,22 @@
 (define bom:components
   (lambda (port ls attriblist)
     (if (not (null? ls))
-	(let ((package (car ls)))
+        (let ((package (car ls)))
           (if (not (string=? "1" (gnetlist:get-package-attribute package "nobom")))
               (begin
                 (display package port)
                 (write-char #\tab port)
                 (bom:printlist (bom:find-attribs package attriblist) port)))
-	  (bom:components port (cdr ls) attriblist)))))
+          (bom:components port (cdr ls) attriblist)))))
 
 (define bom:find-attribs
   (lambda (package attriblist)
     (if (null? attriblist)
-	'()
-	(cons (gnetlist:get-package-attribute package (car attriblist))
-	      (bom:find-attribs package (cdr attriblist))))))
+        '()
+        (cons (gnetlist:get-package-attribute package (car attriblist))
+              (bom:find-attribs package (cdr attriblist))))))
 
 ;;
 ;; Bill of Material backend written by Matt Ettus ends here
 ;;
 ;; --------------------------------------------------------------------------
-

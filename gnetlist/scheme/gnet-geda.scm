@@ -20,7 +20,7 @@
 
 ;; --------------------------------------------------------------------------
 ;;
-;; gEDA's native test netlist format specific functions go here 
+;; gEDA's native test netlist format specific functions go here
 ;;
 
 ;;
@@ -28,7 +28,7 @@
 ;;
 (define geda:write-top-header
    (lambda (p)
-      (display "START header" p) 
+      (display "START header" p)
       (newline p)
       (newline p)
       (display "gEDA's netlist format" p)
@@ -96,9 +96,9 @@
       (display "END nets" p)
       (newline p)
       (newline p)))
-	
+
 ;;
-;; Top level component writing 
+;; Top level component writing
 ;;
 (define geda:components
    (lambda (port ls)
@@ -113,16 +113,16 @@
                (geda:components port (cdr ls)))))))
 
 ;;
-;; renamed nets writing 
+;; renamed nets writing
 ;;
 (define geda:renamed-nets
    (lambda (port ls)
       (if (not (null? ls))
          (let ((renamed-pair (car ls)))
             (begin
-;;;	       (display renamed-pair) (newline)
+;;;            (display renamed-pair) (newline)
                (display (car renamed-pair) port)
-	       (display " -> " port)
+               (display " -> " port)
                (display (car (cdr renamed-pair)) port)
                (newline port)
                (geda:renamed-nets port (cdr ls)))))))
@@ -133,24 +133,24 @@
 (define geda:display-connections
    (lambda (nets port)
       (if (not (null? nets))
-	 (begin
-	    (display (car (car nets)) port)
-	    (write-char #\space port) 
-	    (display (car (cdr (car nets))) port)
-	    (if (not (null? (cdr nets)))
+         (begin
+            (display (car (car nets)) port)
+            (write-char #\space port)
+            (display (car (cdr (car nets))) port)
+            (if (not (null? (cdr nets)))
                (begin
-	   	  (write-char #\, port) 
-	          (write-char #\space port)))
-	       (geda:display-connections (cdr nets) port)))))
+                  (write-char #\, port)
+                  (write-char #\space port)))
+               (geda:display-connections (cdr nets) port)))))
 
 ;;
-;; Display all nets 
+;; Display all nets
 ;;
 (define geda:display-name-nets
    (lambda (port nets)
       (begin
          (geda:display-connections nets port)
-         (write-char #\space port) 
+         (write-char #\space port)
          (newline port))))
 
 ;;
@@ -160,11 +160,11 @@
    (lambda (port netnames)
       (if (not (null? netnames))
          (let ((netname (car netnames)))
-	    (begin
-	       (display netname port)
-	       (display " : " port)
+            (begin
+               (display netname port)
+               (display " : " port)
                (geda:display-name-nets port (gnetlist:get-all-connections netname))
-	       (geda:write-net port (cdr netnames))))))) 
+               (geda:write-net port (cdr netnames)))))))
 
 ;;
 ;; Write the net part of the gEDA format
@@ -177,7 +177,7 @@
 ;;; Highest level function
 ;;; Write my special testing netlist format
 ;;;
-(define geda 
+(define geda
    (lambda (output-filename)
       (let ((port (open-output-file output-filename)))
          (begin
@@ -195,7 +195,6 @@
          (close-output-port port))))
 
 ;;
-;; gEDA's native test netlist format specific functions ends 
+;; gEDA's native test netlist format specific functions ends
 ;;
 ;; --------------------------------------------------------------------------
-

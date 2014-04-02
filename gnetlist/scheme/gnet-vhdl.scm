@@ -29,7 +29,7 @@
 ;;; the VHDLport clause.
 
 ;;; THHE
-;;; 
+;;;
 ;;; Since VHDL know about port directions, pins need a additional attribute.
 ;;; The code assumes the attribute "type" (IN, OUT, INOUT) on each pin of a symbol.
 ;;; In addition you can add the attribute "width" for a very simple definition of
@@ -40,8 +40,8 @@
   (lambda ()
     ;; construct list
     (list (vhdl:get-matching-urefs "device" "IPAD"  packages)
-	  (vhdl:get-matching-urefs "device" "OPAD"  packages)
-	  (vhdl:get-matching-urefs "device" "IOPAD" packages))))
+          (vhdl:get-matching-urefs "device" "OPAD"  packages)
+          (vhdl:get-matching-urefs "device" "IOPAD" packages))))
 
 ;;; Get matching urefs
 (define vhdl:get-matching-urefs
@@ -53,23 +53,23 @@
             (cons (car package-list) (gnetlist:get-package-attribute (car package-list) "width"))
             (vhdl:get-matching-urefs attribute value (cdr package-list))))
           (else (vhdl:get-matching-urefs attribute value (cdr package-list))))
-    
+
   )
 )
 
 ;;; THHE did not need it anymore
 ;
-;(define vhdl:filter 
+;(define vhdl:filter
 ;  (lambda (attribute value package-list)
 ;    (cond ((null? package-list) '())
-;	  ((string=? (gnetlist:get-package-attribute (car package-list) 
-;						      attribute) value)
-;	   (cons 
-;	    (map (lambda (pin)
-;		   (car (gnetlist:get-nets (car package-list) pin)))
-;		 (pins (car package-list)))
-;	    (vhdl:filter attribute value (cdr package-list))))
-;	  (else (vhdl:filter attribute value (cdr package-list)))))
+;         ((string=? (gnetlist:get-package-attribute (car package-list)
+;                                                     attribute) value)
+;          (cons
+;           (map (lambda (pin)
+;                  (car (gnetlist:get-nets (car package-list) pin)))
+;                (pins (car package-list)))
+;           (vhdl:filter attribute value (cdr package-list))))
+;         (else (vhdl:filter attribute value (cdr package-list)))))
 ;)
 
 ;;; Port Clause
@@ -136,27 +136,27 @@
     (if (not (null? port))
         (begin
           (if (string=? (cadddr port) "unknown")
-	    (begin
-	      (display (car port) p)
-	      (display " : " p)
-	      (display (cadr port) p)
-	      (display " " p)
-	      (display (caddr port) p)
+            (begin
+              (display (car port) p)
+              (display " : " p)
+              (display (cadr port) p)
+              (display " " p)
+              (display (caddr port) p)
             )
           )
           (if (not (string=? (cadddr port) "unknown"))
-	    (begin
-	      (display (car port) p)
-	      (display " : " p)
-	      (display (cadr port) p)
-	      (display " " p)
-	      (display (caddr port) p)
+            (begin
+              (display (car port) p)
+              (display " : " p)
+              (display (cadr port) p)
+              (display " " p)
+              (display (caddr port) p)
               (display "_Vector(" p)
               (display (- (string->number(cadddr port)) 1) p)
-              (display " downto 0)" p) 
+              (display " downto 0)" p)
             )
           )
-	)
+        )
     )
   )
 )
@@ -167,23 +167,23 @@
 (define vhdl:write-port-list
   (lambda (list p)
     (if (not (null? list))
-	(begin
-	  (display "    PORT (" p)
-	  (newline p)
-	  (display "        " p)
-	  (vhdl:write-port (car list) p)
-	  (for-each (lambda (pin)
-		      (begin
-			(display ";" p)
-			(newline p)
-			(display "        " p)
-			(vhdl:write-port pin p)
-		      )
-		    )
-		    (cdr list))
-	  (display ");" p)
-	  (newline p)
-	)
+        (begin
+          (display "    PORT (" p)
+          (newline p)
+          (display "        " p)
+          (vhdl:write-port (car list) p)
+          (for-each (lambda (pin)
+                      (begin
+                        (display ";" p)
+                        (newline p)
+                        (display "        " p)
+                        (vhdl:write-port pin p)
+                      )
+                    )
+                    (cdr list))
+          (display ");" p)
+          (newline p)
+        )
     )
   )
 )
@@ -199,18 +199,18 @@
 (define vhdl:write-port-clause
   (lambda (port-list p)
     (let ((in (car port-list))
-	  (out (cadr port-list))
-	  (inout (caddr port-list)))
+          (out (cadr port-list))
+          (inout (caddr port-list)))
       (vhdl:write-port-list
         (append
-	  (map (lambda (pin)
-		      (list (car pin) "in" "Std_Logic" (cdr pin))) in)
-	  (map (lambda (pin)
-		      (list (car pin) "out" "Std_Logic" (cdr pin))) out)
-	  (map (lambda (pin)
-		      (list (car pin) "inout" "Std_Logic" (cdr pin))) inout)
-	)
-	p
+          (map (lambda (pin)
+                      (list (car pin) "in" "Std_Logic" (cdr pin))) in)
+          (map (lambda (pin)
+                      (list (car pin) "out" "Std_Logic" (cdr pin))) out)
+          (map (lambda (pin)
+                      (list (car pin) "inout" "Std_Logic" (cdr pin))) inout)
+        )
+        p
       )
     )
   )
@@ -329,32 +329,32 @@
         (lambda (device)
           (begin
             ; Hmm... I just grabbed this if stuff... do I need it?
-	    (if (not (memv (string->symbol device) ; ignore specials
-	  	           (map string->symbol (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
-		(begin
-		     (display "    COMPONENT " p)
-		     (display device p)
-		     ;(display " IS" p)
-		     (newline p)
-		     ; Generic clause should be inserted here
+            (if (not (memv (string->symbol device) ; ignore specials
+                           (map string->symbol (list "IOPAD" "IPAD" "OPAD" "HIGH" "LOW"))))
+                (begin
+                     (display "    COMPONENT " p)
+                     (display device p)
+                     ;(display " IS" p)
+                     (newline p)
+                     ; Generic clause should be inserted here
                      ;;; <DEBUG>
                      ;(display (find-device packages device))
                      ;(display " : ")
                      ;(display device)
                      ;(display " : ")
-                     ;(display (vhdl:get-device-port-list 
+                     ;(display (vhdl:get-device-port-list
                      ;                    (find-device packages device)
                      ;         )
                      ;)
                      ;(newline)
                      ;;; </DEBUG>
-                     (vhdl:write-port-clause (vhdl:get-device-port-list 
-                                                (find-device packages device)) 
+                     (vhdl:write-port-clause (vhdl:get-device-port-list
+                                                (find-device packages device))
                                              p)
-		     (display "    END COMPONENT " p)
-		     (display ";" p)
-		     (newline p)
-		     (newline p)
+                     (display "    END COMPONENT " p)
+                     (display ";" p)
+                     (newline p)
+                     (newline p)
                 )
             )
           )
@@ -375,8 +375,8 @@
   (lambda (device)
     ;; construct list
     (list (vhdl:get-device-matching-pins device (gnetlist:get-pins device) "IN")
-	  (vhdl:get-device-matching-pins device (gnetlist:get-pins device) "OUT")
-	  (vhdl:get-device-matching-pins device (gnetlist:get-pins device) "INOUT")
+          (vhdl:get-device-matching-pins device (gnetlist:get-pins device) "OUT")
+          (vhdl:get-device-matching-pins device (gnetlist:get-pins device) "INOUT")
     )
   )
 )
@@ -388,13 +388,13 @@
 (define vhdl:get-device-matching-pins
   (lambda (device pin-list value)
     (cond ((null? pin-list) '())
-	  ((string=? (gnetlist:get-attribute-by-pinnumber device (car pin-list) "pintype" )
+          ((string=? (gnetlist:get-attribute-by-pinnumber device (car pin-list) "pintype" )
                      value)
-	   (cons 
-            (cons (car pin-list) (gnetlist:get-attribute-by-pinnumber device (car pin-list) "width"))  
-	    (vhdl:get-device-matching-pins device (cdr pin-list) value))
+           (cons
+            (cons (car pin-list) (gnetlist:get-attribute-by-pinnumber device (car pin-list) "width"))
+            (vhdl:get-device-matching-pins device (cdr pin-list) value))
            )
-	  (else (vhdl:get-device-matching-pins device (cdr pin-list) value))
+          (else (vhdl:get-device-matching-pins device (cdr pin-list) value))
     )
   )
 )
@@ -407,7 +407,7 @@
   (lambda (device-list)
       (cond ((null? device-list) '())
             ((not (contains? (cdr device-list) (car device-list)))
-             (append (vhdl:get-unique-devices (cdr device-list)) 
+             (append (vhdl:get-unique-devices (cdr device-list))
                      (list (car device-list))))
             (else (vhdl:get-unique-devices (cdr device-list)))
       )
@@ -445,12 +445,12 @@
     (begin
       (for-each
        (lambda (signal)
-	 (begin
-	   (display "    SIGNAL " p)
-	   (display signal p)
-	   (display " : Std_Logic;" p)
-	   (newline p)
-	 )
+         (begin
+           (display "    SIGNAL " p)
+           (display signal p)
+           (display " : Std_Logic;" p)
+           (newline p)
+         )
        )
        all-unique-nets)
     )
@@ -708,23 +708,23 @@
   (lambda (package p)
     (begin
       (let ((pin-list (gnetlist:get-pins-nets package)))
-	(if (not (null? pin-list))
-	    (begin
-	      (display "    PORT MAP (" p)
-	      (newline p)
-	      (display "        " p)
-	      (vhdl:write-association-element (car pin-list) p)
-	      (for-each (lambda (pin)
-			  (display "," p)
-			  (newline p)
-			  (display "        " p)
-			  (vhdl:write-association-element pin p))
-			(cdr pin-list))
-	      (display ")" p)
-	    )
-	)
+        (if (not (null? pin-list))
+            (begin
+              (display "    PORT MAP (" p)
+              (newline p)
+              (display "        " p)
+              (vhdl:write-association-element (car pin-list) p)
+              (for-each (lambda (pin)
+                          (display "," p)
+                          (newline p)
+                          (display "        " p)
+                          (vhdl:write-association-element pin p))
+                        (cdr pin-list))
+              (display ")" p)
+            )
+        )
       )
-			  
+
     )
   )
 )
@@ -778,8 +778,8 @@
       (display (car pin) p)
       (display " => " p)
       (if (strncmp? "unconnected_pin" (cdr pin) 15)
-	  (display "OPEN" p)
-	  (display (cdr pin) p)))))
+          (display "OPEN" p)
+          (display (cdr pin) p)))))
 
 ;;; Secondary unit
 ;;;
@@ -834,21 +834,21 @@
 (define vhdl
   (lambda (output-filename)
     (let ((port (open-output-file output-filename))
-	  (module-name (gnetlist:get-toplevel-attribute "module-name"))
-	  (port-list (vhdl:get-top-port-list)))
+          (module-name (gnetlist:get-toplevel-attribute "module-name"))
+          (port-list (vhdl:get-top-port-list)))
       (begin
 
-;; No longer needed... especially since VHDL isn't a valid mode. :-) 
-;;	(gnetlist:set-netlist-mode "VHDL")
-	(display "-- Structural VHDL generated by gnetlist" port)
-	(newline port)
-	; design_file := design_unit { design_unit }
-	; design_unit := context_clause library_unit
-	(vhdl:write-context-clause port)
-	; library_unit := primary_unit secondary_unit
-	(vhdl:write-primary-unit module-name port-list port)
+;; No longer needed... especially since VHDL isn't a valid mode. :-)
+;;      (gnetlist:set-netlist-mode "VHDL")
+        (display "-- Structural VHDL generated by gnetlist" port)
         (newline port)
-	(vhdl:write-secondary-unit module-name port)
+        ; design_file := design_unit { design_unit }
+        ; design_unit := context_clause library_unit
+        (vhdl:write-context-clause port)
+        ; library_unit := primary_unit secondary_unit
+        (vhdl:write-primary-unit module-name port-list port)
+        (newline port)
+        (vhdl:write-secondary-unit module-name port)
       )
       (close-output-port port)
     )
@@ -876,5 +876,3 @@
     (newline p)
   )
 )
-
-

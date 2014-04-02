@@ -38,8 +38,8 @@
   (lambda (options)
     (let ((filename (backend-option-ref options 'attrib_file "attribs")))
       (if (file-exists? filename)
-	  (open-input-file filename)
-	  (if (backend-option-ref options 'attribs) #f
+          (open-input-file filename)
+          (if (backend-option-ref options 'attribs) #f
               (begin
                 (display (string-append "ERROR: Attribute file '" filename "' not found. You must do one of the following:\n"))
                 (display "         - Create an 'attribs' file\n")
@@ -57,11 +57,11 @@
                      (open-output-file output-filename)))
            (attriblist (bom2:parseconfig (bom2:open-input-file options) options)))
       (and attriblist
-	   (begin
-	     (bom2:printlist (append (cons 'refdes attriblist) (list "qty")) port #\:)
-	     (newline port)
-	     (bom2:printbom port (bom2:components packages attriblist) 0)
-	     (close-output-port port))))))
+           (begin
+             (bom2:printlist (append (cons 'refdes attriblist) (list "qty")) port #\:)
+             (newline port)
+             (bom2:printbom port (bom2:components packages attriblist) 0)
+             (close-output-port port))))))
 
 (define bom2:printbom
   (lambda (port bomlist count)
@@ -86,11 +86,11 @@
   (lambda (ls port delimiter)
     (if (null? ls)
         #f
-	(begin
-	  (display (car ls) port)
+        (begin
+          (display (car ls) port)
           (if (not (null? (cdr ls)))
-	    (write-char delimiter port))
-	  (bom2:printlist (cdr ls) port delimiter)))))
+            (write-char delimiter port))
+          (bom2:printlist (cdr ls) port delimiter)))))
 
 ; Parses attrib file. Returns a list of read attributes.
 (define bom2:parseconfig
@@ -144,12 +144,11 @@
 (define bom2:find-attribs
   (lambda (package attriblist)
     (if (null? attriblist)
-	'()
-	(cons (gnetlist:get-package-attribute package (car attriblist))
-	      (bom2:find-attribs package (cdr attriblist))))))
+        '()
+        (cons (gnetlist:get-package-attribute package (car attriblist))
+              (bom2:find-attribs package (cdr attriblist))))))
 
 ;;
 ;; Bill of Material backend written by Matt Ettus ends here
 ;;
 ;; --------------------------------------------------------------------------
-

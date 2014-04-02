@@ -22,7 +22,7 @@
 
 ;; --------------------------------------------------------------------------
 ;;
-;; protelII netlist format specific functions go here 
+;; protelII netlist format specific functions go here
 ;;
 ;; PROTEL NETLIST 2.0
 ;; [   -- element for list of components
@@ -128,16 +128,16 @@
 ;;
 (define protelII:write-top-header
    (lambda (p)
-      (display "PROTEL NETLIST 2.0" p) 
+      (display "PROTEL NETLIST 2.0" p)
       (newline p)))
-      
+
 ;;
 ;; header for components section
 ;;
 (define protelII:start-components
    (lambda (p)
       (display "" p)))
-;; no header for components   
+;; no header for components
 
 ;;
 ;; footer for components section
@@ -173,147 +173,147 @@
 (define protelII:end-nets
    (lambda (p)
       (display "" p)))
-	
+
 ;;
-;; Top level component writing 
+;; Top level component writing
 ;;
 (define protelII:components
    (lambda (port ls)
       (if (not (null? ls))
          (let ((package (car ls)))
             (begin
-	       (display "[" port)
-	       (newline port)
-	       (display "DESIGNATOR" port)
-	       (newline port)
+               (display "[" port)
+               (newline port)
+               (display "DESIGNATOR" port)
+               (newline port)
                (display package port)
-	       (newline port)
-	       (display "FOOTPRINT" port)
-	       (newline port)
-	       (display (gnetlist:get-package-attribute package  "footprint") port)
-	       (newline port)
-	       (display "PARTTYPE" port)
-	       (newline port)
-	       (let ((value (get-value package)))          ;; This change by SDB on 10.12.2003.
-		     (if (string-ci=? value "unknown")
-			 (display (get-device package) port)
-			 (display value port)
-			 )
-	       )
-	       (newline port)
-	       (display "DESCRIPTION" port)
-	       (newline port)
+               (newline port)
+               (display "FOOTPRINT" port)
+               (newline port)
+               (display (gnetlist:get-package-attribute package  "footprint") port)
+               (newline port)
+               (display "PARTTYPE" port)
+               (newline port)
+               (let ((value (get-value package)))          ;; This change by SDB on 10.12.2003.
+                     (if (string-ci=? value "unknown")
+                         (display (get-device package) port)
+                         (display value port)
+                         )
+               )
+               (newline port)
+               (display "DESCRIPTION" port)
+               (newline port)
                (display (get-device package) port)
-	       (newline port)
-	       (display "Part Field 1" port)
-	       (newline port)
+               (newline port)
+               (display "Part Field 1" port)
+               (newline port)
                (display "*" port)
-	       (newline port)
-	       (display "Part Field 2" port)
-	       (newline port)
+               (newline port)
+               (display "Part Field 2" port)
+               (newline port)
                (display "*" port)
-	       (newline port)
-	       (display "Part Field 3" port)
-	       (newline port)
+               (newline port)
+               (display "Part Field 3" port)
+               (newline port)
                (display "*" port)
-	       (newline port)
-	       (display "Part Field 4" port)
-	       (newline port)
+               (newline port)
+               (display "Part Field 4" port)
+               (newline port)
                (display "*" port)
-	       (newline port)
-	       (display "Part Field 5" port)
-	       (newline port)
+               (newline port)
+               (display "Part Field 5" port)
+               (newline port)
                (display "*" port)
-	       (newline port)
-	       (display "Part Field 6" port)
-	       (newline port)
+               (newline port)
+               (display "Part Field 6" port)
+               (newline port)
                (display "*" port)
-	       (newline port)
-	       (display "Part Field 7" port)
-	       (newline port)
+               (newline port)
+               (display "Part Field 7" port)
+               (newline port)
                (display "*" port)
-	       (newline port)
-	       (display "Part Field 8" port)
-	       (newline port)
+               (newline port)
+               (display "Part Field 8" port)
+               (newline port)
                (display "*" port)
-	       (newline port)
-	       (display "Part Field 9" port)
-	       (newline port)
+               (newline port)
+               (display "Part Field 9" port)
+               (newline port)
                (display "*" port)
-	       (newline port)
-	       (display "Part Field 10" port)
-	       (newline port)
+               (newline port)
+               (display "Part Field 10" port)
+               (newline port)
                (display "*" port)
-	       (newline port)
-	       (display "Part Field 11" port)
-	       (newline port)
+               (newline port)
+               (display "Part Field 11" port)
+               (newline port)
                (display "*" port)
-	       (newline port)
-	       (display "Part Field 12" port)
-	       (newline port)
+               (newline port)
+               (display "Part Field 12" port)
+               (newline port)
                (display "*" port)
-	       (newline port)
-	       (display "Part Field 13" port)
-	       (newline port)
+               (newline port)
+               (display "Part Field 13" port)
+               (newline port)
                (display "*" port)
-	       (newline port)
-	       (display "Part Field 14" port)
-	       (newline port)
+               (newline port)
+               (display "Part Field 14" port)
+               (newline port)
                (display "*" port)
-	       (newline port)
-	       (display "Part Field 15" port)
-	       (newline port)
+               (newline port)
+               (display "Part Field 15" port)
+               (newline port)
                (display "*" port)
-	       (newline port)
-	       (display "Part Field 16" port)
-	       (newline port)
+               (newline port)
+               (display "Part Field 16" port)
+               (newline port)
                (display "*" port)
-	       (newline port)
-	       (display "LIBRARYFIELD1" port)
-	       (newline port)
+               (newline port)
+               (display "LIBRARYFIELD1" port)
+               (newline port)
                (display "" port)
-	       (newline port)
-	       (display "LIBRARYFIELD2" port)
-	       (newline port)
+               (newline port)
+               (display "LIBRARYFIELD2" port)
+               (newline port)
                (display "" port)
-	       (newline port)
-	       (display "LIBRARYFIELD3" port)
-	       (newline port)
+               (newline port)
+               (display "LIBRARYFIELD3" port)
+               (newline port)
                (display "" port)
-	       (newline port)
-	       (display "LIBRARYFIELD4" port)
-	       (newline port)
+               (newline port)
+               (display "LIBRARYFIELD4" port)
+               (newline port)
                (display "" port)
-	       (newline port)
-	       (display "LIBRARYFIELD5" port)
-	       (newline port)
+               (newline port)
+               (display "LIBRARYFIELD5" port)
+               (newline port)
                (display "" port)
-	       (newline port)
-	       (display "LIBRARYFIELD6" port)
-	       (newline port)
+               (newline port)
+               (display "LIBRARYFIELD6" port)
+               (newline port)
                (display "" port)
-	       (newline port)
-	       (display "LIBRARYFIELD7" port)
-	       (newline port)
+               (newline port)
+               (display "LIBRARYFIELD7" port)
+               (newline port)
                (display "" port)
-	       (newline port)
-	       (display "LIBRARYFIELD8" port)
-	       (newline port)
+               (newline port)
+               (display "LIBRARYFIELD8" port)
+               (newline port)
                (display "" port)
-	       (newline port)
+               (newline port)
                (display "]" port)
-	       (newline port)
+               (newline port)
                (protelII:components port (cdr ls)))))))
 
 ;;
-;; renamed nets writing 
+;; renamed nets writing
 ;;
 (define protelII:renamed-nets
    (lambda (port ls)
       (if (not (null? ls))
          (let ((renamed-pair (car ls)))
             (begin
-;;;	       (display renamed-pair) (newline)
+;;;            (display renamed-pair) (newline)
 ;;;            (display (car renamed-pair) port)
 ;;;            (display " -> " port)
 ;;;            (display (car (cdr renamed-pair)) port)
@@ -327,29 +327,29 @@
 (define protelII:display-connections
    (lambda (nets port)
       (if (not (null? nets))
-  	 (begin
-	    (let ((package (car (car nets))))
-	       (display package port)
-	       (write-char #\- port) 
-	       (display (car (cdr (car nets))) port)
-	       (display " " port)
-	       (display (get-device package) port)
-	       (display "-" port)
-	       (display (car (cdr (car nets))) port)
-	       (display " PASSIVE" port))
-	    (if (not (null? (cdr nets)))
-	       (begin
-	          (newline port))) 
-	    (protelII:display-connections (cdr nets) port)))))
+         (begin
+            (let ((package (car (car nets))))
+               (display package port)
+               (write-char #\- port)
+               (display (car (cdr (car nets))) port)
+               (display " " port)
+               (display (get-device package) port)
+               (display "-" port)
+               (display (car (cdr (car nets))) port)
+               (display " PASSIVE" port))
+            (if (not (null? (cdr nets)))
+               (begin
+                  (newline port)))
+            (protelII:display-connections (cdr nets) port)))))
 
 ;;
-;; Display all nets 
+;; Display all nets
 ;;
 (define protelII:display-name-nets
    (lambda (port nets)
       (begin
          (protelII:display-connections nets port)
-         (write-char #\space port) 
+         (write-char #\space port)
          (newline port))))
 
 ;;
@@ -359,15 +359,15 @@
    (lambda (port netnames)
       (if (not (null? netnames))
          (let ((netname (car netnames)))
-	    (begin
-	       (display "(" port)
-	       (newline port)
-	       (display netname port)
-	       (newline port)
+            (begin
+               (display "(" port)
+               (newline port)
+               (display netname port)
+               (newline port)
                (protelII:display-name-nets port (gnetlist:get-all-connections netname))
-	       (display ")" port)
-	       (newline port)
-	       (protelII:write-net port (cdr netnames))))))) 
+               (display ")" port)
+               (newline port)
+               (protelII:write-net port (cdr netnames)))))))
 
 ;;
 ;; Write the net part of the gEDA format
@@ -380,7 +380,7 @@
 ;;; Highest level function
 ;;; Write my special testing netlist format
 ;;;
-(define protelII 
+(define protelII
    (lambda (output-filename)
       (let ((port (open-output-file output-filename)))
          (begin
@@ -398,6 +398,6 @@
          (close-output-port port))))
 
 ;;
-;; gEDA's native test netlist format specific functions ends 
+;; gEDA's native test netlist format specific functions ends
 ;;
 ;; --------------------------------------------------------------------------

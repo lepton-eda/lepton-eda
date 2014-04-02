@@ -56,7 +56,7 @@
 
 (define drc:net-rules
   (lambda(nets port)
-    (cond 
+    (cond
       ((null? nets) #t)
       ((null? (gnetlist:get-all-connections (car nets)))
           (begin
@@ -87,7 +87,7 @@
 
 (define drc:has-attributes?
   (lambda (attriblist uref port)
-    (if (not (null? attriblist)) 
+    (if (not (null? attriblist))
       (begin
         (if (string=? "unknown" (gnetlist:get-package-attribute uref (car attriblist)))
           (begin
@@ -102,4 +102,3 @@
 ;; DRC backend written by Matt Ettus ends here
 ;;
 ;; --------------------------------------------------------------------------
-

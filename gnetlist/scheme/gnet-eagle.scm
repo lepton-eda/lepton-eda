@@ -1,6 +1,6 @@
 ;;; gEDA - GPL Electronic Design Automation
 ;;; gnetlist - gEDA Netlist
-;;; Copyright (C) 2004-2010 Braddock Gaskill (braddock@braddock.com, 
+;;; Copyright (C) 2004-2010 Braddock Gaskill (braddock@braddock.com,
 ;;;                                           adapted PCB code to Eagle)
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
@@ -43,48 +43,48 @@
    (lambda (port packages)
       (if (not (null? packages))
          (begin
-            (let ((pattern (gnetlist:get-package-attribute (car packages) 
+            (let ((pattern (gnetlist:get-package-attribute (car packages)
                                                            "pattern"))
-	    ;; The above pattern should stay as "pattern" and not "footprint"
+            ;; The above pattern should stay as "pattern" and not "footprint"
                   (package (car packages))
-		  (lib (gnetlist:get-package-attribute (car packages) "lib"))
-		  (value (gnetlist:get-package-attribute (car packages) "value"))
-		  (device (gnetlist:get-package-attribute (car packages) "device"))
-		  )
+                  (lib (gnetlist:get-package-attribute (car packages) "lib"))
+                  (value (gnetlist:get-package-attribute (car packages) "value"))
+                  (device (gnetlist:get-package-attribute (car packages) "device"))
+                  )
                (if (not (string=? pattern "unknown"))
                   (display pattern port))
-	       (display "ADD '" port)
+               (display "ADD '" port)
                (display package port)
-	       (display "' " port)
-;;	       (display "' TQFP144@atmel (0 0)" port)
-;;;	       (write-char #\tab port) 
+               (display "' " port)
+;;             (display "' TQFP144@atmel (0 0)" port)
+;;;            (write-char #\tab port)
                (display (gnetlist:get-package-attribute package "footprint") port)
-	       (display "@" port)
-	       (if (not (string=? lib "unknown"))   
-		   (display lib port)
-		   (display "smd-ipc" port))
-	       (display " (1 1);" port)
-	       (newline port)
+               (display "@" port)
+               (if (not (string=? lib "unknown"))
+                   (display lib port)
+                   (display "smd-ipc" port))
+               (display " (1 1);" port)
+               (newline port)
                (if (not (string=? value "unknown"))
-		   (begin
-		     (display "VALUE '" port)
-		     (display package port)
-		     (display "' '" port)
-		     (display value port)
-		     (display "';" port)
-		     (newline port)
-		     )
-		   (if (not (string=? device "unknown"))
-		       (begin
-			 (display "VALUE '" port)
-			 (display package port)
-			 (display "' '" port)
-			 (display device port)
-			 (display "';" port)
-			 (newline port)
-			 )
-		   ))
-	       )
+                   (begin
+                     (display "VALUE '" port)
+                     (display package port)
+                     (display "' '" port)
+                     (display value port)
+                     (display "';" port)
+                     (newline port)
+                     )
+                   (if (not (string=? device "unknown"))
+                       (begin
+                         (display "VALUE '" port)
+                         (display package port)
+                         (display "' '" port)
+                         (display device port)
+                         (display "';" port)
+                         (newline port)
+                         )
+                   ))
+               )
             (eagle:components port (cdr packages))))))
 
 (define (eagle:display-connections nets)
@@ -112,42 +112,40 @@
    (lambda (port netnames)
       (if (not (null? netnames))
          (let ((netname (car netnames)))
-	    (display "SIGNAL '" port)
-	    (display (gnetlist:alias-net netname) port)
-	    (display "'" port)
-	    (newline port)
-;            (display (gnetlist:wrap 
-;		      (eagle:display-connections 
-;		       (gnetlist:get-all-connections netname)) 
-;		      78
-;		      "") 
-;		     port)
-            (display (eagle:display-connections 
-		       (gnetlist:get-all-connections netname))
-		     port)
-	    (eagle:write-net port (cdr netnames))))))
+            (display "SIGNAL '" port)
+            (display (gnetlist:alias-net netname) port)
+            (display "'" port)
+            (newline port)
+;            (display (gnetlist:wrap
+;                     (eagle:display-connections
+;                      (gnetlist:get-all-connections netname))
+;                     78
+;                     "")
+;                    port)
+            (display (eagle:display-connections
+                       (gnetlist:get-all-connections netname))
+                     port)
+            (eagle:write-net port (cdr netnames))))))
 
-(define eagle 
+(define eagle
    (lambda (filename)
       (let ((port (open-output-file filename)))
-	;; initialize the net-name aliasing
-	(gnetlist:build-net-aliases eagle:map-net-names all-unique-nets)
-	
-	;; print out the header
-;;;	(display "!EAGLE-POWERPCB-V3.0-MILS!\n" port)
-;;;	(display "\n*PART*\n" port)
-;;;	(display "/* CADSoft Eagle Scripted Netlist Format */\n" port)
-	(display "   ;\n" port)
-	
-	;; print out the parts
-	(eagle:components port packages)
-	
-	;; print out the net information
-;;;	(display "\n*NET*\n" port)
-	(eagle:write-net port (gnetlist:get-all-unique-nets "dummy"))
-	
-	;; print out the footer
-;;;	(display "\n*END*\n" port)
-	(close-output-port port))))
+        ;; initialize the net-name aliasing
+        (gnetlist:build-net-aliases eagle:map-net-names all-unique-nets)
 
+        ;; print out the header
+;;;     (display "!EAGLE-POWERPCB-V3.0-MILS!\n" port)
+;;;     (display "\n*PART*\n" port)
+;;;     (display "/* CADSoft Eagle Scripted Netlist Format */\n" port)
+        (display "   ;\n" port)
 
+        ;; print out the parts
+        (eagle:components port packages)
+
+        ;; print out the net information
+;;;     (display "\n*NET*\n" port)
+        (eagle:write-net port (gnetlist:get-all-unique-nets "dummy"))
+
+        ;; print out the footer
+;;;     (display "\n*END*\n" port)
+        (close-output-port port))))

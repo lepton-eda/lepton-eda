@@ -28,9 +28,9 @@
 
 (define vipec:component-templates
    (list
-      (cons 
+      (cons
          (cons "RESISTOR" "RES")
-         (list 
+         (list
             (list "value" "R=" #t "use value attrib for resistance")))
       (cons
          (cons "INDUCTOR" "IND")
@@ -57,7 +57,7 @@
       (cons
          (cons "SPARAMBLOCK" "BLOCK")
          (list
-            (list "filename" "" #t "filename attrib for sparams")))            
+            (list "filename" "" #t "filename attrib for sparams")))
 ))
 
 (define vipec:get-template
@@ -133,7 +133,7 @@
 
 (define vipec:header
    (lambda (port)
-      (display "% ViPEC RF Netlister\n" port)  
+      (display "% ViPEC RF Netlister\n" port)
       (display "% Written by Matthew Ettus\n" port)
       (display "% Based on code by Bas Gieltjes\n" port)))
 
@@ -158,4 +158,3 @@
          (newline port)
          (vipec:analysis-block packages port)
          (close-output-port port))))
-

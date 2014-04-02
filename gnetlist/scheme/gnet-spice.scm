@@ -24,14 +24,14 @@
 ;;
 
 ;;
-;; Given a uref, returns the device associated nets(s) ordered by 
+;; Given a uref, returns the device associated nets(s) ordered by
 ;; their pin#, what when not defined?
 ;; problem is slotted components e.g. ../examples/singlenet_1.sch
 ;;
 
-;; Ales' changed implemenation 
+;; Ales' changed implemenation
 ;; Commented out since it has some problems
-;; (define spice:write-net-name-of-node 
+;; (define spice:write-net-name-of-node
 ;;   (lambda (uref pins port)
 ;;     (if (not (null? pins))
 ;;            (let ((pin (car pins)))
@@ -48,7 +48,7 @@
 
 
 ;;
-;; gnet-spice replacement of gnetlist:get-nets, a net labeled "GND" becomes 0 
+;; gnet-spice replacement of gnetlist:get-nets, a net labeled "GND" becomes 0
 ;;
 (define spice:get-net
   (lambda (uref pin-name )
@@ -63,20 +63,20 @@
 ;;
 (define spice:write-two-pin-names
   (lambda (package pin-a pin-b port)
-    (display (string-append 
+    (display (string-append
       (car (spice:get-net package (gnetlist:get-attribute-by-pinseq package pin-a "pinnumber"))) " ") port)
-    (display (string-append 
+    (display (string-append
       (car (spice:get-net package (gnetlist:get-attribute-by-pinseq package pin-b "pinnumber"))) " ") port)))
-    
+
 
 
 ;;
-;; write a current controlled voltage source and implement the necessary 
+;; write a current controlled voltage source and implement the necessary
 ;;   current measuring voltage source
 (define spice:write-ccvs
-  (lambda (package port)            
+  (lambda (package port)
     ( begin
-      (display "* begin ccvs expansion, h<name>\n" port) 
+      (display "* begin ccvs expansion, h<name>\n" port)
           ;; implement the controlled current source
           ;; the user should create the uref label begining with a h
       (display (string-append package " ") port)
@@ -95,12 +95,12 @@
 
 
 ;;
-;; write a current controlled current source and implement the necessary 
+;; write a current controlled current source and implement the necessary
 ;;   current measuring voltage source
 (define spice:write-cccs
-  (lambda (package port)            
+  (lambda (package port)
     ( begin
-      (display "* begin cccs expansion, f<name>\n" port) 
+      (display "* begin cccs expansion, f<name>\n" port)
           ;; implement the controlled current source
           ;; the user should create the uref label begining with a f
       (display (string-append package " ") port)
@@ -115,12 +115,12 @@
 
 
 ;;
-;; write a voltage controlled current source and implement the necessary 
+;; write a voltage controlled current source and implement the necessary
 ;;   voltage measuring current source
 (define spice:write-vccs
-  (lambda (package port)            
+  (lambda (package port)
     ( begin
-      (display "* begin vccs expansion, g<name>\n" port) 
+      (display "* begin vccs expansion, g<name>\n" port)
           ;; implement the controlled current source
           ;; the user should create a uref label beginning with a g
       (display (string-append package " ") port)
@@ -137,12 +137,12 @@
 
 
 ;;
-;; write a voltage controlled voltage source and implement the necessary 
+;; write a voltage controlled voltage source and implement the necessary
 ;;   voltage measuring current source
 (define spice:write-vcvs
-  (lambda (package port)            
+  (lambda (package port)
     ( begin
-      (display "* begin vcvs expansion, e<name>\n" port) 
+      (display "* begin vcvs expansion, e<name>\n" port)
           ;; implement the controlled voltage source
           ;; the user should create a uref label beginning with an e
       (display (string-append package " ") port)
@@ -155,7 +155,7 @@
       (display (string-append "Isense_" package " ") port)
       (spice:write-two-pin-names package "3" "4" port)
       (display "dc 0\n" port)
-          ;; with an output current source it is possible to leave the output voltage source 
+          ;; with an output current source it is possible to leave the output voltage source
           ;; unconnected i.e. spice won't complain about unconnected nodes
       (display (string-append "Iout_" package " ") port)
       (spice:write-two-pin-names package "1" "2" port)
@@ -167,10 +167,10 @@
 ;; Create a nullor, make sure it consists of a voltage controlled source
 ;;
 (define spice:write-nullor
-  (lambda (package port)            
+  (lambda (package port)
     ( begin
-      (display "* begin nullor expansion, e<name>\n" port) 
-          ;; implement the controlled voltage source 
+      (display "* begin nullor expansion, e<name>\n" port)
+          ;; implement the controlled voltage source
       (display (string-append "E-" package " ") port)
       (spice:write-net-name-of-component package (length (gnetlist:get-pins package)) port)
       (display (string-append (gnetlist:get-package-attribute package "value") "\n" ) port)
@@ -181,7 +181,7 @@
       (display (string-append "Imeasure_" package " ") port)
       (spice:write-two-pin-names package "3" "4" port)
       (display "dc 0\n" port)
-          ;; with an output current source it is possible to leave the output voltage source 
+          ;; with an output current source it is possible to leave the output voltage source
           ;; unconnected i.e. spice won't complain about unconnected nodes
       (display (string-append "Iout_" package " ") port)
       (spice:write-two-pin-names package "1" "2" port)
@@ -196,12 +196,12 @@
 (define spice:write-list-of-attributes
   (lambda (package attrib-list port)
     (if (not (null? attrib-list))
-      (begin      
+      (begin
             ; Is it possible to make no differentiation between upper and lower case?
-            ; That relieves you of mixed case forms e.g. As, AS, as..., they are the 
+            ; That relieves you of mixed case forms e.g. As, AS, as..., they are the
             ; same attributes, spice3f5 is case insensitive.  And other spice versions?
         (if (not (string=? (gnetlist:get-package-attribute package (car attrib-list)) "unknown"))
-          (display (string-append  " " (car attrib-list) "=" 
+          (display (string-append  " " (car attrib-list) "="
                                (gnetlist:get-package-attribute package (car attrib-list))) port))
         (spice:write-list-of-attributes package (cdr attrib-list) port)))))
 
@@ -211,7 +211,7 @@
 ;;
 (define spice:write-mos-transistor
   (lambda (package port)
-    (spice:write-one-component package port) 
+    (spice:write-one-component package port)
             ;; create list of attributes which can be attached to a mosfet
     (let ((attrib-list (list "l" "w" "as" "ad" "pd" "ps" "nrd" "nrs" "temp" "ic")))
       (spice:write-list-of-attributes package attrib-list port))
@@ -223,7 +223,7 @@
 
 
 ;;
-;; Given a uref, returns the device associated nets(s) ordered by their pin#, 
+;; Given a uref, returns the device associated nets(s) ordered by their pin#,
 ;; what when not defined?
 ;;      problem is slotted components e.g. ../examples/singlenet_1.sch
 ;;
@@ -238,8 +238,8 @@
 ;; Given a uref, returns the device attribute value as string
 ;;
 (define spice:component-value
-  (lambda (package) 
-    (let ((value (gnetlist:get-package-attribute package "value"))) 
+  (lambda (package)
+    (let ((value (gnetlist:get-package-attribute package "value")))
       (if (not (string=? value "unknown"))
         value
         "<No valid value attribute found>"))))
@@ -258,11 +258,11 @@
 ;;
 (define spice:write-one-component
   (lambda (package port)
-    (display (string-append package " ") port) 
+    (display (string-append package " ") port)
         ;; write net names, slotted components not implemented
     (spice:write-net-name-of-component package (length (gnetlist:get-pins package)) port)
         ;; write component value, if components have a label "value=#"
-        ;; what if a component has no value label, currently unknown is written  
+        ;; what if a component has no value label, currently unknown is written
     (display (spice:component-value package) port)))
 
 
@@ -274,16 +274,16 @@
   (lambda (port ls)
      (if (not (null? ls))
       (let ((package (car ls)))                           ;; search for specific device labels
-        (cond   
+        (cond
           ( (string=? (get-device package) "SPICE-ccvs")
               (spice:write-ccvs package port))
-          ( (string=? (get-device package) "SPICE-cccs") 
+          ( (string=? (get-device package) "SPICE-cccs")
               (spice:write-cccs package port))
-          ( (string=? (get-device package) "SPICE-vcvs") 
+          ( (string=? (get-device package) "SPICE-vcvs")
               (spice:write-vcvs package port))
-          ( (string=? (get-device package) "SPICE-vccs") 
+          ( (string=? (get-device package) "SPICE-vccs")
               (spice:write-vccs package port))
-          ( (string=? (get-device package) "SPICE-nullor") 
+          ( (string=? (get-device package) "SPICE-nullor")
               (spice:write-nullor package port))
           ( (string=? (get-device package) "PMOS_TRANSISTOR")
               (spice:write-mos-transistor package port))
@@ -293,10 +293,10 @@
               (spice:write-include package port))
           ( else (spice:write-one-component package port)
                (newline port)))
-        (spice:write-netlist port (cdr ls)) ))))  
+        (spice:write-netlist port (cdr ls)) ))))
 
 
-;; 
+;;
 ;; Spice netlist header
 ;;
 (define spice:write-top-header
@@ -319,7 +319,7 @@
   (lambda (output-filename)
     (let ((port (open-output-file output-filename)))
 ;; No longer needed
-;;      (gnetlist:set-netlist-mode "SPICE")   
+;;      (gnetlist:set-netlist-mode "SPICE")
       (spice:write-top-header port)
       (spice:write-netlist port packages)
       (spice:write-bottom-footer port)

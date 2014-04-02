@@ -50,14 +50,14 @@
       (define value (gnetlist:get-package-attribute package "value"))
       (if (string=? "unknown" value)
          ""
-	 value)))
- 
+         value)))
+
 ;;
 ;; Top level header
 ;;
 (define tango:write-top-header
    (lambda (p)
-      (display "START header" p) 
+      (display "START header" p)
       (newline p)
       (newline p)
       (display "TANGO netlist for gnetlist" p)
@@ -69,27 +69,27 @@
       (newline p)))
 
 ;;
-;; Top level component writing 
+;; Top level component writing
 ;;
 (define tango:components
    (lambda (port ls)
       (if (not (null? ls))
          (let ((package (car ls)))
-	    (begin
-	       (display "[" port)
-	       (newline port)
-	       (display package port)
-	       (newline port)
-	       (display (tango:get-pattern package) port)
-	       (newline port)
-	       (display (tango:get-device package) port)
-	       (newline port)
-	       (display (tango:get-value package) port)
-	       (newline port)
-	       (newline port)
-	       (display "]" port)
-	       (newline port)
-	       (tango:components port (cdr ls)))))))
+            (begin
+               (display "[" port)
+               (newline port)
+               (display package port)
+               (newline port)
+               (display (tango:get-pattern package) port)
+               (newline port)
+               (display (tango:get-device package) port)
+               (newline port)
+               (display (tango:get-value package) port)
+               (newline port)
+               (newline port)
+               (display "]" port)
+               (newline port)
+               (tango:components port (cdr ls)))))))
 
 ;;
 ;; Display the individual net connections
@@ -97,14 +97,14 @@
 (define tango:display-connections
    (lambda (nets port)
       (if (not (null? nets))
-	 (begin
-	   (display (car (car nets)) port)
-	   (display "-" port) 
-	   (display (car (cdr (car nets))) port)
-	   (if (not (null? (cdr nets)))
-		(begin
-		  (newline port)))
-	          (tango:display-connections (cdr nets) port)))))
+         (begin
+            (display (car (car nets)) port)
+            (display "-" port)
+            (display (car (cdr (car nets))) port)
+            (if (not (null? (cdr nets)))
+                (begin
+                  (newline port)))
+                  (tango:display-connections (cdr nets) port)))))
 
 
 ;;
@@ -122,17 +122,17 @@
    (lambda (port netnames)
       (if (not (null? netnames))
          (let ((netname (car netnames)))
-	    (begin
-	       (display "(" port)
+            (begin
+               (display "(" port)
                (newline port)
                (display netname port)
                (newline port)
 
-	       (tango:display-name-nets port (gnetlist:get-all-connections netname))
-	       (newline port)
-	       (display ")" port)
-	       (newline port)
-	       (tango:write-net port (cdr netnames))))))) 
+               (tango:display-name-nets port (gnetlist:get-all-connections netname))
+               (newline port)
+               (display ")" port)
+               (newline port)
+               (tango:write-net port (cdr netnames)))))))
 
 
 ;;
@@ -150,13 +150,12 @@
    (lambda (output-filename)
       (let ((port (open-output-file output-filename)))
          (begin
-;;;	    (gnetlist:set-netlist-mode "TANGO") No longer needed
-	    (tango:components port packages)
-	    (tango:nets port))
-	 (close-output-port port))))
+;;;         (gnetlist:set-netlist-mode "TANGO") No longer needed
+            (tango:components port packages)
+            (tango:nets port))
+         (close-output-port port))))
 
 ;;
 ;; TANGO netlist backend written by Nuno Sucena ends here
 ;;
 ;; --------------------------------------------------------------------------
-

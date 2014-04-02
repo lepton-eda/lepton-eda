@@ -193,23 +193,22 @@ gsch2pcb backend configuration:
   (if gsch2pcb:use-m4
       ;; pipe with the macro define in pcb program
       (let ((pipe (open-output-pipe command-line))
-	    )
-	
-	(display "Using the m4 processor for pcb footprints\n")
-	;; packages is a list with the different refdes value
-	(gsch2pcb:write-value-footprints pipe packages)
-	(close-pipe pipe)
-	)
-      
+            )
+
+        (display "Using the m4 processor for pcb footprints\n")
+        ;; packages is a list with the different refdes value
+        (gsch2pcb:write-value-footprints pipe packages)
+        (close-pipe pipe)
+        )
+
       (let ((port  (open output-filename (logior O_WRONLY O_APPEND))))
-	(display "Skipping the m4 processor for pcb footprints\n")
-	(gsch2pcb:write-value-footprints port packages)
-	(close-port port)
-	)
+        (display "Skipping the m4 processor for pcb footprints\n")
+        (gsch2pcb:write-value-footprints port packages)
+        (close-port port)
+        )
       )
 
   (let ((port (open output-filename (logior O_WRONLY O_APPEND))))
     (gsch2pcb:write-bottom-footer port)
     close-port port)
   )
-
