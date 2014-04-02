@@ -55,19 +55,19 @@
     (if pos (calay:translate (string-append (substring string-to-translate 0
     pos) "-" (substring string-to-translate (+ 1 pos)))) string-to-translate)))
 
-(define (calay:write-net netnames port)
+(define (calay:write-net netnames)
   (if (not (null? netnames))
       (let ((netname (car netnames)))
-        (display "/" port)
-        (display (gnetlist:alias-net netname) port)
-        (display "\t" port)
+        (display "/")
+        (display (gnetlist:alias-net netname))
+        (display "\t")
         (display (calay:wrap (calay:display-connections
-          (gnetlist:get-all-connections netname)) 66) port)
-        (calay:write-net (cdr netnames) port))))
+          (gnetlist:get-all-connections netname)) 66))
+        (calay:write-net (cdr netnames)))))
 
 
 (define (calay output-filename)
-  (let ((port (gnetlist:output-port output-filename)))
-    (gnetlist:build-net-aliases calay:translate all-unique-nets)
-    (calay:write-net (gnetlist:get-all-unique-nets "dummy") port)
-    (close-output-port port)))
+  (set-current-output-port (gnetlist:output-port output-filename))
+  (gnetlist:build-net-aliases calay:translate all-unique-nets)
+  (calay:write-net (gnetlist:get-all-unique-nets "dummy"))
+  (close-output-port (current-output-port)))
