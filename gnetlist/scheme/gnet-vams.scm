@@ -80,11 +80,8 @@
                (if (not (gnetlist:stdout? output-filename))
                  (set! output-filename
                    (string-append
-                     (if (string-index output-filename #\/)
-                         (substring output-filename 0
-                                    (+ (string-rindex
-                                        output-filename #\/ 0 ofl) 1))
-                         "./")
+                     (dirname output-filename)
+                     "/"
                      (string-downcase! entity)
                      "_arc"
                      (substring output-filename
@@ -108,24 +105,18 @@
             (if (not (gnetlist:stdout? output-filename))
              (if (not (null? top-attribs))
                  (set! output-filename
-                       (string-append
-                        (if (string-index output-filename #\/)
-                           (substring output-filename 0
-                                   (+ (string-rindex
-                                       output-filename #\/ 0 ofl) 1))
-                            "./")
-                        (string-downcase!
-                         (get-device (vams:get-uref top-attribs)))
-                        ".vhdl"))
+                   (string-append
+                     (dirname output-filename)
+                     "/"
+                     (string-downcase!
+                       (get-device (vams:get-uref top-attribs)))
+                     ".vhdl"))
                  (set! output-filename
                        (string-append
-                        (if (string-index output-filename #\/)
-                           (substring output-filename 0
-                                   (+ (string-rindex
-                                       output-filename #\/ 0 ofl) 1))
-                            "./")
-                        (string-downcase! entity)
-                        ".vhdl"))))
+                         (dirname output-filename)
+                         "/"
+                         (string-downcase! entity)
+                         ".vhdl"))))
 
              (message output-filename)
              (message "\n")
