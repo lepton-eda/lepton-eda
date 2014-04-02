@@ -26,7 +26,7 @@ Options
 Description
 
 $0 reads a file, tests.list,  describing tests to run on <backend>.
-If no specific test is specified on the $0 command line, then all 
+If no specific test is specified on the $0 command line, then all
 tests are run.
 
 Examples
@@ -155,14 +155,14 @@ ${all_tests}
 EOF
 
 # Now run through all tests in test.list, prepare the $rundir,
-# then run the tests. 
+# then run the tests.
 for t in $all_tests ; do
 
-    # strip any leading garbage 
+    # strip any leading garbage
     t=`echo $t | sed 's;^\*;;g'`
 
     # figure out what files we need to copy for this test and what
-    # arguments to feed gnetlist 
+    # arguments to feed gnetlist
     schematics=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $2}'`
     auxfiles=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $3}'`
     args=`grep "^[ \t]*${t}[ \t]*|" $TESTLIST | awk 'BEGIN{FS="|"} {print $4}'`
@@ -231,8 +231,11 @@ for t in $all_tests ; do
 
     # run gnetlist -g $backend
     echo "${GNETLIST} -g $backend $args $schematics"
-    cd ${rundir} && ${GNETLIST} -g $backend $args $schematics 
-    rc=$?
+    cd ${rundir} && ${GNETLIST} -g $backend $args $schematics
+    rc1=$?
+    echo "${GNETLIST} -g $backend -o - $args $schematics > stdout.net"
+    ${GNETLIST} -g $backend -o - $args $schematics > stdout.net
+    rc2=$?
 
     # OK, now check results of run.
     good=0
@@ -241,12 +244,13 @@ for t in $all_tests ; do
 
     ref=${GOLDEN_DIR}/${t}-output.net
     out=${rundir}/output.net
+    std=${rundir}/stdout.net
 
     # Hack to help with vams backend
     if [ -f ${rundir}/default_entity_arc.net ]; then
       mv ${rundir}/default_entity_arc.net $out
     fi
-    
+
     if test "X$regen" = "Xyes" ; then
 
         # Copy output on top of golden output, accounting for the case
@@ -257,18 +261,29 @@ for t in $all_tests ; do
             rm ${ref}
         fi
 
-	echo "$rc" > $refcode
+	echo "$rc1" > $refcode
 	echo "Regenerated ${ref}"
         good=1
-    elif test $rc -ne $code ; then
-	echo "FAILED:  gnetlist -g $backend returned $rc which did not match the expected $code"
+    elif test $rc1 -ne $code ; then
+	echo "FAILED:  gnetlist -g $backend returned $rc1 which did not match the expected $code"
+	bad=1
+    elif test $rc2 -ne $code ; then
+	echo "FAILED:  gnetlist -g $backend -o - returned $rc2 which did not match the expected $code"
 	bad=1
     elif test -f ${ref} ; then
 
 	sed '/gnetlist -g/d' ${ref} > ${out}.tmp1
 	sed '/gnetlist -g/d' ${out} > ${out}.tmp2
+	sed '/gnetlist -g/d' ${std} > ${out}.tmp3
 
-	if diff -w ${out}.tmp1 ${out}.tmp2 >/dev/null ; then
+    # Hack to help with allegro backend
+    # Device files are ignored as yet
+    if test "X$backend" = "Xallegro" ; then
+        sed '/gnetlist -g/d' ${std} | sed '/^\$END$/ q' > ${out}.tmp3
+    fi
+
+	if diff -w ${out}.tmp1 ${out}.tmp2 >/dev/null &&
+	    diff -w ${out}.tmp2 ${out}.tmp3 >/dev/null ; then
 	    echo "PASS"
             good=1
         # If neither output nor golden file exists, then succeed
@@ -292,7 +307,7 @@ for t in $all_tests ; do
     skip=`expr $skip + $soso`
 
     cd $here
-    
+
     # Delete the run directory in prep for the next test
     test "$debug" = "no" && rm -fr ${rundir}
 
@@ -307,4 +322,3 @@ if test $pass -ne $tot ; then
 fi
 
 exit $rc
-
