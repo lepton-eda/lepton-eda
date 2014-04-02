@@ -264,7 +264,7 @@
 
 ;; The top level netlister for ewnet
 (define ewnet
-  (lambda (filename)
+  (lambda (output-filename)
     (newline)
     (display "---------------------------------\n")
     (display "gEDA/gnetlist ewnet Backend\n")
@@ -276,7 +276,7 @@
     (display "windows based layout tools\n")
     (display "---------------------------------\n\n")
 
-    (let ((port (open-output-file filename))
+    (let ((port (open-output-file output-filename))
           (all-nets (gnetlist:get-all-unique-nets "dummy"))
           )
 

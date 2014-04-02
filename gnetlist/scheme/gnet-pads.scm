@@ -109,8 +109,8 @@
             (pads:write-net port (cdr netnames))))))
 
 (define pads
-   (lambda (filename)
-      (let ((port (open-output-file filename)))
+   (lambda (output-filename)
+      (let ((port (open-output-file output-filename)))
         ;; initialize the net-name aliasing
         (gnetlist:build-net-aliases pads:map-net-names all-unique-nets)
 

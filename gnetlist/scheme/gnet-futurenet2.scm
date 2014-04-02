@@ -206,7 +206,7 @@
 
 ;; The top level netlister for futurenet2
 (define futurenet2
-   (lambda (filename)
+   (lambda (output-filename)
      (newline)
      (display "---------------------------------\n")
      (display "gEDA/gnetlist FutureNet2 Backend\n")
@@ -218,7 +218,7 @@
      (display "Ranger2 or other windows based layout tools\n")
      (display "---------------------------------\n\n")
 
-      (let ((port (open-output-file filename))
+      (let ((port (open-output-file output-filename))
             (all-nets (gnetlist:get-all-unique-nets "dummy"))
             )
 

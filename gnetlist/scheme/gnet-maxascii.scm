@@ -87,8 +87,8 @@
             (maxascii:write-net port (cdr netnames))))))
 
 (define maxascii
-   (lambda (filename)
-      (let ((port (open-output-file filename)))
+   (lambda (output-filename)
+      (let ((port (open-output-file output-filename)))
          (display "*OrCAD\n*START\n" port)
 
          (maxascii:components port packages)

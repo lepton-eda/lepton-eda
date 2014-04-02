@@ -128,8 +128,8 @@
             (eagle:write-net port (cdr netnames))))))
 
 (define eagle
-   (lambda (filename)
-      (let ((port (open-output-file filename)))
+   (lambda (output-filename)
+      (let ((port (open-output-file output-filename)))
         ;; initialize the net-name aliasing
         (gnetlist:build-net-aliases eagle:map-net-names all-unique-nets)
 

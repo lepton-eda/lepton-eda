@@ -19,8 +19,8 @@
 
 ; Export a design to Osmond PCB
 
-(define (osmond filename)
-        (set-current-output-port (open-output-file filename))
+(define (osmond output-filename)
+        (set-current-output-port (open-output-file output-filename))
         (for-each osmond:part packages)
         (for-each osmond:signal all-unique-nets))
 
