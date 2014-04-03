@@ -256,10 +256,9 @@
         (list (match:substring simple-id 1) (list 0 0 #f #f netname)))
 
        (else
-        (display
+        (message
          (string-append "Warning: `" netname
-                        "' is not likely a valid Verilog identifier"))
-        (newline)
+                        "' is not likely a valid Verilog identifier\n"))
         (list netname (list 0 0 #f #f netname)))
        ))))
 
@@ -408,15 +407,13 @@
                         '() ;; this is a net without any expression, leave it
                         )
                       ((and list-sure (not consistant))
-                       (begin      ;; order is inconsistent
-                         (display
+                       (message      ;; order is inconsistent
                           (string-append "Warning: Net `" real "' has a "
                                          "bit order that conflicts with "
                                          "the original definition of `"
                                          list-real "', ignoring `"
-                                         real "'"
-                                         ))
-                         (newline)))
+                                         real "'\n"
+                                         )))
                        ((and (not list-sure) sure consistant)
                         (begin
                           (set-cdr! listed

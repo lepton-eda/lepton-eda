@@ -135,13 +135,12 @@
 ;; The top level netlister for cascade
 (define cascade
    (lambda (output-filename)
-     (newline)
-     (display "---------------------------------\n")
-     (display "gEDA/gnetlist Cascade Backend\n")
+     (message "\n---------------------------------\n")
+     (message "gEDA/gnetlist Cascade Backend\n")
 
-     (display "---------------------------------\n\n")
+     (message "---------------------------------\n\n")
 
-     (display (string-append "Writing to output file \"" output-filename
+     (message (string-append "Writing to output file \"" output-filename
                              "\"... ") )
       (let ((port (gnetlist:output-port output-filename))
             (first_block #f)
@@ -177,6 +176,6 @@
 
         )
 
-      (display "done\n")
+      (message "done\n")
       )
    )

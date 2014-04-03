@@ -67,9 +67,9 @@
             (car templates)
             (vipec:get-template (cdr templates) device))
          (begin
-            (display "Template not found   ")
-            (display device)
-            (newline)
+            (message "Template not found   ")
+            (message device)
+            (message "\n")
             (cons (cons device "error") '())))))
 
 (define (vipec:write-net-name-of-node uref number-of-pin netnumbers port)

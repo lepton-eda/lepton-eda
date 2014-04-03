@@ -41,9 +41,9 @@
       (let ((lib (gnetlist:get-package-attribute (car components) "library")))
         (if (string=? "unknown" lib)
           (begin
-            (display "Component ")
-            (display (car components))
-            (display " does not have a library attribute\n")))
+            (message "Component ")
+            (message (car components))
+            (message " does not have a library attribute\n")))
         (if (contains? done lib)
           (gossip:get-libraries p (cdr components) done)
           (begin

@@ -213,8 +213,7 @@
     (if (pintype-can-drive-valid? pintype-can-drive)
         pintype-can-drive
         (begin
-          (display "INTERNAL ERROR: List of pins which can drive a net bad specified. Using default value.")
-          (newline)
+          (message "INTERNAL ERROR: List of pins which can drive a net bad specified. Using default value.\n")
           #f))
     #f))
 
@@ -266,8 +265,7 @@
                  (char=? action-unused-slots #\c)
                  (char=? action-unused-slots #\e))))
     (begin
-      (display "INTERNAL ERROR: Action when unused slots are found has a wrong value. Using default.")
-      (newline)
+      (message "INTERNAL ERROR: Action when unused slots are found has a wrong value. Using default.\n")
       (set! action-unused-slots #\w)))
 
 ;-----------------------------------------------------------------------
@@ -902,7 +900,7 @@
        (begin
          (display "NOTE: Found pins without the 'pintype' attribute: " port)
          (display-unknown-pintypes nets)
-         (display "\n"))))
+         (message "\n"))))
 
 ;
 ;  End of Net checking functions
@@ -1036,12 +1034,10 @@
          ;; If there are only warnings and it's in quiet mode, then
          ;; do not return an error.
          (if (and (not (string=? "-" output-filename)) (> errors_number 0))
-             (begin (display "DRC errors found. See output file.")
-                    (newline))
+             (message "DRC errors found. See output file.\n")
              (if (> warnings_number 0)
                  (if (not (calling-flag? "ignore-warnings-in-return-value" (gnetlist:get-calling-flags)))
-                     (begin (display "DRC warnings found. See output file.")
-                            (newline)))))
+                     (message "DRC warnings found. See output file.\n"))))
 
          ))))
 
