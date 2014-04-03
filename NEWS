@@ -35,6 +35,8 @@ Notable changes in gEDA/gaf 1.9.2
 * `convert_sym.awk' has been removed from the distribution; equivalent
   functionality is provided by the `convert_sym' command.
 
+* gnetlist now supports output of netlists to the standard output.
+
 Notable changes in gEDA/gaf 1.9.1
 =================================
 

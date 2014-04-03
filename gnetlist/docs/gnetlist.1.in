@@ -48,6 +48,8 @@ Print a list of available netlist backends.
 \fB-o\fR \fIFILE\fR
 Specify the filename for the generated netlist.  By default, output is
 directed to `output.net'.
+If `-' is given instead of a filename, the output is directed to the
+standard output.
 .TP 8
 \fB-l\fR \fIFILE\fR
 Specify a Scheme file to be loaded before the backend is loaded or
