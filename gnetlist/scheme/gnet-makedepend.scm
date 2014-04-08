@@ -93,12 +93,16 @@
   "([[:alnum:]_]+)-([[:digit:]]+).([[:alpha:]]+)$")
 
 (define (makedepend:split-filename makedepend-scheme name)
-  (let* ((match (string-match makedepend-scheme name))
-         (base (match:substring match 1))
-         (page (match:substring match 2))
-         (ext  (match:substring match 3))
-         )
-    (list base page ext)
+  (let ((match (string-match makedepend-scheme name)))
+    (if match
+      (let* ((base (match:substring match 1))
+             (page (match:substring match 2))
+             (ext  (match:substring match 3)))
+        (list base page ext))
+      (begin
+        (display "ERROR: Schematic file name must take the form: BASE-PAGENUM.EXT\n"
+                 (current-error-port))
+        (primitive-exit 1)))
   )
 )
 
