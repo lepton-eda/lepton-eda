@@ -131,12 +131,12 @@
         )
 
     ;schematic deps
-    (format "~a: ~a\n"
+    (format #t "~a: ~a\n"
             (string-join input-files " ")
             (string-join sources " "))
 
     ;netlist deps
-    (format "~a.cir: ~a ~a\n"
+    (format #t "~a.cir: ~a ~a\n"
             base
             (string-join input-files " ")
             (string-join files " "))
