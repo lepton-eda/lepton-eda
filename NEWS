@@ -11,6 +11,9 @@ Notable changes in gEDA/gaf 1.9.2
 =================================
 * Visibility and attributes of several VHDL symbols have been fixed.
 
+* Four verilog symbols have been fixed so that the verilog gnetlist
+  backend outputs their pins in right order.
+
 * Two obsolete scripts verilog2vhdl.sh and script.sed have been
   removed.
 
