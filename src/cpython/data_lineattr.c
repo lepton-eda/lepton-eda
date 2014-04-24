@@ -45,10 +45,36 @@ static PyObject *LineAttr_new(
 
 static int LineAttr_init(LineAttr *self, PyObject *args, PyObject *kwds)
 {
-	static char *kwlist[] = { NULL };
+	double width_arg = 0.;
+	int cap_style_arg = 0;
+	int dash_style_arg = 0;
+	double dash_length_arg = 0.;
+	double dash_space_arg = 0.;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "", kwlist))
+	static char *kwlist[] = {
+		"width",
+		"cap_style",
+		"dash_style",
+		"dash_length",
+		"dash_space",
+		NULL
+	};
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "|diidd:LineAttr", kwlist,
+		    &width_arg,
+		    &cap_style_arg,
+		    &dash_style_arg,
+		    &dash_length_arg,
+		    &dash_space_arg))
 		return -1;
+
+
+	self->data.width = width_arg;
+	self->data.cap_style = cap_style_arg;
+	self->data.dash_style = dash_style_arg;
+	self->data.dash_length = dash_length_arg;
+	self->data.dash_space = dash_space_arg;
 
 	return 0;
 }

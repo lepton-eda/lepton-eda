@@ -73,10 +73,67 @@ static PyObject *Text_new(
 
 static int Text_init(Text *self, PyObject *args, PyObject *kwds)
 {
-	static char *kwlist[] = { NULL };
+	double x_arg = 0., y_arg = 0.;
+	int color_arg = 0;
+	int text_size_arg = 0;
+	PyObject *visibility_arg = NULL;
+	int show_name_value_arg = 0;
+	int angle_arg = 0;
+	int alignment_arg = 0;
+	PyObject *text_arg = NULL;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "", kwlist))
+	static char *kwlist[] = {
+		"x", "y",
+		"color",
+		"text_size",
+		"visibility",
+		"show_name_value",
+		"angle",
+		"alignment",
+		"text",
+		NULL
+	};
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "|ddiiOiiiO:Text", kwlist,
+		    &x_arg, &y_arg,
+		    &color_arg,
+		    &text_size_arg,
+		    &visibility_arg,
+		    &show_name_value_arg,
+		    &angle_arg,
+		    &alignment_arg,
+		    &text_arg))
 		return -1;
+
+	int visibility = 0;
+	if (visibility_arg != NULL) {
+		visibility = PyObject_IsTrue(visibility_arg);
+		if (visibility == -1)
+			return -1;
+	}
+	if (text_arg != NULL && !PyString_Check(text_arg)) {
+		char buf[BUFSIZ];
+		snprintf(buf, BUFSIZ,
+			 "text attribute must be %.50s, not %.50s",
+			 PyString_Type.tp_name, text_arg->ob_type->tp_name);
+		PyErr_SetString(PyExc_TypeError, buf);
+		return -1;
+	}
+
+	self->data.pos.x = x_arg;
+	self->data.pos.y = y_arg;
+	self->data.color = color_arg;
+	self->data.text_size = text_size_arg;
+	self->data.visibility = !!visibility;
+	self->data.show_name_value = show_name_value_arg;
+	self->data.angle = angle_arg;
+	self->data.alignment = alignment_arg;
+	if (text_arg != NULL) {
+		Py_INCREF(text_arg);
+		Py_DECREF(self->text);
+		self->text = text_arg;
+	}
 
 	return 0;
 }

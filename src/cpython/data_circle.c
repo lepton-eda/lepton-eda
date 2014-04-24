@@ -70,10 +70,61 @@ static PyObject *Circle_new(
 
 static int Circle_init(Circle *self, PyObject *args, PyObject *kwds)
 {
-	static char *kwlist[] = { NULL };
+	double x_arg = 0., y_arg = 0.;
+	double radius_arg = 0.;
+	int color_arg = 0;
+	PyObject *line_arg = NULL;
+	PyObject *fill_arg = NULL;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "", kwlist))
+	static char *kwlist[] = {
+		"x", "y",
+		"radius",
+		"color",
+		"line",
+		"fill",
+		NULL
+	};
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "|dddiOO:Circle", kwlist,
+		    &x_arg, &y_arg,
+		    &radius_arg,
+		    &color_arg,
+		    &line_arg,
+		    &fill_arg))
 		return -1;
+
+	if (line_arg != NULL && !PyObject_TypeCheck(line_arg, &LineAttrType)) {
+		char buf[BUFSIZ];
+		snprintf(buf, BUFSIZ,
+			 "line attribute must be %.50s, not %.50s",
+			 LineAttrType.tp_name, line_arg->ob_type->tp_name);
+		PyErr_SetString(PyExc_TypeError, buf);
+		return -1;
+	}
+	if (fill_arg != NULL && !PyObject_TypeCheck(fill_arg, &FillAttrType)) {
+		char buf[BUFSIZ];
+		snprintf(buf, BUFSIZ,
+			 "fill attribute must be %.50s, not %.50s",
+			 FillAttrType.tp_name, fill_arg->ob_type->tp_name);
+		PyErr_SetString(PyExc_TypeError, buf);
+		return -1;
+	}
+
+	self->data.pos.x = x_arg;
+	self->data.pos.y = y_arg;
+	self->data.radius = radius_arg;
+	self->data.color = color_arg;
+	if (line_arg != NULL) {
+		Py_INCREF(line_arg);
+		Py_DECREF(self->line);
+		self->line = line_arg;
+	}
+	if (fill_arg != NULL) {
+		Py_INCREF(fill_arg);
+		Py_DECREF(self->fill);
+		self->fill = fill_arg;
+	}
 
 	return 0;
 }

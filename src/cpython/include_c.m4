@@ -21,6 +21,12 @@ m4_define(`construct_diversion', `1')
 m4_define(`prepare_diversion', `2')
 m4_define(`new0_diversion', `3')
 m4_define(`new1_diversion', `4')
+m4_define(`init0_diversion', `10')
+m4_define(`init1_diversion', `11')
+m4_define(`init2_diversion', `12')
+m4_define(`init3_diversion', `13')
+m4_define(`init4_diversion', `14')
+m4_define(`init5_diversion', `15')
 m4_define(`traverse_diversion', `5')
 m4_define(`clear_diversion', `6')
 m4_define(`members_diversion', `7')
@@ -29,8 +35,10 @@ m4_define(`getset_diversion', `9')
 
 m4_define(`begin_divert', `m4_divert($1_diversion)m4_dnl')
 m4_define(`end_divert', `m4_divert(`-1')')
+m4_define(`inline_divert', `m4_divert($1_diversion)`'$2`'m4_divert(`-1')')
 
 m4_define(`undivert', `m4_undivert($1_diversion)m4_dnl')
+m4_define(`inline_undivert', `m4_undivert($1_diversion)')
 
 m4_define(`snip',
   `m4_define(`stored_divnum', m4_divnum)m4_ifdef(
@@ -53,7 +61,22 @@ begin_divert(`members')
 	{ "y", T_DOUBLE, offsetof(Class, data.pos.y), 0,
 	  PyDoc_STR("") },
 end_divert
+begin_divert(`init0')
+	double x_arg = 0., y_arg = 0.;
+end_divert
+begin_divert(`init1')
+		"x", "y",
+end_divert
+inline_divert(`init2', `dd')
+inline_divert(`init3', `,
+		    &x_arg, &y_arg')
+begin_divert(`init5')
+	self->data.pos.x = x_arg;
+	self->data.pos.y = y_arg;
+end_divert
 ')
+
+# ----------------------------------------------------------------------------
 
 m4_define(`cg_size', `
 begin_divert(`members')
@@ -62,26 +85,89 @@ begin_divert(`members')
 	{ "height", T_DOUBLE, offsetof(Class, data.size.y), 0,
 	  PyDoc_STR("") },
 end_divert
+begin_divert(`init0')
+	double width_arg = 0., height_arg = 0.;
+end_divert
+begin_divert(`init1')
+		"width", "height",
+end_divert
+inline_divert(`init2', `dd')
+inline_divert(`init3', `,
+		    &width_arg, &height_arg')
+begin_divert(`init5')
+	self->data.size.x = width_arg;
+	self->data.size.y = height_arg;
+end_divert
 ')
+
+# ----------------------------------------------------------------------------
 
 m4_define(`cg_int', `
 begin_divert(`members')
 	{ "`$2'", T_INT, offsetof(Class, data.`$1'), 0,
 	  PyDoc_STR("") },
 end_divert
+begin_divert(`init0')
+	int `$2'_arg = 0;
+end_divert
+begin_divert(`init1')
+		"`$2'",
+end_divert
+inline_divert(`init2', `i')
+inline_divert(`init3', `,
+		    &`$2'_arg')
+begin_divert(`init5')
+	self->data.`$1' = `$2'_arg;
+end_divert
 ')
+
+# ----------------------------------------------------------------------------
 
 m4_define(`cg_double', `
 begin_divert(`members')
 	{ "`$2'", T_DOUBLE, offsetof(Class, data.`$1'), 0,
 	  PyDoc_STR("") },
 end_divert
+begin_divert(`init0')
+	double `$2'_arg = 0.;
+end_divert
+begin_divert(`init1')
+		"`$2'",
+end_divert
+inline_divert(`init2', `d')
+inline_divert(`init3', `,
+		    &`$2'_arg')
+begin_divert(`init5')
+	self->data.`$1' = `$2'_arg;
+end_divert
 ')
+
+# ----------------------------------------------------------------------------
 
 m4_define(`cg_bool', `
 begin_divert(`members')
 	{ "`$2'", T_BOOL, offsetof(Class, data.`$1'), 0,
 	  PyDoc_STR("") },
+end_divert
+begin_divert(`init0')
+	PyObject *`$2'_arg = NULL;
+end_divert
+begin_divert(`init1')
+		"`$2'",
+end_divert
+inline_divert(`init2', `O')
+inline_divert(`init3', `,
+		    &`$2'_arg')
+begin_divert(`init4')
+	int `$2' = 0;
+	if (`$2'_arg != NULL) {
+		`$2' = PyObject_IsTrue(`$2'_arg);
+		if (`$2' == -1)
+			return -1;
+	}
+end_divert
+begin_divert(`init5')
+	self->data.`$1' = !!`$2';
 end_divert
 ')
 
@@ -112,6 +198,32 @@ begin_divert(`new1')
 	if (self->`$1' == NULL) {
 		Py_DECREF(self);
 		return NULL;
+	}
+end_divert
+begin_divert(`init0')
+	PyObject *`$2'_arg = NULL;
+end_divert
+begin_divert(`init1')
+		"`$2'",
+end_divert
+inline_divert(`init2', `O')
+inline_divert(`init3', `,
+		    &`$2'_arg')
+begin_divert(`init4')
+	if (`$2'_arg != NULL && !PyString_Check(`$2'_arg)) {
+		char buf[BUFSIZ];
+		snprintf(buf, BUFSIZ,
+			 "`$2' attribute must be %.50s, not %.50s",
+			 PyString_Type.tp_name, `$2'_arg->ob_type->tp_name);
+		PyErr_SetString(PyExc_TypeError, buf);
+		return -1;
+	}
+end_divert
+begin_divert(`init5')
+	if (`$2'_arg != NULL) {
+		Py_INCREF(`$2'_arg);
+		Py_DECREF(self->`$1');
+		self->`$1' = `$2'_arg;
 	}
 end_divert
 begin_divert(`traverse')
@@ -176,6 +288,32 @@ begin_divert(`new1')
 		return NULL;
 	}
 end_divert
+begin_divert(`init0')
+	PyObject *line_arg = NULL;
+end_divert
+begin_divert(`init1')
+		"line",
+end_divert
+inline_divert(`init2', `O')
+inline_divert(`init3', `,
+		    &line_arg')
+begin_divert(`init4')
+	if (line_arg != NULL && !PyObject_TypeCheck(line_arg, &LineAttrType)) {
+		char buf[BUFSIZ];
+		snprintf(buf, BUFSIZ,
+			 "line attribute must be %.50s, not %.50s",
+			 LineAttrType.tp_name, line_arg->ob_type->tp_name);
+		PyErr_SetString(PyExc_TypeError, buf);
+		return -1;
+	}
+end_divert
+begin_divert(`init5')
+	if (line_arg != NULL) {
+		Py_INCREF(line_arg);
+		Py_DECREF(self->line);
+		self->line = line_arg;
+	}
+end_divert
 begin_divert(`traverse')
 	Py_VISIT(self->line);
 end_divert
@@ -236,6 +374,32 @@ begin_divert(`new1')
 	if (self->fill == NULL) {
 		Py_DECREF(self);
 		return NULL;
+	}
+end_divert
+begin_divert(`init0')
+	PyObject *fill_arg = NULL;
+end_divert
+begin_divert(`init1')
+		"fill",
+end_divert
+inline_divert(`init2', `O')
+inline_divert(`init3', `,
+		    &fill_arg')
+begin_divert(`init4')
+	if (fill_arg != NULL && !PyObject_TypeCheck(fill_arg, &FillAttrType)) {
+		char buf[BUFSIZ];
+		snprintf(buf, BUFSIZ,
+			 "fill attribute must be %.50s, not %.50s",
+			 FillAttrType.tp_name, fill_arg->ob_type->tp_name);
+		PyErr_SetString(PyExc_TypeError, buf);
+		return -1;
+	}
+end_divert
+begin_divert(`init5')
+	if (fill_arg != NULL) {
+		Py_INCREF(fill_arg);
+		Py_DECREF(self->fill);
+		self->fill = fill_arg;
 	}
 end_divert
 begin_divert(`traverse')
@@ -352,10 +516,20 @@ snap -----------------------------------
 
 static int Class(`init')(Class *self, PyObject *args, PyObject *kwds)
 {
-	static char *kwlist[] = { NULL };
+undivert(`init0')
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "", kwlist))
+	static char *kwlist[] = {
+undivert(`init1')
+		NULL
+	};
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "|inline_undivert(`init2'):Class", kwlist`'inline_undivert(`init3')))
 		return -1;
+
+undivert(`init4')
+
+undivert(`init5')
 
 	return 0;
 }

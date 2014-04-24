@@ -52,10 +52,40 @@ static PyObject *Picture_new(
 
 static int Picture_init(Picture *self, PyObject *args, PyObject *kwds)
 {
-	static char *kwlist[] = { NULL };
+	double x_arg = 0., y_arg = 0.;
+	double width_arg = 0., height_arg = 0.;
+	int angle_arg = 0;
+	PyObject *mirror_arg = NULL;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "", kwlist))
+	static char *kwlist[] = {
+		"x", "y",
+		"width", "height",
+		"angle",
+		"mirror",
+		NULL
+	};
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "|ddddiO:Picture", kwlist,
+		    &x_arg, &y_arg,
+		    &width_arg, &height_arg,
+		    &angle_arg,
+		    &mirror_arg))
 		return -1;
+
+	int mirror = 0;
+	if (mirror_arg != NULL) {
+		mirror = PyObject_IsTrue(mirror_arg);
+		if (mirror == -1)
+			return -1;
+	}
+
+	self->data.pos.x = x_arg;
+	self->data.pos.y = y_arg;
+	self->data.size.x = width_arg;
+	self->data.size.y = height_arg;
+	self->data.angle = angle_arg;
+	self->data.mirror = !!mirror;
 
 	return 0;
 }

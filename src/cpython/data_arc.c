@@ -63,10 +63,53 @@ static PyObject *Arc_new(
 
 static int Arc_init(Arc *self, PyObject *args, PyObject *kwds)
 {
-	static char *kwlist[] = { NULL };
+	double x_arg = 0., y_arg = 0.;
+	double radius_arg = 0.;
+	int startangle_arg = 0;
+	int sweepangle_arg = 0;
+	int color_arg = 0;
+	PyObject *line_arg = NULL;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "", kwlist))
+	static char *kwlist[] = {
+		"x", "y",
+		"radius",
+		"startangle",
+		"sweepangle",
+		"color",
+		"line",
+		NULL
+	};
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "|dddiiiO:Arc", kwlist,
+		    &x_arg, &y_arg,
+		    &radius_arg,
+		    &startangle_arg,
+		    &sweepangle_arg,
+		    &color_arg,
+		    &line_arg))
 		return -1;
+
+	if (line_arg != NULL && !PyObject_TypeCheck(line_arg, &LineAttrType)) {
+		char buf[BUFSIZ];
+		snprintf(buf, BUFSIZ,
+			 "line attribute must be %.50s, not %.50s",
+			 LineAttrType.tp_name, line_arg->ob_type->tp_name);
+		PyErr_SetString(PyExc_TypeError, buf);
+		return -1;
+	}
+
+	self->data.pos.x = x_arg;
+	self->data.pos.y = y_arg;
+	self->data.radius = radius_arg;
+	self->data.startangle = startangle_arg;
+	self->data.sweepangle = sweepangle_arg;
+	self->data.color = color_arg;
+	if (line_arg != NULL) {
+		Py_INCREF(line_arg);
+		Py_DECREF(self->line);
+		self->line = line_arg;
+	}
 
 	return 0;
 }

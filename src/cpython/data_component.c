@@ -52,10 +52,45 @@ static PyObject *Component_new(
 
 static int Component_init(Component *self, PyObject *args, PyObject *kwds)
 {
-	static char *kwlist[] = { NULL };
+	double x_arg = 0., y_arg = 0.;
+	PyObject *selectable_arg = NULL;
+	int angle_arg = 0;
+	PyObject *mirror_arg = NULL;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "", kwlist))
+	static char *kwlist[] = {
+		"x", "y",
+		"selectable",
+		"angle",
+		"mirror",
+		NULL
+	};
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "|ddOiO:Component", kwlist,
+		    &x_arg, &y_arg,
+		    &selectable_arg,
+		    &angle_arg,
+		    &mirror_arg))
 		return -1;
+
+	int selectable = 0;
+	if (selectable_arg != NULL) {
+		selectable = PyObject_IsTrue(selectable_arg);
+		if (selectable == -1)
+			return -1;
+	}
+	int mirror = 0;
+	if (mirror_arg != NULL) {
+		mirror = PyObject_IsTrue(mirror_arg);
+		if (mirror == -1)
+			return -1;
+	}
+
+	self->data.pos.x = x_arg;
+	self->data.pos.y = y_arg;
+	self->data.selectable = !!selectable;
+	self->data.angle = angle_arg;
+	self->data.mirror = !!mirror;
 
 	return 0;
 }

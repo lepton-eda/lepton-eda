@@ -18,6 +18,7 @@ tests = snippets/functions.py \
 	copy_attached.py \
 	copy_object.py \
 	copy_objects.py \
+	data_ctors.py \
 	delete_sel.py \
 	exist.py \
 	get_loc_attach.py \

@@ -52,10 +52,60 @@ static PyObject *Net_new(
 
 static int Net_init(Net *self, PyObject *args, PyObject *kwds)
 {
-	static char *kwlist[] = { NULL };
+	double x_arg = 0., y_arg = 0.;
+	double width_arg = 0., height_arg = 0.;
+	int color_arg = 0;
+	PyObject *is_bus_arg = NULL;
+	PyObject *is_pin_arg = NULL;
+	PyObject *is_inverted_arg = NULL;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "", kwlist))
+	static char *kwlist[] = {
+		"x", "y",
+		"width", "height",
+		"color",
+		"is_bus",
+		"is_pin",
+		"is_inverted",
+		NULL
+	};
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "|ddddiOOO:Net", kwlist,
+		    &x_arg, &y_arg,
+		    &width_arg, &height_arg,
+		    &color_arg,
+		    &is_bus_arg,
+		    &is_pin_arg,
+		    &is_inverted_arg))
 		return -1;
+
+	int is_bus = 0;
+	if (is_bus_arg != NULL) {
+		is_bus = PyObject_IsTrue(is_bus_arg);
+		if (is_bus == -1)
+			return -1;
+	}
+	int is_pin = 0;
+	if (is_pin_arg != NULL) {
+		is_pin = PyObject_IsTrue(is_pin_arg);
+		if (is_pin == -1)
+			return -1;
+	}
+	int is_inverted = 0;
+	if (is_inverted_arg != NULL) {
+		is_inverted = PyObject_IsTrue(is_inverted_arg);
+		if (is_inverted == -1)
+			return -1;
+	}
+
+	self->data.pos.x = x_arg;
+	self->data.pos.y = y_arg;
+	self->data.size.x = width_arg;
+	self->data.size.y = height_arg;
+	self->data.color = color_arg;
+	self->data.is_bus = !!is_bus;
+	self->data.is_pin = !!is_pin;
+	self->data.is_inverted = !!is_inverted;
 
 	return 0;
 }

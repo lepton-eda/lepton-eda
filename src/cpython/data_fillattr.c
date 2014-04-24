@@ -45,10 +45,40 @@ static PyObject *FillAttr_new(
 
 static int FillAttr_init(FillAttr *self, PyObject *args, PyObject *kwds)
 {
-	static char *kwlist[] = { NULL };
+	int type_arg = 0;
+	double width_arg = 0.;
+	int angle0_arg = 0;
+	double pitch0_arg = 0.;
+	int angle1_arg = 0;
+	double pitch1_arg = 0.;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwds, "", kwlist))
+	static char *kwlist[] = {
+		"type",
+		"width",
+		"angle0",
+		"pitch0",
+		"angle1",
+		"pitch1",
+		NULL
+	};
+
+	if (!PyArg_ParseTupleAndKeywords(
+		    args, kwds, "|ididid:FillAttr", kwlist,
+		    &type_arg,
+		    &width_arg,
+		    &angle0_arg,
+		    &pitch0_arg,
+		    &angle1_arg,
+		    &pitch1_arg))
 		return -1;
+
+
+	self->data.type = type_arg;
+	self->data.width = width_arg;
+	self->data.angle0 = angle0_arg;
+	self->data.pitch0 = pitch0_arg;
+	self->data.angle1 = angle1_arg;
+	self->data.pitch1 = pitch1_arg;
 
 	return 0;
 }
