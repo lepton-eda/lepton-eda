@@ -121,12 +121,13 @@ assert_attributes(xorn.storage.Circle(), {
         'line': xorn.storage.LineAttr,
         'fill': xorn.storage.FillAttr,
 })
-assert_attributes(xorn.storage.Component(), {
+assert_attributes(xorn.storage.Component(symbol = None), {
         'x': float,
         'y': float,
         'selectable': bool,
         'angle': int,
         'mirror': bool,
+        'symbol': types.NoneType,
 })
 assert_attributes(xorn.storage.Line(), {
         'x': float,
@@ -152,13 +153,14 @@ assert_attributes(xorn.storage.Path(), {
         'line': xorn.storage.LineAttr,
         'fill': xorn.storage.FillAttr,
 })
-assert_attributes(xorn.storage.Picture(), {
+assert_attributes(xorn.storage.Picture(pixmap = None), {
         'x': float,
         'y': float,
         'width': float,
         'height': float,
         'angle': int,
         'mirror': bool,
+        'pixmap': types.NoneType,
 })
 assert_attributes(xorn.storage.Text(), {
         'x': float,

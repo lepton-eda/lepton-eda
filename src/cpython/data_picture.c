@@ -22,6 +22,13 @@
 
 PyObject *construct_picture(const struct xornsch_picture *data)
 {
+	if (data->pixmap.incref != (void (*)(void *))Py_IncRef ||
+	    data->pixmap.decref != (void (*)(void *))Py_DecRef) {
+		PyErr_SetString(PyExc_ValueError,
+				"pixmap cannot be handled by Xorn Python API");
+		return NULL;
+	}
+
 	PyObject *no_args = PyTuple_New(0);
 	Picture *self = (Picture *)PyObject_CallObject(
 		(PyObject *)&PictureType, no_args);
@@ -31,6 +38,7 @@ PyObject *construct_picture(const struct xornsch_picture *data)
 		return NULL;
 
 	self->data = *data;
+	Py_XINCREF(self->data.pixmap.ptr);
 	return (PyObject *)self;
 }
 
@@ -47,6 +55,12 @@ static PyObject *Picture_new(
 	Picture *self = (Picture *)type->tp_alloc(type, 0);
 	if (self == NULL)
 		return NULL;
+
+	PyObject *no_args = PyTuple_New(0);
+	self->data.pixmap.incref = (void (*)(void *))Py_IncRef;
+	self->data.pixmap.decref = (void (*)(void *))Py_DecRef;
+	Py_DECREF(no_args);
+
 	return (PyObject *)self;
 }
 
@@ -56,21 +70,24 @@ static int Picture_init(Picture *self, PyObject *args, PyObject *kwds)
 	double width_arg = 0., height_arg = 0.;
 	int angle_arg = 0;
 	PyObject *mirror_arg = NULL;
+	PyObject *pixmap_arg = NULL;
 
 	static char *kwlist[] = {
 		"x", "y",
 		"width", "height",
 		"angle",
 		"mirror",
+		"pixmap",
 		NULL
 	};
 
 	if (!PyArg_ParseTupleAndKeywords(
-		    args, kwds, "|ddddiO:Picture", kwlist,
+		    args, kwds, "|ddddiOO:Picture", kwlist,
 		    &x_arg, &y_arg,
 		    &width_arg, &height_arg,
 		    &angle_arg,
-		    &mirror_arg))
+		    &mirror_arg,
+		    &pixmap_arg))
 		return -1;
 
 	int mirror = 0;
@@ -86,12 +103,27 @@ static int Picture_init(Picture *self, PyObject *args, PyObject *kwds)
 	self->data.size.y = height_arg;
 	self->data.angle = angle_arg;
 	self->data.mirror = !!mirror;
+	self->data.pixmap.ptr = pixmap_arg;
+	Py_XINCREF(pixmap_arg);
 
+	return 0;
+}
+
+static int Picture_traverse(Picture *self, visitproc visit, void *arg)
+{
+	Py_VISIT(self->data.pixmap.ptr);
+	return 0;
+}
+
+static int Picture_clear(Picture *self)
+{
+	Py_CLEAR(self->data.pixmap.ptr);
 	return 0;
 }
 
 static void Picture_dealloc(Picture *self)
 {
+	Picture_clear(self);
 	self->ob_type->tp_free((PyObject *)self);
 }
 
@@ -108,6 +140,12 @@ static PyMemberDef Picture_members[] = {
 	  PyDoc_STR("") },
 	{ "mirror", T_BOOL, offsetof(Picture, data.mirror), 0,
 	  PyDoc_STR("") },
+	{ "pixmap", T_OBJECT_EX, offsetof(Picture, data.pixmap.ptr), 0,
+	  PyDoc_STR("") },
+	{ NULL }  /* Sentinel */
+};
+
+static PyGetSetDef Picture_getset[] = {
 	{ NULL }  /* Sentinel */
 };
 
@@ -146,7 +184,7 @@ PyTypeObject PictureType = {
 	NULL,				/* PyBufferProcs *tp_as_buffer */
 
 	/* Flags to define presence of optional/expanded features */
-	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
+	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
 					/* long tp_flags */
 
 	/* Documentation string */
@@ -155,10 +193,10 @@ PyTypeObject PictureType = {
 
 	/* Assigned meaning in release 2.0 */
 	/* call function for all accessible objects */
-	NULL,				/* traverseproc tp_traverse */
+	(traverseproc)Picture_traverse,/* traverseproc tp_traverse */
 
 	/* delete references to contained objects */
-	NULL,				/* inquiry tp_clear */
+	(inquiry)Picture_clear,	/* inquiry tp_clear */
 
 	/* Assigned meaning in release 2.1 */
 	/* rich comparisons */
@@ -175,7 +213,7 @@ PyTypeObject PictureType = {
 	/* Attribute descriptor and subclassing stuff */
 	NULL,				/* struct PyMethodDef *tp_methods */
 	Picture_members,		/* struct PyMemberDef *tp_members */
-	NULL,				/* struct PyGetSetDef *tp_getset */
+	Picture_getset,		/* struct PyGetSetDef *tp_getset */
 	NULL,				/* struct _typeobject *tp_base */
 	NULL,				/* PyObject *tp_dict */
 	NULL,				/* descrgetfunc tp_descr_get */

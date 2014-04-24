@@ -20,5 +20,5 @@ cg_pos
 cg_bool(`selectable', `selectable')
 cg_int(`angle', `angle')
 cg_bool(`mirror', `mirror')
-# drawing contents;
+cg_pointer(`symbol', `symbol')
 cg_output

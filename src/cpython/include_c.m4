@@ -17,6 +17,7 @@ m4_divert(`-1')
 
 m4_define(`stdout_diversion', `0')
 
+m4_define(`preconstruct_diversion', `16')
 m4_define(`construct_diversion', `1')
 m4_define(`prepare_diversion', `2')
 m4_define(`new0_diversion', `3')
@@ -271,6 +272,51 @@ end_divert
 
 # ----------------------------------------------------------------------------
 
+m4_define(`cg_pointer', `
+  m4_define(`is_complex')
+begin_divert(`members')
+	{ "`$2'", T_OBJECT_EX, offsetof(Class, data.`$1'.ptr), 0,
+	  PyDoc_STR("") },
+end_divert
+begin_divert(`preconstruct')
+	if (data->`$1'.incref != (void (*)(void *))Py_IncRef ||
+	    data->`$1'.decref != (void (*)(void *))Py_DecRef) {
+		PyErr_SetString(PyExc_ValueError,
+				"`$2' cannot be handled by Xorn Python API");
+		return NULL;
+	}
+
+end_divert
+begin_divert(`construct')
+	Py_XINCREF(self->data.`$1'.ptr);
+end_divert
+begin_divert(`new0')
+	self->data.`$1'.incref = (void (*)(void *))Py_IncRef;
+	self->data.`$1'.decref = (void (*)(void *))Py_DecRef;
+end_divert
+begin_divert(`init0')
+	PyObject *`$2'_arg = NULL;
+end_divert
+begin_divert(`init1')
+		"`$2'",
+end_divert
+inline_divert(`init2', `O')
+inline_divert(`init3', `,
+		    &`$2'_arg')
+begin_divert(`init5')
+	self->data.`$1'.ptr = `$2'_arg;
+	Py_XINCREF(`$2'_arg);
+end_divert
+begin_divert(`traverse')
+	Py_VISIT(self->data.`$1'.ptr);
+end_divert
+begin_divert(`clear')
+	Py_CLEAR(self->data.`$1'.ptr);
+end_divert
+')
+
+# ----------------------------------------------------------------------------
+
 m4_define(`cg_line', `
   m4_define(`is_complex')
 begin_divert(`construct')
@@ -474,6 +520,7 @@ begin_divert(`stdout')
 
 PyObject *construct_`'typename`'(const struct xornsch_`'typename *data)
 {
+undivert(`preconstruct')
 	PyObject *no_args = PyTuple_New(0);
 	Class *self = (Class *)PyObject_CallObject(
 		(PyObject *)&Class`'Type, no_args);

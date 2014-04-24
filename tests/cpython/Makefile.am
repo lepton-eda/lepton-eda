@@ -28,6 +28,7 @@ tests = snippets/functions.py \
 	get_obtype.py \
 	is_selected.py \
 	module.py \
+	pointer.py \
 	query_attached.py \
 	reloc_attach.py \
 	reloc_order.py \

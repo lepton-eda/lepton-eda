@@ -20,5 +20,5 @@ cg_pos
 cg_size
 cg_int(`angle', `angle')
 cg_bool(`mirror', `mirror')
-# pixmap pixmap;
+cg_pointer(`pixmap', `pixmap')
 cg_output

@@ -520,6 +520,7 @@ class Component:
         self.selectable = False
         self.angle = 0
         self.mirror = False
+        self.symbol = None
 
 ## \brief Schematic line.
 
@@ -564,6 +565,7 @@ class Picture:
         self.height = 0.
         self.angle = 0
         self.mirror = False
+        self.pixmap = None
 
 ## \brief Schematic text or attribute.
 

@@ -22,6 +22,13 @@
 
 PyObject *construct_component(const struct xornsch_component *data)
 {
+	if (data->symbol.incref != (void (*)(void *))Py_IncRef ||
+	    data->symbol.decref != (void (*)(void *))Py_DecRef) {
+		PyErr_SetString(PyExc_ValueError,
+				"symbol cannot be handled by Xorn Python API");
+		return NULL;
+	}
+
 	PyObject *no_args = PyTuple_New(0);
 	Component *self = (Component *)PyObject_CallObject(
 		(PyObject *)&ComponentType, no_args);
@@ -31,6 +38,7 @@ PyObject *construct_component(const struct xornsch_component *data)
 		return NULL;
 
 	self->data = *data;
+	Py_XINCREF(self->data.symbol.ptr);
 	return (PyObject *)self;
 }
 
@@ -47,6 +55,12 @@ static PyObject *Component_new(
 	Component *self = (Component *)type->tp_alloc(type, 0);
 	if (self == NULL)
 		return NULL;
+
+	PyObject *no_args = PyTuple_New(0);
+	self->data.symbol.incref = (void (*)(void *))Py_IncRef;
+	self->data.symbol.decref = (void (*)(void *))Py_DecRef;
+	Py_DECREF(no_args);
+
 	return (PyObject *)self;
 }
 
@@ -56,21 +70,24 @@ static int Component_init(Component *self, PyObject *args, PyObject *kwds)
 	PyObject *selectable_arg = NULL;
 	int angle_arg = 0;
 	PyObject *mirror_arg = NULL;
+	PyObject *symbol_arg = NULL;
 
 	static char *kwlist[] = {
 		"x", "y",
 		"selectable",
 		"angle",
 		"mirror",
+		"symbol",
 		NULL
 	};
 
 	if (!PyArg_ParseTupleAndKeywords(
-		    args, kwds, "|ddOiO:Component", kwlist,
+		    args, kwds, "|ddOiOO:Component", kwlist,
 		    &x_arg, &y_arg,
 		    &selectable_arg,
 		    &angle_arg,
-		    &mirror_arg))
+		    &mirror_arg,
+		    &symbol_arg))
 		return -1;
 
 	int selectable = 0;
@@ -91,12 +108,27 @@ static int Component_init(Component *self, PyObject *args, PyObject *kwds)
 	self->data.selectable = !!selectable;
 	self->data.angle = angle_arg;
 	self->data.mirror = !!mirror;
+	self->data.symbol.ptr = symbol_arg;
+	Py_XINCREF(symbol_arg);
 
+	return 0;
+}
+
+static int Component_traverse(Component *self, visitproc visit, void *arg)
+{
+	Py_VISIT(self->data.symbol.ptr);
+	return 0;
+}
+
+static int Component_clear(Component *self)
+{
+	Py_CLEAR(self->data.symbol.ptr);
 	return 0;
 }
 
 static void Component_dealloc(Component *self)
 {
+	Component_clear(self);
 	self->ob_type->tp_free((PyObject *)self);
 }
 
@@ -111,6 +143,12 @@ static PyMemberDef Component_members[] = {
 	  PyDoc_STR("") },
 	{ "mirror", T_BOOL, offsetof(Component, data.mirror), 0,
 	  PyDoc_STR("") },
+	{ "symbol", T_OBJECT_EX, offsetof(Component, data.symbol.ptr), 0,
+	  PyDoc_STR("") },
+	{ NULL }  /* Sentinel */
+};
+
+static PyGetSetDef Component_getset[] = {
 	{ NULL }  /* Sentinel */
 };
 
@@ -149,7 +187,7 @@ PyTypeObject ComponentType = {
 	NULL,				/* PyBufferProcs *tp_as_buffer */
 
 	/* Flags to define presence of optional/expanded features */
-	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
+	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
 					/* long tp_flags */
 
 	/* Documentation string */
@@ -158,10 +196,10 @@ PyTypeObject ComponentType = {
 
 	/* Assigned meaning in release 2.0 */
 	/* call function for all accessible objects */
-	NULL,				/* traverseproc tp_traverse */
+	(traverseproc)Component_traverse,/* traverseproc tp_traverse */
 
 	/* delete references to contained objects */
-	NULL,				/* inquiry tp_clear */
+	(inquiry)Component_clear,	/* inquiry tp_clear */
 
 	/* Assigned meaning in release 2.1 */
 	/* rich comparisons */
@@ -178,7 +216,7 @@ PyTypeObject ComponentType = {
 	/* Attribute descriptor and subclassing stuff */
 	NULL,				/* struct PyMethodDef *tp_methods */
 	Component_members,		/* struct PyMemberDef *tp_members */
-	NULL,				/* struct PyGetSetDef *tp_getset */
+	Component_getset,		/* struct PyGetSetDef *tp_getset */
 	NULL,				/* struct _typeobject *tp_base */
 	NULL,				/* PyObject *tp_dict */
 	NULL,				/* descrgetfunc tp_descr_get */
