@@ -15,7 +15,9 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 tests = base64.py \
-	proxy.py
+	proxy.py \
+	geda/attrib.py \
+	geda/parse_attrib.py
 
 EXTRA_DIST = $(tests)
 

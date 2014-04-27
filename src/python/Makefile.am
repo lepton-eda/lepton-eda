@@ -22,4 +22,6 @@ pkgpython_PYTHON = \
 noinst_PYTHON = storage.py
 
 gedadir = $(pkgpythondir)/geda
-geda_PYTHON = geda/__init__.py
+geda_PYTHON = \
+	geda/__init__.py \
+	geda/attrib.py
