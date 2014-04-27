@@ -63,6 +63,13 @@ static PyObject *get_objects_attached_to(
 		return NULL;
 	}
 
+	if (ob_arg != Py_None &&
+	    !xorn_object_exists_in_revision(((Revision *)rev_arg)->rev,
+					    ((Object *)ob_arg)->ob)) {
+		PyErr_SetString(PyExc_KeyError, "Object does not exist");
+		return NULL;
+	}
+
 	xorn_object_t *objects;
 	size_t count;
 
@@ -206,6 +213,13 @@ static PyObject *select_attached_to(
 			 ObjectType.tp_name,
 			 ob_arg->ob_type->tp_name);
 		PyErr_SetString(PyExc_TypeError, buf);
+		return NULL;
+	}
+
+	if (ob_arg != Py_None &&
+	    !xorn_object_exists_in_revision(((Revision *)rev_arg)->rev,
+					    ((Object *)ob_arg)->ob)) {
+		PyErr_SetString(PyExc_KeyError, "Object does not exist");
 		return NULL;
 	}
 

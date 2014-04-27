@@ -316,6 +316,7 @@ class Selection:
 # *not* attached.  The objects are returned in their actual order.
 # Objects attached to the returned objects are not returned.
 #
+# \throw KeyError    if \a ob is not \c None and does not exist in \a rev
 # \throw MemoryError if there is not enough memory
 
 def get_objects_attached_to(rev, ob):
@@ -383,7 +384,7 @@ def select_object(ob):
 # The object may be \c None, in which case the selection contains all
 # objects which are *not* attached.
 #
-# \throw KeyError    if \a ob does not exist in \a rev
+# \throw KeyError    if \a ob is not \c None and does not exist in \a rev
 # \throw MemoryError if there is not enough memory
 
 def select_attached_to(rev, ob):
