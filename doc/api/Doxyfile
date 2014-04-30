@@ -751,6 +751,7 @@ INPUT                  = .. \
                          ../../src/storage/object.cc \
                          ../../src/storage/revision.cc \
                          ../../src/storage/selection.cc \
+                         ./xorn/fileutils.py \
                          ./xorn/proxy.py \
                          ./xorn/storage.py
 
