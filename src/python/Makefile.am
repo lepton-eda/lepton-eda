@@ -16,6 +16,7 @@
 
 pkgpython_PYTHON = \
 	__init__.py \
+	base64.py \
 	fileutils.py \
 	proxy.py
 noinst_PYTHON = storage.py
