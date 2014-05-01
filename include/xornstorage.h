@@ -151,6 +151,12 @@ struct xorn_double2d {
 	double x, y;
 };
 
+struct xorn_pointer {
+	void *ptr;
+	void (*incref)(void *ptr);
+	void (*decref)(void *ptr);
+};
+
 struct xornsch_line_attr {
 	double width;
 	int cap_style;
@@ -198,7 +204,7 @@ struct xornsch_component {
 	bool selectable;
 	int angle;
 	bool mirror;
-	/* drawing contents; */
+	struct xorn_pointer symbol;
 };
 
 struct xornsch_line {
@@ -229,7 +235,7 @@ struct xornsch_picture {
 	struct xorn_double2d size;
 	int angle;
 	bool mirror;
-	/* pixmap pixmap; */
+	struct xorn_pointer pixmap;
 };
 
 struct xornsch_text {

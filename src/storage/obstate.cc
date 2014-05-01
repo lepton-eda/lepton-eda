@@ -56,14 +56,34 @@ static void duplicate_string(xorn_string &str)
 	str.s = buf;
 }
 
+static void incref_pointer(xorn_pointer &pointer)
+{
+	if (pointer.incref)
+		pointer.incref(pointer.ptr);
+}
+
+static void decref_pointer(xorn_pointer &pointer)
+{
+	if (pointer.decref)
+		pointer.decref(pointer.ptr);
+}
+
 obstate::obstate(xorn_obtype_t type, void const *data)
 	: refcnt(1), type(type), data(copy_data(type, data))
 {
 	try {
 		switch(type) {
+		case xornsch_obtype_component:
+			incref_pointer(
+				((xornsch_component *)this->data)->symbol);
+			break;
 		case xornsch_obtype_path:
 			duplicate_string(
 				((xornsch_path *)this->data)->pathdata);
+			break;
+		case xornsch_obtype_picture:
+			incref_pointer(
+				((xornsch_picture *)this->data)->pixmap);
 			break;
 		case xornsch_obtype_text:
 			duplicate_string(((xornsch_text *)this->data)->text);
@@ -80,8 +100,14 @@ obstate::obstate(xorn_obtype_t type, void const *data)
 obstate::~obstate()
 {
 	switch(type) {
+	case xornsch_obtype_component:
+		decref_pointer(((xornsch_component *)data)->symbol);
+		break;
 	case xornsch_obtype_path:
 		free(const_cast<char *>(((xornsch_path *)data)->pathdata.s));
+		break;
+	case xornsch_obtype_picture:
+		decref_pointer(((xornsch_picture *)data)->pixmap);
 		break;
 	case xornsch_obtype_text:
 		free(const_cast<char *>(((xornsch_text *)data)->text.s));
