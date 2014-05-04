@@ -6,8 +6,8 @@ following components:
 - \ref storage "libxornstorage", a shared library encapsulating the
   details of object representation in memory
 
-For more general information about these projects, see
-http://hedmen.org/xi/.
+For more general information about this project, see
+http://hedmen.org/xorn/.
 
 --------------------------------------------------------------------------------
 
