@@ -558,7 +558,7 @@ class Net:
 
 class Path:
     def __init__(self):
-        self.pathdata = ""
+        self.pathdata = ''
         self.color = 0
         self.line = LineAttr()
         self.fill = FillAttr()
@@ -587,4 +587,4 @@ class Text:
         self.show_name_value = 0
         self.angle = 0
         self.alignment = 0
-        self.text = ""
+        self.text = ''
