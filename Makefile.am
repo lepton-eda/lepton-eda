@@ -26,6 +26,7 @@ include_HEADERS = include/xornstorage.h
 
 dist_bin_SCRIPTS = \
 	bin/xorn \
+	bin/xorn-extract-symbol \
 	bin/xorn-find-symbol-by-pinout
 
 ACLOCAL_AMFLAGS = -I m4
