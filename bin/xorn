@@ -1,0 +1,129 @@
+#!/usr/bin/python
+# Copyright (C) 2013, 2014 Roland Lutz
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+
+import getopt, imp, os, sys
+from gettext import gettext as _
+import xorn.command
+
+def main():
+    try:
+        options, remaining = getopt.getopt(
+            xorn.command.args, '', ['help', 'version'])
+    except getopt.GetoptError as e:
+        xorn.command.invalid_arguments(e.msg)
+
+    for option, value in options:
+        if option == '--help':
+	    sys.stdout.write(_(
+"Usage: %s COMMAND [ARGS]...\n"
+"       %s --help\n"
+"       %s --version\n")
+                             % (xorn.command.program_name,
+                                xorn.command.program_name,
+                                xorn.command.program_name))
+	    sys.stdout.write("\n")
+	    sys.stdout.write(_(
+"      --help            give this help\n"
+"      --version         display version number\n"))
+	    sys.stdout.write("\n")
+	    sys.stdout.write(_("Report %s bugs to %s\n")
+                             % (xorn.config.PACKAGE_NAME,
+                                xorn.config.PACKAGE_BUGREPORT))
+            sys.exit(0)
+
+        if option == '--version':
+            xorn.command.core_version()
+
+    if not remaining:
+        xorn.command.invalid_arguments(_("missing command name"))
+
+    short_name = 'xorn-' + remaining[0]
+
+    for path in os.environ['PATH'].split(':'):
+        fn = os.path.join(path, short_name)
+        if not os.access(fn, os.X_OK):
+            continue
+
+        try:
+            f = open(fn)
+        except IOError as e:
+            sys.stderr.write(_("%s: failed to open '%s': %s\n") % (
+                    xorn.command.program_short_name, fn, e.strerror))
+            sys.exit(1)
+
+        try:
+            interpreter = f.readline()
+        except IOError as e:
+            sys.stderr.write(_("%s: failed to read '%s': %s\n") % (
+                    xorn.command.program_short_name, fn, e.strerror))
+            sys.exit(1)
+
+        if interpreter not in ['#!/usr/bin/python\n',
+                               '#!/usr/bin/env python\n']:
+            try:
+                f.close()
+            except IOError as e:
+                sys.stderr.write(_("%s: failed to close '%s': %s\n") % (
+                        xorn.command.program_short_name, fn, e.strerror))
+                sys.exit(1)
+
+            sys.stderr.write(_("Executing `%s'\n") % fn)
+            try:
+                os.execl(fn, fn, *remaining[1:])
+            except OSError as e:
+                sys.stderr.write(_("%s: failed to execute '%s': %s\n") % (
+                        xorn.command.program_short_name, fn, e.strerror))
+                sys.exit(1)
+
+        xorn.command.program_name += ' ' + remaining[0]
+        xorn.command.program_short_name = short_name
+        xorn.command.args = remaining[1:]
+
+        try:
+            try:
+                module = imp.load_module(
+                    short_name, f, fn, ('', 'r', imp.PY_SOURCE))
+            finally:
+                f.close()
+        except SystemExit:
+            raise
+        except:
+            sys.stderr.write(_("`%s' failed to load.\n") % short_name)
+            sys.stderr.write(_("This is an error.  Please report it to %s\n")
+                             % xorn.command.bugreport)
+            sys.stderr.write('\n')
+            raise
+
+        try:
+            if 'main' in module.__dict__:
+                module.main()
+        except SystemExit:
+            raise
+        except:
+            sys.stderr.write(_("`%s' raised an uncaught exception.\n")
+                             % short_name)
+            sys.stderr.write(_("This is an error.  Please report it to %s\n")
+                             % xorn.command.bugreport)
+            sys.stderr.write('\n')
+            raise
+
+        return
+
+    xorn.command.invalid_arguments(_("%s: no such subcommand") % remaining[0])
+
+if __name__ == '__main__':
+    main()

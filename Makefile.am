@@ -24,6 +24,8 @@ SUBDIRS = \
 
 include_HEADERS = include/xornstorage.h
 
+dist_bin_SCRIPTS = bin/xorn
+
 ACLOCAL_AMFLAGS = -I m4
 
 EXTRA_DIST = \
