@@ -757,6 +757,7 @@ INPUT                  = .. \
                          ./xorn/fileutils.py \
                          ./xorn/proxy.py \
                          ./xorn/storage.py \
+                         ./xorn/geda/__init__.py \
                          ./xorn/geda/attrib.py \
                          ./xorn/geda/fileformat.py \
                          ./xorn/geda/read.py \
