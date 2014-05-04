@@ -112,6 +112,8 @@ class ObjectProxy:
         return xorn.storage.object_is_selected(self.rev, sel, self.ob)
 
     def __getattr__(self, name):
+        if name.startswith('_'):
+            raise AttributeError
         if 'rev' not in self.__dict__ or 'ob' not in self.__dict__:
             raise AttributeError
         if name in ['line', 'fill']:
@@ -153,6 +155,8 @@ class AttributeProxy:
         return self.rev.get_object_data(self.ob).__getattribute__(self.name)
 
     def __getattr__(self, name):
+        if name.startswith('_'):
+            raise AttributeError
         if 'rev' not in self.__dict__ or 'ob' not in self.__dict__ \
                 or 'name' not in self.__dict__:
             raise AttributeError

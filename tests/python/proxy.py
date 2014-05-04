@@ -77,6 +77,9 @@ except AttributeError:
 else:
     raise AssertionError
 
+assert 'xorn.storage.Box' in repr(op.data())
+assert 'xorn.storage.Box' not in repr(op)
+
 # attribute attributes
 
 assert ap.width == 2.5
@@ -92,6 +95,9 @@ except AttributeError:
     pass
 else:
     raise AssertionError
+
+assert 'xorn.storage.LineAttr' in repr(ap.data())
+assert 'xorn.storage.LineAttr' not in repr(ap)
 
 # revision methods
 
