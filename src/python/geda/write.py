@@ -1,0 +1,260 @@
+# xorn.geda - Python library for manipulating gEDA files
+# Copyright (C) 1998-2010 Ales Hvezda
+# Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+# Copyright (C) 2013, 2014 Roland Lutz
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software Foundation,
+# Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+
+## \namespace xorn.geda.write
+## Writing gEDA schematic/symbol files.
+
+import xorn.fileutils
+import xorn.proxy
+import xorn.storage
+import xorn.base64
+import xorn.geda.fileformat
+
+## Current gEDA \c PACKAGE_DATE_VERSION.
+
+RELEASE_VERSION = 20121203
+
+## Current schematic/symbol file format version.
+
+FILEFORMAT_VERSION = 2
+
+## Save a schematic or symbol file in libgeda format.
+#
+# See \ref xorn.fileutils.write for a description of the keyword
+# arguments.
+#
+# \return \c None.
+#
+# \throw IOError, OSError if a filesystem error occurred
+# \throw ValueError       if an object with an unknown type is encountered
+
+def write(rev, filename, **kwds):
+    def write_func(f):
+        write_file(f, rev)
+
+    xorn.fileutils.write(filename, write_func, **kwds)
+
+## Return the gEDA file header string.
+#
+# This function simply returns the DATE_VERSION and FILEFORMAT_VERSION
+# formatted as a gEDA file header.
+
+def file_format_header():
+    return 'v %s %u\n' % (RELEASE_VERSION, FILEFORMAT_VERSION)
+
+## Write a schematic or symbol to a file in libgeda format.
+#
+# \param [in] f    A file-like object to which to write.
+# \param [in] rev  The schematic or symbol which should be written.
+#
+# \return \c None.
+#
+# \throw ValueError if an object with an unknown type is encountered
+
+def write_file(f, rev):
+    f.write(file_format_header())
+    for ob in rev.toplevel_objects():
+        write_object(f, ob)
+
+## Format a line style to a string.
+
+def format_line(data):
+    return '%d %d %d %d %d' % (data.width,
+                               data.cap_style,
+                               data.dash_style,
+                               data.dash_length,
+                               data.dash_space)
+
+## Format a fill style to a string.
+
+def format_fill(data):
+    return '%d %d %d %d %d %d' % (data.type,
+                                  data.width,
+                                  data.angle0,
+                                  data.pitch0,
+                                  data.angle1,
+                                  data.pitch1)
+
+## Return the libgeda ripper direction of a bus object.
+#
+# \warning This function is not implemented.  See Xorn bug #143.
+
+def bus_ripper_direction(object):
+    return 0
+
+## Write an object to a file in libgeda format.
+#
+# It follows the post-20000704 release file format that handles the
+# line type and fill options.
+#
+# \param [in] f          A file-like object to which to write.
+# \param [in] o_current  The object which should be written.
+#
+# \return \c None.
+#
+# \throw ValueError if an object with an unknown type is encountered
+
+def write_object(f, o_current):
+    data = o_current.data()
+
+    if isinstance(data, xorn.storage.Line):
+        f.write('%c %d %d %d %d %d %s\n' % (
+                xorn.geda.fileformat.OBJ_LINE,
+                data.x,
+                data.y,
+                data.x + data.width,
+                data.y + data.height,
+                data.color,
+                format_line(data.line)))
+    elif isinstance(data, xorn.storage.Net):
+        if data.is_pin:
+            if data.is_inverted:
+                x0, y0 = data.x + data.width, data.y + data.height
+                x1, y1 = data.x, data.y
+            else:
+                x0, y0 = data.x, data.y
+                x1, y1 = data.x + data.width, data.y + data.height
+
+            f.write('%c %d %d %d %d %d %d %d\n' % (
+                    xorn.geda.fileformat.OBJ_PIN,
+                    x0, y0, x1, y1,
+                    data.color,
+                    data.is_bus,
+                    data.is_inverted))
+        elif data.is_bus:
+            f.write('%c %d %d %d %d %d %d\n' % (
+                    xorn.geda.fileformat.OBJ_BUS,
+                    data.x,
+                    data.y,
+                    data.x + data.width,
+                    data.y + data.height,
+                    data.color,
+                    bus_ripper_direction(object)))
+        else:
+            f.write('%c %d %d %d %d %d\n' % (
+                    xorn.geda.fileformat.OBJ_NET,
+                    data.x,
+                    data.y,
+                    data.x + data.width,
+                    data.y + data.height,
+                    data.color))
+    elif isinstance(data, xorn.storage.Box):
+        f.write('%c %d %d %d %d %d %s %s\n' % (
+                xorn.geda.fileformat.OBJ_BOX,
+                data.x,
+                data.y,
+                data.width,
+                data.height,
+                data.color,
+                format_line(data.line),
+                format_fill(data.fill)))
+    elif isinstance(data, xorn.storage.Circle):
+        f.write('%c %d %d %d %d %s %s\n' % (
+                xorn.geda.fileformat.OBJ_CIRCLE,
+                data.x,
+                data.y,
+                data.radius,
+                data.color,
+                format_line(data.line),
+                format_fill(data.fill)))
+    elif isinstance(data, xorn.storage.Component):
+        embedded = hasattr(data.symbol, 'prim_objs')
+        if embedded:
+            basename = 'EMBEDDED' + data.symbol.basename
+        else:
+            basename = data.symbol
+
+        f.write('%c %d %d %d %d %d %s\n' % (
+                xorn.geda.fileformat.OBJ_COMPLEX,
+                data.x,
+                data.y,
+                data.selectable,
+                data.angle,
+                data.mirror,
+                basename))
+
+        if embedded:
+            f.write('[\n')
+            for ob in xorn.proxy.RevisionProxy(
+                    data.symbol.prim_objs).toplevel_objects():
+                write_object(f, ob)
+            f.write(']\n')
+    elif isinstance(data, xorn.storage.Text):
+        # string can have multiple lines (seperated by \n's)
+        f.write('%c %d %d %d %d %d %d %d %d %d\n' % (
+                xorn.geda.fileformat.OBJ_TEXT,
+                data.x,
+                data.y,
+                data.color,
+                data.text_size,
+                data.visibility,
+                data.show_name_value,
+                data.angle,
+                data.alignment,
+                data.text.count('\n') + 1))
+        f.write(data.text + '\n')
+    elif isinstance(data, xorn.storage.Path):
+        f.write('%c %d %s %s %d\n' % (
+                xorn.geda.fileformat.OBJ_PATH,
+                data.color,
+                format_line(data.line),
+                format_fill(data.fill),
+                data.pathdata.count('\n') + 1))
+        f.write(data.pathdata + '\n')
+    elif isinstance(data, xorn.storage.Arc):
+        f.write('%c %d %d %d %d %d %d %s\n' % (
+                xorn.geda.fileformat.OBJ_ARC,
+                data.x,
+                data.y,
+                data.radius,
+                data.startangle,
+                data.sweepangle,
+                data.color,
+                format_line(data.line)))
+    elif isinstance(data, xorn.storage.Picture):
+        embedded = hasattr(data.pixmap, 'file_content')
+        if embedded:
+            filename = data.pixmap.filename
+        else:
+            filename = data.pixmap
+
+        f.write('%c %d %d %d %d %d %d %d\n%s\n' % (
+                xorn.geda.fileformat.OBJ_PICTURE,
+                data.x,
+                data.y,
+                data.width,
+                data.height,
+                data.angle,
+                data.mirror,
+                embedded,
+                filename))
+
+        if embedded:
+            xorn.base64.encode(f, data.pixmap.file_content, delim = '.')
+    else:
+        raise ValueError, \
+            _("Encountered an object with unknown type %s") % type(data)
+
+    # save any attributes
+    attribs = o_current.attached_objects()
+    if attribs:
+        f.write('{\n')
+        for ob in attribs:
+            write_object(f, ob)
+        f.write('}\n')
