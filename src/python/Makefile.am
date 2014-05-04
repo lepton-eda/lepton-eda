@@ -15,3 +15,4 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 pkgpython_PYTHON = __init__.py
+noinst_PYTHON = storage.py
