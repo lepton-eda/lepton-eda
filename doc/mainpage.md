@@ -8,6 +8,8 @@ following components:
 
 - Python \ref xorn.storage "bindings" for libxornstorage
 
+- \ref xorn "Xorn", a Python library for high-level object manipulation
+
 For more general information about these projects, see
 http://hedmen.org/xi/.
 
