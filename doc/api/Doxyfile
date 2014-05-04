@@ -751,6 +751,7 @@ INPUT                  = .. \
                          ../../src/storage/object.cc \
                          ../../src/storage/revision.cc \
                          ../../src/storage/selection.cc \
+                         ./xorn/__init__.py \
                          ./xorn/base64.py \
                          ./xorn/command.py \
                          ./xorn/fileutils.py \
