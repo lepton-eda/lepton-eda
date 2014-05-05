@@ -43,6 +43,17 @@ def write(rev, path):
                          % (xorn.command.program_short_name, path, e.strerror))
         sys.exit(1)
 
+def write_file(data, path):
+    try:
+        def write_func(f):
+            f.write(data)
+
+        xorn.fileutils.write(path, write_func)
+    except (IOError, OSError) as e:
+        sys.stderr.write(_("%s: can't write %s: %s\n")
+                         % (xorn.command.program_short_name, path, e.strerror))
+        sys.exit(1)
+
 def main():
     try:
         options, remaining = getopt.getopt(
@@ -53,9 +64,9 @@ def main():
     for option, value in options:
         if option == '--help':
             sys.stdout.write(_(
-"Usage: %s SCHEMATIC SYMBOL...\n") % xorn.command.program_name)
+"Usage: %s SCHEMATIC SYMBOL|PICTURE...\n") % xorn.command.program_name)
             sys.stdout.write(_(
-"Extract symbols embedded in a schematic into a separate file\n"))
+"Extract objects embedded in a schematic into a separate file\n"))
             sys.stdout.write("\n")
             sys.stdout.write(_(
 "      --help            give this help\n"
@@ -73,6 +84,7 @@ def main():
 
     rev = read(remaining[0])
     embedded_symbols = {}
+    embedded_pixmaps = {}
 
     for ob in rev.toplevel_objects():
         data = ob.data()
@@ -81,16 +93,28 @@ def main():
                 and not data.symbol.basename in embedded_symbols:
             embedded_symbols[data.symbol.basename.encode()] = \
                 data.symbol.prim_objs
+        if isinstance(data, xorn.storage.Picture) \
+                and isinstance(data.pixmap, xorn.geda.read.EmbeddedPixmap):
+            filename = os.path.basename(data.pixmap.filename)
+            if not filename in embedded_pixmaps:
+                embedded_pixmaps[filename.encode()] = data.pixmap.file_content
 
-    for basename in remaining[1:]:
-        if basename not in embedded_symbols:
+    for filename in remaining[1:]:
+        basename = os.path.basename(filename)
+        if basename not in embedded_symbols \
+                and basename not in embedded_pixmaps:
             sys.stderr.write(_("%s: can't extract '%s': "
-                               "No such embedded symbol\n")
+                               "No such embedded symbol or pixmap\n")
                              % (xorn.command.program_short_name, basename))
             sys.exit(1)
 
-    for basename in remaining[1:]:
-        write(xorn.proxy.RevisionProxy(embedded_symbols[basename]), basename)
+    for filename in remaining[1:]:
+        basename = os.path.basename(filename)
+        if basename in embedded_symbols:
+            write(xorn.proxy.RevisionProxy(
+                    embedded_symbols[basename]), filename)
+        else:
+            write_file(embedded_pixmaps[basename], filename)
 
 if __name__ == '__main__':
     main()
