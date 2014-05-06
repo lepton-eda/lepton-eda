@@ -1,4 +1,29 @@
-Not released yet.
+March 2014
+==========
+
+- Functions returning an object list now have an integer return type
+  (instead of void).  They will return 0 on success and -1 on failure.
+  The returned pointer may be NULL if no objects are returned.
+
+- Added API documentation.  Type `make doxygen' to build.
+
+- New functions:
+    xorn_object_is_selected
+    xorn_select_difference
+    xorn_select_including
+    xorn_select_excluding
+
+- Objects now have an intrinsic order
+
+- Text objects can be attached to net and component objects
+
+- New functions:
+    xorn_get_object_location
+    xorn_relocate_object
+    xorn_get_objects_attached_to
+    xorn_select_attached_to
+
+- Added symbol and pixmap reference attributes
 
 --------------------------------------------------------------------------------
 
