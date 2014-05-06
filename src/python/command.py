@@ -55,34 +55,46 @@ import xorn.config
 
 bugreport = xorn.config.PACKAGE_BUGREPORT
 
+## Return the value of <tt>argv[0]</tt>.
+#
+# Python replaces <tt>sys.argv[0]</tt> with an absolute path if the
+# command was run from the search path.  This function tries to
+# compensate for this by returning just the basename if
+# <tt>sys.argv[0]</tt> is an absolute path.
+
+def argv0():
+    if sys.argv[0].startswith('/'):
+        return os.path.basename(sys.argv[0])
+    return sys.argv[0]
+
 ## Name that was used to invoke the script.
 #
-# If the script was run by \c xorn, this is <tt>sys.argv[0]</tt> plus
-# a space character plus the subcommand name.  Otherwise, it is the
-# same as <tt>sys.argv[0]</tt>.
+# If the script was run by \c xorn, this is <tt>argv[0]</tt> plus a
+# space character plus the subcommand name.  Otherwise, it is the same
+# as <tt>argv[0]</tt>.
 #
 # Typically used in the output of \c \--help.
 
-program_name = sys.argv[0]
+program_name = argv0()
 
 ## Basename component of the name that was used to invoke the script.
 #
 # If the script was run by \c xorn, this is the basename of the
 # executed script, i.e., \c 'xorn-<i>something</i>'.  Otherwise, it is
-# the same as <tt>sys.argv[0]</tt>, with all text up to and including
-# the final slash (/), if any, removed.
+# the same as <tt>argv[0]</tt>, with all text up to and including the
+# final slash (/), if any, removed.
 #
 # Typically used in error messages.
 
-program_short_name = os.path.basename(sys.argv[0])
+program_short_name = os.path.basename(argv0())
 
 ## List of command arguments.
 #
 # A list of unparsed arguments, starting with the first argument
 # following the invocation name.  If the script was run by \c xorn,
-# this is the right-hand part of \c sys.argv with all \c xorn
-# arguments and the command name stripped.  Otherwise, it is the same
-# as <tt>sys.argv[1:]</tt>.
+# this is the right-hand part of \c argv with all \c xorn arguments
+# and the command name stripped.  Otherwise, it is the same as
+# <tt>argv[1:]</tt>.
 
 args = sys.argv[1:]
 
