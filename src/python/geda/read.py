@@ -212,6 +212,9 @@ def read_file(f, name, override_net_color = None,
     # This is where read objects end up.  Will be swapped for embedded comps.
     rev = xorn.storage.Revision()
 
+    # origin for embedded components
+    origin = 0, 0
+
     format = FileFormat(0, 0)  # no file format definition at all
 
     for line in f:
@@ -220,33 +223,33 @@ def read_file(f, name, override_net_color = None,
         objtype = line[0]
 
         if objtype == OBJ_LINE:
-            ob = rev.add_object(read_line(line, format))
+            ob = rev.add_object(read_line(line, origin, format))
         elif objtype == OBJ_NET:
-            ob = rev.add_object(read_net(line, format))
+            ob = rev.add_object(read_net(line, origin, format))
             if override_net_color is not None:
                 ob.color = override_net_color
         elif objtype == OBJ_BUS:
-            ob = rev.add_object(read_bus(line, format))
+            ob = rev.add_object(read_bus(line, origin, format))
             if override_bus_color is not None:
                 ob.color = override_bus_color
         elif objtype == OBJ_BOX:
-            ob = rev.add_object(read_box(line, format))
+            ob = rev.add_object(read_box(line, origin, format))
         elif objtype == OBJ_PICTURE:
-            ob = rev.add_object(read_picture(line, f, format))
+            ob = rev.add_object(read_picture(line, f, origin, format))
         elif objtype == OBJ_CIRCLE:
-            ob = rev.add_object(read_circle(line, format))
+            ob = rev.add_object(read_circle(line, origin, format))
         elif objtype == OBJ_COMPLEX:
-            ob = rev.add_object(read_complex(line, format))
+            ob = rev.add_object(read_complex(line, origin, format))
         elif objtype == OBJ_TEXT:
-            ob = rev.add_object(read_text(line, f, format))
+            ob = rev.add_object(read_text(line, f, origin, format))
         elif objtype == OBJ_PATH:
-            ob = rev.add_object(read_path(line, f, format))
+            ob = rev.add_object(read_path(line, f, origin, format))
         elif objtype == OBJ_PIN:
-            ob = rev.add_object(read_pin(line, format))
+            ob = rev.add_object(read_pin(line, origin, format))
             if override_pin_color is not None:
                 color = override_pin_color
         elif objtype == OBJ_ARC:
-            ob = rev.add_object(read_arc(line, format))
+            ob = rev.add_object(read_arc(line, origin, format))
         elif objtype == STARTATTACH_ATTR:
             if ob is None:
                 raise ParseError, \
@@ -269,7 +272,7 @@ def read_file(f, name, override_net_color = None,
                     raise ParseError, \
                         _("Tried to attach a non-text item as an attribute")
 
-                attrib = read_text(line, f, format)
+                attrib = read_text(line, f, origin, format)
                 rev.relocate_object(rev.add_object(attrib), ob, None)
 
             ob = None
@@ -285,15 +288,16 @@ def read_file(f, name, override_net_color = None,
                       ">>\n%s<<\n") % (name, line)
             if component_data.symbol.prim_objs is not None:
                 raise ParseError
-            object_lists_save.append((rev, ob))
+            object_lists_save.append((rev, ob, origin))
             rev = xorn.storage.Revision()
             component_data.symbol.prim_objs = rev
+            origin = origin[0] + component_data.x, origin[1] + component_data.y
         elif objtype == END_EMBEDDED:
             if not object_lists_save:
                 raise ParseError, \
                     _("Read unexpected embedded symbol end marker in [%s] :\n"
                       ">>\n%s<<\n") % (name, line)
-            rev, ob = object_lists_save.pop()
+            rev, ob, origin = object_lists_save.pop()
         elif objtype == ENDATTACH_ATTR:
             raise ParseError, "Unexpected '}'"
         elif objtype == INFO_FONT:
@@ -352,7 +356,7 @@ def pin_update_whichend(rev, force_boundingbox):
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a circle object
 
-def read_circle(buf, format):
+def read_circle(buf, (origin_x, origin_y), format):
     if not format.supports_linefill_attributes:
         type, x1, y1, radius, color = sscanf(
             buf, "%c %d %d %d %d\n", _("Failed to parse circle object"))
@@ -391,8 +395,8 @@ def read_circle(buf, format):
         color = DEFAULT_COLOR
 
     return xorn.storage.Circle(
-        x = x1,
-        y = y1,
+        x = x1 - origin_x,
+        y = y1 - origin_y,
         radius = radius,
         color = color,
         line = xorn.storage.LineAttr(
@@ -416,7 +420,7 @@ def read_circle(buf, format):
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a arc object
 
-def read_arc(buf, format):
+def read_arc(buf, (origin_x, origin_y), format):
     if not format.supports_linefill_attributes:
         type, x1, y1, radius, start_angle, end_angle, color = sscanf(
             buf, "%c %d %d %d %d %d %d\n", _("Failed to parse arc object"))
@@ -446,8 +450,8 @@ def read_arc(buf, format):
         color = DEFAULT_COLOR
 
     return xorn.storage.Arc(
-        x = x1,
-        y = y1,
+        x = x1 - origin_x,
+        y = y1 - origin_y,
         radius = radius,
         startangle = start_angle,
         sweepangle = end_angle,
@@ -464,7 +468,7 @@ def read_arc(buf, format):
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a box object
 
-def read_box(buf, format):
+def read_box(buf, (origin_x, origin_y), format):
     if not format.supports_linefill_attributes:
         type, x1, y1, width, height, color = sscanf(
             buf, "%c %d %d %d %d %d\n", _("Failed to parse box object"))
@@ -507,8 +511,8 @@ def read_box(buf, format):
     # We don't care and just use the file format representation.
 
     return xorn.storage.Box(
-        x = x1,
-        y = y1,
+        x = x1 - origin_x,
+        y = y1 - origin_y,
         width = width,
         height = height,
         color = color,
@@ -531,7 +535,7 @@ def read_box(buf, format):
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a bus object
 
-def read_bus(buf, format):
+def read_bus(buf, (origin_x, origin_y), format):
     if not format.enhanced_pinbus_format:
         type, x1, y1, x2, y2, color = sscanf(
             buf, "%c %d %d %d %d %d\n", _("Failed to parse bus object"))
@@ -558,8 +562,8 @@ def read_bus(buf, format):
         ripper_dir = 0
 
     return xorn.storage.Net(
-        x = x1,
-        y = y1,
+        x = x1 - origin_x,
+        y = y1 - origin_y,
         width = x2 - x1,
         height = y2 - y1,
         color = color,
@@ -572,7 +576,7 @@ def read_bus(buf, format):
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a component object
 
-def read_complex(buf, format):
+def read_complex(buf, (origin_x, origin_y), format):
     type, x1, y1, selectable, angle, mirror, basename = sscanf(
         buf, "%c %d %d %d %d %d %s\n", _("Failed to parse complex object"))
 
@@ -604,8 +608,8 @@ def read_complex(buf, format):
         #o_complex_remove_promotable_attribs(new_obj)
 
     return xorn.storage.Component(
-        x = x1,
-        y = y1,
+        x = x1 - origin_x,
+        y = y1 - origin_y,
         selectable = selectable,
         angle = angle,
         mirror = mirror,
@@ -616,7 +620,7 @@ def read_complex(buf, format):
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a line object
 
-def read_line(buf, format):
+def read_line(buf, (origin_x, origin_y), format):
     if not format.supports_linefill_attributes:
         type, x1, y1, x2, y2, color = sscanf(
             buf, "%c %d %d %d %d %d\n", _("Failed to parse line object"))
@@ -647,8 +651,8 @@ def read_line(buf, format):
         color = DEFAULT_COLOR
 
     return xorn.storage.Line(
-        x = x1,
-        y = y1,
+        x = x1 - origin_x,
+        y = y1 - origin_y,
         width = x2 - x1,
         height = y2 - y1,
         color = color,
@@ -664,7 +668,7 @@ def read_line(buf, format):
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a net object
 
-def read_net(buf, format):
+def read_net(buf, (origin_x, origin_y), format):
     type, x1, y1, x2, y2, color = sscanf(
         buf, "%c %d %d %d %d %d\n", _("Failed to parse net object"))
 
@@ -681,8 +685,8 @@ def read_net(buf, format):
         color = DEFAULT_COLOR
 
     return xorn.storage.Net(
-        x = x1,
-        y = y1,
+        x = x1 - origin_x,
+        y = y1 - origin_y,
         width = x2 - x1,
         height = y2 - y1,
         color = color,
@@ -699,7 +703,7 @@ def read_net(buf, format):
 # \throw ParseError if not enough lines could be read from the file
 # \throw ValueError if \a first_line doesn't describe a path object
 
-def read_path(first_line, f, format):
+def read_path(first_line, f, (origin_x, origin_y), format):
     type, color, \
     line_width, line_end, line_type, line_length, line_space, \
     fill_type, fill_width, angle1, pitch1, angle2, pitch2, \
@@ -755,7 +759,7 @@ def read_path(first_line, f, format):
 # \throw ParseError if the picture data could be read from the file
 # \throw ValueError if \a first_line doesn't describe a picture object
 
-def read_picture(first_line, f, format):
+def read_picture(first_line, f, (origin_x, origin_y), format):
     type, x1, y1, width, height, angle, mirrored, embedded = sscanf(
         first_line, "%c %d %d %d %d %d %d %d\n",
         _("Failed to parse picture definition"))
@@ -813,8 +817,8 @@ def read_picture(first_line, f, format):
         print _("Setting embedded to False\n")
 
     return xorn.storage.Picture(
-        x = x1,
-        y = y1,
+        x = x1 - origin_x,
+        y = y1 - origin_y,
         width = width,
         height = height,
         angle = angle,
@@ -826,7 +830,7 @@ def read_picture(first_line, f, format):
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a pin object
 
-def read_pin(buf, format):
+def read_pin(buf, (origin_x, origin_y), format):
     if not format.enhanced_pinbus_format:
         type, x1, y1, x2, y2, color = sscanf(
             buf, "%c %d %d %d %d %d\n", _("Failed to parse pin object"))
@@ -869,8 +873,8 @@ def read_pin(buf, format):
         raise ParseError
 
     return xorn.storage.Net(
-        x = x1,
-        y = y1,
+        x = x1 - origin_x,
+        y = y1 - origin_y,
         width = x2 - x1,
         height = y2 - y1,
         color = color,
@@ -887,7 +891,7 @@ def read_pin(buf, format):
 # \throw ParseError if not enough lines could be read from the file
 # \throw ValueError if \a first_line doesn't describe a text object
 
-def read_text(first_line, f, format):
+def read_text(first_line, f, (origin_x, origin_y), format):
     if format.supports_multiline_text:
         type, x, y, color, size, visibility, show_name_value, angle, \
         alignment, num_lines = sscanf(
@@ -954,8 +958,8 @@ def read_text(first_line, f, format):
         text = text[:-1]
 
     return xorn.storage.Text(
-        x = x,
-        y = y,
+        x = x - origin_x,
+        y = y - origin_y,
         color = color,
         text_size = size,
         visibility = visibility,
