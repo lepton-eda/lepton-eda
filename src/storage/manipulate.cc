@@ -189,7 +189,8 @@ int xorn_set_object_data(xorn_revision_t rev, xorn_object_t ob,
  *    the text to be copied and deleted along with the net or component.
  *
  * If \a attach_to is \c NULL, the object becomes un-attached.  If \a
- * ob and \a insert_before are identical, the revision is left unchanged.
+ * ob and \a insert_before are identical and \a ob is already
+ * attached to \a attach_to, the revision is left unchanged.
  *
  * \param rev            Revision to modify (must be transient)
  * \param ob             The object which should be reordered and/or

@@ -34,18 +34,15 @@ In practice, this means:
   keep tabs on a certain state of a file, making it easy to implement
   an undo/redo functionality.
 
-- The “identity” of one or multiple objects is represented by \ref
-  xorn_object_t "objects" and \ref xorn_selection_t "selections",
-  respectively, which are used as a keys to look up and change the
-  state of the objects in a revision.
-
+- The actual data an object has in a revision is looked up and changed
+  using a \ref xorn_object_t or \ref xorn_selection_t key which
+  describes the “identity” of one or multiple objects, respectively.
 
 The library's interface is designed to anticipate the operations which
 an application will typically perform on the file's contents and
-provide functions which express these intentions in an abstract enough
-way to allow for some degree of optimization on the library's part.
-For example, to delete all circles and arcs with radius zero, instead
-of
+provide abstract functions which express these intentions to allow the
+library to do some optimization.  For example, to delete all circles
+and arcs with radius zero, instead of
 
 \snippet motivation.c discrete
 
@@ -53,12 +50,12 @@ you would write:
 
 \snippet motivation.c integrated
 
-The implementation could, for example, chose to express the selection
-as a filter which can be applied to individual objects rather than as
-a list of object pointers, if this should prove more efficient.  This
-way, the application doesn't have to know about but can still benefit
-from optimizations to the potentially messy detail of how the data is
-internally stored and accessed.
+The implementation could now, for example, choose to express the
+selection as a filter which can be applied to individual objects
+rather than as a list of object pointers, if this should prove more
+efficient.  This way, the application doesn't have to know about but
+can still benefit from optimizations to the potentially messy detail
+of how the data is internally stored and accessed.
 
 \sa xornstorage.h
 \sa \ref using-storage

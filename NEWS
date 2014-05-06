@@ -1,4 +1,55 @@
-Not released yet.
+May 2014
+========
+
+- Added python package `xorn' which provides proxy classes for easy
+  access to the storage backend, base64 encoding/decoding, and helper
+  functions for writing files in a safe way
+
+- Added python package `xorn.geda' which supports reading and writing
+  gEDA files and gEDA attribute handling
+
+- Added command-line utility `xorn' with two sub-commands:
+    extract - extract embedded symbols or pixmaps from a schematic
+    find-symbol-by-pinout - find symbols matching a given pinout
+
+
+April 2014
+==========
+
+- Python extension: Members of data classes can now be passed as
+  constructor arguments
+
+- Added symbol and pixmap attributes
+
+- Python extension: All functions now raise KeyError if an object
+  argument does not exist
+
+
+March 2014
+==========
+
+- Storage library: Functions returning an object list now have an
+  integer return type (instead of void).  They will return 0 on
+  success and -1 on failure.  The returned pointer may be NULL if no
+  objects are returned.
+
+- Added API documentation.  Type `make doxygen' to build.
+
+- New functions:
+    xorn_object_is_selected (xorn.storage.object_is_selected)
+    xorn_select_difference  (xorn.storage.select_difference)
+    xorn_select_including   (xorn.storage.select_including)
+    xorn_select_excluding   (xorn.storage.select_excluding)
+
+- Objects now have an intrinsic order
+
+- Text objects can be attached to net and component objects
+
+- New functions:
+    xorn_get_object_location     (xorn.storage.Revision.get_object_location)
+    xorn_relocate_object         (xorn.storage.Revision.relocate_object)
+    xorn_get_objects_attached_to (xorn.storage.get_objects_attached_to)
+    xorn_select_attached_to      (xorn.storage.select_attached_to)
 
 --------------------------------------------------------------------------------
 
