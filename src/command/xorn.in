@@ -68,7 +68,7 @@ def main():
             try:
                 os.execl(fn, fn, *remaining[1:])
             except OSError as e:
-                sys.stderr.write(_("%s: failed to execute '%s': %s\n") % (
+                sys.stderr.write(_("%s: %s: %s\n") % (
                         xorn.command.program_short_name, fn, e.strerror))
                 sys.exit(1)
 
