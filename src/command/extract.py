@@ -18,6 +18,9 @@ import getopt, sys, os
 from gettext import gettext as _
 import xorn.command
 import xorn.config
+import xorn.fileutils
+import xorn.proxy
+import xorn.storage
 import xorn.geda.attrib
 import xorn.geda.read
 import xorn.geda.write

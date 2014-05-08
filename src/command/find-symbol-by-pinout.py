@@ -20,7 +20,7 @@ from gettext import gettext as _
 
 import xorn.command
 import xorn.config
-import xorn.proxy
+import xorn.storage
 import xorn.geda.attrib
 import xorn.geda.read
 
