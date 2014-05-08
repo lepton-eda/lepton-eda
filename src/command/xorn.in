@@ -53,7 +53,7 @@ def main():
             xorn.command.core_version()
 
     if not args:
-        xorn.command.invalid_arguments(_("missing command name"))
+        xorn.command.invalid_arguments(_("No command name given."))
 
     short_name = 'xorn-' + args[0]
 
@@ -73,7 +73,7 @@ def main():
                 sys.exit(1)
 
         xorn.command.invalid_arguments(
-            _("%s: no such subcommand") % args[0])
+            _("`%s' is not a xorn command.") % args[0])
 
     xorn.command.program_name += ' ' + args[0]
     xorn.command.program_short_name = short_name
