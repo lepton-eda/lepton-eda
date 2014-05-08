@@ -22,6 +22,7 @@ import getopt, gettext, imp, os, sys
 from gettext import gettext as _
 sys.path.insert(0, pythondir)
 import xorn.command
+import xorn.config
 
 def main():
     gettext.bindtextdomain(xorn.config.PACKAGE, xorn.config.localedir)
