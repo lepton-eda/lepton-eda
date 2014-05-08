@@ -62,7 +62,7 @@ def main():
     except ImportError:
         for path in os.environ['PATH'].split(':'):
             fn = os.path.join(path, short_name)
-            if not os.access(fn, os.X_OK):
+            if not os.path.exists(fn):
                 continue
 
             sys.stderr.write(_("Executing `%s'\n") % fn)
