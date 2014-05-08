@@ -20,6 +20,7 @@ EXTRA_DIST = xorn.in
 
 xorn: $(srcdir)/xorn.in Makefile
 	$(AM_V_GEN)sed \
+	    -e 's,[@]pythondir[@],$(pythondir),g' \
 	    -e 's,[@]commanddir[@],$(commanddir),g' \
 		$(srcdir)/$@.in > $@
 

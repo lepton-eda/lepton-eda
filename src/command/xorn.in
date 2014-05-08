@@ -15,10 +15,12 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
+pythondir = '@pythondir@'
 commanddir = '@commanddir@'
 
 import getopt, imp, os, sys
 from gettext import gettext as _
+sys.path.insert(0, pythondir)
 import xorn.command
 
 def main():
