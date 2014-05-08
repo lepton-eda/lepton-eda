@@ -25,7 +25,7 @@ import xorn.command
 
 def main():
     try:
-        options, remaining = getopt.getopt(
+        options, args = getopt.getopt(
             xorn.command.args, '', ['help', 'version'])
     except getopt.GetoptError as e:
         xorn.command.invalid_arguments(e.msg)
@@ -52,13 +52,13 @@ def main():
         if option == '--version':
             xorn.command.core_version()
 
-    if not remaining:
+    if not args:
         xorn.command.invalid_arguments(_("missing command name"))
 
-    short_name = 'xorn-' + remaining[0]
+    short_name = 'xorn-' + args[0]
 
     try:
-        res = imp.find_module(remaining[0], [commanddir])
+        res = imp.find_module(args[0], [commanddir])
     except ImportError:
         for path in os.environ['PATH'].split(':'):
             fn = os.path.join(path, short_name)
@@ -66,18 +66,18 @@ def main():
                 continue
 
             try:
-                os.execl(fn, fn, *remaining[1:])
+                os.execl(fn, fn, *args[1:])
             except OSError as e:
                 sys.stderr.write(_("%s: %s: %s\n") % (
                         xorn.command.program_short_name, fn, e.strerror))
                 sys.exit(1)
 
         xorn.command.invalid_arguments(
-            _("%s: no such subcommand") % remaining[0])
+            _("%s: no such subcommand") % args[0])
 
-    xorn.command.program_name += ' ' + remaining[0]
+    xorn.command.program_name += ' ' + args[0]
     xorn.command.program_short_name = short_name
-    xorn.command.args = remaining[1:]
+    xorn.command.args = args[1:]
 
     try:
         try:

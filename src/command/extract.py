@@ -66,7 +66,7 @@ def write_file(data, path):
 
 def main():
     try:
-        options, remaining = getopt.getopt(
+        options, args = getopt.getopt(
             xorn.command.args, '', ['help', 'version'])
     except getopt.GetoptError as e:
         xorn.command.invalid_arguments(e.msg)
@@ -89,10 +89,10 @@ def main():
         elif option == '--version':
             xorn.command.core_version()
 
-    if len(remaining) < 2:
+    if len(args) < 2:
         xorn.command.invalid_arguments(_("not enough arguments"))
 
-    rev = read(remaining[0])
+    rev = read(args[0])
     embedded_symbols = {}
     embedded_pixmaps = {}
 
@@ -110,7 +110,7 @@ def main():
             if not filename in embedded_pixmaps:
                 embedded_pixmaps[filename.encode()] = data.pixmap.file_content
 
-    for filename in remaining[1:]:
+    for filename in args[1:]:
         basename = os.path.basename(filename)
         if basename not in embedded_symbols \
                 and basename not in embedded_pixmaps:
@@ -119,7 +119,7 @@ def main():
                              % (xorn.command.program_short_name, basename))
             sys.exit(1)
 
-    for filename in remaining[1:]:
+    for filename in args[1:]:
         basename = os.path.basename(filename)
         if basename in embedded_symbols:
             write(xorn.proxy.RevisionProxy(

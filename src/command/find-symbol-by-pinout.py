@@ -68,7 +68,7 @@ def find_symbols(root, pinout):
 
 def main():
     try:
-        options, remaining = getopt.getopt(
+        options, args = getopt.getopt(
             xorn.command.args, '', ['help', 'version'])
     except getopt.GetoptError as e:
         xorn.command.invalid_arguments(e.msg)
@@ -92,15 +92,15 @@ def main():
         if option == '--version':
             xorn.command.core_version()
 
-    if len(remaining) < 2:
+    if len(args) < 2:
         xorn.command.invalid_arguments(_("too few arguments"))
 
     pinout = {}
-    for arg in remaining[1:]:
+    for arg in args[1:]:
         try:
             pos = arg.index(':')
         except ValueError:
             xorn.command.invalid_arguments(_("missing colon in parameter"))
         pinout[arg[:pos]] = arg[pos + 1:]
 
-    find_symbols(remaining[0], pinout)
+    find_symbols(args[0], pinout)

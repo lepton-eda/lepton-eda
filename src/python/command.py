@@ -31,7 +31,7 @@
 #
 # def main():
 #     try:
-#         options, remaining = getopt.getopt(
+#         options, args = getopt.getopt(
 #             xorn.command.args, '', ['help', 'version'])
 #     except getopt.GetoptError as e:
 #         xorn.command.invalid_arguments(e.msg)
