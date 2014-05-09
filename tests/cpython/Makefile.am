@@ -14,7 +14,7 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-tests = snippets/functions.py \
+TESTS = snippets/functions.py \
 	copy_attached.py \
 	copy_object.py \
 	copy_objects.py \
@@ -38,35 +38,9 @@ tests = snippets/functions.py \
 	string.py \
 	transient.py
 
-EXTRA_DIST = $(tests) Setup.py
+EXTRA_DIST = $(TESTS) Setup.py
 
-tty_colors = {								\
-	color_tests=no;							\
-	if test "X$(AM_COLOR_TESTS)" = Xno;				\
-	then	color_tests=no;						\
-	elif test "X$(AM_COLOR_TESTS)" = Xalways;			\
-	then	color_tests=yes;					\
-	elif test "X$$TERM" != Xdumb && { test -t 1; } 2>/dev/null;	\
-	then	color_tests=yes;					\
-	fi;								\
-	if test $$color_tests = yes;					\
-	then	red='[0;31m';						\
-		grn='[0;32m';						\
-		lgn='[1;32m';						\
-		blu='[1;34m';						\
-		mgn='[0;35m';						\
-		brg='[1m';						\
-		std='[m';						\
-	else	mgn= red= grn= lgn= blu= brg= std=;			\
-	fi;								\
-}
-
-installcheck-local:
-	@$(tty_colors);							\
-	for tc in $(tests);						\
-	do	if PYTHONPATH=$(pyexecdir) python $(srcdir)/$$tc;	\
-		then	echo "$${grn}PASS$${std}: $$tc";		\
-		else	echo "$${red}FAIL$${std}: $$tc";		\
-			exit 1;						\
-		fi							\
-	done
+AM_TESTS_ENVIRONMENT = \
+	PYTHONPATH='$(top_builddir)/built-packages'; \
+	export PYTHONPATH;
+LOG_COMPILER = $(PYTHON)
