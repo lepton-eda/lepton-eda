@@ -16,7 +16,7 @@
 
 AM_CPPFLAGS = -I$(top_srcdir)/include
 AM_CFLAGS = -Wall -W -Werror -Wno-empty-body
-LDADD = ../../src/storage/libxornstorage.la
+LDADD = $(top_builddir)/src/storage/libxornstorage.la
 
 TESTS = snippets/example \
 	snippets/functions \
