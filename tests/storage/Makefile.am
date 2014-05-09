@@ -18,7 +18,8 @@ AM_CPPFLAGS = -I$(top_srcdir)/include
 AM_CFLAGS = -Wall -W -Werror -Wno-empty-body
 LDADD = $(top_builddir)/src/storage/libxornstorage.la
 
-TESTS = snippets/example \
+check_PROGRAMS = \
+	snippets/example \
 	snippets/functions \
 	snippets/motivation \
 	copy_attached \
@@ -47,5 +48,5 @@ TESTS = snippets/example \
 	string \
 	transient
 
-check_PROGRAMS = $(TESTS)
+TESTS = $(check_PROGRAMS)
 EXTRA_DIST = Setup.h
