@@ -33,6 +33,9 @@ geda_PYTHON = \
 	geda/read.py \
 	geda/write.py
 
+# Make sure config.py is available when running from builddir
+all-local: $(nodist_pkgpython_PYTHON)
+
 config.py: $(srcdir)/config.py.in Makefile
 	$(AM_V_GEN)sed \
 	    -e 's,[@]PACKAGE[@],$(PACKAGE),g' \

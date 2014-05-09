@@ -25,6 +25,19 @@ SUBDIRS = \
 
 include_HEADERS = include/xornstorage.h
 
+nodist_noinst_PYTHON = built-packages/xorn.py
+all-local: $(nodist_noinst_PYTHON)
+built-packages/xorn.py: Makefile
+	$(AM_V_GEN)$(MKDIR_P) built-packages && { \
+	    echo '__path__ = ["$(abs_builddir)/src/cpython/.libs",'; \
+	    echo '            "$(abs_builddir)/src/python",'; \
+	    echo '            "$(abs_srcdir)/src/python"]'; \
+	} > $@
+
+CLEANFILES = \
+	built-packages/xorn.py \
+	built-packages/xorn.pyc
+
 ACLOCAL_AMFLAGS = -I m4
 
 EXTRA_DIST = \
