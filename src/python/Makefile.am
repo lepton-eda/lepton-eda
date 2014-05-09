@@ -34,7 +34,8 @@ geda_PYTHON = \
 	geda/write.py
 
 config.py: $(srcdir)/config.py.in Makefile
-	sed -e 's,[@]PACKAGE[@],$(PACKAGE),g' \
+	$(AM_V_GEN)sed \
+	    -e 's,[@]PACKAGE[@],$(PACKAGE),g' \
 	    -e 's,[@]PACKAGE_BUGREPORT[@],$(PACKAGE_BUGREPORT),g' \
 	    -e 's,[@]PACKAGE_NAME[@],$(PACKAGE_NAME),g' \
 	    -e 's,[@]PACKAGE_STRING[@],$(PACKAGE_STRING),g' \
