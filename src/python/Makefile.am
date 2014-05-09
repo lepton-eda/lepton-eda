@@ -23,7 +23,7 @@ pkgpython_PYTHON = \
 noinst_PYTHON = storage.py
 nodist_pkgpython_PYTHON = config.py
 EXTRA_DIST = config.py.in
-CLEANFILES = config.py
+CLEANFILES = config.py config.pyc
 
 gedadir = $(pkgpythondir)/geda
 geda_PYTHON = \
