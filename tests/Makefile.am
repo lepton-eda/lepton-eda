@@ -18,6 +18,13 @@ AM_CPPFLAGS = -I$(top_srcdir)/include
 AM_CFLAGS = -Wall -W -Werror -Wno-empty-body
 LDADD = $(top_builddir)/src/storage/libxornstorage.la
 
+TEST_EXTENSIONS = .py
+
+AM_TESTS_ENVIRONMENT = \
+	PYTHONPATH='$(top_builddir)/built-packages'; \
+	export PYTHONPATH;
+PY_LOG_COMPILER = $(PYTHON)
+
 check_PROGRAMS = \
 	storage/snippets/example \
 	storage/snippets/functions \
@@ -48,5 +55,35 @@ check_PROGRAMS = \
 	storage/string \
 	storage/transient
 
-TESTS = $(check_PROGRAMS)
-EXTRA_DIST = storage/Setup.h
+pythontests = \
+	cpython/snippets/functions.py \
+	cpython/copy_attached.py \
+	cpython/copy_object.py \
+	cpython/copy_objects.py \
+	cpython/data_ctors.py \
+	cpython/delete_sel.py \
+	cpython/exist.py \
+	cpython/get_loc_attach.py \
+	cpython/get_loc_order.py \
+	cpython/get_obdata.py \
+	cpython/get_objects.py \
+	cpython/get_obtype.py \
+	cpython/is_selected.py \
+	cpython/module.py \
+	cpython/pointer.py \
+	cpython/query_attached.py \
+	cpython/reloc_attach.py \
+	cpython/reloc_order.py \
+	cpython/selection.py \
+	cpython/set_obdata.py \
+	cpython/stat.py \
+	cpython/string.py \
+	cpython/transient.py \
+	python/base64.py \
+	python/proxy.py \
+	python/geda/attrib.py \
+	python/geda/parse_attrib.py
+
+TESTS = $(check_PROGRAMS) $(pythontests)
+
+EXTRA_DIST = storage/Setup.h cpython/Setup.py $(pythontests)
