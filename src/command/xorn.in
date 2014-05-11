@@ -15,6 +15,8 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
+commanddir = '@commanddir@'
+
 import getopt, imp, os, sys
 from gettext import gettext as _
 import xorn.command
@@ -53,33 +55,13 @@ def main():
 
     short_name = 'xorn-' + remaining[0]
 
-    for path in os.environ['PATH'].split(':'):
-        fn = os.path.join(path, short_name)
-        if not os.access(fn, os.X_OK):
-            continue
-
-        try:
-            f = open(fn)
-        except IOError as e:
-            sys.stderr.write(_("%s: failed to open '%s': %s\n") % (
-                    xorn.command.program_short_name, fn, e.strerror))
-            sys.exit(1)
-
-        try:
-            interpreter = f.readline()
-        except IOError as e:
-            sys.stderr.write(_("%s: failed to read '%s': %s\n") % (
-                    xorn.command.program_short_name, fn, e.strerror))
-            sys.exit(1)
-
-        if interpreter not in ['#!/usr/bin/python\n',
-                               '#!/usr/bin/env python\n']:
-            try:
-                f.close()
-            except IOError as e:
-                sys.stderr.write(_("%s: failed to close '%s': %s\n") % (
-                        xorn.command.program_short_name, fn, e.strerror))
-                sys.exit(1)
+    try:
+        res = imp.find_module(remaining[0], [commanddir])
+    except ImportError:
+        for path in os.environ['PATH'].split(':'):
+            fn = os.path.join(path, short_name)
+            if not os.access(fn, os.X_OK):
+                continue
 
             sys.stderr.write(_("Executing `%s'\n") % fn)
             try:
@@ -89,41 +71,41 @@ def main():
                         xorn.command.program_short_name, fn, e.strerror))
                 sys.exit(1)
 
-        xorn.command.program_name += ' ' + remaining[0]
-        xorn.command.program_short_name = short_name
-        xorn.command.args = remaining[1:]
+        xorn.command.invalid_arguments(
+            _("%s: no such subcommand") % remaining[0])
 
+    xorn.command.program_name += ' ' + remaining[0]
+    xorn.command.program_short_name = short_name
+    xorn.command.args = remaining[1:]
+
+    try:
         try:
-            try:
-                module = imp.load_module(
-                    short_name, f, fn, ('', 'r', imp.PY_SOURCE))
-            finally:
-                f.close()
-        except SystemExit:
-            raise
-        except:
-            sys.stderr.write(_("`%s' failed to load.\n") % short_name)
-            sys.stderr.write(_("This is an error.  Please report it to %s\n")
-                             % xorn.command.bugreport)
-            sys.stderr.write('\n')
-            raise
+            module = imp.load_module(short_name, *res)
+        finally:
+            res[0].close()
+    except SystemExit:
+        raise
+    except:
+        sys.stderr.write(_("`%s' failed to load.\n") % short_name)
+        sys.stderr.write(_("This is an error.  Please report it to %s\n")
+                         % xorn.command.bugreport)
+        sys.stderr.write('\n')
+        raise
 
-        try:
-            if 'main' in module.__dict__:
-                module.main()
-        except SystemExit:
-            raise
-        except:
-            sys.stderr.write(_("`%s' raised an uncaught exception.\n")
-                             % short_name)
-            sys.stderr.write(_("This is an error.  Please report it to %s\n")
-                             % xorn.command.bugreport)
-            sys.stderr.write('\n')
-            raise
+    try:
+        if 'main' in module.__dict__:
+            module.main()
+    except SystemExit:
+        raise
+    except:
+        sys.stderr.write(_("`%s' raised an uncaught exception.\n")
+                         % short_name)
+        sys.stderr.write(_("This is an error.  Please report it to %s\n")
+                         % xorn.command.bugreport)
+        sys.stderr.write('\n')
+        raise
 
-        return
-
-    xorn.command.invalid_arguments(_("%s: no such subcommand") % remaining[0])
+    return
 
 if __name__ == '__main__':
     main()

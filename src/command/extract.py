@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # Copyright (C) 2013, 2014 Roland Lutz
 #
 # This program is free software; you can redistribute it and/or modify
@@ -127,6 +126,3 @@ def main():
                     embedded_symbols[basename]), filename)
         else:
             write_file(embedded_pixmaps[basename], filename)
-
-if __name__ == '__main__':
-    main()

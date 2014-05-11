@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # Find symbols in a directory matching a given pinout
 # Copyright (C) 2013, 2014 Roland Lutz
 #
@@ -105,6 +104,3 @@ def main():
         pinout[arg[:pos]] = arg[pos + 1:]
 
     find_symbols(remaining[0], pinout)
-
-if __name__ == '__main__':
-    main()

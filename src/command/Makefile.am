@@ -14,7 +14,16 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-dist_bin_SCRIPTS = \
-	xorn \
-	xorn-extract \
-	xorn-find-symbol-by-pinout
+bin_SCRIPTS = xorn
+CLEANFILES = xorn
+EXTRA_DIST = xorn.in
+
+xorn: $(srcdir)/xorn.in Makefile
+	$(AM_V_GEN)sed \
+	    -e 's,[@]commanddir[@],$(commanddir),g' \
+		$(srcdir)/$@.in > $@
+
+commanddir = $(pkglibdir)
+command_PYTHON = \
+	extract.py \
+	find-symbol-by-pinout.py
