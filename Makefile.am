@@ -18,16 +18,12 @@ SUBDIRS = \
 	src/storage \
 	src/cpython \
 	src/python \
+	src/command \
 	tests/storage \
 	tests/cpython \
 	tests/python
 
 include_HEADERS = include/xornstorage.h
-
-dist_bin_SCRIPTS = \
-	bin/xorn \
-	bin/xorn-extract \
-	bin/xorn-find-symbol-by-pinout
 
 ACLOCAL_AMFLAGS = -I m4
 
