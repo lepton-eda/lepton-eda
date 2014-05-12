@@ -9,6 +9,12 @@ more information, please consult the `ChangeLog' file.
 
 Notable changes in gEDA/gaf 1.9.2
 =================================
+* Nullor expansion has been fixed in the `spice' and `spice-sdb'
+  backends.
+
+  - Element name prefix "E_" has been substituted for "E-" to prevent
+    errors output by some simulators (e.g. ngspice).
+
 * Visibility and attributes of several VHDL symbols have been fixed.
 
 * Four verilog symbols have been fixed so that the verilog gnetlist

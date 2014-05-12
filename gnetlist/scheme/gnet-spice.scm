@@ -171,7 +171,7 @@
     ( begin
       (display "* begin nullor expansion, e<name>\n")
           ;; implement the controlled voltage source
-      (display (string-append "E-" package " "))
+      (display (string-append "E_" package " "))
       (spice:write-net-name-of-component package (length (gnetlist:get-pins package)))
       (display (string-append (gnetlist:get-package-attribute package "value") "\n" ))
           ;; implement the voltage measuring current source
