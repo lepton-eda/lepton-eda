@@ -124,7 +124,7 @@
           ;; implement the controlled current source
           ;; the user should create a uref label beginning with a g
       (display (string-append package " "))
-      (spice:write-net-name-of-component package (length (gnetlist:get-pins package)))
+      (spice:write-net-name-of-component package)
        (display  (string-append (spice:component-value package) "\n") )
           ;; implement the voltage measuring current source
           ;; imagine yourself copying the voltage of a voltage source with an internal
@@ -146,7 +146,7 @@
           ;; implement the controlled voltage source
           ;; the user should create a uref label beginning with an e
       (display (string-append package " "))
-      (spice:write-net-name-of-component package (length (gnetlist:get-pins package)))
+      (spice:write-net-name-of-component package)
       (display (string-append (gnetlist:get-package-attribute package "value") "\n" ))
           ;; implement the voltage measuring current source
           ;; imagine yourself copying the voltage of a voltage source with an internal
@@ -172,7 +172,7 @@
       (display "* begin nullor expansion, e<name>\n")
           ;; implement the controlled voltage source
       (display (string-append "E_" package " "))
-      (spice:write-net-name-of-component package (length (gnetlist:get-pins package)))
+      (spice:write-net-name-of-component package)
       (display (string-append (gnetlist:get-package-attribute package "value") "\n" ))
           ;; implement the voltage measuring current source
           ;; imagine yourself copying the voltage of a voltage source with an internal
@@ -227,9 +227,9 @@
 ;; what when not defined?
 ;;      problem is slotted components e.g. ../examples/singlenet_1.sch
 ;;
-(define (spice:write-net-name-of-component uref number-of-pin)
+(define (spice:write-net-name-of-component uref)
   (do ((i 1 (1+ i)))
-      ((> i number-of-pin))
+      ((> i  (length (gnetlist:get-pins uref))))
     (let ((pin-name (number->string i)))
       (display (car (spice:get-net uref (gnetlist:get-attribute-by-pinseq uref pin-name "pinnumber"))))
       (write-char #\space))))
@@ -260,7 +260,7 @@
   (lambda (package)
     (display (string-append package " "))
         ;; write net names, slotted components not implemented
-    (spice:write-net-name-of-component package (length (gnetlist:get-pins package)))
+    (spice:write-net-name-of-component package)
         ;; write component value, if components have a label "value=#"
         ;; what if a component has no value label, currently unknown is written
     (display (spice:component-value package))))
