@@ -88,7 +88,7 @@
       (display "dc 0\n")
           ;; now it is possible to leave the output voltage source unconnected
           ;; i.e. spice won't complain about unconnected nodes
-      (display (string-append "Iout_" package " "))
+      (display (string-append "IOut_" package " "))
       (spice:write-two-pin-names package "1" "2")
       (display "dc 0\n")
       (display "* end ccvs expansion\n"))))
@@ -130,7 +130,7 @@
           ;; imagine yourself copying the voltage of a voltage source with an internal
           ;; impedance, spice starts complaining about unconnected nets if this current
           ;; source is not here.
-      (display (string-append "Imeasure_" package " "))
+      (display (string-append "IMeasure_" package " "))
       (spice:write-two-pin-names package "3" "4")
       (display "dc 0\n")
       (display "* end vccs expansion\n"))))
@@ -157,7 +157,7 @@
       (display "dc 0\n")
           ;; with an output current source it is possible to leave the output voltage source
           ;; unconnected i.e. spice won't complain about unconnected nodes
-      (display (string-append "Iout_" package " "))
+      (display (string-append "IOut_" package " "))
       (spice:write-two-pin-names package "1" "2")
       (display "dc 0\n")
       (display "* end vcvs expansion\n"))))
@@ -178,12 +178,12 @@
           ;; imagine yourself copying the voltage of a voltage source with an internal
           ;; impedance, spice starts complaining about unconnected nets if this current
           ;; source is not here.
-      (display (string-append "Imeasure_" package " "))
+      (display (string-append "IMeasure_" package " "))
       (spice:write-two-pin-names package "3" "4")
       (display "dc 0\n")
           ;; with an output current source it is possible to leave the output voltage source
           ;; unconnected i.e. spice won't complain about unconnected nodes
-      (display (string-append "Iout_" package " "))
+      (display (string-append "IOut_" package " "))
       (spice:write-two-pin-names package "1" "2")
       (display "dc 0\n")
       (display "* end of nullor expansion\n"))))
