@@ -19,7 +19,7 @@ SUBDIRS = \
 	src/cpython \
 	src/python \
 	src/command \
-	tests/storage \
+	tests \
 	tests/cpython \
 	tests/python
 

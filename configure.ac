@@ -40,7 +40,7 @@ AC_CONFIG_FILES([
 	src/cpython/Makefile
 	src/python/Makefile
 	src/command/Makefile
-	tests/storage/Makefile
+	tests/Makefile
 	tests/cpython/Makefile
 	tests/python/Makefile
 ])
