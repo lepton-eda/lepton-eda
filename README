@@ -14,7 +14,7 @@ INSTALL for more-detailed instructions.
 Dependencies:
 - running: Python interpreter
 - building: g++, gcc, binutils, make, Python headers
-- building from git: autotools, libtool
+- building from git: autotools, libtool, gettext
 
 For a list of known bugs and issues, see:
 http://bugs.hedmen.org/index.php?project=2

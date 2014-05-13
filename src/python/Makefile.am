@@ -46,4 +46,5 @@ config.py: $(srcdir)/config.py.in Makefile
 	    -e 's,[@]PACKAGE_URL[@],$(PACKAGE_URL),g' \
 	    -e 's,[@]PACKAGE_VERSION[@],$(PACKAGE_VERSION),g' \
 	    -e 's,[@]VERSION[@],$(VERSION),g' \
+	    -e 's,[@]localedir[@],$(localedir),g' \
 		$(srcdir)/$@.in > $@

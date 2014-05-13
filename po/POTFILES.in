@@ -1,0 +1,10 @@
+# List of source files which contain translatable strings.
+
+src/python/base64.py
+src/python/command.py
+src/python/fileutils.py
+src/python/geda/read.py
+src/python/geda/write.py
+src/command/xorn.in
+src/command/extract.py
+src/command/find-symbol-by-pinout.py

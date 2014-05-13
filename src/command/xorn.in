@@ -18,12 +18,15 @@
 pythondir = '@pythondir@'
 commanddir = '@commanddir@'
 
-import getopt, imp, os, sys
+import getopt, gettext, imp, os, sys
 from gettext import gettext as _
 sys.path.insert(0, pythondir)
 import xorn.command
 
 def main():
+    gettext.bindtextdomain(xorn.config.PACKAGE, xorn.config.localedir)
+    gettext.textdomain(xorn.config.PACKAGE)
+
     try:
         options, args = getopt.getopt(
             xorn.command.args, '', ['help', 'version'])
