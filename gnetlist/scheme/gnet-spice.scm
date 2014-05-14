@@ -23,6 +23,9 @@
 ;; SPICE netlist backend written by S. Gieltjes starts here
 ;;
 
+;; Common functions for the `spice' and `spice-sdb' backends
+(load-from-path "spice-common.scm")
+
 ;;
 ;; Given a uref, returns the device associated nets(s) ordered by
 ;; their pin#, what when not defined?
@@ -47,166 +50,8 @@
 ;;)
 
 
-;;
-;; gnet-spice replacement of gnetlist:get-nets, a net labeled "GND" becomes 0
-;;
-(define spice:get-net
-  (lambda (uref pin-name )
-(let ((net-name (gnetlist:get-nets uref pin-name)))
-    (cond ((string=? (car net-name) "GND") (cons "0" #t))
-          (else                            (cons (car net-name) #t))))))
 
 
-;;
-;; write netnames connected to pin-a and pin-b
-;;   (currently used by the controlled sources (e,g,f and h)
-;;
-(define spice:write-two-pin-names
-  (lambda (package pin-a pin-b)
-    (display (string-append
-      (car (spice:get-net package (gnetlist:get-attribute-by-pinseq package pin-a "pinnumber"))) " "))
-    (display (string-append
-      (car (spice:get-net package (gnetlist:get-attribute-by-pinseq package pin-b "pinnumber"))) " "))))
-
-
-
-;;
-;; write a current controlled voltage source and implement the necessary
-;;   current measuring voltage source
-(define spice:write-ccvs
-  (lambda (package)
-    ( begin
-      (display "* begin ccvs expansion, h<name>\n")
-          ;; implement the controlled current source
-          ;; the user should create the uref label begining with a h
-      (display (string-append package " "))
-      (spice:write-two-pin-names package "1" "2")
-      (display (string-append "Vsense_" package  " " (spice:component-value package) "\n" ))
-          ;; implement the current measuring voltage source
-      (display (string-append "Vsense_" package " "))
-      (spice:write-two-pin-names package "3" "4")
-      (display "dc 0\n")
-          ;; now it is possible to leave the output voltage source unconnected
-          ;; i.e. spice won't complain about unconnected nodes
-      (display (string-append "IOut_" package " "))
-      (spice:write-two-pin-names package "1" "2")
-      (display "dc 0\n")
-      (display "* end ccvs expansion\n"))))
-
-
-;;
-;; write a current controlled current source and implement the necessary
-;;   current measuring voltage source
-(define spice:write-cccs
-  (lambda (package)
-    ( begin
-      (display "* begin cccs expansion, f<name>\n")
-          ;; implement the controlled current source
-          ;; the user should create the uref label begining with a f
-      (display (string-append package " "))
-      (spice:write-two-pin-names package "1" "2")
-      (display (string-append "Vsense_" package " " (gnetlist:get-package-attribute package "value") "\n" ))
-          ;; implement the current measuring voltage source
-      (display (string-append "Vsense_" package " "))
-      (spice:write-two-pin-names package "3" "4")
-      (display "dc 0\n")
-      (display "* end cccs expansion\n"))))
-
-
-
-;;
-;; write a voltage controlled current source and implement the necessary
-;;   voltage measuring current source
-(define spice:write-vccs
-  (lambda (package)
-    ( begin
-      (display "* begin vccs expansion, g<name>\n")
-          ;; implement the controlled current source
-          ;; the user should create a uref label beginning with a g
-      (display (string-append package " "))
-      (spice:write-net-name-of-component package)
-       (display  (string-append (spice:component-value package) "\n") )
-          ;; implement the voltage measuring current source
-          ;; imagine yourself copying the voltage of a voltage source with an internal
-          ;; impedance, spice starts complaining about unconnected nets if this current
-          ;; source is not here.
-      (display (string-append "IMeasure_" package " "))
-      (spice:write-two-pin-names package "3" "4")
-      (display "dc 0\n")
-      (display "* end vccs expansion\n"))))
-
-
-;;
-;; write a voltage controlled voltage source and implement the necessary
-;;   voltage measuring current source
-(define spice:write-vcvs
-  (lambda (package)
-    ( begin
-      (display "* begin vcvs expansion, e<name>\n")
-          ;; implement the controlled voltage source
-          ;; the user should create a uref label beginning with an e
-      (display (string-append package " "))
-      (spice:write-net-name-of-component package)
-      (display (string-append (gnetlist:get-package-attribute package "value") "\n" ))
-          ;; implement the voltage measuring current source
-          ;; imagine yourself copying the voltage of a voltage source with an internal
-          ;; impedance, spice starts complaining about unconnected nets if this current
-          ;; source is not here.
-      (display (string-append "Isense_" package " "))
-      (spice:write-two-pin-names package "3" "4")
-      (display "dc 0\n")
-          ;; with an output current source it is possible to leave the output voltage source
-          ;; unconnected i.e. spice won't complain about unconnected nodes
-      (display (string-append "IOut_" package " "))
-      (spice:write-two-pin-names package "1" "2")
-      (display "dc 0\n")
-      (display "* end vcvs expansion\n"))))
-
-
-;;
-;; Create a nullor, make sure it consists of a voltage controlled source
-;;
-(define spice:write-nullor
-  (lambda (package)
-    ( begin
-      (display "* begin nullor expansion, e<name>\n")
-          ;; implement the controlled voltage source
-      (display (string-append "E_" package " "))
-      (spice:write-net-name-of-component package)
-      (display (string-append (gnetlist:get-package-attribute package "value") "\n" ))
-          ;; implement the voltage measuring current source
-          ;; imagine yourself copying the voltage of a voltage source with an internal
-          ;; impedance, spice starts complaining about unconnected nets if this current
-          ;; source is not here.
-      (display (string-append "IMeasure_" package " "))
-      (spice:write-two-pin-names package "3" "4")
-      (display "dc 0\n")
-          ;; with an output current source it is possible to leave the output voltage source
-          ;; unconnected i.e. spice won't complain about unconnected nodes
-      (display (string-append "IOut_" package " "))
-      (spice:write-two-pin-names package "1" "2")
-      (display "dc 0\n")
-      (display "* end of nullor expansion\n"))))
-
-
-
-;;
-;; write all listed and available attributes in the form of <variable>=<value>
-;;
-(define spice:write-list-of-attributes
-  (lambda (package attrib-list)
-    (if (not (null? attrib-list))
-      (begin
-            ; Is it possible to make no differentiation between upper and lower case?
-            ; That relieves you of mixed case forms e.g. As, AS, as..., they are the
-            ; same attributes, spice3f5 is case insensitive.  And other spice versions?
-        (if (not (string=? (gnetlist:get-package-attribute package (car attrib-list)) "unknown"))
-          (display (string-append  " " (car attrib-list) "="
-                               (gnetlist:get-package-attribute package (car attrib-list)))))
-        (spice:write-list-of-attributes package (cdr attrib-list))))))
-
-
-;;
 ;;  write mos transistor
 ;;
 (define spice:write-mos-transistor
@@ -220,29 +65,6 @@
       (cond ((string=? off-value "#t") (display " off"))
             ((string=? off-value "1" ) (display " off"))))
     (newline)))
-
-
-;;
-;; Given a uref, returns the device associated nets(s) ordered by their pin#,
-;; what when not defined?
-;;      problem is slotted components e.g. ../examples/singlenet_1.sch
-;;
-(define (spice:write-net-name-of-component uref)
-  (do ((i 1 (1+ i)))
-      ((> i  (length (gnetlist:get-pins uref))))
-    (let ((pin-name (number->string i)))
-      (display (car (spice:get-net uref (gnetlist:get-attribute-by-pinseq uref pin-name "pinnumber"))))
-      (write-char #\space))))
-
-;;
-;; Given a uref, returns the device attribute value as string
-;;
-(define spice:component-value
-  (lambda (package)
-    (let ((value (gnetlist:get-package-attribute package "value")))
-      (if (not (string=? value "unknown"))
-        value
-        "<No valid value attribute found>"))))
 
 
 ;;
@@ -260,7 +82,7 @@
   (lambda (package)
     (display (string-append package " "))
         ;; write net names, slotted components not implemented
-    (spice:write-net-name-of-component package)
+    (spice:write-net-names-on-component package)
         ;; write component value, if components have a label "value=#"
         ;; what if a component has no value label, currently unknown is written
     (display (spice:component-value package))))

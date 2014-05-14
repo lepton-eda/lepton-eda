@@ -119,6 +119,9 @@
 ;; The following is needed to make guile 1.8.x happy.
 (use-modules (ice-9 rdelim) (srfi srfi-1))
 
+;; Common functions for the `spice' and `spice-sdb' backends
+(load-from-path "spice-common.scm")
+
 ;;--------------------------------------------------------------------------------
 ;; spice-sdb:loop-through-files -- loops through the model-file list, and for each file
 ;;  name discovered in the list, it processes the file by invoking handle-spice-file.
@@ -432,22 +435,6 @@
 ) ;; end define
 
 
-;;-------------------------------------------------------------------
-;; write all listed and available attributes in the form of <variable>=<value>
-;;-------------------------------------------------------------------
-(define spice-sdb:write-list-of-attributes
-  (lambda (package attrib-list)
-    (if (not (null? attrib-list))
-      (begin
-            ; Is it possible to make no differentiation between upper and lower case?
-            ; That relieves you of mixed case forms e.g. As, AS, as..., they are the
-            ; same attributes, spice3f5 is case insensitive.  And other spice versions?
-        (if (not (string=? (gnetlist:get-package-attribute package (car attrib-list)) "unknown"))
-          (display (string-append  " " (car attrib-list) "="
-                               (gnetlist:get-package-attribute package (car attrib-list)))))
-        (spice-sdb:write-list-of-attributes package (cdr attrib-list))))))
-
-
 ;;---------------------------------------------------------------
 ;;  write prefix if first char of refdes is improper,
 ;;  eg. if MOSFET is named T1 then becomes MT1 in SPICE
@@ -535,152 +522,6 @@
 ;;***************  Dealing with nets, devices, & SPICE cards.    *******************
 ;;**********************************************************************************
 
-;;-----------------------------------------------------------
-;; gnet-spice replacement of gnetlist:get-nets, a net labeled "GND" becomes 0
-;;-----------------------------------------------------------
-(define spice-sdb:get-net
-  (lambda (refdes pin-name)
-    (let ((net-name (gnetlist:get-nets refdes pin-name)))
-      (cond ((string=? (car net-name) "GND") (cons "0" #t))
-            (else                            (cons (car net-name) #t)))
-    )
-  )
-)
-
-
-;;---------------------------------------------------------------------
-;; write netnames connected to pin-a and pin-b
-;;   (currently used by the controlled sources (e, g, f and h)
-;;---------------------------------------------------------------------
-(define spice-sdb:write-two-pin-names
-  (lambda (package pin-a pin-b)
-    (display (string-append
-      (car (spice-sdb:get-net package (gnetlist:get-attribute-by-pinseq package pin-a "pinnumber"))) " "))
-    (display (string-append
-      (car (spice-sdb:get-net package (gnetlist:get-attribute-by-pinseq package pin-b "pinnumber"))) " "))))
-
-
-;;----------------------------------------------------------------
-;; write a current controlled voltage source and implement the necessary
-;;   current measuring voltage source
-;;----------------------------------------------------------------
-(define spice-sdb:write-ccvs
-  (lambda (package)
-    ( begin
-      (display "* begin ccvs expansion, h<name>\n")
-          ;; implement the controlled current source
-          ;; the user should create the refdes label begining with a h
-      (display (string-append package " "))
-      (spice-sdb:write-two-pin-names package "1" "2")
-      (display (string-append "Vsense_" package  " " (spice-sdb:component-value package) "\n" ))
-          ;; implement the current measuring voltage source
-      (display (string-append "Vsense_" package " "))
-      (spice-sdb:write-two-pin-names package "3" "4")
-      (display "dc 0\n")
-          ;; now it is possible to leave the output voltage source unconnected
-          ;; i.e. spice won't complain about unconnected nodes
-      (display (string-append "IOut_" package " "))
-      (spice-sdb:write-two-pin-names package "1" "2")
-      (display "dc 0\n")
-      (display "* end ccvs expansion\n"))))
-
-
-;;-----------------------------------------------------------------------
-;; write a current controlled current source and implement the necessary
-;;   current measuring voltage source
-;;-----------------------------------------------------------------------
-(define spice-sdb:write-cccs
-  (lambda (package)
-    ( begin
-      (display "* begin cccs expansion, f<name>\n")
-          ;; implement the controlled current source
-          ;; the user should create the refdes label begining with a f
-      (display (string-append package " "))
-      (spice-sdb:write-two-pin-names package "1" "2")
-      (display (string-append "Vsense_" package " " (gnetlist:get-package-attribute package "value") "\n" ))
-          ;; implement the current measuring voltage source
-      (display (string-append "Vsense_" package " "))
-      (spice-sdb:write-two-pin-names package "3" "4")
-      (display "dc 0\n")
-      (display "* end cccs expansion\n"))))
-
-
-;;-------------------------------------------------------------------------
-;; write a voltage controlled current source and implement the necessary
-;;   voltage measuring current source
-;;-------------------------------------------------------------------------
-(define spice-sdb:write-vccs
-  (lambda (package)
-    ( begin
-      (display "* begin vccs expansion, g<name>\n")
-          ;; implement the controlled current source
-          ;; the user should create a refdes label beginning with a g
-      (display (string-append package " "))
-      (spice-sdb:write-net-names-on-component package)
-       (display  (string-append (spice-sdb:component-value package) "\n"))
-          ;; implement the voltage measuring current source
-          ;; imagine yourself copying the voltage of a voltage source with an internal
-          ;; impedance, spice starts complaining about unconnected nets if this current
-          ;; source is not here.
-      (display (string-append "IMeasure_" package " "))
-      (spice-sdb:write-two-pin-names package "3" "4")
-      (display "dc 0\n")
-      (display "* end vccs expansion\n"))))
-
-
-;;------------------------------------------------------------------------
-;; write a voltage controlled voltage source and implement the necessary
-;;   voltage measuring current source
-;;------------------------------------------------------------------------
-(define spice-sdb:write-vcvs
-  (lambda (package)
-    ( begin
-      (display "* begin vcvs expansion, e<name>\n")
-          ;; implement the controlled voltage source
-          ;; the user should create a refdes label beginning with an e
-      (display (string-append package " "))
-      (spice-sdb:write-net-names-on-component package)
-      (display (string-append (gnetlist:get-package-attribute package "value") "\n" ))
-          ;; implement the voltage measuring current source
-          ;; imagine yourself copying the voltage of a voltage source with an internal
-          ;; impedance, spice starts complaining about unconnected nets if this current
-          ;; source is not here.
-      (display (string-append "Isense_" package " "))
-      (spice-sdb:write-two-pin-names package "3" "4")
-      (display "dc 0\n")
-          ;; with an output current source it is possible to leave the output voltage source
-          ;; unconnected i.e. spice won't complain about unconnected nodes
-      (display (string-append "IOut_" package " "))
-      (spice-sdb:write-two-pin-names package "1" "2")
-      (display "dc 0\n")
-      (display "* end vcvs expansion\n"))))
-
-
-;;--------------------------------------------------------------------------
-;; Create a nullor, make sure it consists of a voltage controlled source
-;;--------------------------------------------------------------------------
-(define spice-sdb:write-nullor
-  (lambda (package)
-    ( begin
-      (display "* begin nullor expansion, e<name>\n")
-          ;; implement the controlled voltage source
-      (display (string-append "E_" package " "))
-      (spice-sdb:write-net-names-on-component package)
-      (display (string-append (gnetlist:get-package-attribute package "value") "\n" ))
-          ;; implement the voltage measuring current source
-          ;; imagine yourself copying the voltage of a voltage source with an internal
-          ;; impedance, spice starts complaining about unconnected nets if this current
-          ;; source is not here.
-      (display (string-append "IMeasure_" package " "))
-      (spice-sdb:write-two-pin-names package "3" "4")
-      (display "dc 0\n")
-          ;; with an output current source it is possible to leave the output voltage source
-          ;; unconnected i.e. spice won't complain about unconnected nodes
-      (display (string-append "IOut_" package " "))
-      (spice-sdb:write-two-pin-names package "1" "2")
-      (display "dc 0\n")
-      (display "* end of nullor expansion\n"))))
-
 
 ;;----------------------------------------------------------------
 ;;
@@ -740,7 +581,7 @@
           (display (string-append off " ")))
 
   ;; Write out remaining attributes
-      (spice-sdb:write-list-of-attributes package attrib-list)
+      (spice:write-list-of-attributes package attrib-list)
 
   ;; Now write out newline in preparation for writing out model.
       (newline)
@@ -1026,7 +867,7 @@
     ;; I include non-standard "area" attrib here per popular demand.
     (let ((attrib-list (list "area" "l" "w" "temp")))
             ;; write the attributes (if any) separately
-      (spice-sdb:write-list-of-attributes package attrib-list)
+      (spice:write-list-of-attributes package attrib-list)
       (display " "))  ;; add additional space. . . .
 
     ;; finally output a new line
@@ -1065,7 +906,7 @@
     ;; a list of attributes which can be attached to a capacitor.
     ;; I include non-standard "area" attrib here per request of Peter Kaiser.
     (let ((attrib-list (list "area" "l" "w" "ic")))
-      (spice-sdb:write-list-of-attributes package attrib-list)
+      (spice:write-list-of-attributes package attrib-list)
             ;; write the off attribute separately
                 (display " "))  ;; add additional space. . . .
 
@@ -1095,7 +936,7 @@
 
     ;; create list of attributes which can be attached to a inductor
     (let ((attrib-list (list "l" "w" "ic")))
-      (spice-sdb:write-list-of-attributes package attrib-list)
+      (spice:write-list-of-attributes package attrib-list)
 
       ;; write the off attribute separately
       (display " "))  ;; add additional space. . . .
@@ -1174,7 +1015,7 @@
     ;; Next write out attribtes if they exist.  Use
     ;; a list of attributes which can be attached to a junction.
     (let ((attrib-list (list "area")))
-      (spice-sdb:write-list-of-attributes package attrib-list)
+      (spice:write-list-of-attributes package attrib-list)
             ;; write the off attribute separately
                 (display " "))  ;; add additional space. . . .
 
@@ -1257,11 +1098,11 @@
               (if (not (string=? pin (gnetlist:get-attribute-by-pinseq refdes pin "pinseq")))
                 (debug-spew " <== INCONSISTENT!\n")
                 (debug-spew "\n") )
-              (debug-spew (string-append "     netname = " (car (spice-sdb:get-net refdes (gnetlist:get-attribute-by-pinseq refdes pin "pinnumber"))) "\n"))
+              (debug-spew (string-append "     netname = " (car (spice:get-net refdes (gnetlist:get-attribute-by-pinseq refdes pin "pinnumber"))) "\n"))
           )) ;; if #T for super debugging
 ;; -------------------------------------
 
-        (set! pin (car (spice-sdb:get-net refdes (gnetlist:get-attribute-by-pinseq refdes pin "pinnumber"))))
+        (set! pin (car (spice:get-net refdes (gnetlist:get-attribute-by-pinseq refdes pin "pinnumber"))))
         (if (string=? pin "ERROR_INVALID_PIN")
           (begin
             (debug-spew (string-append "For " refdes ", found pin with no pinseq attribute.  Ignoring. . . .\n"))
@@ -1295,19 +1136,6 @@
 )
 
 
-;;-----------------------------------------------------------
-;; Given a refdes, returns the device attribute "value" as string
-;; Used when "value" is a mandatory attribute.
-;; Returns "<no valid attribute . . .>" if not available.
-;;-----------------------------------------------------------
-(define spice-sdb:component-value
-  (lambda (package)
-    (let ((value (gnetlist:get-package-attribute package "value")))
-      (if (not (string=? value "unknown"))
-        value
-        "<No valid value attribute found>"))))
-
-
 ;;------------------------------------------------------------
 ;; Given a refdes, returns the device attribute "value" as string
 ;; Used when "value" is an optional attribute.
@@ -1328,7 +1156,7 @@
   (lambda (package)
     (let ((model (gnetlist:get-package-attribute package "model")))
       (if (not (string=? model "unknown"))
-        model spice-sdb:component-value))))
+        model spice:component-value))))
 
 
 ;;----------------------------------------------------------
@@ -1396,7 +1224,7 @@
 (define spice-sdb:write-options
   (lambda (package)
     (debug-spew (string-append "Found .OPTIONS box.  Refdes = " package "\n"))
-    (display (string-append ".OPTIONS " (spice-sdb:component-value package) "\n"))))
+    (display (string-append ".OPTIONS " (spice:component-value package) "\n"))))
 
 
 ;;----------------------------------------------------------
@@ -1487,7 +1315,7 @@
         (spice-sdb:write-component-no-value package)
         ;; write component value, if components have a label "value=#"
         ;; what if a component has no value label, currently unknown is written
-        (display (spice-sdb:component-value package))
+        (display (spice:component-value package))
         (newline)
        )
       ) ;; end cond
@@ -1527,15 +1355,15 @@
           ( (string=? device "spice-subcircuit-LL"))  ;; do nothing for subcircuit declaration.
           ( (string=? device "spice-IO"))             ;; do nothing for SPICE IO pins.
           ( (string=? device "SPICE-ccvs")
-              (spice-sdb:write-ccvs package))
+              (spice:write-ccvs package))
           ( (string=? device "SPICE-cccs")
-              (spice-sdb:write-cccs package))
+              (spice:write-cccs package))
           ( (string=? device "SPICE-vcvs")
-              (spice-sdb:write-vcvs package))
+              (spice:write-vcvs package))
           ( (string=? device "SPICE-vccs")
-              (spice-sdb:write-vccs package))
+              (spice:write-vccs package))
           ( (string=? device "SPICE-nullor")
-              (spice-sdb:write-nullor package))
+              (spice:write-nullor package))
           ( (string=? device "DIODE")
               (spice-sdb:write-diode package))
           ( (string=? device "PMOS_TRANSISTOR")
@@ -1750,6 +1578,9 @@
 ;;---------------------------------------------------------------
 (define spice-sdb
   (lambda (output-filename)
+    ;; Redefine write-net-names-on-component
+    (set! spice:write-net-names-on-component spice-sdb:write-net-names-on-component)
+
 ;;
 ;; First find out if this is a .SUBCKT lower level,
 ;; or if it is a regular schematic.
