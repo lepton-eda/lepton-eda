@@ -17,6 +17,9 @@ Notable changes in gEDA/gaf 1.9.2
 
   - A default gain value has been added in the nullor expansion code. 
 
+* Two attributes ("value=" and "symversion=") have been added to the
+  default nullor symbol.
+
 * Visibility and attributes of several VHDL symbols have been fixed.
 
 * Four verilog symbols have been fixed so that the verilog gnetlist
