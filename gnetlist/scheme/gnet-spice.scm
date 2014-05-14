@@ -26,31 +26,6 @@
 ;; Common functions for the `spice' and `spice-sdb' backends
 (load-from-path "spice-common.scm")
 
-;;
-;; Given a uref, returns the device associated nets(s) ordered by
-;; their pin#, what when not defined?
-;; problem is slotted components e.g. ../examples/singlenet_1.sch
-;;
-
-;; Ales' changed implemenation
-;; Commented out since it has some problems
-;; (define spice:write-net-name-of-node
-;;   (lambda (uref pins)
-;;     (if (not (null? pins))
-;;            (let ((pin (car pins)))
-;;             (begin
-;;           (display pin) (newline)
-;;           (display (car (gnetlist:get-nets uref pin)))
-;;          (write-char #\space)
-;;          (spice:write-net-name-of-node uref (cdr pins))
-;;        )
-;;      )
-;;    )
-;;  )
-;;)
-
-
-
 
 ;;  write mos transistor
 ;;
