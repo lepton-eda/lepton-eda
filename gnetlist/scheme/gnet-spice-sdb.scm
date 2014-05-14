@@ -1075,7 +1075,7 @@
 
 
 ;;--------------------------------------------------------------------
-;; Given a refdes and port, and optionally a format string, this writes
+;; Given a refdes, and optionally a format string, this writes
 ;; out the nets attached to the component's pins. If it's not called
 ;; with a format string it looks for one in the net-format attribute,
 ;; otherwise it writes out the pins unformatted. This is used to write
