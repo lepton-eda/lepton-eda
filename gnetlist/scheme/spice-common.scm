@@ -151,12 +151,12 @@
 ;;--------------------------------------------------------------------------
 (define spice:write-nullor
   (lambda (package)
-    ( begin
+    (let ((value (gnetlist:get-package-attribute package "value")))
       (display "* begin nullor expansion, e<name>\n")
           ;; implement the controlled voltage source
       (display (string-append "E_" package " "))
       (spice:write-net-names-on-component package)
-      (display (string-append (gnetlist:get-package-attribute package "value") "\n" ))
+      (display (string-append (if (string=? value "unknown") "1000Meg" value) "\n"))
           ;; implement the voltage measuring current source
           ;; imagine yourself copying the voltage of a voltage source with an internal
           ;; impedance, spice starts complaining about unconnected nets if this current
