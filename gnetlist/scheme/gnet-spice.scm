@@ -51,7 +51,7 @@
 
 
 ;;
-;; write the uref, the net name connected to pin# and the component value. No extra attributes.
+;; write the refdes, the net name connected to pin# and the component value. No extra attributes.
 ;;
 (define spice:write-one-component
   (lambda (package)
@@ -64,7 +64,7 @@
 
 
 ;;
-;; write the uref, to the pin# connected net and component value and optional extra attributes
+;; write the refdes, to the pin# connected net and component value and optional extra attributes
 ;; check if the component is a special spice component
 ;;
 (define spice:write-netlist
