@@ -178,13 +178,12 @@
 (define spice:write-list-of-attributes
   (lambda (package attrib-list)
     (if (not (null? attrib-list))
-      (begin
+      (let ((attrib (gnetlist:get-package-attribute package (car attrib-list))))
             ; Is it possible to make no differentiation between upper and lower case?
             ; That relieves you of mixed case forms e.g. As, AS, as..., they are the
             ; same attributes, spice3f5 is case insensitive.  And other spice versions?
-        (if (not (string=? (gnetlist:get-package-attribute package (car attrib-list)) "unknown"))
-          (display (string-append  " " (car attrib-list) "="
-                               (gnetlist:get-package-attribute package (car attrib-list)))))
+        (if (not (string=? attrib "unknown"))
+          (display (string-append  " " (car attrib-list) "=" attrib)))
         (spice:write-list-of-attributes package (cdr attrib-list))))))
 
 
