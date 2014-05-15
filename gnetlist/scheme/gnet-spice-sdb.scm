@@ -209,7 +209,7 @@
         (display (string-append "*\n"))
      ) ;; end of outer let
     (begin
-      (display (string-append "ERROR: File '" model-filename "' not found.\n"))
+      (message (string-append "ERROR: File '" model-filename "' not found.\n"))
       (primitive-exit 1))
     )
   )
@@ -428,7 +428,7 @@
        ) ;; end of inner lets
       ) ;; end of outer let
     (begin
-      (display (string-append "ERROR: File '" model-filename "' not found.\n"))
+      (message (string-append "ERROR: File '" model-filename "' not found.\n"))
       (primitive-exit 1))
     )
   )
