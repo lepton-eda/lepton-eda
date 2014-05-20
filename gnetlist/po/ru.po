@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: geda gnetlist\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
 "POT-Creation-Date: 2014-03-08 21:51+0000\n"
-"PO-Revision-Date: 2014-03-08 20:49+0400\n"
+"PO-Revision-Date: 2014-05-20 08:55+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: gEDA Developers\n"
 "Language: ru\n"
@@ -301,12 +301,12 @@ msgstr "Отсутствуют атрибуты «refdes» и «pinnumber»\n"
 #: gnetlist/src/s_net.c:291 gnetlist/src/s_net.c:328
 #, c-format
 msgid "Found duplicate net name, renaming [%s] to [%s]\n"
-msgstr "Обнаружено дублирование имени соединения, переименование «%s» в «%s»\n"
+msgstr "Обнаружено ещё одно имя для соединения «%s», переименование в «%s»\n"
 
 #: gnetlist/src/s_net.c:440
-#, fuzzy, c-format
+#, c-format
 msgid "s_net_name: incorrect connectivity type %i\n"
-msgstr "s_name_nets: неверный тип соединения «%i»\n"
+msgstr "s_net_name: неверный тип соединения «%i»\n"
 
 #: gnetlist/src/s_net.c:460
 #, c-format
