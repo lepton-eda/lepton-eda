@@ -109,7 +109,7 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object,
 
   /* is the object already part of the list ? */
   if (g_list_find (object->attribs, attrib)) {
-    g_warning ("Attribute [%s] already attached\n", attrib->text->string);
+    g_warning (_("Attribute [%s] already attached\n"), attrib->text->string);
     return;
   }
 
