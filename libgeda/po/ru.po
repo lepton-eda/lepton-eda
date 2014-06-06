@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
-"POT-Creation-Date: 2014-03-08 22:17+0000\n"
-"PO-Revision-Date: 2014-03-08 20:50+0400\n"
+"POT-Creation-Date: 2014-06-06 15:49+0400\n"
+"PO-Revision-Date: 2014-06-06 16:40+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: geda-user@delorie.com\n"
 "Language: ru\n"
@@ -330,6 +330,11 @@ msgstr "Недопустимое значение цветового индек�
 #: libgeda/src/o_text_basic.c:388
 msgid "Setting color to default color\n"
 msgstr "Установка цвета по умолчанию\n"
+
+#: libgeda/src/o_attrib.c:112
+#, c-format
+msgid "Attribute [%s] already attached\n"
+msgstr "Атрибут «%s» уже прикреплён\n"
 
 #: libgeda/src/o_attrib.c:117
 msgid "Attempt to attach non text item as an attribute!\n"
@@ -911,7 +916,7 @@ msgstr "Объект ~A прикреплён как атрибут"
 
 #: libgeda/src/scheme_complex.c:346 libgeda/src/scheme_page.c:308
 msgid "Object ~A has attributes"
-msgstr "Объект ~A имеет собственные атрибуты"
+msgstr "К объекту ~A прикреплены атрибуты"
 
 #: libgeda/src/scheme_object.c:232
 msgid "Object ~A has bad type '~A'"
@@ -1031,11 +1036,11 @@ msgstr ""
 msgid "Parse error: ~s"
 msgstr "Ошибка обработки: ~s"
 
-#: libgeda/src/edascmhookproxy.c:75
+#: libgeda/src/edascmhookproxy.c:81
 msgid "Scheme hook"
 msgstr "Функция перехвата Scheme"
 
-#: libgeda/src/edascmhookproxy.c:76
+#: libgeda/src/edascmhookproxy.c:82
 msgid "The Scheme-level hook to proxy"
 msgstr "Перехват функций Scheme для EdascmHookProxy"
 
