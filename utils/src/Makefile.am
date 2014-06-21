@@ -7,7 +7,7 @@ grenum_SOURCES = grenum.c grenum.h
 
 gsch2pcb_SOURCES = gsch2pcb.c
 gsch2pcb_CPPFLAGS = \
-	-DPCBDATADIR=\"$(PCBDATADIR)\" \
+	-DPCBM4DIR=\"$(PCBM4DIR)\" \
 	-DPCBLIBPATH=\"$(PCBLIBPATH)\"
 gsch2pcb_CFLAGS = $(GLIB_CFLAGS)
 gsch2pcb_LDFLAGS = $(GLIB_LIBS)
