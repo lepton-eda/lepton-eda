@@ -115,7 +115,7 @@ cmd_shell_impl (void *data, int argc, char **argv)
   /* Interactive, so enable readline support and print an abbreviated
    * version message. */
   if (interactive) {
-    printf ("gEDA %s (g%.7s)\n", PACKAGE_DOTTED_VERSION, PACKAGE_GIT_COMMIT);
+    fprintf (stderr, "gEDA %s (g%.7s)\n", PACKAGE_DOTTED_VERSION, PACKAGE_GIT_COMMIT);
     SCM expr = scm_list_3 (sym_begin,
                            scm_list_2 (sym_use_modules,
                                        scm_list_2 (sym_ice_9, sym_readline)),
