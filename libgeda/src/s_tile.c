@@ -293,7 +293,7 @@ static void s_tile_add_line_object (TOPLEVEL *toplevel, OBJECT *object)
   }
 }
 
-/*! \brief add an object to the tile ssytem
+/*! \brief add an object to the tile system
  *  \par Function Description
  *  This function takes dispatches the object to the correct
  *  function, depending on its type.
@@ -324,7 +324,7 @@ void s_tile_add_object (TOPLEVEL *toplevel, OBJECT *object)
 
 /*! \brief remove an object from the tiles
  *  \par Function Description
- *  This function remose an object from all tiles that are refered by the object.
+ *  This function removes an object from all tiles that are referred by the object.
  *  It also removes the object from each tile that contained the object.
  *  \param object The object to remove
  */
