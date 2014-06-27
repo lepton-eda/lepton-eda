@@ -54,7 +54,8 @@
 
 static gint global_pid = 0;
 
-/* Called just before removing an OBJECT from a PAGE. */
+/* Called just before removing an OBJECT from a PAGE
+ * or after appending an OBJECT to a PAGE. */
 static void
 object_added (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
 {
