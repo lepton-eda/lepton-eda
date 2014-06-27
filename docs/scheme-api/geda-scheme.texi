@@ -1363,12 +1363,6 @@ degrees).
 Finally, the symbol is translated by @var{position}.
 @end enumerate
 
-The component's contents (as returned by @code{component-contents})
-have the transformation already applied to them.  Updating the
-translation information using e.g. @code{set-component!} will not
-alter them -- that must be done separately (e.g. by reloading the
-symbol).
-
 @defun component? object
 Returns @samp{#t} if and only if @var{object} is a component @code{object}.
 @end defun
@@ -1398,8 +1392,8 @@ If no match for @var{basename} is found, @samp{#f} is returned.
 Sets the parameters of @var{component}.  Arguments are the same as to
 @code{make-component}.  Returns @var{component}.
 
-@strong{Note}: Remember that modifying the transformation parameters
-of a component does not update the component's contents.
+Modifying the transformation parameters of a component immediately updates
+the component's contents.
 @end defun
 
 @defun component-info component
