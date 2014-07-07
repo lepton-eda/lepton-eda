@@ -55,7 +55,8 @@
 ;; Add all symbol libraries found below DIR to be searched for
 ;; components, naming them with an optional PREFIX.
 (define* (component-library-search rootdir  #:optional prefix)
-  (let ((dht (make-hash-table 31)))
+  (let ((dht (make-hash-table 31))
+        (rootdir (expand-env-variables rootdir)))
     ;; Build symbol directory list
     (ftw rootdir
          (lambda (filename statinfo flags)
