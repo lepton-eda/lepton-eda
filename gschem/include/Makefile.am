@@ -15,6 +15,7 @@ noinst_HEADERS = \
 	gschem_bottom_widget.h \
 	gschem_defines.h \
 	gschem_dialog.h \
+	gschem_fill_swatch_cell_renderer.h \
 	gschem_integer_combo_box.h \
 	gschem_macro_widget.h \
 	gschem_main_window.h \

@@ -29,6 +29,7 @@ gschem_SOURCES = \
 	gschem_action.c \
 	gschem_bottom_widget.c \
 	gschem_dialog.c \
+	gschem_fill_swatch_cell_renderer.c \
 	gschem_integer_combo_box.c \
 	gschem_macro_widget.c \
 	gschem_main_window.c \

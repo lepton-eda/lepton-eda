@@ -130,6 +130,7 @@ x_fstylecb_new ()
 {
   GtkComboBox *combo;
   GtkCellLayout *layout;
+  GtkCellRenderer *swatch_cell;
   GtkCellRenderer *text_cell;
 
   if (fstyle_list_store == NULL) {
@@ -138,6 +139,13 @@ x_fstylecb_new ()
 
   combo = GTK_COMBO_BOX (gtk_combo_box_new_with_model (GTK_TREE_MODEL (fstyle_list_store)));
   layout = GTK_CELL_LAYOUT (combo); /* For convenience */
+
+  /* Renders the fill swatch. Since this won't contain text, set a
+   * minimum width. */
+  swatch_cell = GTK_CELL_RENDERER (gschem_fill_swatch_cell_renderer_new ());
+  g_object_set (swatch_cell, "width", 25, NULL);
+  gtk_cell_layout_pack_start (layout, swatch_cell, FALSE);
+  gtk_cell_layout_add_attribute (layout, swatch_cell, "fill-type", COLUMN_INDEX);
 
   /* Renders the name of the fill style */
   text_cell = GTK_CELL_RENDERER (gtk_cell_renderer_text_new());

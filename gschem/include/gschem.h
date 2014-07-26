@@ -32,6 +32,7 @@ typedef struct st_gschem_toplevel GschemToplevel;
 #include "x_pagesel.h"
 #include "x_states.h"
 #include "gschem_swatch_column_renderer.h"
+#include "gschem_fill_swatch_cell_renderer.h"
 #include "globals.h"
 #include "prototype.h"
 #include "gschem_integer_combo_box.h"
