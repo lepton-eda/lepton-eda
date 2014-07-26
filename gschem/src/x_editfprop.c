@@ -358,7 +358,7 @@ static void editfprop_init(EditFProp *dialog)
   alignment = gtk_alignment_new(0,0,1,1);
   gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
                             DIALOG_INDENTATION, 0);
-  gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(vbox), alignment, FALSE, FALSE, 0);
 
   table = gtk_table_new (6, 2, FALSE);
   gtk_table_set_row_spacings(GTK_TABLE(table), DIALOG_V_SPACING);
