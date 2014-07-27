@@ -27,6 +27,8 @@ gschem_SOURCES = \
 	gschemhotkeystore.c \
 	gschem_accel_label.c \
 	gschem_action.c \
+	gschem_binding.c \
+	gschem_binding_integer.c \
 	gschem_bottom_widget.c \
 	gschem_dialog.c \
 	gschem_fill_swatch_cell_renderer.c \
@@ -77,8 +79,6 @@ gschem_SOURCES = \
 	x_colorcb.c \
 	x_compselect.c \
 	x_dialog.c \
-	x_editcolor.c \
-	x_editfprop.c \
 	x_editlprop.c \
 	x_edittext.c \
 	x_event.c \

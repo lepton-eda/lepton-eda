@@ -68,7 +68,7 @@ DEFINE_I_CALLBACK(file_new)
 
   /* create a new page */
   page = x_window_open_page (w_current, NULL);
-  x_window_set_current_page (w_current, page); 
+  x_window_set_current_page (w_current, page);
   s_log_message (_("New page created [%s]\n"), page->page_filename);
 }
 
@@ -406,7 +406,7 @@ void i_callback_toolbar_edit_redo(GtkWidget* widget, gpointer data)
 DEFINE_I_CALLBACK(edit_select)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  o_redraw_cleanstates(w_current);	
+  o_redraw_cleanstates(w_current);
 
   /* this is probably the only place this should be */
   i_set_state(w_current, SELECT);
@@ -518,7 +518,7 @@ DEFINE_I_CALLBACK(edit_mcopy)
   if (o_select_return_first_object(w_current)) {
     if (g_action_get_position (TRUE, &wx, &wy)) {
       o_redraw_cleanstates(w_current);
-      w_current->event_state = MCOPY; 
+      w_current->event_state = MCOPY;
       o_copy_start(w_current, wx, wy);
       w_current->event_state = ENDMCOPY;
       w_current->inside_action = 1;
@@ -578,7 +578,7 @@ DEFINE_I_CALLBACK(edit_delete)
   i_update_middle_button(w_current, i_callback_edit_delete, _("Delete"));
 
   if (o_select_return_first_object(w_current)) {
-    o_redraw_cleanstates(w_current);	
+    o_redraw_cleanstates(w_current);
     o_delete_selected(w_current);
     /* if you delete the objects you must go into select
      * mode after the delete */
@@ -676,7 +676,8 @@ DEFINE_I_CALLBACK(edit_color)
 
   i_update_middle_button(w_current, i_callback_edit_color, _("Color"));
 
-  color_edit_dialog(w_current);
+  /* dialogs have been merged */
+  line_type_dialog(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -879,11 +880,11 @@ DEFINE_I_CALLBACK(edit_embed)
     o_undo_savestate_old(w_current, UNDO_ALL);
   } else {
     /* nothing selected, go back to select state */
-    o_redraw_cleanstates(w_current);	
+    o_redraw_cleanstates(w_current);
     w_current->inside_action = 0;
     i_set_state(w_current, SELECT);
   }
-  
+
 }
 
 /*! \todo Finish function documentation!!!
@@ -918,7 +919,7 @@ DEFINE_I_CALLBACK(edit_unembed)
     o_undo_savestate_old(w_current, UNDO_ALL);
   } else {
     /* nothing selected, go back to select state */
-    o_redraw_cleanstates(w_current);	
+    o_redraw_cleanstates(w_current);
     w_current->inside_action = 0;
     i_set_state(w_current, SELECT);
   }
@@ -963,7 +964,7 @@ DEFINE_I_CALLBACK(edit_update)
 
   } else {
     /* nothing selected, go back to select state */
-    o_redraw_cleanstates(w_current);	
+    o_redraw_cleanstates(w_current);
     w_current->inside_action = 0;
     i_set_state(w_current, SELECT);
   }
@@ -1081,6 +1082,7 @@ DEFINE_I_CALLBACK(edit_linetype)
 
   g_return_if_fail (w_current != NULL);
 
+  /* dialogs have been merged */
   line_type_dialog(w_current);
 }
 
@@ -1095,7 +1097,8 @@ DEFINE_I_CALLBACK(edit_filltype)
 
   g_return_if_fail (w_current != NULL);
 
-  fill_type_dialog(w_current);
+  /* dialogs have been merged */
+  line_type_dialog(w_current);
 }
 
 /*! \section view-menu View Menu Callback Functions */
@@ -1134,7 +1137,7 @@ DEFINE_I_CALLBACK(view_zoom_full)
   a_zoom(w_current, page_view, ZOOM_FULL, DONTCARE, 0);
 
   if (w_current->undo_panzoom) {
-    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY); 
+    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
   }
 }
 
@@ -1209,7 +1212,7 @@ DEFINE_I_CALLBACK(view_zoom_in)
           0);
 
   if (w_current->undo_panzoom) {
-    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY); 
+    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
   }
 }
 
@@ -1233,9 +1236,9 @@ DEFINE_I_CALLBACK(view_zoom_out)
          ZOOM_OUT,
          g_action_get_position (FALSE, NULL, NULL) ? HOTKEY : MENU,
          0);
- 
+
   if (w_current->undo_panzoom) {
-    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY); 
+    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
   }
 }
 
@@ -1764,7 +1767,7 @@ DEFINE_I_CALLBACK(add_component)
  *  \par Function Description
  *
  *  \note
- *  don't use the widget parameter on this function, or do some checking... 
+ *  don't use the widget parameter on this function, or do some checking...
  *  since there is a call: widget = NULL, data = 0 (will be w_current hack)
  */
 void i_callback_toolbar_add_component(GtkWidget* widget, gpointer data)
@@ -1895,8 +1898,8 @@ DEFINE_I_CALLBACK(add_text)
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
-  
-  o_redraw_cleanstates(w_current);	
+
+  o_redraw_cleanstates(w_current);
   o_invalidate_rubber (w_current);
 
   w_current->inside_action = 0;
@@ -1928,7 +1931,7 @@ DEFINE_I_CALLBACK(add_line)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   gint wx, wy;
-  
+
   g_return_if_fail (w_current != NULL);
 
   o_redraw_cleanstates(w_current);
@@ -1970,11 +1973,11 @@ DEFINE_I_CALLBACK(add_path)
 DEFINE_I_CALLBACK(add_box)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  gint wx, wy; 
+  gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
 
-  o_redraw_cleanstates(w_current);	
+  o_redraw_cleanstates(w_current);
   o_invalidate_rubber (w_current);
 
   i_update_middle_button(w_current, i_callback_add_box, _("Box"));
@@ -2002,7 +2005,7 @@ DEFINE_I_CALLBACK(add_picture)
 
   g_return_if_fail (w_current != NULL);
 
-  o_redraw_cleanstates(w_current);	
+  o_redraw_cleanstates(w_current);
   o_invalidate_rubber (w_current);
 
   w_current->inside_action = 0;
@@ -2020,7 +2023,7 @@ DEFINE_I_CALLBACK(add_picture)
 DEFINE_I_CALLBACK(add_circle)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  gint wx, wy; 
+  gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
 
@@ -2049,7 +2052,7 @@ DEFINE_I_CALLBACK(add_circle)
 DEFINE_I_CALLBACK(add_arc)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  gint wx, wy; 
+  gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
 
@@ -2078,7 +2081,7 @@ DEFINE_I_CALLBACK(add_arc)
 DEFINE_I_CALLBACK(add_pin)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  gint wx, wy; 
+  gint wx, wy;
 
   g_return_if_fail (w_current != NULL);
 
@@ -2261,7 +2264,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
   if (object != NULL) {
     /* only allow going into symbols */
     if (object->type == OBJ_COMPLEX) {
-      s_log_message(_("Searching for symbol [%s]\n"), 
+      s_log_message(_("Searching for symbol [%s]\n"),
 		    object->complex_basename);
       sym = s_clib_get_symbol_by_name (object->complex_basename);
       if (sym == NULL)
@@ -2344,9 +2347,9 @@ DEFINE_I_CALLBACK(attributes_attach)
     return;
   }
 
-  first_object = (OBJECT *) s_current->data; 
+  first_object = (OBJECT *) s_current->data;
   if (!first_object) {
-    return;	
+    return;
   }
 
   /* skip over first object */
@@ -2855,7 +2858,7 @@ DEFINE_I_CALLBACK(cancel)
   /* clear the key guile command-sequence */
   g_keys_reset (w_current);
 
-  if (w_current->inside_action) { 
+  if (w_current->inside_action) {
      o_invalidate_all (w_current);
   }
 
@@ -2915,8 +2918,8 @@ DEFINE_I_CALLBACK(options_show_coord_window)
  *  used when you click the close button on the window which sends a DELETE
  *  signal to the app
  */
-gboolean i_callback_close_wm ( GtkWidget *widget, GdkEvent *event, 
-	                   gpointer data ) 
+gboolean i_callback_close_wm ( GtkWidget *widget, GdkEvent *event,
+	                   gpointer data )
 {
 
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);

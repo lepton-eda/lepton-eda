@@ -42,6 +42,12 @@ enum
   PROP_CAP_STYLE,
   PROP_DASH_LENGTH,
   PROP_DASH_SPACE,
+  PROP_FILL_ANGLE1,
+  PROP_FILL_ANGLE2,
+  PROP_FILL_PITCH1,
+  PROP_FILL_PITCH2,
+  PROP_FILL_TYPE,
+  PROP_FILL_WIDTH,
   PROP_LINE_TYPE,
   PROP_LINE_WIDTH,
   PROP_OBJECT_COLOR
@@ -89,6 +95,30 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
     case PROP_DASH_SPACE:
       g_value_set_int (value, gschem_selection_adapter_get_dash_space (adapter));
+      break;
+
+    case PROP_FILL_ANGLE1:
+      g_value_set_int (value, gschem_selection_adapter_get_fill_angle1 (adapter));
+      break;
+
+    case PROP_FILL_ANGLE2:
+      g_value_set_int (value, gschem_selection_adapter_get_fill_angle2 (adapter));
+      break;
+
+    case PROP_FILL_PITCH1:
+      g_value_set_int (value, gschem_selection_adapter_get_fill_pitch1 (adapter));
+      break;
+
+    case PROP_FILL_PITCH2:
+      g_value_set_int (value, gschem_selection_adapter_get_fill_pitch2 (adapter));
+      break;
+
+    case PROP_FILL_TYPE:
+      g_value_set_int (value, gschem_selection_adapter_get_fill_type (adapter));
+      break;
+
+    case PROP_FILL_WIDTH:
+      g_value_set_int (value, gschem_selection_adapter_get_fill_width (adapter));
       break;
 
     case PROP_LINE_TYPE:
@@ -152,6 +182,66 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_FILL_ANGLE1,
+                                   g_param_spec_int ("fill-angle1",
+                                                     "Fill Angle 1",
+                                                     "Fill Angle 1",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     -1,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_FILL_ANGLE2,
+                                   g_param_spec_int ("fill-angle2",
+                                                     "Fill Angle 2",
+                                                     "Fill Angle 2",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     -1,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_FILL_PITCH1,
+                                   g_param_spec_int ("fill-pitch1",
+                                                     "Fill Pitch 1",
+                                                     "Fill Pitch 1",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     -1,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_FILL_PITCH2,
+                                   g_param_spec_int ("fill-pitch2",
+                                                     "Fill Pitch 2",
+                                                     "Fill Pitch 2",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     -1,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_FILL_TYPE,
+                                   g_param_spec_int ("fill-type",
+                                                     "Fill Type",
+                                                     "Fill Type",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     -1,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_FILL_WIDTH,
+                                   g_param_spec_int ("fill-width",
+                                                     "Fill Width",
+                                                     "Fill Width",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     -1,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_LINE_TYPE,
                                    g_param_spec_int ("line-type",
                                                      "Line Type",
@@ -181,6 +271,21 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
                                                      G_MAXINT,
                                                      -1,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  /* This signal indicates changes to the selection that requires the undo
+   * manager save the state.
+   */
+
+  g_signal_new ("handle-undo",                    /* signal_name  */
+                G_OBJECT_CLASS_TYPE (klass),      /* itype        */
+                0,                                /* signal_flags */
+                0,                                /* class_offset */
+                NULL,                             /* accumulator  */
+                NULL,                             /* accu_data    */
+                g_cclosure_marshal_VOID__VOID,    /* c_marshaller */
+                G_TYPE_NONE,                      /* return_type  */
+                0                                 /* n_params     */
+                );
 }
 
 
@@ -325,6 +430,312 @@ gschem_selection_adapter_get_dash_space (GschemSelectionAdapter *adapter)
   }
 
   return dash_space;
+}
+
+
+
+/*! \brief Get the fill angle 1 from the selection
+ *
+ *  \param [in] adapter This adapter
+ *  \return The angle. If there are not objects with a line_type, or
+ *  multiple objects with a different angle, this function returns -1.
+ */
+int
+gschem_selection_adapter_get_fill_angle1 (GschemSelectionAdapter *adapter)
+{
+  gint fill_angle = -1;
+  GList *iter;
+
+  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    gint temp_angle1;
+    gint temp_angle2;
+    OBJECT_FILLING temp_fill_type;
+    gint temp_pitch1;
+    gint temp_pitch2;
+    gint temp_width;
+
+    success = o_get_fill_options(object,
+                                 &temp_fill_type,
+                                 &temp_width,
+                                 &temp_pitch1,
+                                 &temp_angle1,
+                                 &temp_pitch2,
+                                 &temp_angle2);
+
+
+    if (success) {
+      if (fill_angle < 0) {
+        fill_angle = temp_angle1;
+      }
+      else if (fill_angle != temp_angle1) {
+        fill_angle = -2;
+        break;
+      }
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  return fill_angle;
+}
+
+
+
+/*! \brief Get the fill angle 2 from the selection
+ *
+ *  \param [in] adapter This adapter
+ *  \return The angle. If there are not objects with a line_type, or
+ *  multiple objects with a different angle, this function returns -1.
+ */
+int
+gschem_selection_adapter_get_fill_angle2 (GschemSelectionAdapter *adapter)
+{
+  gint fill_angle = -1;
+  GList *iter;
+
+  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    gint temp_angle1;
+    gint temp_angle2;
+    OBJECT_FILLING temp_fill_type;
+    gint temp_pitch1;
+    gint temp_pitch2;
+    gint temp_width;
+
+    success = o_get_fill_options(object,
+                                 &temp_fill_type,
+                                 &temp_width,
+                                 &temp_pitch1,
+                                 &temp_angle1,
+                                 &temp_pitch2,
+                                 &temp_angle2);
+
+
+    if (success) {
+      if (fill_angle < 0) {
+        fill_angle = temp_angle2;
+      }
+      else if (fill_angle != temp_angle2) {
+        fill_angle = -2;
+        break;
+      }
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  return fill_angle;
+}
+
+
+
+/*! \brief Get the fill pitch 1 from the selection
+ *
+ *  \param [in] adapter This adapter
+ *  \return The pitch. If there are not objects with a line_type, or
+ *  multiple objects with a different pitch, this function returns -1.
+ */
+int
+gschem_selection_adapter_get_fill_pitch1 (GschemSelectionAdapter *adapter)
+{
+  gint fill_pitch = -1;
+  GList *iter;
+
+  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    gint temp_angle1;
+    gint temp_angle2;
+    OBJECT_FILLING temp_fill_type;
+    gint temp_pitch1;
+    gint temp_pitch2;
+    gint temp_width;
+
+    success = o_get_fill_options(object,
+                                 &temp_fill_type,
+                                 &temp_width,
+                                 &temp_pitch1,
+                                 &temp_angle1,
+                                 &temp_pitch2,
+                                 &temp_angle2);
+
+
+    if (success) {
+      if (fill_pitch < 0) {
+        fill_pitch = temp_pitch1;
+      }
+      else if (fill_pitch != temp_pitch1) {
+        fill_pitch = -2;
+        break;
+      }
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  return fill_pitch;
+}
+
+
+
+/*! \brief Get the fill pitch 2 from the selection
+ *
+ *  \param [in] adapter This adapter
+ *  \return The pitch. If there are not objects with a line_type, or
+ *  multiple objects with a different pitch, this function returns -1.
+ */
+int
+gschem_selection_adapter_get_fill_pitch2 (GschemSelectionAdapter *adapter)
+{
+  gint fill_pitch = -1;
+  GList *iter;
+
+  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    gint temp_angle1;
+    gint temp_angle2;
+    OBJECT_FILLING temp_fill_type;
+    gint temp_pitch1;
+    gint temp_pitch2;
+    gint temp_width;
+
+    success = o_get_fill_options(object,
+                                 &temp_fill_type,
+                                 &temp_width,
+                                 &temp_pitch1,
+                                 &temp_angle1,
+                                 &temp_pitch2,
+                                 &temp_angle2);
+
+
+    if (success) {
+      if (fill_pitch < 0) {
+        fill_pitch = temp_pitch2;
+      }
+      else if (fill_pitch != temp_pitch2) {
+        fill_pitch = -2;
+        break;
+      }
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  return fill_pitch;
+}
+
+
+
+/*! \brief Get the fill type from the selection
+ *
+ *  \param [in] adapter This adapter
+ *  \return The fill_type. If there are not objects with a line_type, or
+ *  multiple objects with a different fill_type, this function returns -1.
+ */
+int
+gschem_selection_adapter_get_fill_type (GschemSelectionAdapter *adapter)
+{
+  gint fill_type = -1;
+  GList *iter;
+
+  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    gint temp_angle1;
+    gint temp_angle2;
+    OBJECT_FILLING temp_fill_type;
+    gint temp_pitch1;
+    gint temp_pitch2;
+    gint temp_width;
+
+    success = o_get_fill_options(object,
+                                 &temp_fill_type,
+                                 &temp_width,
+                                 &temp_pitch1,
+                                 &temp_angle1,
+                                 &temp_pitch2,
+                                 &temp_angle2);
+
+
+    if (success) {
+      if (fill_type < 0) {
+        fill_type = temp_fill_type;
+      }
+      else if (fill_type != temp_fill_type) {
+        fill_type = -2;
+        break;
+      }
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  return fill_type;
+}
+
+
+
+/*! \brief Get the fill width from the selection
+ *
+ *  \param [in] adapter This adapter
+ *  \return The fill_width. If there are not objects with a line_type, or
+ *  multiple objects with a different fill_width, this function returns -1.
+ */
+int
+gschem_selection_adapter_get_fill_width (GschemSelectionAdapter *adapter)
+{
+  gint fill_width = -1;
+  GList *iter;
+
+  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    gint temp_angle1;
+    gint temp_angle2;
+    OBJECT_FILLING temp_fill_type;
+    gint temp_pitch1;
+    gint temp_pitch2;
+    gint temp_width;
+
+    success = o_get_fill_options(object,
+                                 &temp_fill_type,
+                                 &temp_width,
+                                 &temp_pitch1,
+                                 &temp_angle1,
+                                 &temp_pitch2,
+                                 &temp_angle2);
+
+
+    if (success) {
+      if (fill_width < 0) {
+        fill_width = temp_width;
+      }
+      else if (fill_width != temp_width) {
+        fill_width = -2;
+        break;
+      }
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  return fill_width;
 }
 
 
@@ -560,6 +971,377 @@ gschem_selection_adapter_new ()
 
 
 
+/*! \brief Set the fill angle 1 in the selection
+ *
+ *  \param [in] selection
+ *  \param [in] angle
+ */
+void
+gschem_selection_adapter_set_fill_angle1 (GschemSelectionAdapter *adapter, int angle)
+{
+  GList *iter;
+
+  g_return_if_fail (adapter != NULL);
+
+  if ((adapter->selection == NULL) || (adapter->toplevel == NULL)) {
+    return;
+  }
+
+  g_return_if_fail (adapter->toplevel->page_current != NULL);
+  g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
+  g_return_if_fail (angle >= 0);
+
+  iter = geda_list_get_glist (adapter->selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    gint temp_angle1;
+    gint temp_angle2;
+    OBJECT_FILLING temp_fill_type;
+    gint temp_pitch1;
+    gint temp_pitch2;
+    gint temp_width;
+
+    success = o_get_fill_options(object,
+                                 &temp_fill_type,
+                                 &temp_width,
+                                 &temp_pitch1,
+                                 &temp_angle1,
+                                 &temp_pitch2,
+                                 &temp_angle2);
+
+    if (success) {
+      o_set_fill_options (adapter->toplevel,
+                          object,
+                          temp_fill_type,
+                          temp_width,
+                          temp_pitch1,
+                          angle,
+                          temp_pitch2,
+                          temp_angle2);
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  g_object_notify (G_OBJECT (adapter), "fill-angle1");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
+}
+
+
+/*! \brief Set the fill angle 2 in the selection
+ *
+ *  \param [in] selection
+ *  \param [in] angle
+ */
+void
+gschem_selection_adapter_set_fill_angle2 (GschemSelectionAdapter *adapter, int angle)
+{
+  GList *iter;
+
+  g_return_if_fail (adapter != NULL);
+
+  if ((adapter->selection == NULL) || (adapter->toplevel == NULL)) {
+    return;
+  }
+
+  g_return_if_fail (adapter->toplevel->page_current != NULL);
+  g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
+  g_return_if_fail (angle >= 0);
+
+  iter = geda_list_get_glist (adapter->selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    gint temp_angle1;
+    gint temp_angle2;
+    OBJECT_FILLING temp_fill_type;
+    gint temp_pitch1;
+    gint temp_pitch2;
+    gint temp_width;
+
+    success = o_get_fill_options(object,
+                                 &temp_fill_type,
+                                 &temp_width,
+                                 &temp_pitch1,
+                                 &temp_angle1,
+                                 &temp_pitch2,
+                                 &temp_angle2);
+
+    if (success) {
+      o_set_fill_options (adapter->toplevel,
+                          object,
+                          temp_fill_type,
+                          temp_width,
+                          temp_pitch1,
+                          temp_angle1,
+                          temp_pitch2,
+                          angle);
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  g_object_notify (G_OBJECT (adapter), "fill-angle2");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
+}
+
+
+
+
+/*! \brief Set the fill pitch 1 in the selection
+ *
+ *  \param [in] selection
+ *  \param [in] angle
+ */
+void
+gschem_selection_adapter_set_fill_pitch1 (GschemSelectionAdapter *adapter, int pitch)
+{
+  GList *iter;
+
+  g_return_if_fail (adapter != NULL);
+
+  if ((adapter->selection == NULL) || (adapter->toplevel == NULL)) {
+    return;
+  }
+
+  g_return_if_fail (adapter->toplevel->page_current != NULL);
+  g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
+  g_return_if_fail (pitch >= 0);
+
+  iter = geda_list_get_glist (adapter->selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    gint temp_angle1;
+    gint temp_angle2;
+    OBJECT_FILLING temp_fill_type;
+    gint temp_pitch1;
+    gint temp_pitch2;
+    gint temp_width;
+
+    success = o_get_fill_options(object,
+                                 &temp_fill_type,
+                                 &temp_width,
+                                 &temp_pitch1,
+                                 &temp_angle1,
+                                 &temp_pitch2,
+                                 &temp_angle2);
+
+    if (success) {
+      o_set_fill_options (adapter->toplevel,
+                          object,
+                          temp_fill_type,
+                          temp_width,
+                          pitch,
+                          temp_angle1,
+                          temp_pitch2,
+                          temp_angle2);
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  g_object_notify (G_OBJECT (adapter), "fill-pitch1");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
+}
+
+
+/*! \brief Set the fill pitch 2 in the selection
+ *
+ *  \param [in] selection
+ *  \param [in] pitch
+ */
+void
+gschem_selection_adapter_set_fill_pitch2 (GschemSelectionAdapter *adapter, int pitch)
+{
+  GList *iter;
+
+  g_return_if_fail (adapter != NULL);
+
+  if ((adapter->selection == NULL) || (adapter->toplevel == NULL)) {
+    return;
+  }
+
+  g_return_if_fail (adapter->toplevel->page_current != NULL);
+  g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
+  g_return_if_fail (pitch >= 0);
+
+  iter = geda_list_get_glist (adapter->selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    gint temp_angle1;
+    gint temp_angle2;
+    OBJECT_FILLING temp_fill_type;
+    gint temp_pitch1;
+    gint temp_pitch2;
+    gint temp_width;
+
+    success = o_get_fill_options(object,
+                                 &temp_fill_type,
+                                 &temp_width,
+                                 &temp_pitch1,
+                                 &temp_angle1,
+                                 &temp_pitch2,
+                                 &temp_angle2);
+
+    if (success) {
+      o_set_fill_options (adapter->toplevel,
+                          object,
+                          temp_fill_type,
+                          temp_width,
+                          temp_pitch1,
+                          temp_angle1,
+                          pitch,
+                          temp_angle2);
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  g_object_notify (G_OBJECT (adapter), "fill-pitch2");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
+}
+
+
+
+
+/*! \brief Set the fill type in the selection
+ *
+ *  \param [in] selection
+ *  \param [in] line_type
+ */
+void
+gschem_selection_adapter_set_fill_type (GschemSelectionAdapter *adapter, int fill_type)
+{
+  GList *iter;
+
+  g_return_if_fail (adapter != NULL);
+
+  if ((adapter->selection == NULL) || (adapter->toplevel == NULL)) {
+    return;
+  }
+
+  g_return_if_fail (adapter->toplevel->page_current != NULL);
+  g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
+  g_return_if_fail (fill_type >= 0);
+
+  iter = geda_list_get_glist (adapter->selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    gint temp_angle1;
+    gint temp_angle2;
+    OBJECT_FILLING temp_fill_type;
+    gint temp_pitch1;
+    gint temp_pitch2;
+    gint temp_width;
+
+    success = o_get_fill_options(object,
+                                 &temp_fill_type,
+                                 &temp_width,
+                                 &temp_pitch1,
+                                 &temp_angle1,
+                                 &temp_pitch2,
+                                 &temp_angle2);
+
+    if (success) {
+      o_set_fill_options (adapter->toplevel,
+                          object,
+                          fill_type,
+                          temp_width,
+                          temp_pitch1,
+                          temp_angle1,
+                          temp_pitch2,
+                          temp_angle2);
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  g_object_notify (G_OBJECT (adapter), "fill-angle1");
+  g_object_notify (G_OBJECT (adapter), "fill-angle2");
+  g_object_notify (G_OBJECT (adapter), "fill-pitch1");
+  g_object_notify (G_OBJECT (adapter), "fill-pitch2");
+  g_object_notify (G_OBJECT (adapter), "fill-type");
+  g_object_notify (G_OBJECT (adapter), "fill-width");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
+}
+
+
+
+/*! \brief Set the fill width in the selection
+ *
+ *  \param [in] selection
+ *  \param [in] fill_width
+ */
+void
+gschem_selection_adapter_set_fill_width (GschemSelectionAdapter *adapter, int fill_width)
+{
+  GList *iter;
+
+  g_return_if_fail (adapter != NULL);
+
+  if ((adapter->selection == NULL) || (adapter->toplevel == NULL)) {
+    return;
+  }
+
+  g_return_if_fail (adapter->toplevel->page_current != NULL);
+  g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
+  g_return_if_fail (fill_width >= 0);
+
+  iter = geda_list_get_glist (adapter->selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+    gboolean success;
+    gint temp_angle1;
+    gint temp_angle2;
+    OBJECT_FILLING temp_fill_type;
+    gint temp_pitch1;
+    gint temp_pitch2;
+    gint temp_width;
+
+    success = o_get_fill_options(object,
+                                 &temp_fill_type,
+                                 &temp_width,
+                                 &temp_pitch1,
+                                 &temp_angle1,
+                                 &temp_pitch2,
+                                 &temp_angle2);
+
+    if (success) {
+      o_set_fill_options (adapter->toplevel,
+                          object,
+                          temp_fill_type,
+                          fill_width,
+                          temp_pitch1,
+                          temp_angle1,
+                          temp_pitch2,
+                          temp_angle2);
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  g_object_notify (G_OBJECT (adapter), "fill-width");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
+}
+
+
+
 /*! \brief Set the line type in the selection
  *
  *  \param [in] selection
@@ -614,6 +1396,8 @@ gschem_selection_adapter_set_line_type (GschemSelectionAdapter *adapter, int lin
   g_object_notify (G_OBJECT (adapter), "line-type");
   g_object_notify (G_OBJECT (adapter), "dash-length");
   g_object_notify (G_OBJECT (adapter), "dash-space");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
 }
 
 
@@ -670,6 +1454,8 @@ gschem_selection_adapter_set_line_width (GschemSelectionAdapter *adapter, int li
   }
 
   g_object_notify (G_OBJECT (adapter), "line-width");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
 }
 
 
@@ -726,6 +1512,8 @@ gschem_selection_adapter_set_dash_length (GschemSelectionAdapter *adapter, int d
   }
 
   g_object_notify (G_OBJECT (adapter), "dash-length");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
 }
 
 
@@ -782,6 +1570,8 @@ gschem_selection_adapter_set_dash_space (GschemSelectionAdapter *adapter, int da
   }
 
   g_object_notify (G_OBJECT (adapter), "dash-space");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
 }
 
 
@@ -838,6 +1628,8 @@ gschem_selection_adapter_set_cap_style (GschemSelectionAdapter *adapter, int cap
   }
 
   g_object_notify (G_OBJECT (adapter), "cap-style");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
 }
 
 
@@ -867,6 +1659,8 @@ gschem_selection_adapter_set_object_color (GschemSelectionAdapter *adapter, int 
   }
 
   g_object_notify (G_OBJECT (adapter), "object-color");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
 }
 
 
@@ -903,6 +1697,12 @@ gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter, SELECTI
   g_object_notify (G_OBJECT (adapter), "cap-style");
   g_object_notify (G_OBJECT (adapter), "dash-length");
   g_object_notify (G_OBJECT (adapter), "dash-space");
+  g_object_notify (G_OBJECT (adapter), "fill-angle1");
+  g_object_notify (G_OBJECT (adapter), "fill-angle2");
+  g_object_notify (G_OBJECT (adapter), "fill-pitch1");
+  g_object_notify (G_OBJECT (adapter), "fill-pitch2");
+  g_object_notify (G_OBJECT (adapter), "fill-type");
+  g_object_notify (G_OBJECT (adapter), "fill-width");
   g_object_notify (G_OBJECT (adapter), "line-type");
   g_object_notify (G_OBJECT (adapter), "line-width");
   g_object_notify (G_OBJECT (adapter), "object-color");
@@ -944,6 +1744,12 @@ selection_changed (GedaList *selection, GschemSelectionAdapter *adapter)
   g_object_notify (G_OBJECT (adapter), "cap-style");
   g_object_notify (G_OBJECT (adapter), "dash-length");
   g_object_notify (G_OBJECT (adapter), "dash-space");
+  g_object_notify (G_OBJECT (adapter), "fill-angle1");
+  g_object_notify (G_OBJECT (adapter), "fill-angle2");
+  g_object_notify (G_OBJECT (adapter), "fill-pitch1");
+  g_object_notify (G_OBJECT (adapter), "fill-pitch2");
+  g_object_notify (G_OBJECT (adapter), "fill-type");
+  g_object_notify (G_OBJECT (adapter), "fill-width");
   g_object_notify (G_OBJECT (adapter), "line-type");
   g_object_notify (G_OBJECT (adapter), "line-width");
   g_object_notify (G_OBJECT (adapter), "object-color");
@@ -974,6 +1780,30 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
     case PROP_DASH_SPACE:
       gschem_selection_adapter_set_dash_space (adapter, g_value_get_int (value));
+      break;
+
+    case PROP_FILL_ANGLE1:
+      gschem_selection_adapter_set_fill_angle1 (adapter, g_value_get_int (value));
+      break;
+
+    case PROP_FILL_ANGLE2:
+      gschem_selection_adapter_set_fill_angle2 (adapter, g_value_get_int (value));
+      break;
+
+    case PROP_FILL_PITCH1:
+      gschem_selection_adapter_set_fill_pitch1 (adapter, g_value_get_int (value));
+      break;
+
+    case PROP_FILL_PITCH2:
+      gschem_selection_adapter_set_fill_pitch2 (adapter, g_value_get_int (value));
+      break;
+
+    case PROP_FILL_TYPE:
+      gschem_selection_adapter_set_fill_type (adapter, g_value_get_int (value));
+      break;
+
+    case PROP_FILL_WIDTH:
+      gschem_selection_adapter_set_fill_width (adapter, g_value_get_int (value));
       break;
 
     case PROP_LINE_TYPE:

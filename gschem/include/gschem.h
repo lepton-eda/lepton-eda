@@ -36,6 +36,8 @@ typedef struct st_gschem_toplevel GschemToplevel;
 #include "globals.h"
 #include "prototype.h"
 #include "gschem_integer_combo_box.h"
+#include "gschem_binding.h"
+#include "gschem_binding_integer.h"
 
 /* Gettext translation */
 #include "gettext.h"

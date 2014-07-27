@@ -490,7 +490,7 @@ void o_move_prep_rubberband(GschemToplevel *w_current);
 int o_move_zero_length(OBJECT *object);
 void o_move_end_rubberband(GschemToplevel *w_current, int world_diff_x, int world_diff_y, GList **objects);
 /* o_net.c */
-void o_net_reset(GschemToplevel *w_current); 
+void o_net_reset(GschemToplevel *w_current);
 void o_net_guess_direction(GschemToplevel *w_current, int x, int y);
 void o_net_find_magnetic(GschemToplevel *w_current, int event_x, int event_y);
 void o_net_finishmagnetic(GschemToplevel *w_current);
@@ -631,7 +631,6 @@ void coord_dialog(GschemToplevel *w_current, int x, int y);
 gint color_set(GtkWidget *w, gpointer data);
 char *index2functionstring(int index);
 void color_edit_dialog_apply(GtkWidget *w, GschemToplevel *w_current);
-void color_edit_dialog(GschemToplevel *w_current);
 void x_dialog_hotkeys(GschemToplevel *w_current);
 void x_dialog_raise_all(GschemToplevel *w_current);
 

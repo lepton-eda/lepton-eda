@@ -258,21 +258,27 @@ x_fstylecb_get_use2 (GtkWidget *widget)
 void
 x_fstylecb_set_index (GtkWidget *widget, int style)
 {
-  GtkTreeIter iter;
-  gboolean success;
-  GValue value = {0};
+  GtkTreeIter *active = NULL;
 
   g_return_if_fail (fstyle_list_store != NULL);
 
-  success = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (fstyle_list_store), &iter);
-  while (success) {
-    gtk_tree_model_get_value (GTK_TREE_MODEL (fstyle_list_store), &iter, COLUMN_INDEX, &value);
-    if (g_value_get_int (&value) == style) {
+  if (style >= 0) {
+    GtkTreeIter iter;
+    gboolean success;
+    GValue value = {0};
+
+    success = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (fstyle_list_store), &iter);
+    while (success) {
+      gtk_tree_model_get_value (GTK_TREE_MODEL (fstyle_list_store), &iter, COLUMN_INDEX, &value);
+      if (g_value_get_int (&value) == style) {
+        g_value_unset (&value);
+        active = &iter;
+        break;
+      }
       g_value_unset (&value);
-      gtk_combo_box_set_active_iter (GTK_COMBO_BOX(widget), &iter);
-      break;
+      success = gtk_tree_model_iter_next (GTK_TREE_MODEL(fstyle_list_store), &iter);
     }
-    g_value_unset (&value);
-    success = gtk_tree_model_iter_next (GTK_TREE_MODEL(fstyle_list_store), &iter);
   }
+
+  gtk_combo_box_set_active_iter (GTK_COMBO_BOX(widget), active);
 }

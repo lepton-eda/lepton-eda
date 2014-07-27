@@ -20,7 +20,7 @@
 
 /*! \file o_basic.c
  *  \brief functions for the basic object type
- *  
+ *
  *  This file contains the code used to handle OBJECTs (st_object).
  *  The object is the basic type of all elements stored in schematic
  *  and symbol files.
@@ -37,7 +37,7 @@
  *  The complex object can carry many primary objects. If the complex
  *  object is a symbol, then the complex symbol contains all the pins,
  *  the text and the graphics.
- *  
+ *
  *  \image html o_object_relations.png
  *  \image latex o_object_relations.pdf "object relations" width=14cm
  */
@@ -93,7 +93,7 @@ int inside_region(int xmin, int ymin, int xmax, int ymax, int x, int y)
  */
 void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current,
 			OBJECT_END end, OBJECT_TYPE type,
-			int width, int length, int space) 
+			int width, int length, int space)
 {
   g_return_if_fail (o_current != NULL);
 
@@ -120,10 +120,10 @@ void o_set_line_options(TOPLEVEL *toplevel, OBJECT *o_current,
       }
     break;
     default:
-    
+
     break;
   }
-  
+
   o_emit_pre_change_notify (toplevel, o_current);
 
   o_current->line_width = width;
@@ -192,10 +192,55 @@ gboolean o_get_line_options(OBJECT *object,
 void o_set_fill_options(TOPLEVEL *toplevel, OBJECT *o_current,
 			OBJECT_FILLING type, int width,
 			int pitch1, int angle1,
-			int pitch2, int angle2) 
+			int pitch2, int angle2)
 {
   if(o_current == NULL) {
     return;
+  }
+
+  /* do some error checking / correcting */
+  switch(type) {
+    case(FILLING_MESH):
+      if (width < 0) {
+        width = 1;
+      }
+      if (angle1 < 0) {
+        angle1 = 45;
+      }
+      if (pitch1 < 0) {
+        pitch1 = 100;
+      }
+      if (angle2 < 0) {
+        angle2 = 135;
+      }
+      if (pitch2 < 0) {
+        pitch2 = 100;
+      }
+      break;
+
+    case(FILLING_HATCH):
+      if (width < 0) {
+        width = 1;
+      }
+      if (angle1 < 0) {
+        angle1 = 45;
+      }
+      if (pitch1 < 0) {
+        pitch1 = 100;
+      }
+      angle2 = -1;
+      pitch2 = -1;
+      break;
+
+    case(FILLING_HOLLOW):
+    case(FILLING_FILL):
+    default:
+      width = -1;
+      angle1 = -1;
+      pitch1 = -1;
+      angle2 = -1;
+      pitch2 = -1;
+      break;
   }
 
   o_emit_pre_change_notify (toplevel, o_current);

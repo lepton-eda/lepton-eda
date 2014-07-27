@@ -43,11 +43,22 @@ struct _EditLProp
 
   GschemSelectionAdapter *adapter;
 
+  GSList *bindings;
+
+  GtkWidget *colorcb;
+
   GtkWidget *width_entry;
   GtkWidget *line_type;
   GtkWidget *length_entry;
   GtkWidget *space_entry;
   GtkWidget *line_end;
+
+  GtkWidget *fstylecb;
+  GtkWidget *widthe;
+  GtkWidget *angle1e;
+  GtkWidget *angle2e;
+  GtkWidget *pitch1e;
+  GtkWidget *pitch2e;
 };
 
 GType

@@ -58,6 +58,24 @@ int
 gschem_selection_adapter_get_dash_space (GschemSelectionAdapter *adapter);
 
 int
+gschem_selection_adapter_get_fill_angle1 (GschemSelectionAdapter *adapter);
+
+int
+gschem_selection_adapter_get_fill_angle2 (GschemSelectionAdapter *adapter);
+
+int
+gschem_selection_adapter_get_fill_pitch1 (GschemSelectionAdapter *adapter);
+
+int
+gschem_selection_adapter_get_fill_pitch2 (GschemSelectionAdapter *adapter);
+
+int
+gschem_selection_adapter_get_fill_type (GschemSelectionAdapter *adapter);
+
+int
+gschem_selection_adapter_get_fill_width (GschemSelectionAdapter *adapter);
+
+int
 gschem_selection_adapter_get_line_type (GschemSelectionAdapter *adapter);
 
 int
@@ -83,6 +101,24 @@ gschem_selection_adapter_set_dash_length (GschemSelectionAdapter *adapter, int d
 
 void
 gschem_selection_adapter_set_dash_space (GschemSelectionAdapter *adapter, int dash_space);
+
+void
+gschem_selection_adapter_set_fill_angle1 (GschemSelectionAdapter *adapter, int angle);
+
+void
+gschem_selection_adapter_set_fill_angle2 (GschemSelectionAdapter *adapter, int angle);
+
+void
+gschem_selection_adapter_set_fill_pitch1 (GschemSelectionAdapter *adapter, int pitch);
+
+void
+gschem_selection_adapter_set_fill_pitch2 (GschemSelectionAdapter *adapter, int pitch);
+
+void
+gschem_selection_adapter_set_fill_type (GschemSelectionAdapter *adapter, int line_type);
+
+void
+gschem_selection_adapter_set_fill_width (GschemSelectionAdapter *adapter, int line_width);
 
 void
 gschem_selection_adapter_set_line_type (GschemSelectionAdapter *adapter, int line_type);

@@ -56,6 +56,9 @@ static void
 gschem_integer_combo_box_init (GschemIntegerComboBox *combo);
 
 static void
+notify_active (GschemIntegerComboBox *combo, GParamSpec *pspec, gpointer unused);
+
+static void
 remove_widget (GschemIntegerComboBox *combo, GtkWidget *widget, gpointer unused);
 
 static void
@@ -69,7 +72,7 @@ value_changed (GschemIntegerComboBox *combo, gpointer unused);
  *  out event for the instant apply functionality.
  *
  *  \param [in] combo  This combo box
- *  \param [in] widget The netry widget added to the combo box
+ *  \param [in] widget The entry widget added to the combo box
  *  \param [in] unused
  */
 static void
@@ -221,6 +224,11 @@ gschem_integer_combo_box_init (GschemIntegerComboBox *combo)
   combo->changed = FALSE;
 
   g_signal_connect(G_OBJECT (combo),
+                   "notify::active",
+                   G_CALLBACK (notify_active),
+                   NULL);
+
+  g_signal_connect(G_OBJECT (combo),
                    "add",
                    G_CALLBACK (add_widget),
                    NULL);
@@ -304,6 +312,18 @@ gschem_integer_combo_box_set_value (GtkWidget *widget, int value)
 }
 
 
+/*! \brief The active item in the combo box has changed
+ */
+static void
+notify_active (GschemIntegerComboBox *combo, GParamSpec *pspec, gpointer unused)
+{
+  g_return_if_fail (combo != NULL);
+
+  g_signal_emit_by_name (combo, "apply");
+  combo->changed = FALSE;
+}
+
+
 
 /*! \brief The entry widget is removed from the combo box.
  *
@@ -346,8 +366,18 @@ value_changed (GschemIntegerComboBox *combo, gpointer unused)
   if (gtk_widget_is_focus (GTK_WIDGET (gschem_integer_combo_box_get_entry (GTK_WIDGET (combo))))) {
     combo->changed = TRUE;
   }
+
+  /* This code was getting called before the value changed. The signal handler
+   * was fetching data from one selection in the past.
+   *
+   * This code is here in case of compatibility issues pre and post 2.24, that
+   * there will be some info for addressing the issue.
+   */
+
+#if 0
   else {
     g_signal_emit_by_name (combo, "apply");
     combo->changed = FALSE;
   }
+#endif
 }
