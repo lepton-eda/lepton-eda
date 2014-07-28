@@ -36,6 +36,8 @@
 #include "gschem.h"
 #include <gdk/gdkkeysyms.h>
 
+/*! \private
+ */
 enum
 {
   PROP_0,
@@ -150,7 +152,6 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
   G_OBJECT_CLASS (klass)->get_property = get_property;
   G_OBJECT_CLASS (klass)->set_property = set_property;
 
-
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_CAP_STYLE,
                                    g_param_spec_int ("cap-style",
@@ -158,7 +159,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
                                                      "Cap Style",
                                                      G_MININT,
                                                      G_MAXINT,
-                                                     -1,
+                                                     NO_SELECTION,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
@@ -168,7 +169,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
                                                      "Dash Length",
                                                      G_MININT,
                                                      G_MAXINT,
-                                                     -1,
+                                                     NO_SELECTION,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
@@ -178,7 +179,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
                                                      "Dash Space",
                                                      G_MININT,
                                                      G_MAXINT,
-                                                     -1,
+                                                     NO_SELECTION,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
@@ -188,7 +189,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
                                                      "Fill Angle 1",
                                                      G_MININT,
                                                      G_MAXINT,
-                                                     -1,
+                                                     NO_SELECTION,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
@@ -198,7 +199,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
                                                      "Fill Angle 2",
                                                      G_MININT,
                                                      G_MAXINT,
-                                                     -1,
+                                                     NO_SELECTION,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
@@ -208,7 +209,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
                                                      "Fill Pitch 1",
                                                      G_MININT,
                                                      G_MAXINT,
-                                                     -1,
+                                                     NO_SELECTION,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
@@ -218,7 +219,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
                                                      "Fill Pitch 2",
                                                      G_MININT,
                                                      G_MAXINT,
-                                                     -1,
+                                                     NO_SELECTION,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
@@ -228,7 +229,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
                                                      "Fill Type",
                                                      G_MININT,
                                                      G_MAXINT,
-                                                     -1,
+                                                     NO_SELECTION,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
@@ -238,7 +239,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
                                                      "Fill Width",
                                                      G_MININT,
                                                      G_MAXINT,
-                                                     -1,
+                                                     NO_SELECTION,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
@@ -248,7 +249,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
                                                      "Line Type",
                                                      G_MININT,
                                                      G_MAXINT,
-                                                     -1,
+                                                     NO_SELECTION,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
 
@@ -259,7 +260,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
                                                      "Line Width",
                                                      G_MININT,
                                                      G_MAXINT,
-                                                     -1,
+                                                     NO_SELECTION,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
@@ -269,7 +270,7 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
                                                      "Object Color",
                                                      G_MININT,
                                                      G_MAXINT,
-                                                     -1,
+                                                     NO_SELECTION,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   /* This signal indicates changes to the selection that requires the undo
@@ -293,14 +294,18 @@ gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
 /*! \brief Get the cap style from the selection
  *
  *  \param [in] adapter This adapter
- *  \return The cap style. If there are not objects with a cap style, or
- *  multiple objects with a different cap style, this function returns -1.
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different cap styles are selected
+ *  \retval others          The cap style of the selected objects
  */
 int
 gschem_selection_adapter_get_cap_style (GschemSelectionAdapter *adapter)
 {
-  gint cap_style = -1;
+  gint cap_style = NO_SELECTION;
   GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
 
   iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
 
@@ -325,7 +330,7 @@ gschem_selection_adapter_get_cap_style (GschemSelectionAdapter *adapter)
         cap_style = temp_cap_style;
       }
       else if (cap_style != temp_cap_style) {
-        cap_style = -2;
+        cap_style = MULTIPLE_VALUES;
         break;
       }
     }
@@ -341,14 +346,18 @@ gschem_selection_adapter_get_cap_style (GschemSelectionAdapter *adapter)
 /*! \brief Get the dash_length from the selection
  *
  *  \param [in] adapter This adapter
- *  \return The dash_length. If there are not objects with a dash_length, or
- *  multiple objects with a different dash_length, this function returns -1.
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different dash lengths are selected
+ *  \retval others          The dash length of the selected objects
  */
 int
 gschem_selection_adapter_get_dash_length (GschemSelectionAdapter *adapter)
 {
-  gint dash_length = -1;
+  gint dash_length = NO_SELECTION;
   GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
 
   iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
 
@@ -373,7 +382,7 @@ gschem_selection_adapter_get_dash_length (GschemSelectionAdapter *adapter)
         dash_length = temp_dash_length;
       }
       else if (dash_length != temp_dash_length) {
-        dash_length = -2;
+        dash_length = MULTIPLE_VALUES;
         break;
       }
     }
@@ -386,17 +395,21 @@ gschem_selection_adapter_get_dash_length (GschemSelectionAdapter *adapter)
 
 
 
-/*! \brief Get the dash_space from the selection
+/*! \brief Get the dash space from the selection
  *
  *  \param [in] adapter This adapter
- *  \return The dash_space. If there are not objects with a dash_space, or
- *  multiple objects with a different dash_space, this function returns -1.
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different dash spacings are selected
+ *  \retval others          The dash spacing of the selected objects
  */
 int
 gschem_selection_adapter_get_dash_space (GschemSelectionAdapter *adapter)
 {
-  gint dash_space = -1;
+  gint dash_space = NO_SELECTION;
   GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
 
   iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
 
@@ -421,7 +434,7 @@ gschem_selection_adapter_get_dash_space (GschemSelectionAdapter *adapter)
         dash_space = temp_dash_space;
       }
       else if (dash_space != temp_dash_space) {
-        dash_space = -2;
+        dash_space = MULTIPLE_VALUES;
         break;
       }
     }
@@ -434,17 +447,21 @@ gschem_selection_adapter_get_dash_space (GschemSelectionAdapter *adapter)
 
 
 
-/*! \brief Get the fill angle 1 from the selection
+/*! \brief Get the first fill line angle of the selected objects
  *
  *  \param [in] adapter This adapter
- *  \return The angle. If there are not objects with a line_type, or
- *  multiple objects with a different angle, this function returns -1.
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different fill line angles are selected
+ *  \retval others          The fill line angle of the selected objects
  */
 int
 gschem_selection_adapter_get_fill_angle1 (GschemSelectionAdapter *adapter)
 {
-  gint fill_angle = -1;
+  gint fill_angle = NO_SELECTION;
   GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
 
   iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
 
@@ -472,7 +489,7 @@ gschem_selection_adapter_get_fill_angle1 (GschemSelectionAdapter *adapter)
         fill_angle = temp_angle1;
       }
       else if (fill_angle != temp_angle1) {
-        fill_angle = -2;
+        fill_angle = MULTIPLE_VALUES;
         break;
       }
     }
@@ -485,17 +502,21 @@ gschem_selection_adapter_get_fill_angle1 (GschemSelectionAdapter *adapter)
 
 
 
-/*! \brief Get the fill angle 2 from the selection
+/*! \brief Get the second fill line angle of the selected objects
  *
  *  \param [in] adapter This adapter
- *  \return The angle. If there are not objects with a line_type, or
- *  multiple objects with a different angle, this function returns -1.
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different fill line angles are selected
+ *  \retval others          The fill line angle of the selected objects
  */
 int
 gschem_selection_adapter_get_fill_angle2 (GschemSelectionAdapter *adapter)
 {
-  gint fill_angle = -1;
+  gint fill_angle = NO_SELECTION;
   GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
 
   iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
 
@@ -523,7 +544,7 @@ gschem_selection_adapter_get_fill_angle2 (GschemSelectionAdapter *adapter)
         fill_angle = temp_angle2;
       }
       else if (fill_angle != temp_angle2) {
-        fill_angle = -2;
+        fill_angle = MULTIPLE_VALUES;
         break;
       }
     }
@@ -536,17 +557,21 @@ gschem_selection_adapter_get_fill_angle2 (GschemSelectionAdapter *adapter)
 
 
 
-/*! \brief Get the fill pitch 1 from the selection
+/*! \brief Get the first fill line pitch of the selected objects
  *
  *  \param [in] adapter This adapter
- *  \return The pitch. If there are not objects with a line_type, or
- *  multiple objects with a different pitch, this function returns -1.
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different fill line pitches are selected
+ *  \retval others          The fill line pitch of the selected objects
  */
 int
 gschem_selection_adapter_get_fill_pitch1 (GschemSelectionAdapter *adapter)
 {
-  gint fill_pitch = -1;
+  gint fill_pitch = NO_SELECTION;
   GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
 
   iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
 
@@ -574,7 +599,7 @@ gschem_selection_adapter_get_fill_pitch1 (GschemSelectionAdapter *adapter)
         fill_pitch = temp_pitch1;
       }
       else if (fill_pitch != temp_pitch1) {
-        fill_pitch = -2;
+        fill_pitch = MULTIPLE_VALUES;
         break;
       }
     }
@@ -587,17 +612,21 @@ gschem_selection_adapter_get_fill_pitch1 (GschemSelectionAdapter *adapter)
 
 
 
-/*! \brief Get the fill pitch 2 from the selection
+/*! \brief Get the second fill line pitch of the selected objects
  *
  *  \param [in] adapter This adapter
- *  \return The pitch. If there are not objects with a line_type, or
- *  multiple objects with a different pitch, this function returns -1.
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different fill line pitches are selected
+ *  \retval others          The fill line pitch of the selected objects
  */
 int
 gschem_selection_adapter_get_fill_pitch2 (GschemSelectionAdapter *adapter)
 {
-  gint fill_pitch = -1;
+  gint fill_pitch = NO_SELECTION;
   GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
 
   iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
 
@@ -625,7 +654,7 @@ gschem_selection_adapter_get_fill_pitch2 (GschemSelectionAdapter *adapter)
         fill_pitch = temp_pitch2;
       }
       else if (fill_pitch != temp_pitch2) {
-        fill_pitch = -2;
+        fill_pitch = MULTIPLE_VALUES;
         break;
       }
     }
@@ -641,14 +670,18 @@ gschem_selection_adapter_get_fill_pitch2 (GschemSelectionAdapter *adapter)
 /*! \brief Get the fill type from the selection
  *
  *  \param [in] adapter This adapter
- *  \return The fill_type. If there are not objects with a line_type, or
- *  multiple objects with a different fill_type, this function returns -1.
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different fill types are selected
+ *  \retval others          The fill type of the selected objects
  */
 int
 gschem_selection_adapter_get_fill_type (GschemSelectionAdapter *adapter)
 {
-  gint fill_type = -1;
+  gint fill_type = NO_SELECTION;
   GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
 
   iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
 
@@ -676,7 +709,7 @@ gschem_selection_adapter_get_fill_type (GschemSelectionAdapter *adapter)
         fill_type = temp_fill_type;
       }
       else if (fill_type != temp_fill_type) {
-        fill_type = -2;
+        fill_type = MULTIPLE_VALUES;
         break;
       }
     }
@@ -689,17 +722,21 @@ gschem_selection_adapter_get_fill_type (GschemSelectionAdapter *adapter)
 
 
 
-/*! \brief Get the fill width from the selection
+/*! \brief Get the width of the fill lines from the selection
  *
  *  \param [in] adapter This adapter
- *  \return The fill_width. If there are not objects with a line_type, or
- *  multiple objects with a different fill_width, this function returns -1.
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different fill line widths are selected
+ *  \retval others          The fill line width of the selected objects
  */
 int
 gschem_selection_adapter_get_fill_width (GschemSelectionAdapter *adapter)
 {
-  gint fill_width = -1;
+  gint fill_width = NO_SELECTION;
   GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
 
   iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
 
@@ -727,7 +764,7 @@ gschem_selection_adapter_get_fill_width (GschemSelectionAdapter *adapter)
         fill_width = temp_width;
       }
       else if (fill_width != temp_width) {
-        fill_width = -2;
+        fill_width = MULTIPLE_VALUES;
         break;
       }
     }
@@ -743,14 +780,18 @@ gschem_selection_adapter_get_fill_width (GschemSelectionAdapter *adapter)
 /*! \brief Get the line_type from the selection
  *
  *  \param [in] adapter This adapter
- *  \return The line_type. If there are not objects with a line_type, or
- *  multiple objects with a different line_type, this function returns -1.
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different line types are selected
+ *  \retval others          The line type of the selected objects
  */
 int
 gschem_selection_adapter_get_line_type (GschemSelectionAdapter *adapter)
 {
-  gint line_type = -1;
+  gint line_type = NO_SELECTION;
   GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
 
   iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
 
@@ -775,7 +816,7 @@ gschem_selection_adapter_get_line_type (GschemSelectionAdapter *adapter)
         line_type = temp_line_type;
       }
       else if (line_type != temp_line_type) {
-        line_type = -2;
+        line_type = MULTIPLE_VALUES;
         break;
       }
     }
@@ -791,14 +832,18 @@ gschem_selection_adapter_get_line_type (GschemSelectionAdapter *adapter)
 /*! \brief Get the line width from the selection
  *
  *  \param [in] adapter This adapter
- *  \return The line width. If there are not objects with a line width, or
- *  multiple objects with a different line width, this function returns -1.
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different widths are selected
+ *  \retval others          The width of the selected objects
  */
 int
 gschem_selection_adapter_get_line_width (GschemSelectionAdapter *adapter)
 {
-  gint line_width = -1;
+  gint line_width = NO_SELECTION;
   GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
 
   iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
 
@@ -823,7 +868,7 @@ gschem_selection_adapter_get_line_width (GschemSelectionAdapter *adapter)
         line_width = temp_line_width;
       }
       else if (line_width != temp_line_width) {
-        line_width = -2;
+        line_width = MULTIPLE_VALUES;
         break;
       }
     }
@@ -836,19 +881,21 @@ gschem_selection_adapter_get_line_width (GschemSelectionAdapter *adapter)
 
 
 
-/*! \brief Get the object color from the selection
+/*! \brief Get the color of selected objects
  *
  *  \param [in] adapter This adapter
- *  \return The object color. If there are no objects with an object color, or
- *  multiple objects with a different colors, this function returns -1.
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different colors are selected
+ *  \retval others          The color of the selected objects
  */
 int
 gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
 {
-  int color = -1;
+  int color = NO_SELECTION;
   GList *iter;
 
-  g_return_val_if_fail (adapter != NULL, -1);
+  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
 
   iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
 
@@ -879,7 +926,7 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
         (object->type == OBJ_PATH)   ||
         (object->type == OBJ_TEXT))) {
       if (color != object->color) {
-        color = -1;
+        color = MULTIPLE_VALUES;
       }
     }
     iter = g_list_next (iter);

@@ -23,6 +23,16 @@
  * \brief
  */
 
+/* Returned by properties when there are no items selected
+ */
+#define NO_SELECTION (-1)
+
+/* Returned by properties when there are multiple values in the selection
+ */
+#define MULTIPLE_VALUES (-2)
+
+
+
 #define GSCHEM_TYPE_SELECTION_ADAPTER           (gschem_selection_adapter_get_type())
 #define GSCHEM_SELECTION_ADAPTER(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_SELECTION_ADAPTER, GschemSelectionAdapter))
 #define GSCHEM_SELECTION_ADAPTER_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_SELECTION_ADAPTER, GschemSelectionAdapterClass))
