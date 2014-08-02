@@ -60,20 +60,18 @@ struct st_gschem_toplevel {
   GtkWidget *tewindow;                  /* text edit */
   GtkWidget *sewindow;                  /* slot edit */
   GtkWidget *aawindow;                  /* arc attribs */
-  GtkWidget *fpwindow;                  /* fill properties */
   GtkWidget *lpwindow;                  /* line properties */
   GtkWidget *mawindow;                  /* multi attribute */
   GtkWidget *aewindow;                  /* attribute edit */
   GtkWidget *trwindow;                  /* translate */
-  GtkWidget *tswindow;                  /* text size */
   GtkWidget *tshowwindow;               /* text show window */
   GtkWidget *thidewindow;               /* text hide window */
   GtkWidget *tfindwindow;               /* text find window */
   GtkWidget *hkwindow;                  /* Help/Hotkeys... dialog*/
-  GtkWidget *clwindow;                  /* Color edit dialog */
   GtkWidget *cowindow;                  /* Coordinate window */
   GtkWidget *coord_world;                 /* World coordinate label */
   GtkWidget *coord_screen;                /* Screen coordinate window */
+  GtkWidget *sswindow;                  /* snap size dialog */
 
   /* -------------------------------------- */
   /* Models for widgets inside dialog boxes */

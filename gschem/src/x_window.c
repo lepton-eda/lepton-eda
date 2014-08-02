@@ -194,7 +194,7 @@ static GtkWidget *x_window_stock_pixmap(const char *stock, GschemToplevel *w_cur
 
   /* First check if GTK knows this icon */
   if(gtk_stock_lookup(stockid, &item)) {
-    wpixmap = gtk_image_new_from_stock(stockid, 
+    wpixmap = gtk_image_new_from_stock(stockid,
                                        GTK_ICON_SIZE_LARGE_TOOLBAR);
   } else {
     /* Look up the icon in the icon theme */
@@ -248,7 +248,7 @@ void x_window_create_main(GschemToplevel *w_current)
   char *right_button_text;
 
   /* used to signify that the window isn't mapped yet */
-  w_current->window = NULL; 
+  w_current->window = NULL;
 
   w_current->main_window = GTK_WIDGET (gschem_main_window_new ());
 
@@ -260,7 +260,7 @@ void x_window_create_main(GschemToplevel *w_current)
    * see below
    */
 
-   /* 
+   /*
     * normally we let the window manager handle locating and sizing
     * the window.  However, for some batch processing of schematics
     * (generating a pdf of all schematics for example) we want to
@@ -295,10 +295,10 @@ void x_window_create_main(GschemToplevel *w_current)
   	handlebox = gtk_handle_box_new ();
   	gtk_box_pack_start (GTK_BOX (main_box), handlebox, FALSE, FALSE, 0);
   }
- 
+
   if (w_current->toolbars) {
     toolbar = gtk_toolbar_new();
-    gtk_toolbar_set_orientation (GTK_TOOLBAR(toolbar), 
+    gtk_toolbar_set_orientation (GTK_TOOLBAR(toolbar),
                                  GTK_ORIENTATION_HORIZONTAL);
     gtk_toolbar_set_style (GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
 
@@ -308,52 +308,52 @@ void x_window_create_main(GschemToplevel *w_current)
       gtk_box_pack_start(GTK_BOX(main_box), toolbar, FALSE, FALSE, 0);
     }
 
-    gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
-                             _("New"), 
-                             _("New file"), 
-                             "toolbar/new", 
+    gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
+                             _("New"),
+                             _("New file"),
+                             "toolbar/new",
                              x_window_stock_pixmap("new", w_current),
-                             (GtkSignalFunc) i_callback_toolbar_file_new, 
+                             (GtkSignalFunc) i_callback_toolbar_file_new,
                              w_current);
-    gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
-                             _("Open"), 
-                             _("Open file..."), 
+    gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
+                             _("Open"),
+                             _("Open file..."),
                              "toolbar/open",
                              x_window_stock_pixmap("open", w_current),
-                             (GtkSignalFunc) i_callback_toolbar_file_open, 
+                             (GtkSignalFunc) i_callback_toolbar_file_open,
                              w_current);
-    gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
-                             _("Save"), 
-                             _("Save file"), 
-                             "toolbar/save", 
+    gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
+                             _("Save"),
+                             _("Save file"),
+                             "toolbar/save",
                              x_window_stock_pixmap("save", w_current),
-                             (GtkSignalFunc) i_callback_toolbar_file_save, 
+                             (GtkSignalFunc) i_callback_toolbar_file_save,
                              w_current);
-    gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
-    gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
-                             _("Undo"), 
-                             _("Undo last operation"), 
-                             "toolbar/undo", 
+    gtk_toolbar_append_space (GTK_TOOLBAR(toolbar));
+    gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
+                             _("Undo"),
+                             _("Undo last operation"),
+                             "toolbar/undo",
                              x_window_stock_pixmap("undo", w_current),
-                             (GtkSignalFunc) i_callback_toolbar_edit_undo, 
+                             (GtkSignalFunc) i_callback_toolbar_edit_undo,
                              w_current);
-    gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
-                             _("Redo"), 
-                             _("Redo last undo"), 
-                             "toolbar/redo", 
+    gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
+                             _("Redo"),
+                             _("Redo last undo"),
+                             "toolbar/redo",
                              x_window_stock_pixmap("redo", w_current),
-                             (GtkSignalFunc) i_callback_toolbar_edit_redo, 
+                             (GtkSignalFunc) i_callback_toolbar_edit_redo,
                              w_current);
-    gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
+    gtk_toolbar_append_space (GTK_TOOLBAR(toolbar));
     /* not part of any radio button group */
-    gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
-                             _("Component"), 
-                             _("Add component...\nSelect library and component from list, move the mouse into main window, click to place\nRight mouse button to cancel"), 
-                             "toolbar/component", 
+    gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
+                             _("Component"),
+                             _("Add component...\nSelect library and component from list, move the mouse into main window, click to place\nRight mouse button to cancel"),
+                             "toolbar/component",
                              x_window_stock_pixmap("insert-symbol", w_current),
-                             (GtkSignalFunc) i_callback_toolbar_add_component, 
+                             (GtkSignalFunc) i_callback_toolbar_add_component,
                              w_current);
-    w_current->toolbar_net = 
+    w_current->toolbar_net =
       gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                  GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                  NULL,
@@ -363,7 +363,7 @@ void x_window_create_main(GschemToplevel *w_current)
                                  x_window_stock_pixmap("insert-net", w_current),
                                  (GtkSignalFunc) i_callback_toolbar_add_net,
                                  w_current);
-    w_current->toolbar_bus = 
+    w_current->toolbar_bus =
       gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                  GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                  w_current->toolbar_net,
@@ -374,15 +374,15 @@ void x_window_create_main(GschemToplevel *w_current)
                                  (GtkSignalFunc) i_callback_toolbar_add_bus,
                                  w_current);
     /* not part of any radio button group */
-    gtk_toolbar_append_item (GTK_TOOLBAR (toolbar), 
-                             _("Text"), 
-                             _("Add Text..."), 
-                             "toolbar/text", 
+    gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
+                             _("Text"),
+                             _("Add Text..."),
+                             "toolbar/text",
                              x_window_stock_pixmap("insert-text", w_current),
-                             (GtkSignalFunc) i_callback_toolbar_add_text, 
+                             (GtkSignalFunc) i_callback_toolbar_add_text,
                              w_current);
-    gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
-    w_current->toolbar_select = 
+    gtk_toolbar_append_space (GTK_TOOLBAR(toolbar));
+    w_current->toolbar_select =
       gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
                                  GTK_TOOLBAR_CHILD_RADIOBUTTON,
                                  w_current->toolbar_bus,
@@ -390,14 +390,14 @@ void x_window_create_main(GschemToplevel *w_current)
                                  _("Select mode"),
                                  "toolbar/select",
                                  x_window_stock_pixmap("select", w_current),
-                                 (GtkSignalFunc) i_callback_toolbar_edit_select, 
+                                 (GtkSignalFunc) i_callback_toolbar_edit_select,
                                  w_current);
 
 
-    gtk_toolbar_append_space (GTK_TOOLBAR(toolbar)); 
+    gtk_toolbar_append_space (GTK_TOOLBAR(toolbar));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w_current->toolbar_select),
                                  TRUE);
-  } 
+  }
 
 
   /*  Try to create popup menu (appears in right mouse button  */
@@ -550,8 +550,8 @@ void x_window_close(GschemToplevel *w_current)
 
   x_pagesel_close (w_current);
 
-  if (w_current->tswindow)
-  gtk_widget_destroy(w_current->tswindow);
+  if (w_current->sswindow)
+  gtk_widget_destroy(w_current->sswindow);
 
   if (w_current->iwindow)
   gtk_widget_destroy(w_current->iwindow);
@@ -561,9 +561,6 @@ void x_window_close(GschemToplevel *w_current)
 
   if (w_current->cowindow)
   gtk_widget_destroy(w_current->cowindow);
-
-  if (w_current->clwindow)
-  gtk_widget_destroy(w_current->clwindow);
 
   if (w_current->sewindow)
   gtk_widget_destroy(w_current->sewindow);

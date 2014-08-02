@@ -181,15 +181,14 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->mawindow     = NULL;
   w_current->aewindow     = NULL;
   w_current->trwindow     = NULL;
-  w_current->tswindow     = NULL;
   w_current->tshowwindow  = NULL;
   w_current->thidewindow  = NULL;
   w_current->tfindwindow  = NULL;
   w_current->hkwindow     = NULL;
-  w_current->clwindow     = NULL;
   w_current->cowindow     = NULL;
   w_current->coord_world  = NULL;
   w_current->coord_screen = NULL;
+  w_current->sswindow     = NULL;
 
   /* -------------------------------------- */
   /* Models for widgets inside dialog boxes */

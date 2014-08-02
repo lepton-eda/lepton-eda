@@ -327,7 +327,7 @@ void snap_size_dialog_response(GtkWidget *w, gint response,
 
   switch (response) {
   case GTK_RESPONSE_ACCEPT:
-    spin_size = g_object_get_data(G_OBJECT(w_current->tswindow),"spin_size");
+    spin_size = g_object_get_data(G_OBJECT(w_current->sswindow),"spin_size");
     size = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spin_size));
 
     w_current->snap_size = size;
@@ -348,8 +348,8 @@ void snap_size_dialog_response(GtkWidget *w, gint response,
   /* clean up */
   i_set_state(w_current, SELECT);
   i_update_toolbar(w_current);
-  gtk_widget_destroy(w_current->tswindow);
-  w_current->tswindow = NULL;
+  gtk_widget_destroy(w_current->sswindow);
+  w_current->sswindow = NULL;
 }
 
 /*! \brief Create the snap size dialog
@@ -362,8 +362,8 @@ void snap_size_dialog (GschemToplevel *w_current)
   GtkWidget *vbox;
   GtkWidget *spin_size;
 
-  if (!w_current->tswindow) {
-    w_current->tswindow = gschem_dialog_new_with_buttons(_("Snap Size"),
+  if (!w_current->sswindow) {
+    w_current->sswindow = gschem_dialog_new_with_buttons(_("Snap Size"),
                                                          GTK_WINDOW(w_current->main_window),
                                                          GTK_DIALOG_MODAL,
                                                          "snap-size", w_current,
@@ -374,23 +374,23 @@ void snap_size_dialog (GschemToplevel *w_current)
                                                          NULL);
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
-    gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->tswindow),
+    gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->sswindow),
                                             GTK_RESPONSE_ACCEPT,
                                             GTK_RESPONSE_REJECT,
                                             -1);
 
-    gtk_window_position(GTK_WINDOW(w_current->tswindow),
+    gtk_window_position(GTK_WINDOW(w_current->sswindow),
                         GTK_WIN_POS_MOUSE);
 
-    g_signal_connect (G_OBJECT (w_current->tswindow), "response",
+    g_signal_connect (G_OBJECT (w_current->sswindow), "response",
                       G_CALLBACK (snap_size_dialog_response),
                       w_current);
-    gtk_dialog_set_default_response(GTK_DIALOG(w_current->tswindow),
+    gtk_dialog_set_default_response(GTK_DIALOG(w_current->sswindow),
                                     GTK_RESPONSE_ACCEPT);
 
-    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow),
+    gtk_container_border_width(GTK_CONTAINER(w_current->sswindow),
                                DIALOG_BORDER_SPACING);
-    vbox = GTK_DIALOG(w_current->tswindow)->vbox;
+    vbox = GTK_DIALOG(w_current->sswindow)->vbox;
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
     label = gtk_label_new (_("Enter new snap grid spacing:"));
@@ -403,16 +403,16 @@ void snap_size_dialog (GschemToplevel *w_current)
     gtk_entry_set_activates_default(GTK_ENTRY(spin_size), TRUE);
     gtk_widget_grab_focus(spin_size);
 
-    GLADE_HOOKUP_OBJECT(w_current->tswindow, spin_size, "spin_size");
-    gtk_widget_show_all(w_current->tswindow);
+    GLADE_HOOKUP_OBJECT(w_current->sswindow, spin_size, "spin_size");
+    gtk_widget_show_all(w_current->sswindow);
   }
 
   else {  /* dialog already there */
-    gtk_window_present(GTK_WINDOW(w_current->tswindow));
+    gtk_window_present(GTK_WINDOW(w_current->sswindow));
   }
 
   /* always set the current gschem value to the dialog entry */
-  spin_size = g_object_get_data(G_OBJECT(w_current->tswindow),"spin_size");
+  spin_size = g_object_get_data(G_OBJECT(w_current->sswindow),"spin_size");
   gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_size), w_current->snap_size);
   gtk_editable_select_region(GTK_EDITABLE(spin_size), 0, -1);
 }
@@ -887,19 +887,12 @@ void x_dialog_raise_all(GschemToplevel *w_current)
   if(w_current->trwindow) {
     gdk_window_raise(w_current->trwindow->window);
   }
-  if(w_current->tswindow) {
-    gdk_window_raise(w_current->tswindow->window);
-  }
   if(w_current->hkwindow) {
     gdk_window_raise(w_current->hkwindow->window);
   }
   if(w_current->cowindow) {
     gdk_window_raise(w_current->cowindow->window);
   }
-  if(w_current->clwindow) {
-    gdk_window_raise(w_current->clwindow->window);
-  }
-
 }
 
 /*********** End of misc support functions for dialog boxes *******/
