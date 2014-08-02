@@ -144,21 +144,25 @@ x_rotatecb_get_angle (GtkWidget *widget)
 void
 x_rotatecb_set_angle (GtkWidget *widget, int angle)
 {
-  GtkTreeIter iter;
-  gboolean success;
-  GValue value = {0};
-
   g_return_if_fail (rotation_list_store != NULL);
 
-  success = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (rotation_list_store), &iter);
-  while (success) {
-    gtk_tree_model_get_value (GTK_TREE_MODEL (rotation_list_store), &iter, COLUMN_INTEGER, &value);
-    if (g_value_get_int (&value) == angle) {
+  if (angle >= 0) {
+    GtkTreeIter iter;
+    gboolean success;
+    GValue value = {0};
+
+    success = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (rotation_list_store), &iter);
+    while (success) {
+      gtk_tree_model_get_value (GTK_TREE_MODEL (rotation_list_store), &iter, COLUMN_INTEGER, &value);
+      if (g_value_get_int (&value) == angle) {
+        g_value_unset (&value);
+        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (widget), &iter);
+        break;
+      }
       g_value_unset (&value);
-      gtk_combo_box_set_active_iter (GTK_COMBO_BOX (widget), &iter);
-      break;
+      success = gtk_tree_model_iter_next (GTK_TREE_MODEL (rotation_list_store), &iter);
     }
-    g_value_unset (&value);
-    success = gtk_tree_model_iter_next (GTK_TREE_MODEL (rotation_list_store), &iter);
+  } else {
+    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (widget), NULL);
   }
 }

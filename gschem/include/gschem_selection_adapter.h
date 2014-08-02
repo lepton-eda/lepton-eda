@@ -97,6 +97,21 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter);
 SELECTION *
 gschem_selection_adapter_get_selection (GschemSelectionAdapter *adapter);
 
+int
+gschem_selection_adapter_get_text_alignment (GschemSelectionAdapter *adapter);
+
+int
+gschem_selection_adapter_get_text_color (GschemSelectionAdapter *adapter);
+
+int
+gschem_selection_adapter_get_text_rotation (GschemSelectionAdapter *adapter);
+
+int
+gschem_selection_adapter_get_text_size (GschemSelectionAdapter *adapter);
+
+const char*
+gschem_selection_adapter_get_text_string (GschemSelectionAdapter *adapter);
+
 TOPLEVEL*
 gschem_selection_adapter_get_toplevel (GschemSelectionAdapter *adapter);
 
@@ -141,6 +156,21 @@ gschem_selection_adapter_set_object_color (GschemSelectionAdapter *adapter, int 
 
 void
 gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter, SELECTION *selection);
+
+void
+gschem_selection_adapter_set_text_color (GschemSelectionAdapter *adapter, int color);
+
+void
+gschem_selection_adapter_set_text_alignment (GschemSelectionAdapter *adapter, int alignment);
+
+void
+gschem_selection_adapter_set_text_rotation (GschemSelectionAdapter *adapter, int angle);
+
+void
+gschem_selection_adapter_set_text_size (GschemSelectionAdapter *adapter, int size);
+
+void
+gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter, const char *string, GschemToplevel *w_current);
 
 void
 gschem_selection_adapter_set_toplevel (GschemSelectionAdapter *adapter, TOPLEVEL *toplevel);

@@ -31,6 +31,7 @@ gschem_SOURCES = \
 	gschem_binding_integer.c \
 	gschem_bottom_widget.c \
 	gschem_dialog.c \
+	gschem_dialog_misc.c \
 	gschem_fill_swatch_cell_renderer.c \
 	gschem_integer_combo_box.c \
 	gschem_macro_widget.c \
@@ -39,6 +40,7 @@ gschem_SOURCES = \
 	gschem_page_view.c \
 	gschem_selection_adapter.c \
 	gschem_swatch_column_renderer.c \
+	gschem_text_properties_dialog.c \
 	gschem_toplevel.c \
 	i_basic.c \
 	i_callbacks.c \
@@ -80,7 +82,6 @@ gschem_SOURCES = \
 	x_compselect.c \
 	x_dialog.c \
 	x_editlprop.c \
-	x_edittext.c \
 	x_event.c \
 	x_fileselect.c \
 	x_fstylecb.c \

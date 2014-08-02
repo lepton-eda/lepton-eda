@@ -22,6 +22,7 @@ typedef struct st_gschem_toplevel GschemToplevel;
 #include "gschem_accel_label.h"
 #include "gschem_action.h"
 #include "gschem_dialog.h"
+#include "gschem_dialog_misc.h"
 #include "gschemhotkeystore.h"
 #include "i_vars.h"
 #include "x_preview.h"
@@ -38,6 +39,8 @@ typedef struct st_gschem_toplevel GschemToplevel;
 #include "gschem_integer_combo_box.h"
 #include "gschem_binding.h"
 #include "gschem_binding_integer.h"
+
+#include "gschem_text_properties_dialog.h"
 
 /* Gettext translation */
 #include "gettext.h"

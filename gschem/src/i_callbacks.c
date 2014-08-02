@@ -630,17 +630,12 @@ DEFINE_I_CALLBACK(edit_pin_type)
 DEFINE_I_CALLBACK(edit_text)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  OBJECT *object;
 
   g_return_if_fail (w_current != NULL);
 
   i_update_middle_button(w_current, i_callback_edit_text, _("Edit Text"));
-  object = o_select_return_first_object(w_current);
-  if (object) {
-    if (object->type == OBJ_TEXT) {
-      o_text_edit(w_current, object);
-    }
-  }
+
+  text_edit_dialog (w_current);
 }
 
 /*! \todo Finish function documentation!!!

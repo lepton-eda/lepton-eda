@@ -52,242 +52,30 @@ enum
   PROP_FILL_WIDTH,
   PROP_LINE_TYPE,
   PROP_LINE_WIDTH,
-  PROP_OBJECT_COLOR
+  PROP_OBJECT_COLOR,
+  PROP_TEXT_ALIGNMENT,
+  PROP_TEXT_COLOR,
+  PROP_TEXT_ROTATION,
+  PROP_TEXT_SIZE,
+  PROP_TEXT_STRING
 };
 
 
 
 static void
+class_init (GschemSelectionAdapterClass *klass);
+
+static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass);
-
-static void
-gschem_selection_adapter_init (GschemSelectionAdapter *adapter);
+instance_init (GschemSelectionAdapter *adapter);
 
 static void
 selection_changed (GedaList *selection, GschemSelectionAdapter *adapter);
 
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
-
-
-
-/*! \brief Get a property
- *
- *  \param [in]     object
- *  \param [in]     param_id
- *  \param [in,out] value
- *  \param [in]     pspec
- */
-static void
-get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
-{
-  GschemSelectionAdapter *adapter = GSCHEM_SELECTION_ADAPTER (object);
-
-  switch (param_id) {
-    case PROP_CAP_STYLE:
-      g_value_set_int (value, gschem_selection_adapter_get_cap_style (adapter));
-      break;
-
-    case PROP_DASH_LENGTH:
-      g_value_set_int (value, gschem_selection_adapter_get_dash_length (adapter));
-      break;
-
-    case PROP_DASH_SPACE:
-      g_value_set_int (value, gschem_selection_adapter_get_dash_space (adapter));
-      break;
-
-    case PROP_FILL_ANGLE1:
-      g_value_set_int (value, gschem_selection_adapter_get_fill_angle1 (adapter));
-      break;
-
-    case PROP_FILL_ANGLE2:
-      g_value_set_int (value, gschem_selection_adapter_get_fill_angle2 (adapter));
-      break;
-
-    case PROP_FILL_PITCH1:
-      g_value_set_int (value, gschem_selection_adapter_get_fill_pitch1 (adapter));
-      break;
-
-    case PROP_FILL_PITCH2:
-      g_value_set_int (value, gschem_selection_adapter_get_fill_pitch2 (adapter));
-      break;
-
-    case PROP_FILL_TYPE:
-      g_value_set_int (value, gschem_selection_adapter_get_fill_type (adapter));
-      break;
-
-    case PROP_FILL_WIDTH:
-      g_value_set_int (value, gschem_selection_adapter_get_fill_width (adapter));
-      break;
-
-    case PROP_LINE_TYPE:
-      g_value_set_int (value, gschem_selection_adapter_get_line_type (adapter));
-      break;
-
-    case PROP_LINE_WIDTH:
-      g_value_set_int (value, gschem_selection_adapter_get_line_width (adapter));
-      break;
-
-    case PROP_OBJECT_COLOR:
-      g_value_set_int (value, gschem_selection_adapter_get_object_color (adapter));
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
-  }
-}
-
-
-
-/*! \brief Initialize GschemSelectionAdapter class
- *
- *  \param [in] klass The class for the GschemSelectionAdapter
- */
-static void
-gschem_selection_adapter_class_init (GschemSelectionAdapterClass *klass)
-{
-  G_OBJECT_CLASS (klass)->get_property = get_property;
-  G_OBJECT_CLASS (klass)->set_property = set_property;
-
-  g_object_class_install_property (G_OBJECT_CLASS (klass),
-                                   PROP_CAP_STYLE,
-                                   g_param_spec_int ("cap-style",
-                                                     "Cap Style",
-                                                     "Cap Style",
-                                                     G_MININT,
-                                                     G_MAXINT,
-                                                     NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-
-  g_object_class_install_property (G_OBJECT_CLASS (klass),
-                                   PROP_DASH_LENGTH,
-                                   g_param_spec_int ("dash-length",
-                                                     "Dash Length",
-                                                     "Dash Length",
-                                                     G_MININT,
-                                                     G_MAXINT,
-                                                     NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-
-  g_object_class_install_property (G_OBJECT_CLASS (klass),
-                                   PROP_DASH_SPACE,
-                                   g_param_spec_int ("dash-space",
-                                                     "Dash Space",
-                                                     "Dash Space",
-                                                     G_MININT,
-                                                     G_MAXINT,
-                                                     NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-
-  g_object_class_install_property (G_OBJECT_CLASS (klass),
-                                   PROP_FILL_ANGLE1,
-                                   g_param_spec_int ("fill-angle1",
-                                                     "Fill Angle 1",
-                                                     "Fill Angle 1",
-                                                     G_MININT,
-                                                     G_MAXINT,
-                                                     NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-
-  g_object_class_install_property (G_OBJECT_CLASS (klass),
-                                   PROP_FILL_ANGLE2,
-                                   g_param_spec_int ("fill-angle2",
-                                                     "Fill Angle 2",
-                                                     "Fill Angle 2",
-                                                     G_MININT,
-                                                     G_MAXINT,
-                                                     NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-
-  g_object_class_install_property (G_OBJECT_CLASS (klass),
-                                   PROP_FILL_PITCH1,
-                                   g_param_spec_int ("fill-pitch1",
-                                                     "Fill Pitch 1",
-                                                     "Fill Pitch 1",
-                                                     G_MININT,
-                                                     G_MAXINT,
-                                                     NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-
-  g_object_class_install_property (G_OBJECT_CLASS (klass),
-                                   PROP_FILL_PITCH2,
-                                   g_param_spec_int ("fill-pitch2",
-                                                     "Fill Pitch 2",
-                                                     "Fill Pitch 2",
-                                                     G_MININT,
-                                                     G_MAXINT,
-                                                     NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-
-  g_object_class_install_property (G_OBJECT_CLASS (klass),
-                                   PROP_FILL_TYPE,
-                                   g_param_spec_int ("fill-type",
-                                                     "Fill Type",
-                                                     "Fill Type",
-                                                     G_MININT,
-                                                     G_MAXINT,
-                                                     NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-
-  g_object_class_install_property (G_OBJECT_CLASS (klass),
-                                   PROP_FILL_WIDTH,
-                                   g_param_spec_int ("fill-width",
-                                                     "Fill Width",
-                                                     "Fill Width",
-                                                     G_MININT,
-                                                     G_MAXINT,
-                                                     NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-
-  g_object_class_install_property (G_OBJECT_CLASS (klass),
-                                   PROP_LINE_TYPE,
-                                   g_param_spec_int ("line-type",
-                                                     "Line Type",
-                                                     "Line Type",
-                                                     G_MININT,
-                                                     G_MAXINT,
-                                                     NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-
-
-  g_object_class_install_property (G_OBJECT_CLASS (klass),
-                                   PROP_LINE_WIDTH,
-                                   g_param_spec_int ("line-width",
-                                                     "Line Width",
-                                                     "Line Width",
-                                                     G_MININT,
-                                                     G_MAXINT,
-                                                     NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-
-  g_object_class_install_property (G_OBJECT_CLASS (klass),
-                                   PROP_OBJECT_COLOR,
-                                   g_param_spec_int ("object-color",
-                                                     "Object Color",
-                                                     "Object Color",
-                                                     G_MININT,
-                                                     G_MAXINT,
-                                                     NO_SELECTION,
-                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
-
-  /* This signal indicates changes to the selection that requires the undo
-   * manager save the state.
-   */
-
-  g_signal_new ("handle-undo",                    /* signal_name  */
-                G_OBJECT_CLASS_TYPE (klass),      /* itype        */
-                0,                                /* signal_flags */
-                0,                                /* class_offset */
-                NULL,                             /* accumulator  */
-                NULL,                             /* accu_data    */
-                g_cclosure_marshal_VOID__VOID,    /* c_marshaller */
-                G_TYPE_NONE,                      /* return_type  */
-                0                                 /* n_params     */
-                );
-}
 
 
 
@@ -927,6 +715,7 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
         (object->type == OBJ_TEXT))) {
       if (color != object->color) {
         color = MULTIPLE_VALUES;
+        break;
       }
     }
     iter = g_list_next (iter);
@@ -949,6 +738,211 @@ gschem_selection_adapter_get_selection (GschemSelectionAdapter *adapter)
 
   return adapter->selection;
 }
+
+
+
+/*! \brief Get the text alignment from the selection
+ *
+ *  \param [in] adapter This adapter
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different rotations are selected
+ *  \retval others          The rotation of the selected objects
+ */
+int
+gschem_selection_adapter_get_text_alignment (GschemSelectionAdapter *adapter)
+{
+  gint alignment = NO_SELECTION;
+  GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
+
+  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+
+    if ((object != NULL) && (object->type == OBJ_TEXT)) {
+      int temp_alignment = object->text->alignment;
+
+      if (alignment < 0) {
+        alignment = temp_alignment;
+      }
+      else if (alignment != temp_alignment) {
+        alignment = MULTIPLE_VALUES;
+        break;
+      }
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  return alignment;
+}
+
+
+
+/*! \brief Get the color of selected objects
+ *
+ *  \param [in] adapter This adapter
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different colors are selected
+ *  \retval others          The color of the selected objects
+ */
+int
+gschem_selection_adapter_get_text_color (GschemSelectionAdapter *adapter)
+{
+  int color = NO_SELECTION;
+  GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
+
+  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+
+  while (iter != NULL) {
+    OBJECT* object = (OBJECT *) iter->data;
+    iter = g_list_next (iter);
+    if ((object != NULL) && (object->type == OBJ_TEXT)) {
+      color = object->color;
+      break;
+    }
+  }
+
+  /* Check if all other objects have the same properties */
+
+  while (iter != NULL) {
+    OBJECT* object = (OBJECT *) iter->data;
+    if ((object != NULL) && (object->type == OBJ_TEXT)) {
+      if (color != object->color) {
+        color = MULTIPLE_VALUES;
+        break;
+      }
+    }
+    iter = g_list_next (iter);
+  }
+
+  return color;
+}
+
+
+
+/*! \brief Get the text rotation angle from the selection
+ *
+ *  \param [in] adapter This adapter
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different rotations are selected
+ *  \retval others          The rotation of the selected objects
+ */
+int
+gschem_selection_adapter_get_text_rotation (GschemSelectionAdapter *adapter)
+{
+  gint angle = NO_SELECTION;
+  GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
+
+  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+
+    if ((object != NULL) && (object->type == OBJ_TEXT)) {
+      int temp_angle = object->text->angle;
+
+      if (angle < 0) {
+        angle = temp_angle;
+      }
+      else if (angle != temp_angle) {
+        angle = MULTIPLE_VALUES;
+        break;
+      }
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  return angle;
+}
+
+
+
+/*! \brief Get the text size from the selection
+ *
+ *  \param [in] adapter This adapter
+ *
+ *  \retval NO_SELECTION    No objects are selected
+ *  \retval MULTIPLE_VALUES Multiple objects with different rotations are selected
+ *  \retval others          The rotation of the selected objects
+ */
+int
+gschem_selection_adapter_get_text_size (GschemSelectionAdapter *adapter)
+{
+  gint size = NO_SELECTION;
+  GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, NO_SELECTION);
+
+  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+
+    if ((object != NULL) && (object->type == OBJ_TEXT)) {
+      int temp_size = object->text->size;
+
+      if (size < 0) {
+        size = temp_size;
+      }
+      else if (size != temp_size) {
+        size = MULTIPLE_VALUES;
+        break;
+      }
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  return size;
+}
+
+
+/*! \brief Get the text string from the selection
+ *
+ *  \param [in] adapter This adapter
+ *
+ *  \retval NULL      No objects or multiple values are selected
+ *  \retval non-NULL  The content string of the selected text object [transfer none]
+ */
+const char*
+gschem_selection_adapter_get_text_string (GschemSelectionAdapter *adapter)
+{
+  const char *string = NULL;
+  GList *iter;
+
+  g_return_val_if_fail (adapter != NULL, NULL);
+
+  iter = geda_list_get_glist (gschem_selection_adapter_get_selection (adapter));
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+
+    if ((object != NULL) && (object->type == OBJ_TEXT)) {
+      if (string == NULL) {
+        string = o_text_get_string (adapter->toplevel, object);
+      } else {
+        string = NULL;
+        break;
+      }
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  return string;
+}
+
 
 
 
@@ -977,14 +971,14 @@ gschem_selection_adapter_get_type ()
   if (type == 0) {
     static const GTypeInfo info = {
       sizeof(GschemSelectionAdapterClass),
-      NULL,                                                    /* base_init */
-      NULL,                                                    /* base_finalize */
-      (GClassInitFunc) gschem_selection_adapter_class_init,
-      NULL,                                                    /* class_finalize */
-      NULL,                                                    /* class_data */
+      NULL,                                  /* base_init */
+      NULL,                                  /* base_finalize */
+      (GClassInitFunc) class_init,
+      NULL,                                  /* class_finalize */
+      NULL,                                  /* class_data */
       sizeof(GschemSelectionAdapter),
-      0,                                                       /* n_preallocs */
-      (GInstanceInitFunc) gschem_selection_adapter_init,
+      0,                                     /* n_preallocs */
+      (GInstanceInitFunc) instance_init,
     };
 
     type = g_type_register_static (G_TYPE_OBJECT, "GschemSelectionAdapter", &info, 0);
@@ -995,20 +989,9 @@ gschem_selection_adapter_get_type ()
 
 
 
-/*! \brief Initialize GschemSelection instance
+/*! \brief Create a new instance of the GschemSelectionAdapter
  *
- *  \param [in,out] selection
- */
-static void
-gschem_selection_adapter_init (GschemSelectionAdapter *adapter)
-{
-}
-
-
-
-/*! \brief Create a new instanceof the GschemSelectionAdapter
- *
- *  \return A new instanceof the GschemSelectionAdapter
+ *  \return A new instance of the GschemSelectionAdapter
  */
 GschemSelectionAdapter*
 gschem_selection_adapter_new ()
@@ -1018,7 +1001,7 @@ gschem_selection_adapter_new ()
 
 
 
-/*! \brief Set the fill angle 1 in the selection
+/*! \brief Set the first fill angle in the selection
  *
  *  \param [in] selection
  *  \param [in] angle
@@ -1706,6 +1689,7 @@ gschem_selection_adapter_set_object_color (GschemSelectionAdapter *adapter, int 
   }
 
   g_object_notify (G_OBJECT (adapter), "object-color");
+  g_object_notify (G_OBJECT (adapter), "text-color");
 
   g_signal_emit_by_name (adapter, "handle-undo");
 }
@@ -1757,6 +1741,184 @@ gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter, SELECTI
 
 
 
+/*! \brief Set the text alignment in the selection
+ *
+ *  \param [in] adapter
+ *  \param [in] size
+ */
+void
+gschem_selection_adapter_set_text_alignment (GschemSelectionAdapter *adapter, int alignment)
+{
+  GList *iter;
+
+  g_return_if_fail (adapter != NULL);
+  g_return_if_fail (adapter->toplevel != NULL);
+  g_return_if_fail (alignment >= 0);
+
+  iter = geda_list_get_glist (adapter->selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+
+    if (object->type == OBJ_TEXT) {
+      object->text->alignment = alignment;
+      o_text_recreate(adapter->toplevel, object);
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  g_object_notify (G_OBJECT (adapter), "text-alignment");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
+}
+
+
+
+/*! \brief Set the text color in the selection
+ *
+ *  \param [in] adapter
+ *  \param [in] color
+ */
+void
+gschem_selection_adapter_set_text_color (GschemSelectionAdapter *adapter, int color)
+{
+  GList *iter;
+
+  g_return_if_fail (adapter != NULL);
+  g_return_if_fail (color >= 0);
+  g_return_if_fail (color < MAX_COLORS);
+
+  iter = geda_list_get_glist (adapter->selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+
+    if (object->type == OBJ_TEXT) {
+      o_set_color (adapter->toplevel, object, color);
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  g_object_notify (G_OBJECT (adapter), "object-color");
+  g_object_notify (G_OBJECT (adapter), "text-color");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
+}
+
+
+
+/*! \brief Set the text rotation in the selection
+ *
+ *  \param [in] adapter
+ *  \param [in] angle
+ */
+void
+gschem_selection_adapter_set_text_rotation (GschemSelectionAdapter *adapter, int angle)
+{
+  GList *iter;
+
+  g_return_if_fail (adapter != NULL);
+  g_return_if_fail (adapter->toplevel != NULL);
+  g_return_if_fail (angle >= 0);
+
+  iter = geda_list_get_glist (adapter->selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+
+    if (object->type == OBJ_TEXT) {
+      object->text->angle = angle;
+      o_text_recreate(adapter->toplevel, object);
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  g_object_notify (G_OBJECT (adapter), "text-rotation");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
+}
+
+
+
+/*! \brief Set the text size in the selection
+ *
+ *  \param [in] adapter
+ *  \param [in] size
+ */
+void
+gschem_selection_adapter_set_text_size (GschemSelectionAdapter *adapter, int size)
+{
+  GList *iter;
+
+  g_return_if_fail (adapter != NULL);
+  g_return_if_fail (adapter->toplevel != NULL);
+  g_return_if_fail (size >= 0);
+
+  iter = geda_list_get_glist (adapter->selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+
+    if (object->type == OBJ_TEXT) {
+      object->text->size = size;
+      o_text_recreate(adapter->toplevel, object);
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  g_object_notify (G_OBJECT (adapter), "text-size");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
+}
+
+
+
+/*! \brief Set the text size in the selection
+ *
+ *  \param [in] adapter
+ *  \param [in] size
+ *  \param [in] w_current
+ */
+void
+gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter, const char *string, GschemToplevel *w_current)
+{
+  GList *iter;
+
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (adapter != NULL);
+  g_return_if_fail (adapter->toplevel != NULL);
+  g_return_if_fail (string != NULL);
+
+  iter = geda_list_get_glist (adapter->selection);
+
+  while (iter != NULL) {
+    OBJECT *object = (OBJECT*) iter->data;
+
+    if (object->type == OBJ_TEXT) {
+      o_text_set_string (adapter->toplevel, object, string);
+
+      /* handle slot= attribute, it's a special case */
+      if (object->attached_to != NULL && g_ascii_strncasecmp (string, "slot=", 5) == 0) {
+        o_slot_end (w_current, object->attached_to, string);
+      }
+
+      o_text_recreate (adapter->toplevel, object);
+    }
+
+    iter = g_list_next (iter);
+  }
+
+  g_object_notify (G_OBJECT (adapter), "text-string");
+
+  g_signal_emit_by_name (adapter, "handle-undo");
+}
+
+
+
 /*! \brief Set the toplevel associated with this adapter
  *
  *  \param [in] adapter
@@ -1772,7 +1934,306 @@ gschem_selection_adapter_set_toplevel (GschemSelectionAdapter *adapter, TOPLEVEL
 
 
 
-/*! \brief Signal handler for when the selection changes
+/*! \private
+ *  \brief Initialize GschemSelectionAdapter class
+ *
+ *  \param [in] klass The class for the GschemSelectionAdapter
+ */
+static void
+class_init (GschemSelectionAdapterClass *klass)
+{
+  G_OBJECT_CLASS (klass)->get_property = get_property;
+  G_OBJECT_CLASS (klass)->set_property = set_property;
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_CAP_STYLE,
+                                   g_param_spec_int ("cap-style",
+                                                     "Cap Style",
+                                                     "Cap Style",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_DASH_LENGTH,
+                                   g_param_spec_int ("dash-length",
+                                                     "Dash Length",
+                                                     "Dash Length",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_DASH_SPACE,
+                                   g_param_spec_int ("dash-space",
+                                                     "Dash Space",
+                                                     "Dash Space",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_FILL_ANGLE1,
+                                   g_param_spec_int ("fill-angle1",
+                                                     "Fill Angle 1",
+                                                     "Fill Angle 1",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_FILL_ANGLE2,
+                                   g_param_spec_int ("fill-angle2",
+                                                     "Fill Angle 2",
+                                                     "Fill Angle 2",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_FILL_PITCH1,
+                                   g_param_spec_int ("fill-pitch1",
+                                                     "Fill Pitch 1",
+                                                     "Fill Pitch 1",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_FILL_PITCH2,
+                                   g_param_spec_int ("fill-pitch2",
+                                                     "Fill Pitch 2",
+                                                     "Fill Pitch 2",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_FILL_TYPE,
+                                   g_param_spec_int ("fill-type",
+                                                     "Fill Type",
+                                                     "Fill Type",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_FILL_WIDTH,
+                                   g_param_spec_int ("fill-width",
+                                                     "Fill Width",
+                                                     "Fill Width",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_LINE_TYPE,
+                                   g_param_spec_int ("line-type",
+                                                     "Line Type",
+                                                     "Line Type",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_LINE_WIDTH,
+                                   g_param_spec_int ("line-width",
+                                                     "Line Width",
+                                                     "Line Width",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_OBJECT_COLOR,
+                                   g_param_spec_int ("object-color",
+                                                     "Object Color",
+                                                     "Object Color",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_TEXT_ALIGNMENT,
+                                   g_param_spec_int ("text-alignment",
+                                                     "Text Alignment",
+                                                     "Text Alignment",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_TEXT_COLOR,
+                                   g_param_spec_int ("text-color",
+                                                     "Text Color",
+                                                     "Text Color",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_TEXT_ROTATION,
+                                   g_param_spec_int ("text-rotation",
+                                                     "Text Rotation",
+                                                     "Text Rotation",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_TEXT_SIZE,
+                                   g_param_spec_int ("text-size",
+                                                     "Text Size",
+                                                     "Text Size",
+                                                     G_MININT,
+                                                     G_MAXINT,
+                                                     NO_SELECTION,
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_TEXT_STRING,
+                                   g_param_spec_string ("text-string",
+                                                        "Text String",
+                                                        "Text String",
+                                                        NULL,
+                                                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  /* This signal indicates changes to the selection that requires the undo
+   * manager save the state.
+   */
+
+  g_signal_new ("handle-undo",                    /* signal_name  */
+                G_OBJECT_CLASS_TYPE (klass),      /* itype        */
+                0,                                /* signal_flags */
+                0,                                /* class_offset */
+                NULL,                             /* accumulator  */
+                NULL,                             /* accu_data    */
+                g_cclosure_marshal_VOID__VOID,    /* c_marshaller */
+                G_TYPE_NONE,                      /* return_type  */
+                0                                 /* n_params     */
+                );
+}
+
+
+
+/*! \private
+ *  \brief Get a property
+ *
+ *  \param [in]     object
+ *  \param [in]     param_id
+ *  \param [in,out] value
+ *  \param [in]     pspec
+ */
+static void
+get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
+{
+  GschemSelectionAdapter *adapter = GSCHEM_SELECTION_ADAPTER (object);
+
+  switch (param_id) {
+    case PROP_CAP_STYLE:
+      g_value_set_int (value, gschem_selection_adapter_get_cap_style (adapter));
+      break;
+
+    case PROP_DASH_LENGTH:
+      g_value_set_int (value, gschem_selection_adapter_get_dash_length (adapter));
+      break;
+
+    case PROP_DASH_SPACE:
+      g_value_set_int (value, gschem_selection_adapter_get_dash_space (adapter));
+      break;
+
+    case PROP_FILL_ANGLE1:
+      g_value_set_int (value, gschem_selection_adapter_get_fill_angle1 (adapter));
+      break;
+
+    case PROP_FILL_ANGLE2:
+      g_value_set_int (value, gschem_selection_adapter_get_fill_angle2 (adapter));
+      break;
+
+    case PROP_FILL_PITCH1:
+      g_value_set_int (value, gschem_selection_adapter_get_fill_pitch1 (adapter));
+      break;
+
+    case PROP_FILL_PITCH2:
+      g_value_set_int (value, gschem_selection_adapter_get_fill_pitch2 (adapter));
+      break;
+
+    case PROP_FILL_TYPE:
+      g_value_set_int (value, gschem_selection_adapter_get_fill_type (adapter));
+      break;
+
+    case PROP_FILL_WIDTH:
+      g_value_set_int (value, gschem_selection_adapter_get_fill_width (adapter));
+      break;
+
+    case PROP_LINE_TYPE:
+      g_value_set_int (value, gschem_selection_adapter_get_line_type (adapter));
+      break;
+
+    case PROP_LINE_WIDTH:
+      g_value_set_int (value, gschem_selection_adapter_get_line_width (adapter));
+      break;
+
+    case PROP_OBJECT_COLOR:
+      g_value_set_int (value, gschem_selection_adapter_get_object_color (adapter));
+      break;
+
+    case PROP_TEXT_ALIGNMENT:
+      g_value_set_int (value, gschem_selection_adapter_get_text_alignment (adapter));
+      break;
+
+    case PROP_TEXT_COLOR:
+      g_value_set_int (value, gschem_selection_adapter_get_text_color (adapter));
+      break;
+
+    case PROP_TEXT_ROTATION:
+      g_value_set_int (value, gschem_selection_adapter_get_text_rotation (adapter));
+      break;
+
+    case PROP_TEXT_SIZE:
+      g_value_set_int (value, gschem_selection_adapter_get_text_size (adapter));
+      break;
+
+    case PROP_TEXT_STRING:
+      g_value_set_string (value, gschem_selection_adapter_get_text_string (adapter));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
+  }
+}
+
+
+
+/*! \brief Initialize GschemSelection instance
+ *
+ *  \param [in,out] selection
+ */
+static void
+instance_init (GschemSelectionAdapter *adapter)
+{
+}
+
+
+
+/*! \private
+ *  \brief Signal handler for when the selection changes
  *
  *  \par Function Description
  *  This function gets called when items are added or removed from the
@@ -1800,6 +2261,11 @@ selection_changed (GedaList *selection, GschemSelectionAdapter *adapter)
   g_object_notify (G_OBJECT (adapter), "line-type");
   g_object_notify (G_OBJECT (adapter), "line-width");
   g_object_notify (G_OBJECT (adapter), "object-color");
+  g_object_notify (G_OBJECT (adapter), "text-alignment");
+  g_object_notify (G_OBJECT (adapter), "text-color");
+  g_object_notify (G_OBJECT (adapter), "text-rotation");
+  g_object_notify (G_OBJECT (adapter), "text-size");
+  g_object_notify (G_OBJECT (adapter), "text-string");
 }
 
 
@@ -1864,6 +2330,30 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
     case PROP_OBJECT_COLOR:
       gschem_selection_adapter_set_object_color (adapter, g_value_get_int (value));
       break;
+
+    case PROP_TEXT_ALIGNMENT:
+      gschem_selection_adapter_set_text_alignment (adapter, g_value_get_int (value));
+      break;
+
+    case PROP_TEXT_COLOR:
+      gschem_selection_adapter_set_text_color (adapter, g_value_get_int (value));
+      break;
+
+    case PROP_TEXT_ROTATION:
+      gschem_selection_adapter_set_text_rotation (adapter, g_value_get_int (value));
+      break;
+
+    case PROP_TEXT_SIZE:
+      gschem_selection_adapter_set_text_size (adapter, g_value_get_int (value));
+      break;
+
+    /* Currently, the text string cannot be set using the gobject property
+     * system
+     *
+     * case PROP_TEXT_STRING:
+     *   gschem_selection_adapter_set_text_string (adapter, g_value_get_string (value));
+     *   break;
+     */
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);

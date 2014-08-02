@@ -25,10 +25,10 @@
 
 #include "gschem.h"
 
-/*! \brief Update status bar string 
+/*! \brief Update status bar string
  *
  *  \par Function Description
- *  This function actually updates the status bar 
+ *  This function actually updates the status bar
  *  widget with the new string.
  *
  *  \param [in] w_current GschemToplevel structure
@@ -148,11 +148,11 @@ static const char *i_status_string(GschemToplevel *w_current)
 /*! \brief Show state field
  *
  *  \par Function Description
- *  Show state field on screen, possibly with the 
+ *  Show state field on screen, possibly with the
  *  addition of an extra message
  *
  *  \param [in] w_current GschemToplevel structure
- *  \param [in] message The string to be displayed 
+ *  \param [in] message The string to be displayed
  */
 void i_show_state(GschemToplevel *w_current, const char *message)
 {
@@ -163,18 +163,18 @@ void i_show_state(GschemToplevel *w_current, const char *message)
 
   /* Fill in the string array */
   array[i--] = i_status_string(w_current);
-  
+
   if(toplevel->show_hidden_text)
     array[i--] = _("Show Hidden");
-  
+
   if(w_current->snap == SNAP_OFF)
     array[i--] = _("Snap Off");
   else if (w_current->snap == SNAP_RESNAP)
     array[i--] = _("Resnap Active");
-  
+
   if(message && message[0])
     array[i] = message;
-  
+
   /* Skip over NULLs */
   while(array[i] == NULL)
     i++;
@@ -260,14 +260,14 @@ void i_update_middle_button(GschemToplevel *w_current,
       gschem_bottom_widget_set_middle_button_text (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
                                                    _("Stroke"));
     break;
-#else 
+#else
     /* remove this case eventually and make it a null case */
     case(STROKE):
       gschem_bottom_widget_set_middle_button_text (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
                                                    _("none"));
       break;
 #endif
-		
+
     case(REPEAT):
       temp_string = g_strconcat (_("Repeat/"), string, NULL);
 
@@ -287,31 +287,31 @@ void i_update_middle_button(GschemToplevel *w_current,
  */
 void i_update_toolbar(GschemToplevel *w_current)
 {
-  if (!w_current->toolbars) 
+  if (!w_current->toolbars)
 	return;
 
   switch(w_current->event_state) {
     case(NONE):
     case(SELECT):
-    case(STARTSELECT): 
+    case(STARTSELECT):
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
 				   w_current->toolbar_select), TRUE);
       break;
-      
-    case(DRAWNET): 
-    case(STARTDRAWNET): 
-    case(NETCONT): 
+
+    case(DRAWNET):
+    case(STARTDRAWNET):
+    case(NETCONT):
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
 				   w_current->toolbar_net), TRUE);
       break;
-      
-    case(DRAWBUS): 
-    case(STARTDRAWBUS): 
-    case(BUSCONT): 
+
+    case(DRAWBUS):
+    case(STARTDRAWBUS):
+    case(BUSCONT):
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
 				   w_current->toolbar_bus), TRUE);
       break;
-      
+
     case(DRAWLINE): /*! \todo */
     case(DRAWBOX): /*! \todo */
     case(DRAWPICTURE): /*! \todo */
@@ -396,11 +396,11 @@ void i_update_menus(GschemToplevel *w_current)
 {
   gboolean have_text_selected;
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  /* 
+  /*
    * This is very simplistic.  Right now it just disables all menu
    * items which get greyed out when a component is not selected.
    * Eventually what gets enabled/disabled
-   * should be based on what is in the selection list 
+   * should be based on what is in the selection list
    */
 
   g_assert(w_current != NULL);
@@ -422,13 +422,9 @@ void i_update_menus(GschemToplevel *w_current)
     x_menus_sensitivity(w_current, "_Edit/Rotate 90 Mode", TRUE);
     x_menus_sensitivity(w_current, "_Edit/Mirror Mode", TRUE);
     x_menus_sensitivity(w_current, "_Edit/Edit...", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Edit Text...", TRUE);
     x_menus_sensitivity(w_current, "_Edit/Slot...", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Color...", TRUE);
     x_menus_sensitivity(w_current, "_Edit/Lock", TRUE);
     x_menus_sensitivity(w_current, "_Edit/Unlock", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Line Width & Type...", TRUE);
-    x_menus_sensitivity(w_current, "_Edit/Fill Type...", TRUE);
     x_menus_sensitivity(w_current, "_Edit/Embed Component/Picture", TRUE);
     x_menus_sensitivity(w_current, "_Edit/Unembed Component/Picture", TRUE);
     x_menus_sensitivity(w_current, "_Edit/Update Component", TRUE);
@@ -459,13 +455,9 @@ void i_update_menus(GschemToplevel *w_current)
     x_menus_sensitivity(w_current, "_Edit/Rotate 90 Mode", FALSE);
     x_menus_sensitivity(w_current, "_Edit/Mirror Mode", FALSE);
     x_menus_sensitivity(w_current, "_Edit/Edit...", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Edit Text...", FALSE);
     x_menus_sensitivity(w_current, "_Edit/Slot...", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Color...", FALSE);
     x_menus_sensitivity(w_current, "_Edit/Lock", FALSE);
     x_menus_sensitivity(w_current, "_Edit/Unlock", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Line Width & Type...", FALSE);
-    x_menus_sensitivity(w_current, "_Edit/Fill Type...", FALSE);
     x_menus_sensitivity(w_current, "_Edit/Embed Component/Picture", FALSE);
     x_menus_sensitivity(w_current, "_Edit/Unembed Component/Picture", FALSE);
     x_menus_sensitivity(w_current, "_Edit/Update Component", FALSE);
@@ -489,7 +481,7 @@ void i_update_menus(GschemToplevel *w_current)
 }
 
 /*! \brief Set filename as gschem window title
- *  
+ *
  *  \par Function Description
  *  Set filename as gschem window title using
  *  the gnome HID format style.
@@ -508,12 +500,12 @@ void i_set_filename(GschemToplevel *w_current, const gchar *string)
     return;
 
   filename = g_path_get_basename(string);
-  
+
   print_string = g_strdup_printf("%s - gschem", filename);
-  
+
   gtk_window_set_title(GTK_WINDOW(w_current->main_window),
 		       print_string);
-  
+
   g_free(print_string);
   g_free(filename);
 }

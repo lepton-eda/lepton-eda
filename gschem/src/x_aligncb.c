@@ -158,21 +158,25 @@ x_aligncb_get_align (GtkWidget *widget)
 void
 x_aligncb_set_align (GtkWidget *widget, int align)
 {
-  GtkTreeIter iter;
-  gboolean success;
-  GValue value = {0};
-
   g_return_if_fail (align_list_store != NULL);
 
-  success = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (align_list_store), &iter);
-  while (success) {
-    gtk_tree_model_get_value (GTK_TREE_MODEL (align_list_store), &iter, COLUMN_ALIGN, &value);
-    if (g_value_get_int (&value) == align) {
+  if (align >= 0) {
+    GtkTreeIter iter;
+    gboolean success;
+    GValue value = {0};
+
+    success = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (align_list_store), &iter);
+    while (success) {
+      gtk_tree_model_get_value (GTK_TREE_MODEL (align_list_store), &iter, COLUMN_ALIGN, &value);
+      if (g_value_get_int (&value) == align) {
+        g_value_unset (&value);
+        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (widget), &iter);
+        break;
+      }
       g_value_unset (&value);
-      gtk_combo_box_set_active_iter (GTK_COMBO_BOX (widget), &iter);
-      break;
+      success = gtk_tree_model_iter_next (GTK_TREE_MODEL (align_list_store), &iter);
     }
-    g_value_unset (&value);
-    success = gtk_tree_model_iter_next (GTK_TREE_MODEL (align_list_store), &iter);
+  } else {
+    gtk_combo_box_set_active_iter (GTK_COMBO_BOX(widget), NULL);
   }
 }

@@ -21,6 +21,8 @@
 
 #include "gschem.h"
 
+static void
+handle_undo (GschemToplevel *w_current);
 
 
 /* A list of common values for the dash length drop down menu
@@ -412,6 +414,12 @@ gschem_toplevel_get_selection_adapter (GschemToplevel *w_current)
   if (w_current->selection_adapter == NULL) {
     w_current->selection_adapter = gschem_selection_adapter_new ();
 
+    g_signal_connect_swapped (w_current->selection_adapter,
+                              "handle-undo",
+                              G_CALLBACK (handle_undo),
+                              w_current);
+
+
     gschem_selection_adapter_set_toplevel (w_current->selection_adapter, w_current->toplevel);
     gschem_selection_adapter_set_selection (w_current->selection_adapter, w_current->toplevel->page_current->selection_list);
   }
@@ -634,4 +642,22 @@ gschem_toplevel_set_toplevel (GschemToplevel *w_current, TOPLEVEL *toplevel)
   g_return_if_fail (w_current != NULL);
 
   w_current->toplevel = toplevel;
+}
+
+/*! \brief Allow the undo manager to process changes
+ *
+ *  \param [in] w_current
+ */
+static void
+handle_undo (GschemToplevel *w_current)
+{
+  TOPLEVEL *toplevel;
+
+  g_return_if_fail (w_current != NULL);
+
+  toplevel = gschem_toplevel_get_toplevel (w_current);
+  g_return_if_fail (toplevel != NULL);
+
+  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  o_undo_savestate_old (w_current, UNDO_ALL);
 }

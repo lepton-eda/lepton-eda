@@ -83,7 +83,7 @@ void o_edit(GschemToplevel *w_current, GList *list)
         o_text_num_lines (str) == 1) {
         attrib_edit_dialog(w_current,o_current, FROM_MENU);
     } else {
-      o_text_edit(w_current, o_current);
+      text_edit_dialog (w_current);
     }
     break;
   }
@@ -442,7 +442,7 @@ int o_edit_find_text (GschemToplevel *w_current, const GList *o_list,
                         1, 0);
 
 	  /* Make sure the titlebar and scrollbars are up-to-date */
-	  x_window_set_current_page(w_current, 
+	  x_window_set_current_page(w_current,
                                     w_current->toplevel->page_current );
 
           last_o = o_current;

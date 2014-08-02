@@ -64,5 +64,5 @@ struct _EditLProp
 GType
 editlprop_get_type();
 
-void
-x_editlprop_set_selection(EditLProp *dialog, GedaList *selection);
+GtkDialog*
+editlprop_new (GschemToplevel *w_current);

@@ -17,6 +17,7 @@ noinst_HEADERS = \
 	gschem_bottom_widget.h \
 	gschem_defines.h \
 	gschem_dialog.h \
+	gschem_dialog_misc.h \
 	gschem_fill_swatch_cell_renderer.h \
 	gschem_integer_combo_box.h \
 	gschem_macro_widget.h \
@@ -26,6 +27,7 @@ noinst_HEADERS = \
 	gschem_selection_adapter.h \
 	gschem_struct.h \
 	gschem_swatch_column_renderer.h \
+	gschem_text_properties_dialog.h \
 	gschem_toplevel.h
 
 MOSTLYCLEANFILES = *.log core FILE *~
