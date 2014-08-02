@@ -2595,7 +2595,7 @@ DEFINE_I_CALLBACK(options_text_size)
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
-  text_size_dialog(w_current);
+  text_edit_dialog (w_current);
 }
 
 /*! \todo Finish function documentation!!!

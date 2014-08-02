@@ -100,7 +100,7 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
 
 /*! \brief Creates the arc angle dialog
  *  \par Function Description
- *  This function creates the arc angle dialog. Depending on the 
+ *  This function creates the arc angle dialog. Depending on the
  *  \a arc_object the entries are filled with the arc OBJECT properties
  *  or with some standard values.
  *
@@ -200,7 +200,7 @@ void arc_angle_dialog (GschemToplevel *w_current, OBJECT *arc_object)
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_start),0);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_sweep), 90);
   } else {
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(radius), 
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(radius),
 			      arc_object->arc->width / 2);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_start),
 			      arc_object->arc->start_angle);
@@ -311,109 +311,6 @@ void translate_dialog (GschemToplevel *w_current)
 }
 
 /***************** End of Translate dialog box ***********************/
-
-/***************** Start of Text size dialog box *********************/
-
-/*! \brief response function for the text size dialog
- *  \par Function Description
- *  This function takes the user input and applies it to gschem
- */
-void text_size_dialog_response(GtkWidget *w, gint response,
-                               GschemToplevel *w_current)
-{
-  GtkWidget *spin_size;
-  gint size;
-
-  switch (response) {
-  case GTK_RESPONSE_ACCEPT:
-    spin_size = g_object_get_data(G_OBJECT(w_current->tswindow),"spin_size");
-    size = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spin_size));
-
-    w_current->text_size = size;
-    gschem_toplevel_page_content_changed (w_current, w_current->toplevel->page_current);
-    o_undo_savestate_old(w_current, UNDO_ALL);
-    break;
-  case GTK_RESPONSE_REJECT:
-  case GTK_RESPONSE_DELETE_EVENT:
-    /* void */
-    break;
-  default:
-    printf("text_size_dialog_response(): strange signal %d\n",response);
-  }
-
-  /* clean up */
-  i_set_state(w_current, SELECT);
-  i_update_toolbar(w_current);
-  gtk_widget_destroy(w_current->tswindow);
-  w_current->tswindow = NULL;
-}
-
-/*! \brief Create the text size dialog
- *  \par Function Description
- *  This function creates the text size dialog.
- */
-void text_size_dialog (GschemToplevel *w_current)
-{
-  GtkWidget *label = NULL;
-  GtkWidget *vbox;
-  GtkWidget *spin_size;
-
-  if (!w_current->tswindow) {
-    w_current->tswindow = gschem_dialog_new_with_buttons(_("Text Size"),
-                                                         GTK_WINDOW(w_current->main_window),
-                                                         GTK_DIALOG_MODAL,
-                                                         "text-size", w_current,
-                                                         GTK_STOCK_CANCEL,
-                                                         GTK_RESPONSE_REJECT,
-                                                         GTK_STOCK_OK,
-                                                         GTK_RESPONSE_ACCEPT,
-                                                         NULL);
-
-  /* Set the alternative button order (ok, cancel, help) for other systems */
-    gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->tswindow),
-                                            GTK_RESPONSE_ACCEPT,
-                                            GTK_RESPONSE_REJECT,
-                                            -1);
-
-    gtk_window_position(GTK_WINDOW(w_current->tswindow),
-                        GTK_WIN_POS_MOUSE);
-
-    g_signal_connect (G_OBJECT (w_current->tswindow), "response",
-                      G_CALLBACK (text_size_dialog_response),
-                      w_current);
-    gtk_dialog_set_default_response(GTK_DIALOG(w_current->tswindow),
-                                    GTK_RESPONSE_ACCEPT);
-
-    gtk_container_border_width(GTK_CONTAINER(w_current->tswindow),
-                               DIALOG_BORDER_SPACING);
-    vbox = GTK_DIALOG(w_current->tswindow)->vbox;
-    gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
-
-    label = gtk_label_new (_("Enter new text size:"));
-    gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
-    gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
-
-    spin_size = gtk_spin_button_new_with_range(2,10000,2);
-    gtk_editable_select_region( GTK_EDITABLE(spin_size), 0, -1);
-    gtk_box_pack_start(GTK_BOX(vbox), spin_size, FALSE, FALSE, 0);
-    gtk_entry_set_activates_default(GTK_ENTRY(spin_size), TRUE);
-    gtk_widget_grab_focus(spin_size);
-
-    GLADE_HOOKUP_OBJECT(w_current->tswindow, spin_size, "spin_size");
-    gtk_widget_show_all(w_current->tswindow);
-  }
-
-  else { /* dialog already created */
-    gtk_window_present(GTK_WINDOW(w_current->tswindow));
-  }
-
-  /* always set the current text size to the dialog */
-  spin_size = g_object_get_data(G_OBJECT(w_current->tswindow),"spin_size");
-  gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_size), w_current->text_size);
-  gtk_editable_select_region(GTK_EDITABLE(spin_size), 0, -1);
-}
-
-/***************** End of Text size dialog box ***********************/
 
 /***************** Start of Snap size dialog box *********************/
 
