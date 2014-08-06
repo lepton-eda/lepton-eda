@@ -608,16 +608,27 @@ export_svg ()
   cairo_matrix_t mtx;
   cairo_t *cr;
 
-  /* Create a surface. To begin with, we don't know the size. */
-  surface = cairo_svg_surface_create (settings.outfile, 1, 1);
+  /* Create a surface and run export_layout_page() to figure out
+   * the picture extents and set up the cairo transformation
+   * matrix.  The surface is created only in order to force
+   * eda_renderer_default_get_user_bounds() to behave quietly. */
+  surface = cairo_svg_surface_create (settings.outfile, 0, 0);
+  cr = cairo_create (surface);
+  g_object_set (renderer, "cairo-context", cr, NULL);
+  export_layout_page (NULL, &extents, &mtx);
+  cairo_destroy (cr);
+
+  /* Now create a new surface with the known extents. */
+  surface = cairo_svg_surface_create (settings.outfile,
+                                      extents.width,
+                                      extents.height);
   cr = cairo_create (surface);
   g_object_set (renderer, "cairo-context", cr, NULL);
 
-  export_layout_page (NULL, &extents, &mtx);
-  cairo_pdf_surface_set_size (surface, extents.width, extents.height);
   cairo_set_matrix (cr, &mtx);
   export_draw_page (NULL);
 
+  cairo_show_page (cr);
   cairo_surface_finish (surface);
   export_cairo_check_error (cairo_surface_status (surface));
 }
