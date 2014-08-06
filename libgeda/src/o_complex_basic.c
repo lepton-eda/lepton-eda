@@ -872,10 +872,17 @@ OBJECT *o_complex_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Rotates a complex object in world coordinates
  *  \par Function Description
+ *  This function rotates a complex \a object around the
+ *  (\a centerx,\a centery) point by \a angle degrees.
+ *  The center of rotation is in world units.
  *
+ *  \param [in]      toplevel  The toplevel environment.
+ *  \param [in]      centerx   X coordinate of rotation center (world coords).
+ *  \param [in]      centery   Y coordinate of rotation center (world coords).
+ *  \param [in]      angle     Rotation angle in degrees.
+ *  \param [in,out]  object    Complex object to rotate.
  */
 void o_complex_rotate_world(TOPLEVEL *toplevel,
                             int centerx, int centery,
