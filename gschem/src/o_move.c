@@ -131,7 +131,7 @@ void o_move_end(GschemToplevel *w_current)
   OBJECT *object;
   int diff_x, diff_y;
   GList *s_iter;
-  GList *rubbernet_objects = NULL; 
+  GList *rubbernet_objects = NULL;
 
   g_return_if_fail (page != NULL);
 
@@ -272,13 +272,14 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
   OBJECT *object;
   gint object_x, object_y;
   gboolean resnap = FALSE;
+  SNAP_STATE snap_mode;
+
+  snap_mode = gschem_options_get_snap_mode (w_current->options);
 
   selection = geda_list_get_glist( toplevel->page_current->selection_list );
 
   /* realign the object if we are in resnap mode */
-  if (selection != NULL
-      && w_current->snap == SNAP_RESNAP) {
-
+  if ((selection != NULL) && (snap_mode == SNAP_RESNAP)) {
     if (g_list_length(selection) > 1) {
       /* find an object that is not attached to any other object */
       for (s_current = selection;

@@ -277,11 +277,11 @@ SCM_DEFINE (snap_point, "%snap-point", 2, 0, 0,
   /* We save and restore the current snap setting, because we want to
    * *always* snap the requested cordinates. */
   GschemToplevel *w_current = g_current_window ();
-  int save_snap = w_current->snap;
-  w_current->snap = SNAP_GRID;
+  SNAP_STATE save_snap = gschem_options_get_snap_mode (w_current->options);
+  gschem_options_set_snap_mode (w_current->options, SNAP_GRID);
   int x = snap_grid (w_current, scm_to_int (x_s));
   int y = snap_grid (w_current, scm_to_int (y_s));
-  w_current->snap = save_snap;
+  gschem_options_set_snap_mode (w_current->options, save_snap);
 
   return scm_cons (scm_from_int (x), scm_from_int (y));
 }

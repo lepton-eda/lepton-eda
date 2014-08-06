@@ -18,6 +18,7 @@ typedef struct st_gschem_toplevel GschemToplevel;
 #include "gschem_main_window.h"
 #include "gschem_selection_adapter.h"
 #include "gschem_struct.h"
+#include "gschem_options.h"
 #include "gschem_toplevel.h"
 #include "gschem_accel_label.h"
 #include "gschem_action.h"
@@ -41,6 +42,7 @@ typedef struct st_gschem_toplevel GschemToplevel;
 #include "gschem_binding_integer.h"
 
 #include "gschem_text_properties_dialog.h"
+#include "gschem_options_dialog.h"
 
 /* Gettext translation */
 #include "gettext.h"

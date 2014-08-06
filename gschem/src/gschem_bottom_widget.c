@@ -186,9 +186,9 @@ gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass)
                                    g_param_spec_int ("grid-mode",
                                                      "Grid Mode",
                                                      "Grid Mode",
-                                                     G_MININT,
-                                                     G_MAXINT,
-                                                     GRID_NONE,
+                                                     0,
+                                                     (GRID_MODE_COUNT - 1),
+                                                     GRID_MODE_NONE,
                                                      G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
@@ -684,7 +684,7 @@ update_grid_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unuse
         g_critical ("%s: update_grid_label(): widget->snap_mode out of range: %d\n", __FILE__, widget->snap_mode);
     }
 
-    if (widget->grid_mode == GRID_NONE) {
+    if (widget->grid_mode == GRID_MODE_NONE) {
       grid_text = g_strdup (_("OFF"));
     } else {
       if (widget->grid_size <= 0) {

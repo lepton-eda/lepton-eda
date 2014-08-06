@@ -49,7 +49,7 @@ int   default_do_logging = TRUE;
 int   default_logging_dest = LOG_WINDOW;
 int   default_embed_complex = FALSE;
 int   default_include_complex = FALSE;
-int   default_snap_size = 100;
+int   default_snap_size = DEFAULT_SNAP_SIZE;
 
 int   default_scrollbars_flag = TRUE;
 int   default_image_color = FALSE;
@@ -140,7 +140,7 @@ void i_vars_set(GschemToplevel *w_current)
 
   w_current->embed_complex   = default_embed_complex;
   w_current->include_complex = default_include_complex;
-  w_current->snap_size       = default_snap_size;
+  gschem_options_set_snap_size (w_current->options, default_snap_size);
   w_current->log_window      = default_log_window;
   w_current->log_window_type = default_log_window_type;
 

@@ -115,7 +115,7 @@ static void create_type_menu(GtkComboBox *combo)
   return;
 }
 
-/*! \brief Given a gdk-pixbuf image type description, it returns the type, 
+/*! \brief Given a gdk-pixbuf image type description, it returns the type,
  *  or extension of the image.
  *  \par Return the gdk-pixbuf image type, or extension, which has the
  *  given gdk-pixbuf description.
@@ -144,7 +144,7 @@ x_image_get_type_from_description (const char *description)
     ptr = g_slist_next (ptr);
   }
 
-  return NULL;  
+  return NULL;
 }
 
 /*! \brief Update the filename of a file dialog, when the image type has changed.
@@ -154,9 +154,9 @@ x_image_get_type_from_description (const char *description)
  *  \param combo     [in] A combobox inside a file chooser dialog, with gdk-pixbuf image type descriptions.
  *  \param w_current [in] the GschemToplevel structure.
  *  \return nothing.
- * 
+ *
  */
-static void x_image_update_dialog_filename(GtkComboBox *combo, 
+static void x_image_update_dialog_filename(GtkComboBox *combo,
     GschemToplevel *w_current) {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   char* image_type_descr = NULL;
@@ -186,17 +186,17 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
     file_basename = g_path_get_basename(old_image_filename);
 
     if (g_strrstr(file_basename, ".") != NULL) {
-      file_name = g_strndup(file_basename, 
+      file_name = g_strndup(file_basename,
           g_strrstr(file_basename, ".") - file_basename);
     }
   }
 
   /* Add the extension */
   if (file_name) {
-    new_image_filename = g_strdup_printf("%s.%s", file_name, 
+    new_image_filename = g_strdup_printf("%s.%s", file_name,
         image_type);
   } else {
-    new_image_filename = g_strdup_printf("%s.%s", file_basename, 
+    new_image_filename = g_strdup_printf("%s.%s", file_basename,
         image_type);
   }
 
@@ -394,7 +394,7 @@ void x_image_setup (GschemToplevel *w_current)
 
   /* Connect the changed signal to the callback, so the filename
      gets updated every time the image type is changed */
-  g_signal_connect (type_combo, "changed", 
+  g_signal_connect (type_combo, "changed",
       G_CALLBACK(x_image_update_dialog_filename),
       w_current);
 
@@ -429,7 +429,7 @@ void x_image_setup (GschemToplevel *w_current)
       NULL);
 
   /* Update the filename */
-  x_image_update_dialog_filename(GTK_COMBO_BOX(type_combo), w_current);  
+  x_image_update_dialog_filename(GTK_COMBO_BOX(type_combo), w_current);
 
   gtk_dialog_set_default_response(GTK_DIALOG(dialog),
       GTK_RESPONSE_ACCEPT);
@@ -439,7 +439,7 @@ void x_image_setup (GschemToplevel *w_current)
 
   gtk_container_set_border_width(GTK_CONTAINER(dialog),
       DIALOG_BORDER_SPACING);
-  gtk_box_set_spacing(GTK_BOX(GTK_DIALOG(dialog)->vbox), 
+  gtk_box_set_spacing(GTK_BOX(GTK_DIALOG(dialog)->vbox),
       DIALOG_V_SPACING);
 
   gtk_widget_show (dialog);
@@ -536,7 +536,7 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
   new_w_current.drawable = new_w_current.window;
   new_w_current.cr = gdk_cairo_create (new_w_current.window);
 
-  new_w_current.grid = 0;
+  gschem_options_set_grid_mode (new_w_current.options, GRID_MODE_NONE);
 
   new_w_current.win_width = new_w_current.image_width;
   new_w_current.win_height = new_w_current.image_height;
@@ -579,7 +579,7 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
 
   if (toplevel.image_color == FALSE)
   {
-    x_image_convert_to_greyscale(pixbuf); 
+    x_image_convert_to_greyscale(pixbuf);
   }
 
   if (new_w_current.cr != NULL) cairo_destroy (new_w_current.cr);

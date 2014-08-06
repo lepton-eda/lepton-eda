@@ -48,6 +48,7 @@ static int query_dots_grid_spacing (GschemToplevel *w_current)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (page_view);
   int incr, screen_incr;
+  int snap_size = gschem_options_get_snap_size (w_current->options);
 
   g_return_val_if_fail (geometry != NULL, -1);
   g_return_val_if_fail (page_view != NULL, -1);
@@ -59,12 +60,12 @@ static int query_dots_grid_spacing (GschemToplevel *w_current)
     incr = round_5_2_1 (geometry->to_world_x_constant * DOTS_VARIABLE_MODE_SPACING) + 0.1;
 
     /* limit minimum grid spacing to grid to snap_size */
-    if (incr < w_current->snap_size) {
-      incr = w_current->snap_size;
+    if (incr < snap_size) {
+      incr = snap_size;
     }
   } else {
     /* Fixed size grid in world coorinates */
-    incr = w_current->snap_size;
+    incr = snap_size;
     screen_incr = gschem_page_view_SCREENabs (page_view, incr);
     if (screen_incr < w_current->dots_grid_fixed_threshold) {
       /* No grid drawn if the on-screen spacing is less than the threshold */
@@ -244,7 +245,7 @@ static int query_mesh_grid_spacing (GschemToplevel *w_current)
 {
   int incr, screen_incr;
 
-  incr = w_current->snap_size;
+  incr = gschem_options_get_snap_size (w_current->options);
   screen_incr = gschem_page_view_SCREENabs (GSCHEM_PAGE_VIEW (w_current->drawing_area), incr);
 
   /* We draw a fine grid if its on-screen spacing is large enough */
@@ -276,7 +277,8 @@ static int query_mesh_grid_spacing (GschemToplevel *w_current)
 static void
 draw_mesh_grid_region (GschemToplevel *w_current, int x, int y, int width, int height)
 {
-  int coarse_increment = MESH_COARSE_GRID_MULTIPLIER * w_current->snap_size;
+  int snap_size = gschem_options_get_snap_size (w_current->options);
+  int coarse_increment = MESH_COARSE_GRID_MULTIPLIER * snap_size;
   double dummy = 0.0;
   double threshold = w_current->mesh_grid_display_threshold;
 
@@ -298,7 +300,7 @@ draw_mesh_grid_region (GschemToplevel *w_current, int x, int y, int width, int h
     cairo_translate (w_current->cr, 0.5, 0.5);
 
     /* Draw the fine grid if its on-screen spacing is large enough */
-    if (w_current->snap_size >= threshold) {
+    if (snap_size >= threshold) {
       draw_mesh (w_current,
                  &user_to_device_matrix,
                  MESH_GRID_MINOR_COLOR,
@@ -306,7 +308,7 @@ draw_mesh_grid_region (GschemToplevel *w_current, int x, int y, int width, int h
                  floor (y_start),
                  ceil (x_end),
                  ceil (y_end),
-                 w_current->snap_size,
+                 snap_size,
                  MESH_COARSE_GRID_MULTIPLIER);
     }
 
@@ -339,15 +341,21 @@ draw_mesh_grid_region (GschemToplevel *w_current, int x, int y, int width, int h
 void x_grid_draw_region (GschemToplevel *w_current,
                          int x, int y, int width, int height)
 {
-  switch (w_current->grid) {
-    case GRID_NONE:
+  GRID_MODE grid_mode;
+
+  g_return_if_fail (w_current != NULL);
+
+  grid_mode = gschem_options_get_grid_mode (w_current->options);
+
+  switch (grid_mode) {
+    case GRID_MODE_NONE:
       return;
 
-    case GRID_DOTS:
+    case GRID_MODE_DOTS:
       draw_dots_grid_region (w_current, x, y, width, height);
       break;
 
-    case GRID_MESH:
+    case GRID_MODE_MESH:
       draw_mesh_grid_region (w_current, x, y, width, height);
       break;
   }
@@ -372,11 +380,17 @@ void x_grid_draw_region (GschemToplevel *w_current,
  */
 int x_grid_query_drawn_spacing (GschemToplevel *w_current)
 {
-  switch (w_current->grid) {
+  GRID_MODE grid_mode;
+
+  g_return_if_fail (w_current != NULL);
+
+  grid_mode = gschem_options_get_grid_mode (w_current->options);
+
+  switch (grid_mode) {
     default:
-    case GRID_NONE: return -1;
-    case GRID_DOTS: return query_dots_grid_spacing (w_current);
-    case GRID_MESH: return query_mesh_grid_spacing (w_current);
+    case GRID_MODE_NONE: return -1;
+    case GRID_MODE_DOTS: return query_dots_grid_spacing (w_current);
+    case GRID_MODE_MESH: return query_mesh_grid_spacing (w_current);
   }
 }
 

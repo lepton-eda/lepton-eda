@@ -127,7 +127,7 @@ preview_callback_button_press (GtkWidget *widget,
 {
   Preview *preview = PREVIEW (widget);
   GschemToplevel *preview_w_current = preview->preview_w_current;
-  gint wx, wy; 
+  gint wx, wy;
 
   if (!preview->active) {
     return TRUE;
@@ -156,7 +156,7 @@ preview_callback_button_press (GtkWidget *widget,
         gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
         break;
   }
-  
+
   return FALSE;
 }
 
@@ -181,7 +181,7 @@ preview_update (Preview *preview)
   if (gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview)) == NULL) {
     return;
   }
-  
+
   /* delete old preview, create new page */
   /* it would be better to just resets current page - Fix me */
   s_page_delete (preview_toplevel, gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview)));
@@ -239,7 +239,7 @@ GType
 preview_get_type ()
 {
   static GType preview_type = 0;
-  
+
   if (!preview_type) {
     static const GTypeInfo preview_info = {
       sizeof(PreviewClass),
@@ -252,12 +252,12 @@ preview_get_type ()
       0,    /* n_preallocs */
       (GInstanceInitFunc) preview_init,
     };
-                
+
     preview_type = g_type_register_static (GSCHEM_TYPE_PAGE_VIEW,
                                            "Preview",
                                            &preview_info, 0);
   }
-  
+
   return preview_type;
 }
 
@@ -267,7 +267,7 @@ preview_class_init (PreviewClass *klass)
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
 
   preview_parent_class = g_type_class_peek_parent (klass);
-  
+
   gobject_class->set_property = preview_set_property;
   gobject_class->get_property = preview_get_property;
   gobject_class->dispose      = preview_dispose;
@@ -294,7 +294,7 @@ preview_class_init (PreviewClass *klass)
                           FALSE,
                           G_PARAM_READWRITE));
 
-        
+
 }
 
 static gboolean
@@ -359,7 +359,7 @@ preview_init (Preview *preview)
   preview_w_current->scrollbars_flag = FALSE;
 
   /* be sure to turn off the grid */
-  preview_w_current->grid = FALSE;
+  gschem_options_set_grid_mode (preview_w_current->options, GRID_MODE_NONE);
 
   /* preview_w_current windows don't have toolbars */
   preview_w_current->handleboxes = FALSE;
@@ -381,9 +381,9 @@ preview_init (Preview *preview)
   preview->active   = FALSE;
   preview->filename = NULL;
   preview->buffer   = NULL;
-  
-  gtk_widget_set_events (GTK_WIDGET (preview), 
-                         GDK_EXPOSURE_MASK | 
+
+  gtk_widget_set_events (GTK_WIDGET (preview),
+                         GDK_EXPOSURE_MASK |
                          GDK_POINTER_MOTION_MASK |
                          GDK_BUTTON_PRESS_MASK);
   for (tmp = drawing_area_events; tmp->detailed_signal != NULL; tmp++) {
@@ -392,7 +392,7 @@ preview_init (Preview *preview)
                       tmp->c_handler,
                       preview_w_current);
   }
-  
+
 }
 
 static void
@@ -405,7 +405,7 @@ preview_set_property (GObject *object,
   GschemToplevel *preview_w_current = preview->preview_w_current;
 
   g_assert (preview_w_current != NULL);
-  
+
   switch(property_id) {
       case PROP_FILENAME:
         if (preview->buffer != NULL) {
@@ -471,12 +471,12 @@ preview_dispose (GObject *self)
     preview_w_current->drawing_area = NULL;
 
     x_window_free_gc (preview_w_current);
-    
+
     gschem_toplevel_free (preview_w_current);
 
     preview->preview_w_current = NULL;
   }
-    
+
   G_OBJECT_CLASS (preview_parent_class)->dispose (self);
 }
 

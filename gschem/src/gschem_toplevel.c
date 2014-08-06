@@ -24,6 +24,9 @@
 static void
 handle_undo (GschemToplevel *w_current);
 
+static void
+notify_options (GschemToplevel *w_current);
+
 
 /* A list of common values for the dash length drop down menu
  */
@@ -259,7 +262,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->event_state = SELECT;
   w_current->image_width  = 0;
   w_current->image_height = 0;
-  w_current->grid = GRID_MESH;
   w_current->min_zoom = 0;
   w_current->max_zoom = 8;
   w_current->drawbounding_action_mode = FREE;
@@ -275,6 +277,13 @@ GschemToplevel *gschem_toplevel_new ()
   /* ------------------ */
   /* rc/user parameters */
   /* ------------------ */
+  w_current->options = gschem_options_new();
+
+  g_signal_connect_swapped (G_OBJECT (w_current->options),
+                            "notify",
+                            G_CALLBACK (notify_options),
+                            w_current);
+
   w_current->text_caps = 0;
   w_current->text_size = 0;
 
@@ -318,8 +327,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->select_slack_pixels = 4;
   w_current->zoom_gain = 20;
   w_current->scrollpan_steps = 8;
-  w_current->snap = SNAP_GRID;
-  w_current->snap_size = 100;
 
   w_current->smob = SCM_UNDEFINED;
 
@@ -373,6 +380,11 @@ gschem_toplevel_free (GschemToplevel *w_current)
   if (w_current->text_size_list_store != NULL) {
     g_object_unref (w_current->text_size_list_store);
     w_current->text_size_list_store = NULL;
+  }
+
+  if (w_current->options != NULL) {
+    g_object_unref (w_current->options);
+    w_current->options = NULL;
   }
 
   if (w_current->renderer != NULL) {
@@ -659,4 +671,22 @@ handle_undo (GschemToplevel *w_current)
 
   gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
   o_undo_savestate_old (w_current, UNDO_ALL);
+}
+
+
+
+/*! \brief Property change notification for any/all settings
+ *
+ *  \param [in] w_current
+ */
+static void
+notify_options (GschemToplevel *w_current)
+{
+  g_return_if_fail (w_current != NULL);
+
+  //gschem_toplevel_get_toplevel (w_current)->page_current->CHANGED=1;  /* maybe remove those two lines */
+  //o_undo_savestate_old(w_current, UNDO_ALL);
+
+  i_update_grid_info (w_current);
+  o_invalidate_all (w_current);
 }

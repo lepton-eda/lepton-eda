@@ -160,16 +160,19 @@ void i_show_state(GschemToplevel *w_current, const char *message)
   gchar *what_to_say;
   const gchar *array[5] = { NULL };
   int i = 3; /* array[4] must be NULL */
+  SNAP_STATE snap_mode;
 
   /* Fill in the string array */
   array[i--] = i_status_string(w_current);
 
+  snap_mode = gschem_options_get_snap_mode (w_current->options);
+
   if(toplevel->show_hidden_text)
     array[i--] = _("Show Hidden");
 
-  if(w_current->snap == SNAP_OFF)
+  if(snap_mode == SNAP_OFF)
     array[i--] = _("Snap Off");
-  else if (w_current->snap == SNAP_RESNAP)
+  else if (snap_mode == SNAP_RESNAP)
     array[i--] = _("Resnap Active");
 
   if(message && message[0])
@@ -527,9 +530,9 @@ i_update_grid_info (GschemToplevel *w_current)
 
   if (w_current->bottom_widget != NULL) {
     g_object_set (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
-        "snap-mode", w_current->snap,
-        "snap-size", w_current->snap_size,
-        "grid-mode", w_current->grid,
+        "snap-mode", gschem_options_get_snap_mode (w_current->options),
+        "snap-size", gschem_options_get_snap_size (w_current->options),
+        "grid-mode", gschem_options_get_grid_mode (w_current->options),
         "grid-size", x_grid_query_drawn_spacing (w_current),
         NULL);
   }

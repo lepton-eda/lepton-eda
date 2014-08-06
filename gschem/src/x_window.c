@@ -473,13 +473,13 @@ void x_window_create_main(GschemToplevel *w_current)
   }
 
   w_current->bottom_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_BOTTOM_WIDGET,
-      "grid-mode",          w_current->grid,
-      "grid-size",          100, /* x_grid_query_drawn_spacing (w_current), -- occurs before the page is set */
+      "grid-mode",          gschem_options_get_grid_mode (w_current->options),
+      "grid-size",          gschem_options_get_snap_size (w_current->options), /* x_grid_query_drawn_spacing (w_current), -- occurs before the page is set */
       "left-button-text",   _("Pick"),
       "middle-button-text", middle_button_text,
       "right-button-text",  right_button_text,
-      "snap-mode",          w_current->snap,
-      "snap-size",          w_current->snap_size,
+      "snap-mode",          gschem_options_get_snap_mode (w_current->options),
+      "snap-size",          gschem_options_get_snap_size (w_current->options),
       "status-text",        _("Select Mode"),
       NULL));
 

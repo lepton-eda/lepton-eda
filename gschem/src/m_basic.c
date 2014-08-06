@@ -36,29 +36,30 @@
 int snap_grid(GschemToplevel *w_current, int input)
 {
   int p, m, n;
-  int sign, value, snap_grid;
+  int sign, value, snap_size;
+  SNAP_STATE snap_mode;
 
-  if (w_current->snap == SNAP_OFF ||
-      w_current->snap_size <= 0) {
+  snap_mode = gschem_options_get_snap_mode (w_current->options);
+  snap_size = gschem_options_get_snap_size (w_current->options);
+
+  if (snap_mode == SNAP_OFF) {
     return(input);
   }
-
-  snap_grid = w_current->snap_size;
 
   /* this code was inspired from killustrator, it's much simpler than mine */
   sign = ( input < 0 ? -1 : 1 );
   value = abs(input);
 
-  p = value / snap_grid;
-  m = value % snap_grid;
-  n = p * snap_grid;
-  if (m > snap_grid / 2)
-  n += snap_grid;
+  p = value / snap_size;
+  m = value % snap_size;
+  n = p * snap_size;
+  if (m > snap_size / 2)
+  n += snap_size;
 
 #if DEBUG
   printf("p: %d\n", p);
   printf("m: %d\n", m);
-  printf("m > snap_grid / 2: %d\n", (m > snap_grid / 2));
+  printf("m > snap_size / 2: %d\n", (m > snap_size / 2));
   printf("n: %d\n", n);
   printf("n*s: %d\n", n*sign);
 #endif

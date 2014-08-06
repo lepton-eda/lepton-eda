@@ -807,6 +807,7 @@ DEFINE_I_CALLBACK(edit_unlock)
  */
 DEFINE_I_CALLBACK(edit_translate)
 {
+  SNAP_STATE snap_mode;
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
@@ -814,15 +815,17 @@ DEFINE_I_CALLBACK(edit_translate)
   i_update_middle_button(w_current,
                          i_callback_edit_translate, _("Translate"));
 
-  if (w_current->snap == SNAP_OFF) {
+  snap_mode = gschem_options_get_snap_mode (w_current->options);
+
+  if (snap_mode == SNAP_OFF) {
     s_log_message(_("WARNING: Do not translate with snap off!\n"));
     s_log_message(_("WARNING: Turning snap on and continuing "
                   "with translate.\n"));
-    w_current->snap = SNAP_GRID;
+    gschem_options_set_snap_mode (w_current->options, SNAP_GRID);
     i_show_state(w_current, NULL); /* update status on screen */
   }
 
-  if (w_current->snap_size != 100) {
+  if (gschem_options_get_snap_size (w_current->options) != 100) {
     s_log_message(_("WARNING: Snap grid size is "
                   "not equal to 100!\n"));
     s_log_message(_("WARNING: If you are translating a symbol "
@@ -2622,12 +2625,7 @@ DEFINE_I_CALLBACK(options_scale_up_snap_size)
 
   g_return_if_fail (w_current != NULL);
 
-  w_current->snap_size *= 2;
-  gschem_toplevel_get_toplevel (w_current)->page_current->CHANGED=1;  /* maybe remove those two lines */
-  o_undo_savestate_old(w_current, UNDO_ALL);
-
-  i_update_grid_info (w_current);
-  o_invalidate_all (w_current);
+  gschem_options_scale_snap_up (w_current->options);
 }
 
 /*! \brief Divide by two the snap grid size.
@@ -2641,14 +2639,7 @@ DEFINE_I_CALLBACK(options_scale_down_snap_size)
 
   g_return_if_fail (w_current != NULL);
 
-  if (w_current->snap_size % 2 == 0)
-    w_current->snap_size /= 2;
-  gschem_toplevel_get_toplevel (w_current)->page_current->CHANGED=1;  /* maybe remove those two lines */
-  o_undo_savestate_old(w_current, UNDO_ALL);
-
-  i_update_grid_info (w_current);
-  o_invalidate_all (w_current);
-
+  gschem_options_scale_snap_down (w_current->options);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2684,24 +2675,20 @@ DEFINE_I_CALLBACK(options_afeedback)
  */
 DEFINE_I_CALLBACK(options_grid)
 {
+  GRID_MODE grid_mode;
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
 
-  switch (w_current->grid) {
-    case GRID_NONE: w_current->grid = GRID_DOTS; break;
-    case GRID_DOTS: w_current->grid = GRID_MESH; break;
-    case GRID_MESH: w_current->grid = GRID_NONE; break;
-  }
+  gschem_options_cycle_grid_mode (w_current->options);
 
-  switch (w_current->grid) {
-    case GRID_NONE: s_log_message (_("Grid OFF\n"));           break;
-    case GRID_DOTS: s_log_message (_("Dot grid selected\n"));  break;
-    case GRID_MESH: s_log_message (_("Mesh grid selected\n")); break;
-  }
+  grid_mode = gschem_options_get_grid_mode (w_current->options);
 
-  i_update_grid_info (w_current);
-  o_invalidate_all (w_current);
+  switch (grid_mode) {
+    case GRID_MODE_NONE: s_log_message (_("Grid OFF\n"));           break;
+    case GRID_MODE_DOTS: s_log_message (_("Dot grid selected\n"));  break;
+    case GRID_MODE_MESH: s_log_message (_("Mesh grid selected\n")); break;
+  }
 }
 
 /*! \todo Finish function documentation!!!
@@ -2711,12 +2698,16 @@ DEFINE_I_CALLBACK(options_grid)
  */
 DEFINE_I_CALLBACK(options_snap)
 {
+  SNAP_STATE snap_mode;
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
-  /* toggle to the next snap state */
-  w_current->snap = (w_current->snap+1) % SNAP_STATE_COUNT;
+  g_return_if_fail (w_current != NULL);
 
-  switch (w_current->snap) {
+  gschem_options_cycle_snap_mode (w_current->options);
+
+  snap_mode = gschem_options_get_snap_mode (w_current->options);
+
+  switch (snap_mode) {
   case SNAP_OFF:
     s_log_message(_("Snap OFF (CAUTION!)\n"));
     break;
@@ -2728,7 +2719,7 @@ DEFINE_I_CALLBACK(options_snap)
     break;
   default:
     g_critical("options_snap: toplevel->snap out of range: %d\n",
-               w_current->snap);
+               snap_mode);
   }
 
   i_show_state(w_current, NULL); /* update status on screen */

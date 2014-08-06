@@ -146,7 +146,6 @@ struct st_gschem_toplevel {
   int num_untitled;                     /* keep track of untitled wins */
   int event_state;                      /* Current event state */
   int image_width, image_height;        /* h, w of image write */
-  int grid;                             /* what type of grid to show */
   int min_zoom;                         /* minimum zoom factor */
   int max_zoom;                         /* maximum zoom factor */
   int inside_redraw;                    /* complex vs list redrawing */
@@ -163,6 +162,8 @@ struct st_gschem_toplevel {
   /* ------------------ */
   /* rc/user parameters */
   /* ------------------ */
+  GschemOptions *options;
+
   int text_caps;
   int text_size;
 
@@ -204,9 +205,6 @@ struct st_gschem_toplevel {
   int bus_ripper_type;    /* sets type of the bus ripper (component or net) */
   int bus_ripper_rotation;  /* sets if the the bus ripper is symmetric or not */
   int magneticnet_mode; /* enables/disables the magnetic net mode ON/OFF */
-
-  SNAP_STATE snap;                      /* Whether/how to snap to grid */
-  int snap_size;                        /* Snap grid parameter */
 
   /* sets the mininum number of pixels necessary for the grid to be */
   /* displayed */

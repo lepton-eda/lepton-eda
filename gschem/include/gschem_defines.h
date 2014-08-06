@@ -76,9 +76,13 @@
 #define MULTIPLE                1
 
 /* for grid */
-#define GRID_NONE               0
-#define GRID_DOTS               1
-#define GRID_MESH               2
+typedef enum
+{
+  GRID_MODE_NONE,
+  GRID_MODE_DOTS,
+  GRID_MODE_MESH,
+  GRID_MODE_COUNT
+} GRID_MODE;
 
 /* for dots_grid_mode */
 #define DOTS_GRID_VARIABLE_MODE 0
