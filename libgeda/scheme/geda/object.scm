@@ -359,6 +359,15 @@
 (define-public (set-component! c position angle mirror locked)
   (%set-complex! c (car position) (cdr position) angle mirror locked))
 
+(define-public (set-component-with-transform! c position angle mirror locked)
+  (let ((obj (%set-complex! c 0 0 0 #f locked)))
+    (%translate-object!
+      (%rotate-object!
+        (if mirror (%mirror-object! obj 0) obj)
+        0 0 angle)
+    (car position)
+    (cdr position))))
+
 (define-public (make-component basename . args)
   (let ((c (%make-complex basename)))
     (apply set-component! c args)))

@@ -1402,6 +1402,13 @@ Sets the parameters of @var{component}.  Arguments are the same as to
 of a component does not update the component's contents.
 @end defun
 
+@defun set-component-with-transform! component position angle mirror locked
+Sets the parameters of @var{component}.  Arguments are the same as to
+@code{make-component}.  Returns @var{component}.
+
+@strong{Note}: All transformations are applied immediately.
+@end defun
+
 @defun component-info component
 Returns the parameters of @var{component} as a list of the form:
 
