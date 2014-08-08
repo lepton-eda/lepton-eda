@@ -684,9 +684,15 @@ notify_options (GschemToplevel *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  //gschem_toplevel_get_toplevel (w_current)->page_current->CHANGED=1;  /* maybe remove those two lines */
-  //o_undo_savestate_old(w_current, UNDO_ALL);
+  /* Events can occur before the drawing area is created */
 
-  i_update_grid_info (w_current);
-  o_invalidate_all (w_current);
+  if (w_current->drawing_area != NULL) {
+    /* maybe remove those two lines
+     * gschem_toplevel_get_toplevel (w_current)->page_current->CHANGED=1;
+     * o_undo_savestate_old(w_current, UNDO_ALL);
+     */
+
+    i_update_grid_info (w_current);
+    o_invalidate_all (w_current);
+  }
 }
