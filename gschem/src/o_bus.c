@@ -61,18 +61,11 @@ int o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
   TOPLEVEL *toplevel = gschem_page_view_get_toplevel (page_view);
   PAGE *page = gschem_page_view_get_page (page_view);
   OBJECT *new_obj;
-  int color;
   GList *prev_conn_objects = NULL;
 
   g_assert( w_current->inside_action != 0 );
   g_return_val_if_fail (toplevel != NULL, FALSE);
   g_return_val_if_fail (page != NULL, FALSE);
-
-  if (toplevel->override_bus_color == -1) {
-    color = BUS_COLOR;
-  } else {
-    color = toplevel->override_bus_color;
-  }
 
   /* erase the rubberbus */
   /* o_bus_invalidate_rubber (w_current); */
@@ -85,7 +78,7 @@ int o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
     return FALSE;
   }
 
-  new_obj = o_bus_new(toplevel, OBJ_BUS, color,
+  new_obj = o_bus_new(toplevel, OBJ_BUS, BUS_COLOR,
                       w_current->first_wx, w_current->first_wy,
                       w_current->second_wx, w_current->second_wy, 0);
   s_page_append (toplevel, page, new_obj);

@@ -2,9 +2,6 @@
 extern int default_text_size;
 extern int default_text_caps;
 extern gchar *default_print_command;
-extern int default_override_net_color;
-extern int default_override_bus_color;
-extern int default_override_pin_color;
 extern int default_net_direction_mode;
 extern int default_net_selection_mode;
 extern int default_background_color;

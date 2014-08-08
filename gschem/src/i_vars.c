@@ -37,9 +37,6 @@ int   default_attribute_color = ATTRIBUTE_COLOR;
 int   default_detachattr_color = DETACHED_ATTRIBUTE_COLOR;
 int   default_net_endpoint_color = NET_ENDPOINT_COLOR;
 int   default_junction_color = JUNCTION_COLOR;
-int   default_override_net_color = -1;
-int   default_override_bus_color = -1;
-int   default_override_pin_color = -1;
 int   default_net_direction_mode = TRUE;
 int   default_net_selection_mode = 0;
 int   default_background_color = BACKGROUND_COLOR;
@@ -127,12 +124,6 @@ void i_vars_set(GschemToplevel *w_current)
 
   w_current->net_direction_mode = default_net_direction_mode;
   w_current->net_selection_mode = default_net_selection_mode;
-
-  toplevel->override_net_color = default_override_net_color;
-
-  toplevel->override_bus_color = default_override_bus_color;
-
-  toplevel->override_pin_color = default_override_pin_color;
 
   w_current->zoom_with_pan           = default_zoom_with_pan;
   w_current->actionfeedback_mode     = default_actionfeedback_mode;

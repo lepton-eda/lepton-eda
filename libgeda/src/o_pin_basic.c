@@ -156,10 +156,6 @@ OBJECT *o_pin_read (TOPLEVEL *toplevel, const char buf[],
     color = DEFAULT_COLOR;
   }
 
-  if (toplevel->override_pin_color != -1) {
-    color = toplevel->override_pin_color;
-  }
-
   new_obj = o_pin_new (toplevel, type, color, x1, y1, x2, y2,
                        pin_type, whichend);
 

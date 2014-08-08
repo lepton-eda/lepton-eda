@@ -142,10 +142,6 @@ OBJECT *o_bus_read (TOPLEVEL *toplevel, const char buf[],
                     type, x1, y1, x2, y2, color);
   }
 
-  if (toplevel->override_bus_color != -1) {
-    color = toplevel->override_bus_color;
-  }
-
   if (color < 0 || color > MAX_COLORS) {
     s_log_message (_("Found an invalid color [ %s ]\n"), buf);
     s_log_message (_("Setting color to default color\n"));

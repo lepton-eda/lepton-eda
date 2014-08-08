@@ -50,12 +50,6 @@ struct st_toplevel
   int auto_save_interval;
   gint auto_save_timeout;
 
-  /* BLOCK SET IN GSCHEM, BUT USED IN LIBGEDA - NEEDS A RETHINK */
-  int override_net_color;
-  int override_bus_color;
-  int override_pin_color;
-  /* END BLOCK - ALTHOUGH THERE ARE MORE CASES! */
-
   /* either TRUE or FALSE (color or no color) */
   int image_color;
 

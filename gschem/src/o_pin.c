@@ -46,17 +46,10 @@ void o_pin_end(GschemToplevel *w_current, int x, int y)
   TOPLEVEL *toplevel = gschem_page_view_get_toplevel (page_view);
   PAGE *page = gschem_page_view_get_page (page_view);
   OBJECT *new_obj;
-  int color;
 
   g_assert( w_current->inside_action != 0 );
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (page != NULL);
-
-  if (toplevel->override_pin_color == -1) {
-    color = PIN_COLOR;
-  } else {
-    color = toplevel->override_pin_color;
-  }
 
   /* undraw rubber line */
   /* o_pin_invalidate_rubber (w_current); */
@@ -68,7 +61,7 @@ void o_pin_end(GschemToplevel *w_current, int x, int y)
     return;
   }
 
-  new_obj = o_pin_new(toplevel, OBJ_PIN, color,
+  new_obj = o_pin_new(toplevel, OBJ_PIN, PIN_COLOR,
                       w_current->first_wx, w_current->first_wy,
                       w_current->second_wx, w_current->second_wy,
                       PIN_TYPE_NET, 0);

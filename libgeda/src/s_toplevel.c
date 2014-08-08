@@ -39,8 +39,6 @@
  *  for its properties.
  *
  *  \returns the newly created TOPLEVEL.
- *
- *  \todo rethink block below that is set in gschem but used in libgeda.
  */
 TOPLEVEL *s_toplevel_new (void)
 {
@@ -65,12 +63,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->show_hidden_text = 0;
 
   toplevel->major_changed_refdes = NULL;
-
-  /* BLOCK SET IN GSCHEM, BUT USED IN LIBGEDA - NEEDS A RETHINK */
-  toplevel->override_net_color = -1;
-  toplevel->override_bus_color = -1;
-  toplevel->override_pin_color = -1;
-  /* END BLOCK - ALTHOUGH THERE ARE MORE CASES! */
 
   toplevel->image_color = FALSE;
 

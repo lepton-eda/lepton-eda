@@ -449,7 +449,6 @@ void o_net_start(GschemToplevel *w_current, int w_x, int w_y)
 int o_net_end(GschemToplevel *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  int color;
   int primary_zero_length, secondary_zero_length;
   int found_primary_connection = FALSE;
   int save_wx, save_wy;
@@ -486,19 +485,13 @@ int o_net_end(GschemToplevel *w_current, int w_x, int w_y)
   save_wx = w_current->third_wx;
   save_wy = w_current->third_wy;
 
-  if (toplevel->override_net_color == -1) {
-    color = NET_COLOR;
-  } else {
-    color = toplevel->override_net_color;
-  }
-
   if (w_current->third_wx != snap_grid (w_current, w_current->third_wx)
       || w_current->third_wy != snap_grid (w_current, w_current->third_wy))
       s_log_message(_("Warning: Ending net at off grid coordinate\n"));
 
   if (!primary_zero_length ) {
   /* create primary net */
-      new_net = o_net_new(toplevel, OBJ_NET, color,
+      new_net = o_net_new(toplevel, OBJ_NET, NET_COLOR,
                           w_current->first_wx, w_current->first_wy,
                           w_current->second_wx, w_current->second_wy);
       s_page_append (toplevel, toplevel->page_current, new_net);
@@ -533,7 +526,7 @@ int o_net_end(GschemToplevel *w_current, int w_x, int w_y)
   if (!secondary_zero_length && !found_primary_connection) {
       
       /* Add secondary net */
-      new_net = o_net_new(toplevel, OBJ_NET, color,
+      new_net = o_net_new(toplevel, OBJ_NET, NET_COLOR,
                           w_current->second_wx, w_current->second_wy,
                           w_current->third_wx, w_current->third_wy);
       s_page_append (toplevel, toplevel->page_current, new_net);
@@ -724,7 +717,6 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   OBJECT *new_obj;
-  int color;
   GList *cl_current = NULL;
   OBJECT *bus_object = NULL;
   CONN *found_conn = NULL;
@@ -751,13 +743,6 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
   if (length <= ripper_size) {
     return(FALSE);
   }
-
-  if (toplevel->override_net_color == -1) {
-    color = NET_COLOR;
-  } else {
-    color = toplevel->override_net_color;
-  }
-
   
   /* check for a bus connection and draw rippers if so */
   cl_current = prev_conn_objects;
@@ -1022,7 +1007,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
     
     for (i = 0; i < ripper_count; i++) {
       if (w_current->bus_ripper_type == NET_BUS_RIPPER) {
-        new_obj = o_net_new(toplevel, OBJ_NET, color,
+        new_obj = o_net_new(toplevel, OBJ_NET, NET_COLOR,
                   rippers[i].x[0], rippers[i].y[0],
                   rippers[i].x[1], rippers[i].y[1]);
         s_page_append (toplevel, toplevel->page_current, new_obj);
