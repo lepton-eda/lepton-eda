@@ -106,10 +106,7 @@ SCM_DEFINE (make_complex_library, "%make-complex/library", 1, 0, 0,
 /*! \brief Set complex object parameters.
  * \par Function Description
  * Modifies the complex object \a complex_s by setting its parameters
- * to new values. The modifying is performed in the following sequence:
- *   1. Mirroring.
- *   2. Rotation.
- *   3. Translating to new position.
+ * to new values.
  *
  * \note Scheme API: Implements the %set-complex! procedure in the
  * (geda core complex) module.
@@ -136,16 +133,6 @@ SCM_DEFINE (set_complex_x, "%set-complex!", 6, 0, 0,
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (complex_s);
 
-  o_emit_pre_change_notify (toplevel, obj);
-
-  int x = scm_to_int (x_s);
-  int y = scm_to_int (y_s);
-
-  /* Mirroring */
-  if (obj->complex->mirror != scm_is_true (mirror_s)) {
-    o_mirror_world (toplevel, x, y, obj);
-  }
-
   /* Angle */
   int angle = scm_to_int (angle_s);
   switch (angle) {
@@ -162,19 +149,16 @@ SCM_DEFINE (set_complex_x, "%set-complex!", 6, 0, 0,
                     scm_list_1 (angle_s));
   }
 
-  /* The angle to rotate by is the difference between the
-   * angle we want and the current angle */
-  angle -= obj->complex->angle;
-  if (angle < 0) {
-    angle += 360;
-  }
-  o_rotate_world (toplevel, x, y, angle, obj);
+  o_emit_pre_change_notify (toplevel, obj);
 
+  int x = scm_to_int (x_s);
+  int y = scm_to_int (y_s);
   o_translate_world (toplevel,
                      x - obj->complex->x,
                      y - obj->complex->y,
                      obj);
-
+  obj->complex->angle = angle;
+  obj->complex->mirror = scm_is_true (mirror_s);
   obj->selectable = scm_is_false (locked_s);
 
   obj->w_bounds_valid_for = NULL; /* We need to do this explicitly... */
