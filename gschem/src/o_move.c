@@ -33,9 +33,13 @@ void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *s_iter;
 
+  g_return_if_fail (w_current != NULL);
   g_return_if_fail (w_current->stretch_list == NULL);
 
   if (o_select_selected (w_current)) {
+    gboolean net_rubber_band_mode;
+
+    net_rubber_band_mode = gschem_options_get_net_rubber_band_mode (w_current->options);
 
     /* Save the current state. When rotating the selection when moving,
        we have to come back to here */
@@ -49,7 +53,7 @@ void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
     o_invalidate_glist (w_current,
        geda_list_get_glist (toplevel->page_current->selection_list));
 
-    if (w_current->netconn_rubberband) {
+    if (net_rubber_band_mode) {
       o_move_prep_rubberband(w_current);
 
       /* Set the dont_redraw flag on rubberbanded objects and invalidate them.
@@ -132,7 +136,9 @@ void o_move_end(GschemToplevel *w_current)
   int diff_x, diff_y;
   GList *s_iter;
   GList *rubbernet_objects = NULL;
+  gboolean net_rubber_band_mode;
 
+  g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
 
   object = o_select_return_first_object(w_current);
@@ -150,7 +156,9 @@ void o_move_end(GschemToplevel *w_current)
   o_move_invalidate_rubber (w_current, FALSE);
   w_current->rubber_visible = 0;
 
-  if (w_current->netconn_rubberband) {
+  net_rubber_band_mode = gschem_options_get_net_rubber_band_mode (w_current->options);
+
+  if (net_rubber_band_mode) {
     o_move_end_rubberband (w_current, diff_x, diff_y, &rubbernet_objects);
   }
 
@@ -335,11 +343,14 @@ void o_move_invalidate_rubber (GschemToplevel *w_current, int drawing)
 {
   GList *s_iter;
   int dx1, dx2, dy1, dy2;
+  gboolean net_rubber_band_mode;
 
   g_return_if_fail (w_current != NULL);
 
+  net_rubber_band_mode = gschem_options_get_net_rubber_band_mode (w_current->options);
+
   o_place_invalidate_rubber (w_current, drawing);
-  if (w_current->netconn_rubberband) {
+  if (net_rubber_band_mode) {
 
     for (s_iter = w_current->stretch_list;
          s_iter != NULL; s_iter = g_list_next (s_iter)) {
@@ -381,10 +392,15 @@ o_move_draw_rubber (GschemToplevel *w_current,
 {
   GList *s_iter;
   int diff_x, diff_y;
+  gboolean net_rubber_band_mode;
+
+  g_return_if_fail (w_current != NULL);
 
   o_place_draw_rubber (w_current, renderer);
 
-  if (!w_current->netconn_rubberband)
+  net_rubber_band_mode = gschem_options_get_net_rubber_band_mode (w_current->options);
+
+  if (!net_rubber_band_mode)
     return;
 
   diff_x = w_current->second_wx - w_current->first_wx;

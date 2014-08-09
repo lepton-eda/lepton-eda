@@ -43,6 +43,8 @@ struct _GschemOptionsDialog {
 
   GtkSizeGroup *size_group;
 
+  GtkWidget *magnetic_net_widget;
+  GtkWidget *net_rubber_band_widget;
   GtkWidget *snap_size;
 
   GtkWidget *grid_radio[GRID_MODE_COUNT];

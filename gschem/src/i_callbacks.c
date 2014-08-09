@@ -2739,12 +2739,14 @@ DEFINE_I_CALLBACK(options_rubberband)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
-  if (w_current->netconn_rubberband) {
-    w_current->netconn_rubberband = 0;
-    s_log_message(_("Rubber band OFF \n"));
-  } else {
-    w_current->netconn_rubberband = 1;
+  g_return_if_fail (w_current != NULL);
+
+  gschem_options_cycle_net_rubber_band_mode (w_current->options);
+
+  if (gschem_options_get_net_rubber_band_mode (w_current->options)) {
     s_log_message(_("Rubber band ON\n"));
+  } else {
+    s_log_message(_("Rubber band OFF \n"));
   }
 }
 
@@ -2758,12 +2760,17 @@ DEFINE_I_CALLBACK(options_magneticnet)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
-  if ((w_current->magneticnet_mode = !w_current->magneticnet_mode)) {
+  g_return_if_fail (w_current != NULL);
+
+  gschem_options_cycle_magnetic_net_mode (w_current->options);
+
+  if (gschem_options_get_magnetic_net_mode (w_current->options)) {
     s_log_message(_("magnetic net mode: ON\n"));
   }
   else {
     s_log_message(_("magnetic net mode: OFF\n"));
   }
+
   i_show_state(w_current, NULL);
 }
 

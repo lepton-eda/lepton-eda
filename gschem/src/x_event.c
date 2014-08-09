@@ -924,7 +924,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
 
 
     case(STARTDRAWNET):
-    if(w_current->magneticnet_mode == 1) {
+    if(gschem_options_get_magnetic_net_mode (w_current->options)) {
       o_net_start_magnetic(w_current, w_x, w_y);
     }
     break;
@@ -1358,17 +1358,17 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
 
 /*! \brief get the pointer position of a given GschemToplevel
  *  \par Function Description
- *  This function gets the pointer position of the drawing area of the 
+ *  This function gets the pointer position of the drawing area of the
  *  current workspace <b>GschemToplevel</b>. The flag <b>snapped</b> specifies
  *  whether the pointer position should be snapped to the current grid.
- *  
+ *
  *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] snapped    An option flag to specify the wished coords
  *  \param [out] wx        snapped/unsnapped world x coordinate
  *  \param [out] wy        snapped/unsnapped world y coordinate
  *
  *  \return Returns TRUE if the pointer position is inside the drawing area.
- *  
+ *
  */
 gboolean
 x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapped, gint *wx, gint *wy)

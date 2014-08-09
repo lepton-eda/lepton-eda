@@ -43,6 +43,8 @@ enum
 {
   PROP_0,
   PROP_GRID_MODE,
+  PROP_MAGNETIC_NET_MODE,
+  PROP_NET_RUBBER_BAND_MODE,
   PROP_SNAP_MODE,
   PROP_SNAP_SIZE
 };
@@ -81,6 +83,42 @@ gschem_options_cycle_grid_mode (GschemOptions *options)
 
 
 
+/*! \brief Cycle magnetic net mode to the next option
+ *
+ *  \param options These options
+ */
+void
+gschem_options_cycle_magnetic_net_mode (GschemOptions *options)
+{
+  gboolean next_magnetic_net_mode;
+
+  g_return_if_fail (options != NULL);
+
+  next_magnetic_net_mode = !options->magnetic_net_mode;
+
+  gschem_options_set_magnetic_net_mode (options, next_magnetic_net_mode);
+}
+
+
+
+/*! \brief Cycle net rubber band mode to the next option
+ *
+ *  \param options These options
+ */
+void
+gschem_options_cycle_net_rubber_band_mode (GschemOptions *options)
+{
+  gboolean next_net_rubber_band_mode;
+
+  g_return_if_fail (options != NULL);
+
+  next_net_rubber_band_mode = !options->net_rubber_band_mode;
+
+  gschem_options_set_net_rubber_band_mode (options, next_net_rubber_band_mode);
+}
+
+
+
 /*! \brief Cycle snap mode to the next option
  *
  *  \param options These options
@@ -111,6 +149,36 @@ gschem_options_get_grid_mode (GschemOptions *options)
   g_return_val_if_fail (options != NULL, GRID_MODE_MESH);
 
   return options->grid_mode;
+}
+
+
+
+/*! \brief Get the magnetic net mode
+ *
+ *  \param [in] options These options
+ *  \return The magnetic net mode
+ */
+gboolean
+gschem_options_get_magnetic_net_mode (GschemOptions *options)
+{
+  g_return_val_if_fail (options != NULL, DEFAULT_MAGNETIC_NET_MODE);
+
+  return options->magnetic_net_mode;
+}
+
+
+
+/*! \brief Get the magnetic net mode
+ *
+ *  \param [in] options These options
+ *  \return The magnetic net mode
+ */
+gboolean
+gschem_options_get_net_rubber_band_mode (GschemOptions *options)
+{
+  g_return_val_if_fail (options != NULL, DEFAULT_NET_RUBBER_BAND_MODE);
+
+  return options->net_rubber_band_mode;
 }
 
 
@@ -231,6 +299,42 @@ gschem_options_set_grid_mode (GschemOptions *options, GRID_MODE grid_mode)
 
 
 
+/*! \brief Set the magnetic net mode
+ *
+ *  \param [in] options These options
+ *  \param [in] enabled Magnetic net mode
+ */
+void
+gschem_options_set_magnetic_net_mode (GschemOptions *options, gboolean enabled)
+{
+  g_return_if_fail (options != NULL);
+
+  options->magnetic_net_mode = enabled;
+
+  g_object_notify (G_OBJECT (options), "magnetic-net-mode");
+}
+
+
+
+/*! \brief Set the net rubber band mode
+ *
+ *  Sets whether nets rubberband as you move them (or connecting comps)
+ *
+ *  \param [in] options These options
+ *  \param [in] enabled Net rubber band mode
+ */
+void
+gschem_options_set_net_rubber_band_mode (GschemOptions *options, gboolean enabled)
+{
+  g_return_if_fail (options != NULL);
+
+  options->net_rubber_band_mode = enabled;
+
+  g_object_notify (G_OBJECT (options), "net-rubber-band-mode");
+}
+
+
+
 /*! \brief Set the snap mode
  *
  *  \param [in] options These options
@@ -298,6 +402,22 @@ class_init (GschemOptionsClass *klass)
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_MAGNETIC_NET_MODE,
+                                   g_param_spec_boolean ("magnetic-net-mode",
+                                                         "Magnetic Net Mode",
+                                                         "magnetic Net Mode",
+                                                         DEFAULT_MAGNETIC_NET_MODE,
+                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_NET_RUBBER_BAND_MODE,
+                                   g_param_spec_boolean ("net-rubber-band-mode",
+                                                         "Net Rubber Band Mode",
+                                                         "Net Rubber Band Mode",
+                                                         DEFAULT_NET_RUBBER_BAND_MODE,
+                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_SNAP_MODE,
                                    g_param_spec_int ("snap-mode",
                                                      "Snap Mode",
@@ -336,6 +456,14 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
   switch (param_id) {
     case PROP_GRID_MODE:
       g_value_set_int (value, gschem_options_get_grid_mode (options));
+      break;
+
+    case PROP_MAGNETIC_NET_MODE:
+      g_value_set_boolean (value, gschem_options_get_magnetic_net_mode (options));
+      break;
+
+    case PROP_NET_RUBBER_BAND_MODE:
+      g_value_set_boolean (value, gschem_options_get_net_rubber_band_mode (options));
       break;
 
     case PROP_SNAP_MODE:
@@ -379,6 +507,14 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
   switch (param_id) {
     case PROP_GRID_MODE:
       gschem_options_set_grid_mode (options, g_value_get_int (value));
+      break;
+
+    case PROP_MAGNETIC_NET_MODE:
+      gschem_options_set_magnetic_net_mode (options, g_value_get_boolean (value));
+      break;
+
+    case PROP_NET_RUBBER_BAND_MODE:
+      gschem_options_set_net_rubber_band_mode (options, g_value_get_boolean (value));
       break;
 
     case PROP_SNAP_MODE:

@@ -44,6 +44,9 @@ GtkWidget*
 create_snap_mode_widget (GschemOptionsDialog *dialog);
 
 static GtkWidget*
+create_net_section (GschemOptionsDialog *dialog);
+
+static GtkWidget*
 create_snap_section (GschemOptionsDialog *dialog);
 
 static void
@@ -63,6 +66,18 @@ update_grid_mode_model (GschemOptionsDialog *dialog, GtkWidget *button);
 
 static void
 update_grid_mode_widget (GschemOptionsDialog *dialog);
+
+static void
+update_magnetic_net_mode_model (GschemOptionsDialog *dialog);
+
+static void
+update_magnetic_net_mode_widget (GschemOptionsDialog *dialog);
+
+static void
+update_net_rubber_band_mode_model (GschemOptionsDialog *dialog);
+
+static void
+update_net_rubber_band_mode_widget (GschemOptionsDialog *dialog);
 
 static void
 update_snap_mode_model (GschemOptionsDialog *dialog, GtkWidget *button);
@@ -237,6 +252,45 @@ create_grid_mode_widget (GschemOptionsDialog *dialog)
 
 
 /*! \private
+ *  \brief Create section with net tool settings
+ *
+ *  \param [in] dialog
+ *  \return The net section widget
+ */
+static GtkWidget*
+create_net_section (GschemOptionsDialog *dialog)
+{
+  GtkWidget *label[2];
+  GtkWidget *table;
+  GtkWidget *widget[2];
+
+  /* These widgets are shown in the same order as the options menu */
+
+  label[0] = gschem_dialog_misc_create_property_label (_("Net Rubber Band Mode:"));
+  label[1] = gschem_dialog_misc_create_property_label (_("Magnetic Net Mode:"));
+
+  /*! \todo These should become a GtkSwitch when updating to GTK 3.0 */
+
+  widget[0] = dialog->net_rubber_band_widget = gtk_check_button_new_with_label (_("Enabled"));
+  widget[1] = dialog->magnetic_net_widget = gtk_check_button_new_with_label (_("Enabled"));
+
+  table = gschem_dialog_misc_create_property_table (label, widget, 2);
+
+  g_signal_connect_swapped (G_OBJECT (dialog->magnetic_net_widget),
+                            "toggled",
+                            G_CALLBACK (update_magnetic_net_mode_model),
+                            dialog);
+
+  g_signal_connect_swapped (G_OBJECT (dialog->net_rubber_band_widget),
+                            "toggled",
+                            G_CALLBACK (update_net_rubber_band_mode_model),
+                            dialog);
+
+  return gschem_dialog_misc_create_section_widget (_("<b>Net Options</b>"), table);
+}
+
+
+/*! \private
  *  \brief Create section with snap and grid settings
  *
  *  \param [in] dialog
@@ -384,6 +438,12 @@ instance_init (GschemOptionsDialog *dialog)
                       FALSE,                                   /* expand  */
                       FALSE,                                   /* fill    */
                       0);                                      /* padding */
+
+  gtk_box_pack_start (GTK_BOX (vbox),                          /* box     */
+                      create_net_section (dialog),             /* child   */
+                      FALSE,                                   /* expand  */
+                      FALSE,                                   /* fill    */
+                      0);                                      /* padding */
 }
 
 
@@ -432,6 +492,14 @@ set_options (GschemOptionsDialog *dialog, GschemOptions *options)
                                           dialog);
 
     g_signal_handlers_disconnect_by_func (dialog->options,
+                                          G_CALLBACK (update_net_rubber_band_mode_widget),
+                                          dialog);
+
+    g_signal_handlers_disconnect_by_func (dialog->options,
+                                          G_CALLBACK (update_magnetic_net_mode_widget),
+                                          dialog);
+
+    g_signal_handlers_disconnect_by_func (dialog->options,
                                           G_CALLBACK (update_grid_mode_widget),
                                           dialog);
 
@@ -449,6 +517,16 @@ set_options (GschemOptionsDialog *dialog, GschemOptions *options)
                               dialog);
 
     g_signal_connect_swapped (dialog->options,
+                              "notify::magnetic-net-mode",
+                              G_CALLBACK (update_magnetic_net_mode_widget),
+                              dialog);
+
+    g_signal_connect_swapped (dialog->options,
+                              "notify::net-rubber-band-mode",
+                              G_CALLBACK (update_net_rubber_band_mode_widget),
+                              dialog);
+
+    g_signal_connect_swapped (dialog->options,
                               "notify::snap-mode",
                               G_CALLBACK (update_snap_mode_widget),
                               dialog);
@@ -460,6 +538,8 @@ set_options (GschemOptionsDialog *dialog, GschemOptions *options)
   }
 
   update_grid_mode_widget (dialog);
+  update_magnetic_net_mode_widget (dialog);
+  update_net_rubber_band_mode_widget (dialog);
   update_snap_mode_widget (dialog);
   update_snap_size_widget (dialog);
 }
@@ -522,6 +602,97 @@ update_grid_mode_widget (GschemOptionsDialog *dialog)
                                          G_CALLBACK (update_grid_mode_model),
                                          dialog);
     }
+  }
+}
+
+
+
+/*! \private
+ *  \brief Update the magnetic net mode in the model
+ *
+ *  \param [in,out] dialog This dialog
+ */
+static void
+update_magnetic_net_mode_model (GschemOptionsDialog *dialog)
+{
+  GschemToplevel *w_current;
+
+  g_return_if_fail (dialog != NULL);
+
+  g_object_get (dialog, "gschem-toplevel", &w_current, NULL);
+
+  g_return_if_fail (w_current != NULL);
+
+  gschem_options_set_magnetic_net_mode (w_current->options,
+                                        gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->magnetic_net_widget)));
+}
+
+
+
+/*! \private
+ *  \brief Update the net rubber band mode widget with the current value
+ *
+ *  \param [in,out] dialog This dialog
+ */
+static void
+update_magnetic_net_mode_widget (GschemOptionsDialog *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+
+  if (dialog->options != NULL) {
+    GschemToplevel *w_current;
+
+    g_object_get (dialog, "gschem-toplevel", &w_current, NULL);
+
+    g_return_if_fail (w_current != NULL);
+
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->magnetic_net_widget),
+                                  gschem_options_get_magnetic_net_mode (w_current->options));
+  }
+}
+
+
+/*! \private
+ *  \brief Update the net rubber band mode in the model
+ *
+ *  \param [in,out] dialog This dialog
+ */
+static void
+update_net_rubber_band_mode_model (GschemOptionsDialog *dialog)
+{
+  GschemToplevel *w_current;
+
+  g_return_if_fail (dialog != NULL);
+
+  g_object_get (dialog, "gschem-toplevel", &w_current, NULL);
+
+  g_return_if_fail (w_current != NULL);
+
+  gschem_options_set_net_rubber_band_mode (w_current->options,
+                                           gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->net_rubber_band_widget)));
+}
+
+
+
+/*! \private
+ *  \brief Update the net rubber band mode widget with the current value
+ *
+ *  \param [in,out] dialog This dialog
+ */
+static void
+update_net_rubber_band_mode_widget (GschemOptionsDialog *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+
+  if (dialog->options != NULL) {
+    GschemToplevel *w_current;
+
+    g_object_get (dialog, "gschem-toplevel", &w_current, NULL);
+
+    g_return_if_fail (w_current != NULL);
+
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->net_rubber_band_widget),
+                                  gschem_options_get_net_rubber_band_mode (w_current->options));
   }
 }
 

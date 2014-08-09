@@ -309,14 +309,12 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->undo_type = 0;
   w_current->undo_panzoom = 0;
   w_current->draw_grips = 0;
-  w_current->netconn_rubberband = 0;
   w_current->warp_cursor = 0;
   w_current->toolbars = 0;
   w_current->handleboxes = 0;
   w_current->bus_ripper_size = 0;
   w_current->bus_ripper_type = 0;
   w_current->bus_ripper_rotation = 0;
-  w_current->magneticnet_mode = 0;
   w_current->dots_grid_fixed_threshold = 10;
   w_current->dots_grid_dot_size = 1;
   w_current->dots_grid_mode = DOTS_GRID_VARIABLE_MODE;

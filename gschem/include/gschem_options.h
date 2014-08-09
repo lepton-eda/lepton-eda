@@ -23,6 +23,26 @@
  * \brief
  */
 
+/*! \brief The initial mode for magnetic nets
+ *
+ *  TRUE = enabled
+ *  FALSE = disabled
+ *
+ *  Loading a configuration will overwrite this value
+ */
+#define DEFAULT_MAGNETIC_NET_MODE (TRUE)
+
+
+/*! \brief The initial mode for rubber band nets
+ *
+ *  TRUE = enabled
+ *  FALSE = disabled
+ *
+ *  Loading a configuration will overwrite this value
+ */
+#define DEFAULT_NET_RUBBER_BAND_MODE (FALSE)
+
+
 /*! \brief The initial snap size
  *
  *  This value will get replaced by user settings.
@@ -63,6 +83,8 @@ struct _GschemOptions {
   GObject parent;
 
   int        grid_mode;
+  gboolean   magnetic_net_mode;
+  gboolean   net_rubber_band_mode;
   SNAP_STATE snap_mode;
   int        snap_size;
 };
@@ -71,10 +93,22 @@ void
 gschem_options_cycle_grid_mode (GschemOptions *options);
 
 void
+gschem_options_cycle_magnetic_net_mode (GschemOptions *options);
+
+void
+gschem_options_cycle_net_rubber_band_mode (GschemOptions *options);
+
+void
 gschem_options_cycle_snap_mode (GschemOptions *options);
 
 GRID_MODE
 gschem_options_get_grid_mode (GschemOptions *options);
+
+gboolean
+gschem_options_get_magnetic_net_mode (GschemOptions *options);
+
+gboolean
+gschem_options_get_net_rubber_band_mode (GschemOptions *options);
 
 SNAP_STATE
 gschem_options_get_snap_mode (GschemOptions *options);
@@ -96,6 +130,12 @@ gschem_options_scale_snap_up (GschemOptions *options);
 
 void
 gschem_options_set_grid_mode (GschemOptions *options, GRID_MODE grid_mode);
+
+void
+gschem_options_set_magnetic_net_mode (GschemOptions *options, gboolean enabled);
+
+void
+gschem_options_set_net_rubber_band_mode (GschemOptions *options, gboolean enabled);
 
 void
 gschem_options_set_snap_mode (GschemOptions *options, SNAP_STATE snap_mode);

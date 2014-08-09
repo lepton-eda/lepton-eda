@@ -195,16 +195,12 @@ struct st_gschem_toplevel {
   int undo_panzoom;       /* sets if pan / zoom info is saved in undo */
   int draw_grips;         /* sets if grips are enabled or not */
 
-  /* sets whether nets rubberband as you move them (or connecting comps) */
-  int netconn_rubberband;
-
   int warp_cursor;        /* warp the cursor when zooming */
   int toolbars;           /* sets if the toolbar(s) are enabled or disabled */
   int handleboxes;        /* sets if the handleboxes are enabled or disabled */
   int bus_ripper_size;    /* sets size of the bus rippers */
   int bus_ripper_type;    /* sets type of the bus ripper (component or net) */
   int bus_ripper_rotation;  /* sets if the the bus ripper is symmetric or not */
-  int magneticnet_mode; /* enables/disables the magnetic net mode ON/OFF */
 
   /* sets the mininum number of pixels necessary for the grid to be */
   /* displayed */
