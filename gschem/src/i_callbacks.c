@@ -2688,6 +2688,7 @@ DEFINE_I_CALLBACK(options_grid)
     case GRID_MODE_NONE: s_log_message (_("Grid OFF\n"));           break;
     case GRID_MODE_DOTS: s_log_message (_("Dot grid selected\n"));  break;
     case GRID_MODE_MESH: s_log_message (_("Mesh grid selected\n")); break;
+    default:             s_log_message (_("Invalid grid mode\n"));
   }
 }
 
