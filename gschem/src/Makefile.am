@@ -36,6 +36,7 @@ gschem_SOURCES = \
 	gschem_integer_combo_box.c \
 	gschem_macro_widget.c \
 	gschem_main_window.c \
+	gschem_object_properties_dialog.c \
 	gschem_options.c \
 	gschem_options_dialog.c \
 	gschem_page_geometry.c \
@@ -83,7 +84,6 @@ gschem_SOURCES = \
 	x_colorcb.c \
 	x_compselect.c \
 	x_dialog.c \
-	x_editlprop.c \
 	x_event.c \
 	x_fileselect.c \
 	x_fstylecb.c \

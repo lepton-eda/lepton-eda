@@ -29,7 +29,6 @@ typedef struct st_gschem_toplevel GschemToplevel;
 #include "x_preview.h"
 #include "x_compselect.h"
 #include "x_dialog.h"
-#include "x_editlprop.h"
 #include "x_log.h"
 #include "x_pagesel.h"
 #include "x_states.h"
@@ -41,8 +40,9 @@ typedef struct st_gschem_toplevel GschemToplevel;
 #include "gschem_binding.h"
 #include "gschem_binding_integer.h"
 
-#include "gschem_text_properties_dialog.h"
+#include "gschem_object_properties_dialog.h"
 #include "gschem_options_dialog.h"
+#include "gschem_text_properties_dialog.h"
 
 /* Gettext translation */
 #include "gettext.h"

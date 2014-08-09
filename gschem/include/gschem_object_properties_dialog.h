@@ -18,26 +18,26 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file x_editlprop.h
+ * \file gschem_object_properties_dialog.h
  *
  * \brief A dialog box for editing an object's line properties.
  */
 
-#define TYPE_EDITLPROP           (editlprop_get_type())
-#define EDITLPROP(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), TYPE_EDITLPROP, EditLProp))
-#define EDITLPROP_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  TYPE_EDITLPROP, EditLPropClass))
-#define IS_EDITLPROP(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TYPE_EDITLPROP))
-#define EDITLPROP_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), TYPE_EDITLPROP, EditLPropClass))
+#define GSCHEM_TYPE_OBJECT_PROPERTIES_DIALOG           (gschem_object_properties_dialog_get_type())
+#define GSCHEM_OBJECT_PROPERTIES_DIALOG(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_OBJECT_PROPERTIES_DIALOG, GschemObjectPropertiesDialog))
+#define GSCHEM_OBJECT_PROPERTIES_DIALOG_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_OBJECT_PROPERTIES_DIALOG, GschemObjectPropertiesDialogClass))
+#define IS_GSCHEM_OBJECT_PROPERTIES_DIALOG(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_OBJECT_PROPERTIES_DIALOG))
+#define GSCHEM_OBJECT_PROPERTIES_DIALOG_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj),  GSCHEM_TYPE_OBJECT_PROPERTIES_DIALOG, GschemObjectPropertiesDialogClass))
 
-typedef struct _EditLPropClass EditLPropClass;
-typedef struct _EditLProp EditLProp;
+typedef struct _GschemObjectPropertiesDialogClass GschemObjectPropertiesDialogClass;
+typedef struct _GschemObjectPropertiesDialog GschemObjectPropertiesDialog;
 
-struct _EditLPropClass
+struct _GschemObjectPropertiesDialogClass
 {
   GschemDialogClass parent_class;
 };
 
-struct _EditLProp
+struct _GschemObjectPropertiesDialog
 {
   GschemDialog parent;
 
@@ -61,12 +61,12 @@ struct _EditLProp
   GtkWidget *pitch2e;
 
   GtkWidget *fill_section_widget;
+  GtkWidget *general_section_widget;
   GtkWidget *line_section_widget;
-  GtkWidget *object_section_widget;
 };
 
 GType
-editlprop_get_type();
+gschem_object_properties_dialog_get_type();
 
 GtkDialog*
-editlprop_new (GschemToplevel *w_current);
+gschem_object_properties_dialog_new (GschemToplevel *w_current);

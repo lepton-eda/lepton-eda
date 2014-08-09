@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 /*!
- * \file x_editlprop.c
+ * \file gschem_object_properties_dialog.c
  *
  * \brief A dialog box for editing object properties.
  */
@@ -38,82 +38,82 @@
 
 
 static void
-class_init (EditLPropClass *klass);
+class_init (GschemObjectPropertiesDialogClass *klass);
 
 static GtkWidget*
-create_fill_property_widget (EditLProp *dialog);
+create_fill_property_widget (GschemObjectPropertiesDialog *dialog);
 
 static GtkWidget*
-create_line_property_widget (EditLProp *dialog);
+create_general_property_widget (GschemObjectPropertiesDialog *dialog);
 
 static GtkWidget*
-create_object_property_widget (EditLProp *dialog);
+create_line_property_widget (GschemObjectPropertiesDialog *dialog);
 
 static void
 dispose (GObject *object);
 
 static void
-geometry_restore (EditLProp *dialog, EdaConfig *cfg, gchar* group_name);
+geometry_restore (GschemObjectPropertiesDialog *dialog, EdaConfig *cfg, gchar* group_name);
 
 static void
-geometry_save (EditLProp *dialog, EdaConfig *cfg, gchar* group_name);
+geometry_save (GschemObjectPropertiesDialog *dialog, EdaConfig *cfg, gchar* group_name);
 
 static void
-instance_init (EditLProp *dialog);
+instance_init (GschemObjectPropertiesDialog *dialog);
 
 static void
-notify_gschem_toplevel (EditLProp *dialog);
+notify_gschem_toplevel (GschemObjectPropertiesDialog *dialog);
 
 static void
-set_selection_adapter (EditLProp *dialog, GschemSelectionAdapter *adapter);
+set_selection_adapter (GschemObjectPropertiesDialog *dialog, GschemSelectionAdapter *adapter);
 
 static void
-update_cap_style_model (GtkWidget *widget, EditLProp *dialog);
+update_cap_style_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog);
 
 static void
-update_cap_style_widget (EditLProp *dialog);
+update_cap_style_widget (GschemObjectPropertiesDialog *dialog);
 
 static void
-update_fill_type_model (GtkWidget *widget, EditLProp *dialog);
+update_fill_type_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog);
 
 static void
-update_fill_type_widget (EditLProp *dialog);
+update_fill_type_widget (GschemObjectPropertiesDialog *dialog);
 
 static void
-update_line_type_model (GtkWidget *widget, EditLProp *dialog);
+update_line_type_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog);
 
 static void
-update_line_type_widget (EditLProp *dialog);
+update_line_type_widget (GschemObjectPropertiesDialog *dialog);
 
 static void
-update_object_color_model (GtkWidget *widget, EditLProp *dialog);
+update_object_color_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog);
 
 static void
-update_object_color_widget (EditLProp *dialog);
+update_object_color_widget (GschemObjectPropertiesDialog *dialog);
 
 
 
-/*! \brief Get/register EditLProp type.
+/*! \brief Get/register GschemObjectPropertiesDialog type.
  */
 GType
-editlprop_get_type()
+gschem_object_properties_dialog_get_type()
 {
   static GType type = 0;
 
   if (type == 0) {
     static const GTypeInfo info = {
-      sizeof(EditLPropClass),
+      sizeof(GschemObjectPropertiesDialogClass),
       NULL,                                   /* base_init */
       NULL,                                   /* base_finalize */
       (GClassInitFunc) class_init,
       NULL,                                   /* class_finalize */
       NULL,                                   /* class_data */
-      sizeof(EditLProp),
+      sizeof(GschemObjectPropertiesDialog),
       0,                                      /* n_preallocs */
       (GInstanceInitFunc) instance_init,
     };
 
-    type = g_type_register_static (GSCHEM_TYPE_DIALOG, "EditLProp", &info, 0);
+    type = g_type_register_static (GSCHEM_TYPE_DIALOG, "GschemObjectPropertiesDialog", &info, 0);
   }
 
   return type;
@@ -126,13 +126,13 @@ editlprop_get_type()
  *  \param [in] w_current The GschemToplevel structure
  */
 GtkDialog*
-editlprop_new (GschemToplevel *w_current)
+gschem_object_properties_dialog_new (GschemToplevel *w_current)
 {
-  return g_object_new (TYPE_EDITLPROP,
+  return g_object_new (GSCHEM_TYPE_OBJECT_PROPERTIES_DIALOG,
                        /* GtkContainer */
                        "border-width",    DIALOG_BORDER_SPACING,
                        /* GtkWindow */
-                       "title",           _("Edit Line Width & Type"),
+                       "title",           _("Object Properties"),
                        "default-width",   320,
                        "default-height",  350,
                        "window-position", GTK_WIN_POS_NONE,
@@ -164,13 +164,13 @@ line_type_dialog (GschemToplevel *w_current)
 
   gschem_dialog_misc_show_non_modal (w_current,
                                      &(w_current->lpwindow),
-                                     editlprop_new);
+                                     gschem_object_properties_dialog_new);
 }
 
 
 
 /*! \private
- *  \brief Initialize EditLProp class
+ *  \brief Initialize GschemObjectPropertiesDialog class
  *
  *  \par Function Description
  *
@@ -180,7 +180,7 @@ line_type_dialog (GschemToplevel *w_current)
  *  \param [in] klass
  */
 static void
-class_init (EditLPropClass *klass)
+class_init (GschemObjectPropertiesDialogClass *klass)
 {
   GObjectClass *object_class;
 
@@ -202,7 +202,7 @@ class_init (EditLPropClass *klass)
  *  \return A new fill property section widget
  */
 static GtkWidget*
-create_fill_property_widget (EditLProp *dialog)
+create_fill_property_widget (GschemObjectPropertiesDialog *dialog)
 {
   GtkWidget *label[6];
   GtkWidget *table;
@@ -279,13 +279,42 @@ create_fill_property_widget (EditLProp *dialog)
 
 
 /*! \private
+ *  \brief Create a general property section widget
+ *
+ *  \param [in] dialog
+ *  \return A new general property section widget
+ */
+static GtkWidget*
+create_general_property_widget (GschemObjectPropertiesDialog *dialog)
+{
+  GtkWidget *label[1];
+  GtkWidget *table;
+  GtkWidget *widget[1];
+
+  label[0] = gschem_dialog_misc_create_property_label (_("Color:"));
+
+  widget[0] = dialog->colorcb = x_colorcb_new ();
+
+  table = gschem_dialog_misc_create_property_table (label, widget, 1);
+
+  g_signal_connect(G_OBJECT (dialog->colorcb),
+                   "changed",
+                   G_CALLBACK (update_object_color_model),
+                   dialog);
+
+  return gschem_dialog_misc_create_section_widget (_("<b>General Properties</b>"), table);
+}
+
+
+
+/*! \private
  *  \brief Create a line property section widget
  *
  *  \param [in] dialog
  *  \return A new line property section widget
  */
 static GtkWidget*
-create_line_property_widget (EditLProp *dialog)
+create_line_property_widget (GschemObjectPropertiesDialog *dialog)
 {
   GtkWidget *label[5];
   GtkWidget *table;
@@ -345,35 +374,6 @@ create_line_property_widget (EditLProp *dialog)
 
 
 
-/*! \private
- *  \brief Create a line property section widget
- *
- *  \param [in] dialog
- *  \return A new line property section widget
- */
-static GtkWidget*
-create_object_property_widget (EditLProp *dialog)
-{
-  GtkWidget *label[1];
-  GtkWidget *table;
-  GtkWidget *widget[1];
-
-  label[0] = gschem_dialog_misc_create_property_label (_("Color:"));
-
-  widget[0] = dialog->colorcb = x_colorcb_new ();
-
-  table = gschem_dialog_misc_create_property_table (label, widget, 1);
-
-  g_signal_connect(G_OBJECT (dialog->colorcb),
-                   "changed",
-                   G_CALLBACK (update_object_color_model),
-                   dialog);
-
-  return gschem_dialog_misc_create_section_widget (_("<b>Object Properties</b>"), table);
-}
-
-
-
 /*! \brief Dispose
  *
  *  \param [in,out] object This object
@@ -381,13 +381,13 @@ create_object_property_widget (EditLProp *dialog)
 static void
 dispose (GObject *object)
 {
-  EditLProp *dialog;
-  EditLPropClass *klass;
+  GschemObjectPropertiesDialog *dialog;
+  GschemObjectPropertiesDialogClass *klass;
   GObjectClass *parent_class;
 
   g_return_if_fail (object != NULL);
 
-  dialog = EDITLPROP (object);
+  dialog = GSCHEM_OBJECT_PROPERTIES_DIALOG (object);
 
   set_selection_adapter (dialog, NULL);
 
@@ -397,7 +397,7 @@ dispose (GObject *object)
 
   /* lastly, chain up to the parent dispose */
 
-  klass = EDITLPROP_GET_CLASS (object);
+  klass = GSCHEM_OBJECT_PROPERTIES_DIALOG_GET_CLASS (object);
   g_return_if_fail (klass != NULL);
   parent_class = g_type_class_peek_parent (klass);
   g_return_if_fail (parent_class != NULL);
@@ -414,7 +414,7 @@ dispose (GObject *object)
  *  \param [in] group_name The group name in the key file to find the data under.
  */
 static void
-geometry_restore (EditLProp *dialog, EdaConfig *cfg, gchar* group_name)
+geometry_restore (GschemObjectPropertiesDialog *dialog, EdaConfig *cfg, gchar* group_name)
 {
   GError *error = NULL;
   gboolean value;
@@ -436,22 +436,22 @@ geometry_restore (EditLProp *dialog, EdaConfig *cfg, gchar* group_name)
 
   value = eda_config_get_boolean (cfg,
                                   group_name,
-                                  "line-section-expanded",
+                                  "general-section-expanded",
                                   &error);
 
   if (error == NULL) {
-    gtk_expander_set_expanded (GTK_EXPANDER (dialog->line_section_widget), value);
+    gtk_expander_set_expanded (GTK_EXPANDER (dialog->general_section_widget), value);
   }
 
   g_clear_error (&error);
 
   value = eda_config_get_boolean (cfg,
                                   group_name,
-                                  "object-section-expanded",
+                                  "line-section-expanded",
                                   &error);
 
   if (error == NULL) {
-    gtk_expander_set_expanded (GTK_EXPANDER (dialog->object_section_widget), value);
+    gtk_expander_set_expanded (GTK_EXPANDER (dialog->line_section_widget), value);
   }
 
   g_clear_error (&error);
@@ -467,7 +467,7 @@ geometry_restore (EditLProp *dialog, EdaConfig *cfg, gchar* group_name)
  *  \param [in] group_name The group name in the key file to store the data under.
  */
 static void
-geometry_save (EditLProp *dialog, EdaConfig *cfg, gchar* group_name)
+geometry_save (GschemObjectPropertiesDialog *dialog, EdaConfig *cfg, gchar* group_name)
 {
   g_return_if_fail (dialog != NULL);
 
@@ -478,24 +478,24 @@ geometry_save (EditLProp *dialog, EdaConfig *cfg, gchar* group_name)
 
   eda_config_set_boolean (cfg,
                           group_name,
-                          "line-section-expanded",
-                          gtk_expander_get_expanded (GTK_EXPANDER (dialog->line_section_widget)));
+                          "general-section-expanded",
+                          gtk_expander_get_expanded (GTK_EXPANDER (dialog->general_section_widget)));
 
   eda_config_set_boolean (cfg,
                           group_name,
-                          "object-section-expanded",
-                          gtk_expander_get_expanded (GTK_EXPANDER (dialog->object_section_widget)));
+                          "line-section-expanded",
+                          gtk_expander_get_expanded (GTK_EXPANDER (dialog->line_section_widget)));
 }
 
 
 
 /*! \private
- *  \brief Initialize EditLProp instance
+ *  \brief Initialize GschemObjectPropertiesDialog instance
  *
  *  \param [in,out] dialog The edit text dialog
  */
 static void
-instance_init (EditLProp *dialog)
+instance_init (GschemObjectPropertiesDialog *dialog)
 {
   GtkWidget *vbox;
 
@@ -521,12 +521,12 @@ instance_init (EditLProp *dialog)
   vbox = GTK_DIALOG (dialog)->vbox;
   gtk_box_set_spacing (GTK_BOX (vbox), DIALOG_V_SPACING);
 
-  dialog->object_section_widget = create_object_property_widget (dialog);
-  dialog->line_section_widget   = create_line_property_widget (dialog);
-  dialog->fill_section_widget   = create_fill_property_widget (dialog);
+  dialog->general_section_widget = create_general_property_widget (dialog);
+  dialog->line_section_widget    = create_line_property_widget (dialog);
+  dialog->fill_section_widget    = create_fill_property_widget (dialog);
 
   gtk_box_pack_start (GTK_BOX (vbox),                          /* box     */
-                      dialog->object_section_widget,           /* child   */
+                      dialog->general_section_widget,          /* child   */
                       FALSE,                                   /* expand  */
                       FALSE,                                   /* fill    */
                       0);                                      /* padding */
@@ -556,7 +556,7 @@ instance_init (EditLProp *dialog)
  *  \param [in]     selection The selection to manipulate
  */
 static void
-notify_gschem_toplevel (EditLProp *dialog)
+notify_gschem_toplevel (GschemObjectPropertiesDialog *dialog)
 {
     GschemToplevel *w_current;
 
@@ -601,7 +601,7 @@ notify_gschem_toplevel (EditLProp *dialog)
  *  \param [in]     selection The selection to manipulate
  */
 static void
-set_selection_adapter (EditLProp *dialog, GschemSelectionAdapter *adapter)
+set_selection_adapter (GschemObjectPropertiesDialog *dialog, GschemSelectionAdapter *adapter)
 {
   g_return_if_fail (dialog != NULL);
 
@@ -669,7 +669,7 @@ set_selection_adapter (EditLProp *dialog, GschemSelectionAdapter *adapter)
  *  \param [in] dialog The line properties dialog box
  */
 static void
-update_cap_style_model (GtkWidget *widget, EditLProp *dialog)
+update_cap_style_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog)
 {
   TOPLEVEL *toplevel;
   GschemToplevel *w_current;
@@ -704,7 +704,7 @@ update_cap_style_model (GtkWidget *widget, EditLProp *dialog)
  *  \param [in,out] dialog This dialog
  */
 static void
-update_cap_style_widget (EditLProp *dialog)
+update_cap_style_widget (GschemObjectPropertiesDialog *dialog)
 {
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (dialog->line_end != NULL);
@@ -735,7 +735,7 @@ update_cap_style_widget (EditLProp *dialog)
  *  \param [in] dialog The line properties dialog box
  */
 static void
-update_fill_type_model (GtkWidget *widget, EditLProp *dialog)
+update_fill_type_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog)
 {
   TOPLEVEL *toplevel;
   GschemToplevel *w_current;
@@ -770,7 +770,7 @@ update_fill_type_model (GtkWidget *widget, EditLProp *dialog)
  *  \param [in,out] dialog This dialog
  */
 static void
-update_fill_type_widget (EditLProp *dialog)
+update_fill_type_widget (GschemObjectPropertiesDialog *dialog)
 {
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (dialog->fstylecb != NULL);
@@ -800,7 +800,7 @@ update_fill_type_widget (EditLProp *dialog)
  *  \param [in] dialog The line properties dialog box
  */
 static void
-update_line_type_model (GtkWidget *widget, EditLProp *dialog)
+update_line_type_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog)
 {
   TOPLEVEL *toplevel;
   GschemToplevel *w_current;
@@ -835,7 +835,7 @@ update_line_type_model (GtkWidget *widget, EditLProp *dialog)
  *  \param [in,out] dialog This dialog
  */
 static void
-update_line_type_widget (EditLProp *dialog)
+update_line_type_widget (GschemObjectPropertiesDialog *dialog)
 {
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (dialog->line_type != NULL);
@@ -865,7 +865,7 @@ update_line_type_widget (EditLProp *dialog)
  *  \param [in] dialog The line properties dialog box
  */
 static void
-update_object_color_model (GtkWidget *widget, EditLProp *dialog)
+update_object_color_model (GtkWidget *widget, GschemObjectPropertiesDialog *dialog)
 {
   TOPLEVEL *toplevel;
   GschemToplevel *w_current;
@@ -900,7 +900,7 @@ update_object_color_model (GtkWidget *widget, EditLProp *dialog)
  *  \param [in,out] dialog This dialog
  */
 static void
-update_object_color_widget (EditLProp *dialog)
+update_object_color_widget (GschemObjectPropertiesDialog *dialog)
 {
   g_return_if_fail (dialog != NULL);
   g_return_if_fail (dialog->colorcb != NULL);
