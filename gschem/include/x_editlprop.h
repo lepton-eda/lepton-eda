@@ -59,6 +59,10 @@ struct _EditLProp
   GtkWidget *angle2e;
   GtkWidget *pitch1e;
   GtkWidget *pitch2e;
+
+  GtkWidget *fill_section_widget;
+  GtkWidget *line_section_widget;
+  GtkWidget *object_section_widget;
 };
 
 GType

@@ -53,6 +53,12 @@ static void
 dispose (GObject *object);
 
 static void
+geometry_restore (EditLProp *dialog, EdaConfig *cfg, gchar* group_name);
+
+static void
+geometry_save (EditLProp *dialog, EdaConfig *cfg, gchar* group_name);
+
+static void
 instance_init (EditLProp *dialog);
 
 static void
@@ -401,6 +407,89 @@ dispose (GObject *object)
 
 
 /*! \private
+ *  \brief Restore widget state
+ *
+ *  \param [in] dialog     The GschemDialog to restore the position and size of.
+ *  \param [in] key_file   The GKeyFile to load the geometry data from.
+ *  \param [in] group_name The group name in the key file to find the data under.
+ */
+static void
+geometry_restore (EditLProp *dialog, EdaConfig *cfg, gchar* group_name)
+{
+  GError *error = NULL;
+  gboolean value;
+
+  g_return_if_fail (dialog != NULL);
+
+  /* If any errors occur, use the value already set */
+
+  value = eda_config_get_boolean (cfg,
+                                  group_name,
+                                  "fill-section-expanded",
+                                  &error);
+
+  if (error == NULL) {
+    gtk_expander_set_expanded (GTK_EXPANDER (dialog->fill_section_widget), value);
+  }
+
+  g_clear_error (&error);
+
+  value = eda_config_get_boolean (cfg,
+                                  group_name,
+                                  "line-section-expanded",
+                                  &error);
+
+  if (error == NULL) {
+    gtk_expander_set_expanded (GTK_EXPANDER (dialog->line_section_widget), value);
+  }
+
+  g_clear_error (&error);
+
+  value = eda_config_get_boolean (cfg,
+                                  group_name,
+                                  "object-section-expanded",
+                                  &error);
+
+  if (error == NULL) {
+    gtk_expander_set_expanded (GTK_EXPANDER (dialog->object_section_widget), value);
+  }
+
+  g_clear_error (&error);
+}
+
+
+
+/*! \private
+ *  \brief Save widget state
+ *
+ *  \param [in] dialog     The GschemDialog to save the position and size of.
+ *  \param [in] key_file   The GKeyFile to save the geometry data to.
+ *  \param [in] group_name The group name in the key file to store the data under.
+ */
+static void
+geometry_save (EditLProp *dialog, EdaConfig *cfg, gchar* group_name)
+{
+  g_return_if_fail (dialog != NULL);
+
+  eda_config_set_boolean (cfg,
+                          group_name,
+                          "fill-section-expanded",
+                          gtk_expander_get_expanded (GTK_EXPANDER (dialog->fill_section_widget)));
+
+  eda_config_set_boolean (cfg,
+                          group_name,
+                          "line-section-expanded",
+                          gtk_expander_get_expanded (GTK_EXPANDER (dialog->line_section_widget)));
+
+  eda_config_set_boolean (cfg,
+                          group_name,
+                          "object-section-expanded",
+                          gtk_expander_get_expanded (GTK_EXPANDER (dialog->object_section_widget)));
+}
+
+
+
+/*! \private
  *  \brief Initialize EditLProp instance
  *
  *  \param [in,out] dialog The edit text dialog
@@ -419,23 +508,37 @@ instance_init (EditLProp *dialog)
                     G_CALLBACK (notify_gschem_toplevel),
                     NULL);
 
+  g_signal_connect (G_OBJECT (dialog),
+                    "geometry-restore",
+                    G_CALLBACK (geometry_restore),
+                    NULL);
+
+  g_signal_connect (G_OBJECT (dialog),
+                    "geometry-save",
+                    G_CALLBACK (geometry_save),
+                    NULL);
+
   vbox = GTK_DIALOG (dialog)->vbox;
   gtk_box_set_spacing (GTK_BOX (vbox), DIALOG_V_SPACING);
 
+  dialog->object_section_widget = create_object_property_widget (dialog);
+  dialog->line_section_widget   = create_line_property_widget (dialog);
+  dialog->fill_section_widget   = create_fill_property_widget (dialog);
+
   gtk_box_pack_start (GTK_BOX (vbox),                          /* box     */
-                      create_object_property_widget (dialog),  /* child   */
+                      dialog->object_section_widget,           /* child   */
                       FALSE,                                   /* expand  */
                       FALSE,                                   /* fill    */
                       0);                                      /* padding */
 
   gtk_box_pack_start (GTK_BOX (vbox),                          /* box     */
-                      create_line_property_widget (dialog),    /* child   */
+                      dialog->line_section_widget,             /* child   */
                       FALSE,                                   /* expand  */
                       FALSE,                                   /* fill    */
                       0);                                      /* padding */
 
   gtk_box_pack_start (GTK_BOX (vbox),                          /* box     */
-                      create_fill_property_widget (dialog),    /* child   */
+                      dialog->fill_section_widget,             /* child   */
                       FALSE,                                   /* expand  */
                       FALSE,                                   /* fill    */
                       0);                                      /* padding */
