@@ -48,8 +48,7 @@
 /*------------------------------------------------------------------*/
 /*! \brief Initialise variables in the TOPLEVEL
  *
- * Initialize the variables in toplevel. In practice, this is only
- * the paper size for the sheet.
+ * Initialize the variables in toplevel.
  * \param toplevel pointer to the TOPLEVEL to set paper size in.
  */
 void i_vars_set (TOPLEVEL *toplevel)
