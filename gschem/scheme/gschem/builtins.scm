@@ -389,7 +389,7 @@ found, shows a dialog with an error message."
 
 (define-action-public
     (&help-manual #:label (_ "gEDA Manuals") #:icon "help-browser"
-     #:tooltip (_ "View the front page of the gEDA documention in a browser."))
+     #:tooltip (_ "View the front page of the gEDA documentation in a browser."))
   (show-wiki "geda:documentation"))
 
 
