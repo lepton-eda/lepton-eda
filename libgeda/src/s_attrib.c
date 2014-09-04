@@ -115,9 +115,10 @@ void s_attrib_free()
   attrib_index=0;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Perform initialization of array of attributes.
  *  \par Function Description
+ *  This function performs initialization of the \a attrib array
+ *  by setting all its members to NULL.
  *
  */
 void s_attrib_init()
