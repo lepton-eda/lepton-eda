@@ -364,7 +364,7 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
 
   geometry = g_hash_table_lookup (view->geometry_table, page);
 
-  /* \todo The following line is depricated in GDK 2.24 */
+  /* \todo The following line is deprecated in GDK 2.24 */
   gdk_drawable_get_size (GTK_WIDGET (view)->window, &screen_width, &screen_height);
 
   if (geometry == NULL) {
@@ -627,9 +627,9 @@ gschem_page_view_init (GschemPageView *view)
 
 
 
-/*! \brief Create a new instanceof the GschemPageView
+/*! \brief Create a new instance of the GschemPageView
  *
- *  \return A new instanceof the GschemPageView
+ *  \return A new instance of the GschemPageView
  */
 GschemPageView*
 gschem_page_view_new_with_toplevel (TOPLEVEL *toplevel)

@@ -36,7 +36,7 @@
  *
  *  \par Function Description
  *  Returns the world spacing of the rendered grid, taking into account where
- *  the grid drawing code may drop elelments which are too densly packed for a
+ *  the grid drawing code may drop elements which are too densely packed for a
  *  given zoom level.
  *
  *  \param [in] w_current  The GschemToplevel.
@@ -239,7 +239,7 @@ static void draw_mesh (GschemToplevel *w_current,
  *
  *  \par Function Description
  *  Returns the world spacing of the rendered grid, taking into account where
- *  the grid drawing code may drop elelments which are too densly packed for a
+ *  the grid drawing code may drop elements which are too densely packed for a
  *  given zoom level.
  *
  *  \param [in] w_current  The GschemToplevel.
@@ -384,7 +384,7 @@ void x_grid_draw_region (GschemToplevel *w_current,
  *
  *  \par Function Description
  *  Returns the world spacing of the rendered grid, taking into account where
- *  the grid drawing code may drop elelments which are too densly packed for a
+ *  the grid drawing code may drop elements which are too densely packed for a
  *  given zoom level.
  *
  *  \param [in] w_current  The GschemToplevel.

@@ -403,7 +403,7 @@ void x_window_create_main(GschemToplevel *w_current)
   w_current->popup_menu = (GtkWidget *) get_main_popup(w_current);
 
 
-  /* Setup a GtkScrolledWindow for the drawig area */
+  /* Setup a GtkScrolledWindow for the drawing area */
   hadjustment = GTK_ADJUSTMENT (gtk_adjustment_new (0.0,
                                                     0.0,
                                                     toplevel->init_right,
