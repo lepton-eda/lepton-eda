@@ -375,7 +375,7 @@ void x_grid_draw_region (GschemToplevel *w_current,
 
 #if DEBUG
   /* highly temp, just for diag purposes */
-  x_draw_tiles(w_current);
+  x_draw_tiles(w_current, cr);
 #endif
 }
 
@@ -413,52 +413,60 @@ int x_grid_query_drawn_spacing (GschemToplevel *w_current)
  *  \par Function Description
  *
  */
-void x_draw_tiles(GschemToplevel *w_current)
+void x_draw_tiles(GschemToplevel *w_current, cairo_t *cr)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   TILE *t_current;
-  GdkFont *font;
   int i,j;
-  int x1, y1, x2, y2;
-  int screen_x, screen_y;
-  int width, height;
   char *tempstring;
+  GdkColor *color;
+  cairo_text_extents_t extents;
 
-  gdk_gc_set_foreground (w_current->gc, x_get_color (LOCK_COLOR));
+  color = x_get_color (LOCK_COLOR);
 
-  font = gdk_fontset_load ("fixed");
+  cairo_set_source_rgb (cr,
+                        color->red   / 65535.0,
+                        color->green / 65535.0,
+                        color->blue  / 65535.0);
+
+  cairo_select_font_face (cr,
+                          "Sans",
+                          CAIRO_FONT_SLANT_NORMAL,
+                          CAIRO_FONT_WEIGHT_BOLD);
+
+  cairo_set_font_size (cr, 2000);
+
   for (j = 0; j < MAX_TILES_Y; j++) {
     for (i = 0; i < MAX_TILES_X; i++) {
       t_current = &toplevel->page_current->world_tiles[i][j];
-      gschem_page_view_WORLDtoSCREEN (GSCHEM_PAGE_VIEW (w_current->drawing_area), t_current->left, t_current->top, &x1, &y1);
-      gschem_page_view_WORLDtoSCREEN (GSCHEM_PAGE_VIEW (w_current->drawing_area), t_current->right, t_current->bottom, &x2, &y2);
 
-      screen_x = min(x1, x2);
-      screen_y = min(y1, y2);
+      cairo_rectangle (cr,
+                       t_current->left,
+                       t_current->top,
+                       t_current->right - t_current->left,
+                       t_current->bottom - t_current->top);
 
-      width = abs(x1 - x2);
-      height = abs(y1 - y2);
+      cairo_save (cr);
 
-#if DEBUG
-      printf("x, y: %d %d\n", screen_x, screen_y);
-      printf("w x h: %d %d\n", width, height);
-#endif
-      gdk_draw_rectangle (w_current->drawable,
-                          w_current->gc,
-                          FALSE, screen_x, screen_y,
-                          width, height);
+      cairo_translate (cr,
+                      (t_current->left + t_current->right) / 2.0,
+                      (t_current->top + t_current->bottom) / 2.0);
 
-      tempstring = g_strdup_printf("%d %d", i, j);
+      tempstring = g_strdup_printf("(%d,%d)", i, j);
 
-      gdk_draw_text (w_current->drawable,
-                     font,
-                     w_current->gc,
-                     screen_x+10, screen_y+10,
-                     tempstring,
-                     strlen(tempstring));
+      cairo_scale (cr, 1.0, -1.0);
+
+      cairo_text_extents (cr, tempstring, &extents);
+
+      cairo_move_to (cr,
+                     extents.width / -2.0,
+                     extents.height / 2.0);
+
+      cairo_show_text (cr, tempstring);
+
       g_free(tempstring);
+
+      cairo_restore (cr);
     }
   }
-
-  gdk_font_unref(font);
 }
