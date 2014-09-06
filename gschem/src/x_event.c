@@ -69,6 +69,9 @@ x_event_expose(GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_cu
 
     w_current->cr = gdk_cairo_create( GTK_WIDGET (view)->window );
 
+    gdk_cairo_rectangle (w_current->cr, &(event->area));
+    cairo_clip (w_current->cr);
+
     o_redraw_rects (w_current,
                     page,
                     geometry,
