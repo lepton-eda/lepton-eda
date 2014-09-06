@@ -107,7 +107,6 @@ struct st_gschem_toplevel {
   /* ---------------- */
   GdkWindow *window;                    /* drawing_area's X drawable */
   GdkPixmap *drawable;                  /* drawable to paint onto */
-  cairo_t *cr;                          /* Cairo surface */
 
   int win_width, win_height;            /* Actual size of window (?) */
 

@@ -37,6 +37,7 @@ extern COLOR display_outline_colors[MAX_COLORS];
  *
  */
 void o_redraw_rects (GschemToplevel *w_current,
+                     cairo_t *cr,
                      PAGE *page,
                      GschemPageGeometry *geometry,
                      GdkRectangle *rectangles,
@@ -63,17 +64,17 @@ void o_redraw_rects (GschemToplevel *w_current,
   g_return_if_fail (page != NULL);
   g_return_if_fail (geometry != NULL);
 
-  cairo_save (w_current->cr);
-  cairo_set_matrix (w_current->cr, gschem_page_geometry_get_world_to_screen_matrix (geometry));
+  cairo_save (cr);
+  cairo_set_matrix (cr, gschem_page_geometry_get_world_to_screen_matrix (geometry));
 
   for (i = 0; i < n_rectangles; i++) {
-    x_repaint_background_region (w_current, rectangles[i].x, rectangles[i].y,
+    x_repaint_background_region (w_current, cr, rectangles[i].x, rectangles[i].y,
                                  rectangles[i].width, rectangles[i].height);
   }
 
   grip_half_size = GRIP_SIZE / 2;
   cue_half_size = CUE_BOX_SIZE;
-  cairo_user_to_device (w_current->cr, &cue_half_size, &dummy);
+  cairo_user_to_device (cr, &cue_half_size, &dummy);
   bloat = MAX (grip_half_size, (int)cue_half_size);
 
 
@@ -85,8 +86,8 @@ void o_redraw_rects (GschemToplevel *w_current,
     double upper_x = rectangles[i].x + rectangles[i].width + bloat;
     double upper_y = rectangles[i].y - bloat;
 
-    cairo_device_to_user (w_current->cr, &lower_x, &lower_y);
-    cairo_device_to_user (w_current->cr, &upper_x, &upper_y);
+    cairo_device_to_user (cr, &lower_x, &lower_y);
+    cairo_device_to_user (cr, &upper_x, &upper_y);
 
     world_rect[i].lower_x = floor (lower_x);
     world_rect[i].lower_y = floor (lower_y);
@@ -126,7 +127,7 @@ void o_redraw_rects (GschemToplevel *w_current,
   /* Set up renderer */
   renderer = g_object_ref (w_current->renderer);
   g_object_set (G_OBJECT (renderer),
-                "cairo-context", w_current->cr,
+                "cairo-context", cr,
                 "grip-size", ((double) grip_half_size * geometry->to_world_x_constant),
                 "render-flags", render_flags,
                 "color-map", render_color_map,
@@ -183,13 +184,13 @@ void o_redraw_rects (GschemToplevel *w_current,
       case ENDMOVE:
         if (w_current->last_drawb_mode != -1) {
           /* FIXME shouldn't need to save/restore colormap here */
-          cairo_save (w_current->cr);
+          cairo_save (cr);
           eda_renderer_set_color_map (renderer, render_outline_color_map);
 
           o_move_draw_rubber (w_current, renderer);
 
           eda_renderer_set_color_map (renderer, render_color_map);
-          cairo_restore (w_current->cr);
+          cairo_restore (cr);
         }
         break;
 
@@ -200,13 +201,13 @@ void o_redraw_rects (GschemToplevel *w_current,
       case ENDPASTE:
         if (w_current->rubber_visible) {
           /* FIXME shouldn't need to save/restore colormap here */
-          cairo_save (w_current->cr);
+          cairo_save (cr);
           eda_renderer_set_color_map (renderer, render_outline_color_map);
 
           o_place_draw_rubber (w_current, renderer);
 
           eda_renderer_set_color_map (renderer, render_color_map);
-          cairo_restore (w_current->cr);
+          cairo_restore (cr);
         }
         break;
 
@@ -215,13 +216,13 @@ void o_redraw_rects (GschemToplevel *w_current,
       case NETCONT:
         if (w_current->rubber_visible) {
           /* FIXME shouldn't need to save/restore colormap here */
-          cairo_save (w_current->cr);
+          cairo_save (cr);
           eda_renderer_set_color_map (renderer, render_outline_color_map);
 
           o_net_draw_rubber (w_current, renderer);
 
           eda_renderer_set_color_map (renderer, render_color_map);
-          cairo_restore (w_current->cr);
+          cairo_restore (cr);
         }
         break;
 
@@ -230,13 +231,13 @@ void o_redraw_rects (GschemToplevel *w_current,
       case BUSCONT:
         if (w_current->rubber_visible) {
           /* FIXME shouldn't need to save/restore colormap here */
-          cairo_save (w_current->cr);
+          cairo_save (cr);
           eda_renderer_set_color_map (renderer, render_outline_color_map);
 
           o_bus_draw_rubber(w_current, renderer);
 
           eda_renderer_set_color_map (renderer, render_color_map);
-          cairo_restore (w_current->cr);
+          cairo_restore (cr);
         }
         break;
 

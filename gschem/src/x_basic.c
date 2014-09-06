@@ -30,6 +30,7 @@
  *
  */
 void x_repaint_background_region (GschemToplevel *w_current,
+                                  cairo_t *cr,
                                   int x, int y, int width, int height)
 {
   gdk_gc_set_foreground (w_current->gc,
@@ -38,7 +39,7 @@ void x_repaint_background_region (GschemToplevel *w_current,
   gdk_draw_rectangle (w_current->drawable,
                       w_current->gc, TRUE, x, y, width, height);
 
-  x_grid_draw_region (w_current, x, y, width, height);
+  x_grid_draw_region (w_current, cr, x, y, width, height);
 }
 
 /*! \todo Finish function documentation!!!

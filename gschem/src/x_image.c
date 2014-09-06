@@ -521,6 +521,7 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
   TOPLEVEL toplevel;
   GdkRectangle rect;
   GschemPageGeometry *geometry;
+  cairo_t *cr;
 
   /* Do a copy of the w_current struct and work with it */
   memcpy(&new_w_current, w_current, sizeof(GschemToplevel));
@@ -534,7 +535,7 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
 
   new_w_current.window = gdk_pixmap_new (w_current->window, size_x, size_y, -1);
   new_w_current.drawable = new_w_current.window;
-  new_w_current.cr = gdk_cairo_create (new_w_current.window);
+  cr = gdk_cairo_create (new_w_current.window);
 
   gschem_options_set_grid_mode (new_w_current.options, GRID_MODE_NONE);
 
@@ -567,7 +568,7 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
                                                    toplevel.init_right,
                                                    toplevel.init_bottom);
 
-  o_redraw_rects (&new_w_current, toplevel.page_current, geometry, &rect, 1);
+  o_redraw_rects (&new_w_current, cr, toplevel.page_current, geometry, &rect, 1);
 
   gschem_page_geometry_free (geometry);
 
@@ -582,7 +583,8 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
     x_image_convert_to_greyscale(pixbuf);
   }
 
-  if (new_w_current.cr != NULL) cairo_destroy (new_w_current.cr);
+  cairo_destroy (cr);
+
   if (new_w_current.window != NULL) {
     g_object_unref(new_w_current.window);
   }

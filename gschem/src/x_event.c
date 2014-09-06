@@ -63,24 +63,19 @@ x_event_expose(GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_cu
   geometry = gschem_page_view_get_page_geometry (view);
 
   if (page != NULL) {
-    cairo_t *save_cr;
+    cairo_t *cr = gdk_cairo_create (GTK_WIDGET (view)->window);
 
-    save_cr = w_current->cr;
-
-    w_current->cr = gdk_cairo_create( GTK_WIDGET (view)->window );
-
-    gdk_cairo_rectangle (w_current->cr, &(event->area));
-    cairo_clip (w_current->cr);
+    gdk_cairo_rectangle (cr, &(event->area));
+    cairo_clip (cr);
 
     o_redraw_rects (w_current,
+                    cr,
                     page,
                     geometry,
                     &(event->area),
                     1);
 
-    cairo_destroy (w_current->cr);
-
-    w_current->cr = save_cr;
+    cairo_destroy (cr);
   }
 
   return(0);
