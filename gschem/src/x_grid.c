@@ -204,8 +204,9 @@ static void draw_mesh (GschemToplevel *w_current, cairo_matrix_t *user_to_device
 
     cairo_move_to (w_current->cr, (int)(x1+0.5), (int)(y1+0.5));
     cairo_line_to (w_current->cr, (int)(x2+0.5), (int)(y2+0.5));
+
+    cairo_stroke (w_current->cr);
   }
-  cairo_stroke (w_current->cr);
 
   for (i = x_start; i < x_end; i = i + incr) {
 
@@ -225,8 +226,9 @@ static void draw_mesh (GschemToplevel *w_current, cairo_matrix_t *user_to_device
 
     cairo_move_to (w_current->cr, (int)(x1+0.5), (int)(y1+0.5));
     cairo_line_to (w_current->cr, (int)(x2+0.5), (int)(y2+0.5));
+
+    cairo_stroke (w_current->cr);
   }
-  cairo_stroke (w_current->cr);
 }
 
 

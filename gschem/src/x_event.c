@@ -63,17 +63,17 @@ x_event_expose(GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_cu
   geometry = gschem_page_view_get_page_geometry (view);
 
   if (page != NULL) {
-    GdkRectangle *rectangles;
-    int n_rectangles;
     cairo_t *save_cr;
 
     save_cr = w_current->cr;
 
     w_current->cr = gdk_cairo_create( GTK_WIDGET (view)->window );
 
-    gdk_region_get_rectangles (event->region, &rectangles, &n_rectangles);
-    o_redraw_rects (w_current, page, geometry, rectangles, n_rectangles);
-    g_free (rectangles);
+    o_redraw_rects (w_current,
+                    page,
+                    geometry,
+                    &(event->area),
+                    1);
 
     cairo_destroy (w_current->cr);
 
