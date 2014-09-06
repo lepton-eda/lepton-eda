@@ -33,11 +33,14 @@ void x_repaint_background_region (GschemToplevel *w_current,
                                   cairo_t *cr,
                                   int x, int y, int width, int height)
 {
-  gdk_gc_set_foreground (w_current->gc,
-                         x_get_color (w_current->background_color));
+  GdkColor *color = x_get_color (w_current->background_color);
 
-  gdk_draw_rectangle (w_current->drawable,
-                      w_current->gc, TRUE, x, y, width, height);
+  cairo_set_source_rgb (cr,
+                        color->red   / 65535.0,
+                        color->green / 65535.0,
+                        color->blue  / 65535.0);
+
+  cairo_paint (cr);
 
   x_grid_draw_region (w_current, cr, x, y, width, height);
 }
