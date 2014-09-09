@@ -353,14 +353,15 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
 {
   typedef void (*NotifyFunction) (void*,void*);
 
-  GschemPageGeometry *geometry;
-  PAGE *page = gschem_page_view_get_page (view);
+  PAGE *page = NULL;
+  GschemPageGeometry *geometry = NULL;
   int screen_width;
   int screen_height;
 
-  g_return_val_if_fail (page != NULL, NULL);
   g_return_val_if_fail (view != NULL, NULL);
-  g_return_val_if_fail (view->toplevel != NULL, NULL);
+
+  page = gschem_page_view_get_page (view);
+  g_return_val_if_fail (page != NULL, NULL);
 
   geometry = g_hash_table_lookup (view->geometry_table, page);
 
@@ -648,12 +649,16 @@ gschem_page_view_new_with_toplevel (TOPLEVEL *toplevel)
 void
 gschem_page_view_pan (GschemPageView *view, int w_x, int w_y)
 {
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
-  PAGE *page = gschem_page_view_get_page (view);
+  PAGE *page = NULL;
+  GschemPageGeometry *geometry = NULL;
 
-  g_return_if_fail (geometry != NULL);
-  g_return_if_fail (page != NULL);
   g_return_if_fail (view != NULL);
+
+  page = gschem_page_view_get_page (view);
+  g_return_if_fail (page != NULL);
+
+  geometry = gschem_page_view_get_page_geometry (view);
+  g_return_if_fail (geometry != NULL);
 
   /* make mouse to the new world-center;
      attention: there are information looses because of type cast in mil_x */
@@ -695,14 +700,18 @@ gschem_page_view_pan (GschemPageView *view, int w_x, int w_y)
 void
 gschem_page_view_pan_mouse (GschemPageView *view, GschemToplevel *w_current, int diff_x, int diff_y)
 {
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
-  PAGE *page = gschem_page_view_get_page (view);
+  PAGE *page = NULL;
+  GschemPageGeometry *geometry = NULL;
   double world_cx, world_cy;
   double page_cx, page_cy;
 
-  g_return_if_fail (geometry != NULL);
-  g_return_if_fail (page != NULL);
   g_return_if_fail (view != NULL);
+
+  page = gschem_page_view_get_page (view);
+  g_return_if_fail (page != NULL);
+
+  geometry = gschem_page_view_get_page_geometry (view);
+  g_return_if_fail (geometry != NULL);
 
 #if DEBUG
   printf("gschem_page_view_pan_mouse(): diff_x=%d, diff_y=%d\n", diff_x, diff_y);
@@ -1166,13 +1175,17 @@ gschem_page_view_WORLDtoSCREEN (GschemPageView *view, int x, int y, int *px, int
 void
 gschem_page_view_zoom_extents (GschemPageView *view, const GList *objects)
 {
-  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
-  PAGE *page = gschem_page_view_get_page (view);
+  PAGE *page = NULL;
+  GschemPageGeometry *geometry = NULL;
   const GList *temp = objects;
 
-  g_return_if_fail (geometry != NULL);
-  g_return_if_fail (page != NULL);
   g_return_if_fail (view != NULL);
+
+  page = gschem_page_view_get_page (view);
+  g_return_if_fail (page != NULL);
+
+  geometry = gschem_page_view_get_page_geometry (view);
+  g_return_if_fail (geometry != NULL);
 
   if (temp == NULL) {
     temp = s_page_objects (page);
