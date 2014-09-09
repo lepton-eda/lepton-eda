@@ -93,27 +93,11 @@ void i_callback_toolbar_file_new(GtkWidget* widget, gpointer data)
 DEFINE_I_CALLBACK(file_new_window)
 {
   GschemToplevel *w_current;
-  PAGE *page;
+  w_current = x_window_new (NULL);
+  x_window_set_current_page (w_current, x_window_open_page (w_current, NULL));
 
-  w_current = gschem_toplevel_new ();
-  gschem_toplevel_set_toplevel (w_current, s_toplevel_new ());
-
-  gschem_toplevel_get_toplevel (w_current)->load_newer_backup_func = x_fileselect_load_backup;
-  gschem_toplevel_get_toplevel (w_current)->load_newer_backup_data = w_current;
-
-  o_text_set_rendered_bounds_func (gschem_toplevel_get_toplevel (w_current),
-                                   o_text_get_rendered_bounds, w_current);
-
-  /* Damage notifications should invalidate the object on screen */
-  o_add_change_notify (gschem_toplevel_get_toplevel (w_current),
-                       (ChangeNotifyFunc) o_invalidate,
-                       (ChangeNotifyFunc) o_invalidate, w_current);
-
-  x_window_setup (w_current);
-
-  page = x_window_open_page (w_current, NULL);
-  x_window_set_current_page (w_current, page);
-  s_log_message (_("New Window created [%s]\n"), page->page_filename);
+  s_log_message (_("New Window created [%s]\n"),
+      w_current->toplevel->page_current->page_filename);
 }
 
 /*! \todo Finish function documentation!!!

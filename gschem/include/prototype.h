@@ -724,7 +724,7 @@ gboolean x_print_export_pdf_page (GschemToplevel *w_current, const gchar *filena
 gboolean x_print_export_pdf (GschemToplevel *w_current, const gchar *filename);
 void x_print (GschemToplevel *w_current);
 /* x_rc.c */
-void x_rc_parse_gschem (GschemToplevel *w_current, const gchar *rcfile);
+void x_rc_parse_gschem (TOPLEVEL *toplevel, const gchar *rcfile);
 /* x_rotatecb.c */
 GtkWidget* x_rotatecb_new ();
 int x_rotatecb_get_angle (GtkWidget *widget);
@@ -751,3 +751,4 @@ gint x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *fil
 void x_window_close_page (GschemToplevel *w_current, PAGE *page);
 void x_window_set_default_icon (void);
 void x_window_init_icons (void);
+GschemToplevel* x_window_new (TOPLEVEL *toplevel);

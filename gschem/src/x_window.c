@@ -945,3 +945,37 @@ x_window_init_icons (void)
                                      icon_path);
   g_free (icon_path);
 }
+
+/*! \brief Creates a new X window.
+ *
+ * \par Function description
+ *
+ * Creates and initializes new GschemToplevel object and then sets
+ * and setups its libgeda \a toplevel.
+ *
+ * \param toplevel The libgeda TOPLEVEL object.
+ * \return Pointer to the new GschemToplevel object.
+ */
+GschemToplevel* x_window_new (TOPLEVEL *toplevel)
+{
+  GschemToplevel *w_current;
+
+  w_current = gschem_toplevel_new ();
+  gschem_toplevel_set_toplevel (w_current,
+                                (toplevel != NULL) ? toplevel : s_toplevel_new ());
+
+  gschem_toplevel_get_toplevel (w_current)->load_newer_backup_func = x_fileselect_load_backup;
+  gschem_toplevel_get_toplevel (w_current)->load_newer_backup_data = w_current;
+
+  o_text_set_rendered_bounds_func (gschem_toplevel_get_toplevel (w_current),
+                                   o_text_get_rendered_bounds, w_current);
+
+  /* Damage notifications should invalidate the object on screen */
+  o_add_change_notify (gschem_toplevel_get_toplevel (w_current),
+                       (ChangeNotifyFunc) o_invalidate,
+                       (ChangeNotifyFunc) o_invalidate, w_current);
+
+  x_window_setup (w_current);
+
+  return w_current;
+}

@@ -126,9 +126,9 @@ void main_prog(void *closure, int argc, char *argv[])
   int i;
   char *cwd = NULL;
   GschemToplevel *w_current = NULL;
+  TOPLEVEL *toplevel = NULL;
   char *input_str = NULL;
   int argv_index;
-  int first_page = 1;
   char *filename;
   SCM scm_tmp;
 
@@ -215,18 +215,7 @@ void main_prog(void *closure, int argc, char *argv[])
     g_error ("%s", message);
   }
 
-  /* Allocate w_current */
-  w_current = gschem_toplevel_new ();
-  gschem_toplevel_set_toplevel (w_current, s_toplevel_new ());
-
-  w_current->toplevel->load_newer_backup_func = x_fileselect_load_backup;
-  w_current->toplevel->load_newer_backup_data = w_current;
-
-  o_text_set_rendered_bounds_func (w_current->toplevel,
-                                   o_text_get_rendered_bounds, w_current);
-
   scm_dynwind_begin (0);
-  g_dynwind_window (w_current);
 
   /* Run pre-load Scheme expressions */
   g_scm_eval_protected (s_pre_load_expr, scm_current_module ());
@@ -238,7 +227,8 @@ void main_prog(void *closure, int argc, char *argv[])
     s_log_message (_("Couldn't find init scm file [%s]\n"), "gschem.scm");
   }
   input_str = scm_to_utf8_string (scm_tmp);
-  if (g_read_file(w_current->toplevel, input_str, NULL)) {
+  toplevel = s_toplevel_new ();
+  if (g_read_file(toplevel, input_str, NULL)) {
     s_log_message(_("Read init scm file [%s]\n"), input_str);
   } else {
     /*! \todo These two messages are the same. Should be
@@ -255,15 +245,19 @@ void main_prog(void *closure, int argc, char *argv[])
 
   /* Now read in RC files. */
   g_rc_parse_gtkrc();
-  x_rc_parse_gschem (w_current, rc_filename);
+  x_rc_parse_gschem (toplevel, rc_filename);
 
-  /* Set default icon and make sure we can find our own icons */
+  /* Set default icon theme and make sure we can find our own icons */
   x_window_set_default_icon();
   x_window_init_icons ();
 
   /* At end, complete set up of window. */
   x_color_allocate();
-  x_window_setup (w_current);
+
+  /* Allocate w_current */
+  w_current = x_window_new (toplevel);
+
+  g_dynwind_window (w_current);
 
 #ifdef HAVE_LIBSTROKE
   x_stroke_init ();
@@ -279,9 +273,6 @@ void main_prog(void *closure, int argc, char *argv[])
       filename = g_build_filename (cwd, argv[i], NULL);
     }
 
-    if ( first_page )
-      first_page = 0;
-
     /*
      * SDB notes:  at this point the filename might be unnormalized, like
      * /path/to/foo/../bar/baz.sch.  Bad filenames will be normalized in
@@ -293,14 +284,11 @@ void main_prog(void *closure, int argc, char *argv[])
 
   g_free(cwd);
 
-  /* If no page has been loaded (wasn't specified in the command line.) */
-  /* Then create an untitled page */
-  if ( first_page ) {
-    x_window_open_page( w_current, NULL );
-  }
-
   /* Update the window to show the current page */
-  x_window_set_current_page( w_current, w_current->toplevel->page_current );
+  x_window_set_current_page (w_current,
+    (w_current->toplevel->page_current == NULL) ?
+      x_window_open_page (w_current, NULL) :
+      w_current->toplevel->page_current);
 
 
 #if DEBUG

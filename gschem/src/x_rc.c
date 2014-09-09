@@ -25,12 +25,11 @@
 
 /* Error handler function used by x_rc_parse_gschem(). */
 static void
-x_rc_parse_gschem_error (GError **err, GschemToplevel *w_current)
+x_rc_parse_gschem_error (GError **err)
 {
   char *msg2; /* Secondary text */
   GtkWidget *dialog;
 
-  g_assert (w_current != NULL);
   g_assert (err != NULL);
 
   /* Take no chances; if err was not set for some reason, it's a
@@ -62,7 +61,7 @@ x_rc_parse_gschem_error (GError **err, GschemToplevel *w_current)
                             (*err)->message);
   }
 
-  dialog = gtk_message_dialog_new (GTK_WINDOW (w_current->main_window),
+  dialog = gtk_message_dialog_new (NULL,
                                    GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
                                    GTK_BUTTONS_OK,
                                    _("Cannot load gschem configuration."));
@@ -82,9 +81,8 @@ x_rc_parse_gschem_error (GError **err, GschemToplevel *w_current)
  * \param rcfile     Specific config file path, or NULL.
  */
 void
-x_rc_parse_gschem (GschemToplevel *w_current, const gchar *rcfile) {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  g_rc_parse_handler (toplevel, "gschemrc", rcfile,
+x_rc_parse_gschem (TOPLEVEL *toplevel, const gchar *rcfile) {
+  return g_rc_parse_handler (toplevel, "gschemrc", rcfile,
                       (ConfigParseErrorFunc) x_rc_parse_gschem_error,
-                      (void *) w_current);
+                      (void *) toplevel);
 }
