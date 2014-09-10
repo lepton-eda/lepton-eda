@@ -747,6 +747,36 @@ create_inuse_tree_model (Compselect *compselect)
   return (GtkTreeModel*)store;
 }
 
+/* \brief Helper function for create_lib_tree_model. */
+
+static void populate_component_store(GtkTreeStore *store, GList *srclist)
+{
+  GtkTreeIter iter, iter2;
+
+  gtk_tree_store_append (store, &iter, NULL);
+  gtk_tree_store_set (store, &iter,
+                      0, srclist->data,
+                      1, s_clib_source_get_name ((CLibSource *)srclist->data),
+                      2, FALSE,
+                      -1);
+
+  GList *symhead, *symlist;
+  symhead = s_clib_source_get_symbols ((CLibSource *)srclist->data);
+  for (symlist = symhead;
+       symlist != NULL;
+       symlist = g_list_next (symlist)) {
+
+    gtk_tree_store_append (store, &iter2, &iter);
+    gtk_tree_store_set (store, &iter2,
+                        0, symlist->data,
+                        1, s_clib_symbol_get_name ((CLibSymbol *)symlist->data),
+                        2, TRUE,
+                        -1);
+  }
+
+  g_list_free (symhead);
+}
+
 /* \brief Create the tree model for the "Library" view.
  * \par Function Description
  * Creates a tree where the branches are the available component
@@ -757,7 +787,6 @@ create_lib_tree_model (Compselect *compselect)
 {
   GtkTreeStore *store;
   GList *srchead, *srclist;
-  GList *symhead, *symlist;
   PAGE *page = GSCHEM_DIALOG(compselect)->w_current->toplevel->page_current;
   EdaConfig *cfg = eda_config_get_context_for_path (page->page_filename);
   gboolean sort = eda_config_get_boolean (cfg, "gschem.library", "sort", NULL);
@@ -771,30 +800,7 @@ create_lib_tree_model (Compselect *compselect)
   for (srclist = srchead;
        srclist != NULL;
        srclist = g_list_next (srclist)) {
-
-    GtkTreeIter iter, iter2;
-
-    gtk_tree_store_append (store, &iter, NULL);
-    gtk_tree_store_set (store, &iter,
-                        0, srclist->data,
-                        1, s_clib_source_get_name ((CLibSource *)srclist->data),
-                        2, FALSE,
-                        -1);
-
-    symhead = s_clib_source_get_symbols ((CLibSource *)srclist->data);
-    for (symlist = symhead;
-         symlist != NULL;
-         symlist = g_list_next (symlist)) {
-
-      gtk_tree_store_append (store, &iter2, &iter);
-      gtk_tree_store_set (store, &iter2,
-                          0, symlist->data,
-                          1, s_clib_symbol_get_name ((CLibSymbol *)symlist->data),
-                          2, TRUE,
-                          -1);
-    }
-
-    g_list_free (symhead);
+    populate_component_store(store, srclist);
   }
   g_list_free (srchead);
 
