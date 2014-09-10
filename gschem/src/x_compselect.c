@@ -326,6 +326,15 @@ inuse_treeview_set_cell_data (GtkTreeViewColumn *tree_column,
   g_object_set ((GObject*)cell, "text", s_clib_symbol_get_name (symbol), NULL);
 }
 
+/*! \brief Returns whether a library treeview node represents a symbol. */
+
+static gboolean is_symbol(GtkTreeModel *tree_model, GtkTreeIter *iter)
+{
+  gboolean result;
+  gtk_tree_model_get (tree_model, iter, 2, &result, -1);
+  return result;
+}
+
 /*! \brief Determines visibility of items of the library treeview.
  *  \par Function Description
  *  This is the function used to filter entries of the component
@@ -357,7 +366,7 @@ lib_model_filter_visible_func (GtkTreeModel *model,
 
   /* If this is a source, only display it if it has children that
    * match */
-  if (gtk_tree_model_iter_has_child (model, iter)) {
+  if (!is_symbol (model, iter)) {
     GtkTreeIter iter2;
 
     gtk_tree_model_iter_children (model, &iter2, iter);
@@ -412,7 +421,7 @@ tree_row_activated (GtkTreeView       *tree_view,
   model = gtk_tree_view_get_model (tree_view);
   gtk_tree_model_get_iter (model, &iter, path);
 
-  if (!gtk_tree_model_iter_has_child (model, &iter)) {
+  if (is_symbol (model, &iter)) {
     gtk_dialog_response (GTK_DIALOG (compselect),
                          COMPSELECT_RESPONSE_HIDE);
     return;
@@ -544,7 +553,7 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
 {
   GtkTreeView *view;
   GtkTreeModel *model;
-  GtkTreeIter iter, parent;
+  GtkTreeIter iter;
   Compselect *compselect = (Compselect*)user_data;
   const CLibSymbol *sym = NULL;
   gchar *buffer = NULL;
@@ -554,9 +563,8 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
     view = gtk_tree_selection_get_tree_view (selection);
     if (view == compselect->inusetreeview ||
         /* No special handling required */
-        (view == compselect->libtreeview &&
-         gtk_tree_model_iter_parent (model, &parent, &iter))) {
-         /* Tree view needs to check that we're at a leaf node */
+        (view == compselect->libtreeview && is_symbol (model, &iter))) {
+         /* Tree view needs to check that we're at a symbol node */
 
       gtk_tree_model_get (model, &iter, 0, &sym, -1);
       buffer = s_clib_symbol_get_data (sym);
@@ -754,7 +762,9 @@ create_lib_tree_model (Compselect *compselect)
   EdaConfig *cfg = eda_config_get_context_for_path (page->page_filename);
   gboolean sort = eda_config_get_boolean (cfg, "gschem.library", "sort", NULL);
 
-  store = (GtkTreeStore*)gtk_tree_store_new (2, G_TYPE_POINTER, G_TYPE_STRING);
+  store = (GtkTreeStore*)gtk_tree_store_new (3, G_TYPE_POINTER,
+                                                G_TYPE_STRING,
+                                                G_TYPE_BOOLEAN);
 
   /* populate component store */
   srchead = s_clib_get_sources (sort);
@@ -768,6 +778,7 @@ create_lib_tree_model (Compselect *compselect)
     gtk_tree_store_set (store, &iter,
                         0, srclist->data,
                         1, s_clib_source_get_name ((CLibSource *)srclist->data),
+                        2, FALSE,
                         -1);
 
     symhead = s_clib_source_get_symbols ((CLibSource *)srclist->data);
@@ -779,6 +790,7 @@ create_lib_tree_model (Compselect *compselect)
       gtk_tree_store_set (store, &iter2,
                           0, symlist->data,
                           1, s_clib_symbol_get_name ((CLibSymbol *)symlist->data),
+                          2, TRUE,
                           -1);
     }
 
@@ -1512,7 +1524,7 @@ compselect_get_property (GObject *object,
       case PROP_SYMBOL:
         {
           GtkTreeModel *model;
-          GtkTreeIter iter, parent;
+          GtkTreeIter iter;
           CLibSymbol *symbol = NULL;
 
           switch (compselect_get_view (compselect)) {
@@ -1529,7 +1541,7 @@ compselect_get_property (GObject *object,
                   gtk_tree_view_get_selection (compselect->libtreeview),
                   &model,
                   &iter)
-                && gtk_tree_model_iter_parent (model, &parent, &iter)) {
+                && is_symbol (model, &iter)) {
               gtk_tree_model_get (model, &iter, 0, &symbol, -1);
             }
             break;
