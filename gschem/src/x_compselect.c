@@ -342,21 +342,10 @@ lib_treeview_set_cell_data (GtkTreeViewColumn *tree_column,
                             GtkTreeIter       *iter,
                             gpointer           data)
 {
-  GtkTreeIter parent;
-  CLibSource *source;
-  CLibSymbol *symbol;
-  const char *text;
-
-  if (!gtk_tree_model_iter_parent (tree_model, &parent, iter)) {
-    /* If top level, must be a source. */
-    gtk_tree_model_get (tree_model, iter, 0, &source, -1);
-    text = s_clib_source_get_name (source);
-  } else {
-    /* Otherwise, must be a symbol */
-    gtk_tree_model_get (tree_model, iter, 0, &symbol, -1);
-    text = s_clib_symbol_get_name (symbol);
-  }
+  gchararray text;
+  gtk_tree_model_get (tree_model, iter, 1, &text, -1);
   g_object_set ((GObject*)cell, "text", text, NULL);
+  free(text);
 }
 
 /*! \brief Determines visibility of items of the library treeview.
@@ -787,7 +776,7 @@ create_lib_tree_model (Compselect *compselect)
   EdaConfig *cfg = eda_config_get_context_for_path (page->page_filename);
   gboolean sort = eda_config_get_boolean (cfg, "gschem.library", "sort", NULL);
 
-  store = (GtkTreeStore*)gtk_tree_store_new (1, G_TYPE_POINTER);
+  store = (GtkTreeStore*)gtk_tree_store_new (2, G_TYPE_POINTER, G_TYPE_STRING);
 
   /* populate component store */
   srchead = s_clib_get_sources (sort);
@@ -800,6 +789,7 @@ create_lib_tree_model (Compselect *compselect)
     gtk_tree_store_append (store, &iter, NULL);
     gtk_tree_store_set (store, &iter,
                         0, srclist->data,
+                        1, s_clib_source_get_name ((CLibSource *)srclist->data),
                         -1);
 
     symhead = s_clib_source_get_symbols ((CLibSource *)srclist->data);
@@ -810,6 +800,7 @@ create_lib_tree_model (Compselect *compselect)
       gtk_tree_store_append (store, &iter2, &iter);
       gtk_tree_store_set (store, &iter2,
                           0, symlist->data,
+                          1, s_clib_symbol_get_name ((CLibSymbol *)symlist->data),
                           -1);
     }
 
