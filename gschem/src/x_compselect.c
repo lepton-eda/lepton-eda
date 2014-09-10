@@ -326,28 +326,6 @@ inuse_treeview_set_cell_data (GtkTreeViewColumn *tree_column,
   g_object_set ((GObject*)cell, "text", s_clib_symbol_get_name (symbol), NULL);
 }
 
-/*! \brief Sets data for a particular cell of the library treeview.
- *  \par Function Description
- *  This function determines what data is to be displayed in the
- *  selection selection view.
- *
- *  The top level of the model contains sources, and the next symbols.
- *  s_clib_source_get_name() or s_clib_symbol_get_name() as
- *  appropriate is called to get the text to display.
- */
-static void
-lib_treeview_set_cell_data (GtkTreeViewColumn *tree_column,
-                            GtkCellRenderer   *cell,
-                            GtkTreeModel      *tree_model,
-                            GtkTreeIter       *iter,
-                            gpointer           data)
-{
-  gchararray text;
-  gtk_tree_model_get (tree_model, iter, 1, &text, -1);
-  g_object_set ((GObject*)cell, "text", text, NULL);
-  free(text);
-}
-
 /*! \brief Determines visibility of items of the library treeview.
  *  \par Function Description
  *  This is the function used to filter entries of the component
@@ -1040,9 +1018,7 @@ create_lib_treeview (Compselect *compselect)
                   "title", _("Components"),
                   NULL));
   gtk_tree_view_column_pack_start (column, renderer, TRUE);
-  gtk_tree_view_column_set_cell_data_func (column, renderer,
-                                           lib_treeview_set_cell_data,
-                                           NULL, NULL);
+  gtk_tree_view_column_add_attribute (column, renderer, "text", 1);
   gtk_tree_view_append_column (GTK_TREE_VIEW (libtreeview), column);
 
   /* add the treeview to the scrolled window */
