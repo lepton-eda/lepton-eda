@@ -749,19 +749,90 @@ create_inuse_tree_model (Compselect *compselect)
 
 /* \brief Helper function for create_lib_tree_model. */
 
-static void populate_component_store(GtkTreeStore *store, GList *srclist)
+static void populate_component_store(GtkTreeStore *store, GList **srclist,
+                                     GtkTreeIter *parent, const char *prefix)
 {
-  GtkTreeIter iter, iter2;
+  CLibSource *source = (CLibSource *)(*srclist)->data;
+  const char *name = s_clib_source_get_name (source);
 
-  gtk_tree_store_append (store, &iter, NULL);
+  char *text, *new_prefix;
+  GList *new_srclist;
+
+  if (*name == '\0') {
+    text = NULL;
+    new_prefix = NULL;
+    new_srclist = NULL;
+  } else {
+    g_assert(strncmp(name, prefix, strlen(prefix)) == 0);
+    char *p = strchr(name + strlen(prefix) + 1, '/');
+
+    if (p != NULL) {
+      /* There is a parent directory that was skipped
+         because it doesn't contain symbols. */
+      source = NULL;
+      size_t prefix_len = strlen(prefix);
+      text = malloc(p - name - prefix_len + 1);
+      if (text == NULL) {
+        fprintf(stderr, "Not enough memory\n");
+        return;
+      }
+      memcpy(text, name + prefix_len, p - name - prefix_len);
+      text[p - name - prefix_len] = '\0';
+      new_prefix = malloc(p - name + 2);
+      if (new_prefix == NULL) {
+        fprintf(stderr, "Not enough memory\n");
+        free(text);
+        return;
+      }
+      memcpy(new_prefix, name, p - name + 1);
+      new_prefix[p - name + 1] = '\0';
+      new_srclist = *srclist;
+    } else {
+      size_t prefix_len = strlen(prefix);
+      size_t name_len = strlen(name);
+      text = malloc(name_len - prefix_len + 1);
+      if (text == NULL) {
+        fprintf(stderr, "Not enough memory\n");
+        return;
+      }
+      memcpy(text, name + prefix_len, name_len - prefix_len);
+      text[name_len - prefix_len] = '\0';
+      new_prefix = malloc(name_len + 2);
+      if (new_prefix == NULL) {
+        fprintf(stderr, "Not enough memory\n");
+        free(text);
+        return;
+      }
+      memcpy(new_prefix, name, name_len);
+      new_prefix[name_len] = '/';
+      new_prefix[name_len + 1] = '\0';
+      new_srclist = g_list_next (*srclist);
+    }
+  }
+
+  GtkTreeIter iter;
+  gtk_tree_store_append (store, &iter, parent);
   gtk_tree_store_set (store, &iter,
-                      0, srclist->data,
-                      1, s_clib_source_get_name ((CLibSource *)srclist->data),
+                      0, source,
+                      1, text,
                       2, FALSE,
                       -1);
+  free(text);
 
+  /* Look ahead, adding subdirectories. */
+  while (new_srclist != NULL &&
+         strncmp(s_clib_source_get_name ((CLibSource *)new_srclist->data),
+                 new_prefix, strlen(new_prefix)) == 0) {
+    *srclist = new_srclist;
+    populate_component_store(store, srclist, &iter, new_prefix);
+    new_srclist = g_list_next (*srclist);
+  }
+  free(new_prefix);
+
+  /* populate symbols */
   GList *symhead, *symlist;
-  symhead = s_clib_source_get_symbols ((CLibSource *)srclist->data);
+  GtkTreeIter iter2;
+  symhead = s_clib_source_get_symbols (source);
   for (symlist = symhead;
        symlist != NULL;
        symlist = g_list_next (symlist)) {
@@ -773,7 +844,6 @@ static void populate_component_store(GtkTreeStore *store, GList *srclist)
                         2, TRUE,
                         -1);
   }
-
   g_list_free (symhead);
 }
 
@@ -800,7 +870,7 @@ create_lib_tree_model (Compselect *compselect)
   for (srclist = srchead;
        srclist != NULL;
        srclist = g_list_next (srclist)) {
-    populate_component_store(store, srclist);
+    populate_component_store(store, &srclist, NULL, "/");
   }
   g_list_free (srchead);
 
