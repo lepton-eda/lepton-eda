@@ -167,6 +167,7 @@ init_module_gschem_core_hook ()
   } while (0)
 
   DEFINE_HOOK ("%add-objects-hook",1);
+  DEFINE_HOOK ("%copy-objects-hook",1);
   DEFINE_HOOK ("%remove-objects-hook",1);
   DEFINE_HOOK ("%move-objects-hook",1);
   DEFINE_HOOK ("%mirror-objects-hook",1);

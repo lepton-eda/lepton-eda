@@ -52,6 +52,10 @@ void o_buffer_copy(GschemToplevel *w_current, int buf_num)
   }
 
   selection_to_buffer (w_current, buf_num);
+
+  g_run_hook_object_list (w_current,
+                          "%copy-objects-hook",
+                          object_buffer[buf_num]);
 }
 
 /*! \todo Finish function documentation!!!

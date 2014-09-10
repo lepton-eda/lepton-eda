@@ -24,6 +24,8 @@
 
 (define-public add-objects-hook %add-objects-hook)
 
+(define-public copy-objects-hook %copy-objects-hook)
+
 (define-public remove-objects-hook %remove-objects-hook)
 
 (define-public move-objects-hook %move-objects-hook)
