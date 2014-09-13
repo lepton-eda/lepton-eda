@@ -23,6 +23,7 @@
 
 
 #include <config.h>
+#include <locale.h>
 #include <version.h>
 
 #ifdef HAVE_UNISTD_H
@@ -30,7 +31,7 @@
 #endif
 
 /*------------------------------------------------------------------*/
-/* Includes originally from testgtksheet -- stuff needed to deal with 
+/* Includes originally from testgtksheet -- stuff needed to deal with
  * spreadsheet widget.
  *------------------------------------------------------------------*/
 #include <stdio.h>
@@ -62,7 +63,7 @@
  * x_window_init() and attached to the File->Quit menu item in
  * x_window_create_menu().  On execution, the function checks for
  * unsaved changes before calling gattrib_quit() to quit the program.
- *  
+ *
  *  \return value 0 to the shell to denote a successful quit.
  */
 gboolean gattrib_really_quit(void)
@@ -141,10 +142,10 @@ void gattrib_main(void *closure, int argc, char *argv[])
   /* Initialize gEDA stuff */
   libgeda_init();
 
-  /* Note that argv_index holds index to first non-flag command line option 
+  /* Note that argv_index holds index to first non-flag command line option
    * (that is, to the first file name) */
   argv_index = parse_commandline(argc, argv);
-  
+
   /* ----------  create log file right away ---------- */
   /* ----------  even if logging is enabled ---------- */
   s_log_init ("gattrib");
@@ -167,8 +168,8 @@ void gattrib_main(void *closure, int argc, char *argv[])
 
   gtk_init(&argc, &argv);
 
-  x_window_init();  
-  
+  x_window_init();
+
   /* ---------- Initialize SHEET_DATA data structure ---------- */
   sheet_head = s_sheet_data_new();   /* sheet_head was declared in globals.h */
 
@@ -198,7 +199,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
      /* just exit the program */
      exit(1);
   }
-  
+
   g_slist_foreach(file_list, (GFunc)g_free, NULL);
   g_slist_free(file_list);
 

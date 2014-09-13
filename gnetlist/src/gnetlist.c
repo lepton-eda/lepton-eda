@@ -19,6 +19,7 @@
  */
 
 #include <config.h>
+#include <locale.h>
 #include <version.h>
 #include <missing.h>
 
