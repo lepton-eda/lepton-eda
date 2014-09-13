@@ -234,52 +234,71 @@ void i_set_state_msg(GschemToplevel *w_current, enum x_states newstate,
  *  \par Function Description
  *
  */
-void i_update_middle_button(GschemToplevel *w_current,
-			    void (*func_ptr)(),
-			    const char *string)
+void i_update_middle_button (GschemToplevel *w_current,
+                             void (*func_ptr)(),
+                             const char *string)
 {
-  char *temp_string;
-
-  if (func_ptr == NULL)
-    return;
-
-  if (string == NULL)
-    return;
-
-  if (!w_current->bottom_widget) {
-    return;
-  }
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->bottom_widget != NULL);
 
   switch(w_current->middle_button) {
 
     /* remove this case eventually and make it a null case */
     case(ACTION):
-      gschem_bottom_widget_set_middle_button_text (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
-                                                   _("Action"));
+      gschem_bottom_widget_set_middle_button_text (
+          GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+          _("Action"));
+      w_current->last_callback = NULL;
       break;
 
 #ifdef HAVE_LIBSTROKE
     case(STROKE):
-      gschem_bottom_widget_set_middle_button_text (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
-                                                   _("Stroke"));
+      gschem_bottom_widget_set_middle_button_text (
+          GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+          _("Stroke"));
+      w_current->last_callback = NULL;
     break;
 #else
     /* remove this case eventually and make it a null case */
     case(STROKE):
-      gschem_bottom_widget_set_middle_button_text (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
-                                                   _("none"));
+      gschem_bottom_widget_set_middle_button_text (
+          GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+          _("none"));
+      w_current->last_callback = NULL;
       break;
 #endif
 
     case(REPEAT):
-      temp_string = g_strconcat (_("Repeat/"), string, NULL);
+      if ((string != NULL) && (func_ptr != NULL))
+      {
+        char *temp_string = g_strconcat (_("Repeat/"), string, NULL);
 
-      gschem_bottom_widget_set_middle_button_text (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
-                                                   temp_string);
-      w_current->last_callback = func_ptr;
-      g_free(temp_string);
+        gschem_bottom_widget_set_middle_button_text (
+            GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+            temp_string);
+
+        g_free(temp_string);
+        w_current->last_callback = func_ptr;
+      } else {
+        gschem_bottom_widget_set_middle_button_text (
+            GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+            _("Repeat/none"));
+        w_current->last_callback = NULL;
+      }
       break;
 
+    case(MID_MOUSEPAN_ENABLED):
+      gschem_bottom_widget_set_middle_button_text (
+          GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+          _("Pan"));
+      w_current->last_callback = NULL;
+      break;
+
+    default:
+      gschem_bottom_widget_set_middle_button_text (
+          GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+          _("none"));
+      w_current->last_callback = NULL;
   }
 }
 

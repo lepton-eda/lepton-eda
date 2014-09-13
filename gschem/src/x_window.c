@@ -244,7 +244,6 @@ void x_window_create_main(GschemToplevel *w_current)
   GtkWidget *vscrollbar;
   GtkAdjustment *hadjustment;
   GtkAdjustment *vadjustment;
-  char *middle_button_text;
   char *right_button_text;
 
   /* used to signify that the window isn't mapped yet */
@@ -448,24 +447,6 @@ void x_window_create_main(GschemToplevel *w_current)
                     w_current);
 
   /* bottom box */
-  switch (w_current->middle_button) {
-    case STROKE:
-#ifdef HAVE_LIBSTROKE
-      middle_button_text = _("Stroke");
-#else
-      middle_button_text = _("none");
-#endif
-      break;
-
-   case ACTION:
-     middle_button_text = _("Action");
-     break;
-
-   default:
-     middle_button_text = _("Repeat/none");
-     break;
-  }
-
   if (default_third_button == POPUP_ENABLED) {
     right_button_text = _("Menu/Cancel");
   } else {
@@ -476,12 +457,14 @@ void x_window_create_main(GschemToplevel *w_current)
       "grid-mode",          gschem_options_get_grid_mode (w_current->options),
       "grid-size",          gschem_options_get_snap_size (w_current->options), /* x_grid_query_drawn_spacing (w_current), -- occurs before the page is set */
       "left-button-text",   _("Pick"),
-      "middle-button-text", middle_button_text,
+      "middle-button-text", _("none"),
       "right-button-text",  right_button_text,
       "snap-mode",          gschem_options_get_snap_mode (w_current->options),
       "snap-size",          gschem_options_get_snap_size (w_current->options),
       "status-text",        _("Select Mode"),
       NULL));
+
+  i_update_middle_button (w_current, NULL, NULL);
 
   gtk_box_pack_start (GTK_BOX (main_box), w_current->bottom_widget, FALSE, FALSE, 0);
 
