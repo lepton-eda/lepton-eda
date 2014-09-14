@@ -1566,8 +1566,7 @@ DEFINE_I_CALLBACK(clipboard_copy)
   i_update_middle_button (w_current, i_callback_clipboard_copy,
                           _("Copy to clipboard"));
 
-  o_buffer_copy (w_current, 0);
-  x_clipboard_set (w_current, object_buffer[0]);
+  o_buffer_copy (w_current, CLIPBOARD_BUFFER);
 }
 
 /*! \brief Cut selection to clipboard.
@@ -1584,8 +1583,7 @@ DEFINE_I_CALLBACK(clipboard_cut)
   i_update_middle_button (w_current, i_callback_clipboard_cut,
                           _("Cut to clipboard"));
 
-  o_buffer_cut (w_current, 0);
-  x_clipboard_set (w_current, object_buffer[0]);
+  o_buffer_cut (w_current, CLIPBOARD_BUFFER);
 }
 
 /*! \brief Start pasting clipboard contents
@@ -1596,7 +1594,7 @@ DEFINE_I_CALLBACK(clipboard_paste)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  GList *object_list = NULL;
+  int empty;
 
   /* Choose a default position to start pasting. This is required to
    * make pasting when the cursor is outside the screen or pasting via
@@ -1609,16 +1607,11 @@ DEFINE_I_CALLBACK(clipboard_paste)
 
   g_action_get_position (TRUE, &wx, &wy);
 
-  object_list = x_clipboard_get (w_current);
+  empty = o_buffer_paste_start (w_current, wx, wy, CLIPBOARD_BUFFER);
 
-  if (object_list == NULL) {
+  if (empty) {
     i_set_state_msg (w_current, SELECT, _("Empty clipboard"));
-    return;
   }
-  s_delete_object_glist (toplevel, object_buffer[0]);
-  object_buffer[0] = object_list;
-
-  o_buffer_paste_start (w_current, wx, wy, 0);
 }
 
 /*! \section buffer-menu Buffer Menu Callback Functions */
@@ -1688,6 +1681,7 @@ i_callback_buffer_paste (gpointer data, guint callback_action,
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   gchar *msg;
+  int empty;
 
   /* Choose a default position to start pasting. This is required to
    * make pasting when the cursor is outside the screen or pasting via
@@ -1704,12 +1698,11 @@ i_callback_buffer_paste (gpointer data, guint callback_action,
 
   g_action_get_position (TRUE, &wx, &wy);
 
-  if (object_buffer[n-1] == NULL) {
-    i_set_state_msg(w_current, SELECT, _("Empty buffer"));
-    return;
-  }
+  empty = o_buffer_paste_start (w_current, wx, wy, n-1);
 
-  o_buffer_paste_start (w_current, wx, wy, n-1);
+  if (empty) {
+    i_set_state_msg(w_current, SELECT, _("Empty buffer"));
+  }
 }
 
 #define DEFINE_I_CALLBACK_BUF(op, n) \

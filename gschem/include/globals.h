@@ -33,7 +33,7 @@ GtkRecentManager *recent_manager;
 extern GdkColor white;
 extern GdkColor black;
 
-extern char *rc_filename; 
+extern char *rc_filename;
 extern char *output_filename;
 
 
@@ -46,9 +46,9 @@ extern int quiet_mode;
 extern int verbose_mode;
 extern int auto_place_mode;
 
-#define MAX_BUFFERS 	5
 /* Global buffers */
-extern GList *object_buffer[MAX_BUFFERS];
+#define MAX_BUFFERS      (5)
+#define CLIPBOARD_BUFFER (0)
 
 /* Hooks */
 extern SCM complex_place_list_changed_hook;

@@ -42,8 +42,5 @@ int quiet_mode = FALSE;
 int verbose_mode = FALSE;
 int auto_place_mode = FALSE;
 
-/* Global buffers */
-GList *object_buffer[MAX_BUFFERS];
-
 /* Hooks */
 SCM complex_place_list_changed_hook;

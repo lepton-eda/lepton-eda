@@ -22,76 +22,142 @@
 
 #include "gschem.h"
 
+
+GList *object_buffer[MAX_BUFFERS];
+
+
+/*! \brief Copy the contents of the clipboard to a buffer
+ *
+ *  \param [in] w_current
+ *  \param [in] buf_num
+ */
+static void
+clipboard_to_buffer(GschemToplevel *w_current, int buf_num)
+{
+  GList *object_list;
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (buf_num >= 0);
+  g_return_if_fail (buf_num < MAX_BUFFERS);
+
+  object_list = x_clipboard_get (w_current);
+
+  if (object_buffer[buf_num] != NULL) {
+    s_delete_object_glist (toplevel, object_buffer[buf_num]);
+  }
+
+  object_buffer[buf_num] = object_list;
+}
+
+
+/*! \brief Copy the selection to a buffer
+ *
+ *  \param [in] w_current
+ *  \param [in] buf_num
+ */
 static void
 selection_to_buffer(GschemToplevel *w_current, int buf_num)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *s_current = NULL;
 
-  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (buf_num >= 0);
+  g_return_if_fail (buf_num < MAX_BUFFERS);
+
+  s_current = geda_list_get_glist (toplevel->page_current->selection_list);
 
   if (object_buffer[buf_num] != NULL) {
-    s_delete_object_glist(toplevel, object_buffer[buf_num]);
+    s_delete_object_glist (toplevel, object_buffer[buf_num]);
     object_buffer[buf_num] = NULL;
   }
 
-  object_buffer[buf_num] = o_glist_copy_all (toplevel, s_current,
+  object_buffer[buf_num] = o_glist_copy_all (toplevel,
+                                             s_current,
                                              object_buffer[buf_num]);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+
+/*! \brief Copy the selection into a buffer
  *
+ *  \param [in] w_current
+ *  \param [in] buf_num
  */
-void o_buffer_copy(GschemToplevel *w_current, int buf_num)
+void
+o_buffer_copy(GschemToplevel *w_current, int buf_num)
 {
-  if (buf_num < 0 || buf_num >= MAX_BUFFERS) {
-    g_warning (_("o_buffer_copy: Invalid buffer %i\n"), buf_num);
-    return;
-  }
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (buf_num >= 0);
+  g_return_if_fail (buf_num < MAX_BUFFERS);
 
   selection_to_buffer (w_current, buf_num);
 
   g_run_hook_object_list (w_current,
                           "%copy-objects-hook",
                           object_buffer[buf_num]);
+
+  if (buf_num == CLIPBOARD_BUFFER) {
+    x_clipboard_set (w_current, object_buffer[buf_num]);
+  }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+
+/*! \brief Cut the selection into a buffer
  *
+ *  \param [in] w_current
+ *  \param [in] buf_num
  */
-void o_buffer_cut(GschemToplevel *w_current, int buf_num)
+void
+o_buffer_cut(GschemToplevel *w_current, int buf_num)
 {
-  if (buf_num < 0 || buf_num >= MAX_BUFFERS) {
-    g_warning (_("o_buffer_cut: Invalid buffer %i\n"), buf_num);
-    return;
-  }
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (buf_num >= 0);
+  g_return_if_fail (buf_num < MAX_BUFFERS);
 
   selection_to_buffer (w_current, buf_num);
   o_delete_selected(w_current);
+
+  if (buf_num == CLIPBOARD_BUFFER) {
+    x_clipboard_set (w_current, object_buffer[buf_num]);
+  }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+
+/*! \brief place the contents of the buffer into the place list
  *
+ *  \retval TRUE  the clipboard is empty
+ *  \retval FALSE the clipboard contained objects
  */
-void o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y,
-                          int buf_num)
+int
+o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int rleft, rtop, rbottom, rright;
   int x, y;
 
-  if (buf_num < 0 || buf_num >= MAX_BUFFERS) {
-    fprintf(stderr, _("Got an invalid buffer_number [o_buffer_paste_start]\n"));
-    return;
-  }
+  g_return_val_if_fail (w_current != NULL, TRUE);
+  g_return_val_if_fail (toplevel != NULL, TRUE);
+  g_return_val_if_fail (buf_num >= 0, TRUE);
+  g_return_val_if_fail (buf_num < MAX_BUFFERS, TRUE);
 
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
+
+  if (buf_num == CLIPBOARD_BUFFER) {
+    clipboard_to_buffer(w_current, buf_num);
+  }
+
+  if (object_buffer[buf_num] == NULL) {
+    return TRUE;
+  }
 
   /* remove the old place list if it exists */
   s_delete_object_glist(toplevel, toplevel->page_current->place_list);
@@ -107,7 +173,7 @@ void o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y,
                                      &rright, &rbottom)) {
     /* If the place buffer doesn't have any objects
      * to define its any bounds, we drop out here */
-    return;
+    return TRUE;
   }
 
   /* Place the objects into the buffer at the mouse origin, (w_x, w_y). */
@@ -125,6 +191,18 @@ void o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y,
   w_current->inside_action = 1;
   i_set_state(w_current, ENDPASTE);
   o_place_start (w_current, w_x, w_y);
+
+  /* the next paste operation will be a copy of these objects */
+
+  g_run_hook_object_list (w_current,
+                          "%copy-objects-hook",
+                          object_buffer[buf_num]);
+
+  if (buf_num == CLIPBOARD_BUFFER) {
+    x_clipboard_set (w_current, object_buffer[buf_num]);
+  }
+
+  return FALSE;
 }
 
 
