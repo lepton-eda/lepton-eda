@@ -551,12 +551,19 @@ void o_invalidate_all (GschemToplevel *w_current)
  */
 void o_invalidate (GschemToplevel *w_current, OBJECT *object)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  if (w_current == NULL || w_current->drawing_area == NULL || w_current->dont_invalidate) return;
+
   int left, top, bottom, right;
+
+  GschemPageView *view = GSCHEM_PAGE_VIEW (w_current->drawing_area);
+
+  if (view->page == NULL) return;
+
+  TOPLEVEL *toplevel = view->page->toplevel;
 
   if (world_get_single_object_bounds(toplevel, object, &left,  &top,
                                                        &right, &bottom)) {
-    gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+    gschem_page_view_invalidate_world_rect (view,
                                             left,
                                             top,
                                             right,

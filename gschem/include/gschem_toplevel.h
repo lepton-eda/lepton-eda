@@ -220,6 +220,8 @@ struct st_gschem_toplevel {
   int zoom_gain;          /* Percentage increase in size for a zoom-in operation */
   int scrollpan_steps;    /* Number of scroll pan events required to traverse the viewed area */
 
+  gboolean dont_invalidate;
+
   SCM smob;               /* The Scheme representation of this window */
 };
 

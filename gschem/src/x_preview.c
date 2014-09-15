@@ -87,8 +87,13 @@ preview_callback_realize (GtkWidget *widget,
 {
   Preview *preview = PREVIEW (widget);
   GschemToplevel *preview_w_current = preview->preview_w_current;
-  TOPLEVEL *preview_toplevel = preview_w_current->toplevel;
-  PAGE *preview_page;
+  GschemPageView *preview_view = GSCHEM_PAGE_VIEW (preview);
+
+  g_return_if_fail (preview_view != NULL);
+  PAGE *preview_page = preview_view->page;
+  g_return_if_fail (preview_page != NULL);
+  TOPLEVEL *preview_toplevel = preview_page->toplevel;
+  g_return_if_fail (preview_toplevel != NULL);
 
   preview_w_current->window = preview_w_current->drawing_area->window;
   gtk_widget_grab_focus (preview_w_current->drawing_area);
@@ -102,11 +107,7 @@ preview_callback_realize (GtkWidget *widget,
 
   x_window_setup_gc (preview_w_current);
 
-  preview_page = s_page_new (preview_toplevel, "unknown");
-  s_page_goto (preview_toplevel, preview_page);
-  gschem_toplevel_page_changed (preview_w_current);
-
-  gschem_page_view_zoom_extents (GSCHEM_PAGE_VIEW (widget), NULL);
+  gschem_page_view_zoom_extents (preview_view, NULL);
 }
 
 /*! \brief Handles the press on a mouse button.
@@ -173,18 +174,24 @@ static void
 preview_update (Preview *preview)
 {
   GschemToplevel *preview_w_current = preview->preview_w_current;
-  TOPLEVEL *preview_toplevel = preview_w_current->toplevel;
   int left, top, right, bottom;
   int width, height;
   GError * err = NULL;
 
-  if (gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview)) == NULL) {
+  GschemPageView *preview_view = GSCHEM_PAGE_VIEW (preview);
+
+  g_return_if_fail (preview_view != NULL);
+  PAGE *preview_page = gschem_page_view_get_page (preview_view);
+
+  if (preview_page == NULL) {
     return;
   }
 
+  TOPLEVEL *preview_toplevel = preview_page->toplevel;
+
   /* delete old preview, create new page */
   /* it would be better to just resets current page - Fix me */
-  s_page_delete (preview_toplevel, gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview)));
+  s_page_delete (preview_toplevel, preview_page);
   gschem_toplevel_page_changed (preview_w_current);
   s_page_goto (preview_toplevel, s_page_new (preview_toplevel, "preview"));
   gschem_toplevel_page_changed (preview_w_current);
@@ -193,7 +200,7 @@ preview_update (Preview *preview)
     g_assert ((preview->filename == NULL) || (preview->buffer == NULL));
     if (preview->filename != NULL) {
       /* open up file in current page */
-      f_open_flags (preview_toplevel, gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview)),
+      f_open_flags (preview_toplevel, preview_page,
                     preview->filename,
                     F_OPEN_RC | F_OPEN_RESTORE_CWD, NULL);
       /* test value returned by f_open... - Fix me */
@@ -206,11 +213,11 @@ preview_update (Preview *preview)
                                        _("Preview Buffer"), &err);
 
       if (err == NULL) {
-        s_page_append_list (preview_toplevel, gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview)),
+        s_page_append_list (preview_toplevel, preview_page,
                             objects);
       }
       else {
-        s_page_append (preview_toplevel, gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview)),
+        s_page_append (preview_toplevel, preview_page,
                        o_text_new(preview_toplevel, OBJ_TEXT, 2, 100, 100, LOWER_MIDDLE, 0,
                                   err->message, 10, VISIBLE, SHOW_NAME_VALUE));
         g_error_free(err);
@@ -219,7 +226,7 @@ preview_update (Preview *preview)
   }
 
   if (world_get_object_glist_bounds (preview_toplevel,
-                                     s_page_objects (gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview))),
+                                     s_page_objects (preview_page),
                                      &left, &top,
                                      &right, &bottom)) {
     /* Clamp the canvas size to the extents of the page being previewed */
@@ -232,7 +239,7 @@ preview_update (Preview *preview)
   }
 
   /* display current page (possibly empty) */
-  gschem_page_view_zoom_extents (GSCHEM_PAGE_VIEW (preview), NULL);
+  gschem_page_view_zoom_extents (preview_view, NULL);
 }
 
 GType
@@ -340,10 +347,10 @@ preview_init (Preview *preview)
     { "scroll_event",         G_CALLBACK (preview_event_scroll)           },
     { NULL,                   NULL                                        }
   }, *tmp;
+
   GschemToplevel *preview_w_current;
   preview_w_current = gschem_toplevel_new ();
   gschem_toplevel_set_toplevel (preview_w_current, s_toplevel_new ());
-  gschem_page_view_set_toplevel (GSCHEM_PAGE_VIEW (preview), preview_w_current->toplevel);
 
   preview_w_current->toplevel->load_newer_backup_func =
     x_fileselect_load_backup;
@@ -381,13 +388,15 @@ preview_init (Preview *preview)
   preview->active   = FALSE;
   preview->filename = NULL;
   preview->buffer   = NULL;
+  PAGE *preview_page = s_page_new (preview->preview_w_current->toplevel, "preview");
+  gschem_page_view_set_page (GSCHEM_PAGE_VIEW (preview), preview_page);
 
   gtk_widget_set_events (GTK_WIDGET (preview),
                          GDK_EXPOSURE_MASK |
                          GDK_POINTER_MOTION_MASK |
                          GDK_BUTTON_PRESS_MASK);
   for (tmp = drawing_area_events; tmp->detailed_signal != NULL; tmp++) {
-    g_signal_connect (preview,
+    g_signal_connect (GTK_WIDGET (preview),
                       tmp->detailed_signal,
                       tmp->c_handler,
                       preview_w_current);
@@ -479,6 +488,3 @@ preview_dispose (GObject *self)
 
   G_OBJECT_CLASS (preview_parent_class)->dispose (self);
 }
-
-
-

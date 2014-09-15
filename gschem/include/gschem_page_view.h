@@ -46,7 +46,7 @@ struct _GschemPageView
 
   GHashTable *geometry_table;
 
-  TOPLEVEL *toplevel;
+  PAGE *page;
 };
 
 
@@ -59,9 +59,6 @@ gschem_page_view_get_page (GschemPageView *view);
 
 GschemPageGeometry*
 gschem_page_view_get_page_geometry (GschemPageView *view);
-
-TOPLEVEL*
-gschem_page_view_get_toplevel (GschemPageView *view);
 
 GType
 gschem_page_view_get_type ();
@@ -82,7 +79,7 @@ void
 gschem_page_view_invalidate_world_rect (GschemPageView *view, int left, int top, int right, int bottom);
 
 GschemPageView*
-gschem_page_view_new_with_toplevel (TOPLEVEL *toplevel);
+gschem_page_view_new_with_page (PAGE *page);
 
 void
 gschem_page_view_pan(GschemPageView *page_view, int x, int y);
@@ -101,9 +98,6 @@ gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustme
 
 void
 gschem_page_view_set_page (GschemPageView *view, PAGE *page);
-
-void
-gschem_page_view_set_toplevel (GschemPageView *view, TOPLEVEL *toplevel);
 
 void
 gschem_page_view_set_vadjustment (GschemPageView *view, GtkAdjustment *vadjustment);

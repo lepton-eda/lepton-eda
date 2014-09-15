@@ -164,9 +164,9 @@ dispose (GObject *object)
 
   /* According to the GObject Manual the dispose function might be
    * called several times. We don't want to call
-   * gschem_page_view_set_toplevel twice here  */
-  if (view->toplevel != NULL) {
-    gschem_page_view_set_toplevel (view, NULL);
+   * gschem_page_view_set_page twice here  */
+  if (view->page != NULL) {
+    gschem_page_view_set_page (view, NULL);
   }
 
   /* lastly, chain up to the parent dispose */
@@ -222,10 +222,6 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       g_value_set_boxed (value, gschem_page_view_get_page_geometry (view));
       break;
 
-    case PROP_TOPLEVEL:
-      g_value_set_pointer (value, gschem_page_view_get_toplevel (view));
-      break;
-
     case PROP_VADJUSTMENT:
       g_value_set_object (value, gschem_page_view_get_vadjustment (view));
       break;
@@ -274,13 +270,6 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
                                                        "Page Geometry",
                                                        GSCHEM_TYPE_PAGE_GEOMETRY,
                                                        G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
-
-  g_object_class_install_property (G_OBJECT_CLASS (klass),
-                                   PROP_TOPLEVEL,
-                                   g_param_spec_pointer ("toplevel",
-                                                         "Toplevel",
-                                                         "Toplevel",
-                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_VADJUSTMENT,
@@ -341,9 +330,8 @@ PAGE*
 gschem_page_view_get_page (GschemPageView *view)
 {
   g_return_val_if_fail (view != NULL, NULL);
-  g_return_val_if_fail (view->toplevel != NULL, NULL);
 
-  return view->toplevel->page_current;
+  return view->page;
 }
 
 
@@ -366,7 +354,9 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
   g_return_val_if_fail (view != NULL, NULL);
 
   page = gschem_page_view_get_page (view);
-  g_return_val_if_fail (page != NULL, NULL);
+  if (page == NULL) {
+    return NULL;
+  }
 
   geometry = g_hash_table_lookup (view->geometry_table, page);
 
@@ -380,21 +370,21 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
                                                      page->top,
                                                      page->right,
                                                      page->bottom,
-                                                     view->toplevel->init_left,
-                                                     view->toplevel->init_top,
-                                                     view->toplevel->init_right,
-                                                     view->toplevel->init_bottom);
+                                                     view->page->toplevel->init_left,
+                                                     view->page->toplevel->init_top,
+                                                     view->page->toplevel->init_right,
+                                                     view->page->toplevel->init_bottom);
 
     g_hash_table_insert (view->geometry_table, page, geometry);
     s_page_weak_ref (page, (NotifyFunction) page_deleted, view);
 
     gschem_page_geometry_zoom_extents (geometry,
-                                       view->toplevel,
+                                       view->page->toplevel,
                                        s_page_objects (page),
                                        A_PAN_DONT_REDRAW);
 
     /* this code gets removed when the variables are factored out of PAGE */
-    set_window (view->toplevel,
+    set_window (view->page->toplevel,
                 page,
                 gschem_page_geometry_get_viewport_left (geometry),
                 gschem_page_geometry_get_viewport_right (geometry),
@@ -412,21 +402,6 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
   }
 
   return geometry;
-}
-
-
-
-/*! \brief Get the toplevel for this view
- *
- *  \param [in] view The view
- *  \return The toplevel for the view
- */
-TOPLEVEL*
-gschem_page_view_get_toplevel (GschemPageView *view)
-{
-  g_return_val_if_fail (view != NULL, NULL);
-
-  return view->toplevel;
 }
 
 
@@ -511,14 +486,14 @@ gschem_page_view_invalidate_object (GschemPageView *view, OBJECT *object)
     return;
   }
 
-  if (view->toplevel != NULL) {
+  if (view->page != NULL) {
     gboolean success;
     int world_bottom;
     int world_right;
     int world_left;
     int world_top;
 
-    success = world_get_single_object_bounds (view->toplevel,
+    success = world_get_single_object_bounds (view->page->toplevel,
                                               object,
                                               &world_left,
                                               &world_top,
@@ -623,7 +598,7 @@ gschem_page_view_init (GschemPageView *view)
                                                 NULL,
                                                 (GDestroyNotify) gschem_page_geometry_free);
 
-  view->toplevel = NULL;
+  view->page = NULL;
 
   g_signal_connect (view,
                     "set-scroll-adjustments",
@@ -638,9 +613,9 @@ gschem_page_view_init (GschemPageView *view)
  *  \return A new instance of the GschemPageView
  */
 GschemPageView*
-gschem_page_view_new_with_toplevel (TOPLEVEL *toplevel)
+gschem_page_view_new_with_page (PAGE *page)
 {
-  return GSCHEM_PAGE_VIEW (g_object_new (GSCHEM_TYPE_PAGE_VIEW, "toplevel", toplevel, NULL));
+  return GSCHEM_PAGE_VIEW (g_object_new (GSCHEM_TYPE_PAGE_VIEW, "page", page, NULL));
 }
 
 
@@ -678,7 +653,7 @@ gschem_page_view_pan (GschemPageView *view, int w_x, int w_y)
   /* x_basic_warp_cursor(w_current->drawing_area, x, y); */
 
   /* this code gets removed when the variables are factored out of PAGE */
-  set_window (view->toplevel,
+  set_window (view->page->toplevel,
               page,
               gschem_page_geometry_get_viewport_left (geometry),
               gschem_page_geometry_get_viewport_right (geometry),
@@ -735,7 +710,7 @@ gschem_page_view_pan_mouse (GschemPageView *view, GschemToplevel *w_current, int
   gschem_page_geometry_pan_general (geometry, world_cx, world_cy, 1, A_PAN_DONT_REDRAW);
 
   /* this code gets removed when the variables are factored out of PAGE */
-  set_window (view->toplevel,
+  set_window (view->page->toplevel,
               page,
               gschem_page_geometry_get_viewport_left (geometry),
               gschem_page_geometry_get_viewport_right (geometry),
@@ -822,50 +797,20 @@ gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustme
 void
 gschem_page_view_set_page (GschemPageView *view, PAGE *page)
 {
-  g_return_if_fail (page != NULL);
   g_return_if_fail (view != NULL);
   g_return_if_fail (view->geometry_table != NULL);
-  g_return_if_fail (view->toplevel != NULL);
 
-  s_page_goto (view->toplevel, page);
+  view->page = page;
+
+  if (page != NULL) {
+    g_return_if_fail (page->toplevel != NULL);
+    s_page_goto (page->toplevel, page);
+  }
 
   g_object_notify (G_OBJECT (view), "page");
   g_object_notify (G_OBJECT (view), "page-geometry");
   g_signal_emit_by_name (view, "update-grid-info");
 }
-
-
-
-/*! \brief Set the libgeda toplevel for this view
- *
- *  \param [in,out] view The view
- *  \param [in]     toplevel The libgeda toplevel
- */
-void
-gschem_page_view_set_toplevel (GschemPageView *view, TOPLEVEL *toplevel)
-{
-  g_return_if_fail (view != NULL);
-
-  if (view->toplevel != NULL) {
-    o_remove_change_notify (view->toplevel,
-                            (ChangeNotifyFunc) gschem_page_view_invalidate_object,
-                            (ChangeNotifyFunc) gschem_page_view_invalidate_object,
-                            view);
-  }
-
-  view->toplevel = toplevel;
-
-  if (view->toplevel != NULL) {
-    o_add_change_notify (view->toplevel,
-                         (ChangeNotifyFunc) gschem_page_view_invalidate_object,
-                         (ChangeNotifyFunc) gschem_page_view_invalidate_object,
-                         view);
-  }
-
-  g_object_notify (G_OBJECT (view), "page");
-  g_object_notify (G_OBJECT (view), "toplevel");
-}
-
 
 
 /*! \brief Set the vertical scroll adjustment for this view
@@ -947,10 +892,6 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       gschem_page_view_set_page (view, g_value_get_pointer (value));
       break;
 
-    case PROP_TOPLEVEL:
-      gschem_page_view_set_toplevel (view, g_value_get_pointer (value));
-      break;
-
     case PROP_VADJUSTMENT:
       gschem_page_view_set_vadjustment (view, g_value_get_object (value));
       break;
@@ -979,11 +920,11 @@ gschem_page_view_SCREENabs(GschemPageView *view, int val)
 
   page = gschem_page_view_get_page (view);
 
-  g_return_val_if_fail (page != NULL, 0);
+  if (page == NULL) return 0;
 
   f0 = page->left;
   f1 = page->right;
-  f = view->toplevel->width / (f1 - f0);
+  f = view->page->toplevel->width / (f1 - f0);
   i = f * (double)(val);
 
 #ifdef HAS_RINT
@@ -1054,7 +995,6 @@ gschem_page_view_update_vadjustment (GschemPageView *view)
     PAGE *page = gschem_page_view_get_page (view);
 
     g_return_if_fail (page != NULL);
-    g_return_if_fail (view->toplevel != NULL);
 
     gtk_adjustment_set_page_increment(view->vadjustment,
                                       fabs (page->bottom - page->top) - 100.0);
@@ -1063,7 +1003,7 @@ gschem_page_view_update_vadjustment (GschemPageView *view)
                                   fabs (page->bottom - page->top));
 
     gtk_adjustment_set_value(view->vadjustment,
-                             view->toplevel->init_bottom - page->bottom);
+                             view->page->toplevel->init_bottom - page->bottom);
 
 #if DEBUG
     printf("V %f %f\n", view->vadjustment->lower, view->vadjustment->upper);
@@ -1130,7 +1070,7 @@ vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view)
   g_return_if_fail (vadjustment != NULL);
   g_return_if_fail (view != NULL);
 
-  if ((view->toplevel != NULL) && (view->vadjustment != NULL)) {
+  if ((view->page->toplevel != NULL) && (view->vadjustment != NULL)) {
     int current_bottom;
     int new_bottom;
     PAGE *page;
@@ -1140,7 +1080,7 @@ vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view)
     page = gschem_page_view_get_page (view);
 
     current_bottom = page->bottom;
-    new_bottom = view->toplevel->init_bottom - (int) vadjustment->value;
+    new_bottom = view->page->toplevel->init_bottom - (int) vadjustment->value;
 
     page->bottom = new_bottom;
     page->top = page->top - (current_bottom - new_bottom);
@@ -1196,10 +1136,10 @@ gschem_page_view_zoom_extents (GschemPageView *view, const GList *objects)
     temp = s_page_objects (page);
   }
 
-  gschem_page_geometry_zoom_extents (geometry, view->toplevel, temp, A_PAN_DONT_REDRAW);
+  gschem_page_geometry_zoom_extents (geometry, view->page->toplevel, temp, A_PAN_DONT_REDRAW);
 
   /* this code gets removed when the variables are factored out of PAGE */
-  set_window (view->toplevel,
+  set_window (view->page->toplevel,
               page,
               gschem_page_geometry_get_viewport_left (geometry),
               gschem_page_geometry_get_viewport_right (geometry),

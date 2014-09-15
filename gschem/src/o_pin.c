@@ -43,8 +43,8 @@ void o_pin_start(GschemToplevel *w_current, int w_x, int w_y)
 void o_pin_end(GschemToplevel *w_current, int x, int y)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  TOPLEVEL *toplevel = gschem_page_view_get_toplevel (page_view);
   PAGE *page = gschem_page_view_get_page (page_view);
+  TOPLEVEL *toplevel = page->toplevel;
   OBJECT *new_obj;
 
   g_assert( w_current->inside_action != 0 );

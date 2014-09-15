@@ -370,6 +370,7 @@ struct st_tile {
 
 struct st_page {
 
+  TOPLEVEL* toplevel;
   int pid;
 
   GList *_object_list;

@@ -150,6 +150,8 @@ GschemToplevel *gschem_toplevel_new ()
 
   w_current->toplevel = NULL;
 
+  w_current->dont_invalidate = FALSE;
+
   /* ------------------- */
   /* main window widgets */
   /* ------------------- */

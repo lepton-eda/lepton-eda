@@ -98,7 +98,7 @@ void x_window_free_gc(GschemToplevel *w_current)
 void x_window_create_drawing(GtkWidget *scrolled, GschemToplevel *w_current)
 {
   /* drawing next */
-  w_current->drawing_area = GTK_WIDGET (gschem_page_view_new_with_toplevel (w_current->toplevel));
+  w_current->drawing_area = GTK_WIDGET (gschem_page_view_new_with_page (w_current->toplevel->page_current));
   /* Set the size here.  Be sure that it has an aspect ratio of 1.333
    * We could calculate this based on root window size, but for now
    * lets just set it to:
@@ -507,6 +507,8 @@ void x_window_close(GschemToplevel *w_current)
   o_conn_print_hash(w_current->page_current->conn_table);
 #endif
 
+  w_current->dont_invalidate = TRUE;
+
   /* close all the dialog boxes */
   if (w_current->sowindow)
   gtk_widget_destroy(w_current->sowindow);
@@ -710,8 +712,6 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
                   s_page_objects (toplevel->page_current),
                   A_PAN_DONT_REDRAW);
 
-  o_undo_savestate_old (w_current, UNDO_ALL);
-
   if ( old_current != NULL ) {
     s_page_goto (toplevel, old_current);
     gschem_toplevel_page_changed (w_current);
@@ -761,6 +761,9 @@ x_window_set_current_page (GschemToplevel *w_current, PAGE *page)
 
   x_manual_resize (w_current);
   gschem_page_view_update_scroll_adjustments (page_view);
+
+  o_undo_savestate_old (w_current, UNDO_ALL);
+
   gschem_page_view_invalidate_all (page_view);
 }
 

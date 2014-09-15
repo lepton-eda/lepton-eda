@@ -58,8 +58,8 @@ void o_bus_start(GschemToplevel *w_current, int w_x, int w_y)
 int o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  TOPLEVEL *toplevel = gschem_page_view_get_toplevel (page_view);
   PAGE *page = gschem_page_view_get_page (page_view);
+  TOPLEVEL *toplevel = page->toplevel;
   OBJECT *new_obj;
   GList *prev_conn_objects = NULL;
 

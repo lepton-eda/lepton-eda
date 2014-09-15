@@ -93,8 +93,8 @@ int o_text_get_rendered_bounds (void *user_data, OBJECT *o_current,
 void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int align, int rotate, int size)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  TOPLEVEL *toplevel = gschem_page_view_get_toplevel (page_view);
   PAGE *page = gschem_page_view_get_page (page_view);
+  TOPLEVEL *toplevel = page->toplevel;
 
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (page != NULL);
@@ -139,8 +139,8 @@ void o_text_change(GschemToplevel *w_current, OBJECT *object, char *string,
 		   int visibility, int show)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  TOPLEVEL *toplevel = gschem_page_view_get_toplevel (page_view);
   PAGE *page = gschem_page_view_get_page (page_view);
+  TOPLEVEL *toplevel = page->toplevel;
 
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (page != NULL);

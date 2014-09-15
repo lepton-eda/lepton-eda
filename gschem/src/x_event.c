@@ -996,13 +996,18 @@ x_event_configure (GschemPageView    *page_view,
                    gpointer           user_data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (user_data);
-  TOPLEVEL *toplevel = gschem_page_view_get_toplevel (page_view);
+
+  PAGE *p_current = page_view->page;
+  if (p_current == NULL) {
+    return FALSE;
+  }
+
+  TOPLEVEL *toplevel = p_current->toplevel;
+  g_assert (toplevel != NULL);
+
   GList *iter;
-  PAGE *p_current;
   gint old_win_width, old_win_height, new_win_width, new_win_height;
   gdouble relativ_zoom_factor = 1.0;
-
-  g_assert (toplevel != NULL);
 
   if (gschem_page_view_get_page (page_view) == NULL) {
     /* don't want to call this if the current page isn't setup yet */

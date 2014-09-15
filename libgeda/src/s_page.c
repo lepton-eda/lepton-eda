@@ -165,6 +165,7 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
 
   /* now append page to page list of toplevel */
   geda_list_add( toplevel->pages, page );
+  page->toplevel = toplevel;
 
   return page;
 }
