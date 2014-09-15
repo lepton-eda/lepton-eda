@@ -52,7 +52,8 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->init_left = 0;
   toplevel->init_top  = 0;
-  /* init_right and _bottom are set before this function is called */
+  toplevel->init_right  = 0;
+  toplevel->init_bottom = 0;
 
   toplevel->width  = 1;
   toplevel->height = 1;
