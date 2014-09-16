@@ -1503,7 +1503,6 @@ compselect_constructor (GType type,
                                         NULL));
   preview = GTK_WIDGET (g_object_new (TYPE_PREVIEW,
                                       /* Preview */
-                                      "active", FALSE,
                                       NULL));
   gtk_container_add (GTK_CONTAINER (alignment), preview);
   gtk_container_add (GTK_CONTAINER (frame), alignment);
