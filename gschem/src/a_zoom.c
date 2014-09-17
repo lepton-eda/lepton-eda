@@ -132,59 +132,6 @@ a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int select
  *  \par Function Description
  * 
  */
-void a_zoom_extents (GschemToplevel *w_current, PAGE *page, const GList *list, int pan_flags)
-{
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  int lleft, lright, ltop, lbottom;
-  double zx, zy, relativ_zoom_factor;
-  double world_pan_center_x,world_pan_center_y;
-
-  if (list == NULL) {
-    return;
-  }
-
-  if (!world_get_object_glist_bounds (toplevel, list,
-                                      &lleft, &ltop,
-                                      &lright, &lbottom)) {
-    return;
-  }
-
-#if DEBUG
-  printf("in a_zoom_extents:  left: %d, right: %d, top: %d, bottom: %d\n",
-         lleft, lright, ltop, lbottom);
-#endif
-
-  /* Calc the necessary zoomfactor to show everything
-   * Start with the windows width and height (minus a small padding in pixels),
-   * then scale back to world coordinates with the to_screen_y_constant as the
-   * initial page data may not have the correct aspect ratio. */
-  zx = (double)(toplevel->width - 2 * ZOOM_EXTENTS_PADDING_PX) / (lright-lleft);
-  zy = (double)(toplevel->height - 2 * ZOOM_EXTENTS_PADDING_PX) / (lbottom-ltop);
-  /* choose the smaller one */
-  relativ_zoom_factor = (zx < zy ? zx : zy) / page->to_screen_y_constant;
-	
-  /*get the center of the objects*/
-  world_pan_center_x = (double) (lright + lleft) /2.0;
-  world_pan_center_y = (double) (lbottom + ltop) /2.0;
-	
-  /* and create the new window*/
-  a_pan_general(w_current, page, world_pan_center_x, world_pan_center_y,
-                relativ_zoom_factor, pan_flags );	
-
-  /*! \bug FIXME? trigger a x_event_motion() call without moving the cursor 
-   *  this will redraw rubberband lines after zooming
-   *  removed!, it has side effects in the preview of the part dialog 
-   *  need to find another way to trigger x_event_motion() (Werner)
-   */
-  /* x_basic_warp_cursor(w_current->drawing_area, mouse_x, mouse_y); */
-
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- * 
- */
 static void
 a_zoom_box(GschemToplevel *w_current, PAGE *page, int pan_flags)
 {

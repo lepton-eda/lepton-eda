@@ -712,7 +712,7 @@ gschem_page_geometry_zoom_extents (GschemPageGeometry *geometry, TOPLEVEL *tople
   }
 
 #if DEBUG
-  printf("in a_zoom_extents:  left: %d, right: %d, top: %d, bottom: %d\n",
+  printf("in gschem_page_geometry_zoom_extents:  left: %d, right: %d, top: %d, bottom: %d\n",
          lleft, lright, ltop, lbottom);
 #endif
 
