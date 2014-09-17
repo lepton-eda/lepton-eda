@@ -713,6 +713,8 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
   gschem_page_view_set_page (page_view,
                              toplevel->page_current);
 
+  o_undo_savestate (w_current, toplevel->page_current, UNDO_ALL);
+
   /* This line is generally un-needed, however if some code
    * wants to open a page, yet not bring it to the front, it is
    * needed needed to add it into the page manager. Otherwise,
@@ -758,9 +760,6 @@ x_window_set_current_page (GschemToplevel *w_current, PAGE *page)
 
   x_manual_resize (w_current);
   gschem_page_view_update_scroll_adjustments (page_view);
-
-  o_undo_savestate_old (w_current, UNDO_ALL);
-
   gschem_page_view_invalidate_all (page_view);
 }
 
