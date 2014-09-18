@@ -2381,7 +2381,7 @@ gtk_sheet_set_vadjustment (GtkSheet      *sheet,
   if (sheet->vadjustment)
     {
       gtk_signal_disconnect_by_data (GTK_OBJECT (sheet->vadjustment), sheet);
-      gtk_object_unref (GTK_OBJECT (sheet->vadjustment));
+      g_object_unref(GTK_OBJECT(sheet->vadjustment));
     }
 
   sheet->vadjustment = adjustment;
@@ -2427,7 +2427,7 @@ gtk_sheet_set_hadjustment (GtkSheet      *sheet,
   if (sheet->hadjustment)
     {
       gtk_signal_disconnect_by_data (GTK_OBJECT (sheet->hadjustment), sheet);
-      gtk_object_unref (GTK_OBJECT (sheet->hadjustment));
+      g_object_unref(GTK_OBJECT(sheet->hadjustment));
     }
 
   sheet->hadjustment = adjustment;
@@ -2538,13 +2538,13 @@ gtk_sheet_destroy (GtkObject * object)
   if (sheet->hadjustment)
     {
       gtk_signal_disconnect_by_data (GTK_OBJECT (sheet->hadjustment), sheet);
-      gtk_object_unref (GTK_OBJECT (sheet->hadjustment));
+      g_object_unref(GTK_OBJECT(sheet->hadjustment));
       sheet->hadjustment = NULL;
     }
   if (sheet->vadjustment)
     {
       gtk_signal_disconnect_by_data (GTK_OBJECT (sheet->vadjustment), sheet);
-      gtk_object_unref (GTK_OBJECT (sheet->vadjustment));
+      g_object_unref(GTK_OBJECT(sheet->vadjustment));
       sheet->vadjustment = NULL;
     }
 
