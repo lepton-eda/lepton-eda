@@ -2165,7 +2165,7 @@ gtk_sheet_flash(gpointer data)
   sheet=GTK_SHEET(data);
 
   if(!GTK_WIDGET_REALIZED(GTK_WIDGET(sheet))) return TRUE;
-  if(!GTK_WIDGET_DRAWABLE(GTK_WIDGET(sheet))) return TRUE;
+  if(!gtk_widget_is_drawable(GTK_WIDGET(sheet))) return TRUE;
   if(!gtk_sheet_range_isvisible(sheet, sheet->clip_range)) return TRUE;
   if(GTK_SHEET_IN_XDRAG(sheet)) return TRUE; 
   if(GTK_SHEET_IN_YDRAG(sheet)) return TRUE; 
@@ -2936,7 +2936,7 @@ gtk_sheet_cell_draw_default (GtkSheet *sheet, gint row, gint col)
   g_return_if_fail (sheet != NULL);
 
   /* bail now if we arn't drawable yet */
-  if (!GTK_WIDGET_DRAWABLE (sheet)) return;
+  if (!gtk_widget_is_drawable(sheet)) return;
 
   if (row < 0 || row > sheet->maxrow) return;
   if (col < 0 || col > sheet->maxcol) return;
@@ -2987,7 +2987,7 @@ gtk_sheet_cell_draw_border (GtkSheet *sheet, gint row, gint col, gint mask)
   g_return_if_fail (sheet != NULL);
 
   /* bail now if we arn't drawable yet */
-  if (!GTK_WIDGET_DRAWABLE (sheet)) return;
+  if (!gtk_widget_is_drawable(sheet)) return;
 
   if (row < 0 || row > sheet->maxrow) return;
   if (col < 0 || col > sheet->maxcol) return;
@@ -3062,7 +3062,7 @@ gtk_sheet_cell_draw_label (GtkSheet *sheet, gint row, gint col)
   g_return_if_fail (sheet != NULL);
 
    /* bail now if we aren't drawable yet */
-   if (!GTK_WIDGET_DRAWABLE (sheet))
+   if (!gtk_widget_is_drawable(sheet))
     return;
 
   if (row > sheet->maxallocrow) return;
@@ -3217,7 +3217,7 @@ gtk_sheet_range_draw(GtkSheet *sheet, const GtkSheetRange *range)
  g_return_if_fail(sheet != NULL);
  g_return_if_fail(GTK_SHEET(sheet));
  
- if(!GTK_WIDGET_DRAWABLE(GTK_WIDGET(sheet))) return;
+ if(!gtk_widget_is_drawable(GTK_WIDGET(sheet))) return;
  if(!GTK_WIDGET_REALIZED(GTK_WIDGET(sheet))) return;
  if(!GTK_WIDGET_MAPPED(GTK_WIDGET(sheet))) return;
 
@@ -4126,7 +4126,7 @@ gtk_sheet_draw_active_cell(GtkSheet *sheet)
 {
     gint row, col;
 
-    if(!GTK_WIDGET_DRAWABLE(GTK_WIDGET(sheet))) return;
+    if(!gtk_widget_is_drawable(GTK_WIDGET(sheet))) return;
     if(!GTK_WIDGET_REALIZED(GTK_WIDGET(sheet))) return;
 
     row = sheet->active_cell.row;
@@ -4732,7 +4732,7 @@ gtk_sheet_expose (GtkWidget * widget,
 
   sheet = GTK_SHEET (widget);
 
-  if (GTK_WIDGET_DRAWABLE (widget))
+  if (gtk_widget_is_drawable(widget))
   {
       range.row0=ROW_FROM_YPIXEL(sheet,event->area.y);
       range.col0=COLUMN_FROM_XPIXEL(sheet,event->area.x);
@@ -6009,7 +6009,7 @@ size_allocate_column_title_buttons (GtkSheet * sheet)
 			    sheet->column_title_area.width, 
                             sheet->column_title_area.height);
 
-  if(!GTK_WIDGET_DRAWABLE(sheet)) return;
+  if(!gtk_widget_is_drawable(sheet)) return;
 
   for (i = MIN_VISIBLE_COLUMN(sheet); i <= MAX_VISIBLE_COLUMN(sheet); i++)
       gtk_sheet_button_draw(sheet,-1,i);
@@ -6049,7 +6049,7 @@ size_allocate_row_title_buttons (GtkSheet * sheet)
 			   sheet->row_title_area.width, 
                            sheet->row_title_area.height);
 
-  if(!GTK_WIDGET_DRAWABLE(sheet)) return;
+  if(!gtk_widget_is_drawable(sheet)) return;
 
   for(i = MIN_VISIBLE_ROW(sheet); i <= MAX_VISIBLE_ROW(sheet); i++)
       gtk_sheet_button_draw(sheet,i,-1);
