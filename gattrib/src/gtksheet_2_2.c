@@ -1360,12 +1360,12 @@ gtk_sheet_thaw(GtkSheet *sheet)
   sheet->old_vadjustment = -1.;
   sheet->old_hadjustment = -1.;
 
-  if(sheet->hadjustment)
-      gtk_signal_emit_by_name (GTK_OBJECT (sheet->hadjustment), 
-   			      "value_changed");
-  if(sheet->vadjustment)
-      gtk_signal_emit_by_name (GTK_OBJECT (sheet->vadjustment), 
-   			      "value_changed");
+  if (sheet->hadjustment) {
+    g_signal_emit_by_name (sheet->hadjustment, "value_changed");
+  }
+  if (sheet->vadjustment) {
+    g_signal_emit_by_name (sheet->vadjustment, "value_changed");
+  }
 
   if(sheet->state == GTK_STATE_NORMAL)
      if(sheet->sheet_entry && GTK_WIDGET_MAPPED(sheet->sheet_entry)){
@@ -1394,9 +1394,9 @@ gtk_sheet_set_row_titles_width(GtkSheet *sheet, guint width)
  adjust_scrollbars(sheet);
 
  sheet->old_hadjustment = -1.;
- if(sheet->hadjustment)
-     gtk_signal_emit_by_name (GTK_OBJECT (sheet->hadjustment), 
-  			      "value_changed");
+ if (sheet->hadjustment) {
+   g_signal_emit_by_name (sheet->hadjustment, "value_changed");
+ }
  size_allocate_global_button(sheet);
 }
 
@@ -1413,9 +1413,9 @@ gtk_sheet_set_column_titles_height(GtkSheet *sheet, guint height)
  adjust_scrollbars(sheet);
 
  sheet->old_vadjustment = -1.;
- if(sheet->vadjustment)
-     gtk_signal_emit_by_name (GTK_OBJECT (sheet->vadjustment), 
- 			      "value_changed");
+ if (sheet->vadjustment) {
+   g_signal_emit_by_name (sheet->vadjustment, "value_changed");
+ }
  size_allocate_global_button(sheet);
 }
 
@@ -1448,9 +1448,9 @@ gtk_sheet_show_column_titles(GtkSheet *sheet)
  } 
 
  sheet->old_vadjustment = -1.;
- if(sheet->vadjustment)
-     gtk_signal_emit_by_name (GTK_OBJECT (sheet->vadjustment), 
-			      "value_changed");
+ if (sheet->vadjustment) {
+   g_signal_emit_by_name (sheet->vadjustment, "value_changed");
+ }
  size_allocate_global_button(sheet);
 }
 
@@ -1483,9 +1483,9 @@ gtk_sheet_show_row_titles(GtkSheet *sheet)
  }
 
  sheet->old_hadjustment = -1.;
- if(sheet->hadjustment)
-     gtk_signal_emit_by_name (GTK_OBJECT (sheet->hadjustment), 
-			      "value_changed");
+ if (sheet->hadjustment) {
+   g_signal_emit_by_name (sheet->hadjustment, "value_changed");
+ }
  size_allocate_global_button(sheet);
 }
 
@@ -1516,9 +1516,9 @@ gtk_sheet_hide_column_titles(GtkSheet *sheet)
  }
  
  sheet->old_vadjustment = -1.;
- if(sheet->vadjustment)
-     gtk_signal_emit_by_name (GTK_OBJECT (sheet->vadjustment), 
-			      "value_changed");
+ if (sheet->vadjustment) {
+   g_signal_emit_by_name (sheet->vadjustment, "value_changed");
+ }
 }
 
 void
@@ -1547,9 +1547,9 @@ gtk_sheet_hide_row_titles(GtkSheet *sheet)
  }
 
  sheet->old_hadjustment = -1.;
- if(sheet->hadjustment)
-     gtk_signal_emit_by_name (GTK_OBJECT (sheet->hadjustment), 
-			      "value_changed");
+ if (sheet->hadjustment) {
+   g_signal_emit_by_name (sheet->hadjustment, "value_changed");
+ }
 }
 
 gboolean
@@ -1859,8 +1859,7 @@ gtk_sheet_moveto (GtkSheet * sheet,
 	sheet->vadjustment->value = y;
 
       sheet->old_vadjustment = -1.;
-      gtk_signal_emit_by_name (GTK_OBJECT (sheet->vadjustment), 
-			       "value_changed");
+      g_signal_emit_by_name (sheet->vadjustment, "value_changed");
 
     } 
      
@@ -1894,8 +1893,7 @@ gtk_sheet_moveto (GtkSheet * sheet,
 	sheet->hadjustment->value = x;
 
       sheet->old_vadjustment = -1.;
-      gtk_signal_emit_by_name (GTK_OBJECT (sheet->hadjustment), 
-			       "value_changed");
+      g_signal_emit_by_name (sheet->hadjustment, "value_changed");
 
     }
 }
@@ -5087,7 +5085,7 @@ gtk_sheet_button_release (GtkWidget * widget,
 	  
 	  gtk_sheet_set_column_width (sheet, sheet->drag_cell.col, new_column_width (sheet, sheet->drag_cell.col, &x));
           sheet->old_hadjustment = -1.;
-          gtk_signal_emit_by_name (GTK_OBJECT (sheet->hadjustment), "value_changed");
+          g_signal_emit_by_name (sheet->hadjustment, "value_changed");
 	  return TRUE;
   }
 
@@ -5100,7 +5098,7 @@ gtk_sheet_button_release (GtkWidget * widget,
 	  
 	  gtk_sheet_set_row_height (sheet, sheet->drag_cell.row, new_row_height (sheet, sheet->drag_cell.row, &y));
           sheet->old_vadjustment = -1.;
-          gtk_signal_emit_by_name (GTK_OBJECT (sheet->vadjustment), "value_changed");
+          g_signal_emit_by_name (sheet->vadjustment, "value_changed");
 	  return TRUE;
   }
 
@@ -5506,22 +5504,6 @@ gtk_sheet_extend_selection(GtkSheet *sheet, gint row, gint column)
                gtk_sheet_real_select_range(sheet, &range);
 
 }
-
-/* Removed by SDB while cleaning up key press behavior */
-#if 0
-static gint
-gtk_sheet_entry_key_press(GtkWidget *widget,
-		          GdkEventKey *key)
-{
-  gboolean focus;
-#ifdef DEBUG
-  printf("Entered gtk_sheet_entry_key_press. . . . . \n");
-#endif
-
-  gtk_signal_emit_by_name(GTK_OBJECT(widget), "key_press_event", key, &focus);
-  return focus;
-}
-#endif
 
 static gint
 gtk_sheet_key_press(GtkWidget *widget,
@@ -6553,16 +6535,7 @@ adjust_scrollbars (GtkSheet * sheet)
   sheet->vadjustment->step_increment = DEFAULT_ROW_HEIGHT(GTK_WIDGET(sheet));
   sheet->vadjustment->lower = 0;
   sheet->vadjustment->upper = SHEET_HEIGHT (sheet) + 80;
-/*
-  if (sheet->sheet_window_height - sheet->voffset > SHEET_HEIGHT (sheet))
-    {
-      sheet->vadjustment->value = MAX(0, SHEET_HEIGHT (sheet) - 
-	sheet->sheet_window_height);
-      gtk_signal_emit_by_name (GTK_OBJECT (sheet->vadjustment), 
-			       "value_changed");
-    }
-*/
-    gtk_signal_emit_by_name (GTK_OBJECT(sheet->vadjustment), "changed");
+  g_signal_emit_by_name (sheet->vadjustment, "changed");
 
  }
 
@@ -6572,16 +6545,7 @@ adjust_scrollbars (GtkSheet * sheet)
   sheet->hadjustment->step_increment = DEFAULT_COLUMN_WIDTH;
   sheet->hadjustment->lower = 0;
   sheet->hadjustment->upper = SHEET_WIDTH (sheet)+ 80;
-/*
-  if (sheet->sheet_window_width - sheet->hoffset > SHEET_WIDTH (sheet))
-    {
-      sheet->hadjustment->value = MAX(0, SHEET_WIDTH (sheet) - 
-	sheet->sheet_window_width);
-      gtk_signal_emit_by_name (GTK_OBJECT(sheet->hadjustment), 
-			       "value_changed");
-    }
-*/
-    gtk_signal_emit_by_name (GTK_OBJECT(sheet->hadjustment), "changed");
+  g_signal_emit_by_name (sheet->hadjustment, "changed");
 
  }
 /*
@@ -7066,9 +7030,9 @@ gtk_sheet_add_column(GtkSheet *sheet, guint ncols)
  if(sheet->state==GTK_SHEET_ROW_SELECTED) sheet->range.coli+=ncols;
 
  sheet->old_hadjustment = -1.;
- if(!GTK_SHEET_IS_FROZEN(sheet) && sheet->hadjustment)
-      gtk_signal_emit_by_name (GTK_OBJECT (sheet->hadjustment), 
-			       "value_changed");
+ if (!GTK_SHEET_IS_FROZEN (sheet) && sheet->hadjustment) {
+   g_signal_emit_by_name (sheet->hadjustment, "value_changed");
+ }
 }
 
 void
@@ -7087,9 +7051,9 @@ gtk_sheet_add_row(GtkSheet *sheet, guint nrows)
  adjust_scrollbars(sheet);
 
  sheet->old_vadjustment = -1.;
- if(!GTK_SHEET_IS_FROZEN(sheet) && sheet->vadjustment)
-      gtk_signal_emit_by_name (GTK_OBJECT (sheet->vadjustment), 
-			       "value_changed");
+ if (!GTK_SHEET_IS_FROZEN (sheet) && sheet->vadjustment) {
+   g_signal_emit_by_name (sheet->vadjustment, "value_changed");
+ }
 }
 
 void
@@ -7123,9 +7087,9 @@ gtk_sheet_insert_rows(GtkSheet *sheet, guint row, guint nrows)
  adjust_scrollbars(sheet);
  
  sheet->old_vadjustment = -1.;
- if(!GTK_SHEET_IS_FROZEN(sheet) && sheet->vadjustment)
-      gtk_signal_emit_by_name (GTK_OBJECT (sheet->vadjustment), 
-			       "value_changed");
+ if (!GTK_SHEET_IS_FROZEN (sheet) && sheet->vadjustment) {
+   g_signal_emit_by_name (sheet->vadjustment, "value_changed");
+ }
 
 }
 
@@ -7160,9 +7124,9 @@ gtk_sheet_insert_columns(GtkSheet *sheet, guint col, guint ncols)
  adjust_scrollbars(sheet);
 
  sheet->old_hadjustment = -1.;
- if(!GTK_SHEET_IS_FROZEN(sheet) && sheet->hadjustment)
-      gtk_signal_emit_by_name (GTK_OBJECT (sheet->hadjustment), 
-			       "value_changed");
+ if (!GTK_SHEET_IS_FROZEN (sheet) && sheet->hadjustment) {
+   g_signal_emit_by_name (sheet->hadjustment, "value_changed");
+ }
 
 }
 
@@ -7227,9 +7191,9 @@ gtk_sheet_delete_rows(GtkSheet *sheet, guint row, guint nrows)
  adjust_scrollbars(sheet);
 
  sheet->old_vadjustment = -1.;
- if(!GTK_SHEET_IS_FROZEN(sheet) && sheet->vadjustment)
-      gtk_signal_emit_by_name (GTK_OBJECT (sheet->vadjustment), 
-			       "value_changed");
+ if (!GTK_SHEET_IS_FROZEN (sheet) && sheet->vadjustment) {
+   g_signal_emit_by_name (sheet->vadjustment, "value_changed");
+ }
 
 }
 
@@ -7294,9 +7258,9 @@ gtk_sheet_delete_columns(GtkSheet *sheet, guint col, guint ncols)
  adjust_scrollbars(sheet);
 
  sheet->old_hadjustment = -1.;
- if(!GTK_SHEET_IS_FROZEN(sheet) && sheet->hadjustment)
-      gtk_signal_emit_by_name (GTK_OBJECT (sheet->hadjustment), 
-			       "value_changed");
+ if (!GTK_SHEET_IS_FROZEN (sheet) && sheet->hadjustment) {
+   g_signal_emit_by_name (sheet->hadjustment, "value_changed");
+ }
 
 }
 
