@@ -927,7 +927,7 @@ gtk_sheet_init (GtkSheet *sheet)
   sheet->freeze_count = 0;
   sheet->state = GTK_SHEET_NORMAL;
 
-  GTK_WIDGET_UNSET_FLAGS (sheet, GTK_NO_WINDOW);
+  gtk_widget_set_has_window(sheet, TRUE);
   gtk_widget_set_can_focus(sheet, TRUE);
 
   sheet->maxrow = 0;
@@ -2889,7 +2889,7 @@ gtk_sheet_unmap (GtkWidget * widget)
 
   if (gtk_widget_get_mapped(widget))
     {
-      GTK_WIDGET_UNSET_FLAGS (widget, GTK_MAPPED);
+      gtk_widget_set_mapped(widget, FALSE);
 
       gdk_window_hide (sheet->sheet_window);
       if(sheet->column_titles_visible)
@@ -4001,7 +4001,7 @@ gtk_sheet_hide_active_cell(GtkSheet *sheet)
  GTK_WIDGET_UNSET_FLAGS(sheet->sheet_entry, GTK_HAS_FOCUS);
  gtk_widget_grab_focus(GTK_WIDGET(sheet));
 
- GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(sheet->sheet_entry), GTK_VISIBLE);
+ gtk_widget_set_visible(GTK_WIDGET(sheet->sheet_entry), FALSE);
 
 }
 
