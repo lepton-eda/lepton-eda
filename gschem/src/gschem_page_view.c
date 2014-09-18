@@ -365,7 +365,8 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
   geometry = g_hash_table_lookup (view->geometry_table, page);
 
   /* \todo The following line is depricated in GDK 2.24 */
-  gdk_drawable_get_size (GTK_WIDGET (view)->window, &screen_width, &screen_height);
+  screen_width = gdk_window_get_width(GTK_WIDGET(view)->window);
+  screen_height = gdk_window_get_height(GTK_WIDGET(view)->window);
 
   if (geometry == NULL) {
     geometry = gschem_page_geometry_new_with_values (screen_width,

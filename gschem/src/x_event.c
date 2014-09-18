@@ -1383,7 +1383,8 @@ x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapped, gint 
   g_return_val_if_fail (GTK_WIDGET (page_view)->window != NULL, FALSE);
 
   /* \todo The following line is depricated in GDK 2.24 */
-  gdk_drawable_get_size (GTK_WIDGET (page_view)->window, &width, &height);
+  width = gdk_window_get_width(GTK_WIDGET(page_view)->window);
+  height = gdk_window_get_height(GTK_WIDGET(page_view)->window);
 
   gtk_widget_get_pointer(GTK_WIDGET (page_view), &sx, &sy);
 
