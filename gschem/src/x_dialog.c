@@ -132,8 +132,8 @@ void arc_angle_dialog (GschemToplevel *w_current, OBJECT *arc_object)
                                             GTK_RESPONSE_REJECT,
                                             -1);
 
-    gtk_window_position(GTK_WINDOW(w_current->aawindow),
-                        GTK_WIN_POS_MOUSE);
+    gtk_window_set_position(GTK_WINDOW(w_current->aawindow),
+                            GTK_WIN_POS_MOUSE);
 
     g_signal_connect (G_OBJECT (w_current->aawindow), "response",
                       G_CALLBACK (arc_angle_dialog_response),
@@ -276,8 +276,8 @@ void translate_dialog (GschemToplevel *w_current)
                                             GTK_RESPONSE_REJECT,
                                             -1);
 
-    gtk_window_position(GTK_WINDOW (w_current->trwindow),
-                        GTK_WIN_POS_MOUSE);
+    gtk_window_set_position(GTK_WINDOW(w_current->trwindow),
+                            GTK_WIN_POS_MOUSE);
 
     g_signal_connect (G_OBJECT (w_current->trwindow), "response",
                       G_CALLBACK (translate_dialog_response),
@@ -379,8 +379,8 @@ void slot_edit_dialog (GschemToplevel *w_current, const char *string)
                                             GTK_RESPONSE_REJECT,
                                             -1);
 
-    gtk_window_position(GTK_WINDOW(w_current->sewindow),
-                        GTK_WIN_POS_MOUSE);
+    gtk_window_set_position(GTK_WINDOW(w_current->sewindow),
+                            GTK_WIN_POS_MOUSE);
 
     gtk_dialog_set_default_response (GTK_DIALOG (w_current->sewindow),
                                      GTK_RESPONSE_ACCEPT);
@@ -527,8 +527,7 @@ void coord_dialog (GschemToplevel *w_current, int x, int y)
                                                          GTK_RESPONSE_REJECT,
                                                          NULL);
 
-    gtk_window_position (GTK_WINDOW (w_current->cowindow),
-                         GTK_WIN_POS_NONE);
+    gtk_window_set_position(GTK_WINDOW(w_current->cowindow), GTK_WIN_POS_NONE);
 
     g_signal_connect (G_OBJECT (w_current->cowindow), "response",
                       G_CALLBACK (coord_dialog_response),
@@ -670,8 +669,7 @@ void x_dialog_hotkeys (GschemToplevel *w_current)
                                                          GTK_RESPONSE_REJECT,
                                                          NULL);
 
-    gtk_window_position (GTK_WINDOW (w_current->hkwindow),
-                         GTK_WIN_POS_NONE);
+    gtk_window_set_position(GTK_WINDOW(w_current->hkwindow), GTK_WIN_POS_NONE);
 
     g_signal_connect (G_OBJECT (w_current->hkwindow), "response",
                       G_CALLBACK (x_dialog_hotkeys_response),
@@ -1011,8 +1009,8 @@ void find_text_dialog(GschemToplevel *w_current)
                                             GTK_RESPONSE_REJECT,
                                             -1);
 
-    gtk_window_position(GTK_WINDOW(w_current->tfindwindow),
-                        GTK_WIN_POS_MOUSE);
+    gtk_window_set_position(GTK_WINDOW(w_current->tfindwindow),
+                            GTK_WIN_POS_MOUSE);
 
     g_signal_connect (G_OBJECT (w_current->tfindwindow), "response",
                       G_CALLBACK (find_text_dialog_response),
@@ -1118,8 +1116,8 @@ void hide_text_dialog(GschemToplevel * w_current)
                                             GTK_RESPONSE_REJECT,
                                             -1);
 
-    gtk_window_position(GTK_WINDOW(w_current->thidewindow),
-                        GTK_WIN_POS_MOUSE);
+    gtk_window_set_position(GTK_WINDOW(w_current->thidewindow),
+                            GTK_WIN_POS_MOUSE);
 
     g_signal_connect (G_OBJECT (w_current->thidewindow), "response",
                       G_CALLBACK (hide_text_dialog_response),
@@ -1219,8 +1217,8 @@ void show_text_dialog(GschemToplevel * w_current)
                                             GTK_RESPONSE_REJECT,
                                             -1);
 
-    gtk_window_position(GTK_WINDOW(w_current->tshowwindow),
-                        GTK_WIN_POS_MOUSE);
+    gtk_window_set_position(GTK_WINDOW(w_current->tshowwindow),
+                            GTK_WIN_POS_MOUSE);
 
     g_signal_connect (G_OBJECT (w_current->tshowwindow), "response",
                       G_CALLBACK (show_text_dialog_response),
@@ -2324,7 +2322,7 @@ void x_dialog_edit_pin_type (GschemToplevel *w_current, const GList *obj_list)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
 
