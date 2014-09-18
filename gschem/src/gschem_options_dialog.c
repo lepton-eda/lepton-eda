@@ -425,8 +425,7 @@ instance_init (GschemOptionsDialog *dialog)
                     G_CALLBACK (notify_gschem_toplevel),
                     NULL);
 
-  gtk_container_border_width (GTK_CONTAINER (dialog),
-                              DIALOG_BORDER_SPACING);
+  gtk_container_set_border_width(GTK_CONTAINER(dialog), DIALOG_BORDER_SPACING);
 
   dialog->size_group = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
 

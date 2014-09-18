@@ -142,7 +142,8 @@ void arc_angle_dialog (GschemToplevel *w_current, OBJECT *arc_object)
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->aawindow),
                                     GTK_RESPONSE_ACCEPT);
 
-    gtk_container_border_width(GTK_CONTAINER(w_current->aawindow), DIALOG_BORDER_SPACING);
+    gtk_container_set_border_width(GTK_CONTAINER(w_current->aawindow),
+                                   DIALOG_BORDER_SPACING);
     vbox = GTK_DIALOG(w_current->aawindow)->vbox;
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
@@ -286,8 +287,8 @@ void translate_dialog (GschemToplevel *w_current)
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->trwindow),
                                     GTK_RESPONSE_ACCEPT);
 
-    gtk_container_border_width(GTK_CONTAINER(w_current->trwindow),
-                               DIALOG_BORDER_SPACING);
+    gtk_container_set_border_width(GTK_CONTAINER(w_current->trwindow),
+                                   DIALOG_BORDER_SPACING);
     vbox = GTK_DIALOG(w_current->trwindow)->vbox;
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
@@ -390,8 +391,8 @@ void slot_edit_dialog (GschemToplevel *w_current, const char *string)
                       G_CALLBACK (slot_edit_dialog_response),
                       w_current);
 
-    gtk_container_border_width(GTK_CONTAINER(w_current->sewindow),
-                               DIALOG_BORDER_SPACING);
+    gtk_container_set_border_width(GTK_CONTAINER(w_current->sewindow),
+                                   DIALOG_BORDER_SPACING);
     vbox = GTK_DIALOG(w_current->sewindow)->vbox;
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
@@ -534,8 +535,8 @@ void coord_dialog (GschemToplevel *w_current, int x, int y)
                       G_CALLBACK (coord_dialog_response),
                       w_current);
 
-    gtk_container_border_width (GTK_CONTAINER(w_current->cowindow),
-                                DIALOG_BORDER_SPACING);
+    gtk_container_set_border_width(GTK_CONTAINER(w_current->cowindow),
+                                   DIALOG_BORDER_SPACING);
     vbox = GTK_DIALOG(w_current->cowindow)->vbox;
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
@@ -679,8 +680,8 @@ void x_dialog_hotkeys (GschemToplevel *w_current)
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->hkwindow),
                                     GTK_RESPONSE_ACCEPT);
 
-    gtk_container_border_width (GTK_CONTAINER (w_current->hkwindow),
-                                DIALOG_BORDER_SPACING);
+    gtk_container_set_border_width(GTK_CONTAINER(w_current->hkwindow),
+                                   DIALOG_BORDER_SPACING);
     gtk_widget_set_usize(w_current->hkwindow, 300,300);
 
     vbox = GTK_DIALOG(w_current->hkwindow)->vbox;
@@ -1020,8 +1021,8 @@ void find_text_dialog(GschemToplevel *w_current)
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->tfindwindow),
                                      GTK_RESPONSE_ACCEPT);
 
-    gtk_container_border_width(GTK_CONTAINER(w_current->tfindwindow),
-                               DIALOG_BORDER_SPACING);
+    gtk_container_set_border_width(GTK_CONTAINER(w_current->tfindwindow),
+                                   DIALOG_BORDER_SPACING);
     vbox = GTK_DIALOG(w_current->tfindwindow)->vbox;
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
@@ -1128,8 +1129,8 @@ void hide_text_dialog(GschemToplevel * w_current)
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->thidewindow),
                                     GTK_RESPONSE_ACCEPT);
 
-    gtk_container_border_width(GTK_CONTAINER(w_current->thidewindow),
-                               DIALOG_BORDER_SPACING);
+    gtk_container_set_border_width(GTK_CONTAINER(w_current->thidewindow),
+                                   DIALOG_BORDER_SPACING);
     vbox = GTK_DIALOG(w_current->thidewindow)->vbox;
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
@@ -1230,8 +1231,8 @@ void show_text_dialog(GschemToplevel * w_current)
     gtk_dialog_set_default_response(GTK_DIALOG(w_current->tshowwindow),
                                     GTK_RESPONSE_ACCEPT);
 
-    gtk_container_border_width(GTK_CONTAINER(w_current->tshowwindow),
-                               DIALOG_BORDER_SPACING);
+    gtk_container_set_border_width(GTK_CONTAINER(w_current->tshowwindow),
+                                   DIALOG_BORDER_SPACING);
     vbox = GTK_DIALOG(w_current->tshowwindow)->vbox;
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
@@ -2330,7 +2331,7 @@ void x_dialog_edit_pin_type (GschemToplevel *w_current, const GList *obj_list)
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
 
-  gtk_container_border_width (GTK_CONTAINER (dialog), DIALOG_BORDER_SPACING);
+  gtk_container_set_border_width(GTK_CONTAINER(dialog), DIALOG_BORDER_SPACING);
   vbox = GTK_DIALOG (dialog)->vbox;
   gtk_box_set_spacing (GTK_BOX(vbox), DIALOG_V_SPACING);
 

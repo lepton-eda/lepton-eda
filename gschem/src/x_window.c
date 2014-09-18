@@ -275,7 +275,7 @@ void x_window_create_main(GschemToplevel *w_current)
 
   /* Containers first */
   main_box = gtk_vbox_new(FALSE, 1);
-  gtk_container_border_width(GTK_CONTAINER(main_box), 0);
+  gtk_container_set_border_width(GTK_CONTAINER(main_box), 0);
   gtk_container_add(GTK_CONTAINER(w_current->main_window), main_box);
 
   menubar = get_main_menu (w_current);
