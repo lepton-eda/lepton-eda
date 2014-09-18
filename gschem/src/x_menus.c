@@ -324,7 +324,7 @@ void x_menus_sensitivity (GschemToplevel *w_current, const char *buf, int flag)
     return;
   }
   
-  item = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(w_current->menubar), buf);
+  item = (GtkWidget *) g_object_get_data(G_OBJECT(w_current->menubar), buf);
 
   if (item) {
     gtk_widget_set_sensitive(GTK_WIDGET(item), flag);
@@ -412,7 +412,8 @@ void x_menu_attach_recent_files_submenu(GschemToplevel *w_current)
   g_signal_connect(GTK_OBJECT(menuitem_file_recent_items), "item-activated",
                    G_CALLBACK(recent_chooser_item_activated), w_current);
 
-  menuitem_to_append_to = (GtkWidget *) gtk_object_get_data(GTK_OBJECT(w_current->menubar), "_File/Open Recen_t");
+  menuitem_to_append_to = (GtkWidget *) g_object_get_data(G_OBJECT(w_current->menubar),
+                                                          "_File/Open Recen_t");
   if(menuitem_to_append_to == NULL)
     return;
   gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem_to_append_to), menuitem_file_recent_items);
