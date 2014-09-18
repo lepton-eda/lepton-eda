@@ -215,7 +215,7 @@ get_main_menu(GschemToplevel *w_current)
       /* add a handle to the menu_bar object to get access to widget objects */
       /* This string should NOT be internationalized */
       buf = g_strdup_printf("%s/%s", *raw_menu_name, raw_menu_item_name);
-      gtk_object_set_data(GTK_OBJECT(menu_bar), buf, menu_item);
+      g_object_set_data(G_OBJECT(menu_bar), buf, menu_item);
       g_free(buf);
 
       scm_dynwind_end();
