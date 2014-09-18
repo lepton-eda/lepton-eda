@@ -295,7 +295,8 @@ void translate_dialog (GschemToplevel *w_current)
     gtk_misc_set_alignment(GTK_MISC (label), 0, 0);
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 
-    textentry = gtk_entry_new_with_max_length (10);
+    textentry = gtk_entry_new();
+    gtk_entry_set_max_length(GTK_ENTRY(textentry), 10);
     gtk_entry_set_text(GTK_ENTRY(textentry), "0");
     gtk_editable_select_region(GTK_EDITABLE(textentry), 0, -1);
     gtk_entry_set_activates_default(GTK_ENTRY(textentry), TRUE);
@@ -1028,7 +1029,8 @@ void find_text_dialog(GschemToplevel *w_current)
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 
-    textentry = gtk_entry_new_with_max_length(20);
+    textentry = gtk_entry_new();
+    gtk_entry_set_max_length(GTK_ENTRY(textentry), 20);
     gtk_editable_select_region(GTK_EDITABLE(textentry), 0, -1);
     gtk_box_pack_start(GTK_BOX(vbox), textentry, FALSE, FALSE, 0);
     gtk_entry_set_activates_default(GTK_ENTRY(textentry), TRUE);
@@ -1135,7 +1137,8 @@ void hide_text_dialog(GschemToplevel * w_current)
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 
-    textentry = gtk_entry_new_with_max_length(20);
+    textentry = gtk_entry_new();
+    gtk_entry_set_max_length(GTK_ENTRY(textentry), 20);
     gtk_box_pack_start(GTK_BOX(vbox), textentry, FALSE, FALSE, 0);
     gtk_entry_set_activates_default(GTK_ENTRY(textentry), TRUE);
     gtk_widget_grab_focus(textentry);
@@ -1236,7 +1239,8 @@ void show_text_dialog(GschemToplevel * w_current)
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
     gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 0);
 
-    textentry = gtk_entry_new_with_max_length(20);
+    textentry = gtk_entry_new();
+    gtk_entry_set_max_length(GTK_ENTRY(textentry), 20);
     gtk_box_pack_start(GTK_BOX(vbox), textentry, FALSE, FALSE, 0);
     gtk_entry_set_activates_default(GTK_ENTRY(textentry), TRUE);
     gtk_widget_grab_focus(textentry);
