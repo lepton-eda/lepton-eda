@@ -82,6 +82,9 @@ GschemPageView*
 gschem_page_view_new_with_page (PAGE *page);
 
 void
+gschem_page_view_pan_general(GschemPageView *page_view, int x, int y, double relativ_zoom_factor);
+
+void
 gschem_page_view_pan(GschemPageView *page_view, int x, int y);
 
 void

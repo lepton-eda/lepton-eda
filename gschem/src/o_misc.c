@@ -436,10 +436,7 @@ int o_edit_find_text (GschemToplevel *w_current, const GList *o_list,
             a_zoom(w_current, page_view, ZOOM_IN, DONTCARE, A_PAN_DONT_REDRAW);
             text_screen_height = gschem_page_view_SCREENabs (GSCHEM_PAGE_VIEW (w_current->drawing_area), y2 - y1);
           }
-          a_pan_general(w_current,
-                        toplevel->page_current,
-                        o_current->text->x, o_current->text->y,
-                        1, 0);
+          gschem_page_view_pan (page_view, o_current->text->x, o_current->text->y);
 
 	  /* Make sure the titlebar and scrollbars are up-to-date */
 	  x_window_set_current_page(w_current,

@@ -620,14 +620,15 @@ gschem_page_view_new_with_page (PAGE *page)
 
 
 
-/*! \brief Center the view on the given world coordinate
+/*! \brief Pan the view on the given world coordinate using given zoom factor
  *
  *  \param [in,out] page_view This GschemPageView
  *  \param [in]     w_x       The world x coordinate of the new center
  *  \param [in]     w_y       The world y coordinate of the new center
+ *  \param [in]     relativ_zoom_factor  The zoom factor
  */
 void
-gschem_page_view_pan (GschemPageView *view, int w_x, int w_y)
+gschem_page_view_pan_general (GschemPageView *view, int w_x, int w_y, double relativ_zoom_factor)
 {
   PAGE *page = NULL;
   GschemPageGeometry *geometry = NULL;
@@ -643,7 +644,7 @@ gschem_page_view_pan (GschemPageView *view, int w_x, int w_y)
   /* make mouse to the new world-center;
      attention: there are information looses because of type cast in mil_x */
 
-  gschem_page_geometry_pan_general (geometry, w_x, w_y, 1, A_PAN_DONT_REDRAW);
+  gschem_page_geometry_pan_general (geometry, w_x, w_y, relativ_zoom_factor, A_PAN_DONT_REDRAW);
 
   /*! \bug FIXME? This call will trigger a motion event (x_event_motion()),
    * even if the user doesn't move the mouse
@@ -663,6 +664,19 @@ gschem_page_view_pan (GschemPageView *view, int w_x, int w_y)
   g_signal_emit_by_name (view, "update-grid-info");
   gschem_page_view_update_scroll_adjustments (view);
   gschem_page_view_invalidate_all (view);
+}
+
+
+/*! \brief Center the view on the given world coordinate
+ *
+ *  \param [in,out] page_view This GschemPageView
+ *  \param [in]     w_x       The world x coordinate of the new center
+ *  \param [in]     w_y       The world y coordinate of the new center
+ */
+void
+gschem_page_view_pan (GschemPageView *view, int w_x, int w_y)
+{
+  gschem_page_view_pan_general (view, w_x, w_y, 1);
 }
 
 
@@ -707,19 +721,7 @@ gschem_page_view_pan_mouse (GschemPageView *view, GschemToplevel *w_current, int
   printf("  world_cx=%f, world_cy=%f\n", world_cx, world_cy);
 #endif
 
-  gschem_page_geometry_pan_general (geometry, world_cx, world_cy, 1, A_PAN_DONT_REDRAW);
-
-  /* this code gets removed when the variables are factored out of PAGE */
-  set_window (view->page->toplevel,
-              page,
-              gschem_page_geometry_get_viewport_left (geometry),
-              gschem_page_geometry_get_viewport_right (geometry),
-              gschem_page_geometry_get_viewport_top (geometry),
-              gschem_page_geometry_get_viewport_bottom (geometry));
-
-  g_signal_emit_by_name (view, "update-grid-info");
-  gschem_page_view_update_scroll_adjustments (view);
-  gschem_page_view_invalidate_all (view);
+  gschem_page_view_pan_general (view, world_cx, world_cy, 1);
 }
 
 

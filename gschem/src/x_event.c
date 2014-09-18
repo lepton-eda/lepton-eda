@@ -1049,29 +1049,6 @@ x_event_configure (GschemPageView    *page_view,
 
   }
 
-  /* save current page */
-  //old_page_current = gschem_page_view_get_page (page_view);
-
-  /* re-pan each page of the TOPLEVEL */
-  for ( iter = geda_list_get_glist( toplevel->pages );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    gdouble cx, cy;
-    p_current = (PAGE *)iter->data;
-
-    /* doing this the aspectratio is kept when changing (hw)*/
-    cx = ((gdouble)(p_current->left + p_current->right))  / 2;
-    cy = ((gdouble)(p_current->top  + p_current->bottom)) / 2;
-    //s_page_goto (toplevel, p_current);
-    //gschem_toplevel_page_changed (w_current);
-    a_pan_general (w_current, p_current, cx, cy, relativ_zoom_factor, A_PAN_DONT_REDRAW);
-
-  }
-  /* restore current page to saved value */
-  //s_page_goto (toplevel, old_page_current);
-  //gschem_toplevel_page_changed (w_current);
-
   /* redraw the current page and update UI */
   gschem_page_view_invalidate_all (page_view);
   gschem_page_view_update_scroll_adjustments (page_view);

@@ -392,7 +392,7 @@ gschem_page_geometry_pan_general(GschemPageGeometry *geometry,
   g_return_if_fail (geometry != NULL);
 
 #if DEBUG
-  printf("a_pan_general(): world_cx=%f, world_cy=%f\n",world_cx, world_cy);
+  printf("gschem_page_geometry_pan_general(): world_cx=%f, world_cy=%f\n",world_cx, world_cy);
 #endif
 
   /* calc minimum zoomfactors and choose the smaller one. They are equal

@@ -1,4 +1,3 @@
-gschem/src/a_pan.c
 gschem/src/a_zoom.c
 gschem/src/g_attrib.c
 gschem/src/g_funcs.c

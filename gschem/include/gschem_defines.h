@@ -115,7 +115,7 @@ typedef enum
 #define MENU			1
 #define HOTKEY			2
 
-/* for a_pan_general and a_zoom */
+/* for gschem_page_geometry_pan_general and a_zoom */
 #define A_PAN_IGNORE_BORDERS 	1
 #define A_PAN_DONT_REDRAW 	2
 

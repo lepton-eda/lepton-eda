@@ -9,7 +9,6 @@ BUILT_SOURCES = \
 	g_select.x
 
 gschem_SOURCES = \
-	a_pan.c \
 	a_zoom.c \
 	g_action.c \
 	g_attrib.c \

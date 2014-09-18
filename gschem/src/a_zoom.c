@@ -97,8 +97,10 @@ a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int select
 
 
   /* calculate new window and draw it */
-  a_pan_general(w_current, page, world_pan_center_x, world_pan_center_y,
-                relativ_zoom_factor, pan_flags);
+  gschem_page_view_pan_general (page_view,
+                                world_pan_center_x,
+                                world_pan_center_y,
+                                relativ_zoom_factor);
 
   /* Before warping the cursor, filter out any consecutive scroll events 
    * from the event queue.  If the program receives more than one scroll 
@@ -156,8 +158,10 @@ a_zoom_box(GschemToplevel *w_current, PAGE *page, int pan_flags)
   world_pan_center_y = (w_current->first_wy + w_current->second_wy) / 2.0;
 
   /* and create the new window*/
-  a_pan_general(w_current, page, world_pan_center_x, world_pan_center_y,
-                relativ_zoom_factor, pan_flags);	
+  gschem_page_view_pan_general (gschem_toplevel_get_current_page_view (w_current),
+                                world_pan_center_x,
+                                world_pan_center_y,
+                                relativ_zoom_factor);
 }
 
 /*! \todo Finish function documentation!!!
