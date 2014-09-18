@@ -501,7 +501,7 @@ gschem_page_view_invalidate_object (GschemPageView *view, OBJECT *object)
   g_return_if_fail (object != NULL);
   g_return_if_fail (view != NULL);
 
-  if (!GTK_WIDGET_REALIZED (GTK_WIDGET (view))) {
+  if (!gtk_widget_get_realized(GTK_WIDGET(view))) {
     return;
   }
 
