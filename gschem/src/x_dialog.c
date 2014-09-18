@@ -1052,7 +1052,7 @@ void find_text_dialog(GschemToplevel *w_current)
   /* always select the text string in the entry */
   textentry = g_object_get_data (G_OBJECT (w_current->tfindwindow), "textentry");
   gtk_entry_set_text(GTK_ENTRY(textentry), generic_textstring);
-  gtk_entry_select_region(GTK_ENTRY(textentry), 0, -1);
+  gtk_editable_select_region(GTK_EDITABLE(textentry), 0, -1);
 }
 
 /*********** End of find text dialog box *******/
@@ -1153,7 +1153,7 @@ void hide_text_dialog(GschemToplevel * w_current)
   /* always select the text in the search entry */
   textentry = g_object_get_data (G_OBJECT (w_current->thidewindow), "textentry");
   gtk_entry_set_text(GTK_ENTRY(textentry), generic_textstring);
-  gtk_entry_select_region(GTK_ENTRY(textentry), 0, -1);
+  gtk_editable_select_region(GTK_EDITABLE(textentry), 0, -1);
 }
 
 /*********** End of hide text dialog box *******/
@@ -1254,7 +1254,7 @@ void show_text_dialog(GschemToplevel * w_current)
   /* always select the text in the entry */
   textentry = g_object_get_data (G_OBJECT (w_current->tshowwindow), "textentry");
   gtk_entry_set_text(GTK_ENTRY(textentry), generic_textstring);
-  gtk_entry_select_region(GTK_ENTRY(textentry), 0, -1);
+  gtk_editable_select_region(GTK_EDITABLE(textentry), 0, -1);
 }
 
 /*********** End of show text dialog box *******/
