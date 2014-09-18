@@ -6152,7 +6152,7 @@ gtk_sheet_size_allocate_entry(GtkSheet *sheet)
 
  gtk_widget_size_allocate(sheet->sheet_entry, &shentry_allocation);
 
- if(previous_style == style) gtk_style_unref(previous_style);
+ if(previous_style == style) g_object_unref(G_OBJECT(previous_style));
 }
 
 
