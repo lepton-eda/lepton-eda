@@ -394,7 +394,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
                     (GtkAttachOptions) (0), 0, 0);
 
   value_entry = gtk_entry_new ();
-  gtk_widget_ref (value_entry);
+  g_object_ref(value_entry);
   g_object_set_data_full(G_OBJECT(aewindow), "value_entry", value_entry,
                          (GtkDestroyNotify)gtk_widget_unref);
   gtk_table_attach (GTK_TABLE (table), value_entry, 1, 2, 1, 2,
@@ -404,7 +404,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 
   /* Visibility */
   visbutton = gtk_check_button_new_with_label (_("Visible"));
-  gtk_widget_ref (visbutton);
+  g_object_ref(visbutton);
   g_object_set_data_full(G_OBJECT(aewindow), "visbutton", visbutton,
                          (GtkDestroyNotify)gtk_widget_unref);
 
@@ -414,7 +414,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
                     (GtkAttachOptions) (0), 0, 0);
 
   show_options = gtk_option_menu_new ();
-  gtk_widget_ref (show_options);
+  g_object_ref(show_options);
   g_object_set_data_full(G_OBJECT(aewindow), "show_options", show_options,
                          (GtkDestroyNotify)gtk_widget_unref);
   gtk_widget_show (show_options);
@@ -450,7 +450,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 
     addtoallbutton = gtk_radio_button_new_with_label (hbox2_group, _("All"));
     hbox2_group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(addtoallbutton));
-    gtk_widget_ref (addtoallbutton);
+    g_object_ref(addtoallbutton);
     g_object_set_data_full(G_OBJECT(aewindow), "addtoallbutton",
                            addtoallbutton, (GtkDestroyNotify)gtk_widget_unref);
     gtk_table_attach(GTK_TABLE(table), addtoallbutton, 0, 1, 0, 1,
@@ -458,7 +458,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 		     
     addtocompsbutton = gtk_radio_button_new_with_label (hbox2_group, _("Components"));
     hbox2_group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(addtocompsbutton));
-    gtk_widget_ref (addtocompsbutton);
+    g_object_ref(addtocompsbutton);
     g_object_set_data_full(G_OBJECT(aewindow), "addtocompsbutton",
                            addtocompsbutton,
                            (GtkDestroyNotify)gtk_widget_unref);
@@ -467,7 +467,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 
     addtonetsbutton = gtk_radio_button_new_with_label (hbox2_group, _("Nets"));
     hbox2_group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(addtonetsbutton));
-    gtk_widget_ref (addtonetsbutton);
+    g_object_ref(addtonetsbutton);
     g_object_set_data_full(G_OBJECT(aewindow), "addtonetsbutton",
                            addtonetsbutton,
                            (GtkDestroyNotify)gtk_widget_unref);
@@ -476,7 +476,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 
     overwritebutton = gtk_check_button_new_with_label (_("Replace existing attributes"));
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(overwritebutton), TRUE);
-    gtk_widget_ref (overwritebutton);
+    g_object_ref(overwritebutton);
     g_object_set_data_full(G_OBJECT(aewindow), "overwritebutton",
                            overwritebutton,
                            (GtkDestroyNotify)gtk_widget_unref);

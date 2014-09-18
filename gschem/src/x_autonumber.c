@@ -34,7 +34,7 @@
 
 #define GLADE_HOOKUP_OBJECT(component,widget,name) \
   g_object_set_data_full (G_OBJECT (component), name, \
-    gtk_widget_ref (widget), (GDestroyNotify) gtk_widget_unref)
+    g_object_ref(widget), (GDestroyNotify) gtk_widget_unref)
 
 /** @brief How many entries to keep in the "Search text" combo box. */
 #define HISTORY_LENGTH		15
