@@ -427,10 +427,8 @@ void x_window_create_main(GschemToplevel *w_current)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (w_current->scrolled), policy, policy);
 
   hscrollbar = gtk_scrolled_window_get_hscrollbar (GTK_SCROLLED_WINDOW (w_current->scrolled));
-  gtk_range_set_update_policy (GTK_RANGE (hscrollbar), GTK_UPDATE_CONTINUOUS);
 
   vscrollbar = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (w_current->scrolled));
-  gtk_range_set_update_policy (GTK_RANGE (vscrollbar), GTK_UPDATE_CONTINUOUS);
 
   /* macro box */
   w_current->macro_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_MACRO_WIDGET, NULL));
