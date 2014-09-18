@@ -6166,7 +6166,7 @@ create_sheet_entry(GtkSheet *sheet)
 
  if(sheet->entry_type){
 
-   if(!gtk_type_is_a (sheet->entry_type, GTK_TYPE_ENTRY)){
+   if(!g_type_is_a(sheet->entry_type, GTK_TYPE_ENTRY)){
 
      parent = GTK_WIDGET(gtk_type_new(sheet->entry_type));
 
