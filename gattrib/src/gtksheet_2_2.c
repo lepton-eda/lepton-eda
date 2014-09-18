@@ -4099,9 +4099,9 @@ gtk_sheet_show_active_cell(GtkSheet *sheet)
  gtk_entry_set_visibility(GTK_ENTRY(sheet_entry), attributes.is_visible);
 
  if(gtk_sheet_locked(sheet) || !attributes.is_editable){ 
-            gtk_entry_set_editable(GTK_ENTRY(sheet_entry), FALSE);
+            gtk_editable_set_editable(GTK_EDITABLE(sheet_entry), FALSE);
  }else{
-            gtk_entry_set_editable(GTK_ENTRY(sheet_entry), TRUE);
+            gtk_editable_set_editable(GTK_EDITABLE(sheet_entry), TRUE);
  }
 
 
