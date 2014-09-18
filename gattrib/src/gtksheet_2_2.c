@@ -5558,10 +5558,11 @@ gtk_sheet_key_press(GtkWidget *widget,
 
   switch(key->keyval){
     case GDK_Return: case GDK_KP_Enter:
-      if(sheet->state == GTK_SHEET_NORMAL && 
-         !GTK_SHEET_IN_SELECTION(sheet))
-         gtk_signal_emit_stop_by_name(GTK_OBJECT(gtk_sheet_get_entry(sheet)), 
-                                     "key_press_event");
+      if (sheet->state == GTK_SHEET_NORMAL &&
+          !GTK_SHEET_IN_SELECTION (sheet)) {
+        g_signal_stop_emission_by_name (gtk_sheet_get_entry (sheet),
+                                        "key_press_event");
+      }
       row = sheet->active_cell.row;
       col = sheet->active_cell.col;
       if(sheet->state == GTK_SHEET_COLUMN_SELECTED)
