@@ -53,7 +53,7 @@ SCM g_rc_gsymcheck_version(SCM scm_version)
 	      SCM_ARG1, "gsymcheck-version");
 
   version = scm_to_utf8_string (scm_version);
-  if (g_strcasecmp (version, PACKAGE_DATE_VERSION) != 0) {
+  if (g_ascii_strcasecmp(version, PACKAGE_DATE_VERSION) != 0) {
     fprintf(stderr, _(
             "You are running gEDA/gaf version [%s%s.%s],\n"
             "but you have a version [%s] gsymcheckrc file:\n[%s]\n"

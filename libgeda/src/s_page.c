@@ -416,7 +416,7 @@ PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename)
         iter = g_list_next( iter ) ) {
 
     page = (PAGE *)iter->data;
-    if ( g_strcasecmp( page->page_filename, filename ) == 0 )
+    if (g_ascii_strcasecmp(page->page_filename, filename) == 0 )
       return page;
   }
   return NULL;
