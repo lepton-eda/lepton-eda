@@ -2388,7 +2388,7 @@ gtk_sheet_set_vadjustment (GtkSheet      *sheet,
   if (sheet->vadjustment)
     {
       gtk_object_ref (GTK_OBJECT (sheet->vadjustment));
-      gtk_object_sink (GTK_OBJECT (sheet->vadjustment));
+      g_object_ref_sink(GTK_OBJECT(sheet->vadjustment));
 
       g_signal_connect(GTK_OBJECT(sheet->vadjustment), "changed",
                        (GtkSignalFunc)vadjustment_changed, (gpointer)sheet);
@@ -2433,7 +2433,7 @@ gtk_sheet_set_hadjustment (GtkSheet      *sheet,
   if (sheet->hadjustment)
     {
       gtk_object_ref (GTK_OBJECT (sheet->hadjustment));
-      gtk_object_sink (GTK_OBJECT (sheet->hadjustment));
+      g_object_ref_sink(GTK_OBJECT(sheet->hadjustment));
 
       g_signal_connect(GTK_OBJECT(sheet->hadjustment), "changed",
                        (GtkSignalFunc)hadjustment_changed, (gpointer)sheet);
