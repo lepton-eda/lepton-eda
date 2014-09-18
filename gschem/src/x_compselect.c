@@ -653,7 +653,7 @@ compselect_callback_filter_entry_changed (GtkEditable *editable,
   sensitive =
     (g_ascii_strcasecmp (gtk_entry_get_text (compselect->entry_filter),
                          "") != 0);
-  if (GTK_WIDGET_IS_SENSITIVE (button) != sensitive) {
+  if (gtk_widget_is_sensitive(button) != sensitive) {
     gtk_widget_set_sensitive (button, sensitive);
   }
 
