@@ -696,7 +696,7 @@ update_grid_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unuse
 
     label_text = g_strdup_printf (_("Grid(%s, %s)"), snap_text, grid_text);
 
-    gtk_label_set (GTK_LABEL (widget->grid_label), label_text);
+    gtk_label_set_text(GTK_LABEL(widget->grid_label), label_text);
 
     g_free (grid_text);
     g_free (label_text);
