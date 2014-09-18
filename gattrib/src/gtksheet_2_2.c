@@ -747,7 +747,7 @@ gtk_sheet_class_init (GtkSheetClass * klass)
   sheet_signals[SELECT_ROW] =
     gtk_signal_new ("select_row",
 		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
+		    G_TYPE_FROM_CLASS(object_class),
 		    GTK_SIGNAL_OFFSET (GtkSheetClass, select_row),
 		    gtkextra_VOID__INT,
                     GTK_TYPE_NONE, 1, GTK_TYPE_INT);
@@ -755,7 +755,7 @@ gtk_sheet_class_init (GtkSheetClass * klass)
   sheet_signals[SELECT_COLUMN] =
     gtk_signal_new ("select_column",
 		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
+		    G_TYPE_FROM_CLASS(object_class),
 		    GTK_SIGNAL_OFFSET (GtkSheetClass, select_column),
 		    gtkextra_VOID__INT,
                     GTK_TYPE_NONE, 1, GTK_TYPE_INT);
@@ -763,7 +763,7 @@ gtk_sheet_class_init (GtkSheetClass * klass)
   sheet_signals[SELECT_RANGE] =
     gtk_signal_new ("select_range",
 		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
+		    G_TYPE_FROM_CLASS(object_class),
 		    GTK_SIGNAL_OFFSET (GtkSheetClass, select_range),
                     gtkextra_VOID__BOXED,
 	            GTK_TYPE_NONE, 1, GTK_TYPE_SHEET_RANGE);
@@ -771,7 +771,7 @@ gtk_sheet_class_init (GtkSheetClass * klass)
   sheet_signals[CLIP_RANGE] =
     gtk_signal_new ("clip_range",
 		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
+		    G_TYPE_FROM_CLASS(object_class),
 		    GTK_SIGNAL_OFFSET (GtkSheetClass, clip_range),
                     gtkextra_VOID__BOXED,
 	            GTK_TYPE_NONE, 1, GTK_TYPE_SHEET_RANGE);
@@ -779,21 +779,21 @@ gtk_sheet_class_init (GtkSheetClass * klass)
   sheet_signals[RESIZE_RANGE] =
     gtk_signal_new ("resize_range",
 		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
+		    G_TYPE_FROM_CLASS(object_class),
 		    GTK_SIGNAL_OFFSET (GtkSheetClass, resize_range),
 		    gtkextra_VOID__BOXED_BOXED,
 	            GTK_TYPE_NONE, 2, GTK_TYPE_SHEET_RANGE, GTK_TYPE_SHEET_RANGE);
   sheet_signals[MOVE_RANGE] =
     gtk_signal_new ("move_range",
 		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
+		    G_TYPE_FROM_CLASS(object_class),
 		    GTK_SIGNAL_OFFSET (GtkSheetClass, move_range),
 		    gtkextra_VOID__BOXED_BOXED,
                     GTK_TYPE_NONE, 2, GTK_TYPE_SHEET_RANGE, GTK_TYPE_SHEET_RANGE);
   sheet_signals[TRAVERSE] =
     gtk_signal_new ("traverse",
 		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
+		    G_TYPE_FROM_CLASS(object_class),
 		    GTK_SIGNAL_OFFSET (GtkSheetClass, traverse),
                     gtkextra_BOOLEAN__INT_INT_POINTER_POINTER,
 	            GTK_TYPE_BOOL, 4, GTK_TYPE_INT, GTK_TYPE_INT,
@@ -802,7 +802,7 @@ gtk_sheet_class_init (GtkSheetClass * klass)
   sheet_signals[DEACTIVATE] =
     gtk_signal_new ("deactivate",
 		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
+		    G_TYPE_FROM_CLASS(object_class),
 		    GTK_SIGNAL_OFFSET (GtkSheetClass, deactivate),
                     gtkextra_BOOLEAN__INT_INT,
 	            GTK_TYPE_BOOL, 2, GTK_TYPE_INT, GTK_TYPE_INT);
@@ -810,7 +810,7 @@ gtk_sheet_class_init (GtkSheetClass * klass)
   sheet_signals[ACTIVATE] =
     gtk_signal_new ("activate",
 		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
+		    G_TYPE_FROM_CLASS(object_class),
 		    GTK_SIGNAL_OFFSET (GtkSheetClass, activate),
                     gtkextra_BOOLEAN__INT_INT,
 	            GTK_TYPE_BOOL, 2, GTK_TYPE_INT, GTK_TYPE_INT);
@@ -818,7 +818,7 @@ gtk_sheet_class_init (GtkSheetClass * klass)
   sheet_signals[SET_CELL] =
     gtk_signal_new ("set_cell",
 		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
+		    G_TYPE_FROM_CLASS(object_class),
 		    GTK_SIGNAL_OFFSET (GtkSheetClass, set_cell),
                     gtkextra_VOID__INT_INT,
 	            GTK_TYPE_NONE, 2, GTK_TYPE_INT, GTK_TYPE_INT);
@@ -826,7 +826,7 @@ gtk_sheet_class_init (GtkSheetClass * klass)
   sheet_signals[CLEAR_CELL] =
     gtk_signal_new ("clear_cell",
 		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
+		    G_TYPE_FROM_CLASS(object_class),
 		    GTK_SIGNAL_OFFSET (GtkSheetClass, clear_cell),
                     gtkextra_VOID__INT_INT,
 	            GTK_TYPE_NONE, 2, GTK_TYPE_INT, GTK_TYPE_INT);
@@ -834,7 +834,7 @@ gtk_sheet_class_init (GtkSheetClass * klass)
   sheet_signals[CHANGED] =
     gtk_signal_new ("changed",
 		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
+		    G_TYPE_FROM_CLASS(object_class),
 		    GTK_SIGNAL_OFFSET (GtkSheetClass, changed),
                     gtkextra_VOID__INT_INT,
 	            GTK_TYPE_NONE, 2, GTK_TYPE_INT, GTK_TYPE_INT);
@@ -842,7 +842,7 @@ gtk_sheet_class_init (GtkSheetClass * klass)
   sheet_signals[NEW_COL_WIDTH] =
     gtk_signal_new ("new_column_width",
 		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
+		    G_TYPE_FROM_CLASS(object_class),
 		    GTK_SIGNAL_OFFSET (GtkSheetClass, changed),
                     gtkextra_VOID__INT_INT,
 	            GTK_TYPE_NONE, 2, GTK_TYPE_INT, GTK_TYPE_INT);
@@ -850,7 +850,7 @@ gtk_sheet_class_init (GtkSheetClass * klass)
   sheet_signals[NEW_ROW_HEIGHT] =
     gtk_signal_new ("new_row_height",
 		    GTK_RUN_LAST,
-		    GTK_CLASS_TYPE(object_class),
+		    G_TYPE_FROM_CLASS(object_class),
 		    GTK_SIGNAL_OFFSET (GtkSheetClass, changed),
                     gtkextra_VOID__INT_INT,
 	            GTK_TYPE_NONE, 2, GTK_TYPE_INT, GTK_TYPE_INT);
@@ -860,7 +860,7 @@ gtk_sheet_class_init (GtkSheetClass * klass)
   widget_class->set_scroll_adjustments_signal =
     gtk_signal_new ("set_scroll_adjustments",
                     GTK_RUN_LAST,
-                    GTK_CLASS_TYPE(object_class),
+                    G_TYPE_FROM_CLASS(object_class),
                     GTK_SIGNAL_OFFSET (GtkSheetClass, set_scroll_adjustments),
                     gtkextra_VOID__OBJECT_OBJECT,
                     GTK_TYPE_NONE, 2, GTK_TYPE_ADJUSTMENT, GTK_TYPE_ADJUSTMENT);
