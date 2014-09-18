@@ -6214,9 +6214,9 @@ create_sheet_entry(GtkSheet *sheet)
 
  /* #if 0 */
  /*  SDB says:  I need to work out the event passing system */
- gtk_signal_connect_object(GTK_OBJECT(entry),"key_press_event",
-                           (GtkSignalFunc) gtk_sheet_key_press,
-                           GTK_OBJECT(sheet)); 
+ g_signal_connect_swapped(GTK_OBJECT(entry), "key_press_event",
+                          (GtkSignalFunc)gtk_sheet_key_press,
+                          GTK_OBJECT(sheet)); 
  /*  gtk_signal_connect_object(GTK_OBJECT(entry),"key_press_event",
                            (GtkSignalFunc) gtk_sheet_entry_key_press,
                            GTK_OBJECT(sheet)); 
