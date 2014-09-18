@@ -112,7 +112,7 @@ void x_window_create_drawing(GtkWidget *scrolled, GschemToplevel *w_current)
 
   gtk_container_add(GTK_CONTAINER(scrolled), w_current->drawing_area);
 
-  GTK_WIDGET_SET_FLAGS (w_current->drawing_area, GTK_CAN_FOCUS );
+  gtk_widget_set_can_focus(w_current->drawing_area, TRUE);
   gtk_widget_grab_focus (w_current->drawing_area);
   gtk_widget_show (w_current->drawing_area);
 }
