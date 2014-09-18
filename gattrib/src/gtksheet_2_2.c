@@ -601,7 +601,7 @@ _gtkextra_signal_emit(GtkObject *object, guint signal_id, ...)
 
   va_start (var_args, signal_id);
 
-  g_value_init(instance_and_params + 0, GTK_OBJECT_TYPE(object));
+  g_value_init(instance_and_params + 0, G_OBJECT_TYPE(object));
   g_value_set_instance (instance_and_params + 0, G_OBJECT(object));
 
   g_signal_query(signal_id, &query);
