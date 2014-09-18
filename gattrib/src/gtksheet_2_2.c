@@ -1368,7 +1368,7 @@ gtk_sheet_thaw(GtkSheet *sheet)
    			      "value_changed");
 
   if(sheet->state == GTK_STATE_NORMAL)
-     if(sheet->sheet_entry && GTK_WIDGET_MAPPED(sheet->sheet_entry)){
+     if(sheet->sheet_entry && gtk_widget_get_mapped(sheet->sheet_entry)){
         gtk_sheet_activate_cell(sheet, sheet->active_cell.row, sheet->active_cell.col);
 /*
         gtk_signal_connect(GTK_OBJECT(gtk_sheet_get_entry(sheet)),
@@ -2826,7 +2826,7 @@ gtk_sheet_map (GtkWidget * widget)
 
   sheet = GTK_SHEET (widget);
 
-  if (!GTK_WIDGET_MAPPED (widget))
+  if (!gtk_widget_get_mapped(widget))
     {
       gtk_widget_set_mapped(widget, TRUE);
 
@@ -2843,20 +2843,20 @@ gtk_sheet_map (GtkWidget * widget)
            gdk_window_show (sheet->row_title_window);
       }
 
-      if(!GTK_WIDGET_MAPPED (sheet->sheet_entry)){
+      if(!gtk_widget_get_mapped(sheet->sheet_entry)){
       	          gtk_widget_show (sheet->sheet_entry);
    	          gtk_widget_map (sheet->sheet_entry);
       }
 
       if (GTK_WIDGET_VISIBLE (sheet->button) &&
-	  !GTK_WIDGET_MAPPED (sheet->button)){
+	  !gtk_widget_get_mapped(sheet->button)){
                   gtk_widget_show(sheet->button);
 	          gtk_widget_map (sheet->button);
       }
 
       if(GTK_BIN(sheet->button)->child)
         if (GTK_WIDGET_VISIBLE (GTK_BIN(sheet->button)->child) &&
-  	   !GTK_WIDGET_MAPPED (GTK_BIN(sheet->button)->child))
+  	   !gtk_widget_get_mapped(GTK_BIN(sheet->button)->child))
   	          gtk_widget_map (GTK_BIN(sheet->button)->child);
 
       gtk_sheet_range_draw(sheet, NULL);
@@ -2871,7 +2871,7 @@ gtk_sheet_map (GtkWidget * widget)
         children = g_list_next(children);
 
         if (GTK_WIDGET_VISIBLE (child->widget) &&
-    	    !GTK_WIDGET_MAPPED (child->widget)){
+    	    !gtk_widget_get_mapped(child->widget)){
 	  gtk_widget_map (child->widget);
           gtk_sheet_position_child(sheet, child);
         }
@@ -2892,7 +2892,7 @@ gtk_sheet_unmap (GtkWidget * widget)
 
   sheet = GTK_SHEET (widget);
 
-  if (GTK_WIDGET_MAPPED (widget))
+  if (gtk_widget_get_mapped(widget))
     {
       GTK_WIDGET_UNSET_FLAGS (widget, GTK_MAPPED);
 
@@ -2903,10 +2903,10 @@ gtk_sheet_unmap (GtkWidget * widget)
           gdk_window_hide (sheet->row_title_window);
       gdk_window_hide (widget->window);
 
-      if (GTK_WIDGET_MAPPED (sheet->sheet_entry))
+      if (gtk_widget_get_mapped(sheet->sheet_entry))
 	gtk_widget_unmap (sheet->sheet_entry);
 
-      if (GTK_WIDGET_MAPPED (sheet->button))
+      if (gtk_widget_get_mapped(sheet->button))
 	gtk_widget_unmap (sheet->button);
 
       children = sheet->children;
@@ -2916,7 +2916,7 @@ gtk_sheet_unmap (GtkWidget * widget)
           children = g_list_next(children);
 
           if (GTK_WIDGET_VISIBLE (child->widget) &&
-	      GTK_WIDGET_MAPPED (child->widget))
+	      gtk_widget_get_mapped(child->widget))
                 {
   	             gtk_widget_unmap (child->widget);
                 }
@@ -3219,7 +3219,7 @@ gtk_sheet_range_draw(GtkSheet *sheet, const GtkSheetRange *range)
  
  if(!gtk_widget_is_drawable(GTK_WIDGET(sheet))) return;
  if(!gtk_widget_get_realized(GTK_WIDGET(sheet))) return;
- if(!GTK_WIDGET_MAPPED(GTK_WIDGET(sheet))) return;
+ if(!gtk_widget_get_mapped(GTK_WIDGET(sheet))) return;
 
  if(range == NULL)
  {
@@ -6090,7 +6090,7 @@ gtk_sheet_size_allocate_entry(GtkSheet *sheet)
  const gchar *text;
 
  if(!gtk_widget_get_realized(GTK_WIDGET(sheet))) return;
- if(!GTK_WIDGET_MAPPED(GTK_WIDGET(sheet))) return;
+ if(!gtk_widget_get_mapped(GTK_WIDGET(sheet))) return;
 
  sheet_entry = GTK_ENTRY(gtk_sheet_get_entry(sheet));
 
@@ -6514,7 +6514,7 @@ gtk_sheet_button_draw (GtkSheet *sheet, gint row, gint column)
       gtk_widget_set_state(child->widget, button->state);
 
       if(gtk_widget_get_realized(GTK_WIDGET(sheet)) &&
-         GTK_WIDGET_MAPPED(child->widget))
+         gtk_widget_get_mapped(child->widget))
             {
               gtk_widget_size_allocate(child->widget, 
                                        &allocation);
@@ -8037,8 +8037,8 @@ gtk_sheet_put(GtkSheet *sheet, GtkWidget *child, gint x, gint y)
           (!gtk_widget_get_realized(child) || GTK_WIDGET_NO_WINDOW(child)))
         gtk_sheet_realize_child(sheet, child_info);
 
-       if(GTK_WIDGET_MAPPED(GTK_WIDGET(sheet)) && 
-          !GTK_WIDGET_MAPPED(child))
+       if(gtk_widget_get_mapped(GTK_WIDGET(sheet)) && 
+          !gtk_widget_get_mapped(child))
         gtk_widget_map(child);
     }
 
@@ -8135,8 +8135,8 @@ gtk_sheet_attach        (GtkSheet *sheet,
           (!gtk_widget_get_realized(widget) || GTK_WIDGET_NO_WINDOW(widget)))
         gtk_sheet_realize_child(sheet, child);
 
-       if(GTK_WIDGET_MAPPED(GTK_WIDGET(sheet)) &&
-          !GTK_WIDGET_MAPPED(widget))
+       if(gtk_widget_get_mapped(GTK_WIDGET(sheet)) &&
+          !gtk_widget_get_mapped(widget))
         gtk_widget_map(widget);
     }
 
@@ -8212,8 +8212,8 @@ gtk_sheet_button_attach		(GtkSheet *sheet,
           (!gtk_widget_get_realized(widget) || GTK_WIDGET_NO_WINDOW(widget)))
         gtk_sheet_realize_child(sheet, child);
 
-       if(GTK_WIDGET_MAPPED(GTK_WIDGET(sheet)) && 
-          !GTK_WIDGET_MAPPED(widget))
+       if(gtk_widget_get_mapped(GTK_WIDGET(sheet)) && 
+          !gtk_widget_get_mapped(widget))
         gtk_widget_map(widget);
     }
 
