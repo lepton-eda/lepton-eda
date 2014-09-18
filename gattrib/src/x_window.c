@@ -94,7 +94,7 @@ x_window_init()
   gtk_window_set_default_size(GTK_WINDOW(window), 750, 600);  
   
   g_signal_connect(GTK_OBJECT(window), "delete_event",
-                   GTK_SIGNAL_FUNC(gattrib_really_quit), 0);
+                   G_CALLBACK(gattrib_really_quit), 0);
 
   /* -----  Now create main_vbox.  This is a container which organizes child  ----- */  
   /* -----  widgets into a vertical column.  ----- */  
