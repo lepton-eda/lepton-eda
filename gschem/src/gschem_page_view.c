@@ -366,10 +366,10 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
   if (geometry == NULL) {
     geometry = gschem_page_geometry_new_with_values (screen_width,
                                                      screen_height,
-                                                     page->left,
-                                                     page->top,
-                                                     page->right,
-                                                     page->bottom,
+                                                     view->page->toplevel->init_left,
+                                                     view->page->toplevel->init_top,
+                                                     view->page->toplevel->init_right,
+                                                     view->page->toplevel->init_bottom,
                                                      view->page->toplevel->init_left,
                                                      view->page->toplevel->init_top,
                                                      view->page->toplevel->init_right,
@@ -383,22 +383,15 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
                                        s_page_objects (page),
                                        A_PAN_DONT_REDRAW);
 
-    /* this code gets removed when the variables are factored out of PAGE */
-    set_window (view->page->toplevel,
-                page,
-                gschem_page_geometry_get_viewport_left (geometry),
-                gschem_page_geometry_get_viewport_right (geometry),
-                gschem_page_geometry_get_viewport_top (geometry),
-                gschem_page_geometry_get_viewport_bottom (geometry));
   }
   else {
     gschem_page_geometry_set_values (geometry,
                                      screen_width,
                                      screen_height,
-                                     page->left,
-                                     page->top,
-                                     page->right,
-                                     page->bottom);
+                                     gschem_page_geometry_get_viewport_left (geometry),
+                                     gschem_page_geometry_get_viewport_top (geometry),
+                                     gschem_page_geometry_get_viewport_right (geometry),
+                                     gschem_page_geometry_get_viewport_bottom (geometry));
   }
 
   return geometry;
@@ -653,14 +646,6 @@ gschem_page_view_pan_general (GschemPageView *view, int w_x, int w_y, double rel
    */
   /* x_basic_warp_cursor(w_current->drawing_area, x, y); */
 
-  /* this code gets removed when the variables are factored out of PAGE */
-  set_window (view->page->toplevel,
-              page,
-              gschem_page_geometry_get_viewport_left (geometry),
-              gschem_page_geometry_get_viewport_right (geometry),
-              gschem_page_geometry_get_viewport_top (geometry),
-              gschem_page_geometry_get_viewport_bottom (geometry));
-
   g_signal_emit_by_name (view, "update-grid-info");
   gschem_page_view_update_scroll_adjustments (view);
   gschem_page_view_invalidate_all (view);
@@ -857,20 +842,20 @@ hadjustment_value_changed (GtkAdjustment *hadjustment, GschemPageView *view)
   g_return_if_fail (hadjustment != NULL);
   g_return_if_fail (view != NULL);
 
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+  g_return_if_fail (geometry != NULL);
+
   if (view->hadjustment != NULL) {
     int current_left;
     int new_left;
-    PAGE *page;
 
     g_return_if_fail (view->hadjustment == hadjustment);
 
-    page = gschem_page_view_get_page (view);
-
-    current_left = page->left;
+    current_left = gschem_page_geometry_get_viewport_left (geometry),
     new_left = (int) hadjustment->value;
 
-    page->left = new_left;
-    page->right = page->right - (current_left - new_left);
+    geometry->viewport_left = new_left;
+    geometry->viewport_right = geometry->viewport_right - (current_left - new_left);
 
     gschem_page_view_invalidate_all (view);
   }
@@ -917,6 +902,7 @@ gschem_page_view_SCREENabs(GschemPageView *view, int val)
   double i;
   int j;
   PAGE *page;
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
 
   g_return_val_if_fail (view != NULL, 0);
 
@@ -924,8 +910,8 @@ gschem_page_view_SCREENabs(GschemPageView *view, int val)
 
   if (page == NULL) return 0;
 
-  f0 = page->left;
-  f1 = page->right;
+  f0 = gschem_page_geometry_get_viewport_left  (geometry);
+  f1 = gschem_page_geometry_get_viewport_right (geometry);
   f = view->page->toplevel->width / (f1 - f0);
   i = f * (double)(val);
 
@@ -952,14 +938,17 @@ gschem_page_view_update_hadjustment (GschemPageView *view)
 
     g_return_if_fail (page != NULL);
 
+    GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+    g_return_if_fail (geometry != NULL);
+
     gtk_adjustment_set_page_increment (view->hadjustment,
-                                       fabs (page->right -page->left) - 100.0);
+                                       fabs (geometry->viewport_right - geometry->viewport_left) - 100.0);
 
     gtk_adjustment_set_page_size (view->hadjustment,
-                                  fabs (page->right -page->left));
+                                  fabs (geometry->viewport_right - geometry->viewport_left));
 
     gtk_adjustment_set_value (view->hadjustment,
-                              page->left);
+                               geometry->viewport_left);
 
 #if DEBUG
     printf("H %f %f\n", view->hadjustment->lower, view->hadjustment->upper);
@@ -998,14 +987,17 @@ gschem_page_view_update_vadjustment (GschemPageView *view)
 
     g_return_if_fail (page != NULL);
 
+    GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+    g_return_if_fail (geometry != NULL);
+
     gtk_adjustment_set_page_increment(view->vadjustment,
-                                      fabs (page->bottom - page->top) - 100.0);
+                                      fabs (geometry->viewport_bottom - geometry->viewport_top) - 100.0);
 
     gtk_adjustment_set_page_size (view->vadjustment,
-                                  fabs (page->bottom - page->top));
+                                  fabs (geometry->viewport_bottom - geometry->viewport_top));
 
     gtk_adjustment_set_value(view->vadjustment,
-                             view->page->toplevel->init_bottom - page->bottom);
+                             view->page->toplevel->init_bottom - geometry->viewport_bottom);
 
 #if DEBUG
     printf("V %f %f\n", view->vadjustment->lower, view->vadjustment->upper);
@@ -1075,17 +1067,17 @@ vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view)
   if ((view->page->toplevel != NULL) && (view->vadjustment != NULL)) {
     int current_bottom;
     int new_bottom;
-    PAGE *page;
 
     g_return_if_fail (view->vadjustment == vadjustment);
 
-    page = gschem_page_view_get_page (view);
+    GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+    g_return_if_fail (geometry != NULL);
 
-    current_bottom = page->bottom;
+    current_bottom = geometry->viewport_bottom;
     new_bottom = view->page->toplevel->init_bottom - (int) vadjustment->value;
 
-    page->bottom = new_bottom;
-    page->top = page->top - (current_bottom - new_bottom);
+    geometry->viewport_bottom = new_bottom;
+    geometry->viewport_top = geometry->viewport_top - (current_bottom - new_bottom);
 
     gschem_page_view_invalidate_all (view);
   }
@@ -1139,14 +1131,6 @@ gschem_page_view_zoom_extents (GschemPageView *view, const GList *objects)
   }
 
   gschem_page_geometry_zoom_extents (geometry, view->page->toplevel, temp, A_PAN_DONT_REDRAW);
-
-  /* this code gets removed when the variables are factored out of PAGE */
-  set_window (view->page->toplevel,
-              page,
-              gschem_page_geometry_get_viewport_left (geometry),
-              gschem_page_geometry_get_viewport_right (geometry),
-              gschem_page_geometry_get_viewport_top (geometry),
-              gschem_page_geometry_get_viewport_bottom (geometry));
 
   g_signal_emit_by_name (view, "update-grid-info");
   gschem_page_view_update_scroll_adjustments (view);

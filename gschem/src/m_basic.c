@@ -82,8 +82,10 @@ int WORLDabs(GschemToplevel *w_current, int val)
   double i;
   int j;
 
-  fw1 = w_current->toplevel->page_current->right;
-  fw0 = w_current->toplevel->page_current->left;
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (gschem_toplevel_get_current_page_view (w_current));
+
+  fw1 = geometry->viewport_right;
+  fw0 = geometry->viewport_left;
   fw  = w_current->toplevel->width;
   fval = val;
   i = fval * (fw1 - fw0) / fw;
@@ -125,13 +127,13 @@ struct st_halfspace {
  *
  *  \warning halfspace must be allocated before this function is called
  */
-static void WORLDencode_halfspace (GschemToplevel *w_current,
+static void WORLDencode_halfspace (GschemPageGeometry *geometry,
                                    sPOINT *point, HALFSPACE *halfspace)
 {
-  halfspace->left = point->x < w_current->toplevel->page_current->left;
-  halfspace->right = point->x > w_current->toplevel->page_current->right;
-  halfspace->bottom = point->y > w_current->toplevel->page_current->bottom;
-  halfspace->top = point->y < w_current->toplevel->page_current->top;
+  halfspace->left = point->x < geometry->viewport_left;
+  halfspace->right = point->x > geometry->viewport_right;
+  halfspace->bottom = point->y > geometry->viewport_bottom;
+  halfspace->top = point->y < geometry->viewport_top;
 }
 
 /*! \brief Calculate the cliping region for a set of coordinates.
@@ -165,17 +167,18 @@ int WORLDclip_change (GschemToplevel *w_current,
   point2.x = *x2;
   point2.y = *y2;
 
-  w_l = w_current->toplevel->page_current->left;
-  w_t = w_current->toplevel->page_current->top;
-  w_r = w_current->toplevel->page_current->right;
-  w_b = w_current->toplevel->page_current->bottom;
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (gschem_toplevel_get_current_page_view (w_current));
+  w_l = geometry->viewport_left;
+  w_t = geometry->viewport_top;
+  w_r = geometry->viewport_right;
+  w_b = geometry->viewport_bottom;
 
   done = FALSE;
   visible = FALSE;
 
   do {
-    WORLDencode_halfspace (w_current, &point1, &half1);
-    WORLDencode_halfspace (w_current, &point2, &half2);
+    WORLDencode_halfspace (geometry, &point1, &half1);
+    WORLDencode_halfspace (geometry, &point2, &half2);
 
 #if DEBUG
     printf("starting loop\n");
@@ -279,7 +282,7 @@ int WORLDclip_change (GschemToplevel *w_current,
  *  \param [in,out] y2     y coordinate of the second screen point.
  *  \return TRUE if coordinates are now visible, FALSE otherwise.
  */
-int clip_nochange (GschemToplevel *w_current, int x1, int y1, int x2, int y2)
+int clip_nochange (GschemPageGeometry *geometry, int x1, int y1, int x2, int y2)
 {
   HALFSPACE half1, half2;
   HALFSPACE tmp_half;
@@ -297,17 +300,17 @@ int clip_nochange (GschemToplevel *w_current, int x1, int y1, int x2, int y2)
 
   /*printf("before: %d %d %d %d\n", x1, y1, x2, y2);*/
 
-  w_l = w_current->toplevel->page_current->left;
-  w_t = w_current->toplevel->page_current->top;
-  w_r = w_current->toplevel->page_current->right;
-  w_b = w_current->toplevel->page_current->bottom;
+  w_l = geometry->viewport_left;
+  w_t = geometry->viewport_top;
+  w_r = geometry->viewport_right;
+  w_b = geometry->viewport_bottom;
 
   done = FALSE;
   visible = FALSE;
 
   do {
-    WORLDencode_halfspace (w_current, &point1, &half1);
-    WORLDencode_halfspace (w_current, &point2, &half2);
+    WORLDencode_halfspace (geometry, &point1, &half1);
+    WORLDencode_halfspace (geometry, &point2, &half2);
 
 #if DEBUG
     printf("starting loop\n");
@@ -412,15 +415,16 @@ int visible (GschemToplevel *w_current,
              int wleft, int wtop, int wright, int wbottom)
 {
   int visible=FALSE;
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (gschem_toplevel_get_current_page_view (w_current));
 
-  visible = clip_nochange (w_current, wleft, wtop, wright, wtop);
+  visible = clip_nochange (geometry, wleft, wtop, wright, wtop);
 
 #if DEBUG
   printf("vis1 %d\n", visible);
 #endif
 
   if (!visible) {
-    visible = clip_nochange (w_current, wleft, wbottom, wright, wbottom);
+    visible = clip_nochange (geometry, wleft, wbottom, wright, wbottom);
   } else {
     return(visible);
   }
@@ -430,7 +434,7 @@ int visible (GschemToplevel *w_current,
 #endif
 
   if (!visible) {
-    visible = clip_nochange (w_current, wleft, wtop, wleft, wbottom);
+    visible = clip_nochange (geometry, wleft, wtop, wleft, wbottom);
   } else {
     return(visible);
   }
@@ -440,7 +444,7 @@ int visible (GschemToplevel *w_current,
 #endif
 
   if (!visible) {
-    visible = clip_nochange (w_current, wright, wtop, wright, wbottom);
+    visible = clip_nochange (geometry, wright, wtop, wright, wbottom);
   } else {
     return(visible);
   }
@@ -450,10 +454,10 @@ int visible (GschemToplevel *w_current,
 #endif
 
 #if DEBUG
-  printf("%d %d %d\n", wleft, w_current->toplevel->page_current->top, wright);
-  printf("%d %d %d\n", wtop, w_current->toplevel->page_current->top, wbottom);
-  printf("%d %d %d\n", wleft, w_current->toplevel->page_current->right, wright);
-  printf("%d %d %d\n", wtop, w_current->toplevel->page_current->bottom, wbottom);
+  printf("%d %d %d\n", wleft, geometry->viewport_top, wright);
+  printf("%d %d %d\n", wtop, geometry->viewport_top, wbottom);
+  printf("%d %d %d\n", wleft, geometry->viewport_right, wright);
+  printf("%d %d %d\n", wtop, geometry->viewport_bottom, wbottom);
 #endif
 
   /*
@@ -461,10 +465,10 @@ int visible (GschemToplevel *w_current,
    * We only need to test if one point on the screen clipping boundary
    * is indide the bounding box of the object.
    */
-  if (w_current->toplevel->page_current->left >= wleft  &&
-      w_current->toplevel->page_current->left <= wright &&
-      w_current->toplevel->page_current->top >= wtop    &&
-      w_current->toplevel->page_current->top <= wbottom ) {
+  if (geometry->viewport_left >= wleft  &&
+      geometry->viewport_left <= wright &&
+      geometry->viewport_top >= wtop    &&
+      geometry->viewport_top <= wbottom ) {
     visible = 1;
   }
 

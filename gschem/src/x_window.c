@@ -712,8 +712,6 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
 
   gschem_page_view_set_page (page_view,
                              toplevel->page_current);
-  gschem_page_view_zoom_extents (page_view,
-                                 NULL);
 
   /* This line is generally un-needed, however if some code
    * wants to open a page, yet not bring it to the front, it is

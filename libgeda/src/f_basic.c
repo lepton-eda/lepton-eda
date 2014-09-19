@@ -199,11 +199,6 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
   /* has the head been freed yet? */
   /* probably not hack PAGE */
 
-  set_window(toplevel, page,
-             toplevel->init_left, toplevel->init_right,
-             toplevel->init_top,  toplevel->init_bottom);
-
-
   /* Cache the cwd so we can restore it later. */
   if (flags & F_OPEN_RESTORE_CWD) {
     saved_cwd = g_get_current_dir();

@@ -153,10 +153,6 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
 
   page->weak_refs = NULL;
   
-  set_window (toplevel, page,
-              toplevel->init_left, toplevel->init_right,
-              toplevel->init_top,  toplevel->init_bottom);
-
   /* Backup variables */
   g_get_current_time (&page->last_load_or_save_time);
   page->ops_since_last_backup = 0;

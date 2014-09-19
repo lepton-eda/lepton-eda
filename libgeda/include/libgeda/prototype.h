@@ -44,7 +44,6 @@ void i_vars_libgeda_freenames();
 void libgeda_init(void);
 
 /* m_basic.c */
-void set_window(TOPLEVEL *toplevel, PAGE *page, int xmin, int xmax, int ymin, int ymax);
 void rotate_point(int x, int y, int angle, int *newx, int *newy);
 void rotate_point_90(int x, int y, int angle, int *newx, int *newy);
 void PAPERSIZEtoWORLD(int width, int height, int border, int *right, int *bottom);

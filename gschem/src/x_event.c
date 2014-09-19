@@ -1032,7 +1032,6 @@ x_event_configure (GschemPageView    *page_view,
   w_current->win_width   = toplevel->width  = new_win_width;
   w_current->win_height  = toplevel->height = new_win_height;
 
-
   /* in the case the user has maximised the window (hence the */
   /* configure event) fit the view by playing with zoom level */
   if (gdk_window_get_state (
@@ -1048,6 +1047,20 @@ x_event_configure (GschemPageView    *page_view,
       (width_ratio < height_ratio) ? width_ratio : height_ratio;
 
   }
+
+  /* save current page */
+  PAGE *old_page_current = gschem_page_view_get_page (page_view);
+
+  /* re-pan each page of the TOPLEVEL */
+  for ( iter = geda_list_get_glist( toplevel->pages );
+        iter != NULL;
+        iter = g_list_next( iter ) ) {
+
+    gschem_page_view_set_page (page_view, (PAGE *)iter->data);
+    gschem_page_view_zoom_extents (page_view, NULL);
+
+  }
+  gschem_page_view_set_page (page_view, old_page_current);
 
   /* redraw the current page and update UI */
   gschem_page_view_invalidate_all (page_view);
@@ -1079,14 +1092,6 @@ void x_manual_resize(GschemToplevel *w_current)
 
   toplevel->width = w_current->win_width;
   toplevel->height = w_current->win_height;
-
-  /* need to do this every time you change width / height */
-  set_window(toplevel,
-             page,
-             page->left,
-             page->right,
-             page->top,
-             page->bottom);
 
 #if DEBUG
   printf("Window aspect: %f\n",

@@ -79,7 +79,10 @@ o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
   UNDO *u_current;
   UNDO *u_current_next;
 
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (gschem_toplevel_get_current_page_view (w_current));
+
   g_return_if_fail (page != NULL);
+  g_return_if_fail (geometry != NULL);
 
   /* save autosave backups if necessary */
   o_autosave_backups(w_current);
@@ -138,10 +141,10 @@ o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
   page->undo_tos =
   s_undo_add(page->undo_tos,
              flag, filename, object_list,
-             page->left,
-             page->top,
-             page->right,
-             page->bottom,
+             geometry->viewport_left,
+             geometry->viewport_top,
+             geometry->viewport_right,
+             geometry->viewport_bottom,
              page->page_control,
              page->up);
 
@@ -398,11 +401,6 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
 
     f_open(toplevel, page, u_current->filename, NULL);
 
-    x_manual_resize(w_current);
-    page->page_control = u_current->page_control;
-    page->up = u_current->up;
-    gschem_toplevel_page_content_changed (w_current, page);
-
   } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_list) {
 
     s_page_delete_objects (toplevel, page);
@@ -410,19 +408,22 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
     s_page_append_list (toplevel, page,
                         o_glist_copy_all (toplevel, u_current->object_list,
                                           NULL));
-
-    x_manual_resize(w_current);
-    page->page_control = u_current->page_control;
-    page->up = u_current->up;
-    gschem_toplevel_page_content_changed (w_current, page);
   }
 
-  /* do misc setups */
-  set_window(toplevel, page,
-             u_current->left, u_current->right,
-             u_current->top, u_current->bottom);
+  x_manual_resize(w_current);
+  page->page_control = u_current->page_control;
+  page->up = u_current->up;
+  gschem_toplevel_page_content_changed (w_current, page);
 
-  gschem_page_view_update_scroll_adjustments (GSCHEM_PAGE_VIEW (w_current->drawing_area));
+  GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+
+  gschem_page_geometry_set_viewport_left   (geometry, u_current->left);
+  gschem_page_geometry_set_viewport_right  (geometry, u_current->right);
+  gschem_page_geometry_set_viewport_top    (geometry, u_current->top);
+  gschem_page_geometry_set_viewport_bottom (geometry, u_current->bottom);
+  gschem_page_view_pan (view, (u_current->left + u_current->right)/2, (u_current->top + u_current->bottom)/2);
+  gschem_page_view_update_scroll_adjustments (view);
 
   /* restore logging */
   do_logging = save_logging;

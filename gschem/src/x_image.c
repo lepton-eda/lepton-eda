@@ -237,6 +237,9 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
   GtkWidget *dialog;
   float prop;
 
+  GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+
   w_current->image_width = width = desired_width;
   w_current->image_height = height = desired_height;
 
@@ -246,10 +249,10 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
   toplevel->width = width;
   toplevel->height = height;
 
-  save_page_left = toplevel->page_current->left;
-  save_page_right = toplevel->page_current->right;
-  save_page_top = toplevel->page_current->top;
-  save_page_bottom = toplevel->page_current->bottom;
+  save_page_left = geometry->viewport_left;
+  save_page_right = geometry->viewport_right;
+  save_page_top = geometry->viewport_top;
+  save_page_bottom = geometry->viewport_bottom;
 
   page_width = save_page_right - save_page_left;
   page_height = save_page_bottom - save_page_top;
@@ -265,12 +268,10 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
     page_width = (page_height * prop);
   }
 
-  /* need to do this every time you change width / height */
-  set_window(toplevel, toplevel->page_current,
-      page_center_left - (page_width / 2),
-      page_center_left + (page_width / 2),
-      page_center_top - (page_height / 2),
-      page_center_top + (page_height / 2));
+  gschem_page_geometry_set_viewport_left   (geometry, page_center_left - (page_width / 2));
+  gschem_page_geometry_set_viewport_right  (geometry, page_center_left + (page_width / 2));
+  gschem_page_geometry_set_viewport_top    (geometry, page_center_top - (page_height / 2));
+  gschem_page_geometry_set_viewport_bottom (geometry, page_center_top + (page_height / 2));
 
   /* de select everything first */
   o_select_unselect_all( w_current );
@@ -327,15 +328,12 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
   toplevel->width = save_width;
   toplevel->height = save_height;
 
-  /* need to do this every time you change width / height */
-  set_window(toplevel, toplevel->page_current,
-      save_page_left,
-      save_page_right,
-      save_page_top,
-      save_page_bottom);
+  gschem_page_geometry_set_viewport_left   (geometry, save_page_left  );
+  gschem_page_geometry_set_viewport_right  (geometry, save_page_right );
+  gschem_page_geometry_set_viewport_top    (geometry, save_page_top   );
+  gschem_page_geometry_set_viewport_bottom (geometry, save_page_bottom);
 
   o_invalidate_all (w_current);
-
 }
 
 /*! \brief Display the image file selection dialog.
@@ -520,8 +518,10 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
   GschemToplevel new_w_current;
   TOPLEVEL toplevel;
   GdkRectangle rect;
-  GschemPageGeometry *geometry;
+  GschemPageGeometry *old_geometry, *new_geometry;
   cairo_t *cr;
+
+  old_geometry = gschem_page_view_get_page_geometry (gschem_toplevel_get_current_page_view (w_current));
 
   /* Do a copy of the w_current struct and work with it */
   memcpy(&new_w_current, w_current, sizeof(GschemToplevel));
@@ -557,20 +557,20 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
   rect.width = right - origin_x;
   rect.height = bottom - origin_y;
 
-  geometry = gschem_page_geometry_new_with_values (size_x,
+  new_geometry = gschem_page_geometry_new_with_values (size_x,
                                                    size_y,
-                                                   toplevel.page_current->left,
-                                                   toplevel.page_current->top,
-                                                   toplevel.page_current->right,
-                                                   toplevel.page_current->bottom,
+                                                   old_geometry->viewport_left,
+                                                   old_geometry->viewport_top,
+                                                   old_geometry->viewport_right,
+                                                   old_geometry->viewport_bottom,
                                                    toplevel.init_left,
                                                    toplevel.init_top,
                                                    toplevel.init_right,
                                                    toplevel.init_bottom);
 
-  o_redraw_rects (&new_w_current, cr, toplevel.page_current, geometry, &rect, 1);
+  o_redraw_rects (&new_w_current, cr, toplevel.page_current, new_geometry, &rect, 1);
 
-  gschem_page_geometry_free (geometry);
+  gschem_page_geometry_free (new_geometry);
 
   /* Get the pixbuf */
   pixbuf = gdk_pixbuf_get_from_drawable (NULL,new_w_current.drawable, NULL,

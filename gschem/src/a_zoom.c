@@ -25,7 +25,7 @@
 #include "gschem.h"
 
 static void
-a_zoom_box(GschemToplevel *w_current, PAGE *page, int pan_flags);
+a_zoom_box(GschemToplevel *w_current, int pan_flags);
 
 /* Kazu - discuss with Ales
  * 1) rint
@@ -43,13 +43,15 @@ a_zoom_box(GschemToplevel *w_current, PAGE *page, int pan_flags);
 void
 a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int selected_from, int pan_flags)
 {
-  PAGE *page = gschem_page_view_get_page (page_view);
+  g_return_if_fail (page_view != NULL);
+
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (page_view);
+  g_return_if_fail (geometry != NULL);
+
   double world_pan_center_x,world_pan_center_y,relativ_zoom_factor = - 1;
   int start_x, start_y;
   double top, bottom, right, left;
 
-  g_return_if_fail (page != NULL);
-  g_return_if_fail (page_view != NULL);
 
   /* NB: w_current->zoom_gain is a percentage increase */
   switch(dir) {
@@ -77,16 +79,16 @@ a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int select
       world_pan_center_x = start_x;
       world_pan_center_y = start_y;
     } else {
-      left = ((page->left - start_x) * (1/relativ_zoom_factor) + start_x);
-      right = ((page->right - start_x) * (1/relativ_zoom_factor) + start_x);
-      top = ((page->top - start_y) * (1/relativ_zoom_factor) + start_y);
-      bottom = ((page->bottom - start_y) * (1/relativ_zoom_factor) + start_y);
+      left = ((geometry->viewport_left - start_x) * (1/relativ_zoom_factor) + start_x);
+      right = ((geometry->viewport_right - start_x) * (1/relativ_zoom_factor) + start_x);
+      top = ((geometry->viewport_top - start_y) * (1/relativ_zoom_factor) + start_y);
+      bottom = ((geometry->viewport_bottom - start_y) * (1/relativ_zoom_factor) + start_y);
       world_pan_center_x = (right + left) / 2;
       world_pan_center_y = (top + bottom) / 2;
     }
   } else {
-    world_pan_center_x = (double) (page->left + page->right) / 2;
-    world_pan_center_y = (double) (page->top + page->bottom) / 2;
+    world_pan_center_x = (double) (geometry->viewport_left + geometry->viewport_right) / 2;
+    world_pan_center_y = (double) (geometry->viewport_top + geometry->viewport_bottom) / 2;
   }
 
 #if DEBUG
@@ -135,10 +137,18 @@ a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int select
  * 
  */
 static void
-a_zoom_box(GschemToplevel *w_current, PAGE *page, int pan_flags)
+a_zoom_box(GschemToplevel *w_current, int pan_flags)
 {
   double zx, zy, relativ_zoom_factor;
   double world_pan_center_x, world_pan_center_y;
+
+  g_return_if_fail (w_current != NULL);
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  g_return_if_fail (page_view != NULL);
+
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (page_view);
+  g_return_if_fail (geometry != NULL);
 
   /*test if there is really a box*/
   if (w_current->first_wx == w_current->second_wx ||
@@ -148,8 +158,8 @@ a_zoom_box(GschemToplevel *w_current, PAGE *page, int pan_flags)
   }
 	
   /*calc new zoomfactors and choose the smaller one*/
-  zx = (double) abs(page->left - page->right) / abs(w_current->first_wx - w_current->second_wx);
-  zy = (double) abs(page->top - page->bottom) / abs(w_current->first_wy - w_current->second_wy);
+  zx = (double) abs(geometry->viewport_left - geometry->viewport_right) / abs(w_current->first_wx - w_current->second_wx);
+  zy = (double) abs(geometry->viewport_top - geometry->viewport_bottom) / abs(w_current->first_wy - w_current->second_wy);
 
   relativ_zoom_factor = (zx < zy ? zx : zy);
 	
@@ -183,15 +193,13 @@ void a_zoom_box_start(GschemToplevel *w_current, int w_x, int w_y)
 void a_zoom_box_end(GschemToplevel *w_current, int x, int y)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
 
   g_assert( w_current->inside_action != 0 );
-  g_return_if_fail (page != NULL);
 
   a_zoom_box_invalidate_rubber (w_current);
   w_current->rubber_visible = 0;
 
-  a_zoom_box(w_current, page, 0);
+  a_zoom_box(w_current, 0);
 
   if (w_current->undo_panzoom) {
     o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY); 

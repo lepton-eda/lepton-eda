@@ -104,8 +104,11 @@ static void draw_dots_grid_region (GschemToplevel *w_current,
 
   gdk_gc_set_foreground (w_current->gc, x_get_color (DOTS_GRID_COLOR));
 
-  gschem_page_view_SCREENtoWORLD (GSCHEM_PAGE_VIEW (w_current->drawing_area), x - 1, y + height + 1, &x_start, &y_start);
-  gschem_page_view_SCREENtoWORLD (GSCHEM_PAGE_VIEW (w_current->drawing_area), x + width + 1, y - 1, &x_end, &y_end);
+  GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
+  GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+
+  gschem_page_view_SCREENtoWORLD (view, x - 1, y + height + 1, &x_start, &y_start);
+  gschem_page_view_SCREENtoWORLD (view, x + width + 1, y - 1, &x_end, &y_end);
 
   /* figure starting grid coordinates, work by taking the start
    * and end coordinates and rounding down to the nearest
@@ -115,11 +118,11 @@ static void draw_dots_grid_region (GschemToplevel *w_current,
 
   for (i = x_start; i <= x_end; i = i + incr) {
     for(j = y_start; j <= y_end; j = j + incr) {
-      gschem_page_view_WORLDtoSCREEN (GSCHEM_PAGE_VIEW (w_current->drawing_area), i,j, &dot_x, &dot_y);
-      if (inside_region (toplevel->page_current->left,
-                         toplevel->page_current->top,
-                         toplevel->page_current->right,
-                         toplevel->page_current->bottom, i, j)) {
+      gschem_page_view_WORLDtoSCREEN (view, i,j, &dot_x, &dot_y);
+      if (inside_region (geometry->viewport_left,
+                         geometry->viewport_top,
+                         geometry->viewport_right,
+                         geometry->viewport_bottom, i, j)) {
 
         if (w_current->dots_grid_dot_size == 1) {
           points[count].x = dot_x;

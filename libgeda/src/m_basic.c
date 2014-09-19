@@ -25,37 +25,6 @@
 #include "libgeda_priv.h"
 
 
-/*! \brief Set the contraints for the current page.
- *  \par Function Description
- *  This function will set the current page constraints.
- *
- *  \param [in]     toplevel  The TOPLEVEL object.
- *  \param [in,out] page       The PAGE object to set constraints on.
- *  \param [in]     xmin       The minimum x coordinate for the page.
- *  \param [in]     xmax       The maximum x coordinate for the page.
- *  \param [in]     ymin       The minimum y coordinate for the page.
- *  \param [in]     ymax       The maximum y coordinate for the page.
- */
-void set_window(TOPLEVEL *toplevel, PAGE *page,
-                int xmin, int xmax, int ymin, int ymax)
-{
-  double fs,f0,f1;
-
-  page->left   = xmin;
-  page->right  = xmax;
-  page->top    = ymin; 
-  page->bottom = ymax;
-
-  /* now do the constant setups */
-
-  /* pix_y */
-  f0 = page->top;
-  f1 = page->bottom;
-  fs = toplevel->height;
-  page->to_screen_y_constant = fs / (f1 - f0); 
-}
-
-
 /*! \brief Rotate a point by an arbitrary angle.
  *  \par Function Description
  *  This function will rotate a point coordinate by an arbitrary angle
