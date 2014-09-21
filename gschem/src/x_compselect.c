@@ -762,7 +762,17 @@ static void populate_component_store(GtkTreeStore *store, GList **srclist,
     text = NULL;
     new_prefix = NULL;
     new_srclist = NULL;
+  } else if (*name != '/') {
+    /* directory added by component-library */
+    text = strdup(name);
+    if (text == NULL) {
+      fprintf(stderr, "Not enough memory\n");
+      return;
+    }
+    new_prefix = NULL;
+    new_srclist = NULL;
   } else {
+    /* directory added by component-library-search */
     g_assert(strncmp(name, prefix, strlen(prefix)) == 0);
     char *p = strchr(name + strlen(prefix) + 1, '/');
 
