@@ -138,7 +138,8 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
   if (event->type == GDK_2BUTTON_PRESS &&
       (w_current->event_state == STARTSELECT ||
        w_current->event_state == SELECT)) {
-    o_find_object(w_current, w_x, w_y, TRUE);
+    /* Don't re-select an object (lp-912978) */
+    /* o_find_object(w_current, w_x, w_y, TRUE); */
     if (o_select_selected (w_current)) {
        o_edit(w_current, geda_list_get_glist( page->selection_list ));
        i_set_state(w_current, SELECT);
