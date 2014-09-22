@@ -408,7 +408,6 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
                                           NULL));
   }
 
-  x_manual_resize(w_current);
   page->page_control = u_current->page_control;
   page->up = u_current->up;
   gschem_toplevel_page_content_changed (w_current, page);

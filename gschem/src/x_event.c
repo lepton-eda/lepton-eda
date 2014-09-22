@@ -1056,38 +1056,6 @@ x_event_configure (GschemPageView    *page_view,
  *  \brief
  *  \par Function Description
  *
- *  \note
- *  this is used during an open command
- *  to setup the correct sizes
- */
-void x_manual_resize(GschemToplevel *w_current)
-{
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-
-  /* of the actual win window (drawing_area) */
-  w_current->win_width  = w_current->drawing_area->allocation.width;
-  w_current->win_height = w_current->drawing_area->allocation.height;
-
-#if DEBUG
-  printf("manual: %d %d\n", w_current->win_width, w_current->win_height);
-#endif
-
-  toplevel->width = w_current->win_width;
-  toplevel->height = w_current->win_height;
-
-#if DEBUG
-  printf("Window aspect: %f\n",
-         (float) w_current->win_width / (float) w_current->win_height);
-  /* No longer used?
-     printf("w: %d h: %d\n", width, height); */
-  printf("aw: %d ah: %d\n", w_current->win_width, w_current->win_height);
-#endif
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
  */
 gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
                    GschemToplevel *w_current)
