@@ -1080,7 +1080,6 @@ x_event_configure (GschemPageView    *page_view,
 void x_manual_resize(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  PAGE *page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (w_current->drawing_area));
 
   /* of the actual win window (drawing_area) */
   w_current->win_width  = w_current->drawing_area->allocation.width;

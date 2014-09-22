@@ -90,7 +90,6 @@ zz *  \param [in] height     The height of the region to draw.
 static void draw_dots_grid_region (GschemToplevel *w_current,
                                    int x, int y, int width, int height)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int i, j;
   int dot_x, dot_y;
   int x_start, y_start, x_end, y_end;

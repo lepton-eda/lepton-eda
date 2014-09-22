@@ -192,8 +192,6 @@ void a_zoom_box_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 void a_zoom_box_end(GschemToplevel *w_current, int x, int y)
 {
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-
   g_assert( w_current->inside_action != 0 );
 
   a_zoom_box_invalidate_rubber (w_current);
