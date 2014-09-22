@@ -381,8 +381,6 @@ struct st_page {
   char *page_filename; 
   int CHANGED;			/* changed flag */
 
-  float to_screen_y_constant;
-
   TILE world_tiles[MAX_TILES_X][MAX_TILES_Y];
 
   /* Undo/Redo Stacks and pointers */	

@@ -1007,7 +1007,6 @@ x_event_configure (GschemPageView    *page_view,
 
   GList *iter;
   gint old_win_width, old_win_height, new_win_width, new_win_height;
-  gdouble relativ_zoom_factor = 1.0;
 
   if (gschem_page_view_get_page (page_view) == NULL) {
     /* don't want to call this if the current page isn't setup yet */
@@ -1031,22 +1030,6 @@ x_event_configure (GschemPageView    *page_view,
   /* update the GschemToplevel with new size of drawing area */
   w_current->win_width   = toplevel->width  = new_win_width;
   w_current->win_height  = toplevel->height = new_win_height;
-
-  /* in the case the user has maximised the window (hence the */
-  /* configure event) fit the view by playing with zoom level */
-  if (gdk_window_get_state (
-        (gtk_widget_get_toplevel (
-          GTK_WIDGET (page_view)))->window) & GDK_WINDOW_STATE_MAXIMIZED) {
-    gdouble width_ratio, height_ratio;
-
-    /* tweak relative_zoom to better fit page in maximized window */
-    width_ratio  = ((gdouble)new_win_width)  / ((gdouble)old_win_width);
-    height_ratio = ((gdouble)new_win_height) / ((gdouble)old_win_height);
-    /* keep smallest ratio as relative zoom factor when panning */
-    relativ_zoom_factor =
-      (width_ratio < height_ratio) ? width_ratio : height_ratio;
-
-  }
 
   /* save current page */
   PAGE *old_page_current = gschem_page_view_get_page (page_view);
