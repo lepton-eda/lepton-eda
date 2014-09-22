@@ -592,6 +592,7 @@ gschem_page_view_init (GschemPageView *view)
                                                 (GDestroyNotify) gschem_page_geometry_free);
 
   view->page = NULL;
+  view->configured = FALSE;
 
   g_signal_connect (view,
                     "set-scroll-adjustments",

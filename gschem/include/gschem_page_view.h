@@ -46,6 +46,8 @@ struct _GschemPageView
 
   GHashTable *geometry_table;
 
+  gboolean configured;
+
   PAGE *page;
 };
 

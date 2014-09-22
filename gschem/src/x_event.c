@@ -1040,9 +1040,17 @@ x_event_configure (GschemPageView    *page_view,
         iter = g_list_next( iter ) ) {
 
     gschem_page_view_set_page (page_view, (PAGE *)iter->data);
-    gschem_page_view_zoom_extents (page_view, NULL);
+
+    if (page_view->configured) {
+      gschem_page_view_pan_mouse (page_view, w_current, 0, 0);
+    } else {
+      gschem_page_view_zoom_extents (page_view, NULL);
+    }
 
   }
+
+  page_view->configured = TRUE;
+
   gschem_page_view_set_page (page_view, old_page_current);
 
   /* redraw the current page and update UI */
