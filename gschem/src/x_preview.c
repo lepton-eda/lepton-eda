@@ -187,11 +187,8 @@ preview_update (Preview *preview)
 
   TOPLEVEL *preview_toplevel = preview_page->toplevel;
 
-  /* delete old preview, create new page */
-  /* it would be better to just resets current page - Fix me */
-  s_page_delete (preview_toplevel, preview_page);
-  gschem_toplevel_page_changed (preview_w_current);
-  s_page_goto (preview_toplevel, s_page_new (preview_toplevel, "preview"));
+  /* delete old preview */
+  s_page_delete_objects (preview_toplevel, preview_page);
   gschem_toplevel_page_changed (preview_w_current);
 
   if (preview->active) {
@@ -230,14 +227,18 @@ preview_update (Preview *preview)
     /* Clamp the canvas size to the extents of the page being previewed */
     width = right - left;
     height = bottom - top;
-    preview_toplevel->init_left   = left  - ((double)width * OVER_ZOOM_FACTOR);
-    preview_toplevel->init_right  = right + ((double)width * OVER_ZOOM_FACTOR);
-    preview_toplevel->init_top    = top    - ((double)height * OVER_ZOOM_FACTOR);
-    preview_toplevel->init_bottom = bottom + ((double)height * OVER_ZOOM_FACTOR);
+
+    GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (preview_view);
+    geometry->world_left   = left   - ((double)width  * OVER_ZOOM_FACTOR);
+    geometry->world_right  = right  + ((double)width  * OVER_ZOOM_FACTOR);
+    geometry->world_top    = top    - ((double)height * OVER_ZOOM_FACTOR);
+    geometry->world_bottom = bottom + ((double)height * OVER_ZOOM_FACTOR);
   }
 
   /* display current page (possibly empty) */
   gschem_page_view_zoom_extents (preview_view, NULL);
+
+  gschem_toplevel_page_changed (preview_w_current);
 }
 
 GType
