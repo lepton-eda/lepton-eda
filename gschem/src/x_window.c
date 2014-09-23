@@ -45,10 +45,6 @@ void x_window_setup (GschemToplevel *w_current)
   x_clipboard_init (w_current);
 
   /* x_window_setup_world() - BEGIN */
-  toplevel->init_left = -45;
-  toplevel->init_top  = -45;
-  /* init_right and _bottom are set before this function is called */
-
   w_current->win_width  = default_width;
   w_current->win_height = default_height;
   /* x_window_setup_world() - END */
