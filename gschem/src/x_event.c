@@ -1028,8 +1028,8 @@ x_event_configure (GschemPageView    *page_view,
   w_current->drawable = w_current->window;
 
   /* update the GschemToplevel with new size of drawing area */
-  w_current->win_width   = toplevel->width  = new_win_width;
-  w_current->win_height  = toplevel->height = new_win_height;
+  w_current->win_width   = new_win_width;
+  w_current->win_height  = new_win_height;
 
   /* save current page */
   PAGE *old_page_current = gschem_page_view_get_page (page_view);

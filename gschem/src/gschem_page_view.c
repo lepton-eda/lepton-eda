@@ -913,7 +913,7 @@ gschem_page_view_SCREENabs(GschemPageView *view, int val)
 
   f0 = gschem_page_geometry_get_viewport_left  (geometry);
   f1 = gschem_page_geometry_get_viewport_right (geometry);
-  f = view->page->toplevel->width / (f1 - f0);
+  f = gschem_page_view_get_page_geometry (view)->screen_width / (f1 - f0);
   i = f * (double)(val);
 
 #ifdef HAS_RINT

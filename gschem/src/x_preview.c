@@ -98,10 +98,8 @@ preview_callback_realize (GtkWidget *widget,
   preview_w_current->window = preview_w_current->drawing_area->window;
   gtk_widget_grab_focus (preview_w_current->drawing_area);
 
-  preview_toplevel->width  = preview_w_current->drawing_area->allocation.width;
-  preview_toplevel->height = preview_w_current->drawing_area->allocation.height;
-  preview_w_current->win_width  = preview_toplevel->width;
-  preview_w_current->win_height = preview_toplevel->height;
+  preview_w_current->win_width  = preview_w_current->drawing_area->allocation.width;
+  preview_w_current->win_height = preview_w_current->drawing_area->allocation.height;
 
   preview_w_current->drawable = preview_w_current->window;
 
@@ -372,17 +370,15 @@ preview_init (Preview *preview)
   preview_w_current->handleboxes = FALSE;
   preview_w_current->toolbars    = FALSE;
 
-  preview_w_current->toplevel->width  = 160;
-  preview_w_current->toplevel->height = 120;
-  preview_w_current->win_width  = preview_w_current->toplevel->width;
-  preview_w_current->win_height = preview_w_current->toplevel->height;
+  preview_w_current->win_width  = 160;
+  preview_w_current->win_height = 120;
 
   preview_w_current->drawing_area = GTK_WIDGET (preview);
   preview->preview_w_current = preview_w_current;
 
   g_object_set (GTK_WIDGET (preview),
-                "width-request",  preview_w_current->toplevel->width,
-                "height-request", preview_w_current->toplevel->height,
+                "width-request",  preview_w_current->win_width,
+                "height-request", preview_w_current->win_height,
                 NULL);
 
   preview->active   = FALSE;

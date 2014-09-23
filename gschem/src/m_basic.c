@@ -86,7 +86,7 @@ int WORLDabs(GschemToplevel *w_current, int val)
 
   fw1 = geometry->viewport_right;
   fw0 = geometry->viewport_left;
-  fw  = w_current->toplevel->width;
+  fw  = w_current->win_width;
   fval = val;
   i = fval * (fw1 - fw0) / fw;
 

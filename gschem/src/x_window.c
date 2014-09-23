@@ -49,11 +49,8 @@ void x_window_setup (GschemToplevel *w_current)
   toplevel->init_top  = -45;
   /* init_right and _bottom are set before this function is called */
 
-  toplevel->width  = default_width;
-  toplevel->height = default_height;
-
-  w_current->win_width  = toplevel->width;
-  w_current->win_height = toplevel->height;
+  w_current->win_width  = default_width;
+  w_current->win_height = default_height;
   /* x_window_setup_world() - END */
 
   /* Add to the list of windows */

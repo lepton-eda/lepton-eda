@@ -55,9 +55,6 @@ TOPLEVEL *s_toplevel_new (void)
   toplevel->init_right  = 0;
   toplevel->init_bottom = 0;
 
-  toplevel->width  = 1;
-  toplevel->height = 1;
-
   toplevel->pages = geda_list_new();
   toplevel->page_current = NULL;
 

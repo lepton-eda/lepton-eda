@@ -243,11 +243,11 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
   w_current->image_width = width = desired_width;
   w_current->image_height = height = desired_height;
 
-  save_width = toplevel->width;
-  save_height = toplevel->height;
+  save_width  = w_current->win_width;
+  save_height = w_current->win_height;
 
-  toplevel->width = width;
-  toplevel->height = height;
+  w_current->win_width = width;
+  w_current->win_height = height;
 
   save_page_left = geometry->viewport_left;
   save_page_right = geometry->viewport_right;
@@ -325,8 +325,8 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
     }
   }
 
-  toplevel->width = save_width;
-  toplevel->height = save_height;
+  w_current->win_width = save_width;
+  w_current->win_height = save_height;
 
   gschem_page_geometry_set_viewport_left   (geometry, save_page_left  );
   gschem_page_geometry_set_viewport_right  (geometry, save_page_right );
