@@ -162,7 +162,12 @@ dispose (GObject *object)
   g_hash_table_foreach (view->geometry_table, (GHFunc)remove_page_weak_reference, view);
   g_hash_table_remove_all (view->geometry_table);
 
-  gschem_page_view_set_toplevel (view, NULL);
+  /* According to the GObject Manual the dispose function might be
+   * called several times. We don't want to call
+   * gschem_page_view_set_toplevel twice here  */
+  if (view->toplevel != NULL) {
+    gschem_page_view_set_toplevel (view, NULL);
+  }
 
   /* lastly, chain up to the parent dispose */
 
