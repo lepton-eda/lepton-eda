@@ -382,7 +382,6 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
                                        view->page->toplevel,
                                        s_page_objects (page),
                                        A_PAN_DONT_REDRAW);
-
   }
   else {
     gschem_page_geometry_set_values (geometry,
@@ -984,9 +983,6 @@ gschem_page_view_update_vadjustment (GschemPageView *view)
   g_return_if_fail (view != NULL);
 
   if (view->vadjustment != NULL) {
-    PAGE *page = gschem_page_view_get_page (view);
-
-    g_return_if_fail (page != NULL);
 
     GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
     g_return_if_fail (geometry != NULL);
@@ -998,7 +994,7 @@ gschem_page_view_update_vadjustment (GschemPageView *view)
                                   fabs (geometry->viewport_bottom - geometry->viewport_top));
 
     gtk_adjustment_set_value(view->vadjustment,
-                             view->page->toplevel->init_bottom - geometry->viewport_bottom);
+                             geometry->world_bottom - geometry->viewport_bottom);
 
 #if DEBUG
     printf("V %f %f\n", view->vadjustment->lower, view->vadjustment->upper);
@@ -1065,7 +1061,7 @@ vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view)
   g_return_if_fail (vadjustment != NULL);
   g_return_if_fail (view != NULL);
 
-  if ((view->page->toplevel != NULL) && (view->vadjustment != NULL)) {
+  if (view->vadjustment != NULL) {
     int current_bottom;
     int new_bottom;
 
@@ -1075,7 +1071,7 @@ vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view)
     g_return_if_fail (geometry != NULL);
 
     current_bottom = geometry->viewport_bottom;
-    new_bottom = view->page->toplevel->init_bottom - (int) vadjustment->value;
+    new_bottom = geometry->world_bottom - (int) vadjustment->value;
 
     geometry->viewport_bottom = new_bottom;
     geometry->viewport_top = geometry->viewport_top - (current_bottom - new_bottom);
