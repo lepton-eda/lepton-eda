@@ -367,17 +367,25 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
   page->undo_tos = NULL;
   page->undo_current = NULL;
 
+  o_select_unselect_all (w_current);
+
   if (w_current->undo_type == UNDO_DISK && u_current->filename) {
-    s_page_delete (toplevel, page);
-    gschem_toplevel_page_changed (w_current);
-    page = s_page_new(toplevel, u_current->filename);
-    s_page_goto (toplevel, page);
+    /* delete objects of page */
+    s_page_delete_objects (toplevel, page);
+
+    /* Free the objects in the place list. */
+    s_delete_object_glist (toplevel, page->place_list);
+    page->place_list = NULL;
+
     gschem_toplevel_page_changed (w_current);
   } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_list) {
-    s_page_delete (toplevel, page);
-    gschem_toplevel_page_changed (w_current);
-    page = s_page_new (toplevel, save_filename);
-    s_page_goto (toplevel, page);
+    /* delete objects of page */
+    s_page_delete_objects (toplevel, page);
+
+    /* Free the objects in the place list. */
+    s_delete_object_glist (toplevel, page->place_list);
+    page->place_list = NULL;
+
     gschem_toplevel_page_changed (w_current);
   }
 
