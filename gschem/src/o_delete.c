@@ -121,6 +121,7 @@ void o_delete_selected (GschemToplevel *w_current)
 
   g_list_free (to_remove);
 
+  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
   w_current->inside_action = 0;
   o_undo_savestate_old (w_current, UNDO_ALL);
   i_update_menus (w_current);
