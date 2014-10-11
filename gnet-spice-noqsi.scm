@@ -217,12 +217,7 @@ This may indicate an erroneously duplicated refdes.\n"
 
 (define (field-skip s cs)
     (let ((i (string-skip s cs)))
-    
-    (if i 
-        (if (zero? i) 
-            #f 
-            i)
-        #f)))
+      (and (not (zero? i)) i)))
 
   
 ;; Magic characters for field expansion.
