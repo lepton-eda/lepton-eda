@@ -38,9 +38,9 @@
     (for-each (lambda (f) (format #t ".INCLUDE ~A\n" f)) files)
     (for-each (lambda (s) (format #t "~A\n" s)) cards)
     (if subcircuit (format #t ".ENDS\n"))
-    (if (positive? error-count) (begin
-        (format (current-error-port) "~A errors.\n" error-count)
-        (primitive-exit 1))))
+    (when (positive? error-count)
+          (format (current-error-port) "~A errors.\n" error-count)
+          (primitive-exit 1)))
 
 
 ;; Write a header. Critical because SPICE may treat the first line
