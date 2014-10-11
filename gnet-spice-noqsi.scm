@@ -65,7 +65,7 @@
       (cond
        ((equal? f "unknown") files)
        ((member f files) files)
-       (true (cons f files)))))
+       (#t (cons f files)))))
 
 ;; List of files to include
 
