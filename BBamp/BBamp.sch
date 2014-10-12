@@ -1,4 +1,4 @@
-v 20110115 2
+v 20130925 2
 C 40000 40000 0 0 0 EMBEDDEDNoqsi-title-B.sym
 [
 B 40000 40000 17000 11000 15 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
@@ -192,6 +192,8 @@ T 49000 46800 5 10 0 0 180 6 1
 model-name=fastpnp
 T 49000 46800 5 10 0 0 180 6 1
 footprint=sot23
+T 49000 46800 5 10 0 0 0 0 1
+file=transistors.lib
 }
 C 47800 45300 1 0 0 npn-2.sym
 {
@@ -201,6 +203,8 @@ T 48200 45500 5 10 0 0 0 0 1
 spice-prototype=X? #C #B #E fastnpn
 T 47800 45300 5 10 0 0 0 0 1
 footprint=sot23
+T 47800 45300 5 10 0 0 0 0 1
+file=transistors.lib
 }
 C 47100 44400 1 180 0 vee-1.sym
 C 48500 44200 1 180 0 vee-1.sym
