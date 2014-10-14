@@ -2699,14 +2699,14 @@ gtk_sheet_realize (GtkWidget * widget)
 					  GDK_GC_SUBWINDOW);
 
   if(sheet->sheet_entry->parent){
-          gtk_widget_ref(sheet->sheet_entry);
+          g_object_ref(sheet->sheet_entry);
           gtk_widget_unparent(sheet->sheet_entry);
   }
   gtk_widget_set_parent_window (sheet->sheet_entry, sheet->sheet_window);
   gtk_widget_set_parent(sheet->sheet_entry, GTK_WIDGET(sheet));
 
   if(sheet->button && sheet->button->parent){
-          gtk_widget_ref(sheet->button);
+          g_object_ref(sheet->button);
           gtk_widget_unparent(sheet->button);
   }
   gtk_widget_set_parent_window(sheet->button, sheet->sheet_window);
@@ -6174,7 +6174,7 @@ create_sheet_entry(GtkSheet *sheet)
 
  if(sheet->sheet_entry){
     /* avoids warnings */
-    gtk_widget_ref(sheet->sheet_entry);
+    g_object_ref(sheet->sheet_entry);
     gtk_widget_unparent(sheet->sheet_entry);
     gtk_widget_destroy(sheet->sheet_entry);
  }
