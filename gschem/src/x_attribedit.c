@@ -514,7 +514,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
   if (val) {
     gtk_entry_set_text(GTK_ENTRY(value_entry), val);
     len = strlen(val);
-    gtk_entry_select_region(GTK_ENTRY(value_entry), 0, len);
+    gtk_editable_select_region (GTK_EDITABLE (value_entry), 0, len);
   }
   g_object_set_data (G_OBJECT (aewindow), "invocation_flag",
                      GINT_TO_POINTER(flag));

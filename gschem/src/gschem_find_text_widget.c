@@ -188,7 +188,7 @@ void find_text_dialog (GschemToplevel *w_current)
 
   gtk_widget_show (GTK_WIDGET (w_current->find_text_widget));
   gtk_widget_grab_focus (gschem_find_text_widget_get_entry (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)));
-  gtk_entry_select_region(GTK_ENTRY(gschem_find_text_widget_get_entry (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget))), 0, -1);
+  gtk_editable_select_region (GTK_EDITABLE (gschem_find_text_widget_get_entry (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget))), 0, -1);
 }
 
 
