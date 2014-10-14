@@ -140,9 +140,6 @@ void main_prog(void *closure, int argc, char *argv[])
 #endif
 
 #if ENABLE_NLS
-  /* this should be equivalent to setlocale (LC_ALL, "") */
-  gtk_set_locale();
-
   /* This must be the same for all locales */
   setlocale(LC_NUMERIC, "C");
 
