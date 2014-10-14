@@ -508,7 +508,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
     /* show value only */
     gtk_option_menu_set_history (GTK_OPTION_MENU (show_options), 0);
   }
-  gtk_object_set_data(GTK_OBJECT(aewindow), "attrib", attrib);
+  g_object_set_data (G_OBJECT (aewindow), "attrib", attrib);
   if (name) {
     gtk_entry_set_text(GTK_ENTRY(attrib_combo_entry), name);
   }
@@ -517,16 +517,14 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
     len = strlen(val);
     gtk_entry_select_region(GTK_ENTRY(value_entry), 0, len);
   }
-  gtk_object_set_data(GTK_OBJECT(aewindow), "invocation_flag",
-                      GINT_TO_POINTER(flag));
+  g_object_set_data (G_OBJECT (aewindow), "invocation_flag",
+                     GINT_TO_POINTER(flag));
 
   if (!x_event_get_pointer_position(w_current, TRUE, &wx, &wy)) {
     wx = wy = -1;
   }
-  gtk_object_set_data(GTK_OBJECT(aewindow), "position_wx",
-                      GINT_TO_POINTER(wx));
-  gtk_object_set_data(GTK_OBJECT(aewindow), "position_wy",
-                      GINT_TO_POINTER(wy));
+  g_object_set_data (G_OBJECT (aewindow), "position_wx", GINT_TO_POINTER(wx));
+  g_object_set_data (G_OBJECT (aewindow), "position_wy", GINT_TO_POINTER(wy));
   
   /* gschem specific */
   i = 0;
