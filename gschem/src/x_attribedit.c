@@ -80,13 +80,13 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
   gint wx, wy;
 
   value_entry =
-  gtk_object_get_data(GTK_OBJECT(w_current->aewindow), "value_entry");
+    g_object_get_data (G_OBJECT (w_current->aewindow), "value_entry");
   name_entry =
-  gtk_object_get_data(GTK_OBJECT(w_current->aewindow), "attrib_combo_entry");
+    g_object_get_data (G_OBJECT (w_current->aewindow), "attrib_combo_entry");
   visbutton =
-  gtk_object_get_data(GTK_OBJECT(w_current->aewindow), "visbutton");
+    g_object_get_data (G_OBJECT (w_current->aewindow), "visbutton");
   show_options =
-  gtk_object_get_data(GTK_OBJECT(w_current->aewindow), "show_options");
+    g_object_get_data (G_OBJECT (w_current->aewindow), "show_options");
 
   value = gtk_entry_get_text(value_entry);
   label = gtk_entry_get_text(name_entry);
@@ -124,7 +124,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
   }
 
   attribptr =
-  gtk_object_get_data(GTK_OBJECT(w_current->aewindow), "attrib");
+    g_object_get_data (G_OBJECT (w_current->aewindow), "attrib");
   if (!attribptr) {
     OBJECT *new = NULL;
 
@@ -144,20 +144,16 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
     if (nsel > 1) {
 
       addtoallbutton =
-        gtk_object_get_data(GTK_OBJECT(w_current->aewindow),
-                            "addtoallbutton");
+        g_object_get_data (G_OBJECT (w_current->aewindow), "addtoallbutton");
 
       addtocompsbutton =
-        gtk_object_get_data(GTK_OBJECT(w_current->aewindow),
-                            "addtocompsbutton");
+        g_object_get_data (G_OBJECT (w_current->aewindow), "addtocompsbutton");
 
       addtonetsbutton =
-        gtk_object_get_data(GTK_OBJECT(w_current->aewindow),
-                            "addtonetsbutton");
+        g_object_get_data (G_OBJECT (w_current->aewindow), "addtonetsbutton");
 
       overwritebutton =
-        gtk_object_get_data(GTK_OBJECT(w_current->aewindow),
-                            "overwritebutton");
+        g_object_get_data (G_OBJECT (w_current->aewindow), "overwritebutton");
 
       if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(overwritebutton))) {
 	replace = 1;
@@ -217,12 +213,14 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
       new = o_attrib_add_attrib(w_current, newtext, vis, show, object);
 
       invocation_flag =
-	GPOINTER_TO_INT( gtk_object_get_data(GTK_OBJECT(w_current->aewindow),
-				  "invocation_flag") );
-      wx = GPOINTER_TO_INT( gtk_object_get_data(GTK_OBJECT(w_current->aewindow),
-						"position_wx"));
-      wy = GPOINTER_TO_INT( gtk_object_get_data(GTK_OBJECT(w_current->aewindow),
-						"position_wy"));
+        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (w_current->aewindow),
+                                            "invocation_flag"));
+      wx =
+        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (w_current->aewindow),
+                                            "position_wx"));
+      wy =
+        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (w_current->aewindow),
+                                            "position_wy"));
       
 #if DEBUG
       printf("invocation flag: %d\n", invocation_flag);
