@@ -317,8 +317,6 @@ void x_window_create_main(GschemToplevel *w_current)
   GtkWidget *menubar=NULL;
   GtkWidget *toolbar=NULL;
   GtkWidget *handlebox=NULL;
-  GtkWidget *hscrollbar;
-  GtkWidget *vscrollbar;
   GtkWidget *scrolled;
   GtkAdjustment *hadjustment;
   GtkAdjustment *vadjustment;
@@ -526,12 +524,6 @@ void x_window_create_main(GschemToplevel *w_current)
 
   policy = (w_current->scrollbars_flag) ? GTK_POLICY_ALWAYS : GTK_POLICY_NEVER;
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), policy, policy);
-
-  hscrollbar = gtk_scrolled_window_get_hscrollbar (GTK_SCROLLED_WINDOW (scrolled));
-  gtk_range_set_update_policy (GTK_RANGE (hscrollbar), GTK_UPDATE_CONTINUOUS);
-
-  vscrollbar = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (scrolled));
-  gtk_range_set_update_policy (GTK_RANGE (vscrollbar), GTK_UPDATE_CONTINUOUS);
 
   /* find text box */
   w_current->find_text_widget = GTK_WIDGET (g_object_new (GSCHEM_TYPE_FIND_TEXT_WIDGET, NULL));
