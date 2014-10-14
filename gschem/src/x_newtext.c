@@ -274,11 +274,6 @@ static void newtext_init(NewText *dialog)
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
   gtk_table_attach(GTK_TABLE(table), label, 0,1,1,2, GTK_FILL,0,0,0);
 
-  //sizeentry = gtk_entry_new_with_max_length (10);
-  //gtk_editable_select_region(GTK_EDITABLE (sizeentry), 0, -1);
-  //gtk_entry_set_activates_default(GTK_ENTRY(sizeentry), TRUE);
-  //gtk_table_attach_defaults(GTK_TABLE(table), sizeentry, 1,2,1,2);
-
   dialog->textsizecb = gschem_integer_combo_box_new();
   gschem_integer_combo_box_set_value(dialog->textsizecb, 12);
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->textsizecb, 1,2,1,2);
