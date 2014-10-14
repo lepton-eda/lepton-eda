@@ -444,7 +444,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
     gtk_container_add (GTK_CONTAINER (alignment), table);
 
     addtoallbutton = gtk_radio_button_new_with_label (hbox2_group, _("All"));
-    hbox2_group = gtk_radio_button_group (GTK_RADIO_BUTTON (addtoallbutton));
+    hbox2_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (addtoallbutton));
     g_object_ref (addtoallbutton);
     g_object_set_data_full (G_OBJECT (aewindow), "addtoallbutton", addtoallbutton,
                             (GtkDestroyNotify) g_object_unref);
@@ -452,7 +452,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 		     (GtkAttachOptions) (GTK_FILL), 0, 0, 0);
 		     
     addtocompsbutton = gtk_radio_button_new_with_label (hbox2_group, _("Components"));
-    hbox2_group = gtk_radio_button_group (GTK_RADIO_BUTTON (addtocompsbutton));
+    hbox2_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (addtocompsbutton));
     g_object_ref (addtocompsbutton);
     g_object_set_data_full (G_OBJECT (aewindow), "addtocompsbutton", addtocompsbutton,
                             (GtkDestroyNotify) g_object_unref);
@@ -460,7 +460,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 		     (GtkAttachOptions) (GTK_FILL), 0, 0, 0);
 
     addtonetsbutton = gtk_radio_button_new_with_label (hbox2_group, _("Nets"));
-    hbox2_group = gtk_radio_button_group (GTK_RADIO_BUTTON (addtonetsbutton));
+    hbox2_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (addtonetsbutton));
     g_object_ref (addtonetsbutton);
     g_object_set_data_full (G_OBJECT (aewindow), "addtonetsbutton", addtonetsbutton,
                             (GtkDestroyNotify) g_object_unref);
