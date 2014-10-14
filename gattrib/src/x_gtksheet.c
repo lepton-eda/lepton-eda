@@ -142,8 +142,8 @@ x_gtksheet_init()
       /*  Note that the entry cell is the text entry field at the top of the
        *  sheet's working area (like in MS E*cel).   I have removed this from
        *  gattrib, but leave the code in just in case I want to put it back.  */
-      gtk_signal_connect(GTK_OBJECT(gtk_sheet_get_entry(GTK_SHEET(sheets[i]))),
-			   "changed", (GtkSignalFunc) show_entry, NULL);
+      g_signal_connect (gtk_sheet_get_entry (GTK_SHEET (sheets[i])),
+                        "changed", (GtkSignalFunc) show_entry, NULL);
     }
   }
 }

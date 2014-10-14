@@ -1120,10 +1120,8 @@ gtk_sheet_change_entry(GtkSheet *sheet, GtkType entry_type)
   if(state == GTK_SHEET_NORMAL)
     {
       gtk_sheet_show_active_cell(sheet); 
-      gtk_signal_connect(GTK_OBJECT(gtk_sheet_get_entry(sheet)),
-                         "changed",
-                         (GtkSignalFunc)gtk_sheet_entry_changed,
-                         GTK_OBJECT(GTK_WIDGET(sheet)));
+      g_signal_connect (gtk_sheet_get_entry (sheet), "changed",
+                        (GtkSignalFunc) gtk_sheet_entry_changed, sheet);
     }
  
 }
@@ -1370,13 +1368,6 @@ gtk_sheet_thaw(GtkSheet *sheet)
   if(sheet->state == GTK_STATE_NORMAL)
      if(sheet->sheet_entry && GTK_WIDGET_MAPPED(sheet->sheet_entry)){
         gtk_sheet_activate_cell(sheet, sheet->active_cell.row, sheet->active_cell.col);
-/*
-        gtk_signal_connect(GTK_OBJECT(gtk_sheet_get_entry(sheet)),
-           	           "changed",
-                           (GtkSignalFunc)gtk_sheet_entry_changed,
-                           GTK_OBJECT(GTK_WIDGET(sheet)));
-        gtk_sheet_show_active_cell(sheet);
-*/
      }
 
 }
@@ -2389,12 +2380,10 @@ gtk_sheet_set_vadjustment (GtkSheet      *sheet,
       g_object_ref (sheet->vadjustment);
       g_object_ref_sink (sheet->vadjustment);
 
-      gtk_signal_connect (GTK_OBJECT (sheet->vadjustment), "changed",
-			  (GtkSignalFunc) vadjustment_changed,
-			  (gpointer) sheet);
-      gtk_signal_connect (GTK_OBJECT (sheet->vadjustment), "value_changed",
-			  (GtkSignalFunc) vadjustment_value_changed,
-			  (gpointer) sheet);
+      g_signal_connect (sheet->vadjustment, "changed",
+                        (GtkSignalFunc) vadjustment_changed, sheet);
+      g_signal_connect (sheet->vadjustment, "value_changed",
+                        (GtkSignalFunc) vadjustment_value_changed, sheet);
     }
 
   if (!sheet->vadjustment || !old_adjustment)
@@ -2435,12 +2424,10 @@ gtk_sheet_set_hadjustment (GtkSheet      *sheet,
       g_object_ref (sheet->hadjustment);
       g_object_ref_sink (sheet->hadjustment);
 
-      gtk_signal_connect (GTK_OBJECT (sheet->hadjustment), "changed",
-			  (GtkSignalFunc) hadjustment_changed,
-			  (gpointer) sheet);
-      gtk_signal_connect (GTK_OBJECT (sheet->hadjustment), "value_changed",
-			  (GtkSignalFunc) hadjustment_value_changed,
-			  (gpointer) sheet);
+      g_signal_connect (sheet->hadjustment, "changed",
+                        (GtkSignalFunc) hadjustment_changed, sheet);
+      g_signal_connect (sheet->hadjustment, "value_changed",
+                        (GtkSignalFunc) hadjustment_value_changed, sheet);
     }
 
   if (!sheet->hadjustment || !old_adjustment)
@@ -2744,10 +2731,8 @@ create_global_button(GtkSheet *sheet)
 {
    sheet->button = gtk_button_new_with_label(" ");
 
-   gtk_signal_connect (GTK_OBJECT (sheet->button),
-		      "pressed",
-		      (GtkSignalFunc) global_button_clicked,
-		      (gpointer) sheet);
+   g_signal_connect (sheet->button, "pressed",
+                     (GtkSignalFunc) global_button_clicked, sheet);
 }
 
 static void
@@ -4047,10 +4032,8 @@ gtk_sheet_activate_cell(GtkSheet *sheet, gint row, gint col)
  GTK_SHEET_UNSET_FLAGS(sheet, GTK_SHEET_IN_SELECTION);
  gtk_sheet_show_active_cell(sheet);
 
- gtk_signal_connect(GTK_OBJECT(gtk_sheet_get_entry(sheet)),
-        	    "changed",
-                    (GtkSignalFunc)gtk_sheet_entry_changed,
-                    GTK_OBJECT(GTK_WIDGET(sheet)));
+ g_signal_connect (gtk_sheet_get_entry (sheet), "changed",
+                   (GtkSignalFunc) gtk_sheet_entry_changed, sheet);
 
  _gtkextra_signal_emit(GTK_OBJECT(sheet),sheet_signals[ACTIVATE], row, col, &veto);
 
