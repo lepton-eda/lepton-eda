@@ -146,7 +146,7 @@ void x_dialog_hotkeys (GschemToplevel *w_current)
 
     gtk_container_set_border_width (GTK_CONTAINER (w_current->hkwindow),
                                     DIALOG_BORDER_SPACING);
-    gtk_widget_set_usize(w_current->hkwindow, 300,300);
+    gtk_widget_set_size_request (w_current->hkwindow, 300, 300);
 
     vbox = GTK_DIALOG(w_current->hkwindow)->vbox;
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
