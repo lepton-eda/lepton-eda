@@ -8065,8 +8065,9 @@ gtk_sheet_put(GtkSheet *sheet, GtkWidget *child, gint x, gint y)
   if (gtk_widget_get_visible (GTK_WIDGET (sheet)))
     {
        if(GTK_WIDGET_REALIZED(GTK_WIDGET(sheet)) && 
-          (!GTK_WIDGET_REALIZED(child) || GTK_WIDGET_NO_WINDOW(child)))
+          (!GTK_WIDGET_REALIZED(child) || !gtk_widget_get_has_window (child))) {
         gtk_sheet_realize_child(sheet, child_info);
+       }
 
        if(GTK_WIDGET_MAPPED(GTK_WIDGET(sheet)) && 
           !GTK_WIDGET_MAPPED(child))
@@ -8163,8 +8164,9 @@ gtk_sheet_attach        (GtkSheet *sheet,
   if (gtk_widget_get_visible (GTK_WIDGET (sheet)))
     {
        if(GTK_WIDGET_REALIZED(GTK_WIDGET(sheet)) &&
-          (!GTK_WIDGET_REALIZED(widget) || GTK_WIDGET_NO_WINDOW(widget)))
+          (!GTK_WIDGET_REALIZED(widget) || !gtk_widget_get_has_window (widget))) {
         gtk_sheet_realize_child(sheet, child);
+       }
 
        if(GTK_WIDGET_MAPPED(GTK_WIDGET(sheet)) &&
           !GTK_WIDGET_MAPPED(widget))
@@ -8240,8 +8242,9 @@ gtk_sheet_button_attach		(GtkSheet *sheet,
   if (gtk_widget_get_visible (GTK_WIDGET (sheet)))
     {
        if(GTK_WIDGET_REALIZED(GTK_WIDGET(sheet)) && 
-          (!GTK_WIDGET_REALIZED(widget) || GTK_WIDGET_NO_WINDOW(widget)))
+          (!GTK_WIDGET_REALIZED(widget) || !gtk_widget_get_has_window (widget))) {
         gtk_sheet_realize_child(sheet, child);
+       }
 
        if(GTK_WIDGET_MAPPED(GTK_WIDGET(sheet)) && 
           !GTK_WIDGET_MAPPED(widget))
