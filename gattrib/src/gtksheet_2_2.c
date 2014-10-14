@@ -2208,7 +2208,7 @@ gtk_sheet_unclip_range(GtkSheet *sheet)
   if(!GTK_SHEET_IN_CLIP(sheet)) return;
 
   GTK_SHEET_UNSET_FLAGS(sheet, GTK_SHEET_IN_CLIP);
-  gtk_timeout_remove(sheet->clip_timer);
+  g_source_remove (sheet->clip_timer);
   gtk_sheet_range_draw(sheet, &sheet->clip_range);
 
   if(gtk_sheet_range_isvisible(sheet, sheet->range))
@@ -2590,12 +2590,12 @@ gtk_sheet_destroy (GtkObject * object)
   }
 
   if(sheet->timer){
-     gtk_timeout_remove(sheet->timer);
+     g_source_remove (sheet->timer);
      sheet->timer = 0;
   }
 
   if(sheet->clip_timer){
-     gtk_timeout_remove(sheet->clip_timer);
+     g_source_remove (sheet->clip_timer);
      sheet->clip_timer = 0;
   }
 
@@ -5230,7 +5230,7 @@ gtk_sheet_button_release (GtkWidget * widget,
   if(GTK_SHEET_IN_SELECTION)
          gdk_pointer_ungrab (event->time);
   if(sheet->timer)
-         gtk_timeout_remove(sheet->timer);
+         g_source_remove (sheet->timer);
   gtk_grab_remove(GTK_WIDGET(sheet));
 
   GTK_SHEET_UNSET_FLAGS(sheet, GTK_SHEET_IN_SELECTION);
