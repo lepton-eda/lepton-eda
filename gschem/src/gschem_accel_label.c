@@ -208,7 +208,7 @@ gschem_accel_label_expose_event (GtkWidget      *widget,
 
   direction = gtk_widget_get_direction (widget);
 
-  if (GTK_WIDGET_DRAWABLE (accel_label))
+  if (gtk_widget_is_drawable (GTK_WIDGET (accel_label)))
     {
       guint ac_width;
 
