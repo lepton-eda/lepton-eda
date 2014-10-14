@@ -1215,8 +1215,7 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
 					  GTK_RESPONSE_REJECT,
 					  -1);
 
-  gtk_window_position (GTK_WINDOW (autonumber_text),
-		       GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (autonumber_text), GTK_WIN_POS_MOUSE);
   
   gtk_container_set_border_width (GTK_CONTAINER (autonumber_text),
                                   DIALOG_BORDER_SPACING);

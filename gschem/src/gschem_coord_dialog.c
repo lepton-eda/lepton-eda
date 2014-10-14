@@ -92,8 +92,7 @@ void coord_dialog (GschemToplevel *w_current, int x, int y)
                                                          GTK_RESPONSE_REJECT,
                                                          NULL);
 
-    gtk_window_position (GTK_WINDOW (w_current->cowindow),
-                         GTK_WIN_POS_NONE);
+    gtk_window_set_position (GTK_WINDOW (w_current->cowindow), GTK_WIN_POS_NONE);
 
     g_signal_connect (G_OBJECT (w_current->cowindow), "response",
                       G_CALLBACK (coord_dialog_response),

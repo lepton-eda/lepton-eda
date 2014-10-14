@@ -114,8 +114,7 @@ void arc_angle_dialog (GschemToplevel *w_current, OBJECT *arc_object)
                                             GTK_RESPONSE_REJECT,
                                             -1);
 
-    gtk_window_position(GTK_WINDOW(w_current->aawindow),
-                        GTK_WIN_POS_MOUSE);
+    gtk_window_set_position (GTK_WINDOW (w_current->aawindow), GTK_WIN_POS_MOUSE);
 
     g_signal_connect (G_OBJECT (w_current->aawindow), "response",
                       G_CALLBACK (arc_angle_dialog_response),

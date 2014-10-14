@@ -227,8 +227,7 @@ static void newtext_init(NewText *dialog)
                                           GTK_RESPONSE_REJECT,
                                           -1);
 
-  gtk_window_position(GTK_WINDOW (dialog),
-                      GTK_WIN_POS_NONE);
+  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_NONE);
 
   g_signal_connect (G_OBJECT (dialog), "response",
                     G_CALLBACK (text_input_dialog_response),

@@ -104,8 +104,7 @@ void slot_edit_dialog (GschemToplevel *w_current, const char *count, const char 
                                             GTK_RESPONSE_REJECT,
                                             -1);
 
-    gtk_window_position(GTK_WINDOW(w_current->sewindow),
-                        GTK_WIN_POS_MOUSE);
+    gtk_window_set_position (GTK_WINDOW (w_current->sewindow), GTK_WIN_POS_MOUSE);
 
     gtk_dialog_set_default_response (GTK_DIALOG (w_current->sewindow),
                                      GTK_RESPONSE_ACCEPT);

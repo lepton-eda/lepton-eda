@@ -135,8 +135,7 @@ void x_dialog_hotkeys (GschemToplevel *w_current)
                                                          GTK_RESPONSE_REJECT,
                                                          NULL);
 
-    gtk_window_position (GTK_WINDOW (w_current->hkwindow),
-                         GTK_WIN_POS_NONE);
+    gtk_window_set_position (GTK_WINDOW (w_current->hkwindow), GTK_WIN_POS_NONE);
 
     g_signal_connect (G_OBJECT (w_current->hkwindow), "response",
                       G_CALLBACK (x_dialog_hotkeys_response),
