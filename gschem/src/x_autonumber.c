@@ -1218,8 +1218,8 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   gtk_window_position (GTK_WINDOW (autonumber_text),
 		       GTK_WIN_POS_MOUSE);
   
-  gtk_container_border_width(GTK_CONTAINER(autonumber_text), 
-			     DIALOG_BORDER_SPACING);
+  gtk_container_set_border_width (GTK_CONTAINER (autonumber_text),
+                                  DIALOG_BORDER_SPACING);
   vbox1 = GTK_DIALOG(autonumber_text)->vbox;
   gtk_box_set_spacing(GTK_BOX(vbox1), DIALOG_V_SPACING);
 

@@ -114,8 +114,8 @@ void slot_edit_dialog (GschemToplevel *w_current, const char *count, const char 
                       G_CALLBACK (slot_edit_dialog_response),
                       w_current);
 
-    gtk_container_border_width(GTK_CONTAINER(w_current->sewindow),
-                               DIALOG_BORDER_SPACING);
+    gtk_container_set_border_width (GTK_CONTAINER (w_current->sewindow),
+                                    DIALOG_BORDER_SPACING);
     vbox = GTK_DIALOG(w_current->sewindow)->vbox;
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
