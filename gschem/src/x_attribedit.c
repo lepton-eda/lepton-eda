@@ -418,11 +418,11 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
                     (GtkAttachOptions) (0), 0, 0);
   show_options_menu = gtk_menu_new ();
   glade_menuitem = gtk_menu_item_new_with_label (_("Show Value Only"));
-  gtk_menu_append (GTK_MENU (show_options_menu), glade_menuitem);
+  gtk_menu_shell_append (GTK_MENU_SHELL (show_options_menu), glade_menuitem);
   glade_menuitem = gtk_menu_item_new_with_label (_("Show Name Only"));
-  gtk_menu_append (GTK_MENU (show_options_menu), glade_menuitem);
+  gtk_menu_shell_append (GTK_MENU_SHELL (show_options_menu), glade_menuitem);
   glade_menuitem = gtk_menu_item_new_with_label (_("Show Name & Value"));
-  gtk_menu_append (GTK_MENU (show_options_menu), glade_menuitem);
+  gtk_menu_shell_append (GTK_MENU_SHELL (show_options_menu), glade_menuitem);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (show_options), show_options_menu);
   gtk_option_menu_set_history (GTK_OPTION_MENU (show_options), 0);
   

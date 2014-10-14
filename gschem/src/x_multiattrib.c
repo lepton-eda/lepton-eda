@@ -1615,11 +1615,11 @@ multiattrib_init_visible_types (GtkOptionMenu *optionmenu)
 
   menu = gtk_menu_new ();
   item = gtk_menu_item_new_with_label (_("Show Name & Value"));
-  gtk_menu_append (menu, item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
   item = gtk_menu_item_new_with_label (_("Show Value only"));
-  gtk_menu_append (menu, item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
   item = gtk_menu_item_new_with_label (_("Show Name only"));
-  gtk_menu_append (menu, item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 
   gtk_option_menu_set_menu (optionmenu, menu);
 }

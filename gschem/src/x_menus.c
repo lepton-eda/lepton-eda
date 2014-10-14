@@ -121,7 +121,7 @@ get_main_menu(GschemToplevel *w_current)
     menu = gtk_menu_new();
 
     menu_item = gtk_tearoff_menu_item_new ();
-    gtk_menu_append(GTK_MENU(menu), menu_item);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
     gtk_widget_show(menu_item);
 
     scm_items_len = (int) scm_ilength (scm_items);
@@ -149,7 +149,7 @@ get_main_menu(GschemToplevel *w_current)
 
       if (strcmp(menu_item_name, "SEPARATOR") == 0) {
         menu_item = gtk_menu_item_new();
-        gtk_menu_append(GTK_MENU(menu), menu_item);
+        gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
       } else {
 
         if(scm_is_false (scm_item_func)) {
@@ -206,7 +206,7 @@ get_main_menu(GschemToplevel *w_current)
                             w_current);
         }
 
-        gtk_menu_append (GTK_MENU (menu), menu_item);
+        gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
       }
 
       gtk_widget_show (menu_item);
@@ -254,7 +254,7 @@ get_main_popup (GschemToplevel *w_current)
     if (e.action == NULL) {
       menu_item = gtk_menu_item_new();
       gtk_widget_show (menu_item);
-      gtk_menu_append (GTK_MENU (menu), menu_item);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
       continue;
     }
 
@@ -277,7 +277,7 @@ get_main_popup (GschemToplevel *w_current)
                       G_CALLBACK (g_menu_execute), w_current);
 
     menu_item = gtk_action_create_menu_item (GTK_ACTION (action));
-    gtk_menu_append (GTK_MENU (menu), menu_item);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
 
     /* Add a handle to the menu object to get access to widget
        objects. Horrible horrible hack, but it's the same approach as
