@@ -2192,7 +2192,7 @@ gtk_sheet_clip_range (GtkSheet *sheet, const GtkSheetRange *range)
     sheet->clip_range=*range;
 
   sheet->interval=0;
-  sheet->clip_timer=gtk_timeout_add(TIMEOUT_FLASH, gtk_sheet_flash, sheet); 
+  sheet->clip_timer = g_timeout_add (TIMEOUT_FLASH, (GSourceFunc) gtk_sheet_flash, sheet);
 
   g_signal_emit (sheet, sheet_signals[CLIP_RANGE], 0, &sheet->clip_range);
 
@@ -4921,7 +4921,7 @@ gtk_sheet_button_press (GtkWidget * widget,
 		       GDK_BUTTON_RELEASE_MASK,
 		       NULL, NULL, event->time);
      gtk_grab_add(GTK_WIDGET(sheet));
-     sheet->timer=gtk_timeout_add(TIMEOUT_SCROLL, gtk_sheet_scroll, sheet); 
+     sheet->timer = g_timeout_add (TIMEOUT_SCROLL, (GSourceFunc) gtk_sheet_scroll, sheet);
      GTK_WIDGET_UNSET_FLAGS(sheet->sheet_entry, GTK_HAS_FOCUS);
      GTK_WIDGET_SET_FLAGS(GTK_SHEET(sheet), GTK_HAS_FOCUS);
      gtk_widget_grab_focus(GTK_WIDGET(sheet));
@@ -4987,7 +4987,7 @@ gtk_sheet_button_press (GtkWidget * widget,
      if(sheet->column[column].is_sensitive){;
        gtk_sheet_click_cell(sheet, -1, column, &veto);
        gtk_grab_add(GTK_WIDGET(sheet));
-       sheet->timer=gtk_timeout_add(TIMEOUT_SCROLL, gtk_sheet_scroll, sheet); 
+       sheet->timer = g_timeout_add (TIMEOUT_SCROLL, (GSourceFunc) gtk_sheet_scroll, sheet);
        GTK_WIDGET_UNSET_FLAGS(sheet->sheet_entry, GTK_HAS_FOCUS);
        GTK_WIDGET_SET_FLAGS(GTK_SHEET(sheet), GTK_HAS_FOCUS);
        gtk_widget_grab_focus(GTK_WIDGET(sheet));
@@ -5001,7 +5001,7 @@ gtk_sheet_button_press (GtkWidget * widget,
      if(sheet->row[row].is_sensitive){
        gtk_sheet_click_cell(sheet, row, -1, &veto);
        gtk_grab_add(GTK_WIDGET(sheet));
-       sheet->timer=gtk_timeout_add(TIMEOUT_SCROLL, gtk_sheet_scroll, sheet); 
+       sheet->timer = g_timeout_add (TIMEOUT_SCROLL, (GSourceFunc) gtk_sheet_scroll, sheet);
        GTK_WIDGET_UNSET_FLAGS(sheet->sheet_entry, GTK_HAS_FOCUS);
        GTK_WIDGET_SET_FLAGS(GTK_SHEET(sheet), GTK_HAS_FOCUS);
        gtk_widget_grab_focus(GTK_WIDGET(sheet));
