@@ -1574,8 +1574,9 @@ gtk_sheet_hide_column_titles(GtkSheet *sheet)
  if(GTK_WIDGET_REALIZED(GTK_WIDGET(sheet))){
   if(sheet->column_title_window) 
     gdk_window_hide(sheet->column_title_window);
-  if(GTK_WIDGET_VISIBLE(sheet->button)) 
+  if (gtk_widget_get_visible (sheet->button)) {
     gtk_widget_hide(sheet->button);
+  }
 
   for(col = MIN_VISIBLE_COLUMN(sheet); col <= MAX_VISIBLE_COLUMN(sheet); col++){
     GtkSheetChild *child;
@@ -1606,8 +1607,9 @@ gtk_sheet_hide_row_titles(GtkSheet *sheet)
  if(GTK_WIDGET_REALIZED(GTK_WIDGET(sheet))){
   if(sheet->row_title_window) 
     gdk_window_hide(sheet->row_title_window);
-  if(GTK_WIDGET_VISIBLE(sheet->button)) 
+  if (gtk_widget_get_visible (sheet->button)) {
     gtk_widget_hide(sheet->button);
+  }
   for(row = MIN_VISIBLE_ROW(sheet); row <= MAX_VISIBLE_ROW(sheet); row++){
     GtkSheetChild *child;
     child = sheet->row[row].button.child;
@@ -2914,14 +2916,14 @@ gtk_sheet_map (GtkWidget * widget)
    	          gtk_widget_map (sheet->sheet_entry);
       }
 
-      if (GTK_WIDGET_VISIBLE (sheet->button) &&
+      if (gtk_widget_get_visible (sheet->button) &&
 	  !GTK_WIDGET_MAPPED (sheet->button)){
                   gtk_widget_show(sheet->button);
 	          gtk_widget_map (sheet->button);
       }
 
       if(GTK_BIN(sheet->button)->child)
-        if (GTK_WIDGET_VISIBLE (GTK_BIN(sheet->button)->child) &&
+        if (gtk_widget_get_visible (GTK_BIN (sheet->button)->child) &&
   	   !GTK_WIDGET_MAPPED (GTK_BIN(sheet->button)->child))
   	          gtk_widget_map (GTK_BIN(sheet->button)->child);
 
@@ -2936,7 +2938,7 @@ gtk_sheet_map (GtkWidget * widget)
         child = children->data;
         children = g_list_next(children);
 
-        if (GTK_WIDGET_VISIBLE (child->widget) &&
+        if (gtk_widget_get_visible (child->widget) &&
     	    !GTK_WIDGET_MAPPED (child->widget)){
 	  gtk_widget_map (child->widget);
           gtk_sheet_position_child(sheet, child);
@@ -2981,7 +2983,7 @@ gtk_sheet_unmap (GtkWidget * widget)
           child = children->data;
           children = g_list_next(children);
 
-          if (GTK_WIDGET_VISIBLE (child->widget) &&
+          if (gtk_widget_get_visible (child->widget) &&
 	      GTK_WIDGET_MAPPED (child->widget))
                 {
   	             gtk_widget_unmap (child->widget);
@@ -3948,7 +3950,7 @@ gtk_sheet_entry_changed(GtkWidget *widget, gpointer data)
 
  sheet=GTK_SHEET(data);
 
- if(!GTK_WIDGET_VISIBLE(widget)) return;
+ if (!gtk_widget_get_visible (widget)) return;
  if(sheet->state != GTK_STATE_NORMAL) return;
 
  row=sheet->active_cell.row;
@@ -8060,7 +8062,7 @@ gtk_sheet_put(GtkSheet *sheet, GtkWidget *child, gint x, gint y)
 
   gtk_widget_size_request(child, &child_requisition);
 
-  if (GTK_WIDGET_VISIBLE(GTK_WIDGET(sheet)))
+  if (gtk_widget_get_visible (GTK_WIDGET (sheet)))
     {
        if(GTK_WIDGET_REALIZED(GTK_WIDGET(sheet)) && 
           (!GTK_WIDGET_REALIZED(child) || GTK_WIDGET_NO_WINDOW(child)))
@@ -8158,7 +8160,7 @@ gtk_sheet_attach        (GtkSheet *sheet,
   child->x = area.x + child->xpadding;
   child->y = area.y + child->ypadding;
 
-  if (GTK_WIDGET_VISIBLE(GTK_WIDGET(sheet)))
+  if (gtk_widget_get_visible (GTK_WIDGET (sheet)))
     {
        if(GTK_WIDGET_REALIZED(GTK_WIDGET(sheet)) &&
           (!GTK_WIDGET_REALIZED(widget) || GTK_WIDGET_NO_WINDOW(widget)))
@@ -8235,7 +8237,7 @@ gtk_sheet_button_attach		(GtkSheet *sheet,
              sheet->row[row].height = button_requisition.height; 
   }
 
-  if (GTK_WIDGET_VISIBLE(GTK_WIDGET(sheet)))
+  if (gtk_widget_get_visible (GTK_WIDGET (sheet)))
     {
        if(GTK_WIDGET_REALIZED(GTK_WIDGET(sheet)) && 
           (!GTK_WIDGET_REALIZED(widget) || GTK_WIDGET_NO_WINDOW(widget)))
