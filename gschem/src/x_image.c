@@ -516,6 +516,7 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
   int origin_x, origin_y, bottom, right;
   int size_x, size_y;
   GschemToplevel new_w_current;
+  GschemOptions options;
   TOPLEVEL toplevel;
   GdkRectangle rect;
   GschemPageGeometry *old_geometry, *new_geometry;
@@ -525,10 +526,13 @@ GdkPixbuf *x_image_get_pixbuf (GschemToplevel *w_current)
 
   /* Do a copy of the w_current struct and work with it */
   memcpy(&new_w_current, w_current, sizeof(GschemToplevel));
+  /* Do a copy of the options struct and work with it */
+  memcpy(&options, w_current->options, sizeof(GschemOptions));
   /* Do a copy of the toplevel struct and work with it */
   memcpy(&toplevel, w_current->toplevel, sizeof(TOPLEVEL));
 
   new_w_current.toplevel = &toplevel;
+  new_w_current.options = &options;
 
   size_x = new_w_current.image_width;
   size_y = new_w_current.image_height;
