@@ -162,9 +162,9 @@ preview_callback_button_press (GtkWidget *widget,
 
 /*! \brief Updates the preview widget.
  *  \par Function Description
- *  This function update the preview: if the preview is active and a
- *  filename has been given, it opens the file and display
- *  it. Otherwise it display a blank page.
+ *  This function updates the preview: if the preview is active and a
+ *  filename has been given, it opens the file and displays
+ *  it. Otherwise it displays a blank page.
  *
  *  \param [in] preview The preview widget.
  */
