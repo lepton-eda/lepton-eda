@@ -369,14 +369,14 @@ lib_model_filter_visible_func (GtkTreeModel *model,
   if (!is_symbol (model, iter)) {
     GtkTreeIter iter2;
 
-    gtk_tree_model_iter_children (model, &iter2, iter);
     ret = FALSE;
-    do {
-      if (lib_model_filter_visible_func (model, &iter2, data)) {
-        ret = TRUE;
-        break;
-      }
-    } while (gtk_tree_model_iter_next (model, &iter2));
+    if (gtk_tree_model_iter_children (model, &iter2, iter))
+      do {
+        if (lib_model_filter_visible_func (model, &iter2, data)) {
+          ret = TRUE;
+          break;
+        }
+      } while (gtk_tree_model_iter_next (model, &iter2));
   } else {
     gtk_tree_model_get (model, iter,
                         0, &sym,
