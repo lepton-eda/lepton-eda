@@ -623,13 +623,9 @@ gschem_page_view_new_with_page (PAGE *page)
 void
 gschem_page_view_pan_general (GschemPageView *view, int w_x, int w_y, double relativ_zoom_factor)
 {
-  PAGE *page = NULL;
   GschemPageGeometry *geometry = NULL;
 
   g_return_if_fail (view != NULL);
-
-  page = gschem_page_view_get_page (view);
-  g_return_if_fail (page != NULL);
 
   geometry = gschem_page_view_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
@@ -671,7 +667,7 @@ gschem_page_view_pan (GschemPageView *view, int w_x, int w_y)
  *  The w_current parameter will be replaced with signals. This way, any object
  *  can listen for changes in the view.
  *
- *  \param [in,out] page      This GschemPageView
+ *  \param [in,out] view      This GschemPageView
  *  \param [in]     w_current The GschemToplevel
  *  \param [in]     diff_x    The screen x coordinate displacement
  *  \param [in]     diff_y    The screen y coordinate displacement
@@ -679,15 +675,11 @@ gschem_page_view_pan (GschemPageView *view, int w_x, int w_y)
 void
 gschem_page_view_pan_mouse (GschemPageView *view, GschemToplevel *w_current, int diff_x, int diff_y)
 {
-  PAGE *page = NULL;
   GschemPageGeometry *geometry = NULL;
   double world_cx, world_cy;
   double page_cx, page_cy;
 
   g_return_if_fail (view != NULL);
-
-  page = gschem_page_view_get_page (view);
-  g_return_if_fail (page != NULL);
 
   geometry = gschem_page_view_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
@@ -901,14 +893,11 @@ gschem_page_view_SCREENabs(GschemPageView *view, int val)
   double f0,f1,f;
   double i;
   int j;
-  PAGE *page;
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
 
   g_return_val_if_fail (view != NULL, 0);
 
-  page = gschem_page_view_get_page (view);
-
-  if (page == NULL) return 0;
+  if (geometry == NULL) return 0;
 
   f0 = gschem_page_geometry_get_viewport_left  (geometry);
   f1 = gschem_page_geometry_get_viewport_right (geometry);
@@ -934,9 +923,6 @@ gschem_page_view_update_hadjustment (GschemPageView *view)
   g_return_if_fail (view != NULL);
 
   if (view->hadjustment != NULL) {
-    PAGE *page = gschem_page_view_get_page (view);
-
-    g_return_if_fail (page != NULL);
 
     GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
     g_return_if_fail (geometry != NULL);
@@ -1111,20 +1097,16 @@ gschem_page_view_WORLDtoSCREEN (GschemPageView *view, int x, int y, int *px, int
 void
 gschem_page_view_zoom_extents (GschemPageView *view, const GList *objects)
 {
-  PAGE *page = NULL;
   GschemPageGeometry *geometry = NULL;
   const GList *temp = objects;
 
   g_return_if_fail (view != NULL);
 
-  page = gschem_page_view_get_page (view);
-  g_return_if_fail (page != NULL);
-
   geometry = gschem_page_view_get_page_geometry (view);
   g_return_if_fail (geometry != NULL);
 
   if (temp == NULL) {
-    temp = s_page_objects (page);
+    temp = s_page_objects (gschem_page_view_get_page (view));
   }
 
   gschem_page_geometry_zoom_extents (geometry, view->page->toplevel, temp, A_PAN_DONT_REDRAW);
