@@ -664,9 +664,6 @@ x_window_open_page (GschemToplevel *w_current, const gchar *filename)
     return page;
   }
 
-
-  gschem_toplevel_page_changed (w_current);
-
   page = s_page_new (toplevel, fn);
   s_page_goto (toplevel, page);
   gschem_toplevel_page_changed (w_current);
