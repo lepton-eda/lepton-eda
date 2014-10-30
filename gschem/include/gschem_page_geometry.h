@@ -119,8 +119,7 @@ void
 gschem_page_geometry_pan_general(GschemPageGeometry *geometry,
                                  double world_cx,
                                  double world_cy,
-                                 double relativ_zoom_factor,
-                                 int flags);
+                                 double relativ_zoom_factor);
 
 int
 gschem_page_geometry_pix_x (GschemPageGeometry *geometry, int value);
@@ -150,4 +149,4 @@ void
 gschem_page_geometry_set_viewport_top (GschemPageGeometry *geometry, int viewport_top);
 
 void
-gschem_page_geometry_zoom_extents (GschemPageGeometry *geometry, TOPLEVEL *toplevel, const GList *list, int pan_flags);
+gschem_page_geometry_zoom_extents (GschemPageGeometry *geometry, TOPLEVEL *toplevel, const GList *list);

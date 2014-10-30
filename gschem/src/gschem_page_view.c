@@ -380,8 +380,7 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
 
     gschem_page_geometry_zoom_extents (geometry,
                                        view->page->toplevel,
-                                       s_page_objects (page),
-                                       A_PAN_DONT_REDRAW);
+                                       s_page_objects (page));
   }
   else {
     gschem_page_geometry_set_values (geometry,
@@ -633,7 +632,7 @@ gschem_page_view_pan_general (GschemPageView *view, int w_x, int w_y, double rel
   /* make mouse to the new world-center;
      attention: there are information looses because of type cast in mil_x */
 
-  gschem_page_geometry_pan_general (geometry, w_x, w_y, relativ_zoom_factor, A_PAN_DONT_REDRAW);
+  gschem_page_geometry_pan_general (geometry, w_x, w_y, relativ_zoom_factor);
 
   /*! \bug FIXME? This call will trigger a motion event (x_event_motion()),
    * even if the user doesn't move the mouse
@@ -1109,7 +1108,7 @@ gschem_page_view_zoom_extents (GschemPageView *view, const GList *objects)
     temp = s_page_objects (gschem_page_view_get_page (view));
   }
 
-  gschem_page_geometry_zoom_extents (geometry, view->page->toplevel, temp, A_PAN_DONT_REDRAW);
+  gschem_page_geometry_zoom_extents (geometry, view->page->toplevel, temp);
 
   g_signal_emit_by_name (view, "update-grid-info");
   gschem_page_view_update_scroll_adjustments (view);

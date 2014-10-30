@@ -1270,7 +1270,7 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
 
   if (zoom) {
     /*! \todo Change "HOTKEY" TO new "MOUSE" specifier? */
-    a_zoom(w_current, GSCHEM_PAGE_VIEW (widget), zoom_direction, HOTKEY, 0);
+    a_zoom(w_current, GSCHEM_PAGE_VIEW (widget), zoom_direction, HOTKEY);
   }
 
   if (pan_xaxis) {

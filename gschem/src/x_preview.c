@@ -137,8 +137,7 @@ preview_callback_button_press (GtkWidget *widget,
         a_zoom (preview_w_current,
                 GSCHEM_PAGE_VIEW (preview),
                 ZOOM_IN,
-                HOTKEY,
-                A_PAN_DONT_REDRAW);
+                HOTKEY);
         gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
         break;
       case 2: /* middle mouse button: pan */
@@ -150,8 +149,7 @@ preview_callback_button_press (GtkWidget *widget,
         a_zoom (preview_w_current,
                 GSCHEM_PAGE_VIEW (preview),
                 ZOOM_OUT,
-                HOTKEY,
-                A_PAN_DONT_REDRAW);
+                HOTKEY);
         gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
         break;
   }

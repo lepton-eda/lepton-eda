@@ -25,7 +25,7 @@
 #include "gschem.h"
 
 static void
-a_zoom_box(GschemToplevel *w_current, int pan_flags);
+a_zoom_box(GschemToplevel *w_current);
 
 /* Kazu - discuss with Ales
  * 1) rint
@@ -41,7 +41,7 @@ a_zoom_box(GschemToplevel *w_current, int pan_flags);
  */
 /* dir is either ZOOM_IN, ZOOM_OUT or ZOOM_FULL which are defined in globals.h */
 void
-a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int selected_from, int pan_flags)
+a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int selected_from)
 {
   g_return_if_fail (page_view != NULL);
 
@@ -137,7 +137,7 @@ a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int select
  * 
  */
 static void
-a_zoom_box(GschemToplevel *w_current, int pan_flags)
+a_zoom_box(GschemToplevel *w_current)
 {
   double zx, zy, relativ_zoom_factor;
   double world_pan_center_x, world_pan_center_y;
@@ -197,7 +197,7 @@ void a_zoom_box_end(GschemToplevel *w_current, int x, int y)
   a_zoom_box_invalidate_rubber (w_current);
   w_current->rubber_visible = 0;
 
-  a_zoom_box(w_current, 0);
+  a_zoom_box(w_current);
 
   if (w_current->undo_panzoom) {
     o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY); 

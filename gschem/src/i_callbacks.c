@@ -1116,7 +1116,7 @@ DEFINE_I_CALLBACK(view_zoom_full)
   g_return_if_fail (page_view != NULL);
 
   /* scroll bar stuff */
-  a_zoom(w_current, page_view, ZOOM_FULL, DONTCARE, 0);
+  a_zoom(w_current, page_view, ZOOM_FULL, DONTCARE);
 
   if (w_current->undo_panzoom) {
     o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
@@ -1190,8 +1190,7 @@ DEFINE_I_CALLBACK(view_zoom_in)
   a_zoom (w_current,
           page_view,
           ZOOM_IN,
-          g_action_get_position (FALSE, NULL, NULL) ? HOTKEY : MENU,
-          0);
+          g_action_get_position (FALSE, NULL, NULL) ? HOTKEY : MENU);
 
   if (w_current->undo_panzoom) {
     o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
@@ -1216,8 +1215,7 @@ DEFINE_I_CALLBACK(view_zoom_out)
   a_zoom(w_current,
          page_view,
          ZOOM_OUT,
-         g_action_get_position (FALSE, NULL, NULL) ? HOTKEY : MENU,
-         0);
+         g_action_get_position (FALSE, NULL, NULL) ? HOTKEY : MENU);
 
   if (w_current->undo_panzoom) {
     o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);

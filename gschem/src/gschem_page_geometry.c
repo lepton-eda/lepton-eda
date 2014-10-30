@@ -369,20 +369,13 @@ gschem_page_geometry_new_with_values (int screen_width,
  *  \param [in]     world_cx
  *  \param [in]     world_cy
  *  \param [in]     relativ_zoom_factor
- *  \param [in]     flags
  */
 void
 gschem_page_geometry_pan_general(GschemPageGeometry *geometry,
                                  double world_cx,
                                  double world_cy,
-                                 double relativ_zoom_factor,
-                                 int flags)
+                                 double relativ_zoom_factor)
 {
-  /* see libgeda/include/defines.h for flags */
-  /*if the borders should be ignored always, remove, outcomment or changes
-    the flags in the function-calls*/
-  /*	flags |= A_PAN_IGNORE_BORDERS;
-   */
   /* think it's better that the zoomfactor is defined as pix/mills
      this will be the same as w_current->page_current->to_screen_x/y_constant*/
   int zoom_max = 5;
@@ -402,7 +395,7 @@ gschem_page_geometry_pan_general(GschemPageGeometry *geometry,
   zoom_min = zx < zy ? zx : zy;
 
 #if DEBUG
-  printf("  zx_min=%f, zy_min=%f , flags=%d\n ",zx, zy, flags);
+  printf("  zx_min=%f, zy_min=%f", zx, zy);
 #endif
 
   /* to_screen_x_constant and to_screen_y_constant are almost the same.
@@ -417,9 +410,7 @@ gschem_page_geometry_pan_general(GschemPageGeometry *geometry,
   else {
     zoom_new = zoom_old * relativ_zoom_factor;
     zoom_new = zoom_new > zoom_max ? zoom_max : zoom_new;
-    if (!(flags & A_PAN_IGNORE_BORDERS)) {
-      zoom_new = zoom_new < zoom_min ? zoom_min : zoom_new;
-    }
+    zoom_new = zoom_new < zoom_min ? zoom_min : zoom_new;
   }
 
   /* calculate the new visible area; adding 0.5 to round */
@@ -429,42 +420,40 @@ gschem_page_geometry_pan_general(GschemPageGeometry *geometry,
   geometry->viewport_bottom = world_cy + (double) geometry->screen_height / 2 / zoom_new + 0.5;
 
   /* and put it back to the borders */
-  if (!(flags & A_PAN_IGNORE_BORDERS)) {
-    /* check right border */
-    if (geometry->viewport_right > geometry->world_right) {
-      geometry->viewport_left += geometry->world_right - geometry->viewport_right;
-      geometry->viewport_right = geometry->world_right;
-    }
-    /* check left border */
-    if (geometry->viewport_left < geometry->world_left) {
-      geometry->viewport_right += geometry->world_left - geometry->viewport_left;
-      geometry->viewport_left = geometry->world_left;
-    }
+  /* check right border */
+  if (geometry->viewport_right > geometry->world_right) {
+    geometry->viewport_left += geometry->world_right - geometry->viewport_right;
+    geometry->viewport_right = geometry->world_right;
+  }
+  /* check left border */
+  if (geometry->viewport_left < geometry->world_left) {
+    geometry->viewport_right += geometry->world_left - geometry->viewport_left;
+    geometry->viewport_left = geometry->world_left;
+  }
 
-    /* If there is any slack, center the view */
-    diff = (geometry->viewport_right - geometry->viewport_left) - (geometry->world_right - geometry->world_left);
-    if (diff > 0) {
-      geometry->viewport_left -= diff / 2;
-      geometry->viewport_right -= diff / 2;
-    }
+  /* If there is any slack, center the view */
+  diff = (geometry->viewport_right - geometry->viewport_left) - (geometry->world_right - geometry->world_left);
+  if (diff > 0) {
+    geometry->viewport_left -= diff / 2;
+    geometry->viewport_right -= diff / 2;
+  }
 
-    /* check bottom border */
-    if (geometry->viewport_bottom > geometry->world_bottom) {
-      geometry->viewport_top += geometry->world_bottom - geometry->viewport_bottom;
-      geometry->viewport_bottom = geometry->world_bottom;
-    }
-    /* check top border */
-    if (geometry->viewport_top < geometry->world_top) {
-      geometry->viewport_bottom += geometry->world_top - geometry->viewport_top;
-      geometry->viewport_top = geometry->world_top;
-    }
+  /* check bottom border */
+  if (geometry->viewport_bottom > geometry->world_bottom) {
+    geometry->viewport_top += geometry->world_bottom - geometry->viewport_bottom;
+    geometry->viewport_bottom = geometry->world_bottom;
+  }
+  /* check top border */
+  if (geometry->viewport_top < geometry->world_top) {
+    geometry->viewport_bottom += geometry->world_top - geometry->viewport_top;
+    geometry->viewport_top = geometry->world_top;
+  }
 
-    /* If there is any slack, center the view */
-    diff = (geometry->viewport_bottom - geometry->viewport_top) - (geometry->world_bottom - geometry->world_top);
-    if (diff > 0) {
-      geometry->viewport_top -= diff / 2;
-      geometry->viewport_bottom -= diff / 2;
-    }
+  /* If there is any slack, center the view */
+  diff = (geometry->viewport_bottom - geometry->viewport_top) - (geometry->world_bottom - geometry->world_top);
+  if (diff > 0) {
+    geometry->viewport_top -= diff / 2;
+    geometry->viewport_bottom -= diff / 2;
   }
 }
 
@@ -689,10 +678,9 @@ gschem_page_geometry_set_viewport_top (GschemPageGeometry *geometry, int viewpor
  *  \param [in,out] geometry  This GschemPageGeometry
  *  \param [in]     toplevel  The TOPLEVEL for the given objects
  *  \param [in]     list      The list of object to zoom extents
- *  \param [in]     pan_flags
  */
 void
-gschem_page_geometry_zoom_extents (GschemPageGeometry *geometry, TOPLEVEL *toplevel, const GList *list, int pan_flags)
+gschem_page_geometry_zoom_extents (GschemPageGeometry *geometry, TOPLEVEL *toplevel, const GList *list)
 {
   int lleft, lright, ltop, lbottom;
   double zx, zy, relativ_zoom_factor;
@@ -734,8 +722,7 @@ gschem_page_geometry_zoom_extents (GschemPageGeometry *geometry, TOPLEVEL *tople
   gschem_page_geometry_pan_general (geometry,
                                     world_pan_center_x,
                                     world_pan_center_y,
-                                    relativ_zoom_factor,
-                                    pan_flags);
+                                    relativ_zoom_factor);
 
   /*! \bug FIXME? trigger a x_event_motion() call without moving the cursor 
    *  this will redraw rubberband lines after zooming
