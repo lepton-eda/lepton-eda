@@ -187,7 +187,6 @@ preview_update (Preview *preview)
 
   /* delete old preview */
   s_page_delete_objects (preview_toplevel, preview_page);
-  gschem_toplevel_page_changed (preview_w_current);
 
   if (preview->active) {
     g_assert ((preview->filename == NULL) || (preview->buffer == NULL));
@@ -235,8 +234,6 @@ preview_update (Preview *preview)
 
   /* display current page (possibly empty) */
   gschem_page_view_zoom_extents (preview_view, NULL);
-
-  gschem_toplevel_page_changed (preview_w_current);
 }
 
 GType
