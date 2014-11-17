@@ -188,7 +188,6 @@ void picture_selection_dialog (GschemToplevel *w_current)
     g_free (filename);
   }
 
-  i_update_toolbar(w_current);
   if (w_current->pfswindow) {
     gtk_widget_destroy(w_current->pfswindow);
     w_current->pfswindow=NULL;
@@ -384,7 +383,6 @@ void picture_change_filename_dialog (GschemToplevel *w_current)
     g_free (filename);
   }
 
-  i_update_toolbar(w_current);
   if (w_current->pfswindow) {
     gtk_widget_destroy(w_current->pfswindow);
     w_current->pfswindow=NULL;

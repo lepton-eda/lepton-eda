@@ -45,7 +45,7 @@ void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
        we have to come back to here */
     o_undo_savestate_old(w_current, UNDO_ALL);
     w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
-    w_current->event_state = MOVE;
+    i_set_state (w_current, MOVE);
 
     w_current->first_wx = w_current->second_wx = w_x;
     w_current->first_wy = w_current->second_wy = w_y;

@@ -159,12 +159,12 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         /* look for grips or fall through if not enabled */
         if (!o_grips_start(w_current, unsnapped_wx, unsnapped_wy)) {
           /* now go into normal SELECT */
-          w_current->event_state = STARTSELECT;
+          i_set_state (w_current, STARTSELECT);
           w_current->first_wx = w_current->second_wx = unsnapped_wx;
           w_current->first_wy = w_current->second_wy = unsnapped_wy;
         } else {
           /* a grip was found */
-          w_current->event_state = GRIPS;
+          i_set_state (w_current, GRIPS);
           w_current->inside_action = 1;
         }
         break;
@@ -172,7 +172,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       case(STARTCOPY):
         if (o_select_selected(w_current)) {
           o_copy_start(w_current, w_x, w_y);
-          w_current->event_state = COPY;
+          i_set_state (w_current, COPY);
           w_current->inside_action = 1;
         }
         break;
@@ -180,7 +180,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       case(STARTMCOPY):
         if (o_select_selected(w_current)) {
           o_copy_start(w_current, w_x, w_y);
-          w_current->event_state = MCOPY;
+          i_set_state (w_current, MCOPY);
           w_current->inside_action = 1;
         }
         break;
@@ -188,112 +188,112 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       case(STARTMOVE):
         if (o_select_selected(w_current)) {
           o_move_start(w_current, w_x, w_y);
-          w_current->event_state = MOVE;
+          i_set_state (w_current, MOVE);
           w_current->inside_action = 1;
         }
         break;
 
       case(STARTPASTE):
         o_buffer_paste_start(w_current, w_x, w_y, w_current->buffer_number);
-        w_current->event_state = ENDPASTE;
+        i_set_state (w_current, ENDPASTE);
         w_current->inside_action = 1;
         break;
 
       case(DRAWLINE):
         o_line_start(w_current, w_x, w_y);
-        w_current->event_state = ENDLINE;
+        i_set_state (w_current, ENDLINE);
         w_current->inside_action = 1;
         break;
 
       case(ENDLINE):
         o_line_end(w_current, w_x, w_y);
         w_current->inside_action = 0;
-        w_current->event_state = DRAWLINE;
+        i_set_state (w_current, DRAWLINE);
         break;
 
     case DRAWPATH:
       o_path_start (w_current, w_x, w_y);
-      w_current->event_state = ENDPATH;
+      i_set_state (w_current, ENDPATH);
       w_current->inside_action = TRUE;
       break;
 
     case PATHCONT:
       o_path_continue (w_current, w_x, w_y);
-      w_current->event_state = ENDPATH;
+      i_set_state (w_current, ENDPATH);
       w_current->inside_action = TRUE;
       break;
 
       case(DRAWBOX):
         o_box_start(w_current, w_x, w_y);
-        w_current->event_state = ENDBOX;
+        i_set_state (w_current, ENDBOX);
         w_current->inside_action = 1;
         break;
 
       case(ENDBOX):
         o_box_end(w_current, w_x, w_y);
         w_current->inside_action = 0;
-        w_current->event_state = DRAWBOX;
+        i_set_state (w_current, DRAWBOX);
         break;
 
       case(DRAWPICTURE):
         o_picture_start(w_current, w_x, w_y);
-        w_current->event_state = ENDPICTURE;
+        i_set_state (w_current, ENDPICTURE);
         w_current->inside_action = 1;
         break;
 
       case(ENDPICTURE):
         o_picture_end(w_current, w_x, w_y);
         w_current->inside_action = 0;
-        w_current->event_state = DRAWPICTURE;
+        i_set_state (w_current, DRAWPICTURE);
         break;
 
       case(DRAWCIRCLE):
         o_circle_start(w_current, w_x, w_y);
-        w_current->event_state = ENDCIRCLE;
+        i_set_state (w_current, ENDCIRCLE);
         w_current->inside_action = 1;
         break;
 
       case(ENDCIRCLE):
         o_circle_end(w_current, w_x, w_y);
         w_current->inside_action = 0;
-        w_current->event_state = DRAWCIRCLE;
+        i_set_state (w_current, DRAWCIRCLE);
         break;
 
       case(DRAWARC):
         o_arc_start(w_current, w_x, w_y);
-        w_current->event_state = ENDARC;
+        i_set_state (w_current, ENDARC);
         w_current->inside_action = 1;
         break;
 
       case(ENDARC):
         o_arc_end1(w_current, w_x, w_y);
         w_current->inside_action = 0;
-        w_current->event_state = DRAWARC;
+        i_set_state (w_current, DRAWARC);
         break;
 
       case(DRAWPIN):
         o_pin_start(w_current, w_x, w_y);
-        w_current->event_state = ENDPIN;
+        i_set_state (w_current, ENDPIN);
         w_current->inside_action = 1;
         break;
 
       case(ENDPIN):
         o_pin_end(w_current, w_x, w_y);
         w_current->inside_action = 0;
-        w_current->event_state = DRAWPIN;
+        i_set_state (w_current, DRAWPIN);
         break;
 
       case(STARTDRAWNET):  /*! \todo change state name? */
         o_net_start(w_current, w_x, w_y);
         w_current->inside_action = 1;
-        w_current->event_state=DRAWNET;
+        i_set_state (w_current, DRAWNET);
 
         break;
 
       case(STARTDRAWBUS):
         o_bus_start(w_current, w_x, w_y);
         w_current->inside_action = 1;
-        w_current->event_state=DRAWBUS;
+        i_set_state (w_current, DRAWBUS);
 
         break;
 
@@ -302,7 +302,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         /* Only continue the net if net end worked */
         if (o_net_end(w_current, w_x, w_y)) {
           o_net_start(w_current, w_current->first_wx, w_current->first_wy);
-          w_current->event_state=NETCONT;
+          i_set_state (w_current, NETCONT);
         } else { /* cleanup and start a new net */
           o_net_invalidate_rubber (w_current);
           o_net_reset(w_current);
@@ -316,7 +316,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         /* Only continue the net if net end worked */
         if (o_bus_end(w_current, w_x, w_y)) {
           o_bus_start(w_current, w_current->first_wx, w_current->first_wy);
-          w_current->event_state=BUSCONT;
+          i_set_state (w_current, BUSCONT);
         } else {
           w_current->inside_action=0;
           i_set_state(w_current, STARTDRAWBUS);
@@ -328,7 +328,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         if (!w_current->continue_component_place) {
           w_current->inside_action = 0;
           i_set_state(w_current, SELECT);
-          i_update_toolbar(w_current);
         }
         break;
 
@@ -336,7 +335,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         o_place_end(w_current, w_x, w_y, FALSE, NULL, "%paste-objects-hook");
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
-        i_update_toolbar(w_current);
         break;
 
       case(ENDROTATEP):
@@ -345,7 +343,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
-        i_update_toolbar(w_current);
         break;
 
       case(ENDMIRROR):
@@ -355,26 +352,23 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
-        i_update_toolbar(w_current);
         break;
 
       case(ENDTEXT):
         o_place_end(w_current, w_x, w_y, FALSE, NULL, "%add-objects-hook");
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
-        i_update_toolbar(w_current);
         break;
 
 
       case(PAN):
         gschem_page_view_pan (page_view, w_x, w_y);
         i_set_state(w_current, SELECT);
-        i_update_toolbar(w_current);
         break;
 
       case(ZOOMBOXSTART):
         a_zoom_box_start(w_current, unsnapped_wx, unsnapped_wy);
-        w_current->event_state = ZOOMBOXEND;
+        i_set_state (w_current, ZOOMBOXEND);
         w_current->inside_action = 1;
         break;
 
@@ -421,7 +415,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
          * find anything */
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
-        i_update_toolbar(w_current);
         goto end_button_pressed;
       }
 
@@ -539,7 +532,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
             i_callback_cancel(w_current, 0, NULL);
             break;
         }
-        i_update_toolbar(w_current);
       }
     }
   }
@@ -589,28 +581,26 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
         /* do nothing */
         break;
       case(MOVE):
-        w_current->event_state = ENDMOVE;
+        i_set_state (w_current, ENDMOVE);
         break;
 
       case(COPY):
-        w_current->event_state = ENDCOPY;
+        i_set_state (w_current, ENDCOPY);
         break;
 
       case(MCOPY):
-        w_current->event_state = ENDMCOPY;
+        i_set_state (w_current, ENDMCOPY);
         break;
       case(GRIPS):
         o_grips_end(w_current),
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
-        i_update_toolbar(w_current);
         break;
       case(ENDMOVE):
         o_move_end(w_current);
         /* having this stay in copy was driving me nuts*/
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
-        i_update_toolbar(w_current);
         break;
 
       case(ENDCOPY):
@@ -618,7 +608,6 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
         /* having this stay in copy was driving me nuts*/
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
-        i_update_toolbar(w_current);
         break;
 
       case(ENDMCOPY):
@@ -627,7 +616,6 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
         w_current->inside_action = 1;
         /* Keep the state and the inside_action, as the copy has not finished. */
         i_set_state(w_current, ENDMCOPY);
-        i_update_toolbar(w_current);
         o_undo_savestate_old(w_current, UNDO_ALL);
         break;
 
@@ -635,14 +623,12 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
         o_select_box_end(w_current, unsnapped_wx, unsnapped_wy);
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
-        i_update_toolbar(w_current);
         break;
 
       case(ZOOMBOXEND):
         a_zoom_box_end(w_current, unsnapped_wx, unsnapped_wy);
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
-        i_update_toolbar(w_current);
         break;
 
       case(STARTSELECT):
@@ -650,21 +636,21 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
         if (!o_grips_start(w_current, unsnapped_wx, unsnapped_wy)) {
                                 /* now go looking for objects to select */
           o_find_object(w_current, unsnapped_wx, unsnapped_wy, TRUE);
-          w_current->event_state = SELECT;
+          i_set_state (w_current, SELECT);
           w_current->inside_action = 0;
         } else {
                                 /* an grip was found */
-          w_current->event_state = GRIPS;
+          i_set_state (w_current, GRIPS);
           w_current->inside_action = 1;
         }
         break;
 
     case ENDPATH:
       if (o_path_end (w_current, w_x, w_y)) {
-        w_current->event_state = PATHCONT;
+        i_set_state (w_current, PATHCONT);
         w_current->inside_action = TRUE;
       } else {
-        w_current->event_state = DRAWPATH;
+        i_set_state (w_current, DRAWPATH);
         w_current->inside_action = FALSE;
       }
       break;
@@ -709,14 +695,12 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
         o_move_end(w_current);
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
-        i_update_toolbar(w_current);
         break;
 
         case(COPY):
         o_copy_end(w_current);
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
-        i_update_toolbar(w_current);
         break;
       }
       break;
@@ -825,14 +809,14 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
                 && (!o_find_object(w_current, w_current->first_wx, w_current->first_wy, TRUE)
                     || !o_select_selected(w_current)))) {
       if (o_select_box_start(w_current, unsnapped_wx, unsnapped_wy)) {
-        w_current->event_state = SBOX;
+        i_set_state (w_current, SBOX);
         w_current->inside_action = 1;
       }
       break;
     } else {
       /* Start moving the selected object(s) */
       o_move_start(w_current, w_x, w_y);
-      w_current->event_state = ENDMOVE;
+      i_set_state (w_current, ENDMOVE);
       w_current->inside_action = 1;
       /* Fall through bottom of case to finish the move */
     }

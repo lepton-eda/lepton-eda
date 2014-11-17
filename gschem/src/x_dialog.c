@@ -243,7 +243,6 @@ void translate_dialog_response(GtkWidget *widget, gint response,
   }
 
   i_set_state(w_current, SELECT);
-  i_update_toolbar(w_current);
   gtk_widget_destroy(w_current->trwindow);
   w_current->trwindow=NULL;
 }
@@ -346,7 +345,6 @@ void slot_edit_dialog_response(GtkWidget *widget, gint response, GschemToplevel 
     printf("slot_edit_dialog_response(): strange signal %d\n",response);
   }
   i_set_state(w_current, SELECT);
-  i_update_toolbar(w_current);
   gtk_widget_destroy(w_current->sewindow);
   w_current->sewindow = NULL;
 }

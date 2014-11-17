@@ -71,6 +71,7 @@ static const char *i_status_string(GschemToplevel *w_current)
     case SBOX:
     case GRIPS:
       return _("Select Mode");
+    case DRAWCOMP:
     case ENDCOMP:
       return _("Component Mode"); /*EK* new */
     case ENDTEXT:
@@ -223,7 +224,10 @@ void i_set_state(GschemToplevel *w_current, enum x_states newstate)
 void i_set_state_msg(GschemToplevel *w_current, enum x_states newstate,
 		     const char *message)
 {
-  w_current->event_state = newstate;
+  if ((newstate != w_current->event_state) || (message != NULL)) {
+    w_current->event_state = newstate;
+    i_update_toolbar (w_current);
+  }
   i_show_state(w_current, message);
 }
 

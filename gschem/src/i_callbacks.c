@@ -214,7 +214,6 @@ DEFINE_I_CALLBACK(file_save_all)
      i_set_state_msg(w_current, SELECT, _("Saved All"));
   }
 
-  i_update_toolbar(w_current);
   x_pagesel_update (w_current);
   i_update_menus(w_current);
 }
@@ -394,7 +393,6 @@ DEFINE_I_CALLBACK(edit_select)
 
   /* this is probably the only place this should be */
   i_set_state(w_current, SELECT);
-  i_update_toolbar(w_current);
   w_current->inside_action = 0;
 }
 
@@ -433,7 +431,6 @@ DEFINE_I_CALLBACK (edit_select_all)
 
   i_set_state (w_current, SELECT);
   w_current->inside_action = 0;
-  i_update_toolbar (w_current);
   i_update_menus (w_current);
 }
 
@@ -450,7 +447,6 @@ DEFINE_I_CALLBACK (edit_deselect)
 
   i_set_state (w_current, SELECT);
   w_current->inside_action = 0;
-  i_update_toolbar (w_current);
   i_update_menus (w_current);
 }
 
@@ -472,7 +468,7 @@ DEFINE_I_CALLBACK(edit_copy)
     if (g_action_get_position (TRUE, &wx, &wy)) {
       o_redraw_cleanstates(w_current);
       o_copy_start(w_current, wx, wy);
-      w_current->event_state = ENDCOPY;
+      i_set_state (w_current, ENDCOPY);
       w_current->inside_action = 1;
 
     } else {
@@ -502,9 +498,9 @@ DEFINE_I_CALLBACK(edit_mcopy)
   if (o_select_return_first_object(w_current)) {
     if (g_action_get_position (TRUE, &wx, &wy)) {
       o_redraw_cleanstates(w_current);
-      w_current->event_state = MCOPY;
+      i_set_state (w_current, MCOPY);
       o_copy_start(w_current, wx, wy);
-      w_current->event_state = ENDMCOPY;
+      i_set_state (w_current, ENDMCOPY);
       w_current->inside_action = 1;
 
     } else {
@@ -535,7 +531,7 @@ DEFINE_I_CALLBACK(edit_move)
     if (g_action_get_position (TRUE, &wx, &wy)) {
       o_redraw_cleanstates(w_current);
       o_move_start(w_current, wx, wy);
-      w_current->event_state = ENDMOVE;
+      i_set_state (w_current, ENDMOVE);
       w_current->inside_action = 1;
 
     } else {
@@ -568,7 +564,6 @@ DEFINE_I_CALLBACK(edit_delete)
      * mode after the delete */
     w_current->inside_action = 0;
     i_set_state(w_current, SELECT);
-    i_update_toolbar(w_current);
     i_update_menus(w_current);
   }
 }
@@ -709,9 +704,8 @@ DEFINE_I_CALLBACK(edit_rotate_90)
     o_rotate_world_update(w_current, wx, wy, 90, object_list);
   }
 
-  w_current->event_state = SELECT;
+  i_set_state (w_current, SELECT);
   w_current->inside_action = 0;
-  i_update_toolbar(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -743,9 +737,8 @@ DEFINE_I_CALLBACK(edit_mirror)
     o_mirror_world_update(w_current, wx, wy, object_list);
   }
 
-  w_current->event_state = SELECT;
+  i_set_state (w_current, SELECT);
   w_current->inside_action = 0;
-  i_update_toolbar(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1725,6 +1718,7 @@ DEFINE_I_CALLBACK(add_component)
 
   g_return_if_fail (w_current != NULL);
 
+  i_set_state(w_current, DRAWCOMP);
   o_redraw_cleanstates (w_current);
   x_compselect_open (w_current);
 
@@ -1732,7 +1726,6 @@ DEFINE_I_CALLBACK(add_component)
                          i_callback_add_component, _("Component"));
 
   i_set_state(w_current, SELECT);
-  i_update_toolbar(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1765,7 +1758,6 @@ DEFINE_I_CALLBACK(add_attribute)
                          _("Attribute"));
 
   i_set_state(w_current, SELECT);
-  i_update_toolbar(w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1787,7 +1779,6 @@ DEFINE_I_CALLBACK(add_net)
   /* need to click */
   i_update_middle_button(w_current, i_callback_add_net, _("Net"));
   i_set_state(w_current, STARTDRAWNET);
-  i_update_toolbar(w_current);
 
   if (!g_action_get_position (TRUE, &wx, &wy)) {
     w_current->inside_action = 0;
@@ -1796,7 +1787,7 @@ DEFINE_I_CALLBACK(add_net)
 
   o_net_start(w_current, wx, wy);
 
-  w_current->event_state=DRAWNET;
+  i_set_state (w_current, DRAWNET);
   w_current->inside_action = 1;
 }
 
@@ -1833,7 +1824,6 @@ DEFINE_I_CALLBACK(add_bus)
   /* need to click */
   i_update_middle_button(w_current, i_callback_add_bus, _("Bus"));
   i_set_state(w_current, STARTDRAWBUS);
-  i_update_toolbar(w_current);
 
   if (!g_action_get_position (TRUE, &wx, &wy)) {
     w_current->inside_action = 0;
@@ -1842,7 +1832,7 @@ DEFINE_I_CALLBACK(add_bus)
 
   o_bus_start(w_current, wx, wy);
 
-  w_current->event_state=DRAWBUS;
+  i_set_state (w_current, DRAWBUS);
   w_current->inside_action = 1;
 }
 
@@ -1877,7 +1867,6 @@ DEFINE_I_CALLBACK(add_text)
 
   w_current->inside_action = 0;
   i_set_state(w_current, SELECT);
-  i_update_toolbar(w_current);
 
   text_input_dialog(w_current);
 }
@@ -1983,7 +1972,6 @@ DEFINE_I_CALLBACK(add_picture)
 
   w_current->inside_action = 0;
   i_set_state(w_current, SELECT);
-  i_update_toolbar(w_current);
 
   picture_selection_dialog(w_current);
 }
@@ -2817,7 +2805,6 @@ DEFINE_I_CALLBACK(cancel)
   /* this is problematic since we don't know what the right mode */
   /* (when you cancel inside an action) should be */
   i_set_state(w_current, SELECT);
-  i_update_toolbar(w_current);
 
   /* clear the key guile command-sequence */
   g_keys_reset (w_current);

@@ -827,7 +827,6 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
   s_log_message (log_msg, filename);
 
   i_set_state_msg  (w_current, SELECT, state_msg);
-  i_update_toolbar (w_current);
 
   return ret;
 }
