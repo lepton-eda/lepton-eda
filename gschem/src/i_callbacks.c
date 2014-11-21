@@ -954,11 +954,6 @@ DEFINE_I_CALLBACK(edit_show_hidden)
 
   g_return_if_fail (w_current != NULL);
 
-  /* This is a new addition 3/15 to prevent this from executing
-   * inside an action */
-  if (w_current->inside_action)
-    return;
-
   i_update_middle_button(w_current,
                          i_callback_edit_show_hidden,
                          _("ShowHidden"));
