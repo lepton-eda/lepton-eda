@@ -149,6 +149,11 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
   g_return_val_if_fail (buf_num >= 0, TRUE);
   g_return_val_if_fail (buf_num < MAX_BUFFERS, TRUE);
 
+  /* Cancel current place or draw action if it is being done */
+  if (w_current->inside_action) {
+    i_callback_cancel (w_current, 0, NULL);
+  }
+
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   if (buf_num == CLIPBOARD_BUFFER) {
