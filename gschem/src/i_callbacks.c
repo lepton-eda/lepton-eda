@@ -1560,7 +1560,6 @@ DEFINE_I_CALLBACK(clipboard_cut)
 DEFINE_I_CALLBACK(clipboard_paste)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int empty;
 
   /* Choose a default position to start pasting. This is required to
