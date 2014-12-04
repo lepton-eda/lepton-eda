@@ -1859,6 +1859,7 @@ DEFINE_I_CALLBACK(add_text)
 
   w_current->inside_action = 0;
   i_set_state(w_current, SELECT);
+  i_update_middle_button(w_current, i_callback_add_text, _("Text"));
 
   text_input_dialog(w_current);
 }
