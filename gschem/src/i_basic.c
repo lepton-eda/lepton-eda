@@ -63,8 +63,6 @@ static const char *i_status_string(GschemToplevel *w_current)
 
   switch ( w_current->event_state ) {
     case NONE:
-    case STARTROUTENET: /*! \todo */
-    case ENDROUTENET: /*! \todo */
       return "";
     case STARTSELECT:
     case SELECT:
@@ -362,8 +360,6 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(ENDMIRROR): /*! \todo */
     case(ZOOMBOXSTART): /*! \todo */
     case(ZOOMBOXEND): /*! \todo */
-    case(STARTROUTENET): /*! \todo */
-    case(ENDROUTENET): /*! \todo */
     case(STARTPASTE): /*! \todo */
     case(ENDPASTE): /*! \todo */
     case(GRIPS): /*! \todo */

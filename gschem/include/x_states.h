@@ -58,8 +58,8 @@ enum x_states {
   ENDMIRROR,    /* 30 */
   ZOOMBOXSTART, /* 31 */
   ZOOMBOXEND,   /* 32 */
-  STARTROUTENET,/* 33 */
-  ENDROUTENET,  /* 34 */
+//STARTROUTENET,/* 33 */
+//ENDROUTENET,  /* 34 */
   DRAWBUS,      /* 35 */
   BUSCONT,      /* 36 */
   STARTDRAWBUS, /* 37 */

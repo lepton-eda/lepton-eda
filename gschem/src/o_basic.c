@@ -463,7 +463,6 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(ENDMIRROR):
     case(ENDPICTURE):
     case(ENDROTATEP):
-    case(ENDROUTENET):
     case(SBOX):
     case(STARTCOPY):
     case(STARTMCOPY):
@@ -471,7 +470,6 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(STARTDRAWNET):
     case(STARTMOVE):
     case(STARTPASTE):
-    case(STARTROUTENET):
     case(STARTSELECT):
     case(ZOOMBOXSTART):
       return FALSE;
