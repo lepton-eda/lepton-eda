@@ -362,7 +362,6 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
       return TRUE;
 
     /* all remaining states without dc changes */
-    case(NONE):
     case(SELECT):
     case(PAN):
     case(MIRRORMODE):

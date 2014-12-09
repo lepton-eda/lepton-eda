@@ -25,55 +25,33 @@
 /* NOTE: when adding states, also update i_status_string() function */
 
 enum x_states {
-  NONE,         /*  0 */
-  SELECT,       /*  1 */
-  LINEMODE,     /*  2 */
-  BOXMODE,      /*  3 */
-//MOVE,         /*  4 */
-  COPYMODE,     /*  5 */
-  CIRCLEMODE,   /*  6 */
-//ZOOM,         /*  7 */
-  PAN,          /*  8 */
-  NETMODE,      /*  9 */
-//NETCONT,      /* 10 */
-  PINMODE,      /* 11 */
-  ARCMODE,      /* 12 */
-//STARTDRAWNET, /* 13 */
-  COMPMODE,     /* 14 */
-  SBOX,         /* 15 */
-//STARTSELECT,  /* 16 */
-//STARTCOPY,    /* 17 */
-  MOVEMODE,     /* 18 */
-//ENDCOPY,      /* 19 */
-//ENDMOVE,      /* 20 */
-//ENDLINE,      /* 21 */
-//ENDBOX,       /* 22 */
-//ENDCIRCLE,    /* 23 */
-//ENDARC,       /* 24 */
-//ENDPIN,       /* 25 */
-//ENDCOMP,      /* 26 */
-  TEXTMODE,     /* 27 */
-//ENDTEXT,      /* 28 */
-  ROTATEMODE,   /* 29 */
-  MIRRORMODE,   /* 30 */
-  ZOOMBOX,      /* 31 */
-//ZOOMBOXEND,   /* 32 */
-//STARTROUTENET,/* 33 */
-//ENDROUTENET,  /* 34 */
-  BUSMODE,      /* 35 */
-//BUSCONT,      /* 36 */
-//STARTDRAWBUS, /* 37 */
-  PASTEMODE,    /* 38 */
-//ENDPASTE,     /* 39 */
-  GRIPS,        /* 40 */
-  PICTUREMODE,  /* 41 */
-//ENDPICTURE,   /* 42 */
-  MCOPYMODE,    /* 43 */
-//STARTMCOPY,   /* 44 */
-//ENDMCOPY,     /* 45 */
-//DRAWPATH,     /* 46 */
-  PATHMODE,     /* 47 */
-//ENDPATH,      /* 48 */
+  /* Basic modes */
+  SELECT,
+  GRIPS,
+  /* Draw modes */
+  ARCMODE,
+  BOXMODE,
+  BUSMODE,
+  CIRCLEMODE,
+  LINEMODE,
+  NETMODE,
+  PATHMODE,
+  PICTUREMODE,
+  PINMODE,
+  /* Place modes */
+  COMPMODE,
+  COPYMODE,
+  MCOPYMODE,
+  MOVEMODE,
+  PASTEMODE,
+  TEXTMODE,
+  /* Box modes */
+  SBOX,
+  ZOOMBOX,
+  /* Special modes */
+  PAN,
+  MIRRORMODE,
+  ROTATEMODE,
 };
 
 
