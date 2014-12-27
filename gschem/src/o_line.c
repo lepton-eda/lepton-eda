@@ -182,23 +182,3 @@ void o_line_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
   eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
   eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, wwidth, -1, -1);
 }
-
-/*! \brief
- *  \par Function Description
- *
- *  \param [in] w_current  The TOPLEVEL object.
- *  \param [in] line
- *  \param [in] x1
- *  \param [in] y1
- *  \param [in] x2
- *  \param [in] y2
- *  \return int
- */
-int o_line_visible (GschemToplevel *w_current, LINE *line,
-                    int *x1, int *y1, int *x2, int *y2)
-{
-  *x1 = line->x[0];  *y1 = line->y[0];
-  *x2 = line->x[1];  *y2 = line->y[1];
-
-  return WORLDclip_change (w_current, x1, y1, x2, y2);
-}
