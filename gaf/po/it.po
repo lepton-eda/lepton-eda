@@ -1,0 +1,308 @@
+# Italian translation for the gEDA gaf package.
+# This file is distributed under the same license as the gEDA gschem package.
+# Copyright (C) 2014 Marco Ciampa <ciampix@libero.it>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: geda-gaf\n"
+"Report-Msgid-Bugs-To: https://bugs.launchpad.net/geda\n"
+"POT-Creation-Date: 2014-08-12 17:38+0200\n"
+"PO-Revision-Date: 2014-12-28 22:09+0100\n"
+"Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
+"Language-Team: Italian <it@li.org>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../gaf/gaf.c:65
+#, c-format
+msgid ""
+"Usage: gaf [OPTION...] COMMAND [ARGS ...]\n"
+"\n"
+"gEDA/gaf command-line utility.\n"
+"\n"
+"General options:\n"
+"  --no-rcfiles   inhibit loading of 'gafrc' files\n"
+"  -h, --help     display usage information and exit\n"
+"  -V, --version  display version information and exit\n"
+"\n"
+"Commonly-used commands (type `gaf <cmd> --help' for usage):\n"
+"  shell          Scheme REPL for interactive gEDA data processing\n"
+"  config         Edit gEDA configuration\n"
+"  export         Export gEDA files in various image formats.\n"
+"\n"
+"Please report bugs to %s.\n"
+msgstr ""
+"Uso: gaf [OPZIONI...] COMANDO [ARG ...]\n"
+"\n"
+"gEDA/gaf utilità a riga di comando.\n"
+"\n"
+"Opzioni generali:\n"
+"  --no-rcfiles   inibisce il caricamento dei file 'gafrc'\n"
+"  -h, --help     mostra le informazioni sull'uso ed esce\n"
+"  -V, --version  mostra le informazioni di versione ed esce\n"
+"\n"
+"Comandi usati correntemente (battere `gaf <cmd> --help' per l'uso):\n"
+"  shell          REPL Scheme per elaborazione dati gEDA interattiva\n"
+"  config         modifica la configurazione di gEDA\n"
+"  export         esporta i file gEDA in vari formati immagine.\n"
+"\n"
+"Segnalare eventuali difetti a %s.\n"
+
+#: ../../gaf/gaf.c:88
+#, c-format
+msgid ""
+"gEDA/gaf %s (g%.7s)\n"
+"Copyright (C) 1998-2012 gEDA developers\n"
+"This is free software, and you are welcome to redistribute it under\n"
+"certain conditions. For details, see the file `COPYING', which is\n"
+"included in the gEDA distribution.\n"
+"There is NO WARRANTY, to the extent permitted by law.\n"
+msgstr ""
+"gEDA/gaf %s (g%.7s)\n"
+"Copyright (C) 1998-2012 gli sviluppatori di gEDA\n"
+"Questo è software libero, e siete invitati a redistribuirlo sotto\n"
+"certe condizioni. Per i dettagli, vedere il file \"COPYING\", incluso\n"
+"nella distribuzione di gEDA.\n"
+"NON C'È ALCUNA GARANZIA, nei limiti della legislazione vigente.\n"
+
+#. getopt_long already printed an error message
+#: ../../gaf/gaf.c:136
+#, c-format
+msgid ""
+"\n"
+"Run `gaf --help' for more information.\n"
+msgstr "\nEseguire \"gaf --help\" per ulteriori informazioni.\n"
+
+#: ../../gaf/gaf.c:148
+#, c-format
+msgid ""
+"ERROR: You must specify a command to run.\n"
+"\n"
+"Run `gaf --help' for more information.\n"
+msgstr ""
+"ERRORE: è necessario specificare un comando da eseguire.\n"
+"\n"
+"Eseguire \"gaf --help\" per ulteriori informazioni.\n"
+
+#: ../../gaf/gaf.c:166
+#, c-format
+msgid ""
+"ERROR: Unrecognised command `%s'.\n"
+"\n"
+"Run `gaf --help' for more information.\n"
+msgstr ""
+"ERRORE: comando non riconosciuto \"%s\".\n"
+"\n"
+"Eseguire \"gaf --help\" per ulteriori informazioni.\n"
+
+#: ../../gaf/config.c:47
+#, c-format
+msgid ""
+"Usage: gaf config [OPTION] [GROUP KEY [VALUE]]\n"
+"\n"
+"View and modify gEDA configuration.\n"
+"\n"
+"  -p, --project[=PATH]  select project configuration [PATH=.]\n"
+"  -u, --user     select user configuration\n"
+"  -s, --system   select system configuration\n"
+"  -h, --help     display usage information and exit\n"
+"\n"
+"If GROUP and KEY are specified, retrieves the value of that\n"
+"configuration parameter.  If a VALUE was specified, sets the value of\n"
+"the parameter.  The -p, -u and -s options can be used to select the\n"
+"configuration store affected (by default, the project configuration\n"
+"store for the current directory). If no GROUP and KEY were provided,\n"
+"outputs the filename of the selected configuration store.\n"
+"\n"
+"Please report bugs to %s.\n"
+msgstr ""
+"Uso: gaf config [OPZIONE] [GRUPPO CHIAVE [VALORE]]\n"
+"\n"
+"Visualizza e modifica la configurazione di gEDA.\n"
+"\n"
+"  -p, --project[=PERCORSO]  seleziona la configurazione del \n"
+"                            progetto [PERCORSO=]\n"
+"  -u, --user     seleziona la configurazione utente\n"
+"  -s, --system   seleziona la configurazione di sistema\n"
+"  -h, --help     mostra le informazioni d'uso ed esce\n"
+"\n"
+"Se GRUPPO e CHIAVE vengono specificati, recupera il valore di quel\n"
+"parametro di configurazione.  Se un VALORE era stato specificato, \n"
+"imposta il valore di quel parametro.\n"
+"Le opzioni -p, -u e -s si possono usare per selezionare l'archivio\n"
+"di configurazione interessato (come preimpostazione, l'archivio di\n"
+"configurazione del progetto per la cartella corrente). Se nessun\n"
+"GRUPPO e CHIAVE vengono forniti, emette il nome del file dell'archivio\n"
+"di configurazione selezionato.\n"
+"\n"
+"Segnalare eventuali difetti a %s.\n"
+
+#: ../../gaf/config.c:68
+msgid ""
+"\n"
+"Run `gaf config --help' for more information.\n"
+msgstr "\nEseguire \"gaf config --help\" per ulteriori informazioni.\n"
+
+#: ../../gaf/config.c:69
+msgid "ERROR: You may only specify a single configuration store.\n"
+msgstr "ERRORE: si può specificare solo un singolo archivio di configurazione.\n"
+
+#: ../../gaf/config.c:158
+#, c-format
+msgid "WARNING: Could not load '%s': %s.\n"
+msgstr "ATTENZIONE: impossibile caricare \"%s\": %s.\n"
+
+#: ../../gaf/config.c:170
+#, c-format
+msgid "ERROR: You must specify both configuration group and key.\n"
+msgstr "ERRORE: si deve specificare sia il gruppo di configurazione che la chiave.\n"
+
+#: ../../gaf/config.c:182 ../../gaf/config.c:196 ../../gaf/export.c:318
+#, c-format
+msgid "ERROR: %s.\n"
+msgstr "ERRORE: %s.\n"
+
+#: ../../gaf/export.c:146
+#, c-format
+msgid "ERROR: Bad argument '%s' to %s option.\n"
+msgstr "ERRORE: argomento errato \"%s\" all'opzione %s.\n"
+
+#: ../../gaf/export.c:147
+msgid ""
+"\n"
+"Run `gaf export --help' for more information.\n"
+msgstr "\nEseguire `gaf export --help' per ulteriori informazioni.\n"
+
+#: ../../gaf/export.c:188
+#, c-format
+msgid "ERROR: Cannot infer output format from filename '%s'.\n"
+msgstr "ERRORE: impossibile ricavare il formato di uscita dal nome del file \"%s\".\n"
+
+#: ../../gaf/export.c:205
+#, c-format
+msgid "ERROR: Cannot find supported format for filename '%s'.\n"
+msgstr "ERRORE: impossibile trovare il formato supportato per il file di nome \"%s\".\n"
+
+#: ../../gaf/export.c:210
+#, c-format
+msgid "ERROR: Unsupported output format '%s'.\n"
+msgstr "ERRORE: formato di uscita \"%s\" non supportato.\n"
+
+#: ../../gaf/export.c:222
+#, c-format
+msgid "ERROR: Selected output format does not support multipage output\n"
+msgstr "ERRORE: il formato di uscita selezionato non supporta le pagine multiple\n"
+
+#: ../../gaf/export.c:234
+#, c-format
+msgid "ERROR: Failed to load '%s': %s\n"
+msgstr "ERRORE: fallito il caricamento di \"%s\": %s\n"
+
+#: ../../gaf/export.c:240
+#, c-format
+msgid "ERROR: Failed to change directory to '%s': %s\n"
+msgstr "ERRORE: fallito il cambiamento di cartella a \"%s\": %s\n"
+
+#: ../../gaf/export.c:904
+#, c-format
+msgid ""
+"Usage: gaf export [OPTION ...] -o OUTPUT [--] FILE ...\n"
+"\n"
+"Export gEDA files in various image formats.\n"
+"\n"
+"  -f, --format=TYPE      output format (normally autodetected)\n"
+"  -o, --output=OUTPUT    output filename\n"
+"  -p, --paper=NAME       select paper size by name\n"
+"  -s, --size=WIDTH;HEIGHT  specify exact paper size\n"
+"  -k, --scale=FACTOR     specify output scale factor\n"
+"  -l, --layout=ORIENT    page orientation\n"
+"  -m, --margins=TOP;LEFT;BOTTOM;RIGHT\n"
+"                           set page margins\n"
+"  -a, --align=HALIGN;VALIGN\n"
+"                           set alignment of drawing within page\n"
+"  -d, --dpi=DPI          pixels-per-inch for raster outputs\n"
+"  -c, --color            enable color output\n"
+"  --no-color             disable color output\n"
+"  -F, --font=NAME        set font family for printing text\n"
+"  -h, --help     display usage information and exit\n"
+"\n"
+"Please report bugs to %s.\n"
+msgstr ""
+"Uso: gaf export [OPZIONE ...] -o USCITA [--] FILE ...\n"
+"\n"
+"Esporta i file gEDA in vari formati immagine.\n"
+"\n"
+"  -f, --format=TIPO      formato d'uscita (normalmente autorilevato)\n"
+"  -o, --output=USCITA    nome file di uscita\n"
+"  -p, --paper=NOME       seleziona la dimensione carta per nome\n"
+"  -s, --size=LARGH;ALT   specifica esattamente la dimensione carta\n"
+"  -k, --scale=FATTORE    specifica il fattore di scala in uscita\n"
+"  -l, --layout=ORIENT    orientamento pagina\n"
+"  -m, --margins=CIMA;SINISTRA;FONDO;DESTRA\n"
+"                          imposta i margini di pagina\n"
+"  -a, --align=ALL.NTO-ORIZZ;ALL.NTO-VERT\n"
+"                         imposta l'allineamento dei disegni nella pagina\n"
+"  -d, --dpi=DPI          pixel-per-pollice per risultati raster\n"
+"  -c, --color            abilita il colore nei risultati\n"
+"  --no-color             disabilita il colore nei risultati\n"
+"  -F, --font=NAME        imposta il font family per la stampa del testo\n"
+"  -h, --help             mostra le informazioni sull'uso ed esce\n"
+"\n"
+"Segnalare eventuali difetti a %s.\n"
+
+#: ../../gaf/export.c:1083
+#, c-format
+msgid "ERROR: You must specify at least one input filename.\n"
+msgstr "ERRORE: bisogna specificare almeno un nome file in ingresso.\n"
+
+#: ../../gaf/export.c:1092
+#, c-format
+msgid "ERROR: You must specify an output filename.\n"
+msgstr "ERRORE: bisogna specificare un nome file in uscita.\n"
+
+#: ../../gaf/shell.c:46
+#, c-format
+msgid ""
+"Usage: gaf shell [OPTION ...]\n"
+"\n"
+"Shell for interactive processing of gEDA data using Scheme.\n"
+"\n"
+"  -s FILE        load Scheme source code from FILE, and exit\n"
+"  -c EXPR        evaluate Scheme expression EXPR, and exit\n"
+"  --             stop scanning arguments; run interactively\n"
+"\n"
+"The above switches stop argument processing, and pass all\n"
+"remaining arguments as the value of (command-line).\n"
+"\n"
+"  -L DIRECTORY   add DIRECTORY to the front of the Scheme load path\n"
+"  -l FILE        load Scheme source code from FILE\n"
+"  -h, --help     display usage information and exit\n"
+"\n"
+"Please report bugs to %s.\n"
+msgstr ""
+"Uso: gaf shell [OPZIONE ...]\n"
+"\n"
+"Shell per l'elaborazione interattiva dei dati gEDA con Scheme.\n"
+"\n"
+"  -s FILE        carica il codice sorgente Scheme da FILE ed esce\n"
+"  -c EXPR        elabora l'espressione Scheme EXPR ed esce\n"
+"  --             blocca la scansione degli argomenti ed esegue interattivamente\n"
+"\n"
+"L'opzione soprastante blocca l'elaborazione degli argomenti e passa tutti i\n"
+"rimanenti argomenti come valore di (command-line).\n"
+"\n"
+"  -L CARTELLA    aggiunge CARTELLA in cima al percorso di caricamento di Scheme\n"
+"  -l FILE        carica il codice sorgente Scheme da FILE\n"
+"  -h, --help     mostra le informazioni sull'uso ed esce\n"
+"\n"
+"Segnalare eventuali difetti a %s.\n"
+
+#. getopt_long already printed an error message
+#: ../../gaf/shell.c:102
+#, c-format
+msgid ""
+"\n"
+"Run `gaf shell --help' for more information.\n"
+msgstr "\nEseguire `gaf shell --help' per ulteriori informazioni.\n"
