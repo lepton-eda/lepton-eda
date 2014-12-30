@@ -284,6 +284,8 @@ gschem_options_scale_snap_up (GschemOptions *options)
 
 /*! \brief Set the grid mode
  *
+ *  If the grid mode is invalid the default grid mode is set.
+ *
  *  \param [in] options These options
  *  \param [in] grid_mode The grid mode
  */
@@ -292,7 +294,16 @@ gschem_options_set_grid_mode (GschemOptions *options, GRID_MODE grid_mode)
 {
   g_return_if_fail (options != NULL);
 
-  options->grid_mode = grid_mode;
+  switch (grid_mode) {
+    case GRID_MODE_NONE:
+    case GRID_MODE_DOTS:
+    case GRID_MODE_MESH:
+      options->grid_mode = grid_mode;
+      break;
+    default:
+      options->grid_mode = default_grid_mode;
+      break;
+  }
 
   g_object_notify (G_OBJECT (options), "grid-mode");
 }
@@ -398,7 +409,7 @@ class_init (GschemOptionsClass *klass)
                                                      "Grid Mode",
                                                      0,
                                                      (GRID_MODE_COUNT - 1),
-                                                     GRID_MODE_MESH,
+                                                     DEFAULT_GRID_MODE,
                                                      G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS | G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),

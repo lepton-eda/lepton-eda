@@ -201,6 +201,7 @@ struct st_gschem_toplevel {
   int bus_ripper_type;    /* sets type of the bus ripper (component or net) */
   int bus_ripper_rotation;  /* sets if the the bus ripper is symmetric or not */
 
+  int grid_mode;          /* sets the mode of the grid (no grid, dots or mesh) */
   /* sets the mininum number of pixels necessary for the grid to be */
   /* displayed */
   int dots_grid_fixed_threshold;

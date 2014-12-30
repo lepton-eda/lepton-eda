@@ -43,6 +43,13 @@
 #define DEFAULT_NET_RUBBER_BAND_MODE (FALSE)
 
 
+/*! \brief The initial grid mode
+ *
+ *  This value will get replaced by user settings.
+ */
+#define DEFAULT_GRID_MODE (GRID_MODE_MESH)
+
+
 /*! \brief The initial snap size
  *
  *  This value will get replaced by user settings.

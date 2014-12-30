@@ -83,6 +83,7 @@ int   default_bus_ripper_size = 200;
 int   default_bus_ripper_type = COMP_BUS_RIPPER;
 int   default_bus_ripper_rotation = NON_SYMMETRIC;
 int   default_force_boundingbox = FALSE;
+int   default_grid_mode = DEFAULT_GRID_MODE;
 int   default_dots_grid_dot_size = 1;
 int   default_dots_grid_mode = DOTS_GRID_VARIABLE_MODE;
 int   default_dots_grid_fixed_threshold = 10;
@@ -165,6 +166,7 @@ void i_vars_set(GschemToplevel *w_current)
 
   toplevel->force_boundingbox  = default_force_boundingbox;
 
+  gschem_options_set_grid_mode (w_current->options, default_grid_mode);
   w_current->dots_grid_dot_size          = default_dots_grid_dot_size;
   w_current->dots_grid_mode              = default_dots_grid_mode;
   w_current->dots_grid_fixed_threshold   = default_dots_grid_fixed_threshold;
