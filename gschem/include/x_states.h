@@ -41,41 +41,39 @@ enum x_states {
   STARTDRAWNET, /* 13 */
   DRAWCOMP,     /* 14 */
   SBOX,         /* 15 */
-  STARTPAN,     /* 16 */
-  STARTSELECT,  /* 17 */
-  STARTCOPY,    /* 18 */
-  STARTMOVE,    /* 19 */
-  ENDCOPY,      /* 20 */
-  ENDMOVE,      /* 21 */
-  ENDLINE,      /* 22 */
-  ENDBOX,       /* 23 */
-  ENDCIRCLE,    /* 24 */
-  ENDARC,       /* 25 */
-  ENDPIN,       /* 26 */
-  ENDCOMP,      /* 27 */
-  DRAWTEXT,     /* 28 */
-  ENDTEXT,      /* 29 */
-  ENDROTATEP,   /* 30 */
-  ENDMIRROR,    /* 31 */
-  ZOOMBOXSTART, /* 32 */
-  ZOOMBOXEND,   /* 33 */
-  STARTROUTENET,/* 34 */
-  ENDROUTENET,  /* 35 */
-  MOUSEPAN,     /* 36 */
-  DRAWBUS,      /* 37 */
-  BUSCONT,      /* 38 */
-  STARTDRAWBUS, /* 39 */
-  STARTPASTE,   /* 40 */
-  ENDPASTE,     /* 41 */
-  GRIPS,        /* 42 */
-  DRAWPICTURE,  /* 43 */
-  ENDPICTURE,   /* 44 */
-  MCOPY,        /* 45 */
-  STARTMCOPY,   /* 46 */
-  ENDMCOPY,     /* 47 */
-  DRAWPATH,     /* 48 */
-  PATHCONT,     /* 49 */
-  ENDPATH,      /* 50 */
+  STARTSELECT,  /* 16 */
+  STARTCOPY,    /* 17 */
+  STARTMOVE,    /* 18 */
+  ENDCOPY,      /* 19 */
+  ENDMOVE,      /* 20 */
+  ENDLINE,      /* 21 */
+  ENDBOX,       /* 22 */
+  ENDCIRCLE,    /* 23 */
+  ENDARC,       /* 24 */
+  ENDPIN,       /* 25 */
+  ENDCOMP,      /* 26 */
+  DRAWTEXT,     /* 27 */
+  ENDTEXT,      /* 28 */
+  ENDROTATEP,   /* 29 */
+  ENDMIRROR,    /* 30 */
+  ZOOMBOXSTART, /* 31 */
+  ZOOMBOXEND,   /* 32 */
+  STARTROUTENET,/* 33 */
+  ENDROUTENET,  /* 34 */
+  DRAWBUS,      /* 35 */
+  BUSCONT,      /* 36 */
+  STARTDRAWBUS, /* 37 */
+  STARTPASTE,   /* 38 */
+  ENDPASTE,     /* 39 */
+  GRIPS,        /* 40 */
+  DRAWPICTURE,  /* 41 */
+  ENDPICTURE,   /* 42 */
+  MCOPY,        /* 43 */
+  STARTMCOPY,   /* 44 */
+  ENDMCOPY,     /* 45 */
+  DRAWPATH,     /* 46 */
+  PATHCONT,     /* 47 */
+  ENDPATH,      /* 48 */
 };
 
 

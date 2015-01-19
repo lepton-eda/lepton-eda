@@ -1241,7 +1241,7 @@ DEFINE_I_CALLBACK(view_pan)
   if (!g_action_get_position (FALSE, &wx, &wy)) {
     o_redraw_cleanstates (w_current);
     w_current->inside_action = 0;
-    i_set_state (w_current, STARTPAN);
+    i_set_state (w_current, PAN);
   } else {
     gschem_page_view_pan (page_view, wx, wy);
     if (w_current->undo_panzoom) {

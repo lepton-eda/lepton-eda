@@ -463,14 +463,12 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(ENDPICTURE):
     case(ENDROTATEP):
     case(ENDROUTENET):
-    case(MOUSEPAN):
     case(SBOX):
     case(STARTCOPY):
     case(STARTMCOPY):
     case(STARTDRAWBUS):
     case(STARTDRAWNET):
     case(STARTMOVE):
-    case(STARTPAN):
     case(STARTPASTE):
     case(STARTROUTENET):
     case(STARTSELECT):

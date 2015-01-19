@@ -89,9 +89,7 @@ static const char *i_status_string(GschemToplevel *w_current)
     case ZOOMBOXEND:
     case ZOOMBOXSTART:
       return _("Zoom Box");
-    case STARTPAN:
     case PAN:
-    case MOUSEPAN:
       return _("Pan Mode");
     case STARTPASTE:
     case ENDPASTE:
@@ -344,7 +342,6 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(COPY): /*! \todo */
     case(ZOOM): /*! \todo */
     case(PAN): /*! \todo */
-    case(STARTPAN): /*! \todo */
     case(STARTCOPY): /*! \todo */
     case(STARTMOVE): /*! \todo */
     case(ENDCOPY): /*! \todo */
@@ -363,7 +360,6 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(ZOOMBOXEND): /*! \todo */
     case(STARTROUTENET): /*! \todo */
     case(ENDROUTENET): /*! \todo */
-    case(MOUSEPAN): /*! \todo */
     case(STARTPASTE): /*! \todo */
     case(ENDPASTE): /*! \todo */
     case(GRIPS): /*! \todo */
