@@ -709,7 +709,7 @@ gschem_page_view_pan_mouse (GschemPageView *view, GschemToplevel *w_current, int
  *  This function takes in SCREEN x/y coordinates and
  *  transforms them to WORLD x/y coordinates.
  *
- *  \param [in]  w_current  The GschemToplevel object.
+ *  \param [in]  view       The GschemPageView object.
  *  \param [in]  mx         The x coordinate in SCREEN units.
  *  \param [in]  my         The y coordinate in SCREEN units.
  *  \param [out] x          The x coordinate in WORLD units.
