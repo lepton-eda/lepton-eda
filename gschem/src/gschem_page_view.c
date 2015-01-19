@@ -704,7 +704,7 @@ gschem_page_view_pan_mouse (GschemPageView *view, GschemToplevel *w_current, int
 
 
 
-/*! \brief Transform WORLD coordinates to WORLD coordinates
+/*! \brief Transform SCREEN coordinates to WORLD coordinates
  *  \par Function Description
  *  This function takes in SCREEN x/y coordinates and
  *  transforms them to WORLD x/y coordinates.
