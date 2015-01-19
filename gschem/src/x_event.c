@@ -1073,29 +1073,6 @@ gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
   return(0);
 }
 
-/*! \brief Get a snapped pointer position in world coordinates
- *
- *  \par Function Description
- *  Queries GTK for the mouse location in world coordinates,
- *  then snaps it to the grid.
- *
- * \param [in]  w_current  The GschemToplevel object.
- * \param [in]  page_view  The GschemPageView object.
- * \param [out] wx         Return location for the snapped X coordinate.
- * \param [out] wy         Return location for the snapped Y coordiante.
- */
-static void
-get_snapped_pointer (GschemToplevel *w_current, GschemPageView *page_view, int *wx, int *wy)
-{
-  int sx, sy;
-  int unsnapped_wx, unsnapped_wy;
-
-  gtk_widget_get_pointer (GTK_WIDGET (page_view), &sx, &sy);
-  gschem_page_view_SCREENtoWORLD (page_view, sx, sy, &unsnapped_wx, &unsnapped_wy);
-  *wx = snap_grid (w_current, unsnapped_wx);
-  *wy = snap_grid (w_current, unsnapped_wy);
-}
-
 /*! \brief Callback to handle key events in the drawing area.
  *  \par Function Description
  *
@@ -1111,10 +1088,8 @@ gboolean
 x_event_key (GschemPageView *page_view, GdkEventKey *event, GschemToplevel *w_current)
 {
   gboolean retval = FALSE;
-  int wx, wy;
-  int shift_key = 0;
-  int control_key = 0;
   int pressed;
+  gboolean special = FALSE;
 
 #if DEBUG
   printf("x_event_key_pressed: Pressed key %i.\n", event->keyval);
@@ -1135,67 +1110,24 @@ x_event_key (GschemPageView *page_view, GdkEventKey *event, GschemToplevel *w_cu
 
     case GDK_Shift_L:
     case GDK_Shift_R:
-      shift_key = 1;
       w_current->SHIFTKEY = pressed;
+      special = TRUE;
       break;
 
     case GDK_Control_L:
     case GDK_Control_R:
-      control_key = 1;
       w_current->CONTROLKEY = pressed;
+      special = TRUE;
       break;
   }
 
-
-  /* Huge switch statement to evaluate state transitions. Jump to
-   * end_key label to escape the state evaluation rather
-   * than returning from the function directly. */
   scm_dynwind_begin (0);
   g_dynwind_window (w_current);
 
-  switch (w_current->event_state) {
-    case ENDLINE:
-      if (control_key) {
-        get_snapped_pointer (w_current, page_view, &wx, &wy);
-        o_line_motion (w_current, wx, wy);
-      }
-      break;
-    case STARTDRAWNET:
-      if (control_key) {
-        get_snapped_pointer (w_current, page_view, &wx, &wy);
-        o_net_start_magnetic(w_current, wx, wy);
-      }
-      break;
-    case DRAWNET:
-    case NETCONT:
-      if (shift_key || control_key) {
-        get_snapped_pointer (w_current, page_view, &wx, &wy);
-        o_net_motion (w_current, wx, wy);
-      }
-      break;
-    case DRAWBUS:
-    case BUSCONT:
-      if (control_key) {
-        get_snapped_pointer (w_current, page_view, &wx, &wy);
-        o_bus_motion (w_current, wx, wy);
-      }
-      break;
-    case ENDMOVE:
-      if (control_key) {
-        get_snapped_pointer (w_current, page_view, &wx, &wy);
-        o_move_motion (w_current, wx, wy);
-      }
-      break;
-    case ENDCOMP:   /* FIXME: This state shouldn't respond to modifier keys */
-    case ENDPASTE:  /* FIXME: This state shouldn't respond to modifier keys */
-    case ENDTEXT:   /* FIXME: This state shouldn't respond to modifier keys */
-    case ENDCOPY:
-    case ENDMCOPY:
-      if (control_key) {
-        get_snapped_pointer (w_current, page_view, &wx, &wy);
-        o_place_motion (w_current, wx, wy);
-      }
-      break;
+  /* Special case to update the object being drawn or placed after
+   * scrolling when Shift or Control were pressed */
+  if (special) {
+    x_event_faked_motion (gschem_toplevel_get_current_page_view (w_current), event);
   }
 
   if (pressed)
@@ -1295,6 +1227,7 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
     o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
   }
 
+  x_event_faked_motion (gschem_toplevel_get_current_page_view (w_current), NULL);
   /* Stop further processing of this signal */
   return TRUE;
 }
@@ -1349,4 +1282,57 @@ x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapped, gint 
   *wy = y;
 
   return TRUE;
+}
+
+/*! \brief Emits a faked motion event to update objects being drawn or placed
+ *  \par Function Description
+ *  This function emits an additional "motion-notify-event" to
+ *  update objects being drawn or placed while zooming, scrolling, or
+ *  panning.
+ *
+ *  If its event parameter is not NULL, the current state of Shift
+ *  and Control is preserved to correctly deal with special cases.
+ *
+ *  \param [in] view      The GschemPageView object which received the signal.
+ *  \param [in] event     The event structure of the signal or NULL.
+ *  \returns FALSE to propagate the event further.
+ */
+gboolean
+x_event_faked_motion (GschemPageView *view, GdkEventKey *event) {
+  gint x, y;
+  gboolean ret;
+  GdkEventMotion *newevent;
+
+  gtk_widget_get_pointer (GTK_WIDGET (view), &x, &y);
+  newevent = (GdkEventMotion*)gdk_event_new(GDK_MOTION_NOTIFY);
+  newevent->x = x;
+  newevent->y = y;
+
+  if (event != NULL ) {
+    switch (event->keyval) {
+      case GDK_Control_L:
+      case GDK_Control_R:
+        if (event->type == GDK_KEY_PRESS) {
+          newevent->state |= GDK_CONTROL_MASK;
+        } else {
+          newevent->state &= ~GDK_CONTROL_MASK;
+        }
+        break;
+
+      case GDK_Shift_L:
+      case GDK_Shift_R:
+        if (event->type == GDK_KEY_PRESS) {
+          newevent->state |= GDK_SHIFT_MASK;
+        } else {
+          newevent->state &= ~GDK_SHIFT_MASK;
+        }
+        break;
+    }
+  }
+
+  g_signal_emit_by_name (view, "motion-notify-event", newevent, &ret);
+
+  gdk_event_free((GdkEvent*)newevent);
+
+  return FALSE;
 }

@@ -634,13 +634,6 @@ gschem_page_view_pan_general (GschemPageView *view, int w_x, int w_y, double rel
 
   gschem_page_geometry_pan_general (geometry, w_x, w_y, relativ_zoom_factor);
 
-  /*! \bug FIXME? This call will trigger a motion event (x_event_motion()),
-   * even if the user doesn't move the mouse
-   * Not ready for prime time, maybe there is another way to trigger the
-   * motion event without changing the cursor position (Werner)
-   */
-  /* x_basic_warp_cursor(w_current->drawing_area, x, y); */
-
   g_signal_emit_by_name (view, "update-grid-info");
   gschem_page_view_update_scroll_adjustments (view);
   gschem_page_view_invalidate_all (view);
@@ -657,6 +650,9 @@ void
 gschem_page_view_pan (GschemPageView *view, int w_x, int w_y)
 {
   gschem_page_view_pan_general (view, w_x, w_y, 1);
+  /* Trigger a motion event to update the objects being drawn */
+  /* This works e.g. if the view is centered at the mouse pointer position */
+  x_event_faked_motion (view, NULL);
 }
 
 
@@ -698,6 +694,12 @@ gschem_page_view_pan_mouse (GschemPageView *view, GschemToplevel *w_current, int
 #endif
 
   gschem_page_view_pan_general (view, world_cx, world_cy, 1);
+
+  /* Trigger a motion event to update the objects being drawn */
+  /* Don't emit such an event if diffs are zero to avoid recursion */
+  if (diff_x == 0 && diff_y == 0) {
+    x_event_faked_motion (view, NULL);
+  }
 }
 
 
@@ -1109,6 +1111,9 @@ gschem_page_view_zoom_extents (GschemPageView *view, const GList *objects)
   }
 
   gschem_page_geometry_zoom_extents (geometry, view->page->toplevel, temp);
+
+  /* Trigger a motion event to update the objects being drawn */
+  x_event_faked_motion (view, NULL);
 
   g_signal_emit_by_name (view, "update-grid-info");
   gschem_page_view_update_scroll_adjustments (view);
