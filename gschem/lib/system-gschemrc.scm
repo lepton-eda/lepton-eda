@@ -265,7 +265,7 @@
 ; Determines if the newly placed components are embedded in the schematic 
 ; or if only the filename is specified and the component is searched for 
 ; instead.  If it is enabled, then all new components will be embedded 
-; othewise they are not embedded.  This can be controlled on the fly during
+; otherwise they are not embedded.  This can be controlled on the fly during
 ; runtime with the "Embed Component" checkbox on the select component dialog
 ; box
 ;
@@ -426,7 +426,7 @@
 ; Controls the binding of the mouse scroll wheel.
 ; "classic" style is the gschem default, where scrolling with no modifier
 ; key is mapped to zoom, + CTRL -> x-axis pan, + SHIFT -> y-axis pan.
-; "gtk" style changes the behaviour to be more like other GTK appliactions,
+; "gtk" style changes the behaviour to be more like other GTK applications,
 ; no modifier -> y-axis pan, + CTRL -> zoom, + SHIFT -> x-axis pan.
 (scroll-wheel "classic")
 ;(scroll-wheel "gtk")
@@ -455,8 +455,8 @@
 ; bus-ripper-size  : Sets the size of the auto bus rippers.  
 ; bus-ripper-type  : Sets the bus ripper type either a "component" or 
 ;                    plain "net"
-; bus-ripper-syname  : If above is set to component, specify the symbol name.
-;                      The symbol must exist in a component library
+; bus-ripper-symname  : If above is set to component, specify the symbol name.
+;                       The symbol must exist in a component library
 ; bus-ripper-rotation  : Either "symmetric" or "non-symmetric".  This deals 
 ;                        with how the bus ripper symbol is rotated when it 
 ;                        is auto added to a schematic.
@@ -546,7 +546,7 @@
 ; conditions occur:
 ;
 ;  1) Add/Attribute... has been invoked via the hotkey
-;  2) It is the the "netname" attribute being added
+;  2) It is the "netname" attribute being added
 ;  3) It is being attached to a horizontal or vertical net segment
 ;  4) The initial mouse position is at or near the actual net (with one
 ;     grid unit).
@@ -555,7 +555,7 @@
 ;(add-attribute-offset 50)
 
 
-; reset-componet-library
+; reset-component-library
 ;
 ; When reset-component-library is executed, then all known component library
 ; paths are erased.  This is useful if the user wants to override all the
@@ -681,7 +681,7 @@
 ; Users can customize the default titleblock by adding the following line
 ; (without the semi-colons at the beginning) to the gschemrc file:
 ;; (define default-titleblock "title-A4.sym")
-;; Change "title-A4.sym" by the name of your prefered titleblock!
+;; Change "title-A4.sym" by the name of your preferred titleblock!
 ;
 ; If you don't want a titleblock to be added automatically, then add one of 
 ; the following lines to your gschemrc file (without the semicolon).
@@ -1094,7 +1094,7 @@
 ; Actions can have several hotkeys, but the displayed keys are the last
 ; ones found.
 ;
-; The SEPARATOR keyword is case sensitive and puts a seperator into the menu.
+; The SEPARATOR keyword is case sensitive and puts a separator into the menu.
 ;
 
 (or (defined? 'define-syntax)
