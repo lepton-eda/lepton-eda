@@ -29,10 +29,6 @@
 #include <gdk/gdkkeysyms.h>
 
 
-/* used by mouse pan */
-int start_pan_x, start_pan_y;
-int throttle = 0;
-
 /* used for the stroke stuff */
 #ifdef HAVE_LIBSTROKE
 static int DOING_STROKE = FALSE;
@@ -452,27 +448,19 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 #endif /* HAVE_LIBSTROKE */
 
       case(MID_MOUSEPAN_ENABLED):
-      w_current->event_state = MOUSEPAN; /* start */
-      w_current->inside_action = 1;
-      w_current->doing_pan = TRUE;
-      start_pan_x = (int) event->x;
-      start_pan_y = (int) event->y;
-      throttle=0;
+      gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
       break;
     }
 
   } else if (event->button == 3) {
     if (!w_current->inside_action) {
       if (w_current->third_button == POPUP_ENABLED) {
+        /* (third-button "popup") */
         i_update_menus(w_current);  /* update menus before popup  */
         do_popup(w_current, event);
-      } else {
-        w_current->event_state = MOUSEPAN; /* start */
-        w_current->inside_action = 1;
-        w_current->doing_pan = TRUE;
-        start_pan_x = (int) event->x;
-        start_pan_y = (int) event->y;
-        throttle=0;
+      } else { /* MOUSEPAN_ENABLED */
+        /* (third-button "mousepan") */
+        gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
       }
     } else { /* this is the default cancel */
       switch (w_current->event_state) {
@@ -736,35 +724,13 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 #endif /* HAVE_LIBSTROKE */
 
       case(MID_MOUSEPAN_ENABLED):
-      w_current->doing_pan=FALSE;
-      o_invalidate_all (w_current);
-      if (w_current->undo_panzoom) {
-        o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
-      }
-      /* this needs to be REDONE */
-      /* if you mouse pan, you will be thrown out of the current mode. */
-      /* not good */
-      w_current->inside_action = 0;
-      i_set_state(w_current, SELECT);
-      i_update_toolbar(w_current);
+      gschem_page_view_pan_end (page_view, w_current);
       break;
     }
 
   } else if (event->button == 3) {
-    if (w_current->doing_pan) { /* just for ending a mouse pan */
-      w_current->doing_pan=FALSE;
-      o_invalidate_all (w_current);
-
-      if (w_current->undo_panzoom) {
-        o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
-      }
-      /* this needs to be REDONE */
-      /* if you mouse pan, you will be thrown out of the current mode. */
-      /* not good */
-      w_current->inside_action = 0;
-      i_set_state(w_current, SELECT);
-      i_update_toolbar(w_current);
-    }
+      /* just for ending a mouse pan */
+      gschem_page_view_pan_end (page_view, w_current);
   }
  end_button_released:
   scm_dynwind_end ();
@@ -780,7 +746,6 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 gint
 x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel *w_current)
 {
-  int pdiff_x, pdiff_y;
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
   int skip_event=0;
@@ -826,25 +791,8 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
   if (w_current->cowindow) {
     coord_display_update(w_current, (int) event->x, (int) event->y);
   }
-  if (w_current->third_button == MOUSEPAN_ENABLED || w_current->middle_button == MID_MOUSEPAN_ENABLED) {
-    if((w_current->event_state == MOUSEPAN) &&
-       w_current->inside_action) {
-         pdiff_x = (int) event->x - start_pan_x;
-         pdiff_y = (int) event->y - start_pan_y;
 
-         if (!(throttle % 5)) {
-           gschem_page_view_pan_mouse(page_view,
-                                      w_current,
-                                      pdiff_x*w_current->mousepan_gain,
-                                      pdiff_y*w_current->mousepan_gain);
-
-           start_pan_x = (int) event->x;
-           start_pan_y = (int) event->y;
-         }
-         throttle++;
-         return(0);
-       }
-  }
+  gschem_page_view_pan_motion (page_view, w_current, (int) event->x, (int) event->y);
 
   /* Huge switch statement to evaluate state transitions. Jump to
    * end_motion label to escape the state evaluation rather

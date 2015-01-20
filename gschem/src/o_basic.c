@@ -106,7 +106,8 @@ void o_redraw_rects (GschemToplevel *w_current,
   render_flags = EDA_RENDERER_FLAG_HINTING;
   if (toplevel->show_hidden_text)
     render_flags |= EDA_RENDERER_FLAG_TEXT_HIDDEN;
-  if (w_current->fast_mousepan && w_current->doing_pan)
+  if (w_current->fast_mousepan &&
+      gschem_toplevel_get_current_page_view(w_current)->doing_pan)
     render_flags |= (EDA_RENDERER_FLAG_TEXT_OUTLINE
                      | EDA_RENDERER_FLAG_PICTURE_OUTLINE);
 

@@ -592,6 +592,11 @@ gschem_page_view_init (GschemPageView *view)
   view->page = NULL;
   view->configured = FALSE;
 
+  view->doing_pan = FALSE;
+  view->pan_x = 0;
+  view->pan_y = 0;
+  view->throttle = 0;
+
   g_signal_connect (view,
                     "set-scroll-adjustments",
                     G_CALLBACK (set_scroll_adjustments),
@@ -699,6 +704,85 @@ gschem_page_view_pan_mouse (GschemPageView *view, GschemToplevel *w_current, int
   /* Don't emit such an event if diffs are zero to avoid recursion */
   if (diff_x == 0 && diff_y == 0) {
     x_event_faked_motion (view, NULL);
+  }
+}
+
+
+
+/*! \brief Start mouse panning in the view
+ *  \par Function Description
+ *  This function saves current coordinates of the mouse pointer
+ *  to pan_x and pan_y  and toggles the view into pan mode.
+ *
+ *  \param [in,out] view  This GschemPageView
+ *  \param [in]     x     The screen x coordinate
+ *  \param [in]     y     The screen y coordinate
+ */
+void gschem_page_view_pan_start (GschemPageView *view, int x, int y)
+{
+  view->doing_pan = TRUE;
+  view->pan_x = x;
+  view->pan_y = y;
+  view->throttle = 0;
+}
+
+
+
+/*! \brief Continue mouse panning in the view
+ *  \par Function Description
+ *  In the view pan mode, this function calculates displacement of
+ *  the mouse pointer relative to its previous position and repans
+ *  the view taking in account the mousepan_gain setting of
+ *  w_current. Then it replaces pan_x and pan_y with the new
+ *  coordinates.
+ *
+ *  \param [in,out] view      This GschemPageView
+ *  \param [in]     w_current The GschemToplevel
+ *  \param [in]     x         The new screen x coordinate
+ *  \param [in]     y         The new screen y coordinate
+ */
+void
+gschem_page_view_pan_motion (GschemPageView *view, GschemToplevel *w_current, int x, int y)
+{
+  int pdiff_x, pdiff_y;
+
+  if (view->doing_pan) {
+    pdiff_x = x - view->pan_x;
+    pdiff_y = y - view->pan_y;
+
+    if (!(view->throttle % 5)) {
+      gschem_page_view_pan_mouse(view,
+                                 w_current,
+                                 pdiff_x*w_current->mousepan_gain,
+                                 pdiff_y*w_current->mousepan_gain);
+
+      view->pan_x = x;
+      view->pan_y = y;
+    }
+    view->throttle++;
+  }
+}
+
+/*! \brief End mouse panning in the view
+ *  \par Function Description
+ *  This function resets the view pan mode and invalidates the
+ *  view.  If undo_panzoom is enabled, the current viewport
+ *  data are saved for undo.
+ *
+ *  \param [in,out] view      This GschemPageView
+ *  \param [in]     w_current The GschemToplevel
+ */
+void
+gschem_page_view_pan_end (GschemPageView *view, GschemToplevel *w_current)
+{
+  if (view->doing_pan) {
+    gschem_page_view_invalidate_all (view);
+
+    if (w_current->undo_panzoom) {
+      o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
+    }
+
+    view->doing_pan = FALSE;
   }
 }
 

@@ -153,7 +153,6 @@ struct st_gschem_toplevel {
   int CONTROLKEY;                       /* control key pressed? */
   int SHIFTKEY;                         /* shift key pressed? */
   int ALTKEY;                           /* alt key pressed? */
-  int doing_pan;                        /* mouse pan status flag */
   int buffer_number;                    /* current paste buffer in use */
   void (*last_callback)();              /* Last i_call* cmd executed */
   GList *clipboard_buffer;              /* buffer for system clipboard integration */

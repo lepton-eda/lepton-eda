@@ -48,6 +48,11 @@ struct _GschemPageView
 
   gboolean configured;
 
+  gboolean doing_pan;  /* mouse pan status flag */
+  int pan_x;
+  int pan_y;
+  int throttle;
+
   PAGE *page;
 };
 
@@ -91,6 +96,15 @@ gschem_page_view_pan(GschemPageView *page_view, int x, int y);
 
 void
 gschem_page_view_pan_mouse(GschemPageView *page_view, GschemToplevel *w_current, int diff_x, int diff_y);
+
+void
+gschem_page_view_pan_start(GschemPageView *page_view, int x, int y);
+
+void
+gschem_page_view_pan_motion(GschemPageView *page_view, GschemToplevel *w_current, int x, int y);
+
+void
+gschem_page_view_pan_end(GschemPageView *page_view, GschemToplevel *w_current);
 
 int
 gschem_page_view_SCREENabs(GschemPageView *view, int val);
