@@ -170,6 +170,7 @@ SCM g_rc_image_size(SCM width, SCM height);
 SCM g_rc_log_window(SCM mode);
 SCM g_rc_log_window_type(SCM mode);
 SCM g_rc_third_button(SCM mode);
+SCM g_rc_third_button_cancel(SCM mode);
 SCM g_rc_middle_button(SCM mode);
 SCM g_rc_scroll_wheel(SCM mode);
 SCM g_rc_net_consolidate(SCM mode);

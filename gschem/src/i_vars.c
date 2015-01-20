@@ -55,6 +55,7 @@ int   default_image_height = 600;
 int   default_log_window = MAP_ON_STARTUP;
 int   default_log_window_type = DECORATED;
 int   default_third_button = POPUP_ENABLED;
+int   default_third_button_cancel = TRUE;
 #ifdef HAVE_LIBSTROKE
 int   default_middle_button = STROKE;
 #else
@@ -140,6 +141,7 @@ void i_vars_set(GschemToplevel *w_current)
   w_current->image_width        = default_image_width;
   w_current->image_height       = default_image_height;
   w_current->third_button       = default_third_button;
+  w_current->third_button_cancel= default_third_button_cancel;
   w_current->middle_button      = default_middle_button;
   w_current->scroll_wheel       = default_scroll_wheel;
   toplevel->net_consolidate    = default_net_consolidate;

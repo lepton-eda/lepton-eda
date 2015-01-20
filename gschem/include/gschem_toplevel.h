@@ -177,6 +177,7 @@ struct st_gschem_toplevel {
   int log_window;         /* controls if the log windows mapped on startup */
   int log_window_type;    /* controls if the log window is decorated or not */
   int third_button;       /* controls what the third mouse button does */
+  int third_button_cancel;/* controls if the third mouse button cancels actions */
   int middle_button;      /* controls what the third mouse button does */
   int scroll_wheel;       /* controls what the mouse scroll wheel does */
   int file_preview;       /* controls if the preview area is enabled or not */

@@ -70,6 +70,7 @@ static struct gsubr_t gschem_funcs[] = {
   { "log-window",                1, 0, 0, g_rc_log_window },
   { "log-window-type",           1, 0, 0, g_rc_log_window_type },
   { "third-button",              1, 0, 0, g_rc_third_button },
+  { "third-button-cancel",       1, 0, 0, g_rc_third_button_cancel },
   { "middle-button",             1, 0, 0, g_rc_middle_button },
   { "scroll-wheel",              1, 0, 0, g_rc_scroll_wheel },
   { "net-consolidate",           1, 0, 0, g_rc_net_consolidate },

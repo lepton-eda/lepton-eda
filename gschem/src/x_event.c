@@ -458,84 +458,89 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         /* (third-button "popup") */
         i_update_menus(w_current);  /* update menus before popup  */
         do_popup(w_current, event);
-      } else { /* MOUSEPAN_ENABLED */
+      } else {
         /* (third-button "mousepan") */
         gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
       }
-    } else { /* this is the default cancel */
-      switch (w_current->event_state) {
-        case(STARTDRAWNET):
-        case(DRAWNET):
-        case(NETCONT):
-          w_current->inside_action = 0;
-          i_set_state(w_current, STARTDRAWNET);
-          o_net_invalidate_rubber (w_current);
-          o_net_reset(w_current);
-          break;
+    } else {
+      if ((w_current->third_button == MOUSEPAN_ENABLED) &&
+          (!w_current->third_button_cancel)) {
+        gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
+      } else { /* this is the default cancel */
+        switch (w_current->event_state) {
+          case(STARTDRAWNET):
+          case(DRAWNET):
+          case(NETCONT):
+            w_current->inside_action = 0;
+            i_set_state(w_current, STARTDRAWNET);
+            o_net_invalidate_rubber (w_current);
+            o_net_reset(w_current);
+            break;
 
-        case(STARTDRAWBUS):
-        case(DRAWBUS):
-        case(BUSCONT):
-          w_current->inside_action = 0;
-          i_set_state(w_current, STARTDRAWBUS);
-          o_bus_invalidate_rubber (w_current);
-          break;
+          case(STARTDRAWBUS):
+          case(DRAWBUS):
+          case(BUSCONT):
+            w_current->inside_action = 0;
+            i_set_state(w_current, STARTDRAWBUS);
+            o_bus_invalidate_rubber (w_current);
+            break;
 
-        case(DRAWPIN):
-        case(ENDPIN):
-          w_current->inside_action = 0;
-          i_set_state(w_current, DRAWPIN);
-          o_pin_invalidate_rubber (w_current);
-          break;
+          case(DRAWPIN):
+          case(ENDPIN):
+            w_current->inside_action = 0;
+            i_set_state(w_current, DRAWPIN);
+            o_pin_invalidate_rubber (w_current);
+            break;
 
-        case(DRAWLINE):
-        case(ENDLINE):
-          w_current->inside_action = 0;
-          i_set_state(w_current, DRAWLINE);
-          o_line_invalidate_rubber (w_current);
-          break;
+          case(DRAWLINE):
+          case(ENDLINE):
+            w_current->inside_action = 0;
+            i_set_state(w_current, DRAWLINE);
+            o_line_invalidate_rubber (w_current);
+            break;
 
-      case DRAWPATH:
-      case PATHCONT:
-      case ENDPATH:
-        w_current->inside_action = 0;
-        i_set_state (w_current, DRAWPATH);
-        o_path_invalidate_rubber (w_current);
-        break;
+          case DRAWPATH:
+          case PATHCONT:
+          case ENDPATH:
+            w_current->inside_action = 0;
+            i_set_state (w_current, DRAWPATH);
+            o_path_invalidate_rubber (w_current);
+            break;
 
-        case(DRAWBOX):
-        case(ENDBOX):
-          w_current->inside_action = 0;
-          i_set_state(w_current, DRAWBOX);
-          o_box_invalidate_rubber (w_current);
-          break;
+          case(DRAWBOX):
+          case(ENDBOX):
+            w_current->inside_action = 0;
+            i_set_state(w_current, DRAWBOX);
+            o_box_invalidate_rubber (w_current);
+            break;
 
-        case(DRAWPICTURE):
-        case(ENDPICTURE):
-          w_current->inside_action = 0;
-          i_set_state(w_current, DRAWPICTURE);
-          o_picture_invalidate_rubber (w_current);
-          break;
+          case(DRAWPICTURE):
+          case(ENDPICTURE):
+            w_current->inside_action = 0;
+            i_set_state(w_current, DRAWPICTURE);
+            o_picture_invalidate_rubber (w_current);
+            break;
 
-        case(DRAWCIRCLE):
-        case(ENDCIRCLE):
-          w_current->inside_action = 0;
-          i_set_state(w_current, DRAWCIRCLE);
-          o_circle_invalidate_rubber (w_current);
-          break;
+          case(DRAWCIRCLE):
+          case(ENDCIRCLE):
+            w_current->inside_action = 0;
+            i_set_state(w_current, DRAWCIRCLE);
+            o_circle_invalidate_rubber (w_current);
+            break;
 
-        case(DRAWARC):
-        case(ENDARC):
-          w_current->inside_action = 0;
-          i_set_state(w_current, DRAWARC);
-          o_arc_invalidate_rubber (w_current);
-          break;
+          case(DRAWARC):
+          case(ENDARC):
+            w_current->inside_action = 0;
+            i_set_state(w_current, DRAWARC);
+            o_arc_invalidate_rubber (w_current);
+            break;
 
-        default:
-          i_callback_cancel(w_current, 0, NULL);
-          break;
+          default:
+            i_callback_cancel(w_current, 0, NULL);
+            break;
+        }
+        i_update_toolbar(w_current);
       }
-      i_update_toolbar(w_current);
     }
   }
 

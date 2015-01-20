@@ -27,6 +27,7 @@ extern int default_height;
 extern int default_log_window;
 extern int default_log_window_type;
 extern int default_third_button;
+extern int default_third_button_cancel;
 extern int default_middle_button;
 extern int default_scroll_wheel;
 extern int default_net_consolidate;
