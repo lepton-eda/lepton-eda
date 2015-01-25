@@ -465,14 +465,13 @@ DEFINE_I_CALLBACK(edit_copy)
   i_update_middle_button(w_current, i_callback_edit_copy, _("Copy"));
 
   if (o_select_return_first_object(w_current)) {
+    o_redraw_cleanstates(w_current);
     if (g_action_get_position (TRUE, &wx, &wy)) {
-      o_redraw_cleanstates(w_current);
       o_copy_start(w_current, wx, wy);
       i_set_state (w_current, ENDCOPY);
       w_current->inside_action = 1;
 
     } else {
-      o_redraw_cleanstates(w_current);
       i_set_state(w_current, STARTCOPY);
 
     }
@@ -496,15 +495,14 @@ DEFINE_I_CALLBACK(edit_mcopy)
   i_update_middle_button(w_current, i_callback_edit_mcopy, _("Multiple Copy"));
 
   if (o_select_return_first_object(w_current)) {
+    o_redraw_cleanstates(w_current);
     if (g_action_get_position (TRUE, &wx, &wy)) {
-      o_redraw_cleanstates(w_current);
       i_set_state (w_current, MCOPY);
       o_copy_start(w_current, wx, wy);
       i_set_state (w_current, ENDMCOPY);
       w_current->inside_action = 1;
 
     } else {
-      o_redraw_cleanstates(w_current);
       i_set_state(w_current, STARTMCOPY);
 
     }
@@ -528,14 +526,13 @@ DEFINE_I_CALLBACK(edit_move)
   i_update_middle_button(w_current, i_callback_edit_move, _("Move"));
 
   if (o_select_return_first_object(w_current)) {
+    o_redraw_cleanstates(w_current);
     if (g_action_get_position (TRUE, &wx, &wy)) {
-      o_redraw_cleanstates(w_current);
       o_move_start(w_current, wx, wy);
       i_set_state (w_current, ENDMOVE);
       w_current->inside_action = 1;
 
     } else {
-      o_redraw_cleanstates(w_current);
       i_set_state(w_current, STARTMOVE);
 
     }
