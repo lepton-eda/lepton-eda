@@ -5,10 +5,6 @@ T 400 8750 8 10 0 0 0 0 1
 device=ATmega16L_DIP
 T 400 8950 8 10 0 0 0 0 1
 footprint=DIP40
-T 400 9150 8 10 0 0 0 0 1
-net=GND:20
-T 400 9350 8 10 0 0 0 0 1
-net=Vcc:40
 P 100 2100 400 2100 1 0 0
 {
 T 300 2150 5 8 1 1 0 6 1
@@ -459,7 +455,7 @@ T 3300 4900 5 10 0 1 0 0 1
 pinseq=32
 }
 T 400 10150 8 10 0 0 0 0 1
-symversion=2.0
+symversion=2.1
 T 400 10350 8 10 0 0 0 0 1
 documentation=http://www.atmel.com/dyn/resources/prod_documents/doc2466.pdf
 V 350 4900 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
