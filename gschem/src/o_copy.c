@@ -69,18 +69,7 @@ void o_copy_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_copy_end(GschemToplevel *w_current)
 {
-  o_place_end (w_current, w_current->second_wx, w_current->second_wy, FALSE,
-               "%paste-objects-hook");
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void o_copy_multiple_end(GschemToplevel *w_current)
-{
-  o_place_end (w_current, w_current->second_wx, w_current->second_wy, TRUE,
+  o_place_end (w_current, w_current->second_wx, w_current->second_wy,
+               (w_current->event_state == MCOPYMODE),
                "%paste-objects-hook");
 }

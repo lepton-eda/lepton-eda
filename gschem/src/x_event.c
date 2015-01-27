@@ -383,8 +383,8 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
     if (w_current->inside_action) {
       if (page_view->page->place_list != NULL) {
         switch(w_current->event_state) {
-          case (COPYMODE)  : o_copy_end(w_current); break;
-          case (MCOPYMODE) : o_copy_multiple_end(w_current); break;
+          case (COPYMODE)  :
+          case (MCOPYMODE) : o_copy_end(w_current); break;
           default: break;
         }
       } else {
