@@ -420,7 +420,6 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
         w_current->inside_action = 1;
         /* Keep the state and the inside_action, as the copy has not finished. */
         i_set_state(w_current, ENDMCOPY);
-        o_undo_savestate_old(w_current, UNDO_ALL);
         break;
     }
     if (w_current->inside_action) {
