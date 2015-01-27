@@ -111,13 +111,13 @@ void o_complex_prepare_place(GschemToplevel *w_current, const CLibSymbol *sym)
   /* Run the complex place list changed hook without redrawing */
   /* since the place list is going to be redrawn afterwards */
   o_complex_place_changed_run_hook (w_current);
- 
+
   w_current->inside_action = 1;
   i_set_state (w_current, ENDCOMP);
 }
 
 
-/*! \brief Run the complex place list changed hook. 
+/*! \brief Run the complex place list changed hook.
  *  \par Function Description
  *  The complex place list is usually used when placing new components
  *  in the schematic. This function should be called whenever that list
@@ -177,7 +177,7 @@ void o_complex_translate_all(GschemToplevel *w_current, int offset)
   x = snap_grid (w_current, w_rleft);
   /* WARNING: w_rtop isn't the top of the bounds, it is the smaller
    * y_coordinate, which represents in the bottom in world coords.
-   * These variables are as named from when screen-coords (which had 
+   * These variables are as named from when screen-coords (which had
    * the correct sense) were in use . */
   y = snap_grid (w_current, w_rtop);
 
