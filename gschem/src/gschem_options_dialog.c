@@ -216,7 +216,7 @@ create_grid_mode_widget (GschemOptionsDialog *dialog)
   GtkWidget *box;
   int index;
 
-  g_return_if_fail (dialog != NULL);
+  g_return_val_if_fail (dialog != NULL, NULL);
 
   box = gtk_hbox_new (FALSE, FALSE);
 
@@ -339,7 +339,7 @@ create_snap_mode_widget (GschemOptionsDialog *dialog)
   GtkWidget *box;
   int index;
 
-  g_return_if_fail (dialog != NULL);
+  g_return_val_if_fail (dialog != NULL, NULL);
 
   box = gtk_hbox_new (FALSE, FALSE);
 
