@@ -7,7 +7,7 @@ language: c
 # headers
 before_install: >
   sudo apt-get install -y \
-    libgtk2.0-dev gettext-dev libstroke-dev guile2.0-dev flex bison
+    libgtk2.0-dev libgettextpo-dev libstroke0-dev guile-2.0-dev flex bison
 
 # Set up the source tree by fetching Linux-specific prebuilt objects
 install: ./autogen.sh && ./configure
