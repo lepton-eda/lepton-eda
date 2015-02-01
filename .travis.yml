@@ -1,0 +1,17 @@
+# Very basic Travis CI (http://travis-ci.org) control file that allows
+# some basic Linux-based continuous integration testing (for free).
+
+language: c
+
+# Before setting up the source tree, install necessary development
+# headers
+before_install: >
+  sudo apt-get install -y \
+    libgtk2.0-dev gettext-dev libstroke-dev guile2.0-dev flex bison
+
+# Set up the source tree by fetching Linux-specific prebuilt objects
+install: ./autogen.sh && ./configure
+
+# Bootstrap the LCB compiler, build the default target set and run a
+# the default test suite.
+script: make -s all check
