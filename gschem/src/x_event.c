@@ -153,6 +153,20 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
    * returning from the function directly. */
 
   if (event->button == 1) {
+    if (w_current->inside_action) {
+      /* End action */
+      switch(w_current->event_state) {
+        case (ARCMODE)    : o_arc_end1(w_current, w_x, w_y); break;
+        default: break;
+      }
+    } else {
+      /* Start action */
+      switch(w_current->event_state) {
+        case (ARCMODE)    : o_arc_start(w_current, w_x, w_y); break;
+        default: break;
+      }
+    }
+
     switch(w_current->event_state) {
 
       case(SELECT):
@@ -257,18 +271,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         o_circle_end(w_current, w_x, w_y);
         w_current->inside_action = 0;
         i_set_state (w_current, DRAWCIRCLE);
-        break;
-
-      case(DRAWARC):
-        o_arc_start(w_current, w_x, w_y);
-        i_set_state (w_current, ENDARC);
-        w_current->inside_action = 1;
-        break;
-
-      case(ENDARC):
-        o_arc_end1(w_current, w_x, w_y);
-        w_current->inside_action = 0;
-        i_set_state (w_current, DRAWARC);
         break;
 
       case(DRAWPIN):
@@ -481,6 +483,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
             i_set_state(w_current, DRAWLINE);
             o_line_invalidate_rubber (w_current);
             break;
+          case (ARCMODE)    : o_arc_invalidate_rubber     (w_current); break;
 
           case DRAWPATH:
           case PATHCONT:
@@ -505,12 +508,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
           case(ENDCIRCLE):
             i_set_state(w_current, DRAWCIRCLE);
             o_circle_invalidate_rubber (w_current);
-            break;
-
-          case(DRAWARC):
-          case(ENDARC):
-            i_set_state(w_current, DRAWARC);
-            o_arc_invalidate_rubber (w_current);
             break;
 
           default:
@@ -774,6 +771,13 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
   scm_dynwind_begin (0);
   g_dynwind_window (w_current);
 
+  if (w_current->inside_action) {
+    switch(w_current->event_state) {
+      case(ARCMODE)    :   o_arc_motion (w_current, w_x, w_y, ARC_RADIUS); break;
+      default: break;
+    }
+  }
+
   switch(w_current->event_state) {
 
     case(SELECT):
@@ -837,12 +841,6 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
     if (w_current->inside_action)
       o_circle_motion (w_current, w_x, w_y);
     break;
-
-    case(ENDARC):
-    if (w_current->inside_action)
-      o_arc_motion (w_current, w_x, w_y, ARC_RADIUS);
-    break;
-
 
     case(STARTDRAWNET):
     if(gschem_options_get_magnetic_net_mode (w_current->options)) {

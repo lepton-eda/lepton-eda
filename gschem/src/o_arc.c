@@ -57,6 +57,8 @@ void o_arc_invalidate_rubber (GschemToplevel *w_current)
  */
 void o_arc_start(GschemToplevel *w_current, int w_x, int w_y)
 {
+  w_current->inside_action = 1;
+
   /* set the center of the arc */
   w_current->first_wx = w_x;
   w_current->first_wy = w_y;
@@ -98,16 +100,17 @@ void o_arc_end1(GschemToplevel *w_current, int w_x, int w_y)
   w_current->rubber_visible = 0;
 
   /* ack! zero length radius */
-  if (w_current->distance == 0) {
-    return;
-  }
+  if (w_current->distance != 0) {
 
 #if DEBUG
   printf("DIST: %d\n", w_current->distance);
 #endif
 
-  /* open a dialog to input the start and end angle */
-  arc_angle_dialog(w_current, NULL);
+    /* open a dialog to input the start and end angle */
+    arc_angle_dialog(w_current, NULL);
+  }
+
+  w_current->inside_action = 0;
 }
 
 /*! \brief Ends the process of arc input.
@@ -191,6 +194,8 @@ void o_arc_end4(GschemToplevel *w_current, int radius,
 void o_arc_motion (GschemToplevel *w_current, int w_x, int w_y, int whichone)
 {
   int diff_x, diff_y, angle_deg;
+
+  g_assert (w_current->inside_action != 0);
 
   /* erase the previous temporary arc */
   if (w_current->rubber_visible)

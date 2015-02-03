@@ -37,7 +37,7 @@ enum x_states {
   DRAWNET,      /*  9 */
   NETCONT,      /* 10 */
   DRAWPIN,      /* 11 */
-  DRAWARC,      /* 12 */
+  ARCMODE,      /* 12 */
   STARTDRAWNET, /* 13 */
   DRAWCOMP,     /* 14 */
   SBOX,         /* 15 */
@@ -49,7 +49,7 @@ enum x_states {
   ENDLINE,      /* 21 */
   ENDBOX,       /* 22 */
   ENDCIRCLE,    /* 23 */
-  ENDARC,       /* 24 */
+//ENDARC,       /* 24 */
   ENDPIN,       /* 25 */
   ENDCOMP,      /* 26 */
   DRAWTEXT,     /* 27 */

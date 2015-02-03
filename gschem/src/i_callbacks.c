@@ -2013,18 +2013,14 @@ DEFINE_I_CALLBACK(add_arc)
   o_redraw_cleanstates(w_current);
   o_invalidate_rubber (w_current);
 
+  i_set_state(w_current, ARCMODE);
   i_update_middle_button(w_current, i_callback_add_arc, _("Arc"));
 
   if (!g_action_get_position (TRUE, &wx, &wy)) {
-    w_current->inside_action = 0;
-    i_set_state(w_current, DRAWARC);
     return;
   }
 
   o_arc_start(w_current, wx, wy);
-
-  w_current->inside_action = 1;
-  i_set_state(w_current, ENDARC);
 }
 
 /*! \todo Finish function documentation!!!
