@@ -157,12 +157,14 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       /* End action */
       switch(w_current->event_state) {
         case (ARCMODE)    : o_arc_end1(w_current, w_x, w_y); break;
+        case (BOXMODE)    : o_box_end(w_current, w_x, w_y); break;
         default: break;
       }
     } else {
       /* Start action */
       switch(w_current->event_state) {
         case (ARCMODE)    : o_arc_start(w_current, w_x, w_y); break;
+        case (BOXMODE)    : o_box_start(w_current, w_x, w_y); break;
         default: break;
       }
     }
@@ -236,18 +238,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       i_set_state (w_current, ENDPATH);
       w_current->inside_action = TRUE;
       break;
-
-      case(DRAWBOX):
-        o_box_start(w_current, w_x, w_y);
-        i_set_state (w_current, ENDBOX);
-        w_current->inside_action = 1;
-        break;
-
-      case(ENDBOX):
-        o_box_end(w_current, w_x, w_y);
-        w_current->inside_action = 0;
-        i_set_state (w_current, DRAWBOX);
-        break;
 
       case(DRAWPICTURE):
         o_picture_start(w_current, w_x, w_y);
@@ -484,18 +474,13 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
             o_line_invalidate_rubber (w_current);
             break;
           case (ARCMODE)    : o_arc_invalidate_rubber     (w_current); break;
+          case (BOXMODE)    : o_box_invalidate_rubber     (w_current); break;
 
           case DRAWPATH:
           case PATHCONT:
           case ENDPATH:
             i_set_state (w_current, DRAWPATH);
             o_path_invalidate_rubber (w_current);
-            break;
-
-          case(DRAWBOX):
-          case(ENDBOX):
-            i_set_state(w_current, DRAWBOX);
-            o_box_invalidate_rubber (w_current);
             break;
 
           case(DRAWPICTURE):
@@ -774,6 +759,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
   if (w_current->inside_action) {
     switch(w_current->event_state) {
       case(ARCMODE)    :   o_arc_motion (w_current, w_x, w_y, ARC_RADIUS); break;
+      case(BOXMODE)    :   o_box_motion  (w_current, w_x, w_y); break;
       default: break;
     }
   }
@@ -825,11 +811,6 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
   case ENDPATH:
     if (w_current->inside_action)
       o_path_motion (w_current, w_x, w_y);
-    break;
-
-    case(ENDBOX):
-    if (w_current->inside_action)
-      o_box_motion ( w_current, w_x, w_y);
     break;
 
     case(ENDPICTURE):

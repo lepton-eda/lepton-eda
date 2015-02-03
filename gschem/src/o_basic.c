@@ -268,11 +268,6 @@ void o_redraw_rects (GschemToplevel *w_current,
         o_path_draw_rubber (w_current, renderer);
       break;
 
-      case ENDBOX:
-        if (w_current->rubber_visible)
-          o_box_draw_rubber (w_current, renderer);
-        break;
-
       case ENDPICTURE:
         if (w_current->rubber_visible)
           o_picture_draw_rubber (w_current, renderer);
@@ -292,6 +287,7 @@ void o_redraw_rects (GschemToplevel *w_current,
     if (w_current->rubber_visible) {
       switch (w_current->event_state) {
         case ARCMODE    : o_arc_draw_rubber (w_current, renderer); break;
+        case BOXMODE    : o_box_draw_rubber (w_current, renderer); break;
         default: break;
       }
     }
@@ -347,10 +343,7 @@ int o_invalidate_rubber (GschemToplevel *w_current)
     break;
 
     case (ARCMODE)    : o_arc_invalidate_rubber (w_current); break;
-    case(DRAWBOX):
-    case(ENDBOX):
-      o_box_invalidate_rubber (w_current);
-    break;
+    case (BOXMODE)    : o_box_invalidate_rubber (w_current); break;
 
     case(DRAWPICTURE):
     case(ENDPICTURE):
@@ -400,8 +393,8 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(MCOPY):
     case(DRAWBUS):
     case(ARCMODE):
+    case(BOXMODE):
     case(DRAWNET):
-    case(ENDBOX):
     case(ENDCIRCLE):
     case(ENDCOPY):
     case(ENDMCOPY):
@@ -450,7 +443,6 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(NONE):
     case(SELECT):
     case(DRAWLINE):
-    case(DRAWBOX):
     case(DRAWCIRCLE):
     case(ZOOM):
     case(PAN):

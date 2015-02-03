@@ -68,6 +68,8 @@ void o_box_invalidate_rubber (GschemToplevel *w_current)
  */
 void o_box_start(GschemToplevel *w_current, int w_x, int w_y)
 {
+  w_current->inside_action = 1;
+
   /* init first_w[x|y], second_w[x|y] to describe box */
   w_current->first_wx = w_current->second_wx = w_x;
   w_current->first_wy = w_current->second_wy = w_y;
@@ -125,29 +127,32 @@ void o_box_end(GschemToplevel *w_current, int w_x, int w_y)
 	  w_current->first_wy = (-1);
 	  w_current->second_wx  = (-1);
 	  w_current->second_wy  = (-1);
-	  return;
-  }
 
-  /* create the object */
-  new_obj = o_box_new (toplevel, OBJ_BOX, GRAPHIC_COLOR,
-                       box_left, box_top,
-                       box_left + box_width, box_top - box_height);
-  s_page_append (toplevel, page, new_obj);
+  } else {
+
+    /* create the object */
+    new_obj = o_box_new (toplevel, OBJ_BOX, GRAPHIC_COLOR,
+                         box_left, box_top,
+                         box_left + box_width, box_top - box_height);
+    s_page_append (toplevel, page, new_obj);
 
 #if DEBUG
   printf("coords: %d %d %d %d\n", box_left, box_top, box_width, box_height);
 #endif
-	
-  w_current->first_wx = (-1);
-  w_current->first_wy = (-1);
-  w_current->second_wx  = (-1);
-  w_current->second_wy  = (-1);
-	
-  /* Call add-objects-hook */
-  g_run_hook_object (w_current, "%add-objects-hook", new_obj);
 
-  gschem_toplevel_page_content_changed (w_current, page);
-  o_undo_savestate(w_current, page, UNDO_ALL);
+    w_current->first_wx = (-1);
+    w_current->first_wy = (-1);
+    w_current->second_wx  = (-1);
+    w_current->second_wy  = (-1);
+
+    /* Call add-objects-hook */
+    g_run_hook_object (w_current, "%add-objects-hook", new_obj);
+
+    gschem_toplevel_page_content_changed (w_current, page);
+    o_undo_savestate(w_current, page, UNDO_ALL);
+  }
+
+  w_current->inside_action = 0;
 }
 
 /*! \brief Draw temporary box while dragging edge.

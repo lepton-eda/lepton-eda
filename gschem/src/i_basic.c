@@ -114,9 +114,7 @@ static const char *i_status_string(GschemToplevel *w_current)
     case ENDPATH:
       return _("Path Mode");
     case ARCMODE    : return _("Arc Mode");
-    case DRAWBOX:
-    case ENDBOX:
-      return _("Box Mode");
+    case BOXMODE    : return _("Box Mode");
     case DRAWPICTURE:
     case ENDPICTURE:
       return _("Picture Mode");
@@ -334,7 +332,7 @@ void i_update_toolbar(GschemToplevel *w_current)
 
     case(DRAWLINE): /*! \todo */
     case(ARCMODE): /*! \todo */
-    case(DRAWBOX): /*! \todo */
+    case(BOXMODE): /*! \todo */
     case(DRAWPICTURE): /*! \todo */
     case(DRAWPIN): /*! \todo */
     case(DRAWCIRCLE): /*! \todo */
@@ -347,7 +345,6 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(ENDCOPY): /*! \todo */
     case(ENDMOVE): /*! \todo */
     case(ENDLINE): /*! \todo */
-    case(ENDBOX): /*! \todo */
     case(ENDPICTURE): /*! \todo */
     case(ENDCIRCLE): /*! \todo */
     case(ENDPIN): /*! \todo */

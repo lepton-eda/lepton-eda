@@ -28,7 +28,7 @@ enum x_states {
   NONE,         /*  0 */
   SELECT,       /*  1 */
   DRAWLINE,     /*  2 */
-  DRAWBOX,      /*  3 */
+  BOXMODE,      /*  3 */
   MOVE,         /*  4 */
   COPY,         /*  5 */
   DRAWCIRCLE,   /*  6 */
@@ -47,7 +47,7 @@ enum x_states {
   ENDCOPY,      /* 19 */
   ENDMOVE,      /* 20 */
   ENDLINE,      /* 21 */
-  ENDBOX,       /* 22 */
+//ENDBOX,       /* 22 */
   ENDCIRCLE,    /* 23 */
 //ENDARC,       /* 24 */
   ENDPIN,       /* 25 */
