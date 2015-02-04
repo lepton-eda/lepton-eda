@@ -71,9 +71,9 @@ enum x_states {
   MCOPY,        /* 43 */
   STARTMCOPY,   /* 44 */
   ENDMCOPY,     /* 45 */
-  DRAWPATH,     /* 46 */
-  PATHCONT,     /* 47 */
-  ENDPATH,      /* 48 */
+//DRAWPATH,     /* 46 */
+  PATHMODE,     /* 47 */
+//ENDPATH,      /* 48 */
 };
 
 

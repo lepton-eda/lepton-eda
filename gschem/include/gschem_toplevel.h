@@ -133,6 +133,7 @@ struct st_gschem_toplevel {
                                            type of object being manipulated. */
   OBJECT *which_object;                 /* Object being manipulated */
   PATH *temp_path;                      /* Path being created */
+  gboolean pathcontrol;                 /* Set path control point while path creating */ /* FIXME: can we do without it? */
 
   /* ------------------ */
   /* Rubberbanding nets */

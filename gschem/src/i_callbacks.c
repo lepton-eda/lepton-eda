@@ -1900,9 +1900,11 @@ DEFINE_I_CALLBACK(add_path)
   o_redraw_cleanstates (w_current);
   o_invalidate_rubber (w_current);
 
+  i_set_state (w_current, PATHMODE);
   i_update_middle_button (w_current, i_callback_add_path, _("Path"));
-  i_set_state (w_current, DRAWPATH);
-  w_current->inside_action = FALSE;
+
+  /* Don't start path here since setting of its first point and
+   * control point requires the left button click and release */
 }
 
 /*! \todo Finish function documentation!!!

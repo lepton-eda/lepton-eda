@@ -347,6 +347,9 @@ o_path_start(GschemToplevel *w_current, int w_x, int w_y)
 {
   g_assert (w_current);
 
+  w_current->pathcontrol = TRUE;
+  w_current->inside_action = 1;
+
   /* Reset path creation state */
   if (w_current->temp_path != NULL) {
     w_current->temp_path->num_sections = 0;
@@ -379,6 +382,9 @@ void
 o_path_continue (GschemToplevel *w_current, int w_x, int w_y)
 {
   g_assert (w_current);
+  g_assert (w_current->inside_action != 0);
+
+  w_current->pathcontrol = TRUE;
 
   o_path_invalidate_rubber (w_current);
 
@@ -402,19 +408,16 @@ void
 o_path_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
   g_assert (w_current);
+  g_assert (w_current->inside_action != 0);
 
   o_path_invalidate_rubber (w_current);
 
-  switch (w_current->event_state) {
-  case PATHCONT:
+  w_current->second_wx = w_x;
+  w_current->second_wy = w_y;
+
+  if (!w_current->pathcontrol) {
     w_current->first_wx = w_x;
     w_current->first_wy = w_y;
-  case ENDPATH:
-    w_current->second_wx = w_x;
-    w_current->second_wy = w_y;
-    break;
-  default:
-    g_warn_if_reached ();
   }
 
   o_path_invalidate_rubber (w_current);
@@ -434,7 +437,7 @@ o_path_motion (GschemToplevel *w_current, int w_x, int w_y)
  *  \param [in] w_x        (unused)
  *  \param [in] w_y        (unused)
  */
-gboolean
+void
 o_path_end(GschemToplevel *w_current, int w_x, int w_y)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
@@ -446,6 +449,7 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
   int x1, y1, x2, y2;
 
   g_assert (w_current);
+  g_assert (w_current->inside_action != 0);
   g_assert (w_current->toplevel);
   g_assert (w_current->temp_path != NULL);
   g_assert (w_current->temp_path->sections != NULL);
@@ -504,7 +508,7 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
 
     w_current->rubber_visible = FALSE;
 
-    return FALSE;
+    w_current->inside_action = 0;
   } else {
     /* Leave state as it is and continue path drawing... */
 
@@ -512,7 +516,7 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
     w_current->third_wx = x2;
     w_current->third_wy = y2;
 
-    return TRUE;
+    w_current->pathcontrol = FALSE;
   }
 }
 
@@ -592,6 +596,8 @@ o_path_invalidate_rubber_grips (GschemToplevel *w_current)
  */
 void o_path_motion_grips (GschemToplevel *w_current, int w_x, int w_y)
 {
+  g_assert (w_current->inside_action != 0);
+
   if (w_current->rubber_visible)
     o_path_invalidate_rubber_grips (w_current);
 

@@ -226,12 +226,6 @@ void o_redraw_rects (GschemToplevel *w_current,
         if (w_current->rubber_visible)
           a_zoom_box_draw_rubber (w_current, renderer);
         break;
-
-    case PATHCONT:
-    case ENDPATH:
-      if (w_current->rubber_visible)
-        o_path_draw_rubber (w_current, renderer);
-      break;
     }
 
     if (w_current->rubber_visible) {
@@ -240,6 +234,7 @@ void o_redraw_rects (GschemToplevel *w_current,
         case BOXMODE    : o_box_draw_rubber (w_current, renderer); break;
         case CIRCLEMODE : o_circle_draw_rubber (w_current, renderer); break;
         case LINEMODE   : o_line_draw_rubber (w_current, renderer); break;
+        case PATHMODE   : o_path_draw_rubber (w_current, renderer); break;
         case PICTUREMODE: o_picture_draw_rubber (w_current, renderer); break;
         case PINMODE    : o_pin_draw_rubber (w_current, renderer); break;
         case BUSMODE:
@@ -288,18 +283,13 @@ int o_invalidate_rubber (GschemToplevel *w_current)
 
   switch(w_current->event_state) {
 
-  case DRAWPATH:
-  case PATHCONT:
-  case ENDPATH:
-    o_path_invalidate_rubber (w_current);
-    break;
-
     case (ARCMODE)    : o_arc_invalidate_rubber (w_current); break;
     case (BOXMODE)    : o_box_invalidate_rubber (w_current); break;
     case (BUSMODE)    : o_bus_invalidate_rubber (w_current); break;
     case (CIRCLEMODE) : o_circle_invalidate_rubber (w_current); break;
     case (LINEMODE)   : o_line_invalidate_rubber (w_current); break;
     case (NETMODE)    : o_net_invalidate_rubber (w_current); break;
+    case (PATHMODE)   : o_path_invalidate_rubber (w_current); break;
     case (PICTUREMODE): o_picture_invalidate_rubber (w_current); break;
     case (PINMODE)    : o_pin_invalidate_rubber (w_current); break;
 
@@ -345,12 +335,11 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(CIRCLEMODE):
     case(LINEMODE):
     case(NETMODE):
+    case(PATHMODE):
     case(PICTUREMODE):
     case(PINMODE):
     case(ENDCOPY):
     case(ENDMCOPY):
-    case PATHCONT:
-    case ENDPATH:
     case(ENDMOVE):
     case(ENDPASTE):
     case(ENDTEXT):

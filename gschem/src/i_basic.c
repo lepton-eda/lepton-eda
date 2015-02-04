@@ -100,15 +100,12 @@ static const char *i_status_string(GschemToplevel *w_current)
         return _("Magnetic Net Mode");
       else
         return _("Net Mode");
-    case DRAWPATH:
-    case PATHCONT:
-    case ENDPATH:
-      return _("Path Mode");
     case ARCMODE    : return _("Arc Mode");
     case BOXMODE    : return _("Box Mode");
     case BUSMODE    : return _("Bus Mode");
     case CIRCLEMODE : return _("Circle Mode");
     case LINEMODE   : return _("Line Mode");
+    case PATHMODE   : return _("Path Mode");
     case PICTUREMODE: return _("Picture Mode");
     case PINMODE    : return _("Pin Mode");
     case COPY:

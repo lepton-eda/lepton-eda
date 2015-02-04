@@ -250,6 +250,7 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->which_grip = -1;
   w_current->which_object = NULL;
   w_current->temp_path = NULL;
+  w_current->pathcontrol = TRUE;
 
   /* ------------------ */
   /* Rubberbanding nets */

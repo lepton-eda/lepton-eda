@@ -162,6 +162,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         case (CIRCLEMODE) : o_circle_end(w_current, w_x, w_y); break;
         case (LINEMODE)   : o_line_end(w_current, w_x, w_y); break;
         case (NETMODE)    : o_net_end(w_current, w_x, w_y); break;
+        case (PATHMODE)   : o_path_continue (w_current, w_x, w_y); break;
         case (PICTUREMODE): o_picture_end(w_current, w_x, w_y); break;
         case (PINMODE)    : o_pin_end (w_current, w_x, w_y); break;
         default: break;
@@ -175,6 +176,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         case (CIRCLEMODE) : o_circle_start(w_current, w_x, w_y); break;
         case (LINEMODE)   : o_line_start(w_current, w_x, w_y); break;
         case (NETMODE)    : o_net_start(w_current, w_x, w_y); break;
+        case (PATHMODE)   : o_path_start (w_current, w_x, w_y); break;
         case (PICTUREMODE): o_picture_start(w_current, w_x, w_y); break;
         case (PINMODE)    : o_pin_start (w_current, w_x, w_y); break;
         default: break;
@@ -225,18 +227,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         i_set_state (w_current, ENDPASTE);
         w_current->inside_action = 1;
         break;
-
-    case DRAWPATH:
-      o_path_start (w_current, w_x, w_y);
-      i_set_state (w_current, ENDPATH);
-      w_current->inside_action = TRUE;
-      break;
-
-    case PATHCONT:
-      o_path_continue (w_current, w_x, w_y);
-      i_set_state (w_current, ENDPATH);
-      w_current->inside_action = TRUE;
-      break;
 
       case(ENDCOMP):
         o_place_end(w_current, w_x, w_y, w_current->continue_component_place,
@@ -378,15 +368,9 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
           case (CIRCLEMODE) : o_circle_invalidate_rubber  (w_current); break;
           case (LINEMODE)   : o_line_invalidate_rubber    (w_current); break;
           case (NETMODE)    : o_net_reset                 (w_current); break;
+          case (PATHMODE)   : o_path_invalidate_rubber    (w_current); break;
           case (PICTUREMODE): o_picture_invalidate_rubber (w_current); break;
           case (PINMODE)    : o_pin_invalidate_rubber     (w_current); break;
-
-          case DRAWPATH:
-          case PATHCONT:
-          case ENDPATH:
-            i_set_state (w_current, DRAWPATH);
-            o_path_invalidate_rubber (w_current);
-            break;
 
           default:
             i_callback_cancel(w_current, 0, NULL);
@@ -504,16 +488,12 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
           w_current->inside_action = 1;
         }
         break;
-
-    case ENDPATH:
-      if (o_path_end (w_current, w_x, w_y)) {
-        i_set_state (w_current, PATHCONT);
-        w_current->inside_action = TRUE;
-      } else {
-        i_set_state (w_current, DRAWPATH);
-        w_current->inside_action = FALSE;
+    }
+    if (w_current->inside_action) {
+      switch(w_current->event_state) {
+        case(PATHMODE)   : o_path_end (w_current, w_x, w_y); break;
+        default: break;
       }
-      break;
     }
   } else if (event->button == 2) {
 
@@ -657,6 +637,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
       case(CIRCLEMODE) :   o_circle_motion (w_current, w_x, w_y); break;
       case(LINEMODE)   :   o_line_motion (w_current, w_x, w_y); break;
       case(NETMODE)    :   o_net_motion (w_current, w_x, w_y); break;
+      case(PATHMODE)   :   o_path_motion (w_current, w_x, w_y); break;
       case(PICTUREMODE):   o_picture_motion (w_current, w_x, w_y); break;
       case(PINMODE)    :   o_pin_motion (w_current, w_x, w_y); break;
       default: break;
@@ -704,12 +685,6 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
     case(MOVE):
     if (w_current->inside_action)
       o_move_motion (w_current, w_x, w_y);
-    break;
-
-  case PATHCONT:
-  case ENDPATH:
-    if (w_current->inside_action)
-      o_path_motion (w_current, w_x, w_y);
     break;
 
     case(COPY):
