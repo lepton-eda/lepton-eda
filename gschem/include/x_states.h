@@ -31,7 +31,7 @@ enum x_states {
   BOXMODE,      /*  3 */
   MOVE,         /*  4 */
   COPY,         /*  5 */
-  DRAWCIRCLE,   /*  6 */
+  CIRCLEMODE,   /*  6 */
   ZOOM,         /*  7 */
   PAN,          /*  8 */
   DRAWNET,      /*  9 */
@@ -48,7 +48,7 @@ enum x_states {
   ENDMOVE,      /* 20 */
   ENDLINE,      /* 21 */
 //ENDBOX,       /* 22 */
-  ENDCIRCLE,    /* 23 */
+//ENDCIRCLE,    /* 23 */
 //ENDARC,       /* 24 */
   ENDPIN,       /* 25 */
   ENDCOMP,      /* 26 */

@@ -258,11 +258,6 @@ void o_redraw_rects (GschemToplevel *w_current,
           o_picture_draw_rubber (w_current, renderer);
         break;
 
-      case ENDCIRCLE:
-        if (w_current->rubber_visible)
-          o_circle_draw_rubber (w_current, renderer);
-        break;
-
       case ENDPIN:
         if (w_current->rubber_visible)
           o_pin_draw_rubber (w_current, renderer);
@@ -273,6 +268,7 @@ void o_redraw_rects (GschemToplevel *w_current,
       switch (w_current->event_state) {
         case ARCMODE    : o_arc_draw_rubber (w_current, renderer); break;
         case BOXMODE    : o_box_draw_rubber (w_current, renderer); break;
+        case CIRCLEMODE : o_circle_draw_rubber (w_current, renderer); break;
         case BUSMODE:
           /* FIXME shouldn't need to save/restore colormap here */
           cairo_save (cr);
@@ -334,15 +330,11 @@ int o_invalidate_rubber (GschemToplevel *w_current)
     case (ARCMODE)    : o_arc_invalidate_rubber (w_current); break;
     case (BOXMODE)    : o_box_invalidate_rubber (w_current); break;
     case (BUSMODE)    : o_bus_invalidate_rubber (w_current); break;
+    case (CIRCLEMODE) : o_circle_invalidate_rubber (w_current); break;
 
     case(DRAWPICTURE):
     case(ENDPICTURE):
       o_picture_invalidate_rubber (w_current);
-    break;
-
-    case(DRAWCIRCLE):
-    case(ENDCIRCLE):
-      o_circle_invalidate_rubber (w_current);
     break;
 
     default:
@@ -384,8 +376,8 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(ARCMODE):
     case(BOXMODE):
     case(BUSMODE):
+    case(CIRCLEMODE):
     case(DRAWNET):
-    case(ENDCIRCLE):
     case(ENDCOPY):
     case(ENDMCOPY):
     case(ENDLINE):
@@ -433,7 +425,6 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(NONE):
     case(SELECT):
     case(DRAWLINE):
-    case(DRAWCIRCLE):
     case(ZOOM):
     case(PAN):
     case(DRAWPICTURE):

@@ -56,6 +56,8 @@ void o_circle_invalidate_rubber (GschemToplevel *w_current)
  */
 void o_circle_start(GschemToplevel *w_current, int w_x, int w_y)
 {
+  w_current->inside_action = 1;
+
   /* center of circle */
   w_current->first_wx = w_x;
   w_current->first_wy = w_y;
@@ -119,6 +121,8 @@ void o_circle_end(GschemToplevel *w_current, int w_x, int w_y)
 
   gschem_toplevel_page_content_changed (w_current, page);
   o_undo_savestate(w_current, page, UNDO_ALL);
+
+  w_current->inside_action = 0;
 }
 
 /*! \brief Draw temporary circle while dragging edge.
