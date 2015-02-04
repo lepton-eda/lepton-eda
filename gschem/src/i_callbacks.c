@@ -2020,18 +2020,14 @@ DEFINE_I_CALLBACK(add_pin)
   o_redraw_cleanstates(w_current);
   o_invalidate_rubber (w_current);
 
+  i_set_state (w_current, PINMODE);
   i_update_middle_button(w_current, i_callback_add_pin, _("Pin"));
 
   if (!g_action_get_position (TRUE, &wx, &wy)) {
-    w_current->inside_action = 0;
-    i_set_state(w_current, DRAWPIN);
     return;
   }
 
   o_pin_start(w_current, wx, wy);
-
-  w_current->inside_action = 1;
-  i_set_state(w_current, ENDPIN);
 }
 
 /*! \section hierarchy-menu Hierarchy Menu Callback Functions */
