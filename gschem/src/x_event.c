@@ -160,6 +160,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         case (BOXMODE)    : o_box_end(w_current, w_x, w_y); break;
         case (BUSMODE)    : o_bus_end(w_current, w_x, w_y); break;
         case (CIRCLEMODE) : o_circle_end(w_current, w_x, w_y); break;
+        case (LINEMODE)   : o_line_end(w_current, w_x, w_y); break;
         default: break;
       }
     } else {
@@ -169,6 +170,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         case (BOXMODE)    : o_box_start(w_current, w_x, w_y); break;
         case (BUSMODE)    : o_bus_start(w_current, w_x, w_y); break;
         case (CIRCLEMODE) : o_circle_start(w_current, w_x, w_y); break;
+        case (LINEMODE)   : o_line_start(w_current, w_x, w_y); break;
         default: break;
       }
     }
@@ -216,18 +218,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         o_buffer_paste_start(w_current, w_x, w_y, w_current->buffer_number);
         i_set_state (w_current, ENDPASTE);
         w_current->inside_action = 1;
-        break;
-
-      case(DRAWLINE):
-        o_line_start(w_current, w_x, w_y);
-        i_set_state (w_current, ENDLINE);
-        w_current->inside_action = 1;
-        break;
-
-      case(ENDLINE):
-        o_line_end(w_current, w_x, w_y);
-        w_current->inside_action = 0;
-        i_set_state (w_current, DRAWLINE);
         break;
 
     case DRAWPATH:
@@ -434,15 +424,11 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
             o_pin_invalidate_rubber (w_current);
             break;
 
-          case(DRAWLINE):
-          case(ENDLINE):
-            i_set_state(w_current, DRAWLINE);
-            o_line_invalidate_rubber (w_current);
-            break;
           case (ARCMODE)    : o_arc_invalidate_rubber     (w_current); break;
           case (BOXMODE)    : o_box_invalidate_rubber     (w_current); break;
           case (BUSMODE)    : o_bus_invalidate_rubber     (w_current); break;
           case (CIRCLEMODE) : o_circle_invalidate_rubber  (w_current); break;
+          case (LINEMODE)   : o_line_invalidate_rubber    (w_current); break;
 
           case DRAWPATH:
           case PATHCONT:
@@ -724,6 +710,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
       case(BOXMODE)    :   o_box_motion  (w_current, w_x, w_y); break;
       case(BUSMODE)    :   o_bus_motion (w_current, w_x, w_y); break;
       case(CIRCLEMODE) :   o_circle_motion (w_current, w_x, w_y); break;
+      case(LINEMODE)   :   o_line_motion (w_current, w_x, w_y); break;
       default: break;
     }
   }
@@ -764,11 +751,6 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
     case(MOVE):
     if (w_current->inside_action)
       o_move_motion (w_current, w_x, w_y);
-    break;
-
-    case(ENDLINE):
-    if (w_current->inside_action)
-      o_line_motion (w_current, w_x, w_y);
     break;
 
   case PATHCONT:

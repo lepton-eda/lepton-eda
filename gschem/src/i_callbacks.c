@@ -1887,18 +1887,14 @@ DEFINE_I_CALLBACK(add_line)
   o_redraw_cleanstates(w_current);
   o_invalidate_rubber (w_current);
 
+  i_set_state(w_current, LINEMODE);
   i_update_middle_button(w_current, i_callback_add_line, _("Line"));
 
   if (!g_action_get_position (TRUE, &wx, &wy)) {
-    i_set_state(w_current, DRAWLINE);
-    w_current->inside_action = 0;
     return;
   }
 
   o_line_start(w_current, wx, wy);
-
-  w_current->inside_action = 1;
-  i_set_state(w_current, ENDLINE);
 }
 
 DEFINE_I_CALLBACK(add_path)

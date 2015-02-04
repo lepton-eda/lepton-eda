@@ -102,9 +102,6 @@ static const char *i_status_string(GschemToplevel *w_current)
         return _("Magnetic Net Mode");
       else
         return _("Net Mode");
-    case DRAWLINE:
-    case ENDLINE:
-      return _("Line Mode");
     case DRAWPATH:
     case PATHCONT:
     case ENDPATH:
@@ -113,6 +110,7 @@ static const char *i_status_string(GschemToplevel *w_current)
     case BOXMODE    : return _("Box Mode");
     case BUSMODE    : return _("Bus Mode");
     case CIRCLEMODE : return _("Circle Mode");
+    case LINEMODE   : return _("Line Mode");
     case DRAWPICTURE:
     case ENDPICTURE:
       return _("Picture Mode");
@@ -323,10 +321,10 @@ void i_update_toolbar(GschemToplevel *w_current)
 				   w_current->toolbar_bus), TRUE);
       break;
 
-    case(DRAWLINE): /*! \todo */
     case(ARCMODE): /*! \todo */
     case(BOXMODE): /*! \todo */
     case(CIRCLEMODE): /*! \todo */
+    case(LINEMODE): /*! \todo */
     case(DRAWPICTURE): /*! \todo */
     case(DRAWPIN): /*! \todo */
     case(MOVE): /*! \todo */
@@ -337,7 +335,6 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(STARTMOVE): /*! \todo */
     case(ENDCOPY): /*! \todo */
     case(ENDMOVE): /*! \todo */
-    case(ENDLINE): /*! \todo */
     case(ENDPICTURE): /*! \todo */
     case(ENDPIN): /*! \todo */
     case(ENDCOMP): /*! \todo */

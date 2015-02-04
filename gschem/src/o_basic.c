@@ -242,11 +242,6 @@ void o_redraw_rects (GschemToplevel *w_current,
           a_zoom_box_draw_rubber (w_current, renderer);
         break;
 
-      case ENDLINE:
-        if (w_current->rubber_visible)
-          o_line_draw_rubber (w_current, renderer);
-        break;
-
     case PATHCONT:
     case ENDPATH:
       if (w_current->rubber_visible)
@@ -269,6 +264,7 @@ void o_redraw_rects (GschemToplevel *w_current,
         case ARCMODE    : o_arc_draw_rubber (w_current, renderer); break;
         case BOXMODE    : o_box_draw_rubber (w_current, renderer); break;
         case CIRCLEMODE : o_circle_draw_rubber (w_current, renderer); break;
+        case LINEMODE   : o_line_draw_rubber (w_current, renderer); break;
         case BUSMODE:
           /* FIXME shouldn't need to save/restore colormap here */
           cairo_save (cr);
@@ -316,11 +312,6 @@ int o_invalidate_rubber (GschemToplevel *w_current)
       o_pin_invalidate_rubber (w_current);
     break;
 
-    case(DRAWLINE):
-    case(ENDLINE):
-      o_line_invalidate_rubber (w_current);
-    break;
-
   case DRAWPATH:
   case PATHCONT:
   case ENDPATH:
@@ -331,6 +322,7 @@ int o_invalidate_rubber (GschemToplevel *w_current)
     case (BOXMODE)    : o_box_invalidate_rubber (w_current); break;
     case (BUSMODE)    : o_bus_invalidate_rubber (w_current); break;
     case (CIRCLEMODE) : o_circle_invalidate_rubber (w_current); break;
+    case (LINEMODE)   : o_line_invalidate_rubber (w_current); break;
 
     case(DRAWPICTURE):
     case(ENDPICTURE):
@@ -377,10 +369,10 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(BOXMODE):
     case(BUSMODE):
     case(CIRCLEMODE):
+    case(LINEMODE):
     case(DRAWNET):
     case(ENDCOPY):
     case(ENDMCOPY):
-    case(ENDLINE):
     case PATHCONT:
     case ENDPATH:
     case(ENDMOVE):
@@ -424,7 +416,6 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     /* all remaining states without dc changes */
     case(NONE):
     case(SELECT):
-    case(DRAWLINE):
     case(ZOOM):
     case(PAN):
     case(DRAWPICTURE):
