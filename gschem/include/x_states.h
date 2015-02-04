@@ -66,8 +66,8 @@ enum x_states {
   STARTPASTE,   /* 38 */
   ENDPASTE,     /* 39 */
   GRIPS,        /* 40 */
-  DRAWPICTURE,  /* 41 */
-  ENDPICTURE,   /* 42 */
+  PICTUREMODE,  /* 41 */
+//ENDPICTURE,   /* 42 */
   MCOPY,        /* 43 */
   STARTMCOPY,   /* 44 */
   ENDMCOPY,     /* 45 */

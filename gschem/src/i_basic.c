@@ -111,9 +111,7 @@ static const char *i_status_string(GschemToplevel *w_current)
     case BUSMODE    : return _("Bus Mode");
     case CIRCLEMODE : return _("Circle Mode");
     case LINEMODE   : return _("Line Mode");
-    case DRAWPICTURE:
-    case ENDPICTURE:
-      return _("Picture Mode");
+    case PICTUREMODE: return _("Picture Mode");
     case DRAWPIN:
     case ENDPIN:
       return _("Pin Mode");
@@ -325,7 +323,7 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(BOXMODE): /*! \todo */
     case(CIRCLEMODE): /*! \todo */
     case(LINEMODE): /*! \todo */
-    case(DRAWPICTURE): /*! \todo */
+    case(PICTUREMODE): /*! \todo */
     case(DRAWPIN): /*! \todo */
     case(MOVE): /*! \todo */
     case(COPY): /*! \todo */
@@ -335,7 +333,6 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(STARTMOVE): /*! \todo */
     case(ENDCOPY): /*! \todo */
     case(ENDMOVE): /*! \todo */
-    case(ENDPICTURE): /*! \todo */
     case(ENDPIN): /*! \todo */
     case(ENDCOMP): /*! \todo */
     case(ENDTEXT): /*! \todo */

@@ -1950,7 +1950,6 @@ DEFINE_I_CALLBACK(add_picture)
   o_redraw_cleanstates(w_current);
   o_invalidate_rubber (w_current);
 
-  w_current->inside_action = 0;
   i_set_state(w_current, SELECT);
 
   picture_selection_dialog(w_current);

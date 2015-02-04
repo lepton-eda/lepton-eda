@@ -55,6 +55,8 @@
  */
 void o_picture_start(GschemToplevel *w_current, int w_x, int w_y)
 {
+  w_current->inside_action = 1;
+
   /* init first_w[x|y], second_w[x|y] to describe box */
   w_current->first_wx = w_current->second_wx = w_x;
   w_current->first_wy = w_current->second_wy = w_y;
@@ -96,27 +98,26 @@ void o_picture_end(GschemToplevel *w_current, int w_x, int w_y)
   picture_left   = GET_PICTURE_LEFT  (w_current);
   picture_top    = GET_PICTURE_TOP   (w_current);
 
-  /* pictures with null width and height are not allowed */
-  if ((picture_width == 0) && (picture_height == 0)) {
-    /* cancel the object creation */
-    return;
+  /* pictures with null width or height are not allowed */
+  if ((picture_width != 0) && (picture_height != 0)) {
+
+    /* create the object */
+    new_obj = o_picture_new(toplevel,
+                            NULL, 0, w_current->pixbuf_filename,
+                            OBJ_PICTURE,
+                            picture_left, picture_top,
+                            picture_left + picture_width,
+                            picture_top - picture_height,
+                            0, FALSE, FALSE);
+    s_page_append (toplevel, toplevel->page_current, new_obj);
+
+    /* Run %add-objects-hook */
+    g_run_hook_object (w_current, "%add-objects-hook", new_obj);
+
+    gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+    o_undo_savestate_old(w_current, UNDO_ALL);
   }
-
-  /* create the object */
-  new_obj = o_picture_new(toplevel,
-                          NULL, 0, w_current->pixbuf_filename,
-                          OBJ_PICTURE,
-                          picture_left, picture_top,
-                          picture_left + picture_width,
-                          picture_top - picture_height,
-                          0, FALSE, FALSE);
-  s_page_append (toplevel, toplevel->page_current, new_obj);
-
-  /* Run %add-objects-hook */
-  g_run_hook_object (w_current, "%add-objects-hook", new_obj);
-
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
-  o_undo_savestate_old(w_current, UNDO_ALL);
+  w_current->inside_action = 0;
 }
 
 /*! \brief Creates the add image dialog
@@ -183,7 +184,7 @@ void picture_selection_dialog (GschemToplevel *w_current)
       o_picture_set_pixbuf(w_current, pixbuf, filename);
     
       gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
-      i_set_state(w_current, DRAWPICTURE);
+      i_set_state(w_current, PICTUREMODE);
     }
     g_free (filename);
   }
