@@ -245,15 +245,8 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
       case(ROTATEMODE):   o_rotate_world_update(w_current, w_x, w_y, 90,
                             geda_list_get_glist(page->selection_list)); break;
-
-      case(ENDMIRROR):
-        o_mirror_world_update(w_current, w_x, w_y,
-                              geda_list_get_glist(
-                                page->selection_list ));
-
-        w_current->inside_action = 0;
-        i_set_state(w_current, SELECT);
-        break;
+      case(MIRRORMODE):   o_mirror_world_update(w_current, w_x, w_y,
+                            geda_list_get_glist(page->selection_list)); break;
 
       case(ENDTEXT):
         o_place_end(w_current, w_x, w_y, FALSE, "%add-objects-hook");

@@ -381,7 +381,7 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(SELECT):
     case(ZOOM):
     case(PAN):
-    case(ENDMIRROR):
+    case(MIRRORMODE):
     case(ROTATEMODE):
     case(SBOX):
     case(STARTCOPY):

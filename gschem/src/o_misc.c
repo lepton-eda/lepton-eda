@@ -284,6 +284,10 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
 
   gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
   o_undo_savestate_old(w_current, UNDO_ALL);
+
+  if (w_current->event_state == MIRRORMODE) {
+    i_set_state(w_current, SELECT);
+  }
 }
 
 /*! \todo Finish function documentation!!!
