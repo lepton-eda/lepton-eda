@@ -391,15 +391,14 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
     switch(w_current->middle_button) {
 
       case(ACTION):
-                                /* determine here if copy or move */
-                                /* for now do move only */
-                                /* make sure the list is not empty */
+
       /* don't want to search if shift */
-      /* key is depresed */
+      /* key is pressed */
       if (!w_current->SHIFTKEY) {
         o_find_object(w_current, unsnapped_wx, unsnapped_wy, TRUE);
       }
 
+      /* make sure the list is not empty */
       if (!o_select_selected(w_current)) {
         /* this means the above find did not
          * find anything */
@@ -408,6 +407,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         goto end_button_pressed;
       }
 
+      /* determine here if copy or move */
       if (w_current->ALTKEY) {
         o_copy_start(w_current, w_x, w_y);
         w_current->inside_action = 1;
