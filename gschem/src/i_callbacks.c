@@ -665,24 +665,11 @@ DEFINE_I_CALLBACK(edit_rotate_90)
 
   g_return_if_fail (w_current != NULL);
 
-  /* If inside an appropriate action, send a button 2 released,
-   * so rotating will be handled by x_event.c */
-  if ( w_current->inside_action &&
-       (w_current->event_state == ENDCOMP ||
-        w_current->event_state == ENDTEXT ||
-        w_current->event_state == ENDMOVE ||
-        w_current->event_state == ENDCOPY ||
-        w_current->event_state == ENDMCOPY ||
-        w_current->event_state == ENDPASTE )) {
-      GdkEvent* event;
-
-      event = gdk_event_new(GDK_BUTTON_RELEASE);
-      ((GdkEventButton*) event)->button = 2;
-      x_event_button_released (NULL, (GdkEventButton *) event, w_current);
-      gdk_event_free(event);
-
-      return;
-    }
+  if (w_current->inside_action &&
+      (gschem_toplevel_get_current_page_view (w_current)->page->place_list != NULL)) {
+    o_place_rotate (w_current);
+    return;
+  }
 
   if (!g_action_get_position (TRUE, &wx, &wy)) {
     i_set_state(w_current, ENDROTATEP);
