@@ -32,7 +32,7 @@ enum x_states {
   MOVE,         /*  4 */
   COPY,         /*  5 */
   CIRCLEMODE,   /*  6 */
-  ZOOM,         /*  7 */
+//ZOOM,         /*  7 */
   PAN,          /*  8 */
   NETMODE,      /*  9 */
 //NETCONT,      /* 10 */
@@ -56,8 +56,8 @@ enum x_states {
   ENDTEXT,      /* 28 */
   ROTATEMODE,   /* 29 */
   MIRRORMODE,   /* 30 */
-  ZOOMBOXSTART, /* 31 */
-  ZOOMBOXEND,   /* 32 */
+  ZOOMBOX,      /* 31 */
+//ZOOMBOXEND,   /* 32 */
 //STARTROUTENET,/* 33 */
 //ENDROUTENET,  /* 34 */
   BUSMODE,      /* 35 */

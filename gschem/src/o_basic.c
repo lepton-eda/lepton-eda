@@ -221,11 +221,6 @@ void o_redraw_rects (GschemToplevel *w_current,
         if (w_current->rubber_visible)
           o_select_box_draw_rubber (w_current, renderer);
         break;
-
-      case ZOOMBOXEND:
-        if (w_current->rubber_visible)
-          a_zoom_box_draw_rubber (w_current, renderer);
-        break;
     }
 
     if (w_current->rubber_visible) {
@@ -257,6 +252,7 @@ void o_redraw_rects (GschemToplevel *w_current,
           eda_renderer_set_color_map (renderer, render_color_map);
           cairo_restore (cr);
           break;
+        case ZOOMBOX    : a_zoom_box_draw_rubber (w_current, renderer); break;
         default: break;
       }
     }
@@ -345,7 +341,7 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(ENDTEXT):
     case(GRIPS):
     case(MOVE):
-    case(ZOOMBOXEND):
+    case(ZOOMBOX):
       /* it is possible to cancel in the middle of a place,
        * so lets be sure to clean up the place_list structure */
 
@@ -379,7 +375,6 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     /* all remaining states without dc changes */
     case(NONE):
     case(SELECT):
-    case(ZOOM):
     case(PAN):
     case(MIRRORMODE):
     case(ROTATEMODE):
@@ -389,7 +384,6 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(STARTMOVE):
     case(STARTPASTE):
     case(STARTSELECT):
-    case(ZOOMBOXSTART):
       return FALSE;
   }
 

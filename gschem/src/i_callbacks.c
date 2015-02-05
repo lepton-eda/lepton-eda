@@ -1133,14 +1133,10 @@ DEFINE_I_CALLBACK(view_zoom_box)
 
   o_redraw_cleanstates(w_current);
 
-  if (!g_action_get_position (FALSE, &wx, &wy)) {
-    w_current->inside_action = 0;
-    i_set_state(w_current, ZOOMBOXSTART);
-  } else {
-    a_zoom_box_start(w_current, wx, wy);
+  i_set_state(w_current, ZOOMBOX);
 
-    w_current->inside_action = 1;
-    i_set_state(w_current, ZOOMBOXEND);
+  if (g_action_get_position (FALSE, &wx, &wy)) {
+    a_zoom_box_start(w_current, wx, wy);
   }
 }
 

@@ -179,6 +179,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         case (PATHMODE)   : o_path_start (w_current, w_x, w_y); break;
         case (PICTUREMODE): o_picture_start(w_current, w_x, w_y); break;
         case (PINMODE)    : o_pin_start (w_current, w_x, w_y); break;
+        case (ZOOMBOX)    : a_zoom_box_start(w_current, unsnapped_wx, unsnapped_wy); break;
         default: break;
       }
     }
@@ -259,13 +260,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         gschem_page_view_pan (page_view, w_x, w_y);
         i_set_state(w_current, SELECT);
         break;
-
-      case(ZOOMBOXSTART):
-        a_zoom_box_start(w_current, unsnapped_wx, unsnapped_wy);
-        i_set_state (w_current, ZOOMBOXEND);
-        w_current->inside_action = 1;
-        break;
-
     }
   } else if (event->button == 2) {
 
@@ -408,6 +402,10 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
   g_dynwind_window (w_current);
 
   if (event->button == 1) {
+    if ((w_current->event_state == ZOOMBOX) && w_current->inside_action) {
+      a_zoom_box_end(w_current, unsnapped_wx, unsnapped_wy);
+    }
+
     switch(w_current->event_state) {
       case(SELECT):
         /* do nothing */
@@ -456,13 +454,6 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
         break;
-
-      case(ZOOMBOXEND):
-        a_zoom_box_end(w_current, unsnapped_wx, unsnapped_wy);
-        w_current->inside_action = 0;
-        i_set_state(w_current, SELECT);
-        break;
-
       case(STARTSELECT):
         /* first look for grips */
         if (!o_grips_start(w_current, unsnapped_wx, unsnapped_wy)) {
@@ -628,6 +619,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
       case(PATHMODE)   :   o_path_motion (w_current, w_x, w_y); break;
       case(PICTUREMODE):   o_picture_motion (w_current, w_x, w_y); break;
       case(PINMODE)    :   o_pin_motion (w_current, w_x, w_y); break;
+      case(ZOOMBOX)    :   a_zoom_box_motion (w_current, unsnapped_wx, unsnapped_wy); break;
       default: break;
     }
   } else {
@@ -689,12 +681,6 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
     if (w_current->inside_action)
     o_select_box_motion (w_current, unsnapped_wx, unsnapped_wy);
     break;
-
-    case(ZOOMBOXEND):
-    if (w_current->inside_action)
-      a_zoom_box_motion (w_current, unsnapped_wx, unsnapped_wy);
-    break;
-
   }
 
   scm_dynwind_end ();

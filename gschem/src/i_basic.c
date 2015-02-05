@@ -79,10 +79,6 @@ static const char *i_status_string(GschemToplevel *w_current)
     case STARTMOVE:
     case ENDMOVE:
       return _("Move Mode");
-    case ZOOM:
-    case ZOOMBOXEND:
-    case ZOOMBOXSTART:
-      return _("Zoom Box");
     case PAN:
       return _("Pan Mode");
     case STARTPASTE:
@@ -115,6 +111,7 @@ static const char *i_status_string(GschemToplevel *w_current)
     case ENDMCOPY:
       return _("Multiple Copy Mode");
     case GRIPS      : return _("Modify Mode");
+    case ZOOMBOX    : return _("Zoom Box");
   }
   g_assert_not_reached();
   return ""; /* should not happen */
@@ -316,7 +313,6 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(PINMODE): /*! \todo */
     case(MOVE): /*! \todo */
     case(COPY): /*! \todo */
-    case(ZOOM): /*! \todo */
     case(PAN): /*! \todo */
     case(STARTCOPY): /*! \todo */
     case(STARTMOVE): /*! \todo */
@@ -326,8 +322,7 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(ENDTEXT): /*! \todo */
     case(ROTATEMODE): /*! \todo */
     case(MIRRORMODE): /*! \todo */
-    case(ZOOMBOXSTART): /*! \todo */
-    case(ZOOMBOXEND): /*! \todo */
+    case(ZOOMBOX): /*! \todo */
     case(STARTPASTE): /*! \todo */
     case(ENDPASTE): /*! \todo */
     case(GRIPS): /*! \todo */
