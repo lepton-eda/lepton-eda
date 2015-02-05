@@ -68,9 +68,6 @@ static const char *i_status_string(GschemToplevel *w_current)
     case SBOX:
       return _("Select Mode");
     case TEXTMODE: return _("Text Mode");
-    case STARTCOPY:
-    case ENDCOPY:
-      return _("Copy Mode");
     case STARTMOVE:
     case ENDMOVE:
       return _("Move Mode");
@@ -91,21 +88,16 @@ static const char *i_status_string(GschemToplevel *w_current)
     case BUSMODE    : return _("Bus Mode");
     case CIRCLEMODE : return _("Circle Mode");
     case COMPMODE   : return _("Component Mode");
+    case COPYMODE   : return _("Copy Mode");
+    case MCOPYMODE  : return _("Multiple Copy Mode");
     case LINEMODE   : return _("Line Mode");
     case MIRRORMODE : return _("Mirror Mode");
     case PATHMODE   : return _("Path Mode");
     case PICTUREMODE: return _("Picture Mode");
     case PINMODE    : return _("Pin Mode");
     case ROTATEMODE : return _("Rotate Mode");
-    case COPY:
-      return _("Copy");
     case MOVE:
       return _("Move");
-    case MCOPY:
-      return _("Multiple Copy");
-    case STARTMCOPY:
-    case ENDMCOPY:
-      return _("Multiple Copy Mode");
     case GRIPS      : return _("Modify Mode");
     case ZOOMBOX    : return _("Zoom Box");
   }
@@ -307,11 +299,10 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(PICTUREMODE): /*! \todo */
     case(PINMODE): /*! \todo */
     case(MOVE): /*! \todo */
-    case(COPY): /*! \todo */
     case(PAN): /*! \todo */
-    case(STARTCOPY): /*! \todo */
+    case(COPYMODE): /*! \todo */
+    case(MCOPYMODE): /*! \todo */
     case(STARTMOVE): /*! \todo */
-    case(ENDCOPY): /*! \todo */
     case(ENDMOVE): /*! \todo */
     case(COMPMODE): /*! \todo */
     case(ROTATEMODE): /*! \todo */
@@ -321,9 +312,6 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(STARTPASTE): /*! \todo */
     case(ENDPASTE): /*! \todo */
     case(GRIPS): /*! \todo */
-    case(MCOPY): /*! \todo */
-    case(STARTMCOPY): /*! \todo */
-    case(ENDMCOPY): /*! \todo */
     default:
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
 				   w_current->toolbar_select), TRUE);

@@ -59,8 +59,6 @@ void o_copy_start(GschemToplevel *w_current, int w_x, int w_y)
                           "%copy-objects-hook",
                           toplevel->page_current->place_list);
 
-  w_current->inside_action = 1;
-  i_set_state(w_current, COPY);
   o_place_start (w_current, w_x, w_y);
 }
 

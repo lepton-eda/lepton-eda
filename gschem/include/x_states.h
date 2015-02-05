@@ -30,7 +30,7 @@ enum x_states {
   LINEMODE,     /*  2 */
   BOXMODE,      /*  3 */
   MOVE,         /*  4 */
-  COPY,         /*  5 */
+  COPYMODE,     /*  5 */
   CIRCLEMODE,   /*  6 */
 //ZOOM,         /*  7 */
   PAN,          /*  8 */
@@ -42,9 +42,9 @@ enum x_states {
   COMPMODE,     /* 14 */
   SBOX,         /* 15 */
 //STARTSELECT,  /* 16 */
-  STARTCOPY,    /* 17 */
+//STARTCOPY,    /* 17 */
   STARTMOVE,    /* 18 */
-  ENDCOPY,      /* 19 */
+//ENDCOPY,      /* 19 */
   ENDMOVE,      /* 20 */
 //ENDLINE,      /* 21 */
 //ENDBOX,       /* 22 */
@@ -68,9 +68,9 @@ enum x_states {
   GRIPS,        /* 40 */
   PICTUREMODE,  /* 41 */
 //ENDPICTURE,   /* 42 */
-  MCOPY,        /* 43 */
-  STARTMCOPY,   /* 44 */
-  ENDMCOPY,     /* 45 */
+  MCOPYMODE,    /* 43 */
+//STARTMCOPY,   /* 44 */
+//ENDMCOPY,     /* 45 */
 //DRAWPATH,     /* 46 */
   PATHMODE,     /* 47 */
 //ENDPATH,      /* 48 */

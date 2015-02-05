@@ -189,27 +189,14 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         case (PINMODE)    : o_pin_start (w_current, w_x, w_y); break;
         case (ZOOMBOX)    : a_zoom_box_start(w_current, unsnapped_wx, unsnapped_wy); break;
         case (SELECT)     : o_select_start(w_current, w_x, w_y); break;
+
+        case (COPYMODE)   :
+        case (MCOPYMODE)  : o_copy_start(w_current, w_x, w_y); break;
         default: break;
       }
     }
 
     switch(w_current->event_state) {
-      case(STARTCOPY):
-        if (o_select_selected(w_current)) {
-          o_copy_start(w_current, w_x, w_y);
-          i_set_state (w_current, COPY);
-          w_current->inside_action = 1;
-        }
-        break;
-
-      case(STARTMCOPY):
-        if (o_select_selected(w_current)) {
-          o_copy_start(w_current, w_x, w_y);
-          i_set_state (w_current, MCOPY);
-          w_current->inside_action = 1;
-        }
-        break;
-
       case(STARTMOVE):
         if (o_select_selected(w_current)) {
           o_move_start(w_current, w_x, w_y);
@@ -247,8 +234,8 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       if (!(w_current->event_state == COMPMODE||
             w_current->event_state == TEXTMODE||
             w_current->event_state == ENDMOVE ||
-            w_current->event_state == ENDCOPY ||
-            w_current->event_state == ENDMCOPY ||
+            w_current->event_state == COPYMODE  ||
+            w_current->event_state == MCOPYMODE ||
             w_current->event_state == ENDPASTE )) {
         i_callback_cancel(w_current, 0, NULL);
       }
@@ -276,9 +263,8 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
       /* determine here if copy or move */
       if (w_current->ALTKEY) {
+        i_set_state(w_current, COPYMODE);
         o_copy_start(w_current, w_x, w_y);
-        w_current->inside_action = 1;
-        i_set_state(w_current, COPY);
       } else {
         o_move_start(w_current, w_x, w_y);
         w_current->inside_action = 1;
@@ -387,43 +373,29 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
         i_set_state (w_current, ENDMOVE);
         break;
 
-      case(COPY):
-        i_set_state (w_current, ENDCOPY);
-        break;
-
-      case(MCOPY):
-        i_set_state (w_current, ENDMCOPY);
-        break;
       case(ENDMOVE):
         o_move_end(w_current);
         /* having this stay in copy was driving me nuts*/
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
         break;
-
-      case(ENDCOPY):
-        o_copy_end(w_current);
-        /* having this stay in copy was driving me nuts*/
-        w_current->inside_action = 0;
-        i_set_state(w_current, SELECT);
-        break;
-
-      case(ENDMCOPY):
-        o_copy_multiple_end(w_current);
-        /* having this stay in copy was driving me nuts*/
-        w_current->inside_action = 1;
-        /* Keep the state and the inside_action, as the copy has not finished. */
-        i_set_state(w_current, ENDMCOPY);
-        break;
     }
     if (w_current->inside_action) {
-      switch(w_current->event_state) {
-        case(GRIPS)      : o_grips_end(w_current); break;
-        case(PATHMODE)   : o_path_end (w_current, w_x, w_y); break;
-        case(SBOX)       : o_select_box_end(w_current, unsnapped_wx, unsnapped_wy); break;
-        case(SELECT)     : o_select_end(w_current, unsnapped_wx, unsnapped_wy); break;
-        case(ZOOMBOX)    : a_zoom_box_end(w_current, unsnapped_wx, unsnapped_wy); break;
-        default: break;
+      if (page_view->page->place_list != NULL) {
+        switch(w_current->event_state) {
+          case (COPYMODE)  : o_copy_end(w_current); break;
+          case (MCOPYMODE) : o_copy_multiple_end(w_current); break;
+          default: break;
+        }
+      } else {
+        switch(w_current->event_state) {
+          case (GRIPS)     : o_grips_end(w_current); break;
+          case (PATHMODE)  : o_path_end (w_current, w_x, w_y); break;
+          case (SBOX)      : o_select_box_end(w_current, unsnapped_wx, unsnapped_wy); break;
+          case (SELECT)    : o_select_end(w_current, unsnapped_wx, unsnapped_wy); break;
+          case (ZOOMBOX)   : a_zoom_box_end(w_current, unsnapped_wx, unsnapped_wy); break;
+          default: break;
+        }
       }
     }
   } else if (event->button == 2) {
@@ -432,8 +404,8 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
       if (w_current->event_state == COMPMODE||
           w_current->event_state == TEXTMODE||
           w_current->event_state == ENDMOVE ||
-          w_current->event_state == ENDCOPY ||
-          w_current->event_state == ENDMCOPY ||
+          w_current->event_state == COPYMODE  ||
+          w_current->event_state == MCOPYMODE ||
           w_current->event_state == ENDPASTE ) {
 
         if (w_current->event_state == ENDMOVE) {
@@ -461,15 +433,14 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 
     switch(w_current->middle_button) {
       case(ACTION):
+        if (w_current->inside_action && (page_view->page->place_list != NULL)) {
+          switch(w_current->event_state) {
+            case (COPYMODE): o_copy_end(w_current); break;
+          }
+        }
       switch(w_current->event_state) {
         case(MOVE):
         o_move_end(w_current);
-        w_current->inside_action = 0;
-        i_set_state(w_current, SELECT);
-        break;
-
-        case(COPY):
-        o_copy_end(w_current);
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
         break;
@@ -563,6 +534,8 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
   if (w_current->inside_action) {
     if (page_view->page->place_list != NULL) {
       switch(w_current->event_state) {
+        case (COPYMODE)   :
+        case (MCOPYMODE)  :
         case (COMPMODE)   :
         case (TEXTMODE)   : o_place_motion (w_current, w_x, w_y); break;
         default: break;
@@ -600,10 +573,6 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
       o_move_motion (w_current, w_x, w_y);
     break;
 
-    case(COPY):
-    case(MCOPY):
-    case(ENDCOPY):
-    case(ENDMCOPY):
     case(ENDPASTE):
     o_place_motion (w_current, w_x, w_y);
     break;

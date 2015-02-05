@@ -183,6 +183,8 @@ void o_redraw_rects (GschemToplevel *w_current,
       switch (w_current->event_state) {
         case COMPMODE:
         case TEXTMODE:
+        case COPYMODE:
+        case MCOPYMODE:
           if (w_current->rubber_visible) {
             /* FIXME shouldn't need to save/restore colormap here */
             cairo_save (cr);
@@ -213,8 +215,6 @@ void o_redraw_rects (GschemToplevel *w_current,
         }
         break;
 
-      case ENDCOPY:
-      case ENDMCOPY:
       case ENDPASTE:
         if (w_current->rubber_visible) {
           /* FIXME shouldn't need to save/restore colormap here */
@@ -331,8 +331,6 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
       x_compselect_deselect (w_current);
 
       /* Fall through */
-    case(COPY):
-    case(MCOPY):
     case(ARCMODE):
     case(BOXMODE):
     case(BUSMODE):
@@ -342,8 +340,8 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(PATHMODE):
     case(PICTUREMODE):
     case(PINMODE):
-    case(ENDCOPY):
-    case(ENDMCOPY):
+    case(COPYMODE):
+    case(MCOPYMODE):
     case(ENDMOVE):
     case(ENDPASTE):
     case(TEXTMODE):
@@ -387,8 +385,6 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(MIRRORMODE):
     case(ROTATEMODE):
     case(SBOX):
-    case(STARTCOPY):
-    case(STARTMCOPY):
     case(STARTMOVE):
     case(STARTPASTE):
       return FALSE;
