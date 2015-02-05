@@ -243,13 +243,8 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         i_set_state(w_current, SELECT);
         break;
 
-      case(ENDROTATEP):
-        o_rotate_world_update(w_current, w_x, w_y, 90,
-          geda_list_get_glist(page->selection_list ));
-
-        w_current->inside_action = 0;
-        i_set_state(w_current, SELECT);
-        break;
+      case(ROTATEMODE):   o_rotate_world_update(w_current, w_x, w_y, 90,
+                            geda_list_get_glist(page->selection_list)); break;
 
       case(ENDMIRROR):
         o_mirror_world_update(w_current, w_x, w_y,

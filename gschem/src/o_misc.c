@@ -230,6 +230,10 @@ void o_rotate_world_update(GschemToplevel *w_current,
   if (!w_current->inside_action) {
     o_undo_savestate_old(w_current, UNDO_ALL);
   }
+
+  if (w_current->event_state == ROTATEMODE) {
+    i_set_state(w_current, SELECT);
+  }
 }
 
 /*! \todo Finish function documentation!!!

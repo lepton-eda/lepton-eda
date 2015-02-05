@@ -79,8 +79,6 @@ static const char *i_status_string(GschemToplevel *w_current)
     case STARTMOVE:
     case ENDMOVE:
       return _("Move Mode");
-    case ENDROTATEP:
-      return _("Rotate Mode");
     case ENDMIRROR:
       return _("Mirror Mode");
     case ZOOM:
@@ -107,6 +105,7 @@ static const char *i_status_string(GschemToplevel *w_current)
     case PATHMODE   : return _("Path Mode");
     case PICTUREMODE: return _("Picture Mode");
     case PINMODE    : return _("Pin Mode");
+    case ROTATEMODE : return _("Rotate Mode");
     case COPY:
       return _("Copy");
     case MOVE:
@@ -326,7 +325,7 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(ENDMOVE): /*! \todo */
     case(ENDCOMP): /*! \todo */
     case(ENDTEXT): /*! \todo */
-    case(ENDROTATEP): /*! \todo */
+    case(ROTATEMODE): /*! \todo */
     case(ENDMIRROR): /*! \todo */
     case(ZOOMBOXSTART): /*! \todo */
     case(ZOOMBOXEND): /*! \todo */

@@ -672,7 +672,7 @@ DEFINE_I_CALLBACK(edit_rotate_90)
   }
 
   if (!g_action_get_position (TRUE, &wx, &wy)) {
-    i_set_state(w_current, ENDROTATEP);
+    i_set_state(w_current, ROTATEMODE);
     i_update_middle_button(w_current, i_callback_edit_rotate_90, _("Rotate"));
     return;
   }
@@ -687,9 +687,6 @@ DEFINE_I_CALLBACK(edit_rotate_90)
     /* Allow o_rotate_world_update to redraw the objects */
     o_rotate_world_update(w_current, wx, wy, 90, object_list);
   }
-
-  i_set_state (w_current, SELECT);
-  w_current->inside_action = 0;
 }
 
 /*! \todo Finish function documentation!!!

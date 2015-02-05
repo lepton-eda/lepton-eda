@@ -54,7 +54,7 @@ enum x_states {
   ENDCOMP,      /* 26 */
   DRAWTEXT,     /* 27 */
   ENDTEXT,      /* 28 */
-  ENDROTATEP,   /* 29 */
+  ROTATEMODE,   /* 29 */
   ENDMIRROR,    /* 30 */
   ZOOMBOXSTART, /* 31 */
   ZOOMBOXEND,   /* 32 */
