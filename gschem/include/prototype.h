@@ -538,7 +538,7 @@ void o_place_mirror(GschemToplevel *w_current);
 /* o_select.c */
 void o_select_run_hooks(GschemToplevel *w_current, OBJECT *o_current, int flag);
 void o_select_object(GschemToplevel *w_current, OBJECT *o_current, int type, int count);
-int o_select_box_start(GschemToplevel *w_current, int x, int y);
+void o_select_box_start(GschemToplevel *w_current, int x, int y);
 void o_select_box_end(GschemToplevel *w_current, int x, int y);
 void o_select_box_motion(GschemToplevel *w_current, int x, int y);
 void o_select_box_invalidate_rubber(GschemToplevel *w_current);

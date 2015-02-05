@@ -446,11 +446,6 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
         o_undo_savestate_old(w_current, UNDO_ALL);
         break;
 
-      case(SBOX):
-        o_select_box_end(w_current, unsnapped_wx, unsnapped_wy);
-        w_current->inside_action = 0;
-        i_set_state(w_current, SELECT);
-        break;
       case(STARTSELECT):
         /* first look for grips */
         if (!o_grips_start(w_current, unsnapped_wx, unsnapped_wy)) {
@@ -468,6 +463,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
     if (w_current->inside_action) {
       switch(w_current->event_state) {
         case(PATHMODE)   : o_path_end (w_current, w_x, w_y); break;
+        case(SBOX)       : o_select_box_end(w_current, unsnapped_wx, unsnapped_wy); break;
         case(ZOOMBOX)    : a_zoom_box_end(w_current, unsnapped_wx, unsnapped_wy); break;
         default: break;
       }
@@ -617,6 +613,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
       case(PATHMODE)   :   o_path_motion (w_current, w_x, w_y); break;
       case(PICTUREMODE):   o_picture_motion (w_current, w_x, w_y); break;
       case(PINMODE)    :   o_pin_motion (w_current, w_x, w_y); break;
+      case(SBOX)       :   o_select_box_motion (w_current, unsnapped_wx, unsnapped_wy); break;
       case(ZOOMBOX)    :   a_zoom_box_motion (w_current, unsnapped_wx, unsnapped_wy); break;
       default: break;
     }
@@ -646,10 +643,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
             || (!o_find_selected_object(w_current, w_current->first_wx, w_current->first_wy)
                 && (!o_find_object(w_current, w_current->first_wx, w_current->first_wy, TRUE)
                     || !o_select_selected(w_current)))) {
-      if (o_select_box_start(w_current, unsnapped_wx, unsnapped_wy)) {
-        i_set_state (w_current, SBOX);
-        w_current->inside_action = 1;
-      }
+      o_select_box_start(w_current, unsnapped_wx, unsnapped_wy);
       break;
     } else {
       /* Start moving the selected object(s) */
@@ -673,11 +667,6 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
     case(ENDPASTE):
     case(ENDTEXT):
     o_place_motion (w_current, w_x, w_y);
-    break;
-
-    case(SBOX):
-    if (w_current->inside_action)
-    o_select_box_motion (w_current, unsnapped_wx, unsnapped_wy);
     break;
   }
 

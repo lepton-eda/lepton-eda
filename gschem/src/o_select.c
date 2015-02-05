@@ -200,7 +200,7 @@ void o_select_object(GschemToplevel *w_current, OBJECT *o_current,
  *  \par Function Description
  *
  */
-int o_select_box_start(GschemToplevel *w_current, int w_x, int w_y)
+void o_select_box_start(GschemToplevel *w_current, int w_x, int w_y)
 {
   int diff_x, diff_y, dist;
 
@@ -211,13 +211,13 @@ int o_select_box_start(GschemToplevel *w_current, int w_x, int w_y)
      then don't enter the selection box mode */
   dist = gschem_page_view_SCREENabs (GSCHEM_PAGE_VIEW (w_current->drawing_area), max(diff_x, diff_y));
 
-  if (dist < 10) {
-    return FALSE;
-  }
+  if (dist >= 10) {
+    w_current->second_wx = w_x;
+    w_current->second_wy = w_y;
 
-  w_current->second_wx = w_x;
-  w_current->second_wy = w_y;
-  return TRUE;
+    i_set_state (w_current, SBOX);
+    w_current->inside_action = 1;
+  }
 }
 
 /*! \todo Finish function documentation!!!
@@ -227,10 +227,15 @@ int o_select_box_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_select_box_end(GschemToplevel *w_current, int w_x, int w_y)
 {
+  g_assert (w_current->inside_action != 0);
+
   o_select_box_invalidate_rubber (w_current);
   w_current->rubber_visible = 0;
 
   o_select_box_search(w_current);
+
+  i_set_state(w_current, SELECT);
+  w_current->inside_action = 0;
 }
 
 /*! \todo Finish function documentation!!!
@@ -240,6 +245,8 @@ void o_select_box_end(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_select_box_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
+  g_assert (w_current->inside_action != 0);
+
   if (w_current->rubber_visible)
     o_select_box_invalidate_rubber (w_current);
     

@@ -216,11 +216,6 @@ void o_redraw_rects (GschemToplevel *w_current,
         if (w_current->rubber_visible)
           o_grips_draw_rubber (w_current, renderer);
         break;
-
-      case SBOX:
-        if (w_current->rubber_visible)
-          o_select_box_draw_rubber (w_current, renderer);
-        break;
     }
 
     if (w_current->rubber_visible) {
@@ -252,6 +247,7 @@ void o_redraw_rects (GschemToplevel *w_current,
           eda_renderer_set_color_map (renderer, render_color_map);
           cairo_restore (cr);
           break;
+        case SBOX       : o_select_box_draw_rubber (w_current, renderer); break;
         case ZOOMBOX    : a_zoom_box_draw_rubber (w_current, renderer); break;
         default: break;
       }
