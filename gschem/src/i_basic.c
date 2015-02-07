@@ -68,9 +68,6 @@ static const char *i_status_string(GschemToplevel *w_current)
     case SBOX:
       return _("Select Mode");
     case TEXTMODE: return _("Text Mode");
-    case STARTMOVE:
-    case ENDMOVE:
-      return _("Move Mode");
     case PAN:
       return _("Pan Mode");
     case STARTPASTE:
@@ -92,12 +89,11 @@ static const char *i_status_string(GschemToplevel *w_current)
     case MCOPYMODE  : return _("Multiple Copy Mode");
     case LINEMODE   : return _("Line Mode");
     case MIRRORMODE : return _("Mirror Mode");
+    case MOVEMODE   : return _("Move Mode");
     case PATHMODE   : return _("Path Mode");
     case PICTUREMODE: return _("Picture Mode");
     case PINMODE    : return _("Pin Mode");
     case ROTATEMODE : return _("Rotate Mode");
-    case MOVE:
-      return _("Move");
     case GRIPS      : return _("Modify Mode");
     case ZOOMBOX    : return _("Zoom Box");
   }
@@ -298,12 +294,10 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(LINEMODE): /*! \todo */
     case(PICTUREMODE): /*! \todo */
     case(PINMODE): /*! \todo */
-    case(MOVE): /*! \todo */
     case(PAN): /*! \todo */
     case(COPYMODE): /*! \todo */
     case(MCOPYMODE): /*! \todo */
-    case(STARTMOVE): /*! \todo */
-    case(ENDMOVE): /*! \todo */
+    case(MOVEMODE): /*! \todo */
     case(COMPMODE): /*! \todo */
     case(ROTATEMODE): /*! \todo */
     case(TEXTMODE): /*! \todo */

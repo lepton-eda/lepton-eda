@@ -29,7 +29,7 @@ enum x_states {
   SELECT,       /*  1 */
   LINEMODE,     /*  2 */
   BOXMODE,      /*  3 */
-  MOVE,         /*  4 */
+//MOVE,         /*  4 */
   COPYMODE,     /*  5 */
   CIRCLEMODE,   /*  6 */
 //ZOOM,         /*  7 */
@@ -43,9 +43,9 @@ enum x_states {
   SBOX,         /* 15 */
 //STARTSELECT,  /* 16 */
 //STARTCOPY,    /* 17 */
-  STARTMOVE,    /* 18 */
+  MOVEMODE,     /* 18 */
 //ENDCOPY,      /* 19 */
-  ENDMOVE,      /* 20 */
+//ENDMOVE,      /* 20 */
 //ENDLINE,      /* 21 */
 //ENDBOX,       /* 22 */
 //ENDCIRCLE,    /* 23 */

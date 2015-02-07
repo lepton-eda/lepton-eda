@@ -37,6 +37,8 @@ void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
   g_return_if_fail (w_current->stretch_list == NULL);
 
   if (o_select_selected (w_current)) {
+    i_set_state (w_current, MOVEMODE);
+
     gboolean net_rubber_band_mode;
 
     net_rubber_band_mode = gschem_options_get_net_rubber_band_mode (w_current->options);
@@ -45,7 +47,6 @@ void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
        we have to come back to here */
     o_undo_savestate_old(w_current, UNDO_ALL);
     w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
-    i_set_state (w_current, MOVE);
 
     w_current->first_wx = w_current->second_wx = w_x;
     w_current->first_wy = w_current->second_wy = w_y;
@@ -141,6 +142,8 @@ void o_move_end(GschemToplevel *w_current)
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
 
+  g_assert (w_current->inside_action != 0);
+
   object = o_select_return_first_object(w_current);
 
   if (!object) {
@@ -231,6 +234,9 @@ void o_move_end(GschemToplevel *w_current)
 
   s_stretch_destroy_all (w_current->stretch_list);
   w_current->stretch_list = NULL;
+
+  i_set_state(w_current, SELECT);
+  w_current->inside_action = 0;
 }
 
 
@@ -262,8 +268,6 @@ void o_move_cancel (GschemToplevel *w_current)
   w_current->stretch_list = NULL;
 
   w_current->inside_action = 0;
-  i_set_state (w_current, SELECT);
-
   o_undo_callback (w_current, page, UNDO_ACTION);
 }
 
@@ -281,6 +285,9 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
   gint object_x, object_y;
   gboolean resnap = FALSE;
   SNAP_STATE snap_mode;
+
+  g_assert (w_current->inside_action != 0);
+  g_assert (toplevel->page_current->place_list != NULL);
 
   snap_mode = gschem_options_get_snap_mode (w_current->options);
 

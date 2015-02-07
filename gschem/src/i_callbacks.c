@@ -327,9 +327,7 @@ DEFINE_I_CALLBACK(edit_undo)
    * Since they are also contained in the schematic page, a
    * crash occurs when the page objects are free'd.
    * */
-  if (w_current->inside_action &&
-      (w_current->event_state == MOVE ||
-       w_current->event_state == ENDMOVE)) {
+  if (w_current->inside_action) {
     i_callback_cancel (w_current, 0, NULL);
   } else {
     GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
@@ -518,13 +516,8 @@ DEFINE_I_CALLBACK(edit_move)
     o_redraw_cleanstates(w_current);
     if (g_action_get_position (TRUE, &wx, &wy)) {
       o_move_start(w_current, wx, wy);
-      i_set_state (w_current, ENDMOVE);
-      w_current->inside_action = 1;
-
-    } else {
-      i_set_state(w_current, STARTMOVE);
-
     }
+    i_set_state (w_current, MOVEMODE);
   } else {
     i_set_state_msg(w_current, SELECT, _("Select objs first"));
   }
@@ -2706,14 +2699,13 @@ DEFINE_I_CALLBACK(cancel)
   if (w_current->inside_action) {
     /* If we're cancelling from a move action, re-wind the
      * page contents back to their state before we started */
-    if (w_current->event_state == MOVE ||
-        w_current->event_state == ENDMOVE)
-      o_move_cancel (w_current);
+    o_move_cancel (w_current);
+  }
 
     /* If we're cancelling from a grip action, call the specific cancel
      * routine to reset the visibility of the object being modified */
-    if (w_current->event_state == GRIPS)
-      o_grips_cancel (w_current);
+  if (w_current->event_state == GRIPS) {
+    o_grips_cancel (w_current);
   }
 
   /* Free the place list and its contents. If we were in a move

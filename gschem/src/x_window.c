@@ -483,8 +483,7 @@ void x_window_close(GschemToplevel *w_current)
   /* If we're closing whilst inside a move action, re-wind the
    * page contents back to their state before we started */
   if (w_current->inside_action &&
-      (w_current->event_state == MOVE ||
-       w_current->event_state == ENDMOVE)) {
+      w_current->event_state == MOVEMODE) {
     o_move_cancel (w_current);
   }
 
@@ -857,8 +856,7 @@ x_window_close_page (GschemToplevel *w_current, PAGE *page)
   /* If we're closing whilst inside a move action, re-wind the
    * page contents back to their state before we started */
   if (w_current->inside_action &&
-      (w_current->event_state == MOVE ||
-       w_current->event_state == ENDMOVE)) {
+      w_current->event_state == MOVEMODE) {
     o_move_cancel (w_current);
   }
 

@@ -122,8 +122,6 @@ void o_select_motion (GschemToplevel *w_current, int wx, int wy)
   } else {
     /* Start moving the selected object(s) */
     o_move_start(w_current, w_current->first_wx, w_current->first_wy);
-    i_set_state (w_current, ENDMOVE);
-    w_current->inside_action = 1;
   }
 }
 

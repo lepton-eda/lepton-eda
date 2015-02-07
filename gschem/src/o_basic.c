@@ -136,8 +136,7 @@ void o_redraw_rects (GschemToplevel *w_current,
 
   /* Determine whether we should draw the selection at all */
   draw_selected = !(w_current->inside_action &&
-                    ((w_current->event_state == MOVE) ||
-                     (w_current->event_state == ENDMOVE)));
+                    (w_current->event_state == MOVEMODE));
 
   /* First pass -- render non-selected objects */
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
@@ -196,24 +195,23 @@ void o_redraw_rects (GschemToplevel *w_current,
             cairo_restore (cr);
           }
         break;
+        case MOVEMODE:
+          if (w_current->last_drawb_mode != -1) {
+            /* FIXME shouldn't need to save/restore colormap here */
+            cairo_save (cr);
+            eda_renderer_set_color_map (renderer, render_outline_color_map);
+
+            o_move_draw_rubber (w_current, renderer);
+
+            eda_renderer_set_color_map (renderer, render_color_map);
+            cairo_restore (cr);
+          }
+          break;
         default: break;
       }
     }
     /* Redraw the rubberband objects (if they were previously visible) */
     switch (w_current->event_state) {
-      case MOVE:
-      case ENDMOVE:
-        if (w_current->last_drawb_mode != -1) {
-          /* FIXME shouldn't need to save/restore colormap here */
-          cairo_save (cr);
-          eda_renderer_set_color_map (renderer, render_outline_color_map);
-
-          o_move_draw_rubber (w_current, renderer);
-
-          eda_renderer_set_color_map (renderer, render_color_map);
-          cairo_restore (cr);
-        }
-        break;
 
       case ENDPASTE:
         if (w_current->rubber_visible) {
@@ -342,19 +340,17 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(PINMODE):
     case(COPYMODE):
     case(MCOPYMODE):
-    case(ENDMOVE):
+    case(MOVEMODE):
     case(ENDPASTE):
     case(TEXTMODE):
     case(GRIPS):
-    case(MOVE):
     case(ZOOMBOX):
       /* it is possible to cancel in the middle of a place,
        * so lets be sure to clean up the place_list structure */
 
       /* If we're cancelling from a move action, re-wind the
        * page contents back to their state before we started. */
-      if ((w_current->event_state == MOVE) ||
-          (w_current->event_state == ENDMOVE)) {
+      if (w_current->event_state == MOVEMODE) {
         o_move_cancel (w_current);
       }
 
@@ -385,7 +381,6 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(MIRRORMODE):
     case(ROTATEMODE):
     case(SBOX):
-    case(STARTMOVE):
     case(STARTPASTE):
       return FALSE;
   }
