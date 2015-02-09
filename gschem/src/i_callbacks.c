@@ -1813,19 +1813,14 @@ DEFINE_I_CALLBACK(add_bus)
   o_redraw_cleanstates(w_current);
   o_invalidate_rubber (w_current);
 
-  /* need to click */
+  i_set_state(w_current, BUSMODE);
   i_update_middle_button(w_current, i_callback_add_bus, _("Bus"));
-  i_set_state(w_current, STARTDRAWBUS);
 
   if (!g_action_get_position (TRUE, &wx, &wy)) {
-    w_current->inside_action = 0;
     return;
   }
 
   o_bus_start(w_current, wx, wy);
-
-  i_set_state (w_current, DRAWBUS);
-  w_current->inside_action = 1;
 }
 
 /*! \todo Finish function documentation!!!

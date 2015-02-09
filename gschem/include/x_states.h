@@ -60,9 +60,9 @@ enum x_states {
   ZOOMBOXEND,   /* 32 */
 //STARTROUTENET,/* 33 */
 //ENDROUTENET,  /* 34 */
-  DRAWBUS,      /* 35 */
-  BUSCONT,      /* 36 */
-  STARTDRAWBUS, /* 37 */
+  BUSMODE,      /* 35 */
+//BUSCONT,      /* 36 */
+//STARTDRAWBUS, /* 37 */
   STARTPASTE,   /* 38 */
   ENDPASTE,     /* 39 */
   GRIPS,        /* 40 */

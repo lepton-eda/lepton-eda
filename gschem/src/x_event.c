@@ -158,6 +158,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       switch(w_current->event_state) {
         case (ARCMODE)    : o_arc_end1(w_current, w_x, w_y); break;
         case (BOXMODE)    : o_box_end(w_current, w_x, w_y); break;
+        case (BUSMODE)    : o_bus_end(w_current, w_x, w_y); break;
         default: break;
       }
     } else {
@@ -165,12 +166,12 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       switch(w_current->event_state) {
         case (ARCMODE)    : o_arc_start(w_current, w_x, w_y); break;
         case (BOXMODE)    : o_box_start(w_current, w_x, w_y); break;
+        case (BUSMODE)    : o_bus_start(w_current, w_x, w_y); break;
         default: break;
       }
     }
 
     switch(w_current->event_state) {
-
       case(SELECT):
         /* look for grips or fall through if not enabled */
         if (!o_grips_start(w_current, unsnapped_wx, unsnapped_wy)) {
@@ -282,13 +283,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
         break;
 
-      case(STARTDRAWBUS):
-        o_bus_start(w_current, w_x, w_y);
-        w_current->inside_action = 1;
-        i_set_state (w_current, DRAWBUS);
-
-        break;
-
       case(DRAWNET):
       case(NETCONT):
         /* Only continue the net if net end worked */
@@ -303,17 +297,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         }
         break;
 
-      case(DRAWBUS):
-      case(BUSCONT):
-        /* Only continue the net if net end worked */
-        if (o_bus_end(w_current, w_x, w_y)) {
-          o_bus_start(w_current, w_current->first_wx, w_current->first_wy);
-          i_set_state (w_current, BUSCONT);
-        } else {
-          w_current->inside_action=0;
-          i_set_state(w_current, STARTDRAWBUS);
-        }
-        break;
       case(ENDCOMP):
         o_place_end(w_current, w_x, w_y, w_current->continue_component_place,
                     NULL, "%add-objects-hook");
@@ -455,13 +438,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
             o_net_reset(w_current);
             break;
 
-          case(STARTDRAWBUS):
-          case(DRAWBUS):
-          case(BUSCONT):
-            i_set_state(w_current, STARTDRAWBUS);
-            o_bus_invalidate_rubber (w_current);
-            break;
-
           case(DRAWPIN):
           case(ENDPIN):
             i_set_state(w_current, DRAWPIN);
@@ -475,6 +451,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
             break;
           case (ARCMODE)    : o_arc_invalidate_rubber     (w_current); break;
           case (BOXMODE)    : o_box_invalidate_rubber     (w_current); break;
+          case (BUSMODE)    : o_bus_invalidate_rubber     (w_current); break;
 
           case DRAWPATH:
           case PATHCONT:
@@ -760,6 +737,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
     switch(w_current->event_state) {
       case(ARCMODE)    :   o_arc_motion (w_current, w_x, w_y, ARC_RADIUS); break;
       case(BOXMODE)    :   o_box_motion  (w_current, w_x, w_y); break;
+      case(BUSMODE)    :   o_bus_motion (w_current, w_x, w_y); break;
       default: break;
     }
   }
@@ -833,12 +811,6 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
     case(NETCONT):
     if (w_current->inside_action)
       o_net_motion (w_current, w_x, w_y);
-    break;
-
-    case(DRAWBUS):
-    case(BUSCONT):
-    if (w_current->inside_action)
-      o_bus_motion (w_current, w_x, w_y);
     break;
 
     case(ENDPIN):

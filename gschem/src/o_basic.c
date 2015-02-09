@@ -227,21 +227,6 @@ void o_redraw_rects (GschemToplevel *w_current,
         }
         break;
 
-      case STARTDRAWBUS:
-      case DRAWBUS:
-      case BUSCONT:
-        if (w_current->rubber_visible) {
-          /* FIXME shouldn't need to save/restore colormap here */
-          cairo_save (cr);
-          eda_renderer_set_color_map (renderer, render_outline_color_map);
-
-          o_bus_draw_rubber(w_current, renderer);
-
-          eda_renderer_set_color_map (renderer, render_color_map);
-          cairo_restore (cr);
-        }
-        break;
-
       case GRIPS:
         if (w_current->rubber_visible)
           o_grips_draw_rubber (w_current, renderer);
@@ -288,6 +273,16 @@ void o_redraw_rects (GschemToplevel *w_current,
       switch (w_current->event_state) {
         case ARCMODE    : o_arc_draw_rubber (w_current, renderer); break;
         case BOXMODE    : o_box_draw_rubber (w_current, renderer); break;
+        case BUSMODE:
+          /* FIXME shouldn't need to save/restore colormap here */
+          cairo_save (cr);
+          eda_renderer_set_color_map (renderer, render_outline_color_map);
+
+          o_bus_draw_rubber(w_current, renderer);
+
+          eda_renderer_set_color_map (renderer, render_color_map);
+          cairo_restore (cr);
+          break;
         default: break;
       }
     }
@@ -314,12 +309,6 @@ int o_invalidate_rubber (GschemToplevel *w_current)
 
   switch(w_current->event_state) {
 
-    case(STARTDRAWBUS):
-    case(DRAWBUS):
-    case(BUSCONT):
-      o_bus_invalidate_rubber (w_current);
-    break;
-
     case(STARTDRAWNET):
     case(DRAWNET):
     case(NETCONT):
@@ -344,6 +333,7 @@ int o_invalidate_rubber (GschemToplevel *w_current)
 
     case (ARCMODE)    : o_arc_invalidate_rubber (w_current); break;
     case (BOXMODE)    : o_box_invalidate_rubber (w_current); break;
+    case (BUSMODE)    : o_bus_invalidate_rubber (w_current); break;
 
     case(DRAWPICTURE):
     case(ENDPICTURE):
@@ -391,9 +381,9 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
       /* Fall through */
     case(COPY):
     case(MCOPY):
-    case(DRAWBUS):
     case(ARCMODE):
     case(BOXMODE):
+    case(BUSMODE):
     case(DRAWNET):
     case(ENDCIRCLE):
     case(ENDCOPY):
@@ -446,7 +436,6 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(DRAWCIRCLE):
     case(ZOOM):
     case(PAN):
-    case(BUSCONT):
     case(DRAWPICTURE):
     case(DRAWPIN):
     case(ENDMIRROR):
@@ -455,7 +444,6 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(SBOX):
     case(STARTCOPY):
     case(STARTMCOPY):
-    case(STARTDRAWBUS):
     case(STARTDRAWNET):
     case(STARTMOVE):
     case(STARTPASTE):

@@ -102,10 +102,6 @@ static const char *i_status_string(GschemToplevel *w_current)
         return _("Magnetic Net Mode");
       else
         return _("Net Mode");
-    case STARTDRAWBUS:
-    case DRAWBUS:
-    case BUSCONT:
-      return _("Bus Mode");
     case DRAWLINE:
     case ENDLINE:
       return _("Line Mode");
@@ -115,6 +111,7 @@ static const char *i_status_string(GschemToplevel *w_current)
       return _("Path Mode");
     case ARCMODE    : return _("Arc Mode");
     case BOXMODE    : return _("Box Mode");
+    case BUSMODE    : return _("Bus Mode");
     case DRAWPICTURE:
     case ENDPICTURE:
       return _("Picture Mode");
@@ -323,9 +320,7 @@ void i_update_toolbar(GschemToplevel *w_current)
 				   w_current->toolbar_net), TRUE);
       break;
 
-    case(DRAWBUS):
-    case(STARTDRAWBUS):
-    case(BUSCONT):
+    case(BUSMODE):
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
 				   w_current->toolbar_bus), TRUE);
       break;

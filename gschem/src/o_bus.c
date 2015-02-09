@@ -37,6 +37,8 @@
  */
 void o_bus_start(GschemToplevel *w_current, int w_x, int w_y)
 {
+  w_current->inside_action = 1;
+
   w_current->first_wx = w_current->second_wx = w_x;
   w_current->first_wy = w_current->second_wy = w_y;
 }
@@ -55,7 +57,7 @@ void o_bus_start(GschemToplevel *w_current, int w_x, int w_y)
  *  \param [in] w_x        (unused)
  *  \param [in] w_y        (unused)
  */
-int o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
+void o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   PAGE *page = gschem_page_view_get_page (page_view);
@@ -73,30 +75,30 @@ int o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
 
   /* don't allow zero length bus */
   /* this ends the bus drawing behavior we want this? hack */
-  if ( (w_current->first_wx == w_current->second_wx) &&
-       (w_current->first_wy == w_current->second_wy) ) {
-    return FALSE;
+  if ( (w_current->first_wx != w_current->second_wx) ||
+       (w_current->first_wy != w_current->second_wy) ) {
+
+    new_obj = o_bus_new(toplevel, OBJ_BUS, BUS_COLOR,
+                        w_current->first_wx, w_current->first_wy,
+                        w_current->second_wx, w_current->second_wy, 0);
+    s_page_append (toplevel, page, new_obj);
+
+    /* connect the new bus to the other busses */
+    prev_conn_objects = s_conn_return_others (prev_conn_objects, new_obj);
+    o_invalidate_glist (w_current, prev_conn_objects);
+    g_list_free (prev_conn_objects);
+
+    /* Call add-objects-hook */
+    g_run_hook_object (w_current, "%add-objects-hook", new_obj);
+
+    w_current->first_wx = w_current->second_wx;
+    w_current->first_wy = w_current->second_wy;
+
+    gschem_toplevel_page_content_changed (w_current, page);
+    o_undo_savestate(w_current, page, UNDO_ALL);
   }
 
-  new_obj = o_bus_new(toplevel, OBJ_BUS, BUS_COLOR,
-                      w_current->first_wx, w_current->first_wy,
-                      w_current->second_wx, w_current->second_wy, 0);
-  s_page_append (toplevel, page, new_obj);
-
-  /* connect the new bus to the other busses */
-  prev_conn_objects = s_conn_return_others (prev_conn_objects, new_obj);
-  o_invalidate_glist (w_current, prev_conn_objects);
-  g_list_free (prev_conn_objects);
-
-  /* Call add-objects-hook */
-  g_run_hook_object (w_current, "%add-objects-hook", new_obj);
-
-  w_current->first_wx = w_current->second_wx;
-  w_current->first_wy = w_current->second_wy;
-
-  gschem_toplevel_page_content_changed (w_current, page);
-  o_undo_savestate(w_current, page, UNDO_ALL);
-  return TRUE;
+  /* Don't reset w_current->inside_action here since we want to continue drawing */
 }
 
 /*! \brief draw the bus rubber when creating a bus
