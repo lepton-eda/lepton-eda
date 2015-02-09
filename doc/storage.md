@@ -63,7 +63,7 @@ of how the data is internally stored and accessed.
 
 --------------------------------------------------------------------------------
 
-Copyright (C) 2013, 2014 Roland Lutz
+Copyright (C) 2013-2015 Roland Lutz
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the [GNU Free Documentation License, Version 1.2]
