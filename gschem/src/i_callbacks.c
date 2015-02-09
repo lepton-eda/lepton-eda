@@ -1709,8 +1709,9 @@ DEFINE_I_CALLBACK(add_component)
 
   g_return_if_fail (w_current != NULL);
 
-  i_set_state(w_current, DRAWCOMP);
   o_redraw_cleanstates (w_current);
+
+  i_set_state(w_current, DRAWCOMP);
   x_compselect_open (w_current);
 
   i_update_middle_button(w_current,
