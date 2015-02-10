@@ -34,11 +34,11 @@ enum x_states {
   CIRCLEMODE,   /*  6 */
   ZOOM,         /*  7 */
   PAN,          /*  8 */
-  DRAWNET,      /*  9 */
-  NETCONT,      /* 10 */
+  NETMODE,      /*  9 */
+//NETCONT,      /* 10 */
   PINMODE,      /* 11 */
   ARCMODE,      /* 12 */
-  STARTDRAWNET, /* 13 */
+//STARTDRAWNET, /* 13 */
   DRAWCOMP,     /* 14 */
   SBOX,         /* 15 */
   STARTSELECT,  /* 16 */

@@ -161,6 +161,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         case (BUSMODE)    : o_bus_end(w_current, w_x, w_y); break;
         case (CIRCLEMODE) : o_circle_end(w_current, w_x, w_y); break;
         case (LINEMODE)   : o_line_end(w_current, w_x, w_y); break;
+        case (NETMODE)    : o_net_end(w_current, w_x, w_y); break;
         case (PICTUREMODE): o_picture_end(w_current, w_x, w_y); break;
         case (PINMODE)    : o_pin_end (w_current, w_x, w_y); break;
         default: break;
@@ -173,6 +174,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         case (BUSMODE)    : o_bus_start(w_current, w_x, w_y); break;
         case (CIRCLEMODE) : o_circle_start(w_current, w_x, w_y); break;
         case (LINEMODE)   : o_line_start(w_current, w_x, w_y); break;
+        case (NETMODE)    : o_net_start(w_current, w_x, w_y); break;
         case (PICTUREMODE): o_picture_start(w_current, w_x, w_y); break;
         case (PINMODE)    : o_pin_start (w_current, w_x, w_y); break;
         default: break;
@@ -235,27 +237,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       i_set_state (w_current, ENDPATH);
       w_current->inside_action = TRUE;
       break;
-
-      case(STARTDRAWNET):  /*! \todo change state name? */
-        o_net_start(w_current, w_x, w_y);
-        w_current->inside_action = 1;
-        i_set_state (w_current, DRAWNET);
-
-        break;
-
-      case(DRAWNET):
-      case(NETCONT):
-        /* Only continue the net if net end worked */
-        if (o_net_end(w_current, w_x, w_y)) {
-          o_net_start(w_current, w_current->first_wx, w_current->first_wy);
-          i_set_state (w_current, NETCONT);
-        } else { /* cleanup and start a new net */
-          o_net_invalidate_rubber (w_current);
-          o_net_reset(w_current);
-          i_set_state(w_current, STARTDRAWNET);
-          w_current->inside_action = 0;
-        }
-        break;
 
       case(ENDCOMP):
         o_place_end(w_current, w_x, w_y, w_current->continue_component_place,
@@ -390,19 +371,13 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         w_current->inside_action = 0;
 
         switch (w_current->event_state) {
-          case(STARTDRAWNET):
-          case(DRAWNET):
-          case(NETCONT):
-            i_set_state(w_current, STARTDRAWNET);
-            o_net_invalidate_rubber (w_current);
-            o_net_reset(w_current);
-            break;
 
           case (ARCMODE)    : o_arc_invalidate_rubber     (w_current); break;
           case (BOXMODE)    : o_box_invalidate_rubber     (w_current); break;
           case (BUSMODE)    : o_bus_invalidate_rubber     (w_current); break;
           case (CIRCLEMODE) : o_circle_invalidate_rubber  (w_current); break;
           case (LINEMODE)   : o_line_invalidate_rubber    (w_current); break;
+          case (NETMODE)    : o_net_reset                 (w_current); break;
           case (PICTUREMODE): o_picture_invalidate_rubber (w_current); break;
           case (PINMODE)    : o_pin_invalidate_rubber     (w_current); break;
 
@@ -681,8 +656,14 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
       case(BUSMODE)    :   o_bus_motion (w_current, w_x, w_y); break;
       case(CIRCLEMODE) :   o_circle_motion (w_current, w_x, w_y); break;
       case(LINEMODE)   :   o_line_motion (w_current, w_x, w_y); break;
+      case(NETMODE)    :   o_net_motion (w_current, w_x, w_y); break;
       case(PICTUREMODE):   o_picture_motion (w_current, w_x, w_y); break;
       case(PINMODE)    :   o_pin_motion (w_current, w_x, w_y); break;
+      default: break;
+    }
+  } else {
+    switch(w_current->event_state) {
+      case(NETMODE)    :   o_net_start_magnetic(w_current, w_x, w_y); break;
       default: break;
     }
   }
@@ -729,18 +710,6 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
   case ENDPATH:
     if (w_current->inside_action)
       o_path_motion (w_current, w_x, w_y);
-    break;
-
-    case(STARTDRAWNET):
-    if(gschem_options_get_magnetic_net_mode (w_current->options)) {
-      o_net_start_magnetic(w_current, w_x, w_y);
-    }
-    break;
-
-    case(DRAWNET):
-    case(NETCONT):
-    if (w_current->inside_action)
-      o_net_motion (w_current, w_x, w_y);
     break;
 
     case(COPY):

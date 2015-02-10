@@ -95,9 +95,7 @@ static const char *i_status_string(GschemToplevel *w_current)
       g_free(buf);
       buf = g_strdup_printf(_("Paste %d Mode"), w_current->buffer_number+1);
       return buf;
-    case STARTDRAWNET:
-    case DRAWNET:
-    case NETCONT:
+    case NETMODE:
       if (gschem_options_get_magnetic_net_mode (w_current->options))
         return _("Magnetic Net Mode");
       else
@@ -305,9 +303,7 @@ void i_update_toolbar(GschemToplevel *w_current)
 				   w_current->toolbar_select), TRUE);
       break;
 
-    case(DRAWNET):
-    case(STARTDRAWNET):
-    case(NETCONT):
+    case(NETMODE):
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
 				   w_current->toolbar_net), TRUE);
       break;

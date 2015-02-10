@@ -54,11 +54,13 @@
  */
 void o_net_reset(GschemToplevel *w_current)
 {
+  o_net_invalidate_rubber (w_current);
   w_current->first_wx = w_current->first_wy = -1;
   w_current->second_wx = w_current->second_wy = -1;
   w_current->third_wx = w_current->third_wy = -1;
   w_current->magnetic_wx = w_current->magnetic_wy = -1;
   w_current->rubber_visible = 0;
+  w_current->inside_action = 0;
 }
 
 /*! \brief guess the best direction for the next net drawing action
@@ -392,6 +394,10 @@ void o_net_finishmagnetic(GschemToplevel *w_current)
  */
 void o_net_start_magnetic(GschemToplevel *w_current, int w_x, int w_y)
 {
+  if (!(gschem_options_get_magnetic_net_mode (w_current->options))) {
+    return;
+  }
+
   o_net_invalidate_rubber (w_current);
 
   if (w_current->CONTROLKEY) {
@@ -404,7 +410,6 @@ void o_net_start_magnetic(GschemToplevel *w_current, int w_x, int w_y)
 
   o_net_invalidate_rubber (w_current);
   w_current->rubber_visible = 1;
-  w_current->inside_action = 1;
 }
 
 /*! \brief set the start point of a new net
@@ -415,6 +420,8 @@ void o_net_start_magnetic(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_net_start(GschemToplevel *w_current, int w_x, int w_y)
 {
+  w_current->inside_action = 1;
+
   if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
     w_current->first_wx = w_current->magnetic_wx;
     w_current->first_wy = w_current->magnetic_wy;
@@ -446,7 +453,7 @@ void o_net_start(GschemToplevel *w_current, int w_x, int w_y)
  *
  * The function returns TRUE if it has drawn a net, FALSE otherwise.
  */
-int o_net_end(GschemToplevel *w_current, int w_x, int w_y)
+void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int primary_zero_length, secondary_zero_length;
@@ -479,7 +486,8 @@ int o_net_end(GschemToplevel *w_current, int w_x, int w_y)
   /* If both nets are zero length... */
   /* this ends the net drawing behavior */
   if ( primary_zero_length && secondary_zero_length ) {
-    return FALSE;
+    o_net_reset(w_current);
+    return;
   }
 
   save_wx = w_current->third_wx;
@@ -555,7 +563,8 @@ int o_net_end(GschemToplevel *w_current, int w_x, int w_y)
   gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
   o_undo_savestate_old(w_current, UNDO_ALL);
 
-  return (TRUE);
+  /* Continue net drawing */
+  o_net_start(w_current, w_current->first_wx, w_current->first_wy);
 }
 
 /*! \brief erase and redraw the rubber lines when drawing a net

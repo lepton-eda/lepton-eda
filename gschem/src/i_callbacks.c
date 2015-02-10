@@ -1765,22 +1765,16 @@ DEFINE_I_CALLBACK(add_net)
   g_return_if_fail (w_current != NULL);
 
   o_redraw_cleanstates(w_current);
-  o_invalidate_rubber (w_current);
-  o_net_reset(w_current);
 
-  /* need to click */
+  i_set_state(w_current, NETMODE);
   i_update_middle_button(w_current, i_callback_add_net, _("Net"));
-  i_set_state(w_current, STARTDRAWNET);
 
   if (!g_action_get_position (TRUE, &wx, &wy)) {
-    w_current->inside_action = 0;
     return;
   }
 
+  o_net_reset(w_current);
   o_net_start(w_current, wx, wy);
-
-  i_set_state (w_current, DRAWNET);
-  w_current->inside_action = 1;
 }
 
 /*! \todo Finish function documentation!!!

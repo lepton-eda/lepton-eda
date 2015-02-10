@@ -494,7 +494,7 @@ void o_net_find_magnetic(GschemToplevel *w_current, int event_x, int event_y);
 void o_net_finishmagnetic(GschemToplevel *w_current);
 void o_net_start_magnetic(GschemToplevel *w_current, int x, int y);
 void o_net_start(GschemToplevel *w_current, int x, int y);
-int o_net_end(GschemToplevel *w_current, int x, int y);
+void o_net_end(GschemToplevel *w_current, int x, int y);
 void o_net_motion(GschemToplevel *w_current, int x, int y);
 void o_net_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer);
 void o_net_invalidate_rubber(GschemToplevel *w_current);
