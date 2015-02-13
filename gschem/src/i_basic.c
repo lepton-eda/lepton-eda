@@ -67,7 +67,6 @@ static const char *i_status_string(GschemToplevel *w_current)
     case STARTSELECT:
     case SELECT:
     case SBOX:
-    case GRIPS:
       return _("Select Mode");
     case DRAWCOMP:
     case ENDCOMP:
@@ -117,6 +116,7 @@ static const char *i_status_string(GschemToplevel *w_current)
     case STARTMCOPY:
     case ENDMCOPY:
       return _("Multiple Copy Mode");
+    case GRIPS      : return _("Modify Mode");
   }
   g_assert_not_reached();
   return ""; /* should not happen */
