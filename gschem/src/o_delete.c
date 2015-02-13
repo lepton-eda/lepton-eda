@@ -49,10 +49,16 @@ void o_delete (GschemToplevel *w_current, OBJECT *object)
  *  \par Function Description
  *  This function deletes the objects selected on the current page of
  *  toplevel \a w_current.
+ *  If \a remove_entirely is FALSE, the objects will be removed
+ *  only from the page, which is suitable for cutting to a buffer.
+ *  Otherwise, they will be removed from the TOPLEVEL as well,
+ *  which suits the plain delete operation.
  *
- *  \param [in] w_current The GschemToplevel object.
+ *  \param [in] w_current        The GschemToplevel object.
+ *  \param [in] remove_entirely  Whether to remove objects from
+ *                               the TOPLEVEL or not.
  */
-void o_delete_selected (GschemToplevel *w_current)
+void o_delete_selected (GschemToplevel *w_current, gboolean remove_entirely)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   SELECTION *selection = toplevel->page_current->selection_list;
@@ -114,15 +120,16 @@ void o_delete_selected (GschemToplevel *w_current)
 
   g_run_hook_object_list (w_current, "%remove-objects-hook", to_remove);
 
-  for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
-    obj = (OBJECT *) iter->data;
-    s_delete_object (toplevel, obj);
+  if (remove_entirely) {
+    for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
+      obj = (OBJECT *) iter->data;
+      s_delete_object (toplevel, obj);
+    }
   }
 
   g_list_free (to_remove);
 
   gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
-  w_current->inside_action = 0;
   o_undo_savestate_old (w_current, UNDO_ALL);
   i_update_menus (w_current);
 }

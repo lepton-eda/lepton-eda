@@ -124,7 +124,7 @@ o_buffer_cut(GschemToplevel *w_current, int buf_num)
   g_return_if_fail (buf_num < MAX_BUFFERS);
 
   selection_to_buffer (w_current, buf_num);
-  o_delete_selected(w_current);
+  o_delete_selected(w_current, FALSE);
 
   if (buf_num == CLIPBOARD_BUFFER) {
     x_clipboard_set (w_current, object_buffer[buf_num]);

@@ -436,7 +436,7 @@ void o_copy_multiple_end(GschemToplevel *w_current);
 /* o_cue.c */
 /* o_delete.c */
 void o_delete(GschemToplevel *w_current, OBJECT *object);
-void o_delete_selected(GschemToplevel *w_current);
+void o_delete_selected(GschemToplevel *w_current, gboolean remove_entirely);
 /* o_find.c */
 gboolean o_find_object(GschemToplevel *w_current, int x, int y,
 		       gboolean deselect_afterwards);
