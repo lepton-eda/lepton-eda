@@ -301,6 +301,7 @@ void o_place_rotate (GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
+  o_place_invalidate_rubber (w_current, FALSE);
   o_glist_rotate_world (toplevel,
                         w_current->first_wx, w_current->first_wy, 90,
                         toplevel->page_current->place_list);
@@ -309,4 +310,5 @@ void o_place_rotate (GschemToplevel *w_current)
   /* Run rotate-objects-hook */
   g_run_hook_object_list (w_current, "%rotate-objects-hook",
                           toplevel->page_current->place_list);
+  o_place_invalidate_rubber (w_current, TRUE);
 }
