@@ -55,6 +55,8 @@ void o_place_end (GschemToplevel *w_current,
   GList *connected_objects = NULL;
   GList *iter;
 
+  g_assert (w_current->inside_action != 0);
+
   /* erase old image */
   /* o_place_invaidate_rubber (w_current, FALSE); */
   w_current->rubber_visible = 0;
@@ -120,6 +122,9 @@ void o_place_end (GschemToplevel *w_current,
  */
 void o_place_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
+  g_assert (w_current->inside_action != 0);
+  g_assert (gschem_toplevel_get_current_page_view (w_current)->page->place_list != NULL);
+
   if (w_current->rubber_visible)
     o_place_invalidate_rubber (w_current, FALSE);
   w_current->second_wx = w_x;
