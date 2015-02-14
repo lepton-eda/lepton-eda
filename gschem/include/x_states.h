@@ -63,8 +63,8 @@ enum x_states {
   BUSMODE,      /* 35 */
 //BUSCONT,      /* 36 */
 //STARTDRAWBUS, /* 37 */
-  STARTPASTE,   /* 38 */
-  ENDPASTE,     /* 39 */
+  PASTEMODE,    /* 38 */
+//ENDPASTE,     /* 39 */
   GRIPS,        /* 40 */
   PICTUREMODE,  /* 41 */
 //ENDPICTURE,   /* 42 */

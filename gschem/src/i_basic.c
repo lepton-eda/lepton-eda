@@ -70,8 +70,7 @@ static const char *i_status_string(GschemToplevel *w_current)
     case TEXTMODE: return _("Text Mode");
     case PAN:
       return _("Pan Mode");
-    case STARTPASTE:
-    case ENDPASTE:
+    case PASTEMODE:
       g_free(buf);
       buf = g_strdup_printf(_("Paste %d Mode"), w_current->buffer_number+1);
       return buf;
@@ -303,8 +302,7 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(TEXTMODE): /*! \todo */
     case(MIRRORMODE): /*! \todo */
     case(ZOOMBOX): /*! \todo */
-    case(STARTPASTE): /*! \todo */
-    case(ENDPASTE): /*! \todo */
+    case(PASTEMODE): /*! \todo */
     case(GRIPS): /*! \todo */
     default:
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(

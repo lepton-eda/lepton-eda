@@ -159,6 +159,8 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
                                 "%add-objects-hook"); break;
           case (TEXTMODE)   : o_place_end(w_current, w_x, w_y, FALSE,
                                 "%add-objects-hook"); break;
+          case (PASTEMODE)  : o_place_end(w_current, w_x, w_y, FALSE,
+                                "%paste-objects-hook"); break;
           default: break;
         }
       } else {
@@ -198,18 +200,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
     }
 
     switch(w_current->event_state) {
-      case(STARTPASTE):
-        o_buffer_paste_start(w_current, w_x, w_y, w_current->buffer_number);
-        i_set_state (w_current, ENDPASTE);
-        w_current->inside_action = 1;
-        break;
-
-      case(ENDPASTE):
-        o_place_end(w_current, w_x, w_y, FALSE, "%paste-objects-hook");
-        w_current->inside_action = 0;
-        i_set_state(w_current, SELECT);
-        break;
-
       case(ROTATEMODE):   o_rotate_world_update(w_current, w_x, w_y, 90,
                             geda_list_get_glist(page->selection_list)); break;
       case(MIRRORMODE):   o_mirror_world_update(w_current, w_x, w_y,
@@ -229,7 +219,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
             w_current->event_state == MOVEMODE||
             w_current->event_state == COPYMODE  ||
             w_current->event_state == MCOPYMODE ||
-            w_current->event_state == ENDPASTE )) {
+            w_current->event_state == PASTEMODE )) {
         i_callback_cancel(w_current, 0, NULL);
       }
       goto end_button_pressed;
@@ -386,7 +376,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
           w_current->event_state == MOVEMODE||
           w_current->event_state == COPYMODE  ||
           w_current->event_state == MCOPYMODE ||
-          w_current->event_state == ENDPASTE ) {
+          w_current->event_state == PASTEMODE ) {
 
         if (w_current->event_state == MOVEMODE) {
           o_move_invalidate_rubber (w_current, FALSE);
@@ -511,6 +501,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
         case (COPYMODE)   :
         case (MCOPYMODE)  :
         case (COMPMODE)   :
+        case (PASTEMODE)  :
         case (TEXTMODE)   : o_place_motion (w_current, w_x, w_y); break;
         case (MOVEMODE)   : o_move_motion (w_current, w_x, w_y); break;
         default: break;
@@ -538,13 +529,6 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
       case(NETMODE)    :   o_net_start_magnetic(w_current, w_x, w_y); break;
       default: break;
     }
-  }
-
-  switch(w_current->event_state) {
-
-    case(ENDPASTE):
-    o_place_motion (w_current, w_x, w_y);
-    break;
   }
 
   scm_dynwind_end ();

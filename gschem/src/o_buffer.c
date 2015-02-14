@@ -193,8 +193,7 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
   o_glist_translate_world (toplevel, w_x - x, w_y - y,
                            toplevel->page_current->place_list);
 
-  w_current->inside_action = 1;
-  i_set_state(w_current, ENDPASTE);
+  i_set_state(w_current, PASTEMODE);
   o_place_start (w_current, w_x, w_y);
 
   /* the next paste operation will be a copy of these objects */
