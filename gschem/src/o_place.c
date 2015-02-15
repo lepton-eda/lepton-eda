@@ -58,7 +58,7 @@ void o_place_end (GschemToplevel *w_current,
   g_assert (w_current->inside_action != 0);
 
   /* erase old image */
-  /* o_place_invaidate_rubber (w_current, FALSE); */
+  /* o_place_invalidate_rubber (w_current, FALSE); */
   w_current->rubber_visible = 0;
 
   /* Calc final object positions */
@@ -179,7 +179,7 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
    * method and movement constraints, use with the current settings */
   if (drawing) {
     /* Ensure we set this to flag there is "something" supposed to be
-     * drawn when the invaliate call below causes an expose event. */
+     * drawn when the invalidate call below causes an expose event. */
     w_current->last_drawb_mode = w_current->actionfeedback_mode;
     w_current->drawbounding_action_mode = (w_current->CONTROLKEY)
                                             ? CONSTRAINED : FREE;
