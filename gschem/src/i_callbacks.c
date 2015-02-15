@@ -702,6 +702,12 @@ DEFINE_I_CALLBACK(edit_mirror)
 
   g_return_if_fail (w_current != NULL);
 
+  if (w_current->inside_action &&
+      (gschem_toplevel_get_current_page_view (w_current)->page->place_list != NULL)) {
+    o_place_mirror (w_current);
+    return;
+  }
+
   if (!g_action_get_position (TRUE, &wx, &wy)) {
     i_set_state(w_current, MIRRORMODE);
     i_update_middle_button(w_current, i_callback_edit_mirror, _("Mirror"));

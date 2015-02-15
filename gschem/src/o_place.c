@@ -334,3 +334,29 @@ void o_place_rotate (GschemToplevel *w_current)
                           toplevel->page_current->place_list);
   o_place_invalidate_rubber (w_current, TRUE);
 }
+
+
+/*! \brief Mirror the objects being placed
+ *
+ *  \par Function Description
+ *  This function erases the objects in the place list, mirrors
+ *  them, runs %mirror-objects-hook, and redraws the objects after
+ *  mirroring.
+ *
+ *  \param [in] w_current   The GschemToplevel object.
+ */
+void o_place_mirror (GschemToplevel *w_current)
+{
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+
+  o_place_invalidate_rubber (w_current, FALSE);
+  o_glist_mirror_world (toplevel,
+                        w_current->first_wx, w_current->first_wy,
+                        toplevel->page_current->place_list);
+
+
+  /* Run mirror-objects-hook */
+  g_run_hook_object_list (w_current, "%mirror-objects-hook",
+                          toplevel->page_current->place_list);
+  o_place_invalidate_rubber (w_current, TRUE);
+}

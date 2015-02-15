@@ -534,6 +534,7 @@ void o_place_motion(GschemToplevel *w_current, int x, int y);
 void o_place_invalidate_rubber(GschemToplevel *w_current, int drawing);
 void o_place_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer);
 void o_place_rotate(GschemToplevel *w_current);
+void o_place_mirror(GschemToplevel *w_current);
 /* o_select.c */
 void o_select_run_hooks(GschemToplevel *w_current, OBJECT *o_current, int flag);
 void o_select_object(GschemToplevel *w_current, OBJECT *o_current, int type, int count);
