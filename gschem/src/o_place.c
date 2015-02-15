@@ -22,10 +22,16 @@
 
 #include "gschem.h"
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Start placement action
  *
+ *  \par Function Description
+ *  This function remembers the current world coordinates and
+ *  invalidates the bounding box of the objects in the current
+ *  place list.
+ *
+ *  \param [in] w_current   GschemToplevel which we're drawing for.
+ *  \param [in] w_x         The current world X coordinate.
+ *  \param [in] w_y         The current world Y coordinate.
  */
 void o_place_start (GschemToplevel *w_current, int w_x, int w_y)
 {
@@ -36,10 +42,21 @@ void o_place_start (GschemToplevel *w_current, int w_x, int w_y)
   w_current->rubber_visible = 1;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief End placement action
  *
+ *  \par Function Description
+ *  This function finishes the current placement action by adding
+ *  objects to the current page at the given new world coordinates
+ *  and redrawing them on the canvas. It also saves the current
+ *  state in the undo list and updates the menus.
+ *
+ *  If \a continue_placing is TRUE, a copy of the placement list
+ *  is saved to start a new place action.
+ *
+ *  \param [in]  w_current  GschemToplevel which we're drawing for.
+ *  \param [in]  w_x        The current world X coordinate.
+ *  \param [in]  w_y        The current world Y coordinate.
+ *  \param [in]  hook_name  The hook to run after adding the objects.
  */
 void o_place_end (GschemToplevel *w_current,
                   int w_x, int w_y,
@@ -110,10 +127,16 @@ void o_place_end (GschemToplevel *w_current,
   i_update_menus (w_current);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Move the objects in the place list to new coordinates
  *
+ *  \par Function Description
+ *  This function erases the objects in the current place list at
+ *  their previous coordinates and draws them at the new given
+ *  coordinates.
+ *
+ *  \param [in] w_current   GschemToplevel which we're drawing for.
+ *  \param [in] w_x         The current world X coordinate.
+ *  \param [in] w_y         The current world Y coordinate.
  */
 void o_place_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
@@ -287,10 +310,14 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
+/*! \brief Rotate the objects being placed
  *
+ *  \par Function Description
+ *  This function erases the objects in the place list, rotates
+ *  them, runs %rotate-objects-hook, and redraws the objects after
+ *  rotating.
+ *
+ *  \param [in] w_current   The GschemToplevel object.
  */
 void o_place_rotate (GschemToplevel *w_current)
 {
