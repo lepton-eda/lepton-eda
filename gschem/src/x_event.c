@@ -230,7 +230,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
       case(ENDCOMP):
         o_place_end(w_current, w_x, w_y, w_current->continue_component_place,
-                    NULL, "%add-objects-hook");
+                    "%add-objects-hook");
         if (!w_current->continue_component_place) {
           w_current->inside_action = 0;
           i_set_state(w_current, SELECT);
@@ -238,7 +238,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         break;
 
       case(ENDPASTE):
-        o_place_end(w_current, w_x, w_y, FALSE, NULL, "%paste-objects-hook");
+        o_place_end(w_current, w_x, w_y, FALSE, "%paste-objects-hook");
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
         break;
@@ -256,7 +256,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         break;
 
       case(ENDTEXT):
-        o_place_end(w_current, w_x, w_y, FALSE, NULL, "%add-objects-hook");
+        o_place_end(w_current, w_x, w_y, FALSE, "%add-objects-hook");
         w_current->inside_action = 0;
         i_set_state(w_current, SELECT);
         break;

@@ -44,7 +44,6 @@ void o_place_start (GschemToplevel *w_current, int w_x, int w_y)
 void o_place_end (GschemToplevel *w_current,
                   int w_x, int w_y,
                   int continue_placing,
-                  GList **ret_new_objects,
                   const char* hook_name)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -77,10 +76,6 @@ void o_place_end (GschemToplevel *w_current,
     /* Otherwise just take it */
     temp_dest_list = toplevel->page_current->place_list;
     toplevel->page_current->place_list = NULL;
-  }
-
-  if (ret_new_objects != NULL) {
-    *ret_new_objects = g_list_copy (temp_dest_list);
   }
 
   o_glist_translate_world(toplevel, w_diff_x, w_diff_y, temp_dest_list);

@@ -72,7 +72,7 @@ void o_copy_start(GschemToplevel *w_current, int w_x, int w_y)
 void o_copy_end(GschemToplevel *w_current)
 {
   o_place_end (w_current, w_current->second_wx, w_current->second_wy, FALSE,
-               NULL, "%paste-objects-hook");
+               "%paste-objects-hook");
 }
 
 
@@ -84,5 +84,5 @@ void o_copy_end(GschemToplevel *w_current)
 void o_copy_multiple_end(GschemToplevel *w_current)
 {
   o_place_end (w_current, w_current->second_wx, w_current->second_wy, TRUE,
-               NULL, "%paste-objects-hook");
+               "%paste-objects-hook");
 }
