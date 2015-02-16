@@ -1752,12 +1752,10 @@ DEFINE_I_CALLBACK(add_net)
   i_set_state(w_current, NETMODE);
   i_update_middle_button(w_current, i_callback_add_net, _("Net"));
 
-  if (!g_action_get_position (TRUE, &wx, &wy)) {
-    return;
+  if (g_action_get_position (TRUE, &wx, &wy)) {
+    o_net_reset(w_current);
+    o_net_start(w_current, wx, wy);
   }
-
-  o_net_reset(w_current);
-  o_net_start(w_current, wx, wy);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1793,11 +1791,9 @@ DEFINE_I_CALLBACK(add_bus)
   i_set_state(w_current, BUSMODE);
   i_update_middle_button(w_current, i_callback_add_bus, _("Bus"));
 
-  if (!g_action_get_position (TRUE, &wx, &wy)) {
-    return;
+  if (g_action_get_position (TRUE, &wx, &wy)) {
+    o_bus_start(w_current, wx, wy);
   }
-
-  o_bus_start(w_current, wx, wy);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1867,11 +1863,9 @@ DEFINE_I_CALLBACK(add_line)
   i_set_state(w_current, LINEMODE);
   i_update_middle_button(w_current, i_callback_add_line, _("Line"));
 
-  if (!g_action_get_position (TRUE, &wx, &wy)) {
-    return;
+  if (g_action_get_position (TRUE, &wx, &wy)) {
+    o_line_start(w_current, wx, wy);
   }
-
-  o_line_start(w_current, wx, wy);
 }
 
 DEFINE_I_CALLBACK(add_path)
@@ -1908,11 +1902,9 @@ DEFINE_I_CALLBACK(add_box)
   i_set_state(w_current, BOXMODE);
   i_update_middle_button(w_current, i_callback_add_box, _("Box"));
 
-  if (!g_action_get_position (TRUE, &wx, &wy)) {
-    return;
+  if (g_action_get_position (TRUE, &wx, &wy)) {
+    o_box_start(w_current, wx, wy);
   }
-
-  o_box_start(w_current, wx, wy);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1952,11 +1944,9 @@ DEFINE_I_CALLBACK(add_circle)
   i_set_state(w_current, CIRCLEMODE);
   i_update_middle_button(w_current, i_callback_add_circle, _("Circle"));
 
-  if (!g_action_get_position (TRUE, &wx, &wy)) {
-    return;
+  if (g_action_get_position (TRUE, &wx, &wy)) {
+    o_circle_start(w_current, wx, wy);
   }
-
-  o_circle_start(w_current, wx, wy);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1977,11 +1967,9 @@ DEFINE_I_CALLBACK(add_arc)
   i_set_state(w_current, ARCMODE);
   i_update_middle_button(w_current, i_callback_add_arc, _("Arc"));
 
-  if (!g_action_get_position (TRUE, &wx, &wy)) {
-    return;
+  if (g_action_get_position (TRUE, &wx, &wy)) {
+    o_arc_start(w_current, wx, wy);
   }
-
-  o_arc_start(w_current, wx, wy);
 }
 
 /*! \todo Finish function documentation!!!
@@ -2002,11 +1990,9 @@ DEFINE_I_CALLBACK(add_pin)
   i_set_state (w_current, PINMODE);
   i_update_middle_button(w_current, i_callback_add_pin, _("Pin"));
 
-  if (!g_action_get_position (TRUE, &wx, &wy)) {
-    return;
+  if (g_action_get_position (TRUE, &wx, &wy)) {
+    o_pin_start(w_current, wx, wy);
   }
-
-  o_pin_start(w_current, wx, wy);
 }
 
 /*! \section hierarchy-menu Hierarchy Menu Callback Functions */
