@@ -70,10 +70,8 @@ void o_select_start (GschemToplevel *w_current, int wx, int wy)
  *  \par Function Description
  *  Finishes the process of selection if the \a o_select_start()
  *  or \a o_select_motion() functions haven't defined other
- *  functions to finish it. If no grip was found at the given
- *  coordinates the function tries to find an object under the
- *  mouse pointer and select it.  Otherwise, it switches on the
- *  GRIPS mode for working with the grip found.
+ *  functions to finish it.  In this case the function tries to
+ *  find an object under the mouse pointer and select it.
  *
  *  The function is intended to be called by releasing the left
  *  mouse button.
@@ -84,13 +82,9 @@ void o_select_start (GschemToplevel *w_current, int wx, int wy)
  */
 void o_select_end (GschemToplevel *w_current, int wx, int wy)
 {
-  /* first look for grips */
-  o_grips_start(w_current, wx, wy);
-  if (w_current->event_state != GRIPS) {
-    /* now go looking for objects to select */
-    o_find_object(w_current, wx, wy, TRUE);
-    i_set_state (w_current, SELECT);
-  }
+  /* look for objects to select */
+  o_find_object(w_current, wx, wy, TRUE);
+  w_current->inside_action = 0;
 }
 
 
