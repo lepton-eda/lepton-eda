@@ -38,6 +38,100 @@
 
 #include "gschem.h"
 
+/*! \brief Start the process of selection
+ *  \par Function Description
+ *  Chooses the way of how to start the selection process. If no
+ *  grip was found at the given coordinates the function toggles
+ *  the current state into the STARTSELECT mode in order to define
+ *  what to do farther. Otherwise, it switches on the GRIPS mode
+ *  for working with the grip found.
+ *
+ *  The function is intended to be called by pressing the left
+ *  mouse button.
+ *
+ *  \param [in] w_current The GschemToplevel structure.
+ *  \param [in] wx        The world X coordinate.
+ *  \param [in] wy        The world Y coordinate.
+ */
+void o_select_start (GschemToplevel *w_current, int wx, int wy)
+{
+  /* look for grips or fall through if not enabled */
+  if (!o_grips_start(w_current, wx, wy)) {
+    /* now go into normal SELECT */
+    i_set_state (w_current, STARTSELECT);
+    w_current->first_wx = w_current->second_wx = wx;
+    w_current->first_wy = w_current->second_wy = wy;
+  } else {
+    i_set_state (w_current, GRIPS);
+    w_current->inside_action = 1;
+  }
+}
+
+/*! \brief End the process of selection
+ *  \par Function Description
+ *  Finishes the process of selection if the \a o_select_start()
+ *  or \a o_select_motion() functions haven't defined other
+ *  functions to finish it. If no grip was found at the given
+ *  coordinates the function tries to find an object under the
+ *  mouse pointer and select it.  Otherwise, it switches on the
+ *  GRIPS mode for working with the grip found.
+ *
+ *  The function is intended to be called by releasing the left
+ *  mouse button.
+ *
+ *  \param [in] w_current The GschemToplevel structure.
+ *  \param [in] wx        The world X coordinate.
+ *  \param [in] wy        The world Y coordinate.
+ */
+void o_select_end (GschemToplevel *w_current, int wx, int wy)
+{
+  /* first look for grips */
+  if (!o_grips_start(w_current, wx, wy)) {
+    /* now go looking for objects to select */
+    o_find_object(w_current, wx, wy, TRUE);
+    i_set_state (w_current, SELECT);
+  } else {
+    /* an grip was found */
+    i_set_state (w_current, GRIPS);
+    w_current->inside_action = 1;
+  }
+}
+
+
+/*! \brief Determine whether objects have to be selected or moved
+ *  \par Function Description
+ *  Checks if the shift or control keys are pressed, (that means
+ *  the user definitely wants to drag out a selection box), or
+ *  there are no selected objects under the cursor. In that case
+ *  the function starts drawing the selection box. Otherwise, it
+ *  looks for the objects that have been or could be selected and
+ *  starts moving them.
+ *
+ *  The function is intended to be called by motion of the mouse
+ *  while the left mouse button is pressed.
+ *
+ *  \param [in] w_current The GschemToplevel structure.
+ *  \param [in] wx        The world X coordinate.
+ *  \param [in] wy        The world Y coordinate.
+ */
+void o_select_motion (GschemToplevel *w_current, int wx, int wy)
+{
+  /* Check if a mod key is pressed or there is no selected object
+   * under the cursor */
+  if (w_current->SHIFTKEY || w_current->CONTROLKEY
+          || (!o_find_selected_object(w_current, w_current->first_wx, w_current->first_wy)
+              && (!o_find_object(w_current, w_current->first_wx, w_current->first_wy, TRUE)
+                  || !o_select_selected(w_current)))) {
+    /* Start drawing a selection box to select objects */
+    o_select_box_start(w_current, wx, wy);
+  } else {
+    /* Start moving the selected object(s) */
+    o_move_start(w_current, w_current->first_wx, w_current->first_wy);
+    i_set_state (w_current, ENDMOVE);
+    w_current->inside_action = 1;
+  }
+}
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

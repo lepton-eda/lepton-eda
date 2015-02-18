@@ -185,19 +185,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
     }
 
     switch(w_current->event_state) {
-      case(SELECT):
-        /* look for grips or fall through if not enabled */
-        if (!o_grips_start(w_current, unsnapped_wx, unsnapped_wy)) {
-          /* now go into normal SELECT */
-          i_set_state (w_current, STARTSELECT);
-          w_current->first_wx = w_current->second_wx = unsnapped_wx;
-          w_current->first_wy = w_current->second_wy = unsnapped_wy;
-        } else {
-          /* a grip was found */
-          i_set_state (w_current, GRIPS);
-          w_current->inside_action = 1;
-        }
-        break;
+      case(SELECT):       o_select_start(w_current, w_x, w_y); break;
 
       case(STARTCOPY):
         if (o_select_selected(w_current)) {
@@ -446,19 +434,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
         o_undo_savestate_old(w_current, UNDO_ALL);
         break;
 
-      case(STARTSELECT):
-        /* first look for grips */
-        if (!o_grips_start(w_current, unsnapped_wx, unsnapped_wy)) {
-                                /* now go looking for objects to select */
-          o_find_object(w_current, unsnapped_wx, unsnapped_wy, TRUE);
-          i_set_state (w_current, SELECT);
-          w_current->inside_action = 0;
-        } else {
-                                /* an grip was found */
-          i_set_state (w_current, GRIPS);
-          w_current->inside_action = 1;
-        }
-        break;
+      case(STARTSELECT): o_select_end(w_current, unsnapped_wx, unsnapped_wy); break;
     }
     if (w_current->inside_action) {
       switch(w_current->event_state) {
@@ -634,25 +610,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
       o_grips_motion(w_current, w_x, w_y);
     break;
 
-    case(STARTSELECT):
-    /* If the shift or control keys are pressed, that means the user definately wants to drag out a
-     * selection box.  Otherwise, if there is not a selected object under the cursor, look for one
-     * that could be selected and start moving it.
-     */
-    if (w_current->SHIFTKEY || w_current->CONTROLKEY
-            || (!o_find_selected_object(w_current, w_current->first_wx, w_current->first_wy)
-                && (!o_find_object(w_current, w_current->first_wx, w_current->first_wy, TRUE)
-                    || !o_select_selected(w_current)))) {
-      o_select_box_start(w_current, unsnapped_wx, unsnapped_wy);
-      break;
-    } else {
-      /* Start moving the selected object(s) */
-      o_move_start(w_current, w_x, w_y);
-      i_set_state (w_current, ENDMOVE);
-      w_current->inside_action = 1;
-      /* Fall through bottom of case to finish the move */
-    }
-    /* Fall through to handle move */
+    case(STARTSELECT): o_select_motion (w_current, unsnapped_wx, unsnapped_wy); break;
     case(ENDMOVE):
     case(MOVE):
     if (w_current->inside_action)
