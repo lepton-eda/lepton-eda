@@ -64,7 +64,6 @@ static const char *i_status_string(GschemToplevel *w_current)
   switch ( w_current->event_state ) {
     case NONE:
       return "";
-    case STARTSELECT:
     case SELECT:
     case SBOX:
       return _("Select Mode");
@@ -290,7 +289,6 @@ void i_update_toolbar(GschemToplevel *w_current)
   switch(w_current->event_state) {
     case(NONE):
     case(SELECT):
-    case(STARTSELECT):
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(
 				   w_current->toolbar_select), TRUE);
       break;

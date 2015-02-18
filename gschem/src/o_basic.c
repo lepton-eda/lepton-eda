@@ -379,7 +379,6 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(STARTMCOPY):
     case(STARTMOVE):
     case(STARTPASTE):
-    case(STARTSELECT):
       return FALSE;
   }
 

@@ -41,7 +41,7 @@ enum x_states {
 //STARTDRAWNET, /* 13 */
   DRAWCOMP,     /* 14 */
   SBOX,         /* 15 */
-  STARTSELECT,  /* 16 */
+//STARTSELECT,  /* 16 */
   STARTCOPY,    /* 17 */
   STARTMOVE,    /* 18 */
   ENDCOPY,      /* 19 */

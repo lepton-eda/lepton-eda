@@ -41,10 +41,11 @@
 /*! \brief Start the process of selection
  *  \par Function Description
  *  Chooses the way of how to start the selection process. If no
- *  grip was found at the given coordinates the function toggles
- *  the current state into the STARTSELECT mode in order to define
- *  what to do farther. Otherwise, it switches on the GRIPS mode
- *  for working with the grip found.
+ *  grip was found at the given coordinates the function sets
+ *  \a w_current->inside_action in order to force other functions
+ *  (\a o_select_motion() or \a o_select_end()) to decide that.
+ *  Otherwise, it switches on the GRIPS mode for working with the
+ *  grip found.
  *
  *  The function is intended to be called by pressing the left
  *  mouse button.
@@ -60,7 +61,7 @@ void o_select_start (GschemToplevel *w_current, int wx, int wy)
 
   if (w_current->event_state != GRIPS) {
     /* now go into normal SELECT */
-    i_set_state (w_current, STARTSELECT);
+    w_current->inside_action = 1;
     w_current->first_wx = w_current->second_wx = wx;
     w_current->first_wy = w_current->second_wy = wy;
   }
@@ -82,6 +83,8 @@ void o_select_start (GschemToplevel *w_current, int wx, int wy)
  */
 void o_select_end (GschemToplevel *w_current, int wx, int wy)
 {
+  g_assert (w_current->inside_action != 0);
+
   /* look for objects to select */
   o_find_object(w_current, wx, wy, TRUE);
   w_current->inside_action = 0;
@@ -106,6 +109,8 @@ void o_select_end (GschemToplevel *w_current, int wx, int wy)
  */
 void o_select_motion (GschemToplevel *w_current, int wx, int wy)
 {
+  g_assert (w_current->inside_action != 0);
+
   /* Check if a mod key is pressed or there is no selected object
    * under the cursor */
   if (w_current->SHIFTKEY || w_current->CONTROLKEY

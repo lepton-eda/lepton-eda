@@ -132,13 +132,11 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
   w_y = snap_grid (w_current, unsnapped_wy);
 
   if (event->type == GDK_2BUTTON_PRESS &&
-      (w_current->event_state == STARTSELECT ||
-       w_current->event_state == SELECT)) {
+      w_current->event_state == SELECT) {
     /* Don't re-select an object (lp-912978) */
     /* o_find_object(w_current, w_x, w_y, TRUE); */
     if (o_select_selected (w_current)) {
        o_edit(w_current, geda_list_get_glist( page->selection_list ));
-       i_set_state(w_current, SELECT);
        scm_dynwind_end ();
        return(0);
     }
@@ -180,13 +178,12 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         case (PICTUREMODE): o_picture_start(w_current, w_x, w_y); break;
         case (PINMODE)    : o_pin_start (w_current, w_x, w_y); break;
         case (ZOOMBOX)    : a_zoom_box_start(w_current, unsnapped_wx, unsnapped_wy); break;
+        case(SELECT)      : o_select_start(w_current, w_x, w_y); break;
         default: break;
       }
     }
 
     switch(w_current->event_state) {
-      case(SELECT):       o_select_start(w_current, w_x, w_y); break;
-
       case(STARTCOPY):
         if (o_select_selected(w_current)) {
           o_copy_start(w_current, w_x, w_y);
@@ -392,9 +389,6 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
   if (event->button == 1) {
 
     switch(w_current->event_state) {
-      case(SELECT):
-        /* do nothing */
-        break;
       case(MOVE):
         i_set_state (w_current, ENDMOVE);
         break;
@@ -428,14 +422,13 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
         i_set_state(w_current, ENDMCOPY);
         o_undo_savestate_old(w_current, UNDO_ALL);
         break;
-
-      case(STARTSELECT): o_select_end(w_current, unsnapped_wx, unsnapped_wy); break;
     }
     if (w_current->inside_action) {
       switch(w_current->event_state) {
         case(GRIPS)      : o_grips_end(w_current); break;
         case(PATHMODE)   : o_path_end (w_current, w_x, w_y); break;
         case(SBOX)       : o_select_box_end(w_current, unsnapped_wx, unsnapped_wy); break;
+        case(SELECT)     : o_select_end(w_current, unsnapped_wx, unsnapped_wy); break;
         case(ZOOMBOX)    : a_zoom_box_end(w_current, unsnapped_wx, unsnapped_wy); break;
         default: break;
       }
@@ -588,6 +581,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
       case(GRIPS)      :   o_grips_motion(w_current, w_x, w_y); break;
       case(SBOX)       :   o_select_box_motion (w_current, unsnapped_wx, unsnapped_wy); break;
       case(ZOOMBOX)    :   a_zoom_box_motion (w_current, unsnapped_wx, unsnapped_wy); break;
+      case(SELECT)     :   o_select_motion (w_current, w_x, w_y); break;
       default: break;
     }
   } else {
@@ -599,11 +593,6 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
 
   switch(w_current->event_state) {
 
-    case(SELECT):
-    /* do nothing */
-    break;
-
-    case(STARTSELECT): o_select_motion (w_current, unsnapped_wx, unsnapped_wy); break;
     case(ENDMOVE):
     case(MOVE):
     if (w_current->inside_action)
