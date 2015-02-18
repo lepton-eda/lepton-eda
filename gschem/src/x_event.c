@@ -402,9 +402,6 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
   g_dynwind_window (w_current);
 
   if (event->button == 1) {
-    if ((w_current->event_state == ZOOMBOX) && w_current->inside_action) {
-      a_zoom_box_end(w_current, unsnapped_wx, unsnapped_wy);
-    }
 
     switch(w_current->event_state) {
       case(SELECT):
@@ -471,6 +468,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
     if (w_current->inside_action) {
       switch(w_current->event_state) {
         case(PATHMODE)   : o_path_end (w_current, w_x, w_y); break;
+        case(ZOOMBOX)    : a_zoom_box_end(w_current, unsnapped_wx, unsnapped_wy); break;
         default: break;
       }
     }
