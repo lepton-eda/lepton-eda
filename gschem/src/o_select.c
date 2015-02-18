@@ -56,14 +56,13 @@
 void o_select_start (GschemToplevel *w_current, int wx, int wy)
 {
   /* look for grips or fall through if not enabled */
-  if (!o_grips_start(w_current, wx, wy)) {
+  o_grips_start(w_current, wx, wy);
+
+  if (w_current->event_state != GRIPS) {
     /* now go into normal SELECT */
     i_set_state (w_current, STARTSELECT);
     w_current->first_wx = w_current->second_wx = wx;
     w_current->first_wy = w_current->second_wy = wy;
-  } else {
-    i_set_state (w_current, GRIPS);
-    w_current->inside_action = 1;
   }
 }
 
@@ -86,14 +85,11 @@ void o_select_start (GschemToplevel *w_current, int wx, int wy)
 void o_select_end (GschemToplevel *w_current, int wx, int wy)
 {
   /* first look for grips */
-  if (!o_grips_start(w_current, wx, wy)) {
+  o_grips_start(w_current, wx, wy);
+  if (w_current->event_state != GRIPS) {
     /* now go looking for objects to select */
     o_find_object(w_current, wx, wy, TRUE);
     i_set_state (w_current, SELECT);
-  } else {
-    /* an grip was found */
-    i_set_state (w_current, GRIPS);
-    w_current->inside_action = 1;
   }
 }
 

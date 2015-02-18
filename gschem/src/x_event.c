@@ -406,11 +406,6 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
       case(MCOPY):
         i_set_state (w_current, ENDMCOPY);
         break;
-      case(GRIPS):
-        o_grips_end(w_current),
-        w_current->inside_action = 0;
-        i_set_state(w_current, SELECT);
-        break;
       case(ENDMOVE):
         o_move_end(w_current);
         /* having this stay in copy was driving me nuts*/
@@ -438,6 +433,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
     }
     if (w_current->inside_action) {
       switch(w_current->event_state) {
+        case(GRIPS)      : o_grips_end(w_current); break;
         case(PATHMODE)   : o_path_end (w_current, w_x, w_y); break;
         case(SBOX)       : o_select_box_end(w_current, unsnapped_wx, unsnapped_wy); break;
         case(ZOOMBOX)    : a_zoom_box_end(w_current, unsnapped_wx, unsnapped_wy); break;
@@ -589,6 +585,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
       case(PATHMODE)   :   o_path_motion (w_current, w_x, w_y); break;
       case(PICTUREMODE):   o_picture_motion (w_current, w_x, w_y); break;
       case(PINMODE)    :   o_pin_motion (w_current, w_x, w_y); break;
+      case(GRIPS)      :   o_grips_motion(w_current, w_x, w_y); break;
       case(SBOX)       :   o_select_box_motion (w_current, unsnapped_wx, unsnapped_wy); break;
       case(ZOOMBOX)    :   a_zoom_box_motion (w_current, unsnapped_wx, unsnapped_wy); break;
       default: break;
@@ -604,10 +601,6 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
 
     case(SELECT):
     /* do nothing */
-    break;
-
-    case(GRIPS):
-      o_grips_motion(w_current, w_x, w_y);
     break;
 
     case(STARTSELECT): o_select_motion (w_current, unsnapped_wx, unsnapped_wy); break;

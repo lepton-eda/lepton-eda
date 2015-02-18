@@ -449,7 +449,7 @@ OBJECT *o_grips_search_path_world(GschemToplevel *w_current, OBJECT *o_current, 
 OBJECT *o_grips_search_picture_world(GschemToplevel *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
 OBJECT *o_grips_search_circle_world(GschemToplevel *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
 OBJECT *o_grips_search_line_world(GschemToplevel *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
-int o_grips_start(GschemToplevel *w_current, int x, int y);
+void o_grips_start(GschemToplevel *w_current, int x, int y);
 void o_grips_motion(GschemToplevel *w_current, int x, int y);
 void o_grips_end(GschemToplevel *w_current);
 void o_grips_cancel(GschemToplevel *w_current);
