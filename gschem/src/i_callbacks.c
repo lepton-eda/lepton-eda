@@ -2724,9 +2724,7 @@ DEFINE_I_CALLBACK(cancel)
   /* clear the key guile command-sequence */
   g_keys_reset (w_current);
 
-  if (w_current->inside_action) {
-     o_invalidate_all (w_current);
-  }
+  o_invalidate_all (w_current);
 
   w_current->inside_action=0;
 }
