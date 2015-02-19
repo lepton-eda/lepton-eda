@@ -178,7 +178,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         case (PICTUREMODE): o_picture_start(w_current, w_x, w_y); break;
         case (PINMODE)    : o_pin_start (w_current, w_x, w_y); break;
         case (ZOOMBOX)    : a_zoom_box_start(w_current, unsnapped_wx, unsnapped_wy); break;
-        case(SELECT)      : o_select_start(w_current, w_x, w_y); break;
+        case (SELECT)     : o_select_start(w_current, w_x, w_y); break;
         default: break;
       }
     }
