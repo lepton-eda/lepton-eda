@@ -183,8 +183,6 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-  GschemBindingInteger *binding = GSCHEM_BINDING_INTEGER (object);
-
   switch (param_id) {
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);

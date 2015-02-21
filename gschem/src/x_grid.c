@@ -373,6 +373,7 @@ void x_grid_draw_region (GschemToplevel *w_current,
     case GRID_MODE_MESH:
       draw_mesh_grid_region (w_current, cr, x, y, width, height);
       break;
+    default: g_assert_not_reached ();
   }
 
 #if DEBUG

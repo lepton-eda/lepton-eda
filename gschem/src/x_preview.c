@@ -169,7 +169,6 @@ preview_callback_button_press (GtkWidget *widget,
 static void
 preview_update (Preview *preview)
 {
-  GschemToplevel *preview_w_current = preview->preview_w_current;
   int left, top, right, bottom;
   int width, height;
   GError * err = NULL;
@@ -305,7 +304,6 @@ preview_event_configure (GtkWidget         *widget,
 {
   gboolean retval;
   GschemToplevel *preview_w_current = PREVIEW (widget)->preview_w_current;
-  PAGE *preview_page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (widget));
 
   retval = x_event_configure (GSCHEM_PAGE_VIEW (widget), event, preview_w_current);
 

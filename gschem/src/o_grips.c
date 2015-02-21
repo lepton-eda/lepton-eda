@@ -859,7 +859,7 @@ void o_grips_start(GschemToplevel *w_current, int w_x, int w_y)
 {
   OBJECT *object;
   int whichone;
-  void (*func) (GschemToplevel*, OBJECT*, int*, int*, int*) = NULL;
+  void (*func) (GschemToplevel*, OBJECT*, int, int, int) = NULL;
 
   if (w_current->draw_grips) {
 
