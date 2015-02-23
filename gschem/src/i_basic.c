@@ -70,8 +70,7 @@ static const char *i_status_string(GschemToplevel *w_current)
     case DRAWCOMP:
     case ENDCOMP:
       return _("Component Mode"); /*EK* new */
-    case ENDTEXT:
-      return _("Text Mode"); /*EK* new */
+    case TEXTMODE: return _("Text Mode");
     case STARTCOPY:
     case ENDCOPY:
       return _("Copy Mode");
@@ -317,8 +316,8 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(ENDCOPY): /*! \todo */
     case(ENDMOVE): /*! \todo */
     case(ENDCOMP): /*! \todo */
-    case(ENDTEXT): /*! \todo */
     case(ROTATEMODE): /*! \todo */
+    case(TEXTMODE): /*! \todo */
     case(MIRRORMODE): /*! \todo */
     case(ZOOMBOX): /*! \todo */
     case(STARTPASTE): /*! \todo */

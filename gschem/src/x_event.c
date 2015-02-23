@@ -153,17 +153,25 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
   if (event->button == 1) {
     if (w_current->inside_action) {
       /* End action */
-      switch(w_current->event_state) {
-        case (ARCMODE)    : o_arc_end1(w_current, w_x, w_y); break;
-        case (BOXMODE)    : o_box_end(w_current, w_x, w_y); break;
-        case (BUSMODE)    : o_bus_end(w_current, w_x, w_y); break;
-        case (CIRCLEMODE) : o_circle_end(w_current, w_x, w_y); break;
-        case (LINEMODE)   : o_line_end(w_current, w_x, w_y); break;
-        case (NETMODE)    : o_net_end(w_current, w_x, w_y); break;
-        case (PATHMODE)   : o_path_continue (w_current, w_x, w_y); break;
-        case (PICTUREMODE): o_picture_end(w_current, w_x, w_y); break;
-        case (PINMODE)    : o_pin_end (w_current, w_x, w_y); break;
-        default: break;
+      if (page_view->page->place_list != NULL) {
+        switch(w_current->event_state) {
+          case (TEXTMODE)   : o_place_end(w_current, w_x, w_y, FALSE,
+                                "%add-objects-hook"); break;
+          default: break;
+        }
+      } else {
+        switch(w_current->event_state) {
+          case (ARCMODE)    : o_arc_end1(w_current, w_x, w_y); break;
+          case (BOXMODE)    : o_box_end(w_current, w_x, w_y); break;
+          case (BUSMODE)    : o_bus_end(w_current, w_x, w_y); break;
+          case (CIRCLEMODE) : o_circle_end(w_current, w_x, w_y); break;
+          case (LINEMODE)   : o_line_end(w_current, w_x, w_y); break;
+          case (NETMODE)    : o_net_end(w_current, w_x, w_y); break;
+          case (PATHMODE)   : o_path_continue (w_current, w_x, w_y); break;
+          case (PICTUREMODE): o_picture_end(w_current, w_x, w_y); break;
+          case (PINMODE)    : o_pin_end (w_current, w_x, w_y); break;
+          default: break;
+        }
       }
     } else {
       /* Start action */
@@ -234,13 +242,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       case(MIRRORMODE):   o_mirror_world_update(w_current, w_x, w_y,
                             geda_list_get_glist(page->selection_list)); break;
 
-      case(ENDTEXT):
-        o_place_end(w_current, w_x, w_y, FALSE, "%add-objects-hook");
-        w_current->inside_action = 0;
-        i_set_state(w_current, SELECT);
-        break;
-
-
       case(PAN):
         gschem_page_view_pan (page_view, w_x, w_y);
         i_set_state(w_current, SELECT);
@@ -251,7 +252,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
     /* try this out and see how it behaves */
     if (w_current->inside_action) {
       if (!(w_current->event_state == ENDCOMP ||
-            w_current->event_state == ENDTEXT ||
+            w_current->event_state == TEXTMODE||
             w_current->event_state == ENDMOVE ||
             w_current->event_state == ENDCOPY ||
             w_current->event_state == ENDMCOPY ||
@@ -436,7 +437,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 
     if (w_current->inside_action) {
       if (w_current->event_state == ENDCOMP ||
-          w_current->event_state == ENDTEXT ||
+          w_current->event_state == TEXTMODE||
           w_current->event_state == ENDMOVE ||
           w_current->event_state == ENDCOPY ||
           w_current->event_state == ENDMCOPY ||
@@ -567,21 +568,28 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
   g_dynwind_window (w_current);
 
   if (w_current->inside_action) {
-    switch(w_current->event_state) {
-      case(ARCMODE)    :   o_arc_motion (w_current, w_x, w_y, ARC_RADIUS); break;
-      case(BOXMODE)    :   o_box_motion  (w_current, w_x, w_y); break;
-      case(BUSMODE)    :   o_bus_motion (w_current, w_x, w_y); break;
-      case(CIRCLEMODE) :   o_circle_motion (w_current, w_x, w_y); break;
-      case(LINEMODE)   :   o_line_motion (w_current, w_x, w_y); break;
-      case(NETMODE)    :   o_net_motion (w_current, w_x, w_y); break;
-      case(PATHMODE)   :   o_path_motion (w_current, w_x, w_y); break;
-      case(PICTUREMODE):   o_picture_motion (w_current, w_x, w_y); break;
-      case(PINMODE)    :   o_pin_motion (w_current, w_x, w_y); break;
-      case(GRIPS)      :   o_grips_motion(w_current, w_x, w_y); break;
-      case(SBOX)       :   o_select_box_motion (w_current, unsnapped_wx, unsnapped_wy); break;
-      case(ZOOMBOX)    :   a_zoom_box_motion (w_current, unsnapped_wx, unsnapped_wy); break;
-      case(SELECT)     :   o_select_motion (w_current, w_x, w_y); break;
-      default: break;
+    if (page_view->page->place_list != NULL) {
+      switch(w_current->event_state) {
+        case (TEXTMODE)   : o_place_motion (w_current, w_x, w_y); break;
+        default: break;
+      }
+    } else {
+      switch(w_current->event_state) {
+        case (ARCMODE)    : o_arc_motion (w_current, w_x, w_y, ARC_RADIUS); break;
+        case (BOXMODE)    : o_box_motion  (w_current, w_x, w_y); break;
+        case (BUSMODE)    : o_bus_motion (w_current, w_x, w_y); break;
+        case (CIRCLEMODE) : o_circle_motion (w_current, w_x, w_y); break;
+        case (LINEMODE)   : o_line_motion (w_current, w_x, w_y); break;
+        case (NETMODE)    : o_net_motion (w_current, w_x, w_y); break;
+        case (PATHMODE)   : o_path_motion (w_current, w_x, w_y); break;
+        case (PICTUREMODE): o_picture_motion (w_current, w_x, w_y); break;
+        case (PINMODE)    : o_pin_motion (w_current, w_x, w_y); break;
+        case (GRIPS)      : o_grips_motion(w_current, w_x, w_y); break;
+        case (SBOX)       : o_select_box_motion (w_current, unsnapped_wx, unsnapped_wy); break;
+        case (ZOOMBOX)    : a_zoom_box_motion (w_current, unsnapped_wx, unsnapped_wy); break;
+        case (SELECT)     : o_select_motion (w_current, w_x, w_y); break;
+        default: break;
+      }
     }
   } else {
     switch(w_current->event_state) {
@@ -604,7 +612,6 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
     case(ENDMCOPY):
     case(ENDCOMP):
     case(ENDPASTE):
-    case(ENDTEXT):
     o_place_motion (w_current, w_x, w_y);
     break;
   }

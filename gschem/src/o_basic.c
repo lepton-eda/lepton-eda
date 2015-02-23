@@ -179,6 +179,23 @@ void o_redraw_rects (GschemToplevel *w_current,
   }
 
   if (w_current->inside_action) {
+    if (page->place_list != NULL) {
+      switch (w_current->event_state) {
+        case TEXTMODE:
+          if (w_current->rubber_visible) {
+            /* FIXME shouldn't need to save/restore colormap here */
+            cairo_save (cr);
+            eda_renderer_set_color_map (renderer, render_outline_color_map);
+
+            o_place_draw_rubber (w_current, renderer);
+
+            eda_renderer_set_color_map (renderer, render_color_map);
+            cairo_restore (cr);
+          }
+        break;
+        default: break;
+      }
+    }
     /* Redraw the rubberband objects (if they were previously visible) */
     switch (w_current->event_state) {
       case MOVE:
@@ -198,7 +215,6 @@ void o_redraw_rects (GschemToplevel *w_current,
       case ENDCOPY:
       case ENDMCOPY:
       case ENDCOMP:
-      case ENDTEXT:
       case ENDPASTE:
         if (w_current->rubber_visible) {
           /* FIXME shouldn't need to save/restore colormap here */
@@ -330,7 +346,7 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     case(ENDMCOPY):
     case(ENDMOVE):
     case(ENDPASTE):
-    case(ENDTEXT):
+    case(TEXTMODE):
     case(GRIPS):
     case(MOVE):
     case(ZOOMBOX):

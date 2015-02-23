@@ -35,6 +35,8 @@
  */
 void o_place_start (GschemToplevel *w_current, int w_x, int w_y)
 {
+  w_current->inside_action = 1;
+
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
 
@@ -125,6 +127,11 @@ void o_place_end (GschemToplevel *w_current,
 
   o_undo_savestate_old (w_current, UNDO_ALL);
   i_update_menus (w_current);
+
+  if (!continue_placing) {
+    i_set_state(w_current, SELECT);
+    w_current->inside_action = 0;
+  }
 }
 
 /*! \brief Move the objects in the place list to new coordinates

@@ -123,7 +123,7 @@ void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int 
                               VISIBLE, SHOW_NAME_VALUE));
 
   w_current->inside_action = 1;
-  i_set_state (w_current, ENDTEXT);
+  i_set_state (w_current, TEXTMODE);
 }
 
 

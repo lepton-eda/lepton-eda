@@ -52,8 +52,8 @@ enum x_states {
 //ENDARC,       /* 24 */
 //ENDPIN,       /* 25 */
   ENDCOMP,      /* 26 */
-  DRAWTEXT,     /* 27 */
-  ENDTEXT,      /* 28 */
+  TEXTMODE,     /* 27 */
+//ENDTEXT,      /* 28 */
   ROTATEMODE,   /* 29 */
   MIRRORMODE,   /* 30 */
   ZOOMBOX,      /* 31 */
