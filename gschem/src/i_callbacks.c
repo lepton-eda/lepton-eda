@@ -1515,6 +1515,7 @@ DEFINE_I_CALLBACK(clipboard_cut)
   i_update_middle_button (w_current, i_callback_clipboard_cut,
                           _("Cut to clipboard"));
 
+  o_redraw_cleanstates(w_current);
   o_buffer_cut (w_current, CLIPBOARD_BUFFER);
 }
 
