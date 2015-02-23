@@ -181,6 +181,7 @@ void o_redraw_rects (GschemToplevel *w_current,
   if (w_current->inside_action) {
     if (page->place_list != NULL) {
       switch (w_current->event_state) {
+        case COMPMODE:
         case TEXTMODE:
           if (w_current->rubber_visible) {
             /* FIXME shouldn't need to save/restore colormap here */
@@ -214,7 +215,6 @@ void o_redraw_rects (GschemToplevel *w_current,
 
       case ENDCOPY:
       case ENDMCOPY:
-      case ENDCOMP:
       case ENDPASTE:
         if (w_current->rubber_visible) {
           /* FIXME shouldn't need to save/restore colormap here */
@@ -326,7 +326,7 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
 
   switch (w_current->event_state) {
     /* all states with something on the dc */
-    case(ENDCOMP):
+    case(COMPMODE):
       /* De-select the lists in the component selector */
       x_compselect_deselect (w_current);
 

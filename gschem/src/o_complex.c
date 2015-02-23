@@ -42,6 +42,9 @@ void o_complex_prepare_place(GschemToplevel *w_current, const CLibSymbol *sym)
   const gchar *sym_name = s_clib_symbol_get_name (sym);
   GError *err = NULL;
 
+  i_set_state (w_current, COMPMODE);
+  w_current->inside_action = 1;
+
   /* remove the old place list if it exists */
   s_delete_object_glist(toplevel, toplevel->page_current->place_list);
   toplevel->page_current->place_list = NULL;
@@ -72,6 +75,7 @@ void o_complex_prepare_place(GschemToplevel *w_current, const CLibSymbol *sym)
 
       g_error_free(err);
       i_set_state (w_current, SELECT);
+      w_current->inside_action = 0;
       return;
     }
 
@@ -90,6 +94,7 @@ void o_complex_prepare_place(GschemToplevel *w_current, const CLibSymbol *sym)
 
       s_delete_object(toplevel, new_object);
       i_set_state (w_current, SELECT);
+      w_current->inside_action = 0;
       return;
     }
     else {
@@ -111,9 +116,6 @@ void o_complex_prepare_place(GschemToplevel *w_current, const CLibSymbol *sym)
   /* Run the complex place list changed hook without redrawing */
   /* since the place list is going to be redrawn afterwards */
   o_complex_place_changed_run_hook (w_current);
-
-  w_current->inside_action = 1;
-  i_set_state (w_current, ENDCOMP);
 }
 
 

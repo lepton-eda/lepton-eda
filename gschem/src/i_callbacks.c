@@ -1694,7 +1694,7 @@ DEFINE_I_CALLBACK(add_component)
 
   o_redraw_cleanstates (w_current);
 
-  i_set_state(w_current, DRAWCOMP);
+  i_set_state(w_current, COMPMODE);
   x_compselect_open (w_current);
 
   i_update_middle_button(w_current,
@@ -2697,7 +2697,7 @@ DEFINE_I_CALLBACK(cancel)
 
   g_return_if_fail (w_current != NULL);
 
-  if (w_current->event_state == ENDCOMP &&
+  if (w_current->event_state == COMPMODE &&
       w_current->cswindow) {
     /* user hit escape key when placing components */
 

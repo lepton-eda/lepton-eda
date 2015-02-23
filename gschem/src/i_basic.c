@@ -67,9 +67,6 @@ static const char *i_status_string(GschemToplevel *w_current)
     case SELECT:
     case SBOX:
       return _("Select Mode");
-    case DRAWCOMP:
-    case ENDCOMP:
-      return _("Component Mode"); /*EK* new */
     case TEXTMODE: return _("Text Mode");
     case STARTCOPY:
     case ENDCOPY:
@@ -93,6 +90,7 @@ static const char *i_status_string(GschemToplevel *w_current)
     case BOXMODE    : return _("Box Mode");
     case BUSMODE    : return _("Bus Mode");
     case CIRCLEMODE : return _("Circle Mode");
+    case COMPMODE   : return _("Component Mode");
     case LINEMODE   : return _("Line Mode");
     case MIRRORMODE : return _("Mirror Mode");
     case PATHMODE   : return _("Path Mode");
@@ -315,7 +313,7 @@ void i_update_toolbar(GschemToplevel *w_current)
     case(STARTMOVE): /*! \todo */
     case(ENDCOPY): /*! \todo */
     case(ENDMOVE): /*! \todo */
-    case(ENDCOMP): /*! \todo */
+    case(COMPMODE): /*! \todo */
     case(ROTATEMODE): /*! \todo */
     case(TEXTMODE): /*! \todo */
     case(MIRRORMODE): /*! \todo */

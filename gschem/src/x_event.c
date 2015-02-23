@@ -155,6 +155,8 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       /* End action */
       if (page_view->page->place_list != NULL) {
         switch(w_current->event_state) {
+          case (COMPMODE)   : o_place_end(w_current, w_x, w_y, w_current->continue_component_place,
+                                "%add-objects-hook"); break;
           case (TEXTMODE)   : o_place_end(w_current, w_x, w_y, FALSE,
                                 "%add-objects-hook"); break;
           default: break;
@@ -222,15 +224,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         w_current->inside_action = 1;
         break;
 
-      case(ENDCOMP):
-        o_place_end(w_current, w_x, w_y, w_current->continue_component_place,
-                    "%add-objects-hook");
-        if (!w_current->continue_component_place) {
-          w_current->inside_action = 0;
-          i_set_state(w_current, SELECT);
-        }
-        break;
-
       case(ENDPASTE):
         o_place_end(w_current, w_x, w_y, FALSE, "%paste-objects-hook");
         w_current->inside_action = 0;
@@ -251,7 +244,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
     /* try this out and see how it behaves */
     if (w_current->inside_action) {
-      if (!(w_current->event_state == ENDCOMP ||
+      if (!(w_current->event_state == COMPMODE||
             w_current->event_state == TEXTMODE||
             w_current->event_state == ENDMOVE ||
             w_current->event_state == ENDCOPY ||
@@ -436,7 +429,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
   } else if (event->button == 2) {
 
     if (w_current->inside_action) {
-      if (w_current->event_state == ENDCOMP ||
+      if (w_current->event_state == COMPMODE||
           w_current->event_state == TEXTMODE||
           w_current->event_state == ENDMOVE ||
           w_current->event_state == ENDCOPY ||
@@ -452,7 +445,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 
         o_place_rotate(w_current);
 
-        if (w_current->event_state == ENDCOMP) {
+        if (w_current->event_state == COMPMODE) {
           o_complex_place_changed_run_hook (w_current);
         }
 
@@ -570,6 +563,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
   if (w_current->inside_action) {
     if (page_view->page->place_list != NULL) {
       switch(w_current->event_state) {
+        case (COMPMODE)   :
         case (TEXTMODE)   : o_place_motion (w_current, w_x, w_y); break;
         default: break;
       }
@@ -610,7 +604,6 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
     case(MCOPY):
     case(ENDCOPY):
     case(ENDMCOPY):
-    case(ENDCOMP):
     case(ENDPASTE):
     o_place_motion (w_current, w_x, w_y);
     break;

@@ -39,7 +39,7 @@ enum x_states {
   PINMODE,      /* 11 */
   ARCMODE,      /* 12 */
 //STARTDRAWNET, /* 13 */
-  DRAWCOMP,     /* 14 */
+  COMPMODE,     /* 14 */
   SBOX,         /* 15 */
 //STARTSELECT,  /* 16 */
   STARTCOPY,    /* 17 */
@@ -51,7 +51,7 @@ enum x_states {
 //ENDCIRCLE,    /* 23 */
 //ENDARC,       /* 24 */
 //ENDPIN,       /* 25 */
-  ENDCOMP,      /* 26 */
+//ENDCOMP,      /* 26 */
   TEXTMODE,     /* 27 */
 //ENDTEXT,      /* 28 */
   ROTATEMODE,   /* 29 */

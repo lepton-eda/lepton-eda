@@ -130,7 +130,7 @@ x_compselect_callback_response (GtkDialog *dialog,
               g_assert_not_reached ();
         }
 
-        if (w_current->event_state == ENDCOMP) {
+        if (w_current->event_state == COMPMODE) {
           /* Delete the component which was being placed */
           if (w_current->rubber_visible)
             o_place_invalidate_rubber (w_current, FALSE);
@@ -146,6 +146,7 @@ x_compselect_callback_response (GtkDialog *dialog,
         if (symbol == NULL) {
           /* If there is no symbol selected, switch to SELECT mode */
           i_set_state (w_current, SELECT);
+          w_current->inside_action = 0;
         } else {
           /* Otherwise set the new symbol to place */
           o_complex_prepare_place (w_current, symbol);
@@ -172,13 +173,14 @@ x_compselect_callback_response (GtkDialog *dialog,
         gtk_widget_destroy (GTK_WIDGET (dialog));
         w_current->cswindow = NULL;
 
-        if (w_current->event_state == ENDCOMP) {
+        if (w_current->event_state == COMPMODE) {
 
           /* Cancel the place operation currently in progress */
           o_redraw_cleanstates (w_current);
 
           /* return to the default state */
           i_set_state (w_current, SELECT);
+          w_current->inside_action = 0;
         }
         break;
 
