@@ -43,9 +43,6 @@ void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
 
     net_rubber_band_mode = gschem_options_get_net_rubber_band_mode (w_current->options);
 
-    /* Save the current state. When rotating the selection when moving,
-       we have to come back to here */
-    o_undo_savestate_old(w_current, UNDO_ALL);
     w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
     w_current->first_wx = w_current->second_wx = w_x;
@@ -210,9 +207,6 @@ void o_move_end(GschemToplevel *w_current)
     s_current = g_list_next(s_current);
   }
 
-  /* Remove the undo saved in o_move_start */
-  o_undo_remove_last_undo(w_current, page);
-
   /* Draw the objects that were moved */
   o_invalidate_glist (w_current,
     geda_list_get_glist (page->selection_list));
@@ -268,7 +262,6 @@ void o_move_cancel (GschemToplevel *w_current)
   w_current->stretch_list = NULL;
 
   w_current->inside_action = 0;
-  o_undo_callback (w_current, page, UNDO_ACTION);
 }
 
 

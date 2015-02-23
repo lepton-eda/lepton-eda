@@ -494,23 +494,3 @@ void o_undo_cleanup(void)
   g_free(tmp_path);
   tmp_path = NULL;
 }
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-o_undo_remove_last_undo (GschemToplevel *w_current, PAGE *page)
-{
-  if (page->undo_current == NULL) {
-    return;
-  }
-
-  if (page->undo_current) {
-    page->undo_current = page->undo_current->prev;
-    if (page->undo_current == NULL) {
-      page->undo_current = page->undo_bottom;
-    }
-  }
-}
