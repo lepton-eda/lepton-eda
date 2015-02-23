@@ -1539,6 +1539,7 @@ DEFINE_I_CALLBACK(clipboard_paste)
 
   g_action_get_position (TRUE, &wx, &wy);
 
+  o_redraw_cleanstates(w_current);
   empty = o_buffer_paste_start (w_current, wx, wy, CLIPBOARD_BUFFER);
 
   if (empty) {
