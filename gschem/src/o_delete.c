@@ -114,6 +114,16 @@ void o_delete_selected (GschemToplevel *w_current)
 
   g_run_hook_object_list (w_current, "%remove-objects-hook", to_remove);
 
+  if (w_current->inside_action && w_current->event_state == MOVEMODE) {
+    /* In MOVEMODE selection is equal to the place list and we
+     * have to remove the place list as well. o_move_cancel will
+     * do it for us. */
+    o_move_cancel (w_current);
+    /* Now change the current mode to SELECT since we have nothing
+     * to move any more. */
+    i_set_state (w_current, SELECT);
+  }
+
   for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
     obj = (OBJECT *) iter->data;
     s_delete_object (toplevel, obj);
@@ -122,7 +132,6 @@ void o_delete_selected (GschemToplevel *w_current)
   g_list_free (to_remove);
 
   gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
-  w_current->inside_action = 0;
   o_undo_savestate_old (w_current, UNDO_ALL);
   i_update_menus (w_current);
 }
