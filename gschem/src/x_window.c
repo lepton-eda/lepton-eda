@@ -480,11 +480,10 @@ void x_window_close(GschemToplevel *w_current)
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   gboolean last_window = FALSE;
 
-  /* If we're closing whilst inside a move action, re-wind the
+  /* If we're closing whilst inside an action, re-wind the
    * page contents back to their state before we started */
-  if (w_current->inside_action &&
-      w_current->event_state == MOVEMODE) {
-    o_move_cancel (w_current);
+  if (w_current->inside_action) {
+    i_callback_cancel (w_current, 0, NULL);
   }
 
   /* last chance to save possible unsaved pages */
@@ -853,11 +852,10 @@ x_window_close_page (GschemToplevel *w_current, PAGE *page)
 
   g_assert (page->pid != -1);
 
-  /* If we're closing whilst inside a move action, re-wind the
+  /* If we're closing whilst inside an action, re-wind the
    * page contents back to their state before we started */
-  if (w_current->inside_action &&
-      w_current->event_state == MOVEMODE) {
-    o_move_cancel (w_current);
+  if (w_current->inside_action) {
+    i_callback_cancel (w_current, 0, NULL);
   }
 
   if (page == toplevel->page_current) {
