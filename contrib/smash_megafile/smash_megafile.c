@@ -71,8 +71,12 @@ int main(int argc, char **argv)
     }
 
   /* create a subdir to hold the exploded files */
+
+#ifdef __MINGW32__
+  mkdir(argv[1]);
+#else
   mkdir(argv[1], 0777);    /* try to be friendly */
-  
+#endif
 
   /* read each table entry and extract the file from the megafile */
   while(!feof(megafile))
