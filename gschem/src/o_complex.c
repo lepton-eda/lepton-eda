@@ -43,7 +43,7 @@ void o_complex_prepare_place(GschemToplevel *w_current, const CLibSymbol *sym)
   GError *err = NULL;
 
   i_set_state (w_current, COMPMODE);
-  w_current->inside_action = 1;
+  i_action_start (w_current);
 
   /* remove the old place list if it exists */
   s_delete_object_glist(toplevel, toplevel->page_current->place_list);
@@ -75,7 +75,7 @@ void o_complex_prepare_place(GschemToplevel *w_current, const CLibSymbol *sym)
 
       g_error_free(err);
       i_set_state (w_current, SELECT);
-      w_current->inside_action = 0;
+      i_action_stop (w_current);
       return;
     }
 
@@ -94,7 +94,7 @@ void o_complex_prepare_place(GschemToplevel *w_current, const CLibSymbol *sym)
 
       s_delete_object(toplevel, new_object);
       i_set_state (w_current, SELECT);
-      w_current->inside_action = 0;
+      i_action_stop (w_current);
       return;
     }
     else {

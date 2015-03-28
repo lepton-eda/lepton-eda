@@ -31,7 +31,7 @@
  */
 void o_pin_start(GschemToplevel *w_current, int w_x, int w_y)
 {
-  w_current->inside_action = 1;
+  i_action_start (w_current);
 
   w_current->first_wx = w_current->second_wx = w_x;
   w_current->first_wy = w_current->second_wy = w_y;
@@ -74,7 +74,7 @@ void o_pin_end(GschemToplevel *w_current, int x, int y)
 
   gschem_toplevel_page_content_changed (w_current, page);
   o_undo_savestate(w_current, page, UNDO_ALL);
-  w_current->inside_action = 0;
+  i_action_stop (w_current);
 }
 
 /*! \todo Finish function documentation!!!

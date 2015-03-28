@@ -57,7 +57,8 @@ enum
   PROP_RIGHT_BUTTON_TEXT,
   PROP_SNAP_MODE,
   PROP_SNAP_SIZE,
-  PROP_STATUS_TEXT
+  PROP_STATUS_TEXT,
+  PROP_STATUS_TEXT_COLOR,
 };
 
 
@@ -252,6 +253,14 @@ gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass)
                                                         "Status Text",
                                                         "none",
                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_STATUS_TEXT_COLOR,
+                                   g_param_spec_boolean ("status-text-color",
+                                                         "Status State",
+                                                         "Status State",
+                                                         FALSE,
+                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 }
 
 
@@ -588,6 +597,31 @@ gschem_bottom_widget_set_snap_size (GschemBottomWidget *widget, int size)
 }
 
 
+/*! \brief Set the status text color
+ *
+ *  \par Function Description
+ *  Changes the status text color to show if the current editing
+ *  action is active or not.
+ *
+ *  \param [in,out] view    This GschemBottomWidget
+ *  \param [in]     active  The state to visualise
+ */
+void
+gschem_bottom_widget_set_status_text_color (GschemBottomWidget *widget, gboolean active)
+{
+  g_return_if_fail (widget != NULL);
+
+  GdkColor color;
+
+  if (active) {
+    gdk_color_parse ("green", &color);
+  } else {
+    gdk_color_parse ("black", &color);
+  }
+
+  gtk_widget_modify_fg (GTK_WIDGET (widget->status_label), GTK_STATE_NORMAL, &color);
+}
+
 
 /*! \brief Set the status text
  *
@@ -644,6 +678,10 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
     case PROP_STATUS_TEXT:
       gschem_bottom_widget_set_status_text (widget, g_value_get_string (value));
+      break;
+
+    case PROP_STATUS_TEXT_COLOR:
+      gschem_bottom_widget_set_status_text_color (widget, g_value_get_boolean (value));
       break;
 
     default:

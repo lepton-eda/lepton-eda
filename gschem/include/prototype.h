@@ -227,6 +227,9 @@ void gschem_quit(void);
 void main_prog(void *closure, int argc, char *argv[]);
 int main(int argc, char *argv[]);
 /* i_basic.c */
+void i_action_start(GschemToplevel *w_current);
+void i_action_stop(GschemToplevel *w_current);
+void i_action_update_status(GschemToplevel *w_current,gboolean inside_action);
 void i_show_state(GschemToplevel *w_current, const char *message);
 void i_set_state(GschemToplevel *w_current, enum x_states newstate);
 void i_set_state_msg(GschemToplevel *w_current, enum x_states newstate, const char *message);

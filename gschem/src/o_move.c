@@ -66,7 +66,7 @@ void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
     }
 
     o_select_move_to_place_list(w_current);
-    w_current->inside_action = 1;
+    i_action_start (w_current);
 
     o_move_invalidate_rubber (w_current, TRUE);
   }
@@ -145,7 +145,7 @@ void o_move_end(GschemToplevel *w_current)
 
   if (!object) {
     /* actually this is an error condition hack */
-    w_current->inside_action = 0;
+    i_action_stop (w_current);
     i_set_state(w_current, SELECT);
     return;
   }
@@ -230,7 +230,7 @@ void o_move_end(GschemToplevel *w_current)
   w_current->stretch_list = NULL;
 
   i_set_state(w_current, SELECT);
-  w_current->inside_action = 0;
+  i_action_stop (w_current);
 }
 
 
@@ -261,7 +261,7 @@ void o_move_cancel (GschemToplevel *w_current)
   s_stretch_destroy_all (w_current->stretch_list);
   w_current->stretch_list = NULL;
 
-  w_current->inside_action = 0;
+  i_action_stop (w_current);
 }
 
 

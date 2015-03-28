@@ -149,6 +149,54 @@ void i_show_state(GschemToplevel *w_current, const char *message)
   g_free(what_to_say);
 }
 
+
+/*! \brief Mark start of an editing action
+ *
+ *  \par Function Description
+ *  Calls i_action_update_status() informing it that the new
+ *  editing action is started.
+ *
+ *  \param [in] w_current GschemToplevel structure
+ */
+void i_action_start (GschemToplevel *w_current)
+{
+  i_action_update_status (w_current, TRUE);
+}
+
+
+/*! \brief Mark end of an editing action
+ *
+ *  \par Function Description
+ *  Calls i_action_update_status() informing it that the current
+ *  editing action is finished.
+ *
+ *  \param [in] w_current GschemToplevel structure
+ */
+void i_action_stop (GschemToplevel *w_current)
+{
+  i_action_update_status (w_current, FALSE);
+}
+
+
+/*! \brief Update status of an editing action
+ *
+ *  \par Function Description
+ *  Checks if the current action state has been changed (an action
+ *  was started or finished) and informs the bottom widget to make
+ *  it update the status text color accordingly
+ *
+ *  \param [in] w_current GschemToplevel structure
+ */
+void i_action_update_status (GschemToplevel *w_current, gboolean inside_action)
+{
+  if (w_current->inside_action != inside_action) {
+    w_current->inside_action = inside_action;
+    gschem_bottom_widget_set_status_text_color (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
+                                                inside_action);
+  }
+}
+
+
 /*! \brief Set new state, then show state field
  *
  *  \par Function Description

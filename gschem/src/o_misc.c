@@ -47,7 +47,7 @@ void o_edit(GschemToplevel *w_current, GList *list)
   const gchar *str = NULL;
 
   if (list == NULL) {
-    w_current->inside_action = 0;
+    i_action_stop (w_current);
     i_set_state(w_current, SELECT);
     return;
   }
@@ -190,7 +190,7 @@ void o_rotate_world_update(GschemToplevel *w_current,
 
   /* this is okay if you just hit rotate and have nothing selected */
   if (list == NULL) {
-    w_current->inside_action = 0;
+    i_action_stop (w_current);
     i_set_state(w_current, SELECT);
     return;
   }
@@ -248,7 +248,7 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
   GList *o_iter;
 
   if (list == NULL) {
-    w_current->inside_action = 0;
+    i_action_stop (w_current);
     i_set_state(w_current, SELECT);
     return;
   }

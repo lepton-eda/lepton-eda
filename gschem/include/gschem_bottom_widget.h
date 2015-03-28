@@ -104,3 +104,6 @@ gschem_bottom_widget_set_snap_size (GschemBottomWidget *widget, int size);
 
 void
 gschem_bottom_widget_set_status_text (GschemBottomWidget *widget, const char *text);
+
+void
+gschem_bottom_widget_set_status_text_color (GschemBottomWidget *widget, gboolean active);

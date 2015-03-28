@@ -239,7 +239,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       if (!o_select_selected(w_current)) {
         /* this means the above find did not
          * find anything */
-        w_current->inside_action = 0;
+        i_action_stop (w_current);
         i_set_state(w_current, SELECT);
         goto end_button_pressed;
       }
@@ -286,7 +286,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       } else { /* this is the default cancel */
 
         /* reset all draw and place actions */
-        w_current->inside_action = 0;
+        i_action_stop (w_current);
 
         switch (w_current->event_state) {
 

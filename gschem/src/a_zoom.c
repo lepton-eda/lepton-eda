@@ -181,7 +181,7 @@ a_zoom_box(GschemToplevel *w_current)
  */
 void a_zoom_box_start(GschemToplevel *w_current, int w_x, int w_y)
 {
-  w_current->inside_action = 1;
+  i_action_start (w_current);
 
   w_current->first_wx = w_current->second_wx = w_x;
   w_current->first_wy = w_current->second_wy = w_y;
@@ -205,7 +205,7 @@ void a_zoom_box_end(GschemToplevel *w_current, int x, int y)
     o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY); 
   }
 
-  w_current->inside_action = 0;
+  i_action_stop (w_current);
   i_set_state(w_current, SELECT);
 }
 

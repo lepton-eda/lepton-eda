@@ -57,7 +57,7 @@ void o_line_invalidate_rubber (GschemToplevel *w_current)
  */
 void o_line_start(GschemToplevel *w_current, int w_x, int w_y)
 {
-  w_current->inside_action = 1;
+  i_action_start (w_current);
 
   /* init first_w[x|y], second_w[x|y] to describe line */
   w_current->first_wx = w_current->second_wx = w_x;
@@ -113,7 +113,7 @@ void o_line_end(GschemToplevel *w_current, int w_x, int w_y)
     o_undo_savestate(w_current, page, UNDO_ALL);
   }
 
-  w_current->inside_action = 0;
+  i_action_stop (w_current);
 }
 
 /*! \brief Draw temporary line while dragging end.

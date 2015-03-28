@@ -57,7 +57,7 @@ void o_arc_invalidate_rubber (GschemToplevel *w_current)
  */
 void o_arc_start(GschemToplevel *w_current, int w_x, int w_y)
 {
-  w_current->inside_action = 1;
+  i_action_start (w_current);
 
   /* set the center of the arc */
   w_current->first_wx = w_x;
@@ -110,7 +110,7 @@ void o_arc_end1(GschemToplevel *w_current, int w_x, int w_y)
     arc_angle_dialog(w_current, NULL);
   }
 
-  w_current->inside_action = 0;
+  i_action_stop (w_current);
 }
 
 /*! \brief Ends the process of arc input.

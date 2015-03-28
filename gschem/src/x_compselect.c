@@ -146,7 +146,7 @@ x_compselect_callback_response (GtkDialog *dialog,
         if (symbol == NULL) {
           /* If there is no symbol selected, switch to SELECT mode */
           i_set_state (w_current, SELECT);
-          w_current->inside_action = 0;
+          i_action_stop (w_current);
         } else {
           /* Otherwise set the new symbol to place */
           o_complex_prepare_place (w_current, symbol);
@@ -180,7 +180,7 @@ x_compselect_callback_response (GtkDialog *dialog,
 
           /* return to the default state */
           i_set_state (w_current, SELECT);
-          w_current->inside_action = 0;
+          i_action_stop (w_current);
         }
         break;
 

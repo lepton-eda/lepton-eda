@@ -60,7 +60,7 @@ void o_net_reset(GschemToplevel *w_current)
   w_current->third_wx = w_current->third_wy = -1;
   w_current->magnetic_wx = w_current->magnetic_wy = -1;
   w_current->rubber_visible = 0;
-  w_current->inside_action = 0;
+  i_action_stop (w_current);
 }
 
 /*! \brief guess the best direction for the next net drawing action
@@ -420,7 +420,7 @@ void o_net_start_magnetic(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_net_start(GschemToplevel *w_current, int w_x, int w_y)
 {
-  w_current->inside_action = 1;
+  i_action_start (w_current);
 
   if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1) {
     w_current->first_wx = w_current->magnetic_wx;

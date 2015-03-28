@@ -348,7 +348,7 @@ o_path_start(GschemToplevel *w_current, int w_x, int w_y)
   g_assert (w_current);
 
   w_current->pathcontrol = TRUE;
-  w_current->inside_action = 1;
+  i_action_start (w_current);
 
   /* Reset path creation state */
   if (w_current->temp_path != NULL) {
@@ -508,7 +508,7 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
 
     w_current->rubber_visible = FALSE;
 
-    w_current->inside_action = 0;
+    i_action_stop (w_current);
   } else {
     /* Leave state as it is and continue path drawing... */
 

@@ -391,7 +391,7 @@ DEFINE_I_CALLBACK(edit_select)
 
   /* this is probably the only place this should be */
   i_set_state(w_current, SELECT);
-  w_current->inside_action = 0;
+  i_action_stop (w_current);
 }
 
 /*! \todo Finish function documentation!!!
@@ -428,7 +428,7 @@ DEFINE_I_CALLBACK (edit_select_all)
   o_select_visible_unlocked (w_current);
 
   i_set_state (w_current, SELECT);
-  w_current->inside_action = 0;
+  i_action_stop (w_current);
   i_update_menus (w_current);
 }
 
@@ -444,7 +444,7 @@ DEFINE_I_CALLBACK (edit_deselect)
   o_select_unselect_all (w_current);
 
   i_set_state (w_current, SELECT);
-  w_current->inside_action = 0;
+  i_action_stop (w_current);
   i_update_menus (w_current);
 }
 
@@ -541,7 +541,7 @@ DEFINE_I_CALLBACK(edit_delete)
     o_delete_selected(w_current);
     /* if you delete the objects you must go into select
      * mode after the delete */
-    w_current->inside_action = 0;
+    i_action_stop (w_current);
     i_set_state(w_current, SELECT);
     i_update_menus(w_current);
   }
@@ -822,7 +822,7 @@ DEFINE_I_CALLBACK(edit_embed)
   } else {
     /* nothing selected, go back to select state */
     o_redraw_cleanstates(w_current);
-    w_current->inside_action = 0;
+    i_action_stop (w_current);
     i_set_state(w_current, SELECT);
   }
 
@@ -861,7 +861,7 @@ DEFINE_I_CALLBACK(edit_unembed)
   } else {
     /* nothing selected, go back to select state */
     o_redraw_cleanstates(w_current);
-    w_current->inside_action = 0;
+    i_action_stop (w_current);
     i_set_state(w_current, SELECT);
   }
 
@@ -906,7 +906,7 @@ DEFINE_I_CALLBACK(edit_update)
   } else {
     /* nothing selected, go back to select state */
     o_redraw_cleanstates(w_current);
-    w_current->inside_action = 0;
+    i_action_stop (w_current);
     i_set_state(w_current, SELECT);
   }
 
@@ -1190,7 +1190,7 @@ DEFINE_I_CALLBACK(view_pan)
 
   if (!g_action_get_position (FALSE, &wx, &wy)) {
     o_redraw_cleanstates (w_current);
-    w_current->inside_action = 0;
+    i_action_stop (w_current);
     i_set_state (w_current, PAN);
   } else {
     gschem_page_view_pan (page_view, wx, wy);
@@ -1809,7 +1809,7 @@ DEFINE_I_CALLBACK(add_text)
   o_redraw_cleanstates(w_current);
   o_invalidate_rubber (w_current);
 
-  w_current->inside_action = 0;
+  i_action_stop (w_current);
   i_set_state(w_current, SELECT);
   i_update_middle_button(w_current, i_callback_add_text, _("Text"));
 
@@ -2726,7 +2726,7 @@ DEFINE_I_CALLBACK(cancel)
 
   o_invalidate_all (w_current);
 
-  w_current->inside_action=0;
+  i_action_stop (w_current);
 }
 
 /*! \section help-menu Help Menu Callback Functions */

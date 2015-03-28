@@ -352,7 +352,7 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
       s_delete_object_glist(toplevel, toplevel->page_current->place_list);
       toplevel->page_current->place_list = NULL;
 
-      w_current->inside_action = 0;
+      i_action_stop (w_current);
 
       /* touch the select state */
       i_set_state(w_current, SELECT);

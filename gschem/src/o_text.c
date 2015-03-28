@@ -122,7 +122,7 @@ void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int 
                               /* visibility is set when you create the object */
                               VISIBLE, SHOW_NAME_VALUE));
 
-  w_current->inside_action = 1;
+  i_action_start (w_current);
   i_set_state (w_current, TEXTMODE);
 }
 

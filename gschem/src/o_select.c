@@ -61,7 +61,7 @@ void o_select_start (GschemToplevel *w_current, int wx, int wy)
 
   if (w_current->event_state != GRIPS) {
     /* now go into normal SELECT */
-    w_current->inside_action = 1;
+    i_action_start (w_current);
     w_current->first_wx = w_current->second_wx = wx;
     w_current->first_wy = w_current->second_wy = wy;
   }
@@ -87,7 +87,7 @@ void o_select_end (GschemToplevel *w_current, int wx, int wy)
 
   /* look for objects to select */
   o_find_object(w_current, wx, wy, TRUE);
-  w_current->inside_action = 0;
+  i_action_stop (w_current);
 }
 
 
@@ -303,7 +303,7 @@ void o_select_box_start(GschemToplevel *w_current, int w_x, int w_y)
     w_current->second_wy = w_y;
 
     i_set_state (w_current, SBOX);
-    w_current->inside_action = 1;
+    i_action_start (w_current);
   }
 }
 
@@ -322,7 +322,7 @@ void o_select_box_end(GschemToplevel *w_current, int w_x, int w_y)
   o_select_box_search(w_current);
 
   i_set_state(w_current, SELECT);
-  w_current->inside_action = 0;
+  i_action_stop (w_current);
 }
 
 /*! \todo Finish function documentation!!!

@@ -35,7 +35,7 @@
  */
 void o_place_start (GschemToplevel *w_current, int w_x, int w_y)
 {
-  w_current->inside_action = 1;
+  i_action_start (w_current);
 
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
@@ -130,7 +130,7 @@ void o_place_end (GschemToplevel *w_current,
 
   if (!continue_placing) {
     i_set_state(w_current, SELECT);
-    w_current->inside_action = 0;
+    i_action_stop (w_current);
   }
 }
 

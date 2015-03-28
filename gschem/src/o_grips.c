@@ -894,7 +894,7 @@ void o_grips_start(GschemToplevel *w_current, int w_x, int w_y)
       if (func != NULL) {
         (*func) (w_current, object, w_x, w_y, whichone);
         i_set_state (w_current, GRIPS);
-        w_current->inside_action = 1;
+        i_action_start (w_current);
       }
     }
   }
@@ -1332,7 +1332,7 @@ void o_grips_end(GschemToplevel *w_current)
 
   if (!object) {
     /* actually this is an error condition hack */
-    w_current->inside_action = 0;
+    i_action_stop (w_current);
     i_set_state(w_current, SELECT);
     return;
   }
@@ -1402,7 +1402,7 @@ void o_grips_end(GschemToplevel *w_current)
   o_undo_savestate_old(w_current, UNDO_ALL);
 
   i_set_state(w_current, SELECT);
-  w_current->inside_action = 0;
+  i_action_stop (w_current);
 }
 
 
