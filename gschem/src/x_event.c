@@ -135,6 +135,14 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       w_current->event_state == SELECT) {
     /* Don't re-select an object (lp-912978) */
     /* o_find_object(w_current, w_x, w_y, TRUE); */
+
+    /* GDK_BUTTON_EVENT is emitted before GDK_2BUTTON_EVENT, which
+     * leads to setting of the inside_action flag.  If o_edit()
+     * brings up a modal window (e.g., the edit attribute dialog),
+     * it intercepts the release button event and thus doesn't
+     * allow resetting of the inside_action flag so we do it
+     * manually here before processing the double-click event. */
+    i_action_stop (w_current);
     o_edit(w_current, geda_list_get_glist( page->selection_list ));
     scm_dynwind_end ();
     return(0);
