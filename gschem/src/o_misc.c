@@ -47,8 +47,6 @@ void o_edit(GschemToplevel *w_current, GList *list)
   const gchar *str = NULL;
 
   if (list == NULL) {
-    i_action_stop (w_current);
-    i_set_state(w_current, SELECT);
     return;
   }
 
