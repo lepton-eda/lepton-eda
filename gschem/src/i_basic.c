@@ -64,9 +64,8 @@ static const char *i_status_string(GschemToplevel *w_current)
   switch ( w_current->event_state ) {
     case SELECT     : return _("Select Mode");
     case SBOX       : return _("Select Box Mode");
-    case TEXTMODE: return _("Text Mode");
-    case PAN:
-      return _("Pan Mode");
+    case TEXTMODE   : return _("Text Mode");
+    case PAN        : return _("Pan Mode");
     case PASTEMODE:
       g_free(buf);
       buf = g_strdup_printf(_("Paste %d Mode"), w_current->buffer_number+1);
