@@ -135,11 +135,9 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       w_current->event_state == SELECT) {
     /* Don't re-select an object (lp-912978) */
     /* o_find_object(w_current, w_x, w_y, TRUE); */
-    if (o_select_selected (w_current)) {
-       o_edit(w_current, geda_list_get_glist( page->selection_list ));
-       scm_dynwind_end ();
-       return(0);
-    }
+    o_edit(w_current, geda_list_get_glist( page->selection_list ));
+    scm_dynwind_end ();
+    return(0);
   }
 
   w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
