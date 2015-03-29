@@ -79,8 +79,6 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
   int option_index;
   gint wx, wy;
 
-  i_set_state(w_current, SELECT);
-
   value_entry =
   gtk_object_get_data(GTK_OBJECT(w_current->aewindow), "value_entry");
   name_entry =
@@ -264,7 +262,6 @@ void attribute_edit_dialog_response(GtkWidget *w, gint response,
     break;
   case GTK_RESPONSE_REJECT:
   case GTK_RESPONSE_DELETE_EVENT:
-    i_set_state(w_current, SELECT);
     gtk_grab_remove(w_current->aewindow);
     gtk_widget_destroy(w_current->aewindow);
     w_current->aewindow = NULL;
