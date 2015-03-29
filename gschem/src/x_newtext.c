@@ -152,7 +152,7 @@ dialog_response_apply (NewText *dialog)
  */
 static void dialog_response_cancel(NewText *dialog)
 {
-  i_set_state(dialog->parent.w_current, SELECT);
+  i_callback_cancel(dialog->parent.w_current, 0, NULL);
   gtk_widget_destroy(dialog->parent.w_current->tiwindow);
   dialog->parent.w_current->tiwindow=NULL;
 }
