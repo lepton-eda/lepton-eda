@@ -292,7 +292,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       } else { /* this is the default cancel */
 
         /* reset all draw and place actions */
-        i_action_stop (w_current);
 
         switch (w_current->event_state) {
 
