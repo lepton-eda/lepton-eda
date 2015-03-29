@@ -62,9 +62,8 @@ static const char *i_status_string(GschemToplevel *w_current)
   static char *buf = 0;
 
   switch ( w_current->event_state ) {
-    case SELECT:
-    case SBOX:
-      return _("Select Mode");
+    case SELECT     : return _("Select Mode");
+    case SBOX       : return _("Select Box Mode");
     case TEXTMODE: return _("Text Mode");
     case PAN:
       return _("Pan Mode");
