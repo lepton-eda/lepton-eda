@@ -2157,6 +2157,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
       /* s_hierarchy_down_symbol() will not zoom the loaded page */
       gschem_page_view_zoom_extents (gschem_toplevel_get_current_page_view (w_current),
                                      NULL);
+      o_undo_savestate_old(w_current, UNDO_ALL);
     }
   }
 }
