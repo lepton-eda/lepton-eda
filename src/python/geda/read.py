@@ -88,26 +88,27 @@ class FileFormat:
         ## Can text objects have multiple lines?
         self.supports_multiline_text = fileformat_ver >= 1
 
-class EmbeddedSymbol:
+class Symbol:
     # basename: The filename of the component
 
     # The just basename is the filename of the component. This
     # filename is not the full path.
 
-    def __init__(self, basename):
+    def __init__(self, basename, embedded):
         self.basename = basename
         self.prim_objs = None
+        self.embedded = embedded
 
-class EmbeddedPixmap:
+class Pixmap:
     # In gEDA, the filename is not used if the picture is embedded.
 
-    # embedded: Embedded or link to the picture file.
     # filename: Path and filename of a not embedded picture.
     # picture_data: Serialized picture
 
-    def __init__(self, file_content, filename):
-        self.file_content = file_content
+    def __init__(self, filename, embedded):
+        self.file_content = None
         self.filename = filename
+        self.embedded = embedded
 
 ## Helper function for \ref sscanf.
 
@@ -600,9 +601,9 @@ def read_complex(buf, (origin_x, origin_y), format):
     # color = DEFAULT_COLOR
 
     if basename.startswith('EMBEDDED'):
-        symbol = EmbeddedSymbol(basename = basename[8:])
+        symbol = Symbol(basename[8:], True)
     else:
-        symbol = basename
+        symbol = Symbol(basename, False)
         #clib = s_clib_get_symbol_by_name(basename)
         ## Delete or hide attributes eligible for promotion inside the complex
         #o_complex_remove_promotable_attribs(new_obj)
@@ -796,21 +797,19 @@ def read_picture(first_line, f, (origin_x, origin_y), format):
         print _("Found an image with no filename.")
         filename = None
 
-    pixmap = filename
+    pixmap = Pixmap(filename, False)
 
     if embedded == 1:
         # Read the encoded picture
         try:
-            file_content = xorn.base64.decode(f, delim = '.')
+            pixmap.file_content = xorn.base64.decode(f, delim = '.')
         except xorn.base64.DecodingError as e:
             print _("Failed to load image from embedded data [%s]: "
                     "%s\n") % (filename, e.message)
             # _("Base64 decoding failed.")
             print _("Falling back to file loading. Picture unembedded.\n")
         else:
-            pixmap = EmbeddedPixmap(
-                file_content = file_content,
-                filename = filename)
+            pixmap.embedded = True
     elif embedded != 0:
         print _("Found a picture with a wrong 'embedded' parameter: "
                 "%d.\n") % embedded

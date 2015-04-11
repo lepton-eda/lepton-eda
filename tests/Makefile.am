@@ -83,6 +83,7 @@ pythontests = \
 	python/base64.py \
 	python/proxy.py \
 	python/geda/attrib.py \
+	python/geda/complex.py \
 	python/geda/parse_attrib.py
 
 TESTS = $(check_PROGRAMS) $(pythontests)

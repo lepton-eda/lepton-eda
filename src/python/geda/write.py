@@ -176,11 +176,10 @@ def write_object(f, o_current, offset_x, offset_y):
                 format_line(data.line),
                 format_fill(data.fill)))
     elif isinstance(data, xorn.storage.Component):
-        embedded = hasattr(data.symbol, 'prim_objs')
-        if embedded:
+        if data.symbol.embedded:
             basename = 'EMBEDDED' + data.symbol.basename
         else:
-            basename = data.symbol
+            basename = data.symbol.basename
 
         f.write('%c %d %d %d %d %d %s\n' % (
                 xorn.geda.fileformat.OBJ_COMPLEX,
@@ -191,7 +190,7 @@ def write_object(f, o_current, offset_x, offset_y):
                 data.mirror,
                 basename))
 
-        if embedded:
+        if data.symbol.embedded:
             f.write('[\n')
             for ob in xorn.proxy.RevisionProxy(
                     data.symbol.prim_objs).toplevel_objects():
@@ -230,12 +229,6 @@ def write_object(f, o_current, offset_x, offset_y):
                 data.color,
                 format_line(data.line)))
     elif isinstance(data, xorn.storage.Picture):
-        embedded = hasattr(data.pixmap, 'file_content')
-        if embedded:
-            filename = data.pixmap.filename
-        else:
-            filename = data.pixmap
-
         f.write('%c %d %d %d %d %d %d %d\n%s\n' % (
                 xorn.geda.fileformat.OBJ_PICTURE,
                 offset_x + data.x,
@@ -244,10 +237,10 @@ def write_object(f, o_current, offset_x, offset_y):
                 data.height,
                 data.angle,
                 data.mirror,
-                embedded,
-                filename))
+                data.pixmap.embedded,
+                data.pixmap.filename))
 
-        if embedded:
+        if data.pixmap.embedded:
             xorn.base64.encode(f, data.pixmap.file_content, delim = '.')
     else:
         raise ValueError, \

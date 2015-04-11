@@ -98,14 +98,12 @@ def main():
 
     for ob in rev.toplevel_objects():
         data = ob.data()
-        if isinstance(data, xorn.storage.Component) \
-                and isinstance(data.symbol, xorn.geda.read.EmbeddedSymbol) \
+        if isinstance(data, xorn.storage.Component) and data.symbol.embedded \
                 and not data.symbol.basename in embedded_symbols:
             unhide_attributes(ob)
             embedded_symbols[data.symbol.basename.encode()] = \
                 data.symbol.prim_objs
-        if isinstance(data, xorn.storage.Picture) \
-                and isinstance(data.pixmap, xorn.geda.read.EmbeddedPixmap):
+        if isinstance(data, xorn.storage.Picture) and data.pixmap.embedded:
             filename = os.path.basename(data.pixmap.filename)
             if not filename in embedded_pixmaps:
                 embedded_pixmaps[filename.encode()] = data.pixmap.file_content
