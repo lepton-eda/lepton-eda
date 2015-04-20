@@ -26,7 +26,6 @@
 #endif
 
 #include "gschem.h"
-#include <missing.h>
 
 /*! \todo Finish function documentation!!!
  *  \brief

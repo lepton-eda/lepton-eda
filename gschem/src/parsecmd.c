@@ -19,7 +19,6 @@
  */
 #include <config.h>
 #include <version.h>
-#include <missing.h>
 
 #include <stdio.h>
 #include <ctype.h>

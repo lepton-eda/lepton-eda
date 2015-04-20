@@ -19,7 +19,6 @@
  */
 
 #include <config.h>
-#include <missing.h>
 #include "gschem.h"
 
 enum {

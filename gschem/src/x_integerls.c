@@ -23,7 +23,6 @@
  */
 #include <config.h>
 #include <version.h>
-#include <missing.h>
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>

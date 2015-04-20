@@ -111,7 +111,6 @@
  */
 
 #include <config.h>
-#include <missing.h>
 
 #include <stdio.h>
 #include <glib.h>

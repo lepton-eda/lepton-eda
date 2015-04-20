@@ -21,7 +21,6 @@
 #include <config.h>
 #include <locale.h>
 #include <version.h>
-#include <missing.h>
 
 #include <stdio.h>
 #include <sys/param.h>

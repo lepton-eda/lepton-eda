@@ -25,7 +25,6 @@
  */
 
 #include <config.h>
-#include <missing.h>
 
 #include <errno.h>
 #include <stdio.h>
