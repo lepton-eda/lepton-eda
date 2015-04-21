@@ -108,7 +108,7 @@
 ; dark background. The dark background is the original look.
 ;
 ;(load (build-path geda-rc-path "print-colormap-darkbg")) ; dark background
-(load (build-path geda-rc-path "print-colormap-lightbg")) ; light background
+(primitive-load (build-path geda-rc-path "print-colormap-lightbg")) ; light background
 
 
 ;;;; Process configuration script directory

@@ -32,7 +32,7 @@
 ; light (almost white) background.  The dark background is the
 ; original look.
 ;
-(load (build-path geda-rc-path "gschem-colormap-darkbg")) ; dark background
+(primitive-load (build-path geda-rc-path "gschem-colormap-darkbg")) ; dark background
 ;(load (build-path geda-rc-path "gschem-colormap-lightbg")) ; light background
 ;(load (build-path geda-rc-path "gschem-colormap-bw")) ; light background, bw
 
