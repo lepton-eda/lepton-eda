@@ -116,12 +116,15 @@ cmd_shell_impl (void *data, int argc, char **argv)
    * version message. */
   if (interactive) {
     fprintf (stderr, "gEDA %s (g%.7s)\n", PACKAGE_DOTTED_VERSION, PACKAGE_GIT_COMMIT);
+  /* readline is not supported for MinGW builds yet */
+#ifndef __MINGW32__
     SCM expr = scm_list_3 (sym_begin,
                            scm_list_2 (sym_use_modules,
                                        scm_list_2 (sym_ice_9, sym_readline)),
                            scm_list_1 (sym_activate_readline));
 
     scm_eval_x (expr, scm_current_module ());
+#endif /* __MINGW32__ */
   }
 
   /* Now load rc files, if necessary */
