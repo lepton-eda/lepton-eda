@@ -31,6 +31,9 @@ class RevisionProxy:
     def __ne__(self, other):
         return not isinstance(other, RevisionProxy) or self.rev != other.rev
 
+    def __hash__(self):
+        return hash(self.rev)
+
     def toplevel_objects(self):
         return [ObjectProxy(self.rev, ob)
                 for ob in xorn.storage.get_objects_attached_to(self.rev, None)]
@@ -81,6 +84,9 @@ class ObjectProxy:
     def __ne__(self, other):
         return not isinstance(other, ObjectProxy) or self.rev != other.rev \
                                                   or self.ob != other.ob
+
+    def __hash__(self):
+        return hash((self.rev, self.ob))
 
     def exists(self):
         return self.rev.object_exists(self.ob)

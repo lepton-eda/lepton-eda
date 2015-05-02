@@ -43,6 +43,11 @@ assert xorn.proxy.RevisionProxy(rev) != rp1
 assert xorn.proxy.RevisionProxy(rev1) != rp
 assert xorn.proxy.RevisionProxy(rev1) == rp1
 
+assert hash(xorn.proxy.RevisionProxy(rev)) == hash(rp)
+assert hash(xorn.proxy.RevisionProxy(rev)) != hash(rp1)
+assert hash(xorn.proxy.RevisionProxy(rev1)) != hash(rp)
+assert hash(xorn.proxy.RevisionProxy(rev1)) == hash(rp1)
+
 assert xorn.proxy.ObjectProxy(rev, ob) == op
 assert xorn.proxy.ObjectProxy(rev, ob) != op1
 assert xorn.proxy.ObjectProxy(rev, ob1) != op
@@ -51,6 +56,15 @@ assert xorn.proxy.ObjectProxy(rev1, ob) != op
 assert xorn.proxy.ObjectProxy(rev1, ob) != op1
 assert xorn.proxy.ObjectProxy(rev1, ob1) != op
 assert xorn.proxy.ObjectProxy(rev1, ob1) != op1
+
+assert hash(xorn.proxy.ObjectProxy(rev, ob)) == hash(op)
+assert hash(xorn.proxy.ObjectProxy(rev, ob)) != hash(op1)
+assert hash(xorn.proxy.ObjectProxy(rev, ob1)) != hash(op)
+assert hash(xorn.proxy.ObjectProxy(rev, ob1)) == hash(op1)
+assert hash(xorn.proxy.ObjectProxy(rev1, ob)) != hash(op)
+assert hash(xorn.proxy.ObjectProxy(rev1, ob)) != hash(op1)
+assert hash(xorn.proxy.ObjectProxy(rev1, ob1)) != hash(op)
+assert hash(xorn.proxy.ObjectProxy(rev1, ob1)) != hash(op1)
 
 # object attributes
 
