@@ -41,6 +41,11 @@ static int Object_compare(Object *obj0, Object *obj1)
 	return 0;
 }
 
+static long Object_hash(Object *self)
+{
+	return _Py_HashPointer(self->ob);
+}
+
 PyTypeObject ObjectType = {
 	PyObject_HEAD_INIT(NULL)
 	0,                         /*ob_size*/
@@ -66,7 +71,7 @@ PyTypeObject ObjectType = {
 	NULL,				/* PyMappingMethods *tp_as_mapping */
 
 	/* More standard operations (here for binary compatibility) */
-	NULL,				/* hashfunc tp_hash */
+	(hashfunc)Object_hash,		/* hashfunc tp_hash */
 	NULL,				/* ternaryfunc tp_call */
 	NULL,				/* reprfunc tp_str */
 	NULL,				/* getattrofunc tp_getattro */

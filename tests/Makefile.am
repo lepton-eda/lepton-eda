@@ -70,6 +70,7 @@ pythontests = \
 	cpython/get_obtype.py \
 	cpython/is_selected.py \
 	cpython/module.py \
+	cpython/ob_equality.py \
 	cpython/pointer.py \
 	cpython/query_attached.py \
 	cpython/reloc_attach.py \
