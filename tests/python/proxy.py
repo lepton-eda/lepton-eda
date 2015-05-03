@@ -204,3 +204,12 @@ assert ap1.exists() == False
 
 assert isinstance(ap.data(), xorn.storage.LineAttr)
 assert throws(ap1.data) == AttributeError
+
+# sanity checks
+
+assert throws(xorn.proxy.RevisionProxy, None) == ValueError
+assert throws(xorn.proxy.ObjectProxy, None, ob) == ValueError
+assert throws(xorn.proxy.ObjectProxy, rev, None) == ValueError
+assert throws(xorn.proxy.AttributeProxy, None, ob, 'line') == ValueError
+assert throws(xorn.proxy.AttributeProxy, rev, None, 'line') == ValueError
+assert throws(xorn.proxy.AttributeProxy, rev, ob, None) == ValueError

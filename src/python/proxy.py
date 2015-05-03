@@ -23,6 +23,8 @@ import xorn.storage
 
 class RevisionProxy:
     def __init__(self, rev):
+        if not isinstance(rev, xorn.storage.Revision):
+            raise ValueError
         self.rev = rev
 
     def __eq__(self, other):
@@ -74,6 +76,10 @@ class RevisionProxy:
 
 class ObjectProxy:
     def __init__(self, rev, ob):
+        if not isinstance(rev, xorn.storage.Revision):
+            raise ValueError
+        if not isinstance(ob, xorn.storage.Object):
+            raise ValueError
         self.rev = rev
         self.ob = ob
 
@@ -142,6 +148,12 @@ class ObjectProxy:
 
 class AttributeProxy:
     def __init__(self, rev, ob, name):
+        if not isinstance(rev, xorn.storage.Revision):
+            raise ValueError
+        if not isinstance(ob, xorn.storage.Object):
+            raise ValueError
+        if not isinstance(name, str):
+            raise ValueError
         self.rev = rev
         self.ob = ob
         self.name = name
