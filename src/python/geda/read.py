@@ -287,6 +287,8 @@ def read_file(f, name, override_net_color = None,
                 raise ParseError, \
                     _("Read unexpected embedded symbol start marker in [%s] :\n"
                       ">>\n%s<<\n") % (name, line)
+            if not component_data.symbol.embedded:
+                raise ParseError
             if component_data.symbol.prim_objs is not None:
                 raise ParseError
             object_lists_save.append((rev, ob, origin))
