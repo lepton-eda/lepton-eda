@@ -29,6 +29,7 @@ gedadir = $(pkgpythondir)/geda
 geda_PYTHON = \
 	geda/__init__.py \
 	geda/attrib.py \
+	geda/clib.py \
 	geda/fileformat.py \
 	geda/read.py \
 	geda/write.py

@@ -769,6 +769,7 @@ INPUT                  = .. \
                          ./xorn/storage.py \
                          ./xorn/geda/__init__.py \
                          ./xorn/geda/attrib.py \
+                         ./xorn/geda/clib.py \
                          ./xorn/geda/fileformat.py \
                          ./xorn/geda/read.py \
                          ./xorn/geda/write.py

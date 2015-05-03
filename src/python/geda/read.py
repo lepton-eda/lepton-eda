@@ -31,6 +31,7 @@ from gettext import gettext as _
 import xorn.storage
 import xorn.proxy
 import xorn.base64
+import xorn.geda.clib
 from xorn.geda.fileformat import *
 
 ## Raised when parsing a malformed file.
@@ -98,6 +99,19 @@ class Symbol:
         self.basename = basename
         self.prim_objs = None
         self.embedded = embedded
+
+    ## Look up the symbol from the component library, loading it if necessary.
+
+    def load(self):
+        if self.embedded:
+            raise ValueError  # can't load an embedded symbol
+        if self.prim_objs is not None:
+            return            # symbol is already loaded
+
+        self.prim_objs = xorn.geda.clib.lookup_symbol(self.basename)
+
+        # # Delete or hide attributes eligible for promotion inside the complex
+        # o_complex_remove_promotable_attribs(new_obj)
 
 class Pixmap:
     # In gEDA, the filename is not used if the picture is embedded.
@@ -191,6 +205,7 @@ def read(filename, **kwds):
 # \param [in] f                   A file-like object from which to read.
 # \param [in] name                The file name displayed in warning
 #                                 and error messages.
+# \param [in] load_symbols        Load referenced symbol files as well
 # \param [in] override_net_color  Reset the color of nets do default?
 # \param [in] override_bus_color  Reset the color of buses do default?
 # \param [in] override_pin_color  Reset the color of pins do default?
@@ -200,7 +215,8 @@ def read(filename, **kwds):
 #
 # \throw ParseError if the file is not a valid gEDA schematic/symbol file
 
-def read_file(f, name, override_net_color = None,
+def read_file(f, name, load_symbols = False,
+                       override_net_color = None,
                        override_bus_color = None,
                        override_pin_color = None,
                        force_boundingbox = False):
@@ -240,7 +256,8 @@ def read_file(f, name, override_net_color = None,
         elif objtype == OBJ_CIRCLE:
             ob = rev.add_object(read_circle(line, origin, format))
         elif objtype == OBJ_COMPLEX:
-            ob = rev.add_object(read_complex(line, origin, format))
+            ob = rev.add_object(read_complex(line, origin, format,
+                                             load_symbols))
         elif objtype == OBJ_TEXT:
             ob = rev.add_object(read_text(line, f, origin, format))
         elif objtype == OBJ_PATH:
@@ -583,10 +600,13 @@ def read_bus(buf, (origin_x, origin_y), format):
 
 ## Read a component object from a string in gEDA format.
 #
+# If the symbol is not embedded and \a load_symbol is \c True, try to
+# load it from the component library.
+#
 # \throw ParseError if the string could not be parsed
 # \throw ValueError if \a buf doesn't describe a component object
 
-def read_complex(buf, (origin_x, origin_y), format):
+def read_complex(buf, (origin_x, origin_y), format, load_symbol):
     type, x1, y1, selectable, angle, mirror, basename = sscanf(
         buf, "%c %d %d %d %d %d %s\n", _("Failed to parse complex object"))
 
@@ -613,9 +633,8 @@ def read_complex(buf, (origin_x, origin_y), format):
         symbol = Symbol(basename[8:], True)
     else:
         symbol = Symbol(basename, False)
-        #clib = s_clib_get_symbol_by_name(basename)
-        ## Delete or hide attributes eligible for promotion inside the complex
-        #o_complex_remove_promotable_attribs(new_obj)
+        if load_symbol:
+            symbol.load()
 
     return xorn.storage.Component(
         x = x1 - origin_x,
