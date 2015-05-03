@@ -74,7 +74,8 @@ for data, embedded in [(COMPONENT0_SCH, False),
     assert isinstance(box.data(), xorn.storage.Box)
     assert len(pin.attached_objects()) == 3
 
-for data in [COMPONENT1_SCH.replace('EMBEDDEDsymbol.sym', 'symbol.sym')]:
+for data in [COMPONENT0_SCH.replace('symbol.sym', 'EMBEDDEDsymbol.sym'),
+             COMPONENT1_SCH.replace('EMBEDDEDsymbol.sym', 'symbol.sym')]:
     # Test if inconsistencies trigger an exception
     try:
         xorn.geda.read.read_file(StringIO.StringIO(data), '<test data>')

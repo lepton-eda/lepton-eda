@@ -335,6 +335,13 @@ def read_file(f, name, override_net_color = None,
             raise ParseError, _("Read garbage in [%s] :\n"
                                 ">>\n%s<<\n") % (name, line)
 
+    for ob in rev.get_objects():
+        data = rev.get_object_data(ob)
+        if isinstance(data, xorn.storage.Component) \
+               and data.symbol.embedded \
+               and data.symbol.prim_objs is None:
+            raise ParseError
+
     if not format.enhanced_pinbus_format:
         pin_update_whichend(rev, force_boundingbox)
 
