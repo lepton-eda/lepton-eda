@@ -1399,7 +1399,7 @@ main (gint argc, gchar ** argv)
      * instead of trying to hard code a value which is very
      * likely wrong
      */
-    m4_pcbdir = PCBM4DIR;
+    m4_pcbdir = g_strdup ("PCBM4DIR");
   }
 
   default_m4_pcbdir = g_strdup (m4_pcbdir);
