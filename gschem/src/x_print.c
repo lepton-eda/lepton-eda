@@ -33,6 +33,15 @@
 #include <cairo-pdf.h>
 
 #define DEFAULT_PDF_SIZE 256
+/* PDF scale used by Adobe is fixed and equal to 72 ppi. */
+#define DEFAULT_ADOBE_PDF_PPI 72
+/* Gschem scale is not defined by any standard, so to make things
+ * more definite as we must have reasonable real sizes while
+ * exporting to PDF, let's use the proposition at
+ * http://wiki.geda-project.org/geda:file_format_spec
+ * and set 1 gschem point = 1 mil, i.e. 1000 points = 1 inch */
+#define DEFAULT_GSCHEM_PPI 1000
+
 #define CFG_GROUP_PRINTING "gschem.printing"
 #define CFG_KEY_PRINTING_ORIENTATION "layout"
 #define CFG_KEY_PRINTING_PAPER "paper"
@@ -334,8 +343,8 @@ x_print_export_pdf (GschemToplevel *w_current,
                                           s_page_objects (w_current->toplevel->page_current),
                                           &wx_min, &wy_min, &wx_max, &wy_max);
   if (status) {
-    width = wx_max - wx_min;
-    height = wy_max - wy_min;
+    width  = (wx_max - wx_min) * DEFAULT_ADOBE_PDF_PPI / DEFAULT_GSCHEM_PPI;
+    height = (wy_max - wy_min) * DEFAULT_ADOBE_PDF_PPI / DEFAULT_GSCHEM_PPI;
   } else {
     /* Fallback size if there are no drawable objects */
     width = height = DEFAULT_PDF_SIZE;
