@@ -146,9 +146,8 @@ static struct ExportSettings settings = {
 #define bad_arg_msg _("ERROR: Bad argument '%s' to %s option.\n")
 #define see_help_msg _("\nRun `gaf export --help' for more information.\n")
 
-/* Main function for `gaf export' */
-void
-cmd_export (int argc, char **argv)
+static void
+cmd_export_impl (void *data, int argc, char **argv)
 {
   int i;
   GError *err = NULL;
@@ -1093,4 +1092,12 @@ export_command_line (int argc, char * const *argv)
     fprintf (stderr, see_help_msg);
     exit (1);
   }
+}
+
+/* Main function for `gaf export' */
+int
+cmd_export (int argc, char **argv)
+{
+  scm_boot_guile (argc, argv, cmd_export_impl, NULL); /* Doesn't return */
+  return 0;
 }
