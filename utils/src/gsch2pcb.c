@@ -1388,9 +1388,6 @@ main (gint argc, gchar ** argv)
   const char *pcbdata_path;
   const char *configure_m4_pcbdir = PCBM4DIR; /* do not free it */
 
-  if (argc < 2)
-    usage ();
-
   pcbdata_path = g_getenv ("PCBDATA");  /* do not free return value */
   if (pcbdata_path != NULL) {
     /* If PCBDATA is set, use the value */
@@ -1408,6 +1405,9 @@ main (gint argc, gchar ** argv)
   }
 
   default_m4_pcbdir = g_strdup (m4_pcbdir);
+
+  if (argc < 2)
+    usage ();
 
   get_args (argc, argv);
 
