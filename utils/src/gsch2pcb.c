@@ -1386,6 +1386,7 @@ main (gint argc, gchar ** argv)
   gboolean created_pcb_file = TRUE;
   char *path, *p;
   const char *pcbdata_path;
+  const char *configure_m4_pcbdir = PCBM4DIR; /* do not free it */
 
   if (argc < 2)
     usage ();
@@ -1394,12 +1395,16 @@ main (gint argc, gchar ** argv)
   if (pcbdata_path != NULL) {
     /* If PCBDATA is set, use the value */
     m4_pcbdir = g_strconcat (pcbdata_path, "/m4", NULL);
-  } else {
+  } else if (configure_m4_pcbdir != NULL) {
     /* Use the default value passed in from the configure script
      * instead of trying to hard code a value which is very
      * likely wrong
      */
-    m4_pcbdir = g_strdup ("PCBM4DIR");
+    m4_pcbdir = g_strdup (configure_m4_pcbdir);
+  } else {
+    /* Neither PCBDATA was set nor PCBM4DIR has been configured */
+    /* Fall back to using the "m4" subdirectory in the current directory */
+    m4_pcbdir = g_strdup ("./m4");
   }
 
   default_m4_pcbdir = g_strdup (m4_pcbdir);
