@@ -1323,7 +1323,7 @@ static void
 usage ()
 {
   puts (usage_string0);
-  printf ("                         %s\n", default_m4_pcbdir);
+  printf ("                         %s\n\n", default_m4_pcbdir);
   puts (usage_string1);
   exit (0);
 }
