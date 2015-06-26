@@ -9,6 +9,10 @@ more information, please consult the `ChangeLog' file.
 
 Notable changes in gEDA/gaf 1.9.2
 =================================
+* Build system changes:
+
+  - Guile 2.0 or newer is now required.
+
 * Nullor expansion has been fixed in the `spice' and `spice-sdb'
   backends.
 
