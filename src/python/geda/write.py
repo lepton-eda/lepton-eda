@@ -94,9 +94,60 @@ def format_fill(data):
 
 ## Return the libgeda ripper direction of a bus object.
 #
-# \warning This function is not implemented.  See Xorn bug #143.
+# Search the schematic for ripper components connecting to the bus.
+# If rippers are found and are oriented in the same direction, return
+# \c -1 or \c 1 depending on the orientation, otherwise return \c 0.
 
-def bus_ripper_direction(object):
+def bus_ripper_direction(bus_ob):
+    bus_data = bus_ob.data()
+    found_neg = False
+    found_pos = False
+    for ob in xorn.proxy.RevisionProxy(bus_ob.rev).toplevel_objects():
+        data = ob.data()
+        if not isinstance(data, xorn.storage.Component) \
+               or data.symbol.basename != 'busripper-1.sym':
+            continue
+
+        if data.angle == 0:
+            x = data.x + 200.
+            y = data.y + 200.
+        elif data.angle == 90:
+            x = data.x - 200.
+            y = data.y + 200.
+        elif data.angle == 180:
+            x = data.x - 200.
+            y = data.y - 200.
+        elif data.angle == 270:
+            x = data.x + 200.
+            y = data.y - 200.
+        else:
+            continue  # invalid angle
+
+        # check for vertical bus
+        if bus_data.width == 0 and bus_data.x == x \
+               and y >= min(bus_data.y, bus_data.y + bus_data.height) \
+               and y <= max(bus_data.y, bus_data.y + bus_data.height):
+            if data.angle == 0 or data.angle == 90:
+                found_pos = 1
+            else:
+                found_neg = 1
+
+        # check for horizontal bus
+        if bus_data.height == 0 and bus_data.y == y \
+               and x >= min(bus_data.x, bus_data.x + bus_data.width) \
+               and x <= max(bus_data.x, bus_data.x + bus_data.width):
+            if data.angle == 0 or data.angle == 270:
+                found_pos = 1
+            else:
+                found_neg = 1
+
+    if found_neg and found_pos:
+        # Found inconsistent ripperdir for bus. Setting to 0.
+        return 0
+    if found_neg:
+        return -1
+    if found_pos:
+        return 1
     return 0
 
 ## Write an object to a file in libgeda format.
@@ -148,7 +199,7 @@ def write_object(f, o_current, offset_x, offset_y):
                     offset_x + data.x + data.width,
                     offset_y + data.y + data.height,
                     data.color,
-                    bus_ripper_direction(object)))
+                    bus_ripper_direction(o_current)))
         else:
             f.write('%c %d %d %d %d %d\n' % (
                     xorn.geda.fileformat.OBJ_NET,

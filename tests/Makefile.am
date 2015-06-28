@@ -84,8 +84,12 @@ pythontests = \
 	python/proxy.py \
 	python/geda/attrib.py \
 	python/geda/complex.py \
-	python/geda/parse_attrib.py
+	python/geda/parse_attrib.py \
+	python/geda/ripperdir.py
+
+testdata = \
+	python/geda/ripperdir.sch
 
 TESTS = $(check_PROGRAMS) $(pythontests)
 
-EXTRA_DIST = storage/Setup.h cpython/Setup.py $(pythontests)
+EXTRA_DIST = storage/Setup.h cpython/Setup.py $(pythontests) $(testdata)
