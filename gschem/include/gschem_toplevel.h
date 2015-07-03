@@ -33,7 +33,6 @@ struct st_gschem_toplevel {
   GtkWidget *main_window;
 
   GtkWidget *drawing_area;
-  GtkWidget *scrolled;
   GtkWidget *menubar;
   GtkWidget *popup_menu;
 

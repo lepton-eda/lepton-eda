@@ -235,6 +235,7 @@ void x_window_create_main(GschemToplevel *w_current)
   GtkWidget *handlebox=NULL;
   GtkWidget *hscrollbar;
   GtkWidget *vscrollbar;
+  GtkWidget *scrolled;
   GtkAdjustment *hadjustment;
   GtkAdjustment *vadjustment;
   char *right_button_text;
@@ -411,18 +412,18 @@ void x_window_create_main(GschemToplevel *w_current)
                                                     100.0,
                                                     10.0));
 
-  w_current->scrolled = gtk_scrolled_window_new (hadjustment, vadjustment);
-  gtk_container_add(GTK_CONTAINER(main_box), w_current->scrolled);
-  x_window_create_drawing(w_current->scrolled, w_current);
+  scrolled = gtk_scrolled_window_new (hadjustment, vadjustment);
+  gtk_container_add(GTK_CONTAINER(main_box), scrolled);
+  x_window_create_drawing(scrolled, w_current);
   x_window_setup_draw_events(w_current);
 
   policy = (w_current->scrollbars_flag) ? GTK_POLICY_ALWAYS : GTK_POLICY_NEVER;
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (w_current->scrolled), policy, policy);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled), policy, policy);
 
-  hscrollbar = gtk_scrolled_window_get_hscrollbar (GTK_SCROLLED_WINDOW (w_current->scrolled));
+  hscrollbar = gtk_scrolled_window_get_hscrollbar (GTK_SCROLLED_WINDOW (scrolled));
   gtk_range_set_update_policy (GTK_RANGE (hscrollbar), GTK_UPDATE_CONTINUOUS);
 
-  vscrollbar = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (w_current->scrolled));
+  vscrollbar = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (scrolled));
   gtk_range_set_update_policy (GTK_RANGE (vscrollbar), GTK_UPDATE_CONTINUOUS);
 
   /* macro box */
