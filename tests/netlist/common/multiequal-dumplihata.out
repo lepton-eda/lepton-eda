@@ -1,0 +1,68 @@
+ha:gschem {
+	ha:elements {
+		ha:V1 {
+			ha:pins {
+				ha:V1-2 {
+					pinseq={2}
+					pintype={pwr}
+					pinlabel={-}
+				}
+				ha:V1-1 {
+					pinseq={1}
+					pintype={pwr}
+					pinlabel={+}
+				}
+			}
+			ha:pin-conns {
+				V1-2 = {GND}
+				V1-1 = {unnamed_net1}
+			}
+			ha:attribs {
+				value={DC 1V}
+				refdes={V1}
+			}
+		}
+		ha:R1 {
+			ha:pins {
+				ha:R1-1 {
+					pinseq={1}
+					pintype={pas}
+					pinlabel={1}
+				}
+				ha:R1-2 {
+					pinseq={2}
+					pintype={pas}
+					pinlabel={2}
+				}
+			}
+			ha:pin-conns {
+				R1-1 = {GND}
+				R1-2 = {unnamed_net1}
+			}
+			ha:attribs {
+				value={20}
+				refdes={R1}
+			}
+		}
+		ha:A1 {
+			ha:pins {
+			}
+			ha:pin-conns {
+			}
+			ha:attribs {
+				value={abotol=1e-11}
+				refdes={A1}
+			}
+		}
+	}
+	ha:nets {
+		li:GND {
+			V1-2
+			R1-1
+		}
+		li:unnamed_net1 {
+			V1-1
+			R1-2
+		}
+	}
+}

@@ -1,0 +1,27 @@
+Tests for xorn-netlist
+======================
+
+These are the original tests used by gnetlist which compare the
+netlister output for a set of test schematics with known good output
+files.  To run the tests, type:
+
+    make check
+
+The tests do NOT cover most of the more advanced features of the
+backends; they are basically just a bunch of standard schematics run
+through each backend, whether meaningful or not.
+
+Please note that the tests only make sure there are no accidental new
+defects.  In particular, it has not been checked whether the original
+output files were correct in the first place.
+
+--------------------------------------------------------------------------------
+
+Copyright (C) 2013-2015 Roland Lutz
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.2 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+Texts.  A copy of the license is included in the ``GNU Free
+Documentation License'' file as part of this distribution.

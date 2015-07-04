@@ -21,7 +21,8 @@ SUBDIRS = \
 	src/python \
 	src/command \
 	src/backend \
-	tests
+	tests \
+	tests/netlist
 
 include_HEADERS = include/xornstorage.h
 

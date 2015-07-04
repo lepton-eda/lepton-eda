@@ -46,5 +46,6 @@ AC_CONFIG_FILES([
 	src/command/Makefile
 	src/backend/Makefile
 	tests/Makefile
+	tests/netlist/Makefile
 ])
 AC_OUTPUT

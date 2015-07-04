@@ -1,0 +1,228 @@
+ha:gschem {
+	ha:elements {
+		ha:AMP2 {
+			ha:pins {
+				ha:AMP2-2 {
+					pinseq={2}
+					pintype={out}
+					pinlabel={OUT}
+				}
+				ha:AMP2-1 {
+					pinseq={1}
+					pintype={in}
+					pinlabel={IN}
+				}
+			}
+			ha:pin-conns {
+				AMP2-2 = {unconnected_pin-1}
+				AMP2-1 = {unnamed_net6}
+			}
+			ha:attribs {
+				IIP3={12}
+				NF={12}
+				G={10}
+				footprint={none}
+				refdes={AMP2}
+				device={cascade-amp}
+			}
+		}
+		ha:T1 {
+			ha:pins {
+				ha:T1-2 {
+					pinseq={2}
+					pintype={out}
+					pinlabel={2}
+				}
+				ha:T1-1 {
+					pinseq={1}
+					pintype={in}
+					pinlabel={1}
+				}
+			}
+			ha:pin-conns {
+				T1-2 = {unnamed_net6}
+				T1-1 = {unnamed_net5}
+			}
+			ha:attribs {
+				ROUT={50}
+				RIN={50}
+				NF={0}
+				G={0}
+				footprint={none}
+				device={cascade-transformer}
+				refdes={T1}
+			}
+		}
+		ha:MX1 {
+			ha:pins {
+				ha:MX1-2 {
+					pinseq={2}
+					pintype={out}
+					pinlabel={OUT}
+				}
+				ha:MX1-1 {
+					pinseq={1}
+					pintype={in}
+					pinlabel={IN}
+				}
+			}
+			ha:pin-conns {
+				MX1-2 = {unnamed_net5}
+				MX1-1 = {unnamed_net4}
+			}
+			ha:attribs {
+				IIP3={5}
+				NF={15}
+				G={12}
+				refdes={MX1}
+				device={cascade-mixer}
+				footprint={none}
+			}
+		}
+		ha:FL1 {
+			ha:pins {
+				ha:FL1-2 {
+					pinseq={2}
+					pintype={out}
+					pinlabel={O}
+				}
+				ha:FL1-1 {
+					pinseq={1}
+					pintype={in}
+					pinlabel={I}
+				}
+			}
+			ha:pin-conns {
+				FL1-2 = {unnamed_net4}
+				FL1-1 = {unnamed_net3}
+			}
+			ha:attribs {
+				NF={5.5}
+				G={-5.5}
+				refdes={FL1}
+				device={cascade-filter}
+				footprint={none}
+			}
+		}
+		ha:DEF1 {
+			ha:pins {
+				ha:DEF1-2 {
+					pinseq={2}
+					pintype={out}
+					pinlabel={OUT}
+				}
+				ha:DEF1-1 {
+					pinseq={1}
+					pintype={in}
+					pinlabel={IN}
+				}
+			}
+			ha:pin-conns {
+				DEF1-2 = {unnamed_net3}
+				DEF1-1 = {unnamed_net2}
+			}
+			ha:attribs {
+				footprint={none}
+				RHO={0.2}
+				ROUT={50}
+				RIN={50}
+				refdes={DEF1}
+				device={cascade-defaults}
+			}
+		}
+		ha:AMP1 {
+			ha:pins {
+				ha:AMP1-2 {
+					pinseq={2}
+					pintype={out}
+					pinlabel={OUT}
+				}
+				ha:AMP1-1 {
+					pinseq={1}
+					pintype={in}
+					pinlabel={IN}
+				}
+			}
+			ha:pin-conns {
+				AMP1-2 = {unnamed_net2}
+				AMP1-1 = {unnamed_net1}
+			}
+			ha:attribs {
+				IIP3={-2}
+				NF={5}
+				G={12}
+				footprint={none}
+				refdes={AMP1}
+				device={cascade-amp}
+			}
+		}
+		ha:SOURCE {
+			ha:pins {
+				ha:SOURCE-1 {
+					pinseq={1}
+					pintype={out}
+					pinlabel={OUT}
+				}
+			}
+			ha:pin-conns {
+				SOURCE-1 = {unnamed_net1}
+			}
+			ha:attribs {
+				BW={1}
+				CN={70}
+				C={0}
+				footprint={none}
+				refdes={SOURCE}
+				device={cascade-source}
+			}
+		}
+		ha:DEFAULTS {
+			ha:pins {
+				ha:DEFAULTS-1 {
+					pinseq={unknown}
+					pintype={pwr}
+					pinlabel={unknown}
+				}
+			}
+			ha:pin-conns {
+				DEFAULTS-1 = {GND}
+			}
+			ha:attribs {
+				RHO={0}
+				ROUT={50}
+				RIN={50}
+				refdes={DEFAULTS}
+				device={cascade-defaults-top}
+			}
+		}
+	}
+	ha:nets {
+		li:unnamed_net6 {
+			AMP2-1
+			T1-2
+		}
+		li:unnamed_net5 {
+			T1-1
+			MX1-2
+		}
+		li:unnamed_net4 {
+			MX1-1
+			FL1-2
+		}
+		li:unnamed_net3 {
+			FL1-1
+			DEF1-2
+		}
+		li:unnamed_net2 {
+			DEF1-1
+			AMP1-2
+		}
+		li:unnamed_net1 {
+			AMP1-1
+			SOURCE-1
+		}
+		li:GND {
+			DEFAULTS-1
+		}
+	}
+}

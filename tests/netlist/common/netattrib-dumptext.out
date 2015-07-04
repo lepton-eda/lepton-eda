@@ -1,0 +1,87 @@
+element	F1
+element-pins	F1	F1-2	F1-1
+pin-attrib	F1-2	pinseq	2
+pin-attrib	F1-2	pintype	pas
+pin-attrib	F1-2	pinlabel	2
+pin-attrib	F1-1	pinseq	1
+pin-attrib	F1-1	pintype	pas
+pin-attrib	F1-1	pinlabel	1
+pin-conn	F1-2	unconnected_pin-3
+pin-conn	F1-1	one
+element-attrib	F1	refdes	F1
+element	U300
+element-pins	U300	U300-14	U300-7	U300-2	U300-1
+pin-attrib	U300-14	pinseq	unknown
+pin-attrib	U300-14	pintype	pwr
+pin-attrib	U300-14	pinlabel	unknown
+pin-attrib	U300-7	pinseq	unknown
+pin-attrib	U300-7	pintype	pwr
+pin-attrib	U300-7	pinlabel	unknown
+pin-attrib	U300-2	pinseq	2
+pin-attrib	U300-2	pintype	out
+pin-attrib	U300-2	pinlabel	Y
+pin-attrib	U300-1	pinseq	1
+pin-attrib	U300-1	pintype	in
+pin-attrib	U300-1	pinlabel	A
+pin-conn	U300-14	Vcc
+pin-conn	U300-7	GND
+pin-conn	U300-2	unnamed_net1
+pin-conn	U300-1	one
+element-attrib	U300	refdes	U300
+element	U200
+element-pins	U200	U200-14	U200-7	U200-2	U200-1
+pin-attrib	U200-14	pinseq	unknown
+pin-attrib	U200-14	pintype	pwr
+pin-attrib	U200-14	pinlabel	unknown
+pin-attrib	U200-7	pinseq	unknown
+pin-attrib	U200-7	pintype	pwr
+pin-attrib	U200-7	pinlabel	unknown
+pin-attrib	U200-2	pinseq	2
+pin-attrib	U200-2	pintype	out
+pin-attrib	U200-2	pinlabel	Y
+pin-attrib	U200-1	pinseq	1
+pin-attrib	U200-1	pintype	in
+pin-attrib	U200-1	pinlabel	A
+pin-conn	U200-14	Vcc
+pin-conn	U200-7	GND
+pin-conn	U200-2	netattrib
+pin-conn	U200-1	one
+element-attrib	U200	refdes	U200
+element	U100
+element-pins	U100	U100-5	U100-7	U100-14	U100-1	U100-2	U100-3
+pin-attrib	U100-5	pinseq	unknown
+pin-attrib	U100-5	pintype	pwr
+pin-attrib	U100-5	pinlabel	unknown
+pin-attrib	U100-7	pinseq	unknown
+pin-attrib	U100-7	pintype	pwr
+pin-attrib	U100-7	pinlabel	unknown
+pin-attrib	U100-14	pinseq	unknown
+pin-attrib	U100-14	pintype	pwr
+pin-attrib	U100-14	pinlabel	unknown
+pin-attrib	U100-1	pinseq	1
+pin-attrib	U100-1	pintype	in
+pin-attrib	U100-1	pinlabel	A
+pin-attrib	U100-2	pinseq	2
+pin-attrib	U100-2	pintype	in
+pin-attrib	U100-2	pinlabel	B
+pin-attrib	U100-3	pinseq	3
+pin-attrib	U100-3	pintype	out
+pin-attrib	U100-3	pinlabel	Y
+pin-conn	U100-5	netattrib
+pin-conn	U100-7	GND
+pin-conn	U100-14	Vcc
+pin-conn	U100-1	unconnected_pin-2
+pin-conn	U100-2	unconnected_pin-1
+pin-conn	U100-3	one
+element-attrib	U100	net	netattrib:5
+element-attrib	U100	refdes	U100
+net	unnamed_net1
+net-conns	unnamed_net1	U300-2
+net	netattrib
+net-conns	netattrib	U200-2	U100-5
+net	GND
+net-conns	GND	U300-7	U200-7	U100-7
+net	Vcc
+net-conns	Vcc	U300-14	U200-14	U100-14
+net	one
+net-conns	one	F1-1	U300-1	U200-1	U100-3

@@ -1,0 +1,32 @@
+element	V1
+element-pins	V1	V1-2	V1-1
+pin-attrib	V1-2	pinseq	2
+pin-attrib	V1-2	pintype	pwr
+pin-attrib	V1-2	pinlabel	-
+pin-attrib	V1-1	pinseq	1
+pin-attrib	V1-1	pintype	pwr
+pin-attrib	V1-1	pinlabel	+
+pin-conn	V1-2	GND
+pin-conn	V1-1	unnamed_net1
+element-attrib	V1	value	DC 1V
+element-attrib	V1	refdes	V1
+element	R1
+element-pins	R1	R1-1	R1-2
+pin-attrib	R1-1	pinseq	1
+pin-attrib	R1-1	pintype	pas
+pin-attrib	R1-1	pinlabel	1
+pin-attrib	R1-2	pinseq	2
+pin-attrib	R1-2	pintype	pas
+pin-attrib	R1-2	pinlabel	2
+pin-conn	R1-1	GND
+pin-conn	R1-2	unnamed_net1
+element-attrib	R1	value	20
+element-attrib	R1	refdes	R1
+element	A1
+element-pins	A1
+element-attrib	A1	value	abotol=1e-11
+element-attrib	A1	refdes	A1
+net	GND
+net-conns	GND	V1-2	R1-1
+net	unnamed_net1
+net-conns	unnamed_net1	V1-1	R1-2

@@ -1,0 +1,31 @@
+<LiquidPCB>
+	<netlist name="Main netlist">
+		<net name="unnamed_net6">
+			<netnode component="AMP2" pin=1 />
+			<netnode component="T1" pin=2 />
+		</net>
+		<net name="unnamed_net5">
+			<netnode component="T1" pin=1 />
+			<netnode component="MX1" pin=2 />
+		</net>
+		<net name="unnamed_net4">
+			<netnode component="MX1" pin=1 />
+			<netnode component="FL1" pin=2 />
+		</net>
+		<net name="unnamed_net3">
+			<netnode component="FL1" pin=1 />
+			<netnode component="DEF1" pin=2 />
+		</net>
+		<net name="unnamed_net2">
+			<netnode component="DEF1" pin=1 />
+			<netnode component="AMP1" pin=2 />
+		</net>
+		<net name="unnamed_net1">
+			<netnode component="AMP1" pin=1 />
+			<netnode component="SOURCE" pin=1 />
+		</net>
+		<net name="GND">
+			<netnode component="DEFAULTS" pin=1 />
+		</net>
+	</netlist>
+</LiquidPCB>

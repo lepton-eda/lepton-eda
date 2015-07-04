@@ -1,0 +1,46 @@
+START header
+
+gEDA's netlist format
+Created specifically for testing of gnetlist
+
+END header
+
+START components
+
+U2 device=LM317
+C4 device=POLARIZED_CAPACITOR
+C3 device=POLARIZED_CAPACITOR
+R1 device=VARIABLE_RESISTOR
+C2 device=POLARIZED_CAPACITOR
+R2 device=RESISTOR
+C1 device=POLARIZED_CAPACITOR
+S1 device=SPST
+CONN1 device=MAINS_CONNECTOR
+T1 device=transformer
+F1 device=FUSE
+U1 device=DIODE-BRIDGE
+
+END components
+
+START renamed-nets
+
+four -> GND
+
+END renamed-nets
+
+START nets
+
+ten : U2 1, R1 2, C3 1, R2 1 
+eleven : U2 2, C4 1, R2 2 
+GND : CONN1 3 
+one : S1 1, CONN1 1 
+five : CONN1 2, T1 2 
+three : T1 1, F1 2 
+two : S1 2, F1 1 
+six : T1 3, U1 4 
+seven : T1 4, U1 3 
+nine : C4 2, C3 2, R1 3, R1 1, C2 2, C1 2, U1 2 
+eight : U2 3, C2 1, C1 1, U1 1 
+
+END nets
+

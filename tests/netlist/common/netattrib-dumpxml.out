@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gschem>
+	<elements>
+		<element name="F1">
+			<pins>
+				<pin name="F1-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="2" />
+				</pin>
+				<pin name="F1-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="pas" />
+					<attrib name="pinlabel" value="1" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="F1-2" value="unconnected_pin-3" />
+				<pin-conn name="F1-1" value="one" />
+			</pin-conns>
+			<attributes>
+				<attrib name="refdes" value="F1" />
+			</attributes>
+		</element>
+		<element name="U300">
+			<pins>
+				<pin name="U300-14">
+					<attrib name="pinseq" value="unknown" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U300-7">
+					<attrib name="pinseq" value="unknown" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U300-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="out" />
+					<attrib name="pinlabel" value="Y" />
+				</pin>
+				<pin name="U300-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="A" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="U300-14" value="Vcc" />
+				<pin-conn name="U300-7" value="GND" />
+				<pin-conn name="U300-2" value="unnamed_net1" />
+				<pin-conn name="U300-1" value="one" />
+			</pin-conns>
+			<attributes>
+				<attrib name="refdes" value="U300" />
+			</attributes>
+		</element>
+		<element name="U200">
+			<pins>
+				<pin name="U200-14">
+					<attrib name="pinseq" value="unknown" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U200-7">
+					<attrib name="pinseq" value="unknown" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U200-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="out" />
+					<attrib name="pinlabel" value="Y" />
+				</pin>
+				<pin name="U200-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="A" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="U200-14" value="Vcc" />
+				<pin-conn name="U200-7" value="GND" />
+				<pin-conn name="U200-2" value="netattrib" />
+				<pin-conn name="U200-1" value="one" />
+			</pin-conns>
+			<attributes>
+				<attrib name="refdes" value="U200" />
+			</attributes>
+		</element>
+		<element name="U100">
+			<pins>
+				<pin name="U100-5">
+					<attrib name="pinseq" value="unknown" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U100-7">
+					<attrib name="pinseq" value="unknown" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U100-14">
+					<attrib name="pinseq" value="unknown" />
+					<attrib name="pintype" value="pwr" />
+					<attrib name="pinlabel" value="unknown" />
+				</pin>
+				<pin name="U100-1">
+					<attrib name="pinseq" value="1" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="A" />
+				</pin>
+				<pin name="U100-2">
+					<attrib name="pinseq" value="2" />
+					<attrib name="pintype" value="in" />
+					<attrib name="pinlabel" value="B" />
+				</pin>
+				<pin name="U100-3">
+					<attrib name="pinseq" value="3" />
+					<attrib name="pintype" value="out" />
+					<attrib name="pinlabel" value="Y" />
+				</pin>
+			</pins>
+			<pin-conns>
+				<pin-conn name="U100-5" value="netattrib" />
+				<pin-conn name="U100-7" value="GND" />
+				<pin-conn name="U100-14" value="Vcc" />
+				<pin-conn name="U100-1" value="unconnected_pin-2" />
+				<pin-conn name="U100-2" value="unconnected_pin-1" />
+				<pin-conn name="U100-3" value="one" />
+			</pin-conns>
+			<attributes>
+				<attrib name="net" value="netattrib:5" />
+				<attrib name="refdes" value="U100" />
+			</attributes>
+		</element>
+	</elements>
+	<nets>
+		<net name="unnamed_net1">
+			<pin name="U300-2" />
+		</net>
+		<net name="netattrib">
+			<pin name="U200-2" />
+			<pin name="U100-5" />
+		</net>
+		<net name="GND">
+			<pin name="U300-7" />
+			<pin name="U200-7" />
+			<pin name="U100-7" />
+		</net>
+		<net name="Vcc">
+			<pin name="U300-14" />
+			<pin name="U200-14" />
+			<pin name="U100-14" />
+		</net>
+		<net name="one">
+			<pin name="F1-1" />
+			<pin name="U300-1" />
+			<pin name="U200-1" />
+			<pin name="U100-3" />
+		</net>
+	</nets>
+</gschem>

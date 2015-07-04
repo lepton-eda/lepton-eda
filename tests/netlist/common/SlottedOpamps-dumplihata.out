@@ -1,0 +1,152 @@
+ha:gschem {
+	ha:elements {
+		ha:U1.4 {
+			ha:pins {
+				ha:U1.4-14 {
+					pinseq={1}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+				ha:U1.4-13 {
+					pinseq={2}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+				ha:U1.4-12 {
+					pinseq={3}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+			}
+			ha:pin-conns {
+				U1.4-14 = {samenet_output_c}
+				U1.4-13 = {minusin_slot4_pin13_b}
+				U1.4-12 = {plusin_slot4_pin12_a}
+			}
+			ha:attribs {
+				slot={4}
+				refdes={U1}
+				device={LM324}
+			}
+		}
+		ha:U1.3 {
+			ha:pins {
+				ha:U1.3-8 {
+					pinseq={1}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+				ha:U1.3-9 {
+					pinseq={2}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+				ha:U1.3-10 {
+					pinseq={3}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+			}
+			ha:pin-conns {
+				U1.3-8 = {samenet_output_c}
+				U1.3-9 = {minusin_slot3_pin_b}
+				U1.3-10 = {plusin_slot3_pin10_a}
+			}
+			ha:attribs {
+				slot={3}
+				refdes={U1}
+				device={LM324}
+			}
+		}
+		ha:U1.2 {
+			ha:pins {
+				ha:U1.2-7 {
+					pinseq={1}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+				ha:U1.2-6 {
+					pinseq={2}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+				ha:U1.2-5 {
+					pinseq={3}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+			}
+			ha:pin-conns {
+				U1.2-7 = {samenet_output_c}
+				U1.2-6 = {minusin_slot2_pin6_b}
+				U1.2-5 = {plusin_slot2_pin5_a}
+			}
+			ha:attribs {
+				slot={2}
+				refdes={U1}
+				device={LM324}
+			}
+		}
+		ha:U1.1 {
+			ha:pins {
+				ha:U1.1-1 {
+					pinseq={1}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+				ha:U1.1-2 {
+					pinseq={2}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+				ha:U1.1-3 {
+					pinseq={3}
+					pintype={unknown}
+					pinlabel={unknown}
+				}
+			}
+			ha:pin-conns {
+				U1.1-1 = {samenet_output_c}
+				U1.1-2 = {minusin_slot1_pin_b}
+				U1.1-3 = {plusin_slot1_pin3_a}
+			}
+			ha:attribs {
+				slot={1}
+				refdes={U1}
+				device={LM324}
+			}
+		}
+	}
+	ha:nets {
+		li:minusin_slot4_pin13_b {
+			U1.4-13
+		}
+		li:plusin_slot4_pin12_a {
+			U1.4-12
+		}
+		li:minusin_slot3_pin_b {
+			U1.3-9
+		}
+		li:plusin_slot3_pin10_a {
+			U1.3-10
+		}
+		li:minusin_slot2_pin6_b {
+			U1.2-6
+		}
+		li:plusin_slot2_pin5_a {
+			U1.2-5
+		}
+		li:samenet_output_c {
+			U1.4-14
+			U1.3-8
+			U1.2-7
+			U1.1-1
+		}
+		li:minusin_slot1_pin_b {
+			U1.1-2
+		}
+		li:plusin_slot1_pin3_a {
+			U1.1-3
+		}
+	}
+}

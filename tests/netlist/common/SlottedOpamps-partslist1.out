@@ -1,0 +1,4 @@
+.START
+..refdes	device	value	footprint	quantity
+U1	LM324	unknown	unknown	1
+.END

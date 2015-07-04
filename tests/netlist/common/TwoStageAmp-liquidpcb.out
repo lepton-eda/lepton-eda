@@ -1,0 +1,70 @@
+<LiquidPCB>
+	<netlist name="Main netlist">
+		<net name="unnamed_net2">
+			<netnode component="C2" pin=1 />
+			<netnode component="R8" pin=2 />
+		</net>
+		<net name="Vbase2">
+			<netnode component="R3" pin=1 />
+			<netnode component="C2" pin=2 />
+			<netnode component="R4" pin=2 />
+			<netnode component="Q2" pin=2 />
+		</net>
+		<net name="Vem2">
+			<netnode component="CE2" pin=2 />
+			<netnode component="RE2" pin=2 />
+			<netnode component="Q2" pin=1 />
+		</net>
+		<net name="Vout">
+			<netnode component="Cout" pin=2 />
+			<netnode component="RL" pin=2 />
+		</net>
+		<net name="VColl2">
+			<netnode component="Q2" pin=3 />
+			<netnode component="Cout" pin=1 />
+			<netnode component="RC2" pin=1 />
+		</net>
+		<net name="GND">
+			<netnode component="R4" pin=1 />
+			<netnode component="CE2" pin=1 />
+			<netnode component="RE2" pin=1 />
+			<netnode component="VCC" pin=2 />
+			<netnode component="Vinput" pin=2 />
+			<netnode component="CE1" pin=1 />
+			<netnode component="RL" pin=1 />
+			<netnode component="RE1" pin=1 />
+			<netnode component="R2" pin=1 />
+		</net>
+		<net name="Vcc">
+			<netnode component="R3" pin=2 />
+			<netnode component="RC1" pin=2 />
+			<netnode component="VCC" pin=1 />
+			<netnode component="RC2" pin=2 />
+			<netnode component="R1" pin=2 />
+		</net>
+		<net name="Vin">
+			<netnode component="Vinput" pin=1 />
+			<netnode component="R5" pin=1 />
+		</net>
+		<net name="unnamed_net1">
+			<netnode component="C1" pin=1 />
+			<netnode component="R5" pin=2 />
+		</net>
+		<net name="Vbase1">
+			<netnode component="C1" pin=2 />
+			<netnode component="R2" pin=2 />
+			<netnode component="R1" pin=1 />
+			<netnode component="Q1" pin=2 />
+		</net>
+		<net name="Vem1">
+			<netnode component="CE1" pin=2 />
+			<netnode component="RE1" pin=2 />
+			<netnode component="Q1" pin=1 />
+		</net>
+		<net name="Vcoll1">
+			<netnode component="R8" pin=1 />
+			<netnode component="RC1" pin=1 />
+			<netnode component="Q1" pin=3 />
+		</net>
+	</netlist>
+</LiquidPCB>

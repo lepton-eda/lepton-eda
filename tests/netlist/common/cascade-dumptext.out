@@ -1,0 +1,133 @@
+element	AMP2
+element-pins	AMP2	AMP2-2	AMP2-1
+pin-attrib	AMP2-2	pinseq	2
+pin-attrib	AMP2-2	pintype	out
+pin-attrib	AMP2-2	pinlabel	OUT
+pin-attrib	AMP2-1	pinseq	1
+pin-attrib	AMP2-1	pintype	in
+pin-attrib	AMP2-1	pinlabel	IN
+pin-conn	AMP2-2	unconnected_pin-1
+pin-conn	AMP2-1	unnamed_net6
+element-attrib	AMP2	IIP3	12
+element-attrib	AMP2	NF	12
+element-attrib	AMP2	G	10
+element-attrib	AMP2	footprint	none
+element-attrib	AMP2	refdes	AMP2
+element-attrib	AMP2	device	cascade-amp
+element	T1
+element-pins	T1	T1-2	T1-1
+pin-attrib	T1-2	pinseq	2
+pin-attrib	T1-2	pintype	out
+pin-attrib	T1-2	pinlabel	2
+pin-attrib	T1-1	pinseq	1
+pin-attrib	T1-1	pintype	in
+pin-attrib	T1-1	pinlabel	1
+pin-conn	T1-2	unnamed_net6
+pin-conn	T1-1	unnamed_net5
+element-attrib	T1	ROUT	50
+element-attrib	T1	RIN	50
+element-attrib	T1	NF	0
+element-attrib	T1	G	0
+element-attrib	T1	footprint	none
+element-attrib	T1	device	cascade-transformer
+element-attrib	T1	refdes	T1
+element	MX1
+element-pins	MX1	MX1-2	MX1-1
+pin-attrib	MX1-2	pinseq	2
+pin-attrib	MX1-2	pintype	out
+pin-attrib	MX1-2	pinlabel	OUT
+pin-attrib	MX1-1	pinseq	1
+pin-attrib	MX1-1	pintype	in
+pin-attrib	MX1-1	pinlabel	IN
+pin-conn	MX1-2	unnamed_net5
+pin-conn	MX1-1	unnamed_net4
+element-attrib	MX1	IIP3	5
+element-attrib	MX1	NF	15
+element-attrib	MX1	G	12
+element-attrib	MX1	refdes	MX1
+element-attrib	MX1	device	cascade-mixer
+element-attrib	MX1	footprint	none
+element	FL1
+element-pins	FL1	FL1-2	FL1-1
+pin-attrib	FL1-2	pinseq	2
+pin-attrib	FL1-2	pintype	out
+pin-attrib	FL1-2	pinlabel	O
+pin-attrib	FL1-1	pinseq	1
+pin-attrib	FL1-1	pintype	in
+pin-attrib	FL1-1	pinlabel	I
+pin-conn	FL1-2	unnamed_net4
+pin-conn	FL1-1	unnamed_net3
+element-attrib	FL1	NF	5.5
+element-attrib	FL1	G	-5.5
+element-attrib	FL1	refdes	FL1
+element-attrib	FL1	device	cascade-filter
+element-attrib	FL1	footprint	none
+element	DEF1
+element-pins	DEF1	DEF1-2	DEF1-1
+pin-attrib	DEF1-2	pinseq	2
+pin-attrib	DEF1-2	pintype	out
+pin-attrib	DEF1-2	pinlabel	OUT
+pin-attrib	DEF1-1	pinseq	1
+pin-attrib	DEF1-1	pintype	in
+pin-attrib	DEF1-1	pinlabel	IN
+pin-conn	DEF1-2	unnamed_net3
+pin-conn	DEF1-1	unnamed_net2
+element-attrib	DEF1	footprint	none
+element-attrib	DEF1	RHO	0.2
+element-attrib	DEF1	ROUT	50
+element-attrib	DEF1	RIN	50
+element-attrib	DEF1	refdes	DEF1
+element-attrib	DEF1	device	cascade-defaults
+element	AMP1
+element-pins	AMP1	AMP1-2	AMP1-1
+pin-attrib	AMP1-2	pinseq	2
+pin-attrib	AMP1-2	pintype	out
+pin-attrib	AMP1-2	pinlabel	OUT
+pin-attrib	AMP1-1	pinseq	1
+pin-attrib	AMP1-1	pintype	in
+pin-attrib	AMP1-1	pinlabel	IN
+pin-conn	AMP1-2	unnamed_net2
+pin-conn	AMP1-1	unnamed_net1
+element-attrib	AMP1	IIP3	-2
+element-attrib	AMP1	NF	5
+element-attrib	AMP1	G	12
+element-attrib	AMP1	footprint	none
+element-attrib	AMP1	refdes	AMP1
+element-attrib	AMP1	device	cascade-amp
+element	SOURCE
+element-pins	SOURCE	SOURCE-1
+pin-attrib	SOURCE-1	pinseq	1
+pin-attrib	SOURCE-1	pintype	out
+pin-attrib	SOURCE-1	pinlabel	OUT
+pin-conn	SOURCE-1	unnamed_net1
+element-attrib	SOURCE	BW	1
+element-attrib	SOURCE	CN	70
+element-attrib	SOURCE	C	0
+element-attrib	SOURCE	footprint	none
+element-attrib	SOURCE	refdes	SOURCE
+element-attrib	SOURCE	device	cascade-source
+element	DEFAULTS
+element-pins	DEFAULTS	DEFAULTS-1
+pin-attrib	DEFAULTS-1	pinseq	unknown
+pin-attrib	DEFAULTS-1	pintype	pwr
+pin-attrib	DEFAULTS-1	pinlabel	unknown
+pin-conn	DEFAULTS-1	GND
+element-attrib	DEFAULTS	RHO	0
+element-attrib	DEFAULTS	ROUT	50
+element-attrib	DEFAULTS	RIN	50
+element-attrib	DEFAULTS	refdes	DEFAULTS
+element-attrib	DEFAULTS	device	cascade-defaults-top
+net	unnamed_net6
+net-conns	unnamed_net6	AMP2-1	T1-2
+net	unnamed_net5
+net-conns	unnamed_net5	T1-1	MX1-2
+net	unnamed_net4
+net-conns	unnamed_net4	MX1-1	FL1-2
+net	unnamed_net3
+net-conns	unnamed_net3	FL1-1	DEF1-2
+net	unnamed_net2
+net-conns	unnamed_net2	DEF1-1	AMP1-2
+net	unnamed_net1
+net-conns	unnamed_net1	AMP1-1	SOURCE-1
+net	GND
+net-conns	GND	DEFAULTS-1

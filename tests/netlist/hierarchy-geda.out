@@ -1,0 +1,47 @@
+START header
+
+gEDA's netlist format
+Created specifically for testing of gnetlist
+
+END header
+
+START components
+
+Uunder/Umiddle/Urock/Qrock device=PNP_TRANSISTOR
+U2 device=7404
+U1 device=7404
+Utop/Umiddle/Urock/Qrock device=PNP_TRANSISTOR
+
+END components
+
+START renamed-nets
+
+Uunder/Umiddle/Urock/unnamed_net4 -> U1_2_to_B
+Uunder/Umiddle/Urock/unnamed_net3 -> U2_1_to_E
+Uunder/Umiddle/rockA -> U1_2_to_B
+Uunder/Umiddle/rockB -> U2_1_to_E
+Uunder/middleA -> U1_2_to_B
+Uunder/middleB -> U2_1_to_E
+Utop/Umiddle/Urock/unnamed_net2 -> U1_2_to_B
+Utop/Umiddle/Urock/unnamed_net1 -> U2_1_to_E
+Utop/Umiddle/rockA -> U1_2_to_B
+Utop/Umiddle/rockB -> U2_1_to_E
+Utop/middleA -> U1_2_to_B
+Utop/middleB -> U2_1_to_E
+
+END renamed-nets
+
+START nets
+
+Uunder/Umiddle/Urock/BUGA : Uunder/Umiddle/Urock/Qrock D 
+Uunder/Umiddle/Urock/-12V : Uunder/Umiddle/Urock/Qrock C 
+same_for_all : U2 2 
+Vcc : U2 14, U1 14 
+GND : U2 7, U1 7 
+Utop/Umiddle/Urock/BUGA : Utop/Umiddle/Urock/Qrock D 
+Utop/Umiddle/Urock/-12V : Utop/Umiddle/Urock/Qrock C 
+U1_2_to_B : Uunder/Umiddle/Urock/Qrock B, Utop/Umiddle/Urock/Qrock B, U1 2 
+U2_1_to_E : Uunder/Umiddle/Urock/Qrock E, Utop/Umiddle/Urock/Qrock E, U2 1 
+
+END nets
+

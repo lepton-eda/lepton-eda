@@ -1,0 +1,3 @@
+* Spice netlister for gnetlist
+U1 samenet_output_c minusin_slot1_pin_b plusin_slot1_pin3_a ERROR_INVALID_PIN ERROR_INVALID_PIN ERROR_INVALID_PIN ERROR_INVALID_PIN ERROR_INVALID_PIN ERROR_INVALID_PIN ERROR_INVALID_PIN ERROR_INVALID_PIN ERROR_INVALID_PIN <No valid value attribute found>
+.END

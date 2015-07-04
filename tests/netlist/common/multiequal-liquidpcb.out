@@ -1,0 +1,12 @@
+<LiquidPCB>
+	<netlist name="Main netlist">
+		<net name="GND">
+			<netnode component="V1" pin=2 />
+			<netnode component="R1" pin=1 />
+		</net>
+		<net name="unnamed_net1">
+			<netnode component="V1" pin=1 />
+			<netnode component="R1" pin=2 />
+		</net>
+	</netlist>
+</LiquidPCB>

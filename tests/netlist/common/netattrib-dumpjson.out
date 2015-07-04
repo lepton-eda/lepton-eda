@@ -1,0 +1,162 @@
+{
+	"elements": {
+		"F1": {
+			"pins": {
+				"F1-2": {
+					"pinseq": "2",
+					"pintype": "pas",
+					"pinlabel": "2",
+				},
+				"F1-1": {
+					"pinseq": "1",
+					"pintype": "pas",
+					"pinlabel": "1",
+				},
+			},
+			"pin-conns": {
+				"F1-2": "unconnected_pin-3",
+				"F1-1": "one",
+			},
+			"attribs":{
+				"refdes": "F1",
+			},
+		},
+		"U300": {
+			"pins": {
+				"U300-14": {
+					"pinseq": "unknown",
+					"pintype": "pwr",
+					"pinlabel": "unknown",
+				},
+				"U300-7": {
+					"pinseq": "unknown",
+					"pintype": "pwr",
+					"pinlabel": "unknown",
+				},
+				"U300-2": {
+					"pinseq": "2",
+					"pintype": "out",
+					"pinlabel": "Y",
+				},
+				"U300-1": {
+					"pinseq": "1",
+					"pintype": "in",
+					"pinlabel": "A",
+				},
+			},
+			"pin-conns": {
+				"U300-14": "Vcc",
+				"U300-7": "GND",
+				"U300-2": "unnamed_net1",
+				"U300-1": "one",
+			},
+			"attribs":{
+				"refdes": "U300",
+			},
+		},
+		"U200": {
+			"pins": {
+				"U200-14": {
+					"pinseq": "unknown",
+					"pintype": "pwr",
+					"pinlabel": "unknown",
+				},
+				"U200-7": {
+					"pinseq": "unknown",
+					"pintype": "pwr",
+					"pinlabel": "unknown",
+				},
+				"U200-2": {
+					"pinseq": "2",
+					"pintype": "out",
+					"pinlabel": "Y",
+				},
+				"U200-1": {
+					"pinseq": "1",
+					"pintype": "in",
+					"pinlabel": "A",
+				},
+			},
+			"pin-conns": {
+				"U200-14": "Vcc",
+				"U200-7": "GND",
+				"U200-2": "netattrib",
+				"U200-1": "one",
+			},
+			"attribs":{
+				"refdes": "U200",
+			},
+		},
+		"U100": {
+			"pins": {
+				"U100-5": {
+					"pinseq": "unknown",
+					"pintype": "pwr",
+					"pinlabel": "unknown",
+				},
+				"U100-7": {
+					"pinseq": "unknown",
+					"pintype": "pwr",
+					"pinlabel": "unknown",
+				},
+				"U100-14": {
+					"pinseq": "unknown",
+					"pintype": "pwr",
+					"pinlabel": "unknown",
+				},
+				"U100-1": {
+					"pinseq": "1",
+					"pintype": "in",
+					"pinlabel": "A",
+				},
+				"U100-2": {
+					"pinseq": "2",
+					"pintype": "in",
+					"pinlabel": "B",
+				},
+				"U100-3": {
+					"pinseq": "3",
+					"pintype": "out",
+					"pinlabel": "Y",
+				},
+			},
+			"pin-conns": {
+				"U100-5": "netattrib",
+				"U100-7": "GND",
+				"U100-14": "Vcc",
+				"U100-1": "unconnected_pin-2",
+				"U100-2": "unconnected_pin-1",
+				"U100-3": "one",
+			},
+			"attribs":{
+				"net": "netattrib:5",
+				"refdes": "U100",
+			},
+		},
+	},
+	"nets": {
+		"unnamed_net1": [
+			"U300-2",
+		],
+		"netattrib": [
+			"U200-2",
+			"U100-5",
+		],
+		"GND": [
+			"U300-7",
+			"U200-7",
+			"U100-7",
+		],
+		"Vcc": [
+			"U300-14",
+			"U200-14",
+			"U100-14",
+		],
+		"one": [
+			"F1-1",
+			"U300-1",
+			"U200-1",
+			"U100-3",
+		],
+	},
+}

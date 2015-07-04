@@ -1,0 +1,28 @@
+.PCB
+.REM CREATED BY gEDA GNETLIST
+.CON
+.COD 2
+
+.REM ten
+U2 1 R1 2 C3 1 R2 1
+.REM eleven
+U2 2 C4 1 R2 2
+.REM GND
+CONN1 3
+.REM one
+S1 1 CONN1 1
+.REM five
+CONN1 2 T1 2
+.REM three
+T1 1 F1 2
+.REM two
+S1 2 F1 1
+.REM six
+T1 3 U1 4
+.REM seven
+T1 4 U1 3
+.REM nine
+C4 2 C3 2 R1 3 R1 1 C2 2 C1 2 U1 2
+.REM eight
+U2 3 C2 1 C1 1 U1 1
+.EOD
