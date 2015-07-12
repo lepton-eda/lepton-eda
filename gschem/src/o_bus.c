@@ -66,8 +66,8 @@ void o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
   GList *prev_conn_objects = NULL;
 
   g_assert( w_current->inside_action != 0 );
-  g_return_val_if_fail (toplevel != NULL, FALSE);
-  g_return_val_if_fail (page != NULL, FALSE);
+  g_return_if_fail (toplevel != NULL);
+  g_return_if_fail (page != NULL);
 
   /* erase the rubberbus */
   /* o_bus_invalidate_rubber (w_current); */
