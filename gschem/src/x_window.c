@@ -530,9 +530,6 @@ void x_window_close(GschemToplevel *w_current)
   if (w_current->sswindow)
   gtk_widget_destroy(w_current->sswindow);
 
-  if (w_current->iwindow)
-  gtk_widget_destroy(w_current->iwindow);
-
   if (w_current->hkwindow)
   gtk_widget_destroy(w_current->hkwindow);
 

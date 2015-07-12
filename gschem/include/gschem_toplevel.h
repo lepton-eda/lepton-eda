@@ -53,7 +53,6 @@ struct st_gschem_toplevel {
   GtkWidget *sowindow;                  /* Script open */
   GtkWidget *pfswindow;                 /* Picture File Selection window */
   GtkWidget *cswindow;                  /* component select */
-  GtkWidget *iwindow;                   /* image write dialog box */
   GtkWidget *pswindow;                  /* page select */
   GtkWidget *tiwindow;                  /* text input */
   GtkWidget *tewindow;                  /* text edit */
