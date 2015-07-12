@@ -348,6 +348,7 @@ def get_symbol(source, symbol):
     if not isinstance(data, xorn.storage.Revision):
         raise ValueError, "Failed to load symbol data [%s] " \
             "from source [%s]" % (symbol, source.name)
+    data.finalize()
 
     # Cache the symbol data
     _symbol_cache[id(source), symbol] = data

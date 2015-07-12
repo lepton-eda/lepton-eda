@@ -75,8 +75,10 @@ class MockupSource:
     def get(self, symbol):
         if symbol != 'symbol.sym':
             raise ValueError
-        return xorn.geda.read.read_file(
+        rev = xorn.geda.read.read_file(
             StringIO.StringIO(SYMBOL_SYM), '<test data>')
+        assert rev.is_transient()
+        return rev
 
 xorn.geda.clib.add_source(MockupSource(), '<test source>')
 
@@ -97,6 +99,7 @@ for data, load_symbols, embedded in [(COMPONENT0_SCH, False, False),
         continue
 
     assert isinstance(symbol.prim_objs, xorn.storage.Revision)
+    assert symbol.prim_objs.is_transient() == embedded
     pin, box = xorn.proxy.RevisionProxy(symbol.prim_objs).toplevel_objects()
     assert isinstance(pin.data(), xorn.storage.Net)
     assert isinstance(box.data(), xorn.storage.Box)
