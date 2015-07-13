@@ -165,7 +165,7 @@ pin-conn	U1-2	nine
 pin-conn	U1-1	eight
 element-attrib	U1	refdes	U1
 net	ten
-net-conns	ten	U2-1	R1-2	C3-1	R2-1
+net-conns	ten	U2-1	C3-1	R1-2	R2-1
 net	eleven
 net-conns	eleven	U2-2	C4-1	R2-2
 net	GND
@@ -183,6 +183,6 @@ net-conns	six	T1-3	U1-4
 net	seven
 net-conns	seven	T1-4	U1-3
 net	nine
-net-conns	nine	C4-2	C3-2	R1-3	R1-1	C2-2	C1-2	U1-2
+net-conns	nine	C4-2	C3-2	R1-1	R1-3	C2-2	C1-2	U1-2
 net	eight
 net-conns	eight	U2-3	C2-1	C1-1	U1-1

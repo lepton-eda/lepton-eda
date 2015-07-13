@@ -11,11 +11,11 @@
 			<netnode component="U100" pin=14 />
 		</net>
 		<net name="SING_N">
-			<netnode component="U100" pin=4 />
-			<netnode component="U100" pin=5 />
+			<netnode component="U100" pin=9 />
 			<netnode component="U100" pin=10 />
 			<netnode component="U100" pin=8 />
-			<netnode component="U100" pin=9 />
+			<netnode component="U100" pin=4 />
+			<netnode component="U100" pin=5 />
 			<netnode component="U100" pin=6 />
 		</net>
 	</netlist>

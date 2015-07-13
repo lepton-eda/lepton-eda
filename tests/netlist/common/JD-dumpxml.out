@@ -286,9 +286,9 @@
 	<nets>
 		<net name="Vdd1">
 			<pin name="Rlp-2" />
+			<pin name="Vdd-1" />
 			<pin name="M1-B" />
 			<pin name="M1-S" />
-			<pin name="Vdd-1" />
 			<pin name="X1-6" />
 		</net>
 		<net name="GND">
@@ -303,8 +303,8 @@
 		</net>
 		<net name="LVH">
 			<pin name="Rb-2" />
-			<pin name="M1-D" />
 			<pin name="M1-G" />
+			<pin name="M1-D" />
 			<pin name="X1-3" />
 		</net>
 		<net name="i">
@@ -313,8 +313,8 @@
 		</net>
 		<net name="p">
 			<pin name="Cp-1" />
-			<pin name="Rt-1" />
 			<pin name="Rlp-1" />
+			<pin name="Rt-1" />
 			<pin name="X1-5" />
 		</net>
 		<net name="m">

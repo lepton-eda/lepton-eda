@@ -41,7 +41,7 @@ END renamed-nets
 START nets
 
 unnamed_net2 : C2 1, R8 2 
-Vbase2 : R3 1, C2 2, R4 2, Q2 2 
+Vbase2 : C2 2, R4 2, R3 1, Q2 2 
 Vem2 : CE2 2, RE2 2, Q2 1 
 Vout : Cout 2, RL 2 
 VColl2 : Q2 3, Cout 1, RC2 1 

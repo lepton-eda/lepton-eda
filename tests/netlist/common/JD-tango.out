@@ -78,9 +78,9 @@ LVD
 (
 Vdd1
 Rlp-2
+Vdd-1
 M1-B
 M1-S
-Vdd-1
 X1-6
 )
 (
@@ -97,8 +97,8 @@ X1-2
 (
 LVH
 Rb-2
-M1-D
 M1-G
+M1-D
 X1-3
 )
 (
@@ -109,8 +109,8 @@ X1-1
 (
 p
 Cp-1
-Rt-1
 Rlp-1
+Rt-1
 X1-5
 )
 (

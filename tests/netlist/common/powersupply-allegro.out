@@ -14,8 +14,8 @@ $PACKAGES
 ! DIODE-BRIDGE! DIODE-BRIDGE; U1
 $NETS
 ten; U2.1,
- R1.2,
  C3.1,
+ R1.2,
  R2.1
 eleven; U2.2,
  C4.1,
@@ -35,8 +35,8 @@ seven; T1.4,
  U1.3
 nine; C4.2,
  C3.2,
- R1.3,
  R1.1,
+ R1.3,
  C2.2,
  C1.2,
  U1.2

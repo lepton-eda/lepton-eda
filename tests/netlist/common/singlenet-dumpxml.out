@@ -138,11 +138,11 @@
 			<pin name="U100.2-14" />
 		</net>
 		<net name="SING_N">
-			<pin name="U100.2-4" />
-			<pin name="U100.2-5" />
+			<pin name="U100.3-9" />
 			<pin name="U100.3-10" />
 			<pin name="U100.3-8" />
-			<pin name="U100.3-9" />
+			<pin name="U100.2-4" />
+			<pin name="U100.2-5" />
 			<pin name="U100.2-6" />
 		</net>
 	</nets>

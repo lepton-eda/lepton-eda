@@ -522,9 +522,9 @@
 			<pin name="R8-2" />
 		</net>
 		<net name="Vbase2">
-			<pin name="R3-1" />
 			<pin name="C2-2" />
 			<pin name="R4-2" />
+			<pin name="R3-1" />
 			<pin name="Q2-2" />
 		</net>
 		<net name="Vem2">

@@ -305,8 +305,8 @@
 	<nets>
 		<net name="ten">
 			<pin name="U2-1" />
-			<pin name="R1-2" />
 			<pin name="C3-1" />
+			<pin name="R1-2" />
 			<pin name="R2-1" />
 		</net>
 		<net name="eleven">
@@ -344,8 +344,8 @@
 		<net name="nine">
 			<pin name="C4-2" />
 			<pin name="C3-2" />
-			<pin name="R1-3" />
 			<pin name="R1-1" />
+			<pin name="R1-3" />
 			<pin name="C2-2" />
 			<pin name="C1-2" />
 			<pin name="U1-2" />
