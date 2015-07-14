@@ -739,7 +739,7 @@ x_window_set_current_page (GschemToplevel *w_current, PAGE *page)
   gschem_page_view_set_page (page_view, page);
 
   i_update_menus (w_current);
-  i_set_filename (w_current, page->page_filename);
+  /* i_set_filename (w_current, page->page_filename); */
 
   x_pagesel_update (w_current);
   x_multiattrib_update (w_current);
@@ -815,7 +815,7 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
     /* add to recent file list */
     gtk_recent_manager_add_item (recent_manager, g_filename_to_uri(filename, NULL, NULL));
 
-    i_set_filename (w_current, page->page_filename);
+    /* i_set_filename (w_current, page->page_filename); */
     x_pagesel_update (w_current);
   }
 

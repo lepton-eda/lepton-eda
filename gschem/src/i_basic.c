@@ -487,8 +487,9 @@ void i_update_menus(GschemToplevel *w_current)
  *
  *  \param [in] w_current GschemToplevel structure
  *  \param [in] string The filename
+ *  \param [in] string 'Page changed' indication in window's title
  */
-void i_set_filename(GschemToplevel *w_current, const gchar *string)
+void i_set_filename(GschemToplevel *w_current, const gchar *string, const gchar *changed)
 {
   gchar *print_string=NULL;
   gchar *filename=NULL;
@@ -500,7 +501,7 @@ void i_set_filename(GschemToplevel *w_current, const gchar *string)
 
   filename = g_path_get_basename(string);
 
-  print_string = g_strdup_printf("%s - gschem", filename);
+  print_string = g_strdup_printf("%s%s - gschem", changed, filename);
 
   gtk_window_set_title(GTK_WINDOW(w_current->main_window),
 		       print_string);

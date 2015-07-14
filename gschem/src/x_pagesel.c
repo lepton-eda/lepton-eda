@@ -93,6 +93,18 @@ void x_pagesel_update (GschemToplevel *w_current)
     g_assert (IS_PAGESEL (w_current->pswindow));
     pagesel_update (PAGESEL (w_current->pswindow));
   }
+
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  if (page_view == NULL) {
+    return;
+  }
+
+  PAGE *page = gschem_page_view_get_page (page_view);
+  if (page == NULL) {
+    return;
+  }
+
+  i_set_filename (w_current, page->page_filename, page->CHANGED ? "* " : "");
 }
 
 /*! \brief Callback for page manager response.

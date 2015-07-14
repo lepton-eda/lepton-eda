@@ -236,7 +236,7 @@ void i_set_state_msg(GschemToplevel *w_current, enum x_states newstate, const ch
 void i_update_middle_button(GschemToplevel *w_current, void (*func_ptr)(), const char *string);
 void i_update_toolbar(GschemToplevel *w_current);
 void i_update_menus(GschemToplevel *w_current);
-void i_set_filename(GschemToplevel *w_current, const gchar *string);
+void i_set_filename(GschemToplevel *w_current, const gchar *string, const gchar *changed);
 void i_update_grid_info(GschemToplevel *w_current);
 void i_update_grid_info_callback (GschemPageView *view, GschemToplevel *w_current);
 /* i_callbacks.c */
