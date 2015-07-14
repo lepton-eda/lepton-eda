@@ -44,7 +44,9 @@ snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
 
 .1.in.1:
-	d=`LANG=C date -d $(DATE_VERSION) "+%B %-d, %Y"` ; \
+	d=`$(GUILE) -c '(setlocale LC_ALL "C") \
+	  (display (strftime "%B %-d, %Y" \
+	  (car (strptime "%Y%m%d" (cadr (program-arguments))))))' $(DATE_VERSION)` ; \
 	v="$(DOTTED_VERSION).$(DATE_VERSION)" ; \
 	sed -e"s:[@]DATE@:$$d:" -e"s:[@]VERSION@:$$v:" < $< > $@
 
