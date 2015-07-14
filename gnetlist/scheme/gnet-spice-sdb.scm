@@ -1013,11 +1013,7 @@
 
     ;; Next write out attributes if they exist.  Use
     ;; a list of attributes which can be attached to a junction.
-    (let ((attrib-list (list "area")))
-      (spice:write-list-of-attributes package attrib-list)
-            ;; write the off attribute separately
-                (display " "))  ;; add additional space. . . .
-
+    (spice:write-list-of-attributes package (list "area"))
     (newline)
   )
 )
