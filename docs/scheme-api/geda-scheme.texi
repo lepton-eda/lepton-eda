@@ -2365,6 +2365,12 @@ Called after objects are added to the page, at their initial creation.
 The argument is a list of the objects being added.
 @end defvar
 
+@defvar copy-objects-hook
+Called after objects are copied, either via @strong{Edit → Copy Mode} or
+similar, or to buffers, or to the clipboard.  Argument is a list of the
+objects that were copied.
+@end defvar
+
 @defvar remove-objects-hook
 Called after objects are removed from the page.  Argument is a list of
 the objects being removed.
