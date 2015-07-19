@@ -33,15 +33,17 @@
         max((w)->first_wy, (w)->second_wy)
 
 /*! \todo Finish function documentation!!!
- *  \brief 
+ *  \brief
  *  \par Function Description
  *
  */
 void o_box_invalidate_rubber (GschemToplevel *w_current)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+
   g_return_if_fail (w_current != NULL);
 
-  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+  gschem_page_view_invalidate_world_rect (page_view,
                                           w_current->first_wx,
                                           w_current->first_wy,
                                           w_current->second_wx,
@@ -114,7 +116,7 @@ void o_box_end(GschemToplevel *w_current, int w_x, int w_y)
   /* erase the temporary box */
   /* o_box_invalidate_rubber (w_current); */
   w_current->rubber_visible = 0;
-  
+
   box_width  = GET_BOX_WIDTH (w_current);
   box_height = GET_BOX_HEIGHT(w_current);
   box_left   = GET_BOX_LEFT  (w_current);

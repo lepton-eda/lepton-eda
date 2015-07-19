@@ -244,7 +244,7 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
   world_get_object_glist_bounds (page->toplevel, page->place_list,
                                  &left, &top, &right, &bottom);
 
-  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+  gschem_page_view_invalidate_world_rect (page_view,
                                           left + diff_x,
                                           top + diff_y,
                                           right + diff_x,

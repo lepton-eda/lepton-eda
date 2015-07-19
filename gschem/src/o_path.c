@@ -188,7 +188,7 @@ path_expand (GschemToplevel *w_current)
  * nodes (control points coincident with the node position) generate a
  * LINETO section; and a path ends either whenever the user clicks on
  * either the first or the current node.
- * 
+ *
  * \return the number of path sections added.
  */
 static int
@@ -254,7 +254,7 @@ path_next_sections (GschemToplevel *w_current)
     section->code = PATH_MOVETO;
     section->x3 = x1;
     section->y3 = y1;
-    
+
   } else if (!end_path) {
     path_expand (w_current);
     section = &p->sections[p->num_sections++];
@@ -302,6 +302,7 @@ path_next_sections (GschemToplevel *w_current)
 void
 o_path_invalidate_rubber (GschemToplevel *w_current)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   int added_sections;
   int min_x, min_y, max_x, max_y;
 
@@ -320,7 +321,7 @@ o_path_invalidate_rubber (GschemToplevel *w_current)
   min_y = MIN (min_y, w_current->second_wy);
   max_y = MAX (max_y, w_current->second_wy);
 
-  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+  gschem_page_view_invalidate_world_rect (page_view,
                                           min_x,
                                           min_y,
                                           max_x,
@@ -568,12 +569,13 @@ o_path_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 void
 o_path_invalidate_rubber_grips (GschemToplevel *w_current)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   int min_x, min_y, max_x, max_y;
 
   path_rubber_bbox (w_current, NULL,
                     &min_x, &max_y, &max_x, &min_y);
 
-  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+  gschem_page_view_invalidate_world_rect (page_view,
                                           min_x,
                                           min_y,
                                           max_x,

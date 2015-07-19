@@ -30,9 +30,11 @@
  */
 void o_line_invalidate_rubber (GschemToplevel *w_current)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+
   g_return_if_fail (w_current != NULL);
 
-  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+  gschem_page_view_invalidate_world_rect (page_view,
                                           w_current->first_wx,
                                           w_current->first_wy,
                                           w_current->second_wx,
@@ -124,7 +126,7 @@ void o_line_end(GschemToplevel *w_current, int w_x, int w_y)
  *  of the line is (<B>first_wx</B>,<B>first_wy</B>), the second end is
  *  (<B>second_wx</B>,<B>second_wy</B>).
  *  The first end is constant. The second end is updated to the (<B>w_x</B>,<B>w_y</B>).
- * 
+ *
  *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
  *  \param [in] w_y        Current y coordinate of pointer in world units.
@@ -142,15 +144,15 @@ void o_line_motion (GschemToplevel *w_current, int w_x, int w_y)
    * The coordinates of the moving end of the line are updated. Its new
    * coordinates are in <B>w_x</B> and <B>w_y</B> parameters and saved to
    * <B>w_current->second_wx</B> and <B>w_current->second_wy</B> respectively.
-   */ 
+   */
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
-  
+
   /* if the control key was pressed then draw ortho lines */
   if (w_current->CONTROLKEY) {
     diff_x = abs(w_current->second_wx - w_current->first_wx);
     diff_y = abs(w_current->second_wy - w_current->first_wy);
-    
+
     if (diff_x >= diff_y) {
       w_current->second_wy = w_current->first_wy;
     } else {

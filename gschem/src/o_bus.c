@@ -28,9 +28,9 @@
  *  \par Function Description
  *  This function sets the start point (<B>w_x</B>,<B>w_y</B>) of a new bus
  *  in the <B>GschemToplevel</B> structure.
- *  
+ *
  *  The start point is stored in <B>first_wx</B>, <B>first_wy</B>.
- *  
+ *
  *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] w_x        the x position in world coords
  *  \param [in] w_y        the y position in world coords
@@ -46,11 +46,11 @@ void o_bus_start(GschemToplevel *w_current, int w_x, int w_y)
 /*! \brief finish a bus drawing action
  *  \par Function Description
  *  This function finishes a net drawing action. The function draws
- *  a bus from the point (<B>first_wx</B>,<B>first_wy</B>) to 
+ *  a bus from the point (<B>first_wx</B>,<B>first_wy</B>) to
  *  (<B>second_wx</B>,<B>second_wy</B>). Both points are taken from
  *  the <B>GschemToplevel</B> structure.
  *
- *  The function returns TRUE if a bus object has been created and 
+ *  The function returns TRUE if a bus object has been created and
  *  FALSE if no bus object has been created.
  *
  *  \param [in] w_current  The GschemToplevel object.
@@ -104,13 +104,13 @@ void o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
 /*! \brief draw the bus rubber when creating a bus
  *  \par Function Description
  *  This function draws
- *  a bus rubber from the point (<B>first_wx</B>,<B>first_wy</B>) from  
+ *  a bus rubber from the point (<B>first_wx</B>,<B>first_wy</B>) from
  *  the <B>GschemToplevel</B> structure to the input parameter
  *  (<B>w_x</B>, <B>w_y</B>).
  *
- *  The function stores creates an non-orthogonal bus segment if the 
+ *  The function stores creates an non-orthogonal bus segment if the
  *  CONTROLKEY is pressed. The coordinates of the second rubberbus point
- *  is stored as (<B>second_wx</B>,<B>second_wy</B>) in the 
+ *  is stored as (<B>second_wx</B>,<B>second_wy</B>) in the
  *  <B>GschemToplevel</B> structure.
  *
  *  \param [in] w_current  The GschemToplevel object.
@@ -152,9 +152,11 @@ void o_bus_motion (GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_bus_invalidate_rubber (GschemToplevel *w_current)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+
   g_return_if_fail (w_current != NULL);
 
-  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+  gschem_page_view_invalidate_world_rect (page_view,
                                           w_current->first_wx,
                                           w_current->first_wy,
                                           w_current->second_wx,
@@ -164,7 +166,7 @@ void o_bus_invalidate_rubber (GschemToplevel *w_current)
 /*! \brief draw a rubberbus segment
  *  \par Function Description
  *  This function draws a bus segment from the point
- *  (<B>first_wx</B>,<B>first_wy</B>) to the point 
+ *  (<B>first_wx</B>,<B>first_wy</B>) to the point
  *  (<B>second_wx</B>,<B>second_wy</B>) from the <B>GschemToplevel</B>
  *   structure.
  *

@@ -30,9 +30,11 @@
  */
 void o_circle_invalidate_rubber (GschemToplevel *w_current)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+
   g_return_if_fail (w_current != NULL);
 
-  gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+  gschem_page_view_invalidate_world_rect (page_view,
                                           w_current->first_wx - w_current->distance,
                                           w_current->first_wy - w_current->distance,
                                           w_current->first_wx + w_current->distance,
@@ -48,7 +50,7 @@ void o_circle_invalidate_rubber (GschemToplevel *w_current)
  *  world units.
  *
  *  The first step of the circle input is to set the center of the arc.
- *  This center is kept in (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>). 
+ *  This center is kept in (<B>w_current->first_wx</B>,<B>w_current->first_wy</B>).
  *
  *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] w_x        Current x coordinate of pointer in world units.
@@ -103,7 +105,7 @@ void o_circle_end(GschemToplevel *w_current, int w_x, int w_y)
   /* erase the temporary circle */
   /* o_circle_invalidate_rubber (w_current); */
   w_current->rubber_visible = 0;
-  
+
   /* circle with null radius are not allowed */
   if (w_current->distance == 0) {
     /* cancel the object creation */
