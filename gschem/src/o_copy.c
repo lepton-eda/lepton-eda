@@ -32,8 +32,11 @@
  */
 void o_copy_start(GschemToplevel *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   GList *s_current;
+
+  g_return_if_fail (page != NULL);
 
   /* Copy the objects into the buffer at their current position,
    * with future motion relative to the mouse origin, (w_x, w_y). */
@@ -44,20 +47,20 @@ void o_copy_start(GschemToplevel *w_current, int w_x, int w_y)
   if (!o_select_selected (w_current))
     return;
 
-  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
+  s_current = geda_list_get_glist (page->selection_list);
 
-  if (toplevel->page_current->place_list != NULL) {
-    s_delete_object_glist(toplevel, toplevel->page_current->place_list);
-    toplevel->page_current->place_list = NULL;
+  if (page->place_list != NULL) {
+    s_delete_object_glist (page->toplevel, page->place_list);
+    page->place_list = NULL;
   }
 
-  toplevel->page_current->place_list =
-    o_glist_copy_all (toplevel, s_current,
-                      toplevel->page_current->place_list);
+  page->place_list = o_glist_copy_all (page->toplevel,
+                                       s_current,
+                                       page->place_list);
 
   g_run_hook_object_list (w_current,
                           "%copy-objects-hook",
-                          toplevel->page_current->place_list);
+                          page->place_list);
 
   o_place_start (w_current, w_x, w_y);
 }
