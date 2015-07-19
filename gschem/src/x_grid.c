@@ -250,10 +250,11 @@ static void draw_mesh (GschemToplevel *w_current,
  */
 static int query_mesh_grid_spacing (GschemToplevel *w_current)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   int incr, screen_incr;
 
   incr = gschem_options_get_snap_size (w_current->options);
-  screen_incr = gschem_page_view_SCREENabs (GSCHEM_PAGE_VIEW (w_current->drawing_area), incr);
+  screen_incr = gschem_page_view_SCREENabs (page_view, incr);
 
   /* We draw a fine grid if its on-screen spacing is large enough */
   if (screen_incr >= w_current->mesh_grid_display_threshold) {
@@ -261,7 +262,7 @@ static int query_mesh_grid_spacing (GschemToplevel *w_current)
   }
 
   incr *= MESH_COARSE_GRID_MULTIPLIER;
-  screen_incr = gschem_page_view_SCREENabs (GSCHEM_PAGE_VIEW (w_current->drawing_area), incr);
+  screen_incr = gschem_page_view_SCREENabs (page_view, incr);
 
   /* We draw a coarse grid if its on-screen spacing is large enough */
   if (screen_incr >= w_current->mesh_grid_display_threshold)
