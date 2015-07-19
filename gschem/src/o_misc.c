@@ -434,13 +434,13 @@ int o_edit_find_text (GschemToplevel *w_current, const GList *o_list,
 
           a_zoom(w_current, page_view, ZOOM_FULL, DONTCARE);
           g_assert( world_get_single_object_bounds (toplevel, o_current, &x1, &y1, &x2, &y2) );
-          text_screen_height = gschem_page_view_SCREENabs (GSCHEM_PAGE_VIEW (w_current->drawing_area), y2 - y1);
+          text_screen_height = gschem_page_view_SCREENabs (page_view, y2 - y1);
           /* this code will zoom/pan till the text screen height is about */
           /* 50 pixels high, perhaps a future enhancement will be to make */
           /* this number configurable */
           while (text_screen_height < 50) {
             a_zoom(w_current, page_view, ZOOM_IN, DONTCARE);
-            text_screen_height = gschem_page_view_SCREENabs (GSCHEM_PAGE_VIEW (w_current->drawing_area), y2 - y1);
+            text_screen_height = gschem_page_view_SCREENabs (page_view, y2 - y1);
           }
           gschem_page_view_pan (page_view, o_current->text->x, o_current->text->y);
 
