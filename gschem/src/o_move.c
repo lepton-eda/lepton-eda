@@ -30,9 +30,11 @@
  */
 void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   GList *s_iter;
 
+  g_return_if_fail (page != NULL);
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (w_current->stretch_list == NULL);
 
@@ -48,8 +50,7 @@ void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
     w_current->first_wx = w_current->second_wx = w_x;
     w_current->first_wy = w_current->second_wy = w_y;
 
-    o_invalidate_glist (w_current,
-       geda_list_get_glist (toplevel->page_current->selection_list));
+    o_invalidate_glist (w_current, geda_list_get_glist (page->selection_list));
 
     if (net_rubber_band_mode) {
       o_move_prep_rubberband(w_current);
@@ -102,20 +103,23 @@ void o_move_end_lowlevel (GschemToplevel *w_current,
                          OBJECT *object,
                          int diff_x, int diff_y)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
+
+  g_return_if_fail (page != NULL);
 
   switch (object->type) {
 
     case (OBJ_NET):
     case (OBJ_BUS):
     case (OBJ_PIN):
-      s_conn_remove_object (toplevel, object);
-      o_translate_world (toplevel, diff_x, diff_y, object);
-      s_conn_update_object (toplevel, object);
+      s_conn_remove_object (page->toplevel, object);
+      o_translate_world (page->toplevel, diff_x, diff_y, object);
+      s_conn_update_object (page->toplevel, object);
       break;
 
     default:
-      o_translate_world (toplevel, diff_x, diff_y, object);
+      o_translate_world (page->toplevel, diff_x, diff_y, object);
       break;
   }
 }
@@ -208,16 +212,14 @@ void o_move_end(GschemToplevel *w_current)
   }
 
   /* Draw the objects that were moved */
-  o_invalidate_glist (w_current,
-    geda_list_get_glist (page->selection_list));
+  o_invalidate_glist (w_current, geda_list_get_glist (page->selection_list));
 
   /* Draw the connected nets/buses that were also changed */
   o_invalidate_glist (w_current, rubbernet_objects);
 
   /* Call move-objects-hook for moved objects and changed connected
    * nets/buses */
-  GList *moved_list = g_list_concat (page->place_list,
-                                     rubbernet_objects);
+  GList *moved_list = g_list_concat (page->place_list, rubbernet_objects);
   page->place_list = NULL;
   rubbernet_objects = NULL;
   g_run_hook_object_list (w_current, "%move-objects-hook", moved_list);
@@ -272,19 +274,21 @@ void o_move_cancel (GschemToplevel *w_current)
  */
 void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   GList *selection, *s_current;
   OBJECT *object;
   gint object_x, object_y;
   gboolean resnap = FALSE;
   SNAP_STATE snap_mode;
 
+  g_return_if_fail (page != NULL);
+  g_return_if_fail (page->place_list != NULL);
   g_assert (w_current->inside_action != 0);
-  g_assert (toplevel->page_current->place_list != NULL);
 
   snap_mode = gschem_options_get_snap_mode (w_current->options);
 
-  selection = geda_list_get_glist( toplevel->page_current->selection_list );
+  selection = geda_list_get_glist (page->selection_list);
 
   /* realign the object if we are in resnap mode */
   if ((selection != NULL) && (snap_mode == SNAP_RESNAP)) {
@@ -307,7 +311,7 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
            s_current != NULL && resnap == TRUE;
            s_current = g_list_next(s_current)) {
         if (!(object == (OBJECT *) s_current->data)
-            && !o_attrib_is_attached(toplevel,
+            && !o_attrib_is_attached(page->toplevel,
                                      (OBJECT *) s_current->data, object)) {
           resnap = FALSE;
         }
@@ -320,7 +324,7 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
     /* manipulate w_x and w_y in a way that will lead to a position
        of the object that is aligned with the grid */
     if (resnap) {
-      if (o_get_position(toplevel, &object_x, &object_y, object)) {
+      if (o_get_position(page->toplevel, &object_x, &object_y, object)) {
         w_x += snap_grid (w_current, object_x) - object_x;
         w_y += snap_grid (w_current, object_y) - object_y;
       }
@@ -341,6 +345,7 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_move_invalidate_rubber (GschemToplevel *w_current, int drawing)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   GList *s_iter;
   int dx1, dx2, dy1, dy2;
   gboolean net_rubber_band_mode;
@@ -370,7 +375,7 @@ void o_move_invalidate_rubber (GschemToplevel *w_current, int drawing)
             dy2 = w_current->second_wy - w_current->first_wy;
           }
 
-          gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
+          gschem_page_view_invalidate_world_rect (page_view,
                                                   object->line->x[0] + dx1,
                                                   object->line->y[0] + dy1,
                                                   object->line->x[1] + dx2,
@@ -464,11 +469,14 @@ int o_move_return_whichone(OBJECT * object, int x, int y)
  */
 void o_move_check_endpoint(GschemToplevel *w_current, OBJECT * object)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   GList *cl_current;
   CONN *c_current;
   OBJECT *other;
   int whichone;
+
+  g_return_if_fail (page != NULL);
 
   if (!object)
   return;
@@ -512,10 +520,10 @@ void o_move_check_endpoint(GschemToplevel *w_current, OBJECT * object)
 
       OBJECT *new_net;
       /* other object is a pin, insert a net */
-      new_net = o_net_new (toplevel, OBJ_NET, NET_COLOR,
+      new_net = o_net_new (page->toplevel, OBJ_NET, NET_COLOR,
                            c_current->x, c_current->y,
                            c_current->x, c_current->y);
-      s_page_append (toplevel, toplevel->page_current, new_net);
+      s_page_append (page->toplevel, page, new_net);
       /* This new net object is only picked up for stretching later,
        * somewhat of a kludge. If the move operation is cancelled, these
        * new 0 length nets are removed by the "undo" operation invoked.
@@ -554,13 +562,16 @@ void o_move_check_endpoint(GschemToplevel *w_current, OBJECT * object)
  */
 void o_move_prep_rubberband(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   GList *s_current;
   OBJECT *object;
   OBJECT *o_current;
   GList *iter;
 
-  for (s_current = geda_list_get_glist (toplevel->page_current->selection_list);
+  g_return_if_fail (page != NULL);
+
+  for (s_current = geda_list_get_glist (page->selection_list);
        s_current != NULL; s_current = g_list_next (s_current)) {
     object = s_current->data;
 
@@ -619,7 +630,8 @@ void o_move_end_rubberband (GschemToplevel *w_current,
                             int w_dx, int w_dy,
                             GList** objects)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   GList *s_iter, *s_iter_next;
 
   for (s_iter = w_current->stretch_list;
@@ -635,7 +647,7 @@ void o_move_end_rubberband (GschemToplevel *w_current,
         object->type == OBJ_BUS) {
 
       /* remove the object's connections */
-      s_conn_remove_object (toplevel, object);
+      s_conn_remove_object (page->toplevel, object);
 
       object->line->x[whichone] += w_dx;
       object->line->y[whichone] += w_dy;
@@ -648,8 +660,8 @@ void o_move_end_rubberband (GschemToplevel *w_current,
       }
 
       object->w_bounds_valid_for = NULL;
-      s_tile_update_object (toplevel, object);
-      s_conn_update_object (toplevel, object);
+      s_tile_update_object (page->toplevel, object);
+      s_conn_update_object (page->toplevel, object);
       *objects = g_list_append (*objects, object);
     }
   }
