@@ -35,6 +35,8 @@
  */
 void o_place_start (GschemToplevel *w_current, int w_x, int w_y)
 {
+  g_return_if_fail (w_current != NULL);
+
   i_action_start (w_current);
 
   w_current->second_wx = w_x;
@@ -65,14 +67,16 @@ void o_place_end (GschemToplevel *w_current,
                   int continue_placing,
                   const char* hook_name)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   int w_diff_x, w_diff_y;
   OBJECT *o_current;
-  PAGE *p_current;
   GList *temp_dest_list = NULL;
   GList *connected_objects = NULL;
   GList *iter;
 
+  g_return_if_fail (page != NULL);
+  g_return_if_fail (w_current != NULL);
   g_assert (w_current->inside_action != 0);
 
   /* erase old image */
@@ -88,28 +92,26 @@ void o_place_end (GschemToplevel *w_current,
 
   if (continue_placing) {
     /* Make a copy of the place list if we want to keep it afterwards */
-    temp_dest_list = o_glist_copy_all (toplevel,
-                                       toplevel->page_current->place_list,
+    temp_dest_list = o_glist_copy_all (page->toplevel,
+                                       page->place_list,
                                        temp_dest_list);
   } else {
     /* Otherwise just take it */
-    temp_dest_list = toplevel->page_current->place_list;
-    toplevel->page_current->place_list = NULL;
+    temp_dest_list = page->place_list;
+    page->place_list = NULL;
   }
 
-  o_glist_translate_world(toplevel, w_diff_x, w_diff_y, temp_dest_list);
+  o_glist_translate_world(page->toplevel, w_diff_x, w_diff_y, temp_dest_list);
 
   /* Attach each item back onto the page's object list. Update object
    * connectivity and add the new objects to the selection list.*/
-  p_current = toplevel->page_current;
-
   for (iter = temp_dest_list; iter != NULL; iter = g_list_next (iter)) {
     o_current = iter->data;
 
-    s_page_append (toplevel, p_current, o_current);
+    s_page_append (page->toplevel, page, o_current);
 
     /* Update object connectivity */
-    s_conn_update_object (toplevel, o_current);
+    s_conn_update_object (page->toplevel, o_current);
     connected_objects = s_conn_return_others (connected_objects, o_current);
   }
 
@@ -121,7 +123,7 @@ void o_place_end (GschemToplevel *w_current,
   g_list_free (connected_objects);
   connected_objects = NULL;
 
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current, page);
   o_invalidate_glist (w_current, temp_dest_list); /* only redraw new objects */
   g_list_free (temp_dest_list);
 
@@ -147,8 +149,13 @@ void o_place_end (GschemToplevel *w_current,
  */
 void o_place_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
+
+  g_return_if_fail (page != NULL);
+  g_return_if_fail (page->place_list != NULL);
+  g_return_if_fail (w_current != NULL);
   g_assert (w_current->inside_action != 0);
-  g_assert (gschem_toplevel_get_current_page_view (w_current)->page->place_list != NULL);
 
   if (w_current->rubber_visible)
     o_place_invalidate_rubber (w_current, FALSE);
@@ -193,12 +200,14 @@ void o_place_motion (GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   int diff_x, diff_y;
   int left, top, bottom, right;
 
+  g_return_if_fail (page != NULL);
+  g_return_if_fail (page->place_list != NULL);
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (toplevel->page_current->place_list != NULL);
 
   /* If drawing is true, then don't worry about the previous drawing
    * method and movement constraints, use with the current settings */
@@ -232,7 +241,7 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
   }
 
   /* Find the bounds of the drawing to be done */
-  world_get_object_glist_bounds (toplevel, toplevel->page_current->place_list,
+  world_get_object_glist_bounds (page->toplevel, page->place_list,
                                  &left, &top, &right, &bottom);
 
   gschem_page_view_invalidate_world_rect (GSCHEM_PAGE_VIEW (w_current->drawing_area),
@@ -260,11 +269,14 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
 void
 o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
   cairo_t *cr = eda_renderer_get_cairo_context (renderer);
   int diff_x, diff_y;
 
-  g_return_if_fail (toplevel->page_current->place_list != NULL);
+  g_return_if_fail (page != NULL);
+  g_return_if_fail (page->place_list != NULL);
+  g_return_if_fail (w_current != NULL);
 
   /* Don't worry about the previous drawing method and movement
    * constraints, use with the current settings */
@@ -298,8 +310,8 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
     int left, top, bottom, right;
 
     /* Find the bounds of the drawing to be done */
-    world_get_object_glist_bounds (toplevel,
-                                   toplevel->page_current->place_list,
+    world_get_object_glist_bounds (page->toplevel,
+                                   page->place_list,
                                    &left, &top, &right, &bottom);
 
     /* Draw box outline */
@@ -308,7 +320,7 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
     eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, 0, -1, -1);
   } else {
     GList *iter;
-    for (iter = toplevel->page_current->place_list; iter != NULL;
+    for (iter = page->place_list; iter != NULL;
          iter = g_list_next (iter)) {
       eda_renderer_draw (renderer, (OBJECT *) iter->data);
     }
@@ -328,17 +340,22 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
  */
 void o_place_rotate (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
+
+  g_return_if_fail (page != NULL);
 
   o_place_invalidate_rubber (w_current, FALSE);
-  o_glist_rotate_world (toplevel,
-                        w_current->first_wx, w_current->first_wy, 90,
-                        toplevel->page_current->place_list);
 
+  o_glist_rotate_world (page->toplevel,
+                        w_current->first_wx,
+                        w_current->first_wy,
+                        90,
+                        page->place_list);
 
   /* Run rotate-objects-hook */
-  g_run_hook_object_list (w_current, "%rotate-objects-hook",
-                          toplevel->page_current->place_list);
+  g_run_hook_object_list (w_current, "%rotate-objects-hook", page->place_list);
+
   o_place_invalidate_rubber (w_current, TRUE);
 }
 
@@ -354,16 +371,20 @@ void o_place_rotate (GschemToplevel *w_current)
  */
 void o_place_mirror (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
+  PAGE *page = gschem_page_view_get_page (page_view);
+
+  g_return_if_fail (page != NULL);
 
   o_place_invalidate_rubber (w_current, FALSE);
-  o_glist_mirror_world (toplevel,
-                        w_current->first_wx, w_current->first_wy,
-                        toplevel->page_current->place_list);
 
+  o_glist_mirror_world (page->toplevel,
+                        w_current->first_wx,
+                        w_current->first_wy,
+                        page->place_list);
 
   /* Run mirror-objects-hook */
-  g_run_hook_object_list (w_current, "%mirror-objects-hook",
-                          toplevel->page_current->place_list);
+  g_run_hook_object_list (w_current, "%mirror-objects-hook", page->place_list);
+
   o_place_invalidate_rubber (w_current, TRUE);
 }
